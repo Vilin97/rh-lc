@@ -20,25 +20,6 @@ variable {K F V V' : Type} [Field K] [NumberField K] [StarRing K] [Field F] [Num
   [Module (𝓞 K) V'] [IsScalarTower (𝓞 K) K V']
 variable {h : V →ₗ⋆[K] V →ₗ[K] K} {h' : V' →ₗ⋆[K] V' →ₗ[K] K}
 
-omit [FiniteDimensional K V] [FiniteDimensional K V'] in
-private theorem isFullLattice_cut (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsFullLattice K L) : Submodule.IsFullLattice K (S.cut L) := by
-  refine { toIsLattice := StabilizerLattices.isLattice_cut S hL.toIsLattice, span_eq_top := ?_ }
-  rw [eq_top_iff]
-  intro a _
-  have ha : S.ι a ∈ Submodule.span K (L : Set V) := by
-    rw [hL.span_eq_top]
-    exact Submodule.mem_top
-  obtain ⟨y, hy, r, hya⟩ := (IsLocalization.mem_span_iff (nonZeroDivisors (𝓞 K))).mp ha
-  rw [Submodule.span_eq] at hy
-  have hr : (r : 𝓞 K) • a ∈ S.cut L := by
-    rw [S.mem_cut_iff, ← algebraMap_smul K (r : 𝓞 K), map_smul, hya, smul_smul,
-      IsLocalization.mk'_spec', map_one, one_smul]
-    exact hy
-  have hmul := Submodule.smul_mem (Submodule.span K (S.cut L : Set V'))
-    (IsLocalization.mk' K 1 r) (Submodule.subset_span hr)
-  rwa [← algebraMap_smul K (r : 𝓞 K), smul_smul, IsLocalization.mk'_spec, map_one, one_smul] at hmul
-
 private theorem VecSplit_adjoin_le_locF_of_le_locF (S : VecSplit h h') {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsPrime)
     {T T' : Submodule (𝓞 K) V'} (hT : T ≤ locF 𝔭 T') :
     S.adjoin T ≤ locF 𝔭 (S.adjoin T') := by
@@ -83,7 +64,7 @@ theorem vd_cut (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF
     (hd : IsTotPosDef h) (S : VecSplit h h') (h1 : h S.x₀ S.x₀ = 1) {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (hx : S.x₀ ∈ L)
     {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) : vd h' (S.cut L) 𝔭 = vd h L 𝔭 := by
-  have hcL := isFullLattice_cut S hL
+  have hcL := StabilizerLattices.isFullLattice_cut S hL
   obtain ⟨b', hb'L, hb'⟩ := LocalSpans.exists_basis_locF hcL h𝔭
   have hint : ∀ i j, h' (b' i) (b' j) ∈ (1 : Submodule (𝓞 K) K) := fun i j =>
     UnimodularLocalization.isIntegralLat_cut S hLi _ (hb'L i) _ (hb'L j)
@@ -136,7 +117,7 @@ theorem vd_cut_of_mem_locF (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) 
     {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (hx : S.x₀ ∈ locF 𝔭 B) :
     vd h' (S.cut B) 𝔭 = vd h B 𝔭 := by
   have e5 := locF_eq_locF_adjoin_cut hK hF S h1 hBi h𝔭 hx
-  have hcB := isFullLattice_cut S hB
+  have hcB := StabilizerLattices.isFullLattice_cut S hB
   have hBA : Submodule.IsFullLattice K (S.adjoin (S.cut B)) := by
     refine { toIsLattice := (S.isLattice_adjoin_iff _).mpr hcB.toIsLattice, span_eq_top := ?_ }
     rw [eq_top_iff]

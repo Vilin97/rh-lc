@@ -32,9 +32,9 @@ public import Formalism.LocalRingCardinality.SpanPowerMembership.Adelic
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links Formalism.L2.DIV
-open Formalism.IndefR.Mult IsDedekindDomain NumberField MeasureTheory GlobalTheory.ChiGrid GlobalTheory.FunObj GlobalTheory.RowTest GlobalTheory.CompanionTheory.Ar.RT
+open Formalism.IndefR.Mult IsDedekindDomain NumberField MeasureTheory GlobalTheory.ChiGrid GlobalTheory.FunObj GlobalTheory.RowTest
 open scoped TensorProduct ComplexConjugate GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
-attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField borelKw borelSpaceKw
+attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 noncomputable section
 
@@ -108,6 +108,8 @@ section Pure
 
 attribute [local instance] Classical.propDecidable
 
+local notation "pureT" => GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure
+
 open GlobalTheory.AdelicU (evFin)
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
@@ -139,17 +141,17 @@ theorem pure_update
   set t : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F) → ℂ := fun w => if w = v then ψ (fun i => evFin F v (x i)) else 1 with ht
   have hts : (Function.mulSupport t).Finite := (Set.finite_singleton v).subset fun w hw => by
     by_contra h
-    exact hw (if_neg h)
+    exact hw (ite_eq_right h)
   have key : (fun w => Function.update φ v ψ w fun i => evFin F w (x i)) =
       fun w => t w * Function.update φ v 1 w fun i => evFin F w (x i) := by
     funext w
     by_cases h : w = v
     · subst h
       simp [ht]
-    · simp [ht, h, Function.update_of_ne h]
+    · simp [ht, h]
   unfold GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure
-  rw [key, finprod_mul_distrib hts h1, finprod_eq_single t v fun w hw => if_neg hw]
-  simp only [ht, if_true]
+  rw [key, finprod_mul_distrib hts h1, finprod_eq_single t v fun w hw => ite_eq_right hw]
+  simp only [ht, ite_true]
   ring
 
 theorem piK_repl (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (x : κ → AF F) (y : κ → Fv F v) :
@@ -209,6 +211,8 @@ theorem pure_update_mem
   | zero =>
     rw [e]
     convert L.zero_mem using 1
+    funext x
+    simp only [Pi.zero_apply, zero_mul]
   | add a b _ _ ha hb =>
     rw [e] at ha hb ⊢
     convert L.add_mem ha hb using 1

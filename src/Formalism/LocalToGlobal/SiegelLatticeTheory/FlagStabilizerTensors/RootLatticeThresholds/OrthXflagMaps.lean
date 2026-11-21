@@ -78,7 +78,7 @@ theorem chain_pow (hn : n ∈ NLam Λ F) (j : ℕ) :
   | zero => intro i x hx; simpa using hx
   | succ j ih =>
     intro i x hx
-    rw [pow_succ, Module.End.mul_apply]
+    rw [pow_succ, mul_apply_eq_comp]
     apply ih
     have : ((n : S.V →ₗ[E] S.V) - 1) x = n x - x := by simp
     rw [this]
@@ -107,7 +107,7 @@ theorem conj_nilp (hn : n ∈ NLam Λ F) (γ : S.V ≃ₗ[E] S.V) :
     | zero => intro x; simp [LinearEquiv.coe_inv]
     | succ N ih =>
       intro x
-      rw [pow_succ, Module.End.mul_apply, ih, pow_succ, Module.End.mul_apply]
+      rw [pow_succ, mul_apply_eq_comp, ih, pow_succ, mul_apply_eq_comp]
       congr 2
       simp [LinearEquiv.coe_inv, map_sub]
   ext x
@@ -126,7 +126,7 @@ theorem unip_fin (A : Module.End K M) {k N : ℕ} (hk : 0 < k) (h1 : A ^ k = 1) 
   have hA : A = B + 1 := by rw [hB]; abel
 
   have hd : X ∣ ((X + 1 : K[X]) ^ k - 1) := by
-    rw [X_dvd_iff, coeff_sub, coeff_X_add_one_pow, coeff_one_zero, Nat.choose_zero_right, Nat.cast_one, sub_self]
+    rw [X_dvd_iff, coeff_sub, coeff_X_add_one_pow, coeff_one, if_pos rfl, Nat.choose_zero_right, Nat.cast_one, sub_self]
   obtain ⟨q, hq⟩ := hd
   have hq0 : q.coeff 0 = (k : K) := by
     have := congrArg (fun p : K[X] => p.coeff 1) hq
@@ -191,7 +191,7 @@ theorem pow_maps {p : Submodule D.host.E (VS D).V} (f : (VS D).V →ₗ[D.host.E
     ∀ y ∈ p, (f ^ N) y ∈ p := by
   induction N with
   | zero => intro y hy; simpa using hy
-  | succ N ih => intro y hy; rw [pow_succ, Module.End.mul_apply]; exact ih _ (h y hy)
+  | succ N ih => intro y hy; rw [pow_succ, mul_apply_eq_comp]; exact ih _ (h y hy)
 
 theorem indL_pow (f : (VS D).V →ₗ[D.host.E] (VS D).V) (hP : ∀ y ∈ perpS (VS D) F0.X, f y ∈ perpS (VS D) F0.X)
     (hX : ∀ y ∈ F0.X, f y ∈ F0.X) (N : ℕ) :
@@ -205,7 +205,7 @@ theorem indL_pow (f : (VS D).V →ₗ[D.host.E] (VS D).V) (hP : ∀ y ∈ perpS 
     refine LinearMap.ext fun w => ?_
     induction w using Submodule.Quotient.induction_on with
     | H x =>
-      rw [pow_succ, Module.End.mul_apply, indL_mk, ih, indL_mk, indL_mk]
+      rw [pow_succ, mul_apply_eq_comp, indL_mk, ih, indL_mk, indL_mk]
       congr 1
 
 end Ind

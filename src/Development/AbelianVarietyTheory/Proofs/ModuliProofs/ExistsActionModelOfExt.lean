@@ -35,8 +35,8 @@ private theorem exists_monoidHom_aut_of_lies {𝒞 : Type*} [Category 𝒞] {U X
   have hmul : ∀ g h, r (g * h) = r h ≫ r g := by
     intro g h
     refine hj (g * h) _ _ (hrl _) (hml g h) ?_
-    rw [hr (g * h), map_mul, Aut.mul_asIso, Iso.trans_hom, Category.assoc,
-      reassoc_of% (hr h), hr g]
+    have hm : ∀ a b : Aut U, (a * b).asIso.hom = b.asIso.hom ≫ a.asIso.hom := fun _ _ => rfl
+    rw [hr (g * h), map_mul, hm, Category.assoc, reassoc_of% (hr h), hr g]
   have hinv : ∀ g, r g ≫ r g⁻¹ = 𝟙 X ∧ r g⁻¹ ≫ r g = 𝟙 X := fun g =>
     ⟨by rw [← hmul, inv_mul_cancel, hone], by rw [← hmul, mul_inv_cancel, hone]⟩
   exact ⟨{ toFun := fun g => Aut.of ⟨r g, r g⁻¹, (hinv g).1, (hinv g).2⟩
@@ -107,28 +107,14 @@ theorem exists_action_model_of_ext {E : Type} [Field E] [NumberField E] [IsCMFie
     (by rw [map_one]; exact (Category.id_comp _).trans (Category.comp_id _).symm) hw
     (fun g h => by
       show ((mu h).φ ≫ (mu g).φ) ≫ C.t.G.hom = C.t.G.hom ≫ (ρ (g * h)).asIso.hom
-      rw [map_mul, Aut.mul_asIso, Iso.trans_hom, Category.assoc, hw g, reassoc_of% (hw h)])
+      have hm : ∀ a b : Aut C.X, (a * b).asIso.hom = b.asIso.hom ≫ a.asIso.hom := fun _ _ => rfl
+      rw [map_mul, hm, Category.assoc, hw g, reassoc_of% (hw h)])
     (fun g a b ha hb hab => hcan (ρ g).asIso a b ha hb hab)
   refine ⟨ρ, τ, mu, fun g => ⟨(hτ g).symm, hjρ g, ?_⟩⟩
   rw [hτ]
   exact (hmu g).trans (by rw [hν])
 
-theorem exists_action_model :
-    (∀ (T K : Type) [CommRing T] [IsDomain T] [IsDiscreteValuationRing T] [Field K] [Algebra T K]
-      [IsFractionRing T K] (G G' : Over (Sp T)) [GrpObj G] [GrpObj G'],
-      IsSemiAbelian G → IsSemiAbelian G' →
-      ∀ f : (Over.pullback (spMap (algebraMap T K))).obj G ⟶ (Over.pullback (spMap (algebraMap T K))).obj G',
-        IsMonHom f → ∃! F : G ⟶ G', IsMonHom F ∧ (Over.pullback (spMap (algebraMap T K))).map F = f) →
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (U : Scheme.{0})
-      (F O : Type) [Field F] [CommRing O] (c : U ⟶ Sp F) (t : SAB H U) (β : O →+* F)
-      (C : Cpt c t β) (Z : Scheme.{0}) (q : C.X ⟶ Z) (Γ : Type) [Group Γ] [Finite Γ]
-      (ρ₀ : Γ →* Aut U) (τ₀ : Γ →* Aut t.G.left) (ν : ∀ g, SABMap t t (ρ₀ g).asIso.hom),
-      IsDedFrac β → Algebra.FiniteType ℤ O → IsProper t.G.hom → IsIntegralHom q →
-      (∀ g, (ν g).φ = (τ₀ g).asIso.hom) →
-      (∀ g, ∃ ρZ : Z ⟶ Z, C.j ≫ q ≫ ρZ = (ρ₀ g).asIso.hom ≫ C.j ≫ q) →
-      ∃ (ρ : Γ →* Aut C.X) (τ : Γ →* Aut C.t.G.left) (mu : ∀ g, SABMap C.t C.t (ρ g).asIso.hom),
-        ∀ g, (mu g).φ = (τ g).asIso.hom ∧ C.j ≫ (ρ g).asIso.hom = (ρ₀ g).asIso.hom ≫ C.j ∧
-          C.m.φ ≫ (τ g).asIso.hom = (τ₀ g).asIso.hom ≫ C.m.φ := by
+theorem exists_action_model : (∀ (T K : Type) [CommRing T] [IsDomain T] [IsDiscreteValuationRing T] [Field K] [Algebra T K] [IsFractionRing T K] (G G' : Over (Sp T)) [GrpObj G] [GrpObj G'], IsSemiAbelian G → IsSemiAbelian G' → ∀ f : (Over.pullback (spMap (algebraMap T K))).obj G ⟶ (Over.pullback (spMap (algebraMap T K))).obj G', IsMonHom f → ∃! F : G ⟶ G', IsMonHom F ∧ (Over.pullback (spMap (algebraMap T K))).map F = f) → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (U : Scheme.{0}) (F O : Type) [Field F] [CommRing O] (c : U ⟶ Sp F) (t : SAB H U) (β : O →+* F) (C : Cpt c t β) (Z : Scheme.{0}) (q : C.X ⟶ Z) (Γ : Type) [Group Γ] [Finite Γ] (ρ₀ : Γ →* Aut U) (τ₀ : Γ →* Aut t.G.left) (ν : ∀ g, SABMap t t (ρ₀ g).asIso.hom), IsDedFrac β → Algebra.FiniteType ℤ O → IsProper t.G.hom → IsIntegralHom q → (∀ g, (ν g).φ = (τ₀ g).asIso.hom) → (∀ g, ∃ ρZ : Z ⟶ Z, C.j ≫ q ≫ ρZ = (ρ₀ g).asIso.hom ≫ C.j ≫ q) → ∃ (ρ : Γ →* Aut C.X) (τ : Γ →* Aut C.t.G.left) (mu : ∀ g, SABMap C.t C.t (ρ g).asIso.hom), ∀ g, (mu g).φ = (τ g).asIso.hom ∧ C.j ≫ (ρ g).asIso.hom = (ρ₀ g).asIso.hom ≫ C.j ∧ C.m.φ ≫ (τ g).asIso.hom = (τ₀ g).asIso.hom ≫ C.m.φ := by
   intro hN E _ _ _ H U F O _ _ c t β C Z q Γ _ _ ρ₀ τ₀ ν hβ hfin hprop hq hν hZ
   exact exists_action_model_of_ext C q ρ₀ τ₀ ν hβ hq hν hZ
     (fun r n f h => Models.exists_sabMap_extending hN E H U F O c t β U F O c t β C C r n f hβ hfin hprop h)

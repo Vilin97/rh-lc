@@ -243,10 +243,11 @@ theorem cayDensEx_holds : CayDensEx := by
   set φM := φ.toHomeomorph.toMeasurableEquiv with hφM
   set ψM := ψ.toHomeomorph.toMeasurableEquiv with hψM
   set m : Measure (HcS.BasicNotions.UpqT (pP ε) (pQ ε)) := (Formalism.REAL.muG ε).map φM with hm
-  haveI : m.IsHaarMeasure := ContinuousMulEquiv.isHaarMeasure_map (Formalism.REAL.muG ε) φ
+  have hmHaar : m.IsHaarMeasure := ContinuousMulEquiv.isHaarMeasure_map (Formalism.REAL.muG ε) φ
   set lam : Measure (HcS.BasicNotions.lieU (pP ε) (pQ ε)) := (volume : Measure (gLie ε)).map ψM with hlam
-  haveI : lam.IsAddHaarMeasure := ψ.isAddHaarMeasure_map volume
-  obtain ⟨D, hD, hDm, f, hfm, hfc, -, hfT, hmap⟩ := HcHDC.cayDensU (pP ε) (pQ ε) m lam
+  have hlamHaar : lam.IsAddHaarMeasure := ψ.isAddHaarMeasure_map volume
+  have hDensity := @HcHDC.cayDensU (pP ε) (pQ ε) m hmHaar lam hlamHaar
+  obtain ⟨D, hD, -, f, hfm, hfc, -, hfT, hmap⟩ := hDensity
   have hψ0 : ψ 0 = 0 := map_zero ψ
   have hψc : ContinuousAt ψ 0 := ψ.continuous.continuousAt
   have hN1 : ψ ⁻¹' D ∈ 𝓝 (0 : gLie ε) := hψc.preimage_mem_nhds (by rw [hψ0]; exact hD)

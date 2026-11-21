@@ -6,6 +6,7 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Lin
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SourceLiftAtGluedPlaceProof
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsBilinearEquivariantOrthogonalSummandLift
 public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthCommensurableSpanSpanOfDetNeZero
+import GroundTheory.LocalFields.Uniqueness
 
 @[expose] public section
 
@@ -135,6 +136,33 @@ namespace GlobalTheory.FinPl.SrcExact
 
 open GlobalTheory.FinPl GlobalTheory.FinPl.SrcGl GlobalTheory.FinPl.SrcTheta
 
+private theorem isFullLattice_of_gluedIndicator {k : Type} [Field k] [ValuativeRel k]
+    [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n n' : Type} [Fintype n']
+    (q : Unif k) (P : Pair k n') (Λ : Submodule 𝒪[k] (n → k)) [Λ.IsLattice k]
+    (hf : IsLocallyConstant (latInd (gluedS q 1 P.ker P.vec) Λ)) : Λ.IsFullLattice k := by
+  classical
+  let y := q.inv • avec k n' 1 1 + inX k n' 1 P.vec
+  have hy : y ∈ gluedS q 1 P.ker P.vec := by
+    rw [gluedS]
+    exact le_sup_left (le_sup_right (Submodule.subset_span (Set.mem_singleton y)))
+  have hy_last : y (Sum.inr 0) = q.inv := by simp [y, avec, inX]
+  have hq := (Valuation.Integer.not_isUnit_iff_valuation_lt_one (v := valuation k)).mp q.2.not_isUnit
+  have hp := (GroundTheory.LocalField.tendsto_pow_atTop_nhds_zero_iff (q.1 : k)).2 hq
+  have hzero : latInd (gluedS q 1 P.ker P.vec) Λ 0 = 1 := by simp [latInd]
+  refine { span_eq_top := Submodule.eq_top_iff'.2 fun x => ?_ }
+  let M := vecMulVec x (Pi.single (Sum.inr (0 : Fin 1) : n' ⊕ Fin 1) (q.1 : k))
+  have hMy : M *ᵥ y = x := by
+    rw [M, vecMulVec_mulVec, single_dotProduct, hy_last, Unif.inv, mul_inv_cancel₀ q.ne_zero]
+    simp
+  obtain ⟨m, hm⟩ := ((hp.zero_smul_const M).eventually (hf.eventually_eq 0)).exists
+  rw [hzero, latInd] at hm
+  split_ifs at hm with hmem
+  · have hx := hmem y hy
+    rw [smul_mulVec, hMy] at hx
+    exact (Submodule.span k (Λ : Set (n → k))).smul_mem_iff_of_isUnit
+      (isUnit_iff_ne_zero.mpr (pow_ne_zero m q.ne_zero)) |>.mp (Submodule.subset_span hx)
+  · exact (zero_ne_one hm).elim
+
 theorem exists_theta_exact {D : D7} (hLin : LinExact D) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (p : SplitPt D k) (n n' : Type) [Fintype n] [DecidableEq n] [Fintype n']
     [DecidableEq n'] (q : Unif k) (ψ : AddChar (AF D.host.F) ℂ) (S A L T : HSp D) (o : OrthDec S A L)
@@ -197,10 +225,11 @@ theorem GlobalTheory.FinPl.sourceExact : ∀ D : D7, GlobalTheory.FinPl.SourceEx
   refine ⟨((resCard k : ℝ) ^ Fintype.card n)⁻¹ * (resCard k : ℝ) ^ ((Fintype.card n : ℝ) / 2), 1,
     mul_pos (inv_pos.2 (pow_pos hQ _)) (Real.rpow_pos_of_pos hQ _), ?_⟩
   intro ψ S A L T o ζ hL hA vA χS χT om hW _ hT α α₀ β hsum P Λ _ LS LT f₀ Ξ Ξ' hΞ hΞ' φ hφ
+  haveI : Λ.IsFullLattice k := isFullLattice_of_gluedIndicator q P Λ hΞ.2.2.2.1.1
   set χ := resChar χ₀ hχ q with hχχ
   obtain ⟨lS, hlS, hq, hθ⟩ :=
     exists_theta_exact (GlobalTheory.T.linearModel_splitPlace_characterEquivariance D) k p n n' q ψ S A L T o hA vA χS χT om hW α α₀ β hsum
-  have hdet : ∀ L' : Submodule 𝒪[k] (n' → k), L'.IsLattice k → ∀ g ∈ latStab L',
+  have hdet : ∀ L' : Submodule 𝒪[k] (n' → k), L'.IsFullLattice k → ∀ g ∈ latStab L',
       ((lS (Matrix.GeneralLinearGroup.det g) : ℂˣ) : ℂ) = 1 := fun L' hL' g hg => by
     rw [GlobalTheory.T.unramifiedCharacter_det_latticeStabilizer_eq_one k n' L' hL' g hg lS (hlS hT), Units.val_one]
   have hsb := GlobalTheory.T.schwartzBruhat_tensor_indicator_character_facts k n n'
@@ -208,7 +237,7 @@ theorem GlobalTheory.FinPl.sourceExact : ∀ D : D7, GlobalTheory.FinPl.SourceEx
   have hinv : ∀ (θ : CA A →ₗ[ℂ] (Matrix n (n' ⊕ Fin 1) k → ℂ) →ₗ[ℂ] (GA D T → WO L T → ℂ)),
       (∀ (g : GL n' k) (v : CA A) (Φ : Matrix n (n' ⊕ Fin 1) k → ℂ), Φ ∈ SB (Matrix n (n' ⊕ Fin 1) k) →
         θ (caRep α g v) (fun x => Φ (x * (blk g).val)) = ((lS (Matrix.GeneralLinearGroup.det g) : ℂˣ) : ℂ)⁻¹ • θ v Φ) →
-      ∀ a ∈ SB (n → k), ∀ L' : Submodule 𝒪[k] (n' → k), L'.IsLattice k →
+      ∀ a ∈ SB (n → k), ∀ L' : Submodule 𝒪[k] (n' → k), L'.IsFullLattice k →
         GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.IsLiftInv (caRep α) (θ.compl₂ (tensL a)) L' := by
     intro θ hθe a ha L' hL' g hg v Ψ hΨ
     simp only [LinearMap.compl₂_apply, tensL_apply]
@@ -251,7 +280,7 @@ theorem GlobalTheory.FinPl.sourceExact : ∀ D : D7, GlobalTheory.FinPl.SourceEx
   have hχ1 : χ ≠ 1 := hχχ ▸ resChar_ne_one hχ q
   rw [show liftA o om vA (φ P) Ξ = θ (φc P) _ from (hθv (φc P) _ _ hΞ).symm]
   have hexp := ((GlobalTheory.T.gluedLattice_finite_expansions_localField k n n' q χ hχ1 Λ).1 P).1
-  rw [hexp]
+  rw [congrArg (θ (φc P)) hexp]
   have e0 : θ (φc P) (tensCol (latInd P.ker Λ) (vecInd Λ)) = 0 :=
     GlobalTheory.LastSteps.lift_latInd P hram heq (hinv θ hθe _ (hsb.2.1 Λ inferInstance) P.ker inferInstance) Λ
   have e1 : ∀ Q ∈ withLat Λ, θ (φc P) (tensCol (latInd P.ker Q.ker + GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.mainDatum q χ 1 P Q)
@@ -275,5 +304,5 @@ theorem GlobalTheory.FinPl.sourceExact : ∀ D : D7, GlobalTheory.FinPl.SourceEx
     rw [b1, b2, hθv _ _ _ (hΞ' Q hQ), coe_FFStar] at a2
     rw [tensCol_add, map_add (f := _), a0, zero_add, a1, a2, map_inv, map_inv, Units.val_inv_eq_inv_val, inv_inv]
     rfl
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_smul, map_add (f := _), map_sum, e0, zero_add, Finset.sum_congr rfl e1, ← Finset.smul_sum, smul_smul]
+  rw [(θ (φc P)).map_smul, (θ (φc P)).map_add, map_sum (θ (φc P)), e0, zero_add,
+    Finset.sum_congr rfl e1, ← Finset.smul_sum, smul_smul]

@@ -63,7 +63,7 @@ def OmFinVol : Prop :=
     (νX : Measure (Fin a → Fin n → AF F ⊗[F] E)) (Λ : Set (Fin n → E)) (μf : Measure (HA (Af F) σ J)),
     StdHyp σ J ψ → (gramE σ J X0).det ≠ 0 → 1 ≤ a → 2 * a < n → Formalism.MainNotions.UnusedSlot34.SWa1 F E σ n J →
     Formalism.L2.SG.Pf.NcWeil.StabilizerFirstChernCompatibility F E σ n J →
-    (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
+    (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
     IsOmT F E σ n J ψ (gramE σ J X0) hT νX →
     μf.IsHaarMeasure → 0 < μf (Kf σ J Λ) → μf (Kf σ J Λ) < ⊤ →
     MeasurableSet {X : Fin a → Fin n → Af F ⊗[F] E | ∃ k ∈ Kf σ J Λ, X = k • ratTup (Af F) X0} ∧

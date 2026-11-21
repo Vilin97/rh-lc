@@ -23,7 +23,7 @@ def stdSumBasis (K : Type*) [Field K] (m k : ℕ) : Module.Basis (Fin m ⊕ Fin 
 
 def LinesLatticeBasis.Statement : Prop :=
   ∀ (V : Type) [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V] (ι : Type) [Fintype ι],
-    Fintype.card ι = Module.finrank ℚ V → ∀ M : Submodule ℤ V, Submodule.IsLattice ℚ M →
+    Fintype.card ι = Module.finrank ℚ V → ∀ M : Submodule ℤ V, Submodule.IsFullLattice ℚ M →
       ∃ b : Module.Basis ι ℚ V, M = Submodule.span ℤ (Set.range b)
 
 def LinesGenIndexDet.Statement : Prop :=
@@ -35,11 +35,11 @@ def LinesGenIndexDet.Statement : Prop :=
 def LinesIsLattice.Statement : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι] (M : Submodule (𝓞 K) (ι → K)),
     (M.restrictScalars ℤ).FG → Submodule.span K (M : Set (ι → K)) = ⊤ →
-      Submodule.IsLattice ℚ (M.restrictScalars ℤ)
+      Submodule.IsFullLattice ℚ (M.restrictScalars ℤ)
 
 def LinesGenIndexTrans.Statement : Prop :=
   ∀ (V : Type) [AddCommGroup V] [Module ℚ V] [FiniteDimensional ℚ V] (A B C : Submodule ℤ V),
-    Submodule.IsLattice ℚ A → Submodule.IsLattice ℚ B → Submodule.IsLattice ℚ C →
+    Submodule.IsFullLattice ℚ A → Submodule.IsFullLattice ℚ B → Submodule.IsFullLattice ℚ C →
       0 < genIndex A.toAddSubgroup B.toAddSubgroup ∧
         genIndex A.toAddSubgroup B.toAddSubgroup * genIndex B.toAddSubgroup C.toAddSubgroup =
           genIndex A.toAddSubgroup C.toAddSubgroup
@@ -63,8 +63,15 @@ theorem stdSumBasis_elim (K : Type*) [Field K] (m k : ℕ) :
   funext x; cases x <;> rfl
 
 theorem stdLattice_isLattice_example :
-    Submodule.IsLattice ℚ ((stdLattice ℚ 1).restrictScalars ℤ) :=
-  Submodule.IsLattice.of_fg ℚ ((Submodule.fg_span (Set.finite_range _)).restrictScalars)
+    Submodule.IsFullLattice ℚ ((stdLattice ℚ 1).restrictScalars ℤ) where
+  toIsLattice := Submodule.IsLattice.of_fg ℚ
+    ((Submodule.fg_span (Set.finite_range _)).restrictScalars)
+  span_eq_top := by
+    change Submodule.span ℚ (stdLattice ℚ 1 : Set (Fin 1 → ℚ)) = ⊤
+    rw [stdLattice, Submodule.span_span_of_tower (𝓞 ℚ)]
+    have h : ⇑(Pi.basisFun ℚ (Fin 1)) = fun j => Pi.single j 1 :=
+      funext (Pi.basisFun_apply ℚ (Fin 1))
+    rw [← h, Module.Basis.span_eq]
 
 end
 

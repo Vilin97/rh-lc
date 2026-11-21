@@ -19,9 +19,10 @@ theorem sig_sig (h : IsCMExt F E σ) (x : E) : σ (σ x) = x := by
   obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
   exact τ.injective (by rw [h.2.2.2, h.2.2.2, star_star])
 
-theorem exists_nsmul_mem {n : ℕ} {L : Submodule (𝓞 E) (Fin n → E)} (h : L.IsLattice E) (v : Fin n → E) :
+theorem exists_nsmul_mem {n : ℕ} {L : Submodule (𝓞 E) (Fin n → E)} (h : L.IsFullLattice E) (v : Fin n → E) :
     ∃ N : ℕ, 0 < N ∧ N • v ∈ L := by
-  have hv : v ∈ Submodule.span E (L : Set (Fin n → E)) := by rw [h.span_eq_top]; trivial
+  letI := h
+  have hv : v ∈ Submodule.span E (L : Set (Fin n → E)) := by rw [Submodule.IsFullLattice.span_eq_top]; trivial
   obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 E)) E _ v hv
   rw [Submodule.span_eq] at ht
   have ht0 : (t : 𝓞 E) ≠ 0 := nonZeroDivisors.ne_zero t.2
@@ -100,7 +101,7 @@ theorem latH_of {B : Base F E} (hcm : IsCMExt F E σ) {X : Spc F E n} {W : Spc F
       star_mul := fun a b => by show σ (a * b) = σ b * σ a; rw [map_mul, mul_comm]
       star_add := fun a b => map_add σ a b }
   obtain ⟨m, u, u', hu, hd⟩ := GlobalTheory.LatVacDual.exists_dual_family X.Jᵀ (fun i j => hX.herm i j)
-    (by rwa [Matrix.det_transpose]) X.L hX.lat.fg hX.lat.span_eq_top (fun y hy => (hX.dual y).2 fun x hx => by
+    (by rwa [Matrix.det_transpose]) X.L hX.lat.fg (by letI := hX.lat; exact Submodule.IsFullLattice.span_eq_top) (fun y hy => (hX.dual y).2 fun x hx => by
       obtain ⟨b, hb⟩ := hy x hx
       have : form σ X.J y x = b := by
         rw [hb, Finset.sum_comm]
@@ -145,10 +146,10 @@ theorem latH_of {B : Base F E} (hcm : IsCMExt F E σ) {X : Spc F E n} {W : Spc F
     exact hten _ (hu i).1 _ (nsmul_mem (hN' i) c)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [trace_int_iff, key M', hRat_sum, Finset.mul_sum, map_sum]
-    refine IsIntegral.sum _ fun i _ => ?_
-    rw [hRat_ten X.J W.J _ ξ₀ e2, map_neg]
-    have := (hW.dual _).1 ((hΛ M).1 hM _ (hu i).1) _ ((hΛ M').1 hM' _ (hu i).2) 1
-    simpa using this.neg
+      refine IsIntegral.sum _ fun i _ => ?_
+      rw [hRat_ten X.J W.J _ ξ₀ e2, map_neg]
+      have := (hW.dual _).1 ((hΛ M).1 hM _ (hu i).1) _ ((hΛ M').1 hM' _ (hu i).2) 1
+      simpa using this.neg
   · let o' : 𝓞 E := RingOfIntegers.mapRingHom (σ : E →+* E) o
     have h1 := (trace_int_iff _).1 (H _ (hten t ht _ (W.L.smul_mem o' hx)))
     rw [hRat_ten X.J W.J _ ξ₀ e2, map_neg] at h1

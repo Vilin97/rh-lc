@@ -143,13 +143,15 @@ theorem values_isLattice (M : C.Cl → Submodule (𝓞 K) C.V) (hM : ∀ c, Subm
     have ha : a ≠ 0 := Finset.prod_ne_zero_iff.mpr fun c _ => hd c
     have hax : a • x ∈ L := (hL _).2 fun c => by
       change a • x.1 c ∈ M c
-      rw [a, ← Finset.prod_erase_mul _ _ (Finset.mem_univ c), mul_smul]
+      dsimp [a]
+      rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ c), mul_smul]
       exact (M c).smul_mem _ (hdx c)
     have haK : algebraMap (𝓞 K) K a ≠ 0 := fun h =>
       ha ((IsFractionRing.injective (𝓞 K) K) (by simpa using h))
     have h := (Submodule.span K (L : Set C.Forms)).smul_mem
       (algebraMap (𝓞 K) K a)⁻¹ (Submodule.subset_span hax)
-    simpa [← algebraMap_smul K a x, smul_smul, haK] using h
+    rw [← algebraMap_smul K a x, smul_smul, inv_mul_cancel₀ haK, one_smul] at h
+    exact h
 end Datum
 
 theorem root_mem_cmMax {K : Type} [Field K] [StarRing K] (σ : K →+* ℂ)
@@ -200,7 +202,8 @@ omit [StarRing K] in
 theorem dualFr_isFullLattice {n : ℕ} (M : Submodule (𝓞 K) (Fin n → K))
     (hM : Submodule.IsLattice K M) : Submodule.IsFullLattice K (dualFr M) := by
   classical
-  refine ⟨GlobalTheory.DualLat.isLattice_dualFr M hM, ?_⟩
+  letI := GlobalTheory.DualLat.isLattice_dualFr M hM
+  refine ⟨?_⟩
   apply eq_top_iff.mpr
   intro x _
   obtain ⟨S, hS⟩ := hM.fg
@@ -219,7 +222,8 @@ theorem dualFr_isFullLattice {n : ℕ} (M : Submodule (𝓞 K) (Fin n → K))
     hd ((IsFractionRing.injective (𝓞 K) K) (by simpa using h))
   have h := (Submodule.span K (dualFr M : Set (Fin n → K))).smul_mem
     (algebraMap (𝓞 K) K d)⁻¹ (Submodule.subset_span hdx)
-  simpa [← algebraMap_smul K d x, smul_smul, hdK] using h
+  rw [← algebraMap_smul K d x, smul_smul, inv_mul_cancel₀ hdK, one_smul] at h
+  exact h
 
 omit [StarRing E] [StarRing K] in
 theorem delAtr_isLattice (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsLattice E L) :

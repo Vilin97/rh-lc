@@ -74,6 +74,37 @@ theorem hs_mul_le_of_cols {X P : Matrix (Fin n) (Fin n) ℂ} {c : ℝ}
   rw [← mulVec_col]
   exact h j
 
+theorem hs_proj_le {P : Matrix (Fin n) (Fin n) ℂ} (h1 : Pᴴ = P) (h2 : P * P = P) :
+    Formalism.REAL.hs P ≤ n := by
+  have hc : (1 - P)ᴴ = 1 - P := by simp [h1]
+  have hi : (1 - P) * (1 - P) = 1 - P := by
+    noncomm_ring [h2]
+  have hv (y : Fin n → ℂ) : nsq (P *ᵥ y) ≤ nsq y := by
+    have he : nsq (P *ᵥ y) + nsq ((1 - P) *ᵥ y) = nsq y := by
+      rw [nsq_proj h1 h2, nsq_proj hc hi, ← Complex.add_re, ← dotProduct_add,
+        ← Matrix.add_mulVec]
+      simp [nsq_eq_re]
+    linarith [nsq_nonneg ((1 - P) *ᵥ y)]
+  rw [hs_eq_cols]
+  calc
+    _ ≤ ∑ j : Fin n, nsq (Pi.single j 1) := by
+      refine Finset.sum_le_sum fun j _ => ?_
+      have he : P *ᵥ Pi.single j 1 = fun i => P i j := by
+        ext i
+        simp only [Matrix.mulVec_single_one, Matrix.col_apply]
+      rw [← he]
+      exact hv (Pi.single j 1)
+    _ = n := by
+      have hs (j : Fin n) : nsq (Pi.single j 1) = 1 := by
+        classical
+        unfold nsq
+        rw [Finset.sum_eq_single j]
+        · simp
+        · intro i _ hij
+          simp [hij]
+        · simp
+      simp [hs]
+
 theorem hs_sub_comm (M N : Matrix (Fin n) (Fin n) ℂ) : Formalism.REAL.hs (M - N) = Formalism.REAL.hs (N - M) := by
   simp only [Formalism.REAL.hs, Matrix.sub_apply]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

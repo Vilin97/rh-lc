@@ -40,12 +40,12 @@ theorem mem_mIdealOver_iff (y : (Σ k, ι k) → Ω) (f : MvPolynomial (Σ k, ι
       ∀ b : K → ℕ, aeval y (weightedHomogeneousComponent (NumbersDVR.blockWeight ι) b f) = 0 := by
   constructor
   · intro hf b
-    rw [← coeff_mConeMapOver, RingHom.mem_ker.mp hf, coeff_zero]
+    rw [← coeff_mConeMapOver, RingHom.mem_ker.mp hf, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   · intro h
     refine RingHom.mem_ker.mpr (MvPolynomial.ext _ _ fun d => ?_)
     have := coeff_mConeMapOver (S := S) y (⇑d) f
     rw [Finsupp.equivFunOnFinite_symm_coe] at this
-    rw [this, h, coeff_zero]
+    rw [this, h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
 
 end Homog
 

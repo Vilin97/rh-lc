@@ -11,12 +11,12 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenModelEqGe
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Gen GlobalTheory.LKTrip GlobalTheory.LKGeo UpperTheory.Gal.G3
-open UpperTheory.Gal.Int.Geo (Lv IsTrans Integ KS Mem FEt KSEx KSNice)
 open scoped TensorProduct
 universe u
 
 theorem UpperTheory.Gal.G3.pTateDiff :
     TateDiff := by
+  unfold TateDiff
   intro p _ D G L R _ _ gb S s N o k _ _ t I J hI hJ
   have hN : 0 < N.1 := by have := N.2.1; omega
   have hNp : N.1.Coprime p := N.2.2

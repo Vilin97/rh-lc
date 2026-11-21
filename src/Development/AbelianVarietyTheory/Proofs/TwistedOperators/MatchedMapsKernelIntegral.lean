@@ -31,7 +31,8 @@ theorem exists_decomp {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     ∃ (T : Finset (Pl F)) (m : ℕ) (f : Fin m → SInf F (Fin n × Fin d))
       (φ : Fin m → (v : Pl F) → (Fin n × Fin d → Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v) → ℂ),
       (∀ i, f i ∈ M.Pol ψ emb ∧ (∀ v, φ i v ∈ GlobalTheory.WeilM.SB (Fin n × Fin d → Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v)) ∧
-        ∀ v ∉ T, φ i v = M.vac v) ∧ Φ = ∑ i, pureT (f i) (φ i) := by
+        ∀ v ∉ T, φ i v = M.vac v) ∧
+      Φ = ∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i) := by
   classical
   unfold GlobalTheory.SquareAgree.algD at hΦ
   induction hΦ using Submodule.span_induction with

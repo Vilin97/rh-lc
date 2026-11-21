@@ -4,6 +4,7 @@ public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnivChar
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsSplitSupportedRepFiniteUnitaryClassStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FockHarmonicLatticeFgAndSpansValueSpaceStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteAdelicPointLatticeIsLattice
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistingCharacterAdmissibleGaloisTwistGoodStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DualTypePlacesIsSplitNonconjugateOfAdmissible
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HasInfExpMulOfIsOpenKer
@@ -124,18 +125,9 @@ theorem term_mem_span {ρ : Setup D.ntw} (hρ : ρ.Good) (i : D.ntw.Tw) (j : Fin
       have h2 := Formalism.BasicNotions.sig_sum _ hB.sigOK (tauE D τ)
       rw [← h1] at h2
       exact h2.le
-    have hlat : Submodule.IsLattice D.host.E ((ρ.B i j b).latAt (finPt _ h')) :=
-      by
-        have hfin := Module.Finite.iff_fg.2 hB.frame.sdS.1.fg
-        obtain ⟨c₂, hc₂, h₂⟩ := Formalism.UG.P.adelstabL_upper (F := D.host.F) (ρ.B i j b).F.ΛS hfin
-        obtain ⟨d, hd, c, hc, hcg, hcgi⟩ := Formalism.UG.P.levelaf_exists_denom (E := D.host.E) (Formalism.UG.bc (Lev.swapAE D) (finPt _ h').1)
-        have hG := Formalism.UG.P.adelstab_entries (Formalism.UG.bc (Lev.swapAE D) (finPt _ h').1) d c hc hcg
-        have hf := Formalism.UG.P.adelstab_finite (Formalism.UG.bc (Lev.swapAE D) (finPt _ h').1) _ c₂ d hc₂ hd h₂ hG
-        change Submodule.IsLattice D.host.E (Formalism.UG.CS.globLat (Formalism.UG.bc (Lev.swapAE D) (finPt _ h').1) (ρ.B i j b).F.ΛS)
-        rw [Formalism.UG.P.csGlob_eq]
-        exact Submodule.IsLattice.of_fg _ (Module.Finite.iff_fg.mp hf)
     have h2 := (GlobalTheory.ExportSeries.HarmLattice.harmLat_fg_span D (Wc D j).rank (Vc D j).rank (ρ.B i j b).w (ρ.B i j b).F.BS _ (Formalism.L2.Host.embLL0 D) (labLL0 D)
-      (ρ.eO i b).range ((ρ.B i j b).latAt (finPt _ h')) hB.wt hm (hρ.isCoefRing i b) hlat).2
+      (ρ.eO i b).range ((ρ.B i j b).latAt (finPt _ h')) hB.wt hm (hρ.isCoefRing i b)
+      (GlobalTheory.LatFull.latAt_isFullLattice D ρ hρ i j b h')).2
     have h3 : (ρ.lat i j b (ρ.eO i b).range h' : Set (PolF D (Wc D j).rank (Vc D j).rank)) =
         (harmLat (Formalism.L2.Host.embLL0 D) (labLL0 D) (ρ.eO i b).range (Wc D j).rank (ρ.B i j b).w (ρ.B i j b).F.BS
           ((ρ.B i j b).latAt (finPt _ h')) : Set (PolF D (Wc D j).rank (Vc D j).rank)) := rfl

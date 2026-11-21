@@ -42,15 +42,20 @@ theorem bwp_eval_aeval_X {σ : Type*} (L : ℂ[X]) (i : σ) (y : σ → ℂ) :
 
 theorem bwp_sepPoly_fin (k : ℕ) : ∀ (n : ℕ) (G : (Fin n → ℂ) → ℂ),
     (∀ y m, ∃ Q : ℂ[X], Q.natDegree ≤ k ∧ ∀ t, G (Function.update y m t) = Q.eval t) →
-    ∃ F : MvPolynomial (Fin n) ℂ, ∀ y, G y = MvPolynomial.eval y F
-  | 0, G, _ => ⟨MvPolynomial.C (G 0), fun y => by
+    ∃ F : MvPolynomial (Fin n) ℂ, ∀ y, G y = MvPolynomial.eval y F := by
+  intro n
+  induction n with
+  | zero =>
+    intro G _
+    exact ⟨MvPolynomial.C (G 0), fun y => by
       rw [MvPolynomial.eval_C, Subsingleton.elim y 0]⟩
-  | n + 1, G, hG => by
+  | succ n ih =>
+    intro G hG
     obtain ⟨S, hS, -⟩ := bwp_exists_nodes ∅ Set.finite_empty k
     have hsub : ∀ c : ℂ, ∃ F : MvPolynomial (Fin n) ℂ,
         ∀ y', G (Fin.cons c y') = MvPolynomial.eval y' F := by
       intro c
-      refine bwp_sepPoly_fin k n (fun y' => G (Fin.cons c y')) ?_
+      refine ih (fun y' => G (Fin.cons c y')) ?_
       intro y' m
       obtain ⟨Q, hQ, hQt⟩ := hG (Fin.cons c y') m.succ
       exact ⟨Q, hQ, fun t => by simp only [Fin.cons_update]; exact hQt t⟩

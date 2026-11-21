@@ -51,7 +51,7 @@ def LatStep : Prop :=
     (h : V →ₗ⋆[E] V →ₗ[E] E) (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
     (∀ a, σ a = star a) → (∃ θ : E, σ θ ≠ θ) →
     (∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) →
-    h.IsSymm → h.Nondegenerate → Submodule.IsLattice E L0 →
+    h.IsSymm → h.Nondegenerate → Submodule.IsFullLattice E L0 →
     (∀ τ : E →+* ℂ, HasSignature ((gramOf h b).map τ) M 0) →
     ∀ g : HA (AF F) σ (gramOf h b), ∃ N : Submodule (𝓞 E) V,
       (N : Set V) = latSet σ (gramOf h b) b L0 g ∧ N ∈ genus h L0
@@ -63,7 +63,7 @@ def IsomStep : Prop :=
     (h : V →ₗ⋆[E] V →ₗ[E] E) (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
     (∀ a, σ a = star a) → (∃ θ : E, σ θ ≠ θ) →
     (∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) →
-    h.IsSymm → h.Nondegenerate → Submodule.IsLattice E L0 →
+    h.IsSymm → h.Nondegenerate → Submodule.IsFullLattice E L0 →
     (∀ τ : E →+* ℂ, HasSignature ((gramOf h b).map τ) M 0) →
     ∀ γ : GamG σ (gramOf h b), iotaG σ (gramOf h b) b γ ∈ isom h
 
@@ -74,7 +74,7 @@ def EquivStep : Prop :=
     (h : V →ₗ⋆[E] V →ₗ[E] E) (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
     (∀ a, σ a = star a) → (∃ θ : E, σ θ ≠ θ) →
     (∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) →
-    h.IsSymm → h.Nondegenerate → Submodule.IsLattice E L0 →
+    h.IsSymm → h.Nondegenerate → Submodule.IsFullLattice E L0 →
     (∀ τ : E →+* ℂ, HasSignature ((gramOf h b).map τ) M 0) →
     ∀ (g : HA (AF F) σ (gramOf h b)) (γ : GamG σ (gramOf h b)) (k : SFin σ (gramOf h b) (crdOf b L0)),
       latSet σ (gramOf h b) b L0 ((γ : HA (AF F) σ (gramOf h b)) * g * k) = iotaG σ (gramOf h b) b γ '' latSet σ (gramOf h b) b L0 g
@@ -86,7 +86,7 @@ def InjStep : Prop :=
     (h : V →ₗ⋆[E] V →ₗ[E] E) (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
     (∀ a, σ a = star a) → (∃ θ : E, σ θ ≠ θ) →
     (∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) →
-    h.IsSymm → h.Nondegenerate → Submodule.IsLattice E L0 →
+    h.IsSymm → h.Nondegenerate → Submodule.IsFullLattice E L0 →
     (∀ τ : E →+* ℂ, HasSignature ((gramOf h b).map τ) M 0) →
     ∀ (g g' : HA (AF F) σ (gramOf h b)) (u : V ≃ₗ[E] V), u ∈ isom h →
       u '' latSet σ (gramOf h b) b L0 g' = latSet σ (gramOf h b) b L0 g →
@@ -99,7 +99,7 @@ def SurjStep : Prop :=
     (h : V →ₗ⋆[E] V →ₗ[E] E) (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
     (∀ a, σ a = star a) → (∃ θ : E, σ θ ≠ θ) →
     (∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) →
-    h.IsSymm → h.Nondegenerate → Submodule.IsLattice E L0 →
+    h.IsSymm → h.Nondegenerate → Submodule.IsFullLattice E L0 →
     (∀ τ : E →+* ℂ, HasSignature ((gramOf h b).map τ) M 0) →
     ∀ N ∈ genus h L0, ∃ g : HA (AF F) σ (gramOf h b), latSet σ (gramOf h b) b L0 g = N
 
@@ -110,7 +110,7 @@ def CardStep : Prop :=
     (h : V →ₗ⋆[E] V →ₗ[E] E) (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
     (∀ a, σ a = star a) → (∃ θ : E, σ θ ≠ θ) →
     (∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) →
-    h.IsSymm → h.Nondegenerate → Submodule.IsLattice E L0 →
+    h.IsSymm → h.Nondegenerate → Submodule.IsFullLattice E L0 →
     (∀ τ : E →+* ℂ, HasSignature ((gramOf h b).map τ) M 0) →
     ∀ g : HA (AF F) σ (gramOf h b),
       Nat.card (stab (GamG σ (gramOf h b)) (SFin σ (gramOf h b) (crdOf b L0)) g) =
@@ -123,7 +123,7 @@ def Dict : Prop :=
     (h : V →ₗ⋆[E] V →ₗ[E] E) (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
     (∀ a, σ a = star a) → (∃ θ : E, σ θ ≠ θ) →
     (∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) →
-    h.IsSymm → h.Nondegenerate → Submodule.IsLattice E L0 →
+    h.IsSymm → h.Nondegenerate → Submodule.IsFullLattice E L0 →
     (∀ τ : E →+* ℂ, HasSignature ((gramOf h b).map τ) M 0) →
     ∃ (Λ : HA (AF F) σ (gramOf h b) → Submodule (𝓞 E) V) (ι : GamG σ (gramOf h b) → V ≃ₗ[E] V),
       IsDict (GamG σ (gramOf h b)) (SFin σ (gramOf h b) (crdOf b L0)) h L0 Λ ι

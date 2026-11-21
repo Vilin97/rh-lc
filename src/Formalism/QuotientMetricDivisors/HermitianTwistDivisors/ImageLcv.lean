@@ -85,21 +85,15 @@ theorem idxLcv_lidx_add (p : Ideal R) [p.IsPrime] (A B C : Submodule R V)
     obtain ⟨d, hd, hdY⟩ :=
       Formalism.HermitianLatticesTheory.indexBasic_denom (nonZeroDivisors R) X Y hX (by rw [hY]; exact le_top)
     exact Module.length_ne_top_iff.mpr (Formalism.HermitianLatticesTheory.indexBasic_finLen p X Y hX hd hdY)
-  have hAt := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) A
-    hA.span_eq_top
-  have hBt := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) B
-    hB.span_eq_top
-  have hCt := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) C
-    hC.span_eq_top
-  have hAfg : A.FG := hA.toIsLattice.fg
-  have hBfg : B.FG := hB.toIsLattice.fg
-  have hCfg : C.FG := hC.toIsLattice.fg
-  have hDt : Formalism.HermitianLatticesTheory.locS (nonZeroDivisors R) (A ⊓ B ⊓ C) = ⊤ := by
-    rw [Formalism.HermitianLatticesTheory.locBasic_locS_inf, Formalism.HermitianLatticesTheory.locBasic_locS_inf, hAt, hBt, hCt]
-    simp
-  have hAD := hfin A _ hAfg hDt
-  have hBD := hfin B _ hBfg hDt
-  have hCD := hfin C _ hCfg hDt
+  let _ : Submodule.IsFullLattice K A := hA
+  let _ : Submodule.IsFullLattice K B := hB
+  let _ : Submodule.IsFullLattice K C := hC
+  have hD : Submodule.IsFullLattice K (A ⊓ B ⊓ C) := inferInstance
+  have hDt := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) (A ⊓ B ⊓ C)
+    hD.span_eq_top
+  have hAD := hfin A _ hA.toIsLattice.fg hDt
+  have hBD := hfin B _ hB.toIsLattice.fg hDt
+  have hCD := hfin C _ hC.toIsLattice.fg hDt
   rw [Formalism.HermitianLatticesTheory.indexBasic_lidx_via p A C (A ⊓ B ⊓ C) (le_trans inf_le_left inf_le_left)
       inf_le_right hAD hCD,
     Formalism.HermitianLatticesTheory.indexBasic_lidx_via p A B (A ⊓ B ⊓ C) (le_trans inf_le_left inf_le_left)
@@ -131,6 +125,18 @@ theorem imageLcv_std_lat (d : ℕ) :
     span_eq_top := ?_ }
   rw [Submodule.span_span_of_tower, imageLcv_std_eq]
   exact (Pi.basisFun K (Fin d)).span_eq
+
+omit [StarRing K] in
+theorem matLat_isFullLattice {d d' : ℕ} (φ : Matrix (Fin d') (Fin d) K)
+    (hφ : Function.Surjective φ.mulVec) (L : Submodule (𝓞 K) (Fin d → K))
+    (hL : Submodule.IsFullLattice K L) : Submodule.IsFullLattice K (matLat φ L) := by
+  refine {
+    toIsLattice := Submodule.IsLattice.of_fg K (hL.toIsLattice.fg.map _)
+    span_eq_top := ?_ }
+  change Submodule.span K (φ.mulVecLin '' (L : Set (Fin d → K))) = ⊤
+  rw [Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+  exact hφ
+
 theorem imageLcv_gram_ne [_root_.NumberField.IsTotallyComplex K] {d : ℕ}
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (hX : ∀ v, IsUnit (X v).det)
     (e : Fin d → Fin d → K) (he : LinearIndependent K e) (v : InfinitePlace K) :
@@ -168,13 +174,7 @@ theorem imageLcv_of (h : LcvBasis) : ImageLcv := by
       matLat φ (Submodule.span (𝓞 K) (Set.range (fun i => (Pi.single i 1 : Fin d → K)))) := by
     rw [matLat, Submodule.map_span, ← Set.range_comp]
     rfl
-  have hLat : Submodule.IsLattice K (matLat φ L) := by
-    refine ⟨(Submodule.IsLattice.fg (self := hL)).map _, ?_⟩
-    have : ((matLat φ L : Submodule (𝓞 K) (Fin d → K)) : Set (Fin d → K)) =
-        (Matrix.mulVecLin φ) '' (L : Set (Fin d → K)) := by
-      rw [matLat, Submodule.map_coe]
-      rfl
-    exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
+  have hLat := matLat_isFullLattice φ hsurj L hL
   obtain ⟨-, h1⟩ := h K d XT hXT (matLat φ L) hLat _ hF
   obtain ⟨-, h2⟩ := h K d XS hXS L hL _ hE
   have hidx : ∀ w : HeightOneSpectrum (𝓞 K),

@@ -74,6 +74,12 @@ def unipU : Subgroup (GL (Fin N) k) :=
 def unipL : Subgroup (GL (Fin N) k) :=
   unipB k (Fin N) ⊓ (leviEmb k (stdBlocks d hd)).range.comap (MulAut.conj (pm k (wOpen d hd))).toMonoidHom
 
+theorem OpenFactor.mem_unipL {u : GL (Fin N) k} : u ∈ unipL k d hd ↔
+    u ∈ unipB k (Fin N) ∧
+      pm k (wOpen d hd) * u * (pm k (wOpen d hd))⁻¹ ∈ (leviEmb k (stdBlocks d hd)).range := by
+  simp only [unipL, Subgroup.mem_inf, Subgroup.mem_comap, MulEquiv.coe_toMonoidHom,
+    MulAut.conj_apply]
+
 end GlobalTheory.CompanionTheory.Rodier
 
 namespace GlobalTheory.CompanionTheory.Rodier

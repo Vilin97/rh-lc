@@ -157,18 +157,19 @@ theorem card_dvd_card_GL (N : Submodule (𝓞 E) V) (hN : Submodule.IsFullLattic
   rw [pow_one]
   exact h4
 
+open Formalism.HermitianLatticesTheory in
 theorem mass_mul_idx [StarRing E] (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h.IsSymm)
     (hpos : ∀ x : V, x ≠ 0 → 0 < Algebra.trace ℚ E (h x x))
-    (L : Submodule (𝓞 E) V) (hL : Submodule.IsLattice E L) (w : Ideal (𝓞 E)) [hw : w.IsMaximal]
+    (L : Submodule (𝓞 E) V) (hL : Submodule.IsFullLattice E L) (w : Ideal (𝓞 E)) [hw : w.IsMaximal]
     {g : ℕ} (hg : g.Prime) (hgw : (g : 𝓞 E) ∈ w) (hn : Ideal.absNorm w = g)
     (hbig : Module.finrank ℚ E * Module.finrank E V + 1 < g) :
     ∃ n : ℕ, 0 < n ∧ (n : ℝ) = Formalism.HermitianLatticesTheory.mass h L * StandardLattice.idxColLoc g (Module.finrank E V) := by
-  obtain ⟨⟨s, hs₀⟩, hm, hp⟩ := Formalism.HermitianLatticesTheory.final_massBasic E V h hs hpos L hL
+  obtain ⟨⟨s, hs₀⟩, hm, hp⟩ := final_massBasic E V h hs hpos L (by infer_instance)
   obtain ⟨m, hm0, hm1, hm2⟩ := idx_eq g (Module.finrank E V) hg
   have key : ∀ M ∈ s, ((m / Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ) = ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ)⁻¹ * m := by
     intro M hM
     have hMl : Submodule.IsFullLattice E M := (hs₀.1 M hM).1
-    have hfin := Formalism.HermitianLatticesTheory.autFinite E V h hs hpos M hMl.toIsLattice
+    have hfin := autFinite E V h hs hpos M (by infer_instance)
     have : Finite (Formalism.HermitianLatticesTheory.isom h ⊓ autLat M : Subgroup (V ≃ₗ[E] V)) := hfin.to_subtype
     have e : Nat.card (Formalism.ThetaLiftIndependence.autL h M) = Nat.card (Formalism.HermitianLatticesTheory.isom h ⊓ autLat M : Subgroup (V ≃ₗ[E] V)) := rfl
     have h1 := card_dvd_card_GL M hMl w hg hgw hn hbig (Formalism.HermitianLatticesTheory.isom h ⊓ autLat M) inf_le_right
@@ -220,8 +221,12 @@ theorem duStarOf_nat : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (hc :
     have := hStd_trace_pos hconj x hx
     rw [hStd_apply] at this
     exact this
-  have hL : Submodule.IsLattice H.E (StandardLattice.stdLat H.E R.k) := by
-    exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
+  have hL : Submodule.IsFullLattice H.E (StandardLattice.stdLat H.E R.k) := by
+    refine { toIsLattice := Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _)),
+             span_eq_top := ?_ }
+    have hb : (fun i : Fin R.k => (Pi.single i 1 : Fin R.k → H.E)) = Pi.basisFun H.E (Fin R.k) :=
+      funext fun i => (Pi.basisFun_apply H.E (Fin R.k) i).symm
+    rw [StandardLattice.stdLat, Submodule.span_span_of_tower, hb, Module.Basis.span_eq]
   obtain ⟨n₁, p₁, e₁⟩ := mass_mul_idx _ hsym hpos _ hL v.asIdeal hg hv hn
     (by rw [Module.finrank_fin_fun, hdeg']; have := hbig 0; omega)
   rw [Module.finrank_fin_fun] at e₁

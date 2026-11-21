@@ -22,7 +22,10 @@ open GroundTheory.Heights₂.Heights.NumbersDVR in
 theorem main : FlagModelValueIndependence.Statement :=
   FlagModelValueIndependence.proof
     (FlagPairValueIndependence.proof GlobalTheory.T.flag_plain_value_independent GlobalTheory.T.flag_further_term_independent_statement)
-    (FlagModelCommonModel.proof GlobalTheory.CompanionTheory.CommAlg.joinTwoModels GlobalTheory.CompanionTheory.CommAlg.JoinPullbackAlt.main
-      GlobalTheory.CompanionTheory.Heights.join_vertical_divisor_statement GlobalTheory.T.flag_model_join_left GlobalTheory.T.flag_model_join_right)
+    (_root_.GroundTheory.Heights₂.Heights.NumbersDVR.FlagModelCommonModel.proof
+      GlobalTheory.CompanionTheory.CommAlg.joinTwoModels
+      GlobalTheory.CompanionTheory.CommAlg.JoinPullbackAlt.main
+      GlobalTheory.CompanionTheory.Heights.join_vertical_divisor_statement
+      GlobalTheory.T.flag_model_join_left GlobalTheory.T.flag_model_join_right)
 
 end GlobalTheory.CompanionTheory.CommAlg.FlagModelValue

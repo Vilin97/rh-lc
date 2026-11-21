@@ -214,26 +214,23 @@ theorem integral_eq_lin (ν : Measure K) [IsProbabilityMeasure ν] (n : ι → �
   rw [integral_mul_const]
   exact (hmono m _).symm
 
-theorem integral_mul_left_inv (ν : Measure K) [IsProbabilityMeasure ν] [ν.IsMulLeftInvariant] (F : K → ℂ)
-    (hF : Measurable F) (g0 : K) : ∫ g, F (g0 * g) ∂ν = ∫ g, F g ∂ν := by
+theorem integral_mul_left_inv (ν : Measure K) [ν.IsMulLeftInvariant] (F : K → ℂ)
+    (hF : Measurable F) (g0 : K) (hae : AEMeasurable (g0 * ·) ν) :
+    ∫ g, F (g0 * g) ∂ν = ∫ g, F g ∂ν := by
   have hmap : ν.map (g0 * ·) = ν := map_mul_left_eq_self ν g0
-  have hae : AEMeasurable (g0 * ·) ν := by
-    by_contra h
-    have h0 := Measure.map_of_not_aemeasurable h
-    rw [hmap] at h0
-    exact IsProbabilityMeasure.ne_zero ν h0
   have := integral_map hae hF.aestronglyMeasurable (μ := ν)
   rw [hmap] at this
   exact this.symm
 
 theorem avg_perp : ∀ {ι : Type} [Fintype ι] (a d : ℕ) (n : ι → ℕ) {K : Type} [Group K] [MeasurableSpace K] (ν : Measure K), IsProbabilityMeasure ν → ν.IsMulLeftInvariant →
+  (∀ g0 : K, AEMeasurable (g0 * ·) ν) →
   ∀ (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ)), (∀ τ i j, Measurable fun g => (ρ g τ : Matrix (Fin a) (Fin a) ℂ) i j) →
     Function.Surjective ρ →
   ∀ (Λ : GlobalTheory.MinorFrame.Pol ι d a →ₗ[ℂ] ℂ) (P : GlobalTheory.MinorFrame.Pol ι d a),
     (∀ I ∈ GlobalTheory.MinorFrame.inv a d n, Formalism.L2.DIV.fockS I P = 0) →
     ∫ g, (∏ τ, (ρ g τ : Matrix (Fin a) (Fin a) ℂ).det ^ (-(n τ : ℤ))) *
       Λ (GlobalTheory.MinorFrame.colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) P) ∂ν = 0 := by
-  intro ι _ a d n K _ _ ν hν hinv ρ hρ hsurj Λ P hP
+  intro ι _ a d n K _ _ ν hν hinv hleft ρ hρ hsurj Λ P hP
   obtain ⟨S, hS⟩ := support_colSub_bdd P
   set Q : Pol ι d a := ∑ m ∈ S, monomial m (∫ g, cc n ρ g * AddMonoidAlgebra.coeff (colSub (Mg ρ g) P) m ∂ν) with hQdef
   have hav : ∀ ℓ : Pol ι d a →ₗ[ℂ] ℂ, ∫ g, cc n ρ g * ℓ (colSub (Mg ρ g) P) ∂ν = ℓ Q :=
@@ -251,7 +248,7 @@ theorem avg_perp : ∀ {ι : Type} [Fintype ι] (a d : ℕ) (n : ι → ℕ) {K 
     rw [← h1, hcoef m]
     have hF : Measurable fun g => cc n ρ g * AddMonoidAlgebra.coeff (colSub (Mg ρ g) P) m :=
       (measurable_cc n ρ hρ).mul (coeff_colSub_good ρ hρ P m).1
-    rw [← integral_mul_left_inv ν _ hF g0, ← integral_const_mul]
+    rw [← integral_mul_left_inv ν _ hF g0 (hleft g0), ← integral_const_mul]
     refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
     simp only
     rw [colSub_comp, ← Mg_mul, cc_mul n ρ g0 g]

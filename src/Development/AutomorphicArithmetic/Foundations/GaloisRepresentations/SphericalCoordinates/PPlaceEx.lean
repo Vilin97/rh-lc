@@ -19,6 +19,27 @@ open GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKGe
 open scoped Matrix TensorProduct Classical
 open UpperTheory.Gal.W2
 
+private def repOnLocal {O M : Type} [Ring O] [AddCommGroup M] [Module O M] :
+    O →+* Module.End ℚ (ℚ ⊗[ℤ] M) :=
+  ((Module.End.baseChangeHom ℤ ℚ M).toRingHom).comp (Module.toModuleEnd ℤ M)
+
+private theorem rational_equiv_local (p : ℕ) [Fact p.Prime] (D : Datum p)
+    (Y : PLat D.O D.inv) (hs : Function.Surjective (algebraMap (𝓞 D.F) D.O))
+    (hr : Module.finrank ℤ Y.La = Module.finrank ℤ D.La) :
+    ∃ e : (ℚ ⊗[ℤ] Y.La) ≃ₗ[ℚ] VQ D,
+      ∀ (c : D.O) (u : ℚ ⊗[ℤ] Y.La),
+        e ((DistribSMul.toLinearMap ℤ Y.La c).baseChange ℚ u) = actQ D c (e u) := by
+  haveI := D.freeLa
+  haveI := D.finLa
+  have hfin : Module.finrank ℚ (ℚ ⊗[ℤ] Y.La) = Module.finrank ℚ (VQ D) := by
+    rw [Module.finrank_baseChange, Module.finrank_baseChange, hr]
+  obtain ⟨e, he⟩ := UpperTheory.Reformulated.B.ExistsEquivOfFinrank.exists_equiv_of_finrank
+    ((repOnLocal (O := D.O) (M := Y.La)).comp (algebraMap (𝓞 D.F) D.O))
+    ((repOnLocal (O := D.O) (M := D.La)).comp (algebraMap (𝓞 D.F) D.O)) hfin
+  refine ⟨e, fun c u => ?_⟩
+  obtain ⟨c, rfl⟩ := hs c
+  exact he c u
+
 private theorem typeAt_of {p : ℕ} [Fact p.Prime] (D : Datum p) (ha : D.a = 1) (hm : D.m = 1) (t₀ : D.F →+* ℂ)
     (ht : ∀ i, D.tau i = t₀) (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) (h : IsSigD D ρ t₀) :
     UpperTheory.ComplexUniformization.TypeAt D ρ := by
@@ -210,7 +231,10 @@ theorem UpperTheory.Gal.W2.placeEx_of :
   have hrk : Module.finrank ℤ D'.La = Module.finrank ℤ D.La := by
     rw [rank_of_period ρ D' P hP, rank_datum D hm]
   have hs : IsSig (algebraMap (𝓞 D.F) D.O) D.inv ρ D.n t₀ (epsD D) := hρ
-  obtain ⟨e, he⟩ := UpperTheory.exists_rational_equiv_of_rank p D D' hs.onto hrk
+  obtain ⟨e, he⟩ : ∃ e : (ℚ ⊗[ℤ] D'.La) ≃ₗ[ℚ] VQ D,
+      ∀ (c : D.O) (u : ℚ ⊗[ℤ] D'.La),
+        e ((DistribSMul.toLinearMap ℤ D'.La c).baseChange ℚ u) = actQ D c (e u) :=
+    rational_equiv_local p D D' hs.onto hrk
   obtain ⟨β, hβs, hβf⟩ := UpperTheory.exists_unitary_unit_hermitian_form_of_cm_lattice p D G L D' e he
   let j : D'.La →+ VQ D := e.toAddEquiv.toAddMonoidHom.comp (TensorProduct.mk ℤ ℚ D'.La 1).toAddMonoidHom
   have hj : ∀ u, j u = e (1 ⊗ₜ u) := fun u => rfl
@@ -219,7 +243,6 @@ theorem UpperTheory.Gal.W2.placeEx_of :
     intro c u
     rw [hj, hj, ← he c (1 ⊗ₜ u)]
     simp
-    rfl
   have hsp : ∀ w : VQ D, ∃ (m : ℕ) (u : D'.La), m ≠ 0 ∧ m • w = j u := by
     intro w
     obtain ⟨m, u, hm0, hmu⟩ := tens_int D'.La (e.symm w)

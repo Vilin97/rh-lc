@@ -40,11 +40,8 @@ theorem lift_index_bound_extended (A3 : FamIn3 K G Pl0 I0 Ty T m) {s : ℕ} (hOk
   obtain ⟨Jn, hJn, hinc⟩ := h11 y hy j
   have wf := A3.side_well_formed hOk P0 ψ0 Zs hst hin hsep
   have hD : (A3.side3 P0 ψ0 Zs).dZ j (S.μ y) = S.D := S.rankZ wf j (S.μ y)
-  have hlat := lift_lattices K G Pl0 (A3.A.fam.L j (S.μ y)) (A3.A.fam.lvlA P0 ψ0)
-    ((A3.fam3.toSub2 Zs).Zl j (S.μ y)) A3.A.fam.v0 s (A3.A.fam.blockHyp_lift hOk.ok2 P0 ψ0 j (S.μ y))
   have hJ : A3.A.fam.JJW P0 ψ0 (A3.fam3.toSub2 Zs) j (S.μ y) y ≤ Jn :=
-    (exponent_weight_spectral K _ y ((A3.A.fam.L j (S.μ y)).cutZ (A3.A.fam.lvlA P0 ψ0) ((A3.fam3.toSub2 Zs).Zl j (S.μ y)))
-      ((A3.A.fam.L j (S.μ y)).delZ (A3.A.fam.lvlA P0 ψ0) ((A3.fam3.toSub2 Zs).Zl j (S.μ y))) hlat.2.1 hlat.2.2.1).2 Jn hinc
+    Nat.sInf_le hinc
   have h1 : jw ((A3.side3 P0 ψ0 Zs).HT j (S.μ y)) y ((A3.side3 P0 ψ0 Zs).Tl j (S.μ y)) ≤
       (A3.A.fam.etaJW P0 ψ0 (A3.fam3.toSub2 Zs) j (S.μ y) y : ℤ) + ((A3.side3 P0 ψ0 Zs).dZ j (S.μ y) : ℤ) *
         ((A3.A.fam.JJW P0 ψ0 (A3.fam3.toSub2 Zs) j (S.μ y) y : ℤ) +

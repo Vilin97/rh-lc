@@ -7,7 +7,7 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RadicalStalks.EpsMulSub
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbelianSchemeDeRhamLocallyFreeHodgeDegenerates
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CrystallineSmoothLiftOfRelations
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeLieSequenceExactAbelianScheme
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeLieSequenceExactAbelianSchemeStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbelianSchemeSpecFieldSmoothOfRelativeDimension
 
 @[expose] public section
@@ -184,7 +184,7 @@ theorem UpperTheory.Gal.Ord.hasse :
   obtain ⟨T, _, _, τ, j, u, hj, hq, hku, hτ⟩ := hdeep
   have hab := o.ab
   obtain ⟨g, hg⟩ := GlobalTheory.AbFieldDim.exists_smoothOfRelativeDimension k o.A hab
-  have HL : LieExact o.A := GlobalTheory.LieHodge.lieExact_of_crystallineLift_hodgeDeRham GlobalTheory.SmoothLift.crystallineSmoothLift_of_relations
+  have HL : LieExact o.A := GlobalTheory.T.hodgeLieSequence_exact_abelianScheme GlobalTheory.SmoothLift.crystallineSmoothLift_of_relations
     GlobalTheory.AbCoh.abelianHodgeDeRham k o.A g hab hg
   haveI := hab.smooth
   haveI : AlgebraicGeometry.IsReduced o.A.left := GlobalTheory.isReduced_of_smooth_of_isReduced o.A.hom

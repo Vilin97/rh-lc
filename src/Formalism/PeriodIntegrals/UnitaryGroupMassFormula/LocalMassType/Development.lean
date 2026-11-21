@@ -106,10 +106,4 @@ theorem arith (M a a' k k1 kn s s' u ug : ℝ) (hM : M * (a * a') = k * k1) (hs 
     rw [div_eq_div_iff (mul_ne_zero hu hug') (mul_ne_zero (mul_ne_zero ha hu) (mul_ne_zero ha' hu))]
     linear_combination (u * u) * hM - (k * u) * hidx
 
-def LatOfGlob : Prop :=
-  ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (v : HeightOneSpectrum (𝓞 F)) {n : ℕ} (Λ : Set (Fin n → E)),
-    (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
-    LocMassOrdW.IsLatLoc v Λ
-
 end PI.LocMassTypW

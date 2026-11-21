@@ -95,22 +95,24 @@ def readLMv : ReadL (datMv N h t.r.z).R (datMv N h t.r.z).F ((p0Mv N h p0)) (rea
 
 
 set_option maxHeartbeats 1600000 in
-theorem readSame : ReadSame N h t (readMv N h t) (readLMv N h t) where
-  tup := (by with_unfolding_all exact ((readB_tup (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  tupT := (by with_unfolding_all exact ((readB_tupT (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  PY := (by with_unfolding_all exact ((readB_PY (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  PW := (by with_unfolding_all exact ((readB_PW (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  rep := (by with_unfolding_all exact ((readB_rep (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  jE := (by with_unfolding_all exact ((readB_jE (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  heq_eigen_embedding_zero := (by with_unfolding_all exact ((substitutedColumnValuesReading_baseLevelRows_eq (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  eE := (by with_unfolding_all exact ((readB_eE (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  jA := (by with_unfolding_all exact ((readB_jA (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  jA0 := (by with_unfolding_all exact ((substitutedColumnValuesReading_baseCoordinatesA_eq (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  eMt := (by with_unfolding_all exact ((readB_eMt (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  eW := (by with_unfolding_all exact ((readB_eW (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
-  jW := (by with_unfolding_all exact ((readLB_jW (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Z) :))
-  eRR := (by with_unfolding_all exact ((readLB_eRR (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Z) :))
-  eRR0 := (by with_unfolding_all exact ((substitutedColumnValuesLift_baseRowLatticeCoords_eq (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Z) :))
+theorem readSame : ReadSame N h t (readMv N h t) (readLMv N h t) := by
+  exact {
+    tup := (by with_unfolding_all exact ((readB_tup (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    tupT := (by with_unfolding_all exact ((readB_tupT (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    PY := (by with_unfolding_all exact ((readB_PY (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    PW := (by with_unfolding_all exact ((readB_PW (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    rep := (by with_unfolding_all exact ((readB_rep (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    jE := (by with_unfolding_all exact ((readB_jE (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    heq_eigen_embedding_zero := (by with_unfolding_all exact ((substitutedColumnValuesReading_baseLevelRows_eq (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    eE := (by with_unfolding_all exact ((readB_eE (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    jA := (by with_unfolding_all exact ((readB_jA (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    jA0 := (by with_unfolding_all exact ((substitutedColumnValuesReading_baseCoordinatesA_eq (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    eMt := (by with_unfolding_all exact ((readB_eMt (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    eW := (by with_unfolding_all exact ((readB_eW (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
+    jW := (by with_unfolding_all exact ((readLB_jW (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Z) :))
+    eRR := (by with_unfolding_all exact ((readLB_eRR (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Z) :))
+    eRR0 := (by with_unfolding_all exact ((substitutedColumnValuesLift_baseRowLatticeCoords_eq (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Z) :))
+  }
 
 end Main
 

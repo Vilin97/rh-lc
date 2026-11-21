@@ -458,36 +458,6 @@ def upL (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (q : 𝓞
 
 abbrev lk (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Type := modP P.1 (d.1.kerAt P)
 
-theorem full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
-    Submodule.IsFullLattice E d.1.N := by
-  let := d.2.lat
-  refine { span_eq_top := ?_ }
-  let W := Submodule.span E (d.1.N : Set (Sp E n))
-  change W = ⊤
-  by_contra h
-  let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
-  let g : Sp E n →ₗ[E] Module.Dual E W :=
-    (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
-  have hdim : finrank E (Module.Dual E W) < finrank E (Sp E n) := by
-    rw [Subspace.dual_finrank_eq]
-    exact Submodule.finrank_lt h
-  obtain ⟨x, hx, hx₀⟩ :=
-    Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
-  have hsmul (a : E) : a • e x ∈ d.1.N := by
-    rw [← d.2.uni, dualBasic_mem_dual]
-    intro y hy
-    apply hStd_mem_one_symm
-    have hxy : hStd E n (e x) y = 0 :=
-      congrArg (fun k : Module.Dual E W => k ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
-    simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
-  let i : E →ₗ[𝓞 E] d.1.N :=
-    ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict d.1.N hsmul
-  let : Module.Finite (𝓞 E) d.1.N := Module.Finite.iff_fg.mpr d.2.lat.fg
-  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
-    smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
-  exact RingOfIntegers.not_isField E
-    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
-
 theorem kerAt_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Submodule.IsLattice E (d.1.kerAt P) := by
   obtain ⟨p, hp, hp0⟩ : ∃ p ∈ P.1.asIdeal, p ≠ 0 := by
     by_contra H
@@ -630,6 +600,47 @@ end DecoSet
 
 end MoveLemmas
 
+private theorem rec_mem_span_of_smul_mem {K V : Type} [Field K] [NumberField K]
+    [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
+    (M : Submodule (𝓞 K) V) {a : 𝓞 K} (ha : a ≠ 0) {x : V} (hx : a • x ∈ M) :
+    x ∈ Submodule.span K (M : Set V) := by
+  have haK : (a : K) ≠ 0 := by exact_mod_cast ha
+  apply (Submodule.smul_mem_iff _ haK).mp
+  rw [algebraMap_smul]
+  exact Submodule.subset_span hx
+
+private theorem rec_intDel_full {K : Type} [Field K] [NumberField K] [StarRing K]
+    (S : GSD K) (h : S.Ok) (hD : ∀ d, Submodule.IsFullLattice K (S.Del d)) :
+    Submodule.IsFullLattice K S.intDel := by
+  classical
+  let : Fintype S.Cl := h.fintypeCl
+  refine { toIsLattice := ?_, span_eq_top := top_unique ?_ }
+  · apply Submodule.IsLattice.of_fg K
+    let e := S.coordOf h S.outSec
+    apply Submodule.fg_of_fg_map_injective (e.toLinearMap.restrictScalars (𝓞 K)) e.injective
+    change (S.intDel.map ((S.coordOf h S.outSec).toLinearMap.restrictScalars (𝓞 K))).FG
+    rw [S.map_intDel h S.outSec]
+    exact (Formalism.DivisionValues.ValuationLatticeField.valLatF_isLattice _
+      (S.toCSD h).I_injective _ fun c => (hD (S.outSec.rep c)).toIsLattice).fg
+  · intro φ _
+    have hex (c : S.Cl) : ∃ a : 𝓞 K, a ≠ 0 ∧
+        a • (φ : S.D → S.V) (S.outSec.rep c) ∈ S.Del (S.outSec.rep c) := by
+      have hs : (φ : S.D → S.V) (S.outSec.rep c) ∈
+          Submodule.span K (S.Del (S.outSec.rep c) : Set S.V) := by
+        rw [(hD (S.outSec.rep c)).span_eq_top]
+        exact Submodule.mem_top
+      obtain ⟨a, ha⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 K)) K _ _ hs
+      rw [Submodule.span_eq] at ha
+      exact ⟨a, nonZeroDivisors.coe_ne_zero a, ha⟩
+    choose a ha ha_mem using hex
+    apply rec_mem_span_of_smul_mem S.intDel (a := ∏ c, a c)
+      (Finset.prod_ne_zero_iff.mpr fun c _ => ha c)
+    apply (S.mem_intDel_iff h S.outSec _).mpr
+    intro c
+    change (∏ c', a c') • (φ : S.D → S.V) (S.outSec.rep c) ∈ S.Del (S.outSec.rep c)
+    rw [← Finset.mul_prod_erase Finset.univ a (Finset.mem_univ c), mul_comm, mul_smul]
+    exact (S.Del (S.outSec.rep c)).smul_mem _ (ha_mem c)
+
 section FormT
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
@@ -737,10 +748,10 @@ theorem dilD_stab (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (c : (formGSD C Λ
 theorem formGSD_intOf_span (hX : X.Ok) (hC : C.Eqv) (N : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Submodule (𝓞 X.K) C.V)
     (hs : ∀ (a : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)),
       N (a • d) = (N d).map ((C.rho a.1).restrictScalars (𝓞 X.K)))
-    (hN : ∀ d, Submodule.IsLattice X.K (N d)) :
+    (hN : ∀ d, Submodule.IsFullLattice X.K (N d)) :
     Submodule.span X.K ((formGSD C Λ).intOf N : Set (formGSD C Λ).EqFun) = ⊤ := by
   let C' : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) := { C with Del := N }
-  have h := (formGSD C' Λ).intDel_isLattice (formGSD_ok C' Λ hX ⟨hC.nab_smul, hs, hC.inv⟩) hN
+  have h := rec_intDel_full (formGSD C' Λ) (formGSD_ok C' Λ hX ⟨hC.nab_smul, hs, hC.inv⟩) hN
   exact h.span_eq_top
 
 end FormT
@@ -1106,22 +1117,30 @@ end Levs
   (stepGSD W Λ u j).toH (stepOk W Λ hX u j) (stepGSD W Λ u j).intDel
 
 theorem rec_delAtr_lattice {n : ℕ} (lam : X.Tau → DomWeight n) {M : Submodule (𝓞 X.E) (Sp X.E n)}
-    (hM : Submodule.IsLattice X.E M) : Submodule.IsLattice X.K (delAtr X.emb lam M) :=
+    (hM : Submodule.IsFullLattice X.E M) : Submodule.IsFullLattice X.K (delAtr X.emb lam M) :=
   (nablaDeltaLattice_holds X.K X.Tau n lam _ fun τ =>
-    (dualFrameLattice_holds X.K n 1 _ (by simp) (tauLatticeLattice_holds X.E X.K X.Tau n X.emb τ _ hM)).1).2
+    du_dualFr_lattice latticeBasisExists_holds _ (tauLatticeLattice_holds X.E X.K X.Tau n X.emb τ M hM)).2
 
 theorem stepH_good (hX : X.Ok) (u : Pr.Word) (j : ℕ) : (stepH (W := W) (Λ := Λ) hX u j).Good :=
-  ((stepRat W Λ hX u j).posH (stepOk W Λ hX u j)).good
-    ((stepGSD W Λ u j).intDel_isLattice (stepOk W Λ hX u j) fun d =>
-      rec_delAtr_lattice (W.lamTrue u j) (d : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := Pr.vGs)).2.Lsh_lattice)
+  let h := stepOk W Λ hX u j
+  have hL := rec_intDel_full (stepGSD W Λ u j) h fun d => by
+    let := DecoSet.full_lattice d
+    let := d.2.Lsh_lattice
+    exact rec_delAtr_lattice (W.lamTrue u j) (Submodule.IsFullLattice.of_le X.E d.2.N_le_Lsh)
+  ⟨((stepRat W Λ hX u j).posH h).frameOK _, hL.fg, hL.span_eq_top⟩
 
 theorem rec_LshKer_lattice {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) (P : ST) :
-    Submodule.IsLattice X.E (d.1.LshKer P) := by
-  refine lattice_between d.2.L_lattice d.2.Lsh_lattice (fun x hx => ?_) ?_
-  · exact Submodule.subset_span ⟨d.2.L_le_Lsh hx, ((d.2.mem_L x).1 hx).2 P⟩
-  · unfold Deco.LshKer
-    rw [Submodule.span_le]
-    exact fun x hx => hx.1
+    Submodule.IsFullLattice X.E (d.1.LshKer P) := by
+  have hle : d.1.LshKer P ≤ d.1.Lsh := Submodule.span_le.mpr fun _ hx => hx.1
+  refine {
+    toIsLattice := Submodule.IsLattice.of_fg X.E (d.2.Lsh_lattice.fg.of_le hle)
+    span_eq_top := top_unique ?_ }
+  rw [← d.full_lattice.span_eq_top, Submodule.span_le]
+  intro x hx
+  obtain ⟨a, haP, ha⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
+  apply rec_mem_span_of_smul_mem (d.1.LshKer P) ha
+  refine Submodule.subset_span ⟨d.2.N_le_Lsh (d.1.N.smul_mem a hx), ?_⟩
+  rw [d.2.f_smul P a x (lc_le_locP P.1 d.1.N hx), Ideal.Quotient.eq_zero_iff_mem.mpr haP, zero_mul]
 
 
 variable (W Λ) in
@@ -1274,9 +1293,9 @@ def ptEv (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEn
 @[reducible] def ptH (hX : X.Ok) : HLat X.K := (ptGSD W ΛM).toH (ptOk W ΛM hX) (ptGSD W ΛM).intDel
 
 theorem ptH_good (hX : X.Ok) : (ptH W ΛM hX).Good :=
-  ((ptRat W ΛM hX).posH (ptOk W ΛM hX)).good
-    ((ptGSD W ΛM).intDel_isLattice (ptOk W ΛM hX) fun d =>
-      rec_delAtr_lattice W.sgTrue (d : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG')).2.lat)
+  let h := ptOk W ΛM hX
+  have hL := rec_intDel_full (ptGSD W ΛM) h fun d => rec_delAtr_lattice W.sgTrue (DecoSet.full_lattice d)
+  ⟨((ptRat W ΛM hX).posH h).frameOK _, hL.fg, hL.span_eq_top⟩
 
 variable {W ΛM}
 

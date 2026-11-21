@@ -48,7 +48,7 @@ theorem extract : Extract := by
     rw [hφv, LinearMap.zero_apply]
     refine Finset.sum_eq_zero fun m _ => ?_
     have hc := congrArg (AddMonoidAlgebra.coeff · (E m)) hQ
-    simp only [Q, coeff_sum, coeff_monomial, coeff_zero, hE.eq_iff] at hc
+    simp only [Q, coeff_sum, coeff_monomial, AddMonoidAlgebra.coeff_zero, hE.eq_iff] at hc
     simp at hc
     rw [hc, mul_zero]
   have hw : w ∈ Submodule.span K (Set.range v) := by rw [htop]; exact Submodule.mem_top

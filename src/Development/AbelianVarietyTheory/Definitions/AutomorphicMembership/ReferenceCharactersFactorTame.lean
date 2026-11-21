@@ -38,7 +38,7 @@ open Classical in
 def latFr (P : HeightOneSpectrum (𝓞 E)) (N : Submodule (𝓞 E) (Sp E n)) : Sp E n ≃ₗ[E] Sp E n :=
   if localization₂ P.asIdeal N = stdAt E n P then 1 else frameAt P N
 
-theorem isFr_latFr (P : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) :
+theorem isFr_latFr (P : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E) (Sp E n)} (hN : IsSdLat N) :
     IsFr P N (latFr P N) := by
   unfold latFr
   split_ifs with h
@@ -70,7 +70,7 @@ theorem isFr_ptFr (p : DecoF E n ST SG Q) (P : HeightOneSpectrum (𝓞 E)) : IsF
     exact p.2 ⟨P, h'⟩
   · unfold ptFr
     rw [dite_eq_right h, dite_eq_right h']
-    exact isFr_latFr P p.deco.2.lat
+    exact isFr_latFr P ⟨p.deco.2.lat, p.deco.2.uni⟩
 
 theorem ptFr_congr {ST' : Finset (HeightOneSpectrum (𝓞 E))} {p : DecoF E n ST SG Q} {p' : DecoF E n ST' SG Q}
     (hN : p.deco.1.N = p'.deco.1.N) (hbe : p.deco.1.be = p'.deco.1.be) (hfr : p.fr = p'.fr) : ptFr p = ptFr p' := by

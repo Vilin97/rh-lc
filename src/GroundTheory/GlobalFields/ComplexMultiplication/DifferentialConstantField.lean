@@ -64,7 +64,7 @@ theorem exists_algebraMap_eq_of_bcEmb {c : E.toAffine.FunctionField} {a : F'}
     | algebraMap x =>
       rw [AlgHom.commutes, IsScalarTower.algebraMap_apply F F' K']
       exact IntermediateField.algebraMap_mem _ _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   obtain ⟨r, s, hr, hs, rfl⟩ := exists_eq_add_mul_genY E c
@@ -95,7 +95,7 @@ theorem exists_algebraMap_eq_of_bcEmb {c : E.toAffine.FunctionField} {a : F'}
   rw [aeval_genX_eq_zero_iff] at key
   have hcoeff : ∀ j, algebraMap F F' (p.coeff j) = a * algebraMap F F' (q.coeff j) := by
     intro j
-    have := congrArg (coeff · j) key
+    have := congrArg (fun (f : F'[X]) => f.coeff j) key
     simp only [coeff_sub, coeff_map, coeff_C_mul, coeff_zero] at this
     linear_combination this
   have hqi : q.coeff q.natDegree ≠ 0 := leadingCoeff_ne_zero.mpr hq

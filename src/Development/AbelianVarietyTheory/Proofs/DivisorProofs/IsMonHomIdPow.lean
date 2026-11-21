@@ -11,20 +11,14 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAdditi
 
 @[expose] public section
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj NumberField IsDedekindDomain
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Cris GlobalTheory.DeRham GlobalTheory.RealMult GlobalTheory.CMVal GlobalTheory.LatVal GlobalTheory.LatJet GlobalTheory.LatModel
-open GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds (IsClassZetaVals c_vp cE_vp a0)
-open TensorProduct
-open GlobalTheory.AbDual GlobalTheory.AbLaw GlobalTheory.CechPic
+open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Sp)
+open GlobalTheory.DeRham (push push_comp push_congr push_id push_mul)
+open GlobalTheory.AbDual (isMonHom_one push_one)
 
 set_option autoImplicit false
 noncomputable section
 attribute [local instance] Over.cartesianMonoidalCategory
-
-namespace GlobalTheory.PolPrimeTo
-
-
-end GlobalTheory.PolPrimeTo
 
 namespace GlobalTheory.PolPrimeTo
 
@@ -52,10 +46,6 @@ theorem push_id_pow (A : Over S) [GrpObj A] [IsCommMonObj A] (n : ℕ) :
 
 end Push
 
-end GlobalTheory.PolPrimeTo
-
-namespace GlobalTheory.PolPrimeTo
-
 theorem bijective_push {S : Scheme.{0}} {R : Type} [CommRing R] {I : Ideal R} (κ : DividedPowers I) (t : S ⟶ Sp R)
     {A B : Over S} [GrpObj A] [GrpObj B] [IsCommMonObj A] [IsCommMonObj B] (f : A ⟶ B) (h : B ⟶ A)
     [IsMonHom f] [IsMonHom h] (m : ℕ) (hm : IsUnit (m : R)) (e₁ : f ≫ h = 𝟙 A ^ m) (e₂ : h ≫ f = 𝟙 B ^ m) :
@@ -71,9 +61,5 @@ theorem bijective_push {S : Scheme.{0}} {R : Type} [CommRing R] {I : Ideal R} (�
     rw [k₁, k₁] at e
     exact (hm.smul_left_cancel).1 e
   · rw [k₂, smul_smul, hm.mul_val_inv, one_smul]
-
-end GlobalTheory.PolPrimeTo
-
-namespace GlobalTheory.PolPrimeTo
 
 end GlobalTheory.PolPrimeTo

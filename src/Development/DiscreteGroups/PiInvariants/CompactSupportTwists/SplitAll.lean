@@ -18,7 +18,7 @@ noncomputable section
 
 open NumberField IsDedekindDomain Matrix
 open GlobalTheory.CuspRep GlobalTheory.PRep Formalism.UG Formalism.BasicNotions GlobalTheory.UnitaryBC GlobalTheory.DiscSpec PositivityTheory.Rg.Rs
-open PositivityTheory.Rg.BcB.F PositivityTheory.Rg.BcB.Desc
+open PositivityTheory.Rg.BcB.F
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 

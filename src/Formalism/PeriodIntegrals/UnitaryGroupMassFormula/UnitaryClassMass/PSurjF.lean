@@ -20,7 +20,7 @@ def PatchF : Prop :=
     (σ : E →ₐ[F] E) (V : Type) [AddCommGroup V] [Module E V] [Module (𝓞 E) V]
     [IsScalarTower (𝓞 E) E V] [FiniteDimensional E V]
     (M : ℕ) (J : Matrix (Fin M) (Fin M) E) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
-    Submodule.IsLattice E L0 →
+    Submodule.IsFullLattice E L0 →
     (∀ y : Fin M → E, PI.UnitaryGroupMassFormula.UJClassFin.vinc (F := F) y ∈ latHat F E (crdOf b L0) → y ∈ crdOf b L0) →
     ∀ (γ : UJ (σ : E →+* E) J) (T : Finset (HeightOneSpectrum (𝓞 F))),
       ∃ g : HA (AF F) σ J, latSet σ J b L0 g =
@@ -32,7 +32,7 @@ def SemiApprox : Prop :=
     [IsScalarTower (𝓞 E) E V] [FiniteDimensional E V]
     (h : V →ₗ⋆[E] V →ₗ[E] E) (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
     (∀ a, σ a = star a) → (∃ θ : E, σ θ ≠ θ) →
-    h.IsSymm → h.Nondegenerate → Submodule.IsLattice E L0 →
+    h.IsSymm → h.Nondegenerate → Submodule.IsFullLattice E L0 →
     ∀ N ∈ genus h L0, ∀ T : Finset (HeightOneSpectrum (𝓞 F)),
       ∃ γ : UJ (σ : E →+* E) (gramOf h b), ∀ v ∈ T,
         Floc v (gmap (linOf b (γ : GL (Fin M) E)) L0) = Floc v N
@@ -122,7 +122,7 @@ theorem surjStep_of_F (hP : PatchF) (hS : SemiApprox) (hO : LSOne) : SurjStep :=
   have hout : ∀ v, v ∉ T → Floc v L0 = Floc v N := fun v hv => flocEq v L0 N D (hTm v hv) hDL hDN
   constructor
   · rintro ⟨h1, h2⟩
-    apply interLocF (F := F) N hN.1 x
+    apply interLocF (F := F) N hN.1.toIsLattice x
     intro v
     by_cases hv : v ∈ T
     · rw [← hγ v hv]

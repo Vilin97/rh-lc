@@ -20,7 +20,7 @@ public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Polari
 noncomputable section
 
 open NumberField IsDedekindDomain Matrix Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N
-open GlobalTheory.CuspRep GlobalTheory.ContraPair GlobalTheory.LocGlobAll.Model
+open GlobalTheory.CuspRep GlobalTheory.ContraPair
 
 namespace GlobalTheory.LocGlobDual.Model
 
@@ -84,7 +84,7 @@ theorem dualIsConj_of_isCsd {π : CuspSub L a} (h : Paired π π invTOp) (hc : �
     Subtype.ext (by
       change (cptRep L a k * cptRep L a k') φ.1 = φ.1
       rw [← map_mul, e, map_one]; rfl)
-  let Pe : π.V ≃ₗ[ℂ] π.V := LinearEquiv.ofLinear P Q
+  let Pe : π.V ≃ₗ[ℂ] π.V := LinearEquiv.ofLinearMap P Q
     (LinearMap.ext fun φ => by simp [P, Q, f1, f2]) (LinearMap.ext fun φ => by simp [P, Q, f1, f2])
   let S := Pe.trans T
   have hS : ∀ o φ, S (π.op (invTOp (conjOp o)) φ) = π.op o (S φ) := fun o φ => by

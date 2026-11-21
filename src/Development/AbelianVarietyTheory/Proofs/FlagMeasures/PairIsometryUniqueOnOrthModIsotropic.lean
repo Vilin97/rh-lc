@@ -7,6 +7,7 @@ public import Formalism.SharpRestriction.CuspSpanNormBounds.AbsoluteAmplitudeSec
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.EncardBiUnionLe
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsDenominatorOfFg
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemOfPerpPerp
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LinearFormsBoundedRepresentatives
 
 @[expose] public section
 
@@ -184,7 +185,9 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [StarRing E] (S : HSpace
     intro x hx
     obtain ⟨a, hy⟩ := exists_sub_smul_mem_orth A hT' x hx
     set y := x - a • A.fl.z with hy_def
-    obtain ⟨d, hd0, hd⟩ := GlobalTheory.Mass.RowPerp.exists_smul_mem hΛ y
+    have hfull : Submodule.IsFullLattice E Λ :=
+      { toIsLattice := hΛ, span_eq_top := GlobalTheory.LoopC.FunIdx.span_eq_top_of_unimodular Λ hΛ hu }
+    obtain ⟨d, hd0, hd⟩ := GlobalTheory.Mass.RowPerp.exists_smul_mem hfull y
     have hdM : d • y ∈ M := (hM _).2 ⟨hd, by
       rw [← algebraMap_smul E d y]; exact U.smul_mem _ hy⟩
     have h1 := hmain _ hdM

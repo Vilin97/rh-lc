@@ -135,17 +135,16 @@ theorem rlv_coordFacts (i : ℕ) (hi : i ≤ D.R.m) :
     refine Finset.sum_congr rfl fun b _ => ?_
     simp [gramN, hκ, CMData.sig, LinearEquiv.funCongrLeft_apply, LinearMap.funLeft, starRingEnd_apply]
   let K : Formalism.L2.GlobalTheoryTheory.Comp.Coord D.sp.cm (D.sp.X i) (Fin (D.R.N i)) := ⟨κ, gramN D i hi, hform_eq⟩
+  have hdual c := Formalism.HermitianLatticesTheory.dualLattice (𝓞 D.host.E) D.host.E (D.sp.X i).V
+    (D.sp.X i).hT (D.sp.X i).herm (D.sp.X i).nondeg
+    Formalism.L2.GlobalTheoryTheory.Comp.star_int (D.clsLat u i c) (D.clsLat_lat u i c)
   refine ⟨fun c => ?_, fun c => ?_, fun a b => ?_⟩
-  · have h1 := Formalism.HermitianLatticesTheory.dualLattice (𝓞 D.host.E) D.host.E (D.sp.X i).V (D.sp.X i).hT (D.sp.X i).herm (D.sp.X i).nondeg
-      Formalism.L2.GlobalTheoryTheory.Comp.star_int (D.clsLat u i c) (D.clsLat_lat u i c)
-    have e1 := K.lat_dual (Formalism.HermitianLatticesTheory.dual (D.sp.X i).hT (D.clsLat u i c))
+  · have e1 := K.lat_dual (Formalism.HermitianLatticesTheory.dual (D.sp.X i).hT (D.clsLat u i c))
     have e2 := K.lat_dual (D.clsLat u i c)
-    rw [h1.2.1, e2] at e1
+    rw [(hdual c).2.1, e2] at e1
     exact e1.symm
-  · have h1 := Formalism.HermitianLatticesTheory.dualLattice (𝓞 D.host.E) D.host.E (D.sp.X i).V (D.sp.X i).hT (D.sp.X i).herm (D.sp.X i).nondeg
-      Formalism.L2.GlobalTheoryTheory.Comp.star_int (D.clsLat u i c) (D.clsLat_lat u i c)
-    have e2 := K.lat_dual (D.clsLat u i c)
-    have h3 := K.isLat_lat h1.1
+  · have e2 := K.lat_dual (D.clsLat u i c)
+    have h3 := K.isLat_lat (hdual c).1
     rw [e2] at h3
     exact Module.Finite.iff_fg.1 h3.1
   · have h := (D.sp.X i).herm.eq (κ.symm a) (κ.symm b)

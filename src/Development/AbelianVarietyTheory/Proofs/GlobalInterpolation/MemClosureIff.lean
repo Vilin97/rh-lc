@@ -143,10 +143,10 @@ section Lat
 variable {E K : Type} [Field E] [NumberField E] [Field K] [NumberField K] {ι : Type} [Fintype ι] {n : ℕ}
 
 theorem mem_localization_delAtr (emb : ι → E →+* K) (lam : ι → DomWeight n) (w : HeightOneSpectrum (𝓞 K))
-    {L : Submodule (𝓞 E) (Fin n → E)} (hL : Submodule.IsLattice E L) (B : ι → GL (Fin n) K)
+    {L : Submodule (𝓞 E) (Fin n → E)} (hL : Submodule.IsFullLattice E L) (B : ι → GL (Fin n) K)
     (hB : ∀ τ, IsBasisAt w (dualFr (tauLat emb τ L)) (B τ)) (F : Formalism.L2.DIV.VV K lam) :
     F ∈ localization₂ w.asIdeal (delAtr emb lam L) ↔ ∃ z ∈ localization₂ w.asIdeal (delStd K lam), F.1 = actP lam B z := by
-  have hM : ∀ τ, Submodule.IsLattice K (dualFr (tauLat emb τ L)) := fun τ =>
+  have hM : ∀ τ, Submodule.IsFullLattice K (dualFr (tauLat emb τ L)) := fun τ =>
     du_dualFr_lattice basisAtEx _ (tauLatLattice E K ι n emb τ L hL)
   have h1 : F ∈ localization₂ w.asIdeal (delAtr emb lam L) ↔
       F.1 ∈ localization₂ w.asIdeal (delP lam fun τ => dualFr (tauLat emb τ L)) := Iff.rfl
@@ -192,7 +192,7 @@ theorem bcBelow_eq (j : E →+* K) (w : HeightOneSpectrum (𝓞 K)) (P : HeightO
 omit [Fintype ι] in
 theorem basis_seen (emb : ι → E →+* K) (τ : ι) (w : HeightOneSpectrum (𝓞 K)) (P : HeightOneSpectrum (𝓞 E))
     (h : ∀ x, w.valuation K (emb τ x) ≤ 1 ↔ P.valuation E x ≤ 1) {L : Submodule (𝓞 E) (Fin n → E)}
-    (hL : Submodule.IsLattice E L) {g : GL (Fin n) E} (hg : IsBasisAt P L g) :
+    (hL : Submodule.IsFullLattice E L) {g : GL (Fin n) E} (hg : IsBasisAt P L g) :
     IsBasisAt w (dualFr (tauLat emb τ L)) (inside₂ K n (Formalism.UG.bc (emb τ) g)) :=
   pb_isBasisAt_dualFr w _ (tauLatLattice E K ι n emb τ L hL).fg _
     (bc_isBasisAt (emb τ) w (by rw [bcBelow_eq _ w P h]; exact hg))
@@ -200,7 +200,7 @@ theorem basis_seen (emb : ι → E →+* K) (τ : ι) (w : HeightOneSpectrum (�
 omit [Fintype ι] in
 theorem basis_conj [StarRing E] (emb : ι → E →+* K) (τ : ι) (w : HeightOneSpectrum (𝓞 K)) (P : HeightOneSpectrum (𝓞 E))
     (h : ∀ x, w.valuation K (emb τ (star x)) ≤ 1 ↔ P.valuation E x ≤ 1) {L : Submodule (𝓞 E) (Fin n → E)}
-    (hL : Submodule.IsLattice E L) {g : GL (Fin n) E} (hg : IsBasisAt P L g) :
+    (hL : Submodule.IsFullLattice E L) {g : GL (Fin n) E} (hg : IsBasisAt P L g) :
     IsBasisAt w (dualFr (tauLat emb τ (dual (hStd E n) L))) (Formalism.UG.bc ((emb τ).comp (starRingEnd E)) g) := by
   have e := roundLat E K ι n emb (starRingEnd E) τ (fun x => star_star x) 1 (dual (hStd E n) L) L (dual_lattice hL)
     (by ext a b; simp [Formalism.UG.cT, Matrix.one_apply, eq_comm]) (fun y => by

@@ -1,5 +1,6 @@
 module
 
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ParameterLawsEmpty
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CharacterChoiceData
@@ -26,13 +27,17 @@ theorem e_locG_eq_rcAt_ofDet_of_isComp {hL : _root_.UpperTheory.Zero.LLC.RecTExi
     (cg : _root_.GlobalTheory.HeightCounting.CGTrueT hL D T) (cs : CharSide D cf) (π : D.naut.CG 1) (w : PlE D.host)
     (ξ : (w.adicCompletion D.host.E)ˣ →* ℂˣ) (h : IsComp (cs.e1 π).1 w ξ) :
     T.e w (D.naut.locG π w) = _root_.GlobalTheory.NPin.weilDeligneOfLocalIrrep hL D w 1 (GlobalTheory.SplitRead.Irr.ofDet 1 ξ h.1) := by
-  haveI := host_isCMField D.host
+  have : IsCMField D.host.E := host_isCMField D.host
   set χ' := (CGu.equivChar D.host.E (cg.e 1 π)).1 with hχ'
   set χ := (cs.e1 π).1 with hχ
-  have hloc : ∀ v, T.e v (D.naut.locG π v) = _root_.GlobalTheory.CuspRep.ParLawsT.locParT hL (CG.ofChar χ') (D.nd.plOm.2 v) := fun v => by
-    rw [cg.loc, hχ', CGu.ofChar_equivChar]; rfl
-  have unr' : ∀ v, D.naut.unr (D.naut.locG π v) ↔ χ'.UnrAt v := fun v => by
-    rw [T.unr, hloc v]; exact _root_.GlobalTheory.RankOneComp.locParT_ofChar_unr_iff_unrAt hL χ' _
+  have hloc (v : PlE D.host) :
+      T.e v (D.naut.locG π v) =
+        ParLawsT.locParT hL (CG.ofChar χ') (D.nd.plOm.2 v) := by
+    rw [cg.loc, hχ', CGu.ofChar_equivChar]
+    rfl
+  have unr' (v : PlE D.host) : D.naut.unr (D.naut.locG π v) ↔ χ'.UnrAt v := by
+    rw [T.unr, hloc v]
+    exact _root_.GlobalTheory.RankOneComp.locParT_ofChar_unr_iff_unrAt hL χ' (D.nd.plOm.2 v)
   have hchar : χ' = χ := by
     rw [← mul_inv_eq_one]
     apply GlobalTheory.HeckeSplitRow.eq_one_of_split D.host

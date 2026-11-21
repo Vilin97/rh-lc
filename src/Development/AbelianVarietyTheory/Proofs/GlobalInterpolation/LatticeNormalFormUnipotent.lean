@@ -301,21 +301,21 @@ theorem latticeNormalForm : LatticeNormalForm := by
       exact ⟨hx, x.2⟩
     · rintro ⟨h1, h2⟩
       exact ⟨⟨y, h2⟩, h1, rfl⟩
-  haveI : Submodule.IsLattice F M := Submodule.IsLattice.of_fg F (by
+  have hfg : M.FG := by
     refine Submodule.fg_of_fg_map_injective (X.subtype.restrictScalars O) X.injective_subtype ?_
-    have : (inY X M).FG := by
-      rw [hM]
-      exact hΛ.fg.of_le inf_le_left
-    exact this)
+    change (inY X M).FG
+    rw [hM]
+    exact hΛ.toIsLattice.fg.of_le inf_le_left
   have hspan : Submodule.span F (M : Set X) = ⊤ := by
-      rw [eq_top_iff]
-      intro x _
-      obtain ⟨s, hs, hsx⟩ := exists_smul_mem (F := F) Λ (x : Y)
-      have hs' : algebraMap O F s ≠ 0 := by simpa using hs
-      have h1 : s • x ∈ Submodule.span F (M : Set X) := Submodule.subset_span hsx
-      rw [← algebraMap_smul F] at h1
-      exact (Submodule.smul_mem_iff _ hs').1 h1
-  haveI : Submodule.IsFullLattice F M := { span_eq_top := hspan }
+    rw [eq_top_iff]
+    intro x _
+    obtain ⟨s, hs, hsx⟩ := exists_smul_mem (F := F) Λ (x : Y)
+    have hs' : algebraMap O F s ≠ 0 := by simpa using hs
+    have h1 : s • x ∈ Submodule.span F (M : Set X) := Submodule.subset_span hsx
+    rw [← algebraMap_smul F] at h1
+    exact (Submodule.smul_mem_iff _ hs').1 h1
+  haveI : Submodule.IsFullLattice F M :=
+    { toIsLattice := Submodule.IsLattice.of_fg F hfg, span_eq_top := hspan }
   obtain ⟨γ, hγ⟩ := exists_equiv_map_eq (F := F) M L
   let P := Submodule.prodEquivOfIsCompl _ _ hfr.2
   let g : Y ≃ₗ[F] Y := P.symm ≪≫ₗ (γ.prodCongr (LinearEquiv.refl F _)) ≪≫ₗ P

@@ -157,7 +157,7 @@ theorem mem_intSpanAt_iff {n : ℕ} (w : D.what₂.places.Pl) (lam : D.what₂.T
         refine AddSubgroup.subset_closure ⟨1, f, one_mem _, hf, ?_⟩
         rw [one_smul, map_ten]
       | zero => rw [map_zero]; exact zero_mem _
-      | add p q _ _ hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+      | add p q _ _ hp hq => rw [map_add (f := _)]; exact add_mem hp hq
       | smul z q _ hq =>
         rw [zsmul_eq_mul, map_mul, map_intCast, ← zsmul_eq_mul]
         exact zsmul_mem hq z

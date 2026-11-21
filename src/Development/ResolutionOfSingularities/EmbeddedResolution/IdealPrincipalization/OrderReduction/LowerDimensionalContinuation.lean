@@ -303,7 +303,7 @@ theorem isPullbackBlowupSequence_appendLowerDimReduction
       (NontrivialBoundary.pullbackWithNontrivialBoundary S q).boundary.length hsep')
   rw [heq, heq']
   exact isPullbackBlowupSequence_append_of_two_fields q s _ s' _ hinv Dt
-    (inner.nonempty_sequenceOfBlowupsPullback.some.toBlowupDataOfSeq)
+    (SequenceOfBlowupsPullback.toBlowupDataOfSeq inner.nonempty_sequenceOfBlowupsPullback.some)
 
 end StrictTransformComparison
 

@@ -31,8 +31,27 @@ local notation "jK" => algebraMap (𝓞 K) K
 variable {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (𝓞 K) V} {𝔭 : Ideal (𝓞 F)} {m : ℕ}
   {b : Fin m → V} {a : Fin m → 𝓞 F}
 
-def gen (J : JD h L 𝔭 b a) (i : Fin m) : DiscMod h ⊤ L 𝔭 :=
-  Submodule.Quotient.mk ⟨phi (K := K) b a (Pi.single i 1), J.u_mem i⟩
+private def genRepresentative (J : JD h L 𝔭 b a) (i : Fin m) : ↥(locF 𝔭 (dualIn h ⊤ L)) := by
+  refine ⟨∑ k, (if k = i then 1 / jK (ι (a i)) else 0) • b k, ?_⟩
+  have := J.max.isPrime
+  rw [J.memA]
+  intro k
+  rw [crd_sum J.orth J.diag J.ne]
+  by_cases hk : k = i
+  · subst k
+    have hne : jK (ι (a i)) ≠ 0 := RingOfIntegers.coe_ne_zero_iff.mpr
+      ((map_ne_zero_iff ι (RingOfIntegers.algebraMap.injective F K)).mpr (J.ne i))
+    rw [ite_eq_left rfl, mul_one_div, div_self hne]
+    exact one_mem _
+  · rw [ite_eq_right hk, mul_zero]
+    exact zero_mem _
+
+private theorem crd_genRepresentative (J : JD h L 𝔭 b a) (i k : Fin m) :
+    crd h b a (genRepresentative J i : V) k = if k = i then 1 / jK (ι (a i)) else 0 :=
+  crd_sum J.orth J.diag J.ne _ k
+
+@[no_expose] def gen (J : JD h L 𝔭 b a) (i : Fin m) : DiscMod h ⊤ L 𝔭 :=
+  Submodule.Quotient.mk (genRepresentative J i)
 
 theorem div_mem_of_zero (J : JD h L 𝔭 b a) {k : Fin m} (hk : vF 𝔭 (a k) = 0) (z : 𝓞 K) :
     haveI := J.max.isPrime; jK z / jK (ι (a k)) ∈ HU.SP K 𝔭 := by
@@ -53,10 +72,10 @@ theorem smul_gen_eq_zero_iff (J : JD h L 𝔭 b a) {i : Fin m} (hi : vF 𝔭 (a 
   constructor
   · intro H
     have := H i
-    rw [crd_smul, J.crd_u, if_pos rfl, mul_one_div] at this
+    rw [crd_smul, crd_genRepresentative J, ite_eq_left rfl, mul_one_div] at this
     exact (div_mem_iff_one J hi c).1 this
   · intro hc k
-    rw [crd_smul, J.crd_u]
+    rw [crd_smul, crd_genRepresentative J]
     split_ifs with hk
     · subst hk; rw [mul_one_div]; exact (div_mem_iff_one J hi c).2 hc
     · rw [mul_zero]; exact zero_mem _
@@ -71,7 +90,7 @@ theorem exists_smul_gen (J : JD h L 𝔭 b a) {i : Fin m} (hj : ∀ j, j ≠ i �
   rw [gen, ← Submodule.Quotient.mk_smul, Submodule.Quotient.eq, Submodule.mem_comap,
     Submodule.subtype_apply, Submodule.coe_sub, Submodule.coe_smul, J.memB]
   intro k
-  rw [crd_sub, crd_smul, J.crd_u]
+  rw [crd_sub, crd_smul, crd_genRepresentative J]
   split_ifs with hk
   · subst hk
     have e : crd h b a (x : V) k - jK z * (1 / jK (ι (a k))) =
@@ -135,7 +154,7 @@ theorem cond_iff (J : JD h L 𝔭 b a) {i : Fin m} (hi : vF 𝔭 (a i) = 1)
     rw [map_sub, map_mul, map_one, jK_conjO]
   constructor
   · intro H
-    let u : ↥(locF 𝔭 (dualIn h ⊤ L)) := ⟨_, J.u_mem i⟩
+    let u := genRepresentative J i
     have e1 : (Submodule.Quotient.mk (c • u) : DiscMod h ⊤ L 𝔭) =
         algebraMap (𝓞 K) (Module.End (𝓞 K) (DiscMod h ⊤ L 𝔭)) c (Submodule.Quotient.mk u) := by
       rw [Module.algebraMap_end_apply, Submodule.Quotient.mk_smul]
@@ -144,15 +163,15 @@ theorem cond_iff (J : JD h L 𝔭 b a) {i : Fin m} (hi : vF 𝔭 (a i) = 1)
     have huu : h (u : V) (u : V) = 1 / jK (ι (a i)) := by
       rw [h_expand J.orth J.diag J.ne J.bX J.loc J.max.isPrime J.lat, Finset.sum_eq_single i]
       · simp only [u]
-        rw [J.crd_u, if_pos rfl, star_div₀, star_one, star_jK_ι J.fix]
+        rw [crd_genRepresentative J, ite_eq_left rfl, star_div₀, star_one, star_jK_ι J.fix]
         field_simp [jK_ι_ne_zero (J.ne i)]
       · intro k _ hk
         simp only [u]
-        rw [J.crd_u, if_neg hk, star_zero, zero_mul, zero_mul]
+        rw [crd_genRepresentative J, ite_eq_right hk, star_zero, zero_mul, zero_mul]
       · intro hi'; exact absurd (Finset.mem_univ i) hi'
     have e2 : h ((c • u : ↥(locF 𝔭 (dualIn h ⊤ L))) : V) ((c • u : ↥(locF 𝔭 (dualIn h ⊤ L))) : V) -
         h (u : V) (u : V) = jK (conjO K c * c - 1) / jK (ι (a i)) := by
-      rw [Submodule.coe_smul, smul_eq_jK c, LinearMap.map_smulₛₗ₂, LinearMap.map_smul,
+      rw [Submodule.coe_smul, ← algebraMap_smul K c, LinearMap.map_smulₛₗ₂, LinearMap.map_smul,
         smul_eq_mul, smul_eq_mul, starRingEnd_apply, huu, hjc]
       ring
     rw [e2] at H1
@@ -169,7 +188,8 @@ theorem cond_iff (J : JD h L 𝔭 b a) {i : Fin m} (hi : vF 𝔭 (a i) = 1)
       hx hy) ?_
     have e3 : h (c • (x : V)) (c • (y : V)) - h (x : V) (y : V) =
         (star (jK c) * jK c - 1) * h (x : V) (y : V) := by
-      rw [smul_eq_jK c, smul_eq_jK c, LinearMap.map_smulₛₗ₂, LinearMap.map_smul,
+      rw [← algebraMap_smul K c (x : V), ← algebraMap_smul K c (y : V),
+        LinearMap.map_smulₛₗ₂, LinearMap.map_smul,
         smul_eq_mul, smul_eq_mul, starRingEnd_apply]
       ring
     rw [e3, h_expand J.orth J.diag J.ne J.bX J.loc J.max.isPrime J.lat, Finset.mul_sum]

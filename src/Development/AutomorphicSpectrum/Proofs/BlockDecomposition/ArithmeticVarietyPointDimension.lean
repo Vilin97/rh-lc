@@ -67,17 +67,17 @@ theorem isArithVar_ptIdeal : ∀ (m : ℕ) (n : Fin (m + 1) → ℕ) (x : MP ℤ
   rw [hd] at hdim
   have h1 : ((d : ℕ∞)) = (Algebra.trdeg ℤ ((MP ℤ m n).residueField x)).toENat + 1 := WithBot.coe_injective hdim
   obtain ⟨t, ht⟩ : ∃ t : ℕ, (Algebra.trdeg ℤ ((MP ℤ m n).residueField x)).toENat = t := by
-    refine ⟨(Algebra.trdeg ℤ ((MP ℤ m n).residueField x)).toENat.toNat, (ENat.coe_toNat ?_).symm⟩
+    refine ⟨(Algebra.trdeg ℤ ((MP ℤ m n).residueField x)).toENat.toNat, (ENat.natCast_toNat ?_).symm⟩
     intro h
     rw [h] at h1
-    exact ENat.coe_ne_top d (by simpa using h1)
+    simp at h1
   have hdt : d = t + 1 := by
     rw [ht] at h1
     exact_mod_cast h1
   subst hdt
   have htr : Algebra.trdeg ℤ (blockFnField (ptCoord x)) = t := by
     rw [GlobalTheory.T.function_field_of_point_coords_top m n x, GlobalTheory.CompanionTheory.Ar.PB.FMX.DimY.trdeg_top]
-    exact Cardinal.toENat_eq_nat.mp ht
+    exact Cardinal.toENat_eq_natCast.mp ht
   exact GlobalTheory.CompanionTheory.Ar.PB.FMX.DimY.isArithVar_of_trdeg (ptCoord x) (ptChart x) (ptCoord_chart_ne_zero x) t htr
 
 end GlobalTheory.CompanionTheory.MPDict.DimVar

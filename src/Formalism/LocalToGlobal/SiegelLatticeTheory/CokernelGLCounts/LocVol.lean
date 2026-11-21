@@ -288,7 +288,7 @@ def OrdLocAt {r : ℕ} (P P' : Frame E n r) (Λ : Set (Fin n → E)) : Prop :=
 
 def TypLocAt {r : ℕ} (g : ℕ) (P P' : Frame E n r) (Λ : Set (Fin n → E)) : Prop :=
   StdHyp σ J ψ → ∀ T T' : F, P.IsStd σ J T → P'.IsStd σ J T' → IsSDLoc σ J v Λ → UnramAt (E := E) v →
-    (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E L ∧ (L : Set (Fin n → E)) = Λ) → g.Prime → (g : 𝓞 F) ∈ v.asIdeal → Ideal.absNorm v.asIdeal = g → etaV (E := E) v = 1 →
+    (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set (Fin n → E)) = Λ) → g.Prime → (g : 𝓞 F) ∈ v.asIdeal → Ideal.absNorm v.asIdeal = g → etaV (E := E) v = 1 →
   (∃ κ ∈ Formalism.L2.SG.TypedSets.Kv σ J Λ v, ∀ a, ∃ y ∈ latLoc (E := E) v Λ,
     locF v (κ • ratTup (Fv F v) (F0 P')) a - locF v (ratTup (Fv F v) (F0 P)) a = sc (E := E) v (g : Fv F v) • y) →
   ∀ μG : Measure (HA (Fv F v) σ J), μG.IsHaarMeasure →

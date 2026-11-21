@@ -1,6 +1,8 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.LineBasis
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.ArchFrame
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HasDivPlace
 
 @[expose] public section
 

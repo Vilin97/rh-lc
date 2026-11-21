@@ -67,7 +67,9 @@ end UpperTheory.Gal.Spc
 
 theorem UpperTheory.Gal.Spc.specData :
     UpperTheory.Gal.Int.Geo.Pl.WtOf → UpperTheory.Gal.Spc.SpecData := by
-  intro hWt E _ _ _ A n p _ S F x U w₀ Up V hodd hSc hGen hOff hq r W hAux N hrN hStab L hw Ty hTy hEx J g θ hseen
+  intro hWt
+  unfold UpperTheory.Gal.Spc.SpecData UpperTheory.Gal.Spc.ForData
+  intro E _ _ _ A n p _ S F x U w₀ Up V hodd hSc hGen hOff hq r W hAux N hrN hStab L hw Ty hTy hEx J g θ hseen
   obtain ⟨⟨Lv, hLv⟩, ⟨Kw, hKwo, hKwc, hKwF⟩, hJo, hJc, hker, hcusp⟩ :=
     UpperTheory.Gal.Spc.tyTop E A n p S F x U w₀ Up V hodd hSc hGen hOff hq r W hAux N hrN hStab L hw Ty hTy
   obtain ⟨u, hu, u', hu', heu, hue, hinv, hcomm, hX⟩ :=

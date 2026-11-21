@@ -412,48 +412,6 @@ end Formalism.MainNotions.BridgeLemma₅
 
 end PartFr3
 
-section PartFr4
-
-namespace Formalism.MainNotions.BridgeLemma₅
-
-open Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.TopsChoicePartA Formalism.MainNotions.S.LevR Formalism.MainNotions.S.UnitaryLevelOperators
-open scoped ContDiff
-
-section Transfer
-
-variable {m : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {U : Set (Fin m → ℂ)}
-
-
-end Transfer
-
-section Level
-
-variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {B : Base E} {r : ℕ}
-
-variable (C : Ctx B r) (Γ : GCtx E r)
-
-def frLev0Open (h : (Fin (r + 1) → ℂ) → E →L[ℂ] E) (SS : Fin B.k0 → (Fin (r + 1) → ℂ) → E →L[ℂ] E) : Prop :=
-  (∀ n (hn : n ≤ r), ∀ Y : ℂ,
-    let u := Y + ((Γ.nV : ℂ) - 1) / 2
-    Γ.cminor n hn u ∈ Γ.PolyInv ∧ Γ.Rad (Γ.cminor n hn u) (DnVn n hn Y 0) ∧
-    (∀ hn1 : n + 1 ≤ r, Γ.Rad (Γ.cminor n hn u) (DnVn (n + 1) hn1 Y 1))) ∧
-  (∀ Y : ℂ, ∃ Θ ∈ Γ.PolyInv, Γ.Rad Θ (Rhat r C.Q Y)) ∧
-  (∀ l, SSnat (SS l) ∈ C.AA) ∧ (∀ Y : ℂ, R0 r B.T B.T' h Y ∈ C.AA) ∧
-  (∀ Y : ℂ, NoPoleRho B Y →
-    C.OpEq (R0 r B.T B.T' h Y)
-      (mulE (xInvFib B.rhoP C.P Y) ∘ Rhat r C.Q Y -
-        ∑ l, mulE (shInv B.rhoP C.P l Y) ∘ SSnat (SS l) ∘ Ahat r Y)) ∧
-  (∀ Y : ℂ, NoPoleRho B Y →
-    C.OpEq (mulE (xInvFib B.rhoP C.P Y) ∘ C.RhatV Y)
-      (weightedMirrorLevelOperator r B.T B.T' (C.fstar h) Y +
-        ∑ l, mulE (shInv B.rhoP C.P l Y) ∘ (mulF (fun x => Dr x / star (Dr x)) ∘ mulE (C.fstar (SS l))) ∘ AhatV r Y))
-
-end Level
-
-end Formalism.MainNotions.BridgeLemma₅
-
-end PartFr4
-
 section PartFr5
 
 namespace Formalism.MainNotions.BridgeLemma₅
@@ -478,38 +436,6 @@ end Ee
 end Formalism.MainNotions.BridgeLemma₅
 
 end PartFr5
-
-section PartFr6
-
-namespace Formalism.MainNotions.BridgeLemma₅
-
-open Polynomial Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.TopsChoicePartA Formalism.MainNotions.S.LevR Formalism.MainNotions.S.UnitaryLevelOperators
-
-section Res
-
-variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {B : Base E} {r : ℕ} (C : Ctx B r)
-
-variable {C}
-
-variable (C)
-
-def frResOpen (C1 C2 : ℝ) (SS : Fin B.k0 → (Fin (r + 1) → ℂ) → E →L[ℂ] E) : Prop :=
-  ∀ w : List (Bool × ℝ), Admissible B.I w → Ctx.IsPlus w → (∀ a ∈ w, a.2 ∈ mid3 B) →
-    (6 ≤ lenI B → (w.length : ℝ) ≤ lenI B →
-      (∀ i : Fin w.length, (∑ j : Fin w.length, if j = i then 0 else 1 / |(w.get i).2 - (w.get j).2|) ≤ C1) →
-      ∀ Y Y' : ℝ, Y ∈ mid3 B → Y' ∈ mid3 B → (∀ a ∈ w, 2 < |Y - a.2| ∧ 2 < |Y' - a.2|) →
-      (w.map fun a => 1 / |Y - a.2|).sum ≤ C1 → (w.map fun a => 1 / |Y' - a.2|).sum ≤ C1 →
-      ∀ x ∈ C.Dom, ∀ v : (Fin w.length → Fin 2) → E,
-        wnormSq C (fun s ρ => C.cw w s ρ * C.xw w Y s ρ) x
-            (fun s => ∑ t, (C.ee SS w Y s t x - C.ee SS w Y' s t x) (v t)) ≤
-          (C2 * |Y - Y'| * ((B.k0 + 1 : ℝ) / lenI B + (w.map fun a => 1 / (|Y - a.2| * |Y' - a.2|)).sum)) ^ 2 *
-            wnormSq C (fun s ρ => C.cw w s ρ * C.qw w Y / C.xw w ((Y : ℂ) + 1) s ρ) x v)
-
-end Res
-
-end Formalism.MainNotions.BridgeLemma₅
-
-end PartFr6
 
 section PartFr7
 

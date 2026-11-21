@@ -35,7 +35,7 @@ theorem apply_mem_twKer {σ : Representation ℂ G V} {τ : Representation ℂ G
     refine Submodule.subset_span ⟨n, q u, ?_⟩
     rw [map_sub, map_smul, q.isIntertwining]
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem exists_subquotient_subsingleton [TopologicalSpace G] [IsTopologicalGroup G] (π : Representation ℂ G V)
@@ -53,7 +53,7 @@ theorem exists_subquotient_subsingleton [TopologicalSpace G] [IsTopologicalGroup
     exact hx ((Submodule.mem_bot ℂ).1 hmem)
   obtain ⟨S, hS0, hST⟩ : ∃ S : Subrepresentation π, S ≠ ⊥ ∧ S ≠ ⊤ := by
     by_contra hc
-    push_neg at hc
+    push Not at hc
     exact hn { exists_pair_ne := ⟨⊥, ⊤, hbt⟩
                eq_bot_or_eq_top := fun S => (eq_or_ne S ⊥).imp_right (hc S) }
   by_cases hSK : S.toSubmodule ≤ twKer π H χ
@@ -68,7 +68,7 @@ theorem exists_subquotient_subsingleton [TopologicalSpace G] [IsTopologicalGroup
     refine Submodule.Quotient.subsingleton_iff.2 (eq_top_iff.2 fun w _ => ?_)
     obtain ⟨v, rfl⟩ := hq w
     exact apply_mem_twKer q H χ (hr S v (hSK v.2))
-  · obtain ⟨s, hsS, hsK⟩ := SetLike.not_le_iff_exists.1 hSK
+  · obtain ⟨s, hsS, hsK⟩ := IsConcreteLE.not_le_iff_exists.1 hSK
     have hs0 : (Submodule.mkQ (twKer π H χ)) s ≠ 0 := fun h => hsK ((Submodule.Quotient.mk_eq_zero _).1 h)
     have hline := (finrank_eq_one_iff_of_nonzero' _ hs0).1 h1
     let U : Submodule ℂ V := S.toSubmodule

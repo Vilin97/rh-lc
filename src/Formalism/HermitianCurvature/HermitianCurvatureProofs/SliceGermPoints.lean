@@ -78,11 +78,12 @@ theorem slice_germ_points : Formalism.FourierDecayAlt.P.FormNormSumIdentities.YG
     congr 1
     unfold G.OmBlock
     congr 1
+    funext p
+    unfold G.blockIntegrand
     congr 1
     have hp := hL _ (hne p) (himg p)
     simp only [G.orbM] at hp
-    rw [hp]
-    exact (phiFun_tr (by rw [ptSize_ptG]; omega) _ _ z z' F _ _ _ γ).symm
+    exact hp.trans (phiFun_tr (by rw [ptSize_ptG]; omega) _ _ z z' F _ _ _ γ).symm
   · obtain ⟨D0, hDK, hz⟩ := hq
     have hz0 : w0 ≠ 0 := by
       rintro rfl

@@ -198,7 +198,14 @@ theorem multiplicative_closure_prime_mem_alt : GlobalTheory.Published.HarishChan
   obtain ⟨L, -, -, hpar, -⟩ := hLed (q.w.st Z') q.x.isOver hη hA
   obtain ⟨hhost, -⟩ := hHost (q.w.st Z') q.x.isOver
   have s := GlobalTheory.Mem.R3.LedRec.sameGrp q.x.what₂.grp g1'
-  refine (GlobalTheory.T.equalMultiplicities_rowTest_of_sameGroupTransfer q.B q.w.C q.Z Z' q.w.px q.w.I q.x.what₂.hX q.T q.x.Wt s q.x.what₂.r.z).1 ?_
+  have transfer : GlobalTheory.CuspMult.MultEq (GlobalTheory.Mem.R3.DatCopy.copy Z' s q.x.what₂.r.z).R.toRealDat → GlobalTheory.CuspMult.MultEq q.x.what₂.r.z.R.toRealDat := by
+    intro h
+    have e := GlobalTheory.Mem.R3.DatCopy.twice_eq Z' (iK := q.x.what₂.r.z.alg) q.x.what₂.r.z.R
+    have h2 := GlobalTheory.Mem.R3.DatCopy.multEq_tr (a := Z') q.Z (iK := GlobalTheory.Mem.R3.Tr.alg Z' q.x.what₂.r.z.alg) (R := GlobalTheory.Mem.R3.Tr.real Z' q.x.what₂.r.z.R.toRealDat)
+      (by with_unfolding_all exact h)
+    rw [e]
+    with_unfolding_all exact h2
+  apply transfer
   have hEx' := GlobalTheory.Mem.R3.DatCopy.copy_exAt Z' s q.x.what₂.exAt
   have hok := q.x.what₂.r.intersectionNumber_baseChange.ok
   have hok' : (GlobalTheory.Mem.R3.famR Z'.st q.w.I q.x.what₂.hX (GlobalTheory.Mem.R3.usedOf q.w.I q.T q.x.Wt)

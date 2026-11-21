@@ -48,14 +48,14 @@ theorem mIdealOver_genPt [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] [P.
   · intro hf
     have hc : ∀ b : K → ℕ, weightedHomogeneousComponent (NumbersDVR.blockWeight ι) b f ∈ P := by
       intro b
-      rw [← aeval_genPt_eq_zero, ← coeff_mConeMapOver, RingHom.mem_ker.mp hf, coeff_zero]
+      rw [← aeval_genPt_eq_zero, ← coeff_mConeMapOver, RingHom.mem_ker.mp hf, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     rw [← sum_weightedHomogeneousComponent (NumbersDVR.blockWeight ι) f,
       finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f)]
     exact Ideal.sum_mem _ fun b _ => hc b
   · intro hf
     refine RingHom.mem_ker.mpr ?_
     ext m
-    rw [coeff_zero]
+    rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     have h := coeff_mConeMapOver (S := O) (genPt P) (⇑m) f
     rw [Finsupp.equivFunOnFinite_symm_coe] at h
     rw [h, aeval_genPt_eq_zero]

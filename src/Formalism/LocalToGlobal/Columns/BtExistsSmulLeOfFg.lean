@@ -84,13 +84,13 @@ theorem dualFr_le_locP (w : HeightOneSpectrum (𝓞 K)) {A A' : Submodule (𝓞 
   rwa [dotProduct_smul, ← smul_dotProduct] at this
 
 theorem round_locP_congr (lam : ι → DomWeight n) (w : HeightOneSpectrum (𝓞 K)) {L L' : Submodule (𝓞 E) (Fin n → E)}
-    (hL : Submodule.IsLattice E L) (hL' : Submodule.IsLattice E L') (h : SameBelow emb w L L') :
+    (hL : Submodule.IsFullLattice E L) (hL' : Submodule.IsFullLattice E L') (h : SameBelow emb w L L') :
     localization₂ w.asIdeal (delAtr emb lam L) = localization₂ w.asIdeal (delAtr emb lam L') ∧
       localization₂ w.asIdeal (nabAtr emb lam L) = localization₂ w.asIdeal (nabAtr emb lam L') := by
-  have hA : ∀ τ, Submodule.IsLattice K (tauLat emb τ L) := fun τ => tauLatLattice E K ι n emb τ L hL
-  have hA' : ∀ τ, Submodule.IsLattice K (tauLat emb τ L') := fun τ => tauLatLattice E K ι n emb τ L' hL'
-  have hM : ∀ τ, Submodule.IsLattice K (dualFr (tauLat emb τ L)) := fun τ => du_dualFr_lattice basisAtEx _ (hA τ)
-  have hM' : ∀ τ, Submodule.IsLattice K (dualFr (tauLat emb τ L')) := fun τ => du_dualFr_lattice basisAtEx _ (hA' τ)
+  have hA : ∀ τ, Submodule.IsFullLattice K (tauLat emb τ L) := fun τ => tauLatLattice E K ι n emb τ L hL
+  have hA' : ∀ τ, Submodule.IsFullLattice K (tauLat emb τ L') := fun τ => tauLatLattice E K ι n emb τ L' hL'
+  have hM : ∀ τ, Submodule.IsFullLattice K (dualFr (tauLat emb τ L)) := fun τ => du_dualFr_lattice basisAtEx _ (hA τ)
+  have hM' : ∀ τ, Submodule.IsFullLattice K (dualFr (tauLat emb τ L')) := fun τ => du_dualFr_lattice basisAtEx _ (hA' τ)
   have hloc : ∀ τ, localization₂ w.asIdeal (dualFr (tauLat emb τ L)) = localization₂ w.asIdeal (dualFr (tauLat emb τ L')) := by
     intro τ
     apply le_antisymm

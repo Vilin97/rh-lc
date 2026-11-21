@@ -35,9 +35,7 @@ theorem loc_eq_unrChar {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (h : χ.U
 
 theorem loc_pow (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) (k : ℕ) (x : (w.adicCompletion E)ˣ) :
     (χ ^ k).loc w x = χ.loc w x ^ k := by
-  induction k with
-  | zero => simpa using HChar.loc_one w x
-  | succ k ih => rw [pow_succ, HChar.loc_mul, ih, pow_succ]
+  simp [HChar.loc]
 
 theorem loc_mul_loc_conj {μ : HChar E} {e : InfinitePlace E → ℤ} (h : GlobalTheory.BCT.IsMu μ e) (w : HeightOneSpectrum (𝓞 E))
     (x : ((GlobalTheory.ThetaSatake.cw w).adicCompletion E)ˣ) :

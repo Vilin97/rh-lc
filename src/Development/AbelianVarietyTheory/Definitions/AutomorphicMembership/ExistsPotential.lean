@@ -158,7 +158,7 @@ open Classical in
   A_Dstar _ := rfl
   A_GamP _ := rfl
   clsLat := letI := B.host.cmStar; fun _ i _ => (B.sp.X i).L0
-  clsLat_lat := letI := B.host.cmStar; fun _ i _ => (B.sp.X i).standardTuple_isLattice
+  clsLat_lat := letI := B.host.cmStar; fun _ i _ => baseLattice_full (B.sp.X i)
   Tup := Fin 3
   mu0 := 0
   muStar := 1

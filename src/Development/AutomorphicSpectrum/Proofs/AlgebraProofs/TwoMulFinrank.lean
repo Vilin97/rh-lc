@@ -20,7 +20,9 @@ variable {C O : Type} [Field C] [CommRing O] [Algebra O C] {E : Type} [Field E] 
   (P : HTPoint C O c κ N V Ω)
 
 theorem ht_surjective : Function.Surjective P.ht := by
-  rw [← LinearMap.range_eq_top, eq_top_iff, ← P.om_lat.span_eq_top, Submodule.span_le]
+  have : P.om.IsFullLattice C := P.om_lat
+  have hspan : Submodule.span C (P.om : Set Ω) = ⊤ := Submodule.IsFullLattice.span_eq_top
+  rw [← LinearMap.range_eq_top, eq_top_iff, ← hspan, Submodule.span_le]
   intro y hy
   obtain ⟨x, -, hx⟩ := P.κ_mem y hy
   show y ∈ LinearMap.range P.ht
@@ -29,10 +31,24 @@ theorem ht_surjective : Function.Surjective P.ht := by
   rw [map_smul, hx, ← algebraMap_smul C κ y, smul_smul, inv_mul_cancel₀ P.κ_ne, one_smul]
 
 theorem T_lattice : P.T.IsLattice C := by
-  obtain ⟨-, hsp, hT⟩ := P.free
-  refine ⟨?_, hsp⟩
-  rw [hT]
-  exact Submodule.fg_span (Set.finite_range _)
+  obtain ⟨hli, -, hT⟩ := P.free
+  have hfg : P.T.FG := by
+    rw [hT]
+    exact Submodule.fg_span (Set.finite_range _)
+  refine ⟨hfg, ?_⟩
+  intro s hs hliO
+  rcases s.eq_empty_or_nonempty with rfl | ⟨x, hx⟩
+  · exact linearIndepOn_empty C id
+  have hinj : Function.Injective (algebraMap O C) := by
+    intro a b hab
+    apply hliO.linearIndependent.smul_left_injective ⟨x, hx⟩
+    change a • x = b • x
+    rw [← algebraMap_smul C a x, ← algebraMap_smul C b x, hab]
+  have : FaithfulSMul O C := (faithfulSMul_iff_algebraMap_injective O C).mpr hinj
+  have : Nontrivial O := (algebraMap O C).domain_nontrivial
+  refine Submodule.linearIndepOn_of_finrank_le_finrank_span P.T hfg ?_ hs hliO
+  rw [hT, Submodule.span_span_of_tower O, finrank_span_eq_card hli,
+    finrank_span_eq_card (hli.restrict_scalars' O)]
 
 theorem rho_t_mem (a : 𝓞 E) (i : Fin N) : P.ρ a (P.t i) ∈ P.T := by
   obtain ⟨-, -, hT⟩ := P.free
@@ -62,7 +78,7 @@ theorem ht_eigProj (σ : E →+* C) (x : V) :
     simp only [eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, P.ht_lin]
 
 theorem om'_lattice : P.om'.IsLattice C := by
-  letI : P.om.IsLattice C := P.om_lat
+  have : P.om.IsFullLattice C := P.om_lat
   apply Submodule.IsLattice.mono_of_fg C (show P.om' ≤ P.om from ?_) ?_
   · rintro _ ⟨x, hx, rfl⟩
     exact P.ht_mem x hx
@@ -91,10 +107,7 @@ theorem dualLat_flip : dualLat P.e.flip P.T = P.T := by
   rw [e_skew P y x, neg_mem_iff]
 include P in
 theorem finite_V : Module.Finite C V := by
-  have hfg : P.T.FG := by
-    rw [P.free.2.2]
-    exact Submodule.fg_span (Set.finite_range _)
-  obtain ⟨s, hs⟩ := hfg
+  obtain ⟨s, hs⟩ := (T_lattice P).fg
   refine ⟨⟨s, ?_⟩⟩
   rw [← Submodule.span_span_of_tower O, hs, P.free.2.1]
 include P in

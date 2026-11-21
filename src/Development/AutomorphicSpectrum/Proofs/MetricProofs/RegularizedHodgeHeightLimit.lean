@@ -66,7 +66,7 @@ theorem log_norm_section_local (A : FinHolAtlas e X) {U : Set X} (hU : IsOpen U)
     have hsw : AnalyticAt ℂ (fun w => s ((A.chart j).symm w)) w :=
       analyticAt_pi_iff.2 fun p => hs p j w ⟨hw.1, hw.2.1⟩
     have hcomp : AnalyticAt ℂ (fun w => L (s ((A.chart j).symm w))) w :=
-      AnalyticAt.comp' (hNsub hw.2.2).1 hsw
+      AnalyticAt.comp (f := fun w => s ((A.chart j).symm w)) (hNsub hw.2.2).1 hsw
     exact hcomp.add analyticAt_const
   · intro y hy
     have hTy := (hNsub hy.2).2.1

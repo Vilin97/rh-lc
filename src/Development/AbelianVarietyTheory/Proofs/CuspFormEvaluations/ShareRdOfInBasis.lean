@@ -23,9 +23,9 @@ theorem addL_zero_wt (u wL : WeightFamilies.Wt D j) : addL u wL 0 = u := by
 
 theorem rk_Mlat_eq_finrank (X : PJ D B P j) (ka : WeightFamilies.Wt D j) (h : LatAt B j ka) :
     X.rk ka (B.Mlat j ka) = Module.finrank B.KO (⊤ : Submodule B.KO (B.Cusp j ka)) := by
-  have hL : Submodule.IsLattice B.KO (B.Mlat j ka) := h
+  letI : Submodule.IsFullLattice B.KO (B.Mlat j ka) := h
   unfold PJ.rk
-  rw [hL.span_eq_top]
+  rw [Submodule.IsFullLattice.span_eq_top]
 
 private lemma s_mem_sp_univ (R : Rdg X) {N : ℕ} {wL : WeightFamilies.Wt D j} (w : Fin N → B.Cusp j wL)
     (t : Idx D j N → ℂ) (i : Fin (WeightFamilies.dimY D j + 1)) : R.s w t i ∈ R.sp wL Set.univ := by

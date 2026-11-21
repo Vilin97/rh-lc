@@ -21,7 +21,7 @@ theorem exists_lead {r : ℕ} (b₀ b : Fin r → L) (hF : ∀ i, flagStep Ω b 
     rw [← Set.image_insert_eq]
     congr 1
     ext k
-    simp only [Set.mem_setOf_eq, Set.mem_insert_iff, Fin.ext_iff]
+    simp only [Set.mem_ofPred_eq, Set.mem_insert_iff, Fin.ext_iff]
     omega
   unfold flagStep at h1
   rw [h2, Submodule.mem_span_insert] at h1
@@ -89,7 +89,7 @@ theorem apply_mem_of_span (R : Subring Ω) (w : Module.Dual Ω L) (s : Set L) (h
   induction he using Submodule.span_induction with
   | mem x hx => exact h x hx
   | zero => rw [map_zero]; exact R.zero_mem
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx =>
     have : w (c • x) = (c : Ω) * w x := map_smul w (c : Ω) x
     rw [this]; exact mul_mem c.2 hx
@@ -107,7 +107,7 @@ theorem exists_nat_diff {E : Type} [Field E] [NumberField E] (x : E) :
   have : ((y.natAbs ^ 2 : ℕ) : E) = (y : E) * y := by
     rw [← Int.cast_natCast, Nat.cast_pow, Int.natAbs_sq, Int.cast_pow, sq]
   rw [Nat.cast_mul, this]
-  simp only [RingOfIntegers.coe_eq_algebraMap, map_mul, map_natCast, map_intCast]
+  simp only [map_mul, map_natCast, map_intCast]
   rw [hz]; ring
 
 end PositivityTheory.HtPt.Flagb

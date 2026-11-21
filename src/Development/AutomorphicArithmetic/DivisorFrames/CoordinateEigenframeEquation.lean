@@ -25,10 +25,10 @@ private theorem UpperTheory.triangular_frame_compat {O : Type} [CommRing O] {β 
     {x' : Sp k ⟶ Z.X} {g : EigFrame Z φ' x'} {t' : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ} (b : f.Tri ψ g t') :
     ∃ s, f₂.Tri ψ g s := by
   obtain rfl : φ₂ = φ₁ := RingHom.ext fun x => hι ((RingHom.congr_fun a₂.2.1 x).symm.trans (RingHom.congr_fun a.2.1 x))
-  obtain ⟨k₁, hk₁⟩ := f₂.exists_isMap _ a.2.1 a.1
-  obtain ⟨k, hk⟩ := f.exists_isMap _ a.2.1 a.1
-  obtain ⟨q₁, hq₁⟩ := f₂.exists_isMap _ b.2.1 b.1
-  obtain ⟨q, hq⟩ := f.exists_isMap _ b.2.1 b.1
+  obtain ⟨k₁, hk₁⟩ := f₂.exists_isMap (φ' := φ₀) (x' := x₀) ι a.2.1 a.1
+  obtain ⟨k, hk⟩ := f.exists_isMap (φ' := φ₀) (x' := x₀) ι a.2.1 a.1
+  obtain ⟨q₁, hq₁⟩ := f₂.exists_isMap (φ' := φ') (x' := x') ψ b.2.1 b.1
+  obtain ⟨q, hq⟩ := f.exists_isMap (φ' := φ') (x' := x') ψ b.2.1 b.1
   have e1 (τ i d) : k₁.co f₀ τ d i = ∑ j, k.co f₀ τ j i * ι (f₂.co f τ d j) := by
     rw [← k₁.co_mul k, hk₁.co τ hk a.1, Matrix.mul_apply]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _

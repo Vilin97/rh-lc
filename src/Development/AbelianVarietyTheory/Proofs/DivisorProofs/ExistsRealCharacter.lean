@@ -107,7 +107,7 @@ theorem GlobalTheory.FrameEquiv.exists_real_character : ∀ (D : D7) (S T : HSp 
   have h1 := main (u * u') (mul_mem hu hu') B₀ hB₀ φ₀ s₀
   obtain ⟨hm, hmul, -⟩ := (hJ B₀ hB₀).2.2.2.2.2 u'
   have e : ((1, u * u') : GA D S × GA D T) = (1, u) * (1, u') := by simp
-  rw [e, map_mul, Module.End.mul_apply, main u' hu' B₀ hB₀ φ₀ s₀, map_smul, main u hu _ hm φ₀ s₀, hmul u,
+  rw [e, map_mul, mul_apply_eq_comp, main u' hu' B₀ hB₀ φ₀ s₀, map_smul, main u hu _ hm φ₀ s₀, hmul u,
     smul_smul] at h1
   have hne := Th_ne_zero C (xB_mem_dom C ((hJ _ hm).2.2.2.2.2 u).1) s₀ n₀
   rw [mul_comm]

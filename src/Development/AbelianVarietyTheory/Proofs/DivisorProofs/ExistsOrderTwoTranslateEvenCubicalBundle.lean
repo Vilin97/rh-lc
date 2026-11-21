@@ -378,7 +378,8 @@ open GlobalTheory.IndefiniteRowSideFullHecke.AlgebraLevelSetting (FormalTorus Lv
 variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]
   {X : Type} [AddCommGroup X]
 
-
+set_option hygiene false in
+local notation "𝔪" => IsLocalRing.maximalIdeal R
 
 omit [IsDomain R] in
 theorem exists_points [IsAdicComplete 𝔪 R] {i₀ : splitTorus (Lv 𝔪 0) X ⟶ thickObj R 𝔪 0 G} (F : FormalTorus 𝔪 i₀) :

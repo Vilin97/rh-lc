@@ -31,7 +31,7 @@ lemma finite_of_semilinear {R R' M M' : Type*} [CommRing R] [CommRing R'] [AddCo
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span (by simp only [Finset.coe_image]; exact ⟨y, hy, rfl⟩)
     | zero => simp
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | smul r' y _ hy =>
       obtain ⟨r, rfl⟩ := hσ r'
       have : e.symm (σ r • y) = r • e.symm y := by

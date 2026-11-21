@@ -81,8 +81,8 @@ private theorem exists_der {Y : Scheme.{0}} (s' : Y ⟶ Sp ℂ) (y0 : Y)
   haveI : IsLocalization.AtPrime (Y.presheaf.stalk y0) p := hV.isLocalization_stalk ⟨y0, h⟩
   have hp : ∀ b : Sec s' V, b ∈ p ↔ ev (algebraMap (Sec s' V) _ b) = 0 := by
     intro b
-    rw [← mem_max_iff ev, ← IsLocalization.AtPrime.comap_maximalIdeal (Y.presheaf.stalk y0) p]
-    rfl
+    exact (IsLocalization.AtPrime.to_map_mem_maximal_iff (Y.presheaf.stalk y0) p b).symm.trans
+      (mem_max_iff ev _)
   obtain ⟨δ, h1, h2, h3⟩ := UpperTheory.kaehler_functional_vanishing_of_localization_at_prime (B := Sec s' V) (S := Y.presheaf.stalk y0) p ev hp d φ
     (fun b ω => (hs b ω).trans (by rw [he]; rfl))
     (fun ω hω => by

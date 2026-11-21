@@ -49,10 +49,10 @@ theorem _root_.GroundTheory.Arith.Abelian.Isogeny.exists_map_eq_of_forall_conj_e
         obtain ⟨h1, h2⟩ := map_eq_of_galFF_ratEmb W g (hs g)
         rcases Finset.mem_union.mp hc with hc | hc
         · obtain ⟨n, -, rfl⟩ := Polynomial.mem_coeffs_iff.mp hc
-          have := congrArg (coeff · n) h1
+          have := congrArg (fun p : ℂ[X] ↦ p.coeff n) h1
           simpa using this
         · obtain ⟨n, -, rfl⟩ := Polynomial.mem_coeffs_iff.mp hc
-          have := congrArg (coeff · n) h2
+          have := congrArg (fun p : ℂ[X] ↦ p.coeff n) h2
           simpa using this
       exact IntermediateField.mem_bot.1 hbot
     constructor

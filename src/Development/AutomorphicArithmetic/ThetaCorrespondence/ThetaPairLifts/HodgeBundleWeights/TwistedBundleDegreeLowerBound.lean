@@ -48,9 +48,9 @@ theorem degree_twist_ge : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorem
     exact sub_le_self _ (by positivity)
   obtain ⟨hpq, -, -, -, -, g, ee, F, -⟩ := hY.unf Y.d.c₂.F.val.toRingHom rfl
   have hK := GlobalTheory.KeyCover.nonempty_keySec_of_family _ _ _ _ _ _ Y.d.c₂.F.val.toRingHom rfl ee F (by omega) hY.geo
-  obtain ⟨t, ht, -, hd⟩ := (GlobalTheory.FlatTwisting.twSec_of_flat _ _ _ _ _ _ _ Y.U (xiR D) _ hK hY.unf (by omega)
+  obtain ⟨t, ht, -, hd⟩ := (GlobalTheory.FlatTwisting.twSec_of_flat _ _ _ _ _ _ _ Y.U (xiR D) (badPrimes T.Q.H Y.d.l₂) hK hY.unf (by omega)
     (_root_.GlobalTheory.T.unramified_points_of_deep_cover hP D T j Y e o hT hj hY)).2 ⟨c₁, hc⟩ Z w (hc Z τ₀).1.some.hasPts
-  have key := GlobalTheory.FlatTw.degOn_add_rank_mul_degLo_le _ _ _ _ _ _ _ Y.U (xiR D) D (fun _ => D.sp.W j) Y.dict Z _ t _ _ hY.unf
+  have key := GlobalTheory.FlatTw.degOn_add_rank_mul_degLo_le _ _ _ _ _ _ _ Y.U (xiR D) D (fun _ => D.sp.W j) Y.dict Z _ t _ (badPrimes T.Q.H Y.d.l₂) hY.unf
     (AllWt.even_wtOf la 0) badPrimes_prime ht hG
   rw [← wtOf_add'] at key
   refine le_trans ?_ key

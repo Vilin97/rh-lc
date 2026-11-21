@@ -37,7 +37,8 @@ theorem rowMap_coeff_mem : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0
   simp only [GlobalTheory.FunObj.GridChoice.rowMap, LinearMap.comp_apply]
   refine gen _ (fun i w hw m => ?_) D.R.m _ h1
   split_ifs with h
-  · refine coeff_map_mem _ _ (fun a b => ?_) w hw m
+  · refine coeff_map_mem _ _ ?_ w hw m
+    intro a b
     have := (hF.isRatAt hβ hτ hd c).2 ⟨i, h⟩ a b
     simpa [GlobalTheory.FunObj.Normal.IsRatAt, GlobalTheory.FunObj.Normal.IsRatIn, GlobalTheory.FunObj.Normal.kkIn, LinearMap.toMatrix_apply] using this
   · exact ⟨0, by simp⟩

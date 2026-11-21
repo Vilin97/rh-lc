@@ -76,7 +76,9 @@ theorem UpperTheory.V.Cj.H.wigAlpha :
     exact (((((hc _ _).sub_right ((hc _ _).smul_right _)).sub_left
       (((hc _ _).sub_right ((hc _ _).smul_right _)).smul_left _)).smul_right _).smul_left _
       |>.smul_right _).smul_left _
-  obtain ⟨α₀, h1, -, h3⟩ := alphaAbs M a (hol τ LA) (hol τ LB) (fun k => x - (k : ℂ)) hcomm
+  have hAlpha := UpperTheory.V.AlgRepEndIrreducible.alphaAbs M a (hol τ LA) (hol τ LB)
+    (fun k : Fin a => x - (k.val : ℂ)) hcomm
+  obtain ⟨α₀, h1, -, h3⟩ := hAlpha
   set s : ℂ := (a.factorial : ℂ)⁻¹ with hs
   have e : ∀ (r : ℝ) (v : M), r • v = (r : ℂ) • v := fun r v => (algebraMap_smul ℂ r v).symm
   let α : (Lie E a →ₗ[ℝ] M) →ₗ[ℝ] M :=

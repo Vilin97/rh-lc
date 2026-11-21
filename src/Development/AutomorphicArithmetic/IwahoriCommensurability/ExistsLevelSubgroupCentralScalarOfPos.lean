@@ -53,7 +53,7 @@ theorem UpperTheory.exists_levelSubgroup_central_scalar_of_pos :
     obtain ⟨g, rfl⟩ := F.surj h
     rw [← map_mul, ← map_mul, hcen]
   · intro v
-    refine sub_eq_zero.1 (F.vec_inj _ fun w hw => ?_)
+    refine sub_eq_zero.1 (F.vec_inj (S.L.actG (F.j (rat y)) v - c • v) fun w hw => ?_)
     rw [map_sub, map_nsmul, F.vec_act w hw, sub_eq_zero]
     have e : (F.a w * comp w (rat y) * (F.a w)⁻¹).val = (c : w.adicCompletion E) • (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) := by
       rw [Units.val_mul, Units.val_mul, hcomp w]

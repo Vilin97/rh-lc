@@ -47,7 +47,7 @@ theorem transportSt (D : D7) : TransportSt D := by
 
 theorem gluedSt (D : D7) : GluedSt D := by
   intro u π hπ Y X ι z hz L₀ f₀ hb
-  have hL₀ : Submodule.IsLattice D.host.E L₀ := hb.1
+  have hL₀ : Submodule.IsFullLattice D.host.E L₀ := hb.1
 
   obtain ⟨f, hf, hff⟩ := GlobalTheory.T.exists_isAdelicGlueVector_of_glueBaseData D u π hπ X L₀ f₀ hb
   obtain ⟨x, hx⟩ := exists_sub_inc_mem_hat (D := D) (Λ := L₀) hL₀.span_eq_top f
@@ -55,7 +55,7 @@ theorem gluedSt (D : D7) : GluedSt D := by
   rw [← hx₀] at hx
   have hg : IsGlueVec X u L₀ (vA X x₀) := hf.congr hx
   have hgl : IsGlued Y X ι z u π L₀ f₀ (glueLat Y X ι z u L₀ x₀) := by
-    refine GlobalTheory.T.gluedLattice_prescribed_localComponents D u π Y X ι z hz L₀ x₀ f₀ hL₀ hg (fun w hw => ⟨?_, ?_⟩)
+    refine GlobalTheory.T.gluedLattice_prescribed_localComponents D u π Y X ι z hz L₀ x₀ f₀ hL₀.toIsLattice hg (fun w hw => ⟨?_, ?_⟩)
     · rw [← hff w hw, smul_smul, idem_mul_self]
     · rw [← hff w hw, ← smul_sub]
       exact smul_mem_hat (idem_mem w) hx
@@ -73,8 +73,8 @@ theorem ungluedSt (D : D7) : UngluedSt D := by
     have key := GlobalTheory.T.isAdelicGlueVector_of_selfDual_primitive D u Y X ι z hz (capX Y X ι L) x₀ hlat
     rw [← hL] at key
     exact key hSD hP
-  refine ⟨fun w => idem w • vA X x₀, GlobalTheory.T.isGlueBaseData_of_isAdelicGlueVector D u π hπ X _ _ hlat hg, ?_⟩
-  have key := GlobalTheory.T.gluedLattice_prescribed_localComponents D u π Y X ι z hz (capX Y X ι L) x₀ (fun w => idem w • vA X x₀) hlat hg
+  refine ⟨fun w => idem w • vA X x₀, GlobalTheory.T.isGlueBaseData_of_isAdelicGlueVector D u π hπ X _ _ (by first | exact hlat.toIsLattice | exact hlat) hg, ?_⟩
+  have key := GlobalTheory.T.gluedLattice_prescribed_localComponents D u π Y X ι z hz (capX Y X ι L) x₀ (fun w => idem w • vA X x₀) hlat.toIsLattice hg
     (fun w _ => ⟨by simp only [smul_smul, idem_mul_self], by simp only [sub_self]; exact zero_mem_hat⟩)
   rwa [← hL] at key
 

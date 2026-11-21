@@ -19,7 +19,9 @@ variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyCompl
 private theorem blo_at {r : ℕ} (b : Blo S r) : ∃ V, IsSummand (mu1 E r) V ∧
     At (mu1 E r) S V (fun τ => Finset.univ.val.map (b.Λ τ)) fun w => (b.sat w).map fun x : ℂˣ => (x : ℂ) := by
   obtain ⟨V, hV, hf⟩ := b.summand
-  obtain ⟨π, hπ, -⟩ := Dp.exCusp E r (mu1 E r) V hV
+  have hex : ∃! π : CuspSub E r, Dp.Carries (mu1 E r) π V :=
+    Dp.exCusp E r (mu1 E r) V hV
+  obtain ⟨π, hπ, -⟩ := hex
   have hc : (⟨b.f.1, b.cusp⟩ : AutomorphicForm.cuspForms E r) ∈ AutomorphicForm.centralCuspForms E r := fun s x => by
     have := b.cen (Real.log s.1) x
     unfold zt at this

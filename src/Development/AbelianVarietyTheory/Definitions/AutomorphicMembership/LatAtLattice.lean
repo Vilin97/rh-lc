@@ -6,6 +6,7 @@ public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.HermitianCodeWordWeilElementMemQuadraticField
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.XiAtPenultimateEqXiCpl1
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ReferenceCharactersFactorTame
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.StandardBaseFlagComplementIntegralLattice
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.H90USurjective
 public import Formalism.LocalToGlobal.Columns.RowFormsSym
 public import Formalism.LocalRingCardinality.DataKerP
@@ -168,12 +169,34 @@ def eCls0 (u : B.Word) (a : I.ι) : (I.stp u I.mu0 0).Cl ≃ (I.stp u a 0).Cl :=
 
 include l in
 theorem latAt_lattice (u : B.Word) (a : I.ι) (i : ℕ) (c : (I.stp u a i).Cl) :
-    letI := B.host.cmStar; Submodule.IsLattice B.host.E (I.latAt u a i c) := by
+    letI := B.host.cmStar; Submodule.IsFullLattice B.host.E (I.latAt u a i c) := by
   letI := B.host.cmStar
   unfold latAt
   split_ifs with hi
-  · exact Submodule.IsLattice.of_fg _ ((l.lat u a i c).fg.map _)
-  · exact (B.sp.X i).standardTuple_isLattice
+  · let d := ((I.stp u a i).rep c).1.1.deco
+    have hsymm : (hStd B.host.E (B.R.N i)).IsSymm := by
+      constructor
+      intro x y
+      simp only [hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, starRingEnd_apply, star_star]
+      exact Finset.sum_congr rfl fun j _ => mul_comm _ _
+    have hN := GlobalTheory.LoopC.Base.span_eq_top_of_unimodular _ hsymm
+      hStd_nondeg d.2.lat d.2.uni
+    have hL : Submodule.span B.host.E (d.1.L : Set (Sp B.host.E (B.R.N i))) = ⊤ := by
+      rw [eq_top_iff, ← hN, Submodule.span_le]
+      intro x hx
+      have hTx := d.2.smul_N_mem_L (T_mem_vT l.pr u) hx
+      have hT : algebraMap (𝓞 B.host.E) B.host.E (B.T u : 𝓞 B.host.E) ≠ 0 := by
+        show ((B.T u : 𝓞 B.host.E) : B.host.E) ≠ 0
+        exact_mod_cast (B.T_prime u).ne_zero
+      rw [← algebraMap_smul B.host.E] at hTx
+      exact (Submodule.smul_mem_iff _ hT).mp (Submodule.subset_span hTx)
+    refine { toIsLattice := Submodule.IsLattice.of_fg _ ((l.lat u a i c).fg.map _)
+             span_eq_top := ?_ }
+    rw [Submodule.map_coe, LinearMap.coe_restrictScalars, ← Submodule.map_span,
+      show Submodule.span B.host.E (((I.stp u a i).rep c).1.1.deco.1.L :
+        Set (Sp B.host.E (B.R.N i))) = ⊤ from hL,
+      Submodule.map_top, LinearEquiv.range]
+  · exact baseLattice_full (B.sp.X i)
 
 def cols : Cols B where
   mem u := ⟨I.chain l u I.mu0, I.atT l u I.mu0, I.per l u I.mu0⟩

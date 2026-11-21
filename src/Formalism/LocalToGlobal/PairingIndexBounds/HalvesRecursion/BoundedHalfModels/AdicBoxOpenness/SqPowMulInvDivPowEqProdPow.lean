@@ -25,7 +25,7 @@ theorem gh_map_mem {M : Type} [AddCommGroup M] [Module R M] (I : Ideal R) {Y Z :
     (f : M →ₗ[R] M) (h : ∀ z ∈ Y, f z ∈ Z) {y : M} (hy : y ∈ I • Y) : f y ∈ I • Z := by
   refine Submodule.smul_induction_on hy (fun r hr z hz => ?_) (fun x y hx hy => ?_)
   · rw [map_smul]; exact Submodule.smul_mem_smul hr (h z hz)
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · rw [map_add]; exact add_mem hx hy
 
 theorem gh_smul_mem {M : Type} [AddCommGroup M] [Module R M] (I : Ideal R) {Y Z : Submodule R M}
     (c : R) (h : ∀ z ∈ Y, c • z ∈ Z) {y : M} (hy : y ∈ I • Y) : c • y ∈ I • Z := by

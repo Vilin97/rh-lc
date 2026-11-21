@@ -36,7 +36,7 @@ theorem absIso : AbsIso := by
         change ρ (g * z) (f x) = ρ (h⁻¹ * g * z * h) (f x)
         rw [← e]
       | zero => simp
-      | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
       | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
     · intro h0
       apply hf0

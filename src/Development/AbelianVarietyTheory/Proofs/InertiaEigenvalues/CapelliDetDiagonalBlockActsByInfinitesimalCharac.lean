@@ -72,7 +72,7 @@ theorem map_leviEmb {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) {c N 
   by_cases hjk : j = k
   · subst hjk
     simp [leviEmb, blockDiagonal'_apply_eq]
-  · simp [leviEmb, blockDiagonal'_apply_ne _ _ _ hjk]
+  · simp [leviEmb, blockDiagonal'_apply, hjk]
 
 variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {c N : ℕ} {n : Fin c → ℕ}
 
@@ -121,6 +121,7 @@ theorem iota_val (e : (Σ j, Fin (n j)) ≃ Fin N) (i : Fin c) (y : GL (Fin (n i
   simp only [iota, leviEmb, MonoidHom.coe_toHomUnits, MonoidHom.coe_mk, OneHom.coe_mk]
   rw [h]
   congr
+  exact Subsingleton.elim _ _
 
 def blockLin (e : (Σ j, Fin (n j)) ≃ Fin N) (i : Fin c) : Lie E (n i) →ₗ[ℝ] Lie E N where
   toFun x := toL (reindex e e (blockDiagonal' (Pi.single (M := fun j => Matrix (Fin (n j)) (Fin (n j)) (Cinf E)) i

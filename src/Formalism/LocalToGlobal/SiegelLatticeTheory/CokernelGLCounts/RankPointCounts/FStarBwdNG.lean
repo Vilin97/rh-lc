@@ -37,7 +37,7 @@ theorem bcP_X {x : (VS D).V} (hx : x ∈ Xsp (lf D F0)) : baseChange₂ D p x �
     rw [← frame_cs, baseChangeAt_frame_eq Zd p γ hu, Units.smul_def]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [(baseChange₂ D p).map_add]; exact add_mem ha hb
   | smul c x _ hx => rw [Formalism.L2.SG.Pf.LocalDenominators.baseChange_smul₂]; exact Submodule.smul_mem _ _ hx
 
 theorem baseChange_mem_perp_sup {m : (VS D).V} (hm : m ∈ orth (VS D) (Xsp (lf D F0))) :

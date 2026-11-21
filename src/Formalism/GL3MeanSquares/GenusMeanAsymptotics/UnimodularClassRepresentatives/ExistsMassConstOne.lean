@@ -35,8 +35,8 @@ theorem trace_pos {h : V →ₗ⋆[K] V →ₗ[K] K} (hd : IsTotPosDef h) :
 
 theorem exists_model [FiniteDimensional K V] {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm)
     (hd : IsTotPosDef h) (h1 : finrank K V = 1) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) :
-    ∃ (h' : K →ₗ⋆[K] K →ₗ[K] K) (A : Submodule (𝓞 K) K), h' 1 1 ≠ 0 ∧ Submodule.IsLattice K A ∧
+    (hL : Submodule.IsFullLattice K L) :
+    ∃ (h' : K →ₗ⋆[K] K →ₗ[K] K) (A : Submodule (𝓞 K) K), h' 1 1 ≠ 0 ∧ Submodule.IsFullLattice K A ∧
       (∃ s, IsClassReps h' A s) ∧ mass h' A = mass h L := by
   let b := Module.finBasisOfFinrankEq K V h1
   let φ : V ≃ₗ[K] K := b.equivFun.trans (LinearEquiv.funUnique (Fin 1) K K)
@@ -45,9 +45,9 @@ theorem exists_model [FiniteDimensional K V] {h : V →ₗ⋆[K] V →ₗ[K] K} 
     intro x y
     simp [h']
   have htr := trace_pos hd
-  obtain ⟨hex, -, -⟩ := Formalism.HermitianLatticesTheory.massBasic K V h hs htr L hL
+  obtain ⟨hex, -, -⟩ := Formalism.HermitianLatticesTheory.massBasic K V h hs htr L hL.toIsLattice
   obtain ⟨hex', hm⟩ := mass_mapE φ hh' hex
-  refine ⟨h', mapE φ L, ?_, isLattice_mapE φ hL, hex', hm⟩
+  refine ⟨h', mapE φ L, ?_, isFullLattice_mapE φ hL, hex', hm⟩
   have h0 : φ.symm 1 ≠ 0 := by simp
   intro hz
   have := htr _ h0
@@ -79,13 +79,11 @@ theorem exists_massConst_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
     exact Complex.normSq_pos.mpr hx'
   have hn₀ : h₀ 1 1 ≠ 0 := by simp [hh]
   set L₀ : Submodule (𝓞 K) K := Submodule.span (𝓞 K) {(1 : K)}
-  have hL₀ : Submodule.IsLattice K L₀ :=
-    Submodule.IsLattice.of_fg K (Submodule.fg_span_singleton _)
-  have hL₀full : Submodule.IsFullLattice K L₀ := by
-    letI := hL₀
-    refine ⟨?_⟩
-    exact RankOne.span_eq_top_of_ne_zero (Submodule.subset_span rfl) one_ne_zero
-  obtain ⟨hex₀, -, hpos₀⟩ := Formalism.HermitianLatticesTheory.massBasic K K h₀ hs₀ (RankOne.trace_pos hd₀) L₀ hL₀
+  have hL₀ : Submodule.IsFullLattice K L₀ :=
+    { toIsLattice := Submodule.IsLattice.of_fg K (Submodule.fg_span_singleton _)
+      span_eq_top := RankOne.span_eq_top_of_ne_zero (Submodule.subset_span rfl) one_ne_zero }
+  obtain ⟨hex₀, -, hpos₀⟩ := Formalism.HermitianLatticesTheory.massBasic K K h₀ hs₀
+    (RankOne.trace_pos hd₀) L₀ hL₀.toIsLattice
   refine ⟨Formalism.HermitianLatticesTheory.mass h₀ L₀, hpos₀, ?_⟩
   intro V _ _ _ _ _ h L hs hd h1 hL hLi
   obtain ⟨h', A, hn', hA, -, hm⟩ := RankOne.exists_model hs hd h1 hL
@@ -93,6 +91,6 @@ theorem exists_massConst_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
     unfold lamG
     exact (tprod_congr fun p => localFactor_rank_one hK hF hs hd hL hLi h1 p.2).trans tprod_one
   rw [hlam, mul_one, ← hm]
-  exact RankOne.mass_eq_of_lattices hn₀ hn' hL₀full hA hex₀
+  exact RankOne.mass_eq_of_lattices hn₀ hn' hL₀ hA hex₀
 
 end Formalism.HermitianLattices.Ext.L3

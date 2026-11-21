@@ -31,11 +31,4 @@ instance subsingleton_sp (K : Type) [Field K] : Subsingleton (Sp K) :=
 
 end General
 
-section Main
-
-variable {O : Type} [CommRing O] {Z : Scheme.{0}} (s : Z ⟶ Sp O) {C : Coc Z} {N : ℕ} (Em : C.Emb N)
-  {ch : Charts Z} {r : ℕ} (D : C.Sub ch r)
-
-end Main
-
 end GlobalTheory.SubClosure

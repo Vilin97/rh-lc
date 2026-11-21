@@ -83,9 +83,9 @@ theorem exists_patches_of_res (hRes : ResK.ResKStatement)
   have hmem := GlobalTheory.T.generic_point_mem_dense_open _ Ω ξF U hFg hd
   have hin : ResK.IsResInput M i U e := ⟨hi, hred, hd, by rw [his]; exact hU⟩
   obtain ⟨r, X', j, f', hj, hfj, hsm, hiso, hdense, hsnc⟩ := hRes F M e _ i U hin
-  letI algF : Algebra F Ω := b.toAlgebra
-  letI algO : Algebra (𝓞 F) Ω := (b.comp (algebraMap (𝓞 F) F)).toAlgebra
-  haveI : IsScalarTower (𝓞 F) F Ω := .of_algebraMap_eq' rfl
+  let algF : Algebra F Ω := b.toAlgebra
+  let algO : Algebra (𝓞 F) Ω := (b.comp (algebraMap (𝓞 F) F)).toAlgebra
+  have : IsScalarTower (𝓞 F) F Ω := .of_algebraMap_eq' rfl
   have hs0 : ξ₀ ≫ s = spMap (algebraMap (𝓞 F) Ω) := by
     rw [← hF1, Category.assoc, pullback.condition, ← Category.assoc, hF2]
     show _ = Spec.map (CommRingCat.ofHom (b.comp (algebraMap (𝓞 F) F)))
@@ -197,12 +197,12 @@ theorem exists_base (hRes : ResK.ResKStatement) (E : Type) [Field E] [NumberFiel
       (∀ p ∈ S, FullTorsion Y.t.G (M₁.ξ ≫ f₁) (p ^ 4)) ∧ (∀ p ∈ S, ∃ ζ : Ω, IsPrimitiveRoot ζ (p ^ 4)) ∧
       SncPts M₁.ξ D.dim {p | Char0 M₁.ξ p ∧ p.1 ∉ f₁ ⁻¹' abLocus Y.t.G} ∧
       Algebra.trdeg ℤ Ω = ((D.dim : ℕ) : Cardinal) := by
-  haveI : FiniteDimensional ℚ c.F := c.fin
-  haveI : NumberField c.F := {}
+  have : FiniteDimensional ℚ c.F := c.fin
+  have : NumberField c.F := {}
   have hgen₀ := GlobalTheory.T.component_generic_is_generic_point E H D l Xo c Y Ω₀ ξ₀ hg
   obtain ⟨w₀, -⟩ := GlobalTheory.T.generic_point_factors_open E H D l Xo c Y Ω₀ ξ₀ hgen₀
   obtain ⟨cst, -⟩ := exists_cst (Y := Y) w₀
-  haveI : CharZero Ω₀ := charZero_of_injective_ringHom cst.injective
+  have : CharZero Ω₀ := charZero_of_injective_ringHom cst.injective
   obtain ⟨Ω, _, _, i, hfin, htors, hroot⟩ := GlobalTheory.T.exists_finite_extension_primes E H D l Xo c Y Ω₀ ξ₀ S hgen₀ hS
   obtain ⟨K₀, _, J₀, _, yc, X₀, ξ', f₀, bd₀, -, hall₀, htie₀, hf₀, -, -⟩ := GlobalTheory.T.exists_coords_of_generic_point hRes E H D l Xo c Y Ω₀ ξ₀ hg
   obtain ⟨K₁, _, J₁, _, y₁, bk, bx, M, h, -, -, hdom, hnorm, hsm⟩ :=
@@ -219,10 +219,10 @@ theorem exists_base (hRes : ResK.ResKStatement) (E : Type) [Field E] [NumberFiel
   have hinj : Function.Injective (algebraMap (𝓞 c.F) c.F) := RingOfIntegers.coe_injective
   have hA := GlobalTheory.T.generic_trdeg_eq_dimension E H D l Xo c _ _ Y Ω₀ ξ₀ Ω y₀ i hinj hg (hy₀ ▸ hMξ)
   have htr : Algebra.trdeg ℤ Ω = ((D.dim : ℕ) : Cardinal) := by
-    letI : Algebra Ω₀ Ω := i.toAlgebra
-    haveI : FiniteDimensional Ω₀ Ω := hfin
-    haveI : FaithfulSMul ℤ Ω₀ := (faithfulSMul_iff_algebraMap_injective ℤ Ω₀).mpr Int.cast_injective
-    haveI : FaithfulSMul Ω₀ Ω := (faithfulSMul_iff_algebraMap_injective Ω₀ Ω).mpr i.injective
+    let : Algebra Ω₀ Ω := i.toAlgebra
+    have : FiniteDimensional Ω₀ Ω := hfin
+    have : FaithfulSMul ℤ Ω₀ := (faithfulSMul_iff_algebraMap_injective ℤ Ω₀).mpr Int.cast_injective
+    have : FaithfulSMul Ω₀ Ω := (faithfulSMul_iff_algebraMap_injective Ω₀ Ω).mpr i.injective
     have htow := trdeg_add_eq ℤ Ω₀ (A := Ω)
     rw [hA, trdeg_eq_zero_iff.2 (Algebra.IsAlgebraic.of_finite Ω₀ Ω), add_zero] at htow
     exact htow.symm
@@ -276,7 +276,7 @@ theorem unitAt_nat {X : Scheme.{0}} {ξ : Sp Ω ⟶ X} [CharZero Ω] (q : Cpt ξ
   | zero => exact absurd rfl hn
   | one =>
     rw [Nat.cast_one]
-    exact ⟨one_ne_zero, (regAt ξ q).one_mem, by simpa using (regAt ξ q).one_mem⟩
+    exact ⟨one_ne_zero, (regAt ξ q).one_mem, by simp⟩
   | prime r hr =>
     have := h r hr dvd_rfl
     exact not_not.1 this
@@ -302,9 +302,9 @@ theorem vb_shrink {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E
       (eigSp A.ρ (A.cst.comp (labelEmb c s))) := by
   classical
   obtain ⟨-, -, hchar, hemb, hrank, -, -, hreg⟩ := GlobalTheory.T.hodge_cpt_interior_generic E H D l Xo c O β Y _ Ω K J y A hβ
-  haveI := hchar
-  haveI : Fintype (CMType H ⊕ CMType H) := Fintype.ofFinite _
-  haveI : IsNoetherian A.X := ((GlobalTheory.T.regAt_noetherian_model_noetherian _ Ω A.ξ ℤ _ _ A.tie).2 A.all).1
+  have := hchar
+  let : Fintype (CMType H ⊕ CMType H) := Fintype.ofFinite _
+  have : IsNoetherian A.X := ((GlobalTheory.T.regAt_noetherian_model_noetherian _ Ω A.ξ ℤ _ _ A.tie).2 A.all).1
   have hS₀ : ∀ p ∈ S₀, p.Prime := fun p hp => A.S_prime p (Finset.mem_union_left _ hp)
   obtain ⟨-, hcard⟩ := GlobalTheory.T.label_embedding_injective E H l c
   have hlat := (GlobalTheory.T.lie_omega_lattice_vector_bundle A.X Ω A.ξ A.t.G A.Li A.M A.tie.gen A.t.semi.smooth).1
@@ -319,7 +319,7 @@ theorem vb_shrink {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E
       rcases Int.natAbs_eq (NumberField.discr E) with e | e
       · rw [e]; simpa using h
       · rw [e]
-        refine ⟨by simpa using h.1, by simpa using neg_mem h.2.1, ?_⟩
+        refine ⟨by simpa using h.1, by simp, ?_⟩
         simpa using neg_mem h.2.2)
   have h₀ : (A.dR s).IsVBOn {q | ∀ l ∈ S₀, ¬ InFibre A.ξ l q} (labelRk D s) (A.Vgen s) := by
     have := hsplit.1 s
@@ -430,7 +430,7 @@ theorem exists_geo : Top.Given → Out.WeilSt → ∀ (E : Type) [Field E] [Numb
     have hr : 0 < r := by
       rw [← hrk τ]
       rcases hsm with e | e <;> rw [e] <;> simp only [labelRk, Sum.elim_inl, Sum.elim_inr] <;> omega
-    haveI : Module.Finite Ω (A.Vgen (sm τ)) := Module.finite_of_finrank_pos (by omega)
+    have : Module.Finite Ω (A.Vgen (sm τ)) := Module.finite_of_finrank_pos (by omega)
     let bs := Module.finBasisOfFinrankEq Ω (A.Vgen (sm τ)) hfr
     refine ⟨fun k => (bs k : A.Li), ?_, ?_⟩
     · exact bs.linearIndependent.map' (Submodule.subtype _) (Submodule.ker_subtype _)
@@ -470,8 +470,8 @@ theorem exists_geo : Top.Given → Out.WeilSt → ∀ (E : Type) [Field E] [Numb
     (fun p hp' => hp'.1) hsncA
   have hab : abLocus A.t.G = A.f ⁻¹' abLocus Y.t.G :=
     (Set.ext fun x => abLocus_pullback abLocusOne Y.t.semi A.m.cart.1 x).symm
-  letI algi : Algebra Ω₀ Ω := i.toAlgebra
-  haveI : FiniteDimensional Ω₀ Ω := hfin
+  let algi : Algebra Ω₀ Ω := i.toAlgebra
+  have : FiniteDimensional Ω₀ Ω := hfin
   refine ⟨K₃, inferInstance, J₃, inferInstance, Ω, inferInstance, inferInstance, y₃, toS₀ A hβ hdisc ξ₀ hξ₀ i hi y₃ tie₃,
     Module.finrank Ω₀ Ω, bd, fun p => if h : p ∈ S₁ then -(a (some ⟨p, h⟩)) else 0,
     fun p => if h : p ∈ S₁ then fv ⟨p, h⟩ else 0, fun p => if h : p ∈ S₁ then gv ⟨p, h⟩ else 0, s, a none, e none,

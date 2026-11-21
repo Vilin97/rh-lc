@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.StdLvPr
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.FiniteAdeleRingNontrivial
 public import Formalism.LocalToGlobal.HermitianForms.TiedTwJSym
 public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.SplitIntPI
 public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.SelfDualPI
@@ -146,7 +147,7 @@ theorem mem_Uloc_iff_iwU (S : Formalism.L2.Forms.StepLevel F E σ J T f bad) {G 
 
 set_option maxHeartbeats 1000000 in
 theorem stab_class_lattice (S : Formalism.L2.Forms.StepLevel F E σ J T f bad) (M : Submodule (𝓞 E) (Fin n → E))
-    (hfin : Module.Finite (𝓞 E) M) (hspan : Submodule.span E (M : Set (Fin n → E)) = ⊤)
+    (hfin : Module.Finite (𝓞 E) M)
     (y : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F))
     (hy : ∀ x : Fin n → E ⊗[F] FiniteAdeleRing (𝓞 F) F,
         x ∈ latS (F := F) (FiniteAdeleRing (𝓞 F) F)
@@ -165,11 +166,8 @@ theorem stab_class_lattice (S : Formalism.L2.Forms.StepLevel F E σ J T f bad) (
         (tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)) S.Lb := by
     intro z
     rw [← hy]
-    have h1 : z ∈ Formalism.UG.CS.globLat (F := F) 1 M ↔
-        ((1 : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F))⁻¹).1 *ᵥ
-          (fun i => inclE (F := F) (FiniteAdeleRing (𝓞 F) F) (z i)) ∈ latS (F := F) (FiniteAdeleRing (𝓞 F) F)
-          (tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)) M := Iff.rfl
-    rwa [Formalism.UG.P.global_lattice_one_holds F E (Fin n) M hfin hspan, inv_one, Units.val_one, one_mulVec] at h1
+    exact ⟨Formalism.L2.GlobalTheoryTheory.Br.latS_of_mem (F := F) M z,
+      Formalism.L2.GlobalTheoryTheory.Br.latLocGlob_main (F := F) M hfin z⟩
   have e2 : (fun i => inclE (F := F) (FiniteAdeleRing (𝓞 F) F) ((γ.1 *ᵥ x) i)) =
       (bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ).1 *ᵥ
         (fun i => inclE (F := F) (FiniteAdeleRing (𝓞 F) F) (x i)) := by
@@ -193,14 +191,6 @@ theorem clsCrd_zero (D : D7) (u : D.what₂.Word) (c : (D.mem u).C.cls 0) :
 theorem crdLat0_fin (D : D7) (u : D.what₂.Word) (c : (D.mem u).C.cls 0) :
     Module.Finite (𝓞 D.host.E) (D.sp.crdLat0 (D.clsLat u 0 c)) :=
   Module.Finite.iff_fg.2 ((D.clsLat_lat u 0 c).fg.map _)
-
-theorem crdLat0_span (D : D7) (u : D.what₂.Word) (c : (D.mem u).C.cls 0) :
-    Submodule.span D.host.E (D.sp.crdLat0 (D.clsLat u 0 c) : Set (Fin D.R.k → D.host.E)) = ⊤ := by
-  have : (D.sp.crdLat0 (D.clsLat u 0 c) : Set (Fin D.R.k → D.host.E)) =
-      (D.sp.crd0 : (D.sp.X 0).V →ₗ[D.host.E] (Fin D.R.k → D.host.E)) '' (D.clsLat u 0 c : Set (D.sp.X 0).V) := rfl
-  rw [this, Submodule.span_image, (D.clsLat_lat u 0 c).span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-  exact D.sp.crd0.surjective
-
 
 set_option maxHeartbeats 4000000 in
 theorem exists_colLevel (D : D7) (u : D.what₂.Word) {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
@@ -257,7 +247,7 @@ theorem exists_colLevel (D : D7) (u : D.what₂.Word) {Ch : ℕ → Type} {chOf 
     stabI := st
     stabI_inj := hinj
     stabI_range := fun c γ hγ => hrange c ⟨γ, hγ⟩
-    stabI_lat := fun c γ x => stab_class_lattice S _ (crdLat0_fin D u c) (crdLat0_span D u c) (y c).1 (hlat c)
+    stabI_lat := fun c γ x => stab_class_lattice S _ (crdLat0_fin D u c) (y c).1 (hlat c)
       (st c γ).1 ((hrange c (st c γ)).1 ⟨γ, rfl⟩) x }, hcar, rfl, hfr⟩
 
 

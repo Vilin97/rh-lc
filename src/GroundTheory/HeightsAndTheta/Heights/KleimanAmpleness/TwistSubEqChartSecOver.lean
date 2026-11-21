@@ -87,6 +87,7 @@ theorem twist_sub_eq_chartSecOver (β : K → ℤ)
     rw [SetLike.mem_coe, mem_sub_iff_gam]
     refine exists_congr fun n => ?_
     rw [Kleiman.SubSystem.gam, hQ]
+  let X := IndefiniteRowSideFullHecke.Kleiman2.blockVec y k₀ ∘ e.symm
   obtain ⟨i, hi⟩ := I.2.1
   have hxi : X i ≠ 0 := (Kleiman.mem_support _).mp (I.2.2 hi)
   have hcard := Finset.card_erase_add_one hi
@@ -110,19 +111,21 @@ theorem twist_sub_eq_chartSecOver (β : K → ℤ)
     convert h using 2
     abel
   · rintro ⟨n, hn⟩
-    refine ⟨(X i ^ c)⁻¹ * t, ?_, by field_simp⟩
-    rw [← SetLike.mem_coe, hsubQ]
-    refine ⟨n + c, ?_⟩
-    have h := secOver_mul y hP hn
-    rw [show Kleiman.xProd I ^ (n + c) * ((X i ^ c)⁻¹ * t) =
-        (∏ j ∈ I.1.erase i, X j) ^ c * (Kleiman.xProd I ^ n * t) by
-      rw [hxI]; field_simp; ring]
-    convert h using 2
-    funext k
-    rw [← hcard]
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
-    push_cast
-    ring
+    refine ⟨(X i ^ c)⁻¹ * t, ?_, ?_⟩
+    · rw [← SetLike.mem_coe, hsubQ]
+      refine ⟨n + c, ?_⟩
+      have h := secOver_mul y hP hn
+      rw [show Kleiman.xProd I ^ (n + c) * ((X i ^ c)⁻¹ * t) =
+          (∏ j ∈ I.1.erase i, X j) ^ c * (Kleiman.xProd I ^ n * t) by
+        rw [hxI]; field_simp; ring]
+      convert h using 2
+      funext k
+      rw [← hcard]
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+      push_cast
+      ring
+    · change X i ^ c * ((X i ^ c)⁻¹ * t) = t
+      field_simp
 
 end ModelTwistGenerated
 

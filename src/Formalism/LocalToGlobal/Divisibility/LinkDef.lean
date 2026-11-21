@@ -103,12 +103,9 @@ theorem lift_exponent_of_least (A : FamIn K G Pl0 T m) {s : ℕ} (hOk : A.fam.Ok
     (hJ0 : ∀ y ∈ Tw, ∀ j, J0 (μ y) y j = ((A.fam.JJ P0 ψ0 Zs j (μ y) y : ℚ) : ℝ)) :
     LiftExponentAtTwisted A P0 ψ0 Zs μ Tw J0 := by
   intro y hy j
-  have hlat := lift_lattices K G Pl0 (A.fam.L j (μ y)) (A.fam.lvlA P0 ψ0) (Zs.Zl j (μ y)) A.fam.v0 s
-    (A.fam.blockHyp_lift hOk P0 ψ0 j (μ y))
   refine ⟨A.fam.JJW P0 ψ0 Zs j (μ y) y, ?_, ?_⟩
   · rw [hJ0 y hy j, mul_comm, A.fam.JJ_ramw P0 ψ0 Zs j (μ y) y]
-  · exact (exponent_weight_spectral K _ y ((A.fam.L j (μ y)).cutZ (A.fam.lvlA P0 ψ0) (Zs.Zl j (μ y)))
-      ((A.fam.L j (μ y)).delZ (A.fam.lvlA P0 ψ0) (Zs.Zl j (μ y))) hlat.2.1 hlat.2.2.1).1
+  · exact BlockDat.lf_exp_spec (Z := Zs.Zl j (μ y)) (A.fam.blockHyp_lift hOk P0 ψ0 j (μ y)) y
 
 theorem bLG_def {J Pl : Type} [Fintype J] [Fintype Pl] [DecidableEq Pl] (R : RecNums J Pl) {s : ℕ} (hs : 0 < s)
     (hG0 : Real.log (Fintype.card G) ≤ R.lam0) (S : Finset (HeightOneSpectrum (𝓞 K))) :

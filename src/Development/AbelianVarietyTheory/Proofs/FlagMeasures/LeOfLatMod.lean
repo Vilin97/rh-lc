@@ -72,14 +72,14 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
 section Nondeg
 
 omit [StarRing K] [FiniteDimensional K V] in
-theorem gidx_pos {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (hB : Submodule.IsLattice K B) :
+theorem gidx_pos {A B : Submodule (𝓞 K) V} (hA : Submodule.IsFullLattice K A) (hB : Submodule.IsFullLattice K B) :
     0 < gidx A B :=
   div_pos (Nat.cast_pos.2 (Nat.pos_of_ne_zero (idxN_ne_zero hB hA.fg)))
     (Nat.cast_pos.2 (Nat.pos_of_ne_zero (idxN_ne_zero hA hB.fg)))
 
 omit [StarRing K] [FiniteDimensional K V] in
-theorem gidx_mul {A B C : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (hB : Submodule.IsLattice K B)
-    (hC : Submodule.IsLattice K C) : gidx A B * gidx B C = gidx A C := by
+theorem gidx_mul {A B C : Submodule (𝓞 K) V} (hA : Submodule.IsFullLattice K A) (hB : Submodule.IsFullLattice K B)
+    (hC : Submodule.IsFullLattice K C) : gidx A B * gidx B C = gidx A C := by
   have hL : (A ⊔ B ⊔ C).FG := (hA.fg.sup hB.fg).sup hC.fg
   have a : A ≤ A ⊔ B ⊔ C := le_sup_of_le_left le_sup_left
   have b : B ≤ A ⊔ B ⊔ C := le_sup_of_le_left le_sup_right
@@ -104,17 +104,17 @@ theorem gidx_dual {A B : Submodule (𝓞 K) V} (hA : Submodule.IsFullLattice K A
   have hL : Submodule.IsFullLattice K (A ⊔ B) :=
     Submodule.IsFullLattice.of_le K (le_sup_left : A ≤ A ⊔ B)
   rw [gidx_of_le (an _ _ (le_sup_left : A ≤ A ⊔ B)) (an _ _ (le_sup_right : B ≤ A ⊔ B))
-      (idxN_ne_zero (dl _ hL).1.toIsLattice (dl _ hA).1.fg),
-    gidx_of_ge (le_sup_right : B ≤ A ⊔ B) (le_sup_left : A ≤ A ⊔ B) (idxN_ne_zero hB.toIsLattice hL.fg)
-      (idxN_ne_zero hB.toIsLattice hA.fg)]
-  rw [idx_eq (Formalism.HermitianLatticesTheory.dual h A), idx_eq (Formalism.HermitianLatticesTheory.dual h B), idxN_dual h hs hn hA.toIsLattice _ _ hL.toIsLattice le_sup_left rfl,
-    idxN_dual h hs hn hB.toIsLattice _ _ hL.toIsLattice le_sup_right rfl]
+      (idxN_ne_zero (dl _ hL).1 (dl _ hA).1.fg),
+    gidx_of_ge (le_sup_right : B ≤ A ⊔ B) (le_sup_left : A ≤ A ⊔ B) (idxN_ne_zero hB hL.fg)
+      (idxN_ne_zero hB hA.fg)]
+  rw [idx_eq (Formalism.HermitianLatticesTheory.dual h A), idx_eq (Formalism.HermitianLatticesTheory.dual h B), idxN_dual h hs hn hA _ _ hL le_sup_left rfl,
+    idxN_dual h hs hn hB _ _ hL le_sup_right rfl]
   rfl
 
 theorem gidx_disc {A B : Submodule (𝓞 K) V} (hA : Submodule.IsFullLattice K A) (hB : Submodule.IsFullLattice K B) :
     gidx (Formalism.HermitianLatticesTheory.dual h B) B = gidx A B ^ 2 * gidx (Formalism.HermitianLatticesTheory.dual h A) A := by
   have dl := Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K V h hs hn Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range
-  rw [← gidx_mul (dl _ hB).1.toIsLattice (dl _ hA).1.toIsLattice hB.toIsLattice, ← gidx_mul (dl _ hA).1.toIsLattice hA.toIsLattice hB.toIsLattice, gidx_dual h hs hn hB hA]
+  rw [← gidx_mul (dl _ hB).1 (dl _ hA).1 hB, ← gidx_mul (dl _ hA).1 hA hB, gidx_dual h hs hn hB hA]
   ring
 
 end Nondeg
@@ -262,8 +262,8 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
       gidx A B = gidx (latIn C A) (latIn C B) := fun h1 h2 h3 h4 => by
     rw [gidx, gidx, idx_latIn p hpC hpI h1 h2 h3, idx_latIn p hpC hpI h3 h4 h1]
   have p1 : 0 < gidx (dual H M) M := by
-    rw [g d1 d2 a b, d3]; exact gidx_pos (dl _ L).1.toIsLattice L.toIsLattice
-  have p2 : 0 < gidx M M' := by rw [g a b a' b']; exact gidx_pos L.toIsLattice L'.toIsLattice
+    rw [g d1 d2 a b, d3]; exact gidx_pos (dl _ L).1 L
+  have p2 : 0 < gidx M M' := by rw [g a b a' b']; exact gidx_pos L L'
   have p3 : gidx (dual H M') M' = gidx M M' ^ 2 * gidx (dual H M) M := by
     rw [g d1 d2 a b, g d1' d2' a' b', g a b a' b', d3, d3']
     exact gidx_disc h hs hn L L'

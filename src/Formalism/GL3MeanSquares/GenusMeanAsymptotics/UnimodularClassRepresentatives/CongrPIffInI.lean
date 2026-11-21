@@ -24,12 +24,11 @@ local notation "κ" => algebraMap (𝓞 K) K
 theorem congrP_iff_inI {k : ℕ} {a b : K} : CongrP 𝔭 k a b ↔ InI 𝔭 k (a - b) := Iff.rfl
 
 theorem inI_int (h𝔭 : 𝔭.IsMaximal) {k : ℕ} {z : 𝓞 K} : InI 𝔭 k (κ z) ↔ z ∈ extP K 𝔭 ^ k := by
-  have := integralBasisSpans.congrP_int h𝔭 k z 0
-  rw [congrP_iff_inI, map_zero, sub_zero, Ideal.Quotient.eq, sub_zero] at this
-  exact this
+  simpa only [congrP_iff_inI, map_zero, sub_zero, Ideal.Quotient.eq_zero_iff_mem] using
+    integralBasisSpans.congrP_int h𝔭 k z 0
 
-theorem inI_ι (h𝔭 : 𝔭.IsMaximal) {k : ℕ} {n : 𝓞 F} : InI 𝔭 k (κ (ι n)) ↔ n ∈ 𝔭 ^ k := by
-  rw [inI_int h𝔭, mem_pow_iff]
+theorem inI_ι (h𝔭 : 𝔭.IsMaximal) {k : ℕ} {n : 𝓞 F} : InI 𝔭 k (κ (ι n)) ↔ n ∈ 𝔭 ^ k :=
+  (inI_int (z := ι n) h𝔭).trans (mem_pow_iff (K := K) 𝔭 k n)
 
 theorem InI.of_mul (hp : 𝔭.IsPrime) {k : ℕ} {t : 𝓞 F} (ht : t ∉ 𝔭) {a : K}
     (h : InI 𝔭 k (κ (ι t) * a)) : InI 𝔭 k a := by

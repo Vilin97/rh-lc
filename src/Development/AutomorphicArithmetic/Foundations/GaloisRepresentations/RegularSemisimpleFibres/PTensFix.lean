@@ -35,7 +35,7 @@ private theorem idem_comm [TopologicalSpace Γ] [IsTopologicalGroup Γ] {π : Re
     simpa using this
   have h4 : π u (π g (idem hπ hH v)) = π g (π (g⁻¹ * u * g) (idem hπ hH v)) := by
     have e1 : u * g = g * (g⁻¹ * u * g) := by group
-    rw [← Module.End.mul_apply (π u), ← map_mul, e1, map_mul, Module.End.mul_apply]
+    rw [← mul_apply_eq_comp (π u), ← map_mul, e1, map_mul, mul_apply_eq_comp]
   rw [h4, mem_fixed.1 (idem_mem hπ hH v) _ hu']
 
 end Rep
@@ -86,7 +86,7 @@ private theorem oneMap_fix [∀ a, TopologicalSpace (G a)] [∀ a, IsTopological
       rw [oneMap_tprod]
       refine mem_fixed.2 fun u hu => ?_
       rw [position_tprod, Function.update_self, mem_fixed.1 (he (f a)) u hu, Function.update_idem]
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact add_mem hx hy
   have h2 : ∀ f : ∀ b, V b, (twKer (σ a) H 1).map
       ((PiTensorProduct.tprod ℂ).toLinearMap f a) ≤ twKer (intersection_update_fsHerm_neg_one σ a) H 1 := fun f => by
     rw [Submodule.map_le_iff_le_comap]

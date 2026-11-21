@@ -108,8 +108,8 @@ private theorem jr_abs {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommR
           F.oEl v (fun j => pushCh (f i : B.B ⧸ J →+* K) (B.psiT J v j)) g := by
         unfold GFrame.oEl
         rw [map_list_prod, List.map_ofFn]
-        congr 2
-        rfl
+        simp only [Function.comp_def, map_sub, MonoidAlgebra.mapRingHom_single, map_one,
+          pushCh, MonoidHom.comp_apply, Units.coe_map]
       rw [h1]
       exact UpperTheory.V.AlgebraTools.Det.oElRep F O K n (ρ i) v _ (hflag i v) g
     exact ⟨hk, UpperTheory.V.AlgebraTools.Det.killsStar F O _ n _ hP _ hk⟩
@@ -170,7 +170,6 @@ private theorem jr_surj {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [Comm
     rw [← hlam, ← map_mul]
     exact hb
 end Abstract
-attribute [-instance] UpperTheory.V.GradeZeroInterpolatingElement.instIsLocalRingSubtypePadicAlgClMemSubalgebraPadicIntO in
 theorem UpperTheory.V.Hi.ring_props_of_is_j_unitary_hecke_data :
     _root_.UpperTheory.V.Af.HypothesesH' → ∀ (l : ℕ) [Fact l.Prime] (L Ω : Type) [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (s : HidaSetting l L Ω) (n : ℕ), 1 ≤ n →
     ∀ (V : s.Lev) (Q : QData V) (c : Coef l), ∀ (r : Resid V.frame c.O n) (ι : Qbar l ≃+* ℂ), ∀ (B : UniversalOrdinaryDeterminantRing r) (Λ : LamObj r) (R : _root_.UpperTheory.V.Hi.CaseU.UnitaryHeckeData Q ι Λ) (K : (hset Q R.τ₀).Lev), V.S' = s.S → ∀ J : Ideal B.B, R.IsJ B K J → B.RingProps Λ J := by

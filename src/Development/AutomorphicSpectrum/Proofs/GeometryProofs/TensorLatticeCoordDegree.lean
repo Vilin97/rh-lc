@@ -64,7 +64,7 @@ theorem centre_local (A : Type) [CommRing A] [IsLocalRing A] [Algebra (𝓞 L) A
     centre (spMap (algebraMap (𝓞 L) A) ≫ z) = z (primeOf v) := by
   have e : (spMap (algebraMap (𝓞 L) A)) (IsLocalRing.closedPoint A) = primeOf v := by
     apply PrimeSpectrum.ext
-    exact IsLocalization.AtPrime.comap_maximalIdeal A (primeOf v).asIdeal
+    exact IsLocalization.AtPrime.under_maximalIdeal A (primeOf v).asIdeal
   exact (Scheme.Hom.comp_apply _ _ _).trans (congrArg z e)
 
 end Centre

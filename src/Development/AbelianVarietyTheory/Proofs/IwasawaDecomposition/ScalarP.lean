@@ -37,6 +37,7 @@ def baN {N : TwNew (Dof x)} (N' : TwNew (Dof x)) {j : Fin (DN x N).R.m} (X : Exp
     ExportSeries.Base (Vc (DN x N') ((j))) (Wc (DN x N') ((j))) :=
   (@baT B (@ColW.C B f T w) (@RowPk.Over.Z B f T w (@Pre2.Z₀ B f T K w P) (@Pre2.hX B f T K w P) (@Pre2.Wt B f T K w P) (@Pre2.z B f T K w P) (@Pre2.q B f T K w P) (@oTw K B f T w P x N)) (@RowPk.Over.Z B f T w (@Pre2.Z₀ B f T K w P) (@Pre2.hX B f T K w P) (@Pre2.Wt B f T K w P) (@Pre2.z B f T K w P) (@Pre2.q B f T K w P) (@oTw K B f T w P x N')) (Vc (@DN K B f T w P x N) j) (Wc (@DN K B f T w P x N) j) X)
 
+set_option maxHeartbeats 8000000 in
 theorem isNormN {N : TwNew (Dof x)} (N' : TwNew (Dof x)) {j : Fin (DN x N).R.m}
     {X : ExportSeries.Base (Vc (DN x N) j) (Wc (DN x N) j)} {ν : ℂ} (h : IsNorm (D := DN x N) (datTw x N).R (datTw x N).geo.v₀ X ν) :
     IsNorm (D := DN x N') (datTw x N').R (datTw x N').geo.v₀ (j := (j)) (@baN K B f T w P x N N' j X) ν := by
@@ -49,7 +50,7 @@ variable {N₁ : TwNew (Dof x)} {kKs : (datTw x N₁).core.Q.c.F →+* ↥(DN x 
   {YS : NExpRealS (datTw x N₁).R (datTw x N₁).cG (ratDatR (datTw x N₁).R (datTw x N₁).cG kKs hk)} {X : NExpTied (DN x N₁)} {hF Pq}
   (p : PreTie YS (datTw x N₁).geo.v₀ X hF Pq)
 
-def nP : TwNew (Dof x) := ⟨N₁.tw, (p.ex), N₁.h0, (p.nth), N₁.br, N₁.hbr⟩
+def nP : TwNew (Dof x) := ⟨N₁.tw, PreTie.ex (D := DN x N₁) (Ks := (datTw x N₁).core.Q.c.F) p, N₁.h0, PreTie.nth (D := DN x N₁) (Ks := (datTw x N₁).core.Q.c.F) p, N₁.br, N₁.hbr⟩
 
 def kP : (datTw x (nP p)).core.Q.c.F →+* ↥(DN x (nP p)).LL0 := (kKs)
 

@@ -39,9 +39,11 @@ private theorem massU_zero_eq_one (K : Type) [Field K] [NumberField K] [StarRing
   haveI : Subsingleton ((Fin 0 → K) ≃ₗ[K] (Fin 0 → K)) :=
     ⟨fun f g => LinearEquiv.ext fun x => Subsingleton.elim _ _⟩
   have hlat : Submodule.IsLattice K (_root_.Formalism.MainNotions.S.Cnt.stdLat K 0) := _root_.ReciprocityTheory.ChartRestriction.L3.isLattice_of_ortho (_root_.Formalism.MainNotions.StandardLattice.stdLat_ortho K 0)
+  have hfull : Submodule.IsFullLattice K (_root_.Formalism.MainNotions.S.Cnt.stdLat K 0) :=
+    { toIsLattice := hlat, span_eq_top := Subsingleton.elim _ _ }
   have hgen : _root_.Formalism.MainNotions.S.Cnt.stdLat K 0 ∈ _root_.Formalism.HermitianLatticesTheory.genus (_root_.Formalism.MainNotions.S.Cnt.stdH K 0) (_root_.Formalism.MainNotions.S.Cnt.stdLat K 0) := by
     unfold _root_.Formalism.HermitianLatticesTheory.genus _root_.Formalism.HermitianLatticesTheory.SameGenus
-    exact ⟨hlat, fun p _ => ⟨1, one_mem _, hsub _ _⟩⟩
+    exact ⟨hfull, fun p _ => ⟨1, one_mem _, hsub _ _⟩⟩
   have hs : ∃ s, _root_.Formalism.ThetaLiftIndependence.IsClassReps (_root_.Formalism.MainNotions.S.Cnt.stdH K 0) (_root_.Formalism.MainNotions.S.Cnt.stdLat K 0) s := by
     refine ⟨{_root_.Formalism.MainNotions.S.Cnt.stdLat K 0}, ?_⟩
     unfold _root_.Formalism.ThetaLiftIndependence.IsClassReps

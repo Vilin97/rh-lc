@@ -23,6 +23,8 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 theorem ordSub_conj {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N)
     (hu : Formalism.HermitianLatticesTheory.IsUnimodular (hStd E n) N) (P : HeightOneSpectrum (𝓞 E)) :
     ordSub (conjPrime₂ P) (detSub N) = -ordSub P (detSub N) := by
+  have hfr (w : HeightOneSpectrum (𝓞 E)) : IsFr w N (latFr w N) := by
+    first | exact isFr_latFr w ⟨hN, hu⟩ | exact isFr_latFr w hN
   have hfull : Submodule.IsFullLattice E N := by
     letI : Submodule.IsLattice E N := hN
     refine ⟨?_⟩
@@ -30,7 +32,7 @@ theorem ordSub_conj {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice 
     rw [← ((Pi.basisFun E (Fin n)).map (latFr P N)).span_eq]
     refine Submodule.span_le.2 ?_
     rintro _ ⟨i, rfl⟩
-    obtain ⟨s, hs, hx⟩ := (mem_locP _ _ _).1 ((isFr_latFr P hN _).2 (CharValCompare.single_mem_stdAt P i))
+    obtain ⟨s, hs, hx⟩ := (mem_locP _ _ _).1 ((hfr P _).2 (CharValCompare.single_mem_stdAt P i))
     have hs0 : (algebraMap (𝓞 E) E s) ≠ 0 := by
       intro h
       have : s = 0 := (FaithfulSMul.algebraMap_injective (𝓞 E) E) (by simpa using h)
@@ -41,9 +43,9 @@ theorem ordSub_conj {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice 
       (algebraMap (𝓞 E) E s)⁻¹ (Submodule.subset_span hx')
     rw [← mul_smul, inv_mul_cancel₀ hs0, one_smul] at hm
     simpa only [Module.Basis.map_apply, Pi.basisFun_apply, SetLike.mem_coe] using hm
-  have h := CharValCompare.val_dual (P := P) ⟨hN, hu⟩ (isFr_latFr P hN) (isFr_latFr (conjPrime₂ P) hN)
+  have h := CharValCompare.val_dual (P := P) ⟨hN, hu⟩ (hfr P) (hfr (conjPrime₂ P))
   rw [map_mul, valuation_star, CharValCompare.conjP_conjP] at h
-  rw [ordSub_detSub_eq hfull (isFr_latFr P hN), ordSub_detSub_eq hfull (isFr_latFr (conjPrime₂ P) hN)]
+  rw [ordSub_detSub_eq hfull (hfr P), ordSub_detSub_eq hfull (hfr (conjPrime₂ P))]
   unfold ordF
   rw [eq_inv_of_mul_eq_one_right h, WithZero.log_inv]
 

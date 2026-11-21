@@ -172,7 +172,7 @@ theorem exists_isAdapted : ∀ (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (p q a 
     congr 1
     ext s
     simp [mulVec, dotProduct, Matrix.one_apply]
-  refine ⟨Λ, x₀, Ti, fun i => T'.submatrix id fun s => ⟨i, s⟩, B * γ.1, he, hn, (fun i => (hΛ i).toIsLattice), fun i k => ⟨?_, ?_, fun h => ?_⟩,
+  refine ⟨Λ, x₀, Ti, fun i => T'.submatrix id fun s => ⟨i, s⟩, B * γ.1, he, hn, hΛ, fun i k => ⟨?_, ?_, fun h => ?_⟩,
     fun i => ⟨?_, ?_, ?_⟩, hG, fun z => ⟨fun hz => ?_, ?_⟩, hS⟩
   · rw [hT, hT, hsub, h1]; rfl
   · rw [hsub, h2]; rfl

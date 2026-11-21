@@ -141,7 +141,7 @@ theorem gen_cone {Φ : Type} [Field Φ] [Algebra (MvPolynomial K Ω₁) Φ] [IsF
     intro a
     induction a using MvPolynomial.induction_on with
     | C s => exact hC s
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p n hp => rw [map_mul]; exact mul_mem hp (hX n)
   have hc : c ∈ S := by
     obtain ⟨a, b, -, rfl⟩ := IsFractionRing.div_surjective (A := MvPolynomial K Ω₁) c

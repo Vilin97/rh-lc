@@ -151,12 +151,11 @@ theorem exists_leftInv (b : Module.Basis κ ℤ D.La) (L : Link D G) :
     have := congrArg (fun f => f c) hT'
     simpa using this
   refine ⟨fun X => ∑ i, ∑ j, X i j • ((1 : AfP p) ⊗ₜ[ℚ] T' (Matrix.single i j 1)), ?_, ?_⟩
-  · exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  · exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
       Continuous.smul (f := fun X : Matrix κ κ (AfP p) => X i j)
         (g := fun _ => (1 : AfP p) ⊗ₜ[ℚ] T' (Matrix.single i j 1)) (continuous_id.matrix_elem i j) continuous_const
   · intro y
-    induction y using TensorProduct.induction_on with
-    | zero => simp
+    induction y using TensorProduct.inductionOn with
     | add x y hx hy =>
       dsimp only at hx hy ⊢
       rw [map_add (f := _)]
@@ -264,8 +263,7 @@ theorem exists_level_eq_KN : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTG
         map_add' := fun x y ↦ by simp only [map_add (f := _), MulOpposite.unop_add]
         map_smul' := by
           intro r x
-          induction x using TensorProduct.induction_on with
-          | zero => simp
+          induction x using TensorProduct.inductionOn with
           | tmul a y =>
             simp only [TensorProduct.smul_tmul', smul_eq_mul, starT_tmul, RingHom.id_apply]
           | add x y hx hy => simp only [smul_add, map_add (f := _), MulOpposite.unop_add, hx, hy, RingHom.id_apply] }

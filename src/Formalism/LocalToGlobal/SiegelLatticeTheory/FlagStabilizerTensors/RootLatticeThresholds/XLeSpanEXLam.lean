@@ -468,7 +468,7 @@ theorem map_X_of_e {G K : LFlag S r T'} {φ : S.V ≃ₗ[E] S.V} (he : ∀ a, φ
   induction hx using Submodule.span_induction with
   | mem y hy => obtain ⟨a, rfl⟩ := hy; rw [he]; exact Submodule.subset_span ⟨a, rfl⟩
   | zero => simp
-  | add y w _ _ hy hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hw
+  | add y w _ _ hy hw => rw [map_add (f := _)]; exact add_mem hy hw
   | smul k y _ hy => rw [map_smul]; exact Submodule.smul_mem _ k hy
 
 theorem xplus_frame {G K : LFlag S r T'} {φ : S.V ≃ₗ[E] S.V} (hf : ∀ a, frame K a = φ (frame G a))

@@ -23,10 +23,10 @@ private def repOn {O M : Type} [Ring O] [AddCommGroup M] [Module O M] :
   ((Module.End.baseChangeHom ℤ ℚ M).toRingHom).comp (Module.toModuleEnd ℤ M)
 
 private theorem repOn_apply {O M : Type} [Ring O] [AddCommGroup M] [Module O M] (b : O) :
-    (repOn b : Module.End ℚ (ℚ ⊗[ℤ] M)) = (DistribMulAction.toLinearMap ℤ M b).baseChange ℚ := rfl
+    (repOn b : Module.End ℚ (ℚ ⊗[ℤ] M)) = (DistribSMul.toLinearMap ℤ M b).baseChange ℚ := rfl
 
 theorem UpperTheory.exists_rational_equiv_of_rank :
-    ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (Y : PLat D.O D.inv), Function.Surjective (algebraMap (𝓞 D.F) D.O) → Module.finrank ℤ Y.La = Module.finrank ℤ D.La → ∃ e : (ℚ ⊗[ℤ] Y.La) ≃ₗ[ℚ] VQ D, ∀ (c : D.O) (u : ℚ ⊗[ℤ] Y.La), e ((DistribMulAction.toLinearMap ℤ Y.La c).baseChange ℚ u) = actQ D c (e u) := by
+    ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (Y : PLat D.O D.inv), Function.Surjective (algebraMap (𝓞 D.F) D.O) → Module.finrank ℤ Y.La = Module.finrank ℤ D.La → ∃ e : (ℚ ⊗[ℤ] Y.La) ≃ₗ[ℚ] VQ D, ∀ (c : D.O) (u : ℚ ⊗[ℤ] Y.La), e ((DistribSMul.toLinearMap ℤ Y.La c).baseChange ℚ u) = actQ D c (e u) := by
   intro p _ D Y hs hr
   haveI := D.freeLa
   haveI := D.finLa

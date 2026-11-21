@@ -14,6 +14,28 @@ open CompanionTheory.WaveGrid.MomL (mnr momL)
 open CompanionTheory.LimBd.Main (ZuckT ZuckDualT Wsp Box gap_of_box)
 open scoped ENNReal
 
+private theorem sum_natAbs_le_ball_local {n : ℕ} : ∀ e, ∀ ν ∈ ball n e, ∑ i, (ν i).natAbs ≤ e
+  | 0, ν, h => by
+    rw [ball, Finset.mem_singleton] at h
+    simp [h]
+  | e + 1, ν, h => by
+    obtain ⟨x, hx, s, hs, rfl⟩ :=
+      (Finset.mem_image₂ (f := (· + ·)) (s := ball n e) (t := steps n) (c := ν)).mp h
+    have h1 := sum_natAbs_le_ball_local e x hx
+    have h2 : ∑ i, (s i).natAbs ≤ 1 := by
+      have key : ∀ t : Fin n, ∑ i, ((Pi.single t 1 : Fin n → ℤ) i).natAbs = 1 := fun t => by
+        rw [Finset.sum_eq_single t (fun b _ hb => by simp [hb]) (by simp)]
+        simp
+      simp only [steps, Finset.mem_insert, Finset.mem_union, Finset.mem_image, Finset.mem_univ, true_and] at hs
+      rcases hs with rfl | ⟨t, rfl⟩ | ⟨t, rfl⟩
+      · simp
+      · exact (key t).le
+      · simpa only [Pi.neg_apply, Int.natAbs_neg] using (key t).le
+    have h3 : ∑ i, ((x + s) i).natAbs ≤ ∑ i, (x i).natAbs + ∑ i, (s i).natAbs := by
+      rw [← Finset.sum_add_distrib]
+      exact Finset.sum_le_sum fun i _ => Int.natAbs_add_le _ _
+    omega
+
 def gapY (k r : ℕ) : ℝ :=
   ((2 * r + 2 : ℕ) : ℝ) ^ ((9 : ℝ) / 2) *
     (((3 * (r + 1) : ℕ) : ℝ) * ((2 * r + k + 1 : ℕ) : ℝ) ^ 2 + ((2 * r + k + 1 : ℕ) : ℝ) ^ 3)
@@ -244,7 +266,7 @@ theorem wBp_of {t : ∀ n : ℕ, (Fin n → Bool) → ℝ} {Ct : ℝ} (hCt : 0 �
         ENNReal.ofReal (b ^ (max (max C₁ C₂) 0 * ((2 * P.r + 2 : ℕ) : ℝ) ^ 4) *
           max 1 (1 / TBB.Gp p γ) ^ (40 * (P.r + 1) ^ 2)) * TBB.jN2 p F := by
     intro ν hν F hF
-    have hν1 : BranchingSupport.n1 ν ≤ (P.r + 1) * a := sum_natAbs_le_of_mem_ball _ ν hν
+    have hν1 : BranchingSupport.n1 ν ≤ (P.r + 1) * a := sum_natAbs_le_ball_local _ ν hν
     have hbox : (fun s => lam s + (ν s : ℝ)) ∈ Box lam e := fun s => by
       rw [he]
       simpa using abs_ball hν s

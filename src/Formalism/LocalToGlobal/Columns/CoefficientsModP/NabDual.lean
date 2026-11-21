@@ -75,7 +75,7 @@ end
 
 theorem nabDelDual_of (hD : NabDelDescent) (hK : PairBDualK) : NabDelDual := by
   intro K _ _ _ ι _ n lam G M _ hG hM
-  have hMc : ∀ τ, Submodule.IsLattice K (bcLat (starRingEnd K) (M τ)) := fun τ =>
+  have hMc : ∀ τ, Submodule.IsFullLattice K (bcLat (starRingEnd K) (M τ)) := fun τ =>
     bc_bcLat_lattice (j := starRingEnd K) tauLatticeLattice_holds (M τ) (hM τ)
   let GG : ι → GL (Fin n) K := fun τ => Matrix.GeneralLinearGroup.mkOfDetNeZero (G τ) (hG τ).ne_zero
   constructor

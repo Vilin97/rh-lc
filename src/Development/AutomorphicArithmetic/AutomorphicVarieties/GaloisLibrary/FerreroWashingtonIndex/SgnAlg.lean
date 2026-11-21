@@ -21,7 +21,7 @@ private theorem gen2 {G Q W : Type} [Group G] [Finite Q] [AddCommGroup W] (h2 : 
     change ψ x ∈ (LinearMap.range φ).toAddSubgroup
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b ha hb => rw [map_add ψ]; exact add_mem ha hb
     | single g n =>
       have : (MonoidAlgebra.single g n : MonoidAlgebra ℤ G) = n • MonoidAlgebra.single g 1 := by simp
       rw [this, map_zsmul]

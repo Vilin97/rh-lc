@@ -62,7 +62,33 @@ variable {L : Lat S}
 
 theorem exists_mul_mem (hL : IsSelfDualC S L) (v : Pl D) :
     ∃ m : ℕ, 0 < m ∧ ∀ y : Fin S.rank → AE D, (∀ i, y i ∈ intAt D (· = v)) → (m : AE D) • y ∈ latV S L (· = v) := by
-  obtain ⟨N, hN, -, h⟩ := GlobalTheory.LatAlmostStd.exists_commensurable L hL.1
+  have hfull : Submodule.IsFullLattice D.host.E L := by
+    haveI : Submodule.IsLattice D.host.E L := hL.1
+    refine ⟨?_⟩
+    obtain ⟨m, s, s', hs, _, hd⟩ := GlobalTheory.FinPl.LatMem.exists_dualBasis S hL
+    apply eq_top_iff.mpr
+    intro y _
+    have hy : y = ∑ l, (∑ b, (∑ k, star (s' l k) * S.gram k b) * y b) • s l := by
+      funext a
+      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+      have heq : (∑ l, (∑ b, (∑ k, star (s' l k) * S.gram k b) * y b) * s l a) =
+          ∑ b, ∑ l, (∑ k, star (s' l k) * S.gram k b) * y b * s l a := by
+        rw [Finset.sum_comm]
+        exact Finset.sum_congr rfl fun l _ => Finset.sum_mul ..
+      rw [heq]
+      have hterm : ∀ b, (∑ l, (∑ k, star (s' l k) * S.gram k b) * y b * s l a) =
+          (if a = b then 1 else 0) * y b := by
+        intro b
+        calc
+          _ = ∑ l, (s l a * ∑ k, star (s' l k) * S.gram k b) * y b := by
+            refine Finset.sum_congr rfl fun l _ => ?_
+            ring
+          _ = _ := by rw [← Finset.sum_mul, hd]
+      simp_rw [hterm]
+      simp
+    rw [hy]
+    exact Submodule.sum_mem _ fun l _ => Submodule.smul_mem _ _ (Submodule.subset_span (hs l))
+  obtain ⟨N, hN, -, h⟩ := GlobalTheory.LatAlmostStd.exists_commensurable L hfull
   refine ⟨N.natAbs, Int.natAbs_pos.2 hN, fun y hy => ?_⟩
   have h1 : (N : AE D) • y ∈ latV S L (· = v) := by
     have e : (N : AE D) • y = ∑ i, fun k => y i * incA D ((Pi.single i (N • ((1 : 𝓞 D.host.E) : D.host.E)) :

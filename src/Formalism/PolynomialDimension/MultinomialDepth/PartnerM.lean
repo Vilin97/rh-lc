@@ -487,13 +487,13 @@ theorem glAct_keep (LL : Letters N) (j : ℕ) (c d : Fin r) (Q Q' : Set (Fin N �
   refine Submodule.sum_mem _ fun i _ => ?_
   by_cases hi : (i : ℕ) < j
   · by_cases hvi : LL.vec i = true
-    · simp only [if_pos hi, if_pos hvi]
+    · simp only [ite_eq_left hi, ite_eq_left hvi]
       exact XD_keep (i, c) (i, d) Q Q' (fun m hm h1 => hv i hi hvi m hm h1) x hx
-    · simp only [if_pos hi, if_neg hvi, LinearMap.neg_apply]
+    · simp only [ite_eq_left hi, ite_eq_right hvi, LinearMap.neg_apply]
       refine Submodule.neg_mem _ ?_
       have hf : LL.vec i = false := by simpa using hvi
       exact XD_keep (i, d) (i, c) Q Q' (fun m hm h1 => hc i hi hf m hm h1) x hx
-  · simp only [if_neg hi, LinearMap.zero_apply]
+  · simp only [ite_eq_right hi, LinearMap.zero_apply]
     exact Submodule.zero_mem _
 
 theorem glAct_pol (LL : Letters N) (j : ℕ) (c d : Fin r) :
@@ -591,17 +591,17 @@ theorem coeff_cartan (LL : Letters N) (j : ℕ) (c : Fin r) (x : MvPolynomial (F
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases h : (i : ℕ) < j
   · by_cases hv : LL.vec i = true
-    · simp only [if_pos h, if_pos hv]
+    · simp only [ite_eq_left h, ite_eq_left hv]
       show AddMonoidAlgebra.coeff (X (i, c) * pderiv (i, c) x) m = _
       rw [coeff_XD_lemma]
       push_cast
       ring
-    · simp only [if_pos h, if_neg hv, LinearMap.neg_apply, coeff_neg]
+    · simp only [ite_eq_left h, ite_eq_right hv, LinearMap.neg_apply, coeff_neg]
       show -AddMonoidAlgebra.coeff (X (i, c) * pderiv (i, c) x) m = _
       rw [coeff_XD_lemma]
       push_cast
       ring
-  · simp only [if_neg h]
+  · simp only [ite_eq_right h]
     simp
 
 theorem cartan_eig (LL : Letters N) (j : ℕ) (μ : Fin r → ℤ) (x : MvPolynomial (Fin N × Fin r) ℚ_[p])
@@ -697,11 +697,11 @@ theorem lower_action_preserves_weight_le [NeZero r] (LL : Letters N) (j : ℕ) (
   apply glAct_keep
   · intro i hi hvi m hm h1
     simp only [Set.mem_setOf_eq] at hm ⊢
-    rw [(wt_shift LL j c d 0 i hi m).1 hvi h1, if_neg hc0]
+    rw [(wt_shift LL j c d 0 i hi m).1 hvi h1, ite_eq_right hc0]
     exact le_trans (WithTop.coe_le_coe.mpr (by split_ifs <;> omega)) hm
   · intro i hi hvi m hm h1
     simp only [Set.mem_setOf_eq] at hm ⊢
-    rw [(wt_shift LL j c d 0 i hi m).2 hvi h1, if_neg hc0]
+    rw [(wt_shift LL j c d 0 i hi m).2 hvi h1, ite_eq_right hc0]
     exact le_trans (WithTop.coe_le_coe.mpr (by split_ifs <;> omega)) hm
 
 end Wt
@@ -736,7 +736,7 @@ theorem comm_XD [DecidableEq σ] (u v u' v' : σ) (g : MvPolynomial σ k) :
     intro a b
     by_cases h : a = b
     · subst h; simp
-    · rw [if_neg h, pderiv_X_of_ne h]
+    · rw [ite_eq_right h, pderiv_X_of_ne h]
   simp only [Derivation.leibniz, smul_eq_mul, hXa]
   rw [pderiv_pderiv_lemma v v' g]
   split_ifs <;> ring
@@ -783,7 +783,7 @@ theorem tm_comm_ne (LL : Letters N) (j : ℕ) (i i' : Fin N) (hii : i ≠ i') (c
     have h1 : u' ≠ v := fun h => hii (by rw [← hv, ← h, hu'])
     have h2 : u ≠ v' := fun h => hii (by rw [← hu, h, hv'])
     have := comm_XD (k := ℚ_[p]) u v u' v' y
-    rw [if_neg h1, if_neg h2, sub_zero, sub_eq_zero] at this
+    rw [ite_eq_right h1, ite_eq_right h2, sub_zero, sub_eq_zero] at this
     exact this
   have hform : ∀ (l : Fin N) (e f : Fin r), ∃ (α : ℚ_[p]) (u v : Fin r),
       ∀ z, tm (p := p) LL j l e f z = α • (X (l, u) * pderiv (l, v) z) := by
@@ -791,13 +791,13 @@ theorem tm_comm_ne (LL : Letters N) (j : ℕ) (i i' : Fin N) (hii : i ≠ i') (c
     by_cases hl : (l : ℕ) < j
     · by_cases hv : LL.vec l = true
       · refine ⟨1, e, f, fun z => ?_⟩
-        simp only [tm, if_pos hl, if_pos hv, one_smul]
+        simp only [tm, ite_eq_left hl, ite_eq_left hv, one_smul]
         rfl
       · refine ⟨-1, f, e, fun z => ?_⟩
-        simp only [tm, if_pos hl, if_neg hv, neg_one_smul]
+        simp only [tm, ite_eq_left hl, ite_eq_right hv, neg_one_smul]
         rfl
     · refine ⟨0, e, f, fun z => ?_⟩
-      simp only [tm, if_neg hl, zero_smul]
+      simp only [tm, ite_eq_right hl, zero_smul]
       rfl
   obtain ⟨α, u, v, hα⟩ := hform i c d
   obtain ⟨β, u', v', hβ⟩ := hform i' a b
@@ -812,7 +812,7 @@ theorem tm_comm_eq (LL : Letters N) (j : ℕ) (i : Fin N) (c d a b : Fin r)
   have key2 := comm_XD (k := ℚ_[p]) (i, d) (i, c) (i, b) (i, a) y
   by_cases hij : (i : ℕ) < j
   · by_cases hv : LL.vec i = true
-    · simp only [tm, if_pos hij, if_pos hv]
+    · simp only [tm, ite_eq_left hij, ite_eq_left hv]
       show X (i, c) * pderiv (i, d) (X (i, a) * pderiv (i, b) y) -
           X (i, a) * pderiv (i, b) (X (i, c) * pderiv (i, d) y) =
         (if d = a then X (i, c) * pderiv (i, b) y else 0) - (if b = c then X (i, a) * pderiv (i, d) y else 0)
@@ -822,7 +822,7 @@ theorem tm_comm_eq (LL : Letters N) (j : ℕ) (i : Fin N) (c d a b : Fin r)
       · subst hda; simp [hbc, hbc.symm]
       · subst hbc; simp [hda, hda.symm]
       · simp [hda, hbc, hda.symm, hbc.symm]
-    · simp only [tm, if_pos hij, if_neg hv]
+    · simp only [tm, ite_eq_left hij, ite_eq_right hv]
       show -(X (i, d) * pderiv (i, c) (-(X (i, b) * pderiv (i, a) y))) -
           -(X (i, b) * pderiv (i, a) (-(X (i, d) * pderiv (i, c) y))) =
         (if d = a then -(X (i, b) * pderiv (i, c) y) else 0) - (if b = c then -(X (i, d) * pderiv (i, a) y) else 0)
@@ -833,7 +833,7 @@ theorem tm_comm_eq (LL : Letters N) (j : ℕ) (i : Fin N) (c d a b : Fin r)
       · subst hda; simp [hbc, hbc.symm, sub_neg_eq_add, neg_add_eq_sub]
       · subst hbc; simp [hda, hda.symm, sub_neg_eq_add, neg_add_eq_sub]
       · simp [hda, hbc, hda.symm, hbc.symm]
-  · simp only [tm, if_neg hij]
+  · simp only [tm, ite_eq_right hij]
     simp
 
 theorem glAct_comm (LL : Letters N) (j : ℕ) (c d a b : Fin r) (x : MvPolynomial (Fin N × Fin r) ℚ_[p]) :
@@ -892,7 +892,7 @@ theorem eulX {σ : Type} {s : ℕ} (t : Fin s → σ) (ht : Function.Injective t
   subst hm
   rw [Finset.sum_eq_single c]
   · simp
-  · intro b _ hb; rw [Finsupp.single_apply, if_neg (fun h => hb (ht h).symm)]
+  · intro b _ hb; rw [Finsupp.single_apply, ite_eq_right (fun h => hb (ht h).symm)]
   · simp
 
 theorem eul_XD {σ : Type} {s : ℕ} (t : Fin s → σ) (ht : Function.Injective t) (c d : Fin s)
@@ -1201,8 +1201,8 @@ theorem vdm (H : MvPolynomial σ K →ₗ[K] MvPolynomial σ K) (f : (σ →₀ 
         ext m
         simp only [coeff_smul, smul_eq_mul, coeff_compP, hy]
         by_cases h : f m = k
-        · rw [if_pos h, if_pos h, h, inv_mul_cancel_left₀ hka]
-        · rw [if_neg h, if_neg h, mul_zero]
+        · rw [ite_eq_left h, ite_eq_left h, h, inv_mul_cancel_left₀ hka]
+        · rw [ite_eq_right h, ite_eq_right h, mul_zero]
       rw [hrel]
       exact S.smul_mem _ (ih _ hyS hysupp k)
     intro k
@@ -1216,12 +1216,12 @@ theorem vdm (H : MvPolynomial σ K →ₗ[K] MvPolynomial σ K) (f : (σ →₀ 
         · have hm := hsupp m (MvPolynomial.mem_support_iff.mpr hc)
           rw [Finset.mem_insert] at hm
           by_cases hfk : f m = a
-          · rw [if_pos hfk, Finset.sum_eq_zero, sub_zero]
+          · rw [ite_eq_left hfk, Finset.sum_eq_zero, sub_zero]
             intro k' hk'
-            exact if_neg (fun h => ha (by rw [← hfk, h]; exact hk'))
-          · rw [if_neg hfk, Finset.sum_eq_single (f m), if_pos rfl, sub_self]
+            exact ite_eq_right (fun h => ha (by rw [← hfk, h]; exact hk'))
+          · rw [ite_eq_right hfk, Finset.sum_eq_single (f m), ite_eq_left rfl, sub_self]
             · intro b _ hb
-              rw [if_neg (Ne.symm hb)]
+              rw [ite_eq_right (Ne.symm hb)]
             · intro hn
               exact absurd (hm.resolve_left hfk) hn
       rw [hdec]
@@ -1303,7 +1303,7 @@ theorem exists_hw (LL : Letters N) (j : ℕ) (S : Submodule ℚ_[p] (MvPolynomia
     refine ⟨wv m0, hWfin.mem_toFinset.mpr ⟨_, wcomp_mem LL j S (fun c => hS c c) (wv m0) x hx, ?_, ?_⟩⟩
     · intro h0
       have := congrArg (AddMonoidAlgebra.coeff · m0) h0
-      rw [coeff_compP, if_pos (fun c => rfl), coeff_zero] at this
+      rw [coeff_compP, ite_eq_left (fun c => rfl), AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
       exact (mem_support_iff.mp hm0) this
     · rw [WtSpC, mem_restrictSupport_iff]
       intro m hm c _
@@ -1322,7 +1322,7 @@ theorem exists_hw (LL : Letters N) (j : ℕ) (S : Submodule ℚ_[p] (MvPolynomia
   have h1 := hmax _ hmem
   have h2 : (-∑ c' : Fin r, ((c' : ℕ) : ℤ) * shiftW μ c d c') = (-∑ c' : Fin r, ((c' : ℕ) : ℤ) * μ c') + (((d : ℕ) : ℤ) - ((c : ℕ) : ℤ)) := by
     simp only [shiftW, mul_add, mul_sub, Finset.sum_add_distrib, Finset.sum_sub_distrib, mul_ite, mul_one, mul_zero,
-      Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      Finset.sum_ite_eq, Finset.mem_univ, ite_true]
     ring
   have h3 : ((c : ℕ) : ℤ) < ((d : ℕ) : ℤ) := by exact_mod_cast hcd
   linarith
@@ -1370,16 +1370,16 @@ theorem glAct_min (LL : Letters N) (j : ℕ) (c d : Fin r) : glAct p LL j c d = 
   unfold glAct
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases h : (i : ℕ) < j
-  · rw [if_pos h, if_pos (lt_min h i.isLt)]
-  · rw [if_neg h, if_neg (fun h' => h (lt_of_lt_of_le h' (min_le_left _ _)))]
+  · rw [ite_eq_left h, ite_eq_left (lt_min h i.isLt)]
+  · rw [ite_eq_right h, ite_eq_right (fun h' => h (lt_of_lt_of_le h' (min_le_left _ _)))]
 
 theorem wt_min (LL : Letters N) (j : ℕ) (c : Fin r) : wt LL j c = wt LL (min j N) c := by
   funext m
   unfold wt
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases h : (i : ℕ) < j
-  · rw [if_pos h, if_pos (lt_min h i.isLt)]
-  · rw [if_neg h, if_neg (fun h' => h (lt_of_lt_of_le h' (min_le_left _ _)))]
+  · rw [ite_eq_left h, ite_eq_left (lt_min h i.isLt)]
+  · rw [ite_eq_right h, ite_eq_right (fun h' => h (lt_of_lt_of_le h' (min_le_left _ _)))]
 
 theorem ycond_min [NeZero r] (LL : Letters N) (j : ℕ) (Mt : WithTop ℤ) :
     YCond p (r := r) LL j Mt = YCond p (r := r) LL (min j N) Mt := by
@@ -1442,8 +1442,8 @@ theorem fock_monomial {σ : Type} (z : MvPolynomial σ ℚ_[p]) (m0 : σ →₀ 
   classical
   unfold fock
   rw [Finset.sum_eq_single m0]
-  · rw [coeff_monomial, if_pos rfl, mul_one]
-  · intro b _ hb; rw [coeff_monomial, if_neg (Ne.symm hb)]; ring
+  · rw [coeff_monomial, ite_eq_left rfl, mul_one]
+  · intro b _ hb; rw [coeff_monomial, ite_eq_right (Ne.symm hb)]; ring
   · intro h; exact absurd hm0 h
 
 theorem fockN_monomial_ge (LL : Letters N) (z : MvPolynomial (Fin N × Fin r) ℚ_[p]) (m0 : Fin N × Fin r →₀ ℕ)

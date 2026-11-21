@@ -7,6 +7,7 @@ public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTenso
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareTriple
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareStanding
 public import Formalism.LocalToGlobal.Columns.BrpStarLatLattice
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 
 @[expose] public section
 
@@ -130,8 +131,24 @@ theorem negConj_isHerm : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {
   have hR : Node.InRange D.R.m (.grid (i : ℕ) (j : ℕ)) := ⟨i.2.le, j.2.le⟩
   have hV := node_isV G hL hR
   have hsd : IsSelfDualC (spW₁ G i j) (G.Λ (.grid (i : ℕ) (j : ℕ))) := hV.sd
-  have hlat : Submodule.IsLattice D.host.E (Formalism.L2.Col.starLat D.host.E (G.Λ (.grid (i : ℕ) (j : ℕ)))) :=
-    Formalism.L2.Col.brp_starLat_lattice _ _ hsd.1
+  have hlat : Submodule.IsFullLattice D.host.E (Formalism.L2.Col.starLat D.host.E (G.Λ (.grid (i : ℕ) (j : ℕ)))) := by
+    let N := G.Λ (.grid (i : ℕ) (j : ℕ))
+    have hN : Submodule.IsFullLattice D.host.E N :=
+      Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _ hsd
+    letI : Submodule.IsLattice D.host.E (Formalism.L2.Col.starLat D.host.E N) :=
+      Formalism.L2.Col.brp_starLat_lattice D.host.E N hsd.1
+    refine ⟨?_⟩
+    have heq : star '' (N : Set (Fin (spW₁ G i j).rank → D.host.E)) =
+        (Formalism.L2.Col.starLat D.host.E N : Set (Fin (spW₁ G i j).rank → D.host.E)) := by
+      ext x
+      change (∃ y, y ∈ N ∧ star y = x) ↔ star x ∈ N
+      constructor
+      · rintro ⟨y, hy, rfl⟩
+        simpa using hy
+      · intro hx
+        exact ⟨star x, hx, star_star x⟩
+    rw [← heq]
+    exact Formalism.L2.Col.brp_star_span_top D.host.E _ (Submodule.IsFullLattice.span_eq_top (self := hN))
   have hb : ∀ v : B.P, ∃ β, GlobalTheory.AdelicU.IsSplitBasis (B.τ v) (Formalism.L2.Col.starLat D.host.E (G.Λ (.grid (i : ℕ) (j : ℕ)))) β :=
     fun v => GlobalTheory.AdelicU.exists_isSplitBasis (B.τ v) _ (GlobalTheory.AdelicU.isCMExt_host D)
   refine ⟨Formalism.L2.Col.starLat D.host.E (G.Λ (.grid (i : ℕ) (j : ℕ))),

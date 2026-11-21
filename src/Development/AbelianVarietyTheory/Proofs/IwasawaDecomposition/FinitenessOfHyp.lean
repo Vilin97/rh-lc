@@ -12,6 +12,8 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForm
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ThirdLevelOfGoodTwists
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TiedColumnData
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RingSpecNormalisedCharacterEq
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.StrictHenselianAcyclic
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsPolarizedTwistAbsPow
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChebSplitNd
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
@@ -100,9 +102,7 @@ def natW : NAt hL (withLoc L) (cfL L (cfOf x)) (chL L l.c.ch) (tpL L l.c.tp) whe
   host := ⟨(by with_unfolding_all exact (l.a.host.fr :)), (by with_unfolding_all exact (l.a.host.jLL :)), (by with_unfolding_all exact (l.a.host.embLL :))⟩
   frameN := by
     intro y
-    with_unfolding_all
-      rw [al.jE]
-      exact l.a.frame y
+    with_unfolding_all exact (RingHom.congr_fun al.jE y).trans (l.a.frame y)
   chrN := al.chrN
   chrGal := al.chrGal
   Pq := (by with_unfolding_all exact (l.Pq :))
@@ -140,7 +140,8 @@ def rowD : NRow (D := DL x L) (natD l Sp Au ss al hLg) (datL x L).R (datL x L).F
   nexp := ysL L l
   hecke := hkHL L l
   grp := grpD l L
-  rowLoc := (by with_unfolding_all exact ((al.loc ((by with_unfolding_all exact ((frameY Y) :))) ((by with_unfolding_all exact ((eq_of_heq (kc% hY.rep : HEq (repOf Y) (kc% (repOf x.r.Y) : type_of% (repOf Y)))) :)))) :))
+  rowLoc := by
+    with_unfolding_all exact al.loc (frameY Y) (eq_of_heq hY.rep)
   S_eq := (by with_unfolding_all exact ((SL_heq L l.rat) :))
   hL_eq := (by with_unfolding_all exact ((HEq.refl l.rat.In.hL) :))
   rep_eq := (by with_unfolding_all exact (hY.rep.symm :))

@@ -43,23 +43,29 @@ theorem placeMap_up {S T : HSp D} (B : Base S T) (a : AE D) :
   exact (by with_unfolding_all exact ((congrArg Classical.epsilon hP) :))
 
 theorem vec_up {S T : HSp D} (B : Base S T) (Q ω) :
-    (baseUp r B).F.vec (baseUp r B).G (kc% Q) (kc% ω) = kc% (B.F.vec B.G Q ω) := by
+    (baseUp r B).F.vec (baseUp r B).G (by with_unfolding_all exact (Q :))
+      (by with_unfolding_all exact (ω :)) = (by with_unfolding_all exact (B.F.vec B.G Q ω :)) := by
   have e := placeMap_up r B (halfIdem B.G.Pg Q)
-  show (baseUp r B).F.placeMap (kc% (halfIdem B.G.Pg Q)) (kc% (B.F.datumFn B.G Q ω)) = _
+  show (baseUp r B).F.placeMap (by with_unfolding_all exact (halfIdem B.G.Pg Q :))
+    (by with_unfolding_all exact (B.F.datumFn B.G Q ω :)) = _
   rw [e]
-  exact kc% rfl
+  with_unfolding_all exact rfl
 
 
 open Classical in
 theorem vecAt_up {S T : HSp D} (B : Base S T) (Q φ) :
-    (baseUp r B).vecAt (kc% Q) (kc% φ) = kc% (B.vecAt Q φ) := by
-  show (baseUp r B).F.vec (baseUp r B).G (kc% (B.de.Q ∪ Q)) (kc% (B.locFn Q φ)) = _
+    (baseUp r B).vecAt (by with_unfolding_all exact (Q :))
+      (by with_unfolding_all exact (φ :)) = (by with_unfolding_all exact (B.vecAt Q φ :)) := by
+  show (baseUp r B).F.vec (baseUp r B).G (by with_unfolding_all exact (B.de.Q ∪ Q :))
+    (by with_unfolding_all exact (B.locFn Q φ :)) = _
   exact vec_up r B _ _
 
 theorem series_up {S T : HSp D} (B : Base S T) (ω : PairRep S T) (Q φ h) :
-    series (baseUp r B).F (kc% ω) ((baseUp r B).vecAt (kc% Q) (kc% φ)) (kc% h) = kc% (series B.F ω (B.vecAt Q φ) h) := by
+    series (baseUp r B).F (by with_unfolding_all exact (ω :))
+      ((baseUp r B).vecAt (by with_unfolding_all exact (Q :)) (by with_unfolding_all exact (φ :)))
+      (by with_unfolding_all exact (h :)) = (by with_unfolding_all exact (series B.F ω (B.vecAt Q φ) h :)) := by
   rw [vecAt_up r B]
-  exact kc% rfl
+  with_unfolding_all exact rfl
 
 theorem theta_up {S T : HSp D} (B : Base S T) (ω : PairRep S T) (h : GA D S) :
     (baseUp r B).theta ((ω)) ((h)) = (B.theta ω h) :=
@@ -76,10 +82,12 @@ theorem gen_up {S T : HSp D} (B : Base S T) (ω : PairRep S T) (ψ : Twist D Cir
   exact (by with_unfolding_all exact (rfl :))
 
 theorem genSet_up {S T : HSp D} (B : Base S T) (ω : PairRep S T) (ψ : Twist D Circle) (h P) :
-    (baseUp r B).genSet ((by with_unfolding_all exact (ω :))) (twistUp r ψ) (kc% h) (kc% P) = kc% (B.genSet ω ψ h P) := by
+    (baseUp r B).genSet (by with_unfolding_all exact (ω :)) (twistUp r ψ)
+      (by with_unfolding_all exact (h :)) (by with_unfolding_all exact (P :)) =
+        (by with_unfolding_all exact (B.genSet ω ψ h P :)) := by
   unfold Base.genSet
   rw [gen_up]
-  exact kc% rfl
+  with_unfolding_all exact rfl
 
 def univUp {C : Type} [AddCommGroup C] (u : UnivTwist D C) : UnivTwist (overD D r) C := ⟨(by with_unfolding_all exact (u.del :)), (by with_unfolding_all exact (u.kap :))⟩
 

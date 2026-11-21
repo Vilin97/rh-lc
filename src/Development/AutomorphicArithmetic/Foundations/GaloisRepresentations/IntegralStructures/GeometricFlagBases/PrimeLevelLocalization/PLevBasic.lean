@@ -29,17 +29,15 @@ theorem mulF_mem (x : 𝓞 D.F) {v} (hv : v ∈ LaHat D) : mulF D x v ∈ LaHat 
     obtain ⟨a, y, ha, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨a, _, ha, mulF_tmul x a y⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
 
 theorem end_ext {f g : AfP p ⊗[ℚ] VQ D →+ AfP p ⊗[ℚ] VQ D}
     (h : ∀ (a : AfP p) (r : ℚ) (y : D.La), f (a ⊗ₜ (r ⊗ₜ y)) = g (a ⊗ₜ (r ⊗ₜ y))) (v) : f v = g v := by
-  induction v using TensorProduct.induction_on with
-  | zero => rw [map_zero, map_zero]
+  induction v using TensorProduct.inductionOn with
   | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | tmul a z =>
-    induction z using TensorProduct.induction_on with
-    | zero => rw [TensorProduct.tmul_zero, map_zero, map_zero]
+    induction z using TensorProduct.inductionOn with
     | add b c hb hc => rw [TensorProduct.tmul_add, map_add (f := _), map_add (f := _), hb, hc]
     | tmul r y => exact h a r y
 
@@ -57,8 +55,7 @@ theorem mulF_one (v) : mulF D 1 v = v := by
 theorem actG_mulF (g : G.GAf) (x : 𝓞 D.F) (v) : L.actG g (mulF D x v) = mulF D x (L.actG g v) := by
   have key : ∀ c : AfP p ⊗[ℚ] G.C, actOn L.rep (AfP p) c * mulF D x = mulF D x * actOn L.rep (AfP p) c := by
     intro c
-    induction c using TensorProduct.induction_on with
-    | zero => simp
+    induction c using TensorProduct.inductionOn with
     | add a b ha hb => rw [map_add (f := _), add_mul, mul_add, ha, hb]
     | tmul a y =>
       have h := (L.rep_range (L.rep y)).1 ⟨y, rfl⟩ (algebraMap (𝓞 D.F) D.O x)
@@ -97,11 +94,11 @@ theorem Integ_idHat {g : G.GAf} (hg : Integ L g) {𝔟 : Ideal (𝓞 D.F)} {z} (
     obtain ⟨x, hx, v, hv, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨x, hx, _, hg v hv, actG_mulF L g x v⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
 
 theorem actG_mul (g h : G.GAf) (v) : L.actG (g * h) v = L.actG g (L.actG h v) := by
-  rw [map_mul, Module.End.mul_apply]
+  rw [map_mul, mul_apply_eq_comp]
 
 theorem actG_inv_act (g : G.GAf) (v) : L.actG g⁻¹ (L.actG g v) = v := by
   rw [← actG_mul, inv_mul_cancel, map_one, Module.End.one_apply]

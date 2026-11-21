@@ -6,6 +6,7 @@ public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.EventuallyCongOne
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LamRdefEqSgTrue
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ReadsDeco
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemOfPerpPerp
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ClassPresBasic
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MulVecMemHatSwap
 public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.AdelicUnitaryEqRealMulFiniteSplit
@@ -37,11 +38,11 @@ theorem repr_map_mem {V V' ι ι' : Type} [AddCommGroup V] [Module K V] [AddComm
 
 omit [StarRing K] in
 theorem isIntegral_of_line {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
-    (N : Submodule (𝓞 K) V) (hN : Submodule.IsLattice K N) {v : V} (hv : v ≠ 0) (l : K)
+    (N : Submodule (𝓞 K) V) (hN : Submodule.IsFullLattice K N) {v : V} (hv : v ≠ 0) (l : K)
     (h : ∀ a : K, a • v ∈ N → l • a • v ∈ N) : IsIntegral (𝓞 K) l := by
   let M : Submodule (𝓞 K) V := N ⊓ (Submodule.span K {v}).restrictScalars (𝓞 K)
   have hM : M.FG := by
-    haveI : Module.Finite (𝓞 K) N := Module.Finite.iff_fg.2 hN.fg
+    haveI : Module.Finite (𝓞 K) N := Module.Finite.iff_fg.2 hN.toIsLattice.fg
     exact Submodule.FG.of_le_of_isNoetherian (inf_le_left : M ≤ N)
   have hne : M ≠ ⊥ := by
     have hv' : v ∈ Submodule.span K (N : Set V) := hN.span_eq_top ▸ Submodule.mem_top
@@ -145,14 +146,21 @@ theorem exists_unit (S : GSD K) (hG : S.Good 1) (hR : S.Rat) (hp : ∀ x, S.pair
     rw [mul_comm]
     exact this
   rw [hG.ok.nab_smul] at le
-  have i1 : IsIntegral (𝓞 K) l := isIntegral_of_line _ (hG.nab_lat _) v0 l fun a ha => by
+  have hnab : Submodule.IsFullLattice K (S.Nab (S.outSec.rep c)) := by
+    letI : Module.Finite K S.V := Module.Finite.of_basis S.bV
+    have hlat := hG.nab_lat (S.outSec.rep c)
+    refine { toIsLattice := hlat, span_eq_top := top_le_iff.mp ?_ }
+    rw [← GlobalTheory.Mass.RowPerp.span_dual_eq_top hG.nondeg _ hlat.fg]
+    refine Submodule.span_mono fun x hx => hG.del_le _ ?_
+    simpa only [Nat.cast_one, one_smul] using hG.dual_le _ x hx
+  have i1 : IsIntegral (𝓞 K) l := isIntegral_of_line _ hnab v0 l fun a ha => by
     obtain ⟨_, ⟨w, hw, rfl⟩, h2⟩ := le.le ⟨_, ha, rfl⟩
     have : w = l • a • v := gi (e0.injective (by
       refine h2.trans ?_
       show e (a • v) = _
       rw [map_smul, H2, smul_comm l a, map_smul, map_smul, map_smul, map_smul]))
     exact this ▸ hw
-  have i2 : IsIntegral (𝓞 K) l⁻¹ := isIntegral_of_line _ (hG.nab_lat _) v0 l⁻¹ fun a ha => by
+  have i2 : IsIntegral (𝓞 K) l⁻¹ := isIntegral_of_line _ hnab v0 l⁻¹ fun a ha => by
     obtain ⟨w, hw, h2⟩ := le.ge ⟨_, ⟨_, ha, rfl⟩, rfl⟩
     have : w = l⁻¹ • a • v := e.injective (by
       refine h2.trans ?_

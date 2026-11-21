@@ -204,27 +204,29 @@ def ReadSame.what₂ (s : ReadSame N h t Y L) : RowsT K w (Db.setDivZ Z N h) Wt 
 
 
 set_option maxHeartbeats 2000000 in
-theorem ReadSame.rowsSame (s : ReadSame N h t Y L) : RowsSame t s.what₂ where
-  Xg := rfl
-  tr := rfl
-  core := (by with_unfolding_all exact ((HEq.refl (datMv N h t.r.z).core) :))
-  R := (by with_unfolding_all exact ((HEq.refl (datMv N h t.r.z).R) :))
-  cG := (by with_unfolding_all exact ((datMv_cG N h t.r.z) :))
-  tup := (by with_unfolding_all exact (s.tup :))
-  tupT := (by with_unfolding_all exact (s.tupT :))
-  PY := (by with_unfolding_all exact (s.PY :))
-  PW := (by with_unfolding_all exact (s.PW :))
-  rep := (by with_unfolding_all exact (s.rep :))
-  jE := (by with_unfolding_all exact (s.jE :))
-  heq_eigen_embedding_zero := (by with_unfolding_all exact (s.heq_eigen_embedding_zero :))
-  eE := (by with_unfolding_all exact (s.eE :))
-  jA := (by with_unfolding_all exact (s.jA :))
-  jA0 := (by with_unfolding_all exact (s.jA0 :))
-  eMt := (by with_unfolding_all exact (s.eMt :))
-  eW := (by with_unfolding_all exact (s.eW :))
-  jW := (by with_unfolding_all exact (s.jW :))
-  eRR := (by with_unfolding_all exact (s.eRR :))
-  eRR0 := (by with_unfolding_all exact (s.eRR0 :))
+theorem ReadSame.rowsSame (s : ReadSame N h t Y L) : RowsSame t s.what₂ := by
+  exact {
+    Xg := rfl
+    tr := rfl
+    core := (by with_unfolding_all exact ((HEq.refl (datMv N h t.r.z).core) :))
+    R := (by with_unfolding_all exact ((HEq.refl (datMv N h t.r.z).R) :))
+    cG := (by with_unfolding_all exact ((datMv_cG N h t.r.z) :))
+    tup := (by with_unfolding_all exact (s.tup :))
+    tupT := (by with_unfolding_all exact (s.tupT :))
+    PY := (by with_unfolding_all exact (s.PY :))
+    PW := (by with_unfolding_all exact (s.PW :))
+    rep := (by with_unfolding_all exact (s.rep :))
+    jE := (by with_unfolding_all exact (s.jE :))
+    heq_eigen_embedding_zero := (by with_unfolding_all exact (s.heq_eigen_embedding_zero :))
+    eE := (by with_unfolding_all exact (s.eE :))
+    jA := (by with_unfolding_all exact (s.jA :))
+    jA0 := (by with_unfolding_all exact (s.jA0 :))
+    eMt := (by with_unfolding_all exact (s.eMt :))
+    eW := (by with_unfolding_all exact (s.eW :))
+    jW := (by with_unfolding_all exact (s.jW :))
+    eRR := (by with_unfolding_all exact (s.eRR :))
+    eRR0 := (by with_unfolding_all exact (s.eRR0 :))
+  }
 
 
 set_option maxHeartbeats 2000000 in
@@ -340,7 +342,7 @@ def ReadSame.rxs (s : ReadSame N h t Y L) (x : RXs t) : RXs s.what₂ where
   canon := (by with_unfolding_all exact (x.canon :))
   rank := (by with_unfolding_all exact (x.rank :))
   pb := (by with_unfolding_all exact (x.pb :))
-  std := kc% x.std
+  std := by with_unfolding_all exact (x.std :)
 
 end Rows
 
@@ -349,11 +351,13 @@ set_option maxHeartbeats 4000000 in
 theorem ReadSame.objT {N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V} {h : B.Word → ℝ} {O : Obj2 (w.D Z)} {t : RowsT K w Z Wt O.p0}
     {Y : Read (datMv N h t.r.z).R.toRealDat (datMv N h t.r.z).F.lv2 ((p0Mv N h O.p0))}
     {L : ReadL (datMv N h t.r.z).R (datMv N h t.r.z).F ((p0Mv N h O.p0)) Y} (s : ReadSame N h t Y L) (H : ObjT O t) :
-    ObjT (Z := Db.setDivZ Z N h) (Wt := Wt) (K := K) (O.tr N h) ((by with_unfolding_all exact (s.what₂ :))) where
-  amb := (by with_unfolding_all exact ((And.intro (s.amb1 (a := O.amb) (((O.tr N h).amb)) (((Eq.refl O.amb.MtH))) (((HEq.refl O.amb.jAmb))) ((H.amb.1)))
-    (s.amb0 (a := O.amb0) (((O.tr N h).amb0)) (((Eq.refl O.amb0.MtH))) (((HEq.refl O.amb0.jAmb))) ((H.amb.2)))) : _))
-  mjH := (by with_unfolding_all exact ((s.mj_fwd (X := O.X) ((H.mjH))) : _))
-  kapR σ := (by with_unfolding_all exact (((H.kapR σ).trans (GlobalTheory.EX.OB.kapSharp_tr (D := w.D Z) N h).symm) :))
+    ObjT (Z := Db.setDivZ Z N h) (Wt := Wt) (K := K) (O.tr N h) ((by with_unfolding_all exact (s.what₂ :))) := by
+  exact {
+    amb := (by with_unfolding_all exact ((And.intro (s.amb1 (a := O.amb) (((O.tr N h).amb)) (((Eq.refl O.amb.MtH))) (((HEq.refl O.amb.jAmb))) ((H.amb.1)))
+      (s.amb0 (a := O.amb0) (((O.tr N h).amb0)) (((Eq.refl O.amb0.MtH))) (((HEq.refl O.amb0.jAmb))) ((H.amb.2)))) : _))
+    mjH := (by with_unfolding_all exact ((s.mj_fwd (X := O.X) ((H.mjH))) : _))
+    kapR σ := (by with_unfolding_all exact (((H.kapR σ).trans (GlobalTheory.EX.OB.kapSharp_tr (D := w.D Z) N h).symm) :))
+  }
 
 
 end GlobalTheory.Mem.R3.Rw.DivMv

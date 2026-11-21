@@ -120,13 +120,43 @@ theorem finite_quot_of_reps {H : Type} [AddCommGroup H] [Module (𝓞 E) H] (M :
 
 variable [StarRing E] {a b : ℕ}
 
+theorem full_of_sd {n : ℕ} {L : Submodule (𝓞 E) (Sp E n)}
+    (hL : IsSdLat L) : Submodule.IsFullLattice E L := by
+  let := hL.1
+  refine { span_eq_top := ?_ }
+  let W := Submodule.span E (L : Set (Sp E n))
+  change W = ⊤
+  by_contra hW
+  let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+  let g : Sp E n →ₗ[E] Module.Dual E W :=
+    (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+  have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Sp E n) := by
+    rw [Subspace.dual_finrank_eq]
+    exact Submodule.finrank_lt hW
+  obtain ⟨x, hx, hx₀⟩ :=
+    Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+  have hsmul (a : E) : a • e x ∈ L := by
+    rw [← hL.2, dualBasic_mem_dual]
+    intro y hy
+    apply hStd_mem_one_symm
+    have hxy : hStd E n (e x) y = 0 :=
+      congrArg (fun f : Module.Dual E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+    simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+  let i : E →ₗ[𝓞 E] L :=
+    ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict L hsmul
+  let : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.mpr hL.1.fg
+  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+    smul_left_injective E (fun hz => hx₀ (e.map_eq_zero_iff.mp hz)) (congrArg Subtype.val hab)
+  exact RingOfIntegers.not_isField E
+    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+
 def homG (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b)) : Submodule (𝓞 E) (HomE E a b) where
   carrier := {x | ∀ y ∈ N, x y ∈ N'}
   add_mem' := fun hx hx' y hy => add_mem (hx y hy) (hx' y hy)
   zero_mem' := fun _ _ => zero_mem _
   smul_mem' := fun r _ hx y hy => Submodule.smul_mem _ r (hx y hy)
 
-theorem homG_fg (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b)) (hN : Submodule.IsLattice E N)
+theorem homG_fg (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b)) (hN : Submodule.IsFullLattice E N)
     (hN' : Submodule.IsLattice E N') : (homG N N').FG := by
   obtain ⟨G, hG⟩ := hN.fg
   have : Module.Finite (𝓞 E) ↥N' := Module.Finite.iff_fg.2 hN'.fg
@@ -138,8 +168,8 @@ theorem homG_fg (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E
     intro x x' h
     apply Subtype.ext
     have hspan : Submodule.span E (G : Set (Sp E a)) = ⊤ := by
-      intro s hs hli
-      exact (LinearIndependent.iff_fractionRing _ _).mp hli
+      rw [← Submodule.span_span_of_tower (𝓞 E), hG]
+      exact hN.span_eq_top
     refine LinearMap.ext_on hspan fun g hg => ?_
     exact congrArg Subtype.val (congrFun h ⟨g, hg⟩)
   have : Module.Finite (𝓞 E) ↥(homG N N') := Module.Finite.of_injective ev hinj
@@ -206,7 +236,7 @@ theorem homAt_div (S : Finset (HeightOneSpectrum (𝓞 E))) (N : Submodule (𝓞
 
 theorem lattice_classes_finite_refinement (X : Fields) (a b : ℕ) (Sall : Finset (HeightOneSpectrum (𝓞 X.E))) : LatFin (X := X) a b Sall := by
   intro N N' c c' hN hN' _ hc'
-  obtain ⟨F, hF, hFM⟩ := semilocal_reps Sall (homG N N') (homAt Sall N N') (homG_fg N N' hN.1 hN'.1) (homG_le Sall N N')
+  obtain ⟨F, hF, hFM⟩ := semilocal_reps Sall (homG N N') (homAt Sall N N') (homG_fg N N' (full_of_sd hN) hN'.1) (homG_le Sall N N')
     (fun x hx P hP => homAt_clear Sall N N' hN.1.fg x hx P hP) c' hc' (fun x hx j hj => homAt_div Sall N N' c' hc' x hx j hj)
   exact finite_quot_of_reps _ c c' F hF hFM
 
@@ -456,7 +486,7 @@ theorem Seam.sd_lat (hok : s.Ok) {n : ℕ} {N : Submodule (𝓞 X.E) (Sp X.E n)}
   · rw [eq_top_iff]
     intro y _
     have h1 : (fun i => s.iE.symm (y i) : Sp X.E n) ∈ Submodule.span X.E (N : Set (Sp X.E n)) := by
-      rw [hN.1.span_eq_top]; trivial
+      rw [(full_of_sd hN).span_eq_top]; trivial
     have h2 := s.vec_spanE _ h1
     rw [s.vec_surj] at h2
     exact Submodule.span_mono (fun z hz => Submodule.subset_span hz) h2
@@ -534,7 +564,7 @@ theorem finite_div_quot {E : Type} [Field E] [NumberField E] {H : Type} [AddComm
 theorem kerFin {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ} (Sall : Finset (HeightOneSpectrum (𝓞 E)))
     (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b)) (hN : IsSdLat N) (hN' : IsSdLat N') (cA cB : ℕ) (hA : 0 < cA) (hB : 0 < cB) :
     Finite (↥(divLat cA (homAt Sall N N')) ⧸ (mulLat cB (homAt Sall N N')).comap (divLat cA (homAt Sall N N')).subtype) := by
-  obtain ⟨F, hF, hFM⟩ := semilocal_reps Sall (homG N N') (homAt Sall N N') (homG_fg N N' hN.1 hN'.1) (homG_le Sall N N')
+  obtain ⟨F, hF, hFM⟩ := semilocal_reps Sall (homG N N') (homAt Sall N N') (homG_fg N N' (full_of_sd hN) hN'.1) (homG_le Sall N N')
     (fun x hx P hP => homAt_clear Sall N N' hN.1.fg x hx P hP) (cA * cB) (Nat.mul_pos hA hB)
     (fun x hx j hj => homAt_div Sall N N' (cA * cB) (Nat.mul_pos hA hB) x hx j hj)
   exact finite_div_quot _ cA cB hA F hF hFM

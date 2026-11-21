@@ -51,8 +51,7 @@ private theorem star_jK_eq_of_mem_closure_prime_compl (hF : IsFixF K F) {𝔭 : 
   induction hs using Submonoid.closure_induction with
   | mem y hy =>
     obtain ⟨t, _, rfl⟩ := hy
-    rw [coe_iota_eq_algebraMap_coe]
-    exact (hF _).2 ⟨(t : F), rfl⟩
+    exact (hF _).2 ⟨(t : F), (coe_iota_eq_algebraMap_coe t).symm⟩
   | one => simp
   | mul y z _ _ hy hz => rw [map_mul, star_mul', hy, hz]
 
@@ -205,8 +204,7 @@ theorem mem_locF_dualIn_iff (hF : IsFixF K F) (h𝔭 : 𝔭.IsMaximal) (hL : IsL
         rw [map_add (f := _), LinearMap.add_apply]
         exact Submodule.add_mem _ hy hw
       | smul r y _ hy =>
-        let r' := RingOfIntegers.mapRingHom (starRingEnd K) r
-        have hr' : jK r' = star (jK r) := rfl
+        obtain ⟨r', hr'⟩ := StandardSymmetricSums.star_int r
         rw [smul_eq_jK r, LinearMap.map_smulₛₗ₂, starRingEnd_apply, ← hr', smul_eq_mul, ← Algebra.smul_def]
         exact Submodule.smul_mem _ r' hy
     refine Exists.intro (ι (∏ g, t g)) ⟨Submonoid.subset_closure ⟨_, hT, rfl⟩, ?_⟩

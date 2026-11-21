@@ -80,7 +80,7 @@ theorem UpperTheory.V.Ws.Po.ptA :
       · refine hmem ⟨_, 𝔞.V.mem_of_valuation_le_one _ (hζz i).le⟩ (hr _ (Subfield.subset_closure (.inr ?_)))
         exact Finset.mem_coe.2 (Finset.mem_union_right _ (Finset.mem_image.2 ⟨i, Finset.mem_univ _, rfl⟩))
     | algebraMap a => exact h0 (algebraMap O (W.gr 0) a)
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   obtain ⟨η, hη⟩ := factor (𝔞.toK.comp f') (Subtype.val_injective.comp hf'.inj) _ hall
   have hη' : ∀ x, (f' (η x) : 𝔞.K) = ζ x := hη

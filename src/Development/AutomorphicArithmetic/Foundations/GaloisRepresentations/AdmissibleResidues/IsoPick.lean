@@ -78,7 +78,7 @@ private theorem isoPick_sup {H Y : Type} {J : Sort*} [Group H] [AddCommGroup Y] 
   refine Submodule.iSup_induction _ (motive := fun z => π.asModuleEquiv.symm z ∈ P) hv h ?_ ?_
   · rw [map_zero]; exact zero_mem _
   · intro a b ha hb
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    rw [map_add]; exact add_mem ha hb
 
 private theorem isoPick_equiv {H S S' : Type} [Group H] [AddCommGroup S] [Module ℂ S] [AddCommGroup S'] [Module ℂ S']
     (σ : Representation ℂ H S) (σ' : Representation ℂ H S')

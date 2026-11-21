@@ -21,6 +21,8 @@ namespace GlobalTheory.CompanionTheory.QuotVan
 
 variable {n : ℕ}
 
+local notation "θc" => thetaR (starRingEnd ℂ) n
+
 theorem isMulRightInvariant_of_center {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [LocallyCompactSpace G] [SecondCountableTopology G] [T2Space G] [MeasurableSpace G] [BorelSpace G]
     (hG : ∀ Δ : G →* ℝ≥0, (∀ g, (∀ h, g * h = h * g) → Δ g = 1) → ∀ g, Δ g = 1)
@@ -50,6 +52,11 @@ theorem isMulRightInvariant_GL (n : ℕ) [MeasurableSpace (GL (Fin n) ℂ)] [Bor
 
 def uK (n : ℕ) : Subgroup (GL (Fin n) ℂ) := MonoidHom.eqLocus (thetaR (starRingEnd ℂ) n) (MonoidHom.id _)
 
+private theorem theta_conjTranspose_val (g : GL (Fin n) ℂ) :
+    (θc g).val = ((g⁻¹ : GL (Fin n) ℂ).val)ᴴ := by
+  ext i j
+  simp [thetaR_val, Matrix.conjTranspose_apply]
+
 theorem isCompact_uK (n : ℕ) : IsCompact (uK n : Set (GL (Fin n) ℂ)) := by
   have h := GlobalTheory.Tw.isCompact_unitary_GL n
   convert h using 1
@@ -58,7 +65,7 @@ theorem isCompact_uK (n : ℕ) : IsCompact (uK n : Set (GL (Fin n) ℂ)) := by
   change thetaR (starRingEnd ℂ) n k = k ↔ k.val * star k.val = 1
   constructor
   · intro hk
-    have h1 := GlobalTheory.CompanionTheory.NilChangeVar.theta_val k
+    have h1 := theta_conjTranspose_val k
     rw [hk] at h1
     have h2 : star k.val = (k⁻¹ : GL (Fin n) ℂ).val := by
       rw [Matrix.star_eq_conjTranspose]
@@ -68,7 +75,7 @@ theorem isCompact_uK (n : ℕ) : IsCompact (uK n : Set (GL (Fin n) ℂ)) := by
     exact Units.mul_inv k
   · intro hk
     refine Units.ext ?_
-    rw [GlobalTheory.CompanionTheory.NilChangeVar.theta_val]
+    rw [theta_conjTranspose_val]
     have : (k⁻¹ : GL (Fin n) ℂ).val = star k.val := Units.inv_eq_of_mul_eq_one_right hk
     rw [this, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_conjTranspose]
 
@@ -193,6 +200,9 @@ namespace GlobalTheory.CompanionTheory.QuotVan
 section Levi
 
 variable {n : ℕ}
+
+local notation "Mx" => Matrix (Fin n) (Fin n) ℂ
+local notation "Sb" => Submodule ℂ (Fin n → ℂ)
 
 open GlobalTheory.CompanionTheory.FlagCent (mem_img_iff)
 
@@ -323,7 +333,11 @@ section Decomp
 
 variable {n : ℕ}
 
-open GlobalTheory.CompanionTheory.NilChangeVar (eq_zero_of_mulVec)
+local notation "Mx" => Matrix (Fin n) (Fin n) ℂ
+local notation "Sb" => Submodule ℂ (Fin n → ℂ)
+
+private theorem eq_zero_of_mulVec {M : Mx} (h : ∀ y, M *ᵥ y = 0) : M = 0 :=
+  Matrix.ext_iff_mulVec.mpr fun y => by simpa only [Matrix.zero_mulVec] using h y
 
 theorem levi_decomp {W₁ W₂ V₂ V₃ : Sb} (c₁ : W₁ ⊔ V₂ = W₂) (d₁ : W₁ ⊓ V₂ = ⊥) (c₂ : W₂ ⊔ V₃ = ⊤)
     (d₂ : W₂ ⊓ V₃ = ⊥) (q : GL (Fin n) ℂ) (hq₁ : img q W₁ = W₁) (hq₂ : img q W₂ = W₂) :

@@ -56,7 +56,7 @@ theorem exists_isTm {g : ℕ} [Fact g.Prime] (h : IsPlaceOver A w) (hw : normV w
     (hγ : TameGenAt A γ) {m : ℕ} (hm : 0 < m) (hc : m.Coprime g) {z : ℂ} (hz : z ^ m = 1) :
     ∃ χ : Ine (F := E) A →* ℂˣ, IsTm χ ∧ (χ ⟨γ, hγ.1⟩ : ℂ) = z := by
   have : IsAlgClosed Ω := IsAlgClosure.isAlgClosed E
-  obtain ⟨ϖ, h1, h2⟩ := SetLike.exists_of_lt
+  obtain ⟨ϖ, h1, h2⟩ := IsConcreteLE.exists_of_lt
     (Ideal.pow_lt_self w.asIdeal w.ne_bot w.isPrime.ne_top 2 le_rfl)
   obtain ⟨x, hx⟩ := IsAlgClosed.exists_pow_nat_eq (algebraMap E Ω (ϖ : E)) hm
   have h0 : x ≠ 0 := by
@@ -171,7 +171,7 @@ theorem exists_tameOm (γ : Fin 2 → PlE D.host → GE D.nd) (hγ : GenFam D γ
   let om : ∀ k : Fin 2, PlE D.host → Fb (D.host.g k) (D.host.g_prime k) → GE D.nd → ℂ := fun k w x σ =>
     if h : σ ∈ Ine (F := D.host.E) (D.nd.plOm.1 w) then χ k w x ⟨σ, h⟩ else 1
   have e : ∀ k w x σ (h : σ ∈ Ine (F := D.host.E) (D.nd.plOm.1 w)), om k w x σ = χ k w x ⟨σ, h⟩ :=
-    fun k w x σ h => dif_pos h
+    fun k w x σ h => dite_eq_left h
   have hv : ∀ k : Fin 2, ∀ w ∈ placesOver D.host.E (D.host.g k), ∀ x, x ≠ 0 →
       om k w x (γ k w) = D.ntypes.teichC k x := fun k w hw x hx => by
     rw [e _ _ _ _ (hγ.2 k w hw).1, h2 k w x hw hx]
@@ -252,14 +252,14 @@ theorem tameLP_iff {w : PlE D.host} (L : D.naut.LP w) : TameLP D L ↔ (T.e w L)
 theorem labDepth_of_tie {γ} (hγ : GenFam D γ) (h : LabAll T γ) : LabDepth D := by
   intro k w hw L
   have : Fact (D.host.g k).Prime := ⟨D.host.g_prime k⟩
-  rw [h k w hw L, tameLP_iff T, ← T.dim]
+  rw [h k w hw L, tameLP_iff T L, ← T.dim w L]
   exact ⟨WD.lab_monic _ _ _, WD.natDegree_lab_eq_iff
     (TeichmullerInertiaLabelCondition.of_tameGenAt (normV_eq D hw) (hγ.2 k w hw) (D.ntypes.teichC_inj k)) _⟩
 
 theorem labGen_of_tie {γ} (hγ : GenFam D γ) (h : LabAll T γ) : LabGen D := by
   refine ⟨γ, hγ, fun k w hw L hL => ?_⟩
   have : Fact (D.host.g k).Prime := ⟨D.host.g_prime k⟩
-  rw [h k w hw L, ← T.dim] at hL
+  rw [h k w hw L, ← T.dim w L] at hL
   rw [h k w hw L, T.inePol w L _ (hγ.2 k w hw).1]
   exact WD.inePol_eq_of_natDegree_lab _ _ _ hL
 

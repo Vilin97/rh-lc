@@ -55,9 +55,9 @@ theorem symbolMapMulLeft : KappaLeft := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [kappa_apply, kappa_apply, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun g _ => ?_
-  rw [Module.End.mul_apply, Ed_val, Derivation.map_smul, mul_smul_comm]
+  rw [mul_apply_eq_comp, Ed_val, Derivation.map_smul, mul_smul_comm]
   congr 1
-  simp only [Derivation.leibniz, pderiv_inl_xi, smul_zero, zero_add, add_zero, smul_eq_mul]
+  simp only [Derivation.leibniz, pderiv_inl_xi, smul_eq_mul]
   rw [pderiv_rename Sum.inl_injective, map_mul, rename_X]
   ring
 
@@ -70,7 +70,7 @@ private theorem coeff_pderiv_eq_coeff_add_single_mul_multinomial_depth {σ : Typ
     by_cases h : u = n + Finsupp.single i 1
     · subst h
       simp
-    · rw [if_neg h, zero_mul]
+    · rw [ite_eq_right h, zero_mul]
       split_ifs with h2
       · have hu : u i = 0 := by
           by_contra hne
@@ -81,17 +81,17 @@ private theorem coeff_pderiv_eq_coeff_add_single_mul_multinomial_depth {σ : Typ
         simp [hu]
       · rfl
   next p q hp hq =>
-    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+    rw [map_add (f := _), AddMonoidAlgebra.coeff_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, Finsupp.add_apply, hp, hq, add_mul]
 
 theorem symbolMapMulRight : KappaRight := by
   intro K _ _ k d a b A
   apply pol_ext
   intro m g
-  rw [coeff_kappa, Module.End.mul_apply, Ed_mono, map_smul, Submodule.coe_smul, coeff_smul, coeff_X_mul']
+  rw [coeff_kappa, mul_apply_eq_comp, Ed_mono, map_smul, Submodule.coe_smul, coeff_smul, coeff_X_mul']
   by_cases hb : g b = 0
-  · rw [if_neg (by simp [hb])]
+  · rw [ite_eq_right (by simp [hb])]
     simp [hb]
-  · rw [if_pos (by simp [hb]), sumElim_sub_single_inr, coeff_pderiv_eq_coeff_add_single_mul_multinomial_depth, sumElim_add_single_inr, coeff_kappa]
+  · rw [ite_eq_left (by simp [hb]), sumElim_sub_single_inr, coeff_pderiv_eq_coeff_add_single_mul_multinomial_depth, sumElim_add_single_inr, coeff_kappa]
     simp only [Finsupp.sumElim_apply, Sum.elim_inr]
     have h1 := invFact_add_single (K := K) (g - single b 1) a
     have h2 := invFact_add_single (K := K) (g - single b 1) b
@@ -122,10 +122,10 @@ private theorem coeff_sumElim_tt_pow (K : Type) [Field K] (k d : ℕ) (m g : Fin
     mul_one, mul_zero]
   by_cases h : m = g ∧ g.degree = d
   · obtain ⟨hmg, hd⟩ := h
-    rw [if_pos ⟨hmg, hd⟩, Finset.sum_eq_single (⇑g)]
+    rw [ite_eq_left ⟨hmg, hd⟩, Finset.sum_eq_single (⇑g)]
     · simp [hmg]
     · intro f _ hf
-      rw [if_neg]
+      rw [ite_eq_right]
       rintro ⟨_, h2⟩
       apply hf
       rw [← h2]
@@ -136,9 +136,9 @@ private theorem coeff_sumElim_tt_pow (K : Type) [Field K] (k d : ℕ) (m g : Fin
       rw [Finset.mem_piAntidiag]
       refine ⟨?_, fun i _ => Finset.mem_univ i⟩
       rw [← hd, Finsupp.degree_eq_sum]
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     refine Finset.sum_eq_zero fun f hf => ?_
-    rw [if_neg]
+    rw [ite_eq_right]
     rintro ⟨h1, h2⟩
     apply h
     refine ⟨h1.symm.trans h2, ?_⟩
@@ -150,10 +150,10 @@ theorem symbolMapOne : KappaId := by
   intro K _ _ k d
   apply pol_ext
   intro m g
-  rw [coeff_kappa, Module.End.one_apply, mono_val, coeff_smul, smul_eq_mul, coeff_sumElim_tt_pow]
+  rw [coeff_kappa, one_apply_eq_self, mono_val, coeff_smul, smul_eq_mul, coeff_sumElim_tt_pow]
   by_cases h : m = g ∧ g.degree = d
   · obtain ⟨hmg, hd⟩ := h
-    rw [if_pos hd, if_pos ⟨hmg, hd⟩, coeff_monomial, if_pos hmg.symm, mul_one]
+    rw [ite_eq_left hd, ite_eq_left ⟨hmg, hd⟩, coeff_monomial, ite_eq_left hmg.symm, mul_one]
     have hspec := Nat.multinomial_spec (Finset.univ : Finset (Fin k)) ⇑g
     have hsum : ∑ i, g i = d := by rw [← hd, Finsupp.degree_eq_sum]
     rw [hsum] at hspec
@@ -166,9 +166,9 @@ theorem symbolMapOne : KappaId := by
       exact (Nat.cast_ne_zero.2 (Nat.factorial_ne_zero d)) hcast
     unfold invFact
     rw [prodFact_fintype, hcast, mul_inv, mul_assoc, inv_mul_cancel₀ hM, mul_one]
-  · rw [if_neg h, mul_zero]
+  · rw [ite_eq_right h, mul_zero]
     split_ifs with hd
-    · rw [coeff_monomial, if_neg (fun hgm => h ⟨hgm.symm, hd⟩), mul_zero]
-    · rw [coeff_zero, mul_zero]
+    · rw [coeff_monomial, ite_eq_right (fun hgm => h ⟨hgm.symm, hd⟩), mul_zero]
+    · simp
 
 end PI.OpWords

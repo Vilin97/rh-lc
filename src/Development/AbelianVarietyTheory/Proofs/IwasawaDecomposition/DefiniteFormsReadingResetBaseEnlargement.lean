@@ -25,6 +25,8 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CrdOv
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RSideA
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NVNeZero
 
+import all Mathlib.RingTheory.DedekindDomain.AdicValuation.Valuation -- unfold `HeightOneSpectrum.valuation` in `frames_enl`
+
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField
@@ -267,8 +269,19 @@ theorem frames_enl {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat 
       fun θ hθ => ?_, fun βV hβ => ?_⟩
   · have e : Pg = (z.R.Pg) := hPg.trans ((by with_unfolding_all exact (z.lev.Pg.symm :)))
     subst e
-    refine ⟨by kexactB z.pins.keep.frames, (HEq.refl z.R.Pg), (by with_unfolding_all exact ((heq_of_eq hall.symm) :)), fun eG hG => ?_⟩
-    exact (by with_unfolding_all exact ((heq_of_eq (isIdG_unique (w.st Z) (px := w.px) z.lev.Pg (eG := (by with_unfolding_all exact (eG :))) ((by with_unfolding_all exact (hG :))) z.idG)) :))
+    refine ⟨?_, HEq.refl z.R.Pg, (by with_unfolding_all exact ((heq_of_eq hall.symm) :)), fun eG hG => ?_⟩
+    · intro hframes
+      have hframesOld : Seed.Frm.FramesExistDiagonal (w.st Z).toD7 z.R.Pg := by
+        unfold Seed.Frm.FramesExistDiagonal Seed.Frm.SDFrames Seed.Frm.NormalFrameConditionsDiagonal
+          Seed.Frm.NormalClausesG Seed.Frm.XBasesG Mi.NormalFrames Mi.NormalFrame0 Mi.VertexAt at hframes ⊢
+        set_option smartUnfolding false in
+          with_unfolding_all exact hframes
+      have hnormal := z.pins.keep.frames hframesOld
+      unfold Seed.Frm.NormalFrameConditionsDiagonal Seed.Frm.NormalClausesG Seed.Frm.XBasesG
+        Mi.NormalFrames Mi.NormalFrame0 Mi.VertexAt at hnormal ⊢
+      set_option smartUnfolding false in
+        with_unfolding_all exact hnormal
+    · exact (by with_unfolding_all exact ((heq_of_eq (isIdG_unique (w.st Z) (px := w.px) z.lev.Pg (eG := (by with_unfolding_all exact (eG :))) ((by with_unfolding_all exact (hG :))) z.idG)) :))
   · exact (by with_unfolding_all exact ((heq_of_eq (isStdChar_unique (D := (w.st Z).toD7) (ψ := (by with_unfolding_all exact (ψ :))) ((by with_unfolding_all exact (hψ :))) z.pins.keep.std)) :))
   · exact (by with_unfolding_all exact ((heq_of_eq (isInfFam_unique (D := (w.st Z).toD7) (θ := (by with_unfolding_all exact (θ :))) ((by with_unfolding_all exact (hθ :))) z.pins.char.base.models.inf)) :))
   · have e : ((βV) : type_of% z.R.βV) = z.R.βV := funext fun j => Eq.trans ((hβ j)) (z.lev.beta.1 j).symm

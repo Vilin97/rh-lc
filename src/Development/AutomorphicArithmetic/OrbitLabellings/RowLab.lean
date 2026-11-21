@@ -128,8 +128,9 @@ theorem resIdeal_prime (em : O →+* C) (hi : ∀ x, V.Ge 0 (em x)) : (resIdeal 
   ne_top' := by
     rw [Ideal.ne_top_iff_one]
     intro h
-    have h' : V.MM (em 1) := h
-    exact not_mm_one (V := V) (by simpa using h')
+    change V.MM (em 1) at h
+    rw [map_one] at h
+    exact not_mm_one h
   mem_or_mem' := by
     intro x y h
     change V.MM (em (x * y)) at h

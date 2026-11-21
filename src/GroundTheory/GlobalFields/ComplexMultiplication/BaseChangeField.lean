@@ -116,10 +116,10 @@ theorem isAlgebraic_coeffs [DecidableEq Ω] {r : RatFunc Ω}
   obtain ⟨h1, h2⟩ := map_eq_of_galFF_ratEmb E (g.restrictScalars F) (h g)
   rcases Finset.mem_union.mp hc with hc | hc
   · obtain ⟨n, -, rfl⟩ := Polynomial.mem_coeffs_iff.mp hc
-    have := congrArg (coeff · n) h1
+    have := congrArg (fun p : Polynomial Ω => p.coeff n) h1
     simpa using this
   · obtain ⟨n, -, rfl⟩ := Polynomial.mem_coeffs_iff.mp hc
-    have := congrArg (coeff · n) h2
+    have := congrArg (fun p : Polynomial Ω => p.coeff n) h2
     simpa using this
 
 omit [IsAlgClosed Ω] in

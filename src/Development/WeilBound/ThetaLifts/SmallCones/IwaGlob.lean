@@ -254,8 +254,8 @@ theorem iwa_glob {n₁ : ℕ} {H : Plane E n n₁} (hB : B.IsGood σ) (hX : X.Is
   refine ⟨q * p, p⁻¹ * (q⁻¹ * g), t' * t, (hK _).2 ⟨fun w => ?_, fun z hz => ⟨?_, ?_⟩⟩, ?_, by group⟩
   · rw [mat_mul, Matrix.map_mul, e2, one_mul]
     exact h2 w
-  · exact stab_of_int hX.lat (fun v z hz h => (e3 v z hz h).1) hz
-  · exact stab_of_int hX.lat (fun v z hz h => (e3 v z hz h).2) hz
+  · exact stab_of_int hX.lat.toIsLattice (fun v z hz h => (e3 v z hz h).1) hz
+  · exact stab_of_int hX.lat.toIsLattice (fun v z hz h => (e3 v z hz h).2) hz
   · rw [mat_mul, ← Matrix.mulVec_mulVec, e1, Matrix.mulVec_smul, h1, smul_smul, Units.val_mul]
 
 end IwaG

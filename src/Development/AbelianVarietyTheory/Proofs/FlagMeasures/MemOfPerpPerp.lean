@@ -237,9 +237,11 @@ theorem perp_lattice {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.
     obtain ⟨c, hc, hw⟩ := exists_smul_mem hfull (ι w)
     have hc' : (c : K) ≠ 0 := (map_ne_zero_iff _ inj).mpr hc
     have hcw : c • w ∈ L := (hL _).2 ⟨c • ι w, hw, by simp⟩
-    have hspan := Submodule.subset_span hcw
+    have hspan : (c : K) • w ∈ Submodule.span K (L : Set W) := by
+      rw [algebraMap_smul K c w]
+      exact Submodule.subset_span hcw
     have := (Submodule.span K (L : Set W)).smul_mem (c : K)⁻¹ hspan
-    simpa [← algebraMap_smul K c w, ← mul_smul, hc'] using this
+    simpa only [← mul_smul, inv_mul_cancel₀ hc', one_smul] using this
   · obtain ⟨l, hl, e⟩ := (hL y).1 hy
     rw [← hπl (Submodule.mem_sup_left e)]
     exact hpair x hx l hl (hperp (Submodule.mem_sup_left e))

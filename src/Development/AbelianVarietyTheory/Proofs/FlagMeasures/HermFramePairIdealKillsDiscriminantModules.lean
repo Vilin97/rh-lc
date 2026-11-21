@@ -439,7 +439,9 @@ theorem kill_Th (N : NF H r) {Λ : Submodule (𝓞 K) V} (hU : IsUnimod H Λ) (h
         (x : K) * y / Dl N.F N.F' l hl ∈ (1 : Submodule (𝓞 K) K) ∧
         (x : K) * y / star (Dl N.F N.F' l hl) ∈ (1 : Submodule (𝓞 K) K)) :
     𝔠 ^ 3 • dual H (latTh N.F N.F' Λ) ≤ latTh N.F N.F' Λ := by
-  have hL := (isLatMod_top_bot_iff Λ).1 hU.1
+  have hL₀ := (isLatMod_top_bot_iff Λ).1 hU.1
+  have hL : Submodule.IsFullLattice K Λ :=
+    { toIsLattice := Submodule.IsLattice.of_fg K hL₀.1, span_eq_top := hL₀.2 }
   have hint : ∀ y ∈ Λ, ∀ x ∈ Λ, H.B y x ∈ (1 : Submodule (𝓞 K) K) := by
     intro y hy
     rw [← hU.2, mem_dual_iff] at hy

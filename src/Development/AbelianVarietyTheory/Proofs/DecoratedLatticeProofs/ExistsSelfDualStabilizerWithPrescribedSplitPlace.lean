@@ -64,14 +64,12 @@ theorem prod_ofFn_single {M : Type*} [Monoid M] :
   | 0, _, i, _ => i.elim0
   | r + 1, f, i, h => by
     rw [List.ofFn_succ, List.prod_cons]
-    by_cases hi : i = 0
-    · subst hi
-      rw [List.prod_eq_one, mul_one]
+    rcases Fin.eq_zero_or_eq_succ i with rfl | ⟨i', rfl⟩
+    · rw [List.prod_eq_one, mul_one]
       intro x hx
       obtain ⟨j, rfl⟩ := (List.mem_ofFn' _ _).1 hx
       exact h _ (Fin.succ_ne_zero j)
-    · obtain ⟨i', rfl⟩ : ∃ j : Fin r, j.succ = i := ⟨i.pred hi, Fin.succ_pred i hi⟩
-      rw [h 0 (Fin.succ_ne_zero i').symm, one_mul]
+    · rw [h 0 (Fin.succ_ne_zero i').symm, one_mul]
       exact prod_ofFn_single (fun j => f j.succ) i' fun j hj => h _ fun e => hj (Fin.succ_injective _ e)
 
 def locHom (S : HSp D) {k : Type} [Ring k] (f : AE D →+* k) : GA D S →* Matrix (Fin S.rank) (Fin S.rank) k where

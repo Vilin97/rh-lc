@@ -287,21 +287,24 @@ theorem pts_inj : ∀ (bs bs' : List (K × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧ 1
     have hzero : 0 < (((t, s) :: b1).map Prod.snd).sum := by
       simp only [List.map_cons, List.sum_cons]
       omega
-    obtain ⟨e1, e2⟩ :
-        pσ ((t, s) :: b1) 0 = pσ ((t', s') :: b1') 0 ∧
-          pv ((t, s) :: b1) 0 = pv ((t', s') :: b1') 0 := h 0 hzero
-    simp only [pσ, if_pos hs1, if_pos hs1', Nat.sub_zero] at e1
-    simp only [pv, if_pos hs1, if_pos hs1'] at e2
-    have ess : s = s' := by omega
-    subst s' t'
-    have := pts_inj b1 b1' (fun b hb => hv b (by simp [hb])) (fun b hb => hv' b (by simp [hb])) (by omega)
-      (fun i hi => by
-        have hindex : s + i < (((t, s) :: b1).map Prod.snd).sum := by
-          simpa only [List.map_cons, List.sum_cons] using Nat.add_lt_add_left hi s
-        obtain ⟨a, b⟩ := h (s + i) hindex
-        simp only [pσ, pv, if_neg (show ¬ (s + i < s) by omega), Nat.add_sub_cancel_left] at a b
-        exact ⟨by omega, b⟩)
-    rw [this]
+    have hsize : s - 1 = s' - 1 := by
+      simpa only [pσ, if_pos hs1, if_pos hs1', Nat.sub_zero] using (h 0 hzero).1
+    have hlabel : t = t' := by
+      simpa only [pv, if_pos hs1, if_pos hs1'] using (h 0 hzero).2
+    have hsEq : s = s' := by omega
+    subst s'
+    subst t'
+    apply congrArg (List.cons (t, s))
+    refine pts_inj b1 b1' (fun b hb => hv b (by simp [hb]))
+      (fun b hb => hv' b (by simp [hb])) (Nat.add_left_cancel hs) ?_
+    intro i hi
+    have hindex : s + i < (((t, s) :: b1).map Prod.snd).sum := by
+      simpa only [List.map_cons, List.sum_cons] using Nat.add_lt_add_left hi s
+    have hshift : ¬ s + i < s := by omega
+    have hentries := h (s + i) hindex
+    refine ⟨Nat.add_left_cancel (n := s) ?_, ?_⟩
+    · simpa only [pσ, if_neg hshift, Nat.add_sub_cancel_left] using hentries.1
+    · simpa only [pv, if_neg hshift, Nat.add_sub_cancel_left] using hentries.2
 
 theorem pt_eq_of_struct (p p' : Point K N) (h : ∀ i, i < N → pσ p.1 i = pσ p'.1 i ∧ pv p.1 i = pv p'.1 i) :
     p = p' :=

@@ -33,7 +33,9 @@ namespace GlobalTheory.CompanionTheory.Ar.Top
 theorem goodTower_volume_of_reduced : (PartI ∧ N1ab ∧ N1c ∧ ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H), ToroidalLevelCompatibility (D := D) ∧ ToroidalHeckeCompatibility (D := D)) → KeyFormula → GlobalTheory.Published.SemiAbelianHomExtension → GroundTheory.Heights₂.Heights.NumbersDVR.NumericalSegre.Statement → ReciprocityTheory.ChartRestriction.G.Geo.ResK.ResKStatement → HT.FarguesHodgeTate → Flat.GagaSections → GroundTheory.Heights₂.Heights.LineOfLargeDegree.Statement → PB.Inputs → Prov.HS → Prov.An → Prov.ZhangDimensionPushDownGrassmannianHeightBounds → ReciprocityTheory.ChartRestriction.G.Geo.PtsIntegrableStatement → ReciprocityTheory.ChartRestriction.G.AI.I2.AvoidStatement → GlobalTheory.CompanionTheory.Ar.GR.QuotientByFiniteFlatStatement → GlobalTheory.CompanionTheory.Ar.GR.ZarhinStatement → ThetaUnifAV → Top.GoodTowerExistsX ∧ Top.VolumeTheoremX := by
   intro hM hKF hSA hNS hResK hFHT hGaga hLLD hPB hHS hAn hNine hPts hAvoid hQ hZ hTheta
   have hGiven : Top.Given :=
-    GlobalTheory.T.final_theorem_of_inputs_left hM hKF hSA hNS hResK hFHT hGaga hLLD hPB hHS hAn hNine
+    ⟨hM, hKF, hSA, hNS, hResK, GlobalTheory.T.semi_abelian_statement_holds, hFHT, hGaga,
+      (GlobalTheory.T.slope_bound_of_line_large_degree hLLD).1, hPB, hHS, hAn, hNine,
+      GlobalTheory.T.antisymmetric_perturbation_holds⟩
   have hW : Out.WeilSt := GlobalTheory.CompanionTheory.Ar.Link.weilSt
   have hHTD : GR.HodgeTateDatumStatement := GlobalTheory.CompanionTheory.Ar.GR.Top.main
   have hOrd : GR.OrdinaryCurveStatement := GlobalTheory.T.ordinary_curve_statement_holds
@@ -41,6 +43,15 @@ theorem goodTower_volume_of_reduced : (PartI ∧ N1ab ∧ N1c ∧ ∀ (E : Type)
   have hCmpSt : Cmp.CmpSt := GlobalTheory.T.comparison_of_inputs_avoidance hPB hAvoid hResK
   have hTied : HodgeComparisonCompatibility := GlobalTheory.T.CmpHodgeTied_holds
   have hPair : Cmp.CmpPair := GlobalTheory.T.cmpPair_of_inputs hPB hCmpSt hTied hTheta
-  exact GlobalTheory.T.good_tower_volume_theorem hGiven hPts hAvoid hW hFam hPair
+  have hA0 := GlobalTheory.T.flat_zero_from_resolution_and_gaga hResK hGaga
+  have hA1 := GlobalTheory.T.flat_first_from_resolution_and_gaga hResK hGaga
+  refine ⟨?_, ?_⟩
+  · intro E _ _ _ H D Xo l c Y _ hgl hs hp hq
+    exact GlobalTheory.T.exists_good_root_tower hGiven hW hA0 hA1 E H D Xo l c Y hgl hs hp hq
+  · exact GlobalTheory.T.volume_theorem_of_inputs hGiven hPts hW
+      (GlobalTheory.T.exists_geometric_height_constants hGiven hW GlobalTheory.T.FlatDegree_holds)
+      (GlobalTheory.T.model_on_hodge_from_family hFam)
+      (GlobalTheory.T.triv_flag_on_hodge_of_fargues hFHT) GlobalTheory.T.FlatDegree_holds
+      GlobalTheory.T.TwistAut_holds hPair hCmpSt
 
 end GlobalTheory.CompanionTheory.Ar.Top

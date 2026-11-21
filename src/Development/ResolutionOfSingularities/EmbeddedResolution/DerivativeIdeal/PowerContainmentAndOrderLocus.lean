@@ -220,12 +220,14 @@ theorem ideal_le_pow_of_restrictIdeal_eq_coordIdeal {X : Scheme.{u}} {k : Type u
     c.algebra_formallyEtale hU
   let xs : {i : Fin n // i ∈ S} → Γ(X, U) := fun i => c.coord i.1
   let Ds : {i : Fin n // i ∈ S} → Derivation k Γ(X, U) Γ(X, U) :=
-    fun i => EtaleCoordinates.partialDeriv k (ULift.{u} (Fin n)) Γ(X, U) (ULift.up i.1)
+    fun i => ((EtaleCoordinates.basisKaehler k (ULift.{u} (Fin n)) Γ(X, U)).coord
+      (ULift.up i.1)).compDer (KaehlerDifferential.D k Γ(X, U))
   have hD : ∀ i j : {i : Fin n // i ∈ S}, Ds i (xs j) = if i = j then 1 else 0 := by
     intro i j
-    show (EtaleCoordinates.partialDeriv k (ULift.{u} (Fin n)) Γ(X, U) (ULift.up i.1))
-        (c.coord j.1) = if i = j then 1 else 0
-    rw [← c.etaleCoordinates_coord j.1, EtaleCoordinates.partialDeriv_coord]
+    change (EtaleCoordinates.basisKaehler k (ULift.{u} (Fin n)) Γ(X, U)).repr
+      (KaehlerDifferential.D k Γ(X, U) (c.coord j.1)) (ULift.up i.1) = _
+    rw [← c.etaleCoordinates_coord j.1, ← EtaleCoordinates.basisKaehler_apply,
+      Module.Basis.repr_self, Finsupp.single_apply]
     have hiff : (ULift.up.{u} i.1 = ULift.up.{u} j.1) ↔ i = j := by
       constructor
       · intro hh
@@ -233,8 +235,8 @@ theorem ideal_le_pow_of_restrictIdeal_eq_coordIdeal {X : Scheme.{u}} {k : Type u
       · intro hh
         rw [hh]
     by_cases hij : i = j
-    · rw [if_pos (hiff.mpr hij), if_pos hij]
-    · rw [if_neg (fun hh => hij (hiff.mp hh)), if_neg hij]
+    · rw [if_pos (hiff.mpr hij).symm, if_pos hij]
+    · rw [if_neg (fun hh => hij (hiff.mp hh.symm)), if_neg hij]
   have hrange : Set.range xs = c.coord '' (S : Set (Fin n)) := by
     ext y
     constructor

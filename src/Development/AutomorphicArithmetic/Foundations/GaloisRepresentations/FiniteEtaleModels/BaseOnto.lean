@@ -34,7 +34,7 @@ structure Ext (S : Site gb w q r 𝔴 𝔫) (N₁ : ℕ) (𝔟 : Ideal (𝓞 D.F
   proj : ∀ k, IsProjOver ((GlobalTheory.KS.pow Y.univ.A k).hom ≫ Y.s)
   dim : ∀ k, ∃ d, SmoothOfRelativeDimension d ((GlobalTheory.KS.pow Y.univ.A k).hom ≫ Y.s)
 
-abbrev Ext.site {S : Site gb w q r 𝔴 𝔫} {N₁ : ℕ} {𝔟 : Ideal (𝓞 D.F)} (X : Ext S N₁ 𝔟) :
+abbrev Ext.site {S : Site gb w q r 𝔴 𝔫} {N₁ : ℕ} {𝔟 : Ideal (𝓞 D.F)} (X : FiniteEtaleModels.Ext S N₁ 𝔟) :
     Site gb w q r 𝔴 (Ideal.span {(N₁ : 𝓞 D.F)} * 𝔟) where
   atq := S.atq
   sp := S.sp
@@ -62,16 +62,17 @@ abbrev Ext.site {S : Site gb w q r 𝔴 𝔫} {N₁ : ℕ} {𝔟 : Ideal (𝓞 D
 
 variable {S : Site gb w q r 𝔴 𝔫} {N₁ N₂ : ℕ} {𝔟₁ 𝔟₂ : Ideal (𝓞 D.F)}
 
-structure Down (X₁ : Ext S N₁ 𝔟₁) (X₂ : Ext S N₂ 𝔟₂) : Type where
+structure Down (X₁ : FiniteEtaleModels.Ext S N₁ 𝔟₁) (X₂ : FiniteEtaleModels.Ext S N₂ 𝔟₂) : Type where
   t : X₁.Y.X ⟶ X₂.Y.X
   ov : t ≫ X₂.Y.s = X₁.Y.s
   Φ : X₁.Y.univ.A.left ⟶ X₂.Y.univ.A.left
   w : Φ ≫ X₂.Y.univ.A.hom = X₁.Y.univ.A.hom ≫ t
 
-def Down.pw {X₁ : Ext S N₁ 𝔟₁} {X₂ : Ext S N₂ 𝔟₂} (d : Down X₁ X₂) (k : ℕ) :
+def Down.pw {X₁ : FiniteEtaleModels.Ext S N₁ 𝔟₁} {X₂ : FiniteEtaleModels.Ext S N₂ 𝔟₂} (d : Down X₁ X₂) (k : ℕ) :
     (GlobalTheory.KS.pow X₁.Y.univ.A k).left ⟶ (GlobalTheory.KS.pow X₂.Y.univ.A k).left := GlobalTheory.KS.powMap d.t d.Φ d.w k
 
-def Down.Extends {X₁ : Ext S N₁ 𝔟₁} {X₂ : Ext S N₂ 𝔟₂} (d : Down X₁ X₂) {k : ℕ} {T : KS L gb k} {h : G.GAf} {M₁ M₂ : Lv p}
+def Down.Extends {X₁ : FiniteEtaleModels.Ext S N₁ 𝔟₁} {X₂ : FiniteEtaleModels.Ext S N₂ 𝔟₂} (d : Down X₁ X₂)
+    {k : ℕ} {T : KS L gb k} {h : G.GAf} {M₁ M₂ : Lv p}
     (W : Wit T h M₁ M₂) {c₁ c₂ : ℕ} {a₁ a₂ : 𝓞 D.F} (C₁ : X₁.site.Cl (T.M M₁).univ c₁ a₁) (C₂ : X₂.site.Cl (T.M M₂).univ c₂ a₂) : Prop :=
   C₁.j ≫ d.t = W.π ≫ C₂.j ∧ C₁.m.φ ≫ d.Φ = W.ψ.left ≫ W.φ.φ ≫ C₂.m.φ
 
@@ -80,7 +81,8 @@ end
 def StepA : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G), Sc D G → ∀ (E : Type) [Field E] [NumberField E] (gb : GBase D.toG E)
     (w : HeightOneSpectrum (𝓞 E)) (q : ℕ) [Fact q.Prime] (r : ℤ) (𝔴 𝔫 : Ideal (𝓞 D.F)) (S : Site gb w q r 𝔴 𝔫) (k : ℕ) (T : KS L gb k)
-    (N₀ κ : ℕ) (𝔟₁ 𝔟₂ : Ideal (𝓞 D.F)) (X₁ : Ext S (N₀ * κ) 𝔟₁) (X₂ : Ext S N₀ 𝔟₂), 𝔟₁ ≤ 𝔟₂ → ∀ (h : G.GAf), Integ L h →
+    (N₀ κ : ℕ) (𝔟₁ 𝔟₂ : Ideal (𝓞 D.F)) (X₁ : FiniteEtaleModels.Ext S (N₀ * κ) 𝔟₁) (X₂ : FiniteEtaleModels.Ext S N₀ 𝔟₂),
+    𝔟₁ ≤ 𝔟₂ → ∀ (h : G.GAf), Integ L h →
     (∀ v ∈ LaHat D, ∃ v' ∈ LaHat D, L.actG h v' = κ • v) → ∀ (M₁ M₂ : Lv p) (c₁ c₂ : ℕ) (a₁ a₂ : 𝓞 D.F),
     X₁.site.Num M₁.1 c₁ a₁ → X₂.site.Num M₂.1 c₂ a₂ →
     ∀ (C₁ : X₁.site.Cl (T.M M₁).univ c₁ a₁) (C₂ : X₂.site.Cl (T.M M₂).univ c₂ a₂) (W : Wit T h M₁ M₂),
@@ -89,7 +91,7 @@ def StepA : Prop :=
 def StepF : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G), Sc D G → ∀ (E : Type) [Field E] [NumberField E] (gb : GBase D.toG E)
     (w : HeightOneSpectrum (𝓞 E)) (q : ℕ) [Fact q.Prime] (r : ℤ) (𝔴 𝔫 : Ideal (𝓞 D.F)) (S : Site gb w q r 𝔴 𝔫) (k : ℕ) (T : KS L gb k)
-    (N₀ κ : ℕ) (𝔟₁ 𝔟₂ : Ideal (𝓞 D.F)) (X₁ : Ext S (N₀ * κ) 𝔟₁) (X₂ : Ext S N₀ 𝔟₂), 𝔟₁ ≤ 𝔟₂ →
+    (N₀ κ : ℕ) (𝔟₁ 𝔟₂ : Ideal (𝓞 D.F)) (X₁ : FiniteEtaleModels.Ext S (N₀ * κ) 𝔟₁) (X₂ : FiniteEtaleModels.Ext S N₀ 𝔟₂), 𝔟₁ ≤ 𝔟₂ →
     ∀ (M₁ M₂ : Lv p) (c₁ c₂ : ℕ) (a₁ a₂ : 𝓞 D.F), X₁.site.Num M₁.1 c₁ a₁ → X₂.site.Num M₂.1 c₂ a₂ → M₂.1 ∣ M₁.1 →
     ∀ (C₁ : X₁.site.Cl (T.M M₁).univ c₁ a₁) (C₂ : X₂.site.Cl (T.M M₂).univ c₂ a₂) (W : Wit T 1 M₁ M₂),
       ∃ d : Down X₁ X₂, d.Extends W C₁ C₂ ∧ IsFinite d.t ∧ Etale d.t ∧ IsPullback d.Φ X₁.Y.univ.A.hom X₂.Y.univ.A.hom d.t
@@ -97,7 +99,8 @@ def StepF : Prop :=
 def StepB : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G), Sc D G → ∀ (E : Type) [Field E] [NumberField E] (gb : GBase D.toG E)
     (w : HeightOneSpectrum (𝓞 E)) (q : ℕ) [Fact q.Prime] (r : ℤ) (𝔴 𝔫 : Ideal (𝓞 D.F)) (S : Site gb w q r 𝔴 𝔫) (k : ℕ) (T : KS L gb k)
-    (N₀ : ℕ) (𝔟₁ 𝔟₂ : Ideal (𝓞 D.F)) (X₁ : Ext S N₀ 𝔟₁) (X₂ : Ext S N₀ 𝔟₂) (𝔴' : Ideal (𝓞 D.F)) (i : ℕ), 𝔴'.IsMaximal → uId D q r ≤ 𝔴' →
+    (N₀ : ℕ) (𝔟₁ 𝔟₂ : Ideal (𝓞 D.F)) (X₁ : FiniteEtaleModels.Ext S N₀ 𝔟₁) (X₂ : FiniteEtaleModels.Ext S N₀ 𝔟₂)
+    (𝔴' : Ideal (𝓞 D.F)) (i : ℕ), 𝔴'.IsMaximal → uId D q r ≤ 𝔴' →
     𝔟₁ ≤ 𝔟₂ * 𝔴' → i ≤ D.n → ∀ (h : G.GAf), Integ L h → IsTjElt L q r 𝔴' i h → ∀ (M₁ M₂ : Lv p) (c₁ c₂ : ℕ) (a₁ a₂ : 𝓞 D.F),
     X₁.site.Num M₁.1 c₁ a₁ → X₂.site.Num M₂.1 c₂ a₂ → Ideal.absNorm 𝔴' ^ i ∣ M₁.1 →
     ∀ (C₁ : X₁.site.Cl (T.M M₁).univ c₁ a₁) (C₂ : X₂.site.Cl (T.M M₂).univ c₂ a₂) (W : Wit T h M₁ M₂),
@@ -132,6 +135,6 @@ def QuotOf : Prop :=
 def ExtEx : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p), Sc D G → ∀ (E : Type) [Field E] [NumberField E] (gb : GBase D.toG E)
     (w : HeightOneSpectrum (𝓞 E)) (q : ℕ) [Fact q.Prime] (r : ℤ) (𝔴 𝔫 : Ideal (𝓞 D.F)) (S : Site gb w q r 𝔴 𝔫)
-    (N₁ : ℕ) (𝔟 : Ideal (𝓞 D.F)), LevAt D q r 𝔴 N₁ 𝔟 → Nonempty (Ext S N₁ 𝔟)
+    (N₁ : ℕ) (𝔟 : Ideal (𝓞 D.F)), LevAt D q r 𝔴 N₁ 𝔟 → Nonempty (FiniteEtaleModels.Ext S N₁ 𝔟)
 
 end UpperTheory.Gal.FiniteEtaleModels

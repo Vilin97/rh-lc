@@ -177,8 +177,7 @@ theorem adm_norm_of_fixed_frames (hTF : FrameTie X u u' F0 F0') (hK : TermK F0 F
       simp only [hY', Matrix.mulVec_mulVec, hκ', ← fmat_mul]
       congr 2
       group
-    rw [e] at h1
-    exact h1
+    exact (congrArg (InAt X.B.I X.B.g X.B.g) e).mp h1
 
   have fixE : ∀ (w : D.what₂.Word) (h : Formalism.L2.SG.PoincareInHH.PoincareSetting.Hfin X w) (a : Fin D.R.rS),
       X.B.I.fmat ((h : X.B.I.Gf) * X.xu w)⁻¹ *ᵥ incl X.B.I (X.crd (X.eX a)) = incl X.B.I (X.crd (X.eX a)) :=

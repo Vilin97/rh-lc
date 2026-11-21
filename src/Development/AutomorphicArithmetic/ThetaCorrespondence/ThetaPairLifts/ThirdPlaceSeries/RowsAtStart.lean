@@ -1,6 +1,8 @@
 module
 
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FinitenessOfHyp
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistDataAgreeAcrossCoefficientsLocalized
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.SameGaloisLevelExists
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RingSpecNormalisedCharacterEq
@@ -61,7 +63,9 @@ def weightedAtData : _root_.GlobalTheory.Mem.Top.Bl.NAtData hL (withLoc L) (cfL 
   all := al.a
   chr_eq := al.chr
   host := ⟨(by with_unfolding_all exact (l.a.host.fr :)), (by with_unfolding_all exact (l.a.host.jLL :)), (by with_unfolding_all exact (l.a.host.embLL :))⟩
-  frameN := fun y => (by with_unfolding_all exact (((congrArg (fun e : (Dof x).host.E →+* Qb => e ((y))) ((al.jE) : ((al.a.gal.fr.jE) : (Dof x).host.E →+* Qb) = l.a.jE)).trans (l.a.frame ((y)))) : _))
+  frameN := by
+    intro y
+    with_unfolding_all exact (RingHom.congr_fun al.jE y).trans (l.a.frame y)
   chrN := al.chrN
   chrGal := al.chrGal
   Pq := (by with_unfolding_all exact (l.Pq :))
@@ -92,7 +96,8 @@ def normalizedRowDatum : _root_.GlobalTheory.Mem.Top.Bl.NormRealisationData (D :
   nexp := _root_.GlobalTheory.HeightCounting.Fin3.yStructureLocal L l
   hecke := _root_.GlobalTheory.HeightCounting.Fin3.localHeckeHeightData L l
   grp := _root_.GlobalTheory.HeightCounting.Fin3.grpTie_famR l L
-  rowLoc := (by with_unfolding_all exact ((al.loc ((by with_unfolding_all exact ((frameY Y) :))) ((by with_unfolding_all exact ((eq_of_heq (kc% hY.rep : HEq (repOf Y) (kc% (repOf x.r.Y) : type_of% (repOf Y)))) :)))) :))
+  rowLoc := by
+    with_unfolding_all exact al.loc (frameY Y) (eq_of_heq hY.rep)
   S_eq := (by with_unfolding_all exact ((SL_heq L l.rat) :))
   hL_eq := (by with_unfolding_all exact ((HEq.refl l.rat.In.hL) :))
   rep_eq := (by with_unfolding_all exact (hY.rep.symm :))

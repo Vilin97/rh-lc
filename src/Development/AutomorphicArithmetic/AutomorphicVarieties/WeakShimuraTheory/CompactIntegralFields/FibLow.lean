@@ -66,7 +66,7 @@ private theorem UpperTheory.V.Ws.fib_gen {O Γ : Type} [CommRing O] [Group Γ] [
       · exact hr _ _ _
       · exact hn _ _ _
     | algebraMap b => exact hB b
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | mul y z _ _ hy hz => rw [map_mul]; exact mul_mem hy hz
 
 theorem UpperTheory.V.Ws.fib :

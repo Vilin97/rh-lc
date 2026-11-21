@@ -25,8 +25,8 @@ theorem baseFrame_one_eq {D : D7} (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D))
   · intro hx
     simpa using h1 x hx
 
-theorem latAt_isLattice : ∀ (D : D7) (ρ : Setup D.ntw), ρ.Good → ∀ (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool)
-    (h : GA D (Vc D j)), Submodule.IsLattice D.host.E ((ρ.B i j b).latAt (finPt (Vc D j) h)) := by
+theorem latAt_isFullLattice : ∀ (D : D7) (ρ : Setup D.ntw), ρ.Good → ∀ (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool)
+    (h : GA D (Vc D j)), Submodule.IsFullLattice D.host.E ((ρ.B i j b).latAt (finPt (Vc D j) h)) := by
   intro D ρ hρ i j b h
   open Matrix in
   have heq : (ρ.B i j b).latAt (finPt (Vc D j) h) = Bridge.hLat (Vc D j) (finPt (Vc D j) h) := by
@@ -56,6 +56,14 @@ theorem latAt_isLattice : ∀ (D : D7) (ρ : Setup D.ntw), ρ.Good → ∀ (i : 
     · intro hz
       exact GlobalTheory.PrincInLevel.swap_mem_hatL (ρ.B i j b).F.ΛS _ hz
   rw [heq]
-  exact GlobalTheory.RepsCompare.isLattice_hLat _ _
+  obtain ⟨-, -, hfg, hspan, -⟩ := GlobalTheory.Member.latHat_eq_hat_and_gram D (Vc D j)
+  obtain ⟨Λ, hΛ, hΛfg, hΛspan, -⟩ := GlobalTheory.AdLat.exists_lattice_latOf D.host.F D.host.E
+    (Vc D j).rank (GlobalTheory.Member.latC (Vc D j)) (finPt (Vc D j) h).1 hfg hspan
+  rw [SetLike.coe_injective ((GlobalTheory.RepsCompare.coe_hLat _ _).trans hΛ.symm)]
+  exact { toIsLattice := Submodule.IsLattice.of_fg D.host.E hΛfg, span_eq_top := hΛspan }
+
+theorem latAt_isLattice (D : D7) (ρ : Setup D.ntw) (hρ : ρ.Good) (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool)
+    (h : GA D (Vc D j)) : Submodule.IsLattice D.host.E ((ρ.B i j b).latAt (finPt (Vc D j) h)) :=
+  (latAt_isFullLattice D ρ hρ i j b h).toIsLattice
 
 end GlobalTheory.LatFull

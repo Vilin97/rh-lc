@@ -23,6 +23,40 @@ open Alg LatA
 
 variable {D : D7} {X : HidaSetting D} {u : D.what₂.Word} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
 
+local notation "FI" => FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E
+
+private def starStable (I : FI) : Prop := ∀ x ∈ I, star x ∈ I
+
+private theorem starStable_one : starStable (1 : FI) := by
+  intro x hx
+  obtain ⟨o, rfl⟩ := (FractionalIdeal.mem_one_iff _).1 hx
+  obtain ⟨o', ho'⟩ := Formalism.L2.SG.NGCut.LeadingMinorIntegrality.star_int o
+  exact (FractionalIdeal.mem_one_iff _).2 ⟨o', ho'⟩
+
+private theorem starStable_inv {I : FI} (hI : starStable I) : starStable I⁻¹ := by
+  by_cases h0 : I = 0
+  · subst h0
+    intro x hx
+    rw [_root_.inv_zero] at hx ⊢
+    rw [(FractionalIdeal.mem_zero_iff _).1 hx, star_zero]
+    exact (FractionalIdeal.mem_zero_iff _).2 rfl
+  intro x hx
+  rw [FractionalIdeal.mem_inv_iff h0] at hx ⊢
+  intro y hy
+  have h := starStable_one _ (hx _ (hI y hy))
+  rwa [star_mul, star_star, mul_comm] at h
+
+private theorem starStable_aaD (a : Fin D.R.rS) : starStable (aaD D a) := by
+  rw [Formalism.L2.SG.SplitPrimeNormLemmas.IntG.aaD_eq]
+  have : ddS D ^ (D.R.rS - (a : ℕ)) = (((Formalism.L2.SG.NGCut.LeadingMinorIntegrality.dI D ^ (D.R.rS - (a : ℕ)) : Ideal (𝓞 D.host.E)) : FI)) := by
+    rw [FractionalIdeal.coeIdeal_pow]; rfl
+  rw [this]
+  apply starStable_inv
+  intro x hx
+  obtain ⟨y, hy, rfl⟩ := (FractionalIdeal.mem_coeIdeal _).1 hx
+  obtain ⟨y', hy', ey⟩ := Formalism.L2.SG.NGCut.LeadingMinorIntegrality.star_mem_pow _ y hy
+  exact (FractionalIdeal.mem_coeIdeal _).2 ⟨y', hy', ey⟩
+
 theorem inW_add {v w : (VS D).V} (hv : InW X v) (hw : InW X w) : InW X (v + w) := fun c =>
   ⟨by rw [map_add (f := _), (hv c).1, (hw c).1, add_zero], by rw [map_add (f := _), (hv c).2, (hw c).2, add_zero]⟩
 
@@ -61,7 +95,7 @@ theorem pW_sum (s : Finset (Fin D.R.rS)) (c : Fin D.R.rS → D.host.E) (v : Fin 
 theorem inv_up (X0 : Matrix (Fin D.R.rS) (Fin D.R.rS) D.host.E) (hup : ∀ b a, a < b → X0 b a = 0)
     (hd : ∀ a, X0 a a = 1) : (∀ b a, a < b → X0⁻¹ b a = 0) ∧ ∀ a, X0⁻¹ a a = 1 := by
   have hdet : X0.det = 1 := by
-    rw [Matrix.det_of_upperTriangular (fun i j hij => hup i j hij)]
+    rw [Matrix.det_of_isUpperTriangular (fun i j hij => hup i j hij)]
     simp [hd]
   have hU : IsUnit X0.det := by rw [hdet]; exact isUnit_one
   have hXY : X0 * X0⁻¹ = 1 := Matrix.mul_nonsing_inv _ hU
@@ -106,7 +140,14 @@ theorem dictLatB_holds : DictLatB := by
     intro d a
     rw [hBeq, Matrix.conjTranspose_apply]
     rcases lt_trichotomy a d with h | h | h
-    · rw [mul_comm]; exact SS_mul (SS_aaD a) (SS_inv (SS_aaD d)) _ (hXinv a d h)
+    · rw [mul_comm]
+      refine FractionalIdeal.mul_induction_on (hXinv a d h) ?_ ?_
+      · intro x hx y hy
+        rw [star_mul']
+        exact FractionalIdeal.mul_mem_mul (starStable_aaD a x hx) (starStable_inv (starStable_aaD d) y hy)
+      · intro x y hx hy
+        rw [star_add]
+        exact Submodule.add_mem _ hx hy
     · subst h; rw [hYd, star_one, mul_comm]; exact one_mem_aa a
     · rw [hYup a d h, star_zero]; exact Submodule.zero_mem _
 

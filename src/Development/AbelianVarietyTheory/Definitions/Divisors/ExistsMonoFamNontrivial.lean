@@ -249,12 +249,4 @@ theorem Fam.exists_monoFam [IsNoetherianRing R] (C : Fam Xo c R) (hφ : IsPolFan
   refine ⟨v, k, hk, ?_⟩
   simpa only [Fin.prod_univ_one, Matrix.cons_val_zero, e, ← pow_mul, Finset.prod_pow_eq_pow_sum] using hc
 
-section Tests
-
-open GlobalTheory.RigChart GlobalTheory.RigChart.Model GlobalTheory.ToricData ReciprocityTheory.ChartRestriction.G.Out.InhTate
-
-variable {V : Type} [CommRing V] [IsDomain V] {m : ℕ} {K : Type} [Field K]
-
-end Tests
-
 end GlobalTheory.UChart

@@ -143,7 +143,9 @@ theorem reduceFF_constMap (V : WeierstrassCurve 𝒪) [V.IsElliptic]
       obtain ⟨h₂, e₂⟩ := exists_some_eq h₁ hx hy
       obtain ⟨h₃, e₃⟩ := reduceFF_some K W V h₂
       rw [e₁, e₂, e₃]
-      have e₄ := reducePoint_some_integral K V h (nonsingular_residue_of_isElliptic K V h.1)
+      have e₄ := reducePoint_some_integral K V h
+        (WeierstrassCurve.Affine.equation_iff_nonsingular.mp
+          (equation_residue V (equation_of_map K V h.1)))
       refine Eq.trans ?_ (congrArg (constMap (V.map (residue 𝒪))
         (W.map (residue 𝒪)).toAffine.FunctionField) e₄).symm
       show _ = Point.some _ _ _

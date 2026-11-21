@@ -59,7 +59,9 @@ private theorem exists_gl (D₁ D₂ : Submodule κ (Fin n → κ))
     intro x
     simp only [e, LinearEquiv.trans_apply]
     rw [Submodule.prodEquivOfIsCompl_symm_apply_left]
-    simp
+    change (eD x : Fin n → κ) + (eC 0 : Fin n → κ) = (eD x : Fin n → κ)
+    rw [eC.map_zero]
+    simp only [Submodule.coe_zero, add_zero]
   let M := LinearMap.toMatrix' (e : (Fin n → κ) →ₗ[κ] (Fin n → κ))
   let M' := LinearMap.toMatrix' (e.symm : (Fin n → κ) →ₗ[κ] (Fin n → κ))
   have hMM : M * M' = 1 := by

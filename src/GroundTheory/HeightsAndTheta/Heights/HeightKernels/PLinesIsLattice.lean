@@ -42,10 +42,12 @@ end KLinesIsLattice
 
 theorem LinesIsLattice.proof : LinesIsLattice.Statement := by
   intro K _ _ ι _ M hfg hspan
-  refine ⟨hfg, ?_⟩
+  refine { toIsLattice := Submodule.IsLattice.of_fg ℚ hfg, span_eq_top := ?_ }
   have hMN : Submodule.span K (M : Set (ι → K)) ≤ KLinesIsLattice.qSpan M :=
     Submodule.span_le.mpr fun v hv => Submodule.subset_span hv
   rw [hspan, top_le_iff] at hMN
-  intro s hs hli
-  exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  rw [eq_top_iff]
+  intro v _
+  have hv : v ∈ KLinesIsLattice.qSpan M := hMN ▸ Submodule.mem_top
+  exact hv
 end GroundTheory.Heights₂.Heights

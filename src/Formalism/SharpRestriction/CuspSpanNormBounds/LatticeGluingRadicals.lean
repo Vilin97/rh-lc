@@ -368,6 +368,47 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : �
 theorem a_mem_orth (U : Submodule E S.V) (y : S.V) : y ∈ orth S U ↔ ∀ x ∈ U, S.hT x y = 0 := by
   simp [orth, Submodule.mem_iInf]
 
+theorem a_full (Λ : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E Λ)
+    (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ) :
+    Submodule.IsFullLattice E Λ := by
+  classical
+  letI := hL
+  refine { span_eq_top := ?_ }
+  by_contra hspan
+  obtain ⟨φ, hφ₀, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
+  obtain ⟨bs, hbs⟩ := Formalism.HermitianLatticesTheory.dualLattice_dualBasis S.hT S.nondeg S.frame
+  let μ := ∑ j, star (φ (S.frame j)) • bs j
+  have hμ : S.hT μ = φ := by
+    apply S.frame.ext
+    intro i
+    dsimp [μ]
+    rw [map_sum, LinearMap.sum_apply]
+    have hs : ∀ j, S.hT (star (φ (S.frame j)) • bs j) (S.frame i) =
+        φ (S.frame j) * (if i = j then 1 else 0) := by
+      intro j
+      rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star]
+      congr 1
+      rw [← S.herm.eq (S.frame i) (bs j), hbs]
+      split_ifs <;> simp
+    simp only [hs, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  have hμ₀ : μ ≠ 0 := by
+    intro h
+    apply hφ₀
+    ext y
+    simpa [h] using congrFun (congrArg DFunLike.coe hμ) y |>.symm
+  have hline (a : E) : a • μ ∈ Λ := by
+    rw [← hU, Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
+    intro y hy
+    have hy₀ := LinearMap.mem_ker.mp (hφ (Submodule.subset_span hy))
+    simp [← S.herm.eq (a • μ) y, LinearMap.map_smulₛₗ, hμ, hy₀]
+  let i : E →ₗ[𝓞 E] Λ :=
+    ((LinearMap.toSpanSingleton E _ μ).restrictScalars (𝓞 E)).codRestrict Λ hline
+  let : Module.Finite (𝓞 E) Λ := Module.Finite.iff_fg.mpr hL.fg
+  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+    smul_left_injective E hμ₀ (congrArg Subtype.val hab)
+  exact RingOfIntegers.not_isField E
+    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+
 theorem a_exists_smul_mem (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsFullLattice E Λ) (x : S.V) :
     ∃ c : 𝓞 E, c ≠ 0 ∧ c • x ∈ Λ := by
   first
@@ -1413,7 +1454,7 @@ theorem m_fin_quot {M : Type} [AddCommGroup M] [Module (𝓞 E) M] [Module.Finit
 
 variable (Λ : Submodule (𝓞 E) S.V) {T T' : E} (F : LFlag S r T) (F' : LFlag S r T')
 
-theorem m_BQ_finite (hΛ : Submodule.IsFullLattice E Λ) : Finite (BQ Λ F F') := by
+theorem m_BQ_finite (hΛ : Submodule.IsLattice E Λ) : Finite (BQ Λ F F') := by
   have h1 : Module.Finite (𝓞 E) Λ := Module.Finite.iff_fg.2 hΛ.fg
   have h2 : IsNoetherian (𝓞 E) Λ := isNoetherian_of_isNoetherianRing_of_finite (𝓞 E) Λ
   have hfg : (BLat Λ F F').FG := (isNoetherian_submodule.1 h2) (BLat Λ F F') inf_le_left
@@ -3404,7 +3445,7 @@ theorem d_normals {u : D.what₂.Word} {T' : ℕ} {F : Formalism.MainNotions.S.U
     {β : (hS D).V ≃ₗ[D.host.E] (hS D).V}
     (hF : FixedHyp D Λ F) (hT'' : IsTerm Λ (gS D) F F'') (hp : IsPair Λ F F' F'' β (gS D))
     (hA3 : Formalism.MainNotions.S.UnitaryVolumeMass.HyperplaneEquality D Λ F F' F'' β) : d_NormalsAgree Λ F F' F'' β := by
-  have hU : UUE Λ F F'' = U2 F F'' := a_HU Λ hF.1 F F'' hF.2.2.1.2 hT''.1.2
+  have hU : UUE Λ F F'' = U2 F F'' := a_HU Λ (a_full Λ hF.1 hF.2.1) F F'' hF.2.2.1.2 hT''.1.2
   have hc : IsCompl (UUE Λ F F'') (Hp Λ F F'') := by
     unfold Hp
     rw [hU]
@@ -4416,7 +4457,7 @@ theorem d_termHyp {D : D7} (hGl : Formalism.MainNotions.S.UnitaryVolumeMass.stGl
     {F : Formalism.MainNotions.S.UnitaryVolumeMass.Fl D T} {F' : Formalism.MainNotions.S.UnitaryVolumeMass.Fl D T'} (hF : FixedHyp D Λ F)
     (hT' : IsTerm Λ (gS D) F F') (hG' : IsGeneric Λ (gS D) F F') : d_TermHyp Λ (gS D) F F' := by
   exact {
-    lat := hF.1
+    lat := (a_full Λ hF.1 hF.2.1)
     unim := hF.2.1
     glue := fun U hU => (hGl Λ hF.1 hF.2.1 U hU).1
     g0 := Nat.one_le_iff_ne_zero.1 (d_gS_pos D)
@@ -4791,7 +4832,7 @@ theorem conv_lift_card_le_norm_pow (hΛ : Submodule.IsFullLattice E Λ) (hg : 0 
     (hc : IsFixedConv Λ g F) (hT : IsTerm Λ g F F') :
     (Nat.card (gB Λ g F F') : ℝ) ≤ (Nat.card (BQ Λ F F') : ℝ) / NE (E := E) g ^ (r + 1) := by
   obtain ⟨K, hK, hcard⟩ := e_exists_K hΛ hg hz hc hT
-  exact m_gB_le Λ F F' g hg (m_BQ_finite Λ F F' hΛ) K hK hcard
+  exact m_gB_le Λ F F' g hg (m_BQ_finite Λ F F' hΛ.toIsLattice) K hK hcard
 
 end Main
 
@@ -4806,7 +4847,7 @@ theorem lemma_one_card_bound_local (D : D7) (Λ : VanishingOnXAndXPlusGluing.Lat
     (hF : FixedHyp D Λ F) (hT : IsTerm Λ (gS D) F F') :
     (Nat.card (gB Λ (gS D) F F') : ℝ) ≤
       (Nat.card (BQ Λ F F') : ℝ) / NE (E := D.host.E) (gS D) ^ (D.R.rS + 1) :=
-  conv_lift_card_le_norm_pow hF.1 (e_gS_pos D) hF.2.2.1 hF.2.2.2 hT
+  conv_lift_card_le_norm_pow (a_full Λ hF.1 hF.2.1) (e_gS_pos D) hF.2.2.1 hF.2.2.2 hT
 
 end D7
 
@@ -4947,7 +4988,7 @@ theorem i_fg_of_le {L A : Submodule (𝓞 E) S.V} (hL : L.FG) (h : A ≤ L) : A.
 
 include hΛ hc in
 theorem sum_of_intersections_is_lattice : Submodule.IsFullLattice E ((Λ ⊓ toO S U) ⊔ (Λ ⊓ toO S U')) := by
-  refine ⟨Submodule.IsLattice.of_fg E (i_fg_of_le hΛ.fg (sup_le inf_le_left inf_le_left)), ?_⟩
+  refine { toIsLattice := Submodule.IsLattice.of_fg E (i_fg_of_le hΛ.fg (sup_le inf_le_left inf_le_left)), span_eq_top := ?_ }
   rw [a_span_sup, a_span_inf Λ hΛ U, a_span_inf Λ hΛ U', hc.sup_eq_top]
 
 theorem i_M_le_P : Λ ⊓ toO S U ≤ i_P Λ U U' :=
@@ -5185,7 +5226,7 @@ section D7
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem i_stGlue (D : D7) : Formalism.MainNotions.S.UnitaryVolumeMass.stGlue D :=
-  fun Λ hΛ hu U hU => i_gluing Λ hΛ hu U hU
+  fun Λ hΛ hu U hU => i_gluing Λ (a_full Λ hΛ hu) hu U hU
 
 theorem gluing_unimodular_first (D : D7) : VanishingOnXAndXPlusGlobal.adm1 D := i_stGlue D
 
@@ -5695,7 +5736,7 @@ theorem g_le_span (M : Submodule (𝓞 E) S.V) : M ≤ toO S (spanE S M) := fun 
 theorem g_comap_lattice {U : Submodule E S.V} {M : Submodule (𝓞 E) S.V} (hM : M.FG) (hs : spanE S M = U) :
     Submodule.IsFullLattice E (M.comap (g_iota U)) := by
   have hle : M ≤ toO S U := hs ▸ g_le_span M
-  refine ⟨Submodule.IsLattice.of_fg E ?_, ?_⟩
+  refine { toIsLattice := Submodule.IsLattice.of_fg E ?_, span_eq_top := ?_ }
   · apply Submodule.fg_of_fg_map_injective (g_iota U) (g_iota_inj U)
     rw [g_map_comap hle]; exact hM
   · apply Submodule.map_injective_of_injective U.injective_subtype
@@ -5810,7 +5851,7 @@ theorem lemma_one_det_general_lattice (hΛ : Submodule.IsFullLattice E Λ) (hg :
     rw [hU']; exact Submodule.mem_sup_left (Submodule.mem_sup_right (Submodule.mem_span_singleton_self _))
   have hzU' : F'.fl.z ∈ UUE Λ F F' := by
     rw [hU']; exact Submodule.mem_sup_right (Submodule.mem_sup_right (Submodule.mem_span_singleton_self _))
-  have hfinB : Finite (BQ Λ F F') := m_BQ_finite Λ F F' hΛ
+  have hfinB : Finite (BQ Λ F F') := m_BQ_finite Λ F F' hΛ.toIsLattice
   have hle : Thp Λ F F' ≤ La Λ g F F' := g_Thp_le_La Λ F F' g hX hX' hzU hzU'
   obtain ⟨φ, hφ, -⟩ := lemma_one_quotient_embedding (g := g) hg hz hz' (a_disj (a_HInd F F' hG)) hX hX'
   have hfinQ : Finite (La Λ g F F' ⧸ (Thp Λ F F').comap (La Λ g F F').subtype) :=
@@ -5865,9 +5906,9 @@ theorem lattice_det_eq_index_quotient (D : D7) (h1 : g_GlueDet D) (hDI : g_DetIn
     (hF : FixedHyp D Λ F) (hg : 0 < gS D) (hT : IsTerm Λ (gS D) F F') :
     latDet (hS D) (La Λ (gS D) F F') =
       NG Λ F F' / ((Nat.card (BQ Λ F F') : ℝ) * (iIdx Λ (gS D) F F' : ℝ)) := by
-  have hU' : UUE Λ F F' = U2 F F' := a_HU Λ hF.1 F F' hF.2.2.1.2 hT.1.2
-  refine lemma_one_det_general_lattice Λ F F' (gS D) hF.1 hg hF.2.2.1 hT.1 hT.2.2 hDI ?_
-  refine h1 Λ hF.1 hF.2.1 (UUE Λ F F') ?_
+  have hU' : UUE Λ F F' = U2 F F' := a_HU Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT.1.2
+  refine lemma_one_det_general_lattice Λ F F' (gS D) (a_full Λ hF.1 hF.2.1) hg hF.2.2.1 hT.1 hT.2.2 hDI ?_
+  refine h1 Λ (a_full Λ hF.1 hF.2.1) hF.2.1 (UUE Λ F F') ?_
   rw [hU']; exact a_HNd F F' hT.2.2
 
 end D7
@@ -6490,7 +6531,7 @@ theorem h_La_fg (hΛ : Submodule.IsFullLattice E Λ) (hg : 0 < g) (hz : IsLift �
     (hG : Gval F F' ≠ 0) : (La Λ g F F').FG := by
   have hU : HU Λ F F' := a_HU Λ hΛ F F' hz.2 hz'.2
   obtain ⟨hX, hX'⟩ := a_X_le hU
-  have hfinB : Finite (BQ Λ F F') := m_BQ_finite Λ F F' hΛ
+  have hfinB : Finite (BQ Λ F F') := m_BQ_finite Λ F F' hΛ.toIsLattice
   have hle : Thp Λ F F' ≤ La Λ g F F' := c_Thp_le_La hU
   obtain ⟨φ, hφ, -⟩ := lemma_one_quotient_embedding (g := g) hg hz hz' (a_disj (a_HInd F F' hG)) hX hX'
   have hfinQ : Finite (La Λ g F F' ⧸ (Thp Λ F F').comap (La Λ g F F').subtype) :=
@@ -6574,7 +6615,7 @@ theorem h_a2det (D : D7) (u : D.what₂.Word) (T' : ℕ) (Λ : Submodule (𝓞 D
       latDet (hS D) (La Λ (gS D) F F') * latDet (hS D) (La Λ (gS D) F F'') /
         (latDet (hS D) (Psi Λ F F' F'' β W (La Λ (gS D) F F')) *
           latDet (hS D) (Psi Λ F F' F'' β W (La Λ (gS D) F F''))) :=
-  h_a2det_gen hF.1 (g_gS_pos D) hF.2.2.1 hT'.1 hT''.1 hT'.2.2 hT''.2.2 hP
+  h_a2det_gen (a_full Λ hF.1 hF.2.1) (g_gS_pos D) hF.2.2.1 hT'.1 hT''.1 hT'.2.2 hT''.2.2 hP
     (p_posX D _ (lt_of_lt_of_le (by norm_num) hPr.2.1) F) hW
 
 end D7
@@ -6644,15 +6685,15 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem lattice_lemma_two (D : D7) : VanishingOnXAndXPlusGluing.Conclusion2 D := by
   intro u T' Λ F F' hF hPr hT
   exact lemma_two_of_three_parts D u T' Λ F F' hF hPr hT
-    (lemma_two_unique_pair Λ hF.1 F F' hF.2.2.1.2 hT.1.2 hT.2.2)
-    (lemma_two_lift_difference Λ hF.1 F F' hF.2.2.1.2 hT.1.2 hT.2.2)
-    (lemma_two_exists_lifts Λ hF.1 F F' hF.2.2.1.2 hT.1.2 hT.2.2)
+    (lemma_two_unique_pair Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT.1.2 hT.2.2)
+    (lemma_two_lift_difference Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT.1.2 hT.2.2)
+    (lemma_two_exists_lifts Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT.1.2 hT.2.2)
 
 theorem radical_positive_definite (D : D7) : VanishingOnXAndXPlusGluing.GlobalIntegralModelCondition D := by
   intro u T' Λ F F' hF hPr hT
   have h0 : 0 < Tu D u := lt_of_lt_of_le (by norm_num) hPr.2.1
-  exact ⟨a_rankHp_k Λ hF.1 F F' hF.2.2.1.2 hT.1.2 hT.2.2 D.R.k (p_rankV D),
-    radical_positive_each_embedding Λ (a_HU Λ hF.1 F F' hF.2.2.1.2 hT.1.2) (a_HNd F F' hT.2.2) (p_posX D _ h0 F)⟩
+  exact ⟨a_rankHp_k Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT.1.2 hT.2.2 D.R.k (p_rankV D),
+    radical_positive_each_embedding Λ (a_HU Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT.1.2) (a_HNd F F' hT.2.2) (p_posX D _ h0 F)⟩
 
 def Lem1Det (D : D7) : Prop :=
   ∀ (u : D.what₂.Word) (T' : ℕ) (Λ : VanishingOnXAndXPlusGluing.LatS D) (F : VanishingOnXAndXPlusGluing.FlS D (Tu D u)) (F' : VanishingOnXAndXPlusGluing.FlS D T'),
@@ -6665,7 +6706,7 @@ theorem z_gS_pos (D : D7) : 0 < gS D :=
 
 theorem lemma_one_of_determinant (D : D7) (h : Lem1Det D) : VanishingOnXAndXPlusGluing.Conclusion1 D := by
   intro u T' Λ F F' hF hPr hT
-  have hU := a_HU Λ hF.1 F F' hF.2.2.1.2 hT.1.2
+  have hU := a_HU Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT.1.2
   have hfin : Finite (BQ Λ F F') := m_BQ_finite Λ F F' hF.1
   obtain ⟨φ, h1, h2, h3⟩ := lemma_one_quotient_embedding (z_gS_pos D) hF.2.2.1 hT.1 (a_disj (a_HInd F F' hT.2.2))
     (a_X_le hU).1 (a_X_le hU).2
@@ -6679,8 +6720,8 @@ theorem lattice_lemma_one (D : D7) : VanishingOnXAndXPlusGluing.Conclusion1 D :=
 
 theorem radicals_eq_theta (D : D7) : VanishingOnXAndXPlusGluing.DefiniteRankOne D := by
   intro u T' Λ F F' F'' β hF hPr hT' hT'' hP hs
-  exact radical_setting_third_of D Λ F F' F'' β (a_HU Λ hF.1 F F' hF.2.2.1.2 hT'.1.2) (a_HNd F F' hT'.2.2)
-    (a_HU Λ hF.1 F F'' hF.2.2.1.2 hT''.1.2) (a_HNd F F'' hT''.2.2)
+  exact radical_setting_third_of D Λ F F' F'' β (a_HU Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT'.1.2) (a_HNd F F' hT'.2.2)
+    (a_HU Λ (a_full Λ hF.1 hF.2.1) F F'' hF.2.2.1.2 hT''.1.2) (a_HNd F F'' hT''.2.2)
     (radical_positive_definite D u T' Λ F F' hF hPr hT').1 (radical_positive_definite D u T' Λ F F'' hF hPr hT'').1 hs
 
 def RadicalDeterminantIdentity (D : D7) : Prop :=
@@ -6698,9 +6739,9 @@ theorem radical_second_of_determinant (D : D7) (h : RadicalDeterminantIdentity D
   intro u T' Λ F F' F'' β hF hPr hT' hT'' hP hs W hW
   have h0 : 0 < Tu D u := lt_of_lt_of_le (by norm_num) hPr.2.1
   have h0' : 0 < T' := lt_of_lt_of_le (by norm_num) hPr.2.2.2.1
-  exact radical_setting_second_of D Λ (gS D) F F' F'' β W (p_starConj D) hF.1 hF.2.1 hP
-    (a_HU Λ hF.1 F F' hF.2.2.1.2 hT'.1.2) (a_HNd F F' hT'.2.2)
-    (a_HU Λ hF.1 F F'' hF.2.2.1.2 hT''.1.2) (a_HNd F F'' hT''.2.2)
+  exact radical_setting_second_of D Λ (gS D) F F' F'' β W (p_starConj D) (a_full Λ hF.1 hF.2.1) hF.2.1 hP
+    (a_HU Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT'.1.2) (a_HNd F F' hT'.2.2)
+    (a_HU Λ (a_full Λ hF.1 hF.2.1) F F'' hF.2.2.1.2 hT''.1.2) (a_HNd F F'' hT''.2.2)
     (p_posX D _ h0 F) (p_posX D _ h0' F'') hW
     (radical_positive_definite D u T' Λ F F' hF hPr hT').1 (radical_positive_definite D u T' Λ F F'' hF hPr hT'').1
     (h u T' Λ F F' F'' β hF hPr hT' hT'' hP hs W hW)
@@ -6733,8 +6774,8 @@ theorem theorem_A_of_inequalities (D : D7) (h : ThmAIneq D) : VanishingOnXAndXPl
   have hk : 1 ≤ D.R.k := by have := D.R.m_add_three_le_k; omega
   obtain ⟨i1, i2⟩ := h u T' Λ F F' F'' β hF hPr hT' hT'' hP hs
   refine ⟨i1, fun hnd => ?_⟩
-  obtain ⟨r1, r2⟩ := c_thmA_ranks hP (a_HU Λ hF.1 F F' hF.2.2.1.2 hT'.1.2) (a_HNd F F' hT'.2.2)
-    (a_HU Λ hF.1 F F'' hF.2.2.1.2 hT''.1.2) (a_HNd F F'' hT''.2.2) (p_posX D _ h0' F'')
+  obtain ⟨r1, r2⟩ := c_thmA_ranks hP (a_HU Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT'.1.2) (a_HNd F F' hT'.2.2)
+    (a_HU Λ (a_full Λ hF.1 hF.2.1) F F'' hF.2.2.1.2 hT''.1.2) (a_HNd F F'' hT''.2.2) (p_posX D _ h0' F'')
     (by exact_mod_cast h0.ne') D.R.k (p_rankV D)
     (radical_positive_definite D u T' Λ F F' hF hPr hT').1 (radical_positive_definite D u T' Λ F F'' hF hPr hT'').1 hk hnd
   exact ⟨r1, r2, i2 hnd⟩
@@ -6791,7 +6832,7 @@ theorem j_exists_basis {A : Submodule (𝓞 E) (Fin e → E)} (hA : j_Lat A) : �
   have h3 : Module.Finite ℤ Az :=
     Module.Finite.equiv ((Submodule.restrictScalarsEquiv ℤ (𝓞 E) (Fin e → E) A).restrictScalars ℤ).symm
   have hlat : Submodule.IsFullLattice ℚ Az := by
-    refine ⟨Submodule.IsLattice.of_fg ℚ (Module.Finite.iff_fg.1 h3), ?_⟩
+    refine { toIsLattice := Submodule.IsLattice.of_fg ℚ (Module.Finite.iff_fg.1 h3), span_eq_top := ?_ }
     rw [eq_top_iff]
     intro x _
     have hx : x ∈ Submodule.span E (A : Set (Fin e → E)) := by rw [hA.2]; trivial
@@ -6805,12 +6846,14 @@ theorem j_exists_basis {A : Submodule (𝓞 E) (Fin e → E)} (hA : j_Lat A) : �
     Module.finrank_eq_of_rank_eq
       ((Submodule.IsLattice.rank' ℚ Az).trans (Module.finrank_eq_rank ℚ (Fin e → E)).symm)
   let b : Basis (Fin (finrank ℚ (Fin e → E))) ℤ Az := Module.finBasisOfFinrankEq ℤ Az hr
-  refine ⟨b.extendOfIsLattice ℚ, ?_⟩
+  refine ⟨b.extendOfIsFullLattice ℚ, ?_⟩
   unfold j_IsBasisOf
-  have hrange : Set.range (b.extendOfIsLattice ℚ) = Az.subtype '' Set.range b := by
+  have hrange : Set.range (b.extendOfIsFullLattice ℚ) = Az.subtype '' Set.range b := by
     rw [← Set.range_comp]
     congr 1
-  have hspan : Submodule.span ℤ (Set.range (b.extendOfIsLattice ℚ)) = Az := by
+    funext i
+    simp
+  have hspan : Submodule.span ℤ (Set.range (b.extendOfIsFullLattice ℚ)) = Az := by
     rw [hrange, ← Submodule.map_span, b.span_eq, Submodule.map_top, Submodule.range_subtype]
   ext x
   have key : ∀ s : Set (Fin e → E), Submodule.span ℤ s = Az → (x ∈ Az ↔ x ∈ AddSubgroup.closure s) := by
@@ -7905,10 +7948,10 @@ theorem j_DetBBound (D : D7) (u : D.what₂.Word) (T' : ℕ) (Λ : VanishingOnXA
   have h0 : 0 < Tu D u := lt_of_lt_of_le (by norm_num) hPr.2.1
   have h0' : 0 < T' := lt_of_lt_of_le (by norm_num) hPr.2.2.2.1
   have hg : 0 < gS D := Nat.mul_pos (D.host.g_prime 0).pos (D.host.g_prime 1).pos
-  have h := j_detB_gen (p_starConj D) hF.1 hF.2.1 hg hF.2.2.1 hT'.1 hT''.1 hT'.2.2 hT''.2.2 hP
+  have h := j_detB_gen (p_starConj D) (a_full Λ hF.1 hF.2.1) hF.2.1 hg hF.2.2.1 hT'.1 hT''.1 hT'.2.2 hT''.2.2 hP
     (p_posX D _ h0 F) (p_posX D _ h0' F'') hW
-    (a_rankHp_k Λ hF.1 F F' hF.2.2.1.2 hT'.1.2 hT'.2.2 D.R.k (p_rankV D))
-    (a_rankHp_k Λ hF.1 F F'' hF.2.2.1.2 hT''.1.2 hT''.2.2 D.R.k (p_rankV D)) hnd
+    (a_rankHp_k Λ (a_full Λ hF.1 hF.2.1) F F' hF.2.2.1.2 hT'.1.2 hT'.2.2 D.R.k (p_rankV D))
+    (a_rankHp_k Λ (a_full Λ hF.1 hF.2.1) F F'' hF.2.2.1.2 hT''.1.2 hT''.2.2 D.R.k (p_rankV D)) hnd
   rw [j_finrank] at h
   unfold DetBBound
   have e1 : 2 * D.R.f * (s0 Λ F F' F'' β D.R.k - 1) = (s0 Λ F F' F'' β D.R.k - 1) * (2 * D.R.f) := by ring
@@ -8360,7 +8403,7 @@ theorem k_count (hΛ : Submodule.IsFullLattice E Λ) (hg : 0 < g) (hP : IsPair �
     (hL : ∀ s ∈ L, ∃ x ∈ La Λ g F F', x ∈ radL Λ F F' F'' β ∧ k_al f β s = k_al f β x) :
     iIdx Λ g F F'' * g_idx L (integralPartOfModule f β L) ≤ Nat.card (gB Λ g F F'') := by
   have hU'' := a_HU Λ hΛ F F'' hz.2 hz''.2
-  have hfin : Finite (BQ Λ F F'') := m_BQ_finite Λ F F'' hΛ
+  have hfin : Finite (BQ Λ F F'') := m_BQ_finite Λ F F'' hΛ.toIsLattice
   obtain ⟨φ, h1, h2, -⟩ := lemma_one_quotient_embedding hg hz hz'' (a_disj (a_HInd F F'' hG''))
     (a_X_le hU'').1 (a_X_le hU'').2
   let π : gB Λ g F F'' →ₗ[𝓞 E] (E ⧸ k_O E) :=
@@ -8667,7 +8710,7 @@ theorem k_rank1 (hc : StarConj E) (a : S.V →ₗ[E] E) {l : Submodule E S.V} (h
         have := sub_eq_zero.1 (hinj _ hl1 hz)
         rw [this]
         exact Submodule.smul_mem _ t (Submodule.mem_span_singleton_self _))
-    exact this
+    simpa only [g_idx, Ideal.absNorm_apply, Submodule.cardQuot_apply] using this
   have hM : latDet S (Submodule.span (𝓞 E) {s₀}) = Real.sqrt (∏ τ : E →+* ℂ, nrm S τ s₀) := by
     rw [k_latDet_cyc hc₀]
     congr 1
@@ -8683,7 +8726,7 @@ theorem k_rank1 (hc : StarConj E) (a : S.V →ₗ[E] E) {l : Submodule E S.V} (h
     apply Real.le_sqrt_of_sq_le
     rw [div_pow, mul_pow, Real.sq_sqrt (Finset.prod_nonneg fun _ _ => hT.le), ← Finset.prod_pow,
       ← Finset.prod_pow, ← Finset.prod_mul_distrib, ← Finset.prod_div_distrib]
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro τ _
       have := hκ τ
       positivity
@@ -8791,7 +8834,7 @@ theorem k_count_pos (hΛ : Submodule.IsFullLattice E Λ) (hg : 0 < g) (hP : IsPa
     (hL : ∀ s ∈ L, ∃ x ∈ La Λ g F F', x ∈ radL Λ F F' F'' β ∧ k_al f β s = k_al f β x) :
     0 < g_idx L (integralPartOfModule f β L) := by
   have hU'' := a_HU Λ hΛ F F'' hz.2 hz''.2
-  have hfin : Finite (BQ Λ F F'') := m_BQ_finite Λ F F'' hΛ
+  have hfin : Finite (BQ Λ F F'') := m_BQ_finite Λ F F'' hΛ.toIsLattice
   let π : gB Λ g F F'' →ₗ[𝓞 E] (E ⧸ k_O E) :=
     (k_fbar (Λ := Λ) hf hz.2 hz''.2) ∘ₗ (gB Λ g F F'').subtype
   have hfr : Finite (LinearMap.range π) :=
@@ -9148,7 +9191,7 @@ theorem k_thmA_deg (D : D7) (u : D.what₂.Word) (T' : ℕ) (Λ : VanishingOnXAn
   have hg : 0 < gS D := z_gS_pos D
   have hk : 1 ≤ D.R.k := by have := D.R.m_add_three_le_k; omega
   have hc := p_starConj D
-  have hΛ := hF.1
+  have hΛ := (a_full Λ hF.1 hF.2.1)
   have hz := hF.2.2.1
   have hU' : HU Λ F F' := a_HU Λ hΛ F F' hz.2 hT'.1.2
   have hU'' : HU Λ F F'' := a_HU Λ hΛ F F'' hz.2 hT''.1.2

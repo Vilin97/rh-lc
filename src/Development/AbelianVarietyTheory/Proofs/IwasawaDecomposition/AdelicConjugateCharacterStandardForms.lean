@@ -7,6 +7,7 @@ public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.Adelic
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.EmbHInjective
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MulVecMemLocLatIffOfFrame
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsMulEqInteger
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.FiniteAdeleRingNontrivial
 
 @[expose] public section
 
@@ -171,16 +172,22 @@ theorem locP_le_of_le' {R W : Type} [CommRing R] [AddCommGroup W] [Module R W] (
   exact ⟨t * s, p.primeCompl.mul_mem ht hs, by rw [mul_smul]; exact hx'⟩
 
 theorem clsCrd_fin (D : D7) (u : D.what₂.Word) (i : ℕ) (hi : i ≤ D.R.m) (c : (D.mem u).C.cls i) :
-    Module.Finite (𝓞 D.host.E) (clsCrd D u i hi c) ∧
-      Submodule.span D.host.E (clsCrd D u i hi c : Set (Fin (D.R.N i) → D.host.E)) = ⊤ := by
+    Module.Finite (𝓞 D.host.E) (clsCrd D u i hi c) := by
   letI := D.host.cmStar
-  have h := D.clsLat_lat u i c
-  refine ⟨Module.Finite.iff_fg.2 (h.fg.map _), ?_⟩
-  have h2 := congrArg (Submodule.map (((D.sp.X i).frame.equivFun.trans
-    (LinearEquiv.funCongrLeft D.host.E D.host.E (finCongr (rankN D i hi)).symm) :
-      (D.sp.X i).V ≃ₗ[D.host.E] (Fin (D.R.N i) → D.host.E)) : (D.sp.X i).V →ₗ[D.host.E] (Fin (D.R.N i) → D.host.E))) h.span_eq_top
-  rw [Submodule.map_span, Submodule.map_top, LinearEquiv.range] at h2
-  exact h2
+  exact Module.Finite.iff_fg.2 ((D.clsLat_lat u i c).fg.map _)
+
+private theorem span_eq_top_of_y_lat {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
+    [Algebra F E] {n : ℕ} (Lb L : Submodule (𝓞 E) (Fin n → E))
+    (hfin : Module.Finite (𝓞 E) Lb) (hspan : Submodule.span E (Lb : Set (Fin n → E)) = ⊤)
+    (y : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F))
+    (hy : ∀ x : Fin n → E ⊗[F] FiniteAdeleRing (𝓞 F) F,
+      x ∈ latS (F := F) _ (tensInt (F := F) _ (intOE E) (intAd F)) L ↔
+      (y⁻¹).1 *ᵥ x ∈ latS (F := F) _ (tensInt (F := F) _ (intOE E) (intAd F)) Lb) :
+    Submodule.span E (L : Set (Fin n → E)) = ⊤ := by
+  have hG := Formalism.UG.P.csGlob_lattice (F := F) Lb hfin hspan y
+  rw [eq_top_iff, ← hG.span_eq_top, Submodule.span_le]
+  intro z hz
+  exact Formalism.L2.GlobalTheoryTheory.Br.latS_mem_span (F := F) L z ((hy _).2 hz)
 
 theorem mulLat_fin {E : Type} [Field E] [NumberField E] {n : ℕ} (γ : GL (Fin n) E) (L : Submodule (𝓞 E) (Fin n → E))
     (hL : Module.Finite (𝓞 E) L) (hs : Submodule.span E (L : Set (Fin n → E)) = ⊤) :
@@ -221,21 +228,30 @@ theorem sameoff_gen {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : �
     (q : HeightOneSpectrum (𝓞 D.host.E)) (hq : q.under (𝓞 D.host.F) ≠ v) :
     Formalism.HermitianLatticesTheory.localization₂ q.asIdeal (Formalism.L2.Forms.mulLat γ.1 (clsCrd D u i hi c')) =
       Formalism.HermitianLatticesTheory.localization₂ q.asIdeal (clsCrd D u i hi c) := by
-  obtain ⟨f1, s1⟩ := clsCrd_fin D u i hi c
-  obtain ⟨f2, s2⟩ := clsCrd_fin D u i hi c'
-  obtain ⟨f3, s3⟩ := mulLat_fin γ _ f2 s2
-  have key : ∀ z, z ∈ GlobalTheory.IndefiniteRowSideFullHecke.SplittingProjection.locLat (q.under (𝓞 D.host.F)) (Formalism.L2.Forms.mulLat γ.1 (clsCrd D u i hi c')) ↔
-      z ∈ GlobalTheory.IndefiniteRowSideFullHecke.SplittingProjection.locLat (q.under (𝓞 D.host.F)) (clsCrd D u i hi c) := by
+  have f1 := clsCrd_fin D u i hi c
+  have f2 := clsCrd_fin D u i hi c'
+  obtain ⟨key, s1, s2⟩ :
+      (∀ z, z ∈ GlobalTheory.IndefiniteRowSideFullHecke.SplittingProjection.locLat (q.under (𝓞 D.host.F)) (Formalism.L2.Forms.mulLat γ.1 (clsCrd D u i hi c')) ↔
+        z ∈ GlobalTheory.IndefiniteRowSideFullHecke.SplittingProjection.locLat (q.under (𝓞 D.host.F)) (clsCrd D u i hi c)) ∧
+      Submodule.span D.host.E (clsCrd D u i hi c : Set (Fin (D.R.N i) → D.host.E)) = ⊤ ∧
+      Submodule.span D.host.E (clsCrd D u i hi c' : Set (Fin (D.R.N i) → D.host.E)) = ⊤ := by
     by_cases h0 : i = 0 ∨ i = D.R.m
-    · have hS := hAd.1 h0
-      exact locLat_of_adStep _ _ _ _ _ _ _ _ _ _ _ _ _ _ (T.cls i hi h0).lev.Lb_fin f1 f2
-        (fun κ hκ X => stepLevel_stab _ κ hκ X) ((T.cls i hi h0).y_lat c) ((T.cls i hi h0).y_lat c') hS hq
+    · let K := T.cls i hi h0
+      exact ⟨locLat_of_adStep _ _ _ _ _ _ _ _ _ _ _ _ _ _ K.lev.Lb_fin f1 f2
+          (fun κ hκ X => stepLevel_stab _ κ hκ X) (K.y_lat c) (K.y_lat c') (hAd.1 h0) hq,
+        span_eq_top_of_y_lat _ _ K.lev.Lb_fin K.lev.Lb_span _ (K.y_lat c),
+        span_eq_top_of_y_lat _ _ K.lev.Lb_fin K.lev.Lb_span _ (K.y_lat c')⟩
     · have h1 : 1 ≤ i := by omega
       have h2 : i + 1 ≤ D.R.m := by omega
       obtain ⟨hβ, hS⟩ := hAd.2 h1 h2
-      exact locLat_of_adStep _ _ _ _ _ _ _ _ _ _ _ _ _ _ (T.ch i h1 h2 (chOf i c)).lev.Lb_fin f1 f2
-        (fun κ hκ X => stepLevel_stab _ κ hκ X) ((T.ch i h1 h2 (chOf i c)).y_lat ⟨c, rfl⟩)
-        ((T.ch i h1 h2 (chOf i c)).y_lat ⟨c', hβ⟩) hS hq
+      let K := T.ch i h1 h2 (chOf i c)
+      have hy := K.y_lat ⟨c, rfl⟩
+      have hy' := K.y_lat ⟨c', hβ⟩
+      exact ⟨locLat_of_adStep _ _ _ _ _ _ _ _ _ _ _ _ _ _ K.lev.Lb_fin f1 f2
+          (fun κ hκ X => stepLevel_stab _ κ hκ X) hy hy' hS hq,
+        span_eq_top_of_y_lat _ _ K.lev.Lb_fin K.lev.Lb_span _ hy,
+        span_eq_top_of_y_lat _ _ K.lev.Lb_fin K.lev.Lb_span _ hy'⟩
+  obtain ⟨f3, s3⟩ := mulLat_fin γ _ f2 s2
   exact le_antisymm (locP_le_of_locLat_le q _ _ f1 s1 fun z hz => (key z).1 hz)
     (locP_le_of_locLat_le q _ _ f3 s3 fun z hz => (key z).2 hz)
 

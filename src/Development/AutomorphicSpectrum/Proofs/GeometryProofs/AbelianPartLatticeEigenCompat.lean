@@ -181,11 +181,11 @@ theorem prime_cases (𝔭 : PrimeSpectrum (𝓞 L)) : 𝔭.asIdeal = ⊥ ∨ ∃
 theorem bad_finite {m : ℕ} (T : Matrix (Fin m) (Fin m) L) (hT : T.det ≠ 0) :
     {v : FinitePlace L | ¬ ((∀ i j, v (T i j) ≤ 1) ∧ v T.det = 1)}.Finite := by
   classical
-  have h1 : (Function.mulSupport fun v : FinitePlace L => v T.det).Finite := FinitePlace.mulSupport_finite hT
+  have h1 : (Function.mulSupport fun v : FinitePlace L => v T.det).Finite := FinitePlace.hasFiniteMulSupport hT
   have h2 : ∀ i j, {v : FinitePlace L | ¬ v (T i j) ≤ 1}.Finite := fun i j => by
     by_cases h0 : T i j = 0
     · simp [h0]
-    · refine Set.Finite.subset (FinitePlace.mulSupport_finite h0) fun v hv e => hv ?_
+    · refine Set.Finite.subset (FinitePlace.hasFiniteMulSupport h0) fun v hv e => hv ?_
       exact (show v (T i j) = 1 from e).le
   refine (h1.union (Set.finite_iUnion fun i => Set.finite_iUnion fun j => h2 i j)).subset fun v hv => ?_
   by_cases hd : v T.det = 1

@@ -286,7 +286,7 @@ theorem evMap_injOn {I : ∀ k, Finset (ι k)} (hI : CellMeets y I) (γ : K → 
 theorem map_evMap_locPart {I : ∀ k, Finset (ι k)} (hI : CellMeets y I) (γ : K → ℤ) :
     (locPart ι (quotPart S (mIdealOver S y)) (cellMon S I) γ).map (evMap y I) = cellSec S y γ I := by
   unfold cellSec
-  rw [if_pos hI]
+  rw [ite_eq_left hI]
   apply le_antisymm
   · rw [Submodule.map_le_iff_le_comap]
     intro x hx
@@ -363,7 +363,7 @@ theorem cellRes_mem_locPart {J I : ∀ k, Finset (ι k)} (h : cellMon S J ≤ ce
     rw [cellRes_mk h]
     exact Submodule.subset_span ⟨m, ⟨t.1, h t.2⟩, a, ht, hm, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x₁ x₂ _ _ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
+  | add x₁ x₂ _ _ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
   | smul s x _ h' => rw [cellRes_smul]; exact Submodule.smul_mem _ s h'
 
 theorem evMap_cellRes {J I : ∀ k, Finset (ι k)} (hJI : ∀ k, J k ⊆ I k) (hI : CellMeets y I)

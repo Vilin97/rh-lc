@@ -127,11 +127,11 @@ theorem pb_dual_gen (lam : ι → DomWeight n) (T T' : Submodule (𝓞 K) (Pol K
     (hInd : ∀ (w : HeightOneSpectrum (𝓞 K)) (M : ι → Submodule (𝓞 K) (Fin n → K)) (B B' : ι → GL (Fin n) K),
       (∀ τ, IsBasisAt w (M τ) (B τ)) → (∀ τ, IsBasisAt w (M τ) (B' τ)) → ∀ F : Pol K ι n,
       (actP lam B⁻¹ F ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T ↔ actP lam B'⁻¹ F ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T))
-    (hLoc : ∀ (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsLattice K (M τ)) →
+    (hLoc : ∀ (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsFullLattice K (M τ)) →
       ∀ (w : HeightOneSpectrum (𝓞 K)) (B : ι → GL (Fin n) K), (∀ τ, IsBasisAt w (M τ) (B τ)) →
       Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (transLat lam T' M) =
         (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T').map ((actP lam B).restrictScalars (𝓞 K)))
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) (x : Pol K ι n)
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) (x : Pol K ι n)
     (hx : x ∈ VV K lam) :
     x ∈ transLat lam T (fun τ => dualFr (M τ)) ↔
       ∀ y ∈ transLat lam T' M, y ∈ VV K lam → pairB lam x y ∈ (1 : Submodule (𝓞 K) K) := by

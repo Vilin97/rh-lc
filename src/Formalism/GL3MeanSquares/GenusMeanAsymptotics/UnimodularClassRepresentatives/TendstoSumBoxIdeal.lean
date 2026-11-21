@@ -50,7 +50,7 @@ theorem exists_abs_alphaN_le (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
 
 theorem tendsto_sum_box_ideal (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (hm : 2 ≤ finrank K V) (S : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal})
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (hm : 2 ≤ finrank K V) (S : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal})
     (hS : ∀ 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, vd h L 𝔭.1 ≠ 0 → 𝔭 ∈ S) {b : Ideal (𝓞 F)} (hb : b ≠ ⊥)
     (hbS : ∀ 𝔭 ∈ S, b ⊔ 𝔭.1 = ⊤) :
     Tendsto (fun j : ℕ => ((j : ℝ) ^ 2) ^ (-((Formalism.HermitianLatticesTheory.fDeg K * finrank K V : ℕ) : ℤ)) *
@@ -63,10 +63,10 @@ theorem tendsto_sum_box_ideal (hK : Formalism.HermitianLatticesTheory.IsCMUnram 
           ∏ 𝔭 ∈ S, (1 - etaF K F 𝔭.1 ^ finrank K V *
             (Ideal.absNorm 𝔭.1 : ℝ) ^ (-(finrank K V : ℤ)))⁻¹)) := by
   choose C hC using fun 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} =>
-    exists_abs_alphaN_le hK hF hs hd hL hLi hm 𝔭.2
+    exists_abs_alphaN_le hK hF hs hd hL.toIsLattice hLi hm 𝔭.2
   have key := BoxSum.tendsto_sum_of_mean hK hF (m := finrank K V) (by omega) S
     (fun 𝔭 n => alphaN h L 𝔭.1 n) C (fun 𝔭 => 2 * vd h L 𝔭.1 + 2) (fun 𝔭 _ n => hC 𝔭 n)
-    (fun 𝔭 _ n n' k hn hk hc => alphaN_congr hK hF hs hd hL hLi 𝔭.2 hn (by omega) hc)
+    (fun 𝔭 _ n n' k hn hk hc => alphaN_congr hK hF hs hd hL.toIsLattice hLi 𝔭.2 hn (by omega) hc)
     (fun 𝔭 _ => tendsto_mean_alphaN hK hF hs hd hL hLi hm 𝔭.2) hb hbS
   refine (key.mul_const (∏ 𝔭 ∈ S, (1 - etaF K F 𝔭.1 ^ finrank K V *
             (Ideal.absNorm 𝔭.1 : ℝ) ^ (-(finrank K V : ℤ)))⁻¹)).congr fun j => ?_

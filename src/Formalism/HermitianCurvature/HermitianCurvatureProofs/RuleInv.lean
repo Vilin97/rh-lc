@@ -23,21 +23,24 @@ theorem comm_mat_prod (x : A) :
         (h M (by simp) i k).mul_right (comm_mat_prod x l (fun N hN => h N (by simp [hN])) k j)
 
 theorem prod_mul_prod_eq_one : ∀ (n : ℕ) (f g : Fin n → A), (∀ i, f i * g i = 1) →
-    (∀ i j, Commute (f i) (g j)) → (List.ofFn f).prod * (List.ofFn g).prod = 1
-  | 0, _, _, _, _ => by simp
-  | n + 1, f, g, h1, hc => by
+    (∀ i j, Commute (f i) (g j)) → (List.ofFn f).prod * (List.ofFn g).prod = 1 := by
+  intro n
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      intro f g h1 hc
       rw [List.ofFn_succ, List.ofFn_succ, List.prod_cons, List.prod_cons]
       have hP : Commute (List.ofFn fun i => f i.succ).prod (g 0) :=
         Commute.list_prod_left _ _ (by
           intro a ha
           obtain ⟨i, rfl⟩ := List.mem_ofFn.mp ha
           exact hc _ _)
-      have ih := prod_mul_prod_eq_one n (fun i => f i.succ) (fun i => g i.succ)
+      have hTail := ih (fun i => f i.succ) (fun i => g i.succ)
         (fun i => h1 _) (fun i j => hc _ _)
       calc
         _ = f 0 * g 0 * ((List.ofFn fun i => f i.succ).prod * (List.ofFn fun i => g i.succ).prod) :=
           hP.mul_mul_mul_comm _ _
-        _ = 1 := by rw [h1 0, ih, mul_one]
+        _ = 1 := by rw [h1 0, hTail, mul_one]
 
 variable {r : ℕ} (L : LevelData A r)
 

@@ -95,9 +95,21 @@ theorem isLattice_tr (φ : V ≃ₗ[K] V') {M : Submodule (𝓞 K) V} (hM : Subm
     Submodule.IsLattice K (latMap φ M) :=
   Submodule.IsLattice.of_fg K (hM.fg.map _)
 
+theorem isFullLattice_tr (φ : V ≃ₗ[K] V') {M : Submodule (𝓞 K) V}
+    (hM : Submodule.IsFullLattice K M) : Submodule.IsFullLattice K (latMap φ M) := by
+  letI : Submodule.IsLattice K (latMap φ M) := isLattice_tr φ hM.toIsLattice
+  constructor
+  change Submodule.span K ((M.map ((φ : V →ₗ[K] V').restrictScalars (𝓞 K)) :
+    Submodule (𝓞 K) V') : Set V') = ⊤
+  rw [show Submodule.span K ((M.map ((φ : V →ₗ[K] V').restrictScalars (𝓞 K)) :
+      Submodule (𝓞 K) V') : Set V') = (Submodule.span K (M : Set V)).map φ.toLinearMap by
+        rw [Submodule.map_span]; rfl,
+    hM.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+  exact φ.surjective
+
 theorem genus_tr {φ : V ≃ₗ[K] V'} (hφ : ∀ x y, h' (φ x) (φ y) = h x y) {L M : Submodule (𝓞 K) V}
     (hM : M ∈ genus h L) : latMap φ M ∈ genus h' (latMap φ L) := by
-  refine ⟨isLattice_tr φ hM.1, fun p hp => ?_⟩
+  refine ⟨isFullLattice_tr φ hM.1, fun p hp => ?_⟩
   obtain ⟨g, hg, e⟩ := hM.2 p hp
   exact ⟨cj φ g, cj_mem_isom hφ hg, by rw [loc_tr, gmap_cj, e, loc_tr]⟩
 

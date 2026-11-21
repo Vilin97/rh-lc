@@ -336,6 +336,36 @@ private theorem mem_dual_lemma_2 (L : Submodule (𝓞 E) (Sp E n)) (y : Sp E n) 
   simp only [dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
     LinearMap.restrictScalars_apply]
 
+theorem DecoSet.full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
+    Submodule.IsFullLattice E d.1.N := by
+  let := d.2.lat
+  refine { span_eq_top := ?_ }
+  let W := Submodule.span E (d.1.N : Set (Sp E n))
+  change W = ⊤
+  by_contra h
+  let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+  let g : Sp E n →ₗ[E] Module.Dual E W :=
+    (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+  have hdim : finrank E (Module.Dual E W) < finrank E (Sp E n) := by
+    rw [Subspace.dual_finrank_eq]
+    exact Submodule.finrank_lt h
+  obtain ⟨x, hx, hx₀⟩ :=
+    Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+  have hsmul (a : E) : a • e x ∈ d.1.N := by
+    rw [← d.2.uni, mem_dual_lemma_2]
+    intro y hy
+    apply hStd_mem_one_symm
+    have hxy : hStd E n (e x) y = 0 :=
+      congrArg (fun k : Module.Dual E W => k ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+    simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+  let i : E →ₗ[𝓞 E] d.1.N :=
+    ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict d.1.N hsmul
+  let : Module.Finite (𝓞 E) d.1.N := Module.Finite.iff_fg.mpr d.2.lat.fg
+  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+    smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+  exact RingOfIntegers.not_isField E
+    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+
 theorem dual_anti {L M : Submodule (𝓞 E) (Sp E n)} (h : L ≤ M) :
     dual (hStd E n) M ≤ dual (hStd E n) L := by
   intro y hy

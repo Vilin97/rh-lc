@@ -65,7 +65,7 @@ theorem cst_trx_val (P : GPt A) {v : epsR K ⟶ A} (hv : IsTangent v) {U : A.lef
 theorem eps_eq (P : GPt A) :
     letI : Algebra (DualNumber K) (DualNumber P.B) := (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)).toAlgebra
     algebraMap (DualNumber K) (DualNumber P.B) DualNumber.eps = TrivSqZeroExt.inr 1 := by
-  ext <;> simp [dualMap, RingHom.algebraMap_toAlgebra]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, RingHom.algebraMap_toAlgebra]
 
 theorem cechKS_lifts : ∀ (K : Type) [Field K] (A : Over (Sp K)) [GrpObj A] (A' : Over (Sp (DualNumber K))) [GrpObj A'] (i : A.left ⟶ A'.left) (L : LB A.left) (n : ℕ) (u : Fin n → (epsR K ⟶ A)) (θ : Matrix (Fin n) (Fin n) K), (∀ a, IsTangent (u a)) → IsCechKS A A' i L u θ → ∃ (J : Type) (W : J → A.left.Opens) (c : J → L.ι) (y : J → ∀ P : GPt A, Sp (DualNumber P.B) ⟶ A'.left), ⨆ k, W k = ⊤ ∧ (∀ k, W k ≤ L.U (c k)) ∧ (∀ (k : J) (P : GPt A), P.In (W k) → IsLift i P (y k P)) ∧ (∀ (k : J) (P Q : GPt A) (φ : P.Hom Q), P.In (W k) → spMap (dualMap (φ.ρ : P.B →+* Q.B)) ≫ y k P = y k Q) ∧ ∀ (k k' : J) (P : GPt A) (U : A'.left.Opens) (f : Γ(A'.left, U)), P.In (W k) → P.In (W k') → P.In (i ⁻¹ᵁ U) → valR (y k P) U f - valR (y k' P) U f = (TrivSqZeroExt.inr (∑ a, (∑ b, algebraMap K P.B (θ a b) * dlog L (u b) (c k) (c k') P) * (valR (P.trx (u a)) (i ⁻¹ᵁ U) ((i.app U).hom f)).snd) : DualNumber P.B) := by
   intro K _ A _ A' _ i L n u θ hu h
@@ -82,14 +82,18 @@ theorem cechKS_lifts : ∀ (K : Type) [Field K] (A : Over (Sp K)) [GrpObj A] (A'
     let I := Ideal.span {algebraMap (DualNumber K) (DualNumber P.B) DualNumber.eps}
     have hI : ∀ a ∈ I, (TrivSqZeroExt.fstHom K P.B P.B : DualNumber P.B →+* P.B) a = 0 := by
       intro a ha
+      change a ∈ Ideal.span {algebraMap (DualNumber K) (DualNumber P.B) DualNumber.eps} at ha
       obtain ⟨b, rfl⟩ := Ideal.mem_span_singleton'.mp ha
       rw [eps_eq P]
       simp
+    change spMap (Ideal.Quotient.mk I) ≫ lam k (DualNumber P.B) P.cst.x =
+      spMap (Ideal.Quotient.mk I) ≫ P.cst.x ≫ i at h2
     have hq : (Ideal.Quotient.lift I _ hI).comp (Ideal.Quotient.mk I) =
         (TrivSqZeroExt.fstHom K P.B P.B : DualNumber P.B →+* P.B) := RingHom.ext fun _ ↦ rfl
     calc spMap (TrivSqZeroExt.fstHom K P.B P.B : DualNumber P.B →+* P.B) ≫ _
         = spMap (Ideal.Quotient.lift I _ hI) ≫ spMap (Ideal.Quotient.mk I) ≫ lam k (DualNumber P.B) P.cst.x := by
           rw [← Category.assoc, ← Cris.spMap_comp, hq]
+          rfl
       _ = spMap (Ideal.Quotient.lift I _ hI) ≫ spMap (Ideal.Quotient.mk I) ≫ P.cst.x ≫ i := by rw [h2]
       _ = (spMap (TrivSqZeroExt.fstHom K P.B P.B : DualNumber P.B →+* P.B) ≫ P.cst.x) ≫ i := by
           rw [← Category.assoc, ← Category.assoc, ← Cris.spMap_comp, hq, Category.assoc]

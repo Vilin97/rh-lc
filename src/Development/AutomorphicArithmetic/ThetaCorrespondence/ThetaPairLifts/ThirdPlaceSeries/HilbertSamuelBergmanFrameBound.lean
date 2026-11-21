@@ -47,6 +47,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms (LevelA
 open GlobalTheory.BadCount
 open scoped TensorProduct
 noncomputable section
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.FrameBerg
 end GlobalTheory.FrameBerg
 namespace GlobalTheory.FrameBerg

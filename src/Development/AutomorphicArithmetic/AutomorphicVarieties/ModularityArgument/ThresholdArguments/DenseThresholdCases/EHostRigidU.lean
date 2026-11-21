@@ -162,10 +162,11 @@ private theorem rig_above (hP : UpperTheory.V.Loc.LocalPublishedTheorems) (Ω : 
     exact hy _ _
   · have he : (0 : ℤ) < e := by exact_mod_cast hD.e_pos
     intro a b hab
-    refine mul_lt_mul_of_pos_left ?_ he
-    have : (a : ℕ) < b := hab
-    simp only [wt1]
-    omega
+    have hwt : wt1 b < wt1 a := by
+      have : (a : ℕ) < b := hab
+      simp only [wt1]
+      omega
+    exact mul_lt_mul_of_pos_left hwt he
   · rw [hh.ine s (hI s hs') (hle hs) a, psi, hΨ s hs (hI s hs')]
     have := rig_char c (cycZ ℚ Ω l (s : G ℚ Ω)) e a
     rw [← hcy] at this
@@ -262,18 +263,18 @@ private theorem h1f_vanishing_conj_invariant {Ω : Type} [Field Ω] [CharZero Ω
     (R : G ℚ Ω →* GG (m := 3) (R := PadicAlgCl l))
     (h : GL (Fin 3) (PadicAlgCl l)) (H : Af.BlochKatoSelmerVanishes l (adRep (conjBy h R))) : Af.BlochKatoSelmerVanishes l (adRep R) := by
   have e : ∀ g, conjBy h R g = GG.ofGL h * R g * (GG.ofGL h)⁻¹ := fun g => rfl
-  refine h1f_equiv_of_intertwiner _ _ (GG.ad (m := 3) (GG.ofGL h)) (GG.ad (m := 3) (GG.ofGL h)⁻¹)
+  refine h1f_equiv_of_intertwiner _ _ (GG.ad (m := 3) _ (GG.ofGL h)) (GG.ad (m := 3) _ (GG.ofGL h)⁻¹)
     ?_ (fun x => ?_) (fun g x => ?_) (fun g x => ?_) H
-  · have : ⇑(GG.ad (m := 3) (GG.ofGL h)) = fun X => (GG.ofGL h).mat * X *
+  · have : ⇑(GG.ad (m := 3) _ (GG.ofGL h)) = fun X => (GG.ofGL h).mat * X *
         (((GG.ofGL h).left⁻¹ : GL (Fin 3) (PadicAlgCl l)) : Matrix (Fin 3) (Fin 3) (PadicAlgCl l)) := by
       funext X
       rw [GG.ad_apply, GG.adFun, if_pos (SemidirectProduct.right_inl _)]
     rw [this]
     exact (continuous_const.matrix_mul continuous_id).matrix_mul continuous_const
   · rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
-  · show GG.ad (m := 3) _ (GG.ad (m := 3) (R g) x) = GG.ad (m := 3) (conjBy h R g) _
+  · show GG.ad (m := 3) _ _ (GG.ad (m := 3) _ (R g) x) = GG.ad (m := 3) _ (conjBy h R g) _
     rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, e, inv_mul_cancel_right]
-  · show GG.ad (m := 3) _ (GG.ad (m := 3) (conjBy h R g) x) = GG.ad (m := 3) (R g) _
+  · show GG.ad (m := 3) _ _ (GG.ad (m := 3) _ (conjBy h R g) x) = GG.ad (m := 3) _ (R g) _
     rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, e, mul_assoc, inv_mul_cancel_left]
 private theorem val_of_even {Ω : Type} [Field Ω] (B : ValuationSubring Ω) {M : ℕ} (hM : Even M)
     (h : B.valuation ((4 : ℕ) : Ω) < 1) : B.valuation (M : Ω) < 1 := by

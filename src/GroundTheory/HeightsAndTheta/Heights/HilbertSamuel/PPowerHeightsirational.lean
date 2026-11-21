@@ -151,17 +151,17 @@ theorem homog_X_block (k₀ : K) (i₀ : ι k₀) : IsMultiHomog (X ⟨k₀, i�
   subst hm
   by_cases hk : k = k₀
   · subst hk
-    simp only [blockDeg, if_true]
+    simp only [blockDeg, ite_true]
     rw [Finset.sum_eq_single i₀]
     · simp
     · intro b _ hb
-      rw [Finsupp.single_apply, if_neg]
+      rw [Finsupp.single_apply, ite_eq_right]
       intro h
       exact hb (eq_of_heq (Sigma.mk.inj_iff.mp h).2).symm
     · simp
-  · rw [blockDeg, if_neg hk]
+  · rw [blockDeg, ite_eq_right hk]
     refine Finset.sum_eq_zero fun i _ => ?_
-    rw [Finsupp.single_apply, if_neg]
+    rw [Finsupp.single_apply, ite_eq_right]
     intro h
     exact hk (Sigma.mk.inj_iff.mp h).1.symm
 
@@ -274,7 +274,7 @@ theorem PowerHeightsirational.proof (hN : GeneratedNefGeneric.Statement) (hK : K
       | C r =>
         rw [aeval_C, algebraMap_int_eq, eq_intCast]
         exact intCast_mem _ r
-      | add f1 f2 h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+      | add f1 f2 h1 h2 => rw [map_add]; exact add_mem h1 h2
       | mul_X f p h1 => rw [map_mul, aeval_X]; exact mul_mem h1 (hrat p)
     have hy : (fun p : Σ κ, ι κ => y ⟨p.1, c0 p.1⟩ * (y p / y ⟨p.1, c0 p.1⟩)) = y := by
       funext p

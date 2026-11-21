@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP.TauLatticeLatticeHolds
 public import Development.AbelianVarietyTheory.Definitions.Foundations.IsSelfDualE
 public import Formalism.LocalToGlobal.Columns.CoefficientsModP.PairingNondegenerateHolds
 public import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkPderivBlockEmbNe
@@ -49,84 +50,13 @@ theorem exists_smul_mem {M : Submodule (𝓞 K) (Fin n → K)}
   | (intros; apply @_root_.GlobalTheory.DeterminantSimpLemma.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.DeterminantSimpLemma.main ..)
 
-theorem isLattice_dualFr (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsLattice K M) :
-    Submodule.IsLattice K (dualFr M) := by
-  classical
-  refine ⟨?_, ?_⟩
-  · have h : ∀ i : Fin n, ∃ d : 𝓞 K, d ≠ 0 ∧ d • (Pi.single i (1 : K) : Fin n → K) ∈ M := fun i =>
-      exists_smul_mem (by rw [hM.span_eq_top]; trivial)
-    choose d hd hdM using h
-    have hle : dualFr M ≤ Submodule.span (𝓞 K)
-        (Set.range fun i : Fin n => (Pi.single i (algebraMap (𝓞 K) K (d i))⁻¹ : Fin n → K)) := by
-      intro φ hφ
-      rw [← Finset.univ_sum_single φ]
-      refine Submodule.sum_mem _ fun i _ => ?_
-      obtain ⟨b, hb⟩ := Submodule.mem_one.1 (hφ _ (hdM i))
-      have hdi : algebraMap (𝓞 K) K (d i) ≠ 0 := by simpa using hd i
-      have : (Pi.single i (φ i) : Fin n → K) =
-          b • (Pi.single i (algebraMap (𝓞 K) K (d i))⁻¹ : Fin n → K) := by
-        rw [← Pi.single_smul, Algebra.smul_def, hb, dotProduct_smul, dotProduct_single,
-          Algebra.smul_def]
-        congr 1
-        field_simp
-      rw [this]
-      exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
-    exact Submodule.FG.of_le (Submodule.fg_span (Set.finite_range _)) hle
-  · obtain ⟨S, hS⟩ := hM.fg
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+theorem isLattice_dualFr (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsFullLattice K M) :
+    Submodule.IsFullLattice K (dualFr M) :=
+  du_dualFr_lattice latticeBasisExists_holds M hM
+
 theorem isLattice_hdualFr [StarRing K] (G : Matrix (Fin n) (Fin n) K) (M : Submodule (𝓞 K) (Fin n → K))
-    (hG : IsUnit G.det) (hM : Submodule.IsLattice K M) : Submodule.IsLattice K (hdualFr G M) := by
-  classical
-  obtain ⟨S, hS⟩ := hM.fg
-  set f : (Fin n → K) → (Fin n → K) := fun y => star y ᵥ* G with hf
-  have hadd : ∀ y z, f (y + z) = f y + f z := fun y z => by
-    simp only [hf, star_add, Matrix.add_vecMul]
-  have hsm : ∀ (a : K) y, f (a • y) = star a • f y := fun a y => by
-    simp only [hf, star_smul, Matrix.smul_vecMul]
-  have h0 : f 0 = 0 := by simp [hf]
-  set M' : Submodule (𝓞 K) (Fin n → K) := Submodule.span (𝓞 K) (f '' S) with hM'
-  have hfM : ∀ y ∈ M, f y ∈ M' := by
-    intro y hy
-    rw [← hS] at hy
-    induction hy using Submodule.span_induction with
-    | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
-    | zero => rw [h0]; exact zero_mem _
-    | add y z _ _ hy hz => rw [hadd]; exact add_mem hy hz
-    | smul a y _ hy =>
-      obtain ⟨b, hb⟩ := Submodule.mem_one.1
-        (star_mem_one (Submodule.mem_one.2 ⟨a, rfl⟩ : algebraMap (𝓞 K) K a ∈ (1 : Submodule (𝓞 K) K)))
-      rw [← algebraMap_smul K a y, hsm, ← hb, algebraMap_smul]
-      exact M'.smul_mem _ hy
-  have hL : Submodule.IsLattice K M' := by
-    refine ⟨Submodule.fg_span ((S.finite_toSet).image _), ?_⟩
-    have key : ∀ y ∈ Submodule.span K (M : Set (Fin n → K)),
-        f y ∈ Submodule.span K (M' : Set (Fin n → K)) := by
-      intro y hy
-      induction hy using Submodule.span_induction with
-      | mem y hy => exact Submodule.subset_span (hfM y hy)
-      | zero => rw [h0]; exact zero_mem _
-      | add y z _ _ hy hz => rw [hadd]; exact add_mem hy hz
-      | smul a y _ hy => rw [hsm]; exact Submodule.smul_mem _ _ hy
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
-  have heq : hdualFr G M = dualFr M' := by
-    ext x
-    constructor
-    · intro hx z hz
-      induction hz using Submodule.span_induction with
-      | mem z hz =>
-        obtain ⟨y, hy, rfl⟩ := hz
-        have := hx y (hS ▸ Submodule.subset_span hy)
-        rwa [Matrix.dotProduct_mulVec, dotProduct_comm] at this
-      | zero => simp
-      | add y z _ _ hy hz => rw [dotProduct_add]; exact add_mem hy hz
-      | smul a y _ hy => rw [dotProduct_smul]; exact Submodule.smul_mem _ _ hy
-    · intro hx y hy
-      rw [Matrix.dotProduct_mulVec, dotProduct_comm]
-      exact hx _ (hfM y hy)
-  rw [heq]
-  exact isLattice_dualFr M' hL
+    (hG : IsUnit G.det) (hM : Submodule.IsFullLattice K M) : Submodule.IsFullLattice K (hdualFr G M) :=
+  (dualFrameLattice_holds K n G M hG hM).2
 
 omit [NumberField K] in
 theorem star_dot [StarRing K] (x y : Fin n → K) : star (x ⬝ᵥ y) = star y ⬝ᵥ star x := by
@@ -152,7 +82,10 @@ theorem hdualFr_dualFr [StarRing K] (G : Matrix (Fin n) (Fin n) K) (M : Submodul
     rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv G hG, Matrix.one_mulVec, ← star_dot]
     exact star_mem_one (hφ y hy)
 
-theorem dualFr_lattice_and_hdual : DualFrLattice ∧ DualFrHdual :=
+theorem dualFr_lattice_and_hdual :
+    (∀ (K : Type) [Field K] [NumberField K] [StarRing K] (n : ℕ) (G : Matrix (Fin n) (Fin n) K)
+      (M : Submodule (𝓞 K) (Fin n → K)), IsUnit G.det → Submodule.IsFullLattice K M →
+      Submodule.IsFullLattice K (dualFr M) ∧ Submodule.IsFullLattice K (hdualFr G M)) ∧ DualFrHdual :=
   ⟨fun _ _ _ _ _ G M hG hM => ⟨isLattice_dualFr M hM, isLattice_hdualFr G M hG hM⟩,
     fun _ _ _ _ _ G M _ hG _ => hdualFr_dualFr G M hG⟩
 

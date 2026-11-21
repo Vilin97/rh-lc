@@ -55,6 +55,8 @@ open Formalism.IndefR.Fin.LevelGroupLemmas.Lat (frG intM)
 
 variable {D : D7}
 
+local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
+
 theorem prod_idem {R ι : Type} [CommRing R] [DecidableEq ι] (es : ι → R) (d : R) (s : Finset ι)
     (h : ∀ a ∈ s, ∀ b ∈ s, a ≠ b → es a * es b = 0) :
     ∏ a ∈ s, (es a * d + (1 - es a)) = (∑ a ∈ s, es a) * d + (1 - ∑ a ∈ s, es a) := by

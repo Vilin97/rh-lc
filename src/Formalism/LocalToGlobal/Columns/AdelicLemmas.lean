@@ -752,7 +752,7 @@ end Inj2
 section Ok
 
 
-open Formalism.BasicNotions in
+open Formalism.BasicNotions Formalism.UG in
 private theorem defUnimod_span
     {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
     {hc : CMData F E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {L : Submodule (𝓞 E) (Fin n → E)}
@@ -1054,20 +1054,21 @@ theorem smul_lattice (P : Pl E) {N : Submodule (𝓞 E) (Fin n → E)} (hN : Sub
   haveI : IsNoetherian (𝓞 E) N := isNoetherian_of_fg_of_noetherian N hN.fg
   haveI : IsNoetherian (𝓞 E) ↥(P.asIdeal • N) := isNoetherian_of_le Submodule.smul_le_right
   refine ⟨inferInstance, ?_⟩
-  apply eq_top_iff.mpr
-  intro v _
-  have hv : v ∈ Submodule.span E (N : Set (Fin n → E)) := by rw [hN.span_eq_top]; trivial
+  apply top_unique
+  rw [← hN.span_eq_top, Submodule.span_le]
+  intro w hw
   obtain ⟨a, ha, ha0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.ne_bot
   have haE : algebraMap (𝓞 E) E a ≠ 0 := (IsFractionRing.injective (𝓞 E) E).ne ha0
-  induction hv using Submodule.span_induction with
-  | mem w hw =>
-    have hw' : a • w ∈ P.asIdeal • N := Submodule.smul_mem_smul ha hw
-    have := (Submodule.span E ((P.asIdeal • N : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E))).smul_mem
-      (algebraMap (𝓞 E) E a)⁻¹ (Submodule.subset_span hw')
-    simpa [← IsScalarTower.algebraMap_smul E, smul_smul, inv_mul_cancel₀ haE] using this
-  | zero => exact Submodule.zero_mem _
-  | add x y _ _ hx hy => exact Submodule.add_mem _ hx hy
-  | smul c x _ hx => exact Submodule.smul_mem _ c hx
+  have hw' : a • w ∈ P.asIdeal • N := Submodule.smul_mem_smul ha hw
+  have hw'' : (algebraMap (𝓞 E) E a) • w ∈
+      Submodule.span E ((P.asIdeal • N : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E)) := by
+    apply Submodule.subset_span
+    change (algebraMap (𝓞 E) E a) • w ∈ P.asIdeal • N
+    simpa only [IsScalarTower.algebraMap_smul] using hw'
+  have := (Submodule.span E ((P.asIdeal • N : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E))).smul_mem
+    (algebraMap (𝓞 E) E a)⁻¹ hw''
+  change w ∈ Submodule.span E ((P.asIdeal • N : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E))
+  simpa only [smul_smul, inv_mul_cancel₀ haE, one_smul] using this
 theorem reduction_kernel_equality : RedKer F E n := by
   classical
   intro x P v hv h0

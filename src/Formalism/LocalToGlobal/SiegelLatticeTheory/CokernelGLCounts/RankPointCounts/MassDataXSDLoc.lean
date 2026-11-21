@@ -65,7 +65,27 @@ theorem oev_gen (a : 𝓞 E) : inclR (F := F) (Fv F v) (a : E) ∈ OEv (E := E) 
 
 theorem oev_mul {s t : Fv F v ⊗[F] E} (hs : s ∈ OEv (E := E) v) (ht : t ∈ OEv (E := E) v) :
     s * t ∈ OEv (E := E) v := by
-  first | exact UpperTheory.Reformulated.B.Qh24.oev_mul .. | (apply UpperTheory.Reformulated.B.Qh24.oev_mul <;> assumption) | (intros; apply UpperTheory.Reformulated.B.Qh24.oev_mul <;> assumption) | (apply @UpperTheory.Reformulated.B.Qh24.oev_mul <;> assumption) | (intros; apply @UpperTheory.Reformulated.B.Qh24.oev_mul <;> assumption) | (apply @UpperTheory.Reformulated.B.Qh24.oev_mul <;> first | assumption | infer_instance) | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› ‹_› ‹_› ‹_› ‹_› v s t hs ht | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› ‹_› ‹_› ‹_› ‹_› v s t hs | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› ‹_› ‹_› ‹_› ‹_› v s t | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› ‹_› ‹_› ‹_› ‹_› v s | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› ‹_› ‹_› ‹_› ‹_› v | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› ‹_› ‹_› ‹_› ‹_› | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› ‹_› ‹_› ‹_› | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› ‹_› ‹_› | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› ‹_› | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E ‹_› | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F E | exact @UpperTheory.Reformulated.B.Qh24.oev_mul F
+  unfold OEv at hs ht ⊢
+  rw [SetLike.mem_coe] at hs ht ⊢
+  induction hs using Submodule.span_induction with
+  | mem a ha =>
+    obtain ⟨a, -, rfl⟩ := ha
+    induction ht using Submodule.span_induction with
+    | mem b hb =>
+      obtain ⟨b, -, rfl⟩ := hb
+      exact Submodule.subset_span ⟨a * b, trivial, by simp [map_mul]⟩
+    | zero => simp
+    | add y z _ _ h1 h2 => rw [mul_add]; exact Submodule.add_mem _ h1 h2
+    | smul c y _ h =>
+      show _ * ((c : Fv F v) • y) ∈ _
+      rw [mul_smul_comm]
+      exact Submodule.smul_mem _ c h
+  | zero => simp
+  | add x z _ _ h1 h2 => rw [add_mul]; exact Submodule.add_mem _ h1 h2
+  | smul c x _ h =>
+    show ((c : Fv F v) • x) * t ∈ _
+    rw [smul_mul_assoc]
+    exact Submodule.smul_mem _ c h
 
 theorem oev_alg (c : v.adicCompletionIntegers F) : ((c : Fv F v) ⊗ₜ[F] (1 : E)) ∈ OEv (E := E) v := by
   have h : ((c : Fv F v) ⊗ₜ[F] (1 : E)) = c • inclR (F := F) (Fv F v) ((1 : 𝓞 E) : E) := by
@@ -81,7 +101,7 @@ theorem swp_mem_oev {s : E ⊗[F] Fv F v} (hs : s ∈ Sv (E := E) v) : swp v s �
     · exact oev_alg v ⟨c, hc⟩
   | zero => rw [map_zero]; exact zero_mem (Submodule.span _ _)
   | one => rw [map_one]; simpa using oev_gen v (E := E) 1
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (S := Submodule _ _) hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem (S := Submodule _ _) hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem (S := Submodule _ _) hx
   | mul x y _ _ hx hy => rw [map_mul]; exact oev_mul v hx hy
 

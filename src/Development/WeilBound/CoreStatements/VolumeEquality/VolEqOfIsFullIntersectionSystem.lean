@@ -2,6 +2,7 @@ module
 
 public import Development.WeilBound.CoreStatements.VolumeEquality.VolEqOfDegPush
 public import Development.WeilBound.CoreStatements.VolumeEquality.DegPush
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.GoodOrigin
 public import Development.AutomorphicSpectrum.Statements.TowerExistence.GoodTowerExistsX
 public import Development.AutomorphicSpectrum.Statements.GeometryStatements.HodgeLatticeFlagBound
 public import Development.AutomorphicSpectrum.Statements.GeometryStatements.TrivFlagOnHodge

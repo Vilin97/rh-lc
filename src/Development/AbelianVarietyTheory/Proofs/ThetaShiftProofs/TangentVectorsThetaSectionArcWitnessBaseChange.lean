@@ -307,7 +307,7 @@ theorem lieImg_baseChange [IsLocalRing A] [IsLocalRing A']
     (hU : Out.IsPullUnif (PowerSeries.map f) hD bc W.P.U W'.P.U) (he : ∀ y, hD.xe (W'.e y) = W.e (p.xe y))
     (hs : W'.φ ≫ prj p = prj hD ≫ W.φ) (S : Sq W.w hD.w p.w W'.w)
     {ν : Out.GtPt a.D₀ (epsR A)} {ν' : Out.GtPt a'.D₀ (epsR A')} {v : epsR (PowerSeries A) ⟶ W.t.G}
-    {v' : epsR (PowerSeries A') ⟶ W'.t.G} (hν : LetBC p ν ν') (hv : LieImg W ν v)
+    {v' : epsR (PowerSeries A') ⟶ W'.t.G} (hν : ArcQ.LetBC p ν ν') (hv : LieImg W ν v)
     (hv' : v'.left ≫ bc.hom.left ≫ pullback.fst W.t.G.hom (Out.specOf (PowerSeries.map f)) =
       spMap (dualMap (PowerSeries.map f)) ≫ v.left) : LieImg W' ν' v' := by
   intro n ρ' κ' vn' hρ₁ hρ₂ hκ₁ hκ₂ hb hf x
@@ -315,8 +315,10 @@ theorem lieImg_baseChange [IsLocalRing A] [IsLocalRing A']
   obtain ⟨h, hh, ⟨-, ht⟩, -⟩ := lev n
   obtain ⟨ho, Ht⟩ := ht (W'.e x)
   rw [he] at ho Ht
-  obtain ⟨hg, Hν⟩ := hν.2 x
-  have Hν := (maps_iff p.w _ _ _ _ _ _ _ (Out.GeneratorPullback.pullAlong_le _ _ _ _ _ hg) (fun _ => rfl)).1 Hν
+  unfold ArcQ.LetBC at hν
+  obtain ⟨hg, hmaps⟩ := hν.2 x
+  have Hν := (maps_iff p.w _ _ _ (ν'.s x) (ν.s (p.xe x)) _ _
+    (Out.GeneratorPullback.pullAlong_le _ _ _ _ _ hg) (fun _ => rfl)).1 hmaps
   have := isLocalRing_trunc A n
   have := isLocalRing_trunc A' n
   have := ConstTan.isLocalRing_dual (PowerSeries A ⧸ Ideal.span {(PowerSeries.X : PowerSeries A)} ^ (n + 1))
@@ -398,7 +400,7 @@ theorem thetaOf_baseChange (hG : Out.GlobalFnsSt)
     rw [map_zero] at a₁ a₂
     exact isPullTerm_baseChange hs S a.D₀.P.isLB (srel_of t₁ t₂) a₂ a₁ hT
 
-theorem main : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] [IsLocalRing A] [IsNoetherianRing A] (b : O →+* A) (a : ArcIn Dw l β A b) (χ : Sp (PowerSeries A) ⟶ Y.X) (W : Wit Y a χ) (A' : Type) [CommRing A'] [IsDomain A'] [IsLocalRing A'] [IsNoetherianRing A'] (b' : O →+* A') (a' : ArcIn Dw l β A' b') (f : A →+* A') (p : Out.IsPullDeg f a.D₀ a'.D₀) (W' : Wit Y a' (spMap (PowerSeries.map f) ≫ χ)), InBC f a a' p → WitBC f p W W' → ∃ m : SABMap W'.t W.t (spMap (PowerSeries.map f)), W'.m.φ = m.φ ≫ W.m.φ ∧ (∀ ν ν' v (v' : epsR (PowerSeries A') ⟶ W'.t.G), LetBC p ν ν' → LieImg W ν v → v'.left ≫ m.φ = spMap (dualMap (PowerSeries.map f)) ≫ v.left → LieImg W' ν' v') ∧ ∀ (w : LB.Iso W'.t.PP.L (W.t.PP.L.pull m.φ)) th th' θ (θ' : LB.Sec W'.t.PP.L) θ₂, RigIso m w → ThBC p th th' → ThetaOf W th θ → PullSec m.φ θ θ₂ → IsoMaps w θ' θ₂ → ThetaOf W' th' θ' := by
+theorem main : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] [IsLocalRing A] [IsNoetherianRing A] (b : O →+* A) (a : ArcIn Dw l β A b) (χ : Sp (PowerSeries A) ⟶ Y.X) (W : Wit Y a χ) (A' : Type) [CommRing A'] [IsDomain A'] [IsLocalRing A'] [IsNoetherianRing A'] (b' : O →+* A') (a' : ArcIn Dw l β A' b') (f : A →+* A') (p : Out.IsPullDeg f a.D₀ a'.D₀) (W' : Wit Y a' (spMap (PowerSeries.map f) ≫ χ)), InBC f a a' p → WitBC f p W W' → ∃ m : SABMap W'.t W.t (spMap (PowerSeries.map f)), W'.m.φ = m.φ ≫ W.m.φ ∧ (∀ ν ν' v (v' : epsR (PowerSeries A') ⟶ W'.t.G), ArcQ.LetBC p ν ν' → LieImg W ν v → v'.left ≫ m.φ = spMap (dualMap (PowerSeries.map f)) ≫ v.left → LieImg W' ν' v') ∧ ∀ (w : LB.Iso W'.t.PP.L (W.t.PP.L.pull m.φ)) th th' θ (θ' : LB.Sec W'.t.PP.L) θ₂, RigIso m w → ThBC p th th' → ThetaOf W th θ → PullSec m.φ θ θ₂ → IsoMaps w θ' θ₂ → ThetaOf W' th' θ' := by
   intro hL _ E _ _ _ H Dw l Xo c O _ β Y A _ _ _ _ b a χ W A' _ _ _ _ b' a' f p W' _
     ⟨hD, bc, _, hU, hφ, he, hs, w₁, w₂, e, T₁, T₂⟩
   obtain ⟨m, hm⟩ := sabCancel pullCubCancel E H _ _ _ _ _ _ _ _ W.m W'.m

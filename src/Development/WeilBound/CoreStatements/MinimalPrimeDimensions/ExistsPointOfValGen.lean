@@ -173,7 +173,9 @@ theorem exists_cdvr_point_gen {K Ω : Type} [Field K] [NumberField K] [Field Ω]
   have : Finite (𝓞 L ⧸ w.asIdeal) := w.asIdeal.finiteQuotientOfFreeOfNeBot w.ne_bot
   have : CharZero (HeightOneSpectrum.adicCompletionIntegers L w) :=
     charZero_of_injective_algebraMap (FaithfulSMul.algebraMap_injective (𝓞 L) (HeightOneSpectrum.adicCompletionIntegers L w))
-  obtain ⟨e1, he1, h1e⟩ := GlobalTheory.AdicCompl.exists_e (L := L) w
+  obtain ⟨e1, he1, h1e⟩ : ∃ e : ℕ, 0 < e ∧ ∀ x : L,
+      valV (HeightOneSpectrum.adicCompletionIntegers L w) (GlobalTheory.AdicCompl.kMap w x) =
+        w.valuation L x ^ e := GlobalTheory.AdicCompl.exists_e (L := L) w
   let T : CDVR := { V := HeightOneSpectrum.adicCompletionIntegers L w, cpl := GlobalTheory.AdicCompl.isAdicComplete w }
   let k : L →+* T.Fr := GlobalTheory.AdicCompl.kMap w
   have hvk : ∀ x : L, vV T.V (k x) = (e1 : ℤ) * vLa w x := fun x => by
@@ -187,7 +189,9 @@ theorem exists_cdvr_point_gen {K Ω : Type} [Field K] [NumberField K] [Field Ω]
     refine ⟨Nat.mul_pos (Nat.pos_of_ne_zero he2) he1, fun a => ?_⟩
     show vV (HeightOneSpectrum.adicCompletionIntegers L w) (GlobalTheory.AdicCompl.kMap w (algebraMap K L a)) = _
     simp only [vV, vLa]
-    rw [h1e, ← HeightOneSpectrum.valuation_liesOver L la w a, ← pow_mul, WithZero.log_pow]
+    rw [h1e, ← HeightOneSpectrum.valuation_liesOver L la w a,
+      ← Ideal.ramificationIdx'_eq_ramificationIdx la.asIdeal w.asIdeal la.ne_bot,
+      ← pow_mul, WithZero.log_pow]
     push_cast
     simp
   have hfin : T.FinRes := GlobalTheory.AdicCompl.finite_res w

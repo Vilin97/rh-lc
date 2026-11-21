@@ -35,8 +35,9 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
   have hconj : κ (conjO K θ₀) = star (κ θ₀) := rfl
   set δ : K := κ θ₀ - star (κ θ₀) with hδ
   have hδe : InI 𝔭 1 (δ * κ e - 1) := by
-    refine ⟨1, fun h1 => h𝔭.ne_top ((Ideal.eq_top_iff_one _).2 h1), _, he, ?_⟩
-    simp [hδ, hconj]
+    refine ⟨1, fun h1 => h𝔭.ne_top ((Ideal.eq_top_iff_one _).2 h1),
+      (θ₀ - conjO K θ₀) * e - 1, he, ?_⟩
+    simp only [map_sub, map_mul, map_one, hδ, hconj, one_mul]
   obtain ⟨hne, hinv⟩ := InI.unit h𝔭 hF hδe
   have hδe' : 1 + (δ * κ e - 1) = δ * κ e := by ring
   rw [hδe'] at hne hinv

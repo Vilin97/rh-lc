@@ -716,7 +716,7 @@ theorem shortDual_holds (D : D7) : ShortDual D := by
   let L := D.clsLat u 0 c
   -- Clearing denominators and multiplying by the index puts a nonzero multiple of each vector in L.
   have hL : Submodule.IsFullLattice E L := by
-    have hLatBase : Submodule.IsLattice E L := D.clsLat_lat u 0 c
+    have hLatBase : Submodule.IsLattice E L := Submodule.IsLattice.of_fg E (D.clsLat_lat u 0 c).fg
     refine { toIsLattice := hLatBase, span_eq_top := top_le_iff.mp ?_ }
     intro x _
     obtain ⟨s, hs⟩ := hLatBase.fg
@@ -840,7 +840,7 @@ theorem columnHypotheses (D : D7) (u : D.what₂.Word) :
     Tpos := by exact_mod_cast b_Tu_pos D u
     conj := D.sp.cm.cmUnram.2.1
     pos := fun τ x hx => D.X_form_pos 0 (Nat.zero_le _) τ x hx
-    lat := D.clsLat_lat u 0
+    lat := fun c => Submodule.IsLattice.of_fg _ (D.clsLat_lat u 0 c).fg
   }
 
 end ColRec

@@ -185,7 +185,7 @@ theorem chowFormSectionPerfect_of (hA : ChowFormSectionAlgClosed.Statement)
     ConeDimComponent.proof_closed F n e I W u hI hdimI hu (mem_relComps_of_mem_support hW)
   let g : Ideal (MvPolynomial (Fin n) F) → MvPolynomial (Fin e × Fin n) F :=
     fun W => if h : ∃ g, IsChowForm W e g then h.choose else 1
-  have hg : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, IsChowForm W e (g W) := fun W hW => by
+  have hg : ∀ W ∈ (divCycle I u).support, IsChowForm W e (g W) := fun W hW => by
     have hex := chowFormExists_full F n e W (hWc W hW).1 (hWc W hW).2
     simp only [g, dif_pos hex]
     exact hex.choose_spec
@@ -339,7 +339,7 @@ theorem chowFormSectionAlgClosed_of (h₅ : SectionOrderAlgClosed.Statement) :
     h₃ F n e W (hW1 W hW).1 (hW1 W hW).2
   let g : Ideal (MvPolynomial (Fin n) F) → MvPolynomial (Fin e × Fin n) F :=
     fun W => if h : ∃ g, IsChowForm W e g then h.choose else 1
-  have hg : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, IsChowForm W e (g W) := fun W hW => by
+  have hg : ∀ W ∈ (divCycle I u).support, IsChowForm W e (g W) := fun W hW => by
     simp only [g, dif_pos (hex W hW)]
     exact (hex W hW).choose_spec
   have hspan : ∀ W ∈ (divCycle I u).support, incIdeal W e = Ideal.span {g W} := fun W hW =>

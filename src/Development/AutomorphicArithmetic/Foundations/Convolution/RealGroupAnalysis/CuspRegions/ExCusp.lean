@@ -15,7 +15,7 @@ theorem UpperTheory.ConvolutionTheory.Dr.exCusp :
     UpperTheory.ConvolutionTheory.Dr.ExCusp := by
   intro E _ _ _ n μ _ V hV
   obtain ⟨hs, hne, hirr, -⟩ := formsIrr E n μ V hV
-  refine ⟨Fb.ofIrr _ hs (hs.isIrreducible_iff.2 ⟨hne, hirr⟩), ⟨hV, Fb.carrier_ofIrr _ _ _⟩, fun π h => ?_⟩
-  refine TR.CuspSub.ext ?_
-  rw [← Fb.map_carrier π, h.carrier_eq]
-  rfl
+  let π₀ := Fb.ofIrr _ hs (hs.isIrreducible_iff.2 ⟨hne, hirr⟩)
+  have hπ₀ : Fb.carrier π₀ = formsIn μ V := Fb.carrier_ofIrr _ _ _
+  refine ⟨π₀, ⟨hV, hπ₀⟩, fun π h => TR.CuspSub.ext ?_⟩
+  rw [← Fb.map_carrier π, ← Fb.map_carrier π₀, h.carrier_eq, hπ₀]

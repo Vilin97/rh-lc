@@ -74,7 +74,7 @@ theorem isLattice_of_fibReps (S : VecSplit h h') {L : Submodule (𝓞 K) V}
     {s' : Finset (Submodule (𝓞 K) V')} (hs' : IsFibReps S L s') {Λ' : Submodule (𝓞 K) V'}
     (hΛ' : Λ' ∈ s') : Submodule.IsLattice K Λ' := by
   obtain ⟨Λ, hΛ, -, rfl⟩ := hs'.1 Λ' hΛ'
-  exact StabilizerLattices.isLattice_cut S hΛ.1
+  exact StabilizerLattices.isLattice_cut S hΛ.1.toIsLattice
 
 theorem exists_norm_eq (hF : IsFixF K F) (hs : h.IsSymm) (S : VecSplit h h')
     {L : Submodule (𝓞 K) V} (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L)
@@ -123,7 +123,10 @@ theorem sum_genus (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
   have hfr : finrank K V' = finrank K V - 1 := by
     have := S.finrank_add_one
     omega
-  have hmc := hc V' h' M hs2 hd2 hfr hM.1 hMi
+  have hMfull : Submodule.IsFullLattice K M := by
+    obtain ⟨Λ, hΛ, -, rfl⟩ := hM.nonempty hK hF hs hd hL hLi
+    exact StabilizerLattices.isFullLattice_cut S hΛ.1
+  have hmc := hc V' h' M hs2 hd2 hfr hMfull hMi
   have e1 : ∀ Λ' ∈ s'.filter (fun Λ' => Formalism.HermitianLatticesTheory.SameGenus h' M Λ'),
       (Nat.card (fibG S L Λ') : ℝ) / (Nat.card (Formalism.ThetaLiftIndependence.autL h' Λ') : ℝ) =
         (∏ 𝔭 ∈ Z, (fibLoc S L 𝔭.1 (locF 𝔭.1 M) : ℝ)) *

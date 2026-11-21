@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionEval
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionPoints
 public import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
 public import GroundTheory.ArithmeticGeometry.AbelianVarieties.KodairaNeron
 

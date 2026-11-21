@@ -46,9 +46,10 @@ theorem map_mem_pow (c : K →+* K) {𝔞 𝔟 : Submodule (𝓞 K) K} (h : ∀ 
     ∀ (n : ℕ), ∀ x ∈ 𝔞 ^ n, c x ∈ 𝔟 ^ n
   | 0, x, hx => by rw [pow_zero] at *; exact map_mem_one c hx
   | n + 1, x, hx => by
-    rw [pow_succ] at *
+    rw [pow_succ] at hx ⊢
     refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) (fun a b ha hb => ?_)
-    · rw [map_mul]; exact Submodule.mul_mem_mul (map_mem_pow c h n a ha) (h b hb)
+    · rw [map_mul c]
+      exact Submodule.mul_mem_mul (map_mem_pow c h n a ha) (h b hb)
     · rw [map_add c]
       exact add_mem ha hb
 

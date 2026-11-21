@@ -17,10 +17,7 @@ public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.E
 
 @[expose] public section
 
-open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
-open scoped CategoryTheory.Obj
-open ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.MuConst GlobalTheory.HTSheaf GlobalTheory.LieVB
-open GlobalTheory.Conormal
+open CategoryTheory Limits
 
 namespace GlobalTheory.TorsionChart
 

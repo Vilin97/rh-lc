@@ -35,7 +35,7 @@ theorem isIntAf_intCast (z : ℤ) : IsIntAf ((z : AfP p)) := fun v => by
   rw [map_intCast]; exact intCast_mem _ z
 
 theorem isIntAf_add {a b : AfP p} (ha : IsIntAf a) (hb : IsIntAf b) : IsIntAf (a + b) := fun v => by
-  rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
+  rw [map_add]; exact add_mem (ha v) (hb v)
 
 theorem isIntAf_neg {a : AfP p} (ha : IsIntAf a) : IsIntAf (-a) := fun v => by
   rw [map_neg]; exact neg_mem (ha v)

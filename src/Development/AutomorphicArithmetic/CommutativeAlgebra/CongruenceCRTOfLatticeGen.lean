@@ -31,7 +31,6 @@ private theorem inAf_mem' (x : D.La) : inAf D x ∈ LaHat D :=
 private theorem mulF_tmul (c : 𝓞 D.F) (a : AfP p) (t : ℚ) (x : D.La) :
     mulF D c (a ⊗ₜ (t ⊗ₜ x)) = a ⊗ₜ (t ⊗ₜ (algebraMap (𝓞 D.F) D.O c • x)) := by
   simp [mulF, actQ]
-  rfl
 
 private theorem mulF_inAf (c : 𝓞 D.F) (x : D.La) :
     mulF D c (inAf D x) = inAf D (algebraMap (𝓞 D.F) D.O c • x) := mulF_tmul c 1 1 x
@@ -70,7 +69,7 @@ private theorem mulF_mem (c : 𝓞 D.F) {v : AfP p ⊗[ℚ] VQ D} (hv : v ∈ La
     rw [mulF_tmul]
     exact AddSubgroup.subset_closure ⟨a, _, ha, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 private theorem mem_idHat {𝔟 : Ideal (𝓞 D.F)} {x : 𝓞 D.F} (hx : x ∈ 𝔟) {v : AfP p ⊗[ℚ] VQ D} (hv : v ∈ LaHat D) :

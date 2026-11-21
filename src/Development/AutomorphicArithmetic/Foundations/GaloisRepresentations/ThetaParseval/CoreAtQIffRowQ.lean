@@ -17,7 +17,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace UpperTheory.Gal.TP
 
-open Sub
+open _root_.UpperTheory.Gal.TP.Sub
 
 variable {E Ω : Type} [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime]
 
@@ -154,7 +154,6 @@ theorem atPlaceQ (hCE : CharEx) (hSat : SatAE) (hDI : DenseId) (hCp : CpFacts) (
         (fun τ => (GlobalTheory.GalDef.jumpsOf ι lam τ).map (· + m (ι.toRingHom.comp τ))) τ +
           Finset.univ.val.map fun i => (fun i τ => -p₁ i (ι.toRingHom.comp τ)) i τ := by
       funext τ
-      simp only [jumpsOf_eq]
       exact h1.inf _
     rw [hj] at c1
     have c2 := hcl w _ (fun i => (((ψ₁ i).val w : ℂˣ) : ℂ)) _ (fun i τ => -p₁ i (ι.toRingHom.comp τ))

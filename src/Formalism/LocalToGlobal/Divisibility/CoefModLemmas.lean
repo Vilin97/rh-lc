@@ -135,23 +135,23 @@ def NabDelEquiv : Prop :=
 def NabDelDual : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (ι : Type) [Fintype ι] (n : ℕ) (lam : ι → DomWeight n)
     (G : ι → Matrix (Fin n) (Fin n) K) (M : ι → Submodule (𝓞 K) (Fin n → K)),
-    (∀ τ, (G τ)ᴴ = G τ) → (∀ τ, IsUnit (G τ).det) → (∀ τ, Submodule.IsLattice K (M τ)) →
+    (∀ τ, (G τ)ᴴ = G τ) → (∀ τ, IsUnit (G τ).det) → (∀ τ, Submodule.IsFullLattice K (M τ)) →
     Formalism.HermitianLatticesTheory.dual (pairK lam G) (nabK lam M) = delK lam (fun τ => hdualFr (G τ) (M τ)) ∧
     Formalism.HermitianLatticesTheory.dual (pairK lam G) (delK lam M) = nabK lam (fun τ => hdualFr (G τ) (M τ))
 
 def DualFrHdual : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (n : ℕ) (G : Matrix (Fin n) (Fin n) K)
-    (M : Submodule (𝓞 K) (Fin n → K)), Gᴴ = G → IsUnit G.det → Submodule.IsLattice K M →
+    (M : Submodule (𝓞 K) (Fin n → K)), Gᴴ = G → IsUnit G.det → Submodule.IsFullLattice K M →
     hdualFr (G⁻¹)ᵀ (dualFr M) = dualFr (hdualFr G M)
 
 def DualFrLattice : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (n : ℕ) (G : Matrix (Fin n) (Fin n) K)
-    (M : Submodule (𝓞 K) (Fin n → K)), IsUnit G.det → Submodule.IsLattice K M →
-    Submodule.IsLattice K (dualFr M) ∧ Submodule.IsLattice K (hdualFr G M)
+    (M : Submodule (𝓞 K) (Fin n → K)), IsUnit G.det → Submodule.IsFullLattice K M →
+    Submodule.IsFullLattice K (dualFr M) ∧ Submodule.IsFullLattice K (hdualFr G M)
 
 def TauLatLattice : Prop :=
   ∀ (E K : Type) [Field E] [NumberField E] [Field K] [NumberField K] (ι : Type) (n : ℕ) (emb : ι → E →+* K) (τ : ι)
-    (L : Submodule (𝓞 E) (Fin n → E)), Submodule.IsLattice E L → Submodule.IsLattice K (tauLat emb τ L)
+    (L : Submodule (𝓞 E) (Fin n → E)), Submodule.IsFullLattice E L → Submodule.IsFullLattice K (tauLat emb τ L)
 
 def TauLatG : Prop :=
   ∀ (E K : Type) [Field E] [NumberField E] [Field K] [NumberField K] (ι : Type) (n : ℕ) (emb : ι → E →+* K) (τ : ι)
@@ -162,7 +162,7 @@ def TauLatG : Prop :=
 def TauLatDual : Prop :=
   ∀ (E K : Type) [Field E] [NumberField E] [Field K] [NumberField K] [StarRing K] (ι : Type) (n : ℕ)
     (emb : ι → E →+* K) (cE : E →+* E) (τ : ι), (∀ x, star (emb τ x) = emb τ (cE x)) →
-    ∀ (J : Matrix (Fin n) (Fin n) E) (L L' : Submodule (𝓞 E) (Fin n → E)), IsUnit J.det → Submodule.IsLattice E L →
+    ∀ (J : Matrix (Fin n) (Fin n) E) (L L' : Submodule (𝓞 E) (Fin n → E)), IsUnit J.det → Submodule.IsFullLattice E L →
       (∀ y, y ∈ L' ↔ ∀ x ∈ L, Formalism.UG.hform cE J x y ∈ (algebraMap (𝓞 E) E).range) →
       hdualFr (gramK emb J τ) (tauLat emb τ L) = tauLat emb τ L'
 
@@ -179,7 +179,7 @@ def UJUnitary : Prop :=
 def RoundLat : Prop :=
   ∀ (E K : Type) [Field E] [NumberField E] [Field K] [NumberField K] (ι : Type) (n : ℕ)
     (emb : ι → E →+* K) (cE : E →+* E) (τ : ι), (∀ x, cE (cE x) = x) →
-    ∀ (Jg : GL (Fin n) E) (L L' : Submodule (𝓞 E) (Fin n → E)), Submodule.IsLattice E L →
+    ∀ (Jg : GL (Fin n) E) (L L' : Submodule (𝓞 E) (Fin n → E)), Submodule.IsFullLattice E L →
       Formalism.UG.IsHerm cE (Jg : Matrix (Fin n) (Fin n) E) →
       (∀ y, y ∈ L' ↔ ∀ x ∈ L, Formalism.UG.hform cE (Jg : Matrix (Fin n) (Fin n) E) x y ∈ (algebraMap (𝓞 E) E).range) →
       dualFr (tauLat emb τ L) = gLat (invTrK (embGL emb Jg⁻¹) τ) (tauLat (fun τ => (emb τ).comp cE) τ L')

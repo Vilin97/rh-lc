@@ -20,8 +20,7 @@ variable (I : AutInst)
 abbrev sg : I.E ⊗[I.F] Af I.F →+* I.E ⊗[I.F] Af I.F := Formalism.UG.sigR I.cm.sig (Af I.F)
 
 theorem sg_sg (x : I.E ⊗[I.F] Af I.F) : sg I (sg I x) = x := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul e b =>
     show (I.cm.sig (I.cm.sig e)) ⊗ₜ[I.F] b = e ⊗ₜ[I.F] b
@@ -127,7 +126,7 @@ theorem sg_Wq {t : I.E ⊗[I.F] Af I.F} (ht : t ∈ Wq I w) : sg I t ∈ Wq I (w
     rw [e]
     exact iE_mem (sig_mem_wc I ha)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
+  | add x z _ _ hx hz => rw [map_add]; exact add_mem hx hz
   | smul r x _ hx =>
     show sg I ((r : I.E ⊗[I.F] Af I.F) * x) ∈ Wq I (wc I w)
     rw [map_mul]

@@ -107,7 +107,8 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
     (bc_smul : ∀ (a : E) y, bc (a • y) = algebraMap E K a • bc y) (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E L)
     (bc_L : Q.L = Submodule.span (𝓞 K) (bc '' (L : Set S.V)))
     (bc_norm : ∀ (v : InfinitePlace K) y, (majAt Q.b Q.X v (bc y) (bc y)).re = (v.embedding (algebraMap E K (S.hT y y))).re) :
-    Q.mu = muDef (Pi.basisFun E (Fin S.rank)) (fun v => Formalism.L2.Geo.Def.frameOf (S.gram.map v.embedding)) (crdLat S L) := by
+    Q.mu = muDef (Pi.basisFun E (Fin S.rank)) (fun v => Formalism.L2.Geo.Def.frameOf (S.gram.map v.embedding)) (crdLat S L) ∧
+      Submodule.IsFullLattice E L := by
   classical
   have hM : Submodule.IsLattice E (crdLat S L) :=
     Submodule.IsLattice.of_fg E (hL.fg.map _)
@@ -151,11 +152,10 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
   haveI : FiniteDimensional K Q.V := Module.Finite.of_basis Q.b
   have hinj : Function.Injective f := (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hfr).2 hsurj
   obtain ⟨XK, hP1, hP3, hfg0, hmu'⟩ := pull_coords Q hQ f hinj hsurj
-  rw [hmu']
   have hcomap : Q.L.comap (f.restrictScalars (𝓞 K)) = Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E))) := by
     rw [hQL]
     exact Submodule.comap_map_eq_of_injective (f := f.restrictScalars (𝓞 K)) hinj _
-  rw [hcomap] at hfg0 ⊢
+  rw [hcomap] at hfg0
   have hbc := Formalism.HermiteSiegelSlopes.baseChange E K (Fin S.rank) (fun v => Formalism.L2.Geo.Def.frameOf (S.gram.map v.embedding)) XK
     (fun v => (hY v).1) hP1
     (fun w x => by
@@ -179,6 +179,17 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
     rw [hspanT]
     simp
   have hrM : rkK (crdLat S L) = S.rank := hbc.1.symm.trans hrT' 
+  have hspanM : Submodule.span E (crdLat S L : Set (Fin S.rank → E)) = ⊤ := by
+    apply Submodule.eq_top_of_finrank_eq
+    simpa [rkK] using hrM
+  have hfull : Submodule.IsFullLattice E L := by
+    refine { toIsLattice := hL, span_eq_top := ?_ }
+    apply (LinearMap.map_injective (LinearMap.ker_eq_bot.mpr (crd S).injective) :
+      Function.Injective (Submodule.map (crd S).toLinearMap))
+    rw [Submodule.map_span, Submodule.map_top, LinearMap.range_eq_top.mpr (crd S).surjective]
+    exact hspanM
+  refine ⟨?_, hfull⟩
+  rw [hmu', hcomap]
   have hneM : crdLat S L ≠ ⊥ := Formalism.L2.Col.isLattice_ne_bot hM
   have hfgT := hfg0
   have hrT : rkK (Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E)))) = S.rank := hbc.1.trans hrM
@@ -208,7 +219,7 @@ theorem q_lattice_slope (D : D7) : QSlope D := by
     (by rw [Fintype.card_congr (CV.eQ c τ), Fintype.card_fin, H.rank]) (CV.bc c τ) (CV.bc_smul c τ) (D.clsLat u 0 c) (H.lat c)
     (CV.bc_L c τ) (CV.bc_norm c τ)
   have hT : (Tu D u) ^ (2 * D.R.f) ≠ 0 := pow_ne_zero _ H.Tpos.ne'
-  rw [h1, eLat_mu D.sp.cm (D.sp.X 0) (D.sp.X_sig 0) (D.X_posDef 0 (Nat.zero_le _)) hn _ (H.lat c) _ hT (CV.latT c), H.deg, H.rank,
+  rw [h1.1, eLat_mu D.sp.cm (D.sp.X 0) (D.sp.X_sig 0) (D.X_posDef 0 (Nat.zero_le _)) hn _ h1.2 _ hT (CV.latT c), H.deg, H.rank,
     Ranks.N_zero]
   have hf : (0 : ℝ) < (D.R.f : ℝ) := by
     have : 0 < 2 * D.R.f := by rw [← H.deg]; exact Module.finrank_pos

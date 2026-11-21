@@ -1,6 +1,9 @@
 module
 
 public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.FlatSat
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.GoodOrigin
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ExistsUniqueLeftBasisCoordsAdicCompletion
+import all Development.WeilBound.CoreStatements.PlurisubharmonicCones.FlatSat
 public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsSmulMemOfEig
 public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsAction
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CmHostRankBounds

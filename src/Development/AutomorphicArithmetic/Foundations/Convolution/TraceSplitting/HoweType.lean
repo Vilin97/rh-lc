@@ -85,7 +85,9 @@ theorem UpperTheory.ConvolutionTheory.T.howeType :
   intro F E _ _ _ _ _ _ _ _ σ hσ _ n _ μ _ V hV v w hw N hN
   obtain ⟨iA, iV, iFD, iG, s, -, -, -, hgal, -⟩ := UpperTheory.V.Z.Tf.Orb.placeData F E σ hσ v w hw
   haveI : CharZero (v.adicCompletion F) := algebraRat.charZero _
-  obtain ⟨π, hπ, -⟩ := UpperTheory.ConvolutionTheory.Dp.exCusp E n μ V hV
+  obtain ⟨π, hπ, -⟩ : ∃! π : GlobalTheory.CuspRep.CuspSub E n,
+      UpperTheory.ConvolutionTheory.Dp.Carries μ π V :=
+    UpperTheory.ConvolutionTheory.Dp.exCusp E n μ V hV
   obtain ⟨hl, -, -, -⟩ := UpperTheory.V.Z.Tf.Orb.gLTop (w.1.adicCompletion E) n
   letI : MeasurableSpace (Gw n w.1) := borel _
   haveI : BorelSpace (Gw n w.1) := ⟨rfl⟩

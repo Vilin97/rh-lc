@@ -762,7 +762,9 @@ set_option maxHeartbeats 4000000 in
 theorem slot_mv_extension_with_list_geo_cl (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (cDep : ℝ) (Γ : GeoP) :
     PositionMv (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension (_root_.GlobalTheory.HeightCounting.Up.extensionWithList hL cDep) SExt.none (geoCl Γ)).s := by
   intro K B f T w Z O x N h O' hO' col n
-  obtain ⟨t', hs, hgeo, hpk, hobj, hrx⟩ := GlobalTheory.T.rows_pass_to_moved_divisionLatticesHeights K B f T w Z x.Wt O x.what₂ N h O' hO'
+  have hrows := _root_.GlobalTheory.T.rows_pass_to_moved_divisionLatticesHeights
+    K B f T w Z x.Wt O x.what₂ N h O' hO'
+  obtain ⟨t', hs, hgeo, hpk, hobj, hrx⟩ := hrows
   obtain ⟨nch', xd', -, hnx, -, -, hmv⟩ := _root_.GlobalTheory.T.exists_kept_choice_upper_lattice_alt hL K B f T w Z x.Wt Z.S N h O.nch O.xd
   obtain ⟨hn1, hn2⟩ := hnx rfl
   subst hO'

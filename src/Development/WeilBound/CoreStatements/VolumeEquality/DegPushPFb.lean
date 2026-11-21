@@ -108,7 +108,7 @@ theorem ker_baseChange {k B K σ Φ Φ' : Type} [Field k] [CommRing B] [Algebra 
       refine Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ ?_)
       rw [RingHom.mem_ker]
       have hv := congrArg (AddMonoidAlgebra.coeff · v) hQ0
-      rw [coeff_map, coeff_zero] at hv
+      rw [coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at hv
       exact hv
     have hqne : algebraMap (MvPolynomial K k) Φ q ≠ 0 :=
       IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors (mem_nonZeroDivisors_of_ne_zero hq)

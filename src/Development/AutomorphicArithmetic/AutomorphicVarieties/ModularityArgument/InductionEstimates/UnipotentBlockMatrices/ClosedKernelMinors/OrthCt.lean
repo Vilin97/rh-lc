@@ -44,6 +44,19 @@ private theorem int0 {A B : Type} [MeasurableSpace A] [MeasurableSpace B]
   filter_upwards [h, hf.prod_right_ae] with a ha hi
   exact ha hi
 
+private theorem constantTermL2_unipotent_mul {K : Type} [Field K] [NumberField K] {n : ℕ}
+    (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (w : L2 μ) (r : ℕ)
+    (Y : UPos n r → 𝔸[K]) (z : G1 K n) :
+    constantTermL2 μ r w (unipOne r Y * z) = constantTermL2 μ r w z := by
+  simp only [constantTermL2, ctFun]
+  have h (X : UPos n r → 𝔸[K]) : unipOne r X * (unipOne r Y * z) = unipOne r (X + Y) * z := by
+    rw [unipOne_add, mul_assoc]
+  simp_rw [h]
+  refine setIntegral_add_right_of_periodic isAddFundamentalDomain_unipFundamentalDomain
+    (h := fun X => (w : RightCosetSpace (Gam K n) → ℂ) (RightCosetSpace.mk (Gam K n) (unipOne r X * z)))
+    (fun ξ hξ s => ?_) Y
+  rw [unipOne_add, mul_assoc, RightCosetSpace.mk_mul_of_mem (unipOne_mem_rationalGLOne r ⟨ξ, hξ⟩)]
+
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.orthCt :
     ∀ {K : Type} [Field K] [NumberField K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (F : G1 K (2 + 2) → ℂ), Continuous F → (∀ γ ∈ PK K, ∀ g, F (γ * g) = F g) → InBand F → Decays F → (∀ X g, F (nn X * g) = F g) → ∀ v w : L2 μ, Reps μ v (th F) →
       constantTermL2 μ 2 w =ᵐ[μ] 0 → ⟪v, w⟫_ℂ = 0 := by
@@ -90,7 +103,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.orthCt :
     simp [hg]
   rw [hL, eq_comm, mul_eq_zero] at h0
   have h1 := h0.resolve_left (ENNReal.ofReal_pos.mpr hc').ne'
-  simp only [mul_assoc, CuspidalProjection.constantTermL2_unipotent_mul, lintegral_const] at h1
+  simp only [mul_assoc, constantTermL2_unipotent_mul, lintegral_const] at h1
   have hcont : Continuous fun p : G1 K 2 × G1 K 2 × ℝ × KG K (2 + 2) =>
       lv p.1 p.2.1 p.2.2.1 * (p.2.2.2 : G1 K (2 + 2)) :=
     (hlv.comp (f := fun p : G1 K 2 × G1 K 2 × ℝ × KG K (2 + 2) => (p.1, p.2.1, p.2.2.1)) (by fun_prop)).mul

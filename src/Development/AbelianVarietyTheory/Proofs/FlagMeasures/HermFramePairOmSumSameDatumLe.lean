@@ -158,12 +158,36 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
 theorem om_smul (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (N : NF H r) {g : ℕ} {Λ : Submodule (𝓞 K) V} (hg : 1 ≤ g)
     (hΛ : N.IsTerm g Λ) {s : V ≃ₗ[K] V} (hs : s ∈ N.R) : N.om (s • Λ) = N.om Λ := by
   obtain ⟨-, hS, -, -⟩ := GlobalTheory.T.commonUnipotent_stabiliser_preserves_terms_and_datum K V H hK r N g Λ hg hΛ s hs
-  obtain ⟨-, -, -, -, hRef, -⟩ := GlobalTheory.T.hermFramePair_innerLattices_unimodular_primitive K V H hK r N g Λ hg hΛ
   obtain ⟨-, -, -, -, hnil⟩ := GlobalTheory.T.hermFramePairCommonUnipotentStabiliser_summary K V H hK r N
-  have hL : Submodule.IsLattice K Λ := ((isUnimod_iff H Λ).1 hΛ.1.1).1
+  have hLat := ((isUnimod_iff H Λ).1 hΛ.1.1).1
+  have hL : Submodule.IsFullLattice K Λ :=
+    { Submodule.IsLattice.of_fg K hLat.1 with span_eq_top := hLat.2 }
   unfold NF.om NF.Gam
   rw [hS.1]
-  exact (Unimod.invVol_smul K V N.R (2 * r + 1) hnil Λ _ hL hRef).2 s hs
+  let A := N.R ⊓ MulAction.stabilizer (V ≃ₗ[K] V) Λ
+  let B := N.R ⊓ MulAction.stabilizer (V ≃ₗ[K] V) (s • Λ)
+  let C := N.R ⊓ MulAction.stabilizer (V ≃ₗ[K] V) (N.Ref (latL N.F N.F' Λ))
+  have hB : Submodule.IsFullLattice K (s • Λ) := Unimod.isLattice_smul s hL
+  have hab : A.relIndex B ≠ 0 := Unimod.relIndex_ne_zero N.R hL hB
+  have hba : B.relIndex A ≠ 0 := Unimod.relIndex_ne_zero N.R hB hL
+  have hd : GlobalTheory.HL.invVol A B = 1 := by
+    have h := (Unimod.invVol_smul K V N.R (2 * r + 1) hnil Λ Λ hL hL).2 s hs
+    simpa [A, B, GlobalTheory.HL.invVol] using h
+  change GlobalTheory.HL.invVol C B = GlobalTheory.HL.invVol C A
+  by_cases hca : C.relIndex A = 0
+  · have hcb : C.relIndex B = 0 := by
+      by_contra h
+      exact (Subgroup.relIndex_ne_zero_trans h hba) hca
+    simp [GlobalTheory.HL.invVol, hca, hcb]
+  · by_cases hac : A.relIndex C = 0
+    · have hbc : B.relIndex C = 0 := by
+        by_contra h
+        exact (Subgroup.relIndex_ne_zero_trans hab h) hac
+      simp [GlobalTheory.HL.invVol, hac, hbc]
+    · have hcb : C.relIndex B ≠ 0 := Subgroup.relIndex_ne_zero_trans hca hab
+      have hbc : B.relIndex C ≠ 0 := Subgroup.relIndex_ne_zero_trans hba hac
+      have h := (GlobalTheory.HL.invVol_mul_pos_le_conj C A B hca hac hcb hbc).1
+      simpa [hd] using h
 
 theorem isLatMod_latLa (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (N : NF H r) {g : ℕ} {Λ : Submodule (𝓞 K) V} (hg : 1 ≤ g)
     (hΛ : N.IsTerm g Λ) :

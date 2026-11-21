@@ -10,6 +10,12 @@ open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 namespace LateralTheory.CohomologicalPurity.TubeCut
 variable {P' P : Arrow Spc} (φ : P' ⟶ P)
 
+private theorem inl_sig : dbl.inl (QQ φ) ≫ sig φ = 𝟙 _ :=
+  pushout.inl_desc (f := jj φ) (g := jj φ) _ _ _
+
+private theorem inr_sig : dbl.inr (QQ φ) ≫ sig φ = rr φ ≫ jj φ :=
+  pushout.inr_desc (f := jj φ) (g := jj φ) _ _ _
+
 theorem etale_double_inl_sigma_inl_eq_inl : dbl.inl (QQ φ) ≫ sig φ ≫ dbl.inl (QQ φ) = dbl.inl (QQ φ) :=
   (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ dbl.inl (QQ φ)) (inl_sig φ)).trans (Category.id_comp _))
 

@@ -27,7 +27,7 @@ theorem aeval_mem (F : IntermediateField ℚ Ω) (w : (Σ k, ι k) → Ω) (hw :
     aeval w f ∈ F := by
   induction f using MvPolynomial.induction_on with
   | C a => rw [aeval_C, algebraMap_int_eq, eq_intCast]; exact intCast_mem F a
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | mul_X p q hp => rw [map_mul, aeval_X]; exact mul_mem hp (hw q)
 
 

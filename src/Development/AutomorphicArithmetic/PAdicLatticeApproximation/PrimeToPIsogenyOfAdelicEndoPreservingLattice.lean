@@ -44,7 +44,7 @@ theorem UpperTheory.primeToP_isogeny_of_adelic_endo_preserving_lattice :
       rw [hCt]
       exact AddSubgroup.subset_closure ⟨a, ψ (b • u), ha, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   have hAC : A * (actQ D b).baseChange (AfP p) = Cc * A := by
     refine ext_inAf D fun x => ?_
@@ -53,7 +53,7 @@ theorem UpperTheory.primeToP_isogeny_of_adelic_endo_preserving_lattice :
       obtain ⟨w', hw', e'⟩ := hA n hn hc x
       obtain ⟨z, hz⟩ := hf n hn hc b x
       refine ⟨inAf D (ψ z) + w - Cc w', sub_mem (add_mem (inAf_mem D _) hw) (hCL _ hw'), ?_⟩
-      rw [Module.End.mul_apply, Module.End.mul_apply, bc_inAf, e, hz, e', map_add (f := _), map_add (f := _), hCin, map_nsmul,
+      rw [mul_apply_eq_comp, mul_apply_eq_comp, bc_inAf, e, hz, e', map_add (f := _), map_add (f := _), hCin, map_nsmul,
         map_nsmul, inAf_add, inAf_nsmul]
       simp only [smul_add, smul_sub]; abel
     exact sub_eq_zero.1 this

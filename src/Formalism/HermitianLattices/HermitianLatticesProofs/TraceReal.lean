@@ -47,22 +47,12 @@ lemma traceReal_lower (h : V →ₗ⋆[K] V →ₗ[K] K)
     (L : Submodule (NumberField.RingOfIntegers K) V) [Submodule.IsLattice K L] :
     ∃ l : ℝ, 0 < l ∧ ∀ x ∈ L, x ≠ 0 → l ≤ ((Algebra.trace ℚ K (h x x) : ℚ) : ℝ) := by
   classical
-  haveI : Module.Finite (NumberField.RingOfIntegers K) L := Submodule.IsLattice.finite K L
-  haveI : IsAddTorsionFree L := isAddTorsionFree_ringOfIntegers_submodule L
-  haveI : Module.Finite ℤ L := Module.Finite.trans (NumberField.RingOfIntegers K) L
-  haveI : Module.IsTorsionFree ℤ L := by
-    constructor
-    intro r hr a b hab
-    have hr0 : r ≠ 0 := hr.ne_zero
-    apply Subtype.ext
-    have hab' : r • (a : V) = r • (b : V) := by
-      have := congrArg (fun y : L => (y : V)) hab
-      simpa using this
-    have h1 : (r : K) • ((a : V) - (b : V)) = 0 := by
-      rw [smul_sub, Int.cast_smul_eq_zsmul K, Int.cast_smul_eq_zsmul K, hab', sub_self]
-    have hrK : (r : K) ≠ 0 := Int.cast_ne_zero.mpr hr0
-    exact sub_eq_zero.mp ((smul_eq_zero.mp h1).resolve_left hrK)
-  haveI : Module.Free ℤ L := Module.free_of_finite_type_torsion_free'
+  have : Module.Finite (NumberField.RingOfIntegers K) L := Submodule.IsLattice.finite K L
+  have : Module.Finite ℤ L := Module.Finite.trans (NumberField.RingOfIntegers K) L
+  have : Module.IsTorsionFree ℤ V := Module.IsTorsionFree.trans_faithfulSMul ℤ K V
+  have : Module.IsTorsionFree ℤ L :=
+    Subtype.coe_injective.moduleIsTorsionFree (fun x : L => (x : V)) (fun _ _ => rfl)
+  have : Module.Free ℤ L := Module.free_of_finite_type_torsion_free'
   let b := Module.Free.chooseBasis ℤ L
   let e : Module.Free.ChooseBasisIndex ℤ L → V := fun i => ((b i : L) : V)
   let G : Matrix (Module.Free.ChooseBasisIndex ℤ L) (Module.Free.ChooseBasisIndex ℤ L) ℚ :=
@@ -222,7 +212,7 @@ theorem traceReal_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hS : h.IsSymm)
     intro x
     rw [← hinner, real_inner_self_eq_norm_sq]
   refine ⟨finrank ℚ V, ι, hinner, hbound, fun M hM => ?_⟩
-  have := hM
+  have : Submodule.IsLattice K M := hM.toIsLattice
   obtain ⟨l, hl, hlow⟩ := traceReal_lower h hpos M
   have hdisc : DiscreteTopology (zmap ι M) := by
     apply discreteTopology_of_isOpen_singleton_zero

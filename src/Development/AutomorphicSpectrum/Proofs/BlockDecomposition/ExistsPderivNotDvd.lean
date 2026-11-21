@@ -16,10 +16,10 @@ theorem exists_pderiv_not_dvd {K σ : Type*} [Field K] [CharZero K] (π : MvPoly
   have hT : π.totalDegree ≠ 0 := by
     intro h
     have hC := totalDegree_eq_zero_iff_eq_C.1 h
-    by_cases ha : coeff 0 π = 0
+    by_cases ha : π.coeff 0 = 0
     · rw [ha, map_zero] at hC
       exact hπ.ne_zero hC
-    · apply hπ.not_unit
+    · apply hπ.not_isUnit
       rw [hC]
       exact (IsUnit.mk0 _ ha).map C
   have h1 : ¬ ∀ m ∈ π.support, ∀ x, m x = 0 := by
@@ -33,11 +33,11 @@ theorem exists_pderiv_not_dvd {K σ : Type*} [Field K] [CharZero K] (π : MvPoly
     · subst hi
       simp
       omega
-    · simp [Finsupp.single_apply, Ne.symm hi]
+    · simp [Ne.symm hi]
   have hne : pderiv j π ≠ 0 := by
     intro h0
     have h2 := coeff_pderiv (i := j) π (m - Finsupp.single j 1)
-    rw [h0, hm', coeff_zero] at h2
+    rw [h0, hm', AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h2
     have h3 : (((m - Finsupp.single j 1 : σ →₀ ℕ) j : ℕ) + 1 : K) ≠ 0 := by
       exact Nat.cast_add_one_ne_zero _
     exact mul_ne_zero (mem_support_iff.1 hm) h3 h2.symm

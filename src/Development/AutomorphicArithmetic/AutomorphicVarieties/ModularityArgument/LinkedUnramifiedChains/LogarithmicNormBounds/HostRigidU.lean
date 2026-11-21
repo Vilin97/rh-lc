@@ -166,8 +166,7 @@ private theorem rig_above (hP : UpperTheory.V.Loc.LocalPublishedTheorems) (Ω : 
   refine rig_loc hP φ hφ (F.ηv F.vl) (ok.η_cont.comp_continuous hl) (r.comp (F.loc F.vl)) _ (r'.comp (F.loc F.vl)) h
     (fun g => hm _) (hc.comp hl) (hyc.comp hl) (fun g k => ?_) (fun g => hd _) H ho hle hh.tri
     (fun a => (e : ℤ) * wt1 a) ?_ (fun s hs hs' a => ?_) (fun i j hij => ⟨g, hg, ?_⟩)
-  · simp only [map_mul]
-    exact hy _ _
+  · simpa only [map_mul, adRep, MonoidHom.comp_apply] using hy _ _
   · have he : (0 : ℤ) < e := by exact_mod_cast hD.e_pos
     intro a b hab
     refine mul_lt_mul_of_pos_left ?_ he
@@ -304,20 +303,22 @@ private theorem h1f_equiv_of_intertwiner {F Ω : Type} [Field F] [NumberField F]
       rw [← key, ← map_sub, ← hx g, LinearMap.rTensor_tmul]
       rfl
 
-private theorem h1f_vanishing_conj_invariant {Ω : Type} [Field Ω] [CharZero Ω] {l : ℕ} [Fact l.Prime] (R : G ℚ Ω →* GG (m := 3) (R := PadicAlgCl l))
+private theorem h1f_vanishing_conj_invariant {Ω : Type} [Field Ω] [CharZero Ω] {l : ℕ} [Fact l.Prime]
+    (R : G ℚ Ω →* GG (m := 3) (R := PadicAlgCl l))
     (h : GL (Fin 3) (PadicAlgCl l)) (H : Af.BlochKatoSelmerVanishes l (adRep (conjBy h R))) : Af.BlochKatoSelmerVanishes l (adRep R) := by
   have e : ∀ g, conjBy h R g = GG.ofGL h * R g * (GG.ofGL h)⁻¹ := fun g => rfl
-  refine h1f_equiv_of_intertwiner _ _ (GG.ad (GG.ofGL h)) (GG.ad (GG.ofGL h)⁻¹) ?_ (fun x => ?_) (fun g x => ?_) (fun g x => ?_) H
-  · have : ⇑(GG.ad (GG.ofGL h)) = fun X => (GG.ofGL h).mat * X *
+  refine h1f_equiv_of_intertwiner _ _ (GG.ad (m := 3) _ (GG.ofGL h)) (GG.ad (m := 3) _ (GG.ofGL h)⁻¹)
+    ?_ (fun x => ?_) (fun g x => ?_) (fun g x => ?_) H
+  · have : ⇑(GG.ad (m := 3) _ (GG.ofGL h)) = fun X => (GG.ofGL h).mat * X *
         (((GG.ofGL h).left⁻¹ : GL (Fin 3) (PadicAlgCl l)) : Matrix (Fin 3) (Fin 3) (PadicAlgCl l)) := by
       funext X
       rw [GG.ad_apply, GG.adFun, if_pos (SemidirectProduct.right_inl _)]
     rw [this]
     exact (continuous_const.matrix_mul continuous_id).matrix_mul continuous_const
   · rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
-  · show GG.ad _ (GG.ad (R g) x) = GG.ad (conjBy h R g) _
+  · show GG.ad (m := 3) _ _ (GG.ad (m := 3) _ (R g) x) = GG.ad (m := 3) _ (conjBy h R g) _
     rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, e, inv_mul_cancel_right]
-  · show GG.ad _ (GG.ad (conjBy h R g) x) = GG.ad (R g) _
+  · show GG.ad (m := 3) _ _ (GG.ad (m := 3) _ (conjBy h R g) x) = GG.ad (m := 3) _ (R g) _
     rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, e, mul_assoc, inv_mul_cancel_left]
 
 private theorem val_of_even {Ω : Type} [Field Ω] (B : ValuationSubring Ω) {M : ℕ} (hM : Even M)

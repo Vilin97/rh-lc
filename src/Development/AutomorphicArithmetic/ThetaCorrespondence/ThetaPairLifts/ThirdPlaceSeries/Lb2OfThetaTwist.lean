@@ -65,16 +65,22 @@ theorem lb2_of_theta_twist_alt (x : St P) (l : _root_.GlobalTheory.HeightCountin
       (by with_unfolding_all exact ((hT.side ((i)) ((j)) b).hk_none : _))⟩, (by with_unfolding_all exact (hT.isUnramified₂ :))⟩⟩
 theorem exists_levelB2_twisted_state_of_thetaTie : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {P : Pre2 K w} (x : St P) (l : _root_.GlobalTheory.HeightCounting.Up.SecondIntermediateLevel hL x) (th : NTh (Dof x).R (Dof x).host (Dof x).what₂ (Dof x).LL0 (Dof x).nd (Dof x).ntw (Dof x).nexp), GlobalTheory.GeoTie.ThetaTie l.b.YS x.m.z.geo.fw th → ∃ x' : St P, Nonempty (_root_.GlobalTheory.HeightCounting.Up.ThirdIntermediateLevel hL x') ∧ x'.o = oTw x (thTw (Dof x) th) ∧ HEq x'.m.z.R.toRealDat.toLevCh (GlobalTheory.Mem.R3.Tr.levCh (a := x.o.Z) (oTw x (thTw (Dof x) th)).Z x.m.z.R.toRealDat.toLevCh) := by
   intro hL K B f T w P x l th hT
-  have hser := _root_.GlobalTheory.T.series_at_theta_twist_ys_exp hL x l th
-  obtain ⟨m, hm, hc, hh⟩ := GlobalTheory.T.exists_movedData_laterStagesWithNewTwist x (thTw (Dof x) th)
-  obtain ⟨r, hp, hrep, hj, he⟩ := GlobalTheory.T.exists_normalisedReading_transported_newTwist x _ m hm hc hh
-  obtain ⟨l', h1, h2, h3, h4, h5, h6, h7⟩ := _root_.GlobalTheory.T.read_package_twist_heq_alt hL x l.toLI _ m hm hc hh r hp hrep hj he
+  let N := thTw (Dof x) th
+  obtain ⟨m, hm, hc, hh⟩ := GlobalTheory.T.exists_movedData_laterStagesWithNewTwist x N
+  obtain ⟨r, hp, hrep, hj, he⟩ :=
+    GlobalTheory.T.exists_normalisedReading_transported_newTwist x N m hm hc hh
+  obtain ⟨l', h1, h2, h3, h4, h5, h6, h7⟩ :=
+    _root_.GlobalTheory.T.read_package_twist_heq_alt hL x l.toLI N m hm hc hh r hp hrep hj he
   obtain ⟨mt, hPV⟩ := _root_.GlobalTheory.HeightCounting.Up.exists_in_mt_theta_twist_pv_eq x l.toLI th m hm hc hh r hp hj
-  refine ⟨stTw x _ m hc hh r hp, ?_, rfl, ?_⟩
-  · exact (_root_.GlobalTheory.HeightCounting.Up.lb2_of_theta_twist_alt x l th hT m hm hc hh r hp l' h1 h2 h3 h4 h5 h6 h7 mt hPV hser).elim fun b => ⟨{ toLI := { l' with mt := mt }, b := b }⟩
+  refine ⟨stTw x N m hc hh r hp, ?_, rfl, ?_⟩
+  · have hser := _root_.GlobalTheory.T.series_at_theta_twist_ys_exp hL x l th
+    have hpoints := _root_.GlobalTheory.HeightCounting.Up.lb2_of_theta_twist_alt
+      x l th hT m hm hc hh r hp l' h1 h2 h3 h4 h5 h6 h7 mt hPV hser
+    exact hpoints.map fun b => { toLI := { l' with mt := mt }, b := b }
   · show HEq m.z.R.toRealDat.toLevCh _
     rw [hm]
-    exact (by with_unfolding_all exact ((HEq.refl (datTw x (thTw (Dof x) th)).R.toRealDat.toLevCh) :))
+    with_unfolding_all
+      exact HEq.refl (datTw x N).R.toRealDat.toLevCh
 end GlobalTheory.HeightCounting.Up
 end
 end

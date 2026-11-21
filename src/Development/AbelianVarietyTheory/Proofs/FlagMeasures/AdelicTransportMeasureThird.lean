@@ -119,7 +119,7 @@ theorem gelf_scalar (he : IsEquiv θ Φ) (hs : IsSob Φ) (τ : D.what₂.Tau) (k
     rw [Submodule.coe_smul, ← hc _ ((MultGelf.mem_sm M τ).1 (v τ).2), Submodule.coe_sum]
     exact Finset.sum_congr rfl fun idx _ => (hf1 idx).symm
   have h2 : c • Φ v = Φ (Function.update v τ (c • v τ)) := by
-    rw [Φ.map_update_smul, Function.update_eq_self]
+    rw [Φ.map_update_smul, RingHom.id_apply, Function.update_eq_self]
   rw [h2, h1]
   refine Eq.trans ?_ (map_sum (Φ.toLinearMap v τ) f Finset.univ).symm
   exact Finset.sum_congr rfl fun idx _ => hf2 idx
@@ -130,7 +130,7 @@ theorem zfin (he : IsEquiv θ Φ) (hs : IsSob Φ) (u : M.Vec) :
   obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hf
   obtain ⟨c, hc⟩ := gelf_scalar he hs τ k
   have h2 : a • Φ u = Φ (Function.update u τ (a • u τ)) := by
-    rw [Φ.map_update_smul, Function.update_eq_self]
+    rw [Φ.map_update_smul, RingHom.id_apply, Function.update_eq_self]
   rw [h2, hc, ← h2]
   exact Submodule.smul_mem _ _ hf
 
@@ -152,7 +152,7 @@ theorem smooth (hθ : IsInfFam θ) (he : IsEquiv θ Φ) (hs : IsSob Φ) (hc : �
     have h3 : der v τ hXY = (a : ℂ) • der v τ hX + der v τ hY :=
       Subtype.ext ((h1 _ haX _ hY).trans (by rw [h2 a X hX]; rfl))
     simp only [rder_apply he hs τ v hX, rder_apply he hs τ v hY, rder_apply he hs τ v hXY]
-    rw [h3, Φ.map_update_add, Φ.map_update_smul]
+    rw [h3, Φ.map_update_add, Φ.map_update_smul, RingHom.id_apply]
 
 theorem foldr_rder (he : IsEquiv θ Φ) (hs : IsSob Φ) (u : M.Vec)
     (l : List (D.what₂.Tau × Matrix (Fin V.rank) (Fin V.rank) ℂ)) (hl : ∀ p ∈ l, p.2 ∈ lieAt V p.1) :

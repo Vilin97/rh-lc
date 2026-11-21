@@ -1,6 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.DiscreteSpectrumResidualClassification
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CopyLIntegral
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HoldsFromPrintedInputs
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.Hypotheses3
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.LocalTypeDictionary.RationalDataSizedFamily
@@ -43,7 +44,7 @@ theorem atDat_holds_alt (hP : _root_.GlobalTheory.PrimIn.PublishedThetaCondition
   obtain ⟨L, hsc, hsz, hpar, hn⟩ := hLed (w.st Z') hO hη hA
   obtain ⟨hhost, -, -, -, -, -, hV, -⟩ := hHost (w.st Z') hO
   have s : SameGrp Z Z' := LedRec.sameGrp g1 g1'
-  refine DatCopy.holds_of_copy Z' s ?_
+  refine _root_.GlobalTheory.Mem.R3.DatCopy.holds_of_copy Z' s (z := z) ?_
   have hEx' := DatCopy.copy_exAt Z' s hEx
   have hU' := DatCopy.copy_lUnif Z' s (hU w hw Z hX Wt z g1 g2 hEx g4)
   have hI' := DatCopy.copy_lIntegral Z' s (hI w hw Z hX Wt z g1 g2 hEx g4)

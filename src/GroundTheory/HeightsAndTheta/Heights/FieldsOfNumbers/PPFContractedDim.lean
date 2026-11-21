@@ -80,13 +80,15 @@ theorem coeff_killBlocks (T : Finset K) (q : MRing ι F) (d : (Σ k, ι k) →�
   classical
   induction q using MvPolynomial.induction_on' with
   | monomial d' c =>
-    rw [killBlocks_monomial, apply_ite (AddMonoidAlgebra.coeff · d), coeff_zero, coeff_monomial]
+    rw [killBlocks_monomial, apply_ite (AddMonoidAlgebra.coeff · d), AddMonoidAlgebra.coeff_zero, coeff_monomial]
     by_cases hd : d' = d
     · subst hd
       simp
     · simp [hd]
   | add p q hp hq =>
-    rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
+    simp only [map_add, AddMonoidAlgebra.coeff_add]
+    change AddMonoidAlgebra.coeff (killBlocks T p) d + AddMonoidAlgebra.coeff (killBlocks T q) d = _
+    rw [hp, hq]
     split_ifs <;> simp
 
 theorem weight_apply_eq_zero_iff (d : (Σ k, ι k) →₀ ℕ) (k : K) :
@@ -121,7 +123,8 @@ theorem killBlocks_of_isMultiHomog (T : Finset K) {p : MRing ι F} {b : K → �
         exact this v hv rfl
     by_cases hb : ∀ k ∈ T, b k = 0
     · rw [if_pos (key.mpr hb), if_pos hb]
-    · rw [if_neg (fun h => hb (key.mp h)), if_neg hb, coeff_zero]
+    · rw [if_neg (fun h => hb (key.mp h)), if_neg hb, AddMonoidAlgebra.coeff_zero]
+      rfl
 
 theorem killBlocks_mem_of_isMultiHomogIdeal {Q : Ideal (MRing ι F)} (hQ : IsMultiHomogIdeal Q)
     (T : Finset K) {q : MRing ι F} (hq : q ∈ Q) : killBlocks T q ∈ Q := by

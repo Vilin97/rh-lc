@@ -22,13 +22,15 @@ theorem translate_apply (a : GL (Fin N) k) (l : Levi k fun a => Fin (d a))
     (f : IndSp (stdBlocks d hd) ρ) (u : GL (Fin N) k) :
     (parInd (stdBlocks d hd) ρ a f).1.1 (pm k (wOpen d hd) * u) =
       (deltaHalf k (fun a => Fin (d a)) l : ℂ) • ρ l (f.1.1 (pm k (wOpen d hd) * (a⁻¹ * u * a))) := by
+  letI : DecidableEq (Fin h) := Classical.typeDecidableEq _
   have hx : pm k (wOpen d hd) * u * a =
       leviEmb k (stdBlocks d hd) l * (pm k (wOpen d hd) * (a⁻¹ * u * a)) := by
     rw [← hl]
     group
   have hm : leviEmb k (stdBlocks d hd) l ∈ parab k (stdBlocks d hd) :=
     mem_parab_iff.2 fun _ _ i j hab => by
-      simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+      simp [leviEmb]
+      exact Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne'
   have hp : leviProj k (stdBlocks d hd) ⟨leviEmb k (stdBlocks d hd) l, hm⟩ = l := by
     funext a
     ext i j
@@ -45,13 +47,15 @@ theorem translate_mem_openFns (a : GL (Fin N) k) (l : Levi k fun a => Fin (d a))
     (haB : ∀ u ∈ unipB k (Fin N), a * u * a⁻¹ ∈ unipB k (Fin N))
     {f : IndSp (stdBlocks d hd) ρ} (hf : f ∈ openFns d hd ρ) :
     parInd (stdBlocks d hd) ρ a f ∈ openFns d hd ρ := by
+  letI : DecidableEq (Fin h) := Classical.typeDecidableEq _
   have hf' : ∀ g : GL (Fin N) k, f.1.1 g ≠ 0 → g ∈ cell k d hd (wOpen d hd) := hf
   show ∀ g : GL (Fin N) k, (parInd (stdBlocks d hd) ρ a f).1.1 g ≠ 0 → g ∈ cell k d hd (wOpen d hd)
   intro g hg
   obtain ⟨p, hp, n, hn, hpn⟩ := hf' (g * a) hg
   have hm : leviEmb k (stdBlocks d hd) l ∈ parab k (stdBlocks d hd) :=
     mem_parab_iff.2 fun _ _ i j hab => by
-      simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+      simp [leviEmb]
+      exact Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne'
   refine ⟨p * (leviEmb k (stdBlocks d hd) l)⁻¹,
     (parab k _).mul_mem hp ((parab k _).inv_mem hm), a * n * a⁻¹, haB n hn, ?_⟩
   have hg' : g = p * pm k (wOpen d hd) * n * a⁻¹ := by

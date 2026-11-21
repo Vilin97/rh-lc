@@ -112,7 +112,7 @@ def InfDim : Prop :=
     (lam : Wt L l n) (d : ℕ) (e : (Fin d → ℂ) ≃ₗ[ℂ] ⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res))
     (ξ : GV n (fun v : V.frame.Vl => s.w v.1) →* GL (Fin d) ℂ), IsBasis ι e ξ → ∀ lam', WtLink V ι lam lam' → ∀ σ, IsAutRepU σ → (∀ v, HasWeightAt σ v.embedding (lam' v)) →
     ∀ (U : Subgroup (finU (E := L) (n := n))) (U' : Subgroup (Ga l L n × GL' n V)),
-    U' = U.map ((MonoidHom.prod (away l L n).rangeRestrict (Pi.monoidHom fun v : V.frame.Vl => cLoc (s.w v.1))).comp (finU (E := L) (n := n)).subtype) →
+    U' = U.map ((MonoidHom.prod (away l L n).rangeRestrict (MonoidHom.pi fun v : V.frame.Vl => cLoc (s.w v.1))).comp (finU (E := L) (n := n)).subtype) →
     Module.rank ℂ ↥(σ ⊓ GlobalTheory.PRep.fixed (GlobalTheory.BCT.RF L n) U) = Module.rank ℂ ↥((hset Q τ₀).X.AF ξ ⊓ Submodule.span ℂ {F | ∀ ℓ, toForm ι e F ℓ ∈ σ} ⊓
       fixd (rtr ℂ (Ga l L n × GL' n V) (Fin d → ℂ)) U') * d ∧ (d : ℂ) = GlobalTheory.BCT.dimW lam'
 
@@ -132,7 +132,9 @@ def YDim : Prop :=
     (∀ y : Emb l (fun v : V.frame.Vl => s.w v.1), HasWeightAt σ (ι.toRingHom.comp y.res) (lam y.res).dual) → ∀ (C : Comps V σ) (b : ℕ)
     (φ : ∀ v : V.frame.Vl, Fin n → Uo ((s.w v.1).adicCompletion L) → ℂ) (μ : V.frame.Vl → Fin n → ℂ),
     Module.rank ℂ ↥(YOf Q ι τ₀ e ξ σ ⊓ eigL (fun v : V.frame.Vl => s.w v.1) ((hset Q τ₀).X.rpF ℂ d m) b φ μ) =
-      Module.rank ℂ (eigL (fun v : V.frame.Vl => s.w v.1) C.repL b φ μ) * Module.rank ℂ (C.inv ι τ₀)
+      Module.rank ℂ (eigL (fun v : V.frame.Vl => s.w v.1) C.repL b φ μ) *
+        Module.rank ℂ (invT (KT n (wt s)) (Kc _ n 1)
+          ((Matrix.GeneralLinearGroup.map (ι.toRingHom.comp (algebraMap c.O (Qbar l)))).comp τ₀) C.repS)
 
 def WtEx : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (L Ω : Type) [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω]

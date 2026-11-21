@@ -419,7 +419,7 @@ theorem hasseRp_mem_span_Kp {T : Set (Rp X la N)} (hT : ∀ t ∈ T, Tay.IsCst (
     · exact Submodule.subset_span ht
     · exact zero_mem _
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx β) (hy β)
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem (hx β) (hy β)
   | smul k x _ hx =>
     rw [hasseRp_smul]
     exact Submodule.sum_mem _ fun q _ => Submodule.smul_mem _ _ (hx q.2)

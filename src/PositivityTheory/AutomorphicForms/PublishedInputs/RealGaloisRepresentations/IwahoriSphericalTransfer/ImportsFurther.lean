@@ -27,7 +27,8 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (η η' : HChar F), (∀
     obtain ⟨h1, h2, h3⟩ := hv'
     intro x
     refine GlobalTheory.FrobDense.eq_one_of_unif ((η * η'⁻¹).loc v) (fun y hy => ?_) x
-    rw [HChar.loc_mul, HChar.loc_inv, η.val_eq h1 y hy, η'.val_eq h2 y hy, h3, mul_inv_cancel]
+    change η.loc v y * (η'.loc v y)⁻¹ = 1
+    rw [η.val_eq h1 y hy, η'.val_eq h2 y hy, h3, mul_inv_cancel]
   exact mul_inv_eq_one.mp key
 
 end GlobalTheory.HeckeMultOne

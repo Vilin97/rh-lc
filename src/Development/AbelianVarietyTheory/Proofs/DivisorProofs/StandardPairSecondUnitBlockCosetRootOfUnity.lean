@@ -33,13 +33,15 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle Formalism.L2.DIV G
 
 variable {D : D7}
 
+local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
+
 theorem cpt_toEAf (Q : Pl D.host.E) (z : Formalism.L2.Theta.AE D) :
     cpt Q (toEAf D z) = GlobalTheory.LFun.finAdEquiv D.host.F D.host.E (finPart D z) Q := by
   have h : toAd D (toEAf D z) = GlobalTheory.LFun.finAdEquiv D.host.F D.host.E (finPart D z) := by
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a x => exact (toAd_spec D x a.2).trans ((mul_comm _ _).trans (GlobalTheory.LFun.toFinAd_tmul a.2 x).symm)
-    | add a b ha hb => simp only [RingHom.map_add (f := _), RingEquiv.map_add (f := _), ha, hb]
+    | add a b ha hb => simp only [RingHom.map_add, RingEquiv.map_add, ha, hb]
   exact congrArg (fun s : FiniteAdeleRing (𝓞 D.host.E) D.host.E => s Q) h
 
 theorem cpt_locIdele (Q w : Pl D.host.E) (y : (w.adicCompletion D.host.E)ˣ) :

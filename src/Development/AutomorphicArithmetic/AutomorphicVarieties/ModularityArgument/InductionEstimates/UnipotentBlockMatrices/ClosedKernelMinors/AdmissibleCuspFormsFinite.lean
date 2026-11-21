@@ -187,23 +187,24 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.adm :
   have : (U.subgroupOf (KG K 2)).FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
   obtain ⟨B, hB, hB'⟩ := admissible_induced_finite (U.subgroupOf (KG K 2)) (Subgroup.subgroupOfEquivOfLe hU).symm 𝒜
     (Subgroup.subgroupOfEquivOfLe hU).symm.surjective
-  obtain ⟨hcs, hI, hirr⟩ := UpperTheory.ConvolutionTheory.Dp.sumT K 2 μ τ ⟨hτ.le, hτ.closed, hτ.inv, hτ.ne, hτ.irr⟩
+  have hS : UpperTheory.ConvolutionTheory.C.IsSummand μ τ := ⟨hτ.le, hτ.closed, hτ.inv, hτ.ne, hτ.irr⟩
+  obtain ⟨hcs, hI, hirr⟩ := UpperTheory.ConvolutionTheory.Dp.sumT K 2 μ τ hS
   let π := CuspidalAutomorphicRepresentation.ofSummand _ hI hirr (summandCuspForms_ne_bot μ _ hI hirr)
   obtain ⟨W, hW, hW'⟩ := admissible_cusp_forms_finite π B
   let E : Submodule ℂ (G1 K 2 → ℂ) :=
     { carrier := {φ | Continuous φ ∧ (∃ v ∈ τ, Reps μ v φ) ∧ ∀ m, (fun u : U => φ (m * u)) ∈ 𝒜}
       zero_mem' := ⟨continuous_const, ⟨0, τ.zero_mem, by
-        filter_upwards [(quasiMeasurePreserving_mk (Gam K 2) μ).ae (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K 2) μ))]
+        filter_upwards [QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K 2) μ) (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K 2) μ))]
           with y e using e⟩, fun _ => 𝒜.zero_mem⟩
       add_mem' := by
         rintro a b ⟨h1, ⟨v, hv, h2⟩, h3⟩ ⟨h1', ⟨v', hv', h2'⟩, h3'⟩
         refine ⟨h1.add h1', ⟨v + v', τ.add_mem hv hv', ?_⟩, fun m => 𝒜.add_mem (h3 m) (h3' m)⟩
-        filter_upwards [(quasiMeasurePreserving_mk (Gam K 2) μ).ae (Lp.coeFn_add v v'), h2, h2'] with y e p q
+        filter_upwards [QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K 2) μ) (Lp.coeFn_add v v'), h2, h2'] with y e p q
         rw [e, Pi.add_apply, p, q, Pi.add_apply]
       smul_mem' := by
         rintro c a ⟨h1, ⟨v, hv, h2⟩, h3⟩
         refine ⟨h1.const_smul c, ⟨c • v, τ.smul_mem c hv, ?_⟩, fun m => 𝒜.smul_mem c (h3 m)⟩
-        filter_upwards [(quasiMeasurePreserving_mk (Gam K 2) μ).ae (Lp.coeFn_smul c v), h2] with y e p
+        filter_upwards [QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K 2) μ) (Lp.coeFn_smul c v), h2] with y e p
         rw [e, Pi.smul_apply, p, Pi.smul_apply] }
   have hsl : ∀ φ ∈ E, ∀ m : G1 K 2, (fun k : KG K 2 => φ (m * k)) ∈ B := fun φ hφ m => hB' _ fun k => by
     convert hφ.2.2 (m * k) using 2 with u

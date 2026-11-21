@@ -146,7 +146,7 @@ theorem exists_form_basis {L : Type} [Field L] (y : (Σ k, ι k) → Ω) (φ : L
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simpa using intCast_mem B a
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul, aeval_X]
       exact mul_mem hp (Algebra.subset_adjoin ⟨i, rfl⟩)
@@ -283,7 +283,7 @@ theorem gauge_ne_zero {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
     (Rd : Reading Fr h Z) (u : GlobalTheory.AllWt.Weight Dw) : gauge Rd u ≠ 0 :=
   mul_ne_zero (Units.ne_zero _) (Finset.prod_ne_zero_iff.2 fun r _ => zpow_ne_zero _ (Or.lines r).1)
 
-theorem exists_small_basis : Top.Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (h : GenFrEx Xo c), ∀ (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) [DecidableEq (CMType H)] (T : Top.RootTower (CMType H) (Dw.p + Dw.q)) (o : Top.GoodOrigin Y T) (B : ℕ) (b : T.Comp) (Fr : Small.GenFrame (o.toTowerOrigin.Or B b)) (Z : Comp Xo c) (Rd : Reading Fr h Z) (II : IntersectionSystem) (u : GlobalTheory.AllWt.Weight Dw) (g : ℝ), IsFullIntersectionSystem II → T.T1 II → Top.WeightHyp T.j (reW u) g → Top.bigB0 (reW u) g < B + 1 → ∃ (k₀ : ℕ) (R₀ : ℝ) (f : Fin (o.toTowerOrigin.Or B b).Fl.deg → (T.M B b).Ω), 8 ∣ k₀ ∧ 0 < R₀ ∧ (∀ i, f i ∈ modelSmall (o.toTowerOrigin.Or B b) (k₀ • u) R₀) ∧ (∀ a : Fin (o.toTowerOrigin.Or B b).Fl.deg → Om Z, ∑ i, Rd.φ (a i) * f i = 0 → a = 0) ∧ ∀ (v : GlobalTheory.AllWt.Weight Dw) (s : (T.M B b).Ω), (∀ i, trOf Rd v (s * f i) = 0) → s = 0 := by
+theorem exists_small_basis : GlobalTheory.CompanionTheory.Ar.Top.Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (h : GenFrEx Xo c), ∀ (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) [DecidableEq (CMType H)] (T : Top.RootTower (CMType H) (Dw.p + Dw.q)) (o : GlobalTheory.CompanionTheory.Ar.Top.GoodOrigin Y T) (B : ℕ) (b : T.Comp) (Fr : Small.GenFrame (o.toTowerOrigin.Or B b)) (Z : Comp Xo c) (Rd : Reading Fr h Z) (II : IntersectionSystem) (u : GlobalTheory.AllWt.Weight Dw) (g : ℝ), IsFullIntersectionSystem II → T.T1 II → Top.WeightHyp T.j (reW u) g → Top.bigB0 (reW u) g < B + 1 → ∃ (k₀ : ℕ) (R₀ : ℝ) (f : Fin (o.toTowerOrigin.Or B b).Fl.deg → (T.M B b).Ω), 8 ∣ k₀ ∧ 0 < R₀ ∧ (∀ i, f i ∈ modelSmall (o.toTowerOrigin.Or B b) (k₀ • u) R₀) ∧ (∀ a : Fin (o.toTowerOrigin.Or B b).Fl.deg → Om Z, ∑ i, Rd.φ (a i) * f i = 0 → a = 0) ∧ ∀ (v : GlobalTheory.AllWt.Weight Dw) (s : (T.M B b).Ω), (∀ i, trOf Rd v (s * f i) = 0) → s = 0 := by
   intro hG E _ _ _ H Dw l Xo c h Y _ T o B b Fr Z Rd II u g hII hT1 hW hB
   have hIn : PB.Inputs := hG.2.2.2.2.2.2.2.2.2.1
   have hStrict : ∀ τ, StrictAnti (u τ) := fun τ a b' hab => by

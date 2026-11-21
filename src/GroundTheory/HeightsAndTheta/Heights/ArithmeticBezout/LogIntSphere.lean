@@ -94,10 +94,10 @@ theorem measurable_groupNorm (h : HermNorm n) (i : Fin k) :
 theorem measurable_normT (h : HermNorm n) (T : Finset (Fin k)) : Measurable (normT h T) := by
   refine Measurable.of_eval fun ij => ?_
   by_cases hT : ij.1 ∈ T
-  · simp only [normT, hT, if_true]
+  · simp only [normT, hT, ite_true]
     exact (Complex.measurable_ofReal.comp (measurable_groupNorm h ij.1)).inv.mul
       (measurable_pi_apply _)
-  · simp only [normT, hT, if_false]
+  · simp only [normT, hT, ite_false]
     exact measurable_pi_apply _
 
 theorem scale_inGroup_apply_same (i : Fin k) (c : ℂ) (u : Fin k × Fin n → ℂ) (j : Fin n) :
@@ -143,14 +143,14 @@ theorem normT_mem_polydisc (h : HermNorm n) (C : ℝ) (hC0 : 0 ≤ C)
   simp only [polydisc, mem_univ_pi, Metric.mem_closedBall, dist_zero_right] at hu ⊢
   intro ij
   by_cases hT : ij.1 ∈ T
-  · simp only [normT, hT, if_true, norm_mul, norm_inv, Complex.norm_real, Real.norm_eq_abs,
+  · simp only [normT, hT, ite_true, norm_mul, norm_inv, Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (h.li_norm_nonneg _)]
     by_cases h0 : (h.norm fun j => u (ij.1, j)) = 0
     · rw [h0, _root_.inv_zero, zero_mul]; exact hC0
     · rw [inv_mul_le_iff₀ (lt_of_le_of_ne (h.li_norm_nonneg _) (Ne.symm h0))]
       have := hC (fun j => u (ij.1, j)) ij.2
       simpa [mul_comm] using this
-  · simp only [normT, hT, if_false]
+  · simp only [normT, hT, ite_false]
     exact hu ij
 
 theorem integrableOn_log_groupNorm (h : HermNorm n) (r : ℝ) (i : Fin k) :
@@ -297,8 +297,8 @@ theorem logNormT (h : HermNorm n) (C : ℝ) (hC0 : 0 ≤ C)
       have hg'0 : g' ≠ 0 := by
         intro h0
         have := congrArg (AddMonoidAlgebra.coeff · m0) h0
-        rw [hg', coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
-        exact mem_support_iff.mp hm0 this
+        rw [hg', coeff_weightedHomogeneousComponent, ite_eq_left rfl, AddMonoidAlgebra.coeff_zero] at this
+        exact mem_support_iff.mp hm0 (by simpa using this)
       obtain ⟨ih1, ih2⟩ := logNormT_insert_of_homog h C T i hi g' hg'0 d0
         (weightedHomogeneousComponent_isWeightedHomogeneous _ _) (ih g' hg'0).1 (ih g' hg'0).2
       obtain ⟨M, hM⟩ := (isCompact_polydisc (ι := Fin k × Fin n) C).exists_bound_of_continuousOn

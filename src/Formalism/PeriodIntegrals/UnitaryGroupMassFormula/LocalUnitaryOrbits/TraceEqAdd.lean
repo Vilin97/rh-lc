@@ -58,8 +58,7 @@ theorem trace_v (σ : E →ₐ[F] E) (hinv : ∀ y, σ (σ y) = y) (hnt : ∃ x,
     (hfin : Module.finrank F E = 2) (w : Fv F v ⊗[F] E) :
     algebraMap (Fv F v) (Fv F v ⊗[F] E) (Algebra.trace (Fv F v) (Fv F v ⊗[F] E) w) =
       w + sigR (Fv F v) σ w := by
-  induction w using TensorProduct.induction_on with
-  | zero => simp
+  induction w using TensorProduct.inductionOn with
   | tmul c e =>
     have e1 : c ⊗ₜ[F] e = c • inclR (F := F) (Fv F v) e := by
       simp [inclR, TensorProduct.smul_tmul']
@@ -75,8 +74,7 @@ theorem trace_v (σ : E →ₐ[F] E) (hinv : ∀ y, σ (σ y) = y) (hnt : ∃ x,
 
 theorem sigR_sigR (σ : E →ₐ[F] E) (hinv : ∀ y, σ (σ y) = y) (w : Fv F v ⊗[F] E) :
     sigR (Fv F v) σ (sigR (Fv F v) σ w) = w := by
-  induction w using TensorProduct.induction_on with
-  | zero => simp
+  induction w using TensorProduct.inductionOn with
   | tmul c e => simp [sigR, hinv]
   | add w1 w2 h1 h2 => rw [map_add (f := _), map_add (f := _), h1, h2]
 
@@ -123,7 +121,7 @@ theorem b_trace_mem {x : Fv F v ⊗[F] E} (hx : x ∈ OEv (E := E) v) :
     have hint : IsIntegral ℤ (Algebra.trace F E (a : E)) := Algebra.isIntegral_trace a.2
     exact HeightOneSpectrum.coe_algebraMap_mem (𝓞 F) F v ⟨_, hint⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x1 x2 _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add x1 x2 _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
   | smul c x _ h =>
     have e : c • x = (c : Fv F v) • x := rfl
     rw [e, map_smul, smul_eq_mul]

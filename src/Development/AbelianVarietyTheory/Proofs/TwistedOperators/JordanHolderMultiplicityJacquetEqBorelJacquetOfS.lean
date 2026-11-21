@@ -156,7 +156,5 @@ theorem jhMult_jac_eq_jacB (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
     simp [leviEmb, leviTorus, points, GeneralLinearGroup.coe_scalar, Matrix.scalar, diagonal_apply]
   rw [heq]
   congr 4
-  ext i j
-  simp [leviEmb, leviTorus, points, GeneralLinearGroup.coe_scalar, Matrix.scalar, diagonal_apply]
 
 end GlobalTheory.SmGL.EmptyBlocks

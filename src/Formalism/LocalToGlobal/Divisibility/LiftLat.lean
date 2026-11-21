@@ -163,12 +163,6 @@ def EtaUnits : Prop :=
     (B : BlockDat K G Pl0) (ℓ : Lvl K G) (Z : Submodule K B.S.Forms) (w : HeightOneSpectrum (𝓞 K)),
     B.etaU ℓ Z w * (Col.eW w : ℚ) = (B.etaW ℓ Z w : ℚ)
 
-def ExpWSpec : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (d : ℕ) (w : HeightOneSpectrum (𝓞 K))
-    (A B : Submodule (𝓞 K) (Fin d → K)), Submodule.IsLattice K A → Submodule.IsLattice K B →
-    (∀ a ∈ w.asIdeal ^ expW w A B, ∀ z ∈ A, a • z ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal B) ∧
-    ∀ J : ℕ, (∀ a ∈ w.asIdeal ^ J, ∀ z ∈ A, a • z ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal B) → expW w A B ≤ J
-
 structure BlockHyp {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Group G] [Fintype G]
     {Pl0 : Type} (B : BlockDat K G Pl0) (ℓ : Lvl K G) (v0 : InfinitePlace K) (s : ℕ) : Prop where
 

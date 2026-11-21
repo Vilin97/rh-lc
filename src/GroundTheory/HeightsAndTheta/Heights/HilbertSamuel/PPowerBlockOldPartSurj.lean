@@ -84,13 +84,13 @@ theorem homog_X [DecidableEq K] (p : Σ k, ι k) : IsMultiHomog (X p : MRing ι)
     rw [Pi.single_eq_same, Finset.sum_eq_single i]
     · simp
     · intro b _ hb
-      rw [Finsupp.single_apply, if_neg]
+      rw [Finsupp.single_apply, ite_eq_right]
       intro e
       exact hb (eq_of_heq (Sigma.mk.inj_iff.mp e).2).symm
     · simp
   · rw [Pi.single_eq_of_ne h]
     refine Finset.sum_eq_zero fun j _ => ?_
-    rw [Finsupp.single_apply, if_neg]
+    rw [Finsupp.single_apply, ite_eq_right]
     intro e
     exact h (congrArg Sigma.fst e).symm
 
@@ -370,12 +370,13 @@ theorem vanish_new {N : ℕ} (y : (Σ k, ι k) → Ω) (v : Fin N → Ω) (E : K
   let ψ : MRing ι →+* ℂ := (eval x).comp (MvPolynomial.map (Int.castRingHom ℂ))
   have hcoef : MvPolynomial.map ψ (Γ f) = 0 := by
     ext μ
-    rw [coeff_map, coeff_zero]
+    simp only [coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     have hm : AddMonoidAlgebra.coeff (Γ f) μ ∈ mCoordIdeal y := by
       show _ ∈ RingHom.ker (mConeMap y)
       rw [RingHom.mem_ker]
       have := congrArg (AddMonoidAlgebra.coeff · μ) hzero
-      rwa [coeff_map, coeff_zero] at this
+      simpa only [coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
+        AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom] using this
     exact hx.2 _ hm
 
   have hval : ((eval fun _ => (1 : ℂ)).comp ((MvPolynomial.map ψ).comp Γ.toRingHom)) =

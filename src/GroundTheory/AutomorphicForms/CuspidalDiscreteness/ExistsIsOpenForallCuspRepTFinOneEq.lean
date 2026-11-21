@@ -98,6 +98,7 @@ theorem toLp_integrated_archRepT {γ : archGroup K n → ℂ} (hγ : Continuous 
 
 
 set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem isContRep_integrated_archRepT {w : CuspL2 μ} {W : normOneGL (K := K) (n := n) → ℂ}
     (hW : IsContRep μ (toLp μ w) W) {C : ℝ} (hWb : ∀ y, ‖W y‖ ≤ C)
     {γ : archGroup K n → ℂ} (hγ : Continuous γ) (hγc : HasCompactSupport γ) :

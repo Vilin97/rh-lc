@@ -97,6 +97,26 @@ theorem isRegularLocalRing_quotient_map_etaleChartCoordIdeal (k : Type u) [Field
     (Ideal.map (Ideal.Quotient.mk (etaleChartCoordIdeal k m S J)) q)
     (A ⧸ Ideal.map (algebraMap S A) (etaleChartCoordIdeal k m S J))
 
+private noncomputable def coordinateBasis (k : Type u) [Field k] (m : ℕ)
+    (S : Type u) [CommRing S] [Algebra (CoordPolynomialRing k m) S]
+    [Algebra k S] [IsScalarTower k (CoordPolynomialRing k m) S]
+    [Algebra.Etale (CoordPolynomialRing k m) S] :
+    Module.Basis (ULift.{u} (Fin m)) S (KaehlerDifferential k S) :=
+  (Algebra.TensorProduct.basis S
+    (KaehlerDifferential.mvPolynomialBasis k (ULift.{u} (Fin m)))).map
+      (KaehlerDifferential.isBaseChange_of_formallyEtale k (CoordPolynomialRing k m) S).equiv
+
+private theorem coordinateBasis_apply (k : Type u) [Field k] (m : ℕ)
+    (S : Type u) [CommRing S] [Algebra (CoordPolynomialRing k m) S]
+    [Algebra k S] [IsScalarTower k (CoordPolynomialRing k m) S]
+    [Algebra.Etale (CoordPolynomialRing k m) S] (i : Fin m) :
+    coordinateBasis k m S (ULift.up i) =
+      KaehlerDifferential.D k S (etaleChartCoord k m S i) := by
+  simp only [coordinateBasis, Module.Basis.map_apply, Algebra.TensorProduct.basis_apply,
+    KaehlerDifferential.mvPolynomialBasis_apply, IsBaseChange.equiv_tmul, one_smul,
+    KaehlerDifferential.map_D]
+  rfl
+
 private theorem algebraMap_etaleChartCoord_notMem_maximalIdeal_sq_sup (k : Type u) [Field k] (m : ℕ) (S : Type u) [CommRing S]
     [Algebra (CoordPolynomialRing k m) S] [Algebra.Etale (CoordPolynomialRing k m) S]
     (q : Ideal S) [q.IsPrime] (A : Type u) [CommRing A] [Algebra S A]
@@ -111,17 +131,22 @@ private theorem algebraMap_etaleChartCoord_notMem_maximalIdeal_sq_sup (k : Type 
   let algebraKA : Algebra k A := ((algebraMap S A).comp (algebraMap k S)).toAlgebra
   have : IsScalarTower k S A := IsScalarTower.of_algebraMap_eq' rfl
   let D : Derivation k S S :=
-    EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) S (ULift.up.{u} j)
+    ((coordinateBasis k m S).coord (ULift.up.{u} j)).compDer (KaehlerDifferential.D k S)
   let DA : Derivation k A A := D.mapToLocalization q.primeCompl
   have hderivAlgebraMap : ∀ s : S, DA (algebraMap S A s) = algebraMap S A (D s) :=
     Derivation.mapToLocalization_algebraMap D q.primeCompl
   have hDx : D (etaleChartCoord k m S j) = 1 :=
-    EtaleCoordinates.partialDeriv_coord_self k (ULift.{u} (Fin m)) S (ULift.up.{u} j)
+    by
+      change (coordinateBasis k m S).repr (KaehlerDifferential.D k S
+        (etaleChartCoord k m S j)) (ULift.up j) = 1
+      rw [← coordinateBasis_apply k m S j, Module.Basis.repr_self, Finsupp.single_eq_same]
   have hDne : ∀ i : Fin m, i ≠ j → D (etaleChartCoord k m S i) = 0 := by
     intro i hne
     have hup : (ULift.up.{u} j) ≠ ULift.up.{u} i := fun h => hne (congrArg ULift.down h).symm
-    exact EtaleCoordinates.partialDeriv_coord_of_ne k (ULift.{u} (Fin m)) S
-      (ULift.up.{u} j) (ULift.up.{u} i) hup
+    change (coordinateBasis k m S).repr (KaehlerDifferential.D k S
+      (etaleChartCoord k m S i)) (ULift.up j) = 0
+    rw [← coordinateBasis_apply k m S i, Module.Basis.repr_self, Finsupp.single_apply]
+    simp [Ne.symm hup]
   have hmapeq : Ideal.map (algebraMap S A) (etaleChartCoordIdeal k m S J')
       = Ideal.span ((fun i : Fin m => algebraMap S A (etaleChartCoord k m S i)) ''
         (J' : Set (Fin m))) := by

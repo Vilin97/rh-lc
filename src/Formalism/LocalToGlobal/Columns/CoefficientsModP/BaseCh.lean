@@ -389,7 +389,7 @@ theorem bc_inv_bc {ι : Type} {n : ℕ} (B : ι → GL (Fin n) K) :
 variable {ι : Type} [Fintype ι] {n : ℕ}
 
 theorem bc_transLat (lam : ι → DomWeight n) (T : Submodule (𝓞 K) (Pol K ι n)) (T' : Submodule (𝓞 K') (Pol K' ι n))
-    (hT : bcPol j T = T') (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ))
+    (hT : bcPol j T = T') (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ))
     (hind : ∀ (w' : HeightOneSpectrum (𝓞 K')) (B B' : ι → GL (Fin n) K'),
       (∀ τ, IsBasisAt w' (bcLat j (M τ)) (B τ)) → (∀ τ, IsBasisAt w' (bcLat j (M τ)) (B' τ)) → ∀ F : Pol K' ι n,
       (actP lam B⁻¹ F ∈ Formalism.HermitianLatticesTheory.localization₂ w'.asIdeal T' ↔ actP lam B'⁻¹ F ∈ Formalism.HermitianLatticesTheory.localization₂ w'.asIdeal T'))
@@ -691,20 +691,20 @@ theorem bc_polOfVV_comap (lam : ι → DomWeight n) (N : Submodule (𝓞 K) (Pol
 theorem usage₁₁ (lam : ι → DomWeight n) (M : ι → Submodule (𝓞 K) (Fin n → K)) : delP lam M ≤ nabP lam M :=
   transLat_mono lam (delStd_le_nabStd K lam) M
 
-theorem bc_dualFr_lattice (h : DualFrLattice) (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsLattice K M) :
-    Submodule.IsLattice K (dualFr M) :=
+theorem bc_dualFr_lattice (h : DualFrLattice) (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsFullLattice K M) :
+    Submodule.IsFullLattice K (dualFr M) :=
   (@h K _ _ starRingOfComm n 1 M (by simp) hM).1
 
 variable {K' : Type} [Field K'] [NumberField K'] (j : K →+* K')
 
-theorem bc_bcLat_lattice (h : TauLatLattice) (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsLattice K M) :
-    Submodule.IsLattice K' (bcLat j M) := h K K' Unit n (fun _ => j) () M hM
+theorem bc_bcLat_lattice (h : TauLatLattice) (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsFullLattice K M) :
+    Submodule.IsFullLattice K' (bcLat j M) := h K K' Unit n (fun _ => j) () M hM
 
 theorem bc_at (hbc : NabDelBaseChange) (hle : NabLeVV) (htl : TauLatLattice) (lam : ι → DomWeight n)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) :
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) :
     polOfVV lam (nabK lam fun τ => bcLat j (M τ)) = bcPol j (polOfVV lam (nabK lam M)) ∧
     polOfVV lam (delK lam fun τ => bcLat j (M τ)) = bcPol j (polOfVV lam (delK lam M)) := by
-  have hM' : ∀ τ, Submodule.IsLattice K' (bcLat j (M τ)) := fun τ => bc_bcLat_lattice j htl (M τ) (hM τ)
+  have hM' : ∀ τ, Submodule.IsFullLattice K' (bcLat j (M τ)) := fun τ => bc_bcLat_lattice j htl (M τ) (hM τ)
   obtain ⟨h1, h2⟩ := hbc K K' j ι n lam M hM
   unfold nabK delK
   rw [bc_polOfVV_comap lam _ (hle K' ι n lam _ hM'), bc_polOfVV_comap lam _ (hle K ι n lam M hM),
@@ -717,7 +717,7 @@ end AtE
 theorem nabDelBaseChangeAt_of (hbc : NabDelBaseChange) (hle : NabLeVV) (htl : TauLatLattice) (hdl : DualFrLattice)
     (hdf : BaseChangeDualFr) : NabDelBaseChangeAt := by
   intro E K K' _ _ _ _ _ _ j ι _ n emb lam L hL
-  have hM : ∀ τ, Submodule.IsLattice K (tauLat emb τ L) := fun τ => htl E K ι n emb τ L hL
+  have hM : ∀ τ, Submodule.IsFullLattice K (tauLat emb τ L) := fun τ => htl E K ι n emb τ L hL
   have e1 : (fun τ => tauLat (fun τ => j.comp (emb τ)) τ L) = fun τ => bcLat j (tauLat emb τ L) :=
     funext fun τ => baseChangeTauLattice_holds E K K' j ι n emb τ L
   have e2 : (fun τ => dualFr (tauLat (fun τ => j.comp (emb τ)) τ L)) = fun τ => bcLat j (dualFr (tauLat emb τ L)) :=
@@ -731,7 +731,7 @@ theorem nabDelBaseChangeAt_of (hbc : NabDelBaseChange) (hle : NabLeVV) (htl : Ta
 theorem nabDelDescentAt_of (hd : NabDelDescent) (htl : TauLatLattice) (hdl : DualFrLattice)
     (hdf : BaseChangeDualFr) : NabDelDescentAt := by
   intro E K K' _ _ _ _ _ _ j ι _ n emb lam L hL x y hxy
-  have hM : ∀ τ, Submodule.IsLattice K (tauLat emb τ L) := fun τ => htl E K ι n emb τ L hL
+  have hM : ∀ τ, Submodule.IsFullLattice K (tauLat emb τ L) := fun τ => htl E K ι n emb τ L hL
   have e1 : (fun τ => tauLat (fun τ => j.comp (emb τ)) τ L) = fun τ => bcLat j (tauLat emb τ L) :=
     funext fun τ => baseChangeTauLattice_holds E K K' j ι n emb τ L
   have e2 : (fun τ => dualFr (tauLat (fun τ => j.comp (emb τ)) τ L)) = fun τ => bcLat j (dualFr (tauLat emb τ L)) :=

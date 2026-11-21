@@ -39,7 +39,9 @@ omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem absPow_uniq {χ χ' : HChar E} {s : ℝ} (h : χ.IsAbsPow s) (h' : χ'.IsAbsPow s) : χ = χ' := by
   rw [← mul_inv_eq_one]
   refine GlobalTheory.DiscSpec.Model.eq_one_of_isAbsPow ⟨fun v x hx => ?_, fun v => ?_, fun k => ?_⟩
-  · rw [HChar.loc_mul, HChar.loc_inv, h.1 v x hx, h'.1 v x hx, inv_one, mul_one]
+  · have loc_mul (a b : HChar E) : (a * b).loc v x = a.loc v x * b.loc v x := rfl
+    have loc_inv (a : HChar E) : (a⁻¹).loc v x = (a.loc v x)⁻¹ := rfl
+    rw [loc_mul, loc_inv, h.1 v x hx, h'.1 v x hx, inv_one, mul_one]
   · have : χ.val v = χ'.val v := Units.ext ((h.2.1 v).trans (h'.2.1 v).symm)
     rw [HChar.val_mul, HChar.val_inv, this, mul_inv_cancel]; simp
   · have : χ.inf k = χ'.inf k := Units.ext ((h.2.2 k).trans (h'.2.2 k).symm)

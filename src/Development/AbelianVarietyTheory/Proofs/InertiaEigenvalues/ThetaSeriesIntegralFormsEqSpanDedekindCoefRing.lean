@@ -298,7 +298,7 @@ theorem mtLat_eq_span : ∀ (D : D7) (S T : HSp D) (B : Base S T), B.Good → �
     have := law_mem_span (O := O) (Bridge.ratF S) (B.act.comp (GQ S).subtype) (B.levJ ψ) (B.levLam ψ) hlam
       (B.coefLat σ emb φ.range)
       (fun g => (HarmLattice.harmLat_fg_span D _ _ _ _ _ _ _ _ _ hB.wt (pq_le hB) hc
-        ((Formalism.UG.P.csGlob_lattice _ (Module.Finite.iff_fg.2 hB.frame.sdS.1.fg) (by letI := hfull S B.F.ΛS hB.frame.sdS; exact Submodule.IsFullLattice.span_eq_top) _).toIsLattice)).1)
+        (Formalism.UG.P.csGlob_lattice _ (Module.Finite.iff_fg.2 hB.frame.sdS.1.fg) (hfull S B.F.ΛS hB.frame.sdS).span_eq_top _)).1)
       (fun γ g k P hP => Base.act_mem_coefLat hB.frame hc γ g k (Base.mem_St_of_mem_levJ k.2) hP)
       (fun I F hF hi => GlobalTheory.T.linearIndependent_complex_of_subfield_coeffLattice D S T B hB K σ emb φ.range hc (Subfield.closure (φ.range : Set ℂ)) Subfield.subset_closure I F
         (fun a g => hF a g trivial) (indep_closure hi))

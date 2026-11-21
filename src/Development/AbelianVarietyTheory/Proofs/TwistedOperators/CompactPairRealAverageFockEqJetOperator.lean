@@ -94,6 +94,7 @@ private theorem lft_mem_VV {K : Type} [Group K] [TopologicalSpace K] {r : K → 
   rw [e]
   exact Submodule.smul_mem _ _ (Submodule.coe_mem _)
 
+omit [Fintype ι] in
 private theorem evalAt_smul' (y : ι → Matrix (Fin b) (Fin b) ℂ) (c : ℂ) (p : PY ι b) :
     evalAt y (c • p) = c * evalAt y p := by
   unfold evalAt
@@ -178,6 +179,7 @@ theorem avg_eq_jet (hab : a ≤ b) (ha : 0 < a) (lam : ι → DomWeight a) (lam'
   refine Finset.sum_congr rfl fun i _ => ?_
   ring
 
+omit [Fintype ι] in
 theorem substF_rename (g : ι → Matrix (Fin a) (Fin a) ℂ) (h : ι → Matrix (Fin b) (Fin b) ℂ) (P : FP ι a b) :
     GlobalTheory.CompactHowe.substF (fun τ => (g τ).transpose) h (rename (fun k : ι × Fin b × Fin a => (k.1, k.2.2, k.2.1)) P) =
       rename (fun k : ι × Fin b × Fin a => (k.1, k.2.2, k.2.1)) (mvZ g h P) := by
@@ -267,7 +269,7 @@ theorem grid_vals {i : ℕ} (hi : i + 1 ≤ D.R.m) (τ : D.what₂.Tau)
     intro j hj
     unfold parV
     rw [entries_shift, Finset.card_image_of_injective _ (add_left_injective _)]
-    exact (card_entries_parD D sc.cGap τ hj).trans (rank_grid G hj).symm
+    exact (GlobalTheory.FunObj.card_entries_parD D sc.cGap τ hj).trans (rank_grid G hj).symm
   have cardN : ∀ j, j ≤ D.R.m →
       ((entries (parV D sc.cGap j D.R.m τ)).image Neg.neg).card = (G.V (.grid j D.R.m)).rank := by
     intro j hj
@@ -276,7 +278,7 @@ theorem grid_vals {i : ℕ} (hi : i + 1 ≤ D.R.m) (τ : D.what₂.Tau)
       ((entries (parV D sc.cGap i D.R.m τ)).image Neg.neg).image (· + ((if Odd (i + D.R.m) then -(1 / 2) else 0) - (if Odd (i + 1 + D.R.m) then -(1 / 2) else 0))) ∪
         TPar.block (-(cen D sc.cGap τ (D.R.m - i) : ℚ) - (if Odd (i + 1 + D.R.m) then -(1 / 2) else 0)) (sLen D) := by
     unfold parV
-    rw [entries_shift, entries_shift, entries_parD_succ D sc.cGap τ hi]
+    rw [entries_shift, entries_shift, GlobalTheory.FunObj.entries_parD_succ D sc.cGap τ hi]
     exact neg_step _ _ _ _ _
   have hlt : ∀ x ∈ (entries (parV D sc.cGap i D.R.m τ)).image Neg.neg,
       ∀ y ∈ TPar.block (-(cen D sc.cGap τ (D.R.m - i) : ℚ) - (if Odd (i + 1 + D.R.m) then -(1 / 2) else 0)) (sLen D), y < x + ((if Odd (i + D.R.m) then -(1 / 2) else 0) - (if Odd (i + 1 + D.R.m) then -(1 / 2) else 0)) := by
@@ -289,7 +291,7 @@ theorem grid_vals {i : ℕ} (hi : i + 1 ≤ D.R.m) (τ : D.what₂.Tau)
       convert hy using 1
       ring
     rw [neg_sub_mem_block] at hy'
-    have hlt0 := parD_below D sc.cGap τ hi hp hy'
+    have hlt0 := GlobalTheory.FunObj.parD_below D sc.cGap τ hi hp hy'
     linarith
   exact step_vals hrb _ _ (cardN i hi0) hFe hlt (cardN (i + 1) hi) (wt G (.grid i D.R.m) τ) (wt G (.grid (i + 1) D.R.m) τ)
     (fun r => wt_grid_eq_highestWeight G τ hi0 (cardP i hi0) (cardN i hi0) r)
@@ -470,8 +472,8 @@ theorem real_average_jet : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts}
   intro D T L sc G W U S μ0 hL i hi a b ha hb e₁ e₂ he₁ he₂ Q Λ
   classical
   have hi1 : i + 1 ≤ D.R.m := hi
-  haveI : LocallyCompactSpace (GA D (G.V (.grid i D.R.m))) := (Formalism.IndefR.Eqv.ga_facts D _).2.2.1
-  haveI : LocallyCompactSpace (GinfC (G.V (.grid i D.R.m))) := (GlobalTheory.AdelicSplit.isClosed_GinfC' _).locallyCompactSpace
+  have : LocallyCompactSpace (GA D (G.V (.grid i D.R.m))) := (Formalism.IndefR.Eqv.ga_facts D _).2.2.1
+  have : LocallyCompactSpace (GinfC (G.V (.grid i D.R.m))) := (GlobalTheory.AdelicSplit.isClosed_GinfC' _).locallyCompactSpace
   have hr : OntoUni fun k : GinfC (G.V (.grid i D.R.m)) => inB W.θ (G.V (.grid i D.R.m)) (S.N.frC (.grid i D.R.m)) k.1 :=
     GlobalTheory.SeeSaw.ontoUni_inB D W.θ _ _ W.θ_is (fun τ => GlobalTheory.RealType.frC_on S.N (by exact ⟨hi.le, rfl⟩) τ)
   have hr' : OntoUni fun k : GinfC (G.V (.grid (i + 1) D.R.m)) => inB W.θ (G.V (.grid (i + 1) D.R.m)) (S.N.frC (.grid (i + 1) D.R.m)) k.1 :=

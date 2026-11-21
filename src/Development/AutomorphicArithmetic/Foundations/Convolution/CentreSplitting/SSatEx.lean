@@ -22,7 +22,8 @@ open UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.Dp UpperTheor
 theorem UpperTheory.ConvolutionTheory.Dp.sSatEx :
     UpperTheory.ConvolutionTheory.Dp.SSatEx := by
   intro E _ _ _ n μ _ V hV w hne
-  obtain ⟨π, h, -⟩ := exCusp E n μ V hV
+  have hex : ∃! π : CuspSub E n, Carries μ π V := exCusp E n μ V hV
+  obtain ⟨π, h, -⟩ := hex
   obtain ⟨J, hi, hd, -, hJ'⟩ := UpperTheory.ConvolutionTheory.Dp.locEmb E n μ π V h
   have hρ : ∀ g v, ‖locOn h.summand w g v‖ = ‖v‖ := fun g v => by
     change ‖RG μ (finGL E n (locGL E n w g)) (v : LL μ)‖ = ‖(v : LL μ)‖

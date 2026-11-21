@@ -53,7 +53,7 @@ private theorem isSatake_of_eig {K : Type} [Field K] [NumberField K] {n : ℕ} (
   intro h u hu'
   have h1 : h ∈ Spherical.eigenSubalgebra (localHaar n w) z (fun g => l (ρ g y)) hf := htop ▸ Algebra.mem_top
   have h2 := h1 1
-  simp only [one_mul, map_one, Module.End.one_apply] at h2
+  simp only [one_mul, map_one, one_apply_eq_self] at h2
   have h3 := dual_heckeAct (localHaar n w) (ρ := ρ) (h : HeckeAlgebra (localHaar n w)).mem (hs y) l
   rw [h2, hz' h y hy, map_smul, smul_eq_mul] at h3
   rw [hz' h u hu', mul_right_cancel₀ hl h3]

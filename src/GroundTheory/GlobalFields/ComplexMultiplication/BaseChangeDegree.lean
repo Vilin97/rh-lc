@@ -48,13 +48,13 @@ theorem two_genY_add_ne_zero [E.IsElliptic] :
     ring
   obtain ⟨h1, h2⟩ := WeierstrassCurve.Affine.CoordinateRing.smul_basis_eq_zero key
   have h2F : (2 : F) = 0 := by
-    have := congrArg (coeff · 0) h2
+    have := congrArg (AddMonoidAlgebra.coeff · 0) h2
     simpa using this
   have ha₁ : E.a₁ = 0 := by
-    have := congrArg (coeff · 1) h1
+    have := congrArg (AddMonoidAlgebra.coeff · 1) h1
     simpa using this
   have ha₃ : E.a₃ = 0 := by
-    have := congrArg (coeff · 0) h1
+    have := congrArg (AddMonoidAlgebra.coeff · 0) h1
     simpa using this
   have hΔ : E.Δ = 0 := by
     simp only [WeierstrassCurve.Δ, WeierstrassCurve.b₂, WeierstrassCurve.b₄, WeierstrassCurve.b₆,

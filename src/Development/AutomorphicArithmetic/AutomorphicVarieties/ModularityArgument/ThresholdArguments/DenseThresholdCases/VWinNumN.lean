@@ -1,11 +1,11 @@
 module
 
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.DiscreteSeriesCoefficientsCuspidal
-public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AdmissibleResidues.WinNumN
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CongNum
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.AutomorphicFormHyp
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.AutQN
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.AfStmt
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.FrobeniusTraceCountBoundOfCmEigensystemCount
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AdmissibleResidues.SumThree
 
 @[expose] public section
 
@@ -25,8 +25,7 @@ open GlobalTheory.GalOfCusp UpperTheory.V.CongNum
 section
 private theorem normV_rat {p : ℕ} (hp : p.Prime) (w : HeightOneSpectrum (𝓞 ℚ)) (hw : (p : 𝓞 ℚ) ∈ w.asIdeal) :
     normV w = p := by
-  have h : normV w = Ideal.absNorm w.asIdeal := by
-    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]; rfl
+  have h : normV w = Ideal.absNorm w.asIdeal := (Ideal.absNorm_eq_natCard w.asIdeal).symm
   have hN : Ideal.absNorm (Ideal.span {((p : ℕ) : 𝓞 ℚ)}) = p := by
     rw [Ideal.absNorm_span_natCast, NumberField.RingOfIntegers.rank]
     simp

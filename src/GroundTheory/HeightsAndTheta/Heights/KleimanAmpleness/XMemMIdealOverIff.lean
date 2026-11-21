@@ -58,10 +58,11 @@ theorem mIdealOver_genPtOf (W : Ideal (NumbersDVR.MRing ι k)) [W.IsPrime] (hh :
     rw [← sum_weightedHomogeneousComponent (NumbersDVR.blockWeight ι) f,
       finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f)]
     refine Ideal.sum_mem _ fun b _ => (hz _).mp ?_
-    rw [← coeff_mConeMapOver, h, coeff_zero]
+    rw [← coeff_mConeMapOver, h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   · intro hf
     ext e
-    rw [coeff_zero, ← Finsupp.equivFunOnFinite_symm_coe e, coeff_mConeMapOver]
+    rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
+      ← Finsupp.equivFunOnFinite_symm_coe e, coeff_mConeMapOver]
     exact (hz _).mpr (hh f hf _)
 
 end Generic

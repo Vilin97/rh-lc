@@ -273,7 +273,7 @@ theorem box_relIndex_ne_zero {c : K} (hc : c ≠ 0) :
   have hid : ∀ c : K, box (i := i) c =
       idealLattice (fun _ : Fin i => FractionalIdeal.spanSingleton (𝓞 K)⁰ c) := fun c => by
     simp only [box, idealLattice, FractionalIdeal.coe_spanSingleton]
-  have lat : ∀ c : K, c ≠ 0 → Submodule.IsLattice ℚ ((box (i := i) c).restrictScalars ℤ) := by
+  have lat : ∀ c : K, c ≠ 0 → Submodule.IsFullLattice ℚ ((box (i := i) c).restrictScalars ℤ) := by
     intro c hc
     obtain ⟨hfg, hspan⟩ := LinesIdealLatticeFG.proof K i (fun _ => FractionalIdeal.spanSingleton (𝓞 K)⁰ c)
       (fun _ => by rw [Ne, FractionalIdeal.spanSingleton_eq_zero_iff]; exact hc)

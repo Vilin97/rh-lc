@@ -83,7 +83,7 @@ private theorem form_core {F : Type} [Field F] [NumberField F] [IsCMField F] {n 
     intro u w
     conv_lhs => rw [sum_single u, sum_single w]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, AddMonoidHom.finset_sum_apply, dotProduct, Matrix.mulVec, Finset.mul_sum, hterm]
+      simp only [map_sum, AddMonoidHom.finsetSum_apply, dotProduct, Matrix.mulVec, Finset.mul_sum, hterm]
   refine ⟨A, ?_, ?_, hform⟩
   · intro hdet
     obtain ⟨v, hv, hAv⟩ := Matrix.exists_mulVec_eq_zero_iff.2 hdet

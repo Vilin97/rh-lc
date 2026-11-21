@@ -47,18 +47,16 @@ theorem nondeg (h : V →ₗ⋆[K] V →ₗ[K] K) (hp : PD h) : h.Nondegenerate 
 
 omit [StarRing K] in
 theorem span_isLattice (h1 : Module.finrank K V = 1) {x : V} (hx : x ≠ 0) :
-    Submodule.IsFullLattice K (Submodule.span (𝓞 K) {x}) := by
-  have : FiniteDimensional K V := Module.finite_of_finrank_eq_succ h1
-  letI : Submodule.IsLattice K (Submodule.span (𝓞 K) {x}) :=
-    Submodule.IsLattice.of_fg K (Submodule.fg_span_singleton x)
-  refine ⟨?_⟩
-  rw [Submodule.span_span_of_tower]
-  exact (finrank_eq_one_iff_of_nonzero x hx).mp h1
+    Submodule.IsFullLattice K (Submodule.span (𝓞 K) {x}) where
+  toIsLattice := Submodule.IsLattice.of_fg K (Submodule.fg_span_singleton x)
+  span_eq_top := by
+    rw [Submodule.span_span_of_tower]
+    exact (finrank_eq_one_iff_of_ne_zero x hx).mp h1
 
 private theorem apply_self_ne_zero_and_span_of_finrank_one [FiniteDimensional K V] (h : V →ₗ⋆[K] V →ₗ[K] K)
     (hn : h.Nondegenerate) (h1 : Module.finrank K V = 1) {m : V} (hm : m ≠ 0) :
     h m m ≠ 0 ∧ ∀ y : V, ∃ c : K, c • m = y := by
-  have hsp : Submodule.span K {m} = ⊤ := (finrank_eq_one_iff_of_nonzero m hm).mp h1
+  have hsp : Submodule.span K {m} = ⊤ := (finrank_eq_one_iff_of_ne_zero m hm).mp h1
   have hy : ∀ y : V, ∃ c : K, c • m = y := fun y =>
     Submodule.mem_span_singleton.mp (hsp ▸ Submodule.mem_top)
   refine ⟨fun h0 => hm (hn.1 m fun y => ?_), hy⟩

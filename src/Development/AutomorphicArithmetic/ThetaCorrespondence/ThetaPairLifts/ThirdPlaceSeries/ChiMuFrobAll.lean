@@ -40,7 +40,8 @@ theorem chiMu_frob_all_alt : ∀ (hArt : GlobalTheory.Published.GlobalArtinRecip
     rw [GlobalTheory.GalChar.block_loc (cf.isEta.unr v) hx]
     have h1 := hv x hx
     have h2 := cf.isEta.unr v x hx
-    rw [HChar.loc_mul, HChar.loc_inv, h2, inv_one, mul_one] at h1
+    change (tp.tup (X.nd.mu i) j).loc v x * (cf.eta.loc v x)⁻¹ = 1 at h1
+    rw [h2, inv_one, mul_one] at h1
     exact h1
   have hval : ∀ v, ((X.nd.l i : ℕ) : 𝓞 D.host.E) ∉ v.asIdeal → (tp.tup (X.nd.mu i) j * cf.eta⁻¹).UnrAt v →
       ∀ (A' : ValuationSubring X.nd.Om) (τ : G D.host.E X.nd.Om), IsPlaceOver A' v → IsFrob (F := D.host.E) A' (normV v) τ →

@@ -174,7 +174,7 @@ theorem rf_hform_one (x y : Sp X.E n) : Formalism.UG.hform (starRingEnd X.E) (1 
   · intro h
     exact absurd (Finset.mem_univ i) h
 
-theorem rf_hdualFr_tauLat (hX : X.Ok) {N : Submodule (𝓞 X.E) (Sp X.E n)} (hl : Submodule.IsLattice X.E N)
+theorem rf_hdualFr_tauLat (hX : X.Ok) {N : Submodule (𝓞 X.E) (Sp X.E n)} (hl : Submodule.IsFullLattice X.E N)
     (hu : IsUnimodular (hStd X.E n) N) (τ : X.Tau) :
     hdualFr (1 : Matrix (Fin n) (Fin n) X.K) (tauLat X.emb τ N) = tauLat X.emb τ N := by
   have h := tauLatDual X.E X.K X.Tau n X.emb (starRingEnd X.E) τ (fun x => (hX.emb_star τ x).symm) 1 N N
@@ -187,13 +187,13 @@ theorem rf_hdualFr_tauLat (hX : X.Ok) {N : Submodule (𝓞 X.E) (Sp X.E n)} (hl 
   rw [rf_gramK_one] at h
   exact h
 
-theorem squarePk_dualP (hX : X.Ok) (hl : ∀ d, Submodule.IsLattice X.E (L d))
+theorem squarePk_dualP (hX : X.Ok) (hl : ∀ d, Submodule.IsFullLattice X.E (L d))
     (hu : ∀ d, IsUnimodular (hStd X.E n) (L d)) : (squarePk X lam L).DualP := by
   refine { symm := ?_, nondeg := ?_, nab_lat := ?_, del_le := squarePk_del_le X lam L, dual := ?_ }
   · exact pairSymm X.K X.Tau n lam _ fun τ => by rw [rf_gramK_one, Matrix.conjTranspose_one]
   · exact pairNondeg X.K X.Tau n lam _ fun τ => by rw [rf_gramK_one, Matrix.det_one]; exact isUnit_one
   · intro d
-    exact (nabDelLattice X.K X.Tau n lam _ fun τ => tauLatLattice X.E X.K X.Tau n X.emb τ _ (hl d)).1
+    exact (nabDelLattice X.K X.Tau n lam _ fun τ => tauLatLattice X.E X.K X.Tau n X.emb τ _ (hl d)).1.toIsLattice
   · intro d
     have h := (nabDelDual X.K X.Tau n lam (gramK X.emb 1) (fun τ => tauLat X.emb τ (L d))
       (fun τ => by rw [rf_gramK_one, Matrix.conjTranspose_one])
@@ -206,7 +206,7 @@ theorem squarePk_dualP (hX : X.Ok) (hl : ∀ d, Submodule.IsLattice X.E (L d))
     funext τ
     rw [rf_gramK_one, rf_hdualFr_tauLat hX (hl d) (hu d)]
 
-theorem roundPk_dualP (hX : X.Ok) (hl : ∀ d, Submodule.IsLattice X.E (L d))
+theorem roundPk_dualP (hX : X.Ok) (hl : ∀ d, Submodule.IsFullLattice X.E (L d))
     (hu : ∀ d, IsUnimodular (hStd X.E n) (L d)) : (roundPk X lam L).DualP := by
   refine { symm := ?_, nondeg := ?_, nab_lat := ?_, del_le := roundPk_del_le X lam L, dual := ?_ }
   · exact pairSymm X.K X.Tau n lam _ fun τ => by rw [rf_gramKd_one, Matrix.conjTranspose_one]
@@ -214,9 +214,9 @@ theorem roundPk_dualP (hX : X.Ok) (hl : ∀ d, Submodule.IsLattice X.E (L d))
   · intro d
     exact (nabDelLattice X.K X.Tau n lam _ fun τ =>
       (dualFrLattice X.K n 1 _ (by rw [Matrix.det_one]; exact isUnit_one)
-        (tauLatLattice X.E X.K X.Tau n X.emb τ _ (hl d))).1).1
+        (tauLatLattice X.E X.K X.Tau n X.emb τ _ (hl d))).1).1.toIsLattice
   · intro d
-    have hlat : ∀ τ, Submodule.IsLattice X.K (dualFr (tauLat X.emb τ (L d))) := fun τ =>
+    have hlat : ∀ τ, Submodule.IsFullLattice X.K (dualFr (tauLat X.emb τ (L d))) := fun τ =>
       (dualFrLattice X.K n 1 _ (by rw [Matrix.det_one]; exact isUnit_one)
         (tauLatLattice X.E X.K X.Tau n X.emb τ _ (hl d))).1
     have h := (nabDelDual X.K X.Tau n lam (gramKd X.emb 1) (fun τ => dualFr (tauLat X.emb τ (L d)))
@@ -246,10 +246,10 @@ theorem mtVal_ratP (hX : X.Ok) (j : ℕ) (SG : Finset (HeightOneSpectrum (𝓞 X
   roundPk_ratP _ _ hX
 
 theorem rowVal_dualP (hX : X.Ok) (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : (rowVal W SG).DualP :=
-  squarePk_dualP _ _ hX (fun d => d.2.lat) fun d => d.2.uni
+  squarePk_dualP _ _ hX (fun d => d.full_lattice) fun d => d.2.uni
 
 theorem mtVal_dualP (hX : X.Ok) (j : ℕ) (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : (mtVal W j SG).DualP :=
-  roundPk_dualP _ _ hX (fun d => d.2.lat) fun d => d.2.uni
+  roundPk_dualP _ _ hX (fun d => d.full_lattice) fun d => d.2.uni
 
 theorem mtilde_good (hX : X.Ok) (P : LevFam X.E X.K R.r Pr.vGs) : (mtildeGSD W Ch sel mu P).Good 1 := by
   have hEqv : (rowVal W (rowSG Pr sel mu)).Eqv :=

@@ -93,11 +93,11 @@ theorem exists_exact_lift (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     (h𝔭 : 𝔭.IsMaximal) {x₀ : V} (h1 : h x₀ x₀ = 1) {k : ℕ} (hk : 1 ≤ k) {y : V} (hy : y ∈ L)
     (hyy : CongrP 𝔭 k (h y y) 1) :
     ∃ z ∈ locF 𝔭 L, h z z = 1 ∧ z - y ∈ (extP K 𝔭 ^ k • locF 𝔭 L : Submodule (𝓞 K) V) := by
-  have : 𝔭.IsPrime := h𝔭.isPrime
   have hcongr (j : ℕ) (b : 𝓞 F) :
       CongrP 𝔭 j (algebraMap (𝓞 K) K (ι b)) 1 ↔ b - 1 ∈ 𝔭 ^ j := by
-    rw [← map_one (algebraMap (𝓞 K) K), integralBasisSpans.congrP_int h𝔭, Ideal.Quotient.eq,
-      ← map_one (algebraMap (𝓞 F) (𝓞 K)), ← map_sub, idealPowerSpanBounds.mem_pow_iff]
+    have h := integralBasisSpans.congrP_int h𝔭 j (ι b) (ι 1)
+    rw [Ideal.Quotient.eq, ← map_sub, idealPowerSpanBounds.mem_pow_iff] at h
+    simpa only [map_one] using h
   obtain ⟨a, ha⟩ := exists_norm_int hF hs hLi hy
   rw [ha] at hyy
   have ha1 := (hcongr k a).1 hyy

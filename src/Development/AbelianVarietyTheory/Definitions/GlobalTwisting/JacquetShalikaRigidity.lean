@@ -24,7 +24,7 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomolog
 
 namespace GlobalTheory.Fc.S0
 
-structure Hypotheses1 : Prop extends ArithmeticGeometryHyps where
+structure Hypotheses1 : Prop extends toArithmeticGeometryHyps : ArithmeticGeometryHyps where
   hilbertClassFieldJ : GlobalTheory.Published.HilbertClassFieldJ
   siegelWeilUnitarySchrodinger : GlobalTheory.Published.SiegelWeilUnitarySchrodinger
   localTateDualityK : Formalism.GaloisCohomology.LocalTateDualityK

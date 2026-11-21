@@ -135,8 +135,12 @@ theorem exists_equiv_places {D : D7} {B : WeightFamilies.Prov D} {P : ModuliInte
     rw [IsLocalRing.ResidueField.map_residue, eq_comm, ← sub_eq_zero, ← map_sub,
       IsLocalRing.residue_eq_zero_iff]
     exact ha
-  choose χ hχs hχk hχψ using fun c => GlobalTheory.T.componentRing_away_genericSection_quotient D B P j X la N wL w (Ω c) (gF c) d.D d.N hD' eN (d.jc c) (d.x c)
+  let hχ := fun c => GlobalTheory.T.componentRing_away_genericSection_quotient D B P j X la N wL w (Ω c) (gF c) d.D d.N hD' eN (d.jc c) (d.x c)
     (fun p => IsFractionRing.lift_algebraMap (g := (d.sH c).toRingHom) (hs c) p) hφK hφT (h0 c) (hx c)
+  let χ := fun c => Classical.choose (hχ c)
+  have hχs := fun c => (Classical.choose_spec (hχ c)).1
+  have hχk := fun c => (Classical.choose_spec (hχ c)).2.1
+  have hχψ := fun c => (Classical.choose_spec (hχ c)).2.2
   obtain ⟨Ψ, hΨ, hΨs, hΨi, hΨsep⟩ := exists_quot_maps (Jid X la w) (fun c => phiZ X la N (Ω c) (gF c) w)
     (CurveInj.fraction_zero_injective X la N Ω gF w hinj)
     (fun Q hQ _ c c' => CurveLoc.one_of_split X la N w Ω gF hsplit Q hQ c c')

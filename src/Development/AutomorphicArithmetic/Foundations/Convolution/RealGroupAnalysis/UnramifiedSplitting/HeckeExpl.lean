@@ -33,7 +33,7 @@ private theorem coset_sum {K : Type} [Field K] [NumberField K] (v : P K) (n : �
   have hKp : (μ.real (integralGL (Kv v) n : Set (GL (Fin n) (Kv v))) : ℂ) ≠ 0 :=
     Complex.ofReal_ne_zero.2
       (measureReal_compactOpen_pos μ (isCompact_integralGL _ n) (isOpen_integralGL _ n)).ne'
-  have h1 := integral_minusculeHecke_mul (μ := μ) hf g r
+  have h1 := integral_minusculeHecke_mul (F := Kv v) (n := n) (μ := μ) hf g r
   have hcs : HasCompactSupport fun x => (minusculeHecke μ r : HeckeAlgebra μ) x * W (g * x) := by
     refine HasCompactSupport.intro (isCompact_minusculeSet r) fun x hx => ?_
     simp only [minusculeHecke_apply, Set.indicator_of_notMem hx, zero_mul]
@@ -44,10 +44,12 @@ private theorem coset_sum {K : Type} [Field K] [NumberField K] (v : P K) (n : �
         GlobalTheory.LFun.satEig (Formalism.UG.qV K v) n B r * W g := by
     rw [hK, ← UpperTheory.V.Af.Smo.tjSet UpperTheory.V.Af.Smo.sphDict K n v r hr]
     exact hE.eig _ hu r hr g
-  rw [Complex.real_smul] at h2
-  refine mul_left_cancel₀ hKp ?_
-  rw [← h1, h2, ← h3]
-  rfl
+  refine mul_left_cancel₀ hKp (h1.symm.trans (h2.trans ?_))
+  change μ.real (integralGL (Kv v) n : Set _) •
+    (∑ᶠ c : GL (Fin n) (Kv v) ⧸ integralGL (Kv v) n,
+      (minusculeHecke μ r : HeckeAlgebra μ) c.out * W (g * c.out)) = _
+  rw [Complex.real_smul]
+  simp only [minusculeHecke_apply, h3]
 
 end Cosets
 

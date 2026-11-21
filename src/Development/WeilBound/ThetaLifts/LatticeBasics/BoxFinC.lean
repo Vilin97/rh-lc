@@ -74,7 +74,7 @@ theorem D_kfin (hψ : IsStd B.ψ) (hs : IsSplitting (adeleClass F) B.ψ dd (actB
       obtain ⟨v, hv, x, hx, rfl⟩ := hz
       exact Submodule.subset_span ⟨_, at_actB k hv, _, h2 k hk x hx, om_D hψ hs k hv (h0 hx)⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add _ _ _ _ i j => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem i j
+    | add _ _ _ _ i j => rw [map_add (f := _)]; exact add_mem i j
     | smul c _ _ i => rw [map_smul]; exact Submodule.smul_mem _ _ i
 
 abbrev th2 (Y : Spc F E n) (w : InfinitePlace F) := Matrix.fromBlocks (Y.θ w) 0 0 (-Y.θ w)

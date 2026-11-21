@@ -19,6 +19,9 @@ open Formalism.HermitianLattices.Ext.L3 Formalism.HermitianLattices.Ext.L3.U0 Fo
 
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+local notation "κ" => algebraMap (𝓞 K) K
+
 theorem exists_F_mul_int (hF : IsFixF K F) (z : K) :
     ∃ s : 𝓞 F, s ≠ 0 ∧ ∃ r : 𝓞 K, κ (ι s) * z = κ r := by
   obtain ⟨a, m, hm, rfl⟩ := IsFractionRing.div_surjective (A := 𝓞 K) z
@@ -112,7 +115,7 @@ theorem exactAt_locRing (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF
   intro J _ _ b e i₀ ho hu hmin ξ hξ hξu
   have hPp := hP.isPrime
   set 𝔭 := P.comap ι with h𝔭def
-  have h𝔭 : 𝔭.IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+  have h𝔭 : 𝔭.IsMaximal := Ideal.isMaximal_under_of_isIntegral_of_isMaximal P
   have hp : 𝔭.IsPrime := h𝔭.isPrime
   have hπS : ∀ m : ℕ, π ^ m ∈ locRing P := fun m => (locRing P).pow_mem hπ.mem m
   have hnormS : ∀ (v : V) (m : ℕ), IsUnitIn (locRing P) (h v v * (π ^ m)⁻¹) →

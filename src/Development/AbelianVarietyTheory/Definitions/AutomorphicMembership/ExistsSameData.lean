@@ -689,7 +689,7 @@ structure Rest (D : D7) where
   T_ne_pde : ∀ u, (mem u).A.T ≠ D.host.pde ∧ (mem u).A.T ≠ D.host.pde'
   Dstar_eq : ∀ u, (mem u).A.Dstar = (overRows D.what₂ rowsR).Dstar
   clsLat : letI := D.host.cmStar; ∀ u i, (mem u).C.cls i → Submodule (𝓞 D.host.E) (D.sp.X i).V
-  clsLat_lat : letI := D.host.cmStar; ∀ u i c, Submodule.IsLattice D.host.E (clsLat u i c)
+  clsLat_lat : letI := D.host.cmStar; ∀ u i c, Submodule.IsFullLattice D.host.E (clsLat u i c)
   eMu : ∀ u, (overRows D.what₂ rowsR).Mu u ≃ₗ[ℂ] (mem u).A.Mram
   eMt : ∀ u, (mem u).P.Mt ≃ₗ[ℂ] (overRows D.what₂ rowsR).Amb (overRows D.what₂ rowsR).mu0
   perCol_base_eq_PtilCol : ∀ u (φ : (overRows D.what₂ rowsR).Mu u) (F : (overRows D.what₂ rowsR).Amb (overRows D.what₂ rowsR).mu0),

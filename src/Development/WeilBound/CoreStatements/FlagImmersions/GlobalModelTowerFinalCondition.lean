@@ -1,5 +1,7 @@
 module
 
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.GoodOrigin
+public import Development.AutomorphicSpectrum.Statements.GeometryStatements.NearRecordOfValue
 public import Development.WeilBound.CoreStatements.FlagImmersions.RootFlatOnHodgeOf
 public import Development.WeilBound.CoreStatements.FlagImmersions.CptEx
 public import Development.WeilBound.CoreStatements.FlagImmersions.HostRd

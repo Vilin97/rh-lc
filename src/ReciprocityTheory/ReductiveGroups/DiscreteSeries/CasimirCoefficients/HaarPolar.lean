@@ -151,14 +151,22 @@ theorem haar_polar_le (ε : Fin n → Bool) (hq : 1 ≤ q0 ε) (ν : Measure (UJ
   refine ⟨c * (muK ε Set.univ)⁻¹ * c',
     ENNReal.mul_ne_top (ENNReal.mul_ne_top ENNReal.coe_ne_top (ENNReal.inv_ne_top.2 hK)) hc', ?_⟩
   intro f hf
-  set F : (Fin n → Fin n → ℂ) → ℝ≥0∞ := fun m => f (toUJ ε m) with hFdef
-  have hFm : Measurable F := measurable_comp_toUJ ε hf
-  have hFg : ∀ g : UJ ε, F (toM g) = f g := fun g => by simp only [hFdef, toUJ_toM]
+  let F : (Fin n → Fin n → ℂ) → ℝ≥0∞ := fun m => f (toUJ ε m)
+  let G : KG ε × (PCoord ε → ℂ) → ℝ≥0∞ := f ∘ fdphPhi ε
+  have hφ : Measurable (fdphPhi ε) := (fdph_phi_continuous ε).measurable
+  have hG : Measurable G := hf.comp hφ
+  have hG_eq (kz : KG ε × (PCoord ε → ℂ)) : G kz = F (polarM kz) := by
+    change f (fdphPhi ε kz) = f (toUJ ε (polarM kz))
+    rw [← fdph_toM_phi ε kz, toUJ_toM]
+  have hmap : muPolar ε = Measure.map (fdphPhi ε) ((dk ε).prod (fdphNu ε)) := by
+    ext S hS
+    rw [Measure.map_apply hφ hS]
+    exact fdph_apply ε hS
   have hJm : Measurable (fun z : PCoord ε → ℂ => ENNReal.ofReal (Jac z)) :=
     ENNReal.measurable_ofReal.comp (jac_continuous ε).measurable
   have hmeas : AEMeasurable (Function.uncurry fun (k : KG ε) (z : PCoord ε → ℂ) =>
-      F (polarM (k, z)) * ENNReal.ofReal (Jac z)) ((dk ε).prod volume) :=
-    ((hFm.comp (intMuCD_measurable_pM ε)).mul (hJm.comp measurable_snd)).aemeasurable
+      G (k, z) * ENNReal.ofReal (Jac z)) ((dk ε).prod volume) :=
+    (hG.mul (hJm.comp measurable_snd)).aemeasurable
   let H : Matrix (Fin n) (Fin n) ℂ → ℝ≥0∞ := fun X =>
     (∫⁻ k, F (toMK k * NormedSpace.exp X) ∂(muK ε)) *
       ENNReal.ofReal (Real.exp (n * Real.sqrt (2 * q0 ε) * Real.sqrt (hs X)))
@@ -168,18 +176,24 @@ theorem haar_polar_le (ε : Fin n → Bool) (hq : 1 ≤ q0 ε) (ν : Measure (UJ
     refine ENNReal.ofReal_le_ofReal ((jac_le_exp z).trans (Real.exp_le_exp.2 ?_))
     exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right (by linarith)
       (Real.sqrt_nonneg _)) (Real.sqrt_nonneg _)
-  calc ∫⁻ g, f g ∂ν = c * ∫⁻ g, F (toM g) ∂(muPolar ε) := by
+  calc ∫⁻ g, f g ∂ν = c * ∫⁻ kz, G kz ∂((dk ε).prod (fdphNu ε)) := by
         conv_lhs => rw [hν]
-        rw [lintegral_smul_measure, smul_eq_mul]
-        simp only [hFg]
-    _ = c * ∫⁻ k, ∫⁻ z, F (polarM (k, z)) * ENNReal.ofReal (Jac z) ∂volume ∂(dk ε) := by
-        exact congrArg (c * ·) (lintegral_muPolar ε F hFm)
-    _ = c * ∫⁻ z, ∫⁻ k, F (polarM (k, z)) * ENNReal.ofReal (Jac z) ∂(dk ε) ∂volume := by
+        rw [lintegral_smul_measure, smul_eq_mul, hmap, lintegral_map hf hφ]
+        rfl
+    _ = c * ∫⁻ k, ∫⁻ z, G (k, z) * ENNReal.ofReal (Jac z) ∂volume ∂(dk ε) := by
+        refine congrArg (c * ·) ((lintegral_prod G hG.aemeasurable).trans ?_)
+        refine lintegral_congr fun k => ?_
+        have hk : Measurable (fun z : PCoord ε → ℂ => G (k, z)) :=
+          hG.comp measurable_prodMk_left
+        rw [fdphNu, lintegral_withDensity_eq_lintegral_mul volume hJm hk]
+        exact lintegral_congr fun z => mul_comm _ _
+    _ = c * ∫⁻ z, ∫⁻ k, G (k, z) * ENNReal.ofReal (Jac z) ∂(dk ε) ∂volume := by
         exact congrArg (c * ·) (lintegral_lintegral_swap hmeas)
     _ = c * ∫⁻ z, (muK ε Set.univ)⁻¹ * ((∫⁻ k, F (toMK k * NormedSpace.exp (pmat z)) ∂(muK ε)) *
           ENNReal.ofReal (Jac z)) ∂volume := by
         congr 1
         refine lintegral_congr fun z => ?_
+        simp only [hG_eq]
         rw [lintegral_mul_const' _ _ ENNReal.ofReal_ne_top, dk, lintegral_smul_measure, smul_eq_mul,
           mul_assoc]
         rfl

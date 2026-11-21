@@ -129,8 +129,8 @@ theorem main : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
       IsCompact (((GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.latAtV X Y v).map (GlobalTheory.LatVac.locCo M.co v) :
         AddSubgroup ((Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v))) : Set ((Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v))) := by
   intro F E _ _ _ _ _ σ B n d X Y r s r' s' hX hY M _ v
-  obtain ⟨sX, hsX⟩ := exists_gen X.L hX.lat
-  obtain ⟨sY, hsY⟩ := exists_gen Y.L hY.lat
+  obtain ⟨sX, hsX⟩ := exists_gen X.L hX.lat.toIsLattice
+  obtain ⟨sY, hsY⟩ := exists_gen Y.L hY.lat.toIsLattice
   let ι := ↥sX × ↥sY
   let t : ι → Matrix (Fin n) (Fin d) E := fun i => vecMulVec ((i.1 : X.L) : Fin n → E) ((i.2 : Y.L) : Fin d → E)
   let ρ : ι → (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v) := fun i => GlobalTheory.LatVac.locCo M.co v (incM F (t i))

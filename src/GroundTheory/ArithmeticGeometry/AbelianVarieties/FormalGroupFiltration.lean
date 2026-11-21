@@ -153,17 +153,17 @@ theorem pointE_eq_zero_iff {x : MaxIdealPoint (formalGroup W)} : pointE K W x = 
   constructor
   · intro h
     by_contra hx
-    exact pointE_ne_zero K W (fun h0 => hx (MaxIdealPoint.ext h0)) h
+    exact pointE_ne_zero K W (fun h0 => hx (Subtype.ext h0)) h
   · rintro rfl; exact pointE_zero K W
 
 theorem pointE_injective : Function.Injective (pointE K W) := by
   intro x y h
   by_cases hx : x.val = 0
-  · have hx' : x = 0 := MaxIdealPoint.ext hx
+  · have hx' : x = 0 := Subtype.ext hx
     rw [hx', pointE_zero, eq_comm, pointE_eq_zero_iff] at h
     rw [hx', h]
   by_cases hy : y.val = 0
-  · have hy' : y = 0 := MaxIdealPoint.ext hy
+  · have hy' : y = 0 := Subtype.ext hy
     rw [hy', pointE_zero, pointE_eq_zero_iff] at h
     exact absurd h (fun h' => hx (by rw [h']; rfl))
   set ι := algebraMap 𝒪 K
@@ -176,8 +176,8 @@ theorem pointE_injective : Function.Injective (pointE K W) := by
   have e : wVal W x.val = wVal W y.val := by
     have := congrArg (fun t => -t⁻¹) h2
     simpa [div_eq_mul_inv] using this
-  rw [e, div_left_inj' hwy] at h1
-  exact MaxIdealPoint.ext (hι h1)
+  rw [e, div_left_inj₀ hwy] at h1
+  exact Subtype.ext (hι h1)
 
 theorem val_neg_eq (x : MaxIdealPoint (formalGroup W)) :
     (-x).val = psEvalAt (invSeries W) (fun _ : Unit => x.val) := by
@@ -185,7 +185,7 @@ theorem val_neg_eq (x : MaxIdealPoint (formalGroup W)) :
 
 theorem pointE_neg (x : MaxIdealPoint (formalGroup W)) : pointE K W (-x) = -pointE K W x := by
   by_cases hx : x.val = 0
-  · have hx' : x = 0 := MaxIdealPoint.ext hx
+  · have hx' : x = 0 := Subtype.ext hx
     rw [hx', neg_zero, pointE_zero]
     rfl
   set ι := algebraMap 𝒪 K
@@ -284,8 +284,8 @@ theorem pointE_add_of_ne {x y : MaxIdealPoint (formalGroup W)} (hx : x.val ≠ 0
 theorem pointE_add_of_ne' {x y : MaxIdealPoint (formalGroup W)} (hx : x ≠ 0) (hy : y ≠ 0)
     (h₁ : y ≠ x) (h₂ : y ≠ -x) : pointE K W (x + y) = pointE K W x + pointE K W y := by
   classical
-  have hx' : x.val ≠ 0 := fun h => hx (MaxIdealPoint.ext h)
-  have hy' : y.val ≠ 0 := fun h => hy (MaxIdealPoint.ext h)
+  have hx' : x.val ≠ 0 := fun h => hx (Subtype.ext h)
+  have hy' : y.val ≠ 0 := fun h => hy (Subtype.ext h)
   refine pointE_add_of_ne K W hx' hy' ?_
   intro hxy
   have hι := IsFractionRing.injective 𝒪 K
@@ -371,7 +371,7 @@ theorem mem_range_pointE_iff (P : (W.map (algebraMap 𝒪 K)).toAffine.Point) :
     rintro ⟨z, rfl⟩ x y h hP ⟨r, hr⟩
     have hz : z.val ≠ 0 := by
       intro h0
-      have : z = 0 := MaxIdealPoint.ext h0
+      have : z = 0 := Subtype.ext h0
       rw [this, pointE_zero] at hP
       exact WeierstrassCurve.Affine.Point.some_ne_zero h hP.symm
     rw [pointE_of_ne_zero K W hz] at hP

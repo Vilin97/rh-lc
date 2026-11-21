@@ -21,10 +21,13 @@ open Reduction AutomorphicForm RightCosetSpace GJMatrix
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => rationalGLOne (K := K) (n := n)
+
 section Continuity
 
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem continuous_thetaPairing {φ₁ φ₂ Ξ : AdelicGLn.AdelicGL K n → ℂ} (hφ₁ : Continuous φ₁)
     (hφ₂ : Continuous φ₂)
     (hcont : Continuous fun p : {r : ℝ // 0 < r} × AdelicGLn.AdelicGL K n × AdelicGLn.AdelicGL K n =>
@@ -131,6 +134,7 @@ theorem tsum_inv_eq (Ψ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ) (t : {r : ℝ 
 
 
 set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem thetaPairing_eq (hn : 2 ≤ n) {φ₁ φ₂ : AdelicGLn.AdelicGL K n → ℂ}
     (h₁ : φ₁ ∈ cuspForms K n) (h₂ : φ₂ ∈ cuspForms K n)
     {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ} (hΦ : Φ ∈ matrixSchwartzBruhat K n)

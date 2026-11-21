@@ -17,6 +17,8 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle
 
 variable {D : D7}
 
+local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
+
 private theorem isIntM_mul {b a c : ℕ} {N : Matrix (Fin b) (Fin a) (Lev.EAf D)} {κ : Matrix (Fin a) (Fin c) (Lev.EAf D)}
     (hN : IsIntM N) (hκ : IsIntM κ) : IsIntM (N * κ) := fun i j => by
   rw [Matrix.mul_apply]
@@ -25,17 +27,19 @@ private theorem isIntM_mul {b a c : ℕ} {N : Matrix (Fin b) (Fin a) (Lev.EAf D)
 private theorem inId_mul {b a c : ℕ} {I : Ideal (𝓞 D.host.E)} {N : Matrix (Fin b) (Fin a) (Lev.EAf D)}
     {κ : Matrix (Fin a) (Fin c) (Lev.EAf D)} (hκ : IsIntM κ) (i : Fin b) (hN : ∀ l, GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.InId I (N i l))
     (j : Fin c) : GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.InId I ((N * κ) i j) := by
+  choose hInt hId using hN
   have hm : (N * κ) i j ∈ OO := by
     rw [Matrix.mul_apply]
-    exact Subring.sum_mem _ fun l _ => mul_mem (hN l).1 (hκ l j)
+    exact Subring.sum_mem _ fun l _ => mul_mem (hInt l) (hκ l j)
   refine ⟨hm, ?_⟩
-  have e : (⟨(N * κ) i j, hm⟩ : OO) = ∑ l, (⟨N i l, (hN l).1⟩ : OO) * ⟨κ l j, hκ l j⟩ := Subtype.ext (by
-    show (N * κ) i j = _
+  let entry (l : Fin a) : OO := (⟨N i l, hInt l⟩ : OO) * ⟨κ l j, hκ l j⟩
+  have e : (⟨(N * κ) i j, hm⟩ : OO) = ∑ l, entry l := by
+    apply Subtype.ext
+    change (N * κ) i j = (OO).subtype (∑ l, entry l)
     rw [Matrix.mul_apply]
-    push_cast
-    rfl)
+    exact (map_sum (OO).subtype entry Finset.univ).symm
   rw [e]
-  exact Ideal.sum_mem _ fun l _ => Ideal.mul_mem_right _ _ (hN l).2
+  exact Ideal.sum_mem _ fun l _ => Ideal.mul_mem_right _ _ (hId l)
 
 private theorem topL_mul {b a : ℕ} (N : Matrix (Fin b) (Fin a) (Lev.EAf D)) (κ : Matrix (Fin a) (Fin a) (Lev.EAf D)) :
     topL a (N * κ) = topL a N * κ := by

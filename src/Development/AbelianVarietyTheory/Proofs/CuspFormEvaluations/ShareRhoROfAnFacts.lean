@@ -54,7 +54,7 @@ theorem shareRhoR_of_anFacts : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : Mod
     rw [Submodule.top_coe] at h1
     rw [h1]
     unfold PJ.rk
-    have : Submodule.span B.KO (B.Mlat j ka : Set (B.Cusp j ka)) = ⊤ := Submodule.IsLattice.span_eq_top (self := hLat)
+    have : Submodule.span B.KO (B.Mlat j ka : Set (B.Cusp j ka)) = ⊤ := Submodule.IsFullLattice.span_eq_top (self := hLat)
     rw [this]
   haveI hfin : FiniteDimensional ℂ (R.sp ka Set.univ) := by
     have h1 := (d8 ka ⊤).1

@@ -49,8 +49,10 @@ theorem coeff_blockSpecial (ρ : MRing ι F →+* κ) (f : MRing ι F) (e : K �
       Finsupp.weight (blockWeight ι) d = ⇑e := by
     rw [Equiv.symm_apply_eq]; rfl
   by_cases h : Finsupp.weight (blockWeight ι) d = ⇑e
-  · rw [if_pos (hiff.mpr h), if_pos h, mul_one]
-  · rw [if_neg (fun h' => h (hiff.mp h')), if_neg h, mul_zero]
+  · simp [h]
+  · have hn : Finsupp.equivFunOnFinite.symm (Finsupp.weight (blockWeight ι) d) ≠ e :=
+      fun h' => h (hiff.mp h')
+    simp only [hn, h, ↓reduceIte, mul_zero]
 
 end Graded
 
@@ -81,7 +83,7 @@ theorem ValuativeCentre.proof : ValuativeCentre.Statement.{u} := by
     intro p
     induction p using MvPolynomial.induction_on with
     | C a => rw [chartMap, aeval_C]; exact hF a
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p v hp =>
       rw [map_mul]
       refine mul_mem hp ?_
@@ -106,10 +108,12 @@ theorem ValuativeCentre.proof : ValuativeCentre.Statement.{u} := by
     constructor
     · intro h b
       have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm b)) h
-      rwa [coeff_blockSpecial, coeff_zero, Finsupp.coe_equivFunOnFinite_symm] at this
+      change AddMonoidAlgebra.coeff (blockSpecial ρ f) (Finsupp.equivFunOnFinite.symm b) = 0 at this
+      simpa only [coeff_blockSpecial, Finsupp.coe_equivFunOnFinite_symm] using this
     · intro h
       ext e
-      rw [coeff_blockSpecial, coeff_zero, h]
+      change AddMonoidAlgebra.coeff (blockSpecial ρ f) e = 0
+      rw [coeff_blockSpecial, h]
   have hyform : ∀ f b, IsMultiHomog f b → (f ∈ RingHom.ker θ ↔ ρ f = 0) := by
     intro f b hf
     rw [hy]

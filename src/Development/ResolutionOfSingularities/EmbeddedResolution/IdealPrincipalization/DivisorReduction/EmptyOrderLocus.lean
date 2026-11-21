@@ -124,12 +124,12 @@ theorem isPullbackSequenceOfBlowups_of_preimage_orderAtLeastLocus_empty
     IsPullbackBlowupSequence h B' s.toSequenceOfBlowups := by
   have hdisj := center_disjoint_range_of_preimage_orderAtLeastLocus_eq_empty hV h hempty s
   refine (SequenceOfBlowupsPullback.ofBlowupDataOfSeq
-      (SequenceOfBlowupsPullback.ofCentersMissImage h (BlowupSequenceData.ofSequenceOfBlowups s.toSequenceOfBlowups) ?_
-        (BlowupSequenceData.ofSequenceOfBlowups B') ?_)).isPullbackSequenceOfBlowups
-  · intro i hi z hz y
-    rw [BlowupSequenceData.ofSequenceOfBlowups_projectionToBase]
-    exact hdisj i hi z hz y
-  · exact hB'
+      (SequenceOfBlowupsPullback.ofCentersMissImage h (BlowupSequenceData.ofSequenceOfBlowups s.toSequenceOfBlowups)
+        (by
+          intro i hi z hz y
+          rw [BlowupSequenceData.ofSequenceOfBlowups_projectionToBase]
+          exact hdisj i hi z hz y)
+        (BlowupSequenceData.ofSequenceOfBlowups B') (by exact hB'))).isPullbackSequenceOfBlowups
 
 theorem divisorFamily_isPullbackSequenceOfBlowups_of_orderAtLeastLocus_empty
     (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})

@@ -194,12 +194,14 @@ theorem exists_comp_maps (u : WeightFamilies.Wt D j) :
   refine GlobalTheory.SecEval.exists_section_maps D B P j X la N wL u w _
     (((Algebra.TensorProduct.includeRight : OmS Ω (WeightFamilies.dimY D j) N' →ₐ[KTf B.KO (WeightFamilies.dimY D j) N']
       Kp X la N ⊗[KTf B.KO (WeightFamilies.dimY D j) N'] OmS Ω (WeightFamilies.dimY D j) N').toRingHom.comp
-      (algebraMap Ω (OmS Ω (WeightFamilies.dimY D j) N'))).comp gF.toRingHom) (fun a f => ?_) (fun i => ?_) ?_
-  · show (1 : Kp X la N) ⊗ₜ algebraMap Ω (OmS Ω (WeightFamilies.dimY D j) N') (gF (a • f)) =
+      (algebraMap Ω (OmS Ω (WeightFamilies.dimY D j) N'))).comp gF.toRingHom) ?_ ?_ ?_
+  · intro a f
+    change (1 : Kp X la N) ⊗ₜ algebraMap Ω (OmS Ω (WeightFamilies.dimY D j) N') (gF (a • f)) =
       _ * (1 ⊗ₜ algebraMap Ω (OmS Ω (WeightFamilies.dimY D j) N') (gF f))
     rw [← hC, key, hS, map_smul, Algebra.smul_def, map_mul, ← MvPolynomial.algebraMap_eq, AlgHom.commutes,
       ← IsScalarTower.algebraMap_apply]
-  · refine (hsum i.succ).trans ?_
+  · intro i
+    refine (hsum i.succ).trans ?_
     rw [sum_sImg_succ j₀ x (fun k => gF (X.inc wL (w (eN k)))) hx, TensorProduct.tmul_zero]
   · refine (hsum 0).symm ▸ ?_
     exact (IsUnit.mk0 _ (sum_sImg_zero j₀ x (fun k => gF (X.inc wL (w (eN k)))) hx h0)).map
@@ -252,6 +254,7 @@ variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} 
   {A : ι → Type} [∀ c, CommRing (A c)] [∀ c, Algebra (Ω c) (A c)] [∀ c, Algebra B.KO (A c)]
   [∀ c, Algebra (𝓞 B.KO) (A c)] {𝒜 : (c : ι) → WT → Submodule (Ω c) (A c)}
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem plOver_iff (d : Data B.KO ι Ω WT A) (hs : d.S1) (la : HeightOneSpectrum (𝓞 B.KO)) (c : ι)
     (w : AddValuation (OmS (Ω c) d.D d.N) (WithTop ℤ)) :
     letI := d.algOp hs la c
@@ -259,6 +262,7 @@ theorem plOver_iff (d : Data B.KO ι Ω WT A) (hs : d.S1) (la : HeightOneSpectru
       w ∈ d.PlOver la c := by
   letI := d.algOp hs la c
   letI : Algebra (OT B.KO d.D d.N) (OmS (Ω c) d.D d.N) := (d.OTtoS c).toAlgebra
+  letI : Algebra (OT B.KO d.D d.N) (ReciprocityTheory.ChartRestriction.G.T0.Op d.D d.N la) := inferInstance
   haveI : IsScalarTower (OT B.KO d.D d.N) (ReciprocityTheory.ChartRestriction.G.T0.Op d.D d.N la) (OmS (Ω c) d.D d.N) :=
     IsScalarTower.of_algebraMap_eq fun x => by
       show _ = d.KTtoS hs c (ReciprocityTheory.ChartRestriction.G.T0.OpToKT d.D d.N la (algebraMap _ _ x))

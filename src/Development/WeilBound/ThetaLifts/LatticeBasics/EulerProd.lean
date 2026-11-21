@@ -206,7 +206,7 @@ theorem _root_.GlobalTheory.ThK.Dbl.eulerProd : EulerProd := by
     | empty => simp [A]
     | insert v S hv ih =>
       rw [Finset.prod_insert hv, mul_assoc, ih]
-      refine Eq.trans ?_ (step hY.lat hμ (hl v).1 (hl v).2 hf (h v v.2).1 (h v v.2).2.1
+      refine Eq.trans ?_ (step hY.lat.toIsLattice hμ (hl v).1 (hl v).2 hf (h v v.2).1 (h v v.2).2.1
         (P := {u | ∃ h : u ∉ T, ⟨u, h⟩ ∉ insert v S}) (by rintro ⟨_, h'⟩; exact h' (Finset.mem_insert_self _ _))).symm
       congr 3
       ext g
@@ -217,76 +217,15 @@ theorem _root_.GlobalTheory.ThK.Dbl.eulerProd : EulerProd := by
       · rintro (rfl | ⟨h1, h2⟩)
         · exact ⟨v.2, hv⟩
         · exact ⟨h1, fun h3 => h2 (Finset.mem_insert_of_mem h3)⟩
-  have hdet : Y.J.det ≠ 0 := by
-    obtain ⟨w⟩ := (inferInstance : Nonempty (InfinitePlace F))
-    have hs := hY.sig w
-    obtain ⟨hrs, A, hA⟩ := hs
-    let e : Fin r ⊕ Fin s ≃ Fin n := finSumFinEquiv.trans (finCongr hrs)
-    let A' : Matrix (Fin n) (Fin n) ℂ := A.submatrix id e.symm
-    have h1 : A'ᵀ * (Y.J.map (B.emb w).1) * A'.map star = (Matrix.fromBlocks (1 : Matrix (Fin r) (Fin r) ℂ) 0 0 (-1)).submatrix e.symm e.symm := by
-      rw [← hA]; ext i j; simp [A', Matrix.mul_apply]
-    have h2 := congrArg Matrix.det h1
-    intro h0
-    rw [Matrix.det_submatrix_equiv_self, Matrix.det_fromBlocks_zero₂₁, Matrix.det_mul, Matrix.det_mul, ← RingHom.mapMatrix_apply, ← RingHom.map_det, h0, map_zero] at h2
-    simpa [Matrix.det_neg] using h2.symm
-  have form_eq (y x : Fin n → E) : form σ Y.J y x = ∑ l, (y ᵥ* Y.J) l * σ (x l) := by
-    rw [form, Matrix.dotProduct_mulVec]; rfl
-  have hspan : Submodule.span E (Y.L : Set (Fin n → E)) = ⊤ := by
-    by_contra hne
-    obtain ⟨f, hf0, hf⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hne)
-    let a : Fin n → E := fun i => σ (f (Pi.single i 1))
-    let u : Fin n → E := a ᵥ* Y.J⁻¹
-    have hu : u ᵥ* Y.J = a := by
-      simp [u, Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul _ hdet.isUnit]
-    have hform (x : Fin n → E) : form σ Y.J u x = σ (f x) := by
-      rw [form_eq, hu, LinearMap.pi_apply_eq_sum_univ f x, map_sum]
-      refine Finset.sum_congr rfl fun k _ => ?_
-      rw [smul_eq_mul, map_mul, mul_comm]
-      have he : (fun j => if k = j then (1 : E) else 0) = Pi.single k 1 := funext fun j => by
-        rw [Pi.single_apply]; exact if_congr eq_comm rfl rfl
-      rw [he]
-    have hline (c : E) : c • u ∈ Y.L := by
-      apply (hY.dual _).2
-      intro x hx
-      have hx0 : f x = 0 := hf (Submodule.subset_span hx)
-      have he : form σ Y.J (c • u) x = c * form σ Y.J u x := by
-        rw [form_eq, form_eq, Matrix.smul_vecMul, Finset.mul_sum]
-        simp [Pi.smul_apply, smul_eq_mul, mul_assoc]
-      rw [he, hform, hx0, map_zero, mul_zero]
-      exact isIntegral_zero
-    have hu0 : u = 0 := by
-      by_contra hn
-      obtain ⟨i, hi⟩ := Function.ne_iff.mp hn
-      let coord := (LinearMap.proj i : (Fin n → E) →ₗ[E] E).restrictScalars (𝓞 E)
-      have ht : Y.L.map coord = ⊤ := by
-        rw [eq_top_iff]
-        intro x _
-        exact ⟨(x / u i) • u, hline _, div_mul_cancel₀ _ hi⟩
-      have : Module.Finite (𝓞 E) E := Module.finite_def.mpr (ht ▸ hY.lat.fg.map coord)
-      exact RingOfIntegers.not_isField E
-        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
-    have ha : a = 0 := by simpa [hu0] using hu.symm
-    apply hf0
-    apply LinearMap.ext
-    intro x
-    rw [LinearMap.pi_apply_eq_sum_univ f x]
-    apply Finset.sum_eq_zero
-    intro i _
-    have hi : σ (f (Pi.single i 1)) = 0 := congrFun ha i
-    have hi' : f (Pi.single i 1) = 0 := (map_eq_zero σ).mp hi
-    have he : (fun j => if i = j then (1 : E) else 0) = Pi.single i 1 := funext fun j => by
-      rw [Pi.single_apply]; exact if_congr eq_comm rfl rfl
-    simp [he, hi']
-  have hfull : Y.L.IsFullLattice E := { toIsLattice := hY.lat, span_eq_top := hspan }
   have u : ⋃ S, A S = Set.univ := Set.eq_univ_of_forall fun g => by
-    have c := Filter.eventually_cofinite.1 ((ae_mulVec hfull (mat g)).and (ae_mulVec hfull (mat g⁻¹)))
+    have c := Filter.eventually_cofinite.1 ((ae_mulVec hY.lat (mat g)).and (ae_mulVec hY.lat (mat g⁻¹)))
     refine Set.mem_iUnion.2 ⟨c.toFinset.subtype _, fun u ⟨_, h2⟩ => ?_⟩
     rw [Finset.mem_subtype, Set.Finite.mem_toFinset, Set.mem_setOf_eq, not_not] at h2
     exact fun z hz h3 => ⟨h2.1 z hz h3, h2.2 z hz h3⟩
   have := GlobalTheory.AdelicUnitaryTop.countable_heightOneSpectrum F
   have := tendsto_setIntegral_of_monotone (s := A) (f := f) (μ := μ) (fun S => by
     simp only [A, Set.setOf_forall]
-    exact (isClosed_iInter fun u => isClosed_iInter fun _ => isClosed_int hY.lat u).measurableSet)
+    exact (isClosed_iInter fun u => isClosed_iInter fun _ => isClosed_int hY.lat.toIsLattice u).measurableSet)
     (fun S S' hS g hg u ⟨h1, h2⟩ => hg u ⟨h1, fun h3 => h2 (hS h3)⟩) hf.integrableOn
   simpa only [e, u, Measure.restrict_univ] using this
 

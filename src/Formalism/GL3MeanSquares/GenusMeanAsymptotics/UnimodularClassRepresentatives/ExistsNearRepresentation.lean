@@ -137,7 +137,9 @@ theorem exists_near (h𝔭 : 𝔭.IsMaximal) (hF : IsFixF K F) {h : V →ₗ⋆[
   · by_cases h2 : InI 𝔭 (v + 1) (κ (ι (s * s)) * h (x - -b) (x - -b))
     · exfalso
       apply localValuationFiltration.notMem_pow_vF h𝔭 hN
-      rw [← hv, ← inI_ι (K := K) h𝔭]
+      have hmem := integralBasisSpans.congrP_int h𝔭 (v + 1) (ι (4 * (s * s * n))) 0
+      rw [congrP_iff_inI, map_zero, sub_zero, Ideal.Quotient.eq, sub_zero, mem_pow_iff] at hmem
+      rw [← hv, ← hmem]
       have h3 : InI 𝔭 (v + 1) (κ (ι (2 * (s * s))) * (h x x - κ (ι n))) := by
         have := InI.mul hp (InI.int hp (ι (2 * (s * s)))) (hε.mono (by omega : v + 1 ≤ v + k))
         rwa [zero_add] at this

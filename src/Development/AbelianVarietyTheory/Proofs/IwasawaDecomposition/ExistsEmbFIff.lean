@@ -73,7 +73,8 @@ theorem mem_Fi_iff {σ' : E →ₐ[F] E} {J : Matrix (Fin n) (Fin n) E} {T f : �
     (z : S.Cl → Fr emb σ n → ℂ) :
     z ∈ S.Fi emb σ lam ↔ (show S.Cl → Frames (gramC J e) → ℂ from z) ∈ FiC L e lam' y := by
   subst he hl
-  refine Iff.trans ?_ (mem_FiC_iff L _ _ y hy _).symm
+  change z ∈ S.Fi emb σ lam ↔ z ∈ FiC L (embAt σ emb) lam y
+  rw [RowTie.mem_FiC_iff L (embAt σ emb) lam y hy z]
   refine forall_congr' fun c => and_congr Iff.rfl ⟨fun h γ hγ κ e zz zz' hz => ?_, fun H g => ?_⟩
   · obtain ⟨s, hs⟩ := (hr c ⟨γ, hγ⟩).2 ⟨κ.1⁻¹, inv_mem κ.2, by
       show (y c).1 * κ.1⁻¹ * (y c).1⁻¹ = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ
@@ -225,9 +226,10 @@ theorem clsP_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
   have hbad : badG (I.rec7 l Z) = plUnder B.host.F (B.primes X).vGs := by
     ext v
     exact (plUnder_vGs B.sp.cm (BasePrimes.primes_ok B X).1 v).symm
-  obtain ⟨L, R, hLb, hpt, hlev, hchr, hst, hstc⟩ := exists_cls (X := B.fields) B.sp.cm (rowTyG I.Ch I.Ps)
+  have hcls := RowTie.exists_cls (X := B.fields) (n := B.R.N B.R.m - 1) B.sp.cm (rowTyG I.Ch I.Ps)
     (levQX B.R I.sel (I.tup I.mu0)) (fun _ => True) B.embLL hQ (levOk_base B X).split B.R.f (gramP (I.rec7 l Z)) hgP
     (badG (I.rec7 l Z)) hbad
+  obtain ⟨L, R, hLb, hpt, hlev, hchr, hst, hstc⟩ := hcls
   let KP : ClsPTied (D := I.rec7 l Z) u :=
     { lev := L
       y := R.y

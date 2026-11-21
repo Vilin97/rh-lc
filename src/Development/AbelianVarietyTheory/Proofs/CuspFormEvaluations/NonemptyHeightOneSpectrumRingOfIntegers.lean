@@ -28,7 +28,8 @@ theorem shareRhoP_of_anFacts : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : Mod
   have hdim : ∀ M : Submodule B.KO (B.Cusp j ka),
       Module.finrank ℂ (R.sp ka M) = Module.finrank B.KO M := fun M =>
     ((GlobalTheory.T.genericSections_polynomial_dictionary D B P j X R la N wL w t).2.2.2.2.2.2.2 ka M).2
-  have hspan : Submodule.span B.KO (B.Mlat j ka : Set (B.Cusp j ka)) = ⊤ := hL.span_eq_top
+  have hspan : Submodule.span B.KO (B.Mlat j ka : Set (B.Cusp j ka)) = ⊤ :=
+    Submodule.IsFullLattice.span_eq_top (self := hL)
 
   have hd : X.rk ka (B.Mlat j ka) = Module.finrank B.KO (B.Cusp j ka) := by
     unfold PJ.rk

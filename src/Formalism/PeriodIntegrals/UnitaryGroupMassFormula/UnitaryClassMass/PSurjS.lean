@@ -16,7 +16,7 @@ def HermApprox : Prop :=
     [IsScalarTower (𝓞 E) E V] [FiniteDimensional E V]
     (h : V →ₗ⋆[E] V →ₗ[E] E) (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
     (∀ a, σ a = star a) → (∃ θ : E, σ θ ≠ θ) →
-    h.IsSymm → h.Nondegenerate → Submodule.IsLattice E L0 →
+    h.IsSymm → h.Nondegenerate → Submodule.IsFullLattice E L0 →
     ∀ N ∈ genus h L0, ∀ P : Finset (Ideal (𝓞 E)), (∀ p ∈ P, p.IsMaximal) →
       ∃ γ : UJ (σ : E →+* E) (gramOf h b), ∀ p ∈ P,
         loc (K := E) p (gmap (linOf b (γ : GL (Fin M) E)) L0) = loc (K := E) p N

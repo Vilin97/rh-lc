@@ -23,7 +23,7 @@ theorem sum_esymm_mul_hsymm_int {k : ℕ} (hk : k ≠ 0) :
   intro x
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_esymm, map_hsymm, map_zero]
-  rw [GroundTheory.Heights₂.Theta.SymmFun.sum_esymm_mul_hsymm x k, if_neg hk]
+  simp [GroundTheory.Heights₂.Theta.SymmFun.sum_esymm_mul_hsymm x k, hk]
 
 theorem esymm_mem_adjoin (k : ℕ) :
     esymm σ ℤ k ∈ Algebra.adjoin ℤ (Set.range (hsymm σ ℤ)) := by
@@ -100,7 +100,7 @@ theorem proof : SymmetricSpanHsymm.Statement := by
     clear hp hG'
     induction p using MvPolynomial.induction_on with
     | C r => rw [aeval_C]; exact Subalgebra.algebraMap_mem _ r
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p i hp => rw [map_mul, aeval_X]; exact mul_mem hp (esymm_mem_adjoin _)
   have hspan : G ∈ Submodule.span ℤ
       (Submonoid.closure (Set.range (hsymm (Fin N) ℤ)) : Set (MvPolynomial (Fin N) ℤ)) := by

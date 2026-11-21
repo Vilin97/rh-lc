@@ -164,7 +164,7 @@ structure D7 where
   Dstar_eq : ∀ u, (mem u).A.Dstar = what₂.Dstar
 
   clsLat : letI := host.cmStar; ∀ u i, (mem u).C.cls i → Submodule (𝓞 host.E) (sp.X i).V
-  clsLat_lat : letI := host.cmStar; ∀ u i c, Submodule.IsLattice host.E (clsLat u i c)
+  clsLat_lat : letI := host.cmStar; ∀ u i c, Submodule.IsFullLattice host.E (clsLat u i c)
 
   eMu : ∀ u, what₂.Mu u ≃ₗ[ℂ] (mem u).A.Mram
 

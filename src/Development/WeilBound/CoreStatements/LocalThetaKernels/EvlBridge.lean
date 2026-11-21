@@ -74,7 +74,7 @@ theorem acts_unique {κ : Type} [Fintype κ] {v : Pl F} {T : ((κ → AF F) → 
   funext t
   have h' := congrFun h fun i => liftV v (t i)
   have e : r (fun i => liftV v (t i)) = 1 := by
-    rw [← h0, ← hr.1 0 _ (GlobalTheory.VacAny.at_pi fun i => at_liftV v (t i)), zero_add]
+    rw [← h0, ← hr.1 0 _ (fun u hu => funext fun i => at_liftV v (t i) u hu), zero_add]
   simpa only [tens, evFin_liftV, e, mul_one] using h'
 
 section Co
@@ -197,7 +197,7 @@ theorem lat_split {Cy Cx : Matrix (Fin d) (Fin m) (AE F E)}
     obtain ⟨z₁, z₁', h₁, rfl⟩ := ha
     exact ⟨-z₁, -z₁', by rw [Matrix.neg_mul]; exact neg_mem h₁, by simp only [Matrix.neg_mul]; abel⟩
 
-theorem space_split (hX : X.L.IsLattice E) (hW : W.L.IsLattice E) {Cy Cx : Matrix (Fin d) (Fin m) (AE F E)}
+theorem space_split (hX : X.L.IsFullLattice E) (hW : W.L.IsFullLattice E) {Cy Cx : Matrix (Fin d) (Fin m) (AE F E)}
     (h : ∀ y ∈ latW W v, ∃ s t : Fin m → AE F E, Cy *ᵥ s ∈ latW W v ∧ Cx *ᵥ t ∈ latW W v ∧ y = Cy *ᵥ s + Cx *ᵥ t)
     (u : Matrix (Fin n) (Fin d) (AE F E)) :
     ∃ z z' : Matrix (Fin n) (Fin m) (AE F E), liftV v 1 • u = z * Cyᵀ + z' * Cxᵀ := by

@@ -46,6 +46,59 @@ noncomputable section
 
 namespace FunctorialResolution.EmbeddedResolution
 
+private theorem local_chart_comp (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)
+    (i : (MaxContactCoverData.chosenCoverData T hv).idx) {n : ℕ}
+    (c : EtaleChart T.structMap ((MaxContactCoverData.chosenCoverData T hv).opens i) n) :
+    ((MaxContactOpenCover.coverPieceIso T hv i).inv ≫ c.map) ≫ affineSpaceFinToSpec T.base n =
+      (MaxContactOpenCover.coverTripleOpen T hv i).ι ≫ (MaxContactCoverData.coverMap T hv ≫ T.structMap) := by
+  have h1 : c.map ≫ affineSpaceFinToSpec T.base n =
+      ((MaxContactCoverData.chosenCoverData T hv).opens i).ι ≫ T.structMap := c.comp_struct
+  have h2 := MaxContactOpenCover.coverTripleOpen_ι_comp_coverMap T hv i
+  calc ((MaxContactOpenCover.coverPieceIso T hv i).inv ≫ c.map) ≫ affineSpaceFinToSpec T.base n
+      = (MaxContactOpenCover.coverPieceIso T hv i).inv ≫ (c.map ≫ affineSpaceFinToSpec T.base n) := Category.assoc _ _ _
+    _ = (MaxContactOpenCover.coverPieceIso T hv i).inv ≫ (((MaxContactCoverData.chosenCoverData T hv).opens i).ι ≫ T.structMap) := by
+        rw [h1]
+    _ = ((MaxContactOpenCover.coverPieceIso T hv i).inv ≫ ((MaxContactCoverData.chosenCoverData T hv).opens i).ι) ≫ T.structMap :=
+        (Category.assoc _ _ _).symm
+    _ = ((MaxContactOpenCover.coverTripleOpen T hv i).ι ≫ MaxContactCoverData.coverMap T hv) ≫ T.structMap := by rw [h2]
+    _ = (MaxContactOpenCover.coverTripleOpen T hv i).ι ≫ (MaxContactCoverData.coverMap T hv ≫ T.structMap) :=
+        Category.assoc _ _ _
+
+private theorem local_chart_etale (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)
+    (i : (MaxContactCoverData.chosenCoverData T hv).idx) {n : ℕ}
+    (c : EtaleChart T.structMap ((MaxContactCoverData.chosenCoverData T hv).opens i) n) :
+    AlgebraicGeometry.Etale ((MaxContactOpenCover.coverPieceIso T hv i).inv ≫ c.map) := by
+  have : AlgebraicGeometry.Etale c.map := c.isEtale
+  have : IsIso (MaxContactOpenCover.coverPieceIso T hv i).inv := inferInstance
+  have : IsOpenImmersion (MaxContactOpenCover.coverPieceIso T hv i).inv := inferInstance
+  have : AlgebraicGeometry.Etale (MaxContactOpenCover.coverPieceIso T hv i).inv := inferInstance
+  infer_instance
+
+private def localCoverEtaleChart (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)
+    (i : (MaxContactCoverData.chosenCoverData T hv).idx) {n : ℕ}
+    (c : EtaleChart T.structMap ((MaxContactCoverData.chosenCoverData T hv).opens i) n) :
+    EtaleChart (MaxContactCoverData.coverMap T hv ≫ T.structMap) (MaxContactOpenCover.coverTripleOpen T hv i) n where
+  map := (MaxContactOpenCover.coverPieceIso T hv i).inv ≫ c.map
+  comp_struct := by
+    exact local_chart_comp T hv i c
+  isEtale := local_chart_etale T hv i c
+
+private theorem localCoverEtaleChart_coordIdeal (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)
+    (i : (MaxContactCoverData.chosenCoverData T hv).idx) {n : ℕ}
+    (c : EtaleChart T.structMap ((MaxContactCoverData.chosenCoverData T hv).opens i) n)
+    (S : Finset (Fin n)) :
+    (localCoverEtaleChart T hv i c).coordIdeal S = (c.coordIdeal S).comap (MaxContactOpenCover.coverPieceIso T hv i).inv := by
+  have key : (coordSubspaceIdeal T.base n S).comap ((MaxContactOpenCover.coverPieceIso T hv i).inv ≫ c.map)
+      = ((coordSubspaceIdeal T.base n S).comap c.map).comap (MaxContactOpenCover.coverPieceIso T hv i).inv := by
+    rw [Scheme.IdealSheafData.comap_comp]
+  have h1 : (localCoverEtaleChart T hv i c).coordIdeal S
+      = (coordSubspaceIdeal T.base n S).comap ((MaxContactOpenCover.coverPieceIso T hv i).inv ≫ c.map) :=
+    EtaleChart.coordIdeal_eq_comap_coordSubspaceIdeal (localCoverEtaleChart T hv i c) S
+  have h2 : (c.coordIdeal S).comap (MaxContactOpenCover.coverPieceIso T hv i).inv
+      = ((coordSubspaceIdeal T.base n S).comap c.map).comap (MaxContactOpenCover.coverPieceIso T hv i).inv :=
+    congrArg (fun J => J.comap (MaxContactOpenCover.coverPieceIso T hv i).inv) (EtaleChart.coordIdeal_eq_comap_coordSubspaceIdeal c S)
+  exact h1.trans (key.trans h2.symm)
+
 private theorem range_ι_base_subset {X : Scheme.{u}} (U : X.Opens) :
     Set.range U.ι.base ⊆ (U : Set ↥X) :=
   (Scheme.Opens.range_ι U).subset
@@ -127,9 +180,9 @@ theorem isMaxContactHypersurface_coverMaxContactIdeal_of_comap_eq (T : MarkedIde
     · rw [restrictIdeal_coverTripleOpen_coverMaxContactIdeal T hv hres i, htop]
       exact Scheme.IdealSheafData.comap_top _
   · right
-    refine ⟨n, MaxContactOpenCover.coverEtaleChart T hv i c, j, ?_, ?_⟩
+    refine ⟨n, localCoverEtaleChart T hv i c, j, ?_, ?_⟩
     · rw [restrictIdeal_coverTripleOpen_coverMaxContactIdeal T hv hres i, hloc]
-      exact (MaxContactOpenCover.coverEtaleChart_coordIdeal T hv i c {j}).symm
+      exact (localCoverEtaleChart_coordIdeal T hv i c {j}).symm
     · have hmc' : c.coordIdeal {j} ≤
           (maxContactIdeal T.base T.structMap (MaxContactCoverData.balancedTunedIdeal T hv)
             (MaxContactCoverData.tunedMult T)).comap
@@ -141,9 +194,9 @@ theorem isMaxContactHypersurface_coverMaxContactIdeal_of_comap_eq (T : MarkedIde
             (MaxContactCoverData.tunedMult T)).comap (MaxContactCoverData.coverMap T hv) :=
         derivIdealSheafIterate_comap T.base T.structMap (MaxContactCoverData.coverMap T hv)
           (MaxContactCoverData.tunedMult T - 1) (MaxContactCoverData.balancedTunedIdeal T hv)
-      have h1 : (MaxContactOpenCover.coverEtaleChart T hv i c).coordIdeal {j}
+      have h1 : (localCoverEtaleChart T hv i c).coordIdeal {j}
           = (c.coordIdeal {j}).comap (MaxContactOpenCover.coverPieceIso T hv i).inv :=
-        MaxContactOpenCover.coverEtaleChart_coordIdeal T hv i c {j}
+        localCoverEtaleChart_coordIdeal T hv i c {j}
       have h2 := comap_comap_eq_of_comp_eq (MaxContactOpenCover.coverTripleOpen T hv i).ι
         (MaxContactCoverData.coverMap T hv)
         (MaxContactOpenCover.coverPieceIso T hv i).inv ((MaxContactCoverData.chosenCoverData T hv).opens i).ι
@@ -156,7 +209,7 @@ theorem isMaxContactHypersurface_coverMaxContactIdeal_of_comap_eq (T : MarkedIde
               ((MaxContactCoverData.chosenCoverData T hv).opens i).ι).comap
             (MaxContactOpenCover.coverPieceIso T hv i).inv :=
         Scheme.IdealSheafData.comap_mono _ hmc'
-      show (MaxContactOpenCover.coverEtaleChart T hv i c).coordIdeal {j} ≤
+      show (localCoverEtaleChart T hv i c).coordIdeal {j} ≤
         restrictIdeal (maxContactIdeal (MaxContactCoverData.coverTriple T hv).base
           (MaxContactCoverData.coverTriple T hv).structMap
           (MaxContactCoverData.coverTriple T hv).ideal (MaxContactCoverData.tunedMult T))
@@ -202,11 +255,11 @@ theorem inStrictNormalCrossingPositionAt_coverMaxContactIdeal (T : MarkedIdealWi
     · intro r _hr t hrt
       simp at hrt
   · have h2 : ((MaxContactCoverData.coverMaxContactIdeal T hv).comap (MaxContactOpenCover.coverPieceι T hv i)).comap
-        (MaxContactOpenCover.coverPieceIso T hv i).inv = (MaxContactOpenCover.coverEtaleChart T hv i c).coordIdeal {j} := by
-      rw [hres i, hlocal, MaxContactOpenCover.coverEtaleChart_coordIdeal]
+        (MaxContactOpenCover.coverPieceIso T hv i).inv = (localCoverEtaleChart T hv i c).coordIdeal {j} := by
+      rw [hres i, hlocal, localCoverEtaleChart_coordIdeal]
     have key := h1.trans h2
     refine inStrictNormalCrossingPositionAt_of_exists_etaleChart
-      ⟨MaxContactOpenCover.coverTripleOpen T hv i, hxi, n, MaxContactOpenCover.coverEtaleChart T hv i c, fun _ => some j,
+      ⟨MaxContactOpenCover.coverTripleOpen T hv i, hxi, n, localCoverEtaleChart T hv i c, fun _ => some j,
         ?_, ?_, ?_⟩
     · intro r hr s hs t _hrt _hst
       have hr1 : r < 1 := hr

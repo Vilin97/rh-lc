@@ -26,6 +26,8 @@ open Formalism.L2.SG.Pf.unitaryCongruence
 
 variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D)
 
+local notation "RA" => X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F
+
 theorem natCast_int (c : ℕ) : (c : RA) ∈ IntAf X.B.I.F X.B.I.E := natCast_mem _ c
 
 theorem sigA_natCast (c : ℕ) : sigA X.B.I (c : RA) = c := map_natCast _ c
@@ -81,12 +83,6 @@ theorem exists_mult : ∃ c : ℕ, Nat.Coprime c X.B.g ∧ ∀ b : Fin D.R.rS,
         ((ce b * k : ℕ) : RA) • ((cf b : RA) • (X.f0 b - incl X.B.I (X.fR b))) := by
       rw [smul_smul]; push_cast; ring_nf
     rw [this]; exact natsmul_mL X _ (hcf b).2
-
-end GlobalTheory.UkPart
-
-namespace GlobalTheory.UkPart
-open Formalism.L2.SG.Pf.unitaryCongruence
-variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D)
 
 theorem hA_sum_right (p : VA X.B.I) (v : Fin D.R.rS → VA X.B.I) :
     hA X.B.I p (∑ b, v b) = ∑ b, hA X.B.I p (v b) := by
@@ -156,12 +152,6 @@ theorem core (u : D.what₂.Word) (m : X.B.I.Gf) (hmK : m ∈ X.B.I.Kset) (hmN :
       _ = _ := by rw [e2]; ring
   rw [e]
   exact Z_add X.B.I X.B.g h1 (Z_smul X.B.I X.B.g (pow_mem (natCast_int X c) 2) h2)
-
-end GlobalTheory.UkPart
-
-namespace GlobalTheory.UkPart
-open Formalism.L2.SG.Pf.unitaryCongruence
-variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D)
 
 theorem conj_sub (x m : X.B.I.Gf) (v : VA X.B.I) :
     (X.B.I.fmat (x⁻¹ * m * x) - 1) *ᵥ v = X.B.I.fmat x⁻¹ *ᵥ ((X.B.I.fmat m - 1) *ᵥ (X.B.I.fmat x *ᵥ v)) := by

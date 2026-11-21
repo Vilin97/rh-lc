@@ -10,6 +10,14 @@ open Limits
 
 namespace DifferentiableLines.CellsProj
 
+private theorem pt_str {R A : Type} [CommRing R] [CommRing A] {N : ℕ}
+    (c : R →+* A) (v : Fin (N + 1) → A) (hv : Ideal.span (Set.range v) = ⊤) :
+    GlobalTheory.ProjSpace.pt c v hv ≫ PSpace.str R N = spMap c := by
+  rw [GlobalTheory.ProjSpace.pt, PSpace.str, GlobalTheory.ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+  congr 1
+  ext1
+  exact RingHom.ext fun r => MvPolynomial.eval₂Hom_C c v r
+
 theorem isProper_of_proj {K : Type} [CommRing K] {P : Scheme.{0}} {t : P ⟶ Sp K} (h : IsProjOver t) : IsProper t := by
   obtain ⟨N, j, _, e⟩ := h
   have := isProper_str K N
@@ -87,7 +95,7 @@ theorem DifferentiableLines.flag_embedding_atlas_projective : ∀ (E : Type) [Fi
     refine 𝒰.hom_ext _ _ fun k => ?_
     change κ k.1 k.2 ≫ g en ≫ _ = κ k.1 k.2 ≫ π ≫ Y.s
     obtain ⟨hu, e⟩ := hZ.plk.plk k.1 k.2 en
-    rw [← Category.assoc, e, GlobalTheory.ProjSpace.pt_str, ← Category.assoc, hZ.plk.base, cbase, Category.assoc]
+    rw [← Category.assoc, e, pt_str, ← Category.assoc, hZ.plk.base, cbase, Category.assoc]
     have h : (A.V k.1).2.fromSpec ≫ Y.s = spMap ((A.alpha k.1).comp (RingHom.id c.F)) :=
       (spMap_ev_top _).symm
     rw [h]

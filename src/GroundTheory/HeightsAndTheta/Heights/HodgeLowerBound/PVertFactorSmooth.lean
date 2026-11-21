@@ -88,7 +88,7 @@ theorem isMultiHomog_comp (u : MRing ι) (m : K →₀ ℕ) : IsMultiHomog (comp
   intro e he
   rw [mem_support_iff, coeff_comp] at he
   by_contra h
-  exact he (if_neg h)
+  exact he (by simp [h])
 
 theorem aeval_comp (y : (Σ k, ι k) → Ω) (u : MRing ι) (m : K →₀ ℕ) :
     aeval y (comp u m) = AddMonoidAlgebra.coeff (mConeMap y u) m := by
@@ -215,7 +215,7 @@ theorem exists_forms (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p ∈ D
   have hg' : IsMultiHomog (D.vden p) ⇑bg' := by simpa [bg'] using hg
   have key : AddMonoidAlgebra.coeff (mConeMap D.y (u * D.vnum p - v * D.vden p)) (m + bf') = 0 := by
     have h0 : mConeMap D.y (u * D.vnum p - v * D.vden p) = 0 := huv
-    rw [h0, coeff_zero]
+    simp [h0]
   rw [map_sub, map_mul, map_mul, mConeMap_of_homog _ hf', mConeMap_of_homog _ hg', coeff_sub,
     coeff_mul_monomial, coeff_mul_monomial'] at key
   have hfy : aeval D.y (D.vnum p) ≠ 0 := fun h => hV.num_not_mem (mem_mCoordIdeal_of_aeval_eq_zero _ hf h)

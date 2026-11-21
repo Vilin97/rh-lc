@@ -137,6 +137,9 @@ set_option synthInstance.maxHeartbeats 400000
 
 variable {D : D7}
 
+local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
+local notation "σσ" => GlobalTheory.AdelicLatMove.cF D
+
 private def toE (D : D7) : Formalism.MainNotions.StandardLatticesGL3.AE D ≃+* EAf D :=
   (GlobalTheory.BotFormula.toAfE D).trans (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E).toRingEquiv
 
@@ -145,10 +148,11 @@ private theorem toE_int (y : Formalism.MainNotions.StandardLatticesGL3.AE D) : t
 private theorem comm_sigR (z : Af D.host.F ⊗[D.host.F] D.host.E) :
     Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E (sigR (Af D.host.F) D.sp.cm.sig z) =
       σσ (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
-  | add a b ha hb => simp only [map_add (f := _), ha, hb]
+  induction z using TensorProduct.inductionOn with
   | tmul x a => rfl
+  | add a b ha hb =>
+    simp only [(sigR (Af D.host.F) D.sp.cm.sig).map_add,
+      map_add (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E), (σσ).map_add, ha, hb]
 
 private theorem toE_sgA (y : Formalism.MainNotions.StandardLatticesGL3.AE D) : toE D (Formalism.MainNotions.StandardLatticesGL3.sgA D y) = σσ (toE D y) := by
   change Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E (GlobalTheory.BotFormula.toAfE D (Formalism.MainNotions.StandardLatticesGL3.sgA D y)) = _
@@ -162,10 +166,9 @@ private theorem toE_finStd (V : HSp D) (hG : V.gram = 1) (g : Formalism.L2.Theta
   rfl
 
 private theorem cF_cF (z : EAf D) : σσ (σσ z) = z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
-  | add a b ha hb => simp only [map_add (f := _), ha, hb]
+  induction z using TensorProduct.inductionOn with
   | tmul x a => rw [GlobalTheory.AdelicLatMove.cF_tmul, GlobalTheory.AdelicLatMove.cF_tmul, star_star]
+  | add a b ha hb => simp only [(σσ).map_add, ha, hb]
 
 private theorem cF_oToS (b : 𝓞 D.host.E) :
     σσ (Formalism.L2.DIV.oToS D.host.F D.host.E b : EAf D) = (Formalism.L2.DIV.oToS D.host.F D.host.E (D.host.conj • b) : EAf D) := by
@@ -186,7 +189,9 @@ private theorem cF_mem (z : EAf D) (hz : z ∈ OO) : σσ z ∈ OO := by
       exact h2
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb =>
+    rw [(σσ).map_add]
+    exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 
@@ -296,7 +301,7 @@ private theorem actO_apply (S T : HSp D) (g : Formalism.L2.Theta.GA D S) (y : WO
 
 private theorem rightBlock_eq {κ : Type} [Zero κ] {k d o : ℕ} (ho : o + k = d) (Y : Matrix (Fin k) (Fin d) κ) :
     GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.rightBlock o Y = Y.submatrix id fun j : Fin k => (⟨o + j.1, by omega⟩ : Fin d) :=
-  Matrix.ext fun _ j => dif_pos (by omega : o + j.1 < d)
+  Matrix.ext fun _ j => dite_eq_left (by omega : o + j.1 < d)
 
 private theorem rows_of_support (S T : HSp D) (hS : S.gram = 1) (hT : T.gram = 1) (hc : D.host.ccK = ⊤) (βS : GL (Fin S.rank) (EAf D))
     (hβ : Formalism.L2.DIV.IsFrame βS (Formalism.L2.Col.stdLat D.host.E S.rank)) {e : Formalism.L2.Theta.AE D}
@@ -360,7 +365,7 @@ private theorem exists_intG_cosetFn_ne_zero : ∀ {D : D7} (S T : HSp D), S.gram
   · rw [RingHom.map_sub, hfin]
     unfold unitPt
     by_cases hi : i.1 < o
-    · rw [if_neg (by omega), RingHom.map_zero, sub_zero]
+    · rw [ite_eq_right (by omega), RingHom.map_zero, sub_zero]
       refine inId_sum _ fun l _ => ?_
       rw [mul_comm]
       exact inId_mul (hk l j) (h1 i l hi)
@@ -368,9 +373,9 @@ private theorem exists_intG_cosetFn_ne_zero : ∀ {D : D7} (S T : HSp D), S.gram
         ⟨⟨i.1 - o, by omega⟩, Fin.ext (by dsimp only; omega)⟩
       rw [h2]
       by_cases hij : i' = j
-      · rw [if_pos hij, if_pos (by rw [hij]), sub_self]
+      · rw [ite_eq_left hij, ite_eq_left (by rw [hij]), sub_self]
         exact inId_zero _
-      · rw [if_neg hij, if_neg (fun h => hij (Fin.ext (Nat.add_left_cancel h))), RingHom.map_zero, sub_self]
+      · rw [ite_eq_right hij, ite_eq_right (fun h => hij (Fin.ext (Nat.add_left_cancel h))), RingHom.map_zero, sub_self]
         exact inId_zero _
 
 end GlobalTheory.BotSmallDict.Supp

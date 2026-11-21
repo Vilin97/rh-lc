@@ -37,8 +37,8 @@ theorem det_ne (hY : Y.IsHerm σ B r s ∨ Y.IsSkew σ B r s) : Y.J.det ≠ 0 :=
 theorem exists_eps (hY : Y.IsHerm σ B r s ∨ Y.IsSkew σ B r s) :
     ∃ ε : ℤˣ, (∀ i j, σ (Y.J j i) = ((ε : ℤ) : E) * Y.J i j) ∧ Y.L.IsLattice E := by
   rcases hY with h | h
-  · exact ⟨1, fun i j => by simp [h.herm], h.lat⟩
-  · exact ⟨-1, fun i j => by simp [h.skew], h.lat⟩
+  · exact ⟨1, fun i j => by simp [h.herm], h.lat.toIsLattice⟩
+  · exact ⟨-1, fun i j => by simp [h.skew], h.lat.toIsLattice⟩
 
 theorem form_eps (hs : ∀ x, σ (σ x) = x) {J : Matrix (Fin n) (Fin n) E} {ε : ℤˣ}
     (hJ : ∀ i j, σ (J j i) = ((ε : ℤ) : E) * J i j) (x y : Fin n → E) :

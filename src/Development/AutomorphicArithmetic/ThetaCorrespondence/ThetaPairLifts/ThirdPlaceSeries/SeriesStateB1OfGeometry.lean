@@ -57,7 +57,9 @@ theorem pre_at_twisted_copy_of_side_b_tau_true (hA : GlobalTheory.Published.Glob
     (hB : ∃ Bs : SideB N.toD7 (N.cf (cfOf x)) (N.row l.a.A.row) (lowAll (Dof x)) l.Pq (N.rat l.rat.S) l.rat.In.hL l.rat.In.eig
       l.rat.In.θ, TauTrue Bs.exp)
     (hSb : ∀ i, l.rat.In.Sb ⊆ N.tw.S0 i) (hZ : ∃ Z : GlobalTheory.LamTie.LamDat N.toD7, Z.Ok) :
-    PreAt (P := P) (datTw x N) ((by with_unfolding_all exact ((N.row l.a.A.row) :))) ((by with_unfolding_all exact (l.Pq :))) l.rat.In.hL ((by with_unfolding_all exact (l.rat.In.eig :))) ((by with_unfolding_all exact (l.rat.In.θ :))) := by
+    PreAt (P := P) (Z := (oTw x N).Z) (datTw x N)
+      (by with_unfolding_all exact N.row l.a.A.row) (by with_unfolding_all exact l.Pq) l.rat.In.hL
+      (by with_unfolding_all exact l.rat.In.eig) (by with_unfolding_all exact l.rat.In.θ) := by
   obtain ⟨x', l', ho, -, hrow, hPq, hS', hSb', hhL, heig, hθ, hR, hcG, hgeo⟩ := _root_.GlobalTheory.T.twisted_state_transport_heq_levels' hL x l N
   obtain ⟨o', fits', G_eq', etaF', bk', m', copy', coh', s', r', pin'⟩ := x'
   dsimp only at ho

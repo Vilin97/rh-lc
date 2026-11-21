@@ -14,6 +14,17 @@ noncomputable section
 open Finset MeasureTheory Matrix
 open scoped InnerProductSpace
 
+namespace ReciprocityTheory.ChartRestriction.DS.S7
+
+-- Older stub builds refer to the original generated instance name.
+run_cmd do
+  unless (← Lean.getEnv).contains `ReciprocityTheory.ChartRestriction.DS.S7.instMeasurableSpaceSubtypeUnitsMatrixFinComplexMemSubgroupUJKG do
+    let name := Lean.mkIdent `instMeasurableSpaceSubtypeUnitsMatrixFinComplexMemSubgroupUJKG
+    Lean.Elab.Command.elabCommand (← `(abbrev $name:ident {n : ℕ}
+      (ε : Fin n → Bool) : MeasurableSpace (KG ε) := borel _))
+
+end ReciprocityTheory.ChartRestriction.DS.S7
+
 namespace CompanionTheory.RgFd
 
 open ReciprocityTheory.ChartRestriction.DS ReciprocityTheory.ChartRestriction.DS.S7
@@ -114,13 +125,15 @@ theorem nd_muCD_univ {ε : Fin n → Bool} (hq : q0 ε = 0) : muCD ε Set.univ =
   obtain ⟨s, hs⟩ := nd_const_sign hq
   have := nd_isEmpty hs
   have h := lintegral_muCD ε (fun _ => 1) measurable_const
-  rw [lintegral_one] at h
+  simp only [lintegral_one] at h
   rw [h, nd_cPQ hq, ENNReal.ofReal_one, one_mul]
   have hz : ∫⁻ z : PCoord ε → ℂ, ENNReal.ofReal (Jac z) = 1 := by
     simp only [nd_jac_one hs, ENNReal.ofReal_one, lintegral_one]
     rw [MeasureTheory.volume_pi, Measure.pi_of_empty]
     simp
-  simp only [one_mul, hz, lintegral_one, measure_univ]
+  simp only [one_mul, hz]
+  rw [lintegral_one]
+  exact (CompactHaarProbability.dk_isProb ε).measure_univ
 
 theorem nd_finrank {ε : Fin n → Bool} (hq : q0 ε = 0) {lam : Fin n → ℝ} (hl : StrictAnti lam)
     (T : KType ε (lowK ε lam)) : (Module.finrank ℂ T.V : ℝ) = dimVlam lam := by

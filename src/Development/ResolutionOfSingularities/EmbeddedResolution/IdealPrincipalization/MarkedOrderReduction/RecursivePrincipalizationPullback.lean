@@ -380,7 +380,7 @@ private theorem appendRecursivePrincipalization_eq_self_of_eq_none (hinv : Comap
     appendRecursivePrincipalization hinv T rc s J μ = s := by
   have h1 : appendRecursivePrincipalization hinv T rc s J μ = appendIfMarked hinv s J μ (rc (tripleAtLength T s J μ) hd) := by
     unfold appendRecursivePrincipalization
-    exact dif_pos hd
+    exact dite_eq_left hd
   rw [h1]
   unfold appendIfMarked
   rw [h]
@@ -396,7 +396,7 @@ private theorem appendRecursivePrincipalization_eq_append_of_eq_some (hinv : Com
     appendRecursivePrincipalization hinv T rc s J μ = s.append d hinv := by
   have h1 : appendRecursivePrincipalization hinv T rc s J μ = appendIfMarked hinv s J μ (rc (tripleAtLength T s J μ) hd) := by
     unfold appendRecursivePrincipalization
-    exact dif_pos hd
+    exact dite_eq_left hd
   rw [h1]
   unfold appendIfMarked
   rw [h]
@@ -448,23 +448,33 @@ private theorem nonempty_sequenceOfBlowupsPullback_of_markedDataOfSeq {k₁ k₂
     · have he : markedDataOfSeq s J μ σ = some ((MarkedBlowupSequenceData.ofMarkedSequence σ).toMarkedBlowupSequenceData
           (s.proj s.length ≫ p) (s.ideal s.length) m (s.boundary s.length) hm) := by
         unfold markedDataOfSeq
-        exact dif_pos hm
+        exact dite_eq_left hm
       have he' : markedDataOfSeq s' K ν σ' = some ((MarkedBlowupSequenceData.ofMarkedSequence σ').toMarkedBlowupSequenceData
           (s'.proj s'.length ≫ q) (s'.ideal s'.length) m' (s'.boundary s'.length) hm') := by
         unfold markedDataOfSeq
-        exact dif_pos hm'
+        exact dite_eq_left hm'
       have hdd := Option.some.inj (hrem.symm.trans he)
       have hdd' := Option.some.inj (hrem'.symm.trans he')
       subst hdd
       subst hdd'
-      exact ⟨SequenceOfBlowupsPullback.toBlowupDataOfSeq cc⟩
+      exact ⟨{
+        idx := cc.idx
+        map := SequenceOfBlowupsPullback.ofSequenceOfBlowupsMap cc
+        idx_length := SequenceOfBlowupsPullback.index_ofSequenceOfBlowups_length cc
+        idx_lt := SequenceOfBlowupsPullback.index_lt_ofSequenceOfBlowups_length cc
+        idx_strictMono := SequenceOfBlowupsPullback.index_lt_index_succ_of_lt_length_ofSequenceOfBlowups cc
+        isPullback := SequenceOfBlowupsPullback.isPullback_projectionToBase_ofSequenceOfBlowups cc
+        step := SequenceOfBlowupsPullback.ofSequenceOfBlowups_blowupMorphism_comp_map cc
+        center_comap := SequenceOfBlowupsPullback.center_ofSequenceOfBlowups_eq_comap cc
+        center_ne_top := SequenceOfBlowupsPullback.center_ofSequenceOfBlowups_ne_top cc
+        omitted := SequenceOfBlowupsPullback.ofSequenceOfBlowups_ne_of_mem_unmatched_center cc }⟩
     · have hnone : markedDataOfSeq s' K ν σ' = none := by
         unfold markedDataOfSeq
-        exact dif_neg hm'
+        exact dite_eq_right hm'
       exact absurd (hrem'.symm.trans hnone) (Option.some_ne_none d')
   · have hnone : markedDataOfSeq s J μ σ = none := by
       unfold markedDataOfSeq
-      exact dif_neg hm
+      exact dite_eq_right hm
     exact absurd (hrem.symm.trans hnone) (Option.some_ne_none d)
 
 theorem nonempty_sequenceOfBlowupsPullback_appendRecursive (hG : PrincipalizationGeometryHypotheses.{u}) (hinv : ComapIsoInvariance.{u})
@@ -688,7 +698,7 @@ theorem appendRecursive_proj_center_ne_of_orderAtLeastLocus_empty (hG : Principa
     · exfalso
       have hrs : markedDataOfSeq s J μ (principalizationOfDimLe T A (tripleAtLength T s J μ) hd) = none := by
         unfold markedDataOfSeq
-        exact dif_neg hm
+        exact dite_eq_right hm
       have he : appendRecursivePrincipalization hinv T (principalizationOfDimLe T A) s J μ = s :=
         appendRecursivePrincipalization_eq_self_of_eq_none hinv T (principalizationOfDimLe T A) s J μ hd hrs
       rw [he] at hi
@@ -696,7 +706,7 @@ theorem appendRecursive_proj_center_ne_of_orderAtLeastLocus_empty (hG : Principa
   · exfalso
     have he : appendRecursivePrincipalization hinv T (principalizationOfDimLe T A) s J μ = s := by
       unfold appendRecursivePrincipalization
-      exact dif_neg hd
+      exact dite_eq_right hd
     rw [he] at hi
     omega
 
@@ -709,12 +719,12 @@ private theorem appendRecursivePrincipalization_eq_self_or_append (hinv : ComapI
         (s.boundary s.length), appendRecursivePrincipalization hinv T rc s J μ = s.append t hinv := by
   unfold appendRecursivePrincipalization
   by_cases hd : (tripleAtLength T s J μ).krullDimSucc ≤ T.krullDimSucc
-  · rw [dif_pos hd]
+  · rw [dite_eq_left hd]
     unfold appendIfMarked
     cases hrem : markedDataOfSeq s J μ (rc (tripleAtLength T s J μ) hd) with
     | none => exact Or.inl rfl
     | some d => exact Or.inr ⟨d, rfl⟩
-  · rw [dif_neg hd]
+  · rw [dite_eq_right hd]
     exact Or.inl rfl
 
 theorem nonempty_sequenceOfBlowupsPullback_of_orderAtLeastLocus_empty (hG : PrincipalizationGeometryHypotheses.{u}) (hinv : ComapIsoInvariance.{u})

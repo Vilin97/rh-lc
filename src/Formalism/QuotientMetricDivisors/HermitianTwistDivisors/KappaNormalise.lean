@@ -176,14 +176,11 @@ theorem kappa_invariance : KappaInvariance := by
       Formalism.HN.dual_polygon_identity K (Fin D → K) (Fin D) (Pi.basisFun K (Fin D)) XE hXE R hfg hspan
     have hne : Formalism.HN.dualLat R ≠ ⊥ := by
       intro h
-      have h2 : Submodule.span K (((⊥ : Submodule (𝓞 K) (Module.Dual K (Fin D → K)))) :
-          Set (Module.Dual K (Fin D → K))) = ⊥ := by simp
-      rw [h, h2] at hdspan
-      have h1 : finrank K (Module.Dual K (Fin D → K)) = D := by
-        simp [Subspace.dual_finrank_eq]
-      have h3 := congrArg (fun U : Submodule K (Module.Dual K (Fin D → K)) => finrank K U) hdspan
-      simp only [finrank_bot, finrank_top, h1] at h3
-      omega
+      rw [h, Submodule.bot_coe, Submodule.span_zero_singleton] at hdspan
+      let b := (Pi.basisFun K (Fin D)).dualBasis
+      have hb : b ⟨0, hD⟩ ∈ (⊤ : Submodule K _) := Submodule.mem_top
+      rw [← hdspan, Submodule.mem_bot] at hb
+      exact b.ne_zero _ hb
     obtain ⟨-, -, h, -⟩ := Formalism.HN.twist K (Module.Dual K (Fin D → K)) (Fin D)
       (Pi.basisFun K (Fin D)).dualBasis (Formalism.HN.dualFrame XE) (fun v => Real.sqrt (t v)) hXd hsq
       (Formalism.HN.dualLat R) hdfg

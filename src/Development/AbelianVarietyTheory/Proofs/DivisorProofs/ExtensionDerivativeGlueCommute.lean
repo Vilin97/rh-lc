@@ -50,7 +50,7 @@ theorem planeMat_mulVec {n n₁ : ℕ} (H : Plane E n n₁) (u : Fin n₁ → E)
   ring
 
 theorem planeCoef_mul_planeMat (σ : E →ₐ[F] E) (B : Base F E) {n n₁ i₀ i₁ : ℕ} (H : Plane E n n₁) (Y : Spc F E n)
-    (Y₁ : Spc F E n₁) [Submodule.IsLattice E Y.L] (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) :
+    (Y₁ : Spc F E n₁) [Submodule.IsFullLattice E Y.L] (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) :
     planeCoef H * planeMat H = 1 := by
   have h : n₁ + 2 = n := hH.rank.symm
   set e : Fin n₁ ⊕ Fin 2 ≃ Fin n := finSumFinEquiv.trans (finCongr h) with he
@@ -71,7 +71,7 @@ theorem planeCoef_mul_planeMat (σ : E →ₐ[F] E) (B : Base F E) {n n₁ i₀ 
         exact Equiv.sum_comp e.symm (fun k => planeMat H i k * Sum.elim u ![s, t] k)
       rw [Matrix.mulVecLin_apply, hc, planeMat_mulVec]
       abel
-    rw [Submodule.IsLattice.span_eq_top, top_le_iff] at hle
+    rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := Y.L), top_le_iff] at hle
     intro w
     obtain ⟨p, hp⟩ : w ∈ LinearMap.range (Matrix.mulVecLin M') := by rw [hle]; trivial
     exact ⟨p, hp⟩
@@ -83,8 +83,8 @@ theorem posS_injective {d₁ n₁ : ℕ} : Function.Injective (posS : Ic d₁ n�
   rintro (j | a) (j' | a') h <;> simp_all [posS]
 
 theorem exists_ratS_single (σ : E →ₐ[F] E) (B : Base F E) {n d n₁ d₁ i₀ i₁ j₀ j₁ : ℕ} (X : Spc F E n) (W : Spc F E d)
-    (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (H : Plane E n n₁) (H' : Plane E d d₁) [Submodule.IsLattice E X.L]
-    [Submodule.IsLattice E W.L] (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hH' : H'.IsAdapted σ B W W₁ i₀ i₁)
+    (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (H : Plane E n n₁) (H' : Plane E d d₁) [Submodule.IsFullLattice E X.L]
+    [Submodule.IsFullLattice E W.L] (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hH' : H'.IsAdapted σ B W W₁ i₀ i₁)
     (k₀ : Kc F E d₁ n₁) : ∃ u : Matrix (Fin n) (Fin d) E, ∀ k, ratS H H' u k = if k = k₀ then 1 else 0 := by
   classical
   set C : Matrix (Fin n₁ ⊕ Fin 2) (Fin d₁ ⊕ Fin 2) E :=
@@ -134,10 +134,10 @@ theorem incM_smul {m k : Type} (c : F) (u : Matrix m k E) :
   show (1 : AF F) ⊗ₜ[F] (c • u i j) = c • ((1 : AF F) ⊗ₜ[F] u i j)
   rw [TensorProduct.tmul_smul]
 
-theorem exists_zsmul_mem_lat {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] (x : Fin n → E) :
+theorem exists_zsmul_mem_lat {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L] (x : Fin n → E) :
     ∃ m : ℤ, m ≠ 0 ∧ m • x ∈ L := by
   have hx : x ∈ Submodule.span E (L : Set (Fin n → E)) := by
-    rw [Submodule.IsLattice.span_eq_top (A := E) (M := L)]; exact Submodule.mem_top
+    rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := L)]; exact Submodule.mem_top
   induction hx using Submodule.span_induction with
   | mem y hy => exact ⟨1, one_ne_zero, by rwa [one_smul]⟩
   | zero => exact ⟨1, one_ne_zero, by rw [smul_zero]; exact zero_mem _⟩
@@ -168,8 +168,8 @@ theorem incM_sum {m k ι : Type} (s : Finset ι) (f : ι → Matrix m k E) :
   set_option synthInstance.maxHeartbeats 100000 in
     simp [incM, Matrix.sum_apply, map_sum]
 
-theorem eventually_smul_mem_latAtV {n d : ℕ} (X : Spc F E n) (W : Spc F E d) [Submodule.IsLattice E X.L]
-    [Submodule.IsLattice E W.L] (u : Matrix (Fin n) (Fin d) E) :
+theorem eventually_smul_mem_latAtV {n d : ℕ} (X : Spc F E n) (W : Spc F E d) [Submodule.IsFullLattice E X.L]
+    [Submodule.IsFullLattice E W.L] (u : Matrix (Fin n) (Fin d) E) :
     ∀ᶠ v in cofinite, ∀ a : AF F, At (evFin F v) a → evFin F v a ∈ v.adicCompletionIntegers F →
       a • incM F u ∈ latAtV X W v := by
   classical
@@ -204,7 +204,7 @@ theorem vacS_eventually_std : ∀ {F E : Type} [Field F] [NumberField F] [Field 
   classical
   haveI := hX.lat
   haveI := hW.lat
-  obtain ⟨G, hG⟩ := GlobalTheory.VacIndic.exists_gen X.L W.L hX.lat hW.lat
+  obtain ⟨G, hG⟩ := GlobalTheory.VacIndic.exists_gen X.L W.L hX.lat.toIsLattice hW.lat.toIsLattice
   choose M hM using exists_ratS_single σ B X W X₁ W₁ H H' hH hH'
   have e1 : ∀ᶠ v in cofinite, ∀ g ∈ G, ∀ k,
       algebraMap F (Fv F v) (ratS H H' g k) ∈ v.adicCompletionIntegers F :=

@@ -18,7 +18,7 @@ theorem awleib_ext_pf : EtaleSimplicialCochainEqOfEvaluationsAgree := by
   · obtain ⟨N, rfl⟩ := hp
     rw [← cancel_epi (chainsXIso R E N).inv]
     apply Sheaf.hom_ext
-    apply sheafify_hom_ext _ _ _ (Sheaf.cond _)
+    apply sheafify_hom_ext _ _ _ (K.X q).property
     ext U : 2
     apply ModuleCat.free_hom_ext
     intro x

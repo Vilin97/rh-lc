@@ -124,7 +124,12 @@ theorem Th_le_Hp {S : HSpace E} {r : ℕ} {T T' : E} (Λ : Submodule (𝓞 E) S.
   have h1 := (Submodule.mem_inf.1 (Submodule.mem_inf.1 hp).1).1
   exact (Submodule.mem_prod.1 h1).1
 
-theorem corankPosG : PI.PairCorankPos.CorankPosG := by
+theorem corankPosG :
+    ∀ (E : Type) [Field E] [NumberField E] [StarRing E] (S : HSpace E) (r k : ℕ),
+      finrank E S.V = k + 2 * r + 1 →
+      ∀ Λ : Submodule (𝓞 E) S.V, Submodule.IsFullLattice E Λ →
+      ∀ (T T' : E) (F : LFlag S r T) (F' F'' : LFlag S r T') (β : S.V ≃ₗ[E] S.V),
+        IsLift Λ F → IsLift Λ F' → Gval F F' ≠ 0 → 1 ≤ s0 Λ F F' F'' β k := by
   intro E _ _ _ S r k hdim Λ hΛ T T' F F' F'' β hL hL' hG
   have hu := linIndep F.fl F'.fl hG
   have h1 := finrank_orth_add_le S _ hu (UUE Λ F F') (frame_mem_UUE Λ hΛ F F' hL hL')

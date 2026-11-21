@@ -18,7 +18,9 @@ theorem UpperTheory.finiteDimensional_cuspForms_of_level_and_derivOp_bound :
   intro K _ _ n μ _ d b C U S hU hS hfix hbound
   obtain ⟨N, hN, hNv⟩ := UpperTheory.exists_nhds_displacement_le_half_of_derivOp_bound _ _ _ (isExpLieAlgebra K n) d b C
   obtain ⟨N', hN', hN'd⟩ := UpperTheory.exists_nhds_one_normOneGL_factorization K n N U hN hU
-  obtain ⟨f, hf⟩ := UpperTheory.exists_approximate_identity_integrated (normOneGL (K := K) (n := n)) (CuspL2 μ) (cuspRepT μ) μ N' hN'
+  have hApprox := UpperTheory.exists_approximate_identity_integrated
+    (normOneGL (K := K) (n := n)) (CuspL2 μ) (cuspRepT μ) μ N' hN'
+  obtain ⟨f, hf⟩ := hApprox
   have key : ∀ v ∈ S.map (cuspVecL μ),
       ‖(cuspRepT μ).integrated μ (UnitaryRep.ccToL1 μ f) v - v‖ ≤ 1 / 2 * ‖v‖ := by
     rintro _ ⟨φ, hφ, rfl⟩

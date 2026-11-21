@@ -283,7 +283,7 @@ theorem nabDelDual : NabDelDual := by
   intro K _ _ _ ι _ n lam G M _ hG hM
   have hone : ∀ a : K, a ∈ (algebraMap (𝓞 K) K).range ↔ a ∈ (1 : Submodule (𝓞 K) K) := fun a => by
     rw [Submodule.mem_one, RingHom.mem_range]
-  have hM' : ∀ τ, Submodule.IsLattice K (hdualFr (G τ) (M τ)) := fun τ =>
+  have hM' : ∀ τ, Submodule.IsFullLattice K (hdualFr (G τ) (M τ)) := fun τ =>
     (GlobalTheory.DualLat.dualFr_lattice_and_hdual.1 K n (G τ) (M τ) (hG τ) (hM τ)).2
   have hfr : ∀ w : HeightOneSpectrum (𝓞 K), ∃ B B' : ι → GL (Fin n) K,
       (∀ τ, (B τ : Matrix (Fin n) (Fin n) K)ᴴ * G τ * (B' τ : Matrix (Fin n) (Fin n) K) = 1) ∧
@@ -292,7 +292,7 @@ theorem nabDelDual : NabDelDual := by
     choose B hB using fun τ => GlobalTheory.LatBasisAt.basisAtEx K n (M τ) (hM τ) (conjPl w)
     choose B' hB' using fun τ => exists_dual_frame (G τ) (hG τ) (B τ)
     exact ⟨B, B', hB', hB, fun τ =>
-      isBasisAt_hdual (G τ) (M τ) (Submodule.IsLattice.fg (self := hM τ)) w (B τ) (B' τ) (hB τ) (hB' τ)⟩
+      isBasisAt_hdual (G τ) (M τ) (hM τ).fg w (B τ) (B' τ) (hB τ) (hB' τ)⟩
   have hnab : ∀ F ∈ nabP lam M, F ∈ VV K lam := GlobalTheory.T.transportedLattice_localization_free_le_coefficientSpace.2.2 K ι n lam M hM
   have hdel : ∀ F ∈ delP lam M, F ∈ VV K lam := fun F hF =>
     hnab F (transLat_mono lam (delStd_le_nabStd K lam) M hF)

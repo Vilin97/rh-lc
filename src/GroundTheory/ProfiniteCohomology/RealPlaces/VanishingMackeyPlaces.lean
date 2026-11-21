@@ -9,6 +9,7 @@ public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.Splitting
 @[expose] public section
 
 set_option maxSynthPendingDepth 1
+set_option synthInstance.maxHeartbeats 400000
 
 noncomputable section
 
@@ -239,7 +240,7 @@ theorem realMemberPlace_surjective : Function.Surjective (realMemberPlace S ιr 
   let d : MackeyDoubleCoset (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S))
       (gsRealFamily S ιr v).toMonoidHom :=
     DoubleCoset.mk _ _ x
-  obtain ⟨a, b, ha, hb, hab⟩ := DoubleCoset.mk_out_eq_mul
+  obtain ⟨a, ha, b, hb, hab⟩ := DoubleCoset.mk_out_eq_mul
     (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)) (gsRealFamily S ιr v).toMonoidHom.range x
   obtain ⟨h, rfl⟩ := MonoidHom.mem_range.1 hb
   have hout : d.out = a * x * gsRealFamily S ιr v h := hab

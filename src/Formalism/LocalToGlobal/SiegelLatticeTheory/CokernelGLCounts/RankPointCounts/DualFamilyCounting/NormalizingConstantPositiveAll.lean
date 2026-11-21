@@ -38,9 +38,9 @@ theorem normalizing_constants_all (hCov : Formalism.L2.SG.Pf.NcReal.JX.CovolRef)
   have hStd : StdHyp T.X.B.I.cm.sig T.X.B.I.J T.ψ :=
     ⟨MassDataVolumesW.stepCM T.X, MassDataVolumesW.stepHerm T.X, T.ψ_char, T.ψ_std⟩
   have hlat : ∃ L : Submodule (NumberField.RingOfIntegers T.X.B.I.E) (Fin T.X.B.I.n → T.X.B.I.E),
-      Submodule.IsLattice T.X.B.I.E L ∧
+      Submodule.IsFullLattice T.X.B.I.E L ∧
       (L : Set (Fin T.X.B.I.n → T.X.B.I.E)) = (T.X.B.I.L : Set (Fin T.X.B.I.n → T.X.B.I.E)) :=
-    ⟨T.X.B.I.L, Submodule.IsLattice.of_fg T.X.B.I.E T.X.B.I.L_fg, rfl⟩
+    ⟨T.X.B.I.L, ⟨Submodule.IsLattice.of_fg T.X.B.I.E T.X.B.I.L_fg, T.X.B.I.L_span⟩, rfl⟩
   have hdet' : (gramE T.X.B.I.cm.sig T.X.B.I.J (tupH (frameOf T.X u'))).det ≠ 0 :=
     Formalism.L2.SG.Pf.Rescale.standard_gram_nondegenerate T.X.B.I.F T.X.B.I.E T.X.B.I.cm.sig T.X.B.I.n T.X.B.I.J _ _ _
       (fun x => star_star x) hStd.2.1 (Formalism.L2.SG.Pf.Rescale.frame_stdX T.X u')

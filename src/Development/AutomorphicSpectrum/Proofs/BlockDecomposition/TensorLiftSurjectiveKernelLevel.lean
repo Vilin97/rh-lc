@@ -23,8 +23,7 @@ section Generic
 theorem tensor_ringHom_ext {R S T B : Type*} [CommRing R] [CommRing S] [CommRing T] [CommRing B]
     [Algebra R S] [Algebra R T] {f g : S ⊗[R] T →+* B} (h : ∀ a b, f (a ⊗ₜ b) = g (a ⊗ₜ b)) : f = g := by
   refine RingHom.ext fun z => ?_
-  induction z using TensorProduct.induction_on with
-  | zero => rw [map_zero, map_zero]
+  induction z using TensorProduct.inductionOn with
   | tmul a b => exact h a b
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
@@ -63,7 +62,7 @@ theorem surjective_of_span {Wr C B T : Type*} [CommRing Wr] [CommRing C] [CommRi
   induction hy using Submodule.span_induction with
   | mem x hx => exact hS x hx
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [hg]; exact mul_mem (hgr c) hx
 
 end Generic

@@ -120,29 +120,10 @@ theorem exists_isBasisAt_one (M : ι → Submodule (𝓞 K) (Fin n → K))
 
 theorem transLat_fg (hB : BasisAtEx) (lam : ι → DomWeight n) (T : Submodule (𝓞 K) (Pol K ι n)) (hT : T.FG)
     (hsp : Submodule.span K (T : Set (Pol K ι n)) = VV K lam)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) :
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) :
     (transLat lam T M).FG := by
   classical
-  obtain ⟨m, hm⟩ := Ideal.exists_maximal (𝓞 K)
-  let w₀ : HeightOneSpectrum (𝓞 K) :=
-    ⟨m, hm.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hm (RingOfIntegers.not_isField K)⟩
-  have hMfull : ∀ τ, Submodule.IsFullLattice K (M τ) := by
-    intro τ
-    obtain ⟨B, hBw⟩ := hB K n (M τ) (hM τ) w₀
-    have hcol : Submodule.span K (colLat B : Set (Fin n → K)) = ⊤ := by
-      rw [colLat, Submodule.span_span_of_tower]
-      change Submodule.span K (Set.range (B : Matrix (Fin n) (Fin n) K).col) = ⊤
-      rw [← Matrix.range_mulVecLin]
-      exact LinearMap.range_eq_top.mpr (Matrix.mulVec_surjective_iff_isUnit.mpr B.isUnit)
-    refine { toIsLattice := hM τ, span_eq_top := ?_ }
-    rw [eq_top_iff, ← hcol, Submodule.span_le]
-    intro x hx
-    apply Submodule.span_le_restrictScalars (GlobalTheory.LatBasisAt.locRing w₀) K _
-    unfold IsBasisAt at hBw
-    rw [← GlobalTheory.LatBasisAt.mem_localization_iff_mem_span, hBw,
-      GlobalTheory.LatBasisAt.mem_localization_iff_mem_span]
-    exact Submodule.subset_span hx
-  obtain ⟨t, ht, htw⟩ := exists_isBasisAt_one M hMfull
+  obtain ⟨t, ht, htw⟩ := exists_isBasisAt_one M hM
   have hmem : ∀ F ∈ transLat lam T M, ∀ (w : HeightOneSpectrum (𝓞 K)) (B : ι → GL (Fin n) K),
       (∀ τ, IsBasisAt w (M τ) (B τ)) → actP lam B⁻¹ F ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T := by
     intro F hF w B hB
@@ -191,14 +172,53 @@ theorem transLat_fg (hB : BasisAtEx) (lam : ι → DomWeight n) (T : Submodule (
 
 theorem transLat_isLattice (hB : BasisAtEx) (lam : ι → DomWeight n) (T : Submodule (𝓞 K) (Pol K ι n)) (hT : T.FG)
     (hsp : Submodule.span K (T : Set (Pol K ι n)) = VV K lam)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ))
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ))
     (hloc : ∀ (w : HeightOneSpectrum (𝓞 K)) (B : ι → GL (Fin n) K), (∀ τ, IsBasisAt w (M τ) (B τ)) →
       Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (transLat lam T M) =
         (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T).map ((actP lam B).restrictScalars (𝓞 K))) :
-    Submodule.IsLattice K ((transLat lam T M).comap ((VV K lam).subtype.restrictScalars (𝓞 K))) := by
-  apply Submodule.IsLattice.of_fg K
-  refine Submodule.fg_of_fg_map_injective ((VV K lam).subtype.restrictScalars (𝓞 K)) Subtype.val_injective ?_
-  exact (transLat_fg hB lam T hT hsp M hM).of_le (Submodule.map_comap_le _ _)
+    Submodule.IsFullLattice K ((transLat lam T M).comap ((VV K lam).subtype.restrictScalars (𝓞 K))) := by
+  classical
+  let L := (transLat lam T M).comap ((VV K lam).subtype.restrictScalars (𝓞 K))
+  have hL : Submodule.IsLattice K L := by
+    apply Submodule.IsLattice.of_fg K
+    refine Submodule.fg_of_fg_map_injective ((VV K lam).subtype.restrictScalars (𝓞 K)) Subtype.val_injective ?_
+    exact (transLat_fg hB lam T hT hsp M hM).of_le (Submodule.map_comap_le _ _)
+  refine { toIsLattice := hL, span_eq_top := ?_ }
+  obtain ⟨m, hm⟩ := Ideal.exists_maximal (𝓞 K)
+  let w : HeightOneSpectrum (𝓞 K) :=
+    ⟨m, hm.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hm (RingOfIntegers.not_isField K)⟩
+  choose B hBw using fun τ => hB K n (M τ) (hM τ) w
+  let Q := (Submodule.span K (L : Set (VV K lam))).map (VV K lam).subtype
+  have hTQ : ∀ y ∈ T, actP lam B y ∈ Q := by
+    intro y hy
+    have hyV : y ∈ VV K lam := hsp ▸ Submodule.subset_span hy
+    have hyLoc : actP lam B y ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (transLat lam T M) := by
+      rw [hloc w B hBw]
+      exact ⟨y, ⟨1, by simp, by simpa using hy⟩, rfl⟩
+    obtain ⟨s, hs, hsY⟩ := hyLoc
+    have hs0 : algebraMap (𝓞 K) K s ≠ 0 := by
+      intro hzero
+      have hs0 : s = 0 := (IsFractionRing.injective (𝓞 K) K) (by simpa using hzero)
+      exact hs (hs0 ▸ w.asIdeal.zero_mem)
+    have hyBV := polyAction_mem_VV lam B hyV
+    have hsQ : algebraMap (𝓞 K) K s • actP lam B y ∈ Q := by
+      rw [algebraMap_smul]
+      exact ⟨⟨s • actP lam B y, (VV K lam).smul_mem _ hyBV⟩,
+        Submodule.subset_span hsY, rfl⟩
+    exact (Q.smul_mem_iff hs0).mp hsQ
+  have hspan : VV K lam ≤ Q.comap (actP lam B) := by
+    rw [← hsp, Submodule.span_le]
+    exact hTQ
+  apply eq_top_iff.mpr
+  intro x _
+  have hx : actP lam B⁻¹ (x : Pol K ι n) ∈ VV K lam := polyAction_mem_VV lam B⁻¹ x.2
+  have h := hspan hx
+  change actP lam B (actP lam B⁻¹ (x : Pol K ι n)) ∈ Q at h
+  rw [← polyAction_mul, mul_inv_cancel, polyAction_one₂] at h
+  obtain ⟨z, hz, heq⟩ := h
+  have : z = x := Subtype.ext heq
+  change x ∈ Submodule.span K (L : Set (VV K lam))
+  simpa [this] using hz
 
 theorem nabDelLattice : NabDelLattice := by
   intro K _ _ ι _ n lam M hM

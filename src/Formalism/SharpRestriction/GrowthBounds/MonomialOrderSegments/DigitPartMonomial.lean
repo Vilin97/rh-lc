@@ -68,17 +68,18 @@ theorem coeff_ddiv {σ : Type} (M β : σ →₀ ℕ) (F : MvPolynomial σ K) :
   | monomial α c =>
     rw [ddiv_monomial, coeff_monomial]
     by_cases h : M ≤ α
-    · rw [if_pos h, coeff_monomial]
+    · rw [ite_eq_left h, coeff_monomial]
       by_cases h2 : α - M = β
       · have : α = β + M := by rw [← h2, tsub_add_cancel_of_le h]
-        rw [if_pos h2, if_pos this, this]
+        rw [ite_eq_left h2, ite_eq_left this, this]
       · have : ¬ α = β + M := by
           intro h3; apply h2; rw [h3, add_tsub_cancel_right]
-        rw [if_neg h2, if_neg this, zero_mul]
+        rw [ite_eq_right h2, ite_eq_right this, zero_mul]
     · have : ¬ α = β + M := by
         intro h3; apply h; rw [h3]; exact le_add_self
-      rw [if_neg h, if_neg this, coeff_zero, zero_mul]
-  | add p q hp hq => rw [ddiv_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+      rw [ite_eq_right h, ite_eq_right this, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, zero_mul]
+  | add p q hp hq =>
+    simp only [ddiv_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hp, hq, add_mul]
 
 namespace TwistData
 

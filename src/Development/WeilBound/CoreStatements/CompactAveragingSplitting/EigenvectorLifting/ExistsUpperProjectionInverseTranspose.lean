@@ -174,6 +174,9 @@ omit [MeasurableSpace k] [BorelSpace k] in
 theorem shellSet_eq_cell (ϖ : kˣ) (m : Fin a → ℤ) : shellSet ϖ m = cell k (Fin a) ϖ m := by
   unfold shellSet cell
   congr 1
+  apply Units.ext
+  rw [diagGL_val, val_torusElt]
+  simp
 
 omit [BorelSpace k] in
 theorem shellSum_eq (μ : Measure (GL (Fin a) k)) (ϖ : kˣ) (ν : kˣ →* ℂˣ) (z : ℂ) (φ : Matrix (Fin a) (Fin a) k → ℂ) :

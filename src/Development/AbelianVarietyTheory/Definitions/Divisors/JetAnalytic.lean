@@ -118,6 +118,17 @@ structure CxPt (𝔠 : FracId (FR E)) (φ : I → E →+* ℂ) (L : Set E) where
 
   cm : ∀ i, U.IsCMVec i (y i) (w i)
 
+def CxPt.low (T : CxPt 𝔠 φ L) (i : I) : Module.End ℂ (HdR T.X.A) :=
+  T.s i • (T.ψ.flip (T.y i)).smulRight (T.y i)
+
+def CxPt.A (T : CxPt 𝔠 φ L) (i : I) : ℂ := Real.pi * T.U.h i * T.s i * T.w i ^ 2
+
+def CxPt.IsOver (T : CxPt 𝔠 φ L) {R : Type} [CommRing R] (σ : R →+* ℂ)
+    (X₀ : Obj (FR E) 𝔠 (Sp R)) (δ₀ : X₀.DetGen) (N : I → Module.End R (HdR X₀.A)) : Prop :=
+  ∃ (p : T.X.A.left ⟶ X₀.A.left) (m : GrpMor (dp0 R) (𝟙 _) X₀.A (dp0 ℂ) (𝟙 _) T.X.A σ (spMap σ) p),
+    T.X.IsPullBy X₀ (spMap σ) p ∧ Obj.DetCorr σ p δ₀.1 T.δ.1 ∧
+      ∀ i x₀ x, m.Corr x₀ x → m.Corr (N i x₀) (T.low i x)
+
 end Cx
 
 def IsEis {F : Type} [Field F] [NumberField F] (𝔞 𝔟 : FracId F) (k : ℕ) (G : ((F →+* ℝ) → ℂ) → ℂ) : Prop :=

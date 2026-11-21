@@ -210,14 +210,14 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
   have hδ0 : ∀ l k, δ l (T (0, k)) = if k = l then 1 else 0 := by
     intro l k
     show δ l (algebraMap (Kp X la N) (OsK X la w ⧸ m) (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (0, k)))) = _
-    rw [hδK, dK_Tv]
+    rw [hδK, dK_Tv X la N (0, l) (0, k)]
     by_cases hk : k = l
     · subst hk; simp
     · rw [if_neg (fun h => hk (Prod.mk.inj h).2), if_neg hk, map_zero]
   have hδs : ∀ l (i : Fin (WeightFamilies.dimY D j)) k, δ l (T (i.succ, k)) = 0 := by
     intro l i k
     show δ l (algebraMap (Kp X la N) (OsK X la w ⧸ m) (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (i.succ, k)))) = 0
-    rw [hδK, dK_Tv, if_neg (fun h => Fin.succ_ne_zero i (Prod.mk.inj h).1), map_zero]
+    rw [hδK, dK_Tv X la N (0, l) (i.succ, k), if_neg (fun h => Fin.succ_ne_zero i (Prod.mk.inj h).1), map_zero]
   have hδKl : ∀ l (c : X.Kl la), δ l (algebraMap (X.Kl la) (OsK X la w ⧸ m) c) = 0 := by
     intro l c
     show δ l (algebraMap (Kp X la N) (OsK X la w ⧸ m) (algebraMap (X.Kl la) (Kp X la N) c)) = 0
@@ -256,9 +256,9 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
     refine ⟨fun f => ?_⟩
     have hfK : IsAlgebraic (Kp X la N) f := (Algebra.IsIntegral.isIntegral f).isAlgebraic
     have hfO : IsAlgebraic (Op X la N) f :=
-      (IsFractionRing.isAlgebraic_iff (A := Op X la N) (K := Kp X la N) (C := OsK X la w ⧸ m)).2 hfK
+      (IsFractionRing.isAlgebraic_iff (Op X la N) (Kp X la N) (OsK X la w ⧸ m)).2 hfK
     obtain ⟨p, hp0, hp⟩ := hfO
-    obtain ⟨⟨b, hb⟩, hbp⟩ := IsLocalization.integerNormalization_map_to_map (gI X la N).primeCompl p
+    obtain ⟨b, hb, hbp⟩ := IsLocalization.integerNormalization_spec (gI X la N).primeCompl p
     have hp'0 : IsLocalization.integerNormalization (gI X la N).primeCompl p ≠ 0 := by
       intro h0
       rw [h0, Polynomial.map_zero] at hbp

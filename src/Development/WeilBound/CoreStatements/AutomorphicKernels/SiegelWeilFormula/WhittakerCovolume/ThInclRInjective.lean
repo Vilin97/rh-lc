@@ -111,12 +111,4 @@ theorem th_haar_map {G H : Type} [Group G] [TopologicalSpace G] [MeasurableSpace
 
 end PositivityTheory.SiegelWeilFormula.KWhit
 
-example {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    {σ : E →ₐ[F] E} (d : PositivityTheory.SiegelWeilFormula.SD σ) :
-    MeasurableMul (UA σ d.A.J) := by
-  let : BorelSpace (UA σ d.A.J) := ⟨rfl⟩
-  let : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) _
-  let : IsTopologicalGroup (UA σ d.A.J) := Subgroup.instIsTopologicalGroupSubtypeMem _
-  infer_instance
-
 end

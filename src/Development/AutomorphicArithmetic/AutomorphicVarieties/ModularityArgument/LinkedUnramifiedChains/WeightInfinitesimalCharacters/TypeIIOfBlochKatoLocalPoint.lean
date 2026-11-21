@@ -8,7 +8,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuL
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N Formalism.BasicNotions Formalism.BasicNotions.Loc GlobalTheory.GalOfCusp Matrix IsLocalRing
 open UpperTheory.V UpperTheory.V.Base UpperTheory.V.HV UpperTheory.V.Alg UpperTheory.V.U3
 
-set_option maxHeartbeats 750000 in
+set_option maxHeartbeats 4000000 in
 theorem UpperTheory.V.Z.J.typeII_of_blochKato_localPoint :
     U3.CohInp → Z.Kato.KatoTwo → Th.RigII → ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {K : Type} [Field K] [NumberField K] [IsCMField K] [Algebra K Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) {U : (_root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition _ (D.η.comp D.ι) (D.Ψ.comp D.ι)))} {g₁ : G ℚ Ω}, D.Marked g₁ → ∀ (S : D.Ring U g₁) (f : S.R →ₐ[c.O] PadicAlgCl l), IsLocPt f → ∀ ι : Qbar l ≃+* ℂ, TypeII D.η (push f S.r.hom) → (∀ W : G ℚ Ω →* GL (Fin 2) (PadicAlgCl l), D.IsExt (push f S.r.hom) W → D.IsModular ι W) → Af.BlochKatoSelmerVanishes l (adRep (push f S.r.hom)) := by
   intro hC hK hRig Ω _ _ _ K _ _ _ _ l _ c N _ e ψ D U g₁ hm S f₀ hf₀ ι hII hmod
@@ -63,7 +63,7 @@ theorem UpperTheory.V.Z.J.typeII_of_blochKato_localPoint :
         Y 1 0 * d - Y 1 2 * c, Y 1 1, -Y 1 0 * b + Y 1 2 * a;
         (c * Y 0 0 + d * Y 2 0) * d - (c * Y 0 2 + d * Y 2 2) * c, c * Y 0 1 + d * Y 2 1,
           -(c * Y 0 0 + d * Y 2 0) * b + (c * Y 0 2 + d * Y 2 2) * a] := by
-    apply Matrix.ext <;> refine allFin3 ?_ ?_ ?_ <;> refine allFin3 ?_ ?_ ?_ <;> simp [Matrix.mul_apply, Fin.sum_univ_three] <;> ring
+    apply Matrix.ext <;> refine allFin3 ?_ ?_ ?_ <;> refine allFin3 ?_ ?_ ?_ <;> simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_three] <;> ring
 
   have ad_eq {R : Type} [CommRing R] {x : GG (m := 3) (R := R)} {a b c d : R} (h : a * d - b * c = 1)
       (hx : x.mat = !![a, 0, b; 0, 1, 0; c, 0, d]) (X : Matrix (Fin 3) (Fin 3) R) :
@@ -197,7 +197,7 @@ theorem UpperTheory.V.Z.J.typeII_of_blochKato_localPoint :
         first | ring1 | linear_combination h
     rw [ad_eq h hx, if_pos h1, this, hw, conj_eq]
     apply Matrix.ext <;> refine allFin2 ?_ ?_ <;> refine allFin2 ?_ ?_ <;>
-      simp [Matrix.mul_apply, Fin.sum_univ_two, sA_apply, pA_apply] <;> ring
+      simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, sA_apply, pA_apply] <;> ring
 
   have pA_ad_c {R : Type} [CommRing R] {x : GG (m := 3) (R := R)} (hx : x.mat = 1) (h1 : x.right = -1) (Y : Matrix (Fin 2) (Fin 2) R) :
       pA (x.adFun (sA Y)) = -(Jmat R 2 * Yᵀ * Jmat R 2) := by
@@ -223,7 +223,7 @@ theorem UpperTheory.V.Z.J.typeII_of_blochKato_localPoint :
   have pair_eq {R : Type} [CommRing R] (w : Matrix (Fin 2) (Fin 2) R) :
       wᵀ * Jmat R 2 * (!![-1, 0; 0, 1] * w * !![-1, 0; 0, 1]) = w.det • Jmat R 2 := by
     apply Matrix.ext <;> refine allFin2 ?_ ?_ <;> refine allFin2 ?_ ?_ <;>
-      simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.det_fin_two, Jmat, Fin.rev] <;> ring
+      simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, Matrix.det_fin_two, Jmat, Fin.rev] <;> ring
 
   have isBlock_reducible_three_dim {R : Type} [CommRing R] {Γ : Type} [Group Γ] (η : Γ →* ℤˣ) (Ψ : Γ →* Rˣ) (g : Γ) : IsBlockSL2Embedding (r0 η Ψ g) := by
     refine ⟨(Ψ g : R), 0, 0, ((Ψ g)⁻¹ : Rˣ), by simp, ?_⟩

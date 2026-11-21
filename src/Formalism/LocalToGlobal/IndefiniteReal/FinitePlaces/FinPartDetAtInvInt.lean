@@ -442,7 +442,7 @@ theorem comm_mem_intAf {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intA
     exact mul_mem (Subring.subset_closure (Or.inl ⟨⟨(x : D.host.E), ⟨x, rfl⟩⟩, rfl⟩))
       (Subring.subset_closure (Or.inr ⟨⟨a, fun v => ha v⟩, rfl⟩))
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem toEAf_mem_intAf {z : AE D} (hz : finPart D z ∈ intAE D) : toEAf D z ∈ Formalism.L2.Herm.intAf D.host.F D.host.E :=
@@ -465,15 +465,14 @@ theorem comm_mem_intAE {s : D.host.E ⊗[D.host.F] Af D.host.F} (hs : s ∈ Form
   | one =>
     rw [map_one, Algebra.TensorProduct.one_def]
     exact AddSubgroup.subset_closure ⟨1, hone, 1, by simp⟩
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact intAE_mul hx hy
 
 theorem comm_comm (z : Af D.host.F ⊗[D.host.F] D.host.E) :
     (Algebra.TensorProduct.comm D.host.F D.host.E (Af D.host.F))
       ((Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E) z) = z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a b => simp
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 

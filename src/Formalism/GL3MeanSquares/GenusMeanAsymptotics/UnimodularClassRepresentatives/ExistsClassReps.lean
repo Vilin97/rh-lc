@@ -51,7 +51,7 @@ theorem exists_pairReps (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (�
   obtain ⟨s, hs1, hs2⟩ := exists_classReps hs hd hL
   refine OrbSum.exists_reps_of_cover (pairs h L n) (pairs_stable hs L n)
     (⋃ M ∈ s, (fun x => (M, x)) '' {x : V | x ∈ M ∧ h x x = n}) ?_ ?_ ?_
-  · exact Set.Finite.biUnion s.finite_toSet fun M hM => (finite_rep hd (hs1 M hM).1 n).image _
+  · exact Set.Finite.biUnion s.finite_toSet fun M hM => (finite_rep hd (hs1 M hM).1.toIsLattice n).image _
   · intro c hc
     obtain ⟨M, hM, x, hx, rfl⟩ := Set.mem_iUnion₂.mp hc
     exact ⟨hs1 M hM, hx.1, hx.2⟩
@@ -73,7 +73,7 @@ theorem sum_pairs_eq_rep (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (�
   have key := OrbSum.sum_orbits_on (G := Formalism.HermitianLatticesTheory.isom h) (Prod.fst : Submodule (𝓞 K) V × V → _)
     (fun _ _ => rfl) (pairs h L n) (Formalism.HermitianLatticesTheory.genus h L) (pairs_stable hs L n) (fun p hp => hp.1)
     sX s hsX hsr.1 hX (fun M hM => by simp_rw [exists_smul_iff]; exact hsr.2 M hM)
-    (fun M hM => finite_stab_lat hs hd hM.1)
+    (fun M hM => finite_stab_lat hs hd hM.1.toIsLattice)
   rw [key]
   refine Finset.sum_congr rfl fun M hM => ?_
   have e1 : Nat.card {p : Submodule (𝓞 K) V × V // p ∈ pairs h L n ∧ p.1 = M} = repCount h M n :=

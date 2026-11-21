@@ -237,7 +237,7 @@ theorem exists_hwC (LL : Letters N) (j : ℕ) (Cs : Finset (Fin r))
       wcomp_memC LL j Cs S hSd _ x hx, ?_, ?_⟩
     · intro h0
       have := congrArg (AddMonoidAlgebra.coeff · m0) h0
-      rw [coeff_compP, if_pos (fun c _ => rfl), coeff_zero] at this
+      rw [coeff_compP, if_pos (fun c _ => rfl), AddMonoidAlgebra.coeff_zero] at this
       exact (mem_support_iff.mp hm0) this
     · rw [WtSpC, mem_restrictSupport_iff]
       intro m hm

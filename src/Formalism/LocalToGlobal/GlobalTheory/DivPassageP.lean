@@ -36,15 +36,15 @@ theorem partLat_le (e : Matrix (Fin A.Dg) (Fin A.Dg) K) : A.partLat e ≤ A.Rg :
 
 theorem span_partLat (hL : A.LatG) (e : Matrix (Fin A.Dg) (Fin A.Dg) K) :
     Submodule.span K (A.partLat e : Set (Fin A.Dg → K)) = LinearMap.range e.mulVecLin := by
+  unfold LatG at hL
   apply le_antisymm
   · rw [Submodule.span_le]
     intro y hy
     exact hy.2
   · intro w hw
     have hw' : w ∈ Submodule.span K (A.Rg : Set (Fin A.Dg → K)) := by
-      letI : Submodule.IsFullLattice K A.Rg := by
-        simpa only [LatG] using hL
-      rw [Submodule.IsFullLattice.span_eq_top]; exact Submodule.mem_top
+      rw [hL.span_eq_top]
+      exact Submodule.mem_top
     obtain ⟨d, hd, hm⟩ := exists_smul_mem A.Rg w hw'
     have hdK : algebraMap (𝓞 K) K d ≠ 0 := by
       rw [Ne, map_eq_zero_iff _ (IsFractionRing.injective (𝓞 K) K)]; exact hd
@@ -59,10 +59,9 @@ theorem span_partLat (hL : A.LatG) (e : Matrix (Fin A.Dg) (Fin A.Dg) K) :
     exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
 
 theorem partLat_fg (hL : A.LatG) (e : Matrix (Fin A.Dg) (Fin A.Dg) K) : (A.partLat e).FG := by
-  letI : Submodule.IsFullLattice K A.Rg := by
-    simpa only [LatG] using hL
-  have : IsNoetherian (𝓞 K) A.Rg := isNoetherian_of_fg_of_noetherian A.Rg (Submodule.IsLattice.fg K A.Rg)
-  exact Submodule.FG.of_le_of_isNoetherian (A.partLat_le e)
+  unfold LatG at hL
+  letI := hL
+  exact (Submodule.IsLattice.fg K A.Rg).of_le (A.partLat_le e)
 
 theorem nat_smul_ne_zero {n : ℕ} {h : ℕ} (hh : 0 < h) {y : Fin n → K} (hy : y ≠ 0) : (h : 𝓞 K) • y ≠ 0 := by
   rw [Nat.cast_smul_eq_nsmul]
@@ -98,11 +97,7 @@ theorem levelFacts [_root_.NumberField.IsTotallyComplex K] {D : ℕ} (ι : Matri
     rw [hb, Submodule.mem_bot] at this
     exact nat_smul_ne_zero hh hy0 this
 
-  have hfgI : (A.img ι RR).FG := by
-    letI : Submodule.IsFullLattice K A.Rg := by
-      simpa only [LatG] using hL
-    have : IsNoetherian (𝓞 K) A.Rg := isNoetherian_of_fg_of_noetherian A.Rg (Submodule.IsLattice.fg K A.Rg)
-    exact Submodule.FG.of_le_of_isNoetherian (le_trans hle (A.partLat_le ep))
+  have hfgI : (A.img ι RR).FG := (A.partLat_fg hL ep).of_le hle
   have hinj' : Function.Injective (ι.mulVecLin.restrictScalars (𝓞 K)) := hinj
   have hfg : RR.FG := Submodule.fg_of_fg_map_injective _ hinj' hfgI
 

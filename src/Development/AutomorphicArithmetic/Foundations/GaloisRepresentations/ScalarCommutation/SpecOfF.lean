@@ -148,7 +148,7 @@ private theorem forms_fin {Γ H V : Type} [Group Γ] [Group H] [AddCommGroup V] 
       ∃ γ : Γ, ∃ k ∈ K, g = ι γ * r (DoubleCoset.mk ι.range K g) * k := by
     refine ⟨fun q => Quotient.out q, fun g => ?_⟩
     obtain ⟨h, ⟨γ, rfl⟩, k, hk, e⟩ := (@DoubleCoset.eq _ _ ι.range K _ _).1
-      (DoubleCoset.out_eq' ι.range K (DoubleCoset.mk ι.range K g))
+      (DoubleCoset.out_eq' (DoubleCoset.mk ι.range K g))
     exact ⟨γ, k, hk, e⟩
   let L : HeckeTraceForms.forms ι K ξ →ₗ[ℂ] (DoubleCoset.Quotient (ι.range : Set H) (K : Set H) → V) :=
     { toFun := fun φ q => (φ : H → V) (r q)

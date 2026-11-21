@@ -12,13 +12,10 @@ public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.
 
 @[expose] public section
 
-open AlgebraicGeometry CategoryTheory NumberField Matrix MeasureTheory
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.ThFr GlobalTheory.Dict
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor hiding Level Host
-open GlobalTheory.SW hiding Level
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.IndefR.Datum Formalism.L2.Pj
-open scoped TensorProduct ComplexConjugate
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open NumberField
+open ReciprocityTheory.ChartRestriction.G.FD (Data Frame)
+open GlobalTheory.ThFr (IsSympl per_add)
+open GlobalTheory.Dict (pv pv_smul span_range_pv)
 
 namespace GlobalTheory.FrameEquiv
 

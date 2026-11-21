@@ -103,7 +103,7 @@ end A5
 open A5 in
 theorem tendsto_singS_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (hm : 2 ≤ finrank K V) :
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (hm : 2 ≤ finrank K V) :
     Tendsto (fun j : ℕ => ((j : ℝ) ^ 2) ^ (-((Formalism.HermitianLatticesTheory.fDeg K * finrank K V : ℕ) : ℤ)) *
         ∑ᶠ n ∈ boxSet K F ((j : ℝ) ^ 2),
           (Ideal.absNorm (Ideal.span {n}) : ℝ) ^ (finrank K V - 1) * singS F h L n)
@@ -111,17 +111,17 @@ theorem tendsto_singS_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
         Real.sqrt ((2 * Formalism.HermitianLatticesTheory.vInv K) ^ Formalism.HermitianLatticesTheory.fDeg K) * lValEtaF K F (finrank K V))) := by
   classical
   set S : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} :=
-    (finite_vd_ne_zero (F := F) hK hF hs hd hL hLi).toFinset with hSdef
+    (finite_vd_ne_zero (F := F) hK hF hs hd hL.toIsLattice hLi).toFinset with hSdef
   have hS : ∀ 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, vd h L 𝔭.1 ≠ 0 → 𝔭 ∈ S := fun 𝔭 h𝔭 =>
     (Set.Finite.mem_toFinset _).mpr h𝔭
-  obtain ⟨C, hC⟩ := dominated hK hF hs hd hL hLi hm S
+  obtain ⟨C, hC⟩ := dominated hK hF hs hd hL.toIsLattice hLi hm S
   set c0 : ℝ := (finrank K V : ℝ) ^ (-(Formalism.HermitianLatticesTheory.fDeg K : ℤ)) /
     Real.sqrt ((2 * Formalism.HermitianLatticesTheory.vInv K) ^ Formalism.HermitianLatticesTheory.fDeg K) with hc0
   have main := tendsto_weighted_tprod
     (q := fun 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} => (Ideal.absNorm 𝔭.1 : ℝ))
     (fun 𝔭 => by exact_mod_cast two_le_absNorm 𝔭.2) summable_inv_absNorm_sq S
-    (ρ := roL h L S) (roL_zero hK hF hs hd hL hLi hm hS) (fun 𝔭 h𝔭 j => by simp [roL, h𝔭])
-    (roL_diff hK hF hs hd hL hLi hm hS) valF
+    (ρ := roL h L S) (roL_zero hK hF hs hd hL.toIsLattice hLi hm hS) (fun 𝔭 h𝔭 j => by simp [roL, h𝔭])
+    (roL_diff hK hF hs hd hL.toIsLattice hLi hm hS) valF
     (fun j : ℕ => (boxSet_finite hK hF ((j : ℝ) ^ 2)).toFinset)
     (fun n => (Ideal.absNorm (Ideal.span {n}) : ℝ) ^ (finrank K V - 1) * ∏ 𝔭 ∈ S, aLoc h L 𝔭 n)
     (fun j : ℕ => ((j : ℝ) ^ 2) ^ (-((Formalism.HermitianLatticesTheory.fDeg K * finrank K V : ℕ) : ℤ)))
@@ -132,9 +132,9 @@ theorem tendsto_singS_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     congr 1
     refine Finset.sum_congr rfl fun n hn => ?_
     have hb : n ∈ boxSet K F ((j : ℝ) ^ 2) := (Set.Finite.mem_toFinset _).mp hn
-    rw [singS_eq hK hF hs hd hL hLi hm hS (ne_zero_of_mem_boxSet hb), mul_assoc]
+    rw [singS_eq hK hF hs hd hL.toIsLattice hLi hm hS (ne_zero_of_mem_boxSet hb), mul_assoc]
   · intro v hv
-    have ht := tendsto_sum_box_ideal hK hF hs hd hL hLi hm S hS (bId_ne_bot v)
+    have ht := tendsto_sum_box_ideal hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hm S hS (bId_ne_bot v)
       (fun 𝔭 h𝔭 => bId_sup_eq_top (Finset.disjoint_right.mp hv h𝔭))
     simp_rw [coe_filter_box hK hF, finsum_mem_coe_finset] at ht
     rw [absNorm_bId] at ht
@@ -149,7 +149,7 @@ theorem tendsto_singS_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     have : (1 : ℝ) ≤ (j : ℝ) := by exact_mod_cast hj
     nlinarith
   · intro S' hS'
-    have ht := tendsto_sum_box_ideal hK hF hs hd hL hLi hm S' (fun 𝔭 h𝔭 => hS' (hS 𝔭 h𝔭))
+    have ht := tendsto_sum_box_ideal hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hm S' (fun 𝔭 h𝔭 => hS' (hS 𝔭 h𝔭))
       (b := ⊤) (by simp) (fun 𝔭 _ => by simp)
     simp only [Submodule.mem_top, and_true, Ideal.absNorm_top, Nat.cast_one, div_one] at ht
     refine ht.congr fun j => ?_
@@ -158,7 +158,7 @@ theorem tendsto_singS_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     congr 1
     refine Finset.sum_congr rfl fun n hn => ?_
     have hb : n ∈ boxSet K F ((j : ℝ) ^ 2) := (Set.Finite.mem_toFinset _).mp hn
-    rw [mul_assoc, ← prod_aLoc hK hF hs hd hL hLi hS hS' (ne_zero_of_mem_boxSet hb)]
+    rw [mul_assoc, ← prod_aLoc hK hF hs hd hL.toIsLattice hLi hS hS' (ne_zero_of_mem_boxSet hb)]
     rfl
 
 end Formalism.HermitianLattices.Ext.L3

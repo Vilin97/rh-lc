@@ -117,7 +117,7 @@ theorem layer_covolume (E : Type) [Field E] [NumberField E] [StarRing E] (hE : I
     (X : InfinitePlace E → Matrix (Fin n) (Fin n) ℂ) (hX : PlaceMatch φ P X) (hP : ∀ v, IsUnit (P v))
     (F : ℕ → Submodule (𝓞 E) (Fin n → E)) (r : ℕ → ℕ) (T : ∀ b, Matrix (Fin n) (Fin (r b)) E)
     (T' : ∀ b, Matrix (Fin (r b)) (Fin n) E) (Λ : ∀ b, Submodule (𝓞 E) (Fin (r b) → E))
-    (hT : Biorth r m T T') (hΛ : ∀ b, Submodule.IsLattice E (Λ b))
+    (hT : Biorth r m T T') (hΛ : ∀ b, Submodule.IsFullLattice E (Λ b))
     (hF : ∀ k y, y ∈ F k ↔ ∀ b, T' b *ᵥ y ∈ Λ b ∧ (k ≤ b → T' b *ᵥ y = 0))
     (U : ι → ∀ b, Matrix (Fin n) (Fin (r b)) ℂ) (hU : ∀ v, Biorth r m (U v) (fun b => (U v b)ᴴ))
     (hW : ∀ v k y, y ∈ locFlag (φ v) (P v) F k ↔ ∀ b, k ≤ b → (U v b)ᴴ *ᵥ y = 0)
@@ -167,7 +167,7 @@ theorem layer_covolume (E : Type) [Field E] [NumberField E] [StarRing E] (hE : I
         · rw [Matrix.smul_mulVec]; exact zsmul_mem (h1 y hy) k
         · have : (k • Z).map (φ v) = k • Z.map (φ v) := by ext p q; simp
           rw [this, Matrix.mul_smul, Matrix.smul_mul, ← h2]; rfl }
-  have hM := fun b : Fin m => GlobalTheory.T.homLatticeCovolume_embedding_family E hE ι φ hX.1 _ _ (Λ b) (Λ (b + c + 1)) (hΛ _) (hΛ _)
+  have hM := fun b : Fin m => GlobalTheory.T.homLatticeCovolume_embedding_family E hE ι φ hX.1 _ _ (Λ b) (Λ (b + c + 1)) (hΛ _).toIsLattice (hΛ _).toIsLattice
     (fun v => G v b) (fun v => G v (b + c + 1)) (fun v => hdet v _) (fun v => hdet v _) (M b)
     (fun z => Iff.rfl)
   obtain ⟨dL, lL, hcov⟩ := GlobalTheory.T.covolume_pi_lattice_unitary_coordinates ι {i : Fin d // deg i = c} (Fin m) (fun b => r b)
@@ -193,7 +193,7 @@ theorem layer_covolume (E : Type) [Field E] [NumberField E] [StarRing E] (hE : I
     have : 0 < |(discr E : ℝ)| := abs_pos.2 (by exact_mod_cast discr_ne_zero E)
     unfold Formalism.HermitianLatticesTheory.vInv
     positivity
-  have hp := GlobalTheory.T.height_flag_piece_triangular_frame E hE ι n m φ P X hX hP F r T T' Λ hT hΛ hF U hU hW
+  have hp := GlobalTheory.T.height_flag_piece_triangular_frame E hE ι n m φ P X hX hP F r T T' Λ hT (fun b => (hΛ b).toIsLattice) hF U hU hW
   rw [h, hp, hp, div_mul_cancel_left₀ (pow_pos hv _).ne', mul_pow, ← pow_mul, inv_pow, mul_assoc,
     mul_assoc, div_eq_mul_inv]
 
@@ -281,7 +281,9 @@ theorem radicalCovolume : RadicalCovolume := by
     rcases le_total b m with h | h
     · exact hF.1 h
     · exact (hF.2.2.1 b h).le
-  obtain ⟨T, T', Λ, hT, hΛ, hFT⟩ := GlobalTheory.T.exists_biorthogonal_frame_of_saturated_flag I.E I.n m F r hF.1 hF.2.1 hF.2.2.1 (Submodule.IsLattice.of_fg I.E hfg)
+  obtain ⟨T, T', Λ, hT, hΛ, hFT⟩ := GlobalTheory.T.exists_biorthogonal_frame_of_saturated_flag I.E I.n m F r hF.1 hF.2.1 hF.2.2.1 (by
+      letI : Submodule.IsLattice I.E (F m) := Submodule.IsLattice.of_fg I.E hfg
+      exact ⟨hsp⟩)
     (fun b y hy hyb => by
       by_cases hb : m ≤ b
       · rwa [hF.2.2.1 b hb]

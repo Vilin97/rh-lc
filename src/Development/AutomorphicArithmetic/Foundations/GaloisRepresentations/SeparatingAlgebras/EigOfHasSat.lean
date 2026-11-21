@@ -21,7 +21,7 @@ private theorem eig_of_hasSat {E : Type} [Field E] [NumberField E] (w : HeightOn
     (hB : GlobalTheory.LFun.HasSatGL w ρ B) {v : V} (hv : v ∈ GlobalTheory.PRep.fixed ρ (GlobalTheory.LFun.KGL w (n := a))) (hv0 : v ≠ 0)
     (l : Module.Dual ℂ V) : UpperTheory.V.Af.Smo.Eig w B fun g => l (ρ g v) := by
   refine ⟨hB.card, fun y k hk => ?_, fun ϖ hϖ j hj y => ?_⟩
-  · rw [map_mul, Module.End.mul_apply, GlobalTheory.LGrp.mem_fixed.1 hv k hk]
+  · rw [map_mul, mul_apply_eq_comp, GlobalTheory.LGrp.mem_fixed.1 hv k hk]
   · have he := (hB.2 v hv hv0).2.2.2 ϖ hϖ j hj
     let ev : V →+ ℂ :=
       { toFun := fun ψ => l (ρ y ψ)
@@ -30,7 +30,7 @@ private theorem eig_of_hasSat {E : Type} [Field E] [NumberField E] (w : HeightOn
     have hs := ev.map_finsum (GlobalTheory.LFun.finite_heckeVec (Formalism.UG.Final.GLintComm E w a)
       (GlobalTheory.LFun.Tj_mem_hecke hϖ j) ρ v)
     refine Eq.trans (finsum_congr fun c => ?_) (hs.symm.trans ((congrArg ev he).trans ?_))
-    · simp [ev, map_mul, Module.End.mul_apply]
+    · simp [ev, map_mul]
     · simp [ev]
 
 private theorem eigen_top {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) {a : ℕ}
@@ -40,11 +40,12 @@ private theorem eigen_top {E : Type} [Field E] [NumberField E] (w : HeightOneSpe
     (hf : ∀ g, ∀ k ∈ GroundTheory.Automorphic.GLnLocal.integralGL (w.adicCompletion E) a, f (g * k) = f g) :
     eigenSubalgebra μ z f hf = ⊤ := by
   obtain ⟨hKeq, hu, hq, -⟩ := UpperTheory.V.Af.Smo.sphDict E a w
-  have hTj := UpperTheory.V.Af.Smo.tjSet UpperTheory.V.Af.Smo.sphDict E a w
+  have hTj : UpperTheory.V.Af.Smo.TjSet := UpperTheory.V.Af.Smo.tjSet UpperTheory.V.Af.Smo.sphDict
   have hT : ∀ r ≤ a, minusculeHecke μ r ∈ eigenSubalgebra μ z f hf := by
     intro r hr
     refine GlobalTheory.HenQ.ShellOp.minuscule_mem_of z hf hr fun g => ?_
-    rw [hKeq, ← hTj r hr, hE.eig _ hu r hr g, hq r hr, GlobalTheory.HenQ.ShellOp.esymm_eq, GlobalTheory.LFun.satEig]
+    rw [hKeq, ← hTj E a w r hr, hE.eig _ hu r hr g, hq r hr,
+      GlobalTheory.HenQ.ShellOp.esymm_eq, GlobalTheory.LFun.satEig]
   exact eigenSubalgebra_eq_top z hf hT (GlobalTheory.HenQ.ShellOp.central_mem_of_top z hf (hT a le_rfl))
 
 end UpperTheory.Gal.Gen
@@ -92,7 +93,7 @@ theorem UpperTheory.Gal.Gen.locOp_pf :
       exact hE.inv
     have h1 : H ∈ eigenSubalgebra μ z (fun g => l (σ.ρ g v)) hf := eigen_top w μ z hE hf ▸ Algebra.mem_top
     have h2 := h1 1
-    simp only [one_mul, map_one, Module.End.one_apply] at h2
+    simp only [one_mul, map_one, one_apply_eq_self] at h2
     have h3 := hT.2 (fun g => l (σ.ρ g v)) hf
     have h4 : l (opOf σ.ρ h v) = (m : ℂ) * ∑ g ∈ T, (H : HeckeAlgebra μ) g * l (σ.ρ g v) := by
       set_option synthInstance.maxHeartbeats 100000 in

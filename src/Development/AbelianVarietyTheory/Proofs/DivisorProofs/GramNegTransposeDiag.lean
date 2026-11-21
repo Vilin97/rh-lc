@@ -11,18 +11,12 @@ public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries
 
 @[expose] public section
 
-open AlgebraicGeometry CategoryTheory NumberField Matrix MeasureTheory
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.ThFr GlobalTheory.Dict
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor hiding Level Host
-open GlobalTheory.SW hiding Level
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.IndefR.Datum Formalism.L2.Pj
-open scoped TensorProduct ComplexConjugate
+open Matrix Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.IndefR.Datum
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.FrameEquiv
 
-
-open Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.FWT in
+open Formalism.IndefR.Links Formalism.IndefR.Mult in
 open scoped ComplexOrder in
 theorem isCartanInv_cart_model {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (τ : D.what₂.Tau) :
     IsCartanInv (gramAt D V τ) (cart M τ) := by
@@ -57,7 +51,4 @@ theorem isCartanInv_cart_model {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar}
     rw [h3, Matrix.mul_assoc, hs, Matrix.mul_one]
   · rw [hG]
     exact Matrix.PosDef.conjTranspose_mul_self _ (Matrix.mulVec_injective_of_isUnit (M.fr_unit τ))
-
-
-
 end GlobalTheory.FrameEquiv

@@ -154,13 +154,14 @@ theorem exists_point {c : E ≃+* E} {κ : O} {N : ℕ} {La : Type} [AddCommGrou
             perfect := hperf, adj := hadj, om := LinearMap.range mk1, om_lat := ?_,
             ρΩ := omAct C c ρL, om_stable := ?_, ht := ht, ht_lin := ?_, ht_mem := ?_, κ_ne := hκ0,
             κ_mem := ?_, lagr := ?_ }, rfl, rfl, fun _ => rfl, rfl, rfl, ht1⟩
-  · refine { toIsLattice := ⟨?_, ?_⟩, span_eq_top := ?_ }
+  · refine { fg := ?_, linearIndepOn := ?_, span_eq_top := ?_ }
     · rw [LinearMap.range_eq_map]
       exact (Module.Finite.fg_top).map _
     · intro s _ h
       exact (LinearIndependent.iff_fractionRing O C).mp h
     · rw [eq_top_iff]
-      intro x _
+      intro x hx
+      clear hx
       induction x using TensorProduct.induction_on with
       | zero => exact Submodule.zero_mem _
       | tmul c w =>

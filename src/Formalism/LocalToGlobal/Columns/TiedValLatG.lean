@@ -288,7 +288,7 @@ theorem vl_mem_delAtr_iff (hpw : Function.Surjective pw) (J : Matrix (Fin n) (Fi
         fnOf _ (shiftOf lam) (atInf (embAt s emb) ((B⁻¹ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E)) P := by
   have hbas : ∀ (w : Pl.Pl) (B : GL (Fin n) E), IsLocBasis (Pl.resChar w) (M : Set (Fin n → E)) B →
       ∀ τ, IsBasisAt (pw w) (dualFr (tauLat emb τ M)) (vlBd emb B τ) := fun w B hB τ =>
-    pb_isBasisAt_dualFr (pw w) _ (tauLatticeLattice_holds E K ι n emb τ M hM.toIsLattice).fg _ (vl_isBasisAt_tauLat Pl pw hval emb τ w M B hB)
+    pb_isBasisAt_dualFr (pw w) _ (tauLatticeLattice_holds E K ι n emb τ M hM).fg _ (vl_isBasisAt_tauLat Pl pw hval emb τ w M B hB)
   show F.1 ∈ transLat lam (delStd K lam) (fun τ => dualFr (tauLat emb τ M)) ↔ _
   rw [nb_mem_transLat]
   constructor

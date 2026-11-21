@@ -6,6 +6,8 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.Convolut
 public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.KernelTransforms.LocEmb
 public import Development.AutomorphicArithmetic.Foundations.Convolution.GeneralizedMeasures.PolyMem
 public import GroundTheory.AutomorphicForms.Satake
+public import GroundTheory.AutomorphicForms.SphericalIntegral
+public import GroundTheory.AutomorphicForms.MacdonaldHecke
 public import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
 public import GroundTheory.GlobalFields.LocalFieldAtPlace
 public import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace

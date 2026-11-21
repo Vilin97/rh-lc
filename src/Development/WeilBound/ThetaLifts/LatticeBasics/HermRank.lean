@@ -11,7 +11,7 @@ namespace GlobalTheory.ThK.Dbl
 
 open scoped TensorProduct NNReal Matrix Cardinal Classical
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
-open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.CompanionTheory.CMAdele Dense
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.CompanionTheory.CMAdele _root_.GlobalTheory.ThK.Dbl.Dense
 
 namespace Herm
 
@@ -36,7 +36,7 @@ theorem exists_stable {M ι : Type} [AddCommGroup M] [Module ℂ M] [Countable �
   induction hx using Submodule.span_induction with
   | mem _ h => obtain ⟨⟨l, x⟩, rfl⟩ := h; exact Submodule.subset_span ⟨(i :: l, x), by simp⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
@@ -49,7 +49,7 @@ def dL (p : (κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixed
     rw [dOp, dOp, LineDeriv.lineDerivOp_smul, smul_add, RingHom.id_apply]
     congr 1
     ext y
-    simp only [SchwartzMap.smul_apply, SchwartzMap.smulLeftCLM_apply_apply (linForm p.2).hasTemperateGrowth, smul_eq_mul,
+    simp only [smul_apply, SchwartzMap.smulLeftCLM_apply_apply (linForm p.2).hasTemperateGrowth, smul_eq_mul,
       Complex.real_smul]
     ring
 

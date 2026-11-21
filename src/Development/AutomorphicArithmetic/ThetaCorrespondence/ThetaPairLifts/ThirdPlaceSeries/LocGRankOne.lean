@@ -32,6 +32,7 @@ public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLif
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.EventuallyUnr
 public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.IsRecTOfIsRec
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CGTrueT
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsRecTLocRecT
 
 @[expose] public section
@@ -54,10 +55,13 @@ theorem locG_rankOne_alt {hL : _root_.UpperTheory.Zero.LLC.RecTExists} {D : D7} 
   have := host_isCMField D.host
   set χ' := (CGu.equivChar D.host.E (cg.e 1 π)).1 with hχ'
   set χ := (cs.e1 π).1 with hχ
-  have hloc : ∀ v, T.e v (D.naut.locG π v) = _root_.GlobalTheory.CuspRep.ParLawsT.locParT hL (CG.ofChar χ') (D.nd.plOm.2 v) := fun v => by
-    rw [cg.loc, hχ', CGu.ofChar_equivChar]; rfl
-  have unr' : ∀ v, D.naut.unr (D.naut.locG π v) ↔ χ'.UnrAt v := fun v => by
-    rw [T.unr, hloc v]; exact _root_.GlobalTheory.RankOneComp.locParT_ofChar_unr_iff_unrAt hL χ' _
+  have hloc (v : PlE D.host) : T.e v (D.naut.locG π v) =
+      ParLawsT.locParT hL (CG.ofChar χ') (D.nd.plOm.2 v) := by
+    rw [hχ', CGu.ofChar_equivChar]
+    exact cg.loc 1 π v
+  have unr' (v : PlE D.host) : D.naut.unr (D.naut.locG π v) ↔ χ'.UnrAt v := by
+    rw [T.unr v (D.naut.locG π v), hloc v]
+    exact _root_.GlobalTheory.RankOneComp.locParT_ofChar_unr_iff_unrAt hL χ' (D.nd.plOm.2 v)
   have hchar : χ' = χ := by
     rw [← mul_inv_eq_one]
     apply GlobalTheory.HeckeSplitRow.eq_one_of_split D.host

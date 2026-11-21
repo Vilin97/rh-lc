@@ -16,7 +16,7 @@ def CrdBounds : Prop :=
     (V : Type) [AddCommGroup V] [Module E V] [Module (𝓞 E) V]
     [IsScalarTower (𝓞 E) E V] [FiniteDimensional E V]
     (M : ℕ) (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞 E) V),
-    Submodule.IsLattice E L0 →
+    Submodule.IsFullLattice E L0 →
     (∃ c : 𝓞 F, c ≠ 0 ∧ ∀ x ∈ crdOf b L0, ∀ i, IsIntegral ℤ ((c : F) • x i)) ∧
     (∃ c : 𝓞 F, c ≠ 0 ∧ ∀ i, ∀ e : E, IsIntegral ℤ e → Pi.single i ((c : F) • e) ∈ crdOf b L0)
 

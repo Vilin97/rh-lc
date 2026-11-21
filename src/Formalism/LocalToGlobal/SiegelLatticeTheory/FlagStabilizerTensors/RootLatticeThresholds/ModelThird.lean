@@ -18,14 +18,12 @@ variable {r : ℕ} (pN : Formalism.MainNotions.S.Point ℂ (r + 1))
 
 local notation "W" => wPt pN
 
-theorem w_symm (x : Fin (r + 1)) : (W).symm x = W x := (Equiv.symm_apply_eq _).2 (wPt_invol pN x).symm
+theorem w_symm (x : Fin (r + 1)) : (W).symm x = W x := wPt_symm pN x
 
 def sw (q : Formalism.FourierDecayAlt.C2.Lstidx W) : Formalism.FourierDecayAlt.C2.Lstidx W :=
   ⟨(W q.1.2, W q.1.1), by
-    have h := q.2
-    refine ⟨?_, ?_⟩
-    · rw [← w_symm, ← w_symm]; exact h.2
-    · rw [w_symm, w_symm, wPt_invol, wPt_invol]; exact h.1⟩
+    exact ⟨by simpa only [w_symm] using q.2.2,
+      by simpa only [w_symm, wPt_invol] using q.2.1⟩⟩
 
 variable (d : Fin (r + 1) → ℂ)
 
@@ -41,13 +39,13 @@ private theorem low_apply' (v : Formalism.FourierDecayAlt.C2.Lstidx W → ℂ) (
   · rw [Finset.sum_eq_single ⟨(i, j), h⟩]
     · simp
     · intro q _ hq
-      rw [if_neg]
+      rw [ite_eq_right]
       intro hq'
       exact hq (Subtype.ext hq')
     · intro hh
       exact absurd (Finset.mem_univ _) hh
   · refine Finset.sum_eq_zero fun q _ => ?_
-    rw [if_neg]
+    rw [ite_eq_right]
     intro hq'
     apply h
     have hq2 := q.2
@@ -62,14 +60,14 @@ theorem low_R_mono (hd : ∀ a, d a ≠ 0) (x' : Formalism.FourierDecayAlt.C2.Ls
     Finset.sum_eq_single ((wPt pN) i) (fun a _ ha => by
       have hia : i ≠ (wPt pN) a := fun hi => ha (by rw [hi, wPt_invol])
       simp [Formalism.FourierDecayAlt.C2.monoP, hia]) (by simp)]
-  simp only [Formalism.FourierDecayAlt.C2.monoP, Matrix.of_apply, Matrix.conjTranspose_apply, wPt_invol, eq_self_iff_true,
-    if_true]
+  simp only [Formalism.FourierDecayAlt.C2.monoP, Matrix.of_apply, Matrix.conjTranspose_apply,
+    wPt_invol, ite_true]
   rw [low_apply', low_apply']
   by_cases h1 : i = (wPt pN) b
   · subst h1
     simp [wPt_invol, w_symm]
   · have h1' : b ≠ (wPt pN) i := fun h => h1 (by rw [h, wPt_invol])
-    rw [if_neg h1, if_neg h1', zero_add, zero_add]
+    rw [ite_eq_right h1, ite_eq_right h1', zero_add, zero_add]
     have key : ((wPt pN) b < i ∧ (wPt pN).symm i < (wPt pN).symm ((wPt pN) b)) ↔
         ((wPt pN) i < b ∧ (wPt pN).symm b < (wPt pN).symm ((wPt pN) i)) := by
       rw [Equiv.symm_apply_apply, Equiv.symm_apply_apply, w_symm, w_symm]
@@ -91,7 +89,7 @@ theorem mono_mul_inv (hd : ∀ a, d a ≠ 0) :
   ext i b
   simp only [Formalism.FourierDecayAlt.C2.monoP, Matrix.mul_apply, Matrix.of_apply, Matrix.one_apply]
   rw [Finset.sum_eq_single ((wPt pN).symm b)]
-  · simp only [Equiv.apply_symm_apply, eq_self_iff_true, if_true]
+  · simp only [Equiv.apply_symm_apply, ite_true]
     split_ifs with h
     · exact mul_inv_cancel₀ (hd _)
     · exact zero_mul _

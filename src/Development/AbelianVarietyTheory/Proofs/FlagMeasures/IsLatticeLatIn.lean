@@ -63,20 +63,20 @@ theorem span_inf_eq (L : Submodule (𝓞 K) V) (hL : Submodule.IsFullLattice K L
 theorem isLattice_latIn (L : Submodule (𝓞 K) V) (hL : Submodule.IsFullLattice K L) (U : Submodule K V) :
     Submodule.IsFullLattice K (latIn U L) := by
   haveI : Submodule.IsLattice K (latIn U L) := by
-    refine ⟨?_, ?_⟩
-    · refine Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype ?_
-      exact Submodule.FG.of_le hL.fg (Submodule.map_comap_le _ _)
-    · intro s hs hli
-      exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply Submodule.IsLattice.of_fg K
+    refine Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype ?_
+    exact hL.fg.of_le (Submodule.map_comap_le _ _)
   refine ⟨?_⟩
-  · apply top_unique
-    intro x _
-    obtain ⟨r, hr, hru⟩ := Formalism.LFunctionChainParameters.LLcv.span_le_locS (K := K) L (x := (x : V)) (by rw [hL.span_eq_top]; trivial)
-    have h1 : algebraMap (𝓞 K) K r ≠ 0 := by simpa using nonZeroDivisors.ne_zero hr
-    have h2 : r • x ∈ Submodule.span K ((latIn U L : Submodule (𝓞 K) U) : Set U) :=
-      Submodule.subset_span hru
-    rw [← algebraMap_smul K r] at h2
-    exact (Submodule.smul_mem_iff _ h1).1 h2
+  apply Submodule.map_injective_of_injective U.injective_subtype
+  rw [Submodule.map_span, Submodule.map_top, Submodule.range_subtype]
+  refine (congrArg (Submodule.span K) ?_).trans (span_inf_eq L hL U)
+  ext x
+  constructor
+  · rintro ⟨y, hy, rfl⟩
+    exact ⟨hy, y.2⟩
+  · rintro ⟨hx, hxU⟩
+    exact ⟨⟨x, hxU⟩, hx, rfl⟩
+
 variable [StarRing K]
 
 theorem nondeg_of_pd {h : V →ₗ⋆[K] V →ₗ[K] K} (hp : PD h) : h.Nondegenerate := by
@@ -146,12 +146,13 @@ end
 
 theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (h : V →ₗ⋆[K] V →ₗ[K] K), IsCMUnram K → h.IsSymm → PD h → ∀ L : Submodule (𝓞 K) V, IsIntLat h L → Lat.latDetH h L ^ 2 = (discN h L : ℝ) ∧ 0 < Lat.latDetH h L ∧ (∀ j de : ℕ, Cnt.cntPrim h L j de = (primSp h L j (de ^ 2)).encard) ∧ (∀ e : ℕ, Cnt.DiscGen h L e ↔ (∃ t : Finset V, t.card ≤ e ∧ dual h L = L ⊔ Submodule.span (𝓞 K) (t : Set V))) ∧ ∀ (U : Submodule K V), Lat.latDetH h (L ⊓ U.restrictScalars (𝓞 K)) ^ 2 = (discN (hRes h U) (latIn U L) : ℝ) := by
   intro K V _ _ _ _ _ _ _ _ h hK hs hp L hL
+  have hFull : Submodule.IsFullLattice K L := hL.1
   have hle : L ≤ dual h L := fun x hx => (dualBasic_mem_dual _ _ _).2 fun y hy => hL.2 y hy x hx
   have hn := nondeg_of_pd hp
   have h0 := (DiscOrder.main K V h hK hs hn L hL).1
   have hd : Lat.dualInH h L = dual h L := by
     unfold Lat.dualInH
-    rw [hL.1.span_eq_top]
+    rw [hFull.span_eq_top]
     simp
   have h1 : Lat.latDetH h L = Real.sqrt (discN h L : ℝ) := by
     rw [Lat.latDetH, hd, genIdxH_eq_idxN hle h0, discN]
@@ -161,9 +162,9 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     have hsU : (hRes h U).IsSymm := ⟨fun x y => hs.eq x y⟩
     have hpU : PD (hRes h U) := fun τ x hx => hp τ x fun e => hx (Subtype.ext e)
     have hI : IsIntLat (hRes h U) (latIn U L) :=
-      ⟨isLattice_latIn L hL.1 U, fun x hx y hy => hL.2 x hx y hy⟩
+      ⟨isLattice_latIn L hFull U, fun x hx y hy => hL.2 x hx y hy⟩
     have n0 := (DiscOrder.main K U _ hK hsU (nondeg_of_pd hpU) _ hI).1
-    rw [← idxN_dualInH h L hL.1 U] at n0 ⊢
+    rw [← idxN_dualInH h L hFull U] at n0 ⊢
     rw [Lat.latDetH, genIdxH_eq_idxN _ n0]
     intro x hx
     exact ⟨(dualBasic_mem_dual _ _ _).2 fun y hy => hL.2 y hy.1 x hx.1, Submodule.subset_span hx⟩
@@ -173,7 +174,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     exact Real.sqrt_pos.2 (by exact_mod_cast Nat.pos_of_ne_zero h0)
   · have hinj : Function.Injective fun U : Submodule K V => L ⊓ U.restrictScalars (𝓞 K) :=
       Function.LeftInverse.injective (g := fun M : Submodule (𝓞 K) V => Submodule.span K (M : Set V))
-        (span_inf_eq L hL.1)
+        (span_inf_eq L hFull)
     have hsq : ∀ n : ℕ, Real.sqrt (n : ℝ) = de ↔ n = de ^ 2 := fun n => by
       rw [Real.sqrt_eq_iff_eq_sq (Nat.cast_nonneg _) (Nat.cast_nonneg _)]
       exact_mod_cast Iff.rfl
@@ -187,9 +188,9 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     · rintro ⟨U, ⟨a, b⟩, rfl⟩
       refine ⟨⟨inf_le_left, ?_⟩, ?_, ?_⟩
       · simp only
-        rw [span_inf_eq L hL.1]
+        rw [span_inf_eq L hFull]
       · simp only
-        rw [span_inf_eq L hL.1, a]
+        rw [span_inf_eq L hFull, a]
       · simp only
         rw [hU, hsq, b]
 

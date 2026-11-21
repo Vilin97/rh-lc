@@ -18,12 +18,16 @@ open Formalism.HermitianLattices.Ext.L3 Formalism.L2.SG.Pf.Cnt Formalism.L2.SG.P
 variable {K F V : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+local notation "jK" => algebraMap (𝓞 K) K
+
 theorem gramO_apply {m : ℕ} (a : Fin m → 𝓞 F) (Y : Matrix (Fin m) (Fin m) (𝓞 K)) (i j : Fin m) :
     jK (gramO a Y i j) = (∑ l, star (jK (Y l i)) * jK (ι (a l)) * jK (Y l j)) -
       if i = j then jK (ι (a i)) else 0 := by
   rw [gramO, Matrix.sub_apply, Matrix.mul_apply, diagonal_apply]
   simp_rw [mul_diagonal, conjTranspose_apply]
-  split_ifs <;> simp [jK_star, map_sum]
+  have map_star (z : 𝓞 K) : jK (star z) = star (jK z) := rfl
+  split_ifs <;> simp [map_star, map_sum]
 
 def endoOf (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (𝓞 K) V) (𝔭 : Ideal (𝓞 F)) (g : V →ₗ[𝓞 K] V)
     (hA : ∀ x ∈ locF 𝔭 (dualIn h ⊤ L), g x ∈ locF 𝔭 (dualIn h ⊤ L))
@@ -57,9 +61,11 @@ theorem gmap_A (Y : Matrix (Fin m) (Fin m) (𝓞 K))
   intro k
   rw [crd_gmap horth hdiag ha, Finset.mul_sum]
   refine sum_mem fun j _ => ?_
+  have hd : jK (ι (a j)) ≠ 0 := RingOfIntegers.coe_ne_zero_iff.mpr
+    ((map_ne_zero_iff ι (RingOfIntegers.algebraMap.injective F K)).mpr (ha j))
   have e : jK (ι (a k) * Y k j) / jK (ι (a j)) * (jK (ι (a j)) * crd h b a x j) =
       jK (ι (a k)) * (jK (Y k j) * crd h b a x j) := by
-    rw [map_mul, div_mul_eq_mul_div, div_eq_iff (jK_ι_ne_zero (ha j))]; ring
+    rw [map_mul, div_mul_eq_mul_div, div_eq_iff hd]; ring
   rw [← e]
   exact mul_mem (hY k j) (hx j)
 
@@ -77,9 +83,11 @@ theorem h_AB (x y : V) (hx : x ∈ locF 𝔭 (dualIn h ⊤ L)) (hy : y ∈ locF 
   rw [h_expand horth hdiag ha hbX hloc h𝔭.isPrime hL x y,
     h_expand horth hdiag ha hbX hloc h𝔭.isPrime hL y x]
   refine ⟨sum_mem fun i _ => ?_, sum_mem fun i _ => ?_⟩
-  · have e : star (crd h b a x i) * jK (ι (a i)) * crd h b a y i =
+  · have hstar : star (jK (ι (a i))) = jK (ι (a i)) :=
+      (hF _).2 ⟨(a i : F), rfl⟩
+    have e : star (crd h b a x i) * jK (ι (a i)) * crd h b a y i =
         star (jK (ι (a i)) * crd h b a x i) * crd h b a y i := by
-      rw [star_mul', star_jK_ι hF]; ring
+      rw [star_mul', hstar]; ring
     rw [e]
     exact mul_mem (star_mem_SP hF (hx i)) (hy i)
   · rw [mul_assoc]
@@ -99,7 +107,7 @@ theorem form_identity (Y : Matrix (Fin m) (Fin m) (𝓞 K)) (x y : V) :
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ =>
       Finset.sum_congr rfl fun l _ => ?_
     ring
-  · simp only [mul_ite, ite_mul, mul_zero, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  · simp only [mul_ite, ite_mul, mul_zero, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
 
 end
 

@@ -1,8 +1,6 @@
 module
 
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.DiscreteSeriesCoefficientsCuspidal
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbelianDualCrystalOfHyp
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CrystallineSmoothLiftOfRelations
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PeriodComparisonHolds
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsSideExtra
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.GoodReduction.SerreTate
@@ -10,6 +8,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityA
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.LitAut
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.WindowBoundOfLiteratureLevel
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.BaseChangeIsobaricNOf
+public import Development.WeilBound.CoreStatements.AbelianHeightsDuality.DividedPowerAlgebras.CrystallineDeRham
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.AutomorphyLifting.WeakOfAtt
 
 @[expose] public section
@@ -18,7 +17,6 @@ set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 200000
 
 section
-open GlobalTheory.Published
 theorem UpperTheory.One.Join.local_inputs_from_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenImageCondition) :
     _root_.GlobalTheory.Mem.LiteralAutomorphy.LitLocAlt :=
   { bz := (_root_.UpperTheory.LiteratureTheorems.bernstein_zelevinsky_finiteness_of_open O)
@@ -63,9 +61,8 @@ theorem UpperTheory.One.Join.v_window_of_depth_zero_residual_bc_cm (O : _root_.U
 theorem UpperTheory.One.Join.cm_abelian_inputs_from_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenImageCondition) : _root_.GlobalTheory.Mem.LiteralAutomorphy.LiteratureCMHypothesis :=
   { gm := (_root_.UpperTheory.LiteratureTheorems.grothendieck_deformation_of_open O)
     dr := (_root_.UpperTheory.LiteratureTheorems.abelian_de_rham_of_open O)
-    dual := by
-      have hComparison : CrystallineDeRham := FubiniStudyChowHeightFormula₂.Adr.crystallineDeRham
-      exact ⟨_root_.UpperTheory.LiteratureTheorems.dual_abelian_scheme_of_open O, hComparison⟩
+    dual := ⟨_root_.UpperTheory.LiteratureTheorems.dual_abelian_scheme_of_open O,
+      FubiniStudyChowHeightFormula₂.Adr.crystallineDeRham⟩
     per := (GlobalTheory.PeriodFamily.periodComparison_holds)
     gmp := (GlobalTheory.GaussManinTop.main)
     st := (UpperTheory.Lit.serreTateGoodReduction)

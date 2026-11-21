@@ -32,6 +32,7 @@ theorem fix_of_ine (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h
     (σ : G E Ω) (hσ : σ ∈ Ine (F := E) A) (e : E') : σ (algebraMap E' Ω e) = algebraMap E' Ω e := by
   classical
   have : CharZero Ω := charZero_of_injective_algebraMap (algebraMap E Ω).injective
+  let LL := IntermediateField.normalClosure E E' Ω
   have : NumberField (LL) :=
     { to_charZero := charZero_of_injective_algebraMap (algebraMap E (LL)).injective
       to_finiteDimensional := Module.Finite.trans E (LL) }

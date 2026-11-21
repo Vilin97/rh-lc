@@ -9,7 +9,7 @@ public import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
 
 @[expose] public section
 
-open Ad3 Ad3.S
+open Ad3 (Pl Qv pOf)
 open NumberField IsDedekindDomain GroundTheory.Global GroundTheory.LocalField
 open GroundTheory.Automorphic.GodementSection (localChar coe_localChar)
 open GroundTheory.Global.RationalSymbol (prime)

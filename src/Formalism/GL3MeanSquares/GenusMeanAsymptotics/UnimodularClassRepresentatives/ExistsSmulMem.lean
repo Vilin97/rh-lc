@@ -114,6 +114,25 @@ theorem isLattice_cut (S : VecSplit h h') {Λ : Submodule (𝓞 K) V}
       (Submodule.FG.of_le_of_isNoetherian hle)
   · intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
+
+theorem isFullLattice_cut (S : VecSplit h h') {L : Submodule (𝓞 K) V}
+    (hL : Submodule.IsFullLattice K L) : Submodule.IsFullLattice K (S.cut L) := by
+  refine { toIsLattice := isLattice_cut S hL.toIsLattice, span_eq_top := ?_ }
+  rw [eq_top_iff]
+  intro a _
+  have ha : S.ι a ∈ Submodule.span K (L : Set V) := by
+    rw [hL.span_eq_top]
+    exact Submodule.mem_top
+  obtain ⟨y, hy, r, hya⟩ := (IsLocalization.mem_span_iff (nonZeroDivisors (𝓞 K))).mp ha
+  rw [Submodule.span_eq] at hy
+  have hr : (r : 𝓞 K) • a ∈ S.cut L := by
+    rw [S.mem_cut_iff, ← algebraMap_smul K (r : 𝓞 K), map_smul, hya, smul_smul,
+      IsLocalization.mk'_spec', map_one, one_smul]
+    exact hy
+  have hmul := Submodule.smul_mem (Submodule.span K (S.cut L : Set V'))
+    (IsLocalization.mk' K 1 r) (Submodule.subset_span hr)
+  rwa [← algebraMap_smul K (r : 𝓞 K), smul_smul, IsLocalization.mk'_spec, map_one, one_smul] at hmul
+
 def emb (S : VecSplit h h') (Λ' : Submodule (𝓞 K) V') : Submodule (𝓞 K) V :=
   Λ'.map (S.ι.restrictScalars (𝓞 K))
 

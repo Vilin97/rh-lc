@@ -16,6 +16,9 @@ open LocalSpans idealPowerSpanBounds localizedQuotients WCA
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 variable {V : Type} [AddCommGroup V] [Module K V]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+local notation "κ" => algebraMap (𝓞 K) K
+
 variable {𝔭 : Ideal (𝓞 F)}
 
 theorem symm0 {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) {x y : V} (hxy : h x y = 0) : h y x = 0 := by

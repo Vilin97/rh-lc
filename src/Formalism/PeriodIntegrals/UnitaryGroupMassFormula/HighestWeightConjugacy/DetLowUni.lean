@@ -37,16 +37,19 @@ theorem det_lowUni {n : ℕ} {L : Matrix (Fin n) (Fin n) ℂ} (h : LowUni L) : L
 
 theorem exists_LU : ∀ (n : ℕ) (g : Matrix (Fin n) (Fin n) ℂ),
     (∀ k (hk : k < n), (g.submatrix (Fin.castLE hk.le) (Fin.castLE hk.le)).det ≠ 0) →
-    ∃ L U : Matrix (Fin n) (Fin n) ℂ, LowUni L ∧ UpTri U ∧ g = L * U
-  | 0, g, _ => ⟨1, g, ⟨fun i => i.elim0, fun i => i.elim0⟩, fun i => i.elim0, by simp⟩
-  | n + 1, g, hg => by
+    ∃ L U : Matrix (Fin n) (Fin n) ℂ, LowUni L ∧ UpTri U ∧ g = L * U := by
+  intro n
+  induction n with
+  | zero =>
+    intro g _
+    exact ⟨1, g, ⟨fun i => i.elim0, fun i => i.elim0⟩, fun i => i.elim0, by simp⟩
+  | succ n ih =>
+    intro g hg
     let A : Matrix (Fin n) (Fin n) ℂ := g.submatrix Fin.castSucc Fin.castSucc
     have hAk : ∀ k (hk : k < n), (A.submatrix (Fin.castLE hk.le) (Fin.castLE hk.le)).det ≠ 0 := by
       intro k hk
       exact hg k (Nat.lt_succ_of_lt hk)
-    obtain ⟨L', U', hL', hU', hLU⟩ :
-        ∃ L U : Matrix (Fin n) (Fin n) ℂ, LowUni L ∧ UpTri U ∧ A = L * U :=
-      exists_LU n A hAk
+    obtain ⟨L', U', hL', hU', hLU⟩ := ih A hAk
     have hdetA : A.det ≠ 0 := by
       exact hg n (Nat.lt_succ_self n)
     have hdL : L'.det = 1 := det_lowUni hL'

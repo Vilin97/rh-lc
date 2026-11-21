@@ -153,21 +153,6 @@ def ctFun (r : ℕ) (F : RightCosetSpace Γ₁ → ℂ) (y : normOneGL (K := K) 
 def constantTermL2 (r : ℕ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (y : normOneGL (K := K) (n := n)) : ℂ :=
   ctFun r φ y
 
-theorem _root_.GroundTheory.Automorphic.CuspidalProjection.constantTermL2_unipotent_mul
-    (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (r : ℕ)
-    (Y : UPos n r → 𝔸[K]) (z : normOneGL (K := K) (n := n)) :
-    constantTermL2 μ r φ (unipOne r Y * z) = constantTermL2 μ r φ z := by
-  simp only [constantTermL2, ctFun]
-  have h : ∀ X, unipOne r X * (unipOne r Y * z) = unipOne r (X + Y) * z := by
-    intro X
-    rw [unipOne_add, mul_assoc]
-  simp_rw [h]
-  refine setIntegral_add_right_of_periodic isAddFundamentalDomain_unipFundamentalDomain
-    (h := fun X => (φ : RightCosetSpace Γ₁ → ℂ) (mk Γ₁ (unipOne r X * z))) (fun ξ hξ s => ?_) Y
-  show (φ : RightCosetSpace Γ₁ → ℂ) (mk Γ₁ (unipOne r (ξ + s) * z)) =
-    φ (mk Γ₁ (unipOne r s * z))
-  rw [unipOne_add, mul_assoc, mk_mul_of_mem (unipOne_mem_rationalGLOne r ⟨ξ, hξ⟩)]
-
 theorem ae_ae_unip_notMem {Z : Set (RightCosetSpace Γ₁)} (hZ : quotientMeasure Γ₁ μ Z = 0)
     (r : ℕ) : ∀ᵐ y ∂μ, ∀ᵐ X ∂unipMeasure K n r, mk Γ₁ (unipOne r X * y) ∉ Z := by
   set Z' := toMeasurable (quotientMeasure Γ₁ μ) Z

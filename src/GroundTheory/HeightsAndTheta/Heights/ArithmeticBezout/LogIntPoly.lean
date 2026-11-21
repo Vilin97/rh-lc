@@ -61,7 +61,7 @@ theorem eval_scaleP (p : ι → Prop) [DecidablePred p] (a : ℂ) (u : ι → �
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [prod_scaleP]
   rw [Finset.sum_eq_single (Finsupp.weight (indW p) m)]
-  · simp only [if_true]; ring
+  · simp only [ite_true]; ring
   · intro d _ hd; simp [Ne.symm hd]
   · intro h; exact absurd (Finset.mem_range.mpr (Nat.lt_succ_of_le (hD m hm))) h
 
@@ -80,8 +80,8 @@ theorem measurePreserving_scaleP [Fintype ι] (p : ι → Prop) [DecidablePred p
     (f := fun x => if p x then (fun z : ℂ => circleMap 0 1 θ * z) else id)
     (fun x => by
       by_cases h : p x
-      · simp only [h, if_true]; exact measurePreserving_mul_circleMap θ
-      · simp only [h, if_false]; exact MeasurePreserving.id _)
+      · simp only [h, ite_true]; exact measurePreserving_mul_circleMap θ
+      · simp only [h, ite_false]; exact MeasurePreserving.id _)
   have e : scaleP p (circleMap 0 1 θ) =
       fun a x => (if p x then (fun z : ℂ => circleMap 0 1 θ * z) else id) (a x) := by
     funext u x
@@ -94,9 +94,9 @@ theorem measurable_scaleP [Fintype ι] (p : ι → Prop) [DecidablePred p] :
   apply Continuous.measurable
   refine continuous_pi fun x => ?_
   by_cases h : p x
-  · simp only [Function.uncurry, scaleP, h, if_true]
+  · simp only [Function.uncurry, scaleP, h, ite_true]
     exact ((continuous_circleMap 0 1).comp continuous_fst).mul ((continuous_apply x).comp continuous_snd)
-  · simp only [Function.uncurry, scaleP, h, if_false]
+  · simp only [Function.uncurry, scaleP, h, ite_false]
     exact (continuous_apply x).comp continuous_snd
 
 theorem norm_scaleP_circleMap (p : ι → Prop) [DecidablePred p] (θ : ℝ) (u : ι → ℂ) (x : ι) :
@@ -254,7 +254,7 @@ theorem logPoly [Fintype ι] [DecidableEq ι] (r : ℝ) :
     have hg'0 : g' ≠ 0 := by
       intro h
       have := congrArg (AddMonoidAlgebra.coeff · m0) h
-      rw [hg', coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
+      rw [hg', coeff_weightedHomogeneousComponent, ite_eq_left rfl, AddMonoidAlgebra.coeff_zero] at this
       exact mem_support_iff.mp hm0 this
     have hsub : nonHomog g' ⊆ (nonHomog g).erase x := by
       intro y hy

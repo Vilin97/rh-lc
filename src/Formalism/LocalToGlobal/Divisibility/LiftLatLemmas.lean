@@ -22,6 +22,7 @@ noncomputable section
 namespace Formalism.L2.DIV
 
 open Formalism.DivisionValues Formalism.L2.Indef
+open Formalism.HermitianLatticesTheory (locS localization₂ indexBasic_denom dualBasic_mem_dual)
 
 section Poly
 
@@ -39,11 +40,9 @@ theorem eta_units : EtaUnits := by
   rw [Col.lenUW_mul_eW, Col.lenW_toNat]
 
 theorem expW_nonempty {K : Type} [Field K] [NumberField K] {d : ℕ} (w : HeightOneSpectrum (𝓞 K))
-    (A B : Submodule (𝓞 K) (Fin d → K)) (hA : Submodule.IsLattice K A) (hB : Submodule.IsLattice K B) :
-    {J : ℕ | ∀ a ∈ w.asIdeal ^ J, ∀ z ∈ A, a • z ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal B}.Nonempty := by
-  have htop := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) B hB.span_eq_top
-  obtain ⟨δ, hδ, hδA⟩ := Formalism.HermitianLatticesTheory.indexBasic_denom (nonZeroDivisors (𝓞 K)) A B hA.fg
-    (by rw [htop]; exact le_top)
+    (A B : Submodule (𝓞 K) (Fin d → K)) (hA : A.FG) (hAB : A ≤ locS (nonZeroDivisors (𝓞 K)) B) :
+    {J : ℕ | ∀ a ∈ w.asIdeal ^ J, ∀ z ∈ A, a • z ∈ localization₂ w.asIdeal B}.Nonempty := by
+  obtain ⟨δ, hδ, hδA⟩ := indexBasic_denom (nonZeroDivisors (𝓞 K)) A B hA hAB
   have hδ0 : δ ≠ 0 := nonZeroDivisors.ne_zero hδ
   have hI : Ideal.span {δ} ≠ (0 : Ideal (𝓞 K)) := by
     rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]; exact hδ0
@@ -52,7 +51,7 @@ theorem expW_nonempty {K : Type} [Field K] [NumberField K] {d : ℕ} (w : Height
   have hfin : FiniteMultiplicity w.asIdeal (Ideal.span {δ}) := FiniteMultiplicity.of_not_isUnit hwu hI
   obtain ⟨c, hc, hnd⟩ := hfin.exists_eq_pow_mul_and_not_dvd
   have hcw : ¬ c ≤ w.asIdeal := fun h => hnd (Ideal.dvd_iff_le.2 h)
-  obtain ⟨s, hsc, hsw⟩ := SetLike.not_le_iff_exists.1 hcw
+  obtain ⟨s, hsc, hsw⟩ := IsConcreteLE.not_le_iff_exists.1 hcw
   refine ⟨multiplicity w.asIdeal (Ideal.span {δ}), ?_⟩
   intro a ha z hz
   refine ⟨s, hsw, ?_⟩
@@ -64,12 +63,11 @@ theorem expW_nonempty {K : Type} [Field K] [NumberField K] {d : ℕ} (w : Height
   rw [this]
   exact B.smul_mem e (hδA z hz)
 
-theorem exponent_weight_spectral : ExpWSpec := by
-  unfold ExpWSpec
-  intro K _ _ d w A B hA hB
-  refine ⟨?_, fun J hJ => ?_⟩
-  · exact Nat.sInf_mem (expW_nonempty w A B hA hB)
-  · exact Nat.sInf_le hJ
+theorem exponent_weight_spectral {K : Type} [Field K] [NumberField K] {d : ℕ} (w : HeightOneSpectrum (𝓞 K))
+    (A B : Submodule (𝓞 K) (Fin d → K)) (hA : A.FG) (hAB : A ≤ locS (nonZeroDivisors (𝓞 K)) B) :
+    (∀ a ∈ w.asIdeal ^ expW w A B, ∀ z ∈ A, a • z ∈ localization₂ w.asIdeal B) ∧
+      ∀ J : ℕ, (∀ a ∈ w.asIdeal ^ J, ∀ z ∈ A, a • z ∈ localization₂ w.asIdeal B) → expW w A B ≤ J :=
+  ⟨Nat.sInf_mem (expW_nonempty w A B hA hAB), fun _ hJ => Nat.sInf_le hJ⟩
 
 section Alg
 
@@ -247,6 +245,34 @@ theorem lf_delLat_isLattice {s : ℕ} (hS : S.Good s) : Submodule.IsLattice K S.
 
 theorem lf_delLat_le {s : ℕ} (hS : S.Good s) : S.delLat ≤ S.nabLat := ValuationLatticeField.valLatF_mono S.I hS.del_le
 
+private theorem lf_delLat_locS {s : ℕ} (hS : S.Good s) (x : Fin S.dim → K) :
+    x ∈ locS (nonZeroDivisors (𝓞 K)) S.delLat := by
+  classical
+  choose generators hgen using fun c => (hS.nab_lat c).fg
+  let values (i : Σ c, ↥(generators c)) : K := S.pair i.2.1 (S.I x i.1)
+  obtain ⟨a, ha⟩ := IsLocalization.exist_integer_multiples_of_finite (nonZeroDivisors (𝓞 K)) values
+  have hs : (s : 𝓞 K) ∈ nonZeroDivisors (𝓞 K) :=
+    mem_nonZeroDivisors_of_ne_zero (by exact_mod_cast hS.s_pos.ne')
+  refine ⟨(s : 𝓞 K) * a.1, Submonoid.mul_mem _ hs a.2, ?_⟩
+  rw [mul_smul, show S.delLat = valLatF S.I S.Del from rfl, ValuationLatticeField.mem_valLatF]
+  intro c
+  simp only [LinearMap.map_smul_of_tower, Pi.smul_apply]
+  apply hS.dual_le c
+  rw [dualBasic_mem_dual, ← hgen c]
+  intro y hy
+  induction hy using Submodule.span_induction with
+  | mem y hy =>
+    rw [LinearMap.map_smul_of_tower]
+    exact Submodule.mem_one.mpr (ha ⟨c, ⟨y, hy⟩⟩)
+  | zero => simp
+  | add y z _ _ hy hz =>
+    rw [map_add, LinearMap.add_apply]
+    exact add_mem hy hz
+  | smul r y _ hy =>
+    obtain ⟨t, ht⟩ := exponent_index_lattice.hstar (K := K) r
+    rw [← algebraMap_smul K r y, LinearMap.map_smulₛₗ₂, starRingEnd_apply, ← ht, algebraMap_smul]
+    exact Submodule.smul_mem _ t hy
+
 end CSD
 
 namespace BlockDat
@@ -317,14 +343,23 @@ theorem lf_lvlH_pos (h : BlockHyp B ℓ v0 s) (v : InfinitePlace K) :
     image_idempotent_rational K B.S.dim (B.S.gaMat B.r (lvlIdem ℓ.P ℓ.ψ)) (gaMat_rat B.S B.r h.ok.actRat _ hP.rat)
   exact cut_posDef B.S.H (B.S.lvlE B.r ℓ.P ℓ.ψ) lf_lvlE_inj hE (Nat.card ℓ.P) Nat.card_pos v (h.ok.hpos v)
 
-theorem lf_exp_incl (hE : ExpWSpec) (h : BlockHyp B ℓ v0 s) (w : HeightOneSpectrum (𝓞 K)) (ϖ : 𝓞 K)
+theorem lf_exp_spec (h : BlockHyp B ℓ v0 s) (w : HeightOneSpectrum (𝓞 K)) :
+    ∀ a ∈ w.asIdeal ^ B.JexpW ℓ Z w, ∀ z ∈ B.cutZ ℓ Z, a • z ∈ localization₂ w.asIdeal (B.delZ ℓ Z) := by
+  have hAB : B.cutZ ℓ Z ≤ locS (nonZeroDivisors (𝓞 K)) (B.delZ ℓ Z) := by
+    intro z _
+    obtain ⟨a, ha, hz⟩ := B.S.lf_delLat_locS h.ok.good ((B.fE ℓ Z).mulVec z)
+    refine ⟨a, ha, (exponent_index_lattice.mem_cutLat _ _ _).mpr ?_⟩
+    rwa [exponent_index_lattice.mulVec_osmul]
+  exact (exponent_weight_spectral w _ _ (lf_cutZ_isLattice (Z := Z) h).fg hAB).1
+
+theorem lf_exp_incl (h : BlockHyp B ℓ v0 s) (w : HeightOneSpectrum (𝓞 K)) (ϖ : 𝓞 K)
     (hϖ : ϖ ∈ w.asIdeal) :
-    ∀ z ∈ B.cutZ ℓ Z, (ϖ ^ B.JexpW ℓ Z w) • z ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (B.delZ ℓ Z) := fun z hz =>
-  (hE K _ w (B.cutZ ℓ Z) (B.delZ ℓ Z) (lf_cutZ_isLattice (Z := Z) h) (lf_delZ_isLattice (Z := Z) h)).1 _ (Ideal.pow_mem_pow hϖ _) z hz
+    ∀ z ∈ B.cutZ ℓ Z, (ϖ ^ B.JexpW ℓ Z w) • z ∈ localization₂ w.asIdeal (B.delZ ℓ Z) :=
+  lf_exp_spec h w _ (Ideal.pow_mem_pow hϖ _)
 
 end BlockDat
 
-theorem boundsIVAt_of (hE : ExpWSpec) : BoundsIVAt := by
+theorem local_bounds_from_exponent : BoundsIVAt := by
   intro K _ _ _ G _ _ Pl0 B ℓ Z v0 s h w
   obtain ⟨ϖ, hϖ, -, hv⟩ := lf_exists_unif w
   obtain ⟨hH, hdet, -⟩ := orthogonal_projection_exists K v0 h.conj _ 0 (B.S.lvlH B.r ℓ.P ℓ.ψ) (BlockDat.lf_lvlH_pos h v0) 0
@@ -334,7 +369,7 @@ theorem boundsIVAt_of (hE : ExpWSpec) : BoundsIVAt := by
       (ϖ ^ B.JexpW ℓ Z w) • z ∈
         Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (cutLat (B.lE ℓ Z) (valLatF (B.S.lvlI B.r ℓ.P ℓ.ψ) B.S.Del)) := by
     rw [← hnab, ← hdel, BlockDat.lf_cut_nab (Z := Z) h, BlockDat.lf_cut_del (Z := Z) h]
-    exact BlockDat.lf_exp_incl hE h w ϖ hϖ
+    exact BlockDat.lf_exp_incl h w ϖ hϖ
   have key := (bounds_fourth_class_fixed K _ _ (B.S.lvlH B.r ℓ.P ℓ.ψ) hH hdet (B.lE ℓ Z) (B.lPr ℓ Z) (BlockDat.lf_l_proj (Z := Z) h)
     B.S.Cl B.S.V B.S.pair (B.S.lvlI B.r ℓ.P ℓ.ψ) (fun c => Nat.card ℓ.P * B.S.wt c) hinj
     (fun c => Nat.mul_pos Nat.card_pos (B.S.wt_pos c)) hCS B.S.Nab B.S.Del h.ok.good.nab_lat s h.ok.good.s_pos
@@ -342,8 +377,6 @@ theorem boundsIVAt_of (hE : ExpWSpec) : BoundsIVAt := by
     (fun c => Nat.mul_dvd_mul_left _ (B.S.wt_dvd_DGam c)) w ϖ (B.JexpW ℓ Z w) hv hJ).2
   rw [← hnab, BlockDat.lf_cut_nab (Z := Z) h, BlockDat.lf_lE_form (Z := Z) h] at key
   exact key
-
-theorem local_bounds_from_exponent : BoundsIVAt := boundsIVAt_of exponent_weight_spectral
 
 namespace CyclotomicLifting
 

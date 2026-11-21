@@ -44,7 +44,7 @@ theorem LocRingNoeth.proof (hF : LocRingFrac.Statement) : LocRingNoeth.Statement
     intro f
     induction f using MvPolynomial.induction_on with
     | C r => rw [eval₂Hom_C, eq_intCast]; exact intCast_mem _ r
-    | add f₁ f₂ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
+    | add f₁ f₂ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
     | mul_X f p hf => rw [map_mul, eval₂Hom_X']; exact mul_mem hf (Subring.subset_closure ⟨p, rfl⟩)
 
   have hkey : ∀ u a, IsMultiHomog u a → q u = θ u * q (∏ k, X ⟨k, c k⟩ ^ a k) := by

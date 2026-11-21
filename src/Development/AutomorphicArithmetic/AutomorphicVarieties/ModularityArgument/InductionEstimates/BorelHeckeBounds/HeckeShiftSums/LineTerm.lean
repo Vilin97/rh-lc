@@ -138,8 +138,8 @@ private theorem lineTerm [_root_.NumberField.IsTotallyComplex K] (μ : Measure (
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hF, Complex.ofReal_one, one_mul]
     ring
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum, Finset.sum_apply]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hq]
 

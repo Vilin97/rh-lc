@@ -144,7 +144,24 @@ theorem normalFrames_tr (Pg : Finset (Pl a.D.host.E))
     @Seed.Frm.NormalFrameConditionsDiagonal b.D Pg βY βW := by
   rcases h with ⟨⟨e, ev, z, κ, t, h0, hW⟩, hX⟩
   refine ⟨⟨e, ev, z, κ, t, ?_, ?_⟩, ?_⟩
-  · exact h0
+  · rcases h0 with ⟨⟨ha, hκ, ht, hv, hcol⟩, hzero⟩
+    have heq (j i : ℕ) : @Formalism.IndefR.Mi.nfScal a.D κ t j i =
+        @Formalism.IndefR.Mi.nfScal b.D κ t j i := by
+      induction i with
+      | zero => rfl
+      | succ i ih =>
+          simp only [Formalism.IndefR.Mi.nfScal]
+          exact congrArg (fun x : a.D.host.E => κ j i * x) ih
+    refine ⟨⟨ha, hκ, ht, ?_, ?_⟩, hzero⟩
+    · intro PP hPP j hj i hi
+      rw [← heq j i]
+      exact hv PP hPP j hj i hi
+    · intro PP hPP ei hei j hj
+      obtain ⟨h1, h2⟩ := hcol PP hPP ei hei j hj
+      refine ⟨?_, h2⟩
+      intro i hi col hc
+      rw [← heq j i]
+      exact h1 i hi col hc
   · exact hW
   · exact hX
 

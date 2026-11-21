@@ -44,22 +44,27 @@ theorem twIntAt_pow_inv {P : HeightOneSpectrum (𝓞 X.E)} {z : X.E} {B : ℕ} (
 
 theorem twSt_chrOk (hN : ∀ i, i < m2 → TwNormAt (Ch := Ch) (cst := cst) (twSt Ch sel mu cst m2 i)) (hC : TwChrQ Ch sel mu cst m2) :
     ∀ (j : ℕ) (b : (twSt Ch sel mu cst m2 j).β) (P : rowSG Pr sel mu), P.1 ∉ Pr.vGs → TwDegOne X P.1 → j ≠ 0 →
-      TwChrOk Ch sel mu cst j P ((twSt Ch sel mu cst m2 j).h b P)
-  | 0, _, _, _, _, h0 => absurd rfl h0
-  | i + 1, b, P, hP, hd, _ => by
-      by_cases h1 : i + 1 ≤ m2
-      · have hi : i < m2 := Nat.lt_of_succ_le h1
-        obtain ⟨hb, hnf, ⟨al, hal⟩, hint⟩ :=
-          twSt_cand (m2 := m2) (i := i) h1 (hN i hi) b P hP
-        have hs := twSt_of_twNormAt hN i hi al P hP
-        exact hC.1 i hi P hP hd _ _ hs.1 hs.2 hb hnf hint hal
-      · have hle : i + 1 ≤ m2 + 1 := twSt_le Ch sel mu cst m2 (i + 1) b
-        have he : i = m2 := by omega
-        subst i
-        revert b
-        rw [twSt_last Ch sel mu cst m2]
-        intro _
-        exact hC.2 P hP hd
+      TwChrOk Ch sel mu cst j P ((twSt Ch sel mu cst m2 j).h b P) := by
+  intro j
+  cases j with
+  | zero =>
+    intro _ _ _ _ h0
+    exact absurd rfl h0
+  | succ i =>
+    intro b P hP hd _
+    by_cases h1 : i + 1 ≤ m2
+    · have hi : i < m2 := Nat.lt_of_succ_le h1
+      obtain ⟨hb, hnf, ⟨al, hal⟩, hint⟩ :=
+        twSt_cand (Ch := Ch) (cst := cst) (m2 := m2) (i := i) h1 (hN i hi) b P hP
+      have hs := twSt_of_twNormAt (Ch := Ch) (cst := cst) hN i hi al P hP
+      exact hC.1 i hi P hP hd _ _ hs.1 hs.2 hb hnf hint hal
+    · have hle : i + 1 ≤ m2 + 1 := twSt_le Ch sel mu cst m2 (i + 1) b
+      have he : i = m2 := by omega
+      subst i
+      revert b
+      rw [twSt_last Ch sel mu cst m2]
+      intro _
+      exact hC.2 P hP hd
 
 
 variable (Ch sel mu cst m2) in

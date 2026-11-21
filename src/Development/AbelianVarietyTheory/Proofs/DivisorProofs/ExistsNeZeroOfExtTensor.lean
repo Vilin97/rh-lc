@@ -18,9 +18,6 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.JhMultSub
 
 @[expose] public section
 
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.TypeTwo
-open scoped TensorProduct
-
 noncomputable section
 
 namespace GlobalTheory.ReducedFactor
@@ -30,7 +27,7 @@ section General
 variable {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
 theorem nontrivial_of_irr {ρ : Representation ℂ G V} (h : ρ.IsIrreducible) : Nontrivial V := by
-  haveI : IsSimpleOrder (Subrepresentation ρ) := h
+  have : IsSimpleOrder (Subrepresentation ρ) := h
   by_contra hV
   rw [not_nontrivial_iff_subsingleton] at hV
   apply (bot_ne_top : (⊥ : Subrepresentation ρ) ≠ ⊤)

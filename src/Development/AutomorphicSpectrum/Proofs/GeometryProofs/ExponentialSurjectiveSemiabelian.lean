@@ -56,7 +56,7 @@ def atPoint (e : FamExp G M B ψ) {b : Fin n → ℂ} (hb : b ∈ B) :
     have hφ : Continuous (fun p : (Fin 0 → ℂ) × (Fin N → ℂ) => (b, p.2)) := by fun_prop
     have hφ' : Continuous (fun p : (Fin 0 → ℂ) × (Fin g → ℂ) => (b, p.2)) := by fun_prop
     refine ⟨V, N, f, fun p => L (b, p.2), h1, ?_, ?_, ?_⟩
-    · exact AnalyticAt.comp' (f := fun p : (Fin 0 → ℂ) × (Fin N → ℂ) => (b, p.2)) h2
+    · exact AnalyticAt.comp (f := fun p : (Fin 0 → ℂ) × (Fin N → ℂ) => (b, p.2)) h2
         (analyticAt_const.prod analyticAt_snd)
     · exact (hφ'.tendsto (b₀, 0)).eventually h3
     · exact (hφ.tendsto (b₀, _)).eventually h4

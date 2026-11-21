@@ -42,18 +42,17 @@ theorem actAf_mem_laHat (D : Datum p) (c : D.O) {v : AfP p ⊗[ℚ] VQ D} (hv : 
     rw [actAf_tmul]
     exact AddSubgroup.subset_closure ⟨a, c • x, ha, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add u w _ _ hu hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hw
+  | add u w _ _ hu hw => rw [map_add]; exact add_mem hu hw
   | neg u _ hu => rw [map_neg]; exact neg_mem hu
 
 theorem actG_actAf {D : Datum p} {G : HTGroup p} (L : Link D G) (g : G.GAf) (c : D.O)
     (v : AfP p ⊗[ℚ] VQ D) : L.actG g (actAf D c v) = actAf D c (L.actG g v) := by
   have key : ∀ z : AfP p ⊗[ℚ] G.C, Commute (actOn L.rep (AfP p) z) (actAf D c) := by
     intro z
-    induction z using TensorProduct.induction_on with
-    | zero => rw [map_zero]; exact Commute.zero_left _
+    induction z using TensorProduct.inductionOn with
     | tmul r x =>
       have h1 : Commute (L.rep x) (actQ D c) := (L.rep_range (L.rep x)).1 ⟨x, rfl⟩ c
-      simp only [actOn, Algebra.TensorProduct.lift_tmul]
+      simp only [actOn]
       refine Commute.mul_left ?_ ?_
       · exact Algebra.commute_algebraMap_left r _
       · exact h1.map (Module.End.baseChangeHom ℚ (AfP p) (VQ D))

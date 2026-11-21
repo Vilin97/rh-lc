@@ -98,7 +98,7 @@ theorem countK_alt :
       rw [hsys π _ B hB, algSat, Multiset.card_map, ← hB.card]
       simp)
     (by
-      rw [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
+      rw [normV, ← Ideal.absNorm_eq_natCard]
       exact zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
     (fun π hπ => by
       obtain ⟨B, hB⟩ := hsat π hπ ⟨w, hwM⟩
@@ -166,7 +166,7 @@ theorem countP_alt :
       rw [hsys π _ B hB, algSat, Multiset.card_map, ← hB.card]
       simp)
     (by
-      rw [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
+      rw [normV, ← Ideal.absNorm_eq_natCard]
       exact zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
     (fun π hπ => by
       obtain ⟨B, hB⟩ := hsat π hπ ⟨w, hwM⟩
@@ -428,11 +428,9 @@ theorem frobenius_trace_count_bound_of_cm_eigensystem_count_alt :
   intro hC K _ _ _
   obtain ⟨c, A, hK⟩ := hC K 3 (by norm_num)
   refine ⟨c * 2 ^ A, A, fun e he N hN p w hp hw hpN hpd => ?_⟩
-  have hN' : (Ideal.absNorm w.asIdeal : ℕ) = normV w := by
-    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]; rfl
   have hq : 1 ≤ normV w := by
-    rw [← hN']
-    exact Nat.one_le_iff_ne_zero.2 (by simpa [Ideal.absNorm_eq_zero_iff] using w.ne_bot)
+    rw [normV, ← Ideal.absNorm_eq_natCard]
+    exact (NumberField.HeightOneSpectrum.one_lt_absNorm w).le
   have hqC : ((normV w : ℕ) : ℂ) ≠ 0 := by exact_mod_cast (by omega : normV w ≠ 0)
   obtain ⟨D, hcard, hcl⟩ := hK ![(e : ℤ) - 1, -1, -(e : ℤ) - 1]
     (by

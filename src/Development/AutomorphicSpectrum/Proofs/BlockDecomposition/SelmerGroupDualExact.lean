@@ -22,7 +22,7 @@ theorem contAction_twDual_of_continuous {R Γ M : Type*} [CommRing R] [Topologic
         ⋂ m : M, (fun g : Γ => ((χ g : Rˣ) : R) * φ (ρ g⁻¹ m)) ⁻¹' {ψ m} := by
       ext g
       simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_iInter]
-      exact ⟨fun h m => by rw [← h]; rfl, fun h => TDual.ext h⟩
+      exact ⟨fun h m => by rw [← h]; rfl, fun h => DFunLike.ext _ _ h⟩
     rw [hset]
     refine isOpen_iInter_of_finite fun m => ?_
     have h1 : Continuous fun g : Γ => ρ g⁻¹ m :=

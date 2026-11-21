@@ -115,41 +115,42 @@ theorem dom_per {M₁ M₂ : Submodule (𝓞 E) (Sp E a)} {M₁' M₂' : Submodu
   ⟨fun P hP => (GlobalTheory.ThetaMove.PeriodComp.perO_components E a b AA).1 P _ _ _ _ h₁.1.fg (h.1 P hP) (h'.1 P hP),
     fun Q hQ => (GlobalTheory.ThetaMove.PeriodComp.perO_components E a b AA).1 Q _ _ _ _ h₂.1.fg (h.2 Q hQ) (h'.2 Q hQ)⟩
 
+theorem full_of_sd : ∀ {n : ℕ} {L : Submodule (𝓞 E) (Sp E n)}, IsSdLat L → Submodule.IsFullLattice E L := by
+  intro n L hL
+  let := hL.1
+  refine { span_eq_top := ?_ }
+  let W := Submodule.span E (L : Set (Sp E n))
+  change W = ⊤
+  by_contra hW
+  let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+  let g : Sp E n →ₗ[E] Module.Dual E W :=
+    (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+  have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Sp E n) := by
+    rw [Subspace.dual_finrank_eq]
+    exact Submodule.finrank_lt hW
+  obtain ⟨x, hx, hx₀⟩ :=
+    Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+  have hsmul (a : E) : a • e x ∈ L := by
+    rw [← hL.2, dualBasic_mem_dual]
+    intro y hy
+    apply hStd_mem_one_symm
+    have hxy : hStd E n (e x) y = 0 :=
+      congrArg (fun f : Module.Dual E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+    simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+  let i : E →ₗ[𝓞 E] L :=
+    ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict L hsmul
+  let : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.mpr hL.1.fg
+  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+    smul_left_injective E (fun hz => hx₀ (e.map_eq_zero_iff.mp hz)) (congrArg Subtype.val hab)
+  exact RingOfIntegers.not_isField E
+    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+
 theorem full_per {M : Submodule (𝓞 E) (Sp E a)} {M' : Submodule (𝓞 E) (Sp E b)} (h : IsSdLat M) (h' : IsSdLat M') (hA : AA ≠ ⊥) :
-    Full (perO AA M M') := (GlobalTheory.ThetaMove.PeriodComp.perO_components E a b AA).2.2 M M' h.1.fg h'.1 hA
+    Full (perO AA M M') := (GlobalTheory.ThetaMove.PeriodComp.perO_components E a b AA).2.2 M M' h.1.fg (full_of_sd h') hA
 
 theorem perO_fg {M : Submodule (𝓞 E) (Sp E a)} {M' : Submodule (𝓞 E) (Sp E b)} (h : IsSdLat M) (h' : IsSdLat M') (hA : AA.FG) :
     (perO AA M M').FG := by
   classical
-  have full_of_sd : ∀ {n : ℕ} {L : Submodule (𝓞 E) (Sp E n)}, IsSdLat L → Submodule.IsFullLattice E L := by
-    intro n L hL
-    let := hL.1
-    refine { span_eq_top := ?_ }
-    let W := Submodule.span E (L : Set (Sp E n))
-    change W = ⊤
-    by_contra hW
-    let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
-    let g : Sp E n →ₗ[E] Module.Dual E W :=
-      (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
-    have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Sp E n) := by
-      rw [Subspace.dual_finrank_eq]
-      exact Submodule.finrank_lt hW
-    obtain ⟨x, hx, hx₀⟩ :=
-      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
-    have hsmul (a : E) : a • e x ∈ L := by
-      rw [← hL.2, dualBasic_mem_dual]
-      intro y hy
-      apply hStd_mem_one_symm
-      have hxy : hStd E n (e x) y = 0 :=
-        congrArg (fun f : Module.Dual E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
-      simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
-    let i : E →ₗ[𝓞 E] L :=
-      ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict L hsmul
-    let : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.mpr hL.1.fg
-    let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
-      smul_left_injective E (fun hz => hx₀ (e.map_eq_zero_iff.mp hz)) (congrArg Subtype.val hab)
-    exact RingOfIntegers.not_isField E
-      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
   let := full_of_sd h
   obtain ⟨s, hs⟩ := h.1.fg
   let ev : HomE E a b →ₗ[𝓞 E] (s → Sp E b) :=
@@ -183,8 +184,12 @@ theorem idx_formula (hU : ∀ P ∈ S, localization₂ P.asIdeal AA = localizati
   refine Finset.prod_congr rfl fun P hP => ?_
   have hle := h.1 P hP
   rw [(GlobalTheory.ThetaMove.PeriodComp.perO_components E a b AA).2.1 P _ _ h₁.1.fg (hU P hP), (GlobalTheory.ThetaMove.PeriodComp.perO_components E a b AA).2.1 P _ _ h₂.1.fg (hU P hP)] at hle ⊢
-  have := GlobalTheory.IdxHom.relIndex_homAt E a b P M₁ M₂ M₁' M₂' h₁.1 h₂.1 h₁'.1 h₂'.1 hle
-  simpa using congrArg (fun q : ℚ => (q : ℝ)) this
+  have hidx : (((homAt {P} M₂ M₂').toAddSubgroup.relIndex (homAt {P} M₁ M₁').toAddSubgroup : ℕ) : ℚ) =
+      ((Ideal.absNorm P.asIdeal : ℕ) : ℚ) ^ (volExp P M₁ M₁' - volExp P M₂ M₂') := by
+    first
+    | exact GlobalTheory.IdxHom.relIndex_homAt E a b P M₁ M₂ M₁' M₂' h₁ h₂ h₁' h₂' hle
+    | exact GlobalTheory.IdxHom.relIndex_homAt E a b P M₁ M₂ M₁' M₂' h₁.1 h₂.1 h₁'.1 h₂'.1 hle
+  simpa using congrArg (fun q : ℚ => (q : ℝ)) hidx
 
 omit [StarRing E] in
 theorem norm_pos (P : HeightOneSpectrum (𝓞 E)) : (0 : ℝ) < ((Ideal.absNorm P.asIdeal : ℕ) : ℝ) := by

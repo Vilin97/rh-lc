@@ -22,13 +22,7 @@ namespace Formalism.L2.Col
 
 namespace HeckeExHost
 
-open Formalism.L2.Host Formalism.L2.Host.CharEx Formalism.L2.Col.HeckeEx Formalism.L2.DIV
-open scoped Pointwise
-
-section Gen
-
 variable {X : Fields}
-
 
 theorem conjO_conjO' (x : 𝓞 X.E) : X.conjO (X.conjO x) = x := by
   apply RingOfIntegers.ext
@@ -50,17 +44,6 @@ def conjPrime₂ (P : HeightOneSpectrum (𝓞 X.E)) : HeightOneSpectrum (𝓞 X.
     rw [Ideal.mem_bot]
     have := congrArg X.conjO this
     rwa [conjO_conjO', map_zero] at this
-
-end Gen
-
-section Host
-
-variable {R : Formalism.BasicNotions.Ranks} (H : Formalism.BasicNotions.Host R) (ι : Qb →+* ℂ) (LL : Fld) [FiniteDimensional ℚ LL] [Normal ℚ LL]
-  (hE : H.EQ ≤ LL)
-
-
-
-end Host
 
 end HeckeExHost
 

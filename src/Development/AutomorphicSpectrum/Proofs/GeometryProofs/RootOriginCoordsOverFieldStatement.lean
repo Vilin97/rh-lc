@@ -10,5 +10,5 @@ public import Development.AutomorphicSpectrum.Statements.GeometryStatements.Card
 
 @[expose] public section
 
-theorem _root_.GlobalTheory.T.root_origin_coords_over_field :=
-  @GlobalTheory.CompanionTheory.Ar.root_model_on_cover
+alias _root_.GlobalTheory.T.root_origin_coords_over_field :=
+  GlobalTheory.CompanionTheory.Ar.root_model_on_cover

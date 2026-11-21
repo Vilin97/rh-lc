@@ -319,8 +319,8 @@ theorem bd_rho : ∀ (n : ℕ) (i : Fin (n + 2) → ι),
         intro j hj
         refine mem_ordFrom.2 ⟨strictMono_of_fin_one j, ?_⟩
         have hrange : Set.range j ⊆ Set.range i := mem_rangeIn.1 hj
-        have hj0 : j 0 ∈ Set.range i := hrange ⟨0, rfl⟩
-        obtain ⟨a, ha⟩ := Set.mem_range.mp hj0
+        have hj0 : ∃ a, i a = j 0 := hrange (Set.mem_range_self (f := j) 0)
+        obtain ⟨a, ha⟩ := hj0
         rw [← ha]
         exact minIdx_le i a
       exact Finsupp.supported_mono hsubset (bd_mem_rangeIn (single_mem_rangeIn i 1))

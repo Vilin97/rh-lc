@@ -58,7 +58,8 @@ namespace GlobalTheory.CovTop.ShortSpanUnitCover
 set_option maxHeartbeats 1000000 in
 theorem short_vectors_span_uc_alt : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.FlatDegreeCondition → _root_.GlobalTheory.CovTop.CoversCondition fun Fm x _ ι p i Y PP _ => ∀ Z, ∃ (m : ℕ) (v : Fin m → Cusp Z Y.U ((⟨uW p i, cZero (Fm.D x ι) ((i : ℕ) + 1), (Fm.D x ι).R.k - 2, lenT p i PP⟩ : WtPar (dat p i)).wt 0)), (∀ q, v q ∈ latOn Y.U Z _) ∧ Submodule.span Y.d.c₂.F (Set.range v) = ⊤ ∧ ∀ q σ, petOn Y.U (xiR (Fm.D x ι)) (fun _ => (Fm.D x ι).sp.W ((i : ℕ) + 1)) Y.dict Z (wtOf (dat p i) ((⟨uW p i, cZero (Fm.D x ι) ((i : ℕ) + 1), (Fm.D x ι).R.k - 2, lenT p i PP⟩ : WtPar (dat p i)).wt 0) 0) σ (v q).1 ≤ Real.exp (CompHt.dimFlag (dat p i) * PP * (kap p i / lenT p i PP + 1)) := by
   intro hP2 _hDG hSz hFD
-  obtain ⟨C, hC0, hH3⟩ := _root_.GlobalTheory.T.short_generator_norm_comparison hP2
+  have hshort := _root_.GlobalTheory.T.short_generator_norm_comparison hP2
+  obtain ⟨C, hC0, hH3⟩ := hshort
   have hGd := _root_.GlobalTheory.T.covering_domain_lattice_regularity hP2
   refine ((((((_root_.GlobalTheory.T.size_bounds_for_family_alt hSz).and (_root_.GlobalTheory.T.weight_parameter_strict_antitone_alt hSz)).and (_root_.GlobalTheory.CovTop.Sizes.hostN_alt (4 * C + 1))).and _root_.GlobalTheory.CovTop.WtShape.wtN_z).and
     _root_.GlobalTheory.HSApp.wtBig_run_alt).and hFD).imp fun Fm CH _ hh => ?_

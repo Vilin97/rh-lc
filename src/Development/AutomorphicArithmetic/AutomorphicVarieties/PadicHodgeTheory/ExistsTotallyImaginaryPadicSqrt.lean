@@ -137,7 +137,7 @@ theorem UpperTheory.exists_totally_imaginary_padic_sqrt :
         · rw [hb, ← hK]; exact IntermediateField.mem_adjoin_simple_self _ _
         · rw [hjδ]; exact IntermediateField.algebraMap_mem _ _
       | algebraMap a => simp
-      | add x y hx hy ihx ihy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ihx ihy
+      | add x y hx hy ihx ihy => rw [map_add]; exact add_mem ihx ihy
       | inv x hx ihx => rw [map_inv₀]; exact inv_mem ihx
       | mul x y hx hy ihx ihy => rw [map_mul]; exact mul_mem ihx ihy
     · rw [← hK]

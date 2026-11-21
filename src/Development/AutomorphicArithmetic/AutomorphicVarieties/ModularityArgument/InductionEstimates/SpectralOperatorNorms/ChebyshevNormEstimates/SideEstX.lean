@@ -11,7 +11,9 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.Polynomi
 open MeasureTheory NumberField IsDedekindDomain MvPolynomial Filter Topology
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace
 open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.Ci PositivityTheory.Rg.Fx
-open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Adel PositivityTheory.Rg.Tf.IntegralApplyAeEq UpperTheory.V.Z.IntegralApplyAeEq UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial
+open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Adel PositivityTheory.Rg.Tf.IntegralApplyAeEq UpperTheory.V.Z.IntegralApplyAeEq
+
+namespace UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial
 
 private theorem pw_mul {a b M R b' : ℝ} {d : ℕ} (ha : a ≤ M ^ (d + 1)) (hb0 : 0 ≤ b) (hb : b ≤ b') (h1 : 1 ≤ b')
     (hM : |M| ≤ R) : a * b ≤ (R * b') ^ (d + 1) := by
@@ -133,8 +135,8 @@ private theorem tr_bd {E : Type} [Field E] [NumberField E] {μ : Measure (normOn
     exact (norm_mul_le _ _).trans (mul_le_mul ih (by linarith) (norm_nonneg _) (by positivity))
 
 set_option maxHeartbeats 6000000 in
-theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.sideEstX :
-    OneSideX → EvVal → TruncSpec → ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
+theorem sideEstX :
+    OneSideX → Ci.EvVal → Ci.TruncSpec → ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
       (μ : Measure (normOneGL (K := K) (n := (2 + 2)))) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ 2) (𝔵 : Fam 𝔰)
       (ev : PR K (2 + 2) →+* (LL μ →L[ℂ] LL μ)) (evz : ℂ → PR K (2 + 2) →+* (Eu 𝔵.d' →L[ℂ] Eu 𝔵.d'))
       (Nn : Eu 𝔵.d' ≃ₗᵢ[ℂ] Eu 𝔵.d) (Cf : ℝ), 𝔰.toAmp.IsEv ev → (∀ P, Inner μ (ev P)) → 𝔵.IsEvz ev evz →
@@ -335,3 +337,5 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.sideEstX :
   rw [← add_mul, ← add_mul, mul_pow]
   have F2 : K₁ + K₂ ≤ (K₁ + K₂ + 1) ^ (d + 1) := le_trans (by linarith) (le_self_pow₀ (by linarith) (Nat.succ_ne_zero d))
   gcongr
+
+end UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial

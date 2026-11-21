@@ -226,7 +226,7 @@ theorem poly_diff_bound {σ : Type} (p : MvPolynomial σ ℚ) (D : ℕ) (hp : p.
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Finset.prod_pow_eq_pow_sum]
     rfl
-  refine ⟨∑ m ∈ p.support, |coeff m p| * (m.sum fun _ e => e : ℕ), fun t ht => ?_⟩
+  refine ⟨∑ m ∈ p.support, |AddMonoidAlgebra.coeff p m| * (m.sum fun _ e => e : ℕ), fun t ht => ?_⟩
   rw [hev, hev, ← Finset.sum_sub_distrib, Finset.sum_mul]
   refine Finset.sum_le_sum fun m hm => ?_
   have he : (m.sum fun _ e => e) ≤ D := (le_totalDegree hm).trans hp
@@ -243,9 +243,9 @@ theorem poly_diff_bound {σ : Type} (p : MvPolynomial σ ℚ) (D : ℕ) (hp : p.
         _ ≤ (e' + 1) * t ^ (D - 1) := by gcongr
         _ = ((e' + 1 : ℕ) : ℚ) * t ^ (D - 1) := by push_cast; ring
   calc AddMonoidAlgebra.coeff p m * t ^ e - AddMonoidAlgebra.coeff p m * (t - 1) ^ e = AddMonoidAlgebra.coeff p m * (t ^ e - (t - 1) ^ e) := by ring
-    _ ≤ |coeff m p| * (t ^ e - (t - 1) ^ e) := mul_le_mul_of_nonneg_right (le_abs_self _) (by linarith)
-    _ ≤ |coeff m p| * ((e : ℚ) * t ^ (D - 1)) := mul_le_mul_of_nonneg_left h2 (abs_nonneg _)
-    _ = |coeff m p| * (e : ℚ) * t ^ (D - 1) := by ring
+    _ ≤ |AddMonoidAlgebra.coeff p m| * (t ^ e - (t - 1) ^ e) := mul_le_mul_of_nonneg_right (le_abs_self _) (by linarith)
+    _ ≤ |AddMonoidAlgebra.coeff p m| * ((e : ℚ) * t ^ (D - 1)) := mul_le_mul_of_nonneg_left h2 (abs_nonneg _)
+    _ = |AddMonoidAlgebra.coeff p m| * (e : ℚ) * t ^ (D - 1) := by ring
 
 end DiagonalSectionDifference
 

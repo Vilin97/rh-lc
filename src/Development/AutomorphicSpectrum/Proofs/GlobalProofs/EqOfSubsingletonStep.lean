@@ -149,7 +149,9 @@ def imageSub (ψ : H →* G) (A : Representation ℂ H W₀) (μ : Representatio
         have h1 : ι (A h w) = μ (ψ h) (ι w) := ι.isIntertwining _ _ h w
         rw [h1, ← Module.End.mul_apply, ← map_mul, ← hg']
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy =>
+      rw [LinearMap.map_add (μ (ψ h * g'))]
+      exact add_mem hx hy
     | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ r hx
 
 theorem exists_map_of_image (ψ : H →* G) {A : Representation ℂ H W₀} {B : Representation ℂ H W₁}

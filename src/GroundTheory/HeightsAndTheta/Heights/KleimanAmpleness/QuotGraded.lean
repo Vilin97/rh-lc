@@ -132,7 +132,7 @@ theorem weightedHomogeneousComponent_one_mem {p : Ideal (Poly S N)}
     exact hp f hf k
   · have : weightedHomogeneousComponent (fun _ => (1 : ℤ)) c f = 0 := by
       ext d
-      rw [coeff_weightedHomogeneousComponent, weight_one_int, coeff_zero]
+      rw [coeff_weightedHomogeneousComponent, weight_one_int, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
       split_ifs with h
       · omega
       · rfl

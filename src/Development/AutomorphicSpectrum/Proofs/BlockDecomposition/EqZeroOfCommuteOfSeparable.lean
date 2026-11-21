@@ -129,7 +129,7 @@ theorem map_shear (ν : Measure E) [ν.IsAddHaarMeasure] (F : Submodule ℝ E) (
   have hc1 : Measure.map e.symm ν = Measure.addHaarScalarFactor (Measure.map e.symm ν) μ₀ • μ₀ :=
     Measure.isAddLeftInvariant_eq_smul _ _
   have hmap : Measure.map sh (Measure.map e.symm ν) = Measure.map e.symm ν := by
-    rw [hc1, Measure.map_smul, hmp.map_eq]
+    rw [hc1, Measure.map_smul _ hshc.measurable.aemeasurable, hmp.map_eq]
   have hfun : (fun x => x + P x) = e ∘ sh ∘ e.symm := funext fun x => by
     have := hshear (e.symm x)
     simp only [e.apply_symm_apply] at this
@@ -189,13 +189,17 @@ theorem exists_homeo_map_eq_smul (ν : Measure E) [ν.IsAddHaarMeasure] (F : Sub
   have hfun : (Φ : E → E) = (fun x => x + P x) ∘ L := funext fun x => by
     simp [Φ, P]
   have hs : Continuous fun x => x + P x := continuous_id.add hPc
-  rw [hfun, ← Measure.map_map hs.measurable hLc.measurable, hcL, Measure.map_smul, map_shear ν F P hPc hPF hPinv]
+  rw [hfun, ← Measure.map_map hs.measurable hLc.measurable, hcL,
+    Measure.map_smul _ hs.measurable.aemeasurable, map_shear ν F P hPc hPF hPinv]
 
 end Measure
 
 section Nil
 
 variable {n : ℕ}
+
+local notation "cj" => (starRingEnd ℂ)
+local notation "Mx" => Matrix (Fin n) (Fin n) ℂ
 
 def slin (d : GL (Fin n) ℂ) (X : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   -(d.val * Xᴴ * (d⁻¹ : GL (Fin n) ℂ).val)
@@ -326,6 +330,9 @@ end Nil
 section Main
 
 variable {n : ℕ} {W₁ W₂ : Submodule ℂ (Fin n → ℂ)}
+
+local notation "cj" => (starRingEnd ℂ)
+local notation "Mx" => Matrix (Fin n) (Fin n) ℂ
 
 instance : ContinuousSMul ℝ (nilrad W₁ W₂) :=
   ⟨Continuous.subtype_mk (continuous_fst.smul (continuous_subtype_val.comp continuous_snd)) _⟩

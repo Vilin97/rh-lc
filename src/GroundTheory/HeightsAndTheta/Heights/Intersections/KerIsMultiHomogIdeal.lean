@@ -45,7 +45,7 @@ theorem specMap_component [DecidableEq K] {E : Type*} [Field E] (ψ : MRing ι �
     have hX : ∀ p : Σ k, ι k, IsWeightedHomogeneous (tWeight k)
         (RegularityFunctionFieldNumber.cS E ∅ p.1 * MvPolynomial.C (ψ (X p))) (tWeight k p.1) := by
       intro p
-      simp only [RegularityFunctionFieldNumber.cS, Finset.notMem_empty, if_false]
+      simp only [RegularityFunctionFieldNumber.cS, Finset.notMem_empty, ite_false]
       rw [mul_comm]
       exact (isWeightedHomogeneous_X E (tWeight k) p.1).C_mul _
     have hh : IsWeightedHomogeneous (tWeight k) (RegularityFunctionFieldNumber.specMap ψ ∅ (monomial m c))
@@ -127,7 +127,7 @@ theorem RegularityValuationCentre.proof : RegularityValuationCentre.Statement :=
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp [chartHom]
-    | add f g hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
+    | add f g hf hg => rw [map_add]; exact add_mem hf hg
     | mul_X f p hf =>
       rw [map_mul]
       exact mul_mem hf (by simpa [chartHom] using (Valuation.mem_integer_iff v (r p)).mpr (hrle p))

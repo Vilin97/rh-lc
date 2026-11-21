@@ -203,7 +203,8 @@ theorem exists_isometry (hc : Formalism.HermitianLatticesTheory.IsCMUnram E) (W 
     rw [Matrix.det_transpose]; exact (GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.gram_det_isUnit W).ne_zero
   obtain ⟨P, hP0, hP⟩ := congr_signMatrix
     (GlobalTheory.LocalQuad.landherr_of_hasseNormSt GlobalTheory.QNorm.hasseNormSt)
-    GlobalTheory.QNorm.hasseNormSt hG hd (isLattice_coordLat W W.L0 W.standardTuple_isLattice)
+    GlobalTheory.QNorm.hasseNormSt hG hd
+    (isLattice_coordLat W W.L0 W.standardTuple_isLattice W.baseLattice_isUnimodular)
     (selfDual_coordLat W W.L0 W.baseLattice_isUnimodular)
     Set.univ (fun _ => Or.inl trivial) p fun τ _ => by
       have h0 := hs τ

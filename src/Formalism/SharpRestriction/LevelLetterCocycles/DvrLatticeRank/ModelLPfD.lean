@@ -31,8 +31,7 @@ theorem smulLA_tmul' (b : LetA O n) (e : W.EE) (y : LcQ W T π' c) :
 
 theorem smulLA_mul' (a b : LetA O n) (x : LA W T π' c) :
     smulLA W T π' c (a * b) x = smulLA W T π' c a (smulLA W T π' c b x) := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | tmul x y => simp [smulLA_tmul', map_mul, mul_assoc]
   | add x y hx hy => simp [map_add (f := _), hx, hy]
 
@@ -56,9 +55,8 @@ theorem filtration_value_local (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Pro
       Formalism.MainNotions.DeltaInvariantLattices.FilC (PD := PD) T τ a ≤ Formalism.MainNotions.DeltaInvariantLattices.FilC (PD := PD) T τ a') :
     (LinearMap.range (toLA W T π' c ⊤)).map (smulLA W T π' c (Eπ ^ h')) ≤ NL W T Pt π' Eπ h' c := by
   rintro _ ⟨_, ⟨t, rfl⟩, rfl⟩
-  induction t using TensorProduct.induction_on with
-  | zero => simp
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+  induction t using TensorProduct.inductionOn with
+  | add x y hx hy => simpa only [map_add] using add_mem hx hy
   | tmul a s =>
     apply Submodule.subset_span
     obtain ⟨⟨y, hy⟩, hys⟩ := Submodule.Quotient.mk_surjective _ (s : LcQ W T π' c)
@@ -96,15 +94,14 @@ theorem R_smul' {b : LetA O n} (hb : b ∈ W.AΔ) {r : LA W T π' c}
     (hr : r ∈ LinearMap.range (toLA W T π' c ⊤)) :
     smulLA W T π' c b r ∈ LinearMap.range (toLA W T π' c ⊤) := by
   obtain ⟨t, rfl⟩ := hr
-  induction t using TensorProduct.induction_on with
-  | zero => simp
+  induction t using TensorProduct.inductionOn with
   | tmul a s =>
     refine ⟨(⟨b, hb⟩ * a) ⊗ₜ s, ?_⟩
     rw [toLA_tmul', toLA_tmul', smulLA_tmul', ← map_mul]
     congr 2
     simp only [Subalgebra.coe_mul]
     ring
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+  | add x y hx hy => simpa only [map_add] using add_mem hx hy
 
 theorem lattice_contains_power_local (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (Eπ : LetA O n) (h' M : ℕ)
     (hEΔ : Eπ ∈ W.AΔ)

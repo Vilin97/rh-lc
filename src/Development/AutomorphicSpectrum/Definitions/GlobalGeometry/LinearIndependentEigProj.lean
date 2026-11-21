@@ -235,46 +235,4 @@ theorem det_isVB (hσ : ∀ (p : Cpt ξ) (a : 𝓞 E), σ (a : E) ∈ regAt ξ p
 
 end HodgeLat
 
-namespace HodgeInh
-
-open HodgeDeterminantLattice
-
-section General
-
-variable {Ω : Type} [Field Ω] {E : Type} [Field E] [NumberField E]
-
-
-variable (σ : E →+* Ω) (bar : 𝓞 E ≃+* 𝓞 E) (ω : 𝓞 E)
-
-variable {X : Scheme.{0}} {ξ : Spec (CommRingCat.of Ω) ⟶ X}
-
-section
-
-variable (hA : ∀ p a, chi σ a ∈ regAt ξ p) (h2 : Module.finrank ℚ E = 2)
-    (hω : ω - bar ω ≠ 0) (hdvd : ∀ a, ω - bar ω ∣ a - bar a) (L : Lat ξ Ω) (HL : Lat ξ (Ω × Module.Dual Ω Ω))
-    (hloc : ∀ p : Cpt ξ, ∃ U : X.Opens, p.1 ∈ U ∧ ∃ t : Ω, t ≠ 0 ∧ ∀ q : Cpt ξ, q.1 ∈ U →
-      L q = Submodule.span (regAt ξ q) {t} ∧ HL q = latH (regAt ξ q) (chi σ (ω - bar ω)) t)
-
-end
-
-end General
-
-section Split
-
-variable {Ω : Type} [Field Ω] {X : Scheme.{0}} {ξ : Spec (CommRingCat.of Ω) ⟶ X}
-
-end Split
-
-section Gauss
-
-attribute [local instance] cyc
-
-attribute [local instance] cm
-
-attribute [local instance] MvPolynomial.gradedAlgebra
-
-end Gauss
-
-end HodgeInh
-
 end GlobalTheory.CompanionTheory.Ar.Flat

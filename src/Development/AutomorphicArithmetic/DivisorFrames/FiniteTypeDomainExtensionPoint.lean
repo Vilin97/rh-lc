@@ -78,7 +78,7 @@ theorem UpperTheory.finiteType_domain_extension_point :
     induction ha using Submodule.span_induction with
     | mem t ht => exact Algebra.subset_adjoin (Finset.mem_coe.2 (Finset.mem_union_right _ (Finset.mem_image_of_mem _ ht)))
     | zero => rw [map_zero]; exact zero_mem _
-    | add s t _ _ hs ht => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hs ht
+    | add s t _ _ hs ht => rw [map_add]; exact add_mem hs ht
     | smul n t _ ht => rw [map_zsmul]; exact zsmul_mem ht n
   let d0 : 𝓞 F' →+* R0 := d.codRestrict R0 hd
   have hn0 : 𝔫.comap R0.val.toRingHom ≠ ⊤ := Ideal.comap_ne_top _ hn

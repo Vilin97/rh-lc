@@ -192,7 +192,8 @@ theorem quotVanish : QuotVanish := by
     rw [← GlobalTheory.CompanionTheory.FlagCent.perpD_perpD _ hσ, h₁, h₂]
   have g₂ : img (d * thetaR (starRingEnd ℂ) n d) W₂ = W₂ := by
     rw [← GlobalTheory.CompanionTheory.FlagCent.perpD_perpD _ hσ, h₂, h₁]
-  obtain ⟨V₂, V₃, c₁, d₁, c₂, d₂, s₂, s₃⟩ := exists_levi_spaces _ hs hW g₁ g₂
+  have hLevi := exists_levi_spaces (d * thetaR (starRingEnd ℂ) n d) hs hW g₁ g₂
+  obtain ⟨V₂, V₃, c₁, d₁, c₂, d₂, s₂, s₃⟩ := hLevi
   haveI := isHaar_radHomeo hW ν
   refine absVanish μ (flagStab W₁ W₂) (uK n) (isClosed_flagStab W₁ W₂) (isCompact_uK n) ?_
     ((uniRad hW).subgroupOf (flagStab W₁ W₂)) ((flagStab V₂ V₃).subgroupOf (flagStab W₁ W₂))

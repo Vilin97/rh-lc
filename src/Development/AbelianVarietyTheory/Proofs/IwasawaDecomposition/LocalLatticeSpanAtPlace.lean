@@ -30,11 +30,38 @@ theorem smul_mem_of_dvd {A V : Type} [CommRing A] [AddCommGroup V] [Module A V] 
   rw [mul_comm, mul_smul]
   exact M.smul_mem _ hx
 
+theorem dualFr_isFullLattice {K : Type} [Field K] [NumberField K] {n : ℕ} (M : Submodule (𝓞 K) (Fin n → K))
+    (hM : Submodule.IsLattice K M) : Submodule.IsFullLattice K (dualFr M) := by
+  classical
+  letI := GlobalTheory.DualLat.isLattice_dualFr M hM
+  refine ⟨?_⟩
+  apply eq_top_iff.mpr
+  intro x _
+  obtain ⟨S, hS⟩ := hM.fg
+  obtain ⟨d, hd, hdS⟩ := GlobalTheory.DualLat.exists_den_finset (S.image (fun y => x ⬝ᵥ y))
+  have hdx : d • x ∈ dualFr M := by
+    intro y hy
+    rw [← hS] at hy
+    induction hy using Submodule.span_induction with
+    | mem y hy =>
+      rw [smul_dotProduct]
+      exact hdS _ (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
+    | zero => simp
+    | add y z _ _ hy hz => rw [dotProduct_add]; exact add_mem hy hz
+    | smul a y _ hy => rw [dotProduct_smul]; exact Submodule.smul_mem _ _ hy
+  have hdK : algebraMap (𝓞 K) K d ≠ 0 := fun h =>
+    hd ((IsFractionRing.injective (𝓞 K) K) (by simpa using h))
+  have h := (Submodule.span K (dualFr M : Set (Fin n → K))).smul_mem
+    (algebraMap (𝓞 K) K d)⁻¹ (Submodule.subset_span hdx)
+  rw [← algebraMap_smul K d x, smul_smul, inv_mul_cancel₀ hdK, one_smul] at h
+  exact h
+
+
 theorem isLattice_delAtr {E K ι : Type} [Field E] [NumberField E] [Field K] [NumberField K] [Fintype ι] {n : ℕ}
     (emb : ι → E →+* K) (lam : ι → DomWeight n) (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsLattice E L) :
-    Submodule.IsLattice K (delAtr emb lam L) :=
+    Submodule.IsFullLattice K (delAtr emb lam L) :=
   (GlobalTheory.TransLattice.nabDelLattice K ι n lam _ fun τ =>
-    GlobalTheory.DualLat.isLattice_dualFr _ (GlobalTheory.TauLat.tauLat_lattice_dual_round.1 E K ι n emb τ L hL)).2
+    dualFr_isFullLattice _ (GlobalTheory.TauLat.tauLat_lattice_dual_round.1 E K ι n emb τ L hL)).2
 
 theorem span_locW_eq_top {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] (Pl : Rows.Places K) (w : Pl.Pl) (M : Submodule (𝓞 K) V)
@@ -66,6 +93,9 @@ theorem span_locW_BLat : ∀ {E K ι : Type} [Field E] [NumberField E] [StarRing
   haveI := (hI.step i).fin_orb
   refine span_locW_eq_top Pl w _ fun x => ?_
   exact exists_smul_mem_latOf (I.S i) emb (lamT hc i) hF _
-    (fun c => (isLattice_delAtr emb (lamT hc i) _ ((hJ.lev i).ker_lat c.1 _ P)).span_eq_top) x
+    (fun c => by
+      letI := isLattice_delAtr emb (lamT hc i) ((J.A i).ker c.1 ((I.S i).rep c) P)
+        ((hJ.lev i).ker_lat c.1 ((I.S i).rep c) P)
+      exact Submodule.IsFullLattice.span_eq_top) x
 
 end GlobalTheory.Mem.BSpan

@@ -20,7 +20,6 @@ lemma isCoherent_lvl {A : Type} [CommRing A] [IsNoetherianRing A] {I : Ideal A} 
   cases e with
   | zero =>
     have : IsIso (lvl S 0).arrow := by
-      rw [lvl_zero]
       exact (Subobject.isIso_arrow_iff_eq_top _).2 rfl
     exact IsCoherent.of_iso (asIso (lvl S 0).arrow).symm hP
   | succ e => exact GlobalTheory.T.coherent_subobject_coherent hP (S e) (hS.qcoh e)

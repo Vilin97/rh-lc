@@ -12,8 +12,9 @@ namespace GroundTheory.Heights₂.Heights
 namespace KLinesGenIndexDet
 
 theorem span_basis_isLattice {V : Type} [AddCommGroup V] [Module ℚ V] {ι : Type} [Fintype ι]
-    (b : Module.Basis ι ℚ V) : Submodule.IsLattice ℚ (Submodule.span ℤ (Set.range b)) :=
-  Submodule.IsLattice.of_fg ℚ (Submodule.fg_span (Set.finite_range b))
+    (b : Module.Basis ι ℚ V) : Submodule.IsFullLattice ℚ (Submodule.span ℤ (Set.range b)) where
+  toIsLattice := Submodule.IsLattice.of_fg ℚ (Submodule.fg_span (Set.finite_range b))
+  span_eq_top := by rw [Submodule.span_span_of_tower ℤ, b.span_eq]
 
 end KLinesGenIndexDet
 
@@ -23,8 +24,10 @@ theorem LinesGenIndexDet.proof (h1 : LinesLatticeBasis.Statement) : LinesGenInde
   intro V _ _ _ ι _ _ bA bB A B hA hB
   set MA := Submodule.span ℤ (Set.range bA)
   set MB := Submodule.span ℤ (Set.range bB)
-  have : Submodule.IsLattice ℚ MA := KLinesGenIndexDet.span_basis_isLattice bA
-  obtain ⟨bE, hE⟩ := h1 V ι (Module.finrank_eq_card_basis bA).symm (MA ⊓ MB) inferInstance
+  have : Submodule.IsFullLattice ℚ MA := span_basis_isLattice bA
+  have : Submodule.IsFullLattice ℚ MB := span_basis_isLattice bB
+  obtain ⟨bE, hE⟩ := h1 V ι (Module.finrank_eq_card_basis bA).symm (MA ⊓ MB)
+    (Submodule.IsFullLattice.inf ℚ MA MB)
   have hAB : A ⊓ B = AddSubgroup.closure (Set.range bE) := by
     rw [← Submodule.span_int_eq_addSubgroupClosure, ← hE, hA, hB,
       ← Submodule.span_int_eq_addSubgroupClosure, ← Submodule.span_int_eq_addSubgroupClosure]

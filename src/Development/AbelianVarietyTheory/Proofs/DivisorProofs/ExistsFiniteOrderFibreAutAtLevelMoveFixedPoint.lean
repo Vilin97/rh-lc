@@ -63,8 +63,7 @@ theorem iterate_eq {C : Type*} [Category C] {X : C} (θ : Aut X) (N : ℕ) :
   induction N with
   | zero => rfl
   | succ n ih =>
-    rw [Function.iterate_succ_apply', ih, pow_succ']
-    rfl
+    simp only [Function.iterate_succ_apply', ih, pow_succ', Aut.mul_asIso, Iso.trans_hom]
 
 theorem act_natCast {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] {T : Over S} (α : OAct (𝓞 E) G)
     (q : T ⟶ G) (n : ℕ) : q ≫ α.act (n : 𝓞 E) = q ^ n := by

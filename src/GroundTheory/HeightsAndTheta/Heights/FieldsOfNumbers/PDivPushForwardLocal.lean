@@ -68,7 +68,7 @@ theorem DivPushForwardLocal.proof (h1 : DivCycleMinimal.Statement.{u})
     have hcone := h2 F K _ _ hP W hW hPle c a h ha hh hhW α rfl
     have hdc : divCycle (contractPrime j P') a W =
         ((multAt (contractPrime j P' ⊔ Ideal.span {a}) W).toNat : ℤ) := by
-      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+      unfold divCycle
       rw [dite_eq_left ⟨hmin, hW.relevant⟩]
     rw [hMN, hdc]
     rw [hN, hrk, ← hcone] at key

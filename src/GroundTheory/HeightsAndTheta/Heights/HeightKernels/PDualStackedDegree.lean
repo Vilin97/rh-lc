@@ -23,7 +23,7 @@ namespace DualStackedDegreeAlt
 
 variable {K : Type} [Field K] [NumberField K] {i : ℕ}
 
-theorem isLattice (F : HermLattice K i) : Submodule.IsLattice ℚ (F.lattice.restrictScalars ℤ) :=
+theorem isLattice (F : HermLattice K i) : Submodule.IsFullLattice ℚ (F.lattice.restrictScalars ℤ) :=
   LinesIsLattice.proof K (Fin i) F.lattice (F.fg.restrictScalars) F.span_eq
 
 theorem degree_withStdMetric (F : HermLattice K i) :

@@ -23,6 +23,36 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
 
 local notation "ιE" => algebraMap (LetA O n) W.EE
 
+section Quotient
+
+variable (T : LocLat G Qp LL O) (A : ArcP n) (c : ZMod n) (e : ℕ) {d : ℕ} (b : Fin d → W.DD T)
+  (Rst : Finset (Fin d))
+
+def Psub : Submodule O (Fin d → W.EE) where
+  carrier := {f | f ∈ Msub W A c e Rst ∧
+    ∃ g, InNL W T c e (abelian₂ W A c e) b g ∧ ∀ k, f k = algebraMap (LetA O n) W.EE W.π₀ * g k}
+  add_mem' := by
+    rintro f f' ⟨hf, g, hg, hfg⟩ ⟨hf', g', hg', hfg'⟩
+    exact ⟨(Msub W A c e Rst).add_mem hf hf', g + g',
+      Formalism.MainNotions.UnusedSlot80.UnivC.inNL_add W T A c e b hg hg', fun k => by simp [hfg k, hfg' k, mul_add]⟩
+  zero_mem' := ⟨(Msub W A c e Rst).zero_mem, 0, Formalism.MainNotions.UnusedSlot80.UnivC.inNL_zero W T A c e b,
+    fun k => by simp⟩
+  smul_mem' := by
+    rintro o f ⟨hf, g, hg, hfg⟩
+    exact ⟨(Msub W A c e Rst).smul_mem o hf, fun k => o • g k,
+      Formalism.MainNotions.UnusedSlot80.UnivC.inNL_smul W T A c e b o hg, fun k => by
+        rw [Pi.smul_apply, hfg k, mul_smul_comm]⟩
+
+theorem psub_of_pi0Lam [IsDomain O] (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W)
+    (hbij : Function.Bijective (algebraMap K₀ K)) (hA : A.OK) (hc : c ∈ A.cuts) (hT : Win W A T)
+    (hb : Formalism.MainNotions.LiftingTheory.IsFrameΔ W T (c - ((A.len c : ℕ) : ZMod n)) b) (f : Fin d → W.EE)
+    (hf : ∀ k, InFr W c (W.π₀ * abelian₂ W A c (A.len c)) 1 (f k)) (hs : ∀ k ∉ Rst, f k = 0) :
+    f ∈ Psub W T A c (A.len c) b Rst := by
+  obtain ⟨g, hg, hfg⟩ := nl_of_pi0Lam W hR hbij A hA c hc T hT b hb f hf
+  exact ⟨⟨fun k => inFr1_of_pi0Lam W A c _ (hf k), hs⟩, g, hg, hfg⟩
+
+end Quotient
+
 theorem single_mem_span {d : ℕ} {ι : Type} [Fintype ι] (V : ι → Fin d → W.EE) (k : Fin d) (x : W.EE)
     (i : ι) (hV : V i = Pi.single k x) : Pi.single k x ∈ Submodule.span O (Set.range fun j : Fin (Fintype.card ι) =>
       V ((Fintype.equivFin ι).symm j)) := by
@@ -149,12 +179,12 @@ theorem univGenCore_of' [IsDomain O] [IsPrincipalIdealRing O] [NeZero n]
     have hRrm : Rr ∈ Ps := by
       refine psub_of_pi0Lam W T₂ A c b Rst hR hbij hAOK hc hWin hb _ (fun k => ?_) (fun k hk => by simp [hRr, hk])
       by_cases hk : k ∈ Rst
-      · simp only [hRr, hk, if_true]
+      · simp only [hRr, hk, ite_true]
         obtain ⟨w, hw, hwe⟩ := hRk k
         refine ⟨lA W ^ (Kt - Kk k) * w, W.AΔ.mul_mem (W.AΔ.pow_mem (Formalism.MainNotions.UnusedSlot80.KL.lA_mem W) _) hw, ?_⟩
         rw [map_one, one_mul] at hwe ⊢
         rw [hwe, ← Formalism.MainNotions.UnusedSlot80.KL.ι_lE, ← map_mul]; congr 1; ring
-      · simp only [hRr, hk, if_false]; exact ⟨0, W.AΔ.zero_mem, by simp⟩
+      · simp only [hRr, hk, ite_false]; exact ⟨0, W.AΔ.zero_mem, by simp⟩
     have hf0 : ∀ k ∉ Rst, ιE W.π₀ * g₁ k = 0 := fun k hk => by
       rw [← hpp k, hf.1.2 k hk, map_zero, smul_zero, sub_zero]
     have hD2m : D2 ∈ Ps := by
@@ -172,9 +202,9 @@ theorem univGenCore_of' [IsDomain O] [IsPrincipalIdealRing O] [NeZero n]
       intro k
       simp only [hSv, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, Pi.single_apply, smul_ite, smul_zero]
       by_cases hk : k ∈ Rst
-      · rw [if_pos hk, Finset.sum_eq_single k (fun k' _ hk' => by simp [Ne.symm hk']) (fun h => absurd hk h)]
+      · rw [ite_eq_left hk, Finset.sum_eq_single k (fun k' _ hk' => by simp [Ne.symm hk']) (fun h => absurd hk h)]
         simp
-      · rw [if_neg hk, Finset.sum_eq_zero]
+      · rw [ite_eq_right hk, Finset.sum_eq_zero]
         intro k' hk'
         have : k ≠ k' := fun h => hk (h ▸ hk')
         simp [this]
@@ -191,7 +221,7 @@ theorem univGenCore_of' [IsDomain O] [IsPrincipalIdealRing O] [NeZero n]
         rw [Finset.mul_sum]
         refine Finset.sum_congr rfl fun s hs => ?_
         have : s < e := Finset.mem_range.1 hs
-        simp only [hCg, this, if_true]
+        simp only [hCg, this, ite_true]
         rw [lE_smul, smul_smul]
       have e2 : t • f k = PPγ W e JS (f k) - ιE W.π₀ * g₁ k := by
         rw [← hpp k]; unfold PPγ; ring
@@ -204,8 +234,8 @@ theorem univGenCore_of' [IsDomain O] [IsPrincipalIdealRing O] [NeZero n]
       funext k
       rw [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, hSvk k]
       by_cases hk : k ∈ Rst
-      · simp only [hRr, hD2, hk, if_true]; exact key k hk
-      · simp only [hRr, hD2, hk, if_false, hf.1.2 k hk, smul_zero, hf0 k hk, mul_zero, sub_zero, add_zero]
+      · simp only [hRr, hD2, hk, ite_true]; exact key k hk
+      · simp only [hRr, hD2, hk, ite_false, hf.1.2 k hk, smul_zero, hf0 k hk, mul_zero, sub_zero, add_zero]
     refine ⟨Kt, ?_⟩
     rw [heq]
     exact Submodule.add_mem_sup hSvm (Ps.sub_mem hRrm hD2m)

@@ -25,7 +25,8 @@ namespace UpperTheory.Gal.W2.Wit.Sys
 
 variable {p : ℕ} [Fact p.Prime] {D : Datum p} (X : Sys D)
 
-theorem r_nsmul (n : ℕ) (w : VQ D) : X.r (n • w) = n • X.r w := map_nsmul X.r n w
+theorem r_nsmul (n : ℕ) (w : VQ D) :
+    X.r (n • w) = n • (X.r w : AfP p ⊗[ℚ] VQ D) := map_nsmul X.r n w
 
 theorem eq_add {n : ℕ} (hn : 0 < n) (hnp : n.Coprime p) (u v : X.lat) {e : AfP p ⊗[ℚ] VQ D} (he : e ∈ LaHat D)
     (h : X.r (u : VQ D) = X.r (v : VQ D) + n • e) : ∃ e' : X.lat, u = v + n • e' := by

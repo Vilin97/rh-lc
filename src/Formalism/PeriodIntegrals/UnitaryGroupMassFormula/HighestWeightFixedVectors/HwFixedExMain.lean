@@ -42,7 +42,7 @@ theorem detTwK_uni {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n)
   have hd : Matrix.GeneralLinearGroup.det (g τ) = 1 := by
     ext
     rw [Matrix.GeneralLinearGroup.val_det_apply,
-      Matrix.det_of_upperTriangular (fun i j hij => (hg τ).1 i j hij)]
+      Matrix.det_of_isUpperTriangular (fun i j hij => (hg τ).1 i j hij)]
     simp [(hg τ).2]
   rw [hd, _root_.one_zpow, Units.val_one]
 
@@ -55,7 +55,7 @@ theorem uni_X {ι : Type} [Fintype ι] {n : ℕ} (g : ι → GL (Fin n) ℂ) (hg
     show ∀ m, Finsupp.weight (wt ι n) m < _ → AddMonoidAlgebra.coeff (X u) m = 0
     intro m hm
     classical
-    rw [MvPolynomial.coeff_X', if_neg]
+    rw [MvPolynomial.coeff_X, if_neg]
     rintro rfl
     simp [Finsupp.weight_apply, Finsupp.sum_single_index] at hm
     omega
@@ -84,7 +84,7 @@ theorem vv_bound {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n) :
   | mem x hx =>
     obtain ⟨i, rfl⟩ := hx
     ext m
-    rw [coeff_weightedHomogeneousComponent, coeff_zero]
+    rw [coeff_weightedHomogeneousComponent, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     split_ifs with h
     · by_contra hc
       have h1 := Finset.le_sup (f := Finsupp.weight (wt ι n)) (mem_support_iff.mpr hc)
@@ -126,7 +126,7 @@ theorem hwFixedEx_main : HwFixedEx := by
         (fun m hm => Nat.lt_succ_of_le (Finset.le_sup hm))] at h
     · have h0 : weightedHomogeneousComponent w k F = 0 := by
         ext m
-        rw [coeff_weightedHomogeneousComponent, coeff_zero]
+        rw [coeff_weightedHomogeneousComponent, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
         split_ifs with h
         · by_contra hc
           have := Finset.le_sup (f := Finsupp.weight w) (mem_support_iff.mpr hc)
@@ -142,7 +142,7 @@ theorem hwFixedEx_main : HwFixedEx := by
   have hgood0 : good (Finsupp.weight w m0) := by
     refine ⟨x, hxS', fun h => hm0 ?_⟩
     have := congrArg (AddMonoidAlgebra.coeff · m0) h
-    rwa [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
+    rwa [coeff_weightedHomogeneousComponent, if_pos rfl, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
   have hbound : ∀ k, good k → k ≤ D := by
     rintro k ⟨G, hG, hne⟩
     by_contra h
@@ -174,10 +174,10 @@ theorem hwFixedEx_main : HwFixedEx := by
       rwa [actP, LinearMap.smul_apply, detTwK_uni lam g hg, one_smul, AlgHom.toLinearMap_apply] at this
     rw [← sub_eq_zero]
     ext m
-    rw [coeff_zero]
+    rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     by_cases hm : Finsupp.weight w m < Nat.findGreatest good D + 1
     · exact mem_Ge.1 hd m hm
     · have := congrArg (AddMonoidAlgebra.coeff · m) (hmax (Finsupp.weight w m) (by omega) _ hd')
-      rwa [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
+      rwa [coeff_weightedHomogeneousComponent, if_pos rfl, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
 
 end PI.HwFix.UnitaryGroupMassFormula

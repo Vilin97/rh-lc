@@ -48,7 +48,8 @@ theorem UpperTheory.ConvolutionTheory.T.descStep :
   intro hD hL F E _ _ _ _ _ _ _ _ σ hσ hp n hn P hP v w hv
   let μE : Measure (normOneGL (K := E) (n := n)) := Measure.haar
   let μF : Measure (normOneGL (K := F) (n := n)) := Measure.haar
-  obtain ⟨χ', ⟨s, hs'⟩, V, hV⟩ := Dp.exTwist E n μE P hn
+  obtain ⟨χ', hχ', V, hV⟩ := Dp.exTwist E n μE P hn
+  obtain ⟨s, hs'⟩ := hχ'
   obtain ⟨hex, htw⟩ := powTwist F E
   obtain ⟨χ, hs⟩ := (hex s).1
   obtain ⟨hi, hi', h1⟩ := htw s χ χ' hs hs'

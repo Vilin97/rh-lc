@@ -207,7 +207,7 @@ end Lat
 
 def unitLat (D : D7) : Submodule (𝓞 D.host.E) (Fin 1 → D.host.E) where
   carrier := {u | ∀ p, u p ∈ (1 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E)}
-  zero_mem' := fun p => (1 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E).zero_mem
+  zero_mem' := fun _ => (1 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E).zero_mem
   add_mem' := fun hu hv p => (1 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E).val.add_mem (hu p) (hv p)
   smul_mem' := fun c _ hu p => (1 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E).val.smul_mem c (hu p)
 
@@ -358,9 +358,9 @@ theorem top_abs (d : HermitianOrthogonalExtensionData A B 1 1) (S : Finset ℕ) 
       HMul.hMul X ((emb d).map (incA D))) hg) (extM_mul _ _ _ m3)
   · have hq : (prj d).map (incA D) *ᵥ (fun i => incA D (d.a i 0)) = 0 := by
       funext l
-      have := congrArg (incA D) (congrFun (congrFun (orthogonalSumProjection_mul_auxiliary d) l) 0)
-      set_option synthInstance.maxHeartbeats 100000 in
-        simpa [Matrix.mulVec, dotProduct, Matrix.mul_apply, map_sum] using this
+      refine (RingHom.map_mulVec (incA D) (prj d) (fun i => d.a i 0) l).symm.trans ?_
+      change incA D ((prj d * d.a) l 0) = 0
+      rw [orthogonalSumProjection_mul_auxiliary, Matrix.zero_apply, map_zero]
     exact Eq.trans (congrArg (fun X : Matrix (Fin B.rank) (Fin B.rank) (AF D.host.F ⊗[D.host.F] D.host.E) =>
       X *ᵥ (fun i => incA D (d.a i 0))) hg) (extM_mulVec _ _ _ hq)
 

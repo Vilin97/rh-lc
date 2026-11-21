@@ -488,7 +488,28 @@ theorem globStep_holds (hK : X.LevelSubgroupCharacter) : GlobalCondition X u hK 
     rw [eq_top_iff]
     intro q _
     induction q using Submodule.Quotient.induction_on with | H w => ?_
-    obtain ⟨s, hs, hsw⟩ := exists_smul_mem Λ w.val
+    let L := PIW.AdelClassFin.abelian₂ X.B.I ((h : X.B.I.Gf) * X.xu u)
+    letI : Submodule.IsLattice X.B.I.E L := Submodule.IsLattice.of_fg X.B.I.E
+      (PIW.AdelClassFin.mLat_of PIW.AdelClassFin.lattice_intersection'
+        PIW.AdelClassFin.lattice_denominator X.B.I ((h : X.B.I.Gf) * X.xu u)).1
+    letI : Submodule.IsFullLattice X.B.I.E L :=
+      ⟨(PIW.AdelClassFin.mLat_of PIW.AdelClassFin.lattice_intersection'
+        PIW.AdelClassFin.lattice_denominator X.B.I ((h : X.B.I.Gf) * X.xu u)).2⟩
+    obtain ⟨t, ht, htw⟩ := Formalism.L2.SG.Pf.exists_smul_mem L (X.crd w.val)
+    let s := LatticeCoordinateLemmas.sO' X t
+    have hs : s ≠ 0 := by
+      exact fun he => ht ((RingOfIntegers.mapRingEquiv X.ιE).injective (by simpa [s] using he))
+    have hsw : s • w.val ∈ Λ := by
+      rw [hmemΛ]
+      have he : s • w.val = LatticeCoordinateLemmas.gv X (t • X.crd w.val) := by
+        conv_lhs => rw [← LatticeCoordinateLemmas.gv_crd X w.val]
+        change (LatticeCoordinateLemmas.sO' X t) • LatticeCoordinateLemmas.gv X (X.crd w.val) = _
+        exact (LinearMap.map_smulₛₗ (LatticeCoordinateLemmas.gvO X) t (X.crd w.val)).symm
+      rw [he]
+      change X.B.I.fmat ((h : X.B.I.Gf) * X.xu u)⁻¹ *ᵥ
+        incl X.B.I (X.crd (LatticeCoordinateLemmas.gv X (t • X.crd w.val))) ∈ X.B.I.Lf
+      rw [LatticeCoordinateLemmas.crd_gv]
+      exact htw
     have hmem : Submodule.Quotient.mk (s • w) ∈ qLat Λ W ⊥ :=
       mem_qLat.2 ⟨s • w, by simpa using hsw, rfl⟩
     have hsE : algebraMap (𝓞 D.host.E) D.host.E s ≠ 0 := by simpa using hs

@@ -84,52 +84,12 @@ theorem lift_through_split (hK : Known) {K V F : Type} [CommRing K] [IsDomain K]
     (h : (sc (x * io a) ≫ u₁).left ≫ prj pw = spMap (dualMap j) ≫ v.left) :
     ∃ (ν : Out.GtPt DV (epsR V)) (ν₁ e₂ : Out.GtPt DF (epsR F)),
       GtTanR ν ∧ LetBC pw ν ν₁ ∧ LetBC pK e e₂ ∧ GtComb ![x] ![e₂] ν₁ := by
-  have letBC_split {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R']
-      {f : R →+* R'} {D₀ : Out.DegPre R} {D₁ : Out.DegPre R'} (p : Out.IsPullDeg f D₀ D₁)
-      {n : ℕ} {s₀ : ∀ T : Over (Sp R), (T ⟶ D₀.P.A) → Out.GtPt D₀ T}
-      {s₁ : ∀ T : Over (Sp R'), (T ⟶ D₁.P.A) → Out.GtPt D₁ T}
-      (hG : Out.GlobalFnsSt) (h₀ : IsSplit D₀ n s₀) (h₁ : IsSplit D₁ n s₁)
-      {v : epsR R ⟶ D₀.P.A} {v₁ : epsR R' ⟶ D₁.P.A}
-      (hv : v₁.left ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ v.left) :
-      LetBC p (s₀ (epsR R) v) (s₁ (epsR R') v₁) := by
-    open ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.DVR GlobalTheory.TorusModel in
-      have a₀ : ∀ x k, DegPre.gtφT D₀ _ (s₀ (epsR R) v).b x k = v.left ≫ DegPre.gtφT D₀ _ (s₀ D₀.P.A (𝟙 _)).b x k := by
-        intro x k
-        have e := (h₀.2.2 _ _ v (𝟙 _)).1
-        rw [Category.comp_id] at e
-        rw [(TorusCoord.comp_eq_of_left _ (s₀ (epsR R) v).b v.left (𝟙 _) (e.symm.trans (Category.id_comp _).symm)).1 x k,
-          Category.id_comp, TorusCoord.gtφT_eq]
-      have a₁ : ∀ x k, DegPre.gtφT D₁ _ (s₁ (epsR R') v₁).b x k = v₁.left ≫ DegPre.gtφT D₁ _ (s₁ D₁.P.A (𝟙 _)).b x k := by
-        intro x k
-        have e := (h₁.2.2 _ _ v₁ (𝟙 _)).1
-        rw [Category.comp_id] at e
-        rw [(TorusCoord.comp_eq_of_left _ (s₁ (epsR R') v₁).b v₁.left (𝟙 _) (e.symm.trans (Category.id_comp _).symm)).1 x k,
-          Category.id_comp, TorusCoord.gtφT_eq]
-      have hψ : ∀ χ k, DegPre.gtφT D₁ _ (s₁ (epsR R') v₁).b χ k ≫ prj p =
-          spMap (Formalism.L2.Pj.dualMap f) ≫ DegPre.gtφT D₀ _ (s₀ (epsR R) v).b (p.xe χ) k := fun χ k => by
-        rw [a₀, a₁, Category.assoc, (GlobalTheory.SplitBC.univ_corr p hG h₀ h₁ χ).1, ← Category.assoc, hv, Category.assoc]
-      have letBC_iff (ν : GtPt D₀ (epsR R)) (ν₁ : GtPt D₁ (epsR R')) :
-          LetBC p ν ν₁ ↔ ν₁.b.left ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ ν.b.left ∧ ∀ χ,
-            (∀ i, DegPre.gtφT D₁ (epsR R') ν₁.b χ i ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ DegPre.gtφT D₀ (epsR R) ν.b (p.xe χ) i) ∧
-            PMaps p.w _ _ DegPre.gtε (ν₁.s χ) (ν.s (p.xe χ)) (spMap (Formalism.L2.Pj.dualMap f)) :=
-        and_congr Iff.rfl (forall_congr' fun χ =>
-          ⟨fun ⟨hψ, hm⟩ => ⟨hψ, (maps_iff p.w _ _ _ (ν₁.s χ) (ν.s (p.xe χ)) _ _
-            (GeneratorPullback.pullAlong_le _ _ _ _ _ hψ) (fun _ => rfl)).1 hm⟩,
-          fun ⟨hψ, hm⟩ => ⟨hψ, (maps_iff p.w _ _ _ (ν₁.s χ) (ν.s (p.xe χ)) _ _
-            (GeneratorPullback.pullAlong_le _ _ _ _ _ hψ) (fun _ => rfl)).2 hm⟩⟩)
-      refine (letBC_iff _ _).2 ⟨hψ 0 2, fun χ => ⟨hψ χ, ArcQBC.pmaps_of_val p.w_gen D₀.P.isLB D₁.P.isLB (hψ χ)
-        ((s₁ _ v₁).isGen χ) ((s₀ _ v).isGen _) fun y J J' hJ hJ' => ?_⟩⟩
-      have e := (GlobalTheory.SplitBC.univ_corr p hG h₀ h₁ χ).2 _ v₁.left y J J' hJ hJ'
-      rw [hv] at e
-      refine (GlobalTheory.SplitBC.val_univ h₀ v _ _ hJ).trans ?_
-      rw [GlobalTheory.SplitBC.val_univ h₁ v₁ χ _ hJ']
-      simp only [Category.id_comp, a₁]
-      exact e
   obtain ⟨sV, hV⟩ := GlobalTheory.ArcCM.exists_isSplit hK V DV n hn hc
   obtain ⟨sF, hF⟩ := GlobalTheory.ArcCM.exists_isSplit hK F DF n hn (c_pow_of_pull pw hc)
   obtain rfl : e = sB _ (sc a ≫ u) := TorsionPairTest.isPull_unique he (hs.2.2 _ _ (sc a) u)
-  refine ⟨_, _, _, GlobalTheory.SplitBC.gtTanR_split hV hv, letBC_split pw hK.laws.globalFns hV hF h,
-    letBC_split pK hK.laws.globalFns hs hF (sc_over hu₁ a),
+  obtain ⟨h₁, h₂⟩ := GlobalTheory.SplitBC.split_baseChange hK V F j DV DF pw n sV sF hj hV hF v _ h
+  refine ⟨_, _, _, h₁ hv, h₂,
+    (GlobalTheory.SplitBC.split_baseChange hK K F io DK DF pK n sB sF hio hs hF _ _ (sc_over hu₁ a)).2,
     ![sF _ (sc (x * io a) ≫ u₁)], ![sF _ 1, sF _ (sc (x * io a) ≫ u₁)], fun i => ?_, ?_, fun i => ?_, rfl⟩
   · obtain rfl : i = 0 := Subsingleton.elim _ _
     have := hF.2.2 _ _ (sc x) (sc (io a) ≫ u₁)

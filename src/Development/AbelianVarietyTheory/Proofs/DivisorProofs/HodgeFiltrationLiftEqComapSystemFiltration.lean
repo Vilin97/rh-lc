@@ -27,7 +27,12 @@ theorem hodgeFiltration_lift_map_eq_crystalline_kernel (H : CrystallineSmoothLif
     (m : IsMor (dp0 R) s (divided₂ hI) (s₀ ≫ spMap π) (RingHom.id R) i) :
     (F1 s).map m.pull1 = S.K hI := by
   have hb := (H.toCrystallineDeRham R I (divided₂ hI) (isDPNilpotent_squareZero hI) R₀ π hπ hk X X₀ s s₀ i hs hs' hs'' h m).1
-  obtain ⟨e, he, -⟩ := GlobalTheory.T.hodge_cohomology_iso_presented_crystal R R₀ I hI π hπ hk X₀ s₀ S X s i h hP
+  have hex : ∃ e : HO1 s ≃ₗ[R] GlobalTheory.CatCoh.H1 S.F,
+      (∀ (m : IsMor (dp0 R) s (divided₂ hI) (s₀ ≫ spMap π) (RingHom.id R) i)
+        (c : FirstDeRham s), e (toHO1 s (cmp1 s c)) = S.r hI (m.pull1 c)) ∧
+      ∀ c : HO1 s, IsPullO h.w c (S.redO.pull1 (e c)) :=
+    GlobalTheory.T.hodge_cohomology_iso_presented_crystal R R₀ I hI π hπ hk X₀ s₀ S X s i h hP
+  obtain ⟨e, he, -⟩ := hex
   have key : ∀ c, m.pull1 c ∈ S.K hI ↔ c ∈ F1 s := fun c ↦ by
     change S.r hI (m.pull1 c) = 0 ↔ toH1O s c = 0
     rw [← he m c, LinearEquiv.map_eq_zero_iff, structureSheaf_comparison_comm]

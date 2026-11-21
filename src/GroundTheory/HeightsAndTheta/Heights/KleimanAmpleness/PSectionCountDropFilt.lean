@@ -52,7 +52,7 @@ theorem hom_span {T : Set (Poly S N)} (hT : ∀ g ∈ T, ∃ e, g.IsHomogeneous 
     · exact Ideal.subset_span hg
     · exact zero_mem _
   | zero => intro d; simp
-  | add a b _ _ ha hb => intro d; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha d) (hb d)
+  | add a b _ _ ha hb => intro d; rw [map_add (f := _)]; exact add_mem (ha d) (hb d)
   | smul r a _ ha =>
     intro d
     classical
@@ -342,7 +342,7 @@ theorem SectionCount.Drop.Filt.proof (hK : SectionCount.Drop.Filt.Kernel.Stateme
     fun a => ⟨heSv _ (hemb a), heS _ (hemb a), hann _⟩, fun qq => ?_, fun n i => ?_⟩
   ·
     by_cases h : qq ∈ J.minimalPrimes ∧ IsSubvar x qq d
-    · rw [dif_pos h, hc1 qq]
+    · rw [dite_eq_left h, hc1 qq]
       have hset : kept.filter (fun l => eS l = d ∧ Fl.prime l = qq) =
           Finset.univ.filter (fun l => Fl.prime l = qq) := by
         ext l
@@ -423,7 +423,7 @@ theorem SectionCount.Drop.Filt.proof (hK : SectionCount.Drop.Filt.Kernel.Stateme
       | succ r ih =>
         intro hr
         have hr' : r < Fl.n := by omega
-        rw [Finset.sum_range_succ, dif_pos hr']
+        rw [Finset.sum_range_succ, dite_eq_left hr']
         have h1 := hstep ⟨r, hr'⟩
         have h2 := ih (by omega)
         rw [Fin.succ_mk, Fin.castSucc_mk] at h1
@@ -433,7 +433,7 @@ theorem SectionCount.Drop.Filt.proof (hK : SectionCount.Drop.Filt.Kernel.Stateme
     have htop := htel Fl.n le_rfl
     rw [show (⟨Fl.n, by omega⟩ : Fin (Fl.n + 1)) = Fin.last Fl.n from rfl, hlast,
       Finset.sum_range] at htop
-    simp only [Fin.is_lt, dif_pos, Fin.eta] at htop
+    simp only [Fin.is_lt, dite_eq_left, Fin.eta] at htop
 
     have hker := hK k Ω N x j b Fs hxj
     let mulβ : (Fs.twist (twistSys k x (-(b : ℤ)))).secs →ₗ[k] Fs.secs :=

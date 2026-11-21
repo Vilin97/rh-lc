@@ -6,6 +6,7 @@ public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLif
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.RootsOfUnityRingLeWittIntegers
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HeckeOpen
 public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.IsRecTOfIsRec
+meta import Lean.Elab.Tactic.ElabTerm
 
 @[expose] public section
 
@@ -19,6 +20,19 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 4000000
+
+-- These transfers compare fully elaborated types with large dependent instances.
+open Lean Elab Tactic in
+local elab "exact_by_kernel " term:term : tactic =>
+  closeMainGoalUsing `exact_by_kernel fun target _ => do
+    let value ← elabTerm term none
+    let actual ← instantiateMVars (← Meta.inferType value)
+    let target ← instantiateMVars target
+    match Kernel.isDefEq (← getEnv) (← getLCtx) actual target with
+    | .ok true => pure value
+    | .ok false => throwError "expected{indentExpr target}\nbut the term has type{indentExpr actual}"
+    | .error error => throwError (error.toMessageData (← getOptions))
+
 variable {hL : _root_.UpperTheory.Zero.LLC.RecTExists} {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {P : Pre2 K w}
 variable {x : St P} (L : LocAll (lay0 (Dof x)))
 variable (l : _root_.GlobalTheory.HeightCounting.Up.StrictHenselianAcyclicLevel hL x)
@@ -27,9 +41,9 @@ def yStructureLocal : NExpRealS (datL x L).R (datL x L).cG (SL L l.rat) where
   geq := (by with_unfolding_all exact (l.b.YS.geq :))
   rho := (by with_unfolding_all exact (l.b.YS.rho :))
   chi := (by with_unfolding_all exact (l.b.YS.chi :))
-  eF := by with_unfolding_all exact (l.b.YS.eF :)
-  bsup := by with_unfolding_all exact (l.b.YS.bsup :)
-  act := by with_unfolding_all exact (l.b.YS.act :)
+  eF := by exact_by_kernel l.b.YS.eF
+  bsup := by exact_by_kernel l.b.YS.bsup
+  act := by exact_by_kernel l.b.YS.act
 def heckeHeightData : NExpRealH x.m.z.R x.m.z.cG l.rat.S l.b.YS where
   hL := l.rat.In.hL
   hs := l.b.Bs.hs
@@ -46,7 +60,7 @@ def localHeckeHeightData : NExpRealH (datL x L).R (datL x L).cG (SL L l.rat) (_r
   cHk_zero := (by with_unfolding_all exact ((_root_.GlobalTheory.HeightCounting.Fin3.heckeHeightData l).cHk_zero :))
   cHk_unit := (by with_unfolding_all exact ((_root_.GlobalTheory.HeightCounting.Fin3.heckeHeightData l).cHk_unit :))
   cHk_pow := (by with_unfolding_all exact ((_root_.GlobalTheory.HeightCounting.Fin3.heckeHeightData l).cHk_pow :))
-  hkEq := by with_unfolding_all exact ((_root_.GlobalTheory.HeightCounting.Fin3.heckeHeightData l).hkEq :)
+  hkEq := by exact_by_kernel (_root_.GlobalTheory.HeightCounting.Fin3.heckeHeightData l).hkEq
 def psiVectorLocal : ∀ i : Fin (DL x L).R.m, principalLevelFrame.RowPsi (Formalism.IndefR.Links.Vc (DL x L) i) (DL x L).R.nV :=
   fun i => (by with_unfolding_all exact ((rowPsi (a := x.o.Z) (oL x L).Z (l.mt.ad.PV ((i)))) : _))
 def characterChoiceLocal : NChoice (DL x L) := (by with_unfolding_all exact ((chL L l.c.ch) :))
@@ -61,9 +75,7 @@ theorem thetaTie_yStructureLocal_nonempty : Nonempty (GlobalTheory.GeoTie.ThetaT
   obtain ⟨g⟩ := l.b.geo
   exact ⟨⟨fun i j b => ⟨(by with_unfolding_all exact ((g.side ((i)) ((j)) b).pt : _)), (by with_unfolding_all exact ((g.side ((i)) ((j)) b).cover : _)),
     (by with_unfolding_all exact ((g.side ((i)) ((j)) b).ev_eq : _)),
-    (by
-      with_unfolding_all
-        exact ((g.side (by with_unfolding_all exact (i :)) (by with_unfolding_all exact (j :)) b).fmUr :)),
+    (by exact_by_kernel (g.side (by exact_by_kernel i) (by exact_by_kernel j) b).fmUr),
     (by with_unfolding_all exact ((g.side ((i)) ((j)) b).hk : _)),
     (by with_unfolding_all exact ((g.side ((i)) ((j)) b).hk_none : _))⟩, (by with_unfolding_all exact (g.isUnramified₂ :))⟩⟩
 theorem kept_characterChoiceLocal : Kept l.c.ch (_root_.GlobalTheory.HeightCounting.Fin3.characterChoiceLocal L l) :=

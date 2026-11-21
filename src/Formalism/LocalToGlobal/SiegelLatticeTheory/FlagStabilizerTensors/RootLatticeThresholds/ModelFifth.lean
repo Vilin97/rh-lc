@@ -20,12 +20,14 @@ local notation "W" => wPt pN
 theorem mp_model {k0 : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
     [InnerProductSpace ℂ Wq] (Ds : Formalism.FourierDecayAlt.B.RealPlaceData (k0 + 1) r Wp Wq) {δ : Formalism.FourierDecayAlt.B.Mat (k0 + 1) r}
     (hδ : δ ∈ Formalism.FourierDecayAlt.B.GV (k0 + 1) r) {d : Fin (r + 1) → ℂ} (hd : ∀ a, d a ≠ 0)
-    (hdm : ∀ q : Formalism.FourierDecayAlt.C2.Lstidx W, ‖d (W q.1.1)‖ = ‖d (W q.1.2)‖)
-    (hZ : Zhat (k0 + 1) r Ds.z Ds.z' δ = Formalism.FourierDecayAlt.C2.monoP W d) (μ : Measure (Mt (k0 + 1) r))
+    (hdm : ∀ q : Formalism.FourierDecayAlt.C2.Lstidx (wPt pN),
+      ‖d (wPt pN q.1.1)‖ = ‖d (wPt pN q.1.2)‖)
+    (hZ : Zhat (k0 + 1) r Ds.z Ds.z' δ = Formalism.FourierDecayAlt.C2.monoP (wPt pN) d)
+    (μ : Measure (Mt (k0 + 1) r))
     (hconc : μ {x | Matrix.of x ∉ Formalism.FourierDecayAlt.C6.Rset δ} = 0) (c : ℝ≥0∞)
     (hmap : μ.map (fun x => Formalism.MainNotions.S.rootCoords (k0 + 1) r Ds.z' pN (Matrix.of.symm (δ⁻¹ * Matrix.of x * δ))) =
       c • volume) :
-    μ = c • Formalism.FourierDecayAlt.D.muR Ds δ W := by
+    μ = c • Formalism.FourierDecayAlt.D.muR Ds δ (wPt pN) := by
   have hzS : Formalism.FourierDecayAlt.C2.StdZ (k0 + 1) r Ds.z := ⟨Ds.z_mem, Ds.T_pos⟩
   have hz'S : Formalism.FourierDecayAlt.C2.StdZ (k0 + 1) r Ds.z' := ⟨Ds.z'_mem, Ds.T'_pos⟩
   have hG := good_of Ds hδ hd hZ

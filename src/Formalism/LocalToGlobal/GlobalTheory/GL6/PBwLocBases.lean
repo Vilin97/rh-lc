@@ -14,40 +14,10 @@ open Formalism.BasicNotions Formalism.MainNotions.product_first_zeroth_parts For
 
 variable (D : D7) (u : D.what₂.Word)
 
-private theorem isLattice_map_restrictScalars_linearEquiv {K R V W : Type*} [CommRing R] [Field K] [Algebra R K]
-    [AddCommGroup V] [Module K V] [Module R V] [IsScalarTower R K V]
-    [AddCommGroup W] [Module K W] [Module R W] [IsScalarTower R K W]
-    (e : V ≃ₗ[K] W) (L : Submodule R V) (hL : Submodule.IsLattice K L) :
-    Submodule.IsLattice K (L.map ((e : V →ₗ[K] W).restrictScalars R)) := by
-  obtain ⟨hfg, hsp⟩ := hL
-  refine ⟨hfg.map _, ?_⟩
-  rw [Submodule.map_coe, LinearMap.coe_restrictScalars]
-  intro s hs hli
-  have hsub : e.symm '' s ⊆ L := by
-    rintro x ⟨y, hy, rfl⟩
-    obtain ⟨z, hz, rfl⟩ := hs hy
-    simpa using hz
-  have hli' : LinearIndepOn R id (e.symm '' s) := by
-    apply (linearIndepOn_id_imageₛ_iff (f := (e.symm : W →ₗ[K] V).restrictScalars R)
-      e.symm.injective.injOn).2
-    exact hli
-  have hk := hsp _ hsub hli'
-  have := (linearIndepOn_id_imageₛ_iff (f := (e : V →ₗ[K] W)) e.injective.injOn).2 hk
-  simpa [Set.image_image, Function.comp_def] using this
-
 theorem bwB_clsCrd_lat (i : ℕ) (hi : i ≤ D.R.m) (c : (D.mem u).C.cls i) :
     Submodule.IsLattice D.host.E (clsCrd D u i hi c) := by
-  have hL : Submodule.IsLattice D.host.E (D.clsLat u i c) := by
-    first
-      | exact D.clsLat_lat u i c
-      | exact D.clsLat_isLat u i c
-      | exact D.clsLat_isLattice u i c
-      | exact D.clsLat_lattice u i c
-      | exact (D.clsLat_spec u i c).1
-      | exact D.clsLat_spec u i c
-      | exact inferInstance
   unfold clsCrd
-  exact isLattice_map_restrictScalars_linearEquiv _ _ hL
+  exact Submodule.IsLattice.of_fg D.host.E ((D.clsLat_lat u i c).fg.map _)
 
 theorem bwB_gramN_det (i : ℕ) (hi : i ≤ D.R.m) : IsUnit (gramN D i hi).det := by
   letI := D.host.cmStar

@@ -41,7 +41,7 @@ theorem pt_matrices {v : Valuation C NNReal} (hv : v.Integers O) (P : HTPoint C 
   classical
   haveI : IsDomain O := hv.hom_inj.isDomain (algebraMap O C)
   haveI := PositivityTheory.HtPt.Gb.isFractionRing_of_integers hv
-  haveI := P.om_lat
+  haveI : P.om.IsFullLattice C := P.om_lat
   have hinj := hv.hom_inj
   have hsp : ⊤ ≤ Submodule.span C (Set.range fun q : Ix E N =>
       P.ρ (RingOfIntegers.basis E q.2) (P.t q.1)) := by
@@ -80,14 +80,15 @@ theorem pt_matrices {v : Valuation C NNReal} (hv : v.Integers O) (P : HTPoint C 
     rw [Finset.sum_eq_single m (fun b _ hb => by simp [hb]) (by simp)]
     simp [Algebra.smul_def]
   choose Ei hEi using fun m => (Submodule.mem_span_range_iff_exists_fun O).1 (hT ▸ hwT m)
-  let bC := bo.extendOfIsLattice C
+  let bC := bo.extendOfIsFullLattice C
+  have hbC_apply (j : Fin g) : bC j = (bo j : Ω') :=
+    Basis.extendOfIsFullLattice_apply C bo j
   have hbC : ∀ (y : P.om) k, bC.repr (y : Ω') k = algebraMap O C (bo.repr y k) := fun y k => by
     have e : (y : Ω') = ∑ j, algebraMap O C (bo.repr y j) • bC j := by
-      have := congrArg Subtype.val (bo.sum_repr y)
-      rw [Submodule.coe_sum] at this
-      rw [← this]
-      refine Finset.sum_congr rfl fun j _ => ?_
-      simp only [algebraMap_smul, Submodule.coe_smul, bC, Basis.extendOfIsLattice_apply]
+      calc
+        (y : Ω') = ((∑ j, bo.repr y j • bo j : P.om) : Ω') :=
+          congrArg Subtype.val (bo.sum_repr y).symm
+        _ = _ := by simp only [Submodule.coe_sum, Submodule.coe_smul, algebraMap_smul, hbC_apply]
     rw [e, bC.repr_sum_self]
   let Hm : Matrix (Fin g) (Ix E N) O := fun k m => bo.repr ⟨P.ht (B m), P.ht_mem _ (hB m)⟩ k
   have hHm : ∀ k m, algebraMap O C (Hm k m) = bC.repr (P.ht (B m)) k := fun k m =>
@@ -100,7 +101,7 @@ theorem pt_matrices {v : Valuation C NNReal} (hv : v.Integers O) (P : HTPoint C 
       obtain ⟨x, -, hx⟩ := P.κ_mem _ (bo k).2
       refine ⟨(algebraMap O C κ)⁻¹ • x, ?_⟩
       rw [map_smul, hx, ← algebraMap_smul C κ, inv_smul_smul₀ P.κ_ne]
-      exact (Basis.extendOfIsLattice_apply C bo k).symm
+      exact (hbC_apply k).symm
     have h1 := LinearMap.finrank_range_add_finrank_ker P.ht
     rw [hsurj, finrank_top, finrank_eq_card_basis bC, finrank_eq_card_basis B, Fintype.card_fin] at h1
     have horth : LinearMap.BilinForm.orthogonal P.e (LinearMap.ker P.ht) = LinearMap.ker P.ht := by
@@ -186,8 +187,8 @@ theorem chart_matrices {A K : Type} [CommRing A] [IsDomain A] [Field K] [Algebra
   let io : D.om →ₛₗ[algebraMap A O] (Fin _ → O) := bo.equivFun.toLinearMap.comp ι₁
   have hio : ∀ u k, io u k = bo.repr ⟨ι₀ u, hmem u⟩ k := fun _ _ => rfl
   obtain ⟨Hm, Eg, h1, h2, h3, h4, h5⟩ := pt_matrices hv P bo
-  obtain ⟨j, hj, hjr, hjι⟩ := PositivityTheory.HtPt.Gb.bc_iso A K Ω D.om C v O hv Ω' P.om ι₀ D.om_lat D.om_proj P.om_lat
-    hr.span_eq hr.rank_eq
+  obtain ⟨j, hj, hjr, hjι⟩ := PositivityTheory.HtPt.Gb.bc_iso A K Ω D.om C v O hv Ω' P.om ι₀
+    D.om_lat D.om_proj P.om_lat hr.span_eq hr.rank_eq
   have hpR : ∀ z : O, (p : O) ^ R * z ∈ Ideal.span {(p : O)} := fun z =>
     Ideal.mul_mem_right _ _ (Ideal.pow_mem_of_mem _ (Ideal.mem_span_singleton_self _) _ hR)
   refine ⟨_, io, Hm, Eg, ?_, fun f => ?_, h1, h2, h3, fun m m' => ?_, fun m k => ?_⟩

@@ -1,5 +1,6 @@
 module
 
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HasDivPlace
 public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SphericalCoordinates.IsCoordA
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.CommutantEqRangeActOnAndInjective
 public import Development.AutomorphicArithmetic.CommutativeAlgebra.LiftBaseChangeRealBijectiveOfLattice
@@ -73,8 +74,7 @@ private theorem span_gen {La V : Type} [AddCommGroup V] [Module ℚ V] [AddCommG
       rw [TensorProduct.tmul_smul]
       exact Submodule.smul_of_tower_mem _ q hx
   refine eq_top_iff.2 fun u _ => ?_
-  induction u using TensorProduct.induction_on with
-  | zero => simp
+  induction u using TensorProduct.inductionOn with
   | add x y hx hy => exact Submodule.add_mem _ (hx trivial) (hy trivial)
   | tmul r v =>
     have : r ⊗ₜ[ℚ] v = r • ((1 : ℝ) ⊗ₜ[ℚ] v) := by
@@ -88,7 +88,7 @@ private theorem actOn_tg {C V R : Type} [Ring C] [Algebra ℚ C] [AddCommGroup V
   have hl : actOn rep R (r ⊗ₜ[ℚ] c) =
       Algebra.ofId R (Module.End R (R ⊗[ℚ] V)) r * ((Module.End.baseChangeHom ℚ R V).comp rep) c :=
     Algebra.TensorProduct.lift_tmul _ _ _ r c
-  rw [hl, Module.End.mul_apply]
+  rw [hl, Module.End.mul_eq_comp, LinearMap.comp_apply]
   change r • ((rep c).baseChange R (s ⊗ₜ[ℚ] v)) = _
   rw [LinearMap.baseChange_tmul, TensorProduct.smul_tmul', smul_eq_mul]
 
@@ -100,12 +100,10 @@ private theorem actOn_tt {C V : Type} [Ring C] [Algebra ℚ C] [AddCommGroup V] 
 private theorem bc_anti {R A M : Type} [CommRing R] [CommRing A] [AddCommGroup M] [Algebra R A]
     [Module R M] (B : LinearMap.BilinForm R M) (h : ∀ x y, B x y = -B y x) (x y : A ⊗[R] M) :
     B.baseChange A x y = -B.baseChange A y x := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb, neg_add]
   | tmul a m =>
-    induction y using TensorProduct.induction_on with
-    | zero => simp
+    induction y using TensorProduct.inductionOn with
     | add c d hc hd => simp only [map_add (f := _), LinearMap.add_apply, hc, hd, neg_add]
     | tmul c n =>
       rw [LinearMap.BilinForm.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul, h m n, mul_comm a,
@@ -122,18 +120,15 @@ private theorem E_adj {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L 
     (c : ℝ ⊗[ℚ] G.C) (x y : ℝ ⊗[ℚ] VQ D) :
     (D.EF.baseChange ℚ).baseChange ℝ (actOn L.rep ℝ c x) y =
       (D.EF.baseChange ℚ).baseChange ℝ x (actOn L.rep ℝ (starT G.star ℝ c).unop y) := by
-  induction c using TensorProduct.induction_on with
-  | zero => simp
+  induction c using TensorProduct.inductionOn with
   | add a b ha hb =>
     simp only [map_add (f := _), LinearMap.add_apply, MulOpposite.unop_add, ha, hb]
   | tmul r d =>
     rw [starT_tmul]
-    induction x using TensorProduct.induction_on with
-    | zero => simp
+    induction x using TensorProduct.inductionOn with
     | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
     | tmul s u =>
-      induction y using TensorProduct.induction_on with
-      | zero => simp
+      induction y using TensorProduct.inductionOn with
       | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | tmul t v =>
         rw [actOn_tt, actOn_tt, LinearMap.BilinForm.baseChange_tmul,
@@ -165,8 +160,7 @@ theorem UpperTheory.exists_real_period_iso_of_polarized_lattice :
       rw [← hjO, hPq, hPq, hPO]
     exact LinearMap.congr_fun h v
   have hΦO : ∀ (b : D.O) u, Φ ((actQ D b).baseChange ℝ u) = ρ b *ᵥ Φ u := fun b u => by
-    induction u using TensorProduct.induction_on with
-    | zero => simp
+    induction u using TensorProduct.inductionOn with
     | add x y hx hy => simp only [map_add (f := _), hx, hy, Matrix.mulVec_add]
     | tmul r v => rw [LinearMap.baseChange_tmul, hΦt, hΦt, hPqO, Matrix.mulVec_smul]
   let A : Module.End ℝ (ℝ ⊗[ℚ] VQ D) :=
@@ -179,8 +173,8 @@ theorem UpperTheory.exists_real_period_iso_of_polarized_lattice :
   have hJ : ∀ u, Φ (actOn L.rep ℝ Jc u) = Complex.I • Φ u := fun u => by rw [hJc, hA]
   have hJJ : Jc * Jc = -1 := hinj (by
     refine LinearMap.ext fun u => Φ.injective ?_
-    rw [map_mul, Module.End.mul_apply, hJ, hJ, map_neg, map_one, LinearMap.neg_apply,
-      Module.End.one_apply, map_neg, smul_smul, Complex.I_mul_I, neg_smul, one_smul])
+    rw [map_mul, Module.End.mul_eq_comp, LinearMap.comp_apply, hJ, hJ, map_neg, map_one,
+      LinearMap.neg_apply, one_apply_eq_self, map_neg, smul_smul, Complex.I_mul_I, neg_smul, one_smul])
   let T : Module.End ℝ (ℝ ⊗[ℚ] VQ D) := actOn L.rep ℝ (inC G ℝ ((β⁻¹ : G.Cˣ) : G.C))
   let E : (ℝ ⊗[ℚ] VQ D) →ₗ[ℝ] (ℝ ⊗[ℚ] VQ D) →ₗ[ℝ] ℝ := (D.EF.baseChange ℚ).baseChange ℝ
   have hT : ∀ v : VQ D, T ((1 : ℝ) ⊗ₜ[ℚ] v) = (1 : ℝ) ⊗ₜ[ℚ] L.rep ((β⁻¹ : G.Cˣ) : G.C) v := fun v => by
@@ -206,7 +200,7 @@ theorem UpperTheory.exists_real_period_iso_of_polarized_lattice :
     have := LinearMap.congr_fun (LinearMap.congr_fun key x) y
     simpa using this
   have hb : ∀ x, actOn L.rep ℝ (inC G ℝ ((β⁻¹ : G.Cˣ) : G.C) * Jc) x = T (actOn L.rep ℝ Jc x) := fun x => by
-    rw [map_mul, Module.End.mul_apply]
+    rw [map_mul, Module.End.mul_eq_comp, LinearMap.comp_apply]
   have sym : ∀ x y, 2 * E (actOn L.rep ℝ (inC G ℝ ((β⁻¹ : G.Cˣ) : G.C) * Jc) x) y =
       (ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm Hm (Φ x) (Φ y)).re := fun x y => by
     rw [hb, ← key', hJ, ← herm_I]

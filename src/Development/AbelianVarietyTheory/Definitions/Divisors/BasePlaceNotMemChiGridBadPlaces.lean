@@ -424,7 +424,8 @@ abbrev Datum : Type := ∀ i : Fin D.R.m, G.CosAt i
 
 theorem finite_datum (h : (L.ΛY 0).FG) : Finite G.Datum := by
   have : ∀ i : Fin D.R.m, Finite (G.CosAt i) := fun ⟨i, hi⟩ => by
-    haveI := Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _
+    letI : Submodule.IsFullLattice D.host.E (G.Λ (.grid (i + 1) 0)) :=
+      Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _
       (G.sp.V_is (i + 1) 0 (by omega) hi (by omega)).sd
     refine finite_cos (inferInstance) ?_ (G.pl.modul_ne_bot sc)
     cases i with

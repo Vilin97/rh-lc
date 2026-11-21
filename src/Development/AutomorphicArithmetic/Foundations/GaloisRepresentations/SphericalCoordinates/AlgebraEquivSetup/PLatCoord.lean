@@ -115,7 +115,8 @@ private lemma nu_mem {p : ℕ} (β : ℚ ⊗[ℤ] (Fin n → 𝓞 E) ≃ₗ[ℚ]
       obtain ⟨a, x, ha, rfl⟩ := hz
       exact AddSubgroup.subset_closure ⟨a, x i, ha, by rw [nu_tmul, hβ]⟩
     | zero => simpa using zero_mem _
-    | add a b _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+    | add a b _ _ h1 h2 =>
+      simpa only [map_add, Pi.add_apply] using add_mem h1 h2
     | neg a _ h => rw [map_neg]; exact neg_mem h
   · intro h
     have hs : ∀ i, ∀ w ∈ OHat p E, (nu (AfP p) β).symm (Pi.single i w) ∈
@@ -143,8 +144,11 @@ private lemma nu_mem {p : ℕ} (β : ℚ ⊗[ℤ] (Fin n → 𝓞 E) ≃ₗ[ℚ]
 
 end UpperTheory.Gal.W2.Seed.LatticeTensorCoordinates
 
-open UpperTheory.Gal.W2.Seed.LatticeTensorCoordinates in
-theorem UpperTheory.Gal.W2.Seed.pLatCoord :
+namespace UpperTheory.Gal.W2.Seed
+
+open LatticeTensorCoordinates
+
+theorem pLatCoord :
     RepLaws → LatCoord := by
   intro _ E _ _ _ A n p _ S μ hμ
   obtain ⟨β, hβ⟩ := pRepEx E n
@@ -156,3 +160,5 @@ theorem UpperTheory.Gal.W2.Seed.pLatCoord :
     exact nu_act μ hμ S.L.rep β hr (S.mx h) v
   · intro v
     exact nu_mem β hβ v
+
+end UpperTheory.Gal.W2.Seed

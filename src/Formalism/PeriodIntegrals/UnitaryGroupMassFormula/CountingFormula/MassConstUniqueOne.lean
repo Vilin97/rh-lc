@@ -35,9 +35,9 @@ theorem massConst_unique_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
   have ho := stdLat_isOrtho K 1
   have hs := stdForm_isSymm K 1
   have e := hc _ (stdForm K 1) (stdLat K 1) hs (isTotPosDef_of_ortho hK hs ho) (finrank_of_ortho ho)
-    (isLattice_of_ortho ho) (isIntegralLat_of_ortho ho)
+    (isFullLattice_of_ortho ho) (isIntegralLat_of_ortho ho)
   have e' := hc' _ (stdForm K 1) (stdLat K 1) hs (isTotPosDef_of_ortho hK hs ho) (finrank_of_ortho ho)
-    (isLattice_of_ortho ho) (isIntegralLat_of_ortho ho)
+    (isFullLattice_of_ortho ho) (isIntegralLat_of_ortho ho)
   rw [lamG_eq_one_of_ortho hK hF hs ho, mul_one] at e e'
   rw [← e, ← e']
 

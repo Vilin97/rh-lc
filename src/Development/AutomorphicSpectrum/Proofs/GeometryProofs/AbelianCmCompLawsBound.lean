@@ -13,7 +13,7 @@ public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverLaU
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.CostTwoLogBoundStatement
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.UniformAllNormHeightBoundStatement
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FullIntersectionGoodLevelStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FullIntersectionGoodLevel
 public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TowerWeightOfZeroStatement
 
 @[expose] public section
@@ -62,7 +62,7 @@ set_option maxHeartbeats 1000000 in
 theorem top_meanAll : GlobalTheory.CompanionTheory.Ar.Pub.NefRR → GlobalTheory.CompanionTheory.Ar.Top.Given → ArithIntersectionSystemStatement → BirationalPullbackPushforwardFormula → GlobalTheory.CompanionTheory.Ar.Top.GoodTowerExistsX → GlobalTheory.CompanionTheory.Ar.Top.VolumeTheoremX → ∃ C : ℝ, 0 ≤ C ∧ ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] [IsAbelianGalois ℚ E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (h : GenFrEx Xo c) (e : Comp Xo c → Rul Xo c), CompLaws U h e → Ref.UnifAll Xo c → FnAlgClosed (Xo := Xo) (c := c) → (∀ p : ℕ, p.Prime → l.GoodAt p) → l.A = 1 → 1 ≤ Dw.q → 3 * Dw.q + 1 ≤ Dw.p + Dw.q → 2 ≤ Fintype.card (CMType H) → (Nat.primeFactors (2 * (discr E).natAbs) ∪ l.M'.primeFactors).card ≤ 4 * Fintype.card (CMType H) * (Dw.p + Dw.q) ^ 2 → ∀ x : ℝ, (∀ σ, GoodEmb c σ → ∀ k (τ : E →+* ℂ), ‖τ ((U σ).X k).ξ0‖ = x) → GlobalTheory.CovHt.MeanAll U x (Real.log (hostRd E) + |hostLval H|) C := by
   intro hNef hG hII hG6 hGT hVT
   obtain ⟨II, hII⟩ := hII
-  obtain ⟨CT, hCT, hT⟩ := GlobalTheory.T.full_intersection_good_level hG hGT hVT
+  obtain ⟨CT, hCT, hT⟩ := vs_tower hG hGT hVT
   refine ⟨CT + 120, by linarith, ?_⟩
   intro E _ _ _ _ H Dw l Xo c r U h e hLaws hUnif hFn hGood hA hq hpq hcardΨ hbad x hx
   classical

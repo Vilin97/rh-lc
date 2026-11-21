@@ -42,7 +42,7 @@ theorem UpperTheory.ConvolutionTheory.Sph.weakStable :
     obtain ⟨σ, hσ⟩ := IsCyclic.exists_generator (α := M ≃ₐ[K] M)
     let μE : Measure (normOneGL (K := M) (n := n)) := Measure.haar
     let μF : Measure (normOneGL (K := K) (n := n)) := Measure.haar
-    obtain ⟨s, χ, χ', V, -, -, hχ, hχ', hV, -, -, -, hW', hOff, -⟩ :=
+    obtain ⟨s, χ, χ', V, V', θ', hχ, hχ', hV, hV', hθ', hst', hW', hOff, hOff'⟩ :=
       UpperTheory.ConvolutionTheory.Sph.norm K M σ hσ hp n hn μE μF π P hW
     obtain ⟨-, htw⟩ := powTwist K M
     obtain ⟨hi, hi', h1⟩ := htw s χ χ' hχ hχ'

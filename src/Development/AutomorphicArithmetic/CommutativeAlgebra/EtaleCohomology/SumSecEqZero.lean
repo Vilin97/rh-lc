@@ -25,7 +25,7 @@ private theorem sum_sec_eq_zero (Pa : Parts C) (F : Coef C) (hF : Pa.Add F) {Q P
   have hnat : ∀ i, (F.map (S.f s)).hom (a i • c A ((u i).app A y)) =
       a i • c (S.B s) ((u i).app _ (Q.map (S.f s) y)) := by
     intro i
-    rw [map_zsmul, hc' (S.f s) _, FunctorToTypes.naturality]
+    rw [map_zsmul, hc' (S.f s) _, NatTrans.naturality_apply]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_zero, map_sum]
   simp only [hnat]

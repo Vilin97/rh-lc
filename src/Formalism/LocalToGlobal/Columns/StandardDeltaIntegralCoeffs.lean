@@ -97,10 +97,10 @@ theorem coefficient_space_support (K : Type) [Field K] (lam : ι → DomWeight n
     intro m hm τ s
     have := product_support_weights K lam f hf Finset.univ m hm τ s
     simpa using this
-  | zero => intro m hm; exact absurd (coeff_zero m) hm
+  | zero => intro m hm; exact False.elim (hm (by simp))
   | add x y _ _ hx hy =>
     intro m hm
-    rw [MvPolynomial.coeff_add] at hm
+    simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply] at hm
     by_cases h : AddMonoidAlgebra.coeff x m = 0
     · exact hy m (by rw [h, zero_add] at hm; exact hm)
     · exact hx m h
@@ -137,7 +137,7 @@ theorem cfMap_injective (lam : ι → DomWeight n) (g : ι → GL (Fin n) K) : F
   intro x hx
   have h0 : trAct g x.1 = 0 := by
     ext m
-    rw [coeff_zero]
+    simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     by_contra h
     have hm := coefficient_space_support K lam (transpose_action_mem lam g x.2) m h
     exact h (congrFun hx ⟨m, hm⟩)

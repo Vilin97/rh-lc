@@ -27,7 +27,7 @@ theorem exists_pderiv_ne_zero_lt' {K : Type*} [Field K] [CharZero K] {ι : Type*
     simp at hP
   obtain ⟨i, hi⟩ : ∃ i, s i ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     exact hs0 (Finsupp.ext h)
   have hdeg : ∀ t : ι →₀ ℕ, t i ≠ 0 →
       (t.sum fun _ e => e) = ((t - Finsupp.single i 1).sum fun _ e => e) + 1 := by
@@ -45,7 +45,7 @@ theorem exists_pderiv_ne_zero_lt' {K : Type*} [Field K] [CharZero K] {ι : Type*
   refine ⟨i, ?_, ?_⟩
   · intro h0
     have hc := congrArg (AddMonoidAlgebra.coeff · (s - Finsupp.single i 1)) h0
-    rw [hder, coeff_sum, coeff_zero, Finset.sum_eq_single s] at hc
+    rw [hder, coeff_sum, AddMonoidAlgebra.coeff_zero, Finset.sum_eq_single s] at hc
     · rw [coeff_monomial, if_pos rfl] at hc
       exact mul_ne_zero (mem_support_iff.1 hs) (by exact_mod_cast hi) hc
     · intro t _ hts

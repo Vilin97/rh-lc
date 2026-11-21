@@ -112,31 +112,9 @@ theorem form_mem (σ : E →+* Ω) {e : Li} (he : e ∈ GlobalTheory.CompanionTh
 
 theorem eq_zero_of_forms [CharZero Ω] [Fact p.Prime] (σ : E →+* Ω) {e : Li} (he : e ∈ GlobalTheory.CompanionTheory.Ar.HT.eigSp ρ (σ.comp c.toRingHom))
     (h : ∀ f ∈ D.omHT σ, f e = 0) : e = 0 := by
-  have hp : ((p : Ω) ^ Rr) ≠ 0 := pow_ne_zero _ (Nat.cast_ne_zero.2 (Fact.out : p.Prime).ne_zero)
-  have h1 : ∀ u ∈ D.om, u e = 0 := by
-    intro u hu
-    have hm : ((p : R) ^ Rr) • u ∈ D.om' :=
-      Submodule.mem_sup_right ⟨u, hu, rfl⟩
-    have h2 := h _ ⟨_, hm, rfl⟩
-    have h3 : GlobalTheory.CompanionTheory.Ar.HT.eigProj D.ρΩ σ (((p : R) ^ Rr) • u) e = (((p : R) ^ Rr) • u) e :=
-      HTL.eigProj_apply D ρ hc hact σ he _
-    have h4 : (((p : R) ^ Rr) • u) e = (p : Ω) ^ Rr * u e := by
-      simp [Subalgebra.smul_def]
-    have h5 : (p : Ω) ^ Rr * u e = 0 := by
-      rw [← h4, ← h3]
-      exact h2
-    exact (mul_eq_zero.1 h5).resolve_left hp
-  have h2 : ∀ u : Module.Dual Ω Li, u e = 0 := by
-    intro u
-    have hu : u ∈ Submodule.span Ω (D.om : Set (Module.Dual Ω Li)) := by
-      letI : D.om.IsFullLattice Ω := D.om_lat
-      rw [Submodule.IsFullLattice.span_eq_top (A := Ω) (M := D.om)]; trivial
-    induction hu using Submodule.span_induction with
-    | mem x hx => exact h1 x hx
-    | zero => simp
-    | add x y _ _ hx hy => simp [hx, hy]
-    | smul a x _ hx => simp [hx]
-  exact (Module.forall_dual_apply_eq_zero_iff Ω e).1 h2
+  refine HTL.eq_zero_of_forall_om' D D.om_lat.span_eq_top fun u hu => ?_
+  rw [← HTL.eigProj_apply D ρ hc hact σ he u]
+  exact h _ ⟨u, hu, rfl⟩
 
 theorem form_eq_zero (σ : E →+* Ω) {f : Module.Dual Ω Li} (hf : f ∈ D.omHT σ)
     (h : ∀ e ∈ GlobalTheory.CompanionTheory.Ar.HT.eigSp ρ (σ.comp c.toRingHom), f e = 0) : f = 0 := by

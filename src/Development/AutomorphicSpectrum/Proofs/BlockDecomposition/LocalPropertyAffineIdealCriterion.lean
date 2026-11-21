@@ -72,7 +72,7 @@ theorem exists_ideal_on_basicOpen {Y : Scheme.{0}} (P : ∀ T : Scheme.{0}, (T �
     exact this
   · intro h z hz
     have h2 : I₂ ≤ RingHom.ker h' := by
-      rw [← IsLocalization.map_comap (Submonoid.powers f) Γ(Y, Y.basicOpen f) I₂, Ideal.map_le_iff_le_comap]
+      rw [← IsLocalization.map_under (Submonoid.powers f) Γ(Y, Y.basicOpen f) I₂, Ideal.map_le_iff_le_comap]
       intro x hx
       have := h hx
       rw [RingHom.mem_ker] at this

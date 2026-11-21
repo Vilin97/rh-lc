@@ -116,6 +116,91 @@ theorem lvlNab_isLattice {s : ℕ} (h : (A.MtCSD i t).Good s) :
   Formalism.DivisionValues.ValuationLatticeField.valLatF_isLattice ((A.MtCSD i t).lvlI (A.leftGroupActionLift i t) U ψ)
     (Subtype.val_injective.comp (srcForm_injective i t U ψ)) (A.MtCSD i t).Nab h.nab_lat
 
+private theorem goodNab_span_eq_top {K : Type} [Field K] [NumberField K] [StarRing K]
+    {S : CSD K} {s : ℕ} (h : S.Good s) (c : S.Cl) :
+    Submodule.span K (S.Nab c : Set S.V) = ⊤ := by
+  let P := Submodule.span K (S.Nab c : Set S.V)
+  change P = ⊤
+  by_contra hP
+  have hinj : Function.Injective S.pair := by
+    intro x y hxy
+    apply sub_eq_zero.mp
+    apply h.nondeg.1
+    intro z
+    simp [map_sub, hxy]
+  have hproper : P.map S.pair < ⊤ := by
+    apply lt_top_iff_ne_top.mpr
+    intro he
+    apply hP
+    calc
+      P = (P.map S.pair).comap S.pair := (Submodule.comap_map_eq_of_injective hinj P).symm
+      _ = ⊤ := by rw [he, Submodule.comap_top]
+  obtain ⟨f, hf, hker⟩ := Submodule.exists_le_ker_of_lt_top _ hproper
+  obtain ⟨w, hw⟩ := (Module.evalEquiv K S.V).surjective f
+  have hw0 : w ≠ 0 := by
+    intro he
+    subst w
+    exact hf (hw.symm.trans (map_zero _))
+  have hz (y : S.V) (hy : y ∈ S.Nab c) : S.pair y w = 0 := by
+    have hy' := hker (Submodule.mem_map_of_mem (f := S.pair) (Submodule.subset_span hy))
+    rw [LinearMap.mem_ker, ← hw] at hy'
+    exact hy'
+  -- A vector orthogonal to `Nab c` would put an entire K-line in this finitely generated module.
+  have hs : (s : K) ≠ 0 := Nat.cast_ne_zero.mpr h.s_pos.ne'
+  have hline (a : K) : a • w ∈ S.Nab c := by
+    have hd : ((s : K)⁻¹ * a) • w ∈ Formalism.HermitianLatticesTheory.dual S.pair (S.Nab c) := by
+      apply (Formalism.HermitianLatticesTheory.dualBasic_mem_dual _ _ _).2
+      intro y hy
+      rw [map_smul, hz y hy, smul_zero]
+      exact Submodule.zero_mem _
+    have hm := h.del_le c (h.dual_le c _ hd)
+    rwa [← algebraMap_smul K, map_natCast, smul_smul, ← mul_assoc, mul_inv_cancel₀ hs, one_mul] at hm
+  have hnonzero : ∃ u, S.pair u w ≠ 0 := by
+    by_contra! hz'
+    exact hw0 (h.nondeg.2 w hz')
+  obtain ⟨u, hu⟩ := hnonzero
+  let p := (S.pair u).restrictScalars (𝓞 K)
+  have hp : (S.Nab c).map p = ⊤ := by
+    refine eq_top_iff.mpr fun a _ => ⟨(a / S.pair u w) • w, hline _, ?_⟩
+    change S.pair u ((a / S.pair u w) • w) = a
+    rw [map_smul, smul_eq_mul, div_mul_cancel₀ _ hu]
+  have : Module.Finite (𝓞 K) K := ⟨by rw [← hp]; exact (h.nab_lat c).fg.map p⟩
+  have := Algebra.IsIntegral.of_finite (𝓞 K) K
+  exact RingOfIntegers.not_isField K
+    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 K) K) (Field.toIsField K))
+
+private theorem lvlNab_span_eq_top {s : ℕ} (h : (A.MtCSD i t).Good s) :
+    Submodule.span D.what₂.LL ((A.MtCSD i t).lvlNab (A.leftGroupActionLift i t) U ψ :
+      Set (Fin (srcDim A i t U ψ) → D.what₂.LL)) = ⊤ := by
+  classical
+  let K := D.what₂.LL
+  let S := A.MtCSD i t
+  let I := S.lvlI (A.leftGroupActionLift i t) U ψ
+  let N := Formalism.DivisionValues.valLatF I S.Nab
+  change Submodule.span K (N : Set (Fin (srcDim A i t U ψ) → K)) = ⊤
+  rw [eq_top_iff]
+  intro z _
+  have hz (c : S.Cl) : ∃ d ∈ nonZeroDivisors (𝓞 K), d • I z c ∈ S.Nab c := by
+    have htop := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) (S.Nab c)
+      (goodNab_span_eq_top h c)
+    have hm : I z c ∈ Formalism.HermitianLatticesTheory.locS (nonZeroDivisors (𝓞 K)) (S.Nab c) := by
+      rw [htop]
+      exact Submodule.mem_top
+    exact hm
+  choose d hd hdz using hz
+  have hd0 : algebraMap (𝓞 K) K (∏ c, d c) ≠ 0 :=
+    IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors (Submonoid.prod_mem _ fun c _ => hd c)
+  have hmem : (∏ c, d c) • z ∈ N := by
+    change (∏ c, d c) • z ∈ Formalism.DivisionValues.valLatF I S.Nab
+    rw [Formalism.DivisionValues.ValuationLatticeField.mem_valLatF]
+    intro c
+    rw [LinearMap.map_smul_of_tower, Pi.smul_apply, ← Finset.mul_prod_erase _ _ (Finset.mem_univ c),
+      mul_comm (d c), ← smul_smul]
+    exact (S.Nab c).smul_mem _ (hdz c)
+  apply (Submodule.smul_mem_iff _ hd0).mp
+  rw [algebraMap_smul K]
+  exact Submodule.subset_span hmem
+
 theorem exists_src_trU (h : (A.MtCSD i t).ActGood (A.leftGroupActionLift i t)) {f : (A.MtCSD i t).Forms}
     (hf : ∀ c, (f : (A.MtCSD i t).Cl → (A.MtCSD i t).V) c ∈ (A.MtCSD i t).Nab c) :
     ∃ y ∈ (A.MtCSD i t).lvlNab (A.leftGroupActionLift i t) U ψ, srcForm A i t U ψ y = trU (A.leftGroupActionLift i t) U ψ f := by
@@ -479,7 +564,7 @@ theorem lattices_of_tie (t : OnTie h fw hinj EX p ι wL wF nT O v i z act inc �
         (Submodule.span D.what₂.LL (thetaTuple R ι U ψ ph (R.mu v) : Set (Fin (R.nW ι) → D.what₂.LL))).comap
           (toForms h fw ι z ∘ₗ O.θ' v i ∘ₗ y.symm.toLinearMap) :=
       Submodule.span_le.2 fun m hm => hS.theta_mem_span hθ hm
-    exact h4 (hM.span_eq_top.ge trivial)
+    exact h4 ((lvlNab_span_eq_top ι (R.mu v) U ψ hG).ge Submodule.mem_top)
   haveI : IsNoetherian (𝓞 D.what₂.LL) (O.Im v i) := isNoetherian_of_fg_of_noetherian _ hfg
   exact ⟨⟨hfg.of_le hle, le_antisymm ((Submodule.span_mono hle).trans h1) h2⟩,
     ⟨hfg, le_antisymm h1 (h2.trans (Submodule.span_mono hle))⟩, hle⟩

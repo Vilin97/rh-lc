@@ -43,7 +43,7 @@ theorem RelevantPrimeDimGe.proof : RelevantPrimeDimGe.Statement.{u} := by
     rw [key] at hG
     have hmem : rename j G ∈ P := Ideal.Quotient.eq_zero_iff_mem.mp hG
     ext α
-    rw [coeff_zero]
+    simp only [AddMonoidAlgebra.coeff_zero]
     have hcomp := hP.multiHomog _ hmem ⇑α
     have hsum : rename j G = ∑ β ∈ G.support, monomial (Finsupp.mapDomain j β) (AddMonoidAlgebra.coeff G β) := by
       calc rename j G = rename j (∑ β ∈ G.support, monomial β (AddMonoidAlgebra.coeff G β)) := by

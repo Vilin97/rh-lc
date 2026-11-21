@@ -26,9 +26,7 @@ theorem lattice_of_idx {A B : Submodule (𝓞 K) V} (hA : Submodule.IsFullLattic
     (h : idxN A B ≠ 0) : Submodule.IsFullLattice K B := by
   haveI : Submodule.IsLattice K B := Submodule.IsLattice.of_fg K (hA.fg.of_le hle)
   refine ⟨?_⟩
-  rw [← hA.span_eq_top]
-  refine le_antisymm (Submodule.span_mono hle) ?_
-  rw [Submodule.span_le]
+  rw [eq_top_iff, ← hA.span_eq_top, Submodule.span_le]
   intro x hx
   have hn : idxN A B • x ∈ B :=
     AddSubgroup.nsmul_relIndex_mem B.toAddSubgroup (K := A.toAddSubgroup) hx
@@ -44,15 +42,8 @@ theorem lattice_map {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞 K) W]
   haveI : Submodule.IsLattice K (A.map (f.restrictScalars (𝓞 K))) :=
     Submodule.IsLattice.of_fg K (hA.fg.map _)
   refine ⟨?_⟩
-  apply Submodule.eq_top_iff'.2
-  intro y
-  obtain ⟨x, rfl⟩ := hf y
-  have hx : x ∈ Submodule.span K (A : Set V) := by rw [hA.span_eq_top]; trivial
-  induction hx using Submodule.span_induction with
-  | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
-  | zero => simp
-  | add x y _ _ hx hy => simpa using add_mem hx hy
-  | smul a x _ hx => simpa using Submodule.smul_mem _ a hx
+  change Submodule.span K (f '' (A : Set V)) = ⊤
+  rw [← Submodule.map_span, hA.span_eq_top, Submodule.map_top, LinearMap.range_eq_top.2 hf]
 
 theorem exists_rat_basis [Module ℚ V] [IsScalarTower ℚ K V] [Module.Finite ℚ V] {A : Submodule (𝓞 K) V}
     (hA : Submodule.IsFullLattice K A) :
@@ -91,16 +82,14 @@ theorem exists_rat_basis [Module ℚ V] [IsScalarTower ℚ K V] [Module.Finite �
   haveI : (A.restrictScalars ℤ).IsFullLattice ℚ := ⟨hspan⟩
   have : Module.Finite ℤ (A.restrictScalars ℤ) := Submodule.IsLattice.finite ℚ _
   have : Module.Free ℤ (A.restrictScalars ℤ) := Submodule.IsLattice.free ℚ _
-  have hr : Module.finrank ℤ (A.restrictScalars ℤ) = Module.finrank ℚ V := by
-    unfold Module.finrank
-    rw [Submodule.IsLattice.rank' ℚ]
+  have hr := Submodule.IsFullLattice.finrank_eq ℚ (A.restrictScalars ℤ)
   let b₀ := Module.finBasisOfFinrankEq ℤ (A.restrictScalars ℤ) hr
-  refine ⟨b₀.extendOfIsLattice ℚ, ?_⟩
+  refine ⟨b₀.extendOfIsFullLattice ℚ, ?_⟩
   rw [← Submodule.span_int_eq_addSubgroupClosure]
-  have e : Set.range (b₀.extendOfIsLattice ℚ) = (A.restrictScalars ℤ).subtype '' Set.range b₀ := by
+  have e : Set.range (b₀.extendOfIsFullLattice ℚ) = (A.restrictScalars ℤ).subtype '' Set.range b₀ := by
     rw [← Set.range_comp]
     congr 1
-    exact funext fun i => b₀.extendOfIsLattice_apply ℚ i
+    exact funext fun i => b₀.extendOfIsFullLattice_apply ℚ i
   rw [e, ← Submodule.map_span, b₀.span_eq, Submodule.map_top, Submodule.range_subtype]
   rfl
 
@@ -412,8 +401,9 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   have l2 : fixLat p.2.1.2 ≤ L₀ := fun y hy => (m2.1 hy).2
   change GlobalTheory.Mass.idxN L₀ (fixLat p.1.2) = x at i1
   change GlobalTheory.Mass.idxN L₀ (fixLat p.2.1.2) = x' at i2
-  have hA := lattice_of_idx hL.1 l1 (by omega)
-  have hD := lattice_of_idx hL.1 l2 (by omega)
+  have hL₀ : Submodule.IsFullLattice K L₀ := hL.1
+  have hA := lattice_of_idx hL₀ l1 (by omega)
+  have hD := lattice_of_idx hL₀ l2 (by omega)
   obtain ⟨an, -, -, hint, -⟩ :=
     Formalism.HermitianLatticesTheory.dualBasic (𝓞 K) K V H.B.flip (flip_isSymm H) Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range
   have l3 := (hint L₀).1 hL.2
@@ -435,7 +425,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
         map_mul, map_natCast, map_neg, smul_eq_mul]
       field_simp)
   rw [← idxN_mul (l2.trans l3) l4, ← idxN_mul l2 l3, i2,
-    idxN_dual H.B.flip (flip_isSymm H) (flip_nondeg hP) hA x L₀ hL.1 l1 i1] at hc
+    idxN_dual H.B.flip (flip_isSymm H) (flip_nondeg hP) hA x L₀ hL₀ l1 i1] at hc
   change GlobalTheory.Mass.idxN _ _ = D₀ at hD₀
   rw [hD₀] at hc
   refine hc.trans (le_of_eq ?_)

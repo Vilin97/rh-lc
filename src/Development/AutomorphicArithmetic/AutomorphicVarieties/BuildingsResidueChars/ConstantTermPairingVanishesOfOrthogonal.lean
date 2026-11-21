@@ -6,6 +6,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityA
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.UnipotentBlockMatrices.ClosedKernelMinors.HpSpec
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.UnipotentBlockMatrices.ClosedKernelMinors.BlkInvVal
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.UnipotentBlockMatrices.ClosedKernelMinors.PkLaws
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.UnipotentBlockMatrices.UnipotentBlockPairs
 public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsContRep
 
 @[expose] public section
@@ -18,11 +19,13 @@ open scoped NumberField.AdeleRing
 
 private theorem nn_zero {K : Type} [Field K] [NumberField K] : (nn (K := K) 0) = 1 := unipOne_zero 2
 
-private theorem lv_left {K : Type} [Field K] [NumberField K] {F : G1 K (2 + 2) → ℂ} (hP : PFun F) (m₂ : G1 K 2) (s : ℝ)
+private theorem lv_left {K : Type} [Field K] [NumberField K] {F : G1 K (2 + 2) → ℂ}
+    (hP : UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.PFun F) (m₂ : G1 K 2) (s : ℝ)
     (γ : G1 K 2) (hγ : γ ∈ Gam K 2) (m : G1 K 2) (g : G1 K (2 + 2)) :
     F (lv m₂ (γ * m) s * g) = F (lv m₂ m s * g) := by
   have hmem : lv 1 γ 0 ∈ PK K := (pkLaws.2.1 _).2 ⟨0, 1, ⟨γ, hγ⟩, by
-    have h0 : nn (K := K) ((0 : unipLattice K (2 + 2) 2) : UPos (2 + 2) 2 → 𝔸[K]) = 1 := nn_zero
+    have h0 : unipOne (K := K) (n := 2 + 2) 2
+        ((0 : unipLattice K (2 + 2) 2) : UPos (2 + 2) 2 → 𝔸[K]) = 1 := nn_zero
     rw [h0, one_mul]
     rfl⟩
   have e : lv m₂ (γ * m) s = lv 1 γ 0 * lv m₂ m s := by
@@ -89,7 +92,7 @@ private theorem swap_zero {Y X : Type} [MeasurableSpace Y] [MeasurableSpace X] (
 
 theorem UpperTheory.constantTerm_pairing_vanishes_of_orthogonal :
     ∀ {K : Type} [Field K] [NumberField K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ ρ : Submodule ℂ (L2 μ₂)) (F : G1 K (2 + 2) → ℂ) (h : G1 K 2 → ℂ),
-          PFun F → InBand F → Slices τ₁ τ₂ F → τ₂ ⟂ ρ → Continuous h → (∀ γ ∈ Gam K 2, ∀ m, h (γ * m) = h m) → (∃ v ∈ ρ, Reps μ₂ v h) →
+          UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.PFun F → InBand F → Slices τ₁ τ₂ F → τ₂ ⟂ ρ → Continuous h → (∀ γ ∈ Gam K 2, ∀ m, h (γ * m) = h m) → (∃ v ∈ ρ, Reps μ₂ v h) →
           ∀ (m₂ : G1 K 2) (s : ℝ), ∀ k ∈ KG K (2 + 2),
             Integrable (fun y : RightCosetSpace (Gam K 2) => (∫ X, F (w0 K * nn X * (lv (Quotient.out y) m₂ s * k)) ∂unipMeasure K (2 + 2) 2) * starRingEnd ℂ (h (Quotient.out y))) (quotientMeasure (Gam K 2) μ₂) ∧
             ∫ y : RightCosetSpace (Gam K 2), (∫ X, F (w0 K * nn X * (lv (Quotient.out y) m₂ s * k)) ∂unipMeasure K (2 + 2) 2) * starRingEnd ℂ (h (Quotient.out y)) ∂quotientMeasure (Gam K 2) μ₂ = 0 := by

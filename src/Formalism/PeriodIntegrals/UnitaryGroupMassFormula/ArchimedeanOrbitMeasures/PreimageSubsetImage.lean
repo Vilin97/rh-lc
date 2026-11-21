@@ -30,10 +30,14 @@ theorem continuousOn_cayInv : ContinuousOn (cayInv P Q) (cayS (D0 P Q)) := by
   unfold cayCand
   have hc : ContinuousAt (fun g : UpqT P Q => g.mat) g := continuous_mat.continuousAt
   have hinv : ContinuousAt (fun g : UpqT P Q => (g.mat + 1)⁻¹) g := by
-    refine (continuousAt_matrix_inv (g.mat + 1) ?_).comp (hc.add continuousAt_const)
-    obtain ⟨u, hu⟩ := hdet
-    rw [← hu]
-    exact NormedRing.inverse_continuousAt u
+    have hdet_cont : ContinuousAt Ring.inverse (g.mat + 1).det := by
+      obtain ⟨u, hu⟩ := hdet
+      rw [← hu]
+      exact NormedRing.inverse_continuousAt u
+    have hadd : ContinuousAt (fun x : UpqT P Q => x.mat + 1) g :=
+      hc.add continuousAt_const
+    exact (continuousAt_matrix_inv (g.mat + 1) hdet_cont).comp
+      (f := fun x : UpqT P Q => x.mat + 1) (x := g) hadd
   exact ((continuousAt_const.mul hinv).mul (hc.sub continuousAt_const)).continuousWithinAt
 
 theorem betaH_apply (lam : Measure (lieU P Q)) (S : Set (UpqT P Q)) (hS : MeasurableSet S) :

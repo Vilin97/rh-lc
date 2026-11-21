@@ -21,11 +21,11 @@ theorem UpperTheory.Gal.crystallineComparison.satGeom_of :
   have h0 : (0 : ℂ) ∉ B.map (fun b : ℂˣ => ((b⁻¹ : ℂˣ) : ℂ)) := by
     simp
   refine ⟨?_, ?_⟩
-  · show ((WD.lpUnr _).lpTw _).unr
+  · show ((WD.lpUnr h _).lpTw _).unr
     rw [WD.unr_tw]
     exact (WD.lpUnr_spec _ h0).1
   intro g hg
-  show ((WD.lpUnr _).lpTw _).charPol g = _
+  show ((WD.lpUnr h _).lpTw _).charPol g = _
   unfold WD.lpUnr
   rw [WD.lpTw_mk, WD.charPol_mk, WDRep.tw_ρ, WDRep.diag_ρ, hg, coe_bind]
   have hsm : ∀ (s : ℂ) {ι : Type} (f : ι → ℂ), s • diagEnd f = diagEnd (fun i => s * f i) := by

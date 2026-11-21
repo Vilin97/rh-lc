@@ -25,7 +25,7 @@ theorem vecMulVec_sum_zsmul {E : Type} [Field E] {n d kx ky : ℕ} (ex : Fin kx 
     Matrix.vecMulVec (∑ i, c i • ex i) (∑ j, c' j • fy j) =
       ∑ m : Fin kx × Fin ky, (c m.1 * c' m.2) • Matrix.vecMulVec (ex m.1) (fy m.2) := by
   ext a b
-  simp only [Matrix.vecMulVec_apply, Finset.sum_apply, Pi.smul_apply, Matrix.sum_apply, Matrix.smul_apply,
+  simp only [Matrix.vecMulVec_apply, Finset.sum_apply, Matrix.sum_apply, Matrix.smul_apply,
     zsmul_eq_mul]
   rw [Finset.sum_mul_sum, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -101,8 +101,10 @@ theorem latAtV_param : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
       exact ⟨-a, by simp [neg_smul]⟩
   · rintro ⟨a, rfl⟩
     refine AddSubgroup.sum_mem _ fun m _ => AddSubgroup.subset_closure ?_
-    refine ⟨GlobalTheory.EmbChart.atPlace v (a m), GlobalTheory.VacAny.at_atPlace _, ?_, ex m.1, exX _, fy m.2, exY _, rfl⟩
-    rw [GlobalTheory.EmbChart.evFin_atPlace]
-    exact (a m).2
+    refine ⟨GlobalTheory.EmbChart.atPlace v (a m), ?_, ?_, ex m.1, exX _, fy m.2, exY _, rfl⟩
+    · intro u hu
+      rw [smul_eq_mul, mul_comm, GlobalTheory.EmbChart.atPlace_mul_right, hu, mul_zero, map_zero]
+    · rw [GlobalTheory.EmbChart.evFin_atPlace]
+      exact (a m).2
 
 end Tw.LatParam

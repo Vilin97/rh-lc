@@ -26,7 +26,7 @@ theorem exists_finset_span_integral_of_div (hN : NoetherIntegralClosureFinite.St
     intro f
     induction f using MvPolynomial.induction_on with
     | C c => exact Subalgebra.algebraMap_mem _ c
-    | add f g hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
+    | add f g hf hg => rw [map_add]; exact add_mem hf hg
     | mul_X f i hf => rw [map_mul]; exact mul_mem hf (Algebra.subset_adjoin ⟨i, rfl⟩)
   let A : Subalgebra ℂ Ω :=
     { toSubsemiring := (algebraMap O Ω).rangeS, algebraMap_mem' := fun c ↦ ⟨φ (C c), rfl⟩ }

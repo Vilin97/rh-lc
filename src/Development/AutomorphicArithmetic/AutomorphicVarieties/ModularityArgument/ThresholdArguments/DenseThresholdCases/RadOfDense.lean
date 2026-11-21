@@ -59,7 +59,7 @@ theorem UpperTheory.V.Z.J.D.modularity_n_of_num_j_printed_mult_comp :
   let K : (hset (QData.empty V hS) R.τ₀).Lev := ⟨fun q => Empty.elim q, fun q => Empty.elim q⟩
   obtain ⟨J, hJ⟩ := _root_.UpperTheory.V.Hi.exists_hecke_ideal P l L Ω s 3 hn V _ c r ι B Λ R K
   have hE := _root_.UpperTheory.Gal.projectedFormsSystemPart.decomposition_and_automorphicAway_of_isJ P l L Ω s 3 hn V _ c r ι B Λ R K hS J hJ
-  haveI := coef_isCoef l c
+  have := coef_isCoef l c
   have hD := _root_.UpperTheory.V.Hi.dense_of_is_j_unitary_hecke_data P l L Ω s 3 hn V _ c r ι B Λ R K hS J hJ
   have hA := _root_.UpperTheory.V.Pa.has_automorphy_of_statement (locP_of P.litN) l L Ω s V c.O 3 r B J hS (_root_.UpperTheory.V.Hi.level_of_is_j_unitary_hecke_data P l L Ω s 3 hn V _ c r ι B Λ R K hS J hJ)
   obtain ⟨h1, h3⟩ := Pa.pFromAut (cohP_of P.litN) l L Ω s V c.O 3 r B J hn hS (W.locCFT P.litN.aut.art (cohP_of P.litN) l L Ω s)

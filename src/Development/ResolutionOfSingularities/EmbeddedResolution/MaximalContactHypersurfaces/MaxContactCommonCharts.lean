@@ -251,7 +251,10 @@ theorem exists_common_charts_of_isMaxContactHypersurface (A : X.IdealSheafData) 
     refine ⟨(X.presheaf.map (homOfLE hVW₂).op).hom f₂, ?_⟩
     have h2 := ideal_eq_span_image_map_of_le H₂ hW₂ hV hVW₂ ({f₂} : Set Γ(X, W₂)) hf₂span
     rwa [Set.image_singleton] at h2
-  obtain ⟨jd, hjdlab, hjdpd⟩ :=
+  obtain ⟨jd, hjdlab, hjdpd⟩ : ∃ j : Fin n',
+      (∀ i : ℕ, i < N.length → γ i ≠ some j) ∧
+      chartPartialDeriv hV (c'.restrict hVU') j g ∉
+        (hV.primeIdealOf ⟨x, hxV⟩).asIdeal :=
     exists_unlabeled_index_partialDeriv_notMem_primeIdealOf hV (c'.restrict hVU') hxV N γ
       H₂ g hlab hγinj (hsnc₂'.2 x) hg hxH₂ hxN
   have hjdpd' :
@@ -338,7 +341,10 @@ theorem exists_common_charts_of_isMaxContactHypersurface (A : X.IdealSheafData) 
     exact (mem_support_iff_stalkIdeal_le_maximalIdeal H₂ x).mp hxH₂ h2
   have hcoords : ∀ j : Fin n', j ≠ j₀ → c₂.coord j = (c''.restrict hV'V).coord j := by
     intro j hj
-    rw [hc₂other j hj, EtaleChart.coord_restrict c'' hV'V j]
+    rw [hc₂other j hj]
+    change (X.presheaf.map (homOfLE hV'V).op).hom (c''.coord j) =
+      (c''.restrictCompat hV'V).coord j
+    exact (EtaleChart.coord_restrict c'' hV'V j).symm
   have hlabV' : ∀ i : ℕ, ∀ hi : i < N.length,
       (γ i = none → restrictIdeal (N[i]'hi) V' = ⊤) ∧
         ∀ j : Fin n', γ i = some j →

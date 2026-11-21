@@ -1,6 +1,8 @@
 module
 
 public import Development.WeilBound.CoreStatements.VolumeEquality.VolEqOf
+public import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifEx2
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.GoodOrigin
 public import Development.WeilBound.CoreStatements.VolumeEquality.HolNull
 public import Development.WeilBound.CoreStatements.VolumeEquality.ChartMeets
 public import Development.WeilBound.CoreStatements.VolumeEquality.CoverRoots

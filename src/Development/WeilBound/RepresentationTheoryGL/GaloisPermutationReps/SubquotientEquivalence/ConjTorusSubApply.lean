@@ -113,7 +113,7 @@ theorem torus_mem_twKer {τ : Representation ℂ (GL (Fin n) 𝓀[k]) W} (hτ : 
     refine Fintype.sum_equiv (Equiv.mulLeft (⟨x, hx⟩ : unipRad 𝓀[k] e)) _ _ fun u => ?_
     rw [Equiv.coe_mulLeft]
     show _ = τ (x * (u : GL (Fin n) 𝓀[k])) w
-    rw [map_mul, Module.End.mul_apply]
+    rw [map_mul, mul_apply_eq_comp]
 
   have hterm : ∀ u : unipRad 𝓀[k] e, π t (j w) - π t (j (τ u w)) ∈ twKer π (KOne k (Fin n)) 1 := by
     intro u
@@ -136,7 +136,7 @@ theorem torus_mem_twKer {τ : Representation ℂ (GL (Fin n) 𝓀[k]) W} (hτ : 
       · rw [hb1 i l hZ]
         simp
     have : π t (π (incl k n b) (j w)) = π (t * incl k n b * t⁻¹) (π t (j w)) := by
-      rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, inv_mul_cancel_right]
+      rw [← mul_apply_eq_comp, ← map_mul, ← mul_apply_eq_comp, ← map_mul, inv_mul_cancel_right]
     rw [this, ← neg_sub]
     exact neg_mem (sub_mem_twKer hK _)
   have hcard : (Fintype.card (unipRad 𝓀[k] e) : ℂ) • π t (j w) ∈ twKer π (KOne k (Fin n)) 1 := by
@@ -159,13 +159,13 @@ theorem apply_mem_sup {τ : Representation ℂ (GL (Fin n) 𝓀[k]) W} (hτ : Fi
   obtain ⟨ϖ, hϖ⟩ := exists_uniformizer k
   obtain ⟨⟨a, _ha⟩, hg⟩ := GlobalTheory.UnramDoublingProof.exists_cell hϖ g
   obtain ⟨k1, h1, k2, h2, hg'⟩ := DoubleCoset.mem_doubleCoset.1 hg
-  rw [hg', map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, ← hj.2 ⟨k2, h2⟩]
+  rw [hg', map_mul, map_mul, mul_apply_eq_comp, mul_apply_eq_comp, ← hj.2 ⟨k2, h2⟩]
   set w' := τ (redK k (Fin n) ⟨k2, h2⟩) w
   have hmid : π (GlobalTheory.GLDoubling.torusElt k (Fin n) ϖ a) (j w') ∈
       LinearMap.range j ⊔ twKer π (KOne k (Fin n)) 1 := by
     by_cases ha : ∃ i l, a i ≠ a l
     · exact Submodule.mem_sup_right (torus_mem_twKer hτ hj hϖ a ha w')
-    · push_neg at ha
+    · push Not at ha
       obtain ⟨c, hc⟩ : ∃ c, a = fun _ => c := by
         rcases Nat.eq_zero_or_pos n with hn | hn
         · subst hn; exact ⟨0, funext fun i => i.elim0⟩
@@ -191,9 +191,9 @@ theorem st6 : St6 := by
     | mem x hx =>
       obtain ⟨h, w, rfl⟩ := hx
       refine Submodule.subset_span ⟨g * h, w, ?_⟩
-      rw [map_mul, Module.End.mul_apply]
+      rw [map_mul, mul_apply_eq_comp]
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   let U : Subrepresentation π.ρ := ⟨S, fun g _ hx => hS g _ hx⟩
   obtain ⟨w0, hw0⟩ := exists_ne (0 : W)

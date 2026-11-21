@@ -219,7 +219,7 @@ private theorem orb_stable (v : D.U) (γ : Kinf E n) (y : π.V) (hy : y ∈ orb 
     obtain ⟨δ, rfl⟩ := hx
     exact Submodule.subset_span ⟨γ * δ, by simp only [hm]; rfl⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 private theorem fin_comap (v : D.U) : FiniteDimensional ℂ ((orb D v).comap D.i) := by

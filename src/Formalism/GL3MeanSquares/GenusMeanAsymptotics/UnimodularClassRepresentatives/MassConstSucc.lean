@@ -75,7 +75,7 @@ theorem tendsto_left (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
 
 theorem tendsto_right (hH : HermRepUnram) (hLI : LIStat) (hK : Formalism.HermitianLatticesTheory.IsCMUnram K)
     (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h)
-    {L : Submodule (𝓞 K) V} (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L)
+    {L : Submodule (𝓞 K) V} (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L)
     (hm : 2 ≤ finrank K V) {c : ℝ} (hc : MassConst K F (finrank K V - 1) c) :
     Tendsto (fun j : ℕ => (Formalism.HermitianLatticesTheory.mass h L + ∑ᶠ n ∈ boxSet K F ((j : ℝ) ^ 2),
         repMass h L (algebraMap F K (n : F))) / (j : ℝ) ^ (2 * Formalism.HermitianLatticesTheory.fDeg K * finrank K V))
@@ -92,7 +92,7 @@ theorem tendsto_right (hH : HermRepUnram) (hLI : LIStat) (hK : Formalism.Hermiti
   refine (h1.add h2).congr fun j => ?_
   rw [add_div]
   congr 1
-  rw [finsum_mem_congr rfl fun n hn => repMass_eq hH hLI hK hF hs hd hL hLi hm hc hn,
+  rw [finsum_mem_congr rfl fun n hn => repMass_eq hH hLI hK hF hs hd hL.toIsLattice hLi hm hc hn,
     finsum_mem_eq_finite_toFinset_sum _ (A5.boxSet_finite hK hF ((j : ℝ) ^ 2)),
     finsum_mem_eq_finite_toFinset_sum _ (A5.boxSet_finite hK hF ((j : ℝ) ^ 2)),
     ← Finset.mul_sum, zpow_neg, zpow_natCast, ← pow_mul, ← mul_assoc 2, div_eq_mul_inv]
@@ -106,15 +106,15 @@ theorem massConst_succ (hH : HermRepUnram) (hLI : LIStat) (hK : Formalism.Hermit
   unfold MassConst
   intro V _ _ _ _ _ h L hs hd hfin hL hLi
   subst hfin
-  obtain ⟨s, hsr⟩ := StabilizerLattices.exists_classReps hs hd hL
-  have hlim := Step.tendsto_left hK hF hs hd hL hLi hsr
+  obtain ⟨s, hsr⟩ := StabilizerLattices.exists_classReps hs hd hL.toIsLattice
+  have hlim := Step.tendsto_left hK hF hs hd hL.toIsLattice hLi hsr
   have hlim2 := Step.tendsto_right hH hLI hK hF hs hd hL hLi hm hc
   have hfun : (fun j : ℕ => (∑ M ∈ s, (ballCount h M ((j : ℝ) ^ 2) : ℝ) /
         (Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℝ)) / (j : ℝ) ^ (2 * Formalism.HermitianLatticesTheory.fDeg K * finrank K V)) =
       fun j : ℕ => (Formalism.HermitianLatticesTheory.mass h L + ∑ᶠ n ∈ boxSet K F ((j : ℝ) ^ 2),
         repMass h L (algebraMap F K (n : F))) / (j : ℝ) ^ (2 * Formalism.HermitianLatticesTheory.fDeg K * finrank K V) := by
     funext j
-    rw [sum_ballCount_eq hK hF hs hd hL hLi hsr (by positivity)]
+    rw [sum_ballCount_eq hK hF hs hd hL.toIsLattice hLi hsr (by positivity)]
   rw [hfun] at hlim
   have hAB := tendsto_nhds_unique hlim hlim2
   have hn0 : 0 < finrank K V := by omega
@@ -129,7 +129,7 @@ theorem massConst_succ (hH : HermRepUnram) (hLI : LIStat) (hK : Formalism.Hermit
     (Real.pi ^ finrank K V) ((finrank K V - 1).factorial : ℝ) (finrank K V : ℝ)
     (Formalism.HermitianLatticesTheory.vInv K ^ (Formalism.HermitianLatticesTheory.fDeg K * finrank K V))
     (Real.sqrt ((2 * Formalism.HermitianLatticesTheory.vInv K) ^ Formalism.HermitianLatticesTheory.fDeg K)) (lValEtaF K F (finrank K V))
-    (Formalism.HermitianLatticesTheory.fDeg K) (Step.normD_pos hd hL hLi) (by positivity) (by positivity)
+    (Formalism.HermitianLatticesTheory.fDeg K) (Step.normD_pos hd hL.toIsLattice hLi) (by positivity) (by positivity)
     (by exact_mod_cast hn0) (by positivity) (by positivity) hAB
   rw [massRatio_eq_lvalue hK hF (finrank K V) hm]
   exact key

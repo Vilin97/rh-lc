@@ -96,7 +96,7 @@ theorem eval_logPoly_mul (c : ℕ → B) (hc : ∀ k : ℕ, c k * ((k : B) + 1) 
     cases n with
     | zero => simp [coeff_zero_eq_eval_zero]
     | succ n =>
-      have h := congrArg (fun p => coeff p n) hderiv
+      have h := congrArg (fun (p : B[X]) => p.coeff n) hderiv
       simp only [coeff_derivative, coeff_zero] at h
       have hn : IsUnit ((n : B) + 1) := by
         have := hu (n + 1) (by omega)

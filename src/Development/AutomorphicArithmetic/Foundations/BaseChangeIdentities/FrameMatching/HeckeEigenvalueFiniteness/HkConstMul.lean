@@ -44,10 +44,13 @@ theorem UpperTheory.HeckeLevelFrameExistence.locE :
     ⟨hKo, hKc, HasCompactSupport.zero, fun _ _ _ _ _ => rfl⟩
   have hP0 : ∃ v ∈ fixed P.ρ K', v ≠ 0 :=
     ⟨T y₀, ((hd 0 hz).2 y₀ hy₀).1, fun h => hy₀0 (T.map_eq_zero_iff.1 h)⟩
+  have hchoice : PositivityTheory.Rg.BcB.F.Choice.ChoiceS :=
+    PositivityTheory.Rg.BcB.F.Choice.choiceS_of
+      (fun E _ _ _ n w => GlobalTheory.T.isolate_representation_at_character (w.adicCompletion E) (Fin n))
+      (fun E _ _ _ n w => GlobalTheory.T.finite_subquotients (w.adicCompletion E) (Fin n))
+      (fun E _ _ _ n w => GlobalTheory.T.finite_length_of_products (w.adicCompletion E) (Fin n))
   obtain ⟨e₀, hIk, ⟨v₀, hv₀, l, hl1, hl⟩, hkill⟩ :=
-    PositivityTheory.Rg.BcB.F.Choice.choiceS_of (fun E _ _ _ n w => GlobalTheory.T.isolate_representation_at_character _ _)
-      (fun E _ _ _ n w => GlobalTheory.T.finite_subquotients _ _) (fun E _ _ _ n w => GlobalTheory.T.finite_length_of_products _ _)
-      E n w K' hKo hKc P hP0 k D
+    hchoice E n w K' hKo hKc P hP0 k D
   set r : ℂ := (((K'.subgroupOf (UL n w)).relIndex (KL n w) : ℕ) : ℂ) with hr
   have hIk' : PositivityTheory.Rg.BcN.F2.IsHk K' (fun g => r * e₀ g) :=
     ⟨hIk.1, hIk.2.1, hIk.2.2.1.mul_left, fun k₁ h₁ k₂ h₂ g => by

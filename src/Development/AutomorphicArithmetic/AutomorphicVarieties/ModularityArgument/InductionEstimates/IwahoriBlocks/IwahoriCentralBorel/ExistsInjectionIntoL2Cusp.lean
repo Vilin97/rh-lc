@@ -141,7 +141,7 @@ private theorem avg_rep {Y : Type*} [TopologicalSpace Y] [T2Space Y] [SecondCoun
     refine (integral_integral_swap (hint' s)).trans ?_
     exact setIntegral_congr_fun hs' fun x _ => (hΨQ_eq x).symm
   rw [← hV]
-  filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae_eq_comp hVeq] with y hy
+  filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk (Gam K n) μ) hVeq] with y hy
   simp only [Function.comp_apply] at hy
   refine hy.trans ?_
   rw [hΨQ, quotFun_mk]

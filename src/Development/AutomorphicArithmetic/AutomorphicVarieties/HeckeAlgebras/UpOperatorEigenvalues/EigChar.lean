@@ -141,7 +141,7 @@ theorem eigPt {l : ℕ} [Fact l.Prime] {A M ι E : Type} [CommRing A] [IsCNL A] 
       rw [this]
       exact add_mem (Valued.integer.mem_iff.2 (ha i).le) (Valued.integer.mem_iff.2 (hx1 _))
     | algebraMap r => rw [h1']; exact Valued.integer.mem_iff.2 (hx1 _)
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   haveI : IsLocalRing (Valued.integer (PadicAlgCl l)) :=
     inferInstanceAs (IsLocalRing (Valued.v (R := PadicAlgCl l)).valuationSubring)

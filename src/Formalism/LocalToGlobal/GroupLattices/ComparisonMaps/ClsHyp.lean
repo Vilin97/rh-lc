@@ -79,7 +79,8 @@ theorem isHyperbolicAt_of_integralSplit (I : LocId L p nV W Qq) (hb : NotBad I) 
       fun y hy => ⟨_, (((stabGL (Formalism.L2.Herm.locL (I.plc v) L.Lb)).inv_mem h) y).1 hy, fun _ => rfl⟩⟩
   · rintro ⟨ha, hb'⟩
     exact stab_of_first (splV I v) (sigR sp.cm.sig ((I.plc v).adicCompletion F))
-      (intV E (I.plc v)) (sp.gram0.map (inclE (F := F) ((I.plc v).adicCompletion F)))
-      (Formalism.L2.Herm.locL (I.plc v) L.Lb) x hx ha hb'
+      (I.spl_sig (I.plc v) (I.pl v).2) ((I.plc v).adicCompletionIntegers F).toSubring
+      (intV E (I.plc v)) (h1 v) (sp.gram0.map (inclE (F := F) ((I.plc v).adicCompletion F)))
+      (Formalism.L2.Herm.locL (I.plc v) L.Lb) (h2 v) x hx ha hb'
 
 end Formalism.L2.G.Cmp

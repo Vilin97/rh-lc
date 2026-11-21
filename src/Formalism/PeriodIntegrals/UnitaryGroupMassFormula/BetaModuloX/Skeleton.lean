@@ -19,7 +19,7 @@ def ModXAbs : Prop :=
   ∀ {E : Type} [Field E] [NumberField E] [StarRing E] (S : HSpace E) (r T' g : ℕ)
     (F' : LFlag S r (T' : E)) (Λ : Submodule (𝓞 E) S.V) (γ : S.V ≃ₗ[E] S.V),
     (∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) →
-    0 < T' → 3 ≤ g → Submodule.IsLattice E Λ →
+    0 < T' → 3 ≤ g → Submodule.IsFullLattice E Λ →
     (∀ τ : E →+* ℂ, ∀ w ∈ orth S (Xplus F'), w ∉ Xsp F' → 0 < (τ (S.hT w w)).re) →
     IsAutLam S Λ γ → (Xsp F').map (γ : S.V →ₗ[E] S.V) = Xsp F' → γ F'.fl.z = F'.fl.z →
     (∀ w ∈ Lrep Λ F', γ w - w ∈ Ideal.span {(g : 𝓞 E)} • Λ ⊔ XLam Λ F') →
@@ -184,7 +184,7 @@ theorem betaModX_of (h1 : IotaSurj) (h2 : XLamSub) (h3 : PosW) (h4 : ModXAbs)
     exact hφ ⟨_, hd, rfl⟩
   have hpos : 0 < Tu D u' := (D.mem u').A.T_prime.pos
   have key := h4 (VS D) D.R.rS (Tu D u') (gS D) x.1 Λ γ (fun τ => D.sp.cm.cmUnram.2.1 τ) hpos
-    (gS_ge_three D hg) hΛ.2.1.1 (fun τ w hw hwX => h3 D (Tu D u') x.1 τ w hpos hw hwX) hA hXγ hz hcong v hv
+    (gS_ge_three D hg) hΛ.1.1 (fun τ w hw hwX => h3 D (Tu D u') x.1 τ w hpos hw hwX) hA hXγ hz hcong v hv
   have : β₁ v - β₂ v = β₂ (γ v - v) := by
     rw [map_sub, hγv, LinearEquiv.apply_symm_apply]
   rw [this]

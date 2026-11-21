@@ -52,14 +52,19 @@ theorem cell_eq {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     (hg : g ∈ cell k d hd (wOpen d hd)) :
     ∃ p ∈ parab k (stdBlocks d hd), ∃ u ∈ unipU k d hd, g = p * pm k (wOpen d hd) * u := by
   obtain ⟨p, hp, n, hn, rfl⟩ := hg
-  obtain ⟨a, ha, u, hu, rfl⟩ := (GlobalTheory.CompanionTheory.Rodier.unipB_eq_levi_mul_rad k h N d hd).1 n hn
-  have hmem := (GlobalTheory.CompanionTheory.Rodier.OpenFactor.mem_unipL k d hd).mp ha
-  rcases hmem with ⟨hB, hmem⟩
-  obtain ⟨m, hm⟩ := hmem
-  have hc : pm k (wOpen d hd) * a * (pm k (wOpen d hd))⁻¹ = leviEmb k (stdBlocks d hd) m := by
-    exact hm.symm
-  refine ⟨p * leviEmb k (stdBlocks d hd) m, mul_mem hp (leviEmb_mem_parab k _ m), u, hu, ?_⟩
-  rw [← hc]; group
+  let w := pm k (wOpen d hd)
+  let e := stdBlocks d hd
+  have hnLower : w * n * w⁻¹ ∈ parab k (opp e) := OpenFactor.conj_mem_parabLower k d hd hn
+  let nLower : parab k (opp e) := ⟨w * n * w⁻¹, hnLower⟩
+  obtain ⟨v, hv, hnv⟩ := GlobalTheory.SmGL.exists_levi_mul_unip k (opp e) nLower
+  let m := leviProj k (opp e) nLower
+  have hfactor : w * n * w⁻¹ = leviEmb k e m * v := hnv
+  refine ⟨p * leviEmb k e m, mul_mem hp (leviEmb_mem_parab k e m), w⁻¹ * v * w,
+    LowerOpen.inv_conj_mem_unipU k d hd hv, ?_⟩
+  change p * w * n = p * leviEmb k e m * w * (w⁻¹ * v * w)
+  calc
+    p * w * n = p * (w * n * w⁻¹) * w := by group
+    _ = p * leviEmb k e m * w * (w⁻¹ * v * w) := by rw [hfactor]; group
 
 theorem exists_open_of_le {G : Type} [Group G] [TopologicalSpace G] [ContinuousMul G] (U L L₀ : Subgroup G)
     (hL : L ≤ U) (h0 : L₀ ≤ L) (O₀ : Set G) (hO : IsOpen O₀) (hOU : O₀ ∩ (U : Set G) = L₀) :

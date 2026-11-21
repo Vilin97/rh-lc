@@ -3,6 +3,7 @@ module
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.PScKey
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.PScFin
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.PScLin
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HkMemFixed
 
 @[expose] public section
 
@@ -220,7 +221,7 @@ theorem core {n a b : ℕ} (h : a + b = n) (w : Pl E) (μ : (w.adicCompletion E)
     | zero => exact hu₁
     | succ i ih =>
       rw [Function.iterate_succ_apply']
-      exact (((PositivityTheory.Rg.BcN.F2.Final.hkAlg _ _) K' e e hHk hHk).2.2 _ _ _ ih).1
+      exact (GlobalTheory.CompanionTheory.HeckeFix.hk_mem_fixed _ _ K' e hHk _ _ _ ih).1
   have hrun : ∀ i (x : X), Λ j ((matS h w μ e X)^[i + 1] G x) =
       c₀ ^ (i + 1) • ((hk (GlobalTheory.SmGL.ind₂ (GlobalTheory.SmGL.stdSum h) ρ) K' e)^[i] u₁).1.1 x := by
     intro i

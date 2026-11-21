@@ -30,7 +30,7 @@ theorem adjoin_int_mem {K : Type*} [Field K] (L : Subfield K) {t : Set K} (ht : 
     (hg : g ∈ Algebra.adjoin ℤ t) : g ∈ L := by
   induction hg using Algebra.adjoin_induction with
   | mem a ha => exact ht a ha
-  | algebraMap n => simpa using intCast_mem L n
+  | algebraMap n => simp
   | add a b _ _ ha hb => exact add_mem ha hb
   | mul a b _ _ ha hb => exact mul_mem ha hb
 
@@ -59,20 +59,20 @@ theorem genU_of_lt (s : S) {l k : Fin (r s)} (h : l < k) : genU Ω r s l k = 0 :
 theorem genU_self (s : S) (k : Fin (r s)) : genU Ω r s k k = 1 := by
   simp [genU]
 
-theorem det_genU_rows (s : S) (k l : Fin (r s)) (hkl : k ≤ l) :
+theorem det_genU_rows (s : S) (k l : Fin (r s)) (_hkl : k ≤ l) :
     ((genU Ω r s).submatrix
       (fun i : Fin ((k : ℕ) + 1) => if (i : ℕ) = k then l else Fin.castLE k.2 i) (Fin.castLE k.2)).det
       = genU Ω r s l k := by
-  rw [Matrix.det_of_lowerTriangular]
+  rw [Matrix.det_of_isLowerTriangular]
   · rw [Fin.prod_univ_castSucc]
     have h1 : ∀ i : Fin (k : ℕ), (genU Ω r s).submatrix
         (fun i : Fin ((k : ℕ) + 1) => if (i : ℕ) = k then l else Fin.castLE k.2 i) (Fin.castLE k.2)
         i.castSucc i.castSucc = 1 := by
       intro i
       have : ((i.castSucc : Fin ((k : ℕ) + 1)) : ℕ) ≠ k := by simpa using i.2.ne
-      simp only [Matrix.submatrix_apply, if_neg this]
+      simp only [Matrix.submatrix_apply, ite_eq_right this]
       exact genU_self s _
-    simp only [h1, Finset.prod_const_one, one_mul, Matrix.submatrix_apply, Fin.val_last, if_true]
+    simp only [h1, Finset.prod_const_one, one_mul, Matrix.submatrix_apply, Fin.val_last, ite_true]
     congr 1
   · intro i j hij
     have hij' : i < j := hij
@@ -80,7 +80,7 @@ theorem det_genU_rows (s : S) (k l : Fin (r s)) (hkl : k ≤ l) :
       have := j.2
       have : (i : ℕ) < j := hij'
       omega
-    simp only [Matrix.submatrix_apply, if_neg hi]
+    simp only [Matrix.submatrix_apply, ite_eq_right hi]
     exact genU_of_lt s (show Fin.castLE k.2 i < Fin.castLE k.2 j from hij')
 
 variable {E : Type} [AddCommGroup E] [Module Ω E] {n : S → ℕ}
@@ -129,7 +129,7 @@ theorem exists_minor_ne_zero (φ : ∀ s, Fin (n s) → Module.Dual Ω E) (c : �
     (hB : B * Matrix.of (fun j l => φ s j (c s l)) = 1) (k : Fin (r s)) :
     ∃ f : Fin ((k : ℕ) + 1) → Fin (n s), ((flagMat φ c s).submatrix f (Fin.castLE k.2)).det ≠ 0 := by
   by_contra hall
-  push_neg at hall
+  push Not at hall
   have h1 := det_genU_submatrix φ c s B hB k.2
     (fun i : Fin ((k : ℕ) + 1) => if (i : ℕ) = k then k else Fin.castLE k.2 i)
   rw [det_genU_rows s k k le_rfl, genU_self, Finset.sum_eq_zero (fun f _ => by rw [hall f, mul_zero])] at h1
@@ -167,7 +167,7 @@ theorem mem_of_genU_mem (L : Subfield (GenField Ω r)) (hbase : ∀ b : Ω, alge
     | C b =>
       rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
       exact hbase b
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul]
       refine mul_mem hp ?_

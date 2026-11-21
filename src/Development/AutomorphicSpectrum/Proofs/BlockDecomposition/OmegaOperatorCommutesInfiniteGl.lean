@@ -70,7 +70,8 @@ theorem archTraceForm_AdLie (g : archGroup E a) (X Y : (isExpLieAlgebra E a).lie
   congr 1
   have hgi : mat (((g⁻¹ : archGroup E a) : (ArchMatrix E a)ˣ) : ArchMatrix E a) *
       mat (((g : (ArchMatrix E a)ˣ)) : ArchMatrix E a) = 1 := by
-    rw [← mat_mul]
+    change (((g⁻¹ : archGroup E a) : (ArchMatrix E a)ˣ) : ArchMatrix E a) *
+      (((g : (ArchMatrix E a)ˣ)) : ArchMatrix E a) = 1
     simp
   change Matrix.trace ((mat ((g : (ArchMatrix E a)ˣ) : ArchMatrix E a) * mat (X : ArchMatrix E a) *
       mat (((g⁻¹ : archGroup E a) : (ArchMatrix E a)ˣ) : ArchMatrix E a)) *
@@ -117,7 +118,7 @@ theorem omegaOp_comm_rt (E : Type) [Field E] [NumberField E] [_root_.NumberField
   rw [← infEmb_eq]
   have hrt : ∀ φ : Sm E a, smL E a (rt E a (infEmb E a u) φ) = rtInf u (smL E a φ) := fun _ => rfl
   refine LinearMap.ext fun ψ => smL_injective ?_
-  rw [Module.End.mul_apply, Module.End.mul_apply, smL_omegaOp, hrt, uAction_rtInf,
+  rw [mul_apply_eq_comp, mul_apply_eq_comp, smL_omegaOp, hrt, uAction_rtInf,
     AdU_casimir b ε hε2 horth, hrt, smL_omegaOp]
 
 end GlobalTheory.CompanionTheory.HCRep

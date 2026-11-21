@@ -146,15 +146,14 @@ theorem framepf_toLA_smul {a : LetA O n} (ha : a ∈ W.AΔ) {x : LA W T π' c}
     (hx : x ∈ LinearMap.range (toLA W T π' c ⊤)) :
     smulLA W T π' c a x ∈ LinearMap.range (toLA W T π' c ⊤) := by
   obtain ⟨t, rfl⟩ := hx
-  induction t using TensorProduct.induction_on with
-  | zero => simp
+  induction t using TensorProduct.inductionOn with
   | tmul b s =>
     refine ⟨((⟨a, ha⟩ : ↥W.AΔ) * b) ⊗ₜ s, ?_⟩
     show algebraMap (LetA O n) W.EE ((letE c : LetA O n) * (a * b)) ⊗ₜ[O] (s : LcQ W T π' c) =
       (algebraMap (LetA O n) W.EE a * algebraMap (LetA O n) W.EE ((letE c : LetA O n) * b)) ⊗ₜ[O]
         (s : LcQ W T π' c)
     rw [← map_mul, mul_left_comm]
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => simp only [map_add (f := _)] at ⊢; exact Submodule.add_mem _ hx hy
 
 theorem framepf_JLA_smul {a : LetA O n} (ha : a ∈ W.AΔ) {x : LA W T π' c}
     (hx : x ∈ JLA W T π' Eπ h' M c) : smulLA W T π' c a x ∈ JLA W T π' Eπ h' M c := by
@@ -165,8 +164,7 @@ theorem framepf_JLA_smul {a : LetA O n} (ha : a ∈ W.AΔ) {x : LA W T π' c}
 
 theorem framepf_γLA_smulLA (a : LetA O n) (x : LA W T π' c) :
     γLA W T π' c (smulLA W T π' c a x) = smulLA W T π' c (W.γA W.gamK a) (γLA W T π' c x) := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | tmul e ℓ =>
     show W.γE W.gamK (algebraMap (LetA O n) W.EE a * e) ⊗ₜ[O] ℓ =
       (algebraMap (LetA O n) W.EE (W.γA W.gamK a) * W.γE W.gamK e) ⊗ₜ[O] ℓ
@@ -177,15 +175,14 @@ theorem framepf_γLA_smulLA (a : LetA O n) (x : LA W T π' c) :
 theorem framepf_γLA_toLA {x : LA W T π' c} (hx : x ∈ LinearMap.range (toLA W T π' c ⊤)) :
     γLA W T π' c x ∈ LinearMap.range (toLA W T π' c ⊤) := by
   obtain ⟨t, rfl⟩ := hx
-  induction t using TensorProduct.induction_on with
-  | zero => simp
+  induction t using TensorProduct.inductionOn with
   | tmul b s =>
     refine ⟨(⟨W.γA W.gamK b, framepf_γA_Δ _ b.2⟩ : ↥W.AΔ) ⊗ₜ s, ?_⟩
     show algebraMap (LetA O n) W.EE ((letE c : LetA O n) * W.γA W.gamK b) ⊗ₜ[O] (s : LcQ W T π' c) =
       W.γE W.gamK (algebraMap (LetA O n) W.EE ((letE c : LetA O n) * b)) ⊗ₜ[O] (s : LcQ W T π' c)
     rw [W.γE_ext, ← Formalism.MainNotions.LiftingTheory.wmap_γA_letE W W.gamK c, ← map_mul, Formalism.MainNotions.LiftingTheory.wmap_γA_letE]
     rfl
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => simp only [map_add (f := _)] at ⊢; exact Submodule.add_mem _ hx hy
 
 theorem framepf_γD_PcS (g : W.Gam) {p : W.DD T} (hp : p ∈ PcS W T c) : W.γD T g p ∈ PcS W T c := by
   obtain ⟨⟨h1, h2⟩, h3⟩ := hp
@@ -257,8 +254,7 @@ theorem framepf_Ψα_γ (hu : IsUnit (algebraMap (LetA O n) W.EE π'))
       W.γD T W.gamK (Ψ (toLA W T π' c ⊤ z)) - Ψ (γLA W T π' c (toLA W T π' c ⊤ z)) =
         (π' ^ M * Eπ ^ (4 * h')) • p := by
     intro z
-    induction z using TensorProduct.induction_on with
-    | zero => exact ⟨0, Submodule.zero_mem _, by simp⟩
+    induction z using TensorProduct.inductionOn with
     | tmul a s =>
       have e : toLA W T π' c ⊤ (a ⊗ₜ s) =
         algebraMap (LetA O n) W.EE ((letE c : LetA O n) * a) ⊗ₜ (s : LcQ W T π' c) := rfl

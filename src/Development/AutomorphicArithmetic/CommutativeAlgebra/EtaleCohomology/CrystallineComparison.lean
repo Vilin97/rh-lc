@@ -102,7 +102,7 @@ private theorem aic_quot (I : Ideal R) (h : ∀ P : R[X], P.Monic → 0 < P.natD
     (Polynomial.mem_lifts _).2 (Polynomial.map_surjective _ Ideal.Quotient.mk_surjective P)
   obtain ⟨q, rfl, hdeg, hq⟩ := Polynomial.lifts_and_natDegree_eq_and_monic hl hP
   obtain ⟨x, hx⟩ := h q hq (hdeg ▸ hd)
-  exact ⟨_, hx.map⟩
+  exact ⟨_, hx.map (Ideal.Quotient.mk I)⟩
 
 private theorem val_quot (he : IsIdempotentElem e) {π : R}
     (h : ∀ f g : R, (∃ N : ℕ, π ^ N ∈ Ideal.span {f, g}) →

@@ -35,9 +35,9 @@ theorem exists_norm_rconv_le_siegel_basic (f : CompactlySupportedContinuousMap (
       ‖rconv Γ₁ μ f φ x‖ ≤ C * √(R ^ N) * ‖φ‖ := by
   obtain ⟨Cc, N, hCc⟩ := exists_encard_le_siegel hω ht f.hasCompactSupport
   have hf2 : ∫⁻ y, ‖f y‖ₑ ^ 2 ∂μ ≠ ⊤ := by
-    have := (f.continuous.memLp_of_hasCompactSupport (μ := μ) (p := 2) f.hasCompactSupport).eLpNorm_lt_top
-    rw [← L2Kernel.eLpNorm_two_sq]
-    exact (ENNReal.pow_lt_top this).ne
+    have hf : MemLp (⇑f) 2 μ := f.continuous.memLp_of_hasCompactSupport f.hasCompactSupport
+    simpa only [ENNReal.toReal_ofNat, ENNReal.rpow_two] using
+      (lintegral_rpow_eNorm_lt_top_of_eLpNorm_lt_top (by norm_num) (by simp) hf.eLpNorm_lt_top).ne
   set A := (∫⁻ y, ‖f y‖ₑ ^ 2 ∂μ).toReal
   have hA : 0 ≤ A := ENNReal.toReal_nonneg
   refine ⟨√(A * max Cc 0), N, ?_⟩

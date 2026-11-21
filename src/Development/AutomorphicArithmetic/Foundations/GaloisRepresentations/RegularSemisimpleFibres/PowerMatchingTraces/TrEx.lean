@@ -24,12 +24,12 @@ theorem UpperTheory.Gal.InertialTypesAlt.G.trEx :
   intro K _ _ _ n hn π v _ _ m hm τ hτ f hf
   haveI := hm
   let μ : Measure (normOneGL (K := K) (n := n)) := Measure.haar
-  obtain ⟨χ, -, V, hV⟩ := Dp.exTwist K n μ π hn
+  obtain ⟨χ, hχ, V, hV⟩ := Dp.exTwist K n μ π hn
   obtain ⟨⟨τ₁, h₁⟩, htw⟩ := locTw K n hn π χ v τ hτ
   obtain ⟨e, he⟩ := htw τ₁ h₁
   have hocc : Occurs μ V v τ₁ :=
     (occursIff K n μ V hV.summand v τ₁).2 ((Dp.locIff K n μ (π.twist χ) V hV v τ₁).1 h₁)
-  obtain ⟨-, -, h₃⟩ := occursBasics K n μ V v m hV.summand
+  obtain ⟨h₁, h₂, h₃⟩ := occursBasics K n μ V v m hV.summand
   obtain ⟨z, hz⟩ := h₃ τ₁ hocc (fun g => f g * chiAt n χ⁻¹ v g) ((chiBasic K n χ⁻¹ v).2.2 f hf)
   have ht := (trTw _ m (chiAt n χ v) τ τ₁ e he (fun g => f g * chiAt n χ⁻¹ v g) z).1.2 hz
   have hfun : (fun g => f g * chiAt n χ⁻¹ v g * chiAt n χ v g) = f := by

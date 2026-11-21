@@ -60,7 +60,7 @@ theorem exists_fg_pull_sqC (m : SMor Φ Φ' σ) {a b : IdF Φ.A} {a' b' : IdF Φ
     induction hx using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨(⟨g, hg⟩, ⟨x, hx⟩), rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul r x _ hx => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   intro c ha hb hc x
   refine Submodule.span_induction
@@ -113,8 +113,7 @@ theorem afgA_of_bcOn_finO : BcOn False → FinO → AfgA := by
   have hsingle : ∀ (i : Fin m) (t : S.N i ⊗[O] HQ (TO q l s 𝒱) (r - i) (r' - i) j),
       g (Pi.single i t) ∈ ⨆ i, N i := by
     intro i t
-    induction t using TensorProduct.induction_on with
-    | zero => rw [Pi.single_zero, map_zero]; exact zero_mem _
+    induction t using TensorProduct.inductionOn with
     | tmul n x => rw [hg]; exact Submodule.mem_iSup_of_mem i (hNmem i n x)
     | add t t' ht ht' => rw [Pi.single_add, map_add (f := _)]; exact add_mem ht ht'
   have hy : y = ∑ i, g (Pi.single i (g.symm y i)) := by

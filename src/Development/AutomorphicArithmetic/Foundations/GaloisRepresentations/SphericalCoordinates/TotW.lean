@@ -43,7 +43,8 @@ variable {L} {h : G.GAf} {N N' : ℕ} {X' : GenModel gb N'} {X : GenModel gb N}
 def Leg.tot (c : Leg L h X' X) : X'.univ.A.left ⟶ X.univ.A.left := c.ψ.left ≫ c.φ.φ
 
 theorem Leg.tot_w (c : Leg L h X' X) : c.tot ≫ X.univ.A.hom = X'.univ.A.hom ≫ c.q := by
-  rw [Leg.tot, Category.assoc, c.φ.cart.1.w, ← Category.assoc, Over.w]
+  change (c.ψ.left ≫ c.φ.φ) ≫ X.univ.A.hom = X'.univ.A.hom ≫ c.q
+  rw [Category.assoc, c.φ.cart.1.w, ← Category.assoc, Over.w]
 
 def Leg.pw (c : Leg L h X' X) (k : ℕ) : (GlobalTheory.KS.pow X'.univ.A k).left ⟶ (GlobalTheory.KS.pow X.univ.A k).left :=
   GlobalTheory.KS.powMap c.q c.tot c.tot_w k

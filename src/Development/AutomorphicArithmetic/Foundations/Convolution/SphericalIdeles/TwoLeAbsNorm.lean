@@ -47,8 +47,8 @@ theorem UpperTheory.ConvolutionTheory.Sph.up :
   intro F E _ _ _ _ _ _ _ _ σ hσ hp n hn π P hW v hv B hB w hw f hf
   let μE : Measure (normOneGL (K := E) (n := n)) := Measure.haar
   let μF : Measure (normOneGL (K := F) (n := n)) := Measure.haar
-  obtain ⟨s, χ, χ', V, V', θ, hχ, hχ', hV, -, hθ, -, hW', hOff, -⟩ :=
-    Sph.norm F E σ hσ hp n hn μE μF π P hW
+  have hnorm := Sph.norm F E σ hσ hp n hn μE μF π P hW
+  obtain ⟨s, χ, χ', V, V', θ, hχ, hχ', hV, -, hθ, -, hW', hOff, -⟩ := hnorm
   obtain ⟨c1, -, c3, -⟩ := carryLift F E σ hσ hp n hn μE μF
   obtain ⟨Λ, t, S, hS, hAt⟩ := c1 V hV.summand
   have hN := (places F E hp).2.2.2.2.1

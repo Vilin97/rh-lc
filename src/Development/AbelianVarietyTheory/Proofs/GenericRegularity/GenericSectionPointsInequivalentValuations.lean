@@ -167,7 +167,7 @@ theorem exists_point [Finite ι]
     have hmem : frac X la w 1 (CurveLoc.secOf X la N g) ∈ Frac0 X la w :=
       Algebra.subset_adjoin (frac_mem_Hfr X la w (by rw [add_zero_weight_one_eq]; exact CurveLoc.secOf_mem X la N g))
     have h1 : (⟨_, hmem⟩ : ↥(Frac0 X la w)) - 1 ∈ RingHom.ker (phiZ X la N (Ω Z) (gF Z) w) := by
-      rw [RingHom.mem_ker, RingHom.map_sub, map_one, CurveLoc.phiZ_of_eq X la N w (gF Z) _ 1 _ rfl,
+      rw [RingHom.mem_ker, map_sub, map_one, CurveLoc.phiZ_of_eq X la N w (gF Z) _ 1 _ rfl,
         CurveLoc.rzMap_secOf X la N (gF Z) g w (fun k => (hg k).1), CurveLoc.secOf_self, pow_one,
         CurveLoc.weight_zero_section_mul_inv, sub_self]
     have h2 := hZ h1
@@ -327,8 +327,13 @@ variable {ζ : PtsG G la} {y : E.Pt' la} (h : FromW ζ y)
 theorem evK_op (o : Op (xplus X E hM) la G.N) :
     evK (xplus X E hM) la G.N h.ev (algebraMap _ (Kp (xplus X E hM) la G.N) o) =
       algebraMap h.T.V h.T.Fr (h.ι (algebraMap _ (Loc ζ) o)) := by
-  rw [← lift_algKp (xplus X E hM) la G.N G.w h.ev h.s0,
-    h.evW _ (algebraMap _ _ o) ((toOsK (xplus X E hM) la G.w).commutes _), ← IsScalarTower.algebraMap_apply]
+  calc
+    _ = IsLocalization.Away.lift (sec (xplus X E hM) la G.w 0) h.s0
+        ((algebraMap (Kp (xplus X E hM) la G.N) ↥(Frac0 (xplus X E hM) la G.w)
+          (algebraMap _ (Kp (xplus X E hM) la G.N) o) : ↥(Frac0 (xplus X E hM) la G.w)) : Lw (xplus X E hM) la G.w) :=
+      (lift_algKp (xplus X E hM) la G.N G.w h.ev h.s0 _).symm
+    _ = _ := by
+      rw [h.evW _ (algebraMap _ _ o) ((toOsK (xplus X E hM) la G.w).commutes _), ← IsScalarTower.algebraMap_apply]
 
 theorem pos_iff_mem (x : ↥(Frac0 (xplus X E hM) la G.w))
     (a : ↥(As (Op (xplus X E hM) la G.N) (OsK (xplus X E hM) la G.w)))

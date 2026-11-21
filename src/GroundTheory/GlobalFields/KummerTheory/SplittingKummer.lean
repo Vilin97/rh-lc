@@ -35,7 +35,7 @@ theorem algHom_kummerExtension_mem_fieldRange (ι : kummerExtension K n Ω Δ �
       ι y ∈ (algebraMap F E).fieldRange := by
     intro y a ha hy
     obtain ⟨x, hx⟩ := h a ha
-    obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot K n
+    obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot K n
     have hζ' : IsPrimitiveRoot (algebraMap K E ζ) n :=
       hζ.map_of_injective (algebraMap K E).injective
     have hx0 : algebraMap F E x ≠ 0 := by
@@ -81,14 +81,13 @@ theorem finrank_eq_one_of_tensor_surjective {A : Type*} [CommRing A] [Algebra K 
   refine eq_top_iff.2 fun e he ↦ ?_
   clear he
   obtain ⟨t, rfl⟩ := hg e
-  induction t using TensorProduct.induction_on with
-  | zero => rw [map_zero]; exact zero_mem _
+  induction t using TensorProduct.inductionOn with
   | tmul c m =>
     have : c ⊗ₜ[K] m = c • ((1 : F) ⊗ₜ[K] m) := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     rw [this, map_smul]
     exact Subalgebra.smul_mem _ (Algebra.mem_bot.2 (hA m)) c
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y hx hy => rw [map_add]; exact add_mem hx hy
 
 theorem finrank_eq_one_iff_of_kummerExtension [IsSepClosed Ω]
     (g : F ⊗[K] kummerExtension K n Ω Δ →ₐ[F] E) (hg : Function.Surjective g) :
@@ -99,7 +98,7 @@ theorem finrank_eq_one_iff_of_kummerExtension [IsSepClosed Ω]
   · intro h1 a ha
     have hsurj : Function.Surjective (algebraMap F E) :=
       (Algebra.finrank_eq_one_iff_bijective_algebraMap.1 h1).2
-    obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot K n
+    obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot K n
     have hnK : NeZero ((n : ℕ) : K) := hζ.neZero'
     have hnΩ : NeZero ((n : ℕ) : Ω) :=
       ⟨by rw [← map_natCast (algebraMap K Ω)]; exact (map_ne_zero _).2 hnK.out⟩

@@ -131,9 +131,10 @@ private theorem conj_mem (c : Fin n → ℤ) {g : GL (Fin n) F} (hg : g ∈ iwah
   have hle : ∀ i j, i ≠ j → g i j ≠ 0 →
       valuation F ((uniformizer F : F) ^ (c i - c j) * g i j) ≤ valuation F (g i j) := by
     intro i j e z
-    have := valuation_zpow_mul_le_pow_mul (F := F) (x := g i j) (e := 0) (z := c i - c j)
-      (by have := h i j e z; push_cast; omega)
-    simpa using this
+    obtain ⟨m, hm⟩ := Int.eq_ofNat_of_zero_le (sub_nonneg.mpr (h i j e z))
+    rw [hm, zpow_natCast, map_mul, map_pow]
+    simpa using mul_le_mul' (pow_le_one' (valuation_uniformizer_lt_one F).le m)
+      (le_refl (valuation F (g i j)))
   rw [mem_iwahori_iff F n]
   refine ⟨fun i j => ?_, fun i j hij => ?_, fun i => ?_⟩
   · rw [diagPow_conj_apply]
@@ -201,8 +202,8 @@ private theorem hop_mul (J : Subgroup (GL (Fin n) (w.adicCompletion K)))
   obtain ⟨-, -, pxy, sxy, -, -⟩ := UpperTheory.ConvolutionTheory.Tf.hopBasic K n μ w J (x * y) hO hC
   obtain ⟨-, -, a1, -, -, hmul, -, -, -⟩ :=
     UpperTheory.ConvolutionTheory.Tf.commPrj K n μ (J.map (AdelicGLn.localEmbedding w))
-  letI : Fintype (Cs J x) := fx.fintype
-  letI : Fintype (Cs J y) := fy.fintype
+  let : Fintype (Cs J x) := fx.fintype
+  let : Fintype (Cs J y) := fy.fintype
   have rmul : ∀ g h, rhoL μ w (g * h) = rhoL μ w g ∘L rhoL μ w h := fun g h => by
     simp only [rhoL, map_mul, hmul]
   have single : ∀ (z : GL (Fin n) (w.adicCompletion K)) (T : LL μ →L[ℂ] LL μ),

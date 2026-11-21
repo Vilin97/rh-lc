@@ -165,16 +165,15 @@ theorem mass_eq_of_lattices {h₁ h₂ : K →ₗ⋆[K] K →ₗ[K] K} (hn₁ : 
       mulE (B * A') (A * B') hJC (loc p M) = loc p (mulE (B * A') (A * B') hJC M) :=
     fun p hp M => loc_mul hp (B * A') M
   have t4 : ∀ (M : Submodule (𝓞 K) K),
-      Submodule.IsLattice K (mulE (B * A') (A * B') hJC M) ↔ Submodule.IsLattice K M := by
+      Submodule.IsFullLattice K (mulE (B * A') (A * B') hJC M) ↔ Submodule.IsFullLattice K M := by
     intro M
-    change Submodule.IsLattice K (B * A' * M) ↔ Submodule.IsLattice K M
-    simp only [Submodule.IsLattice.iff_fg]
+    change Submodule.IsFullLattice K (B * A' * M) ↔ Submodule.IsFullLattice K M
     constructor
     · intro hM
-      have e := (hA.toIsLattice.fg.mul hB'.toIsLattice.fg).mul hM
+      have e := isLattice_mul (isLattice_mul hA hB') hM
       rwa [← mul_assoc, hJC, one_mul] at e
     · intro hM
-      exact (hB.toIsLattice.fg.mul hA'.toIsLattice.fg).mul hM
+      exact isLattice_mul (isLattice_mul hB hA') hM
   have hΦA : mulE (B * A') (A * B') hJC A = B := by
     show B * A' * A = B
     rw [mul_assoc, hA'A, mul_one]

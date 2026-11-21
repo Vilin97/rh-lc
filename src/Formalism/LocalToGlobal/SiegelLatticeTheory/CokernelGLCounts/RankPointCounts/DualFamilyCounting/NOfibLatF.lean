@@ -23,6 +23,8 @@ open Alg
 
 variable {D : D7}
 
+local notation "FI" => FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E
+
 theorem mem_mul_inv_of {I J : FI} (hI : I ≠ 0) {x : D.host.E} (h : ∀ c ∈ I, c * x ∈ J) : x ∈ J * I⁻¹ := by
   have h1 : FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 D.host.E)) x * I ≤ J := by
     rw [FractionalIdeal.mul_le]
@@ -116,7 +118,7 @@ theorem rows_mem (hL : Formalism.HermitianLatticesTheory.gmap n (VS D).L0 = (VS 
   have key : ∀ t ∈ ((aaD D b * (aaD D b)⁻¹ : FI) : Submodule (𝓞 D.host.E) D.host.E),
       t • xq X n b ∈ aaLb X b := by
     intro t ht
-    rw [FractionalIdeal.coe_mul] at ht
+    rw [FractionalIdeal.coeToSubmodule_mul] at ht
     refine Submodule.mul_induction_on ht (fun α hα β hβ' => ?_) (fun s t hs ht => ?_)
     · rw [mul_smul]
       exact Submodule.subset_span ⟨α, hα, β • xq X n b, hβ β hβ', rfl⟩

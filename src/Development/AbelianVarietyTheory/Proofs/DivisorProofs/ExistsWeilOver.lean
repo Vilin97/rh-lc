@@ -9,6 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EqZer
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IdempotentMulEqZeroOfOrthogonal
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridFirstColumnSpaceRankSignatureSelfDualStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsWeilRepresentationVacuumCosetVectorsGridStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 
 @[expose] public section
 
@@ -50,11 +51,11 @@ theorem exists_uniform {M : Type} [AddCommGroup M] [Module (𝓞 D.host.E) M] {A
   | add x y _ _ hx hy => rw [nsmul_add]; exact add_mem hx hy
   | smul c x _ hx => rw [smul_comm]; exact B.smul_mem c hx
 
-theorem exists_hom_le (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) :
+theorem exists_hom_le (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT) :
     ∃ k : ℕ, 0 < k ∧ ∀ x ∈ homLat ΛS ΛT, k • x ∈ latRat S T ΛS ΛT := by
   let B : Submodule (𝓞 D.host.E) (Matrix (Fin T.rank) (Fin S.rank) D.host.E) :=
     { (latRat S T ΛS ΛT).toAddSubmonoid with smul_mem' := fun c _ hx => smul_mem_latRat c hx }
-  exact exists_uniform (Module.Finite.iff_fg.1 (homLat_fg hS hT.fg)) B fun x _ =>
+  exact exists_uniform (Module.Finite.iff_fg.1 (homLat_fg hS.toIsLattice hT.fg)) B fun x _ =>
     GlobalTheory.LatVacFull.latRat_full D S T ΛS ΛT hS hT x
 
 theorem exists_le_hom (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) :
@@ -88,11 +89,11 @@ theorem exists_le_hom (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.Is
   | add x y _ _ hx hy => rw [nsmul_add]; exact add_mem hx hy
   | neg x _ hx => rw [neg_nsmul]; exact neg_mem hx
 
-theorem isSBHalf_cosInd (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) {e : AE D}
+theorem isSBHalf_cosInd (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT) {e : AE D}
     (he : e * e = e) (hinf : infPart D e = 0) {𝔪 : Ideal (𝓞 D.host.E)} (h𝔪 : 𝔪 ≠ ⊥) (κ : Cos ΛS ΛT 𝔪) :
     IsSBHalf e (latO S T ΛS ΛT fun _ => True) (cosInd e κ) := by
   obtain ⟨a, ha, h1⟩ := exists_hom_le hS hT
-  obtain ⟨b, hb, h2⟩ := exists_le_hom hS hT
+  obtain ⟨b, hb, h2⟩ := exists_le_hom hS.toIsLattice hT.toIsLattice
   have hN : 0 < Ideal.absNorm 𝔪 := Nat.pos_of_ne_zero fun h => h𝔪 (Ideal.absNorm_eq_zero_iff.1 h)
   have k1 : ∀ u ∈ latO S T ΛS ΛT fun _ => True, (b * Ideal.absNorm 𝔪) • u ∈ hatMx (𝔪 • homLat ΛS ΛT) := fun u hu => by
     refine latO_induction (p := fun u => (b * Ideal.absNorm 𝔪) • u ∈ hatMx (𝔪 • homLat ΛS ΛT)) ?_ ?_ ?_ ?_ hu
@@ -213,7 +214,8 @@ theorem exists_vac_cos {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-
   obtain ⟨f, hf⟩ := GlobalTheory.VacuumO.vacExists D ψ θ hψ hθ S T sS sT kS kT cS cT ΛS ΛT dS dT
   choose c hc using fun κ : Cos ΛS ΛT 𝔪 => exists_isThetaAt hψ dS dT (idemSum_mul_self he) (infPart_idemSum he)
     (GlobalTheory.PlaceModelSum.placeModelExistsSum D ψ hψ S T ΛS ΛT dS dT P e he f hf.2.theta hf.2.lat).1
-    (isSBHalf_cosInd dS.1 dT.1 (idemSum_mul_self he) (infPart_idemSum he) h𝔪 κ)
+    (isSBHalf_cosInd (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dS)
+      (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dT) (idemSum_mul_self he) (infPart_idemSum he) h𝔪 κ)
   exact ⟨f, c, hf, hc⟩
 
 theorem exists_weil {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc)

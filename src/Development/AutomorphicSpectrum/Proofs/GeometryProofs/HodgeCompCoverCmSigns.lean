@@ -36,7 +36,10 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.hodge_comp_cover_cm_signs : To
     GlobalTheory.T.hodge_comp_cover_primes hW E H D Xo l c Y S Ω K J y 𝔐 dg hcov
       (fun p hp hdv => by by_contra h; exact (hS' p hp h).1 hdv) hS
   haveI : CharZero M.Ω := charZero_of_injective_ringHom i.injective
-  obtain ⟨n1, n2⟩ := GlobalTheory.T.nefOnFibres_block_xdeg_sums_of_rootLines hG E H D Xo l c Y S M 𝔐' Fl e hY hp hq hS2 hS' hR
+  have hNef : _ ∧ _ :=
+    GlobalTheory.T.nefOnFibres_block_xdeg_sums_of_rootLines hG E H D Xo l c Y S M 𝔐' Fl e
+      hY hp hq hS2 hS' hR
+  obtain ⟨n1, n2⟩ := hNef
   have hb₀ : ∀ σ, LinearIndependent M.Ω (Fl.b σ) := by
     obtain ⟨_, _, -, -, -, h, -⟩ := Fl.generic
     exact h

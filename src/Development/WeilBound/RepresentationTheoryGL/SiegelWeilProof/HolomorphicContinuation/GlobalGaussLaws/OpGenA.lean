@@ -86,7 +86,7 @@ theorem hasTemperateGrowth_evX (P : PX m n) : (fun u : EE => evX P u).HasTempera
   | mul_X p k hp =>
     have hk : (fun u : EE => if k.2.2 then star (u k.1 k.2.1) else u k.1 k.2.1).HasTemperateGrowth := by
       by_cases h : k.2.2
-      · simp only [h, if_true]
+      · simp only [h, ite_true]
         exact ((Complex.conjCLE.toContinuousLinearMap.restrictScalars ℝ).comp (coordL k.1 k.2.1)).hasTemperateGrowth
       · simp only [h]
         exact (coordL k.1 k.2.1).hasTemperateGrowth
@@ -120,10 +120,12 @@ theorem hasTemperateGrowth_phase (ε : Fin m → Bool) (t : ℝ) (b : Matrix (Fi
   have hR : (fun u : EE => t * (b * gramX ε u).trace.re).HasTemperateGrowth := by
     have h1 := ((t • Complex.reCLM : ℂ →L[ℝ] ℝ).hasTemperateGrowth).comp hT
     convert h1 using 1
+    funext u
+    simp
   have h3 := hasTemperateGrowth_expI.comp hR
   convert h3 using 1
-  rw [Complex.ofReal_mul, trace_real ε b hb u]
-  ring_nf
+  funext u
+  simp only [Function.comp_apply, Complex.ofReal_mul, trace_real ε b hb u, mul_assoc]
 
 theorem isSch_phase (ε : Fin m → Bool) (t : ℝ) (b : Matrix (Fin n) (Fin n) ℂ) (hb : bᴴ = b) {f : EE → ℂ}
     (hf : IsSch f) : IsSch (fun u => Complex.exp (Complex.I * (t : ℂ) * (b * gramX ε u).trace) * f u) := by

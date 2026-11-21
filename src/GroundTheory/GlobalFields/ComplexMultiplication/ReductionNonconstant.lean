@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionComp
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionPoints
 public import GroundTheory.GlobalFields.ComplexMultiplication.RespectsAddGeneric
 public import GroundTheory.GlobalFields.ComplexMultiplication.DualDescent
 

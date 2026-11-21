@@ -51,7 +51,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 end Weights
 theorem short_vector_weight_bound_alt : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.FlatDegreeCondition → _root_.GlobalTheory.CovTop.CoversCondition fun Fm x _ ι p i Y PP _ => 0 ≤ PP * kap p i ∧ ∀ Z, ∀ j ≤ lenT p i PP, ∃ (m : ℕ) (v : Fin m → Cusp Z Y.U ((⟨uW p i, cZero (Fm.D x ι) ((i : ℕ) + 1), (Fm.D x ι).R.k - 2, lenT p i PP⟩ : WtPar (dat p i)).wt j)), (∀ q, v q ∈ latOn Y.U Z _) ∧ Submodule.span Y.d.c₂.F (Set.range v) = ⊤ ∧ ∀ q σ, petOn Y.U (xiR (Fm.D x ι)) (fun _ => (Fm.D x ι).sp.W ((i : ℕ) + 1)) Y.dict Z (wtOf (dat p i) ((⟨uW p i, cZero (Fm.D x ι) ((i : ℕ) + 1), (Fm.D x ι).R.k - 2, lenT p i PP⟩ : WtPar (dat p i)).wt j) 0) σ (v q).1 ≤ Real.exp (PP * kap p i) := by
   intro h2 _hDG hSz hF
-  obtain ⟨C₂, c₂, H₂⟩ := _root_.GlobalTheory.T.short_generator_norm_comparison h2
+  have hcomp := _root_.GlobalTheory.T.short_generator_norm_comparison h2
+  obtain ⟨C₂, c₂, H₂⟩ := hcomp
   have H₄ := _root_.GlobalTheory.T.covering_domain_lattice_regularity h2
   refine Closed.imp (Closed.and (Closed.and _root_.GlobalTheory.HSApp.wtBig_run_alt (_root_.GlobalTheory.T.weight_parameter_strict_antitone_alt hSz))
     (Closed.and (_root_.GlobalTheory.T.size_bounds_for_family_alt hSz) (Closed.and hSz hF))) ?_

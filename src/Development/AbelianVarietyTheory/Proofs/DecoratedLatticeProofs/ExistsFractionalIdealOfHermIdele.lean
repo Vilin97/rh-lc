@@ -35,7 +35,7 @@ theorem one_tmul_mem_iff (e : D.host.E) :
   rw [← h]
   exact (GlobalTheory.SplitDec.int_iff (incA D e)).trans (GlobalTheory.SplitDec.rat_int_iff e)
 
-theorem exists_int_mul (y : ZF) : ∃ N : 𝓞 D.host.E, N ≠ 0 ∧
+theorem exists_int_mul (y : Af D.host.F ⊗[D.host.F] D.host.E) : ∃ N : 𝓞 D.host.E, N ≠ 0 ∧
     ((1 : Af D.host.F) ⊗ₜ[D.host.F] (N : D.host.E)) * y ∈ intAE D := by
   obtain ⟨x, u, hu, rfl⟩ := GlobalTheory.FinPl.Conductor.approx y
   obtain ⟨a, b, hb, hab⟩ := IsFractionRing.div_surjective (A := 𝓞 D.host.E) x
@@ -50,7 +50,8 @@ theorem exists_int_mul (y : ZF) : ∃ N : 𝓞 D.host.E, N ≠ 0 ∧
   rw [e]
   exact one_tmul_mem a
 
-theorem approx_mul (z : ZF) {N : 𝓞 D.host.E} (hN : N ≠ 0) : ∃ x : D.host.E, ∃ u ∈ intAE D,
+theorem approx_mul (z : Af D.host.F ⊗[D.host.F] D.host.E) {N : 𝓞 D.host.E} (hN : N ≠ 0) :
+    ∃ x : D.host.E, ∃ u ∈ intAE D,
     z = (1 : Af D.host.F) ⊗ₜ[D.host.F] x + ((1 : Af D.host.F) ⊗ₜ[D.host.F] (N : D.host.E)) * u := by
   have hN' : (N : D.host.E) ≠ 0 := by exact_mod_cast hN
   obtain ⟨x, u, hu, e⟩ := GlobalTheory.FinPl.Conductor.approx

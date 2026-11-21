@@ -73,7 +73,10 @@ theorem hodge_bundle_nef_and_big : _root_.GlobalTheory.CovTop.Hypotheses'' → G
       exact ⟨y⟩
     have hne : (U₀ TF.X Z : Set (Y₀ TF.X Z)).Nonempty := (dense_U₀ TF.X Z).nonempty
     obtain ⟨y, hy⟩ := hne
-    obtain ⟨mu, hmu0, m, hm, hA⟩ := _root_.GlobalTheory.T.hodge_bundle_ample_on_regular_locus hP hN hS hC E H Dw l Xo c TF Z hF la hgla y hy
+    have hamp : ∃ mu : AllWt.Weight Dw, GapGe 0 mu ∧ ∃ m : ℕ, 0 < m ∧
+        AmpleAt (L₀ TF.X Z (m • la - mu)) y :=
+      _root_.GlobalTheory.T.hodge_bundle_ample_on_regular_locus hP hN hS hC E H Dw l Xo c TF Z hF la hgla y hy
+    obtain ⟨mu, hmu0, m, hm, hA⟩ := hamp
     obtain ⟨m', Aa, s, hm', hAa, hAamp, hys⟩ := hA
     have hNn := isLB_L₀ TF.X Z (m • la - mu)
     have hdiv : (LB.div (lbPow (L₀ TF.X Z (m • la - mu)) m') Aa).IsLB := Semi.LB.isLB_div (isLB_lbPow hNn m') hAa

@@ -47,7 +47,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.GeneratorsCompare
 
-open GlobalTheory.IndefiniteRowSideFullHecke Formalism.MainNotions.ModuliIntegralCharts.H1 Formalism.MainNotions.ModuliIntegralCharts.H1.ExpBijectiveUniformisation
+open Formalism.MainNotions.ModuliIntegralCharts.H1 Formalism.MainNotions.ModuliIntegralCharts.H1.ExpBijectiveUniformisation
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ (PS)
 
 section Trans

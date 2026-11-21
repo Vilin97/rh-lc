@@ -108,8 +108,8 @@ theorem exists_transport {E : Type} [Field E] [NumberField E] {Ω W J C X : Type
     · subst hij
       rw [hco _ i 1 (by simp), F.repr_self]
       simp
-    · rw [hco _ i 0 (by simp [Finsupp.single_apply, Ne.symm hij]), F.repr_self]
-      simp [Finsupp.single_apply, Ne.symm hij]
+    · rw [hco _ i 0 (by simp [Ne.symm hij]), F.repr_self]
+      simp [Ne.symm hij]
   · intro a h h'
     have key : ∀ i, cd ⟨_, h'⟩ i = ∑ j, m a i j * cd h j := by
       intro i
@@ -192,12 +192,12 @@ theorem stable_of_isFreeOn {E K V A : Type} [Field E] [NumberField E] [CommRing 
           ρ (RingOfIntegers.basis E j) (t q.1) := by
       have := congrArg (fun y => ρ y (t q.1)) ((RingOfIntegers.basis E).sum_repr (a * RingOfIntegers.basis E q.2))
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, map_mul, Module.End.mul_apply] at this
+        simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, map_mul, mul_apply_eq_comp] at this
       exact this.symm
     rw [e]
     refine Submodule.sum_mem _ fun j _ => Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨(q.1, j), rfl⟩)
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [LinearMap.map_smul_of_tower]
     exact Submodule.smul_mem _ _ hx

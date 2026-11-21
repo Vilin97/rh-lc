@@ -367,7 +367,6 @@ theorem mulF_mem (c : 𝓞 D.F) {v : AfP p ⊗[ℚ] VQ D} (hv : v ∈ LaHat D) :
     apply AddSubgroup.subset_closure
     refine ⟨a, algebraMap (𝓞 D.F) D.O c • x, ha, ?_⟩
     simp [mulF, actQ]
-    rfl
   | zero => rw [_root_.map_zero]; exact zero_mem _
   | add x y _ _ hx hy => rw [_root_.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [_root_.map_neg]; exact neg_mem hx
@@ -383,7 +382,6 @@ theorem inAf_mem' (x : D.La) : inAf D x ∈ LaHat D :=
 
 theorem inAf_mulF (c : 𝓞 D.F) (x : D.La) : inAf D (algebraMap (𝓞 D.F) D.O c • x) = mulF D c (inAf D x) := by
   simp [mulF, actQ, inAf, LinearMap.baseChange_tmul]
-  rfl
 
 end Lat
 

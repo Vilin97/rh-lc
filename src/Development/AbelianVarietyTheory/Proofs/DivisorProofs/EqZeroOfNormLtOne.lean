@@ -188,7 +188,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] [StarRing 
   obtain ⟨⟨s, hs⟩, hm, -⟩ := Formalism.HermitianLatticesTheory.final_massBasic E (Fin n → E) _ (isSymm_std n) (trace_pos hφ) _
     (isLattice_std n).toIsLattice
   obtain ⟨N, ⟨hN, g, hg, e⟩, -⟩ := hs.2 (Formalism.MainNotions.StandardLattice.stdLat E n)
-    ⟨(isLattice_std n).toIsLattice, fun p _ => ⟨1, one_mem _, Submodule.map_id _⟩⟩
+    ⟨isLattice_std n, fun p _ => ⟨1, one_mem _, Submodule.map_id _⟩⟩
   obtain ⟨hf, hc⟩ := card_aut_std hφ n
   haveI : Nonempty (Formalism.ThetaLiftIndependence.autL (Formalism.MainNotions.StandardLattice.stdForm E n) (Formalism.MainNotions.StandardLattice.stdLat E n)) :=
     ⟨⟨1, one_mem _, Submodule.map_id _⟩⟩

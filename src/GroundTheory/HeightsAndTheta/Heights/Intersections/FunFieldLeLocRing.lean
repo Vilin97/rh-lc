@@ -54,7 +54,7 @@ theorem card_add_two_le [CharZero E] (ψ : MRing ι →+* E) (j : ∀ k, ι k) (
 
   have hPQ : P < Q ∅ := by
     obtain ⟨T, hT, hPT⟩ := hPh
-    refine SetLike.lt_iff_le_and_exists.mpr ⟨?_, u, ?_, huP⟩
+    refine IsConcreteLE.lt_iff_le_and_exists.mpr ⟨?_, u, ?_, huP⟩
     · rw [hPT, Ideal.span_le]
       intro g hg
       obtain ⟨b, hb⟩ := hT g hg
@@ -77,7 +77,7 @@ theorem card_add_two_le [CharZero E] (ψ : MRing ι →+* E) (j : ∀ k, ι k) (
             simp [ρ, cS, h1]
           · simp [ρ, cS, h1, h2]
       · simp [ρ]
-    refine SetLike.lt_iff_le_and_exists.mpr ⟨fun g hg => ?_, X ⟨k, j k⟩, ?_, ?_⟩
+    refine IsConcreteLE.lt_iff_le_and_exists.mpr ⟨fun g hg => ?_, X ⟨k, j k⟩, ?_, ?_⟩
     · rw [hmem] at hg ⊢
       have := congrArg (fun f => f g) e
       simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe] at this
@@ -85,7 +85,7 @@ theorem card_add_two_le [CharZero E] (ψ : MRing ι →+* E) (j : ∀ k, ι k) (
     · rw [hmem, specMap_X]
       simp [cS]
     · rw [hmem, specMap_X, hj, map_one, mul_one]
-      simp only [cS, if_neg hk]
+      simp only [cS, ite_eq_right hk]
       exact MvPolynomial.X_ne_zero k
 
   let Qt : Ideal (MRing ι) := RingHom.ker ((Int.castRingHom (ZMod 2)).comp MvPolynomial.constantCoeff)
@@ -99,7 +99,7 @@ theorem card_add_two_le [CharZero E] (ψ : MRing ι →+* E) (j : ∀ k, ι k) (
   have hc2 : MvPolynomial.constantCoeff (2 : MRing ι) = 2 := by
     rw [show (2 : MRing ι) = MvPolynomial.C 2 from (map_ofNat MvPolynomial.C 2).symm, constantCoeff_C]
   have hlast : Q Finset.univ < Qt := by
-    refine SetLike.lt_iff_le_and_exists.mpr ⟨fun g hg => ?_, 2, ?_, ?_⟩
+    refine IsConcreteLE.lt_iff_le_and_exists.mpr ⟨fun g hg => ?_, 2, ?_, ?_⟩
     · rw [hmem, huniv, MvPolynomial.C_eq_zero, Int.cast_eq_zero] at hg
       simp [Qt, RingHom.mem_ker, hg]
     · rw [RingHom.mem_ker, RingHom.comp_apply, hc2, map_ofNat]
@@ -208,7 +208,7 @@ theorem RegularityFunctionFieldNumber.proof : RegularityFunctionFieldNumber.Stat
     | C n =>
       rw [eval₂Hom_C, eq_intCast]
       exact intCast_mem D n
-    | add f g hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
+    | add f g hf hg => rw [map_add]; exact add_mem hf hg
     | mul_X f p hf =>
       rw [map_mul]
       refine mul_mem hf ?_

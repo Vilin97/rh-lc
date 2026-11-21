@@ -60,7 +60,7 @@ theorem aeval_mem (F : IntermediateField ℚ Ω) (w : (Σ k, ι k) → Ω) (hw :
     aeval w f ∈ F := by
   induction f using MvPolynomial.induction_on with
   | C a => rw [aeval_C, algebraMap_int_eq, eq_intCast]; exact intCast_mem F a
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | mul_X p q hp => rw [map_mul, aeval_X]; exact mul_mem hp (hw q)
 
 
@@ -159,12 +159,12 @@ theorem BlockImageArith.proof : BlockImageArith.Statement := by
       rintro ⟨k', i'⟩
       by_cases h : k' = k₀
       · subst h
-        simp only [w, if_true]
+        simp only [w, ite_true]
         exact hyF i'
-      · simp only [w, h, if_false]
+      · simp only [w, h, ite_false]
         exact zero_mem _
     have hw : ∀ i, w ⟨k₀, i⟩ * x j₀ = y ⟨k₀, i⟩ := fun i ↦ by
-      simp only [w, if_true]
+      simp only [w, ite_true]
       exact div_mul_cancel₀ _ hj₀
     obtain ⟨n, g', h', hg', hh', hh0, heq⟩ := hbir _ (X ⟨k, i⟩) (X ⟨k, c k⟩)
       (isMultiHomog_X_single ⟨k, i⟩) (isMultiHomog_X_single ⟨k, c k⟩)

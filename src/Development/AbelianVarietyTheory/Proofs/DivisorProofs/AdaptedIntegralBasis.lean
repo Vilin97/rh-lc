@@ -41,9 +41,14 @@ lemma exists_primitive {n : ℕ} (u : Fin n → LaurentSeries F) (hu : u ≠ 0) 
 lemma exists_indep {n : ℕ} : ∀ (d : ℕ) (U : Submodule (LaurentSeries F) (Fin n → LaurentSeries F)),
     d ≤ Module.finrank (LaurentSeries F) U →
     ∃ y : Fin d → (Fin n → PowerSeries F), (∀ b, lift (y b) ∈ U) ∧
-      LinearIndependent F (fun b => red (y b))
-  | 0, U, _ => ⟨Fin.elim0, fun b => b.elim0, linearIndependent_empty_type⟩
-  | d+1, U, hd => by
+      LinearIndependent F (fun b => red (y b)) := by
+  intro d
+  induction d with
+  | zero =>
+    intro U _
+    exact ⟨Fin.elim0, fun b => b.elim0, linearIndependent_empty_type⟩
+  | succ d ih =>
+    intro U hd
     have hU : U ≠ ⊥ := by
       intro h
       rw [h, finrank_bot] at hd
@@ -61,7 +66,7 @@ lemma exists_indep {n : ℕ} : ∀ (d : ℕ) (U : Submodule (LaurentSeries F) (F
           Module.finrank (LaurentSeries F) (LinearMap.ker f) :=
         (Submodule.equivMapOfInjective _ U.injective_subtype _).finrank_eq.symm
       omega
-    obtain ⟨y, hyU, hyi⟩ := exists_indep d U' hU'
+    obtain ⟨y, hyU, hyi⟩ := ih U' hU'
     refine ⟨Fin.cons y0 y, ?_, ?_⟩
     · intro b
       refine Fin.cases ?_ (fun b => ?_) b
@@ -94,14 +99,15 @@ lemma exists_indep {n : ℕ} : ∀ (d : ℕ) (U : Submodule (LaurentSeries F) (F
 lemma greedy {n : ℕ} (V : ℕ → Submodule (LaurentSeries F) (Fin n → LaurentSeries F))
     (hV : ∀ j, j < n → j < Module.finrank (LaurentSeries F) (V j)) :
     ∀ m, m ≤ n → ∃ c : Fin m → (Fin n → PowerSeries F), (∀ j : Fin m, lift (c j) ∈ V j) ∧
-      LinearIndependent F (fun j => red (c j))
-  | 0, _ => ⟨Fin.elim0, fun j => j.elim0, linearIndependent_empty_type⟩
-  | m+1, hm => by
-    have hm' : m ≤ n := Nat.le_of_succ_le hm
-    obtain ⟨c, hcV, hci⟩ :
-        ∃ c : Fin m → Fin n → PowerSeries F, (∀ j : Fin m, lift (c j) ∈ V j) ∧
-          LinearIndependent F (fun j => red (c j)) :=
-      greedy V hV m hm'
+      LinearIndependent F (fun j => red (c j)) := by
+  intro m
+  induction m with
+  | zero =>
+    intro _
+    exact ⟨Fin.elim0, fun j => j.elim0, linearIndependent_empty_type⟩
+  | succ m ih =>
+    intro hm
+    obtain ⟨c, hcV, hci⟩ := ih (Nat.le_of_succ_le hm)
     obtain ⟨y, hyV, hyi⟩ := exists_indep (Module.finrank (LaurentSeries F) (V m)) (V m) le_rfl
     have : ∃ b, red (y b) ∉ Submodule.span F (Set.range fun j => red (c j)) := by
       by_contra h; push Not at h

@@ -11,7 +11,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.WittOnFalse
 open CategoryTheory Polynomial NumberField IsDedekindDomain AlgebraicGeometry
 open scoped TensorProduct
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory GlobalTheory.AV GlobalTheory.AV.AbVar GlobalTheory.HT
+open GlobalTheory GlobalTheory.AV GlobalTheory.AV.AbVar
 attribute [local instance] CategoryTheory.Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.EigSum

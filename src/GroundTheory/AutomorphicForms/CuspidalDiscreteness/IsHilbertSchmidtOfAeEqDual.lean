@@ -15,6 +15,11 @@ noncomputable section
 
 set_option linter.unusedSectionVars false
 
+private theorem eLpNorm_two_sq_of_aestronglyMeasurable {α E : Type*} [MeasurableSpace α]
+    [NormedAddCommGroup E] {μ : Measure α} {f : α → E} (hf : AEStronglyMeasurable f μ) :
+    eLpNorm f 2 μ ^ 2 = ∫⁻ x, ‖f x‖ₑ ^ 2 ∂μ := by
+  rw [eLpNorm_eq_eLpNorm' (by norm_num) (by simp) hf, ENNReal.toReal_ofNat, L2Kernel.eLpNorm_two_sq]
+
 section HilbertSchmidt
 
 variable {X : Type*} [MeasurableSpace X] {ν : Measure X} [IsFiniteMeasure ν]
@@ -42,7 +47,7 @@ theorem isHilbertSchmidt_of_ae_eq_dual (T : H →L[ℂ] Lp ℂ 2 ν) (e : X → 
   calc hsNormSq T = ∑' i, ‖T (b i)‖ₑ ^ 2 := rfl
     _ = ∑' i, ∫⁻ x, ‖e x (b i)‖ₑ ^ 2 ∂ν := by
         congr 1; ext i
-        rw [Lp.enorm_def, L2Kernel.eLpNorm_two_sq]
+        rw [Lp.eNorm_def, eLpNorm_two_sq_of_aestronglyMeasurable (Lp.aestronglyMeasurable (T (b i)))]
         exact lintegral_congr_ae ((hT (b i)).mono fun x hx => by simp only [hx])
     _ ≤ ∫⁻ x, ∑' i, ‖e x (b i)‖ₑ ^ 2 ∂ν := by
         rw [ENNReal.tsum_eq_iSup_sum]
@@ -142,7 +147,7 @@ theorem stronglyMeasurable_lift (φ : Lp ℂ 2 (quotientMeasure Γ μ)) :
 theorem lintegral_lift_sq_le (φ : Lp ℂ 2 (quotientMeasure Γ μ)) {E : Set G} (hE : MeasurableSet E)
     {N : ℕ} (hN : ∀ g : G, {γ : Γ | γ • g ∈ E}.encard ≤ N) :
     ∫⁻ g in E, ‖φ (mk Γ g)‖ₑ ^ 2 ∂μ ≤ N * ‖φ‖ₑ ^ 2 := by
-  rw [Lp.enorm_def, L2Kernel.eLpNorm_two_sq]
+  rw [Lp.eNorm_def, eLpNorm_two_sq_of_aestronglyMeasurable (Lp.aestronglyMeasurable φ)]
   exact lintegral_indicator_le Γ μ hE hN
     ((Lp.stronglyMeasurable φ).measurable.enorm.pow_const 2)
 
@@ -158,7 +163,7 @@ theorem integrableOn_lift (φ : Lp ℂ 2 (quotientMeasure Γ μ)) {C : Set G} (h
     IntegrableOn (fun g => φ (mk Γ g)) C μ := by
   have hm : MemLp (fun g => φ (mk Γ g)) 2 (μ.restrict C) := by
     refine L2Kernel.lt_top_of_sq_lt_top ?_
-    rw [L2Kernel.eLpNorm_two_sq]
+    rw [eLpNorm_two_sq_of_aestronglyMeasurable (stronglyMeasurable_lift Γ μ φ).aestronglyMeasurable]
     exact lintegral_lift_sq_lt_top Γ μ φ hC
   have : IsFiniteMeasure (μ.restrict C) := ⟨by rw [Measure.restrict_apply_univ]; exact hC.measure_lt_top⟩
   exact hm.integrable one_le_two
@@ -249,9 +254,9 @@ theorem exists_norm_rconv_le (f : CompactlySupportedContinuousMap G ℂ) (x : G)
     f.hasCompactSupport.isCompact.image (continuous_const_mul x)
   obtain ⟨N, hN⟩ := exists_encard_le_of_isCompact Γ hC
   have hf2 : ∫⁻ y, ‖f y‖ₑ ^ 2 ∂μ ≠ ⊤ := by
-    have := (f.continuous.memLp_of_hasCompactSupport (μ := μ) (p := 2) f.hasCompactSupport)
-    rw [← L2Kernel.eLpNorm_two_sq]
-    exact (ENNReal.pow_lt_top this).ne
+    have hf : MemLp (⇑f) 2 μ := f.continuous.memLp_of_hasCompactSupport f.hasCompactSupport
+    simpa only [ENNReal.toReal_ofNat, ENNReal.rpow_two] using
+      (lintegral_rpow_eNorm_lt_top_of_eLpNorm_lt_top (by norm_num) (by simp) hf.eLpNorm_lt_top).ne
   refine ⟨√((∫⁻ y, ‖f y‖ₑ ^ 2 ∂μ) * N).toReal, fun φ => ?_⟩
   refine norm_le_of_enorm_sq_le (ENNReal.mul_ne_top hf2 (by simp)) ?_
   rw [mul_assoc]

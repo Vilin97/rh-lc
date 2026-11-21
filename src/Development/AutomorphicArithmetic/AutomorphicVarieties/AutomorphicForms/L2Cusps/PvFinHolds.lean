@@ -34,7 +34,7 @@ private theorem UpperTheory.V.KernelIndexFullLattice.pvFin_abs {G E M : Type} [G
   let f : ρ.kSpan C v →ₗ[ℂ] M := (LinearEquiv.ofInjective j hj).symm.toLinearMap ∘ₗ
     LinearMap.codRestrict (LinearMap.range j) _ hr
   have hf : ∀ x, j (f x) = P x := fun x =>
-    LinearEquiv.ofInjective_symm_apply j (h := hj) ⟨_, hr x⟩
+    congrArg Subtype.val ((LinearEquiv.ofInjective j hj).apply_symm_apply ⟨_, hr x⟩)
   refine ⟨f ⟨v, ρ.mem_kSpan_self C v⟩, hN' f (fun k x => hj ?_) (fun x => ?_) _, hf _⟩
   · rw [hjσ, hf, hf, ← hP]
     rfl
@@ -57,8 +57,10 @@ theorem UpperTheory.V.KernelIndexFullLattice.pvFin_holds :
     induction hx using Submodule.span_induction with
     | mem x hx =>
       obtain ⟨k, rfl⟩ := hx
+      simp only [archRepT_apply]
       have hcomm : retractOne (finEmb K n u) * archP K n k = archP K n k * retractOne (finEmb K n u) := by
-        rw [← retract_infEmb, ← retractOne_mul, ← retractOne_mul, infEmb_mul_finEmb_comm]
+        rw [← retract_infEmb (k : archGroup K n), ← retractOne_mul, ← retractOne_mul,
+          infEmb_mul_finEmb_comm (k : archGroup K n) u]
       have h1 := (cuspRepT μ₁).map_mul_apply (retractOne (finEmb K n u)) (archP K n k) v
       have h2 := (cuspRepT μ₁).map_mul_apply (archP K n k) (retractOne (finEmb K n u)) v
       rw [hv u hu, ← hcomm, h1] at h2

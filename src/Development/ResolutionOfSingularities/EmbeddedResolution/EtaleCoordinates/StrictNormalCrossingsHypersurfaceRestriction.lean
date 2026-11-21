@@ -644,7 +644,7 @@ theorem hasLocalCoordsOnSmoothHypersurface_of_comap (p : P ⟶ Spec (CommRingCat
       ∀ b : Fin m, w (ULift.up ((ρ b : Fin n))) = wb b := by
     refine ⟨fun t => if h : t.down = j₀ then (c.restrict hU'U).coord j₀
       else wb (ρ.symm ⟨t.down, h⟩), ?_, ?_⟩
-    · exact dif_pos rfl
+    · exact dite_eq_left rfl
     · intro b
       have hne : ((ρ b : Fin n)) ≠ j₀ := (ρ b).2
       show (if h : ((ρ b : Fin n)) = j₀ then (c.restrict hU'U).coord j₀
@@ -752,7 +752,7 @@ theorem hasLocalCoordsOnSmoothHypersurface_of_comap (p : P ⟶ Spec (CommRingCat
       else ULift.up.{u} ((ρ (t.pred h) : Fin n)), ?_, ?_⟩
     · show (if h : (0 : Fin (m + 1)) = 0 then ULift.up.{u} j₀
         else ULift.up.{u} ((ρ ((0 : Fin (m + 1)).pred h) : Fin n))) = ULift.up j₀
-      exact dif_pos rfl
+      exact dite_eq_left rfl
     · intro b
       show (if h : b.succ = 0 then ULift.up.{u} j₀
         else ULift.up.{u} ((ρ (b.succ.pred h) : Fin n))) = ULift.up ((ρ b : Fin n))

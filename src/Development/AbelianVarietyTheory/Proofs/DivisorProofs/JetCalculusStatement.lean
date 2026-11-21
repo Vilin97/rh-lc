@@ -13,7 +13,7 @@ public import Development.AbelianVarietyTheory.Definitions.ThetaValues.MemAnalyt
 
 set_option autoImplicit false
 noncomputable section
-open GlobalTheory.LatVal GlobalTheory.LatJet GlobalTheory.LatJet.An
+open GlobalTheory.LatVal GlobalTheory.LatJet
 open GlobalTheory.IndefiniteRowSideFullHecke.DefiningCoordinates (iterD partialD)
 open scoped Classical
 

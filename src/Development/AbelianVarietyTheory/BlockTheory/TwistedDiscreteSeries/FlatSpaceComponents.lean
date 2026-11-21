@@ -153,7 +153,7 @@ def capX (L : Submodule (𝓞 D.host.E) Y.V) : Lat X :=
   Formalism.L2.Herm.crdLat X (L.comap (ι.restrictScalars (𝓞 D.host.E)))
 
 def IsBasePair (u : D.what₂.Word) (π : 𝓞 D.host.E) (L₀ : Lat X) (f₀ : Pl D.host.E → Fin X.rank → EAf D) : Prop :=
-  Submodule.IsLattice D.host.E L₀ ∧
+  Submodule.IsFullLattice D.host.E L₀ ∧
   (∀ (w : Pl D.host.E) (e : EAf D), IsPlIdem w e → (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) ∉ w.asIdeal →
     ∀ y, InCmp e L₀ y ↔ InCmp e (Formalism.L2.Herm.dualL D.sp.cm X L₀) y) ∧
   ∀ (w : Pl D.host.E) (e : EAf D), IsPlIdem w e → π ∈ w.asIdeal →

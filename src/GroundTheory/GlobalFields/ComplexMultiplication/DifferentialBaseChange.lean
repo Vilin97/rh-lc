@@ -60,7 +60,7 @@ theorem transcendental_bcEmb {z : E.toAffine.FunctionField} (hz : Transcendental
     | algebraMap x =>
       rw [ι.commutes, IsScalarTower.algebraMap_apply F F' K']
       exact A.algebraMap_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let g : F⟮z⟯ →+* A :=

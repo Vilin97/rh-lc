@@ -41,9 +41,12 @@ theorem exists_intOver_start (v : J → R) :
 theorem algebraicIndependent_of_minimal [Infinite k] (hinj : Function.Injective (algebraMap k R))
     (v : J → R) : ∀ (r : ℕ) (L : Fin r → J → k), (∀ t, IntOver k (forms v L) (v t)) →
       (∀ r' < r, ∀ L' : Fin r' → J → k, ¬ ∀ t, IntOver k (forms v L') (v t)) →
-      AlgebraicIndependent k (forms v L)
-  | 0, _, _, _ => algebraicIndependent_empty_type_iff.mpr hinj
-  | r + 1, L, hL, hmin => by
+      AlgebraicIndependent k (forms v L) := by
+  intro r
+  cases r with
+  | zero => exact fun _ _ _ => algebraicIndependent_empty_type_iff.mpr hinj
+  | succ r =>
+    intro L hL hmin
     apply algebraicIndependent_iff.mpr
     intro F hF
     by_contra hF0

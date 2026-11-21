@@ -188,8 +188,9 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
       change locS P.primeCompl (gmap g (loc (K := K) P A)) = _
       rw [e]
       exact genusCovol_locS_locS hle B
-    obtain ⟨a1, a2, -, -, a5⟩ := isomAct (𝓞 K) K V h g hg M
-    have b1 := (ld (gmap g M) (a5.2 hM.1).fg).1 P hP.isPrime
+    obtain ⟨a1, a2, -, -, -⟩ := isomAct (𝓞 K) K V h g hg M
+    have hgM : (gmap g M).FG := hM.1.fg.map ((g : V →ₗ[K] V).restrictScalars (𝓞 K))
+    have b1 := (ld (gmap g M) hgM).1 P hP.isPrime
     have b2 := (ld N hN.1.fg).1 P hP.isPrime
     refine ⟨_, g.injective, genusCovol_addData g _ _ (key _ _ hgL), genusCovol_addData g _ _ (key _ _ ?_)⟩
     rw [b2.1, ← b2.2, ← hgL, ← a2 P, b1.2, ← b1.1, a1, (isomAct (𝓞 K) K V h g hg (dual h M)).2.1 P]

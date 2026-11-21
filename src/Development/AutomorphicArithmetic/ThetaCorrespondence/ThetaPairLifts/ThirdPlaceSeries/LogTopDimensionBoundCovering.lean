@@ -50,7 +50,8 @@ noncomputable section
 namespace GlobalTheory.CovTop.DimLogTop
 theorem log_top_dimension_le_alt : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.CoversCondition fun Fm x _ ι p i Y PP _ => ∀ Z, Real.log (Module.finrank Y.d.c₂.F (cuspOn Y.U Z (wtOf (dat p i) ((⟨uW p i, cZero (Fm.D x ι) ((i : ℕ) + 1), (Fm.D x ι).R.k - 2, lenT p i PP⟩ : WtPar (dat p i)).wt (lenT p i PP)) 0)) : ℝ) ≤ PP := by
   intro hP hSz
-  obtain ⟨Cb, -, hB⟩ := _root_.UpperTheory.Lit.Tam.tamagawa_number_formula hP
+  have hBex := _root_.UpperTheory.Lit.Tam.tamagawa_number_formula hP
+  obtain ⟨Cb, -, hB⟩ := hBex
   have hG := _root_.GlobalTheory.CovTop.GoodDom.covering_regular_at_domain hP
   have hQ := _root_.GlobalTheory.QuoWt.weights_at_point_alt hSz
   have hS := _root_.GlobalTheory.CovTop.CovSz.size_rows_alt hSz

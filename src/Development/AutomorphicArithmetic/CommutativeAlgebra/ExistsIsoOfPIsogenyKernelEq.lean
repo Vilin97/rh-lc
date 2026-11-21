@@ -18,7 +18,6 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomolo
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Hecke GlobalTheory.UPel.HT.ES
-open UpperTheory.ES
 
 section SlopeTestRemainingChoices
 attribute [local instance] Over.cartesianMonoidalCategory
@@ -42,7 +41,8 @@ private theorem eq_one_of_geom {Z B : Over S} [GrpObj B] [IsCommMonObj B] (hB : 
   have hg' : g' ≫ torsion.ι B n = g := pullback.lift_fst _ _ _
   let e : Z ⟶ torsion B n := toUnit Z ≫ GlobalTheory.HTTorsRep.torsEta n
   have he : e ≫ torsion.ι B n = 1 := by
-    simp only [e, Category.assoc, GlobalTheory.HTTorsRep.torsEta_ι]
+    have hEta : GlobalTheory.HTTorsRep.torsEta n ≫ torsion.ι B n = η[B] := pullback.lift_fst _ _ _
+    simp only [e, Category.assoc, hEta]
     rfl
   have hrange : Set.range (𝟙 Z.left) ⊆ Set.range (GlobalTheory.FinEt.agreeι g' e) := by
     have := GlobalTheory.LevCover.range_subset_of_geom (𝟙 Z) (Set.range (GlobalTheory.FinEt.agreeι g' e))

@@ -119,7 +119,7 @@ def MassConst (K F : Type) [Field K] [NumberField K] [StarRing K] [Field F] [Num
     [Algebra F K] (m : ℕ) (c : ℝ) : Prop :=
   ∀ (V : Type) [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (𝓞 K) V),
-    h.IsSymm → IsTotPosDef h → finrank K V = m → Submodule.IsLattice K L →
+    h.IsSymm → IsTotPosDef h → finrank K V = m → Submodule.IsFullLattice K L →
     Formalism.HermitianLatticesTheory.IsIntegralLat h L → Formalism.HermitianLatticesTheory.mass h L = c * lamG F h L
 
 def LIStat : Prop :=
@@ -141,8 +141,8 @@ def LocalDensityRatio : Prop :=
     ∀ (V : Type) [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V]
       [IsScalarTower (𝓞 K) K V] (h : V →ₗ⋆[K] V →ₗ[K] K) (A₀ B₀ : Submodule (𝓞 K) V)
       (𝔭 : Ideal (𝓞 F)),
-      h.IsSymm → IsTotPosDef h → 𝔭.IsMaximal → Submodule.IsLattice K A₀ →
-      Submodule.IsLattice K B₀ → Formalism.HermitianLatticesTheory.IsIntegralLat h A₀ → Formalism.HermitianLatticesTheory.IsIntegralLat h B₀ →
+      h.IsSymm → IsTotPosDef h → 𝔭.IsMaximal → Submodule.IsFullLattice K A₀ →
+      Submodule.IsFullLattice K B₀ → Formalism.HermitianLatticesTheory.IsIntegralLat h A₀ → Formalism.HermitianLatticesTheory.IsIntegralLat h B₀ →
       alphaL h (locF 𝔭 A₀) 𝔭 * (Ideal.absNorm 𝔭 : ℝ) ^ (finrank K V * vd h (locF 𝔭 B₀) 𝔭) *
           orbCount h (locF 𝔭 B₀) (locF 𝔭 A₀) =
         alphaL h (locF 𝔭 B₀) 𝔭 * (Ideal.absNorm 𝔭 : ℝ) ^ (finrank K V * vd h (locF 𝔭 A₀) 𝔭) *

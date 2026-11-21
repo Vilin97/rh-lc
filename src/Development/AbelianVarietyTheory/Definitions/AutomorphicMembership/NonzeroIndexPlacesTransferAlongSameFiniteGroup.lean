@@ -42,7 +42,7 @@ def Dat.transfer (s : SameGrp a b) (z : Dat a.st I hX T Wt) : Dat b.st I hX T Wt
     (alg_eq := (by with_unfolding_all exact (z.alg_eq :)))
     (R := (by with_unfolding_all exact ((real3 (a := a) b z.R) :)))
     (cG := (by with_unfolding_all exact ((z.cG.trans s.iso) :)))
-    (geo := (by with_unfolding_all exact ((geoHalf (a := a) b z.geo) :)))
+    (geo := (by with_unfolding_all exact ((Tr.geoHalf (a := a) b z.geo) :)))
     (pins := (by with_unfolding_all exact ((pins_tr (a := a) b s z.pins) :)))
     (lev := (by with_unfolding_all exact ((z.lev.transfer b) :)))
     (idG := (by with_unfolding_all exact (z.idG :)))

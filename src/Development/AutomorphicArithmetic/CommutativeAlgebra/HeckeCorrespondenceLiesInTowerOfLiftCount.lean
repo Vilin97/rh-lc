@@ -25,7 +25,7 @@ attribute [local instance] Ideal.Quotient.field
 private theorem pow_pr {X Y : Scheme.{0}} {A : Over X} {B : Over Y} (f : X ⟶ Y) (φ : A.left ⟶ B.left)
     (u : φ ≫ B.hom = A.hom ≫ f) (k : ℕ) (i : Fin k) :
     GlobalTheory.KS.powMap f φ u k ≫ (GlobalTheory.KS.pr B i).left = (GlobalTheory.KS.pr A i).left ≫ φ := by
-  have h := congrArg CommaMorphism.left (Pi.lift_π (fun i : Fin k => (Over.homMk ((GlobalTheory.KS.pr A i).left ≫ φ) (by
+  have h := congrArg CommaMorphism.left (Pi.lift_comp_π (fun i : Fin k => (Over.homMk ((GlobalTheory.KS.pr A i).left ≫ φ) (by
     rw [Category.assoc, u, ← Category.assoc, Over.w]; rfl) : Over.mk ((GlobalTheory.KS.pow A k).hom ≫ f) ⟶ B)) i)
   exact h
 

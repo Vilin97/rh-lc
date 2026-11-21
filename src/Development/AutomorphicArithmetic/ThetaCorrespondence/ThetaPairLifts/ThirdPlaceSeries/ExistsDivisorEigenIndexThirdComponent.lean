@@ -35,7 +35,7 @@ theorem exists_divisor_eigen_index_third_component_alt : ∀ hL : _root_.UpperTh
   intro hL _ _
   refine StepW.of_all ?_
   intro K B f T w _ _ _ P x l big L _ _ m _ _ s r _
-  letI : Algebra (↥m.z.core.Q.c.F) (w.st (GlobalTheory.HeightCounting.Fin3.oL x L).Z).toD7.what₂.LL := m.z.alg
+  let : Algebra (↥m.z.core.Q.c.F) (w.st (GlobalTheory.HeightCounting.Fin3.oL x L).Z).toD7.what₂.LL := m.z.alg
   have hX : Nonempty (DivX (GlobalTheory.HeightCounting.Fin3.DL x L)) := nonempty_divX (Y := r.Y) r.Z m.z.pins m.intersectionNumber_baseChange
   rw [GlobalTheory.HeightCounting.Fin3.DL_eq] at hX
   obtain ⟨Xd⟩ := hX
@@ -44,12 +44,7 @@ theorem exists_divisor_eigen_index_third_component_alt : ∀ hL : _root_.UpperTh
 end GlobalTheory.HeightCounting.Up.ThirdIdx
 end
 end
-section
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.L2 Formalism.L2.Host Formalism.IndefR.NX ReciprocityTheory.Aut Formalism.AUTREP NumberField IsDedekindDomain GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Mem.Top.GroupRetwisting GlobalTheory.Mem.Top.Bl GlobalTheory.Mem.R3 GlobalTheory.Mem.R3.Rw GlobalTheory.HeightCounting GlobalTheory.HeightCounting.Up
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-set_option maxHeartbeats 4000000
-set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.eigen_index_divisibility_of_cmDatum_alt : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → _root_.GlobalTheory.NRows.GeometricGaloisRepCompatibility → AllSt fun _ _ _ T w P x => ∀ (l : _root_.GlobalTheory.HeightCounting.Up.StrictHenselianAcyclicLevel hL x) (big : (Dof x).what₂.places.Pl → Finset ℂ) (L : LocAll (lay0 (Dof x))), _root_.GlobalTheory.CoefDuty.BuiltAlt l.a.A l.mt.M l.c.ch l.c.tp.tup big L → SumRepresentations.hypO (withLoc L) → ∀ (m : Moved (GlobalTheory.HeightCounting.Fin3.oL x L)), m.Copy → m.Coh → ∀ (s : Side0 (GlobalTheory.HeightCounting.Fin3.oL x L)) (r : ReadPk m s), r.Pin → ∃ (Xd : DivX (withLoc L)) (E : EigIdx (withLoc L) Xd), Nonempty (E.Pi → (famR (w.st (GlobalTheory.HeightCounting.Fin3.oL x L).Z) w.I P.hX (usedOf w.I T P.Wt) m.z.Xg m.z.tr).A.fam.base.Ix) := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.ThirdIdx.exists_divisor_eigen_index_third_component_alt | exact _root_.GlobalTheory.HeightCounting.Up.ThirdIdx.exists_divisor_eigen_index_third_component_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.ThirdIdx.exists_divisor_eigen_index_third_component_alt <;> assumption)
-end
-end
+
+theorem GlobalTheory.T.eigen_index_divisibility_of_cmDatum_alt :
+    type_of% @GlobalTheory.HeightCounting.Up.ThirdIdx.exists_divisor_eigen_index_third_component_alt :=
+  @GlobalTheory.HeightCounting.Up.ThirdIdx.exists_divisor_eigen_index_third_component_alt

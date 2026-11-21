@@ -73,7 +73,7 @@ theorem f_sum {d : Deco E n ST SG} (hd : d.Ok) (P : ST) {ι : Type} (s : Finset 
 theorem exists_lift {d : Deco E n ST SG} (hd : d.Ok) (P : ST) :
     ∃ φ : Module.Dual E (Sp E n), ∀ v ∈ d.at P.1, P.1.valuation E (φ v) ≤ 1 ∧ (d.f P v = 0 ↔ P.1.valuation E (φ v) < 1) := by
   classical
-  obtain ⟨fr, hfr⟩ := exists_isFr P.1 hd.lat
+  obtain ⟨fr, hfr⟩ := exists_isFr P.1 ⟨hd.lat, hd.uni⟩
   have hb : ∀ i : Fin n, fr (Pi.single i 1) ∈ d.at P.1 := fun i => (hfr _).2 (GlobalTheory.CharValCompare.single_mem_stdAt P.1 i)
   choose c hc using fun i : Fin n => Ideal.Quotient.mk_surjective (d.f P (fr (Pi.single i 1)))
   refine ⟨(∑ i, algebraMap (𝓞 E) E (c i) • (LinearMap.proj i : Sp E n →ₗ[E] E)) ∘ₗ fr.symm.toLinearMap, fun v hv => ?_⟩
@@ -141,7 +141,7 @@ theorem idxExp_dnN {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (hne : conjPrime₂
       omega
   have hint : ∀ v, P.1.valuation E (φ v) ≤ 1 → ((π - 1) / φ e * φ v) • e ∈ d.at P.1 := fun v hv =>
     intAt_smul_mem (intAt_iff.2 (by rw [map_mul]; exact mul_le_one' hc hv)) he'
-  obtain ⟨fr, hfr⟩ := exists_isFr P.1 hd.lat
+  obtain ⟨fr, hfr⟩ := exists_isFr P.1 ⟨hd.lat, hd.uni⟩
   let g' := g.equivOfDetNeZero (hdet ▸ hπ0)
   have hg' : ∀ v, g' v = g v := fun v => rfl
   have hfr' : IsFr P.1 (d.dnN P) (g' * fr) := fun x => by

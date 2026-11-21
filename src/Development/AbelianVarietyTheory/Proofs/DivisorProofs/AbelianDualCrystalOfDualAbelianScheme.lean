@@ -9,7 +9,7 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.Abe
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.AbelianUnobstructed
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.GrothendieckDeformation
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.CanonicalOfAbelianDeRham
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbelianDualCrystalOfHyp
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.BijectiveCechDeRhamComparisonDegreeOne
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CrystallineSmoothLiftOfRelations
 
 @[expose] public section
@@ -18,6 +18,6 @@ namespace GlobalTheory
 
 theorem abelianDualCrystal_of_dualAbelianScheme :
     GlobalTheory.Published.DualAbelianScheme → GlobalTheory.Published.AbelianDualCrystal :=
-  fun h => GlobalTheory.abelianDualCrystal_of_dual_of_smoothLift h GlobalTheory.SmoothLift.crystallineSmoothLift_of_relations
+  fun h ↦ ⟨h, GlobalTheory.SmoothLift.crystallineSmoothLift_of_relations.toCrystallineDeRham⟩
 
 end GlobalTheory

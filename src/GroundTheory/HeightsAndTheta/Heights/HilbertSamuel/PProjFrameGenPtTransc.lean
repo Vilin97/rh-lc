@@ -59,7 +59,7 @@ theorem proof : ProjFrameGenPtTransc.Statement := by
     intro m
     by_cases hm : m ∈ q.support
     · have h1 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single () m)) hFΓ
-      rw [coeff_sum, coeff_zero, Finset.sum_eq_single m] at h1
+      rw [coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, Finset.sum_eq_single m] at h1
       · rw [coeff_C_mul, coeff_X_pow, if_pos rfl, mul_one] at h1
         have h2 := (mul_eq_zero.1 h1).resolve_right (pow_ne_zero _ hX)
         rw [Ideal.Quotient.eq_zero_iff_mem] at h2
@@ -73,7 +73,9 @@ theorem proof : ProjFrameGenPtTransc.Statement := by
       · intro h
         exact absurd hm h
     · exact Polynomial.notMem_support_iff.1 hm
-  exact Polynomial.ext fun m => by rw [hcoef m, Polynomial.coeff_zero]
+  apply AddMonoidAlgebra.ext
+  ext m
+  simpa using congrArg Subtype.val (hcoef m)
 
 end ProjFrameGenPtTransc
 

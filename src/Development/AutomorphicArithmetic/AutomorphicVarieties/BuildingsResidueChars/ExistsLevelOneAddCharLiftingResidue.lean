@@ -65,7 +65,7 @@ theorem UpperTheory.exists_level_one_addChar_lifting_residue :
         show valuation k (-a) < 1
         rw [Valuation.map_neg]; exact ha }
   have hMo : IsOpen (M : Set k) := by
-    have h := IsValuativeTopology.isOpen_ball (R := k) (v := valuation k) 1
+    have h := Valuation.isOpen_ball (v := valuation k) 1
     convert h using 1
     ext x
     exact ((valuation k).restrict_lt_one_iff (x := x)).symm

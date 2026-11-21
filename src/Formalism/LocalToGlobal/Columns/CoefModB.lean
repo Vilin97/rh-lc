@@ -101,13 +101,13 @@ def PairBDualStd : Prop :=
 
 def PairBDualK : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι] (n : ℕ) (lam : ι → DomWeight n)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsLattice K (M τ)) → ∀ x : VV K lam,
+    (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsFullLattice K (M τ)) → ∀ x : VV K lam,
     (x ∈ delK lam (fun τ => dualFr (M τ)) ↔ ∀ y ∈ nabK lam M, pairBK lam x y ∈ (1 : Submodule (𝓞 K) K)) ∧
     (x ∈ nabK lam (fun τ => dualFr (M τ)) ↔ ∀ y ∈ delK lam M, pairBK lam x y ∈ (1 : Submodule (𝓞 K) K))
 
 def PairBDual : Prop :=
   ∀ (E K : Type) [Field E] [NumberField E] [Field K] [NumberField K] (ι : Type) [Fintype ι] (n : ℕ)
-    (emb : ι → E →+* K) (lam : ι → DomWeight n) (L : Submodule (𝓞 E) (Fin n → E)), Submodule.IsLattice E L →
+    (emb : ι → E →+* K) (lam : ι → DomWeight n) (L : Submodule (𝓞 E) (Fin n → E)), Submodule.IsFullLattice E L →
     ∀ x : VV K lam,
     (x ∈ delAtr emb lam L ↔ ∀ y ∈ nabAt emb lam L, pairBK lam x y ∈ (1 : Submodule (𝓞 K) K)) ∧
     (x ∈ nabAtr emb lam L ↔ ∀ y ∈ delAt emb lam L, pairBK lam x y ∈ (1 : Submodule (𝓞 K) K))

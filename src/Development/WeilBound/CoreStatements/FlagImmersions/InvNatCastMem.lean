@@ -70,7 +70,7 @@ theorem dual_mem {Ω V : Type} [Field Ω] [AddCommGroup V] [Module Ω V] {r : �
     obtain ⟨j, rfl⟩ := hx
     exact hφ j
   | zero => simp
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul a x _ hx =>
     rw [Subring.smul_def, map_smul, smul_eq_mul]
     exact mul_mem a.2 hx

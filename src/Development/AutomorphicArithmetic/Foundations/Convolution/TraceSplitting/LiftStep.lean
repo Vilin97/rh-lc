@@ -58,7 +58,9 @@ theorem UpperTheory.ConvolutionTheory.T.liftStep :
   intro hC F E _ _ _ _ _ _ _ _ σ hσ hp n hn hlow π
   let μF : Measure (normOneGL (K := F) (n := n)) := Measure.haar
   let μE : Measure (normOneGL (K := E) (n := n)) := Measure.haar
-  obtain ⟨χ, ⟨s, hχ⟩, V, hV⟩ := Dp.exTwist F n μF π hn
+  have htw : ∃ χ : HChar F, (∃ s : ℂ, IsPow χ s) ∧
+      ∃ V, Dp.Carries μF (π.twist χ) V := Dp.exTwist F n μF π hn
+  obtain ⟨χ, ⟨s, hχ⟩, V, hV⟩ := htw
   obtain ⟨hex, hpw⟩ := powTwist F E
   obtain ⟨χ', hχ'⟩ := (hex s).2
   obtain ⟨hi, hi', hrest⟩ := hpw s χ χ' hχ hχ'

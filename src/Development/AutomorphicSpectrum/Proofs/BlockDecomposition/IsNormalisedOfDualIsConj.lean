@@ -21,7 +21,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LieDerivativ
 noncomputable section
 
 open NumberField IsDedekindDomain Matrix GlobalTheory.CuspRep GlobalTheory.PRep Formalism.UG Formalism.BasicNotions GlobalTheory.UnitaryBC PositivityTheory.Rg.BcB PositivityTheory.Rg.BcB.F
-open PositivityTheory.Rg.BcB.Desc
 open GlobalTheory.DiscSpec
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField

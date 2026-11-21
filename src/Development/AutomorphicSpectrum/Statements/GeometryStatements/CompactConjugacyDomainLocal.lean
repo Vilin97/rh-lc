@@ -65,7 +65,7 @@ theorem exists_constants {Ω : Type} [Field Ω] {K : Type} [Fintype K] {J : K �
   have hle : ∀ g : MRing J, aeval y g ∈ IntermediateField.adjoin F (Set.range y) := fun g => by
     induction g using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul, aeval_X]; exact mul_mem hp (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)
   haveI : Algebra.EssFiniteType F Ω := by

@@ -26,7 +26,7 @@ theorem norm_entry_le {M : Matrix (Fin n) (Fin n) ℂ} (h : Formalism.REAL.hs M 
   have h1 := (norm_entry_sq_le_hs M i j).trans h
   have h0 : (0 : ℝ) ≤ n := Nat.cast_nonneg n
   by_contra hc
-  push_neg at hc
+  push Not at hc
   nlinarith
 
 theorem hs_le_quarter {M : Matrix (Fin n) (Fin n) ℂ}
@@ -60,8 +60,8 @@ theorem exists_net (n : ℕ) (ε : Fin n → Bool) :
       (x := (0 : (Fin n → Fin n → ℂ) × (Fin n → Fin n → ℂ))) (r := (n : ℝ) + 1)).subset ?_
     rintro _ ⟨A, hA, rfl⟩
     have hA' : IsGrad ε A := hA
-    have hm := hs_proj_le (Pm_conj hA') (Pm_idem hA')
-    have hp := hs_proj_le (Pp_conj hA') (Pp_idem hA')
+    have hm := UGeo.hs_proj_le (Pm_conj hA') (Pm_idem hA')
+    have hp := UGeo.hs_proj_le (Pp_conj hA') (Pp_idem hA')
     have hn : (0 : ℝ) ≤ (n : ℝ) + 1 := by positivity
     rw [mem_closedBall_zero_iff, Prod.norm_def]
     refine max_le ?_ ?_
@@ -76,7 +76,7 @@ theorem exists_net (n : ℕ) (ε : Fin n → Bool) :
     obtain ⟨A, hA, e⟩ := hts y.2
     exact ⟨A, hA, e⟩
   choose a ha hfa using hch
-  haveI : Fintype t := htf.fintype
+  let : Fintype t := htf.fintype
   let e := Fintype.equivFin t
   refine ⟨Fintype.card t, fun j => a (e.symm j), fun j => ha _, fun A' hA' => ?_⟩
   have hmem : f A' ∈ ⋃ y ∈ t, Metric.ball y (1 / (2 * ((n : ℝ) + 1))) := hcov ⟨A', hA', rfl⟩

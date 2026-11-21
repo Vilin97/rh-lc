@@ -61,12 +61,4 @@ abbrev KitClass (D : D7) : Type 1 :=
   ∀ (A : Amb D) (N j : ℕ) (S : Sig A N j) (κ : Lv A) (s : FinalTheorems S κ) (L : CmList A) (jC : JC D),
     KitT s L jC → (s.Comp → D.what₂.Tau → ℝ) → Prop
 
-variable {D : D7}
-
-namespace FamOver
-
-variable {Q : KitClass D} {T : Top D} {h : LawsP T} {c : ℕ} (Φ : FamOver Q T h c)
-
-end FamOver
-
 end GlobalTheory.ShFam

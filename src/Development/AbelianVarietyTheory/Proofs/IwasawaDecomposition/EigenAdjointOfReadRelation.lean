@@ -44,7 +44,8 @@ variable {hL : GlobalTheory.Published.LocalLanglandsGL} {K : Ctx} {B : Base} {f 
   {x : St P} (L : LocAll (lay0 (Dof x)))
 
 theorem eigVec_loc {i k Q Rr c v} (h : EigVec x.m.z.R i k Q Rr c v) :
-    EigVec (datL x L).R ((i)) k ((Q)) ((Rr)) ((c)) ((v)) := (h)
+    EigVec (datL x L).R i k Q Rr c v := by
+  with_unfolding_all exact h
 
 end GlobalTheory.HeightCounting.Fin3
 

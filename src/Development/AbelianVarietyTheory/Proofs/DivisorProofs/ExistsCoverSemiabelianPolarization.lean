@@ -359,7 +359,7 @@ private theorem IsActPull.cancel_pullback {O : Type} [CommRing O] {S S₁ S₂ :
     (pullback.lift_snd _ _ _)) fun a => ?_
   rw [pullback.lift_fst, pullback.lift_fst_assoc, h.2]
 
-private theorem main : GlobalTheory.CovTop.Hypotheses2 → GlobalTheory.CovHt.HypothesesH → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E)
+private theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E)
   (q : ℕ) [Fact q.Prime] (k : Type) [Field k] [IsAlgClosed k] [CharP k q] (C : Scheme.{0}) [Algebra k Γ(C, ⊤)] [IsIntegral C],
   IsSmoothProjCurve k C → ∀ (G : Over C) [GrpObj G] [IsSemiAbelian G] (i : OAct (𝓞 E) G), PolGen (H.bar : 𝓞 E →+* 𝓞 E) i →
   ∃ (C₁ : Scheme.{0}) (_ : Algebra k Γ(C₁, ⊤)) (_ : IsIntegral C₁) (π : C₁ ⟶ C), IsSmoothProjCurve k C₁ ∧ IsCover k π ∧
@@ -367,7 +367,7 @@ private theorem main : GlobalTheory.CovTop.Hypotheses2 → GlobalTheory.CovHt.Hy
     ∃ (G' : Over C₁) (_ : GrpObj G') (_ : IsSemiAbelian G') (i' : OAct (𝓞 E) G') (ρ : G₁ ⟶ G') (_ : IsMonHom ρ),
       (∀ a, i₁.act a ≫ ρ = ρ ≫ i'.act a) ∧ Epi (lieMap ρ) ∧
       (∃ r : ℕ, Nonempty (kernel (lieMap ρ) ≅ GlobalTheory.QCoh.freeModule C₁ (Fin r))) ∧ AbGen (H.bar : 𝓞 E →+* 𝓞 E) i' := by
-  intro _ _ E _ _ _ H q _ k _ _ _ C _ _ hC G _ hG i hPol
+  intro E _ _ _ H q _ k _ _ _ C _ _ hC G _ hG i hPol
   have := hG.comm
   have hCv := isCurve_of_isSmoothProjCurve hC
   have := hC.isIntegral

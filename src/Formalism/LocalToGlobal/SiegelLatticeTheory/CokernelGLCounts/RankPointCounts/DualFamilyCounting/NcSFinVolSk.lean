@@ -18,7 +18,7 @@ def KfOrb : Prop :=
     (σ : E →ₐ[F] E) (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (a : ℕ) (X0 : Fin a → Fin n → E)
     (Λ : Set (Fin n → E)),
     IsCMExt F E σ → IsHermND σ J →
-    (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
+    (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
     MeasurableSet {x : Fin a → Fin n → Af F ⊗[F] E | ∃ k ∈ Kf σ J Λ, x = k • ratTup (Af F) X0} ∧
     ∀ x : Fin a → Fin n → Af F ⊗[F] E, (∃ k ∈ Kf σ J Λ, x = k • ratTup (Af F) X0) ↔
       ∀ v : HeightOneSpectrum (𝓞 F),
@@ -29,7 +29,7 @@ def LocSB : Prop :=
     (σ : E →ₐ[F] E) (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (a : ℕ) (X0 : Fin a → Fin n → E)
     (Λ : Set (Fin n → E)),
     IsCMExt F E σ → IsHermND σ J → (gramE σ J X0).det ≠ 0 →
-    (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
+    (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
     ∃ (d : ℕ) (b : Module.Basis (Fin d) F E)
       (C : ∀ v : HeightOneSpectrum (𝓞 F), Set (Fin a → Fin n → Fv F v ⊗[F] E)),
       (∀ v, IsSB ((C v).indicator (1 : (Fin a → Fin n → Fv F v ⊗[F] E) → ℂ))) ∧

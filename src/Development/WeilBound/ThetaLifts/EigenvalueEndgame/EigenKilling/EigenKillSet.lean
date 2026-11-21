@@ -151,9 +151,11 @@ theorem form_swap (hσ : ∀ x, σ (σ x) = x) {J : Matrix (Fin n) (Fin n) E} (�
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
-theorem plane_span {H : Plane E n n₁} {i₀ i₁ : ℕ} (h : H.IsAdapted σ B X X₁ i₀ i₁) (hL : X.L.IsLattice E) (z : Fin n → E) :
+theorem plane_span {H : Plane E n n₁} {i₀ i₁ : ℕ} (h : H.IsAdapted σ B X X₁ i₀ i₁) (hL : X.L.IsFullLattice E) (z : Fin n → E) :
     ∃ (s t : E) (u : Fin n₁ → E), z = s • H.x + H.ι *ᵥ u + t • H.y := by
-  have hz : z ∈ Submodule.span E (X.L : Set (Fin n → E)) := by rw [hL.span_eq_top]; trivial
+  have hz : z ∈ Submodule.span E (X.L : Set (Fin n → E)) := by
+    letI := hL
+    rw [Submodule.IsFullLattice.span_eq_top]; trivial
   induction hz using Submodule.span_induction with
   | mem z hz =>
     obtain ⟨s, t, u, -, -, -, e⟩ := h.split z hz

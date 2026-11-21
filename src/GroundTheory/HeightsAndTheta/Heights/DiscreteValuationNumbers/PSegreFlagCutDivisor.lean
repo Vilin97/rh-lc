@@ -104,7 +104,7 @@ theorem SegreFlagCutDivisor.proof (hSpec : SegreFlagCutSpecialize.Statement)
       rintro ⟨hkpos, rfl⟩
       exact hWc ⟨hQp, (hModel O ϖ hϖ Ω K ι y d hV N E B B' hB w w' x x' f g hfl M M' a₀ a₀' φ φ' hφ hφ'
         Φ e t ht k hkpos hk.le).1.multiProj.relevant, hPQ⟩
-    rw [if_neg hWQ]
+    rw [ite_eq_right hWQ]
     simp [ratDiv, h0]
 
 end

@@ -124,16 +124,18 @@ theorem twisted_local_multiplicity_eq : GlobalTheory.Published.HarishChandraAnal
   obtain ⟨L, hsc, hsz, hpar, hn⟩ := hLed (w.st Z') hO hη hA
   obtain ⟨hhost, -⟩ := hHost (w.st Z') hO
   have s : SameGrp Z Z' := LedRec.sameGrp g1 g1'
-  refine (GlobalTheory.T.equalMultiplicities_rowTest_of_sameGroupTransfer B w.C Z Z' w.px w.I hX T Wt s z).1 ?_
-  have hEx' := DatCopy.copy_exAt Z' s hEx
-  generalize DatCopy.copy Z' s z = y at hEx' ⊢
-  have hch := y.pins.char
-  have hT : TypesTrue (w.st Z').toD7.ntypes y.R.C.P y.R.C.W := by
-    rw [y.lev.C, w.C_eq]
-    exact g1'
-  exact _root_.GlobalTheory.T.twisted_multiplicity_one h1 h2 h3 h4 h5 h6 h7 h12 h13 hG y.R y.F
-    ((hOk w.px w.I hX w.ok w.C_eq w.xi_range).2 _ y.Xg y.tr y.good.irr) hch hEx' hhost ⟨L, hpar⟩ B.ccK_top
-    y.pins.keep.guard (GlobalTheory.LiftRows.Inh.goodTypes_of_typesTrue hch.base.lev hT)
+  have hMult : GlobalTheory.CuspMult.MultEq (DatCopy.copy Z' s z).R.toRealDat := by
+    have hEx' := DatCopy.copy_exAt Z' s hEx
+    generalize DatCopy.copy Z' s z = y at hEx' ⊢
+    have hch := y.pins.char
+    have hT : TypesTrue (w.st Z').toD7.ntypes y.R.C.P y.R.C.W := by
+      rw [y.lev.C, w.C_eq]
+      exact g1'
+    exact _root_.GlobalTheory.T.twisted_multiplicity_one h1 h2 h3 h4 h5 h6 h7 h12 h13 hG y.R y.F
+      ((hOk w.px w.I hX w.ok w.C_eq w.xi_range).2 _ y.Xg y.tr y.good.irr) hch hEx' hhost ⟨L, hpar⟩ B.ccK_top
+      y.pins.keep.guard (GlobalTheory.LiftRows.Inh.goodTypes_of_typesTrue hch.base.lev hT)
+  exact (GlobalTheory.T.equalMultiplicities_rowTest_of_sameGroupTransfer
+    B w.C Z Z' w.px w.I hX T Wt s z).1 hMult
 end GlobalTheory.Mem.R3.Rw.MultAt
 end
 end

@@ -106,7 +106,8 @@ theorem topCore (h2 : ExplicitMapOntoTwoLetters) (h5 : TwoLetterLatticeGaussInve
       have wl := rowA_of_iwh (dPsi_monomial_iwh R.Kf m v (AddMonoidAlgebra.coeff f v)) (Fin.last m) u hc
       exact qt_comb m a b v (hf v hv).1 (hf v hv).2 (by rw [← w0, hu.1]) (by rw [← wl, hu.2])
     · intro hv
-      rw [notMem_support_iff.1 hv, monomial_zero, map_zero, map_zero, coeff_zero]
+      rw [notMem_support_iff.1 hv, monomial_zero, map_zero, map_zero, AddMonoidAlgebra.coeff_zero]
+      rfl
   · have c1 : AddMonoidAlgebra.coeff (dPsi R.Kf m f) u = 0 := by
       by_contra hc
       exact hu ⟨h0 u hc, hl u hc⟩

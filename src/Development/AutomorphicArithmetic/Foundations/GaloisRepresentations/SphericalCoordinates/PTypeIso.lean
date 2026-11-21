@@ -87,12 +87,14 @@ private theorem exR {g : ℕ} {Idx : Type} (E : Fin g ≃ Idx) (s : Idx → Prop
   · intro x y
     rw [← Matrix.mulVec_add]
     congr 1
-    split_ifs <;> simp
+    funext j
+    by_cases h : s (E j) <;> simp [h]
   · intro t x
     simp only [RingHom.id_apply]
     rw [← Matrix.mulVec_smul]
     congr 1
-    split_ifs <;> simp [Complex.real_smul]
+    funext j
+    by_cases h : s (E j) <;> simp [h, Complex.real_smul]
   · intro x
     funext k
     simp only [Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ hu, Matrix.one_mulVec, Equiv.apply_symm_apply]

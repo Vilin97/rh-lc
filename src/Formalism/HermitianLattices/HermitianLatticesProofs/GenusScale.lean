@@ -112,7 +112,6 @@ theorem genusScale : GenusScale := by
     have hm := genusBasic_mem_one_mul _ (hn (h a b)) (k : 𝓞 K)
     rwa [map_natCast] at hm
   intro M hM x hx y hy
-  have hM' : Submodule.IsLattice K M ∧ SameGenus h L M := hM
-  exact genusScale_transfer hinj hstar h _ L M hM'.2 hLd x hx y hy
+  exact genusScale_transfer hinj hstar h _ L M hM.2 hLd x hx y hy
 
 end Formalism.HermitianLatticesTheory

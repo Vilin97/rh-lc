@@ -44,9 +44,10 @@ theorem exists_componentData_origin : Top.Given → Out.WeilSt → ∀ (E : Type
         Or.inl ⟨rfl, rfl, rfl⟩, fun _ => by simp, fun _ => rfl, by omega, hp, by omega⟩
     · refine ⟨Sum.inr, Sum.inl, D.q, D.p, by simp, by simp, Or.inl rfl, fun _ => rfl,
         Or.inr ⟨rfl, rfl, rfl⟩, fun _ => by simp, fun _ => rfl, by omega, hq, by omega⟩
+  have hchart := GlobalTheory.T.global_snc_chart_system hG hW E H D Xo l c Y hgl hp hq Ω₀ ξ₀ hξ S₀ S₁ sm (D.p + D.q - j) hsmc hr hS₀ hS₁ hd hdisc
   obtain ⟨K, _, J, _, Ω, _, _, y, 𝔐, deg, bd, vdeg, vnum, vden, s, aMu, e₀, hK, hgen, hcov, hom, hfree,
     htr, hsnc, hbd, hR, htors, hvb, hvert, hvert2, hli, hspan, hdeg⟩ :=
-    GlobalTheory.T.global_snc_chart_system hG hW E H D Xo l c Y hgl hp hq Ω₀ ξ₀ hξ S₀ S₁ sm (D.p + D.q - j) hsmc hr hS₀ hS₁ hd hdisc
+    hchart
   have hn : D.dim = Fintype.card (CMType H) * j * (D.p + D.q - j) := by
     have h2 := (GlobalTheory.T.cm_host_rank_bounds E H).2.2
     have hmul : j * (D.p + D.q - j) = D.p * D.q := by

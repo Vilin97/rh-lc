@@ -180,15 +180,24 @@ def dbl (hM₁ : ∀ (I I' : Chart x) (J : Chart y), I.1 ⊆ I'.1 → M I J ≤ 
 theorem dbl_good (hM₁ : ∀ (I I' : Chart x) (J : Chart y), I.1 ⊆ I'.1 → M I J ≤ M I' J)
     (hM₂ : ∀ (I : Chart x) (J J' : Chart y), J.1 ⊆ J'.1 → M I J ≤ M I J')
     (hA : ∀ I, Cech.AugExact S (M I) (Ax I)) (hB : ∀ J, Cech.AugExact S (fun I => M I J) (Bx J)) :
-    (dbl Ax Bx hM₁ hM₂ hA hB).Good where
-  ha p := LinearMap.ext fun s => Subtype.ext (funext fun I' => funext fun J => by
+    (dbl Ax Bx hM₁ hM₂ hA hB).Good := by
+  refine { ha := ?ha, hc := ?hc, ka := ?ka, ra := ?ra, rh := ?rh, kc := ?kc, rc := ?rc, rv := ?rv }
+  case ha =>
+    intro p
+    refine LinearMap.ext fun s => Subtype.ext (funext fun I' => funext fun J => ?_)
     change dE S E (support x) p s.1 I' = vW S E x y p 0 (fun I _ => s.1 I) I' J
-    rw [vW_apply])
-  hc _ := LinearMap.ext fun _ => rfl
-  ka p := LinearMap.ker_eq_bot'.mpr fun s hs => Subtype.ext (funext fun I =>
-    (hA I.1).2.1 _ (s.2 I (Set.mem_univ _)) fun J => congrFun (congrFun (congrArg Subtype.val hs) I) J)
-  ra p := by
-    ext f
+    rw [vW_apply]
+  case hc =>
+    intro q
+    exact LinearMap.ext fun _ => rfl
+  case ka =>
+    intro p
+    exact LinearMap.ker_eq_bot'.mpr fun s hs => Subtype.ext (funext fun I =>
+      (hA I.1).2.1 _ (s.2 I (Set.mem_univ _)) fun J => congrFun (congrFun (congrArg Subtype.val hs) I) J)
+  case ra =>
+    intro p
+    apply Submodule.ext
+    intro f
     rw [LinearMap.mem_ker, LinearMap.mem_range]
     constructor
     · intro hf
@@ -198,8 +207,10 @@ theorem dbl_good (hM₁ : ∀ (I I' : Chart x) (J : Chart y), I.1 ⊆ I'.1 → M
       exact ⟨⟨b, fun I _ => hb I⟩, Subtype.ext (funext fun I => funext fun J => (hbf I J).symm)⟩
     · rintro ⟨s, rfl⟩
       exact Subtype.ext (funext fun I => dE_const (s.1 I))
-  rh p q := by
-    ext f
+  case rh =>
+    intro p q
+    apply Submodule.ext
+    intro f
     rw [LinearMap.mem_ker, LinearMap.mem_range]
     constructor
     · intro hf
@@ -210,10 +221,14 @@ theorem dbl_good (hM₁ : ∀ (I I' : Chart x) (J : Chart y), I.1 ⊆ I'.1 → M
       exact ⟨⟨t, (mem_Dsub M).2 fun I J => ht I J (Set.mem_univ _)⟩, Subtype.ext (funext htf)⟩
     · rintro ⟨s, rfl⟩
       exact Subtype.ext (funext fun I => dE_dE q (s.1 I))
-  kc q := LinearMap.ker_eq_bot'.mpr fun t ht => Subtype.ext (funext fun J =>
-    (hB J.1).2.1 _ (t.2 J (Set.mem_univ _)) fun I => congrFun (congrFun (congrArg Subtype.val ht) I) J)
-  rc q := by
-    ext f
+  case kc =>
+    intro q
+    exact LinearMap.ker_eq_bot'.mpr fun t ht => Subtype.ext (funext fun J =>
+      (hB J.1).2.1 _ (t.2 J (Set.mem_univ _)) fun I => congrFun (congrFun (congrArg Subtype.val ht) I) J)
+  case rc =>
+    intro q
+    apply Submodule.ext
+    intro f
     rw [LinearMap.mem_ker, LinearMap.mem_range]
     constructor
     · intro hf
@@ -228,8 +243,10 @@ theorem dbl_good (hM₁ : ∀ (I I' : Chart x) (J : Chart y), I.1 ⊆ I'.1 → M
       change vW S E x y 0 q _ I' J = 0
       rw [vW_apply]
       exact congrFun (dE_const (t.1 J)) I'
-  rv p q := by
-    ext f
+  case rv =>
+    intro p q
+    apply Submodule.ext
+    intro f
     rw [LinearMap.mem_ker, LinearMap.mem_range]
     constructor
     · intro hf

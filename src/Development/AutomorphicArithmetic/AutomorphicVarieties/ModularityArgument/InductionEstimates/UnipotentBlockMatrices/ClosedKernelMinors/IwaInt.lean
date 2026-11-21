@@ -17,7 +17,8 @@ open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.iwaInt :
     ∀ {K : Type} [Field K] [NumberField K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (κ : Measure (KG K (2 + 2))) [κ.IsHaarMeasure], ∃ c : ℝ, 0 < c ∧ ∀ Φ : G1 K (2 + 2) → ℝ≥0∞, Measurable Φ →
       ∫⁻ g, Φ g ∂μ = ENNReal.ofReal c * ∫⁻ m₁, ∫⁻ m₂, ∫⁻ t : ℝ, ∫⁻ k : KG K (2 + 2), ∫⁻ X,
-        Φ (nn X * lv m₁ m₂ t * k) * ENNReal.ofReal (Real.exp (-4 * t)) ∂unipMeasure K (2 + 2) 2 ∂κ ∂volume ∂μ₂ ∂μ₂ := by
+        Φ (unipOne (K := K) (n := 2 + 2) 2 X * lv m₁ m₂ t * k) *
+          ENNReal.ofReal (Real.exp (-4 * t)) ∂unipMeasure K (2 + 2) 2 ∂κ ∂volume ∂μ₂ ∂μ₂ := by
   intro K _ _ μ _ μ₂ _ κ _
   obtain ⟨S, ν, hS, hν, hmem, hΦ⟩ := UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.parHaar (K := K) μ₂
   have hK : IsCompact (KG K (2 + 2) : Set (G1 K (2 + 2))) :=
@@ -40,7 +41,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.iwaInt :
   rw [hc Φ hm, hΦ _ hφ, ENNReal.ofReal_coe_nnreal]
   congr 1
   refine lintegral_congr fun m₁ => lintegral_congr fun m₂ => lintegral_congr fun t => ?_
-  have hn : Measurable fun X : UPos (2 + 2) 2 → 𝔸[K] => nn X * lv m₁ m₂ t :=
+  have hn : Measurable fun X : UPos (2 + 2) 2 → 𝔸[K] =>
+      unipOne (K := K) (n := 2 + 2) 2 X * lv m₁ m₂ t :=
     ((continuous_unipOne (K := K) (n := 2 + 2) 2).mul continuous_const).measurable
   rw [← lintegral_lintegral_swap]
   · refine lintegral_congr fun X => ?_
