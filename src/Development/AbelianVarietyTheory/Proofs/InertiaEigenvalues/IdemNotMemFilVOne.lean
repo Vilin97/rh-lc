@@ -337,12 +337,12 @@ theorem tensor {ρ' : Representation LL G V'} {ι' : Type} [Fintype ι'] {d' : �
         rwa [show n + (0 - k p.1 + (0 - k' p.2)) = n - (k p.1 + k' p.2) by ring] at this
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [tmul_eq_sm_bil, sm_comm, ← sm_idem_idem, ← bil_sm_right, ← bil_sm_left, h1, h2,
-          Fintype.sum_prod_type_right, map_sum, map_sum]
-        refine Finset.sum_congr rfl fun j _ => ?_
-        set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_sum, LinearMap.sum_apply, map_sum]
-        refine Finset.sum_congr rfl fun i _ => ?_
-        rw [bil_sm_left, bil_sm_right, sm_mul, sm_mul]
+            Fintype.sum_prod_type_right, map_sum, map_sum]
+          refine Finset.sum_congr rfl fun j _ => ?_
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, LinearMap.sum_apply, map_sum]
+          refine Finset.sum_congr rfl fun i _ => ?_
+          rw [bil_sm_left, bil_sm_right, sm_mul, sm_mul]
 
 end Adapted
 

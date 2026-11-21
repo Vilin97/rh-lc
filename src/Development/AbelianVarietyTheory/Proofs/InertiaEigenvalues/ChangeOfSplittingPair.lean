@@ -35,7 +35,10 @@ theorem twist_eq_root (ho : IsWeilDatumO ψ V W χV χW om) (hν : IsHeckeChar D
     (hx : IsDetRoot V h x) (hy : IsDetRoot W g y) {f : WO V W → ℂ} (hf : IsThetaFunO ψ V W f) :
     om' (h, g) f = (((ν y : Circle) : ℂ) * ((ν x : Circle) : ℂ)⁻¹) • om (h, g) f := by
   obtain ⟨o, h1, h2⟩ := exists_twist_root ho hν hF
-  rw [GlobalTheory.WeilUniq.weilDatum_unique D ψ ho.std V W _ _ om' o ho' h1 _ f hf, h2 h g x y hx hy, LinearMap.smul_apply]
+  calc
+    om' (h, g) f = o (h, g) f :=
+      GlobalTheory.WeilUniq.weilDatum_unique D ψ ho.std V W _ _ om' o ho' h1 (h, g) f hf
+    _ = _ := by rw [h2 h g x y hx hy, LinearMap.smul_apply]
 
 theorem exists_twist (ho : IsWeilDatumO ψ V W χV χW om) (hν : IsHeckeChar D ν) (hF : ∀ a, ν (idF D a) = 1)
     {nV : GA D V → ℂ} {nW : GA D W → ℂ} (hV : MuVal V ν nV) (hW : MuVal W ν nW) :

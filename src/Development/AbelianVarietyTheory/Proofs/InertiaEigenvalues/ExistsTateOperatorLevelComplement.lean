@@ -146,7 +146,7 @@ theorem int_decomp (K : FinExt l) {j : ℕ} (hj : 1 ≤ j) (c : ℕ) : ∀ x : O
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [← Finset.add_sum_erase _ _ (Finset.mem_univ (0 : Fin l)), map_add (f := _), map_sum, ← add_assoc,
         ← hod]
-      simp
+        simp
 
 variable {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)} {χ : GQ l →* ℚ_[l]ˣ}
 
@@ -276,7 +276,7 @@ theorem norm_l : ‖(l : PadicComplex l)‖ = (l : ℝ)⁻¹ := by
 
 theorem norm_le_one (hact : IsActC act) (hχ : IsCyc χ) (K : FinExt l) {j : ℕ} (hj : 1 ≤ j)
     {x : PadicComplex l} (hx : x ∈ Xj K j) : ‖x‖ ≤ 1 :=
-  closure_minimal (t := {y : PadicComplex l | ‖y‖ ≤ 1}) (fun _ hy => hy.2)
+  closure_minimal (s := intC (Kinf K)) (t := {y : PadicComplex l | ‖y‖ ≤ 1}) (fun _ hy => hy.2)
     (isClosed_le continuous_norm continuous_const)
     ((GlobalTheory.T.tate_decomposition_completed_cyclotomic_integers l act χ hact hχ K j hj).2.2.1 x hx)
 

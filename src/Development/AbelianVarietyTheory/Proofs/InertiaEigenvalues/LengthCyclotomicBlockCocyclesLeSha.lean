@@ -23,7 +23,7 @@ theorem algebraMap_inj : Function.Injective (algebraMap ℤ_[l] O) := by
   have hk : RingHom.ker (algebraMap ℤ_[l] O) ≠ ⊥ := fun h0 => h ((RingHom.injective_iff_ker_eq_bot _).2 h0)
   have hp : (RingHom.ker (algebraMap ℤ_[l] O)).IsPrime := RingHom.ker_isPrime _
   have hm : ((⊥ : Ideal O).comap (algebraMap ℤ_[l] O)).IsMaximal := hp.isMaximal hk
-  have : (⊥ : Ideal O).IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap _ hm
+  have : (⊥ : Ideal O).IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := ℤ_[l]) ⊥ hm
   exact IsDiscreteValuationRing.not_a_field O (IsLocalRing.eq_maximalIdeal this).symm
 
 instance faithful : FaithfulSMul ℤ_[l] O := (faithfulSMul_iff_algebraMap_injective _ _).2 (algebraMap_inj O)

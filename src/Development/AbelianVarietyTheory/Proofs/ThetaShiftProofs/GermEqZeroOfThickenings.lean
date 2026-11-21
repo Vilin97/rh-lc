@@ -329,7 +329,9 @@ theorem HasCoords.toStkA_wVal {e : ℕ} {T : Type} [CommRing T] {r : Sp T ⟶ Sp
     {xe : Sp T ⟶ (thickObj R I e G).left} (h : HasCoords U g x e r xe) {jL : U.LG.L.ι} {jM : D.toPre.P.L.ι}
     (hL : ⊤ ≤ x ⁻¹ᵁ U.LG.L.U jL) (hM : ⊤ ≤ basePt g ⁻¹ᵁ D.toPre.P.L.U jM) (z : Sp T) :
     toStkA z (wVal U e xe jL jM) = (wv U e xe z jM jL).val :=
-  toStkA_valR xe _ z (h.top_le_chart hL hM) _
+  by
+    change toStkA z (valR xe _ _) = (gm xe z _ _).val
+    erw [toStkA_valR_eq_gs xe _ z (h.top_le_chart hL hM), gs_unit xe z _ (h.top_le_chart hL hM (show z ∈ (⊤ : (Sp T).Opens) from trivial))]
 
 
 theorem top_le_secChart {jL : U.LG.L.ι} (hL : ⊤ ≤ x ⁻¹ᵁ U.LG.L.U jL) :
@@ -508,8 +510,21 @@ theorem tau_trans (h : IsFormalPt U J g x) (hL : ⊤ ≤ x ⁻¹ᵁ U.LG.L.U jL)
   set z := cpt (S ⧸ J ^ (e + 1))
   have m := hy.top_le_chart hL hM (show z ∈ (⊤ : (Sp (S ⧸ J ^ (e + 1))).Opens) from trivial)
   have m' := hy.top_le_chart hL' hM' (show z ∈ (⊤ : (Sp (S ⧸ J ^ (e + 1))).Opens) from trivial)
-  have w : wv U e y z jM jL = _ * _ * wv U e y z jM' jL' :=
-    gm_isGen (U.w_gen e) y z (fun _ => jM) (fun _ => jM') (fun _ => jL) (fun _ => jL') m.1 m'.1 m.2 m'.2
+  have w : wv U e y z jM jL =
+      gm y z _ ((D.toPre.P.L.pull (U.gt e).pG.left).g (fun _ => jM) (fun _ => jM')) *
+      (gm y z _ ((U.LG.L.pull (fstG I e G).left).g (fun _ => jL) (fun _ => jL')))⁻¹ *
+      wv U e y z jM' jL' := by
+    have hV : y z ∈ (((D.toPre.P.L.pull (U.gt e).pG.left).U (fun _ => jM) ⊓
+        (U.LG.L.pull (fstG I e G).left).U (fun _ => jL)) ⊓
+        ((D.toPre.P.L.pull (U.gt e).pG.left).U (fun _ => jM') ⊓
+        (U.LG.L.pull (fstG I e G).left).U (fun _ => jL'))) := ⟨m, m'⟩
+    have key := congrArg (gm y z _) ((U.w_gen e) ((fun _ => jM), (fun _ => jL)) ((fun _ => jM'), (fun _ => jL')))
+    erw [gm_res _ z _ hV, map_mul, gm_res _ z _ hV] at key
+    change gm y z _ ((U.w e).s (fun _ => jM, fun _ => jL)) = _
+    erw [key]
+    congr 1
+    show gm y z _ (res _ _ * (res _ _)⁻¹) = _
+    erw [map_mul, map_inv, gm_res _ z _ hV, gm_res _ z _ hV]
   rw [gm_pull_g _ _ y z _ _ m.1 m'.1, gm_pull_g _ _ y z _ _ m.2 m'.2, hy.1, hy.2.1] at w
   have t := congrArg (toStkA z) (isTau_tau h hL hM e y hy.1)
   have t' := congrArg (toStkA z) (isTau_tau h hL' hM' e y hy.1)
@@ -596,8 +611,14 @@ theorem exists_isZero (P : DegPre R) (T : Over (Sp R)) : ∃ g : GtPt P T, g.IsZ
   have c := val_cub P.cub (𝟙 T) hJ (P.cT T χ) (P.cT T χ') (P.zeroT T)
   rw [Category.id_comp, Category.id_comp, Category.id_comp] at c
   refine (val_mul hJ _ _ _).trans (Eq.trans ?_ (val_mul hJ _ _ _).symm)
+  have face : cubV P.cub y J (P.cT T χ) (P.cT T χ') (P.zeroT T) = 1 := by
+    have H := val_corr hJ (P.cub.face 2) (lift (P.cT T χ) (P.cT T χ')).left
+    rw [val_one] at H
+    refine Eq.trans ?_ H
+    refine Eq.trans ?_ (val_cub P.cub (lift (P.cT T χ) (P.cT T χ')) hJ (x2 P.P.A 0) (x2 P.P.A 1) (pzero P.P.A _)).symm
+    congr 1 <;> simp [x2, pzero, Hom.one_def, DegPre.zeroT]
   exact congrArg₂ (· * ·) ((v _ y J hJ).trans (v _ y J hJ).symm)
-    (c.trans (((isCub_cubV P.cub hJ).face₃ _ _).trans (v _ y J hJ).symm))
+    (c.trans (face.trans (v _ y J hJ).symm))
 
 
 variable (U) in

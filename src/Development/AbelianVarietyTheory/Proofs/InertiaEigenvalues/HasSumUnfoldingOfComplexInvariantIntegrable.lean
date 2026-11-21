@@ -47,8 +47,10 @@ theorem hasSum_nonneg {μ : Measure α} {𝓕 A : Set α} {c : ι → ℝ} (hc :
   rw [← ENNReal.tsum_toReal_eq hFi, ← h1, ← integral_eq_lintegral_of_nonneg_ae
     (Filter.Eventually.of_forall hg0) hg.aestronglyMeasurable] at key
   convert key using 1
+  funext i
   rw [integral_eq_lintegral_of_nonneg_ae (Filter.Eventually.of_forall (fun x => hg0 _))
     (hg.comp (hT i)).aestronglyMeasurable]
+  simp [F, ENNReal.toReal_mul, (hc i).le]
 
 theorem hasSum_real {μ : Measure α} {𝓕 A : Set α} {c : ι → ℝ} (hc : ∀ i, 0 < c i)
     {T : ι → α → α} (hT : ∀ i, Measurable (T i)) {H : Set (α → α)}

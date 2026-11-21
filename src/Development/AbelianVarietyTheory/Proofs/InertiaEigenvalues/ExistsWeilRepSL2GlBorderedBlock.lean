@@ -84,8 +84,10 @@ theorem GlobalTheory.JR.weil_repG : ∀ (F E : Type) [NontriviallyNormedField F]
         obtain ⟨A, u, c, l⟩ := Y
         simp only [rowAct, rowMap, ptrB, nS, ft]
         congr 1
-          Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons, mul_zero, add_zero,
-          mul_one, zero_add, mom, pow_zero, Matrix.one_mulVec]
+        funext b
+        change f (A, b, (fun i => c i * 1 + u i * 0), l) *
+          ψ (b ⬝ᵥ (fun i => c i * t + u i * 1)) = _
+        simp only [mul_one, mul_zero, add_zero, mom, pow_zero, Matrix.one_mulVec]
         have hu : (fun i => c i * t + u i) = t • c + u := by funext i; simp [mul_comm]
         rw [hu, dotProduct_add, dotProduct_smul, smul_eq_mul, dotProduct_comm b c,
           AddChar.map_add_eq_mul]

@@ -71,7 +71,7 @@ theorem normV_le_of_isFrob : ∀ (E Ω : Type) [Field E] [NumberField E] [Field 
   classical
   set k := IsLocalRing.ResidueField A
   set P : k[X] := X ^ q - X with hP
-  have hP0 : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero k hq
+  have hP0 : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero hq
   let f : 𝓞 E ⧸ w.asIdeal →+* k :=
     Ideal.Quotient.lift w.asIdeal (toResidue A) (fun x hx => (toResidue_eq_zero_iff A w hw x).mpr hx)
   have hf : Function.Injective f := by

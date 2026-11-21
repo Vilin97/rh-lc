@@ -70,8 +70,8 @@ theorem lead_sum (h : σ X = w * X ^ s) (hs : 0 < s) (G : Fin s → R⟦X⟧) (n
       conv_lhs => rw [← hn, pow_add]
       exact mul_dvd_mul_left _ (X_pow_dvd_map h h1)
     · exact (pow_dvd_pow X n.le_succ).trans (key k hk)
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum, Finset.sum_eq_single ⟨n % s, Nat.mod_lt _ hs⟩]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single ⟨n % s, Nat.mod_lt _ hs⟩]
     · rw [← coeff_map_lead h hs h1, ← coeff_X_pow_mul (σ _) (n % s) (s * (n / s)), add_comm, hn]
     · intro k _ hk
       exact X_pow_dvd_iff.1 (key k fun e => hk (Fin.ext e)) n n.lt_succ_self
@@ -220,7 +220,8 @@ theorem invariants_param : ∀ (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] 
     rw [map_sub (act l O _), hb, hfix, one_mul, hu0, ← map_pow, eq_comm, mul_eq_right₀ hc,
       ← map_one (algebraMap ℤ_[l] O)] at h1
     have h2 := algebraMap_injective l O hl h1
-    ext
+    apply Subtype.ext
+    apply Units.ext
     simpa using h2
   rw [← sub_eq_zero, hG', h0]
   simp

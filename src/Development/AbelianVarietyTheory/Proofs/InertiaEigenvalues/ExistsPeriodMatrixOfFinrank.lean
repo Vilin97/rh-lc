@@ -69,6 +69,8 @@ theorem exists_periodMatrix_of_finrank (F E : Type) [Field F] [Field E] [Algebra
       act g c • ((A g).map (algebraMap F B)).mulVec (fun i => act g (w i))
     rw [← Matrix.mulVec_smul]
     congr 1
+    funext i
+    simp
   have hvE : LinearIndependent E v :=
     b.linearIndependent.map' WE.subtype WE.ker_subtype
   have hvB : LinearIndependent B v := by

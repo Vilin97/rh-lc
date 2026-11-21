@@ -86,7 +86,12 @@ theorem charDual_cogenerator : ∀ (A : Type) [CommRing A] [Finite A] (n : ℕ),
     let x : Fin a → (A →+ ZMod n) := fun j => L.comp (AddMonoidHom.single (fun _ => A) j)
     have key : ∀ (w : Fin a → A) (b : A), (∑ j, w j • x j) b = L (fun k => w k * b) := by
       intro w b
-      rw [AddMonoidHom.finset_sum_apply]
+      have hsum (s : Finset (Fin a)) : (∑ j ∈ s, w j • x j) b = ∑ j ∈ s, (w j • x j) b := by
+        classical
+        induction s using Finset.induction_on with
+        | empty => simp
+        | @insert j s hj ih => simp [hj, ih]
+      rw [hsum]
       have : (fun k => w k * b) = ∑ j, Pi.single j (w j * b) := (Finset.univ_sum_single _).symm
       set_option synthInstance.maxHeartbeats 100000 in
         rw [this, map_sum]

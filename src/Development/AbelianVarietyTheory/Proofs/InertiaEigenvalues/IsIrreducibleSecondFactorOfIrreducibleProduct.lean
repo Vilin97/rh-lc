@@ -141,9 +141,12 @@ theorem isIrreducible_of_prod₂ : ∀ (k : Type) [Field k] [ValuativeRel k] [To
   have hW : Nontrivial W := by
     by_contra hW
     rw [not_nontrivial_iff_subsingleton] at hW
-    have h0 : ∀ z : V ⊗[ℂ] W, z = 0 := fun z => z.induction_on rfl
-      (fun x w => by rw [Subsingleton.elim w 0, TensorProduct.tmul_zero])
-      (fun a b ha hb => by rw [ha, hb, add_zero])
+    have h0 : ∀ z : V ⊗[ℂ] W, z = 0 := by
+      intro z
+      induction z using TensorProduct.induction_on with
+      | zero => rfl
+      | tmul x w => rw [Subsingleton.elim w 0, TensorProduct.tmul_zero]
+      | add a b ha hb => rw [ha, hb, add_zero]
     obtain ⟨f₁, f₂, hne⟩ := hX
     exact hne (Subtype.ext (Subtype.ext (funext fun x => (h0 _).trans (h0 _).symm)))
   rw [isIrreducible_iff]

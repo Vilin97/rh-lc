@@ -23,9 +23,9 @@ theorem norm_zC (x : ℤ_[l]) : ‖zC x‖ = ‖x‖ := by
 
 theorem mem_OC (y : PadicComplex l) : y ∈ PadicComplexInt l ↔ ‖y‖ ≤ 1 := by
   rw [PadicComplexInt, Valuation.mem_valuationSubring_iff, PadicComplex.norm_eq_norm]
-  simp only [Valued.v.norm_def, (show Valuation.RankLeOne.hom' Valued.v = MonoidWithZeroHom.ValueGroup₀.embedding from rfl)]
-  rw [Valuation.embedding_restrict]
-  exact NNReal.coe_le_one.symm
+  simp [Valuation.norm_def, ← NNReal.coe_one, ← NNReal.coe_le_coe,
+    ← map_one (Valuation.RankLeOne.hom' Valued.v),
+    (Valuation.RankLeOne.strictMono' (v := (Valued.v : Valuation (PadicComplex l) _))).le_iff_le, ← map_one Valued.v.restrict]
 
 theorem act_zC {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)} (h : IsActC act) (g : GQ l)
     (x : ℤ_[l]) : act g (zC x) = zC x := by
@@ -104,6 +104,7 @@ theorem finiteOL (LL : FinExt l) : Module.Finite ℤ_[l] ↥(OL LL) :=
 
 theorem inclR_injective (LL : FinExt l) : Function.Injective (inclR LL) := by
   haveI := freeOL LL
+  letI : Module.Flat ℤ_[l] ↥(OL LL) := Module.Flat.of_free
   exact Module.Flat.lTensor_preserves_injective_linearMap (M := ↥(OL LL)) (inclWA l).toLinearMap
     (WittVector.map_injective _ (IsFractionRing.injective (OCb l) (Cb l)))
 

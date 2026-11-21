@@ -162,11 +162,13 @@ theorem cub_push (hG : GlobalFnsSt) (gp : IsGrpPullback D'.P.A D.P.A (spMap f) �
         fin_cases i <;> simp [e, x3, pushPt, cubeMapOf]
       refine (val_pull hI _ _ _).trans ?_
       rw [q, o]
-      have e := val_corr hI (D.cub.face 0) (lift (1 : Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap f) ⟶ D.P.A) 1).left
-      rw [val_one] at e
-      refine Eq.trans ?_ e
-      refine Eq.trans ?_ (val_cub D.cub (lift (1 : Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap f) ⟶ D.P.A) 1) hI (pzero D.P.A _) (x2 D.P.A 0) (x2 D.P.A 1)).symm
-      congr 1 <;> simp [x2, pzero, Hom.one_def]) _ (lift x (lift x' y)).left z J hJ
+      have C : cubV D.cub (T := Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap f)) y I 1 1 1 = 1 := by
+        have e := val_corr hI (D.cub.face 0) (lift (1 : Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap f) ⟶ D.P.A) 1).left
+        rw [val_one] at e
+        refine Eq.trans ?_ e
+        refine Eq.trans ?_ (val_cub D.cub (lift (1 : Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap f) ⟶ D.P.A) 1) hI (pzero D.P.A _) (x2 D.P.A 0) (x2 D.P.A 1)).symm
+        congr 1 <;> simp [x2, pzero, Hom.one_def]
+      exact C.trans (by simp)) _ (lift x (lift x' y)).left z J hJ
   exact (val_pull hJ _ _ _).symm.trans (key.trans (hv' _ _ z J J' hJ hJ'))
 
 variable {F : Type} [Field F] [Algebra (FractionRing R) F] [Algebra (FractionRing R') F]

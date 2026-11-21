@@ -60,7 +60,7 @@ theorem exists_vball_subset {U : Set k} (hU : U ∈ nhds (0 : k)) :
     ∃ r : k, r ≠ 0 ∧ ∀ x, valuation k x ≤ valuation k r → x ∈ U := by
   obtain ⟨γ, hγ⟩ := (IsValuativeTopology.mem_nhds_zero_iff U).1 hU
   obtain ⟨s, hs⟩ := valuation_surjective (γ : ValueGroupWithZero k)
-  obtain ⟨ϖ, hϖ⟩ := exists_uniformizer k
+  obtain ⟨ϖ, hϖ⟩ := GlobalTheory.LocGL.exists_uniformizer k
   have h0 : s ≠ 0 := by rintro rfl; exact γ.ne_zero (by simpa using hs.symm)
   refine ⟨ϖ * s, mul_ne_zero ϖ.ne_zero h0, fun x hx => hγ (hx.trans_lt ?_)⟩
   rw [map_mul, hs, hϖ]
@@ -96,7 +96,7 @@ theorem exists_eq_sum_ballFn {r R : k} (hr : r ≠ 0) (hle : valuation k r ≤ v
     rwa [neg_zero, zero_add] at h4
   · rw [Finset.sum_image ho.injOn, Finset.sum_apply]
     induction x using OnePoint.rec with
-    | infty => simp [h0]
+    | infty => simp [ballFn, h0]
     | coe x =>
       by_cases hx : valuation k x ≤ valuation k R
       · simp only [Pi.smul_apply, ballFn_coe, key _ ⟨x, hx⟩, smul_eq_mul, mul_ite, mul_one, mul_zero,

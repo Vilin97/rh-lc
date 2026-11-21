@@ -16,7 +16,7 @@ noncomputable section
 
 namespace GlobalTheory.Proof.ListFormLabels
 
-open Formalism.BasicNotions GlobalTheory.IndefiniteRowSideFullHecke.BlockRootsCuspidal
+open Formalism.BasicNotions
 
 def ListFormAt (D : D7) (σ : D.what₂.FT) (k : Fin 2) (v : D.nd.PlG k) : Prop :=
     haveI : Fact (D.host.g k).Prime := ⟨D.host.g_prime k⟩

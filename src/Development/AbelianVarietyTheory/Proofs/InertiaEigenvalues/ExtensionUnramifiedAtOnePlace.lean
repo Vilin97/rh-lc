@@ -187,7 +187,8 @@ theorem core {E : Type} [Field E] [NumberField E] [Algebra E Ω] [IsAlgClosure E
     have hfβ' : aeval β' f = 0 := by
       have h2 := hmap f
       rw [hfβ, ← map_zero (algebraMap E' Ω)] at h2
-      exact_mod_cast (algebraMap E' Ω).injective h2
+      apply RingOfIntegers.coe_injective
+      simpa only [map_zero] using (algebraMap E' Ω).injective h2
     have hover : ∀ x : 𝓞 E, algebraMap (𝓞 E) (𝓞 E') x ∈ w'.asIdeal ↔ x ∈ w.asIdeal := by
       intro x
       rw [← h x]
@@ -211,7 +212,7 @@ theorem core {E : Type} [Field E] [NumberField E] [Algebra E Ω] [IsAlgClosure E
     let ζ' : 𝓞 E' := ⟨ζE, hζint⟩
     haveI : w'.asIdeal.IsMaximal := w'.isMaximal
     refine GlobalTheory.T.card_quotient_eq_of_pow_sub_self_mem' w'.asIdeal (g ^ n) ζ' hq2 ?_ ?_ ?_
-    · apply FaithfulSMul.algebraMap_injective (𝓞 E') E'
+    · apply RingOfIntegers.coe_injective
       rw [map_pow, map_one]
       exact hζE.pow_eq_one
     · intro j hj0 hjq hm

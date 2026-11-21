@@ -42,8 +42,8 @@ theorem toStk_unit (z : Sp F) (u : Fˣ) : toStk z u = (TauTwist.unitAt (𝟙 (Sp
 
 private theorem gw_idW_eq_gm {Y : Scheme.{0}} (f : Y ⟶ B) (y : Y) (i j : M.ι) (hi : f y ∈ M.U i)
     (hj : f y ∈ M.U j) : gw (idW M) f y i j = gm f y _ (M.g i j) := by
-  rw [idW, gw_isoPullId _ _ _ _ _ _ hi hj]
-  rfl
+  have hmem : f y ∈ (M.pull (𝟙 B)).U (fun _ => i) ⊓ M.U j := ⟨mem_pull.2 (by simpa using hi), hj⟩
+  exact gm_res f y _ hmem (M.g i j)
 
 private theorem mem_wchart_of_forall_mem {Y : Scheme.{0}} {φ : K → (Y ⟶ B)} {j : K → M.ι} {y : Y}
     (h : ∀ k, φ k y ∈ M.U (j k)) : (𝟙 Y) y ∈ LB.wchart M φ j :=
@@ -134,6 +134,7 @@ attribute [local instance] GlobalTheory.TorusExt.gtGroup
 
 
 open GlobalTheory.ModelData.ModelTate in
+
 theorem exists_tateIsoQ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} (D : Datum H) {R : Type}
     [CommRing R] [IsDomain R] [CharZero R] {I : Ideal R} (hA : AdmBase R I) {t : SAB H (Sp R)} (P : PELUnif I t)
     (hT : P.TorsionIso) {S : Scheme.{0}} (t₀ : SAB H S) (z : Sp (FractionRing R) ⟶ S) (ψ : P.A.A.left ⟶ t₀.G.left)

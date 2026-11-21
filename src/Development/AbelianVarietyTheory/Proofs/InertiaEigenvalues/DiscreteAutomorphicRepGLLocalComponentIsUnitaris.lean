@@ -48,9 +48,9 @@ theorem isUnitarisable_of_embedding {H X : Type} [Group H] [AddCommGroup X] [Mod
   have hm : ∀ v, MemLp (f v) 2 (μ.restrict F) := fun v => by
     obtain ⟨μ', F', hμ', hF', h⟩ := h2 v
     have h3 := lintegral_lt_top hF hF' (fun γ hγ g => by rw [hl v γ hγ g]) h
-    refine ⟨(hc v).aestronglyMeasurable, ?_⟩
-    rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
-    simpa using h3
+    rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
+    · simpa using h3
+    · exact (hc v).aestronglyMeasurable
   have hi : ∀ v w, Integrable (fun g => f v g * starRingEnd ℂ (f w g)) (μ.restrict F) := fun v w =>
     (hm v).integrable_mul (hm w).star
   refine ⟨LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun v w => ∫ g in F, f v g * starRingEnd ℂ (f w g) ∂μ)
@@ -138,7 +138,10 @@ theorem left_latticeGL {φ : Sm E N} (h : IsAutForm φ) (h' : IsSqInt φ.1) :
       one_mem' := fun g => by rw [one_mul]
       mul_mem' := fun {x y} hx hy g => by rw [mul_assoc, hx, hy]
       inv_mem' := fun {x} hx g => by rw [← hx, mul_inv_cancel_left] }
-  have : latticeGL E N ≤ S := sup_le (by rintro _ ⟨γ, rfl⟩; exact h.left γ) (Subgroup.zpowers_le.2 (h'.1 1))
+  have : latticeGL E N ≤ S := sup_le (by
+    intro x hx
+    obtain ⟨γ, rfl⟩ := (show x ∈ (ratGL E N).range from hx)
+    exact h.left γ) (Subgroup.zpowers_le.2 (h'.1 1))
   exact this
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField

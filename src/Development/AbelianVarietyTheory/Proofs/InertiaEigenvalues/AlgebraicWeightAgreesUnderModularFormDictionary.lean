@@ -133,23 +133,23 @@ theorem pair_ext {W : Type} [AddCommGroup W] [Module ℂ W] {ρ : Representation
   refine congrFun (Continuous.ext_on GlobalTheory.WeightRealExt.dense_rat_fin h1 h2 fun z hz => ?_) g
   obtain ⟨γ, hγ, k, hk, rfl⟩ := Set.mem_mul.1 hz
   obtain ⟨γ₀, hγ₀⟩ := GlobalTheory.WeightRealExt.exists_unitaryRationalMatrix_of_mem_definiteUnitaryRational hγ
-  have hR : R γ = ρ (GlobalTheory.WeightRealExt.ratPt γ₀) := hrat γ _ γ₀.1 hγ₀ rfl
-  have hM : GlobalTheory.WeightRealExt.polyMat P (γ * k) = LinearMap.toMatrix b b (a.ρ (GlobalTheory.WeightRealExt.ratPt γ₀)) := by
+  have hR : R γ = ρ ((GlobalTheory.WeightRealExt.ratPt (E := L) (n := n)) γ₀) := hrat γ _ γ₀.1 hγ₀ rfl
+  have hM : GlobalTheory.WeightRealExt.polyMat P (γ * k) = LinearMap.toMatrix b b (a.ρ ((GlobalTheory.WeightRealExt.ratPt (E := L) (n := n)) γ₀)) := by
     have hk' : cInf k = 1 := hk
     rw [GlobalTheory.WeightRealExt.polyMat_congr P (g := γ * k) (h := γ) (by rw [map_mul, hk', mul_one]),
       GlobalTheory.WeightRealExt.polyMat_rat P γ γ₀.1 hγ₀]
     exact (hP _ γ₀.1 rfl).symm
   have e1 : b.equivFun.symm (GlobalTheory.WeightRealExt.polyMat P (γ * k) *ᵥ c) =
-      a.ρ (GlobalTheory.WeightRealExt.ratPt γ₀) (b.equivFun.symm c) := by
+      a.ρ ((GlobalTheory.WeightRealExt.ratPt (E := L) (n := n)) γ₀) (b.equivFun.symm c) := by
     rw [hM, LinearEquiv.symm_apply_eq]
-    have := LinearMap.toMatrix_mulVec_repr b b (a.ρ (GlobalTheory.WeightRealExt.ratPt γ₀)) (b.equivFun.symm c)
+    have := LinearMap.toMatrix_mulVec_repr b b (a.ρ ((GlobalTheory.WeightRealExt.ratPt (E := L) (n := n)) γ₀)) (b.equivFun.symm c)
     rw [← b.equivFun_apply, ← b.equivFun_apply, LinearEquiv.apply_symm_apply] at this
     exact this
-  have e2 : ρ (GlobalTheory.WeightRealExt.ratPt γ₀) (R (γ * k)⁻¹ w) = w := by
+  have e2 : ρ ((GlobalTheory.WeightRealExt.ratPt (E := L) (n := n)) γ₀) (R (γ * k)⁻¹ w) = w := by
     rw [_root_.mul_inv_rev, map_mul, hfin _ ((finU (E := L) (n := n)).inv_mem hk), one_mul, ← hR, ← Module.End.mul_apply, ← map_mul,
       mul_inv_cancel, map_one, Module.End.one_apply]
   change B (R (γ * k)⁻¹ w) _ = B w _
-  rw [e1, ← hB (GlobalTheory.WeightRealExt.ratPt γ₀), e2]
+  rw [e1, ← hB ((GlobalTheory.WeightRealExt.ratPt (E := L) (n := n)) γ₀), e2]
 
 theorem phi_mem {F : FinIso L n} {π : NG.AutRep L n} {U : Submodule ℂ (UA L n → ℂ)} (hU : Dict F π U)
     (R : UA L n →* Module.End ℂ π.W) (hfin : ∀ k ∈ finU (E := L) (n := n), R k = 1)

@@ -113,7 +113,7 @@ theorem posU_zero {p : ι → Fin a × Fin a} (hp : IsNil p) : posU hp (0 : ι �
 theorem continuous_posU [TopologicalSpace R] [IsTopologicalRing R] {p : ι → Fin a × Fin a} (hp : IsNil p) :
     Continuous (posU hp : (ι → R) → GL (Fin a) R) := by
   have h : Continuous fun x : ι → R => posM p x := by
-    refine continuous_finset_sum _ fun t _ => ?_
+    refine continuous_finsetSum _ fun t _ => ?_
     refine continuous_matrix fun i j => ?_
     simp only [Matrix.single_apply]
     split_ifs
@@ -207,7 +207,7 @@ theorem StdPsi.map_dot (hψ : StdPsi ψ) {ι : Type} [Fintype ι] (ξ c : ι →
   rw [this, AddChar.map_add_eq_mul, hψ.rat, one_mul]
 
 theorem continuous_dot {ι : Type} [Fintype ι] (ξ : ι → E) : Continuous (dot ξ : (ι → Ad E) → Ad E) :=
-  continuous_finset_sum _ fun t _ => continuous_const.mul (continuous_apply t)
+  continuous_finsetSum _ fun t _ => continuous_const.mul (continuous_apply t)
 
 theorem per_blk {r m : ℕ} {f : GA E a → ℂ} (hc : Continuous f)
     (hl : ∀ (c : UnipotentBlockColumnIndex a r m → E) g, f (ratGL E a (blkU c) * g) = f g) (g : GA E a) :

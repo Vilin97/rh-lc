@@ -40,7 +40,7 @@ theorem exists_fixer_subset
     (fun m : {m : ℕ // 0 < m} => (fixer ρ p m.1 : Set G))
     (fun m => Subgroup.isClosed_of_isOpen _ (isOpen_fixer ρ hopen m.2))
     (by
-      rw [← Set.disjoint_iff_inter_eq_empty, Set.disjoint_left]
+      rw [Set.disjoint_left]
       intro g hg hg'
       exact hg (hJU g fun m hm => Set.mem_iInter.1 hg' ⟨m, hm⟩))
     (by
@@ -51,7 +51,7 @@ theorem exists_fixer_subset
       rwa [mul_comm] at this)
   refine ⟨m, hm, fun g hg => ?_⟩
   by_contra hc
-  exact Set.disjoint_left.1 (Set.disjoint_iff_inter_eq_empty.2 hmU) hc hg
+  exact Set.disjoint_left.1 hmU hc hg
 
 
 omit [CharP R p] in
@@ -178,14 +178,12 @@ theorem exists_matrixHom {l : ℕ} [Fact l.Prime] {G : Type} [Group G] {L V : Ty
             map_one' := ?_
             map_mul' := fun g h => ?_ }, fun _ _ _ => rfl⟩
   · ext i j
-    apply PadicInt.ext
     change e.repr (ρ 1 (e j)) i = _
     rw [map_one, Module.End.one_apply, e.repr_self, Finsupp.single_apply, Matrix.one_apply]
     by_cases h : i = j
     · rw [if_pos h, if_pos h.symm, PadicInt.coe_one]
     · rw [if_neg h, if_neg (Ne.symm h), PadicInt.coe_zero]
   · ext i j
-    apply PadicInt.ext
     rw [Matrix.mul_apply, PadicInt.coe_sum]
     simp only [PadicInt.coe_mul]
     change e.repr (ρ (g * h) (e j)) i = ∑ k, e.repr (ρ g (e k)) i * e.repr (ρ h (e j)) k
@@ -228,7 +226,6 @@ theorem isCrys_and_jump_eq_zero : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) 
         norm_sub_lt_one_of_fix AI g (fun m hm y hy => hg m hm y hy) x hx)
       rw [← map_one M]
       ext i j
-      apply PadicInt.ext
       rw [hM, hM, h, map_one, Module.End.one_apply])
   have hB : ∀ g, (Matrix.of fun i j => algebraMap ℚ_[l] P.R.B (e.repr (T.ρ g (e j)) i)) *
       (AI.ιA.mapMatrix W).map ((P.PD K).actB g) = AI.ιA.mapMatrix W := fun g => by

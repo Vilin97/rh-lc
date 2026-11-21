@@ -9,7 +9,7 @@ public import GroundTheory.GlobalFields.TateThesis.TateMain
 
 open NumberField Matrix MeasureTheory Filter Topology
 open scoped NumberField.AdeleRing SchwartzMap ContDiff
-open PositivityTheory.EisRk1 GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Adele2 GroundTheory.Automorphic.GodementSection IdeleGroup
+open GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Adele2 GroundTheory.Automorphic.GodementSection IdeleGroup
 
 namespace GlobalTheory.CompanionTheory.EisRk1
 

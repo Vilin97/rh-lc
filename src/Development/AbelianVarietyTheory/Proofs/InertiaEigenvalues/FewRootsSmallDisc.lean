@@ -24,7 +24,7 @@ theorem coeff_sum_monomial_pow (l : ℕ) [Fact l.Prime] (E : ℕ) (a : ℕ → �
   rw [finsetSum_coeff, Finset.sum_eq_single k]
   · simp [coeff_monomial]
   · intro i _ hik
-    rw [coeff_monomial, if_neg]
+    rw [coeff_monomial, Finsupp.single_apply, if_neg]
     intro h
     exact hik (Nat.pow_right_injective hl h)
   · intro h
@@ -46,7 +46,7 @@ theorem coeff_sum_monomial_small (l : ℕ) [Fact l.Prime] (E M : ℕ) (a : ℕ �
   · have h0 : (∑ i ∈ Finset.range (E + 1), monomial (l ^ i) (a i) : ℂ_[l][X]).coeff j = 0 := by
       rw [finsetSum_coeff]
       refine Finset.sum_eq_zero fun i hi => ?_
-      rw [coeff_monomial, if_neg]
+      rw [coeff_monomial, Finsupp.single_apply, if_neg]
       intro hij
       exact h ⟨i, by have := Finset.mem_range.mp hi; omega, hij⟩
     rw [h0, norm_zero, zero_mul]

@@ -8,7 +8,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSm
 open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.U3 UpperTheory.V.Fr
 
 theorem UpperTheory.V.Fr.alg_sep :
-    ∀ {C K : Type} [CommRing C] [IsLocalRing C] [CommRing K] [Algebra C K] {P : ℤ → Submodule C K} [SetLike.GradedMonoid P] (h : HasVertex P), IsNoetherianRing (lauSub P) → ⨅ N : ℕ, vertex P h ^ N = ⊥ := by
+    ∀ {C K : Type} [CommRing C] [IsLocalRing C] [CommRing K] [Algebra C K] {P : ℤ → Submodule C K} [SetLike.GradedMonoid P] (h : HasVertex P), IsNoetherianRing (lauSub P) → ⨅ N : ℕ, vertex h ^ N = ⊥ := by
   intro C K _ _ _ _ P _ h hN
   classical
   rw [eq_bot_iff]
@@ -18,7 +18,7 @@ theorem UpperTheory.V.Fr.alg_sep :
     ⟨AddMonoidAlgebra.single j (x.1.coeff j), single_mem_lauSub P (x.2 j)⟩
   have coeff_comp (x : lauSub P) (j : ℤ) :
       (comp x j).1 = AddMonoidAlgebra.single j (x.1.coeff j) := rfl
-  have comp_mem_vertex : ∀ x : lauSub P, x ∈ vertex P h → ∀ j, comp x j ∈ vertex P h := by
+  have comp_mem_vertex : ∀ x : lauSub P, x ∈ vertex h → ∀ j, comp x j ∈ vertex h := by
     intro x hx j
     change ∃ c ∈ maximalIdeal C, algebraMap C K c = (comp x j).1.coeff 0
     rw [coeff_comp, AddMonoidAlgebra.coeff_single]
@@ -27,8 +27,8 @@ theorem UpperTheory.V.Fr.alg_sep :
       rw [Finsupp.single_eq_same]
       exact hx
     · exact ⟨0, Ideal.zero_mem _, by rw [Finsupp.single_eq_of_ne' hj, map_zero]⟩
-  have comp_mem_pow : ∀ (N : ℕ) (x : lauSub P), x ∈ vertex P h ^ N →
-      ∀ j, comp x j ∈ vertex P h ^ N := by
+  have comp_mem_pow : ∀ (N : ℕ) (x : lauSub P), x ∈ vertex h ^ N →
+      ∀ j, comp x j ∈ vertex h ^ N := by
     intro N
     induction N with
     | zero =>
@@ -38,7 +38,7 @@ theorem UpperTheory.V.Fr.alg_sep :
     | succ n ih =>
       intro x hx
       rw [pow_succ] at hx
-      refine Submodule.mul_induction_on (C := fun z => ∀ j, comp z j ∈ vertex P h ^ (n + 1)) hx ?_ ?_
+      refine Submodule.mul_induction_on (C := fun z => ∀ j, comp z j ∈ vertex h ^ (n + 1)) hx ?_ ?_
       · intro y hy z hz j
         have e : comp (y * z) j =
             ∑ i ∈ y.1.coeff.support, comp y i * comp z (-i + j) := by
@@ -60,13 +60,13 @@ theorem UpperTheory.V.Fr.alg_sep :
     intro j
     let a := (p : AddMonoidAlgebra K ℤ).coeff j
     let q := comp p j
-    have hq : ∀ N : ℕ, q ∈ vertex P h ^ N := fun N => comp_mem_pow N p (hp N) j
-    have hq' : q ∈ ⨅ i : ℕ, (vertex P h) ^ i • (⊤ : Submodule (lauSub P) (lauSub P)) := by
+    have hq : ∀ N : ℕ, q ∈ vertex h ^ N := fun N => comp_mem_pow N p (hp N) j
+    have hq' : q ∈ ⨅ i : ℕ, (vertex h) ^ i • (⊤ : Submodule (lauSub P) (lauSub P)) := by
       rw [Submodule.mem_iInf]
       intro i
       simp only [Ideal.smul_eq_mul, Ideal.mul_top]
       exact hq i
-    obtain ⟨⟨r, hr⟩, hrq⟩ := (Ideal.mem_iInf_smul_pow_eq_bot_iff (vertex P h) q).1 hq'
+    obtain ⟨⟨r, hr⟩, hrq⟩ := (Ideal.mem_iInf_smul_pow_eq_bot_iff (vertex h) q).1 hq'
     have hrq' : r * q = q := hrq
     obtain ⟨c, hc, hcr⟩ := hr
     have h1 : ((r * q : lauSub P) : AddMonoidAlgebra K ℤ).coeff j =

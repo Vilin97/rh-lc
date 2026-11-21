@@ -147,6 +147,7 @@ theorem ev_act_X {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [
     simpa only [map_sub, pow_one] using h2
   have hbin : φ (bin (l := l) O δ) = φ (bin (l := l) O d) := by
     rw [hzero, zero_dvd_iff] at h2'
+    exact sub_eq_zero.mp h2'
   rw [act_X, map_sub, map_one, hbin, bin_nat, map_pow, h3]
   rw [ZMod.val_mul, ← pow_mul]
   congr 1

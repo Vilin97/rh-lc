@@ -158,7 +158,8 @@ theorem exists_int_sub_mem {E : Type} [Field E] [NumberField E] (v : HeightOneSp
   rw [hv, pow_one] at h
   rw [h] at hp
   have : Fact (Ideal.absNorm v.asIdeal).Prime := ⟨hp⟩
-  have hc : Nat.card (𝓞 E ⧸ v.asIdeal) = Ideal.absNorm v.asIdeal := rfl
+  have hc : Nat.card (𝓞 E ⧸ v.asIdeal) = Ideal.absNorm v.asIdeal :=
+    (Ideal.absNorm_eq_natCard v.asIdeal).symm
   have : Nontrivial (𝓞 E ⧸ v.asIdeal) := Ideal.Quotient.nontrivial_iff.2 v.isPrime.ne_top
   have hm := mem_zmultiples_of_prime_card hc (g := (1 : 𝓞 E ⧸ v.asIdeal)) (g' := Ideal.Quotient.mk _ x)
     one_ne_zero

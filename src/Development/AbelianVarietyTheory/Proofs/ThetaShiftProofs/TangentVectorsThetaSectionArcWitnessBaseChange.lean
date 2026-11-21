@@ -42,9 +42,14 @@ theorem sq_of_tri (hs : φ' ≫ π = Φ ≫ φ) {w₁ : LB.Iso M' (M₀.pull (Φ
   intro Z r z j i i' k hj hi hi' hk
   have hj' : π (φ' (r z)) ∈ M₀.U j := (congrArg (fun g => g (r z) ∈ M₀.U j) hs).mpr hj
   rw [← T₁ Z r z j i k hj hi hk, ← T₂ Z r z j i' k hj' hi' hk]
-  cases hs
-  cases eq_of_heq e
-  rfl
+  have gw_heq_local {X X' : Scheme.{0}} {L : LB X} {L' : LB X'} {F F' : X' ⟶ X}
+      (h : F = F') {a : LB.Iso L' (L.pull F)} {b : LB.Iso L' (L.pull F')}
+      (hab : HEq a b) {Z : Scheme.{0}} (f : Z ⟶ X') (z : Z) (j : L.ι) (k : L'.ι) :
+      gw a f z j k = gw b f z j k := by
+    subst h
+    obtain rfl := eq_of_heq hab
+    rfl
+  exact gw_heq_local hs.symm e r z j k
 
 theorem genRelR_baseChange (hs : φ' ≫ π = Φ ≫ φ) (S : Sq w wD wp w') (hw : w.IsGen) (hM : M.IsLB) (hM₀ : M₀.IsLB)
     {K : Type} [Fintype K] {ε : K → ℤ} {T T' N N' : Scheme.{0}} {o : K → (T ⟶ B)} {o' : K → (T' ⟶ B')}
@@ -57,9 +62,30 @@ theorem genRelR_baseChange (hs : φ' ≫ π = Φ ≫ φ) (S : Sq w wD wp w') (hw
     (hp : ∀ k, (v' ≫ o' k) ≫ φ' = κ' ≫ g' k)
     (H : GenRelR w (LB.pullGen _ _ _ t v) (LB.pullGen _ _ _ ν κ)) :
     GenRelR w' (LB.pullGen _ _ _ t' v') (LB.pullGen _ _ _ ν' κ') := by
+  have gm_pullU_eq_gm_comp {S T W : Scheme.{0}} (h : T ⟶ S) (r : W ⟶ T) (z : W) (V : S.Opens)
+      (a : Γ(S, V)ˣ) : gm r z (h ⁻¹ᵁ V) (pullU h V a) = gm (r ≫ h) z V a := by
+    by_cases hz : r z ∈ h ⁻¹ᵁ V
+    · have hz' : (r ≫ h) z ∈ V := hz
+      simp only [gm, dif_pos hz, dif_pos hz']
+      all_goals first
+      | rfl
+      | (ext; simp [pullU, Scheme.comp_app])
+    · have hz' : (r ≫ h) z ∉ V := hz
+      simp only [gm, dif_neg hz, dif_neg hz', MonoidHom.one_apply]
+
+  have gm_pullGen' {X Y : Scheme.{0}} (L : LB X) {K : Type} [Fintype K] (φ : K → (Y ⟶ X)) (ε : K → ℤ) (t : LB.Gen (LB.LinComb L φ ε))
+      {Z Z' : Scheme.{0}} (h : Z ⟶ Y) (r : Z' ⟶ Z) (z : Z') (j : K → L.ι) :
+      gm r z (LB.wchart L (fun k => h ≫ φ k) j) ((LB.pullGen L φ ε t h).s j) = gm (r ≫ h) z (LB.wchart L φ j) (t.s j) := by
+    by_cases hz : r z ∈ LB.wchart L (fun k => h ≫ φ k) j
+    · exact (gm_res r z _ hz (pullU h _ (t.s j))).trans (gm_pullU_eq_gm_comp h r z _ _)
+    · have hz' : (r ≫ h) z ∉ LB.wchart L φ j := fun H => hz (Set.mem_iInter.2 fun k => Set.mem_iInter.1 H k)
+      simp only [gm, dif_neg hz, dif_neg hz', MonoidHom.one_apply]
+      rfl
+
+
   have P := ConstGrp.pmaps_of_genRelR ((isGen_iff w).1 hw) hM hM₀ (DVR.pullGen_isGen _ _ _ _ ht v)
     (DVR.pullGen_isGen _ _ _ _ hν κ) H
-  have toStkA_valR_local {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (z : Sp A) (ht : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
+  have toStkA_valR_local {A : Type} [CommRing A] {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (z : Sp A) (ht : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
       toStkA z (valR x U a.val) = (gm x z U a).val := by
     have hz : x z ∈ U := ht (show z ∈ (⊤ : (Sp A).Opens) from trivial)
     have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c) = c :=

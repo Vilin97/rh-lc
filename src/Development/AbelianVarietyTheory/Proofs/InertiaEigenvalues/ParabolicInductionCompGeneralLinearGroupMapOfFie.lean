@@ -81,7 +81,8 @@ omit [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] in
 theorem map_mem_parab (e : (Σ a, m a) ≃ n) (φ : R →+* S) (p : parab R e) :
     GeneralLinearGroup.map φ (p : GL n R) ∈ parab S e :=
   mem_parab.2 fun i j h => by
-    rw [GeneralLinearGroup.map_apply, mem_parab.1 p.2 i j h, map_zero]
+    change φ (((p : GL n R) : Matrix n n R) i j) = 0
+    rw [mem_parab.1 p.2 i j h, map_zero]
 
 theorem leviProj_map (e : (Σ a, m a) ≃ n) (φ : R →+* S) (p : parab R e) :
     leviProj S e ⟨GeneralLinearGroup.map φ (p : GL n R), map_mem_parab e φ p⟩ =

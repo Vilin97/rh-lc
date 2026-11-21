@@ -46,6 +46,7 @@ theorem kerOp_integrable_continuous : ∀ (E : Type) [Field E] [NumberField E] [
       rw [norm_mul]
       exact mul_le_mul_of_nonneg_left (hC _) (norm_nonneg _)
   refine ⟨fun g => Integrable.mono' hint (hm g) (hbd g), ?_⟩
+  set_option synthInstance.maxHeartbeats 200000 in
   exact continuous_of_dominated hm hbd hint (Filter.Eventually.of_forall fun x =>
     continuous_const.mul (hφc.comp (continuous_id.mul continuous_const)))
 
