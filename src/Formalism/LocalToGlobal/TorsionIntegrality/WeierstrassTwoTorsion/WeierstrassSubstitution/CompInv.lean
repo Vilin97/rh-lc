@@ -77,7 +77,7 @@ theorem integration_spec : IntegSpec.{u} := by
     intro n
     unfold integ
     simp
-  have hd : derivative K (integ f) = f := by
+  have hd : PowerSeries.derivative (integ f) = f := by
     ext n
     rw [coeff_derivative, hc]
     have : ((n : K) + 1) ≠ 0 := Nat.cast_add_one_ne_zero n

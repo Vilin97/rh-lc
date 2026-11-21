@@ -29,7 +29,7 @@ theorem cyclo_comp_mul_X {R : Type} [CommRing R] (p : ℕ) [hp : Fact p.Prime] :
   rw [Polynomial.cyclotomic_prime]
   have hc : (∑ i ∈ Finset.range p, (Polynomial.X : Polynomial R) ^ i).comp (Polynomial.X + 1) =
       ∑ i ∈ Finset.range p, (Polynomial.X + 1) ^ i := by
-    simp [Polynomial.comp, Polynomial.eval₂_finset_sum]
+    simp [Polynomial.comp, Polynomial.eval₂_finsetSum]
   have h := geom_sum_mul (Polynomial.X + 1 : Polynomial R) p
   rw [add_sub_cancel_right] at h
   rw [hc, h]

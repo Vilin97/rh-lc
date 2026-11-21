@@ -110,10 +110,11 @@ theorem urep_tw {ε : Fin n → Bool} {σ : Matrix (Fin n) (Fin n) ℂ → (H �
 
 theorem derived_tw {ε : Fin n → Bool} {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {D : Submodule ℂ H}
     {E : Fin n → Fin n → Module.End ℂ D} (hD : IsDerivedOn ε σ D E) :
-    IsDerivedOn (ε ∘ Fin.rev) (fun g => σ (phiR g)) D (twE ε E) where
-  glRep := twE_gl hD.glRep
-  kStable := fun k hk v hv => hD.kStable _ (phiR_K hk) v hv
-  deriv := fun X hX v => by
+    IsDerivedOn (ε ∘ Fin.rev) (fun g => σ (phiR g)) D (twE ε E) := by
+  refine ⟨twE_gl hD.glRep, ?_, ?_⟩
+  · intro k hk v hv
+    exact hD.kStable (phiR k) (phiR_K hk) v hv
+  · intro X hX v
     have := hD.deriv (phiR X) (phiR_G hX) v
     rw [actM_tw E hX] at this
     have hf : (fun t : ℝ => σ (phiR (NormedSpace.exp ((t : ℂ) • X))) (v : H)) =
@@ -158,6 +159,8 @@ theorem dualLowestKType_of_standard (hK : EigenspaceWeightConeStandard n) : Eige
     rw [hW] at this
     apply cone_rev
     convert this using 1
+    funext a
+    simp only [Pi.sub_apply]
     ring
   · have h1' := xs_tw (ε := ε) h1
     rw [← hθ, ← hG] at h1'

@@ -118,10 +118,12 @@ variable {l : ℕ} [Fact l.Prime] {ι : Type} [DecidableEq ι] {N : ℕ} {F : Fr
   {jK : F.K →* alg F.O N lam} {W : Type} [AddCommGroup W] [Module F.O W] [Module (alg F.O N lam) W]
   [IsScalarTower F.O (alg F.O N lam) W]
 
+open scoped IsMulCommutative in
 def heckeAlg (hOk : F.Ok) (hJ : F.IsJ lam jK) : F.T →ₐ[F.O] Module.End F.O (Forms F.O (A := alg F.O N lam) F.Γ jK W) :=
-  letI : CommRing (Algebra.adjoin F.O (Set.range (op (W := W) hOk hJ))) := Algebra.adjoinCommRingOfComm F.O (by
-    rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩
-    exact op_comm hOk hJ i j)
+  letI : IsMulCommutative (Algebra.adjoin F.O (Set.range (op (W := W) hOk hJ))) :=
+    Algebra.isMulCommutative_adjoin F.O (by
+      rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩ _
+      exact op_comm hOk hJ i j)
   (Algebra.adjoin F.O (Set.range (op (W := W) hOk hJ))).val.comp
     (MvPolynomial.aeval fun i => ⟨op hOk hJ i, Algebra.subset_adjoin ⟨i, rfl⟩⟩)
 

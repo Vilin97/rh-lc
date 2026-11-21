@@ -14,6 +14,9 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBasisI
 open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount GlobalTheory.LKCx
 open scoped TensorProduct Classical
 
+
+#check GlobalTheory.IntBasisKQ.exists_basis_intKQ
+
 noncomputable section
 
 open scoped Pointwise
@@ -113,6 +116,8 @@ theorem rho_charpoly_sep (G : HTGroup p) (w : Fin G.m) (y : G.C) (hdeg : (minpol
     have h := linearIndependent_pow (K := G.F) y
     rw [hdeg] at h
     exact h
+  letI : Module.Free G.F (G.Fw w) := Module.Free.of_divisionRing _ _
+  letI : Module.Flat G.F (G.Fw w) := Module.Flat.of_free
   have hliC : LinearIndependent (G.Fw w) (fun i : Fin G.n => z ^ (i : ℕ)) := by
     have h := Module.Flat.linearIndependent_one_tmul (S := G.Fw w) hliF
     convert h using 1

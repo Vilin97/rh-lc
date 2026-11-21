@@ -17,7 +17,7 @@ private theorem tf (F Ω : Type) [Field F] [Field Ω] [Algebra F Ω] : Module.Is
 
 section SlopeTestRemainingChoices
 
-attribute [local instance high] tf
+attribute [local instance 10000] DivisionSemiring.to_moduleIsTorsionFree
 
 variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] [CharZero Ω] [IsAlgClosure ℚ Ω]
 

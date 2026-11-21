@@ -49,8 +49,8 @@ private theorem levCore (hF : Fit T S VL A) {n : ℕ} (x : UA L n) (hx : x ∈ f
     (hK : ∀ v, P v ↔ ∀ w, un w = v → cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n))
     (hE : ∀ w (_ : w ∈ S) (h : IsSplitAt w) (hv : un w ∈ A.Sg),
       cLoc w x = Matrix.GeneralLinearGroup.map ((T w h).i : Kv (un w) →+* Kw w) (E (un w) hv)) :
-    ((∀ v (h : v ∈ A.Sg), E v h ∈ (A.V v).J n) ∧ ∀ v ∉ A.Sg, P v) ↔ x ∈ lev (Kall L n) S VL := by
-  have memL : x ∈ lev (Kall L n) S VL ↔
+    ((∀ v (h : v ∈ A.Sg), E v h ∈ (A.V v).J n) ∧ ∀ v ∉ A.Sg, P v) ↔ x ∈ lev (Kall (L := L) n) S VL := by
+  have memL : x ∈ lev (Kall (L := L) n) S VL ↔
       (x ∈ finU (E := L) (n := n) ∧ ∀ w, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n)) ∧ ∀ w ∈ S, cLoc w x ∈ (VL w).J n := by
     simp [lev, Kall, Subgroup.mem_inf, Subgroup.mem_iInf]
   rw [memL]
@@ -149,13 +149,13 @@ private theorem hsS (w : Plc L) (hw : w ∈ S) (h : IsSplitAt w) (hv : un w ∈ 
 private theorem hfS (g : SA B.Δ) : (B.bS g : UA L 2) ∈ finU (E := L) (n := 2) := (B.bS g).2.1
 
 include hB hF in
-private theorem cl1 (hA : A.Ok) (g : GA B.Δ) : g ∈ A.dat.UG ↔ (B.bG g : UA L 3) ∈ lev (Kall L 3) S VL :=
+private theorem cl1 (hA : A.Ok) (g : GA B.Δ) : g ∈ A.dat.UG ↔ (B.bG g : UA L 3) ∈ lev (Kall (L := L) 3) S VL :=
   ((datOk _ _ A hA).2.2.2.1 g).trans (levCore T hF _ (B.bG g).2 (fun v => g.1 v ∈ KU (Ov v) _)
     (fun v h => eU (A.hs v h) (g.1 v)) (fun v => hB.KG g v) (fun w hw h hv => hsG hB T hF w hw h hv g))
 
 include hB hF in
 private theorem cl2 (hA : A.Ok) (g : SA B.Δ) :
-    (g : DA B.Δ) ∈ A.dat.U2 ↔ (B.bS g : UA L 2) ∈ lev (Kall L 2) S VL :=
+    (g : DA B.Δ) ∈ A.dat.U2 ↔ (B.bS g : UA L 2) ∈ lev (Kall (L := L) 2) S VL :=
   ((datOk _ _ A hA).2.2.2.2 (g : DA B.Δ)).trans (levCore T hF _ (hfS g) (fun v => (g : DA B.Δ).1 v ∈ KD _ (Ov v))
     (fun v h => eD (A.hs v h) ((g : DA B.Δ).1 v)) (fun v => hB.KS g v) (fun w hw h hv => hsS hB T hF w hw h hv g))
 

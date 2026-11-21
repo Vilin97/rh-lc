@@ -30,10 +30,10 @@ private theorem pInf_id' (u : (TR.Rinf ℚ)ˣ) : TR.pInf ℚ (TR.infId ℚ u).va
   simp [h]
 
 private theorem re_iy' {s : ℝ} (hs : s ≠ 0) : UpperTheory.ConvolutionTheory.RankTwoDescent.re (UpperTheory.ConvolutionTheory.RankTwoDescent.iy s : A ℚ) = s := by
-  simp only [UpperTheory.ConvolutionTheory.RankTwoDescent.re, UpperTheory.ConvolutionTheory.RankTwoDescent.iy, dif_neg hs, pInf_id']
+  simp only [UpperTheory.ConvolutionTheory.RankTwoDescent.re, UpperTheory.ConvolutionTheory.RankTwoDescent.iy, dite_eq_right hs, pInf_id']
 
 private theorem snd_iy' {s : ℝ} (hs : s ≠ 0) : (UpperTheory.ConvolutionTheory.RankTwoDescent.iy s : A ℚ).2 = 1 := by
-  simp only [UpperTheory.ConvolutionTheory.RankTwoDescent.iy, dif_neg hs]
+  simp only [UpperTheory.ConvolutionTheory.RankTwoDescent.iy, dite_eq_right hs]
   change (1 : FiniteAdeleRing (𝓞 ℚ) ℚ) - 0 + 0 = 1
   simp
 
@@ -55,7 +55,7 @@ theorem UpperTheory.schwartzBruhat_translate_decay_bound :
     (((continuous_apply Rat.infinitePlace).comp continuous_fst).comp (hent i j)).norm
   obtain ⟨B1, hB1⟩ := hC.exists_bound_of_continuousOn
     (f := fun k : GL (Fin 2) (A ℚ) => ∑ i, ∑ j, ‖((k⁻¹).val i j).1 Rat.infinitePlace‖)
-    (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => hnorm i j).continuousOn
+    (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => hnorm i j).continuousOn
   have hBk0 : 0 ≤ max B1 0 := le_max_right _ _
   have hBk : ∀ k ∈ C, ∀ i j, |UpperTheory.ConvolutionTheory.RankTwoDescent.re ((k⁻¹).val i j)| ≤ max B1 0 := by
     intro k hk i j

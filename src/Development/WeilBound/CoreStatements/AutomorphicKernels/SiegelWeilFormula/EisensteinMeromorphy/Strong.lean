@@ -90,5 +90,8 @@ theorem eisStrong_of : EisBL → EisStrong := by
     rw [← (hsum z hzt g).tsum_eq]
     unfold PositivityTheory.SiegelWeilFormula.SD.eis GlobalTheory.Eis.cosetSum
     congr 1
+    funext q
+    simp only [eisTerm, flat, GlobalTheory.Eis.term, PositivityTheory.SiegelWeilFormula.SD.Ht,
+      Real.coe_toNNReal _ (hgt_nonneg d.ok.hgt _)]
 
 end PositivityTheory.SiegelWeilFormula.Khead

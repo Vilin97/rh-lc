@@ -16,8 +16,11 @@ namespace GroundTheory.PAdicHodge
 
 variable {p : ℕ} [Fact p.Prime]
 
-section Algebra
+local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
+local notation "𝔹dR" => BDeRham (normInteger ℂ_[p]) p
+local notation "Fil" => IsPerfectoidField.fil ℂ_[p] p
 
+section Algebra
 
 variable (p) in
 def algClToBdRField : PadicAlgCl p →+* 𝔹dR := (algebraMap 𝔹 𝔹dR).comp (algClToBdR p).toRingHom

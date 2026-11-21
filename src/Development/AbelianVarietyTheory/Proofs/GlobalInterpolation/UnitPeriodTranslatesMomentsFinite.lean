@@ -56,9 +56,26 @@ theorem wop_transport (D : D7) (T : Tor D) {N N' g : ℕ} (S : JMB.Setup g) (e :
     rw [qH, JMB.beta, hhf, hd, Complex.re_ofReal_mul]
   have hU := U_transport D T S.Hm e hhf t F
   have hUy := U_transport D T S.Hm e hhf y (U D T t F)
+  have hphase : wPh D T p y = Complex.exp ((Real.pi : ℂ) * Complex.I * (qH D T y : ℂ)) := by
+    have hE : Complex.exp ((Real.pi : ℂ) * Complex.I * (qH D T y : ℂ)) = (-1 : ℂ) ^ m := by
+      rw [hqH.trans hm, show (Real.pi : ℂ) * Complex.I * ((m : ℝ) : ℂ) = (m : ℂ) * (Real.pi * Complex.I) by
+        push_cast; ring, Complex.exp_int_mul, Complex.exp_pi_mul_I]
+    unfold wPh
+    split_ifs with hp
+    · rfl
+    · rw [hE]
+      have hex : ∃ s : ℂ, ∃ (k : ℕ) (m' : ℤ), (p : ℝ) ^ k * qH D T y = (m' : ℝ) ∧ s = (-1 : ℂ) ^ m' :=
+        ⟨(-1 : ℂ) ^ m, 0, m, by rw [hqH.trans hm]; simp, rfl⟩
+      obtain ⟨k, m', hm', hs⟩ := Classical.epsilon_spec hex
+      rw [hs]
+      rw [hqH.trans hm] at hm'
+      have hm'' : m' = (p : ℤ) ^ k * m := by exact_mod_cast hm'.symm
+      have hodd : Odd ((p : ℤ) ^ k) := by
+        have := ((Fact.out : p.Prime).odd_of_ne_two hp).pow (n := k)
+        exact_mod_cast this
+      rw [hm'', zpow_mul, hodd.neg_one_zpow]
   funext z
-  rw [JMB.opW, hU, Wop, I3.JetMomEq.wPh_of_int T y m (hqH.trans hm), hqH]
-  rw [hUy]
+  simp only [JMB.opW, hU, hUy, Wop, hphase, hqH]
 
 theorem jet_transport (D : D7) {N N' g : ℕ} (e : VC D N N' ≃L[ℂ] (Fin g → ℂ)) (G : VC D N N' → ℂ)
     (hG : ContDiff ℂ ⊤ G) (k : ℕ) (v : Fin k → VC D N N') :

@@ -57,7 +57,7 @@ theorem conj_mem_levG (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (Λ M : Lat
     (hPg : ∀ PP ∈ Ld.Pg, ¬ P ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) (hκ : InK V M P κ) :
     t⁻¹ * κ * t ∈ Lev.levG V β Ld := by
   haveI : Submodule.IsLattice D.host.E Λ := hΛ.1
-  have hfg : Λ.FG := Submodule.IsLattice.fg (A := D.host.E)
+  have hfg : Λ.FG := Submodule.IsLattice.fg (A := D.host.E) Λ
   obtain ⟨hκf, hκ1⟩ := (KOpen.mem_grpAt_iff V P κ).1 hκ.1
   have hy : t⁻¹ * κ * t ∈ GfC V := (GfC V).mul_mem ((GfC V).mul_mem ((GfC V).inv_mem ht) hκf) ht
   have hproj : ∀ v, ¬ P v → GlobalTheory.AdelicU.proj D.sp.cm.sig V.gram v (t⁻¹ * κ * t) = 1 := fun v hv => by

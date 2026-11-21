@@ -83,11 +83,11 @@ variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {
 private theorem muBase_un (hmu : ∀ j x, Un ι τ ((L.C.mu0 j).loc w x : ℂ)) (c : ℕ) (x : (Kw w)ˣ) :
     Un ι τ (((muBase L c).loc w x : ℂˣ) : ℂ) := by
   rcases c with _ | c
-  · simpa [muBase] using (Un.one : Un ι τ 1)
+  · simpa [muBase, HChar.loc] using (Un.one : Un ι τ 1)
   · simp only [muBase]
     split_ifs with h
     · exact hmu _ _
-    · simpa using (Un.one : Un ι τ 1)
+    · simpa [HChar.loc] using (Un.one : Un ι τ 1)
 
 variable {t : T} (hmu : ∀ j x, Un ι τ ((L.C.mu0 j).loc w x : ℂ)) (hxi : ∀ x, Un ι τ ((L.xiH t).loc w x : ℂ))
 include hmu hxi

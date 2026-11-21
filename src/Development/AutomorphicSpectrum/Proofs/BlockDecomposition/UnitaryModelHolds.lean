@@ -140,6 +140,8 @@ theorem transfer {ι J : Type} [Fintype J] [DecidableEq J] (b : J → ι) (A : M
     · intro c
       rw [diagOp_eq, op_apply]
       congr 1
+      funext j
+      simp only [Matrix.mulVec_diagonal, Pi.smul_apply, smul_eq_mul, Function.comp_apply]
       by_cases h0 : v (e.symm j) = 0
       · simp [h0]
       · rw [hs _ h0]
@@ -184,7 +186,8 @@ theorem uModel : UModel := by
     show A * _ = _ * A
     simp only [A]
     rw [← Matrix.blockDiagonal'_mul, ← Matrix.blockDiagonal'_mul]
-    congr 1
+    funext k
+    simp
   obtain ⟨d, blk, u, h1, h2, h3⟩ := transfer (fun j : (Σ i, ∀ w, Fin (Module.finrank ℂ (X i w))) => j.1) A hc
   refine ⟨d, blk, u, h1, fun c k => ?_, fun i₀ h => ?_⟩
   · rw [h2, diagonal_sigma]

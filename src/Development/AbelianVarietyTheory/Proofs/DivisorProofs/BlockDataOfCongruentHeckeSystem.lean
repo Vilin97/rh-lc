@@ -89,7 +89,7 @@ theorem blockFor_of_congr : GlobalTheory.Published.ChebotarevDegreeOne → ∀ (
   have dq : ∀ σ, (q σ).natDegree = P.Nr := fun σ => by
     simp only [hq]
     rw [(Matrix.charpoly_monic _).natDegree_mul (monic_prod_of_monic _ _ fun s _ => monic_X_sub_C _),
-      Matrix.charpoly_natDegree_eq_dim, natDegree_finset_prod_X_sub_C_eq_card, Fintype.card_fin,
+      Matrix.charpoly_natDegree_eq_dim, natDegree_finsetProd_X_sub_C_eq_card, Fintype.card_fin,
       Finset.card_univ, Fintype.card_fin, hat]
 
   have cp : CoeffCont p := fun k =>

@@ -79,12 +79,12 @@ variable (D : D7) (r j p : ℕ) (M : MP D p) (Q : Type) (fl : Q → CF p) (Lt : 
   secAdd := fun _ => inferInstance
   H0 := fun _ => ⊤
   nrm := fun _ _ _ => 0
-  nrm_nonneg := by exists_prescribed_local_data
-  norm_le_one_of_mem_sections := by exists_prescribed_local_data
+  nrm_nonneg := fun _ _ _ => le_rfl
+  norm_le_one_of_mem_sections := fun _ _ _ _ => zero_le_one
   GIso := fun _ _ => Empty
   vrat := fun _ _ => 0
   Lb := fun _ => ()
-  Lb_inv := by exists_prescribed_local_data
+  Lb_inv := fun _ => trivial
   nrmRef := fun _ _ _ => 0
   DVP := M.Gn
   dvRho := fun _ => 0
@@ -98,7 +98,7 @@ variable (D : D7) (r j p : ℕ) (M : MP D p) (Q : Type) (fl : Q → CF p) (Lt : 
 
   PL := Unit
   phiAt := fun _ _ _ => 0
-  phiAt_zero := by exists_prescribed_local_data
+  phiAt_zero := fun _ {_} _ _ => rfl
   divGe := fun _ _ _ _ => True
   FJd := Unit
   Chr := fun _ => Unit
@@ -143,7 +143,7 @@ variable (D : D7) (r j p : ℕ) (M : MP D p) (Q : Type) (fl : Q → CF p) (Lt : 
   snAdd := fun _ _ _ => inferInstance
   snMod := fun _ _ _ => inferInstance
   act := fun _ _ _ => 1
-  act_scal := by exists_prescribed_local_data
+  act_scal := fun _ _ _ _ _ => Subsingleton.elim _ _
   vth := fun _ _ _ => 0
   Jet := fun _ _ _ _ => PUnit
   jAdd := fun _ _ _ _ => inferInstance
@@ -216,7 +216,9 @@ variable (D : D7) (r j p : ℕ) (M : MP D p) (Q : Type) (fl : Q → CF p) (Lt : 
   genFin := fun _ => M.fin
   genNe := fun _ => M.ne
   redK := fun _ y => y
-  dvRho_pos_iff := fun _ _ => by simp
+  dvRho_pos_iff := fun _ _ => by
+    show 0 < (0 : ℕ) ↔ ¬ True
+    simp
   genK := fun η => η
   redK_genK := fun _ => rfl
   imgM := fun χ => Empty.elim χ
@@ -230,12 +232,12 @@ variable (D : D7) (r j p : ℕ) (M : MP D p) (Q : Type) (fl : Q → CF p) (Lt : 
   ptK := fun _ _ => q₀
   ptK_good := fun _ _ => ⟨fun _ => rfl, fun _ => h₀⟩
   vpi := fun _ => 1
-  vpi_pos := by exists_prescribed_local_data
+  vpi_pos := fun _ => zero_lt_one
   ordGe := fun _ _ _ _ => True
   yEta := fun _ => q₀
   yEta_good := fun _ => ⟨fun _ => trivial, fun _ => h₀⟩
   homSh := fun _ _ => ()
-  homSh_inv := by exists_prescribed_local_data
+  homSh_inv := fun _ _ _ _ => trivial
   isoSec := fun _ => 0
   nrm_isoSec := fun φ => Empty.elim φ
   isoSymm := fun φ => Empty.elim φ
@@ -246,20 +248,20 @@ variable (D : D7) (r j p : ℕ) (M : MP D p) (Q : Type) (fl : Q → CF p) (Lt : 
   lieL := fun _ => ⊤
   eig := fun _ _ => ⊤
   Wst := fun _ _ _ => ⊤
-  Wst_le := by exists_prescribed_local_data
+  Wst_le := fun _ _ _ => le_rfl
   taut := fun _ _ _ => ⊤
-  taut_eq := by exists_prescribed_local_data
+  taut_eq := fun _ _ _ => by simp
   nrmIn := fun _ _ _ _ => 0
-  nrmRef_def := by exists_prescribed_local_data
-  nrm_Lb_def := by exists_prescribed_local_data
-  om_smul := by exists_prescribed_local_data
+  nrmRef_def := fun _ _ _ => rfl
+  nrm_Lb_def := fun _ _ _ => rfl
+  om_smul := fun _ _ _ _ _ => AddSubgroup.mem_top _
   TC := fun _ => PUnit
   tcAdd := fun _ => inferInstance
   tcMod := fun _ => inferInstance
   iT := fun _ => 0
-  iT_span := by exists_prescribed_local_data
+  iT_span := fun _ => Subsingleton.elim _ _
   htC := fun _ => 0
-  htC_iT := by exists_prescribed_local_data
+  htC_iT := fun _ _ => rfl
   psiC := fun _ => 0
   lieGt1 := fun _ => ⊤
   eT := fun _ _ => 0

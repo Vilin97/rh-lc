@@ -172,7 +172,9 @@ theorem fc_inj_pt_per {B : Base F E} (hB : B.IsGood σ) (b : GL (Fin n ⊕ Fin n
     (fun T β => hψ.2.1 _)
     (chr_ker hB hb)
     lam 𝓖 hlam hFD (fun β => f (nb β * x))
-    (hf.comp ((PositivityTheory.SiegelWeilFormula.kfour.nb_continuous hσ hb hnb).mul continuous_const))
+    (by
+      set_option synthInstance.maxHeartbeats 400000 in
+        exact hf.comp ((PositivityTheory.SiegelWeilFormula.kfour.nb_continuous hσ hb hnb).mul continuous_const))
     (fun γ hγ β => by
       show f (nb (γ + β) * x) = f (nb β * x)
       rw [PositivityTheory.SiegelWeilFormula.kfour.nb_add hnb, mul_assoc]

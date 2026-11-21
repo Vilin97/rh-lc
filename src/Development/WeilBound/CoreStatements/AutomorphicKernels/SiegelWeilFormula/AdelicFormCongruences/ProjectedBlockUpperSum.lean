@@ -74,7 +74,7 @@ def Qa (ε : ℤˣ) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F E
 
 theorem uZ_unitary (ε : ℤˣ) (u : Fin L.n → AE F E) : (uZ L u)ᵀ * Qa (d := d) ε * (uZ L u).map (cA σ) = Qa ε := by
   have hσ := kfour.sigma_sigma_of_good d.ok.good
-  have hcc := GlobalTheory.EisBL.DoubledUnipotentRadical.cA_cA σ hσ
+  have hcc := kfour.cA_cA' σ hσ
   have hD : (uD (σ := σ) L u).map (cA σ) = 1 - (uN L u)ᵀ := by
     ext i j
     simp only [uD, Matrix.map_apply, Matrix.sub_apply, Matrix.transpose_apply, map_sub, hcc, Matrix.one_apply]
@@ -191,7 +191,7 @@ theorem projected_block_upper_sum {ε : ℤˣ} (A D : Matrix (Fin d.n) (Fin d.n)
 theorem uM_eq {uM : (Fin L.n → AE F E) → d.G} {ν 𝓤} (h : L.UData uM ν 𝓤) : uM = unipotentPoint L := by
   obtain ⟨ε, hε⟩ := d.ok.frame.1
   have hσ := kfour.sigma_sigma_of_good d.ok.good
-  have hcc := GlobalTheory.EisBL.DoubledUnipotentRadical.cA_cA σ hσ
+  have hcc := kfour.cA_cA' σ hσ
   funext u
   obtain ⟨a', ha'⟩ := h.1 u
   refine kfour.inFrame_injective d.b ?_
@@ -282,8 +282,8 @@ theorem finOne_mul {a : AF F} (ha : a.2 = 0) : finOne F * a = 0 :=
 theorem sum_mem_Sw (w : InfinitePlace F) (s : Fin (Module.finrank F E) → AF F) (hs : ∀ k, (s k).2 = 0 ∧ ∀ w', w' ≠ w → (s k).1 w' = 0) :
     ∑ k, s k • kfour.bsA F E k ∈ Sw d w := by
   refine ⟨fun w' hw' => ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [St.piInf_smul, (hs k).2 w' hw', map_zero, zero_mul]
   · rw [Finset.smul_sum]

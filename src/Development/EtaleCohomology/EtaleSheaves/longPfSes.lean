@@ -96,8 +96,6 @@ theorem nat2 {K L : Cx R} (g : K ⟶ L) (N : ℕ) :
     rw [pf, dite_eq_left rfl, pf, dite_eq_left rfl, trm_f g (N + 1) _ (by omega)]
     simp [CochainComplex.singleFunctor, CochainComplex.singleFunctors, HomologicalComplex.single_map_f_self,
       HomologicalComplex.singleObjXSelf]
-    erw [Category.id_comp, Category.id_comp, Category.assoc, Category.assoc, Iso.inv_hom_id_assoc]
-    rfl
   · exact (SgZ L N i h).eq_of_tgt _ _
 
 theorem sesK (K : Cx R) (N : ℕ) : (ShortComplex.mk (ι K N) (pp K N) (ιp K N)).ShortExact := by

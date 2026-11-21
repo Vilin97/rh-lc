@@ -22,7 +22,7 @@ private theorem cpt_finAd {D : D7} (Q : Pl D.host.E) (z : AE D) :
     have h2 := congrArg (fun s : FiniteAdeleRing (𝓞 D.host.E) D.host.E => s Q)
       ((GlobalTheory.LFun.toFinAd_tmul (F := D.host.F) a.2 x).trans (mul_comm _ _))
     exact h1.trans h2.symm
-  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingEquiv.map_add (f := _), ha, hb]; rfl
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingEquiv.map_add (e := _), ha, hb]; rfl
 
 private theorem cpt_loc {D : D7} (w Q : Pl D.host.E) (y : (Kw w)ˣ) :
     cpt (D := D) Q (toEAf D (GlobalTheory.LFun.locIdele D.host.F w y : AE D)) =

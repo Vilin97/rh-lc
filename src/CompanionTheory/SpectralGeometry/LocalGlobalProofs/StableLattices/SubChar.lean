@@ -70,12 +70,12 @@ theorem L_core : ∀ (W : Type) [AddCommGroup W] [Module ℂ W] (t : W) (M : ℕ
       mem_image.2 ⟨j, mem_range.2 (Nat.lt_succ_of_le hj), rfl⟩⟩))
   set R := Algebra.adjoin ℂ (S : Set (Module.End ℂ W)) with hR
   have hcomm : ∀ x ∈ R, ∀ y ∈ R, x * y = y * x := by
-    letI := Algebra.adjoinCommRingOfComm ℂ (s := (S : Set (Module.End ℂ W))) (fun a ha b hb => by
+    letI := Algebra.isMulCommutative_adjoin ℂ (s := (S : Set (Module.End ℂ W))) (fun a ha b hb _ => by
       obtain ⟨i, j, rfl⟩ := hS a ha
       obtain ⟨k, l, rfl⟩ := hS b hb
       exact c4 i k j l)
     intro x hx y hy
-    exact congrArg Subtype.val (mul_comm (⟨x, hx⟩ : R) ⟨y, hy⟩)
+    exact congrArg Subtype.val (mul_comm' (⟨x, hx⟩ : R) ⟨y, hy⟩)
   obtain ⟨f, f1, f2, f3, f4⟩ := sub_char R hcomm ⟨S, rfl⟩ t ht
   have fsum : ∀ (A : Finset ℕ) (g : ℕ → Module.End ℂ W), (∀ j ∈ A, g j ∈ R) → (∑ j ∈ A, g j) ∈ R ∧
       f (∑ j ∈ A, g j) = ∑ j ∈ A, f (g j) := by
@@ -253,6 +253,8 @@ theorem coBlock : InjU → GenCOU → COBlock := by
       unfold fb
       rw [map_list_prod, List.map_ofFn]
       congr 2
+      funext i
+      simpa [Function.comp_def, Xq, hs] using (map_qdet ρ _ (Y + shift (sz lev M) i)).symm
     rw [e1]
     refine Submodule.linearMap_qext _ (LinearMap.ext fun z => ?_)
     obtain ⟨hz, e⟩ := hρ (fb (sz lev M) h Y) z

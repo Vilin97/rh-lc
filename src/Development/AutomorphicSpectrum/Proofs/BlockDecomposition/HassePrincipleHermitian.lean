@@ -123,7 +123,12 @@ theorem exists_real_hom (τ : F →+* ℝ) : ∃ ψ : Ainf F →+* ℝ, ∀ x, �
   have h1 : (InfinitePlace.Completion.extensionEmbeddingOfIsReal hv).comp
       (Pi.evalRingHom (fun w : InfinitePlace F => w.Completion) v) (algebraMap F (Ainf F) x) =
         InfinitePlace.embedding_of_isReal hv x :=
-    InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hv ((WithAbs.equiv v.1).symm x)
+    by
+      simpa only [RingHom.comp_apply, Pi.evalRingHom_apply,
+        NumberField.InfiniteAdeleRing.algebraMap_apply,
+        InfinitePlace.Completion.algebraMap_apply, RingEquiv.apply_symm_apply,
+        WithAbs.equiv_symm_apply, WithAbs.equiv_apply, WithAbs.ofAbs_toAbs] using
+        InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hv ((WithAbs.equiv v.1).symm x)
   refine h1.trans ?_
   apply Complex.ofReal_injective
   rw [InfinitePlace.embedding_of_isReal_apply, InfinitePlace.embedding_mk_eq_of_isReal hφ]

@@ -12,7 +12,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory
 
-theorem multilinear_quadratic_isHomogeneous : ∀ (P : Type) [AddCommGroup P] (g n : ℕ) (M : MultilinearMap ℤ (fun _ : Fin g => P) ℤ) (a : Fin n → Fin n → P), ∃ F : MvPolynomial (Fin n) ℤ, F.IsHomogeneous (2 * g) ∧ ∀ m : Fin n → ℤ, MvPolynomial.eval m F = M (fun _ => ∑ i, ∑ j, (m i * m j) • a i j) := by
+theorem multilinear_quadratic_isHomogeneous : ∀ (P : Type) [AddCommGroup P] (g n : ℕ) (M : (Fin g → P) →ₘₗ[ℤ] ℤ) (a : Fin n → Fin n → P), ∃ F : MvPolynomial (Fin n) ℤ, F.IsHomogeneous (2 * g) ∧ ∀ m : Fin n → ℤ, MvPolynomial.eval m F = M (fun _ => ∑ i, ∑ j, (m i * m j) • a i j) := by
   intro P _ g n M a
   refine ⟨∑ r : Fin g → Fin n × Fin n, MvPolynomial.C (M (fun k => a (r k).1 (r k).2)) *
       ∏ k, (MvPolynomial.X (r k).1 * MvPolynomial.X (r k).2), ?_, ?_⟩
@@ -34,5 +34,6 @@ theorem multilinear_quadratic_isHomogeneous : ∀ (P : Type) [AddCommGroup P] (g
       simp only [map_sum, map_mul, MvPolynomial.eval_C, map_prod, MvPolynomial.eval_X]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [MultilinearMap.map_smul_univ, smul_eq_mul, mul_comm]
+    simp only [RingHom.id_apply]
 
 end GlobalTheory

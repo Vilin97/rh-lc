@@ -244,7 +244,7 @@ theorem UpperTheory.has_sum_twisted_zeta_integral_dirichlet_series :
       have h2 : Summable fun n : ℕ => (n : ℝ) ^ (-(s.re - 1)) := Real.summable_nat_rpow.2 (by linarith)
       refine h2.congr fun n => ?_
       rw [Real.inv_rpow (Nat.cast_nonneg n), Real.rpow_neg (Nat.cast_nonneg n)]
-    have hs2 := hs1.subtype {n : ℕ | 0 < n ∧ n.Coprime N}
+    have hs2 := hs1.subtype (fun n : ℕ => 0 < n ∧ n.Coprime N)
     refine Summable.of_nonneg_of_le (fun n => integral_nonneg fun r => norm_nonneg _) (fun n => ?_) hs2
     show _ ≤ ((((n : ℕ) : ℝ)⁻¹) ^ (s.re - 1)) * ∫ r : ℝ, |B0| * (1 + r ^ 2)⁻¹
     rw [← integral_const_mul]

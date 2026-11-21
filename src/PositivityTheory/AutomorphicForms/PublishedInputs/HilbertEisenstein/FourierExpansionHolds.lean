@@ -235,8 +235,9 @@ theorem sExp_assembly (hPt : SPoint) (hZ : SZero) (hNl : SNull) (hA : SAbs) (hU 
     exact hξ ⟨⟨ξ, hpos⟩, Units.ext rfl⟩
   have h2 := (he.hasSum_iff hout).2 hSint
   convert h2 using 1
+  funext ξ
   have hξ2 := ξ.2
-  simp only [hξ2, implies_true, ↓reduceIte]
+  simp only [Function.comp_apply, hcoef, e, Units.val_mk0, hξ2, implies_true, ↓reduceIte]
   show coefAt (fun 𝔪 => C₀ * divS ω c 𝔪) _ * _ = _
   rw [coefAt_const_mul, ex]
   have hs : ∑ v, (reAt v ξ.1 : ℂ) * ((x v : ℂ) + Complex.I * (y.val v : ℂ)) =

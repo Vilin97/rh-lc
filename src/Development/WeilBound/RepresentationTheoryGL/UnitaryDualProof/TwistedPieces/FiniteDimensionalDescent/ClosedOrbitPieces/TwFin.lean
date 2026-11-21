@@ -117,7 +117,7 @@ theorem sect (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonar
     have hpe : ∀ g : Fin (max N (p ^ c)) → Z, pe (fun l => (g l : Matrix (Fin N) (Fin N) k)) x =
         ρ (Ideal.Quotient.mk _ (∑ l : Fin (max N (p ^ c)), C (g l) * X ^ (l : ℕ))) := by
       intro g
-      rw [hρ, eval₂_finset_sum]
+      rw [hρ, eval₂_finsetSum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [C_mul_X_pow_eq_monomial, eval₂_monomial]
       rfl
@@ -145,8 +145,8 @@ theorem sect (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonar
       unfold re
       refine Finset.sum_congr rfl fun l _ => ?_
       by_cases h : (l : ℕ) < p ^ c
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [dif_pos h, map_sum]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [dif_pos h, map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         simp only [ext, dif_pos h, map_smul, map_mul, map_pow]
       · rw [dif_neg h]

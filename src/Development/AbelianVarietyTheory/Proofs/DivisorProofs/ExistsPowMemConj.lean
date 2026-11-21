@@ -152,7 +152,8 @@ theorem exists_pow_mem_conj {H : Type} [Group H] (K K₀ : Subgroup H) (g y : H)
     (hy : y ∈ K.map (MulAut.conj g).toMonoidHom) :
     ∃ m : ℕ, 0 < m ∧ y ^ m ∈ K₀.map (MulAut.conj g).toMonoidHom := by
   obtain ⟨k, hk, rfl⟩ := hy
-  obtain ⟨m, hm0, -, hm⟩ := Subgroup.exists_pow_mem_of_index_ne_zero hK.2 (⟨k, hk⟩ : K)
+  obtain ⟨m, hm0, -, hm⟩ := Subgroup.exists_pow_mem_of_index_ne_zero
+    (H := K₀.subgroupOf K) hK.2.relIndex_ne_zero (⟨k, hk⟩ : K)
   refine ⟨m, hm0, k ^ m, ?_, by simp [map_pow]⟩
   simpa [Subgroup.mem_subgroupOf] using hm
 

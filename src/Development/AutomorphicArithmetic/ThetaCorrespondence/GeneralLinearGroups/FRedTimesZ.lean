@@ -24,9 +24,10 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 
 private theorem two_unit_left {r t : ℕ} (e : t + r = r) (A : BR k r) (hA : Sm A) (y : Fin 0 → IrrGL (k := k))
-    (hy : ∑ i, (y i).1 = t) : Iso (two e (pr y hy) A) A :=
-  GlobalTheory.ProdReorder.ind₂_unit_left k r t e A.V A.ρ hA (fun i => (y i).1) (fun i => (y i).2.rep.V)
-    (fun i => (y i).rep) (stdBlocks _ hy)
+    (hy : ∑ i, (y i).1 = t) : Iso (two e (pr y hy) A) A := by
+  with_unfolding_all
+    exact GlobalTheory.ProdReorder.ind₂_unit_left k r t e A.V A.ρ hA (fun i => (y i).1) (fun i => (y i).2.rep.V)
+      (fun i => (y i).rep) (stdBlocks _ hy)
 
 unseal one GlobalTheory.ProdFlatten.two mp pr Iso Sm in
 private theorem iso_one_pr {h : ℕ} {x : IrrGL (k := k)} {y : Fin h → IrrGL (k := k)} {hy : ∑ i, (y i).1 = x.1}

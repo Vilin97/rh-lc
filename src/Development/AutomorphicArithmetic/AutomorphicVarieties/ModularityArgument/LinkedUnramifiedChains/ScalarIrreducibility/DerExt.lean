@@ -179,6 +179,7 @@ private theorem close_zero (B : Subalgebra O R) [hB : IsCO O B]
 
 end Close
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem UpperTheory.V.J.derExt :
     ∀ (l : ℕ) [Fact l.Prime] (c : Coef l) [Fr.IsCoef l c.O] (F : Fr.Frame l (ResidueField c.O)) (C₀ n : ℕ), F.Ok C₀ → (n = 2 ∨ n = 3) →
         ∀ (S : Fr.Space c.O F n), ∀ ξ : S.A →ₐ[c.O] Qbar l, ∀ D ∈ PtDer ξ (Qbar l), (∀ g i j, D (S.u.r g i j) = 0) → (∀ v i g, D (S.u.ψ v i g : S.A) = 0) → D = 0 := by

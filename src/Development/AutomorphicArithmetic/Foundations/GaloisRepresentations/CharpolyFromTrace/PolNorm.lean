@@ -29,6 +29,7 @@ private theorem pol_norm (hjs : GlobalTheory.Published.JacquetShalikaRigidity) (
   obtain ⟨χ', hs, hN⟩ := GlobalTheory.T.hecke_char_norm_descent K M a χ hpol.sign
   refine ⟨χ', ⟨hs, ?_⟩, hN⟩
   apply UpperTheory.polOfSat_of_thetaSat UpperTheory.theta_satake_parameters_inverse hjs hgk M a ha π' (compNorm M χ')
+
   have hT := GlobalTheory.PolarizedSat.hasSat_conjPlace GlobalTheory.automorphicFormsFiniteGL K a π χ hpol
   have hU : ∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite, (compNorm K χ).UnrAt v :=
     Filter.eventually_cofinite.2 (GlobalTheory.Mem.UnrAe.finite_ramified _)
@@ -42,9 +43,10 @@ private theorem pol_norm (hjs : GlobalTheory.Published.JacquetShalikaRigidity) (
   have hcu := GlobalTheory.T.under_conjugatePlace_eq_conjugatePlace_under K M w
   have hnc : normV (UpperTheory.V.Af.Bc.cPl w) = normV ((UpperTheory.V.Af.Bc.cPl w).under (𝓞 K)) ^ f := by
     rw [hcu]
-    have e1 : normV (UpperTheory.V.Af.Bc.cPl w) = normV w := GlobalTheory.UnrEuler.ConjFac.absNorm_conjSrc _ w
+    have e1 : normV (UpperTheory.V.Af.Bc.cPl w) = normV w := by
+      simpa only [normV, ← Ideal.absNorm_eq_natCard, UpperTheory.V.Af.Bc.cPl] using GlobalTheory.UnrEuler.ConjFac.absNorm_conjSrc (IsCMField.complexConj M).toRingEquiv w
     have e2 : normV (UpperTheory.V.Af.Bc.cPl (w.under (𝓞 K))) = normV (w.under (𝓞 K)) :=
-      GlobalTheory.UnrEuler.ConjFac.absNorm_conjSrc _ _
+      by simpa only [normV, ← Ideal.absNorm_eq_natCard, UpperTheory.V.Af.Bc.cPl] using GlobalTheory.UnrEuler.ConjFac.absNorm_conjSrc (IsCMField.complexConj K).toRingEquiv (w.under (𝓞 K))
     rw [e1, e2, hf]
   obtain ⟨C, hC1, hC2⟩ := hcw f hnc
   rw [hcu] at hC1

@@ -11,7 +11,9 @@ namespace GlobalTheory.ThK.Dbl.Box
 
 open scoped TensorProduct NNReal Matrix SchwartzMap Classical
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
-open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK.Dbl.Dense
+open GlobalTheory.ThK.Dbl.Dense
+open GlobalTheory.AdelicU (EmbOver)
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels (AE At SInf evI piInf realAd)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
   {κ β : Type} [Fintype κ] [Fintype β] {m n : ℕ}

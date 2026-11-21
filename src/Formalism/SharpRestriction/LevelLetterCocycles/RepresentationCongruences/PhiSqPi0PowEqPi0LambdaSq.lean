@@ -60,8 +60,8 @@ theorem liftΔ [FiniteDimensional Qp LL] (W : LocWach PD LL O v n) (hcase : Form
     refine ⟨?_, fun δ' hδ' => ?_⟩
     · rw [hn₁, ← algebraMap_smul (LetA O n)]
       exact (W.N T₁).smul_mem _ ((W.N T₁).sum_mem fun δ _ => W.N_Γ T₁ δ x₁ hx₁N)
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [hn₁, map_smul, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [hn₁, map_smul, map_sum]
       congr 1
       refine Finset.sum_nbij' (δ' * ·) (δ'⁻¹ * ·) (fun g hg => TypesA.delF_mul W hδ' hg)
         (fun g hg => TypesA.delF_mul W (TypesA.delF_inv W hδ') hg) (fun g _ => by simp)
@@ -200,9 +200,12 @@ theorem crisMap_dvO (W : LocWach PD LL O v n) {T₁ T₂ : LocLat G Qp LL O} (F 
   rw [← dv_sum W T₂ e b Finset.univ (fun m => algebraMap O LL (c₁ m)) (fun m k => algebraMap O LL (μ m k)),
     ← dv_smul]
   congr 1
+  funext k
+  have h := congrArg (algebraMap O LL) (hSig k)
+  simp only [map_sum, map_mul] at h
   by_cases hk : k = k₀
-  · subst hk; simp
-  · simp [hk, Pi.single_apply]
+  · subst hk; simpa using h
+  · simpa [hk, Pi.single_apply] using h
 
 end ArcLengthTwoLifting
 

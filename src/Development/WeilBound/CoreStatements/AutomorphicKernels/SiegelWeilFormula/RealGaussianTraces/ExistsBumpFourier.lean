@@ -91,8 +91,8 @@ theorem selfDual_const {H : Type} [AddCommGroup H] [TopologicalSpace H] [Measura
   have hF1' : ∫ s, F s = 1 := hF1
   let P : (ι → WR.E n) → ℂ := fun v => ∏ i, ∏ a, ∏ b, φ (v i a b)
   have hPc : Continuous P := by
-    refine continuous_finset_prod _ fun i _ => continuous_finset_prod _ fun a _ =>
-      continuous_finset_prod _ fun b _ => ?_
+    refine continuous_finsetProd _ fun i _ => continuous_finsetProd _ fun a _ =>
+      continuous_finsetProd _ fun b _ => ?_
     exact hφc.comp ((continuous_apply b).comp ((continuous_apply a).comp (continuous_apply i)))
   have hPs : HasCompactSupport P := by
     refine HasCompactSupport.intro (K := Set.univ.pi fun _ : ι => Set.univ.pi fun _ : Fin n =>

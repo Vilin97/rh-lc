@@ -14,12 +14,12 @@ private theorem zmat_map {G R S : Type} [Group G] [CommRing R] [CommRing S] (f :
   simp only [zmat, Matrix.sub_apply, MonoidHom.comp_apply, GG.map_mat, Matrix.map_apply, map_sub]
 
 private theorem normalised_map {G R S : Type} [Group G] [CommRing R] [CommRing S] (f : R →+* S) {c g₁ : G}
-    {r : G →* GG (m := 3) (R := R)} (h : Normalised c g₁ r) : Normalised c g₁ ((GG.map f).comp r) where
-  atc := by
-    rw [MonoidHom.comp_apply, GG.map_mat, h.atc]
+    {r : G →* GG (m := 3) (R := R)} (h : Normalised c g₁ r) : Normalised c g₁ ((GG.map f).comp r) := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [MonoidHom.comp_apply, GG.map_mat, h.atc]
     exact Matrix.map_one _ (map_zero f) (map_one f)
-  z12 := by rw [zmat_map, h.z12, map_zero]
-  z21 := by rw [zmat_map, h.z21, map_zero]
+  · rw [zmat_map, h.z12, map_zero]
+  · rw [zmat_map, h.z21, map_zero]
 
 private theorem map_reducible_three_dim {G R S : Type} [Group G] [CommRing R] [CommRing S] (f : R →+* S) (η : G →* ℤˣ)
     (Ψ : G →* Rˣ) : (GG.map f).comp (r0 η Ψ) = r0 η ((Units.map f.toMonoidHom).comp Ψ) := by
@@ -60,7 +60,7 @@ private theorem norm_coe_coefO_le_one {l : ℕ} [Fact l.Prime] (c : Coef l) (x :
   obtain ⟨p, hmon, hp⟩ := hint
   by_contra hgt
   push_neg at hgt
-  rw [hmon.as_sum, Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum] at hp
+  rw [hmon.as_sum, Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum] at hp
   have hcoef : ∀ i ∈ Finset.range p.natDegree,
       ‖Polynomial.eval₂ (algebraMap ℤ_[l] (PadicAlgCl l)) (x : PadicAlgCl l)
         (Polynomial.C (p.coeff i) * Polynomial.X ^ i)‖ ≤ ‖(x : PadicAlgCl l)‖ ^ i := by
@@ -77,7 +77,7 @@ private theorem norm_coe_coefO_le_one {l : ℕ} [Fact l.Prime] (c : Coef l) (x :
     rcases Nat.eq_zero_or_pos p.natDegree with hn | hn
     · rw [hn]
       simp
-    · obtain ⟨i, hi, hle⟩ := IsUltrametricDist.exists_norm_finset_sum_le_of_nonempty
+    · obtain ⟨i, hi, hle⟩ := IsUltrametricDist.exists_norm_finsetSum_le_of_nonempty
         (Finset.nonempty_range_iff.mpr hn.ne') (fun i => Polynomial.eval₂
           (algebraMap ℤ_[l] (PadicAlgCl l)) (x : PadicAlgCl l) (Polynomial.C (p.coeff i) * Polynomial.X ^ i))
       exact lt_of_le_of_lt (hle.trans (hcoef i hi)) (pow_lt_pow_right₀ hgt (Finset.mem_range.mp hi))

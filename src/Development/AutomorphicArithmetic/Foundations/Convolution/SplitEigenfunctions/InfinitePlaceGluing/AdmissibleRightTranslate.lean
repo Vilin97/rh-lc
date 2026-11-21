@@ -31,7 +31,7 @@ private theorem wo_sum (D : Dat ℚ E) {ι : Type} (s : Finset ι) (a : ι → �
   | insert i s hi ih =>
     have hc : Continuous (∑ x ∈ s, a x • F x) := by
       rw [Finset.sum_fn]
-      exact continuous_finset_sum _ fun j _ => (hF j).const_smul _
+      exact continuous_finsetSum _ fun j _ => (hF j).const_smul _
     rw [Finset.sum_insert hi, Finset.sum_insert hi, hadd _ _ ((hF i).const_smul _) hc, hsmul, ih]
 
 private theorem lie_expand {ι : Type} [Fintype ι] (b : Module.Basis ι ℝ (Lie E 2)) (X : Lie E 2) (f : Sm E 2) :

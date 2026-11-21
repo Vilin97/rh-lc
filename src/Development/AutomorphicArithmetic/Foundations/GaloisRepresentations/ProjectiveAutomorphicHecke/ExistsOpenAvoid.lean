@@ -128,12 +128,11 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pNbhd2_of :
     refine Set.eq_empty_of_forall_notMem fun u hu => ?_
     have := hone u (Set.mem_iInter.1 hu.2)
     exact hu.1.2 (this ▸ O.one_mem)
-  obtain ⟨F, hF⟩ := (hC.diff hO).elim_finite_subfamily_closed D hD hemp
+  obtain ⟨F, hF⟩ := (hC.diff hO).elim_finite_subfamily_closed D hD (Set.disjoint_iff_inter_eq_empty.mpr hemp)
   obtain ⟨Kw, hK1, hK2⟩ := UpperTheory.Gal.CertificateRingHomMap.PNbhd2.exists_Kw F
   refine ⟨F.image Sigma.fst, Kw, hK1, fun u hu hS => ?_⟩
   by_contra huO
   have hmem : u ∈ ({u : finU (E := E) (n := n) | p u ∈ GlobalTheory.EulerTw.Kglob E n} \ (O : Set (finU (E := E) (n := n)))) ∩ ⋂ i ∈ F, D i :=
     ⟨⟨GlobalTheory.EulerTwRestr.mem_Kglob.2 hu, huO⟩,
       Set.mem_iInter₂.2 fun i hi => hK2 i hi (hS i.1 (Finset.mem_image_of_mem _ hi))⟩
-  rw [hF] at hmem
-  exact hmem
+  exact Set.disjoint_left.mp hF hmem.1 hmem.2

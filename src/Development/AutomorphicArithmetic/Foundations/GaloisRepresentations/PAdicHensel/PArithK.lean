@@ -66,7 +66,7 @@ theorem UpperTheory.Gal.G1.pArithK :
   have hmem : ∀ q : ℕ, q.Prime → q ∣ M → q ∈ Q := by
     intro q hq hqM
     rw [hMdef] at hqM
-    obtain ⟨a, ha, hqa⟩ := (Prime.dvd_finset_prod_iff hq.prime _).1 hqM
+    obtain ⟨a, ha, hqa⟩ := (Prime.dvd_finsetProd_iff hq.prime _).1 hqM
     rwa [(Nat.prime_dvd_prime_iff_eq hq (hprime a ha)).1 hqa]
   obtain ⟨bar, hbar⟩ := hBar E
   obtain ⟨tr, nm, f, hneg, hdisc, hsplit⟩ := hQuad d hd

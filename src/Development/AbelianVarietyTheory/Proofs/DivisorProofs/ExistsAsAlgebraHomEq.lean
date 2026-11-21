@@ -8,7 +8,7 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.Algebra
 
 @[expose] public section
 
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.TypeTwo
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil
 open scoped TensorProduct
 
 noncomputable section
@@ -108,7 +108,9 @@ theorem up_down (hirr : T.IsIrreducible)
     induction x using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
     | tmul u w => simpa using u.2 w
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y hx hy =>
+      rw [map_add]
+      exact add_mem hx hy
   · intro y hy
     let b := Module.Basis.ofVectorSpace ℂ W
     let F := TensorProduct.equivFinsuppOfBasisRight (M := V) b
@@ -151,7 +153,9 @@ theorem down_up [Nontrivial W] (U : Subrepresentation X) : down X T (up X T U) =
       induction x using TensorProduct.induction_on with
       | zero => rw [map_zero, map_zero]; exact zero_mem _
       | tmul u w' => simpa [f] using U.toSubmodule.smul_mem (φ w') u.2
-      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+      | add x y hx hy =>
+        simp only [map_add]
+        exact add_mem hx hy
     obtain ⟨x, hx⟩ := hv w
     have h2 := key x
     rw [hx] at h2

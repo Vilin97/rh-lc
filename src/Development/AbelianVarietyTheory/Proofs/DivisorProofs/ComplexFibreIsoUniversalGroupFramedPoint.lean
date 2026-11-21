@@ -95,15 +95,42 @@ theorem fibre_iso_frame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
             rw [hu2, Category.assoc, hFw, Category.assoc]
         _ = spMap (algebraMap K (DualNumber K)) ≫ spMap (algebraMap (𝓞 K) K) := by rw [Over.w w]; rfl
     obtain ⟨q', hq', -⟩ := GlobalTheory.existsUnique_isVecOver hQ.2.1.1 w
-    have hq'c : IsLieComb (fun k => σ (v i k)) v' q' :=
-      GlobalTheory.ArcQ.NormalForm.isLieComb_baseChange hQ.2.1 (fun k => hv' k) hq' hw
+    have hq'c : IsLieComb (fun k => σ (v i k)) v' q' := by
+      let d := GlobalTheory.CompanionTheory.Ar.dualMap σ
+      have dover : spMap d ≫ spMap (algebraMap K (DualNumber K)) =
+          spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap σ := by
+        rw [GlobalTheory.spMap_comp_spMap, GlobalTheory.spMap_comp_spMap]
+        congr 1
+        ext r <;> simp [d, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+      have dscale (a : K) : spMap d ≫ spMap (epsScaleR a) =
+          spMap (epsScaleR (σ a)) ≫ spMap d := by
+        rw [GlobalTheory.spMap_comp_spMap, GlobalTheory.spMap_comp_spMap]
+        congr 1
+        ext r <;> simp [d, GlobalTheory.CompanionTheory.Ar.dualMap, epsScaleR, TrivSqZeroExt.algebraMap_eq_inl]
+      rw [GlobalTheory.ArcQ.NormalForm.isLieComb_iff] at hw ⊢
+      let U : Over.mk ((epsR ℂ).hom ≫ spMap σ) ⟶ epsR K := Over.homMk (spMap d) dover
+      have e₁ := map_list_prod (pushHom hQ.2.1 (epsR ℂ)) (List.ofFn fun k => GlobalTheory.ArcQ.NormalForm.sc (σ (v i k)) ≫ v' k)
+      have e₂ := map_list_prod (ReciprocityTheory.ChartRestriction.G.Geo.Tor.preHom (G := F.P₀.A) U) (List.ofFn fun k => GlobalTheory.ArcQ.NormalForm.sc (v i k) ≫ F.v k)
+      rw [List.map_ofFn] at e₁ e₂
+      have e₃ : (pushHom hQ.2.1 (epsR ℂ)) ∘ (fun k => GlobalTheory.ArcQ.NormalForm.sc (σ (v i k)) ≫ v' k) =
+          (ReciprocityTheory.ChartRestriction.G.Geo.Tor.preHom (G := F.P₀.A) U) ∘ fun k => GlobalTheory.ArcQ.NormalForm.sc (v i k) ≫ F.v k :=
+        funext fun k => Over.OverMorphism.ext (by
+          show (spMap (epsScaleR (σ (v i k))) ≫ (v' k).left) ≫ ψ =
+            spMap d ≫ spMap (epsScaleR (v i k)) ≫ (F.v k).left
+          rw [Category.assoc, hv', ← Category.assoc, ← Category.assoc, dscale]
+          congr 2)
+      rw [e₃, ← e₂, ← hw] at e₁
+      apply Over.OverMorphism.ext
+      apply hQ.2.1.1.hom_ext
+      · exact hq'.trans (congrArg (·.left) e₁).symm
+      · rw [Over.w, Over.w]
     have hqq : q = q' := by
       obtain ⟨a, ha, rfl⟩ := hq
       obtain ⟨b, hb, rfl⟩ := hq'c
       have hab : a = b := funext fun k => Over.OverMorphism.ext ((ha k).trans (hb k).symm)
       rw [hab]
     subst hqq
-    have key : q.left ≫ χ₀ = spMap (dualMap σ) ≫ u := by
+    have key : q.left ≫ χ₀ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ u := by
       apply m2.cart.1.hom_ext
       · rw [Category.assoc, hχ₀2, Category.assoc, hu2, ← Category.assoc, ← Category.assoc]
         exact congrArg (· ≫ F.φ) hq'
@@ -111,7 +138,7 @@ theorem fibre_iso_frame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
         show spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap σ = _
         rw [GlobalTheory.spMap_comp_spMap, GlobalTheory.spMap_comp_spMap]
         congr 1
-        ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+        ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
     apply Over.OverMorphism.ext
     apply m.cart.1.hom_ext
     · rw [hw', hz.2.1, ← hu1, hφσ]

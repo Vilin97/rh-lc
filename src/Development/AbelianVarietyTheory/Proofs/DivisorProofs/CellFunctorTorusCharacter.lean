@@ -155,14 +155,14 @@ theorem isEmpty_of_sum_one {x y : ℕ} (h : x + y = 1) (i i' : Bool) (hii : i �
   rcases Nat.eq_zero_or_pos x with hx | hx
   · cases i <;> cases i'
     · exact absurd rfl hii
-    · exact Or.inl (by simp [hx]; infer_instance)
-    · exact Or.inr (by simp [hx]; infer_instance)
+    · exact Or.inl (by simp [hx])
+    · exact Or.inr (by simp [hx])
     · exact absurd rfl hii
   · have hy : y = 0 := by omega
     cases i <;> cases i'
     · exact absurd rfl hii
-    · exact Or.inr (by simp [hy]; infer_instance)
-    · exact Or.inl (by simp [hy]; infer_instance)
+    · exact Or.inr (by simp [hy])
+    · exact Or.inl (by simp [hy])
     · exact absurd rfl hii
 
 theorem relDeltaHalf_cols_torusPt (g : ∀ j, (Σ i, Fin (b i j)) ≃ Fin (blk3 m j)) (t₁ t₂ : kˣ)

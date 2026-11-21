@@ -174,7 +174,8 @@ def intGrp (v : HeightOneSpectrum (𝓞 F)) : AddSubgroup (Fv F v ⊗[F] E) wher
   zero_mem' := by intro k; simp
   add_mem' := by
     intro x y hx hy k
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx k) (hy k)
+    rw [map_add (f := _), Finsupp.add_apply]
+    exact add_mem (hx k) (hy k)
   neg_mem' := by
     intro x hx k
     rw [map_neg]; exact neg_mem (hx k)

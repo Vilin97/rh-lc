@@ -119,6 +119,8 @@ def functor : K.Obj ⥤ Thick (dp0 B) s where
       comm := fun _ ↦ rfl
       dp := letI := T'.ratAlg; isDPMorphism_of_rat T.δ T'.δ (f.φ : T.C →+* T'.C) f.mem
       pt := r.analyticChartsRealization_comp_point_eq f }
+  map_id _ := Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl)
+  map_comp _ _ := Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl)
 
 def coef : CoefMap σ (O (dp0 B) s) K.Oc where
   G := r.functor

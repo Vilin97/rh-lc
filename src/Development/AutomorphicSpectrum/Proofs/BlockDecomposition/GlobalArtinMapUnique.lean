@@ -85,9 +85,31 @@ theorem res_eq {art art' : Ideles E →* Gab E Ω} (ha : IsGlobalArtin art)
 theorem eq_inv_arithmetic_artin_map : ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (art : Ideles E →* Gab E Ω), IsGlobalArtin art → art = (PositivityTheory.FamInh.art0 E Ω)⁻¹ := by
   intro E Ω _ _ _ _ _ art ha
   ext x
+  have ha0 : IsGlobalArtin (art0 E Ω)⁻¹ := by
+    refine ⟨(Homeomorph.inv (Gab E Ω)).isOpenQuotientMap.comp (isOpenQuotientMap_art0 E Ω),
+      ?_, ?_, ?_, ?_⟩
+    · rw [← ker_art0 E Ω]
+      ext x
+      simp only [MonoidHom.mem_ker, MonoidHom.inv_apply, inv_eq_one]
+    · intro v A hA g
+      simp only [MonoidHom.inv_apply, inv_eq_iff_eq_inv]
+      rw [art0_unit_iff hA, Subgroup.inv_mem_iff]
+      rfl
+    · intro v A hA g
+      simp only [MonoidHom.inv_apply, map_inv, inv_eq_iff_eq_inv]
+      exact art0_unif_iff hA _
+    · intro v A hA
+      rw [← closure_range_eq hA]
+      congr 1
+      ext g
+      constructor
+      · rintro ⟨x, rfl⟩
+        exact ⟨x⁻¹, by simp⟩
+      · rintro ⟨x, rfl⟩
+        exact ⟨x⁻¹, by simp⟩
   have h : art x * ((art0 E Ω)⁻¹ x)⁻¹ ∈ (⊥ : Subgroup (Gab E Ω)) :=
     mem_of_forall_res (H := ⊥) isClosed_singleton fun L _ _ _ => by
-      rw [map_mul, map_inv, res_eq ha isGlobalArtin_inv L x, mul_inv_cancel]
+      rw [map_mul, map_inv, res_eq ha ha0 L x, mul_inv_cancel]
   rwa [Subgroup.mem_bot, mul_inv_eq_one] at h
 
 end GlobalTheory.CompanionTheory.ArtinMapUniq

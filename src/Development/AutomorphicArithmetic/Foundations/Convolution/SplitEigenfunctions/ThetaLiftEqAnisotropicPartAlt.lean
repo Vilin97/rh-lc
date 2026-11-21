@@ -102,7 +102,7 @@ private theorem core (hMaj : Maj) (hTh : ThCont) (hMean : MeanZero) (hR1 : Rank1
     obtain ⟨hs, hb⟩ := hB' h
     have hle : ‖ThOn S (W.Om g (W.L (gl h * y) ph)).1‖ ≤
         ∑' ξ : Fin 4 → ℚ, ‖(W.Om g (W.L (gl h * y) ph)).1 (rp ξ)‖ := by
-      have hsS := hs.subtype S
+      have hsS := hs.subtype (fun x => x ∈ S)
       refine (norm_tsum_le_tsum_norm hsS).trans ?_
       exact tsum_comp_le_tsum_of_inj hs (fun _ => norm_nonneg _) Subtype.val_injective
     rw [norm_mul]

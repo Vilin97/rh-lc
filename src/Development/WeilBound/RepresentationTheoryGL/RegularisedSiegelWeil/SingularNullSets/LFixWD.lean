@@ -30,7 +30,7 @@ def OffS (S : Finset (Pl D)) (a : AE D) : Prop :=
 variable {S : Finset (Pl D)}
 
 theorem IntS.add {a b : AE D} (ha : IntS S a) (hb : IntS S b) : IntS S (a + b) := fun v hv => by
-  rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v hv) (hb v hv)
+  rw [map_add (f := _)]; exact add_mem (ha v hv) (hb v hv)
 
 theorem IntS.mul {a b : AE D} (ha : IntS S a) (hb : IntS S b) : IntS S (a * b) := fun v hv => by
   rw [map_mul]; exact mul_mem (ha v hv) (hb v hv)

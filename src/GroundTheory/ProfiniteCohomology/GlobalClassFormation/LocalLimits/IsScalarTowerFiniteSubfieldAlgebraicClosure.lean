@@ -18,6 +18,8 @@ open CategoryTheory IsDedekindDomain NumberField IntermediateField GroundTheory.
 
 open scoped TensorProduct Pointwise
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 section Idempotents
@@ -229,8 +231,7 @@ def localDecompHom :
     Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1) →*
       MulAction.stabilizer Gal(F.1/K.1) (placeOfEmbedding ι F).1.asIdeal :=
   (decompHom (v.adicCompletion K.1) (embedLevel ι F)).codRestrict _ fun σ ↦
-    MulAction.mem_stabilizer_iff.2
-      (congrArg (fun u : PlacesOver F.1 v ↦ u.1.asIdeal) (decompHom_smul_placeOfEmbedding ι F σ))
+    congrArg (fun u : PlacesOver F.1 v ↦ u.1.asIdeal) (decompHom_smul_placeOfEmbedding ι F σ)
 
 theorem coe_localDecompHom
     (σ : Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1)) :

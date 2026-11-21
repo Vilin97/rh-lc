@@ -83,7 +83,8 @@ def mulM (h : X.Tau → Matrix (Fin b) (Fin b) ℂ) (g : X.Tau → Matrix (Fin a
 
 theorem zM_mulM (h : X.Tau → Matrix (Fin b) (Fin b) ℂ) (g : X.Tau → Matrix (Fin a) (Fin a) ℂ) (z : VCx X.Tau a b) (τ : X.Tau) :
     zM (mulM h g z) τ = h τ * zM z τ * g τ := by
-  simp [zM, mulM]
+  ext i j
+  rfl
 
 theorem mulM_apply (h : X.Tau → Matrix (Fin b) (Fin b) ℂ) (g : X.Tau → Matrix (Fin a) (Fin a) ℂ) (z : VCx X.Tau a b) (τ : X.Tau) (i : Fin b) (j : Fin a) :
     mulM h g z τ i j = (h τ * zM z τ * g τ) i j := rfl

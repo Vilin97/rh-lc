@@ -53,7 +53,8 @@ theorem pow_rpow_comm {x : ℝ} (hx : 0 ≤ x) (n : ℕ) (s : ℝ) : (x ^ n) ^ s
   rw [← Real.rpow_natCast, ← Real.rpow_mul hx, mul_comm, Real.rpow_mul hx, Real.rpow_natCast]
 
 theorem gn_padicInt {ρ : ℝ} (hρ0 : 0 < ρ) (hρ1 : ρ < 1) (c : ℤ_[p]) :
-    gn ℂ_[p] p ρ (algebraMap (AInf ℂ_[p] p) 𝔸 (IsPerfectoidField.padicIntToWitt (K := ℂ_[p]) p c)) =
+    gn ℂ_[p] p ρ (algebraMap (AInf ℂ_[p] p) (Localization.Away (p : AInf ℂ_[p] p))
+      (IsPerfectoidField.padicIntToWitt (K := ℂ_[p]) p c)) =
       ‖c‖ ^ sig p ρ := by
   by_cases hc : c = 0
   · subst hc

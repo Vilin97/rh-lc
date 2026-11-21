@@ -110,7 +110,7 @@ end GlobalTheory.Core.RkFamModel
 
 namespace GlobalTheory.Core.RkOverModel
 
-open Formalism.BasicNotions GlobalTheory.Core.Rk GlobalTheory.Core.Rk.FamInh
+open Formalism.BasicNotions GlobalTheory.Core.Rk
 
 end GlobalTheory.Core.RkOverModel
 

@@ -52,8 +52,8 @@ theorem range_ideleNorm_mem_nhds_one :
 end IdeleNorm
 
 theorem Abelianization.of_injective_of_isMulCommutative {G : Type*} [Group G] [IsMulCommutative G] :
-    Function.Injective (Abelianization.of : G →* Abelianization G) := by
-  rw [← MonoidHom.ker_eq_bot_iff, Abelianization.ker_of, commutator_eq_bot]
+    Function.Injective (Group.Abelianization.of : G →* Group.Abelianization G) := by
+  rw [← MonoidHom.ker_eq_bot_iff, Group.Abelianization.ker_of, commutator_eq_bot]
 
 namespace IdeleClassLimit
 
@@ -65,26 +65,27 @@ variable (K L : FiniteSubfield) [hKL : Fact (K ≤ L)]
   [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal] [IsMulCommutative (L.1 ≃ₐ[K.1] L.1)]
 
 theorem abstractSymbol_mk (x : IdeleGroup K.1) :
-    abstractSymbol K L (IdeleClassGroup.mk K.1 x) = Abelianization.of (ideleSymbol K.1 L.1 x) := by
-  set f : IdeleGroup K.1 →* Abelianization (L.1 ≃ₐ[K.1] L.1) :=
+    abstractSymbol K L (IdeleClassGroup.mk K.1 x) =
+      Group.Abelianization.of (ideleSymbol K.1 L.1 x) := by
+  set f : IdeleGroup K.1 →* Group.Abelianization (L.1 ≃ₐ[K.1] L.1) :=
     (abstractSymbol K L).comp (IdeleClassGroup.mk K.1) with hf
-  set g : IdeleGroup K.1 →* Abelianization (L.1 ≃ₐ[K.1] L.1) :=
-    Abelianization.of.comp (ideleSymbol K.1 L.1) with hg
+  set g : IdeleGroup K.1 →* Group.Abelianization (L.1 ≃ₐ[K.1] L.1) :=
+    Group.Abelianization.of.comp (ideleSymbol K.1 L.1) with hg
   have hle : localEmbeddingSubgroup K.1 ≤ f.eqLocus g :=
     sup_le (iSup_le fun v ↦ by
         rintro _ ⟨a, rfl⟩
         change abstractSymbol K L (IdeleClassGroup.mk K.1 (finiteEmbedding v a)) =
-          Abelianization.of (ideleSymbol K.1 L.1 (finiteEmbedding v a))
+          Group.Abelianization.of (ideleSymbol K.1 L.1 (finiteEmbedding v a))
         rw [abstractSymbol_mk_finiteEmbedding, ideleSymbol_finiteEmbedding])
       (iSup_le fun w ↦ by
         rintro _ ⟨a, rfl⟩
         change abstractSymbol K L (IdeleClassGroup.mk K.1 (infiniteEmbedding w a)) =
-          Abelianization.of (ideleSymbol K.1 L.1 (infiniteEmbedding w a))
+          Group.Abelianization.of (ideleSymbol K.1 L.1 (infiniteEmbedding w a))
         rw [abstractSymbol_mk_infiniteEmbedding, ideleSymbol_infiniteEmbedding])
   have hfN : ∀ y : IdeleGroup L.1, f (ideleNorm K.1 L.1 y) = 1 := fun y ↦
     abstractSymbol_ideleClassNorm_eq_one K L (IdeleClassGroup.mk L.1 y)
   have hgN : ∀ y : IdeleGroup L.1, g (ideleNorm K.1 L.1 y) = 1 := fun y ↦ by
-    change Abelianization.of (ideleSymbol K.1 L.1 (ideleNorm K.1 L.1 y)) = 1
+    change Group.Abelianization.of (ideleSymbol K.1 L.1 (ideleNorm K.1 L.1 y)) = 1
     rw [ideleSymbol_ideleNorm, map_one]
   obtain ⟨h, hh, ⟨y, hy⟩⟩ :=
     exists_mem_localEmbeddingSubgroup_inv_mul_mem (IdeleNorm.range_ideleNorm_mem_nhds_one L.1) x
@@ -105,7 +106,7 @@ abbrev classSymbol : IdeleClassGroup K.1 →* (L.1 ≃ₐ[K.1] L.1) :=
   CyclotomicSymbol.ideleClassSymbol L.1 (range_diagonal_le_ker_ideleSymbol K L)
 
 theorem abstractSymbol_eq_classSymbol :
-    abstractSymbol K L = Abelianization.of.comp (classSymbol K L) := by
+    abstractSymbol K L = Group.Abelianization.of.comp (classSymbol K L) := by
   refine MonoidHom.ext fun c ↦ ?_
   obtain ⟨x, rfl⟩ := IdeleClassGroup.mk_surjective K.1 c
   exact abstractSymbol_mk K L x
@@ -114,9 +115,9 @@ theorem ker_abstractSymbol :
     (abstractSymbol K L).ker = (FiniteSubfield.ideleClassNorm hKL.out).range := by
   ext c
   rw [MonoidHom.mem_ker, abstractSymbol_apply]
-  have hinj : Function.Injective (Abelianization.map (quotientGaloisEquiv K L).toMonoidHom) :=
+  have hinj : Function.Injective (Group.Abelianization.map (quotientGaloisEquiv K L).toMonoidHom) :=
     fun a b hab ↦ (quotientGaloisEquiv K L).abelianizationCongr.injective hab
-  rw [← map_one (Abelianization.map (quotientGaloisEquiv K L).toMonoidHom), hinj.eq_iff,
+  rw [← map_one (Group.Abelianization.map (quotientGaloisEquiv K L).toMonoidHom), hinj.eq_iff,
     ← map_one (reciprocityEquiv K L).symm, (reciprocityEquiv K L).symm.injective.eq_iff]
   constructor
   · intro h
@@ -135,7 +136,7 @@ theorem ker_classSymbol :
     (classSymbol K L).ker = (FiniteSubfield.ideleClassNorm hKL.out).range := by
   ext c
   rw [← ker_abstractSymbol K L, MonoidHom.mem_ker, MonoidHom.mem_ker, abstractSymbol_eq_classSymbol K L,
-    MonoidHom.comp_apply, ← map_one Abelianization.of,
+    MonoidHom.comp_apply, ← map_one Group.Abelianization.of,
     Abelianization.of_injective_of_isMulCommutative.eq_iff]
 
 theorem ker_ideleSymbol :

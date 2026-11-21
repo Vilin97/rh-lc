@@ -95,14 +95,14 @@ variable (l) in
 def TFil : Prop := ∀ (A : PAlg l) (n : ℕ), A.cris n (tA l) ∈ B.JJ false A n
 
 def TT (P : PAlg l ⥤ Type) (r n : ℕ) : SubF (modF (AcrEl P n)) where
-  S T := { carrier := {x | (show T.1.obj.Acr n from x) ∈ Pb.pdP (B.DD false T.1.obj n) r}
-           add_mem' := fun hx hy => (Pb.pdP (B.DD false T.1.obj n) r).add_mem hx hy
-           zero_mem' := (Pb.pdP (B.DD false T.1.obj n) r).zero_mem
-           smul_mem' := fun a _ hx => (Pb.pdP (B.DD false T.1.obj n) r).mul_mem_left (T.1.obj.cris n a) hx }
-  map_mem φ _ hx := Pb.dividedPowerFiltration_map (B.dd_map false φ.1.hom n) r hx
+  S T := { carrier := {x | (show T.obj.obj.Acr n from x) ∈ Pb.pdP (B.DD false T.obj.obj n) r}
+           add_mem' := fun hx hy => (Pb.pdP (B.DD false T.obj.obj n) r).add_mem hx hy
+           zero_mem' := (Pb.pdP (B.DD false T.obj.obj n) r).zero_mem
+           smul_mem' := fun a _ hx => (Pb.pdP (B.DD false T.obj.obj n) r).mul_mem_left (T.obj.obj.cris n a) hx }
+  map_mem φ _ hx := Pb.dividedPowerFiltration_map (B.dd_map false φ.hom.hom n) r hx
 
-theorem mem_TT {P : PAlg l ⥤ Type} {r n : ℕ} {T : El P} {x : T.1.obj.Acr n} :
-    x ∈ (TT P r n).S T ↔ x ∈ Pb.pdP (B.DD false T.1.obj n) r := Iff.rfl
+theorem mem_TT {P : PAlg l ⥤ Type} {r n : ℕ} {T : El P} {x : T.obj.obj.Acr n} :
+    x ∈ (TT P r n).S T ↔ x ∈ Pb.pdP (B.DD false T.obj.obj n) r := Iff.rfl
 
 theorem mem_pdS {b : Base} {L : b.Fun} {Λ : Type} [CommRing Λ] {c : Λ →+* b.R} {r : ℕ} {T : Thick L} {x : T.B} :
     x ∈ (B.pdS L c r).S T ↔ x ∈ Pb.pdP T.δ r := Iff.rfl
@@ -113,8 +113,8 @@ def βMorF {O : Type} [CommRing O] (F : B.Fn O) (κ : O →+* OC l) (r n : ℕ) 
     mem_TT.2 ((mem_pdS (T := B.gObj F κ false n ((B.jE _).obj T))).1 hx)
 
 def tMor (ht : TFil l) (P : PAlg l ⥤ Type) (r n : ℕ) : CH.Mor (modF (AcrEl P n)) (TT P r n).fn (RingHom.id _) :=
-  mulTo (tA l ^ r) (TT P r n) fun T (x : T.1.obj.Acr n) => mem_TT.2 (by
-    have := Ideal.mul_mem_right x _ (pow_mem_pdP (B.DD false T.1.obj n) (ht T.1.obj n) r)
+  mulTo (tA l ^ r) (TT P r n) fun T (x : T.obj.obj.Acr n) => mem_TT.2 (by
+    have := Ideal.mul_mem_right x _ (pow_mem_pdP (B.DD false T.obj.obj n) (ht T.obj.obj n) r)
     rw [← map_pow] at this
     exact this)
 

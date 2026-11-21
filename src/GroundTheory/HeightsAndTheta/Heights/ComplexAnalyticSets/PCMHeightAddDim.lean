@@ -63,7 +63,6 @@ theorem CMHeightAddDim.height_add_ringKrullDim_quotient_of_isPrime (hreg : CMReg
         rw [WithBot.coe_add, WithBot.coe_one, add_right_comm]
     _ ≤ (P.height : WithBot ℕ∞) + ringKrullDim (B ⧸ P) := by
         gcongr
-        exact_mod_cast hc
 
 theorem CMHeightAddDim.proof (hreg : CMRegularElement.Statement.{u}) : CMHeightAddDim.Statement.{u} := by
   intro B _ _ J hJ
@@ -90,7 +89,6 @@ theorem CMHeightAddDim.proof (hreg : CMRegularElement.Statement.{u}) : CMHeightA
         ringKrullDim_eq_of_ringEquiv ((Ideal.quotEquivOfEq hmap).trans (DoubleQuot.quotQuotEquivQuotOfLE hJQ))]
     rw [WithBot.coe_add, hco, ← hprime Q]
     gcongr
-    exact_mod_cast Ideal.height_mono hJQ
   ·
     obtain ⟨P, hPmin, hPle⟩ := Set.exists_min_image J.minimalPrimes Ideal.height
       (Ideal.finite_minimalPrimes_of_isNoetherianRing B J) (Set.nonempty_coe_sort.mp (Ideal.nonempty_minimalPrimes hJ))

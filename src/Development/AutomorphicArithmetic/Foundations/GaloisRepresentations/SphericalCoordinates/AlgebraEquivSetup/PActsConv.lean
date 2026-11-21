@@ -46,5 +46,7 @@ theorem UpperTheory.Gal.W2.Seed.pActsConv :
       unfold conv
       rw [smul_finsum]
       congr 1
+      funext i
+      simp only [Pi.smul_apply, smul_eq_mul]
       ring
     rw [hlin, conv_tf hA T ψ c h h' hψ hh', smul_smul, mul_comm c' c]

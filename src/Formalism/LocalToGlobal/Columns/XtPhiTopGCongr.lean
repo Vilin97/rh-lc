@@ -22,20 +22,15 @@ structure TopNum (R : Ranks) (i : ℕ) : Prop where
   a_le : R.r + (i + 1 - 1) * R.t ≤ (R.N (i + 1) - 1) + 0
   c0 : cOf R i = 0
 
-theorem topNum_of {m2 : ℕ} (hm : R.m = m2 + 2) : TopNum R (m2 + 1) where
-  a_eq := by
-    have h := xt_a_eq (R := R) hm
-    have e : R.m - 1 = m2 + 1 + 1 - 1 := by omega
-    rwa [e] at h
-  a_le := by
-    have h := xt_a_eq (R := R) hm
-    have e : R.m - 1 = m2 + 1 + 1 - 1 := by omega
-    rw [e] at h
-    rw [h]
-    unfold Ranks.N
-    have e2 : (m2 + 1 + 1) * (R.t + 1) = (m2 + 1) * (R.t + 1) + (R.t + 1) := by ring
-    omega
-  c0 := xt_cOf hm
+theorem topNum_of {m2 : ℕ} (hm : R.m = m2 + 2) : TopNum R (m2 + 1) := by
+  have h := xt_a_eq (R := R) hm
+  have e : R.m - 1 = m2 + 1 + 1 - 1 := by omega
+  rw [e] at h
+  refine ⟨h, ?_, xt_cOf hm⟩
+  rw [h]
+  unfold Ranks.N
+  have e2 : (m2 + 1 + 1) * (R.t + 1) = (m2 + 1) * (R.t + 1) + (R.t + 1) := by ring
+  omega
 
 variable (Ch : Chars X Pr R.m) (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ}
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu))

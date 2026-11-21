@@ -26,7 +26,7 @@ theorem valSet_eq (a : k) (c : kˣ) :
 
 theorem isOpen_valSet (a : k) (c : kˣ) : IsOpen {y : k | valuation k (y - a) ≤ valuation k (c : k)} := by
   rw [valSet_eq]
-  exact (continuous_add_left (-a)).isOpen_preimage _ ((GlobalTheory.SplitWeil.isOpen_int k).smul c)
+  exact (continuous_const.add continuous_id).isOpen_preimage _ ((GlobalTheory.SplitWeil.isOpen_int k).smul c)
 
 private theorem vol_valSet_lemma : SigmaCompactSpace k := by
   obtain ⟨t, ht0, ht1⟩ := Valuation.IsNontrivial.exists_lt_one (v := valuation k)

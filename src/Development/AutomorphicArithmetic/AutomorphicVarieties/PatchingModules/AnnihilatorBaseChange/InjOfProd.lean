@@ -40,7 +40,7 @@ private theorem lam_lift {n : ℕ} {R S H G : Type} [CommRing R] [CommRing S] [G
   rw [← ((UpperTheory.V.CA.d_gmap E).2.2.1 f y).2 i, ← h]
   unfold GDet.lam
   generalize MonoidAlgebra.mapRingHom H f y = z
-  congr 2
+  apply congrArg (fun p : Polynomial S => (-1) ^ i * p.coeff (n - i))
   change D.D (Polynomial S) _ = D.D (Polynomial S) (MonoidAlgebra.mapDomainRingHom (Polynomial S) φ _)
   congr 1
   rw [map_sub]
@@ -138,6 +138,8 @@ theorem UpperTheory.V.Pa.Core.ooPt :
     refine Eq.trans ?_ this
     rw [q1El]
     congr 4
+    funext k
+    simp only [Function.comp_apply, map_sub, hp, map_one, hph]
   · obtain ⟨g, rfl⟩ := hsj g
     obtain ⟨ph, hph⟩ := hsj (Λ.ph j)
     obtain ⟨ta, hta⟩ := hsj (Λ.ta j)

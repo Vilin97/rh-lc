@@ -60,7 +60,7 @@ theorem isIso_stalkMap_genericPoint (f : X ⟶ Y) [IsIntegral X] [IsIntegral Y]
     IsIso (f.stalkMap (genericPoint X)) := by
   set x := genericPoint X
   have h3 : Function.Injective f ∧ ∀ x, (f.residueFieldMap x).hom.IsPurelyInseparable :=
-    ((tfae_universallyInjective.{u} f).out 0 2).mp ‹_›
+    ((tfae_universallyInjective.{u} f).out 1 3).mp ‹_›
   have hpi := h3.2 x
   have hr : Function.Bijective (f.residueFieldMap x) := by
     algebraize [(f.residueFieldMap x).hom]

@@ -85,7 +85,7 @@ theorem absBound :
         _ ≤ B0 := Finset.single_le_sum (f := fun q : DoubleCoset.Quotient (Γ : Set G) (K : Set G) => ∑ i, nu ι (Nf q.out i))
             (fun q _ => Finset.sum_nonneg fun i _ => nu_nonneg' ι _) (Finset.mem_univ q)
     refine ⟨C * B0, mul_nonneg hC hB0n, fun g i => ?_⟩
-    obtain ⟨h, k, hh, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K g
+    obtain ⟨h, hh, k, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K g
     have hg : g = h⁻¹ * ((DoubleCoset.mk Γ K g).out * k⁻¹) := by
       rw [e]; group
     have hNg : Nf g = R (k⁻¹)⁻¹ *ᵥ Nf (DoubleCoset.mk Γ K g).out := by

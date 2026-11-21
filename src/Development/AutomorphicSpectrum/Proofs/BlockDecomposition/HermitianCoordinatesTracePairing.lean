@@ -211,7 +211,8 @@ theorem trace_rat (M : Matrix (Fin r) (Fin r) D.host.E) :
 
 theorem uL_rat (m h : Matrix (Fin r) (Fin r) D.host.E) :
     uL m (rat h) = algebraMap D.host.F (AF D.host.F) (tF m h) := by
-  rw [uL_apply, ← rat_mul, trace_rat, GlobalTheory.CompanionTheory.ThetaInv.halfTr_incA, tF]
+  rw [uL_apply]
+  rw [← rat_mul, trace_rat, GlobalTheory.CompanionTheory.ThetaInv.halfTr_incA, tF]
 
 theorem algebraMap_smul_rat (c : D.host.F) (M : Matrix (Fin r) (Fin r) D.host.E) :
     algebraMap D.host.F (AF D.host.F) c • (rat M : Mx D r r) = rat (c • M) :=
@@ -322,7 +323,7 @@ theorem pairing_comb {n : ℕ} (m : Fin n → Matrix (Fin r) (Fin r) D.host.E) (
 theorem continuous_comb {n : ℕ} (m : Fin n → Matrix (Fin r) (Fin r) D.host.E) :
     Continuous fun v : Fin n → AF D.host.F => ∑ i, v i • (rat (m i) : Mx D r r) := by
   haveI : IsTopologicalAddGroup (Mx D r r) := (lattice_Mx D r r).1
-  exact continuous_finset_sum _ fun i _ => (continuous_smul_rat (m i)).comp (continuous_apply i)
+  exact continuous_finsetSum _ fun i _ => (continuous_smul_rat (m i)).comp (continuous_apply i)
 
 theorem comb_mem {n : ℕ} (m : Fin n → Matrix (Fin r) (Fin r) D.host.E)
     (hm : ∀ i, ct D.sp.cm.sig (m i) = m i) (v : Fin n → AF D.host.F) :
@@ -384,7 +385,7 @@ theorem isTamagawa_map {lam : Measure (hermA D r)} {𝓖 : Set (hermA D r)} (h :
     rw [e1, show me ⁻¹' (c.symm '' 𝓖) = 𝓖 from Set.preimage_image_eq _ c.symm.injective, hm]
   · let f : hermA D r ≃ (Fin n → AF D.host.F) := c.symm.toEquiv
     have hq : Measure.QuasiMeasurePreserving f.symm (lam.map c.symm) lam := by
-      refine ⟨hc, ?_⟩
+      refine ⟨hc.aemeasurable, ?_⟩
       have : (lam.map c.symm).map f.symm = lam := by
         show (lam.map c.symm).map c = lam
         rw [Measure.map_map hc hcs]

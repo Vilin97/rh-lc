@@ -64,8 +64,8 @@ theorem oD_apply (x : Om l) :
     oD l x = algebraMap (Per6.BdRp l) (Per6.BdR l) (algClToBdR l x) := rfl
 
 theorem phi_galCris (g : GQ l) (x : ACris.ACris ℂ_[l] l) :
-    ACris.phi ℂ_[l] l (ACris.galCris (Per6.toBot g) x) =
-      ACris.galCris (Per6.toBot g) (ACris.phi ℂ_[l] l x) := by
+    ACris.phi (ACris.galCris (Per6.toBot g) x) =
+      ACris.galCris (Per6.toBot g) (ACris.phi x) := by
   rw [← ACris.gal_smul_def, ← ACris.gal_smul_def, ACris.phi_gal_smul]
 
 theorem coe_χQ (g : GQ l) :

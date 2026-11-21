@@ -175,13 +175,13 @@ theorem eq_span_fixed (P N : Submodule (𝓞 E) E) (β : E) (hβ : star β = β)
   simpa using Submodule.mem_colon.1 h1 t ht
 
 omit [StarRing E] in
-theorem isLattice_of (N : Submodule (𝓞 E) E) (hfg : N.FG) (hne : N ≠ ⊥) : Submodule.IsFullLattice E N where
-  toIsLattice := Submodule.IsLattice.of_fg E hfg
-  span_eq_top := by
-    obtain ⟨x, hx, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hne
-    refine eq_top_iff.mpr fun y _ => ?_
-    simpa [smul_eq_mul, div_mul_cancel₀ _ hx0] using
-      (Submodule.span E (N : Set E)).smul_mem (y / x) (Submodule.subset_span hx)
+theorem isLattice_of (N : Submodule (𝓞 E) E) (hfg : N.FG) (hne : N ≠ ⊥) : Submodule.IsFullLattice E N := by
+  have : Submodule.IsLattice E N := Submodule.IsLattice.of_fg E hfg
+  refine { span_eq_top := ?_ }
+  obtain ⟨x, hx, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hne
+  refine eq_top_iff.mpr fun y _ => ?_
+  simpa [smul_eq_mul, div_mul_cancel₀ _ hx0] using
+    (Submodule.span E (N : Set E)).smul_mem (y / x) (Submodule.subset_span hx)
 omit [StarRing E] in
 theorem absNorm_le (hE : IsTotallyComplex E) (𝔫 : Ideal (𝓞 E)) (b : 𝓞 E) (hb : b ∈ 𝔫) (hb0 : b ≠ 0) (ρ : ℝ)
     (hρ : ∀ φ : E →+* ℂ, ‖φ (b : E)‖ ≤ ρ) : (Ideal.absNorm 𝔫 : ℝ) ≤ ρ ^ (2 * Formalism.HermitianLatticesTheory.fDeg E) := by

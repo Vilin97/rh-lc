@@ -71,7 +71,7 @@ private theorem sec_equiv (hc : ∀ j, Continuous (c j))
       rw [hF y hy κ, Finset.sum_smul]
       exact Finset.sum_congr rfl fun j _ => by rw [smul_smul, mul_comm]
     rw [h1]
-    exact integrable_finset_sum _ fun j _ => (integrable_c ν M hc j).smul (F j y)
+    exact integrable_finsetSum _ fun j _ => (integrable_c ν M hc j).smul (F j y)
   have h2 := (ContinuousLinearMap.mul ℂ (M.V →L[ℂ] M.V) (M.ρ a⁻¹)).integral_comp_comm hint
   simp only [ContinuousLinearMap.mul_apply'] at h2
   rw [← h2, ← integral_mul_left_eq_self (fun κ : Un n => M.ρ a⁻¹ * (F0 (y * κ.1) • M.ρ κ)) a]
@@ -133,11 +133,11 @@ private theorem ker_val (hk : IsMult μ M k val T') (hc : ∀ j, Continuous (c j
   have hCE : (fun x => ∑ j, F j x • B j e) ∈ CE M := by
     refine ⟨ContDiffOn.sum fun j _ => (hs j).smul contDiffOn_const, fun y hy a => ?_⟩
     have h := congrArg (fun X : M.V →L[ℂ] M.V => X e) (sec_equiv ν M hc hF hy a)
-    simpa only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.mul_apply] using h
+    simpa only [sum_apply, smul_apply, mul_apply_eq_comp] using h
   have h := UpperTheory.RealTr.actEig n μ M k val T' hk χ _ hCE
     (PositivityTheory.Rg.BcB.CG.isEig_sum χ F (fun j => B j e) hs he) 1 (val_mem 1)
   have hI := fun j => integrable_k M μ hk (hs j).continuousOn
-  simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.mul_apply]
+  simp only [sum_apply, smul_apply, mul_apply_eq_comp]
   rw [← h]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [act, one_mul, map_sum, map_smul]

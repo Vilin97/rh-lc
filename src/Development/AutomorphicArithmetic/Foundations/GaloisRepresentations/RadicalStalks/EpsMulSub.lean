@@ -115,7 +115,7 @@ theorem UpperTheory.Gal.Ord.lie :
     intro n h
     exact GlobalTheory.HTCount.crysAct_intCast o n h
   have hLc : ∀ (c : 𝓞 D.F) (h : HdR o.A), HL.toLie (OActN.toF D o.act) (hom o c h) =
-      c • HL.toLie (OActN.toF D o.act) h := fun c h => GlobalTheory.HTLieRho.toLie_crys o HL c h
+      c • HL.toLie (OActN.toF D o.act) h := fun c h => HL.toLie_act _ c h
   have hρ : β b.ρ ^ 2 - (D.tr : k) * β b.ρ + (D.nm : k) = 0 := by
     have h0 := congrArg β b.ρ_root
     simpa using h0
@@ -174,9 +174,60 @@ theorem UpperTheory.Gal.Ord.lie :
       exact (b.apart i j (Ne.symm hj) k β).symm
     have h1 := π.off _ hmax hpmem hne'
     rwa [RingHom.mem_ker, RingHom.comp_apply] at h1
+  have lie_decomp (v : GlobalTheory.Serre.Lie (OActN.toF D o.act)) :
+      ∃ u, D.ω • u = ((D.tr : k) - β b.ρ) • u ∧
+        ∃ w : Fin D.a → GlobalTheory.Serre.Lie (OActN.toF D o.act),
+          (∀ j, w j ∈ GlobalTheory.Serre.Lie.eig (OActN.toF D o.act) (β.comp (b.t j))) ∧
+          v = u + ∑ j, w j := by
+    have hd := GlobalTheory.HTLieRho.two_rho_sub_ne_zero b β
+    set ρ := β b.ρ
+    set ρ' := (D.tr : k) - ρ
+    set e := (ρ - ρ')⁻¹
+    have he : e * (ρ - ρ') = 1 := inv_mul_cancel₀ hd
+    have q : D.ω • D.ω • v - (D.tr : k) • D.ω • v + (D.nm : k) • v = 0 := by
+      have h := congrArg (· • v) (GlobalTheory.HTLieRho.omega_quad D)
+      simp only [zero_smul, add_smul, sub_smul, mul_smul] at h
+      simp only [Int.cast_smul_eq_zsmul] at h ⊢
+      exact h
+    rw [GlobalTheory.HTLieRho.nm_eq_mul b β] at q
+    have hsplit : v = -(e • (D.ω • v - ρ • v)) + e • (D.ω • v - ρ' • v) := by
+      rw [← sub_eq_neg_add, ← smul_sub, sub_sub_sub_cancel_left, ← sub_smul, smul_smul, he, one_smul]
+    have hvr : D.ω • (e • (D.ω • v - ρ' • v)) = ρ • (e • (D.ω • v - ρ' • v)) := by
+      rw [smul_comm D.ω e, smul_sub, smul_comm D.ω ρ']
+      generalize D.ω • D.ω • v = Y at q ⊢
+      generalize D.ω • v = X at q ⊢
+      linear_combination (norm := module) e • q
+    have hLc' (c : 𝓞 D.F) (h : HdR o.A) :
+        HL.toLie (OActN.toF D o.act) (GlobalTheory.HTSummand.crysAct (dp0 k) (𝟙 _) o.act (algebraMap (𝓞 D.F) D.O c) h) =
+          c • HL.toLie (OActN.toF D o.act) h := HL.toLie_act _ c h
+    have lie_rho_decomp (v : GlobalTheory.Serre.Lie (OActN.toF D o.act))
+        (hv : D.ω • v = β b.ρ • v) :
+        ∃ w : Fin D.a → GlobalTheory.Serre.Lie (OActN.toF D o.act),
+          (∀ j, w j ∈ GlobalTheory.Serre.Lie.eig (OActN.toF D o.act) (β.comp (b.t j))) ∧
+          v = ∑ j, w j := by
+      obtain ⟨y, rfl⟩ := HL.toLie_surjective (OActN.toF D o.act) v
+      have hy : GlobalTheory.HTSummand.crysAct (dp0 k) (𝟙 _) o.act (algebraMap (𝓞 D.F) D.O D.ω) y - β b.ρ • y ∈ Fil o.A := by
+        rw [← HL.ker_toLie (OActN.toF D o.act), LinearMap.mem_ker, map_sub, map_smul, hLc', hv, sub_self]
+      obtain ⟨w, hw, hs⟩ := GlobalTheory.HTSummand.lie_mod_fil p D R b N k β _ rfl o y hy
+      refine ⟨fun j => HL.toLie (OActN.toF D o.act) (w j), fun j => ?_, ?_⟩
+      · rw [GlobalTheory.Serre.Lie.mem_eig_iff]
+        intro c
+        have ht := hw j c
+        rw [← HL.ker_toLie (OActN.toF D o.act), LinearMap.mem_ker, map_sub, map_smul, hLc', sub_eq_zero] at ht
+        exact ht
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [← HL.ker_toLie (OActN.toF D o.act), LinearMap.mem_ker, map_sub, map_sum, sub_eq_zero] at hs
+          exact hs
+    obtain ⟨w, hw, hs⟩ := lie_rho_decomp _ hvr
+    refine ⟨-(e • (D.ω • v - ρ • v)), ?_, w, hw, ?_⟩
+    · rw [smul_neg, smul_comm D.ω e, smul_sub, smul_comm D.ω ρ]
+      generalize D.ω • D.ω • v = Y at q ⊢
+      generalize D.ω • v = X at q ⊢
+      linear_combination (norm := module) (-e) • q
+    · rw [← hs]; exact hsplit
   have hkey : ∀ h, HL.toLie (OActN.toF D o.act) (hom o π.ε h) ∈ GlobalTheory.Serre.Lie.eig (OActN.toF D o.act) τ := by
     intro h
-    obtain ⟨u, hu, wv, hwv, hdec⟩ := GlobalTheory.HTLieRho.lie_decomp o β rfl HL (HL.toLie (OActN.toF D o.act) h)
+    obtain ⟨u, hu, wv, hwv, hdec⟩ := lie_decomp (HL.toLie (OActN.toF D o.act) h)
     obtain ⟨hu', rfl⟩ := HL.toLie_surjective (OActN.toF D o.act) u
     choose hs hhs using fun j => HL.toLie_surjective (OActN.toF D o.act) (wv j)
     have hu0 : HL.toLie (OActN.toF D o.act) (hom o π.ε hu') = 0 := by

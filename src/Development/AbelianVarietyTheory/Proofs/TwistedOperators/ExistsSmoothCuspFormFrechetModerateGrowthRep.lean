@@ -421,24 +421,32 @@ theorem conj_mem_lieAt (A : GlobalTheory.ChainFr.Fr V) (τ : D.what₂.Tau) {X :
 
 theorem isSmoothModRep (hθ : IsInfFam θ) (A : GlobalTheory.ChainFr.Fr V) (τ : D.what₂.Tau) :
     GlobalTheory.SmoothGlob.IsSmoothModRep (A.ε τ) (sem θ N hU) (fun g => act N hU hθ (pt θ τ ((A.fr τ)⁻¹ * g * A.fr τ)))
-      fun X => der N hU hθ τ ((A.fr τ)⁻¹ * X * A.fr τ) where
-  withSeminorms := withSem
-  map_one := ContinuousLinearMap.ext fun x => by
+      (fun X => der N hU hθ τ ((A.fr τ)⁻¹ * X * A.fr τ)) := by
+  refine
+    { withSeminorms := withSem
+      map_one := ?_
+      map_mul := ?_
+      continuousOn := ?_
+      hasDRep := ?_
+      growth := ?_ }
+  · refine ContinuousLinearMap.ext fun x => ?_
     rw [Matrix.mul_one, mul_eq_one_comm.1 (fr_mul_inv A τ), show pt θ τ 1 = 1 from Subtype.ext (atTau_one hθ V τ)]
     exact act_one hθ x
-  map_mul a ha b hb := ContinuousLinearMap.ext fun x => by
+  · intro a ha b hb
+    refine ContinuousLinearMap.ext fun x => ?_
     rw [ContinuousLinearMap.comp_apply, ← act_mul, ← pt_mul hθ τ (conj_mem_UH A τ ha) (conj_mem_UH A τ hb)]
     congr 3
     simp only [Matrix.mul_assoc]
     rw [← Matrix.mul_assoc (A.fr τ), fr_mul_inv, Matrix.one_mul]
-  continuousOn v := (continuousOn_act hθ τ v).comp
-    ((continuous_const.matrix_mul continuous_id).matrix_mul continuous_const).continuousOn fun _ h => conj_mem_UH A τ h
-  hasDRep X hX v := by
+  · intro v
+    exact (continuousOn_act hθ τ v).comp
+      ((continuous_const.matrix_mul continuous_id).matrix_mul continuous_const).continuousOn fun _ h => conj_mem_UH A τ h
+  · intro X hX v
     refine tendsto_sub_nhds_zero_iff.1 ((tendsto_quot hθ (conj_mem_lieAt A τ hX) v).congr fun t => ?_)
     beta_reduce
     rw [← Matrix.exp_conj' _ _ (A.fr_unit τ), Matrix.mul_smul, Matrix.smul_mul]
     rfl
-  growth i := by
+  · intro i
     obtain ⟨C, m, hC⟩ := GlobalTheory.T.moderateGrowthSobolevSize_rightTranslate_polyBound D θ hθ V i N
     obtain ⟨C', m', hC'⟩ := GlobalTheory.T.unitaryAdelicHeight_realFrameElement_le_hsPow D θ hθ V A τ
     refine ⟨(C * ‖C'‖₊ ^ m) • sem θ N hU i, m' * m, (withSem.continuous_seminorm i).const_smul (C * ‖C'‖₊ ^ m),

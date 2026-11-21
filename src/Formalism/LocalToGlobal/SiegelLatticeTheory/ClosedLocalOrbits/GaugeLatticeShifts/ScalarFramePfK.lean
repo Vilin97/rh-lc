@@ -22,6 +22,25 @@ variable {D : D7} (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E}
 
 theorem hT_om_X (u v : Fin (D.R.rS + 1) → (VS D).V) {w : (VS D).V} (hw : w ∈ Xs (S := VS D) v) :
     (VS D).hT (Gom u v) w = 0 := by
+  have GDl_top' (u v : Fin (D.R.rS + 1) → (VS D).V) : GDl u v (D.R.rS + 1) = (GZ u v).det := by
+    unfold GDl
+    rw [dite_eq_left le_rfl]
+    congr 1
+  have om_pair (u v : Fin (D.R.rS + 1) → (VS D).V) (b : Fin (D.R.rS + 1)) :
+      (VS D).hT (Gom u v) (v b) = if b = Fin.last _ then GDl u v (D.R.rS + 1) else 0 := by
+    have key := congrFun (congrFun (Matrix.adjugate_mul (GZ u v)) (Fin.last _)) b
+    rw [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply] at key
+    rw [GDl_top']
+    unfold Gom
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
+    simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star]
+    rw [show (∑ a, (GZ u v).adjugate (Fin.last _) a * (VS D).hT (u a) (v b)) =
+        ∑ a, (GZ u v).adjugate (Fin.last _) a * GZ u v a b from rfl, key]
+    rcases eq_or_ne b (Fin.last _) with hb | hb
+    · subst hb
+      simp
+    · rw [if_neg (Ne.symm hb), if_neg hb, smul_zero]
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun D.host.E).1 hw
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
@@ -39,6 +58,57 @@ theorem scal_om (F : LFlag (D.sp.Y 0) D.R.rS T) (F' F'' : LFlag (D.sp.Y 0) D.R.r
     (hD2 : GDl F.fl.fvec F''.fl.fvec (D.R.rS + 1) ≠ 0) :
     star (GDl F.fl.fvec F''.fl.fvec (D.R.rS + 1)) • β (Gom F.fl.fvec F'.fl.fvec) -
       star (GDl F.fl.fvec F'.fl.fvec (D.R.rS + 1)) • Gom F.fl.fvec F''.fl.fvec ∈ Xsp F'' := by
+  have GDl_top' (u v : Fin (D.R.rS + 1) → (VS D).V) : GDl u v (D.R.rS + 1) = (GZ u v).det := by
+    unfold GDl
+    rw [dite_eq_left le_rfl]
+    congr 1
+  have GDl_r' (u v : Fin (D.R.rS + 1) → (VS D).V) :
+      GDl u v D.R.rS = ((GZ u v).submatrix Fin.castSucc Fin.castSucc).det := by
+    unfold GDl
+    rw [dite_eq_left (Nat.le_succ _)]
+    have ecs : (Fin.castLE (Nat.le_succ D.R.rS) : Fin D.R.rS → Fin (D.R.rS + 1)) = Fin.castSucc :=
+      funext fun i => Fin.ext rfl
+    rw [ecs]
+  have om_pair (u v : Fin (D.R.rS + 1) → (VS D).V) (b : Fin (D.R.rS + 1)) :
+      (VS D).hT (Gom u v) (v b) = if b = Fin.last _ then GDl u v (D.R.rS + 1) else 0 := by
+    have key := congrFun (congrFun (Matrix.adjugate_mul (GZ u v)) (Fin.last _)) b
+    rw [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply] at key
+    rw [GDl_top']
+    unfold Gom
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
+    simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star]
+    rw [show (∑ a, (GZ u v).adjugate (Fin.last _) a * (VS D).hT (u a) (v b)) =
+        ∑ a, (GZ u v).adjugate (Fin.last _) a * GZ u v a b from rfl, key]
+    rcases eq_or_ne b (Fin.last _) with hb | hb
+    · subst hb
+      simp
+    · rw [if_neg (Ne.symm hb), if_neg hb, smul_zero]
+  have om_decomp (u v : Fin (D.R.rS + 1) → (VS D).V) :
+      Gom u v - star (GDl u v D.R.rS) • u (Fin.last _) ∈ Xs (S := VS D) u := by
+    unfold Gom
+    rw [Fin.sum_univ_castSucc, PI.UnitaryGroupMassFormula.BetaLUniq.GN.adj_last, ← GDl_r', add_sub_cancel_right]
+    exact Submodule.sum_mem _ fun c _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨c, rfl⟩)
+  have GZ_apply (u v : Fin (D.R.rS + 1) → (VS D).V) (a b : Fin (D.R.rS + 1)) :
+      GZ u v a b = (VS D).hT (u a) (v b) := rfl
+  have eq_zero_of_orth_of_det_ne_zero (u v : Fin (D.R.rS + 1) → (VS D).V) (hdet : GDl u v (D.R.rS + 1) ≠ 0) {q : (VS D).V}
+      (hq : q ∈ Submodule.span D.host.E (Set.range u)) (h : ∀ b, (VS D).hT q (v b) = 0) : q = 0 := by
+    obtain ⟨κ, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun D.host.E).1 hq
+    have hm : Matrix.vecMul (fun a => star (κ a)) (GZ u v) = 0 := by
+      funext b
+      have := h b
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply] at this
+      simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply] at this
+      simp only [Matrix.vecMul, dotProduct, Pi.zero_apply, GZ_apply]
+      exact this
+    rw [GDl_top'] at hdet
+    have hκ := Matrix.eq_zero_of_vecMul_eq_zero hdet hm
+    have : κ = 0 := by
+      funext a
+      have := congrFun hκ a
+      simpa using this
+    simp [this]
   set f := F.fl.fvec with hf
   set f' := F'.fl.fvec with hf'
   set f'' := F''.fl.fvec with hf''

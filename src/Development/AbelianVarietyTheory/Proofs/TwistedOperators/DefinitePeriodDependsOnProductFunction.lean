@@ -166,7 +166,7 @@ theorem jPer_van {M : Vol G} (hN : ∀ X, DefNode D.R.m X → X ≠ .top D.R.m �
     refine int_van _ S a (fun i h' => F i h' * biL W M t j (φ i) (C i j) (GlobalTheory.RowChain.topEmb G hm h')) (fun i hi => ?_) fun h' => ?_
     · have hb := biL_contAut W t (by omega) (hC i hi j hev (by omega)) h0 (hφ i hi) h1
       refine h2.intOn _ ((hF i hi).2.mul (hb.2.comp (topEmb_cont hm))) fun γ hγ x => ?_
-      obtain ⟨γ', hγ', e⟩ := topEmb_rat (G := G) hm γ hγ x
+      obtain ⟨γ', hγ', e⟩ := GlobalTheory.RowVal.topEmb_rat (G := G) hm γ hγ x
       rw [e, (hF i hi).1 γ hγ x, hb.1 γ' hγ']
     · simp only [← mul_assoc]
       refine biL_van W t (by omega) h0 h1 S (fun i => a i * F i h') φ (fun i => C i j) hφ

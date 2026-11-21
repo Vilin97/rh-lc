@@ -22,7 +22,8 @@ theorem UpperTheory.Gal.crystallineComparison.detCoLift_of :
     rw [Submodule.coe_add, f1, Pi.add_apply, Pi.add_apply, map_add (f := _)]
   · intro c x
     funext i
-    rw [Submodule.coe_smul, f2, Pi.smul_apply, Pi.smul_apply, smul_eq_mul, map_mul, h1,
+    change π (co (c • (x : (Fin a → ↥LL.1) ⊗[ℚ_[l]] Bst P)) i) = _
+    rw [f2, Pi.smul_apply, Pi.smul_apply, smul_eq_mul, map_mul, h1,
       Algebra.smul_def]
   · intro c x
     funext i

@@ -60,9 +60,9 @@ theorem isSqInt_mulChi {χ : HChar E} (hu : χ.IsUnitary) (hs : ∀ t, chiDet a 
     exact hI
 
 theorem isDiscrete_map {χ : HChar E} (hu : χ.IsUnitary) (hs : ∀ t, chiDet a χ (splitCentre E a t) = 1)
-    {V : Submodule ℂ (Sm E a)} (hV : IsDiscrete V) : IsDiscrete (V.map (mulChi a χ).toLinearMap) where
-  aut := by
-    rintro _ ⟨φ, hφ, rfl⟩
+    {V : Submodule ℂ (Sm E a)} (hV : IsDiscrete V) : IsDiscrete (V.map (mulChi a χ).toLinearMap) := by
+  refine { aut := ?_, sqInt := ?_, stable := ?_, ne_bot := ?_, irred := ?_ }
+  · rintro _ ⟨φ, hφ, rfl⟩
     have h := hV.aut φ hφ
     refine ⟨?_, ?_, ?_, ?_, ?_⟩
     · intro γ g
@@ -93,12 +93,13 @@ theorem isDiscrete_map {χ : HChar E} (hu : χ.IsUnitary) (hs : ∀ t, chiDet a 
       refine (mul_le_mul (h1 y) (mul_le_mul_of_nonneg_left (h2 y) (norm_nonneg _)) (by positivity)
         ((norm_nonneg _).trans (h1 y))).trans_eq ?_
       ring
-  sqInt := by rintro _ ⟨φ, hφ, rfl⟩; exact isSqInt_mulChi hu hs (hV.sqInt φ hφ)
-  stable := by
-    rintro o _ ⟨φ, hφ, rfl⟩
+  · rintro _ ⟨φ, hφ, rfl⟩
+    exact isSqInt_mulChi hu hs (hV.sqInt φ hφ)
+  · rintro o _ ⟨φ, hφ, rfl⟩
     exact ⟨_, add_mem (V.smul_mem _ (hV.stable o φ hφ)) (V.smul_mem _ hφ), (act_mulChi χ o φ).symm⟩
-  ne_bot h := hV.ne_bot ((Submodule.map_eq_bot_iff (e := mulChi a χ)).1 h)
-  irred W hW hW' := by
+  · intro h
+    exact hV.ne_bot ((Submodule.map_eq_bot_iff (e := mulChi a χ)).1 h)
+  · intro W hW hW'
     have h := hV.irred (W.comap (mulChi a χ).toLinearMap) (fun φ hφ => by
       obtain ⟨ψ, h1, h2⟩ := hW hφ
       rwa [← (mulChi a χ).injective h2]) fun o φ hφ => by

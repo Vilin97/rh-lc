@@ -43,7 +43,7 @@ private theorem proj_of_sum {G V : Type} [Group G] [AddCommGroup V] [Module ℂ 
     exact hNC (le_sup_right.trans (hC.le_of_ge hm le_sup_left))
   obtain ⟨U, hUS, hUC⟩ : ∃ U ∈ S, ¬ U ≤ C := by
     by_contra hn
-    push_neg at hn
+    push Not at hn
     exact hψC (sSup_le hn (hAS hψA))
   have hUs := hSs U hUS
   have hdisj : C ⊓ U = ⊥ := by
@@ -85,12 +85,12 @@ private theorem proj_of_sum {G V : Type} [Group G] [AddCommGroup V] [Module ℂ 
       exact (Submodule.mem_bot ℂ).1 this
     · rw [codisjoint_iff, ← top_le_iff, ← hD.sup_eq_top]
       exact sup_le (sup_le (le_sup_left.trans le_sup_right) le_sup_left) (le_sup_right.trans le_sup_right)
-  let pr : V →ₗ[ℂ] V := U.subtype ∘ₗ Submodule.linearProjOfIsCompl U (C ⊔ D) hc
+  let pr : V →ₗ[ℂ] V := U.subtype ∘ₗ Submodule.projectionOnto U (C ⊔ D) hc
   have hprU : ∀ u ∈ U, pr u = u := fun u hu =>
-    congrArg Subtype.val (Submodule.linearProjOfIsCompl_apply_left hc ⟨u, hu⟩)
+    congrArg Subtype.val (Submodule.projectionOnto_apply_left hc ⟨u, hu⟩)
   have hprC : ∀ c ∈ C, pr c = 0 := fun c hc' => by
-    have h0 : Submodule.linearProjOfIsCompl U (C ⊔ D) hc c = 0 :=
-      Submodule.linearProjOfIsCompl_apply_right' hc (Submodule.mem_sup_left hc')
+    have h0 : Submodule.projectionOnto U (C ⊔ D) hc c = 0 :=
+      Submodule.projectionOnto_apply_of_mem_right hc (Submodule.mem_sup_left hc')
     simp [pr, h0]
   have hform : ∀ c ∈ C, ∀ u ∈ U, pr (c + u) = u := fun c hc' u hu => by
     rw [map_add (f := _), hprC c hc', hprU u hu, zero_add]

@@ -108,10 +108,10 @@ theorem left_nondeg (R C : Submodule LL (Fin a → Fin n → LL)) (hRC : IsCompl
   obtain ⟨u', hu'⟩ := exists_rep (f ∘ₗ R.projectionOnto C hRC)
   have hann : u' ∈ ann C := by
     intro c hc
-    rw [← hu', LinearMap.comp_apply, Submodule.linearProjOfIsCompl_apply_right' hRC hc, map_zero]
+    rw [← hu', LinearMap.comp_apply, Submodule.projectionOnto_apply_of_mem_right hRC hc, map_zero]
   apply hf
   have := hu' u
-  rw [LinearMap.comp_apply, Submodule.linearProjOfIsCompl_apply_left hRC ⟨u, hu⟩] at this
+  rw [LinearMap.comp_apply, Submodule.projectionOnto_apply_left hRC ⟨u, hu⟩] at this
   rw [this]
   exact h u' hann
 

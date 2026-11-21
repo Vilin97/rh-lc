@@ -66,9 +66,9 @@ theorem card_ne_zero_eq {n : ℕ} (e : Fin n → ℕ) :
   rw [Finset.card_filter]
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases hi : e i = 0
-  · rw [if_neg (not_not.mpr hi), hi]
+  · rw [ite_eq_right (not_not.mpr hi), hi]
     simp
-  · rw [if_pos hi, min_eq_right (Nat.one_le_iff_ne_zero.mpr hi)]
+  · rw [ite_eq_left hi, min_eq_right (Nat.one_le_iff_ne_zero.mpr hi)]
 
 variable {K F V : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F]
   [Algebra F K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V]

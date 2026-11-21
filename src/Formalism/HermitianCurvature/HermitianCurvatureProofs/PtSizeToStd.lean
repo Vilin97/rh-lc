@@ -12,13 +12,13 @@ open Formalism.FourierDecayAlt MeasureTheory NumberField
 
 noncomputable section
 
-theorem ptSize_toStd (r : ℕ) (g : ℝ) : ∀ (b : ℕ) (P : C.LPt), D.ptSize (D.toStd r g b P) = D.ptSize P
-  | _, [] => rfl
-  | b, (s, t) :: rest => by
-    simp only [D.toStd, D.ptSize, List.map_cons, List.sum_cons] at *
-    have := ptSize_toStd r g (b + s) rest
-    simp only [D.ptSize] at this
-    rw [this]
+theorem ptSize_toStd (r : ℕ) (g : ℝ) : ∀ (b : ℕ) (P : C.LPt), D.ptSize (D.toStd r g b P) = D.ptSize P := by
+  intro b P
+  induction P generalizing b with
+  | nil => rfl
+  | cons block rest ih =>
+    obtain ⟨s, t⟩ := block
+    simpa only [D.toStd, D.ptSize, List.map_cons, List.sum_cons] using congrArg (s + ·) (ih (b + s))
 
 section defs
 

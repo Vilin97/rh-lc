@@ -413,7 +413,13 @@ theorem ramifiedLattice_of_chain_estimates (Cn : ℝ) : ∃ C : ℝ, ∀ (D : D7
   have hkR : (D.R.k : ℝ) = ((κ + 1 : ℕ) : ℝ) + 1 := by rw [hκ]; push_cast; ring
   have hf : (Fintype.card D.what₂.Tau : ℝ) = D.R.f := by rw [D.what₂.card_Tau]
   have hf0 : (0 : ℝ) < (Fintype.card D.what₂.Tau : ℝ) := by
-    rw [D.what₂.card_Tau]; unfold Ranks.f Ranks.n; positivity
+    have hfpos : 0 < Fintype.card D.what₂.Tau := by
+      rw [D.what₂.card_Tau]
+      have := D.R.two_le_m
+      have := D.R.m_le_f
+      unfold Ranks.f Ranks.n at *
+      omega
+    exact_mod_cast hfpos
   have hlow := hZ u Y
   unfold SlopeLow at hlow
   set mu := ((D.fm u).lat 0).mu with hmu

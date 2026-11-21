@@ -219,7 +219,7 @@ theorem g_rowDiv_shift (R : Type*) [CommRing R] {n : ℕ} (H : ℤ) (a b : Fin r
     (f : MvPolynomial (Fin r × Fin n) R) (hf : IsWeightedHomogeneous (htW ht n) f H) :
     IsWeightedHomogeneous (htW ht n) (rowDiv R a b k f) (H + k * (ht a - ht b)) := by
   unfold rowDiv
-  conv => enter [2, 1, 2]; rw [f.as_sum]
+  conv => enter [2, 1, 1]; rw [f.as_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_

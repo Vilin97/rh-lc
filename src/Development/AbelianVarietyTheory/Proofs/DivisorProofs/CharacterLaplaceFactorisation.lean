@@ -62,8 +62,10 @@ theorem exists_eq_prod_X_sub_C : ∀ (a : ℕ) (Q : ℂ[X]), Q.Monic → Q.natDe
     ∃ α : Fin a → ℂ, Q = ∏ i, (X - C (α i))
   | 0, Q, hm, hd => ⟨Fin.elim0, by rw [Fin.prod_univ_zero]; exact Polynomial.eq_one_of_monic_natDegree_zero hm hd⟩
   | a + 1, Q, hm, hd => by
-    obtain ⟨r, hr⟩ := IsAlgClosed.exists_root Q (by
-      rw [degree_eq_natDegree hm.ne_zero, hd]; exact_mod_cast Nat.succ_ne_zero a)
+    have hdegree : 0 < Q.degree := by
+      rw [degree_eq_natDegree hm.ne_zero, hd]
+      exact WithBot.coe_lt_coe.mpr (Nat.succ_pos a)
+    obtain ⟨r, hr⟩ := Complex.exists_root hdegree
     have hdiv : (X - C r) * (Q /ₘ (X - C r)) = Q := mul_divByMonic_eq_iff_isRoot.mpr hr
     have hm' : (Q /ₘ (X - C r)).Monic := (monic_X_sub_C r).of_mul_monic_left (by rw [hdiv]; exact hm)
     have hd' : (Q /ₘ (X - C r)).natDegree = a := by

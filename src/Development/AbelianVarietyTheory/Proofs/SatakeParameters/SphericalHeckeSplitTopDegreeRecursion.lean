@@ -29,7 +29,7 @@ theorem opOf_sum_single {D : D7} {V : HSp D} {M : Type} [AddCommGroup M] [Module
     opOf π P (∑ i ∈ s, Finsupp.single (l i) (z i)) = ∑ i ∈ s, z i • ∑ γ ∈ rep V P (l i), π γ := by
   classical
   unfold opOf
-  rw [← Finsupp.sum_finset_sum_index (by simp) (by intros; simp [add_smul])]
+  rw [← Finsupp.sum_finsetSum_index (by simp) (by intros; simp [add_smul])]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finsupp.sum_single_index (by simp)]
 
@@ -47,7 +47,7 @@ theorem pos_iff_lt : ∀ {n : ℕ} (d : Fin n → ℤ), Antitone d →
     · have hnil : (List.ofFn fun j : Fin n => d j.succ).filter (fun x => 0 < x) = [] := by
         rw [List.filter_eq_nil_iff]
         intro x hx
-        obtain ⟨j, rfl⟩ := List.mem_ofFn.1 hx
+        obtain ⟨j, rfl⟩ := (List.mem_ofFn (f := fun j : Fin n => d j.succ)).1 hx
         have := hd (Fin.zero_le j.succ)
         simp only [decide_eq_true_eq, not_lt]
         omega
@@ -184,7 +184,7 @@ theorem top_step : ∀ {D : D7} (V : HSp D) (P : Pl D.host.E), conjPl P ≠ P �
     refine (hTi (g * h) hghT x hxT ⟨a, ha, b * (γ⁻¹ * x), K.mul_mem hb hγx, by rw [← mul_assoc, ← hγe]; group⟩).symm
   refine ⟨m (g * h), (hT _ hghT).1, ∑ x ∈ T.erase (g * h), Finsupp.single (List.ofFn (cx x)) (m x : ℂ), ?_, ?_⟩
   · intro d' hd'
-    obtain ⟨x, hxT, hd'x⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hd')
+    obtain ⟨x, hxT, hd'x⟩ := Finset.mem_biUnion.1 (Finsupp.support_finsetSum hd')
     obtain ⟨hne, hxT⟩ := Finset.mem_erase.1 hxT
     rw [Finset.mem_singleton.1 (Finsupp.support_single_subset hd'x)]
     obtain ⟨c1, c2, c3⟩ := hineq x hxT hne

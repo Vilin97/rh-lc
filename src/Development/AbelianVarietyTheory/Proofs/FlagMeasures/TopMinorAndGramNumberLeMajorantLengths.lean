@@ -19,7 +19,7 @@ namespace GlobalTheory.Amp.YBound
 open GlobalTheory.Amp.GramFlag (eucl_eq)
 
 theorem det_upper {r : ℕ} (x : UT r → ℂ) : (upper x).det = 1 := by
-  rw [Matrix.det_of_upperTriangular]
+  rw [Matrix.det_of_isUpperTriangular]
   · simp [upper]
   · intro a b h
     have h' : b < a := h
@@ -64,7 +64,7 @@ theorem formE_le {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (hH : Hᴴ * H = 1) 
       rw [← LinearMap.adjoint_inner_right, ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint]
       congr 1
       ext i
-      simp [Matrix.toEuclideanLin_apply, Matrix.mulVec_mulVec, hH]
+      simp [Matrix.toLpLin_apply, Matrix.mulVec_mulVec, hH]
     rw [norm_eq_sqrt_re_inner (𝕜 := ℂ), this, ← norm_eq_sqrt_re_inner]
   show ‖⟪w, Matrix.toEuclideanLin H v⟫_ℂ‖ ≤ _
   rw [mul_comm, ← h1]

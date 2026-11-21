@@ -29,12 +29,12 @@ private theorem val_le_one {E : Type} [Field E] [NumberField E] [IsCMField E] {n
   simp only [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply_eq, smul_eq_mul, mul_one,
     Matrix.transpose_apply, Matrix.map_apply] at h
   rw [← h]
-  have hG := (GlobalTheory.BCT.GlobLev.mem_KGL_iff_val u _).1
-    ((GlobalTheory.CompanionTheory.LFixDPf.mem_KGL_map_conj u (comp (UpperTheory.Gal.CertificateRingHomMap.cj u) k)).2 (hk _))
+  have hG := (GlobalTheory.BCT.GlobLev.mem_KGL_iff_val (UpperTheory.Gal.CertificateRingHomMap.cj u) _).1 (hk _)
   have ha := (GlobalTheory.BCT.GlobLev.mem_KGL_iff_val u _).1 (hk u)
   rw [← HeightOneSpectrum.mem_adicCompletionIntegers]
   refine sum_mem fun j _ => mul_mem ?_ ?_
   · rw [HeightOneSpectrum.mem_adicCompletionIntegers]
+    rw [(conjLoc_spec (GlobalTheory.SplitPts.conjE E) u).2.2]
     exact hG.1 j ⟨0, hn⟩
   · rw [HeightOneSpectrum.mem_adicCompletionIntegers]
     exact ha.1 j ⟨0, hn⟩

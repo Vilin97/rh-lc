@@ -119,7 +119,11 @@ theorem one_piece : ∀ (k r : ℕ) {Wp : Type} [NormedAddCommGroup Wp] [InnerPr
     have hit : ∫⁻ s, F (fun i j => (Matrix.of s * Matrix.of x) i j) ∂(muProd μW μN) ≤
         ∫⁻ h, ∫⁻ n, F (lmulM (Matrix.of h * Matrix.of n) x) ∂μN ∂μW :=
       calc ∫⁻ s, F (fun i j => (Matrix.of s * Matrix.of x) i j) ∂(muProd μW μN)
-          ≤ ∫⁻ p, F (lmulM (Matrix.of p.1 * Matrix.of p.2) x) ∂(μW.prod μN) := lintegral_map_le _ _
+          ≤ ∫⁻ p, F (lmulM (Matrix.of p.1 * Matrix.of p.2) x) ∂(μW.prod μN) := by
+            apply lintegral_map_le
+            have hc : Continuous (fun p : Mt k r × Mt k r => lmulM (Matrix.of p.1) p.2) := by
+              exact continuous_fst.matrixOf.matrix_mul continuous_snd.matrixOf
+            exact hc.measurable.aemeasurable
         _ ≤ ∫⁻ h, ∫⁻ n, F (lmulM (Matrix.of h * Matrix.of n) x) ∂μN ∂μW := lintegral_prod_le _
     refine hit.trans ?_
     have zero_case : (∀ h : Mt k r, Matrix.of h ∈ UWset k r z → ∀ n : Mt k r,

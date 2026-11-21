@@ -165,21 +165,23 @@ theorem isOpen_UI : IsOpen (UI F E : Set (AE F E)ˣ) := by
   rw [this]
   exact (h1.preimage Units.continuous_val).inter (h1.preimage Units.continuous_coe_inv)
 
-theorem sysI : Sys (PI (F := F) (E := E)) ⊤ (UI F E) fun a => a * a = a where
-  cont a ha := unitInvariant_continuous ha
-  comp a b ha hb := unitInvariant_comp ha hb
-  zero := unitInvariant_zero
-  add a b ha hb h := ⟨idem_add ha hb h, unitInvariant_add ha hb h⟩
-  idem _ h := h
-  cK := isClosed_univ
-  mK _ _ _ _ := trivial
-  mU := isOpen_UI.measurableSet
-  one := (UI F E).one_mem
-  mul _ h _ h' := (UI F E).mul_mem h h'
-  pU a ha l hl w := by
-    rcases cw_cases ha w with e | e
-    · rw [vw, cw_PI_zero ha e, map_one]
-    · rw [vw, cw_PI_one ha e]; exact hl w
+theorem sysI : Sys (PI (F := F) (E := E)) ⊤ (UI F E) fun a => a * a = a := by
+  refine {
+    cont a ha := unitInvariant_continuous ha
+    comp a b ha hb := unitInvariant_comp ha hb
+    zero := unitInvariant_zero
+    add a b ha hb h := ⟨idem_add ha hb h, unitInvariant_add ha hb h⟩
+    idem _ h := h
+    cK := isClosed_univ
+    mK _ _ _ _ := trivial
+    mU := isOpen_UI.measurableSet
+    one := (UI F E).one_mem
+    mul _ h _ h' := (UI F E).mul_mem h h'
+    pU := ?_ }
+  intro a ha l hl w
+  rcases cw_cases ha w with e | e
+  · rw [vw, cw_PI_zero ha e, map_one]
+  · rw [vw, cw_PI_one ha e]; exact hl w
 
 theorem inf_of_part {a : AE F E} (ha : a * a = a) (h0 : infTens F E a = 0) {l : (AE F E)ˣ} (h : l ∈ part PI ⊤ a) :
     infTens F E l = 1 := by
@@ -236,14 +238,19 @@ theorem measEx_of (hS : StabEx) : MeasEx := by
   haveI := (ua_top (σ := σ) X.J).2
   haveI := borelUA (σ := σ) X.J
   have hc := stab_compact hS hB hX hK
-  have sy := sysU hK hc
   have ei := kAt_eq K (evI F) real_idem fun _ => at_inf_iff
   have ef := fun v => kAt_eq K (evFin F v) (idem_idem v) fun _ => at_fin_iff
   have di := idAt_eq (E := E) (evI F) real_idem fun _ => at_inf_iff
   have df := fun v => idAt_eq (E := E) (evFin F v) (idem_idem v) fun _ => at_fin_iff
   have h1 : ∀ {a}, Gd a → ∀ S, S = part (PU σ X.J) K a → ∃ μ : Measure S, μ.IsHaarMeasure ∧ μ Set.univ = 1 := by
     rintro a ha S rfl
-    exact exists_haar _ (sy.closed ha) Set.univ trivial (co_U hK hc ha).1 (co_U hK hc ha).2
+    have hp : Continuous (PU σ X.J a) :=
+      ((unitInvariant_continuous ha.1).comp continuous_subtype_val).subtype_mk _
+    have hclosed : IsClosed (part (PU σ X.J) K a : Set (UA σ X.J)) :=
+      hc.isClosed.inter (isClosed_eq hp continuous_id)
+    have : CompactSpace (part (PU σ X.J) K a) :=
+      isCompact_iff_compactSpace.1 (hc.of_isClosed_subset hclosed fun _ h => h.1)
+    exact exists_haar _ hclosed Set.univ trivial isCompact_univ isOpen_univ
   have h2 : ∀ S : Subgroup (AE F E)ˣ, ∀ P : Set S, (∃ μ : Measure S, μ.IsHaarMeasure ∧ μ P = 1) →
       ∃ μ : @Measure S (borel _), @Measure.IsHaarMeasure _ _ _ (borel _) μ ∧ μ P = 1 := fun S P h => by
     have : borel S = Subtype.instMeasurableSpace := (@BorelSpace.measurable_eq S _ Subtype.instMeasurableSpace (Subtype.borelSpace _)).symm

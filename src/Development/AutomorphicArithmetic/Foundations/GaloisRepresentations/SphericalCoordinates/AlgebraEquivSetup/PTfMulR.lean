@@ -90,7 +90,8 @@ theorem UpperTheory.Gal.W2.Seed.pTfMulR :
     have h1 := ((hAdm X M T r hr).2 k hk x).2
     have h2 := ((hAdm X M T (L'.loc t) hloc).2 k⁻¹ (T.K.inv_mem hk) (x⁻¹ * g)).1
     rw [show (x * k)⁻¹ * g = k⁻¹ * (x⁻¹ * g) by group, h1, h2]
-    generalize_proofs p1 p2
+    have p1 : T.L.pr k ∈ T.J := T.fact.2 k hk
+    have p2 : T.L.pr k⁻¹ ∈ T.J := T.fact.2 k⁻¹ (T.K.inv_mem hk)
     have e : (⟨T.L.pr k⁻¹, p2⟩ : T.J) = (⟨T.L.pr k, p1⟩ : T.J)⁻¹ := Subtype.ext (map_inv _ _)
     rw [e, map_inv, inv_inv]
     have hu := Units.inv_mul (T.ψ ⟨T.L.pr k, p1⟩)

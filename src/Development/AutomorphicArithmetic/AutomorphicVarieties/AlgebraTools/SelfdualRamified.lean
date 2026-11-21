@@ -84,6 +84,8 @@ private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_basis {A : Type} [C
     congr 1
     rw [← e.surjective.range_comp]
     congr 1
+    funext i
+    simp
 
 private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_mat {A : Type} [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] {F G : Type} [Field F] [Algebra A F] [IsFractionRing A F] [Group G]
@@ -162,7 +164,7 @@ private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_mat {A : Type} [Com
       · exact Submodule.mem_one.mpr ⟨1, map_one _⟩
       · exact zero_mem _
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx =>
       rw [← algebraMap_smul F a x, map_smul, algebraMap_smul]
       exact Submodule.smul_mem _ _ hx

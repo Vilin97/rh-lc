@@ -79,7 +79,9 @@ private theorem place_under {F Ω : Type} [Field F] [NumberField F] [Field Ω] [
       exact lt_irrefl _ hab'
   have hpI : ((p : ℕ) : 𝓞 F) ∈ I := by
     show A.valuation (algebraMap F Ω (((p : ℕ) : 𝓞 F) : F)) < 1
-    simpa using hp
+    change A.valuation (algebraMap F Ω (algebraMap (𝓞 F) F (p : 𝓞 F))) < 1
+    rw [map_natCast, map_natCast]
+    exact hp
   have hne : I ≠ ⊥ := by
     intro h0
     rw [h0, Ideal.mem_bot] at hpI

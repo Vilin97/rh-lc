@@ -186,7 +186,7 @@ def jm {W W' : Type} [AddCommGroup W] [Module ℂ W] [AddCommGroup W'] [Module �
   jacquetMap f (unipRad k G.e) (leviEmb k G.e) (by
     intro g
     have hg : leviEmb k G.e g ∈ parab k G.e := (mem_parab_iff (R := k)).2 fun a b i j h => by
-      simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne']
+      simp [leviEmb, blockDiagonal'_apply, h.ne']
     exact parab_le_normalizer k G.e hg)
 
 theorem jm_injective {W W' : Type} [AddCommGroup W] [Module ℂ W] [AddCommGroup W'] [Module ℂ W']

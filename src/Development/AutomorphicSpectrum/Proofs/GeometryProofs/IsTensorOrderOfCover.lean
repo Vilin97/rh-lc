@@ -16,7 +16,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.BT.TranslateEq
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
-open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.BT GlobalTheory.CompanionTheory.IndefiniteRowSideFullHecke.TensorOrderReduction
+open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.BT
 open scoped TensorProduct
 
 variable {R : Type} [CommRing R] [IsDomain R] {T : Type} [CommGroup T]

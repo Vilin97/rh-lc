@@ -41,9 +41,8 @@ private theorem UpperTheory.V.Kum.xe_inter (U : Subgroup (G F Ω)) (g : G F Ω) 
   have hx : ((cycZ F Ω l g : ℤ_[l]) - 1) ≠ 0 := by
     intro h0
     apply hne
-    ext
     rw [sub_eq_zero] at h0
-    simpa using h0
+    exact Units.ext h0
   have hv := (PadicInt.mem_span_pow_iff_le_valuation _ hx
     (PadicInt.valuation ((cycZ F Ω l g : ℤ_[l]) - 1) + 1)).mp (Ideal.mem_span_singleton.mpr (hd _))
   omega
@@ -59,18 +58,14 @@ private theorem UpperTheory.V.Kum.xe_spread {U : Subgroup (G F Ω)} (hU : IsClos
   obtain ⟨i, hi⟩ := hBc.elim_directed_family_closed (fun m => (levU l U (n + m) : Set (G F Ω)))
     (fun m => xe_closed l hU (n + m))
     (by
-      ext g
-      constructor
-      · rintro ⟨⟨hgC, u, hu, rfl⟩, hall⟩
-        rw [Set.mem_iInter] at hall
-        exfalso
-        apply hu
-        apply h u hgC
-        apply xe_inter l U
-        intro m
-        exact xe_anti l U (Nat.le_add_left m n) (hall m)
-      · intro hg
-        exact hg.elim)
+      apply Set.disjoint_left.mpr
+      rintro _ ⟨hgC, u, hu, rfl⟩ hall
+      rw [Set.mem_iInter] at hall
+      apply hu
+      apply h u hgC
+      apply xe_inter l U
+      intro m
+      exact xe_anti l U (Nat.le_add_left m n) (hall m))
     (fun a b => ⟨max a b, xe_anti l U (Nat.add_le_add_left (le_max_left a b) n),
       xe_anti l U (Nat.add_le_add_left (le_max_right a b) n)⟩)
   refine ⟨n + i, Nat.le_add_right n i, ?_⟩
@@ -78,8 +73,7 @@ private theorem UpperTheory.V.Kum.xe_spread {U : Subgroup (G F Ω)} (hU : IsClos
   by_contra hne
   have hmem : u.1 ∈ C ∩ Subtype.val '' ({u : levU l U n | ψ u = 0}ᶜ) ∩ (levU l U (n + i) : Set (G F Ω)) :=
     ⟨⟨huC, u, hne, rfl⟩, hum⟩
-  rw [hi] at hmem
-  exact hmem
+  exact Set.disjoint_left.mp hi hmem.1 hmem.2
 
 end
 

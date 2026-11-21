@@ -54,7 +54,7 @@ private theorem spLoc_pow {Λ B M : Type} [CommRing Λ] [IsLocalRing Λ] [CommRi
       rw [← (IsLocalRing.maximalIdeal.isMaximal Λ).eq_of_le hne hle]
       exact IsLocalRing.maximalIdeal.isMaximal Λ
     have hbot : (⊥ : Ideal (B ⧸ p)).IsMaximal :=
-      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap _ hcomap
+      Ideal.isMaximal_of_isIntegral_of_isMaximal_under (⊥ : Ideal (B ⧸ p)) hcomap
     have hK := Ideal.comap_isMaximal_of_surjective (Ideal.Quotient.mk p)
       Ideal.Quotient.mk_surjective (K := ⊥)
     rwa [← RingHom.ker_eq_comap_bot, Ideal.mk_ker] at hK
@@ -212,6 +212,7 @@ private theorem spLoc_alg (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianR
     intro p
     simp only [t, map_sub, AlgHom.commutes, hψ]
     exact (Core.spRoots R q n P ut p.1).2 p.2
+  set_option synthInstance.maxHeartbeats 200000 in
   have key : ∀ (N : Ideal (MSplitAlg P n)) [N.IsMaximal], (∀ p, t p ∈ N) →
       ∃ F' : Sp P ut →ₐ[R] Localization.AtPrime N,
         ∀ x, F' (ψ x) = algebraMap (MSplitAlg P n) (Localization.AtPrime N) x := by
@@ -270,8 +271,11 @@ private theorem spLoc_alg (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianR
       rw [Ideal.mem_comap, Ideal.mem_comap, AlgHom.commutes, ← Ideal.mem_comap,
         IsLocalRing.maximalIdeal_comap]
     haveI hNmax : N.IsMaximal :=
-      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap N
-        (by rw [hNR]; exact IsLocalRing.maximalIdeal.isMaximal R)
+      Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := R) N
+        (by
+          change (N.comap (algebraMap R (MSplitAlg P n))).IsMaximal
+          rw [hNR]
+          exact IsLocalRing.maximalIdeal.isMaximal R)
     have htN : ∀ p, t p ∈ N := fun p => by
       rw [Ideal.mem_comap, hψt]
       exact hXmax p

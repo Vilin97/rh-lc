@@ -127,7 +127,8 @@ theorem detCent : DetCent := by
     Filter.eventually_cofinite.2 (by simpa using hfl)
   have hqne : ∀ v : HeightOneSpectrum (𝓞 F), (normV v : ℂ) ≠ 0 := fun v => by
     have h1 : 1 < Ideal.absNorm v.asIdeal := NumberField.HeightOneSpectrum.one_lt_absNorm v
-    have h2 : 0 < normV v := zero_lt_one.trans h1
+    have h2 : 0 < normV v := by
+      simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using (zero_lt_one.trans h1)
     exact_mod_cast h2.ne'
   have hν : ω * χ⁻¹ * P⁻¹ = 1 := by
     refine PositivityTheory.jumpWindows.FiniteInfinitePlaceProduct.eq_one _ ?_
@@ -181,7 +182,9 @@ theorem detCent : DetCent := by
       mul_one, h2]
   · have hu : χ.UnrAt w := fun x hx => by
       have h1 := hU x hx
-      rw [hωe, HChar.loc_mul, (GlobalTheory.HeckeGal.Model.absPow_isAbsPow F _).1 w x hx, mul_one] at h1
+      rw [hωe] at h1
+      change (χ.loc w) x * (P.loc w) x = 1 at h1
+      rw [hP, (GlobalTheory.HeckeGal.Model.absPow_isAbsPow F _).1 w x hx, mul_one] at h1
       exact h1
     exact fun σ hσ => (hχ.unr_iff ha (Or.inr rfl) hA).2 hu σ hσ
 

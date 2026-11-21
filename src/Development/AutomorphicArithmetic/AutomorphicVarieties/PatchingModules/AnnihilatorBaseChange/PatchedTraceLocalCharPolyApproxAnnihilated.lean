@@ -28,9 +28,9 @@ private theorem gDet_chi_map_mapRingHom {n : ℕ} {R R' G : Type} [CommRing R] [
   rw [map_sub]
   congr 1
   · ext a
-    simp [g, MonoidAlgebra.mapRingHom, Finsupp.single_apply]
+    simp [g, MonoidAlgebra.mapRingHom, Polynomial.mapRingHom]
   · ext a
-    simp [g, MonoidAlgebra.mapRingHom]
+    simp [g, MonoidAlgebra.mapRingHom, Polynomial.mapRingHom]
 
 private theorem gDet_tr_map_mapRingHom {n : ℕ} {R R' G : Type} [CommRing R] [CommRing R'] [Group G]
     (D : GDet n R G) (f : R →+* R') (x : MonoidAlgebra R G) :
@@ -46,7 +46,8 @@ private theorem gDet_tr_comap_eq_tr_mapDomainRingHom {n : ℕ} {R G H : Type} [C
   dsimp only
   rw [MonoidHom.comp_apply]
   congr 3
-  show MonoidAlgebra.mapDomainRingHom _ φ _ = _
+  congr 1
+  show MonoidAlgebra.mapDomainRingHom (Polynomial R) φ _ = _
   rw [map_sub]
   congr 1
   · simp [MonoidAlgebra.mapDomainRingHom_apply]
@@ -73,10 +74,11 @@ theorem UpperTheory.V.Pa.Core.patched_trace_local_charPoly_approx_annihilated :
   refine ⟨W.t.D.tr (MonoidAlgebra.single h 1 * (List.ofFn fun i =>
     MonoidAlgebra.single (gb i) (1 : W.R) - MonoidAlgebra.single 1 ((W.t.ψ v i (g i) : W.Rˣ) : W.R)).prod), ?_, Or.inl ?_⟩
   · refine hsees 1 _ _ ?_
-    simp only [map_mul, map_list_prod, List.map_ofFn, map_sub, MonoidAlgebra.mapDomainRingHom_apply,
+    simp only [map_mul, map_list_prod, List.map_ofFn, Function.comp_def, map_sub, MonoidAlgebra.mapDomainRingHom_apply,
       MonoidAlgebra.mapDomain_single]
     congr 2
     congr 1
+    funext i
     congr 2
     rw [QuotientGroup.mk'_apply, QuotientGroup.mk'_apply, QuotientGroup.eq, Subgroup.mem_subgroupOf]
     exact hx2 i
@@ -85,12 +87,11 @@ theorem UpperTheory.V.Pa.Core.patched_trace_local_charPoly_approx_annihilated :
     refine Eq.trans ?_ ((A.A N).p.Ord v g (πN0 Λ N h))
     congr 1
     unfold GFrame.oEl
-    simp only [map_mul, map_list_prod, List.map_ofFn, map_sub, MonoidAlgebra.mapDomainRingHom_apply,
-      MonoidAlgebra.mapDomain_single, MonoidAlgebra.mapRingHom_single]
-    rw [map_one]
+    simp only [map_mul, map_list_prod, List.map_ofFn, Function.comp_def, map_sub, MonoidAlgebra.mapDomainRingHom_apply,
+      MonoidAlgebra.mapDomain_single, MonoidAlgebra.mapRingHom_single, map_one]
     congr 2
     congr 1
-      MonoidAlgebra.mapDomainRingHom_apply, MonoidAlgebra.mapDomain_single, map_one]
+    funext i
     rw [← (m.ρ_maps N).2.1 v i]
     congr 2
     exact Subtype.ext (hx1 i)

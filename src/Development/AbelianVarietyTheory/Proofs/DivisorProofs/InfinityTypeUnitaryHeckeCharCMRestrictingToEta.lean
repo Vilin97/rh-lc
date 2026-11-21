@@ -77,7 +77,7 @@ abbrev below (v : InfinitePlace E) : InfinitePlace (maximalRealSubfield E) := v.
 
 def iota (v : InfinitePlace E) : (below E v).Completion →+* ℂ :=
   (InfinitePlace.Completion.ringEquivComplexOfIsComplex (IsTotallyComplex.isComplex v)).toRingHom.comp
-    (LiesOver.completionMap (v := below E v) (w := v))
+    (AbsoluteValue.Completion.map (below E v).1 v.1)
 
 theorem ideleMap_infIdele (v : InfinitePlace E) (x : ((below E v).Completion)ˣ) :
     GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleMap (maximalRealSubfield E) E (infIdele _ (below E v) x) =
@@ -90,7 +90,7 @@ theorem ideleMap_infIdele (v : InfinitePlace E) (x : ((below E v).Completion)ˣ)
       simp
     rw [h1]
     show (InfinitePlace.Completion.ringEquivComplexOfIsComplex (IsTotallyComplex.isComplex w))
-      (NumberField.LiesOver.completionMap (v := w.comap (algebraMap (maximalRealSubfield E) E)) (w := w)
+      (AbsoluteValue.Completion.map (below E w).1 w.1
         (Pi.mulSingle (below E v) ((x : (below E v).Completion)) (w.comap (algebraMap (maximalRealSubfield E) E)))) = _
     by_cases h : w = v
     · subst h
@@ -112,7 +112,7 @@ theorem iota_real (v : InfinitePlace E) (s : ℝ) :
     (InfinitePlace.Completion.ringEquivRealOfIsReal (IsTotallyReal.isReal (below E v))).symm.toRingHom
   have hψ : Continuous ψ :=
     ((InfinitePlace.Completion.isometryEquivComplexOfIsComplex (IsTotallyComplex.isComplex v)).continuous.comp
-      (LiesOver.continuous_completionMap (v := below E v) (w := v))).comp
+      (AbsoluteValue.Completion.continuous_map (below E v).1 v.1)).comp
       (InfinitePlace.Completion.isometryEquivRealOfIsReal (IsTotallyReal.isReal (below E v))).symm.continuous
   have := map_real_smul ψ hψ s 1
   simpa [ψ] using this

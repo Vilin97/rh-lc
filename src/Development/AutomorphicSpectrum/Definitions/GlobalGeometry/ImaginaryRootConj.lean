@@ -39,7 +39,7 @@ theorem labelEmb_inr_rt (c : Coeff l) (τ : CMType H) : ((labelEmb c (.inr τ) H
 
 variable {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
   {Y : Model Xo c β} {S : Finset ℕ} {Ω : Type} [Field Ω] {K : Type} [Fintype K] {J : K → Type}
-  {y : (Σ k, J k) → Ω} (𝔐 : HodgeCpt Y S y)
+  {y : (Σ k, J k) → Ω} (𝔐 : GlobalTheory.CompanionTheory.Ar.HodgeCpt Y S y)
 
 theorem V_isVB (s) : (𝔐.V s).IsVB (labelRk D s) (𝔐.Vgen s) := 𝔐.vb s
 

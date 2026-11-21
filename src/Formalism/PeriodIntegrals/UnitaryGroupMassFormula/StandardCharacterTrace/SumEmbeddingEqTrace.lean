@@ -28,7 +28,7 @@ def Lre : Ainf F →+ ℝ where
 
 theorem continuous_Lre : Continuous (Lre F) := by
   show Continuous (fun a : Ainf F => ∑ w : InfinitePlace F, (extensionEmbedding w (a w)).re)
-  exact continuous_finset_sum _ fun w _ =>
+  exact continuous_finsetSum _ fun w _ =>
     Complex.continuous_re.comp ((isometry_extensionEmbedding w).continuous.comp (continuous_apply w))
 
 theorem sum_embedding_eq_trace [IsTotallyReal F] (y : F) :

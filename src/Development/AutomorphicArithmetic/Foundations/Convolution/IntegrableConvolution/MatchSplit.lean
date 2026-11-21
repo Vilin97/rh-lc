@@ -20,12 +20,12 @@ private theorem prod_ofFn_single {G : Type*} [Monoid G] : ∀ (n : ℕ) (f : Fin
   | 0, _, k, _ => k.elim0
   | n + 1, f, k, h => by
     rw [List.ofFn_succ, List.prod_cons]
-    refine Fin.cases (fun h => ?_) (fun k h => ?_) k h
-    · rw [List.prod_eq_one, mul_one]
-      intro x hx
-      obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hx
-      exact h _ (Fin.succ_ne_zero i)
-    · rw [h 0 (Fin.succ_ne_zero k).symm, one_mul,
+    cases k using Fin.cases with
+    | zero =>
+      rw [List.prod_eq_one, mul_one]
+      exact List.forall_mem_ofFn_iff.2 fun i => h _ (Fin.succ_ne_zero i)
+    | succ k =>
+      rw [h 0 (Fin.succ_ne_zero k).symm, one_mul,
         prod_ofFn_single n (fun i => f i.succ) k fun i hi => h _ fun h' => hi (Fin.succ_injective _ h')]
 
 private theorem transport (X Y T : Type) [Group X] [TopologicalSpace X] [IsTopologicalGroup X] [LocallyCompactSpace X]

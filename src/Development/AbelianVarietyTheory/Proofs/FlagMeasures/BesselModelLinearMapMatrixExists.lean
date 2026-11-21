@@ -33,7 +33,7 @@ theorem crd_map_mulVec (m : (VS D).V →ₗ[D.host.E] (VS D).V) (y : (VS D).V) :
   funext i
   conv_lhs => rw [← X.bas.sum_repr y]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
     Matrix.mulVec, dotProduct, Matrix.of_apply, map_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
   ring

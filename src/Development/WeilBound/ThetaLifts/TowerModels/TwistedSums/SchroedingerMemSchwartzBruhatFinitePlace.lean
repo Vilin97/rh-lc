@@ -41,7 +41,7 @@ theorem schr_mem_SB_of {K : Type} [CommRing K] [Invertible (2 : K)] [Topological
   have h1 : IsLocallyConstant fun x : κ → K => ψ (x ⬝ᵥ w.2 + ⅟(2 : K) * (w.1 ⬝ᵥ w.2)) :=
     (isLocallyConstant_addChar ψ hψ).comp_continuous
       ((continuous_id.dotProduct continuous_const).add continuous_const)
-  have h2 : IsLocallyConstant fun x : κ → K => φ (x + w.1) := hlc.comp_continuous (continuous_add_right w.1)
+  have h2 : IsLocallyConstant fun x : κ → K => φ (x + w.1) := hlc.comp_continuous (continuous_id.add continuous_const)
   have h3 : HasCompactSupport fun x : κ → K => φ (x + w.1) := hcs.comp_homeomorph (Homeomorph.addRight w.1)
   exact ⟨h1.mul h2, h3.mul_left⟩
 

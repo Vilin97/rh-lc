@@ -79,11 +79,11 @@ theorem interlace_bound {K n : ℕ} (hn : K + 1 = n) (u : Fin n → ℝ) (v : Fi
   have hu : StrictAnti u := Fin.strictAnti_iff_succ_lt.2 fun i => (h2 i).trans (h1 i)
   rw [vand_cast]
   simp only [Finset.prod_filter]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro i _
     exact Finset.prod_nonneg fun j _ => by split_ifs <;> positivity
   intro i _
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro j _; split_ifs <;> positivity
   intro j _
   by_cases hij : i < j

@@ -100,7 +100,11 @@ theorem add_one_pow_eq_ringHom_image_add_prime_mul_zero : ∀ (m : ℕ) (n : Fin
     refine ⟨⟨0, j⟩, ?_⟩
     exact (Conormal.id_appLE _ _).trans (resG_self _ _)
   | m + 1, n, c, W, hW, h => by
-    obtain ⟨ha, hc⟩ := add_one_pow_eq_ringHom_image_add_prime_mul_zero m (Fin.tail n) (fun k => c k.succ) _ rfl (mchart_le _)
+    let c' : ∀ k, Bk (Fin.tail n) k := fun k => c k.succ
+    have htail : IsAffineOpen (mchart c') ∧
+        Subring.closure (Set.range (rtOn c' _ (mchart_le c'))) = ⊤ :=
+      add_one_pow_eq_ringHom_image_add_prime_mul_zero m (Fin.tail n) c' _ rfl (mchart_le c')
+    obtain ⟨ha, hc⟩ := htail
     have H := IsPullback.of_hasPullback (toSpecBase ℤ (n 0)) (mpStr ℤ m (Fin.tail n))
     obtain ⟨h1, h2⟩ := GlobalTheory.Conormal.isAffineOpen_and_isPushout H (U := ⊤) (isAffineOpen_top _) ha
       (isAffineOpen_chart ℤ (n 0) (c 0)) le_top le_top

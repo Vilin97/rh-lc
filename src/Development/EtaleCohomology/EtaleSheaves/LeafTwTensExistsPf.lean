@@ -91,8 +91,8 @@ theorem lift_eq (I J : Cx R) (U : Scheme.{0}) (w : ℤ) (x : Tens I J U w) :
     unfold Pair.lift
     erw [DirectSum.toModule_lof]
     induction t using TensorProduct.induction_on with
-    | zero => erw [map_zero, map_zero, map_zero]; rfl
-    | add x y hx hy => erw [map_add, map_add, map_add, hx, hy]; rfl
+    | zero => erw [map_zero, map_zero, map_zero]
+    | add x y hx hy => erw [map_add, map_add, map_add, hx, hy]
     | tmul a b => rw [TensorProduct.lift.tmul]; rfl
 
 theorem Phi_nat (I J : Cx R) {V U : Scheme.{0}} (g : V ⟶ U) (w : ℤ) (x : Tens I J U w) :

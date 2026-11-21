@@ -228,6 +228,7 @@ theorem relIndex_le (hq : ((Formalism.L2.Col.qOf P : ℕ) : 𝓞 E) ∉ P.asIdea
     · exact GlobalTheory.CongLevel.smul_mem_sclLat P _ hq0 _ _ _ x hx
     · exact GlobalTheory.CongLevel.bvec_mem P _ hq0 _ _ _
   · rw [Nat.card_fun, Nat.card_prod, Nat.card_eq_fintype_card (α := Fin (n + c)), Fintype.card_fin]
+    rw [← Ideal.absNorm_eq_natCard]
     rfl
 
 theorem norm_volN_inv_le {k K : Type} [CommRing k] [Field K] {n c : ℕ}

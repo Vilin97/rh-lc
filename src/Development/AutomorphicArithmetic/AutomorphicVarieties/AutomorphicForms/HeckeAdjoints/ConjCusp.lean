@@ -70,25 +70,26 @@ private theorem fin_of_conj {s t : Set (Sm E a)} (h : FiniteDimensional ℂ (Sub
   obtain ⟨x, hx, rfl⟩ := hst y hy
   exact ⟨x, Submodule.subset_span hx, rfl⟩
 
-private theorem isAutForm_conjFn {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (conjFn E a φ) where
-  left γ g := by rw [conjFn_apply, conjFn_apply, h.left]
-  level := by
-    convert h.level using 1
-    ext k
-    exact (Iff.of_eq (congrArg (· = conjFn E a φ) (act_conjFn (.fin k) φ))).trans (conjFn E a).injective.eq_iff
-  kfin := fin_of_conj h.kfin (by
-    rintro _ ⟨k, rfl⟩
-    exact ⟨_, ⟨k, rfl⟩, (act_conjFn (.cpt k) φ).symm⟩)
-  zfin := fin_of_conj h.zfin (by
-    rintro _ ⟨z, hz, rfl⟩
-    refine ⟨_, ⟨conjOp z, conjOp_mem hz, rfl⟩, ?_⟩
-    beta_reduce
-    rw [conjOp_apply, conjFn_conjFn])
-  growth g := by
-    obtain ⟨C, N, h1⟩ := h.growth g
-    refine ⟨C, N, fun y => ?_⟩
-    rw [conjFn_apply, Complex.norm_conj]
-    exact h1 y
+private theorem isAutForm_conjFn {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (conjFn E a φ) := by
+  exact {
+    left γ g := by rw [conjFn_apply, conjFn_apply, h.left]
+    level := by
+      convert h.level using 1
+      ext k
+      exact (Iff.of_eq (congrArg (· = conjFn E a φ) (act_conjFn (.fin k) φ))).trans (conjFn E a).injective.eq_iff
+    kfin := fin_of_conj h.kfin (by
+      rintro _ ⟨k, rfl⟩
+      exact ⟨_, ⟨k, rfl⟩, (act_conjFn (.cpt k) φ).symm⟩)
+    zfin := fin_of_conj h.zfin (by
+      rintro _ ⟨z, hz, rfl⟩
+      refine ⟨_, ⟨conjOp z, conjOp_mem hz, rfl⟩, ?_⟩
+      beta_reduce
+      rw [conjOp_apply, conjFn_conjFn])
+    growth g := by
+      obtain ⟨C, N, h1⟩ := h.growth g
+      refine ⟨C, N, fun y => ?_⟩
+      rw [conjFn_apply, Complex.norm_conj]
+      exact h1 y }
 
 end UpperTheory.V.Af.Gk
 

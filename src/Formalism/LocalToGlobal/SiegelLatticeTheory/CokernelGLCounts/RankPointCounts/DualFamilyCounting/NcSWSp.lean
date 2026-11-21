@@ -49,8 +49,7 @@ theorem indep_coord {n m : ℕ} (hinj : ∀ s t, π s = π t → π' s = π' t �
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at e ⊢
     apply hinj
     set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [map_sum, map_mul, (hs _).1, map_zero]
-      exact e
+      · simpa only [map_sum, map_mul, (hs _).1, map_zero] using e
     set_option synthInstance.maxHeartbeats 100000 in
       · simp [map_sum, map_mul, (hs _).2]
   have e := hX _ hsum j

@@ -123,7 +123,7 @@ theorem modulus (h : IsCMExt F E σ) (M : ℕ) (μW : Measure (Fin 1 → Fin M �
     · obtain ⟨X, hX⟩ := cW y.1
       obtain ⟨r, hr⟩ := cA y.2
       exact ⟨-(X, r), by rw [map_neg, ← sub_eq_add_neg]; exact ⟨hX, hr⟩⟩
-    · refine ((fW _ (hCW.image (continuous_add_left (-y.1)))).prod (fA _ (hCA.image (continuous_add_left (-y.2))))).subset ?_
+    · refine ((fW _ (hCW.image (continuous_const_add (-y.1)))).prod (fA _ (hCA.image (continuous_const_add (-y.2))))).subset ?_
       exact fun l' hl' => ⟨⟨_, hl'.1, neg_add_cancel_left _ _⟩, ⟨_, hl'.2, neg_add_cancel_left _ _⟩⟩
     · exact ((continuous_const_smul _ : Continuous fun x : Fin 1 → Fin M → AF F ⊗[F] E => (_ : AF F ⊗[F] E) • x).prodMap (continuous_const.mul continuous_id : Continuous fun x : AF F => _ * x)).measurable
     · funext b i

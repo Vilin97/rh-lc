@@ -66,7 +66,7 @@ theorem IsGaloisTripleWithReduction.hkFrob {ρ : Reading X i (X.side i s)} (ha :
     (h : _root_.GlobalTheory.Triple.IsGaloisTripleWithReduction C art ρ s σ π r ν w red) : HkFrob i s := by
   intro P hS hP g hF k hk
   obtain ⟨x, h1, h2⟩ := h.hecke k P hk hP hS
-  have e := congrArg (fun p => coeff p k) (h.charpolyRev_matW ha hC hS (D.nd.plOm.2 P) hF)
+  have e := congrArg (fun (p : ℂ[X]) => p.coeff k) (h.charpolyRev_matW ha hC hS (D.nd.plOm.2 P) hF)
   simp only [coeff_map, GlobalTheory.coeff_prod_one_sub_C_mul_X] at e
   have e2 : ((normV P : ℕ) : ℂ) ^ (k * (k - 1) / 2) * heckeVal (muBase C (X.l i) (jIdx s)) π k P =
       (((normV P : ℕ) : ℂ) ^ ((D.R.r - 1) / 2)) ^ k * (satake (muBase C (X.l i) (jIdx s)) π P).esymm k :=

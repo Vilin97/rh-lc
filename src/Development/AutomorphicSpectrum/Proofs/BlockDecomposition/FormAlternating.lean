@@ -252,7 +252,7 @@ theorem wd_mem (hF : IsFil Φ Fil) : ∀ (j : ℕ) (c : Fin j → Co Φ.A 1), (�
     In (Fil (j : ℤ)) (wd j c) ∧ dd j (wd j c) = 0
   | 0, c, _ => ⟨In.unit hF, dd_one⟩
   | j + 1, c, hc => by
-    obtain ⟨h1, h2⟩ := wd_mem hF j (c ∘ Fin.castSucc) (fun k => hc _)
+    obtain ⟨h1, h2⟩ := wd_mem hF j (c ∘ Fin.castSucc) (fun k => hc k.castSucc)
     refine ⟨In.mulc' hF rfl h1 (hc _).1 rfl, ?_⟩
     change dd (j + 1) (cp rfl _ _) = 0
     rw [dd_cp, h2, (hc _).2, cp_zero_left, cp_zero_right, smul_zero, add_zero]
@@ -307,7 +307,7 @@ theorem wd_swap (hF : IsFil Φ Fil) : ∀ (j : ℕ) (c : Fin (j + 1) → Co Φ.A
     Cob Fil (j + 1) (j + 1) (wd (j + 1) c + wd (j + 1) (c ∘ Equiv.swap k.castSucc k.succ))
   | 0, c, _, k => k.elim0
   | j + 1, c, hc, k => by
-    induction k using Fin.lastCases with
+    cases k using Fin.lastCases with
     | last =>
       have e1 : ((c ∘ Equiv.swap (Fin.last j).castSucc (Fin.last j).succ) ∘ Fin.castSucc) ∘ Fin.castSucc =
           (c ∘ Fin.castSucc) ∘ Fin.castSucc := by
@@ -329,7 +329,7 @@ theorem wd_swap (hF : IsFil Φ Fil) : ∀ (j : ℕ) (c : Fin (j + 1) → Co Φ.A
           ((c ∘ Equiv.swap (Fin.last j).castSucc (Fin.last j).succ) (Fin.last (j + 1))) = _
         rw [e1, e2, e3]
       rw [w1]
-      obtain ⟨hu, hdu⟩ := wd_mem hF j ((c ∘ Fin.castSucc) ∘ Fin.castSucc) (fun k => hc _)
+      obtain ⟨hu, hdu⟩ := wd_mem hF j ((c ∘ Fin.castSucc) ∘ Fin.castSucc) (fun k => hc k.castSucc.castSucc)
       exact cob_swap_top hF hu hdu (hc _) (hc _)
     | cast k' =>
       have e1 : (c ∘ Equiv.swap k'.castSucc.castSucc k'.castSucc.succ) ∘ Fin.castSucc =
@@ -350,14 +350,14 @@ theorem wd_swap (hF : IsFil Φ Fil) : ∀ (j : ℕ) (c : Fin (j + 1) → Co Φ.A
       rw [w1]
       change Cob Fil (j + 1 + 1) (j + 1 + 1) (cp rfl (wd (j + 1) (c ∘ Fin.castSucc)) (c (Fin.last (j + 1))) + _)
       rw [← cp_add_left]
-      exact Cob.cp_right (q := 1) hF rfl (wd_swap hF j (c ∘ Fin.castSucc) (fun k => hc _) k') (hc _).1
+      exact Cob.cp_right (q := 1) hF rfl (wd_swap hF j (c ∘ Fin.castSucc) (fun k => hc k.castSucc) k') (hc _).1
         (by rw [(hc _).2]; exact In.zero)
 
 theorem wd_sq (hF : IsFil Φ Fil) : ∀ (j : ℕ) (c : Fin (j + 1) → Co Φ.A 1), (∀ k, Coc Fil (c k)) → ∀ k : Fin j,
     c k.castSucc = c k.succ → Cob Fil (j + 1) (j + 1) (wd (j + 1) c)
   | 0, c, _, k, _ => k.elim0
   | j + 1, c, hc, k, hk => by
-    induction k using Fin.lastCases with
+    cases k using Fin.lastCases with
     | last =>
       rw [Fin.succ_last] at hk
       have w1 : wd (j + 1 + 1) c =
@@ -365,10 +365,10 @@ theorem wd_sq (hF : IsFil Φ Fil) : ∀ (j : ℕ) (c : Fin (j + 1) → Co Φ.A 1
         change cp rfl (cp rfl (wd j ((c ∘ Fin.castSucc) ∘ Fin.castSucc)) (c (Fin.last j).castSucc)) (c (Fin.last (j + 1))) = _
         rw [← hk]
       rw [w1]
-      obtain ⟨hu, hdu⟩ := wd_mem hF j ((c ∘ Fin.castSucc) ∘ Fin.castSucc) (fun k => hc _)
+      obtain ⟨hu, hdu⟩ := wd_mem hF j ((c ∘ Fin.castSucc) ∘ Fin.castSucc) (fun k => hc k.castSucc.castSucc)
       exact cob_sq_top hF hu hdu (hc _)
     | cast k' =>
-      exact Cob.cp_right (q := 1) hF rfl (wd_sq hF j (c ∘ Fin.castSucc) (fun k => hc _) k'
+      exact Cob.cp_right (q := 1) hF rfl (wd_sq hF j (c ∘ Fin.castSucc) (fun k => hc k.castSucc) k'
         (by simp only [Function.comp_apply]; rw [hk, Fin.succ_castSucc])) (hc _).1
         (by rw [(hc _).2]; exact In.zero)
 
@@ -380,9 +380,9 @@ theorem wd_change (hF : IsFil Φ Fil) : ∀ (j : ℕ) (c c' : Fin j → Co Φ.A 
     rw [sub_self]
     exact In.zero
   | j + 1, c, c', b, hc, hc', hb, hd => by
-    obtain ⟨hu, hdu⟩ := wd_mem hF j (c ∘ Fin.castSucc) (fun k => hc _)
-    have ih := wd_change hF j (c ∘ Fin.castSucc) (c' ∘ Fin.castSucc) (b ∘ Fin.castSucc) (fun k => hc _) (fun k => hc' _)
-      (fun k => hb _) (fun k => hd _)
+    obtain ⟨hu, hdu⟩ := wd_mem hF j (c ∘ Fin.castSucc) (fun k => hc k.castSucc)
+    have ih := wd_change hF j (c ∘ Fin.castSucc) (c' ∘ Fin.castSucc) (b ∘ Fin.castSucc)
+      (fun k => hc k.castSucc) (fun k => hc' k.castSucc) (fun k => hb k.castSucc) (fun k => hd k.castSucc)
     have hz : j + 0 = j := rfl
     have e : wd (j + 1) c' - wd (j + 1) c = cp rfl (wd j (c' ∘ Fin.castSucc) - wd j (c ∘ Fin.castSucc)) (c' (Fin.last j)) +
         ((-1 : ℤ) ^ j) • dd j (cp hz (wd j (c ∘ Fin.castSucc)) (b (Fin.last j))) := by

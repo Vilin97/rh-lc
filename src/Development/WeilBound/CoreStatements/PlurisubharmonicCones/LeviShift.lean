@@ -65,7 +65,20 @@ theorem term_zero (A : FinHolAtlas e X) (Θ : Fin e → LocPot X) (L : LocPot X)
   filter_upwards [hu, hg, hun] with t ⟨hu1, hu2, hu3⟩ ⟨hg1, hg2⟩ hun
   have hpot : ∀ i, IsPotential A (Θ i + LocPot.ofFun (u t i)) := fun i =>
     isPotentialAdd A _ _ (hΘ i) (isPotential_ofFun A _ (hu1 i))
-  have hI := ((maMeasure_thm A _ hpot hu2).2 (g t) hg1.measurable).2 (mIntegrableCont A _ hpot _ hg1)
+  have hI : mInt A (fun i => Θ i + LocPot.ofFun (u t i)) (g t) =
+      ∫ y, g t y ∂maMeasure A (fun i => Θ i + LocPot.ofFun (u t i)) := by
+    by_cases hP : Nonempty (ChartPartition A)
+    · have hμ : maMeasure A (fun i => Θ i + LocPot.ofFun (u t i)) =
+          ∑ j, chartMeasure A hP.some (fun i => Θ i + LocPot.ofFun (u t i)) j := by
+        simp [maMeasure, hP, chartMeasure]
+      have hc j := chartMeasure_integrable_integral A hP.some _ hpot hu2 j hg1.measurable
+        (mIntegrableCont A _ hpot _ hg1)
+      rw [hμ, integral_finsetSum_measure fun j _ => (hc j).1]
+      simp only [mInt, dif_pos hP, integralWith]
+      refine Finset.sum_congr rfl fun j _ => ?_
+      rw [(hc j).2]
+      exact integral_congr_ae (Filter.Eventually.of_forall fun y => by ring)
+    · simp [maMeasure, mInt, hP]
   have hnull := bdry_null A L s m W hL hs hsnc _ hpot
   have hmass := (hC C₁ (u t) hC₁ hu1 hu2 hu3 (Real.exp 1) le_rfl).1
   have htail := (hC C₁ (u t) hC₁ hu1 hu2 hu3 R hR2).2

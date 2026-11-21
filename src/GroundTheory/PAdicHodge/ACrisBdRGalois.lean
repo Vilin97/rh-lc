@@ -107,6 +107,10 @@ section Cp
 
 variable {p : ℕ} [hp : Fact p.Prime] {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
+local notation "𝔸" => Localization.Away (p : AInf ℂ_[p] p)
+local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
+local notation "𝒪♭" => PreTilt (normInteger ℂ_[p]) p
+
 def galS (σ : Gal(PadicAlgCl p/K)) (m : ℕ) : acrisQ ℂ_[p] p m →+* acrisQ ℂ_[p] p m :=
   ((galQuot σ m).comp (acrisQ ℂ_[p] p m).subtype).codRestrict (acrisQ ℂ_[p] p m) fun s => by
     obtain ⟨y, hy, hys⟩ := s.2

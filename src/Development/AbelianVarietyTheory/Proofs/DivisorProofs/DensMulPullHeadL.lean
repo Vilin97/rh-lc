@@ -11,7 +11,7 @@ set_option autoImplicit false
 
 open Set MeasureTheory
 open ReciprocityTheory.L2DbarEstimates (V)
-open GlobalTheory.CxForm GlobalTheory.LocFub
+open GlobalTheory.CxForm
 open GlobalTheory.GoodMetric (coordVec)
 
 namespace GlobalTheory.LocFub.TopDens

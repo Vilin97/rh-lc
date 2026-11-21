@@ -29,6 +29,7 @@ public import GroundTheory.AutomorphicForms.MultiplicityOne.Injective
 open NumberField IsDedekindDomain MeasureTheory GlobalTheory.CuspRep GlobalTheory.JSW Formalism.UG GlobalTheory.LFun Formalism.L2.Host
 open scoped ENNReal ComplexConjugate ContDiff
 set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 100000 in
 theorem _root_.GlobalTheory.T.rankinSelberg_cell_integral_finite_part_nonneg : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (φ : GA E (m + r + 1 + 1) → ℂ) (φ' : GA E (m + 1) → ℂ) (κ : GA E (m + 1) → ℝ) (F : (Fin (m + 1) → Ad E) → ℂ),
     Continuous (GlobalTheory.JSW.whit φ) → Continuous (GlobalTheory.JSW.whit φ') →

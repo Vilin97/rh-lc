@@ -30,6 +30,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.meanLaws :
     intro y
     obtain ⟨C, hCc, hCn⟩ := exists_compact_mem_nhds y
     obtain ⟨B, hB⟩ := hΨ.bdd C hCc
+    set_option synthInstance.maxHeartbeats 200000 in
     refine continuousAt_of_dominated (bound := fun _ => B) ?_ ?_ (integrable_const B) ?_
     · exact Eventually.of_forall fun z => (hc z).aestronglyMeasurable
     · filter_upwards [hCn] with z hz

@@ -74,9 +74,10 @@ private theorem key {R K : Type} [CommRing R] [CommRing K] {r : ℕ} (dual : Boo
 theorem UpperTheory.chart_frame_divisor :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β) (F : Type) [Field F] [NumberField F] (e : F ≃+* c.F) (C : FlagCpt Z e) (τ : E →+* ℂ) (X : Scheme.{0}) (j : C.Y.X ⟶ X) (M : X.Modules) (dual : Bool) (A : Chart M (Dw.mult τ) → Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) C.Y.Fn) (fl : Vert.Flag M (Dw.mult τ)), IsLie C.f0 τ j dual A → IsFlag (genericPt C.Y ≫ j) dual A fl → ∀ ch : Chart M (Dw.mult τ), IsAdapted fl ch → ∀ y : C.Y.X, j y ∈ ch.U → ∀ (φ : c.F →+* C.Y.X.presheaf.stalk y) (f f' : StalkFrame C.π y φ) (t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → C.Y.Fnˣ), f.Tri (toFn y) C.f0 t → Fits C.f0 τ y φ f' (lieMat dual (A ch)) → IsTri ((lieMat dual (f.co f' τ)).submatrix (pos dual) id) ∧ ∀ i, IsUnit (lieMat dual (f.co f' τ) (pos dual i) i) ∧ A ch (pos dual i) i * ((t τ (pos dual i) ^ (cond dual (-1) 1 : ℤ) : C.Y.Fnˣ) : C.Y.Fn) = toFn y (lieMat dual (f.co f' τ) (pos dual i) i) := by
   intro E _ _ _ H Dw l Xo c O _ β Z F _ _ e C τ X j M dual A fl hL hF ch hch y hy φ f f' t hT hf'
-  obtain ⟨k, hk⟩ := exists_isMap_toFn (e := e) f hf'.1
+  obtain ⟨k, hk⟩ := f.exists_isMap (toFn y) (x' := genericPt C.Y ≫ C.π ≫ genι Z) hf'.1 (by rw [← spMap_toFn y, Category.assoc])
   obtain ⟨h1, h2⟩ := hT.co τ hk
-  have h3 : Fits C.f0 τ y φ f (C.f0.co k τ) := (fits_iff hf'.1 hk).2 rfl
+  have h3 : Fits C.f0 τ y φ f (C.f0.co k τ) := ⟨hf'.1, fun i => by
+    rw [← hk τ i]; exact C.f0.co_spec k τ i⟩
   refine key dual (toFn y) (toFn_injective y) (U := k.co C.f0 τ) h1 (k.isUnit_det_co _ τ) h2
     (hL.1.1 ch (gen_le j hy)) (hF ch hch (gen_le j hy)) (f.isUnit_det_co f' τ) ?_
   rw [h3.eq_mul hf', ← Matrix.mul_assoc, EigFrame.co_mul, EigFrame.co_self, Matrix.one_mul]

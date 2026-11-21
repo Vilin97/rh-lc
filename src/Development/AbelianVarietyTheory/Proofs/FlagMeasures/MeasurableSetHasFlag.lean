@@ -506,7 +506,7 @@ theorem type_measurable : ∀ (I : AutInst) (a : ℕ) (j : Fin a → ℕ), ∃ s
             (hSm.monotone (show i.castSucc ≤ i.succ from Fin.castSucc_lt_succ.le)) (flag_sat I x0 hf0 i.succ).1)
       have hsm : ∀ i : Fin a, Measurable fun x : I.GA => sizeQ (bas I) (frm I x) (S i.succ) (S i.castSucc) :=
         fun i => measurable_sizeQ I _ _ (fgOf hf0 i.succ) (hsat i) (hSm (show i.castSucc < i.succ from Fin.castSucc_lt_succ)).ne
-      have hszm : Measurable (sz S) := measurable_pi_lambda _ hsm
+      have hszm : Measurable (sz S) := Measurable.of_eval hsm
       have hm1 : MeasurableSet {x | P S x} :=
         (measurableSet_hasFlag I S hsm).inter (MeasurableSet.const _)
       exact ⟨hm1, fun B hB => hm1.inter (hszm hB)⟩

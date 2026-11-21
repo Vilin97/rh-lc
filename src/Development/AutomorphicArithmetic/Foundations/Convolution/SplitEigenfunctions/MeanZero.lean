@@ -43,7 +43,9 @@ private theorem curve (X : Lie E 2) : ∃ c : ℝ → GL (Fin 2) (Cinf E), c 0 =
       (Y : GroundTheory.Automorphic.AutomorphicForm.ArchMatrix E 2) 0 := by
     simpa using hasDerivAt_exp_smul_const (𝕂 := ℝ) (Y : GroundTheory.Automorphic.AutomorphicForm.ArchMatrix E 2) 0
   have h4 := (Cm.archEq E 2).symm.hasFDerivAt.comp_hasDerivAt (0 : ℝ) h3
-  have e : (Cm.archEq E 2).symm Y = X := (Cm.archEq E 2).symm_apply_apply X
+  have e : (Cm.archEq E 2).symm Y = X := by
+    change (Cm.archEq E 2).symm (Cm.archEq E 2 X) = X
+    exact (Cm.archEq E 2).symm_apply_apply X
   refine ⟨fun t => (Cm.grpEq E 2).symm (h.expG (t • Y)), ?_, fun s t => ?_, ?_, h4.congr_deriv e⟩
   · simp only [zero_smul, h.expG_zero, map_one]
   · have e2 : h.expG ((s + t) • Y) = h.expG (s • Y) * h.expG (t • Y) := by

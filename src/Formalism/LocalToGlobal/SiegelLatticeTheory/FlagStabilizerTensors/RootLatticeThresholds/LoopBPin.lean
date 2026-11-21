@@ -85,7 +85,9 @@ theorem covolPos_holds (u u' : D.what₂.Word) : LoopTerm.CovolPos (Y := Y) u u'
   have hRm : MeasurableSet (Rset s) := (Pf.rClosedC_holds D X Y u u' s).measurableSet
   have hRc : (μw.map fun y => g * y * g⁻¹) (Rset s)ᶜ = 0 := by
     rw [Measure.map_apply hcm hRm.compl]
-    exact measure_mono_null (fun y hy hySt => hy (LoopTerm.stInf_conj hg hg' hdec hySt)) hconc
+    apply measure_mono_null _ hconc
+    intro y hy hySt
+    exact hy (LoopTerm.stInf_conj hg hg' hdec hySt)
   have hinv : ∀ q ∈ TermOp.Vanish.ROsub X (X.Fu u) (X.Fu u') s.lam s.lam' s.lin,
       (μw.map fun y => g * y * g⁻¹).map (fun x => q * x) = μw.map fun y => g * y * g⁻¹ := by
     intro q hq

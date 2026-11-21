@@ -29,7 +29,7 @@ namespace Formalism.L2.S.S7.IwasawaBase
 
 open MeasureTheory NumberField
 open scoped ENNReal
-open Formalism.MainNotions.S Formalism.MainNotions.BridgeLemma Formalism.MainNotions.LeviCoordinates Formalism.L2.S.S7.DensDefs Formalism.L2.S.S7.WittLeviSubgroups
+open Formalism.MainNotions.S Formalism.MainNotions.BridgeLemma Formalism.MainNotions.LeviCoordinates
 
 variable (I : AutInst)
 

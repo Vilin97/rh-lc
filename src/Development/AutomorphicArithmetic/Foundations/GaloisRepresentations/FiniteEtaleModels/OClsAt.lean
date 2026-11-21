@@ -33,8 +33,7 @@ private lemma nat_mem_of_isGen {A : Type} [CommRing A] {a : A} {N : ℕ} {𝔞 :
 theorem clsAt : ClsAt := by
   intro q _ D hm1 r hr R R' _ _ _ b gb β hmatch N N₀ c a 𝔞 hN hpos hcop hgen hue Y Ω _ _ y σ hyσ
   obtain ⟨o1, ⟨n1⟩⟩ := raise q D R R' b gb β hmatch N N₀ c hN hpos hcop Y.X Y.s Y.univ Ω y σ hyσ
-  let o₀ := GlobalTheory.HTPullEvery.objPull Y.univ y (y ≫ Y.s) rfl
-  let m := GlobalTheory.HTPullEvery.objPullMap Y.univ y (y ≫ Y.s) rfl
+  obtain ⟨o₀, ⟨m⟩⟩ := GlobalTheory.HTPull.exists_objMap_pull q D R b N₀ Y.X (Sp Ω) Y.s y Y.univ
   have htr : ∀ {f f' : Sp Ω ⟶ Y.X} (_ : f = f') (n : QMap o1 Y.univ f c),
       ∃ n'' : QMap o1 Y.univ f' c, n''.φ = n.φ := by
     intro f f' h n

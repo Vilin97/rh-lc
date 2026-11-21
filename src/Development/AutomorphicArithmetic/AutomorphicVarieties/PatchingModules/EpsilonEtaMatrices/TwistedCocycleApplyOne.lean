@@ -112,10 +112,9 @@ private theorem pow_mem_of_PL (l : ℕ) {Γ : Type} [Group Γ] [TopologicalSpace
   obtain ⟨u, hu⟩ := hc.elim_finite_subfamily_closed
     (fun i : {U : OpenNormalSubgroup Γ // ∀ h ∈ H, ∃ e : ℕ, h ^ l ^ e ∈ U} => (i.1.toSubgroup : Set Γ))
     (fun i => Subgroup.isClosed_of_isOpen _ i.1.isOpen') (by
-      ext y
-      simp only [Set.mem_inter_iff, Set.mem_compl_iff, Set.mem_iInter, Set.mem_empty_iff_false, iff_false,
-        not_and]
-      intro hy hall
+      apply Set.disjoint_left.mpr
+      simp only [Set.mem_compl_iff, Set.mem_iInter]
+      intro y hy hall
       apply hy
       apply hle
       simp only [PL, SetLike.mem_coe, Subgroup.mem_iInf]
@@ -132,8 +131,7 @@ private theorem pow_mem_of_PL (l : ℕ) {Γ : Type} [Group Γ] [TopologicalSpace
     have hpow : l ^ u.sup e = l ^ e i * l ^ (u.sup e - e i) := by rw [← pow_add, Nat.add_sub_cancel' hle']
     rw [SetLike.mem_coe, hpow, pow_mul]
     exact Subgroup.pow_mem _ (i.2 h hh).choose_spec _
-  rw [hu] at hmem
-  exact hmem
+  exact Set.disjoint_left.mp hu hmem.1 hmem.2
 
 private theorem epM_mul {X : Type} [CommRing X] {g n : ℕ} (Z : Fin g → Matrix (Fin n) (Fin n) X) :
     DD.epM Z * DD.epM Z = 0 := by

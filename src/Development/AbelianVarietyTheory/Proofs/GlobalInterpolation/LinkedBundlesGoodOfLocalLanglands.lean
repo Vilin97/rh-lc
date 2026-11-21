@@ -81,7 +81,8 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeR
 
 namespace GlobalTheory.Fc.GoodLinked
 
-def GoodRec : V4.Slot := fun _ X _ _ _ => Formalism.BasicNotions.GoodFTAll X.toD7
+def GoodRec : GlobalTheory.Mem.Top.V4.Slot :=
+  fun _ X _ _ _ => Formalism.BasicNotions.GoodFTAll X.toD7
 
 
 end GlobalTheory.Fc.GoodLinked

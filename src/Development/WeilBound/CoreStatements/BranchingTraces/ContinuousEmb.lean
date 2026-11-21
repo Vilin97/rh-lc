@@ -89,7 +89,8 @@ theorem idem_avg {G K : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup
           funext h
           rw [← integral_const_mul, ← integral_mul_left_eq_self (fun g => φ h * φ (h⁻¹ * g) * F g) h]
           congr 1
-          ring
+          funext g
+          simp [mul_assoc]
       _ = ∫ g, ∫ h, φ h * φ (h⁻¹ * g) * F g ∂ν ∂ν := integral_integral_swap hI
       _ = ∫ g, κ * φ g * F g ∂ν := by
           congr 1
@@ -97,8 +98,7 @@ theorem idem_avg {G K : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup
           rw [integral_mul_const, hconv]
       _ = κ * ∫ h, φ h * ⟪b, ρ h b⟫_ℂ ∂ν := by
           rw [← integral_const_mul]
-          congr 1
-          ring
+          simp [hF, mul_assoc]
   rw [hb'a b', hb'a b]
   exact hmain
 
@@ -213,7 +213,7 @@ theorem fdeg_shift {m : ℕ} {lam : Fin m → ℝ} (s : Fin m) (h : Formalism.Qu
             (Finset.prod_nonneg fun a _ => Finset.prod_nonneg fun b _ => abs_nonneg _)
           calc ∏ a : Fin m, ∏ b ∈ Finset.univ.filter (fun b => a < b), (c a * c b)
                 ≤ ∏ a : Fin m, ∏ b : Fin m, (c a * c b) := by
-                apply Finset.prod_le_prod
+                apply Finset.prod_le_prod₀
                 · intro a _
                   refine Finset.prod_nonneg fun b _ => ?_
                   have := hc1 a
@@ -221,7 +221,7 @@ theorem fdeg_shift {m : ℕ} {lam : Fin m → ℝ} (s : Fin m) (h : Formalism.Qu
                   positivity
                 · intro a _
                   rw [Finset.prod_filter]
-                  apply Finset.prod_le_prod
+                  apply Finset.prod_le_prod₀
                   · intro b _
                     have := hc1 a
                     have := hc1 b

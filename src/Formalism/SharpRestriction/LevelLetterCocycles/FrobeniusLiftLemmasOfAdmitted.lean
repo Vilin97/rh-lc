@@ -203,7 +203,11 @@ theorem lemGA_rec (hA : admitted D HW F Cm CR CA CB CK) (l : ℕ) [Fact l.Prime]
   have hrec : Loc.CaseA K LL := caseA_loc D HW hg hCA
   have hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP ((HW l).W K 1 LL hg) :=
     Formalism.MainNotions.UnusedSlot80.ring_condition_uniformizer_polynomial D HW F hP9 l K LL hrec
-  obtain ⟨hGN, hGA⟩ := Formalism.MainNotions.N.Pv.LocalLengthBound.gam_of_tie ((HW l).W K 1 LL hg) hCA.2.1 hCT
+  have hG : Formalism.MainNotions.N.Pv.LocalLengthBound.GamN ((HW l).W K 1 LL hg) ∧
+      Formalism.MainNotions.N.Pv.LocalLengthBound.GamA ((HW l).W K 1 LL hg) := by
+    set_option synthInstance.maxHeartbeats 400000 in
+      exact Formalism.MainNotions.N.Pv.LocalLengthBound.gam_of_tie ((HW l).W K 1 LL hg) hCA.2.1 hCT
+  obtain ⟨hGN, hGA⟩ := hG
   have hER : Formalism.MainNotions.RamifiedCoefficientChains.Sh.ExpRing ((HW l).W K 1 LL hg) :=
     Formalism.MainNotions.N.Pv.LocalLengthBound.expRing_of ((HW l).W K 1 LL hg) hR
   have h4L : Formalism.MainNotions.WachCoordinates.LevelMapHodgeFiltration ((HW l).W K 1 LL hg) := hLev l K LL hrec (by omega)

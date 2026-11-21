@@ -33,7 +33,8 @@ theorem inr_foldl_restrict {n : ℕ} (L : Fin n → LineBundle k x) (L' : Fin n 
         RestrictData P.toSubSystem hxy P'.toSubSystem s
   | [], Q, Q', r, h => ⟨Q, Q', r, rfl, rfl, h⟩
   | i :: l, Q, Q', r, h => by
-    obtain ⟨s, hs⟩ := RestrictTwist.restrictData_twist h (hL i)
+    obtain ⟨s, hs⟩ :=
+      RestrictTwist.restrictData_twist (Q₁ := Q) (Q₂ := L i) (Q₁' := Q') (Q₂' := L' i) h (hL i)
     exact inr_foldl_restrict L L' rr hL l (Q.tensorProd (L i)) (Q'.tensorProd (L' i)) s hs
 
 theorem proof (hRL : RestrLenRestrict.Statement.{u, w}) : InterNumRestrict.Statement.{u, w} := by

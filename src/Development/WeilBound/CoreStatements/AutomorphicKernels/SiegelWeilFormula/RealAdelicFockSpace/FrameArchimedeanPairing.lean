@@ -120,6 +120,7 @@ theorem spf_eq (x y : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)) :
       (-(xᵀ * incM F d.A.J * y.map (cA σ) * (dbl (incM F d.Y.J))ᵀ).trace) := by
   unfold spf symp
   rw [hTens_trace, neg_one_mul]
+  rfl
 
 theorem trace_evI_trace (z : AE F E) :
     Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (Algebra.trace (AF F) (AE F E) z)) =

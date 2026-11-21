@@ -79,7 +79,7 @@ theorem gram_pair_ne {T T' : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V)
   have hfg : Λ'.FG := hΛ.fg.sup (Submodule.fg_span (Set.finite_range _))
   have := hΛ
   have hL' : Submodule.IsLattice D.host.E Λ' :=
-    Submodule.IsLattice.of_le_of_isLattice_of_fg (A := D.host.E) le_sup_left hfg
+    Submodule.IsLattice.of_fg D.host.E hfg
   have hmem : ∀ k, v k ∈ Λ' := fun k => Submodule.mem_sup_right (Submodule.subset_span ⟨k, rfl⟩)
   let F1 : LFlag (D.sp.Y 0) D.R.rS T := ⟨F.fl, F.fl.z⟩
   let F2 : LFlag (D.sp.Y 0) D.R.rS T' := ⟨F''.fl, F''.fl.z⟩
@@ -192,12 +192,16 @@ theorem genLoc_rows (hrows : IsRowReps D F0 what₂) (γ : TermDef.Term D u u' F
   obtain ⟨F', ⟨h1, h1e⟩, hF'⟩ := hgen
   have hrel := (Formalism.L2.SG.Pf.double_coset_equivalence γ.lam (lf D F0) (PD D γ.lam (lf D F0) u') ⟨F', h1⟩ ⟨repF γ, h2⟩).1
     (h1e.trans h2e.symm)
-  have hgenR : IsGeneric γ.lam (gS D) (lf D F0) (repF γ) :=
-    (PI.TermAttrConst.UnitaryGroupMassFormula.genericity_constant_double_cosets D u u' F0 γ.lam hR ⟨F', h1⟩ ⟨repF γ, h2⟩ hrel).1 hF'
+  have hgenR : IsGeneric γ.lam (gS D) (lf D F0) (repF γ) := by
+    obtain ⟨-, ⟨-, -, hFl, hFc⟩, -⟩ := hR
+    exact (PI.TermAttrConst.UnitaryGroupMassFormula.genFun_gen γ.lam (lf D F0) _ (gS D)
+      hFl hFc (fun x hx => ⟨hx.1, hx.2.1, hx.2.2.1⟩) ⟨F', h1⟩ ⟨repF γ, h2⟩ hrel).1 hF'
   have hrel2 := (Formalism.L2.SG.Pf.double_coset_equivalence γ.lam (lf D F0) (PD D γ.lam (lf D F0) u') (Quot.out γ.cls)
     ⟨repF γ, h2⟩).1 ((Quot.out_eq γ.cls).trans h2e.symm)
   have hGv : Gval (lf D F0) (repF γ) ≠ 0 := by
-    rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hrel2]; exact hG
+    have heq := Formalism.L2.SG.Pf.gval_rel (lf D F0) hrel2
+    change Gval (lf D F0) (repF γ) = Gval (lf D F0) (Quot.out γ.cls).val at heq
+    rw [heq]; exact hG
   exact (Formalism.L2.SG.Pf.frameGenLoc_holds D Zd F0 γ.lam (repF γ) hR h2
     (Formalism.L2.SG.Pf.m_plus_independent _ _ _ _) hGv).1 hgenR p
 
@@ -207,7 +211,9 @@ theorem gval_repF (γ : TermDef.Term D u u' F0 what₂) (w : Point D.host.E (D.R
   obtain ⟨h2, h2e⟩ := starRepF_rep γ
   have hrel2 := (Formalism.L2.SG.Pf.double_coset_equivalence γ.lam (lf D F0) (PD D γ.lam (lf D F0) u') (Quot.out γ.cls)
     ⟨repF γ, h2⟩).1 ((Quot.out_eq γ.cls).trans h2e.symm)
-  rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hrel2]; exact hG
+  have heq := Formalism.L2.SG.Pf.gval_rel (lf D F0) hrel2
+  change Gval (lf D F0) (repF γ) = Gval (lf D F0) (Quot.out γ.cls).val at heq
+  rw [heq]; exact hG
 
 theorem iso_locF' (p : PlF D) {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') :
     Iso' (locH Zd p) (locF' Zd p F') := by

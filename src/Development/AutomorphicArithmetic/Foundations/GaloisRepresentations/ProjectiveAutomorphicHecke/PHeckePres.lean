@@ -67,7 +67,7 @@ private theorem sum_mem_forms (hC : LocComm) (hM : LocMem) {w : Plc E} (hw : IsS
   refine ⟨fun γ g => ?_, fun k hk g => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, mul_assoc]
-    exact Finset.sum_congr rfl fun y _ => hΦ.1 γ _
+      exact Finset.sum_congr rfl fun y _ => hΦ.1 γ _
   · have hx : comp w k ∈ KGL w (n := n) := (mem_lev.1 hk).2.2 w hS hcS
     set x := comp w k with hxdef
     set k' := (loc hw x)⁻¹ * k with hk'def

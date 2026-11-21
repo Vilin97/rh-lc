@@ -26,13 +26,13 @@ theorem idxRatio_cocycle_of_commensurable (N : Subgroup G) {U V W : Subgroup G}
     (hUV : U.Commensurable V) (hVW : V.Commensurable W) (hUW : U.Commensurable W) :
     GlobalTheory.FunObj.idxRatio (N ⊓ U) (N ⊓ V) * GlobalTheory.FunObj.idxRatio (N ⊓ V) (N ⊓ W) =
       GlobalTheory.FunObj.idxRatio (N ⊓ U) (N ⊓ W) := by
-  have dU : (U ⊓ V ⊓ W).relIndex U ≠ 0 := relIndex_triple_inf_ne_zero_of_relIndex_ne_zero hUV.2 hUW.2
+  have dU : (U ⊓ V ⊓ W).relIndex U ≠ 0 := relIndex_triple_inf_ne_zero_of_relIndex_ne_zero hUV.2.relIndex_ne_zero hUW.2.relIndex_ne_zero
   have dV : (U ⊓ V ⊓ W).relIndex V ≠ 0 := by
-    have h := relIndex_triple_inf_ne_zero_of_relIndex_ne_zero (U := V) (V := U) (W := W) hUV.1 hVW.2
+    have h := relIndex_triple_inf_ne_zero_of_relIndex_ne_zero (U := V) (V := U) (W := W) hUV.1.relIndex_ne_zero hVW.2.relIndex_ne_zero
     have e : V ⊓ U ⊓ W = U ⊓ V ⊓ W := Subgroup.ext fun z => by simp only [Subgroup.mem_inf]; tauto
     rwa [e] at h
   have dW : (U ⊓ V ⊓ W).relIndex W ≠ 0 := by
-    have h := relIndex_triple_inf_ne_zero_of_relIndex_ne_zero (U := W) (V := U) (W := V) hUW.1 hVW.1
+    have h := relIndex_triple_inf_ne_zero_of_relIndex_ne_zero (U := W) (V := U) (W := V) hUW.1.relIndex_ne_zero hVW.1.relIndex_ne_zero
     have e : W ⊓ U ⊓ V = U ⊓ V ⊓ W := Subgroup.ext fun z => by simp only [Subgroup.mem_inf]; tauto
     rwa [e] at h
   have nU := GlobalTheory.LKCountPoint.relIndex_inf_inf_ne_zero N dU
@@ -76,8 +76,10 @@ theorem commensurable_prod (K₁ : Subgroup G₁) (K₂ : Subgroup G₂)
     ((K₁.prod K₂).map (MulAut.conj x).toMonoidHom).Commensurable (K₁.prod K₂) := by
   rw [GlobalTheory.LKCountPoint.prod_map_conj]
   refine ⟨?_, ?_⟩
-  · rw [GlobalTheory.LKCountPoint.relIndex_prod]; exact mul_ne_zero (h₁ x.1).1 (h₂ x.2).1
-  · rw [GlobalTheory.LKCountPoint.relIndex_prod]; exact mul_ne_zero (h₁ x.1).2 (h₂ x.2).2
+  · apply Subgroup.isFiniteRelIndex_iff_relIndex_ne_zero.mpr
+    rw [GlobalTheory.LKCountPoint.relIndex_prod]; exact mul_ne_zero (h₁ x.1).1.relIndex_ne_zero (h₂ x.2).1.relIndex_ne_zero
+  · apply Subgroup.isFiniteRelIndex_iff_relIndex_ne_zero.mpr
+    rw [GlobalTheory.LKCountPoint.relIndex_prod]; exact mul_ne_zero (h₁ x.1).2.relIndex_ne_zero (h₂ x.2).2.relIndex_ne_zero
 
 end Prod
 
@@ -127,7 +129,7 @@ theorem orbK_prod_of_commensurable {G₁ G₂ : Type} [Group G₁] [Group G₂] 
       oTerm θ₁ K₁ (twCent θ₁ δ₁ ⊓ K₁) δ₁ f₁ (Quotient.out z.1) *
         oTerm θ₂ K₂ (twCent θ₂ δ₂ ⊓ K₂) δ₂ f₂ (Quotient.out z.2) := by
     intro z
-    obtain ⟨a, b, ha, hb, e⟩ := DoubleCoset.mk_out_eq_mul ((twCent θ₁ δ₁).prod (twCent θ₂ δ₂)) (K₁.prod K₂)
+    obtain ⟨a, ha, b, hb, e⟩ := DoubleCoset.mk_out_eq_mul ((twCent θ₁ δ₁).prod (twCent θ₂ δ₂)) (K₁.prod K₂)
       (Quotient.out z.1, Quotient.out z.2)
     rw [Subgroup.mem_prod] at ha hb
     have e2 : Quotient.out (Equiv.ofBijective _ (dcPair_bij (twCent θ₁ δ₁) K₁ (twCent θ₂ δ₂) K₂) z) =
@@ -159,9 +161,9 @@ theorem core_count_of_commensurable (Γ' T K : Subgroup G) (F : G → ℂ) (hΓT
     ((∃ q : DoubleCoset.Quotient (Γ' : Set G) (K : Set G), F (Quotient.out q) ≠ 0) →
       ∀ t ∈ T, vol (T ⊓ K) ((T ⊓ K).map (MulAut.conj t).toMonoidHom) = 1) := by
   have hri1 : ∀ y, (T ⊓ K).relIndex (T ⊓ K.map (MulAut.conj y).toMonoidHom) ≠ 0 := fun y =>
-    GlobalTheory.LKCountPoint.relIndex_inf_inf_ne_zero T (hK y).2
+    GlobalTheory.LKCountPoint.relIndex_inf_inf_ne_zero T (hK y).2.relIndex_ne_zero
   have hri2 : ∀ y, (T ⊓ K.map (MulAut.conj y).toMonoidHom).relIndex (T ⊓ K) ≠ 0 := fun y =>
-    GlobalTheory.LKCountPoint.relIndex_inf_inf_ne_zero T (hK y).1
+    GlobalTheory.LKCountPoint.relIndex_inf_inf_ne_zero T (hK y).1.relIndex_ne_zero
   have hfinC : ∀ t ∈ T, ((Γ' ⊓ (T ⊓ K).map (MulAut.conj t).toMonoidHom : Subgroup G) : Set G).Finite :=
     fun t _ => (hfin t).subset (SetLike.coe_subset_coe.2 (inf_le_inf_left _ (Subgroup.map_mono inf_le_right)))
   have hfinY : ∀ y, ∀ t ∈ T,
@@ -266,7 +268,7 @@ theorem pointSum_eq_pointSide_of_commensurable : ∀ {Γ G₁ G₂ : Type} [Grou
   · push_neg at hne
     have hF0 : ∀ x : G₁ × G₂, f₁ (x.1⁻¹ * γ * x.1) * φ (x.2⁻¹ * δ * θ x.2) = 0 := by
       intro x
-      obtain ⟨h, k, hh, hk, he⟩ := DoubleCoset.mk_out_eq_mul (ι₁.prod ι₂).range (K₁.prod K₂) x
+      obtain ⟨h, hh, k, hk, he⟩ := DoubleCoset.mk_out_eq_mul (ι₁.prod ι₂).range (K₁.prod K₂) x
       rw [← hFinv h (hΓT hh) x k hk, ← he]
       exact hne _
     have hor : (∀ x₁ : G₁, f₁ (x₁⁻¹ * γ * x₁) = 0) ∨ (∀ x₂ : G₂, φ (x₂⁻¹ * δ * θ x₂) = 0) := by

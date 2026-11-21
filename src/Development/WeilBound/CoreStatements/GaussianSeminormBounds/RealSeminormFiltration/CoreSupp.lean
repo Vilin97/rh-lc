@@ -89,7 +89,7 @@ private theorem exists_mem_support_mul_weight_eq_of_weight_zero (w : σ → ℕ)
   have hg0 : g0 ≠ 0 := by
     intro h
     have h1 := hc0 γ0
-    rw [h, if_pos hb, coeff_zero] at h1
+    simp [h, hb] at h1
     exact (mem_support_iff.mp hγ0) h1.symm
   obtain ⟨γ, hγ⟩ := PI.FJMP.exists_mem_support (mul_ne_zero hD0 hg0)
   have hwγ : Finsupp.weight w γ = b := by

@@ -75,7 +75,7 @@ private theorem cov_cont (α : ℚˣ) : Continuous fun p : ℝ × IdeleGroup ℚ
 
 private theorem fin_rat {C : Set (IdeleGroup ℚ)} (hC : IsCompact C) : {α : ℚˣ | IdeleGroup.diagonal ℚ α ∈ C}.Finite := by
   have h1 : (C ∩ (IdeleGroup.diagonal ℚ).range).Finite :=
-    (hC.inter_right (Subgroup.isClosed_of_discrete (H := (IdeleGroup.diagonal ℚ).range))).finite
+    (hC.inter_right (Subgroup.isClosed_of_discrete (U := (IdeleGroup.diagonal ℚ).range))).finite
       (isDiscrete_iff_discreteTopology.2 (DiscreteTopology.of_subset (s := ((IdeleGroup.diagonal ℚ).range : Set _)) (inferInstanceAs (DiscreteTopology (IdeleGroup.diagonal ℚ).range))
         Set.inter_subset_right))
   exact (h1.preimage (IdeleGroup.diagonal_injective ℚ).injOn).subset fun α hα => ⟨hα, α, rfl⟩

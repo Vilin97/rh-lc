@@ -17,8 +17,6 @@ open UpperTheory.V.Z.Mult (Cp At IsDec CompOf Mult)
 open UpperTheory.V.Z.J.D
 open scoped Matrix TensorProduct
 
-open private au_isTeich from Development.AutomorphicArithmetic.AutomorphicVarieties.HeckeAlgebras.OrdinaryHeckeCharacters.AuTeichEx
-
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 set_option synthInstance.maxHeartbeats 200000
@@ -49,7 +47,10 @@ private theorem card_not_dvd {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [N
     simp [Int.natAbs_pow]
   rw [hn] at hd
   obtain ⟨e, -, he⟩ := (Nat.dvd_prime_pow s.p_prime).1 hd
-  have hq : Nat.card 𝓀[(s.w s.v0).adicCompletion L] = s.p ^ e := (resCard_eq_normV _).trans he
+  have hq : Nat.card 𝓀[(s.w s.v0).adicCompletion L] = s.p ^ e := by
+    refine (resCard_eq_normV (s.w s.v0)).trans ?_
+    rw [normV, ← Ideal.absNorm_eq_natCard]
+    exact he
   intro h
   rw [hq] at h
   exact s.p_ne ((Nat.prime_dvd_prime_iff_eq hl s.p_prime).1 (hl.dvd_of_dvd_pow (hl.dvd_of_dvd_pow h))).symm

@@ -210,8 +210,7 @@ def pr {R : Type} [CommRing R] (e : a ⊕ b ≃ n) : parab R (two e) →* GL a R
 
 def sec {R : Type} [CommRing R] (e : a ⊕ b ≃ n) : GL a R × GL b R →* parab R (two e) :=
   (emb₂ R e).codRestrict _ fun g => mem_parab_iff.2 fun _ _ i j h => by
-    classical
-    simp [emb₂, leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ h.ne']
+    simp [emb₂, leviEmb, Matrix.blockDiagonal'_apply, h.ne']
 
 theorem pr_fst {R : Type} [CommRing R] (e : a ⊕ b ≃ n) (q : parab R (two e)) (i j : a) :
     ((pr e q).1 : Matrix a a R) i j = ((q : GL n R) : Matrix n n R) (e (.inl i)) (e (.inl j)) := rfl

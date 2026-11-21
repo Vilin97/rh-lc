@@ -312,14 +312,18 @@ theorem locEps_mul_tame : ∀ (E : Type) [Field E] [NumberField E] (χ ξ : HCha
     h x hx (hd.trans (WithZero.exp_le_exp.2 (by omega)))
   have hξ1 : ξ.LevelLe w 1 := hξ
   have hmul : ∀ {θ θ' : HChar E} {m : ℕ}, θ.LevelLe w m → θ'.LevelLe w m → (θ * θ').LevelLe w m :=
-    fun h h' x hx hd => by rw [Formalism.L2.Host.HChar.loc_mul, h x hx hd, h' x hx hd, one_mul]
+    fun {θ θ' m} h h' x hx hd => by
+      change θ.loc w x * θ'.loc w x = 1
+      rw [h x hx hd, h' x hx hd, one_mul]
   have hχ2 : χ.LevelLe w 2 := (hχ 2).2 le_rfl
   refine ⟨fun m => ⟨fun h => ?_, fun hm => hmul ((hχ m).2 hm) (mono (by omega) hξ1)⟩, ?_⟩
   · by_contra hm
     have h1 : (χ * ξ).LevelLe w 1 := mono (by omega) h
     have h2 : χ.LevelLe w 1 := by
       have h3 : (χ * ξ * ξ⁻¹).LevelLe w 1 :=
-        hmul h1 (fun x hx hd => by rw [Formalism.L2.Host.HChar.loc_inv, hξ1 x hx hd, inv_one])
+        hmul h1 (fun x hx hd => by
+          change (ξ.loc w x)⁻¹ = 1
+          rw [hξ1 x hx hd, inv_one])
       rwa [mul_inv_cancel_right] at h3
     exact absurd ((hχ 1).1 h2) (by omega)
   · obtain ⟨x₀, hx₀⟩ := gaussSumAt_mul_tame hχ2 hξ (valuation_unif_pow w (2 + diffExp w))

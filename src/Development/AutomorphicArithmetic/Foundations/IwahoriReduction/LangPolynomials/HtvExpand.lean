@@ -61,7 +61,7 @@ private lemma eps_dl (Φ : Fr l A j) (ε : PowerSeries Φ.R →+* ℂ_[l]) (w : 
     (P : Polynomial (R0 A)) (hP : IsUnit (Φ.ser P)) :
     ε (dl (Φ.ser P)) = algebraMap (PadicAlgCl l) ℂ_[l]
       (j (w * (Polynomial.derivative (P.map (R0 A).subtype)).eval w / (P.map (R0 A).subtype).eval w)) := by
-  have h1 : PowerSeries.derivative Φ.R (Φ.ser P) = Φ.ser (Polynomial.derivative P) := by
+  have h1 : PowerSeries.derivative (R := Φ.R) (Φ.ser P) = Φ.ser (Polynomial.derivative P) := by
     unfold Fr.ser
     rw [der_eval, Polynomial.derivative_map]
   have h2 : ε (Ring.inverse (Φ.ser P)) = (ε (Φ.ser P))⁻¹ := by

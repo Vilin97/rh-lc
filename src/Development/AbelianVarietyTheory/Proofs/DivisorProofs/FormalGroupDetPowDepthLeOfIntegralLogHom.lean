@@ -99,7 +99,9 @@ theorem detDepth_le_of_isIntHom : ∀ (C : Type) [Field C] [CharZero C] (v : Add
     simp only [subst_X hA, expAlong]
     rw [subst_exp_hom hφ (hL0 x.1)]
     congr 1
-    exact Finset.sum_comm
+    funext b
+    simp only [Matrix.mulVec, dotProduct, Finset.sum_smul, Finset.smul_sum, smul_smul]
+    rw [Finset.sum_comm]
   refine le_iInf fun f => iInf_le_of_le ⟨subst Φ f.1, ptIntSer_subst (v := v) hΦ hΦi f.2⟩ (le_of_eq ?_)
   simp only
   rw [subst_comp_subst_apply hΦ hA, hcol]

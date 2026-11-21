@@ -199,7 +199,13 @@ theorem vecT_deg (hDT : KB.DegTop) {Cb Cc : ℝ} {S : C.HidaSetting E Wp Wq}
     simp only [if_pos hloc]
     rw [eP]
     change B.hsVec (((p v).TP.E ρ).comp ((p v).V ((p v).Θ.Θ w e (F v ε)) (stdS S P ++ [(s, τ)]))) = _
-    rw [hV, ContinuousLinearMap.comp_smul, ContinuousLinearMap.comp_finset_sum, hsVec_smul, hsVec_sum]
+    have hcomp (a : Finset (Fin K → Fin (d + 1)))
+        (X : (Fin K → Fin (d + 1)) → Wq (S.pl v) →L[ℂ] Wp (S.pl v)) :
+        ((p v).TP.E ρ).comp (∑ n ∈ a, X n) = ∑ n ∈ a, ((p v).TP.E ρ).comp (X n) := by
+      induction a using Finset.induction_on with
+      | empty => simp
+      | insert n a hn ih => simp [hn, ContinuousLinearMap.comp_add, ih]
+    rw [hV, ContinuousLinearMap.comp_smul, hcomp, hsVec_smul, hsVec_sum]
     congr 1
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [ContinuousLinearMap.comp_smul, hsVec_smul]

@@ -81,6 +81,8 @@ private theorem finiteRing_sq_sub_mul_sq_eq_of_card {D : D7} (S X : HSp D) {d : 
           refine (ptO_gen S e _ a _ _).trans ?_
           rw [star_star]
           congr 3
+          funext q
+          simp [Pi.smul_apply, smul_eq_mul, mul_assoc]
         · have h3 : pairA D.host.F 0 α • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F (vecMulVec x ((z + z') • y)) =
               pairA D.host.F 0 α • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F (vecMulVec x (z • y)) +
               pairA D.host.F 0 α • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F (vecMulVec x (z' • y)) := by

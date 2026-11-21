@@ -37,7 +37,11 @@ private theorem detjac_scalar_factor {α : Type} [Fintype α] [DecidableEq α] {
     by_cases ha : a = j
     · subst ha; simp
     · simp [Pi.mulSingle_eq_of_ne ha, Function.update_of_ne ha]
-  rw [piTensor_tprod, h2, ← MultilinearMap.map_update_smul, ← sub_eq_zero, ← MultilinearMap.map_update_sub] at h1
+  rw [piTensor_tprod, h2] at h1
+  have hs : PiTensorProduct.tprod ℂ (Function.update x j (c • v)) =
+      c • PiTensorProduct.tprod ℂ (Function.update x j v) := by
+    simpa using (PiTensorProduct.tprod ℂ).map_update_smul x j c v
+  rw [← hs, ← sub_eq_zero, ← (PiTensorProduct.tprod ℂ).map_update_sub x j] at h1
   by_contra hne
   refine detjac_tprod_ne_zero _ (fun a => ?_) h1
   by_cases ha : a = j

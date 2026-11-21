@@ -44,7 +44,7 @@ theorem lbIso_lbPow_hecke {X : Scheme.{0}} {P : LB X} (hP : P.IsLB) (k : ℕ) :
   have hQ : (Hecke.lbPow P k).IsLB := LB.isLB_linComb hP _ _
   have h₁ : LBIso (lbPow P k) (Hecke.lbPow P k) := by
     unfold Hecke.lbPow lbPow
-    refine (GlobalTheory.PrimNorm.lbIso_iff hP _ _ _ _).2 ?_
+    apply (GlobalTheory.PrimNorm.lbIso_iff hP _ _ _ _).2
     simp
   exact h₁.trans (LB.isLB_linComb hP _ _) hQ (pull_isLB hQ _) (GlobalTheory.DescendedPrincipal.lbIso_pull_id hQ).symm
 

@@ -168,7 +168,8 @@ theorem sameBlock_of : ∀ {E : Type} [CommRing E] (bs : List (Eˣ × ℕ+)) (cs
   | E, _, (t, s) :: bs, (t', s') :: cs, h, a, b, hab, ha, hb => by
     have hcons : (s : ℕ) :: bs.map (fun b => (b.2 : ℕ)) = s' :: cs.map Prod.snd := by
       simpa only [List.map_cons] using h
-    obtain ⟨hs, hrest⟩ := List.cons.inj hcons
+    have hs : (s : ℕ) = s' := List.head_eq_of_cons_eq hcons
+    have hrest : bs.map (fun b => (b.2 : ℕ)) = cs.map Prod.snd := List.tail_eq_of_cons_eq hcons
     simp only [List.map_cons, List.sum_cons] at ha hb
     have s1 : 1 ≤ s' := by rw [← hs]; exact s.pos
     simp only [pSt] at hab

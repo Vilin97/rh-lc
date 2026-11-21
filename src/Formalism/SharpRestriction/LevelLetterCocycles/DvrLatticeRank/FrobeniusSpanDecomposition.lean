@@ -89,8 +89,8 @@ theorem frobenius_span_exact_lift (W : LocWach PD LL O v n) [IsAdicComplete (Ide
   · refine Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ ?_
     unfold Formalism.MainNotions.DeltaInvariantLattices.φspan
     exact Submodule.subset_span ⟨y k, hyNl k, rfl⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Formalism.MainNotions.LiftingTheory.wmap_map_smul, W.map_φ, hy k]
 

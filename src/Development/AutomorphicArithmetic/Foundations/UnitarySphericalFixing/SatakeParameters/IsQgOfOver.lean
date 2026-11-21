@@ -42,7 +42,9 @@ theorem UpperTheory.One.M.isQg_of_over (D : D7) (k : Fin 2) (w : PlE D.host) (hw
   haveI : Fact (D.host.g k).Prime := ⟨D.host.g_prime k⟩
   have key : Function.Surjective (Formalism.BasicNotions.Examples₂.LocF.emb w (D.host.g k) hw) := by
     refine GlobalTheory.TypeRec.Model.emb_surjective _ _ _ (fun h => ?_)
-      (GlobalTheory.TameLabels.normV_eq_of_split (D.host.g_prime k) (D.nd.g_split k) hw)
+      (by
+        simpa [Formalism.ConjugateSelfDual.normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+          (GlobalTheory.TameLabels.normV_eq_of_split (D.host.g_prime k) (D.nd.g_split k) hw))
     have h0 : Ideal.span {((D.host.g k : ℕ) : 𝓞 D.host.E)} ≠ 0 := by
       rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]
       exact_mod_cast (D.host.g_prime k).ne_zero

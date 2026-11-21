@@ -81,6 +81,8 @@ theorem UpperTheory.Kd.L.thcocd :
   have hsg : sgD N l ((δu : ZMod N).val) = sgD N l δ := by
     unfold sgD
     congr 1
+    funext γ
+    simp [IsDiam, hδu]
   have hφ' : GlobalTheory.Glue.IsThB X A N l n (X.diam N l (δu : ZMod N).val
       (GlobalTheory.KA.push (redM l n m (N * N)) (UpperTheory.Kd.L.bTop X l n m N bB) s y)) φ := by
     rw [show X.diam N l ((δu : ZMod N).val) = X.diam N l δ by unfold Tower.diam; rw [hsg]]

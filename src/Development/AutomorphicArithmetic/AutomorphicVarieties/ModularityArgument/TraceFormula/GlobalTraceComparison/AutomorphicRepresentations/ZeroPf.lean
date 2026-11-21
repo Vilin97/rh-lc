@@ -17,9 +17,13 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.zero_pf :
     AeEq → Zero := by
   intro hAe E _ _ _ n D f I hf hinv hI h
   classical
-  haveI : T2Space (H E n 0) := (PositivityTheory.Rg.BcB.E1.ctx PositivityTheory.Rg.BcB.E1.ratProper_holds D).t2
-  haveI : LocallyCompactSpace (H E n 0) := (PositivityTheory.Rg.BcB.E1.ctx PositivityTheory.Rg.BcB.E1.ratProper_holds D).lc
-  haveI : SecondCountableTopology (H E n 0) := (PositivityTheory.Rg.BcB.E1.ctx PositivityTheory.Rg.BcB.E1.ratProper_holds D).sc
+  haveI := CuspidalL2GL.t2Space_GA E n
+  haveI := CuspidalL2GL.t2Space_GA E 0
+  haveI := CuspidalL2GL.locallyCompactSpace_GA E n
+  haveI := CuspidalL2GL.locallyCompactSpace_GA E 0
+  haveI := CuspidalL2GL.secondCountableTopology_GA E n
+  haveI := CuspidalL2GL.secondCountableTopology_GA E 0
+  haveI : SigmaCompactSpace (H E n 0) := sigmaCompactSpace_of_locallyCompact_secondCountable
   haveI : BorelSpace (H E n 0) := ⟨rfl⟩
   haveI : IsLocallyFiniteMeasure D.μ := D.haar.2.2.2
   have key : ∀ K : Set (H E n 0), IsCompact K → ∀ᵐ x ∂D.ν, x ∈ K → ldet x ∈ I → f x = 0 := by
@@ -33,7 +37,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.zero_pf :
         (hK.measure_lt_top_of_nhdsWithin fun x _ => D.μ.finiteAt_nhdsWithin x K)
     set w : H E n 0 → ℂ := S.indicator fun x => starRingEnd ℂ (f x) with hwdef
     have hw : MemLp w 2 D.ν := by
-      rw [hwdef, memLp_indicator_iff_restrict hSm]
+      rw [hwdef, memLp_indicator_iff_restrict hSm.nullMeasurableSet]
       haveI : IsFiniteMeasure (D.ν.restrict S) := isFiniteMeasure_restrict.2 hνS.ne
       refine MemLp.of_bound (Complex.continuous_conj.comp hf).aestronglyMeasurable B
         ((ae_restrict_iff' hSm).2 (Eventually.of_forall fun x hx => ?_))

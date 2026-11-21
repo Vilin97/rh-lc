@@ -318,7 +318,7 @@ theorem spanning : ⊤ ≤ Submodule.span D (Set.range fun i : I p d => cl t i.1
   obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
   induction y using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [(Ideal.Quotient.mk (J p t)).map_add x y]; exact Submodule.add_mem _ hx hy
   | single a c =>
     rw [mk_single, cl_eq_smul]
     exact Submodule.smul_mem _ _ (Submodule.smul_mem _ _ (Submodule.subset_span ⟨fr a, rfl⟩))
@@ -366,7 +366,7 @@ theorem exists_lift (B : Type) [CommRing B] (f : D →+* B) (c : Fin d → ℕ �
       refine Ideal.span_le.2 ?_
       rintro _ ⟨k, rfl⟩
       show g₀ _ = 0
-      rw [map_sub, hg₀, hg₀, hθ, h0, map_one, one_mul]
+      rw [g₀.map_sub _ _, hg₀, hg₀, hθ, h0, map_one, one_mul]
       have : θ (Multiplicative.ofAdd 0) = 1 := map_one θ
       rw [this, mul_one, sub_self]
     exact fun x hx => this hx

@@ -20,7 +20,6 @@ private theorem exists_pow_eq_span {L : Type} [Field L] [NumberField L] (v : Hei
     have h1 := pow_card_eq_one (x := ClassGroup.mk0 ⟨v.asIdeal, hI⟩)
     rw [← map_pow] at h1
     convert h1
-    simp
   obtain ⟨a, ha⟩ := ((ClassGroup.mk0_eq_one_iff hpow).1 hone).principal
   refine ⟨_, a, Fintype.card_pos, ?_, ha⟩
   rintro rfl

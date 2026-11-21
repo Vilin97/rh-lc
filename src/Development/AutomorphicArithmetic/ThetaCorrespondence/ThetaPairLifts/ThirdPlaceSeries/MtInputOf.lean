@@ -62,6 +62,7 @@ theorem main_alt_alt : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.G
   obtain ⟨plg, iso, h1, -⟩ := t.r.z.pins.keep.grp
   exact types_of (D := (w.st Z).toD7) ad hin t.r.z.pins.char.base.lev t.r.z.pins.char.base.grp.levels i _ k hs hnt s' φ b hPg
     ⟨(plg.symm ⟨s'.w, hPg⟩).1, (plg.symm ⟨s'.w, hPg⟩).2, by rw [← h1, plg.apply_symm_apply]⟩ hfr
+
 end GlobalTheory.FrameTypes
 end
 end

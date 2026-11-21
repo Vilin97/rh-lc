@@ -22,7 +22,7 @@ theorem vAdd_dvd_le (w : D.what₂.places.Pl) {n N : ℕ} (hN : N ≠ 0) (hd : n
   set p := D.what₂.places.resChar w with hp
   set k := padicValNat p n with hk
   obtain ⟨n', hn'⟩ : ∃ n', n' = n / p ^ n.factorization p := ⟨_, rfl⟩
-  have hfac : n.factorization p = k := by rw [hk, Nat.factorization_def n hpp]
+  have hfac : n.factorization p = k := by rw [hk, Nat.factorization_def n hpp, Nat.padicValNat_def]
   have hprod : p ^ k * n' = n := by
     rw [hn', ← hfac]; exact Nat.ordProj_mul_ordCompl_eq_self n _
   have hcop : Nat.Coprime n' p := by

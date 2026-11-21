@@ -199,8 +199,12 @@ private theorem prod_eq_norm [Algebra F F'] (ha : ∀ x : F, ((algebraMap F F' x
   have h1 := Algebra.norm_eq_prod_automorphisms F f'
   rw [← hbij.prod_comp (fun τ => τ f')] at h1
   have h2 := congrArg (fun y : F' => (y : L)) h1
-  simp only [ha, SubmonoidClass.coe_finset_prod, hσ] at h2
-  exact h2.symm
+  change F'.subtype (algebraMap F F' (Algebra.norm F f')) =
+    F'.subtype (∏ i, σ i f') at h2
+  rw [map_prod] at h2
+  change ((algebraMap F F' (Algebra.norm F f') : F') : L) =
+    ∏ i, ((σ i f' : F') : L) at h2
+  simpa only [ha, hσ] using h2.symm
 end
 
 private theorem abs_step {k L Γ : Type} [Field k] [IsAlgClosed k] [CharZero k] [Field L] [Group Γ] (a : Γ → L ≃+* L)

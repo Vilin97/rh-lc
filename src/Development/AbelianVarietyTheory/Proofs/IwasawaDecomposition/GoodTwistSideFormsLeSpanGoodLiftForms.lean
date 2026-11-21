@@ -29,14 +29,14 @@ attribute [local instance] finiteLevelGroupFintype
 
 def opL (j : ℕ) : MonoidAlgebra ↥D.LL0 (G0g D.nd) →+* Module.End D.what₂.LL (S.WL j) :=
   (MonoidAlgebra.lift D.what₂.LL (Module.End D.what₂.LL (S.WL j)) (G0g D.nd) (actLHom D S j)).toRingHom.comp
-    (MonoidAlgebra.mapRangeRingHom (G0g D.nd) (algebraMap ↥D.LL0 D.what₂.LL))
+    (MonoidAlgebra.mapRingHom (G0g D.nd) (algebraMap ↥D.LL0 D.what₂.LL))
 
 theorem opL_of (j : ℕ) (g : G0g D.nd) : opL D S j (MonoidAlgebra.of _ _ g) = actL D S j g := by
-  simp [opL, MonoidAlgebra.of_apply, MonoidAlgebra.mapRangeRingHom, actLHom]
+  simp [opL, MonoidAlgebra.of_apply, actLHom]
 
 theorem opL_eL (j : ℕ) : opL D S j (eL D) = ∑ᶠ g : G0g D.nd, ((D.nexp.eLL0 g : ↥D.LL0) : D.what₂.LL) • actL D S j g := by
   rw [finsum_eq_sum_of_fintype]
-  simp [opL, eL, MonoidAlgebra.lift_apply, MonoidAlgebra.mapRangeRingHom, actLHom, Finsupp.sum_fintype]
+  simp [opL, eL, MonoidAlgebra.lift_apply, actLHom, Finsupp.sum_fintype]
 
 variable {D S}
 

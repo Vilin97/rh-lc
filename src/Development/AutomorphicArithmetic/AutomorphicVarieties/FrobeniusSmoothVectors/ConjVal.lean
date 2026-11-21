@@ -50,7 +50,7 @@ private theorem theta_r {n : ℕ} {C : Type} [CommRing C] (ρ : NRep F n C) (g :
   rw [theta_val, ← map_inv, MonoidHom.coe_toHomUnits, MonoidHom.coe_toHomUnits, ← ρ.pol, Frame.star, inv_inv]
 
 private noncomputable def rp (hc : F.del F.c = -1) (hs : F.c * F.c = 1) {n : ℕ} {C : Type} [CommRing C]
-    (ρ : NRep F n C) : F.Γ →* GG n C where
+    (ρ : NRep F n C) : F.Γ →* GG (m := n) (R := C) where
   toFun s := ⟨ρ.r.toHomUnits (pr hc s), F.del s⟩
   map_one' := by
     have h : pr hc (1 : F.Γ) = 1 := pr_coe hc 1

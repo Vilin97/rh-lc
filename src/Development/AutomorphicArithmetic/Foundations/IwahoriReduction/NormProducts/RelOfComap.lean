@@ -130,7 +130,7 @@ private theorem core {m : ℕ} (hC : ∀ c : ClassGroup B, ∃ d, c = d ^ m)
   let ch : Ideal A → Ideal B := Function.invFunOn un S
   have hunM : ∀ P ∈ s, (un P).IsMaximal ∧ un P ≠ 0 := fun P hP => by
     have := hsM P hP
-    refine ⟨Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P, fun h0 => (hsP P hP).2 ?_⟩
+    refine ⟨Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := A) P, fun h0 => (hsP P hP).2 ?_⟩
     exact Ideal.eq_bot_of_comap_eq_bot h0
   have hch : ∀ P ∈ s, ch (un P) ∈ S ∧ un (ch (un P)) = un P := fun P hP =>
     Function.invFunOn_pos ⟨P, hsP P hP, rfl⟩

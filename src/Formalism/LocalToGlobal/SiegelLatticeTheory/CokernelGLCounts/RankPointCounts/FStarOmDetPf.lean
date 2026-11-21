@@ -89,8 +89,8 @@ theorem modeMatrixDet_eq_adjointDet : OmDet Zd u u' F0 what₂ := by
   have hg := (hu1.mul hu2).mul_right_eq_zero.1 hDr
   rw [map_eq_zero_iff _ (D.s.atP p).ιE.injective, gdl_eq] at hg
   have hG := hP.1.1.2.2
-  rw [fwdCut_gval_congr (lf D F0) F' F'₂ (hP.1.2.2.2.2.trans hS.1.symm)] at hG
   apply hG
+  apply Eq.trans (fwdCut_gval_congr (lf D F0) F' F'₂ (hP.1.2.2.2.2.trans hS.1.symm))
   show Formalism.MainNotions.S.Gflag F0 F'₂.fl = 0
   unfold Formalism.MainNotions.S.Gflag
   rw [PI.UnitaryGroupMassFormula.BetaLUniq.GN.Dl_succ, hg, show Zhat F0 F'₂.fl = Z from hS.1, hZ]

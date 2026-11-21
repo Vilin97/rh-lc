@@ -25,12 +25,10 @@ def cyl {G₁ G₂ : C' ⥤ C} (α : G₁ ⟶ G₂) : Fin 2 × C' ⥤ C := Funct
 theorem cyl_top {G₁ G₂ : C' ⥤ C} (α : G₁ ⟶ G₂) {T T' : C'} (φ : T ⟶ T') :
     G₂.map φ = (cyl α).map ((𝟙 (Fin.last 1), φ) : (Fin.last 1, T) ⟶ (Fin.last 1, T')) := by
   simp [cyl]
-  exact (Category.id_comp _).symm
 
 theorem cyl_bot {G₁ G₂ : C' ⥤ C} (α : G₁ ⟶ G₂) {T T' : C'} (φ : T ⟶ T') :
     G₁.map φ = (cyl α).map ((𝟙 (0 : Fin 2), φ) : ((0 : Fin 2), T) ⟶ ((0 : Fin 2), T')) := by
   simp [cyl]
-  exact (Category.id_comp _).symm
 
 theorem cyl_step {G₁ G₂ : C' ⥤ C} (α : G₁ ⟶ G₂) (T : C') :
     α.app T = (cyl α).map ((homOfLE (Fin.zero_le _), 𝟙 T) : ((0 : Fin 2), T) ⟶ (Fin.last 1, T)) := by

@@ -133,6 +133,7 @@ theorem enorm_uInt_self {E : Type} [Field E] [NumberField E] [_root_.NumberField
   ext
   simp
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem zint_unfold : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure],
   ∃ c : ℝ, 0 < c ∧ ∀ (π π' : CuspSub E (m + 1)) (ω ω' : HChar E), ω.IsUnitary → ω'.IsUnitary → π.HasCentChar ω →
     π'.HasCentChar ω' → ∀ φ φ' : GA E (m + 1) → ℂ, φ ∈ GlobalTheory.JSW.mspanR π → φ' ∈ GlobalTheory.JSW.mspanR π' →
@@ -190,8 +191,9 @@ theorem zint_unfold : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberFie
       fun g => ‖fT φ Φ g * conj (fT φ' Φ g) * ((wt N x g : ℝ) : ℂ)‖ₑ from funext fun g => by rw [psi_lastRow_eq hΦp]]
     exact hI1.2.ne
   refine ⟨by rw [e1]; exact hI2, ?_⟩
-  rw [GlobalTheory.T.rankinSelbergThetaIntegral_unfold_mirabolic E m μ 𝓕 𝓕P h𝓕 h𝓕P φ φ' hc.measurable hc'.measurable hl hl' N Φ hΦcont x hfin, e2,
-    Complex.ofReal_one, one_mul, e1]
+  have hUnfold := GlobalTheory.ZUnfTheta.zint_eq_mirabolic E m μ 𝓕 𝓕P h𝓕 h𝓕P
+    φ φ' hc.measurable hc'.measurable hl hl' N Φ hΦcont x hfin
+  rw [hUnfold, e2, Complex.ofReal_one, one_mul, e1]
   exact hEq
 
 end GlobalTheory.ZUnf

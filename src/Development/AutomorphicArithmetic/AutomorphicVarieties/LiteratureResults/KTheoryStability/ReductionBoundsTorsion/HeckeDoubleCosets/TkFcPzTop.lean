@@ -38,6 +38,8 @@ theorem dC_tk {n : ℕ} (F : (Fin (n + 1) → Y) → ℝ) (f : ℕ → Y) :
   unfold dC
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 2
+  funext j
+  simp only [tk, fc]
   split_ifs with h
   · rw [Fin.succAbove_of_castSucc_lt _ _ (by simpa [Fin.lt_def] using h)]
     try rfl
@@ -184,6 +186,8 @@ theorem pPrism : PPrism := by
     congr 1
     rw [← hFi h (tk (m + 2) (pz v i (ext y)))]
     congr 1
+    funext j
+    simp only [tk, pz, ext]
     split_ifs <;> simp [hv]
   · intro y
     rw [dC_neg]

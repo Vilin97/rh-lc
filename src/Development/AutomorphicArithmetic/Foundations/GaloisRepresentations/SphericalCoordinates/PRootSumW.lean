@@ -79,7 +79,7 @@ theorem UpperTheory.Gal.W2.rootSumW_of :
     have hmem' : starRingEnd ℂ (r t₀ j) ∈ rts χ t₁ := by
       change _ ∈ (χ.map t₁).roots
       rw [Polynomial.mem_roots hne, hmap1]
-      exact (Polynomial.isRoot_of_mem_roots hmem).map
+      exact (Polynomial.isRoot_of_mem_roots hmem).map (starRingEnd ℂ)
     rw [hr t₁] at hmem'
     obtain ⟨k, -, hk⟩ := Multiset.mem_map.mp hmem'
     exact ⟨k, hk⟩

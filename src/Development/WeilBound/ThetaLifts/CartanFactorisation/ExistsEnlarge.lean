@@ -36,6 +36,8 @@ theorem exists_enlarge {α : Type} {Q : α → Type} [∀ v, AddCommGroup (Q v)]
   rw [PiTensorProduct.lift.tprod]
   change PiTensorProduct.tprod ℂ (e fun v => y v) = _
   congr 1
+  funext v
+  simp only [e]
   split_ifs with hv
   exacts [rfl, (hy v hv).symm]
 
@@ -70,7 +72,19 @@ theorem anAll_of (hW : WeilConv) (hC : KCoinv) (hI : ILeft) : AnAll := by
   intro F E _ _ _ _ _ σ B a a' G X om om' R Rf hm hq c hc Φ Φ' ⟨T, hT, m, m', f, φ, f', φ', h1, h2, e1, e2, e⟩ h
   have g := hm.triple.geo.hM
   have g' := hm.triple.geo.hM'
-  have hp := pairV' hm.triple
+  have hp : IsPair B G.M' X.α (X.α / X.β) om' G.q (a' - G.q)
+      (a + a' - (G.p + G.q)) (G.p + G.q) := by
+    have hd : IsHecke F E (X.α / X.β) :=
+      ⟨hm.triple.chars.heckeα.1.div' hm.triple.chars.heckeβ.1, fun x => by
+        rw [MonoidHom.div_apply, hm.triple.chars.heckeα.2, hm.triple.chars.heckeβ.2, div_one]⟩
+    have hr : ResEtaPow (Units.map (algebraMap F (AF F)).toMonoidHom).range (X.α / X.β) (a + a') := by
+      intro x
+      rw [MonoidHom.div_apply, Circle.coe_div, hm.triple.chars.resα, hm.triple.chars.resβ, add_comm a a']
+      split_ifs
+      · simp
+      · rw [pow_add, div_eq_mul_inv, ← inv_pow, inv_neg, inv_one]
+    exact ⟨hm.triple.base, hm.triple.geo.hV', hm.triple.geo.hW, g',
+      hm.triple.chars.heckeα, hd, hm.triple.chars.resα, hr, hm.triple.weil'⟩
   obtain ⟨J, hJ⟩ := exists_Ilin hm.triple.weil' (schA F _) le_rfl fun Φ hΦ =>
     ((hW F E σ B _ _ _ _ _ _ _ om' _ _ _ _ hp (Or.inr (by rw [hq]; simp))).1 Φ hΦ).1
   obtain ⟨-, c2, c3, -⟩ := (hC F E σ B a a' G X om om' R Rf hm).1 B.v₁ hm.triple.chars.good

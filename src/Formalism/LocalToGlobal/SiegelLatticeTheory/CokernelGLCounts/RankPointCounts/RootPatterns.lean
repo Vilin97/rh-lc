@@ -133,7 +133,8 @@ theorem place (hLoc : Formalism.L2.SG.NGPin.LocRootHaar) (hrep : Formalism.L2.SG
       ((rootCoords_cont _ _ _ _).measurable.comp hemb.measurable),
       ← Measure.map_map (rootCoords_cont _ _ _ _).measurable hemb.measurable, hmapc, hmap, Measure.map_smul,
       (volume_measurePreserving_piCongrLeft (fun _ : Formalism.L2.SG.RealObj.FreeE w => ℂ) (idxF τ w)).map_eq]
-    rfl
+    · rfl
+    · exact (MeasurableEquiv.piCongrLeft _ _).measurable.aemeasurable
 
 theorem placeHaar_of_loc (hLoc : Formalism.L2.SG.NGPin.LocRootHaar) : Formalism.L2.SG.NGPin.PlaceHaar := by
   intro D X u u' w γ hrep v

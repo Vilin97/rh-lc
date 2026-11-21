@@ -185,7 +185,9 @@ theorem logOf_add (i : Fin d) :
       simp only [g, map_sub, map_add (f := _), d_evF, pderiv_logOf, pderiv_first_ev_second_point_eq_zero, d_evX]
       rw [om_P G i c]; ring
     · simp only [Fin.mk_one]
-      simp only [g, map_sub, map_add (f := _), d_evF, pderiv_logOf, pderiv_second_ev_first_point_eq_zero, d_evY]
+      simp only [g, map_sub, map_add (f := _), pderiv_second_ev_first_point_eq_zero, d_evY]
+      rw [d_evF G]
+      simp only [pderiv_logOf G]
       have := om_Q G i c
       simp only [Ar] at this
       rw [this]; ring

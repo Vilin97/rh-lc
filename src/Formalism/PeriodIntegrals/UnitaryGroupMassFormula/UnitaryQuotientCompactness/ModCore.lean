@@ -132,7 +132,8 @@ theorem rightInv_of (μ : Measure (MtM m)) (hμ : IsHaarOnM G μ)
     rw [toM_mul', toM_mk]
     rfl
   have hinv : Measure.map (· * mk hG s hs) (onG hG μ) = onG hG μ := by
-    rw [hc, Measure.map_smul, map_mul_right_haar, h1, one_smul]
+    rw [hc, Measure.map_smul c (measurable_mul_const (mk hG s hs)).aemeasurable,
+      map_mul_right_haar, h1, one_smul]
   rw [← hback, Measure.map_map hR hMe.measurable, hgkey,
     ← Measure.map_map hMe.measurable (measurable_mul_const _), hinv]
 
@@ -147,19 +148,19 @@ def conjE (c : Matrix (Fin m) (Fin m) ℂ) (hc : IsUnit c) (hcG : ∀ g, c * g *
     exact x.2)
   left_inv x := by
     have hd : IsUnit c.det := (Matrix.isUnit_iff_isUnit_det c).1 hc
-    ext1
+    apply MG.toM_injective
     simp only [toM_mk]
     rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hd, Matrix.one_mul,
       Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hd, Matrix.mul_one]
   right_inv x := by
     have hd : IsUnit c.det := (Matrix.isUnit_iff_isUnit_det c).1 hc
-    ext1
+    apply MG.toM_injective
     simp only [toM_mk]
     rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hd, Matrix.one_mul,
       Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hd, Matrix.mul_one]
   map_mul' x y := by
     have hd : IsUnit c.det := (Matrix.isUnit_iff_isUnit_det c).1 hc
-    ext1
+    apply MG.toM_injective
     simp only [toM_mk, toM_mul']
     simp only [Matrix.mul_assoc]
     rw [← Matrix.mul_assoc c⁻¹ c, Matrix.nonsing_inv_mul _ hd, Matrix.one_mul]
@@ -183,7 +184,8 @@ theorem modF_conj (φ : MG G hG ≃ₜ* MG G hG) (g : MG G hG) :
     have e : ((· * φ g) ∘ ⇑φ) = (⇑φ ∘ (· * g)) := by
       funext x
       simp [map_mul]
-    rw [e, ← Measure.map_map hφ (measurable_mul_const g), map_mul_right_haar g, Measure.map_smul]
+    rw [e, ← Measure.map_map hφ (measurable_mul_const g), map_mul_right_haar g,
+      Measure.map_smul _ hφ.aemeasurable]
   simp only [e1, Measure.haarScalarFactor_smul, Measure.haarScalarFactor_self, smul_eq_mul, mul_one]
 
 theorem modF_bdd (V : Set (MG G hG)) (hV : IsCompact V) :

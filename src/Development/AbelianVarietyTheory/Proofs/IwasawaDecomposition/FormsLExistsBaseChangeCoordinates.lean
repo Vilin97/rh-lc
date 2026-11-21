@@ -46,9 +46,9 @@ theorem formsL_exists_baseChange_coordinates : ∀ {L L' Ks : Type} [Field L] [N
       Pt := F.Pt
       nrm := fun lp y φ' => F.nrm lp y (e.symm φ')
       nrm_nonneg := fun lp y f => F.nrm_nonneg lp y _
-      nrm_zero := fun lp y => by simp only [map_zero]; exact F.nrm_zero lp y
-      nrm_add := fun lp y f g => by simp only [map_add (f := _)]; exact F.nrm_add lp y _ _
-      nrm_smul := fun lp y a f => by simp only [map_smul]; exact F.nrm_smul lp y a _
+      nrm_zero := fun lp y => by rw [e.symm.map_zero]; exact F.nrm_zero lp y
+      nrm_add := fun lp y f g => by rw [e.symm.map_add]; exact F.nrm_add lp y _ _
+      nrm_smul := fun lp y a f => by rw [e.symm.map_smul]; exact F.nrm_smul lp y a _
       towKs := inferInstance
       ρ := ρ'
       chi := (Units.map ι.toMonoidHom).comp F.chi

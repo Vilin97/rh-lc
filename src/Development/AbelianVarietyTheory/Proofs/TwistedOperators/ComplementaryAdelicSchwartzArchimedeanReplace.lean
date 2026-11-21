@@ -74,7 +74,11 @@ theorem restTr : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype �
       Λ (GlobalTheory.WeilM.pureA F f' g') = f' x₀ • g' := by
     intro f' g'
     funext y
-    simp [Λ, GlobalTheory.WeilM.pureA, a]
+    change f' (fun i => (InfiniteAdeleRing.ringEquiv_mixedSpace F) (a i)) * g' y = f' x₀ * g' y
+    congr 1
+    apply congrArg f'
+    funext i
+    exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply (x₀ i)
   have hle : GlobalTheory.WeilM.schA F κ ≤ (GlobalTheory.WeilM.SB (κ → FiniteAdeleRing (𝓞 F) F)).comap Λ := by
     refine Submodule.span_le.2 ?_
     rintro Φ ⟨f', g', hg', rfl⟩

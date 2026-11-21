@@ -45,7 +45,7 @@ theorem hermitian_unfolding_integral (r : ℕ) (V : HSp D) (ψ : AddChar (AF D.h
   have hJ : Integrable (Jt ψ V μ fun y => Φ (untup y)) lam :=
     (GlobalTheory.T.poisson_summation_hermitian_lattice D r ψ hψ lam 𝓖 h𝓖 _ (GlobalTheory.T.theta_integral_continuous D r V ψ θ μ _ hψ hθ hμ hφ)
       (GlobalTheory.T.theta_integral_locally_summable_bound D r V ψ θ μ _ hr hψ hθ hμ hφ)).1
-  obtain ⟨c, hc⟩ := starN_hermE V ψ μ hμ.choose_spec.1 dx hdx
+  obtain ⟨c, hc⟩ := starN_hermE V (r := r) ψ μ hμ.choose_spec.1 dx hdx
   refine integrable_of_hermE lam h𝓖.1 db hdb _ ?_
   simp only [hc]
   exact hJ.const_mul c

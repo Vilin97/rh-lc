@@ -83,7 +83,9 @@ def intF : AddSubgroup (AF F) where
   add_mem' := fun {a b} ha hb => ⟨evI_eq_zero.2 (by
       change a.1 + b.1 = 0
       rw [evI_eq_zero.1 ha.1, evI_eq_zero.1 hb.1, add_zero]),
-    fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.2 v) (hb.2 v)⟩
+    fun v => by
+      rw [map_add (evFin F v)]
+      exact add_mem (ha.2 v) (hb.2 v)⟩
   neg_mem' := fun {a} ha => ⟨evI_eq_zero.2 (by
       change -a.1 = 0
       rw [evI_eq_zero.1 ha.1, neg_zero]),
@@ -154,11 +156,12 @@ theorem eF_mem : eF F ∈ intF F := ⟨evI_eq_zero.2 rfl, fun v => by
   have : evFin F v (eF F) = 1 := map_one (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v)
   rw [this]; exact one_mem _⟩
 
-theorem vec_bound (X : Spc F E n) (hX : X.L.IsLattice E) (x : Fin n → E) :
+theorem vec_bound (X : Spc F E n) (hX : X.L.IsFullLattice E) (x : Fin n → E) :
     ∃ C : Set (Fin n → AE F E), IsCompact C ∧ ∀ M : Matrix (Fin n) (Fin n) (AE F E),
       (∀ y ∈ latHat X, M *ᵥ y ∈ latHat X) → M *ᵥ (eF F • incV F x) ∈ C := by
   have hx : x ∈ Submodule.span E (X.L : Set (Fin n → E)) := by
-    rw [Submodule.IsLattice.span_eq_top (A := E)]; trivial
+    rw [hX.span_eq_top]
+    exact Submodule.mem_top
   induction hx using Submodule.span_induction with
   | mem y hy => exact ⟨_, isCompact_latHat X hX.fg, fun M hM => hM _ (mem_latHat X eF_mem hy)⟩
   | zero =>
@@ -182,7 +185,7 @@ theorem vec_bound (X : Spc F E n) (hX : X.L.IsLattice E) (x : Fin n → E) :
     rw [this]
     exact (Matrix.mulVec_smul _ _ _).symm
 
-theorem fin_bound (X : Spc F E n) (hX : X.L.IsLattice E) (i j : Fin n) :
+theorem fin_bound (X : Spc F E n) (hX : X.L.IsFullLattice E) (i j : Fin n) :
     ∃ C : Set (AE F E), IsCompact C ∧ ∀ M : Matrix (Fin n) (Fin n) (AE F E),
       (∀ y ∈ latHat X, M *ᵥ y ∈ latHat X) → eF F • M i j ∈ C := by
   obtain ⟨C, hC, h⟩ := vec_bound X hX (Pi.single j 1)

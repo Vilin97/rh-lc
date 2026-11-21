@@ -39,7 +39,8 @@ private theorem small_norm_on_maximal_ideal_power {l : ℕ} [Fact l.Prime] {A : 
 
 set_option linter.overlappingInstances false in
 private theorem continuous_padic_embedding_rep {l : ℕ} [Fact l.Prime] {A : Type} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-    (y : A →+* PadicAlgCl l) (hle : ∀ x, ‖y x‖ ≤ 1) {D : Type} [Group D] [TopologicalSpace D] (r : D →* GG 3 A)
+    (y : A →+* PadicAlgCl l) (hle : ∀ x, ‖y x‖ ≤ 1) {D : Type} [Group D] [TopologicalSpace D]
+    (r : D →* GG (m := 3) (R := A))
     (h : UnitaryThreeInertia.AdicCont (maximalIdeal A) r) : Continuous fun g => (r g).mat.map y := by
   refine continuous_matrix fun a b => continuous_iff_continuousAt.2 fun g => Metric.tendsto_nhds.2 fun ε hε => ?_
   obtain ⟨n, hn⟩ := small_norm_on_maximal_ideal_power y hle hε
@@ -53,7 +54,8 @@ private theorem continuous_units_of_continuous_coe {Γ R : Type} [Group Γ] [Top
   simp only [← map_inv]
   exact h.comp continuous_inv
 
-private theorem orthogonal_pairing_from_intertwiner {R : Type} [CommRing R] {x y j : GG 3 R} (hj : j.mat = 1) (hj' : j.right = -1)
+private theorem orthogonal_pairing_from_intertwiner {R : Type} [CommRing R]
+    {x y j : GG (m := 3) (R := R)} (hj : j.mat = 1) (hj' : j.right = -1)
     (hy : y.right = 1) (h : y * j = j * x) : x.mat.transpose * Jmat R 3 * y.mat = Jmat R 3 := by
   have h1 : j.left = 1 := Units.ext hj
   have h2 := congrArg SemidirectProduct.left h

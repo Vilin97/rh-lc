@@ -21,7 +21,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-theorem isCoord_coord (S T : HSp D) (hr : S.rank ≤ T.rank) : IsCoord S T S T (coord S T) where
+theorem isCoord_coord (S T : HSp D) (hr : S.rank ≤ T.rank) : IsCoord S T S T (coord S T) := {
   cont := continuous_coord S T
   cont' := continuous_coord_symm S T
   sympl := symplOH_eq S T hr
@@ -40,7 +40,7 @@ theorem isCoord_coord (S T : HSp D) (hr : S.rank ≤ T.rank) : IsCoord S T S T (
     simpa only [AddEquiv.symm_apply_apply] using coord_symm_map_zero S T _ _ h⟩
   part a x h i j := by
     show a * ∑ k, x j k * incA D (S.gram⁻¹ k i) = ∑ k, x j k * incA D (S.gram⁻¹ k i)
-    simp only [Finset.mul_sum, ← mul_assoc, h]
+    simp only [Finset.mul_sum, ← mul_assoc, h] }
 
 theorem weilOnEqEx_of_weilRepresentation : GlobalTheory.Published.WeilRepresentationUnitaryPair → ∀ D : D7, WeilOnEqEx D := by
   intro hP D ψ hψ V W χ χ' ⟨hr, h1, h2, h3, h4⟩

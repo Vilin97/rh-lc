@@ -278,6 +278,8 @@ theorem free_sub : ∃ (ι : (Fin (D.R.k + 1) → 𝓞 D.host.E) →ₗ[𝓞 D.h
       (LinearIndependent.map' w.linearIndependent (Wb X).subtype (Submodule.ker_subtype _))
     have h2 := h1.units_smul (fun i => Units.mk0 ((n i : ℕ) : D.host.E) (by exact_mod_cast (hn i).ne'))
     convert h2 using 1
+    funext i
+    change n i • ((w i : Wb X) : (VS D).V) = ((n i : ℕ) : D.host.E) • ((w i : Wb X) : (VS D).V)
     rw [Nat.cast_smul_eq_nsmul]
   have hinj : Function.Injective ι := by
     rw [← LinearMap.ker_eq_bot, Submodule.eq_bot_iff]

@@ -249,7 +249,8 @@ theorem skew_conj (F Δ : Matrix (Fin r) (Fin r) ℂ) (hΔ : ∀ i j, star (Δ j
     star ((Fᴴ * Δ * F) a b) = -(Fᴴ * Δ * F) b a := by
   have hD : Δᴴ = -Δ := by
     ext i j
-    rw [conjTranspose_apply, hΔ, neg_apply]
+    rw [conjTranspose_apply, hΔ]
+    rfl
   have hM : (Fᴴ * Δ * F)ᴴ = -(Fᴴ * Δ * F) := by
     rw [conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose, hD]
     simp only [Matrix.mul_assoc, Matrix.neg_mul, Matrix.mul_neg]

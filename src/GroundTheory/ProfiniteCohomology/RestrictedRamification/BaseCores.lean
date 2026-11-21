@@ -79,14 +79,14 @@ def coindTraceShortComplex : ShortComplex (Rep.{u} k G) :=
     ext f
     exact f.2)
 
-theorem coindTraceShortComplex_shortExact : (coindTraceShortComplex U A).ShortExact where
-  exact := by
-    rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
+theorem coindTraceShortComplex_shortExact : (coindTraceShortComplex U A).ShortExact := by
+  apply ShortComplex.ShortExact.mk'
+  · rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
       ShortComplex.moduleCat_exact_iff]
     intro f hf
     exact ⟨⟨f, hf⟩, rfl⟩
-  mono_f := (Rep.mono_iff_injective _).2 fun _ _ h => Subtype.ext h
-  epi_g := (Rep.epi_iff_surjective _).2 (surjective_coindTrace U A)
+  · exact (Rep.mono_iff_injective _).2 fun _ _ h => Subtype.ext h
+  · exact (Rep.epi_iff_surjective _).2 (surjective_coindTrace U A)
 
 end Sequence
 
@@ -133,6 +133,8 @@ end Cores
 section GS
 
 open IsDedekindDomain NumberField GroundTheory.Global
+
+local notation "ℚ̄" => AlgebraicClosure ℚ
 
 theorem surjective_gs_compactCores_three (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1)))
     (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))

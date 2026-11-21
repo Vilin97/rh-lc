@@ -82,7 +82,7 @@ theorem sApi : SApi := by
   · rw [Pi.smul_apply, Pi.smul_apply, ← smul_sub, map_smul, h u, smul_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Finset.sum_apply, Finset.sum_apply, ← Finset.sum_sub_distrib, map_sum]
-    exact Finset.sum_eq_zero (fun i hi => h i hi u)
+      exact Finset.sum_eq_zero (fun i hi => h i hi u)
   · rw [← sub_smul]
     apply ev_smul
     rw [idl, Ideal.span_singleton_pow, Ideal.mem_span_singleton]

@@ -165,7 +165,7 @@ theorem lift_of_killing_polynomial [NeZero n] (hR : Formalism.MainNotions.Liftin
   have e1 : Polynomial.aeval d R u₀ = pp ^ N • Polynomial.aeval d R m₀ - Polynomial.aeval d R μ := by
     rw [hu₀def, (Polynomial.aeval d R).map_sub, (Polynomial.aeval d R).map_smul]
   have e2 : Polynomial.aeval d R1 y = pp ^ N • Polynomial.aeval d R1 dz + Polynomial.aeval d R1 (d μ) := by
-    rw [hy_eq, (Polynomial.aeval d R1).map_add (f := _), (Polynomial.aeval d R1).map_smul]
+    rw [hy_eq, (Polynomial.aeval d R1).map_add, (Polynomial.aeval d R1).map_smul]
   have hu_eq : u = Polynomial.aeval d R u₀ + Polynomial.aeval d R1 y := by
     rw [hudef, hms, e1, e2, key, smul_add]
     abel

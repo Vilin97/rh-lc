@@ -27,12 +27,12 @@ def crd (e f : Fin r → V) (z : V) (g h : Fin r → V) (t : V) : V →ₗ[K] V 
 theorem crd_apply (e f : Fin r → V) (z : V) (g h : Fin r → V) (t v : V) :
     crd H e f z g h t v = ∑ a, H.B v (f a) • g a + ∑ a, H.B v (e a) • h a +
       ((H.B z z)⁻¹ * H.B v z) • t := by
-  simp [crd, LinearMap.sum_apply, smul_eq_mul]
+  simp [crd, bl, LinearMap.sum_apply, smul_eq_mul]
 
 def nil (e f : Fin r → V) : V →ₗ[K] V := LinearMap.id - ∑ b, (bl H (f b)).smulRight (e b)
 
 theorem nil_apply (e f : Fin r → V) (w : V) : nil H e f w = w - ∑ b, H.B w (f b) • e b := by
-  simp [nil, LinearMap.sum_apply]
+  simp [nil, bl, LinearMap.sum_apply]
 
 def rmap (e f : Fin r → V) (z : V) (e' f' : Fin r → V) (z' : V) : V →ₗ[K] V :=
   crd H e' f' z' e f z + nil H e f ∘ₗ (LinearMap.id - crd H e' f' z' e' f' z')
@@ -246,7 +246,12 @@ theorem tri_le (e : Fin r → V) (T : V →ₗ[K] V) (a : Fin r)
   have : T (e b) = (T (e b) - e b) + e b := by abel
   rw [this]
   refine Submodule.add_mem _ ?_ (Submodule.subset_span ⟨b, hb, rfl⟩)
-  exact Submodule.span_mono (Set.image_mono (f := e) (fun c (hc : c < b) => lt_trans hc hb)) (h b hb)
+  have hsub : {c : Fin r | c < b} ⊆ {c : Fin r | c < a} := by
+    intro c hc
+    change c < b at hc
+    change b < a at hb
+    exact lt_trans hc hb
+  exact Submodule.span_mono (Set.image_mono hsub) (h b hb)
 
 theorem tri_map (e e' : Fin r → V) (T : V →ₗ[K] V) (hT : ∀ a, T (e' a) = e a)
     (h : ∀ a, e' a - e a ∈ Submodule.span K (e '' {b | b < a})) :

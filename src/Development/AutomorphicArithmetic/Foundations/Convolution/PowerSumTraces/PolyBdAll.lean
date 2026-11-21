@@ -44,7 +44,38 @@ theorem UpperTheory.ConvolutionTheory.C.polyBdAll :
     UpperTheory.ConvolutionTheory.C.PolyBdAll := by
   intro K _ _ n μ _ a
   obtain ⟨ω, hω, hωB, t, ht, hsieg⟩ := exists_siegelSet (K := K) n
-  obtain ⟨C₀, N₀, hC₀⟩ := exists_norm_rconv_le_siegel_basic μ a hω ht
+  have hbasic : ∃ (C : ℝ) (N : ℕ), ∀ φ : Lp ℂ 2 (quotientMeasure (Gam K n) μ), ∀ b ∈ ω, ∀ (ρ : Fin n → ℝ)
+      (hρ : ∀ i, 0 < ρ i), (∀ i j : Fin n, (j : ℕ) = i + 1 → t * ρ j ≤ ρ i) →
+      ∀ kk ∈ (maxCompact : Subgroup (AdelicGLn.AdelicGL K n)), ∀ x : normOneGL (K := K) (n := n),
+      (x : AdelicGLn.AdelicGL K n) = b * diagUnits n (fun i => posIdele (K := K) (ρ i) (hρ i)) * kk →
+      ∀ R : ℝ, 1 ≤ R → (∀ i j : Fin n, i < j → ρ i / ρ j ≤ R) →
+      ‖rconv (Gam K n) μ a φ x‖ ≤ C * √(R ^ N) * ‖φ‖ := by
+    obtain ⟨Cc, N, hCc⟩ := exists_encard_le_siegel hω ht a.hasCompactSupport
+    have hf2 : ∫⁻ y, ‖a y‖ₑ ^ 2 ∂μ ≠ ⊤ := by
+      have := (a.continuous.memLp_of_hasCompactSupport (μ := μ) (p := 2) a.hasCompactSupport)
+      rw [← L2Kernel.eLpNorm_two_sq]
+      exact (ENNReal.pow_lt_top this).ne
+    set A := (∫⁻ y, ‖a y‖ₑ ^ 2 ∂μ).toReal
+    have hA : 0 ≤ A := ENNReal.toReal_nonneg
+    refine ⟨√(A * max Cc 0), N, ?_⟩
+    intro φ b hb ρ hρ hsieg kk hkk x hx R hR1 hR
+    obtain ⟨m, hmC, hm⟩ := hCc b hb ρ hρ hsieg kk hkk x hx R hR1 hR
+    have hS : MeasurableSet ((fun y => x * y) '' tsupport (a : normOneGL (K := K) (n := n) → ℂ)) :=
+      (a.hasCompactSupport.image (continuous_const_mul x)).measurableSet
+    set_option synthInstance.maxHeartbeats 200000 in
+    have h1 := enorm_rconv_sq_le (Gam K n) μ a φ x hS (fun y hy => image_eq_zero_of_notMem_tsupport
+      fun h' => hy ⟨x⁻¹ * y, h', by simp⟩) hm
+    rw [← mul_assoc] at h1
+    have h2 := norm_le_of_enorm_sq_le (ENNReal.mul_ne_top hf2 (by simp)) h1
+    refine h2.trans ?_
+    gcongr
+    rw [ENNReal.toReal_mul, ENNReal.toReal_natCast, ← Real.sqrt_mul (mul_nonneg hA
+      (le_max_right _ _))]
+    refine Real.sqrt_le_sqrt ?_
+    rw [mul_assoc]
+    refine mul_le_mul_of_nonneg_left (hmC.trans ?_) hA
+    exact mul_le_mul_of_nonneg_right (le_max_left _ _) (pow_nonneg (by linarith) _)
+  obtain ⟨C₀, N₀, hC₀⟩ := hbasic
   obtain ⟨C₁, N₁, hC₁⟩ := UpperTheory.V.Fb.siegelHeight K n ω hω hωB t ht
   obtain ⟨M, hM⟩ := exists_height_le_of_isCompact hω
   obtain ⟨c, hcdef⟩ : ∃ c, c = heightConst K n := ⟨_, rfl⟩

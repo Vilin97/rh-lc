@@ -224,6 +224,6 @@ theorem irreducibleGerm_contains_centredDiscCover :
     (fun x hx hne hb => hMs x ⟨hx.1, (hrU hx.2).1.1⟩
       (hδ0 (A x) (ball_subset_ball (min_le_left _ _) hb) hne))
     (hOpen σ Y w 1 A hAn hIso hDom (ball w r) (ball_mem_nhds w hr))
-  exact ⟨_, _, _, N, fun x hx => hx.1, hN⟩
+  exact ⟨Y ∩ (ball w r ∩ A ⁻¹' ball (A w) (min ρ₀ ρ₁)), _, _, N, fun x hx => hx.1, hN⟩
 
 end GlobalTheory.CompanionTheory.ComplexSets

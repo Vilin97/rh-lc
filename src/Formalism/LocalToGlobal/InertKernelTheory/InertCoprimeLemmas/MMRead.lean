@@ -85,10 +85,10 @@ private theorem exists_integral_subst_inverse_of_unit_linear (h : PowerSeries �
     rw [hh', mul_pow, PowerSeries.coeff_X_pow_mul']
   have hlow : ∀ m k, k < m → PowerSeries.coeff k (h ^ m) = 0 := by
     intro m k hk
-    rw [hpow, if_neg (by omega)]
+    rw [hpow, ite_eq_right (by omega)]
   have hdiag : ∀ m, PowerSeries.coeff m (h ^ m) = u ^ m := by
     intro m
-    rw [hpow, if_pos le_rfl, Nat.sub_self, PowerSeries.coeff_zero_eq_constantCoeff_apply, map_pow, hcc]
+    rw [hpow, ite_eq_left le_rfl, Nat.sub_self, PowerSeries.coeff_zero_eq_constantCoeff_apply, map_pow, hcc]
   let b : ℕ → ℂ_[p] := Nat.strongRec fun n rec =>
     (u ^ n)⁻¹ * PowerSeries.coeff n
       (PowerSeries.X - ∑ m : Fin n, PowerSeries.C (rec m m.isLt) * h ^ (m : ℕ))
@@ -96,7 +96,7 @@ private theorem exists_integral_subst_inverse_of_unit_linear (h : PowerSeries �
       (PowerSeries.X - ∑ m ∈ Finset.range n, PowerSeries.C (b m) * h ^ m) := by
     intro n
     rw [← Fin.sum_univ_eq_sum_range (fun m => PowerSeries.C (b m) * h ^ m) n]
-    exact Nat.strongRecOn'_beta _ n
+    exact Nat.strongRec_eq _ n
   have hcoeffP : ∀ N k, PowerSeries.coeff k (∑ m ∈ Finset.range N, PowerSeries.C (b m) * h ^ m) =
       ∑ m ∈ Finset.range N, b m * PowerSeries.coeff k (h ^ m) := by
     intro N k

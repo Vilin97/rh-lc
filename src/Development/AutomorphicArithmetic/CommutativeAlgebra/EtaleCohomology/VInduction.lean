@@ -199,8 +199,11 @@ private theorem IsVal.van {n : ℕ} {C : M.V n →+ (Module.Dual K (HdR M.q n) �
     rw [smul_comm, h, smul_zero])
   have h2 := congrArg (fun y => p.κ a n y ψ) h1
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [p.lin a hM, map_zero, AddMonoidHom.zero_apply, map_sum, AddMonoidHom.finset_sum_apply,
-    hC.spec _ _ _ (hxs _)] at h2
+    simp only [p.lin a hM, map_zero, AddMonoidHom.zero_apply, map_sum] at h2
+  have heval : (∑ k, p.κ a n (c k • xs k)) ψ = ∑ k, p.κ a n (c k • xs k) ψ := by
+    exact map_sum ({ toFun := fun f => f ψ, map_zero' := rfl, map_add' := fun _ _ => rfl } : (Module.Dual K (HdR M.q n) →+ R.B) →+ R.B) _ _
+  rw [heval] at h2
+  simp only [p.lin a hM, hC.spec _ _ _ (hxs _)] at h2
   have h3 := (mul_eq_zero.mp ((mul_eq_zero.mp h2).resolve_left (tB_pow_ne hF m))).resolve_left (tB_pow_ne hF u)
   have h4 : R.i (R.t ^ N) * ∑ k, R.i (c k) * C (M.toV n (v k)) ψ = 0 := by
     rw [Finset.mul_sum, ← h3]

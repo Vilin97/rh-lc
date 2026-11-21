@@ -31,7 +31,7 @@ theorem UpperTheory.V.PropA.detBound :
     ext p q
     simp [Matrix.sub_apply, Matrix.one_apply, RingHom.mapMatrix_apply]
   rw [← hφ, hdet, norm_prod]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro i _
     positivity
   · intro i _

@@ -91,10 +91,10 @@ variable (O K : Type) [CommRing O] [IsDomain O] [Field K] [Algebra O K] [IsFract
 noncomputable def incl (r : ℕ) : (Fin r → O) →ₗ[O] (Fin r → K) :=
   LinearMap.compLeft (Algebra.linearMap O K) (Fin r)
 
-abbrev stdLat (r : ℕ) : Submodule O (Fin r → K) :=
+noncomputable abbrev stdLat (r : ℕ) : Submodule O (Fin r → K) :=
   Submodule.span O (Set.range (Pi.basisFun K (Fin r)))
 
-abbrev lat (X : Matrix (Fin r) (Fin r) K) : Submodule O (Fin r → K) :=
+noncomputable abbrev lat (X : Matrix (Fin r) (Fin r) K) : Submodule O (Fin r → K) :=
   (stdLat O K r).map ((X.mulVecLin).restrictScalars O)
 
 variable {O K}

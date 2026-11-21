@@ -162,7 +162,8 @@ theorem proof (hFin : CompactHolomorphicFibreFinite.Statement) (hInf : RankDefic
   have hRE := hR.subset_left_of_subset_union isOpen_interior isClosed_closure.isOpen_compl hdisj hRsub hne
   intro y hyD
   by_cases hyC : y ∈ C
-  · exact Set.image_mono (fun v hv => hv.1) hyC
+  · obtain ⟨v, ⟨hv, _⟩, rfl⟩ := hyC
+    exact ⟨v, hv, rfl⟩
   · exact interior_subset (hRE ⟨hyD, hyC⟩)
 
 end ProperHolomorphicSurjective

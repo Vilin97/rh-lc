@@ -111,9 +111,9 @@ theorem continuous_withVal {R S : Type} [Field R] [Field S] {v : Valuation R (Wi
   intro s hs'
   rw [map_zero] at hs'
   obtain ⟨γ, hγ⟩ := Valued.mem_nhds_zero.mp hs'
-  obtain ⟨x0, hx0⟩ := hs (embedding (γ : ValueGroup₀ (.ofClass (Valued.v : Valuation (WithVal v') _))))
-  have hpos : 0 < embedding (γ : ValueGroup₀ (.ofClass (Valued.v : Valuation (WithVal v') _))) := by
-    rw [← map_zero (embedding (f := .ofClass (Valued.v : Valuation (WithVal v') _)))]
+  obtain ⟨x0, hx0⟩ := hs (embedding γ.val)
+  have hpos : 0 < embedding γ.val := by
+    rw [← map_zero (embedding (f := ((Valued.v : Valuation (WithVal v') _) : WithVal v' →*₀ _)))]
     exact embedding_strictMono (Units.zero_lt γ)
   have hx0' : 0 < Valued.v.restrict (WithVal.toVal v x0) := by
     rw [Valuation.restrict_pos_iff, WithVal.valued_toVal, hx0]

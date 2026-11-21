@@ -27,7 +27,7 @@ theorem exists_pairing {Z : Type} [TopologicalSpace Z] [MeasurableSpace Z] [Open
         simp only [BoundedContinuousFunction.coe_add, Pi.add_apply, add_mul]
         exact integral_add (hint F) (hint F')
       map_smul' := fun c F => by
-        simp only [BoundedContinuousFunction.coe_smul, smul_eq_mul, RingHom.id_apply, mul_assoc]
+        simp only [BoundedContinuousFunction.coe_smul, Pi.smul_apply, smul_eq_mul, RingHom.id_apply, mul_assoc]
         exact integral_const_mul c _ } ((ν Set.univ).toReal * ‖G‖) fun F => ?_, fun F => rfl⟩
   have hb : ∀ w, ‖F w * (starRingEnd ℂ) (G w)‖ ≤ ‖F‖ * ‖G‖ := fun w => by
     rw [norm_mul, Complex.norm_conj]

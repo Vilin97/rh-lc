@@ -148,7 +148,7 @@ theorem exists_separable_presentation {R A : Type} [CommRing R] [IsDomain R] [Is
       | algebraMap r =>
         rw [← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply R (FractionRing R) (FractionRing A)]
         exact F.algebraMap_mem _
-      | add a b _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+      | add a b _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
       | mul a b _ _ h1 h2 => rw [map_mul]; exact mul_mem h1 h2
     refine eq_top_iff.2 fun w _ => ?_
     obtain ⟨a, b, -, rfl⟩ := IsFractionRing.div_surjective A w
@@ -212,6 +212,7 @@ theorem hypersurfacePresentation_of (hKS : ∀ s : MvPolynomial σ ℂ, C s ∈ 
       ∀ i, aeval y D * X i - Polynomial.eval₂ (aeval y).toRingHom θ (q i) ∈ K := by
   classical
   have := Fintype.ofFinite ι
+  let 𝔸 := (MvPolynomial ι (MvPolynomial σ ℂ)) ⧸ K
   have hmkC : ∀ s, Ideal.Quotient.mk K (C s) = algebraMap (MvPolynomial σ ℂ) 𝔸 s := fun s => rfl
   have hSinj : Function.Injective (algebraMap (MvPolynomial σ ℂ) 𝔸) := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -226,7 +227,7 @@ theorem hypersurfacePresentation_of (hKS : ∀ s : MvPolynomial σ ℂ, C s ∈ 
     obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective a
     induction p using MvPolynomial.induction_on with
     | C s => rw [hmkC]; exact Subalgebra.algebraMap_mem _ s
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p i hp => rw [map_mul]; exact mul_mem hp (Algebra.subset_adjoin ⟨i, rfl⟩)
   obtain ⟨d, yA, hbd⟩ := exists_transcendenceBasis_fin x hadj
 
@@ -251,7 +252,7 @@ theorem hypersurfacePresentation_of (hKS : ∀ s : MvPolynomial σ ℂ, C s ∈ 
     obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective a
     induction p using MvPolynomial.induction_on with
     | C s => rw [hmkCR]; exact Subalgebra.algebraMap_mem _ _
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul]
       exact mul_mem hp (Algebra.subset_adjoin ⟨eι i, by simp [x]⟩)

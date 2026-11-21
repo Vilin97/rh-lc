@@ -272,13 +272,13 @@ private theorem roots {k : Type} [Field k] (a b : kˣ) (h : ∀ n : ℕ, ((a * b
   have e2 : (a : k) * b ^ 2 + a + 1 = 0 := mul_left_cancel₀ (mul_ne_zero a.ne_zero hb) (by linear_combination h' 2 - h' 0)
   exact mul_ne_zero (mul_ne_zero a.ne_zero b.ne_zero) hb1 (by linear_combination e2 - e1)
 
-private theorem conj_mat {G R : Type} [Group G] [CommRing R] (h : GL (Fin 3) R) (r : G →* GG 3 R) {g : G}
+private theorem conj_mat {G R : Type} [Group G] [CommRing R] (h : GL (Fin 3) R) (r : G →* GG (m := 3) (R := R)) {g : G}
     (hg : (r g).right = 1) : (conjBy h r g).mat = (h : Matrix _ _ R) * (r g).mat * ((h⁻¹ : GL (Fin 3) R) : Matrix _ _ R) := by
   simp [conjBy, GG.mat, hg]
 
 private theorem frame {O K G Γ ι : Type} [CommRing O] [IsLocalRing O] [Field K] [Algebra O K] [FaithfulSMul O K] [Group G]
     [Group Γ] [TopologicalSpace Γ] (F : Frame O G Γ ι) (hπ : Function.Surjective F.π) (g₁ : Γ)
-    (r : Γ →* GG 3 K) (hr : F.IsCharZeroPt g₁ r) (hI : TypeI F.η r) (U : Subgroup G) [U.Normal]
+    (r : Γ →* GG (m := 3) (R := K)) (hr : F.IsCharZeroPt g₁ r) (hI : TypeI F.η r) (U : Subgroup G) [U.Normal]
     (hU : U ≤ (F.η.comp F.π).ker) (x : F.D F.vl) (hx : F.ηv _ x = 1) (hx' : IsUnit ((F.Ψv _ x : O) ^ 2 - 1))
     (u : F.D F.vl) (hu : u ∈ F.Iv _) (huU : u.1 ∈ U) (hu' : F.Ψv _ u ^ 2 ≠ 1) : MatIrr U fun s => (r (F.π s)).mat := by
   by_contra hc
@@ -345,7 +345,7 @@ private theorem frame {O K G Γ ι : Type} [CommRing O] [IsLocalRing O] [Field K
 theorem UpperTheory.V.UnitaryThreeInertia.matIrr_open :
     ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] (c : Coef l) {N : ℕ} [NeZero N] (e : ℕ) (ψ : DirichletCharacter c.O N) (o₁ : ℕ), HostData l e ψ o₁ →
     ∀ (S : Finset Pl) (A : S → ValuationSubring Ω) (F : Frame c.O (Formalism.ConjugateSelfDual.G ℚ Ω) (Gam Ω S) S), IsHostFrame Ω c e ψ S A F →
-    ∀ (g₁ : Gam Ω S), F.Marked g₁ → ∀ r : Gam Ω S →* GG 3 (PadicAlgCl l), F.IsCharZeroPt g₁ r → TypeI F.η r → ∀ U : Subgroup (G ℚ Ω), IsOpen (U : Set (G ℚ Ω)) → U ≤ (eta4 Ω).ker → MatIrr U fun s => (r (toGS Ω _ s)).mat := by
+    ∀ (g₁ : Gam Ω S), F.Marked g₁ → ∀ r : Gam Ω S →* GG (m := 3) (R := PadicAlgCl l), F.IsCharZeroPt g₁ r → TypeI F.η r → ∀ U : Subgroup (G ℚ Ω), IsOpen (U : Set (G ℚ Ω)) → U ≤ (eta4 Ω).ker → MatIrr U fun s => (r (toGS Ω _ s)).mat := by
   intro Ω _ _ _ l hl c N _ e ψ o₁ hD S A F hF g₁ _ r hr hI U hU hUη
   have : IsGalois ℚ Ω := IsAlgClosure.isGalois ℚ Ω
   have : CompactSpace (G ℚ Ω) := inferInstanceAs (CompactSpace (Ω ≃ₐ[ℚ] Ω))

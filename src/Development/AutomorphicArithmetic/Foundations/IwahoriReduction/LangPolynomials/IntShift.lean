@@ -132,7 +132,7 @@ private theorem tvalExp (l : ℕ) [Fact l.Prime] (H : PowerSeries (Qbar l)) (hH 
   let S : Polynomial (OO l) := ∑ n ∈ Finset.range N, Polynomial.C (⟨H.coeff n, hH n⟩ : OO l) * (Polynomial.X - 1) ^ n
   refine ⟨S.natDegree + 1, fun i => (OO l).subtype (S.coeff i), fun i => (S.coeff i).2, fun z => ?_⟩
   rw [← Polynomial.eval₂_eq_sum_range]
-  simp [S, tval, Polynomial.eval₂_finset_sum, Polynomial.eval₂_pow]
+  simp [S, tval, Polynomial.eval₂_finsetSum, Polynomial.eval₂_pow]
 
 private theorem sumJ (l : ℕ) [Fact l.Prime] (φ : DirichletCharacter (Qbar l) l) (k r : ℕ) (ξ : Qbar l)
     (hξ : IsPrimitiveRoot ξ (l ^ r)) (M g : ℕ) (a : ℕ → Qbar l) :

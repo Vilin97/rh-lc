@@ -128,14 +128,14 @@ theorem dom_sum (hB : ThetaBasic) (hp : IsPair B M χX χW om r s r' s') {𝓕} 
         fun g => ∑ i, theta om (pureA F (f i) (φ i)) g h := funext fun g => hsum g h
     show IntegrableOn (fun g => theta om (∑ i, pureA F (f i) (φ i)) g h) M.dom M.μ
     rw [e]
-    exact integrable_finset_sum _ fun i _ => hconv i h
+    exact integrable_finsetSum _ fun i _ => hconv i h
   · obtain ⟨C, k, hCk⟩ := exists_common (fun h : UA σ W.J => (ht h : ℝ)) (fun h => one_le_ht' h) id
       (fun i h => ∫ g in M.dom, ‖theta om (pureA F (f i) (φ i)) g h‖ ∂M.μ) (fun i => ((hfac i).1 (f i)).2)
     refine ⟨C, k, fun h => le_trans ?_ (hCk h)⟩
     calc ∫ g in M.dom, ‖theta om (∑ i, pureA F (f i) (φ i)) g h‖ ∂M.μ
         ≤ ∫ g in M.dom, ∑ i, ‖theta om (pureA F (f i) (φ i)) g h‖ ∂M.μ := by
           refine integral_mono_of_nonneg (Filter.Eventually.of_forall fun g => norm_nonneg _)
-            (integrable_finset_sum _ fun i _ => (hconv i h).norm) (Filter.Eventually.of_forall fun g => ?_)
+            (integrable_finsetSum _ fun i _ => (hconv i h).norm) (Filter.Eventually.of_forall fun g => ?_)
           show ‖theta om (∑ i, pureA F (f i) (φ i)) g h‖ ≤ ∑ i, ‖theta om (pureA F (f i) (φ i)) g h‖
           rw [hsum]
           exact norm_sum_le _ _

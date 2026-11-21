@@ -19,6 +19,8 @@ universe u
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section RootsMap
 
 variable {M N : Type*} [Field M] [Field N] (n : ℕ) [NeZero n]
@@ -116,7 +118,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
 set_option maxHeartbeats 1600000 in
 include hnS in
 theorem bijective_gsRootsOmegaMor (v : S) : Function.Bijective (gsRootsOmegaMor S ιs n v).hom := by
-  obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot ℚ̄ n
+  obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot ℚ̄ n
   have hzS : z ∈ maxUnramifiedOutside K.1 ℚ̄ S :=
     mem_maxUnramifiedOutside_of_pow_eq_one S (NeZero.ne n) hnS hz.pow_eq_one
   have hzS' : IsPrimitiveRoot (⟨z, hzS⟩ : maxUnramifiedOutside K.1 ℚ̄ S) n :=

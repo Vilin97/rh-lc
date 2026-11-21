@@ -551,9 +551,18 @@ theorem UpperTheory.V.Alg.framed_tangent :
     obtain ⟨a1, a2, a3, a4, a5⟩ := hF
     have hm : ∀ A A' : Matrix ι ι R, (A * A').map f = A.map f * A'.map f := fun A A' =>
       Matrix.map_mul (f := (f : R →+* DualNumber (ResidueField O)))
-    refine ⟨fun s => ?_, fun q => ?_, fun v => (hh_group O ι X w Φ R).2.2.2.1 _ f _ (a3 v), by simp [a4],
+    have map_HH (A : Matrix ι ι R) (hA : Φ.HH A) : Φ.HH (A.map f) := by
+      obtain ⟨hform, hblock, hres⟩ := hA
+      have hJ : Φ.JR (DualNumber (ResidueField O)) = (Φ.JR R).map f :=
+        Matrix.ext fun a b => (f.commutes (Φ.J a b)).symm
+      refine ⟨?_, fun a b hab => by simp [hblock a b hab], ?_⟩
+      · rw [hJ, ← Matrix.transpose_map, ← hm, ← hm, hform]
+      · rw [← hres]
+        ext a b
+        exact res_map f _
+    refine ⟨fun s => ?_, fun q => ?_, fun v => map_HH _ (a3 v), by simp [a4],
       fun v s => ?_⟩
-    · have := (hh_group O ι X w Φ R).2.2.2.1 _ f _ (a1 s)
+    · have := map_HH _ (a1 s)
       rwa [hm, show ((r0.hom s⁻¹).map (algebraMap O R)).map f = (r0.hom s⁻¹).map (algebraMap O _) from
         Matrix.ext fun a b => f.commutes _] at this
     · obtain ⟨I, hI⟩ := (hL q).closed R (r.comap (F.ψ q) (F.hψ q)) fun s => by

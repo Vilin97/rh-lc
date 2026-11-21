@@ -138,13 +138,11 @@ theorem zpow_eq_rpow {b : ℝ} (hb : 0 < b) {n m : ℤ} (h : b ^ n = (p : ℝ)�
 
 variable (L : IntermediateField ℚ_[p] (PadicAlgCl p))
 
-theorem unitBall : GlobalTheory.BK.IsUnitBall 𝒪[L] L where
-  inj := Subtype.val_injective
-  mem_range_iff := by
-    intro x
-    change x ∈ Set.range ((↑) : 𝒪[L] → L) ↔ ‖x‖ ≤ 1
-    rw [Subtype.range_coe_subtype]
-    exact Valued.integer.mem_iff
+theorem unitBall : GlobalTheory.BK.IsUnitBall 𝒪[L] L := by
+  refine ⟨Subtype.val_injective, fun x => ?_⟩
+  change x ∈ Set.range ((↑) : 𝒪[L] → L) ↔ ‖x‖ ≤ 1
+  rw [Subtype.range_coe_subtype]
+  exact Valued.integer.mem_iff
 
 attribute [local instance] unitBall
 

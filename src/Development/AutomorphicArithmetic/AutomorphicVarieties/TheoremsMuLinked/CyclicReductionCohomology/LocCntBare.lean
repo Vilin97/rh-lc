@@ -48,7 +48,7 @@ private theorem cardInv {n : ℕ} [NeZero n] {D M M' : Type} [Group D] [AddCommG
   refine (Nat.card_congr ((Equiv.ofBijective f hb).subtypeEquiv fun y => ?_)).symm
   constructor
   · intro h g
-    refine TDual.ext fun x => (key g y x).trans ?_
+    refine LinearMap.ext fun x => (key g y x).trans ?_
     rw [h]; rfl
   · intro h g
     refine hf (LinearMap.ext fun x => (key g y x).symm.trans ?_)

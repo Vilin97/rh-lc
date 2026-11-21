@@ -89,13 +89,8 @@ theorem induct (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) �
         show A.h z * B.h z = A'.h z * B.h z
         rw [hA, hA', hh (Fin.last n) z hz])
     have k2 := key B B b hBa hBa hB hB (fun _ _ => rfl)
-    calc I P (n + 1) L = I P (n + 1) (Fin.snoc (Fin.init L) A) := by rw [hA, Fin.snoc_init_self]
-      _ = I P (n + 1) (Fin.snoc (Fin.init L) (A.tensor B)) - I P (n + 1) (Fin.snoc (Fin.init L) B) := by
-          rw [e1]; ring
-      _ = I P (n + 1) (Fin.snoc (Fin.init L') (A'.tensor B)) - I P (n + 1) (Fin.snoc (Fin.init L') B) := by
-          rw [k1, k2]
-      _ = I P (n + 1) (Fin.snoc (Fin.init L') A') := by rw [e1']; ring
-      _ = I P (n + 1) L' := by rw [hA', Fin.snoc_init_self]
+    rw [e1, e1', k2] at k1
+    simpa only [hA, hA', Fin.snoc_init_self] using add_right_cancel k1
 
 end MetricLocalB
 

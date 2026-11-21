@@ -27,7 +27,7 @@ theorem jac (A B : Type) [CommRing A] [CommRing B] [IsLocalRing A] [Algebra A B]
   rw [Ideal.jacobson, le_sInf_iff]
   rintro n ⟨-, hn⟩
   rw [Ideal.map_le_iff_le_comap]
-  have : (n.comap (algebraMap A B)).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal n
+  have : (n.comap (algebraMap A B)).IsMaximal := Ideal.isMaximal_under_of_isIntegral_of_isMaximal n
   exact le_of_eq (IsLocalRing.eq_maximalIdeal this).symm
 
 theorem evalS (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (S : Subalgebra A B) (p : S[X]) (y : S) :
@@ -37,7 +37,7 @@ theorem evalS (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (S : Subalgeb
 theorem hens (A B : Type) [CommRing A] [CommRing B] [HenselianLocalRing A] [Algebra A B]
     [Algebra.IsIntegral A B] : HenselianRing B ((maximalIdeal A).map (algebraMap A B)) := by
   classical
-  refine ⟨jac A B, fun f hf a0 h0 h1 => ?_⟩
+  refine ⟨by simpa only [Ideal.jacobson_bot] using jac A B, fun f hf a0 h0 h1 => ?_⟩
   set J := (maximalIdeal A).map (algebraMap A B) with hJ
   obtain ⟨n1, c1, g1, hs1⟩ := Submodule.mem_span_set'.1 h0
   obtain ⟨v, hv⟩ := h1.exists_left_inv

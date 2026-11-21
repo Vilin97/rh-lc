@@ -26,24 +26,27 @@ theorem ptEntry_inj : ∀ (bs cs : List (E × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 �
     simp only [List.map_cons, List.sum_cons, List.map_nil, List.sum_nil] at e
     omega
   | (t, s) :: bs, (t', s') :: cs, h, h', e, k => by
-    obtain ⟨ht, hs⟩ : t ≠ 0 ∧ 1 ≤ s := h (t, s) (by simp)
+    have ht : t ≠ 0 := (h (t, s) (by simp)).1
+    have hs : 1 ≤ s := (h (t, s) (by simp)).2
     have hs' : 1 ≤ s' := (h' (t', s') (by simp)).2
     simp only [List.map_cons, List.sum_cons] at e k
     have k0 := k 0 (by omega) (s - 1) (by omega)
-    rw [ptEntry, ite_eq_left (by omega), ite_eq_left (by omega), ptEntry] at k0
+    simp only [ptEntry] at k0
+    rw [ite_eq_left (by omega), ite_eq_left (by omega)] at k0
     have hss : s = s' ∧ t = t' := by
       split_ifs at k0
       · exact ⟨by omega, k0⟩
       · exact absurd k0 ht
       · omega
       · exact absurd k0 ht
-    obtain ⟨rfl, rfl⟩ := hss
-    congr 1
+    rcases hss with ⟨rfl, rfl⟩
+    apply congrArg (List.cons (t, s))
     refine ptEntry_inj bs cs (fun b hb => h b (by simp [hb])) (fun b hb => h' b (by simp [hb])) (by omega)
       fun a ha b hb => ?_
-    have := k (a + s) (by omega) (b + s) (by omega)
-    rwa [ptEntry, ptEntry, ite_eq_right (by omega), ite_eq_left (by omega),
-      ite_eq_right (by omega), ite_eq_left (by omega), Nat.add_sub_cancel, Nat.add_sub_cancel] at this
+    have shifted := k (a + s) (by omega) (b + s) (by omega)
+    have outside : ¬ (a + s < s ∧ b + s < s) := by omega
+    have inside : s ≤ a + s ∧ s ≤ b + s := by omega
+    simpa only [ptEntry, ite_eq_right outside, ite_eq_left inside, Nat.add_sub_cancel] using shifted
 
 theorem ptMat_injective {m : ℕ} : Function.Injective (ptMat : Point E m → Matrix (Fin m) (Fin m) E) := by
   intro w w' h

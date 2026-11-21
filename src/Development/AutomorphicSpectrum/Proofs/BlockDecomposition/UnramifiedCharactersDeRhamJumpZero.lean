@@ -48,7 +48,6 @@ theorem fil_of_unramified (P : LocPrime l) (AI : LocAinf l P) (Ti : LocTied l P 
         norm_sub_lt_one_of_fix AI g (fun m hm y hy => hg m hm y hy) x hx)
       rw [← map_one M]
       ext i j
-      apply PadicInt.ext
       rw [hM, hM, h, map_one, Module.End.one_apply])
   have hB : ∀ g, (Matrix.of fun i j => algebraMap ℚ_[l] P.R.B (e.repr (T.ρ g (e j)) i)) *
       (AI.ιA.mapMatrix W).map ((P.PD K).actB g) = AI.ιA.mapMatrix W := fun g => by
@@ -94,7 +93,7 @@ theorem fil_of_unramified (P : LocPrime l) (AI : LocAinf l P) (Ti : LocTied l P 
       have := (P.PD K).Fil_mul 0 1 _ _ (hf (W⁻¹ i j)) (hF j)
       rwa [zero_add] at this
     apply (GlobalTheory.SplitJump.coord e P.R.BdR).injective
-    rw [hc, map_zero]
+    rw [hc, (GlobalTheory.SplitJump.coord e P.R.BdR).map_zero]
     funext i
     simp [hk0, Matrix.mulVec, dotProduct]
 
@@ -166,25 +165,17 @@ theorem multV_of_fil (P : LocPrime l) (AI : LocAinf l P) (Ti : LocTied l P AI) (
     (h1 : ∀ y ∈ DdR (P.PD K) ρ, y ∈ FilV (P.PD K) (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) 1 → y = 0)
     (τ : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1) (a : ℤ) :
     multV (P.PD K) ρ τ a = if a = 0 then 1 else 0 := by
+  have hanti : Antitone (fun b : ℤ => FilV (P.PD K) (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) b) :=
+    antitone_int_of_succ_le fun n => GlobalTheory.JumpDescent.FilV_anti (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) P K n
   have hdown : ∀ b : ℤ, b ≤ 0 → FilV (P.PD K) (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) 0 ≤
-      FilV (P.PD K) (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) b := by
-    intro b hb
-    induction b, hb using Int.le_induction_down with
-    | base => exact le_rfl
-    | pred n _ ih =>
-      have := GlobalTheory.JumpDescent.FilV_anti (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) P K (n - 1)
-      rw [sub_add_cancel] at this
-      exact ih.trans this
+      FilV (P.PD K) (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) b := fun _ hb => hanti hb
   have hup : ∀ b : ℤ, 1 ≤ b → FilV (P.PD K) (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) b ≤
-      FilV (P.PD K) (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) 1 := by
-    intro b hb
-    induction b, hb using Int.le_induction with
-    | base => exact le_rfl
-    | succ n _ ih => exact (GlobalTheory.JumpDescent.FilV_anti (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) P K n).trans ih
+      FilV (P.PD K) (LL := ↥LL.1) (V := Fin 1 → ↥LL.1) 1 := fun _ hb => hanti hb
   have hneg : ∀ b : ℤ, b ≤ 0 → FildR (P.PD K) ρ τ b = DdRE (P.PD K) ρ τ := fun b hb =>
     inf_eq_left.2 fun y hy => hdown b hb (h0 y hy.1)
   have hpos : ∀ b : ℤ, 1 ≤ b → FildR (P.PD K) ρ τ b = ⊥ := fun b hb =>
     (Submodule.eq_bot_iff _).2 fun y hy => h1 y hy.1.1 (hup b hb hy.2)
+  set_option synthInstance.maxHeartbeats 200000 in
   have hfin : finrank ↥LL.1 ↥(DdRE (P.PD K) ρ τ) = 1 := by
     have := ((GlobalTheory.Per.Components.components_finrank l P AI Ti K LL (Fin 1 → ↥LL.1) ρ).1 τ).2.2 hDR
     simpa using this

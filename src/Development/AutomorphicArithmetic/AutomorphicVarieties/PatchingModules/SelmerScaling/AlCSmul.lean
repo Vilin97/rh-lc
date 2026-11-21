@@ -54,7 +54,8 @@ theorem UpperTheory.V.Pa.pres :
     refine ⟨c, hc, ?_⟩
     show Lifts S.h S.k _
     convert hL using 1
-    exact hlin _ _ _
+    funext j
+    simpa using hlin (Fin (S.k.g + 1)) c (fun i => (z i j : S.Bh →+ S.F))
   have hB : ∀ (e : ℕ) (α : Fin e → S.Tp), LinearIndependent S.F α →
       (∀ i j, Pi.single j (α i) ∈ U) → e + S.k.g * S.k.g ≤ D0 := by
     intro e α hα hs

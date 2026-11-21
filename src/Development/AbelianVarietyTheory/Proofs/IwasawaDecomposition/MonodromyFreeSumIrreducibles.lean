@@ -9,7 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilDel
 
 noncomputable section
 
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.WeilDeligne GlobalTheory.WeilDeligne.PrimDecomp
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.WeilDeligne
   GlobalTheory.LocLanglands Module
 
 namespace GlobalTheory.WeilDeligne.IrrDecomp

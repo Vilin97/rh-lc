@@ -123,6 +123,8 @@ theorem coordF_act (K : FinExt l) (r : ↥(GK K) →* Matrix.GeneralLinearGroup 
   | add a b ha hb =>
     rw [map_add (f := _), map_add (f := _), ha, hb, ← Matrix.mulVec_add]
     congr 1
+    funext j
+    simp only [Pi.add_apply, map_add]
   | tmul v b =>
     have hfix : ∀ c : ↥LL.1, P.actQdR (g : GQ l) (embF P LL c) = embF P LL c := fun c => by
       rw [embF_apply, P.actQdR_Om, hg _ c.2]

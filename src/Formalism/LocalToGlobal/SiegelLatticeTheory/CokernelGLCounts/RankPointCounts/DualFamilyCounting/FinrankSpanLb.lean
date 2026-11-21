@@ -68,7 +68,22 @@ theorem span_Lb_le : Submodule.span D.host.E (X.Lb : Set (VS D).V) ≤ Wb X := b
 theorem span_Lb : Submodule.span D.host.E (X.Lb : Set (VS D).V) = Wb X := by
   refine le_antisymm (span_Lb_le X) fun y hy => ?_
   have hy' := (mem_Wb X).1 hy
-  have htop : Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) = ⊤ := (VS D).standardTuple_isLattice.span_eq_top
+  have htop : Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) = ⊤ := by
+    apply eq_top_iff.mpr
+    intro y _
+    let x : Fin X.B.I.n → X.B.I.E := fun i => X.ιE.symm (X.bas.repr y i)
+    have hx : x ∈ Submodule.span X.B.I.E (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E)) := by
+      rw [X.B.I.L_span]; trivial
+    have hm : ∀ x ∈ Submodule.span X.B.I.E (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E)),
+        (∑ i, X.ιE (x i) • X.bas i) ∈ Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) := by
+      intro x hx
+      induction hx using Submodule.span_induction with
+      | mem x hx => exact Submodule.subset_span ((X.L_eq x).1 hx)
+      | zero => simp
+      | add x y hx hy ihx ihy => simpa [map_add, add_smul, Finset.sum_add_distrib] using Submodule.add_mem _ ihx ihy
+      | smul a x hx ih => simpa [map_mul, mul_smul, Finset.smul_sum] using Submodule.smul_mem _ (X.ιE a) ih
+    have := hm x hx
+    simpa only [x, RingEquiv.apply_symm_apply, X.bas.sum_repr] using this
   have hyL : y ∈ Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) := by rw [htop]; trivial
   have hle : Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) ≤
       Submodule.span D.host.E (Set.range X.eX) ⊔ Submodule.span D.host.E (X.Lb : Set (VS D).V) ⊔

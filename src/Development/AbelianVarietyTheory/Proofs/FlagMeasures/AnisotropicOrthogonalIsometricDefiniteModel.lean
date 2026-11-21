@@ -113,10 +113,10 @@ theorem GlobalTheory.RowsOrb.ub_equiv_model : ∀ (D : D7) (X : HidaSetting D) (
     refine ⟨?_, ?_⟩
     · rw [map_sub, hWe w b, zero_sub, neg_eq_zero]
       exact p_symm_zero (VS D) (hT_span_left X (fun a => X.ee a b) hc)
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sub, corr_apply, map_sum]
-      simp only [map_smul, hT_f_e, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
-        if_true, sub_self]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, corr_apply, map_sum]
+        simp only [map_smul, hT_f_e, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
+          if_true, sub_self]
   have hmUb : ∀ w : W, (⟨(w : (VS D).V) - corr X W w, hmWb w⟩ : GlobalTheory.RowsOrb.Wb X) ∈ GlobalTheory.RowsOrb.Ub X u := by
     intro w
     rw [GlobalTheory.RowsOrb.mem_Ub]

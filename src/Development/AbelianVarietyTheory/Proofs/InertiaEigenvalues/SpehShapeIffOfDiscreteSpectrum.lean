@@ -24,7 +24,7 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsS
 
 noncomputable section
 
-open NumberField IsDedekindDomain GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.DefiniteBC GlobalTheory.BcSpeh GlobalTheory.IndefiniteRowSideFullHecke.SpehProductSatake GlobalTheory.LFun
+open NumberField IsDedekindDomain GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.DefiniteBC GlobalTheory.BcSpeh GlobalTheory.LFun
   GlobalTheory.PRep Formalism.UG
 
 namespace GlobalTheory.BcSpehCompare
@@ -35,7 +35,7 @@ section Linear
 
 variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {w : HeightOneSpectrum (𝓞 E)}
 
-
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isCompact_KGL : IsCompact (KGL w (n := a) : Set (GL (Fin a) (w.adicCompletion E))) :=
   IntPtsUnitary.isCompact_GLint _
     (isCompact_iff_compactSpace.2 (GlobalTheory.AdelicUnitaryTop.compactSpace_adicCompletionIntegers E w))

@@ -152,7 +152,7 @@ variable {k j ρ : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpac
 
 theorem continuous_gN' : Continuous (fun g : B.Mat k (j + ρ) => B.gN g) := by
   unfold B.gN
-  exact (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     Complex.continuous_normSq.comp ((continuous_apply j).comp (continuous_apply i))).sqrt
 
 theorem chartCoefficient_hasCompactSupport (Bs : B.RealPlaceData k (j + ρ) Wp Wq) (b b' : RC k j ρ → ℝ) (hb : ContDiff ℝ ∞ b)
@@ -181,7 +181,7 @@ theorem chartCoefficient_hasCompactSupport (Bs : B.RealPlaceData k (j + ρ) Wp W
     unfold chartCoefficient at hne
     rw [if_pos hD] at hne
     have hμ' : Matrix.of (chart (Matrix.of.symm g)).2.2 ∈ B.GV k ρ := by
-      simpa [chart] using hμ
+      simpa only [chart, Equiv.apply_symm_apply] using hμ
     obtain ⟨hc, hΦne⟩ := smul_ne_zero_iff.1 hne
     have hc' : b (chart (Matrix.of.symm g)).1.1 * b' (chart (Matrix.of.symm g)).1.2 ≠ 0 := by exact_mod_cast hc
     obtain ⟨hb1, hb2⟩ := mul_ne_zero_iff.1 hc'
@@ -225,7 +225,7 @@ theorem chartCoefficient_hasCompactSupport (Bs : B.RealPlaceData k (j + ρ) Wp W
       · intro g hgU hgG
         have hD : DjU k j ρ g ≠ 0 := (djU_ne_iff g).2 hgU.1
         obtain ⟨-, hμ, -⟩ := chart_spec g hgG hD
-        have hμ' : Matrix.of (chart (Matrix.of.symm g)).2.2 ∈ B.GV k ρ := by simpa [chart] using hμ
+        have hμ' : Matrix.of (chart (Matrix.of.symm g)).2.2 ∈ B.GV k ρ := by simpa only [chart, Equiv.apply_symm_apply] using hμ
         unfold chartCoefficient
         rw [if_pos hD, hΦF _ hgU.2 hμ']
     · refine ⟨Cᶜ, fun _ => 0, hCc.isClosed.isOpen_compl, hC, contDiffOn_const, fun g hgU hgG => ?_⟩

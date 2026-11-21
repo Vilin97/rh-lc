@@ -108,7 +108,8 @@ theorem GK_normal {M : ℕ} (hM : 0 < M) : (GK (Kc l M hM)).Normal := by
 theorem val_index_le {N : ℕ} (hN : 0 < N) (d : ℕ) :
     padicValNat l (Module.finrank ℚ_[l] ↥(Kc l (Nat.lcm l N) (lcm_pos hN)).1 / d) ≤ Nat.log l N + 1 := by
   have hp : l.Prime := Fact.out
-  refine (padicValNat_le_nat_log _).trans ?_
+  rw [Nat.padicValNat_def]
+  refine (multiplicity_le_nat_log _).trans ?_
   rw [← Nat.log_mul_base hp.one_lt hN.ne']
   refine Nat.log_mono_right ((Nat.div_le_self _ _).trans ((finrank_le _).trans ?_))
   rw [mul_comm]

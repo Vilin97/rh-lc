@@ -61,10 +61,11 @@ def classInvMor : Rep.res (quotGalEquiv K E).toMonoidHom (ideleClassRep K.1 E.1)
     induction q using QuotientGroup.induction_on with
     | H g =>
       ext c
-      change Additive.ofMul (IdeleClassLimit.of E
-          (restrictHom (E := E) g • Additive.toMul (α := IdeleClassGroup E.1) c)) =
-        Additive.ofMul ((g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • IdeleClassLimit.of E (Additive.toMul (α := IdeleClassGroup E.1) c))
-      rw [IdeleClassLimit.smul_of_of_normal]⟩
+      let σ := restrictHom (F := K) (E := E) g
+      let x : IdeleClassGroup E.1 := Additive.toMul c
+      have h := (IdeleClassLimit.smul_of g.val E x).trans
+        (of_ideleClassEquiv_congr (mapEquiv g.val E) σ.toRingEquiv (fun _ => rfl) x)
+      exact congrArg Additive.ofMul h.symm⟩
 
 theorem classInvMor_bijective : Function.Bijective (classInvMor K E).hom := by
   constructor

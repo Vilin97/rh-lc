@@ -181,31 +181,35 @@ def rowOf (hCR : GlobalTheory.Published.CuspRapidDecay) (hl : R.toLevCh.Is A.μ0
   ioT j h := restr (ioXT R t j h) (cxp_le P hT t) (top_mem P hCR hl hm hc t j h)
 
 theorem rowOf_is (hCR : GlobalTheory.Published.CuspRapidDecay) (hl : R.toLevCh.Is A.μ0) (hm : R.IsModels) (hc : R.IsChain)
-    (hT : Formalism.IndefR.RecTie.TopMultH R) (u : D.what₂.Word) (g : Fam.Geo D) (t : T) : (rowOf P hCR hl hm hc hT u g t).Is where
-  vP j h := by
-    have e : (rowOf P hCR hl hm hc hT u g t).vP j = (vec_lev P hl t j (by omega) (hl.βY (j + 1) h) (hc.vY t j h)).choose := dif_pos h
-    rw [e]
-    exact (vec_lev P hl t j (by omega) (hl.βY (j + 1) h) (hc.vY t j h)).choose_spec
-  vT j h := (vec_lev P hl t (j + 1) (by omega) hl.βX (top_vec hc t j h)).choose_spec
-  sBF j ρ h := by
-    have ho : Odd (j + 1) := (even_idx h).add_one
-    refine ⟨rfl, rfl, ?_, ?_⟩
-    · show (Lift.chrStep (R.toLevCh.mu t) R.eta (j + 1)).1 = _
-      rw [Lift.chrStep, if_pos ho]
-    · show (Lift.chrStep (R.toLevCh.mu t) R.eta (j + 1)).2 = _
-      rw [Lift.chrStep, if_pos ho]
-  sFB j σ h := by
-    have ho : ¬ Odd (j + 1 + 1) := Nat.not_odd_iff_even.2 (even_idx h).add_one.add_one
-    refine ⟨rfl, rfl, ?_, ?_⟩
-    · show (Lift.chrStep (R.toLevCh.mu t) R.eta (j + 1 + 1)).1 = _
-      rw [Lift.chrStep, if_neg ho]
-    · show (Lift.chrStep (R.toLevCh.mu t) R.eta (j + 1 + 1)).2 = _
-      rw [Lift.chrStep, if_neg ho]
-  io j h F := by
-    have e : (rowOf P hCR hl hm hc hT u g t).io j = restr (R.ioY t j) (cp_le P t (j + 1)) (ioY_mem P hCR hl hm hc t j h) := dif_pos h
-    rw [e]
-    exact ⟨cp_le P t (j + 1) F.2, restr_coe _ _ _ F⟩
-  ioT j h F := ⟨cxp_le P hT t F.2, restr_coe (ioXT R t j h) (cxp_le P hT t) (top_mem P hCR hl hm hc t j h) F⟩
+    (hT : Formalism.IndefR.RecTie.TopMultH R) (u : D.what₂.Word) (g : Fam.Geo D) (t : T) : (rowOf P hCR hl hm hc hT u g t).Is := by
+  exact {
+    vP j h := by
+      have e : (rowOf P hCR hl hm hc hT u g t).vP j = (vec_lev P hl t j (by omega) (hl.βY (j + 1) h) (hc.vY t j h)).choose :=
+        dite_eq_left h
+      rw [e]
+      exact (vec_lev P hl t j (by omega) (hl.βY (j + 1) h) (hc.vY t j h)).choose_spec
+    vT j h := (vec_lev P hl t (j + 1) (by omega) hl.βX (top_vec hc t j h)).choose_spec
+    sBF j ρ h := by
+      have ho : Odd (j + 1) := (even_idx h).add_one
+      refine ⟨rfl, rfl, ?_, ?_⟩
+      · show (Lift.chrStep (R.toLevCh.mu t) R.eta (j + 1)).1 = _
+        rw [Lift.chrStep, ite_eq_left ho]
+      · show (Lift.chrStep (R.toLevCh.mu t) R.eta (j + 1)).2 = _
+        rw [Lift.chrStep, ite_eq_left ho]
+    sFB j σ h := by
+      have ho : ¬ Odd (j + 1 + 1) := Nat.not_odd_iff_even.2 (even_idx h).add_one.add_one
+      refine ⟨rfl, rfl, ?_, ?_⟩
+      · show (Lift.chrStep (R.toLevCh.mu t) R.eta (j + 1 + 1)).1 = _
+        rw [Lift.chrStep, ite_eq_right ho]
+      · show (Lift.chrStep (R.toLevCh.mu t) R.eta (j + 1 + 1)).2 = _
+        rw [Lift.chrStep, ite_eq_right ho]
+    io j h F := by
+      have e : (rowOf P hCR hl hm hc hT u g t).io j = restr (R.ioY t j) (cp_le P t (j + 1)) (ioY_mem P hCR hl hm hc t j h) :=
+        dite_eq_left h
+      rw [e]
+      exact ⟨cp_le P t (j + 1) F.2, restr_coe _ _ _ F⟩
+    ioT j h F := ⟨cxp_le P hT t F.2, restr_coe (ioXT R t j h) (cxp_le P hT t) (top_mem P hCR hl hm hc t j h) F⟩
+  }
 
 theorem rowOf_same (hCR : GlobalTheory.Published.CuspRapidDecay) (hl : R.toLevCh.Is A.μ0) (hm : R.IsModels) (hc : R.IsChain)
     (hT : Formalism.IndefR.RecTie.TopMultH R) (u : D.what₂.Word) (g : Fam.Geo D) (t t' : T) :
@@ -221,17 +225,6 @@ variable {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Tau (D.hcW u)} {At 
 variable {K}
 
 end Read
-
-section Real
-
-open GlobalTheory.MiS
-
-variable {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Yd cX} (W : RealPack ex) (u : D.what₂.Word)
-
-variable {W}
-
-end Real
 
 end GlobalTheory.Fam.FamInhab
 

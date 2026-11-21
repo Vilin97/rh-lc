@@ -70,8 +70,9 @@ theorem vV_sub_one {p : ℕ} (hp : p.Prime) {ζ : V} (hζ : IsPrimitiveRoot ζ p
 
 variable (V K) in
 def realVal : Valuation K NNReal :=
-  (valV V).map (WithZeroMulInt.toNNReal (e := 2) two_ne_zero)
-    (WithZeroMulInt.toNNReal_strictMono (by norm_num)).monotone
+  (valV V).map
+    { toMonoidWithZeroHom := WithZeroMulInt.toNNReal (e := 2) two_ne_zero
+      monotone' := (WithZeroMulInt.toNNReal_strictMono (by norm_num)).monotone }
 
 theorem realVal_le_one_iff {x : K} : realVal V K x ≤ 1 ↔ valV V x ≤ 1 := by
   have := (WithZeroMulInt.toNNReal_strictMono (e := 2) (by norm_num)).le_iff_le (a := valV V x) (b := 1)

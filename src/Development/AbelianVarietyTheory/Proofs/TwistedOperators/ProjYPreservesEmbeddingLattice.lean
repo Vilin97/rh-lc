@@ -72,7 +72,9 @@ theorem projY_mem_lat : ∀ {D : D7} {A B B₀ : HSp D} {c ρ : ℕ} (a : Hermit
     · exact Submodule.zero_mem _
   · rw [mulVec_zero, zero_add, ← mulVec_mulVec, mulVec_add, mulVec_mulVec, mulVec_mulVec, hQF, zero_mulVec, zero_add,
       mulVec_mulVec, hQA, hE', Matrix.mul_assoc, ← mulVec_mulVec]
-    congr 1
+    apply congrArg (fun x => a.a *ᵥ x)
+    ext q
+    simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, hPe', Matrix.of_apply, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun p _ => ?_
     by_cases hq : q = (f p).rev

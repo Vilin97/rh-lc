@@ -158,7 +158,7 @@ theorem ArcLengthThreeDescent.Kc_le (l b₁ y η : ℕ) [hl : Fact l.Prime] (hy 
     have h4 : 2 * a ≤ a * l := by nlinarith
     omega
   have hv : padicValNat l (a.choose (y - 1)) ≤ Nat.log l a := by
-    rw [← Nat.factorization_def _ hl.out]
+    rw [Nat.padicValNat_def, ← Nat.factorization_def _ hl.out]
     exact Nat.factorization_choose_le_log
   have hlog1 : (Nat.log l a : ℝ) ≤ Real.logb l a := by
     have h1 : ((l ^ Nat.log l a : ℕ) : ℝ) ≤ (a : ℝ) := by

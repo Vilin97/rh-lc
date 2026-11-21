@@ -167,9 +167,10 @@ theorem Rel.add : ∀ (n : ℕ) (X : DblData R) {x₁ x₂ : X.A n} {y₁ y₂ :
     Rel n X x₁ y₁ → Rel n X x₂ y₂ → Rel n X (x₁ + x₂) (y₁ + y₂)
   | 0, X, _, _, _, _, h₁, h₂ => rel_zero.mpr (by rw [map_add (f := _), map_add (f := _), rel_zero.mp h₁, rel_zero.mp h₂])
   | n + 1, X, _, _, _, _, h₁, h₂ => by
-      obtain ⟨z₁, e₁, r₁⟩ := (rel_succ (n := n) (X := X)).mp h₁
-      obtain ⟨z₂, e₂, r₂⟩ := (rel_succ (n := n) (X := X)).mp h₂
-      refine rel_succ.mpr ⟨z₁ + z₂, by rw [map_add (f := _), map_add (f := _), e₁, e₂], ?_⟩
+      rw [rel_succ] at h₁ h₂ ⊢
+      obtain ⟨z₁, e₁, r₁⟩ := h₁
+      obtain ⟨z₂, e₂, r₂⟩ := h₂
+      refine ⟨z₁ + z₂, by rw [map_add (f := _), map_add (f := _), e₁, e₂], ?_⟩
       rw [map_add (f := _)]
       exact Rel.add n X.shift r₁ r₂
 
@@ -177,8 +178,9 @@ theorem Rel.smul : ∀ (n : ℕ) (X : DblData R) (r : R) {x : X.A n} {y : X.C n}
     Rel n X x y → Rel n X (r • x) (r • y)
   | 0, X, r, _, _, h₁ => rel_zero.mpr (by rw [map_smul, map_smul, rel_zero.mp h₁])
   | n + 1, X, r, _, _, h₁ => by
-      obtain ⟨z, e, r₁⟩ := (rel_succ (n := n) (X := X)).mp h₁
-      refine rel_succ.mpr ⟨r • z, by rw [map_smul, map_smul, e], ?_⟩
+      rw [rel_succ] at h₁ ⊢
+      obtain ⟨z, e, r₁⟩ := h₁
+      refine ⟨r • z, by rw [map_smul, map_smul, e], ?_⟩
       rw [map_smul]
       exact Rel.smul n X.shift r r₁
 
@@ -405,7 +407,8 @@ theorem bdryA (X : DblData R) (hX : X.Good) : ∀ (n : ℕ) (x : X.A n), x ∈ b
       subst hx0
       exact Rel.zero 0 X
   | n + 1, x, hx => by
-      obtain ⟨x₀, rfl⟩ := (LinearMap.mem_range (f := X.dA n)).mp hx
+      change x ∈ LinearMap.range (X.dA n) at hx
+      obtain ⟨x₀, rfl⟩ := LinearMap.mem_range.mp hx
       exact bdA n X hX x₀
 
 theorem bdryC (X : DblData R) (hX : X.Good) : ∀ (n : ℕ) (y : X.C n), y ∈ bdry X.dC n → Rel n X 0 y
@@ -414,7 +417,8 @@ theorem bdryC (X : DblData R) (hX : X.Good) : ∀ (n : ℕ) (y : X.C n), y ∈ b
       subst hy0
       exact Rel.zero 0 X
   | n + 1, y, hy => by
-      obtain ⟨y₀, rfl⟩ := (LinearMap.mem_range (f := X.dC n)).mp hy
+      change y ∈ LinearMap.range (X.dC n) at hy
+      obtain ⟨y₀, rfl⟩ := LinearMap.mem_range.mp hy
       exact bdC n X hX y₀
 
 theorem equiv (X : DblData R) (hX : X.Good) (n : ℕ) : Nonempty (H X.dA n ≃ₗ[R] H X.dC n) :=

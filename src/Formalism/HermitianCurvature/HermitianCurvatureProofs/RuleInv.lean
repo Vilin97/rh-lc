@@ -34,12 +34,10 @@ theorem prod_mul_prod_eq_one : ∀ (n : ℕ) (f g : Fin n → A), (∀ i, f i * 
           exact hc _ _)
       have ih := prod_mul_prod_eq_one n (fun i => f i.succ) (fun i => g i.succ)
         (fun i => h1 _) (fun i j => hc _ _)
-      calc f 0 * (List.ofFn fun i => f i.succ).prod * (g 0 * (List.ofFn fun i => g i.succ).prod)
-          = f 0 * ((List.ofFn fun i => f i.succ).prod * g 0) * (List.ofFn fun i => g i.succ).prod := by
-            noncomm_ring
-        _ = f 0 * g 0 * ((List.ofFn fun i => f i.succ).prod * (List.ofFn fun i => g i.succ).prod) := by
-            rw [hP.eq]; noncomm_ring
-        _ = 1 := by rw [h1, ih, one_mul]
+      calc
+        _ = f 0 * g 0 * ((List.ofFn fun i => f i.succ).prod * (List.ofFn fun i => g i.succ).prod) :=
+          hP.mul_mul_mul_comm _ _
+        _ = 1 := by rw [h1 0, ih, one_mul]
 
 variable {r : ℕ} (L : LevelData A r)
 

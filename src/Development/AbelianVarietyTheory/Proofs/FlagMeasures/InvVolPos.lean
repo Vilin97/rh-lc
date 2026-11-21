@@ -34,7 +34,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   · intro N g Λ hg hT
     have hnil := (GlobalTheory.UnipStab.common_unipotent_stabiliser K V H hK r N).2.2.2.2
     have href := (GlobalTheory.DegCnt.InnerLat.main K V H hK r N g Λ hg hT).2.2.2.2.1
-    have hΛ : Submodule.IsLattice K Λ := ((isUnimod_iff H Λ).1 hT.1.1).1
+    have hΛ : Submodule.IsLattice K Λ := Submodule.IsLattice.of_fg K ((isUnimod_iff H Λ).1 hT.1.1).1.1
     have h1 := GlobalTheory.DegCnt.Unimod.invVol_smul K V N.R (2 * r + 1) hnil Λ _ hΛ href
     have h2 := GlobalTheory.DegCnt.Unimod.invVol_smul K V N.R (2 * r + 1) hnil _ Λ href hΛ
     refine ⟨invVol_pos' _ _ h2.1 h1.1, fun s hs => ?_⟩

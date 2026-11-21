@@ -14,6 +14,8 @@ open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubf
 
 open scoped DirectSum Pointwise
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 variable {K : FiniteSubfield}

@@ -67,7 +67,7 @@ theorem exists_intFr_frBor (T : CDVR) (io : c.F →+* T.Fr) (O : Type) [CommRing
     rw [ha i, Scheme.Hom.appLE, Scheme.Hom.id_app]
     erw [Category.id_comp, show (homOfLE h).op = 𝟙 _ from Subsingleton.elim _ _, CategoryTheory.Functor.map_id]
     rfl
-  exact ⟨⟨y, GlobalTheory.NonIntegralFrameExample.spread_holds Xo c T.Fr y, _, t', m1, m2, ⟨ub, hub⟩, θ, hθ, hmatch⟩, tt, hFB⟩
+  exact ⟨⟨y, GlobalTheory.Frames.framedPoint_field_fromTest GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H Dw l Xo c T.Fr y, _, t', m1, m2, ⟨ub, hub⟩, θ, hθ, hmatch⟩, tt, hFB⟩
 
 end Frames
 

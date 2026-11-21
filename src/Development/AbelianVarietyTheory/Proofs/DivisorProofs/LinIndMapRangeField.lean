@@ -38,23 +38,17 @@ section Tensor
 variable {O K : Type} [CommRing O] [CommRing K] (φ : O →+* K) (N : ℕ) {ι : Type} (lam : ι → ℕ → ℕ)
 
 def bc : NablaT O N lam →ₛₗ[φ] NablaT K N lam :=
+  let f := (PiTensorProduct.tprod K).compLinearMap (σ₁₃ := φ)
+    (fun τ => dwMap φ N (res N (lam τ)))
   letI : Module O (NablaT K N lam) := Module.compHom _ φ
-  let f : MultilinearMap O (fun τ => dualWeyl O N N (res N (lam τ))) (NablaT K N lam) :=
-    { toFun := fun m => PiTensorProduct.tprod K fun τ => dwMap φ N _ (m τ)
-      map_update_add' := fun m i x y => by
-        have hu : ∀ z, (fun τ => dwMap φ N (res N (lam τ)) (Function.update m i z τ)) =
-            Function.update (fun τ => dwMap φ N (res N (lam τ)) (m τ)) i (dwMap φ N _ z) :=
-          fun z => funext fun τ => Function.apply_update (fun τ => dwMap φ N (res N (lam τ))) m i z τ
-        simp only [hu, map_add (f := _), MultilinearMap.map_update_add]
-      map_update_smul' := fun m i c x => by
-        have hu : ∀ z, (fun τ => dwMap φ N (res N (lam τ)) (Function.update m i z τ)) =
-            Function.update (fun τ => dwMap φ N (res N (lam τ)) (m τ)) i (dwMap φ N _ z) :=
-          fun z => funext fun τ => Function.apply_update (fun τ => dwMap φ N (res N (lam τ))) m i z τ
-        simp only [hu, LinearMap.map_smulₛₗ, MultilinearMap.map_update_smul]
-        rfl }
-  { toFun := PiTensorProduct.lift f
-    map_add' := fun x y => map_add _ x y
-    map_smul' := fun c x => (PiTensorProduct.lift f).map_smul c x }
+  let f' : (∀ τ, dualWeyl O N N (res N (lam τ))) →ₘₗ[O] NablaT K N lam :=
+    { toFun := f
+      map_update_add' := f.map_update_add
+      map_update_smul' := f.map_update_smul }
+  let g : NablaT O N lam →ₗ[O] NablaT K N lam := PiTensorProduct.lift f'
+  { toFun := g
+    map_add' := g.map_add
+    map_smul' := g.map_smul }
 
 theorem bc_tprod (m : ∀ τ, dualWeyl O N N (res N (lam τ))) :
     bc φ N lam (PiTensorProduct.tprod O m) = PiTensorProduct.tprod K fun τ => dwMap φ N _ (m τ) := by

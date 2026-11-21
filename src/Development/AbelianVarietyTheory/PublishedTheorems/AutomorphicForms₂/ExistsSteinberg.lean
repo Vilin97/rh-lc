@@ -42,8 +42,8 @@ theorem lpOfChar_unrChar (ha : IsLocalArtin h a) (c : ℂˣ) (hc) :
     WD.lpOfChar h ((SmGL.unrChar (w.adicCompletion E) c).comp a) hc = WD.mk (WDRep.diag h fun _ : Fin 1 => c⁻¹) := by
   simp only [WD.lpOfChar, WDRep.diag, ha.unrChar_comp]
 
-theorem lpChar_lpSp_one (x : WD h) : x.lpChar (WD.lpSp h 1) = x := by
-  have h1 : WD.lpSp h 1 = WD.lpOfChar h (WeilDeligne.unrChar h (qPow w 0)) (isSmooth_unrChar h _) := by
+theorem lpChar_lpSp_one (x : WD h) : x.lpChar (WD.lpSp (h := h) 1) = x := by
+  have h1 : WD.lpSp (h := h) 1 = WD.lpOfChar h (WeilDeligne.unrChar h (qPow w 0)) (isSmooth_unrChar h _) := by
     refine WD.sound ⟨.refl _ _, fun σ v => ?_, fun v => ?_⟩
     · funext i
       simp [WDRep.spEig]

@@ -74,7 +74,7 @@ theorem count_le (Z : Finset ℂ) (w : ℂ → ℝ) (F : ℝ → ℝ) (U h δ M 
   rw [Finset.mul_sum, ← Finset.sum_congr rfl hint, ← integral_finsetSum _ (fun ρ _ => hgi ρ),
     ← intervalIntegral.integral_const_mul, intervalIntegral.integral_of_le hU',
     ← integral_Icc_eq_integral_Ioc]
-  refine integral_mono (integrable_finset_sum _ (fun ρ _ => hgi ρ)) ?_ fun τ => ?_
+  refine integral_mono (integrable_finsetSum _ (fun ρ _ => hgi ρ)) ?_ fun τ => ?_
   · exact ((intervalIntegrable_iff_integrableOn_Icc_of_le hU').1 hF).const_mul M
   · have he : ∑ ρ ∈ Z, g ρ τ = δ * ∑ z ∈ Z.filter (fun z => |τ - z.im| ≤ h), w z := by
       rw [Finset.mul_sum, Finset.sum_filter]
@@ -181,7 +181,7 @@ theorem mean_le : ∃ C CM : ℝ, 0 < C ∧ 0 ≤ CM ∧ ∀ (q : ℕ) [NeZero q
     exact continuousOn_const.mul (continuousOn_id.inv₀ fun y hy => by
       have := hy.1; simp only [id]; linarith)
   calc _ ≤ ∫ y in Set.Ioc N M, C * (Real.log M + CM) * y⁻¹ := by
-        refine setIntegral_mono_on (integrable_finset_sum _
+        refine setIntegral_mono_on (integrable_finsetSum _
           (fun χ _ => hJ χ)) hc measurableSet_Ioc fun y hy => ?_
         have hy1 : 1 ≤ y := by linarith [hy.1]
         simp only [integral_div]

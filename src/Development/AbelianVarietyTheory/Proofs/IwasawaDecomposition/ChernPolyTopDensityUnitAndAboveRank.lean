@@ -29,9 +29,9 @@ theorem chernTop_unit : ∀ (n : ℕ) (ι : Type) (m : ι → ℕ) (G : Reciproc
   intro n ι m G v τ Q
   refine ⟨?_, fun k hk => ?_⟩
   · simp only [chernTop, map_mul, map_sub, map_one, MvPolynomial.aeval_X, chernPoly_zero', sub_self, zero_mul,
-      topCoeff, MvPolynomial.coeff_zero, mul_zero, Finset.sum_const_zero, Complex.zero_re]
+      topCoeff, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, mul_zero, Finset.sum_const_zero, Complex.zero_re]
   · have h := chernPoly_above (fun u => G u τ) v k (by simpa using hk)
     simp only [chernTop, map_mul, MvPolynomial.aeval_X, h, zero_mul,
-      topCoeff, MvPolynomial.coeff_zero, mul_zero, Finset.sum_const_zero, Complex.zero_re]
+      topCoeff, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, mul_zero, Finset.sum_const_zero, Complex.zero_re]
 
 end GlobalTheory.GoodMetric

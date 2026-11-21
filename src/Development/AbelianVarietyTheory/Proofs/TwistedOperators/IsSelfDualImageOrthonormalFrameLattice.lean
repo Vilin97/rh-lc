@@ -63,21 +63,9 @@ theorem isSelfDualC_inV : ∀ {D : D7} (S : HSp D) (fr : GL (Fin S.rank) D.host.
     intro x y
     have := sum_form_orthoFrame S.gram fr.1 hB ((fr⁻¹).1 *ᵥ x) ((fr⁻¹).1 *ᵥ y)
     rwa [hinv, hinv] at this
-  refine ⟨Ls.map (f.restrictScalars (𝓞 D.host.E)), ?_, ⟨hfg.map _, ?_⟩, fun y => ?_⟩
+  refine ⟨Ls.map (f.restrictScalars (𝓞 D.host.E)), ?_, Submodule.IsLattice.of_fg D.host.E (hfg.map _), fun y => ?_⟩
   · ext x
     simp [inV, f, Matrix.toLin'_apply]
-  · rw [eq_top_iff]
-    intro y _
-    rw [← hinv y]
-    have hz : (fr⁻¹).1 *ᵥ y ∈ Submodule.span D.host.E (Ls : Set (Fin S.rank → D.host.E)) := by
-      rw [hspan]; exact Submodule.mem_top
-    have hle : Submodule.span D.host.E (Ls : Set (Fin S.rank → D.host.E)) ≤
-        (Submodule.span D.host.E ((Ls.map (f.restrictScalars (𝓞 D.host.E)) : Submodule (𝓞 D.host.E) _) :
-          Set (Fin S.rank → D.host.E))).comap f := by
-      rw [Submodule.span_le]
-      intro x hx
-      exact Submodule.subset_span ⟨x, hx, rfl⟩
-    exact hle hz
   · rw [hmem, hdual]
     constructor
     · intro h x hx

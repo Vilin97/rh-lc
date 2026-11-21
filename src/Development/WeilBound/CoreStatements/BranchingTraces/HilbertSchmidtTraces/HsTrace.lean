@@ -28,13 +28,13 @@ theorem stab : ∀ {n r : ℕ} {ε : Fin n → Bool} {ε' : Fin r → Bool} (ι 
   intro n r ε ε' ι z ⟨F, hF, FF, Fz, hz⟩
   set Z : Matrix (Fin n) Unit ℂ := replicateCol Unit z with hZ
   have col : ∀ {k : ℕ} (M : Matrix (Fin k) (Fin n) ℂ), M * Z = replicateCol Unit (M *ᵥ z) := fun M => by
-    ext i j; simp [hZ, mul_apply, mulVec, dotProduct]
+    ext i j; simp [hZ, Matrix.mul_apply, mulVec, dotProduct]
   have FZ : Fᴴ * Z = 0 := by rw [col, Fz]; ext; simp
   have ZF : Zᴴ * F = 0 := by simpa using congrArg conjTranspose FZ
   have ZZ : Zᴴ * Z = 1 := by
     ext i j
     have : ((nsq z : ℝ) : ℂ) = 1 := by rw [hz]; simp
-    simp only [hZ, mul_apply, conjTranspose_apply, replicateCol_apply, Complex.star_def, Complex.conj_mul', Subsingleton.elim i j,
+    simp only [hZ, Matrix.mul_apply, conjTranspose_apply, replicateCol_apply, Complex.star_def, Complex.conj_mul', Subsingleton.elim i j,
       one_apply_eq]
     rw [← this, GlobalTheory.CompanionTheory.UnitaryFramesMetricPeriods.nsq]; push_cast; rfl
   have S : F * Fᴴ + Z * Zᴴ = 1 := by

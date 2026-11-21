@@ -77,17 +77,8 @@ theorem cyclotomic_comp_dvd {LL : Type} [Field LL] (n : ℕ) (hn : 0 < n) (ζ₀
   rw [← hback, hc, Polynomial.mul_comp]
 
 private theorem derivative_exp_eq_exp' (A : Type) [Field A] [CharZero A] :
-    derivative A (PowerSeries.exp A) = PowerSeries.exp A := by
-  ext n
-  have key : (1 / ((n + 1).factorial : ℚ)) * ((n : ℚ) + 1) = 1 / (n.factorial : ℚ) := by
-    have h0 : (n.factorial : ℚ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n
-    rw [Nat.factorial_succ, Nat.cast_mul]
-    push_cast
-    field_simp
-  rw [PowerSeries.coeff_derivative, PowerSeries.coeff_exp, PowerSeries.coeff_exp]
-  have h := congrArg (algebraMap ℚ A) key
-  rw [map_mul] at h
-  simpa using h
+    derivative (PowerSeries.exp A) = PowerSeries.exp A :=
+  PowerSeries.derivative_exp A
 
 private theorem constantCoeff_exp_eq_one (A : Type) [Field A] [CharZero A] :
     constantCoeff (PowerSeries.exp A) = 1 := by

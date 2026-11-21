@@ -39,7 +39,7 @@ theorem right_casimir_mem_submodule {H} (h : H ∈ Isub X) : y2 X H ∈ Isub X :
     refine neg_mem (add_mem ?_ (Submodule.smul_mem _ _ (mem_Isub k v)))
     have := mem_Isub (X := X) (k + 1) v
     rwa [pow_succ, Module.End.mul_apply] at this
-  · intro x y hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · intro x y hx hy; rw [map_add]; exact add_mem hx hy
 
 
 variable (X) in

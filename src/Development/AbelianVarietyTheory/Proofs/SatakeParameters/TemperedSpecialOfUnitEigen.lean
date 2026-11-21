@@ -156,7 +156,7 @@ end VecShift
 
 end GlobalTheory.WeilDeligne
 
-theorem GlobalTheory.WeilDeligne.WD.tempered_lpChar_lpSp_of_mono0 : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (x : WD h), x.mono0 → (∀ φ : Weil h, deg φ = 1 → ∀ α ∈ x.eig φ, ‖α‖ = 1) → ∀ l : ℕ, (x.lpChar (WD.lpSp h l)).tempered := by
+theorem GlobalTheory.WeilDeligne.WD.tempered_lpChar_lpSp_of_mono0 : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (x : WD h), x.mono0 → (∀ φ : Weil h, deg φ = 1 → ∀ α ∈ x.eig φ, ‖α‖ = 1) → ∀ l : ℕ, (x.lpChar (WD.lpSp (h := h) l)).tempered := by
   intro E Ω _ _ _ _ _ A w h x
   induction x using WD.ind with
   | hP n a =>
@@ -170,7 +170,7 @@ theorem GlobalTheory.WeilDeligne.WD.tempered_lpChar_lpSp_of_mono0 : ∀ (E Ω : 
   have hp := isPurePair_scaledDiag_vecShift hq (a.semisimple φ) hroots
     (fun i => (WDRep.spEig w l i : ℂ)) (fun i => by rw [WDRep.spEig, norm_qPow])
   let e := TensorProduct.piScalarRight ℂ ℂ (Fin n → ℂ) (Fin l)
-  have h1 : ∀ t, e ((a.tensor (WDRep.sp h l)).ρ φ t) =
+  have h1 : ∀ t, e ((a.tensor (WDRep.sp (h := h) l)).ρ φ t) =
       scaledDiag (a.ρ φ) (fun i => (WDRep.spEig w l i : ℂ)) (e t) := by
     intro t
     induction t using TensorProduct.induction_on with
@@ -179,7 +179,7 @@ theorem GlobalTheory.WeilDeligne.WD.tempered_lpChar_lpSp_of_mono0 : ∀ (E Ω : 
       ext1 i
       simp [e, TensorProduct.piScalarRightHom_tmul, scaledDiag_apply, hφ, smul_smul]
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
-  have h2 : ∀ t, e ((a.tensor (WDRep.sp h l)).N t) = vecShift l (e t) := by
+  have h2 : ∀ t, e ((a.tensor (WDRep.sp (h := h) l)).N t) = vecShift l (e t) := by
     intro t
     induction t using TensorProduct.induction_on with
     | zero => simp

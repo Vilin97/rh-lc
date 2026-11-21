@@ -36,18 +36,18 @@ public import GroundTheory.AutomorphicForms.AffineBruhat
 
 @[expose] public section
 
-open GlobalTheory.IwFn GlobalTheory.SmGL GlobalTheory.TfJl ValuativeRel Matrix
+open ValuativeRel Matrix
 
 namespace GlobalTheory.IwEq
 
 theorem iwahori_eq_glnLocal_iwahori : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (a : ℕ),
-    iwahori k (Fin a) = GroundTheory.Automorphic.GLnLocal.iwahori k a := by
+    GlobalTheory.SmGL.iwahori k (Fin a) = GroundTheory.Automorphic.GLnLocal.iwahori k a := by
   intro k _ _ _ _ a
   ext g
   constructor
   · rintro ⟨u, hu, rfl⟩
-    rw [SetLike.mem_coe, Subgroup.mem_comap, mem_borel] at hu
+    rw [SetLike.mem_coe, Subgroup.mem_comap, GlobalTheory.SmGL.mem_borel] at hu
     refine ⟨u, ?_, ?_⟩
     · rw [SetLike.mem_coe, Subgroup.mem_comap, GroundTheory.Automorphic.mem_borel_iff]
       intro i j hij
@@ -58,7 +58,7 @@ theorem iwahori_eq_glnLocal_iwahori : ∀ (k : Type) [Field k] [ValuativeRel k] 
   · rintro ⟨u, hu, rfl⟩
     rw [SetLike.mem_coe, Subgroup.mem_comap, GroundTheory.Automorphic.mem_borel_iff] at hu
     refine ⟨u, ?_, ?_⟩
-    · rw [SetLike.mem_coe, Subgroup.mem_comap, mem_borel]
+    · rw [SetLike.mem_coe, Subgroup.mem_comap, GlobalTheory.SmGL.mem_borel]
       intro i j hij
       have h := hu i j hij
       rw [GroundTheory.Automorphic.GLnLocal.residueReduction_apply] at h

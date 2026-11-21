@@ -96,10 +96,10 @@ theorem four_mono (sg : ℤˣ) (t : ℂ) (z : Fin n → ℂ) (hz : ∀ j, 0 < ((
   refine ⟨MvPolynomial.C c * ∏ a, ∏ j, rn a j (q a j), ?_, fun u => ?_⟩
   · refine (MvPolynomial.totalDegree_mul _ _).trans ?_
     rw [MvPolynomial.totalDegree_C, zero_add]
-    refine (MvPolynomial.totalDegree_finset_prod _ _).trans ?_
+    refine (MvPolynomial.totalDegree_finsetProd _ _).trans ?_
     rw [Finsupp.sum_fintype _ _ (fun _ => rfl), Fintype.sum_prod_type]
     refine Finset.sum_le_sum fun a _ => ?_
-    refine (MvPolynomial.totalDegree_finset_prod _ _).trans ?_
+    refine (MvPolynomial.totalDegree_finsetProd _ _).trans ?_
     rw [Fintype.sum_prod_type]
     refine Finset.sum_le_sum fun j _ => ?_
     rw [Fintype.sum_bool]

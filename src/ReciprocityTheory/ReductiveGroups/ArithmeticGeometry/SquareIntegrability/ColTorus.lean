@@ -289,7 +289,11 @@ theorem ct_core (hP : Ext.PackingCount) (hGT : Ext.GaussianTailBound) (hA : Prop
     rw [← hβdef] at h1
     rw [h1]; exact h2
   have hB0 : 0 ≤ Real.sqrt Bsq := Real.sqrt_nonneg _
-  have hcol := Col.colS_mem hI hP hGT hB0 hBβ hβ
+  have hcol : Col.colS X I q β ∈ X.Sec q 1 := by
+    refine ⟨(Col.diff_sP hI hP hGT hB0 hBβ hβ.1).comp (differentiable_apply 0), fun γ hγ v => ?_⟩
+    have h := Col.sP_shift hI hP q hβ ⟨γ 0, hγ 0⟩ (v 0)
+    simp only [Col.colS, Pi.add_apply, Fin.prod_univ_one, HC, Fin.sum_univ_one]
+    exact h
   have hamem : ∀ k : Fin 1, (q : ℂ) • (fun _ : Fin 1 => a) k ∈ X.L := by
     intro k
     show (q : ℂ) • ctA x0 q ∈ X.L

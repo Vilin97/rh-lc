@@ -86,9 +86,9 @@ theorem IsGalRU.of_old (H : IsGalRepOfR π ι r wt HT) : IsGalRU π ι r wt HT w
     exact .of_tempered (by rwa [(H.away w hl A h rc hrc σ hσ).wdOf_eq hl]) ht
   weights := H.weights
   weights_sym := H.weights_sym
-  above P AI T w A h O _ _ _ Bw hj :=
+  above P AI T w A h O _ _ _ Bw hj := by
     have k := H.above P AI T w A h O Bw hj
-    ⟨k.1, k.2.1, fun σ hσ hi _ rc hrc => by rw [(k.2.2.1 σ hσ hi).2 rc hrc]; exact ⟨fun _ => rfl, id⟩, k.2.2.2⟩
+    exact ⟨k.1, k.2.1, fun σ hσ hi _ rc hrc => by rw [(k.2.2.1 σ hσ hi).2 rc hrc]; exact ⟨fun _ => rfl, id⟩, k.2.2.2⟩
 
 end Real
 

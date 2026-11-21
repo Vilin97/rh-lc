@@ -41,6 +41,7 @@ theorem LeafPairRel_of (hO : LeafObjFP) (hF : LeafFactorStage) : LeafPairRel := 
   · rw [Category.assoc, pullback.condition, ← Category.assoc, hg1, Category.assoc, incl_incl]
   · rw [pullback.lift_snd]; exact fp_snd _ _ (fp_snd _ _ hp1)
   · convert pb_lift h hsE' using 2
+    simp only [pullback.lift_snd]
   · apply pullback.hom_ext
     · rw [Category.assoc, pullback.lift_fst, Category.assoc, pullback.lift_fst, ← Category.assoc, hg2,
         Category.assoc, pullback.lift_fst]

@@ -239,8 +239,8 @@ theorem finrank_complIntegers [Algebra ℤ_[l] (w.adicCompletionIntegers E)] :
         rintro ⟨q, hq1, hq2⟩
         apply Subtype.ext
         have : q.IsMaximal := by
-          apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ_[l])
-          rw [← Ideal.under_def, ← hq2.over]
+          apply Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := ℤ_[l])
+          rw [← hq2.over]
           exact hmax
         exact IsLocalRing.eq_maximalIdeal this }
   haveI : Fintype ((Ideal.span {(l : ℤ_[l])}).primesOver (w.adicCompletionIntegers E)) :=

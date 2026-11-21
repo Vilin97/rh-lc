@@ -103,12 +103,12 @@ structure IsMix (p : X ⟶ Sp k) (m : ℕ) (T : ∀ d : ℕ, (Fin d → HermLB p
     (∀ a, ((L a).pull i hi).Isometric (L' a)) → ∀ (r : M'.B.ι → Y.functionFieldˣ) (hr : IsRatSec M'.B r),
       T (e + 1) (Fin.cons M L) (i (genericPoint Y)) = recVal (fun z => T e L (i z)) L' M' hr
 
-theorem isMix_zero (p : X ⟶ Sp k) : IsMix p 0 (fun _ _ x => Real.log (Nat.card (X.residueField x))) where
-  iso := fun _ _ _ _ _ _ _ => rfl
-  symm := fun _ _ _ _ _ _ => rfl
-  add := by intros; omega
-  zero := fun _ _ _ => rfl
-  recur := by intros; omega
+theorem isMix_zero (p : X ⟶ Sp k) : IsMix p 0 (fun _ _ x => Real.log (Nat.card (X.residueField x))) := by
+  refine ⟨fun _ _ _ _ _ _ _ => rfl, fun _ _ _ _ _ _ => rfl, ?_, fun _ _ _ => rfl, ?_⟩
+  · intros
+    omega
+  · intros
+    omega
 
 def ArchInteg : Prop := ∀ (k : Type) [CommRing k] (Y : Scheme.{0}) [IsIntegral Y] (q : Y ⟶ Sp k) (e : ℕ), IsArithVar q e →
   ∀ (M N : HermLB q) (r : M.B.ι → Y.functionFieldˣ) (hr : IsRatSec M.B r), N.ArchIntegrable M e hr

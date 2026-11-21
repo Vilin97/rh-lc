@@ -72,7 +72,7 @@ theorem small (T : Set (AF F ⊗[F] E)) (hT : T ∈ 𝓝 0) : ∃ N : ℕ, 0 < N
     AddMonoidHom.mk' (fun c => ∑ i, P (c i) • incAF F E (b i)) fun c c' => by
       simp only [Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
   have hΦ : ∀ c, Φ c = ∑ i, P (c i) • incAF F E (b i) := fun _ => rfl
-  have hc : Continuous Φ := continuous_finset_sum _ fun i _ => by
+  have hc : Continuous Φ := continuous_finsetSum _ fun i _ => by
     have h1 : Continuous fun a : AF F => a • incAF F E (b i) := by
       first
         | fun_prop
@@ -259,7 +259,7 @@ theorem phi_mem {v : HeightOneSpectrum (𝓞 F)} (τ : E →ₐ[F] Fv F v) {z : 
     rw [← hy]
     exact y.2
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem exists_idem {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) {v : HeightOneSpectrum (𝓞 F)} (τ : E →ₐ[F] Fv F v) :

@@ -196,7 +196,8 @@ theorem spanIsLines_of_graded_onto {N : Type} (E : N → ℤ → M) {r : ℕ} (u
     simp only [he, serAct_lines]
     rw [← lines_sum, ← hf]
     congr 1
-    exact Finset.sum_congr rfl fun s _ => by ring
+    ext k
+    simp [Matrix.mulVec, dotProduct, Mx, smul_eq_mul, mul_comm]
 
 theorem serSpan_eq_graded (A : ℤ → Submodule L M) (hA : Antitone A) (hfd : FiniteDimensional L ↥(⨆ a, A a))
     (hsep : ∀ x, (∀ a, x ∈ A a) → x = 0) (S : Set (ℤ → M)) (h1 : ∀ y ∈ S, ∀ k, y k ∈ A (-k))
@@ -308,11 +309,14 @@ theorem isLaurent_twist (c : L) (g : M →ₗ[L] M') {u : ℤ → M} (hu : IsLau
 
 theorem twist_serMul {c : L} (hc : c ≠ 0) (g : M →ₗ[L] M') (f : L⟦X⟧) {u : ℤ → M} (hu : IsLaurent u) :
     twist c g (serMul f u) = serMul (rescale c f) (twist c g u) := by
-  have := congrArg Laur.co (Laur.tw_smul hc g f (Laur.mk u hu : Laur L M))
-  rw [Laur.co_smul] at this
-  refine Eq.trans (funext fun k => ?_) this
-  rw [Laur.co_tw, Laur.co_smul]
-  rfl
+  funext k
+  have h := congrFun (congrArg Laur.co (Laur.tw_smul hc g f (Laur.mk u hu : Laur L M))) k
+  have hm : Laur.co (Laur.mk u hu : Laur L M) = u := by
+    rfl
+  have ht : Laur.co (Laur.tw c g (Laur.mk u hu : Laur L M)) = twist c g u := by
+    funext j
+    rw [Laur.co_tw, hm, twist_apply]
+  simpa [Laur.co_smul, Laur.co_tw, twist_apply, hm, ht] using h
 
 theorem map_serSpan {c : L} (hc : c ≠ 0) (g : M →ₗ[L] M') (S : Set (ℤ → M)) (hS : ∀ y ∈ S, IsLaurent y) :
     (serSpan L S).map (twist c g) = serSpan L (twist c g '' S) := by

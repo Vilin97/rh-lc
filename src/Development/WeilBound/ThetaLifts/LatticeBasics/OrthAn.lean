@@ -293,8 +293,13 @@ theorem isCT_of_cusp (I : OrthIn) (hB : B.IsGood σ) (hW : W.IsSkew σ B r s) {d
       simp [map_mul]
     rw [hs, Matrix.mulVec_smul, dotProduct_smul, smul_dotProduct, h0]
     simp
-  unfold GlobalTheory.ThK.IsCT
+  let P (N : Subgroup (UA σ W.J)) : Prop :=
+    ∀ (μ : Measure N) (𝓕 : Set N), μ.IsHaarMeasure →
+      IsFundamentalDomain ((ratU σ W.J).subgroupOf N) 𝓕 μ → μ 𝓕 = 1 →
+        ∀ h, (0 : UA σ W.J → ℂ) h = ∫ u in 𝓕, f (u.1 * h) ∂μ
+  change P (unip σ W H)
   rw [hEq]
+  dsimp only [P]
   intro μ 𝓕 hμ h𝓕 _ h
   rw [Pi.zero_apply]
   exact (hf _ hU hiso μ 𝓕 hμ h𝓕 h).symm
@@ -329,8 +334,14 @@ private lemma exists_trace_zero_generator_of_isCMExt (I : OrthIn) (hB : B.IsGood
   have hP : PositivityTheory.ThKEnd.IsPlane σ H W W₁ := ⟨hH.rank, hH.xx, hH.yy, hH.xy, hH.orth, hH.gram, hW₁d⟩
   have hEq := I.line F E σ hB.cm d d₁ W W₁ H (Or.inr hW.skew) hP
   obtain ⟨μ, 𝓕, h1, h2, h3⟩ := (I.unip F E σ hB.cm d W (Or.inr hW.skew) hWd (E ∙ H.x)).1.ex
-  unfold GlobalTheory.ThK.IsCT at hc hc'
+  let P (N : Subgroup (UA σ W.J)) (g : UA σ W.J → ℂ) : Prop :=
+    ∀ (μ : Measure N) (𝓕 : Set N), μ.IsHaarMeasure →
+      IsFundamentalDomain ((ratU σ W.J).subgroupOf N) 𝓕 μ → μ 𝓕 = 1 →
+        ∀ h, g h = ∫ u in 𝓕, f (u.1 * h) ∂μ
+  change P (unip σ W H) c at hc
+  change P (unip σ W H) c' at hc'
   rw [hEq] at hc hc'
+  dsimp only [P] at hc hc'
   funext h
   rw [hc μ 𝓕 h1 h2 h3 h, hc' μ 𝓕 h1 h2 h3 h]
 

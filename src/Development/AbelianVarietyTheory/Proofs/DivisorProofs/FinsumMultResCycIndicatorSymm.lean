@@ -131,8 +131,8 @@ variable [IsLocallyNoetherian Y]
 theorem mult_eq {A : LB Y} (hA : A.IsLB) (s : A.Sec) (hs : genericPoint Y ∈ nonzeroLocus s) {i : A.ι} {x : Y}
     (hi : x ∈ A.U i) (p : PrimeSpectrum (Y.presheaf.stalk x)) (hp : p.asIdeal.height = 1) :
     (divOfSec hA s hs).mult (Y.fromSpecStalk x p) = (Module.length (Localization.AtPrime p.asIdeal)
-      (Localization.AtPrime p.asIdeal ⧸ Ideal.span {algebraMap (Y.presheaf.stalk x) (Localization.AtPrime p.asIdeal)
-        (Y.presheaf.germ _ x hi (s.f i))})).toNat := by
+      (Localization.AtPrime p.asIdeal ⧸ Ideal.span {(algebraMap (Y.presheaf.stalk x) (Localization.AtPrime p.asIdeal)
+        (Y.presheaf.germ _ x hi (s.f i)))})).toNat := by
   have hzi : Y.fromSpecStalk x p ∈ A.U i := (specializes_fromSpecStalk Y x p).mem_open (A.U i).isOpen hi
   obtain ⟨e, he⟩ := stalk_equiv Y x p
   rw [mult_divOfSec ((coheight_fromSpecStalk Y x p).trans hp) hzi, length_quot_equiv _ _ e, he _ hzi hi]
@@ -188,8 +188,8 @@ theorem finsum_eq (hq : IsAmb q) {A B : LB Y} (hA : A.IsLB) (hB : B.IsLB) (s : A
     (hb : ∀ p ∈ P, Y.presheaf.germ _ x hj (t.f j) ∉ p.asIdeal) :
     ∑ᶠ z, ((divOfSec hA s hs).mult z : ℝ) * resCyc hB t (Set.indicator {x} 1) z =
       ((∑ p ∈ P, (Module.length (Localization.AtPrime p.asIdeal)
-        (Localization.AtPrime p.asIdeal ⧸ Ideal.span {algebraMap (Y.presheaf.stalk x) (Localization.AtPrime p.asIdeal)
-          (Y.presheaf.germ _ x hi (s.f i))})).toNat * (Module.length (Y.presheaf.stalk x ⧸ p.asIdeal)
+        (Localization.AtPrime p.asIdeal ⧸ Ideal.span {(algebraMap (Y.presheaf.stalk x) (Localization.AtPrime p.asIdeal)
+          (Y.presheaf.germ _ x hi (s.f i)))})).toNat * (Module.length (Y.presheaf.stalk x ⧸ p.asIdeal)
         ((Y.presheaf.stalk x ⧸ p.asIdeal) ⧸
           Ideal.span {Ideal.Quotient.mk p.asIdeal (Y.presheaf.germ _ x hj (t.f j))})).toNat : ℕ) : ℝ) := by
   classical

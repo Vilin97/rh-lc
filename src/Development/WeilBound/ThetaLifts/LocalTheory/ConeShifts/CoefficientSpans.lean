@@ -104,7 +104,7 @@ theorem lat_compact {B : Base F E} {r s r' s'} (hX : X.IsHerm σ B r s) (hW : W.
   obtain ⟨I, _, g, hg⟩ := GlobalTheory.LatParam.latAtV_param X W hX.lat hW.lat v
   haveI := GlobalTheory.AdelicUnitaryTop.compactSpace_adicCompletionIntegers F v
   refine ⟨Set.range fun a : I → v.adicCompletionIntegers F => ∑ m, (a m : Fv F v) • locCo M.co v (incM F (g m)),
-    isCompact_range (continuous_finset_sum _ fun m _ => (show Continuous fun a : I → v.adicCompletionIntegers F => (a m : Fv F v) from
+    isCompact_range (continuous_finsetSum _ fun m _ => (show Continuous fun a : I → v.adicCompletionIntegers F => (a m : Fv F v) from
       continuous_subtype_val.comp (continuous_apply m)).smul continuous_const),
     fun γ hγ => ?_⟩
   obtain ⟨a, rfl⟩ := (hg γ).1 hγ

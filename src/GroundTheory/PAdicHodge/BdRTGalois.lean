@@ -62,10 +62,17 @@ section Cp
 
 variable {p : ℕ} [Fact p.Prime]
 
+local notation "𝒪" => normInteger ℂ_[p]
+local notation "𝒪♭" => PreTilt 𝒪 p
+local notation "𝕎𝒪♭" => WittVector p 𝒪♭
+local notation "𝔹" => BDeRhamPlus 𝒪 p
+local notation "𝔪" => maximalIdeal 𝔹
+local notation "φi" => RingEquiv.symm (_root_.frobeniusEquiv 𝒪♭ p)
+
 theorem exists_coe_eq_of_pow_eq_one {x : ℂ_[p]} {N : ℕ} (hN : N ≠ 0) (hx : x ^ N = 1) :
     ∃ y : PadicAlgCl p, (y : ℂ_[p]) = x := by
-  haveI : NeZero N := ⟨hN⟩
-  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (PadicAlgCl p) N
+  have : NeZero N := ⟨hN⟩
+  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot (PadicAlgCl p) N
   have hζ' : IsPrimitiveRoot (algebraMap (PadicAlgCl p) ℂ_[p] ζ) N :=
     hζ.map_of_injective (algebraMap (PadicAlgCl p) ℂ_[p]).injective
   obtain ⟨i, -, hi⟩ := hζ'.eq_pow_of_pow_eq_one hx
@@ -116,8 +123,8 @@ theorem gal_smul_muBdR {L : IntermediateField ℚ_[p] (PadicAlgCl p)} (σ : Gal(
     (ε : 𝒪♭) :
     σ • muBdR p ε = wittToBDeRhamPlus 𝒪 p (teichmuller p
       (preTiltMap p (galCp σ : ℂ_[p] →+* ℂ_[p]) (AInf.norm_galCp_toRingHom σ) ε)) - 1 := by
-  rw [muBdR, gal_smul_wittToBDeRhamPlus, AInf.mu, smul_sub, smul_one, AInf.gal_smul_teichmuller,
-    map_sub, map_one]
+  rw [muBdR_eq, gal_smul_bdR_def, map_sub, map_one, ← gal_smul_bdR_def,
+    gal_smul_wittToBDeRhamPlus, AInf.gal_smul_teichmuller]
 
 theorem gal_smul_fontaineT_eq {L : IntermediateField ℚ_[p] (PadicAlgCl p)}
     (σ : Gal(PadicAlgCl p/L)) {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) :

@@ -37,8 +37,23 @@ theorem UpperTheory.V.Hi.deformationRing_to_heckeAlgebra_surjective :
       rw [← h1 w P σ hP hσ, dite_eq_left ⟨Nat.succ_pos _, k.2⟩] at e
       have e2 : (D₀.map f.toRingHom).chi (MonoidAlgebra.single (H.prj σ⁻¹) 1) =
           (D₀.chi (MonoidAlgebra.single (H.prj σ⁻¹) 1)).map f.toRingHom := by
-        rw [← (AlgebraTools.Det.mapApi D₀ _).1]
-        simp
+        let y := MonoidAlgebra.single (H.prj σ⁻¹) (1 : B)
+        have he (z : MonoidAlgebra B H.Gq) : MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom H.Gq C
+            (MonoidAlgebra.mapRingHom H.Gq f.toRingHom z) =
+            MonoidAlgebra.mapRingHom H.Gq (Polynomial.mapRingHom f.toRingHom)
+              (MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom H.Gq C z) := by
+          rw [map_sub, MonoidAlgebra.mapRingHom_single, Polynomial.coe_mapRingHom, Polynomial.map_X,
+            ← RingHom.comp_apply, ← RingHom.comp_apply, ← MonoidAlgebra.mapRingHom_comp,
+            ← MonoidAlgebra.mapRingHom_comp, Polynomial.mapRingHom_comp_C]
+        let : Algebra B T[X] := ((algebraMap T T[X]).comp f.toRingHom).toAlgebra
+        have hn := D₀.nat B[X] T[X]
+          { toRingHom := Polynomial.mapRingHom f.toRingHom
+            commutes' := fun a => by change (Polynomial.mapRingHom f.toRingHom) (C a) = C (f a); simp }
+          (MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom H.Gq C y)
+        change (D₀.map f.toRingHom).D T[X] _ = _
+        rw [← show MonoidAlgebra.mapRingHom H.Gq f.toRingHom y =
+          MonoidAlgebra.single (H.prj σ⁻¹) 1 by simp [y], he y]
+        exact hn
       rw [e2, coeff_map] at e
       have e3 : gen (.inl (w, k)) = algebraMap c.O T u ^ ((k + 1) * (k + 1 - 1) / 2 : ℕ) *
           ((-1) ^ ((k : ℕ) + 1) * f ((D₀.chi (MonoidAlgebra.single (H.prj σ⁻¹) 1)).coeff (n - (k + 1)))) := by

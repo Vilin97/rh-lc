@@ -142,8 +142,15 @@ theorem finK_of_lat {V : Type} [AddCommGroup V] [Module O V] [Module (FractionRi
     Module.Finite (FractionRing O) V := by
   obtain ⟨S, hS⟩ := h.1
   refine ⟨⟨S, ?_⟩⟩
-  intro s hs hli
-  exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  apply top_unique
+  rw [← h.2]
+  apply Submodule.span_le.mpr
+  have hsub : Submodule.span O (S : Set V) ≤
+      (Submodule.span (FractionRing O) (S : Set V)).restrictScalars O := by
+    apply Submodule.span_le.mpr
+    exact fun x hx => Submodule.subset_span hx
+  rw [hS] at hsub
+  exact hsub
 variable {Γ : Type} [Group Γ] [TopologicalSpace Γ]
   {V : Type} [AddCommGroup V] [Module O V] [TopologicalSpace V] [IsTopologicalAddGroup V]
   [ContinuousSMul O V] [Module (FractionRing O) V] [IsScalarTower O (FractionRing O) V]

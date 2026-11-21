@@ -41,7 +41,7 @@ set_option autoImplicit false
 namespace GlobalTheory.SelfInterPoly
 
 theorem exists_polynomial_multilinear {A : Type*} {ι : Type} [AddCommGroup A] [Fintype ι]
-    (f : MultilinearMap ℤ (fun _ : ι => A) ℤ) (a b : A) :
+    (f : (ι → A) →ₘₗ[ℤ] ℤ) (a b : A) :
     ∃ P : Polynomial ℝ, ∀ m : ℕ, (f (fun _ => a + m • b) : ℝ) = P.eval (m : ℝ) := by
   classical
   refine ⟨∑ S : Finset ι, Polynomial.C (f (S.piecewise (fun _ => b) (fun _ => a)) : ℝ) *

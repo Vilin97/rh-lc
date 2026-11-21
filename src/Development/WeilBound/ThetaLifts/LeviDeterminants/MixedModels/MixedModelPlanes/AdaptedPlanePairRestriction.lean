@@ -136,7 +136,9 @@ theorem exists_isEv_mixedX_m : ∀ (F E : Type) [Field F] [NumberField F] [Field
     simp only [LinearMap.smul_apply, LinearMap.comp_apply, LinearMap.funLeft_apply, Function.comp_apply, Pi.smul_apply,
       smul_eq_mul]
     rw [hheis _ Φ hΦ]
-    simp only [Darboux.rho, schr, hι, extend_dot_m hj, ← extend_add_m hj, Pi.smul_apply, smul_eq_mul,
+    have hi : co.e (incM F H.ι * z) =
+        (Function.extend j (M₁.co.e z).1 0, Function.extend j (M₁.co.e z).2 0) := hι z
+    simp only [Darboux.rho, schr, hi, Prod.fst, Prod.snd, extend_dot_m hj, ← extend_add_m hj, Pi.smul_apply, smul_eq_mul,
       LinearMap.smul_apply, LinearMap.comp_apply, LinearMap.funLeft_apply, Function.comp_apply]
     ring
   · intro u hu Φ hΦ

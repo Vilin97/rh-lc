@@ -281,13 +281,25 @@ theorem zcPair_eq_one (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) {P : LB 
   haveI := hB.comm
   have oneB : ∀ {Y : Over S} (f : Y ⟶ T), f ≫ (1 : T ⟶ B) = 1 := fun f => by simp
   have oneA : ∀ {Y : Over S} (f : Y ⟶ T), f ≫ (1 : T ⟶ A) = 1 := fun f => by simp
+  have eq_of_evc {A' B' T' : Over S} [GrpObj A'] [GrpObj B'] {P' : LB (A' ⊗ B').left}
+      (h : IsDual A' B' P') {y₁ y₂ : T' ⟶ B'}
+      (e : evc h.isLB (fst A' T') (snd A' T' ≫ y₁) =
+        evc h.isLB (fst A' T') (snd A' T' ≫ y₂)) : y₁ = y₂ := by
+    have hM : (ev P' (fst A' T') (snd A' T' ≫ y₁)).IsLB := pull_isLB h.isLB _
+    have ha : IsAdditive (ev P' (fst A' T') (snd A' T' ≫ y₁)) := by
+      refine (isAdditive_iff hM).2 fun Y a a' t ↦ ?_
+      rw [evc_ev h.isLB, evc_ev h.isLB, evc_ev h.isLB]
+      simp only [lift_fst, lift_snd_assoc]
+      exact (isAdditive_iff h.isLB).1 h.additive Y a a' (t ≫ y₁)
+    exact (h.univ T' _ hM ha).unique ((cls_eq_iff hM hM).1 rfl)
+      ((cls_eq_iff hM (pull_isLB h.isLB _)).1 e)
   have dB : ∀ y : T ⟶ B, evc hD.isLB (fst A T) (snd A T ≫ y) = 0 → y = 1 := by
     intro y hy
-    apply hD.eq_of_evc
+    apply eq_of_evc hD
     rw [hy, oneB, evc_one_right hD.isLB hD.zero]
   have dA : ∀ y : T ⟶ A, evc hD.isLB (snd B T ≫ y) (fst B T) = 0 → y = 1 := by
     intro y hy
-    apply hD'.eq_of_evc
+    apply eq_of_evc hD'
     rw [evc_swap hD.isLB hD'.isLB, evc_swap hD.isLB hD'.isLB, hy, oneA,
       IsAdditive.evc_one hD.isLB hD.additive]
   have R1 : ∀ i, postH l (a ≫ prj (A ⊗ B) i ≫ fst A B) ^ 2 *

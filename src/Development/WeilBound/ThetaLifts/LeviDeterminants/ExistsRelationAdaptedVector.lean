@@ -75,7 +75,8 @@ theorem map_pure (w : InfinitePlace F) (a : Fin n → AE F E) (b : Fin d → E) 
     (Matrix.vecMulVec a (incV F b)).map (piInf (B.emb w)) =
       Matrix.vecMulVec (fun i => piInf (B.emb w) (a i)) fun i => (B.emb w).1 (b i) := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.vecMulVec_apply, map_mul, incV, GlobalTheory.CompanionTheory.Ar.RT.Lie.piInf_inclR]
+  simp only [Matrix.map_apply, Matrix.vecMulVec_apply, map_mul, incV]
+  simp [piInf, inclR, compInf, infEmb]
 
 theorem at_pure {a : Fin n → AE F E} (ha : At (evI F) a) (b : Fin d → AE F E) : At (evI F) (Matrix.vecMulVec a b) := fun t ht => by
   rw [← Matrix.smul_vecMulVec, ha t ht, Matrix.zero_vecMulVec]
@@ -104,7 +105,7 @@ theorem decomp (hW : W.IsSkew σ B r' s') (hH : H.IsAdapted σ B W W₁ i₀ i�
 theorem rel_iota (hH : H.IsAdapted σ B W W₁ i₀ i₁) {e} {z z' : Matrix (Fin n) (Fin d₁) (AE F E)} (h : Rel B X W₁ e z z') :
     Rel B X W e (z * (incM F H.ι)ᵀ) (z' * (incM F H.ι)ᵀ) := fun w => by
   have h1 : ((incM F H.ι)ᵀ).map (piInf (B.emb w)) = (H.ι.map (B.emb w).1)ᵀ := by
-    ext i j; exact GlobalTheory.CompanionTheory.Ar.RT.Lie.piInf_inclR _ _
+    ext i j; simp [incM, piInf, inclR, compInf, infEmb]
   have h2 := congrArg Matrix.transpose (hH.cartan w).1
   rw [Matrix.transpose_mul, Matrix.transpose_mul] at h2
   rw [Matrix.map_mul, Matrix.map_mul, h1, h w, Matrix.smul_mul]

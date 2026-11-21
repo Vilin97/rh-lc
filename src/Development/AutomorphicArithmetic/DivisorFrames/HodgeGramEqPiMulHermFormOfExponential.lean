@@ -49,6 +49,8 @@ private theorem herm_orth {U : Formalism.L2.PjFree.Unf Xo c σ r} (hσ : Formali
   rw [of_apply, ← key, hcol, hcol]
   have hi : ∀ j j' : Fin (Dw.mult τ), W.e.symm ⟨τ, j⟩ = W.e.symm ⟨τ, j'⟩ ↔ j = j' := fun j j' => by simp
   simp [hermForm, smul_mulVec, sum_dotProduct, dotProduct_sum, star_sum, Pi.single_apply, hi, mul_apply, mul_comm]
+  left
+  simp [Matrix.mul_apply, mul_comm]
 
 private theorem herm_exp {U : Formalism.L2.PjFree.Unf Xo c σ r} (hσ : Formalism.L2.PjFree.GoodEmb c σ)
     (hU : Formalism.L2.PjFree.IsUnf U)

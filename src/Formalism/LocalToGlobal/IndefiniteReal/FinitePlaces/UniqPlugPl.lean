@@ -127,18 +127,18 @@ theorem dense_F (v : HeightOneSpectrum (𝓞 F)) : DenseRange fun q : F => piF v
   exact HeightOneSpectrum.denseRange_algebraMap F v
 
 theorem dense_I (w : InfinitePlace F) : DenseRange fun q : F => piI w (algebraMap F (AF F) q) := by
-  have h : (fun q : F => piI w (algebraMap F (AF F) q)) = fun x : F => ({ toCompletion := ↑x } : w.Completion) := by
+  have h : (fun q : F => piI w (algebraMap F (AF F) q)) = fun x : F => (x : w.Completion) := by
     funext q
     show (algebraMap F (AF F) q).1 w = _
     rw [algebraMap_AF]
-    rfl
+    exact InfiniteAdeleRing.algebraMap_apply F q w
   rw [h]
-  have e : Set.range (fun x : F => ({ toCompletion := ↑(WithAbs.toAbs w.1 x) } : w.Completion)) =
-      Set.range (fun x : WithAbs w.1 => ({ toCompletion := ↑x } : w.Completion)) :=
-    (WithAbs.toAbs_surjective w.1).range_comp (fun x : WithAbs w.1 => ({ toCompletion := ↑x } : w.Completion))
+  have e : Set.range (fun x : F => ((WithAbs.toAbs w.1 x : WithAbs w.1) : w.Completion)) =
+      Set.range (fun x : WithAbs w.1 => (x : w.Completion)) :=
+    (WithAbs.toAbs_surjective w.1).range_comp (fun x : WithAbs w.1 => (x : w.Completion))
   unfold DenseRange
   erw [e]
-  exact InfinitePlace.Completion.denseRange_coe w
+  exact AbsoluteValue.Completion.denseRange_coe w.1
 
 def etaS (S : Finset (HeightOneSpectrum (𝓞 F))) : AF F := ∑ w : InfinitePlace F, jI w 1 + ∑ v ∈ S, jF v 1
 

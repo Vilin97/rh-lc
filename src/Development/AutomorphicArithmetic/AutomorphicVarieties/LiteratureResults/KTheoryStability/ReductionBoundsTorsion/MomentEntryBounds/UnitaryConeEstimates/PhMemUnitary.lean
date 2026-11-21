@@ -26,8 +26,9 @@ theorem ph_apply {w : InfinitePlace L} (hw : w.IsComplex) (A : Matrix (Fin N) (F
 
 theorem e_alg {w : InfinitePlace L} (hw : w.IsComplex) (l : L) :
     Completion.ringEquivComplexOfIsComplex hw (algebraMap L w.Completion l) = w.embedding l := by
-  rw [Completion.ringEquivComplexOfIsComplex_apply]
-  simp
+  rw [Completion.ringEquivComplexOfIsComplex_apply, AbsoluteValue.Completion.algebraMap_def,
+    Completion.extensionEmbedding_coe]
+  rfl
 
 theorem ph_diag {w : InfinitePlace L} (hw : w.IsComplex) (γ : GL (Fin N) L) :
     ph hw ((Reduction.infAt w (AdelicGLn.diagonal L N γ) : GL (Fin N) w.Completion) :

@@ -193,7 +193,8 @@ theorem pullC_isMap : ∀ (k : Type) [Field k] (ι κ : Type) [LinearOrder ι] [
     [AddCommGroup E] [Module k E] [AddCommGroup E'] [Module k E'] (A : Finset ι → Submodule k E)
     (B : Finset κ → Submodule k E') (τ : κ → ι) (φ : E →ₗ[k] E'),
     (∀ s t, s.Nonempty → s ⊆ t → A s ≤ A t) → (∀ s t, s.Nonempty → s ⊆ t → B s ≤ B t) →
-    (∀ s : Finset κ, s.Nonempty → ∀ y ∈ A (s.image τ), φ y ∈ B s) → IsMap (cech A) (cech B) (pullC τ φ) := by
+    (∀ s : Finset κ, s.Nonempty → ∀ y ∈ A (s.image τ), φ y ∈ B s) →
+    IsMap (GlobalTheory.PD.cech A) (GlobalTheory.PD.cech B) (pullC τ φ) := by
   intro k _ ι κ _ _ E E' _ _ _ _ A B τ φ _ _ hφ n c hc
   exact ⟨PullMap.pullC_mem A B τ φ hφ n c hc, PullMap.pullC_delta τ φ c⟩
 

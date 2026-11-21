@@ -171,7 +171,7 @@ theorem rep_of_mem (y : (Σ b, ι b) → Ω) {t : Ω} (ht : t ∈ fnField k y) :
     by simp, by simp⟩
   change Q t
   unfold fnField at ht
-  refine IntermediateField.adjoin_induction k (p := fun t _ => Q t) ?_ ?_ ?_ ?_ ?_ ht
+  refine IntermediateField.adjoin_induction k (motive := fun t _ => Q t) ?_ ?_ ?_ ?_ ?_ ht
   · rintro x ⟨p, q, hpq, rfl⟩
     by_cases hq : y q = 0
     · simpa [hq] using hzero

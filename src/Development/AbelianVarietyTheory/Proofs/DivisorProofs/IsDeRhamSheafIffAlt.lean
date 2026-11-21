@@ -47,11 +47,11 @@ theorem cast_left (R : Type) [CommRing R] (hR : (p : R) = 0) (A : Over (Sp R)) :
 theorem frobMor (R : Type) [CommRing R] (hR : (p : R) = 0) (A : Over (Sp R)) [GrpObj A]
     (h : (p : Γ(A.left, ⊤)) = 0) :
     GrpMor (dp0 R) (𝟙 _) A (dp0 R) (𝟙 _) A (frobR p R hR) (spMap (frobR p R hR))
-      (GlobalTheory.VB.frob A.left p h) where
-  dp := isDPMorphism_of_eq_bot _ rfl _ _
-  base := by simp
-  w := frob_comp_hom p R hR A.hom h
-  mul T x y x₀ y₀ hx hy := by
+      (GlobalTheory.VB.frob A.left p h) := by
+  refine { dp := isDPMorphism_of_eq_bot _ rfl _ _, base := ?_,
+           w := frob_comp_hom p R hR A.hom h, mul := ?_ }
+  · simp
+  · intro T x y x₀ y₀ hx hy
     have hT : (p : Γ(T.left, ⊤)) = 0 := cast_left p R hR T
     have hn (f : T.left ⟶ A.left) :
         GlobalTheory.VB.frob T.left p hT ≫ f = f ≫ GlobalTheory.VB.frob A.left p h :=

@@ -30,12 +30,12 @@ theorem Sz.mul {m m' : ℕ} {c c' : ℝ} {a a' : AF F} (h : Sz m c a) (h' : Sz m
 theorem Sz.sum {ι : Type} [Fintype ι] {m : ℕ} {c : ℝ} {a : ι → AF F} (h : ∀ i, Sz m c (a i)) :
     Sz m (Fintype.card ι * c) (∑ i, a i) := by
   refine ⟨?_, fun v => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine (norm_sum_le_of_le _ fun i _ => (h i).1).trans ?_
     simp
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [Finset.mul_sum, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum]
     exact sum_mem fun i _ => (h i).2 v
 
 theorem Sz.mono {m m' : ℕ} {c c' : ℝ} {a : AF F} (h : Sz m c a) (hm : m ∣ m') (hc : c ≤ c') : Sz m' c' a := by
@@ -86,8 +86,8 @@ theorem intF_mul {a z : AF F} (ha : IntF a) (hz : ∀ v, evFin F v z ∈ v.adicC
 theorem intF_sum {ι : Type} [Fintype ι] {a : ι → AF F} (h : ∀ i, IntF (a i)) : IntF (∑ i, a i) := by
   refine ⟨?_, fun v => ?_⟩
   · exact (map_sum (RingHom.fst (Ainf F) (Af F)) a Finset.univ).trans (Finset.sum_eq_zero fun i _ => (h i).1)
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact sum_mem fun i _ => (h i).2 v
 
 variable {κ : Type} [Fintype κ]
@@ -154,8 +154,11 @@ theorem exists_norm_repr_le {ι : Type} [Fintype ι] [DecidableEq ι] (b : Modul
     | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz, add_mul, Finset.sum_add_distrib]
     | tmul a e =>
       have h : ∀ x : F, InfinitePlace.Completion.extensionEmbedding w (algebraMap F w.Completion x) =
-          algebraMap F ℂ x := fun x =>
-        InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm x)
+          algebraMap F ℂ x := fun x => by
+        rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+          Algebra.algebraMap_self_apply, InfinitePlace.Completion.extensionEmbedding_coe]
+        change w.embedding ((WithAbs.equiv w.1) ((WithAbs.equiv w.1).symm x)) = w.embedding x
+        rw [RingEquiv.apply_symm_apply]
       rw [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, map_mul,
         h, Module.Basis.traceDual_repr_apply, Algebra.traceForm_apply,
         trace_eq_sum_embeddings, Finset.mul_sum]

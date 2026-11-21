@@ -31,7 +31,7 @@ namespace GlobalTheory.LocLanglands.SuppLaw
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
-theorem charPol_lpZero (σ : Weil h) : (WD.lpZero h).charPol σ = 1 := by
+theorem charPol_lpZero (σ : Weil h) : (WD.lpZero (h := h)).charPol σ = 1 := by
   rw [WD.lpZero, WD.charPol_mk]
   exact Polynomial.eq_one_of_monic_natDegree_zero (LinearMap.charpoly_monic _)
     (by rw [LinearMap.charpoly_natDegree]; simp)
@@ -54,7 +54,7 @@ theorem nu_eq {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
 theorem charPol_seg {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
     {e : AddChar (w.adicCompletion E) Circle → WD h → ℂˣ} {rc : IrrGL (k := w.adicCompletion E) → WD h}
     (H : LawsLit a ha e rc) (Δ : Segment (w.adicCompletion E)) (σ : Weil h) :
-    (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len)).charPol σ
+    (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len)).charPol σ
       = (Δ.ms.map fun y => (rc y).charPol σ).prod := by
   rw [(GlobalTheory.T.weilDeligne_charpoly_twist_special E Ω A w h (rc Δ.first)).2 Δ.len σ, Segment.ms, Multiset.map_map]
   have h1 : ∀ j : Fin Δ.len, (rc (Δ.term j)).charPol σ = ((rc Δ.first).lpTw ((j : ℕ) : ℝ)).charPol σ := by

@@ -20,7 +20,7 @@ namespace UpperTheory.TNZ.P_prodRc
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
-theorem wd_eq_lpZero {x : WD h} (hx : x.lpDim = 0) : x = WD.lpZero h := by
+theorem wd_eq_lpZero {x : WD h} (hx : x.lpDim = 0) : x = WD.lpZero := by
   obtain ⟨n, a, rfl⟩ := x.exists_rep
   obtain rfl : n = 0 := by simpa using hx
   exact WD.sound ⟨.refl _ _, fun _ _ => Subsingleton.elim _ _, fun _ => Subsingleton.elim _ _⟩

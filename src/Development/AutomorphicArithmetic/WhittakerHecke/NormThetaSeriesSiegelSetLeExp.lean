@@ -83,8 +83,8 @@ private theorem re_mul (x y : A ℚ) : re (x * y) = re x * re y := by
 private theorem re_add (x y : A ℚ) : re (x + y) = re x + re y := by
   simp [re, map_add (f := _)]
 private theorem re_rat (q : ℚ) : re (rt q) = (q : ℝ) := by
-  refine (InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe (IsTotallyReal.isReal Rat.infinitePlace) (WithAbs.toAbs _ q)).trans ?_
-  simp
+  exact eq_ratCast (((Pi.evalRingHom (fun _ : InfinitePlace ℚ => ℝ) Rat.infinitePlace).comp
+    (TR.pInf ℚ)).comp (algebraMap ℚ (A ℚ))) q
 private theorem re_inv (a : (A ℚ)ˣ) : re ((a⁻¹ : (A ℚ)ˣ) : A ℚ) = (re (a : A ℚ))⁻¹ := by
   have h : re (a : A ℚ) * re ((a⁻¹ : (A ℚ)ˣ) : A ℚ) = 1 := by
     rw [← re_mul, Units.mul_inv]

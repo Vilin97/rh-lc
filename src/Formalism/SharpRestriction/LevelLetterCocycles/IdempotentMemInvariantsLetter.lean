@@ -352,7 +352,7 @@ theorem qExpansion_unique (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP 
   obtain ⟨h', hm', e'⟩ := hG (k + 1)
   have htr : trunc (k + 1) F - trunc (k + 1) G = Polynomial.monomial k (coeff k F - coeff k G) := by
     ext j
-    rw [Polynomial.coeff_sub, coeff_trunc, coeff_trunc, Polynomial.coeff_monomial]
+    rw [Polynomial.coeff_sub, coeff_trunc, coeff_trunc, Polynomial.coeff_monomial_apply]
     by_cases hj : j < k + 1
     · rw [if_pos hj, if_pos hj]
       rcases Nat.lt_succ_iff_lt_or_eq.mp hj with hjk | hjk

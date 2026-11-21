@@ -155,14 +155,10 @@ section Prime
 variable {E : Type} [Field E] [NumberField E]
 
 theorem exists_mem_of_list_prod_mem (P : HeightOneSpectrum (𝓞 E)) :
-    ∀ l : List (𝓞 E), l.prod ∈ P.asIdeal → ∃ x ∈ l, x ∈ P.asIdeal
-  | [], h => absurd ((Ideal.eq_top_iff_one _).2 (by simpa using h)) P.isPrime.ne_top
-  | a :: l, h => by
-    rw [List.prod_cons] at h
-    rcases P.isPrime.mem_or_mem h with h | h
-    · exact ⟨a, List.mem_cons_self, h⟩
-    · obtain ⟨x, hx, hxP⟩ := exists_mem_of_list_prod_mem P l h
-      exact ⟨x, List.mem_cons_of_mem a hx, hxP⟩
+    ∀ l : List (𝓞 E), l.prod ∈ P.asIdeal → ∃ x ∈ l, x ∈ P.asIdeal := by
+  intro l
+  simpa only [Multiset.prod_coe, Multiset.mem_coe] using
+    (P.isPrime.multiset_prod_mem_iff_exists_mem (l : Multiset (𝓞 E))).mp
 
 theorem exists_prime_dvd_card (P : HeightOneSpectrum (𝓞 E)) :
     ∃ p : ℕ, p.Prime ∧ (p : 𝓞 E) ∈ P.asIdeal ∧ p ∣ Nat.card (𝓞 E ⧸ P.asIdeal) := by

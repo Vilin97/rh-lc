@@ -13,8 +13,6 @@ open IsLocalRing GlobalTheory.PolFan GlobalTheory.LocM
 
 namespace GlobalTheory.Poinc.PreModel
 
-open TateSys
-
 section
 variable {O : Type} [CommRing O] {bar : O → O} {q s : ℕ} {W : Matrix (Fin s) (Fin s) ℤ} {A : Type} [CommRing A] [IsLocalRing A]
   (Φ : VPre bar q W A)

@@ -49,4 +49,6 @@ private theorem exists_local {E : Type} [Field E] [NumberField E] [IsCMField E] 
   have hc' : constF e Y = (toFn z).comp (ψ.comp φ) := by rw [← RingHom.comp_assoc, hcomp, hc]
   have hm : k.IsMap (toFn z) f' := fun τ i => by
     rw [hf', hk, GlobalTheory.GradedPieces.dual_comp, hcomp]
-  exact ⟨_, k, (fits_iff hc' hm).2 rfl⟩
+  refine ⟨_, k, hc', fun i => ?_⟩
+  rw [← hm τ i]
+  exact g₀.co_spec f' τ i

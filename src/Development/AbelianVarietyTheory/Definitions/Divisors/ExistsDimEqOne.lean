@@ -139,16 +139,16 @@ theorem tmap_id (A : AbVar K) : tmap l A A (𝟙 A) = LinearMap.id :=
 def vmap {A B : AbVar K} (f : A ⟶ B) : Vl l A →ₗ[ℚ_[l]] Vl l B := (tmap l A B f).baseChange ℚ_[l]
 
 def tend (A : AbVar K) : End A →+* Module.End ℤ_[l] (Tl l A) where
-  toFun f := tmap l A A f
+  toFun f := tmap l A A f.asHom
   map_one' := tmap_id l A
-  map_mul' f g := tmap_comp l g f
+  map_mul' f g := tmap_comp l g.asHom f.asHom
   map_zero' := map_zero (tmap l A A)
-  map_add' f g := map_add (tmap l A A) f g
+  map_add' f g := map_add (tmap l A A) f.asHom g.asHom
 
 end Tate
 
 def IsCharpoly {A : AbVar K} (f : End A) (P : Polynomial ℤ) : Prop :=
-  P.Monic ∧ P.natDegree = 2 * A.dim ∧ ∀ n : ℤ, P.eval n = (deg (A := A) (B := A) ((n : End A) - f) : ℤ)
+  P.Monic ∧ P.natDegree = 2 * A.dim ∧ ∀ n : ℤ, P.eval n = (deg ((n : End A) - f).asHom : ℤ)
 
 
 open Classical in

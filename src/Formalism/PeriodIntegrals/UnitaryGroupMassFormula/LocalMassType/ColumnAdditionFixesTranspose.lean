@@ -27,7 +27,7 @@ theorem kv_lin {k : HA (Fv F v) σ J} (hk : k ∈ Formalism.L2.SG.TypedSets.Kv �
   (hk y).symm
 
 theorem locF_smul (k : HA (Fv F v) σ J) {r : ℕ} (X : TupV (E := E) v n (r + 1)) :
-    locF v (k • X) = k • locF v X := by
+    locF (E := E) (n := n) (r := r) v (k • X) = k • locF v X := by
   funext a
   show sc (E := E) v (alp v r a) • lin (Fv F v) σ J k (X a) =
     lin (Fv F v) σ J k (sc (E := E) v (alp v r a) • X a)

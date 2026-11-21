@@ -30,9 +30,7 @@ theorem filtrationLevel_antitone (T : LocLat G Qp LL O) (i : ZMod n) {a b : ℤ}
     Formalism.MainNotions.WachCoordinates.FilLev W T i 0 b ≤ Formalism.MainNotions.WachCoordinates.FilLev W T i 0 a := by
 
   have hF : PD.Fil b ≤ PD.Fil a := by
-    induction b, hab using Int.le_induction with
-    | base => exact le_rfl
-    | succ k _ ih => exact (PD.Fil_anti k).trans ih
+    exact (antitone_int_of_succ_le PD.Fil_anti) hab
   unfold Formalism.MainNotions.WachCoordinates.FilLev Formalism.WeaklyAdmissibleFiltrations.FilCris
   apply Submodule.map_mono
   apply Submodule.map_mono

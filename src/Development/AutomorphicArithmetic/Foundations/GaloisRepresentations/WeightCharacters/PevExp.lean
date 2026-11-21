@@ -19,13 +19,7 @@ private theorem tor_entry_mem_expLe_one_expGe_zero (h : ExpBasic) (a k : ℕ) (A
         ((if (l:ℕ) < k then (z:ℂ) else 1) * (B : Matrix (Fin a) (Fin a) ℂ) l j) := by
     funext z
     rw [Finset.sum_apply, Units.val_mul, Units.val_mul, Matrix.mul_apply]
-    congr 1
-    split_ifs
-    · simp only [Circle.toUnits]
-      first
-        | rfl
-        | simp [unitSphereToUnits_apply_coe]
-    · simp
+    simp [tor_coe, Matrix.diagonal_mul]
   rw [heq]
   constructor
   · refine Submodule.sum_mem _ fun l _ => ?_
@@ -111,10 +105,6 @@ theorem UpperTheory.Gal.Wt.pevExp_of :
       exact_mod_cast MvPolynomial.le_totalDegree hd
     have hm := (h.2.2.1 _ _ hle).1 hp
     convert Submodule.smul_mem _ (AddMonoidAlgebra.coeff P d) hm using 1
-    funext z
-    rfl
   · refine Submodule.sum_mem _ fun d _ => ?_
     have hp := (prod_pow_mem_expLe_sum_expGe h e he d d.support).2
     convert Submodule.smul_mem _ (AddMonoidAlgebra.coeff P d) hp using 1
-    funext z
-    rfl

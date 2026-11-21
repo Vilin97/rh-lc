@@ -53,7 +53,19 @@ theorem eq_zero_of_trB {x : (VS D).V} (hx : x ∈ X.Lb)
     Submodule.span_le.2 fun y hy => LinearMap.mem_ker.2 (h2 y hy)
   refine (VS D).nondeg.1 x fun v => ?_
   have hv : v ∈ Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) := by
-    rw [(VS D).standardTuple_isLattice.span_eq_top]; trivial
+    let a : Fin X.B.I.n → X.B.I.E := fun i => X.ιE.symm (X.bas.repr v i)
+    have ha : a ∈ Submodule.span X.B.I.E (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E)) := by
+      rw [X.B.I.L_span]; trivial
+    have hm : ∀ z ∈ Submodule.span X.B.I.E (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E)),
+        (∑ i, X.ιE (z i) • X.bas i) ∈ Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) := by
+      intro z hz
+      induction hz using Submodule.span_induction with
+      | mem z hz => exact Submodule.subset_span ((X.L_eq z).1 hz)
+      | zero => simp
+      | add z w hz hw ihz ihw => simpa [map_add, add_smul, Finset.sum_add_distrib] using Submodule.add_mem _ ihz ihw
+      | smul c z hz ih => simpa [map_mul, mul_smul, Finset.smul_sum] using Submodule.smul_mem _ (X.ιE c) ih
+    have := hm a ha
+    simpa only [a, RingEquiv.apply_symm_apply, X.bas.sum_repr] using this
   exact LinearMap.mem_ker.1 (hle hv)
 
 theorem trB_expand {N : ℕ} (ℓ : Module.Basis (Fin N) ℤ (X.Lb.restrictScalars ℤ)) (x y : (VS D).V) (hy : y ∈ X.Lb) :

@@ -185,12 +185,12 @@ theorem injR_of_vanKG (hV : VanKG) : InjR := by
           exact ⟨(h A fun h' => hB' (by simp [r, h'])).1, by rw [h3]; omega⟩
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [map_sub, map_sum, hw c, smul_sub, Finset.smul_sum]
-        congr 1
-        refine Finset.sum_congr rfl fun B _ => ?_
-        rw [← Module.End.mul_apply, (hc c).eq, Module.End.mul_apply, t1 B c, map_smul]
+          congr 1
+          refine Finset.sum_congr rfl fun B _ => ?_
+          rw [← Module.End.mul_apply, (hc c).eq, Module.End.mul_apply, t1 B c, map_smul]
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [map_sub, map_sum, hb, Finset.sum_eq_zero, sub_zero]
-        exact fun B _ => LinearMap.congr_fun (koszul_differential_sq_zero n _ V E hA) _
+          exact fun B _ => LinearMap.congr_fun (koszul_differential_sq_zero n _ V E hA) _
   obtain ⟨y', y1, y2, y3⟩ := GlobalTheory.CompanionTheory.LKWtProj.wtProj n (allT n) ε V E hE hU hF _ hc τ y (fun c => funext fun A => by
     rw [hb, Ft_apply, filter_all]
     by_cases e : A = om ε

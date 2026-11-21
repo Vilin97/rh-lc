@@ -14,4 +14,4 @@ theorem UpperTheory.ConvolutionTheory.K.ropAdj :
   intro K _ _ n μ _ f
   have := isInvInvariant_of_isMulRightInvariant μ
   exact ((rightRegularRep (Gam K n) μ).adjoint_integrated μ (UnitaryRep.ccToL1 μ f)).trans
-      (congrArg _ (ccToL1_ccStar μ f).symm)
+      (congrArg _ (ccToL1_ccStar (μ := μ) f).symm)

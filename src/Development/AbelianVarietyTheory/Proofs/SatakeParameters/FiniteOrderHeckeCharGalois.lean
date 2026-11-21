@@ -73,7 +73,8 @@ theorem exists_galChar_of_finite_order : ∀ (Ω : Type) [Field Ω] (K : Type) [
     have e := DFunLike.congr_fun h1 σ
     rw [hχ, hσ, hηb, MonoidHom.one_apply, inv_eq_one] at e
     exact e
-  · filter_upwards [(GlobalTheory.Mem.UnrAe.unr_ae_and_level K η).1] with v hv
+  · filter_upwards [(GlobalTheory.Mem.UnrAe.unr_ae_and_level K η).1.compl_mem_cofinite] with v hv
+    have hv : η.UnrAt v := by simpa using hv
     intro A σ hA hσ
     obtain ⟨x, hx, e⟩ := (ha.frob v A hA _).mpr ⟨σ, hσ, rfl⟩
     rw [hχ, ← map_inv, ← map_inv, ← e, hηb, ← η.val_eq hv x hx]

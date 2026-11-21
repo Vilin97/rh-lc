@@ -11,7 +11,7 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.Algebra
 
 noncomputable section
 
-open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.InertSupp GlobalTheory.IndefiniteRowSideFullHecke.TameConstituentPlaces ValuativeRel Matrix MeasureTheory
+open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.InertSupp ValuativeRel Matrix MeasureTheory
 open scoped TensorProduct
 
 namespace GlobalTheory.ProdSupport

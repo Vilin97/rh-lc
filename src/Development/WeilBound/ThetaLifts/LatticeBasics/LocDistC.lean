@@ -30,10 +30,12 @@ theorem mul_blk_succ {m : Type} (X : Matrix m (Fin (d + 1)) k) (a : k) (b : Fin 
 theorem blk_comm (a : k) (b b' : Fin d → k) (hb : b = (a - 1) • b') :
     blk a 0 1 * blk 1 b' 1 = blk 1 b 1 * (blk 1 b' 1 * blk a 0 1) := by
   subst hb
+  have hsum (f : Fin d → k) (j : Fin d) : ∑ x, f x * (1 : Matrix (Fin d) (Fin d) k) x j = f j := by
+    simpa [Matrix.vecMul, dotProduct] using congrFun (Matrix.vecMul_one f) j
   ext i j
   rw [← Matrix.mul_assoc]
   refine Fin.cases ?_ (fun j => ?_) j <;> simp only [mul_blk_zero, mul_blk_succ] <;>
-    refine Fin.cases ?_ (fun i => ?_) i <;> simp [blk, one_apply]
+    refine Fin.cases ?_ (fun i => ?_) i <;> simp [blk, hsum, one_apply]
   ring
 
 def chE (X : Matrix (Fin (n + 1)) (Fin (d + 1)) k) : ((Fin (n + 1) → k) × (Fin d → k)) × Matrix (Fin n) (Fin d) k :=
@@ -58,10 +60,12 @@ theorem chE_chR (y : ((Fin (n + 1) → k) × (Fin d → k)) × Matrix (Fin n) (F
 
 theorem chE_unip (X : Matrix (Fin (n + 1)) (Fin (d + 1)) k) (hX : X 0 0 ≠ 0) (b : Fin d → k) :
     chE (X * blk 1 b 1) = (((chE X).1.1, (chE X).1.2 + b), (chE X).2) := by
+  have hsum (f : Fin d → k) (j : Fin d) : ∑ x, f x * (1 : Matrix (Fin d) (Fin d) k) x j = f j := by
+    simpa [Matrix.vecMul, dotProduct] using congrFun (Matrix.vecMul_one f) j
   refine Prod.ext (Prod.ext ?_ ?_) ?_
   · ext i; simp [chE, mul_blk_zero]
-  · ext j; simp [chE, mul_blk_zero, mul_blk_succ, one_apply]; field_simp; ring
-  · ext i j; simp [chE, mul_blk_zero, mul_blk_succ, one_apply]; field_simp; ring
+  · ext j; simp [chE, mul_blk_zero, mul_blk_succ, hsum, one_apply]; field_simp; ring
+  · ext i j; simp [chE, mul_blk_zero, mul_blk_succ, hsum, one_apply]; field_simp; ring
 
 theorem chE_levi (X : Matrix (Fin (n + 1)) (Fin (d + 1)) k) (h : Matrix (Fin d) (Fin d) k) :
     chE (X * blk 1 0 h) = (((chE X).1.1, (chE X).1.2 ᵥ* h), (chE X).2 * h) := by

@@ -42,7 +42,7 @@ theorem int_fin {α Y : Type} [MeasurableSpace α] (μ : Measure α) (G : α →
       exact (Finset.mem_erase.1 hg).1 (Eq.trans (Eq.symm ha) (hD a hn)))
   refine ⟨fun y => ?_, ?_⟩
   · simp only [e y]
-    exact integrable_finset_sum _ fun g hg => (hi g hg).const_mul _
+    exact integrable_finsetSum _ fun g hg => (hi g hg).const_mul _
   · have : (fun y => ∫ a, G a y * w a ∂μ) = ∑ g ∈ s, (∫ a, ({a | G a = g} : Set α).indicator w a ∂μ) • g := by
       funext y
       simp only [e y, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
@@ -161,7 +161,7 @@ theorem pure_cancel {w : ∀ v : Pl F, (κ → Fv F v) → ℂ} (hne : ∀ v, w 
     exact hg (SchwartzMap.ext hn)
   funext y
   let y' : ∀ u : ({v} : Finset (Pl F)), κ → Fv F u := fun u => (Finset.mem_singleton.1 u.2).symm ▸ y
-  let m : MultilinearMap ℂ (fun u : ({v} : Finset (Pl F)) => (κ → Fv F u) → ℂ) ℂ :=
+  let m : MultilinearMap (RingHom.id ℂ) (fun u : ({v} : Finset (Pl F)) => (κ → Fv F u) → ℂ) ℂ :=
     (MultilinearMap.mkPiAlgebra ℂ _ ℂ).compLinearMap fun u => LinearMap.proj (y' u)
   let ez : SInf F κ →ₗ[ℂ] ℂ := ⟨⟨fun f => f z, fun _ _ => rfl⟩, fun _ _ => rfl⟩
   have h2 := congrArg (TensorProduct.lift ((LinearMap.mul ℂ ℂ).compl₁₂ ez (PiTensorProduct.lift m))) this

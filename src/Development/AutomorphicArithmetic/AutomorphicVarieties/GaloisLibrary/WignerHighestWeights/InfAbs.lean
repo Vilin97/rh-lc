@@ -10,7 +10,7 @@ open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Al
 open scoped TensorProduct
 
 private theorem multi_cont {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] {q : ℕ}
-    (μ : MultilinearMap ℝ (fun _ : Fin q => V) ℂ) : Continuous μ := by
+    (μ : (Fin q → V) →ₘₗ[ℝ] ℂ) : Continuous μ := by
   let b := Module.finBasis ℝ V
   have e : (μ : (Fin q → V) → ℂ) = fun x => ∑ r : Fin q → Fin (Module.finrank ℝ V),
       (∏ i, b.coord (r i) (x i)) • μ fun i => b (r i) := by
@@ -18,14 +18,14 @@ private theorem multi_cont {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
     have h : x = fun i => ∑ j, b.coord j (x i) • b j := funext fun i => (b.sum_repr (x i)).symm
     set_option synthInstance.maxHeartbeats 100000 in
       conv_lhs => rw [h, μ.map_sum]
-    simp only [μ.map_smul_univ]
+    simp only [μ.map_smul_univ, RingHom.id_apply]
   rw [e]
-  refine continuous_finset_sum _ fun r _ => Continuous.fun_smul ?_ continuous_const
-  exact continuous_finset_prod _ fun i _ =>
+  refine continuous_finsetSum _ fun r _ => Continuous.fun_smul ?_ continuous_const
+  exact continuous_finsetProd _ fun i _ =>
     (b.coord (r i)).continuous_of_finiteDimensional.comp (continuous_apply i)
 
 private theorem multi_deriv {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] {q : ℕ}
-    (μ : MultilinearMap ℝ (fun _ : Fin q => V) ℂ) (c : ℝ → Fin q → V) (c' : Fin q → V)
+    (μ : (Fin q → V) →ₘₗ[ℝ] ℂ) (c : ℝ → Fin q → V) (c' : Fin q → V)
     (hc : ∀ i, HasDerivAt (fun t => c t i) (c' i) 0) :
     HasDerivAt (fun t => μ (c t)) (∑ i, μ (Function.update (c 0) i (c' i))) 0 := by
   let ν : ContinuousMultilinearMap ℝ (fun _ : Fin q => V) ℂ := ⟨μ, multi_cont μ⟩
@@ -63,7 +63,7 @@ theorem UpperTheory.V.AlgRepEndIrreducible.infAbs :
   by_contra hne
   obtain ⟨l, hl, hd⟩ := hS k Z h0 hk _ hne
   apply hl
-  let μ : MultilinearMap ℝ (fun _ : Fin q => Lie E a) ℂ :=
+  let μ : (Fin q → Lie E a) →ₘₗ[ℝ] ℂ :=
     (l.restrictScalars ℝ).compMultilinearMap (ω.toMultilinearMap.compLinearMap fun _ => hp)
   have hμ : ∀ X : Fin q → Herm E a, μ (fun i => toL (X i).1) = l (ω X) := fun X => by
     change l (ω fun i => hp (toL (X i).1)) = _

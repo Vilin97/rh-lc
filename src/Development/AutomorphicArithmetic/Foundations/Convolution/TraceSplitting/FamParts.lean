@@ -56,7 +56,8 @@ theorem UpperTheory.ConvolutionTheory.T.famParts :
       simpa using this
     · have hN := (places F E hl).2.2.2.2.1
       filter_upwards [hsum, hT.eventually_cofinite_notMem] with w hw hwS
-      obtain ⟨B, ⟨B1, hB1, e1⟩, hB'⟩ := hw (resDeg F w) (hN w)
+      obtain ⟨B, ⟨B1, hB1, e1⟩, hB'⟩ := hw (resDeg F w) (by
+        simpa only [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using hN w)
       obtain ⟨C, ⟨C1, hC1, e2⟩, e⟩ := hπ _ hwS
       have e3 : B = C := by
         rw [e1, e2]

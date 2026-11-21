@@ -50,7 +50,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.thCont :
       ((S₁ ×ˢ S₂) ∩ {p | nu ℚ p.2 = 1}) := by
     unfold ThOn
     refine continuousOn_tsum (u := fun ξ : S => B * wt K n (rp ξ.1)) (fun ξ => ?_)
-      ((hs.mul_left B).subtype S) fun ξ p hp => ?_
+      ((hs.mul_left B).subtype (fun x => x ∈ S)) fun ξ p hp => ?_
     · have hc : Continuous fun p : G1 ℚ × GL (Fin 2) (A E) =>
           (W.Om p.1 ph).1 ((ρ p.2⁻¹).val *ᵥ rp ξ.1) :=
         (W.cont ph).comp (continuous_fst.prodMk

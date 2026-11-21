@@ -106,7 +106,9 @@ private theorem exists_semi {K L₁ L₂ : FinExt l}
     (fun a x => by
       obtain ⟨a', e1, e2⟩ := h1 a
       show wdMk P ι ρ₂ (S (a • x)) = θ (ι a) • wdMk P ι ρ₂ (S x)
-      rw [e2, wdMk_smul, hθ, e1])
+      rw [e2]
+      change wdMk P ι ρ₂ ((Dpst P ρ₂).module.toSMul.smul a' (S x)) = _
+      rw [wdMk_smul, hθ, e1])
     (fun c x => by
       obtain ⟨c', e1, e2⟩ := h2 c
       show wdMk P ι ρ₂ (S (mulD P ρ₁ c x)) = θ (ι c) • wdMk P ι ρ₂ (S x)

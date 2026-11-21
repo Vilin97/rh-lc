@@ -213,14 +213,15 @@ theorem line_ex (hS : Slice) (hH : ArchHeis) (hU : ArchUniq) (hc : Cfg B M M₁ 
   obtain ⟨k, φ₁, C, A, -, -, hcont, hid, -, hdec⟩ := hS F E σ B n d n₁ d₁ X W X₁ W₁ M M₁ hB hc.good hc.good₁ _ _ I e hI m uu z hD ψ hψ
   have hlc : Continuous lift := by
     have : lift = lft hB.cm B.emb := funext fun c => by
-      have h2 := (isLift_lft B hB).inv _ (hL.supp c)
-      rw [← h2]; congr 1; funext w; exact hL.pi c w
+      apply ext_at hB.cm B.emb
+      · intro v; rw [fin_of_at (hL.supp c), fin_lft]
+      · intro w; rw [hL.pi, pi_lft]
     rw [this]; exact cont_lft _ _
   have hYc : Continuous fun c j => Y j (lift c) :=
     continuous_pi fun j => (IsModuleTopology.continuous_of_linearMap (Y j)).comp hlc
   refine ⟨fun c => ∑ i, (φ₁ i a / ψ₁ a) • A i fun j => Y j (lift c), fun f => ?_, fun c f => ?_, fun q N hq => ?_⟩
   · simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply]
-    exact continuous_finset_sum _ fun i _ => ((hcont i f).comp hYc).const_smul (φ₁ i a / ψ₁ a)
+    exact continuous_finsetSum _ fun i _ => ((hcont i f).comp hYc).const_smul (φ₁ i a / ψ₁ a)
   · have h1 := hid (fun j => Y j (lift c)) f
     rw [hlin, ev_op hH hU hB hl hψ hc.good hp hp₁ (at_smul (hL.supp c) _)] at h1
     refine SchwartzMap.ext fun y => ?_

@@ -10,7 +10,7 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwistedK
 
 @[expose] public section
 
-open Matrix GlobalTheory.PRep GlobalTheory.BZMir GlobalTheory.BZMir.Fun GlobalTheory.CompanionTheory.BZBeta GlobalTheory.CompanionTheory.BZOnto GlobalTheory.SplitWeil ValuativeRel
+open Matrix GlobalTheory.PRep GlobalTheory.BZMir GlobalTheory.BZMir.Fun GlobalTheory.SplitWeil ValuativeRel
 open scoped Topology
 
 namespace GlobalTheory.CompanionTheory.BZOnto.PerpSmall

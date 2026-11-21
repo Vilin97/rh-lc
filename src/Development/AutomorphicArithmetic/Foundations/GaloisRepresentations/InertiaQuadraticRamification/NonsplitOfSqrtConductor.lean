@@ -17,11 +17,19 @@ open UpperTheory.Gal.UnramifiedFromSplittingCriterion
 namespace UpperTheory.Gal.UnramifiedFromSplittingCriterion.WeylLatticeInDetCoeffSpan
 
 private theorem normV_mem' {K : Type} [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K)) :
-    ((normV v : ℕ) : 𝓞 K) ∈ v.asIdeal := Ideal.absNorm_mem v.asIdeal
+    ((normV v : ℕ) : 𝓞 K) ∈ v.asIdeal := by
+  have h : Nat.card (𝓞 K ⧸ v.asIdeal) = Ideal.absNorm v.asIdeal := by
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  show ((Nat.card (𝓞 K ⧸ v.asIdeal) : ℕ) : 𝓞 K) ∈ v.asIdeal
+  rw [h]
+  exact Ideal.absNorm_mem _
 
 private theorem normV_pos' {K : Type} [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K)) : 0 < normV v := by
-  have h : Ideal.absNorm v.asIdeal ≠ 0 := fun h => v.ne_bot (Ideal.absNorm_eq_zero_iff.1 h)
-  exact Nat.pos_of_ne_zero h
+  have h : Nat.card (𝓞 K ⧸ v.asIdeal) = Ideal.absNorm v.asIdeal := by
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  show 0 < Nat.card (𝓞 K ⧸ v.asIdeal)
+  rw [h]
+  exact Nat.pos_of_ne_zero (fun h0 => v.ne_bot (Ideal.absNorm_eq_zero_iff.1 h0))
 
 private theorem val_lt_of_dvd {K Ω : Type} [Field K] [NumberField K] [Field Ω] [Algebra K Ω] (A : ValuationSubring Ω)
     (v : HeightOneSpectrum (𝓞 K)) (hA : IsPlaceOver A v) {c : ℕ} (h : normV v ∣ c) : A.valuation (c : Ω) < 1 := by

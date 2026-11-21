@@ -187,12 +187,13 @@ theorem isIo_transfer {G H S Sinf Ds Dt : Type*} [MeasurableSpace H] [AddCommGro
     {th : G → H → S → ℂ} {pt : Sinf → S} {T : Sinf →ₗ[ℂ] Ds →ₗ[ℂ] Dt} {CCs CCs' : Submodule ℂ (Ds →ₗ[ℂ] (H → ℂ))}
     {CCt CCt' : Submodule ℂ (Dt →ₗ[ℂ] (G → ℂ))} {io : CCs →ₗ[ℂ] CCt} {io' : CCs' →ₗ[ℂ] CCt'}
     (h : Lift.IsIo ν 𝓕 th pt T CCs CCt io) (hc : ∀ F : CCs', ∃ F' : CCs, F.1 = F'.1 ∧ (io' F).1 = (io F').1) :
-    Lift.IsIo ν 𝓕 th pt T CCs' CCt' io' where
-  integ F φ v g := by
+    Lift.IsIo ν 𝓕 th pt T CCs' CCt' io' := by
+  constructor
+  · intro F φ v g
     obtain ⟨F', h1, -⟩ := hc F
     rw [h1]
     exact h.integ F' φ v g
-  eq F φ v g := by
+  · intro F φ v g
     obtain ⟨F', h1, h2⟩ := hc F
     rw [h1, h2]
     exact h.eq F' φ v g

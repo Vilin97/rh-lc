@@ -106,7 +106,7 @@ theorem conj_uwb {ρ : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ} (
     · rw [← p2]; unfold psiR; rw [hm]
   have hH : haarLie (Nset k r) 1 = ENNReal.ofReal ((2 : ℝ) ^ (r ^ 2 + r * k)) •
       (volume : Measure ((CI k r → ℂ) × (Fin r → ℝ))).map Φ := Formalism.L2.SG.Pf.NcReal.JX.exponential_chart_haar k r
-  rw [hH, Measure.map_smul, Measure.map_map (meas_conjM _) hΦ, key, ← Measure.map_map hΦ hmp.measurable]
+  rw [hH, Measure.map_smul _ (meas_conjM _).aemeasurable, Measure.map_map (meas_conjM _) hΦ, key, ← Measure.map_map hΦ hmp.measurable]
   exact congrArg (fun m => ENNReal.ofReal ((2 : ℝ) ^ (r ^ 2 + r * k)) • Measure.map Φ m) hmp.map_eq
 
 theorem aDil_e (t : ℝ) (a : Fin r) :

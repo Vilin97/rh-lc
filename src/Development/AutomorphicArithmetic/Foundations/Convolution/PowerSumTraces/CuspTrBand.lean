@@ -14,27 +14,23 @@ open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalS
 private theorem summand_map {G H : Type} [Group G] [TopologicalSpace G] [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] [CompleteSpace H] (π : UnitaryRep G H) (W : Submodule ℂ H) (e : G ≃* G)
     (U : H ≃ₗᵢ[ℂ] H) (hU : ∀ g v, U (π g v) = π (e g) (U v)) (hW : W.map (U : H →ₗ[ℂ] H) = W)
-    {V : Submodule ℂ H} (hV : IsSummandOf π W V) : IsSummandOf π W (V.map (U : H →ₗ[ℂ] H)) where
-  le := by
-    rintro _ ⟨v, hv, rfl⟩
+    {V : Submodule ℂ H} (hV : IsSummandOf π W V) : IsSummandOf π W (V.map (U : H →ₗ[ℂ] H)) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · rintro _ ⟨v, hv, rfl⟩
     rw [← hW]
     exact ⟨v, hV.le hv, rfl⟩
-  closed := by
-    rw [Submodule.map_coe]
+  · rw [Submodule.map_coe]
     exact U.toHomeomorph.isClosedMap _ hV.closed
-  inv := by
-    rintro g _ ⟨v, hv, rfl⟩
+  · rintro g _ ⟨v, hv, rfl⟩
     refine ⟨π (e.symm g) v, hV.inv _ _ hv, ?_⟩
     have := hU (e.symm g) v
     simpa using this
-  ne_bot := by
-    intro h
+  · intro h
     refine hV.ne_bot ((Submodule.eq_bot_iff _).2 fun v hv => ?_)
     have h1 : U v ∈ V.map (U : H →ₗ[ℂ] H) := ⟨v, hv, rfl⟩
     rw [h] at h1
     simpa using h1
-  irred := by
-    intro V' hle hcl hinv
+  · intro V' hle hcl hinv
     have hle' : V'.comap (U : H →ₗ[ℂ] H) ≤ V := by
       intro v hv
       obtain ⟨w, hw, hwv⟩ := hle hv

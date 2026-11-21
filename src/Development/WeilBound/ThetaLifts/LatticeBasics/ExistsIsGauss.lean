@@ -159,7 +159,7 @@ theorem exists_isGauss {B : Base F E} (M : Model σ X W) {r s r' s' : ℕ} (hB :
 theorem pol_dense {B : Base F E} (M : Model σ X W) {r s r' s' : ℕ} (hB : B.IsGood σ) (hX : X.IsHerm σ B r s)
     (hW : W.IsSkew σ B r' s') (T : SInf F (Fin n × Fin d) →L[ℂ] ℂ) (hT : ∀ f ∈ M.Pol B.ψ B.emb, T f = 0) : T = 0 := by
   obtain ⟨Q, Q', f, pos, hf', hG⟩ := exists_isGauss M hB hX hW
-  exact schwartz_functional_eq_zero_of_dense Q Q' 1 f one_ne_zero pos hf' _ (Submodule.mem_sInf.2 fun _ hN => hN.1 _ hG)
+  exact schwartz_functional_eq_zero_of_dense Q Q' 1 f one_ne_zero pos hf' (M.Pol B.ψ B.emb) (Submodule.mem_sInf.2 fun _ hN => hN.1 _ hG)
     (fock_mul_linear F E σ n d X W M B.ψ B.emb hB.std) T hT
 
 end Dense

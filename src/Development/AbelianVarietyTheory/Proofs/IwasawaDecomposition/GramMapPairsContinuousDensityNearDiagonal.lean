@@ -317,7 +317,7 @@ theorem gram_density : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       (Function.uncurry fun T (X : Fin 2 → Fin (M + 1) → (R ⊗[F] E)) => psi (A T).1 (A T).2.1 (A T).2.2 X)
       (C ×ˢ Set.univ) := fun A hA =>
     continuous_psi.comp_continuousOn
-      ((hA.comp continuousOn_fst fun p hp => hp.1).prodMk continuousOn_snd)
+      ((hA.comp continuousOn_fst fun p hp => (Set.mem_prod.mp hp).1).prodMk continuousOn_snd)
   have hk₁ := hι.comp_continuousOn (hri.comp hr₁ hu₁)
   have hk₂ := hι.comp_continuousOn (hri.comp hr₂ hu₂)
   obtain ⟨hIc, hIi⟩ := continuousOn_integral_param N hC

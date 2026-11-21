@@ -16,6 +16,8 @@ open CategoryTheory NumberField IsDedekindDomain GroundTheory.Global
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
   (ℓ : ℕ) [NeZero ℓ] (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) ∉ v.asIdeal)
@@ -41,11 +43,20 @@ theorem cohomologyMap_gsRootsLocalUnitsMor_injective (v : S) :
   have h2 := cohomologyMap_f_injective_of_subsingleton (localKummer_shortExact S ℓ v) 1
     subsingleton_cohomology_one_galUnits
   have h1 : Function.Injective (cohomologyMap (gsRootsOmegaMor S ιs ℓ v) 2).hom := by
+    have hbij : Function.Bijective (gsRootsOmegaMor S ιs ℓ v).hom := by
+      obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot ℚ̄ ℓ
+      have hzS : z ∈ maxUnramifiedOutside K.1 ℚ̄ S :=
+        mem_maxUnramifiedOutside_of_pow_eq_one S (NeZero.ne ℓ) hℓS hz.pow_eq_one
+      have hzS' : IsPrimitiveRoot (⟨z, hzS⟩ : maxUnramifiedOutside K.1 ℚ̄ S) ℓ :=
+        hz.of_map_of_injective (f := (maxUnramifiedOutside K.1 ℚ̄ S).val) Subtype.val_injective
+      have hF := bijective_restrictRootsOfUnity_of_isPrimitiveRoot ℓ
+        ((ιs v).comp (maxUnramifiedOutside K.1 ℚ̄ S).val).toRingHom hzS'
+      exact Additive.ofMul.bijective.comp (hF.comp Additive.toMul.bijective)
     have hc := congrArg (fun φ => cohomologyMap φ 2)
-      (comp_repInvOfBijective (gsRootsOmegaMor S ιs ℓ v) (bijective_gsRootsOmegaMor S ιs ℓ hℓS v))
+      (comp_repInvOfBijective (gsRootsOmegaMor S ιs ℓ v) hbij)
     have hc' := (cohomologyMap_comp _ _ 2).symm.trans (hc.trans (cohomologyMap_id 2))
     refine Function.LeftInverse.injective (g := (cohomologyMap (repInvOfBijective
-      (gsRootsOmegaMor S ιs ℓ v) (bijective_gsRootsOmegaMor S ιs ℓ hℓS v)) 2).hom) fun a => ?_
+      (gsRootsOmegaMor S ιs ℓ v) hbij) 2).hom) fun a => ?_
     exact congrArg (fun φ => φ.hom a) hc'
   have e := cohomologyMap_comp (gsRootsOmegaMor S ιs ℓ v)
     (kummerSequence ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1)

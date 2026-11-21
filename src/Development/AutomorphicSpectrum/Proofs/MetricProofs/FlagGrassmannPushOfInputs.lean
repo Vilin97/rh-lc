@@ -70,7 +70,7 @@ theorem snoc_update_add (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1)
   exact FlagHeightMultilinear.I_snoc_fsHerm_add hI hP _ (fun i => hL _) a b
 
 def snocMultilin (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1)) {c : HermLine ι}
-    (hc : IsSmoothHerm c) : MultilinearMap ℤ (fun _ : Fin n => K → ℤ) ℝ where
+    (hc : IsSmoothHerm c) : MultilinearMap (RingHom.id ℤ) (fun _ : Fin n => K → ℤ) ℝ where
   toFun v := I P (n + 1) (Fin.snoc (α := fun _ => HermLine ι) (fun i => fsHerm ι (v i)) c)
   map_update_add' := by
     intro inst v j a b
@@ -104,8 +104,8 @@ theorem pts_fsHerm_sum (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1))
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← snocMultilin_apply hI hP, MultilinearMap.map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
-  rw [MultilinearMap.map_smul_univ _ (fun i => ℓ i (r i)) (fun i => x (r i)), snocMultilin_apply hI hP,
-    zsmul_eq_mul, Int.cast_prod]
+  rw [MultilinearMap.map_smul_univ _ (fun i => ℓ i (r i)) (fun i => x (r i)), snocMultilin_apply hI hP]
+  simp only [RingHom.id_apply, zsmul_eq_mul, Int.cast_prod]
   ring
 
 theorem pts_neg_eq (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1)) :
@@ -126,8 +126,8 @@ theorem pts_neg_eq (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1)) :
     funext _ _
     simp
   rw [← snocMultilin_apply hI hP, e, MultilinearMap.map_smul_univ, snocMultilin_apply hI hP]
-  simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin, zsmul_eq_mul, Int.cast_pow, Int.cast_neg,
-    Int.cast_one]
+  simp only [RingHom.id_apply, Finset.prod_const, Finset.card_univ, Fintype.card_fin, zsmul_eq_mul,
+    Int.cast_pow, Int.cast_neg, Int.cast_one]
   ring
 
 end Multilinear

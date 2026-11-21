@@ -221,18 +221,19 @@ theorem gd_rest (T : Finset (Pl F)) : Gd (rest T) := ⟨rest_idem T, Or.inl (res
 theorem borelUA (J : Matrix (Fin n) (Fin n) E) : BorelSpace (UA σ J) := ⟨rfl⟩
 
 theorem sysU {B : Base F E} {X : Spc F E n} {K : Subgroup (UA σ X.J)} (hK : IsStab B K) (hc : IsCompact (K : Set (UA σ X.J))) :
-    Sys (PU σ X.J) K Set.univ Gd where
-  cont a ha := ((unitInvariant_continuous ha.1).comp continuous_subtype_val).subtype_mk _
-  comp a b ha hb g := Subtype.ext (unitInvariant_comp ha.1 hb.1 g.1)
-  zero g := Subtype.ext (unitInvariant_zero g.1)
-  add a b ha hb h := ⟨ha.add hb h, fun g => Subtype.ext (unitInvariant_add ha.1 hb.1 h g.1)⟩
-  idem a ha := ha.1
-  cK := hc.isClosed
-  mK a ha g hg := PU_mem hK ha hg
-  mU := MeasurableSet.univ
-  one := trivial
-  mul _ _ _ _ := trivial
-  pU _ _ _ _ := trivial
+    Sys (PU σ X.J) K Set.univ Gd :=
+  { cont a ha := ((unitInvariant_continuous ha.1).comp continuous_subtype_val).subtype_mk
+      (fun g => (PU σ X.J a g).property)
+    comp _ _ ha hb g := Subtype.ext (unitInvariant_comp ha.1 hb.1 g.1)
+    zero g := Subtype.ext (unitInvariant_zero g.1)
+    add _ _ ha hb h := ⟨ha.add hb h, fun g => Subtype.ext (unitInvariant_add ha.1 hb.1 h g.1)⟩
+    idem _ ha := ha.1
+    cK := hc.isClosed
+    mK _ ha _ hg := PU_mem hK ha hg
+    mU := MeasurableSet.univ
+    one := trivial
+    mul _ _ _ _ := trivial
+    pU _ _ _ _ := trivial }
 
 theorem kAt_eq {X : Spc F E n} (K : Subgroup (UA σ X.J)) {R : Type} [Zero R] (ev : AF F → R) {a : AF F} (h : a * a = a)
     (hat : ∀ z : Matrix (Fin n) (Fin n) (AE F E), At ev z ↔ a • z = z) : kAt K ev = part (PU σ X.J) K a := by

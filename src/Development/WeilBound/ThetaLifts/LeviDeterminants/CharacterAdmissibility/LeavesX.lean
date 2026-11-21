@@ -13,7 +13,23 @@ open GlobalTheory.Doubling (absE)
 namespace PositivityTheory.ThKF0.Chr
 
 theorem axX (hA : PositivityTheory.Mix.AdelSt) {F : Type} [Field F] [NumberField F] {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) : Ax (adeleClass F) ψ :=
-  { axB hψ with delta := axDelta_of lagLine hψ, imp := axImp_of hA hψ }
+  by
+    have hb : AxB (adeleClass F) ψ := by
+      constructor
+      · exact fun κ _ => (GlobalTheory.T.theta_distribution_heisenberg_invariant F κ ψ hψ.1 (isStd_ne_one hψ) hψ.2.1).1
+      · intro κ _
+        obtain ⟨φ, h, h0⟩ := GlobalTheory.SchANonzero.exists_mem_schA_ne_zero F κ
+        exact ⟨φ, h, fun e => h0 (congrFun e 0)⟩
+      · exact fun κ _ => adelicCoordinatesEvalZeroForm_mem_admissible κ
+      · exact fun κ₁ κ _ _ j hj φ hφ => GlobalTheory.RestrSchA.mem_schA_comp_extend F j hj φ hφ
+      · intro κ₁ κ _ _ j hj l hl g hg
+        obtain ⟨T, hT⟩ := hl _ (GlobalTheory.RestrSchA.sb_comp_extend F hj hg)
+        refine ⟨T.comp (GlobalTheory.RestrSchA.restrS F hj), fun f => ?_⟩
+        rw [ContinuousLinearMap.comp_apply, ← hT]
+        exact congrArg l (funext fun y => GlobalTheory.RestrSchA.pureA_extend F hj f g y)
+      · exact fun κ κ' _ _ => GlobalTheory.SchwartzBox.boxFun_mem_schA F κ κ'
+      · exact fun κ κ' _ _ => box_adm κ κ'
+    exact ⟨hb, axDelta_of lagLine hψ, axImp_of hA hψ⟩
 
 theorem theta_tower_hermitian_first (hA : PositivityTheory.Mix.AdelSt) : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d)
     (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' →

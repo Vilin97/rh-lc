@@ -86,22 +86,38 @@ theorem natAdd_eq (j : Fin t) : Fin.natAdd r j = stdSum (rfl : r + t = r + t) (S
 theorem emb_ll (a : GL (Fin r) k) (b : GL (Fin t) k) (i j : Fin r) :
     (emb₂ k (stdSum (rfl : r + t = r + t)) (a, b)).val (Fin.castAdd t i) (Fin.castAdd t j) = a.val i j := by
   rw [castAdd_eq, castAdd_eq]
-  exact (congrFun (congrFun (val_emb₂ k (stdSum (rfl : r + t = r + t)) (a, b)) _) _).trans (by simp)
+  simpa only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply,
+    Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁,
+    Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using
+    congrFun (congrFun (val_emb₂ k (stdSum (rfl : r + t = r + t)) (a, b))
+      (stdSum (rfl : r + t = r + t) (Sum.inl i))) (stdSum (rfl : r + t = r + t) (Sum.inl j))
 
 theorem emb_lr (a : GL (Fin r) k) (b : GL (Fin t) k) (i : Fin r) (j : Fin t) :
     (emb₂ k (stdSum (rfl : r + t = r + t)) (a, b)).val (Fin.castAdd t i) (Fin.natAdd r j) = 0 := by
   rw [castAdd_eq, natAdd_eq]
-  exact (congrFun (congrFun (val_emb₂ k (stdSum (rfl : r + t = r + t)) (a, b)) _) _).trans (by simp)
+  simpa only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply,
+    Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁,
+    Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using
+    congrFun (congrFun (val_emb₂ k (stdSum (rfl : r + t = r + t)) (a, b))
+      (stdSum (rfl : r + t = r + t) (Sum.inl i))) (stdSum (rfl : r + t = r + t) (Sum.inr j))
 
 theorem emb_rl (a : GL (Fin r) k) (b : GL (Fin t) k) (i : Fin t) (j : Fin r) :
     (emb₂ k (stdSum (rfl : r + t = r + t)) (a, b)).val (Fin.natAdd r i) (Fin.castAdd t j) = 0 := by
   rw [castAdd_eq, natAdd_eq]
-  exact (congrFun (congrFun (val_emb₂ k (stdSum (rfl : r + t = r + t)) (a, b)) _) _).trans (by simp)
+  simpa only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply,
+    Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁,
+    Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using
+    congrFun (congrFun (val_emb₂ k (stdSum (rfl : r + t = r + t)) (a, b))
+      (stdSum (rfl : r + t = r + t) (Sum.inr i))) (stdSum (rfl : r + t = r + t) (Sum.inl j))
 
 theorem emb_rr (a : GL (Fin r) k) (b : GL (Fin t) k) (i j : Fin t) :
     (emb₂ k (stdSum (rfl : r + t = r + t)) (a, b)).val (Fin.natAdd r i) (Fin.natAdd r j) = b.val i j := by
   rw [natAdd_eq, natAdd_eq]
-  exact (congrFun (congrFun (val_emb₂ k (stdSum (rfl : r + t = r + t)) (a, b)) _) _).trans (by simp)
+  simpa only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply,
+    Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁,
+    Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using
+    congrFun (congrFun (val_emb₂ k (stdSum (rfl : r + t = r + t)) (a, b))
+      (stdSum (rfl : r + t = r + t) (Sum.inr i))) (stdSum (rfl : r + t = r + t) (Sum.inr j))
 
 def eqvL (i : Fin r) : {y : Fin r // y ≤ i} ≃ {x : Fin (r + t) // x ≤ Fin.castAdd t i} :=
   Equiv.ofBijective (fun y : {y : Fin r // y ≤ i} => (⟨Fin.castAdd t y.1, by

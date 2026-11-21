@@ -67,7 +67,7 @@ private theorem small_oh (v : Pl (F := F)) {ϖ : Fv F v} (h1 : Valued.v ϖ < 1) 
   obtain ⟨ι, _, o, ho⟩ := oh_sub (E := E) v
   let J : Fv F v × (ι → v.adicCompletionIntegers F) → AE F E :=
     fun p => ∑ i, sg v (p.1 * p.2 i) • inclR (F := F) (AF F) (o i : E)
-  have cJ : Continuous J := continuous_finset_sum _ fun i _ => by
+  have cJ : Continuous J := continuous_finsetSum _ fun i _ => by
     have c1 : Continuous fun p : Fv F v × (ι → v.adicCompletionIntegers F) => sg v (p.1 * (p.2 i : Fv F v)) :=
       (continuous_sg v).comp (continuous_fst.mul (continuous_subtype_val.comp ((continuous_apply i).comp continuous_snd)))
     exact c1.smul (continuous_const (y := inclR (F := F) (AF F) (o i : E)))

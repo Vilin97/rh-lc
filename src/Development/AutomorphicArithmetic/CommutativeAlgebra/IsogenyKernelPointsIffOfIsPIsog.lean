@@ -42,7 +42,9 @@ private theorem hom_cancel :
   have key : GlobalTheory.AV.AbVar.Hom.hom ((n : ℤ) • (F - G)) = 1 := by
     rw [GlobalTheory.AV.AbVar.zsmul_hom, hFG, zpow_natCast, div_pow, hfg, div_self']
   have h0 : (n : ℤ) • (F - G) = 0 :=
-    GlobalTheory.AV.AbVar.hom_ext (by rw [key, GlobalTheory.AV.AbVar.zero_hom])
+    by
+      apply Subtype.ext
+      exact key.trans (GlobalTheory.AV.AbVar.zero_hom A' B').symm
   have h1 := GlobalTheory.AV.AbVar.hom_torsionFree Ω A' B' n (F - G) (by exact_mod_cast hn.ne') h0
   have h2 : F = G := sub_eq_zero.mp h1
   exact congrArg GlobalTheory.AV.AbVar.Hom.hom h2
@@ -457,7 +459,7 @@ private theorem exists_ab (D : Datum p) (r : ℤ) (hr : (p : ℤ) ∣ r ^ 2 - D.
       exact sub_mem (hUJE ha) hβ
     have m3 : a - D.bar β ∈ Ideal.span {(p : 𝓞 D.F) ^ E} := by
       apply hUJ
-      rw [← Ideal.inf_eq_mul_of_isCoprime hcopE]
+      rw [Ideal.mul_eq_inf_of_isCoprime hcopE]
       exact ⟨m1, m2⟩
     obtain ⟨t, ht⟩ := Ideal.mem_span_singleton'.mp m3
     exact ⟨t, by rw [ht]; ring⟩

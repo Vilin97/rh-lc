@@ -41,6 +41,8 @@ private theorem first_cohomology_equiv : Nonempty (H1 ρ ≃ H1 ρ') := by
       refine ⟨?_, fun a b => ?_⟩
       · have := hc.comp he'
         convert this using 1
+        funext g
+        simp
       · have := hf (e.symm a) (e.symm b)
         simpa [map_mul, h] using this
   have keyB : ∀ f : Γ → M, f ∈ B1 ρ ↔ (fun g => f (e g)) ∈ B1 ρ' := by
@@ -78,6 +80,8 @@ private theorem second_cohomology_equiv : Nonempty (H2 ρ ≃ H2 ρ') := by
       refine ⟨?_, fun a b c => ?_⟩
       · have := hc.comp (he'.prodMap he')
         convert this using 1
+        funext p
+        simp
       · have := hf (e.symm a) (e.symm b) (e.symm c)
         simpa [map_mul, h] using this
   have keyB : ∀ f : Γ × Γ → M, f ∈ B2 ρ ↔ (fun p => f (e p.1, e p.2)) ∈ B2 ρ' := by

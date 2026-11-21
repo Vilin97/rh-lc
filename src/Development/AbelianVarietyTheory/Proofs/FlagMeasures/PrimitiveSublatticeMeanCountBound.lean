@@ -101,13 +101,15 @@ theorem isIntLat_latIn (h : V →ₗ⋆[K] V →ₗ[K] K) {L : Submodule (𝓞 K
   refine ⟨⟨?_, ?_⟩, fun x hx y hy => hL.2 x hx y hy⟩
   · apply Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype
     exact hL.1.fg.of_le (Submodule.map_comap_le _ _)
-  · refine eq_top_iff.mpr fun x _ => ?_
-    have hx : (x : V) ∈ Submodule.span K (L : Set V) := by rw [hL.1.span_eq_top]; trivial
-    obtain ⟨a, hax⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 K)) K _ _ hx
-    rw [Submodule.span_eq] at hax
-    have ha' : algebraMap (𝓞 K) K a ≠ 0 := by simpa using nonZeroDivisors.coe_ne_zero a
-    rw [← Submodule.smul_mem_iff _ ha', algebraMap_smul]
-    exact Submodule.subset_span hax
+  · intro s hs hli
+    letI : Submodule.IsLattice K L := hL.1
+    apply LinearIndependent.of_comp U.subtype
+    apply Submodule.IsLattice.linearIndependent K L
+    · intro x
+      exact hs x.2
+    · exact hli.map' (U.subtype.restrictScalars (𝓞 K))
+        (LinearMap.ker_eq_bot.mpr U.injective_subtype)
+
 
 end
 

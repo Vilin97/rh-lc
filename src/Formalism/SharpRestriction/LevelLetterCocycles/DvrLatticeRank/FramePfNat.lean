@@ -96,7 +96,9 @@ theorem framepf_Lmap_toLA {x : LA W T₁ π' c} (hx : x ∈ LinearMap.range (toL
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a s => exact ⟨a ⊗ₜ ⟨framepf_Lmap f hfN π' c s, trivial⟩, rfl⟩
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy =>
+    simp only [map_add (f := _)] at hx hy ⊢
+    exact Submodule.add_mem _ hx hy
 
 theorem framepf_Lmap_LamLA (Eπ : LetA O n) (h' : ℕ) {x : LA W T₁ π' c}
     (hx : x ∈ LamLA W T₁ π' Eπ h' c ⊤) :

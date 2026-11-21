@@ -31,10 +31,15 @@ theorem continuous_pr (hG : IsUnit G) (hπ : IsURepOn (UH G) π) {k : ℕ} {Xs :
 
 theorem pr_add (hG : IsUnit G) : ∀ {k : ℕ} (Xs : Fin k → Matrix (Fin n) (Fin n) ℂ), (∀ i, Xs i ∈ lieG G) →
     ∃ Y : (Fin k → ℝ) → Fin k → Matrix (Fin n) (Fin n) ℂ, (∀ i, ContDiff ℝ ∞ fun t => Y t i) ∧
-      (∀ t i, Y t i ∈ lieG G) ∧ ∀ t h, pr Xs (t + h) = pr Xs t * pr (Y t) h
-  | 0, Xs, _ => ⟨fun _ => Xs, fun i => i.elim0, fun _ i => i.elim0, fun t h => by simp [pr_zero]⟩
-  | k + 1, Xs, hX => by
-    obtain ⟨Y, h1, h2, h3⟩ := pr_add hG (Fin.init Xs) fun i => hX _
+      (∀ t i, Y t i ∈ lieG G) ∧ ∀ t h, pr Xs (t + h) = pr Xs t * pr (Y t) h := by
+  intro k
+  induction k with
+  | zero =>
+    intro Xs _
+    exact ⟨fun _ => Xs, fun i => i.elim0, fun _ i => i.elim0, fun t h => by simp [pr_zero]⟩
+  | succ k ih =>
+    intro Xs hX
+    obtain ⟨Y, h1, h2, h3⟩ := ih (Fin.init Xs) (fun i => hX i.castSucc)
     set X := Xs (Fin.last k) with hXd
     have hexp : ContDiff ℝ ∞ (NormedSpace.exp : Matrix (Fin n) (Fin n) ℂ → _) :=
       contDiff_iff_contDiffAt.2 fun x => (NormedSpace.exp_analytic (𝕂 := ℝ) x).contDiffAt

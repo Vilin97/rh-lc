@@ -23,8 +23,6 @@ open GlobalTheory GlobalTheory.Cartier GlobalTheory.CechPic GlobalTheory.ProjVar
 open GlobalTheory.VertCmp GlobalTheory.Mean4O GlobalTheory.CoverNorm GlobalTheory.VertForm
 open scoped Classical
 
-open private comb from Development.AutomorphicArithmetic.DivisorFrames.NormalModelComplexCompatAlt
-
 namespace GlobalTheory.CovCmp
 
 private theorem pdeg_nsmul {R : Type} [CommRing R] {X : Scheme.{0}} {q : X ⟶ Sp R} {D : ℕ} (hX : IsArithVar q D) (p : ℕ)
@@ -74,40 +72,75 @@ private theorem proj {R : Type} [CommRing R] {X X' : Scheme.{0}} [IsIntegral X] 
   have := hX.isNoetherian
   have := hX'.isNoetherian
   have hq (ζ : X') : q (g ζ) = q' ζ := by rw [← w, Scheme.Hom.comp_apply]
-  have key := comb (J := Unit) (X := fun _ => X') (fun _ => g)
-    (fun _ ζ => if (q' ζ).asIdeal = I then (divOfRatSec (LB.isLB_pull hM g) (isRatSec_pullSec g hg hr)).mult ζ else 0)
-    (fun _ => pdeg p (fun k => (N k).pull g)) (fun _ ζ => (g.residueDegree ζ : ℤ))
-    (fun _ => (CartierDiv.finite_support_mult (divOfRatSec (LB.isLB_pull hM g) (isRatSec_pullSec g hg hr))).subset
-      fun ζ h h0 => h (by simp [h0]))
-    (divOfRatSec hM hr).mult (pdeg p N) (CartierDiv.finite_support_mult _)
-    (fun η => (q η).asIdeal = I) (fun η => Order.coheight η = 1) 1 (g.residueDegree (genericPoint X') : ℝ) 1 d
-    (fun _ ζ h => by
-      rw [hq]
-      by_contra h'
-      exact h (if_neg h'))
-    (fun _ ζ h => by
-      have h₁ : (q' ζ).asIdeal = I := by
-        by_contra h'
-        exact h (if_neg h')
-      rw [if_pos h₁] at h
-      rw [Nat.cast_one, one_pow, one_mul]
-      convert UpperTheory.pullback_degree_of_line_bundles R X X' q q' d hX hX' g w p N hN ζ (h₁ ▸ hp) (CartierDiv.coheight_eq_one_of_mult_ne_zero h))
-    (fun η h => CartierDiv.coheight_eq_one_of_mult_ne_zero h)
-    (fun η hη hη' => by
-      obtain ⟨i, hi⟩ := exists_chart hM η
-      rw [((presents_divOfRatSec hM hr).isEqn i η hi).mult_eq, one_mul, Fintype.sum_unique,
-        ← Int.cast_natCast (g.residueDegree (genericPoint X')),
-        ← Int.cast_mul, ← UpperTheory.pullback_degree_generic_residue R X X' q q' d hX hX' nX nX' g w hg hn η hη' (r i) (r i).ne_zero]
-      congr 1
+  let D := divOfRatSec hM hr
+  let D' := divOfRatSec (LB.isLB_pull hM g) (isRatSec_pullSec g hg hr)
+  let μ (ζ : X') := if (q' ζ).asIdeal = I then D'.mult ζ else 0
+  let T := (CartierDiv.finite_support_mult D').toFinset
+  let S := ((CartierDiv.finite_support_mult D).toFinset ∪ T.image g).filter
+    (fun η => (q η).asIdeal = I ∧ Order.coheight η = 1)
+  have hμ (ζ : X') (h : μ ζ ≠ 0) : (q' ζ).asIdeal = I := by
+    by_contra h'
+    exact h (ite_eq_right h')
+  have hT (ζ : X') (h : μ ζ ≠ 0) : ζ ∈ T := by
+    simpa [T, μ, hμ ζ h] using h
+  have hfiber (η : X) (hη : (q η).asIdeal = I) (hcodim : Order.coheight η = 1) :
+      (∑ ζ ∈ T, if g ζ = η then μ ζ * (g.residueDegree ζ : ℤ) else 0) =
+        (g.residueDegree (genericPoint X') : ℤ) * D.mult η := by
+    rw [← finsum_eq_sum_of_support_subset (s := T) (f := fun ζ =>
+      if g ζ = η then μ ζ * (g.residueDegree ζ : ℤ) else 0)]
+    · obtain ⟨i, hi⟩ := exists_chart hM η
+      rw [show D.mult η = _ from ((presents_divOfRatSec hM hr).isEqn i η hi).mult_eq,
+        ← UpperTheory.pullback_degree_generic_residue R X X' q q' d hX hX' nX nX' g w hg hn η
+          hcodim (r i) (r i).ne_zero]
       refine finsum_congr fun ζ => ?_
       by_cases h : g ζ = η
-      · rw [if_pos h, if_pos h, if_pos (by rw [← hq, h, hη]), Nat.cast_one, one_mul,
-          ((presents_divOfRatSec (LB.isLB_pull hM g) (isRatSec_pullSec g hg hr)).isEqn (fun _ => i) ζ
-            (mem_pull.2 (by rw [h]; exact hi))).mult_eq]
+      · have hζ : (q' ζ).asIdeal = I := by rw [← hq, h, hη]
+        simp only [h, ite_true, μ, ite_eq_left hζ]
+        rw [show D'.mult ζ = _ from
+          ((presents_divOfRatSec (LB.isLB_pull hM g) (isRatSec_pullSec g hg hr)).isEqn
+            (fun _ => i) ζ (mem_pull.2 (h ▸ hi))).mult_eq]
         rfl
-      · rw [if_neg h, if_neg h])
-  rw [Nat.cast_one, one_pow, one_mul, one_mul, Fintype.sum_unique] at key
-  convert key
+      · simp only [h, ite_false]
+    · intro ζ h
+      apply hT
+      intro hzero
+      exact h (by simp [hzero])
+  have htransport :
+      (∑ ζ ∈ T, μ ζ * pdeg p (fun k => (N k).pull g) ζ) =
+        ∑ η ∈ S, (∑ ζ ∈ T, if g ζ = η then μ ζ * (g.residueDegree ζ : ℤ) else 0) * pdeg p N η := by
+    simp only [Finset.sum_mul, ite_mul, zero_mul]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun ζ hζ => ?_
+    rw [Finset.sum_ite_eq]
+    by_cases h : μ ζ = 0
+    · simp [h]
+    have hζI := hμ ζ h
+    have hcodim : Order.coheight ζ = 1 :=
+      CartierDiv.coheight_eq_one_of_mult_ne_zero (show D'.mult ζ ≠ 0 by simpa [μ, hζI] using h)
+    have hgS : g ζ ∈ S ↔ Order.coheight (g ζ) = 1 := by
+      simp [S, Finset.mem_image_of_mem g hζ, hq, hζI]
+    rw [UpperTheory.pullback_degree_of_line_bundles R X X' q q' d hX hX' g w p N hN ζ (hζI ▸ hp) hcodim]
+    simp only [hgS, mul_ite, mul_zero, mul_assoc]
+  have htarget :
+      (∑ᶠ η : X, if (q η).asIdeal = I then ((D.mult η * pdeg p N η : ℤ) : ℝ) else 0) =
+        ∑ η ∈ S, ((D.mult η * pdeg p N η : ℤ) : ℝ) := by
+    rw [finsum_eq_sum_of_support_subset (s := S)]
+    · refine Finset.sum_congr rfl fun η hη => ite_eq_left (Finset.mem_filter.1 hη).2.1
+    · intro η h
+      have hη : (q η).asIdeal = I := by
+        by_contra h'
+        exact h (ite_eq_right h')
+      have hnz : D.mult η ≠ 0 := by
+        intro hzero
+        exact h (by simp [hη, hzero])
+      exact Finset.mem_filter.2 ⟨Finset.mem_union_left _ (by simpa using hnz), hη,
+        CartierDiv.coheight_eq_one_of_mult_ne_zero hnz⟩
+  change ((∑ᶠ ζ, μ ζ * pdeg p (fun k => (N k).pull g) ζ : ℤ) : ℝ) = _
+  rw [finsum_eq_sum_of_support_subset (s := T), htransport, Int.cast_sum, htarget, Finset.mul_sum]
+  · refine Finset.sum_congr rfl fun η hη => ?_
+    obtain ⟨hηI, hcodim⟩ := (Finset.mem_filter.1 hη).2
+    rw [hfiber η hηI hcodim, mul_assoc, Int.cast_mul, Int.cast_natCast]
+  · exact fun ζ h => hT ζ (left_ne_zero_of_mul h)
 
 variable {F : Type} [Field F] [NumberField F] {Y : Var F}
 
@@ -117,7 +150,7 @@ private theorem map_gen {V' V : Mean4O.Cover Y} (g : V'.G ⟶ V.G) (h : g ≫ V.
     have := (genericPoint_spec W.G).image W.π.continuous
     rw [Set.image_univ, W.π.surjective.range_eq, closure_univ] at this
     exact this.eq (genericPoint_spec _)
-  obtain ⟨U, hU, e⟩ := isDiscrete_iff_forall_exists_isOpen.mp (V.π.isDiscrete_preimage_singleton (genericPoint Y.X))
+  obtain ⟨U, hU, e⟩ := isDiscrete_iff_forall_mem_exists_isOpen.mp (V.π.isDiscrete_preimage_singleton (genericPoint Y.X))
     (g (genericPoint V'.G)) (by rw [Set.mem_preimage, ← Scheme.Hom.comp_apply, h, key]; rfl)
   have h₁ : g (genericPoint V'.G) ∈ U := (e.ge rfl).1
   exact (e.le ⟨(genericPoint_specializes _).mem_open hU h₁, key V⟩).symm

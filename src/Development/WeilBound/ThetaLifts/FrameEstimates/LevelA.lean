@@ -88,8 +88,8 @@ theorem exists_lattice (V : Set (AE F E)) (hV : V ∈ 𝓝 (0 : AE F E)) :
       rw [e1]
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
-      refine (map_sum (RingHom.snd (Ainf F) (Af F)) _ _).trans (Finset.sum_congr rfl fun i _ => ?_)
-      exact map_sum (RingHom.snd (Ainf F) (Af F)) _ _
+      simp only [map_mul, c]
+      rfl
     rw [e1, e, e', Pi.smul_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.smul_sum]

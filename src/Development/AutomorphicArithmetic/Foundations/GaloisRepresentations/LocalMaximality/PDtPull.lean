@@ -102,6 +102,8 @@ theorem UpperTheory.Gal.productCup_of_system.dtPull_of :
   · refine (mapDR_iM K K' _ _).trans ?_
     unfold dtS
     congr 1
+    funext a
+    rw [tt, tt, IsScalarTower.algebraMap_apply F K K']
   · obtain ⟨hle, ⟨ev, hev⟩, hbv, -⟩ := hVB K' (rB ℂ K' (xv x) {0}) e.1
     have hLoc := hLO F K' d x hY.covY hY.red e
     have htB : ∀ l, tt K' x l ∈ rB ℂ K' (xv x) {0} := fun l => tco_mem ℂ K' (xv x) l

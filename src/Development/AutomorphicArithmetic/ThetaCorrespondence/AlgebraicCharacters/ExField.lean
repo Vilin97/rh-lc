@@ -43,7 +43,7 @@ private theorem norm_le_of_pow {K : Type} [Field K] [NumberField K] (w : HeightO
   rw [e, ← Polynomial.natDegree_X_pow_sub_X (R := (𝓞 K ⧸ w.asIdeal)) hq]
   refine Polynomial.card_le_degree_of_subset_roots fun y _ => ?_
   obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective y
-  rw [Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero _ hq)]
+  rw [Polynomial.mem_roots (Polynomial.X_pow_sub_X_ne_zero hq)]
   simpa using Ideal.Quotient.eq_zero_iff_mem.2 (h x)
 
 private theorem open_sub {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]

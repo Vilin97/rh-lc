@@ -41,7 +41,7 @@ theorem injective_mvPolynomial_of_finite_of_ringKrullDim {k B : Type} [Field k] 
   have e4 : (d : WithBot ℕ∞) ≤ ringKrullDim (MvPolynomial (Fin d) k ⧸ Ideal.span {r}) :=
     (hB.symm.trans e1).le.trans e2
   have h := (add_le_add e4 (le_refl (1 : WithBot ℕ∞))).trans e3
-  simp only [Nat.card_eq_fintype_card, Fintype.card_fin, zero_add] at h
+  simp only [ENat.card_eq_coe_fintype_card, Fintype.card_fin, zero_add] at h
   norm_cast at h
   omega
 

@@ -425,8 +425,7 @@ theorem map_eigenLat [NumberField L] (hcard : Fintype.card (E →+* L) = Module.
     have h5 : HT.eigProj ρ t (thetaO ρ v z) = phi ρ v t (z t) := by
       set_option synthInstance.maxHeartbeats 100000 in
         rw [phi_apply, thetaO_apply, theta_apply, map_sum, Finset.sum_eq_single t]
-      set_option synthInstance.maxHeartbeats 100000 in
-        · simp only [map_sum, map_smul]
+      · simp only [map_sum, map_smul]
         refine Finset.sum_congr rfl fun a _ => ?_
         rw [eigProj_eigProj, if_pos rfl]
       · intro u _ hu
@@ -452,6 +451,8 @@ theorem map_familyLat [NumberField L] (hcard : Fintype.card (E →+* L) = Module
   classical
   rw [familyLat, Submodule.map_span, ← Set.range_comp]
   congr 2
+  funext a
+  simp only [Function.comp_apply, phi_apply]
   rw [Finset.sum_eq_single a]
   · simp
   · intro b _ hb
@@ -553,8 +554,11 @@ theorem genIndex_tor (hE : EigenLatDifferent.Statement)
         ((Module.finrank ℚ L : ℝ) / Module.finrank ℚ E) := by
   let ι : L →+* ℂ := (IsAlgClosed.lift : L →ₐ[ℚ] ℂ).toRingHom
   obtain ⟨hnz, hidx⟩ := isNzFamily_lat hcard ρ hr hv hst
-  have hT := TorusIndex.proof hE DifferentLatIndex.proof E L ι
-    (exists_split (V := V) hcard ι) r (lat ρ v I hst) r _ hnz t
+  have hT : TorusIndex.Statement := by
+    intro Em _ _ K _ _ ι hι N J m w hw s
+    rw [hE Em K ι hι N J (fg_of_isNzFamily hw) s]
+    exact DifferentLatIndex.proof Em K N J m w hw s
+  have hT := hT E L ι (exists_split (V := V) hcard ι) r (lat ρ v I hst) r _ hnz t
   rw [hidx] at hT
   rw [← hT, ← map_eigenLat hcard ρ hv hst hI, ← map_familyLat hcard ρ v t, genIndex, genIndex,
     map_toAddSubgroup, map_toAddSubgroup]

@@ -48,6 +48,7 @@ theorem liftSat_of (hL : LiftIso) (hS : SrcGood) (hI : ContraIrr) (hU : ContraUn
   have s2 := hC K w n V _ a1 a2 a3 _ s1
   have s3 := hD K w t b⁻¹ ni ϖ hϖ
   have ud : IsUnitarisable (detRep (Fin t) b⁻¹) := (isUnitarisable_ofChar_iff _).2 fun _ => isUnitaryChar_inv ub _
+  set_option synthInstance.maxHeartbeats 200000 in
   have s4 := hP K w n t _ _ _ _ (isSmooth_contra _) (hI _ n V _ a1 a2).1
     ((isSmooth_ofChar_iff _).2 sb.inv.detChar) (isIrreducible_ofChar _) _ _ s2 s3
   have s5 := GlobalTheory.PrinSat.hasSatGL_of_equiv e s4

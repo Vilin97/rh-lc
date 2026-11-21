@@ -138,18 +138,18 @@ variable {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace �
 
 def SuppLocOp (Θ : D.Op (Mx k r → (Wq →L[ℂ] Wp))) : Prop := SuppLoc (fun f => D.ap Θ f)
 
-theorem suppLocOp_closed : Formalism.FourierDecayAlt.P.JCx2.mnClosed (SuppLocOp (k := k) (r := r) (Wp := Wp) (Wq := Wq)) where
-  zero := fun _ _ _ => rfl
-  one := fun f g hg => image_eq_zero_of_notMem_tsupport hg
-  add := fun a b ha hb f g hg => by
-    show D.ap a f g + D.ap b f g = 0
-    have h1 : D.ap a f g = 0 := ha f g hg
-    have h2 : D.ap b f g = 0 := hb f g hg
-    rw [h1, h2, add_zero]
-  mul := fun a b ha hb f g hg => ha (D.ap b f) g fun hg' => hg (tsupport_sub_of (hb f) hg')
-  cop := fun c f g hg => by
-    show c • f g = 0
-    rw [image_eq_zero_of_notMem_tsupport hg, smul_zero]
+theorem suppLocOp_closed : Formalism.FourierDecayAlt.P.JCx2.mnClosed (SuppLocOp (k := k) (r := r) (Wp := Wp) (Wq := Wq)) :=
+  { zero := fun _ _ _ => rfl
+    one := fun f g hg => image_eq_zero_of_notMem_tsupport hg
+    add := fun a b ha hb f g hg => by
+      show D.ap a f g + D.ap b f g = 0
+      have h1 : D.ap a f g = 0 := ha f g hg
+      have h2 : D.ap b f g = 0 := hb f g hg
+      rw [h1, h2, add_zero]
+    mul := fun a b ha hb f g hg => ha (D.ap b f) g fun hg' => hg (tsupport_sub_of (hb f) hg')
+    cop := fun c f g hg => by
+      show c • f g = 0
+      rw [image_eq_zero_of_notMem_tsupport hg, smul_zero] }
 
 theorem suppLocOp_rma (z z' : Fin (2 * r + k + 1) → ℂ) (s Y : ℂ) (a b : Fin 2) :
     SuppLocOp (Formalism.FourierDecayAlt.P.JCx2.rma_Qop (Wp := Wp) (Wq := Wq) k r z z' s Y a b) := fun f g hg => by

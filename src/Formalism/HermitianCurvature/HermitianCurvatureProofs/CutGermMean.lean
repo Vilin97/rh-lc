@@ -238,7 +238,7 @@ theorem germ_mean_property : PropGMean := by
   have hmem : () ∈ ({()} : Finset Unit) := Finset.mem_singleton_self _
   obtain ⟨hb, -, ⟨B', hB'⟩, hlim⟩ := PBK.GermD.propG hGD
   have hbz : MemLp (PBK.bz s bt) 2 volume := (hb () hmem).1
-  have hsq : Integrable (fun z => ‖PBK.bz s bt z‖ ^ 2) := (memLp_two_iff_integrable_sq_norm hbz.1).1 hbz
+  have hsq : Integrable (fun z => ‖PBK.bz s bt z‖ ^ 2) := (memLp_two_iff_integrable_sq_norm hbz.aestronglyMeasurable).1 hbz
   have hae : ∀ᵐ z : ℂ, z ≠ 0 := by
     rw [ae_iff]
     simp [measure_singleton]

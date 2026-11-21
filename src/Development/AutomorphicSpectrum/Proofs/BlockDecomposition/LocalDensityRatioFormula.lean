@@ -63,7 +63,7 @@ open Classical in
 theorem summable_ge (v : HeightOneSpectrum (𝓞 F)) (e : ℝ) (s : Fv F v) :
     Summable fun i : ℕ => if Ge v i s then e ^ i else 0 := by
   obtain ⟨N, hN⟩ := exists_not_ge s
-  refine summable_of_finite_support ((Set.finite_Iic N).subset fun i hi => ?_)
+  refine summable_of_hasFiniteSupport ((Set.finite_Iic N).subset fun i hi => ?_)
   by_contra h
   exact hi (if_neg (hN i (not_le.1 h)))
 
@@ -289,7 +289,7 @@ theorem continuous_pure (S : Finset (HeightOneSpectrum (𝓞 F))) {G : Ainf F �
   unfold PositivityTheory.Rg.Base1.pure
   refine ENNReal.continuous_ofReal.comp ?_
   refine ((hG.comp c1).mul ?_).mul ?_
-  · refine continuous_finset_prod _ fun v hv => (hg v hv).comp ?_
+  · refine continuous_finsetProd _ fun v hv => (hg v hv).comp ?_
     exact (RestrictedProduct.continuous_eval v).comp c2
   · refine continuous_of_inv _ fun a u hu => finprod_congr fun x => ?_
     exact (hw x.1).1 _ _ (val_mul_std a u hu x.1)

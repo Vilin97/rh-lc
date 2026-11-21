@@ -88,7 +88,7 @@ theorem hon_mu (hF : FrobField K l σ) (h : HD σ lam Φ A a) {e hh : PowerSerie
       coeff 1 (lam.subst hh) = coeff 1 hh := by
   have hl := hF.prime
   have hl1 := hF.norm_l
-  have hlam' : IntegralPS (derivative K lam) := h.toLawD.deriv_integral
+  have hlam' : IntegralPS (PowerSeries.derivative lam) := h.toLawD.deriv_integral
   have h' := h.map_frobenius_sq hF
   have Hh : PowerSeries.HasSubst hh := PowerSeries.HasSubst.of_constantCoeff_zero' hh1.g0
   have HΦ' : PowerSeries.HasSubst (MvPowerSeries.map (σ.comp σ) Φ) :=

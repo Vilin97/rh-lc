@@ -160,21 +160,11 @@ theorem conjU_prod (W : HSp D) {J : Matrix (Fin W.rank) (Fin W.rank) D.host.E} (
   | cons a L ih => rw [List.prod_cons, conjU_mul', ih, List.map_cons, List.prod_cons]
 
 theorem prod_map_ite {M ι : Type} [Monoid M] [DecidableEq ι] (g : ι → M) (τ : ι) :
-    ∀ L : List ι, L.Nodup → τ ∈ L → (L.map fun t => if τ = t then g t else 1).prod = g τ
-  | [], _, h => absurd h List.not_mem_nil
-  | a :: L, hL, h => by
-    rw [List.map_cons, List.prod_cons]
-    obtain ⟨ha, hL'⟩ : a ∉ L ∧ L.Nodup := List.nodup_cons.mp hL
-    by_cases e : τ = a
-    · subst e
-      rw [if_pos rfl, List.prod_eq_one, mul_one]
-      intro x hx
-      obtain ⟨t, ht, rfl⟩ := List.mem_map.1 hx
-      rw [if_neg]
-      rintro rfl
-      exact ha ht
-    · rw [if_neg e, one_mul]
-      exact prod_map_ite g τ L hL' ((List.mem_cons.1 h).resolve_left e)
+    ∀ L : List ι, L.Nodup → τ ∈ L → (L.map fun t => if τ = t then g t else 1).prod = g τ := by
+  intro L hL h
+  have hterms : ∀ t, t ≠ τ → t ∈ L → (if τ = t then g t else 1) = 1 :=
+    fun _ ht _ => ite_eq_right ht.symm
+  rw [List.prod_map_eq_pow_single τ _ hterms, List.count_eq_one_of_mem hL h, ite_eq_left rfl, pow_one]
 
 end GlobalTheory.KInfLines
 

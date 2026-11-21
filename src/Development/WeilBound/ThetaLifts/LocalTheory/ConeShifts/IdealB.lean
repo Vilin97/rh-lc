@@ -324,15 +324,28 @@ theorem plane_lines {B : Base F E} {n n₁ : ℕ} {Y : Spc F E n} {Y₁ : Spc F 
     obtain ⟨s, t, u, hs, -, -, rfl⟩ := h.split z hz
     rw [f1]; exact (h.ideal s).2 hs
   have b0 : H.𝔟 ≠ 0 := fun e => by
-    have : ∀ z ∈ Submodule.span E (Y.L : Set (Fin n → E)), form σ Y.J z H.y = 0 := fun z hz => by
-      induction hz using Submodule.span_induction with
-      | mem z hz => have := hb z hz; rwa [e, FractionalIdeal.mem_zero_iff] at this
-      | zero => simp [form]
-      | add a b _ _ ha hb => simp only [form, add_dotProduct] at *; rw [ha, hb, add_zero]
-      | smul a b _ hb => simp only [form, smul_dotProduct] at *; rw [hb, smul_zero]
-    have := this H.x (hl.span_eq_top ▸ Submodule.mem_top)
-    rw [h.xy] at this
-    exact one_ne_zero this
+    have hy : H.y ≠ 0 := by
+      intro hy
+      have := h.xy
+      rw [hy] at this
+      simp [form, Matrix.mulVec, dotProduct] at this
+    have hline (a : E) : a • H.y ∈ Y.L := (hd _).2 fun z hz => by
+      have hz' : form σ Y.J z H.y = 0 := by
+        have := hb z hz
+        rwa [e, FractionalIdeal.mem_zero_iff] at this
+      have : form σ Y.J (a • H.y) z = 0 := by
+        simp only [form, smul_dotProduct, smul_eq_mul]
+        change a * form σ Y.J H.y z = 0
+        rw [sym, hz', map_zero, mul_zero, mul_zero]
+      rw [this]
+      exact D.val.zero_mem
+    let i : E →ₗ[𝓞 E] Y.L :=
+      ((LinearMap.toSpanSingleton E _ H.y).restrictScalars (𝓞 E)).codRestrict Y.L hline
+    let : Module.Finite (𝓞 E) Y.L := Module.Finite.iff_fg.mpr hl.fg
+    let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective E hy (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
   have εD : ∀ t, t * ε ∈ D ↔ t ∈ D := by
     have : ε = 1 ∨ ε = -1 := mul_self_eq_one_iff.1 hε
     rcases this with rfl | rfl

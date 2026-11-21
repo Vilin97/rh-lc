@@ -51,6 +51,7 @@ theorem jInjRd_of_wt {D : D7} (T : Top D) (hM : LawsM T.toCore) {j : ℕ} (hj : 
     JInjRd T j a n := by
   intro m b hb
   have hU : IsUnf (T.U j T.σ₀) := hM.unf j hj T.σ₀ T.good_σ₀
+  set_option synthInstance.maxHeartbeats 200000 in
   have hb' := hb.map' (cusp (T.Q.Xo j) T.Q.c (T.U j) a n).subtype (Submodule.ker_subtype _)
   have hfs : ∀ i, (⇑(cusp (T.Q.Xo j) T.Q.c (T.U j) a n).subtype ∘ b) i ∈ sec (T.Q.Xo j) T.Q.c a n :=
     fun i => cusp_le_sec (T.Q.Xo j) T.Q.c (T.U j) a n (b i).2

@@ -29,7 +29,7 @@ private theorem cont_iy : Continuous fun t : ℝ => iy (Real.exp t) := by
     exact Real.continuous_exp.inv₀ Real.exp_ne_zero
   have e : (fun t : ℝ => iy (Real.exp t)) = fun t => TR.infId ℚ (u t) := by
     funext t
-    exact dif_neg (Real.exp_ne_zero t)
+    exact dite_eq_right (Real.exp_ne_zero t)
   rw [e]
   exact (TR.continuous_infId ℚ).comp hu
 
@@ -62,5 +62,5 @@ theorem UpperTheory.measurable_thetaSeries_comp_continuous :
   refine measurable_of_tendsto_metrizable' (Filter.atTop : Filter (Finset (Rw ℚ)))
     (f := fun (s : Finset (Rw ℚ)) x => ∑ ξ ∈ s,
       Φ fun j => ((iy (Real.exp (τ x)) : (A ℚ)ˣ) : A ℚ) * ((fun i => rt (ξ.1 i)) ᵥ* (h x).val) j)
-    (fun s => (continuous_finset_sum s fun ξ _ => hterm ξ).measurable) ?_
+    (fun s => (continuous_finsetSum s fun ξ _ => hterm ξ).measurable) ?_
   exact tendsto_pi_nhds.mpr fun x => (summable_row hΦ (iy (Real.exp (τ x))) (h x)).hasSum

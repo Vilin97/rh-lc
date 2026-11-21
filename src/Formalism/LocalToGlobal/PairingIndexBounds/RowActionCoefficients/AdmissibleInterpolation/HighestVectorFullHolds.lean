@@ -161,7 +161,7 @@ theorem highest_vector_mem_odd : HvMemO := by
     ext a t
     have := t.isLt
     simp only [Matrix.of_apply, xg, Matrix.mvPolynomialX_apply, dif_pos (show n - 1 - t.val < n by omega)]
-    congr 2
+    apply congrArg (fun p : Fin n × Fin n => (X p : MvPolynomial (Fin n × Fin n) K).coeff _)
     refine Prod.ext rfl (Fin.ext ?_)
     show n - 1 - (n - 1 - t.val) = t.val
     omega

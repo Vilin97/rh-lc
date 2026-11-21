@@ -84,6 +84,8 @@ theorem I_aug (hT : ThetaBasic) (p : IsPair B M χ χ' o r s r' s') (c : Cpt σ 
       M.I o (pure f (Function.update φ v z)) + a • M.I o (pure f (Function.update φ v z')) := fun z hz z' hz' a => by
     rw [← I_lin hT p c (mem z hz) (mem z' hz'), ← ht', ← ht', ← ht']
     congr 1
+    funext x
+    simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     ring
   have zero : M.I o (pure f (Function.update φ v 0)) = 0 := by
     have := add 0 (zero_mem _) 0 (zero_mem _) (-1)

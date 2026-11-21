@@ -70,34 +70,40 @@ open ReciprocityTheory.Aut
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
 def incO : 𝓞 L →+* AL L :=
-  (Algebra.TensorProduct.includeLeftRingHom (R := L⁺) (A := L) (B := AFplus L)).comp (algebraMap (𝓞 L) L)
+  (Algebra.TensorProduct.includeLeftRingHom (R := maximalRealSubfield L) (A := L)
+    (B := AFplus L)).comp (algebraMap (𝓞 L) L)
 
-theorem incO_apply (t : 𝓞 L) : incO t = (t : L) ⊗ₜ[L⁺] (1 : AFplus L) := rfl
+theorem incO_apply (t : 𝓞 L) :
+    incO (L := L) t = (t : L) ⊗ₜ[maximalRealSubfield L] (1 : AFplus L) := rfl
 
-theorem incO_mem (t : 𝓞 L) : incO t ∈ ALint L := Subring.subset_closure (Or.inl ⟨t, rfl⟩)
+theorem incO_mem (t : 𝓞 L) :
+    incO (L := L) t ∈ ALint L := Subring.subset_closure (Or.inl ⟨t, rfl⟩)
 
-theorem one_tmul_mem {b : AFplus L} (hb : ∀ v, b v ∈ v.adicCompletionIntegers L⁺) :
-    (1 : L) ⊗ₜ[L⁺] b ∈ ALint L := Subring.subset_closure (Or.inr ⟨b, hb, rfl⟩)
+theorem one_tmul_mem {b : AFplus L} (hb : ∀ v, b v ∈ v.adicCompletionIntegers (maximalRealSubfield L)) :
+    (1 : L) ⊗ₜ[maximalRealSubfield L] b ∈ ALint L := Subring.subset_closure (Or.inr ⟨b, hb, rfl⟩)
 
 theorem natCast_mem_ALint (N : ℕ) : (N : AL L) ∈ ALint L := natCast_mem _ N
 
 theorem exists_approx (N : ℕ) (hN : 0 < N) {x : AL L} (hx : x ∈ ALint L) :
-    ∃ t : 𝓞 L, ∃ y ∈ ALint L, x = incO t + (N : AL L) * y := by
+    ∃ t : 𝓞 L, ∃ y ∈ ALint L, x = incO (L := L) t + (N : AL L) * y := by
   induction hx using Subring.closure_induction with
   | mem x hx =>
     rcases hx with ⟨t, rfl⟩ | ⟨a, ha, rfl⟩
     · exact ⟨t, 0, zero_mem _, by simp [incO_apply]⟩
-    · obtain ⟨r, b, hb, e⟩ := (GlobalTheory.AdLat.strong_approximation_mod_nat L⁺ N hN).2 a ha
-      refine ⟨algebraMap (𝓞 L⁺) (𝓞 L) r, (1 : L) ⊗ₜ[L⁺] b, one_tmul_mem hb, ?_⟩
-      have h1 : ((algebraMap (𝓞 L⁺) (𝓞 L) r : 𝓞 L) : L) = algebraMap L⁺ L (r : L⁺) := by
+    · obtain ⟨r, b, hb, e⟩ := (GlobalTheory.AdLat.strong_approximation_mod_nat (maximalRealSubfield L) N hN).2 a ha
+      refine ⟨algebraMap (𝓞 (maximalRealSubfield L)) (𝓞 L) r,
+        (1 : L) ⊗ₜ[maximalRealSubfield L] b, one_tmul_mem hb, ?_⟩
+      have h1 : ((algebraMap (𝓞 (maximalRealSubfield L)) (𝓞 L) r : 𝓞 L) : L) =
+          algebraMap (maximalRealSubfield L) L (r : maximalRealSubfield L) := by
         show algebraMap (𝓞 L) L _ = _
         rw [← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
       rw [incO_apply, h1, e, TensorProduct.tmul_add, nsmul_eq_mul]
       congr 1
       · rw [Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one, TensorProduct.tmul_smul,
           TensorProduct.smul_tmul']
-      · have : (N : AL L) = (1 : L) ⊗ₜ[L⁺] (N : AFplus L) := by
-          exact (map_natCast (Algebra.TensorProduct.includeRight (R := L⁺) (A := L) (B := AFplus L)) N).symm
+      · have : (N : AL L) = (1 : L) ⊗ₜ[maximalRealSubfield L] (N : AFplus L) := by
+          exact (map_natCast (Algebra.TensorProduct.includeRight (R := maximalRealSubfield L)
+            (A := L) (B := AFplus L)) N).symm
         rw [this, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
   | zero => exact ⟨0, 0, zero_mem _, by simp⟩
   | one => exact ⟨1, 0, zero_mem _, by simp⟩
@@ -111,7 +117,7 @@ theorem exists_approx (N : ℕ) (hN : 0 < N) {x : AL L} (hx : x ∈ ALint L) :
   | mul x x' _ _ h h' =>
     obtain ⟨t, y, hy, rfl⟩ := h
     obtain ⟨t', y', hy', rfl⟩ := h'
-    refine ⟨t * t', incO t * y' + y * incO t' + (N : AL L) * y * y',
+    refine ⟨t * t', incO (L := L) t * y' + y * incO (L := L) t' + (N : AL L) * y * y',
       add_mem (add_mem (mul_mem (incO_mem _) hy') (mul_mem hy (incO_mem _)))
         (mul_mem (mul_mem (natCast_mem_ALint N) hy) hy'), ?_⟩
     rw [map_mul]
@@ -141,7 +147,8 @@ theorem finite_quot {n : ℕ} (H : Subgroup (Formalism.AUTREP.GAf L n)) (hH : H 
   have hI : Ideal.span {(N : 𝓞 L)} ≠ ⊥ := by simpa using hNz
   have hfin : Finite (𝓞 L ⧸ Ideal.span {(N : 𝓞 L)}) := Ideal.finiteQuotientOfFreeOfNeBot _ hI
   have hap : ∀ (h : H) (i j : Fin n), ∃ t : 𝓞 L, ∃ y ∈ ALint L,
-      (((h : Formalism.AUTREP.GAf L n)).1 : Matrix (Fin n) (Fin n) (AL L)) i j = incO t + (N : AL L) * y :=
+      (((h : Formalism.AUTREP.GAf L n)).1 : Matrix (Fin n) (Fin n) (AL L)) i j =
+        incO (L := L) t + (N : AL L) * y :=
     fun h i j => exists_approx N hN (hH h.2 i j)
   choose t y hy e using hap
   let f : H → Fin n → Fin n → 𝓞 L ⧸ Ideal.span {(N : 𝓞 L)} := fun h i j => Ideal.Quotient.mk _ (t h i j)
@@ -153,8 +160,10 @@ theorem finite_quot {n : ℕ} (H : Subgroup (Formalism.AUTREP.GAf L n)) (hH : H 
       (congrFun (congrFun hff i) j).symm
     rw [Ideal.Quotient.eq, Ideal.mem_span_singleton'] at h2
     obtain ⟨s, hs⟩ := h2
-    refine ⟨incO s + y h' i j - y h i j, sub_mem (add_mem (incO_mem s) (hy h' i j)) (hy h i j), ?_⟩
-    have h3 : incO (t h' i j) - incO (t h i j) = incO s * (N : AL L) := by
+    refine ⟨incO (L := L) s + y h' i j - y h i j,
+      sub_mem (add_mem (incO_mem s) (hy h' i j)) (hy h i j), ?_⟩
+    have h3 : incO (L := L) (t h' i j) - incO (L := L) (t h i j) =
+        incO (L := L) s * (N : AL L) := by
       rw [← map_sub, ← hs, map_mul, map_natCast]
     rw [e h' i j, e h i j]
     linear_combination h3
@@ -292,7 +301,7 @@ theorem hecke_eq_smul_of_isot : ∀ {D : D7} {V : HSp D} {n : ℕ} (hF : D.host.
       have hf := avg_fixed (stabN π H N) ρ1 (x := x) (fun s hs => hs x hx) ⟨κ, Subgroup.subset_closure hκ⟩
       exact congrArg Subtype.val hf
     | zero => simp
-    | add T T' _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
+    | add T T' _ _ h h' => rw [map_add]; exact add_mem h h'
     | smul c T _ h => rw [map_smul]; exact Submodule.smul_mem _ c h
   have := hWe _ (hAW U hUN)
   rwa [hAU] at this

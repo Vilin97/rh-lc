@@ -145,7 +145,8 @@ theorem joint_top : ∀ {N : ℕ} (W : Fin N → I → Submodule K V) (e : Fin N
       (fun i j hij => hc i.succ j.succ (by simpa using hij))
     refine eq_top_iff.2 ?_
     rw [← ih]
-    refine iSup_le fun t y hy => ?_
+    apply iSup_le
+    intro t y hy
     obtain ⟨T, hT⟩ := (h 0).cover y
     rw [hT]
     refine Submodule.sum_mem _ fun mu _ => ?_

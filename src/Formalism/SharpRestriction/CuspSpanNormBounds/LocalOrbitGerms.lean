@@ -452,10 +452,11 @@ theorem isLowUni_mk {P : Fin n × Fin n → Prop} [DecidablePred P] (hP : ∀ p,
   have hij' : i < j := hij
   exact mk_neg P x hij'.ne (fun hp => lt_asymm hij' (hP (i, j) hp))
 
-theorem isCoord_up (n : ℕ) : IsCoord (K := K) (PU n) (upUniG K n) where
-  ne p hp := ne_of_lt hp
-  det x := isUpUni_det K (isUpUni_mk (fun _ hp => hp) x)
-  mem g := by
+theorem isCoord_up (n : ℕ) : IsCoord (K := K) (PU n) (upUniG K n) := by
+  refine { ne := fun _ hp => ne_of_lt hp
+           det := fun x => isUpUni_det K (isUpUni_mk (fun _ hp => hp) x)
+           mem := ?_ }
+  · intro g
     constructor
     · intro hg
       have hg' : IsUpUni (g : Matrix (Fin n) (Fin n) K) := hg
@@ -474,10 +475,11 @@ theorem isCoord_up (n : ℕ) : IsCoord (K := K) (PU n) (upUniG K n) where
 
 theorem isCoord_low (s : List ℕ) (t : ℕ → Kˣ) (sb : Fin s.sum → Fin s.sum → Bool)
     (hsb : ∀ a b, sb a b = true ↔ blk s a = blk s b) :
-    IsCoord (K := K) (PW sb) (lowW K s t) where
-  ne p hp := ne_of_gt hp.1
-  det x := isLowUni_det K (isLowUni_mk (fun _ hp => hp.1) x)
-  mem g := by
+    IsCoord (K := K) (PW sb) (lowW K s t) := by
+  refine { ne := fun _ hp => ne_of_gt hp.1
+           det := fun x => isLowUni_det K (isLowUni_mk (fun _ hp => hp.1) x)
+           mem := ?_ }
+  · intro g
     rw [Formalism.DoubleCosetMeasures.P.Supp.mem_lowW_iff s t (Formalism.DoubleCosetMeasures.P.Phase.ptI s t) (Formalism.DoubleCosetMeasures.P.Phase.ptI_mul_pt s t)
       (Formalism.DoubleCosetMeasures.P.Phase.pt_mul_ptI s t) g]
     constructor
@@ -704,26 +706,30 @@ structure Tri (P : Fin n × Fin n → Prop) : Prop where
   rk1 : ∀ a c b, P (a, c) → P (c, b) → rk (a, c) < rk (a, b)
   rk2 : ∀ a c b, P (a, c) → P (c, b) → rk (c, b) < rk (a, b)
 
-theorem tri_PL : Tri (PL n) where
-  irr a := lt_irrefl a
-  trans a c b h1 h2 := lt_trans h2 h1
-  rk1 a c b h1 h2 := by
+theorem tri_PL : Tri (PL n) := by
+  refine { irr := lt_irrefl
+           trans := fun _ _ _ h1 h2 => lt_trans h2 h1
+           rk1 := ?_
+           rk2 := ?_ }
+  · intro a c b h1 h2
     have h1' : (c : ℕ) < a := h1
     have h2' : (b : ℕ) < c := h2
     simp only [rk]; omega
-  rk2 a c b h1 h2 := by
+  · intro a c b h1 h2
     have h1' : (c : ℕ) < a := h1
     have h2' : (b : ℕ) < c := h2
     simp only [rk]; omega
 
-theorem tri_PU : Tri (PU n) where
-  irr a := lt_irrefl a
-  trans a c b h1 h2 := lt_trans h1 h2
-  rk1 a c b h1 h2 := by
+theorem tri_PU : Tri (PU n) := by
+  refine { irr := lt_irrefl
+           trans := fun _ _ _ h1 h2 => lt_trans h1 h2
+           rk1 := ?_
+           rk2 := ?_ }
+  · intro a c b h1 h2
     have h1' : (a : ℕ) < c := h1
     have h2' : (c : ℕ) < b := h2
     simp only [rk]; omega
-  rk2 a c b h1 h2 := by
+  · intro a c b h1 h2
     have h1' : (a : ℕ) < c := h1
     have h2' : (c : ℕ) < b := h2
     simp only [rk]; omega

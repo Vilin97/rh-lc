@@ -16,8 +16,7 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 
 theorem memLp_two_of_lintegral {X : Type} [MeasurableSpace X] {μ : Measure X} {f : X → ℂ}
     (hm : AEStronglyMeasurable f μ) (h : ∫⁻ x, ‖f x‖ₑ ^ 2 ∂μ ≠ ⊤) : MemLp f 2 μ := by
-  refine ⟨hm, ?_⟩
-  rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
+  rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero ENNReal.ofNat_ne_top hm]
   simpa using h.lt_top
 
 theorem integral_sq_eq {X : Type} [MeasurableSpace X] {μ : Measure X} {f : X → ℂ} (hm : AEStronglyMeasurable f μ) :
@@ -44,8 +43,8 @@ theorem polar_int {X : Type} [MeasurableSpace X] {μ : Measure X} {f g : X → �
   have h3 := hf.add (hg.const_smul Complex.I)
   have h4 := hf.sub (hg.const_smul Complex.I)
   have I : ∀ {k : X → ℂ}, MemLp k 2 μ → Integrable (fun x => ((‖k x‖ ^ 2 : ℝ) : ℂ)) μ := fun hk =>
-    ((memLp_two_iff_integrable_sq_norm hk.1).1 hk).ofReal
-  rw [← integral_sq_eq h1.1, ← integral_sq_eq h2.1, ← integral_sq_eq h3.1, ← integral_sq_eq h4.1,
+    ((memLp_two_iff_integrable_sq_norm hk.aestronglyMeasurable).1 hk).ofReal
+  rw [← integral_sq_eq h1.aestronglyMeasurable, ← integral_sq_eq h2.aestronglyMeasurable, ← integral_sq_eq h3.aestronglyMeasurable, ← integral_sq_eq h4.aestronglyMeasurable,
     ← integral_complex_ofReal, ← integral_complex_ofReal, ← integral_complex_ofReal, ← integral_complex_ofReal,
     ← integral_const_mul, ← integral_const_mul, ← integral_sub (I h1) (I h2),
     ← integral_sub ((I h3).const_mul _) ((I h4).const_mul _),
@@ -64,8 +63,9 @@ theorem continuous_schA {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) : 
 theorem lintegral_sq_schwartz_gen {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V]
     {m : MeasurableSpace V} (hB : BorelSpace V) (μ : Measure V) (hμ : μ.IsAddHaarMeasure) (f : SchwartzMap V ℂ) :
     ∫⁻ z, ‖f z‖ₑ ^ 2 ∂μ ≠ ⊤ := by
-  have := (f.memLp 2 μ).2
-  rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top] at this
+  have hmem := f.memLp 2 μ
+  have := hmem
+  rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero ENNReal.ofNat_ne_top hmem.aestronglyMeasurable] at this
   simpa using this.ne
 
 open scoped Classical in

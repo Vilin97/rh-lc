@@ -36,7 +36,7 @@ theorem UpperTheory.ConvolutionTheory.R2.G.prodExt :
       have hc : IsCompact (Set.accumulate e n) := isCompact_accumulate (fun i => (he i).1) n
       have ho : IsOpen (Set.accumulate e n) := by
         rw [Set.accumulate_def]
-        exact isOpen_biUnion (fun i _ => (he i).2)
+        exact isOpen_iUnion (fun i => isOpen_iUnion (fun _ => (he i).2))
       have := H Set.univ (Set.accumulate e n) MeasurableSet.univ hc ho
       simpa using this
     have hlim : Tendsto (fun n => ∫ ω, (Set.accumulate e n).indicator (1 : Z → ℂ) (s ω) * ρ ω ∂ν)

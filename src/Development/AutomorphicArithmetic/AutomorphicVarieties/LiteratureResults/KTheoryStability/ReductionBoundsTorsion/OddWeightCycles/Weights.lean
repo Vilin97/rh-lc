@@ -50,7 +50,7 @@ theorem rot_rev (q : ℕ) :
   · exact Subsingleton.elim _ _
   · rw [eq_inv_iff_mul_eq_one]
     ext i
-    simp [Equiv.Perm.inv_def, finRotate_succ_apply, Fin.revPerm_apply, Fin.rev_add]
+    simp [Equiv.Perm.inv_def, finRotate_apply, Fin.revPerm_apply, Fin.rev_add]
 
 theorem alt_relabel {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] {q : ℕ}
     (f g : ContinuousMultilinearMap ℝ (fun _ : Fin q => E) ℝ) (τ : Equiv.Perm (Fin q))

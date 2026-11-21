@@ -215,7 +215,7 @@ theorem Wn_bdd : ∀ s ∈ Wn L N, ∀ w i j,
     ‖((s w : SpecialLinearGroup (Fin N) ℂ) : Matrix (Fin N) (Fin N) ℂ) i j‖ ≤ 3 / 2 := by
   intro s hs w i j
   have h1 : ‖(1 : Matrix (Fin N) (Fin N) ℂ) i j‖ ≤ 1 := by
-    rw [one_apply]; split_ifs <;> simp
+    rw [Matrix.one_apply]; split_ifs <;> simp
   calc _ = ‖(((s w : SpecialLinearGroup (Fin N) ℂ) : Matrix (Fin N) (Fin N) ℂ) i j -
         (1 : Matrix (Fin N) (Fin N) ℂ) i j) + (1 : Matrix (Fin N) (Fin N) ℂ) i j‖ := by rw [sub_add_cancel]
     _ ≤ _ := norm_add_le _ _
@@ -235,7 +235,10 @@ theorem Wn_pos (μ : Measure (Sp L N)) [μ.IsOpenPosMeasure] : μ (Wn L N) ≠ 0
   have h1 : (1 : Sp L N) ∈ {s : Sp L N | ∀ w i j, ‖((s w : SpecialLinearGroup (Fin N) ℂ) :
       Matrix (Fin N) (Fin N) ℂ) i j - (1 : Matrix (Fin N) (Fin N) ℂ) i j‖ < 1 / 2} := fun w i j => by
     simp
-  exact fun h0 => (hU.measure_ne_zero μ ⟨1, h1⟩) (measure_mono_null (fun s hs w i j => (hs w i j).le) h0)
+  have hsub : {s : Sp L N | ∀ w i j, ‖((s w : SpecialLinearGroup (Fin N) ℂ) : Matrix (Fin N) (Fin N) ℂ) i j -
+      (1 : Matrix (Fin N) (Fin N) ℂ) i j‖ < 1 / 2} ⊆ Wn L N :=
+    fun s hs w i j => (hs w i j).le
+  exact fun h0 => (hU.measure_ne_zero μ ⟨1, h1⟩) (measure_mono_null hsub h0)
 
 theorem right_trans_le {G : Type} [Group G] [MeasurableSpace G] [MeasurableMul G] (μ : Measure G)
     [μ.IsMulRightInvariant] (W K' : Set G) (hW : MeasurableSet W) (hK' : MeasurableSet K') (t : G)

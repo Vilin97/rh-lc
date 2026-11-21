@@ -235,7 +235,7 @@ theorem cone_core (hSt : StabEx) (hO : ArchOp) (hS : Slice) (hH : ArchHeis) (hU 
   have hwc : Continuous fun t : idAt E (evI F) => wt ν z t.1 := by
     simp only [wt, hab]
     refine (continuous_subtype_val.comp (hν.comp continuous_subtype_val)).mul (Continuous.pow (Complex.continuous_ofReal.comp ?_) _)
-    exact continuous_finset_prod _ fun w _ => ((hL.cont w).comp (Units.continuous_val.comp continuous_subtype_val)).norm.pow 2
+    exact continuous_finsetProd _ fun w _ => ((hL.cont w).comp (Units.continuous_val.comp continuous_subtype_val)).norm.pow 2
   have hwn : ∀ t : idAt E (evI F), ‖wt ν z t.1‖ = (∏ w, ‖piInf (B.emb w) (t.1 : AE F E)‖ ^ 2) ^ z := fun t => by
     rw [wt, norm_mul, Circle.norm_coe, one_mul, norm_pow, Complex.norm_real, hab, Real.norm_of_nonneg (by positivity)]
   let G : kAt K (evI F) × idAt E (evI F) → SInf F (Fin n × Fin d) →L[ℂ] SInf F (Fin n₁ × Fin d₁) :=

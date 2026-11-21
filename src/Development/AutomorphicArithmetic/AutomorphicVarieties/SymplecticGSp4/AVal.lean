@@ -25,8 +25,8 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.aElt :
       apply Submodule.smul_mem
       show (1 : M.R) ∈ M.aPart 0
       exact SetLike.GradedOne.one_mem
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sub, map_sum, AlgHom.commutes]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, AlgHom.commutes]
     simp only [hx0, Algebra.algebraMap_self, RingHom.id_apply, Matrix.trace, Matrix.diag]
     exact sub_self _
   · intro ξ

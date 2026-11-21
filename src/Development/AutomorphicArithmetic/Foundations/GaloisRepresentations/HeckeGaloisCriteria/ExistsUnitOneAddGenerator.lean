@@ -68,14 +68,24 @@ theorem exists_tuple (D : D7) (μ : D.what₂.Tup) (j : ℕ) (F : D.what₂.Mt �
   push Not at hcon
   apply hF
   let ef := fun p : (∀ kv : (Σ k : Fin 2, D.nd.PlG k), Fin D.R.r → ZMod (D.host.g kv.1)) =>
-    GlobalTheory.CutAtGood.ef (D := D) (fun kv => Formalism.CyclotomicNorms.monicOf (p kv))
+    fun kv => (⟨ArithmeticCylinders.atPlace D kv.1 kv.2 (D.ntypes.eSer kv.1 (Formalism.CyclotomicNorms.monicOf (p kv))),
+      GlobalTheory.CutAtGood.atPlace_mem_center D kv.1 kv.2 _ (D.ntypes.eSer_central kv.1 _)⟩ : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))))
   have ht : ∀ p : (∀ kv : (Σ k : Fin 2, D.nd.PlG k), Fin D.R.r → ZMod (D.host.g kv.1)),
       tens (fun kv => ESer D kv (p kv)) = ((∏ kv, ef p kv : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)))) :
         MonoidAlgebra ℂ (G0g D.nd)) := by
     intro p
     have hnd := (Finset.univ : Finset (Σ k : Fin 2, D.nd.PlG k)).nodup_toList
     have hall : ∀ kv, kv ∈ (Finset.univ : Finset (Σ k : Fin 2, D.nd.PlG k)).toList := fun kv => by simp
-    rw [← GlobalTheory.CutAtGood.list_prod_eq _ _ hnd hall]
+    have hprod : ((Finset.univ : Finset (Σ k : Fin 2, D.nd.PlG k)).toList.map fun kv =>
+        ArithmeticCylinders.atPlace D kv.1 kv.2 (D.ntypes.eSer kv.1 (Formalism.CyclotomicNorms.monicOf (p kv)))).prod =
+        ((∏ kv, ef p kv : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)))) : MonoidAlgebra ℂ (G0g D.nd)) := by
+      have hmap : ((Finset.univ : Finset (Σ k : Fin 2, D.nd.PlG k)).toList.map fun kv =>
+          ArithmeticCylinders.atPlace D kv.1 kv.2 (D.ntypes.eSer kv.1 (Formalism.CyclotomicNorms.monicOf (p kv)))) =
+          ((Finset.univ : Finset (Σ k : Fin 2, D.nd.PlG k)).toList.map (ef p)).map (Subalgebra.val _) := by
+        rw [List.map_map]; rfl
+      rw [hmap, ← map_list_prod (Subalgebra.val _), ← List.prod_toFinset (ef p) hnd]
+      simp
+    rw [← hprod]
     have e1 : ((Finset.univ : Finset (Σ k : Fin 2, D.nd.PlG k)).toList.map fun kv =>
         ArithmeticCylinders.atPlace D kv.1 kv.2 (D.ntypes.eSer kv.1 (Formalism.CyclotomicNorms.monicOf (p kv)))) =
         (Finset.univ : Finset (Σ k : Fin 2, D.nd.PlG k)).toList.map fun kv => plc kv (ESer D kv (p kv)) :=
@@ -91,15 +101,22 @@ theorem exists_tuple (D : D7) (μ : D.what₂.Tup) (j : ℕ) (F : D.what₂.Mt �
     split_ifs with hg
     · exact ht p
     · rfl
+  have onMt_coe (c : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)))) :
+      D.ntypes.onMt μ j (c : MonoidAlgebra ℂ (G0g D.nd)) = D.ntypes.cenMt μ j c := by
+    unfold NTypes.onMt
+    rw [dite_eq_left c.2]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [he, GlobalTheory.CutAtGood.onMt_coe, map_sum, LinearMap.sum_apply]
+    rw [he, onMt_coe, map_sum, LinearMap.sum_apply]
   refine Finset.sum_eq_zero fun p _ => ?_
   split_ifs with hg
   · by_contra hc
     obtain ⟨k, v, h0⟩ := hcon (fun k v => Formalism.CyclotomicNorms.monicOf (p ⟨k, v⟩)) hg
-    refine GlobalTheory.CutAtGood.cen_prod_ne _ _ _ F hc ⟨k, v⟩ (Finset.mem_univ _) ?_
-    rw [← GlobalTheory.CutAtGood.onMt_coe]
-    exact h0
+    apply hc
+    rw [← Finset.prod_erase_mul _ (ef p) (Finset.mem_univ ⟨k, v⟩), map_mul, Module.End.mul_apply]
+    have hzero : D.ntypes.cenMt μ j (ef p ⟨k, v⟩) F = 0 := by
+      rw [← onMt_coe]
+      exact h0
+    rw [hzero, map_zero]
   · rw [map_zero]; rfl
 
 theorem exists_type (D : D7) (P : PairedCharacterCondition.Pend D) (i : D.nd.Loc) (PI : D.naut.AV i) (F : D.what₂.Mt (D.nd.mu i) (D.nd.j i))
@@ -115,7 +132,25 @@ theorem exists_type (D : D7) (P : PairedCharacterCondition.Pend D) (i : D.nd.Loc
     · exact GlobalTheory.CutAtGood.atPlace_mem_center D k v _ fun b => (P.lz k).idem_central τ b
     · rw [GlobalTheory.CutAtGood.atPlace_zero]
       exact Subalgebra.zero_mem _
-  rw [P.eSer_eq k, GlobalTheory.CutAtGood.atPlace_sum, GlobalTheory.CutAtGood.onMt_sum D _ _ _ _ hc, LinearMap.sum_apply] at h1
+  have hsum : D.ntypes.onMt (D.nd.mu i) (D.nd.j i)
+      (∑ τ, ArithmeticCylinders.atPlace D k v (if (P.lz k).lab τ = f then (P.lz k).idem τ else 0)) =
+      ∑ τ, D.ntypes.onMt (D.nd.mu i) (D.nd.j i)
+        (ArithmeticCylinders.atPlace D k v (if (P.lz k).lab τ = f then (P.lz k).idem τ else 0)) := by
+    let a := fun τ => ArithmeticCylinders.atPlace D k v (if (P.lz k).lab τ = f then (P.lz k).idem τ else 0)
+    have hco : ∀ τ, a τ ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)) := fun τ => hc τ (Finset.mem_univ _)
+    have hcoe (c : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)))) :
+        D.ntypes.onMt (D.nd.mu i) (D.nd.j i) (c : MonoidAlgebra ℂ (G0g D.nd)) =
+          D.ntypes.cenMt (D.nd.mu i) (D.nd.j i) c := by
+      unfold NTypes.onMt
+      rw [dite_eq_left c.2]
+    change D.ntypes.onMt _ _ (∑ τ, a τ) = ∑ τ, D.ntypes.onMt _ _ (a τ)
+    have hval : (∑ τ, a τ) = ((∑ τ, (⟨a τ, hco τ⟩ : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))))) : MonoidAlgebra ℂ (G0g D.nd)) := by
+      simp only [AddSubmonoidClass.coe_finsetSum]
+    rw [hval, ← AddSubmonoidClass.coe_finsetSum, hcoe, map_sum]
+    apply Finset.sum_congr rfl
+    intro τ _
+    exact (hcoe ⟨a τ, hco τ⟩).symm
+  rw [P.eSer_eq k, GlobalTheory.CutAtGood.atPlace_sum, hsum, LinearMap.sum_apply] at h1
   obtain ⟨τ, -, hτ⟩ := Finset.exists_ne_zero_of_sum_ne_zero h1
   by_cases hlab : (P.lz k).lab τ = f
   · rw [if_pos hlab] at hτ
@@ -140,8 +175,8 @@ theorem tuple_labels {D : D7} {s : ∀ k, D.nd.PlG k → (ZMod (D.host.g k))[X]}
   have hmem : algebraMap (ZMod (D.host.g k)) (Formalism.CyclotomicNorms.Fbar (D.host.g k)) (u : ZMod (D.host.g k)) ∈
       Formalism.CyclotomicNorms.rootsBar (s k v) := by
     unfold Formalism.CyclotomicNorms.rootsBar
-    rw [Polynomial.mem_roots (Polynomial.map_monic_ne_zero (h1.1 v).1)]
-    exact hr.map
+    rw [Polynomial.mem_roots (Polynomial.map_monic_ne_zero (f := algebraMap (ZMod (D.host.g k)) (Formalism.CyclotomicNorms.Fbar (D.host.g k))) (h1.1 v).1)]
+    exact hr.map (algebraMap (ZMod (D.host.g k)) (Formalism.CyclotomicNorms.Fbar (D.host.g k)))
   rcases hu with rfl | rfl
   · exact h1.2.2.2.1 ℓ hℓ hℓne v ⟨D.nd.j i - 1, by have := D.nd.j_range i; omega⟩ _ hmem rfl
   · exact h2.2.2.2.1 ℓ hℓ hℓne v ⟨D.nd.j i - 1, by have := D.nd.j_range i; omega⟩ _ hmem rfl

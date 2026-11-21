@@ -24,7 +24,7 @@ variable {X : Fields} {Pr : Primes X} (hc : CMData X.F X.E) (σ₀ : X.K →+* �
 
 theorem xp_basePi_one : BasePi (∅ : Finset (Pl X.E)) (1 : 𝓞 X.E) where
   dvd r := ⟨fun _ => one_dvd r, fun _ P hP => absurd hP (Finset.notMem_empty P)⟩
-  cop := isCoprime_one_left
+  cop := ⟨1, 0, by simp⟩
 
 theorem xp_L_eq_N {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {SG : Finset (Pl E)}
     (d : Deco E n (∅ : Finset (Pl E)) SG) : d.L = d.N := by

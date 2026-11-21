@@ -30,7 +30,7 @@ private theorem module_local (v : HeightOneSpectrum (𝓞 K)) (x : (v.adicComple
 private theorem norm_of_val (v : HeightOneSpectrum (𝓞 K)) (x : v.adicCompletion K) (n : ℤ)
     (h : Valued.v x = WithZero.exp n) : ‖x‖ = (Ideal.absNorm v.asIdeal : ℝ) ^ n := by
   rw [FinitePlace.norm_def, h, WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero]
-  simp [WithZero.exp]
+  simp [WithZero.log_exp]
 
 private theorem pow_loc {χ : HChar K} {s : ℂ} (h : UpperTheory.ConvolutionTheory.T.IsPow χ s) (v : HeightOneSpectrum (𝓞 K)) (x : (v.adicCompletion K)ˣ) :
     ((χ.loc v x : ℂˣ) : ℂ) = ((‖(x : v.adicCompletion K)‖ : ℝ) : ℂ) ^ s := by
@@ -45,7 +45,8 @@ private theorem pow_unr {χ : HChar K} {s : ℂ} (h : UpperTheory.ConvolutionThe
 private theorem pow_val {χ : HChar K} {s : ℂ} (h : UpperTheory.ConvolutionTheory.T.IsPow χ s) (v : HeightOneSpectrum (𝓞 K)) :
     ((χ.val v : ℂˣ) : ℂ) = ((Formalism.ConjugateSelfDual.normV v : ℕ) : ℂ) ^ (-s) := by
   have e : χ.val v = χ.loc v (Formalism.L2.Host.atFin v (Formalism.L2.Host.unif v)) := rfl
-  have e2 : (Formalism.ConjugateSelfDual.normV v : ℕ) = Ideal.absNorm v.asIdeal := rfl
+  have e2 : (Formalism.ConjugateSelfDual.normV v : ℕ) = Ideal.absNorm v.asIdeal := by
+    rw [Formalism.ConjugateSelfDual.normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
   rw [e, pow_loc h, norm_of_val v _ (-1) (Formalism.L2.Host.unif_spec v), e2, zpow_neg_one, Complex.ofReal_inv,
     Complex.inv_cpow _ _ (by
       rw [Complex.arg_ofReal_of_nonneg (by positivity)]

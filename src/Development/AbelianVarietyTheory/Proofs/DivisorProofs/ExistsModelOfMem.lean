@@ -10,7 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.Crystal
 
 noncomputable section
 
-open Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations Formalism.Per GlobalTheory.AdmBr
+open Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations Formalism.Per
 
 namespace GlobalTheory.CrysSubRep
 

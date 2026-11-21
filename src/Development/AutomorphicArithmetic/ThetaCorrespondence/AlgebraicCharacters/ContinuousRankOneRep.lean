@@ -45,7 +45,7 @@ private theorem alg_cont (wt : Emb l w → ℤ) : Continuous (alg wt) := by
   have : (alg wt : _ → _) = fun x => ∏ τ : Emb l w, (Units.map τ.1.toMonoidHom x) ^ wt τ := by
     funext x; simp [alg]
   rw [this]
-  exact continuous_finset_prod _ fun τ _ => (Continuous.units_map _ τ.2).zpow _
+  exact continuous_finsetProd _ fun τ _ => (Continuous.units_map _ τ.2).zpow _
 
 private theorem cont_gq (s : GQ l) : Continuous s := by
   refine (AddMonoidHomClass.isometry_of_norm s fun x => ?_).continuous
@@ -67,7 +67,7 @@ private theorem ord_zero [Nonempty (Emb l w)] (u : (w.adicCompletion F)ˣ) (hu :
     simp only [Units.val_one, norm_one, zpow_one, norm_prod] at h2
     refine absurd h2.symm (ne_of_lt ?_)
     obtain ⟨τ⟩ := ‹Nonempty (Emb l w)›
-    have := Finset.prod_lt_prod_of_nonempty (s := Finset.univ) (f := fun τ : Emb l w => ‖τ.1 u‖) (g := fun _ => 1)
+    have := Finset.prod_lt_prod_of_nonempty₀ (s := Finset.univ) (f := fun τ : Emb l w => ‖τ.1 u‖) (g := fun _ => 1)
       (fun τ _ => by simp) (fun τ _ => norm_lt τ u h) ⟨τ, by simp⟩
     simpa using this
   have h1 := key u hu

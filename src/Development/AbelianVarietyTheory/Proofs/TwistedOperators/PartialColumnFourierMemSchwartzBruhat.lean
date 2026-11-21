@@ -52,7 +52,7 @@ omit [DecidableEq C] in
 theorem continuous_pairCols_pair (P : Finset C) :
     Continuous fun q : Matrix A C k × Matrix A P k => pairCols P q.1 q.2 := by
   unfold pairCols
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact (continuous_snd.matrix_elem i j).mul (continuous_fst.matrix_elem i (j : C))
 
 end GlobalTheory.ColFourier

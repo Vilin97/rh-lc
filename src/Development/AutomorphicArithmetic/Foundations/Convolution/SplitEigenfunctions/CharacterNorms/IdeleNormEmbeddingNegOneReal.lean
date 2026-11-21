@@ -52,8 +52,8 @@ theorem nE_add (D : Dat ℚ E) (x c : Fin 2 → A ℚ) : nE D (x + c) = nE D x *
 theorem rat_n (k : E) : ∃ γ : GL (Fin 2) E, ratGL E 2 γ = gl (nU (rt k)) := by
   refine ⟨Matrix.SpecialLinearGroup.toGL ⟨!![1, k; 0, 1], by simp [Matrix.det_fin_two]⟩, Units.ext ?_⟩
   ext i j
-  change algebraMap E (A E) (!![1, k; 0, 1] i j) = _
-  fin_cases i <;> fin_cases j <;> simp
+  change algebraMap E (A E) (!![1, k; 0, 1] i j) = (!![1, rt k; 0, 1] : Matrix (Fin 2) (Fin 2) (A E)) i j
+  fin_cases i <;> fin_cases j <;> simp [UpperTheory.ConvolutionTheory.R2.rt]
 
 theorem Wo_right (D : Dat ℚ E) (φ : GL (Fin 2) (A E) → ℂ) (x h : GL (Fin 2) (A E)) :
     Wo D (fun g => φ (g * x)) h = Wo D φ (h * x) := by

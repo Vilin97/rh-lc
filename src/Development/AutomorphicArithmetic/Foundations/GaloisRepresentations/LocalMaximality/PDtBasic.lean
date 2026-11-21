@@ -75,7 +75,6 @@ theorem UpperTheory.Gal.productCup_of_system.dtBasic_of :
           (t := (⟨S, rfl⟩ : Set.powersetCard (Fin d) S.card)) (hd S) : Set.powersetCard (Fin d) (Sᶜ.card + S.card)) : Finset (Fin d)) = Finset.univ := by
         ext i
         simp [Set.powersetCard.disjUnion]
-        tauto
       rw [hu] at e
       exact e
     · have hnd : ¬ Disjoint U S := by

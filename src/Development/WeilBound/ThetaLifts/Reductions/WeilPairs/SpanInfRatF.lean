@@ -26,7 +26,7 @@ variable {σ : E →ₐ[F] E} {B : Base F E} {nS nT : ℕ} {JS : Matrix (Fin nS)
 theorem fin_smul_eq (z : AEF F E) :
     (pairA F 0 1 : AF F) • z = (TensorProduct.map (LinearMap.inr F (Ainf F) (Af F)) LinearMap.id (finPartF F E z) : AEF F E) := by
   induction z using TensorProduct.induction_on with
-  | zero => rw [smul_zero, map_zero, map_zero]; rfl
+  | zero => rw [smul_zero, map_zero, map_zero]
   | tmul a e =>
     rw [TensorProduct.smul_tmul']
     show _ = TensorProduct.map (LinearMap.inr F (Ainf F) (Af F)) LinearMap.id
@@ -39,7 +39,7 @@ theorem fin_smul_eq (z : AEF F E) :
 theorem inf_smul_eq (z : AEF F E) :
     (pairA F 1 0 : AF F) • z = (TensorProduct.map (LinearMap.inl F (Ainf F) (Af F)) LinearMap.id (infPartF F E z) : AEF F E) := by
   induction z using TensorProduct.induction_on with
-  | zero => rw [smul_zero, map_zero, map_zero]; rfl
+  | zero => rw [smul_zero, map_zero, map_zero]
   | tmul a e =>
     rw [TensorProduct.smul_tmul']
     show _ = TensorProduct.map (LinearMap.inl F (Ainf F) (Af F)) LinearMap.id
@@ -58,7 +58,7 @@ theorem finIdem_mul_of_fin {z : AEF F E} (hz : infPartF F E z = 0) : finIdem F E
     _ = z := by rw [← add_smul, h1, one_smul]
 
 theorem finIdem_mul_of_real {z : AEF F E} (hz : finPartF F E z = 0) : finIdem F E * z = 0 := by
-  rw [finIdem, ← Algebra.smul_def, fin_smul_eq, hz, map_zero]; rfl
+  rw [finIdem, ← Algebra.smul_def, fin_smul_eq, hz, map_zero]
 
 theorem finPartF_finIdem : finPartF F E (finIdem F E) = 1 := by
   show Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) (pairA F 0 1 ⊗ₜ 1) = 1
@@ -432,7 +432,7 @@ theorem span_tau (hB : B.IsGood σ) :
       show (B.emb w).1 e = cw B w ((wE B w).embedding e)
       rw [cw_emb]
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   have htop : Submodule.span ℝ (Set.range (mixedEmbedding E)) = ⊤ := by
     refine eq_top_iff.2 (le_trans (le_of_eq (mixedEmbedding.latticeBasis E).span_eq.symm) (Submodule.span_mono ?_))

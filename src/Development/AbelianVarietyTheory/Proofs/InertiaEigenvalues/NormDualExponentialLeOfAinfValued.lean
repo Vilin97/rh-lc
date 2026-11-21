@@ -80,7 +80,7 @@ theorem norm_le_of_log {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)} {
 theorem sum_val (e : ℕ) : ∑ i ∈ Finset.range e, (padicValInt l ((i : ℤ) - e)) =
     padicValNat l e.factorial := by
   induction e with
-  | zero => simp
+  | zero => simp [Nat.padicValNat_def]
   | succ e ih =>
     rw [Finset.sum_range_succ', Nat.factorial_succ,
       (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero e) e.factorial_ne_zero, ← ih,
@@ -89,8 +89,8 @@ theorem sum_val (e : ℕ) : ∑ i ∈ Finset.range e, (padicValInt l ((i : ℤ) 
     · congr 1
       push_cast
       ring
-    · simp only [padicValInt]
-      congr 1
+    · change padicValInt l (-((e + 1 : ℕ) : ℤ)) = padicValNat l (e + 1)
+      simp only [padicValInt, Nat.padicValNat_def, Int.natAbs_neg, Int.natAbs_natCast]
 
 variable {P : LocPrime l} {AI : LocAinf l P}
 

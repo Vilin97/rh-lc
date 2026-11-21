@@ -181,7 +181,9 @@ def trueK {η : HChar D.host.E} (hη : IsEtaT D.host η) : CGK D.naut :=
     have := hη.unitary x
     change ‖(((η.1 x)⁻¹ : ℂˣ) : ℂ)‖ = 1
     rw [Units.val_inv_eq_inv_val, norm_inv, this, inv_one]
-  have hu : ∀ w, (η⁻¹).UnrAt w := fun w x hx => by rw [HChar.loc_inv, hη.unr w x hx, inv_one]
+  have hu : ∀ w, (η⁻¹).UnrAt w := fun w x hx => by
+    have hloc : (η⁻¹).loc w x = (η.loc w x)⁻¹ := rfl
+    rw [hloc, hη.unr w x hx, inv_one]
   { CG := fun a => {π : HostCGu D.host a // 0 < a}
     csd := fun π => π.1.IsCsd
     ralg := fun π => π.1.IsRegAlg

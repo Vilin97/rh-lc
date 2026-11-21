@@ -247,7 +247,7 @@ theorem cNA_pres (hσ : ∀ a, σ (σ a) = a) {b : GL (Fin n ⊕ Fin n) E} (hb :
   have : (lam.map τ.symm).IsAddHaarMeasure := τ.symm.isAddHaarMeasure_map lam
   have e1 := Measure.isAddLeftInvariant_eq_smul (lam.map τ) lam
   have e2 := Measure.isAddLeftInvariant_eq_smul (lam.map τ.symm) lam
-  have hq : Measure.QuasiMeasurePreserving τ.symm lam lam := ⟨hm', by
+  have hq : Measure.QuasiMeasurePreserving τ.symm lam lam := ⟨hm'.aemeasurable, by
     rw [e2]
     exact Measure.AbsolutelyContinuous.rfl.smul_left _⟩
   let eF : nF σ Y b ≃ nF σ Y b :=

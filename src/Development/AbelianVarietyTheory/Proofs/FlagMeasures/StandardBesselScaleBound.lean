@@ -105,6 +105,8 @@ theorem aT_one (k r : ℕ) : aT k r 1 = 1 := by
   unfold aT
   rw [← Matrix.diagonal_one]
   congr 1
+  funext i
+  simp
 
 theorem conjF_one {k r : ℕ} {V : Type*} (F : B.Mat k r → V) : conjF 1 F = F := by
   funext x

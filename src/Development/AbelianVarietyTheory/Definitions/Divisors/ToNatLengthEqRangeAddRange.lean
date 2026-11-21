@@ -113,32 +113,31 @@ private theorem exists_coh_boundary_exact (hS : S.ShortExact) (n : ℕ) :
 
 namespace FiniteLenCoh
 
-theorem of_iso (h : FiniteLenCoh R F) (e : F ≅ G) : FiniteLenCoh R G where
-  ne_top n := (cohOn.mapIso R ⊤ n e).length_eq ▸ h.ne_top n
-  eventually_zero := by
-    obtain ⟨N, hN⟩ := h.eventually_zero
-    refine ⟨N, fun n hn => ?_⟩
-    have := hN n hn
-    exact (cohOn.mapIso R ⊤ n e).symm.injective.subsingleton
+theorem of_iso (h : FiniteLenCoh R F) (e : F ≅ G) : FiniteLenCoh R G := by
+  refine ⟨fun n => (cohOn.mapIso R ⊤ n e).length_eq ▸ h.ne_top n, ?_⟩
+  obtain ⟨N, hN⟩ := h.eventually_zero
+  refine ⟨N, fun n hn => ?_⟩
+  have := hN n hn
+  exact (cohOn.mapIso R ⊤ n e).symm.injective.subsingleton
 
 theorem of_shortExact₂ (hS : S.ShortExact) (h₁ : FiniteLenCoh R S.X₁) (h₃ : FiniteLenCoh R S.X₃) :
-    FiniteLenCoh R S.X₂ where
-  ne_top n := by
+    FiniteLenCoh R S.X₂ := by
+  constructor
+  · intro n
     have h₂ : Function.Exact (cohOn.map R S.f ⊤ n) (cohOn.map R S.g ⊤ n) :=
       SheafLES.exact₂ (shortExact_toAbSheaf hS) n ⊤
     exact length_ne_top_of_exact h₂ (h₁.ne_top n) (h₃.ne_top n)
-  eventually_zero := by
-    obtain ⟨N₁, hN₁⟩ := h₁.eventually_zero
+  · obtain ⟨N₁, hN₁⟩ := h₁.eventually_zero
     obtain ⟨N₃, hN₃⟩ := h₃.eventually_zero
     exact ⟨max N₁ N₃, fun n hn => cohOn.subsingleton₂ hS ⊤ n (hN₁ n (by omega)) (hN₃ n (by omega))⟩
 
 theorem of_shortExact₃ (hS : S.ShortExact) (h₁ : FiniteLenCoh R S.X₁) (h₂ : FiniteLenCoh R S.X₂) :
-    FiniteLenCoh R S.X₃ where
-  ne_top n := by
+    FiniteLenCoh R S.X₃ := by
+  constructor
+  · intro n
     obtain ⟨_, h₃, _⟩ := exists_coh_boundary_exact (R := R) hS n
     exact length_ne_top_of_exact h₃ (h₂.ne_top n) (h₁.ne_top (n + 1))
-  eventually_zero := by
-    obtain ⟨N₁, hN₁⟩ := h₁.eventually_zero
+  · obtain ⟨N₁, hN₁⟩ := h₁.eventually_zero
     obtain ⟨N₂, hN₂⟩ := h₂.eventually_zero
     exact ⟨max N₁ N₂, fun n hn => cohOn.subsingleton₃ hS ⊤ n (hN₂ n (by omega)) (hN₁ (n + 1) (by omega))⟩
 

@@ -289,8 +289,9 @@ def zeroSp (D : D7) : HSp D :=
   GlobalTheory.WeilSchrodinger.hspOf D (0 : Matrix (Fin 0) (Fin 0) D.host.E) ⟨fun x y => by
                rw [Subsingleton.elim x 0, Subsingleton.elim y 0]; simp only [map_zero]⟩
     ⟨fun x _ => Subsingleton.elim _ _, fun x _ => Subsingleton.elim _ _⟩ ⊤
-    ⟨by rw [Subsingleton.elim (⊤ : Submodule (𝓞 D.host.E) (Fin 0 → D.host.E)) ⊥]; exact Submodule.fg_bot,
-      Subsingleton.elim _ _⟩ (Subsingleton.elim _ _) fun _ => (0, 0)
+    (Submodule.IsLattice.of_fg D.host.E (by
+      rw [Subsingleton.elim (⊤ : Submodule (𝓞 D.host.E) (Fin 0 → D.host.E)) ⊥]
+      exact Submodule.fg_bot)) (Subsingleton.elim _ _) fun _ => (0, 0)
 
 theorem blk_empty {R : Type} [Zero R] {n k : ℕ} (e : Fin k ≃ Fin n) (A : Matrix (Fin n) (Fin n) R)
     (Z : Matrix (Fin 0) (Fin 0) R) :

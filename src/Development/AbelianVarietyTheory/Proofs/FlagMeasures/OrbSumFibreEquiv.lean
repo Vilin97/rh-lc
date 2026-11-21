@@ -471,9 +471,7 @@ theorem exists_eq_glue (hn : (hRes h U).Nondegenerate) (L : Submodule (𝓞 K) V
     exact (decomp_unique h hT hz hU e).1.symm⟩
   let N : Submodule (𝓞 K) U := L.map (pr.restrictScalars (𝓞 K))
   have hN : Submodule.IsLattice K N := by
-    refine ⟨hL.fg.map _, ?_⟩
-    have h1 : (N : Set U) = pr '' (L : Set V) := rfl
-    rw [h1, Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top.2 hsur]
+    exact Submodule.IsLattice.of_fg K (hL.fg.map _)
   have hp : ∀ (l : V) (y : U), h l y = hRes h U (pr l) y := fun l y => by
     have := pair h hs hz hU (pr l) y (-((T : K)⁻¹ * h z l)) 0
     rw [← hpr] at this
@@ -703,7 +701,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   have hY := Transp.genus_stable (h := hRes h U) L₀
   rw [← Nat.cast_pow]
   refine orbSum_fibre_equiv (MulEquiv.ofBijective _ (resZ_bijective h hs hT hz hU)) _ _ (latIn U) hπ ?_ hY
-    (fun L hL => hL.2.2.2) _ (fun M hM => ?_) φ hφ
+    (fun L (hL : L ∈ {L : Submodule (𝓞 K) V | Submodule.IsLattice K L ∧ Formalism.HermitianLatticesTheory.IsUnimodular h L ∧ (∀ t : K, t • z ∈ L ↔ t ∈ (1 : Submodule (𝓞 K) K)) ∧ latIn U L ∈ Formalism.HermitianLatticesTheory.genus (hRes h U) L₀}) => hL.2.2.2) _ (fun M hM => ?_) φ hφ
   · rintro g L ⟨h1, h2, h3, h4⟩
     have H := Formalism.HermitianLatticesTheory.isomAct (𝓞 K) K V h g.1.1 g.1.2 L
     refine ⟨H.2.2.2.2.2 h1, H.2.2.2.1.2 h2, fun t => ?_, hπ g L ▸ hY _ _ h4⟩

@@ -31,38 +31,38 @@ variable {h n N : ℕ} {F : SFam h N (zetaAway N)} {j : cycAway n →+* cycAway 
 theorem zeta_pow (hN : N ≠ 0) : zetaAway N ^ N = 1 :=
   Subtype.ext (Complex.isPrimitiveRoot_exp N hN).pow_eq_one
 
-theorem twist_one : Twist F j LinearMap.id 1 (RingHom.id _) (𝟙 _) where
-  cop := Nat.coprime_one_left N
-  root := (pow_one _).symm
-  fix := RingHom.id_comp j
-  symp x y := by simp [Int.ModEq]
-  low x := rfl
-  comm := by rw [spMap_id', Category.id_comp, Category.comp_id]
-  map := by
-    obtain ⟨φ, φ₂, a, b, c, d⟩ := GlobalTheory.SiegelPullComp.pb_id F.univ
-    exact ⟨φ, a, ⟨φ₂, b, c⟩, d⟩
+theorem twist_one : Twist F j LinearMap.id 1 (RingHom.id _) (𝟙 _) :=
+  { cop := Nat.coprime_one_left N
+    root := (pow_one _).symm
+    fix := RingHom.id_comp j
+    symp x y := by simp [Int.ModEq]
+    low x := rfl
+    comm := by rw [spMap_id', Category.id_comp, Category.comp_id]
+    map := by
+      obtain ⟨φ, φ₂, a, b, c, d⟩ := GlobalTheory.SiegelPullComp.pb_id F.univ
+      exact ⟨φ, a, ⟨φ₂, b, c⟩, d⟩ }
 
 theorem Twist.mul {T T' : (Fin h ⊕ Fin h → ℤ) →ₗ[ℤ] (Fin h ⊕ Fin h → ℤ)} {m m' : ℕ}
     {σ σ' : cycAway N →+* cycAway N} {f f' : F.X ⟶ F.X} (t : Twist F j T m σ f) (t' : Twist F j T' m' σ' f') :
-    Twist F j (T ∘ₗ T') (m * m') (σ.comp σ') (f ≫ f') where
-  cop := Nat.Coprime.mul_left t.cop t'.cop
-  root := by rw [RingHom.comp_apply, t'.root, map_pow, t.root, ← pow_mul, mul_comm]
-  fix := by rw [RingHom.comp_assoc, t'.fix, t.fix]
-  symp x y := by
-    have h1 := t.symp (T' x) (T' y)
-    have h2 := (t'.symp x y).mul_left m
-    simp only [LinearMap.comp_apply]
-    calc _ ≡ m * omegaStd (T' x) (T' y) [ZMOD N] := h1
-      _ ≡ m * (m' * omegaStd x y) [ZMOD N] := h2
-      _ = ((m * m' : ℕ) : ℤ) * omegaStd x y := by push_cast; ring
-  low x := by simp only [LinearMap.comp_apply]; rw [t.low, t'.low]
-  comm := by rw [Category.assoc, t'.comm, ← Category.assoc, t.comm, Category.assoc, spMap_comp']
-  map := by
-    obtain ⟨ν, a, b, c⟩ := t.map
-    obtain ⟨ν', a', b', c'⟩ := t'.map
-    refine ⟨ν ≫ ν', a.comp a', Sq.comp b' b, fun x => ?_⟩
-    simp only [LinearMap.comp_apply]
-    rw [← Category.assoc, c, Category.assoc, c', ← Category.assoc]
+    Twist F j (T ∘ₗ T') (m * m') (σ.comp σ') (f ≫ f') :=
+  { cop := Nat.Coprime.mul_left t.cop t'.cop
+    root := by rw [RingHom.comp_apply, t'.root, map_pow, t.root, ← pow_mul, mul_comm]
+    fix := by rw [RingHom.comp_assoc, t'.fix, t.fix]
+    symp x y := by
+      have h1 := t.symp (T' x) (T' y)
+      have h2 := (t'.symp x y).mul_left m
+      simp only [LinearMap.comp_apply]
+      calc _ ≡ m * omegaStd (T' x) (T' y) [ZMOD N] := h1
+        _ ≡ m * (m' * omegaStd x y) [ZMOD N] := h2
+        _ = ((m * m' : ℕ) : ℤ) * omegaStd x y := by push_cast; ring
+    low x := by simp only [LinearMap.comp_apply]; rw [t.low, t'.low]
+    comm := by rw [Category.assoc, t'.comm, ← Category.assoc, t.comm, Category.assoc, spMap_comp']
+    map := by
+      obtain ⟨ν, a, b, c⟩ := t.map
+      obtain ⟨ν', a', b', c'⟩ := t'.map
+      refine ⟨ν ≫ ν', a.comp a', Sq.comp b' b, fun x => ?_⟩
+      simp only [LinearMap.comp_apply]
+      rw [← Category.assoc, c, Category.assoc, c', ← Category.assoc] }
 
 theorem Twist.siegPB {T : (Fin h ⊕ Fin h → ℤ) →ₗ[ℤ] (Fin h ⊕ Fin h → ℤ)} {m : ℕ} {σ : cycAway N →+* cycAway N}
     {f : F.X ⟶ F.X} (t : Twist F j T m σ f) (hN : N ≠ 0) (hinj : ∀ a, (∃ b, T a = N • b) → ∃ b, a = N • b)

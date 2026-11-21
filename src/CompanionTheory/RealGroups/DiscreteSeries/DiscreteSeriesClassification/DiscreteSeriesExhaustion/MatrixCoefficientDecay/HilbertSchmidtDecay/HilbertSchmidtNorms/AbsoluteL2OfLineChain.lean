@@ -310,7 +310,7 @@ theorem step (hLC : LineChain) (H : Hyp ε S m A ν τ r Z M c₁ R₀ C) (hn : 
         _ ≤ _ := le_add_self
   unfold LevelF
   refine lt_of_le_of_lt (lintegral_mono hpt) ?_
-  rw [lintegral_add_left hmball, lintegral_finset_sum _ hmfar]
+  rw [lintegral_add_left hmball, lintegral_finsetSum _ hmfar]
   refine ENNReal.add_lt_top.2 ⟨ball_est hn f s w R₂ hw1 hR₂1 (hL f hf), ?_⟩
   exact ENNReal.sum_lt_top.2 fun j _ => far_est hLC H hn s hs hL c'' hc0 hc1 j (hz j) (U j) (hUm j)
     (fun g k hg => hUK j g k hg) (hUτ j) R₂ hR₂1 hR₂' w hw1 hw2 f hf

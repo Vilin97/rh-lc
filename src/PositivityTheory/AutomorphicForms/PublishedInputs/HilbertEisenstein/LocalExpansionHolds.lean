@@ -169,6 +169,7 @@ theorem fin_int (hLI : LocInt) (hFS : FinSplit) (hOP : OmegaProd) (hCD : CoefDiv
         Cf * (ωF ω (xiF ξ))⁻¹ * coefAt (divS ω c) (algebraMap F (Af F) (ξ : F) * (yf : Af F)) := by
   classical
   have hfin0 : {w : HeightOneSpectrum (𝓞 F) | c w ≠ 0 ∨ dd w ≠ 0}.Finite := by
+    change ({w | c w ≠ 0} ∪ {w | dd w ≠ 0}).Finite
     refine (L2.finite_support H).union ((Ideal.finite_factors (differentIdeal_ne_bot (A := ℤ) (B := 𝓞 F))).subset ?_)
     intro w hw
     have hw' : ordI w (differentIdeal ℤ (𝓞 F)) ≠ 0 := by

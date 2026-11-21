@@ -223,7 +223,9 @@ theorem spectral_operator_X : RDSOpX := by
     exact ubl_mono hSG h (by simp) le_rfl
   have hUa : ∀ ε : ℝ, 0 < ε → ∀ n : ℕ,
       UBL (fun g => HilbertSchmidtVectorization.adjH (cf g)) {g | g ∈ B.GV P.k P.r ∧ ε ≤ Gf P.k P.r D.z D.z' g} n 0 (3 * (P.r + 1)) :=
-    fun ε hε n => ubl_clm HilbertSchmidtVectorization.adjR (fun g hg => hg.1) (hU ε hε n)
+    fun ε hε n => ubl_clm HilbertSchmidtVectorization.adjR
+      (S := {g | g ∈ B.GV P.k P.r ∧ ε ≤ Gf P.k P.r D.z D.z' g})
+      (fun g hg => hg.1) (hU ε hε n)
   have hck : ∀ f : B.Mat P.k P.r → C6.EndH Wp Wq,
       (∀ ε : ℝ, 0 < ε → ∀ n : ℕ, UBL f {g | g ∈ B.GV P.k P.r ∧ ε ≤ Gf P.k P.r D.z D.z' g} n 0 (3 * (P.r + 1))) →
       B.CkOn ⊤ (B.GPos D) f := by

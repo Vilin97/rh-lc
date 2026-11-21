@@ -104,9 +104,9 @@ theorem mul_conjTranspose_eq {g : GL (Fin p ⊕ Fin q) ℂ} (hg : g ∈ Upq p q)
   have e : ∀ a c, fromRows G.toBlocks₁₂ G.toBlocks₂₂ a c = G a (Sum.inr c) := by
     rintro (a | a) c <;> rfl
   simp only [Jpq, Matrix.add_apply, Matrix.smul_apply, Matrix.mul_apply, conjTranspose_apply, Fintype.sum_sum_type, e,
-    fromBlocks_apply₁₁, fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂, one_apply, Matrix.neg_apply,
+    fromBlocks_apply₁₁, fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂, Matrix.neg_apply,
     Matrix.zero_apply]
-  simp
+  simp [Matrix.one_apply]
   ring
 
 theorem continuousAt_majMat {w : Matrix (Fin p) (Fin q) ℂ} (hw : w ∈ hcDom p q) : ContinuousAt majMat w := by
@@ -223,10 +223,12 @@ theorem exists_isFD : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r 
     Subtype.coe_image_subset _ _, fun z hz => ?_, ?_⟩
   · obtain ⟨γ, h⟩ := h1 ⟨flat z, hz⟩
     exact ⟨_, ⟨γ, γ.2, rfl⟩, _, h, rfl⟩
-  · convert measure_empty (μ := muD Tau j (r - j))
-    refine Set.eq_empty_of_forall_notMem ?_
-    rintro _ ⟨⟨v, hv, rfl⟩, _, ⟨γ, hγ, rfl⟩, ⟨w, hw, e⟩, hne⟩
-    have e' : w = a ⟨γ, hγ⟩ v := Subtype.ext e
-    exact hne (congrArg (fun v => unflat v.1) (h2 v hv ⟨γ, hγ⟩ (e' ▸ hw)))
+  · have he : {z | z ∈ Subtype.val '' F ∧ ∃ γ ∈ gammaU X hj κ,
+        flat (moebI γ (unflat z)) ∈ Subtype.val '' F ∧ moebI γ (unflat z) ≠ unflat z} = ∅ := by
+      refine Set.eq_empty_of_forall_notMem ?_
+      rintro _ ⟨⟨v, hv, rfl⟩, _, ⟨γ, hγ, rfl⟩, ⟨w, hw, e⟩, hne⟩
+      have e' : w = a ⟨γ, hγ⟩ v := Subtype.ext e
+      exact hne (congrArg (fun v => unflat v.1) (h2 v hv ⟨γ, hγ⟩ (e' ▸ hw)))
+    rw [he, measure_empty]
 
 end GlobalTheory.BoundedFundDomain

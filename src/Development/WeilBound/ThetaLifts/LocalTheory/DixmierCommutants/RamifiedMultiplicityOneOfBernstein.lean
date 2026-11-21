@@ -201,6 +201,18 @@ theorem acts_zero {κ : Type} [Fintype κ] (T : Module.End ℂ ((κ → AF F) �
 theorem acts_lin {κ : Type} [Fintype κ] {T : Module.End ℂ ((κ → AF F) → ℂ)} (ex : ∀ φ ∈ SB _, ∃ φ₁ ∈ SB _, Acts (evFin F v) T φ φ₁)
     {a b a₁ b₁ : (κ → Fv F v) → ℂ} (ha : a ∈ SB _) (hb : b ∈ SB _) (h1 : Acts (evFin F v) T a a₁) (h2 : Acts (evFin F v) T b b₁) (c : ℂ) :
     Acts (evFin F v) T (a + c • b) (a₁ + c • b₁) := fun r hr => by
+  have rest_transfer (r : (κ → AF F) → ℂ) (φ₀ : (κ → Fv F v) → ℂ)
+      (hne : φ₀ ≠ 0) (hr : Rest (evFin F v) φ₀ r)
+      (φ : (κ → Fv F v) → ℂ) (hφ : φ ∈ SB _) : Rest (evFin F v) φ r := by
+    obtain ⟨y, hy⟩ := Function.ne_iff.1 hne
+    let S : Module.End ℂ ((κ → Fv F v) → ℂ) :=
+      (LinearMap.proj y : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ).smulRight ((φ₀ y)⁻¹ • φ)
+    have h := PositivityTheory.Member.ZakTransform.lift_mem (v := v) (S := S) (fun θ _ => Submodule.smul_mem _ _ (Submodule.smul_mem _ _ hφ)) hr.2
+    rw [PositivityTheory.Member.ZakTransform.lift_tens _ _ (fun x t => hr.1 x _ ((PositivityTheory.Member.ZakTransform.at_iff _).2 (funext fun i => (PositivityTheory.Member.ZakTransform.ep_mul _).trans (by rw [GlobalTheory.EmbChart.evFin_atPlace]))))] at h
+    have e : S φ₀ = φ := by
+      change φ₀ y • (φ₀ y)⁻¹ • φ = φ
+      rw [smul_smul, mul_inv_cancel₀ hy, one_smul]
+    exact ⟨hr.1, e ▸ h⟩
   by_cases h0 : a + c • b = 0
   · have key : a₁ + c • b₁ = 0 := by
       by_cases hb0 : b = 0
@@ -216,7 +228,7 @@ theorem acts_lin {κ : Type} [Fintype κ] {T : Module.End ℂ ((κ → AF F) →
           rw [action_uniqueness F κ v T 0 (zero_mem _) _ _ h1 (acts_zero T), hc]
           simp
         have : Acts (evFin F v) T a ((-c) • b₁) := fun r hr => by
-          have hr' := adjoint_statement.rest F κ v r a ha (by rw [ea]; exact smul_ne_zero (neg_ne_zero.2 hc) hb0) hr b hb
+          have hr' := rest_transfer r a (by rw [ea]; exact smul_ne_zero (neg_ne_zero.2 hc) hb0) hr b hb
           have e1 : ∀ f : (κ → Fv F v) → ℂ, tens (evFin F v) ((-c) • f) r = (-c) • tens (evFin F v) f r := fun f =>
             funext fun _ => by simp [tens, mul_assoc]
           rw [ea, e1, e1, map_smul, h2 r hr']
@@ -227,7 +239,7 @@ theorem acts_lin {κ : Type} [Fintype κ] {T : Module.End ℂ ((κ → AF F) →
   · have hs := add_mem ha ((SB _).smul_mem c hb)
     have e1 : ∀ f g : (κ → Fv F v) → ℂ, tens (evFin F v) (f + c • g) r = tens (evFin F v) f r + c • tens (evFin F v) g r := fun f g =>
       funext fun _ => by simp [tens, mul_assoc, add_mul]
-    rw [e1, e1, map_add (f := _), map_smul, h1 r (adjoint_statement.rest F κ v r _ hs h0 hr a ha), h2 r (adjoint_statement.rest F κ v r _ hs h0 hr b hb)]
+    rw [e1, e1, map_add (f := _), map_smul, h1 r (rest_transfer r _ h0 hr a ha), h2 r (rest_transfer r _ h0 hr b hb)]
 
 theorem ramifiedMultiplicityOne_of_bernstein (hBe : GlobalTheory.Published.BernsteinUnitaryProductIrreducible) : RamifiedMultiplicityOne := by
   intro F E _ _ _ _ _ σ B a a' a₁ a₁' G G₁ X om om' om₁ om₁' R Rf R₁ Rf₁ H i₀ i₁ χ r m m₁ st hH v hv lam lam' hl hl' h0

@@ -218,10 +218,12 @@ theorem hL_off {a : ℕ} (ha : a ≤ n) {w w' : Pl E} (hne : w ≠ w') (k : ℕ)
 
 theorem offB (hd : d.Ok) {a : ℕ} (ha : a ≤ n) {w : Pl E} (hP : w ∉ d.P) : ∀ ls : List (LL d),
     ((ls.map (locL d a ha)).foldr LM.mul (d.eL a)).s w = (MLM.wordLS d a ha w (atPlace d w ls)).s w ∧
-    ((ls.map (locL d a ha)).foldr LM.mul (d.eL a)).t w = (MLM.wordLS d a ha w (atPlace d w ls)).t w
-  | [] => ⟨rfl, rfl⟩
-  | p :: ls => by
-    obtain ⟨ih1, ih2⟩ := offB hd ha hP ls
+    ((ls.map (locL d a ha)).foldr LM.mul (d.eL a)).t w = (MLM.wordLS d a ha w (atPlace d w ls)).t w := by
+  intro ls
+  induction ls with
+  | nil => exact ⟨rfl, rfl⟩
+  | cons p ls ih =>
+    obtain ⟨ih1, ih2⟩ := ih
     have hX := hg_foldr d hd ha ls
     have fin : ∀ l : LM d.kap a (n - a), l.s w = idem (d.lev a w) → l.t w = idem (d.lev₂ a w) →
         (l.mul ((ls.map (locL d a ha)).foldr LM.mul (d.eL a))).s w = (MLM.wordLS d a ha w (atPlace d w ls)).s w ∧

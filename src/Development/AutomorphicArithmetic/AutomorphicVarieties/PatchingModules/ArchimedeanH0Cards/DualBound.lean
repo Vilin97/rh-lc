@@ -299,7 +299,8 @@ theorem UpperTheory.V.Pa.B2.dualBound :
   let Φ : {f : D.M.X →+ ZMod l // ∀ g m, f (D.M.ρ g m) = PadicInt.toZMod ((G.ε g : ℤ_[l]ˣ) : ℤ_[l]) * f m} →
       (Fin n × Fin n × Fin s → x.K → {y : ZMod l // Nat.card x.K • y = 0}) :=
     fun f t v => ⟨f.1 (hD.e.symm (Ψ (Pi.single t v))), by
-      rw [← map_nsmul, ← map_nsmul, ← map_nsmul, hsmul0, map_zero, map_zero, map_zero]⟩
+      change Nat.card x.K • (f.1.comp (hD.e.symm.toLinearMap.toAddMonoidHom.comp Ψ)) (Pi.single t v) = 0
+      rw [← map_nsmul, hsmul0, map_zero]⟩
   have hinj : Function.Injective Φ := by
     intro f f' hff
     apply Subtype.ext

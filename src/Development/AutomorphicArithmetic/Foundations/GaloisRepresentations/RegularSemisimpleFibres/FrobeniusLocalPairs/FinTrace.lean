@@ -121,7 +121,7 @@ private theorem exists_isRes (hRes : ResEx) {k K : Type} [Field k] [ValuativeRel
   have hint : ∀ x : 𝒪[k], ∃ y : 𝒪[K], (y : K) = algebraMap k K x := by
     intro x
     have h1 : (x : k) ≤ᵥ 1 := (Valuation.Compatible.vle_iff_le (v := valuation k) _ _).2 (by rw [map_one]; exact (Valuation.mem_integer_iff _ _).1 x.2)
-    have h2 : algebraMap k K x ≤ᵥ algebraMap k K 1 := (ValuativeExtension.vle_iff_vle _ _).2 h1
+    have h2 : algebraMap k K x ≤ᵥ algebraMap k K 1 := ValuativeExtension.vle_iff_vle.2 h1
     rw [map_one] at h2
     exact ⟨⟨algebraMap k K x, (Valuation.mem_integer_iff _ _).2 (by simpa using (Valuation.Compatible.vle_iff_le (v := valuation K) _ _).1 h2)⟩, rfl⟩
   have hc : (algebraMap F₀ F₁).comp e₀.toRingHom = e₁.toRingHom.comp (algebraMap 𝓀[k] 𝓀[K]) := by

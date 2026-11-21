@@ -77,7 +77,8 @@ open GlobalTheory.SiegLev GlobalTheory.AbLaw GlobalTheory.Poinc
 
 def rootBase {n k : ℕ} (hn : n ≠ 0) (hk : k ≠ 0) : TBase (cycAway (n * k)) k where
   ζ := (cycBase (mul_ne_zero hn hk)).ζ ^ n
-  unit := (IsUnit.mul_iff.1 (by rw [← Nat.cast_mul]; exact isUnit_natCast (mul_ne_zero hn hk))).2
+  unit := isUnit_of_dvd_unit (Nat.cast_dvd_cast (dvd_mul_left k n))
+    (isUnit_natCast (mul_ne_zero hn hk))
   prim K _ β := by
     rw [Units.val_pow_eq_pow_val, map_pow, cycBase_ζ]
     exact (isPrimitiveRoot_map (mul_ne_zero hn hk) β).pow (Nat.pos_of_ne_zero (mul_ne_zero hn hk)) rfl

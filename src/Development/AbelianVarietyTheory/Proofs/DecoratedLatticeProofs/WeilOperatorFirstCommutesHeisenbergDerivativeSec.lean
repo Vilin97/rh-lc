@@ -26,7 +26,8 @@ variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ}
 
 theorem exists_biBound (hψ : IsStdChar D ψ (-1)) {A S A' : HSp D} {C : WO A S → WO S A' → ℂ}
     (h : IsBiTheta ψ A S A' C) : ∃ B : ℝ, ∀ u v, ‖C u v‖ ≤ B := by
-  obtain ⟨B, hB⟩ := GlobalTheory.WeilVacMove.exists_bound hψ
+  obtain ⟨B, hB⟩ := GlobalTheory.WeilVacMove.exists_bound (f := GlobalTheory.BiTransfer.join
+    (GlobalTheory.BiTransfer.sumDec A (GlobalTheory.ChiGrid.negSp A')) S C) hψ
     (GlobalTheory.BiTransfer.isThetaFunO_join (GlobalTheory.BiTransfer.sumDec A (GlobalTheory.ChiGrid.negSp A')) h)
   refine ⟨B, fun u v => ?_⟩
   have := hB (GlobalTheory.BiTransfer.inlH (GlobalTheory.BiTransfer.sumDec A (GlobalTheory.ChiGrid.negSp A')) S u +

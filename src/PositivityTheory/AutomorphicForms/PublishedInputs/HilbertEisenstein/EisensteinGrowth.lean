@@ -264,7 +264,7 @@ theorem core {Ψ : (Fin 2 → Ad F) → ℂ} {e : HeightOneSpectrum (𝓞 F) →
     · rw [mul_zero]
       exact mul_nonneg hc0 (mul_nonneg (hβ0 _) (hβ0 _))
   have hGs : Summable (fun ξ : {ξ : Fin 2 → F // ξ ≠ 0} => β (ξ.1 0) * β (ξ.1 1)) :=
-    hG.subtype {ξ | ξ ≠ 0}
+    by simpa only [Function.comp_def] using hG.subtype (fun ξ : Fin 2 → F => ξ ≠ 0)
   have hsum2 := hGs.mul_left c
   have hs : Summable (fun ξ : {ξ : Fin 2 → F // ξ ≠ 0} =>
       ‖Ψ (rowA ξ.1 ᵥ* (((moduleSection (w0 F) t * a : Ideles F) : Ad F) • M))‖) :=

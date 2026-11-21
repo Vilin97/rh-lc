@@ -70,7 +70,8 @@ theorem sixth_weight_purity_alt_alt : _root_.GlobalTheory.StringRepresentationDe
     simp [Matrix.scalar_apply]
   have hroot : (M.charpoly.map (D.naut.iotaQC i).toRingHom).IsRoot
       ((D.naut.iotaQC i).toRingHom (epsQ D i σ ^ j * c)) :=
-    Polynomial.IsRoot.map (by rw [Polynomial.IsRoot.def, Matrix.eval_charpoly]; exact hdet)
+    Polynomial.IsRoot.map (D.naut.iotaQC i).toRingHom
+      (by rw [Polynomial.IsRoot.def, Matrix.eval_charpoly]; exact hdet)
   rw [hF] at hroot
   have hmem := (Polynomial.mem_roots (Polynomial.monic_multiset_prod_of_monic _ _
     (fun a _ => Polynomial.monic_X_sub_C a)).ne_zero).2 hroot

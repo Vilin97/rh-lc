@@ -106,7 +106,7 @@ theorem MapsI.mul {N : Submodule O V} {I J : Ideal O} {X Y : Module.End E V}
     rw [LinearMap.map_smul_of_tower, mul_comm, Submodule.mul_smul]
     exact Submodule.smul_mem_smul hr (hX n hn)
   · intro a b ha hb
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    rw [map_add]; exact add_mem ha hb
 
 theorem MapsI.mul_stab {N : Submodule O V} {I : Ideal O} {X Y : Module.End E V}
     (hX : MapsI N I X) (hY : Y ∈ stabEnd N) : MapsI N I (X * Y) :=

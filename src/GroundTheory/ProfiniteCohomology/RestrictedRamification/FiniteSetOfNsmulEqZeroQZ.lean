@@ -14,6 +14,8 @@ open CategoryTheory NumberField IsDedekindDomain IntermediateField GroundTheory.
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem finite_setOf_nsmul_eq_zero_QZ {m : ℕ} (hm : m ≠ 0) : {q : QZ | m • q = 0}.Finite := by
   have hmk : ∀ (j : ℕ) (r : ℚ), j • QZ.mk r = QZ.mk (j * r) := by
     intro j r

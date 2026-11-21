@@ -73,7 +73,8 @@ theorem GlobalTheory.HSAmp.card_bounded_forms : ∀ (D q δ : ℕ) (R : ℝ), 0 
         · simpa using hR
       · funext i a
         apply Subtype.ext
-        simp [F, coeff_sum_monomial, a.2]
+        change AddMonoidAlgebra.coeff (∑ b, monomial b.1 (f i b : ℤ)) a.1 = (f i a : ℤ)
+        rw [coeff_sum_monomial, dif_pos a.2]
   let e := Equiv.ofBijective F hF
   have hfin : S.Finite := Set.finite_coe_iff.1 (Finite.of_equiv _ e.symm)
   refine ⟨hfin, ?_, hAcard, ?_, ?_⟩

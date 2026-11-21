@@ -132,7 +132,10 @@ theorem sup_props {S : Submodule ℂ (K → ℂ)} [TopologicalSpace K] (hc : ∀
       (fun k => f (k₀ * k)) ∈ S ⊔ conjSub S ∧ (fun k => f (k * k₀)) ∈ S ⊔ conjSub S := by
   refine ⟨fun f hf => ?_, fun f hf k₀ => ?_⟩
   · obtain ⟨a, ha, c, hc', rfl⟩ := Submodule.mem_sup.1 hf
-    have : Continuous c := by simpa using (hc _ hc').star
+    have : Continuous c := by
+      have h := (hc _ hc').star
+      change Continuous (fun k => star (star (c k))) at h
+      simpa only [star_star] using h
     exact (hc a ha).add this
   · obtain ⟨a, ha, c, hc', rfl⟩ := Submodule.mem_sup.1 hf
     exact ⟨Submodule.add_mem_sup (hL a ha k₀) (hL _ hc' k₀), Submodule.add_mem_sup (hR a ha k₀) (hR _ hc' k₀)⟩

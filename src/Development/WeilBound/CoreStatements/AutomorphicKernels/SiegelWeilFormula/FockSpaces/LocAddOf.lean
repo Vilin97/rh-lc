@@ -131,6 +131,8 @@ theorem T_add (d : SD σ) (Φ Φ' : d.Fn) : d.T (Φ + Φ') = d.T Φ + d.T Φ' :=
   show d.l (d.dd.rho d.B.ψ _ (Φ + Φ')) = d.l (d.dd.rho d.B.ψ _ Φ) + d.l (d.dd.rho d.B.ψ _ Φ')
   rw [← map_add (f := _)]
   congr 1
+  funext y
+  simp [Darboux.rho, schr, mul_add]
 
 omit R in
 theorem T_smul (d : SD σ) (a : ℂ) (Φ : d.Fn) : d.T (a • Φ) = a • d.T Φ := by
@@ -138,7 +140,8 @@ theorem T_smul (d : SD σ) (a : ℂ) (Φ : d.Fn) : d.T (a • Φ) = a • d.T Φ
   show d.l (d.dd.rho d.B.ψ _ (a • Φ)) = a • d.l (d.dd.rho d.B.ψ _ Φ)
   rw [← map_smul]
   congr 1
-  ring
+  funext y
+  simp [Darboux.rho, schr, mul_left_comm]
 
 end PositivityTheory.SiegelWeilFormula.KFock
 

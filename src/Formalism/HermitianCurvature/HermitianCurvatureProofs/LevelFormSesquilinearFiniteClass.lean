@@ -1618,8 +1618,9 @@ theorem rma_sandw (X : ActualOps k r z z' π π') (L : R.LevelData (Pr (RadSp k 
     exact ⟨hR, hN⟩
   | n + 1, hn, M, N, hR, hN => by
     have h : n < r := by omega
-    obtain ⟨hR', hN'⟩ := rma_step X L hL ⟨n, h⟩ Y (M := M) (N := N) hR hN
-    have ih := rma_sandw X L hL Y n (by omega) _ _ hR' hN'
+    have hstep := rma_step (z := z) (z' := z') (π := π) (π' := π')
+      X L hL ⟨n, h⟩ Y (M := M) (N := N) hR hN
+    have ih := rma_sandw X L hL Y n (by omega) _ _ hstep.1 hstep.2
     have e1 : sandw k r Y (n + 1) N =
         sandw k r Y n (oMul (TLs k ⟨n, h⟩ Y) (oMul N (TL k ⟨n, h⟩ Y))) := by
       simp only [sandw, dif_pos h]

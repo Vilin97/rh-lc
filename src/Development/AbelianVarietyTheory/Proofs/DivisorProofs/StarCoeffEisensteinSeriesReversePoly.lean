@@ -36,7 +36,8 @@ def semiMap (σ : ℂ →+* ℂ) (j : ∀ i, V i →+ W i) (hj : ∀ i (a : ℂ)
       have e : ∀ m : V i, (fun k => j k (Function.update f i m k)) =
           Function.update (fun k => j k (f k)) i (j i m) := fun m =>
         funext fun k => Function.apply_update (fun k => j k) f i m k
-      simp only [e, hj, MultilinearMap.map_update_smul, Function.update_eq_self, map_mul, smul_smul, mul_comm])
+      simp only [e, hj, MultilinearMap.map_update_smul, RingHom.id_apply, Function.update_eq_self,
+        map_mul, smul_smul, mul_comm])
 
 theorem semiMap_tprod (σ : ℂ →+* ℂ) (j : ∀ i, V i →+ W i) (hj : ∀ i (a : ℂ) v, j i (a • v) = σ a • j i v)
     (a : ℂ) (f : ∀ i, V i) :

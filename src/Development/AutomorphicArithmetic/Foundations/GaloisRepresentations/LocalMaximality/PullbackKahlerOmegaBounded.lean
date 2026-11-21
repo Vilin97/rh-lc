@@ -35,7 +35,7 @@ private theorem mapDR_om {B : Subalgebra ℂ K} {B' : Subalgebra ℂ L}
     rw [mapDR_smul', mapDR_iMulti]
     exact Submodule.subset_span ⟨_, h b hb, _, fun j => h _ (hv j), rfl⟩
   | zero => simp
-  | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+  | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
   | smul c u _ hu =>
     have e := ((mapDR ℂ K L).toLinearMap.restrictScalars ℂ).map_smul c u
     have e' : mapDR ℂ K L (c • u) = c • mapDR ℂ K L u := e

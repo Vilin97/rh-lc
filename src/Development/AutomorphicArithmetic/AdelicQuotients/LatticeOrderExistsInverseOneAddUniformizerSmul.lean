@@ -31,7 +31,7 @@ private theorem unit_abs {O A : Type} [CommRing O] [IsLocalRing O] [CommRing A] 
   have hdet : IsUnit Q.det := by
     by_contra h
     obtain ⟨m, hm, hq⟩ := exists_max_ideal_of_mem_nonunits h
-    have hmax : (m.comap (algebraMap O S)).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal m
+    have hmax : (m.comap (algebraMap O S)).IsMaximal := Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := O) m
     have heq : m.comap (algebraMap O S) = IsLocalRing.maximalIdeal O := IsLocalRing.eq_maximalIdeal hmax
     have hϖm : φS ϖ ∈ m := by
       have : ϖ ∈ m.comap (algebraMap O S) := heq ▸ hϖ
@@ -114,7 +114,7 @@ private def SS (E : Type) [Field E] [NumberField E] [Algebra F E] (v : Pl (F := 
   mul_mem' := fun {x y} hx hy => ⟨by rw [sgE_mul]; exact oh_mul hx.1 hy.1, RingHom.IsIntegralElem.mul _ hx.2 hy.2⟩
   one_mem' := ⟨by rw [sgE_one]; exact gen_mem 1 (one_mem _), by
     simpa using (phi E v).isIntegralElem_map (x := 1)⟩
-  add_mem' := fun {x y} hx hy => ⟨by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx.1 hy.1, RingHom.IsIntegralElem.add _ hx.2 hy.2⟩
+  add_mem' := fun {x y} hx hy => ⟨by rw [(sgE E v).map_add]; exact add_mem hx.1 hy.1, RingHom.IsIntegralElem.add _ hx.2 hy.2⟩
   zero_mem' := ⟨by rw [map_zero]; exact zero_mem _, RingHom.isIntegralElem_zero _⟩
   neg_mem' := fun {x} hx => ⟨by rw [map_neg]; exact neg_mem hx.1, RingHom.IsIntegralElem.neg _ hx.2⟩
 

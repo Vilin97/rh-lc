@@ -50,9 +50,9 @@ theorem Chart.ev_mem_ideal_smul_add_p (p : ℕ) (O : Type) [CommRing O] (G : PDi
   refine ⟨c.ev n h₁, ?_, b, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [h₁, map_sum]
-    refine Submodule.sum_mem _ fun α _ => ?_
-    rw [hmon, map_smul]
-    exact Submodule.smul_mem_smul (hI α) Submodule.mem_top
+      refine Submodule.sum_mem _ fun α _ => ?_
+      rw [hmon, map_smul]
+      exact Submodule.smul_mem_smul (hI α) Submodule.mem_top
   · rw [map_sub, pow_one] at hb
     rw [← hb]; ring
 

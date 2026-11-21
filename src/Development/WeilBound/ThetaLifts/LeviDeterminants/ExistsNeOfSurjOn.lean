@@ -85,7 +85,19 @@ theorem tw_bij (hA : PositivityTheory.Mix.AdelSt) {ψ : AddChar (AF F) ℂ} (hψ
     exact hne ((ha Ψ hΨ).trans (by rw [a0, zero_smul]))
   have h1 : ∀ Φ ∈ schA F κ, (a⁻¹ • e') (e Φ) = Φ := fun Φ hΦ => by
     rw [LinearMap.smul_apply, show e' (e Φ) = a • Φ from ha Φ hΦ, smul_smul, inv_mul_cancel₀ a0, one_smul]
-  refine ⟨e, _, h, h'.smul (inv_ne_zero a0), ⟨h.maps, fun x hx y hy hxy => ?_, hs⟩, h1, fun Φ hΦ => ?_⟩
+  have hscaled : Tw ψ d₁ d (a⁻¹ • e') := by
+    constructor
+    · exact fun Φ hΦ => Submodule.smul_mem _ _ (h'.maps Φ hΦ)
+    · intro w Φ hΦ
+      rw [LinearMap.smul_apply, LinearMap.smul_apply, h'.Heisenberg₂ w Φ hΦ, rho_smul]
+    · intro l hl g hg
+      obtain ⟨T, hT⟩ := h'.adm l hl g hg
+      refine ⟨a⁻¹ • T, fun f => ?_⟩
+      rw [LinearMap.comp_smul, LinearMap.smul_apply, hT, ContinuousLinearMap.smul_apply]
+    ·
+      obtain ⟨Φ, hΦ, h0⟩ := h'.ne
+      exact ⟨Φ, hΦ, smul_ne_zero (inv_ne_zero a0) h0⟩
+  refine ⟨e, _, h, hscaled, ⟨h.maps, fun x hx y hy hxy => ?_, hs⟩, h1, fun Φ hΦ => ?_⟩
   · rw [← h1 x hx, hxy, h1 y hy]
   · obtain ⟨Ψ, hΨ, rfl⟩ := hs hΦ
     rw [h1 Ψ hΨ]

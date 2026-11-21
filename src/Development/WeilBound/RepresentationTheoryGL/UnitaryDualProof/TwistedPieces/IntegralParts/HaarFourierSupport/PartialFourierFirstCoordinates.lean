@@ -26,7 +26,7 @@ theorem tau_sum (x : Matrix (Fin n) (Fin n) k) : τ x = ∑ i, ∑ j, x i j * τ
 
 theorem continuous_tau : Continuous τ := by
   rw [show (⇑τ) = fun x => ∑ i, ∑ j, x i j * τ (Matrix.single i j 1) from funext (tau_sum τ)]
-  exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     (continuous_id.matrix_elem i j).mul continuous_const
 
 def Dl : Matrix (Fin n) (Fin n) k →ₗ[k] (Fin (dd Z) → k) where
@@ -39,7 +39,7 @@ abbrev TT : Type := ↥(LinearMap.ker (Dl τ Z)) × (Fin n → k)
 theorem continuous_E : Continuous (E Z) := by
   have e : E Z = fun u => ∑ j, u j • ee Z j := funext (E_apply Z)
   rw [e]
-  exact continuous_finset_sum _ fun j _ => (continuous_apply j).smul continuous_const
+  exact continuous_finsetSum _ fun j _ => (continuous_apply j).smul continuous_const
 
 theorem continuous_D : Continuous (D τ Z) :=
   continuous_pi fun j => (continuous_tau τ).comp (continuous_const.matrix_mul continuous_id)

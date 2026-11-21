@@ -82,21 +82,10 @@ theorem continuous_locHom (q : SplitPt D k) (V : HSp D) (F : GlobalTheory.LocMod
 end Local
 
 theorem list_prod_single {M : Type} [Monoid M] {ι : Type} [DecidableEq ι] (f : ι → M) (i : ι)
-    (hf : ∀ i', i' ≠ i → f i' = 1) : ∀ l : List ι, l.Nodup → i ∈ l → (l.map f).prod = f i
-  | [], _, h => absurd h List.not_mem_nil
-  | a :: l, hl, h => by
-    rw [List.nodup_cons] at hl
-    rw [List.map_cons, List.prod_cons]
-    by_cases ha : a = i
-    · subst ha
-      have hprod : (l.map f).prod = 1 := by
-        apply List.prod_eq_one
-        intro y hy
-        obtain ⟨b, hb, rfl⟩ := List.mem_map.1 hy
-        exact hf b fun e => hl.1 (e ▸ hb)
-      rw [hprod, mul_one]
-    · rw [hf a ha, one_mul]
-      exact list_prod_single f i hf l hl.2 ((List.mem_cons.1 h).resolve_left (Ne.symm ha))
+    (hf : ∀ i', i' ≠ i → f i' = 1) : ∀ l : List ι, l.Nodup → i ∈ l → (l.map f).prod = f i := by
+  intro l hl hi
+  rw [List.prod_map_eq_pow_single i f (fun i' hne _ => hf i' hne),
+    List.count_eq_one_of_mem hl hi, pow_one]
 
 theorem map_mt_list_prod {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (q : SplitPt D k) (V : HSp D) (l : List (GA D V)) : (mt V l.prod).map q.pr = (l.map fun g => (mt V g).map q.pr).prod := by

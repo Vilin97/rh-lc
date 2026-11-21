@@ -160,10 +160,12 @@ theorem isFlagPair_join (ϖ : O) (y : (Σ k, ι k) → Ω) (B B' : ChartBundle O
     IsFlagPair ϖ y B B' (((wU.prod wV).map φ).reindex e) (((wU'.prod wV').map φ).reindex e)
       (fun i => Sum.elim xU xV (e.symm i)) (fun i => Sum.elim xU' xV' (e.symm i))
       (fun i => Sum.elim fU fV (e.symm i)) (fun i => Sum.elim gU gV (e.symm i)) where
-  flag := isFlagFrame_join y B BU BV φ e he (fun c hc u => (hU c hc u).1)
-    (fun c hc q => (hV c hc q).1) hpU.flag hpV.flag
-  flag' := isFlagFrame_join y B' BU' BV' φ e he (fun c hc u => (hU c hc u).2)
-    (fun c hc q => (hV c hc q).2) hpU.flag' hpV.flag'
+  flag := by
+    exact isFlagFrame_join y B BU BV φ e he (fun c hc u => (hU c hc u).1)
+      (fun c hc q => (hV c hc q).1) hpU.flag hpV.flag
+  flag' := by
+    exact isFlagFrame_join y B' BU' BV' φ e he (fun c hc u => (hU c hc u).2)
+      (fun c hc q => (hV c hc q).2) hpU.flag' hpV.flag'
   sameFlag i i' hii' := by
     obtain ⟨t, rfl⟩ := e.surjective i
     obtain ⟨t', rfl⟩ := e.surjective i'

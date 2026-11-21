@@ -218,7 +218,8 @@ def IsTensorCopyPi (j : G₁ →* G) (e : ∀ i, Γ i →* G) (σ : Representati
   ∃ T ∈ homTensorPi j e σ δ ρ ⊤, Function.Injective T ∧
     (Submodule.span ℂ {v | ∃ w y, v = T w y}).topologicalClosure = U
 
-def bePi (Φ Φ' : ContinuousMultilinearMap ℂ Hs K) : ℂ := ⟪Φ' fun i => unitVec (Hs i), Φ fun i => unitVec (Hs i)⟫_ℂ
+def bePi (Φ Φ' : ContinuousMultilinearMap ℂ Hs K) : ℂ :=
+  ⟪Φ' fun i => unitVec (H := Hs i), Φ fun i => unitVec (H := Hs i)⟫_ℂ
 
 variable {j : G₁ →* G} {e : ∀ i, Γ i →* G} {σ : Representation ℂ G₁ W} {δ : ∀ i, Γ i →* (Hs i →L[ℂ] Hs i)}
   {ρ : G →* (K →L[ℂ] K)} {U U' : Submodule ℂ K} {Φ Φ' : ContinuousMultilinearMap ℂ Hs K}
@@ -259,22 +260,49 @@ variable [TopologicalSpace G] [∀ i, TopologicalSpace (Γ i)] [CompleteSpace K]
 
 theorem inner_eq_bePi (hδ : ∀ i, IsIrrUnitary (δ i)) (hρ : IsUnitaryRep ρ) (h : Φ ∈ homPi e δ ρ U)
     (h' : Φ' ∈ homPi e δ ρ U') (y y' : ∀ i, Hs i) : ⟪Φ' y', Φ y⟫_ℂ = bePi Φ Φ' * ∏ i, ⟪y' i, y i⟫_ℂ := by
-  have key : ∀ s : Finset ι, ⟪Φ' y', Φ y⟫_ℂ = ⟪Φ' (s.piecewise (fun i => unitVec (Hs i)) y'),
-      Φ (s.piecewise (fun i => unitVec (Hs i)) y)⟫_ℂ * ∏ i ∈ s, ⟪y' i, y i⟫_ℂ := fun s => by
+  let u : ∀ i, Hs i := fun i => unitVec (H := Hs i)
+  have key : ∀ s : Finset ι, ⟪Φ' y', Φ y⟫_ℂ = ⟪Φ' (s.piecewise u y'),
+      Φ (s.piecewise u y)⟫_ℂ * ∏ i ∈ s, ⟪y' i, y i⟫_ℂ := fun s => by
     induction s using Finset.induction_on with
     | empty => simp
     | insert i s hi ih =>
       have := (hδ i).complete
-      have h1 := inner_eq_be_of_norm (hδ i).unitary.norm_apply (hδ i).irred (fun g => hρ.norm_apply (e i g))
-        (toContinuousLinearMap_mem_homIn h (s.piecewise (fun i => unitVec (Hs i)) y) i)
-        (toContinuousLinearMap_mem_homIn h' (s.piecewise (fun i => unitVec (Hs i)) y') i) (y i) (y' i)
+      let A := Φ.toContinuousLinearMap (s.piecewise u y) i
+      let A' := Φ'.toContinuousLinearMap (s.piecewise u y') i
+      have hA (g : Γ i) (x : Hs i) : A (δ i g x) = ρ (e i g) (A x) :=
+        (toContinuousLinearMap_mem_homIn h (s.piecewise u y) i).2 g x
+      have hA' (g : Γ i) (x : Hs i) : A' (δ i g x) = ρ (e i g) (A' x) :=
+        (toContinuousLinearMap_mem_homIn h' (s.piecewise u y') i).2 g x
+      have h1 : ⟪A' (y' i), A (y i)⟫_ℂ = ⟪A' (u i), A (u i)⟫_ℂ * ⟪y' i, y i⟫_ℂ := by
+        obtain ⟨c, hc⟩ := GlobalTheory.hilbert_schur (Hs i) (Γ i) (δ i) (hδ i).unitary.norm_apply
+          (fun S hS hstable => (hδ i).irred.2 S ⟨hS, hstable⟩) (A'.adjoint ∘L A) (fun g => by
+            refine ContinuousLinearMap.ext fun x => ext_inner_left ℂ fun z => ?_
+            change ⟪z, δ i g (A'.adjoint (A x))⟫_ℂ = ⟪z, A'.adjoint (A (δ i g x))⟫_ℂ
+            calc
+              _ = ⟪δ i g⁻¹ z, A'.adjoint (A x)⟫_ℂ := by
+                simpa only [inv_inv] using ((hδ i).unitary.inner_apply_left g⁻¹ z (A'.adjoint (A x))).symm
+              _ = _ := by
+                rw [ContinuousLinearMap.adjoint_inner_right, hA', hρ.inner_apply_left,
+                  ← map_inv, inv_inv, ← hA, ContinuousLinearMap.adjoint_inner_right])
+        have inner_eq (x z : Hs i) : ⟪A' z, A x⟫_ℂ = c * ⟪z, x⟫_ℂ := by
+          have hx : A'.adjoint (A x) = c • x := by
+            simpa using DFunLike.congr_fun hc x
+          rw [← ContinuousLinearMap.adjoint_inner_right, hx, inner_smul_right]
+        have := (hδ i).irred.1
+        have hu : ∃ x : Hs i, ‖x‖ = 1 := exists_norm_eq (Hs i) zero_le_one
+        have hnorm : ‖u i‖ = 1 := by
+          change ‖unitVec (H := Hs i)‖ = 1
+          rw [unitVec, dite_eq_left hu]
+          exact hu.choose_spec
+        rw [inner_eq (y i) (y' i), inner_eq (u i) (u i), inner_self_eq_norm_sq_to_K, hnorm]
+        simp
       rw [Finset.prod_insert hi, Finset.piecewise_insert, Finset.piecewise_insert, ← mul_assoc, ih]
       congr 1
       refine Eq.trans ?_ h1
-      simp only [ContinuousMultilinearMap.toContinuousLinearMap_apply]
-      rw [← s.piecewise_eq_of_notMem (fun i => unitVec (Hs i)) y hi,
-        ← s.piecewise_eq_of_notMem (fun i => unitVec (Hs i)) y' hi, Function.update_eq_self, Function.update_eq_self]
-  simpa only [Finset.piecewise_univ, bePi] using key Finset.univ
+      simp only [A, A', ContinuousMultilinearMap.toContinuousLinearMap_apply]
+      rw [← s.piecewise_eq_of_notMem u y hi, ← s.piecewise_eq_of_notMem u y' hi,
+        Function.update_eq_self, Function.update_eq_self]
+  simpa only [Finset.piecewise_univ, bePi, u] using key Finset.univ
 
 theorem bePi_self_pos (hδ : ∀ i, IsIrrUnitary (δ i)) (hρ : IsUnitaryRep ρ) (h : Φ ∈ homPi e δ ρ U) (h0 : Φ ≠ 0) :
     0 < (bePi Φ Φ).re :=
@@ -286,7 +314,7 @@ end MixedPi
 theorem isRestrTensor_charRep {ι G : Type} {Γ : ι → Type} [Group G] [∀ i, Group (Γ i)] (p : ∀ i, G →* Γ i)
     (χ : ∀ i, Γ i →* Circle) (ψ : G →* Circle) (h : ∀ g, ∀ᶠ i in cofinite, χ i (p i g) = 1)
     (hψ : ∀ g, (ψ g : ℂ) = ∏ᶠ i, (χ i (p i g) : ℂ)) :
-    IsRestrTensor p (fun i => charRep (χ i)) (fun _ => 1) (charRep ψ) fun y => ∏ᶠ i, y i where
+    IsRestrTensor p (fun i => charRep (χ i)) (fun _ => 1) (charRep ψ) (fun y => ∏ᶠ i, y i) where
   unit := .of_forall fun _ => norm_one
   fixed g := (h g).mono fun i hi => by simp [charRep, hi]
   inner_pure y y' hy hy' := by

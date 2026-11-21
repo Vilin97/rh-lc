@@ -10,7 +10,7 @@ open IsLocalRing Polynomial UpperTheory.V UpperTheory.V.Alg UpperTheory.V.W Uppe
 private theorem comap_max {B Q : Type} [CommRing B] [IsLocalRing B] [CommGroup Q] [Finite Q]
     (M : Ideal (MonoidAlgebra B Q)) [M.IsMaximal] :
     M.comap (algebraMap B (MonoidAlgebra B Q)) = maximalIdeal B :=
-  eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M)
+  eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := B) M)
 
 private theorem single_sub_mem {l : ℕ} (hl : l.Prime) {B Q : Type} [CommRing B] [IsLocalRing B]
     [CommGroup Q] [Finite Q] (hB : ((l : ℕ) : B) ∈ maximalIdeal B) (hQ : IsPGroup l Q)

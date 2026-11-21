@@ -167,7 +167,9 @@ theorem img_cpt (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) {K : Set (PBQ
       ∀ x ∈ K, PBQ.GoodP Bj x → ∀ g ∈ Kc, sE Bj e x * g ∈ S := by
   refine ⟨(fun q : PBQ.XP k p ρ × B.Mat k n => sE Bj e q.1 * q.2) '' ((K ∩ {x | PBQ.GoodP Bj x}) ×ˢ Kc), ?_, ?_, ?_⟩
   · refine ((hK.inter_right (goodP_closed Bj)).prod hKc).image_of_continuousOn ?_
-    exact ((sE_contOn Bj e).comp continuous_fst.continuousOn (fun q hq => hq.1.2)).mul continuous_snd.continuousOn
+    refine ((sE_contOn Bj e).comp continuous_fst.continuousOn ?_).mul continuous_snd.continuousOn
+    intro q hq
+    exact hq.1.2
   · rintro _ ⟨q, hq, rfl⟩
     exact Formalism.FourierDecayAlt.P.BetaSesquilinearity.gv_mul (sE_GV Bj e q.1) (hKcG hq.2)
   · intro x hx hg g hgK
@@ -391,11 +393,13 @@ theorem foldT_TI (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) {Ψ : B.Mat 
     (hΨ : CkOn ⊤ (GV k n) Ψ) {U : Set (B.Mat k n)} (hU : IsOpen U) (hv : VanishL Bj e Ψ U) :
     ∀ ts : List (ℂ × Fin (2 * n + k + 1) × Fin (2 * n + k + 1)),
       CkOn ⊤ (GV k n) (foldT ts Ψ) ∧ VanishL Bj e (foldT ts Ψ) U ∧
-        ∀ y ∈ U, y ∈ GV k n → foldT ts (TI Bj e Ψ) y = TI Bj e (foldT ts Ψ) y
-  | [] => ⟨hΨ, hv, fun _ _ _ => rfl⟩
-  | t :: ts => by
+        ∀ y ∈ U, y ∈ GV k n → foldT ts (TI Bj e Ψ) y = TI Bj e (foldT ts Ψ) y := by
+  intro ts
+  induction ts with
+  | nil => exact ⟨hΨ, hv, fun _ _ _ => rfl⟩
+  | cons t ts hts =>
     have : CompleteSpace Wp := FiniteDimensional.complete ℂ Wp
-    obtain ⟨hc, hvv, ih⟩ := foldT_TI Bj e hΨ hU hv ts
+    obtain ⟨hc, hvv, ih⟩ := hts
     have e0 : ∀ f : B.Mat k n → (Wq →L[ℂ] Wp), foldT (t :: ts) f = Top (Q.EH k n) t.1 t.2.1 t.2.2 (foldT ts f) :=
       fun f => rfl
     refine ⟨by rw [e0]; exact ckOn_top hc _ _ _, by rw [e0]; exact vanish_top Bj e hvv _ _ _, fun y hyU hy => ?_⟩

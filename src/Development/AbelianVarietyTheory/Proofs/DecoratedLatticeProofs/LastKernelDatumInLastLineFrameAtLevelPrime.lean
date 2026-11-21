@@ -87,12 +87,15 @@ theorem overAll_of_extFun_eq (ψ : AddChar (AF D.host.F) ℂ) {S T : HSp D} (α 
     (β : ∀ i, Frame (p i) T n₂) (β' : ∀ i, Frame (p i) T n) (LS : Lat S) (LT : Lat T) (Ψ : ι → Matrix n₂ n' k → ℂ)
     (Ψ' : ι → Matrix n n' k → ℂ) (h : ∀ i, extFun (α i) (β i) (Ψ i) = extFun (α i) (β' i) (Ψ' i))
     (hSB : ∀ i, Ψ' i ∈ SB (Matrix n n' k)) :
-    ∀ (l : List ι) (f f' : WO S T → ℂ), OverAll ψ α β LS LT Ψ l f f' → OverAll ψ α β' LS LT Ψ' l f f'
-  | [], _, _, hf => hf
-  | i :: l, f, f', hf => by
-    obtain ⟨g, hg, hov⟩ : ∃ g, OverAll ψ α β LS LT Ψ l f g ∧ Over ψ (α i) (β i) LS LT g (Ψ i) f' := hf
+    ∀ (l : List ι) (f f' : WO S T → ℂ), OverAll ψ α β LS LT Ψ l f f' → OverAll ψ α β' LS LT Ψ' l f f' := by
+  intro l f f' hf
+  induction l generalizing f' with
+  | nil => exact hf
+  | cons i l ih =>
+    change ∃ g, OverAll ψ α β LS LT Ψ l f g ∧ Over ψ (α i) (β i) LS LT g (Ψ i) f' at hf
     change ∃ g, OverAll ψ α β' LS LT Ψ' l f g ∧ Over ψ (α i) (β' i) LS LT g (Ψ' i) f'
-    refine ⟨g, overAll_of_extFun_eq ψ α β β' LS LT Ψ Ψ' h hSB l f g hg, ?_⟩
+    obtain ⟨g, hg, hov⟩ := hf
+    refine ⟨g, ih g hg, ?_⟩
     unfold Over at hov ⊢
     obtain ⟨h1, h2, h3, -, h5⟩ := hov
     refine ⟨h1, h2, h3, hSB i, ?_⟩

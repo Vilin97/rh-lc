@@ -36,7 +36,7 @@ theorem irreducible_lin {K : Type} [Field K] {N : ℕ} {y : Fin N → K} (hy : y
   obtain ⟨j, hj⟩ := Function.ne_iff.1 hy
   have h0 : lin y ≠ 0 := fun h => hj (by
     have := coeff_lin y j
-    rw [h, coeff_zero] at this
+    simp only [h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
     exact this.symm)
   refine irreducible_of_totalDegree_eq_one ((isHomogeneous_lin y).totalDegree h0) fun x hx => ?_
   have hd := hx (Finsupp.single (0, j) 1)

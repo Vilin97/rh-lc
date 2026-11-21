@@ -55,7 +55,7 @@ theorem densProdValAt_of {D : Formalism.BasicNotions.D7} (hη : EtaLocAt D) : De
   have hm := Formalism.L2.SG.Pf.NcArithG.rm_eq D
   have hk5 : D.R.m + 3 ≤ D.R.k := D.R.m_add_three_le_k
   have hr : D.R.r = D.R.k + D.R.m - 1 := rfl
-  have hq := PI.UnitaryGroupMassFormula.CntFormula.residue_field_card D p
+  have hq := Formalism.L2.SG.Pf.LocModel.resCard_loc (D.s.atP p)
   have hmax : p.asIdeal.IsMaximal := p.isMaximal
   have hpos := alphaStd_pos hK hF hmax (D.R.k - 1 - c)
   rw [eq_div_iff hpos.ne', alpha_split' (K := D.host.E) p.asIdeal (show D.R.k - 1 - c ≤ D.R.r by omega), mul_comm]

@@ -19,7 +19,7 @@ theorem E_apply {R : Type*} [Semiring R] {a b j : ℕ} (i : Fin a) (l : Fin b) :
 theorem E_mul {R : Type*} [Semiring R] {a b c j : ℕ} (hb : j ≤ b) :
     E R a b j * E R b c j = E R a c j := by
   ext i l
-  simp only [mul_apply, E_apply]
+  simp only [Matrix.mul_apply, E_apply]
   by_cases h : (i : ℕ) = l ∧ (l : ℕ) < j
   · rw [if_pos h]
     obtain ⟨h1, h2⟩ := h
@@ -234,7 +234,7 @@ theorem bd_E {a b j : ℕ} : Bd (1 : ValueGroupWithZero k) (E k a b j) := fun i 
 
 theorem bd_one {a : ℕ} : Bd (1 : ValueGroupWithZero k) (1 : Matrix (Fin a) (Fin a) k) := by
   intro i l
-  rw [one_apply]
+  rw [Matrix.one_apply]
   split_ifs <;> simp
 
 theorem bd_KO {a : ℕ} {H : GL (Fin a) k} (hH : H ∈ KO k (Fin a)) : Bd (1 : ValueGroupWithZero k) H.val := by
@@ -251,7 +251,7 @@ theorem mem_KO {a : ℕ} {γ : ValueGroupWithZero k} (hc : γ < 1) (A : Matrix (
     have h1 : A i l = (A - 1) i l + (1 : Matrix (Fin a) (Fin a) k) i l := by simp
     rw [h1]
     refine (Valuation.map_add _ _ _).trans (max_le ((hA i l).trans hc.le) ?_)
-    rw [one_apply]
+    rw [Matrix.one_apply]
     split_ifs <;> simp
   have hI : (valuation k).Integers 𝒪[k] := Valuation.integer.integers (valuation k)
   obtain ⟨B, hB⟩ : ∃ B : Matrix (Fin a) (Fin a) 𝒪[k], B = Matrix.of fun i l => ⟨A i l, hint i l⟩ :=

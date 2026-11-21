@@ -151,9 +151,9 @@ theorem exists_sep [Fintype X] (hs : ∀ x y : X, x ≠ y → ∃ f ∈ T, (f : 
       exact ⟨⟨f, hf⟩ - algebraMap O T (f y), by simpa [sub_eq_zero] using hne, fun _ => by simp⟩
   choose g hg using h
   refine ⟨∏ y, g y, ?_, fun y hy => ?_⟩
-  · rw [SubmonoidClass.coe_finset_prod, Finset.prod_apply]
+  · rw [SubmonoidClass.coe_finsetProd, Finset.prod_apply]
     exact Finset.prod_ne_zero_iff.2 fun y _ => (hg y).1
-  · rw [SubmonoidClass.coe_finset_prod, Finset.prod_apply]
+  · rw [SubmonoidClass.coe_finsetProd, Finset.prod_apply]
     exact Finset.prod_eq_zero (Finset.mem_univ y) ((hg y).2 hy)
 
 theorem act_mul_K (f g : T) (v : FractionRing O ⊗[O] M) : (act f).baseChange (FractionRing O) ((act g).baseChange (FractionRing O) v) =

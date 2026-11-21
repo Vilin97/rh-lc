@@ -119,10 +119,10 @@ variable (K n) in
 def archTraceForm : LinearMap.BilinForm ℝ (isExpLieAlgebra K n).lieSubalgebra :=
   LinearMap.mk₂ ℝ
     (fun X Y => mixedTraceL K (trace (mat (X : ArchMatrix K n) * mat (Y : ArchMatrix K n))))
-    (fun X₁ X₂ Y => by simp [Matrix.add_mul, trace_add])
-    (fun r X Y => by simp [trace_smul])
-    (fun X Y₁ Y₂ => by simp [Matrix.mul_add, trace_add])
-    (fun r X Y => by simp [trace_smul])
+    (fun X₁ X₂ Y => by simp only [mat_coe_add, Matrix.add_mul, trace_add, map_add])
+    (fun r X Y => by simp only [mat_coe_smul, Matrix.smul_mul, trace_smul, map_smul])
+    (fun X Y₁ Y₂ => by simp only [mat_coe_add, Matrix.mul_add, trace_add, map_add])
+    (fun r X Y => by simp only [mat_coe_smul, Matrix.mul_smul, trace_smul, map_smul])
 
 theorem archTraceForm_apply (X Y : (isExpLieAlgebra K n).lieSubalgebra) :
     archTraceForm K n X Y =
@@ -292,9 +292,9 @@ theorem exists_archCartanBasis :
       change archTraceForm K n _ _ = _ at this
       simp only [f, ε0, Sum.elim_inl, Sum.inl.injEq]
       exact this
-    · simp only [f, ε0, Sum.elim_inl, Sum.elim_inr, reduceCtorEq, if_false]
+    · simp only [f, ε0, Sum.elim_inl, Sum.elim_inr, reduceCtorEq, ite_false]
       exact archTraceForm_eq_zero_of_skew_herm (bk i).2 (bp j).2
-    · simp only [f, ε0, Sum.elim_inl, Sum.elim_inr, reduceCtorEq, if_false]
+    · simp only [f, ε0, Sum.elim_inl, Sum.elim_inr, reduceCtorEq, ite_false]
       rw [archTraceForm_symm]
       exact archTraceForm_eq_zero_of_skew_herm (bk j).2 (bp i).2
     · have := hbp i j

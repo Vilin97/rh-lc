@@ -31,7 +31,7 @@ theorem intAt_zero (P : GlobalTheory.FinPl.Pl D → Prop) : (0 : AE D) ∈ intAt
 
 theorem intAt_add {P : GlobalTheory.FinPl.Pl D → Prop} {a b : AE D} (ha : a ∈ intAt D P) (hb : b ∈ intAt D P) :
     a + b ∈ intAt D P :=
-  ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha.2 hb.2⟩
+  ⟨add_mem ha.1 hb.1, by rw [map_add]; exact add_mem ha.2 hb.2⟩
 
 theorem intAt_neg {P : GlobalTheory.FinPl.Pl D → Prop} {a : AE D} (ha : a ∈ intAt D P) : -a ∈ intAt D P :=
   ⟨neg_mem ha.1, by rw [map_neg]; exact neg_mem ha.2⟩

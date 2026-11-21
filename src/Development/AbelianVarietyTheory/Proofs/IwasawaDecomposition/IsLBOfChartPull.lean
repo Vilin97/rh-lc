@@ -19,7 +19,8 @@ namespace GlobalTheory.NefFibre
 
 theorem isLB_of_chartPull {Y : Scheme.{0}} {A M : LB Y} (a : ChartPull A M (𝟙 Y)) (hM : M.IsLB)
     (hc : ∀ y : Y, ∃ i, y ∈ A.U i) : A.IsLB := by
-  refine GlobalTheory.GenSpread.isLB_of_gm A hc fun y i j k hi hj hk => ?_
+  refine GlobalTheory.GenSpread.isLB_of_gm A hc ?_
+  intro y i j k hi hj hk
   have hi' : y ∈ M.U (a.idx i) := a.le i hi
   have hj' : y ∈ M.U (a.idx j) := a.le j hj
   have hk' : y ∈ M.U (a.idx k) := a.le k hk

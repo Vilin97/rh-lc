@@ -14,7 +14,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankLeCar
 
 @[expose] public section
 
-open NumberField GlobalTheory.LKTrip GlobalTheory.HTBetti GlobalTheory.Kg
+open NumberField GlobalTheory.LKTrip
 open scoped TensorProduct Matrix.Norms.L2Operator
 
 noncomputable section

@@ -32,7 +32,7 @@ private theorem length_localization_bound {O B L P I : Type} [CommRing O] [IsDom
       induction hf using Submodule.span_induction with
       | mem f hf => exact Submodule.subset_span (by rw [Finset.coe_image]; exact ⟨f, hf, rfl⟩)
       | zero => rw [map_zero]; exact zero_mem _
-      | add f g _ _ hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
+      | add f g _ _ hf hg => rw [map_add]; exact add_mem hf hg
       | smul b f _ hf => rw [hlc]; exact Submodule.smul_mem _ _ hf
   have hfree : Module.Free O (LinearMap.range lc) := inferInstance
   have hrk : Module.finrank O (LinearMap.range lc) = Fintype.card I := by

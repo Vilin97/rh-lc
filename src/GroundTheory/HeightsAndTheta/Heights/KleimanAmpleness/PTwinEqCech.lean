@@ -225,14 +225,14 @@ theorem cechD_extC {i : ℕ} (v : Kleiman.Cech.Cochain (Kleiman.locSys S N M) i)
     by_cases hc : J.card = i + 1 + 1
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [extC_apply_pos G c _ J ⟨hJ, hc⟩, Kleiman.Cech.d_apply, map_sum, ← Finset.sum_coe_sort J]
-      refine Finset.sum_congr rfl fun j _ => ?_
-      have hj : (J.erase j).Nonempty ∧ (J.erase j).card = i + 1 := by
-        rw [Finset.card_erase_of_mem j.2, hc]
-        refine ⟨Finset.card_pos.mp ?_, rfl⟩
-        rw [Finset.card_erase_of_mem j.2, hc]
-        omega
-      rw [extC_apply_pos G c _ _ hj, map_zsmul]
-      rfl
+        refine Finset.sum_congr rfl fun j _ => ?_
+        have hj : (J.erase j).Nonempty ∧ (J.erase j).card = i + 1 := by
+          rw [Finset.card_erase_of_mem j.2, hc]
+          refine ⟨Finset.card_pos.mp ?_, rfl⟩
+          rw [Finset.card_erase_of_mem j.2, hc]
+          omega
+        rw [extC_apply_pos G c _ _ hj, map_zsmul]
+        rfl
     · rw [extC_apply_neg G c _ J (fun h => hc h.2)]
       refine Finset.sum_eq_zero fun j hj => ?_
       have hne : ¬ ((J.erase j).Nonempty ∧ (J.erase j).card = i + 1) := by

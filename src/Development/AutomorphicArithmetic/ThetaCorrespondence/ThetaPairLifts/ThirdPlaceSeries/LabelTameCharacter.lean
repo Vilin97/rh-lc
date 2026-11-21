@@ -26,7 +26,8 @@ theorem label_reduction_alt : _root_.DiscreteGroups.sglob.DzType.DepthZeroInerti
   have hp : resCard ((D.naut.plGw k v).adicCompletion D.host.E) = D.host.g k := by
     haveI : IsGalois ℚ D.host.E := D.host.hostE_isGalois
     obtain ⟨h1, -, -⟩ := GlobalTheory.Mem.Chr.splitsC_place (D.host.g_prime k) (D.nd.g_split k) _ (D.naut.plGw_over k v)
-    exact (GlobalTheory.LocLanglands.resCard_eq_normV _).trans h1
+    apply (GlobalTheory.LocLanglands.resCard_eq_normV _).trans
+    simpa [Formalism.ConjugateSelfDual.normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using h1
   refine ⟨hp, fun L hteich hgen => ?_⟩
   obtain ⟨θ, hθ⟩ := exists_charLift hp htame
   set x := _root_.GlobalTheory.CuspRep.ParLawsT.locRecT hL (D.nd.plOm.2 (D.naut.plGw k v))

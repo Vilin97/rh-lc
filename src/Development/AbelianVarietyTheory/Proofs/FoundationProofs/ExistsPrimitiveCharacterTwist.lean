@@ -48,7 +48,7 @@ theorem exists_root_close {x : Qbar l} {n : ℕ} (hn : n ≠ 0) (h : ‖x ^ n - 
   rw [h1, norm_prod] at h
   by_contra hc
   push Not at hc
-  refine absurd h (not_lt.2 (Finset.one_le_prod fun w hw => ?_))
+  refine absurd h (not_lt.2 (Finset.one_le_prod₀ fun w hw => ?_))
   rw [norm_sub_rev]
   exact hc w ((Polynomial.mem_nthRootsFinset (Nat.pos_of_ne_zero hn) 1).1 hw)
 

@@ -27,7 +27,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem gram_orth {U : Formalism.L2.PjFree.Unf Xo c σ (Dw.p + Dw.q)} (hσ : Formalism.L2.PjFree.GoodEmb c σ)
     (hU : Formalism.L2.PjFree.IsUnf U) (k : U.Comp) (x : (U.X k).dom) (hx : IsOrth (U.X k) x.1) (τ : E →+* ℂ) :
-    (hodgeMet Z U).gram (cxPt Z (U.un k x)) (cxFrame Z (U.un k x)) τ = ((2 * Real.pi : ℝ) : ℂ) • 1 := by
+    (hodgeMet Z U).gram (cxPt Z (U.un k x)) (cxFrame Z (U.un k x)) τ =
+      ((2 * Real.pi : ℝ) : ℂ) • (1 : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) ℂ) := by
   classical
   by_cases h0 : Dw.mult τ = 0
   · ext a
@@ -154,7 +155,7 @@ theorem gram_conj {m : ℕ} {Ω Ω₁ Q : Matrix (Fin m) (Fin m) ℂ} (hΩ₁ : 
 
 theorem hP_transpose {p q : ℕ} (z : Matrix (Fin p) (Fin q) ℂ) : (hP z)ᵀ = 1 - z.map (starRingEnd ℂ) * zᵀ := by
   ext a b
-  simp [hP, Matrix.mul_apply, mul_comm, one_apply, eq_comm]
+  simp [hP, Matrix.mul_apply, mul_comm, Matrix.one_apply, eq_comm]
 
 theorem cast_cols_map {p q q' : ℕ} (z : Matrix (Fin p) (Fin q) ℂ) (e : Fin q' ≃ Fin q) :
     (z.submatrix id e).map (starRingEnd ℂ) * (z.submatrix id e)ᵀ = z.map (starRingEnd ℂ) * zᵀ := by

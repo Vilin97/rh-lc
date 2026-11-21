@@ -201,7 +201,7 @@ theorem standIn_rowsStd (B : Base) (C : Cols B) (hC : SpectralModel.ColsPos C) (
     (eT : ∀ u a, (C.PTw u a).Mt ≃ₗ[ℂ] EuclideanSpace ℂ (Fin (n a)))
     (L : ∀ a, Rows.OLat B.O (B.embLL.comp B.OtoLL) (EuclideanSpace ℂ (Fin (n a))))
     (mt : B.places.Pl → C.Tup) (hmt : ∀ w, mt (B.places.conj w) = mt w) :
-    StandIn (rowsStd B C hC n e0 eT L mt hmt) where
+    StandIn (rowsStd B C hC n e0 eT L mt hmt) := {
   drows := rfl
   d0 := rfl
   dall := rfl
@@ -222,6 +222,7 @@ theorem standIn_rowsStd (B : Base) (C : Cols B) (hC : SpectralModel.ColsPos C) (
        show ((-(aMinusB_int B j τ c).choose : ℤ) : ℚ) = -aMinusB B j τ c
        push_cast
        rw [← (aMinusB_int B j τ c).choose_spec]⟩
+}
 
 theorem exists_rowsRest_std : ∀ (B : Base) (C : Cols B) (n : C.Tup → ℕ) (e0 : ∀ u, (C.mem u).P.Mt ≃ₗ[ℂ] EuclideanSpace ℂ (Fin (n C.mu0))) (eT : ∀ u a, (C.PTw u a).Mt ≃ₗ[ℂ] EuclideanSpace ℂ (Fin (n a))) (L : ∀ a, Rows.OLat B.O (B.embLL.comp B.OtoLL) (EuclideanSpace ℂ (Fin (n a)))) (mt : B.places.Pl → C.Tup), (∀ w, mt (B.places.conj w) = mt w) → SpectralModel.ColsPos C → ∃ (W : RowsRest B C) (g : ∀ a, EuclideanSpace ℂ (Fin (n a)) ≃ₗᵢ[ℂ] W.Amb a), StandIn W ∧ (∀ w, W.muAt w = C.mu0) ∧ (∀ w, W.muTw w = mt w) ∧ (∀ u F, W.eMt0 u F = g C.mu0 (e0 u F)) ∧ (∀ u a F, W.eMtTw u a F = g a (eT u a F)) ∧ (∀ a y, g a y ∈ (W.Mtilde a).carrier ↔ y ∈ (L a).carrier) ∧ (∀ a y, g a y ∈ (W.Mtilde a).gen ↔ y ∈ (L a).gen) ∧ (∀ a, W.eOp a = LinearMap.id) ∧ ∀ u a, W.ze u a = 1 := by
   intro B C n e0 eT L mt hmt hC

@@ -38,7 +38,7 @@ theorem isEquivariant_inv {φ : F ≅ G} (h : IsEquivariant ρ ρ' φ.hom) :
 variable (ρ)
 
 theorem smul_eq_smulHom_comp (a : Γ(X, ⊤)) (φ : F ⟶ G) : a • φ = smulHom F a ≫ φ :=
-  (smulHom_comp φ a).symm
+  (smul_hom_def a φ).trans (smulHom_comp a φ).symm
 
 theorem dualMap_smul (a : Γ(X, ⊤)) (φ : F ⟶ G) : GlobalTheory.CompanionTheory.Ar.dualMap (a • φ) = a • GlobalTheory.CompanionTheory.Ar.dualMap φ := by
   rw [smul_eq_smulHom_comp, dualMap_comp, dualMap_smulHom]
@@ -72,7 +72,9 @@ instance isIso_dualQuotHom : IsIso (dualQuotHom ρ σ) := by
 
 def dualQuotIso : dual (eigenQuot ρ σ) ≅ eigen (dualAct ρ) σ := asIso (dualQuotHom ρ σ)
 
-    (dualQuotIso ρ σ).hom ≫ eigenι _ _ = dualMap (eigenπ ρ σ) := by
+theorem dualQuotIso_hom_ι :
+    (dualQuotIso ρ σ).hom ≫ eigenι _ _ =
+      GlobalTheory.CompanionTheory.Ar.dualMap (eigenπ ρ σ) := by
   simp only [dualQuotIso, asIso_hom, dualQuotHom, eigenLift_ι]
 
 def pullbackQuotIso (f : Y ⟶ X) : eigenQuot (pullAct ρ f) (f.appTop.hom.comp σ) ≅

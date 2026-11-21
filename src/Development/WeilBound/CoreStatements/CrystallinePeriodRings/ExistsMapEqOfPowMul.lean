@@ -122,6 +122,8 @@ end Abstract
 
 variable (l : ℕ) [Fact l.Prime]
 
+local notation "Acris" => ACris.ACris ℂ_[l] l
+
 def cD : Acris →+* Per6.BdR l := (algebraMap (Per6.BdRp l) (Per6.BdR l)).comp (ACris.iota ℂ_[l] l)
 
 theorem cD_injective : Function.Injective (cD l) :=
@@ -174,11 +176,13 @@ theorem bcris_hom_ext {E : Type} [Semiring E] {f g : Per6.Bcris l →+* E}
     (h : ∀ x, f (Per6.cB l x) = g (Per6.cB l x)) : f = g :=
   (cB_isFrac l).hom_ext h
 
-theorem φB_comp : (Per6.φB l).comp (Per6.cB l) = (Per6.cB l).comp (ACris.phi ℂ_[l] l) :=
+theorem φB_comp :
+    (Per6.φB l).comp (Per6.cB l) = (Per6.cB l).comp (ACris.phi (K := ℂ_[l]) (p := l)) :=
   loc2_map_comp _ _ _ _ _
 
 variable {l} in
-theorem φB_cB (x : Acris) : Per6.φB l (Per6.cB l x) = Per6.cB l (ACris.phi ℂ_[l] l x) :=
+theorem φB_cB (x : Acris) :
+    Per6.φB l (Per6.cB l x) = Per6.cB l (ACris.phi (K := ℂ_[l]) (p := l) x) :=
   ((RingHom.comp_apply _ _ x).symm.trans (RingHom.congr_fun (φB_comp l) x)).trans
     (RingHom.comp_apply _ _ x)
 

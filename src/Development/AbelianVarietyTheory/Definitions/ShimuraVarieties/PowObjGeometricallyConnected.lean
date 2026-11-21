@@ -29,12 +29,11 @@ section Hom
 variable {G H : Over S} [GrpObj G] [GrpObj H]
 
 theorem isMonHom_of_mul_comp (f : G ⟶ H)
-    (h : ∀ (T : Over S) (x y : T ⟶ G), (x * y) ≫ f = (x ≫ f) * (y ≫ f)) : IsMonHom f where
-  one_hom := by
-    rw [MonObj.one_eq_one, MonObj.one_eq_one]
+    (h : ∀ (T : Over S) (x y : T ⟶ G), (x * y) ≫ f = (x ≫ f) * (y ≫ f)) : IsMonHom f := by
+  refine { one_hom := ?_, mul_hom := ?_ }
+  · rw [MonObj.one_eq_one, MonObj.one_eq_one]
     exact map_one (MonoidHom.mk' (fun x : 𝟙_ (Over S) ⟶ G ↦ x ≫ f) (h _))
-  mul_hom := by
-    rw [MonObj.mul_eq_mul G, h, MonObj.mul_eq_mul H, MonObj.comp_mul,
+  · rw [MonObj.mul_eq_mul G, h, MonObj.mul_eq_mul H, MonObj.comp_mul,
       tensorHom_fst, tensorHom_snd]
 
 theorem isMonHom_mul [IsCommMonObj H] (f g : G ⟶ H) [IsMonHom f] [IsMonHom g] :
@@ -215,10 +214,11 @@ theorem comp_homOfNat (x : T ⟶ G) : x ≫ homOfNat φ = (φ T (mk a x)).hom :=
   rw [homOfNat, ← this]
   congr 2
 
-theorem isLinearHom_homOfNat : IsLinearHom a b (homOfNat φ) where
-  isMonHom := isMonHom_of_mul_comp _ fun T x y ↦ by
+theorem isLinearHom_homOfNat : IsLinearHom a b (homOfNat φ) := by
+  constructor
+  · refine isMonHom_of_mul_comp _ fun T x y ↦ ?_
     simp only [comp_homOfNat φ hφ, mk_mul, map_add (f := _), hom_add]
-  comm r := by
+  · intro r
     rw [comp_homOfNat φ hφ, ← Category.id_comp (a.act r), mk_comp_act, map_smul]
     rfl
 
@@ -674,11 +674,11 @@ theorem isLinearPullback_pullback [IsCommMonObj G] (a : OAct O G) (f : S' ⟶ S)
 
 theorem IsLinearPullback.of_iso {a₁ : OAct O G₁} {b₁ : OAct O H₁} {a : OAct O G} {f : S' ⟶ S}
     {φ : G₁.left ⟶ G.left} (hφ : IsLinearPullback a₁ a f φ) (e : H₁ ≅ G₁)
-    (he : IsLinearHom b₁ a₁ e.hom) : IsLinearPullback b₁ a f (e.hom.left ≫ φ) where
-  isGrpPullback := by
-    have := he.1
+    (he : IsLinearHom b₁ a₁ e.hom) : IsLinearPullback b₁ a f (e.hom.left ≫ φ) := by
+  constructor
+  · have := he.1
     exact ((isGrpPullback_of_iso e).comp hφ.1).congr (Category.id_comp f) rfl
-  comm c := by
+  · intro c
     rw [Category.assoc, ← hφ.comm, ← Category.assoc, ← Category.assoc, ← Over.comp_left,
       ← Over.comp_left, he.comm]
 

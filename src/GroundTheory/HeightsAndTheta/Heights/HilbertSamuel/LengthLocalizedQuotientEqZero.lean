@@ -27,8 +27,10 @@ theorem telescope_enat : ∀ (n : ℕ) (f : Fin (n + 1) → ℕ∞) (c : Fin n �
     have ih : f (Fin.succ 0) = (∑ j : Fin n, c j.succ) + f (Fin.last n).succ :=
       telescope_enat n (fun k => f k.succ) (fun j => c j.succ) (fun j => h j.succ)
     calc f 0 = c 0 + f (Fin.succ 0) := by simpa using h 0
+      _ = c 0 + ((∑ j : Fin n, c j.succ) + f (Fin.last n).succ) :=
+        congrArg (fun a => c 0 + a) ih
       _ = (∑ j, c j) + f (Fin.last (n + 1)) := by
-        simp only [ih, Fin.succ_last, Fin.sum_univ_succ c, add_assoc]
+        rw [Fin.succ_last, Fin.sum_univ_succ c, add_assoc]
 
 theorem localizedModule_map_coe (P : Submonoid R) {M₀ M₁ : Type*} [AddCommGroup M₀] [Module R M₀]
     [AddCommGroup M₁] [Module R M₁] (f : M₀ →ₗ[R] M₁) :

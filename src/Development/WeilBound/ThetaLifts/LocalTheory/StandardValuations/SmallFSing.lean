@@ -140,7 +140,7 @@ theorem pRam_low (hϖ : IsUnif ϖ) (y : Matrix (Fin a') (Fin a) k) : pRam a a' �
     if ∀ i j, valuation k (y i j) ≤ valuation k ((ϖ : k) ^ c) then 1 else 0 := by
   have e := low_X (k := k) y
   rw [pRam, bigZetaIntegral_eq, gdet_low, bigF_std hϖ (by
-    ext i j; rw [submatrix_apply, eA, id]; erw [e]; simp [one_apply, eq_comm])]
+    ext i j; rw [submatrix_apply, eA, id]; erw [e]; simp [Matrix.one_apply, eq_comm])]
   simp only [map_one, Units.val_one, apow_one, one_mul]
   refine if_congr ⟨fun h i j => ?_, fun h i j => ?_⟩ rfl rfl
   · have := h j (finSumFinEquiv (Sum.inr i))

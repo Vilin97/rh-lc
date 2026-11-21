@@ -35,13 +35,13 @@ theorem totalPull_totalD (y : ∀ s : Finset ι, A.obj s) :
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [totalPull, if_pos h, Cube.totalD_apply A,
       Finset.sum_image (fun x hx y hy hxy => h hx hy hxy), map_sum, Finset.smul_sum]
-    refine Finset.sum_congr rfl fun i hi => ?_
-    have hi' : Set.InjOn τ ((t.erase i : Finset κ) : Set κ) :=
-      h.mono (Finset.coe_subset.2 (Finset.erase_subset i t))
-    rw [totalPull, if_pos hi', map_zsmul, map_zsmul, smul_smul, smul_smul,
-      PD.PullMap.sign_inj h hi, ← ψ.app_res]
-    congr 2
-    exact Cube.res_congr A y (PD.PullMap.image_erase_of_injOn h hi) _ _
+      refine Finset.sum_congr rfl fun i hi => ?_
+      have hi' : Set.InjOn τ ((t.erase i : Finset κ) : Set κ) :=
+        h.mono (Finset.coe_subset.2 (Finset.erase_subset i t))
+      rw [totalPull, if_pos hi', map_zsmul, map_zsmul, smul_smul, smul_smul,
+        PD.PullMap.sign_inj h hi, ← ψ.app_res]
+      congr 2
+      exact Cube.res_congr A y (PD.PullMap.image_erase_of_injOn h hi) _ _
   · rw [totalPull, if_neg h]
     obtain ⟨a, ha, b, hb, he, hab⟩ : ∃ a ∈ t, ∃ b ∈ t, τ a = τ b ∧ a ≠ b := by
       by_contra hc

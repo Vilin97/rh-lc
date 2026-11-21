@@ -106,7 +106,7 @@ variable {d : ℕ} {y₀ : Fin d → ℂ}
 
 @[simp] theorem pev_C (y : Fin d → ℂ) (t : ℂ) (f : analyticSubring y₀) :
     pev y t (C f) = (f : (Fin d → ℂ) → ℂ) y := by
-  simp [pev]
+  simp [pev, evalAt]
 
 @[simp] theorem pev_X (y : Fin d → ℂ) (t : ℂ) : pev (y₀ := y₀) y t X = t := by
   simp [pev]

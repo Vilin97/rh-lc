@@ -36,7 +36,7 @@ theorem coeff_mem_span (G : B[X]) (i : ℕ) :
     rw [← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, eval_monomial, smul_eq_mul,
       mul_comm]
   have hk := congrArg (fun r => r.coeff i) hq
-  simp only [q, finsetSum_coeff, coeff_monomial, coeff_zero, Finset.sum_ite_eq'] at hk
+  simp only [q, finsetSum_coeff, coeff_monomial, Finsupp.single_apply, coeff_zero, Finset.sum_ite_eq'] at hk
   by_cases hs : i ∈ G.support
   · simp only [hs, if_true] at hk
     exact hℓ hk

@@ -150,18 +150,18 @@ theorem cp_td (h : Sep a c d) (r : ℕ) : ∀ m, m ≤ r →
       simp [K]
     · simp only [td, show ¬ (0 + 2 ≤ r) by omega, if_false, show ¬ (1 + 1 ≤ r) by omega]
   | m + 2, hm => by
-    obtain ⟨i1, i1'⟩ := cp_td h r (m + 1) (by omega)
-    obtain ⟨i0, i0'⟩ := cp_td h r m (by omega)
+    have ih1 := cp_td h r (m + 1) (by omega)
+    have ih0 := cp_td h r m (by omega)
     have hb := cp_K_both h m (r - (m + 2))
     rw [show r - (m + 2) + 1 = r - (m + 1) by omega, show r - (m + 2) + 2 = r - m by omega] at hb
     refine ⟨?_, ?_⟩
     · show (if m + 2 ≤ r then a (r - (m + 2)) * td a c d r (m + 1) 0 - c (r - (m + 1)) * d (r - (m + 2)) * td a c d r m 0
         else 0) = _
-      rw [if_pos hm, i1, i0, hb]
+      rw [if_pos hm, ih1.1, ih0.1, hb]
     · show (if m + 1 + 2 ≤ r then a (r - (m + 1 + 2)) * td a c d r (m + 1 + 1) 1 -
           c (r - (m + 1 + 1)) * d (r - (m + 1 + 2)) * td a c d r (m + 1) 1 else 0) = _
       by_cases h3 : m + 3 ≤ r
-      · rw [if_pos (by omega), if_pos (by omega), i1', if_pos (by omega), i0', if_pos (by omega)]
+      · rw [if_pos (by omega), if_pos (by omega), ih1.2, if_pos (by omega), ih0.2, if_pos (by omega)]
         have hb2 := cp_K_both h m (r - (m + 3))
         rw [show r - (m + 3) + 1 = r - (m + 2) by omega, show r - (m + 3) + 2 = r - (m + 1) by omega] at hb2
         rw [show m + 1 + 2 = m + 3 by omega, show m + 1 + 1 = m + 2 by omega, show r - (m + 2 + 1) = r - (m + 3) by omega,
@@ -228,13 +228,13 @@ theorem cp_vAB (Y : ℂ) : ∀ i, i ≤ r → ∀ f : WSm r X,
       (Q.vAB r Y i).2 (f : (Fin r → ℂ) → X) = (((bu (aS X Y) (eS X · 1) (eS X · 2) i).2 f : WSm r X) : (Fin r → ℂ) → X)
   | 0, _, f => ⟨rfl, rfl⟩
   | i + 1, hi, f => by
-    obtain ⟨h1, h2⟩ := cp_vAB Y i (by omega) f
+    have ih := cp_vAB Y i (by omega) f
     have hir : i < r := by omega
     simp only [Q.vAB, dif_pos hir, bu, aS, eS, dif_pos hir]
     refine ⟨?_, ?_⟩
-    · rw [h1, h2]
+    · rw [ih.1, ih.2]
       rfl
-    · rw [h1]
+    · rw [ih.1]
       rfl
 
 theorem cp_tdU (Y : ℂ) (b : Fin 2) : ∀ m, ∀ f : WSm r X,
@@ -335,13 +335,13 @@ theorem loc_tdU (Y : ℂ) (b : Fin 2) : ∀ m, Loc (tdU (X := X) r Y m b)
 theorem loc_vAB (Y : ℂ) : ∀ i, Loc (X := X) (Q.vAB r Y i).1 ∧ Loc (X := X) (Q.vAB r Y i).2
   | 0 => ⟨loc_id, loc_zero⟩
   | i + 1 => by
-    obtain ⟨h1, h2⟩ := loc_vAB Y i
+    have ih := loc_vAB Y i
     by_cases hi : i < r
     · simp only [Q.vAB, dif_pos hi]
-      exact ⟨loc_sub (loc_add (loc_smul Y h1) (loc_comp (loc_pOp _) h1)) (loc_comp (loc_cOp _) h2),
-        loc_comp (loc_ciOp _) h1⟩
+      exact ⟨loc_sub (loc_add (loc_smul Y ih.1) (loc_comp (loc_pOp _) ih.1)) (loc_comp (loc_cOp _) ih.2),
+        loc_comp (loc_ciOp _) ih.1⟩
     · simp only [Q.vAB, dif_neg hi]
-      exact ⟨h1, h2⟩
+      exact ih
 
 theorem cp_cutoff (O : Set (Fin r → ℂ)) (hO : IsOpen O) (hOm : O ⊆ OmX r) (f : (Fin r → ℂ) → X)
     (hf : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) f O) (c : Fin r → ℂ) (hc : c ∈ O) :

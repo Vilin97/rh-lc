@@ -59,7 +59,9 @@ theorem eq_zero_of_ellT_smooth {W : HSp D} {S' : D.what₂.Tau → SPar} (M' : D
     have h1 : b.coord i y = 0 := by
       rw [key]
       exact hu fun τ => (o τ (i τ) : M'.sm τ)
-    simpa using h1
+    change b.repr y i = b.repr 0 i
+    rw [map_zero b.repr, Finsupp.zero_apply]
+    exact h1
   rw [hy, map_zero]
 
 end GlobalTheory.AdjSmooth
@@ -196,6 +198,7 @@ theorem ellT_update_smul {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V
       rw [MultilinearMap.mkPiAlgebra_apply, ← e u]
     rw [smul_eq_mul, smul_eq_mul] at h
     rw [e2, e2, inner_smul_left, h]
+    simp only [RingHom.id_apply]
     ring
   | add a b ha hb =>
     rw [map_add (f := _), map_add (f := _), ha, hb]
@@ -249,7 +252,7 @@ theorem adjoint_smooth : ∀ {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → SP
     have e := (hU P w v).symm.trans (h v)
     rw [(starRingEnd ℂ).injective.eq_iff] at e
     rw [map_sub, map_sub, e, sub_self]
-  let mm : PolF D W.rank V.rank → MultilinearMap ℂ (fun τ => M.sm τ) (SmT M') := fun P =>
+  let mm : PolF D W.rank V.rank → MultilinearMap (RingHom.id ℂ) (fun τ => M.sm τ) (SmT M') := fun P =>
     { toFun := U P
       map_update_add' := fun w τ x y => by
         refine char P _ _ fun v => ?_
@@ -258,7 +261,8 @@ theorem adjoint_smooth : ∀ {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → SP
       map_update_smul' := fun w τ c x => by
         refine char P _ _ fun v => ?_
         rw [coe_update, Submodule.coe_smul, ellT_update_smul, ← coe_update, hU, map_smul, map_smul, smul_eq_mul,
-          map_mul] }
+          map_mul]
+        rfl }
   have hmm : ∀ P w, mm P w = U P w := fun _ _ => rfl
   refine ⟨{ toFun := fun P => PiTensorProduct.lift (mm P)
             map_add' := fun P Q => PiTensorProduct.ext (MultilinearMap.ext fun w => ?_)

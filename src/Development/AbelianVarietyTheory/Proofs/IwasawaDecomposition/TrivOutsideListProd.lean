@@ -162,10 +162,12 @@ theorem list_prod_map_eq {ι G : Type} [Monoid G] (f : ι → G) (a : ι) :
     rw [List.map_cons, List.prod_cons]
     by_cases hb : b = a
     · subst hb
-      rw [List.prod_eq_one, mul_one]
-      intro y hy
-      obtain ⟨c, hc, rfl⟩ := List.mem_map.1 hy
-      exact h1 c (List.mem_cons_of_mem _ hc) (fun e => (List.nodup_cons.1 hnd).1 (e ▸ hc))
+      have hprod : (l.map f).prod = 1 := by
+        apply List.prod_eq_one
+        intro y hy
+        obtain ⟨c, hc, rfl⟩ := List.mem_map.1 hy
+        exact h1 c (List.mem_cons_of_mem _ hc) (fun e => (List.nodup_cons.1 hnd).1 (e ▸ hc))
+      rw [hprod, mul_one]
     · rw [h1 b (by simp) hb, one_mul]
       exact list_prod_map_eq f a l (List.nodup_cons.1 hnd).2 ((List.mem_cons.1 hm).resolve_left (Ne.symm hb))
         (fun c hc => h1 c (List.mem_cons_of_mem _ hc))
@@ -173,10 +175,18 @@ theorem list_prod_map_eq {ι G : Type} [Monoid G] (f : ι → G) (a : ι) :
 theorem trivOutside_list_prod {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
     {T : Set (HeightOneSpectrum (𝓞 (maximalRealSubfield L)))} :
     ∀ l : List (Formalism.AUTREP.GAf L n), (∀ x ∈ l, TrivOutside T x) → TrivOutside T l.prod
-  | [], _ => by rw [List.prod_nil]; exact GlobalTheory.HeckeStdFacts.triv_one
+  | [], _ => by
+    rw [List.prod_nil]
+    intro w _
+    exact Matrix.map_one _ (map_zero _) (map_one _)
   | x :: l, h => by
     rw [List.prod_cons]
-    exact GlobalTheory.HeckeStdFacts.triv_mul (h x (by simp)) (trivOutside_list_prod l fun y hy => h y (List.mem_cons_of_mem _ hy))
+    have hx := h x List.mem_cons_self
+    have hl := trivOutside_list_prod l fun y hy => h y (List.mem_cons_of_mem _ hy)
+    intro w hw
+    have hmul : ((x * l.prod).1 : Matrix (Fin n) (Fin n) (AL L)) =
+        (x.1 : Matrix (Fin n) (Fin n) (AL L)) * (l.prod.1 : Matrix (Fin n) (Fin n) (AL L)) := rfl
+    rw [hmul, Matrix.map_mul, hx w hw, hl w hw, mul_one]
 
 theorem main : ∀ (D : D7) (n : ℕ), D.R.r ≤ n → ∃ Lf : G0g D.nd → Formalism.AUTREP.GAf D.host.E n,
     GlobalTheory.PendOf.IsTypeGroupBlockLift D n Lf ∧ ∀ g, Lf g ∈ ReciprocityTheory.Aut.Umax D.host.E n := by

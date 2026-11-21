@@ -51,7 +51,7 @@ private theorem tw_iso {Γ k : Type} [Group Γ] [Field k] {n : ℕ} {r r' : Γ �
   rw [Units.val_mul, Units.val_mul, Af.tw_val, Af.tw_val, hg, Units.val_mul, Units.val_mul, Matrix.mul_smul,
     Matrix.smul_mul]
 
-private theorem conj_left {G R : Type} [Group G] [CommRing R] (r : G →* GG 3 R) (h : GL (Fin 3) R) (g : G)
+private theorem conj_left {G R : Type} [Group G] [CommRing R] (r : G →* GG (m := 3) (R := R)) (h : GL (Fin 3) R) (g : G)
     (hg : (r g).right = 1) : (conjBy h r g).left = h * (r g).left * h⁻¹ := by
   have e : conjBy h r g = GG.ofGL h * r g * GG.ofGL h⁻¹ := by
     rw [map_inv]; rfl
@@ -81,7 +81,7 @@ private def dg {R : Type} [CommRing R] (t : Rˣ) : GL (Fin 2) R where
   inv_val := by
     rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]; congr 1; funext i; fin_cases i <;> simp
 
-private theorem corner_conj {G R : Type} [Group G] [CommRing R] (r : G →* GG 3 R) (t : Rˣ) (g : G) :
+private theorem corner_conj {G R : Type} [Group G] [CommRing R] (r : G →* GG (m := 3) (R := R)) (t : Rˣ) (g : G) :
     corner (conjBy (tor R t) r g).mat =
       (dg t : Matrix (Fin 2) (Fin 2) R) * corner (r g).mat * (((dg t)⁻¹ : GL (Fin 2) R) : Matrix (Fin 2) (Fin 2) R) := by
   ext a b

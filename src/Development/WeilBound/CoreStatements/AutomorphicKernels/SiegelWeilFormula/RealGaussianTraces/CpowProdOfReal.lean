@@ -250,7 +250,7 @@ theorem realWhitAll_of (hWR : WR.WRSt) : RealWhitAll := by
   haveI : T2Space (HermR (Ainf F) σ n) := eg.toHomeomorph.symm.t2Space
   have hGd : ContinuousOn (fun S : HermR (Ainf F) σ n => c * ∏ i, gg i (eg S i))
       {S : HermR (Ainf F) σ n | IsUnit (S : Matrix (Fin n) (Fin n) (Ainf F ⊗[F] E)).det} := by
-    refine continuousOn_const.mul (continuousOn_finset_prod _ fun i _ => ?_)
+    refine continuousOn_const.mul (continuousOn_finsetProd _ fun i _ => ?_)
     refine (hggc i).comp ((continuous_apply i).comp eg.continuous).continuousOn fun S hS => ?_
     show (herm (eg S i)).det ≠ 0
     rw [heg]; exact det_herm_ygAll σ hCM ψ θ l hP g S hS i
@@ -292,7 +292,7 @@ theorem realWhitAll_of (hWR : WR.WRSt) : RealWhitAll := by
   refine ⟨fun z => (cb : ℂ) * (cμ : ℂ) * ∏ i, Wi i (z - s0), ?_, ?_, ((M : ℝ) - n) / 2 + ∑ i, |σ₀ i|,
     fun z hz => ?_⟩
   · refine (differentiable_const _).mul ?_
-    have := Differentiable.finset_prod (u := Finset.univ) (f := fun i z => Wi i (z - s0))
+    have := Differentiable.finsetProd (u := Finset.univ) (f := fun i z => Wi i (z - s0))
       (fun i _ => (hWid i).comp (differentiable_id.sub_const s0))
     rw [Finset.prod_fn] at this
     exact this

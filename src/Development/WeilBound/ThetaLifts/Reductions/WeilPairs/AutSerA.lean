@@ -104,8 +104,15 @@ theorem main (C : Ctx σ B JS JT ξ₀ θ ι) (hG : GoodLat Λ) (hR : RatSD σ J
   have hψ : IsCharAF F B.ψ := (GlobalTheory.StdCharWeilDatum.isStdCharF_of_isGood F E σ B C.good).1
   have hA := hO.sd
   have hw := hO.hw
-  obtain ⟨-, hJ, hsym, hpos⟩ := omV_laws
-    (PositivityTheory.ThKW.hermitian_majorant_selfAdjoint_posDef F E σ B C.good nS nT JS JT C.hS C.hT ξ₀ C.h0 C.hξ).1 hs.sq hs.pos
+  have hH : (HMF JS JT ξ₀ (tauB B))ᴴ = HMF JS JT ξ₀ (tauB B) := by
+    have hτ := C.good.cm.2.2.2
+    unfold HMF
+    rw [GlobalTheory.RealWeil.blk_conjTranspose]
+    congr 1 <;> funext v
+    · rw [conjTranspose_smul, RealC.herm_map (hτ _) C.hT]
+      simp
+    · rw [conjTranspose_nonsing_inv, RealC.herm_map (hτ _) C.hS]
+  obtain ⟨-, hJ, hsym, hpos⟩ := omV_laws hH hs.sq hs.pos
   have hl : ∀ x y z : WOF F E nS nT, B.ψ (symplOHF σ JS JT ξ₀ (x + y) z) =
       B.ψ (symplOHF σ JS JT ξ₀ x z) * B.ψ (symplOHF σ JS JT ξ₀ y z) :=
     fun x y z => by rw [GlobalTheory.HeisLineF.symplOHF_add_left, AddChar.map_add_eq_mul]

@@ -125,8 +125,15 @@ theorem qdf_frLat (q : QLoc hc n Q Θ) : FrLat ST SG q := by
     intro i j
     have hz : (fun k => (xm : Matrix (Fin n) (Fin n) _) k j) ∈ Formalism.L2.Herm.hatL (F := F)
         (Formalism.UG.CS.globLat (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (stdLat E n)) := by
+      have hspan : Submodule.span E (stdLat E n : Set (Sp E n)) = ⊤ := by
+        apply top_unique
+        rw [← (Pi.basisFun E (Fin n)).span_eq]
+        apply Submodule.span_le.mpr
+        rintro _ ⟨i, rfl⟩
+        apply Submodule.subset_span
+        simpa using (single_mem_stdLat (E := E) (n := n) i 1)
       refine (Formalism.UG.P.span_recovery_of_integral_adelic_approx Formalism.UG.P.integral_adele_approximation_holds F E (Fin n) (stdLat E n)
-        (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) (stdLat_lattice (E := E) (n := n)).span_eq_top xm _).2 ?_
+        (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) hspan xm _).2 ?_
       have e3 : (((xm⁻¹ : GL (Fin n) _) : Matrix (Fin n) (Fin n) _) *ᵥ
           fun k => (xm : Matrix (Fin n) (Fin n) _) k j) = fun k => iA F E ((Pi.single j (1 : E) : Sp E n) k) := by
         have : (fun k => (xm : Matrix (Fin n) (Fin n) _) k j) =

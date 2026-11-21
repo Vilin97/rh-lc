@@ -86,7 +86,7 @@ theorem slice_mem {κ' κ'' : Type} [Fintype κ'] [Fintype κ''] :
     rw [slice0_pureA]
     exact GlobalTheory.CharInvForm.mem_schA _ (sb_slice hg)
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem slice_adm {κ' κ'' : Type} [Fintype κ'] [Fintype κ''] :
@@ -106,7 +106,7 @@ theorem exists_schwartz_one_cpt (V : Type) [NormedAddCommGroup V] [NormedSpace �
 
 theorem exists_sb_one (κ : Type) [Fintype κ] : ∃ g ∈ SB (κ → Af F), g 0 = 1 := by
   obtain ⟨g, hg, y, hy⟩ := PositivityTheory.RL.SeminormBoundRestriction.exists_SB (F := F) (κ := κ)
-  have hc : Continuous fun x : κ → Af F => x + y := continuous_add_right y
+  have hc : Continuous fun x : κ → Af F => x + y := (Homeomorph.addRight y).continuous
   refine ⟨fun x => g (x + y), ⟨hg.1.comp_continuous hc, ?_⟩, by simpa using hy⟩
   exact hg.2.comp_homeomorph (Homeomorph.addRight y)
 

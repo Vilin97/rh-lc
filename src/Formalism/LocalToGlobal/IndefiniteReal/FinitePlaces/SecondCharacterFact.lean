@@ -31,7 +31,7 @@ theorem exists_finset_norm_one (x : F) (hx : x ≠ 0) :
   have hval : v.valuation F x = 1 := by
     rw [map_inv₀, inv_le_one₀ hpos] at hv2
     exact le_antisymm hv1 hv2
-  have h := NumberField.FinitePlace.norm_def' (K := F) v x
+  have h := NumberField.FinitePlace.norm_embedding' (K := F) v x
   rw [hval] at h
   simp only [map_one, NNReal.coe_one] at h
   exact h

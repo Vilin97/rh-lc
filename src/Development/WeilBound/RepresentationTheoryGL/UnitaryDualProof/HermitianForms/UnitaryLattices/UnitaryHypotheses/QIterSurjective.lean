@@ -66,13 +66,16 @@ theorem ker_qIter (ψ : AddChar k Circle) {n : ℕ} :
     have h₂ (a : N₂) : ∃ h : s a ∈ N, θ ⟨s a, h⟩ = θ₂ a :=
       GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ (Nat.le_add_right n j) a
     have hle : K ≤ L := by
+      dsimp only [K, twKer]
       refine Submodule.span_le.2 ?_
       rintro _ ⟨u, v, rfl⟩
       obtain ⟨h, hθ⟩ := h₁ u
       exact Submodule.subset_span ⟨⟨u, h⟩, v, by rw [hθ]⟩
     have e : T = L.map K.mkQ := by
-      refine le_antisymm (Submodule.span_le.2 ?_) ?_
-      · rintro _ ⟨a, x, rfl⟩
+      refine le_antisymm ?_ ?_
+      · dsimp only [T, twKer]
+        refine Submodule.span_le.2 ?_
+        rintro _ ⟨a, x, rfl⟩
         induction x using Submodule.Quotient.induction_on with
         | H v =>
           obtain ⟨h, hθ⟩ := h₂ a
@@ -80,7 +83,8 @@ theorem ker_qIter (ψ : AddChar k Circle) {n : ℕ} :
             Submodule.subset_span ⟨⟨s a, h⟩, v, rfl⟩, ?_⟩
           rw [hθ, Submodule.mkQ_apply, Submodule.Quotient.mk_sub, Submodule.Quotient.mk_smul]
           rfl
-      · refine Submodule.map_le_iff_le_comap.2 (Submodule.span_le.2 ?_)
+      · dsimp only [L, twKer]
+        refine Submodule.map_le_iff_le_comap.2 (Submodule.span_le.2 ?_)
         rintro _ ⟨u, v, rfl⟩
         obtain ⟨u₁, a, hu⟩ := GlobalTheory.CompanionTheory.BZMirStep.derUnipM_decomp
           (Nat.le_add_right n j) u

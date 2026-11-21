@@ -33,7 +33,9 @@ theorem QuotSectionsFinite.proof (hE : Extension.Statement.{u, w, w})
         ⟨_, (mem_homogeneousSubmodule _ f).mpr hf.2.choose_spec⟩
     exact fun p hp d => homogeneousComponent_mem_of_mem h hp d
   have hforms : ∀ (f : Poly k N) (e : ℕ), f.IsHomogeneous e → (f ∈ J ↔ f ∈ J') := fun f e hf =>
-    ⟨fun h => Ideal.subset_span ⟨h, e, hf⟩, fun h => (Ideal.span_le.mpr fun _ hg => hg.1) h⟩
+    ⟨fun h => Ideal.subset_span ⟨h, e, hf⟩, fun h => (show J' ≤ J from Ideal.span_le.mpr (by
+      intro g hg
+      exact hg.1)) h⟩
   have hsys : idealSys x J = idealSys x J' := SubSystem.ext_sub fun I => by
     change idealMod J I = idealMod J' I
     unfold idealMod

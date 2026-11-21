@@ -126,7 +126,7 @@ theorem isIntegral_torusS : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N d e : �
       refine (Polynomial.degree_C_mul_X_pow_le l _).trans_lt ?_
       exact_mod_cast Finset.mem_range.1 hl
     · simp only [Polynomial.eval₂_add, Polynomial.eval₂_pow, Polynomial.eval₂_X,
-        Polynomial.eval₂_finset_sum, Polynomial.eval₂_mul, Polynomial.eval₂_C]
+        Polynomial.eval₂_finsetSum, Polynomial.eval₂_mul, Polynomial.eval₂_C]
       exact hzero
 
 end GlobalTheory.CompanionTheory.GeoInteg

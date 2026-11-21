@@ -75,6 +75,8 @@ private theorem relIndex_eq_inv_norm_det_basis_change {m : ℕ} (a c : Module.Ba
         ((a.equiv c (Equiv.refl _)).toLinearMap.restrictScalars (P.adicCompletionIntegers E)) = B := by
       rw [← Submodule.span_image, ← Set.range_comp, ← hc]
       congr 2
+      funext i
+      exact Module.Basis.equiv_apply _ _ _ _
     rw [← key, ha, Submodule.map_coe]
     rfl
   exact LocalLatticeIndex.index_eq_det A B _ hAfg hAsp himg hBA

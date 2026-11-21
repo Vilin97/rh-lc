@@ -165,7 +165,7 @@ theorem weilPairJ (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) (hRT : Re
       intro x x' s
       rw [key, key, hsig s, hWl, hWl, enorm_smul, enorm_smul]
       show _ * (‖a u‖ₑ * ‖l u (σc (Matrix.of (Tm C τ x)) w0)‖ₑ) * (‖a u‖ₑ * ‖l u (σc (Matrix.of (Tm C τ x')) w0)‖ₑ) = _
-      simp only [enorm]
+      simp only [eNorm_eq_nnNorm]
       ring
     have step : ∫⁻ z, ∫⁻ z', ∫⁻ s, ‖⟪X.B.σ (vOf X τ) (uMat z) (X.B.w (vOf X τ)), X.B.σ (vOf X τ) (uMat s)
         (X.B.σ (vOf X τ) (uMat z') (X.B.w (vOf X τ)))⟫_ℂ‖ₑ * ‖X.Wloc u (vOf X τ) z‖ₑ * ‖X.Wloc u (vOf X τ) z'‖ₑ
@@ -239,7 +239,7 @@ theorem weilPairJ (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) (hRT : Re
       intro x x' s s'
       rw [key, key, hsg, hWl, hWl, enorm_smul, enorm_smul]
       show _ * (‖a u‖ₑ * ‖l u (σc (Matrix.of (Tm C τ x)) w0)‖ₑ) * (‖a u'‖ₑ * ‖l u' (σc (Matrix.of (Tm C τ x')) w0)‖ₑ) = _
-      simp only [enorm]
+      simp only [eNorm_eq_nnNorm]
       ring
     have step : ∫⁻ z, ∫⁻ z', ∫⁻ s, ∫⁻ s', ‖⟪X.B.σ (vOf X τ) (uMat z) (X.B.w (vOf X τ)),
         X.B.σ (vOf X τ) (uMat (s * g * s'⁻¹)) (X.B.σ (vOf X τ) (uMat z') (X.B.w (vOf X τ)))⟫_ℂ‖ₑ *

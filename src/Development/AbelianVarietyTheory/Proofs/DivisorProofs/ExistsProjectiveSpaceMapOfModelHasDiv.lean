@@ -28,8 +28,13 @@ open GlobalTheory.ProjSpace GlobalTheory.Cartier GlobalTheory.QCoh.Qcqs
 theorem pCrd_pt {o A : Type} [CommRing o] [CommRing A] {n : ℕ} (c : o →+* A) (v : Fin (n + 1) → A)
     (hv : Ideal.span (Set.range v) = ⊤) : PCrd (pt c v hv) v := by
   have hφ := toProj_coord o n
+  have hstr : pt c v hv ≫ PSpace.str o n = spMap c := by
+    rw [pt, PSpace.str, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+    congr 1
+    ext1
+    exact RingHom.ext fun r => MvPolynomial.eval₂Hom_C c v r
   have h1 := (ProjCoord.secCoord_iff (Equiv.refl _) (toProj (PSpace.str o n) (coord o n) (iSup_nonzeroLocus_coord o n))
-    c (pt c v hv) (by rw [hφ, Category.comp_id, pt_str]) v).2 ⟨by simpa using hv, by rw [hφ, Category.comp_id]; rfl⟩
+    c (pt c v hv) (by rw [hφ, Category.comp_id]; exact hstr) v).2 ⟨by simpa using hv, by rw [hφ, Category.comp_id]; rfl⟩
   exact (FibreEmbed.secCoord_iff_of_secMaps (LB.isLB_pull (O1_isLB o n) _) (O1_isLB o n)
     (fun j => secMaps_toProjIso _ _ _ j) (iSup_nonzeroLocus_secPull (iSup_nonzeroLocus_coord o n) _)
     (iSup_nonzeroLocus_coord o n)).1 h1
@@ -84,20 +89,23 @@ theorem valF_mul' {V : M.Z.Opens} (hne : (V : Set M.Z).Nonempty) (f g : Γ(M.Z, 
     valF M.pt V (f * g) = valF M.pt V f * valF M.pt V g := by
   rw [← M.res_apply V hne, map_mul, M.res_apply, M.res_apply]
 
-theorem isCoordFamily_ratioFn (hd : M.HasDiv c) : IsCoordFamily (dOpen M c) (ratioFn M c) where
-  cover := top_unique fun z _ => TopologicalSpace.Opens.mem_iSup.2 (hd z)
-  self i := eq_of_valF fun hne => by
+theorem isCoordFamily_ratioFn (hd : M.HasDiv c) : IsCoordFamily (dOpen M c) (ratioFn M c) := by
+  refine { cover := top_le_iff.1 fun z _ => TopologicalSpace.Opens.mem_iSup.2 (hd z)
+           self := ?_, mul := ?_, basicOpen_le := ?_ }
+  · intro i
+    refine eq_of_valF fun hne => ?_
     obtain ⟨z, hz⟩ := hne
     have := valF_ratioFn (j := i) (le_refl (dOpen M c i)) ⟨z, hz⟩
     rw [resG_self] at this
     rw [this, valF_one' ⟨z, hz⟩, div_self hz.1]
-  mul i j k := eq_of_valF fun hne => by
+  · intro i j k
+    refine eq_of_valF fun hne => ?_
     obtain ⟨z, hz⟩ := hne
     rw [valF_mul' ⟨z, hz⟩, valF_ratioFn _ ⟨z, hz⟩, valF_ratioFn _ ⟨z, hz⟩, valF_ratioFn _ ⟨z, hz⟩]
     have h1 := hz.1.1
     have h2 := hz.2.1
     field_simp
-  basicOpen_le i j := fun z hz => by
+  · intro i j z hz
     have hzi : z ∈ dOpen M c i := M.Z.basicOpen_le _ hz
     have hu := (RatModel.isUnit_valF_iff hzi (ratioFn M c i j)).2 hz
     have e : valF M.pt (dOpen M c i) (ratioFn M c i j) = c j / c i := by
@@ -121,18 +129,40 @@ theorem appLE_eq_fnOn {X : Scheme.{0}} (x : Sp Ω ⟶ X) (U : X.Opens) (h : ⊤ 
 
 theorem pt_comp_toHom (hd : M.HasDiv c) (hc : Ideal.span (Set.range c) = ⊤) :
     M.pt ≫ (isCoordFamily_ratioFn hd).toHom M.s = pt (algebraMap o Ω) c hc := by
+  let _ := MvPolynomial.gradedAlgebra (σ := Fin (n + 1)) (R := o)
   set H := isCoordFamily_ratioFn hd
   obtain ⟨i, hi⟩ := hd (genericPoint M.Z)
   have hpt : ⊤ ≤ M.pt ⁻¹ᵁ dOpen M c i := M.top_le_preimage_pt ⟨_, RatModel.div_genericPoint hi.1⟩
   have h₁ : ⊤ ≤ (M.pt ≫ H.toHom M.s) ⁻¹ᵁ chart o n i :=
     GlobalTheory.Points.le_preimage_comp M.pt _ (H.le_toHom_preimage M.s i) hpt
+  have hchart : pt (algebraMap o Ω) c hc ⁻¹ᵁ chart o n i = spOpen (c i) := by
+    rw [pt, chart, ProjPoint.ofHom_preimage_basicOpen _ _ _ one_pos (X_mem o n i),
+      MvPolynomial.eval₂Hom_X']
+    rfl
   have h₂ : ⊤ ≤ pt (algebraMap o Ω) c hc ⁻¹ᵁ chart o n i := by
-    rw [pt_preimage_chart]
+    rw [hchart]
     exact fun y _ => mem_spOpen.2 fun hm => y.isPrime.ne_top (Ideal.eq_top_of_isUnit_mem _ hm (Ne.isUnit hi.1))
-  refine hom_ext (by rw [Category.assoc, H.toHom_str, M.pt_s, pt_str]) fun _ => ⟨⊤, trivial, i, h₁, h₂, fun j => ?_⟩
+  have hstr : pt (algebraMap o Ω) c hc ≫ PSpace.str o n = spMap (algebraMap o Ω) := by
+    rw [pt, PSpace.str, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+    congr 1
+    ext1
+    exact RingHom.ext fun r => MvPolynomial.eval₂Hom_C (algebraMap o Ω) c r
+  refine hom_ext (by rw [Category.assoc, H.toHom_str, M.pt_s, hstr]) fun _ => ⟨⊤, trivial, i, h₁, h₂, fun j => ?_⟩
+  have hratio : pullRatio (pt (algebraMap o Ω) c hc) ⊤ i h₂ j * fnOn ⊤ (c i) = fnOn ⊤ (c j) := by
+    let β := algebraMap o Ω
+    have hunit : IsUnit (MvPolynomial.eval₂Hom β c (MvPolynomial.X i)) := by
+      rw [MvPolynomial.eval₂Hom_X']
+      exact Ne.isUnit hi.1
+    have haway : pt β c hc =
+        spMap (ProjPoint.awayLift (grading o n) (MvPolynomial.eval₂Hom β c) (MvPolynomial.X i) hunit) ≫ _ :=
+      ProjPoint.ofHom_eq_awayι _ _ _ one_pos (X_mem o n i) hunit
+    have heval := ProjPoint.awayLift_mk_mul (grading o n) (MvPolynomial.eval₂Hom β c) hunit
+      (X_mem o n i) 1 (MvPolynomial.X j) (X_mem o n j)
+    rw [pullRatio_of_eq haway h₂ (haway ▸ h₂), pullRatio_spMap_awayι, ← map_mul]
+    exact congrArg _ (by simpa only [ratioAway, MvPolynomial.eval₂Hom_X', pow_one] using heval)
   have hu : IsUnit (fnOn (⊤ : (Sp Ω).Opens) (c i)) := (Ne.isUnit hi.1).map _
   refine hu.mul_right_cancel ?_
-  rw [pullRatio_pt_top_mul _ _ _ i j (Ne.isUnit hi.1) h₂, ← appLE_pullRatio (φ := H.toHom M.s) (hi := H.le_toHom_preimage M.s i) M.pt hpt, H.pullRatio_toHom,
+  rw [hratio, ← appLE_pullRatio (φ := H.toHom M.s) (hi := H.le_toHom_preimage M.s i) M.pt hpt, H.pullRatio_toHom,
     appLE_eq_fnOn, ← map_mul]
   congr 1
   have := valF_ratioFn (M := M) (c := c) (j := j) (le_refl (dOpen M c i)) ⟨_, RatModel.div_genericPoint hi.1⟩

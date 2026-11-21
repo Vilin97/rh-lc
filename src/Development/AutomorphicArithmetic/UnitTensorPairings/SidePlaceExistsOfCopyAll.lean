@@ -18,6 +18,7 @@ private theorem under_le_one {K L : Type} [Field K] [NumberField K] [Field L] [N
   letI : Algebra K L := ι.toAlgebra
   have he : (w.under (𝓞 K)).asIdeal.ramificationIdx' w.asIdeal ≠ 0 :=
     Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver w.asIdeal (w.under (𝓞 K)).ne_bot
+  rw [Ideal.ramificationIdx'_eq_ramificationIdx _ _ (w.under (𝓞 K)).ne_bot] at he
   refine ⟨w.under (𝓞 K), fun x => ?_, fun x => ?_⟩
   · have h := HeightOneSpectrum.valuation_liesOver L (w.under (𝓞 K)) w x
     change _ ↔ w.valuation L (algebraMap K L x) ≤ 1

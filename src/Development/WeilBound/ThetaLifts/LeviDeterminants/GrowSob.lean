@@ -95,7 +95,7 @@ theorem slice {D : ℕ} (b : Module.Basis (Fin D) ℝ (V F κ)) : ∃ μ, IsHaar
     rw [← lintegral_const_mul' _ _ hSc.measure_lt_top.ne]
     refine lintegral_mono fun z => ?_
     have hTm : MeasurableSet ((fun y' => y' + -y) ⁻¹' S) :=
-      hSc.isClosed.measurableSet.preimage (continuous_add_right (-y)).measurable
+      hSc.isClosed.measurableSet.preimage (continuous_id.add continuous_const).measurable
     calc ν S * G (J (z, y)) = ∫⁻ y', ((fun y' => y' + -y) ⁻¹' S).indicator (fun _ => G (J (z, y))) y' ∂ν := by
           rw [lintegral_indicator_const hTm, measure_preimage_add_right, mul_comm]
       _ ≤ _ := by

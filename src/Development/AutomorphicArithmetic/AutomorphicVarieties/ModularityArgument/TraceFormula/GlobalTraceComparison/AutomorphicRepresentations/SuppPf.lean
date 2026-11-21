@@ -27,7 +27,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.supp_pf :
     linarith
   have hf : Continuous fun w : H E n 0 => m.G x (th w) := by
     show Continuous fun w : H E n 0 => ∑ i, inner ℂ (s.k₁ x i) (m.Uπ (s.k₂ (th w) i))
-    refine continuous_finset_sum _ fun i _ => ?_
+    refine continuous_finsetSum _ fun i _ => ?_
     exact continuous_const.inner (m.Uπ.continuous.comp (((s.vecs.cont i).2).comp hthc))
   have hinv : Inv fun w : H E n 0 => m.G x (th w) := by
     intro γ w

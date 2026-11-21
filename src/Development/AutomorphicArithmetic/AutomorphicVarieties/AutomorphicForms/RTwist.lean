@@ -325,12 +325,14 @@ theorem Zalg_mulChi (χ : HChar E) {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zal
 
 theorem IsAutForm.mulChi {φ : Sm E a} (h : IsAutForm φ) (χ : HChar E) : IsAutForm (mulChi a χ φ) where
   left γ g := by simp [h.left, chiDet_ratGL]
-  level := isOpen_stab_of_mem_nhds _ _ <| Filter.mem_of_superset
-    ((h.level.inter (isOpen_ker_chiDet χ)).mem_nhds ⟨by simp, by simp⟩) fun k hk => by
-      have h1 : rt E a (finGL E a k) φ = φ := hk.1
-      have h2 : chiDet a χ (finGL E a k) = 1 := hk.2
-      change rt E a (finGL E a k) _ = _
-      rw [rt_mulChi, h1, h2, Units.val_one, one_smul]
+  level := by
+    refine isOpen_stab_of_mem_nhds _ _ (Filter.mem_of_superset
+      ((h.level.inter (isOpen_ker_chiDet χ)).mem_nhds ⟨by simp, by simp⟩) ?_)
+    intro k hk
+    have h1 : rt E a (finGL E a k) φ = φ := hk.1
+    have h2 : chiDet a χ (finGL E a k) = 1 := hk.2
+    change rt E a (finGL E a k) _ = _
+    rw [rt_mulChi, h1, h2, Units.val_one, one_smul]
   kfin := by
     have := h.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (Set.range fun k => cptRep E a k φ)).map
@@ -469,6 +471,8 @@ theorem HasInfChar.twist {τ : InfinitePlace E} {m : Multiset ℂ} (h : π.HasIn
   change cap τ u (mulChi a χ φ) = _ • mulChi a χ φ
   rw [cap_mulChi, h.2 _ φ hφ, map_smul, Multiset.map_map]
   congr 3
+  funext x
+  simp only [Function.comp_apply, add_assoc, add_comm (expo χ τ) x]
 
 theorem IsRegAlg.twist (h : π.IsRegAlg) {χ : HChar E} (hχ : ∀ v, ∃ n : ℤ, expo χ v = n) : (π.twist χ).IsRegAlg := fun v => by
   obtain ⟨m, h1, h2, h3⟩ := h v
@@ -503,7 +507,7 @@ theorem IsLocComp.congr {w : HeightOneSpectrum (𝓞 E)} {σ σ' : SmIrr (GL (Fi
   refine ⟨T.toLinearMap ∘ₗ f ∘ₗ e.symm.toLinearEquiv.toLinearMap, fun h => h0 (LinearMap.ext fun v => T.injective ?_),
     fun g v => ?_⟩
   · have := LinearMap.congr_fun h (e.toLinearEquiv v)
-    rw [LinearMap.zero_apply, map_zero]
+    rw [LinearMap.zero_apply, T.map_zero]
     exact (congrArg (fun x => T (f x)) (e.toLinearEquiv.symm_apply_apply v)).symm.trans this
   · have h1 : e.symm.toLinearEquiv (σ'.ρ g v) = σ.ρ g (e.symm.toLinearEquiv v) :=
       LinearMap.congr_fun (e.symm.isIntertwining' g) v
@@ -522,7 +526,8 @@ theorem IsLocComp.twist {w : HeightOneSpectrum (𝓞 E)} {σ : SmIrr (GL (Fin a)
     (π.twist χ).IsLocComp w (σ.twist (GlobalTheory.CuspRep.CuspSub.locDet a χ w) (isOpen_ker_locDet χ w)) := by
   obtain ⟨f, h0, hf⟩ := h
   refine ⟨(π.toTwist χ).toLinearMap ∘ₗ f, fun h => h0 (LinearMap.ext fun v => (π.toTwist χ).injective ?_), fun g v => ?_⟩
-  · rw [LinearMap.zero_apply, map_zero]; exact LinearMap.congr_fun h v
+  · rw [LinearMap.zero_apply, (π.toTwist χ).map_zero]
+    exact LinearMap.congr_fun h v
   · change π.toTwist χ (f (((GlobalTheory.CuspRep.CuspSub.locDet a χ w g : ℂˣ) : ℂ) • σ.ρ g v)) =
       (π.twist χ).op (.fin (locGL E a w g)) (π.toTwist χ (f v))
     rw [op_toTwist, map_smul f, hf g v, ← chiDet_locGL, opAdd, zero_smul, add_zero]

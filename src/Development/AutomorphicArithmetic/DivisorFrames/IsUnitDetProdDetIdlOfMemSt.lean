@@ -47,8 +47,9 @@ theorem UpperTheory.isUnitDet_prod_detIdl_of_mem_St :
   classical
   intro D S βS e Z hZ g hg
   have hinf := GlobalTheory.PlaceDatum.infPart_idemSum hZ
-  have hint := StandardFirstTheta.GlobalTheory.CompanionTheory.StdFstTheta.toEAf_mem hZ
   have hee : e * e = e := GlobalTheory.Tow.idemSum_mul_of_subset hZ hZ (Finset.Subset.refl Z)
+  have hint := GlobalTheory.IdemRes.toEAf_mem_of_finPart
+    (GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← RingHom.map_mul, hee]))
   obtain ⟨⟨es, hes, hsum⟩, -⟩ := hZ
   have hid : ∀ w ∈ Z, GlobalTheory.RowVacScalar.idemAt w = es w := fun w hw =>
     GlobalTheory.Tow.idemAt_unique

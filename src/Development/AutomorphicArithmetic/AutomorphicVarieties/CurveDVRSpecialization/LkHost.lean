@@ -28,8 +28,7 @@ private theorem val_of_even {Ω : Type} [Field Ω] (B : ValuationSubring Ω) {M 
     exact absurd h (not_lt.mpr h4)
   obtain ⟨k, rfl⟩ := hM
   have hk : B.valuation (k : Ω) ≤ 1 := by
-    have := B.valuation_le_one (k : B)
-    simpa using this
+    exact B.valuation_le_one (k : B)
   have : ((k + k : ℕ) : Ω) = 2 * (k : Ω) := by push_cast; ring
   rw [this, map_mul]
   exact mul_lt_one_of_lt_of_le h2 hk

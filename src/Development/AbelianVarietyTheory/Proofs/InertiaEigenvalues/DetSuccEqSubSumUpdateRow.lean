@@ -70,14 +70,13 @@ theorem alt_trace_eq_sum_det {M A : Type*} [Monoid M] [CommRing A] {n : ℕ} (r 
       rfl
 
 theorem isPsChar_trace (M A : Type) [Monoid M] [CommRing A] (n : ℕ) (r : M →* Matrix (Fin n) (Fin n) A) :
-    IsPsChar n (fun g => (r g).trace) where
-  one := by simp
-  comm := by
-    intro x y
+    IsPsChar n (fun g => (r g).trace) := by
+  refine ⟨?_, ?_, ?_⟩
+  · simp
+  · intro x y
     simp only [map_mul]
     exact Matrix.trace_mul_comm _ _
-  alt_eq_zero := by
-    intro x
+  · intro x
     rw [alt_trace_eq_sum_det]
     refine Finset.sum_eq_zero fun i _ => ?_
     obtain ⟨b, b', hne, hb⟩ := Fintype.exists_ne_map_eq_of_card_lt i (by simp)

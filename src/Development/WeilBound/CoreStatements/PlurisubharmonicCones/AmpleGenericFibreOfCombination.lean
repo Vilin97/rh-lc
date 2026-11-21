@@ -93,7 +93,7 @@ theorem LevelTowerAlt.ample_generic_fibre_of_combination : PB.Inputs → ∀ II 
   have hDG := GlobalTheory.CompanionTheory.Ar.Giv.degreeGeneric_of_degree (GlobalTheory.CompanionTheory.Ar.Giv.degree_of_system ⟨II, hII⟩)
   have hF := GroundTheory.Heights₂.Heights.NumbersDVR.IntNumIsFieldIntersection.full ℚ K J
   have hPos := GroundTheory.Heights₂.Heights.Targets.Positivity.full ℚ J _ hF
-  let fs : (K → ℤ) → HermLine J := fun b => HermLine.ofMetrics (fun k => fsMetric (J k)) b
+  let fs : (K → ℤ) → HermLine J := fun b => HermLine.ofMetrics (fun k => fsMetric) b
   have hfs : ∀ b, IsSmoothHerm (fs b) := fun b => GroundTheory.Heights₂.Heights.Inter.isSmoothHerm_ofMetrics_fs b
   have hfsn : ∀ b : K → ℤ, (∀ k, 0 ≤ b k) → ∀ W', IsArithVar W' 2 → 0 ≤ geomDeg W' (fs b) 1 := by
     intro b hb W' hW'

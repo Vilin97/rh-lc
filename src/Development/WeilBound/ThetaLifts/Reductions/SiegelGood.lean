@@ -179,14 +179,13 @@ theorem gram_adMat {a b : ℕ} (P : Matrix (Fin n) (Fin a) E) (Q : Matrix (Fin n
   rfl
 
 theorem fr_adMat (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFrame σ J X Y) :
-    Sieg.Fr (sigR (AF F) σ) (JR (F := F) (AF F) J) (adMat F X) (adMat F Y) where
-  ss := sigR_sigR (AF F) (sigma_sigma h)
-  herm := by
-    have cJ : Formalism.UG.cT (σ : E →+* E) J = J := Matrix.ext fun i j => hJ.1 i j
+    Sieg.Fr (sigR (AF F) σ) (JR (F := F) (AF F) J) (adMat F X) (adMat F Y) := by
+  refine ⟨sigR_sigR (AF F) (sigma_sigma h), ?_, ?_, ?_, ?_⟩
+  · have cJ : Formalism.UG.cT (σ : E →+* E) J = J := Matrix.ext fun i j => hJ.1 i j
     rw [JR, ← map_cT_inclR, cJ]
-  xx := by rw [gram_adMat, hW.xx, Matrix.map_zero _ (map_zero _)]
-  yy := by rw [gram_adMat, hW.yy, Matrix.map_zero _ (map_zero _)]
-  xy := by rw [gram_adMat, hW.xy, Matrix.map_one _ (map_zero _) (map_one _)]
+  · rw [gram_adMat, hW.xx, Matrix.map_zero _ (map_zero _)]
+  · rw [gram_adMat, hW.yy, Matrix.map_zero _ (map_zero _)]
+  · rw [gram_adMat, hW.xy, Matrix.map_one _ (map_zero _) (map_one _)]
 
 theorem unitary_matHom (g : GAd σ J) :
     Formalism.UG.cT (sigR (AF F) σ) (matHom _ σ J g).1 * JR (F := F) (AF F) J * (matHom _ σ J g).1 = JR (F := F) (AF F) J :=

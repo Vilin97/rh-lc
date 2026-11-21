@@ -457,6 +457,8 @@ theorem diag_skew (θ : Fin k → ℝ) :
     (Matrix.diagonal fun a => (θ a : ℂ) * Complex.I)ᴴ = -Matrix.diagonal fun a => (θ a : ℂ) * Complex.I := by
   rw [Matrix.diagonal_conjTranspose, Matrix.diagonal_neg]
   congr 1
+  ext i
+  simp
 
 theorem exp_diag (θ : Fin k → ℝ) (t : ℝ) :
     NormedSpace.exp ((t : ℂ) • Matrix.diagonal fun a => (θ a : ℂ) * Complex.I) =

@@ -98,7 +98,7 @@ theorem GlobalTheory.RealGal.wdRelRes_gen : ∀ (F Ω : Type) [Field F] [NumberF
     rw [alpha, alpha, ← (hc σ σ').1 hσ, hdeg, resDeg, resDeg, hq]
   have h4 : weilD Bw h P ρ σ = weilD Bw' h' P ρ σ' :=
     (weilD_apply Bw h P ρ σ).trans ((congrArg₂ (fun (g : ↥(GK Bw.Kw)) (m : ℤ) => actD P ρ g *
-      ((phiU P ρ ^ (-m) : (Module.End ↥L.1 ↥(Dpst P ρ))ˣ) : Module.End ↥L.1 ↥(Dpst P ρ)))
+      Units.val (phiU P ρ ^ (-m)))
       h1 h3).trans (weilD_apply Bw' h' P ρ σ').symm)
   refine wd_ext _ ι ρ fun x => ?_
   exact (wdRho_mk P ι Bw h hj ρ σ x).trans

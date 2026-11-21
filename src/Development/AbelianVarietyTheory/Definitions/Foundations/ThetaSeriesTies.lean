@@ -128,6 +128,7 @@ section Coord
 variable {J : CoreJ D} [Algebra J.Q.c.F D.what₂.LL] {R : RealDat D A J.Q.c.F} {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)}
   {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
 
+attribute [local instance 2000] Submodule.module in
 def cutTo (fw : FWTie J R κ v₀) (i : Fin D.R.m) :
     cutR J.toCore.C ((i : ℕ) + 1) (κ i) →ₗ[J.Q.c.F] (Fin (R.nW i) → D.what₂.LL) :=
   (R.FW i).WK.subtype ∘ₗ (fw.e i).toLinearMap ∘ₗ Submodule.inclusion (cutR_le J.toCore.C ((i : ℕ) + 1) (κ i))
@@ -329,6 +330,7 @@ end
 variable {T : Full D} [inst : Algebra T.J.Q.c.F D.what₂.LL] {R : RealDat D A T.J.Q.c.F}
   {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
 
+attribute [local instance 2000] Submodule.module in
 theorem cutTo_spec {J : CoreJ D} [Algebra J.Q.c.F D.what₂.LL] {R : RealDat D A J.Q.c.F}
     {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec} (fw : FWTie J R κ v₀) (i : Fin D.R.m) :
     Function.Injective (cutTo fw i) ∧ LinearMap.range (cutTo fw i) = (R.FW i).WK := by

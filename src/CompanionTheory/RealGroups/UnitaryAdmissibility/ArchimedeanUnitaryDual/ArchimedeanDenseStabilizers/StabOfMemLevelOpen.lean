@@ -222,7 +222,7 @@ theorem mulVec_fv (h : IsCMExt F E σ) (γ : GRat σ J) (x : Fin n → E) :
 theorem stab_of_mem_levelOpen (h : IsCMExt F E σ) {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L]
     {γ : GRat σ J} (hg : ratEmb σ J γ ∈ levelOpen σ J L) (x : Fin n → E) :
     x ∈ L ↔ (γ.1 : Matrix (Fin n) (Fin n) E).mulVec x ∈ L := by
-  have hfg : L.FG := Submodule.IsLattice.fg (A := E)
+  have hfg : L.FG := Submodule.IsLattice.fg (A := E) L
   have hfin : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.2 hfg
   have hsp : Submodule.span E (L : Set (Fin n → E)) = ⊤ := Submodule.IsLattice.span_eq_top
   have h1 := (mem_levelOpen_iff_latHat σ J hfg (ratEmb σ J γ)).1 hg (fun i => (1 : Af F) ⊗ₜ[F] x i)
@@ -236,7 +236,7 @@ theorem stab_of_mem_levelOpen (h : IsCMExt F E σ) {L : Submodule (𝓞 E) (Fin 
 theorem finite_level_rat (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : CompanionTheory.Rg.Fl.IsPosDef σ J)
     (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] :
     {γ : GRat σ J | ratEmb σ J γ ∈ levelOpen σ J L}.Finite := by
-  have hfg : L.FG := Submodule.IsLattice.fg (A := E)
+  have hfg : L.FG := Submodule.IsLattice.fg (A := E) L
   have hfin : Finite (Formalism.UG.level (σ : E →+* E) J L) := Formalism.UG.Final.StabFinite F E (Fin n) σ J
     (fun τ => RingHom.ext fun x => h.2.2.2 τ x) (by
       ext i j
@@ -253,7 +253,7 @@ theorem exists_class_cover (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : Compa
     (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] :
     ∃ T : Finset (GAd σ J), ∀ x, ∃ (γ : GRat σ J), ∃ a ∈ T, ∃ k ∈ levelOpen σ J L, x = ratEmb σ J γ * a * k := by
   classical
-  have hfg : L.FG := Submodule.IsLattice.fg (A := E)
+  have hfg : L.FG := Submodule.IsLattice.fg (A := E) L
   have hsp : Submodule.span E (L : Set (Fin n → E)) = ⊤ := Submodule.IsLattice.span_eq_top
   letI := cmStarRing h
   let c : E ≃ₐ[F] E := AlgEquiv.ofAlgHom σ σ (AlgHom.ext (sigma_invol h)) (AlgHom.ext (sigma_invol h))

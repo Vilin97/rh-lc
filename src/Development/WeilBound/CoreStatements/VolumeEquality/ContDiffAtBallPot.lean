@@ -22,11 +22,10 @@ theorem hasSum_sheets {X M : Type*} [AddCommMonoid M] [TopologicalSpace M] [Cont
     intro k
     by_cases hk : t ∈ FF k
     · exact Set.finite_of_encard_eq_coe (ht k hk)
-    · convert Set.finite_empty
-      ext m
-      simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
-      rintro rfl hm
-      exact hk (hB m hm)
+    · apply Set.Finite.subset Set.finite_empty
+      intro m hm
+      simp only [Set.mem_empty_iff_false]
+      exact hk (hm.1 ▸ hB m hm.2)
   have hS : {m | t ∈ B m}.Finite := by
     have hU : {m | t ∈ B m} = ⋃ k, {m | pc m = k ∧ t ∈ B m} := by
       ext m
@@ -85,7 +84,8 @@ theorem sum_sheets {X : Type*} [MeasurableSpace X] (μ : Measure X) {np : ℕ}
     intro m
     rw [← integral_norm_eq_lintegral_enorm (hFint m).aestronglyMeasurable, ← integral_indicator (hBm m)]
     congr 1
-    split_ifs <;> simp [Real.norm_eq_abs]
+    ext t
+    by_cases ht : t ∈ B m <;> simp [F, ht, Real.norm_eq_abs]
   have hae : ∀ᵐ t ∂μ, ∀ k, t ∈ FF k → {m | pc m = k ∧ t ∈ B m}.encard = d k := ae_all_iff.mpr hc
   have hmeas : ∀ k, AEMeasurable (fun t => (d k : ℝ≥0∞) * (FF k).indicator (fun x => ‖f k x‖ₑ) t) μ := by
     intro k
@@ -100,8 +100,9 @@ theorem sum_sheets {X : Type*} [MeasurableSpace X] (μ : Measure X) {np : ℕ}
       simp only [nsmul_eq_mul] at h
       rw [← h.tsum_eq]
       congr 1
-      split_ifs <;> simp
-    rw [lintegral_congr_ae hae1, lintegral_finset_sum' _ (fun k _ => hmeas k)]
+      ext m
+      by_cases hm : t ∈ B m <;> simp [F, hm]
+    rw [lintegral_congr_ae hae1, lintegral_finsetSum' _ (fun k _ => hmeas k)]
     apply Finset.sum_congr rfl
     intro k _
     rw [lintegral_const_mul' _ _ (ENNReal.natCast_ne_top _), lintegral_indicator (hF k)]

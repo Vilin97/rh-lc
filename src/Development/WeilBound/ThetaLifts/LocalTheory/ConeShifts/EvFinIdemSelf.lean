@@ -60,7 +60,7 @@ theorem idem_mul_aS {S : Finset (Pl F)} {v : Pl F} (hv : v ∉ S) : idem F v * a
     rcases eq_or_ne u v with rfl | h
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_mul, aS, map_add (f := _), evFin_real, map_sum, Finset.sum_eq_zero fun t ht => evFin_idem_ne (fun e : u = t => hv (e ▸ ht))]
-      simp
+        simp
     · rw [map_mul, evFin_idem_ne h, zero_mul, map_zero]
 
 open Classical in
@@ -87,7 +87,7 @@ theorem tendsto_aS : Tendsto (aS F) atTop (𝓝 1) := by
     exact map_one (InfiniteAdeleRing.ringEquiv_mixedSpace F)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [aS, map_add (f := _), evFin_real, zero_add, map_sum, sub_sub_cancel]
-    exact map_sum (evalV F u) _ _
+      exact map_sum (evalV F u) _ _
 
 section U
 

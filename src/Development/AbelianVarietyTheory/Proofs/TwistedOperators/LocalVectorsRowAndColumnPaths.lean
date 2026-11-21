@@ -105,9 +105,11 @@ theorem getD_zip {S S' S'' : Arrow T → Type} (φ : ∀ a, S a → S' a → S''
     split_ifs with hj
     · rw [hs]
       exact getD_zip φ t i n _ _ j hj
-    · obtain rfl : n = j := by omega
-      rw [hs]
-      rfl
+    · have hnj : n = j := by omega
+      subst j
+      change (splitFam (downPath t i n) (Path.Fam.zip φ d e)).1.2 =
+        φ _ (splitFam (downPath t i n) d).1.2 (splitFam (downPath t i n) e).1.2
+      exact congrArg (fun de => de.1.2) hs
 
 variable {D : D7} {L : LevCh D T} {sc : Consts} {G : GridData L sc}
 

@@ -95,7 +95,22 @@ variable {R : Type u} [CommRing R] (W : WeierstrassCurve R)
 theorem FF_cc {a b : R⟦X⟧} (ha : constantCoeff a = 0) (hb : constantCoeff b = 0) :
     constantCoeff (MvPowerSeries.subst (![a, b] : Fin 2 → R⟦X⟧) (fgl W)) = 0 := by
   exact MvPowerSeries.constantCoeff_subst_eq_zero (hasSubst_pair ha hb)
-    (fun i => by fin_cases i; exacts [ha, hb]) (Fgl1.fgl_cc W)
+    (fun i => by fin_cases i; exacts [ha, hb]) (by
+      have hl : MvPowerSeries.constantCoeff (lam W) = 0 := by
+        rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, Fgl1.coeff_lam]
+        simpa using (Fgl1.wSer_low W).2.1
+      have hw : MvPowerSeries.constantCoeff
+          ((wSer W).subst (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) R)) = 0 := by
+        exact MvPowerSeries.constantCoeff_subst_eq_zero (PowerSeries.HasSubst.const (PowerSeries.HasSubst.X 0))
+          (fun _ => MvPowerSeries.constantCoeff_X 0) (Fgl1.wSer_fixed W).1
+      have hn : MvPowerSeries.constantCoeff (nu W) = 0 := by
+        simp only [nu, map_sub, map_mul, hl, hw, zero_mul, sub_zero]
+      have ht : MvPowerSeries.constantCoeff (cTwo W) = 0 := by
+        simp only [cTwo, map_add, map_mul, map_pow, hl, hn, pow_two, mul_zero, zero_mul, add_zero, zero_add]
+      have hu : MvPowerSeries.constantCoeff (uThird W) = 0 := by
+        simp only [uThird, map_sub, map_neg, map_mul, MvPowerSeries.constantCoeff_X, ht,
+          neg_zero, zero_mul, sub_zero]
+      simp only [fgl, map_mul, hu, zero_mul])
 
 theorem FF_map {S : Type v} [CommRing S] (φ : R →+* S) {a b : R⟦X⟧}
     (ha : constantCoeff a = 0) (hb : constantCoeff b = 0) :
@@ -180,7 +195,22 @@ theorem log_FF (hL : FglLog.{u}) {a b : K⟦X⟧} (ha : constantCoeff a = 0)
       (logSer W).subst a + (logSer W).subst b := by
   have hab := hasSubst_pair ha hb
   have e := congrArg (MvPowerSeries.subst (![a, b] : Fin 2 → K⟦X⟧)) (hL K W).1
-  rw [subst_pair_subst ha hb (Fgl1.fgl_cc W), MvPowerSeries.subst_add hab,
+  rw [subst_pair_subst ha hb (by
+      have hl : MvPowerSeries.constantCoeff (lam W) = 0 := by
+        rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, Fgl1.coeff_lam]
+        simpa using (Fgl1.wSer_low W).2.1
+      have hw : MvPowerSeries.constantCoeff
+          ((wSer W).subst (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) K)) = 0 := by
+        exact MvPowerSeries.constantCoeff_subst_eq_zero (PowerSeries.HasSubst.const (PowerSeries.HasSubst.X 0))
+          (fun _ => MvPowerSeries.constantCoeff_X 0) (Fgl1.wSer_fixed W).1
+      have hn : MvPowerSeries.constantCoeff (nu W) = 0 := by
+        simp only [nu, map_sub, map_mul, hl, hw, zero_mul, sub_zero]
+      have ht : MvPowerSeries.constantCoeff (cTwo W) = 0 := by
+        simp only [cTwo, map_add, map_mul, map_pow, hl, hn, pow_two, mul_zero, zero_mul, add_zero, zero_add]
+      have hu : MvPowerSeries.constantCoeff (uThird W) = 0 := by
+        simp only [uThird, map_sub, map_neg, map_mul, MvPowerSeries.constantCoeff_X, ht,
+          neg_zero, zero_mul, sub_zero]
+      simp only [fgl, map_mul, hu, zero_mul]), MvPowerSeries.subst_add hab,
     subst_pair_subst ha hb (MvPowerSeries.constantCoeff_X 0),
     subst_pair_subst ha hb (MvPowerSeries.constantCoeff_X 1),
     MvPowerSeries.subst_X hab, MvPowerSeries.subst_X hab] at e

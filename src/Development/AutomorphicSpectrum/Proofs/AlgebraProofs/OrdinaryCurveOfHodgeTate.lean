@@ -51,10 +51,11 @@ variable {R : Type} [CommRing R]
 
 theorem isTorsPts_comp {G : Over (Spec (CommRingCat.of R))} [GrpObj G] {p : ℕ} {N N' : Type}
     [AddCommGroup N] [AddCommGroup N'] {pt : N → (sp (R₀ := R) R ⟶ G)}
-    (h : IsTorsPts G p pt) (e : N' ≃+ N) : IsTorsPts G p (fun x => pt (e x)) where
-  inj := h.inj.comp e.injective
-  add x y := by simpa using h.add (e x) (e y)
-  range z := by
+    (h : IsTorsPts G p pt) (e : N' ≃+ N) : IsTorsPts G p (fun x => pt (e x)) := by
+  refine ⟨h.inj.comp e.injective, ?_, ?_⟩
+  · intro x y
+    simpa using h.add (e x) (e y)
+  · intro z
     rw [h.range z]
     exact ⟨fun ⟨x, hx⟩ => ⟨e.symm x, by simpa using hx⟩, fun ⟨x, hx⟩ => ⟨e x, hx⟩⟩
 

@@ -49,7 +49,7 @@ private theorem im_model {l : ℕ} [hl : Fact l.Prime] {G : Type} [Group G] [Top
         simp [Matrix.mul_apply] }
   obtain ⟨C, hC⟩ : ∃ C : ℝ, ∀ g i j, ‖(r g : Matrix (Fin n) (Fin n) (PadicAlgCl l)) i j‖ ≤ C := by
     have h1 : Continuous fun g => ∑ i, ∑ j, ‖(r g : Matrix (Fin n) (Fin n) (PadicAlgCl l)) i j‖ :=
-      continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => (hr i j).norm
+      continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => (hr i j).norm
     obtain ⟨C, hC⟩ := (isCompact_range h1).bddAbove
     refine ⟨C, fun g i j => le_trans ?_ (hC ⟨g, rfl⟩)⟩
     refine le_trans ?_ (Finset.single_le_sum (f := fun i => ∑ j, ‖(r g : Matrix (Fin n) (Fin n) (PadicAlgCl l)) i j‖)

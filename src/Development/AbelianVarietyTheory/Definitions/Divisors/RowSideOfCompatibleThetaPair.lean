@@ -48,9 +48,6 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotio
 abbrev zscOf (P : RowSideFamily ex) (Del h0 : ℕ) (c : ℝ) : DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3 :=
   (rowSideOfCompatibleThetaPair P).zsc Del h0 c
 
-variable {Rc : Formalism.L2.RecT ex} {P : RowSideFamily ex} {Dcf : ∀ Zs : DefSub P.A3.fam3.amb3, DefCols (P.A3.side3 P.Ps P.ψs Zs)}
-  {Spf : ∀ Zs : DefSub P.A3.fam3.amb3, SPer (Dcf Zs)} {S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc}
-
 abbrev PtP : Type 1 := ∀ (D : D7) (O : Obj D) (c : ℝ), PtAt O.ex c → Prop
 
 end GlobalTheory.Fc.Ind

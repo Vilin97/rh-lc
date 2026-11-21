@@ -82,7 +82,10 @@ theorem gradedNoeth : GradedNoeth := by
     obtain ⟨j, rfl⟩ := hSset b hb
     exact hEc i j
   let S := Algebra.adjoin R (Sset : Set (Module.End R (⨁ e, M e)))
-  letI : CommRing S := Algebra.adjoinCommRingOfComm R hcomm
+  letI : IsMulCommutative S := Algebra.isMulCommutative_adjoin R (by
+    intro a ha b hb _
+    exact hcomm a ha b hb)
+  letI : CommRing S := { (inferInstance : Ring S) with mul_comm := mul_comm' }
   haveI : Algebra.FiniteType R S :=
     (Subalgebra.fg_iff_finiteType S).1 (Subalgebra.fg_adjoin_finset _)
   haveI : IsNoetherianRing S := Algebra.FiniteType.isNoetherianRing R S

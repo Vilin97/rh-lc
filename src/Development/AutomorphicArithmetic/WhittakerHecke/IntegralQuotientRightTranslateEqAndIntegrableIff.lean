@@ -25,6 +25,8 @@ theorem UpperTheory.integral_quotient_rightTranslate_eq_and_integrable_iff :
     rfl
   have hm := measurePreserving_rightMul (Γ := rationalGLOne (K := E) (n := r)) (mu1 E r) ⟨g, hg⟩
   have he : MeasurableEmbedding (rightMul (rationalGLOne (K := E) (n := r)) ⟨g, hg⟩) :=
-    (rightMulHomeomorph (rationalGLOne (K := E) (n := r)) ⟨g, hg⟩).measurableEmbedding
+    by
+      set_option synthInstance.maxHeartbeats 200000 in
+        exact (rightMulHomeomorph (rationalGLOne (K := E) (n := r)) ⟨g, hg⟩).measurableEmbedding
   rw [e1, e2]
   exact ⟨hm.integral_comp he _, hm.integrable_comp_emb he⟩

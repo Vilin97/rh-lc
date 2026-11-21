@@ -135,10 +135,10 @@ theorem fm_mul {a b : A P (DQ P)} (ha : FM P a) (hb : FM P b) : FM P (a * b) := 
     rw [hpa, hpb, multiplierPair_mul, cjD_mul]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun π' _ => ?_)
-    rw [map_mul, norm_mul]
-    exact mul_le_mul ((hCa π π' q).trans (le_max_left _ _)) ((hCb π' π'' q).trans (le_max_left _ _))
-      (norm_nonneg _) (le_max_right _ _)
+      refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun π' _ => ?_)
+      rw [map_mul, norm_mul]
+      exact mul_le_mul ((hCa π π' q).trans (le_max_left _ _)) ((hCb π' π'' q).trans (le_max_left _ _))
+        (norm_nonneg _) (le_max_right _ _)
 
 theorem fm_star {a : A P (DQ P)} (ha : FM P a) : FM P (star a) := by
   intro π π'

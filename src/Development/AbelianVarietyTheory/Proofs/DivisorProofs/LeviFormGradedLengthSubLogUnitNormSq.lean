@@ -30,7 +30,7 @@ theorem leviForm_neg_log_unit_sub_log_grD : ∀ (F : Type) [Field F] (σ : F →
   have hm := ChartGlue.mem_over c.e hy hyW
   have hg := c.holo W a
   have hf : ContDiffAt ℂ 2 (ev X.str σ W a ∘ c.e.symm) (c.e y) :=
-    (SCV.analyticAt_of_differentiableOn (hg.mono fun v hv => ⟨hv.1, hv.2⟩) (ho.mem_nhds hm)).contDiffAt
+    (SCV.analyticAt_of_differentiableOn hg (ho.mem_nhds hm)).contDiffAt
   have h0 : (ev X.str σ W a ∘ c.e.symm) (c.e y) ≠ 0 := by
     have := ratVal_ne_zero hu
     rw [ratVal_fnOf hyW] at this

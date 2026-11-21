@@ -130,7 +130,7 @@ theorem idem_smul_eq_of_fix {W : HSp D} {L : Lat W} (hL : Submodule.IsLattice D.
     (h1 : HMul.hMul k B = B) : idem w • k = idem w • (1 : Matrix (Fin W.rank) (Fin W.rank) (EAf D)) := by
   obtain ⟨-, e, he, -, hc⟩ := hB
   obtain rfl := eq_idem he
-  obtain ⟨β, rfl⟩ := exists_eq_lat hL
+  obtain ⟨β, rfl⟩ := GlobalTheory.AdIsom.exists_eq_lat (D := D) (Λ := L) hL
   refine smul_eq_of_fix β (fun j => ?_) h1
   have h := (mem_hat_lat β _).2 (col_mem_gen (OA D) β j)
   obtain ⟨c, hc'⟩ := (hc _).1 ⟨smul_mem_hat (idem_mem w) h, by rw [smul_smul, idem_mul_self]⟩

@@ -124,7 +124,14 @@ theorem lin_fc_sum (hLB : LamBd) (d : SD σ) {nb lam 𝓖} (hcd : CoefData (σ :
   have hfun : ∀ s : Finset ι, (∑ i ∈ s, c i • f i) = fun a => ∑ i ∈ s, c i * f i a := by
     intro s; funext a; simp [Finset.sum_apply]
   have hcs : ∀ s : Finset ι, Continuous (∑ i ∈ s, c i • f i) := by
-    intro s; rw [hfun s]; exact continuous_finset_sum s fun i _ => continuous_const.mul (hc i)
+    intro s
+    induction s using Finset.induction_on with
+    | empty =>
+      change Continuous (fun _ : d.G => (0 : ℂ))
+      exact continuous_const
+    | insert i s hi ih =>
+      rw [Finset.sum_insert hi]
+      exact (continuous_const.smul (hc i)).add ih
   have his : ∀ s : Finset ι, ∀ γ ∈ rat2 σ d.Y, ∀ g, (∑ i ∈ s, c i • f i) (γ * g) = (∑ i ∈ s, c i • f i) g := by
     intro s γ hγ g; rw [hfun s]; exact Finset.sum_congr rfl fun i _ => by rw [hi i γ hγ g]
   induction s using Finset.induction_on with

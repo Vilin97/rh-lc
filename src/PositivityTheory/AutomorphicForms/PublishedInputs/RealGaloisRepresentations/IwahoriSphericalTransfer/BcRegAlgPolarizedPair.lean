@@ -21,7 +21,8 @@ theorem exists_sign_twist {K : Type} [Field K] [NumberField K] [IsCMField K] (χ
     ∃ k : ℕ, ∀ v, (χ * quadChar K ^ k).locInf v (-1) = (-1) ^ b := by
   obtain ⟨v₀⟩ : Nonempty (InfinitePlace (maximalRealSubfield K)) := inferInstance
   have hval : ∀ (k : ℕ) v, (χ * quadChar K ^ k).locInf v (-1) = χ.locInf v₀ (-1) * (-1) ^ k := fun k v => by
-    rw [HChar.locInf_mul, locInf_pow, quadChar_locInf, h v v₀]
+    change χ.locInf v (-1) * (quadChar K ^ k).locInf v (-1) = _
+    rw [locInf_pow, quadChar_locInf, h v v₀]
   have h2 : χ.locInf v₀ (-1) ^ 2 = 1 := by rw [← map_pow, neg_one_sq, map_one]
   have h3 : ((χ.locInf v₀ (-1) : ℂˣ) : ℂ) ^ 2 = 1 := by rw [← Units.val_pow_eq_pow_val, h2, Units.val_one]
   simp only [hval, Units.ext_iff, Units.val_mul, Units.val_pow_eq_pow_val, Units.val_zpow_eq_zpow_val, Units.val_neg,

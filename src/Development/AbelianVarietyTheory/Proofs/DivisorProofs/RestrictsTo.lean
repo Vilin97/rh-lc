@@ -54,22 +54,15 @@ variable (α : O →+* End A) (β : O →+* End B) (α' : O →+* End A') (β' :
 variable {α β α' β' r}
 
 def biprodAct (α : O →+* End A) (β : O →+* End B) : O →+* End (A ⊞ B) where
-  toFun x := biprod.map (act α x) (act β x)
+  toFun x := End.of (biprod.map (act α x) (act β x))
   map_one' := by
-    rw [act, act, map_one, map_one]
-    exact biprod.hom_ext _ _ (by simp [End.one_def]) (by simp [End.one_def])
+    refine End.ext (biprod.hom_ext _ _ ?_ ?_) <;> simp [act]
   map_mul' x y := by
-    rw [act, act, map_mul, map_mul]
-    exact biprod.hom_ext _ _ (by simp [End.mul_def]) (by simp [End.mul_def])
+    refine End.ext (biprod.hom_ext _ _ ?_ ?_) <;> simp [act, Category.assoc]
   map_zero' := by
-    rw [act, act, map_zero, map_zero]
-    change (biprod.map (0 : A ⟶ A) (0 : B ⟶ B) : A ⊞ B ⟶ A ⊞ B) = (0 : A ⊞ B ⟶ A ⊞ B)
-    exact biprod.hom_ext _ _ (by simp) (by simp)
+    refine End.ext (biprod.hom_ext _ _ ?_ ?_) <;> simp [act]
   map_add' x y := by
-    rw [act, act, map_add (f := _), map_add (f := _)]
-    change (biprod.map (act α x + act α y) (act β x + act β y) : A ⊞ B ⟶ A ⊞ B) =
-      (biprod.map (act α x) (act β x) + biprod.map (act α y) (act β y) : A ⊞ B ⟶ A ⊞ B)
-    exact biprod.hom_ext _ _ (by simp) (by simp)
+    refine End.ext (biprod.hom_ext _ _ ?_ ?_) <;> simp [act]
 
 def Datum.split (α : O →+* End A) (β : O →+* End B) {m n : ℕ} (hA : IsVB A m) (hB : IsVB B n) :
     Datum α β β α (m + n) where

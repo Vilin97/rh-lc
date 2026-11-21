@@ -27,7 +27,7 @@ private theorem exists_closed_prod {R : Type} [CommRing R] {X Y : Scheme.{0}} (N
   have hmap : IsClosedImmersion (pullback.map (i ≫ toSpecBase R N) (j ≫ toSpecBase R M)
       (toSpecBase R N) (toSpecBase R M) i j (𝟙 _)
       ((Category.comp_id _).trans rfl) ((Category.comp_id _).trans rfl)) :=
-    MorphismProperty.pullback_map (P := (@IsClosedImmersion : MorphismProperty Scheme.{0}))
+    MorphismProperty.pullbackMap (P := (@IsClosedImmersion : MorphismProperty Scheme.{0}))
       inferInstance inferInstance rfl rfl
   refine ⟨pullback.map (i ≫ toSpecBase R N) (j ≫ toSpecBase R M)
       (toSpecBase R N) (toSpecBase R M) i j (𝟙 _)

@@ -104,7 +104,7 @@ theorem chartMeas_le_sum {D n : ℕ} {Y : Type*} [TopologicalSpace Y] [Measurabl
     _ = ∑ j, ∫⁻ v in toV D '' (G j '' T j), ρ (e.symm v) := tsum_fintype _
     _ ≤ ∑ j, Measure.map (P j) ((volume.restrict (K j \ P j ⁻¹' Z)).withDensity (w j)) S :=
         Finset.sum_le_sum fun j _ => hterm j
-    _ = _ := by rw [Measure.finset_sum_apply]
+    _ = _ := by rw [Measure.finsetSum_apply]
 
 theorem ofReal_abs_norm_mul_le (d : ℂ) (x : ℝ) (ε : ℤˣ) :
     ENNReal.ofReal |Algebra.norm ℝ d| * ENNReal.ofReal ((ε : ℤ) * x) ≤

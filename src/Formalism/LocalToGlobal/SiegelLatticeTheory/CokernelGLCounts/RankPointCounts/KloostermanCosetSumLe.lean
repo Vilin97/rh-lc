@@ -76,7 +76,7 @@ theorem cosets_sum_gen {D : D7} (hNT : KTwoMinorIntegrality.NormLB) (hLS : KTwoM
     have step2 := sum_prod_le S TS (fun l x => wl (D := D) H1 l x) (fun l x => wl_nonneg H1 l x) hinj
     have step3 : ∏ l ∈ S, ∑ x ∈ TS.image (fun δ => δ l), wl (D := D) H1 l x ≤
         ∏ l ∈ S, (64 * Rl (D := D) H1 l) ^ (2 * Fintype.card D.what₂.Tau) := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro l _; exact Finset.sum_nonneg fun x _ => wl_nonneg H1 l x
       · intro l _
         have hint : ∀ x ∈ TS.image (fun δ => δ l), IsIntegral ℤ x := by

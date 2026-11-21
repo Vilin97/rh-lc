@@ -31,7 +31,7 @@ private theorem lmap_sum_zero {J : Type*} [Fintype J] (c : J → R) (A : J → �
   refine LinearMap.ext fun x => DFinsupp.ext fun i => ?_
   have hk := congrArg (fun f : Module.End R (M i) => f (x i)) (h i)
   simp only [LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply, LinearMap.zero_apply] at hk ⊢
-  rw [DFinsupp.finset_sum_apply]
+  rw [DFinsupp.finsetSum_apply, DFinsupp.zero_apply]
   refine Eq.trans (Finset.sum_congr rfl fun j _ => ?_) hk
   rw [DFinsupp.smul_apply, DirectSum.lmap_apply, directSum_lmap_pow_apply]
 

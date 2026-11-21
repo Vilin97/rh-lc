@@ -78,6 +78,7 @@ private theorem gal_eq (hE : Module.finrank ℚ E = 2) :
 
 theorem exists_galois_quotient_of_ideleNorm_eq_one_quadratic (hE : Module.finrank ℚ E = 2) (z : IdeleGroup E) (hz : ideleNorm ℚ E z = 1) :
     ∃ (c : E ≃ₐ[ℚ] E) (y : IdeleGroup E), z = y * (c • y)⁻¹ := by
+  open scoped NumberField.AdeleRing in
   classical
   haveI := (isGalois_isCyclic_of_finrank_eq_two (K := ℚ) (L := E) hE).1
   obtain ⟨c, hc1, hcc, hall⟩ := gal_eq hE

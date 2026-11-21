@@ -42,7 +42,7 @@ theorem pure_cancel {κ : Type} [Fintype κ] {w : ∀ v : Pl F, (κ → Fv F v) 
     exact hg (SchwartzMap.ext hn)
   funext y
   let y' : ∀ u : ({v} : Finset (Pl F)), κ → Fv F u := fun u => (Finset.mem_singleton.1 u.2).symm ▸ y
-  let m : MultilinearMap ℂ (fun u : ({v} : Finset (Pl F)) => (κ → Fv F u) → ℂ) ℂ :=
+  let m : MultilinearMap (RingHom.id ℂ) (fun u : ({v} : Finset (Pl F)) => (κ → Fv F u) → ℂ) ℂ :=
     (MultilinearMap.mkPiAlgebra ℂ _ ℂ).compLinearMap fun u => LinearMap.proj (y' u)
   let ez : SInf F κ →ₗ[ℂ] ℂ := ⟨⟨fun f => f z, fun _ _ => rfl⟩, fun _ _ => rfl⟩
   have h2 := congrArg (TensorProduct.lift ((LinearMap.mul ℂ ℂ).compl₁₂ ez (PiTensorProduct.lift m))) this
@@ -71,10 +71,20 @@ def Hv (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (v : Pl F) (u : Matrix (Fin 
   schr (psiV ψ v) (locW v (M.co.e u)) φ
 
 theorem acts_Hv {u} (hu : At (evFin F v) u) (φ : Fl F v n d) : Acts (evFin F v) (M.co.rho ψ u) φ (Hv M ψ v u φ) :=
-  adjoint_statement.Heisenberg₂ F _ ψ v _ (hu.kd_map M.co.e.toLinearMap) φ
+  by
+    open PositivityTheory.Member.ZakTransform GlobalTheory.CompanionTheory.Ar.SvN in
+    intro r hr
+    change schr ψ (M.co.e u) (tens (evFin F v) φ r) = tens (evFin F v) (Hv M ψ v u φ) r
+    have ha : At (evFin F v) (M.co.e u) := hu.kd_map M.co.e.toLinearMap
+    rw [schr_tens ψ _ _ (indep_of hr.1), offP_eq, sub_smul,
+      (at_iff _).1 ha, one_smul, sub_self, schr_zero]
+    congr 1
+    unfold Hv
+    congr 1
+    exact Subsingleton.elim _ _
 
 theorem Hv_mem (hψ : IsStd ψ) (u) {φ : Fl F v n d} (h : φ ∈ SB _) : Hv M ψ v u φ ∈ SB _ :=
-  PositivityTheory.ThKH.Evl.schr_mem ((adjoint_statement.psi F ψ hψ).2 v).1 _ h
+  PositivityTheory.ThKH.Evl.schr_mem (hψ.1.comp PositivityTheory.Member.ZakTransform.cont_at) _ h
 
 structure Lin (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (v : Pl F)
     (c₁ c₂ : Matrix (Fin n) (Fin d) (AE F E) → Matrix (Fin n) (Fin d) (Fv F v))
@@ -226,7 +236,7 @@ theorem sb_comp {A B : Type} [TopologicalSpace A] [TopologicalSpace B] (e : A �
   ⟨h.1.comp_continuous e.continuous, h.2.comp_homeomorph e⟩
 
 theorem isPsi (hψ : IsStd ψ) (hu : PsiUnr ψ v) : IsPsi (psiV ψ v) :=
-  ⟨((adjoint_statement.psi F ψ hψ).2 v).1, fun _ => GlobalTheory.StdCharFromIsStd.norm_psi hψ _, fun x => by
+  ⟨(hψ.1.comp PositivityTheory.Member.ZakTransform.cont_at), fun _ => GlobalTheory.StdCharFromIsStd.norm_psi hψ _, fun x => by
     have := hu x
     simp only [int_iff] at this
     exact this⟩

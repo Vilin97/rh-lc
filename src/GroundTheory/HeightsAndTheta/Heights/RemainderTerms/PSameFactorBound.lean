@@ -27,12 +27,12 @@ theorem sameFactor_descFactorial_le (n₁ N : ℕ) :
         (n₁ + (k + 1) + 1) * (n₁ + (k + 1)).descFactorial (k + 1) :=
       Nat.succ_descFactorial_succ (n₁ + (k + 1)) (k + 1)
     rw [show k + 2 - 1 = k + 1 by omega, pow_succ 2 k, pow_succ (2 * (n₁ + N)) k, hd]
-    calc
-      (n₁ + (k + 1) + 1) * (n₁ + (k + 1)).descFactorial (k + 1) * (2 ^ k * 2)
-        = ((n₁ + (k + 1)).descFactorial (k + 1) * 2 ^ k) * (2 * (n₁ + (k + 1) + 1)) := by ring
-      _ ≤ ((n₁ + 1) * (2 * (n₁ + N)) ^ k) * (2 * (n₁ + N)) :=
-          Nat.mul_le_mul ih (by omega)
-      _ = (n₁ + 1) * ((2 * (n₁ + N)) ^ k * (2 * (n₁ + N))) := by ring
+    have hleft :
+        (n₁ + (k + 1) + 1) * (n₁ + (k + 1)).descFactorial (k + 1) * (2 ^ k * 2) =
+          ((n₁ + (k + 1)).descFactorial (k + 1) * 2 ^ k) * (2 * (n₁ + (k + 1) + 1)) := by
+      ring
+    rw [hleft, ← mul_assoc (n₁ + 1)]
+    exact Nat.mul_le_mul ih (by omega)
 
 theorem sameFactor_choose_le (r a k : ℕ) (hk1 : 1 ≤ k) (hkN : k ≤ r + a) :
     (Nat.choose (r * a + k) k : ℚ) * 2 ^ (k - 1) / ((r * a : ℕ) + 1 : ℚ) ≤

@@ -92,7 +92,7 @@ theorem exists_partner (hlat : Submodule.IsLattice E Λ) (hΛ : Formalism.Hermit
     refine ⟨inf_le_left, le_antisymm (le_inf inf_le_left fun x hx => Submodule.subset_span hx) ?_⟩
     refine inf_le_inf_left _ ?_
     intro x hx
-    exact (Submodule.span_le (p := U)).2 (fun y hy => hy.2) hx
+    exact (Submodule.span_le (p := U)).2 (fun y (hy : y ∈ M0) => hy.2) hx
   have hint : ∀ x : M0, ∃ o : 𝓞 E, (o : E) = φ x := by
     rintro ⟨x, hx, hxU⟩
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun E).1 hxU

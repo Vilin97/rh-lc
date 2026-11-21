@@ -35,7 +35,7 @@ abbrev KT : Subgroup (GV n wt) := Subgroup.pi Set.univ fun u => KO ((wt u).adicC
 def IsType {m : ℕ} (τ₀ : KT n wt →* GL (Fin m) ℂ) (χ : ∀ u, Fin n → Ine (F := L) (At u) →* ℂˣ) : Prop :=
   IsOpen (τ₀.ker : Set (KT n wt)) ∧
   ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Nontrivial M] (ρ : Representation ℂ (GV n wt) M) (σ : ∀ u, SmIrr (GLw n (wt u))),
-    (∀ u, IsoSum (by classical exact ρ.comp (MonoidHom.mulSingle (fun u => GLw n (wt u)) u)) ⊤ (σ u)) →
+    (∀ u, IsoSum (M := M) (by classical exact ρ.comp (MonoidHom.mulSingle (fun u => GLw n (wt u)) u)) ⊤ (σ u)) →
     ((∃ F : Fin m → M, F ≠ 0 ∧ ∀ (k : KT n wt) i, ∑ j, τ₀ k i j • ρ k (F j) = F i) ↔
       ∀ u rc, IsRec (ht u) rc → IsTypeWD (ht u) (χ u) (rc (algNorm (σ u))))
 

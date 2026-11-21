@@ -152,8 +152,11 @@ theorem tsum_indicator_eq_zero_of_mean_fin {ι : Type*} [Countable ι] : ∀ (K 
       have hh := tsum_indicator_eq_zero_of_mean a' ha' (fun i => μ i 0) (fun t => by
         rw [← h (Fin.cons t s')]
         congr 1
-        rw [mul_assoc, ← Complex.exp_add]
+        funext i
+        dsimp only [a']
+        rw [mul_assoc, ← Complex.exp_add, Fin.sum_univ_succ]
         congr 2
+        simp only [Fin.cons_zero, Fin.cons_succ]
         push_cast
         ring)
       rw [← hh]
@@ -190,7 +193,9 @@ theorem evH_apply (a : AF F) : evH a = evI F a := rfl
 theorem evI_realAd_mul' (t : ℝ) (c : AF F) : evI F (realAd F t * c) = t • evI F c := by
   rw [← evH_apply, map_mul, evH_apply, evH_apply, Algebra.smul_def]
   congr 1
-  simp [evI, realAd]
+  change (InfiniteAdeleRing.ringEquiv_mixedSpace F)
+    ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (algebraMap ℝ _ t)) = _
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 theorem at_realAd_mul' (t : ℝ) (c : AF F) : At (evI F) (realAd F t * c) := by
   intro b hb

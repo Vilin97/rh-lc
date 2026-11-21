@@ -48,8 +48,8 @@ private theorem tr_mul_io (m : ℕ) : (io m)ᵀ * io m = 1 := by
   rcases a with a | a
   · rcases b with b | b
     · by_cases h : a = b
-      · subst h; simp [Matrix.mul_apply, io]
-      · simp [Matrix.mul_apply, io, h, Ne.symm h]
+      · subst h; simp [Matrix.mul_apply, io, Function.swap]
+      · simp [Matrix.mul_apply, io, Function.swap, h, Ne.symm h]
     · exact b.elim0
   · exact a.elim0
 

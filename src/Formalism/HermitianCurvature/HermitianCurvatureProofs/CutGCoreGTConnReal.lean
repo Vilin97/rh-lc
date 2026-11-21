@@ -442,6 +442,8 @@ theorem gauge_reality_holds : GTCReal := by
         ((tsupport_comp_subset Complex.ofReal_zero _).trans (hφs.trans hballA))
       rw [← this]
       congr 1
+      funext ζ
+      simp only [kk, Complex.star_def, Complex.conj_ofReal, Complex.real_smul]
       ring)
     ζ0 (Metric.mem_ball_self (by positivity))
   have h1 : χ ζ0 = 1 := χ.one_of_mem_closedBall (Metric.mem_closedBall_self (by positivity))

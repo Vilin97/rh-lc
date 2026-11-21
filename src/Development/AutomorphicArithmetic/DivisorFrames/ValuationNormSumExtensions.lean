@@ -116,7 +116,7 @@ private theorem vc_vdeg (P : HeightOneSpectrum S) :
   letI := (ResidueField.map (vres (algebraMap K L) (P.valuationSubringAtPrime L))).toAlgebra
   symm
   refine Algebra.finrank_eq_of_equiv_equiv (ResidueField.mapEquiv e)
-    (IsLocalization.AtPrime.equivQuotMaximalIdeal P.asIdeal (P.valuationSubringAtPrime L)) ?_
+    (IsLocalization.AtPrime.equivQuotMaximalIdeal P.asIdeal (P.valuationSubringAtPrime L)).toRingEquiv ?_
   refine Ideal.Quotient.ringHom_ext (RingHom.ext fun a => ?_)
   have h2 : vres (algebraMap K L) (P.valuationSubringAtPrime L) (e a) =
       algebraMap S (P.valuationSubringAtPrime L) (algebraMap W S a) :=

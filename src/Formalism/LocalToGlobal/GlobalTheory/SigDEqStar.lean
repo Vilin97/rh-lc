@@ -104,9 +104,14 @@ theorem repr_bc (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) (y : (D.sp.X 0).V) 
   unfold Mb crd
   conv_lhs => rw [← (D.sp.X 0).frame.sum_repr y]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, B.bc_smul, LinearMap.map_smulₛₗ, map_smulₛₗ, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, RingHom.id_apply]
+    simp only [map_sum, B.bc_smul, LinearMap.map_smulₛₗ, map_smulₛₗ, map_smul, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, RingHom.id_apply]
   rw [← (finCongr (rankN D 0 (Nat.zero_le _))).sum_comp]
   simp only [Equiv.symm_apply_apply]
+  change (Finsupp.applyAddHom ((B.eQ c τ).symm j))
+    (∑ x, B.rho τ ((D.sp.X 0).frame.repr y x) •
+      (B.Q c τ).b.repr (B.bc c τ ((D.sp.X 0).frame x))) = _
+  rw [map_sum (Finsupp.applyAddHom ((B.eQ c τ).symm j) : _ →+ D.what₂.LL)]
+  simp only [Finsupp.applyAddHom_apply, Finsupp.smul_apply, smul_eq_mul]
   apply Finset.sum_congr rfl
   intro k _
   first

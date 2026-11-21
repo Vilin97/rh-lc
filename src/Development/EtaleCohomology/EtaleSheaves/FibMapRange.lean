@@ -15,6 +15,7 @@ lemma fibMap_eq {A : Type} [CommRing A] [IsLocalRing A] {U Z : Scheme.{0}} (p : 
   apply pullback.hom_ext
   · rw [Category.assoc, pullbackRightPullbackFstIso_inv_snd_fst]; exact pullback.lift_fst _ _ _
   · rw [Category.assoc, pullbackRightPullbackFstIso_inv_snd_snd]
+    simp [fibMap]
 
 lemma fibMap_open {A : Type} [CommRing A] [IsLocalRing A] {U Z : Scheme.{0}} (p : Z ⟶ Spec (CommRingCat.of A)) (ι : U ⟶ Z)
     [IsOpenImmersion ι] : IsOpenImmersion (fibMap p ι) := by

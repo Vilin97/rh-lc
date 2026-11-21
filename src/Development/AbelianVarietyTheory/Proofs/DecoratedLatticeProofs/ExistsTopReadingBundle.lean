@@ -49,22 +49,13 @@ namespace GlobalTheory.TopVal
 
 theorem isJ_smul {D : D7} {u : D.what₂.Word} {S : D.what₂.Tau → SPar} {M : Formalism.IndefR.Mult.DSModel D.sp.X' S}
     {j : SmT M →ₗ[ℂ] (Formalism.L2.Forms.FrP D → ℂ)} (h : GlobalTheory.Core.Rk.Top.IsJ u M j) {a : ℂ} (ha : a ≠ 0) :
-    GlobalTheory.Core.Rk.Top.IsJ u M (a • j) where
-  inj := fun _ _ e => h.inj (smul_right_injective _ ha e)
-  range := (LinearMap.range_smul j a ha).trans h.range
-  eqv := fun τ g hg v w hw y y' hy => congrArg (a * ·) (h.eqv τ g hg v w hw y y' hy)
-
-section True
-
-open GlobalTheory.Mem.Col2 GlobalTheory.Core.Rk.Top
-
-variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-  {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : RealPack ex)
-
-
-
-end True
+    GlobalTheory.Core.Rk.Top.IsJ u M (a • j) := by
+  constructor
+  · intro x y e
+    exact h.inj (smul_right_injective (Formalism.L2.Forms.FrP D → ℂ) ha e)
+  · exact (LinearMap.range_smul j a ha).trans h.range
+  · intro τ g hg v w hw y y' hy
+    exact congrArg (a * ·) (h.eqv τ g hg v w hw y y' hy)
 
 theorem levG_one {D : D7} {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Tau (D.hcW u)} {A : ColumnsAtT D.R C} {Pm : PeriodMap D.R C}
     {M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.what₂.Tau (D.hcW u) C A Pm} {bad} (K : Formalism.L2.Forms.ClassesAtPrimes M bad)

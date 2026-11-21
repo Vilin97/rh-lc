@@ -117,7 +117,7 @@ private theorem adelic_hadamard_inequality {K : Type*} [Field K] [NumberField K]
       congr 1
       funext j
       by_cases hj : j = i
-      · subst hj; simp [finComp]
+      · subst hj; simp [finComp]; rfl
       · simp [finComp, Pi.single_eq_of_ne hj]; rfl
     rw [h1, mul_one, single_one_vecMul]
     exact norm_le_pi_norm (finComp v ((b : Matrix (Fin n) (Fin n) 𝔸[K]).row i)) i

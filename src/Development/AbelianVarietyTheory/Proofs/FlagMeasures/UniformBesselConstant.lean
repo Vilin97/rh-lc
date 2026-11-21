@@ -131,14 +131,22 @@ theorem rStab_bigCell (hc : ∀ a, c a ≠ 0) (hg : bigCell k r c μ ∈ UH (Hpk
 end stab
 
 theorem haar_smul {U : Set (B.Mat k r)} {μ : Measure (Mt k r)} (h : B.IsHaarOn U μ) {x : ℝ} (hx : 0 < x) :
-    B.IsHaarOn U (ENNReal.ofReal x • μ) where
-  conc := by rw [Measure.smul_apply, h.conc, smul_zero]
-  left a ha := by rw [Measure.map_smul, h.left a ha]
-  right a ha := by rw [Measure.map_smul, h.right a ha]
-  finite_compact K hK := by
+    B.IsHaarOn U (ENNReal.ofReal x • μ) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · rw [Measure.smul_apply, h.conc, smul_zero]
+  · intro a ha
+    have hcont : Continuous (lmulM a : Mt k r → Mt k r) :=
+      continuous_const.matrix_mul continuous_id
+    rw [Measure.map_smul _ hcont.measurable.aemeasurable, h.left a ha]
+  · intro a ha
+    have hcont : Continuous (B.rmulF a : Mt k r → Mt k r) :=
+      continuous_id.matrix_mul continuous_const
+    rw [Measure.map_smul _ hcont.measurable.aemeasurable, h.right a ha]
+  · intro K hK
     rw [Measure.smul_apply, smul_eq_mul]
     exact ENNReal.mul_lt_top ENNReal.ofReal_lt_top (h.finite_compact K hK)
-  ne_zero h0 := h.ne_zero <| by
+  · intro h0
+    apply h.ne_zero
     have h1 := Measure.measure_univ_eq_zero.2 h0
     rw [Measure.smul_apply, smul_eq_mul] at h1
     exact Measure.measure_univ_eq_zero.1 ((mul_eq_zero.1 h1).resolve_left (ENNReal.ofReal_pos.2 hx).ne')

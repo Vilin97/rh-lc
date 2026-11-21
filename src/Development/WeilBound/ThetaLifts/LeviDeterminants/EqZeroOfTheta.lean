@@ -107,14 +107,19 @@ theorem schur (hψ : IsStd ψ) (d : Darboux B κ) (T : ((κ → AF F) → ℂ) �
     obtain ⟨w', rfl⟩ := d.e.surjective w
     exact h3 w' Φ hΦ
 
-theorem Tw.smul (h : Tw ψ d d₁ e) {c : ℂ} (hc : c ≠ 0) : Tw ψ d d₁ (c • e) where
-  maps Φ hΦ := Submodule.smul_mem _ c (h.maps Φ hΦ)
-  Heisenberg₂ w Φ hΦ := by rw [LinearMap.smul_apply, LinearMap.smul_apply, h.Heisenberg₂ w Φ hΦ, rho_smul]
-  adm l hl g hg := by
+theorem Tw.smul (h : Tw ψ d d₁ e) {c : ℂ} (hc : c ≠ 0) : Tw ψ d d₁ (c • e) := by
+  refine
+    { maps := fun Φ hΦ => Submodule.smul_mem _ c (h.maps Φ hΦ)
+      Heisenberg₂ := ?_
+      adm := ?_
+      ne := ?_ }
+  · intro w Φ hΦ
+    rw [LinearMap.smul_apply, LinearMap.smul_apply, h.Heisenberg₂ w Φ hΦ, rho_smul]
+  · intro l hl g hg
     obtain ⟨T, hT⟩ := h.adm l hl g hg
     refine ⟨c • T, fun f => ?_⟩
     rw [LinearMap.comp_smul, LinearMap.smul_apply, hT, ContinuousLinearMap.smul_apply]
-  ne := by
+  ·
     obtain ⟨Φ, hΦ, h0⟩ := h.ne
     exact ⟨Φ, hΦ, smul_ne_zero hc h0⟩
 

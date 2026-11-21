@@ -40,8 +40,7 @@ private theorem galOf_mul' {A B : Type*} [CommRing A] [Algebra F A] [CommRing B]
       (Algebra.TensorProduct.map (τ : E →ₐ[F] E) (AlgHom.id F A) x) =
       Algebra.TensorProduct.map ((σ * τ : E ≃ₐ[F] E) : E →ₐ[F] E) (AlgHom.id F A) x := by
     intro x
-    induction x using TensorProduct.induction_on with
-    | zero => simp
+    induction x using TensorProduct.inductionOn with
     | tmul a c => simp
     | add a c ha hc => simp only [map_add (f := _), ha, hc]
   simp [galOf, h]
@@ -50,8 +49,7 @@ private theorem galOf_one' {A B : Type*} [CommRing A] [Algebra F A] [CommRing B]
     (b : B) : galOf e (1 : E ≃ₐ[F] E) b = b := by
   have h : ∀ x : E ⊗[F] A, Algebra.TensorProduct.map ((1 : E ≃ₐ[F] E) : E →ₐ[F] E) (AlgHom.id F A) x = x := by
     intro x
-    induction x using TensorProduct.induction_on with
-    | zero => simp
+    induction x using TensorProduct.inductionOn with
     | tmul a c => simp
     | add a c ha hc => simp only [map_add (f := _), ha, hc]
   simp [galOf, h]

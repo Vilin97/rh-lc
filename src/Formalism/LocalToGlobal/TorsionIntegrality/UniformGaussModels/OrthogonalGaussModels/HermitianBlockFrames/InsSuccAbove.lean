@@ -154,7 +154,10 @@ theorem jac_fin : ∀ (m : ℕ) (Γ : Matrix (Fin m) (Fin m) K), S.IntM Γ → S
   | m + 1, Γ, hΓ, hH, hU => by
     by_cases h0 : Γ = 0
     · exact ⟨0, Fin.elim0, fun c => c.elim0, fun c => c.elim0, by simp [h0]⟩
-    obtain ⟨a, i, ha, hai, haa⟩ := S.exists_unit_vec (Γ := Γ) hΓ hH hU h0
+    have hunit : ∃ (a : Fin (m + 1) → K) (i : Fin (m + 1)),
+        S.IntV a ∧ ¬ S.NU (a i) ∧ S.hf Γ a a = 1 :=
+      S.exists_unit_vec hΓ hH hU h0
+    obtain ⟨a, i, ha, hai, haa⟩ := hunit
     have hG := S.IntM_Γp hΓ ha
     have hHG := S.Herm_Γp hΓ hH ha
     have hUG := S.UM_Γp hΓ hH hU ha haa

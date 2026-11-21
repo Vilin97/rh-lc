@@ -246,8 +246,7 @@ theorem hatCompactOpen : HatCompactOpen := by
   have hΦ : Continuous Φ := IsModuleTopology.continuous_of_linearMap Φ
   let Ψ : (Fin k → FiniteAdeleRing (𝓞 F) F) → (Fin N → Adf F E) := fun a => ∑ j, fun i => a j ⊗ₜ[F] y j i
   have hΨ : Continuous Ψ := by
-    apply continuous_finset_sum
-    intro j _
+    refine continuous_finsetSum _ fun j _ => ?_
     apply continuous_pi
     intro i
     have he : (fun a : Fin k → FiniteAdeleRing (𝓞 F) F => a j ⊗ₜ[F] y j i) =

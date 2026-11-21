@@ -149,7 +149,7 @@ theorem seenDef (D : D7) (H : Formalism.L2.Herm.ColsHermS D) : SeenDef D (errOfT
     letI := (D.mem u).A.vTFin
     rw [← Fintype.card_pos_iff, (D.mem u).A.card_vT]
     unfold Ranks.f Ranks.n
-    positivity
+    exact Nat.mul_pos (by decide) D.R.toFrame.ord_pos
   have hτ : ∀ τ, tauLL D τ ((H.atT u).piU : D.host.E) = D.embE ((H.atT u).piU : D.host.E) := by
     intro τ
     rw [tauLL, Formalism.MainNotions.UnusedSlot33.HK.sigmaOf_fix_K D.host _ (D.eTau τ).2 _ (H.atT u).piU_K]

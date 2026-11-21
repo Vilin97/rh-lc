@@ -15,17 +15,17 @@ theorem isThetaP_restrict {G' H' S' Si Tau Y ι : Type} [MeasurableSpace H'] [Ad
     {M : ι → Type} [∀ ρ, AddCommGroup (M ρ)] [∀ ρ, Module ℂ (M ρ)] (low : ∀ ρ, Submodule ℂ (M ρ))
     {ν : Measure H'} {𝓕 : Set H'} {th : G' → H' → S' → ℂ} {pt : Si → S'}
     {io : (⨂[ℂ] ρ, low ρ) →ₗ[ℂ] Tau →ₗ[ℂ] Si} (L : Y →ₗ[ℂ] (H' → Tau)) (hL : Function.Injective L)
-    (S : Submodule ℂ (H' → Tau)) (U : Y →ₗ[ℂ] MultilinearMap ℂ M (G' → ℂ))
+    (S : Submodule ℂ (H' → Tau)) (U : Y →ₗ[ℂ] ((∀ ρ, M ρ) →ₘₗ[ℂ] (G' → ℂ)))
     (h : ∃ thP, Lift.IsThetaP ν 𝓕 th pt io (LinearMap.range L) thP ∧
       ∀ x (v : ∀ ρ, low ρ), U x (fun ρ => v ρ) = thP (L.rangeRestrict x) (PiTensorProduct.tprod ℂ v)) :
     Lift.IsThetaP ν 𝓕 th pt io (LinearMap.range L ⊓ S)
       (LinearMap.lcomp ℂ (G' → ℂ) (PiTensorProduct.map fun ρ => (low ρ).subtype) ∘ₗ
-        (PiTensorProduct.lift : MultilinearMap ℂ M (G' → ℂ) ≃ₗ[ℂ] _).toLinearMap ∘ₗ U ∘ₗ
+        (PiTensorProduct.lift : ((∀ ρ, M ρ) →ₘₗ[ℂ] (G' → ℂ)) ≃ₗ[ℂ] _).toLinearMap ∘ₗ U ∘ₗ
         (LinearEquiv.ofInjective L hL).symm.toLinearMap ∘ₗ Submodule.inclusion inf_le_left) := by
   obtain ⟨thP, hP, hv⟩ := h
   have key : ∀ f : ↥(LinearMap.range L ⊓ S),
       (LinearMap.lcomp ℂ (G' → ℂ) (PiTensorProduct.map fun ρ => (low ρ).subtype) ∘ₗ
-        (PiTensorProduct.lift : MultilinearMap ℂ M (G' → ℂ) ≃ₗ[ℂ] _).toLinearMap ∘ₗ U ∘ₗ
+        (PiTensorProduct.lift : ((∀ ρ, M ρ) →ₘₗ[ℂ] (G' → ℂ)) ≃ₗ[ℂ] _).toLinearMap ∘ₗ U ∘ₗ
         (LinearEquiv.ofInjective L hL).symm.toLinearMap ∘ₗ Submodule.inclusion inf_le_left) f =
         thP (Submodule.inclusion inf_le_left f) := by
     intro f

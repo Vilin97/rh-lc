@@ -61,7 +61,9 @@ theorem lieFree : LieFreeSt Xo c := by
         fun j => algebraMap T.V T.Fr (tmap hxc (G.act.act a) cc j) := hM0
   have h1 := m1.cart
   have h2 : IsGrpPullback t'.G G.G (fB T.V T.Fr) m2.φ := m2.cart
-  choose vA hvA using fun e : Fin n → T.Fr => relA_exists_v x h1 h2 (tvec (x := x') e)
+  have hex : ∀ e : Fin n → T.Fr, ∃ v, RelA x m1.φ m2.φ v (tvec (x := x') e) :=
+    fun e => relA_exists_v x h1 h2 (tvec (x := x') e)
+  choose vA hvA using hex
   have coordA : ∀ w, IsTanAt x w → ∃ e : Fin n → T.Fr, (vA e).left = w := by
     intro w hw
     let v0 : epsAt x ⟶ Xo.univ.t.G := Over.homMk w hw.1

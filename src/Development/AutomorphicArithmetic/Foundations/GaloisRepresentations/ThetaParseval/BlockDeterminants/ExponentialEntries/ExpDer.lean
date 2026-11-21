@@ -108,7 +108,7 @@ theorem Good.mul {D : Derivation ℂ R R} {P Q u v : R} (hP : Good D P u) (hQ : 
     | mem_mul_mem a ha b hb =>
       rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, mul_comm b]
       exact add_mem (Submodule.mul_mem_mul ha (s₂ b hb)) (Submodule.mul_mem_mul (s₁ a ha) hb)
-    | add x _ y _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x _ y _ hx hy => rw [map_add (f := D)]; exact add_mem hx hy
   · have hv : v ∈ N₂ := mem_of_sum h₂ m₂ s₂
     obtain ⟨π, hπ⟩ := LinearMap.exists_leftInverse_of_injective N₂.subtype (Submodule.ker_subtype N₂)
     let b := Module.finBasis ℂ N₂

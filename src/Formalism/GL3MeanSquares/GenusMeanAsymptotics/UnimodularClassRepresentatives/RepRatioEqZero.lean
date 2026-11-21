@@ -59,7 +59,9 @@ theorem repRatio_eq_zero (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
     intro M hM
     obtain ⟨⟨⟨g, hg, rfl⟩, hxM⟩, -⟩ := hR.1 M hM
     rw [LocalizedFibreSets.gmap_locF] at hxM
-    exact hE ⟨_, LocalizedFibreSets.isLattice_gmap g hL, UnimodularLocalization.isIntegralLat_gmap hg hLi, hxM⟩
+    have hL_gmap : Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap g L) :=
+      Submodule.IsLattice.of_fg K (hL.fg.map _)
+    exact hE ⟨_, hL_gmap, UnimodularLocalization.isIntegralLat_gmap hg hLi, hxM⟩
   obtain ⟨J, hJ⟩ := (nkCount_eq_sum hK hF hs hd S hL hLi h𝔭 hn hx hR).exists
   obtain ⟨k, hk1, hk2⟩ := (hJ.and (eventually_ge_atTop (2 * vd h L 𝔭 + 2 * vF 𝔭 n + 2))).exists
   rw [hR0, Finset.sum_empty] at hk1

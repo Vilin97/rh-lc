@@ -36,8 +36,43 @@ theorem lemmaG3_of_inputs (hT : 3 ≤ Tu D u) (hT' : 3 ≤ Tu D u') (t0 t1 t2 : 
     (t1.lin * s'⁻¹ * t1.lin⁻¹) (omp t1.frame.fl (X.Fu u)) - omp t1.frame.fl (X.Fu u) ∈ t1.frame.fl.X ∧
     ∀ w ∈ Hsp (X.Fu u) t1.frame.fl, ∃ w0 ∈ Hsp (X.Fu u) t1.frame.fl,
       σ w - w0 ∈ (X.Fu u).X ∧ (t1.lin * s'⁻¹ * t1.lin⁻¹) w - w0 ∈ t1.frame.fl.X := by
-  obtain ⟨⟨l1, -⟩, ⟨l1', -⟩⟩ := line_occ Y t0 t1 h0 h1 hR1 hG1 hT hT'
-  obtain ⟨⟨l2, -⟩, ⟨l2', -⟩⟩ := line_occ Y t0 t2 h0 h2 hR2 hG2 hT hT'
+  have line_occ (t0 t : TauC Y u u') (h0 : Gt t0 ≠ 0) (h : Gt t ≠ 0) (hR : RelC Y u u' t0 t) (hG : t.G = t0.G)
+      (hT : 3 ≤ Tu D u) (hT' : 3 ≤ Tu D u') :
+      (yT Y u u' t - coefA Y u u' t0 t • yT Y u u' t0 ∈ (X.Fu u).X ∧
+        coefA Y u u' t0 t * star (coefA Y u u' t0 t) = 1) ∧
+      (yT' Y u u' t - coefA' Y u u' t0 t • yT' Y u u' t0 ∈ (X.Fu u').X ∧
+        coefA' Y u u' t0 t * star (coefA' Y u u' t0 t) = 1) := by
+    have hdim := Formalism.L2.SG.Corank.finrank_VS D
+    obtain ⟨hrow, hs0⟩ := hR
+    have hlam : t.lam = t0.lam := congrArg (fun r => (r.1 : Submodule (𝓞 D.host.E) (VS D).V)) hrow
+    have hlam' : t.lam' = t0.lam' := congrArg (fun r => (r.2.1 : Submodule (𝓞 D.host.E) (VS D).V)) hrow
+    have hlat : Submodule.IsLattice D.host.E t0.lam := ((Y.rowsOK u).1 t0.lam t0.mem).2.1.1
+    have hLF : IsLift t0.lam (lf D (X.Fu u)) := ((Y.rowsOK u).1 t0.lam t0.mem).2.1.2.2.1
+    have hL1 : IsLift t0.lam t0.frame := t0.rep.2.2.2.2.1
+    have hL2 : IsLift t0.lam t.frame := by rw [← hlam]; exact t.rep.2.2.2.2.1
+    have hG1 : Gval (lf D (X.Fu u)) t0.frame ≠ 0 := by
+      intro hG
+      apply h0
+      simp only [Formalism.L2.SG.TermOp.Gt]
+      rw [if_pos]
+      exact (Formalism.L2.SG.TermDef.Gt_mk (PI.TermAttrConst.UnitaryGroupMassFormula.gFun_all _ _ _) _).trans hG
+    have hG12 : Gval (lf D (X.Fu u)) t.frame = Gval (lf D (X.Fu u)) t0.frame := by
+      rw [← Formalism.L2.SG.Pf.SatGram.gterm_G Y t, ← Formalism.L2.SG.Pf.SatGram.gterm_G Y t0, hG]
+    have hs0' : Lat.s0 t0.lam (lf D (X.Fu u)) t0.frame t.frame (t.lin * t0.lin⁻¹) D.R.k = 1 := by
+      have h1 : Formalism.L2.SG.TermOp.s0T t0 t = 1 := hs0
+      unfold Formalism.L2.SG.TermOp.s0T at h1
+      rw [if_pos ⟨hlam.symm, hlam'.symm⟩] at h1
+      exact h1
+    have hTh := (CorankRelation.s0_eq_one_iff_Th_eq_Hp D.R.k hdim t0.lam hlat _ t0.frame t.frame _ hLF hL1 hG1).1 hs0'
+    have hTE : ((Tu D u : ℕ) : D.host.E) ≠ 0 := Nat.cast_ne_zero.2 (by omega)
+    have hTE' : ((Tu D u' : ℕ) : D.host.E) ≠ 0 := Nat.cast_ne_zero.2 (by omega)
+    have hTs : star ((Tu D u : ℕ) : D.host.E) = ((Tu D u : ℕ) : D.host.E) := star_natCast _
+    have hTs' : star ((Tu D u' : ℕ) : D.host.E) = ((Tu D u' : ℕ) : D.host.E) := star_natCast _
+    refine ⟨line_pair D.R.k hdim t0.lam hlat (lf D (X.Fu u)) t0.frame t.frame _ hLF hL1 hL2 hG1 hG12 hTE hTs hTh,
+      line_pair' D.R.k hdim t0.lam hlat (lf D (X.Fu u)) (lf D (X.Fu u')) t0.lin t.lin t0.rep.2.2.1 t.rep.2.2.1 hLF
+        hL1 hL2 hG1 hG12 hTE' hTs' hTh⟩
+  obtain ⟨⟨l1, -⟩, ⟨l1', -⟩⟩ := line_occ t0 t1 h0 h1 hR1 hG1 hT hT'
+  obtain ⟨⟨l2, -⟩, ⟨l2', -⟩⟩ := line_occ t0 t2 h0 h2 hR2 hG2 hT hT'
   have hy : yT Y u u' t2 - yT Y u u' t1 ∈ (X.Fu u).X := by
     have := Submodule.sub_mem _ l2 l1
     rw [← ha] at this

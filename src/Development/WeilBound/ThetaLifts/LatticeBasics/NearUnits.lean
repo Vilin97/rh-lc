@@ -51,7 +51,8 @@ theorem near_UA (h : PositivityTheory.KCo.IsSec σ t sec) {X : Spc F E n} (hu : 
     · rw [← sub_sub]
       exact hg.kd_sub (kd_at_matrix.2 fun i j => (at_sgl_smul _ _).kd_add (at_sgl_smul _ _))
     · ext i j
-      simp [S, (h.smul _ _).1, h.fst, ev_sgl, one_apply, apply_ite (piW t)]
+      simp [S, (h.smul _ _).1, h.fst, ev_sgl, one_apply, apply_ite (piW t), map_sub]
+      split_ifs <;> simp
     · have e1 := h.unit_rel g
       have e2 : ((mat g⁻¹).map (piW t))ᵀ * ((mat g).map (piW t))ᵀ = 1 := by
         rw [← transpose_mul, ← Matrix.map_mul, show mat g * mat g⁻¹ = 1 from g.1.mul_inv, Matrix.map_one _ (map_zero _) (map_one _),
@@ -64,7 +65,8 @@ theorem near_UA (h : PositivityTheory.KCo.IsSec σ t sec) {X : Spc F E n} (hu : 
         rfl
       rw [e3]
       ext i j
-      simp [S, (h.smul _ _).2, h.snd, ev_sgl, one_apply, apply_ite (piW (t.comp σ))]
+      simp [S, (h.smul _ _).2, h.snd, ev_sgl, one_apply, apply_ite (piW (t.comp σ)), map_sub]
+      split_ifs <;> simp
   have c2 := cS.prodMk (cS.comp continuous_swap)
   filter_upwards [(c2.tendsto' (1, 1) (1, 1) (by simp [S1])).eventually (near_units h1)] with p hp g hg e1 e2
   have hg' : At (evFin F v) (mat g⁻¹ - 1) := by
@@ -138,8 +140,8 @@ theorem bump : Bump := by
   obtain ⟨φ, hφ, e⟩ := hι.bij.2.2 (ind_mem a0 Y₀)
   have mult : ∀ u, At (evFin F v) u → u.map (piW (t.comp σ)) = 0 → ∀ c : ℂ, (∀ Y, Y - Y₀ ∈ lam (Fv F v) a n d →
       psiV B.ψ v (trace (Yᵀ * -u.map (piW t))) = c) → Acts (evFin F v) (M.co.rho B.ψ u) φ (c • φ) := fun u hu h0 c hc => by
-    have ac := adjoint_statement.Heisenberg₂ F _ B.ψ v _ (hu.kd_map M.co.e.toLinearMap) φ
-    have mem := schr_mem ((adjoint_statement.psi F _ hp.base.std).2 v).1 (locW v (M.co.e.toLinearMap u)) hφ
+    have ac := PositivityTheory.KCo.adjoint_statement.Heisenberg₂ F _ B.ψ v _ (hu.kd_map M.co.e.toLinearMap) φ
+    have mem := schr_mem ((PositivityTheory.KCo.adjoint_statement.psi F _ hp.base.std).2 v).1 (locW v (M.co.e.toLinearMap u)) hφ
     rw [← hι.bij.2.1 mem ((SB _).smul_mem c hφ) (funext fun Y => ?_)]
     · exact ac
     obtain ⟨x, hx, hcx, -⟩ := exists_coord h hG (ofM Y, 0)

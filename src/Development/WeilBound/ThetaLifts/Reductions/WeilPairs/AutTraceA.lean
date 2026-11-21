@@ -376,7 +376,14 @@ theorem gauss_mul_integral_A (C : Ctx σ B JS JT ξ₀ θ ι) (hG : GoodLat Λ) 
     ∃ r : ℝ, 0 < r ∧ (∑ k, gamQF σ JS JT ξ₀ B.ψ (sgOF σ w • (b * t k * a - t k)) (t k)) *
       ∫ v, gaussV (HMF JS JT ξ₀ (tauB B)) s (mMF σ JS JT θ (g⁻¹, h⁻¹)) v = r * κ := by
   have hσ := sgsg C
-  obtain ⟨hH, -⟩ := PositivityTheory.ThKW.hermitian_majorant_selfAdjoint_posDef F E σ B C.good nS nT JS JT C.hS C.hT ξ₀ C.h0 C.hξ
+  have hH : (HMF JS JT ξ₀ (tauB B))ᴴ = HMF JS JT ξ₀ (tauB B) := by
+    have hτ := C.good.cm.2.2.2
+    unfold HMF
+    rw [GlobalTheory.RealWeil.blk_conjTranspose]
+    congr 1 <;> funext v
+    · rw [conjTranspose_smul, RealC.herm_map (hτ _) C.hT]
+      simp
+    · rw [conjTranspose_nonsing_inv, RealC.herm_map (hτ _) C.hS]
   obtain ⟨halt, -, -, hpos⟩ := omV_laws (H := HMF JS JT ξ₀ (tauB B)) hH hs.sq hs.pos
   have hw := hO.hw
   have H := isHeis_opFF hσ C.hS C.hT C.hξ hc hw

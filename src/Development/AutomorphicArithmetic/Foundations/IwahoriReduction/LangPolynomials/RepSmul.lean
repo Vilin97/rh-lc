@@ -164,7 +164,7 @@ theorem UpperTheory.Kd.C7.pRepSmul :
   obtain ⟨hprim, hnm, hunits, hval, hK⟩ := hB
   have hpv : ∀ i, pv (P' i) (ζ m) = ∏ k, pv (P k) (ζ m) ^ a i k := by
     intro i
-    simp only [P', pv, Polynomial.eval₂_finset_prod, Polynomial.eval₂_pow]
+    simp only [P', pv, Polynomial.eval₂_finsetProd, Polynomial.eval₂_pow]
   refine ⟨P', ⟨hprim, hnm, fun i => ?_, hval, fun s hs hcyc hfix => ?_⟩, fun i => ?_⟩
   · beta_reduce
     rw [hpv i]

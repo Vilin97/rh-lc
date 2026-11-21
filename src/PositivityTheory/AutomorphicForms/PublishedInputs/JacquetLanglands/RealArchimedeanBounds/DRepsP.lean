@@ -80,8 +80,9 @@ theorem step {c : Pl F → ℕ} {w : Pl F} {W : List (Pl F)} {ι κ : Type} [Fin
       ∀ x ∈ Hi.fixd ρ (K1 w (c w)), Uop w ρ (c w) x = ∑ j, ρ (r j) x)
     (hr2 : ∀ j, Matrix.GeneralLinearGroup.det (r j) = atFin w (unif w))
     (hr3 : c w ≠ 0 → ∀ j, ∃ u : w.adicCompletionIntegers F, r j = aff (atFin w (unif w)) (u : w.adicCompletion F)) :
-    IsReps c (w :: W) (fun p : κ × ι => locGL F 2 w (r p.1) * b p.2) where
-  act V _ _ ρ x hx := by
+    IsReps c (w :: W) (fun p : κ × ι => locGL F 2 w (r p.1) * b p.2) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro V _ _ ρ x hx
     obtain ⟨hy, he⟩ := hb.act V ρ x hx
     have hy' : (∑ i, ρ (b i) x) ∈ Hi.fixd (ρ.comp (locGL F 2 w)) (K1 w (c w)) :=
       fun k hk => hy _ ((kcTop F).2.2.2.2.2 c w k hk)
@@ -97,9 +98,9 @@ theorem step {c : Pl F → ℕ} {w : Pl F} {W : List (Pl F)} {ι κ : Type} [Fin
     rw [hs]
     refine ⟨(hkComm (hkReps uopSum) kcTop F V ρ c _ hy w).1, ?_⟩
     rw [List.map_cons, List.prod_cons, Module.End.mul_apply, ← he]
-  det p := by
+  · intro p
     rw [map_mul, absF_mul, absF_loc w _ (hr2 p.1), hb.det, List.map_cons, List.prod_cons]
-  loc p w' hw' := by
+  · intro p w' hw'
     classical
     obtain ⟨u', hu'⟩ := hb.loc p.2 w' hw'
     rw [map_mul]
@@ -117,18 +118,21 @@ theorem step {c : Pl F → ℕ} {w : Pl F} {W : List (Pl F)} {ι κ : Type} [Fin
       rw [pLoc_locGL_of_ne h, one_mul, hu']
       simp [List.count_cons, Ne.symm h]
 
-theorem base (c : Pl F → ℕ) : IsReps c ([] : List (Pl F)) (fun _ : Unit => (1 : GF F)) where
-  act V _ _ ρ x hx := by simpa using hx
-  det _ := by simp [absF]
-  loc _ w _ := ⟨0, by simp⟩
+theorem base (c : Pl F → ℕ) : IsReps c ([] : List (Pl F)) (fun _ : Unit => (1 : GF F)) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro V _ _ ρ x hx
+    simpa using hx
+  · intro i
+    simp [absF]
+  · intro i w hw
+    exact ⟨0, by simp⟩
 
 theorem reindex {c : Pl F → ℕ} {W : List (Pl F)} {ι κ : Type} [Fintype ι] [Fintype κ] (e : κ ≃ ι) {a : ι → GF F}
-    (h : IsReps c W a) : IsReps c W (a ∘ e) where
-  act V _ _ ρ x hx := by
-    rw [show ∑ i, ρ ((a ∘ e) i) x = ∑ i, ρ (a i) x from Equiv.sum_comp e (fun i => ρ (a i) x)]
-    exact h.act V ρ x hx
-  det i := h.det (e i)
-  loc i := h.loc (e i)
+    (h : IsReps c W a) : IsReps c W (a ∘ e) := by
+  refine ⟨?_, fun i => h.det (e i), fun i => h.loc (e i)⟩
+  intro V _ _ ρ x hx
+  rw [show ∑ i, ρ ((a ∘ e) i) x = ∑ i, ρ (a i) x from Equiv.sum_comp e (fun i => ρ (a i) x)]
+  exact h.act V ρ x hx
 
 theorem ex (c : Pl F → ℕ) (W : List (Pl F)) : ∃ (ι : Type) (_ : Fintype ι) (a : ι → GF F), IsReps c W a := by
   induction W with

@@ -60,6 +60,7 @@ private theorem cu_le_cint {K : Type} [Field K] (O : Type) [CommRing O] [Algebra
 set_option maxHeartbeats 1600000 in
 theorem UpperTheory.V.Z.Sym.Glob.gqG :
     UpperTheory.V.Z.Sym.Glob.GqG := by
+  set_option synthInstance.maxHeartbeats 200000 in
   classical
   intro F _ _ Δ D hOk ι hιG θ hθ t hCone τ c d m δ i P hCM hdat hmod
   haveI := hOk.real

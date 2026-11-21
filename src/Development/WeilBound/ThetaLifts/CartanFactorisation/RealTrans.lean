@@ -35,11 +35,41 @@ theorem real_trans (hO : ArchOp) (hL : ArchLie) (hQ : ArchUniq) {R : RealMaps F 
     (hP : ((reG G V V' W).M.Pol B.ψ B.emb).map (T : _ →ₗ[ℂ] _) = G.M.Pol B.ψ B.emb)
     (hP' : ((reG G V V' W).M'.Pol B.ψ B.emb).map (T' : _ →ₗ[ℂ] _) = G.M'.Pol B.ψ B.emb) :
     IsRealMaps B (reG G V V' W) om om' ⟨R.Pi, R.p ∘ₗ (T : _ →ₗ[ℂ] _), R.p' ∘ₗ (T' : _ →ₗ[ℂ] _)⟩ := by
+  have hecke_div {χ χ' : Chr F E} (h : IsHecke F E χ) (h' : IsHecke F E χ') : IsHecke F E (χ / χ') :=
+    ⟨h.1.div' h'.1, fun x => by rw [MonoidHom.div_apply, h.2, h'.2, div_one]⟩
+  have res_div {K : Subgroup (AF F)ˣ} {χ χ' : Chr F E} {m n k : ℕ} (h : ResEtaPow K χ m)
+      (h' : ResEtaPow K χ' n) (e : k = m + n) : ResEtaPow K (χ / χ') k := fun x => by
+    rw [MonoidHom.div_apply, Circle.coe_div, h, h', e]
+    split_ifs
+    · simp
+    · rw [pow_add, div_eq_mul_inv, ← inv_pow, inv_neg, inv_one]
+  have pairV {G : Geo σ a a'} {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W} (h : IsTriple B G X om om') :
+      IsPair B G.M X.β (X.β / X.α) om (a - G.p) G.p (a + a' - (G.p + G.q)) (G.p + G.q) :=
+    ⟨h.base, h.geo.hV, h.geo.hW, h.geo.hM, h.chars.heckeβ, hecke_div h.chars.heckeβ h.chars.heckeα, h.chars.resβ,
+      res_div h.chars.resβ h.chars.resα rfl, h.weil⟩
+  have pairV' {G : Geo σ a a'} {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W} (h : IsTriple B G X om om') :
+      IsPair B G.M' X.α (X.α / X.β) om' G.q (a' - G.q) (a + a' - (G.p + G.q)) (G.p + G.q) :=
+    ⟨h.base, h.geo.hV', h.geo.hW, h.geo.hM', h.chars.heckeα, hecke_div h.chars.heckeα h.chars.heckeβ, h.chars.resα,
+      res_div h.chars.resα h.chars.resβ (add_comm _ _), h.weil'⟩
+  have quot_trans {n d : ℕ} {Y Y₂ : Spc F E n} {Z Z₂ : Spc F E d}
+      {M : Model σ Y Z} {M₂ : Model σ (reS Y Y₂) (reS Z Z₂)}
+      {χY χZ : Chr F E} {o : Rep σ Y Z} {u v u' v' : ℕ}
+      (hp : IsPair B M χY χZ o u v u' v') (hp₂ : IsPair B M₂ χY χZ o u v u' v')
+      {g h T} (hg : Moves B Y Y₂ g) (hT : IsArchOp o (g, h) T)
+      (hP : (M₂.Pol B.ψ B.emb).map (T : _ →ₗ[ℂ] _) = M.Pol B.ψ B.emb)
+      {P : Type} [AddCommGroup P] [Module ℂ P] {p : SInf F (Fin n × Fin d) →ₗ[ℂ] P}
+      (q : RealQuot B M o p) : RealQuot B M₂ o (p ∘ₗ (T : _ →ₗ[ℂ] _)) := by
+    refine ⟨?_, ?_, ?_⟩
+    · rw [Submodule.map_comp, hP, q.onto]
+    · exact fun γ hγ f hf f₁ ha => q.lie _ (conj_line hg.1 hγ) (T f) (hP ▸ ⟨f, hf, rfl⟩) (T f₁)
+        (transL hO hL hQ hp hp₂ hT hP (conj_line hg.1 hγ) one_line hγ one_line (fun t => cj1 g (γ t) h) hf ha)
+    · exact fun k hk f hf f₁ ha => q.cpt _ (hg.up hk) (T f) (hP ▸ ⟨f, hf, rfl⟩) (T f₁)
+        (transK hO hQ hp hT (hg.up hk).1 (one_at _) (cj1 g k h) ha)
   have p1 := pairV t
   have p2 := pairV' t
   have q1 := pairV t₂
   have q2 := pairV' t₂
-  refine ⟨quot_trans hO hL hQ p1 q1 hg hT hP r.quot, quot_trans hO hL hQ p2 q2 hg' hT' hP' r.quot',
+  refine ⟨quot_trans p1 q1 hg hT hP r.quot, quot_trans p2 q2 hg' hT' hP' r.quot',
     fun γ hγ f hf f' hf' f₁ f₁' a1 a2 => r.lie _ (conj_line hh.1 hγ) (T f) (hP ▸ ⟨f, hf, rfl⟩) (T' f') (hP' ▸ ⟨f', hf', rfl⟩) _ _
       (transL hO hL hQ p1 q1 hT hP one_line (conj_line hh.1 hγ) one_line hγ (fun t => cj2 g h (γ t)) hf a1)
       (transL hO hL hQ p2 q2 hT' hP' one_line (conj_line hh.1 hγ) one_line hγ (fun t => cj2 g' h (γ t)) hf' a2),

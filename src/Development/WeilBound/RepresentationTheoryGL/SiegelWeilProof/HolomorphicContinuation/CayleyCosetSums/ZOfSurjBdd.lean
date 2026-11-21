@@ -59,7 +59,9 @@ theorem posdef_factor {Y : Matrix (Fin n) (Fin n) ℂ} (hY : Y.PosDef) :
     rw [Matrix.mul_assoc, ← Matrix.star_eq_conjTranspose]
     congr 2
     congr 1
-    rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hY.eigenvalues_pos _).le]
+    funext j
+    simp only [Pi.star_apply, Complex.star_def, Complex.conj_ofReal]
+    rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hY.eigenvalues_pos j).le]
   · rw [Matrix.mul_assoc, ← Matrix.mul_assoc (diagonal _), diagonal_mul_diagonal]
     have : (fun j => ((Real.sqrt (hA.eigenvalues j) : ℝ) : ℂ) * (((Real.sqrt (hA.eigenvalues j))⁻¹ : ℝ) : ℂ)) = fun _ => 1 := by
       funext j

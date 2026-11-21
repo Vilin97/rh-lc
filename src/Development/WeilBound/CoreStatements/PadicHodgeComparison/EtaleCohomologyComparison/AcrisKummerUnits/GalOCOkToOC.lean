@@ -52,7 +52,8 @@ abbrev MH (M : Model l K) (n j : ℕ) : Type 1 := CrystallineSemistableCompariso
 def galMH (M : Model l K) (σ : Gal(PadicAlgCl l/K)) (n j : ℕ) : M.MH n j →ₛₗ[ACris.galCris σ] M.MH n j :=
   (galMor σ (pxTw M.p (okToOC l K) σ (galOC_okToOC σ)) n).pull j
 
-def phiMH (M : Model l K) (n j : ℕ) : M.MH n j →ₛₗ[ACris.phi ℂ_[l] l] M.MH n j := (phiMor M.P n).pull j
+def phiMH (M : Model l K) (n j : ℕ) : M.MH n j →ₛₗ[ACris.phi (K := ℂ_[l]) (p := l)] M.MH n j :=
+  (phiMor M.P n).pull j
 
 def pullMH {M N : Model l K} (u : M.X ⟶ N.X) (hu : u ≫ N.p = M.p) (n j : ℕ) : N.MH n j →ₗ[Acris l] M.MH n j :=
   (pullMor (pxMap (okToOC l K) u hu) n).pull j

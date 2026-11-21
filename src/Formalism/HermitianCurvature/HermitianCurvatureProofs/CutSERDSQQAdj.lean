@@ -252,6 +252,8 @@ theorem radIp_smul_left (μ : Measure (Mt k r)) (w : ℂ) (Φ Ψ : RadSp k r z z
   funext c
   rw [← integral_const_mul]
   congr 1
+  funext x
+  change ⟪B.hsVec (w • (Φ : Fn k r (Wq →L[ℂ] Wp)) c (Matrix.of x)), B.hsVec ((Ψ : Fn k r (Wq →L[ℂ] Wp)) c (Matrix.of x))⟫_ℂ = _
   rw [hsVec_smul_q, inner_smul_left]
 
 theorem radIp_smul_right (μ : Measure (Mt k r)) (w : ℂ) (Φ Ψ : RadSp k r z z' π π') :
@@ -262,6 +264,8 @@ theorem radIp_smul_right (μ : Measure (Mt k r)) (w : ℂ) (Φ Ψ : RadSp k r z 
   funext c
   rw [← integral_const_mul]
   congr 1
+  funext x
+  change ⟪B.hsVec ((Φ : Fn k r (Wq →L[ℂ] Wp)) c (Matrix.of x)), B.hsVec (w • (Ψ : Fn k r (Wq →L[ℂ] Wp)) c (Matrix.of x))⟫_ℂ = _
   rw [hsVec_smul_q, inner_smul_right]
 
 theorem rAdj_smul_real {μ : Measure (Mt k r)} {a : Pr (RadSp k r z z' π π')}

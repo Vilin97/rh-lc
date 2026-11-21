@@ -127,6 +127,7 @@ theorem GlobalTheory.Cusp.constTermOn_eq_integral_semidirect : ∀ (G G₁ : Typ
     obtain ⟨b, e2⟩ : ∃ b : NNReal, μ₁.inv = b • μ₁ := ⟨_, Measure.isMulLeftInvariant_eq_smul μ₁.inv μ₁⟩
     refine ⟨a * b, ?_⟩
     rw [← Measure.inv_inv ν, e1, Measure.inv_def, Measure.map_smul, ← Measure.inv_def, e2, smul_smul]
+    exact measurable_inv.aemeasurable
   have hD₁ := isFundamentalDomain_stdDom (Γ₁.subgroupOf N₁) μ₁
   have hmD₁ := measurableSet_stdDom (Γ₁.subgroupOf N₁)
   have hm𝓕 : MeasurableSet (stdDom ((Γ ⊓ N').subgroupOf N) ∩ π ⁻¹' stdDom (Γ₁.subgroupOf N₁)) :=

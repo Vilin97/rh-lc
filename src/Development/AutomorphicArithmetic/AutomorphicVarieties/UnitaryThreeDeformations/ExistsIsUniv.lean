@@ -89,9 +89,13 @@ private theorem map_max {R' : Type} [CommRing R'] [Algebra O R'] [IsCO O R'] (f 
 private theorem red_push {D : Type} [Group D] {η : D →* ℤˣ} {Ψ : D →* Oˣ} {r : D →* GG (m := 3) (R := R)} (hr : Red η Ψ r)
     {R' : Type} [CommRing R'] [Algebra O R'] [IsCO O R'] (f : R →ₐ[O] R') : Red η Ψ (UnitaryThreeInertia.push f r) where
   mult g := hr.mult g
-  red g a b := by
-    have := map_max f (hr.red g a b)
-    simpa using this
+  red := by
+    intro g a b
+    change f ((r g).mat a b) -
+      algebraMap O R' ((r0 η Ψ g).mat a b) ∈ maximalIdeal R'
+    have h : (r g).mat a b - algebraMap O R ((r0 η Ψ g).mat a b) ∈ maximalIdeal R :=
+      hr.red g a b
+    simpa only [map_sub, AlgHom.commutes] using map_max f h
 
 private theorem cont_push {D : Type} [Group D] [TopologicalSpace D] {r : D →* GG (m := 3) (R := R)}
     (hr : UnitaryThreeInertia.AdicCont (maximalIdeal R) r)

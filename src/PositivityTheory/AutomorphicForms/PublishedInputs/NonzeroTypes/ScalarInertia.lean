@@ -57,7 +57,7 @@ theorem iso_tensor {n : ℕ} (a : WDRep h (Fin n → ℂ)) (ψ : Weil h →* ℂ
       congr 1
       rw [mul_comm, ← mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mul]
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
-  · simp [hN]
+  · simp [WDRep.twist, hN]
 
 end UpperTheory.TNZ.ScalarInertia
 

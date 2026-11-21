@@ -288,6 +288,8 @@ theorem cInfAt_conj {σ : k →+* ℂ} {f : CxPts q ((starRingEnd ℂ).comp σ) 
   have hc1 : ContDiff ℝ ∞ (fun z : ℂ => starRingEnd ℂ z) := by
     have h0 := Complex.conjCLE.contDiff (n := ∞)
     convert h0 using 1
+    ext z
+    rfl
   let c : (ι → ℂ) → (ι → ℂ) := fun v a => starRingEnd ℂ (v a)
   have hc : ContDiff ℝ ∞ c := contDiff_pi.mpr fun a => hc1.comp (contDiff_apply ℝ (fun _ => ℂ) a)
   refine ⟨W, ι, hι, g, fun v => F (c v), c ⁻¹' O, hy', hO.preimage hc.continuous, ?_,

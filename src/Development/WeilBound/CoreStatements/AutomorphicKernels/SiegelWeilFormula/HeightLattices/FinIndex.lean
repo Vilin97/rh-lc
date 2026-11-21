@@ -27,12 +27,20 @@ theorem vol_sig (hcm : HeckeCharacterZeroLocus.SiegelWeilU.IsCMExt F E σ) (v : 
     (lam : Measure (Fin n → HeckeCharacterZeroLocus.SiegelWeilU.Fv F v ⊗[F] E)) [lam.IsAddHaarMeasure]
     (S : Set (Fin n → v.adicCompletion F ⊗[F] E)) :
     lam ((fun y i => HeckeCharacterZeroLocus.SiegelWeilU.sigR (v.adicCompletion F) σ (y i)) '' S) = lam S := by
-  have := GlobalTheory.LocTateInt.finite_FE (F := F) (E := E)
-  have := GlobalTheory.LocTateInt.isTopologicalRing_Ev (F := F) (E := E) v
-  have := GlobalTheory.LocTateInt.t2Space_Fv_tensor (F := F) (E := E) v
-  have := GlobalTheory.LocTateInt.locallyCompactSpace_Ev (F := F) (E := E) v
-  have := GlobalTheory.LocTateInt.secondCountable_Ev (F := F) (E := E) v
-  have := GlobalTheory.LocTateInt.isModuleTopology_Ev (F := F) (E := E) v
+  haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
+  haveI : IsModuleTopology (v.adicCompletion F) (v.adicCompletion F ⊗[F] E) := ⟨rfl⟩
+  haveI : IsTopologicalRing (v.adicCompletion F ⊗[F] E) := GlobalTheory.Doubling.isTopologicalRing_tens
+  haveI : T2Space (v.adicCompletion F ⊗[F] E) := GlobalTheory.Doubling.t2Space_tensorProduct_finiteExtension
+  haveI := PI.UnitaryGroupMassFormula.LocJacTyp.BM.secondCountable_Fv v
+  let b := Algebra.TensorProduct.basis (v.adicCompletion F) (Module.finBasis F E)
+  let coord : (v.adicCompletion F ⊗[F] E) ≃ₜ+ (Fin (Module.finrank F E) → v.adicCompletion F) :=
+    { b.equivFun.toAddEquiv with
+      continuous_toFun := IsModuleTopology.continuous_of_linearMap b.equivFun.toLinearMap
+      continuous_invFun := IsModuleTopology.continuous_of_linearMap b.equivFun.symm.toLinearMap }
+  haveI : LocallyCompactSpace (v.adicCompletion F ⊗[F] E) :=
+    coord.toHomeomorph.isClosedEmbedding.locallyCompactSpace
+  haveI : SecondCountableTopology (v.adicCompletion F ⊗[F] E) :=
+    coord.toHomeomorph.isEmbedding.secondCountableTopology
   have : BorelSpace (HeckeCharacterZeroLocus.SiegelWeilU.Fv F v ⊗[F] E) := ⟨rfl⟩
   set sg := HeckeCharacterZeroLocus.SiegelWeilU.sigR (v.adicCompletion F) σ with hsg
   let Lsg : (v.adicCompletion F ⊗[F] E) →ₗ[v.adicCompletion F] (v.adicCompletion F ⊗[F] E) :=
@@ -68,6 +76,9 @@ theorem vol_sig (hcm : HeckeCharacterZeroLocus.SiegelWeilU.IsCMExt F E σ) (v : 
     rcases mul_self_eq_one_iff.1 h3 with h | h
     · exact_mod_cast h
     · linarith [NNReal.coe_nonneg (addEquivAddHaarChar φ)]
+  have : lam.Regular := by
+    obtain ⟨ho, hc⟩ := lat_isCO (E := E) v n
+    exact Measure.regular_of_isAddLeftInvariant hc ⟨0, mem_interior_iff_mem_nhds.mpr (ho.mem_nhds (zero_mem _))⟩ hc.measure_lt_top.ne
   have h1 := addEquivAddHaarChar_smul_map lam φ
   have himg : (fun y i => sg (y i)) '' S = φ.toHomeomorph.toMeasurableEquiv '' S := rfl
   calc lam ((fun y i => sg (y i)) '' S) = (addEquivAddHaarChar φ • lam.map φ) ((fun y i => sg (y i)) '' S) := by

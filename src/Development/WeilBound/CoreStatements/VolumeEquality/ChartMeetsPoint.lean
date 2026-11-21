@@ -108,7 +108,7 @@ theorem exists_point_hom {κ : Type} {x : κ → Ω} (T : CoordTie ℤ ξ x) (c 
     simpa using valAt_intCast' hz n
   | add a b ha hb iha ihb =>
     show ValAt ξ z (a + b) (ψ (⟨a, ha⟩ + ⟨b, hb⟩))
-    rw [map_add (f := _)]
+    rw [ψ.map_add]
     exact valAt_add_volume_equality iha ihb
   | mul a b ha hb iha ihb =>
     show ValAt ξ z (a * b) (ψ (⟨a, ha⟩ * ⟨b, hb⟩))

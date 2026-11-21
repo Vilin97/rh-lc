@@ -31,29 +31,30 @@ def extZ {R R' : Rep k r} (f : R.smSub →ₗ[ℂ] R'.smSub) (y : R.H) : R'.H :=
 
 theorem extZ_coe {R R' : Rep k r} (f : R.smSub →ₗ[ℂ] R'.smSub) (y : R.smSub) :
     extZ f (y : R.H) = (f y : R'.H) := by
-  simp only [extZ, dif_pos y.2]
+  simp only [extZ, dite_eq_left y.2]
 
 theorem smMap_extZ {R R' : Rep k r} (f : R.smSub →ₗ[ℂ] R'.smSub)
     (hf : ∀ W, LieWd k r W → ∃ (C : ℝ) (Ws : List (List (Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ))), (∀ W' ∈ Ws, LieWd k r W') ∧
       ∀ y : R.smSub, ‖PI.UpqRep.dsigW (k := k) (r := r) R'.σ W (f y : R'.H)‖ ≤
         C * (Ws.map fun W' => ‖PI.UpqRep.dsigW (k := k) (r := r) R.σ W' (y : R.H)‖).sum) :
-    SmMap R R' (extZ f) where
-  mem v hv := by
+    SmMap R R' (extZ f) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro v hv
     have := extZ_coe f ⟨v, hv⟩
     rw [show extZ f v = _ from this]
     exact (f _).2
-  add v hv w hw := by
+  · intro v hv w hw
     have h1 := extZ_coe f ⟨v, hv⟩
     have h2 := extZ_coe f ⟨w, hw⟩
     have h3 := extZ_coe f (⟨v, hv⟩ + ⟨w, hw⟩)
     rw [show extZ f v = _ from h1, show extZ f w = _ from h2, show extZ f (v + w) = _ from h3, map_add (f := _)]
     rfl
-  smul a v hv := by
+  · intro a v hv
     have h1 := extZ_coe f ⟨v, hv⟩
     have h3 := extZ_coe f (a • ⟨v, hv⟩)
     rw [show extZ f v = _ from h1, show extZ f (a • v) = _ from h3, map_smul]
     rfl
-  cont W hW := by
+  · intro W hW
     obtain ⟨C, Ws, h1, h2⟩ := hf W hW
     refine ⟨C, Ws, h1, fun v hv => ?_⟩
     have h3 := extZ_coe f ⟨v, hv⟩

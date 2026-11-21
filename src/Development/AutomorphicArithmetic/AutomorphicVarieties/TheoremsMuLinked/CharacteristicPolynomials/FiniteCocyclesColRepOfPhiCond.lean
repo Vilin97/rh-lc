@@ -48,6 +48,7 @@ private theorem zc_split {l : ℕ} [hl : Fact l.Prime] (c c' : Coef l) (hcc : c.
   haveI : IsScalarTower ℤ_[l] c.O c'.O := IsScalarTower.of_algebraMap_eq fun _ => rfl
   haveI : Module.Finite c.O c'.O := Module.Finite.of_restrictScalars_finite ℤ_[l] _ _
   haveI : FaithfulSMul c.O c'.O := (faithfulSMul_iff_algebraMap_injective _ _).2 (Subalgebra.inclusion_injective hcc)
+  set_option synthInstance.maxHeartbeats 200000 in
   haveI : Module.Free c.O c'.O := Module.free_of_finite_type_torsion_free'
   let b := Module.finBasis c.O c'.O
   let f : G → Fin m → c'.O := fun g i => ⟨z g i, hm g i⟩

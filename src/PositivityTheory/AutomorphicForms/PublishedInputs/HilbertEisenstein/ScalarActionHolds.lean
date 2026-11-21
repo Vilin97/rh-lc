@@ -58,7 +58,6 @@ theorem scalar_action_holds : SPois → SInt → SSmooth → SSmul := by
       unfold coefAt
       split_ifs <;> simp
     convert (h x y hy yf).mul_left a using 1
-    · rfl
     · funext ξ
       rw [e, mul_assoc]
     · rw [e2]

@@ -105,19 +105,19 @@ section Host
 
 variable {X : Fields} {Pr : Primes X}
 
-theorem basePi_of_ok (hX : X.Ok) (hPr : Pr.Ok) (u : Pr.Word) : BasePi (Pr.vT u) (Pr.piT u) where
-  dvd r := by
-    have h0 : Pr.piT u ≠ 0 := by
-      intro h0
-      obtain ⟨a, b, hab⟩ := hPr.piT_cop u
-      rw [h0, map_zero, mul_zero, mul_zero, add_zero] at hab
-      exact zero_ne_one hab
-    constructor
-    · intro hr
-      exact piT_dvd_of_mem hX hPr u r fun P => hr P.1 P.2
-    · rintro ⟨q, rfl⟩ P hP
-      exact Ideal.mul_mem_right _ _ ((mem_divs h0 P).1 hP)
-  cop := hPr.piT_cop u
+theorem basePi_of_ok (hX : X.Ok) (hPr : Pr.Ok) (u : Pr.Word) : BasePi (Pr.vT u) (Pr.piT u) := by
+  have hcop := hPr.piT_cop u
+  refine ⟨?_, hcop⟩
+  intro r
+  have h0 : Pr.piT u ≠ 0 := by
+    intro h0
+    rw [h0, map_zero] at hcop
+    exact not_isCoprime_zero_zero hcop
+  constructor
+  · intro hr
+    exact piT_dvd_of_mem hX hPr u r fun P => hr P.1 P.2
+  · rintro ⟨q, rfl⟩ P hP
+    exact Ideal.mul_mem_right _ _ ((mem_divs h0 P).1 hP)
 
 
 open Classical in

@@ -39,11 +39,13 @@ theorem acris_zero_surjective : Function.Surjective (PAlg.base l).cris0 := by
   | add x y hx hy ihx ihy =>
     obtain ⟨a, ha⟩ := ihx
     obtain ⟨b, hb⟩ := ihy
-    exact ⟨a + b, by rw [map_add (f := _), ha, hb]; rfl⟩
+    refine ⟨a + b, ?_⟩
+    change (PAlg.base l).cris0 (a + b) = (⟨x, hx⟩ : (PAlg.base l).Acr0) + ⟨y, hy⟩
+    exact ((PAlg.base l).cris0.map_add a b).trans (congrArg₂ (· + ·) ha hb)
   | mul x y hx hy ihx ihy =>
     obtain ⟨a, ha⟩ := ihx
     obtain ⟨b, hb⟩ := ihy
-    exact ⟨a * b, by rw [map_mul, ha, hb]; rfl⟩
+    exact ⟨a * b, by rw [map_mul (PAlg.base l).cris0, ha, hb]; rfl⟩
 
 theorem acris_level_surjective (n : ℕ) : Function.Surjective ((PAlg.base l).cris n) := by
   intro w

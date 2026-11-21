@@ -47,7 +47,7 @@ theorem Chev_of : LateralTheory.EWeil.ContinCut.Chev := by
     rw [Metric.mem_ball] at hz
     rw [Pi.sub_apply, ← dist_eq_norm]
     linarith
-  obtain ⟨k, hk⟩ := exists_subset_nhds_of_isCompact hdir hc hU
+  obtain ⟨k, hk⟩ := exists_subset_nhds_of_isCompact hdir hc (mem_nhdsSet_iff_forall.mpr hU)
   refine ⟨k, fun y hy => ?_⟩
   obtain ⟨x, rfl⟩ := hπ y
   obtain ⟨c, w, hc0, hw, rfl⟩ := hk (show x ∈ V k from hy)

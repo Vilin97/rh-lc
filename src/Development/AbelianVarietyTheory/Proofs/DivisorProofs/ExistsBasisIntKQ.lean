@@ -7,7 +7,7 @@ public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtC
 
 @[expose] public section
 
-open Matrix GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.BCFL
+open Matrix GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid
 open scoped TensorProduct Classical
 
 noncomputable section

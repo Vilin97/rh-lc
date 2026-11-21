@@ -21,7 +21,7 @@ noncomputable section
 namespace GlobalTheory.CoverPinCompare
 
 open AlgebraicGeometry CategoryTheory Limits NumberField
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.IndefiniteRowSideFullHecke.RayContainment
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
 open GlobalTheory.ClsVal.Cmp (OverBase overBase_of_ne eq_incl coe_incl spMap_comp')
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}

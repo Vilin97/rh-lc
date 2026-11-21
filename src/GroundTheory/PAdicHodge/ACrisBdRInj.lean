@@ -18,6 +18,8 @@ namespace ACris
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
+local notation "𝔸" => Localization.Away (p : AInf K p)
+
 theorem mem_acrisZero_of_forall_dvd {z : 𝔸}
     (h : ∀ m : ℕ, ∃ s ∈ ACrisZero K p, algebraMap (AInf K p) 𝔸 (xiGen K p ^ m) ∣ z - s) :
     z ∈ ACrisZero K p := by
@@ -48,7 +50,7 @@ theorem mem_acrisZero_of_forall_dvd {z : 𝔸}
     exact sub_eq_zero.1 (eq_zero_of_algebraMap_mul_eq_zero hnz h0)
   have hxi : ξm * (r + r') = dpow m (xiGen K p) * algebraMap (AInf K p) 𝔸 d := by
     rw [← hR, ← mul_assoc, mul_comm (dpow m (xiGen K p)), factorial_mul_dpow, ← map_pow]
-  have hξmem : xiGen K p ∈ RingHom.ker θ := by
+  have hξmem : xiGen K p ∈ RingHom.ker (fontaineTheta (normInteger K) p) := by
     rw [ker_eq_span_xiGen]; exact Ideal.mem_span_singleton_self _
   rw [hz, hxi]
   exact add_mem hs' (Subalgebra.mul_mem _ (dpow_mem hξmem m) (Subalgebra.algebraMap_mem _ d))

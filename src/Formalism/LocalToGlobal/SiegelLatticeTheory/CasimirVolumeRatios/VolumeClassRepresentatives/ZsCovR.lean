@@ -31,7 +31,7 @@ noncomputable section
 
 namespace Formalism.L2.S.S7.ZsCovR
 
-open NumberField Formalism.MainNotions.S Formalism.MainNotions.BridgeLemma Formalism.MainNotions.LeviCoordinates Formalism.L2.S.S7.IwasawaCovolume
+open NumberField Formalism.MainNotions.S Formalism.MainNotions.BridgeLemma
 
 
 end Formalism.L2.S.S7.ZsCovR

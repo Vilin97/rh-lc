@@ -131,8 +131,8 @@ private theorem borelGL_s_eq_leviEmb_points_leviTorus (k : Type) [Field k] [Topo
     [IsTopologicalRing k] [T2Space k] (n : Type) [Fintype n] [DecidableEq n] [LinearOrder n]
     (t : n → kˣ) :
     (_root_.GlobalTheory.LGrp.borelGL k n).s t =
-      @_root_.GlobalTheory.SmGL.leviEmb k _ n _ _ n LinearOrder.toDecidableEq (fun _ => Unit)
-        _ _ _ (_root_.GlobalTheory.SmGL.points n) (_root_.GlobalTheory.SmGL.leviTorus k n t) := by
+      _root_.GlobalTheory.SmGL.leviEmb k (_root_.GlobalTheory.SmGL.points n)
+        (_root_.GlobalTheory.SmGL.leviTorus k n t) := by
   ext i j
   change ((_root_.GlobalTheory.LGrp.diagHom k n t : GL n k) : Matrix n n k) i j = _
   rw [_root_.GlobalTheory.LGrp.diagHom_val]

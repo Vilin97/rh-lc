@@ -5,7 +5,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvMemIntV
 
 @[expose] public section
 
-open IsDedekindDomain GlobalTheory.TauNorm Polynomial
+open IsDedekindDomain Polynomial
 open scoped TensorProduct
 
 namespace GlobalTheory.FinRingNorm

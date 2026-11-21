@@ -103,7 +103,12 @@ instance FinFr.nonempty (y : FrPt Xo c K) (v : FinitePlace K) : Nonempty (FinFr 
   letI := (i.comp (j.comp (algebraMap c.F K))).toAlgebra
   let φ : K →ₐ[c.F] T.Fr := ⟨i.comp j, fun _ => rfl⟩
   obtain ⟨w, hw⟩ := exists_frMap (⟨i, fun _ => rfl⟩ : T₀.Fr →ₐ[c.F] T.Fr) w₀
-  obtain ⟨t, z, hz⟩ := GlobalTheory.AlgLawsCompare.reFrame T _ y₁ w (hw.1.trans hx.symm)
+  have hReframe : Formalism.L2.PjFree.ReFrame Xo c :=
+    Formalism.L2.PjFree.reFrame_of
+      (fun S _ x _ v hv _ w A N w' hw hw' =>
+        GlobalTheory.TangentLinear.isCombAt_mulVec E H Dw l Xo S x v hv w A N w' hw hw')
+      (GlobalTheory.IntRebase.intRebase GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H Dw l Xo c)
+  obtain ⟨t, z, hz⟩ := hReframe T _ y₁ w (hw.1.trans hx.symm)
   exact ⟨⟨T, _, φ, _, ho.bc i hr hi, hf', z, t, w, frMap_comp h₀ hw fun _ => rfl, hz⟩⟩
 
 namespace FinFr
@@ -165,6 +170,7 @@ theorem fac_add (e e' : Ix Dw → ℤ) : F.fac (e + e') = F.fac e * F.fac e' := 
   simp only [fac, Pi.add_apply, zpow_add, Finset.prod_mul_distrib, Units.val_mul, map_mul]
 
 theorem nrm_eq {e : Ix Dw → ℤ} {f : Rul Xo c} (hf : f ∈ secZ Xo c e) : F.nrm f = F.fac e * v (evR Xo c f y) := by
+  let _ := F.io.toAlgebra
   rw [← F.abs_φ, fac, ← map_mul, ← F.tri.evR_eq hf]
   rfl
 

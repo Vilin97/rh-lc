@@ -49,7 +49,7 @@ private theorem exists_co' {D : D7} {ε : Bool} {S X : HSp D} {d : ℕ} (e : Fin
   have hVJ : Vs.J = -(sgn ε S).gram := by
     rw [hX]
     cases ε
-    · simp [sgn]
+    · ext i j; simp [sgn, HSpace.gram]
     · ext i j; simp [HSpace.gram]
   obtain ⟨G, hGd⟩ : ∃ G : Matrix (Fin S.rank) (Fin S.rank) D.host.E, G = (sgn ε S).gram := ⟨_, rfl⟩
   rw [← hGd] at hdet hG hVJ ⊢

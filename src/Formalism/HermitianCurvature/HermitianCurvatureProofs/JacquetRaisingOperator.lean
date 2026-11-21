@@ -64,7 +64,7 @@ theorem rw_clm (L : E →L[ℂ] E) : ∀ (w : List (Mat k r)), (∀ X ∈ w, inL
       Rw w (fun x => L (f x)) g = L (Rw w f g)
   | [], _, _, _, _, _ => rfl
   | X :: w, hw, f, g, hg, hf => by
-    obtain ⟨U, hU, hgU, hUloc⟩ := loc_spread hf
+    obtain ⟨U, hU, hgU, hUloc⟩ := loc_spread (m := ((X :: w).length : ℕ∞)) (f := f) (g := g) hf
     have hw' : ∀ Y ∈ w, inLie k r Y := fun Y hY => hw Y (by simp [hY])
     have hagree : ∀ x ∈ U, x ∈ GV k r → Rw w (fun x => L (f x)) x = L (Rw w f x) := fun x hx hxG =>
       rw_clm L w hw' f x hxG (loc_mono (by simp) (hUloc x hx))

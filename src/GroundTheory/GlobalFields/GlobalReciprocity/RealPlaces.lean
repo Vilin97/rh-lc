@@ -13,6 +13,8 @@ open NumberField NumberField.InfinitePlace NumberField.InfinitePlace.Completion 
   GroundTheory.LocalField.Abstract IdeleGroup
 open scoped GroundTheory.LocalField.Abstract ComplexConjugate NumberField.LiesOver
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 section SqrtNegOne

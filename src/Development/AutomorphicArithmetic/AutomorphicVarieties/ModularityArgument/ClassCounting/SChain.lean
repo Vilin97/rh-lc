@@ -49,6 +49,8 @@ private theorem bd_cm (G H : Type) [Group G] [Group H] (f : G →* H) (m : ℕ) 
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, cm_single]
     congr 2
+    funext i
+    simp only [Fin.contractNth]
     split_ifs <;> simp [map_mul]
 
 private theorem cm_prism (G H : Type) [Group G] [Group H] (f : G →* H) (k : G) (m : ℕ) (z : Ch A G m) :

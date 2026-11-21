@@ -207,10 +207,15 @@ theorem kLow_wt_eq_lowWt {A : Fin n → Fin n → Module.End ℂ (TensorProduct 
 end Orth
 
 theorem cdom_lowWt (γ : Fin n → ℝ) :
-    ∀ l : List (Fin n × Fin n), (∀ p ∈ l, IsKLow ε p) → Formalism.MainNotions.S.CDom ε (lowWt γ l) γ
-  | [], _ => ⟨fun _ _ => 0, fun a b h => absurd rfl h, by simp [lowWt]⟩
-  | p :: l, hl => by
-    obtain ⟨c, hc, heq⟩ := cdom_lowWt γ l fun q hq => hl q (List.mem_cons_of_mem _ hq)
+    ∀ l : List (Fin n × Fin n), (∀ p ∈ l, IsKLow ε p) → Formalism.MainNotions.S.CDom ε (lowWt γ l) γ := by
+  intro l
+  induction l with
+  | nil =>
+    intro _
+    exact ⟨fun _ _ => 0, fun a b h => absurd rfl h, by simp [lowWt]⟩
+  | cons p l ih =>
+    intro hl
+    obtain ⟨c, hc, heq⟩ := ih fun q hq => hl q (List.mem_cons_of_mem _ hq)
     obtain ⟨c0, d0⟩ := p
     have hp : IsKLow ε (c0, d0) := hl _ (List.mem_cons_self ..)
     refine ⟨fun a b => c a b + if a = d0 ∧ b = c0 then 1 else 0, ?_, ?_⟩

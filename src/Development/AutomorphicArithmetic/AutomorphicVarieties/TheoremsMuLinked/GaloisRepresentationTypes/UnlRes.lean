@@ -104,7 +104,7 @@ theorem UpperTheory.V.Th.unlRes :
   · obtain ⟨A, hA, κ, hκ, hu⟩ := H (w.under (𝓞 ℚ)) ((nat_mem_under l w).2 hw)
     obtain ⟨B, d, hB, hF, hc, hs⟩ := flag_move w hA hκ
     have hv : B.valuation (l : Ω) < 1 := by
-      simpa using (hB _).2 hw
+      simpa only [map_natCast] using (hB (l : 𝓞 K)).2 hw
     refine ⟨B, hB, _, hF, fun i j e => hu i j (MonoidHom.ext fun s => ?_)⟩
     obtain ⟨t, rfl⟩ := hs (hdec B hv) s
     have h1 := DFunLike.congr_fun e t

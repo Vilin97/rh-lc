@@ -67,19 +67,18 @@ theorem isU_iff {n : ℕ} (H g : Matrix (Fin n) (Fin n) ℂ) :
     rw [key, h', hf_eq]
 
 theorem isHerm {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (hH : H.IsHermitian) (hd : H.det ≠ 0) :
-    IsHerm (starRingEnd ℂ) (H.map (starRingEnd ℂ)) where
-  invol a := Complex.conj_conj a
-  ne_id := ⟨Complex.I, by
+    IsHerm (starRingEnd ℂ) (H.map (starRingEnd ℂ)) := by
+  refine ⟨Complex.conj_conj, ?_, ?_, ?_⟩
+  · refine ⟨Complex.I, ?_⟩
     intro h
     have := congrArg Complex.im h
-    norm_num at this⟩
-  herm a b := by
+    norm_num at this
+  · intro a b
     simp only [Matrix.map_apply, Complex.conj_conj]
     have := congrFun (congrFun hH b) a
     simp only [Matrix.conjTranspose_apply, RCLike.star_def] at this
     rw [← this, Complex.conj_conj]
-  det_ne := by
-    rw [← RingHom.mapMatrix_apply, ← RingHom.map_det]
+  · rw [← RingHom.mapMatrix_apply, ← RingHom.map_det]
     exact (map_ne_zero _).2 hd
 
 theorem iso_or_one_class {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (hH : H.IsHermitian) (hd : H.det ≠ 0) :

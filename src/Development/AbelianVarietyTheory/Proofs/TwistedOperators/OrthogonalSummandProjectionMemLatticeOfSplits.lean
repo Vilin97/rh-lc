@@ -26,7 +26,9 @@ theorem GlobalTheory.FinPl.projB_mem_of_orthAt : ∀ {D : D7} {S A B : HSp D} (o
     AddSubgroup.subset_closure ⟨indP D.host.F (· = v), indicatorAdele_mem_integralAdeles' _ _, indicatorAdele_supported _ _, 1, rfl, t, ht, rfl⟩
   have h2 := ((hO v _).1 hY).2
   convert h2 using 1
+  funext i
+  simp only [Matrix.mulVec, dotProduct]
   rw [TensorProduct.tmul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   show _ = (1 : AF D.host.F) ⊗ₜ[D.host.F] (o.qB i j) * _
-  rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul]
+  simp only [Algebra.TensorProduct.tmul_mul_tmul, one_mul]

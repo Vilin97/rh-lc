@@ -26,14 +26,8 @@ theorem gmap_mem_genus {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) {I L :
   have hiso : ∀ x y, h (g x) (g y) = h x y := hg
   show Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap g L) ∧ Formalism.HermitianLatticesTheory.SameGenus h I (Formalism.HermitianLatticesTheory.gmap g L)
   refine ⟨?_, ?_⟩
-  · constructor
-    · unfold Formalism.HermitianLatticesTheory.gmap
-      exact hLat.fg.map _
-    · unfold Formalism.HermitianLatticesTheory.gmap
-      rw [Submodule.map_coe]
-      show Submodule.span K (⇑(g : V →ₗ[K] V) '' L) = ⊤
-      rw [Submodule.span_image, hLat.span_eq_top, Submodule.map_top,
-        LinearMap.range_eq_top.mpr g.surjective]
+  · unfold Formalism.HermitianLatticesTheory.gmap
+    exact Submodule.IsLattice.of_fg K (hLat.fg.map _)
   · unfold Formalism.HermitianLatticesTheory.SameGenus
     intro p hp
     obtain ⟨g', hg', he⟩ := hG p hp

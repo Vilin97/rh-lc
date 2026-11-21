@@ -28,25 +28,25 @@ theorem blockMatrix_zero' {R : Type} [CommRing R] {n ρ p : ℕ} (hn : ρ + p = 
 theorem lowerUnipotent_mul_blockDiagonal {R : Type} [CommRing R] {n ρ p : ℕ} (hn : ρ + p = n) (c : Matrix (Fin p) (Fin ρ) R)
     (d : Matrix (Fin p) (Fin p) R) :
     HMul.hMul (bl hn 1 0 c 1) (bl hn 1 0 0 d) = bl hn 1 0 c d := by
-  rw [blockMatrix_multiply]
+  simp only [bl, Matrix.submatrix_mul_equiv, Matrix.fromBlocks_multiply]
   congr 1 <;> simp
 
 theorem blockMatrix_diagonal_mul_lowerUnipotent {R : Type} [CommRing R] {n ρ p : ℕ} (hn : ρ + p = n) (c : Matrix (Fin p) (Fin ρ) R)
     (d : Matrix (Fin p) (Fin p) R) :
     HMul.hMul (bl hn 1 0 0 d) (bl hn 1 0 c 1) = bl hn 1 0 (HMul.hMul d c) d := by
-  rw [blockMatrix_multiply]
+  simp only [bl, Matrix.submatrix_mul_equiv, Matrix.fromBlocks_multiply]
   congr 1 <;> simp
 
 theorem upperUnipotent_mul_blockDiagonal {R : Type} [CommRing R] {n ρ p : ℕ} (hn : ρ + p = n) (y : Matrix (Fin ρ) (Fin p) R)
     (d : Matrix (Fin p) (Fin p) R) :
     HMul.hMul (bl hn 1 y 0 1) (bl hn 1 0 0 d) = bl hn 1 (HMul.hMul y d) 0 d := by
-  rw [blockMatrix_multiply]
+  simp only [bl, Matrix.submatrix_mul_equiv, Matrix.fromBlocks_multiply]
   congr 1 <;> simp
 
 theorem blockMatrix_diagonal_mul_upperUnipotent {R : Type} [CommRing R] {n ρ p : ℕ} (hn : ρ + p = n) (y : Matrix (Fin ρ) (Fin p) R)
     (d : Matrix (Fin p) (Fin p) R) :
     HMul.hMul (bl hn 1 0 0 d) (bl hn 1 y 0 1) = bl hn 1 y 0 d := by
-  rw [blockMatrix_multiply]
+  simp only [bl, Matrix.submatrix_mul_equiv, Matrix.fromBlocks_multiply]
   congr 1 <;> simp
 
 theorem sh_emb_levi (D : D7) (n ρ p : ℕ) (hn : ρ + p = n) (M : Maps D hn) (g₀ : G D p)
@@ -57,8 +57,12 @@ theorem sh_emb_levi (D : D7) (n ρ p : ℕ) (hn : ρ + p = n) (M : Maps D hn) (g
       exact congrArg Units.val (mul_inv_cancel a)
     rw [← adj_mul, h1]
     exact adj_one
+  have diag_mul (A A' B B' : Mx D n n) :
+      blk4 A 0 0 A' * blk4 B 0 0 B' = blk4 (A * B) 0 0 (A' * B') := by
+    rw [submatrix_fromBlocks_mul]
+    congr 1 <;> simp
   apply mat_injective
-  rw [mat_mul', mat_mul', M.sh_mat, M.sh_mat, M.emb_mat g₀ _ _ _ _ h, blockMatrix_zero', block_diagonal_mul, block_diagonal_mul]
+  rw [mat_mul', mat_mul', M.sh_mat, M.sh_mat, M.emb_mat g₀ _ _ _ _ h, blockMatrix_zero', diag_mul, diag_mul]
   congr 1
   · rw [upperUnipotent_mul_blockDiagonal, blockMatrix_diagonal_mul_upperUnipotent]
   · have hk : HMul.hMul (adj (a⁻¹).1 : Mx D p p) (adj (HMul.hMul y a.1 : Mx D ρ p)) = adj y := by

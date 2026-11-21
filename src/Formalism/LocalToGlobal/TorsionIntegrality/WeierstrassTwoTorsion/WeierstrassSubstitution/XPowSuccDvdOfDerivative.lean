@@ -59,22 +59,22 @@ theorem plusZCleared_of (hZ : PlusZ.{u}) (hT : TInZ.{u}) : PlusZCleared.{u} := b
   have hfg : f * g = 1 := mul_invOfUnit _ _ (by rw [hf0, Units.val_one])
   have hTf : T * f = X ^ 2 := by rw [← hT', hf]; ring
   have hTg : T = X ^ 2 * g := by linear_combination g * hTf - T * hfg
-  have hdf : X * derivative K f = 2 * (f - 1) + X ^ 3 * derivative K P := by
+  have hdf : X * derivative f = 2 * (f - 1) + X ^ 3 * derivative P := by
     rw [hf]
     simp only [map_add (f := _), map_sub, Derivation.leibniz, Derivation.leibniz_pow, derivative_X,
       derivative_C, Derivation.map_one_eq_zero, smul_eq_mul, nsmul_eq_mul]
     push_cast
     ring
-  have hdg : derivative K g = -g ^ 2 * derivative K f := by
-    have h := congrArg (derivative K) hfg
+  have hdg : derivative g = -g ^ 2 * derivative f := by
+    have h := congrArg (derivative) hfg
     rw [Derivation.leibniz, Derivation.map_one_eq_zero, smul_eq_mul, smul_eq_mul] at h
-    linear_combination g * h - derivative K g * hfg
+    linear_combination g * h - derivative g * hfg
   have hz : (toL X : LaurentSeries K) * uPow (-1) = 1 := Plus.toL_X_mul
   have hxZ : xZ W = uPow (-2) + toL P - HahnSeries.C (W.b₂ / 12) := by
     rw [← hsh, wpL]; ring
 
-  have hdwp : dL (wpL W) = uPow (-1) ^ 3 * (toL X * toL (derivative K f) - 2 * toL f) := by
-    have h1 : toL X * toL (derivative K f) = 2 * (toL f - 1) + toL X ^ 3 * toL (derivative K P) := by
+  have hdwp : dL (wpL W) = uPow (-1) ^ 3 * (toL X * toL (derivative f) - 2 * toL f) := by
+    have h1 : toL X * toL (derivative f) = 2 * (toL f - 1) + toL X ^ 3 * toL (derivative P) := by
       rw [← map_mul, hdf]
       simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one, map_ofNat]
     rw [hsh, map_add (f := _), dL_uPow, dL_toL, h1]
@@ -85,12 +85,12 @@ theorem plusZCleared_of (hZ : PlusZ.{u}) (hT : TInZ.{u}) : PlusZCleared.{u} := b
       push_cast
       rw [map_neg, map_ofNat]
     rw [e2]
-    linear_combination (-toL (derivative K P)
+    linear_combination (-toL (derivative P)
       * ((toL X * uPow (-1)) ^ 2 + toL X * uPow (-1) + 1)) * hz
-  have hprod : toL T * dL (wpL W) = toL (g * derivative K f) - 2 * uPow (-1) := by
+  have hprod : toL T * dL (wpL W) = toL (g * derivative f) - 2 * uPow (-1) := by
     have hfg' : toL f * toL g = 1 := by rw [← map_mul, hfg, map_one]
     rw [hdwp, hTg, map_mul, map_mul, map_pow]
-    linear_combination (toL g * toL (derivative K f) * ((toL X * uPow (-1)) ^ 2
+    linear_combination (toL g * toL (derivative f) * ((toL X * uPow (-1)) ^ 2
         + toL X * uPow (-1) + 1) - 2 * toL g * toL f * uPow (-1) * (toL X * uPow (-1) + 1)) * hz
       - 2 * uPow (-1) * hfg'
   rw [hprod, map_sub, dL_toL, dL_mul, dL_uPow, hxZ] at hlog
@@ -101,14 +101,14 @@ theorem plusZCleared_of (hZ : PlusZ.{u}) (hT : TInZ.{u}) : PlusZCleared.{u} := b
   have d2 : dL (2 : LaurentSeries K) = 0 := by
     rw [← map_ofNat (HahnSeries.C : K →+* LaurentSeries K) 2, dL_C]
   rw [e2', e1, d2] at hlog
-  have hmain : derivative K (g * derivative K f) = 2 * P - (xp + C (W.b₂ / 12))
+  have hmain : derivative (g * derivative f) = 2 * P - (xp + C (W.b₂ / 12))
       - (xm + C (W.b₂ / 12)) := by
     apply toL_injective
     simp only [map_add (f := _), map_sub, map_mul, map_ofNat, toL_C]
     linear_combination hlog
   rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, hdg] at hmain
   rw [← hmain]
-  linear_combination (-(derivative K (derivative K f)) * f
-    + derivative K f ^ 2 * (f * g + 1)) * hfg
+  linear_combination (-(derivative (derivative f)) * f
+    + derivative f ^ 2 * (f * g + 1)) * hfg
 
 end Formalism.L2.Th1.A

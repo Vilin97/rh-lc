@@ -123,7 +123,7 @@ theorem top_density_dominated : GlobalTheory.HCXi.BesselXiIntegrable → ∀ a :
     ∑ t : Fin Θs.length, (TBB.Ew p (fun _ => 1) (B.opApply Θs[t.1] f) (P.r + 1) [] (TBB.bigPt P.r c) +
       TBB.Ew p (fun _ => 1) (fun g => ((Gf P.k P.r p.T.base.z p.T.base.z' g ^ p₀ : ℝ) : ℂ) • B.opApply Θs[t.1] f g)
         (P.r + 1) [] (TBB.bigPt P.r c)), ?_, ?_⟩
-  · refine Integrable.const_mul (integrable_finset_sum _ fun t _ => Integrable.add ?_ ?_) _
+  · refine Integrable.const_mul (integrable_finsetSum _ fun t _ => Integrable.add ?_ ?_) _
     · refine h2 Wp Wq P p _ (A₀ - d) (hΘ t).1 (hΘ t).2 (hth2.trans ?_)
       have : (0 : ℝ) ≤ (((2 * P.r + 2) * p₀ : ℕ) : ℝ) := by positivity
       linarith

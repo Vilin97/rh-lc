@@ -123,6 +123,8 @@ end Kernels
 
 section GS
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem ratio_mul_eq {a b c nA nB nC PA PB PC κ : ℚ} (r : ℕ) (hPA : PA ≠ 0) (hPB : PB ≠ 0)
     (hPC : PC ≠ 0) (hn : nB = nA * nC) (hχ : a * c = b * κ) (hP : PA * PC = PB * κ) :
     b * nB ^ r / PB = a * nA ^ r / PA * (c * nC ^ r / PC) := by

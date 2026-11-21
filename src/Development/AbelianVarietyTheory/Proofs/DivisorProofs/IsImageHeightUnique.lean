@@ -55,7 +55,7 @@ private theorem exists_integral_matrix_toMatrix_mul_eq_of_isFrame {Nm : (K →+*
   ext j k
   have hk := congr_arg (fun x => b.repr x j) (hc k)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.coe_smul,
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
     Pi.smul_apply, smul_eq_mul] at hk
   simp only [Matrix.mul_apply, Matrix.map_apply, Matrix.of_apply, Basis.toMatrix_apply]
   rw [show (∑ x, (b.repr (b' x)) j * w' x k) = ∑ x, w' x k * (b.repr (b' x)) j from

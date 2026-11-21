@@ -22,8 +22,12 @@ theorem sumBound_of_local : ∀ {F : Type} [Field F] [NumberField F], Formalism.
   have hvan : ∀ l : ℕ, l.Prime → X + 2 ≤ l → cE z l = 0 := by
     intro l hl hlX
     have hl2 : l ≠ 2 := by omega
-    have hv : padicValNat l 2 = 0 := padicValNat.eq_zero_of_not_dvd (fun h => by
-      have := Nat.le_of_dvd (by norm_num) h; omega)
+    have hv : padicValNat l 2 = 0 := by
+      rw [Nat.padicValNat_def]
+      apply multiplicity_eq_zero_of_not_dvd
+      intro h
+      have := Nat.le_of_dvd (by norm_num : 0 < 2) h
+      omega
     have hm : Formalism.PairingDivisionLocalBalance.mE l X = 0 := by
       unfold Formalism.PairingDivisionLocalBalance.mE
       rw [if_neg hl2, if_neg]
