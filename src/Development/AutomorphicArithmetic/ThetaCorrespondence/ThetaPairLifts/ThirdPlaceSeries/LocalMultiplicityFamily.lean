@@ -81,15 +81,31 @@ theorem twist_ok_local : ∀ v, TwistedAt (DL x L) v → IntegralHeckeForms.TwOK
     (((_root_.GlobalTheory.HeightCounting.Fin3.characterChoiceLocal L l).psi' v).comp ((DL x L).ntw.art ((_root_.GlobalTheory.HeightCounting.Fin3.characterChoiceLocal L l).twI v) ((_root_.GlobalTheory.HeightCounting.Fin3.characterChoiceLocal L l).Q v))) := by
   intro v hv
   with_unfolding_all exact (l.c.ok v hv :)
+
+set_option maxHeartbeats 8000000 in
 theorem thetaTie_yStructureLocal_nonempty : Nonempty (GlobalTheory.GeoTie.ThetaTie (_root_.GlobalTheory.HeightCounting.Fin3.yStructureLocal L l) (datL x L).geo.fw (DL x L).nth) := by
+  let Y : NExpRealS (datL x L).R (datL x L).cG (ratL L l.rat.S) := by
+    with_unfolding_all exact (yStructureLocal L l :)
+  with_unfolding_all change Nonempty (GlobalTheory.GeoTie.ThetaTie Y (datL x L).geo.fw (DL x L).nth)
   obtain ⟨g⟩ := l.b.geo
-  exact ⟨⟨fun i j b => ⟨(by with_unfolding_all exact ((g.side ((i)) ((j)) b).pt : _)), (by with_unfolding_all exact ((g.side ((i)) ((j)) b).cover : _)),
-    (by with_unfolding_all exact ((g.side ((i)) ((j)) b).ev_eq : _)),
-    (by
-      intro f
-      with_unfolding_all exact ((g.side i j b).fmUr f :)),
-    (by with_unfolding_all exact ((g.side ((i)) ((j)) b).hk : _)),
-    (by with_unfolding_all exact ((g.side ((i)) ((j)) b).hk_none : _))⟩, (by with_unfolding_all exact (g.isUnramified₂ :))⟩⟩
+  refine ⟨{ side := ?_, isUnramified₂ := ?_ }⟩
+  · intro i j b
+    let side := g.side (by with_unfolding_all exact (i :)) (by with_unfolding_all exact (j :)) b
+    refine { pt := ?_, cover := ?_, ev_eq := ?_, fmUr := ?_, hk := ?_, hk_none := ?_ }
+    · with_unfolding_all exact (side.pt :)
+    · intro z
+      with_unfolding_all exact (side.cover z :)
+    · intro f y
+      with_unfolding_all exact (side.ev_eq f y :)
+    · intro f
+      with_unfolding_all exact (side.fmUr f :)
+    · intro k P hP
+      with_unfolding_all exact (side.hk k P hP :)
+    · intro k P hP y hy c
+      with_unfolding_all exact (side.hk_none k P hP y hy c :)
+  · intro i
+    with_unfolding_all exact (g.isUnramified₂ i :)
+
 theorem kept_characterChoiceLocal : Kept l.c.ch (_root_.GlobalTheory.HeightCounting.Fin3.characterChoiceLocal L l) :=
   ⟨sameGaloisL L, twistDataAgreeAcrossCoefficients_localized L, sameFormsL L, (by with_unfolding_all exact ((HEq.refl (Dof x).ntwbr) :)), (by with_unfolding_all exact ((HEq.refl l.c.ch.twI) :)), (by with_unfolding_all exact ((HEq.refl l.c.ch.sd) :)),
     (by with_unfolding_all exact ((HEq.refl l.c.ch.Q) :)), (by with_unfolding_all exact ((HEq.refl l.c.ch.k') :)), (by with_unfolding_all exact ((HEq.refl l.c.ch.psi') :))⟩

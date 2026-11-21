@@ -107,8 +107,7 @@ theorem sigR_det_quot_mul_aH (hJ : J.det ≠ 0) (p : siegelH R σ Q) :
 
 theorem sigR_invol (hσ : ∀ x, σ (σ x) = x) (y : R ⊗[F] E) :
     Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR R σ (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR R σ y) = y := by
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul a x => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, hσ]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
@@ -435,7 +434,7 @@ theorem ioH_mem_KArch {w : InfinitePlace F} {b : GL (Fin n) (w.Completion ⊗[F]
     ioH _ σ h (g, g') ∈ KArch σ Q w b ↔ g ∈ stabArch σ J w b ∧ g' ∈ stabArch σ J w b := by
   rw [mem_stabArch, mem_stabArch, mem_stabArch, matHom_ioH, ← map_inv (blkGL finSumFinEquiv),
     ← map_mul (blkGL finSumFinEquiv), ← map_mul (blkGL finSumFinEquiv), ← blkMat_one finSumFinEquiv, blkGL_mem_UJ]
-  try exact Iff.rfl
+  exact Iff.rfl
 
 theorem ioH_mem_KAd {g g' : GAd σ J} :
     ioH _ σ h (g, g') ∈ KAd σ Q L a ↔ g ∈ levelAll σ J L a ∧ g' ∈ levelAll σ J L a := by
@@ -520,7 +519,7 @@ theorem isSelfDualAt_dbl {v : HeightOneSpectrum (𝓞 F)} (hL : IsSelfDualAt σ 
 end
 
 theorem isCompact_levelAll (h : IsCMExt F E σ) (J : Matrix (Fin m) (Fin m) E) (L : Submodule (𝓞 E) (Fin m → E))
-    [Submodule.IsLattice E L] (a : GL (Fin m) (AF F ⊗[F] E)) : IsCompact (levelAll σ J L a : Set (GAd σ J)) := by
+    [Submodule.IsFullLattice E L] (a : GL (Fin m) (AF F ⊗[F] E)) : IsCompact (levelAll σ J L a : Set (GAd σ J)) := by
   have hA : IsCompact (Set.pi Set.univ fun w =>
       (stabArch σ J w (bc (compInf F E w) a) : Set (GArch σ J w))) :=
     isCompact_univ_pi fun w => GlobalTheory.AdelicU.Frames.isCompact_stabArch h J w _

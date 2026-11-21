@@ -41,7 +41,7 @@ theorem latMean_congr (hj : 1 ≤ j) {F G : Submodule ℤ (VecInf E j) → ENNRe
   refine tsum_congr fun c => ?_
   congr 1
   refine withDensity_congr_ae ?_
-  filter_upwards [ae_detNorm_pos E j hj] with g hg using h _ (Quot.out c).2 g hg
+  filter_upwards [ae_detNorm_pos E j hj] with g hg using h _ (Quot.out c).2.toIsLattice g hg
 
 theorem latMean_add (hE : IsTotallyComplex E) (hj : 1 ≤ j) {F G : Submodule ℤ (VecInf E j) → ENNReal}
     (hF : ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsLattice E Λ →
@@ -86,8 +86,10 @@ theorem latMean_add (hE : IsTotallyComplex E) (hj : 1 ≤ j) {F G : Submodule �
     funext g
     by_cases hg : g ∈ {g | 0 < detNorm E j g} <;> simp [hg]
   dsimp only
-  rw [key F (hF Λ hΛ), key G (hG Λ hΛ), key (fun L => F L + G L) (by rw [hadd]; exact (hF Λ hΛ).add (hG Λ hΛ)),
-    hadd, lintegral_add_left (hF Λ hΛ)]
+  have hFm := hF Λ hΛ.toIsLattice
+  have hGm := hG Λ hΛ.toIsLattice
+  rw [key F hFm, key G hGm, key (fun L => F L + G L) (by rw [hadd]; exact hFm.add hGm),
+    hadd, lintegral_add_left hFm]
 
 theorem measurable_weight_mul_sum (hE : IsTotallyComplex E) (w : ℝ → ENNReal) (Φ : VecInf E j → ENNReal)
     (hw : Measurable w) (hΦ : Measurable Φ) (Λ : Submodule (𝓞 E) (Fin j → E)) (hΛ : Submodule.IsLattice E Λ) :

@@ -223,82 +223,69 @@ theorem mul_principal_eq_iff (I J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (c : Eˣ)
     exact (h y).2 hy
 
 private abbrev RankOneLattice (E : Type) [Field E] [NumberField E] :=
-  {Λ : Submodule (𝓞 E) (Fin 1 → E) // Submodule.IsLattice E Λ}
+  {Λ : Submodule (𝓞 E) (Fin 1 → E) // Submodule.IsFullLattice E Λ}
 
 private abbrev carries (Λ Λ' : RankOneLattice E) : Prop :=
   ∃ γ : GL (Fin 1) E, ∀ y, (γ : Matrix (Fin 1) (Fin 1) E) *ᵥ y ∈ Λ'.1 ↔ y ∈ Λ.1
 
-private theorem carries_bot_iff {Λ Λ' : RankOneLattice E} (h : carries Λ Λ') :
-    Λ.1 = ⊥ ↔ Λ'.1 = ⊥ := by
-  obtain ⟨γ, hγ⟩ := h
-  have hc := gl_one_ne_zero γ
-  simp only [mulVec_one] at hγ
-  constructor
-  · intro hΛ
-    apply le_bot_iff.mp
-    intro y hy
-    have hy' := (hγ (((γ : Matrix (Fin 1) (Fin 1) E) 0 0)⁻¹ • y)).1 (by
-      rwa [smul_inv_smul₀ hc])
-    rw [hΛ, Submodule.mem_bot] at hy'
-    rw [Submodule.mem_bot]
-    exact (smul_eq_zero.mp hy').resolve_left (inv_ne_zero hc)
-  · intro hΛ'
-    apply le_bot_iff.mp
-    intro y hy
-    have hy' := (hγ y).2 hy
-    rw [hΛ', Submodule.mem_bot] at hy'
-    rw [Submodule.mem_bot]
-    exact (smul_eq_zero.mp hy').resolve_left hc
+private theorem rankOne_ne_bot (Λ : RankOneLattice E) : Λ.1 ≠ ⊥ := by
+  intro h
+  have hspan : Submodule.span E (Λ.1 : Set (Fin 1 → E)) = ⊥ := by
+    refine Submodule.span_eq_bot.mpr fun x hx => ?_
+    change x ∈ Λ.1 at hx
+    simpa only [h, Submodule.mem_bot] using hx
+  rw [Λ.2.span_eq_top] at hspan
+  exact top_ne_bot hspan
 
-private theorem exists_classGroupEquiv :
-    ∃ e : Quot (carries (E := E)) ≃ Option (ClassGroup (𝓞 E)),
-      ∀ c, e c = none ↔ (Quot.out c).1 = ⊥ := by
+private theorem rankOne_full (Λ : Submodule (𝓞 E) (Fin 1 → E))
+    (hΛ : Submodule.IsLattice E Λ) (hne : Λ ≠ ⊥) : Submodule.IsFullLattice E Λ := by
+  obtain ⟨x, hx, hxne⟩ := Λ.ne_bot_iff.mp hne
+  have hx₀ : x 0 ≠ 0 := by
+    intro h
+    apply hxne
+    funext i
+    fin_cases i
+    exact h
+  refine { toIsLattice := hΛ, span_eq_top := eq_top_iff.mpr fun y _ => ?_ }
+  have hy : y = (y 0 / x 0) • x := by
+    funext i
+    fin_cases i
+    exact (div_mul_cancel₀ (y 0) hx₀).symm
+  rw [hy]
+  exact (Submodule.span E _).smul_mem _ (Submodule.subset_span hx)
+
+private theorem exists_classGroupEquiv : Nonempty (Quot (carries (E := E)) ≃ ClassGroup (𝓞 E)) := by
   classical
-  choose ψ hψ using fun Λ : {Λ : RankOneLattice E // Λ.1 ≠ ⊥} =>
-    exists_ideal Λ.1.1 Λ.1.2 Λ.2
+  choose ψ hψ using fun Λ : RankOneLattice E => exists_ideal Λ.1 Λ.2.toIsLattice (rankOne_ne_bot Λ)
   let q := QuotientGroup.mk' (toPrincipalIdeal (𝓞 E) E).range
-  have key : ∀ Λ Λ' hΛ hΛ', carries Λ Λ' ↔ q (ψ ⟨Λ, hΛ⟩) = q (ψ ⟨Λ', hΛ'⟩) := by
-    intro Λ Λ' hΛ hΛ'
+  have key : ∀ Λ Λ', carries Λ Λ' ↔ q (ψ Λ) = q (ψ Λ') := by
+    intro Λ Λ'
     rw [QuotientGroup.mk'_eq_mk']
     constructor
     · rintro ⟨γ, hγ⟩
       refine ⟨_, ⟨Units.mk0 _ (gl_one_ne_zero γ), rfl⟩, (mul_principal_eq_iff _ _ _).2 fun t => ?_⟩
       have := hγ (fun _ => t)
-      rw [mulVec_one, hψ ⟨Λ', hΛ'⟩ _, hψ ⟨Λ, hΛ⟩ _] at this
+      rw [mulVec_one, hψ Λ' _, hψ Λ _] at this
       exact this
     · rintro ⟨_, ⟨c, rfl⟩, h⟩
       obtain ⟨γ, hγ⟩ := exists_gl_one c.ne_zero
       refine ⟨γ, fun y => ?_⟩
-      rw [mulVec_one, hψ ⟨Λ', hΛ'⟩ _, hψ ⟨Λ, hΛ⟩ _, hγ]
+      rw [mulVec_one, hψ Λ' _, hψ Λ _, hγ]
       exact (mul_principal_eq_iff _ _ _).1 h _
-  let f (Λ : RankOneLattice E) := if h : Λ.1 = ⊥ then none else some (q (ψ ⟨Λ, h⟩))
-  have hf (Λ Λ' : RankOneLattice E) : carries Λ Λ' ↔ f Λ = f Λ' := by
-    by_cases hΛ : Λ.1 = ⊥ <;> by_cases hΛ' : Λ'.1 = ⊥
-    · simp only [f, dite_eq_left hΛ, dite_eq_left hΛ', iff_true]
-      exact ⟨1, fun y => by simp [hΛ, hΛ']⟩
-    · simpa [f, hΛ, hΛ'] using fun h : carries Λ Λ' => hΛ' ((carries_bot_iff h).1 hΛ)
-    · simpa [f, hΛ, hΛ'] using fun h : carries Λ Λ' => hΛ ((carries_bot_iff h).2 hΛ')
-    · simpa [f, hΛ, hΛ'] using key Λ Λ' hΛ hΛ'
-  let F := Quot.lift f (fun a b h => (hf a b).1 h)
+  let F := Quot.lift (q ∘ ψ) (fun a b h => (key a b).1 h)
   have hF : Function.Bijective F := by
     constructor
     · rintro ⟨a⟩ ⟨b⟩ h
-      exact Quot.sound ((hf a b).2 h)
-    · rintro (_ | x)
-      · exact ⟨Quot.mk _ ⟨⊥, Submodule.IsLattice.of_fg E Submodule.fg_bot⟩, by
-          simp [F, f]⟩
-      · obtain ⟨I, rfl⟩ := QuotientGroup.mk'_surjective _ x
-        obtain ⟨Λ, hΛ, hne, h⟩ := exists_lattice I
-        refine ⟨Quot.mk _ ⟨Λ, hΛ⟩, ?_⟩
-        have hI : ψ ⟨⟨Λ, hΛ⟩, hne⟩ = I := by
-          ext t
-          exact (hψ ⟨⟨Λ, hΛ⟩, hne⟩ fun _ => t).symm.trans (h fun _ => t)
-        simp [F, f, hne, hI, q]
-  refine ⟨(Equiv.ofBijective F hF).trans
-    (Equiv.optionCongr (ClassGroup.equiv E).symm.toEquiv), fun c => ?_⟩
-  conv_lhs => rw [← Quot.out_eq c]
-  change Option.map _ (f (Quot.out c)) = none ↔ _
-  by_cases h : (Quot.out c).1 = ⊥ <;> simp [f, h]
+      exact Quot.sound ((key a b).2 h)
+    · intro x
+      obtain ⟨I, rfl⟩ := QuotientGroup.mk'_surjective _ x
+      obtain ⟨Λ, hΛ, hne, h⟩ := exists_lattice I
+      let L : RankOneLattice E := ⟨Λ, rankOne_full Λ hΛ hne⟩
+      have hI : ψ L = I := by
+        ext t
+        exact (hψ L fun _ => t).symm.trans (h fun _ => t)
+      exact ⟨Quot.mk _ L, congrArg q hI⟩
+  exact ⟨(Equiv.ofBijective F hF).trans (ClassGroup.equiv E).symm.toEquiv⟩
 
 theorem mem_autGL_iff (Λ : Submodule (𝓞 E) (Fin 1 → E)) (h : Submodule.IsLattice E Λ)
     (hΛ : Λ ≠ ⊥) (x : MatInf E 1) :
@@ -597,27 +584,20 @@ theorem glVol_one : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E
     glVol E 1 = ENNReal.ofReal (dedekindZeta_residue E * Formalism.HermitianLatticesTheory.vInv E ^ Formalism.HermitianLatticesTheory.fDeg E) := by
   intro E _ _ hE
   classical
-  obtain ⟨e, he⟩ := exists_classGroupEquiv (E := E)
+  obtain ⟨e⟩ := exists_classGroupEquiv (E := E)
   have hw : (Units.torsionOrder E : ENNReal) ≠ 0 := by exact_mod_cast (Units.torsionOrder_pos E).ne'
   have hw' : (0 : ℝ) < Units.torsionOrder E := by exact_mod_cast (Units.torsionOrder_pos E)
   rw [← ENNReal.mul_right_inj hw (ENNReal.natCast_ne_top _), glVol, ← ENNReal.tsum_mul_left, ← e.symm.tsum_eq]
-  let F (c : Option (ClassGroup (𝓞 E))) :=
+  let F (c : ClassGroup (𝓞 E)) :=
     (Units.torsionOrder E : ENNReal) *
       covol (autGL E 1 (Quot.out (e.symm c)).1) (haarGL E 1)
         {x | 1 ≤ detNorm E 1 x ∧ detNorm E 1 x < Real.exp 1}
   change (∑' c, F c) = _
-  have hnone : F none = 0 := by
-    have h := (he (e.symm none)).1 (e.apply_symm_apply none)
-    simp only [F, h, covol_bot hE, mul_zero]
-  have hsome (c : ClassGroup (𝓞 E)) :
-      F (some c) = volume (mixedEmbedding.fundamentalCone.normLeOne E) := by
-    have h : (Quot.out (e.symm (some c))).1 ≠ ⊥ := by
-      intro h
-      have := (he (e.symm (some c))).2 h
-      simp at this
-    exact torsion_mul_covol hE _ (Quot.out (e.symm (some c))).2 h
-  rw [tsum_fintype, Fintype.sum_option, hnone, zero_add]
-  simp_rw [hsome]
+  have hF (c : ClassGroup (𝓞 E)) :
+      F c = volume (mixedEmbedding.fundamentalCone.normLeOne E) :=
+    torsion_mul_covol hE _ (Quot.out (e.symm c)).2.toIsLattice (rankOne_ne_bot (Quot.out (e.symm c)))
+  rw [tsum_fintype]
+  simp_rw [hF]
   rw [Finset.sum_const, Finset.card_univ, mixedEmbedding.fundamentalCone.volume_normLeOne]
   have hr : InfinitePlace.nrRealPlaces E = 0 := IsTotallyComplex.nrRealPlaces_eq_zero E
   have hf : Formalism.HermitianLatticesTheory.fDeg E = InfinitePlace.nrComplexPlaces E := by

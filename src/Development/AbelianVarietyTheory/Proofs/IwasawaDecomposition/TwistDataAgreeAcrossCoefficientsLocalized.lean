@@ -57,7 +57,8 @@ def oL (x : St P) (L : LocAll (lay0 (Dof x))) : P.q.Over :=
 abbrev DL (x : St P) (L : LocAll (lay0 (Dof x))) : D7 := (w.st (oL x L).Z).toD7
 
 theorem DL_eq (x : St P) (L : LocAll (lay0 (Dof x))) : DL x L = withLoc L := by
-  simp only [DL, oL, Stages.toD7, assemble, nL, etaL, etaL_nonneg, withLoc, setN, setRaw]
+  simp only [DL, Dof, oL, Stages.toD7, assemble, nL, etaL, withLoc, setN, setRaw,
+    RowPk.W, Pk.what₂, RowsRest.what₂, rowsEta]
 
 def sameL (x : St P) (L : LocAll (lay0 (Dof x))) : SameGrp (B := B) (C := w.C) x.o.Z (oL x L).Z where
   e k := (Equiv.refl ((Dof x).nd.PlG k))
@@ -152,9 +153,7 @@ def tpD : TupTied (DL x L) (cfD x L) (chD L l) :=
     tp.psi_is tp.psi_un
 
 def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) :=
-  @NExpTied.mk (DL x L) X.U_eq X.psiU_gen X.psiU_side X.psiU_xi X.delU_cont X.delU_ine
-    X.thU_empty X.sgnT X.sgnT_one X.Wt X.acgWt X.modWt X.fdWt X.rhoW X.rhoW_irr X.rhoW_alg
-    X.tauG X.sgnG X.sgnG_one X.tau_galois_first_character X.mtV X.rhoW_hw X.rhoW_wt
+  (DL_eq x L).symm ▸ X
 
 theorem fitsL : (oL x L).Fits :=
   ⟨⟨x.fits.div.left, fun S N G => by

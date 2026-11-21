@@ -80,8 +80,11 @@ theorem exact_covolume_ratio : ∀ (hP : _root_.GlobalTheory.CovTop.PublishedHod
         field_simp
       rw [heq]
       exact hψm.norm.const_smul c
-    rw [e1, eLpNorm_const_smul, eLpNorm_eq_eLpNorm' (by norm_num) (by simp) hadm]
-    first | rw [hK2] | rw [← eLpNorm_eq_eLpNorm' (by norm_num) (by simp) hadm, hK2]
+    rw [e1, eLpNorm_const_smul]
+    conv_lhs =>
+      rw [eLpNorm_eq_eLpNorm' (by norm_num) (by simp) hadm]
+    have ht : (2 : ENNReal).toReal = 2 := by norm_num
+    rw [ht, hK2]
     rw [← mul_assoc, Real.enorm_eq_ofReal (inv_nonneg.2 hc0.le),
       ← ENNReal.ofReal_mul (inv_nonneg.2 hc0.le), inv_mul_cancel₀ hc0.ne', ENNReal.ofReal_one, one_mul]
   have hψ : MemLp ψ 2 (muQ1 (Wc D i)) := by rw [memLp_iff, hE]; exact lt_top_iff_ne_top.2 hK3

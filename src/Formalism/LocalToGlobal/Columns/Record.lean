@@ -434,6 +434,15 @@ def modP.map (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (Sp E n)) 
 
 end ModP
 
+private theorem rec_mem_span_of_smul_mem {K V : Type} [Field K] [NumberField K]
+    [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
+    (M : Submodule (𝓞 K) V) {a : 𝓞 K} (ha : a ≠ 0) {x : V} (hx : a • x ∈ M) :
+    x ∈ Submodule.span K (M : Set V) := by
+  have haK : (a : K) ≠ 0 := by exact_mod_cast ha
+  apply (Submodule.smul_mem_iff _ haK).mp
+  rw [algebraMap_smul]
+  exact Submodule.subset_span hx
+
 section LevT
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
@@ -474,27 +483,10 @@ theorem kerAt_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P :
 theorem kerAt_full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) :
     Submodule.IsFullLattice E (d.1.kerAt P) := by
   letI := d.kerAt_lattice P
-  obtain ⟨p, hp, hp0⟩ : ∃ p ∈ P.1.asIdeal, p ≠ 0 := by
-    by_contra H
-    push Not at H
-    exact P.1.ne_bot ((Submodule.eq_bot_iff _).2 H)
-  refine { span_eq_top := ?_ }
-  have hle : Submodule.span E (d.1.N : Set (Sp E n)) ≤
-      Submodule.span E (d.1.kerAt P : Set (Sp E n)) := by
-    apply Submodule.span_le.mpr
-    intro x hx
-    have hm : p • x ∈ Submodule.span E (d.1.kerAt P : Set (Sp E n)) :=
-      Submodule.subset_span (d.2.smul_mem_kerAt P hp hx)
-    have hm' : (algebraMap (𝓞 E) E p) • x ∈
-        Submodule.span E (d.1.kerAt P : Set (Sp E n)) := by
-      simpa only [algebraMap_smul] using hm
-    have hpE : algebraMap (𝓞 E) E p ≠ 0 := (IsFractionRing.injective (𝓞 E) E).ne hp0
-    have := Submodule.smul_mem (Submodule.span E (d.1.kerAt P : Set (Sp E n)))
-      (algebraMap (𝓞 E) E p)⁻¹ hm'
-    change x ∈ Submodule.span E (d.1.kerAt P : Set (Sp E n))
-    simpa only [smul_smul, inv_mul_cancel₀ hpE, one_smul] using this
-  letI := rec_deco_full_lattice d
-  exact top_unique (Submodule.IsFullLattice.span_eq_top (A := E) (M := d.1.N) ▸ hle)
+  obtain ⟨p, hp, hp0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
+  refine { span_eq_top := top_unique ?_ }
+  rw [← (rec_deco_full_lattice d).span_eq_top, Submodule.span_le]
+  exact fun x hx => rec_mem_span_of_smul_mem (d.1.kerAt P) hp0 (d.2.smul_mem_kerAt P hp hx)
 
 def e1 (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Sp E n := d.2.exists_dualBasis.choose P
 
@@ -604,15 +596,6 @@ namespace DecoSet
 end DecoSet
 
 end MoveLemmas
-
-private theorem rec_mem_span_of_smul_mem {K V : Type} [Field K] [NumberField K]
-    [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
-    (M : Submodule (𝓞 K) V) {a : 𝓞 K} (ha : a ≠ 0) {x : V} (hx : a • x ∈ M) :
-    x ∈ Submodule.span K (M : Set V) := by
-  have haK : (a : K) ≠ 0 := by exact_mod_cast ha
-  apply (Submodule.smul_mem_iff _ haK).mp
-  rw [algebraMap_smul]
-  exact Submodule.subset_span hx
 
 private theorem rec_intDel_full {K : Type} [Field K] [NumberField K] [StarRing K]
     (S : GSD K) (h : S.Ok) (hD : ∀ d, Submodule.IsFullLattice K (S.Del d)) :
@@ -1209,7 +1192,8 @@ def recForms (hX : X.Ok) (hPr : Pr.Ok) (hf : X.f = R.f) (σ₀ : X.K →+* ℂ) 
   lv := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lv v
   lvAcg := fun _ _ _ => inferInstance
   lvMod := fun i v c => (inferInstance : Module (𝓞 X.E ⧸ v.1.asIdeal) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lv v))
-  lv_rank := fun i v c => by
+  -- Elaborate the proof separately so it can use the private lattice lemma.
+  lv_rank i v c := by
     exact finrank_modP v.1
       (rec_deco_full_lattice (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c))
   fv := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).fv v

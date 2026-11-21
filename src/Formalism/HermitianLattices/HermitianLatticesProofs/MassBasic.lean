@@ -42,7 +42,16 @@ theorem massBasic_self_mem_genus (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodu
 
 end MassBasicAux
 
-theorem massBasic : MassBasic := by
+theorem massBasic :
+    ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
+      [FiniteDimensional K V] [Module (RingOfIntegers K) V] [IsScalarTower (RingOfIntegers K) K V]
+      (h : V →ₗ⋆[K] V →ₗ[K] K), h.IsSymm →
+      (∀ x : V, x ≠ 0 → 0 < Algebra.trace ℚ K (h x x)) →
+      ∀ L : Submodule (RingOfIntegers K) V, Submodule.IsFullLattice K L →
+        (∃ s, Formalism.ThetaLiftIndependence.IsClassReps h L s) ∧
+        (∀ s, Formalism.ThetaLiftIndependence.IsClassReps h L s →
+          mass h L = ∑ M ∈ s, ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ)⁻¹) ∧
+        0 < mass h L := by
   intro K V _ _ _ _ _ _ _ _ h hh hpos L hL
   obtain ⟨hex, hwt, -⟩ := Formalism.ThetaLiftIndependence.classRepsDefinite K V h hh hpos L hL.toIsLattice
   refine ⟨hex, fun s hs => ?_, ?_⟩

@@ -58,7 +58,8 @@ theorem pre_at_twisted_copy_of_side_b_tau_true (hA : GlobalTheory.Published.Glob
       l.rat.In.θ, TauTrue Bs.exp)
     (hSb : ∀ i, l.rat.In.Sb ⊆ N.tw.S0 i) (hZ : ∃ Z : GlobalTheory.LamTie.LamDat N.toD7, Z.Ok) :
     PreAt (P := P) (Z := (oTw x N).Z) (datTw x N)
-      (by with_unfolding_all exact N.row l.a.A.row) (by with_unfolding_all exact l.Pq) l.rat.In.hL
+      (cast (congrArg RowSide (dof_oTw x N).symm) (N.row l.a.A.row))
+      (by with_unfolding_all exact l.Pq) l.rat.In.hL
       (by with_unfolding_all exact l.rat.In.eig) (by with_unfolding_all exact l.rat.In.θ) := by
   obtain ⟨x', l', ho, -, hrow, hPq, hS', hSb', hhL, heig, hθ, hR, hcG, hgeo⟩ := _root_.GlobalTheory.T.twisted_state_transport_heq_levels' hL x l N
   obtain ⟨o', fits', G_eq', etaF', bk', m', copy', coh', s', r', pin'⟩ := x'
@@ -74,7 +75,8 @@ theorem pre_at_twisted_copy_of_side_b_tau_true (hA : GlobalTheory.Published.Glob
   have h := _root_.GlobalTheory.HeightCounting.SerCopy.pre_at_of_side_b_tau_true_lam_ok hA hK hS _ l' (by
     rewrite [e1, e5, e6]
     exact sideB_tau_congr rfl e2.symm e3.symm hhL.symm ((by with_unfolding_all exact (hB :)))) (by rewrite [e4]; exact (by with_unfolding_all exact (hSb :))) ((by with_unfolding_all exact (hZ :)))
-  exact preAt_congr hz e1 e2 hhL e5 e6 h
+  have hrow' := hrow.trans (cast_heq (congrArg RowSide (dof_oTw x N).symm) (N.row l.a.A.row)).symm
+  exact preAt_congr hz (eq_of_heq hrow') e2 hhL e5 e6 h
 section Install
 variable {x : St P} {N₁ : TwNew (Dof x)} {kKs : (datTw x N₁).core.Q.c.F →+* ↥(DN x N₁).LL0}
   {hk : ∀ y, ((kKs y : ↥(DN x N₁).LL0) : (DN x N₁).what₂.LL) = algebraMap (datTw x N₁).core.Q.c.F (DN x N₁).what₂.LL y}

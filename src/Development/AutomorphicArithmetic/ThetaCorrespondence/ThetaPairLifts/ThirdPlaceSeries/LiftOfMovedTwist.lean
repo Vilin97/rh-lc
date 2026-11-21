@@ -55,7 +55,7 @@ private def reindexBase {hL : _root_.UpperTheory.Zero.LLC.RecTExists} {D D' : D7
   cases eq_of_heq hrep
   exact ⟨a, ha, HEq.rfl⟩
 
-private def movedTwistBase {hL : _root_.UpperTheory.Zero.LLC.RecTExists}
+@[no_expose] def movedTwistBase {hL : _root_.UpperTheory.Zero.LLC.RecTExists}
     (l : IntermediateLevel hL x) (m : Moved (oTw x N)) (hc : m.Copy) (hh : m.Coh)
     (r : ReadPk m (sideTw x N)) (hp : r.Pin) (e : HEq (repOf r.Y) (repOf x.r.Y)) :
     {a : HeightCountingBaseData hL (Dof (stTw x N m hc hh r hp)) (cfOf (stTw x N m hc hh r hp))
@@ -65,10 +65,12 @@ private def movedTwistBase {hL : _root_.UpperTheory.Zero.LLC.RecTExists}
   have hcf : HEq (N.cf (cfOf x)) (cfOf (stTw x N m hc hh r hp)) := by
     with_unfolding_all
       apply charFrame_heq hD <;> rfl
+  let rep := repOf r.Y
+  have hrep := HEq.refl rep
   let a := _root_.UpperTheory.One.M.stageAOfSwitch trivial N l.a
-    (by with_unfolding_all exact repOf r.Y) (by with_unfolding_all exact e)
+    (by with_unfolding_all exact rep) (by with_unfolding_all exact e)
   with_unfolding_all
-    exact reindexBase hD hcf (HEq.refl (repOf r.Y)) a (cusp N l.cusp)
+    exact reindexBase hD hcf hrep a (cusp N l.cusp)
 
 def liftOfMovedTwist {hL : _root_.UpperTheory.Zero.LLC.RecTExists} (l : _root_.GlobalTheory.HeightCounting.Up.IntermediateLevel hL x) (m : Moved (oTw x N)) (hc : m.Copy) (hh : m.Coh) (r : ReadPk m (sideTw x N))
     (hp : r.Pin) (e : HEq (repOf r.Y) (repOf x.r.Y)) (mt : InMt r.Y (cfOf (stTw x N m hc hh r hp)) w.I.xi (QOf P)) (rat : InRat r.Y m.z.cG) :
@@ -85,22 +87,26 @@ theorem li_copy_alt : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) {K : Ctx
   cases m
   dsimp only at hm
   subst hm
-  have G1 : ∀ μ h i y, (x.r.Y.IL.jMt μ h i y).1 = jMtB (N := N) ((by with_unfolding_all exact (r.Y :))) μ h i y := fun μ h i y =>
-    eq_of_heq ((by with_unfolding_all exact ((HEq.symm (H1 ((μ)) ((h)) ((i)) ((y)))) : _)))
   have G2 : ∀ i y, x.r.Y.mj.eW i y = eWB (N := N) ((by with_unfolding_all exact (r.Y :))) i y := fun i y =>
     eq_of_heq ((by with_unfolding_all exact ((HEq.symm (H2 ((i)) ((y)))) : _)))
   have mt : InMt r.Y (cfOf (stTw x N _ hc hh r hp)) w.I.xi (QOf P) := by
-    let a := mtAd (N := N) (by with_unfolding_all exact r.Y) G1 l.mt.ad
     refine
-      { M := by with_unfolding_all exact N.mt l.mt.M
+      { M := fun μ j h1 h2 => by
+          with_unfolding_all exact { l.mt.M μ j h1 h2 with }
         ad :=
-          { PV := by with_unfolding_all exact a.PV
-            std := by with_unfolding_all exact a.std
-            eW := by with_unfolding_all exact a.eW
-            read := by with_unfolding_all exact a.read
-            rat := by with_unfolding_all exact a.rat
-            wt := by with_unfolding_all exact a.wt
-            id := by with_unfolding_all exact a.id }
+          { PV := fun i =>
+              { ψ := by with_unfolding_all exact (l.mt.ad.PV i).ψ
+                inj := by with_unfolding_all exact (l.mt.ad.PV i).inj
+                into := by with_unfolding_all exact (l.mt.ad.PV i).into
+                onto := by with_unfolding_all exact (l.mt.ad.PV i).onto }
+            std := by with_unfolding_all exact l.mt.ad.std
+            eW := by with_unfolding_all exact l.mt.ad.eW
+            read := fun μ h i y g => by
+              have hRead := congrFun (eq_of_heq (H1 μ h i y)) ((l.mt.ad.PV i).ψ g)
+              with_unfolding_all exact (l.mt.ad.read μ h i y g).trans hRead.symm
+            rat := by with_unfolding_all exact l.mt.ad.rat
+            wt := by with_unfolding_all exact l.mt.ad.wt
+            id := by with_unfolding_all exact l.mt.ad.id }
         mt := ?_ }
     with_unfolding_all
       exact ⟨l.mt.mt.prod, l.mt.mt.para, l.mt.mt.uni, l.mt.mt.hyp,
@@ -108,7 +114,7 @@ theorem li_copy_alt : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) {K : Ctx
   refine ⟨liftOfMovedTwist l _ hc hh r hp e mt ?_, ?_⟩
   · with_unfolding_all exact inRat (N := N) r.Y G2 l.rat
   · constructor
-    · exact (movedTwistBase l _ hc hh r hp e).property.2
+    · with_unfolding_all exact (movedTwistBase l _ hc hh r hp e).property.2
     · with_unfolding_all
         exact ⟨HEq.refl l.Pq, HEq.refl (N.rat l.rat.S), HEq.refl l.rat.In.Sb,
           HEq.refl l.rat.In.hL, HEq.refl l.rat.In.eig, HEq.refl l.rat.In.θ⟩

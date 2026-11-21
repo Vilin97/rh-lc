@@ -874,9 +874,17 @@ theorem tMap_lattice (e : V ≃ₗ[K] V') (M : Submodule (𝓞 K) V) (hM : Submo
     Submodule.IsLattice K (tMap e M) :=
   Submodule.IsLattice.of_fg K (hM.fg.map _)
 
+theorem tMap_fullLattice (e : V ≃ₗ[K] V') (M : Submodule (𝓞 K) V)
+    (hM : Submodule.IsFullLattice K M) : Submodule.IsFullLattice K (tMap e M) := by
+  letI : Submodule.IsLattice K (tMap e M) := tMap_lattice e M hM.toIsLattice
+  refine ⟨?_⟩
+  change Submodule.span K ((e : V →ₗ[K] V') '' (M : Set V)) = ⊤
+  rw [← Submodule.map_span, hM.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+  exact e.surjective
+
 theorem tMap_genus (e : V ≃ₗ[K] V') (he : ∀ x y, h' (e x) (e y) = h x y) (L M : Submodule (𝓞 K) V)
     (hM : M ∈ genus h L) : tMap e M ∈ genus h' (tMap e L) := by
-  refine ⟨tMap_lattice e M hM.1, fun p hp => ?_⟩
+  refine ⟨tMap_fullLattice e M hM.1, fun p hp => ?_⟩
   obtain ⟨g, hg, hgL⟩ := hM.2 p hp
   refine ⟨cj e g, cj_isom e he g hg, ?_⟩
   rw [gmap_eq_tMap] at hgL ⊢

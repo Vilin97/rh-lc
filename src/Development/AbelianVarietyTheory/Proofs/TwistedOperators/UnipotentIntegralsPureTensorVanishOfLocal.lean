@@ -89,6 +89,8 @@ end GlobalTheory.TestConstTerm
 
 namespace GlobalTheory.TestConstTerm
 
+local instance {D : D7} (V : HSp D) : Submodule.IsLattice D.host.E (frameLat V) :=
+  Submodule.IsLattice.of_fg D.host.E (frameLat_fg V)
 
 open Classical in
 theorem unipIntegralsVanish_tensor : ∀ (D : D7) (V : HSp D) (𝔉 : IsoFlag V) (fa : ∀ w, GArch D.sp.cm.sig V.gram w → ℂ)

@@ -120,28 +120,29 @@ def natW : NAt hL (withLoc L) (cfL L (cfOf x)) (chL L l.c.ch) (tpL L l.c.tp) whe
   ratIn_θ := rfl
   depth := l.a.depth
 
-private abbrev AtIndices := Σ (D : D7) (cf : CharFrame D) (c : NChoice D), TupTied D cf c
+abbrev PackedNAt (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) :=
+  Σ (cf : CharFrame D) (c : NChoice D) (tp : TupTied D cf c), NAt hL D cf c tp
 
-private abbrev AtFromIndices (hL : GlobalTheory.Published.LocalLanglandsGL) (i : AtIndices) :=
-  NAt hL i.1 i.2.1 i.2.2.1 i.2.2.2
+-- Transport the character data and the record together so their indices stay aligned.
+def natDData : PackedNAt hL (DL x L) :=
+  Eq.rec (motive := fun D _ => PackedNAt hL D)
+    ⟨cfL L (cfOf x), chL L l.c.ch, tpL L l.c.tp, natW l Sp Au ss al hLg⟩ (DL_eq x L).symm
 
-private theorem localizedIndices_eq :
-    (⟨withLoc L, cfL L (cfOf x), chL L l.c.ch, tpL L l.c.tp⟩ : AtIndices) =
-      ⟨DL x L, cfD x L, chD L l, tpD L l⟩ := by
-  refine Sigma.ext (DL_eq x L).symm ?_
-  unfold cfL cfTr cfD TC.cf chD chL tpD tpL
-  congr! (postTransparency := .reducible) <;> first | exact (DL_eq x L).symm | rfl
+abbrev natD := (natDData l Sp Au ss al hLg).2.2.2
 
-def natD : NAt hL (DL x L) (cfD x L) (chD L l) (tpD L l) :=
-  Eq.rec (motive := fun i _ => AtFromIndices hL i) (natW l Sp Au ss al hLg)
-    (localizedIndices_eq (L := L) l)
-
-private theorem atTransport_heq {i i' : AtIndices} (e : i = i') (a : AtFromIndices hL i) :
-    let b : AtFromIndices hL i' := Eq.rec (motive := fun j _ => AtFromIndices hL j) a e
-    HEq (ratL b.nt.L b.nt.S) (ratL a.nt.L a.nt.S) ∧
-      HEq b.nt.hL a.nt.hL ∧ HEq b.nt.rep a.nt.rep := by
+theorem packedNAt_transport_heq {D D' : D7} (e : D = D') (a : PackedNAt hL D) :
+    let b : PackedNAt hL D' := Eq.rec (motive := fun d _ => PackedNAt hL d) a e
+    HEq (ratL b.2.2.2.nt.L b.2.2.2.nt.S) (ratL a.2.2.2.nt.L a.2.2.2.nt.S) ∧
+      HEq b.2.2.2.nt.hL a.2.2.2.nt.hL ∧ HEq b.2.2.2.nt.rep a.2.2.2.nt.rep := by
   cases e
   exact ⟨HEq.refl _, HEq.refl _, HEq.refl _⟩
+
+theorem natD_heq :
+    HEq (ratL (natD l Sp Au ss al hLg).nt.L (natD l Sp Au ss al hLg).nt.S) (ratL L l.rat.S) ∧
+      HEq (natD l Sp Au ss al hLg).nt.hL l.rat.In.hL ∧
+      HEq (natD l Sp Au ss al hLg).nt.rep (repOf x.r.Y) :=
+  packedNAt_transport_heq (DL_eq x L).symm
+    ⟨cfL L (cfOf x), chL L l.c.ch, tpL L l.c.tp, natW l Sp Au ss al hLg⟩
 
 
 include l in
@@ -167,15 +168,9 @@ def rowD : NRow (D := DL x L) (natD l Sp Au ss al hLg) (datL x L).R (datL x L).F
     have hF : F.rep = repOf x.r.Y := by
       with_unfolding_all exact eq_of_heq hY.rep
     exact ⟨by with_unfolding_all exact ((al.loc F hF).sat :)⟩
-  S_eq := by
-    have h := (atTransport_heq (localizedIndices_eq (L := L) l) (natW l Sp Au ss al hLg)).1
-    exact h.trans (SL_heq L l.rat)
-  hL_eq := by
-    have h := (atTransport_heq (localizedIndices_eq (L := L) l) (natW l Sp Au ss al hLg)).2.1
-    with_unfolding_all exact (h.trans (HEq.refl l.rat.In.hL) :)
-  rep_eq := by
-    have h := (atTransport_heq (localizedIndices_eq (L := L) l) (natW l Sp Au ss al hLg)).2.2
-    with_unfolding_all exact (h.trans hY.rep.symm :)
+  S_eq := (natD_heq l Sp Au ss al hLg).1.trans (SL_heq L l.rat)
+  hL_eq := by with_unfolding_all exact ((natD_heq l Sp Au ss al hLg).2.1 :)
+  rep_eq := by with_unfolding_all exact ((natD_heq l Sp Au ss al hLg).2.2.trans hY.rep.symm :)
 
 
 

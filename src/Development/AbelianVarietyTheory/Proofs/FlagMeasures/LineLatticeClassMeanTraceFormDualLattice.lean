@@ -381,15 +381,18 @@ theorem latMean_dualAt : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComp
     exact congrArg (Quot.mk r) (hdd Λ)
   let t : Quot r → ENNReal := Quot.lift (fun Λ => term E j F Λ.1) fun a b ⟨γ, h⟩ =>
     le_antisymm (term_le_of_carries h F (hF _ b.2.toIsLattice)) (term_le_of_carries h.inv F (hF _ a.2.toIsLattice))
-  change ∑' c : Quot r, term E j (fun L => F (dualAt E j L)) (Quot.out c).1 =
-    ∑' c : Quot r, term E j F (Quot.out c).1
   have h1 : ∀ c : Quot r, term E j F (Quot.out c).1 = t c := fun c => by
     conv_rhs => rw [← Quot.out_eq c]
   have h2 : ∀ c : Quot r, term E j (fun L => F (dualAt E j L)) (Quot.out c).1 = t (D c) := fun c => by
     rw [term_dual hE (Quot.out c).2 F (hF _ (d (Quot.out c)).2.toIsLattice)]
     conv_rhs => rw [← Quot.out_eq c]
     rfl
-  simp only [h1, h2]
-  exact hD.toPerm.tsum_eq t
+  have hsum :
+      (∑' c : Quot r, term E j (fun L => F (dualAt E j L)) (Quot.out c).1) =
+        ∑' c : Quot r, term E j F (Quot.out c).1 := by
+    simp only [h1, h2]
+    exact hD.toPerm.tsum_eq t
+  unfold latMean
+  exact hsum
 
 end GlobalTheory.MeanDual

@@ -343,12 +343,30 @@ private def thetaTwistExportTie : ExportTie (_root_.GlobalTheory.HeightCounting.
   tie := fun i j s => (by with_unfolding_all exact ((cell_pz (c := x.o.Z) (a := x.o.Z.N) (nTh_pz x th) (l.b.ser.ex.tie ((i)) ((j)) s)) : _))
   hecke := fun i j s => (by with_unfolding_all exact ((hecke_imp_pz (c := x.o.Z) (a := x.o.Z.N) (nTh_pz x th) (l.b.ser.ex.hecke ((i)) ((j)) s)) : _))
   univ := (by with_unfolding_all exact (l.b.ser.ex.univ :))
+private theorem transport_lam {D E : D7} (e : D = E) (Z : LamTie.LamDat D)
+    (P : ∀ D, LamTie.LamDat D → Prop) (h : P D Z) :
+    P E (cast (congrArg LamTie.LamDat e) Z) := by
+  cases e
+  exact h
+
+private theorem transport_lam_C {D E : D7} (e : D = E) (Z : LamTie.LamDat D) :
+    (cast (congrArg LamTie.LamDat e) Z).C = cast (congrArg CharFrame e) Z.C := by
+  cases e
+  rfl
+
 theorem series_theta_twist_exists : Nonempty (SerAt (_root_.GlobalTheory.HeightCounting.Up.ysTh_alt x l th) (datTw x (thTw (Dof x) th)).geo.v₀ (_root_.GlobalTheory.HeightCounting.Up.exponentOfTheta x l th) (_root_.GlobalTheory.HeightCounting.Up.rowPsiOfTheta x l.toLI th)
     (TC.cf w.I w.l (oTw x (thTw (Dof x) th)).Z) l.Pq) := by
   obtain ⟨Z, h1, h2, h3, h4, h5⟩ := lam_thTw th ⟨l.b.ser.lam, l.b.ser.lam_ok, l.b.ser.lam_teich, l.b.ser.lam_C, l.b.ser.lam_q,
     l.b.ser.lam_tie⟩
-  exact ⟨⟨_root_.GlobalTheory.HeightCounting.Up.SerCp.thetaTwistExportTie x l th, (by with_unfolding_all exact (l.b.ser.bad :)), (by with_unfolding_all exact (l.b.ser.ch :)), (by with_unfolding_all exact (l.b.ser.join :)), (by with_unfolding_all exact (l.b.ser.sup :)), (by with_unfolding_all exact (l.b.ser.off :)), (cast (congrArg _root_.GlobalTheory.LamTie.LamDat (dof_oTw x (thTw (Dof x) th)).symm) Z), (by with_unfolding_all exact (h1 :)), (by with_unfolding_all exact (h2 :)),
-    (by with_unfolding_all exact (h3 :)), (by with_unfolding_all exact (h4 :)), (by with_unfolding_all exact (h5 :))⟩⟩
+  exact ⟨⟨_root_.GlobalTheory.HeightCounting.Up.SerCp.thetaTwistExportTie x l th, (by with_unfolding_all exact (l.b.ser.bad :)), (by with_unfolding_all exact (l.b.ser.ch :)), (by with_unfolding_all exact (l.b.ser.join :)), (by with_unfolding_all exact (l.b.ser.sup :)), (by with_unfolding_all exact (l.b.ser.off :)), (cast (congrArg _root_.GlobalTheory.LamTie.LamDat (dof_oTw x (thTw (Dof x) th)).symm) Z), (transport_lam (dof_oTw x (thTw (Dof x) th)).symm Z (fun _ z => z.Ok) h1),
+    (transport_lam (dof_oTw x (thTw (Dof x) th)).symm Z (fun _ z => z.Teich) h2),
+    (by
+      rw [transport_lam_C, h3]
+      with_unfolding_all rfl),
+    (transport_lam (dof_oTw x (thTw (Dof x) th)).symm Z
+      (fun D z => z.q0 = AbsolutelyIrreducibleSpan.q0 D) h4),
+    (transport_lam (dof_oTw x (thTw (Dof x) th)).symm Z
+      (fun D z => LamTie.IsLamTieFull D.ntw z) h5)⟩⟩
 end L4
 end GlobalTheory.HeightCounting.Up.SerCp
 end

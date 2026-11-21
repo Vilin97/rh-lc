@@ -598,7 +598,7 @@ theorem latOf_isFullLattice (h : Hfin X u) (Λ : Submodule (𝓞 D.host.E) (VS D
     intro v hv
     have hh : N • v ∈ Submodule.span D.host.E (Λ : Set (VS D).V) := Submodule.subset_span (h2 v hv)
     have hn : (N : D.host.E) ≠ 0 := Nat.cast_ne_zero.2 hN.ne'
-    have := Submodule.smul_mem (Submodule.span D.host.E (Λ : Set _)) (N : D.host.E)⁻¹ hh
+    have := Submodule.smul_mem (Submodule.span D.host.E (Λ : Set (VS D).V)) (N : D.host.E)⁻¹ hh
     simpa [← Nat.cast_smul_eq_nsmul D.host.E, smul_smul, hn] using this
   exact hle hy
 

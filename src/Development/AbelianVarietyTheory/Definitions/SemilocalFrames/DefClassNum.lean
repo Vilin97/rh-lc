@@ -106,7 +106,7 @@ def autGL (Λ : Submodule (𝓞 E) (Fin j → E)) : Set (MatInf E j) :=
     ∀ w a b, x w a b = w.embedding ((γ : Matrix (Fin j) (Fin j) E) a b)}
 
 def glVol : ENNReal :=
-  ∑' c : Quot (fun Λ Λ' : {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsLattice E Λ} =>
+  ∑' c : Quot (fun Λ Λ' : {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsFullLattice E Λ} =>
       ∃ γ : GL (Fin j) E, ∀ y, (γ : Matrix (Fin j) (Fin j) E) *ᵥ y ∈ Λ'.1 ↔ y ∈ Λ.1),
     covol (autGL E j (Quot.out c).1) (haarGL E j) {x | 1 ≤ detNorm E j x ∧ detNorm E j x < Real.exp 1}
 

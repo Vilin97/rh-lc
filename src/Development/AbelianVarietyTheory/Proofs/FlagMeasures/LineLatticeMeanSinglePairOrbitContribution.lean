@@ -243,7 +243,7 @@ theorem covol_stabilizer (hE : IsTotallyComplex E) {k : ℕ} (hk : 1 ≤ k) (Λ 
     rw [matInf_mul_assoc, ← matInf_mul_assoc ε, h1, oneInf_mul]
     exact hx.2
 
-theorem orbit_term : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ k : ℕ, 1 ≤ k → ∀ Lf : Ideal (𝓞 E) → Submodule (𝓞 E) (Fin k → E) → Submodule (𝓞 E) (Fin (k + 1) → E), (∀ 𝔞 Λ' y, y ∈ Lf 𝔞 Λ' ↔ (∀ t ∈ 𝔞, (t : E) * y 0 ∈ (algebraMap (𝓞 E) E).range) ∧ Fin.tail y ∈ Λ') → ∀ (w : ℝ → ENNReal) (Φ : VecInf E (k + 1) → ENNReal), Measurable w → Measurable Φ → ∀ (𝔞 : Ideal (𝓞 E)) (Λ' : Submodule (𝓞 E) (Fin k → E)), 𝔞 ≠ ⊥ → Submodule.IsLattice E Λ' → covol {x | x ∈ autGL E (k + 1) (Lf 𝔞 Λ') ∧ ∀ w a, x w a 0 = if a = 0 then 1 else 0} ((haarGL E (k + 1)).withDensity fun g => w (covAt E (k + 1) (latAt E (k + 1) (Lf 𝔞 Λ') g)) * Φ (fun u a => (Matrix.of (g u))⁻¹ a 0)) {g | 0 < detNorm E (k + 1) g} = slabVol E k Λ' * ENNReal.ofReal (Formalism.HermitianLatticesTheory.vInv E ^ (Formalism.HermitianLatticesTheory.fDeg E * (2 * k + 1)) * ((Ideal.absNorm 𝔞 : ℝ) ^ (k + 1))⁻¹) * (∫⁻ x, Φ x) * ∫⁻ t in Set.Ioi (0 : ℝ), w t / ENNReal.ofReal (t ^ 2) := by
+theorem orbit_term : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ k : ℕ, 1 ≤ k → ∀ Lf : Ideal (𝓞 E) → Submodule (𝓞 E) (Fin k → E) → Submodule (𝓞 E) (Fin (k + 1) → E), (∀ 𝔞 Λ' y, y ∈ Lf 𝔞 Λ' ↔ (∀ t ∈ 𝔞, (t : E) * y 0 ∈ (algebraMap (𝓞 E) E).range) ∧ Fin.tail y ∈ Λ') → ∀ (w : ℝ → ENNReal) (Φ : VecInf E (k + 1) → ENNReal), Measurable w → Measurable Φ → ∀ (𝔞 : Ideal (𝓞 E)) (Λ' : Submodule (𝓞 E) (Fin k → E)), 𝔞 ≠ ⊥ → Submodule.IsFullLattice E Λ' → covol {x | x ∈ autGL E (k + 1) (Lf 𝔞 Λ') ∧ ∀ w a, x w a 0 = if a = 0 then 1 else 0} ((haarGL E (k + 1)).withDensity fun g => w (covAt E (k + 1) (latAt E (k + 1) (Lf 𝔞 Λ') g)) * Φ (fun u a => (Matrix.of (g u))⁻¹ a 0)) {g | 0 < detNorm E (k + 1) g} = slabVol E k Λ' * ENNReal.ofReal (Formalism.HermitianLatticesTheory.vInv E ^ (Formalism.HermitianLatticesTheory.fDeg E * (2 * k + 1)) * ((Ideal.absNorm 𝔞 : ℝ) ^ (k + 1))⁻¹) * (∫⁻ x, Φ x) * ∫⁻ t in Set.Ioi (0 : ℝ), w t / ENNReal.ofReal (t ^ 2) := by
   intro E _ _ hE k hk Lf hLf w Φ hw hΦ 𝔞 Λ' h𝔞 hΛ'
   obtain ⟨Λ₀, hmem₀, hΛ₀, hc₀⟩ := GlobalTheory.T.exists_lattice_covolume_inverse_ideal E hE 𝔞 h𝔞
   have hΛ := ((GlobalTheory.T.lattice_nonzero_vector_pair_normal_forms E k Lf hLf).1 𝔞 Λ' h𝔞 hΛ').1
@@ -253,9 +253,9 @@ theorem orbit_term : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex 
   have e' : covAt E k (latAt E k Λ' (oneInf E k)) = κ' := by
     rw [(hκ'c _ (by rw [detNorm_oneInf]; exact one_pos)).2.1, detNorm_oneInf, div_one]
   have e : κ = Formalism.HermitianLatticesTheory.vInv E ^ Formalism.HermitianLatticesTheory.fDeg E / (Ideal.absNorm 𝔞 : ℝ) * κ' := by
-    rw [← hc₀, ← e', ← GlobalTheory.T.infiniteLatticeCovolume_split_lattice_prod E hE k _ Λ₀ Λ' hΛ₀ hΛ' hmem,
+    rw [← hc₀, ← e', ← GlobalTheory.T.infiniteLatticeCovolume_split_lattice_prod E hE k _ Λ₀ Λ' hΛ₀ hΛ'.toIsLattice hmem,
       (hκc _ (by rw [detNorm_oneInf]; exact one_pos)).2.1, detNorm_oneInf, div_one]
-  have hmain := covol_stabilizer hE hk _ Λ₀ Λ' hΛ hΛ₀ hΛ' hmem (fun t => w (κ / t))
+  have hmain := covol_stabilizer hE hk _ Λ₀ Λ' hΛ.toIsLattice hΛ₀ hΛ'.toIsLattice hmem (fun t => w (κ / t))
     (hw.comp (measurable_const.div measurable_id)) Φ hΦ
   have hdens : ((haarGL E (k + 1)).withDensity fun g => w (covAt E (k + 1) (latAt E (k + 1) (Lf 𝔞 Λ') g)) *
       Φ (fun u a => (Matrix.of (g u))⁻¹ a 0)) = (haarGL E (k + 1)).withDensity fun g =>

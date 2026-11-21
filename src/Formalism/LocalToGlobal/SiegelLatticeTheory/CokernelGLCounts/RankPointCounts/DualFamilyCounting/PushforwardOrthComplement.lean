@@ -118,16 +118,16 @@ theorem genusMassW_of (h1 : JordanExists) (h5 : AlphaDisc) : GenusMassW := by
   obtain ⟨s', hs'⟩ := hMB.1
   have hmass := hMB.2.1 s' hs'
   have hMpos := hMB.2.2
-  have hMC := hmc ↥(orthK h U) (formOn h (orthK h U)) T' hWs hWd rfl hT'.toIsLattice hT'i
+  have hMC := hmc ↥(orthK h U) (formOn h (orthK h U)) T' hWs hWd rfl hT' hT'i
   refine ⟨s'.image (push (orthK h U)), ?_, ?_, ?_, ?_⟩
   · intro T hT
     obtain ⟨N, hN, rfl⟩ := Finset.mem_image.mp hT
     have hg := hs'.1 N hN
-    exact ⟨(isLatIn_push_iff_isLattice N).2 (full_of_sameGenusFix hT' hg.1 ((sameGenusFix_push_iff hK hF hs hc T' N).2 hg.2) hK hF hs hc), (sameGenusFix_push_iff hK hF hs hc T' N).2 hg.2⟩
+    exact ⟨(isLatIn_push_iff_isLattice N).2 hg.1, (sameGenusFix_push_iff hK hF hs hc T' N).2 hg.2⟩
   · intro T hT hgen
     obtain ⟨N, rfl⟩ : ∃ N, push (orthK h U) N = T := ⟨_, push_pull (mem_of_isLatIn hT)⟩
     have hN : N ∈ Formalism.HermitianLatticesTheory.genus (formOn h (orthK h U)) T' :=
-      ⟨(isLatIn_push_iff_isLattice N).1 hT |>.toIsLattice, (sameGenusFix_push_iff hK hF hs hc T' N).1 hgen⟩
+      ⟨(isLatIn_push_iff_isLattice N).1 hT, (sameGenusFix_push_iff hK hF hs hc T' N).1 hgen⟩
     obtain ⟨N₁, ⟨hN₁, g, hg, hgN⟩, huniq⟩ := hs'.2 N hN
     refine ⟨push _ N₁, ⟨Finset.mem_image_of_mem _ hN₁, extId hc g, extId_mem hs hc hg, ?_⟩, ?_⟩
     · rw [gmap_extId_push hs hc hg, hgN]
@@ -139,7 +139,7 @@ theorem genusMassW_of (h1 : JordanExists) (h5 : AlphaDisc) : GenusMassW := by
   · intro T hT _
     obtain ⟨N, rfl⟩ : ∃ N, push (orthK h U) N = T := ⟨_, push_pull (mem_of_isLatIn hT)⟩
     have hfin := Formalism.HermitianLatticesTheory.autFinite K ↥(orthK h U) (formOn h (orthK h U)) hWs (StabilizerLattices.trace_pos hWd) N
-      ((isLatIn_push_iff_isLattice N).1 hT).toIsLattice
+      ((isLatIn_push_iff_isLattice N).1 hT)
     have : Finite ↥(Formalism.ThetaLiftIndependence.autL (formOn h (orthK h U)) N) := hfin.to_subtype
     exact Set.finite_coe_iff.mp (Finite.of_equiv _ (stabEquivW hs hc N).symm)
   · rw [Finset.sum_image (fun x _ y _ e => push_injective _ e)]

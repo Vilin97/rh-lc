@@ -48,13 +48,9 @@ theorem gramP_eq (hS : SpStd d.toColBase) : CF.gramP (d.colRec a) = 1 := by
 
 theorem clsCrd_eq (u : d.what₂.Word) (i : ℕ) (hi : i ≤ d.R.m) (c : StCl (Pr := d.Pr) d.W d.lev u i) :
     CF.clsCrd (d.colRec a) u i hi c = (d.repr u i c).1.L := by
-  show (d.clsLat u i c).map (((d.crd i hi : (d.sp.X i).V ≃ₗ[d.host.E] (Fin (d.R.N i) → d.host.E)) :
-    (d.sp.X i).V →ₗ[d.host.E] (Fin (d.R.N i) → d.host.E)).restrictScalars (𝓞 d.host.E)) = _
-  unfold ColDat.clsLat
-  rw [dite_eq_left hi, ← Submodule.map_comp]
-  convert Submodule.map_id _
-  ext x j
-  simp
+  change (d.clsLat u i c).map ((d.crd i hi).toLinearMap.restrictScalars (𝓞 d.host.E)) = _
+  rw [ColDat.clsLat, dite_eq_left hi, ← Submodule.map_comp, ← LinearMap.restrictScalars_comp,
+    LinearEquiv.comp_symm, LinearMap.restrictScalars_id, Submodule.map_id]
 
 theorem embT_eq (hH : HostHyp d) : CF.embT (d.colRec a) = d.X.embC d.σ₀ := by
   funext τ
