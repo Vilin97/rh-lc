@@ -52,7 +52,8 @@ theorem red₂_genPt₂ : ∃ n, red₂ K W W' W' (genPt₂ K W W') = Point.some
     show ((W'.map (liftJ₂ W W')).map (algebraMap _ (liftField₂ K W W'))).toAffine.Nonsingular _ _
     rw [← map_baseChange_eq_map_of K W' (liftJ₂ W W') (liftField₂ K W W') (liftJ₂_algebraMap K W W')]
     exact hT
-  have n := nonsingular_residue_of_isElliptic _ _ h₁.1
+  have n := WeierstrassCurve.Affine.equation_iff_nonsingular.mp
+    (equation_residue _ (equation_of_map _ _ h₁.1))
   refine ⟨n, ?_⟩
   rw [red₂, eT, pointCongr_some]
   exact reducePoint_some_integral _ _ h₁ n
@@ -77,7 +78,8 @@ theorem red₂_genEval_eq_zero
       (P + genPt₂ K W W')) ≠ 0 := by
     rw [← red₂_def, rPT, rT]; exact Point.some_ne_zero _
   obtain ⟨x₃, y₃, h₃, e₃⟩ := exists_integral_of_reducePoint_ne_zero _ _ hne
-  have n₃ := nonsingular_residue_of_isElliptic (liftField₂ K W W') (W'.map (liftJ₂ W W')) h₃.1
+  have n₃ := WeierstrassCurve.Affine.equation_iff_nonsingular.mp
+    (equation_residue _ (equation_of_map _ _ h₃.1))
   have rP3 : red₂ K W W' W' (P + genPt₂ K W W') = Point.some _ _ n₃ := by
     rw [red₂_def, e₃, reducePoint_some_integral _ _ h₃ n₃]
   rw [rPT, rT, Point.some.injEq] at rP3
@@ -133,7 +135,8 @@ theorem reducePoint_some_ne_zero (V : WeierstrassCurve 𝒪) [V.IsElliptic] {X�
     reducePoint K V (Point.some X₀ Y₀ h) ≠ 0 := by
   obtain ⟨x, rfl⟩ := hX
   obtain ⟨y, rfl⟩ := exists_y_of_equation K V h.1
-  rw [reducePoint_some_integral K V h (nonsingular_residue_of_isElliptic K V h.1)]
+  rw [reducePoint_some_integral K V h (WeierstrassCurve.Affine.equation_iff_nonsingular.mp
+    (equation_residue V (equation_of_map K V h.1)))]
   exact Point.some_ne_zero _
 
 variable [W.IsElliptic] [W'.IsElliptic]

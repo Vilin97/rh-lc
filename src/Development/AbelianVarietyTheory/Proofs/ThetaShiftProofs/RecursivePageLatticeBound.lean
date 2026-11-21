@@ -46,7 +46,7 @@ theorem qAt_run : ∃ Cq : ℝ → ℝ → ℝ, ∀ (D : D7) (T : Top D) (h : La
     obtain ⟨Q, -, -⟩ := hP.page
     exact Q.ccK_log
   obtain ⟨hZ, hR⟩ := hroom D large₂ j ka H.CA 7 H.CK Tn (cc D large₂ C2 A2 7 wL) hP.hyp.1 hcc hj hjm h3 hCR hsz hT hc hTc
-  obtain ⟨-, -, -, -, -, -, -, -, hdim, -⟩ := GlobalTheory.T.thetaNet_dimension_and_pointCount_bound D T h j hj large₂ H C2 A2 CT ka wL wF Tn nP nW h0 hP
+  obtain ⟨-, -, -, -, -, -, -, -, hdim, -⟩ := GlobalTheory.RunJoin.net_at_run D T h j hj large₂ H C2 A2 CT ka wL wF Tn nP nW h0 hP
   have hG := GlobalTheory.RunIn.gamAt_of_lawsCore D _ h.toLawsCore
   have hK := GlobalTheory.T.arithmeticCMKnownTheorems_proof
   have hpp : 1041 * Zb D large₂ ^ 3 ≤ WeightFamilies.PPv D large₂ 1041 3 * ka.size := by

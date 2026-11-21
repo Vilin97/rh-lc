@@ -82,9 +82,7 @@ theorem dual_lemma_of_admitted (hA : admitted D HW F Cm CR CA CB CK) (l : ℕ) [
     exact Formalism.MainNotions.RamifiedCoefficientChains.Sh.basTool_of _ (hA.1 l' K' 1 LL' hg').2.2.2.2.2.2.2.2.1
   have hEC : Formalism.MainNotions.RamifiedCoefficientChains.Sh.ExpCrit W :=
     Formalism.MainNotions.N.Pv.LocalLengthBound.expCrit_D' D HW F Cm CR CA CB CK hA hL hBall l K LL hCAl h5l
-  have hGM : Formalism.MainNotions.RamifiedCoefficientChains.S9.DetS.GMem W := by
-    intro _ _ _ _ _ _ _ _ hS i hi e' m' u had σ Z hZP j hmr
-    exact Formalism.MainNotions.RamifiedCoefficientChains.S9.GM.gE_mem W hE hC hQ h1.2.2.2.2.1 h9 hRu hEC hS i hi e' m' u had σ Z hZP j hmr
+  have hGM := Formalism.MainNotions.RamifiedCoefficientChains.S9.GM.gMem_of W hE hC hQ h1.2.2.2.2.1 h9 hRu hEC
   have hBas : Formalism.MainNotions.RamifiedCoefficientChains.Sh.BasTool W := Formalism.MainNotions.RamifiedCoefficientChains.Sh.basTool_of W h9
   have hΔ : IsUnit ((W.DelF.card : ℕ) : ↥(OL LL)) := by
     have hcard : W.DelF.card = l - 1 :=

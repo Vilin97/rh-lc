@@ -59,8 +59,8 @@ theorem sum_natAbs_le_of_mem_ball {n : ℕ} : ∀ e, ∀ ν ∈ ball n e, ∑ i,
     simp [h]
   | e + 1, ν, h => by
     change ν ∈ Finset.image₂ (· + ·) (ball n e) (steps n) at h
-    have hmem : ∃ x ∈ ball n e, ∃ s ∈ steps n, x + s = ν := Finset.mem_image₂.mp h
-    obtain ⟨x, hx, s, hs, rfl⟩ := hmem
+    rw [Finset.mem_image₂] at h
+    obtain ⟨x, hx, s, hs, rfl⟩ := h
     have h1 := sum_natAbs_le_of_mem_ball e x hx
     have h2 := sum_natAbs_le_one_of_mem_unitShifts hs
     have h3 : ∑ i, ((x + s) i).natAbs ≤ ∑ i, (x i).natAbs + ∑ i, (s i).natAbs := by

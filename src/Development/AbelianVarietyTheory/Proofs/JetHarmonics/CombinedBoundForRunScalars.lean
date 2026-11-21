@@ -38,7 +38,11 @@ theorem PageOK.runNum {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCh
     rw [e2]
     nlinarith [mul_nonneg p' p]
   · have hrd : 2 * (D.R.f : ℝ) * D.R.m ≤ D.host.rdE := hA.2.2.2.2.2.2.2.2.2
-    have hf : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+    have hf : 0 < D.R.f := by
+      have := D.R.two_le_m
+      have := D.R.m_le_f
+      unfold Ranks.f Ranks.n
+      omega
     have hm : 0 < D.R.m := hj.1.trans hj.2
     have hs : (0 : ℝ) < 2 * (D.R.f : ℝ) * D.R.m := by positivity
     have hR : 0 < WeightFamilies.RRv D 7 := Real.rpow_pos_of_pos (hs.trans_le hrd) _

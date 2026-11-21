@@ -296,13 +296,14 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
     unfold DecTens at hDecTens
     have hTensor := hDecTens k r (wedge k r m) (vr k r false) U (S.okWedge k r m) (S.okVr k r false)
     rcases hTensor with ⟨hd1, hd2⟩
-    obtain ⟨io₁, pr₁, D₁, e₁⟩ := hd1 (Sub (2 * r + k + 1) m) (Fin (2 * r + k + 1))
+    have h₁ := hd1 (Sub (2 * r + k + 1) m) (Fin (2 * r + k + 1))
       (fun J => V (pJ J)) (fun p => V (par p)) (fun J => (casG (pJ J).1 : ℂ))
       (decW S Lb hk m hU hg (by linarith) (fun a c hac => by linarith [hD a c hac]) _ fun J => hV (pJ J))
       (fun J => decV S Lb hk false (hV (pJ J)) (near hU.1 hg hD m (by linarith) (hJ J)).2.1 (by linarith) _
         fun s => hV (par (J, s)))
       fun J => cs (pJ J)
-    obtain ⟨io₂, pr₂, D₂, e₂⟩ := hd2 (Sub (2 * r + k + 1) m) (Fin (2 * r + k + 1))
+    obtain ⟨io₁, pr₁, D₁, e₁⟩ := h₁
+    have h₂ := hd2 (Sub (2 * r + k + 1) m) (Fin (2 * r + k + 1))
       (fun s => V (ps s)) (fun p => V (par p)) (fun s => (casG (ps s).1 : ℂ))
       (decV S Lb hk false hU hg (by linarith) _ fun s => hV (ps s))
       (fun s => decW S Lb hk m (hV (ps s)) (gap_shift hg false s) (by linarith)
@@ -316,6 +317,7 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
             funext a; simp [ps, par, addSet, shift]; ring
           rw [e']; exact hV (par (J, s)))
       fun s => cs (ps s)
+    obtain ⟨io₂, pr₂, D₂, e₂⟩ := h₂
     obtain ⟨hint, hjj⟩ := S.wedgeInt (2 * r + k + 1) m
     have hm1 : ((m : ℂ) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero m
     obtain ⟨c1, c2⟩ := S.count (2 * r + k + 1) m μ fun a c hac => by linarith [hD a c hac]

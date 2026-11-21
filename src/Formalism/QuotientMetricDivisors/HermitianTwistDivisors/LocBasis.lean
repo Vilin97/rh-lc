@@ -132,8 +132,7 @@ theorem semilocal_basis_exists : LocBasisEx := by
       rw [← Set.range_comp]; rfl
     rw [this, Submodule.span_image, b.span_eq, Submodule.map_top, Submodule.range_subtype]
   have hspan : ⊤ ≤ Submodule.span K (Set.range v) := by
-    letI := hL
-    rw [← Submodule.IsFullLattice.span_eq_top (A := K) (M := L), Submodule.span_le]
+    rw [← hL.span_eq_top, Submodule.span_le]
     intro x hx
     have hxN : x ∈ Submodule.span (A w) (Set.range v) := by
       rw [hspanA]; exact Submodule.subset_span hx

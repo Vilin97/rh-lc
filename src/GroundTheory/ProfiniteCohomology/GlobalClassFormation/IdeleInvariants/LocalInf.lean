@@ -85,7 +85,11 @@ theorem quadraticInv_infIdelesLocalRes_idelesResField_of_finrank_eq_one {v : Inf
     refine key.trans ?_
     rw [unitsScalarsRes, cohomologyMapAlong_comp]
     rfl
-  rw [infIdelesLocalRes_eq_of_algHom ιE0 ιE, key']
+  refine (congrArg (quadraticInv (infPlaceOfEmbedding ι E : InfinitePlace E.1).Completion
+    (AlgebraicClosure (infPlaceOfEmbedding ι E : InfinitePlace E.1).Completion)
+    (infAlgClosure_finrank_le_two _) (infAlgClosure_mul_mem_range_norm _))
+    ((congrArg (fun f => f.hom ((idelesResField K E 2).hom y))
+      (infIdelesLocalRes_eq_of_algHom ιE0 ιE 2)).trans key')).trans ?_
 
   have hbot := Subalgebra.bot_eq_top_of_finrank_eq_one h1
   have hfix : ∀ (σ : Gal(AlgebraicClosure v.Completion / v.Completion))
@@ -132,7 +136,9 @@ theorem quadraticInv_infIdelesLocalRes_idelesResField_of_finrank_eq_one {v : Inf
       intro x hx
       have hT : ∀ i, ψ σ (b i : AlgebraicClosure (infPlaceOfEmbedding ι E : InfinitePlace E.1).Completion) =
           b i := fun i => by
-        rw [hψ_apply, hσ _ (IntermediateField.subset_adjoin v.Completion T ⟨i, rfl⟩), AlgEquiv.symm_apply_apply]
+        change θ.symm (σ (θ (b i : AlgebraicClosure (infPlaceOfEmbedding ι E : InfinitePlace E.1).Completion))) = _
+        exact (congrArg θ.symm (hσ _ (IntermediateField.subset_adjoin v.Completion T ⟨i, rfl⟩))).trans
+          (θ.symm_apply_apply _)
       have hlin : (ψ σ).toAlgHom.toLinearMap ∘ₗ M.val.toLinearMap = M.val.toLinearMap :=
         b.ext fun i => hT i
       exact LinearMap.congr_fun hlin ⟨x, hx⟩

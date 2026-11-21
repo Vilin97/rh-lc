@@ -44,7 +44,7 @@ theorem BlowUpOverLocMaxCentre.proof (h₁ : BlowUpOverLocCentreDom.Statement.{u
   obtain ⟨hfin, -⟩ := h₃ O K ι J P n hP N u hu hu' c x hx hxP W hWmin hWrel
   have : Algebra.IsIntegral (homLocRing P W) (blowUpOverLoc P W u) := Algebra.IsIntegral.of_finite _ _
   have hmax : (𝔫.comap (algebraMap (homLocRing P W) (blowUpOverLoc P W u))).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal 𝔫
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := homLocRing P W) 𝔫
   have hcomap : 𝔫.comap (algebraMap (homLocRing P W) (blowUpOverLoc P W u)) =
       IsLocalRing.maximalIdeal (homLocRing P W) := IsLocalRing.eq_maximalIdeal hmax
   have : (blowUpOf P u).IsPrime := RingHom.ker_isPrime _

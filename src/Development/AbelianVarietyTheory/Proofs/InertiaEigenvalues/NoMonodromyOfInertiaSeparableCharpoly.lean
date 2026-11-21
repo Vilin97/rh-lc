@@ -63,4 +63,4 @@ theorem GlobalTheory.WeilDeligne.WD.noMonodromy_of_inertia_separable_charpoly (E
     intro hs
     exact eq_zero_of_commute_of_separable hs hcomm a.nilpotent
 
-end GlobalTheory.WeilDeligne
+end

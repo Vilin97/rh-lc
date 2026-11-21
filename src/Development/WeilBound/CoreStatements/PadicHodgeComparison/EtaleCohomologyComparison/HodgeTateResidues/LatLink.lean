@@ -69,7 +69,7 @@ theorem lev_σ_ι (h : LevHyp l K M) (k : ℕ) (g : K.fixingSubgroup) (a : (lev 
     (lev h k).ι ((lev h k).σA g a) = (lev h k).σB g ((lev h k).ι a) :=
   ι_map (fk l k) (xi0 l) (fk l k) (xi0 l) l M (gB h k g) (h.gal k g) a
 
-theorem lev_good (h : LevHyp l K M) (k : ℕ) (hk : 1 ≤ k) : (lev h k).Good := {
+theorem lev_good (h : LevHyp l K M) (k : ℕ) (hk : 1 ≤ k) : (lev h k).Good where
   pos := hk
   lat := GlobalTheory.T.level_lattice_base h k hk
   toB_surj := GlobalTheory.T.level_toB_surjective h k
@@ -90,7 +90,6 @@ theorem lev_good (h : LevHyp l K M) (k : ℕ) (hk : 1 ≤ k) : (lev h k).Good :=
     (GlobalTheory.T.level_ideal_eq_map h k) (GlobalTheory.T.level_ideal_eq_map h k) (GlobalTheory.T.level_galois_isDPMorphism h k g).1 fun a => (lev_σ_ι h k g a).symm
   σB_K := GlobalTheory.T.level_galois_fixes_field h k
   pdP_B := GlobalTheory.T.level_filtration_span_t_pow h k
-}
 
 theorem dk_pk (k : ℕ) (x : BdRp l) : dk l k (pk l (k + 1) x) = pk l k x := rfl
 
@@ -98,7 +97,7 @@ theorem sys_dι (h : LevHyp l K M) (m : ℕ) (a : ((levSys h).L (m + 1)).A) :
     (levSys h).dB m (((levSys h).L (m + 1)).ι a) = ((levSys h).L m).ι ((levSys h).dA m a) :=
   (ι_map (fk l (m + 2)) (xi0 l) (fk l (m + 1)) (xi0 l) l M (dk l (m + 1)) (h.dIn (m + 1)) a).symm
 
-theorem levSys_good (h : LevHyp l K M) : (levSys h).Good := {
+theorem levSys_good (h : LevHyp l K M) : (levSys h).Good where
   lev m := lev_good h (m + 1) (Nat.le_add_left 1 m)
   dB_toB m x := dk_pk (m + 1) (pInv l x)
   dι := sys_dι h
@@ -111,7 +110,6 @@ theorem levSys_good (h : LevHyp l K M) : (levSys h).Good := {
   dσ := GlobalTheory.T.level_system_transition_galois_A h
   dσB := GlobalTheory.T.level_system_transition_galois_B h
   cpl := GlobalTheory.T.existsUnique_period_of_compatible h
-}
 
 theorem levSys_ex [FiniteDimensional ℚ_[l] K] : ∃ S : Kap.LevSys (per l K), S.Good ∧ ∀ m, (S.L m).CrisOK :=
   (levHyp_ex (l := l) (K := K)).elim fun _ h => ⟨levSys h, levSys_good h, fun m => GlobalTheory.T.level_xi_mem_ideal_and_theta_compat h (m + 1)⟩

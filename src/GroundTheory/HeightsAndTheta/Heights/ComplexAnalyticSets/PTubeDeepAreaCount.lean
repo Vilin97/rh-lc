@@ -253,7 +253,9 @@ theorem TubeDeepAreaCount.proof (hB : IsolatedPointsCount.Statement) : TubeDeepA
           · obtain ⟨k, hk⟩ := hEcover x hx.1 hx.2
             rw [Set.indicator_of_mem hxf]
             exact (Set.indicator_of_mem (show x ∈ E k ∩ fibre J A y from ⟨hk, hxf⟩)
-              (fun x => ENNReal.ofReal (t y x))).symm.le.trans (ENNReal.le_tsum k)
+              (fun x => ENNReal.ofReal (t y x))).symm.le.trans
+                (ENNReal.le_tsum (f := fun k =>
+                  (E k ∩ fibre J A y).indicator (fun x => ENNReal.ofReal (t y x)) x) k)
           · have : t y x = 0 := by
               simp only [ht]
               split_ifs with h

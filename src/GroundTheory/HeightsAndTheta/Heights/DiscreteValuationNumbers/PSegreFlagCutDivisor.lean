@@ -76,7 +76,7 @@ theorem SegreFlagCutDivisor.proof (hSpec : SegreFlagCutSpecialize.Statement)
         (fun q hq => by
           obtain ⟨n, hn⟩ := hsat hkpos q hq
           exact ⟨_, huW' n, hn⟩)
-      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+      unfold divCycle
       rw [dite_eq_left ⟨hmin, hWrel⟩, hmult]
       rfl
     · by_contra hne

@@ -129,9 +129,16 @@ lemma theta_smulLDeg {p : ℕ} (i : Fin (p + 1) → Fin (n + 1)) (k : ℤ) (a : 
       single_zero_mul_eq_smul]
     congr 1
     rw [← awayDegEquiv_apply, hz, AddEquiv.apply_symm_apply]
-  apply ProjTwist.ext
+  apply Subtype.ext
   funext x
-  rw [ProjTwist.val_smul, val_theta, val_theta, h2]
+  change ProjTwist.val (theta i k (smulLDeg a ℓ)) x =
+    ProjTwist.val (restrictTop (inter (cover A n) i)
+      (algebraMap A Γ(projectiveSpace A n, ⊤) a) •
+        (show Γ(twistingSheaf (grading A n) k, inter (cover A n) i) from theta i k ℓ)) x
+  change ProjTwist.val (theta i k (smulLDeg a ℓ)) x =
+    ((restrictTop (inter (cover A n) i)
+      (algebraMap A Γ(projectiveSpace A n, ⊤) a)).1 x).val * ProjTwist.val (theta i k ℓ) x
+  erw [val_theta, val_theta, h2]
   change ProjTwist.locMap x.1 _ (_ * _) = _
   rw [map_mul]
   congr 1

@@ -76,7 +76,10 @@ theorem exists_short_family_small : Formalism.MainNotions.ModuliIntegralCharts.H
     refine Submodule.span_mono ?_ (hsmall g hg)
     rintro x ⟨hx1, hx2⟩
     exact ⟨hmemC x (hshC hx1), hx1, hx2⟩
-  obtain ⟨Sh, hShA, hShspan⟩ := exists_finset_span_top_of_span (O := 𝓞 T.Q.c.F) _ _ _
+  obtain ⟨Sh, hShA, hShspan⟩ := exists_finset_span_top_of_span (O := 𝓞 T.Q.c.F)
+    (T.C j w ⊓ ⨅ (_ : ¬InR D j), ⊥) (T.sh j w)
+    {g' | g' ∈ (T.C j w ⊓ ⨅ (_ : ¬InR D j), ⊥ : Submodule T.Q.c.F (T.R j)) ∧ g' ∈ T.sh j w ∧
+      ∀ σ, Real.log (T.Ns j w σ g') ≤ 400 * Zb D large₂ * w.size}
     (fun x hx => hx.1) hs hsp
   refine ⟨Sh, fun g hg => ?_, hShspan⟩
   obtain ⟨_, hgs, hgb⟩ := hShA g hg

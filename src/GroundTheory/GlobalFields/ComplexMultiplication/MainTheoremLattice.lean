@@ -69,8 +69,9 @@ theorem latticeEnd_eq_of_lattice_eq {L L' : PeriodPair} (h : L.lattice = L'.latt
 include hK in
 theorem latticeEnd_eq_cmRing_of_lattice_eq {L : PeriodPair} {𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ}
     (h : L.lattice = idealLattice σ₀ 𝔞) : periodLatticeEnd L = cmRingOfEmbedding σ₀ := by
-  rw [latticeEnd_eq_of_lattice_eq (L' := idealPeriodPair σ₀ hK 𝔞)
-    (h.trans (lattice_idealPeriodPair σ₀ hK 𝔞).symm), latticeEnd_idealPeriodPair]
+  exact (latticeEnd_eq_of_lattice_eq (L' := idealPeriodPair σ₀ hK 𝔞)
+    (h.trans (lattice_idealPeriodPair σ₀ hK 𝔞).symm)).trans
+    (latticeEnd_idealPeriodPair σ₀ hK 𝔞)
 
 
 include hK in
@@ -78,7 +79,8 @@ theorem exists_unit_of_forall_mem_iff (J : (FractionalIdeal (𝓞 K)⁰ K)ˣ) {c
     (hc : ∀ z, z ∈ idealLattice σ₀ J ↔ c * z ∈ idealLattice σ₀ J) :
     ∃ ε : (𝓞 K)ˣ, c = σ₀ (algebraMap (𝓞 K) K ε) := by
   have hP := lattice_idealPeriodPair σ₀ hK J
-  have hPend := latticeEnd_idealPeriodPair σ₀ hK J
+  have hPend : periodLatticeEnd (idealPeriodPair σ₀ hK J) = cmRingOfEmbedding σ₀ :=
+    latticeEnd_idealPeriodPair σ₀ hK J
   have hne : ∃ z, z ∉ idealLattice σ₀ J := by
     by_contra h
     push Not at h

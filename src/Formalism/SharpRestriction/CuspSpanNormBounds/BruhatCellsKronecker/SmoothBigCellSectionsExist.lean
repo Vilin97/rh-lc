@@ -63,9 +63,15 @@ end RowsAbstract
 
 theorem ptEntry_col {K : Type} [Zero K] : ∀ (bs : List (K × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧ 1 ≤ b.2) →
     ∀ j, j < (bs.map Prod.snd).sum → ∃ i, i < (bs.map Prod.snd).sum ∧ ∃ t : K, t ≠ 0 ∧
-      ∀ j', ptEntry bs i j' = if j' = j then t else 0
-  | [], _, j, hj => absurd hj (by simp)
-  | (t, s) :: rest, h, j, hj => by
+      ∀ j', ptEntry bs i j' = if j' = j then t else 0 := by
+  intro bs
+  induction bs with
+  | nil =>
+    intro _ j hj
+    exact absurd hj (by simp)
+  | cons b rest ih =>
+    obtain ⟨t, s⟩ := b
+    intro h j hj
     simp only [List.map_cons, List.sum_cons] at hj ⊢
     by_cases hjs : j < s
     · refine ⟨s - 1 - j, by omega, t, (h (t, s) (by simp)).1, fun j' => ?_⟩
@@ -80,7 +86,7 @@ theorem ptEntry_col {K : Type} [Zero K] : ∀ (bs : List (K × ℕ)), (∀ b ∈
     · have hrest : ∀ b ∈ rest, b.1 ≠ 0 ∧ 1 ≤ b.2 :=
         fun b hb => h b (List.mem_cons_of_mem _ hb)
       have hjrest : j - s < (rest.map Prod.snd).sum := by omega
-      obtain ⟨i0, hi0, t0, ht0, h0⟩ := ptEntry_col rest hrest (j - s) hjrest
+      obtain ⟨i0, hi0, t0, ht0, h0⟩ := ih hrest (j - s) hjrest
       refine ⟨i0 + s, by omega, t0, ht0, fun j' => ?_⟩
       simp only [ptEntry]
       rw [if_neg (fun hh => by omega)]

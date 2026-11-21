@@ -60,7 +60,7 @@ theorem exists_common_multiple {ι : Type*} (s : Finset ι) (P : ι → ℕ → 
 
 theorem exists_den_of_fg {J : AddSubgroup E} (hJ : J.FG) :
     ∃ d : ℕ, 0 < d ∧ ∀ j ∈ J, IsIntegral ℤ ((d : E) * j) := by
-  obtain ⟨S, rfl⟩ := hJ
+  obtain ⟨S, rfl⟩ := AddSubgroup.isAddFG_iff.mp hJ
   obtain ⟨d, hd, hS⟩ := exists_common_multiple S (fun s n => IsIntegral ℤ ((n : E) * s))
     (fun _ _ _ h hab => isIntegral_mul_of_dvd h hab) (fun s _ => exists_nat_mul_isIntegral s)
   refine ⟨d, hd, fun j hj => ?_⟩

@@ -196,7 +196,7 @@ theorem uniform_glue : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPar
       map_one, one_mul]
     unfold GlobalTheory.Chain.ptOf pureTensorO
     rw [GlobalTheory.FockProdCoef.pure_mul hAdd hSmul hA hComm hAAdd hASmul hf,
-      GlobalTheory.FockProdCoef.pure_rename hAdd hSmul hA hComm hAAdd hASmul
+      GlobalTheory.FockProdCoef.pure_rename hA hComm
         (GlobalTheory.FockIndep.pure_mem hAdd hSmul hA hf _)]
     rfl
 

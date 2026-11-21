@@ -110,7 +110,12 @@ theorem adeleSplit_snd_hermitianDiagonal (γ : h.unitaryGroup) :
   funext p
   simp [adeleSplit, unitaryCongr_apply, hermitianDiagonal, unitaryDiagonal, finDiag,
     unitaryCoords_unitaryMap, adeleRingEquivProd]
-  erw [unitaryCongr_apply, unitaryCoords_unitaryMap, unitaryCoords_unitaryMap]
+  have hprod (x : unitaryPoints F E (gram h.toSesq v)
+      (InfiniteAdeleRing F × FiniteAdeleRing (𝓞 F) F)) :
+      (unitaryProdEquiv F (gram h.toSesq v) _ _ (isUnit_det_gram h v) x).2 =
+        unitaryMap F E _ (AlgHom.snd F _ _) x := rfl
+  rw [hprod]
+  simp only [unitaryCoords_unitaryMap, Function.comp_apply]
   rfl
 
 end Equivariance

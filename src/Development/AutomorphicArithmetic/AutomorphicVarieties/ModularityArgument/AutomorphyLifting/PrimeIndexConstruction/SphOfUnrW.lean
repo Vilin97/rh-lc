@@ -46,7 +46,8 @@ private theorem exists_polarized {K Ω : Type} [Field K] [NumberField K] [IsCMFi
   have hnorm : compNorm K (χ * quadChar K ^ (m + n)) = compNorm K χ := by
     rw [map_mul, map_pow, compNorm_quadChar, one_pow, mul_one]
   refine ⟨χ * quadChar K ^ (m + n), fun v => ?_, hnorm ▸ hdual⟩
-  rw [HChar.locInf_mul, locInf_pow, hm, quadChar_locInf, ← pow_add, ← add_assoc, pow_add, ← two_mul, pow_mul]
+  change χ.locInf v (-1) * (quadChar K ^ (m + n)).locInf v (-1) = (-1) ^ n
+  rw [locInf_pow, hm, quadChar_locInf, ← pow_add, ← add_assoc, pow_add, ← two_mul, pow_mul]
   simp
 
 private theorem unram_of_charPol {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]

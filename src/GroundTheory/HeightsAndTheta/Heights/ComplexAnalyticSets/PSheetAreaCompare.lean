@@ -179,8 +179,11 @@ theorem SheetAreaCompare.proof (h₁ : SheetImageArea.Statement) : SheetAreaComp
         · by_cases hx : ∃ s, IsSheetAt J A x s
           · obtain ⟨k, hk⟩ := hEcover x hx
             rw [Set.indicator_of_mem hxf]
+            have hle : (E k ∩ fibre J A y).indicator (fun x => ENNReal.ofReal (t x)) x ≤
+                ∑' k, (E k ∩ fibre J A y).indicator (fun x => ENNReal.ofReal (t x)) x :=
+              le_tsum (fun k => (E k ∩ fibre J A y).indicator (fun x => ENNReal.ofReal (t x)) x) k
             exact (Set.indicator_of_mem (show x ∈ E k ∩ fibre J A y from ⟨hk, hxf⟩)
-              (fun x => ENNReal.ofReal (t x))).symm.le.trans (ENNReal.le_tsum k)
+              (fun x => ENNReal.ofReal (t x))).symm.le.trans hle
           · have : t x = 0 := by simp only [ht, dif_neg hx]
             rw [Set.indicator_of_mem hxf, this, ENNReal.ofReal_zero]
             exact zero_le

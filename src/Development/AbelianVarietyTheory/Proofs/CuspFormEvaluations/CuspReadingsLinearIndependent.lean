@@ -13,6 +13,7 @@ open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor F
 namespace GlobalTheory
 
 theorem cusp_readings_linearIndependent : ReciprocityTheory.ChartRestriction.G.PullbackSections.AlgInjAtSt := by
+  set_option synthInstance.maxHeartbeats 200000 in
   unfold ReciprocityTheory.ChartRestriction.G.PullbackSections.AlgInjAtSt
   intro D T h j hj ka σ hσ m f hf
   have hlin := hf.map' (T.C j ka).subtype (T.C j ka).ker_subtype

@@ -136,7 +136,8 @@ theorem intForm_descent_below (l e : ℕ) (hl : l.Prime) : ∃ c₀ : ℕ, ∀ (
     (fun a f ha hf => by
       by_cases h0 : a = 0
       · subst h0
-        rw [zero_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [zero_smul]
         exact (hval 0).2 (by rintro _ ⟨y, rfl⟩; rw [vAtV_zero]; exact le_top)
       have hv : (0 : ℤ) ≤ vLa p a := by
         have hne : p.valuation T.Q.c.F a ≠ 0 := (Valuation.ne_zero_iff _).2 h0

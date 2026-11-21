@@ -301,12 +301,12 @@ theorem exists_flat_rule : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       haveI := red p
       exact eq_zero_of_fields x h
   have hee : ∀ p z, e p z * e p z = e p z := fun p z => sub_eq_zero.1 (zero p _ fun F _ ψ => by
-    rw [map_sub, map_mul]
+    rw [ψ.map_sub, ψ.map_mul]
     by_cases hr : Set.range (fpt z ψ) ⊆ U
     · rw [((C p z F ψ).2 hr).1]; simp
     · rw [((C p z F ψ).1 hr).1]; simp)
   have hsE : ∀ p z, s p z * e p z = s p z := fun p z => sub_eq_zero.1 (zero p _ fun F _ ψ => by
-    rw [map_sub, map_mul]
+    rw [ψ.map_sub, ψ.map_mul]
     by_cases hr : Set.range (fpt z ψ) ⊆ U
     · rw [((C p z F ψ).2 hr).1]; simp
     · rw [((C p z F ψ).1 hr).2]; simp)
@@ -320,7 +320,7 @@ theorem exists_flat_rule : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
         show _ ∈ RingHom.ker (algebraMap p.R m.ResidueField)
         rwa [Ideal.ker_algebraMap_residueField]
       exact this
-    rw [map_sub, map_add (f := _), map_one] at h0
+    rw [ψ.map_sub, ψ.map_add, ψ.map_one] at h0
     by_cases hr : Set.range (fpt z ψ) ⊆ U
     · rw [((C p z _ ψ).2 hr).1] at h0
       exact FS p z _ ψ hr (by simpa using h0)
@@ -362,8 +362,8 @@ theorem exists_flat_rule : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
         · rw [ew j, h.2.1, ← Category.assoc, dualMap_spMap_comp]
       · rw [(D1.1 hr).1, (D1.1 hr).2, (D2.1 hr).1, (D2.1 hr).2]
         exact ⟨rfl, rfl⟩
-    exact ⟨sub_eq_zero.1 (zero q _ fun F _ ψ => by rw [map_sub, (key F ψ).1, sub_self]),
-      sub_eq_zero.1 (zero q _ fun F _ ψ => by rw [map_sub, (key F ψ).2, sub_self])⟩
+    exact ⟨sub_eq_zero.1 (zero q _ fun F _ ψ => by rw [ψ.map_sub, (key F ψ).1, sub_self]),
+      sub_eq_zero.1 (zero q _ fun F _ ψ => by rw [ψ.map_sub, (key F ψ).2, sub_self])⟩
   have hnat' : ∀ (p q : Formalism.L2.Pj.TRing c.F) (f : p.R →ₐ[c.F] q.R) (y : Formalism.L2.Pj.FrPt Xo c p.R)
       (z : Formalism.L2.Pj.FrPt Xo c q.R), Formalism.L2.Pj.FrMap f y z → s' q z = f (s' p y) := fun p q f y z h => by
     obtain ⟨h1, h2⟩ := hnat p q f y z h
@@ -384,7 +384,7 @@ theorem exists_flat_rule : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       have h1 : under (fpt y ψ) = spMap ψ ≫ y'.x := by rw [fpt_under, h.1]
       have D2 := hse p y' F ψ (fpt y ψ) h1 (fpt_snd y ψ)
       have D1 := C p y F ψ
-      rw [map_mul, map_mul]
+      rw [ψ.map_mul, ψ.map_mul]
       by_cases hr : Set.range (fpt y ψ) ⊆ U
       · obtain ⟨v, w, ev, ew, hfr⟩ := GlobalTheory.T.frame_point_vectors E H D l Xo c τ p.R y F ψ (fpt y ψ) hp hq (fpt_under y ψ) (fpt_snd y ψ)
         obtain ⟨v', w', ev', ew', hfr'⟩ := GlobalTheory.T.frame_point_vectors E H D l Xo c τ p.R y' F ψ (fpt y ψ) hp hq h1 (fpt_snd y ψ)
@@ -395,11 +395,11 @@ theorem exists_flat_rule : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
         exact hl.chg F _ _ v w v' w' A B (hfr U hr) (hfr' U hr) hA hB
       · rw [(D1.1 hr).1, (D1.1 hr).2, (D2.1 hr).1, (D2.1 hr).2]
         simp
-    have k1 : e p y' - e p y = 0 := zero p _ fun F _ ψ => by rw [map_sub, (key F ψ).1, sub_self]
+    have k1 : e p y' - e p y = 0 := zero p _ fun F _ ψ => by rw [ψ.map_sub, (key F ψ).1, sub_self]
     have k2 : s p y' * Formalism.L2.Pj.wchar (detE D τ) t - s p y * Formalism.L2.Pj.wchar (detE D (ComplexEmbedding.conjugate τ)) t = 0 :=
       zero p _ fun F _ ψ => by
         have := (key F ψ).2
-        exact (map_sub ψ _ _).trans (sub_eq_zero.2 this)
+        exact (ψ.map_sub _ _).trans (sub_eq_zero.2 this)
     exact ⟨sub_eq_zero.1 k1, sub_eq_zero.1 k2⟩
   have hwt' : ∀ (p : Formalism.L2.Pj.TRing c.F) (t : Formalism.L2.Pj.Ix D → (p.R)ˣ) (y y' : Formalism.L2.Pj.FrPt Xo c p.R),
       Formalism.L2.Pj.FrBor t y y' →

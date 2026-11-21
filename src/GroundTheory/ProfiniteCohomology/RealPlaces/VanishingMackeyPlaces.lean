@@ -218,7 +218,7 @@ theorem realMemberPlace_injective : Function.Injective (realMemberPlace S ιr hL
       Subtype.ext ((ιr v).injective e)
     rw [AlgEquiv.mul_apply, hinj, ← AlgEquiv.mul_apply, mul_inv_cancel, AlgEquiv.one_apply]
   have hdd : d = d' := by
-    rw [← DoubleCoset.out_eq' _ _ d, ← DoubleCoset.out_eq' _ _ d', DoubleCoset.eq]
+    rw [← DoubleCoset.out_eq' d, ← DoubleCoset.out_eq' d', DoubleCoset.eq]
     exact ⟨_, hmem, 1, one_mem _, by group⟩
   subst hdd
   rfl

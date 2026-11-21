@@ -14,11 +14,8 @@ noncomputable section
 
 theorem isAddTorsionFree_of_module (K V : Type*) [Field K] [CharZero K] [AddCommGroup V]
     [Module K V] : IsAddTorsionFree V := by
-  refine ⟨fun k hk x y hxy => ?_⟩
-  have hk' : (k : K) ≠ 0 := Nat.cast_ne_zero.2 hk
-  have e : (k : K) • x = (k : K) • y := by
-    simpa only [Nat.cast_smul_eq_nsmul] using hxy
-  exact smul_right_injective V hk' e
+  letI : HasUniqueDiv V := HasUniqueDiv.of_isTorsionFree K V
+  infer_instance
 
 theorem fg_of_fg_map_of_injective {A B : Type*} [AddCommGroup A] [AddCommGroup B]
     {H : AddSubgroup A} (φ : A →+ B) (hφ : Function.Injective φ) (hH : (H.map φ).FG) : H.FG := by
@@ -144,6 +141,7 @@ theorem ComplementLattice.proof (h : HermitianForm F E W) [FiniteDimensional E W
     exact h2
 
   have : IsAddTorsionFree (hypComplement h v₀ w₀) := isAddTorsionFree_of_module E (hypComplement h v₀ w₀)
+  have : HasUniqueDiv (hypComplement h v₀ w₀) := HasUniqueDiv.of_isTorsionFree E _
   have hGfg : G.FG := fg_of_fg_map_of_injective (nsmulAddMonoidHom N)
     (AddSubgroup.nsmulAddMonoidHom_injective_of_isTorsionFree hNpos.ne')
     (fg_of_le_fg hNG hPlat.fg)

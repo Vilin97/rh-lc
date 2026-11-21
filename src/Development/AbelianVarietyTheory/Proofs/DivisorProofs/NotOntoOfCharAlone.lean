@@ -256,6 +256,8 @@ section Tied
 open Formalism.MainNotions Formalism.MainNotions.DIV.Cons Formalism.L2.Pj Formalism.IndefR.FWT Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta GlobalTheory.OnTies GlobalTheory.FormTies
 open scoped TensorProduct
 
+attribute [local instance 2000] Submodule.module
+
 structure RunData (J : CoreJ D) : Type 1 where
   G : In66 J.Q
   nab : ∀ j, NabV (J.Q.Xo j) J.Q.c

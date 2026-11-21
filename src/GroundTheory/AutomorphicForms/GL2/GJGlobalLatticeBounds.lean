@@ -31,7 +31,7 @@ theorem locHeight_infAt_le_height (g : AdelicGLn.AdelicGL K n) (w : InfinitePlac
     _ ≤ ∏ w' : InfinitePlace K, AutomorphicForm.locHeight (Reduction.infAt w' g) ^ w'.mult := by
         rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ w)]
         exact le_mul_of_one_le_right (zero_le_one.trans (h1 w (Finset.mem_univ w)))
-          (Finset.one_le_prod fun w' hw' => h1 w' (Finset.mem_of_mem_erase hw'))
+          (Finset.one_le_prod₀ fun w' hw' => h1 w' (Finset.mem_of_mem_erase hw'))
     _ ≤ _ := le_mul_of_one_le_right (zero_le_one.trans (AutomorphicForm.one_le_prod_locHeight g))
           (AutomorphicForm.one_le_finprod_locHeight g)
 

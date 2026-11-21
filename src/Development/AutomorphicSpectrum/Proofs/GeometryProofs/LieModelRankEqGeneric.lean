@@ -101,7 +101,6 @@ theorem exists_lift (G : Over S) [GrpObj G] {R R' : Type} [CommRing R] [CommRing
     congr 1
     exact CommRingCat.hom_ext (dualMap_comp_epsMul (algebraMap R R') r)
   have hl : ∀ e, ((M'.pt (f e)).left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ (M.pt e).left) := fun e => by
-    unfold LieModel.Lifts
     rw [hf, Category.comp_id, epsPull_comp_left]
   exact ⟨⟨⟨f, hadd⟩, hsmul⟩, hl⟩
 

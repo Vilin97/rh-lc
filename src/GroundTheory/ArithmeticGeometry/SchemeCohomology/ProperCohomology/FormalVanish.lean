@@ -121,8 +121,8 @@ theorem exists_transMap_eq_zero [IsProper (X ↘ Spec (.of A))] (hUtop : iSup �
         (fun j hj => hNb g j (by omega) t)
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum]
-      exact Finset.sum_eq_zero fun j _ => by
-        rw [← push_d, ← CechFamily.cochain_d, hσ g, map_zero, map_zero]
+        exact Finset.sum_eq_zero fun j _ => by
+          rw [← push_d, ← CechFamily.cochain_d, hσ g, map_zero, map_zero]
   exact key (f g)
 
 end

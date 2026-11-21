@@ -56,8 +56,12 @@ theorem norm_placeEmbedding_algebraMap (u : InfinitePlace F) (x : F) :
   rw [IsScalarTower.algebraMap_apply F u.Completion (u.Completion ⊗[F] E),
     realPlaceEquiv_algebraMap,
     Complex.norm_real, ringEquivRealOfIsReal_apply]
-  erw [extensionEmbeddingOfIsReal_coe hu]
-  exact norm_embedding_of_isReal hu x
+  have h : extensionEmbeddingOfIsReal hu (algebraMap F u.Completion x) =
+      embedding_of_isReal hu x := by
+    rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+      Algebra.algebraMap_self_apply]
+    simpa using extensionEmbeddingOfIsReal_coe hu (WithAbs.toAbs u.1 x)
+  rw [h, norm_embedding_of_isReal hu x]
 
 def placeAbove (u : InfinitePlace F) : InfinitePlace E :=
   InfinitePlace.mk (placeEmbedding u)

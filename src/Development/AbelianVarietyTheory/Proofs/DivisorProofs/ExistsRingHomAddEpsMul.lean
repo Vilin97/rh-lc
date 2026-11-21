@@ -70,7 +70,7 @@ theorem fst_comp_tangent_eq_one : ∀ {E : Type} [Field E] [NumberField E] [IsCM
     rw [Category.assoc, hu, ← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     have e : (TrivSqZeroExt.fstHom K K K).toRingHom.comp (dualMap (ev x0 U.1 hU)) =
         (ev x0 U.1 hU).comp ((TrivSqZeroExt.fstHom Γ(X, U.1) Γ(X, U.1) Γ(X, U.1)).toRingHom) := by
-      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+      ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
     rw [e, CommRingCat.ofHom_comp, Spec.map_comp, Category.assoc, hv2]
     have := congrArg Over.Hom.left (comp_one (M := t.G) κ)
     exact this.symm ▸ rfl
@@ -126,7 +126,7 @@ theorem fst_comp_transl_eq : ∀ {K : Type} [Field K] {A : Over (Sp K)} [GrpObj 
       congr 1
       rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
       congr 2
-      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+      ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
     rw [this, hν, comp_one]
   have h2 : (io ≫ (x' * v')).left = x := by
     rw [comp_mul, h1, _root_.mul_one]

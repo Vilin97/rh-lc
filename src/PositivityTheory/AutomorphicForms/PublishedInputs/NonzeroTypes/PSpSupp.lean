@@ -67,6 +67,7 @@ theorem piTensor_twD_eq {Y : Fin G.s → Type} [∀ a, AddCommGroup (Y a)] [∀ 
   refine MultilinearMap.ext fun x => ?_
   simp only [LinearMap.compMultilinearMap_apply, piTensor_tprod, twist_apply, Grp.twD, detChar_apply]
   rw [MultilinearMap.map_smul_univ, deltaHalf_inv_apply]
+  simp only [RingHom.id_apply]
 
 theorem isIrreducible_piTensor_twD (hBZ : GlobalTheory.Published.BernsteinZelevinskyFiniteness) {Y : Fin G.s → Type}
     [∀ a, AddCommGroup (Y a)] [∀ a, Module ℂ (Y a)] (τ : ∀ a, Representation ℂ (GL (Fin (G.d a)) k) (Y a))

@@ -72,7 +72,8 @@ theorem prism_sum' {I J : Type} {U : I → A.left.Opens} (t : Finset J) (z : J �
     rw [Finset.sum_insert ha, Finset.sum_insert ha, prism_add', ih]
 
 theorem triv_sec {P Q : GPt A} (φ : P.Hom Q) : φ.triv ≫ Q.sec = P.sec ≫ φ.dual := by
-  apply Thick.hom_ext
+  apply Thick.Hom.ext'
+  apply AlgHom.ext
   intro b
   rw [Thick.comp_φ, Thick.comp_φ]
   show TrivSqZeroExt.inl (φ.ρ b) = dualAlg φ.ρ (TrivSqZeroExt.inl b)
@@ -82,7 +83,8 @@ theorem triv_sec {P Q : GPt A} (φ : P.Hom Q) : φ.triv ≫ Q.sec = P.sec ≫ φ
 
 theorem triv_tan {P Q : GPt A} (φ : P.Hom Q) {v : epsR K ⟶ A} (hv : IsTangent v) :
     (φ.tr v).triv ≫ Q.tan hv = P.tan hv ≫ φ.dual := by
-  apply Thick.hom_ext
+  apply Thick.Hom.ext'
+  apply AlgHom.ext
   intro b
   rw [Thick.comp_φ, Thick.comp_φ]
   rfl
@@ -223,7 +225,7 @@ private theorem triv_coc_lemma_7 {K : Type} [Field K] {A : Over (Sp K)} [GrpObj 
   rw [d1_apply] at e
   have e' : ψ.ρ (chernRepEv1 β φ.triv hP) - chernRepEv1 β (φ.triv ≫ ψ.triv) hP +
       chernRepEv1 β ψ.triv hQ = 0 := e
-  have hcomp : (φ.comp ψ).triv = φ.triv ≫ ψ.triv := Thick.hom_ext fun _ ↦ rfl
+  have hcomp : (φ.comp ψ).triv = φ.triv ≫ ψ.triv := Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl)
   rw [sub_add_eq_add_sub, sub_eq_zero] at e'
   rw [hcomp]
   exact e'.symm

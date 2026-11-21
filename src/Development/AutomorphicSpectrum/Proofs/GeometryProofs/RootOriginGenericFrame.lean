@@ -88,7 +88,7 @@ theorem pushHom_mul (u v : tEpsG x₁ ⟶ t₁.G) : pushHom m h (u * v) = pushHo
   have h1 := m.cart.2 T u v (a u) (a v) rfl rfl
   have h2 : ∀ w, pushHom m h w = e ≫ a w := fun w => by
     apply Over.OverMorphism.ext
-    simp [e, a]
+    simp [e, a, pushHom]
   rw [h2, h2, h2, ← MonObj.comp_mul]
   apply Over.OverMorphism.ext
   simp only [Over.comp_left]

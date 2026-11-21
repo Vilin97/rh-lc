@@ -186,7 +186,7 @@ theorem iso_integral_structure_equivariant (N : S.D → Submodule (𝓞 K) S.V) 
 
 
 include e in
-theorem ok (h : S.Ok) : S'.Ok := {
+theorem ok (h : S.Ok) : S'.Ok where
   fin_orb := by
     have := h.fin_orb
     exact Finite.of_equiv _ e.onCl
@@ -203,7 +203,6 @@ theorem ok (h : S.Ok) : S'.Ok := {
     obtain ⟨x, rfl⟩ := e.eV.surjective x'
     obtain ⟨y, rfl⟩ := e.eV.surjective y'
     rw [← e.rho, ← e.rho, e.pair, e.pair, h.inv]
-}
 
 theorem iso_onForms_mem_integral_iff (N : S.D → Submodule (𝓞 K) S.V) (N' : S'.D → Submodule (𝓞 K) S'.V)
     (hc : ∀ d : S.D, N' (e.eD d) = (N d).map ((e.eV : S.V →ₗ[K] S'.V).restrictScalars (𝓞 K))) (φ : S.EqFun) :
@@ -504,7 +503,7 @@ theorem coordOf_mem_delLat (h : F.Ok) (s : ∀ b, (F.mem b).Sec) (φ : F.Forms) 
 def Good (n : ℕ) : Prop := ∀ b, (F.mem b).Good n
 
 theorem toCSDOf_good {n : ℕ} [Nonempty F.β] (G : F.Good n) (s : ∀ b, (F.mem b).Sec) :
-    (F.toCSDOf (fun b => (G b).ok) s).Good n := {
+    (F.toCSDOf (fun b => (G b).ok) s).Good n where
   symm := (G (Classical.arbitrary F.β)).symm
   nondeg := (G (Classical.arbitrary F.β)).nondeg
   inv := fun c γ x y => ((F.mem c.1).toCSDOf_good (G c.1) (s c.1)).inv c.2 γ x y
@@ -514,14 +513,12 @@ theorem toCSDOf_good {n : ℕ} [Nonempty F.β] (G : F.Good n) (s : ∀ b, (F.mem
   s_pos := (G (Classical.arbitrary F.β)).s_pos
   dual_le := fun c => (G c.1).dual_le _
   del_dual := fun c => (G c.1).del_dual _
-}
 
 theorem toCSDOf_rat [Nonempty F.β] (h : F.Ok) (R : ∀ b, (F.mem b).Rat) (s : ∀ b, (F.mem b).Sec) :
-    (F.toCSDOf h s).Rat := {
+    (F.toCSDOf h s).Rat where
   pair_rat := (R (Classical.arbitrary F.β)).pair_rat
   act_rat := fun c γ i j => (R c.1).act_rat (γ : F.G c.1) i j
   pos := (R (Classical.arbitrary F.β)).pos
-}
 
 end GFam
 

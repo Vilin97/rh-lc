@@ -52,7 +52,7 @@ theorem archTraceForm_AdLie (g : archGroup K n) (X Y : (isExpLieAlgebra K n).lie
     rfl
   have hgi' : mat (((g⁻¹ : archGroup K n) : (ArchMatrix K n)ˣ) : ArchMatrix K n) *
       mat (((g : archGroup K n) : (ArchMatrix K n)ˣ) : ArchMatrix K n) = 1 := by
-    rw [← mat_mul, hgi, mat_one]
+    exact hgi
   set A := mat (((g : archGroup K n) : (ArchMatrix K n)ˣ) : ArchMatrix K n)
   set C := mat (((g⁻¹ : archGroup K n) : (ArchMatrix K n)ˣ) : ArchMatrix K n)
   change Matrix.trace (A * mat (X : ArchMatrix K n) * C * (A * mat (Y : ArchMatrix K n) * C)) =

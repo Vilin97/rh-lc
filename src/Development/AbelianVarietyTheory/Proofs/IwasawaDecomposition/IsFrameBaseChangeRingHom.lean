@@ -24,7 +24,11 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {X : Sc
   {S T : Type} [CommRing S] [CommRing T] {x : Sp S ⟶ X}
 
 theorem tv_sum' {κ : Type} (s : Finset κ) (f : κ → TanM x t.G) : tv (∑ i ∈ s, f i) = ∏ i ∈ s, tv (f i) := by
-  simp only [tv, toMul_sum, Subgroup.val_finset_prod]
+  simp only [tv, toMul_sum]
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert a s ha ih => simp [ha, ih]
 
 def Full {κ : Type} [Fintype κ] (v : κ → TanM x t.G) : Prop :=
   ∀ n : TanM x t.G, ∃! a : κ → S, n = ∑ k, a k • v k

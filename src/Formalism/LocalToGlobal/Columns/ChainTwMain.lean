@@ -49,7 +49,8 @@ theorem twSt_chrOk (hN : ∀ i, i < m2 → TwNormAt (Ch := Ch) (cst := cst) (twS
   | i + 1, b, P, hP, hd, _ => by
       by_cases h1 : i + 1 ≤ m2
       · have hi : i < m2 := Nat.lt_of_succ_le h1
-        have hcand := twSt_cand h1 (hN i hi) b P hP
+        have hcand := twSt_cand (Ch := Ch) (sel := sel) (mu := mu) (cst := cst)
+          (m2 := m2) (i := i) h1 (hN i hi) b P hP
         obtain ⟨hb, hnf, ⟨al, hal⟩, hint⟩ := hcand
         have hs := twSt_of_twNormAt hN i hi al P hP
         exact hC.1 i hi P hP hd _ _ hs.1 hs.2 hb hnf hint hal

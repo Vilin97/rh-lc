@@ -35,6 +35,8 @@ theorem linearIndependent_of_indepToC {f : C →ₛₗ[σ] W} (hf : IndepToC f) 
     (Subtype.val_injective.comp e.symm.injective))
   have h2 := h1.comp e e.injective
   convert h2 using 1
+  funext i
+  simp
 
 theorem indepToC_bcMap_iff (hσ : ∀ a, σ' (algebraMap K L a) = σ a) (f : C →ₛₗ[σ] W) :
     IndepToC (BaseChangeTensorProduct.bcMap hσ f) ↔ IndepToC f := by

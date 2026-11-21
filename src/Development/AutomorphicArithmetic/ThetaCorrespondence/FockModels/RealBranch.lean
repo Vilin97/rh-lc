@@ -79,7 +79,6 @@ theorem heWord_of (hP : Par e ε lam ε' mu B) : GlobalTheory.CompanionTheory.Pa
   intro x y hxy hz
   have h := hP.word x y hxy hz
   simp only [ne_eq] at h
-  unfold Xor'
   tauto
 
 private theorem exists_uj_umat_eq_of_mem_UJset {m : ℕ} {ε : Fin m → Bool} {h : Mat m} (hh : h ∈ UJset ε) :

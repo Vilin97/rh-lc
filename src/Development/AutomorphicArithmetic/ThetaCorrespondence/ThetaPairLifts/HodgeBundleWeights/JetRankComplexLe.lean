@@ -98,7 +98,7 @@ theorem jet_bundle_rank_le : GlobalTheory.CovTop.HypothesesX → _root_.GlobalTh
     nlinarith
   have hB : BirOn Y.U Z (wtOf (T.Q.Dw j) u 0) := by
     refine _root_.GlobalTheory.T.birOn_wtOf_of_consecutive_gap_bound hX hGD hQ hSi hP hP2.q15 hP2.q16 D T hT j hp hq Y e o hY u (fun τ a b hab => ?_) Z
-    have h₁ := hu τ a (hab ▸ b.2)
+    have h₁ := hu τ a (by omega)
     rw [gap_eq _ hab] at h₁
     push_cast at h₁ ⊢
     nlinarith

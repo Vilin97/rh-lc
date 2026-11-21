@@ -102,8 +102,10 @@ theorem theta_weight_bounds : ReciprocityTheory.ChartRestriction.G.PullbackSecti
     have : (((WeightFamilies.dimY D j + 4) * WeightAlgebra.DF wL + 2 : ℕ) : ℝ) ≤ (qq D : ℝ) := by push_cast; linarith
     exact_mod_cast this
   have hf : 1 ≤ D.R.f := by
+    have hm := D.R.two_le_m
+    have hmf := D.R.m_le_f
     unfold Ranks.f Ranks.n
-    exact Nat.succ_le_of_lt (by positivity)
+    omega
   have hr : D.R.r ≤ nP := by
     have : 1 * D.R.r ≤ 8 * D.R.f * D.R.r := Nat.mul_le_mul_right _ (by omega)
     omega

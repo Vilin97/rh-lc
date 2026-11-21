@@ -386,7 +386,7 @@ theorem exists_dual (𝔐 : HodgeCpt Y S y) (hind : iSupIndep 𝔐.Vgen) (q : Cp
         · exact one_mem _
         · exact zero_mem _
       · have hxW : x ∈ W := hW (Submodule.mem_iSup_of_mem s' (Submodule.mem_iSup_of_mem e hx.2))
-        have : pr x = 0 := Submodule.linearProjOfIsCompl_apply_right' hc.symm hxW
+        have : pr x = 0 := Submodule.projectionOnto_apply_of_mem_right hc.symm hxW
         simp [this]
     | zero => simpa using zero_mem _
     | add x y _ _ hx hy => simpa using add_mem hx hy

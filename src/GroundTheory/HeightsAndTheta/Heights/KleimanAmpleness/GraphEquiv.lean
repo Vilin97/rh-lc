@@ -72,18 +72,18 @@ theorem up_surj (X : DblData R) (n : ℕ) (w : X.shift.C n) : ∃ z, X.up n z = 
 
 namespace Good
 
-theorem shift {X : DblData R} (hX : X.Good) : X.shift.Good where
-  ha p := hX.ha (p + 1)
-  hc q := LinearMap.ext fun _ => rfl
-  ka p := hX.ka (p + 1)
-  ra p := hX.ra (p + 1)
-  rh p q := hX.rh (p + 1) q
-  kc q := Submodule.ker_subtype _
-  rc q := by
-    show LinearMap.ker (X.v 1 q) = LinearMap.range (LinearMap.range (X.v 0 q)).subtype
-    rw [Submodule.range_subtype]
-    exact hX.rv 0 q
-  rv p q := hX.rv (p + 1) q
+theorem shift {X : DblData R} (hX : X.Good) : X.shift.Good :=
+  { ha := fun p => hX.ha (p + 1)
+    hc := fun _ => LinearMap.ext fun _ => rfl
+    ka := fun p => hX.ka (p + 1)
+    ra := fun p => hX.ra (p + 1)
+    rh := fun p q => hX.rh (p + 1) q
+    kc := fun _ => Submodule.ker_subtype _
+    rc := fun q => by
+      show LinearMap.ker (X.v 1 q) = LinearMap.range (LinearMap.range (X.v 0 q)).subtype
+      rw [Submodule.range_subtype]
+      exact hX.rv 0 q
+    rv := fun p q => hX.rv (p + 1) q }
 
 theorem a_d {X : DblData R} (hX : X.Good) (p : ℕ) (x : X.A p) :
     X.a (p + 1) (X.dA p x) = X.v p 0 (X.a p x) :=

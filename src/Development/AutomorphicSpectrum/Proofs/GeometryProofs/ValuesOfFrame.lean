@@ -201,7 +201,7 @@ theorem stalk_model [IsCommMonObj G] [Smooth G.hom] {Li : Type} [AddCommGroup Li
           rfl }
     exact ⟨hbc.lift ψl, fun t => hbc.lift_eq ψl t⟩
   · refine eq_top_iff.2 fun x _ => ?_
-    exact hbc.inductionOn x (· ∈ P) P.zero_mem hP (fun c n hn => P.smul_mem c hn) (fun _ _ => P.add_mem)
+    exact hbc.inductionOn x hP (fun c n hn => P.smul_mem c hn) (fun _ _ => P.add_mem)
 
 theorem value_end [IsCommMonObj G] {Li T : Type} [AddCommGroup Li] [Module Ω Li] (M : LieModel G ξ Li)
     (hξ : IsCptGen ξ) {L : Type} [Field L] (z : Sp L ⟶ X) (h : genPt ξ ⤳ centre z) {V : Type} [AddCommGroup V]
@@ -287,8 +287,8 @@ theorem values_core (𝔐 : HodgeCpt Y S y) {L : Type} [Field L] (z : Sp L ⟶ �
     refine ⟨g, fun j => ?_, hinj ?_⟩
     · rw [hg]
       exact (hf j).2
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum, ← e]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← e]
       exact (Finset.sum_congr rfl fun j _ => hg j).symm
   have hβW : ∀ j t, i t ∈ eigSp 𝔐.ρ (𝔐.emb j) → β t ∈ eigSp ρ (σ j) := by
     intro j t ht
@@ -331,7 +331,7 @@ theorem values_of_frame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   intro E _ _ _ H D l Xo c Y S Ω _ K _ J _ y 𝔐 L _ _ z P V _ _ _ _ MV A lab m s hLin hfr
   obtain ⟨hact, hlab, -⟩ := hLin
   have hlat := (GlobalTheory.T.hodge_cpt_away_from_primes E H D l Xo c (𝓞 c.F) (algebraMap _ _) Y S Ω K J y 𝔐
-    (FaithfulSMul.algebraMap_injective _ _) ⟨centre (spMap (algebraMap (𝓞 L) L) ≫ z), 𝔐.all _⟩
+    (RingOfIntegers.coe_injective) ⟨centre (spMap (algebraMap (𝓞 L) L) ≫ z), 𝔐.all _⟩
     (fun r hr => not_inFibre _ _ r hr)).2.2
   exact values_core 𝔐 _ P.tK P.m MV A.ρ A.σ A.σ_bij.1 hact hlab hlat lab s hfr
 
