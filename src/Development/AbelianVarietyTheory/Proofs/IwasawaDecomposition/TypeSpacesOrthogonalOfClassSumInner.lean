@@ -165,7 +165,7 @@ theorem mem_sSup_irrRep : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L]
     refine (GlobalTheory.IsotOrth.orbit_finite ρC hN' y (fun κ hκ => Subtype.ext (funext fun g => hy κ hκ g))).subset ?_
     rintro _ ⟨k, hk, rfl⟩
     exact ⟨k, hk.1, rfl⟩
-  have hmem := GlobalTheory.SpanIsot.mem_sSup_irr ρC F ⟨x, hx⟩
+  have hmem := GlobalTheory.SpanIsot.mem_sSup_irr ρC hunit _ F hF horb ⟨x, hx⟩
     (fun κ hκ => Subtype.ext (funext fun g => hxN κ hκ g))
   have hle : sSup {W | GlobalTheory.SpanIsot.IrrSub ρC W} ≤ (sSup {S | NG.IsIrrRep a.ρ S}).comap C.subtype := by
     refine sSup_le fun W hW => ?_

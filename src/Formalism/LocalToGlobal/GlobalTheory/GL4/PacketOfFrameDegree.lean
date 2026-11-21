@@ -28,6 +28,15 @@ variable {D : D7} {u : D.what₂.Word} (CV : ColVal D u)
 theorem MQ_lattice (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) : Submodule.IsLattice D.what₂.LL (MQ CV c τ) := by
   exact Submodule.IsLattice.of_fg _ ((CV.Q_good c τ).2.1.map _)
 
+theorem MQ_fullLattice (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) :
+    Submodule.IsFullLattice D.what₂.LL (MQ CV c τ) := by
+  refine { toIsLattice := MQ_lattice CV c τ, span_eq_top := ?_ }
+  unfold MQ
+  rw [Submodule.map_coe, LinearMap.coe_restrictScalars]
+  rw [show ⇑(crdQ CV c τ : (CV.Q c τ).V →ₗ[D.what₂.LL] (Fin (D.R.N 0) → D.what₂.LL)) = ⇑(crdQ CV c τ) from rfl]
+  rw [← LinearEquiv.coe_coe, Submodule.span_image, (CV.Q_good c τ).2.2, Submodule.map_top]
+  exact LinearEquiv.range _
+
 theorem detTwK_inv_ne (c : (D.mem u).C.cls 0) (v : InfinitePlace D.what₂.LL) :
     detTwK ((D.fm u).lam 0) (invFr CV v c)⁻¹ ≠ 0 := by
   unfold detTwK
@@ -73,7 +82,7 @@ theorem classMapT_of (h : QFrameDeg D) : ClassMapT D := by
   obtain ⟨hyd, hli, -⟩ := hy
   have := (columnHypotheses D u).tc
   have hn : 0 < D.R.N 0 := rank_zero_pos D
-  have hM : ∀ τ, Submodule.IsLattice D.what₂.LL (MQ CV c τ) := MQ_lattice CV c
+  have hM : ∀ τ, Submodule.IsFullLattice D.what₂.LL (MQ CV c τ) := MQ_fullLattice CV c
   refine ⟨cfMap ((D.fm u).lam 0) (gG CV c y hli) ∘ₗ (LinearMap.proj c ∘ₗ (coE CV (hTV0 D u) : ((D.fm u).lat 0).V →ₗ[D.what₂.LL]
       ((D.mem u).C.cls 0 → VV D.what₂.LL ((D.fm u).lam 0)))), twIdeal ((D.fm u).lam 0) (MQ CV c) hM,
     fun v => ‖detTwK ((D.fm u).lam 0) (invFr CV v c)⁻¹‖ ^ 2, ?_, twIdeal_ne_zero _ _ hM, ?_, ?_, ?_, ?_⟩

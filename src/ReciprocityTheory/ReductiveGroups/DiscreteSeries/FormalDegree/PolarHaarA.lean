@@ -16,32 +16,25 @@ open ReciprocityTheory.ChartRestriction.DS.S7
 
 variable {n : ℕ}
 
+local instance (ε : Fin n → Bool) : (muK ε).IsHaarMeasure :=
+  Measure.isHaarMeasure_haarMeasure _
+
 lemma fdph_muK_univ_ne_zero (ε : Fin n → Bool) : muK ε Set.univ ≠ 0 := by
   exact isOpen_univ.measure_ne_zero (muK ε) Set.univ_nonempty
 
 lemma fdph_muK_univ_ne_top (ε : Fin n → Bool) : muK ε Set.univ ≠ ⊤ := by
   exact (isCompact_univ.measure_lt_top (μ := muK ε)).ne
 
-instance fdph_dk_finite (ε : Fin n → Bool) : IsFiniteMeasure (dk ε) := by
-  refine ⟨?_⟩
-  rw [dk, Measure.smul_apply, smul_eq_mul]
-  exact ENNReal.mul_lt_top (ENNReal.inv_lt_top.mpr (pos_iff_ne_zero.mpr (fdph_muK_univ_ne_zero ε)))
-    isCompact_univ.measure_lt_top
+instance fdph_dk_finite (ε : Fin n → Bool) : IsFiniteMeasure (dk ε) :=
+  IsFiniteMeasure.average (μ := muK ε)
 
-instance fdph_dk_openPos (ε : Fin n → Bool) : Measure.IsOpenPosMeasure (dk ε) := by
-  unfold dk
-  exact Measure.isOpenPosMeasure_smul _ (ENNReal.inv_ne_zero.mpr (fdph_muK_univ_ne_top ε))
+instance fdph_dk_openPos (ε : Fin n → Bool) : Measure.IsOpenPosMeasure (dk ε) :=
+  Measure.isOpenPosMeasure_smul (muK ε) (ENNReal.inv_ne_zero.mpr (fdph_muK_univ_ne_top ε))
 
-lemma fdph_shc_pos (u : ℝ) : 0 < shc u := by
-  unfold shc
-  split_ifs with h
-  · exact one_pos
-  · rcases lt_or_gt_of_ne h with h' | h'
-    · exact div_pos_of_neg_of_neg (Real.sinh_neg_iff.mpr h') h'
-    · exact div_pos (Real.sinh_pos_iff.mpr h') h'
+lemma fdph_shc_pos (u : ℝ) : 0 < shc u := pb_shc_pos u
 
 lemma fdph_jac_pos {ε : Fin n → Bool} (z : PCoord ε → ℂ) : 0 < Jac z := by
-  unfold Jac
+  delta Jac
   exact Finset.prod_pos fun a _ => Finset.prod_pos fun b _ => fdph_shc_pos _
 
 abbrev fdphNu (ε : Fin n → Bool) : Measure (PCoord ε → ℂ) :=
@@ -73,36 +66,15 @@ def fdphPhi (ε : Fin n → Bool) (kz : KG ε × (PCoord ε → ℂ)) : UJ ε :=
 lemma fdph_toM_phi (ε : Fin n → Bool) (kz : KG ε × (PCoord ε → ℂ)) : toM (fdphPhi ε kz) = polarM kz := rfl
 
 lemma fdph_phi_continuous (ε : Fin n → Bool) : Continuous (fdphPhi ε) := by
-  unfold fdphPhi
-  have hexp : Continuous (fun M : Matrix (Fin n) (Fin n) ℂ => NormedSpace.exp M) := by
-    letI : NormedRing (Matrix (Fin n) (Fin n) ℂ) := Matrix.linftyOpNormedRing
-    letI : NormedAlgebra ℂ (Matrix (Fin n) (Fin n) ℂ) := Matrix.linftyOpNormedAlgebra
-    letI : NormedAlgebra ℚ (Matrix (Fin n) (Fin n) ℂ) := NormedAlgebra.restrictScalars ℚ ℂ _
-    exact NormedSpace.exp_continuous
-  have htoMK : Continuous (fun k : KG ε => toMK k) := by
-    fun_prop
-  have hpmat : Continuous (fun z : PCoord ε → ℂ => pmat z) := by
-    refine continuous_pi fun a => continuous_pi fun b => ?_
-    by_cases h : b < a ∧ ε a ≠ ε b
-    · simp only [pmat, dif_pos h]
-      exact continuous_apply _
-    · by_cases h' : a < b ∧ ε b ≠ ε a
-      · simp only [pmat, dif_neg h, dif_pos h']
-        exact (continuous_apply _).star
-      · simp only [pmat, dif_neg h, dif_neg h']
-        exact continuous_const
-  have hpol : Continuous (fun kz : KG ε × (PCoord ε → ℂ) => polarM kz) := by
-    unfold polarM
-    exact (htoMK.comp continuous_fst).matrix_mul (hexp.comp (hpmat.comp continuous_snd))
-  apply Continuous.subtype_mk
-  rw [Units.continuous_iff]
-  exact ⟨hpol, (continuous_const.matrix_mul hpol.matrix_conjTranspose).matrix_mul continuous_const⟩
+  apply (isClosedEmbedding_toM ε).isEmbedding.continuous_iff.mpr
+  change Continuous (fun kz => toM (fdphPhi ε kz))
+  simpa only [fdph_toM_phi] using polarM_continuous ε
 
 lemma fdph_preimage (ε : Fin n → Bool) (S : Set (UJ ε)) :
     Set.preimage (β := Fin n → Fin n → ℂ) polarM (Set.image (β := Fin n → Fin n → ℂ) (fun g : UJ ε => toM g) S) =
       fdphPhi ε ⁻¹' S := by
   ext kz
-  simp only [Set.mem_preimage, Set.mem_image]
+  simp only [Set.mem_preimage]
   constructor
   · rintro ⟨g, hg, hgeq⟩
     have hge : g = fdphPhi ε kz :=
@@ -118,7 +90,7 @@ lemma fdph_apply (ε : Fin n → Bool) {S : Set (UJ ε)} (hS : MeasurableSet S) 
   have hE : MeasurableEmbedding (β := Fin n → Fin n → ℂ) (fun g : UJ ε => toM g) := hC.measurableEmbedding
   have hPc : Continuous (Y := Fin n → Fin n → ℂ) (polarM (ε := ε)) := (polarM_isClosedEmbedding ε).continuous
   have hP : Measurable (β := Fin n → Fin n → ℂ) (polarM (ε := ε)) := hPc.measurable
-  unfold muPolar muPolarMat
+  delta muPolar muPolarMat
   rw [hE.comap_apply, Measure.map_apply hP (hE.measurableSet_image' hS), fdph_preimage]
 
 end ReciprocityTheory.ChartRestriction.DS

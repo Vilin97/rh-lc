@@ -130,13 +130,6 @@ def objMv (O : Obj2 (w.D Z)) : Obj2 (w.D (Db.setDivZ Z N h)) where
   amb0 := { O.amb0 with }
   gauge := O.gauge
 
-theorem objMv_eq_cast_tr (O : Obj2 (w.D Z)) :
-    objMv N h O = cast (congrArg Obj2 (Db.D_setDivZ w Z N h).symm) (O.tr N h) := by
-  have hObj : HEq (objMv N h O) (O.tr N h) := by
-    cases Z
-    with_unfolding_all exact HEq.rfl
-  exact eq_of_heq (hObj.trans (cast_heq (congrArg Obj2 (Db.D_setDivZ w Z N h).symm) (O.tr N h)).symm)
-
 theorem datMv_cG {hX : B.fields.Ok} (z : Dat (w.st Z) w.I hX T Wt) : HEq (datMv N h z).cG z.cG := (by with_unfolding_all exact ((HEq.refl z.cG) :))
 
 section Ties
@@ -397,9 +390,7 @@ theorem ReadSame.objT {N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V} {h : B
         exact ⟨s.amb1 (a := O.amb) (objMv N h O).amb rfl (HEq.refl O.amb.jAmb) H.amb.1,
           s.amb0 (a := O.amb0) (objMv N h O).amb0 rfl (HEq.refl O.amb0.jAmb) H.amb.2⟩
     mjH := s.mj_fwd (X := O.X) H.mjH
-    kapR σ := by
-      change O.X.kapR σ = kapSharp (w.D (Db.setDivZ Z N h))
-      exact (H.kapR σ).trans (kapSharp_mv (w := w) (Z := Z) N h).symm
+    kapR σ := (H.kapR σ).trans (kapSharp_mv (w := w) (Z := Z) N h).symm
   }
 
 

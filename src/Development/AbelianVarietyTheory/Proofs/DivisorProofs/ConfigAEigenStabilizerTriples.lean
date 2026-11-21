@@ -136,7 +136,7 @@ theorem level : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     obtain ⟨C, hCc, hsub⟩ := GlobalTheory.StabBounded.exists_compact_superset_stabK F E σ B _ G.V _ _ hT.base hT.geo.hV
     rw [hKeq]
     exact hCc.of_isClosed_subset (GlobalTheory.StabHaar.isClosed_stabK B G.V
-      (GlobalTheory.LatHatClosed.isClosed_latHat F E _ G.V hT.geo.hV.lat)) hsub
+      (GlobalTheory.LatHatClosed.isClosed_latHat F E _ G.V hT.geo.hV.lat.toIsLattice)) hsub
 
   obtain ⟨L₁, L₂, o₁, o₂, hfix⟩ := GlobalTheory.SchrFixNbhd.exists_fix F B.ψ hstd.1 _ Ψ hΨ
 

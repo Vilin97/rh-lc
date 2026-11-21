@@ -1,8 +1,7 @@
 module
 
 public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Divisors.DatumEquiv
-public import Development.AbelianVarietyTheory.Definitions.Divisors.VdmSplit
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.CoordSpan
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.ProdModeCharExp
 
 @[expose] public section
@@ -13,10 +12,11 @@ open ReciprocityTheory.ChartRestriction.DS ReciprocityTheory.ChartRestriction.DS
 
 namespace GlobalTheory.PsCo.PcEF
 
-open GlobalTheory.PsCo.PcEG
-
-theorem fockCoordinates_span_finiteDimensional : CoordFD := by
-  intro n ε M _ _ E Z hZ hK
+theorem fockCoordinates_span_finiteDimensional (n : ℕ) (ε : Fin n → Bool) (M : Type)
+    [NormedAddCommGroup M] [InnerProductSpace ℂ M] (E : Fin n → Fin n → Module.End ℂ M)
+    (Z : Submodule ℂ (TensorProduct ℂ M (Fock n))) (hZ : FiniteDimensional ℂ Z)
+    (hK : IsKStableSub ε (diagE ε (eT E) cpT cmT) Z) :
+    FiniteDimensional ℂ (coordSpan Z) ∧ IsKStableSub ε E (coordSpan Z) := by
   have hle : coordSpan Z ≤ ⨆ s : Finset (Fin (n * n)), Z.map (tcoef (M := M) ((fockBasis n).coord s)) := by
     refine Submodule.span_le.2 ?_
     rintro v ⟨s, y, hy, rfl⟩

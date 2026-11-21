@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PlacesToAdeles
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SpecialLinearGeneratedByTransvections
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsSelfDualLatticeAtPlaceLatticeCompletion
@@ -78,7 +79,8 @@ theorem idAt_eq_zero_of_AA (hAA : D.host.AA = 0) {V V₀ W W₀ : HSp D} {ρ : �
   have hp : IsPlaceIdem D v (pairA D.host.F 0 (singleV D.host.F v 1)) :=
     ⟨_, rfl, GlobalTheory.LatAlmostStd.evalV_single_same v 1, fun w hw => GlobalTheory.LatAlmostStd.evalV_single_ne v 1 hw⟩
   set ε := pairA D.host.F 0 (singleV D.host.F v 1) with hεdef
-  obtain ⟨N, hN, -, hNL⟩ := GlobalTheory.LatAlmostStd.exists_commensurable LV hsdV.1
+  obtain ⟨N, hN, -, hNL⟩ := GlobalTheory.LatAlmostStd.exists_commensurable LV
+    (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice V LV hsdV)
   obtain ⟨b, hb⟩ := IsLocalization.exist_integer_multiples_of_finite (nonZeroDivisors (𝓞 D.host.E))
     (fun k => dV.e k i)
   choose o ho using hb

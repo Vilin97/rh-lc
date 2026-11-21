@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.GlobSpecOfExists
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.TransportedLatticeLocalizationFreeLeCoefficientS
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DualLatticeIsLatticeAndHermitianDual
@@ -77,7 +78,7 @@ theorem localization_dualFr_tauLat_le (τ : ι) {L L' : Submodule (𝓞 E) (Fin 
   exact this
 
 theorem localization_nabK_delK_congr (lam : ι → DomWeight n) {M M' : ι → Submodule (𝓞 K) (Fin n → K)}
-    (hM : ∀ τ, Submodule.IsLattice K (M τ)) (hM' : ∀ τ, Submodule.IsLattice K (M' τ)) (w : HeightOneSpectrum (𝓞 K))
+    (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) (hM' : ∀ τ, Submodule.IsFullLattice K (M' τ)) (w : HeightOneSpectrum (𝓞 K))
     (h : ∀ τ, localization₂ w.asIdeal (M τ) = localization₂ w.asIdeal (M' τ)) :
     localization₂ w.asIdeal (nabK lam M) = localization₂ w.asIdeal (nabK lam M') ∧
       localization₂ w.asIdeal (delK lam M) = localization₂ w.asIdeal (delK lam M') := by
@@ -98,7 +99,7 @@ theorem localization_nabK_delK_congr (lam : ι → DomWeight n) {M M' : ι → S
     rw [key, key, h1.2, h2.2]
 
 theorem localization_nabAtr_delAtr_congr (lam : ι → DomWeight n) {L L' : Submodule (𝓞 E) (Fin n → E)}
-    (hL : Submodule.IsLattice E L) (hL' : Submodule.IsLattice E L') {a : ℕ} (h : ∀ x ∈ L, a • x ∈ L')
+    (hL : Submodule.IsFullLattice E L) (hL' : Submodule.IsFullLattice E L') {a : ℕ} (h : ∀ x ∈ L, a • x ∈ L')
     (h' : ∀ x ∈ L', a • x ∈ L) (w : HeightOneSpectrum (𝓞 K)) (ha : ((a : ℕ) : 𝓞 K) ∉ w.asIdeal) :
     localization₂ w.asIdeal (nabAtr emb lam L) = localization₂ w.asIdeal (nabAtr emb lam L') ∧
       localization₂ w.asIdeal (delAtr emb lam L) = localization₂ w.asIdeal (delAtr emb lam L') :=
@@ -116,7 +117,10 @@ theorem use₃ (lam : X.Tau → DomWeight n) (hT : ∀ Q ∈ ST, ((p : ℕ) : �
     localization₂ w.asIdeal (nabAtr X.emb lam d.1.Lsh) = localization₂ w.asIdeal (nabAtr X.emb lam d.1.N) ∧
       localization₂ w.asIdeal (delAtr X.emb lam d.1.Lsh) = localization₂ w.asIdeal (delAtr X.emb lam d.1.N) := by
   obtain ⟨a, hap, ha⟩ := exists_coprime_mem p ST hT
-  refine localization_nabAtr_delAtr_congr X.emb lam d.2.Lsh_lattice d.2.lat (a := a) (fun x hx => ?_)
+  letI : Submodule.IsFullLattice X.E d.1.N := Formalism.L2.Ker.full_of_sd ⟨d.2.lat, d.2.uni⟩
+  letI := d.2.Lsh_lattice
+  have hLsh : Submodule.IsFullLattice X.E d.1.Lsh := Submodule.IsFullLattice.of_le X.E d.2.N_le_Lsh
+  refine localization_nabAtr_delAtr_congr X.emb lam hLsh inferInstance (a := a) (fun x hx => ?_)
     (fun x hx => Submodule.smul_of_tower_mem _ a (d.2.N_le_Lsh hx)) w (natCast_notMem_of_coprime hap w hw)
   rw [← Nat.cast_smul_eq_nsmul (𝓞 X.E)]
   exact d.2.smul_Lsh_mem_N (fun P => by rw [map_natCast]; exact ha P.1 P.2) hx

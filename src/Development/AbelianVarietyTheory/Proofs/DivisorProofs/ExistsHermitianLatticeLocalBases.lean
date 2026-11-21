@@ -216,9 +216,12 @@ theorem isHerm_spaceW : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G
   have hV := node_isV G hL hX
   haveI hlat : (GlobalTheory.TripleSpaceW.conjSub (G.Λ (.grid ((i : ℕ) + 1) ((j : ℕ) + 1)))).IsLattice D.host.E :=
     GlobalTheory.TripleSpaceW.conjSub_isLattice hV.sd.1
-  choose bas0 hbas0 using fun v : B.P =>
+  haveI := GlobalTheory.TripleSpaceW.conjSub_isFullLattice (selfDual_isFullLattice _ _ hV.sd)
+  have hex : ∀ v : B.P, ∃ bas : GL (Fin (spW G i j).rank) (Fv D.host.F v.1),
+      GlobalTheory.AdelicU.IsSplitBasis (B.τ v) (GlobalTheory.TripleSpaceW.conjSub (G.Λ (.grid ((i : ℕ) + 1) ((j : ℕ) + 1)))) bas := fun v =>
     GlobalTheory.AdelicU.exists_isSplitBasis (B.τ v) (GlobalTheory.TripleSpaceW.conjSub (G.Λ (.grid ((i : ℕ) + 1) ((j : ℕ) + 1))))
       (GlobalTheory.AdelicU.isCMExt_host D)
+  choose bas0 hbas0 using hex
   have hq : Node.neg D.R.m (.grid ((i : ℕ) + 1) ((j : ℕ) + 1)) = (D.R.m - j - 1) / 2 := by
     show (D.R.m - ((j : ℕ) + 1)) / 2 = _
     rw [Nat.sub_sub]

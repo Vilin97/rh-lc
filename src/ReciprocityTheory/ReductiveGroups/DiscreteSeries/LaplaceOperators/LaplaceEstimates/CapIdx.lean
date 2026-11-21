@@ -182,18 +182,19 @@ theorem evalP : EvalPStatement := by
       obtain ⟨e, he_def⟩ : ∃ e : Fin (k + 1) → Fin (2 * r + k + 1), e = Fin.cast (by omega) := ⟨_, rfl⟩
       have he : Function.Injective e := fun a' b' hab => by
         rw [he_def] at hab; exact Fin.cast_injective _ hab
+      have hidx (i : Fin k) : e (Fin.castSucc i) = capIdx k r (Capelli.wIdx k r i) := by
+        rw [he_def]
+        apply Fin.ext
+        change (i : ℕ) = r + (i : ℕ)
+        simp only [hr, zero_add]
       have hWW' : ∀ i j, l ∘ₗ (fun a' b' => CapelliMinorRestriction.resE (frameE Q E) S hSF (e a') (e b'))
           (Fin.castSucc i) (Fin.castSucc j) = Dk i j ∘ₗ l := by
         intro i j
         apply LinearMap.ext
         intro m
-        have hi : e (Fin.castSucc i) = capIdx k r (Capelli.wIdx k r i) :=
-          Fin.ext (by simp [he_def, capIdx, Capelli.wIdx, hr])
-        have hj : e (Fin.castSucc j) = capIdx k r (Capelli.wIdx k r j) :=
-          Fin.ext (by simp [he_def, capIdx, Capelli.wIdx, hr])
         show L (((CapelliMinorRestriction.resE (frameE Q E) S hSF (e (Fin.castSucc i)) (e (Fin.castSucc j)) m : S) : D) : H) =
           Dk i j (L ((m : D) : H))
-        rw [hi, hj, hLdef]
+        rw [hidx i, hidx j, hLdef]
         exact hWW i j m m.2
       have hB0 := Capelli.whittakerZeroStatement S Vp k (fun a' b' => CapelliMinorRestriction.resE (frameE Q E) S hSF (e a') (e b')) Dk l
         (om - 1) hWW'
@@ -213,8 +214,9 @@ theorem evalP : EvalPStatement := by
       exact smul_ne_zero hprod0 hlv
     · refine ⟨0, ?_⟩
       have hkn : k + 2 * r = 2 * r + k := by omega
-      have hcapinj : Function.Injective (capIdx k r) := fun a' b' hab => by
-        unfold capIdx at hab; exact Fin.cast_injective _ hab
+      have hcapinj : Function.Injective (capIdx k r) := by
+        delta capIdx
+        exact Fin.cast_injective _
       have hup' : ∀ a' b', Capelli.blk k r a' < Capelli.blk k r b' →
           l ∘ₗ (fun a' b' => CapelliMinorRestriction.resE (frameE Q E) S hSF (capIdx k r a') (capIdx k r b')) a' b' =
             ψ' a' b' • l := by
@@ -242,7 +244,9 @@ theorem evalP : EvalPStatement := by
           Capelli.cminor (CapelliMinorRestriction.resE (frameE Q E) S hSF) ((Fin.last (2 * r + k)).succAbove ∘ Fin.cast hkn)
             ((0 : Fin (2 * r + k + 1)).succAbove ∘ Fin.cast hkn) (om - 1) := by
         rw [CapelliMinorRestriction.cminor_reindex _ (capIdx k r) hcapinj]
-        congr 1 <;> funext i <;> exact Fin.ext (by simp [capIdx, Fin.succAbove_last])
+        congr 1 <;> funext i <;> apply Fin.ext <;> delta capIdx <;>
+          simp only [Function.comp_apply, Fin.succAbove_last, Fin.succAbove_zero, Fin.val_cast,
+            Fin.val_castSucc, Fin.val_succ]
       rw [CapelliMinorRestriction.cminor_cast _ hkn] at hcm
       have h1 := LinearMap.congr_fun hB1 ⟨(v : D), hvS⟩
       simp only [LinearMap.comp_apply, LinearMap.smul_apply] at h1

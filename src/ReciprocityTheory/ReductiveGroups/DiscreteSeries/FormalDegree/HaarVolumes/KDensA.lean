@@ -272,11 +272,16 @@ theorem kd_dk_eq_map (ε : Fin n → Bool) (μp : Measure (UNgrp (pOf ε))) [μp
       (by rw [Filter.cocompact_eq_bot]; exact Filter.tendsto_bot)
   have : IsProbabilityMeasure ((μp.prod μq).map (kdPsi ε)) :=
     inferInstance
-  have h0 : muK ε Set.univ ≠ 0 := (isOpen_univ.measure_pos (muK ε) Set.univ_nonempty).ne'
-  have htop : muK ε Set.univ ≠ ⊤ := measure_ne_top _ _
-  have : Measure.IsHaarMeasure (dk ε) := Measure.IsHaarMeasure.smul _ (ENNReal.inv_ne_zero.2 htop) (ENNReal.inv_ne_top.2 h0)
+  have h0 : (Measure.haar : Measure (KG ε)) Set.univ ≠ 0 :=
+    isOpen_univ.measure_ne_zero _ Set.univ_nonempty
+  have htop : (Measure.haar : Measure (KG ε)) Set.univ ≠ ⊤ :=
+    isCompact_univ.measure_ne_top
+  have : Measure.IsHaarMeasure (dk ε) := by
+    delta dk muK
+    exact Measure.IsHaarMeasure.smul _ (ENNReal.inv_ne_zero.2 htop) (ENNReal.inv_ne_top.2 h0)
   have : IsProbabilityMeasure (dk ε) := ⟨by
-    simp only [dk, smul_apply, smul_eq_mul]
+    delta dk muK
+    simp only [smul_apply, smul_eq_mul]
     exact ENNReal.inv_mul_cancel h0 htop⟩
   exact Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
 

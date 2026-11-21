@@ -50,22 +50,21 @@ theorem kinj_prod₂MapR (π₁ : Representation ℂ (GL (Fin r) k) U) {π₂ : 
       LinearMap.lTensor U (π₂ h) (F.1.1 1) = F.1.1 1 := by
     intro h hh
     set ℓ : Levi k (Two (Fin r) (Fin t)) := leviTwo k (Fin r) (Fin t) (1, h) with hℓ
-    have hℓK : ℓ ∈ leviK k := by
-      rw [leviK, Subgroup.mem_pi]
-      intro b _
+    have hℓK : ∀ b, ℓ b ∈ KO k (Two (Fin r) (Fin t) b) := by
+      intro b
       cases b
       · exact one_mem _
       · exact hh
     have hEmb : leviEmb k (two (stdSum (rfl : r + t = r + t))) ℓ ∈ KO k (Fin (r + t)) := by
       have hfacts := (GlobalTheory.SmGL.LeviInt.levi_integral_facts k Bool (Fin (r + t))
         (Two (Fin r) (Fin t)) (two (stdSum (rfl : r + t = r + t)))).1 ℓ 1 (one_mem _)
-      simpa using hfacts.mpr ⟨fun a => hℓK a trivial, one_mem _⟩
+      simpa using hfacts.mpr ⟨hℓK, one_mem _⟩
     have hDelta : deltaHalf k (Two (Fin r) (Fin t)) ℓ = 1 := by
       rw [deltaHalf_apply]
       refine Finset.prod_eq_one (fun a _ => ?_)
       
       apply isUnram_absPow k _ _
-      obtain ⟨g, hg⟩ := hℓK a trivial
+      obtain ⟨g, hg⟩ := hℓK a
       rw [← hg]
       have heq : ((Matrix.GeneralLinearGroup.det (Matrix.GeneralLinearGroup.map (algebraMap 𝒪[k] k) g) : kˣ) : k) =
           algebraMap 𝒪[k] k (Matrix.GeneralLinearGroup.det g : 𝒪[k]ˣ) :=
@@ -130,22 +129,21 @@ theorem kinj_prod₂MapL {π₁ : Representation ℂ (GL (Fin r) k) X} {π₁' :
       LinearMap.rTensor U (π₁ h) (F.1.1 1) = F.1.1 1 := by
     intro h hh
     set ℓ : Levi k (Two (Fin r) (Fin t)) := leviTwo k (Fin r) (Fin t) (h, 1) with hℓ
-    have hℓK : ℓ ∈ leviK k := by
-      rw [leviK, Subgroup.mem_pi]
-      intro b _
+    have hℓK : ∀ b, ℓ b ∈ KO k (Two (Fin r) (Fin t) b) := by
+      intro b
       cases b
       · exact hh
       · exact one_mem _
     have hEmb : leviEmb k (two (stdSum (rfl : r + t = r + t))) ℓ ∈ KO k (Fin (r + t)) := by
       have hfacts := (GlobalTheory.SmGL.LeviInt.levi_integral_facts k Bool (Fin (r + t))
         (Two (Fin r) (Fin t)) (two (stdSum (rfl : r + t = r + t)))).1 ℓ 1 (one_mem _)
-      simpa using hfacts.mpr ⟨fun a => hℓK a trivial, one_mem _⟩
+      simpa using hfacts.mpr ⟨hℓK, one_mem _⟩
     have hDelta : deltaHalf k (Two (Fin r) (Fin t)) ℓ = 1 := by
       rw [deltaHalf_apply]
       refine Finset.prod_eq_one (fun a _ => ?_)
       
       apply isUnram_absPow k _ _
-      obtain ⟨g, hg⟩ := hℓK a trivial
+      obtain ⟨g, hg⟩ := hℓK a
       rw [← hg]
       have heq : ((Matrix.GeneralLinearGroup.det (Matrix.GeneralLinearGroup.map (algebraMap 𝒪[k] k) g) : kˣ) : k) =
           algebraMap 𝒪[k] k (Matrix.GeneralLinearGroup.det g : 𝒪[k]ˣ) :=

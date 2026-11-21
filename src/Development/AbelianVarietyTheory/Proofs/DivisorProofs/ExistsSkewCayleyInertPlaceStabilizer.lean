@@ -312,7 +312,7 @@ theorem exists_skew_cayley : ∀ (F E : Type) [Field F] [NumberField F] [Field E
     (∃ M : Matrix (Fin (a + a')) (Fin (a + a')) (AE F E), (1 + Y + mat k * (1 - Y)) * M = 1 ∧
       M * (1 + Y + mat k * (1 - Y)) = 1 ∧ ∀ z ∈ GlobalTheory.InertSph.latAt G.W v, M *ᵥ z ∈ GlobalTheory.InertSph.latAt G.W v) := by
   intro F E _ _ _ _ _ σ B a a' G X om om' hT v w hin k hk
-  have hlat : G.W.L.IsLattice E := hT.geo.hW.lat
+  have hlat : G.W.L.IsLattice E := hT.geo.hW.lat.toIsLattice
   obtain ⟨h2v, h3, -⟩ := hT.base.inert v w hin
   have hp0 : 0 < Ideal.absNorm v.asIdeal := by omega
   have hpv : ((Ideal.absNorm v.asIdeal : ℕ) : 𝓞 F) ∈ v.asIdeal := Ideal.absNorm_mem _

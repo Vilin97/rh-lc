@@ -116,7 +116,7 @@ theorem exists_near_representation (h𝔭 : 𝔭.IsMaximal) (hF : IsFixF K F) {h
   rw [this]
   exact hx.add hp (h6.mono (Nat.zero_le _))
 
-theorem exists_F_smul_mem (hF : IsFixF K F) {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ)
+theorem exists_F_smul_mem (hF : IsFixF K F) {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsFullLattice K Λ)
     (v : V) : ∃ s : 𝓞 F, s ≠ 0 ∧ ι s • v ∈ Λ := by
   obtain ⟨r, hr, hrv⟩ := StabilizerLattices.exists_smul_mem hΛ v
   obtain ⟨s, hs⟩ := (conjO_eq_iff_mem_range hF (conjO K r * r)).1 (by
@@ -132,7 +132,7 @@ theorem exists_F_smul_mem (hF : IsFixF K F) {Λ : Submodule (𝓞 K) V} (hΛ : S
     exact Λ.smul_mem _ hrv
 
 theorem exists_near (h𝔭 : 𝔭.IsMaximal) (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm)
-    (hL : Submodule.IsLattice K A) (hA : Formalism.HermitianLatticesTheory.IsIntegralLat h A) {n : 𝓞 F} (hn : n ≠ 0)
+    (hL : Submodule.IsFullLattice K A) (hA : Formalism.HermitianLatticesTheory.IsIntegralLat h A) {n : 𝓞 F} (hn : n ≠ 0)
     (hrep : ∃ b : V, h b b = κ (ι n)) :
     ∃ v : ℕ, ∀ k : ℕ, 1 ≤ k → ∀ x, InL 𝔭 A 0 x → InI 𝔭 (v + k) (h x x - κ (ι n)) →
       ∃ y, InL 𝔭 A 0 y ∧ h y y = κ (ι n) ∧ InL 𝔭 A k (y - x) := by
@@ -167,7 +167,7 @@ end LocalCell
 
 theorem exists_exact_near (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {A₀ : Submodule (𝓞 K) V}
-    (hA₀ : Submodule.IsLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀) {𝔭 : Ideal (𝓞 F)}
+    (hA₀ : Submodule.IsFullLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} (hn : n ≠ 0)
     (hrep : ∃ b : V, h b b = algebraMap F K (n : F)) :
     ∃ c₀ : ℕ, ∀ k : ℕ, c₀ ≤ k → ∀ x ∈ (locF 𝔭 A₀), CongrP 𝔭 k (h x x) (algebraMap F K (n : F)) →

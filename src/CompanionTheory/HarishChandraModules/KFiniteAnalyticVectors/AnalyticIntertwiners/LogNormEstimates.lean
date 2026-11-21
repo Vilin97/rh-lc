@@ -1,7 +1,7 @@
 module
 
-public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.AnalyticIntertwiners.Clause1
 public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Upqcpt
+public import Formalism.SharpRestriction.Divisibility.SchurIrreducible
 
 @[expose] public section
 

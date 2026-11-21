@@ -4,7 +4,7 @@ public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExi
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.Compact
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.EqZeroOfDatumEmbeddingEqZero
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Exists
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiGelfand
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiExistsStatement
 
 @[expose] public section
 
@@ -27,7 +27,7 @@ theorem final_existsG_of (hS7 : ∀ m : ℕ, S7.PsiExistsStatement m) :
   by_cases hpq : pOf ε = 0 ∨ qOf ε = 0
   · obtain ⟨σ, hDS, -⟩ := isDS_compact hpq hlam T
     exact ⟨T.V, inferInstance, inferInstance, σ, hDS⟩
-  · push_neg at hpq
+  · simp only [not_or] at hpq
     have hq : 1 ≤ S7.q0 ε := by
       show 1 ≤ min (pOf ε) (qOf ε)
       omega

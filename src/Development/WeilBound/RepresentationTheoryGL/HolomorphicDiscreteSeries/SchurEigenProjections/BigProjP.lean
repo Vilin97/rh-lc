@@ -10,7 +10,6 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeri
 public import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
 public import Development.AbelianVarietyTheory.Definitions.Foundations.UnitarySixTwoHarishChandraParameter
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousWordTranslate
-public import Development.WeilBound.CoreStatements.OrbitDecayEstimates.CurveDerivativeDecay.LipschitzEstimate
 public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HeBranching
 public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsNormEmbId
 

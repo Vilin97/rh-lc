@@ -30,7 +30,9 @@ theorem cc_cornerGL_leviEmb {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N)
       (leviEmb T (stdBlocks n h) g : Matrix (Fin N) (Fin N) T)
         (stdBlocks n h ⟨a, i⟩) (stdBlocks n h ⟨b, j⟩) = 0 := by
     classical
-    simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab]
+    simp [leviEmb]
+    letI : DecidableEq (Fin c) := Classical.typeDecidableEq _
+    exact Matrix.blockDiagonal'_apply_ne _ _ _ hab
   apply Units.ext
   ext p q
   obtain ⟨⟨a, i⟩, rfl⟩ := (stdBlocks n h).surjective p
@@ -82,7 +84,9 @@ theorem iwasawa_inf {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N) (x : GA
     apply mem_parab_iff.2
     intro a b i j hab
     classical
-    simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ (ne_of_gt hab)]
+    simp [leviEmb]
+    letI : DecidableEq (Fin c) := Classical.typeDecidableEq _
+    exact Matrix.blockDiagonal'_apply_ne _ _ _ (ne_of_gt hab)
   have hproj (g : ∀ i, GL (Fin (n i)) (Cinf E)) :
       leviProj (Cinf E) (stdBlocks n h) ⟨leviEmb (Cinf E) (stdBlocks n h) g, hLmem g⟩ = g := by
     funext a

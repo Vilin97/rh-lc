@@ -96,47 +96,8 @@ theorem exists_fundDom_unip_herm : ∀ (F E : Type) [Field F] [NumberField F] [F
   have hσ : ∀ a, σ (σ a) = a := cm_conj_conj hB.cm
   have hV := hG.hV
   have hH := hC.hH
-  have hL : Submodule.span E (G.V.L : Set (Fin (b + 2) → E)) = ⊤ := by
-    have hfg : G.V.L.FG := Submodule.IsLattice.fg (self := hG.hV.lat)
-    obtain ⟨generators, hgen⟩ := hfg
-    rw [eq_top_iff]
-    intro v _
-    obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 E))
-      generators (form σ G.V.J v)
-    let c : E := algebraMap (𝓞 E) E (d : 𝓞 E)
-    have hc : c ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors d.2
-    have hv : c • v ∈ G.V.L := by
-      apply (hG.hV.dual _).2
-      intro x hx
-      rw [← hgen] at hx
-      induction hx using Submodule.span_induction with
-      | mem x hx =>
-        obtain ⟨a, ha⟩ := hd x hx
-        rw [form, smul_dotProduct]
-        change IsIntegral ℤ (c * form σ G.V.J v x)
-        rw [Algebra.smul_def] at ha
-        change (a : E) = c * form σ G.V.J v x at ha
-        rw [← ha]
-        exact a.isIntegral_coe
-      | zero =>
-        have hσ : (fun _ : Fin (b + 2) => σ (0 : E)) = 0 := by
-          ext i
-          exact map_zero σ
-        simp only [form, Pi.zero_apply, hσ, Matrix.mulVec_zero, dotProduct_zero, isIntegral_zero]
-      | add x y _ _ hx hy =>
-        have hσ : (fun i => σ ((x + y) i)) = (fun i => σ (x i)) + (fun i => σ (y i)) := by
-          ext i
-          exact map_add σ (x i) (y i)
-        simpa only [form, hσ, Matrix.mulVec_add, dotProduct_add] using hx.add hy
-      | smul a x _ hx =>
-        have hσ : (fun i => σ ((a • x) i)) = σ (a : E) • (fun i => σ (x i)) := by
-          rw [algebra_compatible_smul E a x]
-          ext i
-          exact map_mul σ (a : E) (x i)
-        have ha : IsIntegral ℤ (σ (a : E)) := a.isIntegral_coe.map σ.toRingHom.toIntAlgHom
-        simpa only [form, hσ, Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul] using ha.mul hx
-    simpa only [smul_smul, inv_mul_cancel₀ hc, one_smul] using
-      (Submodule.span E (G.V.L : Set (Fin (b + 2) → E))).smul_mem c⁻¹ (Submodule.subset_span hv)
+  have hL : Submodule.span E (G.V.L : Set (Fin (b + 2) → E)) = ⊤ :=
+    hG.hV.lat.span_eq_top
   have hspan : ∀ v : Fin (b + 2) → E, ∃ (s t : E) (u : Fin b → E), v = s • H.x + H.ι *ᵥ u + t • H.y := by
     intro v
     have hv : v ∈ Submodule.span E (G.V.L : Set (Fin (b + 2) → E)) := by

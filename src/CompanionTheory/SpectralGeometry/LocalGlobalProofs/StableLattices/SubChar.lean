@@ -37,16 +37,16 @@ theorem sub_char {W : Type} [AddCommGroup W] [Module ℂ W] (R : Subalgebra ℂ 
   haveI : Algebra.FiniteType ℂ R := (Subalgebra.fg_iff_finiteType R).1 hfg
   obtain ⟨φ, hφ⟩ := GlobalTheory.T.finite_type_algebra_common_eigencharacter R W t ht
   refine ⟨fun x => if h : x ∈ R then φ ⟨x, h⟩ else 0, ?_, ?_, ?_, ?_⟩
-  · simp only [R.one_mem, dif_pos]
+  · simp only [R.one_mem, dite_eq_left]
     exact map_one φ
   · intro x hx y hy
-    simp only [hx, hy, R.add_mem hx hy, R.mul_mem hx hy, dif_pos]
+    simp only [hx, hy, R.add_mem hx hy, R.mul_mem hx hy, dite_eq_left]
     exact ⟨map_add φ ⟨x, hx⟩ ⟨y, hy⟩, map_mul φ ⟨x, hx⟩ ⟨y, hy⟩⟩
   · intro x hx c
-    simp only [hx, R.smul_mem hx c, dif_pos]
+    simp only [hx, R.smul_mem hx c, dite_eq_left]
     exact map_smul φ c ⟨x, hx⟩
   · intro x hx c e
-    simp only [hx, dif_pos]
+    simp only [hx, dite_eq_left]
     exact hφ ⟨x, hx⟩ c e
 
 theorem L_core : ∀ (W : Type) [AddCommGroup W] [Module ℂ W] (t : W) (M : ℕ) (d : Fin M → ℕ)

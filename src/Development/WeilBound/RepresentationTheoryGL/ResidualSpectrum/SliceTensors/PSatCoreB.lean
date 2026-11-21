@@ -180,8 +180,10 @@ theorem isSatVecGL_of_levi (hs : ∀ a, IsSmooth (π a)) (S : Fin c → Multiset
     have hEmb (g : ∀ a, GL (Fin (N a)) (w.adicCompletion E)) :
         leviEmb (w.adicCompletion E) (stdBlocks N h) g ∈ parab (w.adicCompletion E) (stdBlocks N h) :=
       mem_parab_iff.2 fun _ _ i j hab => by
-        classical
-        simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+        letI : DecidableEq (Fin c) := Classical.typeDecidableEq _
+        simpa [leviEmb, Matrix.reindex_apply] using
+          (Matrix.blockDiagonal'_apply_ne
+            (fun a => (g a : Matrix (Fin (N a)) (Fin (N a)) (w.adicCompletion E))) i j hab.ne')
     have hdecomp (q : parab (w.adicCompletion E) (stdBlocks N h)) :
         ∃ u ∈ unipRad (w.adicCompletion E) (stdBlocks N h),
           (q : GL (Fin n) (w.adicCompletion E)) =

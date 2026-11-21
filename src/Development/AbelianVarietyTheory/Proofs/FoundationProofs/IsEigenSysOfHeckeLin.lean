@@ -7,6 +7,7 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.Supported
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IntegralTensorAdelesEqAdelicCompletionOne
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsHeckeOpFullDualLab
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ContDiffDerivSnoc
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDualFamilyOfIsLattice
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsSatVecUOfDiag
 
 @[expose] public section
@@ -265,7 +266,7 @@ theorem offS_iff {S : Finset (HeightOneSpectrum (𝓞 D.host.F))} : OffS D S w �
   · intro h u hu
     have : ¬ u.asIdeal ≤ (w.under (𝓞 D.host.F)).asIdeal := fun hle =>
       h (HeightOneSpectrum.ext (u.isMaximal.eq_of_le (w.under _).isPrime.ne_top hle) ▸ hu)
-    obtain ⟨x, hx, hx'⟩ := SetLike.not_le_iff_exists.1 this
+    obtain ⟨x, hx, hx'⟩ := IsConcreteLE.not_le_iff_exists.1 this
     refine ⟨x, hx, fun y hy hw => hx' ?_⟩
     obtain rfl : y = algebraMap _ _ x := RingOfIntegers.ext hy
     exact hw
@@ -285,8 +286,8 @@ theorem exists_isHeckeOpFull (hJ : SphOff J χ S) (hv : v ∉ S) (h : w.under (�
   have hS : OffS D S w := offS_iff.2 (h ▸ hv)
   obtain ⟨e, f, hef, h1, h2⟩ := hJ w hS
   obtain ⟨ϖ, p1, p2⟩ : ∃ ϖ ∈ w.asIdeal, ϖ ∉ w.asIdeal ^ 2 :=
-    SetLike.exists_of_lt (Ideal.pow_lt_self w.asIdeal w.ne_bot w.isPrime.ne_top 2 le_rfl)
-  have := GlobalTheory.HeckeDual.isLattice_frameLat V
+    IsConcreteLE.exists_of_lt (Ideal.pow_lt_self w.asIdeal w.ne_bot w.isPrime.ne_top 2 le_rfl)
+  have := GlobalTheory.AdelicU.SelfDual.isLattice_frameLat V
   obtain ⟨R, r1, r2⟩ := GlobalTheory.HeckeDual.exists_rep _ (isOpen_stabLoc D.sp.cm.sig V.gram (frameLat V) v)
     (isCompact_stabLoc D.sp.cm.sig V.gram (frameLat V) v) g
   have hs := Supp.suppF_iff_of_isPrimeIdem V hef h

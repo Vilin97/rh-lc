@@ -18,7 +18,7 @@ namespace ReciprocityTheory.ChartRestriction.DS.G2
 
 variable {n : ℕ}
 
-set_option maxHeartbeats 12000000 in
+set_option maxHeartbeats 100000000 in
 theorem tf_sqInt_of_hW {lam : Fin n → ℝ} {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     {ε : Fin n → Bool} {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {D : Submodule ℂ H}
     {E : Fin n → Fin n → Module.End ℂ D} (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E)

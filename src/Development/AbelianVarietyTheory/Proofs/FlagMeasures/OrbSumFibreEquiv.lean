@@ -136,7 +136,7 @@ theorem cyclic_of_genus (h : V →ₗ⋆[K] V →ₗ[K] K) (hK : IsCMUnram K) (h
     refine genusBasic_lg (K := K) M _ fun P hP => ?_
     obtain ⟨g, hg, hgL⟩ := hM.2 P hP
     have h1 : y ∈ loc (K := K) P (dual h M) := locBasic_le_locS _ _ hy
-    rw [← gmap_loc_dual h hs L M hL.1 hM.1 P hP.isPrime g hg hgL] at h1
+    rw [← gmap_loc_dual h hs L M hL.1.toIsLattice hM.1.toIsLattice P hP.isPrime g hg hgL] at h1
     obtain ⟨w, ⟨s, hs', hw⟩, rfl⟩ := h1
     rw [← hgL]
     refine ⟨r • w, ⟨s, hs', ?_⟩, sm g r w⟩
@@ -148,7 +148,7 @@ theorem cyclic_of_genus (h : V →ₗ⋆[K] V →ₗ[K] K) (hK : IsCMUnram K) (h
     obtain ⟨g, hg, hgL⟩ := hM.2 _ hP
     have h1 : g x₀ ∈ gmap g (loc (K := K) (RingHom.ker ψ) (dual h L)) :=
       ⟨x₀, locBasic_le_locS _ _ hx₀, rfl⟩
-    rw [gmap_loc_dual h hs L M hL.1 hM.1 _ hP.isPrime g hg hgL] at h1
+    rw [gmap_loc_dual h hs L M hL.1.toIsLattice hM.1.toIsLattice _ hP.isPrime g hg hgL] at h1
     obtain ⟨s, hs', hw⟩ := h1
     refine ⟨_, hw, fun r hr => ?_⟩
     have h2 : r • s • g x₀ ∈ loc (K := K) (RingHom.ker ψ) M := locBasic_le_locS _ _ hr
@@ -472,6 +472,18 @@ theorem exists_eq_glue (hn : (hRes h U).Nondegenerate) (L : Submodule (𝓞 K) V
   let N : Submodule (𝓞 K) U := L.map (pr.restrictScalars (𝓞 K))
   have hN : Submodule.IsLattice K N := by
     exact Submodule.IsLattice.of_fg K (hL.fg.map _)
+  have hNfull : Submodule.IsFullLattice K N := by
+    letI : Submodule.IsFullLattice K M := hM.1
+    letI : Submodule.IsLattice K N := hN
+    apply Submodule.IsFullLattice.of_le K (M := M) (N := N)
+    intro u hu
+    have huL : (u : V) ∈ L := by
+      rw [← hLM] at hu
+      exact hu
+    refine ⟨u, huL, ?_⟩
+    have e : (u : V) + (0 : K) • z = _ :=
+      (by simp : (u : V) + (0 : K) • z = u).trans (hpr u)
+    exact (decomp_unique h hT hz hU e).1.symm
   have hp : ∀ (l : V) (y : U), h l y = hRes h U (pr l) y := fun l y => by
     have := pair h hs hz hU (pr l) y (-((T : K)⁻¹ * h z l)) 0
     rw [← hpr] at this
@@ -488,7 +500,7 @@ theorem exists_eq_glue (hn : (hRes h U).Nondegenerate) (L : Submodule (𝓞 K) V
     · rintro H _ ⟨l, hl, rfl⟩
       exact hp l y ▸ H l hl
   have hxN : x ∈ N := by
-    rw [← (dualLattice (𝓞 K) K U _ hsU hn star_algebraMap_ringOfIntegers_mem_range N hN).2.1, hd]
+    rw [← (dualLattice (𝓞 K) K U _ hsU hn star_algebraMap_ringOfIntegers_mem_range N hNfull).2.1, hd]
     exact hx
   obtain ⟨l, hl, e⟩ := hxN
   have e' : pr l = x := e

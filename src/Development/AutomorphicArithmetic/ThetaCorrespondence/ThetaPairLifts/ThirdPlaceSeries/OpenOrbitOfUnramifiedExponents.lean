@@ -233,7 +233,6 @@ public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.IsRec
 set_option synthInstance.maxHeartbeats 200000
 
 section
-section
 open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Top GlobalTheory.Mem.Top.Bl GlobalTheory.Fc
 namespace GlobalTheory.Fc.S0.Open0ProofU
 theorem open_orbit_of_unramified_exponents_alt : _root_.GlobalTheory.Fc.S0.UnitaryGroupThirdPlaceHypotheses → ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (cDep : ℝ), _root_.GlobalTheory.Fc.S0.OpenParameterStatements (_root_.GlobalTheory.Mem.Top.Bl.parametersOfDependence hL cDep) := by
@@ -268,11 +267,7 @@ theorem open_orbit_of_unramified_exponents_alt : _root_.GlobalTheory.Fc.S0.Unita
     hL (_root_.GlobalTheory.HeightCounting.Up.extensionWithList hL cDep) SExt.none (geoCl anyGeometry)
   exact ⟨hPA, hLam, hDiv, hDc, hJ, hTie, hLab, hGood.2, hGeo, hMi.2, hKap, hDf⟩
 end GlobalTheory.Fc.S0.Open0ProofU
-end
-section
-open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Top GlobalTheory.Mem.Top.Bl GlobalTheory.Fc
-set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.open0_of_unitary_group_hypotheses : _root_.GlobalTheory.Fc.S0.UnitaryGroupThirdPlaceHypotheses → ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (cDep : ℝ), _root_.GlobalTheory.Fc.S0.OpenParameterStatements (_root_.GlobalTheory.Mem.Top.Bl.parametersOfDependence hL cDep) := by
-  first | exact @_root_.GlobalTheory.Fc.S0.Open0ProofU.open_orbit_of_unramified_exponents_alt | exact _root_.GlobalTheory.Fc.S0.Open0ProofU.open_orbit_of_unramified_exponents_alt | (intros; apply _root_.GlobalTheory.Fc.S0.Open0ProofU.open_orbit_of_unramified_exponents_alt <;> assumption)
-end
+
+theorem _root_.GlobalTheory.T.open0_of_unitary_group_hypotheses : _root_.GlobalTheory.Fc.S0.UnitaryGroupThirdPlaceHypotheses → ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (cDep : ℝ), _root_.GlobalTheory.Fc.S0.OpenParameterStatements (_root_.GlobalTheory.Mem.Top.Bl.parametersOfDependence hL cDep) :=
+  _root_.GlobalTheory.Fc.S0.Open0ProofU.open_orbit_of_unramified_exponents_alt
 end

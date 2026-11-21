@@ -443,10 +443,9 @@ theorem toL2_congr_on_unitary_bis {F G : Matrix (Fin n) (Fin n) ℂ → ℂ} (h 
   have e : (fun g : Formalism.REAL.UJ ε => F (Formalism.MainNotions.S.umat g)) = fun g => G (Formalism.MainNotions.S.umat g) :=
     funext fun g => h _ g.2
   by_cases hm : MemLp (fun g : Formalism.REAL.UJ ε => F (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε)
-  · rw [toL2_eq_toLp_of_memLp hm, toL2_eq_toLp_of_memLp (e ▸ hm)]
-    exact MemLp.toLp_congr _ _ (Filter.Eventually.of_forall fun g => congrFun e g)
-  · unfold toL2
-    rw [dite_eq_right hm, dite_eq_right (e ▸ hm)]
+  · rw [toL2_eq_memLp_toLp ε hm, toL2_eq_memLp_toLp ε (F := G) (e ▸ hm)]
+    exact MemLp.toLp_congr _ _ (Filter.EventuallyEq.of_eq e)
+  · rw [toL2_eq_zero_of_not_memLp ε hm, toL2_eq_zero_of_not_memLp ε (F := G) (e ▸ hm)]
 
 theorem emb_of {X : GMod n} {c : X.V →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ → ℂ)} (hR : RightOK ε X c)
     (hC : ContOK ε X c) (hL : ∀ u, LevelF ε (c u) 0) (u : X.V) (h1 : c u 1 ≠ 0) :

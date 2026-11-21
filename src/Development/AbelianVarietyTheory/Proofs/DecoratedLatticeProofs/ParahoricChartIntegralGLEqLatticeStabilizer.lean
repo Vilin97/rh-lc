@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsLevMeas
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.TransferOn
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.CartFrSgn
@@ -82,7 +83,7 @@ theorem hermND (D : D7) (V : HSp D) : IsHermND D.sp.cm.sig V.gram :=
 theorem isSelfDualAt_of_isSelfDualC {D : D7} (V : HSp D) {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)}
     (hΛ : IsSelfDualC V Λ) (v : HeightOneSpectrum (𝓞 D.host.F)) :
     GlobalTheory.AdelicU.IsSelfDualAt D.sp.cm.sig V.gram Λ v := by
-  refine (GlobalTheory.AdelicU.SelfDual.forall_isSelfDualAt_iff (hermND D V).2 hΛ.1).2 (fun y => ?_) v
+  refine (GlobalTheory.AdelicU.SelfDual.forall_isSelfDualAt_iff (hermND D V).2 (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice V Λ hΛ)).2 (fun y => ?_) v
   refine (hΛ.2 y).trans (forall₂_congr fun x _ => ?_)
   constructor
   · rintro ⟨b, hb⟩

@@ -12,6 +12,7 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsCom
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CompletedLatticeIntegralityFacts
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsHyperspecialDoubleCosetOfElementaryDivisor
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsBaseChangeFiniteAdeleRingEquiv
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDualFamilyOfIsLattice
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsHeckeOpFullDualLab
 
 @[expose] public section
@@ -421,7 +422,8 @@ theorem exists_dual {R : Finset (GA D V)} (hR : SphOp V P d R) :
   obtain ⟨he, v, hf⟩ := idem_of_isPrimeIdem hef
   obtain ⟨a, rfl⟩ := (GlobalTheory.HeckeDual.suppF_iff V hf α).1 hα
   obtain ⟨δ, hδ, hσδ⟩ := exists_skew D
-  haveI := isLattice_frameLat V
+  haveI : Submodule.IsFullLattice D.host.E (GlobalTheory.AdelicU.frameLat V) :=
+    GlobalTheory.AdelicU.SelfDual.isLattice_frameLat V
   have hK : ∀ g, g ∈ {k | k ∈ KsphC V ∅ ∧ SuppF V f k} ↔
       ∃ k ∈ GlobalTheory.AdelicU.stabLoc D.sp.cm.sig V.gram (GlobalTheory.AdelicU.frameLat V) v,
         GlobalTheory.AdelicU.emb D.sp.cm.sig V.gram v k = g := fun g => by
@@ -464,7 +466,7 @@ theorem label_operators : ∀ {D : D7} (V : HSp D) (P : Pl D.host.E), (∀ d R, 
   have fix : ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (π : GA D V →* Module.End ℂ M) (u : M),
       (∀ k ∈ hyp V P, π k u = u) → ∀ x, ∀ l ∈ K, π (x * l) u = π x u := by
     intro M _ _ π u hu x l hl
-    rw [map_mul, Module.End.mul_apply, hu l (hK ▸ hl)]
+    rw [map_mul, mul_apply_eq_comp, hu l (hK ▸ hl)]
   have c1 : ∀ d R, SphOp V P d R → R.card = (rep V P d).card ∧ ∀ (M : Type) [AddCommGroup M] [Module ℂ M]
       (π : GA D V →* Module.End ℂ M) (u : M), (∀ k ∈ hyp V P, π k u = u) →
       ∑ γ ∈ R, π γ u = opOf π P (Finsupp.single d 1) u := by

@@ -20,7 +20,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 structure IsAdapted (X Y : Matrix (Fin n) (Fin r) E) (L : Submodule (𝓞 E) (Fin n → E))
     (a : GL (Fin n) (AF F ⊗[F] E)) : Prop where
-  lat : Submodule.IsLattice E L
+  lat : Submodule.IsFullLattice E L
   dual : ∀ v, IsSelfDualAt σ J L v
   split : ∀ z ∈ L, ∀ i, ((cT (σ : E →+* E) Y * J) *ᵥ z) i • Xᵀ i ∈ L ∧ ((cT (σ : E →+* E) X * J) *ᵥ z) i • Yᵀ i ∈ L
   maj : IsMajorantFrame σ J a

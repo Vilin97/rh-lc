@@ -195,7 +195,7 @@ theorem _root_.GlobalTheory.T.exists_selfDual_orientedModel_scaled_skewHermitian
     simp only [dotProduct, Matrix.mulVec, Finset.mul_sum, Pi.star_apply, mul_assoc]
   have hdual := dual_iff Z.J Z.L hZ.dual
   have hlat : Submodule.IsLattice D.host.E (scLat D.host.AA⁻¹ Z.L) :=
-    PairLatLattice.scLat_isLattice (inv_ne_zero DualPair.AA_ne) hZ.lat
+    PairLatLattice.scLat_isLattice (inv_ne_zero DualPair.AA_ne) hZ.lat.toIsLattice
   have herm : (sesq D G).IsSymm := by
     refine ⟨fun x v => ?_⟩
     simp only [sesq_apply, starRingEnd_apply, dotProduct, Matrix.mulVec, star_sum, star_mul',

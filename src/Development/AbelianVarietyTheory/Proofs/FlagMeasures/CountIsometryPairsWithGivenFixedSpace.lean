@@ -86,13 +86,25 @@ theorem sub_count [_root_.NumberField.IsTotallyComplex K] (N : Submodule (𝓞 K
 
 
 omit [FiniteDimensional K V] in
-theorem isLattice_of_idx {L M : Submodule (𝓞 K) V} (hL : Submodule.IsLattice K L) (hM : M ≤ L)
-    (h : idx L M ≠ 0) : Submodule.IsLattice K M := by
-  refine ⟨?_, ?_⟩
-  · haveI : IsNoetherian (𝓞 K) L := isNoetherian_of_fg_of_noetherian L hL.fg
-    exact Submodule.FG.of_le_of_isNoetherian hM
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+theorem isLattice_of_idx {L M : Submodule (𝓞 K) V} (hL : Submodule.IsFullLattice K L) (hM : M ≤ L)
+    (h : idx L M ≠ 0) : Submodule.IsFullLattice K M := by
+  haveI : Submodule.IsFullLattice K L := hL
+  haveI : Submodule.IsLattice K M := Submodule.IsLattice.mono K hM
+  refine ⟨?_⟩
+  rw [← Submodule.IsFullLattice.span_eq_top (A := K) (M := L)]
+  refine le_antisymm (Submodule.span_mono hM) ?_
+  rw [Submodule.span_le]
+  intro m hm
+  have hn : (M.toAddSubgroup.relIndex L.toAddSubgroup) • m ∈ M :=
+    AddSubgroup.nsmul_relIndex_mem M.toAddSubgroup (K := L.toAddSubgroup) hm
+  have hnK : ((M.toAddSubgroup.relIndex L.toAddSubgroup : ℕ) : K) ≠ 0 :=
+    Nat.cast_ne_zero.mpr h
+  have hm' : m = ((M.toAddSubgroup.relIndex L.toAddSubgroup : ℕ) : K)⁻¹ •
+      (M.toAddSubgroup.relIndex L.toAddSubgroup • m) := by
+    rw [← Nat.cast_smul_eq_nsmul K, smul_smul, inv_mul_cancel₀ hnK, one_smul]
+  rw [SetLike.mem_coe, hm']
+  exact Submodule.smul_mem _ _ (Submodule.subset_span hn)
+
 
 omit [FiniteDimensional K V] [NumberField K] in
 theorem idx_latIn_le (U : Submodule K V) (L M : Submodule (𝓞 K) V) (h : idx L M ≠ 0) :
@@ -158,7 +170,7 @@ theorem dat_count (H : HermSpace K V) (hK : Formalism.HermitianLatticesTheory.Is
       ENNReal.ofReal ((x : ℝ) ^ (2 * (((Module.finrank K V) - Module.finrank K U : ℕ) : ℝ) + cf K)) *
         ((x : ℝ≥0∞) * D₀) ^ (3 * (2 * j + 1)) := by
   haveI : IsTotallyComplex K := hK.1
-  refine encard_le_mul _ _ (fun d => fixLat d.2) _ _ ?_ (GlobalTheory.T.encard_sublattices_index_fixed_trace_le K V L₀ M U x hL.1 hx) ?_
+  refine encard_le_mul _ _ (fun d => fixLat d.2) _ _ ?_ (GlobalTheory.T.encard_sublattices_index_fixed_trace_le K V L₀ M U x hL.1.toIsLattice hx) ?_
   · rintro d ⟨hd, hM⟩
     exact ⟨fixLat_le hd, hd.2.2.2.1, hM⟩
   · intro La _

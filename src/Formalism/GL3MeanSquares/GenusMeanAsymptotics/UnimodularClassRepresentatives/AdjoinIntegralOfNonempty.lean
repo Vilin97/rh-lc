@@ -104,6 +104,26 @@ private theorem comap_algebraMap_isMaximal_of_isMaximal (P : Ideal (𝓞 K)) (hP
   | exact inferInstance
   | exact Ideal.IsMaximal.under (𝓞 F) P
 
+private theorem patch_exists_common_multiple {N : Submodule (𝓞 K) V}
+    (hN : Submodule.IsFullLattice K N)
+    (s : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal})
+    (B : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} → Submodule (𝓞 K) V)
+    (hBlat : ∀ 𝔭, Submodule.IsFullLattice K (B 𝔭)) (hBs : ∀ 𝔭 ∉ s, B 𝔭 = N) :
+    ∃ n : ℤ, n ≠ 0 ∧ ∀ x ∈ N, n • x ∈ ⨅ 𝔭, locF 𝔭.1 (B 𝔭) := by
+  classical
+  choose n hn hnx using fun 𝔭 => LocF.exists_zsmul_le hN.toIsLattice (hBlat 𝔭)
+  refine ⟨∏ 𝔭 ∈ s, n 𝔭, Finset.prod_ne_zero_iff.mpr fun 𝔭 _ => hn 𝔭, ?_⟩
+  intro x hx
+  rw [Submodule.mem_iInf]
+  intro 𝔭
+  apply LocF.le_locF
+  by_cases h𝔭 : 𝔭 ∈ s
+  · obtain ⟨m, hm⟩ := Finset.dvd_prod_of_mem (fun 𝔭 => n 𝔭) h𝔭
+    rw [hm, mul_comm, mul_smul]
+    exact zsmul_mem (hnx 𝔭 x hx) _
+  · rw [hBs 𝔭 h𝔭]
+    exact zsmul_mem hx _
+
 private theorem patch_isFullLattice {N : Submodule (𝓞 K) V}
     (hN : Submodule.IsFullLattice K N)
     (s : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal})
@@ -112,29 +132,18 @@ private theorem patch_isFullLattice {N : Submodule (𝓞 K) V}
     (hMlat : Submodule.IsLattice K (⨅ 𝔭, locF 𝔭.1 (B 𝔭))) :
     Submodule.IsFullLattice K (⨅ 𝔭, locF 𝔭.1 (B 𝔭)) := by
   classical
-  refine { toIsLattice := Submodule.IsLattice.of_fg K hMlat.fg, span_eq_top := ?_ }
-  choose n hn hnx using fun 𝔭 => LocF.exists_zsmul_le hN.toIsLattice (hBlat 𝔭)
-  let N : ℤ := ∏ 𝔭 ∈ s, n 𝔭
-  have hN0 : N ≠ 0 := Finset.prod_ne_zero_iff.mpr fun 𝔭 _ => hn 𝔭
-  have hNK : (N : K) ≠ 0 := by exact_mod_cast hN0
+  refine { toIsLattice := hMlat, span_eq_top := ?_ }
+  obtain ⟨n, hn, hnx⟩ := patch_exists_common_multiple hN s B hBlat hBs
+  have hnK : (n : K) ≠ 0 := by exact_mod_cast hn
   rw [eq_top_iff, ← hN.span_eq_top]
   apply Submodule.span_le.mpr
   intro x hx
-  have hxN : (N : K) • x ∈ Submodule.span K ((⨅ 𝔭, locF 𝔭.1 (B 𝔭) : Submodule (𝓞 K) V) : Set V) := by
+  have hxN : (n : K) • x ∈ Submodule.span K ((⨅ 𝔭, locF 𝔭.1 (B 𝔭) : Submodule (𝓞 K) V) : Set V) := by
     apply Submodule.subset_span
-    change (N : K) • x ∈ ⨅ 𝔭, locF 𝔭.1 (B 𝔭)
-    rw [Int.cast_smul_eq_zsmul, Submodule.mem_iInf]
-    intro 𝔭
-    apply LocF.le_locF
-    by_cases h𝔭 : 𝔭 ∈ s
-    · obtain ⟨m, hm⟩ := Finset.dvd_prod_of_mem (fun 𝔭 => n 𝔭) h𝔭
-      change (∏ 𝔭 ∈ s, n 𝔭) • x ∈ B 𝔭
-      rw [hm, mul_comm, mul_smul]
-      exact zsmul_mem (hnx 𝔭 x hx) _
-    · rw [hBs 𝔭 h𝔭]
-      exact zsmul_mem hx _
-  have := Submodule.smul_mem (Submodule.span K ((⨅ 𝔭, locF 𝔭.1 (B 𝔭) : Submodule (𝓞 K) V) : Set V)) (N : K)⁻¹ hxN
-  simpa [smul_smul, hNK] using this
+    rw [Int.cast_smul_eq_zsmul]
+    exact hnx x hx
+  have := Submodule.smul_mem (Submodule.span K ((⨅ 𝔭, locF 𝔭.1 (B 𝔭) : Submodule (𝓞 K) V) : Set V)) (n : K)⁻¹ hxN
+  simpa [smul_smul, hnK] using this
 
 theorem card_fibG_eq_card_pi (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (S : VecSplit h h')
     {L : Submodule (𝓞 K) V} (hL : Submodule.IsFullLattice K L) {Λ' : Submodule (𝓞 K) V'}

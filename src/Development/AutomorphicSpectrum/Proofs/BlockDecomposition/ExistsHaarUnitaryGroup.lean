@@ -1,17 +1,11 @@
 module
 
 public import Mathlib
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OrderedCechToCatCochainsOneApplyValueAtSubset
 public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IntegralConjInnerMulInnerOfIsEmptyEquiv
 
 @[expose] public section
 
-open Matrix Finset MeasureTheory
-open scoped ContDiff ComplexConjugate InnerProductSpace
-open PositivityTheory.RgBcC PositivityTheory.RgBcC.Real PositivityTheory.RgBcC.RealD
-open PositivityTheory.RgTw (Mat)
-open GlobalTheory.CompanionTheory.GLK (e1 e2 f1)
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+open MeasureTheory
 
 namespace GlobalTheory.CompanionTheory.ModelS
 

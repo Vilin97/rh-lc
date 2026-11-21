@@ -1,10 +1,10 @@
 module
 
 public import CompanionTheory.RealGroups.FormalDegrees.ArchimedeanFormalDegrees.HlamStable
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.IsClosedKset
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.IntMuCD
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.RhoNSubNab
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.KSchur
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarMirror
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.ToMKMulInv
 
 @[expose] public section

@@ -23,6 +23,7 @@ private theorem conv_left {E : Type} [Field E] [NumberField E] [IsTotallyReal E]
   unfold Af.Smo.conv
   rw [e]
 
+set_option synthInstance.maxHeartbeats 200000 in
 private theorem zero_of_sq {E : Type} [Field E] [NumberField E] {n : ℕ} (μ : Measure (Reduction.normOneGL (K := E) (n := n)))
     [μ.IsHaarMeasure] (F : AdelicGLn.AdelicGL E n → ℂ) (hc : Continuous F) (C : ℝ) (hC : ∀ g, ‖F g‖ ≤ C)
     (h : IsLeftInvariant F)
@@ -45,7 +46,7 @@ private theorem zero_of_sq {E : Type} [Field E] [NumberField E] {n : ℕ} (μ : 
       rw [norm_pow, norm_norm]
       exact pow_le_pow_left₀ (norm_nonneg _) (hb q) 2)
   have h2 := (integral_eq_zero_iff_of_nonneg (fun q => sq_nonneg _) hi).1 h1
-  have h3 := (RightCosetSpace.quasiMeasurePreserving_mk (Reduction.rationalGLOne (K := E) (n := n)) μ).ae_eq h2
+  have h3 := (RightCosetSpace.quasiMeasurePreserving_mk (Reduction.rationalGLOne (K := E) (n := n)) μ).ae_eq_comp h2
   have h4 := (Continuous.ae_eq_iff_eq μ (f := fun y : Reduction.normOneGL (K := E) (n := n) => ‖F y‖ ^ 2)
     ((hc.comp continuous_subtype_val).norm.pow 2) continuous_const).1 h3
   intro y hy

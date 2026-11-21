@@ -6,6 +6,7 @@ public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.Inter
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsMulAddEqOneOfNotMem
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.TransportedWeylLatticeHermitianDuality
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ActPMemLocPDelStdOfIsBasisAt
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.InvSmulMemOfRedL
 
 @[expose] public section
 
@@ -89,7 +90,7 @@ section Pair
 variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι] {n : ℕ}
 
 theorem pairBK_mem_one (lam : ι → DomWeight n) (M : ι → Submodule (𝓞 K) (Fin n → K))
-    (hM : ∀ τ, Submodule.IsLattice K (M τ)) {x y : VV K lam} (hx : x ∈ delK lam fun τ => dualFr (M τ))
+    (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) {x y : VV K lam} (hx : x ∈ delK lam fun τ => dualFr (M τ))
     (hy : y ∈ nabK lam M) : pairBK lam x y ∈ (1 : Submodule (𝓞 K) K) := by
   let _ : StarRing K := starRingOfComm
   have h := (GlobalTheory.TransDual.nabDelDual K ι n lam (fun _ => 1) M (fun _ => by simp) (fun _ => by simp) hM).1
@@ -187,7 +188,10 @@ theorem valuation_pair_br_le_one {X : Fields} {N n : ℕ} (hN : N = n + 1) (lam 
   change s • x ∈ delK lam fun τ => dualFr (tauLat X.emb τ (tilN d.1.N)) at hsx
   simp only [dualFr_tauLat_tilN] at hsx
   have h1 := hB hI hS _ (fun _ => 1) (fun _ => one_ne_zero) _ hsx
-  have h2 := pairBK_mem_one sg _ (fun τ => GlobalTheory.TauLat.tauLatLattice X.E X.K X.Tau n X.emb τ _ d.2.lat) h1 hy
+  have hN : Submodule.IsFullLattice X.E d.1.N :=
+    { toIsLattice := d.2.lat
+      span_eq_top := GlobalTheory.LvT.Pts.span_eq_top_of_unimodular d.1.N d.2.lat d.2.uni }
+  have h2 := pairBK_mem_one sg _ (fun τ => GlobalTheory.TauLat.tauLatLattice X.E X.K X.Tau n X.emb τ _ hN) h1 hy
   have h3 : Br.brAt rfl lam sg (fun _ => (1 : X.K)) = Br.brStd rfl lam sg := by simp [Br.brAt]
   rw [h3, LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower, LinearMap.smul_apply] at h2
   have h4 := valuation_le_one_of_smul w hs h2

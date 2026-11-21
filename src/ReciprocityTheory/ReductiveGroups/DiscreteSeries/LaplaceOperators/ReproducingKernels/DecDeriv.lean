@@ -5,12 +5,12 @@ public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficien
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.ExpInPPosDef
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.IntegrableOfDecayVG
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.ReproducingKernels.DecDerivA
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.LaplaceFoundations.PsiFor
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.ReproducingKernels.DecRepro
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.FormulaF
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiExistsOfFormula
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DatumEmbeddingMemHlam
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.RigidityTheorems.ClosGenStable
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.KSchur
 
 @[expose] public section
 
@@ -110,7 +110,7 @@ theorem psiM_frob_dec {n : ℕ} (ε : Fin n → Bool) (lam : Fin n → ℝ) (h :
     · have hle : s / r ≤ S7.hs X := by
         rw [hss, div_le_iff₀ (by linarith)]; nlinarith
       rw [hm, min_eq_right hle, ← has]; linarith
-    · push_neg at hc
+    · have hsr : s * r < 1 := lt_of_not_ge hc
       have hs1 : s < 1 := by nlinarith
       have hm0 : 0 ≤ m := le_min hs0 (div_nonneg hs0' (by linarith))
       nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ h / 8) hm0]

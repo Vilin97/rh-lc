@@ -87,7 +87,7 @@ theorem latDbl_fill : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
         exact inv_eq_one.1 this
   have hloc := GlobalTheory.LatVac.DualLoc.map_selfDual v dd B.ψ (latDbl G.V G.W v)
     (fun γ hγ => at_of_mem_latDbl _ _ _ hγ) hglob
-  obtain ⟨c, hc0, hc⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded G.V G.W v G.M.co hT.geo.hV.lat hT.geo.hW.lat
+  obtain ⟨c, hc0, hc⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded G.V G.W v G.M.co hT.geo.hV.lat.toIsLattice hT.geo.hW.lat.toIsLattice
   have hbd : ∀ l ∈ (latDbl G.V G.W v).map (GlobalTheory.LatVac.locCo dd v), ∀ i,
       c * l.1 i ∈ v.adicCompletionIntegers F ∧ c * l.2 i ∈ v.adicCompletionIntegers F := by
     rintro l ⟨z, hz, rfl⟩ i

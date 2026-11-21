@@ -302,7 +302,9 @@ theorem eq_vec_of_two_steps {F : Frame S T} (hF : F.Good) {G : TypeDat D T.rank}
   have hg' : cA D (idem G.Pg) * cA D (idem G.Pg) = cA D (idem G.Pg) := by rw [← RingHom.map_mul, hg]
   have hΛ : ∀ a : AE D, a * a = a → ∀ u ∈ F.lat, a • u ∈ F.lat := fun a ha u hu => GlobalTheory.PlaceModelSum.idem_smul_latO ha hu
   obtain ⟨P, s1, -, hP⟩ := h.split
-  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red hF.sdS.1 hF.sdT.1
+  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red
+    (GlobalTheory.PlaceVec.selfDual_isFullLattice S F.ΛS hF.sdS)
+    (GlobalTheory.PlaceVec.selfDual_isFullLattice T F.ΛT hF.sdT)
     (GlobalTheory.PlaceVec.infPart_cA (GlobalTheory.PlaceVec.idemSum_infPart (hP.mono s1).isIdemSum)) (frMapAdj S T F.βS F.βT)
     (GlobalTheory.PlaceVec.frMapAdj_add S T _ _) (GlobalTheory.PlaceVec.frMapAdj_up S T _ _) (GlobalTheory.PlaceVec.frMapAdj_down S T _ _) G.Pg
     (omegaG G.levT G.muC) (GlobalTheory.PlaceDatum.omegaG_congr G.levT G.muC)

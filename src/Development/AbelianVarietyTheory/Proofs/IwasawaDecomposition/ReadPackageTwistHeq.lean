@@ -46,7 +46,7 @@ abbrev RdTw (x : St P) (N : TwNew (Dof x)) : Type 1 :=
 def jMtB (Y : RdTw x N) (μ h i y) : type_of% (x.r.Y.IL.jMt μ h i y).1 := (by with_unfolding_all exact ((Y.IL.jMt ((μ)) ((h)) ((i)) ((y))).1 : _))
 
 def mtAd (Y : RdTw x N) (H : ∀ μ h i y, (x.r.Y.IL.jMt μ h i y).1 = jMtB Y μ h i y) {M : MtFam (Dof x)} (a : MtAd x.r.Y M) :
-    MtAd Y (N.mt M) where
+    MtAd Y ((fun μ j h1 h2 => { M μ j h1 h2 with })) where
   PV i := ⟨(by with_unfolding_all exact ((a.PV ((i))).ψ : _)), (by with_unfolding_all exact ((a.PV ((i))).inj : _)), (by with_unfolding_all exact ((a.PV ((i))).into : _)), (by with_unfolding_all exact ((a.PV ((i))).onto : _))⟩
   std := (by with_unfolding_all exact (a.std :))
   eW := (by with_unfolding_all exact (a.eW :))
@@ -66,10 +66,27 @@ theorem eigAd (Y : RdTw x N) (H : ∀ i y, x.r.Y.mj.eW i y = eWB Y i y) {Sb eig}
     EigAd Y ((Sb)) ((eig)) := fun i σ k Q α Rr hd hg y hy =>
   (by with_unfolding_all exact ((eigAd_of h (((eWB Y))) ((H)) ((i)) ((σ)) k ((Q)) ((α)) ((Rr)) (((hkDat hd))) ((hg)) ((y)) ((hy))) : _))
 
+def ratInTw (n : InRat x.r.Y x.m.z.cG) : RatIn (w.st (oTw x N).Z).toD7
+    (ratDatR (datTw x N).R (datTw x N).cG n.kKs n.hk) where
+  Sb := n.In.Sb
+  rho := n.In.rho
+  chi := n.In.chi
+  ks := n.In.ks
+  fd := n.In.fd
+  mk_fg := n.In.mk_fg
+  hL := n.In.hL
+  hs := n.In.hs
+  hL_zero := n.In.hL_zero
+  θ := n.In.θ
+  θ_ne := n.In.θ_ne
+  eig := n.In.eig
+  span := (by with_unfolding_all exact ((ratIn N n.In).span : _))
+  hL_int := (by with_unfolding_all exact ((ratIn N n.In).hL_int : _))
+
 def inRat (Y : RdTw x N) (H : ∀ i y, x.r.Y.mj.eW i y = eWB Y i y) (n : InRat x.r.Y x.m.z.cG) : InRat Y (datTw x N).cG where
   kKs := (by with_unfolding_all exact (n.kKs :))
   hk := (by with_unfolding_all exact (n.hk :))
-  In := (by with_unfolding_all exact ((ratIn N n.In) :))
+  In := (by with_unfolding_all exact ((ratInTw (N := N) n) :))
   rat :=
     { hecke := fun j k Q α Rr h1 h2 hd y => (by with_unfolding_all exact ((n.rat.hecke j k ((by with_unfolding_all exact (Q :))) ((by with_unfolding_all exact (α :))) ((by with_unfolding_all exact (Rr :))) h1 ((by with_unfolding_all exact (h2 :))) ((by with_unfolding_all exact ((hkDat hd) :))) ((by with_unfolding_all exact (y :)))) :))
       eig := (by with_unfolding_all exact ((eigAd Y H n.rat.eig) :))
@@ -78,10 +95,18 @@ def inRat (Y : RdTw x N) (H : ∀ i y, x.r.Y.mj.eW i y = eWB Y i y) (n : InRat x
       psi := (by with_unfolding_all exact (n.rat.psi :)) }
 
 def inMt (Y : RdTw x N) (H : ∀ μ h i y, (x.r.Y.IL.jMt μ h i y).1 = jMtB Y μ h i y) (n : InMt x.r.Y (cfOf x) w.I.xi (QOf P)) :
-    InMt Y ((N.cf (cfOf x))) w.I.xi (QOf P) where
-  M := (by with_unfolding_all exact ((N.mt n.M) :))
+    InMt Y (⟨(cfOf x).P, (cfOf x).W, (cfOf x).mu0, (cfOf x).eta, (cfOf x).chiPsi, (cfOf x).del, (cfOf x).del', (cfOf x).isMu0, (cfOf x).isEta, (cfOf x).isChi, (cfOf x).isDel, (cfOf x).isDel'⟩) w.I.xi (QOf P) where
+  M := (fun μ j h1 h2 => { n.M μ j h1 h2 with })
   ad := (by with_unfolding_all exact ((mtAd Y H n.ad) :))
-  mt := (by with_unfolding_all exact ((mtIn N n.mt) :))
+  mt :=
+    { prod := by with_unfolding_all exact n.mt.prod
+      para := by with_unfolding_all exact n.mt.para
+      uni := by with_unfolding_all exact n.mt.uni
+      hyp := by with_unfolding_all exact n.mt.hyp
+      wt := by with_unfolding_all exact n.mt.wt
+      rat := by with_unfolding_all exact n.mt.rat
+      int := by with_unfolding_all exact n.mt.int
+      full := by with_unfolding_all exact n.mt.full }
 
 end GlobalTheory.HeightCounting.Up.LiTw
 

@@ -67,7 +67,7 @@ theorem lat_tauLat_comm (τ : ι) {L L' : Submodule (𝓞 E) (Fin n → E)} {q :
   exact hle hy
 
 theorem localized_nabla_eq_of_commensurable (lam : ι → DomWeight n) (w : HeightOneSpectrum (𝓞 K)) {L L' : Submodule (𝓞 E) (Fin n → E)}
-    (hL : Submodule.IsLattice E L) (hL' : Submodule.IsLattice E L') {q : ℕ} (h1 : ∀ x ∈ L, (q : 𝓞 E) • x ∈ L')
+    (hL : Submodule.IsFullLattice E L) (hL' : Submodule.IsFullLattice E L') {q : ℕ} (h1 : ∀ x ∈ L, (q : 𝓞 E) • x ∈ L')
     (h2 : ∀ x ∈ L', (q : 𝓞 E) • x ∈ L) (hq : (q : 𝓞 K) ∉ w.asIdeal) :
     Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (nabAtr emb lam L) = Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (nabAtr emb lam L') := by
   have hM : ∀ τ, Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (dualFr (tauLat emb τ L)) = Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (dualFr (tauLat emb τ L')) :=
@@ -205,6 +205,34 @@ theorem swap_toGf {V : HSp D} (P : principalLevelFrame.RowPsi V V.rank) (hU : Un
     swapAE D ((toGf P x).1.val a b) = (km D V.rank x).val a b := by
   rw [← hU x]; rfl
 
+theorem hLat_full (V : HSp D) (hV : Seed.FrmC.StdLat V) (h : Bridge.Gf V) :
+    Submodule.IsFullLattice D.host.E (Bridge.hLat V h) := by
+  letI := (GlobalTheory.HLatStd.hLat_props D V hV).1 h
+  obtain ⟨N, hN, hNm⟩ := GlobalTheory.PlaceDatum.exists_den_matrix
+    (GlobalTheory.StdFrameExist.SI D) GlobalTheory.PlaceDatum.exists_den_adele
+    (GlobalTheory.HLatStd.invM h)
+  have hNE : (N : D.host.E) ≠ 0 := Nat.cast_ne_zero.2 hN.ne'
+  have hsingle : ∀ i : Fin V.rank, (N : D.host.E) • Pi.single i (1 : D.host.E) ∈ Bridge.hLat V h := by
+    intro i
+    apply GlobalTheory.HLatStd.mem_hLat_of hV h
+    rw [GlobalTheory.HLatStd.iv_natCast_smul, GlobalTheory.HLatStd.mulVec_natCast_smul]
+    exact GlobalTheory.StdFrameExist.intV hNm
+      (GlobalTheory.HLatStd.iv_mem_of_int (by
+        classical
+        intro j
+        by_cases hj : j = i <;> simp [Pi.single_apply, hj, isIntegral_one, isIntegral_zero]))
+  refine { span_eq_top := ?_ }
+  · apply top_unique
+    intro x _
+    rw [pi_eq_sum_univ' x]
+    apply Submodule.sum_mem
+    intro i _
+    have hi : (N : D.host.E) • Pi.single i (1 : D.host.E) ∈
+        Submodule.span D.host.E (Bridge.hLat V h : Set (Fin V.rank → D.host.E)) := Submodule.subset_span (hsingle i)
+    have hi' := Submodule.smul_mem (Submodule.span D.host.E (Bridge.hLat V h : Set (Fin V.rank → D.host.E)))
+      ((x i) * (N : D.host.E)⁻¹) hi
+    simpa [smul_smul, mul_assoc, hNE] using hi'
+
 theorem localization_nabAtr_eq' {V : HSp D} (hV : Seed.FrmC.StdLat V)
     (lam : D.what₂.Tau → DomWeight V.rank) (w : HeightOneSpectrum (𝓞 D.what₂.LL)) {p : ℕ} (hp : (p : 𝓞 D.what₂.LL) ∉ w.asIdeal)
     (h y : Bridge.Gf V)
@@ -215,7 +243,7 @@ theorem localization_nabAtr_eq' {V : HSp D} (hV : Seed.FrmC.StdLat V)
   obtain ⟨h1, h2, -⟩ := GlobalTheory.HLatStd.hLat_props D V hV
   have a1 := h2 (h * y) y⁻¹ p (fun a b => by rw [inv_inv]; exact hy a b)
   rw [mul_inv_cancel_right] at a1
-  exact localized_nabla_eq_of_commensurable _ lam w (h1 _) (h1 _) a1 (h2 h y p hy') hp
+  exact localized_nabla_eq_of_commensurable _ lam w (hLat_full V hV _) (hLat_full V hV _) a1 (h2 h y p hy') hp
 
 theorem line₅ {V : HSp D} (hV : Seed.FrmC.StdLat V) (P : principalLevelFrame.RowPsi V V.rank) (hU : UnitFr P)
     (lam : D.what₂.Tau → DomWeight V.rank) (w : HeightOneSpectrum (𝓞 D.what₂.LL)) {p : ℕ} (hp : (p : 𝓞 D.what₂.LL) ∉ w.asIdeal)

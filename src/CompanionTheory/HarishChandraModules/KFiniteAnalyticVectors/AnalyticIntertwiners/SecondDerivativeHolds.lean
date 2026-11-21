@@ -114,12 +114,12 @@ theorem intertwiner_comm_kset (hσ : Formalism.MainNotions.S.IsURepOn (Formalism
   let e : W ≃ₗ[ℂ] Wh := Submodule.equivMapOfInjective _ Subtype.val_injective W
   let Φ : H →L[ℂ] H := ((smD ε σ).subtypeL.comp W'.subtypeL).comp
     ((LinearMap.toContinuousLinearMap φ).comp
-      ((LinearMap.toContinuousLinearMap (e.symm : Wh →ₗ[ℂ] W)).comp Wh.orthogonalProjection))
+      ((LinearMap.toContinuousLinearMap (e.symm : Wh →ₗ[ℂ] W)).comp Wh.orthogonalProjectionOnto))
   have hΦ : ∀ z : W, Φ ((z : smD ε σ) : H) = (((φ z : W') : smD ε σ) : H) := by
     intro z
     have hz : ((z : smD ε σ) : H) ∈ Wh := Submodule.mem_map_of_mem z.2
-    have h1 : Wh.orthogonalProjection ((z : smD ε σ) : H) = ⟨_, hz⟩ :=
-      Submodule.orthogonalProjection_mem_subspace_eq_self (⟨_, hz⟩ : Wh)
+    have h1 : Wh.orthogonalProjectionOnto ((z : smD ε σ) : H) = ⟨_, hz⟩ :=
+      Submodule.orthogonalProjectionOnto_mem_subspace_eq_self (⟨_, hz⟩ : Wh)
     have h2 : e.symm ⟨_, hz⟩ = z := by
       rw [LinearEquiv.symm_apply_eq]
       rfl

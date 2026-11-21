@@ -53,7 +53,8 @@ theorem thPVec_ne_zero {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : H
     fun PP h => Finset.mem_union_right _ h
   refine GlobalTheory.T.schrodingerIntertwiner_injective_schwartzBruhat D ψ S T ΛS ΛT _ f₀ _ Tm hv.1 hS hT ho.conj.idem
     (by rw [GlobalTheory.DualPairCheck.cA_cA, mul_comm, he.2]) hinf hTm h0
-    (GlobalTheory.PlaceVec.isSBHalf_of_red hS.1 hT.1 hinf (frMapAdj S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_add S T βS βT)
+    (GlobalTheory.PlaceVec.isSBHalf_of_red (GlobalTheory.PlaceVec.selfDual_isFullLattice S ΛS hS)
+      (GlobalTheory.PlaceVec.selfDual_isFullLattice T ΛT hT) hinf (frMapAdj S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_add S T βS βT)
       (GlobalTheory.PlaceVec.frMapAdj_up S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_down S T βS βT) (Pg ∪ Q)
       (fun y => omegaK Pg y * omegaQ Q T.rank ξ (-1) y) fun y y' h => by
         rw [GlobalTheory.PlaceVec.omegaK_congr Pg fun PP hPP => h PP (Finset.mem_union_left _ hPP),

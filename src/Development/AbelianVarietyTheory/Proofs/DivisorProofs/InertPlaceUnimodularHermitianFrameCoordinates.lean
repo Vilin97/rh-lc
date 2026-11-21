@@ -59,8 +59,8 @@ theorem GlobalTheory.InertLocFrame.frame : ∀ (F E : Type) [Field F] [NumberFie
       ∀ i j, (g : Matrix (Fin m) (Fin m) L) i j ∈ Formalism.UG.intL L := by
     rintro m g ⟨g0, rfl⟩ i j
     exact ((g0 : Matrix (Fin m) (Fin m) (Formalism.UG.intL L)) i j).2
-  obtain ⟨PV, hPV⟩ := GlobalTheory.T.exists_frame_adelicLatticeAtFinitePlace_of_inert F E v w hin a G.V hG.hV.lat L ι hinj him hmul hint
-  obtain ⟨PW, hPW⟩ := GlobalTheory.T.exists_frame_adelicLatticeAtFinitePlace_of_inert F E v w hin (a + a') G.W hG.hW.lat L ι hinj him hmul hint
+  obtain ⟨PV, hPV⟩ := GlobalTheory.T.exists_frame_adelicLatticeAtFinitePlace_of_inert F E v w hin a G.V hG.hV.lat.toIsLattice L ι hinj him hmul hint
+  obtain ⟨PW, hPW⟩ := GlobalTheory.T.exists_frame_adelicLatticeAtFinitePlace_of_inert F E v w hin (a + a') G.W hG.hW.lat.toIsLattice L ι hinj him hmul hint
   obtain ⟨JS, hJS, hJSg, hJSh⟩ := GlobalTheory.T.exists_unimodular_gram_inverse_inertPlace F E σ B hB v w hin a _ _ G.V hG.hV L ϖ σL q ι hunr hinj him hmul hσ hint
     PV hPV
   obtain ⟨JT, hJT, hJTg, hJTh⟩ := GlobalTheory.T.inert_place_unramified_skew_space F E σ B hB v w hin (a + a') _ _ G.W hG.hW L ϖ σL q δ ι hunr hodd hδ hinj

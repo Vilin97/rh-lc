@@ -28,47 +28,17 @@ variable {B : Base} {C : Cols B} (a : Late B C) (Z : New a.D) {G' : Type} [Group
   {F0 : ∀ u, Forms0 a.D u} (P : SPack a.D F0) {F₁ : ∀ u, Forms0 (reL a Z).D u} (hs : SameL a Z F0 F₁)
   (hF : FinX (reY Z P.Y))
 
-open Lean Elab Tactic Meta in
-theorem reLD_eq : (reL a Z).D = reD a.D Z := by
-  run_tac
-    let t ← getMainTarget
-    let l := t.appFn!.appArg!
-    let r := t.appArg!
-    let env ← getEnv
-    let ctx ← getLCtx
-    logInfo m!"kernel equality: {Kernel.isDefEqGuarded env ctx l r}"
-    if let .ok l' := Kernel.whnf env ctx l then
-      if let .ok r' := Kernel.whnf env ctx r then
-        logInfo m!"heads: {l'.getAppFn} ({l'.getAppNumArgs}), {r'.getAppFn} ({r'.getAppNumArgs})"
-        if l'.getAppFn == r'.getAppFn then
-          for (x, y) in l'.getAppArgs.zip r'.getAppArgs do
-            unless Kernel.isDefEqGuarded env ctx x y do
-              let fmt trm := trm.getAppFn
-              logInfo m!"mismatch: {fmt x} vs {fmt y}"
-  rfl
-
-/-- Pass the forms to `SPack.re` at its own stage index. -/
-def formsRe (F₁ : ∀ u, Forms0 (reL a Z).D u) : ∀ u, Forms0 (reD a.D Z) u :=
-  cast (congrArg (fun D : D7 => ∀ u, Forms0 D u) (reLD_eq a Z)) F₁
 
 set_option maxHeartbeats 4000000 in
-theorem sameFormsRe (hs : SameL a Z F0 F₁) : SameForms0LevelsAndValues Z F0 (formsRe a Z F₁) := by
-  with_unfolding_all exact hs
-
-local notation "Pᵣ" => P.re Z (F' := formsRe a Z F₁) (sameFormsRe a Z hs) hF
-
-set_option maxHeartbeats 4000000 in
-def packL : SPack (reL a Z).D F₁ := by
-  with_unfolding_all exact Pᵣ
+def packL : SPack (reL a Z).D F₁ := (by with_unfolding_all exact ((P.re Z hs hF) :))
 
 
 set_option maxHeartbeats 4000000 in
-def restL (S : SRest Pᵣ) : SRest (packL a Z P hs hF) := by
-  with_unfolding_all exact S
+def restL (S : SRest (P.re Z hs hF)) : SRest (packL a Z P hs hF) := (by with_unfolding_all exact (S :))
 
 
 set_option maxHeartbeats 4000000 in
-theorem restL_j (j : a.D.what₂.EE ≃ₗᵢ[ℂ] EEC P.X P.G) (S : SRest Pᵣ) (hS : S.j = j.trans (eEECre Z P.G)) :
+theorem restL_j (j : a.D.what₂.EE ≃ₗᵢ[ℂ] EEC P.X P.G) (S : SRest (P.re Z hs hF)) (hS : S.j = j.trans (eEECre Z P.G)) :
     (restL a Z P hs hF S).j = (by with_unfolding_all exact (j.trans (eEECre Z P.G) :)) := (by with_unfolding_all exact (hS :))
 
 
@@ -77,7 +47,7 @@ theorem nonempty_sAtL (R : RealDat a.D A Ks) (F : Face a.D A) (eE : a.D.what₂.
     (t : GA a.D (a.D.sp.Y 0)) (c : ℝ) (hc : 0 < c) (see : SeeAt R F P.X P.inst t)
     (ev : EvalTieT (MP R) R.ν0 R.fd0 (EP R F) P.X P.G (iotaX P.X P.inst).toMulEquiv t c)
     (j : a.D.what₂.EE ≃ₗᵢ[ℂ] EEC P.X P.G) (rowJ : RowJ R eE P.X P.inst P.G t j)
-    (S : SRest Pᵣ) (hS : S.j = j.trans (eEECre Z P.G)) : Nonempty (SAtL a Z R F eE F₁) := by
+    (S : SRest (P.re Z hs hF)) (hS : S.j = j.trans (eEECre Z P.G)) : Nonempty (SAtL a Z R F eE F₁) := by
   have h1 := mvRowJ a Z R P.X P.inst P.G t eE j rowJ
   have h2 := restL_j a Z P hs hF j S hS
   letI := alg (reL a Z) iK
@@ -99,7 +69,7 @@ theorem satOfDiscreteSeries : GlobalTheory.Dec.DSInfChar → GlobalTheory.Publis
   obtain ⟨hD, j, t, c, hc, see, ev, rowJ, rest⟩ := GlobalTheory.T.exists_spectralLevel_objects_replacedStages h1 h2 h3 h4 h5 a.D G' Pl0 T A Ks R F F0 P eE hG hI hL hRT hDs
     hLev hgl hPin hE0 hMod hRg hN hDall
   refine ⟨P.toNew hD j, fun N hh F₁ hs => ?_⟩
-  obtain ⟨hF, S, hS⟩ := rest N hh (formsRe a _ F₁) (sameFormsRe a _ hs)
+  obtain ⟨hF, S, hS⟩ := rest N hh _ hs
   exact nonempty_sAtL a _ P hs hF R F eE t c hc see ev j rowJ S hS
 
 end GlobalTheory.Mem.SRe

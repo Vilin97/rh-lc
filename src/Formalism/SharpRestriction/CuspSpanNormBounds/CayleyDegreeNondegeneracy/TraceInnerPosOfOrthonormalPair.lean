@@ -296,7 +296,9 @@ theorem short_vector_every_place (K : Type) [Field K] [NumberField K] [StarRing 
   obtain ⟨N, ι, hι, -, hlat⟩ := Formalism.HermitianLatticesTheory.final_traceReal K V h hsymm hpos
   have hLlat : Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range e)) :=
     Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range e))
-  obtain ⟨iL1, iL2⟩ := hlat _ hLlat
+  have hLfull : Submodule.IsFullLattice K (Submodule.span (𝓞 K) (Set.range e)) :=
+    { hLlat with span_eq_top := by rw [Submodule.span_span_of_tower, hsp] }
+  obtain ⟨iL1, iL2⟩ := hlat _ hLfull
   obtain ⟨familyMassRatio, familyMassSecondLine⟩ := hlat M hM.1
   have hcov := Formalism.HermitianLatticesTheory.final_genusCovol K V h hsymm hpos N ι hι _ M hLlat hM
   obtain ⟨hcL, hN⟩ := covolume_trace_lattice hK h e hli hsp he N ι hι

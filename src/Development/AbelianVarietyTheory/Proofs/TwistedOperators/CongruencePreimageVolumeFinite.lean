@@ -6,6 +6,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryEm
 public import Development.AbelianVarietyTheory.Definitions.Divisors.NatCastSmulMemHatL
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsUnitaryEmbeddingStabilizer
 public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.GinfCSecondCountable
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 
 @[expose] public section
 
@@ -79,7 +80,7 @@ theorem vol_pos_lt_top : ∀ (D : D7) (Y V : HSp D) (d : HermitianOrthogonalExte
       0 < μ {b : GfC Y | Lev.finE V (stabilizerEmbedding d (b : GA D Y)) ∈ congLev D.sp.cm V.gram Λ 𝔪} ∧
       μ {b : GfC Y | Lev.finE V (stabilizerEmbedding d (b : GA D Y)) ∈ congLev D.sp.cm V.gram Λ 𝔪} < ⊤ := by
   intro D Y V d Λ 𝔪 hΛ h𝔪 μ hμ
-  obtain ⟨hU, hK⟩ := congLev_open_compact V hΛ.1 h𝔪
+  obtain ⟨hU, hK⟩ := congLev_open_compact V (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice V Λ hΛ) h𝔪
   set S := {b : GfC Y | Lev.finE V (stabilizerEmbedding d (b : GA D Y)) ∈ congLev D.sp.cm V.gram Λ 𝔪}
   have hc : Continuous fun b : GfC Y => stabilizerEmbedding d (b : GA D Y) :=
     (GlobalTheory.UnitaryEmbeddingProperties.continuous_unitaryEmbedding d).comp continuous_subtype_val

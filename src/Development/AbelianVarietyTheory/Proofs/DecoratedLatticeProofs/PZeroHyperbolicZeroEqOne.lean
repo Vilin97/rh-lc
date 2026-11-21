@@ -27,6 +27,7 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Exi
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsTameRamified
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsSBExtFunEqHalfInd
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SupportedSubgroupSplitCommutePrimeIdempotents
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 
 @[expose] public section
 
@@ -89,7 +90,7 @@ theorem ae_family {ι : Type} [Finite ι] {x : ι → D.host.E} (hx : x ≠ 0) :
 def Std (S : HSp D) (L : Lat S) (v : Pl D) : Prop := ∀ y, y ∈ latV S L (· = v) ↔ ∀ i, y i ∈ intGrp D v
 
 theorem ae_std {S : HSp D} {L : Lat S} (h : IsSelfDualC S L) : ∀ᶠ v : Pl D in cofinite, Std S L v :=
-  GlobalTheory.LatAlmostStd.eventually_latV_iff D S L h.1
+  GlobalTheory.LatAlmostStd.eventually_latV_iff D S L (GlobalTheory.ProjXCols.selfDual_isFullLattice S L h)
 
 theorem ae_latO {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : IsSelfDualC S LS) (hT : IsSelfDualC T LT) :
     ∀ᶠ v : Pl D in cofinite, ∀ u : WO S T, u ∈ latO S T (LS : Set _) (LT : Set _) (· = v) ↔ ∀ i j, u i j ∈ intGrp D v := by

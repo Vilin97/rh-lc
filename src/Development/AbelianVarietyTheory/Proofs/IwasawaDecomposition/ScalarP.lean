@@ -50,12 +50,7 @@ variable {N₁ : TwNew (Dof x)} {kKs : (datTw x N₁).core.Q.c.F →+* ↥(DN x 
   {YS : NExpRealS (datTw x N₁).R (datTw x N₁).cG (ratDatR (datTw x N₁).R (datTw x N₁).cG kKs hk)} {X : NExpTied (DN x N₁)} {hF Pq}
   (p : PreTie YS (datTw x N₁).geo.v₀ X hF Pq)
 
-def keptP : TwNew (DN x N₁) :=
-  keepTw (DN x N₁) p.Dat p.th p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3
-    (PreTie.nth (D := DN x N₁) (Ks := (datTw x N₁).core.Q.c.F) p)
-
-def nP : TwNew (Dof x) :=
-  ⟨(keptP p).tw, (keptP p).ex, (keptP p).h0, (keptP p).th, (keptP p).br, (keptP p).hbr⟩
+def nP : TwNew (Dof x) := ⟨N₁.tw, PreTie.ex (D := DN x N₁) (Ks := (datTw x N₁).core.Q.c.F) p, N₁.h0, PreTie.nth (D := DN x N₁) (Ks := (datTw x N₁).core.Q.c.F) p, N₁.br, N₁.hbr⟩
 
 def kP : (datTw x (nP p)).core.Q.c.F →+* ↥(DN x (nP p)).LL0 := (kKs)
 
@@ -151,10 +146,11 @@ def serP (hu : GlobalTheory.UnivChar.IsUnivChar (DN x N₁).nexp) (ho : NoOff (D
     intro i j b k Q ψ hA hOK
     obtain ⟨ω, hω, hval⟩ := p.join (pvP p PV) (fun j => hPV j) i j b k Q ψ hA hOK
     refine ⟨{ toFun := fun v => ω v, map_add' := ?_, map_smul' := ?_ }, ?_, ?_⟩
+    -- Infer the module instances from the type of the original witness.
     · intro v v'
-      with_unfolding_all exact ω.map_add' v v'
+      with_unfolding_all exact @LinearMap.map_add' _ _ _ _ _ _ _ _ _ _ _ ω v v'
     · intro a v
-      with_unfolding_all exact ω.map_smul' a v
+      with_unfolding_all exact @LinearMap.map_smul' _ _ _ _ _ _ _ _ _ _ _ ω a v
     · intro v v' e
       exact hω e
     · intro f' g

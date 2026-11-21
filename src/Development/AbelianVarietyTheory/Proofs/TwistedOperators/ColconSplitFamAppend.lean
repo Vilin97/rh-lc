@@ -62,7 +62,7 @@ variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc}
 theorem colcon_rowGrp_jac {t : T} {M : Vol G} (hM : M.Is t) (j σ : ℕ) (hj : j + 2 * σ + 1 = D.R.m) :
     rowGrp G j = jacGrp (jacAt G hM j σ hj).d := by
   unfold rowGrp
-  rw [dif_pos (by omega)]
+  rw [dite_eq_left (by omega)]
   obtain rfl : σ = (D.R.m - 1 - j) / 2 := by omega
   rfl
 
@@ -70,7 +70,7 @@ theorem colcon_rowGrp_bes {t : T} {M : Vol G} (hM : M.Is t) (j σ : ℕ) (hj : j
     (vN : VolN (besDecAt G j σ hj)) :
     rowGrp G j = besGrp (besAt G hM j σ hj vN).d (besAt G hM j σ hj vN).o := by
   unfold rowGrp
-  rw [dif_neg (by omega), dif_pos (by omega)]
+  rw [dite_eq_right (by omega), dite_eq_left (by omega)]
   obtain rfl : σ = (D.R.m - 2 - j) / 2 := by omega
   rfl
 
@@ -89,7 +89,7 @@ theorem colcon_gen (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.
       have hc : conAt W hM Φ h j = lastDat W hM j hj vN (h j) (Φ ⟨j, by omega⟩)
           (castSch G (show j + 1 + 1 = D.R.m by omega) (Φ ⟨j + 1, by omega⟩)) := by
         unfold conAt
-        rw [dif_pos hj]
+        rw [dite_eq_left hj]
         rfl
       have hz' : z = colPer W hM 0 j hj vN (dataFrom G W t hM (downFam t D.R.m D.R.m Φ) 0 j hj vN) F φ (h j) () := hz
       show z = jPer W M t (conAt W hM Φ h) F 0 j hj φ
@@ -131,14 +131,17 @@ theorem colcon_gen (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.
       have e1 : h' (j + 1) = a := (hh' (j + 1) (by simp only [List.mem_range'_1]; omega)).trans
         ((Function.update_of_ne (by omega) _ _).trans (Function.update_self _ _ _))
       have e2 : h' (j + 1 + 1) = b := (hh' (j + 1 + 1) (by simp only [List.mem_range'_1]; omega)).trans (Function.update_self _ _ _)
-      show _ = jPer W M t (conAt W hM Φ h') F σ (j + 1 + 1) _ (biL W M t j φ (conAt W hM Φ h' j))
-      congr 1
+      change _ = jPer W M t (conAt W hM Φ h') F σ (j + 1 + 1) hj'
+        (biL W M t j φ (conAt W hM Φ h' j))
+      apply congrArg (jPer W M t (conAt W hM Φ h') F σ (j + 1 + 1) hj')
       have hx : j + 2 * ((D.R.m - 4 - j) / 2 + 1) + 2 = D.R.m := by omega
       have hC : conAt W hM Φ h' j = _ :=
-        (dif_neg (show ¬ (j + 2 * 0 + 2 = D.R.m) by omega)).trans (dif_pos hx)
+        (dite_eq_right (show ¬ (j + 2 * 0 + 2 = D.R.m) by omega)).trans (dite_eq_left hx)
       rw [hC]
       obtain rfl : σ = (D.R.m - 4 - j) / 2 := by omega
-      rw [e0, e1, e2, colcon_getD_downFam, colcon_getD_downFam]
+      simp only [e0, e1, e2, colcon_getD_downFam]
+      dsimp only [biL, GlobalTheory.SeeSaw.biLift, volAt, contr, flatBF, flatFB, Link.κ,
+        stepAt, linkAt, besAt, jacAt]
       rfl
 
 theorem nIter_conAt_of_colPer : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.Is t) (Φ : SchDown G t) (F : Fn G (.grid D.R.m D.R.m)) (φ : Fn G (.top 0)) (z : ℂ), (chain G W t hM).Iter (colPer W hM _ 0 top_idx (topVN hM) (chainData G W t hM (downFam t D.R.m D.R.m Φ)) F φ 1) z → ∀ (ρ : ∀ j, Measure (rowGrp G j)), (∀ j σ (hj : j + 2 * σ + 1 = D.R.m), HEq (ρ j) (jacAt G hM j σ hj).μR) → (∀ j σ (hj : j + 2 * σ + 2 = D.R.m), HEq (ρ j) (besAt G hM j σ hj (GlobalTheory.Unf.Inhab.nonempty_volN _).some).μR) → NIter ρ (fun j => M.ν (.grid D.R.m j)) (fun h => jPer W M t (conAt W hM Φ h) F _ 0 top_idx φ) (idx D) 1 z := by

@@ -28,7 +28,7 @@ theorem isUnram_of_not_isSplit {v : HeightOneSpectrum (𝓞 D.host.F)} (hs : ¬ 
       Q ∈ Formalism.L2.Host.aboveF (L := D.host.E) D.host.F (P.under (𝓞 D.host.F)) ↔ Q.under (𝓞 D.host.F) = v := by
     intro Q
     rw [hPv]
-    simp only [Formalism.L2.Host.aboveF, Set.Finite.mem_toFinset, Set.mem_setOf_eq]
+    simp only [Formalism.L2.Host.aboveF, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
   have h1 : (Formalism.L2.Host.aboveF (L := D.host.E) D.host.F (P.under (𝓞 D.host.F))).card = 1 := by
     refine Finset.card_eq_one.2 ⟨P, Finset.eq_singleton_iff_unique_mem.2 ⟨(hmem P).2 hPv, fun Q hQ => ?_⟩⟩
     by_contra hne
@@ -118,7 +118,7 @@ theorem eigen_heckeAlg : ∀ (D : D7) (V : HSp D) (J : Set (GA D V)) (χ : GA D 
   refine ⟨hfix, fun x hx => ?_⟩
   obtain ⟨w, h, hcart⟩ := exists_cartan V v
   have hs := isEigenSys_of_heckeLin hJ hv h hfix (hc w)
-  have := GlobalTheory.HeckeDual.isLattice_frameLat V
+  have := GlobalTheory.AdelicU.SelfDual.isLattice_frameLat V
   have hK : IsCommensurated (Kv V v) := PI.UnitaryGroupMassFormula.AdIndexEq.commensurated_of_isOpen_isCompact _
     (isOpen_stabLoc D.sp.cm.sig V.gram (frameLat V) v) (isCompact_stabLoc D.sp.cm.sig V.gram (frameLat V) v)
   have hm := Formalism.UG.Final.DosetIndMem (Gv V v) (Kv V v) ℂ

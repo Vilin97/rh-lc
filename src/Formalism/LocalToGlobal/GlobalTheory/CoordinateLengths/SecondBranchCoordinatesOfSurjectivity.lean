@@ -3,6 +3,7 @@ module
 public import Formalism.LocalToGlobal.GlobalTheory.CoordinateLengths.SecondBranchOfCoordinatesAndCount
 public import Formalism.LocalToGlobal.GlobalTheory.CoordinateLengths.ValuationDetBasisChangeZero
 public import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocBases
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PKerAtP
 public import Formalism.LocalToGlobal.UnitaryNorms.UnramT
 
 @[expose] public section
@@ -18,7 +19,9 @@ theorem locBases {D : D7} {u : D.what₂.Word} (A : AtTTied u) (i : ℕ) (hi : i
     ∀ v, ∃ B' : GL (Fin (D.R.N i)) D.host.E, IsLocBasis (D.mem u).A.T (Lk A i hi v c : Set _) B' := by
   have : Fact (D.mem u).A.T.Prime := ⟨(D.mem u).A.T_prime⟩
   have hL := bwB_clsCrd_lat D u i hi c
-  obtain ⟨d, hd, hle⟩ := dual_le_bnd (sigD D : D.host.E →+* D.host.E) (gramN D i hi) (bwB_gramN_det D i hi) _ hL
+  have hFull : Submodule.IsFullLattice D.host.E (clsCrd D u i hi c) :=
+    { toIsLattice := hL, span_eq_top := (tld_isLat i hi c).2 }
+  obtain ⟨d, hd, hle⟩ := dual_le_bnd (sigD D : D.host.E →+* D.host.E) (gramN D i hi) (bwB_gramN_det D i hi) _ hFull
   obtain ⟨d0, hd0, hle0⟩ := exists_le_bnd _ hL
   have hLd : Ld D u i hi c ≤ bnd d := hle
   have hLd_sp := dual_span (sigD D : D.host.E →+* D.host.E) (gramN D i hi) _ hL

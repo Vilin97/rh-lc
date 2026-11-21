@@ -1,7 +1,6 @@
 module
 
 public import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.L2Embedding
-public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.AnalyticIntertwiners.Clause1
 public import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.DiscreteSpectrumKFiniteDecomposition
 public import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.InConeRefl
 
@@ -32,12 +31,6 @@ def StartMod : Prop :=
 def PathFin : Prop :=
   ∀ (n : ℕ) (ε : Fin n → Bool) (X : GMod n) (χ : Fin n → ℂ) (ss : List (Fin n)),
     (LocFin ε X.E → LocFin ε (path X χ ss).E) ∧ (IntWt X → IntWt (path X χ ss))
-
-def PathExists : Prop :=
-  ∀ (n : ℕ) (χ : Fin n → ℂ) (B : ℝ), ∃ C δ : ℝ, 0 < δ ∧ ∀ N₀ : ℝ, ∃ (ss : List (Fin n)) (N : ℝ), N₀ ≤ N ∧
-    GoodPath χ ss ∧ FarLabels χ (pathEnd χ ss) B ∧ (∀ s, s ∈ ss) ∧
-    (∀ a b, a ≠ b → δ * N ≤ |(pathEnd χ ss a).re - (pathEnd χ ss b).re|) ∧
-    ∀ a, |(pathEnd χ ss a).re| ≤ C * N ∧ |(pathEnd χ ss a).im| ≤ C
 
 def PathEndNat : Prop :=
   ∀ (n : ℕ) (χ : Fin n → ℂ) (ss : List (Fin n)), ∃ m : Fin n → ℕ, pathEnd χ ss = χ + (fun a => (m a : ℂ)) ∧

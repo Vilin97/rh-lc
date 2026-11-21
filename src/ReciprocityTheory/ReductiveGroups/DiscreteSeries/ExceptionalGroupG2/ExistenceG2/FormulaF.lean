@@ -155,10 +155,11 @@ theorem datumEmbedding_highest_ne_zero (hgap : StdGap ε lam) (hP : IsPsiFor ε 
     simp [jfun, ht, hP.2.1, hv₀]
   have hI := ffa_intK (ε := ε) hG
   have hpos : 0 < ∫ k, Complex.normSq (jfun Ψ v₀ v₀ (S7.toMK k)) ∂(dk ε) := by
-    rw [integral_pos_iff_support_of_nonneg (fun k => Complex.normSq_nonneg _) hI, dk,
-      Measure.smul_apply, smul_eq_mul]
+    rw [integral_pos_iff_support_of_nonneg (fun k => Complex.normSq_nonneg _) hI]
+    delta dk S7.muK
+    rw [smul_apply, smul_eq_mul]
     exact ENNReal.mul_pos (ENNReal.inv_ne_zero.2 (CompactHaarProbability.muK_univ_ne_top ε))
-      (hG.isOpen_support.measure_pos (S7.muK ε) ⟨1, h1⟩).ne'
+      (hG.isOpen_support.measure_pos (Measure.haar : Measure (S7.KG ε)) ⟨1, h1⟩).ne'
   linarith
 
 private theorem inner_orthogonalProjection_of_mem {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]

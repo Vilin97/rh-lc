@@ -6,7 +6,6 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForm
 public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.DiscreteSeriesUpqUnique
 public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.LowKTypeMultiplicityOneFock
 public import Formalism.SharpRestriction.CuspSpanNormBounds.HCFiniteKMultiplicityGapped
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.FinalClosed
 
 @[expose] public section
 

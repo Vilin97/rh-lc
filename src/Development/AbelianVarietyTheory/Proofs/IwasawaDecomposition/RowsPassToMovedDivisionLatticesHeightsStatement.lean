@@ -25,7 +25,7 @@ theorem _root_.GlobalTheory.T.rows_pass_to_moved_divisionLatticesHeights :
       (Wt : Set B.places.Pl) (O : Obj2 (w.D Z)) (t : RowsT K w Z Wt O.p0)
       (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ)
       (O' : Obj2 (w.D (Db.setDivZ Z N h))),
-    O' = cast (congrArg Obj2 (Db.D_setDivZ w Z N h).symm) (O.tr N h) →
+    O' = DivMv.objMv (w := w) (Z := Z) N h O →
     ∃ t' : RowsT K w (Db.setDivZ Z N h) Wt O'.p0, RowsSame t t' ∧
       HEq t'.r.z.geo (GlobalTheory.Mem.R3.Tr.geoHalf (a := ⟨Z.W, Z.V, Z.S, Z.N, Z.G⟩)
         (SRe.upL Z Z.S N h) (iK := t.r.z.alg) t.r.z.geo) ∧

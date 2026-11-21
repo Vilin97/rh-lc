@@ -142,7 +142,8 @@ theorem hsPs : HsPs := by
     Complex.ext (by simp [phiK]) (by simp [(phiM_posDef μ (posDef_conj k hx)).2])
   have hps : psM T μ x = ((Module.finrank ℂ T.V : ℝ) : ℂ) •
       ∫ k, ((phiK μ x k : ℝ) : ℂ) • (T.op k * projW T * T.op k⁻¹) ∂(dk ε) := by
-    unfold psM dk
+    unfold psM
+    delta dk
     simp_rw [hφeq]
     rw [integral_smul_measure, ENNReal.toReal_inv, ← Complex.coe_smul, smul_smul]
     congr 1

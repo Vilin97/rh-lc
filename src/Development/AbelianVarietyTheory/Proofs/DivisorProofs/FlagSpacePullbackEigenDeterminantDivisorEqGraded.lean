@@ -112,7 +112,8 @@ theorem detPow_map (a : (E →+* ℂ) → ℤ) {f g : EigFrame Y φ x} {f' g' : 
   rw [map_zpow]
   congr 1
   refine Units.ext ?_
-  rw [IsUnit.unit_spec, hf.co τ hg hx]
+  simp only [Units.coe_map, IsUnit.unit_spec]
+  rw [EigFrame.IsMap.co τ hf hg hx]
   exact (ψ.map_det _).symm
 
 theorem detPow_chart (a : (E →+* ℂ) → ℤ) {Z : Scheme.{0}} {π : Z ⟶ Y.X} (F : Frames Y π) (k k' : F.J) (z : Sp R ⟶ Z)

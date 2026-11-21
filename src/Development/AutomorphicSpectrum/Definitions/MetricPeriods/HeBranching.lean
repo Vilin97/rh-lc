@@ -4,7 +4,6 @@ public import Mathlib
 public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
 public import Formalism.PeriodIntegrals.DSInfCharCap
 public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedType
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.HarishChandraMultiplicityBound
 public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsNormEmbId
 
 @[expose] public section

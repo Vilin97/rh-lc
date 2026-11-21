@@ -28,7 +28,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.cusp_intersection_finite : Top
   have h1 : ∀ᶠ w' in 𝓝[Dc.Xo] w, S'.B.ph (M.proj w') < S'.B.ph (M.proj w) + ε / 3 :=
     ((M.cont w hw).mono hsub).tendsto.eventually (LevelTowerAlt.ph_usc S'.B _ _ (by linarith))
   have hc : ContinuousWithinAt (fun w' => Real.log (S'.ref.h w')) Dc.Xo w :=
-    ((S'.ref_smooth.continuousOn w hw.1).mono fun _ h => h.1.1).log (S'.ref.pos w hw.1).ne'
+    ((S'.ref_smooth.continuousOn w hw.1).mono fun w' (h : w' ∈ Dc.Xo) => (hsub h).1).log (S'.ref.pos w hw.1).ne'
   have h2 : ∀ᶠ w' in 𝓝[Dc.Xo] w, Real.log (S'.ref.h w') < Real.log (S'.ref.h w) + ε / 3 :=
     hc.tendsto.eventually (gt_mem_nhds (by linarith))
   have h3 : ∀ᶠ w' in 𝓝[Dc.Xo] w, ‖w' - w‖ < δ := by

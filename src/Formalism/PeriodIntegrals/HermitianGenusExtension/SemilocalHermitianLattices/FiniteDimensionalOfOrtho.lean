@@ -77,6 +77,15 @@ theorem isLattice_of_ortho {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (�
     (hL : Formalism.HermitianLatticesTheory.IsOrthoLattice h L n) : Submodule.IsLattice K L := by
   obtain ⟨e, hli, hsp, rfl, -⟩ := hL
   exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range e))
+
+theorem isFullLattice_of_ortho {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (𝓞 K) V} {n : ℕ}
+    (hL : Formalism.HermitianLatticesTheory.IsOrthoLattice h L n) : Submodule.IsFullLattice K L := by
+  haveI := isLattice_of_ortho hL
+  obtain ⟨e, hli, hsp, rfl, -⟩ := hL
+  refine ⟨?_⟩
+  apply top_unique
+  rw [← hsp]
+  exact Submodule.span_mono (Submodule.subset_span)
 theorem isTotPosDef_of_ortho (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {h : V →ₗ⋆[K] V →ₗ[K] K}
     (hs : h.IsSymm) {L : Submodule (𝓞 K) V} {n : ℕ} (hL : Formalism.HermitianLatticesTheory.IsOrthoLattice h L n) :
     IsTotPosDef h := by
@@ -151,7 +160,7 @@ theorem mass_pos_of_ortho (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {
     (hs : h.IsSymm) {L : Submodule (𝓞 K) V} {n : ℕ} (hL : Formalism.HermitianLatticesTheory.IsOrthoLattice h L n) :
     0 < Formalism.HermitianLatticesTheory.mass h L := by
   have := finiteDimensional_of_ortho hL
-  exact (Formalism.HermitianLatticesTheory.massBasic K V h hs (trace_pos_of_ortho hK hs hL) L (isLattice_of_ortho hL)).2.2
+  exact (Formalism.HermitianLatticesTheory.massBasic K V h hs (trace_pos_of_ortho hK hs hL) L (isFullLattice_of_ortho hL)).2.2
 
 end Ortho
 

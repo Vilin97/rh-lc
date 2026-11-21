@@ -281,13 +281,16 @@ theorem iota_total [FiniteDimensional K V] {F F' : FlagD H r} {Λ : Submodule (�
         rw [← algebraMap_smul K a, map_smul, LinearMap.smul_apply, smul_eq_mul]
         ring }
   obtain ⟨m, hm, hφ⟩ := GlobalTheory.UnimodQuot.exists_lattice_rep H hU S φ
+  have hΛ := (isLatMod_top_bot_iff Λ).1 hU.1
+  have hfull : Submodule.IsFullLattice K Λ :=
+    { toIsLattice := Submodule.IsLattice.of_fg K hΛ.1, span_eq_top := hΛ.2 }
   have hw : ∀ a : Fin (r + 1), H.B (F.e a) (l' + (g : K) • (-m)) = 0 := by
     intro a
     have haS : F.e a ∈ S := by
       refine Fin.lastCases ?_ (fun b => ?_) a
       · exact Submodule.mem_sup_right (Submodule.mem_span_singleton_self _)
       · exact Submodule.mem_sup_left (e_mem_Xa F b b.2)
-    obtain ⟨s, hs⟩ := GlobalTheory.UnimodQuot.exists_smul_mem ((isLatMod_top_bot_iff Λ).1 hU.1) (F.e a)
+    obtain ⟨s, hs⟩ := GlobalTheory.UnimodQuot.exists_smul_mem (K := K) hfull (F.e a)
     have hs0 : algebraMap (𝓞 K) K s ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors s.2
     have hs' : algebraMap (𝓞 K) K s • F.e a ∈ Λ := by rw [algebraMap_smul]; exact hs
     have e : H.B (algebraMap (𝓞 K) K s • F.e a) m = (g : K)⁻¹ * H.B (algebraMap (𝓞 K) K s • F.e a) l' :=

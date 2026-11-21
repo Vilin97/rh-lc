@@ -23,11 +23,12 @@ open Classical in
 def SyOf (Df : DefSide Bs) (S : IndefData Df) : Finset (HeightOneSpectrum (𝓞 K)) :=
   S.Tw ∪ (if h : (Function.support fun y => vw y (GmOf Df Bs.μ0 y)).Finite then h.toFinset else ∅)
 
-theorem gm_support_finite [_root_.NumberField.IsTotallyComplex K] {Df : DefSide Bs} (wf : Df.WF) (t : Bs.Tup) :
+theorem gm_support_finite [_root_.NumberField.IsTotallyComplex K] {Df : DefSide Bs} (wf : Df.WF) (t : Bs.Tup)
+    (hL : Submodule.IsFullLattice K (Df.abelian₂ t)) :
     (Function.support fun y => vw y (GmOf Df t y)).Finite := by
   have h := (reduction_lemma_second K Bs.K0 wf.cm Bs.v0 wf.conj (Df.nV t) (Df.dQ t) (Df.HV t) (wf.HV_rat t) (wf.HV_pos t)
     (Df.Pq t) (wf.Pq_surj t) (Df.XQ t) (wf.XQ_quot t) (Df.Mt t) (wf.Mt_lat t) (fun y => ebOf Df t y)
-    (fun y => ebOf_spec wf t y)).1
+    (ebOf_spec t hL)).1
   refine h.subset fun y hy => ?_
   rw [Function.mem_support] at hy ⊢
   exact mul_ne_zero (PlaceSumConjugation.lw_pos y).ne' (by exact_mod_cast hy)
@@ -38,10 +39,11 @@ theorem tw_sub_SyOf (Df : DefSide Bs) (S : IndefData Df) : S.Tw ⊆ SyOf Df S :=
   unfold SyOf
   exact Finset.mem_union_left _ hx
 
-theorem gram_det_unit_outside [_root_.NumberField.IsTotallyComplex K] {Df : DefSide Bs} (wf : Df.WF) (S : IndefData Df) (hH0 : S.H0)
+theorem gram_det_unit_outside [_root_.NumberField.IsTotallyComplex K] {Df : DefSide Bs} (wf : Df.WF)
+    (hL : Submodule.IsFullLattice K (Df.abelian₂ Bs.μ0)) (S : IndefData Df) (hH0 : S.H0)
     (y : HeightOneSpectrum (𝓞 K)) (hy : y ∉ SyOf Df S) : vw y (Df.Gm (ebOf Df) (S.μ y) y) = 0 := by
   unfold SyOf at hy
-  rw [dite_eq_left (gm_support_finite wf Bs.μ0)] at hy
+  rw [dite_eq_left (gm_support_finite wf Bs.μ0 hL)] at hy
   simp only [Finset.mem_union, not_or, Set.Finite.mem_toFinset, Function.mem_support, not_not] at hy
   have hμ : S.μ y = Bs.μ0 := by
     by_contra h

@@ -1,5 +1,6 @@
 module
 
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.LaplaceEstimates.EvalMD
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.LaplaceEstimates.PsiDatumStatement
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.ReproducingKernels.DecDeriv
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.LaplaceEstimates.GapNeed
@@ -18,10 +19,6 @@ open scoped InnerProductSpace
 namespace ReciprocityTheory.ChartRestriction.DS.Lap
 
 open ReciprocityTheory.ChartRestriction.DS
-
-def frameE {n : ℕ} {M : Type*} [AddCommGroup M] [Module ℂ M] (Q : Matrix (Fin n) (Fin n) ℂ)
-    (E : Fin n → Fin n → Module.End ℂ M) (i j : Fin n) : Module.End ℂ M :=
-  ∑ a, ∑ b, (Q⁻¹ a i * Q j b) • E a b
 
 def capIdx (k r : ℕ) (i : Fin (k + 2 * r + 1)) : Fin (2 * r + k + 1) := Fin.cast (by omega) i
 

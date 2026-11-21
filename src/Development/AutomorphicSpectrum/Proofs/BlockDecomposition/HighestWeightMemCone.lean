@@ -1,16 +1,13 @@
 module
 
 public import Mathlib
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OrderedCechToCatCochainsOneApplyValueAtSubset
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.ConeWeightsNotSecondType
+public import Formalism.RealPlaceAnalysis.StatementA
 
 @[expose] public section
 
-open Matrix Finset MeasureTheory
-open scoped ContDiff ComplexConjugate InnerProductSpace
-open PositivityTheory.RgBcC PositivityTheory.RgBcC.Real PositivityTheory.RgBcC.RealD
-open PositivityTheory.RgTw (Mat)
-open GlobalTheory.CompanionTheory.GLK (e1 e2 f1)
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
+open Finset
+open PositivityTheory.RgBcC.RealD (inCone)
 
 namespace GlobalTheory.CompanionTheory.HighestCone
 
@@ -20,7 +17,7 @@ theorem letter_comm (hg : Formalism.REAL.GlRel K) (a b c d : Fin n) (v : V) :
     K a b (K c d v) = K c d (K a b v) + (if b = c then K a d v else 0)
       - (if d = a then K c b v else 0) := by
   have h := congrArg (fun f : Module.End ℂ V => f v) (hg a b c d)
-  simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
+  simp only [LinearMap.sub_apply, mul_apply_eq_comp] at h
   have h3 : (if b = c then K a d else 0 : Module.End ℂ V) v = if b = c then K a d v else 0 := by
     split_ifs <;> simp
   have h4 : (if d = a then K c b else 0 : Module.End ℂ V) v = if d = a then K c b v else 0 := by

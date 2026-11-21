@@ -4,7 +4,6 @@ public import Mathlib
 public import Formalism.PeriodIntegrals.ZuckTensor
 public import Formalism.PeriodIntegrals.UpqRep
 public import Formalism.PeriodIntegrals.IsLowUnitH
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.HarishChandraMultiplicityBound
 public import Formalism.LocalToGlobal.IndefiniteReal.PublishedAut
 public import Formalism.LocalToGlobal.IndefiniteReal.SmExpSmulContDiff
 public import Formalism.LocalToGlobal.IndefiniteReal.SchurOrthogonality

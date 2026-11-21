@@ -73,8 +73,8 @@ theorem nu_pos (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF
 
 theorem nu_mul_relIndex (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     (hs : h.IsSymm) (hd : IsTotPosDef h) {A₀ B₀ : Submodule (𝓞 K) V}
-    (hA₀ : Submodule.IsLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀)
-    (hB₀ : Submodule.IsLattice K B₀) (hB₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h B₀) {𝔭 : Ideal (𝓞 F)}
+    (hA₀ : Submodule.IsFullLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀)
+    (hB₀ : Submodule.IsFullLattice K B₀) (hB₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h B₀) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) :
     nu h (locF 𝔭 A₀) 𝔭 * ((autSub h (locF 𝔭 A₀)).relIndex (autSub h (locF 𝔭 B₀)) : ℝ) =
       nu h (locF 𝔭 B₀) 𝔭 * ((autSub h (locF 𝔭 B₀)).relIndex (autSub h (locF 𝔭 A₀)) : ℝ) := by
@@ -162,8 +162,8 @@ theorem kap_alg {E₁ E₂ Q₁ Q₂ ν₁ ν₂ μ₁ μ₂ a b c d a' b' o₁ 
 
 theorem kap_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm) (hd : IsTotPosDef h)
     (S : VecSplit h h')
-    {M₁ M₂ : Submodule (𝓞 K) V} (hM₁ : Submodule.IsLattice K M₁)
-    (hM₁i : Formalism.HermitianLatticesTheory.IsIntegralLat h M₁) (hM₂ : Submodule.IsLattice K M₂)
+    {M₁ M₂ : Submodule (𝓞 K) V} (hM₁ : Submodule.IsFullLattice K M₁)
+    (hM₁i : Formalism.HermitianLatticesTheory.IsIntegralLat h M₁) (hM₂ : Submodule.IsFullLattice K M₂)
     (hM₂i : Formalism.HermitianLatticesTheory.IsIntegralLat h M₂) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F}
     (hn : n ≠ 0) (hx : h S.x₀ S.x₀ = algebraMap F K (n : F)) (hx₁ : S.x₀ ∈ locF 𝔭 M₁)
     (hx₂ : S.x₀ ∈ locF 𝔭 M₂) :
@@ -171,8 +171,8 @@ theorem kap_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF
       kap S (locF 𝔭 M₁) 𝔭 n J k = kap S (locF 𝔭 M₂) 𝔭 n J k := by
   have hq : (0 : ℝ) < (Ideal.absNorm 𝔭 : ℝ) := by
     exact_mod_cast reductionMapsOfForms.absNorm_pos h𝔭
-  have hT₁ := StabilizerLattices.isLattice_cut S hM₁
-  have hT₂ := StabilizerLattices.isLattice_cut S hM₂
+  have hT₁ := StabilizerLattices.isFullLattice_cut S hM₁
+  have hT₂ := StabilizerLattices.isFullLattice_cut S hM₂
   have hT₁i := UnimodularLocalization.isIntegralLat_cut S hM₁i
   have hT₂i := UnimodularLocalization.isIntegralLat_cut S hM₂i
 
@@ -182,14 +182,14 @@ theorem kap_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF
   set R := autSub h' (S.cut (locF 𝔭 M₂)) with hR
   have hPQ : P ≤ Q := autExt_le S _
   have hWR : W ≤ R := autExt_le S _
-  have ho₁ : P.relIndex Q ≠ 0 := oM_ne_zero hs S hM₁ h𝔭 hx₁
-  have ho₂ : W.relIndex R ≠ 0 := oM_ne_zero hs S hM₂ h𝔭 hx₂
+  have ho₁ : P.relIndex Q ≠ 0 := oM_ne_zero hs S (by first | exact hM₁ | exact hM₁.toIsLattice) h𝔭 hx₁
+  have ho₂ : W.relIndex R ≠ 0 := oM_ne_zero hs S (by first | exact hM₂ | exact hM₂.toIsLattice) h𝔭 hx₂
   have hc : R.relIndex Q ≠ 0 := by
     rw [hR, hQ, LocalizedFibreSets.cut_locF, LocalizedFibreSets.cut_locF]
-    exact relIndex_autSub_ne_zero h' hT₁ hT₂ h𝔭
+    exact relIndex_autSub_ne_zero h' (by first | exact hT₁ | exact hT₁.toIsLattice) (by first | exact hT₂ | exact hT₂.toIsLattice) h𝔭
   have hd' : Q.relIndex R ≠ 0 := by
     rw [hR, hQ, LocalizedFibreSets.cut_locF, LocalizedFibreSets.cut_locF]
-    exact relIndex_autSub_ne_zero h' hT₂ hT₁ h𝔭
+    exact relIndex_autSub_ne_zero h' (by first | exact hT₂ | exact hT₂.toIsLattice) (by first | exact hT₁ | exact hT₁.toIsLattice) h𝔭
   have hu : W.relIndex Q ≠ 0 := Subgroup.relIndex_ne_zero_trans ho₂ hc
   have ht : Q.relIndex W ≠ 0 := fun h0 => hd' (Subgroup.relIndex_eq_zero_of_le_right hWR h0)
   have ha' : W.relIndex P ≠ 0 := fun h0 => hu (Subgroup.relIndex_eq_zero_of_le_right hPQ h0)
@@ -203,22 +203,22 @@ theorem kap_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF
         = (P.relIndex Q * Q.relIndex W * W.relIndex P) * Q.relIndex R := by ring
       _ = (Q.relIndex R * W.relIndex Q) * P.relIndex W := by rw [← c1]; ring
       _ = _ := by rw [← c2]; ring
-  have h2 := nu_mul_relIndex hK hF hs hd hM₁ hM₁i hM₂ hM₂i h𝔭
-  have h3 := nu_mul_relIndex hK hF (S.isSymm hs) (S.isTotPosDef hd) hT₁ hT₁i hT₂ hT₂i h𝔭
+  have h2 := nu_mul_relIndex hK hF hs hd (by first | exact hM₁ | exact hM₁.toIsLattice) hM₁i (by first | exact hM₂ | exact hM₂.toIsLattice) hM₂i h𝔭
+  have h3 := nu_mul_relIndex hK hF (S.isSymm hs) (S.isTotPosDef hd) (by first | exact hT₁ | exact hT₁.toIsLattice) hT₁i (by first | exact hT₂ | exact hT₂.toIsLattice) hT₂i h𝔭
   rw [← LocalizedFibreSets.cut_locF, ← LocalizedFibreSets.cut_locF, ← hQ, ← hR] at h3
-  filter_upwards [pair hK hF hs hd hM₁ hM₁i hM₂ hM₂i h𝔭 hn hx hx₁ hx₂] with J hJ
+  filter_upwards [pair hK hF hs hd (by first | exact hM₁ | exact hM₁.toIsLattice) hM₁i (by first | exact hM₂ | exact hM₂.toIsLattice) hM₂i h𝔭 hn hx hx₁ hx₂] with J hJ
   filter_upwards [hJ] with k hk
   rw [relIndex_fix_eq hs, relIndex_fix_eq hs, ← hP, ← hW] at hk
   unfold kap oM
   rw [← hP, ← hW, ← hQ, ← hR]
   refine kap_alg (pow_pos hq _).ne' (pow_pos hq _).ne'
-    (nu_pos hK hF hs hd hM₁ hM₁i h𝔭).ne' (nu_pos hK hF hs hd hM₂ hM₂i h𝔭).ne'
+    (nu_pos hK hF hs hd (by first | exact hM₁ | exact hM₁.toIsLattice) hM₁i h𝔭).ne' (nu_pos hK hF hs hd (by first | exact hM₂ | exact hM₂.toIsLattice) hM₂i h𝔭).ne'
     (a := ((autSub h (locF 𝔭 M₂)).relIndex (autSub h (locF 𝔭 M₁)) : ℝ))
     (b := ((autSub h (locF 𝔭 M₁)).relIndex (autSub h (locF 𝔭 M₂)) : ℝ))
     (c := (R.relIndex Q : ℝ)) (d := (Q.relIndex R : ℝ)) (a' := (W.relIndex P : ℝ))
     (b' := (P.relIndex W : ℝ)) ?_ ?_ ?_ ?_ ?_ ?_ ?_ h2 h3 ?_
-  · exact_mod_cast relIndex_autSub_ne_zero h hM₁ hM₂ h𝔭
-  · exact_mod_cast relIndex_autSub_ne_zero h hM₂ hM₁ h𝔭
+  · exact_mod_cast relIndex_autSub_ne_zero h (by first | exact hM₁ | exact hM₁.toIsLattice) (by first | exact hM₂ | exact hM₂.toIsLattice) h𝔭
+  · exact_mod_cast relIndex_autSub_ne_zero h (by first | exact hM₂ | exact hM₂.toIsLattice) (by first | exact hM₁ | exact hM₁.toIsLattice) h𝔭
   · exact_mod_cast hd'
   · exact_mod_cast ha'
   · exact_mod_cast ho₁

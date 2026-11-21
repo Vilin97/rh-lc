@@ -23,7 +23,7 @@ structure DataJ (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) {r
   cm : IsCMExt F E σ
   herm : IsHermND σ J
   witt : IsWittFrame σ J X Y
-  lat : Submodule.IsLattice E L
+  lat : Submodule.IsFullLattice E L
   iwa : ∀ g, ∃ p β, ScalesBy σ J X p β ∧ ∃ k ∈ levelAll σ J L a, g = p * k
   ht : ∀ p β, ScalesBy σ J X p β → ∀ k ∈ levelAll σ J L a, h (p * k) = absE F E (Matrix.GeneralLinearGroup.det β)
 

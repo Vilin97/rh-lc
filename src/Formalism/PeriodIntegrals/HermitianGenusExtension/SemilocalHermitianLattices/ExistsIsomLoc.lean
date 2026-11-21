@@ -15,7 +15,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
 
 theorem exists_isom_loc (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm)
     {I : Submodule (𝓞 K) V} {n : ℕ} (hI : Formalism.HermitianLatticesTheory.IsOrthoLattice h I n)
-    {L : Submodule (𝓞 K) V} (hL : Submodule.IsLattice K L) (p : Ideal (𝓞 K)) (hp : p.IsMaximal)
+    {L : Submodule (𝓞 K) V} (hL : Submodule.IsFullLattice K L) (p : Ideal (𝓞 K)) (hp : p.IsMaximal)
     (hu : Formalism.HermitianLatticesTheory.IsUnimodularAt h p L) :
     ∃ g ∈ Formalism.HermitianLatticesTheory.isom h, Formalism.HermitianLatticesTheory.gmap g (Formalism.HermitianLatticesTheory.loc (K := K) p I) = Formalism.HermitianLatticesTheory.loc (K := K) p L := by
   have hpos := isTotPosDef_of_ortho hK hs hI

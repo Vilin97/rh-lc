@@ -21,6 +21,54 @@ namespace Formalism.L2.DIV
 
 open Formalism.DivisionValues Formalism.L2.Indef
 
+private theorem span_eq_top_of_scaled_dual_le {K : Type} [Field K] [NumberField K] [StarRing K]
+    {n : ℕ} (H : Matrix (Fin n) (Fin n) K) (M : Submodule (𝓞 K) (Fin n → K))
+    (hfg : M.FG) {c : 𝓞 K} (hc : c ≠ 0)
+    (hdual : ∀ x ∈ Formalism.HermitianLatticesTheory.dual (hform H) M, c • x ∈ M) :
+    Submodule.span K (M : Set (Fin n → K)) = ⊤ := by
+  rw [eq_top_iff]
+  intro x _
+  obtain ⟨generators, hgen⟩ := hfg
+  obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 K))
+    generators (fun y => hform H y x)
+  have hmem : (d : 𝓞 K) • x ∈ Formalism.HermitianLatticesTheory.dual (hform H) M := by
+    rw [mem_dual_iff]
+    intro y hy
+    rw [← hgen] at hy
+    induction hy using Submodule.span_induction with
+    | mem y hy =>
+        rw [← algebraMap_smul K, LinearMap.map_smul, algebraMap_smul K]
+        exact Submodule.mem_one.mpr (hd y hy)
+    | zero => simp
+    | add y z _ _ hy hz =>
+        rw [map_add, LinearMap.add_apply]
+        exact add_mem hy hz
+    | smul a y _ hy =>
+        obtain ⟨b, hb⟩ := Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range a
+        rw [← algebraMap_smul K a y, LinearMap.map_smulₛₗ₂]
+        change star (algebraMap (𝓞 K) K a) • hform H y ((d : 𝓞 K) • x) ∈ _
+        rw [← hb, algebraMap_smul K]
+        exact Submodule.smul_mem _ _ hy
+  have hcK : algebraMap (𝓞 K) K c ≠ 0 := by
+    simpa only [map_zero] using (IsFractionRing.injective (𝓞 K) K).ne hc
+  have hdK : algebraMap (𝓞 K) K d ≠ 0 :=
+    IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors d.2
+  apply (Submodule.smul_mem_iff _ hdK).mp
+  rw [algebraMap_smul K]
+  apply (Submodule.smul_mem_iff _ hcK).mp
+  rw [algebraMap_smul K]
+  exact Submodule.subset_span (hdual _ hmem)
+
+theorem matLat_full {K : Type} [Field K] [NumberField K] {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) K) (hA : Function.Surjective A.mulVec)
+    (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsFullLattice K M) :
+    Submodule.IsFullLattice K (matLat A M) := by
+  refine { toIsLattice := Submodule.IsLattice.of_fg K (hM.fg.map _), span_eq_top := ?_ }
+  rw [matLat, Submodule.map_coe]
+  change Submodule.span K (A.mulVecLin '' (M : Set _)) = ⊤
+  rw [Submodule.span_image, hM.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+  exact hA
+
 namespace BlockDat
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Group G] [Fintype G] {Pl0 : Type}
@@ -73,6 +121,15 @@ theorem XQ_quot : IsQuotMetric (B.Pq ℓ Z) (B.HV ℓ) (B.XQ ℓ Z) :=
 
 theorem Lam_lat : Submodule.IsLattice K (B.abelian₂ ℓ Z) :=
   GluingInclusion.matLat_lattice' (B.Pq ℓ Z) (Pq_surj hv0 h hX) (B.Mt ℓ) (Mt_lat hv0 h hX)
+
+theorem Lam_full : Submodule.IsFullLattice K (B.abelian₂ ℓ Z) := by
+  have hc : ((Fintype.card G * s : ℕ) : 𝓞 K) ≠ 0 := by
+    exact_mod_cast (Nat.mul_pos (Fintype.card_pos (α := G)) h.good.s_pos).ne'
+  have hLat := Mt_lat hv0 h hX
+  have hMt : Submodule.IsFullLattice K (B.Mt ℓ) :=
+    { toIsLattice := hLat
+      span_eq_top := span_eq_top_of_scaled_dual_le _ _ hLat.fg hc (Mt_dual hv0 h hX) }
+  exact matLat_full (B.Pq ℓ Z) (Pq_surj hv0 h hX) (B.Mt ℓ) hMt
 
 theorem XQ_herm : IsHermAt v0 (B.HZ ℓ Z) (B.XQ ℓ Z) :=
   quotFrameHermAt K v0 hv0 _ _ (B.HV ℓ) (HV_pos hv0 h hX) (B.zE ℓ Z) (B.Pq ℓ Z) (Pq_orth hv0 h hX)
@@ -650,15 +707,16 @@ section Side
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase K} {Df : DefSide Bs}
 
-theorem locBasisOf_spec {D : ℕ} (L : Submodule (𝓞 K) (Fin D → K)) (hL : Submodule.IsLattice K L)
+theorem locBasisOf_spec {D : ℕ} (L : Submodule (𝓞 K) (Fin D → K)) (hL : Submodule.IsFullLattice K L)
     (w : HeightOneSpectrum (𝓞 K)) : IsLocBasis L w (locBasisOf L w) := by
   have hex := semilocal_basis_exists K D L hL w
   unfold locBasisOf
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact hex.choose_spec
 
-theorem ebOf_spec (hW : Df.WF) (t : Bs.Tup) (w : HeightOneSpectrum (𝓞 K)) :
-    IsLocBasis (Df.abelian₂ t) w (ebOf Df t w) := locBasisOf_spec _ (hW.Lam_lat t) w
+theorem ebOf_spec (t : Bs.Tup) (hL : Submodule.IsFullLattice K (Df.abelian₂ t))
+    (w : HeightOneSpectrum (𝓞 K)) :
+    IsLocBasis (Df.abelian₂ t) w (ebOf Df t w) := locBasisOf_spec _ hL w
 
 theorem sum_partPr (t : Bs.Tup) (hi : iSupIndep (Df.Qp t)) (ht : (⨆ p, Df.Qp t p) = ⊤) :
     ∑ p, partPr Df t p = 1 := by
@@ -737,7 +795,7 @@ theorem GmOf_le [_root_.NumberField.IsTotallyComplex K] {s : ℕ} (h : F.Ok s) (
     vw w (GmOf (F.side P ψ Zs) t w) ≤
       (((F.side P ψ Zs).dQ t : ℕ) : ℤ) * vw w ((Fintype.card G * s : ℕ) : K) := by
   have hl : 0 < Fintype.card G * s := Nat.mul_pos Fintype.card_pos (h.what₂ t).good.s_pos
-  have hlat := BlockDat.Lam_lat (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
+  have hlat := BlockDat.Lam_full (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
   have := reduction_lemma_first K (cmMax K) (isCMSub_cmMax' K) F.v0 h.conj _ _ ((F.R t).HV (F.lvl P ψ))
     (BlockDat.HV_rat (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr)
     (BlockDat.HV_pos (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr) ((F.R t).Pq (F.lvl P ψ) (Zs.Z t))

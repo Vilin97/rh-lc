@@ -1,7 +1,7 @@
 module
 
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.LowKTypeMultiplicityOneFock
 public import Development.WeilBound.RepresentationTheoryGL.FormalDegree.FormalDegreeHilbert.HlamStable
-public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.DiscreteSeriesSU.GapInv
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DatumEmbeddingMemHlam
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DatumInj
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DatumA
@@ -69,7 +69,7 @@ theorem kmapZero_of (hS : HlamStable) : KmapZero := by
     refine Subtype.ext ?_
     rw [sigLam_coe' hS hP (show toMK k ∈ UJset ε from k.1.2)]
     exact hB k v
-  have hEq := PositivityTheory.DiscreteSeriesGap.GapInv.lowKMultOne_dec n ε lam (Hlam ε Ψ T.w) (sigLam ε Ψ T.w)
+  have hEq := CompanionTheory.D.LK.low_K_type_multiplicity_one n ε lam (Hlam ε Ψ T.w) (sigLam ε Ψ T.w)
     ((mir_isHCParam_iff lam).2 hl) hDS _ _ (isKTypeOf_range B' hB'inj hBint) (isKTypeOf_range j' hj'inj hjint)
   refine LinearMap.ext fun v => ?_
   have hmem : B' v ∈ (⊤ : Submodule ℂ T.V).map j' := by

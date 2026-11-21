@@ -36,7 +36,7 @@ theorem entries_zero_or_d {d l : ℕ} (hd : 0 < d) (σ : IrrRep (GL (Fin d) k)) 
   have h1 : b.1 i j₀ < d := lt_of_le_of_ne (MultOne.entry_le b i j₀) hc.2
   obtain ⟨j₁, hj, h2⟩ := MultOne.exists_other b h1
   have hcu : IsCuspidal (segTerm σ.ρ l i) :=
-    GlobalTheory.LocGL.isCuspidal_twist hσ (isSmoothChar_of_isUnram k (isUnram_absPow k _))
+    GlobalTheory.LocGL.isCuspidal_twist hσ (isSmoothChar_of_isUnram (isUnram_absPow k _))
   have hne : unipRad k (f i) ≠ ⊥ := by
     refine GlobalTheory.SmGL.CuspMax.unipRad_ne_bot_iff.2 ?_
     have e0 : blk (f i) (f i ⟨j₀, ⟨0, h0⟩⟩) = j₀ := by simp [blk]

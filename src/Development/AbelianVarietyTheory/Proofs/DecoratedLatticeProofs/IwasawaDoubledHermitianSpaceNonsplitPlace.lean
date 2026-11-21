@@ -7,6 +7,7 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDua
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TendstoOneOfSummable
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOfValILeOne
 public import Formalism.LocalRingCardinality.ConjSqrtMinusD
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 
 @[expose] public section
 
@@ -311,7 +312,7 @@ open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.Genus
 theorem hasIwasawa_of_inert {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {c : 𝓞 E} (hc : (c : E) + σ c = 1) {n : ℕ}
     {J : Matrix (Fin n) (Fin n) E} (hJ : IsHermND σ J) {Q : Matrix (Fin (n + n)) (Fin (n + n)) E}
-    (hQ : Q = dblGram finSumFinEquiv J) {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L]
+    (hQ : Q = dblGram finSumFinEquiv J) {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsFullLattice E L]
     {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)} (hw : Formalism.UG.IsInertAt F E v w)
     (hL : IsSelfDualAt σ J L v) : HasIwasawa σ Q (KFin σ Q L v) := fun g => by
   have h := (InertChart.under_eq_iff hw w).2 rfl
@@ -344,7 +345,8 @@ theorem hasIwasawa_inert : ∀ (D : D7) (A : HSp D) (L : Lat A), IsSelfDualC A L
     ¬ Formalism.MainNotions.SchurIrreducible.IsSplit (E := D.host.E) v →
       HasIwasawa D.sp.cm.sig (dblSp A).gram (KFin D.sp.cm.sig (dblSp A).gram L v) := by
   intro D A L hL v hv
-  haveI := hL.1
+  haveI : Submodule.IsFullLattice D.host.E L :=
+    Formalism.IndefR.Fin.PDA.selfDual_isFullLattice A L hL
   have := v.isMaximal
   obtain ⟨P, hP, hPv⟩ := Ideal.exists_maximal_ideal_liesOver_of_isIntegral (S := 𝓞 D.host.E) v.asIdeal
   let w : HeightOneSpectrum (𝓞 D.host.E) := ⟨P, hP.isPrime, Ideal.ne_bot_of_liesOver_of_ne_bot v.ne_bot P⟩
@@ -356,7 +358,7 @@ theorem hasIwasawa_inert : ∀ (D : D7) (A : HSp D) (L : Lat A), IsSelfDualC A L
     (((isCMExt_host D).2.2.2 _ _).trans (Formalism.HC.HostAx.conjE_apply _ _ _).symm)] at hc
   exact hasIwasawa_of_inert (GlobalTheory.LFun.InertChart.conj_conj (isCMExt_host D)) (c := c) hc (GlobalTheory.Doubling.isHermND_gram A)
     (gram_hdbl A) (hi.resolve_left hv)
-    ((SelfDual.forall_isSelfDualAt_iff (σ := D.sp.cm.sig) (GlobalTheory.Doubling.isHermND_gram A).2 hL.1).2 (fun y => hL.2 y) v)
+    ((SelfDual.forall_isSelfDualAt_iff (σ := D.sp.cm.sig) (GlobalTheory.Doubling.isHermND_gram A).2 inferInstance).2 (fun y => hL.2 y) v)
 
 end GlobalTheory.InertIwasawa
 

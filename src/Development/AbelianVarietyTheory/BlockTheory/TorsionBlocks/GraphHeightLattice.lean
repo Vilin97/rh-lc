@@ -53,7 +53,7 @@ def InertAt : Prop :=
 def GraphNormFinite : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (h : IsCMExt F E σ) (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (hJ : IsHermND σ J)
-    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] (v : HeightOneSpectrum (𝓞 F)),
+    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L] (v : HeightOneSpectrum (𝓞 F)),
     IsSelfDualAt σ J L v → SplitAt σ J L v h hJ ∧ InertAt σ J L v
 
 omit [NumberField E] in

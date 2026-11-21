@@ -39,7 +39,7 @@ variable {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Modul
   [IsScalarTower (𝓞 K) K V]
 
 theorem normD_pos {h : V →ₗ⋆[K] V →ₗ[K] K} (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) : 0 < normD h L := by
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) : 0 < normD h L := by
   have hd' : ∀ x, h x x = 0 → x = 0 := by
     intro x hx
     by_contra hne
@@ -66,7 +66,7 @@ theorem tendsto_left (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
   refine tendsto_finsetSum _ fun M hM => ?_
   have hg := hsr.1 M hM
   obtain ⟨hMi, -, hMD⟩ := integral_of_mem_genus hK hF hs hd hL hLi hg
-  have ht := (tendsto_ballCount hK hF hs hd hg.1.toIsLattice hMi).const_mul
+  have ht := (tendsto_ballCount hK hF hs hd (by first | exact hg.1 | exact hg.1.toIsLattice) hMi).const_mul
     ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℝ)⁻¹)
   rw [hMD] at ht
   refine ht.congr fun j => ?_
@@ -130,7 +130,7 @@ theorem massConst_succ (hH : HermRepUnram) (hLI : LIStat) (hK : Formalism.Hermit
     (Real.pi ^ finrank K V) ((finrank K V - 1).factorial : ℝ) (finrank K V : ℝ)
     (Formalism.HermitianLatticesTheory.vInv K ^ (Formalism.HermitianLatticesTheory.fDeg K * finrank K V))
     (Real.sqrt ((2 * Formalism.HermitianLatticesTheory.vInv K) ^ Formalism.HermitianLatticesTheory.fDeg K)) (lValEtaF K F (finrank K V))
-    (Formalism.HermitianLatticesTheory.fDeg K) (Step.normD_pos hd hL.toIsLattice hLi) (by positivity) (by positivity)
+    (Formalism.HermitianLatticesTheory.fDeg K) (Step.normD_pos hd hL hLi) (by positivity) (by positivity)
     (by exact_mod_cast hn0) (by positivity) (by positivity) hAB
   rw [massRatio_eq_lvalue hK hF (finrank K V) hm]
   exact key

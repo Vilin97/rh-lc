@@ -24,7 +24,7 @@ theorem exists_isLocBasis_clsP : ∀ (D : D7) (u : D.what₂.Word) (Ch : ℕ →
     ∃ B : GL (Fin (D.R.N D.R.m - 1)) D.host.E,
       IsLocBasis (D.what₂.places.resChar w) (Tf.clsP.lat c : Set (Fin (D.R.N D.R.m - 1) → D.host.E)) B := by
   intro D u Ch chOf Tf w c
-  have hL : Submodule.IsLattice D.host.E (Tf.clsP.lat c) :=
+  have hL : Submodule.IsFullLattice D.host.E (Tf.clsP.lat c) :=
     Formalism.MainNotions.G.ChF.isLattice_of_hat Tf.clsP.lev.Lb (Tf.clsP.lat c) Tf.clsP.lev.Lb_fin Tf.clsP.lev.Lb_span
       (Tf.clsP.y c).1 (Tf.clsP.y_lat c)
   have hspan : Submodule.span D.host.E (Tf.clsP.lat c : Set (Fin (D.R.N D.R.m - 1) → D.host.E)) = ⊤ := by

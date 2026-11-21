@@ -307,12 +307,10 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.intertw :
     rw [hTk g k hk]
   have hP₁ : ∀ γ ∈ Gam K 2, lv γ 1 0 ∈ PK K := fun γ hγ =>
     (pkLaws (K := K)).2.1 _ |>.2 ⟨0, ⟨γ, hγ⟩, 1, by
-      rw [show nn (0 : unipLattice K (2 + 2) 2).1 = 1 from unipOne_zero 2, one_mul]
-      rfl⟩
+      simp [unipOne_zero]⟩
   have hP₂ : ∀ γ ∈ Gam K 2, lv 1 γ 0 ∈ PK K := fun γ hγ =>
     (pkLaws (K := K)).2.1 _ |>.2 ⟨0, 1, ⟨γ, hγ⟩, by
-      rw [show nn (0 : unipLattice K (2 + 2) 2).1 = 1 from unipOne_zero 2, one_mul]
-      rfl⟩
+      simp [unipOne_zero]⟩
   refine ⟨(secCrit μ₂ τ₂ τ₁ D h₂ h₁ _ hfix).2 ⟨?_, ?_, ?_, ?_, ?_⟩, hfix⟩
   · have hΦc : Continuous Φ := by
       rw [hΦ]

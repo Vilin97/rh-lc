@@ -136,6 +136,10 @@ section Frame
 
 variable {M : Type*} [AddCommGroup M] [Module ℂ M]
 
+def frameE {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℂ)
+    (E : Fin n → Fin n → Module.End ℂ M) (i j : Fin n) : Module.End ℂ M :=
+  ∑ a, ∑ b, (Q⁻¹ a i * Q j b) • E a b
+
 theorem frameE_eq_frameAB {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℂ) (E : Fin n → Fin n → Module.End ℂ M) :
     frameE Q E = EvalC.frameAB (Q⁻¹)ᵀ Qᵀ E := rfl
 

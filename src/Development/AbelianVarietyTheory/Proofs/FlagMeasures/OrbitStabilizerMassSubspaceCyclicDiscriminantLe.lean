@@ -33,7 +33,10 @@ theorem smul_def' (h : V →ₗ⋆[K] V →ₗ[K] K) (g : isom h) (L : Submodule
 theorem isIntLat_smul (h : V →ₗ⋆[K] V →ₗ[K] K) (g : isom h) (L : Submodule (𝓞 K) V)
     (hL : IsIntLat h L) : IsIntLat h (g • L) := by
   have H := isomAct (𝓞 K) K V h g g.2 L
-  exact ⟨H.2.2.2.2.2 hL.1, H.2.2.1.2 hL.2⟩
+  refine ⟨{ toIsLattice := H.2.2.2.2.2 hL.1.toIsLattice, span_eq_top := ?_ },
+    H.2.2.1.2 hL.2⟩
+  change Submodule.span K ((g : V ≃ₗ[K] V).toLinearMap '' (L : Set V)) = ⊤
+  rw [← Submodule.map_span, hL.1.span_eq_top, Submodule.map_top, LinearEquiv.range]
 
 theorem dual_smul (h : V →ₗ⋆[K] V →ₗ[K] K) (g : isom h) (L : Submodule (𝓞 K) V) :
     dual h (g • L) = g • dual h L := (isomAct (𝓞 K) K V h g g.2 L).1

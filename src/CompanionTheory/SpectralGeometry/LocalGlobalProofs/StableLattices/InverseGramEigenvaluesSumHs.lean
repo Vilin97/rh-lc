@@ -1,15 +1,15 @@
 module
 
 public import Mathlib
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.HsConjTranspose
+public import Formalism.RealPlaceAnalysis.Complexify
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.IsClosedEmbeddingToM
 
 @[expose] public section
 
 open Matrix
-open CompanionTheory.RgExh.Dec CompanionTheory.RgExh.Dec.L ReciprocityTheory.ChartRestriction.DS GlobalTheory.CompanionTheory.PSubFlag GlobalTheory.CompanionTheory.UGeo
+open ReciprocityTheory.ChartRestriction.DS
 
 namespace GlobalTheory.CompanionTheory.UGeo
-
 
 open scoped ComplexOrder in
 theorem specpos_inv_eigenvalues (n : ℕ) (ε : Fin n → Bool) (g : S7.UJ ε)

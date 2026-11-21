@@ -84,7 +84,7 @@ theorem auxiliaryVectorDecomposition_eq_zero {A B : HSp D} {c : ℕ} {ε : D.hos
 set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 2000000 in
 theorem exists_sumFrame {A B : HSp D} {c : ℕ} {ε : D.host.E} (hε : ε ≠ 0) (d : HermitianOrthogonalExtensionData A B c ε)
-    {Λ : Submodule (𝓞 D.host.E) (Fin A.rank → D.host.E)} (hΛ : Submodule.IsLattice D.host.E Λ)
+    {Λ : Submodule (𝓞 D.host.E) (Fin A.rank → D.host.E)} (hΛ : Submodule.IsFullLattice D.host.E Λ)
     {β : GL (Fin A.rank) (Lev.EAf D)} (hβ : IsFrame β Λ) {𝔟 : Fin c → FractionalIdeal (𝓞 D.host.E)⁰ D.host.E}
     (h𝔟 : ∀ p, 𝔟 p ≠ 0) (y : Fin c → (Lev.EAf D)ˣ)
     (hy : ∀ p Q, Valued.v (cpt (D := D) Q (y p).1) = WithZero.exp (-FractionalIdeal.count D.host.E Q (𝔟 p))) :
@@ -487,8 +487,8 @@ theorem gridChoice_nonempty {U : Set T} (N : Std G U) (Z : Normal W N)
       ((algebraMap (𝓞 D.host.E) D.host.E a) • y) ∈ _ at this
     rw [← smul_assoc, smul_eq_mul, inv_mul_cancel₀ ha0, one_smul] at this
     exact this
-  have hlatTop : ∀ j, j ≤ D.R.m → Submodule.IsLattice D.host.E (G.Λ (.top j)) := fun j hj =>
-    (G.isV (X := .top j) hj fun _ e => by cases e).sd.1
+  have hlatTop : ∀ j, j ≤ D.R.m → Submodule.IsFullLattice D.host.E (G.Λ (.top j)) := fun j hj =>
+    hfull _ _ (G.isV (X := .top j) hj fun _ e => by cases e).sd
   have hb : ∀ j, ∃ β : GL (Fin (G.V (.top j)).rank) (Lev.EAf D), j ≤ D.R.m → IsFrame β (G.Λ (.top j)) := fun j => by
     by_cases hj : j ≤ D.R.m
     · obtain ⟨β, hβ⟩ := GlobalTheory.AdelicFrame.exists_isFrame D.host.F _ (hlatTop j hj).fg (Submodule.IsFullLattice.span_eq_top (self := hfull _ _ ((G.isV (X := .top j) hj fun _ e => by cases e).sd)))
@@ -544,10 +544,10 @@ theorem gridChoice_nonempty {U : Set T} (N : Std G U) (Z : Normal W N)
   have hB : ∀ i j, 1 ≤ i → B.β i j = F i j := fun i j hi => by
     match i, hi with
     | k + 1, _ => rfl
-  have hlatm : Submodule.IsLattice D.host.E (G.Λ (.grid D.R.m D.R.m)) :=
-    (G.isV (X := .grid D.R.m D.R.m) ⟨le_rfl, le_rfl⟩ fun j' e => by
+  have hlatm : Submodule.IsFullLattice D.host.E (G.Λ (.grid D.R.m D.R.m)) :=
+    hfull _ _ (G.isV (X := .grid D.R.m D.R.m) ⟨le_rfl, le_rfl⟩ fun j' e => by
       injection e with e1 e2
-      omega).sd.1
+      omega).sd
   obtain ⟨βl, hl1, hl2⟩ := exists_sumFrame (one_ne_zero : (1 : D.host.E) ≠ 0) G.sp.topDec hlatm
     (hF1 D.R.m D.R.m hm le_rfl le_rfl) (fun _ => one_ne_zero) (fun _ => 1)
     (fun _ Q => by rw [Units.val_one, map_one, map_one, FractionalIdeal.count_one, neg_zero, WithZero.exp_zero])

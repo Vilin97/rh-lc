@@ -55,7 +55,7 @@ theorem coef_dec_of_isDS [CompleteSpace H] (hDS : Formalism.MainNotions.S.IsDS �
       ≤ ‖v‖ * ‖Ψ (S7.toMK k * NormedSpace.exp X) v‖ := norm_inner_le_norm _ _
     _ ≤ ‖v‖ * (‖Ψ (S7.toMK k * NormedSpace.exp X)‖ * ‖v‖) :=
         mul_le_mul_of_nonneg_left (ContinuousLinearMap.le_opNorm _ _) (norm_nonneg _)
-    _ = ‖Ψ (S7.toMK k * NormedSpace.exp X)‖ := by rw [hv1]; ring
+    _ = ‖Ψ (S7.toMK k * NormedSpace.exp X)‖ := by simp only [hv1, mul_one, one_mul]
     _ ≤ _ := hdec k X hX
 
 end ReciprocityTheory.ChartRestriction.DS

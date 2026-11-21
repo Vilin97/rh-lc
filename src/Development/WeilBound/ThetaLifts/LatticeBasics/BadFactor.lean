@@ -172,7 +172,7 @@ theorem _root_.GlobalTheory.ThK.Dbl.badFactor_of (hD : DblX) (hS : StabEx) (hV :
     exact funext fun x => mul_right_cancel₀ (star_ne_zero.2 hy) (congrFun this (Sum.elim x y))
   have cl : IsClosed {g : UA σ X.J | ∀ v ∉ T, IntAt v g} := by
     simp only [Set.setOf_forall]
-    exact isClosed_iInter fun v => isClosed_iInter fun _ => Euler.isClosed_int P.herm.lat v
+    exact isClosed_iInter fun v => isClosed_iInter fun _ => Euler.isClosed_int P.herm.lat.toIsLattice v
   have ct : Continuous (coef om ν Φ) := by
     refine (((d1.weil.2.1.cont l d1.adm _ (d2 Φ m Φ m).1).comp (cont_emb he)).div_const (c : ℂ)).congr fun g => ?_
     exact (congrArg (· / (c : ℂ)) (cf g)).trans (mul_div_cancel_left₀ _ c1)

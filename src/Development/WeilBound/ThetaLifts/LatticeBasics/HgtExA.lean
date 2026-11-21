@@ -241,7 +241,7 @@ theorem back_comm {ξ : E} (hξ : ξ ≠ 0) {k : GAd σ (dblGram finSumFinEquiv 
 
 theorem iwasawa2 {B : Base F E} (hB : B.IsGood σ) {r s : ℕ} (hY : Y.IsHerm σ B r s ∨ Y.IsSkew σ B r s) (x : G2 σ Y) :
     ∃ p : siegelOf (Equiv.refl (Fin n ⊕ Fin n)) (UG (cA σ) (dbl (incM F Y.J))).subtype, ∃ k ∈ stab2 σ Y B, x = p * k := by
-  have hL : Y.L.IsLattice E := hY.elim (·.lat) (·.lat)
+  haveI hL : Y.L.IsFullLattice E := hY.elim (·.lat) (·.lat)
   obtain ⟨ξ, hξ, hh, hw⟩ := exists_scal hB hY
   choose M r h1 h2 h3 h4 using hw
   choose b hb hb' using fun w => exists_arch hB.cm (B.emb w) (h1 w) (isUnit_of_cartan (h2 w)) (h2 w) (h3 w) (h4 w)

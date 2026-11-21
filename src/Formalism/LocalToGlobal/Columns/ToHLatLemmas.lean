@@ -117,16 +117,9 @@ def isoHc (h : S.Ok) (L : Submodule (𝓞 K) S.EqFun) : Formalism.L2.GlobalTheor
 theorem isLattice_of_map (h : S.Ok) (L : Submodule (𝓞 K) S.EqFun)
     (hL : Submodule.IsLattice K (L.map ((S.hCoord h).toLinearMap.restrictScalars (𝓞 K)))) :
     Submodule.IsLattice K L := by
-  refine ⟨Submodule.fg_of_fg_map_injective ((S.hCoord h).toLinearMap.restrictScalars (𝓞 K)) (S.hCoord h).injective hL.fg, ?_⟩
-  have h1 := hL.span_eq_top
-  have h2 : Submodule.span K ((L.map ((S.hCoord h).toLinearMap.restrictScalars (𝓞 K)) :
-      Submodule (𝓞 K) (Fin (S.hDim h) → K)) : Set (Fin (S.hDim h) → K)) =
-      (Submodule.span K (L : Set S.EqFun)).map (S.hCoord h).toLinearMap := by
-    rw [Submodule.map_span]
-    rfl
-  rw [h2] at h1
-  have h3 := congrArg (Submodule.comap (S.hCoord h).toLinearMap) h1
-  rwa [Submodule.comap_map_eq_of_injective (S.hCoord h).injective, Submodule.comap_top] at h3
+  exact Submodule.IsLattice.of_fg K
+    (Submodule.fg_of_fg_map_injective ((S.hCoord h).toLinearMap.restrictScalars (𝓞 K))
+      (S.hCoord h).injective hL.fg)
 
 theorem intDel_isLattice (h : S.Ok) (hD : ∀ d, Submodule.IsLattice K (S.Del d)) :
     Submodule.IsLattice K S.intDel := by
@@ -146,7 +139,7 @@ theorem intNab_isLattice (h : S.Ok) (hD : ∀ d, Submodule.IsLattice K (S.Nab d)
 
 variable {S}
 
-theorem PosH.good {h : S.Ok} (hp : S.PosH h) {L : Submodule (𝓞 K) S.EqFun} (hL : Submodule.IsLattice K L) :
+theorem PosH.good {h : S.Ok} (hp : S.PosH h) {L : Submodule (𝓞 K) S.EqFun} (hL : Submodule.IsFullLattice K L) :
     (S.toH h L).Good := ⟨hp.frameOK L, hL.fg, hL.span_eq_top⟩
 
 end GSD

@@ -1,11 +1,25 @@
 module
 
-public import Mathlib
-public import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.SimpleDistinctness.ScalarCharacterOfL2Embedding
+public import Formalism.FormalDegreeBessel.StatementDS
 
 @[expose] public section
 
 open Finset
+
+namespace CompanionTheory.RgExh.Fin
+
+def ArrCount : Prop :=
+  ∀ (n : ℕ) (ε : Fin n → Bool) (χ χ' : Fin n → ℂ), Function.Injective χ → Function.Injective χ' →
+    (∀ a, (χ a).im = 0 ∧ ∃ m : ℤ, (χ a).re - ((n : ℝ) - 1) / 2 = m) →
+    (∀ a, (χ' a).im = 0 ∧ ∃ m : ℤ, (χ' a).re - ((n : ℝ) - 1) / 2 = m) →
+    ∃ (A : Finset (Equiv.Perm (Fin n) × (Fin n → ℝ))) (A' : Finset (Equiv.Perm (Fin n) × (Fin n → ℝ))),
+      A.card = A'.card ∧
+      (∀ d, d ∈ A ↔ (Formalism.QuantumDeterminants.IsHCParam d.2 ∧ (∀ a b, a < b → ε (d.1 a) = ε (d.1 b) → d.1 a < d.1 b) ∧
+        ∃ τ : Equiv.Perm (Fin n), ∀ a, ((d.2 a : ℝ) : ℂ) = χ (τ a))) ∧
+      (∀ d, d ∈ A' ↔ (Formalism.QuantumDeterminants.IsHCParam d.2 ∧ (∀ a b, a < b → ε (d.1 a) = ε (d.1 b) → d.1 a < d.1 b) ∧
+        ∃ τ : Equiv.Perm (Fin n), ∀ a, ((d.2 a : ℝ) : ℂ) = χ' (τ a)))
+
+end CompanionTheory.RgExh.Fin
 
 namespace GlobalTheory.CompanionTheory.ArrCount
 
@@ -34,7 +48,7 @@ theorem exists_unique_param {n : ℕ} (χ : Fin n → ℂ) (hχ : Function.Injec
       rw [hσ a, hσ b] at e
       exact hanti.lt_iff_gt.1 e
     have hid : (σ : Fin n → Fin n) = id :=
-      (StrictMono.range_inj hσm strictMono_id).1 (by simp [σ.surjective.range_eq])
+      (StrictMono.range_inj_of_wellFoundedLT hσm strictMono_id).1 (by simp [σ.surjective.range_eq])
     funext a
     rw [hσ a, hid]
     rfl

@@ -260,10 +260,13 @@ def DivInputsDef3.toDivInputs0R [_root_.NumberField.IsTotallyComplex K] (hOk : A
   nKcb := I.nKcb
   eig6 := I.eig6
   eb := ebOf (A3.side3 P0 ψ0 Pk.Zs)
-  heb := ebOf_spec (A3.side_well_formed hOk P0 ψ0 Pk.Zs Pk.stable Pk.inBlock hsep)
+  heb t := ebOf_spec t (BlockDat.Lam_full (ℓ := A3.A.fam.lvl P0 ψ0)
+    hOk.ok2.conj (hOk.ok2.what₂ t) hOk.ok2.irr)
   Sy := SyOf (A3.side3 P0 ψ0 Pk.Zs) Pk.core.base.toIndefData
   Sy_tw := tw_sub_SyOf _ _
-  G0 := gram_det_unit_outside (A3.side_well_formed hOk P0 ψ0 Pk.Zs Pk.stable Pk.inBlock hsep) Pk.core.base.toIndefData Pk.core.base.h0
+  G0 := gram_det_unit_outside (A3.side_well_formed hOk P0 ψ0 Pk.Zs Pk.stable Pk.inBlock hsep)
+    (BlockDat.Lam_full (ℓ := A3.A.fam.lvl P0 ψ0) hOk.ok2.conj
+      (hOk.ok2.what₂ A3.fam3.base3.μ0) hOk.ok2.irr) Pk.core.base.toIndefData Pk.core.base.h0
   LG := lgDef R s
   E3 := 1
   E2 := etaSumBound I.bd I.dg s

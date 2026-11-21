@@ -1,7 +1,8 @@
 module
 
 public import Development.WeilBound.RepresentationTheoryGL.FormalDegree.FormalDegreeHilbert.HlamStable
-public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.DiscreteSeriesSU.GapInv
+import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.LowKTypeMultiplicityOneUnconditional
+import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.IsDerivedOnOfIsKMod
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Exists
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.ExistsMu
 
@@ -22,7 +23,9 @@ theorem fdAll_of (hM : ModelDS) (hF : FdModel) : FdAll := by
   obtain ⟨μ, hμ⟩ := S7.exists_mu hl
   have hDS := (hM n ε lam T μ hl hμ).2
   have hd := hF n ε lam T μ hl hμ
-  obtain ⟨U, hU⟩ := PositivityTheory.DiscreteSeriesGap.GapInv.dsUnique_dec n ε lam H σ _ (sigLam ε (PsiM T μ) T.w) hl hσ hDS
+  obtain ⟨U, hU⟩ := GlobalTheory.CompanionTheory.DSUniq.ds_unique
+    CompanionTheory.D.LK.hMultAlg CompanionTheory.D.LK.hKModExists CompanionTheory.D.LK.hOrthCyc
+    n ε lam H _ σ (sigLam ε (PsiM T μ) T.w) hl hσ hDS
   have hc : ∀ (v w : H) (g : Formalism.REAL.UJ ε), Formalism.MainNotions.S.coefOn σ v w g =
       Formalism.MainNotions.S.coefOn (sigLam ε (PsiM T μ) T.w) (U v) (U w) g := by
     intro v w g

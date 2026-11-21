@@ -87,7 +87,7 @@ theorem projPl_embPl_ne : ∀ {u v}, u ≠ v → ∀ x, projPl σ J u (embPl σ 
   | .inr u, .inl v, _, x => proj_embArch σ J u v x
   | .inr _, .inr _, h, x => proj_emb_ne σ J (fun e => h (congrArg _ e)) x
 
-theorem forall_eventually_proj_iff (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L]
+theorem forall_eventually_proj_iff (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L]
     (a : ∀ v, GLoc σ J v → Prop) : (∀ g : GFin σ J, ∀ᶠ v in cofinite, a v (projFinLoc σ J v g)) ↔
       ∀ᶠ v in cofinite, ∀ k ∈ stabLoc σ J L v, a v k := by
   refine ⟨fun h => ?_, fun h g => (h.and (eventually_projFinLoc_mem_stabLoc σ J L g)).mono fun v hv => hv.1 _ hv.2⟩
@@ -97,7 +97,9 @@ theorem forall_eventually_proj_iff (L : Submodule (𝓞 E) (Fin n → E)) [Submo
     · push Not at e
       exact e.imp fun k hk => ⟨hk.1, fun h => absurd h hk.2⟩
   choose k hk hk' using this
-  obtain ⟨g, hg, -⟩ := existsUnique_projFinLoc_eq σ J L k (.of_forall hk)
+  have hex : ∃! g : GFin σ J, ∀ v, projFinLoc σ J v g = k v :=
+    existsUnique_projFinLoc_eq σ J L k (Filter.Eventually.of_forall fun v => hk v)
+  obtain ⟨g, hg, -⟩ := hex
   exact (h g).mono fun v hv => hk' v (hg v ▸ hv)
 
 variable {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
@@ -114,7 +116,7 @@ variable {σ J} {δ : ∀ v, GPl σ J v →* (Hs v →L[ℂ] Hs v)} {ξ : ∀ v,
   {B : (∀ v, Hs v) → H}
 
 theorem IsFactorisation.eventually_fixed (h : IsFactorisation σ J δ ξ π B) (L : Submodule (𝓞 E) (Fin n → E))
-    [Submodule.IsLattice E L] : ∀ᶠ v in cofinite, ∀ k ∈ stabLoc σ J L v, δ (.inr v) k (ξ (.inr v)) = ξ (.inr v) :=
+    [Submodule.IsFullLattice E L] : ∀ᶠ v in cofinite, ∀ k ∈ stabLoc σ J L v, δ (.inr v) k (ξ (.inr v)) = ξ (.inr v) :=
   (forall_eventually_proj_iff σ J L fun v k => δ (.inr v) k (ξ (.inr v)) = ξ (.inr v)).1 fun g =>
     (Sum.inr_injective.tendsto_cofinite.eventually (h.fixed (ofFin σ J g))).mono fun v hv =>
       (congrArg (δ (.inr v) · _) (proj_ofFin σ J v g)).symm.trans hv

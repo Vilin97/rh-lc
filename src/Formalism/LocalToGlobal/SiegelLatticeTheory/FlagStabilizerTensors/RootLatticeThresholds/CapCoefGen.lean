@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.BesselDiscreteSeries.InfCharG
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.Smooth
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CentralCharacters.QuasiDeterminantConjInv
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CentralCharacters.AdjointEquivalence
 public import Formalism.FormalDegreeBessel.FinalIO

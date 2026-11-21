@@ -82,7 +82,38 @@ def weightedAtData : _root_.GlobalTheory.Mem.Top.Bl.NAtData hL (withLoc L) (cfL 
   ratIn_eig := rfl
   ratIn_θ := rfl
   depth := l.a.depth
-def localAtData : _root_.GlobalTheory.Mem.Top.Bl.NAtData hL (DL x L) (cfD x L) (_root_.GlobalTheory.HeightCounting.Fin3.characterChoiceLocal L l) (_root_.GlobalTheory.HeightCounting.Fin3.localCharacterTupleAgreement L l) := (by with_unfolding_all exact ((_root_.GlobalTheory.HeightCounting.Fin3.weightedAtData l Sp Au ss al hLg) :))
+def localAtData : _root_.GlobalTheory.Mem.Top.Bl.NAtData hL (DL x L) (cfD x L) (characterChoiceLocal L l) (localCharacterTupleAgreement L l) := by
+  let a := weightedAtData l Sp Au ss al hLg
+  -- Keep the local indices on the constructors so that the row data still reduce fieldwise.
+  refine {
+    nt := ?_, all := ?_, chr_eq := ?_, host := ?_, frameN := ?_, chrN := ?_
+    chrGal := ?_, Pq := ?_, Pq_over := ?_, pq := ?_, jE_eq := ?_, mt_eq := ?_
+    Pq_eq := ?_, low := ?_, split := ?_, ratIn := ?_, ratIn_hL := ?_, ratIn_eig := ?_
+    ratIn_θ := ?_, depth := ?_ }
+  · refine { toNBuilt := { a.nt.toNBuilt with eq := DL_eq x L }, pack := ?_ }
+    with_unfolding_all rfl
+  · with_unfolding_all exact a.all
+  · with_unfolding_all exact a.chr_eq
+  · with_unfolding_all exact a.host
+  · intro y
+    with_unfolding_all exact a.frameN y
+  · with_unfolding_all exact a.chrN
+  · with_unfolding_all exact a.chrGal
+  · with_unfolding_all exact a.Pq
+  · intro v
+    with_unfolding_all exact a.Pq_over v
+  · intro i j b k Q ψ h1 h2 hadm
+    with_unfolding_all exact a.pq i j b k Q ψ h1 h2 hadm
+  · with_unfolding_all exact a.jE_eq
+  · with_unfolding_all exact a.mt_eq
+  · with_unfolding_all exact a.Pq_eq
+  · with_unfolding_all exact a.low
+  · with_unfolding_all exact a.split
+  · exact a.ratIn
+  · exact a.ratIn_hL
+  · exact a.ratIn_eig
+  · exact a.ratIn_θ
+  · exact a.depth
 include l in
 variable (L) in
 theorem grpTie_famR : Formalism.L2.DIV.GrpTie (DL x L) (famR (w.st (oL x L).Z) w.I P.hX (usedOf w.I T P.Wt) (datL x L).Xg (datL x L).tr).A

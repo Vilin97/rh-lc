@@ -162,15 +162,27 @@ theorem exists_frame {T : ℕ} {P : HeightOneSpectrum (𝓞 E)} (h : Unif T P) {
       ((memLoc P M _).2 ⟨t, ht, by rw [← algebraMap_smul E t]; exact h2 j⟩)
 
 theorem exists_lattice [StarRing E] {T : ℕ} {P : HeightOneSpectrum (𝓞 E)} (h : Unif T P) (p : LocF.PP (locF h) n) :
-    ∃ M : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E M ∧ ∀ x, x ∈ localization₂ P.asIdeal M ↔ x ∈ p.1.L := by
+    ∃ M : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E M ∧ ∀ x, x ∈ localization₂ P.asIdeal M ↔ x ∈ p.1.L := by
   obtain ⟨g, hg⟩ := p.2.lat
   let e : (Fin n → E) ≃ₗ[E] (Fin n → E) :=
     LinearMap.GeneralLinearGroup.generalLinearEquiv E (Fin n → E) (Matrix.GeneralLinearGroup.toLin g)
   have he : ∀ x, e x = (g : Matrix (Fin n) (Fin n) E) *ᵥ x := fun x => rfl
-  refine ⟨gmap e (stdLat E n), gmap_lattice e _ stdLat_lattice, fun x => ?_⟩
-  obtain ⟨y, rfl⟩ := e.surjective x
-  rw [mem_localization_gmap, e.symm_apply_apply, mem_localization_standardLattice, he]
-  exact ((hg y).trans (mem_std h y)).symm
+  have hspan : Submodule.span E (stdLat E n : Set (Fin n → E)) = ⊤ := by
+    rw [stdLat_eq_span, Submodule.span_span_of_tower]
+    convert (Pi.basisFun E (Fin n)).span_eq using 1
+    congr 2
+    ext i
+    exact congrFun (Pi.basisFun_apply E (Fin n) i).symm _
+  have hmap : ((gmap e (stdLat E n) : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E)) =
+      (e : (Fin n → E) →ₗ[E] (Fin n → E)) '' (stdLat E n : Set (Fin n → E)) := by
+    ext x
+    simp [gmap]
+  refine ⟨gmap e (stdLat E n), { toIsLattice := gmap_lattice e _ stdLat_lattice, span_eq_top := ?_ }, fun x => ?_⟩
+  · rw [hmap, ← Submodule.map_span, hspan, Submodule.map_top]
+    exact LinearEquiv.range e
+  · obtain ⟨y, rfl⟩ := e.surjective x
+    rw [mem_localization_gmap, e.symm_apply_apply, mem_localization_standardLattice, he]
+    exact ((hg y).trans (mem_std h y)).symm
 
 theorem f_osmul {P : HeightOneSpectrum (𝓞 E)} {M : Submodule (𝓞 E) (Fin n → E)} {f : (Fin n → E) → Res P}
     (hs : ∀ (a : 𝓞 E), ∀ x ∈ localization₂ P.asIdeal M, f (a • x) = Ideal.Quotient.mk P.asIdeal a * f x)
@@ -531,7 +543,7 @@ theorem exists_deco (h : TAt T ST) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submo
     | insert P s _ ih =>
       obtain ⟨N₁, a1, a2, a3, a4⟩ := ih
       obtain ⟨M, hM, hMp⟩ := exists_lattice (h.unif P) (p P)
-      obtain ⟨N₂, b1, b2, b3, b4⟩ := GlobalTheory.GO.SplitGlue.exists_selfDual_prescribed E n N₁ M P.1 (h.ne P) a1 a2 hM
+      obtain ⟨N₂, b1, b2, b3, b4⟩ := GlobalTheory.GO.SplitGlue.exists_selfDual_prescribed E n N₁ M P.1 (h.ne P) { toIsLattice := a1, span_eq_top := span_eq_top_of_unimodular N₁ a1 a2 } a2 hM
       refine ⟨N₂, b1, b2, fun w hw => (a3 w hw).trans (b4 w (hw P).1 (hw P).2).symm, fun Q hQ x => ?_⟩
       by_cases e : Q = P
       · subst e; rw [b3]; exact hMp x

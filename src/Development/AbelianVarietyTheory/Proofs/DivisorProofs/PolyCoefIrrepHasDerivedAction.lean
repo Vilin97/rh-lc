@@ -1,17 +1,15 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.DatumEquiv
-public import Development.AbelianVarietyTheory.Definitions.Divisors.VdmSplit
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.ContinuousRepresentations.URepCompRed
+public import ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.Statement
 
 @[expose] public section
-
-section
-open GlobalTheory.PsCo.PcEG
 
 noncomputable section
 
 open Matrix
+open scoped InnerProductSpace
 
 namespace GlobalTheory.PsCo.PcEF.PolynomialCoefficientDerivedAction
 
@@ -194,10 +192,16 @@ namespace GlobalTheory.PsCo.PcEF
 
 open ReciprocityTheory.ChartRestriction.DS ReciprocityTheory.ChartRestriction.DS.S7 ReciprocityTheory.ChartRestriction.DS.HW
 
-theorem polyCoefIrrep_hasDerivedAction : ToKType := by
+theorem polyCoefIrrep_hasDerivedAction :
+    ∀ (n : ℕ) (ε : Fin n → Bool) (γ : Fin n → ℝ) (W : Type)
+      [NormedAddCommGroup W] [InnerProductSpace ℂ W] [FiniteDimensional ℂ W]
+      (T : GlobalTheory.PsCo.Pc1.Mat n → (W →L[ℂ] W)), IsKIrr ε γ T →
+      (∀ v w : W, PolyOnK ε fun k => ⟪w, T k v⟫_ℂ) →
+      ∃ T₀ : KType ε γ, ∀ k : KG ε,
+        ReciprocityTheory.ChartRestriction.TR.Weyl.kChar T₀ k = trK T (toMK k) := by
   intro n ε γ W _ _ _ T hT _
   obtain ⟨-, hU, hK⟩ := hT
-  have : CompleteSpace W := FiniteDimensional.complete ℂ W
+  have : CompleteSpace W := FiniteDimensional.completeSpace ℂ W
   obtain ⟨τ, hτc, hτ⟩ := uRepHom n ε W T hU
   obtain ⟨dτ, hder⟩ := derivExists n ε W τ hτc
   have hσ : ∀ g : KG ε, T (toMK g) = ((τ g : unitary (W →L[ℂ] W)) : W →L[ℂ] W) := fun g => (hτ g).symm
@@ -223,5 +227,4 @@ theorem polyCoefIrrep_hasDerivedAction : ToKType := by
 
 end GlobalTheory.PsCo.PcEF
 
-end
 end

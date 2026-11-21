@@ -31,34 +31,12 @@ theorem smul_mem_of_dvd {A V : Type} [CommRing A] [AddCommGroup V] [Module A V] 
   exact M.smul_mem _ hx
 
 theorem dualFr_isFullLattice {K : Type} [Field K] [NumberField K] {n : ℕ} (M : Submodule (𝓞 K) (Fin n → K))
-    (hM : Submodule.IsLattice K M) : Submodule.IsFullLattice K (dualFr M) := by
-  classical
-  letI := GlobalTheory.DualLat.isLattice_dualFr M hM
-  refine ⟨?_⟩
-  apply eq_top_iff.mpr
-  intro x _
-  obtain ⟨S, hS⟩ := hM.fg
-  obtain ⟨d, hd, hdS⟩ := GlobalTheory.DualLat.exists_den_finset (S.image (fun y => x ⬝ᵥ y))
-  have hdx : d • x ∈ dualFr M := by
-    intro y hy
-    rw [← hS] at hy
-    induction hy using Submodule.span_induction with
-    | mem y hy =>
-      rw [smul_dotProduct]
-      exact hdS _ (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
-    | zero => simp
-    | add y z _ _ hy hz => rw [dotProduct_add]; exact add_mem hy hz
-    | smul a y _ hy => rw [dotProduct_smul]; exact Submodule.smul_mem _ _ hy
-  have hdK : algebraMap (𝓞 K) K d ≠ 0 := fun h =>
-    hd ((IsFractionRing.injective (𝓞 K) K) (by simpa using h))
-  have h := (Submodule.span K (dualFr M : Set (Fin n → K))).smul_mem
-    (algebraMap (𝓞 K) K d)⁻¹ (Submodule.subset_span hdx)
-  rw [← algebraMap_smul K d x, smul_smul, inv_mul_cancel₀ hdK, one_smul] at h
-  exact h
+    (hM : Submodule.IsFullLattice K M) : Submodule.IsFullLattice K (dualFr M) :=
+  GlobalTheory.DualLat.isLattice_dualFr M hM
 
 
 theorem isLattice_delAtr {E K ι : Type} [Field E] [NumberField E] [Field K] [NumberField K] [Fintype ι] {n : ℕ}
-    (emb : ι → E →+* K) (lam : ι → DomWeight n) (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsLattice E L) :
+    (emb : ι → E →+* K) (lam : ι → DomWeight n) (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsFullLattice E L) :
     Submodule.IsFullLattice K (delAtr emb lam L) :=
   (GlobalTheory.TransLattice.nabDelLattice K ι n lam _ fun τ =>
     dualFr_isFullLattice _ (GlobalTheory.TauLat.tauLat_lattice_dual_round.1 E K ι n emb τ L hL)).2
@@ -94,8 +72,28 @@ theorem span_locW_BLat : ∀ {E K ι : Type} [Field E] [NumberField E] [StarRing
   refine span_locW_eq_top Pl w _ fun x => ?_
   exact exists_smul_mem_latOf (I.S i) emb (lamT hc i) hF _
     (fun c => by
-      letI := isLattice_delAtr emb (lamT hc i) ((J.A i).ker c.1 ((I.S i).rep c) P)
-        ((hJ.lev i).ker_lat c.1 ((I.S i).rep c) P)
+      let b := c.1
+      let d := (I.S i).rep c
+      have hd := (hJ.tied i).ok b d
+      have hker : Submodule.IsFullLattice E ((J.A i).ker b d P) := by
+        letI := (hJ.lev i).ker_lat b d P
+        letI := (hJ.lev i).N_lat b d
+        refine { span_eq_top := top_unique ?_ }
+        rw [← (Submodule.IsFullLattice.span_eq_top (A := E) (M := (J.A i).N b d)), Submodule.span_le]
+        intro x hx
+        obtain ⟨r, hr, hr0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
+        have hrx : r • x ∈ (J.A i).ker b d P := by
+          rw [(hJ.tied i).ker_eq]
+          exact Submodule.subset_span ⟨hd.N_le_Lsh (Submodule.smul_mem _ r hx),
+            ((hd.mem_kerAt P _).1 (hd.smul_mem_kerAt P hr hx)).2⟩
+        have hrE : algebraMap (𝓞 E) E r ≠ 0 := by simpa using hr0
+        have hspan : r • x ∈ Submodule.span E (((J.A i).ker b d P) : Set _) :=
+          Submodule.subset_span hrx
+        have hh : (algebraMap (𝓞 E) E r)⁻¹ • (r • x) ∈
+            Submodule.span E (((J.A i).ker b d P) : Set _) := Submodule.smul_mem _ _ hspan
+        rw [← algebraMap_smul E r x, smul_smul, inv_mul_cancel₀ hrE, one_smul] at hh
+        exact hh
+      letI := isLattice_delAtr emb (lamT hc i) ((J.A i).ker b d P) hker
       exact Submodule.IsFullLattice.span_eq_top) x
 
 end GlobalTheory.Mem.BSpan

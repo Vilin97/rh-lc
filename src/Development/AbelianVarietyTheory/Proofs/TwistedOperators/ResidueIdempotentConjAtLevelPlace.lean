@@ -97,7 +97,8 @@ theorem rank_pos (D : D7) : 0 < (Yc D 0).rank := by
 theorem cpt_lt_of_smul_mem {D : D7} (g : ℕ) (PP : Pl D.host.E) (hg : (g : 𝓞 D.host.E) ∈ PP.asIdeal)
     (c : (II D).E ⊗[(II D).F] Af (II D).F) (hy : ∀ y ∈ (II D).Lf, c • y ∈ mL (II D) g) :
     Valued.v (GlobalTheory.StdFrames.cpt PP (show EAf D from c)) < 1 := by
-  obtain ⟨β, hβ⟩ := GlobalTheory.AdIsom.exists_eq_lat (GlobalTheory.PlaceModel.isSelfDualC_latFrame (Yc D 0)).1
+  obtain ⟨β, hβ⟩ := GlobalTheory.AdIsom.exists_eq_lat (GlobalTheory.AdIsom.selfDual_isFullLattice
+    (GlobalTheory.PlaceModel.isSelfDualC_latFrame (Yc D 0)))
   let i0 : Fin (Yc D 0).rank := ⟨0, rank_pos D⟩
   let y : Fin (Yc D 0).rank → EAf D := β.val *ᵥ Pi.single i0 1
   have hby : (β⁻¹).val *ᵥ y = Pi.single i0 1 := by

@@ -8,6 +8,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Weigh
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HermitianLatticeChartFamilyLawBasis
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsSmulOfDecoEq
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LatticeMovePreservingLocalParts
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.InvSmulMemOfRedL
 public import Formalism.LocalToGlobal.Columns.ToHLatLemmas
 
 @[expose] public section
@@ -136,7 +137,9 @@ theorem exists_lift (hy : ∀ N, y.ys N = {∅}) (hΛ : ∀ b, Λ b = Λ₀) (h�
   rfl
 
 theorem exists_pt (hy : ∀ N, y.ys N = {∅}) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : ∃ p : PtY ST SG Q y, p.1.1.deco = d := by
-  obtain ⟨γ, -, hγ⟩ := GlobalTheory.SemilocalBasis.exists_equiv X.E n Q d.1.N d.2.lat
+  obtain ⟨γ, -, hγ⟩ := GlobalTheory.SemilocalBasis.exists_equiv X.E n Q d.1.N
+    { toIsLattice := d.2.lat
+      span_eq_top := GlobalTheory.LvT.Pts.span_eq_top_of_unimodular d.1.N d.2.lat d.2.uni }
   exact ⟨⟨(⟨(d, fun _ => γ), fun P x => hγ P.1 P.2 x⟩, ∅), by rw [hy]; rfl⟩, rfl⟩
 
 theorem card_stab (hy : ∀ N, y.ys N = {∅}) (hΛ : ∀ b, Λ b = Λ₀) (hΘ : ∀ b, Θ b = LevQFam.top X.E X.K n Q) (b : β)

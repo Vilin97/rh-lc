@@ -128,12 +128,11 @@ set_option maxHeartbeats 4000000 in
 theorem rows_move_geo : ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (Wt : Set B.places.Pl)
     (O : Obj2 (w.D Z)) (t : RowsT K w Z Wt O.p0) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ)
     (O' : Obj2 (w.D (Db.setDivZ Z N h))),
-    O' = cast (congrArg Obj2 (Db.D_setDivZ w Z N h).symm) (O.tr N h) →
+    O' = objMv N h O →
     ∃ t' : RowsT K w (Db.setDivZ Z N h) Wt O'.p0, RowsSame t t' ∧
       HEq t'.r.z.geo (geoHalf (a := ⟨Z.W, Z.V, Z.S, Z.N, Z.G⟩) (SRe.upL Z Z.S N h) (iK := t.r.z.alg) t.r.z.geo) ∧
       HEq (SRe.pkOf t') ((SRe.pkOf t).up Z Z.S N h) ∧ (ObjT O t → ObjT O' t') ∧ (Nonempty (RXs t) → Nonempty (RXs t')) := by
   intro K B f T w Z Wt O t N h O' hO
-  rw [← objMv_eq_cast_tr N h O] at hO
   subst hO
   have s := readSame N h t
   refine ⟨s.what₂, s.rowsSame, ?_, s.pk, s.objT, fun ⟨x⟩ => ⟨s.rxs x⟩⟩

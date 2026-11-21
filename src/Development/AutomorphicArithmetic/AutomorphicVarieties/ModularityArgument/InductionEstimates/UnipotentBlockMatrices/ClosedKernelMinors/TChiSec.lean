@@ -181,7 +181,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.tChiSec :
       exact hfc.comp ((hlv.comp this).mul (continuous_const.mul continuous_snd))
     · have e : lv (γ * m) m₂ 0 = lv γ 1 0 * lv m m₂ 0 := by rw [hmul, one_mul, add_zero]
       have := hS.rat (lv γ 1 0) (((pkLaws (K := K)).2.1 _).2 ⟨0, ⟨γ, hγ⟩, 1, by
-        rw [show (nn (0 : unipLattice K (2 + 2) 2).1 : G1 K (2 + 2)) = 1 from unipOne_zero 2, one_mul]; rfl⟩)
+        change lv γ 1 0 = nn 0 * lv γ 1 0
+        rw [show (nn 0 : G1 K (2 + 2)) = 1 from unipOne_zero 2, one_mul]⟩)
       simp only [e, mul_assoc, this]
   · simp only [hsl]
     refine slice_int μ μ₂ τ₂ h₂.closed (hw x) a.hasCompactSupport.mul_right
@@ -190,5 +191,6 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.tChiSec :
       exact hfc.comp ((hlv.comp this).mul (continuous_const.mul continuous_snd))
     · have e : lv m₁ (γ * m) 0 = lv 1 γ 0 * lv m₁ m 0 := by rw [hmul, one_mul, add_zero]
       have := hS.rat (lv 1 γ 0) (((pkLaws (K := K)).2.1 _).2 ⟨0, 1, ⟨γ, hγ⟩, by
-        rw [show (nn (0 : unipLattice K (2 + 2) 2).1 : G1 K (2 + 2)) = 1 from unipOne_zero 2, one_mul]; rfl⟩)
+        change lv 1 γ 0 = nn 0 * lv 1 γ 0
+        rw [show (nn 0 : G1 K (2 + 2)) = 1 from unipOne_zero 2, one_mul]⟩)
       simp only [e, mul_assoc, this]

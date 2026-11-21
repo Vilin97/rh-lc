@@ -124,7 +124,12 @@ theorem lIncl_sumExp (p : PtAt ex Csz) (j : Fin D.R.m) (P : Par) (W : Wts D.what
   rw [hJ]
   refine cutLat_locIncl (blk p j t).S _ w.asIdeal _ (fun c => ?_) z hz
   refine locIncl_of_equiv e w.asIdeal _ _ _ _ _ (hNab c) (hDel c) ?_
-  exact GlobalTheory.T.sum_exactExponents_smul_mem_localizedCoeffLattice _ _ _ _ _ _ _ (GlobalTheory.RepsCompare.isLattice_hLat _ _) w
+  have hLat (g : Bridge.Gf (Vc D j)) : Submodule.IsFullLattice D.host.E (Bridge.hLat (Vc D j) g) := by
+    obtain ⟨-, -, hfg, hsp, -⟩ := GlobalTheory.Member.latHat_eq_hat_and_gram D (Vc D j)
+    obtain ⟨Λ, hΛ, h1, h2, -⟩ := GlobalTheory.AdLat.exists_lattice_latOf D.host.F D.host.E (Vc D j).rank (GlobalTheory.Member.latC (Vc D j)) g.1 hfg hsp
+    rw [SetLike.coe_injective ((GlobalTheory.RepsCompare.coe_hLat (Vc D j) g).trans hΛ.symm)]
+    exact { toIsLattice := Submodule.IsLattice.of_fg D.host.E h1, span_eq_top := h2 }
+  exact GlobalTheory.OntoExponentsLat.exZ_sum_smul_mem_locP_delAtr _ _ _ _ _ _ _ (hLat _) w
 
 end Point
 

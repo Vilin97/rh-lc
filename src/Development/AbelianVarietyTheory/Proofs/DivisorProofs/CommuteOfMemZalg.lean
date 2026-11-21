@@ -52,9 +52,14 @@ theorem prod_adj : ∀ {n : ℕ} (k : Fin n) (f₁ f₂ f₃ f₄ : Fin (n + 1) 
     (∀ i, i ≠ k.castSucc → i ≠ k.succ → f₂ i = f₁ i ∧ f₃ i = f₁ i ∧ f₄ i = f₁ i) →
     f₁ k.castSucc * f₁ k.succ + f₂ k.castSucc * f₂ k.succ
       - (f₃ k.castSucc * f₃ k.succ + f₄ k.castSucc * f₄ k.succ) = 0 →
-    (List.ofFn f₁).prod + (List.ofFn f₂).prod - ((List.ofFn f₃).prod + (List.ofFn f₄).prod) = 0
-  | 0, k, _, _, _, _, _, _ => k.elim0
-  | n + 1, k, f₁, f₂, f₃, f₄, h, hr => by
+    (List.ofFn f₁).prod + (List.ofFn f₂).prod - ((List.ofFn f₃).prod + (List.ofFn f₄).prod) = 0 := by
+  intro n
+  induction n with
+  | zero =>
+    intro k
+    exact k.elim0
+  | succ n inductionHypothesis =>
+    intro k f₁ f₂ f₃ f₄ h hr
     induction k using Fin.cases with
     | zero =>
       have hh : ∀ i : Fin n, f₂ i.succ.succ = f₁ i.succ.succ ∧ f₃ i.succ.succ = f₁ i.succ.succ ∧
@@ -66,7 +71,7 @@ theorem prod_adj : ∀ {n : ℕ} (k : Fin n) (f₁ f₂ f₃ f₄ : Fin (n + 1) 
       rw [← this]
       noncomm_ring
     | succ k =>
-      have ih := prod_adj k (fun i => f₁ i.succ) (fun i => f₂ i.succ) (fun i => f₃ i.succ) (fun i => f₄ i.succ)
+      have ih := inductionHypothesis k (fun i => f₁ i.succ) (fun i => f₂ i.succ) (fun i => f₃ i.succ) (fun i => f₄ i.succ)
         (fun i h1 h2 => h _ (by rw [← Fin.succ_castSucc]; exact fun e => h1 (Fin.succ_injective _ e))
           (fun e => h2 (Fin.succ_injective _ e))) (by simpa only [Fin.succ_castSucc] using hr)
       have hcast : (0 : Fin (n + 2)) ≠ k.succ.castSucc := by

@@ -1,21 +1,15 @@
 module
 
 public import Mathlib
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.IsCoreMod
-public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsAdmOnOfFiniteDimensional
-public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.AdmissibleOfIwasawaDecomposition
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDensityOfImmersion
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MapMemKfin
+public import Formalism.RealPlaceAnalysis.StatementA
 
 @[expose] public section
 
 noncomputable section
 
-open Matrix Finset GlobalTheory.OpTrace GlobalTheory.AutomorphicL2Unitary GlobalTheory.LinRed GlobalTheory.CompanionTheory.GLK
-open PositivityTheory.RgBcC PositivityTheory.RgBcC.Real PositivityTheory.RgBcC.RealD
-open PositivityTheory.RgTw (Mat G th IsThetaOp)
-open scoped InnerProductSpace ComplexConjugate
+open Matrix
+open PositivityTheory.RgTw (Mat)
 
 namespace GlobalTheory.CompanionTheory.GLK.Pair
 

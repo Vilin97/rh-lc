@@ -63,10 +63,8 @@ theorem closed_irreducible_lowest_type_data (ε : Fin n → Bool) (lam' : Fin n 
   obtain ⟨T'⟩ := HW.kType_exists_of_dom ε (lowK ε lam') (HW.lowK_int_dom ε lam' hlam).1
     (HW.lowK_int_dom ε lam' hlam).2
   obtain ⟨μ', hμ⟩ := exists_integral_parameter lam' hlam
-  have hP : IsPsiFor ε lam' T' (S7.PsiM T' μ') := by
-    refine ⟨fun k₁ k₂ g hg => S7.psiM_equiv T' μ' k₁ k₂ hg, S7.psiM_one T' μ', S7.psiM_smooth T' μ' hμ,
-      fun g hg => S7.psiM_casimir T' μ' hμ hg, fun ν hν => ?_⟩
-    exact (S7.psiM_integrable T' μ' hμ hlam hgl hq0 ν).2.1 h8
+  have hP : IsPsiFor ε lam' T' (S7.PsiM T' μ') :=
+    (S7.isPsiFor_psiM ε lam' h T' μ' hlam hμ hgl hq0 h8).1
   have hv₀ := HW.KType.w_ne_zero T'
   have hσ := rreg_isURepOn ε
   have hD := isDerivedOn_smE hσ

@@ -1,6 +1,6 @@
 module
 
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.WKTensFockGenSub
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.AdPhysApplySingle
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.DetOneSubEqSumMinors
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.TraceEqTraceRestrictOfRangeLe
 
@@ -27,16 +27,10 @@ theorem tco_physSub_zero {y : TensorProduct ℂ N (Fock n)} (hy : y ∈ physical
     rw [h0, map_zero, map_zero]
   change tcoef ((fockBasis n).coord s) (LinearMap.lTensor N (cpFock x.1 x.2)
     (LinearMap.lTensor N (cmFock x.1 x.2) y)) = 0 at h1
-  rw [tcoef_lTensor, tcoef_lTensor, tcoef_eq_sum] at h1
-  rw [Finset.sum_eq_single s] at h1
-  · have hxs : finProdFinEquiv x ∈ s := by rw [hxdef, Equiv.apply_symm_apply]; exact hm
-    simpa [lf_num_basis, hxs] using h1
-  · intro S _ hS
-    simp only [LinearMap.coe_comp, Function.comp_apply, lf_num_basis]
-    split_ifs
-    · simp [Module.Basis.coord_apply, Finsupp.single_apply, Ne.symm hS]
-    · simp
-  · simp
+  have hxs : finProdFinEquiv x ∈ s := by
+    rw [hxdef, Equiv.apply_symm_apply]
+    exact hm
+  rwa [tcoef_lTensor, tcoef_lTensor, LinearMap.comp_assoc, gc_coord_num, ite_eq_left hxs, one_smul] at h1
 
 theorem tensFock_inf_physSub (L : Submodule ℂ N) :
     tensFock (n := n) L ⊓ physicalSubspace ε = LinearMap.range (TensorProduct.map L.subtype (physFock ε).subtype) := by
@@ -70,8 +64,7 @@ theorem tensFock_inf_physSub (L : Submodule ℂ N) :
     · show _ ∈ physicalSubspace ε
       rw [mem_physicalSubspace_iff]
       intro j b hjb
-      induction x using TensorProduct.induction_on with
-      | zero => simp
+      induction x using TensorProduct.inductionOn with
       | tmul l f =>
         have hf := f.2
         simp only [physFock, Submodule.mem_iInf, LinearMap.mem_ker] at hf
@@ -101,8 +94,7 @@ theorem str_tensFock_physSub (hD : IsDerivedOn ε σ D E) {k : Matrix (Fin n) (F
   set fP := (CliffordAlgebra.involute.toLinearMap ∘ₗ (ff ε k).toLinearMap).restrict (involute_ff_mapsTo k)
   have hsq : ∀ x, (gradT ∘ₗ wK hD hk) (Φ x) = Φ (TensorProduct.map sL fP x) := by
     intro x
-    induction x using TensorProduct.induction_on with
-    | zero => simp
+    induction x using TensorProduct.inductionOn with
     | tmul l f => rfl
     | add x x' hx hx' => rw [map_add (f := _), map_add (f := _), hx, hx', map_add (f := _), map_add (f := _)]
   have hconj : (gradT ∘ₗ wK hD hk).restrict hY0 = e.conj (TensorProduct.map sL fP) := by

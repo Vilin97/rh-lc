@@ -73,7 +73,7 @@ theorem siegel_eq_stab_dblDec : ∀ (D : D7) (V : HSp D), siegel V = stab (dblDe
   intro D V
   refine ⟨Subgroup.ext fun p => ⟨mem_stab_of_mem_siegel V, mem_siegel_of_mem_stab V⟩, fun p h h' => ?_,
     isAniso_zeroSp D, fun a ha => ⟨frameLat (dblSp V), blkGL finSumFinEquiv (a, a),
-      ⟨isLattice_frameLat_host _, SelfDual.isSelfDualAt_frameLat D (dblSp V), ha.dbl⟩, Khat_eq V a⟩⟩
+      ⟨(isLattice_frameLat_host (dblSp V)).toIsLattice, SelfDual.isSelfDualAt_frameLat D (dblSp V), ha.dbl⟩, Khat_eq V a⟩⟩
   rw [onX_dblDec V h h', map_mul, map_mul, map_inv, mul_inv_cancel_comm]
   rfl
 

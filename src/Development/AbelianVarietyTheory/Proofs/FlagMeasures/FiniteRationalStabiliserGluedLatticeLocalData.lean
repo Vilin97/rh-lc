@@ -283,8 +283,15 @@ theorem stabY_finite : ∀ (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FP
       exact Submodule.mul_mem_mul (Submodule.mem_one.2 ⟨o, rfl⟩) ha |> fun h => by simpa using h
 
   let Λ₀ : LV D := Θ ⊔ ΛU
-  have hΛ₀ : Submodule.IsLattice D.host.E Λ₀ := by
-    exact Submodule.IsLattice.of_fg D.host.E (hΘfg.sup (hΛlat.fg.of_le inf_le_left))
+  have hΛ₀ : Submodule.IsFullLattice D.host.E Λ₀ := by
+    refine { toIsLattice := Submodule.IsLattice.of_fg D.host.E (hΘfg.sup (hΛlat.fg.of_le inf_le_left)), span_eq_top := ?_ }
+    apply span_top_of_mul
+    intro v
+    obtain ⟨d, hd, hv⟩ := hmul2 v
+    refine ⟨d, hd, ?_⟩
+    apply (show ΛW ⊔ ΛU ≤ Λ₀ from sup_le ?_ le_sup_right) hv
+    intro w hw
+    exact Submodule.mem_sup_left (Submodule.subset_span (hΛW w hw.1 hw.2))
   refine (GlobalTheory.StabFin.finite_of_fix (VS D).hT U hpos Λ₀ hΛ₀).subset ?_
   rintro h ⟨hh, hm⟩
 

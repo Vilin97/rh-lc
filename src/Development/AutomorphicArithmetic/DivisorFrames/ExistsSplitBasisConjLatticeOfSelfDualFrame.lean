@@ -29,7 +29,8 @@ theorem UpperTheory.exists_splitBasis_conj_lattice_of_selfDual_frame :
   obtain rfl : L = GlobalTheory.TripleSpaceW.conjSub Λ := by
     ext y
     rw [hL, GlobalTheory.TripleSpaceW.mem_conjSub]
-  haveI := GlobalTheory.TripleSpaceW.conjSub_isLattice hΛ.1
+  haveI := GlobalTheory.TripleSpaceW.conjSub_isFullLattice
+    (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice S Λ hΛ)
   obtain ⟨b₀, hb₀⟩ : ∃ b : GL (Fin S.rank) (Fv D.host.F v),
       IsSplitBasis t (GlobalTheory.TripleSpaceW.conjSub Λ) b :=
     GlobalTheory.AdelicU.exists_isSplitBasis t (GlobalTheory.TripleSpaceW.conjSub Λ) (GlobalTheory.AdelicU.isCMExt_host D)

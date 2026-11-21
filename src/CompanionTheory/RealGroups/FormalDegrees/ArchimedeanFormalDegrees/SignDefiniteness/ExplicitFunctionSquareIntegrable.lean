@@ -38,8 +38,7 @@ theorem pl_opNorm_le {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V
 theorem square_integrable_of_norm : PsiNorm → CompanionTheory.RgDs.ExplicitFunctionSquareIntegrable := by
   intro hN n ε lam T μ hl hμ ν hν
   have hfin := hN n ε lam hl T μ hμ
-  have := muCD_isHaar ε
-  set f : UJ ε → (T.V →L[ℂ] T.V) := fun g => PsiM T μ (toM g) with hf
+  let f : UJ ε → (T.V →L[ℂ] T.V) := fun g => PsiM T μ (toM g)
   have hcont : Continuous f :=
     (psiM_continuousOn T μ hμ).comp_continuous (continuous_toM ε) (fun g => g.2)
   have hmCD : MemLp f 2 (muCD ε) := by
@@ -48,7 +47,7 @@ theorem square_integrable_of_norm : PsiNorm → CompanionTheory.RgDs.ExplicitFun
     have hle : ∀ g : Formalism.REAL.UJ ε, ‖‖f g‖ ^ 2‖ₑ ≤
         ENNReal.ofReal (Module.finrank ℂ T.V : ℝ) * ENNReal.ofReal (hsOp (PsiM T μ (Formalism.MainNotions.S.umat g))) := by
       intro g
-      rw [← ENNReal.ofReal_mul (Nat.cast_nonneg _), Real.enorm_eq_ofReal (by positivity)]
+      rw [← ENNReal.ofReal_mul (Nat.cast_nonneg _), Real.eNorm_eq_ofReal (by positivity)]
       exact ENNReal.ofReal_le_ofReal (pl_opNorm_le _)
     calc ∫⁻ g, ‖‖f g‖ ^ 2‖ₑ ∂(muCD ε) ≤ ∫⁻ g : Formalism.REAL.UJ ε, ENNReal.ofReal (Module.finrank ℂ T.V : ℝ) *
           ENNReal.ofReal (hsOp (PsiM T μ (Formalism.MainNotions.S.umat g))) ∂(muCD ε) := lintegral_mono hle

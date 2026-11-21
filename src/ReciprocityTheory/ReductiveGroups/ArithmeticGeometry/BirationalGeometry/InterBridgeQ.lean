@@ -128,24 +128,24 @@ theorem normPoly_of (hM : PCMinContractStatement) : NormPolyStatement := by
     exact hi k (hPp.mem_of_pow_mem _ hk)
   have hf'P : f' ∉ P := fun h' => (hPp.mem_or_mem h').elim hfP hgP
   have hweight (β : (Σ k, ι k) →₀ ℕ) (k : K) :
-      Finsupp.weight blkW β k = ∑ j, β ⟨k, j⟩ := by
+      Finsupp.weight (blkW ι) β k = ∑ j, β ⟨k, j⟩ := by
     rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finset.sum_apply, Fintype.sum_sigma]
     simp [blkW, Pi.single_apply]
-  have hf'h : IsWeightedHomogeneous blkW (map (Int.castRingHom ℂ) f') (fun _ => d) := by
-    have h1 : IsWeightedHomogeneous blkW (map (Int.castRingHom ℂ) f) a := by
+  have hf'h : IsWeightedHomogeneous (blkW ι) (map (Int.castRingHom ℂ) f') (fun _ => d) := by
+    have h1 : IsWeightedHomogeneous (blkW ι) (map (Int.castRingHom ℂ) f) a := by
       intro β hβ
       rw [coeff_map] at hβ
       have hmem : β ∈ f.support := mem_support_iff.mpr (fun h0 => hβ (by simp [h0]))
       funext k
       rw [hweight]
       exact hf β hmem k
-    have h2 : IsWeightedHomogeneous blkW (map (Int.castRingHom ℂ) g)
-        (∑ k, (d - a k) • blkW ⟨k, i k⟩) := by
+    have h2 : IsWeightedHomogeneous (blkW ι) (map (Int.castRingHom ℂ) g)
+        (∑ k, (d - a k) • blkW ι ⟨k, i k⟩) := by
       rw [hgdef, map_prod]
       refine IsWeightedHomogeneous.prod _ _ _ fun k _ => ?_
       rw [map_pow, map_X]
       exact (isWeightedHomogeneous_X ℂ _ _).pow _
-    have hw : a + ∑ k, (d - a k) • blkW ⟨k, i k⟩ = fun _ => d := by
+    have hw : a + ∑ k, (d - a k) • blkW ι ⟨k, i k⟩ = fun _ => d := by
       funext k'
       have hle : a k' ≤ d := Finset.single_le_sum (fun k _ => Nat.zero_le (a k))
         (Finset.mem_univ k')

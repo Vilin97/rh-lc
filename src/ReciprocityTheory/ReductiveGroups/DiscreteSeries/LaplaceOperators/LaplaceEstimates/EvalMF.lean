@@ -51,7 +51,8 @@ theorem tMapD_single {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H
   rw [Finset.sum_eq_single d]
   · simp
   · intro c _ hc
-    simp [Pi.single_eq_of_ne hc, coefX]
+    delta coefX
+    simp only [Pi.single_eq_of_ne hc, map_zero, inner_zero_right, mul_zero]
   · simp
 
 theorem tMapD_sum {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
@@ -72,7 +73,7 @@ theorem perI_tMapD_single {H : Type*} [NormedAddCommGroup H] [InnerProductSpace 
     CapelliMinorRestriction.perI P ψ π (tMapD σ (xJ P z) x₀ w (Pi.single d m)) ξ g =ᵐ[μW.prod μN]
       fun p => (P *ᵥ (g⁻¹ *ᵥ xOne k r z)) d • CapelliMinorRestriction.perI P ψ π (coefX σ x₀ w m) ξ g p := by
   filter_upwards [CapelliMinorRestriction.ae_S hW hN] with p hp
-  simp only [CapelliMinorRestriction.perI]
+  delta CapelliMinorRestriction.perI
   rw [tMapD_single, cJd_sinv P hP z hz _ _ g hp hg, cJd_single P hP, mul_smul]
 
 theorem per_tMapD_single {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]

@@ -21,6 +21,7 @@ namespace GlobalTheory.ResLine.HtCont
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
 
+omit [NumberField E] in
 theorem inv_eigen {x : Matrix (Fin n) (Fin 1) E} {p : GAd σ J} {l : (AF F ⊗[F] E)ˣ}
     (hp : (matHom _ σ J p).1 * adMat F x = l.1 • adMat F x) :
     (matHom _ σ J p⁻¹).1 * adMat F x = (l⁻¹).1 • adMat F x := by
@@ -31,14 +32,16 @@ theorem inv_eigen {x : Matrix (Fin n) (Fin 1) E} {p : GAd σ J} {l : (AF F ⊗[F
   calc _ = ((l⁻¹).1 * l.1) • ((matHom _ σ J p⁻¹).1 * adMat F x) := by rw [Units.inv_mul, one_smul]
     _ = _ := by rw [← smul_smul, h2]
 
+omit [NumberField F] in
 theorem exists_col_ne {r : ℕ} {X Y : Matrix (Fin n) (Fin (r + 1)) E} (hW : IsWittFrame σ J X Y) :
     ∃ i, col X i 0 ≠ 0 := by
   by_contra hc
-  push_neg at hc
+  push Not at hc
   have h0 : ∀ j, X j 0 = 0 := fun j => hc j
   have := congrFun (congrFun hW.xy 0) 0
   simp [Matrix.mul_apply, Formalism.UG.cT, h0] at this
 
+set_option linter.style.haveILetI false in
 theorem isCompact_and_continuous : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n : ℕ)
     (J : Matrix (Fin n) (Fin n) E) (r : ℕ) (X Y : Matrix (Fin n) (Fin (r + 1)) E) (L : Submodule (𝓞 E) (Fin n → E))
     (a : GL (Fin n) (AF F ⊗[F] E)) (h : GAd σ J → ℝ), Data σ J X Y L a h →

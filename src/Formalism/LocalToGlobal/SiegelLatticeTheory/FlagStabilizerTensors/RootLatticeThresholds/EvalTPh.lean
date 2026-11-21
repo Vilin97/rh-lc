@@ -34,14 +34,9 @@ theorem phLoc_int_of_gap (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (hG : F
     Integrable (phLoc (ε := X.B.I.ε v) (X.B.σ v) (X.B.w v) (X.dv v)) (Formalism.REAL.muG (X.B.I.ε v)) := by
   have h := Formalism.L2.SG.WuDecayPf.coef_integrable_of_weighted X
     (Formalism.L2.SG.Pf.WuDec.coefWeighted_of_gap X Formalism.L2.SG.Closed.CoefWeightedLoc_holds hG) v
-  have hs : Integrable (fun g => star (Formalism.L2.SG.WuDecayPf.coefV X v g)) (Formalism.REAL.muG (X.B.I.ε v)) :=
-    Integrable.mono' h.norm
-      ((Formalism.L2.SG.WuDecayPf.continuous_coefV X v).star).aestronglyMeasurable
-      (Filter.Eventually.of_forall fun g => by rw [norm_star])
-  have h2 := hs.const_mul ((X.dv v : ℝ) : ℂ)
-  convert h2 using 1
-  funext g
-  rfl
+  have hs : Integrable (star (Formalism.L2.SG.WuDecayPf.coefV X v)) (Formalism.REAL.muG (X.B.I.ε v)) :=
+    memLp_one_iff_integrable.mp (memLp_one_iff_integrable.mpr h).star
+  exact hs.const_mul (X.dv v : ℂ)
 
 variable {S : D.what₂.Tau → SPar} {M : DSModel (D.sp.Y 0) S} {E : Submodule ℂ (MMap M)}
   {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {ι : GA D (D.sp.Y 0) ≃* X.B.I.GA} {t : GA D (D.sp.Y 0)} {v₀ : M.Vec}

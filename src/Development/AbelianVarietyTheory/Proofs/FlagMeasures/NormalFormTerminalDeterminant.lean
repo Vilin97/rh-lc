@@ -50,7 +50,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 omit [StarRing K] [FiniteDimensional K V] in
-theorem exists_mul {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) (x : V) :
+theorem exists_mul {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsFullLattice K Λ) (x : V) :
     ∃ n : ℕ, n ≠ 0 ∧ (n : K) • x ∈ Λ := by
   refine ⟨_, idxN_ne_zero hΛ (Submodule.fg_span_singleton x), ?_⟩
   rw [Nat.cast_smul_eq_nsmul]
@@ -58,7 +58,7 @@ theorem exists_mul {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) 
     (K := (Submodule.span (𝓞 K) {x}).toAddSubgroup) (Submodule.mem_span_singleton_self x)
 
 omit [StarRing K] [FiniteDimensional K V] in
-theorem span_inf {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) (S : Submodule K V) :
+theorem span_inf {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsFullLattice K Λ) (S : Submodule K V) :
     Submodule.span K ((Λ ⊓ rs (𝓞 K) S : Submodule (𝓞 K) V) : Set V) = S := by
   refine le_antisymm (Submodule.span_le.2 fun x hx => hx.2) fun x hx => ?_
   obtain ⟨n, hn, h⟩ := exists_mul hΛ x
@@ -69,18 +69,24 @@ theorem span_inf {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) (S
 
 omit [StarRing K] in
 theorem isLattice_field {M : Submodule (𝓞 K) K} (hfg : M.FG) {x : K} (hx : x ∈ M) (h0 : x ≠ 0) :
-    Submodule.IsLattice K M := by
-  exact Submodule.IsLattice.of_fg K hfg
+    Submodule.IsFullLattice K M := by
+  haveI : Submodule.IsLattice K M := Submodule.IsLattice.of_fg K hfg
+  refine ⟨?_⟩
+  apply eq_top_iff.mpr
+  intro y _
+  have hx' : x ∈ Submodule.span K (M : Set K) := Submodule.subset_span hx
+  have := (Submodule.span K (M : Set K)).smul_mem (y / x) hx'
+  simpa [smul_eq_mul, div_mul_cancel₀ _ h0] using this
 
-theorem idx_scal {c : K} (hc : c * star c = 1) {A M M' : Submodule (𝓞 K) K} (hA : Submodule.IsLattice K A)
-    (hM : Submodule.IsLattice K M) (hM' : Submodule.IsLattice K M') (h : ∀ t, t ∈ M' ↔ t * c ∈ M)
+theorem idx_scal {c : K} (hc : c * star c = 1) {A M M' : Submodule (𝓞 K) K} (hA : Submodule.IsFullLattice K A)
+    (hM : Submodule.IsFullLattice K M) (hM' : Submodule.IsFullLattice K M') (h : ∀ t, t ∈ M' ↔ t * c ∈ M)
     (h1 : M ≤ A) (h2 : M' ≤ A) : idx A M' = idx A M := by
   have hc0 : c ≠ 0 := fun e => by simp [e] at hc
   have hone : (1 : Submodule (𝓞 K) K).FG := by rw [Submodule.one_eq_span]; exact Submodule.fg_span_singleton _
   have o1 : (1 : K) ∈ (1 : Submodule (𝓞 K) K) := Submodule.mem_one.2 ⟨1, map_one _⟩
   have L1 := isLattice_field hone o1 one_ne_zero
   set C : Submodule (𝓞 K) K := Submodule.span (𝓞 K) {c} with hC
-  have LC : Submodule.IsLattice K C :=
+  have LC : Submodule.IsFullLattice K C :=
     isLattice_field (Submodule.fg_span_singleton _) (Submodule.mem_span_singleton_self c) hc0
   have mC : ∀ x : K, x * c ∈ C ↔ x ∈ (1 : Submodule (𝓞 K) K) := fun x => by
     rw [hC, Submodule.mem_span_singleton, Submodule.mem_one]
@@ -273,7 +279,7 @@ theorem del_sup (H : HermSpace K V) (M : Submodule (𝓞 K) V) (I : Submodule K 
   rw [del, del, hd, gidx, gidx, key a b, key b a]
 
 theorem bOne_symm (H : HermSpace K V) {r : ℕ} (N : NF H r) (hS : NFShape N.F N.F' N.j N.c)
-    {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) (hF : IsFrame N.F Λ N.aa) (hF' : IsFrame N.F' Λ N.aa) :
+    {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsFullLattice K Λ) (hF : IsFrame N.F Λ N.aa) (hF' : IsFrame N.F' Λ N.aa) :
     bOne N.F' N.F Λ N.j = bOne N.F N.F' Λ N.j := by
   obtain ⟨hc0, -, hlev, -⟩ := hS
   set J := Λ ⊓ rs (𝓞 K) (II N.F N.F') with hJ
@@ -330,11 +336,12 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   have hD := (GlobalTheory.T.hermFlagPairLatticeSumDiscriminant_eq_norm_minor K V H hK r N g Λ hg hT N.j le_rfl G.2.2.2.2.2.2.2.2.2.2.1).1
   obtain ⟨hS, -, -, hrad, -⟩ := G.1
   obtain ⟨⟨hU, hF, hF'⟩, -⟩ := hT
-  have hΛ : Submodule.IsLattice K Λ := by
+  have hΛ : Submodule.IsFullLattice K Λ := by
     obtain ⟨N, hN, hNΛ⟩ := hU.1.1
     have heq : Λ = N := by simpa [rs] using hNΛ
     have hfg : Λ.FG := heq.symm ▸ hN
-    exact Submodule.IsLattice.of_fg K hfg
+    haveI : Submodule.IsLattice K Λ := Submodule.IsLattice.of_fg K hfg
+    exact ⟨hU.1.2⟩
   have hb := bOne_symm H N hS hΛ hF hF'
   obtain ⟨hc0, -, -, -, z1, z2, x1, x2, hz⟩ := hS
   have hII : II N.F' N.F = II N.F N.F' := inf_comm _ _

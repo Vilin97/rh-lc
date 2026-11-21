@@ -65,13 +65,8 @@ theorem sum_inner_basis_sq_eq_adjoint {ε : Fin n → Bool} {lam : Fin n → ℝ
   simp_rw [key]
   rw [b.sum_sq_norm_inner_right, Unitary.norm_map]
 
-theorem haar_univ_eq_one (ε : Fin n → Bool) : dk ε Set.univ = 1 := by
-  unfold dk
-  rw [Measure.smul_apply, smul_eq_mul]
-  first
-  | exact ENNReal.inv_mul_cancel (Measure.measure_univ_ne_zero.mpr (NeZero.ne _)) (measure_ne_top _ _)
-  | exact ENNReal.inv_mul_cancel (measure_univ_pos.mpr (NeZero.ne _)).ne' (measure_ne_top _ _)
-  | exact ENNReal.inv_mul_cancel (IsOpenPosMeasure.open_pos _ isOpen_univ Set.univ_nonempty).ne' (measure_ne_top _ _)
+theorem haar_univ_eq_one (ε : Fin n → Bool) : dk ε Set.univ = 1 :=
+  (CompactHaarProbability.dk_isProb ε).measure_univ
 
 theorem hsOp_nonneg {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V] [FiniteDimensional ℂ V]
     (A : V →L[ℂ] V) : 0 ≤ hsOp A := by

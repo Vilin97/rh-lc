@@ -2,7 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.HarishChandraModulesOn
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.AnalyticVectors.Closure
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.ExceptionalGroupG2.ExistenceG2.FinalExists
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.Smooth
 
 @[expose] public section
 

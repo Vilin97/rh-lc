@@ -97,19 +97,32 @@ private theorem lcb_basisAt (emb : ι → E →+* K) (τ : ι) (Λ : Submodule (
 
 private theorem lcb_isLattice (Λ : Submodule (𝓞 E) (Fin n → E)) (s : ℕ) (hs : s ≠ 0)
     (h1 : ∀ x ∈ Λ, ∀ a, (s • x) a ∈ (1 : Submodule (𝓞 E) E))
-    (h2 : ∀ j, s • (Pi.single j 1 : Fin n → E) ∈ Λ) : Submodule.IsLattice E Λ := by
+    (h2 : ∀ j, s • (Pi.single j 1 : Fin n → E) ∈ Λ) : Submodule.IsFullLattice E Λ := by
   have hs' : (s : E) ≠ 0 := Nat.cast_ne_zero.2 hs
-  apply Submodule.IsLattice.of_fg
-  let f : (Fin n → E) →ₗ[𝓞 E] (Fin n → E) := s • LinearMap.id
-  have hf : Function.Injective f := by
-    intro x y h
-    have h' : (s : E) • x = (s : E) • y := by
-      rw [Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul]; exact h
-    exact smul_right_injective _ hs' h'
-  refine Submodule.fg_of_fg_map_injective f hf ?_
-  refine Submodule.FG.of_le (M := Fin n → E) (T := colLat (1 : GL (Fin n) E)) (Submodule.fg_span (Set.finite_range _)) ?_
-  rintro _ ⟨x, hx, rfl⟩
-  exact (lcb_mem_colLat_one _).2 (h1 x hx)
+  have hlat : Submodule.IsLattice E Λ := by
+    apply Submodule.IsLattice.of_fg
+    let f : (Fin n → E) →ₗ[𝓞 E] (Fin n → E) := s • LinearMap.id
+    have hf : Function.Injective f := by
+      intro x y h
+      have h' : (s : E) • x = (s : E) • y := by
+        rw [Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul]; exact h
+      exact smul_right_injective _ hs' h'
+    refine Submodule.fg_of_fg_map_injective f hf ?_
+    refine Submodule.FG.of_le (M := Fin n → E) (T := colLat (1 : GL (Fin n) E)) (Submodule.fg_span (Set.finite_range _)) ?_
+    rintro _ ⟨x, hx, rfl⟩
+    exact (lcb_mem_colLat_one _).2 (h1 x hx)
+  refine { toIsLattice := hlat, span_eq_top := ?_ }
+  apply top_unique
+  intro x _
+  have hsingle : ∀ j : Fin n, (Pi.single j 1 : Fin n → E) ∈ Submodule.span E (Λ : Set (Fin n → E)) := by
+    intro j
+    have h := Submodule.smul_mem (Submodule.span E (Λ : Set (Fin n → E))) (s : E)⁻¹
+      (Submodule.subset_span (h2 j))
+    simpa [← Nat.cast_smul_eq_nsmul E, smul_smul, hs'] using h
+  have hx : x = ∑ j, x j • (Pi.single j 1 : Fin n → E) := by
+    simpa [← Pi.single_smul] using (Finset.univ_sum_single x).symm
+  rw [hx]
+  exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (hsingle j)
 
 private theorem lcb_desc (φ : K →+* ℂ) (lam : ι → DomWeight n) (i : VVIdx lam) :
     ∃ F : VV K lam, (F : Pol K ι n) ∈ nabStd K lam ∧ GlobalTheory.CoefModel.mapVV φ lam F = bVV ℂ lam i := by

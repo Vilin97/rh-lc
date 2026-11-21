@@ -129,17 +129,9 @@ theorem mem_of_loc (Z : LocDat D) (Λ : LV D) (hΛ : Submodule.IsLattice D.host.
   have : x' = x := (LatLoc.cE D).injective he
   rwa [this] at hx'
 
-theorem exists_nat_smul_mem (Λ : LV D) (hΛ : Submodule.IsLattice D.host.E Λ) (v : (VS D).V) :
-    ∃ n : ℕ, 0 < n ∧ (n : D.host.E) • v ∈ Λ := by
-  first
-  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem
-  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem
-  | exact @_root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem
-  | exact _root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem
-  | (apply _root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem ..)
+theorem exists_nat_smul_mem (Λ : LV D) (hΛ : Submodule.IsFullLattice D.host.E Λ) (v : (VS D).V) :
+    ∃ n : ℕ, 0 < n ∧ (n : D.host.E) • v ∈ Λ :=
+  _root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem Λ hΛ v
 
 end GlobalTheory.CompScale
 
@@ -258,7 +250,7 @@ variable {D : D7}
 
 
 set_option maxHeartbeats 2000000 in
-theorem dual_part : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), ∀ (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (w : Point D.host.E (D.R.rS + 1)), ZhatOM (ZhatL F F') = ptMat w → Gval F F' ≠ 0 → ∀ (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS), Based Z FP (Tu D u) (Tu D u') F F' → (∀ p, (FP p).RelG (LocNG.theta (Z.M p))) → ∀ Λ₀ : LV D, Submodule.IsLattice D.host.E Λ₀ → ∃ c : ℕ, 0 < c ∧ ∀ Λ : LV D, Submodule.IsLattice D.host.E Λ → (∀ p, ∃ h ∈ (FP p).UW0, LocNG.img h (lattice₂ D Z.M p Λ₀) = lattice₂ D Z.M p Λ) → ∀ y ∈ orth (VS D) (Xplus F ⊔ Xplus F'), (∀ x ∈ Λ ⊓ toO (VS D) (orth (VS D) (Xplus F ⊔ Xplus F')), (VS D).hT x y ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E)) → (c : D.host.E) • y ∈ Λ := by
+theorem dual_part : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), ∀ (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (w : Point D.host.E (D.R.rS + 1)), ZhatOM (ZhatL F F') = ptMat w → Gval F F' ≠ 0 → ∀ (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS), Based Z FP (Tu D u) (Tu D u') F F' → (∀ p, (FP p).RelG (LocNG.theta (Z.M p))) → ∀ Λ₀ : LV D, Submodule.IsFullLattice D.host.E Λ₀ → ∃ c : ℕ, 0 < c ∧ ∀ Λ : LV D, Submodule.IsLattice D.host.E Λ → (∀ p, ∃ h ∈ (FP p).UW0, LocNG.img h (lattice₂ D Z.M p Λ₀) = lattice₂ D Z.M p Λ) → ∀ y ∈ orth (VS D) (Xplus F ⊔ Xplus F'), (∀ x ∈ Λ ⊓ toO (VS D) (orth (VS D) (Xplus F ⊔ Xplus F')), (VS D).hT x y ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E)) → (c : D.host.E) • y ∈ Λ := by
   intro D X Y u u' F F' w hw hG Z FP hB hR Λ₀ h0
   set U := Xplus F ⊔ Xplus F' with hU
   have memW : ∀ x, x ∈ orth (VS D) U ↔ ∀ v ∈ U, (VS D).hT v x = 0 := fun x => by
@@ -418,9 +410,9 @@ end GlobalTheory.CompScale
 
 namespace GlobalTheory.CompScale
 
-theorem scale_dual : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), ∀ (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (w : Point D.host.E (D.R.rS + 1)), ZhatOM (ZhatL F F') = ptMat w → Gval F F' ≠ 0 → ∀ (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS), Based Z FP (Tu D u) (Tu D u') F F' → (∀ p, (FP p).RelG (LocNG.theta (Z.M p))) → ∀ Λ₀ : LV D, Submodule.IsLattice D.host.E Λ₀ → ∃ d c : ℕ, 0 < d ∧ 0 < c ∧ ∀ Λ : LV D, Submodule.IsLattice D.host.E Λ → (∀ p, ∃ h ∈ (FP p).UW0, LocNG.img h (lattice₂ D Z.M p Λ₀) = lattice₂ D Z.M p Λ) → (∀ x ∈ Λ, ∀ y ∈ Λ, (d : D.host.E) * (VS D).hT x y ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E)) ∧ ∀ y ∈ orth (VS D) (Xplus F ⊔ Xplus F'), (∀ x ∈ Λ ⊓ toO (VS D) (orth (VS D) (Xplus F ⊔ Xplus F')), (VS D).hT x y ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E)) → (c : D.host.E) • y ∈ Λ := by
+theorem scale_dual : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), ∀ (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (w : Point D.host.E (D.R.rS + 1)), ZhatOM (ZhatL F F') = ptMat w → Gval F F' ≠ 0 → ∀ (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS), Based Z FP (Tu D u) (Tu D u') F F' → (∀ p, (FP p).RelG (LocNG.theta (Z.M p))) → ∀ Λ₀ : LV D, Submodule.IsFullLattice D.host.E Λ₀ → ∃ d c : ℕ, 0 < d ∧ 0 < c ∧ ∀ Λ : LV D, Submodule.IsLattice D.host.E Λ → (∀ p, ∃ h ∈ (FP p).UW0, LocNG.img h (lattice₂ D Z.M p Λ₀) = lattice₂ D Z.M p Λ) → (∀ x ∈ Λ, ∀ y ∈ Λ, (d : D.host.E) * (VS D).hT x y ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E)) ∧ ∀ y ∈ orth (VS D) (Xplus F ⊔ Xplus F'), (∀ x ∈ Λ ⊓ toO (VS D) (orth (VS D) (Xplus F ⊔ Xplus F')), (VS D).hT x y ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E)) → (c : D.host.E) • y ∈ Λ := by
   intro D X Y u u' F F' w hw hG Z FP hB hR Λ₀ h0
-  obtain ⟨d, hd0, hd⟩ := scale_part D X Y u u' F F' w hw hG Z FP hB hR Λ₀ h0
+  obtain ⟨d, hd0, hd⟩ := scale_part D X Y u u' F F' w hw hG Z FP hB hR Λ₀ h0.toIsLattice
   obtain ⟨c, hc0, hc⟩ := dual_part D X Y u u' F F' w hw hG Z FP hB hR Λ₀ h0
   exact ⟨d, c, hd0, hc0, fun Λ hΛ hloc => ⟨hd Λ hΛ hloc, hc Λ hΛ hloc⟩⟩
 

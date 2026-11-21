@@ -39,14 +39,14 @@ private theorem isUnitIn_mul' {S : Subring K} {a b : K} (ha : Formalism.Hermitia
 
 theorem exists_orth_basis (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) (hv : vd h L 𝔭 = 0) :
     ∃ (b : Basis (Fin (finrank K V)) K V) (u : Fin (finrank K V) → 𝓞 K), (∀ i, b i ∈ L) ∧
       locF 𝔭 (Submodule.span (𝓞 K) (Set.range b)) = locF 𝔭 L ∧
       (∀ i j, algebraMap (𝓞 K) K (diagonal u i j) = h (b i) (b j)) ∧
       (∀ i, conjO K (u i) = u i) ∧ ∀ i, Ideal.span {u i} ⊔ extP K 𝔭 = ⊤ := by
   obtain ⟨P, hP, rfl⟩ := exists_maximal_over hK hF h𝔭
-  have hU : Formalism.HermitianLatticesTheory.IsUnimodularAt h P L := (isUnimodularAt_iff_vd hK hF hs hd hL hLi hP).2 hv
+  have hU : Formalism.HermitianLatticesTheory.IsUnimodularAt h P L := (isUnimodularAt_iff_vd hK hF hs hd hL.toIsLattice hLi hP).2 hv
   have hSD := Formalism.HermitianLattices.Ext.L3.WA.isSelfDualMod_loc hL hP.isPrime hU
   have hdd : ∀ x, h x x = 0 → x = 0 := by
     intro x hx

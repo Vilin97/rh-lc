@@ -1,6 +1,8 @@
 module
 
 public import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.MatrixCoefficientDecay.HilbertSchmidtDecay.DecayAssembly.Imports
+public import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.MatrixCoefficientDecay.HilbertSchmidtDecay.AbsoluteL2Bound
+public import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.MatrixCoefficientDecay.LineFormulas.RightRule
 
 @[expose] public section
 
@@ -58,7 +60,8 @@ theorem source_gen (hL : N.LeftRule) {n : ℕ} {ε : Fin n → Bool} {H : Type} 
       rw [map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     have hact : actM (path ⟨D, E, hK.gl⟩ χ ss) (Y k) (v k) = ∑ a, ∑ b, Y k a b • (path ⟨D, E, hK.gl⟩ χ ss).E a b (v k) := by
-      simp only [actM, LinearMap.sum_apply, LinearMap.smul_apply]
+      delta actM
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply]
     rw [hact]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]

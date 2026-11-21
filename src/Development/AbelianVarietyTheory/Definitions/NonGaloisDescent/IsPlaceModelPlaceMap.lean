@@ -363,7 +363,8 @@ theorem isSBHalf_datumFn (hF : F.Good) (h : PlacesOK G.Pg Q) (hω : ∀ y y', (�
     IsSBHalf (halfIdem G.Pg Q) F.lat (F.datumFn G Q ω) := by
   have hinf := h.isOrthSum.1.infPart_eq
   refine isSBHalf_mul
-    (GlobalTheory.PlaceVec.isSBHalf_of_red hF.sdS.1 hF.sdT.1 hinf (frMapAdj S T F.βS F.βT) (GlobalTheory.PlaceVec.frMapAdj_add S T _ _)
+    (GlobalTheory.PlaceVec.isSBHalf_of_red (GlobalTheory.PlaceVec.selfDual_isFullLattice S _ hF.sdS)
+      (GlobalTheory.PlaceVec.selfDual_isFullLattice T _ hF.sdT) hinf (frMapAdj S T F.βS F.βT) (GlobalTheory.PlaceVec.frMapAdj_add S T _ _)
       (GlobalTheory.PlaceVec.frMapAdj_up S T _ _) (GlobalTheory.PlaceVec.frMapAdj_down S T _ _) G.Pg (omegaG G.levT G.muC)
       (GlobalTheory.PlaceDatum.omegaG_congr G.levT G.muC))
     (GlobalTheory.PlaceDatum.isSBHalf_of_red _ _ (frMapO S T F.βS F.βT) (GlobalTheory.PlaceDatum.frMapO_add _ _)

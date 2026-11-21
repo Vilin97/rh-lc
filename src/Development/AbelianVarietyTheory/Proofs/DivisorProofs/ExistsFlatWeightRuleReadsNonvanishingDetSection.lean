@@ -121,7 +121,7 @@ theorem fr_map {φ : S →ₐ[c.F] T} {y : FrPt Xo c S} {z : FrPt Xo c T} (h : F
   refine sameVec_unique (sameVec_fr z τ i) ?_
   obtain ⟨w, t, e, e'⟩ := sameVec_fr (Y := Y) y τ i
   refine ⟨spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ.toRingHom) ≫ w, isTan_map _ (ptF_map h).symm t, ?_, ?_⟩
-  · rw [Category.assoc, e, h.2.1]
+  · rw [Category.assoc, e, h.2.1]; rfl
   · rw [Category.assoc, e']; rfl
 
 theorem pt_toGen (y : FrPt Xo c S) : pt Y y ≫ toGen Y = ptF y ≫ Y.jQ := by

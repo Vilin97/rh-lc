@@ -8,7 +8,6 @@ public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExi
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.RregRep
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.Smooth
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiFor
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiGelfand
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.ExistsMu
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Exists
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.AnalyticVectors.Unitary
@@ -119,7 +118,7 @@ theorem schmid_casimir (n : ℕ) : SchmidCasimirStatement n := by
     have hs := Real.sqrt_nonneg (2 * (min (pOf ε) (qOf ε) : ℝ))
     rw [e]
     nlinarith
-  obtain ⟨Ψ, hPsi, -⟩ := exists_isPsiFor S7.psiExists T hHC hgap hq0 h8
+  have hPsi := (S7.isPsiFor_psiM ε lam h T μ hHC hμ hgap hq0 h8).1
   have hv₀ : T.w ≠ 0 := by
     intro h0
     have h1 := T.w_norm

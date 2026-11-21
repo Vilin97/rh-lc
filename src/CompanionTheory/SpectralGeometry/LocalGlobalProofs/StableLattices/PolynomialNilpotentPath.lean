@@ -63,7 +63,7 @@ theorem exists_monic_trace (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N 
   have hcm : ∀ i j, i ≠ j → ∀ p q r v, Commute (Xi i p q) (Xi j r v) := by
     intro i j hij p q r v
     have := hX (stdBlocks n h ⟨i, p⟩) (stdBlocks n h ⟨i, q⟩) (stdBlocks n h ⟨j, r⟩) (stdBlocks n h ⟨j, v⟩)
-    rw [if_neg (hne _ _ _ _ hij), if_neg (hne _ _ _ _ (Ne.symm hij)), sub_self] at this
+    rw [ite_eq_right (hne _ _ _ _ hij), ite_eq_right (hne _ _ _ _ (Ne.symm hij)), sub_self] at this
     exact sub_eq_zero.1 this
   obtain ⟨a, ha1, hform, htr, hcomm⟩ := GlobalTheory.CompanionTheory.RgCOBlock.capelli_coef_commute V c n Xi hglr hcm
   let s : Set (Module.End ℂ V) := Set.range fun p : Fin c × ℕ => a p.1 p.2
@@ -79,7 +79,7 @@ theorem exists_monic_trace (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N 
       zero_mem' := fun F => by simp
       smul_mem' := fun b x hx F => by
         show ((b * x : Algebra.adjoin ℂ s) : Module.End ℂ V) F ∈ I
-        rw [mul_comm, Subalgebra.coe_mul, Module.End.mul_apply]
+        rw [mul_comm, Subalgebra.coe_mul, mul_apply_eq_comp]
         exact hx _ }
   let π := Ideal.Quotient.mkₐ ℂ Yd
   have hamem : ∀ i k, a i k ∈ Algebra.adjoin ℂ s := fun i k => Algebra.subset_adjoin ⟨(i, k), rfl⟩
@@ -142,7 +142,7 @@ theorem exists_monic_trace (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N 
       rw [show Dz ^ k = 0 from hk, sub_zero] at e2
       rw [e1, ← e2]
       have e3 : Fb - Dz = -(D - (b : Module.End ℂ V)) := by simp [Fb, Dz]
-      rw [e3, Module.End.mul_apply, LinearMap.neg_apply]
+      rw [e3, mul_apply_eq_comp, LinearMap.neg_apply]
       exact I.neg_mem (apply_mem_upperImg n h Xf hspan' _)
     rw [hval]
     refine ⟨(X - C (Pc u)) ^ k, (monic_X_sub_C _).pow k, ?_⟩
@@ -169,7 +169,7 @@ theorem exists_monic_trace (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N 
       refine IsIntegral.add ?_ isIntegral_algebraMap
       have := hcoef i (Finset.mem_univ i) (n i - 1)
       simp only [Pp, sumPoly_coeff] at this
-      rwa [if_pos (by omega)] at this
+      rwa [ite_eq_left (by omega)] at this
     · have hz : n i = 0 := by omega
       have hE : IsEmpty (Fin (n i)) := by rw [hz]; infer_instance
       have e : ∑ p, Xi i p p = 0 := Finset.sum_of_isEmpty _
@@ -307,7 +307,7 @@ theorem actM_grading (X : GMod n) {A : Matrix (Fin n) (Fin n) ℂ} (B : GradBasi
     by_cases h : a = b
     · subst h
       simp
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       symm
       refine Finset.sum_eq_zero fun c _ => ?_
       have : ¬(c = a ∧ c = b) := fun e => h (e.1.symm.trans e.2)

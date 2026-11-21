@@ -54,7 +54,10 @@ theorem UpperTheory.ConvolutionTheory.C.polyBdAll :
     have hf2 : ∫⁻ y, ‖a y‖ₑ ^ 2 ∂μ ≠ ⊤ := by
       have := (a.continuous.memLp_of_hasCompactSupport (μ := μ) (p := 2) a.hasCompactSupport)
       rw [← L2Kernel.eLpNorm_two_sq]
-      exact (ENNReal.pow_lt_top this).ne
+      have hnorm := this.eLpNorm_lt_top
+      rw [eLpNorm_eq_eLpNorm' (by norm_num) (by simp) this.aestronglyMeasurable,
+        ENNReal.toReal_ofNat] at hnorm
+      exact (ENNReal.pow_lt_top hnorm).ne
     set A := (∫⁻ y, ‖a y‖ₑ ^ 2 ∂μ).toReal
     have hA : 0 ≤ A := ENNReal.toReal_nonneg
     refine ⟨√(A * max Cc 0), N, ?_⟩

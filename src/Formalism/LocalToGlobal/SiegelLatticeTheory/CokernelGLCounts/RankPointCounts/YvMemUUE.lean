@@ -14,11 +14,11 @@ namespace Formalism.L2.SG.NGCut.NormalVectorPairings
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : ℕ} {T T' : E}
 
-theorem X_le_UUE (Λ : Submodule (NumberField.RingOfIntegers E) S.V) (hΛ : Submodule.IsLattice E Λ)
+theorem X_le_UUE (Λ : Submodule (NumberField.RingOfIntegers E) S.V) (hΛ : Submodule.IsFullLattice E Λ)
     (F : LFlag S r T) (F' : LFlag S r T') (hL : IsLift Λ F) (hL' : IsLift Λ F') : F.fl.X ≤ UUE Λ F F' := by
   exact (Formalism.MainNotions.LatticeGluingRadicals.a_X_le (Formalism.MainNotions.LatticeGluingRadicals.a_HU Λ hΛ F F' hL.2 hL'.2)).1
 
-theorem X'_le_UUE (Λ : Submodule (NumberField.RingOfIntegers E) S.V) (hΛ : Submodule.IsLattice E Λ)
+theorem X'_le_UUE (Λ : Submodule (NumberField.RingOfIntegers E) S.V) (hΛ : Submodule.IsFullLattice E Λ)
     (F : LFlag S r T) (F' : LFlag S r T') (hL : IsLift Λ F) (hL' : IsLift Λ F') : F'.fl.X ≤ UUE Λ F F' := by
   exact (Formalism.MainNotions.LatticeGluingRadicals.a_X_le (Formalism.MainNotions.LatticeGluingRadicals.a_HU Λ hΛ F F' hL.2 hL'.2)).2
 
@@ -33,19 +33,19 @@ theorem z'_mem_UUE (Λ : Submodule (NumberField.RingOfIntegers E) S.V) (hΛ : Su
   rw [← hL'.2]
   exact Submodule.subset_span (Submodule.mem_sup_right (Submodule.mem_span_singleton_self _))
 
-theorem yv_mem_UUE (Λ : Submodule (NumberField.RingOfIntegers E) S.V) (hΛ : Submodule.IsLattice E Λ)
+theorem yv_mem_UUE (Λ : Submodule (NumberField.RingOfIntegers E) S.V) (hΛ : Submodule.IsFullLattice E Λ)
     (F : LFlag S r T) (F' : LFlag S r T') (hL : IsLift Λ F) (hL' : IsLift Λ F') :
     yv F.fl F'.fl ∈ UUE Λ F F' := by
   have hf : ∀ b, F'.fl.fvec b ∈ UUE Λ F F' := by
     intro b
     refine Fin.lastCases ?_ (fun i => ?_) b
     · rw [Formalism.MainNotions.S.FlagG.fvec, Fin.snoc_last]
-      exact z'_mem_UUE Λ hΛ F F' hL hL'
+      exact z'_mem_UUE Λ hΛ.toIsLattice F F' hL hL'
     · rw [Formalism.MainNotions.S.FlagG.fvec, Fin.snoc_castSucc]
       exact X'_le_UUE Λ hΛ F F' hL hL' (Submodule.subset_span ⟨i, rfl⟩)
   unfold yv omp
   exact Submodule.add_mem _ (Submodule.smul_mem _ _ (Submodule.sum_mem _ fun b _ =>
-    Submodule.smul_mem _ _ (hf b))) (Submodule.smul_mem _ _ (z_mem_UUE Λ hΛ F F' hL hL'))
+    Submodule.smul_mem _ _ (hf b))) (Submodule.smul_mem _ _ (z_mem_UUE Λ hΛ.toIsLattice F F' hL hL'))
 
 theorem hT_Hp_UUE (Λ : Submodule (NumberField.RingOfIntegers E) S.V) (F : LFlag S r T) (F' : LFlag S r T')
     {h v : S.V} (hh : h ∈ Hp Λ F F') (hv : v ∈ UUE Λ F F') : S.hT h v = 0 := by
@@ -82,7 +82,7 @@ theorem Hp_symm (Λ : Submodule (NumberField.RingOfIntegers E) S.V) (F : LFlag S
   rw [UUE_symm]
 
 theorem line_pair (k : ℕ) (hdim : finrank E S.V = k + 2 * r + 1) (Λ : Submodule (NumberField.RingOfIntegers E) S.V)
-    (hΛ : Submodule.IsLattice E Λ) (Fl : LFlag S r T) (F1 F2 : LFlag S r T') (β : S.V ≃ₗ[E] S.V)
+    (hΛ : Submodule.IsFullLattice E Λ) (Fl : LFlag S r T) (F1 F2 : LFlag S r T') (β : S.V ≃ₗ[E] S.V)
     (hL : IsLift Λ Fl) (hL1 : IsLift Λ F1) (hL2 : IsLift Λ F2) (hG1 : Gval Fl F1 ≠ 0) (hG12 : Gval Fl F2 = Gval Fl F1)
     (hT : T ≠ 0) (hTs : star T = T) (hTh : Th Λ Fl F1 F2 β = Hp Λ Fl F1) :
     yv Fl.fl F2.fl - (brS S (yv Fl.fl F2.fl) (yv Fl.fl F1.fl) / brS S (yv Fl.fl F1.fl) (yv Fl.fl F1.fl)) •
@@ -99,7 +99,7 @@ theorem line_pair (k : ℕ) (hdim : finrank E S.V = k + 2 * r + 1) (Λ : Submodu
   have hb12 : brS S y2 y2 = brS S y1 y1 := by
     rw [hy1, hy2, brS_yv_yv Fl.fl F2.fl hTs, brS_yv_yv Fl.fl F1.fl hTs]
     exact congrArg (T * ·) hG12
-  obtain ⟨hfin, hk1⟩ := Formalism.L2.SG.NGCut.CorankRelation.finrank_Hp k hdim Λ hΛ Fl F1 hL hL1 hG1
+  obtain ⟨hfin, hk1⟩ := Formalism.L2.SG.NGCut.CorankRelation.finrank_Hp k hdim Λ hΛ.toIsLattice Fl F1 hL hL1 hG1
 
   have hy2H : ∀ h ∈ Hp Λ Fl F1, S.hT h y2 = 0 := by
     intro h hh
@@ -117,9 +117,9 @@ theorem line_pair (k : ℕ) (hdim : finrank E S.V = k + 2 * r + 1) (Λ : Submodu
     · intro x hx h hh
       exact hT_UUE_Hp Λ Fl F1 hh (X_le_UUE Λ hΛ Fl F1 hL hL1 hx)
     · intro h hh
-      exact hT_UUE_Hp Λ Fl F1 hh (z_mem_UUE Λ hΛ Fl F1 hL hL1)
+      exact hT_UUE_Hp Λ Fl F1 hh (z_mem_UUE Λ hΛ.toIsLattice Fl F1 hL hL1)
     · intro x hx hxH
-      exact Formalism.L2.SG.NGCut.CorankRelation.Xsp_Hp_eq_zero Λ hΛ Fl F1 hL hL1 hG1 hx hxH
+      exact Formalism.L2.SG.NGCut.CorankRelation.Xsp_Hp_eq_zero Λ hΛ.toIsLattice Fl F1 hL hL1 hG1 hx hxH
     · omega
     · rw [Formalism.L2.SG.NGCut.NormalVectorPairings.mem_Qsp]
       exact ⟨fun x hx => hT_X_yv Fl.fl F1.fl hx, hT_z_yv Fl.fl F1.fl,

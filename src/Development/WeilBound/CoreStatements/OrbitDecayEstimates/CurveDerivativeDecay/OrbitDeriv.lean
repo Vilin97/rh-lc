@@ -1,6 +1,6 @@
 module
 
-public import Development.WeilBound.CoreStatements.OrbitDecayEstimates.CurveDerivativeDecay.HasDerivAtCurve
+public import Development.WeilBound.CoreStatements.OrbitDecayEstimates.CurveDerivativeDecay.IntegrableOfDec
 
 @[expose] public section
 
@@ -176,14 +176,7 @@ theorem low_bounds {lam : Fin m → ℝ} {B : ℝ} (hm : 2 ≤ m) (hl : Formalis
     unfold hs
     positivity
   rcases hnn.eq_or_lt with h0 | hpos
-  · have hZ0 : Z = 0 := by
-      ext i j
-      have hsum : ∑ i, ∑ j, ‖Z i j‖ ^ 2 = 0 := h0.symm
-      rw [Finset.sum_eq_zero_iff_of_nonneg (fun _ _ => by positivity)] at hsum
-      have hi := hsum i (Finset.mem_univ _)
-      rw [Finset.sum_eq_zero_iff_of_nonneg (fun _ _ => by positivity)] at hi
-      have hij := hi j (Finset.mem_univ _)
-      simpa using hij
+  · have hZ0 : Z = 0 := eq_zero_of_hs h0.symm
     subst hZ0
     have hz := actM_smul (actM (smE ε π) 0 x) 0 (0 : Matrix (Fin m) (Fin m) ℂ)
     simp only [Complex.ofReal_zero, zero_smul] at hz

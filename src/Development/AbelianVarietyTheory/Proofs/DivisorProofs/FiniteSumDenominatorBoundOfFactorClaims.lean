@@ -13,6 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.Orthogona
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteFinClAndGamOrd
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RationalUnitaryConjSplitSupportedFiniteAdelicPoi
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsTestLatUnique
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.WeightLawGoodOfFieldEmbedding
 
 @[expose] public section
 
@@ -411,7 +412,8 @@ theorem exists_intMod_levelPrimePow_eq_add_mul (ch : Choice R) {t : T} {w : PlL 
   haveI := Fintype.ofFinite (TestIx ch.G)
   have hlat : Submodule.IsLattice D.what₂.LL (formLat ch.G ch.rp ch.e) :=
     GlobalTheory.TestLat.SumLat.isLattice_sumLat _ _ _ fun c =>
-      delAtr_isLattice (emb D) (LaP ch.G) _ (isSelfDualE_latOf ch.G (ch.rp.x c.2)).1
+      (GlobalTheory.Mem.LatGood.delAtr_isLattice (emb D) (LaP ch.G) _
+        (isSelfDualE_latOf ch.G (ch.rp.x c.2)).1).toIsLattice
   have key : ∀ x ∈ formLat ch.G ch.rp ch.e, y ⬝ᵥ x = 0 ∨ -B ≤ (vw w (y ⬝ᵥ x) : ℝ) := by
     intro x hx
     have e1 : ∑ a, D.what₂.embLL (x a) * vK ch t Fx a =

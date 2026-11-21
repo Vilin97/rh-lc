@@ -25,7 +25,8 @@ def oneS (F : Type) [Field F] [NumberField F] : SInf F Empty where
   smooth' := contDiff_const
   decay' k n := ⟨‖(0 : Empty → mixedEmbedding.mixedSpace F)‖ ^ k *
       ‖iteratedFDeriv ℝ n (fun _ : Empty → mixedEmbedding.mixedSpace F => (1 : ℂ)) 0‖, fun x => by
-    rw [Subsingleton.elim x 0]⟩
+    have h : x = 0 := funext fun i => nomatch i
+    rw [h]⟩
 
 theorem form_decay {κ ι : Type} [Fintype κ] [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ)
     (S U : ι → (κ → AF F) × (κ → AF F)) (hSU : ∀ i j, (S j).1 ⬝ᵥ (U i).2 - (U i).1 ⬝ᵥ (S j).2 = if i = j then 1 else 0)

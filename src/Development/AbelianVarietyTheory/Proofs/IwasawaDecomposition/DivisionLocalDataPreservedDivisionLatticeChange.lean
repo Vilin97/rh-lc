@@ -56,7 +56,7 @@ set_option maxHeartbeats 4000000 in
 
 
 set_option maxHeartbeats 4000000 in
-@[reducible] def shimUT {G : DV.Geo D₀.what₂.LL} {Lev : Type} {jC : ∀ (p : ℕ) [Fact p.Prime], PlL D₀ p → (DV.KW p →+* ℂ)} {ng : NgPkg}
+@[reducible] def shimUT {G : DV.Geo (D₀).what₂.LL} {Lev : Type} {jC : ∀ (p : ℕ) [Fact p.Prime], PlL D₀ p → (DV.KW p →+* ℂ)} {ng : NgPkg}
     {w : Dat D₁ Lev} (U : ShimU D₀ G jC ng (datBk col Z N h w)) : ShimU D₁ G jC ng w :=
   { U with alg := { U.alg with }, pad := padT col Z N h U.pad }
 
@@ -64,8 +64,8 @@ set_option maxHeartbeats 4000000 in
 
 
 set_option maxHeartbeats 8000000 in
-@[reducible] def formsT {G : DV.Geo D₀.what₂.LL} {NW : ℕ → ℕ} {CompW : ℕ → Type} [∀ j, Fintype (CompW j)]
-    {algW : ∀ j, AlgPkg G D₀.what₂.Tau (NW j) (CompW j)} {PtY : ℕ → ℕ → Type}
+@[reducible] def formsT {G : DV.Geo (D₀).what₂.LL} {NW : ℕ → ℕ} {CompW : ℕ → Type} [∀ j, Fintype (CompW j)]
+    {algW : ∀ j, AlgPkg G (D₀).what₂.Tau (NW j) (CompW j)} {PtY : ℕ → ℕ → Type}
     (P : FormsPkg D₀ G NW CompW algW PtY) :
     FormsPkg D₁ G NW CompW (fun j => { algW j with }) PtY where
   KO := P.KO
@@ -118,7 +118,7 @@ set_option maxHeartbeats 8000000 in
 
 
 set_option maxHeartbeats 8000000 in
-def famT {G : DV.Geo D₀.what₂.LL} {Lev : Type} (F : ShimFam D₀ G Lev) : ShimFam D₁ G Lev :=
+def famT {G : DV.Geo (D₀).what₂.LL} {Lev : Type} (F : ShimFam D₀ G Lev) : ShimFam D₁ G Lev :=
   { F with
     U := fun w => shimUT col Z N h (F.U (datBk col Z N h w))
     forms := formsT col Z N h F.forms }
@@ -165,7 +165,11 @@ theorem divT_setDiv : ∀ {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B 
       { n with tp := { n.tp with }, tie := { n.tie with }, chrPsi := n.chrPsi }
     Nonempty (DivT n' (divXTr w Z N h Y)) := by
   intro B f T w Z Wt nch n Y N h d
-  refine ⟨{ Qp := d.Qp, chr := { d.chr with }, loc := ?_, inK := d.inK,
+  refine ⟨{
+    Qp := d.Qp
+    chr := { d.chr with }
+    loc := ?_
+    inK := d.inK
     geo := geoTiedP_divTr w Z N h d.geo }⟩
   obtain ⟨h1, h2⟩ := d.loc
   exact ⟨h1, { h2 with }⟩

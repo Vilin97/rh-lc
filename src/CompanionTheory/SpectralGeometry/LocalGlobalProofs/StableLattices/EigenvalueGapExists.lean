@@ -1,12 +1,8 @@
 module
 
 public import Mathlib
-public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.HsConjTranspose
 
 @[expose] public section
-
-open Matrix
-open CompanionTheory.RgExh.Dec CompanionTheory.RgExh.Dec.L ReciprocityTheory.ChartRestriction.DS GlobalTheory.CompanionTheory.PSubFlag GlobalTheory.CompanionTheory.UGeo
 
 namespace GlobalTheory.CompanionTheory.UGeoGap
 

@@ -1,5 +1,6 @@
 module
 
+public import Mathlib.Tactic.Eqns
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.IsInfUnitary
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DefsRep
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.IsClosedEmbeddingToM
@@ -22,6 +23,11 @@ variable {n : ℕ}
 
 def dk (ε : Fin n → Bool) : Measure (KG ε) := (muK ε Set.univ)⁻¹ • muK ε
 
+theorem dk_def (ε : Fin n → Bool) : dk ε = (muK ε Set.univ)⁻¹ • muK ε := rfl
+
+-- Use the same rewrite theorem in the Schur and polar Haar import branches.
+attribute [eqns dk_def] dk
+
 abbrev PCoord (ε : Fin n → Bool) : Type := {ab : Fin n × Fin n // ab.2 < ab.1 ∧ ε ab.1 ≠ ε ab.2}
 
 def pmat {ε : Fin n → Bool} (z : PCoord ε → ℂ) : Matrix (Fin n) (Fin n) ℂ := fun a b =>
@@ -34,10 +40,10 @@ theorem pmat_isHermitian {ε : Fin n → Bool} (z : PCoord ε → ℂ) : (pmat z
   simp only [pmat]
   by_cases h1 : b < a ∧ ε a ≠ ε b
   · have hn : ¬ (a < b ∧ ε b ≠ ε a) := fun h => absurd h.1 (not_lt.2 h1.1.le)
-    simp only [dif_neg hn, dif_pos h1, star_star]
+    simp only [dite_eq_right hn, dite_eq_left h1, star_star]
   · by_cases h2 : a < b ∧ ε b ≠ ε a
-    · simp only [dif_pos h2, dif_neg h1]
-    · simp only [dif_neg h1, dif_neg h2, star_zero]
+    · simp only [dite_eq_left h2, dite_eq_right h1]
+    · simp only [dite_eq_right h1, dite_eq_right h2, star_zero]
 
 def pev {ε : Fin n → Bool} (z : PCoord ε → ℂ) : Fin n → ℝ := (pmat_isHermitian z).eigenvalues
 

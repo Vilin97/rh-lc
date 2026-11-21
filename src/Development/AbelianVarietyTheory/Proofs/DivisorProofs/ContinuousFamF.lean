@@ -33,7 +33,7 @@ theorem iter_zero {G : ℝ → ℝ} (h1 : ∀ x, 1 ≤ x → G x = 0) {t : ℝ} 
       (continuous_const.mul continuous_id).continuousAt.eventually (lt_mem_nhds hy)
     filter_upwards [this] with x hx using h1 _ hx.le
   rw [hev.iteratedDeriv_eq k]
-  simp [iteratedDeriv_const]
+  simp
 
 theorem iter_cont {G : ℝ → ℝ} (hG : ContDiff ℝ ∞ G) (t : ℝ) (k : ℕ) :
     Continuous (iteratedDeriv k fun x => G (t * x)) :=
@@ -114,7 +114,7 @@ theorem fam_cs (hR : StR) (ε : Fin n → Bool) {G : ℝ → ℝ} (hG : IsProfil
   refine ⟨((continuous_famF ε hG.1 p t).comp (continuous_toM ε)).mul hw, ?_⟩
   refine HasCompactSupport.intro ((hR n ε).2.2.2 (1 / t)) fun g hg => ?_
   have hg' : 1 < t * rM ε (toM g) := by
-    simp only [Set.mem_setOf_eq, not_le] at hg
+    simp only [Set.mem_ofPred_eq, not_le] at hg
     rwa [div_lt_iff₀' ht] at hg
   simp [famF_eq_zero ε hG.2.1 p ht hg']
 
@@ -258,7 +258,8 @@ theorem lim2 (hEB : StEB) (hR : StR) (hL : StExpLow) (hD : StExpDeriv) (hC : StC
   have hval : ψ (nMode ε) 0 = (J 0 : ℂ) * ev (toM s) (p (nMode ε)) := by
     simp only [ψ, hEB0, inv_one, one_mul, mul_one]
     rw [integral_congr_ae (Eventually.of_forall hinv)]
-    simp [integral_const, Measure.real, muK_univ]
+    rw [integral_const, Measure.real, muK_univ]
+    simp
   obtain ⟨η, hη, hη'⟩ := hC n ε s d hs hinj 1 one_pos
   have heq : ∀ᶠ t : ℝ in atTop, ∫ x, famF ε G p t (toM (x⁻¹ * s * x)) ∂μ =
       ∫ B, ∑ k ∈ Finset.range (Fintype.card (Mode ε) + 1),

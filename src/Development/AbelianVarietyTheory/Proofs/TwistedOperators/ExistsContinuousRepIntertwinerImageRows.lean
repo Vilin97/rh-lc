@@ -9,7 +9,6 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesU
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.EvalTOntoRep
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PiCongrLeftUpdate
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsContinuousLeftInvariantRepConjugateTensor
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DiscreteSeriesTestDataLargeGapsIntegrable
 
 @[expose] public section
 
@@ -30,6 +29,16 @@ private theorem lamS_eq_lamAt (R : Ranks) (P : HCParam R) (i : Fin R.r) :
     · simp [h1, h2]
     · simp [h1, h2]
 
+private theorem lamAt_gap_of_lt {D : D7} (hH : HostHyp D) (τ : D.what₂.Tau)
+    {i j : ℕ} (hij : i < j) (hj : j < D.R.r) :
+    100 * (D.R.r : ℚ) ^ 4 ≤
+      Formalism.L2.NTheta.lamAt (D.hc τ) i - Formalism.L2.NTheta.lamAt (D.hc τ) j := by
+  induction j, hij using Nat.le_induction with
+  | base => exact hH.gapR τ i hj
+  | succ j _ ih =>
+    exact (ih (Nat.lt_of_succ_lt hj)).trans
+      (sub_le_sub_left (Formalism.L2.NTheta.lamAt_lt (D.hc τ) j hj).le _)
+
 private theorem gapGe_hundred_mul_r_pow_four {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (hH : HostHyp D) :
     GlobalTheory.Count.GapGe X.B (100 * (D.R.r : ℝ) ^ 4) := by
   intro v
@@ -41,7 +50,7 @@ private theorem gapGe_hundred_mul_r_pow_four {D : D7} (X : Formalism.L2.SG.HidaS
       100 * (D.R.r : ℝ) ^ 4 ≤ |((Formalism.L2.NTheta.lamAt (D.hc (X.pl v)) i.val : ℚ) : ℝ) -
         ((Formalism.L2.NTheta.lamAt (D.hc (X.pl v)) j.val : ℚ) : ℝ)| := by
     intro i j hij
-    have hq := GlobalTheory.DSGapData.lamAt_gap hH (X.pl v) i.val j.val hij j.isLt
+    have hq := lamAt_gap_of_lt hH (X.pl v) hij j.isLt
     have hr : 100 * (D.R.r : ℝ) ^ 4 ≤ ((Formalism.L2.NTheta.lamAt (D.hc (X.pl v)) i.val : ℚ) : ℝ) -
         ((Formalism.L2.NTheta.lamAt (D.hc (X.pl v)) j.val : ℚ) : ℝ) := by exact_mod_cast hq
     exact hr.trans (le_abs_self _)

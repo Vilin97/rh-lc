@@ -67,17 +67,16 @@ theorem stepUp : StepUpStatement := by
     rw [hper]; exact hne
   obtain ⟨y, hy⟩ := evalP k r ε u lam h H σ D E V T μ ι hσ hD hV hc hVK hμ hcoef hp hq hgap hlam hgl z c Vp π
     μW μN P hP hBD (P * x₀ * P⁻¹) (ι.symm v₂) (ι.symm v₁) ξ s x hX₀ hx hu hne'
-  have hGl : IsGlRep E := hD.glRep
-  have hstab : ∀ a b, ∀ m ∈ genSub E V, E a b m ∈ genSub E V := fun a b m hm =>
-    Submodule.mem_sInf.2 fun S hS => hS.2 a b m (Submodule.mem_sInf.1 hm S hS)
+  have hstab : ∀ a b, ∀ m ∈ genSub E V, E a b m ∈ genSub E V := fun a b _ hm =>
+    LemK.generated_submodule_stable_under_action V a b hm
   have hkill : ∀ m ∈ genSub E V, Capelli.capelliC E (((-(LemK.thV lam s)) : ℝ) : ℂ) m = 0 := by
     intro m hm
     rw [capVal (2 * r + k + 1) ε lam h H σ D E V T μ ι hσ hD hV hc hVK hμ hcoef hlam hgl hNeed hq0 _ m hm,
       Finset.prod_eq_zero (Finset.mem_univ s) (by push_cast; ring), zero_smul]
   have hvS : (((ι.symm v₁ : V) : D)) ∈ genSub E V :=
-    Submodule.mem_sInf.2 fun S hS => hS.1 (ι.symm v₁).2
-  have hXs := (eig D (2 * r + k) E (genSub E V) (-(LemK.thV lam s)) y y ((ι.symm v₁ : V) : D) hGl hstab
-    hkill hvS).1
+    LemK.le_generatedSubmodule_dual V (ι.symm v₁).2
+  have hXs := (eig D (2 * r + k) E (genSub E V) (-(LemK.thV lam s)) y y ((ι.symm v₁ : V) : D)
+    hD.glRep hstab hkill hvS).1
   rw [neg_neg] at hXs
   obtain ⟨Wf, W', hWf, hW', hirr, hcas, hK, hinj⟩ := quotP k r ε u lam h H σ D E V T μ ι hσ hD hV hc hVK hμ
     hcoef hp hq hgap hlam hgl z c Vp π μW μN P hP hBD (P * x₀ * P⁻¹) (ι.symm v₂) ξ s
@@ -86,8 +85,7 @@ theorem stepUp : StepUpStatement := by
     ?_ hW' hirr hcas hK hinj
   intro F hF
   obtain ⟨y', hy', rfl⟩ := hWf F hF
-  have hyS : ∀ c', y' c' ∈ genSub E V := fun c' =>
-    (Submodule.mem_pi.1 (Submodule.mem_inf.1 hy').1) c' (Set.mem_univ _)
+  have hyS : ∀ c', y' c' ∈ genSub E V := (LemK.mem_eigenTensorSpace_gen_iff.1 hy').1
   obtain ⟨hsm, -, hbd⟩ := tMap_spec k r ε lam h H σ D E V T μ ι hσ hD hV hc hVK hμ hcoef hp hq hgap hlam hgl
     (xJ P z) (P * x₀ * P⁻¹) (ι.symm v₂) hX₀ y' hyS
   obtain ⟨C, hC⟩ := hbd []

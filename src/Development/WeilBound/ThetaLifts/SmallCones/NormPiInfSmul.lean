@@ -84,6 +84,7 @@ theorem nice (hS : Slice) (hT : TateAbs) {B : Base F E} {X : Spc F E n} {W : Spc
     (hΨ : Ψ ∈ schA F (Fin n × Fin d)) : Nice μ z fun a => e (M.co.rho B.ψ (τ a • incM F v₀) Ψ) := by
   induction hΨ using Submodule.span_induction with
   | zero =>
+    letI : IsEmpty Empty := ⟨Empty.elim⟩
     refine ⟨Empty, inferInstance, Empty.elim, fun i => i.elim, fun i => i.elim, fun i => i.elim, fun a => ?_, fun _ _ i => i.elim⟩
     rw [Finset.univ_eq_empty, Finset.sum_empty, ← map_zero e]
     exact congrArg e (funext fun x => mul_zero _)

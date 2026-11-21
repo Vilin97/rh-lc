@@ -2,6 +2,7 @@ module
 
 public import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.RationalColumns.ColFacts
 public import Formalism.LocalToGlobal.Divisibility.TupUsed
+public import Formalism.LocalToGlobal.Divisibility.RowLatLemmas
 
 @[expose] public section
 
@@ -13,14 +14,16 @@ open Formalism.HermitianLatticesTheory
 
 namespace Formalism.L2.DIV.RatFullPt
 
-private theorem span_eq_top_of_scaled_dual_le {K : Type} [Field K] [NumberField K] [StarRing K]
+variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {K : MainNotions.G.Consts} {Y : DivX D}
+  {cX : ExtraC} {ex : Extra D L hT Gi Gl K Y cX}
+
+private theorem span_of_scaled_dual {K : Type} [Field K] [NumberField K] [StarRing K]
     {n : ℕ} (H : Matrix (Fin n) (Fin n) K) (M : Submodule (𝓞 K) (Fin n → K))
     (hfg : M.FG) {c : 𝓞 K} (hc : c ≠ 0)
     (hdual : ∀ x ∈ dual (hform H) M, c • x ∈ M) :
     Submodule.span K (M : Set (Fin n → K)) = ⊤ := by
   rw [eq_top_iff]
   intro x _
-  -- Clear the denominators of the pairings with a finite generating set.
   obtain ⟨generators, hgen⟩ := hfg
   obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 K))
     generators (fun y => hform H y x)
@@ -52,17 +55,28 @@ private theorem span_eq_top_of_scaled_dual_le {K : Type} [Field K] [NumberField 
   rw [algebraMap_smul K]
   exact Submodule.subset_span (hdual _ hmem)
 
-private theorem span_matLat_eq_top {K : Type} [Field K] [NumberField K]
-    {m n : ℕ} (A : Matrix (Fin m) (Fin n) K) (hsurj : Function.Surjective A.mulVec)
-    (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.span K (M : Set (Fin n → K)) = ⊤) :
-    Submodule.span K (matLat A M : Set (Fin m → K)) = ⊤ := by
+private theorem full_matLat {K : Type} [Field K] [NumberField K] {m n : ℕ}
+    (A : Matrix (Fin m) (Fin n) K) (hA : Function.Surjective A.mulVec)
+    (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsFullLattice K M) :
+    Submodule.IsFullLattice K (matLat A M) := by
+  refine { toIsLattice := Submodule.IsLattice.of_fg K (hM.fg.map _), span_eq_top := ?_ }
   rw [matLat, Submodule.map_coe]
   change Submodule.span K (A.mulVecLin '' (M : Set _)) = ⊤
-  rw [Submodule.span_image, hM, Submodule.map_top, LinearMap.range_eq_top]
-  exact hsurj
+  rw [Submodule.span_image, hM.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+  exact hA
 
-variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {K : MainNotions.G.Consts} {Y : DivX D}
-  {cX : ExtraC} {ex : Extra D L hT Gi Gl K Y cX}
+private theorem full_Lam {K : Type} [Field K] [NumberField K] [StarRing K]
+    {G : Type} [Group G] [Fintype G] {Pl0 : Type} {B : BlockDat K G Pl0}
+    {ℓ : Lvl K G} {Z : Submodule K B.S.Forms} {v0 : InfinitePlace K}
+    (hv0 : IsConjAt v0) {s : ℕ} (h : B.Ok s) (hX : ∀ χ ∈ ℓ.X, IsAbsIrrChar χ) :
+    Submodule.IsFullLattice K (B.abelian₂ ℓ Z) := by
+  have hc : ((Fintype.card G * s : ℕ) : 𝓞 K) ≠ 0 := by
+    exact_mod_cast (Nat.mul_pos (Fintype.card_pos (α := G)) h.good.s_pos).ne'
+  have hLat := B.Mt_lat hv0 h hX
+  have hMt : Submodule.IsFullLattice K (B.Mt ℓ) :=
+    { toIsLattice := hLat
+      span_eq_top := span_of_scaled_dual _ _ hLat.fg hc (B.Mt_dual hv0 h hX) }
+  exact full_matLat (B.Pq ℓ Z) (B.Pq_surj hv0 h hX) (B.Mt ℓ) hMt
 
 private theorem rr_span_eq_top (P : RowSideFamily ex) {s : ℕ} (hOk : P.A3.fam3.Ok3 s)
     (hF : ColFacts P.S1 P.C) :
@@ -73,16 +87,10 @@ private theorem rr_span_eq_top (P : RowSideFamily ex) {s : ℕ} (hOk : P.A3.fam3
   let localLat (t : P.T) := matLat (P.S1.ι t) (side.abelian₂ t)
   have hlocal (t : P.T) :
       Submodule.span D.what₂.LL (localLat t : Set (Fin P.S1.D → D.what₂.LL)) = ⊤ := by
-    apply span_matLat_eq_top _ (hF.bij t).2
-    change Submodule.span D.what₂.LL
-      (matLat (side.Pq t) (side.Mt t) : Set (Fin (side.dQ t) → D.what₂.LL)) = ⊤
-    apply span_matLat_eq_top _ (hF.wf.Pq_surj t)
-    have hs : 0 < s := (hOk.ok2.what₂ t).good.s_pos
-    have hc : ((Fintype.card P.Gp * s : ℕ) : 𝓞 D.what₂.LL) ≠ 0 := by
-      exact_mod_cast (Nat.mul_pos (Fintype.card_pos (α := P.Gp)) hs).ne'
-    exact span_eq_top_of_scaled_dual_le (side.HV t) (side.Mt t) (hF.wf.Mt_lat t).fg hc
-      (BlockDat.Mt_dual (ℓ := P.A3.fam3.F.lvl P.Ps P.ψs)
-        hOk.ok2.conj (hOk.ok2.what₂ t) hOk.ok2.irr)
+    have hL : Submodule.IsFullLattice D.what₂.LL (side.abelian₂ t) :=
+      full_Lam (ℓ := P.A3.fam3.F.lvl P.Ps P.ψs)
+        hOk.ok2.conj (hOk.ok2.what₂ t) hOk.ok2.irr
+    exact (full_matLat (P.S1.ι t) (hF.bij t).2 _ hL).span_eq_top
   rw [eq_top_iff]
   intro x _
   -- A common denominator puts the vector in the local lattice at every prime.

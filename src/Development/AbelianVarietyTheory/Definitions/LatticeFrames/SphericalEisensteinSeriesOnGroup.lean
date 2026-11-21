@@ -29,7 +29,7 @@ structure Lvl (V : HSp D) where
 def Lvl.K {V : HSp D} (l : Lvl V) : Subgroup (GA D V) := levelAll D.sp.cm.sig V.gram l.L l.c
 
 def Lvl.Good {V : HSp D} (l : Lvl V) : Prop :=
-  Submodule.IsLattice D.host.E l.L ∧ (∀ v, IsSelfDualAt D.sp.cm.sig V.gram l.L v) ∧ IsMaj V l.c
+  Submodule.IsFullLattice D.host.E l.L ∧ (∀ v, IsSelfDualAt D.sp.cm.sig V.gram l.L v) ∧ IsMaj V l.c
 
 def Lvl.form {V : HSp D} (l : Lvl V) : Mx D V.rank V.rank := adj (l.c⁻¹).1 * (l.c⁻¹).1
 

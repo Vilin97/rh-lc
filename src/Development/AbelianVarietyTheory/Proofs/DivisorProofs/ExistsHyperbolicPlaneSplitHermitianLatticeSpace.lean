@@ -129,9 +129,23 @@ theorem exists_hyperbolic_split : ∀ (F E : Type) [Field F] [NumberField F] [Fi
     · rw [← hu]; exact Y.L.sub_mem (Y.L.sub_mem hz (hL z hz).1) (hL z hz).2
     · rw [← hu]; abel
   set L₁ := Y.L.comap ((Matrix.mulVecLin ι).restrictScalars (𝓞 E)) with hL₁def
-  have hlat₁ : L₁.IsLattice E := GlobalTheory.T.isLattice_comap_mulVecLin_of_leftInverse_matrix E n n₁ Y.L ι P hPι hY.lat
+  have hlat₁ : L₁.IsFullLattice E := by
+    refine { toIsLattice := GlobalTheory.T.isLattice_comap_mulVecLin_of_leftInverse_matrix E n n₁ Y.L ι P hPι hY.lat.toIsLattice, span_eq_top := ?_ }
+    refine eq_top_iff.2 fun u _ => ?_
+    have hu : ι *ᵥ u ∈ Submodule.span E (Y.L : Set (Fin n → E)) :=
+      hY.lat.span_eq_top ▸ Submodule.mem_top
+    obtain ⟨z, hz, d, hd⟩ := (IsLocalization.mem_span_iff (M := nonZeroDivisors (𝓞 E))).1 hu
+    have hdu : (d : 𝓞 E) • u ∈ L₁ := by
+      change ι *ᵥ ((d : 𝓞 E) • u) ∈ Y.L
+      rw [Matrix.mulVec_smul, hd, ← IsScalarTower.algebraMap_smul E (d : 𝓞 E), smul_smul,
+        IsLocalization.mk'_spec', map_one, one_smul]
+      simpa only [Submodule.span_eq] using hz
+    have h := (Submodule.span E (L₁ : Set (Fin n₁ → E))).smul_mem
+      (IsLocalization.mk' E 1 d) (Submodule.subset_span hdu)
+    rwa [← IsScalarTower.algebraMap_smul E (d : 𝓞 E), smul_smul,
+      IsLocalization.mk'_spec, map_one, one_smul] at h
   have hx0 : x ≠ 0 := by rintro rfl; simp [form] at hxy
-  obtain ⟨𝔟, h𝔟⟩ := GlobalTheory.T.exists_fractionalIdeal_lattice_line_coefficients E n Y.L hY.lat x hx0
+  obtain ⟨𝔟, h𝔟⟩ := GlobalTheory.T.exists_fractionalIdeal_lattice_line_coefficients E n Y.L hY.lat.toIsLattice x hx0
   set J₁ := ιᵀ * Y.J * ι.map σ with hJ₁
   have hform₁ : ∀ u u', form σ J₁ u u' = form σ Y.J (ι *ᵥ u) (ι *ᵥ u') := form_gram Y.J ι
   let e : InfinitePlace F → E →+* ℂ := fun w => (B.emb w).1
@@ -168,7 +182,7 @@ theorem exists_hyperbolic_split : ∀ (F E : Type) [Field F] [NumberField F] [Fi
       (i.1 = i₁ → ∀ r, β.1 r i = B.τ v (y r)) ∧
       ∀ j : Fin n₁, i.1 = skip i₀ i₁ j → ∀ r, β.1 r i = (ι.map (B.τ v) * (β₁ v).1) r j) ∧
       IsSplitBasis (B.τ v) Y.L β := fun v =>
-    GlobalTheory.T.exists_splitPlace_basis_hyperbolicPlane_complement F E σ hcm v (B.τ v) n n₁ Y.L x y ι (β₁ v) i₀ i₁ hn h01 h1n hY.lat
+    GlobalTheory.T.exists_splitPlace_basis_hyperbolicPlane_complement F E σ hcm v (B.τ v) n n₁ Y.L x y ι (β₁ v) i₀ i₁ hn h01 h1n hY.lat.toIsLattice
       (fun z hz => by
         obtain ⟨u, hu, hz'⟩ := hsplit z hz
         exact ⟨_, _, u, (hL z hz).1, (hL z hz).2, hu, hz'⟩) (hP v).1 (hP v).2 (hβ₁ v)

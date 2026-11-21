@@ -138,19 +138,18 @@ theorem core {J G H : Matrix (Fin n) (Fin n) ℂ} (hJ : J * J = 1) (hHG : H * G 
     calc _ = Hᴴ * (H * G) * Gᴴ := by simp only [Matrix.mul_assoc]
       _ = (G * H)ᴴ := by rw [hHG, Matrix.mul_one, conjTranspose_mul]
       _ = 1 := by rw [hGH, conjTranspose_one]
-  have hnn : ∀ i, 0 ≤ lam i := fun i => by
+  have hHinj : Function.Injective H.mulVec := by
+    intro x y hxy
+    have h := congrArg (fun v => G *ᵥ v) hxy
+    simpa only [mulVec_mulVec, hGH, one_mulVec] using h
+  have hpos : ∀ i, 0 < lam i := fun i => by
     rw [hlam]
     open scoped ComplexOrder in
-    exact (Matrix.posSemidef_conjTranspose_mul_self H).eigenvalues_nonneg i
-  have hn0 : ∀ i, lam i ≠ 0 := fun i h0 => by
-    have hd := congrArg Matrix.det hTG
-    rw [Matrix.det_mul, hT.det_eq_prod_eigenvalues, ← hlam, Finset.prod_eq_zero (Finset.mem_univ i) (by simp [h0])] at hd
-    simp at hd
-  have hpos : ∀ i, 0 < lam i := fun i => lt_of_le_of_ne (hnn i) (hn0 i).symm
+    exact (Matrix.PosDef.conjTranspose_mul_self H hHinj).eigenvalues_pos i
   have hinv : cj U (fun i => (lam i)⁻¹) = G * Gᴴ := by
     have e : cj U (fun i => (lam i)⁻¹) * (Hᴴ * H) = 1 := by
       rw [hTc, cj_mul h1, ← cj_one (U := U) h2]
-      congr 1; funext i; exact inv_mul_cancel₀ (hn0 i)
+      congr 1; funext i; exact inv_mul_cancel₀ (hpos i).ne'
     calc _ = cj U (fun i => (lam i)⁻¹) * ((Hᴴ * H) * (G * Gᴴ)) := by rw [hTG, Matrix.mul_one]
       _ = _ := by rw [← Matrix.mul_assoc, e, Matrix.one_mul]
   have hHc : Hᴴ = J * G * J := by
@@ -198,12 +197,12 @@ theorem core {J G H : Matrix (Fin n) (Fin n) ℂ} (hJ : J * J = 1) (hHG : H * G 
     have hH : nsq (H *ᵥ y) = nsq (cj U (fun i => Real.sqrt (lam i)) *ᵥ y) := by
       refine nsq_eq_of_gram ?_ y
       rw [cj_conj, cj_mul h1, hTc]
-      congr 1; funext i; exact (Real.mul_self_sqrt (hnn i)).symm
+      congr 1; funext i; exact (Real.mul_self_sqrt (hpos i).le).symm
     rw [hPm, hPz, hH, nsq_cj h1, nsq_cj h1, nsq_cj h1, Finset.mul_sum, Finset.mul_sum,
       ← Finset.sum_add_distrib]
     refine Finset.sum_le_sum fun i _ => ?_
     have hc : 0 ≤ ‖(Uᴴ *ᵥ y) i‖ ^ 2 := by positivity
-    rw [Real.sq_sqrt (hnn i)]
+    rw [Real.sq_sqrt (hpos i).le]
     have hfa : a i = f (lam i) := by rw [ha]
     rcases ha3 i with h | h | h
     · have h' := hα i (by rw [← hfa, h])

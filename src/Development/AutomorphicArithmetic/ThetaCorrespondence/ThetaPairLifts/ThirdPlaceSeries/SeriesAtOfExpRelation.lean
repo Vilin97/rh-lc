@@ -141,7 +141,7 @@ private def cellL_pz {hρ : ρ.Good} {rd : Rd ρ (Dof x).nexp ((i)) ((j)) c} (t 
     exact_by_kernel t.thU_eq (kc% Q) M (kc% d) (kc% hQ) (kc% coeffs) (kc% hcoeffs)
   thU_off := by
     intro Q M d hOff
-    rewrite [xi_eq_pz L ρ i j c] at hOff
+    simp only [xi_eq_pz L ρ i j c] at hOff
     exact_by_kernel t.thU_off (kc% Q) M (kc% d) (kc% hOff)
   rdV_inj := (by with_unfolding_all exact (t.rdV_inj :))
   mtLat_iff := by exact_by_kernel t.mtLat_iff
@@ -190,17 +190,30 @@ private theorem lamL_tie_pz {Z : GlobalTheory.LamTie.LamDat (Dof x)} (h : Global
     GlobalTheory.LamTie.IsLamTieFull (DL x L).ntw (lamL_pz L Z) := (by with_unfolding_all exact (h :))
 private theorem lamL_C_pz {Z : GlobalTheory.LamTie.LamDat (Dof x)} (h : Z.C = cfOf x) : (lamL_pz L Z).C = cfD x L :=
   (by with_unfolding_all exact ((congrArg (fun c : CharFrame (Dof x) => chFr (a := x.o.Z) (oL x L).Z ((c))) h) : _))
+
+private theorem reads_heq_of_eq {D D' : D7} (e : D = D') (X : NExpTied D) :
+    HEq (@Reads D X) (@Reads D' (e ▸ X)) := by
+  cases e
+  rfl
+
 @[no_expose] def seriesAtLocal (X : Formalism.L2.NExpTied (withLoc L)) (h : ExpRel L l.b.Bs.exp X) :
     SerAt (_root_.GlobalTheory.HeightCounting.Fin3.yStructureLocal L l) (datL x L).geo.v₀ (expD L X) (_root_.GlobalTheory.HeightCounting.Fin3.psiVectorLocal L l) (cfD x L) (_root_.GlobalTheory.HeightCounting.Fin3.placeMapLocal L l) where
   ex := _root_.GlobalTheory.HeightCounting.Fin3.localYStructureExportTie L l
   bad := (by with_unfolding_all exact (l.b.ser.bad :))
   ch := (by with_unfolding_all exact (l.b.ser.ch :))
-  join := fun i j b k Q ψ hA ht => (by with_unfolding_all exact ((h.reads (kc% i) (j.1 + 1) b k (kc% Q) (kc% ψ) (Nat.le_add_left _ _) (kc% j.2) (kc% hA)
-    (l.b.ser.ex.ρ.ek (kc% i) b k)
-    (Formalism.IndefR.Links.PolF (Dof x) (Formalism.IndefR.Links.Wc (Dof x) (kc% j)).rank (Formalism.IndefR.Links.Vc (Dof x) (kc% j)).rank)
-    (fun f g => (l.b.ser.ex.tie (kc% i) (kc% j) b).rdV k (kc% Q) (kc% ψ) (kc% f)
-      ((Formalism.L2.Theta.finHom _).rangeRestrict ((l.mt.ad.PV (kc% j)).ψ (kc% g))))
-    (kc% (l.b.ser.join (kc% i) (kc% j) b k (kc% Q) (kc% ψ) (kc% hA) (kc% ht)))) :))
+  join := by
+    intro i j b k Q ψ hA ht
+    have hread := h.reads (kc% i) (j.1 + 1) b k (kc% Q) (kc% ψ) (Nat.le_add_left _ _) (kc% j.2) (kc% hA)
+      (l.b.ser.ex.ρ.ek (kc% i) b k)
+      (Formalism.IndefR.Links.PolF (Dof x) (Formalism.IndefR.Links.Wc (Dof x) (kc% j)).rank (Formalism.IndefR.Links.Vc (Dof x) (kc% j)).rank)
+      (fun f g => (l.b.ser.ex.tie (kc% i) (kc% j) b).rdV k (kc% Q) (kc% ψ) (kc% f)
+        ((Formalism.L2.Theta.finHom _).rangeRestrict ((l.mt.ad.PV (kc% j)).ψ (kc% g))))
+      (kc% (l.b.ser.join (kc% i) (kc% j) b k (kc% Q) (kc% ψ) (kc% hA) (kc% ht)))
+    have hreads : @Reads (withLoc L) X = (kc% (@Reads (DL x L) (expD L X))) := by
+      apply eq_of_heq
+      exact_by_kernel reads_heq_of_eq (DL_eq x L).symm X
+    rw [hreads] at hread
+    exact_by_kernel hread
   sup := by
     intro i j b h1 h2 z
     exact_by_kernel l.b.ser.sup (kc% i) j b h1 (kc% h2) (kc% z)

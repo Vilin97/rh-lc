@@ -12,7 +12,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PiCongrLe
 public import Formalism.LocalToGlobal.IndefiniteReal.ZeroPartEigenvalueConvention
 public import Formalism.LocalToGlobal.IndefiniteReal.RationalEmbedding
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RowLevelMatch
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.EvalTPh
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.RowsDef
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ConjugatedIntertwinerHasColumnLevel
 
 @[expose] public section

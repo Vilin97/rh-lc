@@ -119,10 +119,12 @@ lemma flag_nilp_all {m N : ℕ} (g : Matrix (Fin N) (Fin N) ℂ) (v : Fin m → 
   rw [e, pow_add, ← mulVec_mulVec, flag_nilp g v hv a, mulVec_zero]
 
 lemma conj_pow {N : ℕ} (A G Gi : Matrix (Fin N) (Fin N) ℂ) (h1 : Gi * G = 1) (h2 : G * Gi = 1) :
-    ∀ p : ℕ, (Gi * A * G) ^ p = Gi * A ^ p * G
-  | 0 => by simp [h1]
-  | p + 1 => by
-    rw [pow_succ, conj_pow A G Gi h1 h2 p, pow_succ]
+    ∀ p : ℕ, (Gi * A * G) ^ p = Gi * A ^ p * G := by
+  intro p
+  induction p with
+  | zero => simp [h1]
+  | succ p ih =>
+    rw [pow_succ, ih, pow_succ]
     calc
       Gi * A ^ p * G * (Gi * A * G) = Gi * A ^ p * (G * Gi) * A * G := by
         simp only [Matrix.mul_assoc]

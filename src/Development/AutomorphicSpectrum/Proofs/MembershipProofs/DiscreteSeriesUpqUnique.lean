@@ -33,7 +33,8 @@ public import Formalism.SharpRestriction.InertJacobiLevels.TiesView
 public import Formalism.SharpRestriction.InertJacobiLevels.TiesLat
 public import Formalism.SharpRestriction.GrowthBounds.DefsInst
 public import Formalism.LocalRingCardinality.MinkMEqMinkowskiNumber
-public import Development.AutomorphicSpectrum.Proofs.JetProofs.ExistsDiagonalCongrOfSimilitudeDistinctEigenvalu
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.IsDerivedOnOfIsKMod
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.LowKTypeMultiplicityOneUnconditional
 public import Formalism.ThetaLiftIndependence.Statement
 public import Formalism.HermitianLattices.StatementMass
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.DiscreteSeriesUpqUniqueOfClassification
@@ -43,11 +44,10 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RowHC
 
 namespace GlobalTheory.CompanionTheory.Front
 
-theorem discreteSeriesUpqUnique : GlobalTheory.Published.DiscreteSeriesUpqUnique := by
-  have h := GlobalTheory.CompanionTheory.DS.dsUnique
-  unfold GlobalTheory.CompanionTheory.DS.DSUnique at h
-  unfold GlobalTheory.Published.DiscreteSeriesUpqUnique
-  intros
-  apply h <;> assumption
+theorem discreteSeriesUpqUnique : GlobalTheory.Published.DiscreteSeriesUpqUnique :=
+  fun n ε lam hlam H H' _ _ _ _ σ σ' hσ hσ' =>
+    GlobalTheory.CompanionTheory.DSUniq.ds_unique
+      _root_.CompanionTheory.D.LK.hMultAlg _root_.CompanionTheory.D.LK.hKModExists
+      _root_.CompanionTheory.D.LK.hOrthCyc n ε lam H H' σ σ' hlam hσ hσ'
 
 end GlobalTheory.CompanionTheory.Front

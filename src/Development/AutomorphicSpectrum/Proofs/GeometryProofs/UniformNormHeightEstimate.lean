@@ -100,7 +100,7 @@ theorem count_le {K R Om Ω : Type} [Field K] [NumberField K] [AddCommGroup R] [
     have := key s _ hs
     rw [Fintype.card_coe] at this
     exact (Nat.le_mul_of_pos_right _ hpos).trans this
-  haveI : Module.Finite K V := Module.rank_lt_aleph0_iff.1 (hrank.trans_lt (Cardinal.nat_lt_aleph0 _))
+  haveI : Module.Finite K V := Module.rank_lt_aleph0_iff.1 (hrank.trans_lt Cardinal.natCast_lt_aleph0)
   rw [← Module.finrank_eq_rank, Cardinal.toENat_nat]
   have := key _ (Module.finBasis K V) (Module.finBasis K V).linearIndependent
   rw [Fintype.card_fin] at this
@@ -136,7 +136,7 @@ theorem growth_le_of_shift (D : ℕ) (r : ℕ → ℕ∞) (Rk : ℕ → ℕ) (δ
       refine ENat.ne_top_iff_exists.1 (fun ht => ?_) |>.imp fun _ e => e.symm
       have := h τ
       rw [ht, ENat.top_mul (Nat.cast_ne_zero.2 hδ.ne')] at this
-      exact ENat.coe_ne_top _ (top_le_iff.1 this)
+      exact ENat.natCast_ne_top _ (top_le_iff.1 this)
     have hmle : m * δ ≤ Rk (τ + k₀) := by
       have := h τ
       rw [hm] at this
@@ -234,7 +234,7 @@ theorem geomDeg_combLine_top (hI : PB.Inputs) (M : Top.RootModel Ψ N) (n : Opti
   · have hc : (∑ j, Finsupp.single (w j) (1 : ℕ)) none = 0 := by
       rw [Finsupp.finsetSum_apply]
       refine Finset.sum_eq_zero fun j _ => ?_
-      rw [Finsupp.single_apply, if_neg fun h => hw ⟨j, h⟩]
+      rw [Finsupp.single_apply, ite_eq_right fun h => hw ⟨j, h⟩]
     rw [Top.RealGeo.geoMono_word hI M R w, hc, pow_zero, mul_one,
       ptsIntegral_one_eq_mInt hI.resExists resBridge R M.arith fun i => Top.RealGeo.line_smooth M (w i)]
     field_simp
