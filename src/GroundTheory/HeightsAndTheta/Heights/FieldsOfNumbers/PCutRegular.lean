@@ -32,11 +32,15 @@ theorem mixedDiff_snoc {n : ℕ} (bs : Fin n → K → ℤ) (c : K → ℤ) (h :
 
 theorem foldr_diffStep_eventually_zero {h : (K → ℤ) → ℤ}
     (hh : ∀ᶠ m in Filter.atTop, h m = 0) :
-    ∀ l : List (K → ℤ), ∀ᶠ m in Filter.atTop, l.foldr diffStep h m = 0
-  | [] => hh
-  | b :: l => by
-    have ih := foldr_diffStep_eventually_zero hh l
-    filter_upwards [ih, (tendsto_sub_const_atTop b).eventually ih] with m h1 h2
+    ∀ l : List (K → ℤ), ∀ᶠ m in Filter.atTop, l.foldr diffStep h m = 0 := by
+  intro l
+  induction l with
+  | nil => exact hh
+  | cons b l ih =>
+    have hshift : Filter.Tendsto (fun m : K → ℤ => m - b) Filter.atTop Filter.atTop := by
+      simpa only [sub_eq_add_neg, id_eq] using
+        Filter.tendsto_atTop_add_const_right Filter.atTop (-b) Filter.tendsto_id
+    filter_upwards [ih, hshift.eventually ih] with m h1 h2
     simp only [List.foldr_cons, diffStep, h1, h2, sub_self]
 
 
@@ -116,7 +120,15 @@ theorem isMultiHomogIdeal_sup_span {P : Ideal (MRing ι F)} (hP : IsMultiHomogId
   intro f hf b
   obtain ⟨a, ha, t', ht', rfl⟩ := Submodule.mem_sup.mp hf
   obtain ⟨t, rfl⟩ := Ideal.mem_span_singleton'.mp ht'
-  rw [map_add (f := _), HilbExactDivide.component_mul_form hs]
+  have hcomponent : weightedHomogeneousComponent (blockWeight ι) b (t * s) =
+      if c ≤ b then weightedHomogeneousComponent (blockWeight ι) (b - c) t * s else 0 := by
+    letI := MvPolynomial.weightedGradedAlgebra F (blockWeight ι)
+    have hs' : s ∈ weightedHomogeneousSubmodule F (blockWeight ι) c :=
+      (mem_weightedHomogeneousSubmodule _ _ _ _).mpr hs
+    rw [← weightedDecomposition.decompose'_apply, ← weightedDecomposition.decompose'_apply]
+    exact DirectSum.coe_decompose_mul_of_right_mem
+      (𝒜 := weightedHomogeneousSubmodule F (blockWeight ι)) b (a := t) hs'
+  rw [map_add (f := _), hcomponent]
   refine Ideal.add_mem _ (Ideal.mem_sup_left (hP a ha b)) ?_
   split_ifs
   · exact Ideal.mem_sup_right (Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self s))
@@ -236,7 +248,7 @@ theorem ringKrullDim_minimalPrime [Fintype K] [∀ k, Fintype (ι k)] {P W : Ide
   have hht : W'.height ≤ 1 := Ideal.map_height_le_one_of_mem_minimalPrimes hW
   have hquot : ringKrullDim ((MRing ι F ⧸ P) ⧸ W') = ringKrullDim (MRing ι F ⧸ W) :=
     ringKrullDim_eq_of_ringEquiv (DoubleQuot.quotQuotEquivQuotOfLE hPW)
-  have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient F W'
+  have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient W'
   have hdrop := GroundTheory.Arith.Abelian.Jacobian.ringKrullDim_quotient_add_one_le W' hW'ne
   rw [hquot, hdim] at hform hdrop
   exact eq_of_add_one_le_of_le hdrop (le_of_height_add hht hform)

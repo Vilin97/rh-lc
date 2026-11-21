@@ -23,14 +23,15 @@ theorem zp_eq (z : ℤ_[p]) : zp Ω z = zpH (p := p) (Ω := Ω) z := rfl
 theorem thL_coeff (a : Lau p) (r : ℤ) : (thL a).coeff r = (r : ℤ_[p]) * a.coeff r := rfl
 
 theorem thL_mul (a b : Lau p) : thL (a * b) = thL a * b + a * thL b := by
-  ext r : 1
+  apply HahnSeries.ext
+  funext r
   have hs : (thL a).support ⊆ a.support := fun i hi h => hi (by simp [thL_coeff, h])
   have ht : (thL b).support ⊆ b.support := fun i hi h => hi (by simp [thL_coeff, h])
   rw [HahnSeries.coeff_add, HahnSeries.coeff_mul_left' a.isPWO_support hs,
     HahnSeries.coeff_mul_right' b.isPWO_support ht, thL_coeff,
     HahnSeries.coeff_mul (x := a) (y := b), Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun ij hij => ?_
-  rw [Finset.mem_addAntidiagonal] at hij
+  rw [Finset.mem_antidiagonal] at hij
   rw [thL_coeff, thL_coeff, ← hij.2.2]
   push_cast
   ring

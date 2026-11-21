@@ -27,7 +27,7 @@ private theorem lc_quot {Y : Type} (M : Subgroup Γ) (f : Γ ⧸ M → Y)
 private theorem phi_quot (l : ℕ) (M : Subgroup Γ) [M.Normal]
     (h : ∀ H : Subgroup Γ, IsOpen (H : Set Γ) → M ≤ H →
       Finite {φ : H →* Multiplicative (ZMod l) // IsOpen (φ.ker : Set H) ∧ ∀ g : H, (g : Γ) ∈ M → φ g = 1}) :
-    PhiCond (Γ ⧸ M) l := by
+    PhiCond (Γ := Γ ⧸ M) l := by
   intro H hH
   have hc : Continuous (QuotientGroup.mk' M) := QuotientGroup.continuous_mk
   haveI := h (H.comap (QuotientGroup.mk' M)) (hH.preimage hc) fun g hg => by
@@ -90,7 +90,7 @@ theorem UpperTheory.V.Ws.sxUnivKill :
   let rq : Γ ⧸ (Subgroup.normalClosure N).topologicalClosure →* Matrix ι ι (ResidueField Λ) :=
     QuotientGroup.lift _ rbar hK
   have hlq : IsLocallyConstant rq := lc_quot _ rq hloc
-  have hΦ : PhiCond (Γ ⧸ (Subgroup.normalClosure N).topologicalClosure) l :=
+  have hΦ : PhiCond (Γ := Γ ⧸ (Subgroup.normalClosure N).topologicalClosure) l :=
     phi_quot l _ fun H hH hKH => hfin H hH (le_trans (Subgroup.le_topologicalClosure _) hKH)
   obtain ⟨R, _, _, _, r0, hr0⟩ := univ_lift l Λ (Γ ⧸ (Subgroup.normalClosure N).topologicalClosure) ι rq hΦ hlq
   let r : Lift Λ rbar R :=

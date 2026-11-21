@@ -83,13 +83,13 @@ def chartSub (e : ℕ) (Q : Ideal (MvPolynomial (Fin n) D)) (j : Fin n) :
 theorem chartSub_rel_inl (e : ℕ) (Q : Ideal (MvPolynomial (Fin n) D)) (j : Fin n) (i : Fin e) :
     ∑ k, chartSub e Q j (.inl (i, k)) * chartCoord e Q j k = 0 := by
   simp only [chartSub, Sum.elim_inl, sub_mul, Finset.sum_sub_distrib, ite_mul, zero_mul,
-    Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   rw [mul_assoc, mul_comm (chartInvC e Q j) _, chartCoord_mul_inv, mul_one, sub_self]
 
 theorem chartSub_rel_inr (e : ℕ) (Q : Ideal (MvPolynomial (Fin n) D)) (j : Fin n) :
     ∑ k, chartSub e Q j (.inr k) * chartCoord e Q j k = 1 := by
   simp only [chartSub, Sum.elim_inr, sub_mul, Finset.sum_sub_distrib, ite_mul, zero_mul,
-    Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   rw [mul_assoc, mul_comm (chartInvC e Q j) _, chartCoord_mul_inv, mul_one, sub_sub_cancel]
   rw [one_mul, mul_comm, chartCoord_mul_inv]
 
@@ -102,7 +102,7 @@ variable (e : ℕ) (R : Type*) [CommRing R] [Algebra (MvPolynomial (Par e n) D) 
 def chartModel (Q : Ideal (MvPolynomial (Fin n) D)) : Ideal (MvPolynomial (Fin n) R) :=
   Q.map (MvPolynomial.map ((algebraMap (MvPolynomial (Par e n) D) R).comp C))
 
-
+variable (D) in
 def chartPar : Par e n → R := fun p => algebraMap (MvPolynomial (Par e n) D) R (X p)
 
 theorem chartModel_le (Q : Ideal (MvPolynomial (Fin n) D)) :
@@ -227,7 +227,8 @@ theorem chartPsi0_rel_inr :
   have h1 := congrArg (algebraMap _ (ChartBj e R Q j)) h0
   rw [map_zero] at h1
   rw [← h1]
-  simp only [map_sub, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_one]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, chartForm, linForm, map_sum, map_sum]
   congr 1

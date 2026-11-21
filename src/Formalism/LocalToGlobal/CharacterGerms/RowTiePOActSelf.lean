@@ -22,18 +22,33 @@ theorem linAct_smul (φ : Pt C 1 dd) (c : C) (w : Fin dd → C) : linAct φ (c �
   simp only [linAct, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
   exact Finset.sum_congr rfl fun j _ => by ring
 
-theorem cc_dh (Y : FBChart C V O dd) (i : Fin dd) : constantCoeff (pderiv C ((1 : Fin 2), i) Y.h) = 0 := by
-  have hZ : Z0 (![0, pt C dd 0] : Fin 2 → Pt C 1 dd) := constant_zero_zero_point (pt C dd 0) (coordinate_point_constantCoeff 0)
-  have h0 := congrArg (pderiv C ((0 : Fin 1), i)) Y.gauge.ax0
-  rw [pderiv_eval_pair hZ, map_zero] at h0
-  rw [Finset.sum_eq_zero (fun j _ => by
-      rw [show ((![0, pt C dd 0] : Fin 2 → Pt C 1 dd) 0 j) = 0 from rfl, map_zero, mul_zero]), zero_add] at h0
-  rw [show (∑ j, ev (n := 1) ![0, pt C dd 0] (pderiv C ((1 : Fin 2), j) Y.h) *
-      pderiv C ((0 : Fin 1), i) ((![0, pt C dd 0] : Fin 2 → Pt C 1 dd) 1 j)) =
-      ∑ j, ev (n := 1) ![0, pt C dd 0] (pderiv C ((1 : Fin 2), j) Y.h) * pderiv C ((0 : Fin 1), i) (pt C dd 0 j) from rfl,
-    sum_d_pt_self] at h0
-  have h1 := congrArg constantCoeff h0
-  rwa [constantCoeff_ev hZ, map_zero] at h1
+theorem cc_dh (Y : FBChart C V O dd) (i : Fin dd) : constantCoeff (pderiv ((1 : Fin 2), i) Y.h) = 0 := by
+  let a : Fin 2 → Pt C 1 dd := ![0, pt C dd 0]
+  have hZ : Z0 a := constant_zero_zero_point (pt C dd 0) (coordinate_point_constantCoeff 0)
+  have hchain : pderiv ((0 : Fin 1), i) (ev a Y.h) =
+      ∑ p : Fin 2 × Fin dd, ev a (pderiv p Y.h) * pderiv ((0 : Fin 1), i) (a p.1 p.2) := by
+    unfold ev
+    exact Formalism.G.LogCR.pderiv_subst (a := fun p : Fin 2 × Fin dd => a p.1 p.2)
+      (fun p => hZ p.1 p.2) Y.h ((0 : Fin 1), i)
+  have hderiv : pderiv ((0 : Fin 1), i) (ev a Y.h) = ev a (pderiv ((1 : Fin 2), i) Y.h) := by
+    rw [hchain, Finset.sum_eq_single ((1 : Fin 2), i)]
+    · change _ * pderiv ((0 : Fin 1), i) (X ((0 : Fin 1), i)) = _
+      rw [pderiv_X_self, mul_one]
+    · rintro ⟨k, j⟩ _ hne
+      fin_cases k
+      · change _ * pderiv ((0 : Fin 1), i) (0 : PS C 1 dd) = 0
+        rw [map_zero, mul_zero]
+      · have hji : j ≠ i := by
+          intro h
+          subst j
+          exact hne rfl
+        change _ * pderiv ((0 : Fin 1), i) (X ((0 : Fin 1), j)) = 0
+        rw [pderiv_X_of_ne (by simpa using hji), mul_zero]
+    · simp
+  have h0 := congrArg (pderiv ((0 : Fin 1), i)) Y.gauge.ax0
+  change pderiv ((0 : Fin 1), i) (ev a Y.h) = _ at h0
+  rw [hderiv, map_zero] at h0
+  simpa only [constantCoeff_ev hZ, map_zero] using congrArg constantCoeff h0
 
 theorem cc_sgP (Y : FBChart C V O dd) (w : Fin dd → C) : constantCoeff (Y.sgP w) = 0 := by
   unfold FBChart.sgP

@@ -48,7 +48,7 @@ lemma EB_sub {m n : Type*} {A B : Matrix m n ℂ} {a b : ℝ} (hA : EB A a) (hB 
 
 lemma EB_one {n : Type*} [DecidableEq n] : EB (1 : Matrix n n ℂ) 1 := by
   intro i j
-  rw [one_apply]
+  rw [Matrix.one_apply]
   split_ifs <;> simp
 
 lemma EB_zero {m n : Type*} : EB (0 : Matrix m n ℂ) 0 := by
@@ -647,7 +647,7 @@ lemma EB_bk {k j ρ : ℕ} {ι κ : Type*} (M : B.Mat k (j + ρ)) (f : ι → Ix
 
 lemma wMat_mul_self (d : ℕ) : G.wMat d * G.wMat d = 1 := by
   ext i j
-  simp only [G.wMat, mul_apply, of_apply, one_apply]
+  simp only [G.wMat, Matrix.mul_apply, of_apply, Matrix.one_apply]
   rw [Finset.sum_eq_single i.rev (fun b _ hb => by simp [hb]) (fun h => absurd (Finset.mem_univ _) h)]
   simp only [Fin.rev_rev]
   by_cases h : i = j

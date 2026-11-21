@@ -30,7 +30,8 @@ theorem split_norm {K : Type} [Field K] [NumberField K] {k : ℕ} (S : HermForm 
     (hint : IsIntegralOn S X) :
     ∃ J : FractionalIdeal (𝓞 K)⁰ K, J ≤ 1 ∧ (IsSelfDual S X → S.G.det ≠ 0 → 1 ≤ J) ∧
       FractionalIdeal.absNorm J * (vecIdx X : ℚ) ^ 2 = |Algebra.norm ℚ S.G.det| := by
-  obtain ⟨C, z, hfgC, h1, htri, hdiag, hin, hdec, hidx⟩ := lattice_split K k X hfg hstd
+  obtain ⟨C, z, hfgC, h1, htri, hdiag, hin, hdec, hidx⟩ :=
+    ReciprocityTheory.MultiplicativeHeights.SemiDegIdx.lattice_split K k X hfg hstd
   let CF : Fin k → FractionalIdeal (𝓞 K)⁰ K := fun i =>
     ⟨C i, FractionalIdeal.isFractional_of_fg (hfgC i)⟩
   let cF : Fin k → FractionalIdeal (𝓞 K)⁰ K := fun i =>

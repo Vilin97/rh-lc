@@ -222,7 +222,7 @@ theorem KernelRatio_of (hC : UnitaryConstant) : KernelRatio := by
       i₁₂ := i0a, i₂₁ := ia0, i₁₃ := i0b, i₃₁ := ib0, i₂₃ := iab, i₃₂ := iba }
   obtain ⟨S₂, hS₂⟩ := (repsExist _ _ _ i0a).1
   obtain ⟨S₃, hS₃⟩ := (repsExist _ _ _ iab).1
-  have hμ8 := Formalism.L2.Th1.H.TripleEighth_proof _ H β Λ₀ Λa Λb hT ⟨F, hFmem.2, hFne⟩ S₂ S₃ hS₂ hS₃
+  have hμ8 := TripleEighth_proof _ H β Λ₀ Λa Λb hT ⟨F, hFmem.2, hFne⟩ S₂ S₃ hS₂ hS₃
   have hμ := TripleFormula_proof _ H β Λ₀ Λa Λb hT S₂ S₃ hS₂ hS₃ F hFmem.2
   refine ⟨c * tripleMu H β Λ₀ Λa Λb S₂ S₃, ?_, ?_⟩
   · rw [mul_pow, hμ8, mul_one, hc8, hδ]
@@ -278,6 +278,6 @@ theorem quadraticSemicharacterIdentityReformulated_of_kernelRatio_of_localStanda
     quadraticSemicharacterIdentityEquivalent_of_kernelRatio hK l _ ι _ lg linv ph hlog hph hTr n h Λ _ _ g₀ (g₀.trans δ) D0 D1 hfix jl κ hκδ θ hθ hθκ
       t N hN hlN hNt O τ γ B' hB⟩
   obtain ⟨e, he8, he⟩ := hK _ _ n h Λ _ _ g₀ (g₀.trans δ) D0 D1 hfix
-  exact ⟨κ * e, norm_mul_eq_one ι κ e _ he8 hκδ, by rw [hθκ, he, smul_smul]⟩
+  exact ⟨κ * e, KR.norm_mul_eq_one ι κ e _ he8 hκδ, by rw [hθκ, he, smul_smul]⟩
 
 end Formalism.L2.Th1.H

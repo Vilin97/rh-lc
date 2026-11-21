@@ -264,14 +264,11 @@ lemma exists_codiff (E : Type) [Field E] [NumberField E] [StarRing E] :
     exact Algebra.smul_def δ w
   have F2 : ∀ w ∈ Dd, ∃ a₀ ∈ Dd.num, (a₀ : E) = (δ : E) * w := by
     intro w hw
-    have h1 : Dd.den • w ∈ Dd.den • (Dd : Submodule (𝓞 E) E) :=
-      Submodule.smul_mem_pointwise_smul _ _ _ hw
-    rw [FractionalIdeal.den_mul_self_eq_num] at h1
+    have h1 : δ • w ∈ Submodule.map (Algebra.linearMap (𝓞 E) E) Dd.num := by
+      rw [← FractionalIdeal.den_mul_self_eq_num]
+      exact ⟨w, hw, rfl⟩
     obtain ⟨a₀, ha₀, ha₀'⟩ := h1
-    refine ⟨a₀, ha₀, ?_⟩
-    have h2 : (a₀ : E) = Dd.den • w := ha₀'
-    rw [h2]
-    exact Algebra.smul_def δ w
+    exact ⟨a₀, ha₀, ha₀'.trans (Algebra.smul_def δ w)⟩
   have hone : (1 : E) ∈ Dd := FractionalIdeal.one_le_dual_one ℤ ℚ (FractionalIdeal.one_mem_one _)
   refine ⟨δ, Ideal.comap σ Dd.num, hδ, ?_, ?_⟩
   · intro hbot
@@ -311,7 +308,7 @@ lemma exists_codiff (E : Type) [Field E] [NumberField E] [StarRing E] :
 lemma exists_smul_mem_of_span {E U : Type} [Field E] [NumberField E] [AddCommGroup U] [Module E U]
     [Module (𝓞 E) U] [IsScalarTower (𝓞 E) E U] (N : Submodule (𝓞 E) U)
     (hN : Submodule.span E (N : Set U) = ⊤) (x : U) : ∃ d : 𝓞 E, d ≠ 0 ∧ d • x ∈ N := by
-  first | exact Bl.general_b_fact_second'.goal1 .. | (apply Bl.general_b_fact_second'.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_second'.goal1 <;> assumption)
+  exact Bl.general_b_fact_second'.goal1 N hN x
 
 lemma exists_int_smul_mem {E U : Type} [Field E] [NumberField E] [AddCommGroup U]
     [Module (𝓞 E) U] (L : Submodule (𝓞 E) U) (x : U) (d : 𝓞 E) (hd : d ≠ 0) (hx : d • x ∈ L) :

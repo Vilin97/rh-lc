@@ -87,9 +87,9 @@ private theorem field_case (F E K A : Type) [Field F] [NumberField F] [Field E] 
       ((algebraMap K ℝ).comp (algebraMap F K))
     refine local_step F E K L I A v.Completion ℝ e π
       (InfinitePlace.Completion.extensionEmbeddingOfIsReal hv) (fun b => ?_) x (hi v)
-    have := InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hv ((WithAbs.equiv v.1).symm b)
-    rw [hσ] at this
-    exact this
+    simp only [AbsoluteValue.Completion.algebraMap_def v.1, WithAbs.algebraMap_right_apply,
+      Algebra.algebraMap_self_apply, InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe,
+      WithAbs.equiv_apply, WithAbs.ofAbs_toAbs, hσ, RingHom.comp_apply]
 
 end UpperTheory.ConvolutionTheory.D
 

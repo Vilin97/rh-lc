@@ -112,12 +112,15 @@ theorem surj_fst :
   · intro h; simpa using p.asIdeal.add_mem hm h
 
 
+variable (J J₀) in
 def IsChart : Prop := J ≫ G.hom = Spec.map (CommRingCat.ofHom (algebraMap A B)) ≫ J₀
 
 
+variable (J x ε) in
 def IsUnitIn : Prop := Spec.map (CommRingCat.ofHom ε) ≫ J = (1 : Over.mk x ⟶ G).left
 
 
+variable (A ε) in
 def Lifts (f : B →+* TrivSqZeroExt T M) : Prop :=
   (∀ b, (f b).fst = ε b) ∧ ∀ a, (f (algebraMap A B a)).snd = 0
 
@@ -185,9 +188,11 @@ theorem mk_rep (hc : IsChart J J₀) (hε : IsUnitIn J x ε) (f : B →+* TrivSq
 variable {g : ℕ} {d : Fin g → Derivation A B B} {w : Fin g → B →₀ B}
 
 
+variable (ε w) in
 def yco (δ : B → M) (i : Fin g) : M := (w i).sum fun b a => ε a • δ b
 
 
+variable (A J ε w) in
 def Co (v : LieEx.ob x M ⟶ G) (y : Fin g → M) : Prop :=
   ∃ f : B →+* TrivSqZeroExt T M, v.left = Spec.map (CommRingCat.ofHom f) ≫ J ∧ Lifts A ε f ∧
     ∀ i, y i = yco ε w (fun b => (f b).snd) i

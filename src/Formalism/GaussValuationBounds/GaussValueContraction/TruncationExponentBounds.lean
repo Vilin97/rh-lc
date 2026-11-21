@@ -20,7 +20,7 @@ theorem powMemSpanOfLe : RelVanish := by
 private theorem prime_sub_one_mul_padicValNat_factorial_le (ℓ : ℕ) [Fact ℓ.Prime] (r : ℕ) :
     ((ℓ : ℝ) - 1) * (padicValNat ℓ r.factorial : ℝ) ≤ r := by
   have h2 : (ℓ - 1) * padicValNat ℓ r.factorial ≤ r := by
-    rw [sub_one_mul_padicValNat_factorial]
+    rw [Nat.padicValNat_def, (Fact.out : ℓ.Prime).sub_one_mul_multiplicity_factorial]
     exact Nat.sub_le _ _
   have h1 : 1 ≤ ℓ := (Fact.out : ℓ.Prime).one_lt.le
   have h3 : (((ℓ - 1) * padicValNat ℓ r.factorial : ℕ) : ℝ) ≤ r := by exact_mod_cast h2

@@ -15,6 +15,8 @@ namespace Cyclotomic
 
 open GroundTheory.LocalField.Abstract
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section Lift
 
 theorem isOpen_stabilizer_ringOfIntegers (b : 𝓞 ℚ̄) :

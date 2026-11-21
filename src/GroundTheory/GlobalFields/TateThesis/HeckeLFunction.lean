@@ -247,7 +247,7 @@ namespace HeckeCharacter
 
 variable {K : Type*} [Field K] [NumberField K] (χ : HeckeCharacter K)
 
-
+open scoped Classical in
 def coeff (I : Ideal (𝓞 K)) : ℂ :=
   if h : I ≠ ⊥ ∧ IsCoprime I χ.conductor then
     (χ.idealCharacter ⟨idealUnit I h.1, idealUnit_mem_idealsPrimeTo h.1 h.2⟩ : ℂ)

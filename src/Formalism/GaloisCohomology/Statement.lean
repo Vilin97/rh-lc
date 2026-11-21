@@ -37,8 +37,8 @@ def scalRep {R : Type*} [CommRing R] {Γ : Type*} [Group Γ] (M : Type*) [AddCom
   map_mul' g h := by
     ext x
     simp only [map_mul, Units.val_mul, mul_smul, LinearMap.smul_apply, LinearMap.id_apply,
-      Module.End.mul_apply, map_smul]
-    first | rfl | exact smul_comm _ _ _
+      mul_apply_eq_comp, map_smul]
+    exact smul_comm _ _ _
 
 @[simp] theorem scalRep_apply {R : Type*} [CommRing R] {Γ : Type*} [Group Γ] (M : Type*)
     [AddCommGroup M] [Module R M] (ψ : Γ →* Rˣ) (g : Γ) (m : M) :
@@ -50,9 +50,11 @@ variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAl
   (l : ℕ) [Fact l.Prime]
 
 
+variable (F) in
 def Above : Set (HeightOneSpectrum (𝓞 F)) := {v | ((l : ℕ) : 𝓞 F) ∈ v.asIdeal}
 
 
+variable (F Ω) in
 structure LData where
 
   S : Finset (HeightOneSpectrum (𝓞 F))
@@ -62,7 +64,7 @@ structure LData where
   hA : ∀ v, IsPlaceOver (A v) v.1
 
   chi : GS Ω (S : Set (HeightOneSpectrum (𝓞 F))) →* ℤ_[l]ˣ
-  hchi : chi.comp (toGS Ω _) = cycZ F Ω l
+  hchi : chi.comp (toGS Ω _) = cycZ (F := F) (Ω := Ω) l
 
 variable {l}
 
@@ -137,6 +139,7 @@ variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
   [IsTopologicalAddGroup M] [ContinuousConstSMul R M]
 
 
+variable (F Ω) in
 abbrev Places : Type :=
   {A : HeightOneSpectrum (𝓞 F) → ValuationSubring Ω // ∀ v, IsPlaceOver (A v) v}
 

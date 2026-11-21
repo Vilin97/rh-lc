@@ -74,7 +74,8 @@ def vertex (h : HasVertex P) : Ideal (lauSub P) where
 
 variable {P} in
 theorem mem_vertex (h : HasVertex P) {p : lauSub P} :
-    p ∈ vertex h ↔ ∃ c ∈ maximalIdeal C, algebraMap C K c = p.1.coeff 0 := Iff.rfl
+    p ∈ UpperTheory.V.Fr.vertex (P := P) h ↔
+      ∃ c ∈ maximalIdeal C, algebraMap C K c = p.1.coeff 0 := Iff.rfl
 
 end Lau
 

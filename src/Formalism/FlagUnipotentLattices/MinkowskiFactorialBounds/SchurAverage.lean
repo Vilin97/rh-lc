@@ -194,7 +194,7 @@ theorem box_count_alt : BoxCount := by
           have : ∏ v, ‖(c - d) v‖ ^ 2 = 0 := Finset.prod_eq_zero (Finset.mem_univ v) hz
           linarith
         have h2 : ∏ v, ‖(c - d) v‖ ^ 2 < ∏ v, (2 * (B v / (2 * τ))) ^ 2 :=
-          Finset.prod_lt_prod_of_nonempty hpos (fun v _ =>
+          Finset.prod_lt_prod_of_nonempty₀ hpos (fun v _ =>
             pow_lt_pow_left₀ (hcon v) (norm_nonneg _) (by norm_num)) Finset.univ_nonempty
         linarith)
     refine this.trans ?_

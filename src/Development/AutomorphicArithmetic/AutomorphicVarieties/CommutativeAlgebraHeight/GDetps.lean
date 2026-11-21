@@ -47,10 +47,10 @@ private theorem UpperTheory.V.CA.detps_height {A : Type} [CommRing A] [IsNoether
   exact_mod_cast Finset.card_image_le.trans (by simp)
 
 theorem UpperTheory.V.CA.g_detps :
-    ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] (n : ℕ),
+    (∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] (n : ℕ),
       let A := MvPowerSeries ((Fin (n + 1) × Fin (n + 1)) ⊕ Fin (n + 1)) R
       let I : Ideal A := Ideal.span (Set.range (fun a : Fin (n + 1) => ∑ b : Fin (n + 1), (MvPowerSeries.X (Sum.inl (a, b)) * MvPowerSeries.X (Sum.inr b) : A)) ∪ {Matrix.det (Matrix.of fun a b : Fin (n + 1) => (MvPowerSeries.X (Sum.inl (a, b)) : A))})
-      I.radical.IsPrime ∧ I.radical.height ≤ (n + 1 : ℕ) := by
+      I.radical.IsPrime ∧ I.radical.height ≤ (n + 1 : ℕ)) := by
   intro R _ _ _ n A I
   classical
   have hd := UpperTheory.V.CA.g_detrad R n

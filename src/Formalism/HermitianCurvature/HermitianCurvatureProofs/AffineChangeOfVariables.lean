@@ -42,9 +42,11 @@ open Formalism.FourierDecayAlt.P.G3
 theorem affine_change_of_variables : Formalism.FourierDecayAlt.G.AffineChange := by
   intro β α γ hα
   have h1 : (fun ρ : ℂ => α * ρ + γ) = (fun x => x + γ) ∘ (fun ρ : ℂ => α * ρ) := rfl
+  have hmul := measurable_const_mul α
+  have hadd := measurable_add_const γ
   unfold mu
-  rw [Measure.map_smul, h1, ← Measure.map_map (measurable_add_const γ) (measurable_const_mul α),
-    map_mul_vol α hα, Measure.map_smul, map_add_right_eq_self]
+  rw [h1, Measure.map_smul _ (hadd.comp hmul).aemeasurable, ← Measure.map_map hadd hmul,
+    map_mul_vol α hα, Measure.map_smul _ hadd.aemeasurable, map_add_right_eq_self]
   rw [smul_comm]
   congr 1
 

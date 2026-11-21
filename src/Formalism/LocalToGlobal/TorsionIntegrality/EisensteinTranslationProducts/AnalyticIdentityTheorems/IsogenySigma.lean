@@ -14,7 +14,9 @@ namespace IsogenySigmaQuotient
 variable (L : PeriodPair)
 
 
-def ind (x : ℂ) : WithTop ℤ := if x ∈ L.lattice then 1 else 0
+def ind (x : ℂ) : WithTop ℤ := by
+  classical
+  exact if x ∈ L.lattice then 1 else 0
 
 lemma ind_of_mem {x : ℂ} (h : x ∈ L.lattice) : ind L x = 1 := by
   simp [ind, h]

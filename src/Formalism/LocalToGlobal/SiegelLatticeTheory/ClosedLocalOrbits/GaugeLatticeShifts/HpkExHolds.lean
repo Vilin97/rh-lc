@@ -137,8 +137,10 @@ theorem hpkEx_holds : HpkEx := by
   have iW := Formalism.FourierDecayAlt.P.haar_measure_inversion k r _ μW0 cW hW0
   have iW' := Formalism.FourierDecayAlt.P.haar_measure_inversion k r _ μW0' cW' hW0'
   have iN := Formalism.FourierDecayAlt.P.haar_measure_inversion k r _ μN0 cN hN0
-  have jW' : (b' • μW0').map invM = b' • μW0' := by rw [Measure.map_smul, iW']
-  have jN : (d • μN0).map invM = d • μN0 := by rw [Measure.map_smul, iN]
+  have jW' : (b' • μW0').map invM = b' • μW0' := by
+    rw [Measure.map_smul b' meas_invM.aemeasurable, iW']
+  have jN : (d • μN0).map invM = d • μN0 := by
+    rw [Measure.map_smul d meas_invM.aemeasurable, iN]
   set κ : ℝ≥0∞ := b * d * (b' * d) with hκ
   have hκ0 : κ ≠ 0 := by simp [hκ, hb0, hd0, hb0']
   have hκt : κ ≠ ⊤ := by simp [hκ, ENNReal.mul_eq_top, hbt, hdt, hbt']

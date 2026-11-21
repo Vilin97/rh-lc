@@ -49,7 +49,7 @@ theorem exists_tmul_add (θ : L) (h0 : θ ≠ 0) (hθ : IsCMField.complexConj L 
     exact ⟨a + a', b + b', by rw [tmul_add, tmul_add]; abel⟩
 
 theorem compAt_eq_zero : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (s : SplitPlace L) (z : AL L),
-    s.proj z = 0 → s.proj (conjAL L z) = 0 → compAt L s.v z = 0 := by
+    SplitPlace.proj L s z = 0 → SplitPlace.proj L s (conjAL L z) = 0 → compAt L s.v z = 0 := by
   intro L _ _ _ s z h1 h2
   obtain ⟨θ, h0, hθ⟩ := exists_imag L
   obtain ⟨a, b, rfl⟩ := exists_tmul_add L θ h0 hθ z

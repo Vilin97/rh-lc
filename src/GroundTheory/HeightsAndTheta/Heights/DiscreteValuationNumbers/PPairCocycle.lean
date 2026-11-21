@@ -339,8 +339,8 @@ theorem listNum_perm (W : Ideal (MRing ι O)) (Q : List (K → ℤ)) (d : ℕ) :
 variable [Fintype K] [∀ k, Fintype (ι k)]
 
 theorem vNumL_add_head (h3 : IntNumAddFirst.Statement.{0}) {ϖ : O} (hϖ : Irreducible ϖ)
-    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ} (hP : IsModelOver P d) {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
-    (hD : IsVerticalDivisor P ϖ b f g) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hW : ratDiv P f g W ≠ 0)
+    {P : Ideal (MRing ι O)} {d : ℕ} (hP : IsModelOver P d) {b : K → ℤ} {f g : MRing ι O}
+    (hD : IsVerticalDivisor P ϖ b f g) {W : Ideal (MRing ι O)} (hW : ratDiv P f g W ≠ 0)
     (u v : K → ℤ) (l : List (K → ℤ)) (hl : l.length + 1 = d) :
     vNumL W ((u + v) :: l) = vNumL W (u :: l) + vNumL W (v :: l) := by
   obtain ⟨bf, bg, hbf, hbg, -⟩ := hD.degrees
@@ -386,8 +386,8 @@ theorem vNumL_add_head (h3 : IntNumAddFirst.Statement.{0}) {ϖ : O} (hϖ : Irred
   exact key
 
 theorem listNum_headAdd (h3 : IntNumAddFirst.Statement.{0}) {ϖ : O} (hϖ : Irreducible ϖ)
-    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ} (hP : IsModelOver P d) {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
-    (hD : IsVerticalDivisor P ϖ b f g) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hW : ratDiv P f g W ≠ 0)
+    {P : Ideal (MRing ι O)} {d : ℕ} (hP : IsModelOver P d) {b : K → ℤ} {f g : MRing ι O}
+    (hD : IsVerticalDivisor P ϖ b f g) {W : Ideal (MRing ι O)} (hW : ratDiv P f g W ≠ 0)
     (Q : List (K → ℤ)) : HeadAdd (listNum W Q d) := by
   intro u v l
   unfold listNum
@@ -528,7 +528,19 @@ theorem isFlagPair_refl {ϖ : O} {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsP
     simp [Module.Basis.repr_self, hij.ne]
   vertical := fun i => by
     rw [sub_self]
-    exact isVerticalDivisor_one ϖ _
+    have hHom : IsMultiHomog (1 : MRing ι O) 0 :=
+      isWeightedHomogeneous_one O (blockWeight ι)
+    have hOne : (1 : MRing ι O) ∉ pointIdeal O y :=
+      (Ideal.ne_top_iff_one _).mp (Ideal.IsPrime.ne_top' : pointIdeal O y ≠ ⊤)
+    exact {
+      degrees := ⟨0, 0, hHom, hHom, by funext k; simp⟩
+      num_not_mem := hOne
+      den_not_mem := hOne
+      vertical := by simp [ratDiv]
+      unit_off_special := by
+        intro W hW _ _ _
+        have hOneW : 1 ∉ W := (Ideal.ne_top_iff_one W).mp hW.ne_top
+        exact ⟨1, 1, hOneW, hOneW, by simp⟩ }
   generic := fun i => by simp [Module.Basis.repr_self]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
@@ -538,6 +550,7 @@ theorem pairNum_one (P : Ideal (MRing ι O)) (x : Fin N → K → ℤ)
   simp [pairNum, cycEval, ratDiv, divCycle_one]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem classNum_eq_polyVal {σ : Type*} (cls : σ → K → ℤ) {H : MvPolynomial σ ℤ} {n : ℕ}
     (hH : H.IsHomogeneous n) {Q : List (K → ℤ)} {d : ℕ} (hn : n + Q.length = d)
     (W : Ideal (MRing ι O)) : classNum cls H Q W = polyVal (listNum W Q d) cls H := by

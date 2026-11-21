@@ -22,7 +22,8 @@ variable {F : Type*} [Field F] {n : ℕ}
 section Action
 
 
-abbrev NN := (Iwasawa.unipotent F n) × (Iwasawa.unipotent F n)
+abbrev NN (F : Type*) [Field F] (n : ℕ) :=
+  (Iwasawa.unipotent F n) × (Iwasawa.unipotent F n)
 
 @[instance_reducible]
 def biAction : MulAction (NN F n) (GL (Fin n) F) where

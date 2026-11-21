@@ -15,11 +15,11 @@ namespace GlobalTheory.PairOp
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n : Type}
   {M : Type} [AddCommGroup M] [Module ℂ M]
 
-theorem smul_ofDual (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] (c : 𝓀[k]ˣ)
+theorem smul_ofDual (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k] (c : 𝓀[k]ˣ)
     (f : {f : Module.Dual 𝓀[k] (Red L) // f ≠ 0}) :
     c • ofDual L f = ofDual L ⟨(c : 𝓀[k]) • f.1, smul_ne_zero c.ne_zero f.2⟩ := rfl
 
-theorem smul_up (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] (q : Unif k) (c : 𝓀[k]ˣ) (x : {x : Red L // x ≠ 0}) :
+theorem smul_up (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k] (q : Unif k) (c : 𝓀[k]ˣ) (x : {x : Red L // x ≠ 0}) :
     c • up L q x = up L q ⟨((c⁻¹ : 𝓀[k]ˣ) : 𝓀[k]) • x.1, smul_ne_zero (c⁻¹).ne_zero x.2⟩ := by
   obtain ⟨s, hs⟩ := IsLocalRing.residue_surjective (((c⁻¹ : 𝓀[k]ˣ) : 𝓀[k]))
   have hy : Red.mk L x.1.out = x.1 := Red.mk_out x.1
@@ -267,7 +267,7 @@ theorem FF_FFStar [Fintype n] (hχ : χ ≠ 1) (φ : Form k n M) :
   funext P₁
   rw [FF_apply, Pi.sub_apply, Pi.smul_apply, tr'_apply]
   set L := P₁.ker with hL
-  haveI : L.IsLattice k := by rw [hL]; infer_instance
+  have : L.IsFullLattice k := by rw [hL]; infer_instance
   letI : Fintype {f : Module.Dual 𝓀[k] (Red L) // f ≠ 0} := Fintype.ofFinite _
   letI : Fintype {x : Red L // x ≠ 0} := Fintype.ofFinite _
   letI : Fintype (Module.Dual 𝓀[k] (Red L)) := Fintype.ofFinite _
@@ -307,6 +307,7 @@ theorem FF_FFStar [Fintype n] (hχ : χ ≠ 1) (φ : Form k n M) :
     Finset.mem_univ, if_true]
 
 
+variable (χ) in
 theorem FFStar_eq_U_GsStar {φ : Form k n M} (h : φ ∈ Mram k n M) : FFStar q χ φ = U q (GsStar χ φ) := by
   classical
   letI : Fintype 𝓀[k]ˣ := Fintype.ofFinite _
@@ -448,11 +449,13 @@ theorem U_D_ram [Fintype n] (hχ : χ ≠ 1) {φ : Form k n M} (h : φ ∈ Mram 
   exact eq_zpow_smul h3
 
 
+variable (χ) in
 theorem unit_FFStar_FF (c : 𝓀[k]ˣ) :
     (dia c * FFStar q χ * (dia c⁻¹ * FF q χ) : Module.End ℂ (Form k n M)) = FFStar q χ * FF q χ := by
   rw [← FFStar_dia q χ c, mul_assoc, ← mul_assoc (dia c), ← map_mul, mul_inv_cancel, map_one, one_mul]
 
 
+variable (χ) in
 theorem unit_FF_FFStar (c : 𝓀[k]ˣ) :
     (dia c⁻¹ * FF q χ * (dia c * FFStar q χ) : Module.End ℂ (Form k n M)) = FF q χ * FFStar q χ := by
   rw [← FF_dia q χ c⁻¹, mul_assoc, ← mul_assoc (dia c⁻¹), ← map_mul, inv_mul_cancel, map_one, one_mul]

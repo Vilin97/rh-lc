@@ -32,7 +32,7 @@ theorem isInternal_of_proj {R : Type*} {A : Type*} {ι : Type*} [Ring R] [AddCom
 variable {S : Type u} [CommRing S] {N : ℕ}
 
 theorem eq_zero_or_isHomogeneous_of_mem_piece {p : Poly S N} {e : ℤ}
-    (hp : p ∈ (polyGraded S N).piece e) : p = 0 ∨ ∃ n : ℕ, (n : ℤ) = e ∧ p.IsHomogeneous n := by
+    (hp : p ∈ polyGraded.piece e) : p = 0 ∨ ∃ n : ℕ, (n : ℤ) = e ∧ p.IsHomogeneous n := by
   classical
   change p ∈ weightedHomogeneousSubmodule S _ e at hp
   rw [mem_weightedHomogeneousSubmodule] at hp
@@ -57,7 +57,7 @@ variable {M' : Type w} [AddCommGroup M'] [Module (Poly S N) M'] [Module S M']
 
 
 theorem GradedPMod.smul_mem_int (𝓜 : GradedPMod S N M) {p : Poly S N} {e a : ℤ} {m : M}
-    (hp : p ∈ (polyGraded S N).piece e) (hm : m ∈ 𝓜.piece a) : p • m ∈ 𝓜.piece (a + e) := by
+    (hp : p ∈ polyGraded.piece e) (hm : m ∈ 𝓜.piece a) : p • m ∈ 𝓜.piece (a + e) := by
   rcases eq_zero_or_isHomogeneous_of_mem_piece hp with rfl | ⟨n, rfl, hn⟩
   · rw [zero_smul]; exact zero_mem _
   · exact 𝓜.smul_mem n a p m hn hm
@@ -94,7 +94,7 @@ variable {S : Type u} [CommRing S] {N : ℕ}
 
 
 def freeGraded {r : ℕ} (deg : Fin r → ℤ) : GradedPMod S N (Fin r → Poly S N) where
-  piece c := Submodule.pi Set.univ fun j => (polyGraded S N).piece (c - deg j)
+  piece c := Submodule.pi Set.univ fun j => polyGraded.piece (c - deg j)
   isInternal := by
     classical
     refine isInternal_of_proj _ (fun c => LinearMap.pi fun j =>
@@ -102,28 +102,28 @@ def freeGraded {r : ℕ} (deg : Fin r → ℤ) : GradedPMod S N (Fin r → Poly 
         (LinearMap.proj j)) ?_ ?_ ?_
     · intro c f hf
       funext j
-      have hj : f j ∈ (polyGraded S N).piece (c - deg j) := (Submodule.mem_pi.mp hf) j (Set.mem_univ _)
+      have hj : f j ∈ polyGraded.piece (c - deg j) := (Submodule.mem_pi.mp hf) j (Set.mem_univ _)
       change weightedHomogeneousComponent _ (c - deg j) (f j) = f j
       rw [weightedHomogeneousComponent_of_mem hj, if_pos rfl]
     · intro c c' f hcc' hf
       funext j
-      have hj : f j ∈ (polyGraded S N).piece (c' - deg j) := (Submodule.mem_pi.mp hf) j (Set.mem_univ _)
+      have hj : f j ∈ polyGraded.piece (c' - deg j) := (Submodule.mem_pi.mp hf) j (Set.mem_univ _)
       change weightedHomogeneousComponent _ (c - deg j) (f j) = 0
       rw [weightedHomogeneousComponent_of_mem hj, if_neg (by omega)]
     · rw [eq_top_iff]
       rintro f -
       rw [← Finset.univ_sum_single f]
       refine Submodule.sum_mem _ fun j _ => ?_
-      have hall : f j ∈ ⨆ e, (polyGraded S N).piece e := by
+      have hall : f j ∈ ⨆ e, (polyGraded (S := S) (N := N)).piece e := by
         rw [((DirectSum.isInternal_submodule_iff_iSupIndep_and_iSup_eq_top _).mp
-          (polyGraded S N).isInternal).2]
+          polyGraded.isInternal).2]
         trivial
       have hmap : Pi.single j (f j) ∈
-          (⨆ e, (polyGraded S N).piece e).map (LinearMap.single S (fun _ => Poly S N) j) :=
+          (⨆ e, polyGraded.piece e).map (LinearMap.single S (fun _ => Poly S N) j) :=
         ⟨f j, hall, rfl⟩
       rw [Submodule.map_iSup] at hmap
-      have hsub : ∀ e, ((polyGraded S N).piece e).map (LinearMap.single S (fun _ => Poly S N) j) ≤
-          Submodule.pi Set.univ fun j' => (polyGraded S N).piece (e + deg j - deg j') := by
+      have hsub : ∀ e, (polyGraded.piece e).map (LinearMap.single S (fun _ => Poly S N) j) ≤
+          Submodule.pi Set.univ fun j' => (polyGraded (S := S) (N := N)).piece (e + deg j - deg j') := by
         intro e
         rintro _ ⟨p, hp, rfl⟩
         rw [Submodule.mem_pi]
@@ -134,19 +134,19 @@ def freeGraded {r : ℕ} (deg : Fin r → ℤ) : GradedPMod S N (Fin r → Poly 
           exact hp
         · rw [LinearMap.single_apply, Pi.single_eq_of_ne h]
           exact zero_mem _
-      have hle : (⨆ e, ((polyGraded S N).piece e).map (LinearMap.single S (fun _ => Poly S N) j)) ≤
-          ⨆ c, Submodule.pi Set.univ fun j' => (polyGraded S N).piece (c - deg j') :=
+      have hle : (⨆ e, (polyGraded.piece e).map (LinearMap.single S (fun _ => Poly S N) j)) ≤
+          ⨆ c, Submodule.pi Set.univ fun j' => (polyGraded (S := S) (N := N)).piece (c - deg j') :=
         iSup_mono' fun e => ⟨e + deg j, hsub e⟩
       exact hle hmap
   smul_mem e c p f hp hf := by
     rw [Submodule.mem_pi] at hf ⊢
     intro j _
-    have := (polyGraded S N).smul_mem e (c - deg j) p (f j) hp (hf j (Set.mem_univ _))
+    have := polyGraded.smul_mem e (c - deg j) p (f j) hp (hf j (Set.mem_univ _))
     rw [show c + (e : ℤ) - deg j = c - deg j + e by ring]
     exact this
 
 theorem single_one_mem_freeGraded {r : ℕ} (deg : Fin r → ℤ) (j : Fin r) :
-    (Pi.single j 1 : Fin r → Poly S N) ∈ (freeGraded S N deg).piece (deg j) := by
+    (Pi.single j 1 : Fin r → Poly S N) ∈ (freeGraded deg).piece (deg j) := by
   classical
   change _ ∈ Submodule.pi _ _
   rw [Submodule.mem_pi]
@@ -168,7 +168,7 @@ def freeMap {r : ℕ} (g : Fin r → M) : (Fin r → Poly S N) →ₗ[Poly S N] 
 
 omit [Module S M] [IsScalarTower S (Poly S N) M] in
 theorem freeMap_apply {r : ℕ} (g : Fin r → M) (f : Fin r → Poly S N) :
-    freeMap S N g f = ∑ j, f j • g j := by
+    freeMap (S := S) (N := N) g f = ∑ j, f j • g j := by
   simp [freeMap]
 
 
@@ -189,19 +189,18 @@ theorem GradedPMod.exists_gens (𝓜 : GradedPMod S N M) (hM : Module.Finite (Po
   dsimp only
   rw [Equiv.symm_apply_apply]
 
-omit [IsScalarTower S (Poly S N) M] in
 theorem freeMap_mem {r : ℕ} (𝓜 : GradedPMod S N M) {g : Fin r → M} {deg : Fin r → ℤ}
     (hg : ∀ j, g j ∈ 𝓜.piece (deg j)) (c : ℤ) {f : Fin r → Poly S N}
-    (hf : f ∈ (freeGraded S N deg).piece c) : freeMap S N g f ∈ 𝓜.piece c := by
+    (hf : f ∈ (freeGraded deg).piece c) : freeMap (S := S) (N := N) g f ∈ 𝓜.piece c := by
   rw [freeMap_apply]
   refine Submodule.sum_mem _ fun j _ => ?_
-  have hj : f j ∈ (polyGraded S N).piece (c - deg j) := (Submodule.mem_pi.mp hf) j (Set.mem_univ _)
+  have hj : f j ∈ (polyGraded (S := S) (N := N)).piece (c - deg j) := (Submodule.mem_pi.mp hf) j (Set.mem_univ _)
   have := 𝓜.smul_mem_int hj (hg j)
   rwa [add_sub_cancel] at this
 
 omit [Module S M] [IsScalarTower S (Poly S N) M] in
 theorem freeMap_surjective {r : ℕ} {g : Fin r → M} (hg : Submodule.span (Poly S N) (Set.range g) = ⊤) :
-    Function.Surjective (freeMap S N g) := by
+    Function.Surjective (freeMap (S := S) (N := N) g) := by
   classical
   rw [← LinearMap.range_eq_top, eq_top_iff, ← hg, Submodule.span_le]
   rintro _ ⟨j, rfl⟩
@@ -336,14 +335,14 @@ theorem SerreOnto.proof (hC : CechExact.Statement.{u, max u v})
   let eM : M ≃ₗ[Poly S N] ULift.{u} M := ULift.moduleEquiv.symm
   let eF : (Fin r → Poly S N) ≃ₗ[Poly S N] ULift.{v} (Fin r → Poly S N) := ULift.moduleEquiv.symm
   let 𝓜L := 𝓜.transport eM
-  let 𝓕 := (freeGraded S N deg).transport eF
+  let 𝓕 := (freeGraded deg).transport eF
   let φ : GradedHom 𝓕 𝓜L :=
-    { toLin := eM.toLinearMap ∘ₗ freeMap S N g ∘ₗ eF.symm.toLinearMap
+    { toLin := eM.toLinearMap ∘ₗ freeMap (S := S) (N := N) g ∘ₗ eF.symm.toLinearMap
       map_piece := by
         rintro c _ ⟨f, hf, rfl⟩
-        exact ⟨freeMap S N g f, freeMap_mem 𝓜 hg c hf, by simp [eF]⟩ }
+        exact ⟨freeMap (S := S) (N := N) g f, freeMap_mem 𝓜 hg c hf, by simp [eF]⟩ }
   have hφ : Function.Surjective φ.toLin := by
-    change Function.Surjective (⇑eM.toLinearMap ∘ ⇑(freeMap S N g) ∘ ⇑eF.symm.toLinearMap)
+    change Function.Surjective (⇑eM.toLinearMap ∘ ⇑(freeMap (S := S) (N := N) g) ∘ ⇑eF.symm.toLinearMap)
     exact eM.surjective.comp ((freeMap_surjective hspan).comp eF.symm.surjective)
 
   have hKfin : Module.Finite (Poly S N) (LinearMap.ker φ.toLin) := by

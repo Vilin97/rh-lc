@@ -42,8 +42,20 @@ theorem isLattice_between {W : Type} [AddCommGroup W] [Module E W] [Module (𝓞
     have h1 := IsNoetherian.noetherian ((B.map f).comap A.subtype)
     have h2 := h1.map A.subtype
     rwa [Submodule.map_comap_subtype, inf_eq_right.2 hmap] at h2
-  exact ⟨Submodule.fg_of_fg_map_injective f hf hmfg,
-    eq_top_iff.2 (le_trans (le_of_eq hA.span_eq_top.symm) (Submodule.span_mono (SetLike.coe_subset_coe.2 hAB)))⟩
+  refine ⟨Submodule.fg_of_fg_map_injective f hf hmfg, ?_⟩
+  intro s hs hli
+  let g : W →ₗ[E] W := ((T : E) • LinearMap.id)
+  have hg : Function.Injective g := smul_right_injective W (by exact_mod_cast hT : (T : E) ≠ 0)
+  have hgs : g '' s ⊆ A := by
+    rintro _ ⟨x, hx, rfl⟩
+    have hxB : x ∈ B := hs hx
+    have hmul := hTB x hxB
+    simpa [g, LinearMap.smul_apply, LinearMap.id_apply, Nat.cast_smul_eq_nsmul] using hmul
+  have hli' : LinearIndepOn (𝓞 E) id (g '' s) := by
+    apply LinearIndepOn.image (f := g.restrictScalars (𝓞 E)) hli
+    simp [LinearMap.ker_eq_bot.mpr hg]
+  have hli'' : LinearIndepOn E id (g '' s) := hA.linearIndepOn _ hgs hli'
+  exact (linearIndepOn_id_imageₛ_iff (f := g) hg.injOn).mp hli''
 
 end Gen
 

@@ -108,17 +108,14 @@ theorem rename_component (a : MRing (fun k => ι' (j k)) F) (b : K → ℕ) :
     simp
 
 theorem isMultiProjPrime_contractPrime {P' : Ideal (MRing ι' F)} (hP' : IsMultiProjPrime P') :
-    IsMultiProjPrime (contractPrime j P') where
-  isPrime := by
-    have := hP'.isPrime
-    exact contractPrime.isPrime j P'
-  multiHomog := by
-    intro f hf b
+    IsMultiProjPrime (contractPrime j P') := by
+  have := hP'.isPrime
+  refine ⟨contractPrime.isPrime j P', ?_, ?_⟩
+  · intro f hf b
     show rename (blockIncl j ι') _ ∈ P'
     rw [rename_component]
     exact hP'.multiHomog _ hf _
-  relevant := by
-    intro k
+  · intro k
     obtain ⟨i, hi⟩ := hP'.relevant (j k)
     refine ⟨i, ?_⟩
     show rename (blockIncl j ι') (X ⟨k, i⟩) ∉ P'

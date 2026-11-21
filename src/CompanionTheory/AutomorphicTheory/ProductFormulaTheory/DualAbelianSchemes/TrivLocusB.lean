@@ -20,7 +20,9 @@ theorem exists_closed_locTriv_noeth : ∀ (S : Scheme.{0}) (A Y : Over S) [GrpOb
   intro S A Y _ hB hY F hF
   have h₀ : IsPullback (pullback.fst A.hom Y.hom) (snd A Y).left A.hom Y.hom :=
     IsPullback.of_hasPullback A.hom Y.hom
-  obtain ⟨I, hI⟩ := exists_idealSheaf (LocTrivOver (snd A Y).left F) LocTrivOver.comp locTrivOver_of_affine
+  obtain ⟨I, hI⟩ := GlobalTheory.TrivSubscheme.exists_idealSheaf
+    (GlobalTheory.TrivSubscheme.LocTrivOver (snd A Y).left F)
+    GlobalTheory.TrivSubscheme.LocTrivOver.comp GlobalTheory.TrivSubscheme.locTrivOver_of_affine
     (fun U => by
       haveI : IsNoetherianRing Γ(Y.left, U) := IsLocallyNoetherian.component_noetherian U
       let t : Spec (CommRingCat.of Γ(Y.left, U)) ⟶ S := U.2.fromSpec ≫ Y.hom
@@ -33,18 +35,20 @@ theorem exists_closed_locTriv_noeth : ∀ (S : Scheme.{0}) (A Y : Over S) [GrpOb
         (CubeGen.isAb_baseChange hB t) (F.pull φ) (LB.isLB_pull hF φ)
       refine ⟨I, fun S g => ?_⟩
       have h₃ := IsPullback.of_hasPullback (pullback.snd A.hom t) (Spec.map g)
-      rw [← hI S g.hom _ _ _ h₃, locTrivOver_iff (h₃.paste_horiz h₂)]
+      rw [← hI S g.hom _ _ _ h₃,
+        GlobalTheory.TrivSubscheme.locTrivOver_iff (h₃.paste_horiz h₂)]
       refine forall_congr' fun y => exists_congr fun V => and_congr_right fun _ => ?_
       rw [← Category.assoc]
-      exact ((triv_pull_iff _ _ _).trans (triv_pull_iff _ _ _)).symm)
+      exact ((GlobalTheory.TrivSubscheme.triv_pull_iff _ _ _).trans
+        (GlobalTheory.TrivSubscheme.triv_pull_iff _ _ _)).symm)
   refine ⟨Over.mk (I.subschemeι ≫ Y.hom), Over.homMk I.subschemeι rfl,
     inferInstanceAs (IsClosedImmersion I.subschemeι), fun T' x => ?_⟩
   have h₄ : IsPullback (A ◁ x).left (snd A T').left (snd A Y).left x.left := by
     refine IsPullback.of_right ?_ (Over.whiskerLeft_left_snd x) h₀
     rw [Over.whiskerLeft_left_fst, Over.w x]
     exact IsPullback.of_hasPullback A.hom T'.hom
-  simp only [triv_pull_iff]
-  rw [← locTrivOver_iff h₄, hI]
+  simp only [GlobalTheory.TrivSubscheme.triv_pull_iff]
+  rw [← GlobalTheory.TrivSubscheme.locTrivOver_iff h₄, hI]
   constructor
   · intro h
     have h' : I.subschemeι.ker ≤ x.left.ker := by rwa [Scheme.IdealSheafData.ker_subschemeι]

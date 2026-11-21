@@ -145,9 +145,7 @@ theorem archimedean_local_height_term (hd : d.AxH 𝒜) (h : d.S1) (x : Fin (d.N
           Real.log ‖MvPolynomial.eval (hintPt 0 z) (MvPolynomial.map sg a2)‖ -
           Real.log ‖MvPolynomial.eval (hintPt 0 z) (MvPolynomial.map sg b2)‖ -
           Real.log ‖MvPolynomial.eval (hintPt 0 z) (MvPolynomial.map sg b1)‖ := by
-    have hnorm := d.norm_at_sg_B hd h c sg
-    dsimp only at hnorm
-    filter_upwards [hnorm, hint_ae_tail hn hb1c hαb1 hαb10 0,
+    filter_upwards [d.norm_at_sg_B hd h c sg, hint_ae_tail hn hb1c hαb1 hαb10 0,
       hint_ae_tail hn hb2c hαb2 hαb20 0, hint_ae_tail hn ha2c hαa2 hαa20 0] with z hz hb1z hb2z ha2z
     obtain ⟨hfin, hcard, hcl1, hcl2⟩ := hz
     set S := d.ST c sg (d.tOf z) with hS

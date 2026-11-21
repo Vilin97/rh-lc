@@ -52,7 +52,9 @@ def bE (h : PS k 2 d) : Fin d ⊕ Fin d → PS k 1 d := Sum.elim (fun j => X ((0
 theorem sg_const (h : PS k 2 d) (hax : ev (n := 1) ![0, pt k d 0] h = 0) (i : Fin d) :
     constantCoeff (sgOf k h i) = 0 := by
   unfold sgOf
-  rw [map_neg, ← coeff_zero_eq_constantCoeff_apply, coeff_ev_zero_right, Finsupp.embDomain_zero, coeff_pderiv]
+  change -constantCoeff (ev (n := 1) ![0, pt k d 0] (pderiv (R := k) ((1 : Fin 2), i) h)) = 0
+  rw [neg_eq_zero, ← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, coeff_ev_zero_left,
+    Finsupp.embDomain_zero, coeff_pderiv]
   rw [coeff_eq_zero_of_vanish_first_axis h hax _ (fun i' => by simp [Finsupp.single_apply])]
   simp
 
@@ -101,15 +103,10 @@ theorem E_nabla (B : FB R d O) (h : PS k 2 d) (hax : ev (n := 1) ![0, pt k d 0] 
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_mul, map_sub, coe_substAlgHom hb, subst_X hb, E_liftX k h hax]
     simp [bE]
-  have hE : ∀ t, subst (bE k h) (cf k B h u 0 t) = Dof (B.FK k) u (bE k h t) := by
-    rintro (j | i)
-    · rw [cf_inl, E_liftX k h hax]
-      exact (Dof_X k (B.FK k) u j).symm
-    · rw [cf_inr, Pi.zero_apply, map_zero, add_zero, E_liftX k h hax]
-      rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [nabla_eq, vf, ← coe_substAlgHom hb, map_sub, map_sum]
-  simp only [map_mul, coe_substAlgHom hb, hfm, hE, mul_zero, zero_mul, sub_zero]
+    rw [vf, ← coe_substAlgHom hb, map_sub, map_sum]
+  simp only [map_mul, coe_substAlgHom hb, hfm, cf_inl, cf_inr, Pi.zero_apply, map_zero,
+    add_zero, E_liftX k h hax, mvPowerSeries_subst_C hb, Dof_X, mul_zero, zero_mul, sub_zero]
   unfold Dof
   simp only [LogPf.pderiv_subst hc, Finset.mul_sum]
   rw [Finset.sum_comm]

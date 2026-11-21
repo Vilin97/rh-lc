@@ -32,7 +32,8 @@ abbrev EvenPart : Subalgebra ℂ (Big n) := Algebra.adjoin ℂ (Set.range (gen n
 
 open scoped IsMulCommutative in
 instance : CommRing (EvenPart n) :=
-  have := Algebra.isMulCommutative_adjoin ℂ (gen_comm n)
+  have := Algebra.isMulCommutative_adjoin ℂ (s := Set.range (gen n))
+    (fun u hu v hv _ => gen_comm n u hu v hv)
   inferInstance
 
 def toEven : MvPolynomial (Fin n × Fin n) ℂ →ₐ[ℂ] EvenPart n :=

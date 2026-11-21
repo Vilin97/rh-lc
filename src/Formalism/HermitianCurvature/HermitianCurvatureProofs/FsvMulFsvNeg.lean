@@ -174,22 +174,22 @@ theorem waveSiteAll : WaveSiteAll := by
   obtain ⟨hsp, hsc, hsci⟩ := hsite 0
   rw [hsp, hsc, hsci, hp l, hc l, hci l]
   refine ⟨⟨pr_ext ?_ ?_, pr_ext ?_ ?_, rfl⟩, pr_ext ?_ ?_, pr_ext ?_ ?_, pr_ext ?_ ?_⟩
-  · simpa using hWW'
-  · simpa using hWW'
-  · simpa using hW'W
-  · simpa using hW'W
-  · simpa using hcomm Wv _ hW1 1 (by decide)
-  · simpa using (hcomm Wv' _ hW2 4 (by decide)).symm
-  · simpa using hcomm Wv _ hW1 2 (by decide)
-  · simpa using (hcomm Wv' _ hW2 5 (by decide)).symm
-  · simp only [mkPair_fst', pr_mul_fst, pr_add_fst, pr_alg_fst]
+  · exact hWW'
+  · exact hWW'
+  · exact hW'W
+  · exact hW'W
+  · exact hcomm Wv _ hW1 1 (by decide)
+  · exact (hcomm Wv' _ hW2 4 (by decide)).symm
+  · exact hcomm Wv _ hW1 2 (by decide)
+  · exact (hcomm Wv' _ hW2 5 (by decide)).symm
+  · change X.op l 0 * Wv = Wv * X.op l 0 + algebraMap ℂ _ s * Wv * X.op l 1
     apply LinearMap.ext; intro Φ; apply Subtype.ext; funext c g
     obtain ⟨hd, h0⟩ := radSp_regular Φ g c
     simp only [Module.End.mul_apply, LinearMap.add_apply, Module.algebraMap_end_apply, Submodule.coe_add,
       Submodule.coe_smul, Pi.add_apply, Pi.smul_apply, hop, crd, hW1, opL]
     rw [pOp_fsv_smul s l _ c hd h0]
     simp only [cOp]
-  · simp only [mkPair_snd', pr_mul_snd, pr_add_snd, pr_alg_snd]
+  · change Wv' * (-X.op l 3) = (-X.op l 3) * Wv' + X.op l 4 * (Wv' * algebraMap ℂ _ (conj s))
     apply LinearMap.ext; intro Φ; apply Subtype.ext; funext c g
     obtain ⟨hd, h0⟩ := radSp_regular Φ g c
     simp only [Module.End.mul_apply, LinearMap.add_apply, LinearMap.neg_apply, Module.algebraMap_end_apply,

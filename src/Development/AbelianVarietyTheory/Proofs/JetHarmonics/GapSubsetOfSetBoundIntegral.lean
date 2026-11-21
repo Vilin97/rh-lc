@@ -14,7 +14,7 @@ noncomputable section
 
 namespace GlobalTheory.CompareIterDegree
 
-open Formalism.QuantumDeterminants Formalism.HermitianLatticeCounting.ExpansionTerms GlobalTheory.IndefiniteRowSideFullHecke.DegreeProportionalWords
+open Formalism.QuantumDeterminants Formalism.HermitianLatticeCounting.ExpansionTerms
 
 theorem fdeg_ratio_abs {n : ℕ} (μ : Fin n → ℝ) (s : Fin n) (t : ℝ) (hinj : Function.Injective μ) :
     fdegHC (μ + Pi.single s t) / fdegHC μ = ∏ c ∈ univ.erase s, |(μ s + t - μ c) / (μ s - μ c)| := by

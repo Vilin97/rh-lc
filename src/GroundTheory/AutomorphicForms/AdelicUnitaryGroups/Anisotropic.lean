@@ -21,14 +21,14 @@ section Form
 variable (K) (H : Matrix ι ι E) (R : Type*) [CommRing R] [Algebra K R]
 
 def hermValue (x : ι → R ⊗[K] E) : R ⊗[K] E :=
-  (fun i => conjBase K E R (x i)) ⬝ᵥ (baseMatrix K H R *ᵥ x)
+  (fun i => conjBase K E R (x i)) ⬝ᵥ (baseMatrix (K := K) H R *ᵥ x)
 
 variable {K H R}
 
 theorem hermValue_mulVec (g : unitaryPoints K E H R) (x : ι → R ⊗[K] E) :
     hermValue K H R (unitaryMat g *ᵥ x) = hermValue K H R x := by
-  have hg : ((unitaryMat g).map (conjBase K E R))ᵀ * baseMatrix K H R * unitaryMat g =
-      baseMatrix K H R := g.2
+  have hg : ((unitaryMat g).map (conjBase K E R))ᵀ * baseMatrix (K := K) H R * unitaryMat g =
+      baseMatrix (K := K) H R := g.2
   have h1 : (fun i => conjBase K E R ((unitaryMat g *ᵥ x) i)) =
       (unitaryMat g).map (conjBase K E R) *ᵥ (fun i => conjBase K E R (x i)) := by
     funext i

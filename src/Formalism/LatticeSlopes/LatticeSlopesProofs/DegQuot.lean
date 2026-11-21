@@ -185,8 +185,8 @@ theorem degree_quotient : DegQuot := by
     have hy : x - ∑ j, r j • ℓ j ∈ N := by
       apply hker
       · exact L.sub_mem hx (L.sum_mem fun j _ => L.smul_mem _ (hℓL j))
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sub, map_sum, ← hr]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, ← hr]
         simp only [map_zsmul, hℓP]
         exact sub_self _
     obtain ⟨s, hs⟩ : ∃ s : Module.Free.ChooseBasisIndex ℤ N → ℤ,

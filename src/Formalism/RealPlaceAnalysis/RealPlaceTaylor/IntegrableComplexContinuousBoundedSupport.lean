@@ -1308,10 +1308,11 @@ lemma weight_vectors_stable (hsm : ∀ w ∈ W, SmoothOnG ε w)
 lemma lie_operator_word_mem_filtration (hsm : ∀ w ∈ W, SmoothOnG ε w)
     (hstab : ∀ w ∈ W, ∀ i j : Fin n, ε i = ε j → ∃ w' ∈ W, ∀ g, inUJ ε g → Eab ε i j w g = w' g)
     {c d : Fin n} (hcd : ε c = ε d) {m : SmoothFunctionsModGroup ε} (hm : m ∈ weightVectorsQuotient ε W) :
-    ∀ w : List (Fin n × Fin n), lieOperatorQuotient ε c d (wordActionQuotient ε w m) ∈ wordFiltration ε W w.length
-  | [] => word_mem_filtration (w := []) (weight_vectors_stable hsm hstab hm hcd) le_rfl
-  | p :: w => by
-    have ih := lie_operator_word_mem_filtration hsm hstab hcd hm w
+    ∀ w : List (Fin n × Fin n), lieOperatorQuotient ε c d (wordActionQuotient ε w m) ∈ wordFiltration ε W w.length := by
+  intro w
+  induction w with
+  | nil => exact word_mem_filtration (w := []) (weight_vectors_stable hsm hstab hm hcd) le_rfl
+  | cons p w ih =>
     have hgl := lie_operators_gl_relations (ε := ε) c d p.1 p.2
     have key : lieOperatorQuotient ε c d (lieOperatorQuotient ε p.1 p.2 (wordActionQuotient ε w m)) =
         lieOperatorQuotient ε p.1 p.2 (lieOperatorQuotient ε c d (wordActionQuotient ε w m)) +

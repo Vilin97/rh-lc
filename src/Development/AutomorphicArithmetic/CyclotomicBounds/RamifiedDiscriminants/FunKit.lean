@@ -18,7 +18,8 @@ theorem sum_padicValNat_log_le {n : ℕ} (hn : n ≠ 0) (S : Finset ℕ) (hS : �
   rw [Real.log_nat_eq_sum_factorization, Finsupp.sum]
   calc ∑ l ∈ S, (padicValNat l n : ℝ) * Real.log l
       = ∑ l ∈ S, (n.factorization l : ℝ) * Real.log l :=
-        Finset.sum_congr rfl fun l hl => by rw [Nat.factorization_def n (hS l hl)]
+        Finset.sum_congr rfl fun l hl => by
+          rw [Nat.padicValNat_def, Nat.factorization_def n (hS l hl)]
     _ ≤ ∑ l ∈ S ∪ n.factorization.support, (n.factorization l : ℝ) * Real.log l :=
         Finset.sum_le_sum_of_subset_of_nonneg Finset.subset_union_left fun l _ _ =>
           mul_nonneg (by positivity) (Real.log_natCast_nonneg l)
@@ -48,7 +49,8 @@ theorem sum_delta_log_le (E : Type) [Field E] [NumberField E] (S : Finset ℕ) (
       = (∑ l ∈ S, (padicValNat l (discr E).natAbs : ℝ) * Real.log l) / (Module.finrank ℚ E : ℝ) := by
         rw [Finset.sum_div]
         exact Finset.sum_congr rfl fun l _ => by
-          rw [show padicValInt l (discr E) = padicValNat l (discr E).natAbs from rfl]; ring
+          rw [padicValInt, Nat.padicValNat_def]
+          ring
     _ ≤ Real.log |(discr E : ℝ)| / (Module.finrank ℚ E : ℝ) := div_le_div_of_nonneg_right h hn.le
     _ = _ := by ring
 

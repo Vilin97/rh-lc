@@ -5,7 +5,7 @@ public import GroundTheory.Brauer.TensorSimple
 
 @[expose] public section
 
-open NumberField Matrix GlobalTheory.UPel.HT
+open NumberField Matrix
 open scoped TensorProduct ComplexConjugate
 
 namespace GlobalTheory.UPel.HT.RealRepBij
@@ -57,7 +57,8 @@ end GlobalTheory.UPel.HT.RealRepBij
 
 namespace GlobalTheory.UPel.HT.RealRepBij
 
-variable {K F : Type} [Field K] [NumberField K] [IsCMField K] [Field F] [NumberField F] [IsCMField F]
+variable {K F : Type} [Field K] [NumberField K] [NumberField.IsCMField K]
+  [Field F] [NumberField F] [NumberField.IsCMField F]
   [Algebra K F] {p : ℕ} [Fact p.Prime]
 
 end GlobalTheory.UPel.HT.RealRepBij

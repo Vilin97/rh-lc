@@ -11,8 +11,10 @@ open PositivityTheory.RgJS
 namespace UpperTheory.V.Z.Tf.GOne
 
 
-def ExtId : Prop := ForSys fun q X _ A => ∀ x y : X, ∃ F : ℂ → ℂ, (∀ σ : ℝ, 0 < σ → AnalyticAt ℂ F σ) ∧
-  ∀ σ : ℝ, 1 < σ → F σ = (if x = y then (σ : ℂ) - 1 else 1) * Complex.exp (∑' p, lterm q (A x) (A y) σ p)
+def ExtId : Prop := by
+  classical
+  exact ForSys fun q X _ A => ∀ x y : X, ∃ F : ℂ → ℂ, (∀ σ : ℝ, 0 < σ → AnalyticAt ℂ F σ) ∧
+    ∀ σ : ℝ, 1 < σ → F σ = (if x = y then (σ : ℂ) - 1 else 1) * Complex.exp (∑' p, lterm q (A x) (A y) σ p)
 
 def LogTwo : Prop := ForSys fun q X _ A => ∀ x : X, ∃ C : ℝ, ∀ σ : ℝ, 1 < σ → σ ≤ 2 →
   |(∑' p, lterm q (A x) (A x) σ p).re + Real.log (σ - 1)| ≤ C

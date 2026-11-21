@@ -191,7 +191,7 @@ theorem dframe_loc (A B : Fr ε r k) (he : B.e = A.e) (i0 : Fin k) (g : Formalis
     rw [hx', xPr, hJ_sum_right]
     simp only [hJ_smul_right]
     have h := congrFun (congrFun (mul_adjugate Zs) a) (Fin.last r)
-    rw [Matrix.mul_apply, Matrix.smul_apply, one_apply, smul_eq_mul] at h
+    rw [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul] at h
     have h2 : ∑ b, adjugate Zs b (Fin.last r) * hJ ε (f a) (Gm *ᵥ f' b) =
         ∑ b, Zs a b * adjugate Zs b (Fin.last r) := Finset.sum_congr rfl fun b _ => mul_comm _ _
     rw [h2, h]
@@ -210,7 +210,7 @@ theorem dframe_loc (A B : Fr ε r k) (he : B.e = A.e) (i0 : Fin k) (g : Formalis
     rw [hx, xUn, hJ_sum_left]
     simp only [hJ_smul_left, star_star]
     have h := congrFun (congrFun (adjugate_mul Zs) (Fin.last r)) b
-    rw [Matrix.mul_apply, Matrix.smul_apply, one_apply, smul_eq_mul] at h
+    rw [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul] at h
     rw [show ∑ a, adjugate Zs (Fin.last r) a * hJ ε (f a) (Gm *ᵥ f' b) =
       ∑ a, adjugate Zs (Fin.last r) a * Zs a b from rfl, h]
     by_cases hb : b = Fin.last r

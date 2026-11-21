@@ -132,8 +132,10 @@ lemma mult_single (l : Letter ℂ S) (γ : ℂ) :
       (1 + 1 / (l.pt - γ)) • eU l.intersection_update_fsHerm_neg_one 0 0 + (1 - 1 / (l.pt - γ)) • eU l.intersection_update_fsHerm_neg_one 1 1 := by
   rw [mult_eq, eU_same, eU_same, dg_smul, dg_smul, dg_add]
   congr 1
+  funext e
+  simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one]
   generalize e l.intersection_update_fsHerm_neg_one = k
-  fin_cases k <;> simp [sg] <;> ring
+  fin_cases k <;> simp [sg, sub_eq_add_neg, div_eq_mul_inv]
 
 lemma eU_sum (a : S) : (eU a 0 0 + eU a 1 1 : SlopeTestRemainingChoices S A) = 1 := by
   rw [eU_same, eU_same, dg_add, ← dg_one]
@@ -170,7 +172,7 @@ lemma letterSum_step (l : Letter ℂ S) (Y : ℂ) (hY : Y ≠ l.pt) :
         letterSum (l :: v) w Y
   | [], v, _ => by simp [letterSum, Ph_zero]
   | l' :: w, v, h => by
-    obtain ⟨h1, h2, h3⟩ := h l' (by simp)
+    obtain ⟨h1, h2, h3⟩ := h l' List.mem_cons_self
     have ih := letterSum_step l Y hY w (v ++ [l']) (fun l'' hl => h l'' (by simp [hl]))
     simp only [letterSum]
     rw [Ph_add, ih, Ph_res _ _ _ _ _ _ h2 h3 hY, ← mult_single, ← mul_assoc, mult_single_eU _ _ _ h1,

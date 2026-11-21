@@ -21,9 +21,11 @@ variable {K : Type*} [Field K] [NumberField K] [StarRing K]
   [Fintype κ] [DecidableEq κ]
 
 
+variable (K) in
 def nPl : ℕ := Fintype.card (InfinitePlace K)
 
 
+variable (K) in
 def logDisc : ℝ := Real.log |(NumberField.discr K : ℝ)|
 
 def rkK (L : Submodule (𝓞 K) V) : ℕ := Module.finrank K (Submodule.span K (L : Set V))

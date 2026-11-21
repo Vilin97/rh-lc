@@ -92,7 +92,7 @@ theorem ofInfinite_eq_prod (x : (InfiniteAdeleRing K)ˣ) :
   rw [map_prod]
   simp only [ofInfinite_map_infiniteAdeleSingle]
 
-
+variable (K) in
 def infinitePositive : Subgroup (InfiniteAdeleRing K)ˣ where
   carrier := {x | ∀ (w : InfinitePlace K) (hw : w.IsReal),
     0 < InfinitePlace.Completion.extensionEmbeddingOfIsReal hw ((x : InfiniteAdeleRing K) w)}
@@ -122,7 +122,7 @@ theorem mem_infinitePositive {x : (InfiniteAdeleRing K)ˣ} :
       0 < InfinitePlace.Completion.extensionEmbeddingOfIsReal hw ((x : InfiniteAdeleRing K) w) :=
   Iff.rfl
 
-
+variable (K) in
 def infiniteSign : (InfiniteAdeleRing K)ˣ →* ({w : InfinitePlace K // w.IsReal} → SignTypeˣ) :=
   MonoidHom.pi fun w ↦ (Units.map (signHom : ℝ →*₀ SignType).toMonoidHom).comp
     ((Units.map (InfinitePlace.Completion.extensionEmbeddingOfIsReal w.2 :
@@ -153,7 +153,7 @@ instance : (infinitePositive K).FiniteIndex := by
   rw [infinitePositive_eq_ker]
   exact Subgroup.finiteIndex_ker _
 
-
+variable (K) in
 def rayGroup (𝔪 : Ideal (𝓞 K)) : Subgroup (IdeleGroup K) :=
   (diagonal K).range ⊔ (idealLevel 𝔪).map ofFinite ⊔ (infinitePositive K).map ofInfinite
 
@@ -219,7 +219,7 @@ end IdeleGroup
 
 open IdeleGroup
 
-
+variable (K) in
 abbrev RayClassGroup (𝔪 : Ideal (𝓞 K)) : Type _ := IdeleGroup K ⧸ rayGroup K 𝔪
 
 theorem RayClassGroup.finite {𝔪 : Ideal (𝓞 K)} (h𝔪 : 𝔪 ≠ ⊥) : Finite (RayClassGroup K 𝔪) := by

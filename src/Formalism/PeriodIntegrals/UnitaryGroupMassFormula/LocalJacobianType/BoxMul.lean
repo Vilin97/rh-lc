@@ -28,7 +28,6 @@ theorem mulL_apply {ι : Type} (z : ι → Fv F v ⊗[F] E) (c : ι → Fv F v �
     mulL v z c i = z i * c i := rfl
 
 theorem det_mulL {ι : Type} [Fintype ι] [DecidableEq ι] (z : ι → Fv F v ⊗[F] E) :
-    haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
     LinearMap.det (mulL v z) = ∏ i, Algebra.norm (Fv F v) (z i) := by
   haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
   unfold mulL

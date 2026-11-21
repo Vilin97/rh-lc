@@ -121,9 +121,41 @@ theorem terms_vanish [IsDiscreteValuationRing R] {ϖ : R} (hϖ : Irreducible ϖ)
   classical
   choose Q hQ using QForm.exists_QVal (ϖ := ϖ) D
   have hQ' : QForm.IsQ D.toPre ϖ Q := hQ
-  have hv := valOver_vK hϖ
+  let castVal : ℕ∞ →+o WithTop ℚ :=
+    { toFun := WithTop.map (Nat.cast : ℕ → ℚ)
+      map_zero' := rfl
+      map_add' := WithTop.map_add (Nat.castAddMonoidHom ℚ)
+      monotone' := ENat.map_natCast_strictMono.monotone }
+  let vR := (IsDiscreteValuationRing.addVal R).map castVal rfl
+  have hvR : nonZeroDivisors R ≤ vR.toValuation.supp.primeCompl := by
+    intro r hr
+    change WithTop.map (Nat.cast : ℕ → ℚ) (IsDiscreteValuationRing.addVal R r) ≠ ⊤
+    have h := IsDiscreteValuationRing.addVal_eq_top_iff.not.mpr (nonZeroDivisors.ne_zero hr)
+    obtain ⟨n, hn⟩ := ENat.ne_top_iff_exists.mp h
+    rw [← hn]
+    exact WithTop.coe_ne_top
+  let w := vR.toValuation.extendToLocalization hvR (FractionRing R)
+  let v := AddValuation.ofValuation w
+  have hv : ValOver ϖ (FractionRing R) v := by
+    rintro c n ⟨u, rfl⟩
+    rw [Algebra.algebraMap_self, RingHom.id_apply]
+    change OrderDual.ofDual (Multiplicative.toAdd (w (_ ^ n * _))) = _
+    rw [map_mul, map_zpow₀, Valuation.extendToLocalization_apply_map_apply,
+      Valuation.extendToLocalization_apply_map_apply]
+    change n • WithTop.map (Nat.cast : ℕ → ℚ) (IsDiscreteValuationRing.addVal R ϖ) +
+      WithTop.map (Nat.cast : ℕ → ℚ) (IsDiscreteValuationRing.addVal R (u : R)) = _
+    rw [IsDiscreteValuationRing.addVal_uniformizer hϖ, IsDiscreteValuationRing.addVal_eq_zero_of_unit]
+    change n • ((1 : ℚ) : WithTop ℚ) + 0 = _
+    rw [add_zero, ← zsmul_one (R := ℚ) n]
+    cases n with
+    | ofNat k =>
+      change (k : ℤ) • ((1 : ℚ) : WithTop ℚ) = ↑((k : ℤ) • (1 : ℚ))
+      rw [natCast_zsmul, natCast_zsmul, WithTop.coe_nsmul]
+    | negSucc k =>
+      rw [negSucc_zsmul, negSucc_zsmul, WithTop.LinearOrderedAddCommGroup.coe_neg,
+        WithTop.coe_nsmul]
   obtain ⟨hstd, hqc⟩ := prB_std D
-  have hs0 : VGe D (FractionRing R) (vK hϖ) 1 0 (F.s 0) 0 := by
+  have hs0 : VGe D (FractionRing R) v 1 0 (F.s 0) 0 := by
     refine ⟨1, fun _ => 1, fun _ => g 0, fun _ => F.s 0, fun _ => hgF 0, fun _ => by simp, fun j => ?_⟩
     rw [Fin.sum_univ_one, ← map_one (algebraMap R (FractionRing R)), constBF_alg, map_one, _root_.one_mul]
   intro mu hmu
@@ -131,8 +163,8 @@ theorem terms_vanish [IsDiscreteValuationRing R] {ϖ : R} (hϖ : Irreducible ϖ)
   have e01 : (0 : D.toPre.X) + 1 • mu = mu := by simp
   rw [e01] at hm
   have hb0 : QForm.bOf D.toPre Q mu 0 = 0 := by
-    simp [QForm.bOf, QForm.Q_zero hϖ D hQ']
-  have hq1 : 1 ≤ Q mu := QForm.Q_pos hϖ D hQ' hmu
+    simp [QForm.bOf, QForm.Q_zero D hQ']
+  have hq1 : 1 ≤ Q mu := QForm.Q_pos D hQ' hmu
   obtain ⟨N, a, σ, σF, hσF, hva, hsum⟩ := hm
   have hab : ∀ i, ∃ b : R, a i = algebraMap R (FractionRing R) (ϖ * b) := by
     intro i

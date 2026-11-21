@@ -114,7 +114,7 @@ theorem normSqE_pos {z : J → ℂ} (hz : z ≠ 0) : 0 < normSqE z := by
     simpa [eL_apply] using this)
   positivity
 
-theorem log_fs_eq : (fun z => Real.log ((fsMetric J).ρ z)) = fun z => (1 / 2) * Real.log (normSqE z) := by
+theorem log_fs_eq : (fun z => Real.log ((fsMetric (ι := J)).ρ z)) = fun z => (1 / 2) * Real.log (normSqE z) := by
   funext z
   change Real.log ‖WithLp.toLp 2 z‖ = _
   rw [normSqE, eL_apply, Real.log_pow]
@@ -122,7 +122,7 @@ theorem log_fs_eq : (fun z => Real.log ((fsMetric J).ρ z)) = fun z => (1 / 2) *
   ring
 
 theorem hasFDerivAt_log_fs {y : J → ℂ} (hy : y ≠ 0) :
-    HasFDerivAt (fun z => Real.log ((fsMetric J).ρ z)) ((normSqE y)⁻¹ • reInner y) y := by
+    HasFDerivAt (fun z => Real.log ((fsMetric (ι := J)).ρ z)) ((normSqE y)⁻¹ • reInner y) y := by
   rw [log_fs_eq]
   have h := ((hasFDerivAt_normSqE y).log (normSqE_pos hy).ne').const_mul (1 / 2 : ℝ)
   refine h.congr_fderiv ?_
@@ -131,9 +131,9 @@ theorem hasFDerivAt_log_fs {y : J → ℂ} (hy : y ≠ 0) :
   ring
 
 theorem leviForm_log_fs_nonneg {z : J → ℂ} (hz : z ≠ 0) (w : J → ℂ) :
-    0 ≤ leviForm (fun z => Real.log ((fsMetric J).ρ z)) z w := by
+    0 ≤ leviForm (fun z => Real.log ((fsMetric (ι := J)).ρ z)) z w := by
   set G : (J → ℂ) → ((J → ℂ) →L[ℝ] ℝ) := fun y => (normSqE y)⁻¹ • reInner y with hG
-  have hev : fderiv ℝ (fun z => Real.log ((fsMetric J).ρ z)) =ᶠ[𝓝 z] G := by
+  have hev : fderiv ℝ (fun z => Real.log ((fsMetric (ι := J)).ρ z)) =ᶠ[𝓝 z] G := by
     filter_upwards [isOpen_ne.mem_nhds hz] with y hy
     exact (hasFDerivAt_log_fs hy).fderiv
   have hq := normSqE_pos hz
@@ -141,7 +141,7 @@ theorem leviForm_log_fs_nonneg {z : J → ℂ} (hz : z ≠ 0) (w : J → ℂ) :
     (hasDerivAt_inv hq.ne').comp_hasFDerivAt z (hasFDerivAt_normSqE z)
   have hGd : HasFDerivAt G ((normSqE z)⁻¹ • reInner + ((-(normSqE z ^ 2)⁻¹) • (2 • reInner z)).smulRight (reInner z)) z :=
     hc.smul reInner.hasFDerivAt
-  have hD : ∀ v, fderiv ℝ (fderiv ℝ (fun z => Real.log ((fsMetric J).ρ z))) z v v =
+  have hD : ∀ v, fderiv ℝ (fderiv ℝ (fun z => Real.log ((fsMetric (ι := J)).ρ z))) z v v =
       (normSqE z)⁻¹ * inner ℝ (eL v) (eL v) - 2 * (normSqE z ^ 2)⁻¹ * inner ℝ (eL z) (eL v) ^ 2 := by
     intro v
     rw [hev.fderiv_eq, hGd.fderiv]
@@ -185,17 +185,17 @@ theorem leviForm_log_fs_nonneg {z : J → ℂ} (hz : z ≠ 0) (w : J → ℂ) :
     positivity
   linarith
 
-theorem isSmoothMetric_fs : IsSmoothMetric (fsMetric J) := by
+theorem isSmoothMetric_fs : IsSmoothMetric (fsMetric (ι := J)) := by
   unfold IsSmoothMetric
   intro z hz
-  have h : (fsMetric J).ρ = fun z => ‖eL z‖ := rfl
+  have h : (fsMetric (ι := J)).ρ = fun z => ‖eL z‖ := rfl
   rw [h]
   have hne : eL z ≠ 0 := fun h0 => hz (by
     have := congrArg (fun v : EuclideanSpace ℂ J => v.ofLp) h0
     simpa [eL_apply] using this)
   exact ((contDiffAt_norm ℝ hne).comp z (ContinuousLinearMap.contDiff (eL (J := J))).contDiffAt).contDiffWithinAt
 
-theorem isConjInvariant_fs : IsConjInvariant (fsMetric J) := by
+theorem isConjInvariant_fs : IsConjInvariant (fsMetric (ι := J)) := by
   intro z
   change ‖WithLp.toLp 2 _‖ = ‖WithLp.toLp 2 z‖
   rw [EuclideanSpace.norm_eq, EuclideanSpace.norm_eq]

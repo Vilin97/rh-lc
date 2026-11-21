@@ -106,19 +106,16 @@ theorem continuous_withVal {R S : Type} [Field R] [Field S] {v : Valuation R (Wi
   intro s hs'
   rw [map_zero] at hs'
   obtain ⟨γ, hγ⟩ := Valued.mem_nhds_zero.mp hs'
-  obtain ⟨x0, hx0⟩ := hs (embedding (γ : ValueGroup₀ (.ofClass (Valued.v : Valuation (WithVal v') _))))
-  have hpos : 0 < embedding (γ : ValueGroup₀ (.ofClass (Valued.v : Valuation (WithVal v') _))) := by
-    rw [← map_zero (embedding (f := .ofClass (Valued.v : Valuation (WithVal v') _)))]
-    exact embedding_strictMono (Units.zero_lt γ)
+  obtain ⟨x0, hx0⟩ := hs (embedding γ.val)
   have hx0' : 0 < Valued.v.restrict (WithVal.toVal v x0) := by
     rw [Valuation.restrict_pos_iff, WithVal.valued_toVal, hx0]
-    exact hpos
+    exact embedding_unit_pos γ
   refine Filter.mem_map.mpr (Valued.mem_nhds_zero.mpr ⟨Units.mk0 _ hx0'.ne', fun x hx => hγ ?_⟩)
   have hx1 : Valued.v.restrict x < Valued.v.restrict (WithVal.toVal v x0) := hx
   rw [Valuation.restrict_lt_iff] at hx1
   have e0 : Valued.v (WithVal.toVal v x0) = v x0 := WithVal.valued_toVal _ _
   rw [e0, hx0] at hx1
-  show Valued.v.restrict (f x) < (γ : ValueGroup₀ _)
+  show Valued.v.restrict (f x) < γ.val
   rw [Valuation.restrict_lt_iff_lt_embedding, hf]
   exact hx1
 
@@ -229,25 +226,30 @@ theorem continuous_congrAbs_symm (j : E ≃+* L) (u : InfinitePlace L) :
     rfl).continuous
 
 def infEquiv (j : E ≃+* L) (u : InfinitePlace L) : (u.comap j.toRingHom).Completion ≃+* u.Completion :=
-  (InfinitePlace.Completion.equiv (u.comap j.toRingHom)).trans ((UniformSpace.Completion.mapRingEquiv
+  (AbsoluteValue.Completion.equiv (u.comap j.toRingHom).1).trans ((UniformSpace.Completion.mapRingEquiv
     (WithAbs.congr _ _ j) (continuous_congrAbs j u) (continuous_congrAbs_symm j u)).trans
-    (InfinitePlace.Completion.equiv u).symm)
+    (AbsoluteValue.Completion.equiv u.1).symm)
 
 theorem continuous_infEquiv (j : E ≃+* L) (u : InfinitePlace L) : Continuous (infEquiv j u) := by
   have h : Continuous (fun y : (u.comap j.toRingHom).Completion =>
-      (InfinitePlace.Completion.ofCompletion (UniformSpace.Completion.map
+      (AbsoluteValue.Completion.ofCompletion (UniformSpace.Completion.map
         (WithAbs.congr (u.comap j.toRingHom).1 u.1 j)
-          y.toCompletion) : u.Completion)) :=
-    (InfinitePlace.Completion.continuous_ofCompletion u).comp
-      (UniformSpace.Completion.continuous_map.comp (InfinitePlace.Completion.continuous_toCompletion _))
-  exact h.congr fun y => rfl
+          (AbsoluteValue.Completion.toCompletion y)) : u.Completion)) :=
+    (AbsoluteValue.Completion.continuous_ofCompletion u.1).comp
+      (UniformSpace.Completion.continuous_map.comp (AbsoluteValue.Completion.continuous_toCompletion _))
+  refine h.congr fun y => ?_
+  simp only [infEquiv, RingEquiv.trans_apply, AbsoluteValue.Completion.equiv_apply,
+    AbsoluteValue.Completion.equiv_symm_apply]
+  rfl
 
 theorem infEquiv_algebraMap (j : E ≃+* L) (u : InfinitePlace L) (x : E) :
     infEquiv j u (algebraMap E (u.comap j.toRingHom).Completion x) = algebraMap L u.Completion (j x) := by
-  apply InfinitePlace.Completion.ext
+  apply AbsoluteValue.Completion.toCompletion_injective u.1
+  simp only [infEquiv, RingEquiv.trans_apply, AbsoluteValue.Completion.equiv_apply,
+    AbsoluteValue.Completion.equiv_symm_apply, AbsoluteValue.Completion.toCompletion_ofCompletion]
   show UniformSpace.Completion.map (WithAbs.congr (u.comap j.toRingHom).1
-    u.1 j) ((algebraMap E (u.comap j.toRingHom).Completion x).toCompletion) = _
-  rw [InfinitePlace.Completion.algebraMap_toCompletion, InfinitePlace.Completion.algebraMap_toCompletion,
+    u.1 j) (AbsoluteValue.Completion.toCompletion (algebraMap E (u.comap j.toRingHom).Completion x)) = _
+  rw [AbsoluteValue.Completion.toCompletion_algebraMap, AbsoluteValue.Completion.toCompletion_algebraMap,
     UniformSpace.Completion.algebraMap_def, UniformSpace.Completion.algebraMap_def,
     UniformSpace.Completion.map_coe (uniformContinuous_addMonoidHom_of_continuous (continuous_congrAbs j u))]
   rfl

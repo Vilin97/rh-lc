@@ -37,7 +37,7 @@ private lemma integrable_fib (μ : Measure G) [μ.IsHaarMeasure] (m : ℕ) (φ :
     (hc : ∀ i, Continuous (φ i)) (hs : ∀ i, HasCompactSupport (φ i)) (x : G) :
     Integrable (fun y : Fin m → G => ∏ i, φ i (fib y x i)) (Measure.pi fun _ => μ) := by
   have hcont : Continuous fun y : Fin m → G => ∏ i, φ i (fib y x i) :=
-    continuous_finset_prod _ fun i _ =>
+    continuous_finsetProd _ fun i _ =>
       (hc i).comp ((continuous_apply i).comp (continuous_fib x))
   refine hcont.integrable_of_hasCompactSupport ?_
   refine HasCompactSupport.intro

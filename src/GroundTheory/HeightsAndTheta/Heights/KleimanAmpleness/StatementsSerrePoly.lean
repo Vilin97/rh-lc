@@ -56,14 +56,15 @@ end Laurent
 def SerrePoly.Laurent.Statement : Prop :=
   ∀ (S : Type u) [CommRing S] (N : ℕ),
     Function.Injective (polyToLaurent S N) ∧
-    (∀ c : ℤ, ((polyGraded S N).piece c).map (polyToLaurent S N) =
+    (∀ c : ℤ, ((polyGraded (S := S) (N := N)).piece c).map (polyToLaurent S N) =
       Finsupp.supported S S (laurentExps N c ∅)) ∧
     ∃ ι : ∀ I : StdCell N, LocMod S N (Poly S N) I.1 →ₗ[S] Laurent S N,
       (∀ I, Function.Injective (ι I)) ∧
       (∀ (I J : StdCell N) (h : I.1 ⊆ J.1) (z : LocMod S N (Poly S N) I.1),
         ι J (locResS I J h z) = ι I z) ∧
-      (∀ (I : StdCell N) (p : Poly S N), ι I (locMk (Poly S N) I.1 p) = polyToLaurent S N p) ∧
-      ∀ (c : ℤ) (I : StdCell N), (degLoc (polyGraded S N) c I).map (ι I) = laurentDeg S N c I
+      (∀ (I : StdCell N) (p : Poly S N), ι I (locMk (M := Poly S N) I.1 p) = polyToLaurent S N p) ∧
+      ∀ (c : ℤ) (I : StdCell N),
+        (degLoc (polyGraded (S := S) (N := N)) c I).map (ι I) = laurentDeg S N c I
 
 def Cech.Transport.Statement : Prop :=
   ∀ (n : ℕ) (U : Finset (Fin n)) (R : Type u) [CommRing R]

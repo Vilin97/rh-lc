@@ -30,10 +30,12 @@ def evV (v : InfinitePlace I.F) : Formalism.MainNotions.GlobalTheoryTheory.Genus
 
 theorem evV_algebraMap (v : InfinitePlace I.F) (a : I.F) :
     evV I v (algebraMap I.F (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F) a) = v.embedding a := by
-  first
-    | (exact InfinitePlace.Completion.extensionEmbedding_coe v ((WithAbs.equiv v.1).symm a))
-    | (have h := InfinitePlace.Completion.extensionEmbedding_coe v ((WithAbs.equiv v.1).symm a); simp only [Equiv.apply_symm_apply] at h; exact h)
-    | (simp [evV]; done)
+  change InfinitePlace.Completion.extensionEmbedding v
+    ((algebraMap I.F (AdeleRing (𝓞 I.F) I.F) a).1 v) = v.embedding a
+  rw [AdeleRing.algebraMap_fst_apply]
+  change InfinitePlace.Completion.extensionEmbedding v
+    (((WithAbs.equiv v.1).symm a : WithAbs v.1) : v.Completion) = v.embedding a
+  rw [InfinitePlace.Completion.extensionEmbedding_coe, RingEquiv.apply_symm_apply]
 
 def thetaV (v : InfinitePlace I.F) : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F ⊗[I.F] I.E →+* ℂ :=
   letI : Algebra I.F ℂ := v.embedding.toAlgebra

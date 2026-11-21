@@ -100,13 +100,13 @@ lemma eq_of_eventuallyEq_nhdsNE {f g : ℂ → ℂ} {x : ℂ} (hf : ContinuousAt
     ((hg.tendsto.mono_left nhdsWithin_le_nhds).congr' h.symm)
 
 
-def chordSlope (z w : ℂ) : ℂ := (℘'[L] z - ℘'[L] w) / (℘[L] z - ℘[L] w)
+def chordSlope (L : PeriodPair) (z w : ℂ) : ℂ := (℘'[L] z - ℘'[L] w) / (℘[L] z - ℘[L] w)
 
 lemma chordSlope_comm (z w : ℂ) : chordSlope L z w = chordSlope L w z := by
   rw [chordSlope, chordSlope, ← neg_div_neg_eq, neg_sub, neg_sub]
 
 
-def addDefect (w z : ℂ) : ℂ :=
+def addDefect (L : PeriodPair) (w z : ℂ) : ℂ :=
   ℘[L] (z + w) + ℘[L] z + ℘[L] w - chordSlope L z w ^ 2 / 4
 
 lemma weierstrassP_eq_except_zero (z : ℂ) : ℘[L] z = ℘[L - (0 : ℂ)] z + 1 / z ^ 2 := by
@@ -308,7 +308,7 @@ theorem weierstrassP_add_of_two_mul_notMem {z w : ℂ} (hw : w ∉ L.lattice)
       exact hH.meromorphicOrderAt_nonneg
     · exact (analyticAt_addDefect hw hu0 hu1
         (by rwa [sub_neg_eq_add] at hu)).meromorphicOrderAt_nonneg
-  obtain ⟨c, hc⟩ := exists_const_of_meromorphicOrderAt_nonneg L hE.1 hE.2 ho
+  obtain ⟨c, hc⟩ := exists_const_of_meromorphicOrderAt_nonneg hE.1 hE.2 ho
   obtain ⟨H, hH, hH0, hev⟩ := exists_analyticAt_addDefect_zero (L := L) hw
   have hc0 : c = 0 := by
     have hgen : ∀ᶠ u in 𝓝[≠] (0 : ℂ), addDefect L w u = c := by
@@ -418,7 +418,7 @@ theorem derivWeierstrassP_add {z w : ℂ} (hz : z ∉ L.lattice) (hw : w ∉ L.l
   exact derivAdd_algebra _ _ _ _ _ _ hne (L.derivWeierstrassP_sq z hz) (L.derivWeierstrassP_sq w hw)
 
 
-def tangentSlope (w : ℂ) : ℂ := (6 * ℘[L] w ^ 2 - L.g₂ / 2) / ℘'[L] w
+def tangentSlope (L : PeriodPair) (w : ℂ) : ℂ := (6 * ℘[L] w ^ 2 - L.g₂ / 2) / ℘'[L] w
 
 lemma exists_continuousAt_chordSlope {w : ℂ} (hw : w ∉ L.lattice) (h2w : 2 * w ∉ L.lattice) :
     ∃ s : ℂ → ℂ, ContinuousAt s w ∧ s w = tangentSlope L w ∧

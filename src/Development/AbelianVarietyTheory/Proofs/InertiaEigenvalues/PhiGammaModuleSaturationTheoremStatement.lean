@@ -24,7 +24,7 @@ theorem _root_.GlobalTheory.T.phiGammaModule_saturation_theorem :
       (∀ i x, f i (D'.γ i x) = D.γ i (f i x)) →
       ∀ (w w' : ZMod n → ℤ) (N : ZMod n → Submodule k⟦X⟧ V),
         (∀ i, IsLat (N i)) → CondAB D.φ w w' N → (∀ i, CondC (D.γ i) (N i)) →
-        let N' := fun i => (N i).comap ((f i).restrictScalars k⟦X⟧)
+        let N' := fun i => (N i).comap ((f i).restrictScalars k⟦X⟧);
         (∀ i, IsLat (N' i)) ∧ CondAB D'.φ w w' N' ∧ ∀ i, CondC (D'.γ i) (N' i) := by
   intro k _ l _ _ R n _ V _ _ _ _ _ _ _ _ W _ _ _ _ _ _ _ _ D D' f hf hφ hγ w w' N hN hAB hC
   refine ⟨fun i => Sat.isLat_comap _ (hf i) (hN i), fun i => ?_, fun i x hx => ?_⟩

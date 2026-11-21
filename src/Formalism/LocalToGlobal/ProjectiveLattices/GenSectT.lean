@@ -106,16 +106,16 @@ theorem s1T [CharZero K] (hfg : (⊤ : IntermediateField K Ω).FG) (htr : Algebr
       rw [mul_left_comm, IsLocalization.Away.mul_invSelf, mul_one]
     rw [h1]
     exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨i, rfl⟩)
-  have hIs : ∀ a ∈ Is K v, g0 a = 0 := by
+  have hIs : ∀ a ∈ Is (K := K) (D := D) v, g0 a = 0 := by
     intro a ha
-    have hle : Is K v ≤ RingHom.ker g0 := by
+    have hle : Is (K := K) (D := D) v ≤ RingHom.ker g0 := by
       refine Ideal.span_le.2 ?_
       rintro _ ⟨i, rfl⟩
       rw [SetLike.mem_coe, RingHom.mem_ker, hg0, he0sec, hmemJ]
     exact hle ha
-  let g1 : (RS K Ω D m ⧸ Is K v) →+* (Localization.Away (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0) ⧸ tJ (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v) :=
-    Ideal.Quotient.lift (Is K v) g0 hIs
-  have hcomm : g1.comp (algebraMap (KTf K D m) (RS K Ω D m ⧸ Is K v)) =
+  let g1 : (RS K Ω D m ⧸ Is (K := K) (D := D) v) →+* (Localization.Away (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0) ⧸ tJ (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v) :=
+    Ideal.Quotient.lift (Is (K := K) (D := D) v) g0 hIs
+  have hcomm : g1.comp (algebraMap (KTf K D m) (RS K Ω D m ⧸ Is (K := K) (D := D) v)) =
       algebraMap (KTf K D m) (Localization.Away (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0) ⧸ tJ (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v) := by
     refine IsLocalization.ringHom_ext (nonZeroDivisors (KT K D m)) (RingHom.ext fun q => ?_)
     simp only [RingHom.comp_apply]
@@ -128,20 +128,20 @@ theorem s1T [CharZero K] (hfg : (⊤ : IntermediateField K Ω).FG) (htr : Algebr
     rw [IsScalarTower.algebraMap_apply (KTf K D m) K' (Localization.Away (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0) ⧸ tJ (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v)]
     rw [RingHom.algebraMap_toAlgebra, IsFractionRing.lift_algebraMap]
     rfl
-  let g : (RS K Ω D m ⧸ Is K v) →ₐ[KTf K D m] (Localization.Away (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0) ⧸ tJ (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v) :=
+  let g : (RS K Ω D m ⧸ Is (K := K) (D := D) v) →ₐ[KTf K D m] (Localization.Away (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0) ⧸ tJ (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v) :=
     { g1 with commutes' := fun r => congrArg (fun f => f r) hcomm }
   let Θ := Algebra.TensorProduct.lift (Algebra.ofId K' (Localization.Away (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0) ⧸ tJ (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v))
     g (fun _ _ => Commute.all _ _)
-  haveI : IsArtinianRing (K' ⊗[KTf K D m] (RS K Ω D m ⧸ Is K v)) :=
+  haveI : IsArtinianRing (K' ⊗[KTf K D m] (RS K Ω D m ⧸ Is (K := K) (D := D) v)) :=
     IsArtinianRing.of_finite K' _
 
-  have hΘ1 : ∀ y : RS K Ω D m ⧸ Is K v, Θ (1 ⊗ₜ y) = g y := fun y => by
+  have hΘ1 : ∀ y : RS K Ω D m ⧸ Is (K := K) (D := D) v, Θ (1 ⊗ₜ y) = g y := fun y => by
     simp [Θ, Algebra.TensorProduct.lift_tmul]
   have hι : ∀ z : TZ K Ω Kl K', ι z ∈ Θ.range := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b ha hb => rw [map_add ι]; exact add_mem ha hb
     | tmul k y =>
       induction y using TensorProduct.induction_on with
       | zero => simp
@@ -157,7 +157,7 @@ theorem s1T [CharZero K] (hfg : (⊤ : IntermediateField K Ω).FG) (htr : Algebr
         rw [he, map_mul]
         refine mul_mem ?_ ?_
         · rw [hιK]; exact Subalgebra.algebraMap_mem _ _
-        · have : ι (fΩ ω) = Θ (1 ⊗ₜ (Ideal.Quotient.mk (Is K v)
+        · have : ι (fΩ ω) = Θ (1 ⊗ₜ (Ideal.Quotient.mk (Is (K := K) (D := D) v)
               (algebraMap (ΩT Ω D m) (RS K Ω D m) (MvPolynomial.C ω)))) := by
             rw [hΘ1]
             show _ = g0 _
@@ -170,7 +170,7 @@ theorem s1T [CharZero K] (hfg : (⊤ : IntermediateField K Ω).FG) (htr : Algebr
     exact (IsLocalization.Away.algebraMap_isUnit (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0)).map _
   obtain ⟨b0, hb0'⟩ := hι (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0)
   have hb0 : Θ b0 = ι (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0) := hb0'
-  obtain ⟨n0, y0, hy0⟩ := IsArtinian.exists_pow_succ_smul_dvd b0 (1 : K' ⊗[KTf K D m] (RS K Ω D m ⧸ Is K v))
+  obtain ⟨n0, y0, hy0⟩ := IsArtinian.exists_pow_succ_smul_dvd b0 (1 : K' ⊗[KTf K D m] (RS K Ω D m ⧸ Is (K := K) (D := D) v))
   have hinv : ι (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0) * Θ y0 = 1 := by
     rw [Nat.succ_eq_add_one, smul_eq_mul, smul_eq_mul, mul_one] at hy0
     have h := congrArg Θ hy0
@@ -199,9 +199,9 @@ theorem s1T [CharZero K] (hfg : (⊤ : IntermediateField K Ω).FG) (htr : Algebr
     exact ⟨b, by rw [hc]; exact hb⟩
   refine ⟨Module.Finite.of_surjective Θ.toLinearMap hsurj, ?_⟩
 
-  have hvnrB : ∀ b : K' ⊗[KTf K D m] (RS K Ω D m ⧸ Is K v), ∃ y, b = b ^ 2 * y := by
+  have hvnrB : ∀ b : K' ⊗[KTf K D m] (RS K Ω D m ⧸ Is (K := K) (D := D) v), ∃ y, b = b ^ 2 * y := by
     intro b
-    obtain ⟨n, y, h⟩ := IsArtinian.exists_pow_succ_smul_dvd b (1 : K' ⊗[KTf K D m] (RS K Ω D m ⧸ Is K v))
+    obtain ⟨n, y, h⟩ := IsArtinian.exists_pow_succ_smul_dvd b (1 : K' ⊗[KTf K D m] (RS K Ω D m ⧸ Is (K := K) (D := D) v))
     rw [Nat.succ_eq_add_one, smul_eq_mul, smul_eq_mul, mul_one] at h
     have hnil : IsNilpotent (b * (1 - b * y)) := by
       refine ⟨n + 1, ?_⟩

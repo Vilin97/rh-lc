@@ -52,7 +52,7 @@ private theorem taylor_seq (g : ℕ → ℝ → ℂ) (hg : ∀ k s, HasDerivAt (
       M * A * (A ^ m / (Nat.factorial m : ℝ)) := by
     intro m
     have h1 := taylor_mean_remainder_bound (f := g 0) (a := 0) (b := 1) (x := 1) (n := m)
-      (C := M * A ^ (m + 1)) zero_le_one
+      (C := M * A ^ (m + 1))
       (by exact_mod_cast (hgs (m + 1)).contDiffOn) (by simp) (by
         intro y hy
         rw [iteratedDerivWithin_eq_iteratedDeriv (uniqueDiffOn_Icc zero_lt_one)

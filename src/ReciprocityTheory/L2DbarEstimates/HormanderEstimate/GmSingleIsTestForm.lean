@@ -281,18 +281,14 @@ theorem gm_lintegral_wvol {E : Type*} [NormedAddCommGroup E] (n : ℕ) (z : M �
 theorem gm_memLp_two_iff {E : Type*} [NormedAddCommGroup E] {μ : Measure M} (g : M → E)
     (hg : AEStronglyMeasurable g μ) :
     MemLp g 2 μ ↔ ∫⁻ x, ‖g x‖ₑ ^ (2:ℝ) ∂μ < ⊤ := by
-  first
-    | (simp only [MemLp, hg, true_and]
-       rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
-       simp)
-    | (rw [MemLp, and_iff_right hg, eLpNorm_eq_lintegral_rpow_enorm two_ne_zero ENNReal.ofNat_ne_top]
-       simp only [ENNReal.toReal_ofNat]
-       rw [ENNReal.rpow_lt_top_iff_of_pos (by norm_num)])
+  rw [MemLp, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero ENNReal.ofNat_ne_top hg]
+  simp only [ENNReal.toReal_ofNat]
 
 theorem gm_norm_sq {E : Type*} [NormedAddCommGroup E] {μ : Measure M} (u : Lp E 2 μ) :
     ENNReal.ofReal (‖u‖ ^ 2) = ∫⁻ x, ‖u x‖ₑ ^ (2:ℝ) ∂μ := by
   rw [Lp.norm_def, ENNReal.ofReal_pow ENNReal.toReal_nonneg, ENNReal.ofReal_toReal (Lp.eLpNorm_ne_top u),
-    MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top, ← ENNReal.rpow_natCast,
+    MeasureTheory.eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top
+      (Lp.aestronglyMeasurable u), ← ENNReal.rpow_natCast,
     ← ENNReal.rpow_mul]
   norm_num
 
@@ -574,7 +570,7 @@ theorem locL2_sub_weightedL2 (n : ℕ) (z : M → V n) (hz : IsLocalHomeomorph z
           rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top, hw]
       _ < ⊤ := ENNReal.mul_lt_top ENNReal.ofReal_lt_top hfin
   have hsub := hF0C.sub huC
-  rw [gm_memLp_two_iff _ hsub.1] at hsub
+  rw [gm_memLp_two_iff _ hsub.aestronglyMeasurable] at hsub
   have e2 : ∀ x, ‖F0 x - u x‖ₑ ^ (2:ℝ) = ‖F0 x - u x‖ₑ ^ 2 := by
     intro x
     first

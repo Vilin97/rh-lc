@@ -143,14 +143,17 @@ structure Act (j : C₀ ⥤ C) (U : UF C) (d : ℕ) (D : C) where
   trans : ∀ (t : C₀) (c c' : D ⟶ j.obj t), ∃! a, act a c = c'
 
 def Act.γ {j : C₀ ⥤ C} {U : UF C} {d : ℕ} {D : C} (A : Act j U d D) : Gam d →* End D where
-  toFun a := A.act (fun k => U.q D ^ (Multiplicative.toAdd a k)) (𝟙 D)
+  toFun a := End.of (A.act (fun k => U.q D ^ (Multiplicative.toAdd a k)) (𝟙 D))
   map_one' := by
+    apply End.ext
+    change A.act _ (𝟙 D) = 𝟙 D
     have : (fun k => U.q D ^ (Multiplicative.toAdd (1 : Gam d) k)) = 1 := funext fun k => pow_zero _
-    rw [this, A.act_one]; rfl
+    rw [this, A.act_one]
   map_mul' a b := by
-    change _ = A.act _ (𝟙 D) ≫ A.act _ (𝟙 D)
+    apply End.ext
+    change A.act _ (𝟙 D) = A.act _ (𝟙 D) ≫ A.act _ (𝟙 D)
     rw [A.act_comp, Category.id_comp, ← A.act_mul]
-    congr 1
+    apply congrArg (fun c => A.act c (𝟙 D))
     funext k
     rw [Pi.mul_apply, map_pow, U.map_q, ← pow_add, toAdd_mul, Pi.add_apply, add_comm]
 

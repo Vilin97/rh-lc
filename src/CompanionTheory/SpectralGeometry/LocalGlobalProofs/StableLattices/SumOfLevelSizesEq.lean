@@ -23,7 +23,5 @@ theorem sum_sz_eq_card : ∀ (n M : ℕ) (lev : Fin n → ℕ), (∀ a, lev a < 
   refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) key.symm
   unfold sz
   congr 1
-  ext a
-  simp [Fin.ext_iff]
 
 end GlobalTheory.CompanionTheory.RgCOBlock.SumSz

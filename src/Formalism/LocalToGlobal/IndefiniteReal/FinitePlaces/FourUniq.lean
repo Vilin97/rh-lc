@@ -73,6 +73,7 @@ def Pk (ρ : W → Module.End ℂ V) (L Y : AddSubgroup W) (f₀ : V) (k : ℕ) 
   (Nat.card (Gk L Y k) : ℂ)⁻¹ • ∑ᶠ g : Gk L Y k, ρ ((g : QY L Y).out) f₀
 
 
+open Classical in
 def indk (L X : AddSubgroup W) (k : ℕ) (t : W) : ℂ := if t ∈ smulSub k (L ⊓ X) then 1 else 0
 
 theorem Gk_out {k : ℕ} (g : Gk L Y k) : (g : QY L Y).out ∈ Y ∧ k • (g : QY L Y).out ∈ L := by
@@ -272,6 +273,8 @@ end Uniq2
 
 section Uniq3
 
+open Classical
+
 variable {ρ : W → Module.End ℂ V} {χ : W → W → ℂ} {L X Y : AddSubgroup W} {f₀ : V}
   (hχl : ∀ t t' y, χ (t + t') y = χ t y * χ t' y)
   (hχr : ∀ t y y', χ t (y + y') = χ t y * χ t y') (hχ0 : ∀ t y, χ t y ≠ 0)
@@ -282,6 +285,7 @@ variable {ρ : W → Module.End ℂ V} {χ : W → W → ℂ} {L X Y : AddSubgro
   (hfinX : ∀ k, 0 < k → Finite (Qt k (L ⊓ X))) (hfinY : ∀ k, 0 < k → Finite (Qt k (L ⊓ Y)))
   (htf : ∀ k : ℕ, 0 < k → ∀ t : W, k • t = 0 → t = 0)
 
+include hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf
 
 theorem T_formula (T : (W → ℂ) →ₗ[ℂ] V)
     (htr : ∀ Φ, IsSB L X Φ → ∀ x ∈ X, T (fun t => Φ (t + x)) = ρ x (T Φ))

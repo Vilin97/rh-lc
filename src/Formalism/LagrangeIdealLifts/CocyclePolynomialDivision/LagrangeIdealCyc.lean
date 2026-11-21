@@ -51,7 +51,11 @@ private theorem exponent_bound (ℓ : ℕ) [Fact ℓ.Prime] (s a a' : ℕ) (ha :
       (2 * a).factorial := by
     rw [← prod_pow_eq_pow_sum]
     refine (prod_dvd_prod_of_dvd (fun m : ℕ => ℓ ^ padicValInt ℓ ((a' : ℤ) - m)) (fun m : ℕ => ((a' : ℤ) - m).natAbs)
-      fun m _ => (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))).trans ?_
+      fun m _ => ?_).trans ?_
+    · rw [padicValInt, ← Nat.padicValNat_def]
+      exact _root_.Dvd.intro_left
+        (Nat.divMaxPow (((a' : ℤ) - m).natAbs) ℓ)
+        (Nat.divMaxPow_mul_pow_padicValNat ℓ ((a' : ℤ) - m).natAbs)
     rw [prod_natAbs_sub_erase (2 * a) a' (by omega)]
     exact (Nat.factorial_mul_factorial_dvd_factorial_add _ _).trans
       (Nat.factorial_dvd_factorial (by omega))

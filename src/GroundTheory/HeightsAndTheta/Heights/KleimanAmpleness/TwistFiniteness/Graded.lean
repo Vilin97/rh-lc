@@ -90,7 +90,8 @@ def pieceM (c : ℤ) : Submodule (Sy S r) (TMod x η S n0 d0 g0) where
   carrier := {m | toA x η (m : Amb x η) ∈ tgr c}
   add_mem' {a b} ha hb := by
     change toA x η ((a : Amb x η) + b) ∈ tgr c
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    rw [map_add (toA x η)]
+    exact add_mem ha hb
   zero_mem' := by
     change toA x η ((0 : TMod x η S n0 d0 g0) : Amb x η) ∈ tgr c
     rw [Submodule.coe_zero, map_zero]; exact zero_mem _

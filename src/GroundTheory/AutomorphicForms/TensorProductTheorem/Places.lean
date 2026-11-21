@@ -24,7 +24,7 @@ section Group
 variable [DecidableEq ι]
 
 
-def singleHom (v : ι) : G v →* Πʳ w, [G w, K w] where
+def singleHom (K : ∀ w, Subgroup (G w)) (v : ι) : G v →* Πʳ w, [G w, K w] where
   toFun := RestrictedProduct.mulSingle K v
   map_one' := RestrictedProduct.mulSingle_one K v
   map_mul' x y := RestrictedProduct.mulSingle_mul K v x y

@@ -7,7 +7,7 @@ public import Formalism.GL3MeanSquares.InvariantSeriesBidegreeOneOne
 
 namespace Formalism.HermitianLattices.IntegralLatticeDensity
 
-open Finset Formalism.LogVandermondeBounds.TaylorLogMetric
+open Finset
 
 theorem no_form_of_bidegree_one_one : PowerCongruenceIffEqual := by
   unfold PowerCongruenceIffEqual

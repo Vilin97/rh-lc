@@ -28,6 +28,7 @@ theorem hform_snd (z y : n → T) :
     simp [hform, map_sum, map_mul, Prod.snd_sum, hσ, swapR]
 
 
+include hσ Ov hS hΛ in
 theorem map_of_first (x : GL n T) (hx : x ∈ UJ σ J)
     (h1 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ (((x : Matrix n n T) *ᵥ y) a)).1)
     (h2 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ ((((x⁻¹ : GL n T) : Matrix n n T) *ᵥ y) a)).1)
@@ -73,6 +74,7 @@ theorem map_of_first (x : GL n T) (hx : x ∈ UJ σ J)
     exact ((hS _).1 ((hΛ y).1 hy z' hz'Λ)).2
 
 
+include hσ Ov hS hΛ in
 theorem stab_of_first (x : GL n T) (hx : x ∈ UJ σ J)
     (h1 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ (((x : Matrix n n T) *ᵥ y) a)).1)
     (h2 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ ((((x⁻¹ : GL n T) : Matrix n n T) *ᵥ y) a)).1) :

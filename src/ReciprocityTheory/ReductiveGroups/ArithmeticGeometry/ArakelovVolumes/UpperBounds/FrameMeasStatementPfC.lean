@@ -73,7 +73,7 @@ theorem continuous_rmul : Continuous fun q : Frame X.Ψ r × Frame X.Ψ r => rmu
   apply continuous_pi
   intro b
   simp only [rmul, mat, Matrix.mul_apply, Matrix.of_apply]
-  apply continuous_finset_sum
+  apply continuous_finsetSum
   intro k _
   fun_prop
 
@@ -84,7 +84,7 @@ def fI (C : Set (Frame X.Ψ r)) (q : Frame X.Ψ r × (UpI X.Ψ r → ℂ)) : ℝ
 theorem measurable_fI {C : Set (Frame X.Ψ r)} (hCm : MeasurableSet C) : Measurable (fI X C) := by
   have hJ : Continuous (fun y : UpI X.Ψ r → ℂ => jacU y) := by
     unfold jacU
-    apply continuous_finset_prod
+    apply continuous_finsetProd
     intro i _
     split_ifs
     · exact continuous_apply _

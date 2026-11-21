@@ -21,7 +21,7 @@ private theorem fin_prod {ι X : Type} [Fintype ι] {Y : ι → Type} (p : ∀ i
     FiniteDimensional ℂ (Submodule.span ℂ
       {f : X → ℂ | ∃ s : ∀ i, Y i → ℂ, (∀ i, s i ∈ S i) ∧ f = fun x => ∏ i, s i (p i x)}) := by
   classical
-  let T : MultilinearMap ℂ (fun i => Y i → ℂ) (X → ℂ) :=
+  let T : (∀ i, Y i → ℂ) →ₘₗ[ℂ] (X → ℂ) :=
     (MultilinearMap.mkPiAlgebra ℂ ι (X → ℂ)).compLinearMap (fun i => LinearMap.funLeft ℂ ℂ (p i))
   have hT : ∀ s x, T s x = ∏ i, s i (p i x) := by
     intro s x

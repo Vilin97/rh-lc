@@ -59,10 +59,13 @@ theorem eval_prodP {m : ℕ} (lin : Fin m → Prop) [DecidablePred lin] (B : Fin
 
 theorem coeff_all : ∀ {m : ℕ} (B : Fin m → A),
     (List.ofFn fun l => (X + C (B l) : A[X])).prod.coeff m = 1 ∧
-      (1 ≤ m → (List.ofFn fun l => (X + C (B l) : A[X])).prod.coeff (m - 1) = ∑ l, B l)
-  | 0, B => by simp
-  | m + 1, B => by
-    have ih := coeff_all (fun l : Fin m => B l.succ)
+      (1 ≤ m → (List.ofFn fun l => (X + C (B l) : A[X])).prod.coeff (m - 1) = ∑ l, B l) := by
+  intro m
+  induction m with
+  | zero => simp
+  | succ m ih =>
+    intro B
+    specialize ih (fun l => B l.succ)
     have hdeg : (List.ofFn fun l : Fin m => (X + C (B l.succ) : A[X])).prod.natDegree ≤ m := by
       have := natDegree_prodP (fun _ : Fin m => True) (fun l => B l.succ)
       simp only [if_true, Finset.sum_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul, mul_one] at this
@@ -101,12 +104,11 @@ theorem quadratic_top_algebra_holds : QTopAlg := by
       intro σ
       have e1 : (List.ofFn fun k : Fin n => Tm E (Y + h - (k : ℂ)) (id (σ k)) (id k)) =
           List.ofFn fun l => (if lin σ l then algebraMap ℂ A Y else 0) + B σ l := by
-        congr 1
-        split_ifs with hl
-        · have : Y + h - ((l : ℕ) : ℂ) = Y + (h - ((l : ℕ) : ℂ)) := by ring
-          rw [this, map_add (f := _)]
-          abel
-        · simp
+        refine congrArg List.ofFn (funext fun l => ?_)
+        simp only [Tm, id_eq, lin, B]
+        split_ifs
+        · rw [add_sub_assoc, map_add, add_assoc]
+        · simp only [zero_add]
       rw [e1, ← eval_prodP]
       have hdeg : (Pσ σ).natDegree < n + 1 := by
         have := natDegree_prodP (lin σ) (B σ)

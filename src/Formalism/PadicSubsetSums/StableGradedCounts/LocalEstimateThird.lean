@@ -216,8 +216,9 @@ theorem key (P : K[X]) (hP : Irreducible P) (hm : P.Monic) (x : L) (hx : aeval x
     exact hyl'
 
 
-noncomputable def Bset (K : Type) [Field K] [Fintype K] (δ : ℕ) (c₀ : Kˣ) : Finset (Fin δ → K) :=
-  Finset.univ.filter (fun c => Irreducible (monicOf c) ∧
+noncomputable def Bset (K : Type) [Field K] [Fintype K] (δ : ℕ) (c₀ : Kˣ) : Finset (Fin δ → K) := by
+  classical
+  exact Finset.univ.filter (fun c => Irreducible (monicOf c) ∧
     ∃ l' ∈ (Fintype.card K ^ δ - 1).primeFactors,
       monicOf c ∣ X ^ (l' ^ padicValNat l' (Fintype.card K ^ δ - 1)) -
         C ((c₀ : K) ^ (l' ^ padicValNat l' (Fintype.card K ^ δ - 1))))

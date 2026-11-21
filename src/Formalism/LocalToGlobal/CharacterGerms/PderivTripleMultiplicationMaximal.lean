@@ -16,6 +16,8 @@ namespace Formalism.L2.FormalSeriesBounds.FunEq
 open Formalism.L2.FormalSeriesBounds Formalism.L2.FormalSeriesBounds.PartialDerivEval Formalism.L2.FormalSeriesBounds.FirstUnitSeriesIntegrality Formalism.L2.FormalSeriesBounds.MulLFrob Formalism.L2.FormalSeriesBounds.LiftedCoordinateEvaluation
   ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ MvPowerSeries
 
+local macro "pderiv" r:ident : term => `(fun q => MvPowerSeries.pderiv q)
+
 variable {C : Type} [Field C] [CharZero C] {dd : ℕ} {V : VF C} {O : Type} [CommRing O] [StarRing O]
 
 theorem pderiv_first_unit_series_maximal (Y : FBChart C V O dd) (i : Fin dd) : MaximalIdealCongruence.MMS V (pderiv C ((0 : Fin 2), i) Y.u1) := by

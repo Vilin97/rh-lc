@@ -84,6 +84,7 @@ def cutIdentityLeftSide (P : Ideal (MRing ι O)) (f g : MRing ι O) (c : K → �
   cycEval (fun G => vNum G (Matrix.vecCons (fun k => (c k : ℤ)) L)) (ratDiv P f g)
 
 
+open scoped Classical in
 def cutIdentityRightSide (ϖ : O) (P : Ideal (MRing ι O)) (b : K → ℤ) (f g : MRing ι O) (s : MRing ι O) {d : ℕ}
     (L : Fin d → K → ℤ) : ℤ :=
   cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNum W (Matrix.vecCons b L)

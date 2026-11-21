@@ -70,7 +70,7 @@ theorem cc_cc {c : k} (hc : c ≠ 0) (σ : T) : cc (cc σ) = σ := by
     _ = c * 0 := by rw [h01]
     _ = 0 := mul_zero c
 
-
+include hcc in
 theorem pair_index {c : k} (hc : c ≠ 0) (σ σ' : T)
     (h : ∀ a, c * (χ σ a * χ σ (star a) + χ σ' a * χ σ' (star a) - 2 * χ σ a * χ σ' a) = 0) : σ' = cc σ := by
   have P1 : ∀ a, c * ((χ σ a - χ (cc σ) a) * (χ σ a - χ (cc σ') a)) = 0 := by

@@ -13,6 +13,8 @@ public import Development.AutomorphicArithmetic.CupPullbacks.TwoChart
 
 @[expose] public section
 
+set_option synthInstance.maxHeartbeats 100000
+
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC UpperTheory.Pbf
 
 namespace UpperTheory.P2

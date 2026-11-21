@@ -26,7 +26,28 @@ theorem smoothVec_of_smD_A {v : H} (hv : v ∈ smD ε σ) :
     Formalism.L2.Theta.SmoothVec (Formalism.IndefR.Tow.SobPf.lieG (Formalism.REAL.Jm ε)) σ v := by
   rw [mem_smD_iff] at hv
   intro m Xs hX
-  have hc := Formalism.IndefR.PeterssonHilbertSpace.sm_prod_exp_contDiff m Xs
+  have hprod : ∀ (k : ℕ) (Ys : Fin k → Matrix (Fin n) (Fin n) ℂ),
+      ContDiff ℝ ⊤ (fun t : Fin k → ℝ =>
+        (List.ofFn fun i => NormedSpace.exp (t i • Ys i)).prod) := by
+    intro k
+    induction k with
+    | zero =>
+        intro Ys
+        simpa using (contDiff_const : ContDiff ℝ ⊤ fun _ : Fin 0 → ℝ =>
+          (1 : Matrix (Fin n) (Fin n) ℂ))
+    | succ k ih =>
+        intro Ys
+        have h1 : ContDiff ℝ ⊤ (fun t : Fin (k + 1) → ℝ =>
+            NormedSpace.exp (t 0 • Ys 0)) :=
+          (Formalism.IndefR.PeterssonHilbertSpace.sm_exp_smul_contDiff (Ys 0)).comp
+            (contDiff_apply ℝ (fun _ => ℝ) (0 : Fin (k + 1)))
+        have h2 : ContDiff ℝ ⊤ (fun t : Fin (k + 1) → ℝ =>
+            (List.ofFn fun i : Fin k => NormedSpace.exp (t i.succ • Ys i.succ)).prod) :=
+          (ih (fun i => Ys i.succ)).comp
+            (contDiff_pi.2 fun i => contDiff_apply ℝ (fun _ => ℝ) i.succ)
+        simp only [List.ofFn_succ, List.prod_cons]
+        exact PI.KFinSmoothW.Gard.contDiff_mat_mul h1 h2
+  have hc := hprod m Xs
   have hmem : ∀ t : Fin m → ℝ, Formalism.QuantumDeterminants.inUH (Formalism.REAL.Jm ε)
       ((List.ofFn fun i => NormedSpace.exp (t i • Xs i)).prod) :=
     fun t => Formalism.IndefR.PeterssonHilbertSpace.sm_prod_exp_mem _ m Xs (fun i => hX i) t

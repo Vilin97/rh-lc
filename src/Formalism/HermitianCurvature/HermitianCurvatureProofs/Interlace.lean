@@ -130,7 +130,7 @@ lemma ratio_core (k : ℕ) (u u' ρ : ℕ → ℝ) (l : ℕ) (Y : ℝ) (hl1 : 1 
   apply mul_le_mul_of_nonneg_left _ (by positivity)
   unfold xpoly
   rw [← prod_pow]
-  apply prod_le_prod
+  apply prod_le_prod₀
   · intro i _; positivity
   · intro i hi
     have hi' := mem_Icc.1 hi

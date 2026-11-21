@@ -28,9 +28,8 @@ private lemma exists_zhat_eq_eval_poly_deg_le_one (z z' : Fin (2 * r + k + 1) �
   refine ⟨fun a b => ∑ i, ∑ j, C (((Fm k r z)ᴴ * Hpk k r) a i * Fm k r z' j b) *
     MvPolynomial.X (Sum.inl (i, j)), ?_, ?_⟩
   · intro a b
-    refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun i _ => ?_)
-    refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun j _ => ?_)
-    exact deg_CX _ _
+    exact MvPolynomial.totalDegree_finsetSum_le fun i _ =>
+      MvPolynomial.totalDegree_finsetSum_le fun j _ => deg_CX _ _
   · intro g a b
     rw [Zhat_eq]
     set_option synthInstance.maxHeartbeats 100000 in
@@ -46,9 +45,8 @@ private lemma exists_star_zhat_eq_eval_poly_deg_le_one (z z' : Fin (2 * r + k + 
   refine ⟨fun a b => ∑ i, ∑ j, C (star (((Fm k r z)ᴴ * Hpk k r) a i * Fm k r z' j b)) *
     MvPolynomial.X (Sum.inr (i, j)), ?_, ?_⟩
   · intro a b
-    refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun i _ => ?_)
-    refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun j _ => ?_)
-    exact deg_CX _ _
+    exact MvPolynomial.totalDegree_finsetSum_le fun i _ =>
+      MvPolynomial.totalDegree_finsetSum_le fun j _ => deg_CX _ _
   · intro g a b
     rw [Zhat_eq]
     set_option synthInstance.maxHeartbeats 100000 in

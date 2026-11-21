@@ -74,6 +74,9 @@ theorem prod_isPol {A : Type} [Ring A] [Algebra ℂ A] (t : ℕ) (α β : Fin t 
     have h3 := (h1.map (LinearMap.mulLeft ℂ (β 0))).up
     have h4 := h2.add h3
     convert h4 using 1
+    funext u
+    rw [List.ofFn_succ, List.prod_cons, add_mul, smul_mul_assoc]
+    simp only [LinearMap.mulLeft_apply]
 
 theorem Tm_lin {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (E : Fin n → Fin n → A) (u k : ℂ) (a b : Fin n) :
     Tm E (u - k) a b = u • (if a = b then (1 : A) else 0) + ((if a = b then algebraMap ℂ A (-k) else 0) + E a b) := by

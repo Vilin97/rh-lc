@@ -149,7 +149,7 @@ lemma ψd_inj : Function.Injective (ψd La) := by
 lemma ψd_sub (m m' : Fin (finrank ℤ La) → ℤ) : ψd La (m - m') = ψd La m - ψd La m' := by
   simp only [ψd]
   rw [← map_sub]
-  congr 1
+  exact congrArg (Le La).symm (funext fun j => Int.cast_sub (m j) (m' j))
 
 lemma pair_ψd_Tl (m : Fin (finrank ℤ La) → ℤ) (y : Fin (finrank ℤ La) → ℝ) :
     pair (ψd La m) (Tl La y) = ∑ j, y j * (m j : ℝ) := by

@@ -100,10 +100,7 @@ theorem opNormAt_le_of_points {K V ι W κ : Type} [Field K] [NumberField K] [St
         Formalism.HermitianLatticesTheory.fcoord b' X' v (φ f) := by
       simp only [Formalism.HermitianLatticesTheory.fcoord, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv_cancel_right _ _ (hX v)]
       rw [vecAt_apply_linearMap b b' φ v f, Matrix.mulVec_mulVec]
-    have h' := h f
-    simp only [LinearMap.coe_toContinuousLinearMap', Matrix.toEuclideanLin_toLp, Matrix.toLin'_apply, hm]
-    first
-      | exact h'
-      | (rw [hn, hn]; exact h')
+    simpa only [LinearMap.coe_toContinuousLinearMap', Matrix.toEuclideanLin, Matrix.toLpLin_toLp,
+      Matrix.toLin'_apply, hm, hn, Formalism.HermitianLatticesTheory.normAt] using h f
 
 end Formalism.L2.Geo.ExtensionFiltration

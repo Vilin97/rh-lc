@@ -73,7 +73,7 @@ theorem gv_cont (T T' : ℝ) : Continuous (fun c : Fin (r + 1) → ℂ => Gv T T
 
 theorem wtLoc_cont (k : ℕ) (T T' : ℝ) : Continuous (fun c : Fin (r + 1) → ℂ => wtLoc k T T' c) := by
   unfold wtLoc Formalism.L2.SG.RealObj.JacV
-  refine ((gv_cont T T').pow _).mul (continuous_finset_prod _ fun l _ => ?_)
+  refine ((gv_cont T T').pow _).mul (continuous_finsetProd _ fun l _ => ?_)
   unfold Formalism.L2.SG.RealObj.modC
   exact (((continuous_Dl_diagonal l).norm).pow 2).pow 2
 

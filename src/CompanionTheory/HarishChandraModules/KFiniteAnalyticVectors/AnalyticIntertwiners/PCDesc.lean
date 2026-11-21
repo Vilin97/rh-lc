@@ -95,7 +95,7 @@ theorem exists_liftC {g : Matrix (Fin (p + q)) (Fin (p + q)) ℂ} (hg : g ∈ Fo
     rw [← ixC_J, ← ixC_ct, ← ixC_mul, ← ixC_mul, hg']
   have hinv : (Formalism.UG.Jpq p q * (ixC g)ᴴ * Formalism.UG.Jpq p q) * ixC g = 1 := by
     rw [Matrix.mul_assoc, Matrix.mul_assoc, ← Matrix.mul_assoc (ixC g)ᴴ, h1, ← ixC_J, ← ixC_mul, Jm_sqC]
-    ext i j; simp [ixC, one_apply]
+    exact map_one (Matrix.reindexAlgEquiv ℂ ℂ finSumFinEquiv.symm)
   let u : GL (Formalism.BasicNotions.TH.Ix p q) ℂ :=
     ⟨ixC g, Formalism.UG.Jpq p q * (ixC g)ᴴ * Formalism.UG.Jpq p q, mul_eq_one_comm.1 hinv, hinv⟩
   have hu : u ∈ Formalism.UG.Upq p q := by
@@ -190,8 +190,9 @@ def sgnC : Formalism.BasicNotions.TH.Ix p q → ℂ := Sum.elim (fun _ => 1) (fu
 
 theorem Jpq_diagC : Formalism.UG.Jpq p q = diagonal (sgnC (p := p) (q := q)) := by
   ext a b
-  rcases a with a | a <;> rcases b with b | b <;> simp [Formalism.UG.Jpq, sgnC, fromBlocks, diagonal_apply, one_apply]
-    <;> split_ifs <;> simp_all
+  rcases a with a | a <;> rcases b with b | b <;>
+    simp [Formalism.UG.Jpq, sgnC, diagonal_apply, Matrix.one_apply]
+  split_ifs <;> simp
 
 theorem sgn_neC {a b : Formalism.BasicNotions.TH.Ix p q} (h : ¬ Formalism.BasicNotions.TH.sameBlock a b) : sgnC b - sgnC a ≠ 0 := by
   rcases a with a | a <;> rcases b with b | b <;> simp_all [Formalism.BasicNotions.TH.sameBlock, sgnC] <;> norm_num
@@ -240,7 +241,7 @@ theorem exists_contLiftC {p q : ℕ} (T : GrpData p q) (A : Set (Matrix (Fin (p 
     have key : ixC (Formalism.REAL.Jm (epq p q) * g.1ᴴ * Formalism.REAL.Jm (epq p q)) *
         ((T.cov (xs g) : GL _ ℂ) : Formalism.BasicNotions.TH.Mat p q) = 1 := by
       rw [h1, ← ixC_mul, Matrix.mul_assoc, Matrix.mul_assoc, ← Matrix.mul_assoc g.1ᴴ, hg, Jm_sqC]
-      ext i j; simp [ixC, one_apply]
+      exact map_one (Matrix.reindexAlgEquiv ℂ ℂ finSumFinEquiv.symm)
     calc (((T.cov (xs g))⁻¹ : GL _ ℂ) : Formalism.BasicNotions.TH.Mat p q)
         = (ixC (Formalism.REAL.Jm (epq p q) * g.1ᴴ * Formalism.REAL.Jm (epq p q)) *
           ((T.cov (xs g) : GL _ ℂ) : Formalism.BasicNotions.TH.Mat p q)) * (((T.cov (xs g))⁻¹ : GL _ ℂ) : Formalism.BasicNotions.TH.Mat p q) := by
@@ -391,7 +392,11 @@ theorem harish_chandra_descent : Descend := by
       obtain ⟨k, hk, rfl⟩ := hK' g hg
       rw [hσ]
       refine Submodule.smul_mem _ _ ?_
-      refine Submodule.span_induction (fun y hy => ?_) (by simp) (fun a b _ _ ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb)
+      refine Submodule.span_induction (fun y hy => ?_) (by simp)
+        (fun a b _ _ ha hb => by
+          change (πU.π k) (a + b) ∈ _
+          rw [(πU.π k).map_add a b]
+          exact add_mem ha hb)
         (fun c a _ ha => by rw [map_smul]; exact Submodule.smul_mem _ _ ha) hv
       obtain ⟨⟨k', hk'⟩, rfl⟩ := hy
       refine Submodule.subset_span ⟨⟨k * k', ?_⟩, by simp⟩

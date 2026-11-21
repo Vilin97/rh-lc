@@ -163,7 +163,7 @@ theorem haar_unique (hE : UJEmb) (hC : UHConj) (hP : IsUnit P.det) (hH : Pᴴ * 
     have := hν.conc
     rw [← hr] at this
     exact this
-  rw [← Measure.map_smul, ← h1, h2]
+  rw [← Measure.map_smul _ hm.aemeasurable, ← h1, h2]
 
 lemma hs_eq_gN (g : Mat k r) : hs g = gN g ^ 2 := by
   have h0 : 0 ≤ ∑ i, ∑ j, Complex.normSq (g i j) :=

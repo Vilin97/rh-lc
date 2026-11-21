@@ -19,6 +19,7 @@ variable {P : Type} [Fintype P] [DecidableEq P] {α : P → Type} [∀ p, AddCom
   (τ : ∀ p, (∀ q, α q) → α p) (hτ : ∀ p (x x' : ∀ q, α q), (∀ q, h q < h p → x q = x' q) → τ p x = τ p x')
   (A : ∀ p, AddSubgroup (α p)) (F : ∀ p, Set (α p)) (hFd : ∀ p (v : α p), ∃! a : A p, (a : α p) + v ∈ F p)
 
+include hBd hτ hFd in
 
 theorem box_fundT (g : ∀ q, α q) :
     ∃! γ : ∀ q, α q, (∀ p, γ p - τ p γ ∈ A p) ∧ ∀ p, mlaw B γ g p ∈ F p := by

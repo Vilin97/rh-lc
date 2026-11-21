@@ -188,7 +188,8 @@ theorem haar_map_inv_of_lattice (μ : Measure H) [IsHaarMeasure μ] (Γ : Subgro
   let c : ℝ≥0∞ := haarScalarFactor μ.inv μ
   have hc : μ.inv = c • μ := isMulLeftInvariant_eq_smul μ.inv μ
   have h2 : map Inv.inv (map Inv.inv μ) = c ^ 2 • μ := by
-    rw [← inv_def μ, hc, Measure.map_smul, ← inv_def μ, hc, smul_smul, pow_two]
+    rw [← inv_def μ, hc, Measure.map_smul c continuous_inv.measurable.aemeasurable,
+      ← inv_def μ, hc, smul_smul, pow_two]
   have μeq : μ = c ^ 2 • μ := by
     rw [map_map continuous_inv.measurable continuous_inv.measurable] at h2
     simpa only [inv_involutive, Function.Involutive.comp_self, Measure.map_id] using h2
@@ -217,8 +218,8 @@ theorem one_le_of_iterate_bounded (μ : Measure H) [IsHaarMeasure μ] {f : H →
     induction n with
     | zero => simp
     | succ n ih =>
-      rw [Function.iterate_succ, ← map_map (hf.iterate n).measurable hf.measurable, hc, Measure.map_smul,
-        ih, smul_smul, pow_succ']
+      rw [Function.iterate_succ, ← map_map (hf.iterate n).measurable hf.measurable, hc,
+        Measure.map_smul c (hf.iterate n).measurable.aemeasurable, ih, smul_smul, pow_succ']
   have hVpos : 0 < μ V := measure_pos_of_mem_nhds μ hV1
   have hLtop : μ L ≠ ∞ := hL.measure_lt_top.ne
   have hle : ∀ n : ℕ, μ V ≤ c ^ n * μ L := by
@@ -254,9 +255,9 @@ theorem haar_map_equiv_of_bounded (μ : Measure H) [IsHaarMeasure μ] (α : H �
     have e : μ.map (⇑α.symm ∘ ⇑α) = μ := by
       have : (⇑α.symm ∘ ⇑α) = id := funext fun x => α.symm_apply_apply x
       rw [this, Measure.map_id]
-    rw [← map_map (show Measurable (⇑α.symm) from α.symm.continuous.measurable)
-      (show Measurable (⇑α) from α.continuous.measurable), hc, Measure.map_smul, hc',
-      smul_smul] at e
+    have hαsymm : Measurable (⇑α.symm) := α.symm.continuous.measurable
+    rw [← map_map hαsymm (show Measurable (⇑α) from α.continuous.measurable), hc,
+      Measure.map_smul c hαsymm.aemeasurable, hc', smul_smul] at e
     exact e.symm
   obtain ⟨W, hW, hW1⟩ := exists_compact_mem_nhds (1 : H)
   have hWpos : 0 < μ W := measure_pos_of_mem_nhds μ hW1

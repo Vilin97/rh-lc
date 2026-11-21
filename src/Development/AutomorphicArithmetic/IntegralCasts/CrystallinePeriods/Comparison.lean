@@ -132,8 +132,8 @@ theorem exists_p_pow_mul_sub_mem (n : ℕ) {x : AinfInv p R} (hx : x ∈ acrisZe
 def toQuot (n : ℕ) : AcrisZero p R →+* AinfInv p R ⧸ AinfInv.kerTheta p R ^ n :=
   (Ideal.Quotient.mk _).comp (acrisZero p R).val.toRingHom
 
-theorem exists_p_pow_mul_eq (n : ℕ) (d : (toQuot p R n).range) : ∃ b : Ainf p R,
-    (p : (toQuot p R n).range) ^ n * d = (toQuot p R n).rangeRestrict (algebraMap _ _ b) := by
+theorem exists_p_pow_mul_eq (n : ℕ) (d : (toQuot (p := p) (R := R) n).range) : ∃ b : Ainf p R,
+    (p : (toQuot (p := p) (R := R) n).range) ^ n * d = (toQuot (p := p) (R := R) n).rangeRestrict (algebraMap _ _ b) := by
   obtain ⟨_, x, rfl⟩ := d
   obtain ⟨b, hb⟩ := exists_p_pow_mul_sub_mem n x.2
   refine ⟨b, Subtype.ext ?_⟩
@@ -143,15 +143,15 @@ theorem exists_p_pow_mul_eq (n : ℕ) (d : (toQuot p R n).range) : ∃ b : Ainf 
   exact this
 
 instance isAdicComplete_range (n : ℕ) :
-    IsAdicComplete (span {(p : (toQuot p R n).range)}) (toQuot p R n).range where
+    IsAdicComplete (span {(p : (toQuot (p := p) (R := R) n).range)}) (toQuot (p := p) (R := R) n).range where
   toIsPrecomplete := isPrecomplete_of_bounded p n
-    ((toQuot p R n).rangeRestrict.comp (algebraMap (Ainf p R) _)) (exists_p_pow_mul_eq n)
+    ((toQuot (p := p) (R := R) n).rangeRestrict.comp (algebraMap (Ainf p R) _)) (exists_p_pow_mul_eq n)
   haus' x hx := by
     obtain ⟨ϖ⟩ : Nonempty (PFlat p R) := inferInstance
     simp only [smul_eq_mul, Ideal.mul_top, SModEq.zero, Ideal.span_singleton_pow,
       Ideal.mem_span_singleton] at hx
     obtain ⟨b, hb⟩ := exists_p_pow_mul_eq n x
-    have key : ∀ b : Ainf p R, (toQuot p R n).rangeRestrict (algebraMap _ _ b) = 0 ↔
+    have key : ∀ b : Ainf p R, (toQuot (p := p) (R := R) n).rangeRestrict (algebraMap _ _ b) = 0 ↔
         Ainf.xi ϖ ^ n ∣ b := fun b => by
       rw [← AinfInv.algebraMap_mem_kerTheta_pow_iff, ← Ideal.Quotient.eq_zero_iff_mem,
         Subtype.ext_iff]
@@ -173,13 +173,13 @@ end AcrisZero
 namespace Acris
 
 
-def toRange (n : ℕ) : Acris p R →+* (AcrisZero.toQuot p R n).range :=
-  (AdicCompletion.ofAlgEquiv (span {(p : (AcrisZero.toQuot p R n).range)})).symm.toRingHom.comp
-    (adicMap _ _ (AcrisZero.toQuot p R n).rangeRestrict (span_natCast_le_comap p _))
+def toRange (n : ℕ) : Acris p R →+* (AcrisZero.toQuot (p := p) (R := R) n).range :=
+  (AdicCompletion.ofAlgEquiv (span {(p : (AcrisZero.toQuot (p := p) (R := R) n).range)})).symm.toRingHom.comp
+    (adicMap _ _ (AcrisZero.toQuot (p := p) (R := R) n).rangeRestrict (span_natCast_le_comap p _))
 
 theorem toRange_algebraMap (n : ℕ) (a : AcrisZero p R) :
-    toRange p R n (algebraMap _ _ a) = (AcrisZero.toQuot p R n).rangeRestrict a := by
-  have := adicMap_algebraMap _ _ (AcrisZero.toQuot p R n).rangeRestrict
+    toRange (p := p) (R := R) n (algebraMap _ _ a) = (AcrisZero.toQuot (p := p) (R := R) n).rangeRestrict a := by
+  have := adicMap_algebraMap _ _ (AcrisZero.toQuot (p := p) (R := R) n).rangeRestrict
     (span_natCast_le_comap p _) a
   refine (congrArg (AdicCompletion.ofAlgEquiv _).symm this).trans ?_
   exact (AdicCompletion.ofAlgEquiv _).symm.commutes _
@@ -187,30 +187,30 @@ theorem toRange_algebraMap (n : ℕ) (a : AcrisZero p R) :
 
 def rangeMap {m n : ℕ} (g : AinfInv p R ⧸ AinfInv.kerTheta p R ^ n →+*
       AinfInv p S ⧸ AinfInv.kerTheta p S ^ m) (e : AcrisZero p R →+* AcrisZero p S)
-    (h : ∀ a, g (AcrisZero.toQuot p R n a) = AcrisZero.toQuot p S m (e a)) :
-    (AcrisZero.toQuot p R n).range →+* (AcrisZero.toQuot p S m).range :=
+    (h : ∀ a, g (AcrisZero.toQuot (p := p) (R := R) n a) = AcrisZero.toQuot (p := p) (R := S) m (e a)) :
+    (AcrisZero.toQuot (p := p) (R := R) n).range →+* (AcrisZero.toQuot (p := p) (R := S) m).range :=
   (g.comp (Subring.subtype _)).codRestrict _ (by rintro ⟨_, a, rfl⟩; exact ⟨e a, (h a).symm⟩)
 
 theorem map_toRange {m n : ℕ} (g : AinfInv p R ⧸ AinfInv.kerTheta p R ^ n →+*
       AinfInv p S ⧸ AinfInv.kerTheta p S ^ m) (e : AcrisZero p R →+* AcrisZero p S)
-    (h : ∀ a, g (AcrisZero.toQuot p R n a) = AcrisZero.toQuot p S m (e a))
+    (h : ∀ a, g (AcrisZero.toQuot (p := p) (R := R) n a) = AcrisZero.toQuot (p := p) (R := S) m (e a))
     (e' : Acris p R →+* Acris p S) (h' : ∀ a, e' (algebraMap _ _ a) = algebraMap _ _ (e a))
-    (x : Acris p R) : g (toRange p R n x) = toRange p S m (e' x) :=
-  congrArg Subtype.val (RingHom.congr_fun (hom_ext (f := (rangeMap g e h).comp (toRange p R n))
-    (g := (toRange p S m).comp e') fun a => Subtype.ext (by
+    (x : Acris p R) : g (toRange (p := p) (R := R) n x) = toRange (p := p) (R := S) m (e' x) :=
+  congrArg Subtype.val (RingHom.congr_fun (hom_ext (f := (rangeMap g e h).comp (toRange (p := p) (R := R) n))
+    (g := (toRange (p := p) (R := S) m).comp e') fun a => Subtype.ext (by
       rw [RingHom.comp_apply, RingHom.comp_apply, h', toRange_algebraMap, toRange_algebraMap]
       exact h a)) x)
 
 
 def toBdRPlus : Acris p R →+* BdRPlus p R :=
   AdicCompletion.liftRingHom (AinfInv.kerTheta p R)
-    (fun n => (Subring.subtype _).comp (toRange p R n))
+    (fun n => (Subring.subtype _).comp (toRange (p := p) (R := R) n))
     (fun {m n} hle => RingHom.ext fun x =>
       map_toRange (Ideal.Quotient.factorPow _ hle) (RingHom.id _) (fun _ => rfl) (RingHom.id _)
         (fun _ => rfl) x)
 
 theorem eval_toBdRPlus (n : ℕ) (x : Acris p R) :
-    BdRPlus.eval p R n (toBdRPlus p R x) = toRange p R n x := by
+    BdRPlus.eval p R n (toBdRPlus p R x) = toRange (p := p) (R := R) n x := by
   unfold toBdRPlus BdRPlus.eval
   refine (AdicCompletion.evalₐ_liftRingHom _ _ ?_ n x).trans rfl
   exact fun {m n} hle => RingHom.ext fun x =>
@@ -246,7 +246,7 @@ theorem toBdRPlus_log (u : Ainf p R) (hu : Ainf.theta p R u = 1)
   refine BdRPlus.ext_eval fun n => ?_
   have hz : BdRPlus.eval p R n (algebraMap _ _ u - 1) ^ n = 0 :=
     BdRPlus.eval_pow_eq_zero (by simp [hu']) n
-  have h1 : ∀ N, n ≤ N → (toRange p R n (algebraMap _ _ (logPartial N u hu)) :
+  have h1 : ∀ N, n ≤ N → (toRange (p := p) (R := R) n (algebraMap _ _ (logPartial N u hu)) :
       AinfInv p R ⧸ AinfInv.kerTheta p R ^ n) =
       truncLog n (BdRPlus.eval p R n (algebraMap _ _ u - 1)) := fun N hN => by
     rw [← eval_toBdRPlus, toBdRPlus_algebraMap_zero, coe_logPartial, map_truncLog, map_truncLog,
@@ -254,16 +254,16 @@ theorem toBdRPlus_log (u : Ainf p R) (hu : Ainf.theta p R u = 1)
       map_one]
   rw [eval_toBdRPlus, BdRPlus.eval_log, ← h1 n le_rfl]
   congr 1
-  rw [IsHausdorff.eq_iff_smodEq (I := span {(p : (AcrisZero.toQuot p R n).range)})]
+  rw [IsHausdorff.eq_iff_smodEq (I := span {(p : (AcrisZero.toQuot (p := p) (R := R) n).range)})]
   intro k
-  have h2 : toRange p R n (algebraMap _ _ (logPartial n u hu)) =
-      toRange p R n (algebraMap _ _ (logPartial (max n (p ^ k)) u hu)) :=
+  have h2 : toRange (p := p) (R := R) n (algebraMap _ _ (logPartial n u hu)) =
+      toRange (p := p) (R := R) n (algebraMap _ _ (logPartial (max n (p ^ k)) u hu)) :=
     Subtype.ext (by rw [h1 _ le_rfl, h1 _ (le_max_left _ _)])
   have h3 := (eval_eq_zero_iff k (log u hu - algebraMap _ _ (logPartial (max n (p ^ k)) u hu))).1
     (by rw [RingHom.map_sub, eval_log u hu (le_max_right _ _), eval_algebraMap, sub_self])
   rw [h2, smul_eq_mul, Ideal.mul_top, SModEq.sub_mem, Ideal.span_singleton_pow,
     Ideal.mem_span_singleton, ← map_sub]
-  simpa using map_dvd (toRange p R n) h3
+  simpa using map_dvd (toRange (p := p) (R := R) n) h3
 
 @[simp] theorem toBdRPlus_logTeich (η : tateModule p R) :
     toBdRPlus p R (logTeich η) = BdRPlus.logTeich η := toBdRPlus_log _ _ _

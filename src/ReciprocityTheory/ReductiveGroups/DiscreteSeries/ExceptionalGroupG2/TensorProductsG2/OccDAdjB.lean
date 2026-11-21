@@ -173,7 +173,8 @@ theorem adjB_star_Kset {k : Matrix (Fin n) (Fin n) ℂ} (hk : k ∈ Kset ε) : k
     have hJ : (Jm ε)ᴴ = Jm ε := by
       rw [Jm, Matrix.diagonal_conjTranspose]
       congr 1
-      split_ifs <;> simp
+      ext a
+      exact adjSg_conj ε a
     rw [hJ] at h
     exact h.symm
 

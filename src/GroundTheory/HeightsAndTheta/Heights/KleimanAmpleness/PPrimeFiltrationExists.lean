@@ -132,6 +132,7 @@ theorem exists_isPrime_colonIdeal [IsNoetherianRing S] {A : Submodule (Poly S N)
       {I | ∃ (g : M) (e : ℤ), g ∈ 𝓜.piece e ∧ g ∉ A ∧ I = colonIdeal A g}
       ⟨_, g0, e0, hg0, hg0A, rfl⟩
   refine ⟨(g, e), hg, ?_, fun p hp d => homogeneousComponent_mem_colonIdeal hA hg hp d⟩
+  let : GradedAlgebra (homogeneousSubmodule (Fin (N + 1)) S) := MvPolynomial.gradedAlgebra
   refine Ideal.IsHomogeneous.isPrime_of_homogeneous_mem_or_mem
     (𝒜 := homogeneousSubmodule (Fin (N + 1)) S) ?_ ?_ ?_
   · intro i r hr
@@ -163,6 +164,7 @@ variable (𝓜)
 
 
 def primeFiltNext [IsNoetherianRing S] (A : Submodule (Poly S N) M) : M × ℤ :=
+  open scoped Classical in
   if h : 𝓜.IsGradedSub A ∧ A ≠ ⊤ then Classical.choose (exists_isPrime_colonIdeal h.1 h.2) else (0, 0)
 
 theorem primeFiltNext_mem [IsNoetherianRing S] (A : Submodule (Poly S N) M) :
@@ -206,6 +208,7 @@ theorem exists_primeFiltSeq_eq_top [IsNoetherianRing S] [Module.Finite (Poly S N
   rwa [← h2] at h1
 
 
+open scoped Classical in
 def primeFilt [IsNoetherianRing S] [Module.Finite (Poly S N) M] : PrimeFilt 𝓜 where
   n := Nat.find 𝓜.exists_primeFiltSeq_eq_top
   step i := 𝓜.primeFiltSeq i
@@ -233,6 +236,7 @@ variable {S : Type u} [CommRing S] {N : ℕ}
 variable {M : Type v} [AddCommGroup M] [Module (Poly S N) M] [Module S M]
   {𝓜 : GradedPMod S N M}
 
+open scoped Classical in
 theorem card_prime_eq_length (F : PrimeFilt 𝓜) (pp : Ideal (Poly S N)) [pp.IsPrime]
     (hpp : pp ∈ (Module.annihilator (Poly S N) M).minimalPrimes) :
     (((Finset.univ.filter fun k => F.prime k = pp).card : ℕ) : ℕ∞) =

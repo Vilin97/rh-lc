@@ -16,14 +16,14 @@ namespace Formalism.H
 section
 variable (V : Type*) [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V]
 
-theorem dualIsLattice : DualIsLattice V := by
+theorem dualIsLattice : DualIsLattice (V := V) := by
   intro Λ _ _
   obtain ⟨ι, _, _, e, he⟩ := exists_basis_span_eq Λ
   refine isLattice_of_eq_span (LinearMap.BilinForm.dualBasis (innerₗ V)
     dualLattice_innerₗ_nondegenerate e) (dual Λ) ?_
   rw [← he, dualLattice_dual_span_eq e]
 
-theorem dualDual : DualDual V := by
+theorem dualDual : DualDual (V := V) := by
   intro Λ _ _
   obtain ⟨ι, _, _, e, he⟩ := exists_basis_span_eq Λ
   rw [← he, dualLattice_dual_span_eq e, dualLattice_dual_span_eq,
@@ -31,7 +31,7 @@ theorem dualDual : DualDual V := by
 
 variable [MeasurableSpace V] [BorelSpace V]
 
-theorem covolumeDual : CovolumeDual V := by
+theorem covolumeDual : CovolumeDual (V := V) := by
   intro Λ _ _ _ _
   obtain ⟨ι, _, _, e, he⟩ := exists_basis_span_eq Λ
   subst he
@@ -54,10 +54,10 @@ theorem covolumeDual : CovolumeDual V := by
     covolDual_vol_fd, mul_one, mul_one, ← abs_inv]
   exact congrArg abs (eq_inv_of_mul_eq_one_left h)
 
-theorem poissonDecay : PoissonDecay V := poissonDecay_of (dualIsLattice V) (lattice_summable_decay V) (poisson_periodization V)
+theorem poissonDecay : PoissonDecay (V := V) := poissonDecay_of (dualIsLattice V) (lattice_summable_decay V) (poisson_periodization V)
   (unfolding_fourier_coefficient V) (lattice_fourier_series V)
 
-theorem poissonSchwartz : PoissonSchwartz V := poissonSchwartz_of (poissonDecay V) (schwartz_decay_gaussian V)
+theorem poissonSchwartz : PoissonSchwartz (V := V) := poissonSchwartz_of (poissonDecay V) (schwartz_decay_gaussian V)
 
 end
 

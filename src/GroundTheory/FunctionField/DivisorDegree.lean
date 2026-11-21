@@ -35,7 +35,7 @@ theorem linearIndependent_pow_of_transcendental {x : K} (hx : Transcendental k x
   rw [Finset.sum_eq_single i] at h
   · simpa using h
   · intro j _ hj
-    rw [if_neg (fun h' => hj (Fin.ext h'))]
+    exact Finsupp.single_eq_of_ne' (fun h' => hj (Fin.ext h'))
   · intro h'; exact absurd (Finset.mem_univ i) h'
 
 theorem adjoin_inv_eq {x : K} :
@@ -202,7 +202,7 @@ theorem finrank_L_add_divisor (D : Divisor k K) {x : K} (hx : x ≠ 0) :
 end Divisor
 
 
-noncomputable abbrev Pic := Divisor k K ⧸ principalDivisors k K
+noncomputable abbrev Pic := Divisor k K ⧸ principalDivisors (k := k) (K := K)
 
 namespace Pic
 

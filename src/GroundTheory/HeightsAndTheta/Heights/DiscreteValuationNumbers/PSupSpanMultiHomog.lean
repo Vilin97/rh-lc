@@ -16,7 +16,9 @@ attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 theorem isHomogeneous_of_isMultiHomogIdeal' {K : Type*} [DecidableEq K] {ι : K → Type*}
     {R : Type*} [CommRing R] {I : Ideal (MRing ι R)} (hI : IsMultiHomogIdeal I) :
-    I.IsHomogeneous (weightedHomogeneousSubmodule R (blockWeight ι)) := by
+    (by
+      classical
+      exact I.IsHomogeneous (weightedHomogeneousSubmodule R (blockWeight ι))) := by
   classical
   have e : I = Ideal.span
       {g | ∃ f ∈ I, ∃ b, g = weightedHomogeneousComponent (blockWeight ι) b f} := by

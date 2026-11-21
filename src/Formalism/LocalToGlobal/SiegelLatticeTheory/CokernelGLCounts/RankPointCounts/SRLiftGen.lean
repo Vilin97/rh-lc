@@ -81,7 +81,7 @@ theorem srLift_field (A : Matrix (Fin (n + 1)) (Fin (n + 1)) k) (K : Submodule k
   · have h0 : (LinearMap.ker A.mulVecLin).projectionOnto C hC (Pi.single (Fin.last n) 1) = 0 :=
       Submodule.linearProjOfIsCompl_apply_right hC ⟨_, heC⟩
     rw [LinearMap.toMatrix'_apply]
-    simp [h, h0]
+    simp only [h, LinearMap.comp_apply, h0, LinearMap.map_zero, Pi.zero_apply]
   · intro hdet
     obtain ⟨v, hv0, hv⟩ := Matrix.exists_mulVec_eq_zero_iff.2 hdet
     apply hv0

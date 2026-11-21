@@ -47,7 +47,7 @@ theorem UpperTheory.ConvolutionTheory.C.eigSplit :
     exact ⟨_, ⟨hmem _, Module.End.mem_eigenspace_iff.2 hμ⟩, h0⟩
   have hle : μ ≤ η := not_lt.1 fun h => hm ((hS μ).2 ⟨h, hne⟩)
   have hge : 0 ≤ μ := by
-    have h1 := ((ContinuousLinearMap.nonneg_iff_isPositive A).1 hA).re_inner_nonneg_right (prj W (b i))
+    have h1 := (ContinuousLinearMap.nonneg_iff_isPositive.1 hA).re_inner_nonneg_right (prj W (b i))
     rw [hμ, inner_smul_right, inner_self_eq_norm_sq_to_K] at h1
     have h2 : 0 < ‖prj W (b i)‖ ^ 2 := by positivity
     have h3 : 0 ≤ μ * ‖prj W (b i)‖ ^ 2 := by

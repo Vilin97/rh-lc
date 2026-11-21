@@ -23,7 +23,10 @@ theorem not_two_dvd_ord_norm (F K L : Type) [Field F] [ValuativeRel F] [Topologi
   obtain ⟨vK, tK, hK, eK⟩ := exists_isNonarchimedeanLocalField_valuativeExtension F K
   obtain ⟨vL, tL, hL, eL⟩ := exists_isNonarchimedeanLocalField_valuativeExtension K L
   have hm : ((Nat.card 𝓀[F] ^ 2 - 1 : ℕ) : 𝓀[K]) ≠ 0 :=
-    natCast_residueField_ne_zero K (natCast_card_pow_sub_one_ne_zero (K := F) two_ne_zero)
+    by
+      have hmF : ((Nat.card 𝓀[F] ^ 2 - 1 : ℕ) : 𝓀[F]) ≠ 0 :=
+        natCast_card_pow_sub_one_ne_zero (K := F) two_ne_zero
+      simpa using (map_ne_zero (algebraMap (𝓀[F]) (𝓀[K]))).2 hmF
   haveI : IsUnramified K L := ⟨ramificationIndex_eq_one_of_adjoin_eq_top hζ hm htop⟩
   have hodd : ¬ (2 : ℤ) ∣ ord s := by
     intro hd
@@ -95,7 +98,7 @@ theorem etaK_eq_neg_one : ∀ (F E : Type) [NontriviallyNormedField F] [Nontrivi
   haveI := isLocalField F
   haveI := isLocalField E
   haveI : FiniteDimensional F E := Module.finite_of_finrank_pos (by rw [hU.finrank_eq]; norm_num)
-  haveI : ValuativeExtension F E := ⟨fun a b => by
+  haveI : ValuativeExtension F E := ⟨fun {a b} => by
     change ‖algebraMap F E a‖ ≤ ‖algebraMap F E b‖ ↔ ‖a‖ ≤ ‖b‖
     rw [norm_algebraMap', norm_algebraMap']⟩
   have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) = 1 := by
@@ -126,7 +129,7 @@ theorem etaK_eq_neg_one : ∀ (F E : Type) [NontriviallyNormedField F] [Nontrivi
     | algebraMap x =>
       rw [← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply F A.K A.L]
       exact IntermediateField.algebraMap_mem _ _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   have htop' : A.K⟮algebraMap E A.L ζ⟯ = ⊤ := by
@@ -134,7 +137,6 @@ theorem etaK_eq_neg_one : ∀ (F E : Type) [NontriviallyNormedField F] [Nontrivi
     intro y _
     have hbc := A.push.symm.out
     induction y using hbc.inductionOn with
-    | zero => exact zero_mem _
     | tmul e => exact hE e
     | smul k y hy => exact IntermediateField.smul_mem _ (hy trivial)
     | add y z hy hz => exact add_mem (hy trivial) (hz trivial)

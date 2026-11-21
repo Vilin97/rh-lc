@@ -32,11 +32,11 @@ theorem mem_pInt {p : ℕ} {z : C} : z ∈ pInt (C := C) R p ↔ ∃ r : R, z = 
   exact ⟨fun ⟨r, h⟩ => ⟨r, h.symm⟩, fun ⟨r, h⟩ => ⟨r, h.symm⟩⟩
 
 theorem afLat_eq (p : ℕ) {ι : Type} [Fintype ι] (M : Submodule R ((ι → ZMod p) → C)) :
-    afLat p M = (M ⊔ pFun R p _).comap (toC C R _ ∘ₗ formR R p ι) := by
+    afLat p M = (M ⊔ pFun R p _).comap (toC (C := C) R _ ∘ₗ formR R p ι) := by
   ext l
   rw [Submodule.mem_comap, Submodule.mem_sup]
   change (∃ g ∈ M, ∀ x, g x - algebraMap R C (∑ i, l i * ((x i).val : R)) ∈ pInt R p) ↔ _
-  have hf : (toC C R _ ∘ₗ formR R p ι) l = fun x => algebraMap R C (∑ i, l i * ((x i).val : R)) := rfl
+  have hf : (toC (C := C) R _ ∘ₗ formR R p ι) l = fun x => algebraMap R C (∑ i, l i * ((x i).val : R)) := rfl
   rw [hf]
   constructor
   · rintro ⟨g, hg, h⟩
@@ -57,9 +57,9 @@ theorem afLat_eq (p : ℕ) {ι : Type} [Fintype ι] (M : Submodule R ((ι → ZM
     exact neg_mem hx
 
 theorem form_mem_lin (p : ℕ) [NeZero p] {ι : Type} [Fintype ι] (l : ι → R) :
-    (toC C R _ ∘ₗ formR R p ι) l ∈ linFun (C := C) R p (ι → ZMod p) := by
+    (toC (C := C) R _ ∘ₗ formR R p ι) l ∈ linFun (C := C) R p (ι → ZMod p) := by
   rw [linFun, Submodule.mem_inf]
-  have hf : (toC C R _ ∘ₗ formR R p ι) l = fun x => algebraMap R C (∑ i, l i * ((x i).val : R)) := rfl
+  have hf : (toC (C := C) R _ ∘ₗ formR R p ι) l = fun x => algebraMap R C (∑ i, l i * ((x i).val : R)) := rfl
   rw [hf]
   refine ⟨fun x => ⟨∑ i, l i * ((x i).val : R), rfl⟩, ?_⟩
   intro x y
@@ -119,12 +119,12 @@ theorem aflat_fg : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClose
           exact ⟨c, Or.inl hc.symm⟩ }
   rw [afLat_eq, Submodule.comap_comp]
   apply comap_fg_of_valuationRing
-  have hinj : Function.Injective (toC C R (ι → ZMod p)) := by
+  have hinj : Function.Injective (toC (C := C) R (ι → ZMod p)) := by
     intro f g h
     funext x
     exact hv.hom_inj (congrFun h x)
-  apply Submodule.fg_of_fg_map_injective (toC C R (ι → ZMod p)) hinj
-  have hle : AA.carrier ⊔ pFun R p (ι → ZMod p) ≤ LinearMap.range (toC C R (ι → ZMod p)) := by
+  apply Submodule.fg_of_fg_map_injective (toC (C := C) R (ι → ZMod p)) hinj
+  have hle : AA.carrier ⊔ pFun R p (ι → ZMod p) ≤ LinearMap.range (toC (C := C) R (ι → ZMod p)) := by
     apply sup_le
     · intro f hf
       have hi := AA.le_int hf
@@ -141,7 +141,7 @@ theorem aflat_fg : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClose
   · obtain ⟨B, _, hB⟩ := AA.lat
     rw [hB]
     exact Submodule.fg_span (Set.finite_range _)
-  · have hP : pFun R p (ι → ZMod p) = Submodule.map ((p : R) • toC C R (ι → ZMod p)) ⊤ := by
+  · have hP : pFun R p (ι → ZMod p) = Submodule.map ((p : R) • toC (C := C) R (ι → ZMod p)) ⊤ := by
       ext f
       simp only [Submodule.mem_map, Submodule.mem_top, true_and]
       rw [pFun, Submodule.mem_pi]
@@ -160,7 +160,7 @@ theorem aflat_fg : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClose
 theorem afquot : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (R : Type) [CommRing R] [Algebra R C], v.Integers R → v (p : C) < 1 → ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (AA : HopfOrder (C := C) R (ι → ZMod p)), Nonempty (AFQuot p AA.carrier ≃ₗ[R] ((ι → R) ⧸ afLat p AA.carrier)) := by
   intro p _ C _ _ _ v R _ _ hv hp ι _ _ AA
   haveI : NeZero p := ⟨(Fact.out : p.Prime).ne_zero⟩
-  let φ := toC C R (ι → ZMod p) ∘ₗ formR R p ι
+  let φ := toC (C := C) R (ι → ZMod p) ∘ₗ formR R p ι
   let K := Submodule.comap (linFun (C := C) R p (ι → ZMod p)).subtype (afFun p AA.carrier ⊔ pFun (C := C) R p (ι → ZMod p))
   let ψ : (ι → R) →ₗ[R] linFun (C := C) R p (ι → ZMod p) := LinearMap.codRestrict _ φ (fun l => form_mem_lin p l)
   let f := K.mkQ ∘ₗ ψ

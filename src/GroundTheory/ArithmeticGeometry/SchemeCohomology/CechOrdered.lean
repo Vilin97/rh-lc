@@ -243,24 +243,24 @@ lemma bd_ocone {q : ℕ} (c : ι) (S : Set ι) (hc : ∀ s ∈ S, c ≤ s) (z : 
   have hface : ∀ a : Fin (q + 2), t 0 ≤ (t ∘ a.succAbove) 0 := fun a =>
     ht.monotone (Fin.zero_le _)
   by_cases hct : c < t 0
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [if_pos hct, map_zsmul, ← cone_single, bd_cone, bd_single, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [ite_eq_left hct, map_zsmul, ← cone_single, bd_cone, bd_single, map_sum]
     simp only [ocone_single, smul_sub, map_zsmul, Finset.smul_sum]
     congr 1
     · simp
     · refine Finset.sum_congr rfl fun a _ => ?_
-      rw [if_pos (hct.trans_le (hface a)), cone_single]
+      rw [ite_eq_left (hct.trans_le (hface a)), cone_single]
       simp [mul_comm]
   · have hc0 : t 0 = c := le_antisymm (not_lt.mp hct) (hc _ (htS 0))
-    rw [if_neg hct, smul_zero, map_zero, Fin.sum_univ_succ]
+    rw [ite_eq_right hct, smul_zero, map_zero, Fin.sum_univ_succ]
     simp only [ocone_single, Fin.val_zero, pow_zero, one_smul, Fin.val_succ, map_zsmul]
     have h1 : c < (t ∘ (0 : Fin (q + 2)).succAbove) 0 := by
       rw [← hc0]
       exact ht (by simp)
-    rw [if_pos h1]
+    rw [ite_eq_left h1]
     have h2 : ∀ b : Fin (q + 1), ¬ c < (t ∘ b.succ.succAbove) 0 := fun b => by
       simp [hc0]
-    simp only [h2, if_false, smul_zero, Finset.sum_const_zero, add_zero]
+    simp only [h2, ite_false, smul_zero, Finset.sum_const_zero, add_zero]
     have h3 : (Fin.cons c (t ∘ (0 : Fin (q + 2)).succAbove) : Fin (q + 2) → ι) = t := by
       rw [← hc0]
       funext a
@@ -288,7 +288,7 @@ lemma bd_ocone_zero (c : ι) (S : Set ι) (hc : ∀ s ∈ S, c ≤ s) (z : Chain
     AddMonoidHom.id_apply, zmultiplesHom_apply, aug_single]
   rw [ocone_single]
   by_cases hct : c < t 0
-  · rw [if_pos hct, map_zsmul, bd_single, Fin.sum_univ_two]
+  · rw [ite_eq_left hct, map_zsmul, bd_single, Fin.sum_univ_two]
     have e0 : (Fin.cons c t : Fin 2 → ι) ∘ (0 : Fin 2).succAbove = t := by
       funext a; rw [Fin.fin_one_eq_zero a]; rfl
     have e1 : (Fin.cons c t : Fin 2 → ι) ∘ (1 : Fin 2).succAbove = fun _ => c := by
@@ -297,7 +297,7 @@ lemma bd_ocone_zero (c : ι) (S : Set ι) (hc : ∀ s ∈ S, c ≤ s) (z : Chain
     simp [sub_eq_add_neg]
   · have hc0 : t 0 = c := le_antisymm (not_lt.mp hct) (hc _ htS)
     have ht : t = fun _ => c := by funext a; rw [Fin.fin_one_eq_zero a, hc0]
-    rw [if_neg hct, smul_zero, map_zero, ht]
+    rw [ite_eq_right hct, smul_zero, map_zero, ht]
     simp
 
 noncomputable def minR {q : ℕ} (i : Fin (q + 1) → ι) : ι :=
@@ -327,6 +327,7 @@ lemma proj_supp : ∀ (q : ℕ) (i : Fin (q + 1) → ι),
   | 0, i => Supp.single _ ⟨fun a b hab => absurd hab (by simp [Fin.fin_one_eq_zero a,
       Fin.fin_one_eq_zero b]), fun a => ⟨a, rfl⟩⟩
   | q + 1, i => by
+    rw [proj, ocone]
     refine Supp.lin _ _ fun t ht => ?_
     have hw : Supp (fun t => StrictMono t ∧ InRange i t)
         (lin (proj q) (bd q (Finsupp.single i 1))) := by
@@ -353,8 +354,7 @@ theorem bd_proj : ∀ (q : ℕ) (i : Fin (q + 2) → ι),
   | 0, i => by
     have hw : lin (proj 0) (bd 0 (Finsupp.single i 1)) = bd 0 (Finsupp.single i 1) :=
       lin_single_id _
-    change bd 0 (ocone (minR i) (lin (proj 0) (bd 0 (Finsupp.single i 1)))) = _
-    rw [hw, bd_ocone_zero (minR i) (Set.range i) (fun s ⟨a, ha⟩ => ha ▸ minR_le i a)]
+    rw [proj, hw, bd_ocone_zero (minR i) (Set.range i) (fun s ⟨a, ha⟩ => ha ▸ minR_le i a)]
     · have : aug (bd 0 (Finsupp.single i 1)) = 0 := by
         set_option synthInstance.maxHeartbeats 100000 in
           rw [bd_single, map_sum]
@@ -363,8 +363,7 @@ theorem bd_proj : ∀ (q : ℕ) (i : Fin (q + 2) → ι),
     · exact Supp.bd (Supp.single (Q := fun t => InRange i t) _ fun a => ⟨a, rfl⟩)
         fun t ht a => ht _
   | q + 1, i => by
-    change bd (q + 1) (ocone (minR i) (lin (proj (q + 1)) (bd (q + 1) (Finsupp.single i 1)))) = _
-    rw [bd_ocone (minR i) (Set.range i) (fun s ⟨a, ha⟩ => ha ▸ minR_le i a)]
+    rw [proj, bd_ocone (minR i) (Set.range i) (fun s ⟨a, ha⟩ => ha ▸ minR_le i a)]
     · rw [bd_lin_proj q (bd_proj q), bd_bd, map_zero, map_zero, sub_zero]
     · rw [lin_bd_single_apply]
       exact Supp.sum _ _ fun a _ => ((proj_supp (q + 1) _).mono fun s hs =>
@@ -374,12 +373,11 @@ theorem proj_of_strictMono : ∀ (q : ℕ) (i : Fin (q + 1) → ι), StrictMono 
     proj q i = Finsupp.single i 1
   | 0, i, _ => rfl
   | q + 1, i, hi => by
-    change ocone (minR i) (lin (proj q) (bd q (Finsupp.single i 1))) = _
     have hmin : minR i = i 0 := le_antisymm (minR_le i 0) (by
       obtain ⟨a, ha⟩ := minR_mem i
       rw [← ha]
       exact hi.monotone (Fin.zero_le a))
-    rw [lin_bd_single_apply, hmin]
+    rw [proj, lin_bd_single_apply, hmin]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [fun a : Fin (q + 2) => proj_of_strictMono q _ (hi.comp (Fin.strictMono_succAbove a)),
       map_sum, map_zsmul, ocone_single, one_smul]
@@ -387,7 +385,7 @@ theorem proj_of_strictMono : ∀ (q : ℕ) (i : Fin (q + 1) → ι), StrictMono 
     have h1 : i 0 < (i ∘ (0 : Fin (q + 2)).succAbove) 0 := hi (by simp)
     have h2 : ∀ b : Fin (q + 1), ¬ i 0 < (i ∘ b.succ.succAbove) 0 := fun b => by
       simp
-    simp only [h1, h2, if_true, if_false, smul_zero, Finset.sum_const_zero, add_zero,
+    simp only [h1, h2, ite_true, ite_false, smul_zero, Finset.sum_const_zero, add_zero,
       Fin.val_zero, pow_zero, one_smul]
     congr 1
     funext a
@@ -425,7 +423,7 @@ lemma hom_supp : ∀ (q : ℕ) (i : Fin (q + 1) → ι), Supp (fun t => InRange 
         ((proj_supp (q + 1) i).mono fun t ht => ht.2)).sub ?_
       rw [lin_bd_single_apply]
       exact Supp.sum _ _ fun a _ => ((hom_supp q _).mono fun s hs => inRange_face a hs).smul _
-    change Supp _ (Finsupp.mapDomain _ _)
+    rw [hom, cone]
     refine Supp.mapDomain _ hw fun t ht a => ?_
     cases a using Fin.cases with
     | zero => exact ⟨0, rfl⟩
@@ -435,8 +433,7 @@ theorem bd_hom : ∀ (q : ℕ) (i : Fin (q + 2) → ι),
     bd (q + 1) (hom (q + 1) i) =
       Finsupp.single i 1 - proj (q + 1) i - lin (hom q) (bd q (Finsupp.single i 1))
   | 0, i => by
-    change bd 1 (cone (i 0) _) = _
-    rw [bd_cone]
+    rw [hom, bd_cone]
     have : bd 0 (Finsupp.single i 1 - proj 1 i - lin (hom 0) (bd 0 (Finsupp.single i 1))) = 0 := by
       rw [map_sub, map_sub, bd_proj, show hom 0 = fun _ => 0 from rfl, lin_zero', map_zero]
       rw [show lin (proj 0) (bd 0 (Finsupp.single i 1)) = bd 0 (Finsupp.single i 1) from
@@ -444,8 +441,7 @@ theorem bd_hom : ∀ (q : ℕ) (i : Fin (q + 2) → ι),
       simp
     rw [this, map_zero, sub_zero]
   | q + 1, i => by
-    change bd (q + 2) (cone (i 0) _) = _
-    rw [bd_cone]
+    rw [hom, bd_cone]
     have : bd (q + 1) (Finsupp.single i 1 - proj (q + 2) i -
         lin (hom (q + 1)) (bd (q + 1) (Finsupp.single i 1))) = 0 := by
       rw [map_sub, map_sub, bd_proj, ← lin_comp]
@@ -472,6 +468,7 @@ lemma inter_le_of_inRange {q r : ℕ} {i : Fin (r + 1) → ι} {t : Fin (q + 1) 
 variable {P U}
 
 
+open scoped Classical in
 noncomputable def pair {q : ℕ} (σ : Cochain P U q) (V : Opens X) : Chain ι q →+ P.obj (op V) :=
   Finsupp.liftAddHom fun t =>
     if h : V ≤ inter U t then zmultiplesHom _ (res P h (σ t)) else 0

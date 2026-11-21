@@ -27,6 +27,7 @@ theorem equation_of_zwPoly {z w : K} (h : zwPoly V z w = 0) (hw : w ≠ 0) :
 variable [V.IsElliptic]
 
 
+open scoped Classical in
 noncomputable def zwPoint (z w : K) : V.toAffine.Point :=
   if h : zwPoly V z w = 0 ∧ w ≠ 0 then Point.mk (equation_of_zwPoly V h.1 h.2) else 0
 
@@ -289,6 +290,7 @@ theorem pointOf_injective {u u' : MvPowerSeries τ R} (hu : MvPowerSeries.consta
   exact hι h1
 
 
+open scoped Classical in
 theorem pointOf_add [Nonempty τ] {u₁ u₂ : MvPowerSeries τ R}
     (h₁ : MvPowerSeries.constantCoeff u₁ = 0) (h₂ : MvPowerSeries.constantCoeff u₂ = 0)
     (hu₁ : u₁ ≠ 0) (hu₂ : u₂ ≠ 0) (hx : u₁ * wAt W u₂ ≠ u₂ * wAt W u₁) :
@@ -451,6 +453,7 @@ variable {R : Type*} [CommRing R] [IsDomain R] (W : WeierstrassCurve R) [Fact (W
 attribute [local instance] isDomain_mvPowerSeries
 
 
+open scoped Classical in
 theorem pointOf_add_of_coeff {τ : Type*} [Nonempty τ] {u₁ u₂ : MvPowerSeries τ R}
     (h₁ : MvPowerSeries.constantCoeff u₁ = 0) (h₂ : MvPowerSeries.constantCoeff u₂ = 0)
     {i₁ i₂ i₃ i₄ : τ} (hi₁ : MvPowerSeries.coeff (Finsupp.single i₁ 1) u₁ ≠ 0)

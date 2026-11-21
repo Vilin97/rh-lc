@@ -60,4 +60,8 @@ open WlocSk.HM WlocSk.WRI in
 theorem unipotent_right_invariance : WlocSk.WRightInv := by
   intro k r z μW hz hT hH _ h hh
   obtain ⟨c, -, -, hμ⟩ := haar_unique _ (uw_clsub z) μW hH
-  rw [hμ, Measure.map_smul, hmeas_right _ _ (compactW z hz hT) h hh]
+  have hR : Continuous (fun x : Formalism.QuantumDeterminants.Mt k r =>
+      fun i j => (Matrix.of x * h) i j) :=
+    Continuous.matrix_mul continuous_id continuous_const
+  rw [hμ, Measure.map_smul c hR.measurable.aemeasurable,
+    hmeas_right _ _ (compactW z hz hT) h hh]

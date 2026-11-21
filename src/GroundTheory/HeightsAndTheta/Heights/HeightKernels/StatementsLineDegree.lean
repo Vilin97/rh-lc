@@ -26,7 +26,9 @@ abbrev ProjField (K : Type) [Field K] (i : ℕ) : Type := FractionRing (MvPolyno
 
 def embComp {K : Type} [Field K] [NumberField K] {i : ℕ} (σ : K →+* ℂ) (z : ProjIdx K i → ℂ) :
     Fin i → ℂ :=
-  fun j => ∑ m, (canonicalEmbedding.latticeBasis K).repr (Pi.single σ 1) m * z (m, j)
+  by
+    classical
+    exact fun j => ∑ m, (canonicalEmbedding.latticeBasis K).repr (Pi.single σ 1) m * z (m, j)
 
 def latticeNormSq {K : Type} [Field K] [NumberField K] {i : ℕ} (F : HermLattice K i)
     (z : ProjIdx K i → ℂ) : ℝ :=
@@ -49,6 +51,7 @@ theorem embComp_smul {K : Type} [Field K] [NumberField K] {i : ℕ} (σ : K →+
 theorem sum_emb_embComp {K : Type} [Field K] [NumberField K] {i : ℕ} (z : ProjIdx K i → ℂ)
     (m : Module.Free.ChooseBasisIndex ℤ (𝓞 K)) (j : Fin i) :
     ∑ σ : K →+* ℂ, σ (integralBasis K m) * embComp σ z j = z (m, j) := by
+  classical
   set b := canonicalEmbedding.latticeBasis K
   have hb : b m = ∑ σ : K →+* ℂ, σ (integralBasis K m) • (Pi.single σ 1 : (K →+* ℂ) → ℂ) := by
     funext τ

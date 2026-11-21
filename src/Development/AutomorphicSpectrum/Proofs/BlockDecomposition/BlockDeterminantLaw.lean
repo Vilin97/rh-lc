@@ -121,6 +121,7 @@ variable {E : Type} [Field E]
 
 theorem bdet_rat (A : Ad E R) (hi : Function.Injective A.i) (s : Set ι) {p : GL ι R}
     (hp : p ∈ stab R s) (hr : p ∈ A.ratGL ι) : ∃ x, bdet s p = Units.map A.i.toMonoidHom x := by
+  classical
   obtain ⟨g, rfl⟩ := hr
   set d : E := ((g : Matrix ι ι E).submatrix (Subtype.val : s → ι) Subtype.val).det with hd
   have hval : ((bdet s (Matrix.GeneralLinearGroup.map A.i g) : Rˣ) : R) = A.i d := by
@@ -139,6 +140,7 @@ theorem bdet_rat (A : Ad E R) (hi : Function.Injective A.i) (s : Set ι) {p : GL
   rfl
 
 
+open Classical in
 theorem norm_det_blk (M : Matrix ι ι ℂ) (hM : M ∈ Matrix.unitaryGroup ι ℂ) (s : Set ι)
     (h0 : ∀ r, r ∉ s → ∀ c ∈ s, M r c = 0) :
     ‖(M.submatrix (Subtype.val : s → ι) Subtype.val).det‖ = 1 := by
@@ -212,6 +214,7 @@ theorem lg_eq_zero (A : Ad E R) (hA : A.GoodL) (u : Rˣ) (h1 : (u : R) ∈ A.O)
 
 theorem lg_bdet (A : Ad E R) (hA : A.GoodL) (s : Set ι) {p : GL ι R} (hp : p ∈ stab R s)
     (hk : p ∈ A.kGL ι) : A.lg (bdet s p) = 0 := by
+  classical
   refine lg_eq_zero A hA _ ?_ ?_ fun w => ?_
   · rw [bdet_val s hp]
     exact det_mem_subring _ _ fun r c => (hk.1 _ _).1

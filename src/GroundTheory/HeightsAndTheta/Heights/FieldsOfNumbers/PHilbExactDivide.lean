@@ -23,6 +23,7 @@ variable {K : Type} [DecidableEq K] {ι : K → Type} {F : Type u} [Field F]
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 
+open scoped Classical in
 theorem component_mul_form {c : K → ℕ} {s : MRing ι F} (hs : IsMultiHomog s c)
     (t : MRing ι F) (n : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) n (t * s) =

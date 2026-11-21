@@ -179,9 +179,9 @@ end Dehom
 theorem finrank_chart_eq (V : Ideal (MRing ι F)) (hV : IsMultiProjPrime V) (i : ∀ k, ι k)
     (hi : ∀ k, (X ⟨k, i k⟩ : MRing ι F) ∉ V)
     (hfin : haveI := hV.isPrime; FiniteDimensional F (FieldNumbers.homFracDegZero V)) :
-    haveI := hV.isPrime
-    Module.finrank F (MRing ι F ⧸ ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i) =
-      Module.finrank F (FieldNumbers.homFracDegZero V) := by
+    (haveI := hV.isPrime;
+      Module.finrank F (MRing ι F ⧸ ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i) =
+        Module.finrank F (FieldNumbers.homFracDegZero V)) := by
   haveI := hV.isPrime
   set H := FieldNumbers.homFracDegZero V
   let ρ := Ideal.Quotient.liftₐ (ReciprocityTheory.ChartRestriction.G.AI.I1.chartIdeal V i) (dehom V i)

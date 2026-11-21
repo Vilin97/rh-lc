@@ -90,9 +90,7 @@ private theorem mem_Hp_iff_orthogonal {T0 T1 : E} (Λ : Submodule (NumberField.R
 private theorem isLattice_sup_span_singleton (Λ : Submodule (NumberField.RingOfIntegers E) S.V)
     (hΛ : Submodule.IsLattice E Λ) (v : S.V) :
     Submodule.IsLattice E (Λ ⊔ Submodule.span (NumberField.RingOfIntegers E) {v}) := by
-  refine ⟨hΛ.fg.sup (Submodule.fg_span_singleton v), ?_⟩
-  rw [eq_top_iff, ← hΛ.span_eq_top]
-  exact Submodule.span_mono (SetLike.coe_subset_coe.2 le_sup_left)
+  exact Submodule.IsLattice.of_fg E (hΛ.fg.sup (Submodule.fg_span_singleton v))
 
 private theorem flagG_ext_of_e_eq_of_z_eq {T0 : E} (F G : FlagG S r T0) (he : F.e = G.e) (hz : F.z = G.z) :
     F = G := by

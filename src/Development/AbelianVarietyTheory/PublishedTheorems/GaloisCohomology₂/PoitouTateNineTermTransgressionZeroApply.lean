@@ -23,6 +23,7 @@ abbrev muLoc (A : ValuationSubring Ω) :
   charRep ((cycMod F Ω l r).comp (Dec (F := F) A).subtype)
 
 
+variable (Ω) in
 abbrev InvFam : Type :=
   ∀ A : ValuationSubring Ω, H2 (muLoc F l r A) →ₗ[ZMod (l ^ r)] ZMod (l ^ r)
 

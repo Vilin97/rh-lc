@@ -203,7 +203,7 @@ private theorem PRep.d2 {D : GDet n A G} {P : MvPolynomial G A} (h : PRep D P) :
 private def Mn (G : Type) (n : ℕ) : Type := {d : G →₀ ℕ // d.degree = n}
 
 private instance (G : Type) [Finite G] (n : ℕ) : Finite (Mn G n) :=
-  ((Finsupp.finite_of_degree_le (σ := G) n).subset fun _ h => le_of_eq h).to_subtype
+  (Finsupp.finite_of_degree_eq (σ := G) n).to_subtype
 
 private def pol (a : Mn G n → A) : MvPolynomial G A :=
   letI := Fintype.ofFinite (Mn G n)

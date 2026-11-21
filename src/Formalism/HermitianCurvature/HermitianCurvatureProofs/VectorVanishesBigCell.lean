@@ -152,7 +152,10 @@ theorem orbJ_one_zero (S : B.RealPlaceData k r Wp Wq) {γ : B.Mat k r} (hγ : γ
     intro θ hθ p hp
     have h := hθ.2.2 p hp
     rw [hR, integral_dirac] at h
-    simpa [hact] using h
+    have hrow : (Matrix.of (row 1) : B.Mat k r) = 1 := by
+      ext i j
+      simp
+    simpa [hrow, hact] using h
   unfold D.orbJ
   split_ifs with hex
   · have h1 := hθ _ hex.choose_spec.1

@@ -17,7 +17,11 @@ namespace ProjSecDegree
 
 variable {n e : ℕ} (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin (e + 1)) (Fin n) ℂ)
 
+set_option hygiene false in
+local notation "ℝt" => MvPolynomial (Fin (e + 1)) ℂ
 
+set_option hygiene false in
+local notation "𝕂" => FractionRing ℝt
 
 theorem projVar_ne_zero (i : Fin (e + 1)) : projVar e i ≠ 0 :=
   (map_ne_zero_iff _ (IsFractionRing.injective ℝt 𝕂)).2 (X_ne_zero i)
@@ -54,6 +58,7 @@ theorem projHom_X (i : Fin (e + 1)) :
   simp [ComplexSets.projHom, ComplexSets.pullback]
 
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem finrank_eq [Algebra ℝt (MvPolynomial (Fin n) ℂ ⧸ J)]
     (hφ : ∀ p, algebraMap ℝt (MvPolynomial (Fin n) ℂ ⧸ J) p = ComplexSets.projHom J A p) :
     Module.finrank 𝕂 (TensorProduct ℝt 𝕂 (MvPolynomial (Fin n) ℂ ⧸ J)) =
@@ -140,7 +145,7 @@ theorem finrank_eq [Algebra ℝt (MvPolynomial (Fin n) ℂ ⧸ J)]
     simp only [ψ, Ideal.Quotient.lift_mk, RingHom.comp_apply, σ, MvPolynomial.map_X]
   have h₂ : G.comp F = AlgHom.id 𝕂 _ := by
     refine Algebra.TensorProduct.ext (Subsingleton.elim _ _) ?_
-    apply AlgHom.coe_ringHom_injective
+    apply AlgHom.toRingHom_injective
     refine Ideal.Quotient.ringHom_ext (MvPolynomial.ringHom_ext (fun c => ?_) (fun j => ?_))
     · rw [RingHom.comp_apply, RingHom.comp_apply, ← projHom_C J A, ← hφ, AlgHom.coe_toRingHom,
         AlgHom.coe_toRingHom, AlgHom.commutes, AlgHom.commutes]

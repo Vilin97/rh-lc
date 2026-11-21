@@ -20,7 +20,7 @@ variable (k : Type) [CommRing k] [Algebra ℚ k] [Algebra R k]
 def liftX (f : PS k 1 d) : AA k d := MvPowerSeries.subst (fun p : Fin 1 × Fin d => (X (Sum.inl p.2) : AA k d)) f
 
 def sgOf (h : PS k 2 d) (i : Fin d) : PS k 1 d :=
-  -ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), i) h)
+  -ev (n := 1) ![pt k d 0, 0] (pderiv (R := k) ((1 : Fin 2), i) h)
 
 def sg1 (h : PS k 2 d) : Matrix (Fin d) (Fin d) k :=
   fun i j => coeff (Finsupp.single ((0 : Fin 1), j) 1) (sgOf k h i)
@@ -29,12 +29,12 @@ def dAct (B : FB R d O) (a : O) : Matrix (Fin d) (Fin d) k :=
   fun i j => coeff (Finsupp.single ((0 : Fin 1), j) 1) (B.actK k a i)
 
 def Dx (B : FB R d O) (u : Fin d → k) (G : AA k d) : AA k d :=
-  ∑ j : Fin d, liftX k (∑ i : Fin d, C (u i) * ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), i) (B.FK k j))) *
-    pderiv k (Sum.inl j) G
+  ∑ j : Fin d, liftX k (∑ i : Fin d, C (u i) * ev (n := 1) ![pt k d 0, 0]
+    (pderiv (R := k) ((1 : Fin 2), i) (B.FK k j))) * pderiv (R := k) (Sum.inl j) G
 
 def nabla (B : FB R d O) (h : PS k 2 d) (m : ℕ) (u φ : Fin d → k) (G : AA k d) : AA k d :=
-  Dx k B u G + ∑ i : Fin d, liftX k (Dof (B.FK k) u (sgOf k h i)) * pderiv k (Sum.inr i) G +
-    ∑ i : Fin d, C (φ i) * pderiv k (Sum.inr i) G -
+  Dx k B u G + ∑ i : Fin d, liftX k (Dof (B.FK k) u (sgOf k h i)) * pderiv (R := k) (Sum.inr i) G +
+    ∑ i : Fin d, C (φ i) * pderiv (R := k) (Sum.inr i) G -
     C (m : k) * (∑ i : Fin d, (X (Sum.inr i) - liftX k (sgOf k h i)) * C (u i)) * G
 
 def nablaPoly (B : FB R d O) (h : PS k 2 d) (m : ℕ) {ι : Type} [Fintype ι] (u : ι → Fin d → k)

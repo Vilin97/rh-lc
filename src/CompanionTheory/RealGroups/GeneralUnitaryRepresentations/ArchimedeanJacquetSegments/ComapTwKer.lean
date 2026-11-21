@@ -67,17 +67,17 @@ end Abstract
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
-def Q (ψ : AddChar k Circle) {n : ℕ} : (j : ℕ) → (τ : MRep k (n + j)) →
-    τ.V →ₗ[ℂ] TwJacquet (iterPhi k ψ j τ).ρ (MirUin k n) 1
+def Q (ψ : AddChar k Circle) {n : ℕ} : (j : ℕ) → (τ : MRep (n + j)) →
+    τ.V →ₗ[ℂ] TwJacquet (iterPhi ψ j τ).ρ (MirUin k n) 1
   | 0, τ => (twKer τ.ρ (MirUin k n) 1).mkQ
-  | j + 1, τ => (Q ψ j (MRep.phiM k ψ τ)) ∘ₗ (twKer τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j))).mkQ
+  | j + 1, τ => (Q ψ j (MRep.phiM ψ τ)) ∘ₗ (twKer τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j))).mkQ
 
-theorem Q_surj (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep k (n + j)), Function.Surjective (Q k ψ j τ)
+theorem Q_surj (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep (n + j)), Function.Surjective (Q ψ j τ)
   | 0, τ => Submodule.mkQ_surjective _
-  | j + 1, τ => (Q_surj ψ j (MRep.phiM k ψ τ)).comp (Submodule.mkQ_surjective _)
+  | j + 1, τ => (Q_surj ψ j (MRep.phiM ψ τ)).comp (Submodule.mkQ_surjective _)
 
-theorem ker_Q (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep k (n + j)),
-    LinearMap.ker (Q k ψ j τ) = twKer τ.ρ (derUnipM k (n + j) n) (derCharM k ψ (n + j) n)
+theorem ker_Q (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep (n + j)),
+    LinearMap.ker (Q ψ j τ) = twKer τ.ρ (derUnipM k (n + j) n) (derCharM ψ (n + j) n)
   | 0, τ => by
     show LinearMap.ker (twKer τ.ρ (MirUin k n) 1).mkQ = _
     rw [Submodule.ker_mkQ]
@@ -86,14 +86,14 @@ theorem ker_Q (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep k (n 
     have hnm : n ≤ n + j := Nat.le_add_right n j
     have H := comap_twKer τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j)) (phiMinus k ψ τ.ρ)
       ((levi k (n + j + 1)).comp (Mir k (n + j)).subtype) (fun _ _ => rfl) (derUnipM k (n + j) n)
-      (derCharM k ψ (n + j) n) (derUnipM k (n + j + 1) n) (derCharM k ψ (n + j + 1) n)
+      (derCharM ψ (n + j) n) (derUnipM k (n + j + 1) n) (derCharM ψ (n + j + 1) n)
       (GlobalTheory.CompanionTheory.BZMirStep.MirUin_step ψ hnm) (GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ hnm)
       (GlobalTheory.CompanionTheory.BZMirStep.derUnipM_decomp hnm)
     ext v
     have e1 := Submodule.ext_iff.1 H v
     rw [Submodule.mem_comap] at e1
     refine Iff.trans ?_ e1
-    have e2 := Submodule.ext_iff.1 (ker_Q ψ j (MRep.phiM k ψ τ))
+    have e2 := Submodule.ext_iff.1 (ker_Q ψ j (MRep.phiM ψ τ))
       ((twKer τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j))).mkQ v)
     exact e2
 
@@ -102,13 +102,13 @@ def E {n : ℕ} : (j : ℕ) → GL (Fin n) k →* Mir k (n + j)
   | 0 => levi k n
   | j + 1 => (levi k (n + j + 1)).comp ((Mir k (n + j)).subtype.comp (E j))
 
-theorem Q_equiv (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep k (n + j)) (g : GL (Fin n) k) (v : τ.V),
-    Q k ψ j τ (τ.ρ (E k j g) v) = derivM k ψ j τ g (Q k ψ j τ v)
+theorem Q_equiv (ψ : AddChar k Circle) {n : ℕ} : ∀ (j : ℕ) (τ : MRep (n + j)) (g : GL (Fin n) k) (v : τ.V),
+    Q ψ j τ (τ.ρ (E j g) v) = derivM ψ j τ g (Q ψ j τ v)
   | 0, τ, g, v => rfl
-  | j + 1, τ, g, v => Q_equiv ψ j (MRep.phiM k ψ τ) g (Submodule.Quotient.mk v)
+  | j + 1, τ, g, v => Q_equiv ψ j (MRep.phiM ψ τ) g (Submodule.Quotient.mk v)
 
 theorem E_val_zero {n : ℕ} (g : GL (Fin n) k) (i l : Fin (n + 1)) :
-    (((E k 0 g : Mir k n) : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) i l =
+    (((E 0 g : Mir k n) : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) i l =
       if h : (i : ℕ) < n ∧ (l : ℕ) < n then (g : Matrix (Fin n) (Fin n) k) ⟨i, h.1⟩ ⟨l, h.2⟩
       else (1 : Matrix (Fin (n + 1)) (Fin (n + 1)) k) i l := by
   show glEmbMat k n (g : Matrix (Fin n) (Fin n) k) i l = _
@@ -123,11 +123,11 @@ theorem E_val_zero {n : ℕ} (g : GL (Fin n) k) (i l : Fin (n + 1)) :
     | cast l => simp [glEmbMat]
 
 theorem E_val_succ {n j : ℕ} (g : GL (Fin n) k)
-    (ih : ∀ i l : Fin (n + j + 1), (((E k j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) :
+    (ih : ∀ i l : Fin (n + j + 1), (((E j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) :
       Matrix (Fin (n + j + 1)) (Fin (n + j + 1)) k) i l =
       if h : (i : ℕ) < n ∧ (l : ℕ) < n then (g : Matrix (Fin n) (Fin n) k) ⟨i, h.1⟩ ⟨l, h.2⟩
       else (1 : Matrix (Fin (n + j + 1)) (Fin (n + j + 1)) k) i l) (i l : Fin (n + j + 1 + 1)) :
-    glEmbMat k (n + j + 1) (((E k j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) :
+    glEmbMat k (n + j + 1) (((E j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) :
       Matrix (Fin (n + j + 1)) (Fin (n + j + 1)) k) i l =
       if h : (i : ℕ) < n ∧ (l : ℕ) < n then (g : Matrix (Fin n) (Fin n) k) ⟨i, h.1⟩ ⟨l, h.2⟩
       else (1 : Matrix (Fin (n + j + 1 + 1)) (Fin (n + j + 1 + 1)) k) i l := by
@@ -148,7 +148,7 @@ theorem E_val_succ {n j : ℕ} (g : GL (Fin n) k)
       simp [Matrix.one_apply]
 
 theorem E_val {n : ℕ} (g : GL (Fin n) k) : ∀ (j : ℕ) (i l : Fin (n + j + 1)),
-    (((E k j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) : Matrix (Fin (n + j + 1)) (Fin (n + j + 1)) k) i l =
+    (((E j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) : Matrix (Fin (n + j + 1)) (Fin (n + j + 1)) k) i l =
       if h : (i : ℕ) < n ∧ (l : ℕ) < n then (g : Matrix (Fin n) (Fin n) k) ⟨i, h.1⟩ ⟨l, h.2⟩
       else (1 : Matrix (Fin (n + j + 1)) (Fin (n + j + 1)) k) i l
   | 0, i, l => E_val_zero g i l
@@ -168,7 +168,7 @@ theorem one_std {n t N : ℕ} (h : n + t = N) (a b : Fin n ⊕ Fin t) :
   simp [Matrix.one_apply, stdSum_inj]
 
 theorem E_eq {n j : ℕ} (g : GL (Fin n) k) :
-    ((E k j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) =
+    ((E j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) =
       emb₂ k (stdSum (show n + (j + 1) = n + j + 1 from rfl)) (g, 1) := by
   ext i l
   obtain ⟨a, rfl⟩ := (stdSum (show n + (j + 1) = n + j + 1 from rfl)).surjective i
@@ -239,8 +239,8 @@ end Blocks
 
 def Q' (ψ : AddChar k Circle) {n t N : ℕ} (h : n + t = N) {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) :
-    V →ₗ[ℂ] TwJacquet (jacU₂ (stdSum h) π) (rightUnip k n t) (rightWhit k ψ n t) :=
-  (twKer (jacU₂ (stdSum h) π) (rightUnip k n t) (rightWhit k ψ n t)).mkQ ∘ₗ
+    V →ₗ[ℂ] TwJacquet (jacU₂ (stdSum h) π) (rightUnip n t) (rightWhit ψ n t) :=
+  (twKer (jacU₂ (stdSum h) π) (rightUnip n t) (rightWhit ψ n t)).mkQ ∘ₗ
     (twKer π (unipRad k (two (stdSum h))) 1).mkQ
 
 theorem Q'_surj (ψ : AddChar k Circle) {n t N : ℕ} (h : n + t = N) {V : Type} [AddCommGroup V] [Module ℂ V]
@@ -249,18 +249,18 @@ theorem Q'_surj (ψ : AddChar k Circle) {n t N : ℕ} (h : n + t = N) {V : Type}
 
 theorem Q'_equiv (ψ : AddChar k Circle) {n t N : ℕ} (h : n + t = N) {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) (g : GL (Fin n) k) (v : V) :
-    Q' k ψ h π (π (emb₂ k (stdSum h) (g, 1)) v) = derRep k ψ h π g (Q' k ψ h π v) := rfl
+    Q' k ψ h π (π (emb₂ k (stdSum h) (g, 1)) v) = derRep ψ h π g (Q' k ψ h π v) := rfl
 
 theorem derChar_val (ψ : AddChar k Circle) {N n : ℕ} (x : derUnip k N n) :
-    derChar k ψ N n x = Circle.toUnits (ψ (∑ p ∈ Finset.univ.filter
+    derChar ψ N n x = Circle.toUnits (ψ (∑ p ∈ Finset.univ.filter
       (fun p : Fin N × Fin N => (p.2 : ℕ) = p.1 + 1 ∧ n ≤ (p.1 : ℕ)),
         ((x : GL (Fin N) k) : Matrix (Fin N) (Fin N) k) p.1 p.2)) := rfl
 
 theorem ker_Q' (ψ : AddChar k Circle) {n t N : ℕ} (h : n + t = N) {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) :
-    LinearMap.ker (Q' k ψ h π) = twKer π (derUnip k N n) (derChar k ψ N n) := by
+    LinearMap.ker (Q' k ψ h π) = twKer π (derUnip k N n) (derChar ψ N n) := by
   have H := comap_twKer π (unipRad k (two (stdSum h))) 1 (jacU₂ (stdSum h) π) (emb₂ k (stdSum h)) (fun _ _ => rfl)
-    (rightUnip k n t) (rightWhit k ψ n t) (derUnip k N n) (derChar k ψ N n) ?_ ?_ ?_
+    (rightUnip n t) (rightWhit ψ n t) (derUnip k N n) (derChar ψ N n) ?_ ?_ ?_
   · ext v
     have e1 := Submodule.ext_iff.1 H v
     rw [Submodule.mem_comap] at e1
@@ -365,7 +365,7 @@ theorem ker_Q' (ψ : AddChar k Circle) {n t N : ℕ} (h : n + t = N) {V : Type} 
     have hD : IsUnit D := (Matrix.isUnit_iff_isUnit_det D).2 (by rw [hdet]; exact isUnit_one)
     let Dg : GL (Fin t) k := hD.unit
     have hDg : Dg ∈ unipB k (Fin t) := (mem_unipB k).2 ⟨hDl, hDd⟩
-    let a : rightUnip k n t := ⟨(1, Dg), Subgroup.mem_prod.2 ⟨Subgroup.one_mem _, hDg⟩⟩
+    let a : rightUnip n t := ⟨(1, Dg), Subgroup.mem_prod.2 ⟨Subgroup.one_mem _, hDg⟩⟩
     have hDinv : D * ((Dg⁻¹ : GL (Fin t) k) : Matrix (Fin t) (Fin t) k) = 1 := by
       show ((Dg : GL (Fin t) k) : Matrix (Fin t) (Fin t) k) * _ = 1
       rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
@@ -405,13 +405,13 @@ theorem derEquiv (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsN
     DerEquiv k := by
   intro ψ n j V _ _ π
   have hh : n + (j + 1) = n + j + 1 := rfl
-  let A : V →ₗ[ℂ] TwJacquet (iterPhi k ψ j (resM k π)).ρ (MirUin k n) 1 := Q k ψ j (resM k π)
-  let B : V →ₗ[ℂ] TwJacquet (jacU₂ (stdSum hh) π) (rightUnip k n (j + 1)) (rightWhit k ψ n (j + 1)) := Q' k ψ hh π
-  have hAs : Function.Surjective A := Q_surj ψ j (resM k π)
+  let A : V →ₗ[ℂ] TwJacquet (iterPhi ψ j (resM π)).ρ (MirUin k n) 1 := Q ψ j (resM π)
+  let B : V →ₗ[ℂ] TwJacquet (jacU₂ (stdSum hh) π) (rightUnip n (j + 1)) (rightWhit ψ n (j + 1)) := Q' k ψ hh π
+  have hAs : Function.Surjective A := Q_surj ψ j (resM π)
   have hBs : Function.Surjective B := Q'_surj ψ hh π
   have hA : LinearMap.ker A = LinearMap.ker B := by
-    have e1 : LinearMap.ker A = twKer π (derUnip k (n + j + 1) n) (derChar k ψ (n + j + 1) n) :=
-      (ker_Q ψ j (resM k π)).trans (GlobalTheory.T.restriction_mirabolic_twisted_kernel k ψ (n + j) n V π)
+    have e1 : LinearMap.ker A = twKer π (derUnip k (n + j + 1) n) (derChar ψ (n + j + 1) n) :=
+      (ker_Q ψ j (resM π)).trans (GlobalTheory.T.restriction_mirabolic_twisted_kernel k ψ (n + j) n V π)
     rw [e1, ker_Q']
   let L := ((LinearMap.quotKerEquivOfSurjective A hAs).symm.trans (Submodule.quotEquivOfEq _ _ hA)).trans
     (LinearMap.quotKerEquivOfSurjective B hBs)
@@ -424,10 +424,10 @@ theorem derEquiv (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsN
   refine ⟨.mk L (fun g => ?_)⟩
   refine LinearMap.ext fun x => ?_
   obtain ⟨v, rfl⟩ := hAs x
-  have e1 : A (π ((E k j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) v) = derivM k ψ j (resM k π) g (A v) :=
-    Q_equiv ψ j (resM k π) g v
-  have e2 : B (π (emb₂ k (stdSum hh) (g, 1)) v) = derRep k ψ hh π g (B v) := Q'_equiv ψ hh π g v
-  show L (derivM k ψ j (resM k π) g (A v)) = derRep k ψ hh π g (L (A v))
+  have e1 : A (π ((E j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) v) = derivM ψ j (resM π) g (A v) :=
+    Q_equiv ψ j (resM π) g v
+  have e2 : B (π (emb₂ k (stdSum hh) (g, 1)) v) = derRep ψ hh π g (B v) := Q'_equiv ψ hh π g v
+  show L (derivM ψ j (resM π) g (A v)) = derRep ψ hh π g (L (A v))
   rw [hL, ← e2, ← e1, hL, E_eq g]
 
 end CompanionTheory.RgGu.NR

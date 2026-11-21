@@ -188,8 +188,7 @@ theorem pl_good (A : FinHolAtlas (e + 1) X) (L : LocPot X) (s : X → X → ℂ)
   cases hσ : σ k with
   | none =>
     simp only [reduceCtorEq, if_false, Finset.sum_const_zero]
-    refine (mInt_zero_fun (B k) _ (fun p => ?_)).symm
-    show v p.1 = 0
+    refine (mInt_zero_fun (B k) _ (g := v ∘ Subtype.val) (fun p => ?_)).symm
     by_contra hne
     have hp : p.1 ∈ tsupport v := subset_tsupport _ hne
     have hpψ := hVψ (hvV hp)

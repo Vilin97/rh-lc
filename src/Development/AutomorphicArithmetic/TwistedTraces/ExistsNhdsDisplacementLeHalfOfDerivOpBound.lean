@@ -18,7 +18,7 @@ theorem UpperTheory.exists_nhds_displacement_le_half_of_derivOp_bound :
   have hST : ∀ X : 𝔤, S (T X) = X := fun _ => rfl
   let f : 𝔤 → ℝ := fun X => (∑ i, |b.repr (h.toLie X) i|) * |C|
   have hf : Continuous f := by
-    refine Continuous.mul (continuous_finset_sum _ fun i _ => ?_) continuous_const
+    refine Continuous.mul (continuous_finsetSum _ fun i _ => ?_) continuous_const
     exact (LinearMap.continuous_of_finiteDimensional ((b.coord i) ∘ₗ T)).abs
   have hf0 : f 0 = 0 := by
     have : h.toLie 0 = 0 := rfl

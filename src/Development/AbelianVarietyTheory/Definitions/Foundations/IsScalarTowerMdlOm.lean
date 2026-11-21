@@ -41,7 +41,9 @@ attribute [local instance] isScalarTower_mdl_om
 
 
 
-def unitOf (X : Tower Ω ε) (a : X.K) : X.Kˣ := if h : a = 0 then 1 else Units.mk0 a h
+def unitOf (X : Tower Ω ε) (a : X.K) : X.Kˣ :=
+  letI := Classical.propDecidable (a = 0)
+  if h : a = 0 then 1 else Units.mk0 a h
 
 def clsHat (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (a : X.K) : X.Khat l :=
   AdicCompletion.of (idl l) (X.Kl l) ((1 : ℤ_[l]) ⊗ₜ Additive.ofMul (unitOf X a))

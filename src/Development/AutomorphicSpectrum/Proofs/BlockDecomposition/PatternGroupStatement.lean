@@ -17,7 +17,7 @@ variable {ι : Type} [Fintype ι] [DecidableEq ι] {Φ : ι → ι → Prop}
 def Supp (Φ : ι → ι → Prop) (N : Matrix ι ι K) : Prop := ∀ i j, N i j ≠ 0 → Φ i j
 
 theorem mem_patSet_iff (h : IsPat Φ) (u : GL ι K) :
-    u ∈ patSet K Φ ↔ Supp Φ ((u : Matrix ι ι K) - 1) := by
+    u ∈ patSet (K := K) Φ ↔ Supp Φ ((u : Matrix ι ι K) - 1) := by
   unfold patSet
   rw [Set.mem_setOf_eq]
   constructor
@@ -93,7 +93,7 @@ theorem det_one_add (h : IsPat Φ) {N : Matrix ι ι K} (hN : Supp Φ N) : (1 + 
 
 def patSubgroup (h : IsPat Φ) : Subgroup (GL ι K) :=
   let M : Submonoid (GL ι K) :=
-    { carrier := patSet K Φ
+    { carrier := patSet (K := K) Φ
       mul_mem' := by
         intro u v hu hv
         have hu' := (mem_patSet_iff h u).1 hu
@@ -120,8 +120,9 @@ def patSubgroup (h : IsPat Φ) : Subgroup (GL ι K) :=
       exact M.pow_mem hu _ }
 
 
-def fill (Φ : ι → ι → Prop) (f : {p : ι × ι // Φ p.1 p.2} → K) : Matrix ι ι K :=
-  fun i j => if h : Φ i j then f ⟨(i, j), h⟩ else 0
+noncomputable def fill (Φ : ι → ι → Prop) (f : {p : ι × ι // Φ p.1 p.2} → K) : Matrix ι ι K := by
+  classical
+  exact fun i j => if h : Φ i j then f ⟨(i, j), h⟩ else 0
 
 theorem supp_fill (f : {p : ι × ι // Φ p.1 p.2} → K) : Supp Φ (fill Φ f) := by
   intro i j hij
@@ -130,12 +131,12 @@ theorem supp_fill (f : {p : ι × ι // Φ p.1 p.2} → K) : Supp Φ (fill Φ f)
   simp [fill, hΦ]
 
 theorem card_patSet (h : IsPat Φ) :
-    (patSet K Φ).ncard = Fintype.card K ^ Nat.card {p : ι × ι // Φ p.1 p.2} := by
+    (patSet (K := K) Φ).ncard = Fintype.card K ^ Nat.card {p : ι × ι // Φ p.1 p.2} := by
   classical
   have hunit : ∀ f : {p : ι × ι // Φ p.1 p.2} → K, IsUnit (1 + fill Φ f).det := fun f => by
     rw [det_one_add h (supp_fill f)]
     exact isUnit_one
-  let e : patSet K Φ ≃ ({p : ι × ι // Φ p.1 p.2} → K) :=
+  let e : patSet (K := K) Φ ≃ ({p : ι × ι // Φ p.1 p.2} → K) :=
     { toFun := fun u p => (u.1 : Matrix ι ι K) p.1.1 p.1.2
       invFun := fun f => ⟨Matrix.nonsingInvUnit (1 + fill Φ f) (hunit f), by
         refine (mem_patSet_iff h _).2 ?_

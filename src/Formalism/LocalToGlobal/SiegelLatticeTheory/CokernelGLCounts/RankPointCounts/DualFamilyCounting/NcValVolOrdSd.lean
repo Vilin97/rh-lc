@@ -27,7 +27,11 @@ theorem boxScaleL_holds : BoxScaleL := by
   have hrank : Module.finrank (Fv F v) (Fv F v ⊗[F] E) = 2 := by
     rw [Module.finrank_baseChange]; exact hE
   have hdet : LinearMap.det f = ∏ i, x i ^ 2 := by
-    rw [PI.UnitaryGroupMassFormula.LocJacTyp.BM.det_mulL]
+    have hdet_norm : LinearMap.det f = ∏ i, Algebra.norm (Fv F v) (z i) := by
+      unfold f PI.UnitaryGroupMassFormula.LocJacTyp.BM.mulL
+      rw [LinearMap.det_pi]
+      simp only [Algebra.norm_apply]
+    rw [hdet_norm]
     refine Finset.prod_congr rfl fun i _ => ?_
     change Algebra.norm (Fv F v) (algebraMap (Fv F v) (Fv F v ⊗[F] E) (x i)) = _
     rw [Algebra.norm_algebraMap, hrank]
@@ -141,6 +145,6 @@ theorem sdFromAnn_holds : SdFromAnn := by
     rw [inv_pow, ← pow_mul] at this
     field_simp at this
     rw [this]; ring
-  exact (pow_left_inj₀ ha (by positivity) two_ne_zero).mp hsq
+  exact (pow_left_inj₀ ha (pow_nonneg hpos.le _) two_ne_zero).mp hsq
 
 end Formalism.L2.SG.Pf.NcVal.SdW

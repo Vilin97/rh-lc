@@ -128,7 +128,11 @@ theorem la_fin (hNI : NormInv) {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProd
   calc ∫⁻ p, ‖B.gN (Matrix.of p.1.1 * Matrix.of p.1.2 * γ * (Matrix.of p.2.2)⁻¹ * (Matrix.of p.2.1)⁻¹) ^ (-b)‖ₑ
         ∂D.μSS = ∫⁻ p, G (invP p) ∂D.μSS := lintegral_congr_ae (hinv.mono fun p hp => hp.2.symm)
     _ = ∫⁻ p, G (invP p) ∂(D.μSS.map invP) := by rw [map_invP D]
-    _ ≤ ∫⁻ p, G (invP (invP p)) ∂D.μSS := lintegral_map_le (fun p => G (invP p)) invP
+    _ ≤ ∫⁻ p, G (invP (invP p)) ∂D.μSS := by
+      have hm := B2x1.invM_meas (k := k) (r := r)
+      have hinvP : Measurable (invP (k := k) (r := r)) :=
+        (hm.prodMap hm).prodMap (hm.prodMap hm)
+      exact lintegral_map_le (fun p => G (invP p)) hinvP.aemeasurable
     _ = ∫⁻ p, G p ∂D.μSS := lintegral_congr_ae (hinv.mono fun p hp => by show G (invP (invP p)) = G p; rw [hp.1])
     _ < ⊤ := h1
 

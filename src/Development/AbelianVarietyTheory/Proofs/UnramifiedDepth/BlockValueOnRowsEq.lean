@@ -47,18 +47,10 @@ open scoped BigOperators in
 variable {C : Type} [Field C] {σ κ : Type} in
 private lemma coeff_pow_eq_zero_of_degree_lt_unramified_depth (f : MvPowerSeries σ C)
     (hf : MvPowerSeries.constantCoeff f = 0) :
-    ∀ (k : ℕ) (m : σ →₀ ℕ), m.degree < k → MvPowerSeries.coeff m (f ^ k) = 0
-  | 0, m, h => absurd h (Nat.not_lt_zero _)
-  | k + 1, m, h => by
-    classical
-    rw [pow_succ', MvPowerSeries.coeff_mul]
-    refine Finset.sum_eq_zero fun p hp => ?_
-    rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-    by_cases hp1 : p.1 = 0
-    · rw [hp1, MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hf, zero_mul]
-    · have h1 : 0 < p.1.degree := Nat.pos_of_ne_zero ((Finsupp.degree_eq_zero_iff _).not.mpr hp1)
-      have h2 : m.degree = p.1.degree + p.2.degree := by rw [← hp, map_add (f := _)]
-      rw [coeff_pow_eq_zero_of_degree_lt_unramified_depth f hf k p.2 (by omega), mul_zero]
+    ∀ (k : ℕ) (m : σ →₀ ℕ), m.degree < k → MvPowerSeries.coeff m (f ^ k) = 0 := by
+  intro k m h
+  exact MvPowerSeries.coeff_of_lt_order
+    (lt_of_lt_of_le (by exact_mod_cast h) (f.le_order_pow_of_constantCoeff_eq_zero k hf))
 
 open scoped BigOperators in
 variable {C : Type} [Field C] {σ κ : Type} in

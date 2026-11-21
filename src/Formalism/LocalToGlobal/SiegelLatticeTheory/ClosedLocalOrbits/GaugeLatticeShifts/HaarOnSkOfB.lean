@@ -54,6 +54,8 @@ theorem coordSc_qOf (r : ℕ) {sc : ℝ} (hsc : 0 < sc) (c : Fin (r + 1) → ℂ
   conv_rhs => rw [← Fin.snoc_init_self c]
   unfold coordSc qOf
   congr 1
+  funext a
+  dsimp only [Fin.init]
   rw [inv_pow, ← mul_assoc, inv_mul_cancel₀ (pow_ne_zero _ (hs _)), one_mul]
 
 theorem qOf_coordSc (r : ℕ) {sc : ℝ} (hsc : 0 < sc) (q : (Fin r → ℂ) × ℂ) : qOf r sc (coordSc r sc q) = q := by

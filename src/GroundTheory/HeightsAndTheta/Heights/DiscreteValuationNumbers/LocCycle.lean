@@ -20,6 +20,7 @@ section Defs
 variable {R : Type*} [CommRing R]
 
 
+open scoped Classical in
 def locCycle (J W : Ideal R) : ℤ :=
   if h : W ∈ J.minimalPrimes then
     haveI : W.IsPrime := h.1.1

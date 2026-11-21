@@ -327,7 +327,8 @@ theorem secM_spec (S : B.RealPlaceData k r Wp Wq) (ν' : Fin (2 * r + k + 1) →
       rw [hZ, cvec_sum, Matrix.mulVec_sum]
       refine Finset.sum_congr rfl (fun b _ => ?_)
       rw [← Matrix.mulVec_mulVec, hσf, cvec_smul, Matrix.mulVec_smul, kap]
-    rw [hcof, orthoProj_m0_intertwine m₀ hmU hme hms hz hz' μ hμ.ne' hmz hzz0, prW_cvec hz' hν hνz hzz0, Matrix.mulVec_smul, hZ]
+    rw [hcof, orthoProj_m0_intertwine m₀ hz hz' μ hμ.ne' hmz hzz0,
+      prW_cvec hz' hν hνz hzz0, Matrix.mulVec_smul, hZ]
     congr 1
     have hsum : (∑ b, kap Zm b • xco T T' Zm b).2.2.2 = ∑ b, kap Zm b * be T T' Zm b := by
       simp [Prod.snd_sum, xco]
@@ -454,7 +455,7 @@ theorem secM_spec (S : B.RealPlaceData k r Wp Wq) (ν' : Fin (2 * r + k + 1) →
     have hinv : (m₀ * σ)⁻¹ *ᵥ u = v := by
       have : (m₀ * σ) *ᵥ v = u := by rw [← Matrix.mulVec_mulVec, hfix, hmv]
       rw [← this, Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ hγu, Matrix.one_mulVec]
-    rw [hinv, ← hmv, orthoProj_m0_intertwine m₀ hmU hme hms hz hz' μ hμ.ne' hmz hzz0]
+    rw [hinv, ← hmv, orthoProj_m0_intertwine m₀ hz hz' μ hμ.ne' hmz hzz0]
 
 end main
 
@@ -470,7 +471,6 @@ theorem pbi_sectionExists_proof : PBI.SectionExists := by
   intro k r Wp Wq _ _ _ _ Bs ν' m₀ hbase
   refine ⟨fun Z => Matrix.of.symm (PBI.secM Bs.z' ν' m₀ (Tz k r Bs.z) (Tz k r Bs.z') (Matrix.of Z)),
     PBI.secM_contDiffOn Bs.z' ν' m₀ _ _ Bs.T_pos Bs.T'_pos, fun Z hZ => ?_⟩
-  have := PBI.secM_spec Bs ν' m₀ hbase (Matrix.of Z) hZ
-  simpa using this
+  simpa only [Equiv.apply_symm_apply] using PBI.secM_spec Bs ν' m₀ hbase (Matrix.of Z) hZ
 
 end Formalism.FourierDecayAlt.P

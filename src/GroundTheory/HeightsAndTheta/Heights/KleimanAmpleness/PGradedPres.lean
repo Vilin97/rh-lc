@@ -48,7 +48,8 @@ variable {S : Type u} [CommRing S] {N : ℕ}
 
 theorem smul_mem_piece {M : Type w} [AddCommGroup M] [Module (Poly S N) M] [Module S M]
     [IsScalarTower S (Poly S N) M] (𝓜 : GradedPMod S N M) {a c : ℤ} {p : Poly S N} {m : M}
-    (hp : p ∈ (polyGraded S N).piece a) (hm : m ∈ 𝓜.piece c) : p • m ∈ 𝓜.piece (c + a) := by
+    (hp : p ∈ (polyGraded (S := S) (N := N)).piece a) (hm : m ∈ 𝓜.piece c) :
+    p • m ∈ 𝓜.piece (c + a) := by
   change p ∈ weightedHomogeneousSubmodule S (fun _ => (1 : ℤ)) a at hp
   rw [mem_weightedHomogeneousSubmodule] at hp
   rcases le_or_gt 0 a with ha | ha
@@ -73,7 +74,7 @@ theorem smul_mem_piece {M : Type w} [AddCommGroup M] [Module (Poly S N) M] [Modu
 variable {r : ℕ}
 
 def freePiece (d : Fin r → ℤ) (c : ℤ) : Submodule S (ULift.{v} (Fin r → Poly S N)) where
-  carrier := {x | ∀ j, x.down j ∈ (polyGraded S N).piece (c - d j)}
+  carrier := {x | ∀ j, x.down j ∈ (polyGraded (S := S) (N := N)).piece (c - d j)}
   add_mem' ha hb j := add_mem (ha j) (hb j)
   zero_mem' _ := zero_mem _
   smul_mem' s _ hx j := Submodule.smul_mem _ s (hx j)
@@ -85,7 +86,8 @@ theorem coordIncl_down (j : Fin r) (p : Poly S N) :
     (coordIncl.{u, v} j p).down = Pi.single j p := rfl
 
 theorem coordIncl_mem {d : Fin r → ℤ} (j : Fin r) {e : ℤ} {p : Poly S N}
-    (hp : p ∈ (polyGraded S N).piece e) : coordIncl.{u, v} j p ∈ freePiece d (e + d j) := by
+    (hp : p ∈ (polyGraded (S := S) (N := N)).piece e) :
+    coordIncl.{u, v} j p ∈ freePiece d (e + d j) := by
   intro i
   rw [coordIncl_down]
   by_cases h : i = j
@@ -95,12 +97,12 @@ theorem coordIncl_mem {d : Fin r → ℤ} (j : Fin r) {e : ℤ} {p : Poly S N}
   · rw [Pi.single_eq_of_ne h]
     exact zero_mem _
 
-
+variable (N) in
 def freeGraded (d : Fin r → ℤ) : GradedPMod S N (ULift.{v} (Fin r → Poly S N)) where
   piece := freePiece d
   isInternal := by
     refine DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top ?_ ?_
-    · exact iSupIndep_of_coords (polyGraded S N).isInternal.submodule_iSupIndep
+    · exact iSupIndep_of_coords (polyGraded (S := S) (N := N)).isInternal.submodule_iSupIndep
         (fun j => (LinearMap.proj j : (Fin r → Poly S N) →ₗ[S] Poly S N) ∘ₗ
           (ULift.moduleEquiv (R := S)).toLinearMap)
         (fun j c => c - d j) (fun j => sub_left_injective) (fun j c x hx => hx j)
@@ -114,8 +116,8 @@ def freeGraded (d : Fin r → ℤ) : GradedPMod S N (ULift.{v} (Fin r → Poly S
         exact (Finset.univ_sum_single x.down).symm
       rw [hx]
       refine Submodule.sum_mem _ fun j _ => ?_
-      have hp : x.down j ∈ ⨆ e, (polyGraded S N).piece e := by
-        rw [(polyGraded S N).isInternal.submodule_iSup_eq_top]
+      have hp : x.down j ∈ ⨆ e, (polyGraded (S := S) (N := N)).piece e := by
+        rw [(polyGraded (S := S) (N := N)).isInternal.submodule_iSup_eq_top]
         trivial
       refine Submodule.iSup_induction _ (motive := fun p => coordIncl.{u, v} j p ∈ ⨆ c, freePiece d c)
         hp (fun e p hp => Submodule.mem_iSup_of_mem (e + d j) (coordIncl_mem j hp)) ?_ ?_
@@ -125,13 +127,13 @@ def freeGraded (d : Fin r → ℤ) : GradedPMod S N (ULift.{v} (Fin r → Poly S
         rw [map_add (f := _)]
         exact add_mem ha hb
   smul_mem n c p x hp hx j := by
-    change p * x.down j ∈ (polyGraded S N).piece (c + n - d j)
-    have h := smul_mem_piece (polyGraded S N) (a := n) (c := c - d j)
+    change p * x.down j ∈ (polyGraded (S := S) (N := N)).piece (c + n - d j)
+    have h := smul_mem_piece (polyGraded (S := S) (N := N)) (a := n) (c := c - d j)
       (isWeightedHomogeneous_int_of_isHomogeneous hp) (hx j)
     rw [smul_eq_mul, show c - d j + n = c + n - d j by ring] at h
     exact h
 
-
+variable (S N) in
 def freeBasis (r : ℕ) : Module.Basis (Fin r) (Poly S N) (ULift.{v} (Fin r → Poly S N)) :=
   (Pi.basisFun (Poly S N) (Fin r)).map (ULift.moduleEquiv (R := Poly S N)).symm
 
@@ -256,7 +258,7 @@ theorem exists_homogeneous_generators {S : Type u} [CommRing S] {N : ℕ} {M : T
     rw [← hH, Submodule.span_le]
     intro y hy
     exact Submodule.mem_iSup_of_mem (⟨y, hy⟩ : H) (Submodule.mem_span_singleton_self y)
-  obtain ⟨t, ht⟩ := CompleteLattice.IsCompactElement.exists_finset_of_le_iSup _ hcomp _ hle
+  obtain ⟨t, ht⟩ := hcomp.exists_finset_of_le_iSup _ hle
   let e := t.equivFin
   refine ⟨t.card, fun j => ((e.symm j : H) : M),
     fun j => Classical.choose (Set.mem_iUnion.mp (e.symm j : H).2),

@@ -25,7 +25,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 def QuotientByFiniteFlatStatement : Prop :=
   ∀ (R : Type) [CommRing R] (A : Over (Spec (CommRingCat.of R))) [GrpObj A] (L : LB A.left),
     IsAbelianScheme A → L.IsLB → Out.RelAmple A L →
-    ∀ (B : Type) [CommRing B] [Algebra R B] (h : sp (R₀ := R) B ⟶ A), IsFinFlatSub A B h →
+    ∀ (B : Type) [CommRing B] [Algebra R B] (h : sp (R₀ := R) B ⟶ A), IsFinFlatSub B h →
     ∃ (A' : Over (Spec (CommRingCat.of R))) (_ : GrpObj A') (L' : LB A'.left) (q : A ⟶ A'),
       IsAbelianScheme A' ∧ L'.IsLB ∧ Out.RelAmple A' L' ∧ IsMonHom q ∧
       IsFinite q.left ∧ Flat q.left ∧ Surjective q.left ∧

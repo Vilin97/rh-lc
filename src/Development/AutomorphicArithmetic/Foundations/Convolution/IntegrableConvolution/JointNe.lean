@@ -40,7 +40,7 @@ theorem UpperTheory.ConvolutionTheory.L1.jointNe :
     simp only [eigIn, Submodule.mem_inf, Module.End.mem_eigenspace_iff]
     rfl
   have hsa : ∀ k, IsSelfAdjoint (A k) := fun k =>
-    ((ContinuousLinearMap.nonneg_iff_isPositive _).1 (h.A_pos k)).isSelfAdjoint
+    (ContinuousLinearMap.nonneg_iff_isPositive.1 (h.A_pos k)).isSelfAdjoint
   have hAVE : ∀ j, ∀ w ∈ eigIn V E 1, A j w ∈ eigIn V E 1 := by
     intro j w hw
     obtain ⟨hwV, hwE⟩ := (hmemVE w).1 hw

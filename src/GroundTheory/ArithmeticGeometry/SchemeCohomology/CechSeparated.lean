@@ -74,14 +74,18 @@ lemma inter_basicOpen {V : X.Opens} {κ : Type u} (h : κ → Γ(X, V)) :
 
 lemma isCoverSystem_isBasicCover :
     IsCoverSystem (X := X.toTopCat) IsAffineOpen (fun {κ} V U => IsBasicCover (κ := κ) V U) where
-  iSup_eq V κ U hU := hU.2.choose_spec.2
-  inter_mem V κ U hU n i := by
+  iSup_eq := by
+    intro V κ U hU
+    exact hU.2.choose_spec.2
+  inter_mem := by
+    intro V κ U hU n i
     obtain ⟨hV, h, hUh, -⟩ := hU
     have : U = fun a => X.basicOpen (h a) := funext hUh
     subst this
     rw [inter_basicOpen h i]
     exact hV.basicOpen _
-  exists_refinement V hV O hO := by
+  exists_refinement := by
+    intro V hV O hO
     choose f hfO hxf using fun x : V => hV.exists_basicOpen_le (V := O x) ⟨x.1, hO x⟩ x.2
     obtain ⟨fs, hfs⟩ := hV.isCompact.elim_finite_subcover
       (fun x : V => (X.basicOpen (f x) : Set X)) (fun x => (X.basicOpen (f x)).isOpen)
@@ -136,7 +140,8 @@ theorem cechAcyclic_of_isBasicCover (F : X.Modules) [F.IsQuasicoherent] {V : X.O
   let e : tildeAb M ≅ modulesAb F' :=
     (SheafOfModules.toSheaf _).mapIso (@asIso _ _ _ _ F'.fromTildeΓ hiso)
   have hF' : CechAcyclic (modulesAb F').obj U' :=
-    CechAcyclic.of_retract U' e.inv.hom e.hom.hom (congrArg (fun f => f.hom) e.inv_hom_id) hM
+    CechAcyclic.of_retract (modulesAb F').obj U' e.inv.hom e.hom.hom
+      (congrArg (fun f => f.hom) e.inv_hom_id) hM
   have key := cechAcyclic_of_transport (P := (modulesAb F).obj) (P' := (modulesAb F').obj)
     (fun W => hV.fromSpec ''ᵁ W) (fun _ _ hle => hV.fromSpec.image_mono hle)
     (fun W => AddEquiv.refl _) (fun _ _ => rfl) U' (fun i => image_inter hV.fromSpec U' i) hF'

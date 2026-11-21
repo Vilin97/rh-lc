@@ -153,7 +153,7 @@ theorem image_exps (c : ℤ) :
     change _ = c
     rw [← sum_expToInt, ha, hs]
 
-theorem map_piece (c : ℤ) : ((polyGraded S N).piece c).map (polyToLaurent S N) =
+theorem map_piece (c : ℤ) : ((polyGraded (S := S) (N := N)).piece c).map (polyToLaurent S N) =
     Finsupp.supported S S (laurentExps N c ∅) := by
   change (weightedHomogeneousSubmodule S (fun _ => (1 : ℤ)) c).map _ = _
   rw [weightedHomogeneousSubmodule_eq_finsupp_supported, AddMonoidAlgebra.supported_eq_map,
@@ -170,7 +170,7 @@ theorem localizationToLaurent_mk_monomial (I : Finset (Fin (N + 1))) (p : Poly S
   exact (one_mul _).symm
 
 theorem iota_mk (I : StdCell N) (p : Poly S N) :
-    iota I (locMk (Poly S N) I.1 p) = polyToLaurent S N p := by
+    iota I (locMk (M := Poly S N) I.1 p) = polyToLaurent S N p := by
   rw [iota_apply, ← coeff_toL]
   congr 1
   change iotaP I.1 (LocalizedModule.mk p 1) = _
@@ -200,7 +200,7 @@ variable {S : Type u} [CommRing S] {N : ℕ}
 attribute [local instance] algP
 
 theorem iota_gen_mem (c : ℤ) (I : StdCell N) (m : Poly S N) (s : monos (S := S) I.1) (a : ℤ) (e : ℕ)
-    (hm : m ∈ (polyGraded S N).piece a) (hs : (s : Poly S N).IsHomogeneous e) (hc : a - e = c) :
+    (hm : m ∈ (polyGraded (S := S) (N := N)).piece a) (hs : (s : Poly S N).IsHomogeneous e) (hc : a - e = c) :
     iota I (LocalizedModule.mk m s : LocalizedModule (monos (S := S) I.1) (Poly S N)) ∈
       laurentDeg S N c I := by
   obtain ⟨f, hfI, hf⟩ := mem_monos_iff s.2
@@ -230,7 +230,7 @@ theorem iota_gen_mem (c : ℤ) (I : StdCell N) (m : Poly S N) (s : monos (S := S
     simp [expToInt, hfI j hj]
 
 theorem single_mem_map (c : ℤ) (I : StdCell N) (x : Fin (N + 1) → ℤ) (hx : x ∈ laurentExps N c I.1) :
-    Finsupp.single x (1 : S) ∈ (degLoc (polyGraded S N) c I).map (iota I) := by
+    Finsupp.single x (1 : S) ∈ (degLoc (polyGraded (S := S) (N := N)) c I).map (iota I) := by
   obtain ⟨hsum, hnn⟩ := hx
   set dp : Fin (N + 1) →₀ ℕ := Finsupp.equivFunOnFinite.symm fun j => (x j).toNat
   set dm : Fin (N + 1) →₀ ℕ := Finsupp.equivFunOnFinite.symm fun j => (-x j).toNat
@@ -260,7 +260,7 @@ theorem single_mem_map (c : ℤ) (I : StdCell N) (x : Fin (N + 1) → ℤ) (hx :
     rfl
 
 theorem iota_deg (c : ℤ) (I : StdCell N) :
-    (degLoc (polyGraded S N) c I).map (iota I) = laurentDeg S N c I := by
+    (degLoc (polyGraded (S := S) (N := N)) c I).map (iota I) = laurentDeg S N c I := by
   apply le_antisymm
   · rw [degLoc, Submodule.map_span, Submodule.span_le]
     rintro _ ⟨z, ⟨m, s, a, e, hm, hs, hc, rfl⟩, rfl⟩

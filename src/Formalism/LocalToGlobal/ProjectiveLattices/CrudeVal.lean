@@ -99,7 +99,8 @@ lemma crv_vLa_natCast {N : ℕ} (hN : N ≠ 0) :
     have hd : resCharOf la ^ (padicValNat (resCharOf la) N + 1) ∣
         resCharOf la ^ padicValNat (resCharOf la) N * (resCharOf la * b) := ⟨b, by ring⟩
     rw [← hn'] at hd
-    exact pow_succ_padicValNat_not_dvd (p := resCharOf la) hN hd
+    exact pow_succ_padicValNat_not_dvd (p := resCharOf la) hN (by
+      simpa only [Nat.padicValNat_def] using hd)
   have hn0 : n' ≠ 0 := by
     rintro rfl
     exact hN (by simpa using hn')
@@ -133,7 +134,7 @@ lemma crv_padic_prod {σ : Type} (p : ℕ) [Fact p.Prime] (α : σ →₀ ℕ) :
   classical
   simp only [Finsupp.prod]
   refine Finset.induction_on α.support ?_ ?_
-  · simp
+  · simp [Nat.padicValNat_def]
   · intro a u ha ih
     rw [Finset.prod_insert ha, Finset.sum_insert ha,
       (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero _)
@@ -144,8 +145,11 @@ lemma crv_legendre {σ : Type} (p : ℕ) [Fact p.Prime] (α : σ →₀ ℕ) :
   rw [crv_padic_prod, Finset.mul_sum]
   unfold Finsupp.degree
   exact Finset.sum_le_sum fun s _ => by
-    rw [sub_one_mul_padicValNat_factorial]
-    exact Nat.sub_le _ _
+    rw [Nat.padicValNat_def]
+    calc
+      (p - 1) * multiplicity p (α s).factorial = (α s) - (p.digits (α s)).sum :=
+        (Fact.out : p.Prime).sub_one_mul_multiplicity_factorial
+      _ ≤ α s := Nat.sub_le _ _
 
 theorem nval_factProd_le (ho : OverLa la V ι e) {σ : Type} (α : σ →₀ ℕ) :
     nval V e (((α.prod fun _ t => t.factorial : ℕ) : K')) ≤
@@ -178,9 +182,11 @@ theorem nval_factProd_le_zero (ho : OverLa la V ι e) {σ : Type} (α : σ →�
     exact Finset.prod_ne_zero_iff.mpr fun _ _ => Nat.factorial_ne_zero _
   have hv : padicValNat (resCharOf la) (α.prod fun _ t => t.factorial) = 0 := by
     rw [crv_padic_prod]
-    refine Finset.sum_eq_zero fun s _ => padicValNat.eq_zero_of_not_dvd ?_
-    rw [hp.dvd_factorial]
-    exact not_le.mpr (hα s)
+    refine Finset.sum_eq_zero fun s _ => by
+      rw [Nat.padicValNat_def]
+      apply multiplicity_eq_zero_of_not_dvd
+      rw [hp.dvd_factorial]
+      exact not_le.mpr (hα s)
   rw [crv_nval_natCast la ho hne, hv]
   simp
 

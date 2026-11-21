@@ -95,8 +95,10 @@ end
 
 end UpperTheory.ConvolutionTheory.G
 
+open PositivityTheory.Rg.Tf.Geo
+
 theorem UpperTheory.ConvolutionTheory.G.isUnit_last_join :
-    Q1 := by
+    PositivityTheory.Rg.Tf.Geo.Q1 := by
   intro X G T _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ μ _ ν _ _ u i hu hi Φ ρ hΦ hinv hn hfin
   have hex : ∃ ρ, IsNormAlong u (fun t => u (i t)) ν ρ := ⟨ρ, hn⟩
   unfold quotInt

@@ -24,6 +24,7 @@ theorem mem_negSet {a : Fin (N + 1) → ℤ} {j : Fin (N + 1)} : j ∈ negSet a 
   simp [negSet]
 
 
+variable (S) in
 def part (J : Finset (Fin (N + 1))) : Laurent S N →ₗ[S] Laurent S N where
   toFun f := f.filter fun a => negSet a = J
   map_add' _ _ := Finsupp.filter_add
@@ -41,6 +42,7 @@ theorem sum_part (f : Laurent S N) : ∑ J, part S J f = f := by
   simp
 
 
+variable (S N) in
 def wPart (c : ℤ) (J : Finset (Fin (N + 1))) : Submodule S (Laurent S N) :=
   Finsupp.supported S S {a | negSet a = J ∧ ∑ j, a j = c}
 
@@ -88,12 +90,15 @@ theorem part_mem_deg {c : ℤ} {J : Finset (Fin (N + 1))} {I : StdCell N} {f : L
   mem_deg_of_w (part_mem_w hf) (part_eq_zero hf)
 
 
+variable (S N) in
 abbrev G : StdCell N → Type u := fun _ => Laurent S N
 
 
+variable (S N) in
 abbrev ρ := Cech.idRes S (Laurent S N) (Finset.univ : Finset (Fin (N + 1)))
 
 
+variable (S) in
 def partC (J : Finset (Fin (N + 1))) (i : ℕ) : Cech.Cochain (G S N) i →ₗ[S] Cech.Cochain (G S N) i :=
   Cech.mapC (fun _ => part S J) i
 
@@ -216,6 +221,7 @@ theorem mk_eq {c : ℤ} {i : ℕ} {z w : Cech.Cochain (G S N) i}
 end LaurentCohomProof
 
 
+open LaurentCohomProof in
 theorem SerrePoly.LaurentCohom.proof (hC : Cech.Cone.Statement.{u, u}) :
     SerrePoly.LaurentCohom.Statement.{u} := by
   intro S _ _ N

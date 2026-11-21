@@ -296,7 +296,7 @@ theorem exists_series_A {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ
       map_add' := fun X Y => SmDerA.actM_add _ (Matrix.of X) (Matrix.of Y)
       map_smul' := fun c X => SmDerA.actM_smul _ c (Matrix.of X) }
   let ev : Module.End ℂ (smD ε σ) →ₗ[ℂ] H := (smD ε σ).subtype ∘ₗ LinearMap.applyₗ v
-  let q : ∀ m : ℕ, MultilinearMap ℂ (fun _ : Fin m => Fin n → Fin n → ℂ) H := fun m =>
+  let q : ∀ m : ℕ, MultilinearMap (RingHom.id ℂ) (fun _ : Fin m => Fin n → Fin n → ℂ) H := fun m =>
     ((m.factorial : ℂ)⁻¹) • ev.compMultilinearMap
       ((MultilinearMap.mkPiAlgebraFin ℂ m (Module.End ℂ (smD ε σ))).compLinearMap fun _ => act)
   have hq : ∀ m (Y : Fin m → Fin n → Fin n → ℂ), q m Y =

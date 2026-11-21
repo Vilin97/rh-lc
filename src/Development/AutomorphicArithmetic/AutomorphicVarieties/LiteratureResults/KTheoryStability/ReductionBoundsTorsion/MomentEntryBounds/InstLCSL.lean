@@ -29,7 +29,7 @@ instance instSCSL (N : ℕ) : SecondCountableTopology (SpecialLinearGroup (Fin N
 
 variable (L : Type) [Field L] [NumberField L] (N : ℕ)
 
-
+variable {L N} in
 abbrev mt (x : Sp L N) (w : InfinitePlace L) : Matrix (Fin N) (Fin N) ℂ :=
   ((x w : SpecialLinearGroup (Fin N) ℂ) : Matrix (Fin N) (Fin N) ℂ)
 
@@ -43,14 +43,14 @@ def dg (s : Fin N → ℝ) (hs : ∑ i, s i = 0) : Sp L N := fun _ =>
   ⟨diagonal fun i => ((Real.exp (s i) : ℝ) : ℂ), by
     rw [det_diagonal, ← Complex.ofReal_prod, ← Real.exp_sum, hs, Real.exp_zero, Complex.ofReal_one]⟩
 
-
+variable {N} in
 def W (s : Fin N → ℝ) : ℝ := ∑ i : Fin N, ∑ j : Fin N, if (j : ℕ) = i + 1 then |s i - s j| else 0
 
 def Sieg (M T : ℝ) : Set (Sp L N) :=
   {x | ∃ p ∈ Om L N M, ∃ (s : Fin N → ℝ) (hs : ∑ i, s i = 0), (∀ i j : Fin N, (j : ℕ) = i + 1 → s j ≤ s i + T) ∧
     ∃ k ∈ KS L N, x = p * dg L N s hs * k}
 
-
+variable {L N} in
 def IsRatS (c : Sp L N) : Prop :=
   ∃ (g : GL (Fin N) L) (z : InfinitePlace L → ℂ), ∀ w, mt c w = z w • (g : Matrix (Fin N) (Fin N) L).map w.embedding
 

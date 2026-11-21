@@ -31,6 +31,10 @@ theorem csDual_hform_smul_left {A : Type} [CommRing A] {n : Type} [Fintype n] (�
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+local notation "𝒮" => tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)
+local notation "ι" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
+
 theorem csDual_sig_incl (σ : E →ₐ[F] E) (a : E) :
     sigR σ (FiniteAdeleRing (𝓞 F) F) (ι a) = ι (σ a) := by
   simp [sigR, inclE]
@@ -65,13 +69,6 @@ theorem csDual_sig_mem (σ : E →ₐ[F] E) {s : 𝒜} (hs : s ∈ 𝒮) :
       exact Subring.subset_closure (Or.inr ⟨⟨y, hy⟩, rfl⟩)
   exact key s hs
 
-end CsDual
-
-section CsDual2
-
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  {n : Type} [Fintype n] [DecidableEq n]
-
 theorem csDual_hform_incl (σ : E →ₐ[F] E) (J : Matrix n n E) (y x : n → E) :
     hform (sigR σ (FiniteAdeleRing (𝓞 F) F)) (J.map ι) (fun i => ι (y i)) (fun i => ι (x i)) =
       ι (hform (σ : E →+* E) J y x) := by
@@ -95,13 +92,6 @@ theorem csDual_span (σ : E →ₐ[F] E) (J : Matrix n n E) (M : Submodule (𝓞
     rw [Subring.smul_def, csDual_hform_smul_left]
     exact mul_mem (csDual_sig_mem σ a.2) hu
 
-end CsDual2
-
-section CsDual3
-
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  {n : Type} [Fintype n] [DecidableEq n]
-
 theorem csDual_expand (M : Matrix n n E) (v : n → 𝒜) (a b : 𝒜) (k : n) :
     a * b * ((M.map ι) *ᵥ v) k = ∑ i, (b * ι (M k i)) * (a * v i) := by
   simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.mul_sum]
@@ -111,7 +101,7 @@ theorem csDual_expand (M : Matrix n n E) (v : n → 𝒜) (a b : 𝒜) (k : n) :
 theorem csDual_int_coe (d : 𝓞 F) : IsIntegral ℤ (algebraMap (𝓞 F) E d) := by
   exact IsIntegral.algebraMap (Algebra.IsIntegral.isIntegral (R := ℤ) d)
 
-end CsDual3
+end CsDual
 
 theorem dual_lattice_bound_holds (hSpanRecover : Formalism.UG.CS.SpanRecover) : Formalism.UG.CS.DualBound := by
   intro F E _ _ _ _ _ n _ _ σ J Λ hdet hfin hspan

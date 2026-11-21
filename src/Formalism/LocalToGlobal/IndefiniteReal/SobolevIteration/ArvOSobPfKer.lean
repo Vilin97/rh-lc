@@ -35,7 +35,7 @@ theorem evP_qP (k : Fin n → Fin n → ℂ) : evP (qP (n := n)) k = (qr k : ℂ
 theorem continuous_qr : Continuous (qr (n := n)) := by
 
   unfold qr
-  exact continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun j _ =>
     ((continuous_apply_apply a j).sub continuous_const).norm.pow 2
 
 theorem qr_nonneg (k : Fin n → Fin n → ℂ) : 0 ≤ qr k := by
@@ -194,7 +194,7 @@ theorem polyKernel_holds : PolyKernel := by
     have step1 : ∫ k in Uᶜ, ‖((I⁻¹ * g k : ℝ) : ℂ)‖ ∂μ ≤
         ∫ k in {k : Fin n → Fin n → ℂ | qr k < ε}ᶜ, ‖((I⁻¹ * g k : ℝ) : ℂ)‖ ∂μ :=
       setIntegral_mono_set hni.integrableOn (ae_of_all _ fun k => norm_nonneg _)
-        (Set.compl_subset_compl.2 hWU).eventuallyLE
+        (Set.compl_subset_compl.2 hWU).eventuallySubset
     have step2 : ∫ k in {k : Fin n → Fin n → ℂ | qr k < ε}ᶜ, ‖((I⁻¹ * g k : ℝ) : ℂ)‖ ∂μ ≤
         ∫ k in {k : Fin n → Fin n → ℂ | qr k < ε}ᶜ, I⁻¹ * β ^ N ∂μ := by
       refine setIntegral_mono_ae_restrict hni.integrableOn (integrable_const _).integrableOn ?_

@@ -25,7 +25,7 @@ def lieT (K : Type) [CommRing K] (n : ℕ) : Matrix (Fin n) (Fin n) K := Matrix.
 variable {l : ℕ} [Fact l.Prime] {k : Type} [Field k]
 
 @[ext] structure Box (F : Frame l k) (n : ℕ) (C : Type) [CommRing C] where
-  r : F.Γ →* GG n C
+  r : F.Γ →* GG (m := n) (R := C)
   nu : ∀ s, (r s).right = F.del s
   g : F.V → GL (Fin n) C
   tri : ∀ v s, UpT ((g v : Matrix (Fin n) (Fin n) C) * (r (F.loc v s)).mat *
@@ -153,7 +153,7 @@ namespace SetLift
 variable {p : C' →ₐ[O] C} {B : Box F n C} (D : SetLift p B)
 
 def om (x : F.Γ × F.Γ) : Matrix (Fin n) (Fin n) C' :=
-  ((D.r x.1 * sgnAct n C' (F.del x.1) (D.r x.2) * (D.r (x.1 * x.2))⁻¹ : GL (Fin n) C') : Matrix (Fin n) (Fin n) C') - 1
+  ((D.r x.1 * sgnAct (F.del x.1) (D.r x.2) * (D.r (x.1 * x.2))⁻¹ : GL (Fin n) C') : Matrix (Fin n) (Fin n) C') - 1
 
 def a (v : F.V) (s : F.Gv v) : Matrix (Fin n) (Fin n) C' :=
   ((D.r (F.loc v s) * ((D.g v)⁻¹ * D.t v s * D.g v)⁻¹ : GL (Fin n) C') : Matrix (Fin n) (Fin n) C') - 1

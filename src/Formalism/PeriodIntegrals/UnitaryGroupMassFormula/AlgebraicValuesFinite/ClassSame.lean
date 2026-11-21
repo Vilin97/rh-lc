@@ -32,11 +32,13 @@ def ProdNorm : Prop :=
     ∏ φ : L →+* ℂ, ‖φ (k : L)‖ = ∏ v ∈ T, ((Ideal.absNorm v.asIdeal : ℕ) : ℝ) ^ ordF v k
 
 
+open scoped Classical in
 def ClassPow : Prop :=
   ∃ h : ℕ, 0 < h ∧ ∀ v : HeightOneSpectrum (𝓞 L), ∃ k : Lˣ,
     ∀ u : HeightOneSpectrum (𝓞 L), ordF u k = if u = v then (h : ℤ) else 0
 
 
+open scoped Classical in
 def ClassSame : Prop :=
   ∃ (ι : Type) (_ : Finite ι) (c : HeightOneSpectrum (𝓞 L) → ι),
     ∀ v w, c v = c w → ∃ k : Lˣ, ∀ u : HeightOneSpectrum (𝓞 L),

@@ -57,7 +57,7 @@ theorem cutM_eq_zero {s : ℕ} {τ : ℝ} {Z : Mat s} (hτ : 0 < τ) (h : 2 * τ
 theorem cutM_contDiff {s : ℕ} (τ : ℝ) {n : ℕ∞} : ContDiff ℝ n (cutM (s := s) τ) := by
   show ContDiff ℝ n (fun Z : Mat s => ∏ i, ∏ j, chi0 (‖Z i j‖ ^ 2 / τ ^ 2))
   refine contDiff_prod fun i _ => contDiff_prod fun j _ => contDiff_smooth_cutoff.comp ?_
-  exact ((contDiff_apply_apply ℝ ℂ i j).norm_sq ℝ).div_const _
+  exact ((contDiff_apply_apply (𝕜 := ℝ) (E := ℂ) i j).norm_sq ℝ).div_const _
 
 theorem cutM_scale {s : ℕ} {τ : ℝ} (hτ : 0 < τ) :
     cutM (s := s) τ = fun Z => cutM 1 (τ⁻¹ • Z) := by

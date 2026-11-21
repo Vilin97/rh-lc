@@ -41,12 +41,13 @@ theorem aeval_genPt (I : Ideal (MvPolynomial (Fin n) F)) [I.IsPrime] (g : MvPoly
   | C a =>
     rw [aeval_C, IsScalarTower.algebraMap_apply F (MvPolynomial (Fin n) F ⧸ I)]
     rfl
-  | add p q hp hq => simp only [map_add (f := _), hp, hq]
+  | add p q hp hq =>
+    rw [map_add (aeval (genPt I)), (Ideal.Quotient.mk I).map_add, RingHom.map_add, hp, hq]
   | mul_X p j hp => simp only [map_mul, hp, aeval_X, genPt]
 
 theorem ker_aeval_eta (I : Ideal (MvPolynomial (Fin n) F)) (t : Fin n → F) (hI : IsProjPrime I)
     (ht : linForm t ∉ I) :
-    have := hI.isPrime
+    letI : I.IsPrime := hI.isPrime;
     RingHom.ker (aeval ((aeval (genPt I) (linForm t))⁻¹ • genPt I) :
         MvPolynomial (Fin n) F →ₐ[F] FractionRing (MvPolynomial (Fin n) F ⧸ I)) =
       I ⊔ Ideal.span {linForm t - 1} := by

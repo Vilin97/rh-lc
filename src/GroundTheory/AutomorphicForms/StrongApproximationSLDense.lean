@@ -124,6 +124,7 @@ theorem finiteAdele_zero_apply (v : HeightOneSpectrum (𝓞 K)) :
   rfl
 
 
+open Classical in
 def finiteAdeleSingleAdd (v : HeightOneSpectrum (𝓞 K)) (c : v.adicCompletion K) :
     FiniteAdeleRing (𝓞 K) K :=
   RestrictedProduct.single (fun w : HeightOneSpectrum (𝓞 K) => w.adicCompletionIntegers K) v c
@@ -135,6 +136,7 @@ theorem finiteAdeleSingleAdd_apply (v w : HeightOneSpectrum (𝓞 K)) (c : v.adi
   rfl
 
 
+open Classical in
 def localEmbedding (v : HeightOneSpectrum (𝓞 K)) : GL (Fin n) (v.adicCompletion K) →* FiniteAdelicGL K n where
   toFun x := (finiteRestrictedEquiv K n).symm
     (RestrictedProduct.mulSingle (fun w => GLnLocal.integralGL (w.adicCompletion K) n) v x)
@@ -152,6 +154,7 @@ theorem localEmbedding_transvectionGL (v : HeightOneSpectrum (𝓞 K))
     (t : TransvectionStruct (Fin n) (v.adicCompletion K)) :
     localEmbedding v (transvectionGL _ _ t) = transvectionGL (Fin n) (FiniteAdeleRing (𝓞 K) K)
       ⟨t.i, t.j, t.hij, finiteAdeleSingleAdd v t.c⟩ := by
+  classical
   refine Units.ext <| Matrix.ext fun a b => FiniteAdeleRing.ext K fun w => ?_
   change ((finiteRestrictedEquiv K n).symm _ : FiniteAdelicGL K n) a b w = _
   rw [finiteRestrictedEquiv_symm_apply]
@@ -199,12 +202,13 @@ theorem det_finiteRestrictedEquiv_apply (g : FiniteAdelicGL K n) (v : HeightOneS
   rfl
 
 
+open Classical in
 def truncate (S : Finset (HeightOneSpectrum (𝓞 K))) (y : FiniteRestrictedGL K n) :
     FiniteRestrictedGL K n where
   val v := if v ∈ S then y v else 1
   property := by
     filter_upwards [S.finite_toSet.compl_mem_cofinite] with v hv
-    rw [if_neg (by simpa using hv)]
+    rw [ite_eq_right (by simpa using hv)]
     exact one_mem (GLnLocal.integralGL (v.adicCompletion K) n)
 
 open Classical in
@@ -294,7 +298,7 @@ theorem mem_closure_elementarySubgroup {g : FiniteAdelicGL K n}
     have hvS : v ∈ S := Finset.mem_union_left _ (hI.mem_toFinset.2 hv)
     have : w' v = 1 := Subtype.ext <| by
       change (y⁻¹ * truncate S y) v = 1
-      rw [RestrictedProduct.mul_apply, RestrictedProduct.inv_apply, truncate_apply, if_pos hvS,
+      rw [RestrictedProduct.mul_apply, RestrictedProduct.inv_apply, truncate_apply, ite_eq_left hvS,
         inv_mul_cancel]
     rw [this]
     exact mem_of_mem_nhds (ht v)

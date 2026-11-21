@@ -29,7 +29,9 @@ lemma bs_map_weyl {r n : ℕ} (hn : n ≤ r) (ν : Fin n → ℕ) (f : MvPolynom
     rw [← lclosedeq_applyWord_map, lclosedeq_hw_map]
     exact Submodule.subset_span ⟨w, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy =>
+    rw [map_add]
+    exact add_mem hx hy
   | smul c x _ hx =>
     rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hx
@@ -237,7 +239,7 @@ lemma rad_rowDiv (H : BsForm sg D) (p : MvPolynomial (Fin n × Fin n) ℂ) (hp :
     rw [← smul_eq_C_mul, H.smull, mul_comm]
     rfl
   have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) hP0
-  simp only [hP, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq',
+  simp only [hP, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply, Finset.sum_ite_eq',
     if_pos hk, Polynomial.coeff_zero] at this
   exact this
 
