@@ -266,7 +266,7 @@ theorem cT_mul {A : Type} [CommRing A] (s : A →+* A) {n : ℕ} (P Q : Matrix (
 omit [NumberField E] in
 theorem gram_apply {n : ℕ} (J B : Matrix (Fin n) (Fin n) E) (a b : Fin n) :
     (Formalism.UG.cT σ B * J * B) a b = Formalism.UG.hform σ J (fun k => B k a) (fun k => B k b) := by
-  simp only [Formalism.UG.hform, Formalism.UG.cT, mul_apply, Finset.sum_mul, transpose_apply, map_apply]
+  simp only [Formalism.UG.hform, Formalism.UG.cT, Matrix.mul_apply, Finset.sum_mul, transpose_apply, map_apply]
   exact Finset.sum_comm
 
 theorem exists_bounded_unitary [IsTotallyComplex E] (hτ : Function.Bijective fun i => InfinitePlace.mk (τ i))
@@ -331,7 +331,7 @@ theorem hform_ne_zero {D : D7} {V : HSp D} (h : IsAniso V) (x : Fin V.rank → D
   refine h 1 (Matrix.of fun a _ => x a) ⟨one_pos, linearIndependent_unique_iff.2 hx, ?_⟩
   ext a b
   rw [Matrix.zero_apply, ← h0]
-  simp only [Formalism.UG.hform, Formalism.UG.cT, mul_apply, Finset.sum_mul, transpose_apply, map_apply, of_apply]
+  simp only [Formalism.UG.hform, Formalism.UG.cT, Matrix.mul_apply, Finset.sum_mul, transpose_apply, map_apply, of_apply]
   rw [Finset.sum_comm]
 
 theorem mt_mul {D : D7} (V : HSp D) (x y : GA D V) : mt V (x * y) = mt V x * mt V y := by
@@ -417,10 +417,10 @@ theorem exists_compact : ∀ (D : D7) (V : HSp D), IsAniso V → ∃ K : Set (GA
   obtain ⟨C₃, hC₃, hCe₃⟩ := exists_compact_mul ((hC₂.insert 0).insert 1) (h𝓒.image fun M => M.map (incA D))
   obtain ⟨K, hK, hKe⟩ := GlobalTheory.StabCompact.exists_compact_of_entries (AF D.host.F) D.sp.cm.sig V.gram
     (GlobalTheory.DefiniteQuotient.gram_hermND V).2 C₃ hC₃
-  refine ⟨K⁻¹, hK.inv, fun g => ?_⟩
+  refine ⟨Inv.inv '' K, hK.image continuous_inv, fun g => ?_⟩
   obtain ⟨γ, hγ, h₁⟩ := H₁ g⁻¹
   obtain ⟨u, hu, B, M, hM, hum, hBi, hBR⟩ := H₂ (g⁻¹ * γ)
-  refine ⟨γ * u, mul_mem hγ hu, (g⁻¹ * γ * u)⁻¹, Set.inv_mem_inv.2 (hKe _ fun a b => ?_), by group⟩
+  refine ⟨γ * u, mul_mem hγ hu, (g⁻¹ * γ * u)⁻¹, ⟨_, hKe _ fun a b => ?_, rfl⟩, by group⟩
   change mt V (g⁻¹ * γ * u) a b ∈ C₃
   rw [mt_mul_rat V _ _ hum]
   refine hCe₃ _ ⟨M, hM, rfl⟩ _ _ (fun a b => Or.inr (Or.inr (hCe₂ _ (h₁ B hBi a b) (hBR a b)))) (fun a b => ?_) a b

@@ -210,8 +210,14 @@ theorem compat_of_surjective (h3 : Function.Surjective (G3 G).hom.appTop.hom) (P
         (C d (b ≫ w) (d ≫ w))).mul (Ru (a * b * d))).mul (Ru a)).mul (Ru b)).mul (Ru d))
       (by simp only [MonObj.mul_comp, ← _root_.mul_assoc]; abel)
       (fun y I hI => by
+        have face : cubV P.c y I 1 1 1 = 1 := by
+          have e := val_corr hI (P.c.face 0) (lift (1 : 𝟙_ (Over S) ⟶ G) 1).left
+          rw [val_one] at e
+          refine (Eq.trans ?_ e)
+          refine Eq.trans ?_ (val_cub P.c (lift (1 : 𝟙_ (Over S) ⟶ G) 1) hI (pzero G _) (x2 G 0) (x2 G 1)).symm
+          congr 1 <;> simp [x2, pzero, Hom.one_def]
         simp only [MonObj.comp_mul, ← Category.assoc, r₀, r₁, r₂, MonObj.one_comp, _root_.mul_one,
-          (isCub_cubV P.c hI).face, h1 _ y I hI]) (lift x (lift y v)) hJ
+          face, h1 _ y I hI]) (lift x (lift y v)) hJ
     simpa only [MonObj.comp_mul, ← Category.assoc, r₀, r₁, r₂, id] using e
   · intro x
     have e := rep_unique P.L.isLB h3 (lift 1 (lift 1 1))
@@ -219,8 +225,14 @@ theorem compat_of_surjective (h3 : Function.Surjective (G3 G).hom.appTop.hom) (P
       (by
         simp only [GrpObj.inv_comp, mul_inv_cancel_right, mul_inv_cancel, _root_.one_mul]; abel)
       (fun y I hI => by
+        have face : cubV P.c y I 1 1 1 = 1 := by
+          have e := val_corr hI (P.c.face 0) (lift (1 : 𝟙_ (Over S) ⟶ G) 1).left
+          rw [val_one] at e
+          refine (Eq.trans ?_ e)
+          refine Eq.trans ?_ (val_cub P.c (lift (1 : 𝟙_ (Over S) ⟶ G) 1) hI (pzero G _) (x2 G 0) (x2 G 1)).symm
+          congr 1 <;> simp [x2, pzero, Hom.one_def]
         simp only [GrpObj.comp_inv, ← Category.assoc, r₀, MonObj.one_comp, _root_.mul_one, inv_one,
-          (isCub_cubV P.c hI).face, h1 _ y I hI, P.val_sym_one hI]) (lift x (lift 1 1)) hJ
+          face, h1 _ y I hI, P.val_sym_one hI]) (lift x (lift 1 1)) hJ
     simpa only [GrpObj.comp_inv, ← Category.assoc, r₀, id] using e
 
 end Rigid

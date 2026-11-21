@@ -42,7 +42,7 @@ theorem exists_infPow_hom : ∀ (E : Type) [Field E] [NumberField E] (n : (E →
   refine exists_units_hom F ?_
   show Continuous (infPow n)
   rw [funext e]
-  refine continuous_finset_prod _ fun w _ => continuous_finset_prod _ fun i _ => ?_
+  refine continuous_finsetProd _ fun w _ => continuous_finsetProd _ fun i _ => ?_
   refine Continuous.zpow₀ ?_ _ fun x => Or.inl ((map_ne_zero i.1).mpr (h0 x w))
   exact i.2.comp ((continuous_apply w).comp (continuous_fst.comp Units.continuous_val))
 
@@ -82,7 +82,7 @@ theorem exists_lPow_hom : ∀ (E : Type) [Field E] [NumberField E] (l : ℕ) [Fa
   refine exists_units_hom F ?_
   show Continuous (lPow ι n)
   rw [funext e]
-  refine continuous_finset_prod _ fun w _ => continuous_finset_prod _ fun i _ => ?_
+  refine continuous_finsetProd _ fun w _ => continuous_finsetProd _ fun i _ => ?_
   refine Continuous.zpow₀ ?_ _ fun x => Or.inl ((map_ne_zero i.1).mpr (h0 x w))
   exact i.2.comp ((RestrictedProduct.continuous_eval w).comp (continuous_snd.comp Units.continuous_val))
 
@@ -94,7 +94,7 @@ theorem infPow_diagUnits : ∀ (E : Type) [Field E] [NumberField E] (n : (E →+
   have hd : ∀ w : InfinitePlace E, DenseRange (algebraMap E w.Completion) := fun w => by
     refine Dense.mono ?_ (InfinitePlace.Completion.denseRange_coe w)
     rintro _ ⟨a, rfl⟩
-    exact ⟨WithAbs.equiv w.1 a, rfl⟩
+    exact ⟨WithAbs.equiv w.1 a, by simp [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]⟩
   have hmk : ∀ p : Σ w, J w, InfinitePlace.mk (res p) = p.1 := by
     rintro ⟨w, i⟩
     have hn : ∀ y : w.Completion, ‖i.1 y‖ = ‖y‖ := fun y => by
@@ -115,7 +115,8 @@ theorem infPow_diagUnits : ∀ (E : Type) [Field E] [NumberField E] (n : (E →+
         · exact (congrArg norm (DFunLike.congr_fun h1 z)).trans (Complex.norm_conj z)
     refine InfinitePlace.ext _ _ fun a => ?_
     rw [InfinitePlace.apply]
-    exact (hn _).trans (InfinitePlace.Completion.norm_coe w (WithAbs.toAbs _ a))
+    simpa [res, AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply] using
+      (hn _).trans (InfinitePlace.Completion.norm_coe w (WithAbs.toAbs _ a))
   have hinj : Function.Injective res := by
     rintro ⟨v, j⟩ ⟨v', j'⟩ h
     obtain rfl : v = v' := (hmk ⟨v, j⟩).symm.trans ((congrArg InfinitePlace.mk h).trans (hmk ⟨v', j'⟩))
@@ -171,7 +172,7 @@ theorem pos_of_mem_connectedComponentOfOne : ∀ (E : Type) [Field E] [NumberFie
   have hd : DenseRange (algebraMap E w.Completion) := by
     refine Dense.mono ?_ (InfinitePlace.Completion.denseRange_coe w)
     rintro _ ⟨a, rfl⟩
-    exact ⟨WithAbs.equiv w.1 a, rfl⟩
+    exact ⟨WithAbs.equiv w.1 a, by simp [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]⟩
   have him : ∀ y : w.Completion, (e y).im = 0 := fun y =>
     congrFun (hd.equalizer (g := fun y => (e y).im) (h := fun _ => 0) (Complex.continuous_im.comp he)
       continuous_const (funext fun a => (congrArg Complex.im (hek a)).trans (by simp))) y

@@ -30,6 +30,6 @@ theorem exists_normalisation_of_locallyClosed : ∀ (O : Type) [CommRing O] [IsD
     infer_instance
   exact ⟨h.normalization, h.fromNormalization, h.toNormalization, inferInstance,
     IsNormalScheme.pred _, isProjOver_comp_of_isFinite _ hs, flat_normalization h _,
-    isPullback_toNormalization_of_mono j Ω.ι h eh, h.toNormalization.denseRange⟩
+    GlobalTheory.isPullback_toNormalization_of_mono j Ω.ι h eh, h.toNormalization.denseRange⟩
 
 end GlobalTheory.GraphClosure

@@ -284,13 +284,15 @@ theorem pts_inj : ∀ (bs bs' : List (K × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧ 1
     simp only [List.map_cons, List.sum_cons] at hs h
     have hs1 := (hv (t, s) (by simp)).2
     have hs1' := (hv' (t', s') (by simp)).2
-    obtain ⟨e1, e2⟩ := h 0 (by omega)
+    have hzero : 0 < s + (b1.map Prod.snd).sum := by omega
+    obtain ⟨e1, e2⟩ := h 0 hzero
     simp only [pσ, pv, if_pos (show 0 < s by omega), if_pos (show 0 < s' by omega)] at e1 e2
     have ess : s = s' := by omega
     subst ess e2
     have := pts_inj b1 b1' (fun b hb => hv b (by simp [hb])) (fun b hb => hv' b (by simp [hb])) (by omega)
       (fun i hi => by
-        obtain ⟨a, b⟩ := h (s + i) (by omega)
+        have hindex : s + i < s + (b1.map Prod.snd).sum := by omega
+        obtain ⟨a, b⟩ := h (s + i) hindex
         simp only [pσ, pv, if_neg (show ¬ (s + i < s) by omega), Nat.add_sub_cancel_left] at a b
         exact ⟨by omega, b⟩)
     rw [this]

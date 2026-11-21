@@ -36,9 +36,8 @@ theorem GlobalTheory.WeilDeligne.exists_pow_normV_resPow (E Ω : Type) [Field E]
   set Q := primeBelow (F := E) A with hQ
   haveI : w.asIdeal.IsMaximal := w.isMaximal
   haveI : Q.LiesOver w.asIdeal := ⟨(under_primeBelow hA).symm⟩
-  haveI : Q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := 𝓞 E) Q
-    (by rw [show Ideal.comap (algebraMap (𝓞 E) (IntCl E Ω)) Q = w.asIdeal from
-      under_primeBelow hA]; exact w.isMaximal)
+  haveI : Q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := 𝓞 E) Q
+    (by rw [← Ideal.over_def Q w.asIdeal]; exact w.isMaximal)
   letI : Field (IntCl E Ω ⧸ Q) := Ideal.Quotient.field Q
   letI : Field (𝓞 E ⧸ w.asIdeal) := Ideal.Quotient.field w.asIdeal
   haveI : Finite (𝓞 E ⧸ w.asIdeal) := w.asIdeal.finiteQuotientOfFreeOfNeBot w.ne_bot
@@ -120,7 +119,7 @@ theorem GlobalTheory.WeilDeligne.exists_pow_normV_resPow (E Ω : Type) [Field E]
       Polynomial (𝓞 E ⧸ w.asIdeal)).rootSet_finite (IntCl E Ω ⧸ Q)
     refine Set.Finite.to_subtype (hfin.subset fun y hy => ?_)
     rw [Polynomial.mem_rootSet]
-    refine ⟨FiniteField.X_pow_card_sub_X_ne_zero _ hqM, ?_⟩
+    refine ⟨Polynomial.X_pow_sub_X_ne_zero hqM, ?_⟩
     simp only [map_sub, map_pow, Polynomial.aeval_X]
     rw [(hmemR y).mp hy, sub_self]
 

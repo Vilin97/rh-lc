@@ -53,7 +53,7 @@ theorem pj_chg (v : S.V) : pj e f (chg e f f' σ v) = pj e f (σ (pj e f' v)) :=
 
 include hee hff hef hff' hef' hσ hX' in
 theorem hT_chg (v w : S.V) : S.hT (chg e f f' σ v) (chg e f f' σ w) = S.hT v w := by
-  rw [hT_coord (e := e) (f := f) (chg e f f' σ v), hT_coord (e := e) (f := f') v w]
+  rw [hT_coord hee hff hef (chg e f f' σ v), hT_coord hee hff' hef' v w]
   simp only [hT_f_chg hff hef, hT_e_chg hee hef hef', pj_chg hee hff hef]
   congr 1
   have hp : ∀ u, ∀ a, S.hT (e a) (σ (pj e f' u)) = 0 := fun u a =>
@@ -206,7 +206,7 @@ theorem exists_adapt (Λ : LV D) (hΛ : IsRowLat D (X.Fu u) Λ) :
     exact ((hXΛ.trans hXΛ'.symm).le h1).1
   let a := lequiv hee hff hef (δ := δ.symm) (inv_mem hδi) hXs
   have ha : Formalism.HermitianLatticesTheory.gmap a Λ' = Λ' :=
-    gmap_lequiv hee hff hef (inv_mem hδi) hXs
+    gmap_lequiv hee hff hef (inv_mem hδi) hXs (aaS D) hsplit hLp hunΛ' hδ1 hδ2
   have hγe : ∀ b, (δ * a) ((X.Fu u).e b) = (X.Fu u).e b := fun b => by
     show δ (a ((X.Fu u).e b)) = (X.Fu u).e b
     rw [show a ((X.Fu u).e b) = δ.symm ((X.Fu u).e b) from lequiv_e hee hff hef (inv_mem hδi) hXs b,

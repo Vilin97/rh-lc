@@ -234,8 +234,8 @@ theorem jetCopy_eq {d n : ℕ} (m : ℕ) (i : Fin n) :
   rw [Ideal.Quotient.eq]
   apply mem_of_coeff_lemma_3
   intro e he
-  rw [MvPolynomial.coeff_sub, MvPolynomial.coeff_sub, coeff_psTrunc_lemma_4, if_pos ((mem_degLE_lemma_5 m e).mpr he),
-    cc_psTrunc_lemma, MvPowerSeries.constantCoeff_X, map_zero, MvPolynomial.coeff_zero, sub_zero,
+  rw [cc_psTrunc_lemma, MvPowerSeries.constantCoeff_X, map_zero, sub_zero, MvPolynomial.coeff_sub,
+    coeff_psTrunc_lemma_4, ite_eq_left ((mem_degLE_lemma_5 m e).mpr he),
     ← MvPolynomial.coe_X, MvPolynomial.coeff_coe, sub_self]
 
 variable (C : ChartAt Xo c y) (φ : Fin C.d → MvPowerSeries (Fin 1 × Fin (dL Dw)) S)
@@ -350,9 +350,13 @@ theorem pOf_add (g g' : Fin 1 × Fin C.d → S) : pOf C (g + g') = pOf C g * pOf
   have h0 : tp (fun q : Fin 1 × Fin C.d =>
       (![fun j => g (0, j), fun j => g' (0, j)] : Fin 2 → Fin C.d → S) 0 q.2) = tp g := by
     congr 1
+    funext q
+    exact congrArg g (fin_one_pair_eq q)
   have h1 : tp (fun q : Fin 1 × Fin C.d =>
       (![fun j => g (0, j), fun j => g' (0, j)] : Fin 2 → Fin C.d → S) 1 q.2) = tp g' := by
     congr 1
+    funext q
+    exact congrArg g' (fin_one_pair_eq q)
   have hF : (tp2 C g g').comp (jetSubstPS (m := 0 + 1) (fun p : Fin 1 × Fin C.d => C.B.G.F p.2)) = tp (g + g') := by
     apply jet_hom_ext
     intro q
@@ -445,12 +449,9 @@ variable {Xo : Moduli Dw l} {c : Coeff l} [StarRing (𝓞 E)]
 variable {S : Type} [CommRing S] [Algebra c.F S] [Algebra ℚ S] {y : FrPt Xo c S}
 
 theorem isExpChart_of_expOf (C : ChartAt Xo c y) (φ : Fin C.d → MvPowerSeries (Fin 1 × Fin (dL Dw)) S)
-    (hφ : IsExpOf C.B.G.F C.uvec φ) (hA : ExpActOf C φ) : IsExpChart y (xExp y C φ) where
-  zero := xExp_zero C φ hφ
-  trunc := xExp_trunc C φ
-  law := xExp_law C φ hφ
-  act := xExp_act C φ hφ hA
-  tan := xExp_tan C φ hφ
+    (hφ : IsExpOf C.B.G.F C.uvec φ) (hA : ExpActOf C φ) : IsExpChart y (xExp y C φ) := by
+  exact ⟨xExp_zero C φ hφ, xExp_trunc C φ, xExp_law C φ hφ, xExp_act C φ hφ hA,
+    xExp_tan C φ hφ⟩
 
 end Main
 

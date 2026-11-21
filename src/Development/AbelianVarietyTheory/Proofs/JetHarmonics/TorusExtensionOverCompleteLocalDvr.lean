@@ -48,7 +48,7 @@ theorem exists_isGt (hG : GlobalFnsSt) (E : SplitExt S) :
 
 def polPull [IsAffine S] (P : PolAV S) : PolAV S' :=
   have h := isGrpPullback_pullback P.A f
-  have hL' := pull_isLB P.isLB (pullback.fst P.A.hom f)
+  have hL' := LB.isLB_pull P.isLB (pullback.fst P.A.hom f)
   have hw := (isGen_iff _).1 (PolBaseChange.lbIso_refl hL').choose_spec
   { A := (Over.pullback f).obj P.A
     isAb := TLinPf.isAb_pullback f P.A P.isAb
@@ -87,7 +87,7 @@ def actPull [IsCommMonObj H] {O : Type} [Ring O] (ρ : RingAct H O) : RingAct ((
   map_one := by rw [ρ.map_one, CategoryTheory.Functor.map_id]
   map_mul a b := by rw [ρ.map_mul, CategoryTheory.Functor.map_comp]
   map_add a b := by
-    rw [ρ.map_add (f := _)]
+    rw [ρ.map_add a b]
     exact map_mul (Over.pullback f).homMonoidHom (ρ.act a) (ρ.act b)
 
 end BaseChange

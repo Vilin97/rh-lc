@@ -78,7 +78,7 @@ theorem forms_baseChange : ∀ (k K L : Type) [Field k] [CharZero k] [Field K] [
       intro s
       have h0 := congrArg (fun z => BL.repr z s) hsum
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
+        simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
         map_zero, Finsupp.coe_zero, Pi.zero_apply, BK, BL, repr_mapDR bK bL h] at h0
       refine Fintype.linearIndependent_iff.1 hb (fun j => BK.repr (ω j) s) ?_
       simpa [Algebra.smul_def, mul_comm] using h0

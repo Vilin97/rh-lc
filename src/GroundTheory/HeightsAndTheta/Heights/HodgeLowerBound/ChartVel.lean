@@ -24,7 +24,6 @@ def IsChartVel (M : CxModel P d) (e : OpenPartialHomeomorph M.Xc (Fin d → ℂ)
 namespace Line
 
 open GroundTheory.Heights₂.Heights (CP)
-open GroundTheory.Heights₂.Heights.Regular.ProjectiveLine
 
 end Line
 

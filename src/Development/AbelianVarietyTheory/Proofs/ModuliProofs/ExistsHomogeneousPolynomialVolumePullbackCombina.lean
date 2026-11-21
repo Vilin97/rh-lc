@@ -245,13 +245,22 @@ theorem lbIso_pow (hL : L.IsLB) (φ : I → (X ⟶ X)) (x : I → ℤ) (a : ℕ)
   have h := LB.isLB_linComb hL φ
   apply LBIso.symm
   refine iso_of_chart (LB.isLB_linComb (h x) _ _) ⟨fun j _ => j, fun _ _ hj => ?_, ?_⟩
-  · exact Set.mem_iInter.2 fun _ => mem_pull.2 hj
+  · change _ ∈ L.wchart φ _ at hj
+    exact Set.mem_iInter.2 fun _ => by
+      change _ ∈ (𝟙 X : X ⟶ X) ⁻¹' (L.wchart φ _)
+      simpa using hj
   · intro z p q hp hq
+    change z ∈ L.wchart φ p at hp
+    change z ∈ L.wchart φ q at hq
     refine (gm_linComb L φ (a • x) (𝟙 X) z p q hp hq).trans ?_
-    refine Eq.symm ((gm_linComb (LB.LinComb L φ x) (fun _ : PUnit => 𝟙 X) (fun _ => (a : ℤ)) (𝟙 X) z _ _ (Set.mem_iInter.2 fun _ => mem_pull.2 hp) (Set.mem_iInter.2 fun _ => mem_pull.2 hq)).trans ?_)
+    refine Eq.symm ((gm_linComb (LB.LinComb L φ x) (fun _ : PUnit => 𝟙 X) (fun _ => (a : ℤ)) (𝟙 X) z _ _ (Set.mem_iInter.2 fun _ => by change _ ∈ (𝟙 X : X ⟶ X) ⁻¹' (L.wchart φ p); simpa using hp) (Set.mem_iInter.2 fun _ => by change _ ∈ (𝟙 X : X ⟶ X) ⁻¹' (L.wchart φ q); simpa using hq)).trans ?_)
     simp only [Fintype.prod_unique]
-    rw [gm_pull_g, gm_linComb]
-    simp only [Pi.smul_apply, nsmul_eq_mul, zpow_mul, Finset.prod_zpow]
+    simp only [Category.id_comp]
+    change (gm (𝟙 X) z (L.wchart φ p ⊓ L.wchart φ q) ((LB.LinComb L φ x).g p q)) ^ (a : ℤ) = _
+    rw [gm_linComb L φ x (𝟙 X) z p q hp hq]
+    simp only [Pi.smul_apply, nsmul_eq_mul, Category.id_comp, mul_comm]
+    rw [← Finset.prod_zpow]
+    simp only [zpow_mul]
 
 theorem lbIso_div (hL : L.IsLB) (φ : I → (X ⟶ X)) (x y : I → ℤ) :
     LBIso (LB.div (LB.LinComb L φ x) (LB.LinComb L φ y)) (LB.LinComb L φ (x - y)) := by
@@ -261,7 +270,7 @@ theorem lbIso_div (hL : L.IsLB) (φ : I → (X ⟶ X)) (x y : I → ℤ) :
   intro z p q hp hq
   refine (gm_linComb L φ (x - y) (𝟙 X) z p q hp hq).trans (Eq.symm ?_)
   refine (gm_div' (LB.LinComb L φ x) (LB.LinComb L φ y) (𝟙 X) z (p, p) (q, q) ⟨hp, hp⟩ ⟨hq, hq⟩).trans ?_
-  rw [gm_linComb L φ x (𝟙 X) z p q hp hq, gm_linComb L φ y (𝟙 X) z p q hp hq]
+  refine (congrArg₂ (fun a b => a * b⁻¹) (gm_linComb L φ x (𝟙 X) z p q hp hq) (gm_linComb L φ y (𝟙 X) z p q hp hq)).trans ?_
   simp only [Pi.sub_apply, zpow_sub, Finset.prod_mul_distrib, Finset.prod_inv_distrib]
 
 theorem lbIso_div_pow (hL : L.IsLB) (φ : I → (X ⟶ X)) (x y : I → ℤ) (a : ℕ) :
@@ -274,10 +283,12 @@ theorem lbIso_div_pow (hL : L.IsLB) (φ : I → (X ⟶ X)) (x y : I → ℤ) (a 
       cover := (h y).cover
       g_self := fun i => by
         have e := congrArg (·⁻¹) ((h y).g_self i)
-        simpa only [dual, inv_one, ← map_inv] using e
+        simp only [inv_one, ← map_inv] at e
+        exact e
       cocycle := fun i j k => by
         have e := congrArg (·⁻¹) ((h y).cocycle i j k)
-        simpa only [dual, mul_inv, ← map_inv] using e }
+        simp only [mul_inv, ← map_inv] at e
+        exact e }
     have ht := tens_congr_left hd (lbIso_pow hL φ x a)
     simpa only [tens_eq_div, dual, inv_inv, map_inv] using ht
   exact LBIso.trans (LB.isLB_div hp (h y)) (LB.isLB_div (h _) (h y)) (h _) hc (lbIso_div hL φ _ _)

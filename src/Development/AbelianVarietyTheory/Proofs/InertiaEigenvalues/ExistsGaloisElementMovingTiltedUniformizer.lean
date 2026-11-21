@@ -266,8 +266,9 @@ theorem exists_move (a : ℕ) [NeZero a] (ϖ : PiSys l e) :
 end
 
 theorem main : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (ϖ : PiSys l e), l ≠ 2 →
-    ∃ (g : Gl l) (ε : OCb l) (c : ℕ), IsEps ε ∧ c ≠ 0 ∧ sQ l g ∈ GK (ϖ.field a) ∧
-      ∀ k : ℕ, ϖ.kummer (sQ l (g ^ k)) = ε ^ (c * k) := by
+    ∃ (g : GlobalTheory.BKGal.Gl l) (ε : OCb l) (c : ℕ),
+      IsEps ε ∧ c ≠ 0 ∧ GlobalTheory.BKGal.sQ l g ∈ GK (ϖ.field a) ∧
+      ∀ k : ℕ, ϖ.kummer (GlobalTheory.BKGal.sQ l (g ^ k)) = ε ^ (c * k) := by
   intro l _ a e _ _ ϖ _
   obtain ⟨g, hgK, hroot, hmove⟩ := exists_move a ϖ
   obtain ⟨ε, c, hε, hc, hk⟩ := tilt_step ϖ g (ϖ.gal_pi a ⟨g, hgK⟩) hroot hmove

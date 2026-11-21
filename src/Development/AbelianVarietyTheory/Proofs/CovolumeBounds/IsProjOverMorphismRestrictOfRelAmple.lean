@@ -113,9 +113,9 @@ theorem basicOpen_secRatio (a b : L.Sec) :
 theorem isCoordFamily_secRatio {s : Fin (M + 1) → L.Sec} (hs : ⨆ i, nonzeroLocus (s i) = ⊤) :
     IsCoordFamily (fun i => nonzeroLocus (s i)) (fun i j => secRatio (s i) (s j)) where
   cover := hs
-  self _ := secRatio_self _
-  mul _ _ _ := secRatio_mul_secRatio _ _ _ _ _
-  basicOpen_le _ _ := (basicOpen_secRatio _ _).le.trans inf_le_right
+  self i := secRatio_self (s i)
+  mul i j k := secRatio_mul_secRatio (s i) (s j) (s k) inf_le_left inf_le_right
+  basicOpen_le i j := (basicOpen_secRatio (s i) (s j)).le.trans inf_le_right
 
 def toProj (f : Y ⟶ Sp R) (s : Fin (M + 1) → L.Sec) (hs : ⨆ i, nonzeroLocus (s i) = ⊤) : Y ⟶ PSpace R M :=
   (isCoordFamily_secRatio hs).toHom f
@@ -372,7 +372,14 @@ theorem isProjBy_iff_isProjOver (f : Y ⟶ Sp R) : IsProjBy f ↔ IsProjOver f :
   · rintro ⟨_, _, _, _, h⟩
     exact isProjOver_of_veryAmpleBy h
   · rintro ⟨N, φ, _, rfl⟩
-    exact ⟨_, LB.isLB_pull (O1_isLB R N) φ, N, _, veryAmpleBy_secPull_coord φ⟩
+    have hO : (O1 R N).IsLB := by
+      refine ⟨iSup_chart R N, ?_, ?_⟩
+      · intro i
+        exact Units.ext (ratioOn_self (hi := le_rfl))
+      · intro i j k
+        exact Units.ext (ratioOn_mul_ratioOn (hi := inf_le_left.trans inf_le_left)
+          (hj := inf_le_left.trans inf_le_right))
+    exact ⟨_, LB.isLB_pull hO φ, N, _, veryAmpleBy_secPull_coord φ⟩
 
 theorem veryAmpleBy_comp_iff {T : Scheme.{0}} (q : Y ⟶ T) (e : T ⟶ Sp R) [IsIso e] (s : Fin (M + 1) → L.Sec) :
     VeryAmpleBy (q ≫ e) L s ↔

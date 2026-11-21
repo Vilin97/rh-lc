@@ -55,7 +55,7 @@ theorem mem_tensInt_iff {F E : Type} [Field F] [NumberField F] [Field E] [Number
         rw [e1]
         exact mul_mem (Subring.subset_closure (Or.inl ⟨⟨(z : E), z, rfl⟩, rfl⟩))
           (Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩)))
-      (by simp) (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
+      (by simp) (fun y z hy hz => by rw [map_add]; exact add_mem hy hz)
       (fun y hy => by rw [map_neg]; exact neg_mem hy) hx
     simpa using h
 
@@ -74,19 +74,19 @@ theorem exists_inertDatum : ∀ (D : D7) (n : ℕ) (v : HeightOneSpectrum (𝓞 
   have key : ∀ x ∈ w.asIdeal, IsCMField.ringOfIntegersComplexConj D.host.E x ∈ w.asIdeal := by
     intro x hx
     by_contra hc
-    obtain ⟨s, hs⟩ := GlobalTheory.SplitConjPlace.exists_splitPlace w x hx hc
+    obtain ⟨s, hs⟩ := GlobalTheory.SplitConjPlace.exists_splitPlace (D := D) w x hx hc
     exact hv s (hs.trans (HeightOneSpectrum.ext hov))
   have hnsp : ¬ IsSplitPl D.host w := by
     rintro ⟨x, hx, hy⟩
     exact hy _ (by rw [IsCMField.coe_ringOfIntegersComplexConj, GlobalTheory.SplitPlaceOver.host_conj_eq']) (key x hx)
   have hnsa : ¬ GlobalTheory.UnitaryBC.IsSplitAt w := by
     rintro ⟨u, hne, hu⟩
-    rcases GlobalTheory.SplitConjPlace.eq_or_eq_conjPlE w u (congrArg HeightOneSpectrum.asIdeal hu) with e | e
+    rcases GlobalTheory.SplitConjPlace.eq_or_eq_conjPlE (D := D) w u (congrArg HeightOneSpectrum.asIdeal hu) with e | e
     · exact hne e
     · apply hne
       rw [e]
       exact (HeightOneSpectrum.ext (w.isMaximal.eq_of_le
-        (GlobalTheory.SplitConjPlace.conjPlE w).isPrime.ne_top fun x hx => key x hx)).symm
+        (GlobalTheory.SplitConjPlace.conjPlE (D := D) w).isPrime.ne_top fun x hx => key x hx)).symm
   have hw : Formalism.UG.IsInertAt (maximalRealSubfield D.host.E) D.host.E v w := by
     have h := GlobalTheory.InertPlaceConj.isInertAt_of_not_split w (GlobalTheory.DefiniteBC.host_unramified D.host w) hnsa
     rwa [hunder] at h

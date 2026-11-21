@@ -42,10 +42,11 @@ theorem exists_image {O : Type} [CommRing O] {N N' : NumD O} (J : NumD.Iso N N')
     ∃ q : N'.QT k, q.1.1.toAdd = J.e p.1.1.toAdd ∧ J.Rel p.1.2 q.1.2 := by
   let I := NumD.Hom.ofIso J
   have hp : p.1.2 ^ k = N.io p.1.1.toAdd := p.2
-  refine ⟨⟨(Multiplicative.ofAdd (J.e p.1.1.toAdd), I.img p.1.2), ?_⟩, rfl, I.rel_img _⟩
-  have a := (I.rel_img p.1.2).pow k
-  rw [hp] at a
-  exact (I.rel_existsUnique _).unique a (I.rel_io _)
+  obtain ⟨g', hg', huniq⟩ := I.rel_existsUnique p.1.2
+  refine ⟨⟨(Multiplicative.ofAdd (J.e p.1.1.toAdd), g'), ?_⟩, rfl, hg'⟩
+  · have a := NumD.Hom.Rel.pow (I := I) hg' k
+    rw [hp] at a
+    exact (GlobalTheory.Ex.NumD.Hom.rel_existsUnique I _).unique a (GlobalTheory.Ex.NumD.Hom.rel_io I _)
 
 theorem qEq_image {O : Type} [CommRing O] {N N' : NumD O} (J : NumD.Iso N N') {k : ℕ} {p q : N.QT k} {p' q' : N'.QT k}
     (e : N.QEq p q) (hp : p'.1.1.toAdd = J.e p.1.1.toAdd) (hp' : J.Rel p.1.2 p'.1.2)
@@ -66,8 +67,9 @@ theorem genRel_of_gauge {F : Type} [Field F] {B B₀ : Scheme.{0}} {M : LB B} {M
     GenRel w t t₀ x := by
   obtain rfl : pt₀ = fun k => pt k ≫ φ := funext fun k => (hpt k).symm
   have z : Sp F := (default : PrimeSpectrum F)
-  rw [genRel_iff w t t₀ x z]
-  refine ⟨fun _ => rfl, fun j j₀ h₀ h₁ => ?_⟩
+  apply (genRel_iff w t t₀ x z).2
+  refine ⟨fun _ => rfl, ?_⟩
+  intro j j₀ h₀ h₁
   have hJ := fun ψ => (top_le_iff_mem _ _ z).1 (gJ ψ)
   have hJ' := fun ψ => (top_le_iff_mem _ _ z).1 (gJ' ψ)
   have hp : (𝟙 (Sp F) : Sp F ⟶ Sp F) z ∈ LB.wchart M₀ (fun k => pt k ≫ φ) j₀ := Set.mem_iInter.2 h₀

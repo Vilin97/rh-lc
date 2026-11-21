@@ -219,7 +219,7 @@ theorem val_infinite (D : D7) (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E) (
     intro z
     refine (GlobalTheory.HeckeFinTrivial.denseRange_units (tauE D) hd).induction_on z
       (isClosed_eq (continuous_subtype_val.comp (hc.1.1.comp Tc)) ?_) fun k => ?_
-    · refine continuous_finset_prod _ fun τ _ => ?_
+    · refine continuous_finsetProd _ fun τ _ => ?_
       have c1 : Continuous fun z : D.what₂.Tau → ℂˣ => (z τ : ℂ) := Units.continuous_val.comp (continuous_apply τ)
       have n0 : ∀ z : D.what₂.Tau → ℂˣ, (‖(z τ : ℂ)‖ : ℂ) ≠ 0 := fun z => by simp
       exact (c1.div (Complex.continuous_ofReal.comp c1.norm) n0).zpow₀ _

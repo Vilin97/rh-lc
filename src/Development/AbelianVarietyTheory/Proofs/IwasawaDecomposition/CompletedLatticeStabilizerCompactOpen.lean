@@ -23,14 +23,10 @@ theorem exists_compact_latHat (F E : Type) [Field F] [NumberField F] [Field E] [
   obtain ⟨m, x, hx⟩ := Submodule.fg_iff_exists_fin_generating_family.1 hZ
   let g : (Fin m → Af F) → Fin M → Af F ⊗[F] E := fun c i => ∑ k, c k ⊗ₜ[F] x k i
   have hg : Continuous g := by
-    refine continuous_pi fun i => continuous_finset_sum _ fun k _ => ?_
-    have : (fun c : Fin m → Af F => c k ⊗ₜ[F] x k i) = fun c => c k • ((1 : Af F) ⊗ₜ[F] x k i) := by
-      funext c
-      rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
-    rw [this]
-    have hk : Continuous fun c : Fin m → Af F => c k := continuous_apply k
-    have ho : Continuous fun _ : Fin m → Af F => (1 : Af F) ⊗ₜ[F] x k i := continuous_const
-    exact hk.smul ho
+    refine continuous_pi fun i => continuous_finsetSum _ fun k _ => ?_
+    have hc : Continuous (fun c : Fin m → Af F => c k • ((1 : Af F) ⊗ₜ[F] x k i)) :=
+      continuous_smul.comp ((continuous_apply k).prodMk continuous_const)
+    simpa only [TensorProduct.smul_tmul', smul_eq_mul, mul_one] using hc
   have hI : IsCompact (intAf F) := GlobalTheory.AdeleCocompact.isCompact_integral F
   refine ⟨g '' Set.pi Set.univ fun _ => intAf F, (isCompact_univ_pi fun _ => hI).image hg, fun y hy => ?_⟩
   induction hy using AddSubgroup.closure_induction with

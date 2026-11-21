@@ -110,7 +110,10 @@ def extLat (hx : Spec.map (CommRingCat.ofHom g) ≫ x = ξ) (M : LieModel G ξ E
   carrier := {e | ∃ v, Ext g x M e v}
   add_mem' := fun ⟨v, hv⟩ ⟨v', hv'⟩ => ⟨_, hv.mul hx hv'⟩
   zero_mem' := ⟨_, Ext.zero hx⟩
-  neg_mem' := fun {e} ⟨v, hv⟩ => ⟨_, by simpa using hv.smul (-1)⟩
+  neg_mem' := fun {e} ⟨v, hv⟩ => by
+    have h := hv.smul (-1)
+    rw [map_neg, map_one, neg_one_smul] at h
+    exact ⟨_, h⟩
 
 def ExtE (hx : Spec.map (CommRingCat.ofHom g) ≫ x = ξ) (M : LieModel G ξ E) : Type := ↥(extLat hx M)
 

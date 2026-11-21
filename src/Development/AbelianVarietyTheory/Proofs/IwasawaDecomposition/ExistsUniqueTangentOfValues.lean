@@ -135,18 +135,22 @@ theorem exists_form_eq [QuasiSeparated π]
 
 theorem exists_hom_of_isFrame {F : X.Modules} {n : ℕ} {s : Fin n → Γ(F, ⊤)} (hs : IsFrame s) (c : Fin n → Γ(X, ⊤)) :
     ∃ L : F ⟶ structureModule X, ∀ l, L.app ⊤ (s l) = c l := by
-  refine ⟨homGlobalEquiv _ _ (∑ i, c i • hs.coord i), fun l => ?_⟩
-  change dualApp (∑ i, c i • hs.coord i) le_rfl (s l) = c l
-  have hsum (T : Finset (Fin n)) : dualApp (∑ i ∈ T, c i • hs.coord i) le_rfl (s l) = if l ∈ T then c l else 0 := by
+  let coord (i : Fin n) : Γ(dual F, ⊤) :=
+    homMk (fun _ h => (hs.basis h).coord i) fun _ _ h h' t => hs.repr_resM h h' t i
+  have coord_frame (i j : Fin n) : dualApp (coord i) le_rfl (s j) = if j = i then 1 else 0 := by
+    change (hs.basis le_rfl).repr (s j) i = _
+    rw [← Twist.resM_self le_rfl (s j), ← hs.basis_apply le_rfl j, Module.Basis.repr_self, Finsupp.single_apply]
+  refine ⟨homGlobalEquiv _ _ (∑ i, c i • coord i), fun l => ?_⟩
+  change dualApp (∑ i, c i • coord i) le_rfl (s l) = c l
+  have hsum (T : Finset (Fin n)) : dualApp (∑ i ∈ T, c i • coord i) le_rfl (s l) = if l ∈ T then c l else 0 := by
     induction T using Finset.induction_on with
     | empty =>
-      have := dualApp_smul (0 : Γ(X, ⊤)) (hs.coord l) le_rfl
+      have := dualApp_smul (0 : Γ(X, ⊤)) (coord l) le_rfl
       rw [zero_smul, map_zero, zero_smul] at this
       rw [Finset.sum_empty, this]
       simp
     | insert i T hi ih =>
-      have := hs.dualApp_coord_frame i l le_rfl
-      rw [Twist.resM_self] at this
+      have := coord_frame i l
       rw [Finset.sum_insert hi, dualApp_add, LinearMap.add_apply, ih, dualApp_smul, LinearMap.smul_apply, this,
         resG_self]
       by_cases hl : l = i

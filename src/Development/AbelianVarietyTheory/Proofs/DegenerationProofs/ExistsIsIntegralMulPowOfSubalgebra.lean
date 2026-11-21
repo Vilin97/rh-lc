@@ -65,7 +65,8 @@ theorem exists_finite_span_isIntegral_chart [IsDedekindDomain o] [CharZero Ω] [
           field_simp
         rw [this]
         exact mul_mem hy' hx
-  haveI := finite_integralClosure_of_essFiniteType_field o A Ω
+  haveI : Module.Finite A (integralClosure A Ω) :=
+    finite_integralClosure_of_essFiniteType_field (R := A) o Ω
   obtain ⟨s, hs⟩ := (inferInstance : Module.Finite A (integralClosure A Ω))
   refine ⟨(integralClosure A Ω).val.toLinearMap '' s, s.finite_toSet.image _, ?_, fun x hx => ?_⟩
   · rintro _ ⟨x, -, rfl⟩

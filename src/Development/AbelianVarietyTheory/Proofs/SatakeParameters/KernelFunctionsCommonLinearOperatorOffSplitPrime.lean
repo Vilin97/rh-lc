@@ -70,8 +70,18 @@ theorem admissible_pair_twist {D : D7} {a b : ℕ} (cl : ℕ) (N : Submodule (�
     (hA : TaylorLogMetric.admitted D a b N N') (hcl : 0 < cl) (ex : HeightOneSpectrum (𝓞 D.host.E) → ℤ)
     (h01 : ∀ Q, ex Q = 1 ∨ ex Q = 0 ∨ ex Q = -1) (hc : ∀ Q, ex (Formalism.L2.Col.conjPrime₂ Q) = -ex Q) :
     TaylorLogMetric.admitted D a b N (twist₂ N' cl ex) := by
-  have hl := hh_tw_lattice N' ⟨hA.2.2.2.1, hA.2.2.2.2.1⟩ hcl ex h01
-  exact ⟨hA.1, hA.2.1, hA.2.2.1, hl.fg, hl.span_eq_top,
+  have hl := hh_tw_lattice N' (Submodule.IsLattice.of_fg D.host.E hA.2.2.2.1) hcl ex h01
+  have hspan : Submodule.span D.host.E (↑(twist₂ N' cl ex) : Set _) = ⊤ := by
+    apply top_unique
+    rw [← hA.2.2.2.2.1]
+    apply Submodule.span_le.mpr
+    intro x hx
+    have hx' := hh_tw_of N' hcl ex h01 hx
+    have hc : (cl : D.host.E) ≠ 0 := Nat.cast_ne_zero.mpr hcl.ne'
+    have hm := Submodule.subset_span hx'
+    have hm' := Submodule.smul_mem (Submodule.span D.host.E (↑(twist₂ N' cl ex) : Set _)) (cl : D.host.E)⁻¹ hm
+    simpa [Nat.cast_smul_eq_nsmul, ← Nat.cast_smul_eq_nsmul D.host.E, smul_smul, hc] using hm'
+  exact ⟨hA.1, hA.2.1, hA.2.2.1, hl.fg, hspan,
     (unimod_iff _).1 (twist_selfDual D.host.E b N' cl ex hA.2.2.2.1 hcl hc ((unimod_iff _).2 hA.2.2.2.2.2))⟩
 
 theorem split_of_adm {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Base D cc δ) {a b : ℕ} (SS : Finset (HeightOneSpectrum (𝓞 D.host.E))) (cl : ℕ)

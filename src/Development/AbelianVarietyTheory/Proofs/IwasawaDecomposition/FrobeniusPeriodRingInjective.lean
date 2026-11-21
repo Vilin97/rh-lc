@@ -396,7 +396,8 @@ theorem approx_mem {e : Per.Fl l} (he : IsEps e) {q : Per.AinfP l} (hq : (l : Pe
         refine ⟨-((l : Per.Acris l) ^ k * phiA l z'), ?_⟩
         rw [hs] at hx
         rw [← phiA_of]
-        simp only [map_add (f := _), map_mul, map_pow, map_natCast] at hx ⊢
+        set_option synthInstance.maxHeartbeats 200000 in
+          simp only [map_add, map_mul, map_pow, map_natCast] at hx ⊢
         linear_combination hx
       obtain ⟨v, hv⟩ := (hdvd _ _).1 h1
       refine ⟨s', hle s', v, hle v, ?_⟩

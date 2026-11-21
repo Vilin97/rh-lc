@@ -76,7 +76,7 @@ variable {S S' : Scheme.{0}} {f : S' ⟶ S} {A : Over S} {A' : Over S'} [GrpObj 
 
 theorem inK_push (h : IsGrpPullback A' A f φ) (hL : L.IsLB) {T' : Over S'} (x : T' ⟶ A')
     (hx : InK A' (L.pull φ) x) : InK A L (pushPt h.1.w x) := by
-  have hL' := pull_isLB hL φ
+  have hL' := LB.isLB_pull hL φ
   obtain ⟨w, hw⟩ := PolBaseChange.lbIso_refl hL'
   replace hw := (isGen_iff w).1 hw
   intro p
@@ -127,7 +127,7 @@ theorem TrivAlong.comp (h : TrivAlong A L f) {S'' : Scheme.{0}} (g : S'' ⟶ S')
 theorem trivAlong_of_kTriv (h : IsGrpPullback A' A f φ) (hL : L.IsLB) (hK : KTriv A' (L.pull φ)) :
     TrivAlong A L f := by
   intro T a ha x hx
-  have hL' := pull_isLB hL φ
+  have hL' := LB.isLB_pull hL φ
   have hxw : x.left ≫ A.hom = a ≫ f := (Over.w x).trans ha.symm
   let x' : Over.mk a ⟶ A' := Over.homMk (h.1.lift _ _ hxw) (h.1.lift_snd _ _ _)
   let U : Over.mk ((Over.mk a).hom ≫ f) ⟶ T := Over.homMk (𝟙 _) ((Category.id_comp _).trans ha.symm)
@@ -160,7 +160,16 @@ theorem kTriv_of_primes (hG : GlobalFnsSt) (R : Type) [CommRing R] (B : Over (Sp
       p ∈ Set.range (PrimeSpectrum.comap ψ) ∧ TrivAlong B N (spMap ψ)) : KTriv B N := by
   obtain ⟨d, -, n, s, hs⟩ := (GlobalTheory.Unif.relAmple_iff_veryAmpleBy R B N hN).1 ha
   obtain ⟨hO, -, hK⟩ := GlobalTheory.UU.TrivTwist.inK_iff_trivial_twist _ B N hN
-  obtain ⟨H, k, hk, hH⟩ := GlobalTheory.UU.TwistKer.exists_closed_twist_kernel hG R B hB ⟨_, isLB_pw hN _, n, s, hs⟩ N (pw N 0) hN hO
+  obtain ⟨H, k, hk, hH⟩ := GlobalTheory.UU.TwistKer.exists_closed_twist_kernel hG R B hB ⟨_, (by
+    exact { cover := hN.cover
+            g_self := fun i => by
+              have h := congrArg (· ^ (d : ℤ)) (hN.g_self i)
+              simp only [one_zpow, ← map_zpow] at h
+              exact h
+            cocycle := fun i j k => by
+              have h := congrArg (· ^ (d : ℤ)) (hN.cocycle i j k)
+              simp only [mul_zpow, ← map_zpow] at h
+              exact h }), n, s, hs⟩ N (pw N 0) hN hO
   have hfin : IsFinite H.hom := GlobalTheory.AmpleStabFinite.isFinite_of_relAmple hG R B hB N (pw N 0) hN hO ha H k hk hH
   have hrep : ∀ (T : Over (Spec (CommRingCat.of R))) (x : T ⟶ B), InK B N x ↔ ∃ y : T ⟶ H, y ≫ k = x :=
     fun T x => (hK _ rfl T x).trans (hH T x)
@@ -191,7 +200,7 @@ variable [IsCommMonObj A] {R : Type} [CommRing R]
 omit [IsCommMonObj A] in
 theorem relAmple_chart (j : Sp R ⟶ S) [IsOpenImmersion j] (g : S' ⟶ Sp R) (hL : L.IsLB) (hA : RelAmple A L) :
     RelAmple ((Over.pullback (g ≫ j)).obj A) (L.pull (pullback.fst A.hom (g ≫ j))) := by
-  have hL' := pull_isLB hL (pullback.fst A.hom (g ≫ j))
+  have hL' := LB.isLB_pull hL (pullback.fst A.hom (g ≫ j))
   obtain ⟨w, hw⟩ := PolBaseChange.lbIso_refl hL'
   exact relAmple_pull (A' := (Over.pullback (g ≫ j)).obj A) (IsPullback.of_hasPullback _ _) hL hL'
     ((isGen_iff w).1 hw) j.opensRange (isAffineOpen_opensRange j) (fun y => ⟨g y, rfl⟩) hA
@@ -263,7 +272,7 @@ theorem trivAlong_chart (hG : GlobalFnsSt) (j : Sp R ⟶ S) [IsOpenImmersion j] 
   have ha' := relAmple_chart j (𝟙 _) hL ha
   rw [Category.id_comp j] at ha'
   have hp := isGrpPullback_pullback A j
-  refine trivAlong_of_kTriv hp hL (kTriv_of_primes hG R _ (TLinPf.isAb_pullback j A hA) _ (pull_isLB hL _) ha'
+  refine trivAlong_of_kTriv hp hL (kTriv_of_primes hG R _ (TLinPf.isAb_pullback j A hA) _ (LB.isLB_pull hL _) ha'
     fun p => ?_)
   obtain ⟨V, _, ψ, hψ, hV⟩ := h p
   exact ⟨V, inferInstance, ψ, hψ, hV.pull hp hL⟩

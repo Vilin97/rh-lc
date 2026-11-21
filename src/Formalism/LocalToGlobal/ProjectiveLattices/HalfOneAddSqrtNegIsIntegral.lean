@@ -141,13 +141,15 @@ theorem fromK_of_gen {R : Type} [CommRing R] {I : Ideal R} {A : Subalgebra ℤ R
   · exact Ideal.span_le.2 (fun x hx => hx.1)
 
 theorem MbOf_gen (D : D7) : ∀ ps : List ℕ, ∃ G : Set (𝓞 D.host.E),
-    MbOf D ps = Ideal.span G ∧ G ⊆ Algebra.adjoin ℤ {w0E D}
-  | [] => ⟨{1}, by simp [MbOf], by
+    MbOf D ps = Ideal.span G ∧ G ⊆ Algebra.adjoin ℤ {w0E D} := by
+  intro ps
+  induction ps with
+  | nil => exact ⟨{1}, by simp [MbOf], by
       intro x hx; rw [Set.mem_singleton_iff.1 hx]; exact Subalgebra.one_mem _⟩
-  | p :: t => by
-      obtain ⟨G, hG, hGA⟩ := MbOf_gen D t
+  | cons p t ih =>
+      obtain ⟨G, hG, hGA⟩ := ih
       refine ⟨{(p : 𝓞 D.host.E), w0E D - (cRoot D p : 𝓞 D.host.E)} * G, ?_, ?_⟩
-      · rw [MbOf, List.map_cons, List.prod_cons, ← MbOf, hG, pIdeal, Ideal.span_mul_span']
+      · rw [MbOf, List.map_cons, List.prod_cons, ← MbOf, hG, pIdeal, Ideal.span_mul_span]
       · intro x hx
         obtain ⟨a, ha, b, hb, rfl⟩ := Set.mem_mul.1 hx
         refine Subalgebra.mul_mem _ ?_ (hGA hb)

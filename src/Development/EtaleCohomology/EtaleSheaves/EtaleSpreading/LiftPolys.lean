@@ -37,10 +37,15 @@ theorem lift_poly (hc : IsColimit c) {σ : Type} (p : MvPolynomial σ c.pt) :
     exact ⟨j, q * MvPolynomial.X i, by simp [h]⟩
 
 theorem lift_polys (hc : IsColimit c) {σ : Type} : ∀ (m : ℕ) (p : Fin m → MvPolynomial σ c.pt),
-    ∃ (j : J) (q : Fin m → MvPolynomial σ (D.obj j)), ∀ i, MvPolynomial.map (c.ι.app j).hom (q i) = p i
-  | 0, _ => ⟨IsFiltered.nonempty.some, fun i => i.elim0, fun i => i.elim0⟩
-  | m + 1, p => by
-    obtain ⟨j₁, q₁, h₁⟩ := lift_polys hc m (fun i => p i.succ)
+    ∃ (j : J) (q : Fin m → MvPolynomial σ (D.obj j)), ∀ i, MvPolynomial.map (c.ι.app j).hom (q i) = p i := by
+  intro m
+  induction m with
+  | zero =>
+    intro p
+    exact ⟨IsFiltered.nonempty.some, fun i => i.elim0, fun i => i.elim0⟩
+  | succ m ih =>
+    intro p
+    obtain ⟨j₁, q₁, h₁⟩ := ih (fun i => p i.succ)
     obtain ⟨j₂, q₂, h₂⟩ := lift_poly hc (p 0)
     refine ⟨IsFiltered.max j₁ j₂, Fin.cons (MvPolynomial.map (D.map (IsFiltered.rightToMax j₁ j₂)).hom q₂)
       (fun i => MvPolynomial.map (D.map (IsFiltered.leftToMax j₁ j₂)).hom (q₁ i)), ?_⟩

@@ -13,25 +13,21 @@ open IsLocalRing Polynomial
 
 theorem semi_complete {A : Type} [CommRing A] [IsNoetherianRing A] [IsLocalRing A]
     [IsAdicComplete (maximalIdeal A) A] (M : Type) [AddCommGroup M] [Module A M] [Module.Finite A M] :
-    IsAdicComplete (maximalIdeal A) M where
-  toIsHausdorff := inferInstance
-  prec' := by
-    letI : IsPrecomplete (maximalIdeal A) M := by
-      rw [← AdicCompletion.of_surjective_iff]
-      intro y
-      obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite (maximalIdeal A) M y
-      induction t using TensorProduct.induction_on with
-      | zero => exact ⟨0, by simp⟩
-      | tmul r x =>
-        obtain ⟨r, rfl⟩ := AdicCompletion.of_surjective (maximalIdeal A) A r
-        refine ⟨r • x, ?_⟩
-        rw [AdicCompletion.ofTensorProduct_tmul, map_smul]
-        exact (algebraMap_smul (AdicCompletion (maximalIdeal A) A) r _).symm
-      | add x y hx hy =>
-        obtain ⟨a, ha⟩ := hx
-        obtain ⟨b, hb⟩ := hy
-        exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
-    exact IsPrecomplete.prec' (I := maximalIdeal A) (M := M)
+    IsAdicComplete (maximalIdeal A) M := by
+  refine ⟨inferInstance, AdicCompletion.of_surjective_iff.mp ?_⟩
+  intro y
+  obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite (maximalIdeal A) M y
+  induction t using TensorProduct.induction_on with
+  | zero => exact ⟨0, by simp⟩
+  | tmul r x =>
+    obtain ⟨r, rfl⟩ := AdicCompletion.of_surjective (maximalIdeal A) A r
+    refine ⟨r • x, ?_⟩
+    rw [AdicCompletion.ofTensorProduct_tmul, map_smul]
+    exact (algebraMap_smul (AdicCompletion (maximalIdeal A) A) r _).symm
+  | add x y hx hy =>
+    obtain ⟨a, ha⟩ := hx
+    obtain ⟨b, hb⟩ := hy
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
 
 theorem semi_unit_or_nil {Q : Type} [CommRing Q] [Finite Q] (h : ∀ e : Q, e * e = e → e = 0 ∨ e = 1) (x : Q) :
     IsUnit x ∨ IsNilpotent x := by

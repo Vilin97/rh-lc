@@ -489,8 +489,9 @@ theorem position_pair (β : V → V → ℂ) (hβ : ∀ v v', β (-v) v' = -β v
     intro X X'
     have hc : ∀ z : Ix (Fin w.length), z ∘ Fin.cast (len_pm [] w) = z :=
       fun z => funext fun t => congrArg z (Fin.ext rfl)
-    rw [Lw_nil, Ww_nil, JL, one_mul]
-    simp only [hc, KB.pairJ]
+    rw [Lw_nil, Ww_nil, JL, one_mul, KB.pairJ]
+    refine Finset.sum_congr rfl fun z _ => ?_
+    exact congrArg (fun t => β (actP (RRw QQ (D.positionted w)) X z) (X' t)) (hc z)
   | cons y ys ih =>
     intro X X'
     have h' : (KB.minusW ys w).length + 1 = (KB.plusW ys w).length + 1 := by rw [len_pm]

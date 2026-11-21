@@ -149,6 +149,18 @@ end
 theorem exists_form_correction : ∀ (A : Type) [CommRing A] [IsLocalRing A] [IsNoetherianRing A] (X : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of A)), Flat f → ∀ (H : LB X) (n : ℕ) (s : Fin (n + 1) → LB.Sec H), H.IsLB → VeryAmpleBy f H s → ∀ (K : Type) [Field K] (g₀ : A →+* K), Function.Surjective g₀ → ∀ (X₀ : Scheme.{0}) (π : X₀ ⟶ X) (f₀ : X₀ ⟶ Spec (CommRingCat.of K)), IsPullback π f₀ f (Spec.map (CommRingCat.ofHom g₀)) → ∀ (H₀ : LB X₀) (w₀ : LB.Iso H₀ (H.pull π)) (s₀ : Fin (n + 1) → LB.Sec H₀), H₀.IsLB → w₀.IsGen → (∀ j, (∀ z (k : (H).ι) (k' : (H₀).ι), (π) z ∈ (H).U k → z ∈ (H₀).U k' → gs (π) z _ ((s j).f k) = (Geo.Tor.gw (w₀) (𝟙 _) z k k').val * gs (𝟙 _) z _ ((s₀ j).f k'))) → ∀ t : ℕ, FirstCohomologyVanishes (pw H₀ t) → (∀ σ : LB.Sec (pw H₀ t), ∃ P : MvPolynomial (Fin (n + 1)) K, P.IsHomogeneous t ∧ ∀ k : H₀.ι, σ.f k = MvPolynomial.eval₂Hom (cst (f₀) ((H₀).U k)) (fun j => (s₀ j).f k) (P)) → ∀ (A' : Type) [CommRing A'] (g : A →+* A') (X' : Scheme.{0}) (β : X' ⟶ X) (f' : X' ⟶ Spec (CommRingCat.of A')), IsPullback β f' f (Spec.map (CommRingCat.ofHom g)) → ∀ (H' : LB X') (w : LB.Iso H' (H.pull β)) (s' : Fin (n + 1) → LB.Sec H'), H'.IsLB → w.IsGen → (∀ j, (∀ z (k : (H).ι) (k' : (H').ι), (β) z ∈ (H).U k → z ∈ (H').U k' → gs (β) z _ ((s j).f k) = (Geo.Tor.gw (w) (𝟙 _) z k k').val * gs (𝟙 _) z _ ((s' j).f k'))) → ∀ F : MvPolynomial (Fin (n + 1)) A, F.IsHomogeneous t → (∀ k : (H').ι, MvPolynomial.eval₂Hom (cst (β ≫ f) ((H').U k)) (fun j => (s' j).f k) (F) = 0) → ∃ G : MvPolynomial (Fin (n + 1)) A, G.IsHomogeneous t ∧ (∀ d, g (AddMonoidAlgebra.coeff G d) = 0) ∧ (∀ k : (H).ι, MvPolynomial.eval₂Hom (cst (f) ((H).U k)) (fun j => (s j).f k) (F - G) = 0) := by
   intro A _ _ _ X f hf H n s hH hva K _ g₀ hg₀ X₀ π f₀ hπ H₀ w₀ s₀ hH₀ hw₀ hs₀ t h1 hsurj A' _ g X' β f' hβ H' w s'
     hH' hw hs' F hF hF0
+  have isLB_pw : ∀ {Y : Scheme.{0}} {L : LB Y}, L.IsLB → ∀ d : ℤ, (AbLaw.pw L d).IsLB := by
+    intro Y L hL d
+    exact {
+      cover := hL.cover
+      g_self := fun i => by
+        have e := congrArg (· ^ d) (hL.g_self i)
+        simp only [one_zpow, ← map_zpow] at e
+        exact e
+      cocycle := fun i j k => by
+        have e := congrArg (· ^ d) (hL.cocycle i j k)
+        simp only [mul_zpow, ← map_zpow] at e
+        exact e }
   have hM := isLB_pw hH (t : ℤ)
   have hM' := isLB_pw hH' (t : ℤ)
   obtain ⟨m, τ, hτ⟩ := GlobalTheory.T.exists_sections_basis_baseChange_h1Vanishing A X f hf ⟨H, hH, n, s, hva⟩ (AbLaw.pw H t) hM K g₀ hg₀ X₀ π f₀ hπ
@@ -188,11 +200,11 @@ theorem exists_form_correction : ∀ (A : Type) [CommRing A] [IsLocalRing A] [Is
   refine ⟨∑ i, MvPolynomial.C (c i) * Q i,
     MvPolynomial.IsHomogeneous.sum _ _ _ fun i _ => (hQ i).C_mul _, fun d => ?_, fun k => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [MvPolynomial.coeff_sum, map_sum]
+  · rw [MvPolynomial.coeff_sum, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [MvPolynomial.coeff_C_mul, map_mul, congrFun hgc i, Pi.zero_apply, zero_mul]
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sub, sub_eq_zero, map_sum]
+  · rw [map_sub, sub_eq_zero, map_sum]
     refine (hc' k).trans (Finset.sum_congr rfl fun i _ => ?_)
     rw [map_mul, MvPolynomial.eval₂Hom_C, hτQ i k]
     rfl

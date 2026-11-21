@@ -41,7 +41,7 @@ theorem _root_.GlobalTheory.CountableFibres.exists_injective_fderiv {E F : Type}
     rintro ⟨w, x, rfl⟩
     exact ⟨x, by simp [hPL]⟩
   have hg : HasStrictFDerivAt (fun x => P (f x)) (P.comp L) z₀ :=
-    P.hasStrictFDerivAt.comp z₀ ((hf z₀ hz₀).hasStrictFDerivAt one_ne_zero)
+    P.hasStrictFDerivAt.comp z₀ ((hf z₀ hz₀).hasStrictFDerivAt_fderiv one_ne_zero)
 
   obtain ⟨R₀, hR₀⟩ := LinearMap.exists_rightInverse_of_surjective _ hsurj
   set R : W →L[ℂ] E := LinearMap.toContinuousLinearMap R₀
@@ -92,37 +92,62 @@ theorem _root_.GlobalTheory.CountableFibres.exists_injective_fderiv {E F : Type}
         map_sub, hxy, sub_self, map_zero]
     rw [hK, Submodule.mem_bot, sub_eq_zero] at this
     exact this
-  set Ψ := hg.implicitToOpenPartialHomeomorph _ _ hsurj
+  have hcc : K.ClosedComplemented :=
+    ContinuousLinearMap.ker_closedComplemented_of_finiteDimensional_range (P.comp L)
+  let D : ImplicitFunctionData ℂ E W K := {
+    leftFun := fun x => P (f x)
+    leftDeriv := P.comp L
+    rightFun := fun x => (Classical.choose hcc) (x - z₀)
+    rightDeriv := Classical.choose hcc
+    pt := z₀
+    hasStrictFDerivAt_leftFun := hg
+    hasStrictFDerivAt_rightFun :=
+      (Classical.choose hcc).comp_hasStrictFDerivAt ((hasStrictFDerivAt_id z₀).sub_const z₀)
+    range_leftDeriv := hsurj
+    range_rightDeriv := LinearMap.range_eq_of_proj (Classical.choose_spec hcc)
+    isCompl_ker := LinearMap.isCompl_of_proj (Classical.choose_spec hcc) }
+  set Ψ := D.toOpenPartialHomeomorph
   set ψ : K → E := fun t => Ψ.symm (P (f z₀), t)
-  have hψ0 : ψ 0 = z₀ := hg.implicitFunction_apply_image hsurj
-  have hψc : ContinuousAt ψ 0 := (hg.to_implicitFunction hsurj).continuousAt
+  have hp : D.prodFun D.pt = (P (f z₀), 0) := by
+    rw [ImplicitFunctionData.prodFun_apply]
+    simp [D]
+  have heq : ∀ t, D.implicitFunction (P (f z₀)) t = ψ t := fun t =>
+    D.implicitFunction_apply
+  have hψ0 : ψ 0 = z₀ := by
+    rw [← heq]
+    have h := D.implicitFunction_apply_image.self_of_nhds
+    simpa [D] using h
+  have hψc : ContinuousAt ψ 0 := by
+    have h := D.differentiableAt_implicitFunction.continuousAt
+    change ContinuousAt (D.implicitFunction (P (f z₀))) ((Classical.choose hcc) (z₀ - z₀)) at h
+    rw [sub_self, map_zero, funext heq] at h
+    exact h
   have htend : Tendsto (fun t : K => (P (f z₀), t)) (𝓝 0) (𝓝 (P (f z₀), 0)) :=
     tendsto_const_nhds.prodMk_nhds tendsto_id
-  have hlev : ∀ᶠ t in 𝓝 (0 : K), P (f (ψ t)) = P (f z₀) :=
-    htend.eventually (hg.map_implicitFunction_eq hsurj)
+  have hlev : ∀ᶠ t in 𝓝 (0 : K), P (f (ψ t)) = P (f z₀) := by
+    have h := D.leftFun_implicitFunction
+    rw [hp] at h
+    simpa only [D, heq] using htend.eventually h
   have hinv : ∀ᶠ t in 𝓝 (0 : K), (Ψ (ψ t)).2 = t := by
-    have h := Ψ.open_target.mem_nhds (hg.mem_implicitToOpenPartialHomeomorph_target hsurj)
+    have h := Ψ.open_target.mem_nhds (by
+      have h := D.map_pt_mem_toOpenPartialHomeomorph_target
+      simpa [D, Ψ] using h)
     filter_upwards [htend h] with t ht
     simp only [ψ]
     rw [Ψ.right_inv (by exact ht)]
   have hdiff : ∀ᶠ t in 𝓝 (0 : K), DifferentiableAt ℂ ψ t := by
-    have hcc : K.ClosedComplemented :=
-      ContinuousLinearMap.ker_closedComplemented_of_finiteDimensional_range (P.comp L)
-    let D := hg.implicitFunctionDataOfComplemented _ _ hsurj hcc
     have hl : ContDiffAt ℂ 1 D.leftFun D.pt :=
       (P.contDiff.contDiffAt).comp z₀ (hf z₀ hz₀)
-    have hr : ContDiffAt ℂ 1 D.rightFun D.pt := by
-      show ContDiffAt ℂ 1 (fun x => (Classical.choose hcc) (x - z₀)) z₀
-      exact ((Classical.choose hcc).contDiff.comp (contDiff_id.sub contDiff_const)).contDiffAt
-    have hp : D.prodFun D.pt = (P (f z₀), 0) := by
-      rw [ImplicitFunctionData.prodFun_apply]
-      show (P (f z₀), (Classical.choose hcc) (z₀ - z₀)) = _
-      rw [sub_self, map_zero]
+    have hr : ContDiffAt ℂ 1 D.rightFun D.pt :=
+      ((Classical.choose hcc).contDiff.comp (contDiff_id.sub contDiff_const)).contDiffAt
     have hcd := (D.contDiffAt_implicitFunction hl hr one_ne_zero).eventually (by simp)
     rw [hp] at hcd
     filter_upwards [htend.eventually hcd] with t ht
-    exact (ht.differentiableAt one_ne_zero).comp t
-      ((differentiableAt_const _).prodMk differentiableAt_id)
+    have h := (ht.differentiableAt one_ne_zero).comp t
+      ((differentiableAt_const (P (f z₀))).prodMk differentiableAt_id)
+    change DifferentiableAt ℂ (fun x => D.implicitFunction (P (f z₀)) x) t at h
+    rw [funext heq] at h
+    exact h
   have hnear : ∀ᶠ t in 𝓝 (0 : K), ψ t ∈ U ∧
       (∀ v, P (fderiv ℂ f (ψ t) v) = 0 → fderiv ℂ f (ψ t) v = 0) := by
     have h := (hU.eventually_mem hz₀).and hker
@@ -238,7 +263,7 @@ theorem _root_.GlobalTheory.CountableFibres.exists_independent_ratios :
   refine ⟨a₀, a, ⟨z₁, hz₁, ha₀⟩, fun F hF => ?_⟩
   set π : (I → ℂ) →L[ℂ] Fin d → ℂ := ContinuousLinearMap.pi fun i => ContinuousLinearMap.proj (a i)
   have hG : HasStrictFDerivAt (fun z => π (ρ z)) (π.comp D) z₂ :=
-    π.hasStrictFDerivAt.comp z₂ ((hρ z₂ hz₂).hasStrictFDerivAt one_ne_zero)
+    π.hasStrictFDerivAt.comp z₂ ((hρ z₂ hz₂).hasStrictFDerivAt_fderiv one_ne_zero)
   have hsurj : LinearMap.range ((π.comp D : (Fin d → ℂ) →L[ℂ] Fin d → ℂ) :
       (Fin d → ℂ) →ₗ[ℂ] Fin d → ℂ) = ⊤ := by
     rw [LinearMap.range_eq_top, ← LinearMap.injective_iff_surjective, ← LinearMap.ker_eq_bot,

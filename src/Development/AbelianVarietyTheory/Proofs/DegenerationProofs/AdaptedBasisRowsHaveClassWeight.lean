@@ -104,10 +104,6 @@ theorem isTor_nsmul {τ : Multiplicative D.toPre.X →* Fˣ} {g : GtPtF D.toPre 
 theorem exists_qkPt_tor {τ : Multiplicative D.toPre.X →* Fˣ} {g : GtPtF D.toPre F} (h : IsTor τ g) {n : ℕ}
     (hn : τ ^ n = 1) : ∃ q : QkPt D.toPre F n, q.y = 0 ∧ q.g = g := by
   refine ⟨⟨0, g, n • g, (isNsmul_iff_eq _ _ _).2 rfl, (isIota_iff_eq D.tau_bimult _ _).2 ?_⟩, rfl, rfl⟩
-  have := isTor_nsmul h n
-  rw [hn, isTor_iff, isTorusPtF_iff_eq] at this
-  rw [this, map_zero]
-  exact map_zero _
 
 variable [CharZero R] [IsAlgClosed F] {A : PolAV (Spec (CommRingCat.of (FractionRing R)))}
   {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G]

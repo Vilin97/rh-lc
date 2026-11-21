@@ -125,8 +125,26 @@ theorem potModel_semiAbelian_of_isogeny : ∀ (V K : Type) [CommRing V] [IsDomai
     exact ⟨inferInstance, hhen, hac, inferInstance⟩
   have hmodR : IsModel (L := FractionRing R) B ((Over.pullback (spMap (algebraMap W R))).obj G) :=
     isModel_pullback (algebraMap W R) b hbW rfl B G hmod
-  have hsemiR : IsSemiAbelian ((Over.pullback (spMap (algebraMap W R))).obj G) :=
-    ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsSemiAbelian.pullback (spMap (algebraMap W R)) G hG'
+  have hsemiR : IsSemiAbelian ((Over.pullback (spMap (algebraMap W R))).obj G) := by
+    let f := spMap (algebraMap W R)
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · have := hG'.comm
+      infer_instance
+    · have := hG'.smooth
+      change Smooth (pullback.snd G.hom f)
+      infer_instance
+    · have := hG'.separated
+      change IsSeparated (pullback.snd G.hom f)
+      infer_instance
+    · have := hG'.quasiCompact
+      change QuasiCompact (pullback.snd G.hom f)
+      infer_instance
+    · have := hG'.geomConnected
+      change GeometricallyConnected (pullback.snd G.hom f)
+      infer_instance
+    · intro Ω _ _ q
+      obtain ⟨E⟩ := hG'.fibres Ω (q ≫ f)
+      exact ⟨torusExtOfIso (pullCompIso q f G) E⟩
   obtain ⟨GR, _, hsc, hmodA, ht⟩ := exists_model_of_isogeny K R (FractionRing R) hSH A B g m hA hP hgA hgB
     i r hm hri _ hsemiR hmodR
   letI : Algebra V R := ((algebraMap W R).comp (algebraMap V W)).toAlgebra

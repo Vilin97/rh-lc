@@ -300,10 +300,12 @@ theorem card_zeros_on_torsion_le_of_symmetric_veryAmple :
     refine ⟨MvPolynomial.rename E F, hF.trans ?_⟩
     rw [MvPolynomial.eval₂_rename]
     congr 1
+    funext j
+    simp
   · rw [Nat.one_mul]
     obtain ⟨l, hl, c, hc⟩ := hgrow n hn
     exact ⟨l, hl, c, fun t => (hc t).exists⟩
-  · obtain ⟨h', hh'⟩ := exists_sec_nonzeroLocus_eq_of_lbIso (isLB_lbPow hM (k ^ 2)) (pull_isLB hM _)
+  · obtain ⟨h', hh'⟩ := exists_sec_nonzeroLocus_eq_of_lbIso (isLB_lbPow hM (k ^ 2)) (LB.isLB_pull hM _)
       (LBIso.symm (GlobalTheory.T.mulA_pullback_iso_pow_sq_symmetric_abelianVariety K P M k hM hsym)) (secPull (secOfPowOne h) (Out.mulA P.A k).left)
     refine ⟨secCast (Nat.one_mul _).symm h', fun z => ?_⟩
     rw [nonzeroLocus_secCast, hh', nonzeroLocus_secPull, nonzeroLocus_secOfPowOne]

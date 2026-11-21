@@ -155,7 +155,7 @@ theorem common_reps_halves : ∀ (E : Type) [Field E] [NumberField E] [StarRing 
   have hinf : ∀ M A : Submodule (𝓞 E) (Formalism.L2.Col.HomE E a b),
       M.toAddSubgroup.map f ⊓ A.toAddSubgroup.map f = (M ⊓ A).toAddSubgroup.map f := fun M A =>
     (AddSubgroup.map_inf_eq M.toAddSubgroup A.toAddSubgroup f hf).symm
-  have hexpS : ∀ Q, expS SS Q ≤ 1 ∧ -1 ≤ expS SS Q := fun Q => by
+  have hexpS : ∀ Q, Formalism.L2.Ker.expS SS Q ≤ 1 ∧ -1 ≤ Formalism.L2.Ker.expS SS Q := fun Q => by
     rcases Formalism.L2.Ker.expS_cases SS Q with h | h | h <;> rw [h] <;> norm_num
 
   have hcA : ∀ M : Submodule (𝓞 E) (Formalism.L2.Col.HomE E a b), ∀ y ∈ halfAO SS M cl, (cl : 𝓞 E) • y ∈ M := fun M y hy =>

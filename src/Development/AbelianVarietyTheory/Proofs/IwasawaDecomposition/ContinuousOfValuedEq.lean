@@ -64,12 +64,18 @@ theorem exists_infCompl_map (c : L ≃+* L) (w : InfinitePlace L) :
       ∀ k : L, φ (algebraMap L _ k) = algebraMap L _ (c k) := by
   have hc : Continuous (WithAbs.map (w.comap (c : L →+* L)).1 w.1 (c : L →+* L)) :=
     (AddMonoidHomClass.isometry_of_norm _ fun x => rfl).continuous
-  refine ⟨((InfinitePlace.Completion.equiv w).symm.toRingHom.comp
-      (UniformSpace.Completion.mapRingHom _ hc)).comp (InfinitePlace.Completion.equiv _).toRingHom,
-    (InfinitePlace.Completion.continuous_ofCompletion w).comp
-      (UniformSpace.Completion.continuous_map.comp (InfinitePlace.Completion.continuous_toCompletion _)), fun k => ?_⟩
-  apply InfinitePlace.Completion.ext
-  exact UniformSpace.Completion.mapRingHom_coe hc (WithAbs.toAbs _ k)
+  refine ⟨(AbsoluteValue.Completion.ofCompletion.comp
+      (UniformSpace.Completion.mapRingHom _ hc)).comp AbsoluteValue.Completion.toCompletion,
+    ?_, ?_⟩
+  · exact (AbsoluteValue.Completion.continuous_ofCompletion w.1).comp
+      ((UniformSpace.Completion.continuous_map (f := WithAbs.map
+        (w.comap (c : L →+* L)).1 w.1 (c : L →+* L))).comp
+        (AbsoluteValue.Completion.continuous_toCompletion _))
+  · intro k
+    apply AbsoluteValue.Completion.toCompletion_injective w.1
+    simpa [AbsoluteValue.Completion.algebraMap_def, AbsoluteValue.Completion.toCompletion_coe,
+      WithAbs.algebraMap_right_apply] using
+      UniformSpace.Completion.mapRingHom_coe hc (WithAbs.toAbs _ k)
 
 theorem conjPl_symm_iff (c : L ≃+* L) (v v' : HeightOneSpectrum (𝓞 L)) : ConjPl c.symm v' v ↔ ConjPl c v v' :=
   ⟨fun h x => by simpa using (h (c x)).symm, fun h x => by simpa using (h (c.symm x)).symm⟩

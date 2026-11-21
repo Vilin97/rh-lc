@@ -146,7 +146,6 @@ theorem fn_span {U : Y.Opens} (hU : IsAffineOpen U) (hc : ∀ y, ∃ a : Fin n �
     rw [CategoryTheory.Functor.map_id]; rfl
   simp only [e, Algebra.smul_def]
   induction t using hpo.out.inductionOn with
-  | zero => exact ⟨0, by simp⟩
   | tmul y =>
     obtain ⟨a, rfl⟩ := hc y
     refine ⟨fun i => algebraMap S _ (a i), ?_⟩

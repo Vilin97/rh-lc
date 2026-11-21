@@ -101,8 +101,8 @@ variable {D : D7} {X : Fields} (s : Seam D X)
 theorem tr_smul {n : ℕ} (c : 𝓞 X.E) (x : Sp X.E n) :
     (fun i => s.iE ((c • x) i)) = RingOfIntegers.mapRingEquiv s.iE c • (fun i => s.iE (x i)) := by
   funext i
-  simp only [Pi.smul_apply, Algebra.smul_def, map_mul]
-  rfl
+  change s.iE ((c : X.E) * x i) = (RingOfIntegers.mapRingEquiv s.iE c : D.host.E) * s.iE (x i)
+  exact map_mul s.iE _ _
 
 theorem mem_seamLat_iff {n : ℕ} (N : Submodule (𝓞 X.E) (Sp X.E n)) (y : Fin n → D.host.E) :
     y ∈ s.lat N ↔ ∃ x ∈ N, (fun i => s.iE (x i)) = y := by

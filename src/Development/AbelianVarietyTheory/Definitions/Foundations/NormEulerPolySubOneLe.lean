@@ -21,7 +21,7 @@ def eulerPoly (B : Multiset ℂˣ) (x : ℂ) : ℂ := (B.map fun b : ℂˣ => 1 
 
 def eulerFac (B : Multiset ℂˣ) (x : ℂ) : ℂ := (eulerPoly B x)⁻¹
 
-@[simp] theorem eulerFac_zero (x : ℂ) : eulerFac 0 x = 1 := by simp [eulerFac]
+@[simp] theorem eulerFac_zero (x : ℂ) : eulerFac 0 x = 1 := by simp [eulerFac, eulerPoly]
 
 theorem eulerPoly_cons (b : ℂˣ) (B : Multiset ℂˣ) (x : ℂ) :
     eulerPoly (b ::ₘ B) x = (1 - (b : ℂ) * x) * eulerPoly B x := by simp [eulerPoly]
@@ -60,7 +60,7 @@ theorem eulerPoly_ne_zero {B : Multiset ℂˣ} {x : ℂ} (h : ∀ b ∈ B, ‖(b
 theorem norm_eulerPoly_sub_one_le {B : Multiset ℂˣ} {x : ℂ} {y : ℝ} (hy0 : 0 ≤ y) (hy : y ≤ 1)
     (h : ∀ b ∈ B, ‖(b : ℂ) * x‖ ≤ y) : ‖eulerPoly B x - 1‖ ≤ (2 ^ B.card - 1) * y := by
   induction B using Multiset.induction_on with
-  | empty => simp
+  | empty => simp [eulerPoly]
   | cons b B ih =>
     have h1 := ih fun c hc => h c (Multiset.mem_cons_of_mem hc)
     have h2 := h b (Multiset.mem_cons_self _ _)
@@ -220,7 +220,7 @@ theorem Bounded.norm_eulerPoly_le {r : ℕ} {κ σ : ℝ} (h : Bounded T c r κ)
 
 theorem summable_rpow (T : Set (HeightOneSpectrum (𝓞 K))) {σ : ℝ} (hσ : 1 < σ) :
     Summable fun w : {w // w ∉ T} => ((Ideal.absNorm w.1.asIdeal : ℕ) : ℝ) ^ (-σ) :=
-  ((GlobalTheory.countable_ideal_and_summable_absNorm_rpow K).2 σ hσ).2.subtype {w | w ∉ T}
+  ((GlobalTheory.countable_ideal_and_summable_absNorm_rpow K).2 σ hσ).2.subtype (fun w => w ∉ T)
 
 theorem Bounded.converges {r : ℕ} {κ : ℝ} (h : Bounded T c r κ) (hs : κ + 1 < s.re) : Converges T c s :=
   ⟨fun w hw => eulerPoly_ne_zero fun _ hb => (h.norm_le le_rfl hw hb).trans_lt
@@ -231,7 +231,7 @@ theorem Bounded.converges {r : ℕ} {κ : ℝ} (h : Bounded T c r κ) (hs : κ +
 theorem differentiable_eulerPoly (B : Multiset ℂˣ) (w : HeightOneSpectrum (𝓞 K)) :
     Differentiable ℂ fun s => eulerPoly B (npow w (-s)) := by
   induction B using Multiset.induction_on with
-  | empty => simp
+  | empty => simp [eulerPoly]
   | cons b B ih =>
     simp only [eulerPoly_cons]
     refine ((differentiable_const _).sub ((differentiable_const _).mul ?_)).mul ih
@@ -374,6 +374,7 @@ open Formalism.MainNotions.SchurIrreducible
 
 
 open Classical in
+variable (E) in
 def etaU (v : HeightOneSpectrum (𝓞 F)) : ℂˣ := if IsSplit (E := E) v then 1 else -1
 
 theorem etaU_sq (v : HeightOneSpectrum (𝓞 F)) : etaU E v ^ 2 = 1 := by
@@ -381,6 +382,7 @@ theorem etaU_sq (v : HeightOneSpectrum (𝓞 F)) : etaU E v ^ 2 = 1 := by
 
 
 open Classical in
+variable (E) in
 def etaFam (k : ℕ) : Fam F := fun v => if IsUnram (E := E) v ∨ Even k then {etaU E v ^ k} else 0
 
 

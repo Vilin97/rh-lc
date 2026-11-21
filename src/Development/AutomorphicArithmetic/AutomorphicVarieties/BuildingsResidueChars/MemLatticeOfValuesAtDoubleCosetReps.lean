@@ -19,7 +19,7 @@ private theorem detd_mulVec {O Ω : Type} [CommRing O] [Field Ω] [Algebra O Ω]
   exact L.smul_mem r (hv j)
 
 theorem UpperTheory.mem_lattice_of_values_at_double_coset_reps :
-    ∀ (Γ Ga Gp : Type) [Group Γ] [Group Ga] [Group Gp] (X : Frame Γ Ga Gp) (O Ω : Type) [CommRing O] [IsLocalRing O] [Field Ω] [Algebra O Ω] (W : WtRep X.I O Ω) (m : ℕ) (τ : X.Ub →* GL (Fin m) O) (φ : X.I.T →* Oˣ) (U : Subgroup X.Ub) (c : ℕ), W.c0 ≤ c → ∀ (N : ℕ) (x : Fin N → Ga × Gp), (∀ g, ∃ γ i, ∃ u ∈ U, ∃ b ∈ X.I.Iw c, g = X.glob γ * x i * ((u : Ga), b)) → ∀ F ∈ X.ClO m W τ U c φ, ∀ Λ : Submodule O Ω, (∀ n i k, X.unt m W F i (x n) k ∈ Λ) → F ∈ X.Lat m W Λ := by
+    ∀ (Γ Ga Gp : Type) [Group Γ] [Group Ga] [Group Gp] (X : Frame Γ Ga Gp) (O Ω : Type) [CommRing O] [IsLocalRing O] [Field Ω] [Algebra O Ω] (W : WtRep X.I O Ω) (m : ℕ) (τ : X.Ub →* GL (Fin m) O) (φ : X.I.T →* Oˣ) (U : Subgroup X.Ub) (c : ℕ), W.c0 ≤ c → ∀ (N : ℕ) (x : Fin N → Ga × Gp), (∀ g, ∃ γ i, ∃ u ∈ U, ∃ b ∈ X.I.Iw c, g = X.glob γ * x i * ((u : Ga), b)) → ∀ F ∈ X.ClO W τ U c φ, ∀ Λ : Submodule O Ω, (∀ n i k, X.unt m W F i (x n) k ∈ Λ) → F ∈ X.Lat m W Λ := by
   intro Γ Ga Gp _ _ _ X O Ω _ _ _ _ W m τ φ U c hc N x hx F hF Λ hΛ
   simp only [Frame.ClO, Frame.Cl, Submodule.mem_inf] at hF
   obtain ⟨⟨hA, hU⟩, hE⟩ := hF

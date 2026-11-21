@@ -440,11 +440,34 @@ theorem lbIso_lbPow_linComb {Y : Scheme.{0}} {L : LB Y} (hL : L.IsLB) {I : Type}
     LBIso (lbPow (LB.LinComb L φ (fun i => ∑ k, (n k : ℤ) * ε k i)) e)
       (LB.LinComb L φ (fun i => ∑ k, ((e • n) k : ℤ) * ε k i)) := by
   have h := LB.isLB_linComb hL φ (fun i => ∑ k, (n k : ℤ) * ε k i)
-  refine (CechPic.cls_eq_iff (isLB_lbPow h e) (LB.isLB_linComb hL φ _)).2 ?_
-  rw [CechPic.cls_lbPow h, CechPic.cls_linComb hL, CechPic.cls_linComb hL, Finset.smul_sum]
-  refine Finset.sum_congr rfl fun i _ => ?_
-  rw [← natCast_zsmul, smul_smul, Finset.mul_sum]
-  simp only [Pi.smul_apply, smul_eq_mul, Nat.cast_mul, _root_.mul_assoc]
+  apply LBIso.symm
+  refine LBIso.chartPull ?_ (chartPullId _) (PolBaseChange.lbIso_refl (isLB_lbPow h e))
+  have le : ∀ j : I → L.ι, LB.wchart L φ j ≤
+      (𝟙 X) ⁻¹ᵁ LB.wchart (LB.LinComb L φ (fun i => ∑ k, (n k : ℤ) * ε k i))
+        (fun _ : PUnit => 𝟙 X) (fun _ => j) := by
+    intro j y hy
+    exact Set.mem_iInter.2 fun _ => hy
+  refine ⟨fun j _ => j, le, fun y j j' hj hj' => ?_⟩
+  change gm (𝟙 X) y (LB.wchart L φ j ⊓ LB.wchart L φ j')
+    ((LB.LinComb L φ (fun i => ∑ k, ((e • n) k : ℤ) * ε k i)).g j j') =
+    gm (𝟙 X) y (LB.wchart (LB.LinComb L φ (fun i => ∑ k, (n k : ℤ) * ε k i)) (fun _ : PUnit => 𝟙 X) (fun _ => j) ⊓
+      LB.wchart (LB.LinComb L φ (fun i => ∑ k, (n k : ℤ) * ε k i)) (fun _ : PUnit => 𝟙 X) (fun _ => j'))
+      ((lbPow (LB.LinComb L φ (fun i => ∑ k, (n k : ℤ) * ε k i)) e).g (fun _ => j) (fun _ => j'))
+  rw [gm_linComb L φ _ (𝟙 X) y j j' hj hj',
+    gm_linComb _ _ _ (𝟙 X) y _ _ (le j hj) (le j' hj')]
+  simp only [Fintype.prod_unique, Category.id_comp]
+  change (∏ i, gm (φ i) y (L.U (j i) ⊓ L.U (j' i)) (L.g (j i) (j' i)) ^
+      (∑ k, ((e • n) k : ℤ) * ε k i)) =
+    (gm (𝟙 X) y (LB.wchart L φ j ⊓ LB.wchart L φ j')
+      ((LB.LinComb L φ (fun i => ∑ k, (n k : ℤ) * ε k i)).g j j')) ^ (e : ℤ)
+  rw [gm_linComb L φ _ (𝟙 X) y j j' hj hj']
+  simp only [Category.id_comp, Pi.smul_apply, smul_eq_mul, Nat.cast_mul, zpow_natCast]
+  rw [← Finset.prod_pow]
+  refine Finset.prod_congr rfl fun i _ => ?_
+  rw [← zpow_natCast, ← zpow_mul]
+  congr 1
+  rw [Finset.sum_mul]
+  exact Finset.sum_congr rfl fun k _ => by ring
 
 theorem exists_polynomial_sectionsDim_multidegree (p : X ⟶ Sp K) [IsSeparated p] (hc : ⨆ j, U j = ⊤) (hr : 1 ≤ r) {m : Fin r → ℕ}
     (th : ∀ k, Fin (m k + 1) → LB.Sec ⟨J, U, G k⟩) (hth : ∀ k, VAmp p _ (th k)) :

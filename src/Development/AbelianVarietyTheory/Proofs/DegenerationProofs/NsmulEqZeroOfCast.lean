@@ -96,7 +96,8 @@ theorem span_gens_eq [IsDomain o] {U₀ : M.Z.Opens} (hA : S.admitted M U₀) (z
   have hR : S.R ≤ M.O ξ := hA.1.le.trans hO
   refine le_antisymm (Submodule.span_le.2 ?_) (Submodule.span_le.2 ?_)
   · rintro _ ⟨c, k, x₀, i, hk, -, rfl⟩
-    refine (RatModel.Lat.mem_const_iff M).2 fun j => ?_
+    apply (RatModel.Lat.mem_const_iff M).2
+    intro j
     rw [div_eq_mul_inv]
     exact mul_mem (mul_mem (hR (S.th_mem _)) (hO (hA.1.FF_unit _ _ _ hT hk.1))) (Subalgebra.algebraMap_mem _ _)
   · rintro _ ⟨i, rfl⟩

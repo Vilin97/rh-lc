@@ -22,10 +22,4 @@ def ModelLogIntegrable.Statement : Prop :=
     (∀ z ∈ mcPts P, z ∉ N → M.proj z ∈ R.Yo → g z = u (M.proj z)) →
       IsPtsIntegrable P (fun (_ : Fin e) z => c * Real.log (L.h z)) g
 
-namespace Line
-
-open GroundTheory.Heights₂.Heights.Regular.ProjectiveLine
-
-end Line
-
 end GroundTheory.Heights₂.Heights.LowerBoundFree

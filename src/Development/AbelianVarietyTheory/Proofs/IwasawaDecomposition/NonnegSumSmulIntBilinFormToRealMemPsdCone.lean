@@ -95,7 +95,7 @@ theorem sum_smul_toReal_mem_psdCone : ∀ (O : Type) [CommRing O] [IsDedekindDom
   have : Module.FinitePresentation O (X ⧸ R) := Module.finitePresentation_of_finite _ _
   have hproj : Module.Projective O (X ⧸ R) := Module.Flat.projective_of_finitePresentation
   have : Module.Finite ℤ (X ⧸ R) := Module.Finite.trans O (X ⧸ R)
-  have : IsAddTorsionFree (X ⧸ R) := by
+  have : HasUniqueDiv (X ⧸ R) := by
     refine ⟨fun n hn a b hab => ?_⟩
     induction a using Submodule.Quotient.induction_on with | H x => ?_
     induction b using Submodule.Quotient.induction_on with | H y => ?_

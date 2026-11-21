@@ -82,7 +82,6 @@ theorem supNorm_le_of_tmul {f : WithConv (M ⊗[↥(intO C)] M →ₗ[↥(intO C
     (hr : 0 ≤ r) (h : ∀ a b, ‖f.ofConv (a ⊗ₜ b)‖ ≤ r) : supNorm f ≤ r := by
   refine supNorm_le fun t => ?_
   induction t with
-  | zero => simpa using hr
   | tmul a b => exact h a b
   | add x y hx hy =>
     rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)

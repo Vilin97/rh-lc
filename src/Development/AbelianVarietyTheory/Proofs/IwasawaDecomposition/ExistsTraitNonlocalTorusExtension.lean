@@ -91,7 +91,7 @@ theorem GlobalTheory.exists_trait_nonlocal_torusExtension : ∀ (R : Type) [Comm
   let φ₀ : R →+* k₀ := (algebraMap (R ⧸ p) k₀).comp (Ideal.Quotient.mk p)
   let σ : k₀ →+* AlgebraicClosure k₀ := algebraMap k₀ (AlgebraicClosure k₀)
   let G₀ := (Over.pullback (spMap φ₀)).obj G
-  have hG₀ : IsSemiAbelian G₀ := IsSemiAbelian.pullback _ G hG
+  have hG₀ : IsSemiAbelian G₀ := ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsSemiAbelian.pullback _ G hG
   haveI := hG₀.smooth
   haveI := hG₀.quasiCompact
   haveI := hG₀.separated

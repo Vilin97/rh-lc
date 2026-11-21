@@ -78,7 +78,46 @@ theorem volC_pos_of_laHyp (hLa : A.LaHyp a b S) (hN : IsSdLat N) (hN' : IsSdLat 
     rw [hsd, AddSubgroup.mem_bot] at hv
     have := congrFun (congrFun (congrFun hv τ) ⟨0, hb⟩) ⟨0, ha⟩
     simp at this
-  exact covolume_positive X.E a b A.AA S N N' hN.1.fg hN'.1.fg hN.1.span_eq_top hN'.1.span_eq_top hLa.2.2.2.2.1 hAA
+  have span_of_self_dual {n : ℕ} {L : Submodule (𝓞 X.E) (Sp X.E n)} (hL : IsSdLat L) :
+      Submodule.span X.E (L : Set (Sp X.E n)) = ⊤ := by
+    apply Submodule.dualAnnihilator_eq_bot_iff.mp
+    apply le_antisymm ?_ bot_le
+    intro f hf
+    let v : Sp X.E n := fun i => star (f (Pi.single i 1))
+    have hpair : hStd X.E n v = f := by
+      apply (Pi.basisFun X.E (Fin n)).ext
+      intro i
+      rw [Pi.basisFun_apply, hStd_apply, Finset.sum_eq_single i]
+      · simp [v]
+      · intro j _ hj
+        simp [hj]
+      · simp
+    have hline (r : X.E) : r • v ∈ L := by
+      rw [← show dual (hStd X.E n) L = L from hL.2, dualBasic_mem_dual]
+      intro y hy
+      have hy0 : hStd X.E n v y = 0 := by
+        rw [hpair]
+        exact (Submodule.mem_dualAnnihilator f).mp hf y (Submodule.subset_span hy)
+      have hz : hStd X.E n y v = 0 := by
+        simpa [hy0] using ((hStd_isSymm (E := X.E) (n := n)).eq v y).symm
+      simp [hz]
+    have hv : v = 0 := by
+      funext i
+      change v i = 0
+      by_contra hi
+      -- A nonzero coordinate on this line would make the field finite over its ring of integers.
+      let coord := (LinearMap.proj i : Sp X.E n →ₗ[X.E] X.E).restrictScalars (𝓞 X.E)
+      have htop : L.map coord = ⊤ := by
+        rw [eq_top_iff]
+        intro x _
+        exact ⟨(x / v i) • v, hline _, div_mul_cancel₀ _ hi⟩
+      have : Module.Finite (𝓞 X.E) X.E := Module.finite_def.mpr (htop ▸ hL.1.fg.map coord)
+      exact RingOfIntegers.not_isField X.E
+        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 X.E) X.E) (Field.toIsField X.E))
+    rw [Submodule.mem_bot]
+    simpa [hv] using hpair.symm
+  exact covolume_positive X.E a b A.AA S N N' hN.1.fg hN'.1.fg
+    (span_of_self_dual hN) (span_of_self_dual hN') hLa.2.2.2.2.1 hAA
 
 theorem thInd_eq_lift' (hLa : A.LaHyp a b S) (hN : IsSdLat N) (hN' : IsSdLat N') (c : ℕ) (hc : 0 < c) (x s : HomE X.E a b)
     (hs : A.IsLift S N N' c x s) (z : VCx X.Tau a b) :

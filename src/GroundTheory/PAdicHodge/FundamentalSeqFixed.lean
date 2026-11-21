@@ -17,6 +17,10 @@ namespace ACris
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
+local notation "𝒪" => normInteger ℂ_[p]
+local notation "𝔭" => Ideal.span {(p : ACris ℂ_[p] p)}
+local notation "θdR" => IsPerfectoidField.thetaBDeRhamPlusField (K := ℂ_[p]) p
+
 section Residue
 
 theorem prod_range_X_sub_C_zmod :
