@@ -77,10 +77,10 @@ theorem isFractionRing_residueField {X : Scheme.{0}} {U : X.Opens} (hU : IsAffin
     exact ⟨1, by rw [hinj h]⟩
 
 theorem residueFieldMap_finite_separable_of_tame {Γ : Type} [Group Γ] [Finite Γ] {X X' : Scheme.{0}}
-    (ρ : Γ →* Aut X) (π : X ⟶ X') [IsAffineHom π] (hπ : ∀ g, (ρ g).hom ≫ π = π)
+    (ρ : Γ →* Aut X) (π : X ⟶ X') [IsAffineHom π] (hπ : ∀ g, (ρ g).asIso.hom ≫ π = π)
     (hinv : ∀ W : X'.Opens, IsAffineOpen W → ∀ s : Γ(X, π ⁻¹ᵁ W),
       IsInvariantSection ρ _ s → s ∈ Set.range (π.app W))
-    (ht : ∀ (k : Type) [Field k] [IsAlgClosed k] (x : Sp k ⟶ X), (Nat.card {g // x ≫ (ρ g).hom = x} : k) ≠ 0)
+    (ht : ∀ (k : Type) [Field k] [IsAlgClosed k] (x : Sp k ⟶ X), (Nat.card {g // x ≫ (ρ g).asIso.hom = x} : k) ≠ 0)
     (x : X) :
     letI := (π.residueFieldMap x).hom.toAlgebra
     FiniteDimensional (X'.residueField (π x)) (X.residueField x) ∧
@@ -100,7 +100,7 @@ theorem residueFieldMap_finite_separable_of_tame {Γ : Type} [Group Γ] [Finite 
     rw [Algebra.smul_def, Algebra.smul_def, smul_mul', hfix]⟩
   have : Algebra.IsInvariant Γ(X', W) Γ(X, π ⁻¹ᵁ W) Γ := ⟨fun s hs ↦
     hinv W hW s fun g ↦ ⟨hst g, by simpa only [inv_inv] using
-      (show (ρ g⁻¹⁻¹).hom.appLE _ _ (hst _) s = s from hs g⁻¹)⟩⟩
+      (show (ρ g⁻¹⁻¹).asIso.hom.appLE _ _ (hst _) s = s from hs g⁻¹)⟩⟩
   let ev := X.evaluation (π ⁻¹ᵁ W) x hx
   let q : Ideal Γ(X, π ⁻¹ᵁ W) := RingHom.ker ev.hom
   have : q.IsPrime := RingHom.ker_isPrime _
@@ -118,13 +118,13 @@ theorem residueFieldMap_finite_separable_of_tame {Γ : Type} [Group Γ] [Finite 
   let Ω := AlgebraicClosure (X.residueField x)
   let jΩ : X.residueField x ⟶ CommRingCat.of Ω := CommRingCat.ofHom (algebraMap (X.residueField x) Ω)
   let y : Sp Ω ⟶ X := Spec.map (ev ≫ jΩ) ≫ hU.fromSpec
-  have key (g : Γ) : g⁻¹ ∈ q.inertia Γ ↔ y ≫ (ρ g).hom = y := by
-    have e : y ≫ (ρ g).hom = Spec.map ((ρ g).hom.appLE _ _ (hst g) ≫ ev ≫ jΩ) ≫ hU.fromSpec := by
+  have key (g : Γ) : g⁻¹ ∈ q.inertia Γ ↔ y ≫ (ρ g).asIso.hom = y := by
+    have e : y ≫ (ρ g).asIso.hom = Spec.map ((ρ g).asIso.hom.appLE _ _ (hst g) ≫ ev ≫ jΩ) ≫ hU.fromSpec := by
       rw [Spec.map_comp, Category.assoc, Category.assoc, IsAffineOpen.SpecMap_appLE_fromSpec _ hU hU]
     have : Mono jΩ := ConcreteCategory.mono_of_injective _ jΩ.hom.injective
     rw [e, cancel_mono, Spec.map_inj, ← Category.assoc, cancel_mono]
-    have e₂ (s) : g⁻¹ • s = (ρ g).hom.appLE _ _ (hst g) s := by
-      change (ρ g⁻¹⁻¹).hom.appLE _ _ (hst _) s = _
+    have e₂ (s) : g⁻¹ • s = (ρ g).asIso.hom.appLE _ _ (hst g) s := by
+      change (ρ g⁻¹⁻¹).asIso.hom.appLE _ _ (hst _) s = _
       simp only [inv_inv]
     refine Iff.trans AddSubgroup.mem_inertia ⟨fun h ↦ ?_, fun h s ↦ ?_⟩
     · ext s
@@ -134,14 +134,14 @@ theorem residueFieldMap_finite_separable_of_tame {Γ : Type} [Group Γ] [Finite 
     · refine (hq _).2 ?_
       rw [map_sub, sub_eq_zero, e₂]
       exact congr($h s)
-  have hcard : Nat.card {g // y ≫ (ρ g).hom = y} = Nat.card (q.inertia Γ) :=
+  have hcard : Nat.card {g // y ≫ (ρ g).asIso.hom = y} = Nat.card (q.inertia Γ) :=
     Nat.card_congr (Equiv.subtypeEquivRight fun g ↦ (key g).symm.trans (inv_mem_iff (H := q.inertia Γ)))
   apply ht Ω y
   rw [hcard]
   have := congrArg jΩ.hom ((hq _).1 hc)
   simpa using this
 
-theorem splitFibres_descend_of_tame_quotient : ∀ (Γ : Type) [Group Γ] [Finite Γ] (X X' : Scheme.{0}) (ρ : Γ →* Aut X) (π : X ⟶ X') (G : Over X) [GrpObj G] (G' : Over X') [GrpObj G'] (φ : G.left ⟶ G'.left), (IsAffineHom π ∧ (∀ g, (ρ g).hom ≫ π = π) ∧ ∀ V : X'.Opens, Function.Injective (π.app V).hom ∧ ∀ f : Γ(X, π ⁻¹ᵁ V), (∀ g (h : π ⁻¹ᵁ V ≤ (ρ g).hom ⁻¹ᵁ (π ⁻¹ᵁ V)), ((ρ g).hom.appLE _ _ h).hom f = f) → f ∈ Set.range (π.app V).hom) → (∀ (k : Type) [Field k] [IsAlgClosed k] (x : Sp k ⟶ X), (Nat.card {g // x ≫ (ρ g).hom = x} : k) ≠ 0) → IsGrpPullback G G' π φ → (∀ x : X, ∃ (k : Type) (_ : Field k) (_ : Algebra (X.residueField x) k), FiniteDimensional (X.residueField x) k ∧ Algebra.IsSeparable (X.residueField x) k ∧ ∃ S : SplitExt (Sp k), S.IsGt ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (X.residueField x) k)) ≫ X.fromSpecResidueField x)).obj G)) → (∀ x : X', ∃ (k : Type) (_ : Field k) (_ : Algebra (X'.residueField x) k), FiniteDimensional (X'.residueField x) k ∧ Algebra.IsSeparable (X'.residueField x) k ∧ ∃ S : SplitExt (Sp k), S.IsGt ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (X'.residueField x) k)) ≫ X'.fromSpecResidueField x)).obj G')) := by
+theorem splitFibres_descend_of_tame_quotient : ∀ (Γ : Type) [Group Γ] [Finite Γ] (X X' : Scheme.{0}) (ρ : Γ →* Aut X) (π : X ⟶ X') (G : Over X) [GrpObj G] (G' : Over X') [GrpObj G'] (φ : G.left ⟶ G'.left), (IsAffineHom π ∧ (∀ g, (ρ g).asIso.hom ≫ π = π) ∧ ∀ V : X'.Opens, Function.Injective (π.app V).hom ∧ ∀ f : Γ(X, π ⁻¹ᵁ V), (∀ g (h : π ⁻¹ᵁ V ≤ (ρ g).asIso.hom ⁻¹ᵁ (π ⁻¹ᵁ V)), ((ρ g).asIso.hom.appLE _ _ h).hom f = f) → f ∈ Set.range (π.app V).hom) → (∀ (k : Type) [Field k] [IsAlgClosed k] (x : Sp k ⟶ X), (Nat.card {g // x ≫ (ρ g).asIso.hom = x} : k) ≠ 0) → IsGrpPullback G G' π φ → (∀ x : X, ∃ (k : Type) (_ : Field k) (_ : Algebra (X.residueField x) k), FiniteDimensional (X.residueField x) k ∧ Algebra.IsSeparable (X.residueField x) k ∧ ∃ S : SplitExt (Sp k), S.IsGt ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (X.residueField x) k)) ≫ X.fromSpecResidueField x)).obj G)) → (∀ x : X', ∃ (k : Type) (_ : Field k) (_ : Algebra (X'.residueField x) k), FiniteDimensional (X'.residueField x) k ∧ Algebra.IsSeparable (X'.residueField x) k ∧ ∃ S : SplitExt (Sp k), S.IsGt ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (X'.residueField x) k)) ≫ X'.fromSpecResidueField x)).obj G')) := by
   intro Γ _ _ X X' ρ π G _ G' _ φ hq ht hφ hS x'
   obtain ⟨-, hsurj, -⟩ := quotient_isIntegral_surjective_orbits Γ X X' ρ π hq
   obtain ⟨_, hπ, hV⟩ := hq

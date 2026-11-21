@@ -146,7 +146,7 @@ theorem exists_sec_nonzeroLocus_le {R : Type} [CommRing R] {N : ℕ} {s : Set (P
 theorem exists_sections_orbit_subset {Γ : Type} [Group Γ] [Finite Γ] {R : Type} [CommRing R] {X : Scheme.{0}}
     {s : X ⟶ Sp R} (ρ : Γ →* Aut X) (h : IsQProjOver s) :
     ∃ (L : LB X) (n : ℕ) (σ : Fin n → LB.Sec L), L.IsLB ∧ (∀ i, IsAffineOpen (Out.nonzeroLocus (σ i))) ∧
-      ∀ x : X, ∃ i, ∀ g, (ρ g).hom x ∈ Out.nonzeroLocus (σ i) := by
+      ∀ x : X, ∃ i, ∀ g, (ρ g).asIso.hom x ∈ Out.nonzeroLocus (σ i) := by
   classical
   obtain ⟨N, i, hi, hqc, he⟩ := h
   have : IsImmersion i := hi
@@ -167,18 +167,18 @@ theorem exists_sections_orbit_subset {Γ : Type} [Group Γ] [Finite Γ] {R : Typ
     have h2 := h1.preimage i.liftCoborder
     rwa [← Scheme.Hom.comp_preimage, i.liftCoborder_ι] at h2
   have key : ∀ x : X, ∃ n, 1 ≤ n ∧ ∃ t : (lbPow (ProjSpace.O1 R N) n).Sec,
-      Set.range (fun g => i ((ρ g).hom x)) ⊆ Out.nonzeroLocus t ∧
+      Set.range (fun g => i ((ρ g).asIso.hom x)) ⊆ Out.nonzeroLocus t ∧
         Out.nonzeroLocus t ≤ i.coborderRange ∧ IsAffineOpen (Out.nonzeroLocus t) :=
     fun x => exists_sec_nonzeroLocus_le (Set.finite_range _) _ (by rintro _ ⟨g, rfl⟩; exact hmem _)
   choose n hn t hts htU hta using key
-  let W : X → Set X := fun x => {y | ∀ g, i ((ρ g).hom y) ∈ Out.nonzeroLocus (t x)}
+  let W : X → Set X := fun x => {y | ∀ g, i ((ρ g).asIso.hom y) ∈ Out.nonzeroLocus (t x)}
   have hWo : ∀ x, IsOpen (W x) := fun x => by
-    have hW : W x = ⋂ g, ((ρ g).hom ≫ i) ⁻¹' (Out.nonzeroLocus (t x) : Set (PSpace R N)) := by
+    have hW : W x = ⋂ g, ((ρ g).asIso.hom ≫ i) ⁻¹' (Out.nonzeroLocus (t x) : Set (PSpace R N)) := by
       ext y
       simp [W]
     rw [hW]
     exact isOpen_iInter_of_finite fun g =>
-      (Out.nonzeroLocus (t x)).isOpen.preimage ((ρ g).hom ≫ i).continuous
+      (Out.nonzeroLocus (t x)).isOpen.preimage ((ρ g).asIso.hom ≫ i).continuous
   have hWx : ∀ x, x ∈ W x := fun x g => hts x ⟨g, rfl⟩
   obtain ⟨F, hF⟩ := isCompact_univ.elim_finite_subcover W hWo
     (fun y _ => Set.mem_iUnion.2 ⟨y, hWx y⟩)

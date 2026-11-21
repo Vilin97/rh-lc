@@ -61,6 +61,15 @@ private theorem pderiv_ev_rows {b : Fin m → Pt R n d} (hb : ZZ b)
   funext g
   simpa only [Function.comp_apply, pderiv_coe, subst_coe] using hp g
 
+private theorem pderiv_point (v : Fin n × Fin d) (j : Fin n) (i : Fin d) :
+    pderiv v (pt R d j i) = if (j, i) = v then 1 else 0 := by
+  rw [pt, pderiv_X, Pi.single_apply]
+
+private theorem constantCoeff_partial (f : PS R n d) (v : Fin n × Fin d) :
+    constantCoeff (pderiv v f) = coeff (Finsupp.single v 1) f := by
+  rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv, zero_add]
+  simp
+
 theorem ev_at_zero (f : PS R 1 d) : ev ![(0 : Pt R n d)] f = C (constantCoeff f) := by
   ext e
   have ha : HasSubst (fun q : Fin 1 × Fin d => (![(0 : Pt R n d)] q.1 q.2)) :=
@@ -77,16 +86,16 @@ theorem ev_at_zero (f : PS R 1 d) : ev ![(0 : Pt R n d)] f = C (constantCoeff f)
     simp
 
 theorem dcomp_ne {s t : Fin n} (h : t ≠ s) (φ : Pt R 1 d) (j c : Fin d) :
-    pderiv (R := R) (s, j) (comp1 φ (pt R d t) c) = 0 := by
-  show pderiv (R := R) (s, j) (ev ![pt R d t] (φ c)) = 0
-  rw [d1 (Z_pt t)]
-  simp [dpt, h]
+    pderiv (s, j) (comp1 φ (pt R d t) c) = 0 := by
+  show pderiv (s, j) (ev ![pt R d t] (φ c)) = 0
+  rw [pderiv_ev_rows (ZZ_cons (Z_pt t) ZZ_nil), Fin.sum_univ_one]
+  simp [pderiv_point, h]
 
 theorem dcomp_eq (s : Fin n) (φ : Pt R 1 d) (j c : Fin d) :
-    pderiv (R := R) (s, j) (comp1 φ (pt R d s) c) = ev ![pt R d s] (pderiv (R := R) ((0 : Fin 1), j) (φ c)) := by
-  show pderiv (R := R) (s, j) (ev ![pt R d s] (φ c)) = _
-  rw [d1 (Z_pt s)]
-  simp [dpt]
+    pderiv (s, j) (comp1 φ (pt R d s) c) = ev ![pt R d s] (pderiv ((0 : Fin 1), j) (φ c)) := by
+  show pderiv (s, j) (ev ![pt R d s] (φ c)) = _
+  rw [pderiv_ev_rows (ZZ_cons (Z_pt s) ZZ_nil), Fin.sum_univ_one]
+  simp [pderiv_point]
 
 theorem jac_cancel (G : FGLaw R d) {x : Pt R n d} (hx : Z x) (v : Fin d → PS R n d)
     (h : ∀ j, ∑ c, v c * ev ![x, 0] (pderiv (R := R) ((1 : Fin 2), j) (G.F c)) = 0) (c : Fin d) : v c = 0 := by
@@ -96,13 +105,13 @@ theorem jac_cancel (G : FGLaw R d) {x : Pt R n d} (hx : Z x) (v : Fin d → PS R
   have hcc : ∀ c j, constantCoeff (M c j) = if c = j then 1 else 0 := by
     intro c j
     show constantCoeff (ev ![x, 0] (pderiv (R := R) ((1 : Fin 2), j) (G.F c))) = _
-    rw [ccev hb, cc_pderiv]
+    rw [ccev hb, constantCoeff_partial]
     have hu : constantCoeff (pderiv (R := R) ((0 : Fin 1), j) (ev ![(0 : Pt R 1 d), pt R d 0] (G.F c))) =
         constantCoeff (pderiv (R := R) ((0 : Fin 1), j) (pt R d 0 c)) := by
       rw [G.unit c]
       rfl
-    rw [d2 Z_zero (Z_pt 0), dpt] at hu
-    simp [dpt, ccev hb0, cc_pderiv] at hu
+    rw [pderiv_ev_rows hb0, Fin.sum_univ_two, pderiv_point] at hu
+    simp [pderiv_point, ccev hb0, constantCoeff_partial] at hu
     rw [hu]
   have hdet : IsUnit M.det := by
     rw [MvPowerSeries.isUnit_iff_constantCoeff, RingHom.map_det]
@@ -124,7 +133,8 @@ theorem ev_d_prod {b : Fin m → Pt R n d} (hb : ZZ b) (v : Fin m × Fin d) (f :
   induction N with
   | zero => simp [evz hb]
   | succ N ih =>
-    rw [Finset.prod_range_succ, dmul, eva hb, evm hb, evm hb, ih, h, zero_mul, mul_zero, add_zero]
+    rw [Finset.prod_range_succ, Derivation.leibniz, smul_eq_mul, smul_eq_mul,
+      eva hb, evm hb, evm hb, ih, h, mul_zero, mul_zero, add_zero]
 
 theorem d_pow_p (p : ℕ) [CharP R p] (v : Fin n × Fin d) (f : PS R n d) : pderiv (R := R) v (f ^ p) = 0 := by
   rw [Derivation.leibniz_pow]
@@ -151,7 +161,8 @@ theorem d_act_p (p : ℕ) [CharP R p] {G : FGLaw R d} (A : OAct O G) (i j : Fin 
       ∑ c, pderiv (R := R) ((0 : Fin 1), c) (A.act (p : O) i) *
         ev ![pt R d 0, (0 : Pt R 1 d)] (pderiv (R := R) ((1 : Fin 2), k) (G.F c)) := by
     show ev _ (pderiv (R := R) _ (ev ![G.add (pt R d 0) (pt R d 1)] (A.act (p : O) i))) = _
-    rw [d1 (Z_add G (Z_pt 0) (Z_pt 1)), evsum hb]
+    rw [pderiv_ev_rows (ZZ_cons (Z_add G (Z_pt 0) (Z_pt 1)) ZZ_nil), Fin.sum_univ_one]
+    simp only [Matrix.cons_val_zero, evsum hb]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [evm hb, ev1 hb (Z_add G (Z_pt 0) (Z_pt 1)), ep_add G hb (Z_pt 0) (Z_pt 1), ep_pt hb, ep_pt hb]
     simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, p_add_zero G (Z_pt 0)]
@@ -164,12 +175,14 @@ theorem d_act_p (p : ℕ) [CharP R p] {G : FGLaw R d} (A : OAct O G) (i j : Fin 
         (comp1 (A.act (p : O)) (pt R d 1)) i)) = 0 := by
     show ev _ (pderiv (R := R) _ (ev ![comp1 (A.act (p : O)) (pt R d 0), comp1 (A.act (p : O)) (pt R d 1)]
       (G.F i))) = 0
-    rw [d2 (Z_comp1 (Z_act A _) (Z_pt 0)) (Z_comp1 (Z_act A _) (Z_pt 1))]
+    rw [pderiv_ev_rows (ZZ_cons (Z_comp1 (Z_act A _) (Z_pt 0))
+      (ZZ_cons (Z_comp1 (Z_act A _) (Z_pt 1)) ZZ_nil)), Fin.sum_univ_two]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
     simp only [dcomp_ne (show (0 : Fin 2) ≠ 1 by decide), dcomp_eq, mul_zero, Finset.sum_const_zero,
       zero_add, evsum hb, evm hb]
     refine Finset.sum_eq_zero fun e _ => ?_
     rw [ev1 hb (Z_pt 1), ep_pt hb]
-    simp only [Matrix.cons_val_one, Matrix.head_cons, Matrix.cons_val_zero, ev_at_zero, cc_pderiv,
+    simp only [Matrix.cons_val_one, Matrix.head_cons, Matrix.cons_val_zero, ev_at_zero, constantCoeff_partial,
       hp0, map_zero, mul_zero]
   have e := congrArg (fun F : Pt R 2 d => ev ![pt R d 0, (0 : Pt R 1 d)]
     (pderiv (R := R) ((1 : Fin 2), k) (F i))) (A.hom (p : O))
@@ -183,8 +196,9 @@ theorem deriv_first_first_form_zero {z : Pt R n d} (hz : Z z) (c : Fin d) : ev !
   have e0 : pderiv (R := R) ((0 : Fin 2), c) (ev ![pt R d 0, 0, pt R d 1] B.ph1) = 0 := by
     rw [B.cocycleLeft_zero_snd]
     exact Derivation.map_one_eq_zero _
-  rw [d3 (Z_pt 0) Z_zero (Z_pt 1)] at e0
-  simp [dpt] at e0
+  rw [pderiv_ev_rows (ZZ_cons (Z_pt 0) (ZZ_cons Z_zero (ZZ_cons (Z_pt 1) ZZ_nil))),
+    Fin.sum_univ_three] at e0
+  simp [pderiv_point] at e0
   have e1 := congrArg (ev ![(0 : Pt R n d), z]) e0
   rw [ev3 hb (Z_pt 0) Z_zero (Z_pt 1), ep_pt hb, ep_zero hb, ep_pt hb, evz hb] at e1
   simpa using e1
@@ -194,8 +208,9 @@ theorem deriv_second_first_form_zero {z : Pt R n d} (hz : Z z) (c : Fin d) : ev 
   have e0 : pderiv (R := R) ((0 : Fin 2), c) (ev ![0, pt R d 0, pt R d 1] B.ph1) = 0 := by
     rw [B.cocycleLeft_zero_fst]
     exact Derivation.map_one_eq_zero _
-  rw [d3 Z_zero (Z_pt 0) (Z_pt 1)] at e0
-  simp [dpt] at e0
+  rw [pderiv_ev_rows (ZZ_cons Z_zero (ZZ_cons (Z_pt 0) (ZZ_cons (Z_pt 1) ZZ_nil))),
+    Fin.sum_univ_three] at e0
+  simp [pderiv_point] at e0
   have e1 := congrArg (ev ![(0 : Pt R n d), z]) e0
   rw [ev3 hb Z_zero (Z_pt 0) (Z_pt 1), ep_zero hb, ep_pt hb, ep_pt hb, evz hb] at e1
   simpa using e1
@@ -205,13 +220,15 @@ private theorem ev_zero_pderiv_pow1_eq_zero {z : Pt R n d} (hz : Z z) (k : Fin d
   have hb : ZZ ![(0 : Pt R n d), z] := ZZ_cons Z_zero (ZZ_cons hz ZZ_nil)
   unfold pow1
   refine ev_d_prod hb _ _ (fun l => ?_) N
-  rw [d3 (Z_comp1 (Z_act B.A _) (Z_pt 0)) (Z_pt 0) (Z_pt 1)]
-  simp only [eva hb, evsum hb, evm hb, ev3 hb (Z_comp1 (Z_act B.A _) (Z_pt 0)) (Z_pt 0) (Z_pt 1),
+  rw [pderiv_ev_rows (ZZ_cons (Z_comp1 (Z_act B.A _) (Z_pt 0))
+    (ZZ_cons (Z_pt 0) (ZZ_cons (Z_pt 1) ZZ_nil))), Fin.sum_univ_three]
+  simp only [Matrix.cons_val_two, Matrix.tail_cons,
+    eva hb, evsum hb, evm hb, ev3 hb (Z_comp1 (Z_act B.A _) (Z_pt 0)) (Z_pt 0) (Z_pt 1),
     ep_comp1 _ hb (Z_pt 0), ep_pt hb, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
     germComp1_zero_of_noConstantCoeff (Z_act _ _), deriv_first_first_form_zero B hz, deriv_second_first_form_zero B hz, zero_mul, Finset.sum_const_zero,
     zero_add]
   refine Finset.sum_eq_zero fun e _ => ?_
-  simp [dpt, evz hb]
+  simp [pderiv_point, evz hb]
 
 theorem deriv_first_power_char_p (p : ℕ) [CharP R p] (j : Fin d) : pderiv (R := R) ((0 : Fin 2), j) (pow1 B p) = 0 := by
   have hb : ZZ (n := 2) ![pt R d 0, 0, pt R d 1] :=
@@ -222,41 +239,44 @@ theorem deriv_first_power_char_p (p : ℕ) [CharP R p] (j : Fin d) : pderiv (R :
       ev ![pt R d 0, pt R d 1] (pderiv (R := R) ((1 : Fin 2), k) (B.G.F c)) := by
     intro c
     show pderiv (R := R) _ (ev ![pt R d 0, pt R d 1] (B.G.F c)) = _
-    rw [d2 (Z_pt 0) (Z_pt 1)]
-    simp [dpt]
+    rw [pderiv_ev_rows (ZZ_cons (Z_pt 0) (ZZ_cons (Z_pt 1) ZZ_nil)), Fin.sum_univ_two]
+    simp [pderiv_point]
   have hz2 : ∀ c, pderiv (R := R) ((1 : Fin 3), k) (pt R d 2 c) = 0 := by
     intro c
-    simp [dpt]
+    simp [pderiv_point]
   have L : ev ![pt R d 0, (0 : Pt R 2 d), pt R d 1] (pderiv (R := R) ((1 : Fin 3), k)
       (ev ![B.G.add (pt R d 0) (pt R d 1), pt R d 2] (pow1 B p) * B.ph1 ^ p)) =
       ∑ c, pderiv (R := R) ((0 : Fin 2), c) (pow1 B p) *
         ev ![pt R d 0, (0 : Pt R 2 d)] (pderiv (R := R) ((1 : Fin 2), k) (B.G.F c)) := by
-    rw [dmul, d_pow_p, mul_zero, add_zero, evm hb, evpow hb, B.cocycleLeft_zero_snd, one_pow, mul_one,
-      d2 (Z_add B.G (Z_pt 0) (Z_pt 1)) (Z_pt 2)]
-    simp only [hz2, mul_zero, Finset.sum_const_zero, add_zero, evsum hb, evm hb, hadd,
+    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, d_pow_p, mul_zero, zero_add,
+      evm hb, evpow hb, B.cocycleLeft_zero_snd, one_pow, one_mul,
+      pderiv_ev_rows (ZZ_cons (Z_add B.G (Z_pt 0) (Z_pt 1)) (ZZ_cons (Z_pt 2) ZZ_nil)),
+      Fin.sum_univ_two]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
+      hz2, mul_zero, Finset.sum_const_zero, add_zero, evsum hb, evm hb, hadd,
       ev2 hb (Z_add B.G (Z_pt 0) (Z_pt 1)) (Z_pt 2), ev2 hb (Z_pt 0) (Z_pt 1),
       ep_add B.G hb (Z_pt 0) (Z_pt 1), ep_pt hb, Matrix.cons_val_zero, Matrix.cons_val_one,
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, p_add_zero B.G (Z_pt 0), eval_points_two]
   have hA : pderiv (R := R) ((1 : Fin 3), k) (ev ![pt R d 0, pt R d 2] (pow1 B p)) = 0 := by
-    rw [d2 (Z_pt 0) (Z_pt 2)]
-    simp [dpt]
+    rw [pderiv_ev_rows (ZZ_cons (Z_pt 0) (ZZ_cons (Z_pt 2) ZZ_nil)), Fin.sum_univ_two]
+    simp [pderiv_point]
   have hBq : ev ![pt R d 0, (0 : Pt R 2 d), pt R d 1]
       (pderiv (R := R) ((1 : Fin 3), k) (ev ![pt R d 1, pt R d 2] (pow1 B p))) = 0 := by
-    rw [d2 (Z_pt 1) (Z_pt 2)]
-    simp only [dpt, Prod.mk.injEq, true_and, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
-      Finset.mem_univ, if_true]
-    simp [dpt]
+    rw [pderiv_ev_rows (ZZ_cons (Z_pt 1) (ZZ_cons (Z_pt 2) ZZ_nil)), Fin.sum_univ_two]
+    simp [pderiv_point]
     rw [ev2 hb (Z_pt 1) (Z_pt 2), ep_pt hb, ep_pt hb]
     simpa using ev_zero_pderiv_pow1_eq_zero B (Z_pt (R := R) (d := d) (n := 2) 1) k p
   have hC : pderiv (R := R) ((1 : Fin 3), k) (ev ![comp1 (B.A.act (p : O)) (pt R d 0),
       comp1 (B.A.act (p : O)) (pt R d 1), pt R d 2] B.ph1) = 0 := by
-    rw [d3 (Z_comp1 (Z_act B.A _) (Z_pt 0)) (Z_comp1 (Z_act B.A _) (Z_pt 1)) (Z_pt 2)]
+    rw [pderiv_ev_rows (ZZ_cons (Z_comp1 (Z_act B.A _) (Z_pt 0))
+      (ZZ_cons (Z_comp1 (Z_act B.A _) (Z_pt 1)) (ZZ_cons (Z_pt 2) ZZ_nil))), Fin.sum_univ_three]
     have hq : ZZ (n := 3) ![pt R d 1] := ZZ_cons (Z_pt 1) ZZ_nil
     simp [dcomp_ne (show (0 : Fin 3) ≠ 1 by decide), dcomp_eq, d_act_p, evz hq, hz2]
   have e := congrArg (fun f : PS R 3 d => ev ![pt R d 0, (0 : Pt R 2 d), pt R d 1]
     (pderiv (R := R) ((1 : Fin 3), k) f)) (first_power_add R d O B p)
-  rw [L, dmul, dmul, hA, hC, zero_mul, zero_add, mul_zero, add_zero, evm hb, evm hb, hBq,
-    mul_zero, zero_mul] at e
+  rw [L] at e
+  simp only [Derivation.leibniz, smul_eq_mul, hA, hC, mul_zero, zero_mul, zero_add, add_zero,
+    evm hb, hBq] at e
   exact e
 
 end

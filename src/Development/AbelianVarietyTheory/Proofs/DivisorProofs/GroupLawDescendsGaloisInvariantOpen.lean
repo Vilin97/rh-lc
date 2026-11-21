@@ -97,9 +97,9 @@ theorem prod_act {c : S ⟶ S} {φ : G.left ⟶ G.left} (hφ : IsGrpPullback G G
   exact ⟨x₀, y₀, hx₀, hy₀, hφ.2 (Over.mk s) x y x₀ y₀ (pt_unique N hx₀ hx') (pt_unique N hy₀ hy')⟩
 
 theorem law_of_isAffineQuotient {Γ : Type} [Group Γ] [Finite Γ] {α : Γ →* Aut S} (hq : IsAffineQuotient α π)
-    (φ : Γ → (G.left ⟶ G.left)) (hφ : ∀ g, IsGrpPullback G G (α g).hom (φ g))
+    (φ : Γ → (G.left ⟶ G.left)) (hφ : ∀ g, IsGrpPullback G G (α g).asIso.hom (φ g))
     (hN : ∀ g (T : Scheme.{0}) (s : T ⟶ S) (u : T ⟶ N.U.left) (x : T ⟶ G.left),
-      N.Pt s u x → N.Pt (s ≫ (α g).hom) u (x ≫ φ g)) : N.Law := by
+      N.Pt s u x → N.Pt (s ≫ (α g).asIso.hom) u (x ≫ φ g)) : N.Law := by
   have := N.smooth
   have := N.isOpen
   have hy : Flat (N.U ⊗ N.U).hom := by
@@ -116,9 +116,9 @@ theorem law_of_isAffineQuotient {Γ : Type} [Group Γ] [Finite Γ] {α : Γ →*
     rw [pullbackAction_fst, pullbackAction_snd_assoc] at h₁
     exact prod_unique N h₁ (prod_act N (hφ g) (hN g) hz)
   obtain ⟨z₀, hz₁⟩ := prod_exists N (pullback.condition (f := π) (g := (N.U ⊗ N.U).hom))
-  have hrange : ∀ g, pullback.map N.U.hom π N.U.hom π (𝟙 _) (α g).hom (𝟙 _) (by simp) (by simp [hq.comp_eq]) ≫ N.u
+  have hrange : ∀ g, pullback.map N.U.hom π N.U.hom π (𝟙 _) (α g).asIso.hom (𝟙 _) (by simp) (by simp [hq.comp_eq]) ≫ N.u
       = N.u ≫ φ g := fun g => by
-    refine pt_unique N (s := pullback.snd N.U.hom π ≫ (α g).hom) (a := pullback.fst N.U.hom π)
+    refine pt_unique N (s := pullback.snd N.U.hom π ≫ (α g).asIso.hom) (a := pullback.fst N.U.hom π)
       ⟨_, ?_, pullback.lift_snd _ _ _, rfl⟩
       (hN g _ _ _ _ ⟨𝟙 _, Category.id_comp _, Category.id_comp _, Category.id_comp _⟩)
     exact (pullback.lift_fst _ _ _).trans (Category.comp_id _)

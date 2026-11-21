@@ -44,17 +44,17 @@ theorem functionFieldMap_comp {X Y Z : Scheme.{0}} [IsIntegral X] [IsIntegral Y]
 theorem fnAct_mul : ∀ (X : Scheme.{0}) [IsIntegral X] (Γ : Type) [Group Γ] (ρ : Γ →* Aut X) (γ δ : Γ)
     (u : X.functionFieldˣ), fnAct ρ (γ * δ) u = fnAct ρ δ (fnAct ρ γ u) := by
   intro X _ Γ _ ρ γ δ u
-  haveI : IsIso (ρ γ).hom := Iso.isIso_hom (ρ γ)
-  haveI : IsIso (ρ δ).hom := Iso.isIso_hom (ρ δ)
-  haveI : IsIso (ρ (γ * δ)).hom := Iso.isIso_hom (ρ (γ * δ))
-  have hc : (ρ (γ * δ)).hom = (ρ δ).hom ≫ (ρ γ).hom := by
+  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ)
+  haveI : IsIso (ρ δ).asIso.hom := Iso.isIso_hom (ρ δ)
+  haveI : IsIso (ρ (γ * δ)).asIso.hom := Iso.isIso_hom (ρ (γ * δ))
+  have hc : (ρ (γ * δ)).asIso.hom = (ρ δ).asIso.hom ≫ (ρ γ).asIso.hom := by
     rw [map_mul, Aut.Aut_mul_def]; rfl
   apply Units.ext
-  change functionFieldMap (ρ (γ * δ)).hom (u : X.functionField) =
-    functionFieldMap (ρ δ).hom (functionFieldMap (ρ γ).hom (u : X.functionField))
-  have key : ∀ (f : X ⟶ X) (_ : IsDominant f), f = (ρ δ).hom ≫ (ρ γ).hom →
+  change functionFieldMap (ρ (γ * δ)).asIso.hom (u : X.functionField) =
+    functionFieldMap (ρ δ).asIso.hom (functionFieldMap (ρ γ).asIso.hom (u : X.functionField))
+  have key : ∀ (f : X ⟶ X) (_ : IsDominant f), f = (ρ δ).asIso.hom ≫ (ρ γ).asIso.hom →
       functionFieldMap f (u : X.functionField) =
-        functionFieldMap (ρ δ).hom (functionFieldMap (ρ γ).hom (u : X.functionField)) := by
+        functionFieldMap (ρ δ).asIso.hom (functionFieldMap (ρ γ).asIso.hom (u : X.functionField)) := by
     rintro f _ rfl
     rw [functionFieldMap_comp]
     rfl

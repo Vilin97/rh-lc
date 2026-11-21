@@ -33,14 +33,14 @@ section Lin
 variable {X : Scheme.{0}} [IsIntegral X] {Γ : Type} [Group Γ]
 
 def fnAct (ρ : Γ →* Aut X) (γ : Γ) : X.functionFieldˣ →* X.functionFieldˣ :=
-  haveI : IsIso (ρ γ).hom := Iso.isIso_hom (ρ γ)
-  Units.map (GlobalTheory.functionFieldMap (ρ γ).hom).toMonoidHom
+  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ)
+  Units.map (GlobalTheory.functionFieldMap (ρ γ).asIso.hom).toMonoidHom
 
 def RatLin (ρ : Γ →* Aut X) (L : LB X) (hL : L.IsLB) : Prop :=
   ∃ (D : CartierDiv X) (c : Γ → X.functionFieldˣ), cls (toLB D) (isLB_toLB D) = cls L hL ∧
     (∀ γ δ, c (γ * δ) = fnAct ρ δ (c γ) * c δ) ∧
-    (∀ γ x g, D.IsEqn ((ρ γ).hom x) g → D.IsEqn x (fnAct ρ γ g * (c γ)⁻¹)) ∧
-    ∀ γ x g, X.fromSpecResidueField x ≫ (ρ γ).hom = X.fromSpecResidueField x → D.IsEqn x g →
+    (∀ γ x g, D.IsEqn ((ρ γ).asIso.hom x) g → D.IsEqn x (fnAct ρ γ g * (c γ)⁻¹)) ∧
+    ∀ γ x g, X.fromSpecResidueField x ≫ (ρ γ).asIso.hom = X.fromSpecResidueField x → D.IsEqn x g →
       ZeroAt x (((fnAct ρ γ g * (c γ)⁻¹ * g⁻¹ : X.functionFieldˣ) : X.functionField) - 1)
 
 end Lin

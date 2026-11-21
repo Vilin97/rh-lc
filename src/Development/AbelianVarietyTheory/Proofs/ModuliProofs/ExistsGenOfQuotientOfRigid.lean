@@ -186,19 +186,19 @@ end GenDescent
 
 open GenDescent in
 theorem exists_gen_of_quotient_of_rigid :
-    ∀ (Γ : Type) [Group Γ] [Finite Γ] (X X' : Scheme.{0}) (ρ : Γ →* Aut X) (π : X ⟶ X') (P : Over X) (P' : Over X') (φ : P.left ⟶ P'.left) (e : X ⟶ P.left) (e' : X' ⟶ P'.left) (N : LB P'.left), (IsAffineHom π ∧ (∀ g, (ρ g).hom ≫ π = π) ∧ ∀ V : X'.Opens, Function.Injective (π.app V).hom ∧ ∀ f : Γ(X, π ⁻¹ᵁ V), (∀ g (h : π ⁻¹ᵁ V ≤ (ρ g).hom ⁻¹ᵁ (π ⁻¹ᵁ V)), ((ρ g).hom.appLE _ _ h).hom f = f) → f ∈ Set.range (π.app V).hom) → IsPullback φ P.hom P'.hom π → Flat P'.hom → e ≫ P.hom = 𝟙 X → e' ≫ P'.hom = 𝟙 X' → e ≫ φ = π ≫ e' → (∀ (V : X.Opens) (u : Γ(P.left, P.hom ⁻¹ᵁ V)) (h : V ≤ e ⁻¹ᵁ (P.hom ⁻¹ᵁ V)), (e.appLE _ V h).hom u = 1 → u = 1) → N.IsLB → (∃ r : (N.pull e').Gen, r.IsGen) → (∃ t : (N.pull φ).Gen, t.IsGen) → ∃ t : N.Gen, t.IsGen := by
+    ∀ (Γ : Type) [Group Γ] [Finite Γ] (X X' : Scheme.{0}) (ρ : Γ →* Aut X) (π : X ⟶ X') (P : Over X) (P' : Over X') (φ : P.left ⟶ P'.left) (e : X ⟶ P.left) (e' : X' ⟶ P'.left) (N : LB P'.left), (IsAffineHom π ∧ (∀ g, (ρ g).asIso.hom ≫ π = π) ∧ ∀ V : X'.Opens, Function.Injective (π.app V).hom ∧ ∀ f : Γ(X, π ⁻¹ᵁ V), (∀ g (h : π ⁻¹ᵁ V ≤ (ρ g).asIso.hom ⁻¹ᵁ (π ⁻¹ᵁ V)), ((ρ g).asIso.hom.appLE _ _ h).hom f = f) → f ∈ Set.range (π.app V).hom) → IsPullback φ P.hom P'.hom π → Flat P'.hom → e ≫ P.hom = 𝟙 X → e' ≫ P'.hom = 𝟙 X' → e ≫ φ = π ≫ e' → (∀ (V : X.Opens) (u : Γ(P.left, P.hom ⁻¹ᵁ V)) (h : V ≤ e ⁻¹ᵁ (P.hom ⁻¹ᵁ V)), (e.appLE _ V h).hom u = 1 → u = 1) → N.IsLB → (∃ r : (N.pull e').Gen, r.IsGen) → (∃ t : (N.pull φ).Gen, t.IsGen) → ∃ t : N.Gen, t.IsGen := by
   intro Γ _ _ X X' ρ π P P' φ e e' N hq hpb hfl he he' hee hrig hN ⟨r, hr⟩ ⟨t, ht⟩
   have hT : (⊤ : P.left.Opens) ≤ P.hom ⁻¹ᵁ ⊤ := fun _ _ => trivial
   have hT' : P.hom ⁻¹ᵁ ⊤ ≤ ⊤ := le_top
   have hTX : (⊤ : X.Opens) ≤ e ⁻¹ᵁ (P.hom ⁻¹ᵁ ⊤) := fun _ _ => trivial
   obtain ⟨⟨τ, hτ⟩, hall⟩ := quotient_flat_baseChange Γ X X' P.left P'.left ρ π φ P.hom P'.hom hq hpb hfl
   obtain ⟨-, -, hφ⟩ := hall τ hτ
-  have hρπ : ∀ g, (ρ g).hom ≫ π = π := hq.2.1
-  have heτ : ∀ g, e ≫ (τ g).hom = (ρ g).hom ≫ e := fun g => hpb.hom_ext
+  have hρπ : ∀ g, (ρ g).asIso.hom ≫ π = π := hq.2.1
+  have heτ : ∀ g, e ≫ (τ g).hom = (ρ g).asIso.hom ≫ e := fun g => hpb.hom_ext
     (by simp only [Category.assoc, (hτ g).1, hee, reassoc_of% (hρπ g)])
     (by simp only [Category.assoc, (hτ g).2, reassoc_of% he, he, Category.comp_id])
   have hpt : ∀ x, φ (e x) = e' (π x) := fun x => congrArg (fun h : X ⟶ P'.left => h.base x) hee
-  have hρpt : ∀ g x, π ((ρ g).hom x) = π x := fun g x => congrArg (fun h : X ⟶ X' => h.base x) (hρπ g)
+  have hρpt : ∀ g x, π ((ρ g).asIso.hom x) = π x := fun g x => congrArg (fun h : X ⟶ X' => h.base x) (hρπ g)
   have hτpt : ∀ g y, φ ((τ g).hom y) = φ y := fun g y =>
     congrArg (fun h : P.left ⟶ P'.left => h.base y) (hτ g).1
   obtain ⟨a, ha⟩ := exists_compat t ht
@@ -236,11 +236,11 @@ theorem exists_gen_of_quotient_of_rigid :
       have hx : e' (π x) ∈ ⨆ i, N.U i := by rw [hN.cover]; trivial
       obtain ⟨i, hi⟩ := TopologicalSpace.Opens.mem_iSup.1 hx
       have hi' : φ (e x) ∈ N.U i := by rw [hpt]; exact hi
-      have hiρ : e' (π ((ρ g).hom x)) ∈ N.U i := by rw [hρpt]; exact hi
+      have hiρ : e' (π ((ρ g).asIso.hom x)) ∈ N.U i := by rw [hρpt]; exact hi
       have h1 := hcg X e x i hi'
       rw [hb' X e x i hi', heτ g] at h1
       have hid : e' (π ((𝟙 X) x)) ∈ N.U i := hi
-      rw [hnorm X (ρ g).hom x i hiρ, ha1' X (ρ g).hom x i hiρ, hρπ,
+      rw [hnorm X (ρ g).asIso.hom x i hiρ, ha1' X (ρ g).asIso.hom x i hiρ, hρπ,
         ← Category.id_comp e, hnorm X (𝟙 X) x i hid, ha1' X (𝟙 X) x i hid, Category.id_comp] at h1
       exact mul_eq_right.1 h1.symm
     have hcg1 : ∀ y : P.left, gm (𝟙 P.left) y ⊤ cg = 1 := by

@@ -46,9 +46,9 @@ theorem schDom_spec_map {A B : Type} [CommRing A] [CommRing B] [IsDomain A] (φ 
   exact IsSchemeTheoreticallyDominant.of_isDominant _
 
 theorem exists_pow_eq_one_field (hmul : Out.MulNSt) (hS : Out.SerreSt) {F : Type} [Field F] [IsAlgClosed F] [CharZero F]
-    (P : Out.PolAV (Sp F)) (θ : Aut P.A) [IsMonHom θ.hom] (w : LB.Iso P.L (P.L.pull θ.hom.left)) (hw : PGen w) :
+    (P : Out.PolAV (Sp F)) (θ : Aut P.A) [IsMonHom θ.asIso.hom] (w : LB.Iso P.L (P.L.pull θ.asIso.hom.left)) (hw : PGen w) :
     ∃ N : ℕ, 0 < N ∧ θ ^ N = 1 := by
-  have hsucc : ∀ n : ℕ, (θ ^ (n + 1)).hom = θ.hom ≫ (θ ^ n).hom := fun n => by rw [pow_succ]; rfl
+  have hsucc : ∀ n : ℕ, (θ ^ (n + 1)).hom = θ.asIso.hom ≫ (θ ^ n).hom := fun n => by rw [pow_succ]; rfl
   have hQ : ∀ n : ℕ, IsMonHom (θ ^ (n + 1)).hom ∧ ∃ v : LB.Iso P.L (P.L.pull (θ ^ (n + 1)).hom.left), PGen v := by
     intro n
     induction n with
@@ -63,7 +63,7 @@ theorem exists_pow_eq_one_field (hmul : Out.MulNSt) (hS : Out.SerreSt) {F : Type
   have hfin : Finite {x : Over.mk (𝟙 (Sp F)) ⟶ P.A // x ^ 3 = 1} :=
     Nat.finite_of_card_ne_zero (by rw [hc]; positivity)
   let f : {x : Over.mk (𝟙 (Sp F)) ⟶ P.A // x ^ 3 = 1} → {x : Over.mk (𝟙 (Sp F)) ⟶ P.A // x ^ 3 = 1} :=
-    fun x => ⟨x.1 ≫ θ.hom, by rw [← MonObj.pow_comp, x.2, MonObj.one_comp]⟩
+    fun x => ⟨x.1 ≫ θ.asIso.hom, by rw [← MonObj.pow_comp, x.2, MonObj.one_comp]⟩
   have finj : Function.Injective f := fun a b h => Subtype.ext ((Iso.cancel_iso_hom_right _ _ θ).1 (congrArg Subtype.val h))
   let e := Equiv.ofBijective f (Finite.injective_iff_bijective.1 finj)
   have he : ∀ (n : ℕ) x, ((e ^ n) x).1 = x.1 ≫ (θ ^ n).hom := by
@@ -92,7 +92,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 theorem exists_pow_eq_one (hmul : Out.MulNSt) (hS : Out.SerreSt) {X : Scheme.{0}} {t : SAB H X} (hp : IsProper t.G.hom)
     (hA : Out.RelAmple t.G t.PP.L) (hK : Out.KTriv t.G t.PP.L) {S : Type} [CommRing S] [IsDomain S] [CharZero S]
-    {x : Sp S ⟶ X} {t' : SAB H (Sp S)} (m m' : SABMap t' t x) (θ : Aut t'.G) (hθ : θ.hom.left ≫ m.φ = m'.φ) :
+    {x : Sp S ⟶ X} {t' : SAB H (Sp S)} (m m' : SABMap t' t x) (θ : Aut t'.G) (hθ : θ.asIso.hom.left ≫ m.φ = m'.φ) :
     ∃ N : ℕ, 0 < N ∧ θ ^ N = 1 := by
   let F := AlgebraicClosure (FractionRing S)
   let io : S →+* F := (algebraMap (FractionRing S) _).comp (algebraMap S _)
@@ -104,11 +104,11 @@ theorem exists_pow_eq_one (hmul : Out.MulNSt) (hS : Out.SerreSt) {X : Scheme.{0}
   obtain ⟨k, hk⟩ := sabComp pullCubComp E H _ _ _ _ _ _ _ _ m n
   obtain ⟨k', hk'⟩ := sabComp pullCubComp E H _ _ _ _ _ _ _ _ m' n
   obtain ⟨ψ, hψ, hφ, -, -, v, hv, -⟩ := sabMap_iso k' k rfl rfl
-  have hcomm : ψ.hom.left ≫ n.φ = n.φ ≫ θ.hom.left := by
+  have hcomm : ψ.hom.left ≫ n.φ = n.φ ≫ θ.asIso.hom.left := by
     apply m.cart.1.hom_ext
     · have e1 : k.φ = n.φ ≫ m.φ := hk
       have e2 : k'.φ = n.φ ≫ m'.φ := hk'
-      show (ψ.hom.left ≫ n.φ) ≫ m.φ = (n.φ ≫ θ.hom.left) ≫ m.φ
+      show (ψ.hom.left ≫ n.φ) ≫ m.φ = (n.φ ≫ θ.asIso.hom.left) ≫ m.φ
       rw [Category.assoc, ← e1, hφ, e2, Category.assoc, hθ]
     · have e : n.φ ≫ t'.G.hom = tF.G.hom ≫ spMap io := n.cart.1.w
       rw [Category.assoc, Category.assoc, Over.w, e, Over.w_assoc]
@@ -139,7 +139,7 @@ theorem exists_pow_eq_one (hmul : Out.MulNSt) (hS : Out.SerreSt) {X : Scheme.{0}
     | zero => exact (Category.id_comp _).trans (Category.comp_id _).symm
     | succ a ih =>
       rw [pow_succ, pow_succ]
-      show (ψ.hom.left ≫ (ψ' ^ a).hom.left) ≫ n.φ = n.φ ≫ θ.hom.left ≫ (θ ^ a).hom.left
+      show (ψ.hom.left ≫ (ψ' ^ a).hom.left) ≫ n.φ = n.φ ≫ θ.asIso.hom.left ≫ (θ ^ a).hom.left
       rw [Category.assoc, ih, ← Category.assoc, hcomm, Category.assoc]
   refine ⟨N, hN, Iso.ext (Over.OverMorphism.ext ?_)⟩
   have := t'.semi.smooth

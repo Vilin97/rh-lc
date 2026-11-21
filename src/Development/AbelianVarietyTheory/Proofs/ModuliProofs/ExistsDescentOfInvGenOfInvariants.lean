@@ -259,7 +259,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open scoped CategoryTheory.Obj TensorProduct Pointwise
 
 theorem exists_descent_of_tame :
-    ∀ (Γ : Type) [Group Γ] [Finite Γ] (Y Y' : Scheme.{0}) (τ : Γ →* Aut Y) (φ : Y ⟶ Y') (L : LB Y), (IsAffineHom φ ∧ (∀ g, (τ g).hom ≫ φ = φ) ∧ ∀ V : Y'.Opens, Function.Injective (φ.app V).hom ∧ ∀ f : Γ(Y, φ ⁻¹ᵁ V), (∀ g (h : φ ⁻¹ᵁ V ≤ (τ g).hom ⁻¹ᵁ (φ ⁻¹ᵁ V)), ((τ g).hom.appLE _ _ h).hom f = f) → f ∈ Set.range (φ.app V).hom) → (∀ (k : Type) [Field k] [IsAlgClosed k] (x : Sp k ⟶ Y), (Nat.card {g // x ≫ (τ g).hom = x} : k) ≠ 0) → L.IsLB → ∀ u : ∀ g, LB.Gen (LB.LinComb L (K := Fin 2) ![𝟙 Y, (τ g).hom] ![1, -1]), (∀ g, (u g).IsGen) → (∀ g h, LB.Gen.Corr L _ _ _ _ (u (h * g)) (LB.mulGen L _ _ _ _ (u g) (LB.pullGen L _ _ (u h) (τ g).hom))) → (∀ (k : Type) [Field k] [IsAlgClosed k] (y : Sp k ⟶ Y) g, y ≫ (τ g).hom = y → LB.Gen.Corr L _ _ _ _ (LB.pullGen L _ _ (u g) y) (LB.oneGen L)) → ∃ L' : LB Y', L'.IsLB ∧ LBIso L (L'.pull φ) := by
+    ∀ (Γ : Type) [Group Γ] [Finite Γ] (Y Y' : Scheme.{0}) (τ : Γ →* Aut Y) (φ : Y ⟶ Y') (L : LB Y), (IsAffineHom φ ∧ (∀ g, (τ g).asIso.hom ≫ φ = φ) ∧ ∀ V : Y'.Opens, Function.Injective (φ.app V).hom ∧ ∀ f : Γ(Y, φ ⁻¹ᵁ V), (∀ g (h : φ ⁻¹ᵁ V ≤ (τ g).asIso.hom ⁻¹ᵁ (φ ⁻¹ᵁ V)), ((τ g).asIso.hom.appLE _ _ h).hom f = f) → f ∈ Set.range (φ.app V).hom) → (∀ (k : Type) [Field k] [IsAlgClosed k] (x : Sp k ⟶ Y), (Nat.card {g // x ≫ (τ g).asIso.hom = x} : k) ≠ 0) → L.IsLB → ∀ u : ∀ g, LB.Gen (LB.LinComb L (K := Fin 2) ![𝟙 Y, (τ g).asIso.hom] ![1, -1]), (∀ g, (u g).IsGen) → (∀ g h, LB.Gen.Corr L _ _ _ _ (u (h * g)) (LB.mulGen L _ _ _ _ (u g) (LB.pullGen L _ _ (u h) (τ g).asIso.hom))) → (∀ (k : Type) [Field k] [IsAlgClosed k] (y : Sp k ⟶ Y) g, y ≫ (τ g).asIso.hom = y → LB.Gen.Corr L _ _ _ _ (LB.pullGen L _ _ (u g) y) (LB.oneGen L)) → ∃ L' : LB Y', L'.IsLB ∧ LBIso L (L'.pull φ) := by
   intro Γ _ _ Y Y' τ φ L hφ htame hL u hu hc hfix
   obtain ⟨_, _, horb, -, -⟩ := quotient_isIntegral_surjective_orbits Γ Y Y' τ φ hφ
   have : Finite Γᵐᵒᵖ := Finite.of_equiv Γ MulOpposite.opEquiv
@@ -274,7 +274,7 @@ theorem exists_descent_of_tame :
   · obtain ⟨g, hg⟩ := horb x' x e.symm
     exact ⟨MulOpposite.op g, hg⟩
   · rw [← Nat.card_congr (MulOpposite.opEquiv.subtypeEquiv
-      (p := fun g : Γ => r ≫ (τ g).hom = r) fun g => Iff.rfl)]
+      (p := fun g : Γ => r ≫ (τ g).asIso.hom = r) fun g => Iff.rfl)]
     exact htame k r
 
 end GlobalTheory.LinDescent

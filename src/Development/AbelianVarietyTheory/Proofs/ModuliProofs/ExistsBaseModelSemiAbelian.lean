@@ -74,7 +74,7 @@ theorem exists_restrict {Z : Scheme.{0}} {R R' : Type} [CommRing R] [CommRing R'
   simpa using this
 
 theorem pow_hom_eq_iterate {X : Scheme.{0}} (r : Aut X) (m : ℕ) :
-    (r ^ m).hom = (fun f : X ⟶ X => f ≫ r.hom)^[m] (𝟙 _) := by
+    (r ^ m).hom = (fun f : X ⟶ X => f ≫ r.asIso.hom)^[m] (𝟙 _) := by
   induction m with
   | zero => rfl
   | succ m ih => rw [Function.iterate_succ_apply', ← ih, pow_succ']; rfl

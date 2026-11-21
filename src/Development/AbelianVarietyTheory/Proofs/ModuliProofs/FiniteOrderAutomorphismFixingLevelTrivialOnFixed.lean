@@ -98,13 +98,13 @@ theorem torsion_fixed {X X' U' : Scheme.{0}} [IsLocallyNoetherian X'] (hN : Geo.
   rw [← hy'l, Category.assoc, ← hφ'₁, ← Category.assoc, key]
 
 theorem fibre_fixed {X : Scheme.{0}} (G : Over X) [GrpObj G] (hG : IsSemiAbelian G) (ρ : X ⟶ X)
-    (τ : Aut G.left) (hφ : IsGrpPullback G G ρ τ.hom) (d : ℕ) (hd : 0 < d) (hτ : τ ^ d = 1)
+    (τ : Aut G.left) (hφ : IsGrpPullback G G ρ τ.asIso.hom) (d : ℕ) (hd : 0 < d) (hτ : τ ^ d = 1)
     (k : Type) [Field k] [IsAlgClosed k] (x : Sp k ⟶ X) (hx : x ≫ ρ = x) (N : ℕ) (hodd : Odd N) (h3 : 3 ≤ N)
-    (hN : (N : k) ≠ 0) (hfix : ∀ y : Over.mk x ⟶ G, y ^ N = 1 → y.left ≫ τ.hom = y.left) :
-    pullback.fst G.hom x ≫ τ.hom = pullback.fst G.hom x := by
+    (hN : (N : k) ≠ 0) (hfix : ∀ y : Over.mk x ⟶ G, y ^ N = 1 → y.left ≫ τ.asIso.hom = y.left) :
+    pullback.fst G.hom x ≫ τ.asIso.hom = pullback.fst G.hom x := by
   let G' := (Over.pullback x).obj G
   have hπ : IsGrpPullback G' G x (show G'.left ⟶ G.left from pullback.fst G.hom x) := isGrpPullback_pullback G x
-  show (show G'.left ⟶ G.left from pullback.fst G.hom x) ≫ τ.hom = (show G'.left ⟶ G.left from pullback.fst G.hom x)
+  show (show G'.left ⟶ G.left from pullback.fst G.hom x) ≫ τ.asIso.hom = (show G'.left ⟶ G.left from pullback.fst G.hom x)
   generalize (show G'.left ⟶ G.left from pullback.fst G.hom x) = π at hπ ⊢
   obtain ⟨u, hu, hul⟩ := grpPullback_iso ((hπ.comp hφ).congr hx rfl) hπ
   have hpow : ∀ m : ℕ, ((show Aut G' from u) ^ m).hom.left ≫ π = π ≫ (τ ^ m).hom := by
@@ -113,7 +113,7 @@ theorem fibre_fixed {X : Scheme.{0}} (G : Over X) [GrpObj G] (hG : IsSemiAbelian
     | zero => exact (Category.id_comp _).trans (Category.comp_id _).symm
     | succ m ih =>
       rw [pow_succ, pow_succ, Aut.Aut_mul_def, Aut.Aut_mul_def]
-      show (u.hom ≫ _).left ≫ π = π ≫ τ.hom ≫ _
+      show (u.hom ≫ _).left ≫ π = π ≫ τ.asIso.hom ≫ _
       rw [Over.comp_left, Category.assoc, ih, ← Category.assoc, hul, Category.assoc]
   have h1 : (show Aut G' from u) = 1 := GlobalTheory.serre_lemma_semiAbelian k G' (IsSemiAbelian.pullback x G hG) N d u hodd h3 hN hd hu
     (by

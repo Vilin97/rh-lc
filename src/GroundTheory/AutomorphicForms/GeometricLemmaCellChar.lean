@@ -235,8 +235,9 @@ theorem patCoord_mul {k u : GL (Fin n) F} (hu : u ∈ U) :
 
 theorem distribHaarChar_patLeftEquiv {k : GL (Fin n) F} (hk : k ∈ U ⊓ integralGL F n) :
     distribHaarChar (PatIdx T → F) (patLeftEquiv T hT hU hTt hk.1) = 1 := by
-  have hbox : ∀ {k' : GL (Fin n) F}, k' ∈ integralGL F n → ∀ X ∈ Measures.box F (PatIdx T),
-      patLeft T k' X ∈ Measures.box F (PatIdx T) := by
+  have hbox : ∀ {k' : GL (Fin n) F}, k' ∈ integralGL F n →
+      ∀ X ∈ Measures.box (F := F) (ι := PatIdx T),
+        patLeft T k' X ∈ Measures.box (F := F) (ι := PatIdx T) := by
     intro k' hk' X hX
     rw [Measures.mem_box] at hX ⊢
     intro p
@@ -259,7 +260,7 @@ theorem measure_box_eq_relIndex_mul [MeasurableSpace F] [BorelSpace F]
     (μ : Measure (PatIdx T → F)) [μ.IsAddHaarMeasure] [μ.Regular] {L : Subgroup (GL (Fin n) F)}
     (hL : L ≤ U ⊓ integralGL F n) (hLc : IsCompact (L : Set (GL (Fin n) F)))
     (hfin : L.relIndex (U ⊓ integralGL F n) ≠ 0) :
-    μ (Measures.box F (PatIdx T)) = (L.relIndex (U ⊓ integralGL F n) : ℝ≥0∞) *
+    μ Measures.box = (L.relIndex (U ⊓ integralGL F n) : ℝ≥0∞) *
       μ (patCoord T '' (L : Set (GL (Fin n) F))) := by
   classical
   set U₀ := U ⊓ integralGL F n
@@ -269,7 +270,7 @@ theorem measure_box_eq_relIndex_mul [MeasurableSpace F] [BorelSpace F]
   let _ := Fintype.ofFinite (U₀ ⧸ S)
   set piece : U₀ ⧸ S → Set (PatIdx T → F) := fun q =>
     patCoord T '' ((fun l => ((Quotient.out q : U₀) : GL (Fin n) F) * l) '' (L : Set (GL (Fin n) F)))
-  have hbox : Measures.box F (PatIdx T) = ⋃ q, piece q := by
+  have hbox : Measures.box (F := F) (ι := PatIdx T) = ⋃ q, piece q := by
     ext X
     simp only [mem_iUnion]
     constructor
@@ -529,7 +530,7 @@ theorem relIndex_inf_map_conj_diagPow (ν : Fin n → ℤ) :
     exact relIndex_map_conj_diagPow_ne_zero hT hTt hU hUc ν
   have key := measure_box_eq_relIndex_mul hT hU hTt μ (L := U₀ ⊓ M) inf_le_left hVc hfin
   rw [patCoord_image_inf_map_conj hT hU ν] at key
-  have hbox : μ (Measures.box F (PatIdx T)) = 1 := by
+  have hbox : μ Measures.box = 1 := by
     rw [Measures.box, Measure.pi_pi]
     simp [GroundTheory.LocalField.haarIntegers_integers]
   have hchart : μ (Set.univ.pi fun p : PatIdx T =>

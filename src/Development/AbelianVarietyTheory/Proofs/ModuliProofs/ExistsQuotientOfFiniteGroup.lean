@@ -22,11 +22,11 @@ variable {G : Type} [Group G] [Finite G] {X : Scheme.{0}}
 
 theorem isOpenImmersion_desc {T T' Y Y' : Scheme.{0}} {σ : G →* Aut T} {σ' : G →* Aut T'}
     {q : T ⟶ Y} {q' : T' ⟶ Y'} (h : IsAffineQuotient σ q) (h' : IsAffineQuotient σ' q')
-    (m : T ⟶ T') [IsOpenImmersion m] (hm : ∀ g, (σ g).hom ≫ m = m ≫ (σ' g).hom)
+    (m : T ⟶ T') [IsOpenImmersion m] (hm : ∀ g, (σ g).asIso.hom ≫ m = m ≫ (σ' g).asIso.hom)
     (k : Y ⟶ Y') (hk : q ≫ k = m ≫ q') : IsOpenImmersion k := by
   obtain ⟨W, hW⟩ := h'.exists_preimage_eq (U := m.opensRange) (fun g ↦ by
     rintro _ ⟨x, rfl⟩
-    exact ⟨(σ g).hom x, congr($(hm g) x)⟩)
+    exact ⟨(σ g).asIso.hom x, congr($(hm g) x)⟩)
   have hr : Set.range (m ≫ q') ⊆ Set.range W.ι := by
     rintro _ ⟨x, rfl⟩
     have : m x ∈ q' ⁻¹ᵁ W := hW ▸ ⟨x, rfl⟩
@@ -45,7 +45,7 @@ theorem isOpenImmersion_desc {T T' Y Y' : Scheme.{0}} {σ : G →* Aut T} {σ' :
 omit [Finite G] in
 theorem app_of_chart {T Y Y' : Scheme.{0}} {ρ : G →* Aut X} {σ : G →* Aut T}
     {q : T ⟶ Y'} (h : IsAffineQuotient σ q) (π : X ⟶ Y) (i : T ⟶ X) [IsOpenImmersion i]
-    (hi : ∀ g, (σ g).hom ≫ i = i ≫ (ρ g).hom) (κ : Y' ⟶ Y) [IsOpenImmersion κ]
+    (hi : ∀ g, (σ g).asIso.hom ≫ i = i ≫ (ρ g).asIso.hom) (κ : Y' ⟶ Y) [IsOpenImmersion κ]
     (hκ : i ≫ π = q ≫ κ) (W : Y.Opens) (hW : W ≤ κ.opensRange) (hW' : π ⁻¹ᵁ W ≤ i.opensRange) :
     Function.Injective (π.app W) ∧
       ∀ s : Γ(X, π ⁻¹ᵁ W), IsInvariantSection ρ _ s → s ∈ Set.range (π.app W) := by
@@ -77,7 +77,7 @@ theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
     (hc : ∀ x : X, ∃ U : 𝒰, x ∈ U.1)
     (T : 𝒰 → Scheme.{0}) (i : ∀ U, T U ⟶ X) [∀ U, IsOpenImmersion (i U)]
     (hr : ∀ U, (i U).opensRange = U.1) (haff : ∀ U : 𝒰, IsAffineOpen U.1)
-    (σ : ∀ U, G →* Aut (T U)) (hσ : ∀ U g, (σ U g).hom ≫ i U = i U ≫ (ρ g).hom)
+    (σ : ∀ U, G →* Aut (T U)) (hσ : ∀ U g, (σ U g).hom ≫ i U = i U ≫ (ρ g).asIso.hom)
     (Y : 𝒰 → Scheme.{0}) [∀ U, IsAffine (Y U)] (q : ∀ U, T U ⟶ Y U)
     (hq : ∀ U, IsAffineQuotient (σ U) (q U)) :
     ∃ (X' : Scheme.{0}) (π : X ⟶ X'), IsAffineQuotient ρ π := by
@@ -85,7 +85,7 @@ theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
   have hex (U : 𝒰) (x : X) (hx : x ∈ U.1) : ∃ y, i U y = x := by
     rw [← hr U] at hx; exact hx
   have hinj (U : 𝒰) : Function.Injective (i U) := (i U).isOpenEmbedding.injective
-  have hσ' (U : 𝒰) (g : G) (x : T U) : i U ((σ U g).hom x) = (ρ g).hom (i U x) :=
+  have hσ' (U : 𝒰) (g : G) (x : T U) : i U ((σ U g).hom x) = (ρ g).asIso.hom (i U x) :=
     congr($(hσ U g) x)
   have hqσ (U : 𝒰) (g : G) (x : T U) : q U ((σ U g).hom x) = q U x :=
     congr($((hq U).comp_eq g) x)
@@ -122,7 +122,7 @@ theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
     have := hmo (show U.1 ≤ V.1 from f.le)
     isOpenImmersion_desc (hq U) (hq V) _ (hmσ _) _ (hnat f)
   have hsurj (U : 𝒰) : Function.Surjective (e U) := (hq U).surjective.surj
-  have hfib (U : 𝒰) (x y : T U) (h : e U x = e U y) : ∃ g, (ρ g).hom (i U x) = i U y := by
+  have hfib (U : 𝒰) (x y : T U) (h : e U x = e U y) : ∃ g, (ρ g).asIso.hom (i U x) = i U y := by
     obtain ⟨g, rfl⟩ := ((hq U).apply_eq_iff x y).mp h
     exact ⟨g, (hσ' U g x).symm⟩
   have key {U V : 𝒰} (x : T U) (y : T V) (h : i U x = i V y) :
@@ -207,7 +207,7 @@ theorem exists_of_charts (ρ : G →* Aut X) (𝒰 : Set X.Opens)
 
 theorem exists_isAffineQuotient (ρ : G →* Aut X) [OrbitsInAffineOpens ρ] :
     ∃ (X' : Scheme.{0}) (π : X ⟶ X'), IsAffineQuotient ρ π := by
-  let 𝒰 : Set X.Opens := {U | IsAffineOpen U ∧ ∀ g, U ≤ (ρ g).hom ⁻¹ᵁ U}
+  let 𝒰 : Set X.Opens := {U | IsAffineOpen U ∧ ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U}
   refine exists_of_charts ρ 𝒰 (fun U hU V hV x hxU hxV ↦ ?_) (fun x ↦ ?_)
     (fun U ↦ Spec Γ(X, U.1)) (fun U ↦ U.2.1.fromSpec) (fun U ↦ U.2.1.opensRange_fromSpec)
     (fun U ↦ U.2.1)
@@ -227,7 +227,7 @@ theorem exists_isAffineQuotient (ρ : G →* Aut X) [OrbitsInAffineOpens ρ] :
 
 end QuotientGluing
 
-theorem exists_quotient_of_finite_group : ∀ (Γ : Type) [Group Γ] [Finite Γ] (X : Scheme.{0}) [X.IsSeparated] (ρ : Γ →* Aut X), (∀ x : X, ∃ U : X.Opens, IsAffineOpen U ∧ ∀ g, (ρ g).hom x ∈ U) → ∃ (X' : Scheme.{0}) (π : X ⟶ X'), (IsAffineHom π ∧ (∀ g, (ρ g).hom ≫ π = π) ∧ ∀ V : X'.Opens, Function.Injective (π.app V).hom ∧ ∀ f : Γ(X, π ⁻¹ᵁ V), (∀ g (h : π ⁻¹ᵁ V ≤ (ρ g).hom ⁻¹ᵁ (π ⁻¹ᵁ V)), ((ρ g).hom.appLE _ _ h).hom f = f) → f ∈ Set.range (π.app V).hom) := by
+theorem exists_quotient_of_finite_group : ∀ (Γ : Type) [Group Γ] [Finite Γ] (X : Scheme.{0}) [X.IsSeparated] (ρ : Γ →* Aut X), (∀ x : X, ∃ U : X.Opens, IsAffineOpen U ∧ ∀ g, (ρ g).asIso.hom x ∈ U) → ∃ (X' : Scheme.{0}) (π : X ⟶ X'), (IsAffineHom π ∧ (∀ g, (ρ g).asIso.hom ≫ π = π) ∧ ∀ V : X'.Opens, Function.Injective (π.app V).hom ∧ ∀ f : Γ(X, π ⁻¹ᵁ V), (∀ g (h : π ⁻¹ᵁ V ≤ (ρ g).asIso.hom ⁻¹ᵁ (π ⁻¹ᵁ V)), ((ρ g).asIso.hom.appLE _ _ h).hom f = f) → f ∈ Set.range (π.app V).hom) := by
   intro Γ _ _ X _ ρ h
   have : OrbitsInAffineOpens ρ := ⟨h⟩
   obtain ⟨X', π, hπ⟩ := QuotientGluing.exists_isAffineQuotient ρ

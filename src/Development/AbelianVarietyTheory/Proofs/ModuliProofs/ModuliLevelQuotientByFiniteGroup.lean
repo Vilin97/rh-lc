@@ -109,12 +109,12 @@ variable {l₀ l₁ : Level H} {X₀ : Moduli D l₀} {X₁ : Moduli D l₁} {r 
 
 def twistMonoid (τ : autOver r →* Aut X₁.univ.t.G.left) : Submonoid (autOver r) :=
   { carrier := {ω | ∃ (g : D.La →ₗ[𝓞 E] D.La) (σ : KA l₁ ≃+* KA l₁), σ (baseKA l₁).ρ = (baseKA l₁).ρ ∧
-      SemiTwist X₁ ω.1.hom (τ ω).hom g σ.toRingHom}
+      SemiTwist X₁ ω.1.hom (τ ω).asIso.hom g σ.toRingHom}
     mul_mem' := by
       rintro a b ⟨g, σ, h₁, h₂⟩ ⟨g', σ', h₁', h₂'⟩
       refine ⟨g' ∘ₗ g, σ.trans σ', by rw [RingEquiv.trans_apply, h₁, h₁'], ?_⟩
       have e₁ : (a * b).1.hom = b.1.hom ≫ a.1.hom := rfl
-      have e₂ : (τ (a * b)).hom = (τ b).hom ≫ (τ a).hom := by rw [map_mul]; rfl
+      have e₂ : (τ (a * b)).asIso.hom = (τ b).asIso.hom ≫ (τ a).asIso.hom := by rw [map_mul]; rfl
       have e₃ : (σ.trans σ').toRingHom = σ'.toRingHom.comp σ.toRingHom := RingHom.ext fun _ => rfl
       rw [e₁, e₂, e₃, LinearMap.coe_comp]
       exact h₂'.comp h₂
@@ -131,7 +131,7 @@ theorem inv_comp_square {X P : Scheme.{0}} (a : X ≅ X) (t : P ≅ P) {b : X �
   rw [Category.assoc, ← p₂, Iso.eq_inv_comp, ← Category.assoc, ← p₁, Category.assoc, Iso.hom_inv_id_assoc]
 
 theorem finite_twistMonoid (τ : autOver r →* Aut X₁.univ.t.G.left)
-    (mu : ∀ ω : autOver r, SABMap X₁.univ.t X₁.univ.t ω.1.hom) (hmu : ∀ ω, (mu ω).φ = (τ ω).hom) :
+    (mu : ∀ ω : autOver r, SABMap X₁.univ.t X₁.univ.t ω.1.hom) (hmu : ∀ ω, (mu ω).φ = (τ ω).asIso.hom) :
     Finite (twistMonoid τ) := by
   obtain ⟨κ, _, q, hq⟩ := exists_finite_invariant X₁
   haveI := finite_fieldAut l₁
@@ -144,7 +144,7 @@ theorem finite_twistMonoid (τ : autOver r →* Aut X₁.univ.t.G.left)
   have h₁ := hq _ _ (congrArg Prod.fst hab)
   have h₂ : σ a = σ b := congrArg Prod.snd hab
   have e₀ : (b.1 * a.1⁻¹).1.hom = a.1.1.inv ≫ b.1.1.hom := rfl
-  have e₁ : (τ (b.1 * a.1⁻¹)).hom = (τ a.1).inv ≫ (τ b.1).hom := by rw [map_mul, map_inv]; rfl
+  have e₁ : (τ (b.1 * a.1⁻¹)).asIso.hom = (τ a.1).inv ≫ (τ b.1).hom := by rw [map_mul, map_inv]; rfl
   have key : ∀ {x y : X₁.X ⟶ X₁.univ.t.G.left}, y ≫ (τ a.1).hom = a.1.1.hom ≫ x →
       y ≫ (τ b.1).hom = b.1.1.hom ≫ x → x ≫ (mu (b.1 * a.1⁻¹)).φ = (b.1 * a.1⁻¹).1.hom ≫ x := by
     intro x y p₁ p₂
