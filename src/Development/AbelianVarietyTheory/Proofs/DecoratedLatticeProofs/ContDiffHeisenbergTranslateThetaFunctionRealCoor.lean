@@ -60,7 +60,7 @@ theorem contDiff_heisO_iota_fderiv : ∀ (D : D7) (θ : InfFam D) (σ : (D.what�
         Complex.exp (-(Real.pi * Complex.I) * ((omO S T (piW θ T S v) z + s * omO S T (piW θ T S v) u : ℝ) : ℂ)) *
           F ((v + iotaW σ T S z) + iotaW σ T S (s • u)) := by
       funext s
-      rw [heisO_iota h hψ, (omO S T (piW θ T S v)).map_add (f := _), LinearMap.map_smul, smul_eq_mul, (iotaW σ T S).map_add (f := _),
+      rw [heisO_iota h hψ, (omO S T (piW θ T S v)).map_add, LinearMap.map_smul, smul_eq_mul, (iotaW σ T S).map_add,
         add_assoc]
     rw [eline]
     exact hasDerivAt_expLine hH _ _
@@ -82,7 +82,7 @@ theorem contDiff_heisO_iota_fderiv : ∀ (D : D7) (θ : InfFam D) (σ : (D.what�
           ((0 + s * (omO S T (piW θ T S v) u + omO S T z u) : ℝ) : ℂ)) *
           F ((v + iotaW σ T S z) + iotaW σ T S (s • u)) := by
       funext s
-      rw [heisO_iota h hψ, (piW θ T S).map_add (f := _), h.pi_iota, LinearMap.map_smul, smul_eq_mul, (omO S T).map_add (f := _),
+      rw [heisO_iota h hψ, (piW θ T S).map_add, h.pi_iota, LinearMap.map_smul, smul_eq_mul, (omO S T).map_add,
         LinearMap.add_apply, zero_add]
     rw [eF]
     exact hasDerivAt_expLine hH _ _

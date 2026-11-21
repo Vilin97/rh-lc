@@ -41,7 +41,7 @@ open GlobalTheory.SkewLat (scLat pairLat)
 namespace GlobalTheory.BigNZ.LocalPlaceUnderMembership
 
 theorem under_locPl_mem : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T} (_hL : L.Is μ₀) (t : T)
-    (i j : Fin D.R.m) (B : Base D.host.F D.host.E) (X : Chars D.host.F D.host.E) (a a' : ℕ),
+    (i j : Fin D.R.m) (B : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (X : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chars D.host.F D.host.E) (a a' : ℕ),
     X.α = alpha G t i j → X.β = beta G i j → X.IsGood B a a' →
     ∀ w ∈ locPl G t, w.under (𝓞 D.host.F) ∈ X.T := by
   classical

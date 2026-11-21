@@ -42,7 +42,18 @@ theorem formula_trans (D : DegPre R) {r : ℕ} (W : Matrix (Fin r) (Fin r) ℤ) 
   let H : ((TK R).left ⟶ D.P.A.left) → ((TK R).left.presheaf.stalk z)ˣ := fun ψ => gm ψ z _ (D.P.L.g (J ψ) (J₀ ψ))
   let F : Fin r → Fin r → ((TK R).left.presheaf.stalk z)ˣ := fun i j =>
     ∏ a, H (lamPts (toUnit (TK R) ≫ D.c (y i)) (toUnit (TK R) ≫ D.c (y j)) a) ^ Oε a
-  have h₁ := gm_isGen hw x.left z _ _ k k₀ (hJ.mem (tensφ pr) x.left) (hJ₀.mem (tensφ pr) x.left) hk hk₀
+  have h₁ : gm x.left z _ (w.s (fun a => J (x.left ≫ tensφ pr a), k)) =
+      gm x.left z _ ((LB.LinComb D.P.L (tensφ pr) (tensε W)).g
+        (fun a => J (x.left ≫ tensφ pr a)) (fun a => J₀ (x.left ≫ tensφ pr a))) *
+      (gm x.left z _ (L'.g k k₀))⁻¹ *
+      gm x.left z _ (w.s (fun a => J₀ (x.left ≫ tensφ pr a), k₀)) := by
+    have hm : x.left z ∈ (LB.LinComb D.P.L (tensφ pr) (tensε W)).U (fun a => J (x.left ≫ tensφ pr a)) ⊓ L'.U k ⊓
+        ((LB.LinComb D.P.L (tensφ pr) (tensε W)).U (fun a => J₀ (x.left ≫ tensφ pr a)) ⊓ L'.U k₀) :=
+      ⟨⟨hJ.mem (tensφ pr) x.left, hk⟩, hJ₀.mem (tensφ pr) x.left, hk₀⟩
+    have e := congrArg (gm x.left z _) (hw (fun a => J (x.left ≫ tensφ pr a), k)
+      (fun a => J₀ (x.left ≫ tensφ pr a), k₀))
+    exact (gm_res x.left z _ hm _).symm.trans (e.trans ((map_mul _ _ _).trans
+      (congrArg₂ (· * ·) (gm_div L' _ x.left z _ _ hm) (gm_res x.left z _ hm _))))
   have h₂ : gm x.left z _ ((LB.LinComb D.P.L (tensφ pr) (tensε W)).g (fun a => J (x.left ≫ tensφ pr a))
       (fun a => J₀ (x.left ≫ tensφ pr a))) = ∏ i, ∏ j, F i j ^ W i j := by
     refine (gm_linComb D.P.L (tensφ pr) (tensε W) x.left z _ _ (hJ.mem (tensφ pr) x.left) (hJ₀.mem (tensφ pr) x.left)).trans ?_
@@ -65,7 +76,7 @@ theorem formula_trans (D : DegPre R) {r : ℕ} (W : Matrix (Fin r) (Fin r) ℤ) 
     fin_cases a <;> rfl
   refine (congrArg₂ (· * ·) (h₁.trans (congrArg (· * _ * _) h₂)) (Finset.prod_congr rfl fun i _ =>
     Finset.prod_congr rfl fun j _ => congrArg (· ^ W i j) (h₃ i j))).trans ?_
-  simp only [mul_zpow, inv_zpow, Finset.prod_mul_distrib, Finset.prod_inv_distrib, gv]
+  simp only [mul_zpow, inv_zpow, Finset.prod_mul_distrib, Finset.prod_inv_distrib]
   apply Additive.ofMul.injective
   simp only [ofMul_mul, ofMul_inv]
   abel

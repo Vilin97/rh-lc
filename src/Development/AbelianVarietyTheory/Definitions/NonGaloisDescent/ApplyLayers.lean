@@ -232,7 +232,7 @@ theorem lev_eq_evL (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) (a : LetA O n)
 theorem evL_X (W : LocWach PD L O v n) (i : ZMod n) {ζ : L} (h : ∃ j : ℕ, IsPrimitiveRoot ζ (PD.p ^ j)) :
     evL W i ζ X = C ζ * exp L - 1 := by
   obtain ⟨E, h1, h2, h3⟩ := W.lev_π i ζ h
-  have : E = exp L := ode_unique 1 (by simpa using h2) (by simpa using derivative_exp L) (by simpa using h1)
+  have : E = exp L := PowerSeries.exp_unique_of_derivative_eq_self (by simpa using h2) (by simpa using h1)
   rw [← this, ← h3, add_sub_cancel_left]
   rfl
 
@@ -280,6 +280,7 @@ theorem levLaws : LevLaws (H.W K s LL h) := by
 
 theorem laws : Laws H F h := by
   have : FiniteDimensional ℚ_[l] ↥LL.1 := LL.2
+  set_option synthInstance.maxHeartbeats 200000 in
   exact ⟨levLaws H h, ⟨fun e => GlobalTheory.TorsionBoundCompare.ioE_φ _ Subtype.val_injective e,
     fun g e => GlobalTheory.TorsionBoundCompare.ioE_γ _ Subtype.val_injective g e⟩,
     GlobalTheory.TrivCrys.isCrys_lat_of_trivial _ (H.W K s LL h).one_triv⟩

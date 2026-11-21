@@ -104,10 +104,10 @@ def omRe (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)) :
   map_one' := by
     ext f x
     show (reFEquiv S T b) ((om (reGrp S b 1, 1)) ((reFEquiv S T b).symm f)) x = f x
-    rw [map_one, Prod.mk_one_one, map_one, Module.End.one_apply, LinearEquiv.apply_symm_apply]
+    rw [map_one, Prod.mk_one_one, map_one, one_apply_eq_self, LinearEquiv.apply_symm_apply]
   map_mul' p q := by
     ext f x
-    simp [Prod.fst_mul, Prod.snd_mul, ← Prod.mk_mul_mk, map_mul, Module.End.mul_apply]
+    simp [Prod.fst_mul, Prod.snd_mul, ← Prod.mk_mul_mk, map_mul]
 
 theorem omRe_apply (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)) (h : GA D (reS S b)) (g : GA D T)
     (f' : WO (reS S b) T → ℂ) :
@@ -122,24 +122,25 @@ theorem reF_symm (f' : WO (reS S b) T → ℂ) : reF S T b ((reFEquiv S T b).sym
   (reFEquiv S T b).apply_symm_apply f'
 
 theorem isWeak_omRe (ψ : AddChar (AF D.host.F) ℂ) (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ))
-    (hom : IsWeak ψ S T om) : IsWeak ψ (reS S b) T (omRe S T b om) where
-  om_pres p f' hf' := by
+    (hom : IsWeak ψ S T om) : IsWeak ψ (reS S b) T (omRe S T b om) := by
+  constructor
+  · intro p f' hf'
     obtain ⟨h, g⟩ := p
     rw [omRe_apply]
     refine isThetaFunO_reF S T b ψ _ (hom.om_pres _ _ (isThetaFunO_of_reF S T b ψ _ ?_))
     rw [reF_symm]; exact hf'
-  om_heis h g w₀ f' hf' := by
+  · intro h g w₀ f' hf'
     set f := (reFEquiv S T b).symm f' with hf
     have hf1 : f' = reF S T b f := (reF_symm S T b f').symm
     have hth : IsThetaFunO ψ S T f := isThetaFunO_of_reF S T b ψ _ (by rw [← hf1]; exact hf')
     rw [hf1, heisO_reF, omRe_reF, omRe_reF, hom.om_heis _ _ _ _ hth, ← reW_actO, heisO_reF]
-  om_aut γ hγ γ' hγ' f' hf' := by
+  · intro γ hγ γ' hγ' f' hf'
     have hth : IsThetaFunO ψ S T ((reFEquiv S T b).symm f') :=
       isThetaFunO_of_reF S T b ψ _ (by rw [reF_symm]; exact hf')
     rw [omRe_apply, reF_apply, reW_zero, hom.om_aut _ (reGrp_mem_GQ S b γ hγ) _ hγ' _ hth]
     conv_rhs => rw [← reF_symm S T b f']
     exact (reF_zero b _).symm
-  om_unit μ 𝓕 hμ h𝓕 p f' hf' := by
+  · intro μ 𝓕 hμ h𝓕 p f' hf'
     obtain ⟨h, g⟩ := p
     have hth : IsThetaFunO ψ S T ((reFEquiv S T b).symm f') :=
       isThetaFunO_of_reF S T b ψ _ (by rw [reF_symm]; exact hf')

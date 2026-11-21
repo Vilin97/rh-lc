@@ -25,8 +25,9 @@ theorem two_mul_sub_one_sq_of_ringHom (τ : OK H →+* ℂ) : (2 * τ (wK H) - 1
     rw [← e] at this
     have e2 : ((2 : OK H) : 𝓞 E) = 2 := rfl
     simpa [wK, e2] using this
-  have := congrArg τ h
-  simpa [map_ofNat] using this
+  have := congrArg (fun x : OK H => τ x) h
+  set_option synthInstance.maxHeartbeats 200000 in
+    simpa only [map_pow, map_sub, map_mul, map_ofNat, map_neg, map_natCast, map_intCast, map_one] using this
 
 theorem exists_hermitianPairing_eq_im_mul_pureType {D : Datum H} {g : ℕ} {ty : Fin g → (E →+* ℂ)} {Pe : D.La →+ (Fin g → ℂ)}
     (hP : IsPeriod D ty Pe) {ω : ℂ} {x : D.La} (hx : x ∈ PureType.lat hP (2 * ω - 1)) (h0 : x ≠ 0) :

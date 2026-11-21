@@ -44,12 +44,12 @@ theorem form_eq_pi_mul_hermForm : ThetaUnifAV → Out.Laws → ∀ (K : Type) [F
   have key : ∀ (c : Fin F.P₀.g → K) (w : epsR K ⟶ F.P₀.A) (v : epsR ℂ ⟶ Q.A) (W : Fin Q.g → ℂ), IsLieComb c F.v w →
       IsVecOver s ψ w v → u.IsDiff W v → W = ∑ i, s (c i) • X i := fun c w v W hw hv hW => by
     have h1 := (lieComb_baseChange K ℂ s _ _ ψ hQ.2.1 _ F.v w c x v hx hw).1 hv
-    have h2 := UnifDifferential.isDiff_prod u (fun i => s (c i) • X i) _
-      (fun i => Chart.isTan_scale (s (c i)) ((Chart.isTan_iff _).2 (hxt i)))
-      (fun i => UnifDifferential.isDiff_scale u (hX i) (s (c i)))
     have h3 : IsTangent v := by
-      rw [(Chart.isLieComb_iff _ x v).1 h1]
-      exact (Chart.isTan_iff _).1 h2.1
+      rw [(Chart.isLieComb_iff _ x v).1 h1, ← Chart.isTan_iff]
+      refine List.prod_induction Chart.IsTan (fun a b ha hb => Chart.isTan_mul ha hb) Chart.isTan_one ?_
+      intro a ha
+      obtain ⟨i, rfl⟩ := (List.mem_ofFn' _ _).1 ha
+      exact Chart.isTan_scale (s (c i)) ((Chart.isTan_iff _).2 (hxt i))
     exact (t1 v h3).unique hW (UnifDifferential.isDiff_of_isLieComb _ _ _ _ u X x _ v hxt hX h1)
   rw [key c w v W hw hv hW, key c' w' v' W' hw' hv' hW', hermForm_sum_sum, form_eq_sum_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_

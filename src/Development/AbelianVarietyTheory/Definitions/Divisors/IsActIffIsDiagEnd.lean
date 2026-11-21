@@ -163,7 +163,7 @@ theorem exists_unif_good {V : Type} [CommRing V] [IsDomain V] [IsLocalRing V] (h
   have hN := hV.1
   have hC := hV.2.2.1
   obtain ⟨D, rfl, hX⟩ := SelfUnif.exists_degData firstFiveLaws.1.cube (maximalIdeal V) P
-  let A := StrictPull.polPull D.toPre.P (jK V)
+  let A := GlobalTheory.StrictPull.polPull D.toPre.P (jK V)
   have r : LBIso A.L (D.toPre.P.L.pull (pullback.fst D.toPre.P.A.hom (jK V))) := PolBaseChange.lbIso_refl A.isLB
   have hm : IsMonHom (Iso.refl A.A).hom := inferInstanceAs (IsMonHom (𝟙 A.A))
   have hw : LBIso (A.L.pull (Iso.refl A.A).hom.left) (D.toPre.P.L.pull (pullback.fst D.toPre.P.A.hom (jK V))) := by
@@ -186,7 +186,7 @@ theorem UMem.nonempty_of_regular {X₁ : Setup F W i} {z₁ : X₁.M.Z} {act : M
     rwa [Scheme.range_fromSpecStalk] at this
   let yV : X₁.S.R →+* V := (RatModel.valLoc (spMap ev ≫ X₁.M.Z.fromSpecStalk z₁) z₁ (sp _)).comp
     (Subalgebra.inclusion hz).toRingHom
-  let P := StrictPull.polPull X₁.ρ.P (spMap yV)
+  let P := GlobalTheory.StrictPull.polPull X₁.ρ.P (spMap yV)
   letI := P.isAb.comm
   obtain ⟨D, A, U, ψ, hX, hψ, hL, hE⟩ := exists_unif_good hV P
   have r : LBIso P.L (X₁.ρ.P.L.pull (pullback.fst X₁.ρ.P.A.hom (spMap yV))) := PolBaseChange.lbIso_refl P.isLB

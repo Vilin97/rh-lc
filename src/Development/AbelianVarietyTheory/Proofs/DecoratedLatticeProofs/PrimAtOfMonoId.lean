@@ -34,7 +34,11 @@ theorem pX_colMul {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (i : Fin ρ
     funext k
     simp only [Matrix.mulVec, dotProduct, colMul, Matrix.mul_apply, Finset.mul_sum]
     exact Finset.sum_congr rfl fun _ _ => by ring
-  rw [e, d.pX_jX, colMul, Matrix.one_apply_eq, mul_one]
+  have hp : d.pX * d.jX = 1 := by
+    have h := congrArg rat d.e'e
+    rw [rat_one] at h
+    simpa only [HypDec.pX, HypDec.qX, HypDec.jX, rat, Matrix.map_mul] using h
+  rw [e, hp, colMul, Matrix.one_apply_eq, mul_one]
 
 theorem idAt_of_colMul {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) {L : Lat S} {P : Pl D → Prop} {i : Fin ρ} {a : AE D}
     (h : colMul d.jX i a ∈ latV S L P) : a ∈ idAt D P := by

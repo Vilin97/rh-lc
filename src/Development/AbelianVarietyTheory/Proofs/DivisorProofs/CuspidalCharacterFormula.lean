@@ -10,7 +10,7 @@ noncomputable section
 
 namespace GlobalTheory.GoodCharsCompare
 
-open Polynomial Formalism.CyclotomicNorms Formalism.L2.DIV GlobalTheory.FinGL GlobalTheory.IndefiniteRowSideFullHecke.CuspValueComparison GlobalTheory.IndefiniteRowSideFullHecke.TameCharacterTorusValues
+open Polynomial Formalism.CyclotomicNorms Formalism.L2.DIV GlobalTheory.FinGL GlobalTheory.IndefiniteRowSideFullHecke.CuspValueComparison
 
 variable {g : ℕ} [Fact g.Prime]
 
@@ -109,7 +109,9 @@ theorem _root_.GlobalTheory.GoodCharsCompare.eq_minpoly {φ : (ZMod g)[X]} (hm :
   minpoly.eq_of_irreducible_of_monic hi
     ((_root_.GlobalTheory.GoodCharsCompare.mem_rootsBar hm.ne_zero).mp hx) hm
 
-def Ext (ι : (Fbar g)ˣ →* ℂˣ) (ω : Fbar g →*₀ ℂ) : Prop := ∀ u : (Fbar g)ˣ, ((ι u : ℂˣ) : ℂ) = ω u
+def Ext (ι : (_root_.Formalism.CyclotomicNorms.Fbar g)ˣ →* ℂˣ)
+    (ω : _root_.Formalism.CyclotomicNorms.Fbar g →*₀ ℂ) : Prop :=
+  ∀ u : (_root_.Formalism.CyclotomicNorms.Fbar g)ˣ, ((ι u : ℂˣ) : ℂ) = ω u
 
 open Polynomial in
 variable {g : ℕ} [Fact g.Prime] in

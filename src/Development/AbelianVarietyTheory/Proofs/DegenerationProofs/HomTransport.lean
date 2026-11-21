@@ -14,7 +14,7 @@ variable {O O' : Type} [CommRing O] [CommRing O'] {f : O →+* O'} {N : NumD O} 
 
 theorem cubN_eq (k : ℕ) (m x : N.A) :
     cubN N'.θ k 1 (I.φ m) (I.φ x) * I.h (m ^ k) * I.h x * I.h (m * x) ^ k =
-      F (cubN N.θ k 1 m x) * I.h (m ^ k * x) * I.h m ^ k * I.h x ^ k := by
+      Units.map f.toMonoidHom (cubN N.θ k 1 m x) * I.h (m ^ k * x) * I.h m ^ k * I.h x ^ k := by
   induction k with
   | zero => simp [cubN, I.h_one]
   | succ k ih =>
@@ -29,7 +29,7 @@ theorem cubN_eq (k : ℕ) (m x : N.A) :
     linear_combination (norm := abel) a + ih
 
 theorem dbl_eq (x : N.A) :
-    dbl N'.θ N'.σ (I.φ x) * I.h (x * x) = F (dbl N.θ N.σ x) * I.h x ^ 4 := by
+    dbl N'.θ N'.σ (I.φ x) * I.h (x * x) = Units.map f.toMonoidHom (dbl N.θ N.σ x) * I.h x ^ 4 := by
   have a := I.θ_eq x x⁻¹ x
   have b := I.σ_eq x
   rw [mul_inv_cancel, inv_mul_cancel, I.h_one, one_mul, map_inv, mul_one, mul_one] at a
@@ -41,7 +41,8 @@ theorem dbl_eq (x : N.A) :
   linear_combination (norm := abel) a - b
 
 theorem mulq_eq (n : ℕ) (x : N.A) :
-    mulq N'.θ N'.σ n (I.φ x) * I.h x ^ (n ^ 2) = F (mulq N.θ N.σ n x) * I.h (x ^ n) := by
+    mulq N'.θ N'.σ n (I.φ x) * I.h x ^ (n ^ 2) =
+      Units.map f.toMonoidHom (mulq N.θ N.σ n x) * I.h (x ^ n) := by
   induction n with
   | zero => simp [mulq, I.h_one]
   | succ n ih =>
@@ -57,7 +58,8 @@ theorem mulq_eq (n : ℕ) (x : N.A) :
     linear_combination (norm := module) a + ih - n • b
 
 def img (g : N.Gt) : N'.Gt :=
-  ⟨I.φ g.b, fun χ => F (g.s (I.e.symm χ)) * I.h (N.c (I.e.symm χ)) * I.h g.b / I.h (N.c (I.e.symm χ) * g.b),
+  ⟨I.φ g.b, fun χ => Units.map f.toMonoidHom (g.s (I.e.symm χ)) * I.h (N.c (I.e.symm χ)) * I.h g.b /
+    I.h (N.c (I.e.symm χ) * g.b),
     fun χ χ' => by
       obtain ⟨χ, rfl⟩ := I.e.surjective χ
       obtain ⟨χ', rfl⟩ := I.e.surjective χ'
@@ -65,7 +67,7 @@ def img (g : N.Gt) : N'.Gt :=
       simp only [AddEquiv.symm_apply_apply]
       rw [I.c_eq, I.c_eq, N.c_add]
       have a := I.θ_eq (N.c χ) (N.c χ') g.b
-      have b := congrArg F (g.mult χ χ')
+      have b := congrArg (Units.map f.toMonoidHom) (g.mult χ χ')
       simp only [map_mul] at b
       apply Additive.ofMul.injective
       replace a := congrArg Additive.ofMul a
@@ -129,7 +131,7 @@ private theorem cb {k : ℕ} (p : N.QT k) : N.c p.1.1.toAdd = p.1.2.b ^ k := by
 
 theorem s_cubN_eq {k : ℕ} (q : N.QT k) {g : N.Gt} {g' : N'.Gt} (hg : I.Rel g g') :
     g'.s (I.e q.1.1.toAdd) * cubN N'.θ k 1 (I.φ q.1.2.b) (I.φ g.b) * I.h (q.1.2.b * g.b) ^ k =
-      F (g.s q.1.1.toAdd * cubN N.θ k 1 q.1.2.b g.b) * I.h q.1.2.b ^ k * I.h g.b ^ k := by
+      Units.map f.toMonoidHom (g.s q.1.1.toAdd * cubN N.θ k 1 q.1.2.b g.b) * I.h q.1.2.b ^ k * I.h g.b ^ k := by
   have a := hg.2 q.1.1.toAdd
   have b := I.cubN_eq k q.1.2.b g.b
   rw [cb] at a
@@ -142,7 +144,7 @@ theorem s_cubN_eq {k : ℕ} (q : N.QT k) {g : N.Gt} {g' : N'.Gt} (hg : I.Rel g g
 
 theorem wp_eq {k : ℕ} (p q : N.QT k) (p' q' : N'.QT k) (ep : p'.1.1.toAdd = I.e p.1.1.toAdd)
     (hp : I.Rel p.1.2 p'.1.2) (eq : q'.1.1.toAdd = I.e q.1.1.toAdd) (hq : I.Rel q.1.2 q'.1.2) :
-    N'.wp p' q' = F (N.wp p q) := by
+    N'.wp p' q' = Units.map f.toMonoidHom (N.wp p q) := by
   have a := I.s_cubN_eq q hp
   have b := I.s_cubN_eq p hq
   rw [mul_comm p.1.2.b] at b
@@ -154,7 +156,7 @@ theorem wp_eq {k : ℕ} (p q : N.QT k) (p' q' : N'.QT k) (ep : p'.1.1.toAdd = I.
   linear_combination (norm := abel) a - b
 
 theorem wQ_eq {k : ℕ} (hk : Odd k) (p : N.QT k) (p' : N'.QT k) (ep : p'.1.1.toAdd = I.e p.1.1.toAdd)
-    (hp : I.Rel p.1.2 p'.1.2) : N'.wQ p' * I.h p.1.2.b ^ k = F (N.wQ p) := by
+    (hp : I.Rel p.1.2 p'.1.2) : N'.wQ p' * I.h p.1.2.b ^ k = Units.map f.toMonoidHom (N.wQ p) := by
   have a := I.s_cubN_eq p hp
   have b := I.dbl_eq p.1.2.b
   have c := I.mulq_eq k p.1.2.b
@@ -177,7 +179,8 @@ theorem Rel.vt_eq {g : N.Gt} {g' : N'.Gt} (hg : I.Rel g g') (χ : N.X) :
     N'.vt g' (I.e χ) = (I.lam * I.h g.b : O'ˣ) * f (N.vt g χ) := by
   have a := hg.2 χ
   have d := I.ψ_eq χ
-  have key : N'.ψ (I.e χ) * g'.s (I.e χ) * (I.lam * I.h (N.c χ * g.b)) = I.lam * I.h g.b * F (N.ψ χ * g.s χ) := by
+  have key : N'.ψ (I.e χ) * g'.s (I.e χ) * (I.lam * I.h (N.c χ * g.b)) =
+      I.lam * I.h g.b * Units.map f.toMonoidHom (N.ψ χ * g.s χ) := by
     rw [map_mul]
     apply Additive.ofMul.injective
     replace a := congrArg Additive.ofMul a
@@ -193,7 +196,7 @@ theorem txT_eq {m : ℕ} (hm : Odd m) (p : N.QT (m ^ 2)) (p' : N'.QT (m ^ 2)) (e
   have a := I.wQ_eq hm.pow p p' ep hp
   have b := I.mulq_eq m p.1.2.b
   have key : N'.wQ p' / mulq N'.θ N'.σ m (I.φ p.1.2.b) * (I.lam * I.h (p.1.2.b ^ m)) =
-      I.lam * F (N.wQ p / mulq N.θ N.σ m p.1.2.b) := by
+      I.lam * Units.map f.toMonoidHom (N.wQ p / mulq N.θ N.σ m p.1.2.b) := by
     rw [map_div]
     apply Additive.ofMul.injective
     replace a := congrArg Additive.ofMul a
@@ -213,9 +216,9 @@ theorem evT_eq {m : ℕ} (hm : Odd m) (p : N.QT (m ^ 2)) (p' : N'.QT (m ^ 2)) (e
   rw [mul_comm p.1.2.b] at c
   have key : h'.s (I.e p.1.1.toAdd) * cubN N'.θ (m ^ 2) 1 (I.φ p.1.2.b) (I.φ h.b) * N'.wQ p' /
       mulq N'.θ N'.σ m (I.φ (h.b * p.1.2.b)) * (I.lam * I.h ((h.b * p.1.2.b) ^ m)) =
-      I.lam * I.h h.b ^ (m ^ 2) * F (h.s p.1.1.toAdd * cubN N.θ (m ^ 2) 1 p.1.2.b h.b * N.wQ p /
+      I.lam * I.h h.b ^ (m ^ 2) * Units.map f.toMonoidHom (h.s p.1.1.toAdd * cubN N.θ (m ^ 2) 1 p.1.2.b h.b * N.wQ p /
         mulq N.θ N.σ m (h.b * p.1.2.b)) := by
-    rw [map_div, map_mul F]
+    rw [map_div, map_mul (Units.map f.toMonoidHom)]
     apply Additive.ofMul.injective
     replace a := congrArg Additive.ofMul a
     replace b := congrArg Additive.ofMul b

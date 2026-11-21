@@ -152,6 +152,9 @@ theorem exists_isHomFamily (T : PAT H (Sp ℂ)) {g : ℕ} {ty : Fin g → (E →
   have hlin : ∀ (s : 𝓞 E) a, φ (s • a) = φ a ≫ T.t.act.act s := fun s a => ext _ _ fun z => by
     rw [← Category.assoc, hφz, hφz, ← hact]
     congr 2
+    ext k
+    change z * Pe (s • (a : D.La)) k = ty k (s : E) * (z * Pe a k)
+    rw [hP.1]
     ring
   refine ⟨φ, fun v hv => ⟨hφ, fun a b => ext _ _ fun z => ?_, hlin, fun a => ?_, fun a _ => ?_⟩, hφz⟩
   · rw [MonObj.comp_mul, hφz, hφz, hφz, ← u.ex_add, ← map_add (f := _), ← smul_add, ← map_add (f := _)]

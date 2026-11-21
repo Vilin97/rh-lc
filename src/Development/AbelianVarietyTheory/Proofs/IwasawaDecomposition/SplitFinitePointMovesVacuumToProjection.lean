@@ -64,13 +64,8 @@ theorem exists_selfDualC (hS : S.gram = 1) {Λ : Lt D.host.E S.rank} (h : Λ ∈
     · intro H w hw
       have := H (star w) ((h1' _).2 (by rwa [star_star]))
       rwa [star_star] at this
-  refine ⟨ΛS, ⟨⟨hfg, ?_⟩, key⟩, fun v => by rw [h1', star_star]⟩
-  rw [eq_top_iff]
-  intro x _
-  obtain ⟨a, ha, h2⟩ := GlobalTheory.AdLat.cap_exists_denom Λ (span_of_vset h) (star x)
-  have h3 : a • x ∈ ΛS := (h1' _).2 (by rwa [star_nsmul])
-  rw [← Nat.cast_smul_eq_nsmul D.host.E] at h3
-  exact (Submodule.smul_mem_iff _ (Nat.cast_ne_zero.2 ha.ne')).1 (Submodule.subset_span h3)
+  exact ⟨ΛS, ⟨Submodule.IsLattice.of_fg D.host.E hfg, key⟩,
+    fun v => by rw [h1', star_star]⟩
 
 open scoped ComplexOrder in
 theorem cartan_one (hS : S.gram = 1) (τ : D.what₂.Tau) : IsCartanInv (gramAt D S τ) 1 := by
@@ -244,7 +239,7 @@ theorem mov_split {V : HSp D} {e : AE D} (he : IsSplitIdem D e) {h h' : GA D V}
     have := congrArg (fun a => finPart D (cA D a)) (congrFun (congrFun hM i) j)
     simp only [Matrix.smul_apply, smul_eq_mul, map_mul, hs] at this
     exact this
-  refine exists_split (F := D.host.F) ⟨v0.1, span_of_vset v0⟩ ⟨v'.1, span_of_vset v'⟩ ⟨v1.1, span_of_vset v1⟩
+  refine exists_split (F := D.host.F) (Submodule.IsLattice.of_fg D.host.E v0.1) (Submodule.IsLattice.of_fg D.host.E v'.1) (Submodule.IsLattice.of_fg D.host.E v1.1)
     (z := finPart D t • toAf v) ?_ (hst _ _ hv') ?_
   · rw [e0, key t h' 1 hc (by rw [h1, AdelicLatMove.mt_one]), fmtC_one, Matrix.one_mulVec]
     exact hst _ _ hu

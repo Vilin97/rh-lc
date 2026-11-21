@@ -144,7 +144,7 @@ theorem smul_of_rt {M : Type} [AddCommGroup M] [Module (𝓞 E) M] {g : ℕ} (ω
     rw [this, Int.cast_smul_eq_zsmul]
   | add y z hy hz ihy ihz =>
     have e1 : (⟨y + z, Subalgebra.add_mem _ hy hz⟩ : OK H) = ⟨y, hy⟩ + ⟨z, hz⟩ := rfl
-    rw [e1, map_add (f := _), add_smul, hadd, ihy, ihz, add_smul]
+    rw [e1, τ.map_add, add_smul, hadd, ihy, ihz, add_smul]
   | mul y z hy hz ihy ihz =>
     have e1 : (⟨y * z, Subalgebra.mul_mem _ hy hz⟩ : OK H) = ⟨y, hy⟩ * ⟨z, hz⟩ := rfl
     rw [e1, map_mul, mul_smul, ihy, ihz, smul_smul]
@@ -156,7 +156,7 @@ theorem char_sq (ω : ℂ) (τ : OK H →+* ℂ) (hτ : τ (wK H) = ω) : (2 * �
     push_cast [hw]
     linear_combination (2 * H.w0 - 1 + H.rt) * H.two_weight_eq_one_add_root + H.rt_sq
   have := congrArg τ key
-  rw [map_pow, map_sub, map_add (f := _), map_one, map_neg, map_natCast, hτ] at this
+  rw [τ.map_pow, τ.map_sub, τ.map_add, τ.map_one, τ.map_neg, map_natCast, hτ] at this
   linear_combination this
 
 theorem isFam_of_isHomFamily : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (ω : ℂ) (C : Ell H ℂ ω) (D : Datum H) (ε : ℤˣ) (h : D.La → D.La → OK H) (T : PAT H (Sp ℂ)) (L : Submodule (𝓞 E) D.La) (ψ : L → (C.P.A ⟶ T.t.G)), IsKForm D ε h → (∀ x ∈ L, x ≠ 0 → 0 < (ε : ℤ) * D.EF (H.w0 • x) x) → PureType.IsHomFamily T.t C.P.A C.P.L C.v L (2 * ω - 1) Set.univ ψ → IsFam C T h L ψ := by
@@ -284,7 +284,7 @@ theorem isFam_of_isHomFamily : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Fiel
       rfl
     have hh : τ₀ (h a b) = (((ε : ℤ) * (D.EF (H.w0 • (a : D.La)) b - D.EF a b) : ℤ) : ℂ) +
         (((ε : ℤ) * D.EF a b : ℤ) : ℂ) * ω := by
-      rw [e, map_add (f := _), map_mul, map_intCast, map_intCast, hτ₀]
+      rw [e, τ₀.map_add, τ₀.map_mul, map_intCast, map_intCast, hτ₀]
     rw [hFs, hFs, map_smul, hGw, LinearMap.id_apply, smul_smul, GlobalTheory.EigenNorm.hermForm_smul_left,
       GlobalTheory.EigenNorm.hermForm_smul_right, GlobalTheory.EigenNorm.hermForm_smul_left, GlobalTheory.EigenNorm.hermForm_smul_right,
       hpol a b, hh]

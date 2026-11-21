@@ -22,7 +22,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThre
 
 open Matrix IsLocalRing ReciprocityTheory.Gal UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Alg UpperTheory.V.UnitaryThreeInertia
 
-private theorem conjBy_one' {R : Type} [CommRing R] {D : Type} [Group D] (r : D →* GG 3 R) :
+private theorem conjBy_one' {R : Type} [CommRing R] {D : Type} [Group D] (r : D →* GG (m := 3) (R := R)) :
     conjBy 1 r = r := by
   apply MonoidHom.ext; intro g; simp [conjBy, GG.ofGL]
 
@@ -31,11 +31,11 @@ theorem UpperTheory.V.UnitaryThreeInertia.abstract_count :
       [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [Algebra O (PadicAlgCl l)] [IsScalarTower ℤ_[l] O (PadicAlgCl l)] [FaithfulSMul O (PadicAlgCl l)]
       {G Γ ι : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
       [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] [TotallyDisconnectedSpace Γ] [Finite ι] (F : Frame O G Γ ι), F.Ok →
-    F.LocVan → F.Count → F.VanE → F.Cl1 → F.Xpp → ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG 3 R), F.IsUniv g₁ u →
-    Module.Finite O (wpart O u 0) → ∀ (φ : Γ) (Good : (Γ →* GG 3 (PadicAlgCl l)) → Prop),
-      (∀ (ξ : Sring O u →ₐ[O] (PadicAlgCl l)) (r : Γ →* GG 3 (PadicAlgCl l)), IsPtHom u ξ r → TypeI F.η r → Good r) →
+    F.LocVan → F.Count → F.VanE → F.Cl1 → F.Xpp → ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG (m := 3) (R := R)), F.IsUniv g₁ u →
+    Module.Finite O (wpart O u 0) → ∀ (φ : Γ) (Good : (Γ →* GG (m := 3) (R := PadicAlgCl l)) → Prop),
+      (∀ (ξ : Sring O u →ₐ[O] (PadicAlgCl l)) (r : Γ →* GG (m := 3) (R := PadicAlgCl l)), IsPtHom u ξ r → TypeI F.η r → Good r) →
       (∀ r, F.IsCharZeroPt g₁ r → TypeI F.η r → Good r → F.Rigid r ∧ (r φ).mat.trace ≠ (F.rz (PadicAlgCl l) φ).mat.trace) →
-      ∃ (n : ℕ) (r : Fin n → (Γ →* GG 3 (PadicAlgCl l))) (V : ℕ), (∀ i, F.IsCharZeroPt g₁ (r i) ∧ TypeI F.η (r i) ∧ Good (r i)) ∧
+      ∃ (n : ℕ) (r : Fin n → (Γ →* GG (m := 3) (R := PadicAlgCl l))) (V : ℕ), (∀ i, F.IsCharZeroPt g₁ (r i) ∧ TypeI F.η (r i) ∧ Good (r i)) ∧
         (∀ i i', MatIso F.η.ker (mats (r i)) (mats (r i')) → i = i') ∧ (∀ a : O, a ≠ 0 → F.shaLen a ≤ V) ∧
         (V : ℝ) ≤ 2 * (Base.eO l O).toNat * ∑ i, vl1 l ((r i φ).mat.trace - (F.rz (PadicAlgCl l) φ).mat.trace) := by
   intro hM hM' l _ O _ _ _ _ _ _ _ _ _ _ _ G Γ ι _ _ _ _ _ _ _ _ _ _ _ _ _ F hOk hLV hC hVE hCl hX g₁ hm R _ _ _ u hU hfin φ Good hGood hRig

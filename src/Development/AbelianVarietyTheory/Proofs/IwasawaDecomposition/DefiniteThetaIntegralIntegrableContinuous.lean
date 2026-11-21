@@ -31,7 +31,7 @@ theorem continuous_integral_of_cocompact {G H : Type*} [TopologicalSpace G] [Loc
     GlobalTheory.CocompactIntegrable.integrableOn_of_cocompact Γ μ 𝓕 C h𝓕 hC hcov _ continuous_const
       (fun _ _ _ => rfl)
   have hconst' : Integrable (fun _ : H => M) (μ.restrict 𝓕) := by
-    simpa using hconst.re
+    exact hconst.re
   refine continuousAt_of_dominated (bound := fun _ => M) ?_ ?_ hconst' ?_
   · refine Filter.Eventually.of_forall fun g => ?_
     exact (hK.comp (Continuous.prodMk_right g)).aestronglyMeasurable

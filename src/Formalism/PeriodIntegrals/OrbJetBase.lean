@@ -155,7 +155,8 @@ def AdmB : Prop :=
     L.B0 ep be ∧ B1 L.l L.d be ∧ B2 L.l L.d be ∧ B3 L.l L.d be ∧ B4 L.l L.d be
 
 def HidaSetting (a : ℝ) : Prop :=
-  (L.l : ℝ) ≤ a ∧ (∀ s, (L.size s : ℝ) ≤ a) ∧ 2 * Real.logb L.l a + 2 ≤ (L.N0 : ℝ) - 1
+  (L.l : ℝ) ≤ a ∧ (∀ s, ((L.nu s).cells.card : ℝ) ≤ a) ∧
+    2 * Real.logb L.l a + 2 ≤ (L.N0 : ℝ) - 1
 
 end Loc
 

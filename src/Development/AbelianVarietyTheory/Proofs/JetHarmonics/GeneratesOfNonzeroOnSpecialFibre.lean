@@ -578,11 +578,9 @@ theorem integral_baseChange (T T' : CDVR) (io : c.F →+* T.Fr) (io' : c.F →+*
   obtain ⟨G, t, m1, m2, ⟨ub, h₁, h₂, h₃, h₄⟩, θ, hθ, w1, w2, σ, s1, θ2, a1, a2, a3, a4, a5, a6⟩ := hy
   obtain ⟨hx, hu, pm, hs, hb, ha⟩ := hm
   obtain ⟨G', ⟨m⟩⟩ : ∃ G' : SAB H (Sp T'.V), Nonempty (SABMap G' G (spMap f)) := by
-    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (spMap f) G
-    exact ⟨_, ⟨m⟩⟩
+    exact GlobalTheory.ModFam.exists_sabPull (spMap f) G
   obtain ⟨t', ⟨n⟩⟩ : ∃ t' : SAB H (Sp T'.Fr), Nonempty (SABMap t' t (spMap ψ.toRingHom)) := by
-    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (spMap ψ.toRingHom) t
-    exact ⟨_, ⟨m⟩⟩
+    exact GlobalTheory.ModFam.exists_sabPull (spMap ψ.toRingHom) t
   have hι : ψ.toRingHom.comp (algebraMap T.V T.Fr) = (algebraMap T'.V T'.Fr).comp f := RingHom.ext hψ
   have hio : spMap (algebraMap T'.V T'.Fr) ≫ spMap f = spMap ψ.toRingHom ≫ spMap (algebraMap T.V T.Fr) := by
     rw [← sp_comp, ← sp_comp, hι]
@@ -647,8 +645,7 @@ theorem exists_unif_of_split (T T' : CDVR) (f : T.V →+* T'.V) (ψ : T.Fr →+*
   have hio : spMap (algebraMap T'.V T'.Fr) ≫ spMap f = spMap ψ ≫ spMap (algebraMap T.V T.Fr) := by
     rw [← sp_comp, ← sp_comp, hι]
   obtain ⟨tP, ⟨mP⟩⟩ : ∃ tP : SAB H (Sp T'.V), Nonempty (SABMap tP G (spMap f)) := by
-    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (spMap f) G
-    exact ⟨_, ⟨m⟩⟩
+    exact GlobalTheory.ModFam.exists_sabPull (spMap f) G
   obtain ⟨n, -⟩ := sabCancel pullCubCancel E H _ _ _ _ _ _ _ _ m1 m1'
   obtain ⟨w0, r0⟩ := exists_rigIso n
   obtain ⟨w2, r2⟩ := exists_rigIso m2

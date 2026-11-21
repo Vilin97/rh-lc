@@ -95,6 +95,12 @@ theorem map_mem_charTower (hη : Continuous η) {k : ℕ} (σ : Gal(PadicAlgCl p
 
 section CFT
 
+local instance : ValuativeExtension ℚ_[p] (PadicAlgCl p) := by
+  refine ⟨fun {a b} ↦ ?_⟩
+  rw [vle_iff_norm_le, PadicAlgCl.norm_extends, PadicAlgCl.norm_extends,
+    Valuation.Compatible.vle_iff_le (v := Padic.mulValuation),
+    GroundTheory.LocalField.Padic.mulValuation_le_iff_norm_le]
+
 variable (K) [FiniteDimensional ℚ_[p] K]
 
 def artinGal (n : ℕ) : Subgroup Gal(PadicAlgCl p/K) :=
@@ -130,7 +136,7 @@ theorem eq_one_of_mem_fixingSubgroup_maximalAbelianExtension (hη : Continuous �
     (hρ : ρ ∈ (maximalAbelianExtension K (PadicAlgCl p)).fixingSubgroup) : η ρ = 1 := by
   rw [fixingSubgroup_maximalAbelianExtension] at hρ
   have hker : (commutator Gal(PadicAlgCl p/K)).topologicalClosure ≤ η.ker := by
-    refine Subgroup.topologicalClosure_minimal _ (Abelianization.commutator_subset_ker η) ?_
+    refine Subgroup.topologicalClosure_minimal _ (Group.Abelianization.commutator_le_ker η) ?_
     rw [MonoidHom.coe_ker]
     exact isClosed_singleton.preimage hη
   exact hker hρ

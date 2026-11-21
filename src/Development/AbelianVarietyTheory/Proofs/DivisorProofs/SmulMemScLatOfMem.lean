@@ -122,8 +122,8 @@ theorem star_mem_conjSub {E : Type} [Field E] [NumberField E] [StarRing E] {n : 
     {y : Fin n → E} (hy : y ∈ Λ) : star y ∈ GlobalTheory.TripleSpaceW.conjSub Λ := by
   rw [GlobalTheory.TripleSpaceW.mem_conjSub, star_star]; exact hy
 
-theorem smul_ofMaps_inl_mem {t : T} {e : Num G i j} {Bs : Base D.host.F D.host.E} {Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j}
-    {X : Chars D.host.F D.host.E} (h : IsTied t i j e Bs Γ X) (v : Pl D.host.F) {x : HomV G i j} (hx : x ∈ latV G i j) :
+theorem smul_ofMaps_inl_mem {t : T} {e : Num G i j} {Bs : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E} {Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j}
+    {X : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chars D.host.F D.host.E} (h : IsTied t i j e Bs Γ X) (v : Pl D.host.F) {x : HomV G i j} (hx : x ∈ latV G i j) :
     GlobalTheory.LatVac.liftV v 1 • ofMaps e (x, 0) ∈ latAtV Γ.V Γ.W v := by
   refine map_mem_of_closure ((DistribSMul.toAddMonoidHom (Pt G i j) (GlobalTheory.LatVac.liftV v 1)).comp
     ((maps e).symm.toLinearMap.toAddMonoidHom.comp (AddMonoidHom.inl _ _))) ?_ hx
@@ -132,8 +132,8 @@ theorem smul_ofMaps_inl_mem {t : T} {e : Num G i j} {Bs : Base D.host.F D.host.E
     (one_smul_gen_mem _ _ v hα (h.1.ge (star_mem_conjSub hs))
       (h.2.1.ge (pair_mem e (smul_mem_scLat_of_mem ha ht) (zero_mem _))))
 
-theorem smul_ofMaps_inr_mem {t : T} {e : Num G i j} {Bs : Base D.host.F D.host.E} {Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j}
-    {X : Chars D.host.F D.host.E} (h : IsTied t i j e Bs Γ X) (v : Pl D.host.F) {x : HomW G i j} (hx : x ∈ latW G i j) :
+theorem smul_ofMaps_inr_mem {t : T} {e : Num G i j} {Bs : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E} {Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j}
+    {X : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chars D.host.F D.host.E} (h : IsTied t i j e Bs Γ X) (v : Pl D.host.F) {x : HomW G i j} (hx : x ∈ latW G i j) :
     GlobalTheory.LatVac.liftV v 1 • ofMaps e (0, x) ∈ latAtV Γ.V Γ.W v := by
   refine map_mem_of_closure ((DistribSMul.toAddMonoidHom (Pt G i j) (GlobalTheory.LatVac.liftV v 1)).comp
     ((maps e).symm.toLinearMap.toAddMonoidHom.comp (AddMonoidHom.inr _ _))) ?_ hx
@@ -142,7 +142,7 @@ theorem smul_ofMaps_inr_mem {t : T} {e : Num G i j} {Bs : Base D.host.F D.host.E
     (one_smul_gen_mem _ _ v hα (h.1.ge (star_mem_conjSub (neg_mem ht)))
       (h.2.1.ge (pair_mem e (zero_mem _) (star_mem_conjSub (smul_mem_scLat_of_mem ha (star_mem_conjSub hs))))))
 
-theorem latPt_le_latAtV : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (t : T) (i j : ℕ) (e : Num G i j) (Bs : Base D.host.F D.host.E) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j) (X : Chars D.host.F D.host.E), IsTied t i j e Bs Γ X →
+theorem latPt_le_latAtV : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (t : T) (i j : ℕ) (e : Num G i j) (Bs : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j) (X : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chars D.host.F D.host.E), IsTied t i j e Bs Γ X →
     ∀ v : Pl D.host.F, ∀ u ∈ latPt e v, u ∈ latAtV Γ.V Γ.W v := by
   intro D T L sc G t i j e Bs Γ X h v u hu
   obtain ⟨hat, h1, h2⟩ := hu

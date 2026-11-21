@@ -106,7 +106,7 @@ theorem mapW_rat (e : Num G i j) (γ : Matrix (Fin (spW G i j).rank) (Fin ((spW 
   ⟨-_, (congrArg Neg.neg (mulG_rat (spV₁ G i j) ((γ.submatrix id fun k => e (.inr k)).map star))).trans
     (Matrix.map_neg _ (map_neg (incA D)) _).symm⟩
 
-theorem thetaPt_box : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (W : G.Weil) (M : Vol G) (t : T) (i j : ℕ) (e : Num G i j) (Bs : Base D.host.F D.host.E) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j) (X : Chars D.host.F D.host.E)
+theorem thetaPt_box : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (W : G.Weil) (M : Vol G) (t : T) (i j : ℕ) (e : Num G i j) (Bs : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j) (X : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chars D.host.F D.host.E)
     (om : Rep D.sp.cm.sig Γ.V Γ.W) (om' : Rep D.sp.cm.sig Γ.V' Γ.W), IsTripleOf W M t i j e Bs Γ X → IsTriple Bs Γ X om om' →
     (∀ Φ ∈ schA D.host.F (Ix G i j), ∀ Φ' ∈ schA D.host.F (Ix G i j), thetaPt Γ W.ψ (Φ + Φ') = thetaPt Γ W.ψ Φ + thetaPt Γ W.ψ Φ') ∧
     (∀ Φ ∈ schA D.host.F (Ix G i j), ∀ Φ' ∈ schA D.host.F (Ix G i j), thetaPt Γ W.ψ Φ = thetaPt Γ W.ψ Φ' → Φ = Φ') ∧

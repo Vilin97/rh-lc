@@ -25,7 +25,7 @@ private lemma sum_transport {Q : C ⥤ Type} {K : Coef C} (c : Sec Q K) {I : Typ
     rw [map_sum, Multiset.map_map]
   change _ = ∑ i, c.1 B ((g i).app B (Q.map φ w))
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [sec_nat c φ, FunctorToTypes.naturality]
+  rw [sec_nat c φ, ← NatTrans.naturality_apply (g i) φ]
 
 private lemma avg_indep (Pa : Parts C) {K : Coef C} (hK : Pa.Add K) {Q P : C ⥤ Type} {p : Q ⟶ P}
     {I : Type} [Fintype I] {g : I → (Q ⟶ Q)} (h : Pa.LocTrans p g) (c : Sec Q K) {A : C}
@@ -51,13 +51,13 @@ private def avg (Pa : Parts C) {K : Coef C} (hK : Pa.Add K) {Q P : C ⥤ Type} {
   ⟨fun A y => ∑ i, c.1 A ((g i).app A (lift Pa h A y)), by
     intro A B φ y
     have hw : p.app B (Q.map φ (lift Pa h A y)) = p.app B (lift Pa h B (P.map φ y)) := by
-      rw [lift_spec, FunctorToTypes.naturality, lift_spec]
+      rw [lift_spec, NatTrans.naturality_apply p φ, lift_spec]
     change (K.map φ).hom (∑ i, c.1 A ((g i).app A (lift Pa h A y))) =
       ∑ i, c.1 B ((g i).app B (lift Pa h B (P.map φ y)))
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← avg_indep Pa hK h c hw, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [sec_nat c φ, FunctorToTypes.naturality]⟩
+    rw [sec_nat c φ, ← NatTrans.naturality_apply (g i) φ]⟩
 
 private lemma avg_apply (Pa : Parts C) {K : Coef C} (hK : Pa.Add K) {Q P : C ⥤ Type} {p : Q ⟶ P}
     {I : Type} [Fintype I] {g : I → (Q ⟶ Q)} (h : Pa.LocTrans p g) (c : Sec Q K) (A : C)

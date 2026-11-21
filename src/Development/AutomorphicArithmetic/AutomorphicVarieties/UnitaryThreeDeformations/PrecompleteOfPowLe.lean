@@ -141,7 +141,7 @@ private def Tm (C : Type) [CommRing C] : Matrix (Fin 3) (Fin 3) C := !![0, 0, 0;
 private theorem Tm_wt (C : Type) [CommRing C] (a b : Fin 3) (h : wt a b ≠ -1) : Tm C a b = 0 := by
   fin_cases a <;> fin_cases b <;> first | rfl | exact absurd rfl h
 
-private theorem deform_eq {D C : Type} [Group D] [CommRing C] {r r' r'' : D →* GG 3 C}
+private theorem deform_eq {D C : Type} [Group D] [CommRing C] {r r' r'' : D →* GG (m := 3) (R := C)}
     {γ : D → Matrix (Fin 3) (Fin 3) C} (h' : IsDeform r γ r') (h'' : IsDeform r γ r'') : r' = r'' :=
   MonoidHom.ext fun g => SemidirectProduct.ext (Units.ext ((h' g).2.trans (h'' g).2.symm))
     ((h' g).1.trans (h'' g).1.symm)
@@ -191,7 +191,7 @@ private theorem exists_pt
     (hU : ∀ v ∉ F.Tb, ∀ s ∈ F.Nv v, ζ (F.loc v s) = 0)
     (hT : ∀ v ∈ F.Tb, ∃ m ∈ I, ∀ g : F.D v, ζ (F.loc v g) = algebraMap O C ((F.Ψ (F.loc v g))⁻¹ : Oˣ) * m - m)
     (hN : algebraMap O C (F.Ψ g₁) * ζ g₁ = algebraMap O C (F.Ψ (gstar F.c g₁)) * ζ (gstar F.c g₁)) :
-    ∃ r : Γ →* GG 3 C, F.IsPt g₁ r ∧
+    ∃ r : Γ →* GG (m := 3) (R := C), F.IsPt g₁ r ∧
       ∀ g a b, (r g).mat a b = (F.rz C g).mat a b + algebraMap O C (Tm O a b * psi F.Ψ b g) * ζ g := by
   have h0 := isPt_rz F hF g₁ (R := C)
   have hent : ∀ x ∈ I, EntIn I (x • Tm C) := fun x hx a b => I.mul_mem_right _ hx
@@ -262,7 +262,8 @@ private theorem coord
     {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (maximalIdeal O) O] [CharZero O] [Finite (ResidueField O)]
       {G Γ ι : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
       [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] [TotallyDisconnectedSpace Γ] [Finite ι]
-    (F : Frame O G Γ ι) (hF : F.Ok) (g₁ : Γ) {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG 3 R) (hu : F.IsUniv g₁ u)
+    (F : Frame O G Γ ι) (hF : F.Ok) (g₁ : Γ) {R : Type} [CommRing R] [Algebra O R] [IsCO O R]
+    (u : Γ →* GG (m := 3) (R := R)) (hu : F.IsUniv g₁ u)
     (W : WPres O ℤ R) (g : W.σ → Γ) (a b : W.σ → Fin 3)
     (hz : ∀ i, W.z i = (u (g i)).mat (a i) (b i) - (F.rz R (g i)).mat (a i) (b i))
     {M : Type} [AddCommGroup M] [Module O M] [Module.Finite O M] (n : Γ → M) (hlc : IsLocallyConstant n)
@@ -298,7 +299,7 @@ private theorem coord
   simp only [hmul] at hm
   obtain ⟨f, hf, -⟩ := hu.univ _ r hr
   have e1 : ∀ g a b, f ((u g).mat a b) = (r g).mat a b := fun g a b =>
-    congrArg (fun r : Γ →* GG 3 (TrivSqZeroExt O M) => (r g).mat a b) hf
+    congrArg (fun r : Γ →* GG (m := 3) (R := TrivSqZeroExt O M) => (r g).mat a b) hf
   have hX : ∀ i, (f.comp W.π) (MvPowerSeries.X i) =
       TrivSqZeroExt.inr ((Tm O (a i) (b i) * psi F.Ψ (b i) (g i)) • n (g i)) := fun i => by
     have e2 : f ((F.rz R (g i)).mat (a i) (b i)) = (F.rz _ (g i)).mat (a i) (b i) := f.commutes _
@@ -393,7 +394,8 @@ theorem UpperTheory.V.UnitaryThreeInertia.mprime_coord :
     ∀ {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (maximalIdeal O) O] [CharZero O] [Finite (ResidueField O)]
       {G Γ ι : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
       [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] [TotallyDisconnectedSpace Γ] [Finite ι] (F : Frame O G Γ ι), F.Ok →
-    ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG 3 R), F.IsUniv g₁ u →
+    ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R]
+    (u : Γ →* GG (m := 3) (R := R)), F.IsUniv g₁ u →
     ∀ (W : WPres O ℤ R), F.Adapted u W → ∀ a : O, a ≠ 0 → ∃ d : F.ShaO a →+ (W.σ → O ⧸ Ideal.span {a}), Function.Injective d ∧
       (∀ x i, W.wt i ≠ -1 → d x i = 0) ∧ ∀ x f, W.π f = 0 → ∑ i, MvPowerSeries.coeff (Finsupp.single i 1) f • d x i = 0 := by
   intro O _ _ _ _ _ _ G Γ ι _ _ _ _ _ _ _ _ _ _ _ _ _ F hF g₁ hg R _ _ _ u hu W hW a ha

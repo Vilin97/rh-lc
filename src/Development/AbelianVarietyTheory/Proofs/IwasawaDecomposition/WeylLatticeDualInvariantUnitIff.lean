@@ -138,6 +138,10 @@ theorem delW_rowSub : ∀ (p : ℕ) [Fact p.Prime] (T : Type) [Fintype T] (N : �
     have hc0 : c ≠ 0 := norm_ne_zero_iff.1 (by rw [hc]; exact one_ne_zero)
     have := mem_delW_act p T N ν hm c⁻¹ hmI (by rw [norm_inv, hc, inv_one]) _ h
     convert this using 1
+    funext y
     rw [inv_mul_cancel_left₀ hc0]
+    congr 1
+    funext τ
+    simp [← Matrix.mul_assoc, hmul]
 
 end GlobalTheory.DelWSub

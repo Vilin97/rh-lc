@@ -6,7 +6,7 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 @[expose] public section
 
 noncomputable section
-open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC PositivityTheory.AutomorphicGaloisHodgeTate
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 
 namespace UpperTheory.Gal.TranscendenceTraces
 

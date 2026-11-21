@@ -516,8 +516,11 @@ theorem norm_eq : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberFie
       rw [← hP, ← hi1 (Ha.Pw w _), ← hF', hm] at h2
       convert h2 using 2
       congr 1
-      · simp [t, (e i).2]
-      · rw [← Finset.sum_compl_add_sum Θ.S, Finset.sum_eq_zero (s := Θ.S) fun k hk => by simp [t, hk], add_zero,
+      · funext i
+        simp [t, (e i).2]
+      · funext i
+        simp only [Matrix.mulVec, dotProduct, Matrix.submatrix_apply]
+        rw [← Finset.sum_compl_add_sum Θ.S, Finset.sum_eq_zero (s := Θ.S) fun k hk => by simp [t, hk], add_zero,
           Finset.sum_subtype (p := fun k => k ∉ Θ.S) Θ.Sᶜ (by simp), ← e.sum_comp]
         exact Finset.sum_congr rfl fun k _ => by simp [t, (e k).2])
     (ρ := fun x => ρ (L x)) (ρd.comp L.toContinuousLinearMap.differentiable) (fun x => ρn _)

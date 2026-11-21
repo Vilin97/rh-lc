@@ -27,7 +27,7 @@ section SlopeTestRemainingChoices
 
 theorem dualMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') :
     (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) := by
-  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp
+  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem spec_dualMap {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') :
     spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) := by
@@ -47,12 +47,37 @@ theorem lieValAt_base (M : LieModel G ξ E) (hξ : IsCptGen ξ) {R R' : Type} [C
   have h2 := specializes_of_injective (p := ⟨_, h1⟩) (hξ.inj _) c
   have hσ : Spec.map (CommRingCat.ofHom (X.presheaf.stalkSpecializes c).hom) ≫ X.fromSpecStalk (centre z) =
       X.fromSpecStalk (centre (spMap φ ≫ z)) := Scheme.SpecMap_stalkSpecializes_fromSpecStalk c
-  refine ⟨h2, epsBase (X.presheaf.stalkSpecializes c).hom hσ ≫ v, ⟨isTanAt_base _ hσ hv.1, ?_⟩, ?_⟩
-  · change _ = _ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (X.presheaf.stalkSpecializes c).hom) ≫ v.left
+  have base : ∀ {A B : Type} [CommRing A] [CommRing B] (f : A →+* B)
+      {x : Sp A ⟶ X} {y : Sp B ⟶ X} (hf : spMap f ≫ x = y)
+      (u : epsAt x ⟶ G), IsTanAt G x u →
+      ∃ b : epsAt y ⟶ epsAt x, b.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ∧ IsTanAt G y (b ≫ u) := by
+    intro A B _ _ f x y hf u hu
+    have ha : spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (algebraMap A (DualNumber A)) =
+        spMap (algebraMap B (DualNumber B)) ≫ spMap f := by
+      rw [spec_comp, spec_comp]
+      congr 2
+      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    let b : epsAt y ⟶ epsAt x := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f)) (by
+      change _ ≫ _ ≫ x = _ ≫ y
+      rw [← Category.assoc, ha, Category.assoc, hf])
+    refine ⟨b, rfl, ?_⟩
+    change _ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ u.left = _
+    have hh : spMap (TrivSqZeroExt.fstHom B B B).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) =
+        spMap f ≫ spMap (TrivSqZeroExt.fstHom A A A).toRingHom := by
+      rw [spec_comp, spec_comp]
+      congr 2
+      exact RingHom.ext fun a => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    rw [← Category.assoc, hh, Category.assoc, hu]
+    exact congrArg (·.left) (comp_one (M := G) (Over.homMk (spMap f) hf : Over.mk y ⟶ Over.mk x))
+  obtain ⟨b, hb, ht⟩ := base (X.presheaf.stalkSpecializes c).hom hσ v hv.1
+  refine ⟨h2, b ≫ v, ⟨ht, ?_⟩, ?_⟩
+  · change _ = _ ≫ (b.left ≫ v.left)
+    rw [hb]
     have e : (genMap ξ ⟨_, h2⟩).comp (X.presheaf.stalkSpecializes c).hom = genMap ξ ⟨_, h1⟩ :=
       RingHom.ext fun s => genMap_specializes ⟨_, h1⟩ h2 c s
     rw [hv.2, ← Category.assoc, spec_dualMap, e]
-  · change _ = _ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (X.presheaf.stalkSpecializes c).hom) ≫ v.left
+  · change _ = _ ≫ (b.left ≫ v.left)
+    rw [hb]
     have e : (Scheme.stalkClosedPointTo (spMap φ ≫ z)).hom.comp (X.presheaf.stalkSpecializes c).hom =
         φ.comp (Scheme.stalkClosedPointTo z).hom :=
       RingHom.ext fun s => congrArg (fun g => g.hom s) (stalk_base φ z)
@@ -115,7 +140,6 @@ theorem exists_integral_form : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsC
   have hjL : ∀ x, ((ML.pt (jL x)).left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt x).left) := fun x => by
     have h1 := hk (j x)
     have h2 := hj x
-    unfold LieModel.Lifts at h1 h2 ⊢
     rw [Category.comp_id] at h1 h2 ⊢
     change (ML.pt (k (j x))).left = _
     rw [h1, h2, ← Category.assoc, spec_dualMap, ← IsScalarTower.algebraMap_eq]
@@ -136,7 +160,6 @@ theorem exists_integral_form : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsC
       M.ValAt (spMap (algebraMap (𝓞 L) L) ≫ z) e (ML.pt (k y)) := fun e y hv => by
     refine lieValAt_base M hξ (algebraMap A L) hzz hv ?_
     have h1 := hk y
-    unfold LieModel.Lifts at h1
     rwa [Category.comp_id] at h1
   have hcompat : ∀ y : EA, gL (k y) = algebraMap A L (gA y) := fun y => by
     have hy : y ∈ Submodule.span A (Set.range ev) := hspan ▸ Submodule.mem_top
@@ -158,7 +181,6 @@ theorem exists_integral_form : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsC
     have hvx : v = ML.pt (jL x) := by
       apply Over.OverMorphism.ext
       have h4 := hjL x
-      unfold LieModel.Lifts at hl h4
       rw [Category.comp_id] at hl h4
       exact hl.trans h4.symm
     subst hvx

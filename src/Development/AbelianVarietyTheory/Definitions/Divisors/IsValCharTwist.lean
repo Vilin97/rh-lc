@@ -92,10 +92,17 @@ theorem expIn_condF (P : Places L) (v : HeightOneSpectrum (𝓞 D.host.F)) :
     GlobalTheory.CMVal.expIn (condF P) v = if v ∈ P.S0 then condExp P v else 0 := by
   have key : ∀ S : Finset (HeightOneSpectrum (𝓞 D.host.F)), v ∉ S →
       ¬ v.asIdeal ∣ ∏ u ∈ S, u.asIdeal ^ condExp P u := fun S hS h => by
-    obtain ⟨u, hu, h⟩ := (v.prime.dvd_finset_prod_iff _).1 h
-    have h2 := v.prime.dvd_of_dvd_pow h
-    have : v = u := HeightOneSpectrum.ext (associated_iff_eq.1 (v.irreducible.associated_of_dvd u.irreducible h2))
-    exact hS (this ▸ hu)
+    induction S using Finset.induction_on with
+    | empty =>
+      simp only [Finset.prod_empty] at h
+      exact v.prime.2.1 (isUnit_iff_dvd_one.2 h)
+    | @insert u S hu ih =>
+      rw [Finset.prod_insert hu] at h
+      rcases v.prime.2.2 _ _ h with h | h
+      · have h2 := v.prime.dvd_of_dvd_pow h
+        have : v = u := HeightOneSpectrum.ext (associated_iff_eq.1 (v.irreducible.associated_of_dvd u.irreducible h2))
+        exact hS (this ▸ Finset.mem_insert_self _ _)
+      · exact ih (fun hv => hS (Finset.mem_insert_of_mem hv)) h
   show multiplicity v.asIdeal (∏ u ∈ P.S0, u.asIdeal ^ condExp P u) = _
   split_ifs with h
   · rw [← Finset.mul_prod_erase _ _ h]

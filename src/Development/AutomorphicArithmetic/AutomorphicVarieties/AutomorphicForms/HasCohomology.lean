@@ -36,7 +36,13 @@ structure AlgRep where
 
 open Classical in
 def AlgRep.HasInfChar (Ξ : AlgRep E a) (v : InfinitePlace E) (m : Multiset ℂ) : Prop :=
-  Multiset.card m = a ∧ ∀ u : ℂ, Formalism.REAL.qdet (fun i j => Ξ.dmat (toL (Matrix.single i j (Pi.single v 1)))) (u + ((a : ℂ) - 1) / 2) =
+  let dmat (X : Lie E a) : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ :=
+    Matrix.of fun i j =>
+      fderiv ℝ (fun x : Lie E a => if h : IsUnit (Matrix.of x) then Ξ.mat h.unit i j else 0)
+        (oneL E a) X
+  Multiset.card m = a ∧ ∀ u : ℂ,
+    Formalism.REAL.qdet (fun i j => dmat (toL (Matrix.single i j (Pi.single v 1))))
+        (u + ((a : ℂ) - 1) / 2) =
     (m.map (u + ·)).prod • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
 
 

@@ -43,15 +43,42 @@ theorem exists_latInd (q : GlobalTheory.FinPl.SplitPt D k) (hU : q.UnitAA) (FS :
   obtain ⟨ΛT, i2, hβ, -⟩ := GlobalTheory.FinPl.FrameLat.exists_lat D k q T Y β M' hM'
   refine ⟨⟨GlobalTheory.LatPair.latInd ΛS ΛT, GlobalTheory.LatPair.latInd_mem_SB ΛS ΛT⟩, funext fun x => ?_⟩
   have hh := GlobalTheory.FinPl.HalfInd.isHalf_wr α β x
-  have key := GlobalTheory.FinPl.LatIndHalf.mem_latO_iff_rd α β hM hM' hU hα hβ hh
-  have hr : GlobalTheory.FinPl.rd α β (GlobalTheory.FinPl.HalfInd.wr α β x) = x := by
-    rw [GlobalTheory.FinPl.HalfInd.rd_eq]
-    have : Matrix.map (GlobalTheory.FinPl.HalfInd.wr α β x) q.pr = FT.β * x * FS.γ := by
-      ext i j; rw [Matrix.map_apply, GlobalTheory.FinPl.HalfInd.wr_apply, q.pr_sec]
-    rw [this]
-    change FT.γ * (FT.β * x * FS.γ) * FS.β = x
-    rw [Matrix.mul_assoc FT.β, ← Matrix.mul_assoc FT.γ, FT.γβ, Matrix.one_mul, Matrix.mul_assoc, FS.γβ, Matrix.mul_one]
-  rw [hr] at key
+  have mulvec (z : Y' → k) : (GlobalTheory.FinPl.HalfInd.wr α β x) *ᵥ (fun j => q.sec ((α.b *ᵥ z) j)) =
+      fun i => q.sec ((β.b *ᵥ (x *ᵥ z)) i) := by
+    have hM : (β.b * x * α.b') *ᵥ (α.b *ᵥ z) = β.b *ᵥ (x *ᵥ z) := by
+      rw [Matrix.mulVec_mulVec, Matrix.mul_assoc (β.b * x), α.b'b, Matrix.mul_one, Matrix.mulVec_mulVec]
+    rw [← hM]
+    funext i
+    simp only [Matrix.mulVec, dotProduct, GlobalTheory.FinPl.HalfInd.wr_apply]
+    set_option synthInstance.maxHeartbeats 100000 in rw [map_sum]
+    exact Finset.sum_congr rfl fun j _ => (GlobalTheory.FinPl.LatIndHalf.sec_mul q _ _).symm
+  have key : GlobalTheory.FinPl.HalfInd.wr α β x ∈ latO S T (M : Set _) (M' : Set _) (· = q.v) ↔
+      ∀ z ∈ ΛS, x *ᵥ z ∈ ΛT := by
+    have hmem := GlobalTheory.FinPl.LatMem.mem_latO_iff D S T M M' hM hM' (· = q.v) (GlobalTheory.FinPl.HalfInd.wr α β x)
+    rw [hU.2 T M'] at hmem
+    constructor
+    · intro h z hz
+      have h1 := (hmem.1 h).2 _ ((hα z).1 hz)
+      rw [mulvec] at h1
+      exact (hβ _).2 h1
+    · intro h
+      refine hmem.2 ⟨fun i j => ?_, fun y hy => ?_⟩
+      · rw [← hh i j]
+        exact Ideal.mul_mem_right _ _ (GlobalTheory.FinPl.LatIndHalf.e_mem_idAt q)
+      · have hy' : (GlobalTheory.FinPl.HalfInd.wr α β x) *ᵥ y = (GlobalTheory.FinPl.HalfInd.wr α β x) *ᵥ (fun j => q.e * y j) := by
+          funext i
+          simp only [Matrix.mulVec, dotProduct]
+          refine Finset.sum_congr rfl fun j _ => ?_
+          rw [← mul_assoc, mul_comm (GlobalTheory.FinPl.HalfInd.wr α β x i j) q.e, hh i j]
+        have hey : (fun j => q.e * y j) = fun j => q.sec ((α.b *ᵥ (α.b' *ᵥ fun j => q.pr (y j))) j) := by
+          funext j
+          rw [Matrix.mulVec_mulVec, α.bb', Matrix.one_mulVec, q.sec_pr]
+        have hint : finPart D q.e ∈ intAE D := by
+          rw [← GlobalTheory.FinPl.LatIndHalf.sec_one q]
+          exact (q.int_iff 1).1 (one_mem _)
+        have hx : α.b' *ᵥ (fun j => q.pr (y j)) ∈ ΛS := (hα _).2 (hey ▸ GlobalTheory.FinPl.LatIndHalf.mul_mem_latV hint hy)
+        rw [hy', hey, mulvec]
+        exact (hβ _).1 (h _ hx)
   change GlobalTheory.LatPair.latInd ΛS ΛT x = _
   unfold GlobalTheory.LatPair.latInd
   by_cases h : ∀ y ∈ ΛS, x *ᵥ y ∈ ΛT

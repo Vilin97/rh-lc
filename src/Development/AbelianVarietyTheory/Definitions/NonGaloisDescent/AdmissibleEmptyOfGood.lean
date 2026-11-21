@@ -118,7 +118,9 @@ def IsWeil (ν : (AE D)ˣ →* Circle) (ω : PairRep S T) : Prop :=
 open Classical in
 def admitted (Q : Finset (Pl D.host.E)) : Prop := PlacesOK B.G.Pg (B.de.Q ∪ Q) ∧ Disjoint B.de.Q Q
 
-theorem admissible_empty_of_good {B : Base S T} (h : B.Good) : B.admitted ∅ := ⟨by simpa using h.places, Finset.disjoint_empty_right _⟩
+theorem admissible_empty_of_good {B : Base S T} (h : B.Good) : B.admitted ∅ := ⟨by
+  classical
+  simpa only [Finset.union_empty] using h.places, Finset.disjoint_empty_right _⟩
 
 theorem admitted.mono {B : Base S T} {Q Q' : Finset (Pl D.host.E)} (h : B.admitted Q) (hQ : Q' ⊆ Q) : B.admitted Q' := by
   classical

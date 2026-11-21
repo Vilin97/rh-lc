@@ -17,6 +17,8 @@ variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberFi
 variable {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 variable {κ : Type} [Fintype κ] [DecidableEq κ]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+
 abbrev spanO (b : Basis κ K V) : Submodule (𝓞 K) V := Submodule.span (𝓞 K) (Set.range b)
 
 def bO (b : Basis κ K V) : Basis κ (𝓞 K) (spanO b) :=
@@ -57,8 +59,13 @@ theorem congrP_int {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) (a
       apply RingOfIntegers.coe_injective
       rw [e, map_mul, map_sub]
       rfl
-    have ht' : t ∉ 𝔭 ^ (0 + 1) := by rwa [zero_add, pow_one]
-    exact mem_of_mul_mem h𝔭 ht' (by rw [zero_add, ← e']; exact hz)
+    rw [e'] at hz
+    obtain ⟨u, hu⟩ := MeanA.exists_mul_sub_one_mem_pow h𝔭 ht k
+    have hu' : ι (u * t - 1) ∈ extP K 𝔭 ^ k := by
+      rw [extP, ← Ideal.map_pow]
+      exact Ideal.mem_map_of_mem ι hu
+    have hmem := sub_mem (Ideal.mul_mem_left _ (ι u) hz) (Ideal.mul_mem_right (a - c) _ hu')
+    simpa only [map_sub, map_mul, map_one, sub_mul, mul_assoc, one_mul, sub_sub_cancel] using hmem
   · intro hm
     exact ⟨1, fun h1 => h𝔭.ne_top ((Ideal.eq_top_iff_one _).2 h1), a - c, hm, by simp⟩
 

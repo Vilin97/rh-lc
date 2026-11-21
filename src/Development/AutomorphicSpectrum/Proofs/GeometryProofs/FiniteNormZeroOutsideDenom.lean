@@ -187,7 +187,7 @@ theorem frame_transfer {E : Type} [Field E] [NumberField E] [IsCMField E] {H : H
 
 theorem exists_sab {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {S S' : Scheme.{0}} (f : S' ⟶ S)
     (t : SAB H S) : ∃ t' : SAB H S', Nonempty (SABMap t' t f) := by
-  exact ⟨_, ⟨ReciprocityTheory.ChartRestriction.G.PullbackSections.sabM Out.proved_CubePullSt f t⟩⟩
+  exact GlobalTheory.ModFam.exists_sabPull f t
 
 theorem exists_point {X : Scheme.{0}} {F : Type} [Field F] (s : X ⟶ Sp F) [LocallyOfFiniteType s] (U : Set X)
     (hU : IsOpen U) (hne : U.Nonempty) : ∃ (L : Type) (_ : Field L) (β : F →+* L) (y : Sp L ⟶ X),

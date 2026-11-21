@@ -17,7 +17,10 @@ private theorem blk_mul_blk_inv {r s : ℕ} {R : Type} [CommRing R] (m₁ : GL (
   group
 
 theorem UpperTheory.constantTerm_levi_rational_left_invariant :
-    ∀ (K : Type) [Field K] [NumberField K] (r s : ℕ) (φ : AdelicGLn.AdelicGL K (r + s) → ℂ), IsLeftInvariant φ → ∀ (γ₁ : GL (Fin r) K) (γ₂ : GL (Fin s) K) g, constantTerm r φ (AdelicGLn.diagonal K (r + s) (blk γ₁ γ₂) * g) = constantTerm r φ g := by
+    ∀ (K : Type) [Field K] [NumberField K] (r s : ℕ) (φ : AdelicGLn.AdelicGL K (r + s) → ℂ),
+      IsLeftInvariant φ → ∀ (γ₁ : GL (Fin r) K) (γ₂ : GL (Fin s) K) g,
+        constantTerm (r := r) φ (AdelicGLn.diagonal K (r + s) (blk γ₁ γ₂) * g) =
+          constantTerm (r := r) φ g := by
   intro K _ _ r s φ hφ γ₁ γ₂ g
   have hdiag : ∀ γ : GL (Fin (r + s)) K, AdelicGLn.diagonal K (r + s) γ =
       GeneralLinearGroup.map (algebraMap K (AdeleRing (𝓞 K) K)) γ := fun _ => rfl
@@ -57,7 +60,7 @@ theorem UpperTheory.constantTerm_levi_rational_left_invariant :
         ∑ q, algebraMap K (AdeleRing (𝓞 K) K) (d p q) * X q) := by
     intro d
     refine continuous_pi fun p => ?_
-    exact continuous_finset_sum _ fun q _ => continuous_const.mul (continuous_apply q)
+    exact continuous_finsetSum _ fun q _ => continuous_const.mul (continuous_apply q)
   have hinv1 : ∀ Y : UPos (r + s) r → AdeleRing (𝓞 K) K,
       (fun p => ∑ q, algebraMap K (AdeleRing (𝓞 K) K) (c p q) *
         (∑ q', algebraMap K (AdeleRing (𝓞 K) K) (c' q q') * Y q')) = Y := by

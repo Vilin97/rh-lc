@@ -131,8 +131,8 @@ theorem exists_isFreeGen [PerfectField k] [LocallyOfFiniteType p]
       conv_lhs => rw [← e₁, strHom, ← Category.assoc, Scheme.fromSpecStalk_toSpecΓ, ← Spec.map_comp]
       congr 1
       ext a
-      simp [Cartier.constFn, fnOf, algX, Scheme.Hom.appLE]
-      rfl
+      have hApp : p.appLE ⊤ ⊤ (by simp) = p.appTop := p.appLE_eq_app
+      simp [Cartier.constFn, fnOf, algX, algebraΓOfHom_algebraMap, hApp]
     rw [e₂, Spec.preimage_map]
     rfl
   have h2 := topologicalKrullDim_preimage_genericPoint_eq p (d := m + 1) (by rw [e]; exact h1)
@@ -163,7 +163,7 @@ theorem regAt_of_forall_coheight_eq_one [IsLocallyNoetherian X] [GlobalTheory.Is
     fun q hq h1 => ?_
   let P : PrimeSpectrum Γ(X, U) := ⟨q.comap (algebraMap _ (X.presheaf.stalk x)), inferInstance⟩
   have hP1 : P.asIdeal.height = 1 :=
-    (IsLocalization.height_comap (hU.primeIdealOf ⟨x, hx⟩).asIdeal.primeCompl q).trans h1
+    (IsLocalization.height_under (hU.primeIdealOf ⟨x, hx⟩).asIdeal.primeCompl q).trans h1
   have hPQ : P ≤ hU.primeIdealOf ⟨x, hx⟩ := fun s hs => by_contra fun hs' =>
     hq.ne_top (q.eq_top_of_isUnit_mem hs (IsLocalization.map_units (X.presheaf.stalk x)
       (⟨s, hs'⟩ : (hU.primeIdealOf ⟨x, hx⟩).asIdeal.primeCompl)))
@@ -491,11 +491,14 @@ section Checks
 variable {p : X ⟶ Sp k} {n : ℕ} [IsLocallyNoetherian X]
 
 theorem isEffQDiv_qWeil [CompactSpace X] {D : CartierDiv X} (hD : D.Eff) (m : ℕ) :
-    IsEffQDiv (qWeil D m) where
-  finite := D.finite_support_mult.subset fun z hz h => hz (by simp [qWeil, h])
-  coheight z hz := CartierDiv.coheight_eq_one_of_mult_ne_zero (D := D) fun h =>
-    hz (by simp [qWeil, h])
-  nonneg z := by
+    IsEffQDiv (qWeil D m) := by
+  refine ⟨D.finite_support_mult.subset ?_, ?_, ?_⟩
+  · intro z hz h
+    exact hz (by simp [qWeil, h])
+  · intro z hz
+    exact CartierDiv.coheight_eq_one_of_mult_ne_zero (D := D) fun h =>
+      hz (by simp [qWeil, h])
+  · intro z
     refine div_nonneg (Int.cast_nonneg ?_) (Nat.cast_nonneg m)
     obtain ⟨g, hg⟩ := D.exists_isEqn z
     obtain ⟨a, ha⟩ := CartierDiv.eff_iff.1 hD z g hg

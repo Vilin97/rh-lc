@@ -15,7 +15,7 @@ namespace RelBC
 open TensorProduct
 
 theorem multilinear_mem_of_span {R ι M N : Type*} [CommRing R] [Fintype ι] [DecidableEq ι] [AddCommGroup M] [Module R M]
-    [AddCommGroup N] [Module R N] (f : MultilinearMap R (fun _ : ι => M) N) (X : ι → Set M) (T : Submodule R N)
+    [AddCommGroup N] [Module R N] (f : (ι → M) →ₘₗ[R] N) (X : ι → Set M) (T : Submodule R N)
     (h : ∀ w : ι → M, (∀ i, w i ∈ X i) → f w ∈ T) (v : ι → M)
     (hv : ∀ i, v i ∈ Submodule.span R (X i)) : f v ∈ T := by
   have key : ∀ (s : Finset ι) (w : ι → M), (∀ i ∈ s, w i ∈ Submodule.span R (X i)) → (∀ i, i ∉ s → w i ∈ X i) →

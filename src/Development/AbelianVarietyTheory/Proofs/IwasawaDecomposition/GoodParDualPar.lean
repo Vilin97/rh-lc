@@ -87,7 +87,7 @@ variable {D : D7}
 
 theorem sig_add (i : Fin D.R.m) (ρ : D.what₂.Tau) :
     ((Wc D i).sig (tauE D ρ)).1 + ((Wc D i).sig (tauE D ρ)).2 = (Wc D i).rank := by
-  rw [show (Wc D i).sig (tauE D ρ) = D.R.sigW ((i : ℕ) + 1) from D.sp.W_sigval _ (Nat.le_add_left _ _) i.2 _, rank_Wc i]
+  rw [show (Wc D i).sig (tauE D ρ) = D.R.sigW ((i : ℕ) + 1) from D.sp.W_sigval _ (Nat.le_add_left _ _) i.2 _, D.sp.W_rank _ (Nat.le_add_left _ _) i.2]
   have := D.R.m_add_three_le_k
   have hi := i.2
   simp only [Ranks.sigW, Ranks.r]
@@ -95,7 +95,7 @@ theorem sig_add (i : Fin D.R.m) (ρ : D.what₂.Tau) :
 
 theorem goodPar_parAt (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) (ρ : D.what₂.Tau) :
     GoodPar (Wc D i).rank ((Wc D i).sig (tauE D ρ)).1 ((Wc D i).sig (tauE D ρ)).2 (parAt (Wc D i) σ ρ) := by
-  have h := goodPar_holPar (D.hc (lab σ ρ)) (rank_Wc i) (sig_add i ρ)
+  have h := goodPar_holPar (D.hc (lab σ ρ)) (D.sp.W_rank _ (Nat.le_add_left _ _) i.2) (sig_add i ρ)
   unfold Links.parAt
   split_ifs
   · exact h
@@ -130,6 +130,6 @@ theorem exists_frameKs : GlobalTheory.Published.DiscreteSeriesExists → ∀ (D 
   · have he := (Classical.choice (hne i σ)).enum τ
     have e : parAt (Wc D i) σ τ = Formalism.L2.NTheta.holPar _ _ (kapAt (Wc D i) σ τ) := if_pos (hσ τ)
     rw [e] at he
-    exact (GlobalTheory.HolDict.isEnum_holPar_kapW _ (rank_Wc i) (sig_add i τ) he a).2
+    exact (GlobalTheory.HolDict.isEnum_holPar_kapW _ (D.sp.W_rank _ (Nat.le_add_left _ _) i.2) (sig_add i τ) he a).2
 
 end GlobalTheory.RealGeo.FrameModels

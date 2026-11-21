@@ -73,8 +73,8 @@ theorem exists_poly_rowSubst_coef (τ : ι) (k l : Fin m) (f : Pol ι m n) (φ :
     · subst h
       choose P hP hP' using fun b : Fin m => hp (φ ∘ₗ LinearMap.mulRight ℂ (X (ρ, b, c)))
       refine ⟨∑ b, X (b, j) * P b, fun g => ?_, ?_⟩
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_mul, rowSubst_X_self, Finset.mul_sum, map_sum, map_sum]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_mul, rowSubst_X_self, Finset.mul_sum, map_sum, map_sum]
         refine Finset.sum_congr rfl fun b _ => ?_
         rw [mul_smul_comm, map_smul, map_mul (eval _), eval_X, ← hP b g]
         rfl

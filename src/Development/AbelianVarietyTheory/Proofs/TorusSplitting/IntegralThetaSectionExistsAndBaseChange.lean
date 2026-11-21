@@ -40,8 +40,7 @@ theorem intSec_baseChange {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
   obtain ⟨t, m1, m2, θ, w1, w2, σ, s1, θ2, a1, a2, a3, a4, a5, a6⟩ := I
   obtain ⟨hx, -, pm, hs, hf, ha⟩ := hm
   obtain ⟨t', ⟨n⟩⟩ : ∃ t' : SAB H (Sp (FractionRing V')), Nonempty (SABMap t' t (spMap ψ.toRingHom)) := by
-    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (spMap ψ.toRingHom) t
-    exact ⟨_, ⟨m⟩⟩
+    exact GlobalTheory.Models.Inhab.exists_pull (spMap ψ.toRingHom) t
   have hι : ψ.toRingHom.comp (algebraMap V (FractionRing V)) = (algebraMap V' (FractionRing V')).comp φ :=
     RingHom.ext hψ
   have hio : spMap (algebraMap V' (FractionRing V')) ≫ spMap φ =

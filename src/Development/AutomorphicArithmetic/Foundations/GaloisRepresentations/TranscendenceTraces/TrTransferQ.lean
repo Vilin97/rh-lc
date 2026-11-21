@@ -8,7 +8,7 @@ public import Development.EtaleCohomology.EtaleTrace.LTransferCut
 @[expose] public section
 
 noncomputable section
-open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC PositivityTheory.AutomorphicGaloisHodgeTate
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 
 namespace UpperTheory.Gal.TranscendenceTraces
 

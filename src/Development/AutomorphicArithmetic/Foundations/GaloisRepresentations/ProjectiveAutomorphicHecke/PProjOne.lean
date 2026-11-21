@@ -12,13 +12,9 @@ namespace UpperTheory.Gal.CertificateRingHomMap
 
 private theorem monoidAlgebra_lift_freeMonoid_eq_wop {F A J : Type*} [Field F] [Ring A] [Algebra F A] (T : J → A)
     (t : MonoidAlgebra F (FreeMonoid J)) :
-    MonoidAlgebra.lift F A (FreeMonoid J) (FreeMonoid.lift T) t = wop T (t.coeff : List J →₀ F) := by
-  rw [MonoidAlgebra.lift_apply]
-  unfold wop
-  congr 1
-  funext w c
-  rw [FreeMonoid.lift_apply]
-  rfl
+    MonoidAlgebra.lift F A (FreeMonoid J) (FreeMonoid.lift T) t =
+      wop T (t.coeff.equivMapDomain FreeMonoid.toListEquiv) := by
+  simp only [MonoidAlgebra.lift_apply, wop, Finsupp.sum_equivMapDomain, FreeMonoid.lift_apply]
 
 private theorem algHom_wop_eq_wop_comp {F A B J : Type*} [Field F] [Ring A] [Algebra F A] [Ring B]
     [Algebra F B] (φ : A →ₐ[F] B) (T : J → A) (t : List J →₀ F) :
@@ -108,15 +104,16 @@ theorem pProjOne_holds : ProjOne.{u} := by
     exact ⟨MonoidAlgebra.of F _ (FreeMonoid.of j), by simp [Ψ, MonoidAlgebra.lift_of]⟩
   obtain ⟨t, ht⟩ := hD z.2
   have ht' : MonoidAlgebra.lift F (F × A) (FreeMonoid J) (FreeMonoid.lift gen) t = z := ht
-  have hwθ : wop θ t.coeff = (z : F × A).1 := by
-    have h1 := algHom_wop_eq_wop_comp (AlgHom.fst F F A) gen t.coeff
+  let coeff := t.coeff.equivMapDomain FreeMonoid.toListEquiv
+  have hwθ : wop θ coeff = (z : F × A).1 := by
+    have h1 := algHom_wop_eq_wop_comp (AlgHom.fst F F A) gen coeff
     rw [← monoidAlgebra_lift_freeMonoid_eq_wop, ht'] at h1
     exact h1.symm
-  have hwT : wop T t.coeff = (z : F × A).2 := by
-    have h1 := algHom_wop_eq_wop_comp (AlgHom.snd F F A) gen t.coeff
+  have hwT : wop T coeff = (z : F × A).2 := by
+    have h1 := algHom_wop_eq_wop_comp (AlgHom.snd F F A) gen coeff
     rw [← monoidAlgebra_lift_freeMonoid_eq_wop, ht'] at h1
     exact h1.symm
-  refine ⟨t.coeff, ?_, ?_, ?_⟩
+  refine ⟨coeff, ?_, ?_, ?_⟩
   · rw [hwθ]
     exact hzχ
   · rw [hwT]

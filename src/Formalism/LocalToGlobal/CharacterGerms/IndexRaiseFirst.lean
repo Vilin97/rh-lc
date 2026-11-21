@@ -35,7 +35,7 @@ theorem index_raise_first (i : Fin dd) (L : ℕ) (γ : Fin 2 × Fin dd →₀ �
 def FrobX (V : VF C) (f : PS C 3 dd) : Prop :=
   ∀ p : Fin 3 × Fin dd →₀ ℕ, (∃ j, ¬ V.l ∣ p ((0 : Fin 3), j)) → V.MM (coeff p f)
 
-def FrobD (V : VF C) (f : PS C 3 dd) : Prop := ∀ j : Fin dd, MaximalIdealCongruence.MMS V (pderiv C ((0 : Fin 3), j) f)
+def FrobD (V : VF C) (f : PS C 3 dd) : Prop := ∀ j : Fin dd, MaximalIdealCongruence.MMS V (MvPowerSeries.pderiv ((0 : Fin 3), j) f)
 
 private theorem v_natCast_nonneg_of_vf (V : VF C) (m : ℕ) : 0 ≤ V.v (m : C) := by
   induction m with

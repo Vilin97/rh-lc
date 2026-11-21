@@ -52,12 +52,12 @@ theorem dual_conjLat : ∀ {D : D7} (A B : HSp D)
       ∀ o : 𝓞 D.host.E, IsIntegral ℤ (Algebra.trace ℚ D.host.E (o * GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form D.sp.cm.sig (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.skewGram A B e) y x)) := @GlobalTheory.T.scaledLattice_conj_directSum_trace_selfDual
 
 theorem under_gridLocalTensorPlace_mem_goodThetaCharacterPlaces : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T} (_hL : L.Is μ₀) (t : T)
-    (i j : Fin D.R.m) (B : Base D.host.F D.host.E) (X : Chars D.host.F D.host.E) (a a' : ℕ),
+    (i j : Fin D.R.m) (B : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (X : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chars D.host.F D.host.E) (a a' : ℕ),
     X.α = alpha G t i j → X.β = beta G i j → X.IsGood B a a' →
     ∀ w ∈ locPl G t, w.under (𝓞 D.host.F) ∈ X.T := @GlobalTheory.T.placesUnder_localData_mem_goodCharacter_ramification
 
 theorem isHerm_conjLat : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T} (_hL : L.Is μ₀) (W : G.Weil)
-    (i j : Fin D.R.m) (B : Base D.host.F D.host.E) (τf : InfinitePlace D.host.F → D.what₂.Tau),
+    (i j : Fin D.R.m) (B : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (τf : InfinitePlace D.host.F → D.what₂.Tau),
     (∀ w x, (B.emb w).1 x = conj (tauE D (τf w) x)) →
     ∃ bas : ∀ v : HeightOneSpectrum (𝓞 D.host.F), GL (Fin (spW G i j).rank) (Fv D.host.F v),
       Spc.IsHerm D.sp.cm.sig B
@@ -119,7 +119,7 @@ theorem isHerm_conjLat : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {
     exact hbas0 v
 
 theorem isSkew_conjLat : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T} (_hL : L.Is μ₀) (W : G.Weil)
-    (i j : Fin D.R.m) (e : Num G i j) (B : Base D.host.F D.host.E) (τf : InfinitePlace D.host.F → D.what₂.Tau),
+    (i j : Fin D.R.m) (e : Num G i j) (B : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (τf : InfinitePlace D.host.F → D.what₂.Tau),
     (∀ w x, (B.emb w).1 x = conj (tauE D (τf w) x)) →
     ∃ bas : ∀ v : HeightOneSpectrum (𝓞 D.host.F), GL (Fin ((spW G i j).rank + (spW₁ G i j).rank)) (Fv D.host.F v),
       Spc.IsSkew D.sp.cm.sig B
@@ -195,7 +195,7 @@ theorem isSkew_conjLat : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {
     exact (hex v).choose_spec
 
 theorem squareTriple_tied : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T} (hL : L.Is μ₀) (W : G.Weil) (t : T) (i j : Fin D.R.m), SquareStanding G t → ∀ M : Vol G, M.Is t →
-    ∃ (e : Num G i j) (Bs : Base D.host.F D.host.E) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j) (X : Chars D.host.F D.host.E)
+    ∃ (e : Num G i j) (Bs : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j) (X : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chars D.host.F D.host.E)
       (om : Rep D.sp.cm.sig Γ.V Γ.W) (om' : Rep D.sp.cm.sig Γ.V' Γ.W),
       IsTripleOf W M t i j e Bs Γ X ∧ IsTriple Bs Γ X om om' ∧ IsTied t i j e Bs Γ X := by
   classical
@@ -205,7 +205,7 @@ theorem squareTriple_tied : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts
   obtain ⟨mα, mβ, hα, hβ, hκ⟩ := GlobalTheory.T.thetaGridCharacters_archExponents_gap_gt_rank hL t i j hst τf hτf
   obtain ⟨v₁, hv₁P, hv₁s, hv₁l, ⟨τ₁⟩⟩ := GlobalTheory.T.exists_splitCompletely_auxiliary_place_outside_finset (G := G) hL t (S₀ ∪ Q)
   choose τP hτP using fun v : (S₀ ∪ Q : Finset (HeightOneSpectrum (𝓞 D.host.F))) => tau_choice hL t v.1 (hSQ v v.2).1
-  let B : Base D.host.F D.host.E :=
+  let B : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E :=
     ⟨W.ψ, fun w => ⟨_, hτf w⟩, mα, mβ, S₀ ∪ Q, τP, v₁, τ₁⟩
   have hB : B.IsGood D.sp.cm.sig := GlobalTheory.T.isAdmissibleCMBaseData_of_squareTupleStanding hL W t hst B rfl fun v hv => (hSQ v hv).1
   have hemb : ∀ w x, (B.emb w).1 x = conj (tauE D (τf w) x) := fun _ _ => rfl

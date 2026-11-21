@@ -54,7 +54,7 @@ theorem std_eq_sum {g : ℕ} (u : (Σ _ : Fin g, Fin 2) → (Fin g → ℂ)) (hM
     rw [← Matrix.mul_apply, h1, Matrix.one_apply]
     exact if_congr eq_comm rfl rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finsupp.smul_apply, Finset.sum_apply, smul_eq_mul,
+    simp only [map_sum, map_smul, Finsupp.smul_apply, Finset.sum_apply', smul_eq_mul,
     Module.Basis.repr_self, Finsupp.single_apply]
   rw [← h2]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _

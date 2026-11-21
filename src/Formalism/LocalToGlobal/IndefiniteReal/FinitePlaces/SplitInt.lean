@@ -86,15 +86,14 @@ def valIdeal {w : HeightOneSpectrum (𝓞 D.host.F)} (ι : D.host.E →ₐ[D.hos
     exact lt_of_le_of_lt (mul_le_of_le_one_left zero_le (val_emb_le w ι c)) hx
 
 theorem valIdeal_prime {w : HeightOneSpectrum (𝓞 D.host.F)} (ι : D.host.E →ₐ[D.host.F] w.adicCompletion D.host.F) :
-    (valIdeal ι).IsPrime where
-  ne_top' := by
-    intro h
+    (valIdeal ι).IsPrime := by
+  constructor
+  · intro h
     have h1 : (1 : 𝓞 D.host.E) ∈ valIdeal ι := h ▸ Submodule.mem_top
     change Valued.v (ι ((1 : 𝓞 D.host.E) : D.host.E)) < 1 at h1
     rw [show ((1 : 𝓞 D.host.E) : D.host.E) = 1 from rfl, map_one, Valuation.map_one] at h1
     exact lt_irrefl _ h1
-  mem_or_mem' := by
-    intro x y hxy
+  · intro x y hxy
     change Valued.v (ι ((x * y : 𝓞 D.host.E) : D.host.E)) < 1 at hxy
     rw [show ((x * y : 𝓞 D.host.E) : D.host.E) = (x : D.host.E) * (y : D.host.E) from rfl, map_mul,
       Valuation.map_mul] at hxy

@@ -18,10 +18,9 @@ public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LeastPrimeTwi
 
 open IsLocalRing Filter Formalism.MainNotions.V.Pf.V2.Calc UpperTheory.V.Alg UpperTheory.V.Alg.M
 
-private theorem self_isGr {k : ℕ} (X : HidaSetting k) : (GMod.self X.𝒜).IsGr X.𝒜 where
-  smul_mem ha hx := X.gra.toGradedMonoid.toGradedMul.mul_mem ha hx
-  internal := DirectSum.Decomposition.isInternal X.𝒜
-  fin := Module.Finite.self X.R
+private theorem self_isGr {k : ℕ} (X : HidaSetting k) : (GMod.self X.𝒜).IsGr X.𝒜 := by
+  exact ⟨fun ha hx => X.gra.toGradedMonoid.toGradedMul.mul_mem ha hx,
+    DirectSum.Decomposition.isInternal X.𝒜, Module.Finite.self X.R⟩
 
 private theorem chain {k : ℕ} (X : HidaSetting k) (ts : List (Deg k × X.R)) (J : Ideal X.R) (a : X.R)
     (hJ : (GMod.self X.𝒜).IsHomSub J) (hv : Valid X.𝒜 (ts ++ [(0, a)]))
@@ -73,7 +72,8 @@ private theorem coef_hom (J : Ideal A) : (GMod.self (reesGr N)).IsHomSub (coefId
   · exact J.zero_mem
 
 private theorem coeff_alg (b : B) (p : rees N) (n : Fin k →₀ ℕ) :
-    MvPolynomial.coeff n (algebraMap B (rees N) b * p).1 = algebraMap B A b * AddMonoidAlgebra.coeff p.1 n := by
+    AddMonoidAlgebra.coeff (algebraMap B (rees N) b * p).1 n =
+      algebraMap B A b * AddMonoidAlgebra.coeff p.1 n := by
   show AddMonoidAlgebra.coeff (algebraMap B (MvPolynomial (Fin k) A) b * p.1) n = _
   rw [MvPolynomial.algebraMap_apply, MvPolynomial.coeff_C_mul]
 
