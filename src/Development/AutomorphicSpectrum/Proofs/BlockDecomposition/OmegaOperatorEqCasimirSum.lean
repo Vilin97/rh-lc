@@ -57,7 +57,7 @@ theorem mul_neg_add {A : Type*} [Ring A] (x y z t : A) : x * -y + z * t = z * t 
   rw [mul_neg]
   abel
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 open Classical in
 theorem atEmb_embedding_apply (w v : InfinitePlace E) (z : ℂ) :
@@ -207,7 +207,7 @@ theorem expansion (Y : (isExpLieAlgebra E a).lieSubalgebra) :
   simp only [term]
   simp [ev]
 
-theorem omegaOp_eq_two_cas (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a d : ℕ)
+theorem omegaOp_eq_two_cas (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a d : ℕ)
     (b : Module.Basis (Fin d) ℝ (AutomorphicForm.isExpLieAlgebra E a).lieSubalgebra) (ε : Fin d → ℝ)
     (hε : ∀ i, ε i = 1 ∨ ε i = -1)
     (horth : ∀ i j, AutomorphicForm.archTraceForm E a (b i) (b j) = if i = j then ε i else 0) :

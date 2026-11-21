@@ -53,7 +53,7 @@ theorem tw_heq {P : RowSideFamily ex} {Z1 Z2 : DefSub P.A3.fam3.amb3} (h : Z1 = 
   subst h
   rw [eq_of_heq hS]
 
-abbrev pkOf [IsTotallyComplex D.what₂.LL] {Rc : Formalism.L2.RecT ex} {P : RowSideFamily ex}
+abbrev pkOf [_root_.NumberField.IsTotallyComplex D.what₂.LL] {Rc : Formalism.L2.RecT ex} {P : RowSideFamily ex}
     {Dcf : ∀ Zs : DefSub P.A3.fam3.amb3, DefCols (P.A3.side3 P.Ps P.ψs Zs)} {Spf : ∀ Zs : DefSub P.A3.fam3.amb3, SPer (Dcf Zs)}
     {Zscf : DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3} {S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
@@ -61,7 +61,7 @@ abbrev pkOf [IsTotallyComplex D.what₂.LL] {Rc : Formalism.L2.RecT ex} {P : Row
     (hP : CovolumeOntoIsometryConditions Q.Rl (faceT P Dcf Spf Zscf) Q.sEE (hkCan P.A3) Cl CHl) (hI : PassIn3 Q.Rl (faceT P Dcf Spf Zscf) Cl CHl) :=
   primitivePackageFullHecke hOk hsep Q.Rl (faceT P Dcf Spf Zscf) Q.sEE (hkCan P.A3) Cl CHl Q.charW hP hI
 
-def InpAt [IsTotallyComplex D.what₂.LL] {Rc : Formalism.L2.RecT ex} {P : RowSideFamily ex} {X : Formalism.L2.Col.Fields}
+def InpAt [_root_.NumberField.IsTotallyComplex D.what₂.LL] {Rc : Formalism.L2.RecT ex} {P : RowSideFamily ex} {X : Formalism.L2.Col.Fields}
     {e : X.Tau → (X.E →+* D.what₂.LL)} (c : ColRec3 (fieldsLL D X e) P.A3 P.Ps P.ψs)
     {Sp : ∀ Zs : DefSub P.A3.fam3.amb3, SPer (c.face Zs)} {Zsc : DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3}
     {S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
@@ -82,7 +82,7 @@ def InpAt [IsTotallyComplex D.what₂.LL] {Rc : Formalism.L2.RecT ex} {P : RowSi
           (I.wU u) (Cons.nuOf L u (I.eNu u)) (sgRec L u),
         ∃ hQ : ∀ u, ChainTie (inp u).ch (c.memQ (I.wU u)), ∀ u, FirstCols c.hE (hQ u)
 
-def RowsU [IsTotallyComplex D.what₂.LL] {P : RowSideFamily ex} {X : Formalism.L2.Col.Fields}
+def RowsU [_root_.NumberField.IsTotallyComplex D.what₂.LL] {P : RowSideFamily ex} {X : Formalism.L2.Col.Fields}
     {e : X.Tau → (X.E →+* D.what₂.LL)} (c : ColRec3 (fieldsLL D X e) P.A3 P.Ps P.ψs)
     {Sp : ∀ Zs : DefSub P.A3.fam3.amb3, SPer (c.face Zs)} {Zsc : DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3}
     {cf : ConvFace P.A3.fam3.base3} {Cl CHl : ℝ}

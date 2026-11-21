@@ -26,7 +26,7 @@ theorem exists_enum {X : Type} (M : Multiset X) {a : ℕ} (h : M.card = a) :
   intro n h1 h2
   simp
 
-theorem bumpData : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CG E a), π.IsUnitary →
+theorem bumpData : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CG E a), π.IsUnitary →
     ∀ T : Finset (HeightOneSpectrum (𝓞 E)), UnrOutside T π →
     ∃ (α : {w : HeightOneSpectrum (𝓞 E) // w ∉ T} → Fin a → ℂˣ) (π₀ : CuspSub E a) (ω : HChar E),
       (∀ w, Finset.univ.val.map (α w) = sat π w) ∧ CG.mk π₀ = π ∧ ω.IsUnitary ∧ π₀.HasCentChar ω ∧ π₀.IsUnitary ∧

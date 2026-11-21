@@ -18,7 +18,7 @@ noncomputable section
 
 namespace GlobalTheory.JSWPosR
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem kernel_mem_bddForms {ω : HChar E} {F : GA E a → ℂ} (h : F ∈ bddForms E a ω) {X : Type} [MeasurableSpace X]
     (ν : Measure X) (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E)) (hk : GlobalTheory.JSW.IsRapidInf ν k γ) :

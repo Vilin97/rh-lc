@@ -35,7 +35,7 @@ open GlobalTheory.CuspRep.ParLaws
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {a : ℕ}
 
-theorem locParT_eq_locComp [IsTotallyComplex E] (hT : UpperTheory.Zero.LLC.RecTExists) {π : CuspSub E a}
+theorem locParT_eq_locComp [_root_.NumberField.IsTotallyComplex E] (hT : UpperTheory.Zero.LLC.RecTExists) {π : CuspSub E a}
     {σ : SmIrr (GL (Fin a) (w.adicCompletion E))} (hσ : π.IsLocComp w σ) (h : IsPlaceOver A w) :
     locParT hT (CG.mk π) h = locRecT hT h (cls (toRep σ)) := by
   have h1 : (CG.mk π).IsLoc w (Quotient.mk _ σ) := hσ

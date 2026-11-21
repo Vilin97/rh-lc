@@ -51,7 +51,7 @@ theorem qdet_restrict {V : Type} [AddCommGroup V] [Module ℂ V] (S : Submodule 
   rw [← h1, ← h2]
   exact hZ x
 
-theorem qdet_EopV_val : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a)
+theorem qdet_EopV_val : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CuspSub E a)
     (τ : E →+* ℂ) (u : ℂ) (φ : π.V),
     (Formalism.REAL.qdet (EopV π τ) (u + ((a : ℂ) - 1) / 2) φ).1 = cap τ u φ.1 := by
   intro E _ _ _ a π τ u φ

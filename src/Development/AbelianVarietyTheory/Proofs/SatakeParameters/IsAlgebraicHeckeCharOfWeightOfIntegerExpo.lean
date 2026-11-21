@@ -12,7 +12,7 @@ open NumberField Formalism.L2.Host GlobalTheory.HeckeGal GlobalTheory.CuspRep Gl
 
 namespace GlobalTheory.CuspRep.AlgExpo
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem dchi_atEmb (χ : HChar E) (τ : E →+* ℂ) (z : ℂ) :
     dchi χ (atEmb τ z) = expo χ τ * z + expo χ (ComplexEmbedding.conjugate τ) * starRingEnd ℂ z := by
@@ -47,7 +47,7 @@ theorem chiInf_eq_prod (χ : HChar E) (n : (E →+* ℂ) → ℤ) (hn : ∀ τ, 
   refine Finset.prod_congr rfl fun φ _ => ?_
   rw [coord_expU, hn, ← Complex.exp_int_mul]
 
-theorem isAlgPos_of_expo : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (χ : HChar E)
+theorem isAlgPos_of_expo : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (χ : HChar E)
     (n : (E →+* ℂ) → ℤ), (∀ τ, expo χ τ = n τ) → IsAlgPos χ n := by
   intro E _ _ _ χ n hn k _
   have e := chiInf_eq_prod χ n hn (Units.map (diagInf E).toMonoidHom k)

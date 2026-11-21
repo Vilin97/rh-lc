@@ -56,7 +56,7 @@ theorem count_rational (E : Type) [Field E] [NumberField E] (Q : Set (Af E)) (hQ
     _ ≤ |C| * (D * R) ^ N := mul_le_mul_of_nonneg_right (le_abs_self _) (by positivity)
     _ = |C| * (D : ℝ) ^ N * R ^ N := by rw [mul_pow]; ring
 
-theorem count_lattice (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (g₀ : GA E a)
+theorem count_lattice (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (g₀ : GA E a)
     (Q : Set (GA E a)) (hQ : IsCompact Q) :
     ∃ (C : ℝ) (N : ℕ), ∀ y : GL (Fin a) (Cinf E),
       {γ : GA E a | γ ∈ latticeGL E a ∧ (g₀ * infGL E a y)⁻¹ * γ * (g₀ * infGL E a y) ∈ Q}.Finite ∧
@@ -145,7 +145,7 @@ theorem count_lattice (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] 
     _ = (2 * n₀ + 1) * c₃ ^ (a * a) * H ^ (2 * N₂ * (a * a)) := by
         rw [mul_pow, ← pow_mul]; ring
 
-theorem moderate_growth : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (φ : Sm E a), (∀ γ g, φ.1 (ratGL E a γ * g) = φ.1 g) → (∀ t g, φ.1 (splitCentre E a t * g) = φ.1 g) → IsOpen {k | finRep E a k φ = φ} → FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k => cptRep E a k φ)) → FiniteDimensional ℂ (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) '' Zalg E a)) → MemL2Quotient (latticeGL E a) μ φ.1 → ∀ g, ∃ (C : ℝ) (N : ℕ), ∀ y, ‖φ.1 (g * infGL E a y)‖ ≤ C * height y ^ N := by
+theorem moderate_growth : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (φ : Sm E a), (∀ γ g, φ.1 (ratGL E a γ * g) = φ.1 g) → (∀ t g, φ.1 (splitCentre E a t * g) = φ.1 g) → IsOpen {k | finRep E a k φ = φ} → FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k => cptRep E a k φ)) → FiniteDimensional ℂ (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) '' Zalg E a)) → MemL2Quotient (latticeGL E a) μ φ.1 → ∀ g, ∃ (C : ℝ) (N : ℕ), ∀ y, ‖φ.1 (g * infGL E a y)‖ ≤ C * height y ^ N := by
   intro E _ _ _ a μ _ _ φ hl hc hlev hK hZ hL g
   classical
   letI : MeasurableSpace (AutomorphicForm.archGroup E a) := borel _

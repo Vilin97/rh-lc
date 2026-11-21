@@ -22,7 +22,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm
 
 namespace PositivityTheory.Rg.Rs.SliceClasses
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 theorem ctn_unip {φ : Sm E N} (hφ : IsAutForm φ) (r : ℕ) (x : BlockIx N r → Ad E) (g : GA E N) :
     An.ctn r φ.1 (unip x * g) = An.ctn r φ.1 g := by

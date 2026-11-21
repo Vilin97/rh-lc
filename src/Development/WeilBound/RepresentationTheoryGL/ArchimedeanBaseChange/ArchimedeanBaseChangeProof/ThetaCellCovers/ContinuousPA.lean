@@ -106,9 +106,9 @@ theorem redCell_of (h1 : SizeBasic) (h2 : DegBdd) (h3 : DegRat) (h4 : DegRight) 
 
 section Tor
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
-def pA (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (s : ℝ) : Ad E := 1 - sInf E 1 + sInf E fun _ => (s : ℂ)
+def pA (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (s : ℝ) : Ad E := 1 - sInf E 1 + sInf E fun _ => (s : ℂ)
 
 theorem posIdele_val (t : ℝ) : ((posIdele (K := E) (Real.exp t) (Real.exp_pos t) : (Ad E)ˣ) : Ad E) = pA E (Real.exp t) := by
   rw [GlobalTheory.CuspBoundSiegel.posIdele_exp, pA, Complex.ofReal_exp]

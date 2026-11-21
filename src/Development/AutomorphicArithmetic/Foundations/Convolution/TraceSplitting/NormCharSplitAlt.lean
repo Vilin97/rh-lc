@@ -67,7 +67,7 @@ private theorem loc_eq_one {F E : Type} [Field F] [NumberField F] [Field E] [Num
   rw [h2] at h3
   exact h3
 
-private theorem twist_inter {F : Type} [Field F] [NumberField F] [IsTotallyComplex F] {n : ℕ} (π : CuspSub F n) (η : HChar F)
+private theorem twist_inter {F : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] {n : ℕ} (π : CuspSub F n) (η : HChar F)
     (v : HeightOneSpectrum (𝓞 F)) (h : ∀ x, η.loc v x = 1) (g : GL (Fin n) (v.adicCompletion F)) (φ : π.V) :
     (π.twist η).locRep v g (π.toTwist η φ) = π.toTwist η (π.locRep v g φ) := by
   have hd : CuspSub.locDet n η v g = 1 := h _

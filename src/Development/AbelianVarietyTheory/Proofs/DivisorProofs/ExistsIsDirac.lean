@@ -13,12 +13,12 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.UnitaryBC GlobalTheory.CuspR
 open scoped ContDiff
 
 namespace GlobalTheory.GLFin.Inhab
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 section
 attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiffOn_invL : ContDiffOn ℝ ∞ (fun x : Lie E a => toL (Matrix.of x)⁻¹) (invSet E a) := by
   haveI : CompleteSpace (Matrix (Fin a) (Fin a) (Cinf E)) := FiniteDimensional.complete ℝ _
   let T : Matrix (Fin a) (Fin a) (Cinf E) →L[ℝ] Lie E a :=

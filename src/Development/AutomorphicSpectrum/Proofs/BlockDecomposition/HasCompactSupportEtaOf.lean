@@ -74,7 +74,7 @@ theorem eventually_rowGL [TopologicalSpace R] [IsTopologicalRing R]
 
 end Gen
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem exists_openSub (w : Pl E) {N : Set (w.adicCompletion E)} (hN : N ∈ 𝓝 (0 : w.adicCompletion E)) :
     ∃ B : AddSubgroup (w.adicCompletion E), IsOpen (B : Set (w.adicCompletion E)) ∧
@@ -239,7 +239,7 @@ end GlobalTheory.CompanionTheory.CutOff
 
 namespace GlobalTheory.CompanionTheory.CutOff
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem lastRowM_map {R T : Type} [CommRing R] [CommRing T] (p : R →+* T) (A : GL (Fin k) R) (c : Fin k) :
     p (lastRowM A.val c) = lastRowM (GeneralLinearGroup.map p A).val c := by

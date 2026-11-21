@@ -16,7 +16,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.G
 open scoped Classical ENNReal nonZeroDivisors
 
 theorem UpperTheory.ConvolutionTheory.R2.G.expand1 :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, ∀ h, Summable (fun ξ => ‖Wx W M f.1 φ h ξ‖) ∧
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, ∀ h, Summable (fun ξ => ‖Wx W M f.1 φ h ξ‖) ∧
     lift W M f.1 φ h = T0 W M f.1 φ h + ∑' ξ, Wx W M f.1 φ h ξ := by
   intro F E _ _ _ _ _ _ _ D W M π f hf φ hφ h
   haveI : Countable F := Finsupp.Countable.of_moduleFinite (R := ℚ)

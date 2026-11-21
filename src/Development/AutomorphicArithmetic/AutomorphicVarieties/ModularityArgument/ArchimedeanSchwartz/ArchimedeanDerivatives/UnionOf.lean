@@ -208,11 +208,11 @@ private theorem pick_spec {X : Type} {sat : X → Multiset ℂˣ → Prop} {w : 
   rw [pick, dite_eq_left h']
   exact h'.choose_spec
 
-private theorem sat_unique {F : Type} [Field F] [NumberField F] [IsTotallyComplex F] {n : ℕ} (σ : CuspSub F n)
+private theorem sat_unique {F : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] {n : ℕ} (σ : CuspSub F n)
     {w : HeightOneSpectrum (𝓞 F)} {B B' : Multiset ℂˣ} (h : (CG.mk σ).HasSat w B) (h' : (CG.mk σ).HasSat w B') : B = B' :=
   GlobalTheory.LFun.HasSatGL.unique ((CG.hasSat_mk σ w B).1 h) ((CG.hasSat_mk σ w B').1 h')
 
-private theorem sat_card {F : Type} [Field F] [NumberField F] [IsTotallyComplex F] {n : ℕ} (σ : CuspSub F n)
+private theorem sat_card {F : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] {n : ℕ} (σ : CuspSub F n)
     {w : HeightOneSpectrum (𝓞 F)} {B : Multiset ℂˣ} (h : (CG.mk σ).HasSat w B) : Multiset.card B = n :=
   GlobalTheory.LFun.HasSatGL.card ((CG.hasSat_mk σ w B).1 h)
 

@@ -42,7 +42,7 @@ theorem IsImageHeight.neg_log_le {K V Ω : Type} [Field K] [NumberField K] [AddC
   push_cast at h2
   linarith
 
-theorem imageHeight_add_log_nonneg (K V Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [AddCommGroup V]
+theorem imageHeight_add_log_nonneg (K V Ω : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V]
     [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Field Ω] [Algebra K Ω] (Nm : (K →+* ℂ) → V → ℝ)
     (L : Submodule (𝓞 K) V) (ev : V →ₗ[K] Ω) (d n : ℕ) (w : Fin n → V) (abelian₂ : ℝ) (hG : HasGram Nm)
     (hc : ∀ σ x, Nm ((starRingEnd ℂ).comp σ) x = Nm σ x) (hs : Submodule.span K (L : Set V) = ⊤)

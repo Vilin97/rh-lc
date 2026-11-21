@@ -51,7 +51,7 @@ private theorem mt_conj {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ �
   · rintro ⟨a, ha, rfl⟩
     simpa [MulSemiringAction.toRingHom_apply, AlgEquiv.smul_def] using ha
 
-private theorem mt_not_both (L : Type) [Field L] [NumberField L] [IsTotallyReal L] [IsTotallyComplex L] : False := by
+private theorem mt_not_both (L : Type) [Field L] [NumberField L] [IsTotallyReal L] [_root_.NumberField.IsTotallyComplex L] : False := by
   obtain w : NumberField.InfinitePlace L := Classical.choice inferInstance
   exact (NumberField.InfinitePlace.not_isReal_iff_isComplex.mpr (IsTotallyComplex.isComplex w)) (IsTotallyReal.isReal w)
 

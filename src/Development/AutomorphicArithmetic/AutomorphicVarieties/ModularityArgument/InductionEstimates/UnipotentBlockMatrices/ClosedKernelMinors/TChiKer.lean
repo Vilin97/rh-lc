@@ -156,7 +156,7 @@ private theorem assemble {X : Type*} {d : ℕ} (S : Eu d →ₗ[ℂ] (X → ℂ)
 
 set_option maxHeartbeats 800000 in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.tChiKer :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)) {d : ℕ} (A : Line μ τ₁ τ₂ D d), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ → ∀ a : CC K (2 + 2), D.Hecke a →
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)) {d : ℕ} (A : Line μ τ₁ τ₂ D d), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ → ∀ a : CC K (2 + 2), D.Hecke a →
       ∃ β : ℝ → Eu d →L[ℂ] Eu d, Ker β ∧ ∀ (χ : ℝ → ℂ) (v : Eu d), Continuous χ → tChi μ a χ (A.sec v) = A.sec (∫ s, χ s • β s v) := by
   intro K _ _ _ μ _ μ₂ _ τ₁ τ₂ D d A h₁ h₂ a ha
   obtain ⟨hH1, -, -, hHc, -⟩ := hpSpec (K := K)

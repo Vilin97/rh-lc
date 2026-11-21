@@ -47,7 +47,7 @@ theorem exists_tsum_min_le {T : ℝ} (hT : 1 < T) : ∃ B : ℝ≥0∞, B ≠ �
   · refine (min_le_left _ _).trans (hv2.le.trans (le_of_eq ?_))
     rw [zpow_add_one₀ hT0.ne', _root_.zpow_neg, zpow_natCast, Int.natAbs_neg, Int.natAbs_natCast, inv_pow, mul_comm]
 
-theorem integrableOn_min_absDet : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ), 0 < m →
+theorem integrableOn_min_absDet : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ), 0 < m →
     ∀ (μ : Measure (GA E m)) [μ.IsHaarMeasure] (𝓕 : Set (GA E m)),
       IsFundamentalDomain (ratGL E m).range 𝓕 μ →
       IntegrableOn (fun h : GA E m => min (GroundTheory.Global.IdeleGroup.ideleModule E (GeneralLinearGroup.det h) : ℝ)

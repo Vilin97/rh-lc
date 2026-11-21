@@ -74,7 +74,7 @@ theorem isSatVecGL_of_mem_iSup {V W I : Type} [AddCommGroup V] [Module ℂ V] [A
     exact (SatCompare.heckeLin hc (Tj_mem_hecke hϖ j) σ).map_zero
   · exact (h.2 _ h1 h2).2.2.2 ϖ hϖ j hj
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem hasSatGL_locRep {π : CuspSub E n} {σ : SmIrr (GL (Fin n) (w.adicCompletion E))} (hσ : π.IsLocComp w σ)
     {B : Multiset ℂˣ} (h : HasSatGL w σ.ρ B) : HasSatGL w (π.locRep w) B := by
@@ -121,7 +121,7 @@ theorem loc_of_isAbsPow {ν : HChar E} {s : ℝ} (hν : ν.IsAbsPow s) (w : Heig
   push_cast
   ring
 
-variable [IsTotallyComplex E] (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL)
+variable [_root_.NumberField.IsTotallyComplex E] (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL)
 
 
 

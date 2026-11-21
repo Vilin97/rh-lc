@@ -13,7 +13,7 @@ open GlobalTheory.CuspRep (Cinf Lie chart infGL pInf sInf toL lmul invSet)
 open scoped SchwartzMap FourierTransform RealInnerProductSpace ContDiff Topology
 open UpperTheory.V UpperTheory.V.Af.StrongMultiplicityOne
 
-private theorem conv_left {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (f : GA E n → ℂ)
+private theorem conv_left {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (f : GA E n → ℂ)
     (α : Lie E n → ℂ) (z : GA E n) (h : ∀ g, f (z * g) = f g) (g : GA E n) : Af.StrongMultiplicityOne.conv f α (z * g) = Af.StrongMultiplicityOne.conv f α g := by
   have e : chart f (z * g) = chart f g := by
     funext x

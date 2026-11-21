@@ -20,7 +20,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.DiscSMO
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a c N : ℕ} {n : Fin c → ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a c N : ℕ} {n : Fin c → ℕ}
   {π π' : ∀ i, CuspSub E (n i)}
 
 

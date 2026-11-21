@@ -24,15 +24,15 @@ noncomputable section
 
 namespace GlobalTheory.MSpanDecay.RapidLie
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem norm_entry_le (A : Matrix (Fin a) (Fin a) (Cinf E)) (i j : Fin a) : ‖A i j‖ ≤ ‖toL A‖ :=
   (norm_le_pi_norm (toL A i) j).trans (norm_le_pi_norm (toL A) i)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem norm_toL_mul_le (A B : Matrix (Fin a) (Fin a) (Cinf E)) : ‖toL (A * B)‖ ≤ a * (‖toL A‖ * ‖toL B‖) := by
   refine (pi_norm_le_iff_of_nonneg (by positivity)).2 fun i => (pi_norm_le_iff_of_nonneg (by positivity)).2 fun j => ?_
   change ‖(A * B) i j‖ ≤ _
@@ -42,7 +42,7 @@ theorem norm_toL_mul_le (A B : Matrix (Fin a) (Fin a) (Cinf E)) : ‖toL (A * B)
   · simp
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem measurable_comp_of_continuousOn {X : Type} [MeasurableSpace X] {f : Lie E a → ℂ}
     (hf : ContinuousOn f (invSet E a)) {φ : X → Lie E a} (hφ : Measurable φ) (hφ' : ∀ x, φ x ∈ invSet E a) :
     Measurable fun x => f (φ x) := by
@@ -51,7 +51,7 @@ theorem measurable_comp_of_continuousOn {X : Type} [MeasurableSpace X] {f : Lie 
   exact hf.restrict.measurable.comp (hφ.subtype_mk)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem measurable_inv {X : Type} [MeasurableSpace X] {γ : X → GL (Fin a) (Cinf E)}
     (hγ : Measurable fun x => toL (γ x).val) : Measurable fun x => toL ((γ x)⁻¹).val := by
   have key : ∀ y : GL (Fin a) (Cinf E), ((y⁻¹ : GL (Fin a) (Cinf E)) : Matrix (Fin a) (Fin a) (Cinf E)) =
@@ -103,10 +103,10 @@ end GlobalTheory.MSpanDecay.RapidLie
 
 namespace GlobalTheory.MSpanDecay.RapidLie
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem norm_conj_le (y : GL (Fin a) (Cinf E)) (Y : Lie E a) :
     ‖toL ((y⁻¹).val * Matrix.of Y * y.val)‖ ≤ a * a * ‖Y‖ * height y ^ 2 := by
   have h1 : ‖toL y.val‖ ≤ height y := by unfold height; linarith [norm_nonneg (toL (y⁻¹).val)]
@@ -140,7 +140,7 @@ namespace GlobalTheory.MSpanDecay
 
 
 open RapidLie in
-theorem integral_lieD_conj_mem_kSpan : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (G : GA E a → ℂ) (X : Type) [MeasurableSpace X] (ν : Measure X) [SFinite ν] (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E)) (Y : Lie E a), GlobalTheory.JSW.IsRapidInf ν k γ → GlobalTheory.MSpanDecay.Good G → (fun g : GA E a => ∫ x, k x * lieD (toL (((γ x)⁻¹).val * Matrix.of Y * (γ x).val)) G (g * infGL E a (γ x)) ∂ν) ∈ GlobalTheory.MSpanDecay.kSpan E a := by
+theorem integral_lieD_conj_mem_kSpan : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (G : GA E a → ℂ) (X : Type) [MeasurableSpace X] (ν : Measure X) [SFinite ν] (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E)) (Y : Lie E a), GlobalTheory.JSW.IsRapidInf ν k γ → GlobalTheory.MSpanDecay.Good G → (fun g : GA E a => ∫ x, k x * lieD (toL (((γ x)⁻¹).val * Matrix.of Y * (γ x).val)) G (g * infGL E a (γ x)) ∂ν) ∈ GlobalTheory.MSpanDecay.kSpan E a := by
   intro E _ _ _ a G X _ ν _ k γ Y hk hG
   obtain ⟨hkm, hγm, hint⟩ := hk
   have hγ : Measurable fun x => toL (γ x).val := hγm

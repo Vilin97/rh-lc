@@ -10,7 +10,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 
 section
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem one_lt_top (ha : 0 < a) : 1 < detModule E a (splitCentre E a 1) := by
   rw [splitEq_holds E a 1, detModule_centralSection ha]
@@ -40,7 +40,7 @@ private theorem muOne_apply (μ : Measure (GA E a)) {A : Set (G1 E a)} (hA : Mea
     muOne μ A = μ (retractOne ⁻¹' A ∩ band E a) := by
   rw [muOne, Measure.map_apply meas_retract hA, Measure.restrict_apply (meas_retract hA)]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem retract_mul_left (x : G1 E a) (g : GA E a) :
     retractOne ((x : GA E a) * g) = x * retractOne g := by
   ext1

@@ -13,7 +13,7 @@ open NumberField GroundTheory.Automorphic Module Matrix Topology MeasureTheory
 noncomputable section
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 section Form
@@ -37,7 +37,7 @@ def heisForm (h : HermitianForm F E W) (v : Basis ι E W) (x₀ w₀ : W) :
       simp only [Submodule.coe_smul, Pi.smul_apply, real_smul_vec, hForm_smul_right,
         Complex.re_ofReal_mul, smul_eq_mul, Finset.mul_sum])
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] [DecidableEq ι] in
+omit [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] [DecidableEq ι] in
 theorem heisForm_apply (y z : heisY h v x₀ w₀) :
     heisForm h v x₀ w₀ y z = ∑ w, (hForm (gramAt h v w) ((y : InfinitePlace E → ι → ℂ) w)
       ((z : InfinitePlace E → ι → ℂ) w)).re := rfl

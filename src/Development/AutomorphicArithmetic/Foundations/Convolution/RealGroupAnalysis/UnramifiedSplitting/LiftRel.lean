@@ -57,7 +57,7 @@ private theorem co_mkE' {F E : Type} [Field F] [NumberField F] [Field E] [Number
     D.co (D.mkE u 0) 1 = 0 := by rw [coordinate_embedNorm_zero]; simp
 
 theorem UpperTheory.ConvolutionTheory.R2.H.liftRel :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, ∀ h₀ : GL (Fin 2) (A E),
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, ∀ h₀ : GL (Fin 2) (A E),
       ∀ᶠ v : P F in cofinite, W.η.UnrAt v → W.η.val v = -1 → ∀ α β : ℂˣ, π.HasSat v {α, β} → ∀ (ϖ : (Kv v)ˣ) (z : (A E)ˣ), IsU ϖ →
         (z : A E) = D.mkE (idl v ϖ : (A F)ˣ) 0 → ideleNorm F E z = idl v ϖ ^ 2 →
         WE D (lift W M f.1 φ) (aE z * h₀) = (q v)⁻¹ * ((α : ℂ) ^ 2 + (β : ℂ) ^ 2) * WE D (lift W M f.1 φ) h₀ ∧

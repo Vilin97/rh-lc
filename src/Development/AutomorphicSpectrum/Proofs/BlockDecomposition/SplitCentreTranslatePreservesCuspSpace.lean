@@ -10,7 +10,7 @@ open NumberField GlobalTheory.CuspRep MeasureTheory PositivityTheory.Affgl
 
 namespace GlobalTheory.CompanionTheory.CuspFinGL.Transl
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem rt_comm_of_central {h : GA E a} (hc : ∀ g : GA E a, h * g = g * h) (x : GA E a) (φ : Sm E a) :
     rt E a x (rt E a h φ) = rt E a h (rt E a x φ) := by
@@ -60,7 +60,7 @@ theorem isAutForm_rt_of_central {h : GA E a} (hc : ∀ g : GA E a, h * g = g * h
     rw [e]
     exact hb y
 
-theorem rt_splitCentre_mem : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem rt_splitCentre_mem : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (L : Subgroup (GL (Fin a) (Af E))) (W : Type) [AddCommGroup W] [Module ℂ W]
     (ρ : Representation ℂ (Kinf E a) W) (J : Set (Module.End ℂ (Sm E a))), J ⊆ Zalg E a →
     ∀ φ : Sm E a, φ ∈ genSpace L ρ J → IsCuspidal φ.1 → ∀ t : ℝ,

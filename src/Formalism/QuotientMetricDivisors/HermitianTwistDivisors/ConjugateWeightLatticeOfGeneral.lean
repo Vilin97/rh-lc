@@ -177,7 +177,7 @@ theorem gram_hermAt {d : ℕ} (H : Matrix (Fin d) (Fin d) K)
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [hv0, Complex.star_def]
 
-theorem local_idW (hV : ValBasic) (hIC : IdxChange) (hJw : JwGramW) [IsTotallyComplex K]
+theorem local_idW (hV : ValBasic) (hIC : IdxChange) (hJw : JwGramW) [_root_.NumberField.IsTotallyComplex K]
     (v0 : InfinitePlace K) (hv0 : IsConjAt v0)
     (D : ℕ) (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ) (hXE : ∀ v, IsUnit (XE v).det)
     (XQ0 XQ1 : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ) (hXQ0 : ∀ v, IsUnit (XQ0 v).det)

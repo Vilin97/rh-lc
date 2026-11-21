@@ -53,7 +53,7 @@ end GlobalTheory.GLInfReduction
 
 
 open GlobalTheory.GLInfReduction in
-theorem GlobalTheory.GLInfReduction.exists_cover_of_finite_measure (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+theorem GlobalTheory.GLInfReduction.exists_cover_of_finite_measure (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     (a : ℕ) (Λ : Submodule (𝓞 E) (Fin a → E)) (hΛ : Submodule.IsLattice E Λ)
     [MeasurableSpace (GL (Fin a) (Cinf E))] [BorelSpace (GL (Fin a) (Cinf E))]
     (ν : Measure (GL (Fin a) (Cinf E))) [ν.IsHaarMeasure] :

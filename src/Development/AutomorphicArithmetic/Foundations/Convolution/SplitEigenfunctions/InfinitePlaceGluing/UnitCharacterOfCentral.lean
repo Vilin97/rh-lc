@@ -23,7 +23,7 @@ open scoped Classical
 namespace UpperTheory.ConvolutionTheory.RankTwoDescent
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private noncomputable def Bt (M : Meas ℚ) (Φ : GL (Fin 2) (A E) → ℂ) (t : IdeleGroup ℚ) : ℂ :=
   ∫ g in M.D, Φ (em E (gl g * dM t)) ∂M.μ
@@ -84,7 +84,7 @@ private theorem Bt_rat (M : Meas ℚ) {Φ : GL (Fin 2) (A E) → ℂ} (hl : ∀ 
 end
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem UPer_eq (D : Dat ℚ E) (M : Meas ℚ) {ω : HChar ℚ} {Φ : GL (Fin 2) (A E) → ℂ}
     (hcen : ∀ z g, Φ (Matrix.GeneralLinearGroup.scalar (Fin 2) z * g) = ((ω.1 (ideleNorm ℚ E z) : ℂˣ) : ℂ) * Φ g) (t : IdeleGroup ℚ) :

@@ -12,7 +12,7 @@ open NumberField Matrix UpperTheory.V UpperTheory.V.KT
 open scoped ComplexOrder
 
 theorem UpperTheory.V.KT.stabfin :
-    ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (v : Vx L N),
+    ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (v : Vx L N),
     Finite (MulAction.stabilizer (Gm L N) v) := by
   intro L _ _ _ N v
   classical

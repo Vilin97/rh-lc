@@ -21,7 +21,7 @@ namespace DiscreteGroups.sglob.DzType.Rt
 open ValuativeRel GlobalTheory.WeilDeligne GlobalTheory.LocGL GlobalTheory.LocLanglands GlobalTheory.DepthZeroRankOneLabel
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {g : ℕ} [Fact g.Prime]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
-theorem character_inertia_eq_of_congruent_generator [IsTotallyComplex E] (H : _root_.DiscreteGroups.sglob.DzType.DepthZeroInertiaBigAlt) {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
+theorem character_inertia_eq_of_congruent_generator [_root_.NumberField.IsTotallyComplex E] (H : _root_.DiscreteGroups.sglob.DzType.DepthZeroInertiaBigAlt) {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
     {ε : EpsFamily A} {rc : IrrGL (k := w.adicCompletion E) → WD h} (hl : _root_.UpperTheory.One.M.LawsM a ha ε rc)
     (i : ℚ_[g] ≃+* w.adicCompletion E) (hi : Continuous i) (hw : ((g : ℕ) : 𝓞 E) ∈ w.asIdeal)
     (κ : IsLocalRing.ResidueField A ≃+* Formalism.CyclotomicNorms.Fbar g) (L : GlobalTheory.GLq.LabelDatum g) (t : G E Ω) (ht : t ∈ Ine (F := E) A)

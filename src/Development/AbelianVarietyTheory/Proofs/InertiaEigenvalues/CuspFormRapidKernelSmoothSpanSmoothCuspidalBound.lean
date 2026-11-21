@@ -18,7 +18,7 @@ open NumberField MeasureTheory Matrix GlobalTheory.CuspRep GlobalTheory.JSW
 
 namespace GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem mem_mspanR_of_mem {π : CuspSub E a} {φ : Sm E a} (h : φ ∈ π.V) : φ.1 ∈ mspanR π :=
   Submodule.mem_sInf.2 fun _ hS => hS.1 φ h
@@ -218,7 +218,7 @@ theorem mspanR_words (hB : GlobalTheory.Published.CuspFormsBoundedGL) {π : Cusp
   obtain ⟨φ, hφ, rfl⟩ := mspanR_le hB hπ hF
   exact ⟨φ, rfl, mem_dSub.1 hφ⟩
 
-theorem mspanR_smooth : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
+theorem mspanR_smooth : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
     GlobalTheory.Published.CuspFormsBoundedGL → ∀ π : CuspSub E a, π.IsUnitary → ∀ F ∈ mspanR π, ∃ φ : Sm E a, φ.1 = F ∧
       (∀ l, (GlobalTheory.GLFin.word l φ).1 ∈ mspanR π) ∧ IsCuspidal F ∧ ∃ C : ℝ, ∀ g, ‖F g‖ ≤ C := by
   intro E _ _ _ a hB π hπ F hF

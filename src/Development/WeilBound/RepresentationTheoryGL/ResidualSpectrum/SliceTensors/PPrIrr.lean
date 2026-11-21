@@ -12,7 +12,7 @@ open NumberField MeasureTheory GlobalTheory.AutomorphicL2Unitary GlobalTheory.Cu
 
 namespace PositivityTheory.Rg.Rs.PrIrr
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 theorem isStable_sInf (S : Set (Submodule ℂ (Sm E N))) (hS : ∀ U ∈ S, _root_.GlobalTheory.CuspRep.IsStable U) : _root_.GlobalTheory.CuspRep.IsStable (sInf S) := by
   intro o φ hφ

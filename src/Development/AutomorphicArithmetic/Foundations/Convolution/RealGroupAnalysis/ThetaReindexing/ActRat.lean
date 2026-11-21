@@ -42,7 +42,7 @@ private theorem herm_rt (D : Dat F E) (ξ : Fin 4 → F) :
   · exact e3
   · exact e0 _
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private theorem ab_nu (γ : GL (Fin 2) E) : ab (nu F (ratGL E 2 γ)) = 1 := by
   have hd : Matrix.GeneralLinearGroup.det (ratGL E 2 γ) =
@@ -78,7 +78,7 @@ end
 end UpperTheory.ConvolutionTheory.R2.D
 
 theorem UpperTheory.ConvolutionTheory.R2.D.thL :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex E] (D : Dat F E) (γ : GL (Fin 2) E) (φ : V4 F → ℂ),
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (γ : GL (Fin 2) E) (φ : V4 F → ℂ),
     Th (fun v => (((ab (nu F (ratGL E 2 γ)))⁻¹ : ℝ) : ℂ) * φ (D.act (ratGL E 2 γ)⁻¹ v)) = Th φ := by
   intro F E _ _ _ _ _ _ D γ φ
   obtain ⟨ρ, hρ, -, -⟩ := UpperTheory.ConvolutionTheory.R2.D.actMat F E D

@@ -10,7 +10,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrow
 
 namespace GlobalTheory
 
-theorem finite_translates_of_isCompact (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+theorem finite_translates_of_isCompact (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     (a : ℕ) (φ : Sm E a) (h : IsOpen {k | finRep E a k φ = φ})
     (Kf : Set (GL (Fin a) (Af E))) (hK : IsCompact Kf) :
     ∃ S : Finset (GL (Fin a) (Af E)), ∀ f ∈ Kf, ∃ f' ∈ S,

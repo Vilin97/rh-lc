@@ -15,7 +15,7 @@ open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspR
 open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.H
 
 theorem UpperTheory.ConvolutionTheory.R2.split :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), St.Split W M π := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), St.Split W M π := by
   intro F E _ _ _ _ _ _ _ D W M π h0 Q hQ v w i hi hc σ σ' hσ hσ'
   obtain ⟨θ, hθ⟩ := UpperTheory.ConvolutionTheory.R2.I.splt F E D v w i hi hc
   obtain ⟨ι, hι, he⟩ := hσ'

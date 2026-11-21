@@ -18,7 +18,7 @@ attribute [-instance] Formalism.DoubleCosetMeasures.instMeasGL
 namespace UpperTheory.Gal.GamX
 
 def CharSupp : Prop :=
-  ∀ (K L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L]
+  ∀ (K L : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] [Algebra K L]
     [IsGalois K L], (Module.finrank K L).Prime → ∀ n : ℕ, 1 ≤ n → ∀ (π : CuspSub K n) (P : CuspSub L n),
     WeakBC (CG.mk π).HasSat (CG.mk P).HasSat →
     ∀ (v : HeightOneSpectrum (𝓞 K)) (u : HeightOneSpectrum (𝓞 L)) [u.asIdeal.LiesOver v.asIdeal]
@@ -28,7 +28,7 @@ def CharSupp : Prop :=
           fun j => GlobalTheory.BCChar.isSmoothChar_comp_normU v u (hξ j))
 
 def CharLiftPrime : Prop :=
-  ∀ (K L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L]
+  ∀ (K L : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] [Algebra K L]
     [IsGalois K L], (Module.finrank K L).Prime → ∀ a : ℕ, 1 ≤ a → ∀ (π : CuspSub K a) (P : CuspSub L a),
     GlobalTheory.GalCut.IsLift π P → GlobalTheory.RoadU.CharLift π P
 

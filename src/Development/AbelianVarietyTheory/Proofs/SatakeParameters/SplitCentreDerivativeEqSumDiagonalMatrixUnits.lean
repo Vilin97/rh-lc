@@ -24,7 +24,7 @@ open GlobalTheory.GalCut GlobalTheory.Published
 
 namespace GlobalTheory.CuspRep.ZcTrace
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 def conjPerm : Equiv.Perm (E →+* ℂ) where
   toFun := ComplexEmbedding.conjugate
@@ -71,7 +71,7 @@ namespace GlobalTheory.ResW
 
 
 open GlobalTheory.CuspRep.ZcTrace in
-theorem zc_eq_sum_Eop : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), GlobalTheory.ResW.zc E a = ∑ τ : E →+* ℂ, ∑ i : Fin a, GlobalTheory.CuspRep.Eop τ i i := by
+theorem zc_eq_sum_Eop : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), GlobalTheory.ResW.zc E a = ∑ τ : E →+* ℂ, ∑ i : Fin a, GlobalTheory.CuspRep.Eop τ i i := by
   intro E _ _ _ a
   rw [Finset.sum_comm]
   set_option synthInstance.maxHeartbeats 100000 in

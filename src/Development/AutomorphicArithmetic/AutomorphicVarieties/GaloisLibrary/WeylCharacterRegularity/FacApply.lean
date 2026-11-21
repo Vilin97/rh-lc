@@ -81,7 +81,7 @@ theorem dOf_fac (P : Weyl.Pre a) (N : ℕ) (τ : E →+* ℂ) (X : Lie E a) :
   ring
 
 open Classical in
-theorem eOf_fac [IsTotallyComplex E] (P : Weyl.Pre a) (N : ℕ) (τ' τ : E →+* ℂ) (i j : Fin a) :
+theorem eOf_fac [_root_.NumberField.IsTotallyComplex E] (P : Weyl.Pre a) (N : ℕ) (τ' τ : E →+* ℂ) (i j : Fin a) :
     eOf (fac P N τ') τ i j =
       if τ' = τ then P.E i j + (if i = j then algebraMap ℂ _ (-(N : ℂ)) else 0) else 0 := by
   have h1 : ∀ x : Cinf E, dOf (fac P N τ') (toL (Matrix.single i j x)) =

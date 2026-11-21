@@ -12,7 +12,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep GlobalTheory.JSW Filter T
 
 namespace GlobalTheory.RSNonvan
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 def lfac {a b : ℕ} (σ : CG E a) (σ' : CG E b) (s : ℂ) (w : HeightOneSpectrum (𝓞 E)) : ℂ :=
   locL (Ideal.absNorm w.asIdeal) (sat σ w) ((sat σ' w).map (Units.map (starRingEnd ℂ).toMonoidHom)) s

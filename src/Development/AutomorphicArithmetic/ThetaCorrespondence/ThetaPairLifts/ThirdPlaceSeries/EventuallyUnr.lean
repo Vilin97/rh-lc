@@ -40,7 +40,7 @@ theorem reciprocity_eq_diagonal_inv_of_has_satake (H : _root_.UpperTheory.Zero.L
   have φ := equivRep σ
   exact H.sat (cls σ) α ⟨IrrRep.irr _, fixed_ne_bot_of_equiv φ hα.2.1,
     (IsSubquotient.of_surjective φ.toIntertwiningMap φ.toLinearEquiv.surjective).trans hα.2.2⟩
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 variable (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL)
 theorem local_parameter_eq_reciprocity_of_is_local_component {π : CuspSub E a} {σ : SmIrr (GL (Fin a) (w.adicCompletion E))} (hσ : π.IsLocComp w σ)
     (h : IsPlaceOver A w) : _root_.GlobalTheory.CuspRep.ParLawsT.locParT hL (CG.mk π) h = _root_.GlobalTheory.CuspRep.ParLawsT.locRecT hL h (cls (toRep σ)) := by

@@ -49,7 +49,7 @@ def JwGramW : Prop :=
       jw H w T = - vw w (gramR H f)
 
 def StepBW : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (K0 : Subfield K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (K0 : Subfield K),
     IsCMSub K0 → ∀ v0 : InfinitePlace K, IsConjAt v0 →
     ∀ (D : ℕ) (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ), (∀ v, IsUnit (XE v).det) →
     ∀ (Tup : Type) (μ0 : Tup) (μ : HeightOneSpectrum (𝓞 K) → Tup), (∀ w, μ (conjPl w) = μ w) →
@@ -89,7 +89,7 @@ def StepBW : Prop :=
            (jw (HT j (μ w)) w (T j (μ w)) : ℝ)))
 
 def StepBRW : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (K0 : Subfield K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (K0 : Subfield K),
     IsCMSub K0 → ∀ v0 : InfinitePlace K, IsConjAt v0 →
     ∀ (D : ℕ) (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ), (∀ v, IsUnit (XE v).det) →
     ∀ (Tup : Type) (μ0 : Tup) (μ : HeightOneSpectrum (𝓞 K) → Tup), (∀ w, μ (conjPl w) = μ w) →
@@ -133,7 +133,7 @@ def StepBRW : Prop :=
            (jw (HT j (μ w)) w (T j (μ w)) : ℝ)))
 
 def BoundsChainW : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (K0 : Subfield K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (K0 : Subfield K),
     IsCMSub K0 → ∀ v0 : InfinitePlace K, IsConjAt v0 →
     ∀ (D : ℕ) (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ), (∀ v, IsUnit (XE v).det) →
     ∀ (Tup : Type) (μ0 : Tup) (μ : HeightOneSpectrum (𝓞 K) → Tup), (∀ w, μ (conjPl w) = μ w) →

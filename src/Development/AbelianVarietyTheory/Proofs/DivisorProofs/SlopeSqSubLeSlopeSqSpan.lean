@@ -123,7 +123,7 @@ theorem denseRange_of_not_isReal {K : Type} [Field K] {σ : K →+* ℂ} (hσ : 
   · rw [denseRange_iff_closure_range, ← RingHom.coe_fieldRange]
     exact congrArg (fun s : Subfield ℂ => (s : Set ℂ)) h
 
-theorem sum_mk (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (g : InfinitePlace K → ℝ) :
+theorem sum_mk (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (g : InfinitePlace K → ℝ) :
     ∑ σ : K →+* ℂ, g (InfinitePlace.mk σ) = 2 * ∑ v, g v := by
   classical
   rw [← Finset.sum_fiberwise (s := Finset.univ) (g := fun σ : K →+* ℂ => InfinitePlace.mk σ), Finset.mul_sum]
@@ -132,7 +132,7 @@ theorem sum_mk (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (g : In
     Finset.sum_const, nsmul_eq_mul, InfinitePlace.card_filter_mk_eq, (IsTotallyComplex.isComplex v).mult_eq_two]
   rfl
 
-theorem sum_comap (K K' : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field K'] [NumberField K']
+theorem sum_comap (K K' : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field K'] [NumberField K']
     [Algebra K K'] (g : InfinitePlace K → ℝ) :
     ∑ w : InfinitePlace K', g (w.comap (algebraMap K K')) = finrank K K' * ∑ v, g v := by
   classical
@@ -177,7 +177,7 @@ theorem normAt_sum (x : Fin j → K) :
 
 end Frames
 
-theorem gram_le {K K' V V' ι κ : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] [Field K']
+theorem gram_le {K K' V V' ι κ : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] [Field K']
     [NumberField K'] [StarRing K'] [Algebra K K'] [AddCommGroup V] [Module K V] [AddCommGroup V'] [Module K' V']
     [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] {b : Basis ι K V} {X : InfinitePlace K → Matrix ι ι ℂ}
     {b' : Basis κ K' V'} {X' : InfinitePlace K' → Matrix κ κ ℂ} {N : (K →+* ℂ) → V → ℝ} {N' : (K' →+* ℂ) → V' → ℝ}
@@ -222,7 +222,7 @@ theorem gram_le {K K' V V' ι κ : Type} [Field K] [NumberField K] [StarRing K] 
     rw [← Complex.norm_conj]
     simp [Matrix.mulVec, dotProduct, hB]
 
-theorem rk_mul_mu_eq {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] [AddCommGroup V]
+theorem rk_mul_mu_eq {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V]
     [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι] (b : Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ) (hX : ∀ v, IsUnit (X v).det) {j : ℕ} (e : Fin j → V)
     (he : LinearIndependent K e) (L : Submodule (𝓞 K) V) (hL : L.FG)
@@ -250,7 +250,7 @@ theorem rk_mul_mu_eq {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsT
     rw [h5, mul_div_cancel₀ _ Formalism.ExtensionFiltration.HermitianIdempotentFrameLemmas.nPl_ne_zero]
     linarith
 
-theorem slope_sq_sub_le_slope_sq_span : ∀ (K K' V V' : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field K'] [NumberField K'] [Algebra K K'] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [AddCommGroup V'] [Module K' V'] [Module (𝓞 K') V'] [IsScalarTower (𝓞 K') K' V'] (N : (K →+* ℂ) → V → ℝ) (N' : (K' →+* ℂ) → V' → ℝ) (ι : V →ₛₗ[algebraMap K K'] V') (L : Submodule (𝓞 K) V) (c : ℝ), HasGram N → HasGram N' → (∀ σ x, N ((starRingEnd ℂ).comp σ) x = N σ x) → (∀ (n : ℕ) (b : Fin n → V), LinearIndependent K b → LinearIndependent K' (fun k => ι (b k))) → L.FG → L ≠ ⊥ → (∀ σ' x, N' σ' (ι x) ≤ Real.exp c * N (σ'.comp (algebraMap K K')) x) → slope_sq N L - 2 * c ≤ slope_sq N' (Submodule.span (𝓞 K') (ι '' (L : Set V))) := by
+theorem slope_sq_sub_le_slope_sq_span : ∀ (K K' V V' : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field K'] [NumberField K'] [Algebra K K'] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [AddCommGroup V'] [Module K' V'] [Module (𝓞 K') V'] [IsScalarTower (𝓞 K') K' V'] (N : (K →+* ℂ) → V → ℝ) (N' : (K' →+* ℂ) → V' → ℝ) (ι : V →ₛₗ[algebraMap K K'] V') (L : Submodule (𝓞 K) V) (c : ℝ), HasGram N → HasGram N' → (∀ σ x, N ((starRingEnd ℂ).comp σ) x = N σ x) → (∀ (n : ℕ) (b : Fin n → V), LinearIndependent K b → LinearIndependent K' (fun k => ι (b k))) → L.FG → L ≠ ⊥ → (∀ σ' x, N' σ' (ι x) ≤ Real.exp c * N (σ'.comp (algebraMap K K')) x) → slope_sq N L - 2 * c ≤ slope_sq N' (Submodule.span (𝓞 K') (ι '' (L : Set V))) := by
   intro K K' V V' _ _ _ _ _ _ _ _ _ _ _ _ _ _ N N' ι L c ⟨⟨n, ⟨b, X⟩, hG⟩⟩ ⟨⟨n', ⟨b', X'⟩, hG'⟩⟩ hc hli hL h0 hN
   letI : StarRing K := starRingOfComm
   letI : StarRing K' := starRingOfComm

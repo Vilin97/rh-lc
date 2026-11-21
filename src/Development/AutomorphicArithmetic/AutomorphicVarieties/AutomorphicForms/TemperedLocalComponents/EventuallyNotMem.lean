@@ -13,7 +13,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep GlobalTheory.ThetaPull
 
 namespace UpperTheory.V.Af
 
-private theorem regAlg_of_infOf {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} {m : Fin n → ℤ}
+private theorem regAlg_of_infOf {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} {m : Fin n → ℤ}
     (hm : StrictAnti m) {π : CuspSub K n} (h : ∀ τ, π.HasInfChar τ (infOf m)) : (CG.mk π).IsRegAlg := (GlobalTheory.CuspRep.CG.isRegAlg_iff _).2 fun τ => by
   rw [CG.HasInfChar.infChar_eq (π := CG.mk π) (h τ)]
   refine ⟨Multiset.Nodup.map (fun i j e => hm.injective ?_) Finset.univ.nodup, fun z hz => ?_⟩

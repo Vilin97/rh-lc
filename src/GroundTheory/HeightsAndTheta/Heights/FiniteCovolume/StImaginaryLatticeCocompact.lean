@@ -12,7 +12,7 @@ open NumberField GroundTheory.Automorphic Module Matrix Topology
 noncomputable section
 
 variable (F E : Type*) [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 def ImaginaryLatticeCocompact.Statement : Prop :=
   ∀ m : ℕ, 0 < m → ∃ R : ℝ, ∀ s : InfinitePlace E → ℝ, ∃ a : 𝓞 E,

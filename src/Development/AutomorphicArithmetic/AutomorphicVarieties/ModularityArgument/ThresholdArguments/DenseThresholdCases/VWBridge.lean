@@ -17,7 +17,7 @@ open NumberField GlobalTheory.CuspRep UpperTheory.V UpperTheory.V.Af
 theorem UpperTheory.GalN.V.automorphy_bridge_of_printed_hida :
     _root_.UpperTheory.V.Af.HypothesesH' → _root_.UpperTheory.V.Af.AutBridgeAlt := by
   intro _ F Ω _ _ _ _ l _ ι n r
-  have hC : ∀ [IsTotallyComplex F], IsAut ι r ↔ ∃ π : CuspSub F n, (CG.mk π).IsRegAlg ∧ AttC ι r π := by
+  have hC : ∀ [_root_.NumberField.IsTotallyComplex F], IsAut ι r ↔ ∃ π : CuspSub F n, (CG.mk π).IsRegAlg ∧ AttC ι r π := by
     intro hF
     constructor
     · rintro ⟨sat, inf, ⟨_, π, rfl, rfl⟩ | ⟨h, -⟩, hr, ha⟩

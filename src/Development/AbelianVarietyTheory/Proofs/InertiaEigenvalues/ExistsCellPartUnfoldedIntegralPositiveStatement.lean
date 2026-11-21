@@ -21,7 +21,7 @@ public import GroundTheory.AutomorphicForms.MultiplicityOne.Injective
 open NumberField IsDedekindDomain MeasureTheory GlobalTheory.CuspRep Formalism.L2.Host Formalism.UG GlobalTheory.LFun
 open scoped ENNReal ComplexConjugate nonZeroDivisors
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.exists_cellPart_unfoldedIntegral_positive : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ)
+theorem _root_.GlobalTheory.T.exists_cellPart_unfoldedIntegral_positive : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (b : GA E (m + 1) → ℂ) (φ : GA E (m + 1) → ℂ)
     (N : ℕ) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (Φ : (Fin (m + 1) → Cinf E) → ℂ),
     0 < N → (∀ v ∈ S, 0 < FractionalIdeal.count E v (J : FractionalIdeal (𝓞 E)⁰ E)) →

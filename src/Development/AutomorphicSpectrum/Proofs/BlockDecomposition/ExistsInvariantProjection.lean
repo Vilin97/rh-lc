@@ -70,7 +70,7 @@ theorem exists_sum_fixed {G W : Type} [Group G] [TopologicalSpace G] [IsTopologi
     _ = ∑ s ∈ R.image σ, ρ s x := (Finset.sum_image (f := fun s => ρ s x) hinj).symm
     _ = ∑ r ∈ R, ρ r x := by rw [himg]
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
   (μ : Measure (GA E N)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
 theorem l2Map_right_translate (k : GL (Fin N) (Af E)) {a : Sm E N} (ha : a ∈ squareIntegrableSmoothSubmoduleGL μ) (hb : finRep E N k a ∈ squareIntegrableSmoothSubmoduleGL μ) :

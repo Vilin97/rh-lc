@@ -67,7 +67,7 @@ theorem exists_classChar (c : HeightOneSpectrum (𝓞 L) → ℂˣ) (h : ∀ k :
     rw [show Valued.v ((atFin v (unif v) : (v.adicCompletion L)ˣ) : v.adicCompletion L) = _ from unif_spec v,
       WithZero.log_exp, neg_neg, zpow_one]
 
-theorem finprod_sqrt [IsTotallyComplex L] {I : Type} [Fintype I] (φ : I → L →+* ℂ)
+theorem finprod_sqrt [_root_.NumberField.IsTotallyComplex L] {I : Type} [Fintype I] (φ : I → L →+* ℂ)
     (hφ : Function.Bijective fun i => InfinitePlace.mk (φ i)) (k : Lˣ) :
     (∏ᶠ v : HeightOneSpectrum (𝓞 L), ((Real.sqrt (Ideal.absNorm v.asIdeal : ℕ))⁻¹ : ℝ) ^ ordF v k) *
       ∏ i, ‖φ i (k : L)‖ = 1 := by
@@ -94,7 +94,7 @@ theorem finprod_sqrt [IsTotallyComplex L] {I : Type} [Fintype I] (φ : I → L �
   have : (0 : ℝ) ≤ -1 := h ▸ mul_nonneg (finprod_nonneg fun v => by positivity) (by positivity)
   linarith
 
-theorem finprod_alg [IsTotallyComplex L] {I : Type} [Fintype I] (φ : I → L →+* ℂ)
+theorem finprod_alg [_root_.NumberField.IsTotallyComplex L] {I : Type} [Fintype I] (φ : I → L →+* ℂ)
     (hφ : Function.Bijective fun i => InfinitePlace.mk (φ i)) (χ : HChar L) (hu : ∀ v, χ.UnrAt v)
     (hi : χ.HasInf φ fun _ => 1) (w : HeightOneSpectrum (𝓞 L) → ℂˣ)
     (hw : ∀ v, (w v : ℂ) = χ.val v * (((Real.sqrt (Ideal.absNorm v.asIdeal : ℕ))⁻¹ : ℝ) : ℂ)) (k : Lˣ) :

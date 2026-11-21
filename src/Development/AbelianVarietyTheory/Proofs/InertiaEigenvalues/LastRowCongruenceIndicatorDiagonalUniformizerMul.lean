@@ -45,7 +45,7 @@ namespace GlobalTheory.CellLastRow
 
 open GlobalTheory.CellDec GlobalTheory.ZEul
 
-theorem indN_lastRow_tl : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ)
+theorem indN_lastRow_tl : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (ϖ : ∀ v : HeightOneSpectrum (𝓞 E), (v.adicCompletion E)ˣ),
     (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) → ∀ N : ℕ,
     (∀ z ∈ GlobalTheory.RSJ.natLat E N, ∀ v : HeightOneSpectrum (𝓞 E), z v ∈ v.adicCompletionIntegers E) →

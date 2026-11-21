@@ -23,7 +23,7 @@ namespace GlobalTheory.CompanionTheory.GrowthEntries
 
 open GlobalTheory.CompanionTheory.BoxBound
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem norm_entry_le_toL (A : Matrix (Fin a) (Fin a) (Cinf E)) (i j : Fin a) (w : InfinitePlace E) :
     ‖A i j w‖ ≤ ‖toL A‖ :=
@@ -68,7 +68,7 @@ theorem place_eq_norm_pInf (x : E) (w : InfinitePlace E) :
     w x = ‖pInf E (algebraMap E (Ad E) x) w‖ := by
   rw [pInf_algebraMap, InfinitePlace.norm_embedding_eq]
 
-theorem entries_bound : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (g₀ : GA E a)
+theorem entries_bound : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (g₀ : GA E a)
     (Q : Set (GA E a)), IsCompact Q → ∀ n₀ : ℕ, ∃ (Qf : Set (Af E)) (C : ℝ), IsCompact Qf ∧ 0 ≤ C ∧
       ∀ (y : GL (Fin a) (Cinf E)) (γ : GL (Fin a) E) (n : ℤ), |n| ≤ n₀ →
         (g₀ * infGL E a y)⁻¹ * (ratGL E a γ * splitCentre E a 1 ^ n) * (g₀ * infGL E a y) ∈ Q →

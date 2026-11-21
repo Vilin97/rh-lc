@@ -13,7 +13,7 @@ namespace PositivityTheory.jumpWindows
 
 namespace CharacterNondegenerate
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def chi (ψ : AddChar (Ad E) ℂ) : AddChar (Cinf E) ℂ := ψ.compAddMonoidHom (sInf E).toAddMonoidHom
 
@@ -32,7 +32,7 @@ theorem continuous_sInf : Continuous (sInf E) :=
   ((continuous_infEq E).prodMk continuous_const :
     Continuous fun x : Cinf E => ((infEq E x, 0) : InfiniteAdeleRing E × Af E))
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem nonempty_pl : Nonempty (Pl E) := by
   obtain ⟨M, hM⟩ := Ideal.exists_maximal (𝓞 E)
   exact ⟨⟨M, hM.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hM (RingOfIntegers.not_isField E)⟩⟩

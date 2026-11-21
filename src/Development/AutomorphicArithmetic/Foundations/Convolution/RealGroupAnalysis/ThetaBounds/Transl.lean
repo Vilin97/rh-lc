@@ -11,7 +11,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Ff
 open scoped Classical
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.transl :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F), Transl W M := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F), Transl W M := by
   intro F E _ _ _ _ _ _ _ D W M f φ h h₀
   have hnu : nu F (h * h₀) = nu F h * nu F h₀ := by
     simp only [nu, map_mul]

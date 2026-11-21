@@ -32,7 +32,7 @@ theorem tsupport_dTest_subset {E : Type} [Field E] [NumberField E] {a : ℕ} (X 
   apply hw
   simp [dTest, h]
 
-theorem isTest_dTest (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (β : Lie E a → ℂ)
+theorem isTest_dTest (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (β : Lie E a → ℂ)
     (hβ : IsTest β) (X : Lie E a) : IsTest (dTest X β) := by
   have hfd := (contDiff_infty_iff_fderiv.mp hβ.contDiff).2
   refine IsTest.mk ?_ ?_ ?_

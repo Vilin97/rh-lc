@@ -47,7 +47,7 @@ private theorem un_cont {K : Type} [Field K] [NumberField K] {ι : Type} [Fintyp
   exact continuous_archP.comp (continuous_subtype_val.comp ((C.Φ 2).symm.continuous.comp h))
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.lineInj :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ →
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ →
       ∀ (μ : Measure U4) (e : ι → U4 → ℂ) n q n' q' (x : ι → U4), Haar4 μ → ExtP μ e n q n' q' x →
       (∀ i, C.MinAt μ₂ τ₁ i (n i) (q i)) → (∀ i, C.MinAt μ₂ τ₂ i (n' i) (q' i)) → ∀ f, IsSec τ₁ τ₂ f → FixA (C.κ₄ μ) (C.e e) f →
         (∀ (h : FA K (2 + 2)) m₁ m₂, f (lv m₁ m₂ 0 * arc1 ((C.Φ (2 + 2)).symm x) * fin1 h) = 0) → f = 0 := by

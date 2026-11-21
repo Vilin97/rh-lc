@@ -13,7 +13,7 @@ open UpperTheory.V.Af.Smo (EigAt)
 open scoped ComplexOrder
 
 theorem UpperTheory.congruence_element_commute_inf_embedding :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (M : ℕ) (κ : GL (Fin 2) (A E)), CongE M κ → ∀ X : GL (Fin 2) (Cinf E), κ * infGL E 2 X = infGL E 2 X * κ := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (M : ℕ) (κ : GL (Fin 2) (A E)), CongE M κ → ∀ X : GL (Fin 2) (Cinf E), κ * infGL E 2 X = infGL E 2 X * κ := by
   intro E _ _ _ M κ h X
   have h0 : ∀ c : A E, c.1 = 0 → pInf E c = 0 := fun c hc => by
     change (infEq E).symm c.1 = 0

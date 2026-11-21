@@ -11,7 +11,7 @@ open Formalism.DivisionValues (vw lw)
 
 namespace GlobalTheory
 
-theorem meanInf_log_norm_embedding (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (a : K) (ha : a ≠ 0) :
+theorem meanInf_log_norm_embedding (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (a : K) (ha : a ≠ 0) :
     Formalism.PairingDivisionLocalBalance.meanInf K (fun v => Real.log ‖v.embedding a‖) = Real.log |((Algebra.norm ℚ a : ℚ) : ℝ)| / Module.finrank ℚ K := by
   unfold Formalism.PairingDivisionLocalBalance.meanInf
   have hprod := InfinitePlace.prod_eq_abs_norm (K := K) a

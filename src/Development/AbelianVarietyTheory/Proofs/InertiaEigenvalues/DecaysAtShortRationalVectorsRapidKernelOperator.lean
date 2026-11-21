@@ -24,18 +24,18 @@ noncomputable section
 
 namespace GlobalTheory.RapidKernelDecay
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem norm_pInf_apply (x : Ad E) (w : InfinitePlace E) : ‖pInf E x w‖ = ‖x.1 w‖ :=
   (InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _) _
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem height_inv (y : GL (Fin a) (Cinf E)) : height y⁻¹ = height y := by
   unfold height; rw [inv_inv]; ring
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem pFin_vecMul (x : Fin a → Ad E) (m : GA E a) :
     (fun i => pFin E ((x ᵥ* m.val) i)) = (fun i => pFin E (x i)) ᵥ* m.val.map (pFin E) := by
   funext i
@@ -92,7 +92,7 @@ end GlobalTheory.RapidKernelDecay
 
 namespace GlobalTheory.RapidKernelDecay
 
-theorem decays_integral : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (F : GA E a → ℂ)
+theorem decays_integral : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (F : GA E a → ℂ)
     (X : Type) [MeasurableSpace X] (ν : Measure X) [SFinite ν] (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E)),
     GlobalTheory.JSW.IsRapidInf ν k γ → GlobalTheory.ShortVecDecay.Decays F →
       GlobalTheory.ShortVecDecay.Decays (fun g : GA E a => ∫ x, k x * F (g * infGL E a (γ x)) ∂ν) := by

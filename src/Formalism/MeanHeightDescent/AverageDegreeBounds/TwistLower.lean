@@ -23,7 +23,7 @@ open scoped Pointwise
 
 section
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 
@@ -63,7 +63,7 @@ theorem covol_ideal_smul (b : Basis ι K V) (X : InfinitePlace K → Matrix ι �
   rfl
 
 
-omit [StarRing K] [IsTotallyComplex K] in
+omit [StarRing K] [_root_.NumberField.IsTotallyComplex K] in
 theorem den_smul_idealSmul (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K)
     (M : Submodule (𝓞 K) V) :
     (Ideal.span {(I.den : 𝓞 K)}) • Formalism.HermitianLatticesTheory.idealSmul (I : Submodule (𝓞 K) K) M = I.num • M := by
@@ -103,7 +103,7 @@ theorem den_smul_idealSmul (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K)
     rw [← smul_assoc, hax, algebraMap_smul] at h2
     exact h2
 
-omit [StarRing K] [IsTotallyComplex K] in
+omit [StarRing K] [_root_.NumberField.IsTotallyComplex K] in
 theorem rkK_pos' (M : Submodule (𝓞 K) V) (hM0 : M ≠ ⊥) [FiniteDimensional K V] : 0 < rkK (K := K) M := by
   unfold rkK
   apply Nat.pos_of_ne_zero

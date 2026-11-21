@@ -14,7 +14,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.H
 open scoped Classical
 
 theorem UpperTheory.ConvolutionTheory.R2.H.spanCont :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ Φ ∈ span W M π, Continuous Φ.1 ∧ ∀ γ h, Φ.1 (ratGL E 2 γ * h) = Φ.1 h := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ Φ ∈ span W M π, Continuous Φ.1 ∧ ∀ γ h, Φ.1 (ratGL E 2 γ * h) = Φ.1 h := by
   intro F E _ _ _ _ _ _ _ D W M π Φ hΦ
   have hlevel : UpperTheory.ConvolutionTheory.R2.Ff.Level W M π := by
     intro f hf φ hφ Φ hΦ

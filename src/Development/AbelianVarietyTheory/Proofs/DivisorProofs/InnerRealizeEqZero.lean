@@ -65,7 +65,7 @@ theorem inner_pair [StarRing K] {n : ℕ} {b : Module.Basis (Fin n) K V}
   rw [hsum, Finset.sum_congr rfl fun l _ => hpt l, Finset.sum_add_distrib] at h
   simpa using h
 
-theorem deg_eq [IsTotallyComplex K] [StarRing K] {n : ℕ} {b : Module.Basis (Fin n) K V}
+theorem deg_eq [_root_.NumberField.IsTotallyComplex K] [StarRing K] {n : ℕ} {b : Module.Basis (Fin n) K V}
     {X : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ} {N : (K →+* ℂ) → V → ℝ}
     (hG : GlobalTheory.AllWt.IsGram b X N) (L : Submodule (𝓞 K) V) (hL : L.FG) :
     GlobalTheory.AllWt.deg N L = 1 / (Module.finrank ℚ K : ℝ) * Formalism.HN.deg (Formalism.HermitianLatticesTheory.realize b X) L +
@@ -94,7 +94,7 @@ namespace GlobalTheory.OrthRankDeg
 variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-theorem sum_finset [IsTotallyComplex K] [StarRing K] {n : ℕ} {b : Module.Basis (Fin n) K V}
+theorem sum_finset [_root_.NumberField.IsTotallyComplex K] [StarRing K] {n : ℕ} {b : Module.Basis (Fin n) K V}
     {X : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ} {N : (K →+* ℂ) → V → ℝ}
     (hG : GlobalTheory.AllWt.IsGram b X N) {ι : Type} [Fintype ι] [DecidableEq ι] (M : ι → Submodule (𝓞 K) V)
     (hM : ∀ i, (M i).FG)
@@ -140,7 +140,7 @@ theorem sum_finset [IsTotallyComplex K] [StarRing K] {n : ℕ} {b : Module.Basis
     · rw [hrk', Finset.sum_insert ha, ihrk]
     · rw [hdeg, Finset.sum_insert ha, ihdeg]
 
-theorem rkK_deg_iSup : ∀ (K V : Type) [Field K] [NumberField K] [IsTotallyComplex K] [AddCommGroup V] [Module K V]
+theorem rkK_deg_iSup : ∀ (K V : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V] [Module K V]
     [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (ι : Type) [Fintype ι] (N : (K →+* ℂ) → V → ℝ)
     (M : ι → Submodule (𝓞 K) V), HasGram N → (∀ i, (M i).FG) →
     (∀ σ, ∀ f : ι → V, (∀ i, f i ∈ Submodule.span K (M i : Set V)) → N σ (∑ i, f i) ^ 2 = ∑ i, N σ (f i) ^ 2) →

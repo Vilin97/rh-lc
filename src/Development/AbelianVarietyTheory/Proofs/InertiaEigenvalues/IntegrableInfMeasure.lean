@@ -15,7 +15,7 @@ open GlobalTheory.RSTheta GlobalTheory.ShortVecDecay GlobalTheory.Petersson Glob
 
 namespace GlobalTheory.RSThetaLow
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem continuous_invT {R : Type} [CommRing R] [TopologicalSpace R] : Continuous (invT a R) :=
   Units.continuous_iff.2 ⟨Units.continuous_coe_inv.matrix_transpose, Units.continuous_val.matrix_transpose⟩
@@ -65,10 +65,10 @@ theorem continuous_bounded {π : CuspSub E a} (hπ : π.IsUnitary) {φ : Sm E a}
   exact ⟨this.1, this.2.2.2⟩
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def rowInv (ℓ : Fin a) (y : Fin a → Cinf E) : Lie E a := invL (toL (rowMat ℓ y))
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiff_rowMat (ℓ : Fin a) : ContDiff ℝ ∞ fun y : Fin a → Cinf E => toL (rowMat ℓ y) := by
   refine contDiff_pi.2 fun i => ?_
   by_cases h : i = ℓ
@@ -79,11 +79,11 @@ theorem contDiff_rowMat (ℓ : Fin a) : ContDiff ℝ ∞ fun y : Fin a → Cinf 
       funext fun y => updateRow_ne h
     rw [this]; exact contDiff_const
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiffAt_rowInv {ℓ : Fin a} {y : Fin a → Cinf E} (hy : y ∈ rowSet E ℓ) : ContDiffAt ℝ ∞ (rowInv ℓ) y :=
   (contDiffAt_invL (isUnit_rowMat_iff.2 (isUnit_of_mem_rowSet hy))).comp y (contDiff_rowMat ℓ).contDiffAt
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem rowInv_eq {ℓ : Fin a} {y : Fin a → Cinf E} (hy : y ∈ rowSet E ℓ) : rowInv ℓ y = toL ((rowGL ℓ y)⁻¹).val := by
   rw [rowInv, ← val_rowGL (isUnit_of_mem_rowSet hy), invL_val]
 
@@ -97,11 +97,11 @@ theorem contDiffAt_translate (F : Sm E a) (g : GA E a) {ℓ : Fin a} {y : Fin a 
     (Filter.eventually_of_mem ((isOpen_rowSet ℓ).mem_nhds hy) fun _ hz => chart_rowInv _ g hz)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def rowCoef (ℓ : Fin a) (v : Fin a → Cinf E) (β : Fin (Module.finrank ℝ (Lie E a))) (y : Fin a → Cinf E) : ℂ :=
   ((Module.finBasis ℝ (Lie E a)).coord β (toL (rowMat ℓ y * Matrix.of (fderiv ℝ (rowInv ℓ) y v))) : ℝ)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiffOn_rowCoef (ℓ : Fin a) (v : Fin a → Cinf E) (β : Fin (Module.finrank ℝ (Lie E a))) :
     ContDiffOn ℝ ∞ (rowCoef ℓ v β) (rowSet E ℓ) := fun y hy => by
   refine ContDiffAt.contDiffWithinAt (Complex.ofRealCLM.contDiff.contDiffAt.comp y
@@ -171,7 +171,7 @@ theorem fderiv_rsInf {ℓ : Fin a} (F F' : Sm E a) {Φ : (Fin a → Cinf E) → 
     rw [h2]
     simp [rsInf, h0, h1]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isTest_rowCoef_mul {ℓ : Fin a} {Φ : (Fin a → Cinf E) → ℂ} (hΦ : IsTest (rowSet E ℓ) Φ) (v : Fin a → Cinf E)
     (β : Fin (Module.finrank ℝ (Lie E a))) : IsTest (rowSet E ℓ) fun y => rowCoef ℓ v β y * Φ y := by
   have hs : tsupport (fun y => rowCoef ℓ v β y * Φ y) ⊆ tsupport Φ := tsupport_mul_subset_right
@@ -180,7 +180,7 @@ theorem isTest_rowCoef_mul {ℓ : Fin a} {Φ : (Fin a → Cinf E) → ℂ} (hΦ 
   · exact ((contDiffOn_rowCoef ℓ v β).contDiffAt ((isOpen_rowSet ℓ).mem_nhds (hΦ.2.2 hy))).mul hΦ.1.contDiffAt
   · exact contDiffAt_const.congr_of_eventuallyEq (notMem_tsupport_iff_eventuallyEq.1 fun h => hy (hs h))
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem integrable_infMeasure {f : (Fin a → Cinf E) → ℂ} (h : Continuous f) (hc : HasCompactSupport f) :
     Integrable f (infMeasure E a) :=
   (h.integrable_of_hasCompactSupport hc).smul_measure (by simp)

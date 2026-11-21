@@ -23,7 +23,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.CuspRep
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 abbrev Kinf (E : Type) [Field E] (a : ℕ) : Type := Matrix.unitaryGroup (Fin a) (Cinf E)
 
@@ -79,7 +79,7 @@ def ratN (E : Type) [Field E] [NumberField E] (a r : ℕ) : AddSubgroup (BlockIx
   (AddMonoidHom.compLeft (algebraMap E (Ad E)).toAddMonoidHom (BlockIx a r)).range
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem unip_algebraMap {r : ℕ} (x : BlockIx a r → E) :
     unip (fun p => algebraMap E (Ad E) (x p)) = ratGL E a (unip x) := by
   ext i j
@@ -120,18 +120,18 @@ theorem isOpen_ker_chiDet (χ : HChar E) : IsOpen {k : GL (Fin a) (Af E) | chiDe
   exact Iff.of_eq (congrArg (fun u => χ.1 u = 1) (det_finGL k))
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem chiDet_ratGL (χ : HChar E) (γ : GL (Fin a) E) : chiDet a χ (ratGL E a γ) = 1 := by
   rw [← χ.2.2 (GeneralLinearGroup.det γ)]
   exact congrArg χ.1 (Units.ext (det_map _ γ))
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem one_le_height (y : GL (Fin a) (Cinf E)) : 1 ≤ height y := by
   unfold height; linarith [norm_nonneg (toL y.val), norm_nonneg (toL (y⁻¹).val)]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem norm_det_le (x : Matrix (Fin a) (Fin a) (Cinf E)) {B : ℝ} (hx : ‖toL x‖ ≤ B) :
     ‖x.det‖ ≤ a.factorial * B ^ a := by
   rw [Matrix.det_apply]
@@ -330,7 +330,7 @@ theorem HasInfChar.twist {τ : E →+* ℂ} {m : Multiset ℂ} (h : π.HasInfCha
   ac_rfl
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_sLoc (w : HeightOneSpectrum (𝓞 E)) : Continuous (sLoc E w) := by
   classical
   have e : (sLoc E w : _ → Af E) = fun x => Neutral.B1.finiteSingle E w x - Neutral.B1.finiteSingle E w 0 := by
@@ -346,7 +346,7 @@ theorem continuous_sLoc (w : HeightOneSpectrum (𝓞 E)) : Continuous (sLoc E w)
   exact (GlobalTheory.Mem.UnrAe.continuous_finSingle w).sub continuous_const
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_locGL (w : HeightOneSpectrum (𝓞 E)) : Continuous (locGL E a w) :=
   Continuous.units_map _ (continuous_const.add (continuous_id.matrix_map (continuous_sLoc w)))
 
@@ -396,7 +396,7 @@ theorem IsLocComp.congr {w : HeightOneSpectrum (𝓞 E)} {σ σ' : SmIrr (GL (Fi
     rw [h1, hf, locRep_eq, hT, locRep_eq]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def locDet (a : ℕ) (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) : GL (Fin a) (w.adicCompletion E) →* ℂˣ :=
   (χ.loc w).comp GeneralLinearGroup.det
 
@@ -426,7 +426,7 @@ section CM
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 def PhiK (E : Type) [Field E] (a : ℕ) : Kinf E a :=
   ⟨GlobalTheory.Tw.Phi a (Cinf E), Matrix.mem_unitaryGroup_iff.2 (by
     rw [← Phi_mul_transpose a (Cinf E)]
@@ -436,7 +436,7 @@ def PhiK (E : Type) [Field E] (a : ℕ) : Kinf E a :=
     split_ifs <;> simp)⟩
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem toUnits_conj_PhiK (k : Kinf E a) :
     Unitary.toUnits (PhiK E a * k * (PhiK E a)⁻¹) = thetaGL a (starRingEnd (Cinf E)) (Unitary.toUnits k) := by
   have h : Unitary.toUnits (PhiK E a) = PhiU a (Cinf E) := Units.ext rfl

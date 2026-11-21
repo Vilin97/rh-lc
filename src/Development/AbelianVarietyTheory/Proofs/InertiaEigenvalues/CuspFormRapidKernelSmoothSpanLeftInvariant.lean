@@ -14,7 +14,7 @@ open scoped ENNReal nonZeroDivisors Classical
 
 namespace GlobalTheory.JSW
 
-theorem mspanR_left_invariant : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a), ∀ F ∈ GlobalTheory.JSW.mspanR π,
+theorem mspanR_left_invariant : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CuspSub E a), ∀ F ∈ GlobalTheory.JSW.mspanR π,
     ∀ (γ : GL (Fin a) E) (g : GA E a), F (ratGL E a γ * g) = F g := by
   intro E _ _ _ a π
   let S : Submodule ℂ (GA E a → ℂ) :=

@@ -24,7 +24,7 @@ open NumberField Matrix MeasureTheory Formalism.L2.Host GlobalTheory.CuspRep Glo
 open UpperTheory.V.Lit UpperTheory.V.Lit.Dr UpperTheory.V.Lit.Bor
 open scoped TensorProduct GlobalTheory.CuspRep.CuspidalL2GL
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a}
 
 private theorem rapid_of_rapidD {q : ℕ} {ω : Co Ξ q} (h : RapidD ω) : Rapid ω := fun X N => h [] X N
 

@@ -26,7 +26,7 @@ private theorem hcob_map {Γ M M' : Type} [Group Γ] [AddCommGroup M] [Module �
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [hd, map_sum, map_zsmul]
 
-private theorem sigCob_one {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private theorem sigCob_one {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (U : Subgroup (GL (Fin a) (Af E))) (σ : ℂ ≃+* ℂ) {Ξ Ξ' : AlgRep E a} (h : Ξ.d = Ξ'.d) (hσ : ConjMat σ h) (q : ℕ)
     (c : List ↥(⊤ : Subgroup (GL (Fin a) E)) → (GL (Fin a) (Af E) ⧸ U) → Fin Ξ.d → ℂ)
     (hc : HCob (levelRep ⊤ U (ratC Ξ)) q c) : HCob (levelRep ⊤ U (ratC Ξ')) q (sigC σ h c) := by

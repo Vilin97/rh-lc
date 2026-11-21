@@ -17,7 +17,7 @@ open GroundTheory.LocalField (maximalAbelianExtension)
 open scoped nonZeroDivisors
 
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K]
+  [_root_.NumberField.IsTotallyComplex K]
 
 
 omit [Algebra K ℂ] in
@@ -39,7 +39,7 @@ theorem finite_units : Finite (𝓞 K)ˣ := by
     congrArg Subtype.val h
 
 
-omit [Algebra K ℂ] [IsTotallyComplex K] in
+omit [Algebra K ℂ] [_root_.NumberField.IsTotallyComplex K] in
 theorem exists_nat_mul_mem (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (t : K) :
     ∃ k : ℕ, 0 < k ∧ (k : K) * t ∈ (𝔞 : FractionalIdeal (𝓞 K)⁰ K) := by
   obtain ⟨a, ha, ha0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot

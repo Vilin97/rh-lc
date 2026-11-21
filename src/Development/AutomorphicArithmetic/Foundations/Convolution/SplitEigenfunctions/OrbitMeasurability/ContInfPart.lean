@@ -39,7 +39,7 @@ private theorem wt_meas (K : Set (Fin 4 → FiniteAdeleRing (𝓞 ℚ) ℚ)) (hK
   unfold wt
   exact Measurable.ite hs (((continuous_const.add cont_infPart.norm).pow n).measurable.inv) measurable_const
 
-private theorem bound (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2)
+private theorem bound (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2)
     (φ : ↥(Sm E 2)) (hφ : φ ∈ P.V) (K : Set (Fin 4 → FiniteAdeleRing (𝓞 ℚ) ℚ)) (hK : IsCompact K) :
     ∃ (n : ℕ) (B : ℝ), ∀ z ∈ normOneFundamentalDomain E, ∀ h : G1 E,
       (Summable fun ξ : Fin 4 → ℚ => wt K n (D.act (gl h * sZ D (z : IdeleGroup E))⁻¹ (rp ξ))) ∧
@@ -106,7 +106,7 @@ private theorem bound (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] 
         rw [inv_pow]
         field_simp
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem cont_el (D : Dat ℚ E) : Continuous fun p : ↥(IdeleGroup.normOneSubgroup E) × G1 E =>
     gl p.2 * sZ D (p.1 : IdeleGroup E) := by

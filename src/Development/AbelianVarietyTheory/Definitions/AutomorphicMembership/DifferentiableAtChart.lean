@@ -138,7 +138,7 @@ theorem continuous_finId : Continuous (finId E) :=
   Continuous.units_map _ (continuous_const.add (continuous_const.prodMk continuous_id :
     Continuous fun x : Af E => ((0, x) : InfiniteAdeleRing E × Af E)))
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def infEq : Cinf E ≃+* InfiniteAdeleRing E :=
   RingEquiv.piCongrRight fun w => (InfinitePlace.Completion.ringEquivComplexOfIsComplex (IsTotallyComplex.isComplex w)).symm
@@ -189,7 +189,7 @@ theorem ga_ext {g h : GA E a} (h1 : GeneralLinearGroup.map (pInf E) g = GeneralL
 @[simp] theorem pInf_finGL (k : GL (Fin a) (Af E)) : GeneralLinearGroup.map (pInf E) (finGL E a k) = 1 :=
   map_cornerGL_of_zero _ _ (fun _ => map_zero (infEq E).symm) k
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 @[simp] theorem pFin_finGL (k : GL (Fin a) (Af E)) : GeneralLinearGroup.map (pFin E) (finGL E a k) = k := by
   rw [finGL, map_cornerGL_of_hom _ _ (RingHom.id _) fun x => rfl]; rfl
 
@@ -224,22 +224,22 @@ theorem det_finGL (k : GL (Fin a) (Af E)) :
     simp
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 abbrev toL (x : Matrix (Fin a) (Fin a) (Cinf E)) : Lie E a := Matrix.of.symm x
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 def invSet (E : Type) [Field E] (a : ℕ) : Set (Lie E a) := {x | IsUnit (Matrix.of x)}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiff_det : ContDiff ℝ ∞ fun x : Lie E a => (Matrix.of x).det := by
   simp only [Matrix.det_apply', Matrix.of_apply]
   refine ContDiff.sum fun σ _ => contDiff_const.mul (contDiff_prod fun i _ => ?_)
   exact (contDiff_apply ℝ _ i).comp (contDiff_apply ℝ _ (σ i))
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isOpen_invSet : IsOpen (invSet E a) := by
   have : invSet E a = (fun x : Lie E a => (Matrix.of x).det) ⁻¹' {u | IsUnit u} := by
     ext x; exact Matrix.isUnit_iff_isUnit_det _
@@ -247,7 +247,7 @@ theorem isOpen_invSet : IsOpen (invSet E a) := by
   exact Units.isOpen.preimage contDiff_det.continuous
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem val_mem_invSet (y : GL (Fin a) (Cinf E)) : (toL y.val) ∈ invSet E a := y.isUnit
 
 
@@ -262,12 +262,12 @@ theorem chart_val (φ : GA E a → ℂ) (g : GA E a) (y : GL (Fin a) (Cinf E)) :
   rw [chart, dite_eq_left h, e]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def lmul (y : Lie E a) : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap (LinearMap.mulLeft ℝ (Matrix.of y) : Matrix (Fin a) (Fin a) (Cinf E) →ₗ[ℝ] _)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def rmul (y : Lie E a) : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap (LinearMap.mulRight ℝ (Matrix.of y) : Matrix (Fin a) (Fin a) (Cinf E) →ₗ[ℝ] _)
 
@@ -327,7 +327,7 @@ def rt : Representation ℂ (GA E a) (Sm E a) := GlobalTheory.PRep.sub (GlobalTh
 @[simp] theorem rt_apply (h g : GA E a) (φ : Sm E a) : (rt E a h φ).1 g = φ.1 (g * h) := rfl
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 abbrev oneL (E : Type) [Field E] (a : ℕ) : Lie E a := toL 1
 
 def lieD (X : Lie E a) (φ : GA E a → ℂ) (g : GA E a) : ℂ := fderiv ℝ (chart φ g) (oneL E a) X

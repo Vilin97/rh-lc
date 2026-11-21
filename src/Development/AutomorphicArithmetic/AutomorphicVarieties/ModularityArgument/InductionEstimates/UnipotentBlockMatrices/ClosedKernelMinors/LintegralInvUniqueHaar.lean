@@ -118,7 +118,7 @@ private theorem th_tw {K : Type} [Field K] [NumberField K] (e : G1 K (2 + 2) ≃
   congr 1
   simp [hε, mul_assoc]
 
-private theorem sec_tw {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {μ : Measure (G1 K (2 + 2))} [μ.IsHaarMeasure]
+private theorem sec_tw {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {μ : Measure (G1 K (2 + 2))} [μ.IsHaarMeasure]
     {μ₂ : Measure (G1 K 2)} [μ₂.IsHaarMeasure] {τ₁ τ₂ : Submodule ℂ (L2 μ₂)} (i₁ : CuspIrr μ₂ τ₁) (i₂ : CuspIrr μ₂ τ₂)
     {D : TypeDat K (2 + 2)} {σ : K ≃+* K} {θ : Twist μ} {θ₂ : Twist μ₂} (h : UpperTheory.ConvolutionTheory.K.IsGal σ θ)
     (h₂ : UpperTheory.ConvolutionTheory.K.IsGal σ θ₂) (hs : Stable D θ) (m₁ : τ₁.map (θ₂.U : L2 μ₂ →ₗ[ℂ] L2 μ₂) = τ₂)

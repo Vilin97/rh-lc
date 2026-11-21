@@ -82,7 +82,7 @@ theorem exists_near_integer : ∃ C : ℝ, ∀ c : E, ∃ t : E, IsIntegral ℤ 
     rw [Real.norm_eq_abs, abs_of_nonneg (by exact_mod_cast Int.fract_nonneg _)]
     exact_mod_cast (Int.fract_lt_one _).le
 
-theorem exists_small_generator [IsTotallyComplex E] :
+theorem exists_small_generator [_root_.NumberField.IsTotallyComplex E] :
     ∃ (M : ℤ) (C : ℝ), M ≠ 0 ∧ ∀ J : Ideal (𝓞 E), J ≠ ⊥ →
       ∃ j ∈ J, j ≠ 0 ∧ house (algebraMap (𝓞 E) E j) ≤ C * Ideal.absNorm J ∧
         ∀ a ∈ J, j ∣ (M : 𝓞 E) * a := by

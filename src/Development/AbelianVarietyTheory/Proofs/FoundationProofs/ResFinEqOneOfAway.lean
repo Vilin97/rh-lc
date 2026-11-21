@@ -73,7 +73,7 @@ variable {E : Type} [Field E] [NumberField E] {χ : HChar E} {m : ℕ}
 theorem isUnitary_of_pow (hm : m ≠ 0) (h : ∀ x, χ.1 x ^ m = 1) : χ.IsUnitary := fun x =>
   Complex.norm_eq_one_of_pow_eq_one (by rw [← Units.val_pow_eq_pow_val, h, Units.val_one]) hm
 
-theorem locInf_of_pow [IsTotallyComplex E] (hm : m ≠ 0) (h : ∀ x, χ.1 x ^ m = 1) (w : InfinitePlace E)
+theorem locInf_of_pow [_root_.NumberField.IsTotallyComplex E] (hm : m ≠ 0) (h : ∀ x, χ.1 x ^ m = 1) (w : InfinitePlace E)
     (x : (w.Completion)ˣ) : χ.locInf w x = 1 := by
   let e := InfinitePlace.Completion.ringEquivComplexOfIsComplex (IsTotallyComplex.isComplex w)
   obtain ⟨z, hz⟩ := IsAlgClosed.exists_pow_nat_eq (e x) (Nat.pos_of_ne_zero hm)
@@ -86,7 +86,7 @@ theorem locInf_of_pow [IsTotallyComplex E] (hm : m ≠ 0) (h : ∀ x, χ.1 x ^ m
   rw [e2, map_pow]
   exact h _
 
-theorem inf_of_pow [IsTotallyComplex E] (hm : m ≠ 0) (h : ∀ x, χ.1 x ^ m = 1) (k : Eˣ) : χ.inf k = 1 := by
+theorem inf_of_pow [_root_.NumberField.IsTotallyComplex E] (hm : m ≠ 0) (h : ∀ x, χ.1 x ^ m = 1) (k : Eˣ) : χ.inf k = 1 := by
   show χ.1 (infDiag k) = 1
   rw [infDiag, MonoidHom.finsetProd_apply, map_prod]
   exact Finset.prod_eq_one fun w _ => locInf_of_pow hm h w _

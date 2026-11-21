@@ -35,7 +35,7 @@ theorem isUnitary_inv {χ : HChar E} (h : IsUnitary χ) : IsUnitary χ⁻¹ := f
   show ‖(((χ.1 x)⁻¹ : ℂˣ) : ℂ)‖ = 1
   rw [Units.val_inv_eq_inv_val, norm_inv, h x, inv_one]
 
-theorem zero_iff (h : HeckeFunctionalEquationAbs) [IsTotallyComplex E] {I : Type} [Fintype I] {φ : I → E →+* ℂ}
+theorem zero_iff (h : HeckeFunctionalEquationAbs) [_root_.NumberField.IsTotallyComplex E] {I : Type} [Fintype I] {φ : I → E →+* ℂ}
     (hφ : IsCMType φ) {χ : HChar E} {n : I → ℤ} {Λ Λ' : ℂ → ℂ} (hu : IsUnitary χ)
     (hi : Formalism.L2.Host.HChar.HasInf χ φ n) (hn : ∃ i, n i ≠ 0) (h1 : IsCompletedL χ n Λ)
     (h2 : IsCompletedL χ⁻¹ (fun i => -n i) Λ') (s : ℂ) : Λ s = 0 ↔ Λ' (1 - s) = 0 := by

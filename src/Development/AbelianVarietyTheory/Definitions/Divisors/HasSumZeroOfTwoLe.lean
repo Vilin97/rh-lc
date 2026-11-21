@@ -91,7 +91,7 @@ theorem modF_unit {c : Ideal (OF E)} {u : (Af E)ˣ} (hu : u ∈ hatOUnits c) : m
 
 variable {I : Type} [Fintype I]
 
-theorem prod_normSq [IsTotallyComplex E] {φ : I → E →+* ℂ} (h : IsCMType φ) (x : E) :
+theorem prod_normSq [_root_.NumberField.IsTotallyComplex E] {φ : I → E →+* ℂ} (h : IsCMType φ) (x : E) :
     ∏ i, ‖φ i x‖ ^ 2 = |((Algebra.norm ℚ x : ℚ) : ℝ)| := by
   have h1 := InfinitePlace.prod_eq_abs_norm x
   push_cast at h1

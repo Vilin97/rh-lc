@@ -18,7 +18,7 @@ namespace PositivityTheory.AdelicQuotientData
 
 namespace RowsCompactSum
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem contFin : Continuous (fun (y : Fin k → Ad E) (i : Fin k) => pFin E (y i)) :=
   continuous_pi fun i => (GlobalTheory.CuspRep.GASplit.continuous_pFin E).comp (continuous_apply i)

@@ -124,7 +124,7 @@ theorem contDiffAt_extZ {α : glG E a → ℂ} (hα : (glH E a).IsSmoothFun α) 
     rw [Units.mul_inv_cancel_left]
   rw [extZ, dite_eq_left (show IsUnit (Matrix.of x) from hxi), e]
 
-theorem exists_isTest_ext : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), ∀ α : glG E a → ℂ,
+theorem exists_isTest_ext : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), ∀ α : glG E a → ℂ,
     (glH E a).IsSmoothFun α → HasCompactSupport α → ∃ β : Lie E a → ℂ, GlobalTheory.CuspQuot.IsTest (invSet E a) β ∧
       ∀ y : glG E a, β (toL y.1.val) = ((|LinearMap.det ((lmul (toL y.1.val) : Lie E a →L[ℝ] Lie E a) :
         Lie E a →ₗ[ℝ] Lie E a)|⁻¹ : ℝ) : ℂ) * α y := by

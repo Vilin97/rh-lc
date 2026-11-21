@@ -244,7 +244,7 @@ private theorem UpperTheory.ConvolutionTheory.Tf.exists_transpose
 end
 
 theorem UpperTheory.ConvolutionTheory.Tf.convZ :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ) (ν : Measure (archGroup K n)) [ν.IsHaarMeasure]
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ) (ν : Measure (archGroup K n)) [ν.IsHaarMeasure]
       (β₁ β₂ : CompactlySupportedContinuousMap (archGroup K n) ℂ) (h₁ : (fun g => β₁ g⁻¹) ∈ (isExpLieAlgebra K n).smoothFuns (F := ℂ)) (h₂ : (fun g => β₂ g⁻¹) ∈ (isExpLieAlgebra K n).smoothFuns (F := ℂ))
       (z : UEnv K n), z ∈ (isExpLieAlgebra K n).centerU → ∀ x : archGroup K n,
         ∫ a, ((isExpLieAlgebra K n).rightUAction z ⟨fun g => β₁ g⁻¹, h₁⟩ : archGroup K n → ℂ) a⁻¹ * β₂ (a⁻¹ * x) ∂ν =

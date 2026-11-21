@@ -11,7 +11,7 @@ open UpperTheory.V.Lit.Geo
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af GlobalTheory.UnitaryBC UpperTheory.V.Lit.Dr UpperTheory.V.Lit.Bor
 open GroundTheory.Automorphic GroundTheory.Automorphic.CuspidalSpectrum
 
-private theorem gauss_sum_determines_value_and_deviation {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private theorem gauss_sum_determines_value_and_deviation {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (L : AddSubgroup (Fin a → Af E)) (g g' : GA E a)
     (hR : gsum L gauss g' = gsum L gauss g)
     (hC : ∀ F : (Fin a → Cinf E) → ℂ, gsum L F g' = gsum L F g) :

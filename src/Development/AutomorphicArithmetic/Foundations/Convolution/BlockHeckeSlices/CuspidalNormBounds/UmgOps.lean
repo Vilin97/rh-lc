@@ -14,7 +14,7 @@ open GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.V.Cm
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem uc_ind {P : UC E n → Prop} (h1 : ∀ c : ℂ, P (algebraMap ℂ _ c)) (hι : ∀ X, P (ιC E n X))
     (hadd : ∀ x y, P x → P y → P (x + y)) (hmul : ∀ x y, P x → P y → P (x * y)) (u : UC E n) : P u := by
@@ -174,7 +174,7 @@ private theorem umg_hk {φ : Sm E n} (h : Umg φ) (w : Pl E) (j : ℕ) : Umg (hk
 end UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.ConvolutionTheory.BW.umgOps :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.UmgOps E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.UmgOps E := by
   intro E _ _ _ n
   exact ⟨umg_zero, fun φ h => ⟨ContAut.continuous_of_isOpen_stab E n φ h.level, fun _ => umg_add h, umg_smul h,
     umg_uC h, umg_rt h, umg_hk h⟩⟩

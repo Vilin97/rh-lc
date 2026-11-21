@@ -122,7 +122,7 @@ theorem dense_emb {K : Type} [Field K] [NumberField K] (v : InfinitePlace K) (hv
       rw [← RingHom.coe_fieldRange]; rfl
     rw [← hc]; exact hz
 
-theorem dense_fcoord {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+theorem dense_fcoord {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup V] [Module K V] [Fintype ι] [DecidableEq ι] (b : Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ) (hX : ∀ v, IsUnit (X v).det) (v : InfinitePlace K) :
     DenseRange fun x : V => (WithLp.toLp 2 (Formalism.HermitianLatticesTheory.fcoord b X v x) : EuclideanSpace ℂ ι) := by
@@ -151,7 +151,7 @@ theorem dense_fcoord {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsT
   exact h3.denseRange.comp h1 h2
 
 theorem opNormAt_le_of_points {K V ι : Type} [Field K] [NumberField K] [StarRing K]
-    [IsTotallyComplex K] [AddCommGroup V] [Module K V] [Fintype ι] [DecidableEq ι]
+    [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V] [Module K V] [Fintype ι] [DecidableEq ι]
     (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (hX : ∀ v, IsUnit (X v).det)
     (φ : V →ₗ[K] V) (v : InfinitePlace K) (C : ℝ) (hC : 0 ≤ C)
     (h : ∀ f, Formalism.HermitianLatticesTheory.normAt b X v (φ f) ≤ C * Formalism.HermitianLatticesTheory.normAt b X v f) :

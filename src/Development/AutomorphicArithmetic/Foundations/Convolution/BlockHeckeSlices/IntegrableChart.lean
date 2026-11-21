@@ -12,7 +12,7 @@ open scoped ContDiff
 
 namespace UpperTheory.ConvolutionTheory.BW.SliceClasses
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
   {Y : Type} [MeasurableSpace Y] (ν : Measure Y) (p : Y → GA E a) (w : Y → ℂ)
 
 def avg (F : GA E a → ℂ) (g : GA E a) : ℂ := ∫ y, F (p y * g) * w y ∂ν

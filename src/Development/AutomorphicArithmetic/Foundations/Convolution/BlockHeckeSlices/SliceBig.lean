@@ -17,7 +17,7 @@ open GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.V.Cm
 
 namespace UpperTheory.ConvolutionTheory.BW.SliceClasses
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ} {S : Set (Pl E)}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ} {S : Set (Pl E)}
 
 theorem ct_le (n r N : ℕ) : ∃ C : ℝ, 0 ≤ C ∧ ∀ (φ : GA E n → ℂ) (B : ℝ), (∀ g, ‖φ g‖ ≤ B * AutomorphicForm.height g ^ N) →
     ∀ g, ‖AutomorphicForm.constantTerm r φ g‖ ≤ C * B * AutomorphicForm.height g ^ N := by

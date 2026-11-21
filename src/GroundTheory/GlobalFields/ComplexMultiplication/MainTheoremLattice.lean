@@ -68,7 +68,7 @@ end VC
 section Lattice
 
 variable {K : Type*} [Field K] [NumberField K] (σ₀ : K →+* ℂ) (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K]
+  [_root_.NumberField.IsTotallyComplex K]
 
 theorem latticeEnd_eq_of_lattice_eq {L L' : PeriodPair} (h : L.lattice = L'.lattice) :
     periodLatticeEnd L = periodLatticeEnd L' := by

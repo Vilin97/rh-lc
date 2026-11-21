@@ -71,7 +71,7 @@ theorem detAbs_of_det_one {a : ℕ} (u : GA E a) (hu : (u : Matrix (Fin a) (Fin 
   have h : GeneralLinearGroup.det u = 1 := Units.ext (by rw [GeneralLinearGroup.val_det_apply, hu, Units.val_one])
   simp [GlobalTheory.RSnm.detAbs, h]
 
-theorem rows_main : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ),
+theorem rows_main : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ),
     (∀ (γ : GL (Fin (m + 1)) E) (g : GA E (m + 1)), GlobalTheory.ZEul.lastRow (ratGL E (m + 1) γ * g) =
       Matrix.vecMul (algebraMap E (Ad E) ∘ Matrix.vecMul (Pi.single (Fin.last m) 1 : Fin (m + 1) → E) γ.val) g.val) ∧
     (∀ g : GA E (m + 1), GlobalTheory.ZEul.lastRow g = Matrix.vecMul (algebraMap E (Ad E) ∘ (Pi.single (Fin.last m) 1 : Fin (m + 1) → E)) g.val) ∧

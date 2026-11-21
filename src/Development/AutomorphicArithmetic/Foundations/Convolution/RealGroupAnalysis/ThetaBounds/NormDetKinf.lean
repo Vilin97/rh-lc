@@ -14,7 +14,7 @@ open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspR
 open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Ff
 open scoped Classical
 
-private theorem norm_det_kinf {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (k : Kinf E 2)
+private theorem norm_det_kinf {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (k : Kinf E 2)
     (w : InfinitePlace E) : ‖(Unitary.toUnits k).val.det w‖ = 1 := by
   have h : star k.1 * k.1 = 1 := by simp
   have hd : star (k.1.det) * k.1.det = 1 := by
@@ -33,7 +33,7 @@ private theorem dM_one' {F : Type} [Field F] [NumberField F] : dM (1 : (A F)ˣ) 
   fin_cases i <;> fin_cases j <;> simp [dM]
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.kFin :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), KFin W M π := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), KFin W M π := by
   intro F E _ _ _ _ _ _ _ D W M π f hf φ hφ Φ hΦ
   have hl := lin F E D W M π
   obtain ⟨U, hUF, hfd, hU⟩ := (fockSt F E D W).cpt φ hφ

@@ -249,7 +249,7 @@ theorem valuation_finset_prod (w : HeightOneSpectrum (𝓞 K)) (f : ι → K) (h
     simp only [vAdd, map_mul, WithZero.log_mul h1 h2]
     ring
 
-variable [StarRing K] [IsTotallyComplex K]
+variable [StarRing K] [_root_.NumberField.IsTotallyComplex K]
 
 theorem valuation_det_twist (lam : ι → DomWeight n) (w : HeightOneSpectrum (𝓞 K)) (B : ι → GL (Fin n) K) :
     vAdd w (detTwK lam B) = ∑ τ, (lam τ).detShift * vAdd w (B τ : Matrix (Fin n) (Fin n) K).det := by
@@ -291,7 +291,7 @@ end Ideal
 
 section Norm
 
-variable (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] {n : ℕ} {ι : Type} [Fintype ι]
+variable (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} {ι : Type} [Fintype ι]
 
 theorem lattice_slope_degree_formula (hn : 0 < n) (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsLattice K M) :
     (Function.support fun p : {p : Ideal (𝓞 K) // p.IsMaximal} =>

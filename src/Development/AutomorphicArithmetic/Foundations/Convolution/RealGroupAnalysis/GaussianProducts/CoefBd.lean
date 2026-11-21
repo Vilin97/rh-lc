@@ -10,7 +10,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.G
 open scoped Classical ENNReal nonZeroDivisors
 
 theorem UpperTheory.ConvolutionTheory.R2.G.coefBd :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (φ : S4 F) (C : Set (G1 F)) (U : Submodule ℂ (S4 F)), IsCompact C → FiniteDimensional ℂ U → (∀ k ∈ C, W.Om k φ ∈ U) →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (φ : S4 F) (C : Set (G1 F)) (U : Submodule ℂ (S4 F)), IsCompact C → FiniteDimensional ℂ U → (∀ k ∈ C, W.Om k φ ∈ U) →
     ∃ (n : ℕ) (b : Fin n → S4 F) (c : Fin n → G1 F → ℂ) (B : ℝ), (∀ i, b i ∈ U) ∧ (∀ i, ContinuousOn (c i) C) ∧
     ∀ k ∈ C, (∀ i, ‖c i k‖ ≤ B) ∧ W.Om k φ = ∑ i, c i k • b i := by
   intro F E _ _ _ _ _ _ _ D W φ C U hC hU hmem

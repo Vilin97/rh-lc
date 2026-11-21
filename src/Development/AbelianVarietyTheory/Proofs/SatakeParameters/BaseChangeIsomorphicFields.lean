@@ -107,7 +107,7 @@ theorem hasSatGL_of_ringEquiv (c : v.adicCompletion K ≃+* w.adicCompletion M) 
 
 end Sat
 
-variable {K M : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M]
+variable {K M : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M]
   {a : ℕ} (e : K ≃+* M)
 
 def mapL : Lie K a →L[ℝ] Lie M a :=
@@ -265,7 +265,7 @@ theorem Zalg_pull {z : Module.End ℂ (Sm K a)} (hz : z ∈ Zalg K a) :
     exact ⟨x' * y', mul_mem h1 h3, fun φ => by simp [h2, h4]⟩
 
 
-omit [IsTotallyComplex K] [IsTotallyComplex M] in
+omit [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex M] in
 theorem height_map_le (y : GL (Fin a) (Cinf K)) : height (GeneralLinearGroup.map (cInf e) y) ≤ height y := by
   have h1 : ∀ y : GL (Fin a) (Cinf K), ‖toL (GeneralLinearGroup.map (cInf e) y).val‖ ≤ ‖toL y.val‖ := fun y =>
     (pi_norm_le_iff_of_nonneg (norm_nonneg _)).2 fun i => (pi_norm_le_iff_of_nonneg (norm_nonneg _)).2 fun j =>

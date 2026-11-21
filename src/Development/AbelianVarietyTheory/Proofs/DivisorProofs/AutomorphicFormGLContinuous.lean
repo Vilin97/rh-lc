@@ -11,7 +11,7 @@ open NumberField Topology
 
 namespace GlobalTheory.CuspRep
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem continuous_pInf : Continuous (pInf E) :=
   (continuous_pi fun w =>
@@ -19,14 +19,14 @@ theorem continuous_pInf : Continuous (pInf E) :=
       (continuous_apply w)).comp continuous_fst
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_pFin : Continuous (pFin E) := continuous_snd
 
 theorem continuous_mapInf : Continuous (Matrix.GeneralLinearGroup.map (n := Fin a) (pInf E)) :=
   Continuous.units_map _ (continuous_id.matrix_map continuous_pInf)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_mapFin : Continuous (Matrix.GeneralLinearGroup.map (n := Fin a) (pFin E)) :=
   Continuous.units_map _ (continuous_id.matrix_map continuous_pFin)
 

@@ -21,7 +21,7 @@ variable {L : Type} [Field L] [NumberField L]
 theorem productRule (χ : HChar L) : χ.ProductRule :=
   GlobalTheory.Mem.Chr.CharModel.productRule (F := L) ⟨χ.1, χ.2⟩
 
-theorem inf_eq_one [IsTotallyComplex L] (χ : HChar L) {n : ℕ} (hn : 0 < n) (h : χ.OrderDvd n) (k : Lˣ) : χ.inf k = 1 := by
+theorem inf_eq_one [_root_.NumberField.IsTotallyComplex L] (χ : HChar L) {n : ℕ} (hn : 0 < n) (h : χ.OrderDvd n) (k : Lˣ) : χ.inf k = 1 := by
   have hpow : ∀ x, χ.1 x ^ n = 1 := fun x => by
     have h1 : (χ ^ n).1 x = 1 := by rw [show χ ^ n = 1 from h]; rfl
     simpa using h1

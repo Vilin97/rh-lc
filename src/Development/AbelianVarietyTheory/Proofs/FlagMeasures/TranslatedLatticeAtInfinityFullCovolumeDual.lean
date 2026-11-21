@@ -155,7 +155,7 @@ def emb : (Fin j → E) →+ VecInf E j where
   map_zero' := by ext; simp
   map_add' x y := by ext; simp
 
-def mix [IsTotallyComplex E] : (Fin j → mixedEmbedding.mixedSpace E) ≃ₗ[ℝ] VecInf E j where
+def mix [_root_.NumberField.IsTotallyComplex E] : (Fin j → mixedEmbedding.mixedSpace E) ≃ₗ[ℝ] VecInf E j where
   toFun x w a := (x a).2 ⟨w, IsTotallyComplex.isComplex w⟩
   invFun y a := (fun _ => 0, fun w => y w.1 a)
   map_add' _ _ := rfl
@@ -167,16 +167,16 @@ def mix [IsTotallyComplex E] : (Fin j → mixedEmbedding.mixedSpace E) ≃ₗ[�
     exact absurd w.2 (InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex w.1))
   right_inv _ := rfl
 
-theorem mix_apply [IsTotallyComplex E] (x : Fin j → mixedEmbedding.mixedSpace E) (w : InfinitePlace E) (a : Fin j) :
+theorem mix_apply [_root_.NumberField.IsTotallyComplex E] (x : Fin j → mixedEmbedding.mixedSpace E) (w : InfinitePlace E) (a : Fin j) :
     mix E j x w a = (x a).2 ⟨w, IsTotallyComplex.isComplex w⟩ := rfl
 
 def ratB : Basis (Σ _ : Fin j, Free.ChooseBasisIndex ℤ (𝓞 E)) ℚ (Fin j → E) :=
   Pi.basis fun _ => integralBasis E
 
-def intB [IsTotallyComplex E] : Basis (Σ _ : Fin j, Free.ChooseBasisIndex ℤ (𝓞 E)) ℝ (VecInf E j) :=
+def intB [_root_.NumberField.IsTotallyComplex E] : Basis (Σ _ : Fin j, Free.ChooseBasisIndex ℤ (𝓞 E)) ℝ (VecInf E j) :=
   (Pi.basis fun _ => mixedEmbedding.latticeBasis E).map (mix E j)
 
-theorem intB_apply [IsTotallyComplex E] (i) : intB E j i = emb E j (ratB E j i) := by
+theorem intB_apply [_root_.NumberField.IsTotallyComplex E] (i) : intB E j i = emb E j (ratB E j i) := by
   obtain ⟨a, i⟩ := i
   funext w c
   simp only [intB, ratB, Basis.map_apply, Pi.basis_apply, mix_apply, emb, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
@@ -188,7 +188,7 @@ theorem intB_apply [IsTotallyComplex E] (i) : intB E j i = emb E j (ratB E j i) 
 instance : MeasurableAdd (mixedEmbedding.mixedSpace E) := MeasurableAdd₂.toMeasurableAdd
 
 open Classical in
-theorem volume_fd_map [IsTotallyComplex E] {ι : Type} [Fintype ι] (b : Basis ι ℝ (mixedEmbedding.mixedSpace E)) :
+theorem volume_fd_map [_root_.NumberField.IsTotallyComplex E] {ι : Type} [Fintype ι] (b : Basis ι ℝ (mixedEmbedding.mixedSpace E)) :
     volume.real (ZSpan.fundamentalDomain ((Pi.basis fun _ : Fin j => b).map (mix E j))) =
       volume.real (ZSpan.fundamentalDomain b) ^ j := by
   haveI : (volume : Measure (Fin j → mixedEmbedding.mixedSpace E)).IsAddHaarMeasure := Measure.pi.isAddHaarMeasure _
@@ -234,7 +234,7 @@ theorem volume_fd_map [IsTotallyComplex E] {ι : Type} [Fintype ι] (b : Basis �
   rw [this]
   simp
 
-theorem volume_fd_intB [IsTotallyComplex E] :
+theorem volume_fd_intB [_root_.NumberField.IsTotallyComplex E] :
     volume.real (ZSpan.fundamentalDomain (intB E j)) = Formalism.HermitianLatticesTheory.vInv E ^ (Formalism.HermitianLatticesTheory.fDeg E * j) := by
   classical
   rw [intB, volume_fd_map, pow_mul]
@@ -268,7 +268,7 @@ theorem isLattice_int (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsF
   rw [integralBasis_apply, algebraMap_smul]
   exact Λ.smul_mem _ (v i).2
 
-theorem exists_basis [IsTotallyComplex E] (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsFullLattice E Λ) :
+theorem exists_basis [_root_.NumberField.IsTotallyComplex E] (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsFullLattice E Λ) :
     ∃ b : Basis (Idx E j) ℝ (VecInf E j),
       Submodule.span ℤ (emb E j '' (Λ : Set (Fin j → E))) = Submodule.span ℤ (Set.range b) := by
   classical
@@ -318,7 +318,7 @@ theorem latAt_eq_map (Λ : Submodule (𝓞 E) (Fin j → E)) (g : MatInf E j) :
   rw [this, Set.image_image]
   rfl
 
-theorem span_std [IsTotallyComplex E] :
+theorem span_std [_root_.NumberField.IsTotallyComplex E] :
     latAt E j (Submodule.span (𝓞 E) (Set.range fun a => (Pi.single a 1 : Fin j → E)))
       (fun _ a b => if a = b then 1 else 0) = Submodule.span ℤ (Set.range (intB E j)) := by
   have h1 : (Matrix.of fun a b : Fin j => if a = b then (1 : ℂ) else 0) = 1 := rfl

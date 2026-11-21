@@ -24,7 +24,7 @@ omit [NumberField E] in
 theorem coord_embedding (w : InfinitePlace E) (c : Cinf E) : coord w.embedding c = c w := by
   unfold coord; split_ifs <;> simp_all
 
-theorem coord_conj_embedding [IsTotallyComplex E] (w : InfinitePlace E) (c : Cinf E) :
+theorem coord_conj_embedding [_root_.NumberField.IsTotallyComplex E] (w : InfinitePlace E) (c : Cinf E) :
     coord (ComplexEmbedding.conjugate w.embedding) c = starRingEnd ℂ (c w) := by
   set τ := ComplexEmbedding.conjugate w.embedding
   have hs : ∀ z : ℂ, (Pi.single w z : Cinf E) = atEmb τ (starRingEnd ℂ z) := by
@@ -44,7 +44,7 @@ theorem coord_conj_embedding [IsTotallyComplex E] (w : InfinitePlace E) (c : Cin
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Finset.sum_eq_single w (fun v _ hv => h0 v hv _) (by simp), hs, coord_atEmb]
 
-theorem sum_emb [IsTotallyComplex E] {R : Type*} [AddCommMonoid R] (f : (E →+* ℂ) → R) :
+theorem sum_emb [_root_.NumberField.IsTotallyComplex E] {R : Type*} [AddCommMonoid R] (f : (E →+* ℂ) → R) :
     ∑ τ, f τ = ∑ w : InfinitePlace E, (f w.embedding + f (ComplexEmbedding.conjugate w.embedding)) := by
   rw [← Finset.sum_fiberwise Finset.univ (fun τ => InfinitePlace.mk τ) f]
   refine Finset.sum_congr rfl fun w _ => ?_

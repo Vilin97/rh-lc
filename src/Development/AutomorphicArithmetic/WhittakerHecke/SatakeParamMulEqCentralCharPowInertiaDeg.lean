@@ -88,7 +88,7 @@ private theorem unr_of_ok {ω : HChar ℚ} {L : ℕ} (hc : ChOk ω⁻¹ L) {v : 
   exact inv_eq_one.1 h
 
 theorem UpperTheory.satake_param_mul_eq_central_char_pow_inertiaDeg :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (P : CuspSub E 2) (ω : HChar ℚ) (L : ℕ), CenN P ω → ChOk ω⁻¹ L →
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (P : CuspSub E 2) (ω : HChar ℚ) (L : ℕ), CenN P ω → ChOk ω⁻¹ L →
         ∀ (w : H.P E) (α β : ℂˣ) (f : ℕ), ¬ Bad L (w.under (𝓞 ℚ)) → normV w = normV (w.under (𝓞 ℚ)) ^ f →
           (CG.mk P).HasSat w {α, β} → α * β = ω.val (w.under (𝓞 ℚ)) ^ f := by
   intro E _ _ _ P ω L hC hO w α β f hb hf hS

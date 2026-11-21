@@ -37,7 +37,7 @@ private theorem measurable_tsum_complex {ι X : Type} [Countable ι] [Measurable
   · simp [Set.indicator, hx, tsum_eq_zero_of_not_summable hx, tendsto_const_nhds]
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.thMeas :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), ThMeas W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), ThMeas W := by
   intro F E _ _ _ _ _ _ _ D W φ
   haveI : Countable F := Finsupp.Countable.of_moduleFinite (R := ℚ)
   have hpt : ∀ v, Measurable fun g => (W.Om g φ).1 v := fun v =>

@@ -289,7 +289,7 @@ end PoitouTate
 
 open PoitouTate in
 def PoitouTateTotallyComplex : Prop :=
-  ∀ (F Ω : Type) [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω]
+  ∀ (F Ω : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field Ω] [Algebra F Ω]
     [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (r : ℕ), 0 < r →
   ∀ ζ : Ω, IsPrimitiveRoot ζ (l ^ r) →
   ∃ inv : InvFam F Ω l r, IsLocalInvariants ζ inv ∧
@@ -305,7 +305,7 @@ def PoitouTateTotallyComplex : Prop :=
 
 open PoitouTate in
 theorem PoitouTateTotallyComplex.annihilators (h : PoitouTateTotallyComplex)
-    (F Ω : Type) [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω]
+    (F Ω : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field Ω] [Algebra F Ω]
     [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (r : ℕ) (hr : 0 < r) (ζ : Ω)
     (hζ : IsPrimitiveRoot ζ (l ^ r)) :
     ∃ inv : InvFam F Ω l r, IsLocalInvariants ζ inv ∧

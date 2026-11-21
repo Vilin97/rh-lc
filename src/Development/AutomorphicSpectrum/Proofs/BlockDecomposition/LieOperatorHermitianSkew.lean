@@ -24,7 +24,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspRep.CuspidalL2GL MeasureT
 
 namespace GlobalTheory.CompanionTheory.ClozelHerm
 
-theorem op_lie_single_neg {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (π : CuspSub E a)
+theorem op_lie_single_neg {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (π : CuspSub E a)
     (i j : Fin a) (x : Cinf E) :
     π.op (.lie (toL (Matrix.single i j (-x)))) = -π.op (.lie (toL (Matrix.single i j x))) := by
   refine LinearMap.ext fun φ => Subtype.ext ?_
@@ -32,7 +32,7 @@ theorem op_lie_single_neg {E : Type} [Field E] [NumberField E] [IsTotallyComplex
   rw [map_neg]
   rfl
 
-theorem EopV_adjoint : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a)
+theorem EopV_adjoint : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CuspSub E a)
     (B : π.V →ₗ[ℂ] π.V →ₗ⋆[ℂ] ℂ), IsHerm π B → ∀ (τ : E →+* ℂ) (i j : Fin a) (φ ψ : π.V),
     B (EopV π τ i j φ) ψ = -B φ (EopV π (NumberField.ComplexEmbedding.conjugate τ) i j ψ) := by
   intro E _ _ _ a π B hB τ i j φ ψ

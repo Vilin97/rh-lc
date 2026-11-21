@@ -71,7 +71,7 @@ private theorem ofFn_rel {M A : Type} [AddCommGroup M] [Module ℂ M] {V : Submo
     rw [Fin.prod_univ_succ, List.ofFn_succ, List.prod_cons, mul_smul, h, Module.End.mul_apply,
       ofFn_rel n _ _ fun i => h i.succ]
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} {S : Set (Pl E)}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} {S : Set (Pl E)}
 
 theorem commute_uC_finRep (u : UC E n) (k : GL (Fin n) (Af E)) : Commute (uC E n u) (finRep E n k) := by
   have hu : u ∈ Algebra.adjoin ℂ {x : UC E n | ∃ τ i j, x = genC τ i j} := by rw [adjoin_genC]; trivial

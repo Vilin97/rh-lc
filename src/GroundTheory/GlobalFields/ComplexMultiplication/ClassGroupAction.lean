@@ -122,7 +122,7 @@ theorem ellOf_eq_ellOf_iff {L L' : PeriodPair} (hL : periodLatticeEnd L = cmRing
 
 section Quadratic
 
-variable (hK : finrank ℚ K = 2) [IsTotallyComplex K]
+variable (hK : finrank ℚ K = 2) [_root_.NumberField.IsTotallyComplex K]
 include hK
 
 theorem CMCurve.exists_lattice (E : CMCurve K) :

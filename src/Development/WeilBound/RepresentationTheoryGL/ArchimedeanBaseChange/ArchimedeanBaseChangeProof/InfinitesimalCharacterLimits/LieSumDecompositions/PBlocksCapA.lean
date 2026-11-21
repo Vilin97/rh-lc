@@ -12,7 +12,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.
 
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockCapelli
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem qdet_slice {n : Fin 2 → ℕ} (h : ∑ i, n i = n 0 + n 1) (τ : E →+* ℂ) (i : Fin 2) (w : ℂ)
     (ψ : Sm E (n 0 + n 1)) (m : ∀ j, GA E (n j)) (θ : Sm E (n i))

@@ -10,7 +10,7 @@ open NumberField GlobalTheory.CuspRep
 
 namespace GlobalTheory.ZalgCpt
 
-theorem zalg_comm_cptRep : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem zalg_comm_cptRep : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (k : GlobalTheory.CuspRep.Kinf E a) (z : Module.End ℂ (GlobalTheory.CuspRep.Sm E a)),
     z ∈ GlobalTheory.CuspRep.Zalg E a → z * GlobalTheory.CuspRep.cptRep E a k = GlobalTheory.CuspRep.cptRep E a k * z := by
   intro E _ _ _ a k z hz

@@ -15,7 +15,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace PositivityTheory.RSHS
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ)
 
 def CuspDiscrete : Prop :=
   ∀ π : CuspSub E N, π.IsUnitary → IsNormalised π → IsDiscrete π.V

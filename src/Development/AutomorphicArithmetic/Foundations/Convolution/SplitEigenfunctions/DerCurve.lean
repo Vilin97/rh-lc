@@ -110,7 +110,7 @@ private theorem outer_der (N : MeasE E) {Ψ Q : GL (Fin 2) (A E) → ℂ} (hΨ :
   · exact integrable_const _
   · exact ae_of_all _ fun z s _ => inner_der N hΨ hQ hg hd _ s
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private theorem ex_zero' (X : Lie E 2) : ex X 0 = 1 := by
   have h := (exPar E X).1 0 0

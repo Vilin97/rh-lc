@@ -11,7 +11,7 @@ open scoped nonZeroDivisors IntermediateField
 
 namespace GlobalTheory.Mem.RayNorm
 
-theorem int_norm_pos (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] {x : 𝓞 K} (hx : x ≠ 0) :
+theorem int_norm_pos (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {x : 𝓞 K} (hx : x ≠ 0) :
     0 < Algebra.norm ℤ x := by
   classical
   have hx' : (x : K) ≠ 0 := by exact_mod_cast hx
@@ -81,7 +81,7 @@ theorem norm_cast_eq (K : Type) [Field K] [NumberField K] (p : ℕ) {x y : 𝓞 
   simp only [eq_intCast] at e1 e2
   rw [e1, e2, hmat]
 
-theorem absNorm_modEq_one : ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (𝔮 : Ideal (𝓞 K)) (p : ℕ), 𝔮 ≤ Ideal.span {(p : 𝓞 K)} → ∀ (I : Ideal (𝓞 K)) (α β : 𝓞 K), RayPair 𝔮 α β → I * Ideal.span {β} = Ideal.span {α} → Ideal.absNorm I ≡ 1 [MOD p] := by
+theorem absNorm_modEq_one : ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (𝔮 : Ideal (𝓞 K)) (p : ℕ), 𝔮 ≤ Ideal.span {(p : 𝓞 K)} → ∀ (I : Ideal (𝓞 K)) (α β : 𝓞 K), RayPair 𝔮 α β → I * Ideal.span {β} = Ideal.span {α} → Ideal.absNorm I ≡ 1 [MOD p] := by
   intro K _ _ _ 𝔮 p h𝔮 I α β hR hI
   unfold GlobalTheory.NT.RayPair at hR
   obtain ⟨hα, hβ, -, hβq, hαβ, -⟩ := hR

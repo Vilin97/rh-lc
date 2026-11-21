@@ -54,7 +54,7 @@ theorem majorant_cauchySchwarz {ι : Type*} [Fintype ι] [DecidableEq ι] {H P :
 section Places
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 theorem Majorant.isMajorantOf {h : HermitianForm F E W} {v : Basis ι E W} (M : Majorant h v)
@@ -62,7 +62,7 @@ theorem Majorant.isMajorantOf {h : HermitianForm F E W} {v : Basis ι E W} (M : 
   ⟨M.posDef w, (GramAtData.proof h v w).1, (GramAtData.proof h v w).2, M.siegel w⟩
 
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem Majorant.sqrt_le_len {h : HermitianForm F E W} {v : Basis ι E W} (M : Majorant h v)
     (y : InfinitePlace E → ι → ℂ) (w : InfinitePlace E) :
     Real.sqrt (star (y w) ⬝ᵥ (M.P w *ᵥ y w)).re ≤ M.len y := by

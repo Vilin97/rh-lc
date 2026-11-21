@@ -101,7 +101,7 @@ theorem mulVec_coordEquiv (γ : h.unitaryGroup) (y : W) :
     simp only [mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, coordEquiv_apply,
     Algebra.TensorProduct.lid_tmul, one_smul]
 
-variable [IsTotallyReal F] [IsTotallyComplex E]
+variable [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 theorem adeleSplit_snd_hermitianDiagonal (γ : h.unitaryGroup) :
     (adeleSplit h v (hermitianDiagonal h v γ)).2 =
@@ -145,7 +145,7 @@ theorem mem_smul_addSubgroup_iff (γ : h.unitaryGroup) (S : AddSubgroup W) (x : 
     x ∈ γ • S ↔ γ⁻¹ • x ∈ S := by
   exact AddSubgroup.mem_pointwise_smul_iff_inv_smul_mem
 
-variable [IsTotallyReal F] [IsTotallyComplex E]
+variable [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 theorem dictLattice_diagonal_mul (d : ℤ) (γ : h.unitaryGroup)
     (g : unitaryPoints F E (gram h.toSesq v) (FinAdele F)) :

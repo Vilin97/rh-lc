@@ -91,7 +91,7 @@ theorem hasCohomology_transport {σ : Herm E a →ₗ[ℝ] Herm E a} {s : Kinf E
 
 end Transport
 
-variable [NumberField E] [IsTotallyComplex E]
+variable [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 end GlobalTheory.ConjCoh
 

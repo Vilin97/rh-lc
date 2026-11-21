@@ -86,7 +86,7 @@ end GlobalTheory.CrysTwistBack
 
 namespace GlobalTheory.CrysTwistBack
 
-theorem isSpherical_twist_of_unr {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem isSpherical_twist_of_unr {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (κ : HChar E) (hκ : κ.UnrAt w)
     (h : GlobalTheory.SmGL.IsSpherical σ.ρ) :
     GlobalTheory.SmGL.IsSpherical (σ.twist (CuspSub.locDet a κ w) (CuspSub.isOpen_ker_locDet κ w)).ρ := by

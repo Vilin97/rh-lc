@@ -11,7 +11,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.
 
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockCapelli
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 theorem decomp_G (G : Sm E (r + s))
     (hu : ∀ (x : BlockIx (r + s) r → Ad E) (g : GA E (r + s)), G.1 (unip x * g) = G.1 g)

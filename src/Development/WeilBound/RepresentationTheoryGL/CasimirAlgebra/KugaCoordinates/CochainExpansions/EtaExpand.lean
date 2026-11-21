@@ -101,12 +101,12 @@ theorem intersection_update_fsHerm_neg_one (τ : E →+* ℂ) (k : Kinf E a) (X 
   refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ?_
   ring
 
-theorem kap_bar [IsTotallyComplex E] (τ : E →+* ℂ) (k : Kinf E a) (x y : Fin a) :
+theorem kap_bar [_root_.NumberField.IsTotallyComplex E] (τ : E →+* ℂ) (k : Kinf E a) (x y : Fin a) :
     kap E a (barE E τ) k x y = star (kap E a τ k x y) := by
   simp only [kap, Matrix.map_apply]
   exact J.coord_conjugate τ _
 
-theorem eta_expand [IsTotallyComplex E] (lab : Fin q → (E →+* ℂ)) (tl : Fin N → (E →+* ℂ)) (ρ : Kinf E a → Module.End ℂ M)
+theorem eta_expand [_root_.NumberField.IsTotallyComplex E] (lab : Fin q → (E →+* ℂ)) (tl : Fin N → (E →+* ℂ)) (ρ : Kinf E a → Module.End ℂ M)
     (η : TV a M (Fin q ⊕ (Fin N ⊕ Fin N)))
     (h2 : ∀ γ, actT (lab3 (barE E) lab tl) (kap E a) ρ γ η = η) (k : Kinf E a) (I : Fin q → Fin a) (I' I'' : Fin N → Fin a) :
     η (Sum.elim I (Sum.elim I' I'')) = ∑ w : (Fin q → Fin a) × ((Fin N → Fin a) × (Fin N → Fin a)),
@@ -140,7 +140,7 @@ theorem coef_id (tl : Fin N → (E →+* ℂ)) (k : Kinf E a) (Y : Fin N → Her
     star (kap E a (tl j) k y (A' j)))]
   exact Finset.prod_congr rfl fun j _ => intersection_update_fsHerm_neg_one (tl j) k (Y j).1 (A' j) (B' j)
 
-theorem mm_equiv [IsTotallyComplex E] (lab : Fin q → (E →+* ℂ)) (tl : Fin N → (E →+* ℂ)) (ρ : Kinf E a → Module.End ℂ M)
+theorem mm_equiv [_root_.NumberField.IsTotallyComplex E] (lab : Fin q → (E →+* ℂ)) (tl : Fin N → (E →+* ℂ)) (ρ : Kinf E a → Module.End ℂ M)
     (η : TV a M (Fin q ⊕ (Fin N ⊕ Fin N)))
     (h2 : ∀ γ, actT (lab3 (barE E) lab tl) (kap E a) ρ γ η = η) (k : Kinf E a) (Y : Fin N → Herm E a) :
     mm tl η (fun i => adHerm k (Y i)) = actT lab (kap E a) ρ k (mm tl η Y) := by
@@ -177,7 +177,7 @@ theorem mm_equiv [IsTotallyComplex E] (lab : Fin q → (E →+* ℂ)) (tl : Fin 
         refine Finset.sum_congr rfl fun A' _ => ?_
         rw [map_smul, smul_smul]
 
-theorem om_cochain [IsTotallyComplex E] (lab : Fin q → (E →+* ℂ)) (tl : Fin N → (E →+* ℂ))
+theorem om_cochain [_root_.NumberField.IsTotallyComplex E] (lab : Fin q → (E →+* ℂ)) (tl : Fin N → (E →+* ℂ))
     (ρ : Kinf E a → Module.End ℂ M) (η : TV a M (Fin q ⊕ (Fin N ⊕ Fin N)))
     (h2 : ∀ γ, actT (lab3 (barE E) lab tl) (kap E a) ρ γ η = η) :
     IsCochain (actT lab (kap E a) ρ) (om tl η) := by

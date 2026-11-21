@@ -18,7 +18,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Ff
 open scoped Classical
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.thDerL :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F) (W : Weil D), ThDerL O W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F) (W : Weil D), ThDerL O W := by
   intro F E _ _ _ _ _ _ _ D O W φ Y hY g h t
   obtain ⟨hOne, hDer⟩ := dLDer F E D O W Y hY
   obtain ⟨-, hcont, -⟩ := exPar E Y

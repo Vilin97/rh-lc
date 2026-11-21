@@ -13,7 +13,7 @@ open NumberField IsDedekindDomain HeckeValGen GlobalTheory.HeckeSplit
 namespace GlobalTheory.HeckeSplit
 
 theorem heckeChar_eq_one_of_degOne : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
-    [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
+    [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
     [Algebra.IsQuadraticExtension F E] (χ : Ideles E →* ℂˣ), IsHeckeChar E χ →
     (∀ᶠ w in Filter.cofinite, DegOne F w → TrivAt χ w) → χ = 1 := by
   intro F E _ _ _ _ _ _ _ _ χ hχ hdeg

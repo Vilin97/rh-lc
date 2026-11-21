@@ -24,7 +24,7 @@ private theorem finAt_mem_of_integral {K : Type} [Field K] [NumberField K] {n : 
   exact (AdelicGLn.mem_integralFiniteGL_iff_forall K n).1 hu w
 
 theorem UpperTheory.ConvolutionTheory.Tf.ampComm :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (𝔞 : Amp μ),
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (𝔞 : Amp μ),
       (∀ τ i, zc τ i ∈ Subalgebra.center ℂ (UC K n)) →
       0 ≤ 𝔞.A ∧ ‖𝔞.A‖ ≤ 1 ∧ (∀ v, 𝔞.A v ∈ fixF μ 𝔞.U) ∧ IsCompact (𝔞.U : Set (AdelicGLn.FiniteAdelicGL K n)) ∧
       (∀ x, Commute 𝔞.A (𝔞.Z x)) ∧ (∀ x y, Commute (𝔞.Z x) (𝔞.Z y)) ∧

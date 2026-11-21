@@ -23,7 +23,7 @@ private theorem wW_mul_cube (F : Type) [Field F] [NumberField F] : wW F * (wW F 
   simp [Matrix.mul_fin_two, Matrix.one_fin_two]
 
 theorem UpperTheory.ConvolutionTheory.R2.H.slKer :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (φ : S4 F), Sl0 φ.1 → ∀ g, ThRow 0 0 (W.Om g φ).1 = 0 := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (φ : S4 F), Sl0 φ.1 → ∀ g, ThRow 0 0 (W.Om g φ).1 = 0 := by
   intro F E _ _ _ _ _ _ _ D W φ hφ g
   have hH : St.Hat W := hatSt F E D W
   let P : G1 F → Prop := fun g => ∀ χ : S4 F, Sl0 χ.1 → Sl0 (W.Om g χ).1

@@ -86,7 +86,7 @@ end Speh
 
 section Inf
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 theorem hasInfCharGL_unique {V : Submodule ℂ (Sm E N)} (hV : V ≠ ⊥) {τ : E →+* ℂ} {m m' : Multiset ℂ}
     (h : HasInfCharGL V τ m) (h' : HasInfCharGL V τ m') : m = m' := by

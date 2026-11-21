@@ -15,7 +15,7 @@ open NumberField IsDedekindDomain Neutral.B1 ReciprocityTheory.Neutral.Bridge.HC
 
 namespace GlobalTheory.ProdLocUnit
 
-theorem prod_locUnit_eq_one : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyComplex F] (B : Type) [CommGroup B] (ψ : Ideles F →* B), IsOpen (ψ.ker : Set (Ideles F)) → (∀ k : Fˣ, ψ (diagUnits F k) = 1) → ∀ (a : Fˣ) (T : Finset (HeightOneSpectrum (𝓞 F))), (∀ v ∉ T, ψ (locUnit F v a) = 1) → ∏ v ∈ T, ψ (locUnit F v a) = 1 := by
+theorem prod_locUnit_eq_one : ∀ (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] (B : Type) [CommGroup B] (ψ : Ideles F →* B), IsOpen (ψ.ker : Set (Ideles F)) → (∀ k : Fˣ, ψ (diagUnits F k) = 1) → ∀ (a : Fˣ) (T : Finset (HeightOneSpectrum (𝓞 F))), (∀ v ∉ T, ψ (locUnit F v a) = 1) → ∏ v ∈ T, ψ (locUnit F v a) = 1 := by
   intro F _ _ _ B _ ψ hker hd a T hT
   classical
   letI : TopologicalSpace B := ⊥

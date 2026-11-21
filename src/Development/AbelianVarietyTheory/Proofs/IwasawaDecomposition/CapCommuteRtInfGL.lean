@@ -47,7 +47,7 @@ theorem qdet_semiconj {n : ℕ} (E E' : Fin n → Fin n → A) (R : A) (h : ∀ 
 
 end Algebra
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem rt_lie (y : GL (Fin a) (Cinf E)) (X : Matrix (Fin a) (Fin a) (Cinf E)) :
     rt E a (infGL E a y) * lie E a (toL X) = lie E a (toL (y.val * X * (y⁻¹).val)) * rt E a (infGL E a y) := by
@@ -64,7 +64,7 @@ theorem rt_lie (y : GL (Fin a) (Cinf E)) (X : Matrix (Fin a) (Fin a) (Cinf E)) :
   exact congrArg (fun Z => fderiv ℝ (chart φ.1 g) (toL y.val) (toL Z)) (Units.inv_mul_cancel_right (y.val * X) y).symm
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem mul_atEmb (τ : E →+* ℂ) (x : Cinf E) (z : ℂ) : x * atEmb τ z = atEmb τ (coord τ x * z) := by
   classical
   funext w
@@ -111,7 +111,7 @@ theorem rt_Eop (y : GL (Fin a) (Cinf E)) (τ : E →+* ℂ) (i j : Fin a) :
   · ring
   · linear_combination ((c.im : ℂ) / 2) * Complex.I_mul_I
 
-theorem cap_commute_rt_infGL : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (τ : E →+* ℂ) (u : ℂ)
+theorem cap_commute_rt_infGL : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (τ : E →+* ℂ) (u : ℂ)
     (y : GL (Fin a) (Cinf E)), Commute (cap (a := a) τ u) (rt E a (infGL E a y)) := by
   intro E _ _ _ a τ u y
   have h := qdet_semiconj _ _ _ (rt_Eop y τ) (u + ((a : ℂ) - 1) / 2)

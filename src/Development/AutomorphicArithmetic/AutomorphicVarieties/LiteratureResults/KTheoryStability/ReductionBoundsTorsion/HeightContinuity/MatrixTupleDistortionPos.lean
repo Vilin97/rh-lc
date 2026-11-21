@@ -105,7 +105,7 @@ theorem lm_mul_le (hN : 1 ≤ N) (A B : InfinitePlace L → Matrix (Fin N) (Fin 
   exact Finset.single_le_sum (f := fun w => ∑ i, ∑ j, ‖A w i j - (1 : Matrix (Fin N) (Fin N) ℂ) i j‖)
     (fun _ _ => by positivity) (Finset.mem_univ w)
 
-theorem one_le_norm_place [IsTotallyComplex L] (x : 𝓞 L) (hx : x ≠ 0) :
+theorem one_le_norm_place [_root_.NumberField.IsTotallyComplex L] (x : 𝓞 L) (hx : x ≠ 0) :
     ∃ w : InfinitePlace L, 1 ≤ ‖embO w x‖ ^ 2 := by
   classical
   by_contra hne
@@ -132,7 +132,7 @@ theorem one_le_norm_place [IsTotallyComplex L] (x : 𝓞 L) (hx : x ≠ 0) :
   have h3 : 0 ≤ w0 (x : L) ^ w0.mult := pow_nonneg (hnn w0) _
   nlinarith
 
-theorem one_le_lm_one [IsTotallyComplex L] (hN : 1 ≤ N) :
+theorem one_le_lm_one [_root_.NumberField.IsTotallyComplex L] (hN : 1 ≤ N) :
     1 ≤ lm (fun _ : InfinitePlace L => (1 : Matrix (Fin N) (Fin N) ℂ)) := by
   apply le_lm hN
   intro y hy
@@ -228,13 +228,13 @@ theorem iv_one : iv (1 : Gp L N) = fun _ => 1 := by
 theorem tp_one : tp (1 : Gp L N) = fun _ => 1 := by
   funext w; simp [tp]
 
-theorem lm_iv_pos [IsTotallyComplex L] (hN : 1 ≤ N) (x : Gp L N) : 0 < lm (iv x) := by
+theorem lm_iv_pos [_root_.NumberField.IsTotallyComplex L] (hN : 1 ≤ N) (x : Gp L N) : 0 < lm (iv x) := by
   have h1 := one_le_lm_one (L := L) hN
   have h2 := lm_iv_le hN 1 x
   rw [one_mul, iv_one] at h2
   exact pos_of_mul_pos_right (lt_of_lt_of_le one_pos (h1.trans h2)) (matrixTupleDistortion_pos _).le
 
-theorem lm_tp_pos [IsTotallyComplex L] (hN : 1 ≤ N) (x : Gp L N) : 0 < lm (tp x) := by
+theorem lm_tp_pos [_root_.NumberField.IsTotallyComplex L] (hN : 1 ≤ N) (x : Gp L N) : 0 < lm (tp x) := by
   have h1 := one_le_lm_one (L := L) hN
   have h2 := lm_tp_le hN 1 x
   rw [one_mul, tp_one] at h2

@@ -39,13 +39,13 @@ def ShiftIndex : Prop :=
       idx w N N' = -((d : ℤ) * s)
 
 def MuLcv : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (d : ℕ), 0 < d →
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ), 0 < d →
     ∀ X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ, (∀ v, IsUnit (X v).det) →
     ∀ N : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K N →
       Formalism.HN.muDef (Pi.basisFun K (Fin d)) X N = -(lcv X N) / d
 
 def ShiftMu : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (d : ℕ)
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ)
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ), (∀ v, IsUnit (X v).det) →
     ∀ N N' : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K N → Submodule.IsLattice K N' →
     ∀ σ : HeightOneSpectrum (𝓞 K) → ℤ, IsShift N N' σ →

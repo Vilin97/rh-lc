@@ -250,7 +250,7 @@ def RowFromClasses : Prop :=
 
 def RowNGAbstract : Prop :=
   ExactCores → ClassSquaresSum → RowFromClasses → ClassCS → FirstBracket → SecondBracket → MeanAmpJoint →
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (τ Rw I H H₁ : Type) [Fintype I]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (τ Rw I H H₁ : Type) [Fintype I]
     [NormedAddCommGroup H] [InnerProductSpace ℂ H] [NormedAddCommGroup H₁] [InnerProductSpace ℂ H₁]
     [CompleteSpace H₁] (X : PB.Terms τ Rw I H H₁) (r k : ℕ) (Cl Nu : Type) (N : NGData τ E r Cl Nu)
     (C1 C0 Aexp : ℕ) (Pc gf cSt AAre e1 TB : ℝ),
@@ -295,7 +295,7 @@ def RowNGJoint : Prop :=
   NGChain →
   ∀ (C1 C0 A : ℕ) (CB CSt Cg CT : ℝ), 0 ≤ CB → 0 ≤ CSt → 0 ≤ Cg → 0 ≤ CT →
     C1 + C0 + 38 ≤ A → ∃ Cn : ℝ, 0 ≤ Cn ∧
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (τ Rw I H H₁ : Type) [Fintype I]
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (τ Rw I H H₁ : Type) [Fintype I]
       [NormedAddCommGroup H] [InnerProductSpace ℂ H] [NormedAddCommGroup H₁] [InnerProductSpace ℂ H₁]
       [CompleteSpace H₁] (X : PB.Terms τ Rw I H H₁) (r k : ℕ) (Cl Nu : Type) (N : NGData τ E r Cl Nu)
       (P : Type) [Fintype P] (B : S3.MassData P) (b rd g TT cSt e1 Irat Ire : ℝ),

@@ -176,7 +176,7 @@ end SlopeTestRemainingChoices
 end UpperTheory.ConvolutionTheory.R2.Ff
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.opsFock :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F), OpsFock D O := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F), OpsFock D O := by
   intro F E _ _ _ _ _ _ _ D O w i φ hφ
   have hs : φ.1 ∈ Submodule.span ℂ (Gen D.δ) := hφ
   refine ⟨?_, ?_⟩

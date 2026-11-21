@@ -12,7 +12,7 @@ open scoped TensorProduct
 namespace PositivityTheory.Rg.Cz
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 set_option synthInstance.maxHeartbeats 200000
 

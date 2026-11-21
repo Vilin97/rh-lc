@@ -39,7 +39,7 @@ private theorem hol_smul (τ : E →+* ℂ) (r : ℝ) (L : Lie E a →ₗ[ℝ] N
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   module
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private theorem hol_grp (τ : E →+* ℂ) (φ : N →ₗ[ℂ] N') (L : Lie E a →ₗ[ℝ] N) (L' : Lie E a →ₗ[ℝ] N')
     (p q : Matrix (Fin a) (Fin a) (Cinf E)) (h : ∀ X, φ (L (toL X)) = L' (toL (p * X * q)))
@@ -77,7 +77,7 @@ private theorem hol_der_end (τ : E →+* ℂ) (u : Module.End ℂ M) (L : Lie E
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.V.AlgRepEndIrreducible.alphaReal :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (LA LB : Lie E a →ₗ[ℝ] Module.End ℂ M),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (LA LB : Lie E a →ₗ[ℝ] Module.End ℂ M),
       IsLieHom LA → IsLieHom LB → (∀ X Y, Commute (LA X) (LB Y)) →
       (∀ (k : Kinf E a) (X : Matrix (Fin a) (Fin a) (Cinf E)), κ k * LA (toL X) = LA (toL (k.1 * X * star k.1)) * κ k) →
       (∀ (k : Kinf E a) (X : Matrix (Fin a) (Fin a) (Cinf E)), κ k * LB (toL X) = LB (toL (k.1 * X * star k.1)) * κ k) →

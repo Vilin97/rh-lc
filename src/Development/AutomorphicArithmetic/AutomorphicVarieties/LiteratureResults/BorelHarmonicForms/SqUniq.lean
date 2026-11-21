@@ -13,7 +13,7 @@ open scoped TensorProduct
 open Formalism.L2.Host GlobalTheory.UnitaryBC
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem chi_split {χ : HChar E} {s : ℝ} (h : χ.IsAbsPow s) :
     ((chiDet a χ (splitCentre E a 1) : ℂˣ) : ℂ) = ((Real.exp ((a : ℝ) * s * Fintype.card (E →+* ℂ)) : ℝ) : ℂ) := by
@@ -35,7 +35,7 @@ private theorem chi_split {χ : HChar E} {s : ℝ} (h : χ.IsAbsPow s) :
   rw [← Complex.ofReal_cpow (Real.exp_pos _).le, ← Real.exp_mul, Finset.prod_const, Finset.card_univ,
     ← Complex.ofReal_pow, ← Real.exp_nat_mul, mul_comm]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem absPow_uniq {χ χ' : HChar E} {s : ℝ} (h : χ.IsAbsPow s) (h' : χ'.IsAbsPow s) : χ = χ' := by
   rw [← mul_inv_eq_one]
   refine GlobalTheory.DiscSpec.Model.eq_one_of_isAbsPow ⟨fun v x hx => ?_, fun v => ?_, fun k => ?_⟩

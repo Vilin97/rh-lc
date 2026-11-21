@@ -13,7 +13,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 noncomputable section
 namespace GlobalTheory.CompanionTheory.CuspTransfer
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in
@@ -89,7 +89,7 @@ theorem measurableSet_splitFd (ha : 0 < a) : MeasurableSet (splitFd E a) := by
   exact e.isClosedEmbedding.measurableEmbedding.measurableSet_image.2
     ((RightCosetSpace.measurableSet_fundamentalDomain _).prod measurableSet_Ico)
 
-theorem isFundamentalDomain_splitFd : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 0 < a →
+theorem isFundamentalDomain_splitFd : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 0 < a →
     ∀ (μ : Measure (GA E a)) [μ.IsHaarMeasure], IsFundamentalDomain (latticeGL E a)
       ((fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) ''
         (RightCosetSpace.fundamentalDomain (rationalGLOne (K := E) (n := a)) ×ˢ Set.Ico (0 : ℝ) 1)) μ := by

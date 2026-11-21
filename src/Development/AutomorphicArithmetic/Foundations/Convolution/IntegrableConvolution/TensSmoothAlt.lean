@@ -106,7 +106,7 @@ private theorem tens_smooth (D : InfD σ m) (n : ℕ) (φ : Fin (m + 1) → TI F
   refine contDiff_prod fun i _ => ?_
   exact ((IsExpLieAlgebra.isSmoothFun_iff (isExpLieAlgebra F n)).1 (hφ i) _).comp (thetaL D n i).contDiff
 
-private theorem tens_fin [IsTotallyComplex F] (D : InfD σ m) (n : ℕ) (φ : Fin (m + 1) → TI F n) (β : TI E n)
+private theorem tens_fin [_root_.NumberField.IsTotallyComplex F] (D : InfD σ m) (n : ℕ) (φ : Fin (m + 1) → TI F n) (β : TI E n)
     (hβ : IsTens D φ β) (hφ : ∀ i, LeftFin (φ i)) : LeftFin β := by
   haveI := fin_prod (ι := Fin (m + 1)) (X := archGroup E n) (Y := fun _ => archGroup F n) (fun i => compA D n i)
     (fun i => Set.range fun k : archCompact F n => fun g : archGroup F n => φ i ((k : archGroup F n) * g)) hφ

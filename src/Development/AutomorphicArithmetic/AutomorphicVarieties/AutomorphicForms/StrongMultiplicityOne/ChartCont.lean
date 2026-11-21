@@ -13,7 +13,7 @@ open GlobalTheory.CuspRep (Cinf Lie chart infGL pInf sInf toL lmul invSet)
 open scoped SchwartzMap FourierTransform RealInnerProductSpace ContDiff Topology
 open UpperTheory.V UpperTheory.V.Af.StrongMultiplicityOne
 
-private theorem cc_infGL (F : Type) [Field F] [NumberField F] [IsTotallyComplex F] (a : ℕ) :
+private theorem cc_infGL (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] (a : ℕ) :
     Continuous (infGL F a) := by
   refine Continuous.units_map _ ?_
   have hs : Continuous (sInf F : Cinf F → Ad F) := (GlobalTheory.CuspRep.continuous_infEq F).prodMk continuous_const

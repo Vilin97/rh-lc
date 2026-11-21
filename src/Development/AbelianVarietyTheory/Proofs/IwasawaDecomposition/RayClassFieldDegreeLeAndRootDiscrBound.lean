@@ -15,13 +15,13 @@ open scoped IntermediateField
 
 namespace GlobalTheory.Mem.Fld.RaySize
 
-theorem isEmpty_realEmb (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] : IsEmpty (E →+* ℝ) := by
+theorem isEmpty_realEmb (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] : IsEmpty (E →+* ℝ) := by
   refine ⟨fun ψ => ?_⟩
   have h : InfinitePlace.IsReal (InfinitePlace.mk (Complex.ofRealHom.comp ψ)) :=
     ⟨_, ComplexEmbedding.isReal_iff.2 (by ext x; simp [ComplexEmbedding.conjugate]), rfl⟩
   exact (InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex _)) h
 
-theorem degOver_le_and_sz : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (φ : E →+* ℂ) (N : ℕ) (M : IntermediateField ℚ ℂ) (h : IsRayFieldIn φ (natIdeal E N) M), N ≠ 0 → degOver φ M h.emb_mem ≤ classNumber E * N ^ Module.finrank ℚ E ∧ Sz M (Real.log (Module.finrank ℚ E) + Real.log (degOver φ M h.emb_mem)) (Real.log |((discr E : ℤ) : ℝ)| / Module.finrank ℚ E + Real.log N + Real.log (degOver φ M h.emb_mem)) := by
+theorem degOver_le_and_sz : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (φ : E →+* ℂ) (N : ℕ) (M : IntermediateField ℚ ℂ) (h : IsRayFieldIn φ (natIdeal E N) M), N ≠ 0 → degOver φ M h.emb_mem ≤ classNumber E * N ^ Module.finrank ℚ E ∧ Sz M (Real.log (Module.finrank ℚ E) + Real.log (degOver φ M h.emb_mem)) (Real.log |((discr E : ℤ) : ℝ)| / Module.finrank ℚ E + Real.log N + Real.log (degOver φ M h.emb_mem)) := by
   intro E _ _ _ φ N M h hN
   haveI : NumberField M := h.numberField
   letI := algOf φ M h.emb_mem

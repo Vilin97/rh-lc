@@ -21,7 +21,7 @@ public import GroundTheory.AutomorphicForms.MultiplicityOne.Injective
 open NumberField IsDedekindDomain MeasureTheory GlobalTheory.CuspRep Formalism.L2.Host Formalism.UG GlobalTheory.LFun
 open scoped ENNReal ComplexConjugate nonZeroDivisors
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.exists_level_nat_bump_rankinSelbergCell : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ)
+theorem _root_.GlobalTheory.T.exists_level_nat_bump_rankinSelbergCell : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))),
     (∀ w ∈ S, ∀ w' : HeightOneSpectrum (𝓞 E), Ideal.comap (algebraMap ℤ (𝓞 E)) w'.asIdeal =
       Ideal.comap (algebraMap ℤ (𝓞 E)) w.asIdeal → w' ∈ S) →

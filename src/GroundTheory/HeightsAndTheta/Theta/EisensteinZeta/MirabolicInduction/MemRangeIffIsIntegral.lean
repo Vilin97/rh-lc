@@ -368,7 +368,7 @@ end Standard
 
 section Frame
 
-variable (F : Type) [Field F] [NumberField F] [IsTotallyReal F] [IsTotallyComplex E]
+variable (F : Type) [Field F] [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
   [Algebra F E] [Algebra.IsQuadraticExtension F E]
 
 def signs : Fin 2 → Fˣ := ![1, -1]
@@ -390,7 +390,7 @@ end Frame
 
 section Frame
 
-variable {F : Type} [Field F] [NumberField F] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F : Type} [Field F] [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
   [Algebra F E] [Algebra.IsQuadraticExtension F E]
 
 theorem isIntegral_conj {x : E} (hx : IsIntegral ℤ x) : IsIntegral ℤ (conj F E x) :=
@@ -428,7 +428,7 @@ end Frame
 
 section Frame2
 
-variable {F : Type} [Field F] [NumberField F] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F : Type} [Field F] [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
   [Algebra F E] [Algebra.IsQuadraticExtension F E]
 
 theorem stdCoord_flip (τ : InfinitePlace E) (u : Fib τ.embedding (Fin 2 → E)) (i : Fin 2) :

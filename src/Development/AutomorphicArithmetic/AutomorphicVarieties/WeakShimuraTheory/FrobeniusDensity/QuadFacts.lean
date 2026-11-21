@@ -204,7 +204,7 @@ private theorem dvd_twelve_of_totient_le_two (k : ℕ) (hk : 0 < k) (h : k.totie
   · rw [Nat.factorization_eq_zero_of_not_prime _ hp]
     exact Nat.zero_le _
 
-private theorem units_pm {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (h : Module.finrank ℚ K = 2)
+private theorem units_pm {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (h : Module.finrank ℚ K = 2)
     (t : K ≃ₐ[ℚ] K) (hu : ∀ s : K ≃ₐ[ℚ] K, s ≠ 1 → s = t)
     (hτ : ∀ x : 𝓞 K, x * RingOfIntegers.mapRingEquiv t.toRingEquiv x = ((Algebra.norm ℤ x : ℤ) : 𝓞 K))
     (φ : 𝓞 K →+* ZMod 4) (u : (𝓞 K)ˣ) : u = 1 ∨ u = -1 := by
@@ -278,7 +278,7 @@ private theorem units_pm {K : Type} [Field K] [NumberField K] [IsTotallyComplex 
 
 open Pointwise in
 theorem UpperTheory.V.Ws.Tw.quadFacts :
-    ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (K : IntermediateField ℚ Ω) [NumberField K] [IsTotallyComplex K], Module.finrank ℚ K = 2 → ∃ τ : 𝓞 K ≃+* 𝓞 K, (∀ c ∉ K.fixingSubgroup, ∀ x : 𝓞 K, c ((x : K) : Ω) = ((τ x : 𝓞 K) : K)) ∧ (∀ I : Ideal (𝓞 K), I * I.map τ = Ideal.span {(Ideal.absNorm I : 𝓞 K)}) ∧ (∀ c ∉ K.fixingSubgroup, ∀ s s' : G K Ω, resQ K s' = c * resQ K s * c⁻¹ → ∀ (w : HeightOneSpectrum (𝓞 K)) (A : ValuationSubring Ω), IsPlaceOver A w → IsFrob A (normV w) s → ∃ (w' : HeightOneSpectrum (𝓞 K)) (A' : ValuationSubring Ω), w'.asIdeal = w.asIdeal.map τ ∧ IsPlaceOver A' w' ∧ IsFrob A' (normV w') s') ∧ (∀ (p : ℕ) (A : ValuationSubring Ω), p.Prime → A.valuation (p : Ω) < 1 → Dec (F := ℚ) A ≤ K.fixingSubgroup → ∃ w : HeightOneSpectrum (𝓞 K), IsPlaceOver A w ∧ Ideal.absNorm w.asIdeal = p ∧ IsCoprime w.asIdeal (w.asIdeal.map τ) ∧ ∀ n : ℕ, ∃ φ : 𝓞 K →+* ZMod (p ^ n), RingHom.ker φ = w.asIdeal ^ n) ∧ ((∀ A : ValuationSubring Ω, A.valuation (2 : Ω) < 1 → Dec (F := ℚ) A ≤ K.fixingSubgroup) → ∀ u : (𝓞 K)ˣ, u = 1 ∨ u = -1) := by
+    ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (K : IntermediateField ℚ Ω) [NumberField K] [_root_.NumberField.IsTotallyComplex K], Module.finrank ℚ K = 2 → ∃ τ : 𝓞 K ≃+* 𝓞 K, (∀ c ∉ K.fixingSubgroup, ∀ x : 𝓞 K, c ((x : K) : Ω) = ((τ x : 𝓞 K) : K)) ∧ (∀ I : Ideal (𝓞 K), I * I.map τ = Ideal.span {(Ideal.absNorm I : 𝓞 K)}) ∧ (∀ c ∉ K.fixingSubgroup, ∀ s s' : G K Ω, resQ K s' = c * resQ K s * c⁻¹ → ∀ (w : HeightOneSpectrum (𝓞 K)) (A : ValuationSubring Ω), IsPlaceOver A w → IsFrob A (normV w) s → ∃ (w' : HeightOneSpectrum (𝓞 K)) (A' : ValuationSubring Ω), w'.asIdeal = w.asIdeal.map τ ∧ IsPlaceOver A' w' ∧ IsFrob A' (normV w') s') ∧ (∀ (p : ℕ) (A : ValuationSubring Ω), p.Prime → A.valuation (p : Ω) < 1 → Dec (F := ℚ) A ≤ K.fixingSubgroup → ∃ w : HeightOneSpectrum (𝓞 K), IsPlaceOver A w ∧ Ideal.absNorm w.asIdeal = p ∧ IsCoprime w.asIdeal (w.asIdeal.map τ) ∧ ∀ n : ℕ, ∃ φ : 𝓞 K →+* ZMod (p ^ n), RingHom.ker φ = w.asIdeal ^ n) ∧ ((∀ A : ValuationSubring Ω, A.valuation (2 : Ω) < 1 → Dec (F := ℚ) A ≤ K.fixingSubgroup) → ∀ u : (𝓞 K)ˣ, u = 1 ∨ u = -1) := by
   intro Ω _ _ _ l _ hl K _ _ h
   haveI : Algebra.IsQuadraticExtension ℚ K := ⟨h⟩
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ

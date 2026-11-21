@@ -26,7 +26,7 @@ end Abstract
 
 section Lin
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N r s : ℕ}
 
 
 variable (E) in

@@ -15,7 +15,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace PositivityTheory.RSHS.LS
 
-def RestrictAtPoint : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N c : ℕ) (n : Fin c → ℕ)
+def RestrictAtPoint : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N c : ℕ) (n : Fin c → ℕ)
   (h : ∑ i, n i = N) (π : ∀ i, CuspSub E (n i)) (w : HeightOneSpectrum (𝓞 E)) (X : Type) [AddCommGroup X]
   [Module ℂ X] (ρ : Representation ℂ (GL (Fin N) (w.adicCompletion E)) X)
   (F : PositivityTheory.RSHS.LeviInductionForms.LocMaps (indForms h π) w ρ), F.1 ≠ 0 →
@@ -24,7 +24,7 @@ def RestrictAtPoint : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotall
         L (ρ p v) = fun m => L v fun i => m i * finGL E (n i)
           (locGL E (n i) w (leviProj (w.adicCompletion E) (stdBlocks n h) p i))
 
-def ExistsProj : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (c : ℕ) (n : Fin c → ℕ)
+def ExistsProj : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (c : ℕ) (n : Fin c → ℕ)
   (π : ∀ i, CuspSub E (n i)) (w : HeightOneSpectrum (𝓞 E)) (τ : ∀ i, SmIrr (GL (Fin (n i)) (w.adicCompletion E))),
   (∀ i, (π i).IsLocComp w (τ i)) → ∀ t ∈ tensorForms π, t ≠ 0 →
     ∃ p : ((∀ i, GA E (n i)) → ℂ) →ₗ[ℂ] PiTensorProduct ℂ fun i => (τ i).V, p t ≠ 0 ∧

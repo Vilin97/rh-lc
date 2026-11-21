@@ -19,7 +19,7 @@ noncomputable section
 
 namespace GlobalTheory.OneRep.SplitTwist
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem continuous_splitCentre : Continuous (splitCentre E a) := by
   have e : splitCentre E a = fun t : ℝ =>

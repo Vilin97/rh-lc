@@ -138,7 +138,7 @@ end Complex
 
 section Sm
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def smA (Ξ : AlgRep E a) : Lie E a →ₗ[ℝ] Module.End ℂ (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)) where
   toFun X := (lie E a X).rTensor _
@@ -183,13 +183,13 @@ structure IsPet (r : ℝ) (H : Sm E a →ₗ⋆[ℂ] Sm E a →ₗ[ℂ] ℂ) : P
     H (lie E a X φ) ψ + H φ (lie E a X ψ) = -((2 * r * ell E a X : ℝ) : ℂ) * H φ ψ
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 structure IsAdm (Ξ : AlgRep E a) (G : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ) : Prop where
   pos : G.PosDef
   adj : ∀ X : Matrix (Fin a) (Fin a) (Cinf E), (Ξ.dmat (toL X))ᴴ * G = G * Ξ.dmat (toL (star X))
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def HasOne (Ξ : AlgRep E a) (r : ℝ) : Prop := Ξ.dmat (oneL E a) = (r : ℂ) • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
 
 def IsTw (r : ℝ) (χ : HChar E) : Prop :=
@@ -204,7 +204,7 @@ structure IsHarm (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a) (r : ℝ) 
 
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 variable (E) in
 def emb : Cinf E →+* ((E →+* ℂ) → ℂ) := Pi.ringHom fun τ => coord τ
 
@@ -217,19 +217,19 @@ structure IsHolRep {T : Type} {a d : ℕ} (R : GL (Fin a) (T → ℂ) →* Matri
     (∀ i j t, HasDerivAt (fun s => (c s).val i j t) (Z i j t) 0) → ∀ i j, HasDerivAt (fun s => R (c s) i j) (D Z i j) 0
 
 def EllFacts : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), (1 ≤ a → ell E a (oneL E a) = 1) ∧
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), (1 ≤ a → ell E a (oneL E a) = 1) ∧
     (∀ X Y : Matrix (Fin a) (Fin a) (Cinf E), ell E a (toL (X * Y - Y * X)) = 0) ∧
     (∀ (k : Kinf E a) (X : Matrix (Fin a) (Fin a) (Cinf E)), ell E a (toL (k.1 * X * star k.1)) = ell E a (toL X)) ∧
     ∀ (A : Type) [Ring A] [Module ℝ A] [IsScalarTower ℝ A A] [SMulCommClass ℝ A A] (L : Lie E a →ₗ[ℝ] A) (r : ℝ), IsLieHom L → IsLieHom (shift L r)
 
-def FrameEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), ∃ (n : ℕ) (e : Fin n → Herm E a), IsFrame e
+def FrameEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), ∃ (n : ℕ) (e : Fin n → Herm E a), IsFrame e
 
 def FrameAd : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (N : Type) [AddCommGroup N] [Module ℝ N]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (N : Type) [AddCommGroup N] [Module ℝ N]
     (β : Herm E a →ₗ[ℝ] Herm E a →ₗ[ℝ] N) (k : Kinf E a), ∑ j, β (adHerm k (e j)) (adHerm k (e j)) = ∑ j, β (e j) (e j)
 
 def FrameBr : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (N : Type) [AddCommGroup N] [Module ℝ N],
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (N : Type) [AddCommGroup N] [Module ℝ N],
     (∀ (β : Herm E a →ₗ[ℝ] Herm E a →ₗ[ℝ] N) (Z : Matrix (Fin a) (Fin a) (Cinf E)) (hZ : star Z = -Z),
       ∑ j, β (brH Z hZ (e j)) (e j) + ∑ j, β (e j) (brH Z hZ (e j)) = 0) ∧
     ∀ (β : Matrix (Fin a) (Fin a) (Cinf E) →ₗ[ℝ] Herm E a →ₗ[ℝ] N) (X : Herm E a)
@@ -237,59 +237,59 @@ def FrameBr : Prop :=
       ∑ j, β (X.1 * (e j).1 - (e j).1 * X.1) (e j) = -∑ j, β (Complex.I • (e j).1) (brH _ (h j) X)
 
 def CasComm : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (A : Type) [Ring A] [Module ℝ A] [IsScalarTower ℝ A A] [SMulCommClass ℝ A A] (L : Lie E a →ₗ[ℝ] A), IsLieHom L → ∀ X, Commute (cas L e) (L X)
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (A : Type) [Ring A] [Module ℝ A] [IsScalarTower ℝ A A] [SMulCommClass ℝ A A] (L : Lie E a →ₗ[ℝ] A), IsLieHom L → ∀ X, Commute (cas L e) (L X)
 
 def CasPi : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (π : CuspSub E a) (r : ℝ), ∃ c : ℂ, ∀ φ ∈ π.V, cas (shift (lie E a) r) e φ = c • φ
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (π : CuspSub E a) (r : ℝ), ∃ c : ℂ, ∀ φ ∈ π.V, cas (shift (lie E a) r) e φ = c • φ
 
 def CasXi : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (Ξ : AlgRep E a) (r : ℝ), ∃ c : ℂ, cas (shift Ξ.dmat r) e = c • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (Ξ : AlgRep E a) (r : ℝ), ∃ c : ℂ, cas (shift Ξ.dmat r) e = c • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
 
 set_option synthInstance.maxHeartbeats 100000 in
 def CasTens : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), ∃ c : ℂ, ∀ m,
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), ∃ c : ℂ, ∀ m,
     (cas (A := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) (shift (lieB π Ξ) (-r)) e - cas (A := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) (shift (lieA π Ξ) r) e) m = c • m
 
 def KugaZero : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (A B : Lie E a →ₗ[ℝ] Module.End ℂ M), (∀ X Y, Commute (A X) (B Y)) →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (A B : Lie E a →ₗ[ℝ] Module.End ℂ M), (∀ X Y, Commute (A X) (B Y)) →
     ∀ ω : Herm E a [⋀^Fin 0]→ₗ[ℝ] M, InfEq (A + B) ω → ∀ X, del (B - A) e (dCo (A + B) ω) X = (cas B e - cas A e) (ω X)
 
 def KugaSucc : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (A B : Lie E a →ₗ[ℝ] Module.End ℂ M), IsLieHom A → IsLieHom B →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (A B : Lie E a →ₗ[ℝ] Module.End ℂ M), IsLieHom A → IsLieHom B →
     (∀ X Y, Commute (A X) (B Y)) → ∀ (q : ℕ) (ω : Herm E a [⋀^Fin (q + 1)]→ₗ[ℝ] M), InfEq (A + B) ω → ∀ X,
       dCo (A + B) (del (B - A) e ω) X + del (B - A) e (dCo (A + B) ω) X = (cas B e - cas A e) (ω X)
 
 def DelCochain : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (L : Lie E a →ₗ[ℝ] Module.End ℂ M),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (L : Lie E a →ₗ[ℝ] Module.End ℂ M),
     (∀ (k : Kinf E a) (X : Herm E a), κ k * L (toL X.1) = L (toL (adHerm k X).1) * κ k) →
     ∀ (q : ℕ) (ω : Herm E a [⋀^Fin (q + 1)]→ₗ[ℝ] M), IsCochain κ ω → IsCochain κ (del L e ω)
 
 def IpAdj : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (L L' : Lie E a →ₗ[ℝ] Module.End ℂ M) (H : M →ₗ⋆[ℂ] M →ₗ[ℂ] ℂ) (N : Submodule ℂ M),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (L L' : Lie E a →ₗ[ℝ] Module.End ℂ M) (H : M →ₗ⋆[ℂ] M →ₗ[ℂ] ℂ) (N : Submodule ℂ M),
     (∀ X : Herm E a, ∀ x ∈ N, ∀ y ∈ N, H x (L (toL X.1) y) = H (L' (toL X.1) x) y) →
     ∀ (q : ℕ) (ω : Herm E a [⋀^Fin (q + 1)]→ₗ[ℝ] M) (η : Herm E a [⋀^Fin q]→ₗ[ℝ] M), (∀ X, ω X ∈ N) → (∀ X, η X ∈ N) →
       ip e H ω (dCo L η) = ((q : ℂ) + 1) * ip e H (del L' e ω) η
 
 def IpDef : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (H : M →ₗ⋆[ℂ] M →ₗ[ℂ] ℂ) (N : Submodule ℂ M), IsPos H N → ∀ q : ℕ,
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (H : M →ₗ⋆[ℂ] M →ₗ[ℂ] ℂ) (N : Submodule ℂ M), IsPos H N → ∀ q : ℕ,
     (∀ ω η : Herm E a [⋀^Fin q]→ₗ[ℝ] M, ip e H η ω = starRingEnd ℂ (ip e H ω η)) ∧
     ∀ ω : Herm E a [⋀^Fin q]→ₗ[ℝ] M, (∀ X, ω X ∈ N) → 0 ≤ (ip e H ω ω).re ∧ (ip e H ω ω = 0 → ω = 0)
 
 def CasZero : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (A B : Lie E a →ₗ[ℝ] Module.End ℂ M),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (A B : Lie E a →ₗ[ℝ] Module.End ℂ M),
     IsLieHom A → IsLieHom B → (∀ X Y, Commute (A X) (B Y)) →
     (∀ (k : Kinf E a) (X : Herm E a), κ k * (B - A) (toL X.1) = (B - A) (toL (adHerm k X).1) * κ k) →
     (∀ (q : ℕ) (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] M), IsCochain κ ω → InfEq (A + B) ω) →
     ∀ c : ℂ, (∀ m, (cas B e - cas A e) m = c • m) → HasCohomology κ (A + B) → c = 0
 
 def AbsHarm : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (A B : Lie E a →ₗ[ℝ] Module.End ℂ M),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (A B : Lie E a →ₗ[ℝ] Module.End ℂ M),
     IsLieHom A → IsLieHom B → (∀ X Y, Commute (A X) (B Y)) → cas B e = cas A e →
     ∀ H : M →ₗ⋆[ℂ] M →ₗ[ℂ] ℂ, IsPos H ⊤ → (∀ (X : Herm E a) x y, H x ((A + B) (toL X.1) y) = H ((B - A) (toL X.1) x) y) →
     ∀ (q : ℕ) (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] M), InfEq (A + B) ω → dCo (A + B) ω = 0 ∧ Coclosed (B - A) e ω
 
 def HolExt : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (f : GL (Fin a) (Cinf E) → ℂ), f ∈ regFun E a → ∃ Φ : (Fin a → Fin a → (E →+* ℂ) → ℂ) → ℂ,
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (f : GL (Fin a) (Cinf E) → ℂ), f ∈ regFun E a → ∃ Φ : (Fin a → Fin a → (E →+* ℂ) → ℂ) → ℂ,
     DifferentiableOn ℂ Φ {x | IsUnit (Matrix.of x)} ∧ ∀ y : GL (Fin a) (Cinf E), Φ (fun i j => emb E (y.val i j)) = f y
 
 def ExpGenPi : Prop :=
@@ -297,23 +297,23 @@ def ExpGenPi : Prop :=
     (∀ (X : Matrix (Fin a) (Fin a) (T → ℂ)) (y : GL (Fin a) (T → ℂ)), y.val = NormedSpace.exp X → y ∈ H) → ∀ y, y ∈ H
 
 def HolIdExp : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Φ : (Fin a → Fin a → (E →+* ℂ) → ℂ) → ℂ), DifferentiableOn ℂ Φ {x | IsUnit (Matrix.of x)} →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Φ : (Fin a → Fin a → (E →+* ℂ) → ℂ) → ℂ), DifferentiableOn ℂ Φ {x | IsUnit (Matrix.of x)} →
     (∀ y : GL (Fin a) (Cinf E), Φ (fun i j => emb E (y.val i j)) = 0) →
     ∀ X : Matrix (Fin a) (Fin a) ((E →+* ℂ) → ℂ), Φ (fun i j => NormedSpace.exp X i j) = 0
 
 def HolId : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Φ : (Fin a → Fin a → (E →+* ℂ) → ℂ) → ℂ), DifferentiableOn ℂ Φ {x | IsUnit (Matrix.of x)} →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Φ : (Fin a → Fin a → (E →+* ℂ) → ℂ) → ℂ), DifferentiableOn ℂ Φ {x | IsUnit (Matrix.of x)} →
     (∀ y : GL (Fin a) (Cinf E), Φ (fun i j => emb E (y.val i j)) = 0) →
     ∀ g : GL (Fin a) ((E →+* ℂ) → ℂ), Φ (fun i j => g.val i j) = 0
 
 def CxGrp : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), ∃ (R : GL (Fin a) ((E →+* ℂ) → ℂ) →* Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), ∃ (R : GL (Fin a) ((E →+* ℂ) → ℂ) →* Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
     (Φ : Fin Ξ.d → Fin Ξ.d → (Fin a → Fin a → (E →+* ℂ) → ℂ) → ℂ),
     (∀ k l, DifferentiableOn ℂ (Φ k l) {x | IsUnit (Matrix.of x)}) ∧ (∀ g k l, R g k l = Φ k l (fun i j => g.val i j)) ∧
     ∀ y, R (GeneralLinearGroup.map (emb E) y) = Ξ.mat y
 
 def CxExt : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), ∃ (R : GL (Fin a) ((E →+* ℂ) → ℂ) →* Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), ∃ (R : GL (Fin a) ((E →+* ℂ) → ℂ) →* Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
     (D : Matrix (Fin a) (Fin a) ((E →+* ℂ) → ℂ) →ₗ[ℂ] Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ), IsHolRep R D ∧
     ∀ X : Matrix (Fin a) (Fin a) (Cinf E), D (X.map (emb E)) = Ξ.dmat (toL X)
 
@@ -327,25 +327,25 @@ def AdmAbs : Prop :=
     (D : Matrix (Fin a) (Fin a) (T → ℂ) →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ), IsHolRep R D →
     ∃ G : Matrix (Fin d) (Fin d) ℂ, G.PosDef ∧ ∀ Z, (D Z)ᴴ * G = G * D (star Z)
 
-def AdmEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), ∃ G, IsAdm Ξ G
+def AdmEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), ∃ G, IsAdm Ξ G
 
 def XiSchur : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), IsLieHom Ξ.dmat ∧
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), IsLieHom Ξ.dmat ∧
     ∀ P : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ, (∀ X, Commute P (Ξ.dmat X)) → ∃ c : ℂ, P = c • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
 
-def OneReal : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), ∃ r, HasOne Ξ r
+def OneReal : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a), ∃ r, HasOne Ξ r
 
 def AInv : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a) (c : ℂ), lie E a (oneL E a) φ = c • φ → ∀ (t : ℝ) g,
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a) (c : ℂ), lie E a (oneL E a) φ = c • φ → ∀ (t : ℝ) g,
     φ.1 (GlobalTheory.UnitaryBC.splitCentre E a t * g) = Complex.exp (c * t) * φ.1 g
 
-def TwEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ r : ℝ, ∃ χ : HChar E, IsTw (a := a) r χ
+def TwEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ r : ℝ, ∃ χ : HChar E, IsTw (a := a) r χ
 
 def SqUniq : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (r : ℝ) (χ : HChar E), IsTw (a := a) r χ → ∀ φ : Sm E a, lie E a (oneL E a) φ = -(r : ℂ) • φ →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (r : ℝ) (χ : HChar E), IsTw (a := a) r χ → ∀ φ : Sm E a, lie E a (oneL E a) φ = -(r : ℂ) • φ →
     IsSqIntMod φ → GlobalTheory.UnitaryBC.IsSqInt (mulChi a χ φ).1
 
-def SqLie : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (r : ℝ), (∀ (X : Lie E a) (φ : Sm E a), IsSq r φ → IsSq r (lie E a X φ)) ∧
+def SqLie : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (r : ℝ), (∀ (X : Lie E a) (φ : Sm E a), IsSq r φ → IsSq r (lie E a X φ)) ∧
   ∀ (X : Lie E a), ∀ φ ∈ sqSub E a r, lie E a X φ ∈ sqSub E a r
 
 def DerivativeRightTranslateL2 : Prop :=
@@ -357,14 +357,14 @@ def DerivativeRightTranslateL2 : Prop :=
     HasDerivAt (fun s => GlobalTheory.AutomorphicL2Unitary.R Γ μ (c s) hφ.toL2) hψ.toL2 0
 
 def OneParam : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (X : Lie E a), ∃ c : ℝ → GL (Fin a) (Cinf E), c 0 = 1 ∧ (∀ s t, c (s + t) = c s * c t) ∧
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (X : Lie E a), ∃ c : ℝ → GL (Fin a) (Cinf E), c 0 = 1 ∧ (∀ s t, c (s + t) = c s * c t) ∧
     Continuous (fun t => infGL E a (c t)) ∧ HasDerivAt (fun t => toL (c t).val) X 0 ∧
     ∀ t : ℝ, (c t).val = NormedSpace.exp (t • Matrix.of X)
 
 
 open scoped GlobalTheory.CuspRep.CuspidalL2GL in
 def SkewLieActionL2 : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] (X : Lie E a) (φ ψ : Sm E a),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] (X : Lie E a) (φ ψ : Sm E a),
     IsOpen {k | act (.fin k) φ = φ} → IsOpen {k | act (.fin k) ψ = ψ} →
     ∀ (h1 : GlobalTheory.AutomorphicL2Unitary.MemL2Quotient (GlobalTheory.UnitaryBC.latticeGL E a) μ φ.1) (h2 : GlobalTheory.AutomorphicL2Unitary.MemL2Quotient (GlobalTheory.UnitaryBC.latticeGL E a) μ ψ.1)
       (h3 : GlobalTheory.AutomorphicL2Unitary.MemL2Quotient (GlobalTheory.UnitaryBC.latticeGL E a) μ (lie E a X φ).1)
@@ -374,14 +374,14 @@ def SkewLieActionL2 : Prop :=
 
 open scoped GlobalTheory.CuspRep.CuspidalL2GL in
 def SqMem : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (μ : Measure (GA E a)) [μ.IsHaarMeasure] (r : ℝ) (χ : HChar E), IsTw (a := a) r χ →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (μ : Measure (GA E a)) [μ.IsHaarMeasure] (r : ℝ) (χ : HChar E), IsTw (a := a) r χ →
     ∀ φ ∈ sqSub E a r, IsOpen {k | act (.fin k) (mulChi a χ φ) = mulChi a χ φ} ∧
       GlobalTheory.AutomorphicL2Unitary.MemL2Quotient (GlobalTheory.UnitaryBC.latticeGL E a) μ (mulChi a χ φ).1
 
-def PetEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ r : ℝ, ∃ H, IsPet (E := E) (a := a) r H
+def PetEx : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ r : ℝ, ∃ H, IsPet (E := E) (a := a) r H
 
 def CuspSq : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (π : CuspSub E a) (r : ℝ), (∀ φ ∈ π.V, lie E a (oneL E a) φ = -(r : ℂ) • φ) → ∀ φ ∈ π.V, IsSq r φ
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (π : CuspSub E a) (r : ℝ), (∀ φ ∈ π.V, lie E a (oneL E a) φ = -(r : ℂ) • φ) → ∀ φ ∈ π.V, IsSq r φ
 
 def TformPos : Prop :=
   ∀ (W : Type) [AddCommGroup W] [Module ℂ W] (d : ℕ) (H : W →ₗ⋆[ℂ] W →ₗ[ℂ] ℂ) (N : Submodule ℂ W)
@@ -395,32 +395,32 @@ def TformAdj : Prop :=
       tform H G x (S.rTensor _ y) = tform H G (T.rTensor _ x) y)
 
 def SmForm : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a) (r : ℝ) (H : Sm E a →ₗ⋆[ℂ] Sm E a →ₗ[ℂ] ℂ) (G : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ), IsPet r H → IsAdm Ξ G →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a) (r : ℝ) (H : Sm E a →ₗ⋆[ℂ] Sm E a →ₗ[ℂ] ℂ) (G : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ), IsPet r H → IsAdm Ξ G →
     ∀ X : Herm E a, ∀ x ∈ tens Ξ.d (sqSub E a r), ∀ y ∈ tens Ξ.d (sqSub E a r),
       tform H G x (smLie Ξ (toL X.1) y) = tform H G (smAdj Ξ r (toL X.1) x) y
 
 def OneEig : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), HasOne Ξ r → IsCohFor π Ξ →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), HasOne Ξ r → IsCohFor π Ξ →
     ∀ φ ∈ π.V, lie E a (oneL E a) φ = -(r : ℂ) • φ
 
 def InclFacts : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), Function.Injective (incl π Ξ) ∧
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), Function.Injective (incl π Ξ) ∧
     (∀ i m, cmp i (incl π Ξ m) = (cmp i m).1) ∧ (∀ k m, incl π Ξ (tensorK π Ξ k m) = smK Ξ k (incl π Ξ m)) ∧
     (∀ X m, incl π Ξ (tensorLie π Ξ X m) = smLie Ξ X (incl π Ξ m)) ∧
     ∀ X m, incl π Ξ (piAdj π Ξ r X m) = smAdj Ξ r X (incl π Ξ m)
 
 def PiForm : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), (∀ φ ∈ π.V, lie E a (oneL E a) φ = -(r : ℂ) • φ) →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), (∀ φ ∈ π.V, lie E a (oneL E a) φ = -(r : ℂ) • φ) →
     ∃ H : (π.V ⊗[ℂ] (Fin Ξ.d → ℂ)) →ₗ⋆[ℂ] (π.V ⊗[ℂ] (Fin Ξ.d → ℂ)) →ₗ[ℂ] ℂ, IsPos H ⊤ ∧
       ∀ (X : Herm E a) x y, H x (tensorLie π Ξ (toL X.1) y) = H (piAdj π Ξ r (toL X.1) x) y
 
 def PiHarm : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), HasOne Ξ r → IsCohFor π Ξ →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), HasOne Ξ r → IsCohFor π Ξ →
     ∀ (q : ℕ) (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))), IsCochain (tensorK π Ξ) ω →
       dCo (tensorLie π Ξ) ω = 0 ∧ Coclosed (piAdj π Ξ r) e ω
 
 def BasicEx : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (L : Lie E a →ₗ[ℝ] Module.End ℂ M), HasCohomology κ L →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (L : Lie E a →ₗ[ℝ] Module.End ℂ M), HasCohomology κ L →
     ∃ (q : ℕ) (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] M), ω ≠ 0 ∧ IsCochain κ ω ∧ IsBasic ω
 
 def AvgProj : Prop :=
@@ -430,23 +430,23 @@ def AvgProj : Prop :=
       ∀ T : Module.End ℂ V, (∀ u ∈ U, Commute T (ρ u)) → Commute T p
 
 def LevelOp : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (U : Subgroup (GL (Fin a) (Af E))), IsCompact (U : Set (GL (Fin a) (Af E))) → ∀ π : CuspSub E a, HasFixed π.finPart U →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (U : Subgroup (GL (Fin a) (Af E))), IsCompact (U : Set (GL (Fin a) (Af E))) → ∀ π : CuspSub E a, HasFixed π.finPart U →
     ∀ φ : π.V, φ ≠ 0 → ∃ T : Module.End ℂ π.V, T φ ≠ 0 ∧ (∀ k, Commute T (π.op (.cpt k))) ∧
       ∀ ψ, ∀ u ∈ U, π.op (.fin u) (T ψ) = T ψ
 
 def LevelCo : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (U : Subgroup (GL (Fin a) (Af E))), IsCompact (U : Set (GL (Fin a) (Af E))) →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (U : Subgroup (GL (Fin a) (Af E))), IsCompact (U : Set (GL (Fin a) (Af E))) →
     ∀ (π : CuspSub E a) (Ξ : AlgRep E a), IsCohFor π Ξ → HasFixed π.finPart U →
     ∃ (q : ℕ) (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))), ω ≠ 0 ∧ IsCochain (tensorK π Ξ) ω ∧ IsBasic ω ∧
       ∀ X i, ∀ u ∈ U, π.op (.fin u) (cmp i (ω X)) = cmp i (ω X)
 
 def HarmEx : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (U : Subgroup (GL (Fin a) (Af E))), IsCompact (U : Set (GL (Fin a) (Af E))) →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (n : ℕ) (e : Fin n → Herm E a), IsFrame e → ∀ (U : Subgroup (GL (Fin a) (Af E))), IsCompact (U : Set (GL (Fin a) (Af E))) →
     ∀ (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ), HasOne Ξ r → IsCohFor π Ξ → HasFixed π.finPart U →
     ∃ (q : ℕ) (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ))), ω ≠ 0 ∧ IsHarm U Ξ r e ω ∧ ∀ X, ω X ∈ tens Ξ.d π.V
 
 def HarmLin : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a) (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a) (r : ℝ) (q : ℕ),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (n : ℕ) (e : Fin n → Herm E a) (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a) (r : ℝ) (q : ℕ),
     (∀ (s : ℕ) (ω : Fin s → Herm E a [⋀^Fin q]→ₗ[ℝ] (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ))) (c : Fin s → ℂ), (∀ i, IsHarm U Ξ r e (ω i)) →
       IsHarm U Ξ r e (∑ i, c i • ω i)) ∧
     ∀ ω : Herm E a [⋀^Fin q]→ₗ[ℝ] (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)), (IsHarm U Ξ r e ω → IsRelCochain Ξ (IsLevelFn U Ξ) ω) ∧
@@ -460,7 +460,7 @@ def IndepAbs : Prop :=
     iSupIndep V
 
 def Indep : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (d q s : ℕ) (π : Fin s → CuspSub E a), (∀ i j, (π i).Iso (π j) → i = j) →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (d q s : ℕ) (π : Fin s → CuspSub E a), (∀ i j, (π i).Iso (π j) → i = j) →
     ∀ ω : Fin s → Herm E a [⋀^Fin q]→ₗ[ℝ] (Sm E a ⊗[ℂ] (Fin d → ℂ)), (∀ i, ω i ≠ 0) → (∀ i X, ω i X ∈ tens d (π i).V) →
       ∀ c : Fin s → ℂ, ∑ i, c i • ω i = 0 → c = 0
 

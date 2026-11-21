@@ -11,7 +11,7 @@ noncomputable section
 
 namespace GlobalTheory.WhitBump
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem continuous_psiInf : Continuous (psiInf (E := E)) := by
   have hs : Continuous (fun z : Cinf E => sInf E z) :=
@@ -50,7 +50,7 @@ theorem nu_zero : nu (0 : Vp E n) = 1 := by
   · simp [nu, hij, Matrix.one_apply, hij.ne]
   · simp [nu, hij, Matrix.one_apply]
 
-theorem exists_bumpInf_oneL_ne_zero (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) :
+theorem exists_bumpInf_oneL_ne_zero (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) :
     ∃ f : Lie E n → ℝ, ContDiff ℝ ∞ f ∧ HasCompactSupport f ∧ tsupport f ⊆ invSet E n ∧
       bumpInf f (oneL E n) ≠ 0 := by
   classical

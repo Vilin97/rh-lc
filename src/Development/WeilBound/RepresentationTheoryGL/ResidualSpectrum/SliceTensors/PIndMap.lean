@@ -14,7 +14,7 @@ namespace PositivityTheory.Rg.Rs
 
 namespace InducedTensorMap.Main
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem act_fin_val {a : ℕ} (g : GL (Fin a) (Af E)) (F : Sm E a) :
     (act (.fin g) F).1 = fun y => F.1 (y * cf a 1 g) := by

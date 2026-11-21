@@ -13,7 +13,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.CuspRep GlobalTheory.Unitary
 
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.Leaf2Aux.Alg
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 section Hilb
 

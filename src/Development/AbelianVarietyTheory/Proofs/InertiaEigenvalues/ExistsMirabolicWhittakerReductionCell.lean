@@ -53,7 +53,7 @@ theorem row_mul_inv {R : Type} [CommRing R] {a : ℕ} (A B : GL (Fin a) R) (i : 
     simp only [Units.val_mul, Matrix.mul_apply, h]
   rw [e, mul_inv_cancel, Units.val_one]
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem compV_infGL (w : HeightOneSpectrum (𝓞 E)) (y : GL (Fin n) (Cinf E)) :
     GlobalTheory.CellDec.compV E n w (infGL E n y) = 1 := by
@@ -69,7 +69,7 @@ end GlobalTheory.WhitRed
 
 
 open GlobalTheory.WhitRed in
-theorem GlobalTheory.WhitRed.exists_mirabolic : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E)))
+theorem GlobalTheory.WhitRed.exists_mirabolic : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E)))
     (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ) (F : GA E (m + 1) → ℂ)
     (U : Subgroup (GL (Fin (m + 1)) (Af E))) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ),
     (∀ u ∈ U, ∀ g, GlobalTheory.JSW.whit F (g * finGL E (m + 1) u) = GlobalTheory.JSW.whit F g) →

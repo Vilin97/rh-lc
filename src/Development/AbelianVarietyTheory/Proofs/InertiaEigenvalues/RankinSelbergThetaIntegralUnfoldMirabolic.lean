@@ -20,7 +20,7 @@ open scoped ENNReal NNReal ComplexConjugate Matrix
 
 namespace GlobalTheory.ZUnfTheta
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem continuous_secRow {n : ℕ} :
     Continuous (fun y : Fin n → Cinf E => secRow y) := by
@@ -121,7 +121,7 @@ theorem measurable_integrand {φ φ' : GA E (m + 1) → ℂ} (hφ : Measurable �
 end GlobalTheory.ZUnfTheta
 
 set_option synthInstance.maxHeartbeats 200000 in
-theorem GlobalTheory.ZUnfTheta.zint_eq_mirabolic : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ)
+theorem GlobalTheory.ZUnfTheta.zint_eq_mirabolic : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ)
     (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] (𝓕 𝓕P : Set (GA E (m + 1))),
     IsFundamentalDomain (ratGL E (m + 1)).range 𝓕 μ → IsFundamentalDomain (ratMirU E (m + 1) m) 𝓕P μ →
     ∀ φ φ' : GA E (m + 1) → ℂ, Measurable φ → Measurable φ' → (∀ γ g, φ (ratGL E (m + 1) γ * g) = φ g) →

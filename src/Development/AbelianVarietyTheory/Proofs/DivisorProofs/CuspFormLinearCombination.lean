@@ -9,7 +9,7 @@ open NumberField MeasureTheory GlobalTheory.CuspRep
 
 namespace GlobalTheory.CuspFormLin
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {d : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {d : ℕ}
 
 theorem growth_smul_add (c : ℂ) {f f' : GL (Fin d) (Cinf E) → ℂ}
     (h : ∃ (C : ℝ) (N : ℕ), ∀ y, ‖f y‖ ≤ C * height y ^ N)
@@ -64,7 +64,7 @@ theorem isAutForm_smul_add (c : ℂ) {φ ψ : Sm E d} (h : IsAutForm φ) (h' : I
   · intro g
     exact growth_smul_add c (h.growth g) (h'.growth g)
 
-theorem isCuspForm_smul_add (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (d : ℕ) (c : ℂ)
+theorem isCuspForm_smul_add (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (d : ℕ) (c : ℂ)
     (φ ψ : Sm E d) (h : IsCuspForm φ) (h' : IsCuspForm ψ) : IsCuspForm (c • φ + ψ) := by
   refine ⟨isAutForm_smul_add c h.1 h'.1, fun r h0 h1 _ _ ν 𝓕 hν h𝓕 g => ?_⟩
   have i := CuspidalL2GL.integrableOn_unip (ContAut.continuous_of_isOpen_stab E d φ h.1.level) h.1.left ν h𝓕 g

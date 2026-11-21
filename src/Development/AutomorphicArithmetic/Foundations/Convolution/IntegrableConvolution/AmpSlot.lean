@@ -49,7 +49,7 @@ private lemma pow_ok {T : H →L[ℂ] H} (h : 0 ≤ T ∧ ‖T‖ ≤ 1) (k : �
 
 end Ops
 
-private lemma smooth_pow {F : Type} [Field F] [NumberField F] [IsTotallyComplex F] {n : ℕ}
+private lemma smooth_pow {F : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] {n : ℕ}
     (ν : Measure (archGroup F n)) [ν.IsHaarMeasure] (a : TI F n) (h1 : SmoothT a) (h2 : LeftFin a) (k : ℕ) :
     ∃ c : TI F n, (∀ g, c g = cvPow ν (a : archGroup F n → ℂ) k g) ∧ SmoothT c ∧ LeftFin c := by
   induction k with

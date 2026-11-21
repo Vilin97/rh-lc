@@ -14,7 +14,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspRep.CuspidalL2GL GlobalTh
 
 namespace GlobalTheory.GLProj
 
-theorem continuous_proj_incl : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
+theorem continuous_proj_incl : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
     Continuous (fun g : GA E a => Matrix.GeneralLinearGroup.map (pInf E) g) ∧
     Continuous (fun g : GA E a => Matrix.GeneralLinearGroup.map (pFin E) g) ∧
     Continuous (infGL E a) ∧ Continuous (finGL E a) := by

@@ -13,7 +13,7 @@ open NumberField IsDedekindDomain Matrix Formalism.L2.Host GlobalTheory.CuspRep 
 
 namespace GlobalTheory.Published.InvTransposeModel
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem eq_triv (π : CuspSub E 0) : π = CuspSub.triv E (Nat.zero_le 1) := by
   refine CuspSub.ext (((CuspSub.triv E (Nat.zero_le 1)).irred π.V (fun φ _ => ?_) π.stable).resolve_left π.ne_bot)

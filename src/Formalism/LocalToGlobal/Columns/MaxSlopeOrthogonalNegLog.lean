@@ -20,7 +20,7 @@ section F3
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
-variable [IsTotallyComplex K] {V ι : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
+variable [_root_.NumberField.IsTotallyComplex K] {V ι : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
   [Fintype ι] [DecidableEq ι]
 
 theorem slope_line_le_neg_log (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (hX : ∀ v, IsUnit (X v).det) (x : V) (hx : x ≠ 0)
@@ -87,7 +87,7 @@ end F3
 
 section F3b
 
-variable {K : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
 
 end F3b
 

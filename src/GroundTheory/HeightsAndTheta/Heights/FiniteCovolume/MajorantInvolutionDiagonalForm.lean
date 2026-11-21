@@ -81,7 +81,7 @@ end MatrixLevel
 section Places
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 def HermAtPlace.Statement (h : HermitianForm F E W) (v : Basis ι E W) : Prop :=
@@ -160,10 +160,10 @@ def WeightedNormSq.Statement : Prop :=
   ∀ c : InfinitePlace E → ℝ, (∀ w, 0 ≤ c w) → ∀ a : E,
     ‖weightedEmbed c a‖ ^ 2 = ∑ w, c w * ‖w.embedding a‖ ^ 2
 
-def WeightedSpaceDim.Statement [IsTotallyComplex E] : Prop :=
+def WeightedSpaceDim.Statement [_root_.NumberField.IsTotallyComplex E] : Prop :=
   finrank ℝ (EuclideanSpace ℝ (InfinitePlace E × Fin 2)) = finrank ℚ E
 
-def WeightedIndexBound.Statement [IsTotallyComplex E] : Prop :=
+def WeightedIndexBound.Statement [_root_.NumberField.IsTotallyComplex E] : Prop :=
   ∀ c : InfinitePlace E → ℝ, (∀ w, 0 < c w) → ∀ A : AddSubgroup E, intSubgroup E ≤ A → A.FG →
     (∀ a ∈ A, a ≠ 0 → ∑ w, c w ≤ ∑ w, c w * ‖w.embedding a‖ ^ 2) →
     ∀ r : ℝ, (∃ a : Fin (finrank ℚ E) → 𝓞 E, LinearIndependent ℚ (fun i => (a i : E)) ∧
@@ -191,7 +191,7 @@ end Minkowski
 section Steps
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 def WeightedLenSmul.Statement (h : HermitianForm F E W) (v : Basis ι E W) : Prop :=

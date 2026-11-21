@@ -137,7 +137,7 @@ theorem map_pLoc_inv_mul (w : HeightOneSpectrum (𝓞 E)) (k : GL (Fin a) (Af E)
     GeneralLinearGroup.map (pLoc E w) ((locGL E a w (GeneralLinearGroup.map (pLoc E w) k))⁻¹ * k) = 1 := by
   rw [map_mul, map_inv, pLoc_locGL, inv_mul_cancel]
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem nullPart_op (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) (K : Subgroup (GL (Fin a) (w.adicCompletion E)))
     (o : Op E a) {x : π.V} (hx : x ∈ nullPart (π.locRep w) K) : π.op o x ∈ nullPart (π.locRep w) K := by
@@ -249,7 +249,7 @@ theorem finiteDimensional_typePart (h : AutomorphicFormsFiniteGL) (π : CuspSub 
     exact h2
   exact congrArg Subtype.val h3
 
-theorem exists_isLocComp (h : AutomorphicFormsFiniteGL) : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+theorem exists_isLocComp (h : AutomorphicFormsFiniteGL) : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     (a : ℕ) (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)),
     ∃ σ : SmIrr (GL (Fin a) (w.adicCompletion E)), π.IsLocComp w σ ∧ IsAdmissible σ.ρ := by
   intro E _ _ _ a π w

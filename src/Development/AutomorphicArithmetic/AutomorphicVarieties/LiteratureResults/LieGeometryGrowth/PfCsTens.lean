@@ -11,7 +11,7 @@ open UpperTheory.V.Lit.Dr UpperTheory.V.Lit.Bor
 open scoped TensorProduct
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem cmp_lT {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (Q : Matrix (Fin d) (Fin d) ℂ)
     (y : W ⊗[ℂ] (Fin d → ℂ)) (j : Fin d) :

@@ -17,7 +17,7 @@ namespace PositivityTheory.AdelicQuotientData
 
 namespace PKEq1
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 def fC (η : (Fin k → Ad E) → ℝ) (s : (Fin k → Ad E) → GA E k) (φ : XB E k) (g : GA E k) : ℂ :=
   (η (lastRow g) : ℂ) * φ (g * (s (lastRow g))⁻¹)

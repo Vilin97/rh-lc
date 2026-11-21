@@ -10,7 +10,7 @@ open scoped TensorProduct
 namespace UpperTheory.V.Lit.Geo.Pf
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (χ : Formalism.L2.Host.HChar E) {d : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (χ : Formalism.L2.Host.HChar E) {d : ℕ}
   (G : Matrix (Fin d) (Fin d) ℂ) (g : GA E a)
 
 private theorem ev_eq (x : Sm E a ⊗[ℂ] (Fin d → ℂ)) : ev x g = fun j => (cmp j x).1 g :=

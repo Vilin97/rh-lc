@@ -52,7 +52,7 @@ theorem isAlgPos_mul {F : Type} [Field F] [NumberField F] {χ χ' : HChar F} {n 
   rw [e, Units.val_mul, h k hk, h' k hk, ← Finset.prod_mul_distrib]
   exact Finset.prod_congr rfl fun φ _ => (zpow_add₀ ((map_ne_zero φ).2 k.ne_zero) _ _).symm
 
-theorem regAlg_twist {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} {P : CuspSub K n}
+theorem regAlg_twist {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} {P : CuspSub K n}
     (h : (CG.mk P).IsRegAlg) {κ : HChar K} {m : (K →+* ℂ) → ℤ} (hκ : κ.IsAlg m) : (CG.mk (P.twist κ)).IsRegAlg := (GlobalTheory.CuspRep.CG.isRegAlg_iff _).2 fun τ => by
   have e := ((ParLaws.hasInfChar_infChar (CG.mk P) τ).twist κ).infChar_eq
   rw [CG.twist_mk] at e

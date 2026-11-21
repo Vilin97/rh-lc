@@ -201,7 +201,7 @@ theorem rel_aeval_qdet (Γ : Submodule ℂ (M × N)) {n : ℕ} (A : Fin n → Fi
 
 end Rel
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a b : ℕ} (f : Fin b ↪ Fin a)
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a b : ℕ} (f : Fin b ↪ Fin a)
 
 theorem embGL_infGL (y : GL (Fin b) (Cinf E)) : embGL f (infGL E b y) = infGL E a (embGL f y) :=
   ga_ext (by simp [map_embGL]) (by simp [map_embGL])
@@ -210,18 +210,18 @@ theorem embGL_finGL (k : GL (Fin b) (Af E)) : embGL f (finGL E b k) = finGL E a 
   ga_ext (by simp [map_embGL]) (by simp [map_embGL])
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 def embK (k : Kinf E b) : Kinf E a :=
   ⟨(embGL f (Unitary.toUnits k)).val, Matrix.mem_unitaryGroup_iff.2 (by
     have e : star (embGL f (Unitary.toUnits k)).val = (embGL f (Unitary.toUnits k)⁻¹).val := by
       rw [embGL_val, embGL_val, star_add, star_sub, star_extN, star_extN, star_one, star_one]; rfl
     rw [e, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one])⟩
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem toUnits_embK (k : Kinf E b) : Unitary.toUnits (embK f k) = embGL f (Unitary.toUnits k) := Units.ext rfl
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 variable (E) in
 def extL : Lie E b →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap
@@ -231,11 +231,11 @@ def extL : Lie E b →L[ℝ] Lie E a :=
         change extN (Cinf E) f (c • Matrix.of X) = c • extN (Cinf E) f (Matrix.of X)
         rw [extN_apply, extN_apply, Matrix.mul_smul, Matrix.smul_mul] }
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem toL_embGL (y : GL (Fin b) (Cinf E)) :
     toL (embGL f y).val = toL (1 - extN (Cinf E) f 1) + extL E f (toL y.val) := rfl
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem height_embGL : ∃ B : ℝ, 0 ≤ B ∧ ∀ y : GL (Fin b) (Cinf E), height (embGL f y) ≤ B * height y := by
   refine ⟨1 + 2 * ‖toL (1 - extN (Cinf E) f 1)‖ + ‖extL E f‖, by positivity, fun y => ?_⟩
   unfold height

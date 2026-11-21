@@ -14,7 +14,7 @@ open UpperTheory.V.Lit.Geo
 
 namespace UpperTheory.V.Lit.Geo
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem qht_le (g : GA E a) (γ : GL (Fin a) E) :
     qht g ≤ height (K := E) (ratGL E a γ * (retractOne g : KernelIndexFullLattice.G1 E a).1) :=

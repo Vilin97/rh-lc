@@ -30,7 +30,7 @@ end Mat
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase K} {Df : DefSide Bs}
 
-theorem meanInf_eq [IsTotallyComplex K] (g : InfinitePlace K → ℝ) :
+theorem meanInf_eq [_root_.NumberField.IsTotallyComplex K] (g : InfinitePlace K → ℝ) :
     meanInf K g = (1 / (nPl K : ℝ)) * ∑ v, g v := by
   have hn : (nPl K : ℝ) ≠ 0 := by
     have := Formalism.HN.twist_finrank_eq K
@@ -40,7 +40,7 @@ theorem meanInf_eq [IsTotallyComplex K] (g : InfinitePlace K → ℝ) :
   rw [Formalism.HN.twist_finrank_eq K]
   field_simp
 
-theorem meanInf_const [IsTotallyComplex K] (c : ℝ) : meanInf K (fun _ => c) = c := by
+theorem meanInf_const [_root_.NumberField.IsTotallyComplex K] (c : ℝ) : meanInf K (fun _ => c) = c := by
   have hn : (nPl K : ℝ) ≠ 0 := by
     have := Formalism.HN.twist_finrank_eq K
     have h0 : (0 : ℝ) < Module.finrank ℚ K := by exact_mod_cast Module.finrank_pos

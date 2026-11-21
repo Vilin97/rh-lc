@@ -97,7 +97,7 @@ open GlobalTheory.CuspRep (Ad Cinf sInf infEq continuous_infEq infGL toL)
 
 section Entries
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem exists_bound_sInf (f : Ad E →+* ℂ) (hf : Continuous f) :
     ∃ L : ℝ, 0 ≤ L ∧ ∀ z : Cinf E, ‖f (sInf E z)‖ ≤ L * ‖z‖ := by
@@ -154,7 +154,7 @@ open GlobalTheory.BlockForms.LeviLoc (gl_entry fin_symm compFin_eq_zero compFin_
 
 section Block
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
 
 theorem map_one_add_two_rank_perturbation {R T : Type} [CommRing R] [CommRing T] (p : R →+* T) {n d : ℕ}
     (A C : Matrix (Fin n) (Fin d) R) (B D : Matrix (Fin d) (Fin n) R) (P Q : Matrix (Fin d) (Fin d) R) :
@@ -194,7 +194,7 @@ open GlobalTheory.BlockForms.LeviLoc (gl_entry fin_symm compFin_eq_zero compFin_
 
 section Emb
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r : ℕ} {Xf Yf : Matrix (Fin n) (Fin r) E} {l d : ℕ}
   {h : l + d ≤ r} {ι : GlobalTheory.CuspRep.GA E d →* GAd σ J}
 
@@ -225,7 +225,7 @@ open GlobalTheory.CuspRep (Ad Cinf sInf infEq continuous_infEq infGL toL pFin_in
 
 section Inf
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r : ℕ} {Xf Yf : Matrix (Fin n) (Fin r) E} {l d : ℕ}
   {h : l + d ≤ r} {ι : GlobalTheory.CuspRep.GA E d →* GAd σ J}
 
@@ -303,7 +303,7 @@ open GlobalTheory.CuspRep (Ad Cinf sInf infEq continuous_infEq infGL toL pFin_in
 
 section Ht
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r : ℕ} {Xf Yf : Matrix (Fin n) (Fin r) E} {l d : ℕ}
   {h : l + d ≤ r} {ι : GlobalTheory.CuspRep.GA E d →* GAd σ J}
 
@@ -361,7 +361,7 @@ end GlobalTheory.BlockForms.CuspGrowth
 
 
 open GlobalTheory.BlockForms.CuspGrowth in
-theorem GlobalTheory.BlockForms.growth_comp_blockEmb : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+theorem GlobalTheory.BlockForms.growth_comp_blockEmb : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
     (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J →
     ∀ (r : ℕ) (Xf Yf : Matrix (Fin n) (Fin r) E), IsWittFrame σ J Xf Yf → ∀ (K : Subgroup (GAd σ J)), IsMaxCpt σ J K →
     ∀ (S : Finset (Fin r)) (l d : ℕ) (h : l + d ≤ r) (ι : GlobalTheory.CuspRep.GA E d →* GAd σ J), GlobalTheory.BlockForms.IsBlockEmb σ J Xf Yf h ι →

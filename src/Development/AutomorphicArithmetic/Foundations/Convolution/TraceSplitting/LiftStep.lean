@@ -36,8 +36,8 @@ private theorem pow_val {K : Type} [Field K] [NumberField K] {χ : HChar K} {s :
     rw [e, e', zpow_neg_one, NNReal.coe_inv, Complex.ofReal_inv, NNReal.coe_natCast, Complex.ofReal_natCast,
       Complex.inv_cpow _ _ (by rw [Complex.natCast_arg]; exact Real.pi_ne_zero.symm), Complex.cpow_neg]
 
-private theorem bc_twist {K M : Type} [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [IsTotallyComplex K]
-    [IsTotallyComplex M] {ν : HChar K} {ν' : HChar M} {z : ℂ} (hν : IsPow ν z) (hν' : IsPow ν' z) {n : ℕ} (π : CG K n)
+private theorem bc_twist {K M : Type} [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [_root_.NumberField.IsTotallyComplex K]
+    [_root_.NumberField.IsTotallyComplex M] {ν : HChar K} {ν' : HChar M} {z : ℂ} (hν : IsPow ν z) (hν' : IsPow ν' z) {n : ℕ} (π : CG K n)
     {ι : Type} [Fintype ι] {m : ι → ℕ} (P : ∀ i, CG M (m i)) (h : WeakBC π.HasSat (R.sumSat P)) :
     WeakBC (π.twist ν).HasSat (R.sumSat fun i => (P i).twist ν') := by
   refine Filter.Eventually.mono h fun w hw f hf => ?_

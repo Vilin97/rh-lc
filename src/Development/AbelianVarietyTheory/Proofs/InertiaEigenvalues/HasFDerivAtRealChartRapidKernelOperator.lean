@@ -25,7 +25,7 @@ noncomputable section
 
 namespace GlobalTheory.MSpanDecay.KernelDeriv
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem fderiv_chart_apply {G : GA E a → ℂ} (hG : G ∈ Sm E a) (g : GA E a) (u : GL (Fin a) (Cinf E)) (V : Lie E a) :
     fderiv ℝ (chart G g) (toL u.val) V = lieD (toL ((u⁻¹).val * Matrix.of V)) G (g * infGL E a u) := by
@@ -172,7 +172,7 @@ theorem norm_fderiv_comp_le {G : GA E a → ℂ} (hG : G ∈ Sm E a) (g : GA E a
         mul_le_mul s3 hR hr0 (by positivity)
     _ = _ := by rw [mul_pow, pow_succ h (N + 1)]; ring
 
-theorem hasFDerivAt_chart_kernel : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (G : GA E a → ℂ)
+theorem hasFDerivAt_chart_kernel : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (G : GA E a → ℂ)
     (X : Type) [MeasurableSpace X] (ν : Measure X) [SFinite ν] (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E)),
     GlobalTheory.JSW.IsRapidInf ν k γ → GlobalTheory.MSpanDecay.Good G → ∀ (g : GA E a) (y : GL (Fin a) (Cinf E)),
     ∃ L : Lie E a →L[ℝ] ℂ, HasFDerivAt (chart (fun g : GA E a => ∫ x, k x * G (g * infGL E a (γ x)) ∂ν) g) L

@@ -14,7 +14,7 @@ open NumberField MeasureTheory GlobalTheory.CuspRep GroundTheory.Automorphic Gro
 
 namespace UpperTheory.ConvolutionTheory.BW.BlockSaturationData
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (Pl E)}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)}
 
 private theorem blo_at {r : ℕ} (b : Blo S r) : ∃ V, IsSummand (mu1 E r) V ∧
     At (mu1 E r) S V (fun τ => Finset.univ.val.map (b.Λ τ)) fun w => (b.sat w).map fun x : ℂˣ => (x : ℂ) := by
@@ -106,7 +106,7 @@ theorem main (n : ℕ) (d : Dat S n) (h2 : 2 ≤ d.len) : ∃ b : Datum E n, ∀
 end UpperTheory.ConvolutionTheory.BW.BlockSaturationData
 
 theorem UpperTheory.ConvolutionTheory.BW.datDatum :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.DatDatum E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.DatDatum E := by
   intro E _ _ _ S n d h2
   obtain ⟨b, hb⟩ := UpperTheory.ConvolutionTheory.BW.BlockSaturationData.main n d h2
   exact ⟨b, ⟨_, _, hb 0⟩, fun F _ hF z => hF _ _ (hb z)⟩

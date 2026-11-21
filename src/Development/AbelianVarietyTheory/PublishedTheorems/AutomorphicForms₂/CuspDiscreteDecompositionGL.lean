@@ -16,7 +16,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.DiscreteSum GlobalTheory.Uni
 
 namespace GlobalTheory.CuspRep.CuspidalL2GL
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
   {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
 
@@ -92,21 +92,21 @@ end GlobalTheory.CuspRep.CuspidalL2GL
 namespace GlobalTheory.Published
 
 def CuspDiscreteDecompositionGL : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     [μ.IsMulRightInvariant], IsDiscreteSum (Rcusp μ)
 
 def CuspFiniteVectorsGL : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     [μ.IsMulRightInvariant] (H : Submodule ℂ (L2 (latticeGL E a) μ)), H ≤ L2cusp μ →
       IsIrredSubrep (R (latticeGL E a) μ) H → ∃ π : CuspSub E a, IsFinitePartOf μ π H
 
 def CuspFormsBoundedGL : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a), IsCuspForm φ →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a), IsCuspForm φ →
     (∀ t g, ‖φ.1 (splitCentre E a t * g)‖ = ‖φ.1 g‖) → ∃ C : ℝ, ∀ g, ‖φ.1 g‖ ≤ C
 
 def CuspidalSpectrumGL : Prop := CuspDiscreteDecompositionGL ∧ CuspFiniteVectorsGL ∧ CuspFormsBoundedGL
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem CuspFormsBoundedGL.of_isUnitary (h : CuspFormsBoundedGL) {π : CuspSub E a} (hπ : π.IsUnitary) {φ : Sm E a}
     (hφ : φ ∈ π.V) : ∃ C : ℝ, ∀ g, ‖φ.1 g‖ ≤ C :=

@@ -12,7 +12,7 @@ namespace Formalism.MainNotions.BridgeLemma₂
 open NumberField NumberField.mixedEmbedding Formalism.HermitianLatticesTheory
 open scoped nonZeroDivisors NNReal ENNReal
 
-theorem rootDiscr_pow_eq_sqrt_discr (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] :
+theorem rootDiscr_pow_eq_sqrt_discr (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] :
     rootDiscriminant K ^ InfinitePlace.nrComplexPlaces K = Real.sqrt |(discr K : ℝ)| := by
   have h1 := InfinitePlace.card_add_two_mul_card_eq_rank K
   rw [IsTotallyComplex.nrRealPlaces_eq_zero K, zero_add] at h1
@@ -29,7 +29,7 @@ theorem rootDiscr_pow_eq_sqrt_discr (K : Type) [Field K] [NumberField K] [IsTota
 
 
 open scoped Classical in
-theorem exists_small_mem_fractional_ideal (K : Type) [Field K] [NumberField K] [IsTotallyComplex K]
+theorem exists_small_mem_fractional_ideal (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
     (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (hI : FractionalIdeal.absNorm (I : FractionalIdeal (𝓞 K)⁰ K) ≤ 1) :
     ∃ a ∈ (I : FractionalIdeal (𝓞 K)⁰ K), a ≠ 0 ∧ ∀ w : InfinitePlace K, (w a) ^ 2 ≤ rootDiscriminant K := by
   have h1 := InfinitePlace.card_add_two_mul_card_eq_rank K

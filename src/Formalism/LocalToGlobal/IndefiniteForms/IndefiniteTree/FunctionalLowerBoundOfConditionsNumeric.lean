@@ -810,7 +810,7 @@ theorem ip_point (wf : Df.WF) (S : IndefData Df) (hl1a : S.BaseTypeSubspacesMapO
   rw [normAt_sq_eq, normAt_sq_eq, eq1, eq2]
   exact hcore
 
-theorem ip_first [IsTotallyComplex K] (wf : Df.WF) (S : IndefData Df) (hl1a : S.BaseTypeSubspacesMapOntoBothSides) (hl1c : S.RowLatticeBoundForBasis)
+theorem ip_first [_root_.NumberField.IsTotallyComplex K] (wf : Df.WF) (S : IndefData Df) (hl1a : S.BaseTypeSubspacesMapOntoBothSides) (hl1c : S.RowLatticeBoundForBasis)
     (hXE : ∀ v, IsUnit (S.XE v).det) (hD : 0 < S.D) {n : ℕ} (X' : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ)
     (hX' : ∀ v, IsUnit (X' v).det) (Ψ : Matrix (Fin n) (Fin S.D) K) (hΨ : Function.Injective Ψ.mulVec)
     (g : InfinitePlace K → ℝ) (hg : ∀ v p, Df.Qp Bs.μ0 p ≠ ⊥ → g v ≤ ∑ j, Real.log (S.lam j Bs.μ0 p v)) :
@@ -924,7 +924,7 @@ theorem vw_one' (w : Pl K) : vw w (1 : K) = 0 := by
   unfold Formalism.DivisionValues.vw
   rw [FractionalIdeal.spanSingleton_one, FractionalIdeal.count_one]
 
-theorem functional_lower_bound_of_conditions [IsTotallyComplex K] (wf : Df.WF) (S : IndefData Df) (N : IndefNum Bs) (O : FunData K Df)
+theorem functional_lower_bound_of_conditions [_root_.NumberField.IsTotallyComplex K] (wf : Df.WF) (S : IndefData Df) (N : IndefNum Bs) (O : FunData K Df)
     (C x CH b : ℝ)
     (hD : 0 < S.D) (hH0 : S.H0) (hl1a : S.BaseTypeSubspacesMapOntoBothSides) (hl1c : S.RowLatticeBoundForBasis) (hXE : ∀ v, IsUnit (S.XE v).det)
     (hRR : Submodule.IsLattice K S.RR)
@@ -1019,7 +1019,7 @@ theorem functional_lower_bound_of_conditions [IsTotallyComplex K] (wf : Df.WF) (
   unfold IndefData.muMaxRR
   linarith
 
-theorem functional_lower_bound_of_conditions_numeric [IsTotallyComplex K] (wf : Df.WF) (S : IndefData Df) (Z : IndefScale Bs) (C₀ CH : ℝ)
+theorem functional_lower_bound_of_conditions_numeric [_root_.NumberField.IsTotallyComplex K] (wf : Df.WF) (S : IndefData Df) (Z : IndefScale Bs) (C₀ CH : ℝ)
     (O : FunData K Df) (C : ℝ)
     (hD : 0 < S.D) (hH0 : S.H0) (hl1a : S.BaseTypeSubspacesMapOntoBothSides) (hl1c : S.RowLatticeBoundForBasis) (hXE : ∀ v, IsUnit (S.XE v).det)
     (hRR : Submodule.IsLattice K S.RR)

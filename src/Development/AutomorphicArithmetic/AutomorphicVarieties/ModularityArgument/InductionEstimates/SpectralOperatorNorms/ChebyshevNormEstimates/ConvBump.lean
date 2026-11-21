@@ -134,7 +134,7 @@ private theorem coef (n i : ℕ) (hi : i ≤ n) (m : Multiset ℂ) (hm : m.card 
 
 open GlobalTheory.CuspRep UpperTheory.V.Cm
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (Pl E)} (b b' : BW.Blo S 2)
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} (b b' : BW.Blo S 2)
 
 private def Loc (ψ : Sm E (2 + 2)) (a : ℂ) : Prop :=
   BW.Umg ψ ∧ ∀ t : Fin 2 → ℝ, |t 0 - t 1| < 1 → (dat2 b b').comp ψ.1 t = a * Complex.exp ((t 0 - t 1 : ℝ) : ℂ)
@@ -265,7 +265,7 @@ end UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.BumpConvolutionOperators
 
 open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.BumpConvolutionOperators in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.genZ :
-    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (y : Ix E (2 + 2)),
+    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (y : Ix E (2 + 2)),
       (∃ β, Ker β ∧ Conv 𝔵.A'.J 𝔵.A'.J (𝔢.toAmp.Z y) β ∧ symb β 0 = (𝔵.Λ y.1).esymm (y.2 + 1) • 𝔵.a₀) ∧
         𝔢.toAmp.Z y ∘L 𝔵.P = 𝔵.P ∘L 𝔢.toAmp.Z y := by
   intro E _ _ _ μ _ θ 𝔢 𝔵 y

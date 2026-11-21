@@ -18,7 +18,7 @@ open NumberField MeasureTheory Topology Matrix GlobalTheory.AutomorphicL2Unitary
 open GroundTheory.Automorphic
 open scoped ENNReal
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.finite_adelic_restriction_measure : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a))
+theorem _root_.GlobalTheory.T.finite_adelic_restriction_measure : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a))
     [μ.IsHaarMeasure] [MeasurableSpace (AutomorphicForm.archGroup E a)]
     [BorelSpace (AutomorphicForm.archGroup E a)] (U : Set (AdelicGLn.FiniteAdelicGL E a)),
     IsCompact U → U ∈ 𝓝 (1 : AdelicGLn.FiniteAdelicGL E a) →

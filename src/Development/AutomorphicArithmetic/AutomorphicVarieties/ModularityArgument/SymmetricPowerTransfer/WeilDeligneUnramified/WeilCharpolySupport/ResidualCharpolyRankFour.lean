@@ -145,7 +145,7 @@ private theorem ss_iso {Γ k : Type} [Group Γ] [Field k] {n : ℕ} {r r' : Γ �
   congr 1
   group
 
-private theorem att_iso {F Ω : Type} [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω] {l : ℕ} [Fact l.Prime] {n : ℕ}
+private theorem att_iso {F Ω : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field Ω] [Algebra F Ω] {l : ℕ} [Fact l.Prime] {n : ℕ}
     {ι : Qbar l ≃+* ℂ} {r r' : G F Ω →* GL (Fin n) (Qbar l)} {π : CuspSub F n}
     (h : RepIso r r') (H : AttC ι r π) : AttC ι r' π :=
   ⟨ss_iso h H.1, H.2.mono fun _ ⟨B, hB, hB'⟩ => ⟨B, hB, hB'.of_iso h⟩⟩

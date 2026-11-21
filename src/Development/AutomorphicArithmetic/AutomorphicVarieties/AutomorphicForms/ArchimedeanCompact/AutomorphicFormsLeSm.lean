@@ -14,9 +14,9 @@ open NumberField Matrix GlobalTheory.CuspRep GroundTheory.Automorphic GroundTheo
 
 namespace UpperTheory.V.Cm
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem toUnits_mk (y : GL (Fin a) (Cinf E)) (h : y.val ∈ Matrix.unitaryGroup (Fin a) (Cinf E)) :
     Unitary.toUnits (⟨y.val, h⟩ : Kinf E a) = y := Units.ext rfl
 

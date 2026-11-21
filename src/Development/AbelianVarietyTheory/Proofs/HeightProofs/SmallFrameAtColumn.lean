@@ -47,8 +47,8 @@ theorem normDescent : ∀ (K E : Type) [Field K] [NumberField K] [Field E] [Numb
   · exact Ideal.mem_span_singleton.2
       (GlobalTheory.RayDescent.dvd_intNorm_sub_one K E n π (Ideal.mem_span_singleton.1 hπ1))
 
-theorem rayLe : ∀ (K E L Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field E] [NumberField E]
-    [IsTotallyComplex E] [Algebra K E] [Field L] [NumberField L] [Algebra K L] [IsAbelianGalois K L] [Field Ω]
+theorem rayLe : ∀ (K E L Ω : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field E] [NumberField E]
+    [_root_.NumberField.IsTotallyComplex E] [Algebra K E] [Field L] [NumberField L] [Algebra K L] [IsAbelianGalois K L] [Field Ω]
     [Algebra E Ω] [Algebra K Ω] [IsScalarTower K E Ω] (n : ℕ), 0 < n →
     GlobalTheory.FieldSize.IsRay L (Ideal.span {(n : 𝓞 K)}) → ∀ (R : IntermediateField E Ω) [NumberField R] [IsAbelianGalois E R],
     GlobalTheory.FieldSize.IsRay R (Ideal.span {(n : 𝓞 E)}) → ∀ (j : L →ₐ[K] Ω) (x : L), j x ∈ R := by
@@ -99,8 +99,8 @@ theorem rayLe : ∀ (K E L Ω : Type) [Field K] [NumberField K] [IsTotallyComple
     exact GlobalTheory.SplitCompositum.ncard_eq_finrank_of_generated K E L M' f hgen 𝔭 𝔓 hover hnorm hsplL
   exact hle (hmem x)
 
-theorem rayLeC : ∀ (K E L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field E] [NumberField E]
-    [IsTotallyComplex E] [Algebra K E] [Field L] [NumberField L] [Algebra K L] [IsAbelianGalois K L] (n : ℕ), 0 < n →
+theorem rayLeC : ∀ (K E L : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field E] [NumberField E]
+    [_root_.NumberField.IsTotallyComplex E] [Algebra K E] [Field L] [NumberField L] [Algebra K L] [IsAbelianGalois K L] (n : ℕ), 0 < n →
     GlobalTheory.FieldSize.IsRay L (Ideal.span {(n : 𝓞 K)}) → ∀ (φ : E →+* ℂ) (M : IntermediateField ℚ ℂ),
     GlobalTheory.Mem.Fld.IsRayFieldIn φ (GlobalTheory.Mem.Fld.natIdeal E n) M →
     ∃ j : L →+* ℂ, j.comp (algebraMap K L) = φ.comp (algebraMap K E) ∧ ∀ x, j x ∈ M := by

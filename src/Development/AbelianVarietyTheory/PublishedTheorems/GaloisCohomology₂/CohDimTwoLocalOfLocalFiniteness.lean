@@ -12,7 +12,7 @@ open NumberField IsDedekindDomain Representation ReciprocityTheory.Gal Formalism
 namespace GlobalTheory.Published
 
 def CohDimTwoGlobal : Prop :=
-  ∀ (F Ω : Type) [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω]
+  ∀ (F Ω : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field Ω] [Algebra F Ω]
     [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (r : ℕ) (M : Type) [AddCommGroup M]
     [Module (ZMod (l ^ r)) M] [Finite M] [TopologicalSpace M] [DiscreteTopology M]
     (S : Finset (HeightOneSpectrum (𝓞 F)))

@@ -33,7 +33,7 @@ theorem emb_hD (S : HSpace E) (τ : E →+* ℂ) (hτ : ∀ a, τ (star a) = sta
     mul_assoc]
   rfl
 
-theorem denseRange_emb [IsTotallyComplex E] (τ : E →+* ℂ) : DenseRange τ := by
+theorem denseRange_emb [_root_.NumberField.IsTotallyComplex E] (τ : E →+* ℂ) : DenseRange τ := by
   rcases Complex.subfield_eq_of_closed (Subfield.isClosed_topologicalClosure τ.fieldRange) with h | h
   · exfalso
     apply IsTotallyComplex.complexEmbedding_not_isReal τ
@@ -48,7 +48,7 @@ theorem denseRange_emb [IsTotallyComplex E] (τ : E →+* ℂ) : DenseRange τ :
   · have : closure (Set.range τ) = Set.univ := congrArg (fun K : Subfield ℂ => (K : Set ℂ)) h
     exact dense_iff_closure_eq.2 this
 
-theorem closed_of_coords [IsTotallyComplex E] (S : HSpace E) (τ : E →+* ℂ) {C : Set (Fin S.rank → ℂ)}
+theorem closed_of_coords [_root_.NumberField.IsTotallyComplex E] (S : HSpace E) (τ : E →+* ℂ) {C : Set (Fin S.rank → ℂ)}
     (hC : IsClosed C) (h : ∀ x : S.V, (fun a => τ (S.frame.repr x a)) ∈ C) (y : Fin S.rank → ℂ) : y ∈ C := by
   have hd : DenseRange (Pi.map fun (_ : Fin S.rank) => (τ : E → ℂ)) :=
     DenseRange.piMap fun _ => denseRange_emb τ
@@ -74,7 +74,7 @@ theorem continuous_quad {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) :
   simp only [dotProduct, mulVec, Pi.star_apply]
   fun_prop
 
-theorem sig_pos_iff [IsTotallyComplex E] (S : HSpace E) (hS : S.SigOK) (τ : E →+* ℂ)
+theorem sig_pos_iff [_root_.NumberField.IsTotallyComplex E] (S : HSpace E) (hS : S.SigOK) (τ : E →+* ℂ)
     (hτ : ∀ a, τ (star a) = starRingEnd ℂ (τ a)) :
     S.sig τ = (S.rank, 0) ↔ ∀ x : S.V, x ≠ 0 → 0 < (τ (S.hD x x)).re := by
   constructor
@@ -101,7 +101,7 @@ theorem sig_pos_iff [IsTotallyComplex E] (S : HSpace E) (hS : S.SigOK) (τ : E �
       linarith
     exact Prod.ext (by simp only; omega) hq
 
-theorem sig_neg_iff [IsTotallyComplex E] (S : HSpace E) (hS : S.SigOK) (τ : E →+* ℂ)
+theorem sig_neg_iff [_root_.NumberField.IsTotallyComplex E] (S : HSpace E) (hS : S.SigOK) (τ : E →+* ℂ)
     (hτ : ∀ a, τ (star a) = starRingEnd ℂ (τ a)) :
     S.sig τ = (0, S.rank) ↔ ∀ x : S.V, x ≠ 0 → (τ (S.hD x x)).re < 0 := by
   constructor

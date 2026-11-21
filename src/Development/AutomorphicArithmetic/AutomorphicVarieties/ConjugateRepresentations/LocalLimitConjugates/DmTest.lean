@@ -42,7 +42,7 @@ private theorem arch_iff (φ : GA E a → ℂ) :
   rw [← infEmb_mul_finEmb g, infEmb_mul_finEmb_comm, archSlice_mul]
   exact ((isExpLieAlgebra E a).leftTranslateEnd _ ⟨_, h _⟩).2
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private def stab (φ : Sm E a) : Subgroup (GL (Fin a) (Af E)) where
   carrier := {k | ∀ g, φ.1 (g * finGL E a k) = φ.1 g}

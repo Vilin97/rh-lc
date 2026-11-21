@@ -19,8 +19,8 @@ open Formalism.BasicNotions Formalism.HermitianLatticesTheory Formalism.HN Forma
 
 section BC
 
-variable {F E K : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] [IsTotallyComplex E]
-  [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {F E K : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] [_root_.NumberField.IsTotallyComplex E]
+  [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
 
 theorem emb_hform (σ : E →+* ℂ) (hσ : ∀ a, σ (star a) = starRingEnd ℂ (σ a)) {n : ℕ} (H : Matrix (Fin n) (Fin n) E)
     (x y : Fin n → E) :

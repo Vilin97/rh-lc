@@ -107,11 +107,11 @@ def muMinDual : ℝ := Formalism.HN.muMinDef A.dualB A.dualX A.dualL
 end HLat
 
 def bridge_hn_mu : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (A : HLat K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (A : HLat K),
     A.Good → 0 < A.rank → A.mu = - A.lcv / (A.rank : ℝ)
 
 def bridge_dual_mu : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (A : HLat K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (A : HLat K),
     A.Good → 0 < A.rank → A.muMinDual = - A.muMax
 
 def bridge_ccb_dual : Prop :=
@@ -187,7 +187,7 @@ def RankBoundMonotoneInDimension : Prop :=
     a ≤ (1 + η) * q ^ 2 / (Dall : ℝ) → a ≤ (1 + η) * q ^ 2 / (D : ℝ)
 
 def FactHHcc : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (Words : Type)
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (Words : Type)
     [Fintype Words] (D : DivData K Words), D.RR.Good → 0 < D.RR.rank →
     D.s - D.RR.muMinDual ≤ D.HH
 

@@ -39,7 +39,7 @@ def TrExp : Prop :=
       trOn (eigIn V 𝔰.toAmp.A x) ((𝔰.Uq 0 ^ j) ∘L Rop μ 𝔰.g ∘L θ.U) = ∑ ζ ∈ s, c ζ * ζ ^ j
 
 def EvVal : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 0 < n →
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ), 0 < n →
     ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (𝔞 : Amp μ) (V : Submodule ℂ (LL μ)) (x : ℝ), 0 < x → IsSummand μ V →
       (eigIn V 𝔞.A x ≠ ⊥ → ∃ Λ t, At μ 𝔞.S V Λ t) ∧
       (∀ Λ t Λ' t', At μ 𝔞.S V Λ t → At μ 𝔞.S V Λ' t' → Λ = Λ' ∧ ∀ w ∉ 𝔞.S, t w = t' w) ∧
@@ -53,7 +53,7 @@ def ValBc : Prop :=
       (∀ y ∈ (bcPR F P).vars, ∃ y' ∈ P.vars, y.1 = y'.1.under (𝓞 F)) ∧ ∀ η m, bcPR F (chebP η m : PR E n) = chebP η m
 
 def KillEx : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F] [IsTotallyComplex E]
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E]
     (n : ℕ) (SE : Set (Pl E)) (SF : Set (Pl F)), (∀ w : Pl E, w ∈ SE ↔ w.under (𝓞 F) ∈ SF) →
     ∀ (B B' : Type) [Fintype B] [Fintype B'] (b : B → Datum E n) (b' : B' → Datum F n),
       (∀ i, ∃ Λ t, (b i).Pt SE Λ t) → (∀ i, ∃ Λ t, (b' i).Pt SF Λ t) →
@@ -88,7 +88,7 @@ def SepPoly : Prop :=
       ∀ i (x : ℝ), val x (Λ' i) (t' i) P = 0
 
 def OneSide : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n l : ℕ), 0 < n →
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n l : ℕ), 0 < n →
     ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ l) (ev : PR K n →+* (LL μ →L[ℂ] LL μ)),
       𝔰.toAmp.IsEv ev → (∀ P, Inner μ (ev P)) → ∃ N : ℕ, ∀ η : ℝ, 0 < η → η ≤ 1 →
       ∀ χ : ℝ → ℝ, Continuous χ → (∀ x, 0 ≤ χ x ∧ χ x ≤ 1) → (∀ x ≥ η, χ x = 1) →

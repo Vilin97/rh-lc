@@ -11,13 +11,13 @@ open UpperTheory.V.Af.Fin (emb e1 e2 blk Bdd)
 open GlobalTheory.PRep (fixed)
 open scoped TensorProduct
 
-private theorem hull_le {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private theorem hull_le {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     {S U : Submodule ℂ (Sm E a)} (h : ∀ T ∈ Comm E a, ∀ φ ∈ S, T φ ∈ U) : hull S ≤ U := by
   refine Submodule.span_le.2 ?_
   rintro _ ⟨T, hT, φ, hφ, rfl⟩
   exact h T hT φ hφ
 
-private theorem smEq_aeval {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private theorem smEq_aeval {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (z : GroundTheory.Automorphic.AutomorphicForm.UEnv E a) (p : Polynomial ℂ) (φ : Sm E a) :
     Polynomial.aeval (GroundTheory.Automorphic.AutomorphicForm.uAction z) p (UpperTheory.V.Cm.smEq E a φ) =
       UpperTheory.V.Cm.smEq E a (Polynomial.aeval (UpperTheory.V.Cm.uTC E a z) p φ) := by

@@ -56,7 +56,7 @@ private theorem representation_exp_eq_exp_derivative {E : Type} [Field E] [Numbe
   exact h3
 
 theorem UpperTheory.V.AlgRepEndIrreducible.expMat :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a) (X : Matrix (Fin a) (Fin a) (Cinf E)) (y : GL (Fin a) (Cinf E)),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a) (X : Matrix (Fin a) (Fin a) (Cinf E)) (y : GL (Fin a) (Cinf E)),
       y.val = NormedSpace.exp X → Ξ.mat y = NormedSpace.exp (Ξ.dmat (toL X)) := by
   intro E _ _ _ a Ξ X y hy
   have e : y = (Matrix.isUnit_exp X).unit := Units.ext hy

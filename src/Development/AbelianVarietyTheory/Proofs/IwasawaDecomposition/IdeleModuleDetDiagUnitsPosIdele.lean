@@ -13,9 +13,9 @@ open scoped NumberField.AdeleRing
 
 namespace GlobalTheory.CuspBoundSiegel
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem posIdele_mul (ρ σ : ℝ) (hρ : 0 < ρ) (hσ : 0 < σ) :
     posIdele (K := E) (ρ * σ) (mul_pos hρ hσ) = posIdele ρ hρ * posIdele σ hσ := by
   unfold posIdele
@@ -44,7 +44,7 @@ theorem posIdele_exp (u : ℝ) :
     rw [sub_zero, add_zero]
     exact IsDedekindDomain.FiniteAdeleRing.ext _ fun v => by rw [posIdele_finite]; rfl
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem posIdele_congr {x y : ℝ} (hx : 0 < x) (hy : 0 < y) (h : x = y) :
     posIdele (K := E) x hx = posIdele y hy := by subst h; rfl
 
@@ -56,7 +56,7 @@ theorem diagUnits_posIdele (a : ℕ) {x : ℝ} (hx : 0 < x) :
   rfl
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_posIdele_pos :
     Continuous fun r : {r : ℝ // 0 < r} => (posIdele (K := E) r.1 r.2 : IdeleGroup E) := by
   unfold posIdele
@@ -64,7 +64,7 @@ theorem continuous_posIdele_pos :
     (Continuous.subtype_mk ((continuous_subtype_val).pow _) _)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem ideleModule_det_diagUnits_posIdele (a : ℕ) {x : ℝ} (hx : 0 < x) :
     (IdeleGroup.ideleModule E (Matrix.GeneralLinearGroup.det
       (diagUnits a (fun _ : Fin a => posIdele (K := E) x hx))) : ℝ) = x ^ (a * Module.finrank ℚ E) := by

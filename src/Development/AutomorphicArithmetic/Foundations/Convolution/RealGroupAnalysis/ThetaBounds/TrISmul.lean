@@ -18,7 +18,7 @@ namespace UpperTheory.ConvolutionTheory.R2.Ff
 
 section SlopeTestRemainingChoices
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem zE_add (a b : Cinf E) : zE (a + b) = zE a + zE b := by
   ext i j w
@@ -59,7 +59,7 @@ end UpperTheory.ConvolutionTheory.R2.Ff
 attribute [-instance] GlobalTheory.AdmLoc.modFun
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.derT :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ,
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ,
       ∃ T : Lie E 2 →ₗ[ℝ] (GL (Fin 2) (A E) → ℂ),
         (∀ X, T X ∈ Submodule.span ℂ {Φ : GL (Fin 2) (A E) → ℂ | ∃ f ∈ π.V, ∃ φ ∈ Fock D.δ, Φ = lift W M f.1 φ}) ∧
         ∀ X g, HasDerivAt (fun t => lift W M f.1 φ (g * infGL E 2 (ex X t))) (T X g) 0 := by

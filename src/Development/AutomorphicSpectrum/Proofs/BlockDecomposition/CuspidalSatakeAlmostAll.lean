@@ -108,9 +108,9 @@ theorem countable_orbit {G M : Type} [Group G] [TopologicalSpace G] [IsTopologic
 
 section Cusp
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem secondCountable_GL : SecondCountableTopology (GL (Fin a) (Af E)) := by
   haveI := Formalism.L2.Fam.ThC.sc_Af E
   haveI : SecondCountableTopology (Matrix (Fin a) (Fin a) (Af E)) :=
@@ -320,7 +320,7 @@ theorem exists_hasSatGL_of_scalar {π : Representation ℂ (GL (Fin n) (w.adicCo
   rw [div_mul_cancel₀ _ h0] at e
   rw [e, hc j y hy, hBc j hj]
 
-variable [IsTotallyComplex E] {a : ℕ}
+variable [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem isBiSimple_locRep (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) : IsBiSimple (π.locRep w) := by
   intro S h1 h2
@@ -362,7 +362,7 @@ theorem exists_hasSatGL_locRep (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E
   exists_hasSatGL_of_scalar (fun h hh => exists_scalar (π.isSmooth_locRep w) (isOpen_isCompact_KGL w a).2
     (Final.GLintComm E w a) (Final.HeckeCommGL E w a ℂ) (isBiSimple_locRep π w) (rank_cuspSub π) h hh) hs
 
-theorem eventually_exists_hasSat : ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ},
+theorem eventually_exists_hasSat : ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ},
     ∀ (π : CuspSub E a), ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∃ B : Multiset ℂˣ, (CG.mk π).HasSat w B := by
   intro E _ _ _ a π
   obtain ⟨y, hy, h0⟩ := (Submodule.ne_bot_iff _).1 π.ne_bot

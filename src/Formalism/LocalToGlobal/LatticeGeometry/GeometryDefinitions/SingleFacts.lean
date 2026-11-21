@@ -15,7 +15,7 @@ namespace Formalism.L2.Geo.Def.G1
 
 section Line
 
-variable {K : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
 
 section Single
 

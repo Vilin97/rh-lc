@@ -25,7 +25,7 @@ namespace UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter
 
 variable {K M : Type} [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M]
 
-private theorem indCore [IsTotallyComplex K] [IsTotallyComplex M]
+private theorem indCore [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex M]
     (h2 : Module.finrank K M = 2) (P : CuspSub K (2 * 2)) (π : CuspSub M 2) (S : Finset (HeightOneSpectrum (𝓞 K)))
     (hkey : ∀ w : HeightOneSpectrum (𝓞 M), w.under (𝓞 K) ∉ S → Key (CG.mk π).HasSat (CG.mk P).HasSat w)
     (hK : GroundTheory.Automorphic.GJStandardL.ramifiedPlaces K ⊆ S)

@@ -37,7 +37,7 @@ private theorem not_lt_of_not_dvd {Ω : Type} [Field Ω] (A : ValuationSubring �
   rw [← e, map_one] at this
   exact lt_irrefl _ this
 
-private theorem emb_two {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (hK : Module.finrank ℚ K = 2)
+private theorem emb_two {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (hK : Module.finrank ℚ K = 2)
     (τ e : K →+* ℂ) : e = τ ∨ e = ComplexEmbedding.conjugate τ := by
   classical
   have hc : Fintype.card (K →+* ℂ) = 2 := by rw [Embeddings.card, hK]

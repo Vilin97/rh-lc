@@ -22,7 +22,7 @@ namespace GlobalTheory.LatVal
 
 open Neutral.B1
 
-theorem exists_uniformisation_torsTransport {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
+theorem exists_uniformisation_torsTransport {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
     (h2 : Module.finrank ℚ K = 2) (ι : K →+* ℂ) (Λ₀ : PeriodPair) (Ω₀ : ℂ)
     (hΛ : GlobalTheory.IndefiniteRowSideFullHecke.LatticeNormTransport.IsLatOf ι 1 Λ₀) (hΩ : Ω₀ ≠ 0) :
     letI : Algebra K ℂ := ι.toAlgebra
@@ -33,7 +33,7 @@ theorem exists_uniformisation_torsTransport {K : Type} [Field K] [NumberField K]
         ∃ (Λ₁ : PeriodPair) (Ω₁ : ℂ), TorsTransport ι σ.toRingEquiv t Λ₀ Λ₁ Ω₀ Ω₁ :=
   GlobalTheory.T.exists_cmCurve_torsionTransport_secondPeriod h2 ι Λ₀ Ω₀ hΛ hΩ
 
-theorem exists_globalArtinMap {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {Ω : Type}
+theorem exists_globalArtinMap {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {Ω : Type}
     [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] {art : Ideles K →* GlobalTheory.HeckeGal.Gab K Ω}
     (ha : GlobalTheory.HeckeGal.IsGlobalArtin art) (e : Ω ≃ₐ[K] AlgebraicClosure K) :
     ∃ Art : IdeleClassGroup K →* Field.absoluteGaloisGroupAbelianization K, IsGlobalArtinMap K Art ∧

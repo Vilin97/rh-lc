@@ -9,7 +9,7 @@ open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.Conjuga
 open UpperTheory.V.W (Plc)
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-private theorem exists_root (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ} (hm : 0 < m)
+private theorem exists_root (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ} (hm : 0 < m)
     (d : Ideles E) (hd : pFin E (d : Ad E) = 1) : ∃ y : Ideles E, y ^ m = d := by
   have h : ∀ w : InfinitePlace E, ∃ y : w.Completion, y ^ m = (d : Ad E).1 w := fun w => by
     let e := InfinitePlace.Completion.ringEquivComplexOfIsComplex (IsTotallyComplex.isComplex w)

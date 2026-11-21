@@ -15,7 +15,7 @@ open NumberField MeasureTheory GlobalTheory.CuspRep
 
 namespace GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def kerOp {X : Type} [MeasurableSpace X] (ν : Measure X) (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E)) (F : GA E a → ℂ) :
     GA E a → ℂ := fun g => ∫ x, k x * F (g * infGL E a (γ x)) ∂ν

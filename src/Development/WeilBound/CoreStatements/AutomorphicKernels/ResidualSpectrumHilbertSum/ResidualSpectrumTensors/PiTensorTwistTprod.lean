@@ -71,10 +71,10 @@ theorem levi_equiv (ρ : Representation ℂ (GL (Fin a) k) V) (s t : Fin d → �
 
 end Local
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem loc_eq_absPow {ν : HChar E} {s : ℝ} (hν : ν.IsAbsPow s) (w : HeightOneSpectrum (𝓞 E)) :
     ν.loc w = GlobalTheory.SmGL.absPow (w.adicCompletion E) s := by
   ext x

@@ -18,7 +18,7 @@ open scoped TensorProduct
 
 open MeasureTheory GlobalTheory.UnitaryBC in
 open scoped GlobalTheory.CuspRep.CuspidalL2GL in
-private theorem isSqInt_of_cusp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {ψ : Sm E a}
+private theorem isSqInt_of_cusp {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {ψ : Sm E a}
     (hψ : IsCuspForm ψ) (hn : ∀ t g, ψ.1 (splitCentre E a t * g) = ψ.1 g) : IsSqInt ψ.1 := by
   classical
   obtain ⟨μ, hμ⟩ : ∃ μ : Measure (GA E a), μ.IsHaarMeasure := ⟨Measure.haar, inferInstance⟩

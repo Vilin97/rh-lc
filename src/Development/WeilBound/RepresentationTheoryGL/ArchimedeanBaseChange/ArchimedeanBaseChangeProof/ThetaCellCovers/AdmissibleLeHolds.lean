@@ -82,7 +82,7 @@ theorem cellCover_of (h1 : Cover) (h2 : ConjCpt) : CellCover := by
       simp only [← mul_assoc]
       rw [← e2, mul_inv_cancel, one_mul]
 
-theorem discrete_range (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) :
+theorem discrete_range (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) :
     DiscreteTopology (ratGL E n).range :=
   DiscreteTopology.of_continuous_injective (β := latticeGL E n) (f := Subgroup.inclusion le_sup_left)
     (continuous_subtype_val.subtype_mk _) (Subgroup.inclusion_injective _)

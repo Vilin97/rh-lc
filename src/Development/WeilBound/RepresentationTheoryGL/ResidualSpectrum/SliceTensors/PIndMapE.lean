@@ -13,7 +13,7 @@ open scoped ContDiff
 
 namespace PositivityTheory.Rg.Rs.InducedTensorMap
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 namespace E
 

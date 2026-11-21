@@ -22,7 +22,7 @@ namespace GlobalTheory.CompanionTheory.NodeSep
 
 section Geo
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 theorem af_ext {a : ℕ} {g h : GL (Fin a) (Af E)}
     (H : ∀ v, GeneralLinearGroup.map (pLoc E v) g = GeneralLinearGroup.map (pLoc E v) h) : g = h := by

@@ -16,7 +16,7 @@ namespace GlobalTheory.JSW.WhitAlg
 
 open GroundTheory.Automorphic.FourierWhittaker
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem continuous_psiNeg :
     Continuous fun X : Pos a → Ad E => (GroundTheory.Global.adelicChar E (-supSum 0 X) : ℂ) :=
@@ -104,7 +104,7 @@ theorem whit_kerInf {F : GA E a → ℂ} (hF : Continuous F)
         funext Y
         simp only [f, ψ, mul_assoc]
 
-theorem whit_linear_kerInf : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (F G : GA E a → ℂ),
+theorem whit_linear_kerInf : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (F G : GA E a → ℂ),
     Continuous F → Continuous G →
     (∀ K : Set (GA E a), IsCompact K → ∃ (C : ℝ) (N : ℕ), ∀ g ∈ K, ∀ y : GL (Fin a) (Cinf E),
       ‖F (g * infGL E a y)‖ ≤ C * height y ^ N) →

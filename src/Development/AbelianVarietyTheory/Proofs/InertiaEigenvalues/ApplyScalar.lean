@@ -15,7 +15,7 @@ noncomputable section
 
 namespace GlobalTheory.JSW.Central
 
-def centralFns (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ω : HChar E) :
+def centralFns (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ω : HChar E) :
     Submodule ℂ (GA E a → ℂ) where
   carrier := {F | ∀ (z : Neutral.B1.Ideles E) (g : GA E a),
     F (GeneralLinearGroup.scalar (Fin a) z * g) = ((ω.1 z : ℂˣ) : ℂ) * F g}

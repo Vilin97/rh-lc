@@ -44,7 +44,7 @@ theorem conjSrc_conjSrc_symm {E : Type} [Field E] [NumberField E] (c : E ≃+* E
     simp
   rw [e]
 
-variable {M : Type} [Field M] [NumberField M] [IsTotallyComplex M]
+variable {M : Type} [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M]
 
 theorem pInf_s_sFin (s : Ad M ≃+* Ad M) (hs : Continuous s) (y : Af M) : pInf M (s (sFin M y)) = 0 := by
   let f : Af M →+ Cinf M :=

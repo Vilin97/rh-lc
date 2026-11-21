@@ -55,7 +55,7 @@ private theorem conj_deriv {E : Type} [Field E] [NumberField E] {a : ℕ} (k : �
   exact h
 
 theorem UpperTheory.V.AlgRepEndIrreducible.infAbs :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (L : Lie E a →ₗ[ℝ] Module.End ℂ M),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M] (κ : Kinf E a → Module.End ℂ M) (L : Lie E a →ₗ[ℝ] Module.End ℂ M),
       SepDer κ L → ∀ (q : ℕ) (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] M), IsCochain κ ω → InfEq L ω := by
   intro E _ _ _ a M _ _ _ _ κ L hS q ω hω Z hZ Y
   obtain ⟨k, h0, hk⟩ := kCurve E a Z hZ

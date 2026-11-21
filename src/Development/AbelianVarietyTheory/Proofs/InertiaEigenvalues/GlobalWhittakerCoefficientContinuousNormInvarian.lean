@@ -18,7 +18,7 @@ noncomputable section
 
 namespace GlobalTheory.JSW.WhitNorm
 
-theorem continuous_whit_and_norm_mul : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (F : GA E a → ℂ), Continuous F →
+theorem continuous_whit_and_norm_mul : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (F : GA E a → ℂ), Continuous F →
     (∀ γ g, F (ratGL E a γ * g) = F g) →
     Continuous (GlobalTheory.JSW.whit F) ∧ ∀ u ∈ GlobalTheory.CellDec.NA E a, ∀ g, ‖GlobalTheory.JSW.whit F (u * g)‖ = ‖GlobalTheory.JSW.whit F g‖ := by
   intro E _ _ _ a F hF hl

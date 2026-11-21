@@ -21,7 +21,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace GlobalTheory.ResW
 
-theorem nu_zero_isUnitary (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] : (nu E 0).IsUnitary := by
+theorem nu_zero_isUnitary (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] : (nu E 0).IsUnitary := by
   intro x
   simp [nu, GlobalTheory.HeckeGal.Model.absPow, GlobalTheory.Mem.Chr.CharModel.absHom_val]
 
@@ -37,7 +37,7 @@ theorem isUnitarisable_of_twRep {G X : Type} [Group G] [AddCommGroup X] [Module 
   rw [← e]
   linear_combination (-(B (ρ g v) (ρ g w))) * hc
 
-theorem isUnitarisable_of_isLocComp_cusp : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem isUnitarisable_of_isLocComp_cusp : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (x : CuspSub E a), 1 ≤ a → x.IsUnitary → ∀ (w : HeightOneSpectrum (𝓞 E))
     (σ : SmIrr (GL (Fin a) (w.adicCompletion E))), x.IsLocComp w σ → GlobalTheory.SmGL.IsUnitarisable σ.ρ := by
   intro E _ _ _ a x ha hu w σ hσ

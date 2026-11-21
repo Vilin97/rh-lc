@@ -45,7 +45,7 @@ theorem pre_of_good {E : Type} [Field E] [NumberField E] {k : ℕ} {ψ : AddChar
     {f : GA E k → ℂ} (h : Good ψ m f) : Pre ψ m f :=
   ⟨h.cont, h.left, h.law⟩
 
-theorem main (hU1 : U1) (hP1 : P1) (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (k : ℕ)
+theorem main (hU1 : U1) (hP1 : P1) (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (k : ℕ)
     (μ : Measure (GA E k)) [μ.IsHaarMeasure] (ψ : AddChar (Ad E) ℂ) (hψ : StdPsi ψ) :
     ∀ m, m < k → ∀ β, IsWt (nuP E k m) β → ∃ β', IsWt (nuP E k 0) β' ∧
       ∀ f φ, Pre ψ m f → Good ψ m φ → ∫⁻ g, ‖f g‖ₑ ^ 2 ∂μ.withDensity β < ∞ →

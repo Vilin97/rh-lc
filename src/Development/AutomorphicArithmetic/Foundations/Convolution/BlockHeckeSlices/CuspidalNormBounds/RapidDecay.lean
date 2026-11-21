@@ -319,7 +319,7 @@ private theorem siegel_le {φ : AdelicGLn.AdelicGL K n → ℂ}
 end
 
 open GlobalTheory.CuspRep UpperTheory.V.Cm in
-private theorem good_of {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} {φ : Sm E n} (h : Umg φ)
+private theorem good_of {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} {φ : Sm E n} (h : Umg φ)
     (hc : Cusp φ.1) : Good φ.1 := by
   let S : Subgroup (GL (Fin n) (Af E)) :=
     { carrier := {k | GlobalTheory.CuspRep.finRep E n k φ = φ}
@@ -343,7 +343,7 @@ private theorem good_of {E : Type} [Field E] [NumberField E] [IsTotallyComplex E
 end UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.ConvolutionTheory.BW.rapidDecay :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.RapidDecay E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.RapidDecay E := by
   intro E _ _ _ n φ hU hc N
   have h0 := good_of hU hc
   obtain ⟨ω, hω, hωB, t, ht, hsieg⟩ := Reduction.exists_siegelSet (K := E) n

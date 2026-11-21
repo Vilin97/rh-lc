@@ -20,7 +20,7 @@ namespace HChar
 
 variable {L : Type} [Field L] [NumberField L]
 
-theorem inf_eq_one_of_order [IsTotallyComplex L] {χ : HChar L} {n : ℕ} (hn : 0 < n) (h : χ.OrderDvd n) (k : Lˣ) :
+theorem inf_eq_one_of_order [_root_.NumberField.IsTotallyComplex L] {χ : HChar L} {n : ℕ} (hn : 0 < n) (h : χ.OrderDvd n) (k : Lˣ) :
     χ.inf k = 1 := by
 
   have hpow : ∀ (w : InfinitePlace L) (u : (w.Completion)ˣ), ∃ y : (w.Completion)ˣ, y ^ n = u := by

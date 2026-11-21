@@ -9,7 +9,7 @@ open NumberField Matrix UpperTheory.V UpperTheory.V.KT
 open scoped ComplexOrder
 
 @[to_additive]
-private theorem UpperTheory.V.KT.prod_emb (L : Type) [Field L] [NumberField L] [IsTotallyComplex L]
+private theorem UpperTheory.V.KT.prod_emb (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L]
     {M : Type} [CommMonoid M] (f : (L →+* ℂ) → M) :
     ∏ φ, f φ = ∏ w : InfinitePlace L, (f w.embedding * f (ComplexEmbedding.conjugate w.embedding)) := by
   classical
@@ -51,7 +51,7 @@ private theorem UpperTheory.V.KT.det_emb (L : Type) [Field L] [NumberField L] :
   rw [Int.cast_natCast, Complex.ofReal_natCast]
 
 theorem UpperTheory.V.KT.gramdet :
-    ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (h : HS L N),
+    ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (h : HS L N),
     2 ^ dd L N * (gram h).det = (absD L : ℝ) ^ N * (∏ w, (mat h w).det.re) ^ 2 := by
   intro L _ _ _ N h
   classical

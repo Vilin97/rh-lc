@@ -17,7 +17,7 @@ namespace PositivityTheory.AdelicQuotientData
 
 namespace WeightCoefficients
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 def HS (m : ℕ) : Set (GA E k) := {h | ∃ γ u, IsMir m γ ∧ UU (m + 1) u ∧ h = ratGL E k γ * u}
 

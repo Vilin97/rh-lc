@@ -69,9 +69,9 @@ end Loc
 
 section Glob
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ}
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ}
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private theorem smooth_loc (χ : HChar K) (v : HeightOneSpectrum (𝓞 K)) : IsSmoothChar (χ.loc v) :=
   GlobalTheory.HeckeComp.smooth_loc χ v
 

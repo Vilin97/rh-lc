@@ -20,7 +20,7 @@ namespace UpperTheory.One.M
 section Twist
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
-  {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {a : ℕ} [IsTotallyComplex E]
+  {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {a : ℕ} [_root_.NumberField.IsTotallyComplex E]
   (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL)
 
 
@@ -61,7 +61,7 @@ def cgMk (_ : TrivialCondition) (e : ∀ a, D.naut.CG a ↪ HostCGu D.host a) (g
     (csd : haveI := host_isCMField D.host; ∀ a (π : D.naut.CG a), D.naut.csd π ↔ (e a π).IsCsd) : CGTrueT hL D T :=
   ⟨e, good, surj, zero, loc, tw, inf, csd⟩
 
-theorem locParT_unr_iff {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] [IsTotallyComplex E]
+theorem locParT_unr_iff {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] [_root_.NumberField.IsTotallyComplex E]
     {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} (hL : RecTExists) (χ : HChar E) (h : IsPlaceOver A w) :
     (ParLawsT.locParT hL (CG.ofChar χ) h).unr ↔ χ.UnrAt w := by
   obtain ⟨a, ha, H⟩ := ParLawsT.isRecT_locRecT hL h

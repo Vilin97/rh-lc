@@ -18,18 +18,18 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace UpperTheory.V.Published
 
 def ClozelCohC : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a →
     ∀ (π : CuspSub E a) (Ξ : GlobalTheory.GKCoh.AlgRep E a),
       (∀ τ, ∃ m, π.HasInfChar τ m ∧ AlgInfChar Ξ τ (m.map Neg.neg)) → GlobalTheory.GKCoh.IsCohFor π Ξ
 
 def ClozelConjC : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a →
     ∀ (π : CuspSub E a), (CG.mk π).IsRegAlg → ∀ σ : ℂ ≃+* ℂ,
       ∃ (π' : CuspSub E a) (τ τ' : SmIrr (GL (Fin a) (Af E))), IsFinComp π τ ∧ IsFinComp π' τ' ∧ IsConjBy σ τ τ' ∧
         ∀ (φ : E →+* ℂ) (m : Multiset ℂ), π.HasInfChar φ m → π'.HasInfChar (σ.toRingHom.comp φ) m
 
 def BorelInjC : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a →
     ∀ (U : Subgroup (GL (Fin a) (Af E))), IsOpen (U : Set (GL (Fin a) (Af E))) → IsCompact (U : Set (GL (Fin a) (Af E))) →
     ∀ (Ξ : GlobalTheory.GKCoh.AlgRep E a) (S : Finset (CuspSub E a)), (∀ π ∈ S, ∀ π' ∈ S, π.Iso π' → π = π') →
       (∀ π ∈ S, GlobalTheory.GKCoh.IsCohFor π Ξ ∧ HasFixed π.finPart U) → (S.card : Cardinal) ≤ cohDim ⊤ U (ratC Ξ)
@@ -84,7 +84,7 @@ def AdmissibleReal : Prop :=
 
 section BC
 
-variable {F E : Type} [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+variable {F E : Type} [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
   {a : ℕ}
 
 def IsoTwist (π : TR.CuspSub F a) (η : HChar F) : Prop :=
@@ -94,7 +94,7 @@ def IsoTwist (π : TR.CuspSub F a) (η : HChar F) : Prop :=
 
 
 variable (E) in
-omit [IsTotallyReal F] [IsTotallyComplex E] in
+omit [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 def IsQuadCharOf (η : HChar F) : Prop :=
   ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∀ v : HeightOneSpectrum (𝓞 F),
     v.asIdeal = w.asIdeal.comap (algebraMap (𝓞 F) (𝓞 E)) →

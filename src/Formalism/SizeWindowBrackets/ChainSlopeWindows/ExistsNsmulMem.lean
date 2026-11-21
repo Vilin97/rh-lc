@@ -178,7 +178,7 @@ end Alg
 
 section Ht
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 
@@ -337,7 +337,7 @@ end Ht
 
 section Max
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 
@@ -549,7 +549,7 @@ theorem index_finsupp {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [M
   rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
 
 theorem relIndex_ne_zero {K V ι : Type} [Field K] [NumberField K] [StarRing K]
-    [IsTotallyComplex K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
+    [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     [Fintype ι] [DecidableEq ι] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (hX : ∀ v, IsUnit (X v).det) {M N : Submodule (𝓞 K) V} (hM : M.FG) (hNM : N ≤ M)
     (hrk : rkK N = rkK M) : N.toAddSubgroup.relIndex M.toAddSubgroup ≠ 0 := by

@@ -16,11 +16,11 @@ open NumberField GroundTheory.Automorphic Module Matrix Topology MeasureTheory
 noncomputable section
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem BoundedGenerators.proof (h : HermitianForm F E W) (v : Basis ι E W)
     (hR : ReducedBasisBound.Statement) (hA : ArchCovolumeBound.Statement h v)
     (hT : MajorantTransport.Statement h v) : BoundedGenerators.Statement h v := by

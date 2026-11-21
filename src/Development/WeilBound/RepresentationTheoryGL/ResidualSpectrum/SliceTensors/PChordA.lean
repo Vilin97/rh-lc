@@ -11,7 +11,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.
 
 namespace PositivityTheory.Rg.Rs.ChordArithmetic
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem mulChi_absC_cancel (a : ℕ) (z : ℂ) (ψ : Sm E a) :
     mulChi a (Model.absC E z) (mulChi a (Model.absC E (-z)) ψ) = ψ := by

@@ -15,7 +15,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace GlobalTheory.Published
 
 def DiscreteSpectrumResidual : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ), 1 ≤ N →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ), 1 ≤ N →
     (∀ V : Submodule ℂ (Sm E N), IsDiscrete V →
       ∃ (a d : ℕ) (π : CuspSub E a), π.IsUnitary ∧ IsNormalised π ∧ IsSpehOf V π d) ∧
     (∀ (a d : ℕ) (π : CuspSub E a), d * a = N → IsNormalised π →

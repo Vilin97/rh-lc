@@ -10,7 +10,7 @@ open UpperTheory.V.Lit.Geo.Cs
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af GlobalTheory.UnitaryBC UpperTheory.V.Lit.Dr UpperTheory.V.Lit.Bor
 open scoped TensorProduct ContDiff Topology
 
-private theorem ev_eq_cmp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a d : ℕ}
+private theorem ev_eq_cmp {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a d : ℕ}
     (m : Sm E a ⊗[ℂ] (Fin d → ℂ)) (j : Fin d) (g : GA E a) : ev m g j = (UpperTheory.V.Lit.Bor.cmp j m).1 g := by
   induction m using TensorProduct.induction_on with
   | zero => simp

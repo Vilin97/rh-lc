@@ -136,10 +136,10 @@ theorem WeightedNormSq.full : WeightedNormSq.Statement E := WeightedNormSq.proof
 
 theorem IntegralFamilyBound.full : IntegralFamilyBound.Statement E := IntegralFamilyBound.proof E
 
-theorem WeightedSpaceDim.full [IsTotallyComplex E] : WeightedSpaceDim.Statement E :=
+theorem WeightedSpaceDim.full [_root_.NumberField.IsTotallyComplex E] : WeightedSpaceDim.Statement E :=
   WeightedSpaceDim.proof E
 
-theorem WeightedIndexBound.full [IsTotallyComplex E] : WeightedIndexBound.Statement E :=
+theorem WeightedIndexBound.full [_root_.NumberField.IsTotallyComplex E] : WeightedIndexBound.Statement E :=
   WeightedIndexBound.proof E (CoeffLatticeBasis.full E) (IndexLeDet.full E) (WeightedNormSq.full E)
     (WeightedSpaceDim.full E) (MinkowskiVolumeForm.full _ _) (VolumeFormIntComb.full _ _)
 
@@ -156,7 +156,7 @@ end Numbers
 section Spaces
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 variable (h : HermitianForm F E W) (v : Basis ι E W)
 
@@ -215,7 +215,7 @@ end Spaces
 section Conditional
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 theorem MahlerCompactness.full_of {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*}
     [Fintype ι] [DecidableEq ι] (h : HermitianForm F E W) (v : Basis ι E W)

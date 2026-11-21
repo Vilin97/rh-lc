@@ -20,7 +20,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction
 open UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.T GlobalTheory.CuspRep Formalism.L2.Host Formalism.ConjugateSelfDual UpperTheory.V.Published UpperTheory.CBC
 
 private theorem weak_same {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E]
-    [IsTotallyComplex F] [IsTotallyComplex E] {n : ℕ} (hp : (Module.finrank F E).Prime) (π : CuspSub F n)
+    [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (hp : (Module.finrank F E).Prime) (π : CuspSub F n)
     {sat sat' : Pl E → Multiset ℂˣ → Prop} (H : WeakBC (CG.mk π).HasSat sat) (H' : WeakBC (CG.mk π).HasSat sat') :
     ∀ᶠ w : Pl E in cofinite, ∃ B, sat w B ∧ sat' w B := by
   have hN := (places F E hp).2.2.2.2.1

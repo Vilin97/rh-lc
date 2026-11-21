@@ -38,7 +38,7 @@ private theorem UpperTheory.V.KT.detlow_num (d : ℕ) (hd : d = 0 ∨ 2 ≤ d) (
   nlinarith
 
 theorem UpperTheory.V.KT.detlow :
-    ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (h : HS L N), h ∈ Ry L N →
+    ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (h : HS L N), h ∈ Ry L N →
     1 ≤ (I0 L N : ℝ) * ∏ w, (mat h w).det.re := by
   intro L _ _ _ N h hh
   classical

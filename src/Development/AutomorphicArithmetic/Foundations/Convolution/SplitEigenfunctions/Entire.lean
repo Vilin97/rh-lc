@@ -76,7 +76,7 @@ structure admitted (D : Dat ℚ E) (ω : HChar ℚ) (φ : GL (Fin 2) (A E) → �
   wdec : ∀ C : Set (GL (Fin 2) (A E)), IsCompact C → ∃ K : Set (FiniteAdeleRing (𝓞 ℚ) ℚ), IsCompact K ∧ ∀ r : ℕ, ∃ B : ℝ,
     ∀ y : (A ℚ)ˣ, ∀ k ∈ C, ‖Wo D φ (em E (aE y) * k)‖ ≤ B * ((1 + |re y|) ^ r)⁻¹ ∧ (Wo D φ (em E (aE y) * k) ≠ 0 → (y : A ℚ).2 ∈ K)
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 structure Gd (D : Dat ℚ E) (P : CuspSub E 2) (L N : ℕ) (φ : GL (Fin 2) (A E) → ℂ) : Prop where
   pos : 0 < N
@@ -107,8 +107,8 @@ def Unit1 (ω : HChar ℚ) : Prop := ∀ a, ‖((ω.1 a : ℂˣ) : ℂ)‖ = 1
 
 def Entire (a : ℕ → ℂ) : Prop := ∃ F : ℂ → ℂ, Differentiable ℂ F ∧ ∀ s : ℂ, 4 < s.re → F s = LSeries a s
 
-def AllA (p : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], Dat ℚ E → CuspSub E 2 → HChar ℚ → HChar ℚ → Prop) : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2) (ω χ : HChar ℚ),
+def AllA (p : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], Dat ℚ E → CuspSub E 2 → HChar ℚ → HChar ℚ → Prop) : Prop :=
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2) (ω χ : HChar ℚ),
     CenN P ω → Unit1 ω → (∀ a, (χ.1 a * ω.1 a) ^ 2 = 1) → p E D P ω χ
 
 def TrAdm : Prop := AllA fun _ _ _ _ D P ω _ => ∀ φ ∈ Tr P, admitted D ω φ

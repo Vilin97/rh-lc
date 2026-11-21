@@ -25,7 +25,7 @@ private theorem rot_per : Function.Periodic rot (2 * Real.pi) := fun t => by
 
 section
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem dec_of {D : Dat ℚ E} {ω : HChar ℚ} {φ : GL (Fin 2) (A E) → ℂ} (h : admitted D ω φ) (r : ℕ) :
     ∃ B : ℝ, ∀ y t, y ≠ 0 → ‖Wo D φ (em E (aE (iy y) * rot t))‖ ≤ B * ((1 + |y|) ^ r)⁻¹ := by

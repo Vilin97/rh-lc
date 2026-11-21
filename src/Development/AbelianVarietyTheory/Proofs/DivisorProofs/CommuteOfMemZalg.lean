@@ -263,7 +263,7 @@ section Lie
 
 open GlobalTheory.CuspRep NumberField
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def mulL (x y : Lie E a) : Lie E a := Matrix.of.symm (Matrix.of x * Matrix.of y)
 
@@ -279,19 +279,19 @@ def rmul (y : Lie E a) : Lie E a →L[ℝ] Lie E a :=
       map_add' := fun x z => Matrix.add_mul (Matrix.of x) (Matrix.of z) (Matrix.of y)
       map_smul' := fun c x => Matrix.smul_mul c (Matrix.of x) (Matrix.of y) }
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem lmul_apply (x y : Lie E a) : lmul x y = mulL x y := rfl
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem rmul_apply (x y : Lie E a) : rmul y x = mulL x y := rfl
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem mulL_one (x : Lie E a) : mulL x (oneL E a) = x := Matrix.mul_one (Matrix.of x)
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem one_mulL (x : Lie E a) : mulL (oneL E a) x = x := Matrix.one_mul (Matrix.of x)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem inv_nhds {x : Lie E a} (hx : IsUnit (Matrix.of x)) : invSet E a ∈ nhds x := by
   have hc : Continuous fun y : Lie E a => (Matrix.of y).det :=
     Continuous.matrix_det (A := fun y : Lie E a => Matrix.of y) continuous_id
@@ -302,7 +302,7 @@ theorem inv_nhds {x : Lie E a} (hx : IsUnit (Matrix.of x)) : invSet E a ∈ nhds
     rw [this]; exact Units.isOpen.preimage hc
   exact ho.mem_nhds hx
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem isUnit_oneL : IsUnit (Matrix.of (oneL E a)) := isUnit_one
 
 theorem chart_mul (φ : GA E a → ℂ) (g : GA E a) {x : Lie E a} (hx : IsUnit (Matrix.of x)) :
@@ -383,21 +383,21 @@ theorem Eop_bracket (τ τ' : E →+* ℂ) (i j k l : Fin a) :
   simp only [smul_mul_assoc, mul_smul_comm, mul_sub, sub_mul]
   module
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem atEmb_mul (τ : E →+* ℂ) (z w : ℂ) : atEmb τ z * atEmb τ w = atEmb τ (z * w) := by
   classical
   unfold atEmb
   rw [← Pi.single_mul]
   split_ifs <;> simp
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem atEmb_neg (τ : E →+* ℂ) (z : ℂ) : atEmb τ (-z) = - atEmb τ z := by
   classical
   unfold atEmb
   rw [← Pi.single_neg]
   split_ifs <;> simp
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem atEmb_mul_of_ne {τ τ' : E →+* ℂ} (h : InfinitePlace.mk τ ≠ InfinitePlace.mk τ') (z w : ℂ) :
     atEmb τ z * atEmb τ' w = 0 := by
   classical
@@ -408,7 +408,7 @@ theorem atEmb_mul_of_ne {τ τ' : E →+* ℂ} (h : InfinitePlace.mk τ ≠ Infi
     simp [Pi.single_eq_of_ne h]
   · simp [Pi.single_eq_of_ne hv]
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem atEmb_conj {τ τ' : E →+* ℂ} (h : InfinitePlace.mk τ = InfinitePlace.mk τ') (hne : τ ≠ τ') (w : ℂ) :
     atEmb τ' w = atEmb τ (starRingEnd ℂ w) := by
   unfold atEmb

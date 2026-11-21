@@ -55,7 +55,7 @@ private theorem int_update {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E
 
 section
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {ι : Type} [Fintype ι] (C : Co K ι)
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {ι : Type} [Fintype ι] (C : Co K ι)
 
 private noncomputable def glH (i : ι) : GL2C →* G1 K 2 :=
   MonoidHom.mk' (fun g => C.gl i g.1) fun a b => (coLaws K ι C).2.2.2.2.1 i a.1 b.1
@@ -261,7 +261,7 @@ end
 end UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.piLaws :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ : Measure (G1 K 2)) [μ.IsHaarMeasure], (∀ i n q, ∃ P : LL μ →L[ℂ] LL μ, (∀ v, P v = C.Pi μ i n q v) ∧ IsSelfAdjoint P ∧ P ∘L P = P ∧
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ : Measure (G1 K 2)) [μ.IsHaarMeasure], (∀ i n q, ∃ P : LL μ →L[ℂ] LL μ, (∀ v, P v = C.Pi μ i n q v) ∧ IsSelfAdjoint P ∧ P ∘L P = P ∧
         (∀ a b, Commute (P ∘L rightRegularRep (Gam K 2) μ (C.gl i a) ∘L P) (P ∘L rightRegularRep (Gam K 2) μ (C.gl i b) ∘L P)) ∧
         (∀ h : G1 K 2, (∀ b, Commute h (C.gl i b)) → Commute P (rightRegularRep (Gam K 2) μ h)) ∧
         ∀ τ : Submodule ℂ (LL μ), CuspIrr μ τ → ∀ v ∈ τ, P v ∈ τ) ∧

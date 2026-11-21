@@ -60,7 +60,7 @@ theorem infOne_em {k : GL (Fin 2) (A ℚ)} (h : ∀ i j, (k.val i j).1 = ((1 : M
   rw [e, e2]
   fin_cases i <;> fin_cases j <;> simp [Matrix.one_apply]
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem exists_X (D : Dat ℚ E) (u : ℝ) : ∃ X, infGL E 2 X = hU D u := by
   set z := D.mkE 0 (bI u) with hz

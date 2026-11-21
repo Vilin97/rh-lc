@@ -103,7 +103,7 @@ private theorem common_majorant {n : ℕ} (Ψ : Fin n → V4 F → ℂ)
 end UpperTheory.ConvolutionTheory.R2.G
 
 theorem UpperTheory.ConvolutionTheory.R2.G.majL :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ φ ∈ Fock D.δ, ∀ h : GL (Fin 2) (A E), ((nu F h : (A F)ˣ) : A F).1 = 1 → ∀ N : ℕ,
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ φ ∈ Fock D.δ, ∀ h : GL (Fin 2) (A E), ((nu F h : (A F)ˣ) : A F).1 = 1 → ∀ N : ℕ,
     ∃ (B : ℝ) (L : (FractionalIdeal (𝓞 F)⁰ F)ˣ), 0 ≤ B ∧ ∀ k ∈ KK F, ∀ v, ‖hat (W.Om k (W.L h φ)).1 v‖ ≤ B * wt4 L N v := by
   intro F E _ _ _ _ _ _ _ D W φ hφ h ht N
   have hinv : (((nu F h)⁻¹ : (A F)ˣ) : A F).1 = 1 := by

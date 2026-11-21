@@ -14,7 +14,7 @@ open UpperTheory.V.Lit UpperTheory.V.Lit.Geo UpperTheory.V.Lit.Bor UpperTheory.V
 open scoped TensorProduct GlobalTheory.CuspRep.CuspidalL2GL
 open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
-private theorem lev_mulChi {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (χ : HChar E) (φ : Sm E a)
+private theorem lev_mulChi {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (χ : HChar E) (φ : Sm E a)
     (h : HasLev φ) : HasLev (mulChi a χ φ) := by
   let S : Subgroup (GL (Fin a) (Af E)) :=
     { carrier := {k | finRep E a k (mulChi a χ φ) = mulChi a χ φ}

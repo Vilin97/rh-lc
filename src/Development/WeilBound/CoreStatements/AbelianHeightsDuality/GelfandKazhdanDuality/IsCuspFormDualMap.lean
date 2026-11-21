@@ -13,7 +13,7 @@ open NumberField Matrix Formalism.L2.Host GlobalTheory.CuspRep GlobalTheory.Cont
 
 namespace PositivityTheory.PRW.GKD
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in

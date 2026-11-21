@@ -66,7 +66,7 @@ theorem exists_measure_of_eq {X Y : Type} [Group X] [Group Y] [TopologicalSpace 
   haveI : SigmaFinite μ₂ := sigmaFinite_of_locallyFinite
   exact ⟨μ₁.prod μ₂, ⟨inferInstance, inferInstance, inferInstance, inferInstance⟩, hF, fun _ => rfl⟩
 
-theorem isMulRightInvariant_GA (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem isMulRightInvariant_GA (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     [m : MeasurableSpace (GA E a)] [hm : BorelSpace (GA E a)] (μ : Measure (GA E a)) [μ.IsHaarMeasure] :
     μ.IsMulRightInvariant := by
   obtain ⟨ν, h1, h2⟩ := GlobalTheory.CompanionTheory.AdelicHaar.exists_haar_rightInvariant E a

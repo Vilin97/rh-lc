@@ -99,7 +99,7 @@ def FrameFree : Prop :=
       Formalism.HN.muMinDef b X L = Formalism.HN.muMinDef b' X' L
 
 def DualNumbers : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (A : HLat K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (A : HLat K),
     A.Good → 0 < A.rank →
     A.muDual = -A.mu ∧ A.muMaxDual = -A.muMin ∧ A.muMinDual = -A.muMax
 

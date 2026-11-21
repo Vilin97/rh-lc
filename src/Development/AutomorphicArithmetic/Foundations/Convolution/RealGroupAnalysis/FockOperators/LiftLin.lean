@@ -21,7 +21,7 @@ private lemma th_smul {F : Type} [Field F] [NumberField F] (c : ℂ) (a : S4 F) 
   tsum_mul_left
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.liftLin :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ,
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ,
     (∀ f' ∈ π.V, lift W M (f + f').1 φ = lift W M f.1 φ + lift W M f'.1 φ) ∧ (∀ φ' ∈ Fock D.δ, lift W M f.1 (φ + φ') = lift W M f.1 φ + lift W M f.1 φ') ∧
     ∀ c : ℂ, lift W M (c • f).1 φ = c • lift W M f.1 φ ∧ lift W M f.1 (c • φ) = c • lift W M f.1 φ := by
   intro F E _ _ _ _ _ _ _ D W M π f hf φ hφ

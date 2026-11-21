@@ -15,7 +15,7 @@ namespace CompanionTheory.D.gk.Br.LIC
 
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
-theorem continuous_infGL [IsTotallyComplex E] : Continuous (infGL E a) := by
+theorem continuous_infGL [_root_.NumberField.IsTotallyComplex E] : Continuous (infGL E a) := by
   have hs : Continuous (sInf E) := ((continuous_infEq E).prodMk continuous_const :
     Continuous fun x : Cinf E => ((infEq E x, 0) : InfiniteAdeleRing E × Af E))
   exact Continuous.units_map (corner (matN a (sInf E))) (continuous_const.add (continuous_id.matrix_map hs))
@@ -30,7 +30,7 @@ omit [NumberField E] in
 theorem continuous_toUnits_Kinf : Continuous fun k : Kinf E a => (Unitary.toUnits k : GL (Fin a) (Cinf E)) :=
   Units.continuous_iff.2 ⟨continuous_subtype_val, continuous_subtype_val.star⟩
 
-theorem continuous_infGL_toUnits [IsTotallyComplex E] :
+theorem continuous_infGL_toUnits [_root_.NumberField.IsTotallyComplex E] :
     Continuous fun k : Kinf E a => infGL E a (Unitary.toUnits k) :=
   continuous_infGL.comp continuous_toUnits_Kinf
 

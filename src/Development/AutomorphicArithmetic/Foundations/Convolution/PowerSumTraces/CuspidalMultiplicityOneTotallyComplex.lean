@@ -67,7 +67,7 @@ def trForm (X Y : (isExpLieAlgebra K n).lieSubalgebra) : ℝ :=
 end Global
 
 def CuspidalMultiplicityOneTotallyComplex : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure],
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure],
     MultOneAt μ
 
 def TraceSum : Prop :=

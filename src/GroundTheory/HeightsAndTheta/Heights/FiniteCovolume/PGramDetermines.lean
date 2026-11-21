@@ -13,13 +13,13 @@ open NumberField GroundTheory.Automorphic Module
 noncomputable section
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W]
 
 namespace GramDetermines
 
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem sesq_linearCombination (h : HermitianForm F E W) {n : ℕ} {e e' : Fin n → W}
     (hG : ∀ a b, h.toSesq (e a) (e b) = h.toSesq (e' a) (e' b)) (c d : Fin n → E) :
     h.toSesq (Fintype.linearCombination E e' c) (Fintype.linearCombination E e' d) =
@@ -29,7 +29,7 @@ theorem sesq_linearCombination (h : HermitianForm F E W) {n : ℕ} {e e' : Fin n
     LinearMap.smul_apply, hG]
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem linearCombination_surjective {n : ℕ} {e : Fin n → W}
     (hL : IsLattice E (AddSubgroup.closure (Set.range e))) :
     Function.Surjective (Fintype.linearCombination E e) := by
@@ -43,7 +43,7 @@ theorem linearCombination_surjective {n : ℕ} {e : Fin n → W}
   exact hle hx
 
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem linearCombination_eq_zero (h : HermitianForm F E W) {n : ℕ} {e e' : Fin n → W}
     (hL' : IsLattice E (AddSubgroup.closure (Set.range e')))
     (hG : ∀ a b, h.toSesq (e a) (e b) = h.toSesq (e' a) (e' b)) (c : Fin n → E)

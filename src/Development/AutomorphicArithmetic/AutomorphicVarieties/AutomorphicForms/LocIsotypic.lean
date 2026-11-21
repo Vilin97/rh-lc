@@ -77,7 +77,7 @@ def GlobFixed : Prop :=
     (∀ w, ∃ σ, LocIsotypic ρ w σ ∧ HasFixed σ.ρ (KLoc F w n M)) → HasFixed ρ (KLev F n M)
 
 def LocCompC : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (π : CuspSub E n) (w : HeightOneSpectrum (𝓞 E)),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (π : CuspSub E n) (w : HeightOneSpectrum (𝓞 E)),
     (∃ σ, π.IsLocComp w σ) ∧ ∀ σ, π.IsLocComp w σ → LocIsotypic π.finPart w σ
 
 def LocCompR : Prop :=
@@ -113,7 +113,7 @@ def CrysSlopes : Prop :=
         ∀ a : ℤ, (∀ i, m i ≤ a) → ‖ι.symm ((normV w : ℂ) ^ a * b)‖ ≤ 1
 
 def WeylC : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ), ∃ c A : ℕ, ∀ m : Fin n → ℤ, StrictAnti m →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ), ∃ c A : ℕ, ∀ m : Fin n → ℤ, StrictAnti m →
     ∀ H : ℕ, (∀ i, |m i| ≤ H) → ∃ Ξ : GlobalTheory.GKCoh.AlgRep E n, (∀ τ, AlgInfChar Ξ τ ((infOf m).map Neg.neg)) ∧ Ξ.d ≤ c * (H + 1) ^ A
 
 end UpperTheory.V.Af

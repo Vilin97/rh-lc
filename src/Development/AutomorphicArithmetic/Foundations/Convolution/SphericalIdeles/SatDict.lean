@@ -20,7 +20,7 @@ open UpperTheory.ConvolutionTheory.C GlobalTheory.PRep GlobalTheory.CuspRep Glob
 
 namespace UpperTheory.ConvolutionTheory.Sph
 
-private theorem hasSat_iff {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} (π : CuspSub K n)
+private theorem hasSat_iff {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} (π : CuspSub K n)
     (v : HeightOneSpectrum (𝓞 K)) (τ : SmIrr (GL (Fin n) (v.adicCompletion K))) (hτ : π.IsLocComp v τ)
     (B : Multiset ℂˣ) : (Cusp.cx π).sat v B ↔ GlobalTheory.LFun.HasSatGL v τ.ρ B := by
   refine ⟨fun hB => ?_, fun h => GlobalTheory.HeightCounting.Blocks.hasSatGL_locRep hτ h⟩

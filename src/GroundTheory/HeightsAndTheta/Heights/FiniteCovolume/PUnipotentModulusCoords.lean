@@ -15,7 +15,7 @@ open NumberField GroundTheory.Automorphic Module Matrix Topology MeasureTheory
 noncomputable section
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 omit [Fintype ι] [DecidableEq ι] in
@@ -39,7 +39,7 @@ theorem hyperbolic_at_place (h : HermitianForm F E W) (v : Basis ι E W) {x₀ w
   · rw [hForm, ← HermAtPlace.proof h v w, h3, map_one]
 
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem archUnitary_at_place {h : HermitianForm F E W} {v : Basis ι E W} (g : archUnitary h v)
     (w : InfinitePlace E) :
     (((g : InfinitePlace E → GL ι ℂ) w : Matrix ι ι ℂ))ᴴ * gramAt h v w *
@@ -59,7 +59,7 @@ def heisY (h : HermitianForm F E W) (v : Basis ι E W) (x₀ w₀ : W) :
     simp only [Pi.smul_apply, real_smul_vec, hForm_smul_right, (hy w).1, (hy w).2, mul_zero,
       and_self]
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] [DecidableEq ι] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] [DecidableEq ι] in
 theorem mem_heisY {h : HermitianForm F E W} {v : Basis ι E W} {x₀ w₀ : W}
     {y : InfinitePlace E → ι → ℂ} : y ∈ heisY h v x₀ w₀ ↔
       ∀ w, hForm (gramAt h v w) (vecAt v x₀ w) (y w) = 0 ∧
@@ -139,7 +139,7 @@ theorem heisPoint_val (hp : IsHyperbolicPair h x₀ w₀) (p : HeisCoord h v x�
       Matrix ι ι ℂ) = heisMatAt h v x₀ p.1 p.2 w := rfl
 
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem unipRadical_at_place (n : unipRadical h v x₀) (w : InfinitePlace E) :
     (((n : archUnitary h v) : InfinitePlace E → GL ι ℂ) w : Matrix ι ι ℂ)ᴴ * gramAt h v w *
       (((n : archUnitary h v) : InfinitePlace E → GL ι ℂ) w : Matrix ι ι ℂ) = gramAt h v w ∧

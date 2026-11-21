@@ -19,7 +19,7 @@ noncomputable section
 
 namespace GlobalTheory.CuspOrth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {ω : HChar E}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {ω : HChar E}
   (μ : Measure (GA E a)) [μ.IsHaarMeasure]
 
 theorem cuspFormsBounded : CuspFormsBoundedGL :=

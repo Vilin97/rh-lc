@@ -24,7 +24,7 @@ theorem isAddHaarMeasure_unipMeasure (E : Type) [Field E] [NumberField E] (a r :
     (AutomorphicForm.unipMeasure E a r).IsAddHaarMeasure := by
   infer_instance
 
-theorem isCuspidal_of_isCuspForm : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
+theorem isCuspidal_of_isCuspForm : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
     IsCuspForm φ → AutomorphicForm.IsCuspidal φ.1 := by
   intro E _ _ _ a φ h r h0 h1 g
   have h2 := h.2 r h0 h1 (AutomorphicForm.unipMeasure E a r) (AutomorphicForm.unipFundamentalDomain E a r)

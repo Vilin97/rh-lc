@@ -12,7 +12,7 @@ open NumberField Matrix MeasureTheory GlobalTheory.CuspRep
 
 namespace GlobalTheory.MSpanDecay
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def Growth (F : GA E a → ℂ) : Prop :=
   ∀ g : GA E a, ∃ (C : ℝ) (N : ℕ), ∀ y : GL (Fin a) (Cinf E), ‖F (g * infGL E a y)‖ ≤ C * height y ^ N

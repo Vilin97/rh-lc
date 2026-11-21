@@ -15,7 +15,7 @@ open scoped FourierTransform
 
 namespace GlobalTheory.FourierDecay
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 def pairL (u : Fin n → Cinf E) : (Fin n → Cinf E) →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
@@ -129,7 +129,7 @@ end GlobalTheory.FourierDecay
 
 
 open GlobalTheory.FourierDecay in
-theorem GlobalTheory.fourier_decay_family : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (ι : Type)
+theorem GlobalTheory.fourier_decay_family : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (ι : Type)
     (w : ι → ℝ) (𝒞 : Set (ι → (Fin n → Cinf E) → ℂ)),
     (∀ f ∈ 𝒞, (∀ i, ContDiff ℝ ∞ (f i) ∧ HasCompactSupport (f i)) ∧ ∃ C : ℝ, ∀ i, ∫ y, ‖f i y‖ ∂(infMeasure E n) ≤ C * w i) →
     (∀ f ∈ 𝒞, ∀ v : Fin n → Cinf E, (fun i y => fderiv ℝ (f i) y v) ∈ 𝒞) →

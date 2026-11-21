@@ -144,7 +144,7 @@ private theorem eig_unique {F Ω : Type} [Field F] [NumberField F] [Field Ω] [A
 
 section Tw
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {a : ℕ}
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {a : ℕ}
 
 private theorem val_absPow_neg_one (u : HeightOneSpectrum (𝓞 K)) :
     (((GlobalTheory.HeckeGal.Model.absPow K (-1)).val u : ℂˣ) : ℂ) = (normV u : ℂ) := by
@@ -162,7 +162,7 @@ private theorem sat_tw {π : CuspSub K a} {w : HeightOneSpectrum (𝓞 K)} {B : 
 
 end Tw
 
-private theorem indSys_of_att {K M Ω : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Field Ω]
+private theorem indSys_of_att {K M Ω : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Field Ω]
     [Algebra K M] [Algebra K Ω] [Algebra M Ω] [IsScalarTower K M Ω] [IsAlgClosure M Ω] (h2 : Module.finrank K M = 2)
     {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ} {π : CuspSub M 2} {r : G M Ω →* GL (Fin 2) (Qbar l)} (hatt : AttC ι r π)
     {R : G K Ω →* GL (Fin 4) (Qbar l)} (H : IndCh (galEmb K M Ω) r R) {P : CuspSub K 4} (hP : AttC ι R P) :

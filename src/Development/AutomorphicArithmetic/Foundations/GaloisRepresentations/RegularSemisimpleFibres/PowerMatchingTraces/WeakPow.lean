@@ -53,7 +53,7 @@ private theorem pow_val {χ : HChar K} {s : ℂ} (h : UpperTheory.ConvolutionThe
   simp
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  [IsTotallyComplex F] [IsTotallyComplex E] {n : ℕ}
+  [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem val_pow {χ : HChar F} {χ' : HChar E} {s : ℂ} (h : UpperTheory.ConvolutionTheory.T.IsPow χ s) (h' : UpperTheory.ConvolutionTheory.T.IsPow χ' s)
     (w : HeightOneSpectrum (𝓞 E)) (f : ℕ) (hf : Formalism.ConjugateSelfDual.normV w = Formalism.ConjugateSelfDual.normV (w.under (𝓞 F)) ^ f) :

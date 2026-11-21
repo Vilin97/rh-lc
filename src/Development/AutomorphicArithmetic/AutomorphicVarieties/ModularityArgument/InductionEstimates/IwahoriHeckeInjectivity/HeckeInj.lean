@@ -88,21 +88,21 @@ def HeckeAt (A : Line μ τ₁ τ₂ D d) (U : Subgroup (FA K (2 + 2))) (h : FA 
 
 end Defs
 
-def SplitBad (F : Type) [Field F] [NumberField F] {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+def SplitBad (F : Type) [Field F] [NumberField F] {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
     (π : CuspSub E 2) : Prop :=
   ∀ v : Pl F, ¬ GM.Split E v → GM.Unr E v ∧ ∀ w : Pl E, w.under (𝓞 F) = v → ∃ B, (CG.mk π).HasSat w B
 
 def IndCs : Prop :=
-  ∀ (K M : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M],
+  ∀ (K M : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Algebra K M],
     Module.finrank K M = 2 → ∀ π : CuspSub M 2, Z.Bc.MixWtC K π → SplitBad K π →
     ∃ P : CuspSub K (2 * 2), Z.Bc.IndSys (CG.mk π).HasSat (CG.mk P).HasSat ∧ ∀ (τ τ' : M →+* ℂ) (m m' : Multiset ℂ), τ ≠ τ' →
       τ.comp (algebraMap K M) = τ'.comp (algebraMap K M) → π.HasInfChar τ m → π.HasInfChar τ' m' →
       P.HasInfChar (τ.comp (algebraMap K M)) (m + m')
 
-def ForSwap (p : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-    [IsTotallyComplex E] (_ : E ≃ₐ[F] E) (_ _ : Submodule ℂ (L2 (BW.mu1 E 2))) (_ : Twist (BW.mu1 E 2)), Prop) : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-    [IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) →
+def ForSwap (p : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+    [_root_.NumberField.IsTotallyComplex E] (_ : E ≃ₐ[F] E) (_ _ : Submodule ℂ (L2 (BW.mu1 E 2))) (_ : Twist (BW.mu1 E 2)), Prop) : Prop :=
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+    [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) →
     ∀ (τ₁ τ₂ : Submodule ℂ (L2 (BW.mu1 E 2))) (θ₂ : Twist (BW.mu1 E 2)), Pair (BW.mu1 E 2) τ₁ τ₂ → UpperTheory.ConvolutionTheory.K.IsGal σ.toRingEquiv θ₂ →
       τ₁.map (θ₂.U : L2 (BW.mu1 E 2) →ₗ[ℂ] L2 (BW.mu1 E 2)) = τ₂ → τ₂.map (θ₂.U : L2 (BW.mu1 E 2) →ₗ[ℂ] L2 (BW.mu1 E 2)) = τ₁ →
       p F E σ τ₁ τ₂ θ₂
@@ -117,14 +117,14 @@ def ArchEx : Prop := ForSwap fun F E _ _ _ _ _ _ _ _ σ τ₁ τ₂ _ => ∀ D :
     IdemA κF eF ∧ IsSq D eF e ∧ ArchLine τ₁ τ₂ κ e κ₂ p₁ p₂ k₀
 
 def IrrW : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
     [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ → ∀ κ e κ₂ p₁ p₂ k₀, ArchLine τ₁ τ₂ κ e κ₂ p₁ p₂ k₀ →
     ∀ (S : Finset (Pl K)) (U : ∀ w : Pl K, Subgroup (Gw (2 + 2) w)), Lev U → ∀ (D : TypeDat K (2 + 2)), IsTy D κ e (levOn S U) →
     ∀ (d : ℕ) (A : Line μ τ₁ τ₂ D d) (P : Submodule ℂ (Eu d)),
       (∀ w ∈ S, ∀ (g : Gw (2 + 2) w) M, HeckeAt A (levOn S U) (AdelicGLn.localEmbedding w g) M → ∀ v ∈ P, M v ∈ P) → P = ⊥ ∨ P = ⊤
 
 def HeckeEx : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
     [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ → ∀ κ e, IdemA κ e →
     ∀ (S : Finset (Pl K)) (U : ∀ w : Pl K, Subgroup (Gw (2 + 2) w)), Lev U → ∀ (D : TypeDat K (2 + 2)), IsTy D κ e (levOn S U) →
     ∀ (d : ℕ) (A : Line μ τ₁ τ₂ D d), (∀ h, ∃! M, HeckeAt A (levOn S U) h M) ∧
@@ -134,7 +134,7 @@ def HeckeEx : Prop :=
         ActsBy μ A (tens b φ) β → ∀ h M, HeckeAt A (levOn S U) h M → Commute M (symb β 0 : Eu d →ₗ[ℂ] Eu d)
 
 def HeckeInj : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
     [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ → ∀ κ e, IdemA κ e →
     ∀ (S : Finset (Pl K)) (U : ∀ w : Pl K, Subgroup (Gw (2 + 2) w)), Lev U → ∀ (D : TypeDat K (2 + 2)), IsTy D κ e (levOn S U) →
     ∀ (d : ℕ) (A : Line μ τ₁ τ₂ D d), ∀ w ∈ S, U w = GLnLocal.iwahori (w.adicCompletion K) (2 + 2) → ∀ ν : Fin (2 + 2) → ℤ, Antitone ν →
@@ -148,7 +148,7 @@ def TypeOf : Prop :=
       (∀ u ∈ U, ∃ u' ∈ U, θ.e (fin1 u) = fin1 u') → (∀ g, θ.e (θ.e g) = g) → Stable D θ
 
 def AmpEx : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F] [IsTotallyComplex E]
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E]
     (σ : E ≃ₐ[F] E) (D : InfD σ 1) (n : ℕ), 0 < n → ∀ (κF : Measure (archCompact F n)) (eF : archCompact F n → ℂ)
     (κ : Measure (archCompact E n)) (e : archCompact E n → ℂ), IdemA κF eF → IdemA κ e → IsSq D eF e →
     ∀ (νE : Measure (archGroup E n)) [νE.IsHaarMeasure] (νF : Measure (archGroup F n)) [νF.IsHaarMeasure],
@@ -158,7 +158,7 @@ def AmpEx : Prop :=
         ∃ g, ∫ y, aE y * φ (g * archP E n y) ∂νE ≠ 0
 
 def TensAmp : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 0 < n → ∀ (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (𝔞 : Amp μ)
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ), 0 < n → ∀ (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (𝔞 : Amp μ)
     (φ : TF K n), (∀ x, φ x = (𝔞.U : Set (FA K n)).indicator 1 x) →
     (∃ c : ℝ, 0 < c ∧ (∀ Θ : G1 K n → ℂ, Continuous Θ → FixF 𝔞.U Θ → ∀ x, ∫ g, tens 𝔞.a₀ φ g * Θ (x * g) ∂μ =
       c * ∫ y, 𝔞.a₀ y * Θ (x * archP K n y) ∂𝔞.ν) ∧ Rop μ (tens 𝔞.a₀ φ) = (c : ℂ) • 𝔞.A) ∧
@@ -176,7 +176,7 @@ def SwapAt : Prop := ForSwap fun F E _ _ _ _ _ _ _ _ σ τ₁ τ₂ _ =>
     ∀ B, SSat (BW.mu1 E 2) τ₂ w B ↔ SSat (BW.mu1 E 2) τ₁ w' B
 
 def RigidE : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (τ₁ τ₂ : Submodule ℂ (L2 (BW.mu1 E 2))), Pair (BW.mu1 E 2) τ₁ τ₂ →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (τ₁ τ₂ : Submodule ℂ (L2 (BW.mu1 E 2))), Pair (BW.mu1 E 2) τ₁ τ₂ →
     ∀ (S : Set (Pl E)), S.Finite → ∀ m₁ m₂ B₁ B₂, At (BW.mu1 E 2) S τ₁ m₁ B₁ → At (BW.mu1 E 2) S τ₂ m₂ B₂ →
     (∀ b : Datum E (2 + 2), b.Pt S (fun τ => m₁ τ + m₂ τ) (fun w => B₁ w + B₂ w) →
       b.r = 2 ∧ (∀ i, b.d i = 2) ∧ ∃ i j, i ≠ j ∧ At (b.μ i) S (b.V i) m₁ B₁ ∧ At (b.μ j) S (b.V j) m₂ B₂) ∧
@@ -188,8 +188,8 @@ def RigidF : Prop := ForSwap fun F E _ _ _ _ _ _ _ _ _ τ₁ τ₂ _ =>
     ∀ (b : Datum F (2 + 2)) Λ' t', b.Pt SF Λ' t' → ¬ ∀ w ∉ SE, B₁ w + B₂ w = bcSat t' w
 
 def LocSm : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-    [IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ n : ℕ, 0 < n →
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+    [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ n : ℕ, 0 < n →
     ∀ (q : Pl F) (w₀ : PlacesOver E q) (S : Finset (Pl F)), q ∉ S → (∀ v ∉ S, GM.Unr E v) → (∀ v ∈ S, GM.Split E v) →
     ∀ U₀ : ∀ w : Pl E, Subgroup (Gw n w), Lev U₀ → ∀ SE : Finset (Pl E), (∀ w, w ∈ SE ↔ w.under (𝓞 F) ∈ S ∨ w.under (𝓞 F) = q) →
     ∃ (L : GM.Loc σ n q w₀) (U : ∀ w : Pl E, Subgroup (Gw n w)), L.S = S ∧ Lev U ∧ (∀ w : Pl E, w.under (𝓞 F) ∈ S → U w ≤ U₀ w) ∧
@@ -199,8 +199,8 @@ def LocSm : Prop :=
         ∀ u ∈ levOn SE U, ∃ u' ∈ levOn SE U, θ.e (fin1 u) = fin1 u'
 
 def GalLoc : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-    [IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ n : ℕ, 0 < n →
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+    [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ n : ℕ, 0 < n →
     ∀ (μ : Measure (G1 E n)) [μ.IsHaarMeasure] (θ : Twist μ), (IsGalTwist σ θ ↔ UpperTheory.ConvolutionTheory.K.IsGal σ.toRingEquiv θ) ∧ (IsGalTwist σ θ →
       (∀ g, θ.e (θ.e g) = g) ∧
       (∀ (D : InfD σ 1) (eF : archCompact F n → ℂ) (e : archCompact E n → ℂ), IsSq D eF e →
@@ -210,8 +210,8 @@ def GalLoc : Prop :=
           fin1 (AdelicGLn.localEmbedding (w (i + 1)).1 (mapGL n (completionMap v (w (i + 1)).1) g)))
 
 def FamNe : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-    [IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) →
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+    [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) →
     ∀ (μ : Measure (G1 E (2 + 2))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ → ∀ (𝔢 : Side θ 2) (𝔵 : Fam 𝔢) κ e κ₂ p₁ p₂ k₀,
       ArchLine 𝔵.τ₁ 𝔵.τ₂ κ e κ₂ p₁ p₂ k₀ → ∀ (S : Finset (Pl E)) (U : ∀ w : Pl E, Subgroup (Gw (2 + 2) w)), Lev U →
       (∀ w ∈ S, GM.Split E (w.under (𝓞 F)) ∧ ∀ w' : Pl E, w'.under (𝓞 F) = w.under (𝓞 F) → w' ∈ S) →
@@ -233,13 +233,13 @@ def SignMs : Prop :=
     ∃ B' : Multiset ℂˣ, B = B'.map (· ^ 2) ∧ A = B' + B'.map fun b => -b
 
 def SysOf : Prop :=
-  ∀ (K M : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M] [IsGalois K M],
+  ∀ (K M : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Algebra K M] [IsGalois K M],
     Module.finrank K M = 2 → ∀ (π π' : CG M 2) (P : CG K (2 * 2)),
     (∀ w w' : Pl M, w.under (𝓞 K) = w'.under (𝓞 K) → (w ≠ w' ∨ ¬ GM.Split M (w.under (𝓞 K))) → ∀ B, π'.HasSat w B ↔ π.HasSat w' B) →
     WeakBC P.HasSat (R.sumSat (m := fun _ : Fin 2 => 2) ![π, π']) → Z.Bc.IndSys π.HasSat P.HasSat
 
 def IndNorm : Prop :=
-  ∀ (K M : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M] [IsGalois K M],
+  ∀ (K M : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Algebra K M] [IsGalois K M],
     Module.finrank K M = 2 → ∀ π : CuspSub M 2, GlobalTheory.DiscSpec.IsNormalised π →
     (∀ σ : M ≃ₐ[K] M, σ ≠ 1 → ¬ (UpperTheory.CBC.Cusp.cx π).ConjIso σ.toRingEquiv) → SplitBad K π →
     ∃ P : CuspSub K (2 * 2), Z.Bc.IndSys (CG.mk π).HasSat (CG.mk P).HasSat ∧ ∀ (τ τ' : M →+* ℂ) (m m' : Multiset ℂ), τ ≠ τ' →

@@ -21,7 +21,7 @@ private theorem finPart_mulVec {F : Type} [Field F] [NumberField F] (M : Matrix 
     simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, e'']
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.vacL :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (h : GL (Fin 2) (A E)), (Matrix.GeneralLinearGroup.map (pInf E) h).val ∈ Matrix.unitaryGroup (Fin 2) (Cinf E) →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (h : GL (Fin 2) (A E)), (Matrix.GeneralLinearGroup.map (pInf E) h).val ∈ Matrix.unitaryGroup (Fin 2) (Cinf E) →
     ∀ φ ∈ Vac D.δ, W.L h φ ∈ Vac D.δ := by
   intro F E _ _ _ _ _ _ _ D W h hu φ hφ v v' e
   have hinv : (Matrix.GeneralLinearGroup.map (pInf E) h⁻¹).val ∈ Matrix.unitaryGroup (Fin 2) (Cinf E) := by

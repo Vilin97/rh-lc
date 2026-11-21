@@ -20,7 +20,7 @@ namespace GlobalTheory.CompanionTheory.ArchSmooth
 
 open AutomorphicForm
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
 
 def cMap : mixedEmbedding.mixedSpace E →ₗ[ℝ] Cinf E where
   toFun z := fun w => z.2 ⟨w, IsTotallyComplex.isComplex w⟩

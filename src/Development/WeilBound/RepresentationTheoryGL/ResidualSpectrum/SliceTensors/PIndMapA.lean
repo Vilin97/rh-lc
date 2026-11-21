@@ -13,7 +13,7 @@ open scoped ContDiff
 
 namespace PositivityTheory.Rg.Rs.InducedTensorMap
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 def cf (a : ℕ) (k : Kinf E a) (g : GL (Fin a) (Af E)) : GA E a := infGL E a (Unitary.toUnits k) * finGL E a g
 

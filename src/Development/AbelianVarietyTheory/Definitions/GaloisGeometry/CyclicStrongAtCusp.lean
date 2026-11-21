@@ -79,7 +79,7 @@ def Core : Prop := Ex .csd ∧ ∀ c, SphericalLevelCondition .csd c
 
 def CoreAll : Prop := Ex .all ∧ ∀ c, SphericalLevelCondition .all c
 
-def CharLift {K M : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M]
+def CharLift {K M : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Algebra K M]
     (π : CuspSub K a) (P : CuspSub M a) : Prop :=
   IsLift π P ∧ ∀ (v : HeightOneSpectrum (𝓞 K)) (u : HeightOneSpectrum (𝓞 M)) [u.asIdeal.LiesOver v.asIdeal]
     (τ : SmIrr (GL (Fin a) (v.adicCompletion K))) (T : SmIrr (GL (Fin a) (u.adicCompletion M))), π.IsLocComp v τ → P.IsLocComp u T →

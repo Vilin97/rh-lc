@@ -23,7 +23,7 @@ open scoped ComplexConjugate Classical InnerProductSpace ComplexOrder
 open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.famScalar :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
           [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ → ∀ κ e κ₂ p₁ p₂ k₀, ArchLine τ₁ τ₂ κ e κ₂ p₁ p₂ k₀ →
           ∀ (S : Finset (Pl K)) (U : ∀ w : Pl K, Subgroup (Gw (2 + 2) w)), Lev U → ∀ (D : TypeDat K (2 + 2)), IsTy D κ e (levOn S U) →
           ∀ (d : ℕ) (A : Line μ τ₁ τ₂ D d) (𝔞 : Amp μ) (φ : TF K (2 + 2)) (c : ℂ) (β : ℝ → Eu d →L[ℂ] Eu d), 𝔞.U = levOn S U →

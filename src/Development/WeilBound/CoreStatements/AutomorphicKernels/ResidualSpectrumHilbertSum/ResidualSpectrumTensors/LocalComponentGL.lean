@@ -20,7 +20,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace PositivityTheory.RSHS.LocalComponentGL
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem isDiscrete_of_cusp {a : ℕ} {π : CuspSub E a} (hu : π.IsUnitary) (hn : IsNormalised π) : IsDiscrete π.V := by
   refine ⟨fun φ hφ => (π.cusp φ hφ).1, fun φ hφ => ?_, π.stable, π.ne_bot, π.irred⟩

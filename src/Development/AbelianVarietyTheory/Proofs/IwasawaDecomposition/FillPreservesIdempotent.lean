@@ -203,7 +203,7 @@ section Cusp
 
 open GlobalTheory.CuspRep
 
-variable [IsTotallyComplex H.E]
+variable [_root_.NumberField.IsTotallyComplex H.E]
 
 
 variable (A) in

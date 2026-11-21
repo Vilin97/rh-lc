@@ -54,7 +54,7 @@ def nilrad {K : Type} [Field K] {n : ℕ} (W₁ W₂ : Submodule K (Fin n → K)
 
 section Degree
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n k : ℕ}
 
 def cV (v : InfinitePlace E) : Ad E →+* ℂ := (Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) v).comp (pInf E)
 
@@ -89,7 +89,7 @@ theorem degM_zero (x : GA E n) (M : Matrix (Fin n) (Fin 0) E) : degM x M = 0 := 
 
 def prof (n : ℕ) (τ : ℝ) (k : ℕ) : ℝ := τ * k * (2 * n + 1 - k)
 
-def cutSet (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (τ : ℝ) : Set (GA E n) :=
+def cutSet (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (τ : ℝ) : Set (GA E n) :=
   {x | (∀ W : Submodule E (Fin n → E), deg x W ≤ prof n τ (Module.finrank E W)) ∧ -τ ≤ deg x ⊤}
 
 def chiT (τ : ℝ) (x : GA E n) : ℂ := (cutSet E n τ).indicator 1 x

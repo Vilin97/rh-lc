@@ -64,7 +64,7 @@ private theorem range_of_sign {K Ω : Type} [Field K] [NumberField K] [Field Ω]
     obtain ⟨g', e'⟩ := (ha _).1 e
     exact ⟨g', by rw [e', map_mul, h1, mul_one]⟩
 
-private theorem regAlg_twist {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} {P : CuspSub K n}
+private theorem regAlg_twist {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} {P : CuspSub K n}
     (h : (CG.mk P).IsRegAlg) {κ : HChar K} {m : (K →+* ℂ) → ℤ} (hκ : κ.IsAlg m) : (CG.mk (P.twist κ)).IsRegAlg := (GlobalTheory.CuspRep.CG.isRegAlg_iff _).2 fun τ => by
   have e := ((ParLaws.hasInfChar_infChar (CG.mk P) τ).twist κ).infChar_eq
   rw [CG.twist_mk] at e

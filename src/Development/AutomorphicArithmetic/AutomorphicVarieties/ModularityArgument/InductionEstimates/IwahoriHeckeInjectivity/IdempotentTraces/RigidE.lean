@@ -21,7 +21,7 @@ open scoped ComplexConjugate Classical
 
 open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E
 
-private theorem transfer {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a b : ℕ}
+private theorem transfer {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a b : ℕ}
     {μ : Measure (normOneGL (K := E) (n := a))} [μ.IsHaarMeasure] {μ' : Measure (normOneGL (K := E) (n := b))} [μ'.IsHaarMeasure]
     {π : CuspSub E a} {π' : CuspSub E b} {V : Submodule ℂ (LL μ)} {V' : Submodule ℂ (LL μ')}
     (h : Dp.Carries μ π V) (h' : Dp.Carries μ' π' V')
@@ -33,7 +33,7 @@ private theorem transfer {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
   · exact (Dp.sInfIff E a μ π V h τ _).2 ((Dp.sInfIff E a μ' π V' h' τ _).1 (hA.1 τ))
   · exact (Dp.sSatIff E a μ π V h w _).2 ((Dp.sSatIff E a μ' π V' h' w _).1 (hA.2 w hw))
 
-private theorem core {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {ι κ : Type} [Fintype ι] [Fintype κ]
+private theorem core {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {ι κ : Type} [Fintype ι] [Fintype κ]
     (d : ι → ℕ) (d' : κ → ℕ) (hd : ∀ i, 0 < d i) (hd' : ∀ j, 0 < d' j)
     (μ : ∀ i, Measure (normOneGL (K := E) (n := (d i)))) [∀ i, (μ i).IsHaarMeasure]
     (μ' : ∀ j, Measure (normOneGL (K := E) (n := (d' j)))) [∀ j, (μ' j).IsHaarMeasure]

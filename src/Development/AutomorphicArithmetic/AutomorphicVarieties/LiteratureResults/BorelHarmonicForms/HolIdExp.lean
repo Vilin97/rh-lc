@@ -8,7 +8,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibra
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Bor
 open scoped TensorProduct
 
-private theorem emb_split {E : Type} [Field E] [IsTotallyComplex E] (z : (E →+* ℂ) → ℂ) :
+private theorem emb_split {E : Type} [Field E] [_root_.NumberField.IsTotallyComplex E] (z : (E →+* ℂ) → ℂ) :
     ∃ u v : Cinf E, z = emb E u + Complex.I • emb E v := by
   refine ⟨fun w => (z w.embedding + starRingEnd ℂ (z (ComplexEmbedding.conjugate w.embedding))) / 2,
     fun w => -Complex.I * (z w.embedding - starRingEnd ℂ (z (ComplexEmbedding.conjugate w.embedding))) / 2, ?_⟩

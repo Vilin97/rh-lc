@@ -161,7 +161,7 @@ private theorem exists_heckeAt_transport_of_linearIsometryEquiv (A : Line μ τ�
     rw [flat_tw θ hH _ _ (hs v) y, hsy]
   · simp
 
-private theorem hecke_N (hp : Pair μ₂ τ₁ τ₂) [IsTotallyComplex K] (A : Line μ τ₁ τ₂ D d) (A' : Line μ τ₂ τ₁ D d')
+private theorem hecke_N (hp : Pair μ₂ τ₁ τ₂) [_root_.NumberField.IsTotallyComplex K] (A : Line μ τ₁ τ₂ D d) (A' : Line μ τ₂ τ₁ D d')
     {L : Subgroup (FA K (2 + 2))} (hlev : D.Level L) (hle : L ≤ AdelicGLn.integralFiniteGL K (2 + 2))
     (hu : ∀ h, ∃! M, HeckeAt A L h M) (hu' : ∀ h, ∃! M, HeckeAt A' L h M) (N : Eu d' ≃ₗᵢ[ℂ] Eu d)
     (hN : ∀ (Y : L2 μ →L[ℂ] L2 μ) s s', Act A.J Y s → Act A'.J Y s' → ∀ w, N (s' 0 w) = s 0 (N w))

@@ -93,7 +93,7 @@ theorem compV_tl_eq_one {n : ℕ} (ϖ : ∀ v : HeightOneSpectrum (𝓞 E), (v.a
   ext i j
   simp [Matrix.diagonal_apply, Matrix.one_apply]
 
-theorem tl_mul_comm [IsTotallyComplex E] {n : ℕ} (ϖ : ∀ v : HeightOneSpectrum (𝓞 E), (v.adicCompletion E)ˣ) {T : Finset (HeightOneSpectrum (𝓞 E))}
+theorem tl_mul_comm [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (ϖ : ∀ v : HeightOneSpectrum (𝓞 E), (v.adicCompletion E)ˣ) {T : Finset (HeightOneSpectrum (𝓞 E))}
     (l : HeightOneSpectrum (𝓞 E) →₀ (Fin n → ℤ)) (hl : ∀ v ∈ T, l v = 0) {p : GA E n}
     (hp : ∀ w ∉ T, GlobalTheory.CellDec.compV E n w p = 1) :
     GlobalTheory.CellDec.tl n ϖ l * p = p * GlobalTheory.CellDec.tl n ϖ l := by
@@ -113,7 +113,7 @@ namespace GlobalTheory.RSCell.CptMod
 
 open scoped Pointwise
 
-theorem exists_isCompact_mod_NA : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E)))
+theorem exists_isCompact_mod_NA : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E)))
     (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ), (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) →
     ∀ (F : GA E (m + 1) → ℂ) (l₀ : GlobalTheory.CellDec.abelian₂ E (m + 1) T) (U : Subgroup (GL (Fin (m + 1)) (Af E))) (Φ : (Fin (m + 1) → Cinf E) → ℂ)
       (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (C : Set (GA E (m + 1))), IsCompact C →

@@ -18,7 +18,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 
 namespace GlobalTheory.CompanionTheory.Conc.LevAt
 
-theorem aT_eq_lev (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (t : ℝ) :
+theorem aT_eq_lev (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) (t : ℝ) :
     aT E (r + s) r t = GlobalTheory.CompanionTheory.CTFin.lev (Ad E) r s (aT E r r t, 1) := by
   apply Units.ext
   rw [PositivityTheory.Rg.Rs.JFinTr.aT_val, GlobalTheory.SmGL.val_emb₂]

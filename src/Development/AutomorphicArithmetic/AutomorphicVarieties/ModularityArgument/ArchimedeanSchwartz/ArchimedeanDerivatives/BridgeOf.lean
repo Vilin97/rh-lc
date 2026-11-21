@@ -17,7 +17,7 @@ namespace UpperTheory.V.Z.Inf.Bridge
 
 open NumberField.mixedEmbedding GroundTheory.Automorphic.GJMatrix GroundTheory.Global
 
-variable (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ)
+variable (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ)
 
 private theorem hms_infEq (x : Cinf K) : homeomorphMixedSpace K (infEq K x) = Cm.mixEq K x :=
   homeomorphMixedSpace_apply K _

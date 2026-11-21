@@ -949,7 +949,7 @@ theorem factNormFockUnitary : FactNormFockUnitary := by
     rw [← AlgHom.comp_apply, ← h1.1, inv_mul_cancel, h1.2, AlgHom.id_apply]
   simpa [Formalism.UG.dwAct] using congrArg (Formalism.REAL.fockF f) key
 
-theorem nPl_two_mul (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] :
+theorem nPl_two_mul (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] :
     (Formalism.HN.nPl K : ℝ) * 2 = Module.finrank ℚ K := by
   simp only [Formalism.HN.nPl]
   have h1 := NumberField.InfinitePlace.card_add_two_mul_card_eq_rank K

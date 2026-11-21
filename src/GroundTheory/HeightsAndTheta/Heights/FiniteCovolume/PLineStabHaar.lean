@@ -18,19 +18,19 @@ open scoped ENNReal NNReal
 noncomputable section
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 def LineStabHaar.invUnits (b : InfinitePlace E → ℂ) : InfinitePlace E → ℂˣ :=
   fun w => if hb : b w = 0 then 1 else (Units.mk0 (b w) hb)⁻¹
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem LineStabHaar.invUnits_of_ne {b : InfinitePlace E → ℂ} (hb : ∀ w, b w ≠ 0) :
     invUnits b = fun w => (Units.mk0 (b w) (hb w))⁻¹ := by
   funext w
   simp [invUnits, hb w]
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem LineStabHaar.measurable_invUnits : Measurable (invUnits (E := E)) := by
   have h0 : Measurable fun z : ℂ => if hz : z = 0 then (1 : ℂˣ) else (Units.mk0 z hz)⁻¹ := by
     refine measurable_iff_comap_le.2 ?_
@@ -45,7 +45,7 @@ theorem LineStabHaar.measurable_invUnits : Measurable (invUnits (E := E)) := by
   exact Measurable.of_eval fun w => h0.comp (measurable_pi_apply w)
 
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] [DecidableEq ι] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] [DecidableEq ι] in
 theorem LineStabHaar.two_le_finrank {h : HermitianForm F E W} (v : Basis ι E W) {x₀ w₀ : W}
     (hx₀ : x₀ ≠ 0) (hp : IsHyperbolicPair h x₀ w₀) : 2 ≤ finrank E W := by
   have : Module.Finite E W := Module.Finite.of_basis v
@@ -60,7 +60,7 @@ theorem LineStabHaar.two_le_finrank {h : HermitianForm F E W} (v : Basis ι E W)
   simpa using hli.fintype_card_le_finrank
 
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem LineStabHaar.proof (h : HermitianForm F E W) (v : Basis ι E W)
     (h1 : WittPartner.Statement h) (h2 : VecAtNeZero.Statement v)
     (h3 : TorusEmbedding.Statement h v) (h4 : LineEigenvalue.Statement h v)

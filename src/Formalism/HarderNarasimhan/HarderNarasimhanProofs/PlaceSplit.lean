@@ -13,7 +13,7 @@ namespace Formalism.HN
 namespace PlaceDecomposition
 section
 
-theorem dense_comb (K : Type*) [Field K] [NumberField K] [IsTotallyComplex K]
+theorem dense_comb (K : Type*) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
     (t : InfinitePlace K → ℂ) :
     ∃ r : Free.ChooseBasisIndex ℤ (𝓞 K) → ℝ, ∀ u : InfinitePlace K,
       ∑ k, (r k : ℂ) * u.embedding ((RingOfIntegers.basis K k : 𝓞 K) : K) = t u := by
@@ -180,7 +180,7 @@ end
 
 section
 
-variable {K V ι : Type*} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type*} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
   [Fintype ι] [DecidableEq ι]
 
@@ -297,7 +297,7 @@ end
 
 section
 
-variable {K V ι : Type*} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type*} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
   [Fintype ι] [DecidableEq ι]
 
@@ -431,7 +431,7 @@ end
 
 section
 
-variable {K V ι : Type*} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type*} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
   [Fintype ι] [DecidableEq ι] [DecidableEq (InfinitePlace K)]
 

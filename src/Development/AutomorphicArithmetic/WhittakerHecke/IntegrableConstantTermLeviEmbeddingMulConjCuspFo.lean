@@ -90,7 +90,7 @@ private theorem ct_growth {n : ℕ} (r : ℕ) (φ : GA E n → ℂ) {B : ℝ} {N
 end
 
 theorem UpperTheory.integrable_constantTerm_leviEmbedding_mul_conj_cuspForm :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (S : Set (Pl E)) (r s : ℕ) (b : Blo S r) (φ : Sm E (r + s)), Umg φ → ∀ (g : GA E r) (m : GA E s),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (S : Set (Pl E)) (r s : ℕ) (b : Blo S r) (φ : Sm E (r + s)), Umg φ → ∀ (g : GA E r) (m : GA E s),
       Integrable (fun y : RightCosetSpace (rationalGLOne (K := E) (n := r)) => AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g, m)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) (quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)) := by
   intro E _ _ _ S r s b φ hφ g m
   obtain ⟨F, hF, -, hFl, -⟩ := UpperTheory.ConvolutionTheory.BW.ctOps E r s φ hφ

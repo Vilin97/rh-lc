@@ -20,7 +20,7 @@ namespace SatakeInductionStabiliserOpen
 
 open SatakeVectors PInfInd2A
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem isOpen_stab_tw {m : ℕ} {V : Submodule ℂ (Sm E m)} (hV : IsDiscrete V) (z : ℂ) (w : HeightOneSpectrum (𝓞 E)) :
     ∀ ψ ∈ tw V z, IsOpen {g : GL (Fin m) (w.adicCompletion E) | finRep E m (locGL E m w g) ψ = ψ} := by

@@ -56,7 +56,7 @@ theorem cf_nonneg (K : Type) [Field K] [NumberField K] : 0 ≤ cf K := by
   unfold cf
   linarith
 
-theorem sub_count [IsTotallyComplex K] (N : Submodule (𝓞 K) V) (hN : N.FG) (y : ℕ) (hy : 1 ≤ y) :
+theorem sub_count [_root_.NumberField.IsTotallyComplex K] (N : Submodule (𝓞 K) V) (hN : N.FG) (y : ℕ) (hy : 1 ≤ y) :
     ((({M : Submodule (𝓞 K) V | M ≤ N ∧ GlobalTheory.Mass.idxN N M = y}).encard : ℕ∞) : ℝ≥0∞) ≤
       ENNReal.ofReal ((y : ℝ) ^ ((Module.finrank K V : ℝ) + cf K)) := by
   haveI : Module.Finite (𝓞 K) N := Module.Finite.iff_fg.2 hN

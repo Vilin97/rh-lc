@@ -9,7 +9,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Automorphic
 open NumberField MeasureTheory GlobalTheory.AutomorphicL2Unitary GlobalTheory.DiscreteSum GlobalTheory.UnitaryBC GlobalTheory.DiscSpec GlobalTheory.CuspRep GlobalTheory.CuspRep.CuspidalL2GL
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.V.KernelIndexFullLattice
 
-private theorem measurableSet_band' (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) :
+private theorem measurableSet_band' (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) :
     MeasurableSet (band E a) := by
   have hc : Continuous fun g : GA E a => (detModule E a g : ℝ) :=
     continuous_subtype_val.comp continuous_detModule

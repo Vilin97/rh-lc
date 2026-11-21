@@ -10,7 +10,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CompanionTheory.CTFin Matrix
 
 noncomputable section
 namespace GlobalTheory.CompanionTheory.CTFin.Slice1.Height
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 theorem norm_one_le : ‖(1 : Cinf E)‖ ≤ 1 := by
   exact (pi_norm_le_iff_of_nonneg zero_le_one).2 fun i => by simp
@@ -51,7 +51,7 @@ theorem height_lev_le (y : GL (Fin r) (Cinf E)) :
 
 end GlobalTheory.CompanionTheory.CTFin.Slice1.Height
 
-theorem GlobalTheory.CompanionTheory.CTFin.Slice1.height_lev_mul_le : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (c : GL (Fin (r + s)) (Cinf E)), ∃ B : ℝ, 0 ≤ B ∧ ∀ y : GL (Fin r) (Cinf E), height (lev (Cinf E) r s (y, 1) * c) ≤ B * height y := by
+theorem GlobalTheory.CompanionTheory.CTFin.Slice1.height_lev_mul_le : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) (c : GL (Fin (r + s)) (Cinf E)), ∃ B : ℝ, 0 ≤ B ∧ ∀ y : GL (Fin r) (Cinf E), height (lev (Cinf E) r s (y, 1) * c) ≤ B * height y := by
   intro E _ _ _ r s c
   have hb : 0 ≤ GlobalTheory.CompanionTheory.GrowthConv.bnd c := by
     unfold GlobalTheory.CompanionTheory.GrowthConv.bnd

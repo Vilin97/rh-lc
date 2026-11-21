@@ -23,7 +23,7 @@ abbrev glL : Submodule ℝ (Matrix (Fin a) (Fin a) (Cinf E)) := ⊤
 
 theorem glH : IsExpLieAlgebra (glG E a) (glL E a) := isExpLieAlgebra_top
 
-variable {E a} [IsTotallyComplex E]
+variable {E a} [_root_.NumberField.IsTotallyComplex E]
 
 def glRes (φ : GA E a → ℂ) (x : GA E a) : glG E a → ℂ := fun y => φ (x * infGL E a y.1)
 

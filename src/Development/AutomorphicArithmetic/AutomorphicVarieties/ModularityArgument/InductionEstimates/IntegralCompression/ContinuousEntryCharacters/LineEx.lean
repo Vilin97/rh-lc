@@ -22,7 +22,7 @@ open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial UpperTheory.V.Z.Invariant
 open scoped ComplexConjugate Classical InnerProductSpace
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.lineEx :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ →
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ →
       ∀ (μ : Measure U4) (e : ι → U4 → ℂ) n q n' q' (x : ι → U4), Haar4 μ → ExtP μ e n q n' q' x →
       (∀ i, ∃ v ∈ τ₁, C.Pi μ₂ i (n i) (q i) v ≠ 0) → (∀ i, ∃ v ∈ τ₂, C.Pi μ₂ i (n' i) (q' i) v ≠ 0) →
       ∀ S : Finset (Pl K), SphOff μ₂ τ₁ S → SphOff μ₂ τ₂ S →

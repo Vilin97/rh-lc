@@ -20,9 +20,9 @@ namespace PositivityTheory.AdelicQuotientData
 
 namespace QORT
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem la_ratGL_inj : Function.Injective (ratGL E k) := by
   intro a b e
   ext i j

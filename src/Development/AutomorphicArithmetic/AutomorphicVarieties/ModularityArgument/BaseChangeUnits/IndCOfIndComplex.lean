@@ -41,7 +41,7 @@ private theorem infOf_ne {m m' : Fin 2 → ℤ} (h : Function.Injective ![m 0, m
   · exact absurd (@h 3 0 h2) (by decide)
 
 open UpperTheory.CBC UpperTheory.CBC.SConjSpaceCAux in
-private theorem not_conjIso {K M : Type} [Field K] [NumberField K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M]
+private theorem not_conjIso {K M : Type} [Field K] [NumberField K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Algebra K M]
     [IsGalois K M] (π : CuspSub M 2) (hm : MixWtC K π) : ¬ ∀ σ : M ≃ₐ[K] M, (Cusp.cx π).ConjIso σ.toRingEquiv := by
   intro h
   obtain ⟨φ⟩ : Nonempty (K →+* ℂ) := inferInstance

@@ -36,7 +36,7 @@ private theorem row_map {R : Type} [CommRing R] (f : Ad E →+* R) (γ : GL (Fin
   rw [map_mul]
   rfl
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private theorem norm_pInf (x : Ad E) (w : InfinitePlace E) : ‖pInf E x w‖ = ‖x.1 w‖ :=
   (InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _) (x.1 w)

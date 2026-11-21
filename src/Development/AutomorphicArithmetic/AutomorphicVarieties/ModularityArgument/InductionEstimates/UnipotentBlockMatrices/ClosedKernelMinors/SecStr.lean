@@ -14,7 +14,7 @@ open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Adel PositivityTheory.Rg
 open scoped ENNReal NumberField.AdeleRing InnerProductSpace ComplexConjugate
 open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial
 
-private theorem secStr_side {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} (μ₂ : Measure (G1 K 2))
+private theorem secStr_side {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} (μ₂ : Measure (G1 K 2))
     [μ₂.IsHaarMeasure] (τ : Submodule ℂ (L2 μ₂)) (D : TypeDat K n) (hτ : CuspIrr μ₂ τ) (ι : G1 K 2 →* G1 K n)
     (hι : Continuous ι) (hιK : ∀ x ∈ KG K 2, ι x ∈ KG K n) (hK : IsCompact (KG K n : Set (G1 K n))) :
     ∃ E : Submodule ℂ (G1 K 2 → ℂ), FiniteDimensional ℂ E ∧ (∀ φ ∈ E, Rd τ φ) ∧
@@ -72,7 +72,7 @@ private theorem secStr_side {K : Type} [Field K] [NumberField K] [IsTotallyCompl
   group
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.secStr :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ →
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ →
       ∃ E₁ E₂ : Submodule ℂ (G1 K 2 → ℂ), FiniteDimensional ℂ E₁ ∧ FiniteDimensional ℂ E₂ ∧ (∀ φ ∈ E₁, Rd τ₁ φ) ∧ (∀ φ ∈ E₂, Rd τ₂ φ) ∧
         ∀ f : G1 K (2 + 2) → ℂ, Continuous f → D.Fix f → Slices τ₁ τ₂ f → ∀ k ∈ KG K (2 + 2),
           (∀ m₂, (fun m₁ => f (lv m₁ m₂ 0 * k)) ∈ E₁) ∧ ∀ m₁, (fun m₂ => f (lv m₁ m₂ 0 * k)) ∈ E₂ := by

@@ -19,9 +19,9 @@ namespace RhoSigmaFinite
 
 set_option synthInstance.maxHeartbeats 400000
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem uu_eq_one {u : GA E k} {j : ℕ} (hj : k ≤ j) (hu : UU j u) : u = 1 :=
   Units.ext <| Matrix.ext fun i c => by rw [hu.2.2 i c (by omega), Units.val_one]
 
@@ -29,16 +29,16 @@ theorem uu_eq_one {u : GA E k} {j : ℕ} (hj : k ≤ j) (hu : UU j u) : u = 1 :=
 variable (E k) in
 def rho : Measure (GA E k) := Measure.sum fun ξ : RowT E k k => Measure.dirac (ratGL E k (gam ξ))
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem rho_sFinite [Countable (RowT E k k)] : SFinite (rho E k) := by
   rw [rho]; infer_instance
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem lint_rho (F : GA E k → ℝ≥0∞) : ∫⁻ r, F r ∂rho E k = ∑' ξ : RowT E k k, F (ratGL E k (gam ξ)) := by
   rw [rho, lintegral_sum_measure]
   simp only [lintegral_dirac]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem int_rho (Φ : GA E k → ℂ) (hΦ : Measurable Φ) (g : GA E k) :
     ∫ r, Φ (r * g) ∂rho E k = sumF Φ g := by
   by_cases hi : Integrable (fun r => Φ (r * g)) (rho E k)

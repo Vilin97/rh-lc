@@ -29,7 +29,7 @@ section Core
 open NumberField.mixedEmbedding NumberField.InfinitePlace MeasureTheory
 open scoped ENNReal NNReal nonZeroDivisors
 
-theorem mk_lt (K : Type) [Field K] [NumberField K] [IsTotallyComplex K]
+theorem mk_lt (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
     (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (g : InfinitePlace K → ℝ) (hg : ∀ w, 0 < g w)
     (h : (FractionalIdeal.absNorm I.1 : ℝ) * (2:ℝ) ^ nrComplexPlaces K * Real.sqrt |(discr K : ℝ)| <
       Real.pi ^ nrComplexPlaces K * ∏ w, g w ^ 2) :
@@ -80,7 +80,7 @@ end Core
 
 section Line
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] [AddCommGroup V]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V]
   [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι]
 
 theorem muDef_line_eq (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)

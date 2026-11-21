@@ -9,7 +9,7 @@ open NumberField IsDedekindDomain MeasureTheory Formalism.L2.Host GlobalTheory.C
 
 namespace GlobalTheory.CuspRep
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem commute_cap_of_commute_Eop (τ : E →+* ℂ) (u : ℂ) (z : Module.End ℂ (Sm E a))
     (h : ∀ i j, Commute (Eop τ i j) z) : Commute (cap τ u) z := by

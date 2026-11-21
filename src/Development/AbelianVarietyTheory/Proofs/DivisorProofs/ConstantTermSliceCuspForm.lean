@@ -141,10 +141,10 @@ section Specific
 
 open GlobalTheory.LeviGA GlobalTheory.SliceTwo
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a r : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a r : ℕ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiff_mulL {n : ℕ} :
     ContDiff ℝ ∞ (fun p : Lie E n × Lie E n => toL (Matrix.of p.1 * Matrix.of p.2)) := by
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => ?_
@@ -154,7 +154,7 @@ theorem contDiff_mulL {n : ℕ} :
       ((contDiff_apply_apply ℝ k j).comp contDiff_snd)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiff_blkMat_entry (hr : r ≤ a) (i k : Fin a) :
     ContDiff ℝ ∞ (fun x : Lie E (a - r) => blkMat (Cinf E) hr (1, Matrix.of x) i k) := by
   change ContDiff ℝ ∞ (fun x : Lie E (a - r) => Matrix.fromBlocks (1 : Matrix (Fin r) (Fin r) (Cinf E)) 0 0
@@ -166,19 +166,19 @@ theorem contDiff_blkMat_entry (hr : r ≤ a) (i k : Fin a) :
   · simp only [Matrix.fromBlocks_apply₂₂, Matrix.of_apply]; exact contDiff_apply_apply ℝ i k
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def blkA (hr : r ≤ a) (κ : Kinf E a) (x : Lie E (a - r)) : Lie E a :=
   toL (blkMat (Cinf E) hr (1, Matrix.of x) * κ.1)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiff_blkA (hr : r ≤ a) (κ : Kinf E a) : ContDiff ℝ ∞ (blkA hr κ) := by
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => ?_
   change ContDiff ℝ ∞ fun x : Lie E (a - r) => ∑ k, blkMat (Cinf E) hr (1, Matrix.of x) i k * κ.1 k j
   exact ContDiff.sum fun k _ => (contDiff_blkMat_entry hr i k).mul contDiff_const
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem blkA_mem (hr : r ≤ a) (κ : Kinf E a) {x : Lie E (a - r)} (hx : x ∈ invSet E (a - r)) :
     blkA hr κ x ∈ invSet E a := by
   have h1 : IsUnit ((1 : Matrix (Fin r) (Fin r) (Cinf E)), Matrix.of x) := Prod.isUnit_iff.2 ⟨isUnit_one, hx⟩
@@ -222,7 +222,7 @@ section Local
 
 open GlobalTheory.LeviGA GlobalTheory.SliceTwo
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a r : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a r : ℕ}
 
 theorem eventually_chart_eq (φ : Sm E a) (hlev : IsOpen {k | finRep E a k φ = φ}) (G : GA E a)
     (u₀ : BlockIx a r → Ad E) :
@@ -290,7 +290,7 @@ theorem continuousAt_iteratedFDeriv (φ : Sm E a) (hlev : IsOpen {k | finRep E a
 
 end Local
 
-theorem slice_mem_Sm : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a r : ℕ) (hr : r ≤ a)
+theorem slice_mem_Sm : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a r : ℕ) (hr : r ≤ a)
     [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)] (μ : Measure (BlockIx a r → Ad E))
     (𝓕 : Set (BlockIx a r → Ad E)), μ.IsAddHaarMeasure → IsAddFundamentalDomain (ratN E a r) 𝓕 μ → μ 𝓕 = 1 →
     ∀ φ : Sm E a, IsAutForm φ → ∀ (m₁ : GA E r) (t : GL (Fin a) (Af E)) (κ : Kinf E a),

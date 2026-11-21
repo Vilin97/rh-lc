@@ -93,7 +93,7 @@ private theorem det_gram_re_nonneg' {K : Type} [Field K] [NumberField K] [StarRi
   rw [← gram_eq_mul] at hS
   exact (Complex.le_def.mp hS.det_nonneg).1
 
-theorem prod_norm_gramR_le (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+theorem prod_norm_gramR_le (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     (d j : ℕ) (H : Matrix (Fin d) (Fin d) K) (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ)
     (hR : IsRatHerm (cmMax K) H X) (e : Fin j → Fin d → K) :
     ∏ v : InfinitePlace K, ‖v.embedding (gramR H e)‖ ≤

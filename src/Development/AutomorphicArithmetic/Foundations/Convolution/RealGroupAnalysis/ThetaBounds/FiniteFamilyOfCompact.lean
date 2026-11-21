@@ -64,7 +64,7 @@ private theorem finite_family_of_compact {X T V : Type} [TopologicalSpace X] [Ad
     rw [smul_smul, div_mul_cancel₀ _ hne]
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.omFin :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), OmFin W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), OmFin W := by
   intro F E _ _ _ _ _ _ _ D W φ hφ
   obtain ⟨hKc, -⟩ := iwa F
   obtain ⟨U, -, hfd, hmem⟩ := (fockSt F E D W).om φ hφ (KK F) hKc fun k hk => hk.1

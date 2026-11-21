@@ -84,7 +84,7 @@ private theorem decay_of_form {K : Type} [Field K] [NumberField K] {n : ℕ} (Φ
     _ = C := by rw [mul_assoc, inv_mul_cancel₀ (pow_pos hpos N).ne', mul_one]
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.cuspIrr_kFinite_rep_eq_centralCuspForm :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ : Submodule ℂ (L2 μ₂)), CuspIrr μ₂ τ → ∀ φ : G1 K 2 → ℂ, Continuous φ → (∃ v ∈ τ, Reps μ₂ v φ) →
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ : Submodule ℂ (L2 μ₂)), CuspIrr μ₂ τ → ∀ φ : G1 K 2 → ℂ, Continuous φ → (∃ v ∈ τ, Reps μ₂ v φ) →
       FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : KG K 2 => fun m => φ (m * k))) →
       Rd τ φ ∧ ∃ Φ : cuspForms K 2, Φ ∈ centralCuspForms K 2 ∧ (∀ m : G1 K 2, Φ.1 (m : AdelicGLn.AdelicGL K 2) = φ m) ∧
         ((cuspToL2 μ₂ Φ : cuspidalL2 μ₂) : L2 μ₂) ∈ τ := by

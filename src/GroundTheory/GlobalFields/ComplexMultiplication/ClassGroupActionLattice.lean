@@ -56,7 +56,7 @@ def cmRingEquiv : 𝓞 K ≃+* cmRing σ :=
 
 section Quadratic
 
-variable (hK : finrank ℚ K = 2) [IsTotallyComplex K]
+variable (hK : finrank ℚ K = 2) [_root_.NumberField.IsTotallyComplex K]
 include hK
 
 theorem exists_rat_eq_of_im_eq_zero {x : K} (hx : (σ x).im = 0) : ∃ q : ℚ, algebraMap ℚ K q = x := by
@@ -108,7 +108,7 @@ theorem exists_ringOfIntegers_not_rat : ∃ θ : 𝓞 K, ∀ q : ℚ, algebraMap
   have := Subalgebra.bot_eq_top_iff_finrank_eq_one.mp htop
   omega
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 theorem card_chooseBasisIndex (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) :
     Fintype.card (Free.ChooseBasisIndex ℤ I) = 2 := by
   rw [← hK, ← finrank_eq_card_basis (basisOfFractionalIdeal K I)]
@@ -116,13 +116,13 @@ theorem card_chooseBasisIndex (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) :
 def idealBasis (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) : Basis (Fin 2) ℚ K :=
   (basisOfFractionalIdeal K I).reindex (Fintype.equivFinOfCardEq (card_chooseBasisIndex hK I))
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 theorem mem_span_idealBasis {I : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {x : K} :
     x ∈ Submodule.span ℤ (Set.range (idealBasis hK I)) ↔ x ∈ (I : FractionalIdeal (𝓞 K)⁰ K) := by
   rw [idealBasis, Basis.range_reindex]
   exact mem_span_basisOfFractionalIdeal K
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 theorem idealBasis_mem (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (i : Fin 2) :
     idealBasis hK I i ∈ (I : FractionalIdeal (𝓞 K)⁰ K) :=
   (mem_span_idealBasis hK).1 (Submodule.subset_span ⟨i, rfl⟩)

@@ -40,7 +40,7 @@ private theorem entries {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (
     rw [he]
 
 private theorem step {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (O : Ops F) (k : G1 F)
+    [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (O : Ops F) (k : G1 F)
     (w : InfinitePlace F) (i j : Fin 4) (s : ℂ) (hs : s * s = -1)
     (hc : cw w (k 1 0) = -cw w (k 0 1)) (he : cw w (k 1 1) = cw w (k 0 0)) (φ : S4 F)
     (h1 : O.d w i φ = s • O.p D.δ w j φ) (h2 : O.d w j φ = s • O.p D.δ w i φ) :
@@ -71,7 +71,7 @@ private theorem scal {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (δ 
   · linear_combination (4 * (Real.pi : ℂ) * cw w (rt δ)) * hI
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.vacOm :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (k : G1 F), InfOrth k → ∀ φ ∈ Vac D.δ, W.Om k φ ∈ Vac D.δ := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (k : G1 F), InfOrth k → ∀ φ ∈ Vac D.δ, W.Om k φ ∈ Vac D.δ := by
   intro F E _ _ _ _ _ _ _ D W k hk φ hφ
   obtain ⟨O⟩ := opsEx F
   have hv := vacAnn F D.δ O φ hφ

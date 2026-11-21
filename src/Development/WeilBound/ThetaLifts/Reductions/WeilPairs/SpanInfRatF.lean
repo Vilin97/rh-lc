@@ -413,7 +413,7 @@ theorem cw_cw (B : Base F E) (w : InfinitePlace F) (z : ℂ) : cw B w (cw B w z)
 theorem wE_comap (B : Base F E) (w : InfinitePlace F) : (wE B w).comap (algebraMap F E) = w := by
   rw [wE, InfinitePlace.comap_mk, (B.emb w).2, InfinitePlace.mk_embedding]
 
-def Lm (B : Base F E) [IsTotallyComplex E] : mixedEmbedding.mixedSpace E →ₗ[ℝ] (InfinitePlace F → ℂ) :=
+def Lm (B : Base F E) [_root_.NumberField.IsTotallyComplex E] : mixedEmbedding.mixedSpace E →ₗ[ℝ] (InfinitePlace F → ℂ) :=
   LinearMap.pi fun w => (cw B w).comp ((LinearMap.proj (R := ℝ) (φ := fun _ : {W : InfinitePlace E // W.IsComplex} => ℂ)
     ⟨wE B w, IsTotallyComplex.isComplex _⟩).comp (LinearMap.snd ℝ _ _))
 

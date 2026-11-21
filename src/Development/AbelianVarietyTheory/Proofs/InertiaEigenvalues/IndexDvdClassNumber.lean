@@ -118,7 +118,7 @@ open Neutral.B1 ReciprocityTheory.Neutral.Bridge.HCFR Formalism.L2.Host GlobalTh
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
 
-theorem eq_one_of_class [IsTotallyComplex E] {art : Ideles E →* Gab E Ω} (ha : IsGlobalArtin art)
+theorem eq_one_of_class [_root_.NumberField.IsTotallyComplex E] {art : Ideles E →* Gab E Ω} (ha : IsGlobalArtin art)
     {B : Type} [CommGroup B] [TopologicalSpace B] [DiscreteTopology B] (φ : G E Ω →* B) (hφ : Continuous φ)
     (A : HeightOneSpectrum (𝓞 E) → ValuationSubring Ω) (hA : ∀ v, IsPlaceOver (A v) v)
     (hI : ∀ v, ∀ σ ∈ Ine (F := E) (A v), φ σ = 1) (σ : G E Ω)

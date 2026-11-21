@@ -12,7 +12,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 open GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.V.Cm
 
 theorem UpperTheory.ConvolutionTheory.BW.cuspUmg :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.CuspUmg E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.CuspUmg E := by
   intro E _ _ _ n f hf
   refine ⟨⟨hf.1.isLeftInvariant, level_of hf.1.isSmooth hf.1.isKFinite, ?_⟩, hf.2⟩
   obtain ⟨C₀, N, hC₀⟩ := hf.1.hasModerateGrowth

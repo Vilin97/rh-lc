@@ -11,7 +11,7 @@ open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspR
 open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Fo
 open scoped Classical
 
-theorem UpperTheory.ConvolutionTheory.R2.Fo.capOf : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), (∀ O, LieLift O W M π) → (∀ O, MoveE O W M π) → St.Cap W M π := by
+theorem UpperTheory.ConvolutionTheory.R2.Fo.capOf : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), (∀ O, LieLift O W M π) → (∀ O, MoveE O W M π) → St.Cap W M π := by
   intro F E _ _ _ _ _ _ _ D W M π h1 h2 τ m hm u Φ hΦ
   obtain ⟨O⟩ := opsEx F
   obtain ⟨Λ, hΛ⟩ := lamEx F E D W M π

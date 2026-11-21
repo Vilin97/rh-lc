@@ -84,7 +84,7 @@ private theorem expo_intR {χ : HChar E} {n : (E →+* ℂ) → ℤ} (h : IsAlgP
   · rw [e, Pi.single_eq_same]
   · simp [Pi.single_eq_of_ne e]
 end Real
-private theorem expo_intC {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {χ : HChar E} {n : (E →+* ℂ) → ℤ}
+private theorem expo_intC {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {χ : HChar E} {n : (E →+* ℂ) → ℤ}
     (h : IsAlgPos χ n) (τ : E →+* ℂ) : expo χ τ = n τ := by
   refine (GlobalTheory.CuspRep.InfType.expo_of_infType E χ).1 n (fun k => h k fun φ => ?_) τ
   exact absurd (InfinitePlace.isReal_mk_iff.2 (ComplexEmbedding.isReal_iff.2 (RingHom.ext fun x => Complex.conj_ofReal (φ x))))

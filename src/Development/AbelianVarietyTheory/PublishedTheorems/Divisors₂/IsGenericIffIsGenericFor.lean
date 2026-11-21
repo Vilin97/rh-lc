@@ -83,7 +83,7 @@ namespace GlobalTheory.Published
 open GlobalTheory.Whittaker
 
 def CuspidalGeneric : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (π : CuspSub E a)
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (π : CuspSub E a)
     (w : HeightOneSpectrum (𝓞 E)) (ψ : AddChar (w.adicCompletion E) Circle), Continuous ψ → ψ ≠ 1 →
     GlobalTheory.Whittaker.IsGeneric ψ (π.locRep w)
 

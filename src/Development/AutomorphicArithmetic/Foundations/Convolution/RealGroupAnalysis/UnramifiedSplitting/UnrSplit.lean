@@ -19,7 +19,7 @@ open private satLocFree from Development.AutomorphicArithmetic.AutomorphicVariet
 open private UpperTheory.V.Af.RealLocalComponent.exists_comp UpperTheory.V.Af.RealLocalComponent.isotypic from Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.LocCompR
 
 theorem UpperTheory.ConvolutionTheory.R2.H.unrSplit :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ThetaLiftTrivialOrbitTermsVanish W M π → ∀ Q : CuspSub E 2, Q.V ≤ span W M π →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ThetaLiftTrivialOrbitTermsVanish W M π → ∀ Q : CuspSub E 2, Q.V ≤ span W M π →
       ∀ (v : P F) (w : P E), SplitAt v w → ∀ B, π.HasSat v B → (CG.mk Q).HasSat w B := by
   intro F E _ _ _ _ _ _ _ D W M π hN Q hQ v w hs B hB
   obtain ⟨hq, i, hc, hx, hv⟩ := hs

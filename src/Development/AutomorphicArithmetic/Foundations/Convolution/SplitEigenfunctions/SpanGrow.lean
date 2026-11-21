@@ -160,7 +160,7 @@ end SlopeTestRemainingChoices
 
 section Span
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {D : Dat ℚ E} (W : Weil D) (M : Meas ℚ)
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {D : Dat ℚ E} (W : Weil D) (M : Meas ℚ)
 
 private theorem mg (π : TR.CuspSub ℚ 2) {Φ : Sm E 2} (hΦ : Φ ∈ span W M π) : HasModerateGrowth Φ.1 := by
   induction hΦ using Submodule.span_induction with

@@ -32,7 +32,7 @@ theorem continuous_mixedSymm : Continuous (InfiniteAdeleRing.ringEquiv_mixedSpac
 theorem continuous_infIdele : Continuous (infIdele E) :=
   Continuous.units_map _ (continuous_id.prodMk continuous_const)
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def cplxUnit : ({w : InfinitePlace E // w.IsComplex} → ℂˣ) →* (mixedSpace E)ˣ where
   toFun z := ⟨((fun _ => 1), fun w => (z w : ℂ)), ((fun _ => 1), fun w => ((z w)⁻¹ : ℂˣ)),
@@ -94,7 +94,7 @@ theorem coe_algebraMap (F : Type) [Field F] [NumberField F] [Algebra F E] (a : �
 
 end Loc
 
-theorem inf_trivial_of_trivAt_degOne : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] [Algebra.IsQuadraticExtension F E] (χ : Ideles E →* ℂˣ), IsHeckeChar E χ → (∀ᶠ w in Filter.cofinite, DegOne F w → TrivAt χ w) → ∀ x : (InfiniteAdeleRing E)ˣ, χ (infIdele E x) = 1 := by
+theorem inf_trivial_of_trivAt_degOne : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] [Algebra.IsQuadraticExtension F E] (χ : Ideles E →* ℂˣ), IsHeckeChar E χ → (∀ᶠ w in Filter.cofinite, DegOne F w → TrivAt χ w) → ∀ x : (InfiniteAdeleRing E)ˣ, χ (infIdele E x) = 1 := by
   intro F E _ _ _ _ _ _ _ _ χ hχ hdeg
   classical
   obtain ⟨hunr, hcond, hfact⟩ := GlobalTheory.T.continuous_ideleChar_local_factorization E χ hχ.1

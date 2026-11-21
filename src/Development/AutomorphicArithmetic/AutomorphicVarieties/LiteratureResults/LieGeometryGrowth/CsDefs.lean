@@ -59,7 +59,7 @@ end Geo
 
 section Ad
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def pt (g : GL (Fin a) (Cinf E)) (x : GL (Fin a) (Af E)) : GA E a := infGL E a g * finGL E a x
 
@@ -67,7 +67,7 @@ theorem pt_mul (g h : GL (Fin a) (Cinf E)) (x : GL (Fin a) (Af E)) : pt (g * h) 
   rw [pt, pt, map_mul, mul_assoc, infGL_comm, mul_assoc]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def Bnd (c : ℝ) (h : GL (Fin a) (Cinf E)) : Prop := ‖toL h.val‖ ≤ c ∧ ‖toL (h⁻¹).val‖ ≤ c
 
 structure IsLam (lam : GA E a → ℝ) : Prop where
@@ -110,7 +110,7 @@ def Desc (f : GA E a → ℝ) (Φ : (GL (Fin a) (Af E) ⧸ U) → HV E a → ℝ
   ∀ (g : GL (Fin a) (Cinf E)) (x : GL (Fin a) (Af E)), Φ (x : GL (Fin a) (Af E) ⧸ U) (sand g (hOne E a)) = f (pt g x)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def Zw (Z : (GL (Fin a) (Af E) ⧸ U) → HV E a → HV E a) (g : GL (Fin a) (Cinf E)) (x : GL (Fin a) (Af E)) (p : HV E a) :
     HV E a := sand g⁻¹ (Z (x : GL (Fin a) (Af E) ⧸ U) (sand g p))
 

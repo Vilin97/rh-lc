@@ -12,7 +12,7 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisGeometry�
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Bor
 open scoped TensorProduct
 
-private theorem sum_coord_re {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (z : Cinf E) :
+private theorem sum_coord_re {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (z : Cinf E) :
     ∑ τ : E →+* ℂ, coord τ z = ((2 * ∑ w : InfinitePlace E, (z w).re : ℝ) : ℂ) := by
   have h := congrArg Multiplicative.toAdd
     (GlobalTheory.GKCoh.Tests.prod_coord (M := Multiplicative ℂ) Multiplicative.ofAdd z)

@@ -16,7 +16,7 @@ noncomputable section
 
 namespace GlobalTheory.CuspRep.SplitDeriv
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem hasDerivAt_scalar_exp :
     HasDerivAt (fun t : ℝ =>

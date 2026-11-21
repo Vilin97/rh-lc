@@ -16,7 +16,7 @@ namespace UpperTheory.V.Cm
 
 attribute [local instance 100] LieRing.ofAssociativeRing
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
 
 theorem sm_eq : Sm E a = archSmooth E a :=
   le_antisymm (fun _ h => isArchSmooth_of_mem h) fun _ h => mem_Sm_of h
@@ -161,7 +161,7 @@ theorem Zalg_eq_map : Zalg E a = (Subalgebra.center ℂ (UC E a)).map (uC E a) :
   · rintro ⟨_, ⟨τ, u, rfl⟩, rfl⟩
     exact ⟨τ, u, uC_capC τ u⟩
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem one_tmul_mem_center {z : UEnv E a} (hz : z ∈ (isExpLieAlgebra E a).centerU) :
     (1 : ℂ) ⊗ₜ[ℝ] z ∈ Subalgebra.center ℂ (UC E a) := by
   refine Subalgebra.mem_center_iff.2 fun w => ?_
@@ -171,7 +171,7 @@ theorem one_tmul_mem_center {z : UEnv E a} (hz : z ∈ (isExpLieAlgebra E a).cen
   | add x y hx hy => rw [add_mul, mul_add, hx, hy]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem exists_re_im_center {w : UC E a} (hw : w ∈ Subalgebra.center ℂ (UC E a)) :
     ∃ p ∈ (isExpLieAlgebra E a).centerU, ∃ q ∈ (isExpLieAlgebra E a).centerU, w = (1 : ℂ) ⊗ₜ p + Complex.I ⊗ₜ q :=
   Fb.exists_re_im w fun _ => Subalgebra.mem_center_iff.1 hw _

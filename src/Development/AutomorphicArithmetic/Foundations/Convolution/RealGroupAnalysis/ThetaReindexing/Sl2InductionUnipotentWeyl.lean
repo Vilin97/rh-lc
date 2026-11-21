@@ -76,7 +76,7 @@ end Gen
 section Main
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  [IsTotallyReal F] [IsTotallyComplex E] {D : Dat F E} (W : Weil D)
+  [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] {D : Dat F E} (W : Weil D)
 
 private theorem ratS_coe (g : Matrix.SpecialLinearGroup (Fin 2) F) (i j : Fin 2) :
     (ratS F g).1 i j = rt (g.1 i j) := rfl
@@ -152,7 +152,7 @@ end Main
 end UpperTheory.ConvolutionTheory.R2.D.SL2BruhatGenerators
 
 theorem UpperTheory.ConvolutionTheory.R2.D.row :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ γ (r : Fin 2 → F) φ, ThRow (rt (r 0)) (rt (r 1)) (W.Om (ratS F γ) φ).1 =
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ γ (r : Fin 2 → F) φ, ThRow (rt (r 0)) (rt (r 1)) (W.Om (ratS F γ) φ).1 =
       ThRow (rt ((r ᵥ* γ.1) 0)) (rt ((r ᵥ* γ.1) 1)) φ.1 := by
   intro F E _ _ _ _ _ _ _ D W γ r φ
   exact UpperTheory.ConvolutionTheory.R2.D.SL2BruhatGenerators.good_all W γ r φ

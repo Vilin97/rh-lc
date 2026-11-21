@@ -25,7 +25,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace UpperTheory.V.Af
 
-private theorem of_model (P : Hypotheses₂) {K Ω : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Field Ω] [Algebra K Ω]
+private theorem of_model (P : Hypotheses₂) {K Ω : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field Ω] [Algebra K Ω]
     [IsAlgClosure K Ω] {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ} {n : ℕ} {R r : G K Ω →* GL (Fin n) (Qbar l)}
     {π : CuspSub K n} (hc : Continuous R) (hs : IsSSRep R) (H : ∀ w σ, π.IsLocComp w σ → LocGlob ι R w σ)
     (hr : Continuous r) (ha : AttC ι r π) (w) (σ) (hσ : π.IsLocComp w σ) : LocGlob ι r w σ := by
@@ -42,7 +42,7 @@ private theorem of_model (P : Hypotheses₂) {K Ω : Type} [Field K] [NumberFiel
     (r.comp (Dec (F := K) A).subtype) p (fun g => hp g.1) (h2 O Bw hj).1
   exact ⟨h3.1, by rw [h3.2]; exact (h2 O Bw hj).2⟩
 
-private theorem cls_char {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (χ : HChar E)
+private theorem cls_char {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (χ : HChar E)
     {w : HeightOneSpectrum (𝓞 E)} {σ : SmIrr (GL (Fin 1) (w.adicCompletion E))}
     (h : ((CuspSub.triv E le_rfl).twist χ).IsLocComp w σ) (hχ) :
     IrrGL.of σ.ρ σ.smooth σ.irred = IrrGL.ofChar (χ.loc w) hχ := by
@@ -68,7 +68,7 @@ private theorem cls_char {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
   ext v
   exact hf' g v
 
-private theorem rank_one (P : Hypotheses₂) {K Ω : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Field Ω] [Algebra K Ω]
+private theorem rank_one (P : Hypotheses₂) {K Ω : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field Ω] [Algebra K Ω]
     [IsAlgClosure K Ω] {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {π : CuspSub K 1} (hreg : (CG.mk π).IsRegAlg) :
     ∃ R : G K Ω →* GL (Fin 1) (Qbar l), Continuous R ∧ IsSSRep R ∧ ∀ w σ, π.IsLocComp w σ → LocGlob ι R w σ := by
   obtain ⟨χ, rfl⟩ := RankOne.exists_eq_twist π

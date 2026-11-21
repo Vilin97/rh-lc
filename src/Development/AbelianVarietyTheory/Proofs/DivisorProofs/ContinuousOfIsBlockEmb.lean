@@ -59,7 +59,7 @@ theorem continuous_finGL (d : ℕ) : Continuous (GlobalTheory.CuspRep.finGL E d)
   exact (continuous_const.add (continuous_id.matrix_map hs) :
     Continuous fun x : Matrix (Fin d) (Fin d) (GlobalTheory.CuspRep.Af E) => 1 - GlobalTheory.CuspRep.matN d (GlobalTheory.CuspRep.sFin E) 1 + x.map (GlobalTheory.CuspRep.sFin E))
 
-variable [IsTotallyComplex E] {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r : ℕ}
+variable [_root_.NumberField.IsTotallyComplex E] {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r : ℕ}
   {Xf Yf : Matrix (Fin n) (Fin r) E} {l d : ℕ} {h : l + d ≤ r} {ι : GlobalTheory.CuspRep.GA E d →* GAd σ J}
 
 theorem continuous_of_isBlockEmb (hι : GlobalTheory.BlockForms.IsBlockEmb σ J Xf Yf h ι) : Continuous ι := by
@@ -130,7 +130,7 @@ theorem finGL_mem_finPts (hι : GlobalTheory.BlockForms.IsBlockEmb σ J Xf Yf h 
   rw [hf]
   simp only [map_add (f := _), map_one, RingHom.mapMatrix_apply, Matrix.map_mul, hA', hB', Matrix.mul_zero, Matrix.zero_mul, add_zero]
 
-theorem isOpen_rightInv_finGL : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+theorem isOpen_rightInv_finGL : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
     (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J →
     ∀ (r : ℕ) (Xf Yf : Matrix (Fin n) (Fin r) E), IsWittFrame σ J Xf Yf → ∀ (K : Subgroup (GAd σ J)), IsMaxCpt σ J K →
     ∀ (S : Finset (Fin r)) (l d : ℕ) (h : l + d ≤ r) (ι : GlobalTheory.CuspRep.GA E d →* GAd σ J), GlobalTheory.BlockForms.IsBlockEmb σ J Xf Yf h ι →

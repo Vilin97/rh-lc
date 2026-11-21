@@ -15,7 +15,7 @@ open NumberField MeasureTheory GlobalTheory.AutomorphicL2Unitary GlobalTheory.Cu
 
 namespace PositivityTheory.Rg.Rs.PrAdm
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 def annZ (ψ : Sm E N) : Set (Module.End ℂ (Sm E N)) := {z | z ∈ Zalg E N ∧ z ψ = 0}
 

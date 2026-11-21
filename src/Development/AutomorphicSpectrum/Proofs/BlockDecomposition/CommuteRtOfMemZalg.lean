@@ -12,7 +12,7 @@ open NumberField GlobalTheory.CuspRep MeasureTheory PositivityTheory.Affgl Globa
 
 noncomputable section
 namespace GlobalTheory.CompanionTheory.CTFin.Slice1
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 theorem map_lev {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) (g : GL (Fin r) R × GL (Fin s) R) :
     GeneralLinearGroup.map p (lev R r s g) = lev S r s (GeneralLinearGroup.map p g.1, GeneralLinearGroup.map p g.2) := by
@@ -144,7 +144,7 @@ end
 
 noncomputable section
 namespace GlobalTheory.CompanionTheory.CTFin.Slice1
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 theorem lev_mul_one (m₁ x : GA E r) (m₂ : GA E s) :
     lev (Ad E) r s (m₁ * x, m₂) = lev (Ad E) r s (m₁, m₂) * lev (Ad E) r s (x, 1) := by
@@ -180,7 +180,7 @@ end
 
 noncomputable section
 namespace GlobalTheory.CompanionTheory.CTFin.Slice1
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem commute_rt_of_mem_Zalg {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) (h : GA E a) :
     Commute z (rt E a h) := by

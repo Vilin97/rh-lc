@@ -14,7 +14,7 @@ namespace GlobalTheory.JSW.MirSemi
 
 open GlobalTheory.CuspRep GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def locSpan (S : Finset (HeightOneSpectrum (𝓞 E))) (F₀ : GA E a → ℂ) : Submodule ℂ (GA E a → ℂ) :=
   sInf {V | F₀ ∈ V ∧ (∀ F ∈ V, ∀ h ∈ supS (E := E) (a := a) S, (fun g => F (g * h)) ∈ V) ∧

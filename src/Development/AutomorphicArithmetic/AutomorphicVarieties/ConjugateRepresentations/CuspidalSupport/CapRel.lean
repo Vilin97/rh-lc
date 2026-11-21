@@ -11,7 +11,7 @@ open UpperTheory.V.Af.Fin (emb e1 e2 blk Bdd)
 open GlobalTheory.PRep (fixed)
 open scoped TensorProduct
 
-private theorem slice_cap (h : UpperTheory.V.Cj.S.Slice) {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a n : ℕ}
+private theorem slice_cap (h : UpperTheory.V.Cj.S.Slice) {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a n : ℕ}
     (e : Fin a ↪ Fin n) (g : GA E n) :
     ∃ f : Sm E n →ₗ[ℂ] Sm E a, (∀ ψ x, (f ψ).1 x = ψ.1 (g * emb e x)) ∧
       ∀ t u ψ, cap t u (f ψ) = f (capB e t u ψ) := by

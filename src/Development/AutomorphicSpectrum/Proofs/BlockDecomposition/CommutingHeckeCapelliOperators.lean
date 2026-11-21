@@ -99,17 +99,17 @@ theorem glRel_comp {A : Type} [Ring A] {n p : ℕ} {X : Fin n → Fin n → A} (
   have h := hX (f a) (f b) (f c) (f d)
   simpa only [hf.eq_iff] using h
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem Eop_mem_of_lie {N : ℕ} (S : Subalgebra ℂ (Module.End ℂ (Sm E N))) (hL : ∀ X, lie E N X ∈ S) (τ : E →+* ℂ)
     (p q : Fin N) : Eop τ p q ∈ S :=
   Subalgebra.smul_mem _ (Subalgebra.sub_mem _ (hL _) (Subalgebra.smul_mem _ (hL _) _)) _
 
-def gens (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) : Set (Module.End ℂ (Sm E (r + s))) :=
+def gens (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) : Set (Module.End ℂ (Sm E (r + s))) :=
   Set.range (fun p : (E →+* ℂ) × ℂ => GlobalTheory.CompanionTheory.CTFin.capR r s p.1 p.2) ∪
     Set.range (fun p : (E →+* ℂ) × ℂ => GlobalTheory.CompanionTheory.CTFin.capS r s p.1 p.2)
 
-def capAlg (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) :
+def capAlg (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) :
     Subalgebra ℂ (Module.End ℂ (Sm E (r + s))) :=
   Algebra.adjoin ℂ (gens E r s)
 
@@ -226,7 +226,7 @@ theorem capAlg_leftInv (r s : ℕ) {x : Module.End ℂ (Sm E (r + s))} (hx : x �
     (fun τ p q => GlobalTheory.SpehInfChar.Eop_mem_leftInvAlg _ τ p q)
   exact hc hx F (leftInv_closure F hF) (unip v) (Subgroup.subset_closure ⟨v, rfl⟩) g
 
-theorem exists_coeffs : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ), 0 < r → 0 < s →
+theorem exists_coeffs : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ), 0 < r → 0 < s →
   ∃ (S : Subalgebra ℂ (Module.End ℂ (Sm E (r + s)))) (a b : (E →+* ℂ) → ℕ → Module.End ℂ (Sm E (r + s))) (t : (E →+* ℂ) → ℂ),
     (∀ x ∈ S, ∀ y ∈ S, x * y = y * x) ∧
     (∀ x ∈ S, ∀ (τ : E →+* ℂ) (u : ℂ), Commute (cap (a := r + s) τ u) x) ∧

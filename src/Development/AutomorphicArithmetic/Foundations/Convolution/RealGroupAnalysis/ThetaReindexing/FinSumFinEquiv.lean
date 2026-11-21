@@ -74,7 +74,7 @@ end UpperTheory.ConvolutionTheory.R2.D.SliceScalingEquiv
 
 open UpperTheory.ConvolutionTheory.R2.D.SliceScalingEquiv in
 theorem UpperTheory.ConvolutionTheory.R2.D.rowW :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ (r₀ r₁ : F) φ, ThRow (rt r₀) (rt r₁) (W.Om (wW F) φ).1 = ThRow (rt (-r₁)) (rt r₀) φ.1 := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ (r₀ r₁ : F) φ, ThRow (rt r₀) (rt r₁) (W.Om (wW F) φ).1 = ThRow (rt (-r₁)) (rt r₀) φ.1 := by
   intro F E _ _ _ _ _ _ _ D W r₀ r₁ φ
   have hδ : D.δ ≠ 0 := by
     intro h0

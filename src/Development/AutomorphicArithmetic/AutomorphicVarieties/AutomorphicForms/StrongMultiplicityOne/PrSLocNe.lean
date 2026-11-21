@@ -57,7 +57,7 @@ private theorem pr_wh {f : GA E n → ℂ} {u : GA E n} (hf : ∀ g, f (g * u) =
   unfold whittaker
   simp only [← mul_assoc, hf]
 
-private theorem pr_conv [IsTotallyComplex E] {f : GA E n → ℂ} {k : GL (Fin n) (Af E)} (hf : ∀ g, f (g * finGL E n k) = f g)
+private theorem pr_conv [_root_.NumberField.IsTotallyComplex E] {f : GA E n → ℂ} {k : GL (Fin n) (Af E)} (hf : ∀ g, f (g * finGL E n k) = f g)
     (α : Lie E n → ℂ) (g : GA E n) : conv f α (g * finGL E n k) = conv f α g := by
   unfold Af.StrongMultiplicityOne.conv
   congr 1

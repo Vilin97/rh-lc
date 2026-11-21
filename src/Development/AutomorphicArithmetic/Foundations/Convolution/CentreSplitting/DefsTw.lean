@@ -30,12 +30,12 @@ def TwSummand : Prop :=
     (θ : PositivityTheory.Rg.Tf.Core.Twist μ) (V : Submodule ℂ (LL μ)), IsSummand μ V ↔ IsSummand μ (V.map θ.U.toLinearMap)
 
 def GalCentral : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (σ : E ≃+* E) (s : Ad E ≃+* Ad E),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (σ : E ≃+* E) (s : Ad E ≃+* Ad E),
     UpperTheory.CBC.IsGalAd σ s → (∀ s', UpperTheory.CBC.IsGalAd σ s' → s' = s) ∧
       ∀ t, Matrix.GeneralLinearGroup.map s.toRingHom (centralSection E n t) = centralSection E n t
 
 def ConjCarries : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (θ : PositivityTheory.Rg.Tf.Core.Twist μ) (σ : E ≃+* E) (s : Ad E ≃+* Ad E), UpperTheory.CBC.IsGalAd σ s →
     (∀ g : normOneGL (K := E) (n := n), ((θ.e g : normOneGL (K := E) (n := n)) : GA E n) = Matrix.GeneralLinearGroup.map s.toRingHom (g : GA E n)) →
     ∀ (π π' : CuspSub E n) (V' : Submodule ℂ (LL μ)),
@@ -44,7 +44,7 @@ def ConjCarries : Prop :=
       (Carries μ π' V' ↔ Carries μ π (V'.map θ.U.toLinearMap))
 
 def ConjIff : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (θ : PositivityTheory.Rg.Tf.Core.Twist μ) (σ : E ≃+* E) (s : Ad E ≃+* Ad E), UpperTheory.CBC.IsGalAd σ s →
     (∀ g : normOneGL (K := E) (n := n), ((θ.e g : normOneGL (K := E) (n := n)) : GA E n) = Matrix.GeneralLinearGroup.map s.toRingHom (g : GA E n)) →
     ∀ (π : CuspSub E n) (V : Submodule ℂ (LL μ)), Carries μ π V →

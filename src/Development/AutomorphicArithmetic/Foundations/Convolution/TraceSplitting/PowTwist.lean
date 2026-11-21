@@ -100,7 +100,7 @@ private theorem pow_val {χ : HChar K} {s : ℂ} (h : UpperTheory.ConvolutionThe
 
 section Expo
 
-variable [IsTotallyComplex K]
+variable [_root_.NumberField.IsTotallyComplex K]
 
 private theorem module_infId (u : (Cinf K)ˣ) :
     ((GroundTheory.Global.IdeleGroup.ideleModule K (infId K u)).1 : ℝ) = ∏ w, ‖(u : Cinf K) w‖ ^ 2 := by
@@ -141,7 +141,7 @@ end Expo
 
 section Twist
 
-variable {n : ℕ} [IsTotallyComplex K]
+variable {n : ℕ} [_root_.NumberField.IsTotallyComplex K]
 
 private theorem twist_twist_inv (π : CuspSub K n) (χ : HChar K) : (π.twist χ).twist χ⁻¹ = π := by
   rw [← CuspSub.twist_mul, mul_inv_cancel, CuspSub.twist_one]
@@ -162,7 +162,7 @@ end Twist
 section Lift
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  [IsTotallyComplex F] [IsTotallyComplex E] {n : ℕ}
+  [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem val_pow {χ : HChar F} {χ' : HChar E} {s : ℂ} (h : UpperTheory.ConvolutionTheory.T.IsPow χ s) (h' : UpperTheory.ConvolutionTheory.T.IsPow χ' s)
     (w : HeightOneSpectrum (𝓞 E)) (f : ℕ) (hf : Formalism.ConjugateSelfDual.normV w = Formalism.ConjugateSelfDual.normV (w.under (𝓞 F)) ^ f) :
@@ -222,7 +222,7 @@ private theorem norm_completionMap_unit (v : HeightOneSpectrum (𝓞 F)) (w : Pl
   rw [GroundTheory.Global.IdeleGroup.ideleModule_finiteEmbedding, GroundTheory.Global.IdeleGroup.ideleModule_finiteEmbedding] at h4
   exact h4.symm
 
-variable [IsTotallyComplex F] [IsTotallyComplex E] {n : ℕ}
+variable [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem locDet_map {χ : HChar F} {χ' : HChar E} {s : ℂ} (h : UpperTheory.ConvolutionTheory.T.IsPow χ s) (h' : UpperTheory.ConvolutionTheory.T.IsPow χ' s)
     (v : HeightOneSpectrum (𝓞 F)) (w : PlacesOver E v) (hs : Function.Surjective (completionMap v w.1))
@@ -334,7 +334,7 @@ private theorem module_map (σ : K ≃+* K) (x : (𝔸[K])ˣ) :
     exact (finprod_congr h).trans
       (finprod_comp_equiv (finPerm σ) (f := fun w => ‖(x : 𝔸[K]).2 w‖))
 
-variable [IsTotallyComplex K] {n : ℕ}
+variable [_root_.NumberField.IsTotallyComplex K] {n : ℕ}
 
 private theorem galAd_eq (σ : K ≃+* K) (S : Ad K ≃+* Ad K) (h : UpperTheory.CBC.IsGalAd σ S) : S.toRingHom = CT.adMap σ :=
   UpperTheory.ConvolutionTheory.K.adUnique K σ S.toRingHom h.1 h.2.1

@@ -11,7 +11,7 @@ open UpperTheory.V.Cm
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem posIdele_inf (s : ℝ) (hs : 0 < s) (w : InfinitePlace E) :
     ((posIdele s hs : GroundTheory.Global.IdeleGroup E) : AdeleRing (𝓞 E) E).1 w =
@@ -204,7 +204,7 @@ private theorem comb {S : Set (Pl E)} (d : Dat S n) : Function.Surjective d.idx 
 end UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.ConvolutionTheory.BW.datBasics :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.DatBasics E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.DatBasics E := by
   intro E _ _ _
   refine ⟨fun S r b => blo_sum b, fun S n d => ?_⟩
   obtain ⟨h1, h2, h3, h4⟩ := comb d

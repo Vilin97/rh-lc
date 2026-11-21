@@ -11,7 +11,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrow
 
 namespace GlobalTheory.AutGrowth
 
-theorem word_eq_smoothing_of_reproduced : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem word_eq_smoothing_of_reproduced : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (ν : Measure (Lie E a)) [ν.IsAddHaarMeasure] (α : Lie E a → ℂ), IsTest (invSet E a) α → ∀ φ : Sm E a,
     smoothing ν α φ.1 = φ.1 → ∀ l : List (Lie E a), ∃ β : Lie E a → ℂ, IsTest (invSet E a) β ∧
       ((l.map (lie E a)).prod φ).1 = smoothing ν β φ.1 := by

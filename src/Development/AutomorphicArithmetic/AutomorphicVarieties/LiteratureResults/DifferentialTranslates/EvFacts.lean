@@ -11,7 +11,7 @@ open scoped TensorProduct
 
 namespace UpperTheory.V.Lit.Dr
 
-private theorem ev_comp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a d : ℕ}
+private theorem ev_comp {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a d : ℕ}
     (m : Sm E a ⊗[ℂ] (Fin d → ℂ)) (j : Fin d) :
     (fun g => ev m g j) = (TensorProduct.piScalarRight ℂ ℂ (Sm E a) (Fin d) m j).1 := by
   induction m using TensorProduct.induction_on with

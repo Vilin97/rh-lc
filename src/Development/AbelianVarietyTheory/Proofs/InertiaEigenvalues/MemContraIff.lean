@@ -13,7 +13,7 @@ open NumberField IsDedekindDomain Matrix Formalism.L2.Host GlobalTheory.LFun
 
 namespace GlobalTheory.CuspRep
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem invT_val_eq (g : GA E a) : (invT a (Ad E) g).val = (g.valᵀ)⁻¹ := by
   change (g⁻¹).valᵀ = _

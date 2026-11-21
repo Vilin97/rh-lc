@@ -178,7 +178,7 @@ private theorem un_eq (C : Co K ι) (i : ι) (m : U2) : C.un i m = C.gl i (kC m)
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.coLaws :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι), IsHaarK C.κ₂ ∧ (∀ μ, Haar4 μ → IsHaarK (C.κ₄ μ)) ∧ (∀ i m, C.un i m = C.gl i (kC m)) ∧ (∀ i, Continuous (C.gl i)) ∧
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι), IsHaarK C.κ₂ ∧ (∀ μ, Haar4 μ → IsHaarK (C.κ₄ μ)) ∧ (∀ i m, C.un i m = C.gl i (kC m)) ∧ (∀ i, Continuous (C.gl i)) ∧
       (∀ i a b, C.gl i (a * b) = C.gl i a * C.gl i b) ∧ (∀ i j, i ≠ j → ∀ a b, Commute (C.gl i a) (C.gl j b)) ∧
       (∀ i a (h : FA K 2), Commute (C.gl i a) (fin1 h)) ∧ (∀ i (g : G1 K 2), ∃ a h, g = C.gl i a * h ∧ ∀ b, Commute h (C.gl i b)) ∧
       (∀ g : archGroup K 2, ∃ a : ι → GL (Fin 2) ℂ, ∀ l : List ι, l.Nodup → (∀ i, i ∈ l) → archP K 2 g = (l.map fun i => C.gl i (a i)).prod) ∧

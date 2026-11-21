@@ -39,7 +39,7 @@ def up (w : PlacesOver L v) (s : Multiset (IrrGL (k := v.adicCompletion K))) : M
   (chs s).map fun ξ => ξ.comp (nm w)
 
 def GamSum : Prop :=
-  ∀ (K L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L]
+  ∀ (K L : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] [Algebra K L]
     [IsGalois K L], (Module.finrank K L).Prime → ∀ n : ℕ, 2 ≤ n → ∀ (π : CuspSub K n) (P : CuspSub L n),
     WeakBC (CG.mk π).HasSat (CG.mk P).HasSat →
     ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver L v, Multiset (IrrGL (k := w.1.adicCompletion L))),
@@ -47,14 +47,14 @@ def GamSum : Prop :=
       ∑ w, vals (chs (s' w)) (θ.comp (nm w)) = ∑ w : PlacesOver L v, vals (up w s) (θ.comp (nm w))
 
 def GamOne : Prop :=
-  ∀ (K L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L]
+  ∀ (K L : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] [Algebra K L]
     [IsGalois K L], (Module.finrank K L).Prime → ∀ n : ℕ, 2 ≤ n → ∀ (π : CuspSub K n) (P : CuspSub L n),
     WeakBC (CG.mk π).HasSat (CG.mk P).HasSat →
     ∀ (v : HeightOneSpectrum (𝓞 K)) (w : PlacesOver L v), (∀ u : PlacesOver L v, u = w) →
       ∀ s s', SuppAt π v s → SuppAt P w.1 s' → (chs s').filter (Thru w) = up w s
 
 def GamMixed : Prop :=
-  ∀ (K L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L]
+  ∀ (K L : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] [Algebra K L]
     [IsGalois K L], (Module.finrank K L).Prime → ∀ n : ℕ, 1 ≤ n → ∀ (π : CuspSub K n) (P : CuspSub L n),
     WeakBC (CG.mk π).HasSat (CG.mk P).HasSat →
     ∀ (v : HeightOneSpectrum (𝓞 K)) (w : PlacesOver L v) s s', SuppAt π v s → SuppAt P w.1 s' →

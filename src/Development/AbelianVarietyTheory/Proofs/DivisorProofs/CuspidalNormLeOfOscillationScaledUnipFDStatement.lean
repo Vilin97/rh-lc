@@ -11,7 +11,7 @@ public import GroundTheory.AutomorphicForms.ReductionSiegel
 open NumberField MeasureTheory GlobalTheory.CuspRep GlobalTheory.HCF Topology
 open scoped NumberField.AdeleRing
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.cuspidal_norm_le_of_oscillation_scaledUnipFD : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a r : ℕ), 0 < r → r < a →
+theorem _root_.GlobalTheory.T.cuspidal_norm_le_of_oscillation_scaledUnipFD : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a r : ℕ), 0 < r → r < a →
     ∀ φ : GA E a → ℂ, (∀ γ g, φ (ratGL E a γ * g) = φ g) → IsCuspidal φ → Continuous φ →
     ∀ M : ℕ, 0 < M → ∀ (x : GA E a) (B : ℝ),
       (∀ X ∈ GroundTheory.Automorphic.scaledUnipFD E a r M, ‖φ (unip X * x) - φ x‖ ≤ B) → ‖φ x‖ ≤ B := by

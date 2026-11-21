@@ -731,7 +731,7 @@ namespace DefFam
 variable {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Group G] [Fintype G]
   {Pl0 T J : Type} [Fintype J] (F : DefFam K G Pl0 T J)
 
-theorem GmOf_le [IsTotallyComplex K] {s : ℕ} (h : F.Ok s) (P : Subgroup G) (ψ : P →* Kˣ) (Zs : DefSub F.amb)
+theorem GmOf_le [_root_.NumberField.IsTotallyComplex K] {s : ℕ} (h : F.Ok s) (P : Subgroup G) (ψ : P →* Kˣ) (Zs : DefSub F.amb)
     (t : T) (w : HeightOneSpectrum (𝓞 K)) :
     vw w (GmOf (F.side P ψ Zs) t w) ≤
       (((F.side P ψ Zs).dQ t : ℕ) : ℤ) * vw w ((Fintype.card G * s : ℕ) : K) := by

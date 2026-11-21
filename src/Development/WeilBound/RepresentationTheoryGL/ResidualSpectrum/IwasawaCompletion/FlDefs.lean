@@ -15,7 +15,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace PositivityTheory.Rg.Rs.C3.Fl
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 def wPart (N : ℕ) (w : HeightOneSpectrum (𝓞 E)) : GA E N →* GL (Fin N) (w.adicCompletion E) :=
   Matrix.GeneralLinearGroup.map ((pLoc E w).comp (pFin E))

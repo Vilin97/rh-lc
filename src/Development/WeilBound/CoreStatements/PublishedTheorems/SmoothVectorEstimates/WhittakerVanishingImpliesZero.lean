@@ -68,7 +68,7 @@ structure YOK (ψ : AddChar (Ad E) ℂ) (S : Finset (Pl E)) (Y : Submodule ℂ (
   stable : ∀ g, InS S g → ∀ φ ∈ Y, Rt E a g φ ∈ Y
   good : ∀ φ ∈ Y, Good ψ (a - 1) φ
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def cInf : GA E a →* GL (Fin a) (Cinf E) := GeneralLinearGroup.map (pInf E)
 
@@ -84,8 +84,8 @@ def St (ψ : AddChar (Ad E) ℂ) (S : Finset (Pl E)) (Y Y' : Submodule ℂ (XB E
   ∃ φ ∈ Y, ∃ φ' ∈ Y', SmV (repI E a) φ ∧ SmV (repI E a) φ' ∧ Lev S φ ∧ Lev S φ' ∧ Wh ψ φ 1 ≠ 0 ∧
     ∀ g, Om n m g → Wh ψ φ g = Wh ψ φ' g
 
-def ForE (P : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], ℕ → Prop) : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), P E a
+def ForE (P : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], ℕ → Prop) : Prop :=
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), P E a
 
 def G0 : Prop := ForE fun E _ _ _ a =>
   (∀ y, cInf (infGL E a y) = y) ∧ (∀ w y, cLoc w (infGL E a y) = 1) ∧ (∀ w u, cInf (fl a w u : GA E a) = 1) ∧
@@ -155,7 +155,7 @@ def G8 : Prop := ForE fun E _ _ _ a => ∀ ψ, StdPsi ψ → ∀ (S : Finset (Pl
   ∀ Y : Submodule ℂ (XB E a), YOK ψ S Y → ∀ φ ∈ Y, φ ≠ 0 → SmV (repI E a) φ → Lev S φ →
     (∀ w, w ∉ S → ∃ B, SatFn w B φ) → ∃ φ₁ ∈ Y, SmV (repI E a) φ₁ ∧ Lev S φ₁ ∧ Wh ψ φ₁ 1 = 1
 
-def StandardCharacterExists : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E],
+def StandardCharacterExists : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E],
   ∃ ψ : AddChar (Ad E) ℂ, StdPsi ψ ∧ ∀ᶠ w in cofinite, Cond ψ w
 
 def FourierUniquenessMirabolic : Prop := ForE fun E _ _ _ a => ∀ ψ, StdPsi ψ → ∀ (m : ℕ) (f : GA E a → ℂ), (m < a ∨ m = 0) → Good ψ m f →
@@ -184,7 +184,7 @@ def CuspidalIrreducibleSubrep : Prop := ForE fun E _ _ _ a => ∀ (μ : Measure 
 def SmoNorm : Prop := ForE fun E _ _ _ a => ∀ π π' : CuspSub E a, IsNormalised π → IsNormalised π' →
   SameSat π π' → π = π'
 
-def HeckeCharacterRigidity : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (ω ω' : HChar E),
+def HeckeCharacterRigidity : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (ω ω' : HChar E),
   (∀ᶠ w in cofinite, ω.val w = ω'.val w) → ω = ω'
 
 def Smo : Prop := ForE fun E _ _ _ a => ∀ π π' : CuspSub E a, SameSat π π' → π = π'

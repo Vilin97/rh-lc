@@ -232,7 +232,7 @@ theorem vw_one (w : HeightOneSpectrum (𝓞 K)) : vw w (1 : K) = 0 := by
   | simp only [vw, FractionalIdeal.spanSingleton_one, FractionalIdeal.count_one]
   | simp [vw]
 
-theorem IndefSide.boundsMu [IsTotallyComplex K] (hM : Formalism.DivisorInequality.BoundsMu) (hS : SpecDet) (hR0 : GramDeterminantQuotientMetric)
+theorem IndefSide.boundsMu [_root_.NumberField.IsTotallyComplex K] (hM : Formalism.DivisorInequality.BoundsMu) (hS : SpecDet) (hR0 : GramDeterminantQuotientMetric)
     (hG : LatticeGlue) (hRam : RamBasic) {Bs : DefBase K} {Df : DefSide Bs} {N : IndefNum Bs} (wf : Df.WF)
     (S : IndefSide Df N) (hU : S.toIndefData.Untwisted N)
     (eb : ∀ t, HeightOneSpectrum (𝓞 K) → Fin (Df.dQ t) → Fin (Df.dQ t) → K)

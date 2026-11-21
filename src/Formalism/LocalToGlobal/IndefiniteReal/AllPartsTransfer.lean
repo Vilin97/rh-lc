@@ -85,7 +85,7 @@ def Core : Prop :=
         CoreData (τ s) H₀ χ₀ H χ γ δ c Γ
 
 def Metric : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] [StarRing K]
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [StarRing K]
     (G : Type) [Group G] [Fintype G]
     (V : Type) [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     (ι : Type) [Fintype ι] [DecidableEq ι] (b : Basis ι K V)
@@ -102,7 +102,7 @@ def LiftChar : Prop :=
     ∃ χ' : H →* (𝓞 K)ˣ, ∀ h, (((χ' h : (𝓞 K)ˣ) : 𝓞 K) : K) = ((χ h : Kˣ) : K)
 
 def AllPartsTransfer : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] [StarRing K] (G : Type) [Group G]
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [StarRing K] (G : Type) [Group G]
     [Fintype G] (S : Type) [Fintype S] (T : S → Type) [∀ s, AddCommGroup (T s)]
     [∀ s, Module K (T s)] [∀ s, FiniteDimensional K (T s)] (τ : ∀ s, Representation K G (T s))
     (H₀ : Subgroup G) (χ₀ : H₀ →* (𝓞 K)ˣ) (H : Subgroup G) (χ : H →* (𝓞 K)ˣ),

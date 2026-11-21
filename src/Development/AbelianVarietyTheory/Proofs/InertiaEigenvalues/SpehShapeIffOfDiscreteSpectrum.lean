@@ -33,7 +33,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 section Linear
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {w : HeightOneSpectrum (𝓞 E)}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {w : HeightOneSpectrum (𝓞 E)}
 
 
 theorem isCompact_KGL : IsCompact (KGL w (n := a) : Set (GL (Fin a) (w.adicCompletion E))) :=

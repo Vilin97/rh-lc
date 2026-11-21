@@ -17,7 +17,7 @@ namespace PositivityTheory.RgBcC.Bridge
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem chart_add' (φ ψ : GA E a → ℂ) (g : GA E a) (x : Lie E a) : chart (φ + ψ) g x = chart φ g x + chart ψ g x := by
   unfold chart; split_ifs <;> simp

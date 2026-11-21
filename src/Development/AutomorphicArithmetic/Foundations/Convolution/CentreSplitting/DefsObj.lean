@@ -31,17 +31,17 @@ def SSatUnit : Prop :=
     (∃ B' : Multiset ℂˣ, B = B'.map fun b : ℂˣ => (b : ℂ)) ∧ ∀ B₁, SSat μ V w B₁ → B₁ = B
 
 def SSatIff : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (π : CuspSub E n) (V : Submodule ℂ (LL μ)), Carries μ π V → ∀ (w : Pl E) (B : Multiset ℂ),
     SSat μ V w B ↔ ∃ B' : Multiset ℂˣ, B = B'.map (fun b : ℂˣ => (b : ℂ)) ∧ (UpperTheory.CBC.Cusp.cx π).sat w B'
 
 def SSatEx : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (V : Submodule ℂ (LL μ)), IsSummand μ V → ∀ w : Pl E,
     V ⊓ fixL μ w (GLnLocal.integralGL (w.adicCompletion E) n) ≠ ⊥ → ∃ B, SSat μ V w B
 
 def JGen : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (τ : E →+* ℂ),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (τ : E →+* ℂ),
     (∃ j, IsJ (n := n) τ j) ∧ ∀ j, IsJ (n := n) τ j ↔ ∀ a b, j (HarishChandra.e (a, b)) = Cm.genC τ a b
 
 def CapHC : Prop :=
@@ -50,12 +50,12 @@ def CapHC : Prop :=
       HarishChandra.harishChandraHom z = ∏ k : Fin n, (MvPolynomial.C u + MvPolynomial.X k)
 
 def CapZc : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (τ : E →+* ℂ),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (τ : E →+* ℂ),
     (∀ i : Fin n, zc τ i ∈ Subalgebra.center ℂ (UC E n)) ∧
     ∀ u : ℂ, Cm.capC τ u = u ^ n • (1 : UC E n) + ∑ i : Fin n, u ^ (n - (i + 1)) • zc τ i
 
 def InfZc : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (π : CuspSub E n) (τ : E →+* ℂ) (m : Multiset ℂ),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (π : CuspSub E n) (τ : E →+* ℂ) (m : Multiset ℂ),
     (UpperTheory.CBC.Cusp.cx π).inf τ m ↔ m.card = n ∧ ∀ (i : Fin n), ∀ φ ∈ π.V, Cm.uC E n (zc τ i) φ = m.esymm (i + 1) • φ
 
 def LactSpec : Prop :=
@@ -68,16 +68,16 @@ def DiracSep : Prop :=
     (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (v : LL μ), (∀ β : TI K n, SmoothT β → Oinf μ ν β v = 0) → v = 0
 
 def SInfIff : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (π : CuspSub E n) (V : Submodule ℂ (LL μ)), Carries μ π V → ∀ (τ : E →+* ℂ) (m : Multiset ℂ),
     SInf μ V τ m ↔ (UpperTheory.CBC.Cusp.cx π).inf τ m
 
 def SInfEx : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (V : Submodule ℂ (LL μ)), IsSummand μ V → ∀ τ : E →+* ℂ, ∃! m, SInf μ V τ m
 
 def AtInj : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (V V' : Submodule ℂ (LL μ)), IsSummand μ V → IsSummand μ V' → ∀ (S : Set (Pl E)), S.Finite → ∀ t : Pl E → Multiset ℂ,
     (∀ w ∉ S, SSat μ V w (t w)) → (∀ w ∉ S, SSat μ V' w (t w)) → V = V'
 

@@ -9,7 +9,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrow
 
 namespace GlobalTheory
 
-theorem height_diagonal_le_sum (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (r : Fin a → ℝ)
+theorem height_diagonal_le_sum (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (r : Fin a → ℝ)
     (d : GL (Fin a) (Cinf E)) (hr : ∀ i, 0 < r i)
     (hd : d.val = Matrix.diagonal (fun i => fun _ => (r i : ℂ))) :
     height d ≤ 1 + ∑ i, r i + ∑ i, (r i)⁻¹ := by

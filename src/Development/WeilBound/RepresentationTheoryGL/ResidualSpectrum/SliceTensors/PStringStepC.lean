@@ -14,7 +14,7 @@ open scoped ComplexConjugate
 
 namespace PositivityTheory.Rg.Rs.StrStepC
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 def twL {a₁ a₂ d₁ d₂ : ℕ} (π₁ : CuspSub E a₁) (π₂ : CuspSub E a₂) (x : Fin d₁ → ℂ) (y : Fin d₂ → ℂ) :
     List (Σ a, CG E a) :=
@@ -25,7 +25,7 @@ theorem map_fsum {α β ι : Type} (f : α → β) (s : Finset ι) (g : ι → M
     (∑ i ∈ s, g i).map f = ∑ i ∈ s, (g i).map f :=
   map_sum (Multiset.mapAddMonoidHom f) g s
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem absNorm_ne_zero (w : HeightOneSpectrum (𝓞 E)) : ((Ideal.absNorm w.asIdeal : ℕ) : ℂ) ≠ 0 := by
   have := NumberField.HeightOneSpectrum.one_lt_absNorm w
   exact_mod_cast (by omega : Ideal.absNorm w.asIdeal ≠ 0)
@@ -42,7 +42,7 @@ theorem hinv_absC (w : HeightOneSpectrum (𝓞 E)) (x : ℂ) :
   rw [← h1, ← Complex.cpow_neg, map_neg, neg_neg]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem satTw_string (w : HeightOneSpectrum (𝓞 E)) (z : ℂ) (C B₀ : Multiset ℂˣ) {d : ℕ} (e : Fin d → ℝ)
     (h : C.map (fun b : ℂˣ => (b : ℂ)) = ∑ i, satTw w (e i : ℂ) B₀) :
     satTw w z C = ∑ i, B₀.map fun b : ℂˣ => (b : ℂ) * ((Ideal.absNorm w.asIdeal : ℕ) : ℂ) ^ (-(z + (e i : ℂ))) := by

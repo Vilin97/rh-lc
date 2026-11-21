@@ -11,7 +11,7 @@ open MeasureTheory NumberField GlobalTheory.CuspRep GlobalTheory.CompanionTheory
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.integrable_mul_conj_of_moderateGrowth_of_cuspidal :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r : ℕ) (Φ ψ : Sm E r), 0 < r → Umg Φ → Umg ψ → Cusp ψ.1 →
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r : ℕ) (Φ ψ : Sm E r), 0 < r → Umg Φ → Umg ψ → Cusp ψ.1 →
           Integrable (fun y => onQ Φ.1 y * starRingEnd ℂ (onQ ψ.1 y)) (muQ E r) := by
   intro E _ _ _ r Φ ψ _ hΦ hψ hc
   obtain ⟨N, hN⟩ := hΦ.growth

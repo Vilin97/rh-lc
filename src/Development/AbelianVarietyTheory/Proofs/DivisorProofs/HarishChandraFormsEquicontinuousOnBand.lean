@@ -14,7 +14,7 @@ open NumberField MeasureTheory GlobalTheory.CuspRep GlobalTheory.HCF Topology Po
 
 namespace GlobalTheory.HCF.Equi
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem continuous_infGL' : Continuous (infGL E a) := by
   refine Continuous.units_map _ ?_
@@ -29,24 +29,24 @@ theorem continuous_pInf' : Continuous (pInf E) :=
 theorem continuous_mapInf : Continuous (Matrix.GeneralLinearGroup.map (n := Fin a) (pInf E)) :=
   Continuous.units_map _ (continuous_id.matrix_map continuous_pInf')
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_mapFin : Continuous (Matrix.GeneralLinearGroup.map (n := Fin a) (pFin E)) :=
   Continuous.units_map _ (continuous_id.matrix_map (continuous_snd : Continuous (pFin E)))
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem absDetA_eq (g : GA E a) :
     absDetA g = (GroundTheory.Global.IdeleGroup.ideleModule E (Matrix.GeneralLinearGroup.det g) : ℝ) := by
   unfold absDetA
   exact GroundTheory.Automorphic.Reduction.adeleAbs_units (K := E) _
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem absDetA_mul (g h : GA E a) : absDetA (g * h) = absDetA g * absDetA h := by
   rw [absDetA_eq, absDetA_eq, absDetA_eq, map_mul, map_mul, Positive.val_mul]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_absDetA : Continuous (absDetA (E := E) (a := a)) := by
   have e : (absDetA (E := E) (a := a)) =
       fun g => (GroundTheory.Global.IdeleGroup.ideleModule E (GroundTheory.Automorphic.AdelicGLn.det E a g) : ℝ) :=
@@ -61,7 +61,7 @@ theorem continuous_along (ψ : Sm E a) (g : GA E a) : Continuous fun z : GL (Fin
     h.comp_continuous (Units.continuous_val (M := Matrix (Fin a) (Fin a) (Cinf E)) : _) fun z => val_mem_invSet z
   exact h2.congr fun z => chart_val ψ.1 g z
 
-theorem equicontinuous_band : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem equicontinuous_band : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) → ∀ W : Submodule ℂ (Kinf E a → ℂ),
     FiniteDimensional ℂ W → ∀ X : Set (Module.End ℂ (Sm E a) → ℂ), X.Finite → ∀ N : ℕ, ∀ ε : ℝ, 0 < ε →
     ∃ U ∈ 𝓝 (1 : GA E a), ∀ φ ∈ Submodule.span ℂ (formsGL E a L W X N), ∀ M : ℝ, (∀ h ∈ band E a, ‖φ.1 h‖ ≤ M) →

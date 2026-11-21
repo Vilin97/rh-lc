@@ -27,7 +27,7 @@ open NumberField IsDedekindDomain Formalism.L2.Host
 
 variable {L : Type} [Field L] [NumberField L]
 
-theorem inf_triv [IsTotallyComplex L] (χ : HChar L) {n : ℕ} (hn : 0 < n) (h : χ.OrderDvd n) (k : Lˣ) : χ.inf k = 1 := by
+theorem inf_triv [_root_.NumberField.IsTotallyComplex L] (χ : HChar L) {n : ℕ} (hn : 0 < n) (h : χ.OrderDvd n) (k : Lˣ) : χ.inf k = 1 := by
   have hpow : ∀ x, χ.1 x ^ n = 1 := fun x => by
     have h1 : (χ ^ n).1 x = 1 := by rw [show χ ^ n = 1 from h]; rfl
     simpa using h1

@@ -320,7 +320,7 @@ theorem single_vecMul_unip {ℓ : Fin a} (hℓ : ∀ i, i ≤ ℓ) {u : GA E a} 
   · simpa using h2 j
   · simpa [hj.ne] using h1 ℓ j hj
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem exists_decomp {ℓ : Fin a} (hℓ : ∀ i, i ≤ ℓ) {S : Finset (HeightOneSpectrum (𝓞 E))}
     {J : (FractionalIdeal (𝓞 E)⁰ E)ˣ} (hJ : ∀ v ∈ S, 0 < FractionalIdeal.count E v (J : FractionalIdeal (𝓞 E)⁰ E))
@@ -386,9 +386,9 @@ end Decomposition
 
 section Main
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_finGL : Continuous (finGL E a) := by
   refine Continuous.units_map _ (continuous_const.add (continuous_pi fun i => continuous_pi fun j => ?_))
   exact (continuous_const.prodMk (continuous_apply_apply i j) :

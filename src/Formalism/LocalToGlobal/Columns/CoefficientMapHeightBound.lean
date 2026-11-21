@@ -129,7 +129,7 @@ def dW (lam : DomWeight n) : ℕ := ∑ s, lam.natW s
 def gN (g : ι → GL (Fin n) K) (v : InfinitePlace K) (τ : ι) : ℝ :=
   hsN (((g τ : Matrix (Fin n) (Fin n) K)ᵀ).map v.embedding)
 
-variable [IsTotallyComplex K]
+variable [_root_.NumberField.IsTotallyComplex K]
 
 end Norm
 

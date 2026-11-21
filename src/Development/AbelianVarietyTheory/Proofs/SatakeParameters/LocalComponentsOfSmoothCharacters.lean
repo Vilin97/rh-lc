@@ -53,7 +53,7 @@ end Sph
 
 section Glob
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 end Glob
 

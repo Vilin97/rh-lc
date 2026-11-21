@@ -13,7 +13,7 @@ open NumberField Matrix MeasureTheory GlobalTheory.CuspRep GroundTheory.Global G
 
 namespace GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem invT_invT_gl {R : Type} [CommRing R] (g : GL (Fin a) R) : invT a R (invT a R g) = g := by
   apply Units.ext
@@ -105,7 +105,7 @@ theorem comp_invT_mem_mspanR (π : CuspSub E a) (F : GA E a → ℂ) (hF : F ∈
   rw [← rspan_eq_mspanR] at hF ⊢
   exact (memT F).1 (hle hF)
 
-theorem invT_mem_mspanR_contra : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a)
+theorem invT_mem_mspanR_contra : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CuspSub E a)
     (F : GA E a → ℂ), F ∈ GlobalTheory.JSW.mspanR π → (fun g => F (invT a (Ad E) g)) ∈ GlobalTheory.JSW.mspanR π.contra :=
   fun _ _ _ _ _ π F hF => comp_invT_mem_mspanR π F hF
 

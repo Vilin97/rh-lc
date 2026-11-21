@@ -19,7 +19,7 @@ namespace PositivityTheory.AdelicQuotientData
 
 namespace PRSPole
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem bnd (hJS : GlobalTheory.Published.JacquetShalikaBound) {m : ℕ} (π : CuspSub E m) (hπ : IsNormalised π)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (α : Off E S → Fin m → ℂˣ) (hα : SatOff (CG.mk π) S α) :

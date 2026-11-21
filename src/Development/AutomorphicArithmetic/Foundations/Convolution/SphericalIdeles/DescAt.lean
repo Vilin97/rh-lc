@@ -18,8 +18,8 @@ open scoped ComplexConjugate
 namespace UpperTheory.ConvolutionTheory.T
 
 theorem _root_.UpperTheory.ConvolutionTheory.Sph.descAt (hCI : CI) (hGM : GM.GM) :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-    [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+    [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
     ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure] (θ : Twist μE),
       IsGalTwist σ θ → ∀ (V : Submodule ℂ (LL μE)) Λ t (S₀ : Set (Pl E)), IsSummand μE V →
       V.map (θ.U : LL μE →ₗ[ℂ] LL μE) = V → S₀.Finite → At μE S₀ V Λ t → OffAll F n Λ t → ∀ u₀ : Pl F, GM.Unr E u₀ →

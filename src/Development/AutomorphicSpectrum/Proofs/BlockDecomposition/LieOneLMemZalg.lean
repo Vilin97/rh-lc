@@ -80,9 +80,9 @@ end GlobalTheory.CompanionTheory.CapelliTrace
 
 namespace GlobalTheory.CompanionTheory.CapelliTrace
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 open Classical in
 theorem atEmb_one (τ : E →+* ℂ) : atEmb τ 1 = Pi.single (InfinitePlace.mk τ) 1 := by
   unfold atEmb; split_ifs <;> simp
@@ -111,7 +111,7 @@ end GlobalTheory.CompanionTheory.CapelliTrace
 
 namespace GlobalTheory.CompanionTheory.CapelliTrace
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem sum_Eop (i j : Fin a) : ∑ τ : E →+* ℂ, Eop τ i j = lieS E a i j 1 := by
   set X := ∑ τ : E →+* ℂ, Eop τ i j
@@ -140,7 +140,7 @@ theorem lie_oneL_eq : lie E a (oneL E a) = ∑ τ : E →+* ℂ, ∑ i, Eop τ i
     rw [e, map_sum]
   rfl
 
-theorem lie_oneL_mem_Zalg : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
+theorem lie_oneL_mem_Zalg : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
     lie E a (oneL E a) ∈ Zalg E a := by
   intro E _ _ _ a
   rw [lie_oneL_eq]

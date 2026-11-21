@@ -40,7 +40,7 @@ end Gen
 
 section Cusp
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem op_comm_fin (π : CuspSub E a) (o : Op E a) (ho : ∀ k, o ≠ .fin k) (g : GL (Fin a) (Af E)) (y : π.V) :
     π.op o (π.finPart g y) = π.finPart g (π.op o y) := by
@@ -141,7 +141,7 @@ end GlobalTheory.TwistRamified
 
 namespace GlobalTheory.TwistRamified
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem no_eigvec (p : CuspSub E a) (ha : 1 ≤ a) (η : HChar E) (v : HeightOneSpectrum (𝓞 E)) (hη : ¬ η.UnrAt v)
     {x : p.V} (hx : x ∈ GlobalTheory.PRep.fixed (p.locRep v) (GlobalTheory.LFun.KGL v (n := a))) (hx0 : x ≠ 0) (y : p.V)
@@ -221,7 +221,7 @@ end GlobalTheory.TwistRamified
 
 
 open GlobalTheory.CuspRep in
-theorem GlobalTheory.TwistRamified.twist_ne : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a →
+theorem GlobalTheory.TwistRamified.twist_ne : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a →
     ∀ (π : CG E a) (η : HChar E) (v : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ), π.HasSat v B → ¬ η.UnrAt v →
     π.twist η ≠ π := by
   intro E _ _ _ a ha π η v B hB hη

@@ -14,7 +14,7 @@ open UpperTheory.V.Lit UpperTheory.V.Lit.Geo UpperTheory.V.Lit.Bor UpperTheory.V
 open scoped TensorProduct GlobalTheory.CuspRep.CuspidalL2GL ComplexOrder
 open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
-private noncomputable def ipL {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a} {q n : ℕ}
+private noncomputable def ipL {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a} {q n : ℕ}
     (e : Fin n → Herm E a)
     (H : Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ) →ₗ⋆[ℂ] Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ) →ₗ[ℂ] ℂ) : Co Ξ q →ₗ⋆[ℂ] Co Ξ q →ₗ[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun ω η => ip e H ω η)
@@ -27,7 +27,7 @@ private noncomputable def ipL {E : Type} [Field E] [NumberField E] [IsTotallyCom
     (fun c ω η => by
       simp only [ip, AlternatingMap.smul_apply, map_smul, Finset.smul_sum, RingHom.id_apply])
 
-private theorem ipL_apply {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a} {q n : ℕ}
+private theorem ipL_apply {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a} {q n : ℕ}
     (e : Fin n → Herm E a)
     (H : Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ) →ₗ⋆[ℂ] Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ) →ₗ[ℂ] ℂ) (ω η : Co Ξ q) :
     ipL e H ω η = ip e H ω η := rfl

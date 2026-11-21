@@ -23,7 +23,7 @@ open Classical in
 def SyOf (Df : DefSide Bs) (S : IndefData Df) : Finset (HeightOneSpectrum (𝓞 K)) :=
   S.Tw ∪ (if h : (Function.support fun y => vw y (GmOf Df Bs.μ0 y)).Finite then h.toFinset else ∅)
 
-theorem gm_support_finite [IsTotallyComplex K] {Df : DefSide Bs} (wf : Df.WF) (t : Bs.Tup) :
+theorem gm_support_finite [_root_.NumberField.IsTotallyComplex K] {Df : DefSide Bs} (wf : Df.WF) (t : Bs.Tup) :
     (Function.support fun y => vw y (GmOf Df t y)).Finite := by
   have h := (reduction_lemma_second K Bs.K0 wf.cm Bs.v0 wf.conj (Df.nV t) (Df.dQ t) (Df.HV t) (wf.HV_rat t) (wf.HV_pos t)
     (Df.Pq t) (wf.Pq_surj t) (Df.XQ t) (wf.XQ_quot t) (Df.Mt t) (wf.Mt_lat t) (fun y => ebOf Df t y)
@@ -38,7 +38,7 @@ theorem tw_sub_SyOf (Df : DefSide Bs) (S : IndefData Df) : S.Tw ⊆ SyOf Df S :=
   unfold SyOf
   exact Finset.mem_union_left _ hx
 
-theorem gram_det_unit_outside [IsTotallyComplex K] {Df : DefSide Bs} (wf : Df.WF) (S : IndefData Df) (hH0 : S.H0)
+theorem gram_det_unit_outside [_root_.NumberField.IsTotallyComplex K] {Df : DefSide Bs} (wf : Df.WF) (S : IndefData Df) (hH0 : S.H0)
     (y : HeightOneSpectrum (𝓞 K)) (hy : y ∉ SyOf Df S) : vw y (Df.Gm (ebOf Df) (S.μ y) y) = 0 := by
   unfold SyOf at hy
   rw [dite_eq_left (gm_support_finite wf Bs.μ0)] at hy
@@ -126,7 +126,7 @@ section Inputs
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {m : ℕ}
 
-variable [IsTotallyComplex K] {A : FamIn K G Pl0 T m} {s : ℕ} {P0 : Subgroup G} {ψ0 : P0 →* Kˣ} {P1 : Subgroup G}
+variable [_root_.NumberField.IsTotallyComplex K] {A : FamIn K G Pl0 T m} {s : ℕ} {P0 : Subgroup G} {ψ0 : P0 →* Kˣ} {P1 : Subgroup G}
   {ψ1 : P1 →* Kˣ} {Dc : ∀ Zs : DefSub A.fam.amb, DefCols (A.side P1 ψ1 Zs)} {Sp : ∀ Zs : DefSub A.fam.amb, SPer (Dc Zs)}
   {Zsc : DefSub A.fam.amb → IndefScale A.fam.base} {C CH : ℝ} {Pk : IndefPkg A.fam.amb (faceOf A P0 ψ0 P1 ψ1 Dc Sp Zsc) C CH}
   {Pl : Type} [Fintype Pl] [DecidableEq Pl] {R : RecNums A.fam.base.J Pl} {u : (Dc Pk.Zs).Mem}

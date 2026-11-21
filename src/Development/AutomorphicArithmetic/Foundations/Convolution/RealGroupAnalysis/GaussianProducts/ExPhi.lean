@@ -15,7 +15,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.G
 open scoped Classical ENNReal nonZeroDivisors
 
 theorem UpperTheory.ConvolutionTheory.R2.G.exPhi :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (a : (A F)ˣ), ∀ k ∈ KK F, ∃ φ ∈ Fock D.δ, hat (W.Om (mD a * k) φ).1 ![0, 1, 1, 0] ≠ 0 := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (a : (A F)ˣ), ∀ k ∈ KK F, ∃ φ ∈ Fock D.δ, hat (W.Om (mD a * k) φ).1 ![0, 1, 1, 0] ≠ 0 := by
   intro F E _ _ _ _ _ _ _ D W a k hk
   have H := hatSt F E D W
   have K := fockSt F E D W

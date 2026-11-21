@@ -33,7 +33,7 @@ def prof {E : Type} [Field E] [NumberField E] (x : InfinitePlace E → ℝ) (K :
 
 def BoxSumLattice : Prop :=
   Formalism.SA.C.BoxSum → ∃ C : ℝ, 1 ≤ C ∧
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (aa : FractionalIdeal (𝓞 E)⁰ E)
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (aa : FractionalIdeal (𝓞 E)⁰ E)
       (L : AddSubgroup E) (x : InfinitePlace E → ℝ) (K : ℕ) (Θ a : ℝ),
       aa ≠ 0 → (∀ l ∈ L, l ∈ aa) → (∀ w, 0 ≤ x w) → 3 ≤ K → 1 ≤ a → 2 * a < Θ →
       ∏ w, x w ≤ (a / Θ) ^ Fintype.card (InfinitePlace E) * √(FractionalIdeal.absNorm aa : ℝ) →
@@ -59,7 +59,7 @@ def IdealSizes {E W : Type} [Field E] [NumberField E] (D : TB.Data E W)
 
 def LatticeSumsJoint : Prop :=
   Formalism.SA.C.BoxSum → ∃ C : ℝ, 1 ≤ C ∧
-    ∀ (E W : Type) [Field E] [NumberField E] [IsTotallyComplex E] (D : TB.Data E W)
+    ∀ (E W : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : TB.Data E W)
       (e : Fin D.f ≃ InfinitePlace E) (aaD : ℕ → FractionalIdeal (𝓞 E)⁰ E)
       (aaL : ℕ → ℕ → FractionalIdeal (𝓞 E)⁰ E) (Θ a : ℝ),
       PlacesOf D e → 3 ≤ D.K → 1 ≤ a → 2 * a < Θ → IdealSizes D aaD aaL Θ a →

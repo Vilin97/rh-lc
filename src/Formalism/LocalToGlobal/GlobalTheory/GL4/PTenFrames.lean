@@ -52,7 +52,7 @@ end Gen
 
 section Sum
 
-variable {K : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   {ι : Type} [Fintype ι] {W : Type} [AddCommGroup W] [Module K W]
   {Cl : Type} [Fintype Cl] [DecidableEq Cl] {J0 : Type} [Fintype J0] [DecidableEq J0]
 

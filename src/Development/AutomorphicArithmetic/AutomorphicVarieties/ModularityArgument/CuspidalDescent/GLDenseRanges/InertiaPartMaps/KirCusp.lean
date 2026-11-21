@@ -125,7 +125,7 @@ private theorem denseRange_mapGL {K B : Type} [Field K] [Field B] [TopologicalSp
     rfl
   rw [e]; exact hQO
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private noncomputable def pw (w : HeightOneSpectrum (𝓞 E)) : GA E a →* GL (Fin a) (w.adicCompletion E) :=
   (GeneralLinearGroup.map (pLoc E w)).comp (GeneralLinearGroup.map (pFin E))
@@ -148,7 +148,7 @@ private theorem comm_of_pw (w : HeightOneSpectrum (𝓞 E)) {h : GA E a} (hk : p
   · rw [map_mul, map_mul, pFin_finGL]
     exact LocUniq.comm_locGL w hk u
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 private theorem isMirL_mul {k : Type} [Field k] {p q : GL (Fin a) k} (hp : IsMirL p) (hq : IsMirL q) : IsMirL (p * q) := by
   intro i j hi
   change (p.val * q.val) i j = _
@@ -157,7 +157,7 @@ private theorem isMirL_mul {k : Type} [Field k] {p q : GL (Fin a) k} (hp : IsMir
   simp only [Matrix.one_apply, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
   exact hq i j hi
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 private theorem isMirL_one {k : Type} [Field k] : IsMirL (1 : GL (Fin a) k) := fun _ _ _ => rfl
 
 private def X (w : HeightOneSpectrum (𝓞 E)) : Set (GA E a) := {g | IsMirL (pw w g)}

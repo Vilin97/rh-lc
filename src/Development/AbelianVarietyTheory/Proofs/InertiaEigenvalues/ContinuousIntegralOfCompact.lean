@@ -53,7 +53,7 @@ theorem continuous_integral_of_compact {X Y : Type} [TopologicalSpace X] [Topolo
   rw [div_mul_eq_mul_div, div_lt_iff₀ (by positivity)]
   nlinarith
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem rsHat_zero_eq {ℓ : Fin a} {Φ : (Fin a → Cinf E) → ℂ} (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (η : Fin a → Af E)
     (F F' : Sm E a) (hΦ : IsTest (rowSet E ℓ) Φ) : ∃ c : ℂ, ∀ g : GA E a,
@@ -111,7 +111,7 @@ end GlobalTheory.RSResidue
 
 namespace GlobalTheory.RSResidue
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 end GlobalTheory.RSResidue
 

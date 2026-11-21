@@ -111,7 +111,7 @@ theorem exists_lt_of_finset (s : Finset ℂ) (ρ : ℝ) (h : ∀ z ∈ s, ‖z�
 
 section Cover
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 theorem exists_mem_slab (hS : ∀ t, splitCentre E N t = An.tor E fun _ => t) (hL : latticeGL E N = An.lat E N)
     {ω : Set (GA E N)} {t : ℝ} (ht : 0 < t)

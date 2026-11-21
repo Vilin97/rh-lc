@@ -73,7 +73,7 @@ theorem frame_scale_unit (h : ℕ) (hh : 0 < h) (hF : A.FramesG) (v : InfinitePl
   have : (0 : ℝ) < Real.sqrt h := Real.sqrt_pos.mpr (by exact_mod_cast hh)
   exact_mod_cast this.ne'
 
-theorem levelFacts [IsTotallyComplex K] {D : ℕ} (ι : Matrix (Fin A.Dg) (Fin D) K) (ep : Matrix (Fin A.Dg) (Fin A.Dg) K)
+theorem levelFacts [_root_.NumberField.IsTotallyComplex K] {D : ℕ} (ι : Matrix (Fin A.Dg) (Fin D) K) (ep : Matrix (Fin A.Dg) (Fin A.Dg) K)
     (h : ℕ) (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ) (RR : Submodule (𝓞 K) (Fin D → K))
     (hF : A.FramesG) (hL : A.LatG) (hE : A.EmbAt ι ep h XE) (hS : A.SandAt ι ep h RR) (hh : 0 < h)
     (hne : A.partLat ep ≠ ⊥) :

@@ -15,7 +15,7 @@ namespace UpperTheory.ConvolutionTheory.R2.Fo
 
 section
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 private noncomputable def cwH (w : InfinitePlace F) : A F →+* ℂ :=
   Complex.ofRealHom.comp ((Pi.evalRingHom (fun _ : InfinitePlace F => ℝ) w).comp (TR.pInf F))
@@ -97,7 +97,7 @@ end
 end UpperTheory.ConvolutionTheory.R2.Fo
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.gaussAct :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (h : GL (Fin 2) (A E)), (Matrix.GeneralLinearGroup.map (pInf E) h).val ∈ Matrix.unitaryGroup (Fin 2) (Cinf E) →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (h : GL (Fin 2) (A E)), (Matrix.GeneralLinearGroup.map (pInf E) h).val ∈ Matrix.unitaryGroup (Fin 2) (Cinf E) →
     ∀ v, gauss D.δ (D.act h v) = gauss D.δ v := by
   intro F E _ _ _ _ _ _ _ D h hu v
   have key : ∀ w : InfinitePlace F,

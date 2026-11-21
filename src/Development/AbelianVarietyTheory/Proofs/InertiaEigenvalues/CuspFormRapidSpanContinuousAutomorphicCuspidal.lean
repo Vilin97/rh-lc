@@ -19,7 +19,7 @@ noncomputable section
 
 namespace GlobalTheory.JSW.SpanProps
 
-theorem avg_eq_zero {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {F : GA E a → ℂ}
+theorem avg_eq_zero {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {F : GA E a → ℂ}
     (hcont : Continuous F) (hleft : ∀ γ g, F (ratGL E a γ * g) = F g) (hc : IsCuspidal F)
     (r : ℕ) (hr : 0 < r) (hra : r ≤ a - 1) (g : GA E a) :
     avg (ratV E (UnipotentBlockColumnIndex a r (a - 1))) (fun x => F (blkU x * g)) = 0 := by
@@ -46,7 +46,7 @@ theorem avg_eq_zero {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a
 
 end GlobalTheory.JSW.SpanProps
 
-theorem GlobalTheory.JSW.mspanR_cont_left_avg : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (π : CuspSub E (m + 1))
+theorem GlobalTheory.JSW.mspanR_cont_left_avg : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (π : CuspSub E (m + 1))
     (ω : HChar E), ω.IsUnitary → π.HasCentChar ω → ∀ φ ∈ GlobalTheory.JSW.mspanR π, Continuous φ ∧
     (∀ γ g, φ (ratGL E (m + 1) γ * g) = φ g) ∧
     ∀ r, 0 < r → r ≤ m → ∀ g, avg (ratV E (UnipotentBlockColumnIndex (m + 1) r m)) (fun x => φ (blkU x * g)) = 0 := by

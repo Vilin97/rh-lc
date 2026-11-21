@@ -15,7 +15,7 @@ open Formalism.BasicNotions Formalism.HN Formalism.HermitianLatticesTheory Forma
 
 section Generic
 
-variable {K : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   {ι : Type} [Fintype ι] [DecidableEq ι] (G : ι → Type) [∀ i, CommGroup (G i)] [∀ i, Fintype (G i)]
   [∀ i, DecidableEq (G i)]
 
@@ -149,7 +149,7 @@ theorem sum_inv_mulSingle_zero_iff (i : ι) {M : Type} [AddCommGroup M] (F : (�
     funext fun h => Fintype.sum_equiv (Equiv.inv (G i)) _ _ fun a => by simp [Pi.mulSingle_inv]
   rw [h]
 
-variable [IsTotallyComplex K]
+variable [_root_.NumberField.IsTotallyComplex K]
 
 theorem induced_of_slice (B : HLat K) (hB : B.Good) (hB0 : B.L ≠ ⊥)
     (ρ : (∀ i, G i) →* Module.End K B.V) (W : Submodule K B.V)

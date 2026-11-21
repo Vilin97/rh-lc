@@ -51,7 +51,7 @@ private theorem ext_two {E F H : Type} [NormedAddCommGroup E] [NormedSpace ℂ E
     simp only [mem_setOf_eq] at hx ⊢
     rw [map_smul, map_smul, inner_smul_left, inner_smul_left, hx]
 
-private theorem pure_pair {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2)))
+private theorem pure_pair {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2)))
     [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (hP : Pair μ₂ τ₁ τ₂)
     (D : TypeDat K (2 + 2)) (d d' : ℕ) (A : Line μ τ₁ τ₂ D d) (A' : Line μ τ₂ τ₁ D d') :
     ∃ (c : ℝ) (κ : Measure (KG K (2 + 2))), ∀ (β β' : ℝ → ℂ) (e : Eu d) (e' : Eu d') (u : L (Eu d)) (v : L (Eu d')),

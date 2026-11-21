@@ -93,7 +93,7 @@ private theorem core {s : ℂ} (hs : 4 < s.re) {W c : ℂ} {r a B : ℝ} (hr : r
     _ ≤ a ^ (s.re - 1) * (B * (1 + r ^ 2)⁻¹) := by gcongr
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem ex_X (t : ℝ) : ∃ X, infGL E 2 X = em E (rot t) := by
   have h := infGL_mul_finGL (E := E) (a := 2) (em E (rot t))
@@ -136,7 +136,7 @@ private theorem wo_int {D : Dat ℚ E} {P : CuspSub E 2} {ω : HChar ℚ} {L N :
 end
 
 theorem UpperTheory.has_sum_twisted_zeta_integral_dirichlet_series :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2) (ω χ : HChar ℚ),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2) (ω χ : HChar ℚ),
         CenN P ω → Unit1 ω → (∀ a, (χ.1 a * ω.1 a) ^ 2 = 1) → ∀ (L N : ℕ), ChOk χ L → ∀ φ, admitted D ω φ → Gd D P L N φ → ∀ μ : ℕ → ℂ, (∀ n, 0 < n → n.Coprime N → ∀ r t : ℝ, r ≠ 0 →
           Wo D φ (em E (aE (iy r * pin n) * rot t)) = μ n * Wo D φ (em E (aE (iy r) * rot t))) →
         ∀ s : ℂ, 4 < s.re → ∀ t : ℝ,

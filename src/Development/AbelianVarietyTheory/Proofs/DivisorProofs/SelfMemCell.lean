@@ -13,7 +13,7 @@ namespace GlobalTheory.JSW.MirPatch
 
 open GlobalTheory.CuspRep GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def cell (K : Subgroup (GL (Fin a) (Af E))) (q : GA E a) : Set (GA E a) :=
   {p | ∃ u ∈ NA (E := E) (a := a), ∃ k ∈ K, ∃ y : GL (Fin a) (Cinf E), p = u * q * finGL E a k * infGL E a y}

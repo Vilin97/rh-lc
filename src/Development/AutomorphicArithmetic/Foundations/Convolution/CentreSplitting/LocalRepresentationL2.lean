@@ -48,7 +48,7 @@ end General
 
 section Complex
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
   (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
 
 structure Carries (π : CuspSub E n) (V : Submodule ℂ (LL μ)) : Prop where
@@ -96,33 +96,33 @@ def OrthOrIso : Prop :=
       ∀ g (φ ψ : U), ψ.1 = finRepCusp K n g φ.1 → (T ψ).1 = finRepCusp K n g (T φ).1
 
 def NormIff : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (π : CuspSub E n),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (π : CuspSub E n),
     GlobalTheory.DiscSpec.IsNormalised π ↔ Cm.carrier π ≤ centralCuspForms E n
 
 def ExCusp : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (V : Submodule ℂ (LL μ)), IsSummand μ V → ∃! π : CuspSub E n, Carries μ π V
 
 def ExSummand : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (π : CuspSub E n) (V : Submodule ℂ (LL μ)),
     Carries μ π V ↔ Cm.carrier π ≤ centralCuspForms E n ∧ V = ((Cm.carrier π).map (clsL μ)).topologicalClosure
 
 def ExTwist : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (π : CuspSub E n), 1 ≤ n → ∃ χ : Formalism.L2.Host.HChar E,
       (∃ s : ℂ, ∀ x, ((χ.1 x : ℂˣ) : ℂ) = (((GroundTheory.Global.IdeleGroup.ideleModule E x).1 : ℝ) : ℂ) ^ s) ∧
       ∃ V, Carries μ (π.twist χ) V
 
 def IsoEq : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (π π' : CuspSub E n), π.Iso π' ↔ π = π'
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (π π' : CuspSub E n), π.Iso π' ↔ π = π'
 
 def IsoIff : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (π π' : CuspSub E n) (V V' : Submodule ℂ (LL μ)), Carries μ π V → Carries μ π' V' → (π.Iso π' ↔ V = V')
 
 def LocEmb : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (π : CuspSub E n) (V : Submodule ℂ (LL μ)) (h : Carries μ π V), ∃ J : π.V →ₗ[ℂ] V, Function.Injective J ∧ DenseRange J ∧
       (∀ ψ : Cm.carrier π, (J (Cm.carrierEq π ψ)).1 = clsL μ ψ.1) ∧
       ∀ w g φ, J (π.locRep w g φ) = locOn h.summand w g (J φ)
@@ -134,17 +134,17 @@ def FixedDense : Prop :=
     DenseRange J → ∀ v, (∀ u ∈ U, ρ u v = v) → v ∈ closure (J '' {x | ∀ u ∈ U, τ u x = x})
 
 def SatIff : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (π : CuspSub E n) (V : Submodule ℂ (LL μ)) (h : Carries μ π V) (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ),
     (UpperTheory.CBC.Cusp.cx π).sat w B ↔ GlobalTheory.LFun.HasSatGL w (locOn h.summand w) B
 
 def LocFlath : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (π : CuspSub E n)
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (π : CuspSub E n)
     (D : AdelicDecomposition (Cm.toModule π)) (w : HeightOneSpectrum (𝓞 E)) σ,
     (UpperTheory.CBC.Cusp.cx π).locComp w σ ↔ Nonempty (σ.ρ.Equiv (D.finite.π w))
 
 def LocIff : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (π : CuspSub E n) (V : Submodule ℂ (LL μ)) (h : Carries μ π V) (w : HeightOneSpectrum (𝓞 E)) σ,
     (UpperTheory.CBC.Cusp.cx π).locComp w σ ↔ ∃ f : σ.V →ₗ[ℂ] V, f ≠ 0 ∧ ∀ g x, f (σ.ρ g x) = locOn h.summand w g (f x)
 

@@ -60,7 +60,7 @@ private theorem exists_unitary {g h : GL (Fin a) (Cinf E)} (e : sand g (hOne E a
   rw [← inv_mul_eq_iff_eq_mul]
   exact Units.ext rfl
 
-variable [IsTotallyComplex E] (Ξ : AlgRep E a) {q : ℕ}
+variable [_root_.NumberField.IsTotallyComplex E] (Ξ : AlgRep E a) {q : ℕ}
   (α : Herm E a [⋀^Fin q]→ₗ[ℝ] (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)))
 
 private def alt (g : GL (Fin a) (Cinf E)) (x : GL (Fin a) (Af E)) : HV E a [⋀^Fin q]→ₗ[ℝ] (Fin Ξ.d → ℂ) :=

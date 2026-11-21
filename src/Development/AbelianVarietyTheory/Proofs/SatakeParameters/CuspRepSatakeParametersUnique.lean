@@ -16,7 +16,7 @@ open GlobalTheory.AboveL
 
 namespace GlobalTheory.AboveL
 
-theorem cg_hasSat_unique : ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (a : ℕ) (π : CG K a) (w : HeightOneSpectrum (𝓞 K)) (B B' : Multiset ℂˣ), π.HasSat w B → π.HasSat w B' → B = B' :=
+theorem cg_hasSat_unique : ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (a : ℕ) (π : CG K a) (w : HeightOneSpectrum (𝓞 K)) (B B' : Multiset ℂˣ), π.HasSat w B → π.HasSat w B' → B = B' :=
   fun _ _ _ _ _ _ _ _ _ h h' => CG.HasSat.unique h h'
 
 end GlobalTheory.AboveL

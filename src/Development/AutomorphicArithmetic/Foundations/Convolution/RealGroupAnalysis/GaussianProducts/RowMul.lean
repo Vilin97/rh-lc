@@ -12,7 +12,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.G
 open scoped Classical ENNReal nonZeroDivisors
 
 theorem UpperTheory.ConvolutionTheory.R2.G.rowMul :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (p : (Fin 2 → A F) → ℂ) (φ φ' : S4 F), (∀ v, hat φ'.1 v = p ![v 0, v 1] * hat φ.1 v) →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (p : (Fin 2 → A F) → ℂ) (φ φ' : S4 F), (∀ v, hat φ'.1 v = p ![v 0, v 1] * hat φ.1 v) →
     ∀ (g : G1 F) v, hat (W.Om g φ').1 v = p (![v 0, v 1] ᵥ* g.1) * hat (W.Om g φ).1 v := by
   intro F E _ _ _ _ _ _ _ D W
   have hS := hatSt F E D W

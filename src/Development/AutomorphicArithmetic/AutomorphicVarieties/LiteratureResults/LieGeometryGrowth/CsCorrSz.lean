@@ -33,7 +33,7 @@ private theorem term_sz {V W F : Type} [NormedAddCommGroup V] [NormedSpace ℝ V
   have h3 := (appSz V F F k p).1 _ Θ _ _ s2 hΘ h2 ht
   exact h3.mono (le_of_eq (by ring))
 
-private theorem val_sz (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+private theorem val_sz (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a)
     (q : ℕ) (α : Co Ξ q) (w : Fm U Ξ q) (hw : Corr U Ξ α w) (ρ : GA E a → ℝ) (hρ : ∀ g, 0 ≤ ρ g)
     (hb : ∀ (X : Fin q → Herm E a) (j : Fin Ξ.d) (l : List (Lie E a)), ∃ M : ℝ, ∀ g,

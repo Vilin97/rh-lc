@@ -62,7 +62,7 @@ private theorem exp_cast (t : ℝ) : Complex.exp ((((2 + 2 : ℕ) : ℝ) / 2 * t
   push_cast
   ring
 
-private theorem specW [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] {μ₂ : Measure (G1 K 2)} [μ₂.IsHaarMeasure]
+private theorem specW [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] {μ₂ : Measure (G1 K 2)} [μ₂.IsHaarMeasure]
     {τ₁ τ₂ : Submodule ℂ (L2 μ₂)} (hP : Pair μ₂ τ₁ τ₂) {D : TypeDat K (2 + 2)} {d : ℕ} (A : Line μ τ₁ τ₂ D d)
     (w : ℝ → Eu d) (hw : Continuous w) (hwc : HasCompactSupport w) (u : L (Eu d)) (hu : ∀ᵐ x : ℝ, u x = w x) :
     IsContRep μ (A.J u) (th fun y => Complex.exp (2 * (HH y : ℂ)) * A.sec (w (HH y)) y) := by

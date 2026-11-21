@@ -15,7 +15,7 @@ namespace GlobalTheory.CompanionTheory.HaarSplit
 
 
 open GroundTheory.Automorphic.Reduction in
-theorem map_prod_eq_smul (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ha : 0 < a)
+theorem map_prod_eq_smul (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ha : 0 < a)
     (μ : Measure (GA E a)) [μ.IsHaarMeasure] (ν : Measure (normOneGL (K := E) (n := a))) [ν.IsHaarMeasure] :
     ∃ c : ENNReal, c ≠ 0 ∧ c ≠ ⊤ ∧
       Measure.map (fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) (ν.prod volume) = c • μ := by

@@ -24,7 +24,7 @@ theorem isRecT_locRecT (hT : UpperTheory.Zero.LLC.RecTExists) (h : IsPlaceOver A
     UpperTheory.Zero.LLC.IsRecT h (locRecT hT h) :=
   (hT E Ω A w h).choose_spec
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def locParT (hT : UpperTheory.Zero.LLC.RecTExists) (π : CG E a) (h : IsPlaceOver A w) : WD h :=
   locRecT hT h ⟨a, ParLaws.toCl (π.loc w)⟩

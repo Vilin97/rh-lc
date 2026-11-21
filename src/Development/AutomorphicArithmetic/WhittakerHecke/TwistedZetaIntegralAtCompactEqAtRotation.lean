@@ -17,7 +17,7 @@ open UpperTheory.V.Af.Smo (EigAt)
 open scoped ComplexOrder
 
 theorem UpperTheory.twisted_zeta_integral_at_compact_eq_at_rotation :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2) (ω χ : HChar ℚ),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2) (ω χ : HChar ℚ),
         CenN P ω → Unit1 ω → (∀ a, (χ.1 a * ω.1 a) ^ 2 = 1) → ∀ (L N : ℕ), ChOk χ L → ∀ φ, admitted D ω φ → Gd D P L N φ → ∀ (s : ℂ), ∀ k ∈ KK ℚ, k ∈ SS N → ∀ t : ℝ, re (k 1 0) = Real.sin t → re (k 1 1) = Real.cos t →
         Yt D χ φ s (gl k) = Yt D χ φ s (rot t) := by
   intro E _ _ _ D P ω χ hC hU hχ L N hL φ hA hG s k hk hS t hs hc

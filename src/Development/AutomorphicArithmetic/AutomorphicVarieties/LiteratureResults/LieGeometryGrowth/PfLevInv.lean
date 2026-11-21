@@ -13,7 +13,7 @@ open UpperTheory.V.Lit.Geo
 open NumberField Matrix Formalism.L2.Host GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af UpperTheory.V.Lit UpperTheory.V.Lit.Bor
 open scoped TensorProduct
 
-private def levSub {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private def levSub {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a) : Submodule ℂ (Sm E a) where
   carrier := {φ | IsLevelFn U Ξ φ}
   zero_mem' := ⟨fun _ _ => rfl, fun u _ => map_zero _, fun m _ => by simp⟩

@@ -52,7 +52,7 @@ theorem blkU_eq_unip {R : Type} [CommRing R] {a r : ℕ} (x : UnipotentBlockColu
     rfl
   · rw [dite_eq_right h, dite_eq_right (fun h' => h ⟨h'.1, h'.2.1⟩)]
 
-theorem avg_blk_last_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (F : GA E a → ℂ),
+theorem avg_blk_last_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (F : GA E a → ℂ),
     Continuous F → (∀ (γ : GL (Fin a) E) (g : GA E a), F (ratGL E a γ * g) = F g) → GlobalTheory.CuspRep.IsCuspidal F →
     ∀ r : ℕ, 0 < r → r ≤ a - 1 → ∀ g : GA E a,
       GlobalTheory.CuspGeneric.avg (GlobalTheory.CuspGeneric.ratV E (GlobalTheory.CuspGeneric.UnipotentBlockColumnIndex a r (a - 1)))

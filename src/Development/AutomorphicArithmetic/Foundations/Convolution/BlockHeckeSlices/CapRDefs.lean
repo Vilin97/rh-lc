@@ -20,7 +20,7 @@ abbrev muQ (E : Type) [Field E] [NumberField E] (r : ℕ) : Measure (RightCosetS
 
 def pr (Φ f : GA E r → ℂ) : ℂ := ∫ y, onQ Φ y * starRingEnd ℂ (onQ f y) ∂muQ E r
 
-def j0 (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r : ℕ) : Module.End ℂ (Sm E r) :=
+def j0 (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r : ℕ) : Module.End ℂ (Sm E r) :=
   ((r * Module.finrank ℚ E : ℕ) : ℂ)⁻¹ • ∑ τ : E →+* ℂ, ∑ i : Fin r, Eop τ i i
 
 end UpperTheory.ConvolutionTheory.BW

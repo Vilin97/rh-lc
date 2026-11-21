@@ -46,7 +46,7 @@ private theorem UpperTheory.polynomial_coefficients_compare {M : Type*} [AddComm
   simp only [smul_sub, Finset.sum_sub_distrib, this, sub_self]
 
 theorem UpperTheory.zC_succ_eq_and_envelopingAction_compatible :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ),
           (∀ (τ : E →+* ℂ) (i : Fin n), UpperTheory.ConvolutionTheory.BW.zC E n τ (i + 1) = zc τ i) ∧
           ∀ (u : UC E n) (φ : GlobalTheory.CuspRep.Sm E n), (UpperTheory.V.Cm.uC E n u φ).1 = (uAct u (UpperTheory.V.Cm.smEq E n φ)).1 := by
   intro E _ _ _ n

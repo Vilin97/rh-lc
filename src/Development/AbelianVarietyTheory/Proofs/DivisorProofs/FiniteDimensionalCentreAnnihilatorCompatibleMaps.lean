@@ -16,7 +16,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrow
 
 namespace GlobalTheory.AutGrowth.KilledFin
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem cap_commute_Zalg (τ : E →+* ℂ) (u : ℂ) {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) :
     Commute (cap τ u) z :=
@@ -80,7 +80,7 @@ end GlobalTheory.AutGrowth.KilledFin
 namespace GlobalTheory.AutGrowth.KilledFin
 
 theorem finiteDimensional_mapsJ : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀ (E : Type) [Field E] [NumberField E]
-    [IsTotallyComplex E] (a : ℕ) (φ : Sm E a), IsAutForm φ → ∀ L : Subgroup (GL (Fin a) (Af E)),
+    [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a), IsAutForm φ → ∀ L : Subgroup (GL (Fin a) (Af E)),
     IsOpen (L : Set (GL (Fin a) (Af E))) → FiniteDimensional ℂ (mapsJ φ L) := by
   intro hP E _ _ _ a φ hφ L hL
   have hcap : ∀ (τ : E →+* ℂ) (u : ℂ), cap (a := a) τ u ∈ Zalg E a := fun τ u =>

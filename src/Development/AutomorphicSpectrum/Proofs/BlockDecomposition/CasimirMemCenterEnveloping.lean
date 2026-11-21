@@ -96,7 +96,7 @@ theorem cas_mem_of_qdet_mem {A : Type} [Ring A] [Algebra ℂ A] (S : Subalgebra 
   rw [this]
   exact Subalgebra.sub_mem _ (Subalgebra.mul_mem _ hT hT) hW
 
-theorem cas_mem_Zalg : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (τ : E →+* ℂ),
+theorem cas_mem_Zalg : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (τ : E →+* ℂ),
     Formalism.REAL.Cas (Eop (a := a) τ) ∈ Zalg E a := by
   intro F _ _ _ n τ
   have hcap : ∀ Y : ℂ, cap (a := n) τ Y ∈ Zalg F n := fun Y =>

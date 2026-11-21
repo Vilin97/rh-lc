@@ -49,7 +49,7 @@ theorem re_eq (p : ℂ) {D : ℝ} (hD : 0 < D) (σ u : ℝ) :
       ((D ^ σ : ℝ) : ℂ) * (p * (D : ℂ) ^ ((u : ℂ) * Complex.I)) by ring, Complex.re_ofReal_mul]
 
 set_option synthInstance.maxHeartbeats 400000 in
-theorem msc {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ} :
+theorem msc {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ} :
     MeasurableSingletonClass (GA E k) := inferInstance
 
 end LogNormEstimates

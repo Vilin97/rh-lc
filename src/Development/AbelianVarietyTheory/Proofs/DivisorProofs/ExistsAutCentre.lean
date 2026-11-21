@@ -145,7 +145,7 @@ theorem exists_aut_centre [IsGalois ℚ L] (L0 : IntermediateField ℚ L) (β : 
 
 end Val
 
-theorem exists_symbol {K Ω : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Field Ω] [Algebra K Ω]
+theorem exists_symbol {K Ω : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field Ω] [Algebra K Ω]
     {art : Ideles K →* Gab K Ω} (ha : IsGlobalArtin art) (σ : Formalism.ConjugateSelfDual.G K Ω) :
     ∃ t, GlobalTheory.IndefiniteRowSideFullHecke.ToricSymbols.IsSymbol art t σ := by
   obtain ⟨x, hx⟩ := ha.quot.surjective (toAb K Ω σ)⁻¹

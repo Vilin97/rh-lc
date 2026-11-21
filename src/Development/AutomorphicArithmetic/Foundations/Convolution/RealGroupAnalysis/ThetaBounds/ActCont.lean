@@ -13,7 +13,7 @@ open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspR
 open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Ff
 open scoped Classical
 
-private theorem cont_inf (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) :
+private theorem cont_inf (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) :
     Continuous (infGL E a) := by
   have hs : Continuous (sInf E : Cinf E → Ad E) := (GlobalTheory.CuspRep.continuous_infEq E).prodMk continuous_const
   exact Continuous.units_map _ (continuous_const.add (continuous_id.matrix_map hs))
@@ -40,7 +40,7 @@ private theorem cont_act {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     (hv.matrix_map D.continuous_bar).matrix_transpose)
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.actCont :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E), ActCont D := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E), ActCont D := by
   intro F E _ _ _ _ _ _ _ D
   obtain ⟨ρ, hρ, -, -⟩ := UpperTheory.ConvolutionTheory.R2.D.actMat F E D
   have hval : Continuous fun h => (ρ h).val := continuous_matrix fun i j => by

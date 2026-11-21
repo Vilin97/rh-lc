@@ -17,7 +17,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.SmoothRep
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem isCompact_setOf_toL_mem {K : Set (Lie E a)} (hK : IsCompact K) (hs : K ⊆ invSet E a) :
     IsCompact {y : GL (Fin a) (Cinf E) | toL y.val ∈ K} := by
@@ -65,7 +65,7 @@ theorem hasCompactSupport_ker {U : Subgroup (GL (Fin a) (Af E))}
   · exact hg ⟨(_, _), ⟨subset_tsupport _ h0, hu⟩, infGL_mul_finGL g⟩
   · exact h0 rfl
 
-theorem continuous_hasCompactSupport_tst : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem continuous_hasCompactSupport_tst : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (U : Subgroup (GL (Fin a) (Af E))), IsOpen (U : Set (GL (Fin a) (Af E))) →
     IsCompact (U : Set (GL (Fin a) (Af E))) → ∀ β : Lie E a → ℂ, IsTest β →
     Continuous (tst U β) ∧ HasCompactSupport (tst U β) := by

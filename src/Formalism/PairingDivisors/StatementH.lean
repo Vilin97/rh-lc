@@ -21,18 +21,18 @@ def wt {K : Type} [Field K] [NumberField K] [StarRing K] (S : Finset ℕ) (c : �
   ∑ l ∈ S, c l * (vw w (l : K) : ℝ)
 
 def SumValNat : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (n : ℕ),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ),
     (Function.support fun w : Pl K => lw w * (vw w (n : K) : ℝ)).Finite ∧
     ∑ᶠ w : Pl K, lw w * (vw w (n : K) : ℝ) = Real.log n
 
 def WtSum : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (S : Finset ℕ) (c : ℕ → ℝ),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (S : Finset ℕ) (c : ℕ → ℝ),
     (Function.support fun w : Pl K => lw w * wt S c w).Finite ∧
     ∑ᶠ w : Pl K, lw w * wt S c w = ∑ l ∈ S, c l * Real.log l ∧
     ((∀ l ∈ S, 0 ≤ c l) → ∀ w : Pl K, 0 ≤ wt S c w)
 
 def HeightCore : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     (a De : K) (M nff : ℕ) (o vA : Pl K → ℤ) (S : Finset ℕ) (N0 : ℕ → ℝ),
     a ≠ 0 → De ≠ 0 →
     (∀ w, vw w De = -12 * o w) →

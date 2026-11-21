@@ -106,7 +106,7 @@ private theorem amp_eq {K : Type} [Field K] [NumberField K] {n : ℕ} {μ : Meas
   subst h1
   rfl
 
-private theorem term {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F]
+private theorem term {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex F]
     {σ : E ≃ₐ[F] E} {n : ℕ} (hn : 0 < n) {μ : Measure (normOneGL (K := F) (n := n))} [μ.IsHaarMeasure] {q : Pl F}
     {w₀ : GroundTheory.Global.SemiLocal.PlacesOver E q} {ν : Measure (archGroup F n)} [ν.IsHaarMeasure] {a : TI F n} {L : Loc σ n q w₀}
     {e : Fin n → ℤ} {l : ℕ} {𝔣 : Side (Twist.id μ) l} (he : Antitone e) (hF : IsSideF L ν a e 𝔣)

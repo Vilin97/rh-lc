@@ -18,7 +18,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 namespace PositivityTheory.Rg.BcB.CG.SmoothIntegrals
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 abbrev gI (v : InfinitePlace E) : GA E n →* G n := Matrix.GeneralLinearGroup.map (PositivityTheory.Rg.BcB.cV v)
 
@@ -39,24 +39,24 @@ theorem gI_infGL_val (v : InfinitePlace E) (u : GL (Fin n) (Cinf E)) :
   ext i j
   exact congrArg (fun y : GL (Fin n) (Cinf E) => y.val i j v) (pInf_infGL (E := E) (a := n) u)
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem isOpen_GLs₀ : IsOpen (GLs n) :=
   isOpen_ne.preimage (Continuous.matrix_det continuous_id)
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem val_mem_GLs₀ (y : G n) : y.val ∈ GLs n :=
   ((Matrix.isUnit_iff_isUnit_det _).1 y.isUnit).ne_zero
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 def xv (v : InfinitePlace E) (x : Lie E n) : Mat n := fun i j => x i j v
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiff_xv (v : InfinitePlace E) : ContDiff ℝ ∞ (xv (n := n) v) :=
   contDiff_pi.2 fun i => contDiff_pi.2 fun j =>
     (contDiff_apply ℝ (fun _ => ℂ) v).comp ((contDiff_apply ℝ _ j).comp (contDiff_apply ℝ _ i))
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiffAt_matMul {X : Type} [NormedAddCommGroup X] [NormedSpace ℝ X] {f g : X → Mat n} {x : X}
     (hf : ContDiffAt ℝ ∞ f x) (hg : ContDiffAt ℝ ∞ g x) : ContDiffAt ℝ ∞ (fun y => f y * g y) x := by
   refine contDiffAt_pi.2 fun i => contDiffAt_pi.2 fun j => ?_
@@ -66,10 +66,10 @@ theorem contDiffAt_matMul {X : Type} [NormedAddCommGroup X] [NormedSpace ℝ X] 
 
 
 open Classical in
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 def uOf (x : Lie E n) : GL (Fin n) (Cinf E) := if h : IsUnit (Matrix.of x) then h.unit else 1
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem uOf_val {x : Lie E n} (hx : x ∈ invSet E n) : (uOf x).val = Matrix.of x := by
   have h : IsUnit (Matrix.of x) := hx
   rw [uOf, dite_eq_left h]
@@ -80,7 +80,7 @@ theorem chart_eq {φ : GA E n → ℂ} {g : GA E n} {x : Lie E n} (hx : x ∈ in
   have h : IsUnit (Matrix.of x) := hx
   rw [chart, dite_eq_left h, uOf, dite_eq_left h]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuousOn_uOf : ContinuousOn (uOf (E := E) (n := n)) (invSet E n) := by
   rw [continuousOn_iff_continuous_domRestrict]
   show Continuous fun x : invSet E n => uOf x.1
@@ -110,7 +110,7 @@ theorem xv_mem {x : Lie E n} (hx : x ∈ invSet E n) (v : InfinitePlace E) : xv 
   rw [← xv_eq hx v]
   exact val_mem_GLs₀ _
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem inv_mul_mem {A B : Mat n} (hA : A ∈ GLs n) (hB : B ∈ GLs n) : A⁻¹ * B ∈ GLs n := by
   show (A⁻¹ * B).det ≠ 0
   rw [Matrix.det_mul, Matrix.det_nonsing_inv, Ring.inverse_eq_inv']
@@ -122,7 +122,7 @@ def kerQ (κ : InfinitePlace E → Mat n → ℂ) (q : Lie E n × ((InfinitePlac
 def Wset (E : Type) [Field E] [NumberField E] (n : ℕ) : Set ((InfinitePlace E → Mat n) × ℂ) :=
   (Set.univ.pi fun _ => GLs n) ×ˢ Set.univ
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isOpen_Wset : IsOpen (Wset E n) :=
   (isOpen_set_pi Set.finite_univ fun _ _ => isOpen_GLs₀).prod isOpen_univ
 

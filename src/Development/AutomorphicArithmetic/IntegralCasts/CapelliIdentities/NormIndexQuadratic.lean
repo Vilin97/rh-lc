@@ -915,7 +915,7 @@ private lemma US_rank (S : Finset (HeightOneSpectrum (𝓞 K))) :
   simp only [finrank_fintype_fun_eq_card, Fintype.card_coe] at h2
   omega
 
-private lemma index_sq_US [IsTotallyComplex K] (S : Finset (HeightOneSpectrum (𝓞 K))) :
+private lemma index_sq_US [_root_.NumberField.IsTotallyComplex K] (S : Finset (HeightOneSpectrum (𝓞 K))) :
     (powMonoidHom (α := US S) 2).range.index = 2 ^ (InfinitePlace.nrComplexPlaces K + S.card) := by
   obtain ⟨h1, h2⟩ := US_rank S
   rw [index_sq _ (neg_one_mem_US S), h2, Units.rank, InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces,
@@ -1228,7 +1228,7 @@ private lemma exists_unit {θ : Kˣ} {r : L} (hr : r ^ 2 = algebraMap K L θ) (�
       rwa [h5, map_mul, map_mul, h2, h3, one_mul, mul_one] at this
   · rw [Units.val_mk0, map_div₀, σ.commutes, ← mul_div_assoc, hx]
 
-private lemma norm_index_count_bound [IsTotallyComplex K] {θ : Kˣ} {r : L} (hr : r ^ 2 = algebraMap K L θ)
+private lemma norm_index_count_bound [_root_.NumberField.IsTotallyComplex K] {θ : Kˣ} {r : L} (hr : r ^ 2 = algebraMap K L θ)
     (σ : L ≃ₐ[K] L) (hσ : σ r = -r)
     (hb : ∀ x : L, ∃ a b : K, x = algebraMap K L a + algebraMap K L b * r) (h2 : finrank K L = 2)
     {S P : Finset (HeightOneSpectrum (𝓞 K))} (hS : Good S) (hθ : θ ∈ US S) (hP : P ⊆ S)
@@ -1371,7 +1371,7 @@ private lemma exists_quad {K : Type} [Field K] [NumberField K] {θ : K} (h : ¬ 
     exact ⟨x.re, x.im, by ext <;> simp⟩
 
 section glob
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
 
 private lemma count {θ : Kˣ} (hsq : ¬ IsSquare (θ : K))
     {S P : Finset (HeightOneSpectrum (𝓞 K))} (hS : Good S) (hθ : θ ∈ US S) (hP : P ⊆ S)
@@ -1400,13 +1400,13 @@ private lemma count_contra {θ : Kˣ} (hsq : ¬ IsSquare (θ : K))
   have := Finset.card_filter_add_card_filter_not (s := S) (fun v => θ ∈ Qv (v.valuation K))
   omega
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private lemma not_LN {v : HeightOneSpectrum (𝓞 K)} {θ : K} {α x : Kˣ}
     (hα : α ∉ LN (v.valuation K) θ) (h : α⁻¹ * x ∈ Qv (v.valuation K)) :
     x ∉ LN (v.valuation K) θ := fun hx => hα (by
   simpa using mul_mem hx (inv_mem (Qv_le_LN _ θ h)))
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private lemma exists_dual {θ : Kˣ} (S : Finset (HeightOneSpectrum (𝓞 K)))
     (v : HeightOneSpectrum (𝓞 K)) : ∃ x : Kˣ, (θ ∉ Qv (v.valuation K) → x ∉ LN (v.valuation K) θ) ∧
       ∀ w ∈ S, w ≠ v → x ∈ LN (w.valuation K) θ := by
@@ -1464,7 +1464,7 @@ private lemma exists_prime {θ u : Kˣ} (hsq : ¬ IsSquare (θ : K)) (hu : ¬ Is
   rw [map_mul, h8] at h7
   exact (Subgroup.mul_mem_cancel_right _ (sq_mem_Qv _ _)).1 h7
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private lemma mem_sq {S : Finset (HeightOneSpectrum (𝓞 K))} (u : US S)
     (h : IsSquare ((u : Kˣ) : K)) : u ∈ (powMonoidHom (α := US S) 2).range := by
   obtain ⟨y, hy⟩ := h
@@ -1472,7 +1472,7 @@ private lemma mem_sq {S : Finset (HeightOneSpectrum (𝓞 K))} (u : US S)
   have : Units.mk0 y hy0 ^ 2 = u := Units.ext (by simp [hy, sq])
   exact ⟨⟨Units.mk0 y hy0, root_mem_US (this ▸ u.2)⟩, Subtype.ext this⟩
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private lemma mul_mem_Qv' {v : HeightOneSpectrum (𝓞 K)} (h2 : v.valuation K 2 = 1) {x y : Kˣ}
     (hx : v.valuation K x = 1) (hy : v.valuation K y = 1)
     (h : x ∈ Qv (v.valuation K) ↔ y ∈ Qv (v.valuation K)) : x * y ∈ Qv (v.valuation K) := by

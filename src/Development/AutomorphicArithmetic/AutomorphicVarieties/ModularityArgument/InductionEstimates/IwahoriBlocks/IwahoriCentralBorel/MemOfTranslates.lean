@@ -252,7 +252,7 @@ end SlopeTestRemainingChoices
 end UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.xTop :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K 2)) [μ.IsHaarMeasure] (τ : Submodule ℂ (L2 μ)) (κ : Measure (archCompact K 2)) (p : archCompact K 2 → ℂ), CuspIrr μ τ → RankInf μ τ κ p → ∀ {r : ℕ} (w : Fin r → Pl K) (ι : GS 2 w →* FA K 2), Function.Injective w → IsEmb w ι → ∀ Q : Submodule ℂ (L2 μ), IsClosed (Q : Set (L2 μ)) →
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K 2)) [μ.IsHaarMeasure] (τ : Submodule ℂ (L2 μ)) (κ : Measure (archCompact K 2)) (p : archCompact K 2 → ℂ), CuspIrr μ τ → RankInf μ τ κ p → ∀ {r : ℕ} (w : Fin r → Pl K) (ι : GS 2 w →* FA K 2), Function.Injective w → IsEmb w ι → ∀ Q : Submodule ℂ (L2 μ), IsClosed (Q : Set (L2 μ)) →
       (∀ v ∈ Q, InH μ τ κ p (im w) v) → (∀ g, ∀ v ∈ Q, rhoF μ (ι g) v ∈ Q) → Q = ⊥ ∨ ∀ v, InH μ τ κ p (im w) v → v ∈ Q := by
   intro K _ _ _ μ _ τ κ p hτ hR r w ι hw hι Q hQc hQ hQι
   by_cases hbot : Q = ⊥

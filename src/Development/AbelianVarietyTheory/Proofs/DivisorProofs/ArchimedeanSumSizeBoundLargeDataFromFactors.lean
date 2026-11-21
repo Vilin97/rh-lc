@@ -263,7 +263,7 @@ end Base
 
 section Ana
 
-theorem denseRange_embedding {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (p : InfinitePlace K) :
+theorem denseRange_embedding {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (p : InfinitePlace K) :
     DenseRange p.embedding := by
   have hc : p.IsComplex := IsTotallyComplex.isComplex p
   have hr : ¬ ComplexEmbedding.IsReal p.embedding := InfinitePlace.isComplex_iff.1 hc
@@ -288,7 +288,7 @@ theorem denseRange_embedding {K : Type} [Field K] [NumberField K] [IsTotallyComp
   refine ⟨(q.1 : K) + (q.2 : K) * a, ?_⟩
   simp [f, hα]
 
-theorem denseRange_pi {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (p : InfinitePlace K) (N : ℕ) :
+theorem denseRange_pi {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (p : InfinitePlace K) (N : ℕ) :
     DenseRange (fun (x : Fin N → K) i => p.embedding (x i)) := by
   have h := dense_pi (Set.univ : Set (Fin N)) (s := fun _ => Set.range p.embedding) fun i _ => denseRange_embedding p
   refine h.mono ?_

@@ -16,7 +16,7 @@ open GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.V.Cm
 
 namespace UpperTheory.ConvolutionTheory.BW.SliceClasses
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ} {S : Set (Pl E)}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ} {S : Set (Pl E)}
 
 private abbrev eS (r s : ℕ) : Fin s ⊕ Fin r ≃ Fin (r + s) :=
   (Equiv.sumComm (Fin s) (Fin r)).trans (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
@@ -42,7 +42,7 @@ private theorem ex_rel (r : ℕ) (u : UC E s) : ∃ u' : UC E (r + s), (uC E s u
     obtain ⟨y', hy⟩ := hy
     exact ⟨x' * y', by rw [map_mul, map_mul]; exact (CapRes.relAlg (eS r s)).mul_mem hx hy⟩
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem lev_loc (w : Pl E) (k : GL (Fin s) (w.adicCompletion E)) :
     lev (Af E) r s (1, locGL E s w k) = locGL E (r + s) w (lev (w.adicCompletion E) r s (1, k)) := by
   have ext : ∀ g h : GL (Fin (r + s)) (Af E),
@@ -57,7 +57,7 @@ private theorem lev_loc (w : Pl E) (k : GL (Fin s) (w.adicCompletion E)) :
   · simp only [pLoc_locGL_of_ne e, map_one]
     exact map_one _
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem lev_KGL (w : Pl E) {k : GL (Fin s) (w.adicCompletion E)} (hk : k ∈ GlobalTheory.LFun.KGL w (n := s)) :
     lev (w.adicCompletion E) r s (1, k) ∈ GlobalTheory.LFun.KGL w (n := (r + s)) := by
   obtain ⟨k, rfl⟩ := hk
@@ -82,7 +82,7 @@ end UpperTheory.ConvolutionTheory.BW.SliceClasses
 
 open UpperTheory.ConvolutionTheory.BW UpperTheory.ConvolutionTheory.BW.SliceClasses in
 theorem UpperTheory.ConvolutionTheory.BW.sliceUmg :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceUmg E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceUmg E := by
   intro E _ _ _ S r s b t φ hφ
   let G : Sm E (r + s) := ⟨_, big_mem_Sm b t hφ⟩
   let ψ : Sm E s := ⟨_, Slice2.res_mem_Sm G⟩

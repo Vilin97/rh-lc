@@ -13,7 +13,7 @@ open scoped Classical
 
 section SlopeTestRemainingChoices
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem cont_coord (τ : E →+* ℂ) : Continuous (coord (E := E) τ) :=
   AddMonoidHomClass.continuous_of_bound (coord τ) 1 fun x => by
@@ -153,7 +153,7 @@ private theorem fin_part (y : GL (Fin 2) (Cinf E)) (v : V4 F) :
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.actInf :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E), ActInf D := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E), ActInf D := by
   intro F E _ _ _ _ _ _ _ D y v
   refine ⟨fin_part D y v, fun τ => ?_⟩
   have hy : ((infGL E 2 y).val).map ((coord τ).comp (pInf E)) = y.val.map (coord τ) := by

@@ -19,7 +19,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.
 
 namespace PositivityTheory.Rg.Rs.PInfInd2A
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem exists_scalar {N : ℕ} {V : Submodule ℂ (Sm E N)} (hV : IsDiscrete V) {z : Module.End ℂ (Sm E N)}
     (hz : z ∈ Zalg E N) (hc : ∀ o : Op E N, Commute z (act o)) : ∃ c : ℂ, ∀ φ ∈ V, z φ = c • φ := by

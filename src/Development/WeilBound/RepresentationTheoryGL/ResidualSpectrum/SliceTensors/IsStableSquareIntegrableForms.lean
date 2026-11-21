@@ -18,7 +18,7 @@ open NumberField MeasureTheory GlobalTheory.AutomorphicL2Unitary GlobalTheory.Cu
 
 namespace PositivityTheory.Rg.Rs.PrSt
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 theorem splitInv_act (o : Op E N) {φ : Sm E N} (h : ∀ t g, φ.1 (splitCentre E N t * g) = φ.1 g) (t : ℝ)
     (g : GA E N) : (act o φ).1 (splitCentre E N t * g) = (act o φ).1 g := by

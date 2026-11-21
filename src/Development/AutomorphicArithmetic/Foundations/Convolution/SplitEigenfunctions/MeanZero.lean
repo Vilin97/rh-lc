@@ -15,7 +15,7 @@ open scoped Classical Pointwise
 
 namespace UpperTheory.ConvolutionTheory.RankTwoDescent.MZ
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem cont_gl : Continuous (gl : G1 E → GL (Fin 2) (A E)) := Matrix.SpecialLinearGroup.continuous_toGL
 

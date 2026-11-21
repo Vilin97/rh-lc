@@ -265,12 +265,12 @@ end Twist
 
 section Norms
 
-variable {K K' V V' : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Field K'] [NumberField K'] [StarRing K']
+variable {K K' V V' : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field K'] [NumberField K'] [StarRing K']
   [Algebra K K'] [AddCommGroup V] [Module K V] [AddCommGroup V'] [Module K' V'] {κ : Type} [Fintype κ] [DecidableEq κ]
   {b' : Basis κ K' V'} {X' : InfinitePlace K' → Matrix κ κ ℂ} {N : (K →+* ℂ) → V → ℝ} {N' : (K' →+* ℂ) → V' → ℝ}
 
 
-omit [IsTotallyComplex K] [NumberField K] in
+omit [_root_.NumberField.IsTotallyComplex K] [NumberField K] in
 theorem cnorm_cols (hG' : IsGram b' X' N') (φ : V →ₛₗ[algebraMap K K'] V')
     (ht : ∀ σ' x, N' σ' (φ x) = N (σ'.comp (algebraMap K K')) x) {j : ℕ} (e : Fin j → V) (w : InfinitePlace K')
     (x : Fin j → K) :
@@ -359,7 +359,7 @@ theorem gram_ge [StarRing K] {μ : Type} [Fintype μ] [DecidableEq μ] {b : Basi
 
 end Norms
 
-theorem slope_sq_span_le {K K' V V' : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Field K'] [NumberField K']
+theorem slope_sq_span_le {K K' V V' : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field K'] [NumberField K']
     [Algebra K K'] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [AddCommGroup V']
     [Module K' V'] [Module (𝓞 K') V'] [IsScalarTower (𝓞 K') K' V'] {N : (K →+* ℂ) → V → ℝ}
     {N' : (K' →+* ℂ) → V' → ℝ} (ι : V →ₛₗ[algebraMap K K'] V') (L : Submodule (𝓞 K) V) (hg : HasGram N)
@@ -457,7 +457,7 @@ theorem slope_sq_span_le {K K' V V' : Type} [Field K] [NumberField K] [IsTotally
   rw [m3, hf]
   linarith
 
-theorem slopeMax_sq_span_le : ∀ (K K' V V' : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field K'] [NumberField K'] [Algebra K K'] [IsGalois K K'] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [AddCommGroup V'] [Module K' V'] [Module (𝓞 K') V'] [IsScalarTower (𝓞 K') K' V'] (N : (K →+* ℂ) → V → ℝ) (N' : (K' →+* ℂ) → V' → ℝ) (ι : V →ₛₗ[algebraMap K K'] V') (L : Submodule (𝓞 K) V), HasGram N → HasGram N' → (∀ σ x, N ((starRingEnd ℂ).comp σ) x = N σ x) → (∀ (n : ℕ) (b : Fin n → V), LinearIndependent K b → LinearIndependent K' (fun k => ι (b k))) → L.FG → L ≠ ⊥ → (∀ σ' x, N' σ' (ι x) = N (σ'.comp (algebraMap K K')) x) → slopeMax_sq N' (Submodule.span (𝓞 K') (ι '' (L : Set V))) ≤ slopeMax_sq N L := by
+theorem slopeMax_sq_span_le : ∀ (K K' V V' : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field K'] [NumberField K'] [Algebra K K'] [IsGalois K K'] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [AddCommGroup V'] [Module K' V'] [Module (𝓞 K') V'] [IsScalarTower (𝓞 K') K' V'] (N : (K →+* ℂ) → V → ℝ) (N' : (K' →+* ℂ) → V' → ℝ) (ι : V →ₛₗ[algebraMap K K'] V') (L : Submodule (𝓞 K) V), HasGram N → HasGram N' → (∀ σ x, N ((starRingEnd ℂ).comp σ) x = N σ x) → (∀ (n : ℕ) (b : Fin n → V), LinearIndependent K b → LinearIndependent K' (fun k => ι (b k))) → L.FG → L ≠ ⊥ → (∀ σ' x, N' σ' (ι x) = N (σ'.comp (algebraMap K K')) x) → slopeMax_sq N' (Submodule.span (𝓞 K') (ι '' (L : Set V))) ≤ slopeMax_sq N L := by
   intro K K' V V' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ N N' ι L hg hg' hc hli hL h0 hN
   have hL' := (slope_sq_span_le ι L hg hg' hc hli hL h0 hN).1
   obtain ⟨⟨n, ⟨b, X⟩, hG⟩⟩ := id hg

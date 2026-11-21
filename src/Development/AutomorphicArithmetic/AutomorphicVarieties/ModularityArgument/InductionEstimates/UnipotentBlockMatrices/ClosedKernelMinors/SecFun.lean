@@ -187,7 +187,7 @@ private theorem cusp_sum {K : Type} [Field K] [NumberField K] {μ₂ : Measure (
   rw [integral_const_mul, (hφ i).cusp, mul_zero]
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.secFun :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ → ∀ f : G1 K (2 + 2) → ℂ, IsSec τ₁ τ₂ f → D.Fix f → SFun f := by
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ → ∀ f : G1 K (2 + 2) → ℂ, IsSec τ₁ τ₂ f → D.Fix f → SFun f := by
   intro K _ _ _ μ₂ _ τ₁ τ₂ D h₁ h₂ f hf hD
   obtain ⟨hc, ⟨B, hB⟩, hu, hr, hs⟩ := (secCrit μ₂ τ₁ τ₂ D h₁ h₂ f hD).1 hf
   obtain ⟨E₁, E₂, i₁, i₂, r₁, r₂, hE⟩ := secStr μ₂ τ₁ τ₂ D h₁ h₂

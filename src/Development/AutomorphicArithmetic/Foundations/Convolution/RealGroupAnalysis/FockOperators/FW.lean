@@ -13,7 +13,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Fo
 open scoped Classical
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.fW :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (O : Ops F) w, O.f D.δ w * W.Om (wW F) = -(W.Om (wW F) * O.e D.δ w) := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (O : Ops F) w, O.f D.δ w * W.Om (wW F) = -(W.Om (wW F) * O.e D.δ w) := by
   intro F E _ _ _ _ _ _ _ D W O w
   have hc : cw w (rt D.δ) ≠ 0 := (coordMk F E D).2.2.1 w
   have hcc : cc ≠ 0 := by

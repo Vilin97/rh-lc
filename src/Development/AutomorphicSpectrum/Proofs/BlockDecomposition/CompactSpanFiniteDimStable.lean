@@ -33,7 +33,7 @@ theorem exists_skew_curve {E : Type} [Field E] [NumberField E] {a : ℕ} (S : Ma
       Matrix.conjTranspose_smul, hS, star_trivial, smul_neg,
       ← Matrix.exp_add_of_commute _ _ (Commute.refl (t • S)).neg_left, neg_add_cancel, NormedSpace.exp_zero]
 
-theorem liB_skew_mem_span : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a)
+theorem liB_skew_mem_span : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a)
     (Z : (AutomorphicForm.isExpLieAlgebra E a).lieSubalgebra),
     Matrix.conjTranspose (AutomorphicForm.mat (Z : AutomorphicForm.ArchMatrix E a)) =
       -AutomorphicForm.mat (Z : AutomorphicForm.ArchMatrix E a) →

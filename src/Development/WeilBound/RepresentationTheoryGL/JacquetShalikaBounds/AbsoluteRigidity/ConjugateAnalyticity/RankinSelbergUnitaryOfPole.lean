@@ -58,7 +58,7 @@ theorem LS_shift {E : Type} [Field E] [NumberField E] {S : Finset (HeightOneSpec
   simp only [Units.val_mul, hα, hβ]
   rw [shift_term _ (nq_ne_zero w)]
 
-theorem transfer {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (hT : SatTw) {m : ℕ} (ρ : CG E m)
+theorem transfer {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (hT : SatTw) {m : ℕ} (ρ : CG E m)
     (χ : HChar E) (S : Finset (HeightOneSpectrum (𝓞 E))) (hχ : ∀ w, χ.UnrAt w) (α : Off E S → Fin m → ℂˣ)
     (hα : SatOff (ρ.twist χ) S α) : SatOff ρ S (fun w a => α w a * (χ⁻¹).val w.1) := by
   intro w
@@ -80,7 +80,7 @@ theorem re_shift (σ u : ℝ) : ((σ : ℂ) + (u : ℂ) * Complex.I).re = σ := 
 
 
 open Classical in
-theorem core (hR : RSPole) {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (a b : ℕ) (ρ : CuspSub E a)
+theorem core (hR : RSPole) {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a b : ℕ) (ρ : CuspSub E a)
     (ρ' : CuspSub E b) (u : ℝ) (hb : 1 ≤ b) (hab : b ≤ a) (hn : GlobalTheory.DiscSpec.IsNormalised ρ)
     (hn' : GlobalTheory.DiscSpec.IsNormalised ρ') :
     ∃ S₀ : Finset (HeightOneSpectrum (𝓞 E)), ∀ S, S₀ ⊆ S → ∀ (α : Off E S → Fin a → ℂˣ) (β : Off E S → Fin b → ℂˣ),

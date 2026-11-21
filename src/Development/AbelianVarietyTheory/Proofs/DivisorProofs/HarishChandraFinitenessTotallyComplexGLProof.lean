@@ -14,7 +14,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.HCF GlobalTheory.CuspQuot Mea
 
 namespace GlobalTheory.HCFGL
 
-theorem finiteDimensional_single (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem finiteDimensional_single (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (ih : ∀ b < a, ∀ L : Subgroup (GL (Fin b) (Af E)), IsOpen (L : Set (GL (Fin b) (Af E))) →
       ∀ W : Submodule ℂ (Kinf E b → ℂ), FiniteDimensional ℂ W → ∀ X : Set (Module.End ℂ (Sm E b) → ℂ), X.Finite →
       ∀ N : ℕ, FiniteDimensional ℂ (Submodule.span ℂ (formsGL E b L W X N)))

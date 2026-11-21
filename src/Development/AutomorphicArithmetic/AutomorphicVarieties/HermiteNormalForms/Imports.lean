@@ -12,7 +12,7 @@ open NumberField Matrix UpperTheory.V UpperTheory.V.KT
 open scoped ComplexOrder
 
 theorem UpperTheory.V.KT.good :
-    ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ), ConeExtensionAcyclic.Good (qc L N) (Psd L N) := by
+    ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ), ConeExtensionAcyclic.Good (qc L N) (Psd L N) := by
   intro L _ _ _ N
   obtain ⟨hc, hs, hp, hd⟩ := psdcone L N
   refine ⟨fun h hh => ?_, ?_, hc, hs, ?_, hd⟩

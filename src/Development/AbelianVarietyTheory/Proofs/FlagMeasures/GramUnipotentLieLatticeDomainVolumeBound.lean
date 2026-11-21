@@ -141,7 +141,7 @@ private theorem mem_span_ratB_iff_forall_mem_range (K : Type) [Field K] [NumberF
     rintro _ ⟨_, ⟨i, rfl⟩, rfl⟩
     exact ⟨⟨a, i⟩, by simp [GlobalTheory.LatFacts.ratB, Pi.basis_apply]⟩
 
-private theorem mem_span_intB_iff_exists_emb (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (j : ℕ)
+private theorem mem_span_intB_iff_exists_emb (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (j : ℕ)
     (y : GlobalTheory.FlagBase.VecInf K j) :
     y ∈ Submodule.span ℤ (Set.range (GlobalTheory.LatFacts.intB K j)) ↔
       ∃ x : Fin j → 𝓞 K, GlobalTheory.LatFacts.emb K j (fun a => (x a : K)) = y := by
@@ -164,7 +164,7 @@ private theorem mem_span_intB_iff_exists_emb (K : Type) [Field K] [NumberField K
   · rintro ⟨x, rfl⟩
     exact ⟨fun a => (x a : K), (mem_span_ratB_iff_forall_mem_range K j _).2 fun a => ⟨x a, rfl⟩, rfl⟩
 
-theorem exists_domain (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (ι : Type) [Fintype ι]
+theorem exists_domain (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (ι : Type) [Fintype ι]
     (τ : ι → (K →+* ℂ)) (hτ : ∀ w : InfinitePlace K, ∃! v, InfinitePlace.mk (τ v) = w) (R : Type) [Fintype R] [DecidableEq R]
     (H : AddSubgroup (R → 𝓞 K)) (hH : H.index ≠ 0) (M : ι → Matrix R R ℂ) (hM : ∀ v, (M v).det = 1)
     (Λ : Submodule ℤ (ι → R → ℂ))

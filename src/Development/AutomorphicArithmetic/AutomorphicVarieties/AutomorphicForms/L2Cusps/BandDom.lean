@@ -10,7 +10,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 
 namespace UpperTheory.V.KernelIndexFullLattice
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem retract_zpow_mul (n : ℤ) (g : GA E a) :
     retractOne (splitCentre E a 1 ^ n * g) = retractOne g := by

@@ -14,10 +14,10 @@ noncomputable section
 
 namespace GlobalTheory.LieTensor
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem exists_curve {a : ℕ} (Z : Matrix (Fin a) (Fin a) (Cinf E)) :
     ∃ c : ℝ → GL (Fin a) (Cinf E), c 0 = 1 ∧ HasDerivAt (fun t => toL (c t).val) (toL Z) 0 ∧
       (Z.conjTranspose = -Z → ∀ t, (c t).val ∈ Matrix.unitaryGroup (Fin a) (Cinf E)) := by
@@ -130,7 +130,7 @@ theorem lie_block_tensor {c N : ℕ} (n : Fin c → ℕ)
   exact h m
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem exists_decomp {c N : ℕ} {n : Fin c → ℕ} (e : (Σ i, Fin (n i)) ≃ Fin N)
     (Y : Matrix (Fin N) (Fin N) (Cinf E)) :
     ∃ (S : Matrix (Fin N) (Fin N) (Cinf E)) (Z : ∀ i, Matrix (Fin (n i)) (Fin (n i)) (Cinf E))
@@ -203,7 +203,7 @@ theorem leviTensor_all {c N : ℕ} {n : Fin c → ℕ} (e : (Σ i, Fin (n i)) �
     · rw [hU p q hpq, Matrix.single_zero]
       exact leviTensor_zero e π ψ
 
-theorem lie_tensorForms : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] {c N : ℕ} (n : Fin c → ℕ)
+theorem lie_tensorForms : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {c N : ℕ} (n : Fin c → ℕ)
     (h : ∑ i, n i = N) (π : ∀ i, CuspSub E (n i)) (X : Lie E N) (φ : Sm E N), φ ∈ indForms h π →
     ∀ (k : Kinf E N) (g : GL (Fin N) (Af E)),
       (fun m => (lie E N X φ).1 (leviEmb (Ad E) (stdBlocks n h) m * (infGL E N (Unitary.toUnits k) * finGL E N g)))

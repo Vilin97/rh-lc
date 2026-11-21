@@ -49,7 +49,7 @@ private theorem exists_place (E : Type) [Field E] [NumberField E] : Nonempty (He
   obtain ⟨m, hm⟩ := Ideal.exists_maximal (𝓞 E)
   exact ⟨⟨m, hm.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hm (RingOfIntegers.not_isField E)⟩⟩
 
-private theorem absC_pow (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (s : ℂ) : IsPow (GlobalTheory.CuspRep.Model.absC E s) s := by
+private theorem absC_pow (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (s : ℂ) : IsPow (GlobalTheory.CuspRep.Model.absC E s) s := by
   obtain ⟨b, hb⟩ := GlobalTheory.AbsTwist.exists_eq_mul_log_module (F := E) (GlobalTheory.Mem.Chr.CharModel.logNorm E)
     (GlobalTheory.Mem.Chr.CharModel.continuous_logNorm E) (GlobalTheory.Mem.Chr.CharModel.logNorm_mul E)
     (GlobalTheory.Mem.Chr.CharModel.logNorm_principal E)
@@ -77,11 +77,11 @@ private theorem absC_pow (E : Type) [Field E] [NumberField E] [IsTotallyComplex 
     linarith [mul_right_cancel₀ h4 h3]
   simpa [hb1] using hgen s
 
-private theorem pow_eq {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {χ : HChar E} {s : ℂ} (h : IsPow χ s) :
+private theorem pow_eq {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {χ : HChar E} {s : ℂ} (h : IsPow χ s) :
     χ = GlobalTheory.CuspRep.Model.absC E s :=
   Subtype.ext (MonoidHom.ext fun x => Units.ext ((h x).trans (absC_pow E s x).symm))
 
-private theorem pow_expo {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {χ : HChar E} {s : ℂ} (h : IsPow χ s)
+private theorem pow_expo {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {χ : HChar E} {s : ℂ} (h : IsPow χ s)
     (τ : E →+* ℂ) : expo χ τ = s := by
   rw [pow_eq h, GlobalTheory.CuspRep.Model.expo_absC]
 
@@ -145,7 +145,7 @@ private theorem infOf_ne {m m' : Fin 2 → ℤ} (h : Function.Injective ![m 0, m
   · exact absurd (@h 3 0 h2) (by decide)
 
 open UpperTheory.CBC UpperTheory.CBC.SConjSpaceCAux in
-private theorem not_conjIso {K M : Type} [Field K] [NumberField K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M]
+private theorem not_conjIso {K M : Type} [Field K] [NumberField K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Algebra K M]
     (h2 : Module.finrank K M = 2) (π : CuspSub M 2) (hm : MixWtC K π) (σ : M ≃ₐ[K] M) (h1σ : σ ≠ 1) :
     ¬ (Cusp.cx π).ConjIso σ.toRingEquiv := by
   intro h
@@ -182,7 +182,7 @@ section Main
 
 open Formalism.L2.Host Formalism.ConjugateSelfDual UpperTheory.ConvolutionTheory.T
 
-private theorem satTw {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {π : CuspSub E a}
+private theorem satTw {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {π : CuspSub E a}
     {w : HeightOneSpectrum (𝓞 E)} {B : Multiset ℂˣ} (h : (CG.mk π).HasSat w B) {χ : HChar E}
     (hu : χ.UnrAt w) : (CG.mk (π.twist χ)).HasSat w (B.map (· * χ.val w)) :=
   GlobalTheory.SphGal.hasSatGL_twist E a π χ w B hu h

@@ -16,7 +16,7 @@ namespace GlobalTheory.HeckePoisson
 open GlobalTheory.CMVal InfinitePlace ComplexConjugate
 open scoped nonZeroDivisors
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {I : Type} [Fintype I]
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {I : Type} [Fintype I]
 
 def toMixed {φ : I → K →+* ℂ} (h : IsCMType φ) : EuclideanSpace ℂ I ≃ₗ[ℝ] mixedEmbedding.mixedSpace K := by
   classical

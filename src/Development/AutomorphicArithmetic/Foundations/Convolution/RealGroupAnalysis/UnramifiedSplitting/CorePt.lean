@@ -59,7 +59,7 @@ private theorem kat_of_int {K : Type} [Field K] [NumberField K] {v : P K} {g : G
   exacts [h 1 1, hn 0 1, hn 1 0, h 0 0]
 
 theorem UpperTheory.ConvolutionTheory.R2.H.corePt :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F) (ϖ : (Kv v)ˣ), IsU ϖ → Gd D.δ v → W.η.UnrAt v → W.η.val v = -1 →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F) (ϖ : (Kv v)ˣ), IsU ϖ → Gd D.δ v → W.η.UnrAt v → W.η.val v = -1 →
       ∀ (Wt : GL (Fin 2) (A F) → ℂ) (α β : ℂˣ), EigAt v {α, β} Wt → (∀ b g, Wt (gl (nU b) * g) = ψ (-b) * Wt g) → ∀ φ : S4 F, Std v φ.1 →
       ∀ (a : (A F)ˣ), ∀ k ∈ KK F,
         ((ab (idl v ϖ ^ 2) : ℝ) : ℂ) * iw (fun g => Wt (dM (idl v ϖ ^ 2) * gl g) *

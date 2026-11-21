@@ -12,7 +12,7 @@ noncomputable section
 
 namespace GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem fderiv_chart_rmul (φ : Sm E a) (g : GA E a) (y : GL (Fin a) (Cinf E)) (W : Lie E a) :
     fderiv ℝ (chart φ.1 g) (toL y.val) (rmul (toL y.val) W) =

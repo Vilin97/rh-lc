@@ -39,7 +39,7 @@ theorem eq_map_comap {E : Type} [Field E] [NumberField E] [StarRing E]
   exact ht
 
 private theorem isCMField_of_star_compat {E : Type} [Field E] [NumberField E] [StarRing E]
-    [hTC : IsTotallyComplex E]
+    [hTC : _root_.NumberField.IsTotallyComplex E]
     (hs : ∀ (φ : E →+* ℂ) (a : E), φ (star a) = starRingEnd ℂ (φ a)) : IsCMField E := by
   refine GlobalTheory.LeastExponentCompare.isCMField_of_conj E (fun z => star z)
     (fun φ z => by rw [hs, starRingEnd_apply]) ?_

@@ -14,7 +14,7 @@ open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
 section
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private def Bp (W S : Set (GA E a)) : Prop :=
   ∃ f : GA E a → ℝ, (fun g => (f g : ℂ)) ∈ Sm E a ∧ (∀ᶠ k in 𝓝 1, ∀ g, f (g * finGL E a k) = f g) ∧

@@ -113,7 +113,7 @@ structure FamC (I : Type) (m : ℕ) where
   [indexKFirst : Field K]
   [indexKSecond : NumberField K]
   [indexKThird : StarRing K]
-  [indexKFourth : IsTotallyComplex K]
+  [indexKFourth : _root_.NumberField.IsTotallyComplex K]
 
   Wd : Type
   [indexWFirst : AddCommGroup Wd]

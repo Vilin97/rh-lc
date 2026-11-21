@@ -53,7 +53,7 @@ end SlopeTestRemainingChoices
 
 section Span
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {D : Dat ℚ E}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {D : Dat ℚ E}
 
 private theorem span_pos (W : Weil D) (M : Meas ℚ) (π : TR.CuspSub ℚ 2) (hπ : PosInv π) (s : {r : ℝ // 0 < r}) :
     ∀ Φ ∈ span W M π, ∀ g, Φ.1 (GroundTheory.Automorphic.Reduction.centralSection E 2 s * g) = Φ.1 g := by

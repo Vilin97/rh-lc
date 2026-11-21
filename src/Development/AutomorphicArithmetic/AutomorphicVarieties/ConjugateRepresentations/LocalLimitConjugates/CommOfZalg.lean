@@ -17,7 +17,7 @@ open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
 namespace UpperTheory.V.Cj.H.CasimirOperatorShift
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem comm_of_zalg {z o : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) (ho : ∀ τ u, Commute (cap τ u) o) :
     Commute z o := by

@@ -24,7 +24,7 @@ def scaleFrame {d : ℕ} (t : InfinitePlace K → ℝ) (X : InfinitePlace K → 
 end Defs
 
 def KappaInvariance : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (D : ℕ), 0 < D →
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (D : ℕ), 0 < D →
     ∀ XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ, (∀ v, IsUnit (XE v).det) →
     ∀ t : InfinitePlace K → ℝ, (∀ v, 0 < t v) →
 
@@ -57,7 +57,7 @@ def KappaInvariance : Prop :=
             (Formalism.HN.dualFrame XE) φ - meanLog t)
 
 def KappaNormalise : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (D : ℕ), 0 < D →
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (D : ℕ), 0 < D →
     ∀ XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ, (∀ v, IsUnit (XE v).det) →
     ∀ κ : InfinitePlace K → ℝ, (∀ v, 0 < κ v) →
       (∀ v, IsUnit (scaleFrame (fun v => (κ v)⁻¹) XE v).det) ∧

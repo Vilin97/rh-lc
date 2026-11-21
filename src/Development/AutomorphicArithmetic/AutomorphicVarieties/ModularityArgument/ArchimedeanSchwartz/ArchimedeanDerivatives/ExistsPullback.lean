@@ -34,7 +34,7 @@ private theorem exists_pullback {V C L G : Type*} [AddCommGroup V] [Module ℂ V
   rw [hT, hT]
   exact hS g _ _ (hP x) (hP y)
 
-private theorem exists_form {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (π : CuspSub E a)
+private theorem exists_form {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (π : CuspSub E a)
     (h0 : ∀ φ ∈ π.V, lie E a (oneL E a) φ = 0) (w : HeightOneSpectrum (𝓞 E)) :
     ∃ Bf : π.V →ₗ⋆[ℂ] π.V →ₗ[ℂ] ℂ, (∀ x y, Bf y x = starRingEnd ℂ (Bf x y)) ∧ (∀ x, x ≠ 0 → 0 < (Bf x x).re) ∧
       ∀ g x y, Bf (π.locRep w g x) (π.locRep w g y) = Bf x y := by
@@ -57,7 +57,7 @@ private theorem exists_form {E : Type} [Field E] [NumberField E] [IsTotallyCompl
     (fun x hx h => eq_zero_of_petersson_inner_self_eq_zero _ hx h) hinj hτ
     fun g x y hx hy => petersson_inner_finiteAdelic_invariant _ _ hx hy
 
-private theorem exists_twist {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (ha : 1 ≤ a) (σ : CuspSub E a) :
+private theorem exists_twist {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (ha : 1 ≤ a) (σ : CuspSub E a) :
     ∃ (χ : HChar E) (s : ℝ), (∀ φ ∈ (σ.twist χ).V, lie E a (oneL E a) φ = 0) ∧
       ∀ w : HeightOneSpectrum (𝓞 E), χ.UnrAt w ∧ ‖((χ.val w : ℂˣ) : ℂ)‖ = (Ideal.absNorm w.asIdeal : ℝ) ^ s := by
   have hd : ((a : ℂ) * (Module.finrank ℚ E : ℂ)) ≠ 0 :=

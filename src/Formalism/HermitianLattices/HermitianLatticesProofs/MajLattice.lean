@@ -26,7 +26,7 @@ end MajLatticeAux
 
 section MajLatticeMain
 
-variable {K V ι : Type*} [Field K] [NumberField K] [IsTotallyComplex K] [StarRing K] [AddCommGroup V]
+variable {K V ι : Type*} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [StarRing K] [AddCommGroup V]
   [Module K V] [Fintype ι] [DecidableEq ι]
 
 variable [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]

@@ -42,25 +42,25 @@ def MixWt (π : TR.CuspSub E 2) : Prop :=
 
 end Defs
 
-def MixWtC (K : Type) [Field K] {M : Type} [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M] (π : CuspSub M 2) : Prop :=
+def MixWtC (K : Type) [Field K] {M : Type} [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Algebra K M] (π : CuspSub M 2) : Prop :=
   ∀ φ : K →+* ℂ, ∃ (m m' : Fin 2 → ℤ) (τ τ' : M →+* ℂ), τ ≠ τ' ∧ τ.comp (algebraMap K M) = φ ∧ τ'.comp (algebraMap K M) = φ ∧
     π.HasInfChar τ (infOf m) ∧ π.HasInfChar τ' (infOf m') ∧ Function.Injective ![m 0, m 1, m' 0, m' 1]
 
 def IndAutC : Prop :=
-  ∀ (K M Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Field Ω]
+  ∀ (K M Ω : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Field Ω]
     [Algebra K M] [Algebra K Ω] [Algebra M Ω] [IsScalarTower K M Ω] [IsAlgClosure M Ω], Module.finrank K M = 2 →
     ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (π : CuspSub M 2) (r : G M Ω →* GL (Fin 2) (Qbar l)), AttC ι r π → MixWtC K π →
     ∀ R : G K Ω →* GL (Fin 4) (Qbar l), IsSSRep R → IndCh (galEmb K M Ω) r R → IsAutC ι R
 
 def UpQuadI : Prop :=
-  ∀ (F E Ω : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra F E]
+  ∀ (F E Ω : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra F E]
     [Algebra F Ω] [Algebra E Ω] [IsScalarTower F E Ω] [IsAlgClosure E Ω] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ),
     Module.finrank F E = 2 → ∀ (r : G F Ω →* GL (Fin 2) (Qbar l)) (π : TR.CuspSub F 2), Continuous r → π.IsRegAlg → AttR ι r π →
       IsIrr (r.comp (galEmb F E Ω)) → ∃ P : CuspSub E 2, (CG.mk P).IsRegAlg ∧ AttC ι (r.comp (galEmb F E Ω)) P ∧
         ∀ (τ : E →+* ℂ) m, π.HasInfChar (InfinitePlace.mk (τ.comp (algebraMap F E))) m → P.HasInfChar τ m
 
 def UpSolI : Prop :=
-  ∀ (F E Ω : Type) [Field F] [NumberField F] [IsTotallyComplex F] [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra F E]
+  ∀ (F E Ω : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra F E]
     [Algebra F Ω] [Algebra E Ω] [IsScalarTower F E Ω] [IsAlgClosure E Ω] [IsGalois F E] [Group.IsSolvable (E ≃ₐ[F] E)] (l : ℕ) [Fact l.Prime]
     (ι : Qbar l ≃+* ℂ) (r : G F Ω →* GL (Fin 2) (Qbar l)) (π : CuspSub F 2), Continuous r → (CG.mk π).IsRegAlg → AttC ι r π →
       IsIrr (r.comp (galEmb F E Ω)) → ∃ P : CuspSub E 2, (CG.mk P).IsRegAlg ∧ AttC ι (r.comp (galEmb F E Ω)) P ∧

@@ -35,7 +35,7 @@ theorem exists_algEquiv_extend_adjoin {α : ℂ} (hα : IsAlgebraic K α) (φ : 
 end Extend
 
 variable {K : Type*} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K]
+  [_root_.NumberField.IsTotallyComplex K]
 include hK
 
 def galClassHom : (ℂ ≃ₐ[K] ℂ) →* ClassGroup (𝓞 K) where
@@ -75,7 +75,7 @@ section Field
 variable (M : IntermediateField K ℂ) (hM : ∀ y : ELL K, ELL.j y ∈ M)
 include hM
 
-omit [NumberField K] hK [IsTotallyComplex K] in
+omit [NumberField K] hK [_root_.NumberField.IsTotallyComplex K] in
 theorem adjoin_j_le (x : ELL K) : K⟮ELL.j x⟯ ≤ M :=
   adjoin_simple_le_iff.2 (hM x)
 

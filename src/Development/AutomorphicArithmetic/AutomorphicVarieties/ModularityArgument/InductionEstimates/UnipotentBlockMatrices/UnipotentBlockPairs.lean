@@ -135,12 +135,12 @@ end Steps
 def ForAllC (p : ∀ (K : Type) [Field K] [NumberField K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
     [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)) (d d' : ℕ), Line μ τ₁ τ₂ D d → Line μ τ₂ τ₁ D d' → Prop) :
     Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2))
     [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ → ∀ (D : TypeDat K (2 + 2)) (d d' : ℕ)
     (A : Line μ τ₁ τ₂ D d) (A' : Line μ τ₂ τ₁ D d'), p K μ μ₂ τ₁ τ₂ D d d' A A'
 
 def LineExC : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure]
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure]
     (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)), Pair μ₂ τ₁ τ₂ → ∀ D : TypeDat K (2 + 2),
     ∃ d, Nonempty (Line μ τ₁ τ₂ D d)
 

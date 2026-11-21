@@ -61,7 +61,7 @@ theorem infinitePlace_liesOver_comap (w : InfinitePlace E) : w.LiesOver (w.comap
     | exact inferInstance
     | exact ⟨rfl⟩
 
-theorem ncard_places_over_eq_finrank [IsTotallyComplex F] (v : InfinitePlace F) :
+theorem ncard_places_over_eq_finrank [_root_.NumberField.IsTotallyComplex F] (v : InfinitePlace F) :
     {w : InfinitePlace E | w.comap (algebraMap F E) = v}.ncard = finrank F E := by
   have h := InfinitePlace.unramifedPlacesOver_ncard_add_eq_finrank E v
   have hr : InfinitePlace.ramifiedPlacesOver E v = ∅ := by
@@ -85,7 +85,7 @@ theorem ncard_places_over_eq_finrank [IsTotallyComplex F] (v : InfinitePlace F) 
   rw [hr, hu] at h
   simpa using h
 
-theorem bc_prod [IsTotallyComplex F] [IsTotallyComplex E] (g : InfinitePlace F → ℝ) :
+theorem bc_prod [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] (g : InfinitePlace F → ℝ) :
     ∏ w : InfinitePlace E, g (w.comap (algebraMap F E)) = (∏ v, g v) ^ finrank F E := by
   classical
   have hfib : ∀ v : InfinitePlace F,
@@ -100,7 +100,7 @@ theorem bc_prod [IsTotallyComplex F] [IsTotallyComplex E] (g : InfinitePlace F �
   refine Finset.prod_congr rfl fun v _ => ?_
   rw [Finset.prod_congr rfl (fun w hw => by rw [(Finset.mem_filter.1 hw).2]), Finset.prod_const, hfib v]
 
-theorem bc_nPl [IsTotallyComplex F] [IsTotallyComplex E] :
+theorem bc_nPl [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] :
     nPl E = finrank F E * nPl F := by
   classical
   have hfib : ∀ v : InfinitePlace F,
@@ -270,7 +270,7 @@ theorem baseChangeMap_smul_scalar (s : F) (x : ι → F) :
 
 variable [StarRing F] [StarRing E]
 
-theorem bc_gram_det [IsTotallyComplex F]
+theorem bc_gram_det [_root_.NumberField.IsTotallyComplex F]
     (XF : InfinitePlace F → Matrix ι ι ℂ) (XE : InfinitePlace E → Matrix ι ι ℂ)
     (hn : ∀ (w : InfinitePlace E) (x : ι → F),
       Formalism.HermitianLatticesTheory.normAt (Pi.basisFun E ι) XE w (fun i => algebraMap F E (x i)) =

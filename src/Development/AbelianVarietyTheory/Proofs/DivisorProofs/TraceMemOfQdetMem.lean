@@ -190,7 +190,7 @@ end GlobalTheory.CapTrace
 
 namespace GlobalTheory.CuspRep
 
-theorem Eop_add_Eop_conj {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (τ : E →+* ℂ)
+theorem Eop_add_Eop_conj {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (τ : E →+* ℂ)
     (i : Fin a) : Eop τ i i + Eop (ComplexEmbedding.conjugate τ) i i = lieS E a i i (atEmb τ 1) := by
   have e : atEmb τ (-Complex.I) = -atEmb τ Complex.I := by
     rw [atEmb_eq]; simp

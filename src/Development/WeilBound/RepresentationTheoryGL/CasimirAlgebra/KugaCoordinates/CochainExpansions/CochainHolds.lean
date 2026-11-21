@@ -21,7 +21,7 @@ def hY (τ : E →+* ℂ) (j i : Fin a) (z : ℂ) : Herm E a :=
   ⟨Matrix.single j i (atEmb τ z) + star (Matrix.single j i (atEmb τ z)), IsSelfAdjoint.add_star_self _⟩
 
 omit [NumberField E] in
-theorem hY_ent [IsTotallyComplex E] (τ τ' : E →+* ℂ) (h : τ' ≠ barE E τ) (j i j' i' : Fin a) :
+theorem hY_ent [_root_.NumberField.IsTotallyComplex E] (τ τ' : E →+* ℂ) (h : τ' ≠ barE E τ) (j i j' i' : Fin a) :
     coord τ' ((hY τ j i (1 / 2)).1 j' i') - Complex.I * coord τ' ((hY τ j i (Complex.I / 2)).1 j' i') =
       if τ' = τ ∧ j' = j ∧ i' = i then 1 else 0 := by
   have hc : ∀ z, coord τ' (atEmb τ z) = if τ' = τ then z else 0 := fun z => by
@@ -50,7 +50,7 @@ theorem hY_ent [IsTotallyComplex E] (τ τ' : E →+* ℂ) (h : τ' ≠ barE E �
     · simp only [if_neg hp, if_neg hq]; simp
   · simp [h1]
 
-theorem om_ne [IsTotallyComplex E] (tl : Fin N → (E →+* ℂ)) (η : TV a M (Fin q ⊕ (Fin N ⊕ Fin N)))
+theorem om_ne [_root_.NumberField.IsTotallyComplex E] (tl : Fin N → (E →+* ℂ)) (η : TV a M (Fin q ⊕ (Fin N ⊕ Fin N)))
     (h1 : ∀ k k', tl k ≠ barE E (tl k')) (h3 : altPair tl η ≠ 0) : om tl η ≠ 0 := by
   intro h0
   apply h3

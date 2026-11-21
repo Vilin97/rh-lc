@@ -45,7 +45,7 @@ private theorem lev_entries {L : Type} [Field L] (O : Subring L) {r s : ℕ} (a 
   · exact hb x y
 
 theorem UpperTheory.ConvolutionTheory.BW.resTyp :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.ResTyp E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.ResTyp E := by
   intro E _ _ _ r s ρ
   have key : ∀ (k : KA E r) (k' : KA E s), lev (Ad E) r s ((k : GA E r), (k' : GA E s)) ∈ KA E (r + s) := by
     intro k k'

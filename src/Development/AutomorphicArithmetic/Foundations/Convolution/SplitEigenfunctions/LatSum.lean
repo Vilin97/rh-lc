@@ -60,7 +60,7 @@ private theorem rp_injective : Function.Injective (rp : (Fin 4 → ℚ) → V4 �
 
 section Act
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {D : Dat ℚ E}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {D : Dat ℚ E}
   {ρ : GL (Fin 2) (A E) →* GL (Fin 4) (A ℚ)}
 
 private theorem act_mul (hact : ∀ h v, D.act h v = (ρ h).val *ᵥ v) (h h' : GL (Fin 2) (A E)) (v : V4 ℚ) :

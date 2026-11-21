@@ -177,7 +177,7 @@ theorem sesq_ext {F G : V → V → ℂ} {σ : K →+* ℂ} (hσ : ∃ a : K, (�
   · exact absurd h0 hne
   · exact sub_eq_zero.1 h0
 
-theorem exists_im_ne_zero [IsTotallyComplex K] (v : InfinitePlace K) :
+theorem exists_im_ne_zero [_root_.NumberField.IsTotallyComplex K] (v : InfinitePlace K) :
     ∃ a : K, (v.embedding a).im ≠ 0 := by
   have hc : v.IsComplex := IsTotallyComplex.isComplex v
   rw [InfinitePlace.isComplex_iff] at hc
@@ -278,7 +278,7 @@ theorem frame_free : FrameFree := by
   · unfold muMaxDef; rw [h4]
   · unfold muMinDef; rw [h5]
 
-theorem Iso.maj [IsTotallyComplex K] (I : Iso A B) (v : InfinitePlace K) (x y : A.V) :
+theorem Iso.maj [_root_.NumberField.IsTotallyComplex K] (I : Iso A B) (v : InfinitePlace K) (x y : A.V) :
     majAt B.b B.X v (I.e x) (I.e y) = majAt A.b A.X v x y := by
   obtain ⟨a, ha⟩ := exists_im_ne_zero v
   have hA := isSesq_maj A.b A.X v
@@ -578,7 +578,7 @@ theorem Iso.fcoord_eq (I : Iso A B) (hA : FrameOK A) (v : InfinitePlace K) (x : 
   simp only [Iso.umat, Matrix.mulVec_mulVec, Matrix.mul_assoc, Matrix.mul_nonsing_inv _ (hA v),
     Matrix.mul_one]
 
-theorem Iso.umat_star_mul [IsTotallyComplex K] (I : Iso A B) (hA : FrameOK A)
+theorem Iso.umat_star_mul [_root_.NumberField.IsTotallyComplex K] (I : Iso A B) (hA : FrameOK A)
     (v : InfinitePlace K) : (I.umat v).conjTranspose * I.umat v = 1 := by
   have hcol : ∀ i, fcoord B.b B.X v (I.e (A.b i)) = fun k => (I.umat v * (A.X v)⁻¹) k i := by
     intro i
@@ -624,7 +624,7 @@ theorem Iso.umat_mul_symm (I : Iso A B) (hA : FrameOK A) (v : InfinitePlace K) :
     ← Matrix.mul_assoc ((LinearMap.toMatrix A.b B.b I.e.toLinearMap).map v.embedding), hM',
     Matrix.one_mul, Matrix.nonsing_inv_mul _ (hB v)]
 
-theorem Iso.umat_conjTranspose [IsTotallyComplex K] (I : Iso A B) (hA : FrameOK A)
+theorem Iso.umat_conjTranspose [_root_.NumberField.IsTotallyComplex K] (I : Iso A B) (hA : FrameOK A)
     (v : InfinitePlace K) : (I.umat v).conjTranspose = I.symm.umat v := by
   calc (I.umat v).conjTranspose
       = (I.umat v).conjTranspose * (I.umat v * I.symm.umat v) := by
@@ -632,11 +632,11 @@ theorem Iso.umat_conjTranspose [IsTotallyComplex K] (I : Iso A B) (hA : FrameOK 
     _ = I.symm.umat v := by
         rw [← Matrix.mul_assoc, I.umat_star_mul hA, Matrix.one_mul]
 
-theorem Iso.umat_mul_star [IsTotallyComplex K] (I : Iso A B) (hA : FrameOK A)
+theorem Iso.umat_mul_star [_root_.NumberField.IsTotallyComplex K] (I : Iso A B) (hA : FrameOK A)
     (v : InfinitePlace K) : I.umat v * (I.umat v).conjTranspose = 1 := by
   rw [I.umat_conjTranspose hA, I.umat_mul_symm hA]
 
-def Iso.dual [IsTotallyComplex K] (I : Iso A B) (hA : FrameOK A) :
+def Iso.dual [_root_.NumberField.IsTotallyComplex K] (I : Iso A B) (hA : FrameOK A) :
     Iso (HLatOps.dual A) (HLatOps.dual B) where
   e := I.e.symm.dualMap
   map_L := by

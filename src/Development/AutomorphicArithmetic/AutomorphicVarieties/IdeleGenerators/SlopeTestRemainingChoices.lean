@@ -70,7 +70,7 @@ def IsAlgChar (ι : Qbar l ≃+* ℂ) (κ : G F Ω →* (Qbar l)ˣ) : Prop :=
   Continuous κ ∧ ∃ (art : Ideles F →* Gab F Ω) (χ : HChar F) (a : (F →+* ℂ) → ℤ),
     IsGlobalArtin art ∧ IsAlgPos χ a ∧ IsLAdicOf art ι χ a κ
 
-def IsAutC [IsTotallyComplex F] (ι : Qbar l ≃+* ℂ) (r : G F Ω →* GL (Fin n) (Qbar l)) : Prop :=
+def IsAutC [_root_.NumberField.IsTotallyComplex F] (ι : Qbar l ≃+* ℂ) (r : G F Ω →* GL (Fin n) (Qbar l)) : Prop :=
   ∃ π : CuspSub F n, (CG.mk π).IsRegAlg ∧ AttC ι r π
 
 

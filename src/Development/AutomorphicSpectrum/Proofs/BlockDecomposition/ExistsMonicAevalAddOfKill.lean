@@ -108,7 +108,7 @@ theorem exists_monic_aeval_add_of_kill {M : Type*} [AddCommGroup M] [Module ℂ 
     rw [map_mul, Module.End.mul_apply, Polynomial.aeval_X]
     exact h3.symm
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def evK (g : GA E a) : Sm E a →ₗ[ℂ] (Kinf E a → ℂ) where
   toFun φ k := (cptRep E a k φ).1 g
@@ -301,7 +301,7 @@ def archHomeo : archGroup E a ≃ₜ* GL (Fin a) (Cinf E) where
       Continuous.units_map _ (continuous_id.matrix_map (continuous_infEq E))
     exact (archEquiv E a).continuous.comp c1
 
-theorem unifAlpha : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), UnifAlpha E a := by
+theorem unifAlpha : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), UnifAlpha E a := by
   intro E _ _ _ a W _ _ _ ρ _ J hJ _ _ μ hμ
   obtain ⟨d, b, ε, hε, horth, hskew⟩ := exists_archCartanBasis (K := E) (n := a)
   set Ω := omegaOp (E := E) (a := a) (⇑b) ε with hΩ

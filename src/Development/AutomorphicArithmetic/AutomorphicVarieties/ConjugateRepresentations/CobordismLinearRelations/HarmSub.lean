@@ -12,7 +12,7 @@ open scoped TensorProduct
 
 section SlopeTestRemainingChoices
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a}
 
 private theorem rT_adj (r : ℝ) (x : GL (Fin a) (Af E)) (X : Lie E a) (m : Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)) :
     (act (.fin x)).rTensor (Fin Ξ.d → ℂ) (smAdj Ξ r X m) = smAdj Ξ r X ((act (.fin x)).rTensor (Fin Ξ.d → ℂ) m) := by

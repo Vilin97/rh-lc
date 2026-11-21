@@ -92,7 +92,7 @@ theorem real_span (t : (E →+* ℂ) → ℂ) (ht : ConjSymm t) :
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [mixedEmbedding.latticeBasis_apply, mixedEmbedding.commMap_canonical_eq_mixed]
 
-theorem conjugate_ne [IsTotallyComplex E] (σ : E →+* ℂ) : ComplexEmbedding.conjugate σ ≠ σ := by
+theorem conjugate_ne [_root_.NumberField.IsTotallyComplex E] (σ : E →+* ℂ) : ComplexEmbedding.conjugate σ ≠ σ := by
   intro h
   have hr : ComplexEmbedding.IsReal σ := ComplexEmbedding.isReal_iff.mpr h
   exact InfinitePlace.not_isReal_iff_isComplex.mpr (IsTotallyComplex.isComplex (InfinitePlace.mk σ))

@@ -14,7 +14,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrow
 
 namespace GlobalTheory.SiegelTorusInf
 
-theorem exists_diag_infGL (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (r : Fin a → ℝ)
+theorem exists_diag_infGL (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (r : Fin a → ℝ)
     (hr : ∀ i, 0 < r i) : ∃ d : GL (Fin a) (Cinf E), d.val = Matrix.diagonal (fun i => fun _ => (r i : ℂ)) ∧
       diagUnits a (fun i => posIdele (K := E) (r i) (hr i)) = infGL E a d := by
   have h0 : ∀ i, (r i : ℂ) ≠ 0 := fun i => Complex.ofReal_ne_zero.2 (hr i).ne'

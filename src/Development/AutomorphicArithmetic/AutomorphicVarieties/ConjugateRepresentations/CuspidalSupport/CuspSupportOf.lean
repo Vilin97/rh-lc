@@ -48,7 +48,7 @@ open GroundTheory.Automorphic.AutomorphicForm (constantTerm)
 
 namespace UpperTheory.V.Cj.S
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem Supp.congr {a k : ℕ} {m m' : (E →+* ℂ) → Multiset ℂ} {B B' : Pl E → Multiset ℂˣ} (h : Supp E a k m B)
     (hm : ∀ t, m' t = m t) (hB : ∀ᶠ w in Filter.cofinite, B' w = B w) : Supp E a k m' B' := by

@@ -70,7 +70,7 @@ theorem eOf_piK {M : T → GL (Fin a) (Cinf E) → Matrix κ κ ℂ} (h : ∀ t,
 
 
 open Classical in
-theorem coord_hol [IsTotallyComplex E] (τ τ' : E →+* ℂ) :
+theorem coord_hol [_root_.NumberField.IsTotallyComplex E] (τ τ' : E →+* ℂ) :
     (1 / 2 : ℂ) * (coord τ' (atEmb τ 1) - Complex.I * coord τ' (atEmb τ Complex.I)) = if τ' = τ then 1 else 0 := by
   split_ifs with h
   · subst h

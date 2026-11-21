@@ -9,7 +9,7 @@ open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af
 open scoped TensorProduct
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem one_comm (X : Lie E a) (φ : Sm E a) :
     lie E a (oneL E a) (lie E a X φ) = lie E a X (lie E a (oneL E a) φ) := by

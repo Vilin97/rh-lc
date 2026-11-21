@@ -11,7 +11,7 @@ open NumberField IsDedekindDomain MeasureTheory Neutral.B1 ReciprocityTheory.Neu
 
 namespace GlobalTheory.RSJ.Model
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def eLast (R : Type*) [CommRing R] (a : ℕ) : Fin a → R := fun i => if (i : ℕ) + 1 = a then 1 else 0
 
@@ -27,7 +27,7 @@ theorem secRow_eLast {R : Type*} [CommRing R] : secRow (eLast R a) = 1 := by
 
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem secInv_eLast : secInv (eLast (Cinf E) a) = 1 := by
   unfold secInv
   split_ifs with h
@@ -35,13 +35,13 @@ theorem secInv_eLast : secInv (eLast (Cinf E) a) = 1 := by
   · rfl
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem detPow_mul (x : ℝ) (g h : GA E a) : detPow E a x (g * h) = detPow E a x g * detPow E a x h := by
   simp [detPow]
 
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem detPow_ratGL (x : ℝ) (γ : GL (Fin a) E) : detPow E a x (ratGL E a γ) = 1 := by
   have h : Matrix.GeneralLinearGroup.det (ratGL E a γ) = diagUnits E (Matrix.GeneralLinearGroup.det γ) :=
     Units.ext (det_map (algebraMap E (Ad E)) γ)

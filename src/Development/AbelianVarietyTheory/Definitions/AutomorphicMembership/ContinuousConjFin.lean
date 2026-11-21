@@ -19,7 +19,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.CuspRep
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 open Classical in
@@ -42,13 +42,13 @@ def atEmb (τ : E →+* ℂ) (z : ℂ) : Cinf E :=
   Pi.single (InfinitePlace.mk τ) (if (InfinitePlace.mk τ).embedding = τ then z else starRingEnd ℂ z)
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem coord_atEmb (τ : E →+* ℂ) (z : ℂ) : coord τ (atEmb τ z) = z := by
   unfold coord atEmb
   split_ifs <;> simp
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem atEmb_mul (τ : E →+* ℂ) (z z' : ℂ) : atEmb τ z * atEmb τ z' = atEmb τ (z * z') := by
   classical
   unfold atEmb
@@ -56,7 +56,7 @@ theorem atEmb_mul (τ : E →+* ℂ) (z z' : ℂ) : atEmb τ z * atEmb τ z' = a
   split_ifs <;> simp
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem atEmb_eq (τ : E →+* ℂ) (z : ℂ) : atEmb τ z = z.re • atEmb τ 1 + z.im • atEmb τ Complex.I := by
   classical
   unfold atEmb
@@ -78,7 +78,7 @@ theorem atEmb_conj (τ : E →+* ℂ) (z : ℂ) :
   · rw [if_pos (by rw [InfinitePlace.mk_conjugate_eq, h]), if_neg (by rw [h]; exact hne)]; simp
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem atEmb_mul_of_ne {τ τ' : E →+* ℂ} (h : InfinitePlace.mk τ ≠ InfinitePlace.mk τ') (z z' : ℂ) :
     atEmb τ z * atEmb τ' z' = 0 := by
   classical
@@ -200,7 +200,7 @@ theorem Zalg_stable {V : Submodule ℂ (Sm E a)} (hV : ∀ X, ∀ φ ∈ V, lie 
   · exact S.zero_mem
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def chiDet (a : ℕ) (χ : HChar E) : GA E a →* ℂˣ := χ.1.comp GeneralLinearGroup.det
 
 def chiInf (χ : HChar E) : (Cinf E)ˣ →* ℂˣ := χ.1.comp (infId E)
@@ -295,7 +295,7 @@ theorem rt_mulChi (χ : HChar E) (h : GA E a) (φ : Sm E a) :
     simp only [rt_apply, mulChi_apply, map_mul, Units.val_mul, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul]; ring
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem fderiv_det_one (X : Lie E a) :
     fderiv ℝ (fun x : Lie E a => (Matrix.of x).det) (oneL E a) X = (Matrix.of X).trace := by
   have hd : HasFDerivAt (fun x : Lie E a => (Matrix.of x).det)
@@ -417,7 +417,7 @@ section Conj
 
 open GlobalTheory.Mem.Chr
 
-omit [IsTotallyComplex E]
+omit [_root_.NumberField.IsTotallyComplex E]
 
 def conjSrc (c : E ≃+* E) (v : HeightOneSpectrum (𝓞 E)) : HeightOneSpectrum (𝓞 E) :=
   (existsUnique_conjPl c.symm v).exists.choose

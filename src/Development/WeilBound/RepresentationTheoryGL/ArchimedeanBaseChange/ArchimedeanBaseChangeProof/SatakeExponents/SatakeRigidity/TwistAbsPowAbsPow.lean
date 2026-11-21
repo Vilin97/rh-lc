@@ -62,7 +62,7 @@ theorem absPow_mul_absPow (E : Type) [Field E] [NumberField E] (x y : ℝ) :
   push_cast
   ring_nf
 
-theorem twist_absPow_absPow {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (P : CuspSub E a)
+theorem twist_absPow_absPow {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (P : CuspSub E a)
     (x y : ℝ) : (CG.mk (P.twist (absPow E x))).twist (absPow E y) = CG.mk (P.twist (absPow E (x + y))) := by
   rw [← absPow_mul_absPow]
   exact (CG.twist_mul (CG.mk P) _ _).symm

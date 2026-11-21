@@ -22,7 +22,7 @@ noncomputable section
 
 namespace GlobalTheory.GLPoly
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem commute_lieS' {z : Module.End ℂ (Sm E a)} (hz : ∀ X, Commute z (lie E a X)) (i j : Fin a) (x : Cinf E) :
     Commute z (lieS E a i j x) := by
@@ -89,7 +89,7 @@ theorem exists_poly_one (W : Submodule ℂ (Kinf E a → ℂ)) (hW : FiniteDimen
     rw [foldr_replicate'] at h
     exact h
 
-theorem exists_poly_formsGL : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
+theorem exists_poly_formsGL : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
     ∀ (L : Subgroup (GL (Fin a) (Af E))) (W : Submodule ℂ (Kinf E a → ℂ)), FiniteDimensional ℂ W →
     ∀ X : Set (Module.End ℂ (Sm E a) → ℂ), X.Finite → ∀ N : ℕ, ∃ p : Polynomial ℂ, p ≠ 0 ∧
       ∀ φ ∈ GlobalTheory.HCF.formsGL E a L W X N, Polynomial.aeval (lapOp E a) p φ = 0 := by

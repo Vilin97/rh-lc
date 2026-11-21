@@ -83,7 +83,7 @@ def LawOff (S : Finset (Pl E)) (P : GA E k → ℂ) (a : Off E S → (Fin k → 
     ∀ κ ∈ GLnLocal.integralGL (w.1.adicCompletion E) k, ∀ l : Fin k → ℤ,
       P (g * fl k w.1 (n * Iwasawa.torusPow (w.1.adicCompletion E) k l * κ)) = P g * a w l
 
-def SphOff [IsTotallyComplex E] {X : Type} (S : Finset (Pl E)) (P : GA E k → X) : Prop :=
+def SphOff [_root_.NumberField.IsTotallyComplex E] {X : Type} (S : Finset (Pl E)) (P : GA E k → X) : Prop :=
   ∀ g κ : GA E k, cInf κ = 1 → (∀ w ∈ S, cLoc w κ = 1) →
     (∀ w, cLoc w κ ∈ GLnLocal.integralGL (w.adicCompletion E) k) → P (g * κ) = P g
 
@@ -97,7 +97,7 @@ def sumF (f : GA E k → ℂ) (g : GA E k) : ℂ := ∑' ξ : RowT E k k, f (rat
 def PW (ψ : AddChar (Ad E) ℂ) (f φ : GA E k → ℂ) (g : GA E k) : ℂ :=
   whit ψ (k - 1) f g * conj (whit ψ (k - 1) φ g)
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 structure Dat (ψ : AddChar (Ad E) ℂ) (S : Finset (Pl E)) {m : ℕ} (α : Off E S → Fin m → ℂˣ)
     (β : Off E S → Fin k → ℂˣ) (u : ℝ) (f φ : GA E k → ℂ) : Prop where
@@ -129,22 +129,22 @@ variable (E k) in
 def band : Set (GA E k) := {g | 1 ≤ Dt g ∧ Dt g < Dt (splitCentre E k 1)}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def embM {R : Type} [CommRing R] (m : ℕ) (A : Matrix (Fin k) (Fin k) R) : Matrix (Fin m) (Fin m) R :=
   Matrix.of fun i c => if h : (i : ℕ) < k ∧ (c : ℕ) < k then A ⟨i, h.1⟩ ⟨c, h.2⟩ else (1 : Matrix (Fin m) (Fin m) R) i c
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def IsEmb {R : Type} [CommRing R] {m : ℕ} (ι : GL (Fin k) R →* GL (Fin m) R) : Prop := ∀ g, (ι g).val = embM m g.val
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def pT (ψ : AddChar (Ad E) ℂ) (j : ℕ) : ℕ → (GA E k → ℂ) → GA E k → ℂ
   | 0, f => f
   | d + 1, f => pT ψ j d (colT ψ (j + d) f)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def psN (ψ : AddChar (Ad E) ℂ) (n : GA E k) : ℂ :=
   ψ (∑ p : Fin k × Fin k with (p.2 : ℕ) = p.1 + 1, n.val p.1 p.2)
 

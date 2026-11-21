@@ -10,7 +10,7 @@ open NumberField GlobalTheory.CuspRep MeasureTheory
 
 namespace PositivityTheory.Affgl
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def Cofin (J : Set (Module.End ℂ (Sm E a))) : Prop :=
   J ⊆ Zalg E a ∧ ∃ V : Submodule ℂ (Module.End ℂ (Sm E a)), FiniteDimensional ℂ V ∧

@@ -34,7 +34,7 @@ private theorem ptF_rat (γ : GL (Fin a) E) (g : GA E a) (v : Fin a → E) :
   change vFin v ᵥ* _ = vFin (v ᵥ* γ.val) ᵥ* _
   rw [h, map_mul, Units.val_mul, Matrix.vecMul_vecMul]
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private theorem pt_rat (γ : GL (Fin a) E) (g : GA E a) (v : Fin a → E) :
     pt (ratGL E a γ * g) v = pt g (v ᵥ* γ.val) := by

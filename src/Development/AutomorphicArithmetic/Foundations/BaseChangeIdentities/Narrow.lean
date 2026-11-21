@@ -38,7 +38,7 @@ def DefiniteN : Prop :=
         (m : Fin c → (E →+* ℂ) → Multiset ℂ), IsBaseChangeU π h V σ m
 
 def AscComp : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ), 1 ≤ N →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ), 1 ≤ N →
     (∀ (a : ℕ) (π : CuspSub E a), a = N → IsNormalised π →
       ∃ V : Submodule ℂ (Sm E N), IsDiscrete V ∧ AscEmb V π 1) ∧
     ∀ V : Submodule ℂ (Sm E N), IsDiscrete V → ∀ (a d : ℕ) (π : CuspSub E a),

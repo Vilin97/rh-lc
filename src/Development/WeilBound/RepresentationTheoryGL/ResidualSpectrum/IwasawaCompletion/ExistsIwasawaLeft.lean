@@ -14,7 +14,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace PositivityTheory.Rg.Rs.C3.Fl
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N c : ℕ} {n : Fin c → ℕ} (h : ∑ i, n i = N)
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N c : ℕ} {n : Fin c → ℕ} (h : ∑ i, n i = N)
 
 theorem infGL_leviEmb (m : ∀ i, GL (Fin (n i)) (Cinf E)) :
     infGL E N (leviEmb (Cinf E) (stdBlocks n h) m) = leviEmb (Ad E) (stdBlocks n h) fun i => infGL E (n i) (m i) :=

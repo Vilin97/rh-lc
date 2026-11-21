@@ -85,7 +85,7 @@ def GenInputs {E : Type} [Field E] [NumberField E] {r : ℕ} (X : PB.Terms τ Rw
 end Abs
 
 def RowGenAbstract : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (τ Rw I H H₁ : Type) [Fintype I]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (τ Rw I H H₁ : Type) [Fintype I]
     [NormedAddCommGroup H] [InnerProductSpace ℂ H] [NormedAddCommGroup H₁] [InnerProductSpace ℂ H₁]
     [CompleteSpace H₁] (X : PB.Terms τ Rw I H H₁) (r : ℕ) (Cl Nu : Type) (N : PN.NGData τ E r Cl Nu)
     (C1 C0 Aexp : ℕ) (Pc gf cSt AAre e1 TB : ℝ),
@@ -99,7 +99,7 @@ def RowGenAbstract : Prop :=
 def RowGenJoint : Prop :=
   ∀ (C1 C0 A : ℕ) (CB CSt Cg CT : ℝ), 0 ≤ CB → 0 ≤ CSt → 0 ≤ Cg → 0 ≤ CT →
     C1 + C0 + 38 ≤ A → ∃ Cn : ℝ, 0 ≤ Cn ∧
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (τ Rw I H H₁ : Type) [Fintype I]
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (τ Rw I H H₁ : Type) [Fintype I]
       [NormedAddCommGroup H] [InnerProductSpace ℂ H] [NormedAddCommGroup H₁] [InnerProductSpace ℂ H₁]
       [CompleteSpace H₁] (X : PB.Terms τ Rw I H H₁) (r k : ℕ) (Cl Nu : Type) (N : PN.NGData τ E r Cl Nu)
       (P : Type) [Fintype P] (B : S3.MassData P) (b rd g TT cSt e1 Irat Ire : ℝ),

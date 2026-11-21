@@ -14,7 +14,7 @@ open scoped TensorProduct
 
 attribute [local instance 100] LieRing.ofAssociativeRing
 
-private theorem UpperTheory.ConvolutionTheory.Dp.jGen_along {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (τ : E →+* ℂ) (z : ℂ) :
+private theorem UpperTheory.ConvolutionTheory.Dp.jGen_along {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (τ : E →+* ℂ) (z : ℂ) :
     Cm.mixEq E (GlobalTheory.CuspRep.atEmb τ z) = UpperTheory.ConvolutionTheory.along τ z := by
   refine Cm.mixed_ext fun w => ?_
   have h : (Cm.mixEq E (GlobalTheory.CuspRep.atEmb τ z)).2 w = GlobalTheory.CuspRep.atEmb τ z w.1 := Cm.mixRing_snd _ w
@@ -24,7 +24,7 @@ private theorem UpperTheory.ConvolutionTheory.Dp.jGen_along {E : Type} [Field E]
   · rw [if_pos e, if_pos e, e]
   · rw [if_neg e, if_neg e]
 
-private theorem UpperTheory.ConvolutionTheory.Dp.jGen_lie {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (τ : E →+* ℂ)
+private theorem UpperTheory.ConvolutionTheory.Dp.jGen_lie {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (τ : E →+* ℂ)
     (a b : Fin n) (z : ℂ) :
     Cm.ιC E n (GlobalTheory.CuspRep.toL (Matrix.single a b (GlobalTheory.CuspRep.atEmb τ z))) = (1 : ℂ) ⊗ₜ UpperTheory.ConvolutionTheory.elem τ a b z := by
   rw [Cm.ιC_apply, UpperTheory.ConvolutionTheory.elem]
@@ -37,7 +37,7 @@ private theorem UpperTheory.ConvolutionTheory.Dp.jGen_lie {E : Type} [Field E] [
   · exact UpperTheory.ConvolutionTheory.Dp.jGen_along τ z
   · exact map_zero _
 
-private theorem UpperTheory.ConvolutionTheory.Dp.jGen_gen {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (τ : E →+* ℂ)
+private theorem UpperTheory.ConvolutionTheory.Dp.jGen_gen {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (τ : E →+* ℂ)
     (a b : Fin n) :
     (2⁻¹ : ℂ) ⊗ₜ UpperTheory.ConvolutionTheory.elem τ a b 1 - (2⁻¹ * Complex.I) ⊗ₜ UpperTheory.ConvolutionTheory.elem τ a b Complex.I = Cm.genC τ a b := by
   rw [Cm.genC, AlgRepEndIrreducible.eL, UpperTheory.ConvolutionTheory.Dp.jGen_lie, UpperTheory.ConvolutionTheory.Dp.jGen_lie, TensorProduct.smul_tmul', smul_sub,

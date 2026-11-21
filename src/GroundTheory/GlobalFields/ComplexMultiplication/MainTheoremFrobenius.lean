@@ -102,10 +102,10 @@ end Scaling
 section Main
 
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K] {L : IntermediateField K ℂ} [NumberField L]
+  [_root_.NumberField.IsTotallyComplex K] {L : IntermediateField K ℂ} [NumberField L]
 
 
-omit [NumberField K] [IsTotallyComplex K] in
+omit [NumberField K] [_root_.NumberField.IsTotallyComplex K] in
 theorem isPrimitiveRoot_localizationAt (𝔓 : HeightOneSpectrum (𝓞 L)) {ζ : L}
     (hζ : IsPrimitiveRoot ζ 12) :
     IsPrimitiveRoot (algebraMap (𝓞 L) (localizationAt L 𝔓) hζ.toInteger) 12 :=

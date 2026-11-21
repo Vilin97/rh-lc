@@ -24,7 +24,7 @@ open scoped ComplexConjugate Classical
 open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E
 
 open Formalism.L2.Host.CT UpperTheory.V.FieldIso in
-private theorem swap_one {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} {μ : Measure (G1 E n)}
+private theorem swap_one {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} {μ : Measure (G1 E n)}
     [μ.IsHaarMeasure] (σ : E ≃+* E) (θ : Twist μ) (hθ : UpperTheory.ConvolutionTheory.K.IsGal σ θ) {V V' : Submodule ℂ (L2 μ)}
     (hV : IsSummand μ V) (e : V'.map (θ.U : L2 μ →ₗ[ℂ] L2 μ) = V) :
     (∀ (τ : E →+* ℂ) m, SInf μ V τ m ↔ SInf μ V' (τ.comp σ.toRingHom) m) ∧

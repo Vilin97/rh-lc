@@ -75,7 +75,7 @@ private theorem character_placeEmbed_exp (w : InfinitePlace F) (t : ℝ) (q : A 
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.curveE :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F) (W : Weil D), CurveE O W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F) (W : Weil D), CurveE O W := by
   intro F E _ _ _ _ _ _ _ D O W w
   refine ⟨fun t => nU (Fo.at1 w t), cU w, ⟨cU_add w, cU_der w⟩, unipotent_placeEmbed_gl w, fun φ t v => ?_⟩
   have he : (O.e D.δ w φ).1 v = Fo.cc * Fo.cw w (q4 D.δ v) * φ.1 v := by

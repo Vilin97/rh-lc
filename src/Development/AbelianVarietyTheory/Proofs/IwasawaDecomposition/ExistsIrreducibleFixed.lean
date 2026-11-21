@@ -250,7 +250,7 @@ theorem exists_hasSatake_of_unr (H : IsRec h rc) {σ : IrrRep (GL (Fin a) (w.adi
   exact ⟨_, σ.irr, fixed_ne_bot_of_equiv φ hτ.2.1,
     (IsSubquotient.of_surjective φ.toIntertwiningMap φ.toLinearEquiv.surjective).trans hτ.2.2⟩
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def locPar (hL : GlobalTheory.Published.LocalLanglandsGL) (π : CG E a) (h : IsPlaceOver A w) : WD h :=
   locRec hL h ⟨a, toCl (π.loc w)⟩
@@ -448,7 +448,7 @@ theorem map_jumps_iff {a : ℕ} {m : Multiset ℂ} (J : Multiset ℤ) :
     exact ⟨-n, by push_cast; linear_combination hn⟩
   exact ⟨h, Multiset.map_injective Int.cast_injective (e.trans (map_jumps h).symm)⟩
 
-def jumpsInf {E Q : Type} [Field E] [NumberField E] [IsTotallyComplex E] [Field Q] (ι : Q ≃+* ℂ) {a : ℕ} (π : CGu E a)
+def jumpsInf {E Q : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Q] (ι : Q ≃+* ℂ) {a : ℕ} (π : CGu E a)
     (τ : E →+* Q) : Multiset ℤ := jumps a (π.infChar (ι.toRingHom.comp τ))
 
 def jumpsWt {E Q : Type} [Field E] [Field Q] (ι : Q ≃+* ℂ) (n : ℕ) (wt : (E →+* ℂ) → Multiset ℂ) (τ : E →+* Q) :

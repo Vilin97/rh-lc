@@ -43,7 +43,7 @@ private theorem cmp_sum (L : Module.End ℂ S) (c : ℂ) (j : Fin d) (m : S ⊗[
 
 end Components
 
-private theorem cmp_apply {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a d : ℕ}
+private theorem cmp_apply {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a d : ℕ}
     (m : Sm E a ⊗[ℂ] (Fin d → ℂ)) (j : Fin d) (g : GA E a) : (cmp j m).1 g = ev m g j := by
   induction m using TensorProduct.induction_on with
   | zero => simp

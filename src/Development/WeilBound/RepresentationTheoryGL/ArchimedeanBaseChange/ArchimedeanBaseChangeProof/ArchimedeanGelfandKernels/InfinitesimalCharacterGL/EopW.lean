@@ -17,7 +17,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.UnitaryBC Polynomial Finset
 
 namespace PositivityTheory.RgBcC.Bridge
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 open Classical in

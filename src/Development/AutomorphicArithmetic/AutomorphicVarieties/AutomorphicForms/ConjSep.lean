@@ -172,7 +172,7 @@ end Sat
 
 section Fin
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem act_fin_comm (k : GL (Fin a) (Af E)) (o : Op E a) (ho : ∀ k', o ≠ .fin k') :
     act o * act (.fin k) = act (.fin k) * act o := by

@@ -45,7 +45,7 @@ private theorem exPhi {F : Type} [Field F] [NumberField F] [IsTotallyReal F] {v 
   exact ⟨φ, h.trans (by rw [hT])⟩
 
 theorem UpperTheory.ConvolutionTheory.R2.I.omSL :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F) (θ : Kv v), θ ^ 2 = algebraMap F (Kv v) D.δ → θ ≠ 0 →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F) (θ : Kv v), θ ^ 2 = algebraMap F (Kv v) D.δ → θ ≠ 0 →
       ∀ u u', GoodU v D.δ θ u → GoodU v D.δ θ u' → (∀ a ∈ SB (M2 v), ∀ φ : S4 F, φ.1 = ten v θ u (Pt a) →
         (W.Om (wW F) φ).1 = ten v θ u' (Pt fun m => a (m * !![0, 1; -1, 0]))) → Mod v θ W u' := by
   intro F E _ _ _ _ _ _ _ D W v θ hθ hθ0 u u' hu hu' hw

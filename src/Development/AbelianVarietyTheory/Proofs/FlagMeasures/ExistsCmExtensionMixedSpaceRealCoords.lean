@@ -11,7 +11,7 @@ open scoped TensorProduct ENNReal nonZeroDivisors Classical
 namespace GlobalTheory.SnMass.ReCoords
 
 theorem comap_bij (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    [IsTotallyReal F] [IsTotallyComplex E] (h2 : Module.finrank F E = 2) :
+    [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (h2 : Module.finrank F E = 2) :
     Function.Bijective fun w : InfinitePlace E => w.comap (algebraMap F E) := by
   rw [Fintype.bijective_iff_surjective_and_card]
   refine ⟨InfinitePlace.comap_surjective (k := F) (K := E), ?_⟩

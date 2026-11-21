@@ -126,7 +126,7 @@ private theorem lact_elem {K : Type} [Field K] [NumberField K] {n : ℕ} (β : T
   exact (isExpLieAlgebra K n).hasDerivAt_rightDeriv
     (f := fun g => β g⁻¹) h (xL n τ p q z) x
 
-private theorem leftAction_tensor_generator (D : InfD σ m) [IsTotallyComplex F] (n : ℕ) (τ : E →+* ℂ) (k : Fin (m + 1)) (hk : InSlot D τ k)
+private theorem leftAction_tensor_generator (D : InfD σ m) [_root_.NumberField.IsTotallyComplex F] (n : ℕ) (τ : E →+* ℂ) (k : Fin (m + 1)) (hk : InSlot D τ k)
     (φ : Fin (m + 1) → TI F n) (β : TI E n) (hφ : ∀ i, SmoothT (φ i)) (hβ : IsTens D φ β) (p q : Fin n) (z : ℂ) :
     IsTens D (Function.update φ k (lact ((1 : ℂ) ⊗ₜ elem (τ.comp (algebraMap F E)) p q z) (φ k)))
       (lact ((1 : ℂ) ⊗ₜ elem τ p q z) β) := by

@@ -10,7 +10,7 @@ open scoped Classical
 open UpperTheory.ConvolutionTheory.R2
 
 theorem UpperTheory.ConvolutionTheory.R2.datNeg :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex E] (δ : F) (θ : E) (b : Module.Basis (Fin 2) F E),
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex E] (δ : F) (θ : E) (b : Module.Basis (Fin 2) F E),
       b 0 = 1 → b 1 = θ → θ ^ 2 = algebraMap F E δ → ∀ φ : F →+* ℝ, φ δ < 0 := by
   intro F E _ _ _ _ _ _ δ θ b h0 h1 hθ φ
   by_contra hneg

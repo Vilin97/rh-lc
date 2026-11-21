@@ -17,7 +17,7 @@ open NumberField Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Globa
 
 namespace GlobalTheory.LeviGL.ZGood
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem zalg_commute {z z' : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) (hz' : z' ∈ Zalg E a) : Commute z z' := by
   first

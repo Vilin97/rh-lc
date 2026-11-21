@@ -33,7 +33,7 @@ theorem interp {K : Type} (A : Submodule ℂ (K → ℂ)) [FiniteDimensional ℂ
   simp only [map_smul, Submodule.coe_sum, Submodule.coe_smul] at h3
   exact h3.symm
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem slice_mem {r s : ℕ} {L : Subgroup (GL (Fin (r + s)) (Af E))} {W : Type} [AddCommGroup W] [Module ℂ W]
     (ρ : Representation ℂ (Kinf E (r + s)) W) {J : Set (Module.End ℂ (Sm E (r + s)))} (hJ : J ⊆ Zalg E (r + s))

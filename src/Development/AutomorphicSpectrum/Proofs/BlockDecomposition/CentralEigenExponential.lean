@@ -24,7 +24,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.Clozel
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in
@@ -61,7 +61,7 @@ theorem hasDerivAt_scalarCurve :
     rw [e, o]
     exact hasDerivAt_const (0 : ℝ) (0 : ℂ)
 
-theorem eigen_along_splitCentre : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a) (c : ℂ),
+theorem eigen_along_splitCentre : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a) (c : ℂ),
     lie E a (oneL E a) φ = c • φ → ∀ (t : ℝ) (g : GA E a),
       φ.1 (GlobalTheory.UnitaryBC.splitCentre E a t * g) = Complex.exp (c * t) * φ.1 g := by
   intro E _ _ _ a φ c hφ t g

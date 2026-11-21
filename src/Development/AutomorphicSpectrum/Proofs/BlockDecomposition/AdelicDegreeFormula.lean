@@ -21,7 +21,7 @@ theorem exists_leftInv {K : Type} [Field K] {n k : ℕ} (M : Matrix (Fin n) (Fin
     rw [Matrix.toLin'_apply', hg, LinearMap.toMatrix'_id]
   rwa [LinearMap.toMatrix'_comp, LinearMap.toMatrix'_toLin'] at h1
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n k : ℕ}
 
 theorem frame_mul (x t : GA E n) (s : GA E k) (M : Matrix (Fin n) (Fin k) E)
     (h : t.val * M.map (algebraMap E (Ad E)) = M.map (algebraMap E (Ad E)) * s.val) :

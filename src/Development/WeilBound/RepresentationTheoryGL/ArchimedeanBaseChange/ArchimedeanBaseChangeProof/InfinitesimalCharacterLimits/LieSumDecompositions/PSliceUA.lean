@@ -12,7 +12,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm Positivit
 
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.LieSumUnipotentSlice
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 theorem F_slicesU (V : Submodule ℂ (Sm E (r + s))) (hVs : _root_.GlobalTheory.CuspRep.IsStable V) (hVa : ∀ φ ∈ V, IsAutForm φ)
     (hsc : ∀ (τ : E →+* ℂ) (u : ℂ), ∃ c : ℂ, ∀ ψ ∈ V, cap τ u ψ = c • ψ) (T : Sm E (r + s) →ₗ[ℂ] Sm E (r + s))

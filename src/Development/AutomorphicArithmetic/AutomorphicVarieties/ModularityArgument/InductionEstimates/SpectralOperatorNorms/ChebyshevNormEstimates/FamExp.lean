@@ -97,7 +97,7 @@ private theorem eigP_comm {d : ℕ} (a u : Eu d →L[ℂ] Eu d) (ha : IsSelfAdjo
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.famExp :
-    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (N : Eu 𝔵.d' ≃ₗᵢ[ℂ] Eu 𝔵.d) (C₀ : ℝ), Family2 μ 𝔵.A 𝔵.A' 𝔵.P N C₀ → 0 ≤ 𝔢.toAmp.A → ‖𝔢.toAmp.A‖ ≤ 1 →
+    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (N : Eu 𝔵.d' ≃ₗᵢ[ℂ] Eu 𝔵.d) (C₀ : ℝ), Family2 μ 𝔵.A 𝔵.A' 𝔵.P N C₀ → 0 ≤ 𝔢.toAmp.A → ‖𝔢.toAmp.A‖ ≤ 1 →
       (∃ sp : Finset ℝ, (∀ x, x ∈ sp ↔ 0 < x ∧ Module.End.eigenspace (𝔵.a₀ : Eu 𝔵.d' →ₗ[ℂ] Eu 𝔵.d') (x : ℂ) ≠ ⊥) ∧ (∀ x ∈ sp, x ≤ 1) ∧
         ∀ x : ℝ, 0 < x → x ∉ sp → ∀ j, 𝔵.tr N x j = 0) ∧
       ∀ x : ℝ, ∃ (s : Finset ℂ) (c : ℂ → ℂ), 0 ∉ s ∧ ∀ᶠ j : ℕ in atTop, 𝔵.tr N x j = ∑ ζ ∈ s, c ζ * ζ ^ j := by

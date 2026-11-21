@@ -88,7 +88,7 @@ private theorem lev_lv (a b : G1 K 2) (s t : ℝ) :
   rw [blkLaws.1, ← zt_blk, blkLaws.2.2.2.2.2.1, hc, hc, ← mul_assoc, ← mul_assoc, ← zt_add, ← zt_add]
   congr 3 <;> ring
 
-variable [IsTotallyComplex K]
+variable [_root_.NumberField.IsTotallyComplex K]
 
 private theorem blo_rd {S : Set (Pl K)} (b : Blo S 2) (τ : Submodule ℂ (L2 (mu1 K 2)))
     (h : ((cuspToL2 (mu1 K 2) ⟨b.f.1, b.cusp⟩ : cuspidalL2 (mu1 K 2)) : L2 (mu1 K 2)) ∈ τ) :

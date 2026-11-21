@@ -183,7 +183,7 @@ private theorem ind_inv {G : Type*} [Group G] (H : Subgroup G) {k : G} (hk : k �
       Set.indicator_of_notMem (show x ∉ (H : Set G) from hx)]
 end SlopeTestRemainingChoices
 theorem UpperTheory.ConvolutionTheory.GM.termF :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F] [IsTotallyComplex E] (σ : E ≃ₐ[F] E),
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E),
     (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
     ∀ (μ : Measure (normOneGL (K := F) (n := n))) [μ.IsHaarMeasure] (q : Pl F) (w₀ : PlacesOver E q) (q₀ : PlacesOver F q)
       (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (aF : TI F n) (L : Loc σ n q w₀) (ν : Fin n → ℤ), Good ν →

@@ -219,7 +219,7 @@ end UpperTheory.ConvolutionTheory.BW
 
 open UpperTheory.ConvolutionTheory.BW GlobalTheory.CuspRep in
 theorem UpperTheory.ConvolutionTheory.BW.eigComp :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.EigComp E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.EigComp E := by
   intro E _ _ _ S r ρ ψ hr hu hc hk hs h0
   obtain ⟨V, hV, f, hf, hi, hx⟩ := exists_form' (mu1 E r) hu.left ((umgOps E r).2 ψ hu).1
     (by simpa using rapidDecay E r ψ hu hc 0) hc h0

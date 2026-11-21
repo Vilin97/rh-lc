@@ -75,7 +75,7 @@ theorem satEig_add {q r s N : ℕ} (hq : q ≠ 0) (h : r + s = N) {C B : Multise
     rw [e, Complex.cpow_add _ _ hq', Complex.cpow_add _ _ hq']
     ring
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {v : HeightOneSpectrum (𝓞 E)} {N r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {v : HeightOneSpectrum (𝓞 E)} {N r s : ℕ}
 
 section Lin
 

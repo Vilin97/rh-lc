@@ -16,7 +16,7 @@ open scoped TensorProduct
 
 namespace PositivityTheory.Rg.Rs.SatakeVectors
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 namespace Core
 

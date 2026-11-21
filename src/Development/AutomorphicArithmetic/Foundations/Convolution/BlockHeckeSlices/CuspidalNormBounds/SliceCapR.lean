@@ -22,7 +22,7 @@ open MeasureTheory NumberField GlobalTheory.CuspRep GlobalTheory.CompanionTheory
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace UpperTheory.ConvolutionTheory.BW UpperTheory.V.Cm
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r : ℕ}
 
 private theorem tr_one (τ : E →+* ℂ) : ∑ σ : E →+* ℂ, coord σ (atEmb τ 1) = 2 := by
   classical
@@ -100,7 +100,7 @@ private theorem exists_form (hr : 0 < r) {Φ ψ : Sm E r} (hΦ : Umg Φ) (hψ : 
 variable (E r) in
 private noncomputable def zL : Lie E r := ((r * Module.finrank ℚ E : ℕ) : ℝ)⁻¹ • oneL E r
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem coord_zL (τ : E →+* ℂ) (i k : Fin r) :
     coord τ (zL E r i k) = if i = k then ((r * Module.finrank ℚ E : ℕ) : ℂ)⁻¹ else 0 := by
   have : zL E r i k = ((r * Module.finrank ℚ E : ℕ) : ℝ)⁻¹ • (1 : Matrix (Fin r) (Fin r) (Cinf E)) i k := rfl
@@ -296,7 +296,7 @@ private theorem embGL_eq {R : Type} [CommRing R] (r s : ℕ) (g : GL (Fin r) R) 
 end
 
 theorem UpperTheory.ConvolutionTheory.BW.sliceCapR :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceCapR E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceCapR E := by
   intro E _ _ _ S r s b t φ τ u hφ
   funext m
   obtain ⟨F, hF, -, -, hu⟩ := ctOps E r s φ hφ

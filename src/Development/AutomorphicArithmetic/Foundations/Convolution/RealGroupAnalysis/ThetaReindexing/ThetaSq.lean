@@ -86,7 +86,7 @@ private theorem act_nU (D : Dat F E) (u t s z₀ z₁ : A F) :
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.ConvolutionTheory.R2.D.hatNE :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ u t φ x z₀ z₁, hat (W.L (gl (nU (D.mkE u t))) φ).1 ![0, x, z₀, z₁] =
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ u t φ x z₀ z₁, hat (W.L (gl (nU (D.mkE u t))) φ).1 ![0, x, z₀, z₁] =
       ψ (-(x * (2 * (u * z₀ - rt D.δ * (t * z₁))))) * hat φ.1 ![0, x, z₀, z₁] := by
   intro F E _ _ _ _ _ _ _ D W u t φ x z₀ z₁
   set T : A F := 2 * (u * z₀ - rt D.δ * (t * z₁)) with hT

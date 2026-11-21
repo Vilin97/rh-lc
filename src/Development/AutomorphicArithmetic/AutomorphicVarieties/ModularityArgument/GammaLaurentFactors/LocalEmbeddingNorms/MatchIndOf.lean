@@ -222,11 +222,11 @@ private theorem pick_spec {X : Type} {sat : X → Multiset ℂˣ → Prop} {w : 
   rw [pick, dite_eq_left h']
   exact h'.choose_spec
 
-private theorem sat_unique {F : Type} [Field F] [NumberField F] [IsTotallyComplex F] {n : ℕ} (σ : CuspSub F n)
+private theorem sat_unique {F : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] {n : ℕ} (σ : CuspSub F n)
     {w : HeightOneSpectrum (𝓞 F)} {B B' : Multiset ℂˣ} (h : (CG.mk σ).HasSat w B) (h' : (CG.mk σ).HasSat w B') : B = B' :=
   GlobalTheory.LFun.HasSatGL.unique ((CG.hasSat_mk σ w B).1 h) ((CG.hasSat_mk σ w B').1 h')
 
-private theorem sat_card {F : Type} [Field F] [NumberField F] [IsTotallyComplex F] {n : ℕ} (σ : CuspSub F n)
+private theorem sat_card {F : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] {n : ℕ} (σ : CuspSub F n)
     {w : HeightOneSpectrum (𝓞 F)} {B : Multiset ℂˣ} (h : (CG.mk σ).HasSat w B) : Multiset.card B = n :=
   GlobalTheory.LFun.HasSatGL.card ((CG.hasSat_mk σ w B).1 h)
 
@@ -319,7 +319,7 @@ private theorem Key.sat {sat : HeightOneSpectrum (𝓞 M) → Multiset ℂˣ →
   · exact ⟨⟨_, h1⟩, _, h⟩
   · exact ⟨⟨_, h1⟩, _, h⟩
 
-private theorem key_twist [IsTotallyComplex K] [IsTotallyComplex M] (h2 : Module.finrank K M = 2)
+private theorem key_twist [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex M] (h2 : Module.finrank K M = 2)
     {P : CuspSub K (2 * 2)} {π : CuspSub M 2} (χ : HChar K) (ξ : HChar M)
     (hξ : ∀ w : HeightOneSpectrum (𝓞 M), χ.UnrAt (w.under (𝓞 K)) →
       ξ.UnrAt w ∧ ξ.val w = χ.val (w.under (𝓞 K)) ^ (w.under (𝓞 K)).asIdeal.inertiaDeg' w.asIdeal)
@@ -349,7 +349,7 @@ private theorem key_twist [IsTotallyComplex K] [IsTotallyComplex M] (h2 : Module
     · have h := hBP.twist hu
       simpa [Multiset.map_add (f := _), Multiset.map_map, Function.comp_def] using h
 
-private theorem core [IsTotallyComplex K] [IsTotallyComplex M] (hOps : PairGOps) (hCross : CrossG) (hSide : SideG)
+private theorem core [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex M] (hOps : PairGOps) (hCross : CrossG) (hSide : SideG)
     (h2 : Module.finrank K M = 2) (P : CuspSub K (2 * 2)) (π : CuspSub M 2) (S : Finset (HeightOneSpectrum (𝓞 K)))
     (hkey : ∀ w : HeightOneSpectrum (𝓞 M), w.under (𝓞 K) ∉ S → Key (CG.mk π).HasSat (CG.mk P).HasSat w)
     (hK : GroundTheory.Automorphic.GJStandardL.ramifiedPlaces K ⊆ S)

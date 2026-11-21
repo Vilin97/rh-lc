@@ -22,7 +22,7 @@ abbrev G1 : Type := Reduction.normOneGL (K := E) (n := a)
 
 abbrev Γ1 : Subgroup (G1 E a) := Reduction.rationalGLOne (K := E) (n := a)
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def band : Set (GA E a) :=
   {g | a = 0 ∨ (1 ≤ Reduction.detModule E a g ∧
@@ -47,40 +47,40 @@ def cmp {μ : Measure (GA E a)} {μ₁ : Measure (G1 E a)} [μ₁.IsHaarMeasure]
 end Defs
 
 def SplitEq : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (t : ℝ),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (t : ℝ),
     splitCentre E a t =
       Reduction.centralSection E a ⟨Real.exp (a * Module.finrank ℚ E * t), Real.exp_pos _⟩
 
 def QuotMk : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (g : GA E a),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (g : GA E a),
     quotMap E a (mk (latticeGL E a) g) = RightCosetSpace.mk (Γ1 E a) (retractOne g)
 
 def MuHaar : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure],
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure],
     (muOne μ).IsHaarMeasure
 
 def BandDom : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (D : Set (G1 E a)),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (D : Set (G1 E a)),
     (∀ x : G1 E a, ∃! γ : Γ1 E a, γ • x ∈ D) →
     ∀ g : GA E a, ∃! γ : latticeGL E a, γ • g ∈ retractOne ⁻¹' D ∩ band E a
 
 def QuotPres : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure],
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure],
     Pres μ (muOne μ)
 
 def LiftCmp : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     (μ₁ : Measure (G1 E a)) [μ₁.IsHaarMeasure] (hp : Pres μ μ₁) (v : CuspL2 μ₁) (Φ : RightCosetSpace (Γ1 E a) → ℂ),
     (toLp μ₁ v : RightCosetSpace (Γ1 E a) → ℂ) =ᵐ[RightCosetSpace.quotientMeasure (Γ1 E a) μ₁] Φ →
     lift (latticeGL E a) (cmp hp v) =ᵐ[μ] fun g => Φ (RightCosetSpace.mk (Γ1 E a) (retractOne g))
 
 def CmpEquiv : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     [μ.IsMulRightInvariant] (μ₁ : Measure (G1 E a)) [μ₁.IsHaarMeasure] (hp : Pres μ μ₁) (g : GA E a) (v : CuspL2 μ₁),
     R (latticeGL E a) μ g (cmp hp v) = cmp hp (cuspRepT μ₁ (retractOne g) v)
 
 def CmpForm : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     (μ₁ : Measure (G1 E a)) [μ₁.IsHaarMeasure] (hp : Pres μ μ₁) (φ : cuspForms E a), φ ∈ centralCuspForms E a →
     lift (latticeGL E a) (cmp hp (cuspVecL μ₁ φ)) =ᵐ[μ] φ.1
 
@@ -94,16 +94,16 @@ def NeBot : Prop :=
     ((cuspRepT μ₁).restrict V hV).IsIrreducible → summandCuspForms V ≠ ⊥
 
 def RangeLe : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     (μ₁ : Measure (G1 E a)) [μ₁.IsHaarMeasure] (hp : Pres μ μ₁) (v : CuspL2 μ₁), cmp hp v ∈ L2cusp μ
 
 def ContMem : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     (μ₁ : Measure (G1 E a)) [μ₁.IsHaarMeasure] (hp : Pres μ μ₁) (φ : GA E a → ℂ), φ ∈ cuspCont E a →
     ∀ h : MemL2Quotient (latticeGL E a) μ φ, ∃ v : CuspL2 μ₁, cmp hp v = h.toL2
 
 def KFinTr : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     [μ.IsMulRightInvariant] (μ₁ : Measure (G1 E a)) [μ₁.IsHaarMeasure] (hp : Pres μ μ₁) (v : CuspL2 μ₁),
     IsKFinL2 μ (cmp hp v) →
     IsOpen {h : AdelicGLn.FiniteAdelicGL E a | cuspRepT μ₁ (retractOne (finEmb E a h)) v = v} ∧
@@ -173,11 +173,11 @@ def KFinMem : Prop :=
     v ∈ π.carrier.map (cuspVecL μ₁)
 
 def BrCusp : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
     IsCuspForm φ → φ.1 ∈ cuspForms E a
 
 def BrRep : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π₀ : CuspidalAutomorphicRepresentation E a),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π₀ : CuspidalAutomorphicRepresentation E a),
     ∃ π : CuspSub E a, π.V.map (Sm E a).subtype = π₀.carrier.map (cuspForms E a).subtype
 
 end UpperTheory.V.KernelIndexFullLattice

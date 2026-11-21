@@ -18,7 +18,7 @@ open NumberField MeasureTheory Topology Matrix GlobalTheory.AutomorphicL2Unitary
 open GroundTheory.Automorphic
 open scoped ENNReal
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.finite_z_span_integral_representation : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
+theorem _root_.GlobalTheory.T.finite_z_span_integral_representation : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
     FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k => cptRep E a k φ)) →
     FiniteDimensional ℂ (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) '' Zalg E a)) →
     ∀ [MeasurableSpace (AutomorphicForm.archGroup E a)] [BorelSpace (AutomorphicForm.archGroup E a)]

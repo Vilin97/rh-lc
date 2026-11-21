@@ -12,7 +12,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain GlobalTheory.Mem
 
 namespace GlobalTheory.Mem
 
-theorem re_pos_of_majAt {K V ι M : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+theorem re_pos_of_majAt {K V ι M : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup V] [Module K V] [Fintype ι] [DecidableEq ι] [AddCommGroup M] [Module ℂ M]
     (σ : K →+* ℂ) (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (hX : IsUnit (X (InfinitePlace.mk σ)).det) (e : V →ₛₗ[σ] M) (Q : M →ₗ⋆[ℂ] M →ₗ[ℂ] ℂ)

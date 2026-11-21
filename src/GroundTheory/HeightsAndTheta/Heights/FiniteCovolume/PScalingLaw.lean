@@ -80,7 +80,7 @@ theorem vecAt_injective (v : Basis ι E W) : Function.Injective (vecAt v) := by
   ext i
   exact w.embedding.injective (congrFun (congrFun hxy w) i)
 
-variable [NumberField F] [IsTotallyReal F] [IsTotallyComplex E]
+variable [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 theorem archEmbed_smul_vecAt (h : HermitianForm F E W) (v : Basis ι E W) (γ : h.unitaryGroup)
     (x : W) : archEmbed h v γ • vecAt v x = vecAt v (γ • x) := by

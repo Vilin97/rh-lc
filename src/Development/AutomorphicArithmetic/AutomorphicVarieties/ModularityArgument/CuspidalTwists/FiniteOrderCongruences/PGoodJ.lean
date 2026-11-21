@@ -17,7 +17,7 @@ namespace UpperTheory.V.Cu2
 
 namespace GoodJ
 
-theorem isAlg_of_pos {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {κ : HChar K}
+theorem isAlg_of_pos {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {κ : HChar K}
     {m : (K →+* ℂ) → ℤ} (hκ : IsAlgPos κ m) : κ.IsAlg m := fun k => hκ k fun φ => by
   have h := IsTotallyComplex.complexEmbedding_not_isReal (Complex.ofRealHom.comp φ)
   refine absurd ?_ h
@@ -25,7 +25,7 @@ theorem isAlg_of_pos {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {
   ext x
   simp
 
-theorem infChar_twist {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} (P : CuspSub K n)
+theorem infChar_twist {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} (P : CuspSub K n)
     {κ : HChar K} {m : (K →+* ℂ) → ℤ} (hκ : IsAlgPos κ m) (τ : K →+* ℂ) :
     (CG.mk (P.twist κ)).infChar τ = ((CG.mk P).infChar τ).map (· + ((m τ : ℤ) : ℂ)) := by
   have e := ((ParLaws.hasInfChar_infChar (CG.mk P) τ).twist κ).infChar_eq

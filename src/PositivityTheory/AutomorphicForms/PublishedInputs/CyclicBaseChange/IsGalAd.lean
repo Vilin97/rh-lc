@@ -13,7 +13,7 @@ open GlobalTheory.CuspRep GlobalTheory.GalOfCusp UpperTheory.V.Af UpperTheory.V.
 namespace UpperTheory.CBC
 
 inductive Cusp (F : Type) [Field F] [NumberField F] (n : ℕ) : Type
-  | cx [IsTotallyComplex F] (π : CuspSub F n)
+  | cx [_root_.NumberField.IsTotallyComplex F] (π : CuspSub F n)
   | re [IsTotallyReal F] (π : UpperTheory.V.TR.CuspSub F n)
 
 namespace Cusp

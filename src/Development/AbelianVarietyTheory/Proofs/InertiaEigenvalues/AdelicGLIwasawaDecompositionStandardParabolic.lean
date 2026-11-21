@@ -117,10 +117,10 @@ theorem exists_upper_mul_unitary_inf (E : Type) [Field E] (N : ℕ) (y : GL (Fin
     rw [Matrix.map_mul, hbm, hkm]
     exact hyK v
 
-theorem infGL_eq (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ) :
+theorem infGL_eq (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ) :
     infGL E N = cornerGL N (GlobalTheory.CuspRep.sInf E) := rfl
 
-theorem infGL_mem_unipRad (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] {c N : ℕ}
+theorem infGL_mem_unipRad (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {c N : ℕ}
     (n : Fin c → ℕ) (h : ∑ i, n i = N) (u : GL (Fin N) (Cinf E))
     (hu : u ∈ unipRad (Cinf E) (stdBlocks n h)) : infGL E N u ∈ unipRad (Ad E) (stdBlocks n h) := by
   rw [mem_unipRad] at hu ⊢
@@ -138,7 +138,7 @@ theorem infGL_mem_unipRad (E : Type) [Field E] [NumberField E] [IsTotallyComplex
       rw [infGL_eq, cornerGL_entry_ne _ _ hne, hD a i j, Matrix.one_apply_ne hij, Matrix.one_apply_ne hij,
         map_zero]
 
-theorem infGL_leviEmb (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] {c N : ℕ}
+theorem infGL_leviEmb (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {c N : ℕ}
     (n : Fin c → ℕ) (h : ∑ i, n i = N) (l : ∀ i, GL (Fin (n i)) (Cinf E)) :
     infGL E N (leviEmb (Cinf E) (stdBlocks n h) l)
       = leviEmb (Ad E) (stdBlocks n h) (fun i => infGL E (n i) (l i)) := by
@@ -159,7 +159,7 @@ theorem infGL_leviEmb (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] 
       hab (congrArg Sigma.fst ((stdBlocks n h).injective he))
     rw [leviEmb_apply_ne _ _ _ hab, infGL_eq, cornerGL_entry_ne _ _ hne, leviEmb_apply_ne _ _ _ hab, map_zero]
 
-theorem iwasawa : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N) (x : GA E N), ∃ u ∈ unipRad (Ad E) (stdBlocks n h), ∃ (m : ∀ i, GA E (n i)) (k : Kinf E N) (g : GL (Fin N) (Af E)), x = u * leviEmb (Ad E) (stdBlocks n h) m * (infGL E N (Unitary.toUnits k) * finGL E N g) := by
+theorem iwasawa : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N) (x : GA E N), ∃ u ∈ unipRad (Ad E) (stdBlocks n h), ∃ (m : ∀ i, GA E (n i)) (k : Kinf E N) (g : GL (Fin N) (Af E)), x = u * leviEmb (Ad E) (stdBlocks n h) m * (infGL E N (Unitary.toUnits k) * finGL E N g) := by
   intro E _ _ _ c N n h x
   obtain ⟨b, hb, k, hy⟩ := exists_upper_mul_unitary_inf E N (Matrix.GeneralLinearGroup.map (pInf E) x)
   obtain ⟨u, hu, hbu⟩ := exists_levi_mul_unip (Cinf E) (stdBlocks n h) ⟨b, mem_parab_of_upper n h b hb⟩

@@ -86,7 +86,7 @@ private theorem F_bd (r s N : ℕ) : ∃ C : ℝ, 0 ≤ C ∧ ∀ (φ : AdelicGL
   simp only [mul_pow]
   ring
 
-variable [IsTotallyComplex E] {S : Set (Pl E)}
+variable [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)}
 
 private theorem sl_int (b : Blo S r) (φ : Sm E (r + s)) (hφ : Umg φ) (t : ℝ) (m : AdelicGLn.AdelicGL E s) :
     Integrable (fun y : RightCosetSpace (rationalGLOne (K := E) (n := r)) =>
@@ -112,7 +112,7 @@ end UpperTheory.ConvolutionTheory.BW
 
 open UpperTheory.ConvolutionTheory.BW in
 theorem UpperTheory.ConvolutionTheory.BW.sliceBound :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceBound E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceBound E := by
   intro E _ _ _ S r s b
   refine ⟨fun N => ?_, fun φ ψ c hφ hψ t m => ?_⟩
   · obtain ⟨hfU, hfC⟩ := cuspUmg E r b.f b.cusp

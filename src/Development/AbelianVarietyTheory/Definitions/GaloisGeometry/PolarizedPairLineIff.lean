@@ -14,7 +14,7 @@ open NumberField IsDedekindDomain Matrix Formalism.L2.Host GlobalTheory.CuspRep 
 namespace GlobalTheory.ContraPair.Model
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def sc (χ : HChar E) (o : Op E a) : ℂ := ((opMul χ o : ℂˣ) : ℂ) * opTriv o + opAdd χ o
 
@@ -79,7 +79,7 @@ theorem paired_line_iff (ha : a ≤ 1) (χ χ' : HChar E) (s : Op E a → Op E a
       rw [← add_mul, h3, zero_mul]
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem toUnits_barK (k : Kinf E a) : Unitary.toUnits (barK k) = invT a (Cinf E) (Unitary.toUnits k) := Units.ext rfl
 
 

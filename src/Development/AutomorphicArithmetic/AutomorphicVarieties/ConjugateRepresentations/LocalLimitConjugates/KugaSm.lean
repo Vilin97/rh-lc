@@ -19,7 +19,7 @@ private theorem kugaSm_map {E : Type} [Field E] {a n : ℕ} (e : Fin n → Herm 
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [cas, map_sum, map_sub, map_mul, h]
 
-private theorem kugaSm_A {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a n : ℕ} (e : Fin n → Herm E a)
+private theorem kugaSm_A {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a n : ℕ} (e : Fin n → Herm E a)
     (Ξ : AlgRep E a) (r : ℝ) :
     cas (shift (smA Ξ) r) e = (cas (shift (lie E a) r) e).rTensor (Fin Ξ.d → ℂ) := by
   refine kugaSm_map e (Module.End.rTensorAlgHom ℂ (Sm E a) (Fin Ξ.d → ℂ)).toRingHom _ _ fun X => ?_
@@ -28,7 +28,7 @@ private theorem kugaSm_A {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
     algebraMap_smul]
   rfl
 
-private theorem kugaSm_B {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a n : ℕ} (e : Fin n → Herm E a)
+private theorem kugaSm_B {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a n : ℕ} (e : Fin n → Herm E a)
     (Ξ : AlgRep E a) (r c : ℝ) (h : HasCas Ξ r c e) :
     cas (shift (smB Ξ) (-r)) e = (c : ℂ) • 1 := by
   let f : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ →ₐ[ℂ] Module.End ℂ (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)) :=

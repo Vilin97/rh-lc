@@ -10,7 +10,7 @@ open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af
 
 namespace UpperTheory.V.Lit.Geo
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem lie_bound {φ : Sm E a} (h : BddDer φ) :
     ∃ B : ℝ, 0 ≤ B ∧ ∀ (X : Lie E a) (g : GA E a), ‖(lie E a X φ).1 g‖ ≤ B * ‖X‖ := by

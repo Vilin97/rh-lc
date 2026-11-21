@@ -30,7 +30,7 @@ def resT {F : Type} [Field F] (a b : ℕ) {n : ℕ} (T : GL (Fin n) F → ℂ) (
   ∑ᶠ p : GL (Fin n) F, if InPar a p ∧ tlG a p = x ∧ brG a b p = y then T p else 0
 
 def SuppAny : Prop :=
-  ∀ (E Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (n : ℕ), 0 < n →
+  ∀ (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (n : ℕ), 0 < n →
     ∀ (π : CuspSub E n) (Y : Pt E Ω n), Lifts (Pt.base Ω π) Y →
     ∀ (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 E)) (w : HeightOneSpectrum (𝓞 Y.K)) (h : IsPlaceOver A v)
       (h' : IsPlaceOver A w) (g : ℕ) [Fact g.Prime] (i : ℚ_[g] ≃+* v.adicCompletion E), Continuous i →
@@ -40,7 +40,7 @@ def SuppAny : Prop :=
       ∃ ξ hξ, ToralOver h h' (IrrGL.of τ.ρ τ.smooth τ.irred) τ' ξ hξ
 
 def UnlinkedBC : Prop :=
-  ∀ (E Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (n : ℕ), 0 < n →
+  ∀ (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (n : ℕ), 0 < n →
     ∀ (π : CuspSub E n) (Y : Pt E Ω n), Lifts (Pt.base Ω π) Y →
     ∀ (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 E)) (w : HeightOneSpectrum (𝓞 Y.K)) (h : IsPlaceOver A v)
       (h' : IsPlaceOver A w) (g : ℕ) [Fact g.Prime] (i : ℚ_[g] ≃+* v.adicCompletion E), Continuous i →
@@ -250,14 +250,14 @@ def ResDeg : Prop :=
         ∀ z, s z = z ^ Nat.card 𝓀[v.adicCompletion K]
 
 def StableOf : Prop :=
-  ∀ (K M : Type) [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [IsGalois K M] [IsTotallyComplex K]
-    [IsTotallyComplex M], (Module.finrank K M).Prime → ∀ n : ℕ, 0 < n → ∀ (π : CuspSub K n) (P : CuspSub M n),
+  ∀ (K M : Type) [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [IsGalois K M] [_root_.NumberField.IsTotallyComplex K]
+    [_root_.NumberField.IsTotallyComplex M], (Module.finrank K M).Prime → ∀ n : ℕ, 0 < n → ∀ (π : CuspSub K n) (P : CuspSub M n),
     WeakBC (Cusp.cx π).sat (Cusp.cx P).sat →
     (∀ g : M ≃ₐ[K] M, (Cusp.cx P).ConjIso g.toRingEquiv) ∧ SplitLift (Cusp.cx π) (Cusp.cx P)
 
 def StepAt (P₀ : Lbl → Prop) (split : Prop → Prop) : Prop :=
   ∀ (K M Ω : Type) [Field K] [NumberField K] [Field M] [NumberField M] [Field Ω] [Algebra K M] [Algebra K Ω] [Algebra M Ω]
-    [IsScalarTower K M Ω] [IsGalois K M] [IsTotallyComplex K] [IsTotallyComplex M], (Module.finrank K M).Prime →
+    [IsScalarTower K M Ω] [IsGalois K M] [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex M], (Module.finrank K M).Prime →
     ∀ n : ℕ, 0 < n → ∀ (π : CuspSub K n) (P : CuspSub M n), WeakBC (Cusp.cx π).sat (Cusp.cx P).sat →
     ∀ (A : ValuationSubring Ω) (Θ : IsLocalRing.ResidueField A →* ℂ), Inj Θ →
     ∀ (v : HeightOneSpectrum (𝓞 K)) (w : PlacesOver M v), split (UpperTheory.ConvolutionTheory.GM.Split M v) → UpperTheory.ConvolutionTheory.GM.Unr M v →
@@ -277,7 +277,7 @@ def LiftsFix : Prop :=
     ∀ x : X.K, ∃ y : Y.K, algebraMap Y.K Ω y = algebraMap X.K Ω x
 
 def PlaceEx : Prop :=
-  ∀ (K M Ω : Type) [Field K] [NumberField K] [Field M] [NumberField M] [IsTotallyComplex M] [Field Ω] [Algebra K Ω] [Algebra M Ω]
+  ∀ (K M Ω : Type) [Field K] [NumberField K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Field Ω] [Algebra K Ω] [Algebra M Ω]
     (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 K)), IsPlaceOver A v → ∀ (n : ℕ) (P : CuspSub M n),
     ∃ w : HeightOneSpectrum (𝓞 M), IsPlaceOver A w ∧ ∃ τ, P.IsLocComp w τ
 

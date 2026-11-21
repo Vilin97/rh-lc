@@ -253,7 +253,7 @@ theorem lin_fix {D : TypeDat K (2 + 2)} {Kf : Subgroup GF} (hL : D.Level Kf) (hl
     rw [key u hu, Finset.mul_sum]
     exact Finset.sum_congr rfl fun h _ => by ring
 
-theorem lin_sec [IsTotallyComplex K] {μ₂ : Measure (G1 K 2)} [μ₂.IsHaarMeasure] {τ₁ τ₂ : Submodule ℂ (L2 μ₂)} {D : TypeDat K (2 + 2)}
+theorem lin_sec [_root_.NumberField.IsTotallyComplex K] {μ₂ : Measure (G1 K 2)} [μ₂.IsHaarMeasure] {τ₁ τ₂ : Submodule ℂ (L2 μ₂)} {D : TypeDat K (2 + 2)}
     (h₁ : CuspIrr μ₂ τ₁) (h₂ : CuspIrr μ₂ τ₂) (s : Finset GF) (c : GF → ℂ) (ω : ℝ → ℂ) {f : G1 K (2 + 2) → ℂ} (hs : IsSec τ₁ τ₂ f)
     (hf : D.Fix f) (hf' : D.Fix (lin s c ω f)) : IsSec τ₁ τ₂ (lin s c ω f) := by
   obtain ⟨hc, ⟨C, hC⟩, hn, hray, hsl⟩ := (secCrit μ₂ τ₁ τ₂ D h₁ h₂ f hf).1 hs

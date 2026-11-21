@@ -13,7 +13,7 @@ namespace UpperTheory.ConvolutionTheory.R2.Ff
 
 section
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 open scoped Matrix.Norms.Operator
 
@@ -96,6 +96,6 @@ end
 end UpperTheory.ConvolutionTheory.R2.Ff
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.exPar :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], ExPar E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], ExPar E := by
   intro E _ _ _ X
   exact ⟨ex_add X, ex_cont X, ex_der X, ex_det X, fun s t => ex_cen X s t⟩

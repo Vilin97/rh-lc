@@ -88,7 +88,7 @@ theorem exists_split (H : GlobalTheory.Published.HeckeLEntireAndNonzeroAtOne) (h
       h1, h2, h3⟩
   · exact absurd ((i2.2.1 _ (GlobalTheory.UnitaryHeckeBaseChange.under_cP h w)).symm.trans (i1.2.2 _ (conjPrime_ne h he hp))) one_ne_zero
 
-theorem cA_eIdele (h : IsCMExt F E σ) [IsTotallyComplex E] {z : AE F E} (hz : toAdele F E z = GlobalTheory.IdeleCovolume.eIdele E) :
+theorem cA_eIdele (h : IsCMExt F E σ) [_root_.NumberField.IsTotallyComplex E] {z : AE F E} (hz : toAdele F E z = GlobalTheory.IdeleCovolume.eIdele E) :
     cA σ z = z := by
   obtain ⟨_, rfl⟩ := (GlobalTheory.UnitaryHeckeBaseChange.isCMExt_iff σ).1 h
   have := GlobalTheory.AdelicUnitaryTop.t2Space_infiniteAdeleRing_of_numberField_field E

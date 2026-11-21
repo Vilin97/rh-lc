@@ -68,7 +68,7 @@ end SlopeTestRemainingChoices
 end UpperTheory.ConvolutionTheory.R2.Fo
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.fockEx :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (O : Ops F) (s : Set (S4 F)), s.Finite → (∀ φ ∈ s, φ ∈ Fock D.δ) → ∃ Λ m, ∀ φ ∈ s, φ ∈ O.Fk (Vac D.δ ⊓ Fix D.δ Λ) m := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (O : Ops F) (s : Set (S4 F)), s.Finite → (∀ φ ∈ s, φ ∈ Fock D.δ) → ∃ Λ m, ∀ φ ∈ s, φ ∈ O.Fk (Vac D.δ ⊓ Fix D.δ Λ) m := by
   intro F E _ _ _ _ _ _ _ D O s hs
   have hgauss : ∀ g ∈ finiteSchwartzBruhatPi F (ι := Fin 4),
       PF D.δ O (fun v => gauss D.δ v * g (finPartPi v)) := by

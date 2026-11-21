@@ -146,8 +146,8 @@ end UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.IwahoriHeckeOperatorComm
 
 open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.IwahoriHeckeOperatorComm Pointwise in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.sideX :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-          [IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+          [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E), Module.finrank F E = 2 → (∀ τ, τ ∈ Subgroup.zpowers σ) →
           ∀ n : ℕ, 0 < n → ∀ (μ : Measure (G1 E n)) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ → ∀ (q : Pl F) (w₀ : PlacesOver E q), GM.Split E q →
           ∀ (L : GM.Loc σ n q w₀) (νE : Measure (archGroup E n)) (aE : TI E n) (ν : Fin n → ℤ) (𝔢 : Side θ 2), GM.IsSideE L νE aE ν 𝔢 →
           (∀ v, L.φ v = (L.UE v : Set (GL (Fin n) (CompletionsOver E v))).indicator 1) →

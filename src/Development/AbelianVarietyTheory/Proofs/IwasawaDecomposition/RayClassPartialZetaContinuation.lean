@@ -15,7 +15,7 @@ namespace GlobalTheory.Mem.PartialZeta
 
 variable {K : Type} [Field K] [NumberField K]
 
-theorem place_unique [IsTotallyComplex K] (h2 : Module.finrank ℚ K = 2) (v w : InfinitePlace K) : v = w := by
+theorem place_unique [_root_.NumberField.IsTotallyComplex K] (h2 : Module.finrank ℚ K = 2) (v w : InfinitePlace K) : v = w := by
   have hc := InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces (K := K)
   have hr := InfinitePlace.card_add_two_mul_card_eq_rank (K := K)
   rw [IsTotallyComplex.nrRealPlaces_eq_zero, h2] at hr
@@ -23,7 +23,7 @@ theorem place_unique [IsTotallyComplex K] (h2 : Module.finrank ℚ K = 2) (v w :
   have h1 : Fintype.card (InfinitePlace K) = 1 := by omega
   exact Fintype.card_le_one_iff.1 h1.le v w
 
-theorem normSq_eq [IsTotallyComplex K] (h2 : Module.finrank ℚ K = 2) (φ : K →+* ℂ) (x : 𝓞 K) :
+theorem normSq_eq [_root_.NumberField.IsTotallyComplex K] (h2 : Module.finrank ℚ K = 2) (φ : K →+* ℂ) (x : 𝓞 K) :
     ‖φ (x : K)‖ ^ 2 = (Ideal.absNorm (Ideal.span {x}) : ℝ) := by
   haveI : Subsingleton (InfinitePlace K) := ⟨place_unique h2⟩
   have hprod := InfinitePlace.prod_eq_abs_norm (x : K)

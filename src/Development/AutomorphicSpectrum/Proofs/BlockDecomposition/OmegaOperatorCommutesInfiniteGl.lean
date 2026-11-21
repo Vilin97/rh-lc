@@ -61,7 +61,7 @@ theorem sum_sq_map_eq {B : LinearMap.BilinForm ℝ L} {b : Module.Basis ι ℝ L
 
 end General
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem archTraceForm_AdLie (g : archGroup E a) (X Y : (isExpLieAlgebra E a).lieSubalgebra) :
     archTraceForm E a ((isExpLieAlgebra E a).AdLie g X) ((isExpLieAlgebra E a).AdLie g Y) =
@@ -106,7 +106,7 @@ theorem toGL_surjective : Function.Surjective (toGL E a) := fun y => by
   ext i j
   simp
 
-theorem omegaOp_comm_rt (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a d : ℕ)
+theorem omegaOp_comm_rt (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a d : ℕ)
     (b : Module.Basis (Fin d) ℝ (AutomorphicForm.isExpLieAlgebra E a).lieSubalgebra) (ε : Fin d → ℝ)
     (hε : ∀ i, ε i = 1 ∨ ε i = -1)
     (horth : ∀ i j, AutomorphicForm.archTraceForm E a (b i) (b j) = if i = j then ε i else 0)

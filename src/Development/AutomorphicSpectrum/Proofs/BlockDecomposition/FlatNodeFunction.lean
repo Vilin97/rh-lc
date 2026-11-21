@@ -13,7 +13,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.CompanionTheory.LimV.NodeFlat
 
-theorem flatFn_nodeFn : ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ} (e₁ : GA E r → ℂ) (e₂ : GA E s → ℂ), FlatFn e₁ → FlatFn e₂ → FlatFn (nodeFn e₁ e₂) := by
+theorem flatFn_nodeFn : ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ} (e₁ : GA E r → ℂ) (e₂ : GA E s → ℂ), FlatFn e₁ → FlatFn e₂ → FlatFn (nodeFn e₁ e₂) := by
   intro E _ _ _ r s e₁ e₂ h₁ h₂
   have ap : ∀ (u : BlockIx (r + s) r → Ad E) (m : GA E r × GA E s) (k : Kinf E (r + s))
       (c : GL (Fin (r + s)) (Af E)), c ∈ GlobalTheory.CompanionTheory.LimV.KO E (r + s) →

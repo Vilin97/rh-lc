@@ -22,7 +22,7 @@ open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspR
 open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.C
 
 theorem UpperTheory.ConvolutionTheory.R2.weilEx :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E), St.WeilEx D := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E), St.WeilEx D := by
   intro F E _ _ _ _ _ _ _ D
   have hδ : D.δ ≠ 0 := by
     obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance

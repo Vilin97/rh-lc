@@ -113,7 +113,7 @@ def NormRam : Prop :=
     (∃ τ ∈ Ine (F := K) A, ¬ Fixes M τ) → ¬ η.UnrAt v
 
 def NoSelfTwist : Prop :=
-  ∀ (K M Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [Field Ω] [Algebra K M]
+  ∀ (K M Ω : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [Field Ω] [Algebra K M]
     [Algebra K Ω] [Algebra M Ω] [IsScalarTower K M Ω] [IsAlgClosure K Ω] [IsGalois K M], (Module.finrank K M).Prime →
     ∀ (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 K)), IsPlaceOver A v → (∃ τ ∈ Ine (F := K) A, ¬ Fixes M τ) →
     ∀ a : ℕ, 1 ≤ a → ∀ (π : CG K a) (B : Multiset ℂˣ), π.HasSat v B → ∀ η : HChar K, IsNormChar M η → π.twist η ≠ π

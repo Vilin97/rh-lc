@@ -17,7 +17,7 @@ section SlopeTestRemainingChoices
 
 open UpperTheory.V
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem aut_fin (g : GL (Fin a) (Af E)) {φ : Sm E a} (h : GlobalTheory.CuspRep.IsAutForm φ) :
     GlobalTheory.CuspRep.IsAutForm (finRep E a g φ) := by

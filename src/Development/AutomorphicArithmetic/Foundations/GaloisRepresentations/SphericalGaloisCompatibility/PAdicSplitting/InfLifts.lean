@@ -23,13 +23,13 @@ def MixedOf : Prop :=
       (rc (algNorm σ)).mono0 → UpperTheory.Gal.InertialTypesAlt.Mixed (IrrGL.of σ.ρ σ.smooth σ.irred)
 
 def InfStep : Prop :=
-  ∀ (K M : Type) [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [IsGalois K M] [IsTotallyComplex K]
-    [IsTotallyComplex M], (Module.finrank K M).Prime → ∀ n : ℕ, 0 < n → ∀ (π : CuspSub K n) (P : CuspSub M n),
+  ∀ (K M : Type) [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [IsGalois K M] [_root_.NumberField.IsTotallyComplex K]
+    [_root_.NumberField.IsTotallyComplex M], (Module.finrank K M).Prime → ∀ n : ℕ, 0 < n → ∀ (π : CuspSub K n) (P : CuspSub M n),
     UpperTheory.V.Published.WeakBC (UpperTheory.CBC.Cusp.cx π).sat (UpperTheory.CBC.Cusp.cx P).sat →
     ∀ τ : M →+* ℂ, (CG.mk P).infChar τ = (CG.mk π).infChar (τ.comp (algebraMap K M))
 
 def InfLifts : Prop :=
-  ∀ (E Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (n : ℕ), 0 < n →
+  ∀ (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (n : ℕ), 0 < n →
     ∀ (π : CuspSub E n) (Y : UpperTheory.Gal.InertialTypesAlt.Pt E Ω n), UpperTheory.Gal.InertialTypesAlt.Lifts (UpperTheory.Gal.InertialTypesAlt.Pt.base Ω π) Y →
     ∀ τ : Y.K →+* ℂ, (CG.mk Y.π).infChar τ = (CG.mk π).infChar (τ.comp (algebraMap E Y.K))
 

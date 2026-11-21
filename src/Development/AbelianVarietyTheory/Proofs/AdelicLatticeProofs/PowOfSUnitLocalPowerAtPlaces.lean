@@ -15,7 +15,7 @@ open scoped WithZero TensorProduct
 namespace GlobalTheory.CNorm
 
 theorem pow_of_mem_sUnits_union_of_mem_finPow :
-    ∀ (p : ℕ) (F : Type) [Field F] [NumberField F] [IsTotallyComplex F]
+    ∀ (p : ℕ) (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F]
       [DecidableEq (HeightOneSpectrum (𝓞 F))] (ζ : F) (S T : Finset (HeightOneSpectrum (𝓞 F))),
       p.Prime → IsPrimitiveRoot ζ p → AdmP p F S → sUnits F (S ∪ T) ⊔ finPow p F T = ⊤ →
       ∀ y ∈ sUnits F (S ∪ T), y ∈ finPow p F S → ∃ r : F, r ^ p = (y : F) := by

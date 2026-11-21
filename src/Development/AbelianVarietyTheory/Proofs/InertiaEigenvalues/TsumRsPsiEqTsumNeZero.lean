@@ -17,22 +17,22 @@ open GlobalTheory.RSTheta GlobalTheory.ShortVecDecay GlobalTheory.Petersson Glob
 
 namespace GlobalTheory.RSThetaLow
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def rsHat (ℓ : Fin a) (φ φ' : GA E a → ℂ) (Φ : (Fin a → Cinf E) → ℂ) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ)
     (η : Fin a → Af E) (g : GA E a) (y : Fin a → Ad E) : ℂ :=
   adelicFourierPi E (rsPsi ℓ φ φ' Φ J η g) y
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 variable (E a) in
 def lowSet : Set (GA E a) := {g | (ideleModule E (GeneralLinearGroup.det g) : ℝ) ≤ 1}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_absDet : Continuous fun g : GA E a => (ideleModule E (GeneralLinearGroup.det g) : ℝ) :=
   continuous_subtype_val.comp (continuous_ideleModule.comp GeneralLinearGroup.continuous_det)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem absDet_invT (g : GA E a) : (ideleModule E (GeneralLinearGroup.det (invT a (Ad E) g)) : ℝ) =
     (ideleModule E (GeneralLinearGroup.det g) : ℝ)⁻¹ := by
   have h : GeneralLinearGroup.det (invT a (Ad E) g) = GeneralLinearGroup.det g⁻¹ := Units.ext (det_transpose _)

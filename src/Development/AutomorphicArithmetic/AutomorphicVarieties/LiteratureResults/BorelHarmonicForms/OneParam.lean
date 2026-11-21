@@ -9,7 +9,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibra
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Bor
 open scoped TensorProduct
 
-private theorem op_cont_inf (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) :
+private theorem op_cont_inf (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) :
     Continuous (infGL E a) := by
   have hs : Continuous (sInf E : Cinf E → Ad E) := (GlobalTheory.CuspRep.continuous_infEq E).prodMk continuous_const
   exact Continuous.units_map _ (continuous_const.add (continuous_id.matrix_map hs))

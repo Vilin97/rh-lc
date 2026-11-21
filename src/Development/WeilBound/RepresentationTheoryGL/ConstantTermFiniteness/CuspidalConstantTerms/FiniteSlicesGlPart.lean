@@ -147,7 +147,7 @@ section Centre
 
 open PositivityTheory.Affgl GlobalTheory.CuspRep
 
-theorem zfin_of_cofin {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {J : Set (Module.End ℂ (Sm E a))}
+theorem zfin_of_cofin {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {J : Set (Module.End ℂ (Sm E a))}
     (hJ : Cofin J) {f : Sm E a} (hf : ∀ z ∈ J, z f = 0) :
     FiniteDimensional ℂ (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z f) '' Zalg E a)) := by
   obtain ⟨-, V, hV, h⟩ := hJ

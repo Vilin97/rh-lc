@@ -70,7 +70,7 @@ variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 private theorem smooth_loc (χ : HChar K) (v : HeightOneSpectrum (𝓞 K)) : IsSmoothChar (χ.loc v) :=
   GlobalTheory.HeckeComp.smooth_loc χ v
 
-private theorem supp_twist [IsTotallyComplex K] {v : HeightOneSpectrum (𝓞 K)} {σ : SmIrr (GL (Fin n) (v.adicCompletion K))} (χ : HChar K)
+private theorem supp_twist [_root_.NumberField.IsTotallyComplex K] {v : HeightOneSpectrum (𝓞 K)} {σ : SmIrr (GL (Fin n) (v.adicCompletion K))} (χ : HChar K)
     {s : Multiset (IrrGL (k := v.adicCompletion K))} (h : HasSupport σ.ρ s) :
     HasSupport (σ.twist (CuspSub.locDet n χ v) (CuspSub.isOpen_ker_locDet χ v)).ρ
       (s.map (·.tw (χ.loc v) (smooth_loc χ v))) :=

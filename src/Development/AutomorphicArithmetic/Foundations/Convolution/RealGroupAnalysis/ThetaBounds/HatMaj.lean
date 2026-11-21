@@ -145,7 +145,7 @@ end
 open UpperTheory.ConvolutionTheory.R2.Ff.HM
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.hatMaj :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), HatMaj W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), HatMaj W := by
   intro F E _ _ _ _ _ _ _ D W φ hφ y hy
   have hS := hatSt F E D W
   obtain ⟨n, e, he⟩ := omFin F E D W φ hφ

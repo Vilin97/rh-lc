@@ -13,7 +13,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.
 
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockCapelli
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 theorem cap_coeff (a : ℕ) (τ : E →+* ℂ) (d : ℂ) : ∃ f : ℕ → Module.End ℂ (Sm E a), f a = 1 ∧ (∀ k, f k ∈ Zalg E a) ∧
     ∀ u : ℂ, cap τ (u + d) = ∑ k ∈ Finset.range (a + 1), u ^ k • f k := by

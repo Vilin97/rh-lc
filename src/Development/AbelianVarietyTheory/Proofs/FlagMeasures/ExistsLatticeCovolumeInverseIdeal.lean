@@ -42,7 +42,7 @@ theorem isLattice_lat (I : FractionalIdeal (𝓞 E)⁰ E) (hI : I ≠ 0) : Submo
   rw [lat_eq_map]
   exact (FractionalIdeal.fg_of_isNoetherianRing le_rfl I).map _
 
-theorem latAt_lat [IsTotallyComplex E] (I : (FractionalIdeal (𝓞 E)⁰ E)ˣ) :
+theorem latAt_lat [_root_.NumberField.IsTotallyComplex E] (I : (FractionalIdeal (𝓞 E)⁰ E)ˣ) :
     latAt E 1 (lat E I.1) (oneInf E 1) = Submodule.span ℤ (Set.range
       ((Pi.basis fun _ : Fin 1 => mixedEmbedding.fractionalIdealLatticeBasis E I).map (mix E 1))) := by
   set B := mixedEmbedding.fractionalIdealLatticeBasis E I
@@ -84,7 +84,7 @@ theorem latAt_lat [IsTotallyComplex E] (I : (FractionalIdeal (𝓞 E)⁰ E)ˣ) :
   · rintro ⟨t, ht, rfl⟩
     exact ⟨fun _ => t, (mem_lat E _ _).2 ht, funext fun w => key _ w⟩
 
-theorem covAt_lat [IsTotallyComplex E] (I : (FractionalIdeal (𝓞 E)⁰ E)ˣ) :
+theorem covAt_lat [_root_.NumberField.IsTotallyComplex E] (I : (FractionalIdeal (𝓞 E)⁰ E)ˣ) :
     covAt E 1 (latAt E 1 (lat E I.1) (oneInf E 1)) =
       (FractionalIdeal.absNorm I.1 : ℝ) * Formalism.HermitianLatticesTheory.vInv E ^ Formalism.HermitianLatticesTheory.fDeg E := by
 

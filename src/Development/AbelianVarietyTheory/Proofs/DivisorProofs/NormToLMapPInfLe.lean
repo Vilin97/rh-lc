@@ -16,7 +16,7 @@ namespace GlobalTheory.GLCuspNorm
 
 
 open scoped Classical in
-theorem norm_pInf_le (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (x : Ad E) :
+theorem norm_pInf_le (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (x : Ad E) :
     ‖pInf E x‖ ≤ ‖InfiniteAdeleRing.ringEquiv_mixedSpace E x.1‖ := by
   classical
   refine (pi_norm_le_iff_of_nonneg (norm_nonneg _)).2 fun w => ?_
@@ -26,7 +26,7 @@ theorem norm_pInf_le (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (
   rw [h1, ← GroundTheory.Automorphic.CuspidalSpectrum.normAtPlace_ringEquiv_mixedSpace, mixedEmbedding.norm_eq_sup'_normAtPlace]
   exact Finset.le_sup' (fun w => mixedEmbedding.normAtPlace w _) (Finset.mem_univ w)
 
-theorem norm_toL_map_pInf_le : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), ∃ c : ℝ, 0 ≤ c ∧
+theorem norm_toL_map_pInf_le : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), ∃ c : ℝ, 0 ≤ c ∧
     ∀ M : Matrix (Fin a) (Fin a) (Ad E),
       ‖toL (M.map (pInf E))‖ ≤ c * ‖GroundTheory.Automorphic.CuspidalSpectrum.archMat E a M‖ := by
   intro E _ _ _ a

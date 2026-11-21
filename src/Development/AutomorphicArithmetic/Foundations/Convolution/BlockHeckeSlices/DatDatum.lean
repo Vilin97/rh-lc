@@ -15,14 +15,14 @@ open GroundTheory.Automorphic.CuspidalSpectrum PositivityTheory.Rg.Fx UpperTheor
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-structure Rep {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (μ : Measure (normOneGL (K := E) (n := n)))
+structure Rep {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (μ : Measure (normOneGL (K := E) (n := n)))
     (v : LL μ) (φ : Sm E n) : Prop where
   umg : Umg φ
   cen : ∀ t g, φ.1 (zt E n t * g) = φ.1 g
   ae : (v : RightCosetSpace (rationalGLOne (K := E) (n := n)) → ℂ) =ᵐ[quotientMeasure (rationalGLOne (K := E) (n := n)) μ]
     fun y => φ.1 ((Quotient.out y : normOneGL (K := E) (n := n)) : GA E n)
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 def RepOps : Prop := ∀ (n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure], 0 < n → ∀ (v : LL μ) (φ : Sm E n), Rep μ v φ →
   (∀ ψ, Rep μ v ψ → φ = ψ) ∧ (∀ (v' : LL μ) ψ (c : ℂ), Rep μ v' ψ → Rep μ (c • v + v') (c • φ + ψ)) ∧

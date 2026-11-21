@@ -67,7 +67,7 @@ theorem exists_curve (X : Lie E a) (hX : (Matrix.of X)ᴴ = -Matrix.of X) :
 
 end Curve
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def wf (φ : Sm E a) (g : GA E a) : Kinf E a → ℂ := fun k => (cptRep E a k φ).1 g
 
@@ -214,7 +214,7 @@ end Lie
 section Skew
 open scoped Matrix
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem star_atEmb (τ : E →+* ℂ) (z : ℂ) : star (atEmb τ z) = atEmb τ (star z) := by
   classical
   funext w
@@ -225,12 +225,12 @@ theorem star_atEmb (τ : E →+* ℂ) (z : ℂ) : star (atEmb τ z) = atEmb τ (
     split_ifs <;> simp
   · simp [Pi.star_apply, Pi.single_eq_of_ne hw]
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem skew_sub {x : Cinf E} (hx : star x = x) (i j : Fin a) :
     (Matrix.single i j x - Matrix.single j i x)ᴴ = -(Matrix.single i j x - Matrix.single j i x) := by
   rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_single, Matrix.conjTranspose_single, hx, neg_sub]
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem skew_add {y : Cinf E} (hy : star y = -y) (i j : Fin a) :
     (Matrix.single i j y + Matrix.single j i y)ᴴ = -(Matrix.single i j y + Matrix.single j i y) := by
   rw [Matrix.conjTranspose_add, Matrix.conjTranspose_single, Matrix.conjTranspose_single, hy, neg_add, add_comm]
@@ -240,7 +240,7 @@ theorem skew_add {y : Cinf E} (hy : star y = -y) (i j : Fin a) :
 
 end Skew
 
-theorem exists_casK_poly : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem exists_casK_poly : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (W : Submodule ℂ (Kinf E a → ℂ)),
     FiniteDimensional ℂ W → ∃ q : Polynomial ℂ, q ≠ 0 ∧ ∀ φ : Sm E a,
       (∀ g : GA E a, (fun k : Kinf E a => (cptRep E a k φ).1 g) ∈ W) → Polynomial.aeval (casKOp E a) q φ = 0 := by

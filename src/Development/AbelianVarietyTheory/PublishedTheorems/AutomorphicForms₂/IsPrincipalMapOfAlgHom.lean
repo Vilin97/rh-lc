@@ -15,14 +15,14 @@ open NumberField IsDedekindDomain GlobalTheory.NT GlobalTheory.Mem.Fld
 namespace GlobalTheory.Published
 
 def PrincipalIdealSt : Prop :=
-  ∀ (K L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [Algebra K L],
+  ∀ (K L : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field L] [NumberField L] [Algebra K L],
     IsRayField K L ⊤ → ∀ 𝔞 : Ideal (𝓞 K), (𝔞.map (algebraMap (𝓞 K) (𝓞 L))).IsPrincipal
 
 end GlobalTheory.Published
 
 namespace GlobalTheory.HilbertClass
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
 
 
 omit [NumberField K] in
@@ -67,7 +67,7 @@ theorem isRayField_self_top_iff : IsRayField K K ⊤ ↔ IsPrincipalIdealRing (�
   · exact (h.2.2.2 I hI).1 (h1 I)
 
 
-omit [NumberField K] [IsTotallyComplex K] in
+omit [NumberField K] [_root_.NumberField.IsTotallyComplex K] in
 theorem isPrincipal_map_of_algHom {L M : Type} [Field L] [Algebra K L] [Field M] [Algebra K M] (f : L →ₐ[K] M)
     {𝔞 : Ideal (𝓞 K)} (h : (𝔞.map (algebraMap (𝓞 K) (𝓞 L))).IsPrincipal) :
     (𝔞.map (algebraMap (𝓞 K) (𝓞 M))).IsPrincipal := by
@@ -83,7 +83,7 @@ namespace GlobalTheory.Published
 
 open GlobalTheory.HilbertClass
 
-variable {K L M : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [Algebra K L]
+variable {K L M : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field L] [NumberField L] [Algebra K L]
   [Field M] [Algebra K M]
 
 theorem PrincipalIdealSt.of_algHom (H : PrincipalIdealSt) (h : IsRayField K L ⊤) (f : L →ₐ[K] M)
@@ -100,7 +100,7 @@ theorem PrincipalIdealSt.of_isRayField (H : PrincipalIdealSt) (hR : RayField) {�
   exact H.of_algHom h₀ (f.comp g) 𝔞
 
 theorem PrincipalIdealSt.of_isRayFieldIn (H : PrincipalIdealSt) (hR : RayField) {E : Type} [Field E] [NumberField E]
-    [IsTotallyComplex E] {φ : E →+* ℂ} {𝔮 : Ideal (𝓞 E)} (h𝔮 : 𝔮 ≠ ⊥) {R N : IntermediateField ℚ ℂ}
+    [_root_.NumberField.IsTotallyComplex E] {φ : E →+* ℂ} {𝔮 : Ideal (𝓞 E)} (h𝔮 : 𝔮 ≠ ⊥) {R N : IntermediateField ℚ ℂ}
     (h : IsRayFieldIn φ 𝔮 R) (hle : R ≤ N) (𝔞 : Ideal (𝓞 E)) :
     (𝔞.map (RingOfIntegers.mapRingHom (φ.codRestrict N fun x => hle (h.emb_mem x)))).IsPrincipal := by
   have := h.numberField

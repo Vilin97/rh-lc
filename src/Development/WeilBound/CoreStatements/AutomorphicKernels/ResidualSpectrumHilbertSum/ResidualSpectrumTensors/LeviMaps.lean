@@ -14,7 +14,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace PositivityTheory.RSHS.LeviInductionForms
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 def LocMaps (I : Submodule ℂ (Sm E N)) (w : HeightOneSpectrum (𝓞 E)) {X : Type} [AddCommGroup X] [Module ℂ X]
     (ρ : Representation ℂ (GL (Fin N) (w.adicCompletion E)) X) : Type :=

@@ -31,7 +31,7 @@ theorem mul_mem_supS' {E : Type} [Field E] [NumberField E] {a : ℕ} {S : Finset
   intro w hw
   rw [map_mul, hx w hw, hh w hw, one_mul]
 
-theorem infGL_mem_supS' {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (S : Finset (HeightOneSpectrum (𝓞 E)))
+theorem infGL_mem_supS' {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (S : Finset (HeightOneSpectrum (𝓞 E)))
     (y : GL (Fin a) (Cinf E)) : infGL E a y ∈ supS (E := E) (a := a) S := by
   intro w _
   have h1 : GeneralLinearGroup.map ((pLoc E w).comp (pFin E)) (infGL E a y) =
@@ -39,7 +39,7 @@ theorem infGL_mem_supS' {E : Type} [Field E] [NumberField E] [IsTotallyComplex E
     ext i j; rfl
   rw [h1, pFin_infGL, map_one]
 
-theorem whit_rel_locSpan : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E))) (π : CuspSub E a) (φ : Sm E a), φ ∈ π.V → ∀ (t : GA E a) (c : ℂ), GeneralLinearGroup.map (pInf E) t = 1 → (∀ w ∈ S, GeneralLinearGroup.map ((pLoc E w).comp (pFin E)) t = 1) → (∀ x ∈ GlobalTheory.JSW.supS (E := E) (a := a) S, GlobalTheory.JSW.whit φ.1 (x * t) = c * GlobalTheory.JSW.whit φ.1 x) → ∀ F ∈ GlobalTheory.JSW.MirSemi.locSpan S φ.1, ∀ x ∈ GlobalTheory.JSW.supS (E := E) (a := a) S, GlobalTheory.JSW.whit F (x * t) = c * GlobalTheory.JSW.whit F x := by
+theorem whit_rel_locSpan : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E))) (π : CuspSub E a) (φ : Sm E a), φ ∈ π.V → ∀ (t : GA E a) (c : ℂ), GeneralLinearGroup.map (pInf E) t = 1 → (∀ w ∈ S, GeneralLinearGroup.map ((pLoc E w).comp (pFin E)) t = 1) → (∀ x ∈ GlobalTheory.JSW.supS (E := E) (a := a) S, GlobalTheory.JSW.whit φ.1 (x * t) = c * GlobalTheory.JSW.whit φ.1 x) → ∀ F ∈ GlobalTheory.JSW.MirSemi.locSpan S φ.1, ∀ x ∈ GlobalTheory.JSW.supS (E := E) (a := a) S, GlobalTheory.JSW.whit F (x * t) = c * GlobalTheory.JSW.whit F x := by
   intro E _ _ _ a S π φ hφ t c htInf htS hrel
   have hreg := GlobalTheory.T.cusp_form_moderate_growth_compact E a S π φ hφ
   have hlin : ∀ F ∈ locSpan S φ.1, ∀ G ∈ locSpan S φ.1, ∀ (c' : ℂ) (g : GA E a),

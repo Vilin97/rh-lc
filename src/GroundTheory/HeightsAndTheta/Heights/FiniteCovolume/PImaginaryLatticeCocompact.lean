@@ -12,7 +12,7 @@ open NumberField GroundTheory.Automorphic Module
 noncomputable section
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 theorem im_embedding_algebraMap (σ : E →+* ℂ) (c : F) : (σ (algebraMap F E c)).im = 0 := by
   have h := embedding_conj (F := F) σ (algebraMap F E c)
@@ -20,7 +20,7 @@ theorem im_embedding_algebraMap (σ : E →+* ℂ) (c : F) : (σ (algebraMap F E
   exact Complex.conj_eq_iff_im.mp h.symm
 
 
-omit [IsTotallyReal F] [IsTotallyComplex E] in
+omit [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 variable (F E) in
 theorem exists_imaginary_integer : ∃ t : 𝓞 E, (t : E) ≠ 0 ∧ conj F E (t : E) = -(t : E) := by
   obtain ⟨ζ, hζ⟩ := exists_not_mem_range (F := F) (E := E)

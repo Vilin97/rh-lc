@@ -93,7 +93,7 @@ theorem trace_nsmul (G : Matrix (Fin r) (Fin r) E) (ξ : E) (N : ℕ) (u v : Fin
 
 
 omit [IsCMField E] in
-theorem denseRange_emb [IsTotallyComplex E] (τ : E →+* ℂ) : DenseRange τ := by
+theorem denseRange_emb [_root_.NumberField.IsTotallyComplex E] (τ : E →+* ℂ) : DenseRange τ := by
   have hn : ¬ ComplexEmbedding.IsReal τ := IsTotallyComplex.complexEmbedding_not_isReal τ
   obtain ⟨x, hx⟩ : ∃ x, (τ x).im ≠ 0 := by
     by_contra h

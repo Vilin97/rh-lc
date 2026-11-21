@@ -69,7 +69,7 @@ private theorem Key.sat {sat : HeightOneSpectrum (𝓞 K) → Multiset ℂˣ →
   obtain ⟨B, hB, -⟩ := h ⟨w, ⟨rfl⟩⟩
   exact ⟨B, hB⟩
 
-private theorem key_twist [IsTotallyComplex K] [IsTotallyComplex L] {n : ℕ} {π : CuspSub K n} {P : CuspSub L n}
+private theorem key_twist [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex L] {n : ℕ} {π : CuspSub K n} {P : CuspSub L n}
     (χ : HChar K) (ξ : HChar L) {u : HeightOneSpectrum (𝓞 K)}
     (hξ : ∀ w : PlacesOver L u, ξ.UnrAt w.1 ∧ ξ.val w.1 = χ.val u ^ fdeg w)
     (hu : χ.UnrAt u) (h : Key (CG.mk π).HasSat (CG.mk P).HasSat u) :
@@ -84,7 +84,7 @@ private theorem key_twist [IsTotallyComplex K] [IsTotallyComplex L] {n : ℕ} {�
   convert h using 2
   simp [mul_pow]
 
-private theorem core [IsTotallyComplex K] [IsTotallyComplex L] (hOps : PairGOps) (hCross : CrossG) (hSide : SideG)
+private theorem core [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex L] (hOps : PairGOps) (hCross : CrossG) (hSide : SideG)
     (hSupp : SuppFacts) (hReg : RegroupBC) {d : ℕ} (hd : d.Prime) {n : ℕ} (hn : 2 ≤ n) (π : CuspSub K n) (P : CuspSub L n)
     (η : HChar K) (S : Finset (HeightOneSpectrum (𝓞 K)))
     (hkey : ∀ u ∉ S, Key (CG.mk π).HasSat (CG.mk P).HasSat u)

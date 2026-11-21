@@ -69,7 +69,7 @@ theorem sand_mem_cone (g : GL (Fin a) (Cinf E)) {p : HV E a} (hp : p ∈ cone E 
   obtain ⟨h, rfl⟩ := hp
   exact ⟨g * h, by rw [map_mul]; rfl⟩
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def ev {d : ℕ} : Sm E a ⊗[ℂ] (Fin d → ℂ) →ₗ[ℂ] (GA E a → Fin d → ℂ) :=
   TensorProduct.lift (LinearMap.mk₂ ℂ (fun φ v g => φ.1 g • v) (fun φ ψ v => by ext g i; simp [add_mul])

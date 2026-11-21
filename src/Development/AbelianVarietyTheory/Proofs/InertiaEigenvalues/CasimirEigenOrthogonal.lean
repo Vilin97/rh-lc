@@ -19,7 +19,7 @@ noncomputable section
 
 namespace GlobalTheory.CapOrth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ} {μ : Measure (GA E N)}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ} {μ : Measure (GA E N)}
   {W : Submodule ℂ (Sm E N)} (h : ∀ φ ∈ W, MemL2Quotient (latticeGL E N) μ φ.1)
 
 

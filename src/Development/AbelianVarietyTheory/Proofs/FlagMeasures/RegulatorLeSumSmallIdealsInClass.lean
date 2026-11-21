@@ -15,7 +15,7 @@ open NumberField.mixedEmbedding NumberField.InfinitePlace NumberField.Units
   NumberField.Units.dirichletUnitTheorem Module
 open scoped nonZeroDivisors
 
-theorem exists_mem_box (K : Type) [Field K] [NumberField K] [IsTotallyComplex K]
+theorem exists_mem_box (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
     (I : Ideal (𝓞 K)) (hI : I ≠ ⊥) (c : InfinitePlace K → ℝ)
     (hc : ∑ w, (w.mult : ℝ) * c w = Real.log ((Ideal.absNorm I : ℝ) * Real.sqrt |(discr K : ℝ)|)) :
     ∃ a : 𝓞 K, a ∈ I ∧ a ≠ 0 ∧ ∀ w : InfinitePlace K, w (a : K) < Real.exp (c w) := by

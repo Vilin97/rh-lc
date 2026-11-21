@@ -47,7 +47,7 @@ private theorem coe_lsum {d : ℕ} {ι : Type} (s : Finset ι) (W : ι → L (Eu
     rw [e1, Pi.add_apply, e2, Finset.sum_insert hi]
 
 theorem UpperTheory.pseudoEisenstein_section_pfun_inBand_slices_reps :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)) {d : ℕ} (A : Line μ τ₁ τ₂ D d), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ →
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)) {d : ℕ} (A : Line μ τ₁ τ₂ D d), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ →
           ∀ (u : ℝ → Eu d) (F : G1 K (2 + 2) → ℂ), Continuous u → HasCompactSupport u → (∀ g, F g = Complex.exp (2 * (HH g : ℂ)) * A.sec (u (HH g)) g) →
             PFun F ∧ InBand F ∧ Slices τ₁ τ₂ F ∧ ∀ U : L (Eu d), (∀ᵐ x : ℝ, U x = u x) → Reps μ (A.J U) (th F) := by
   intro K _ _ _ μ _ μ₂ _ τ₁ τ₂ D d A h₁ h₂ u F hu hcs hF

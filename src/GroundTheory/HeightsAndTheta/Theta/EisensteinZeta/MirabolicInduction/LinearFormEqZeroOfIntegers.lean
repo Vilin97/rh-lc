@@ -24,7 +24,7 @@ open scoped InnerProductSpace nonZeroDivisors ComplexConjugate
 
 section NumberFieldFacts
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 open Classical
 
@@ -32,7 +32,7 @@ end NumberFieldFacts
 
 section DualLattice
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 end DualLattice
 

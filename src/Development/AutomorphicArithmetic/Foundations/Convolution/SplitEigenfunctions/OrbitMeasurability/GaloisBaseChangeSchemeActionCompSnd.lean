@@ -29,7 +29,7 @@ private noncomputable def hoD {F : Type} [Field F] [NumberField F] (t : (A F)ˣ)
 private theorem emb_cD {F : Type} [Field F] [NumberField F] (t : (A F)ˣ) : MeasurableEmbedding (cD t : G1 F → G1 F) :=
   (hoD t).measurableEmbedding
 
-private noncomputable def tau {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (z : (A E)ˣ) : (A E)ˣ :=
+private noncomputable def tau {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (z : (A E)ˣ) : (A E)ˣ :=
   Units.map ((am E : A ℚ →+* A E) : A ℚ →* A E) (ideleNorm ℚ E z)
 
 private theorem em_dM {E : Type} [Field E] [NumberField E] (t : (A ℚ)ˣ) :
@@ -38,7 +38,7 @@ private theorem em_dM {E : Type} [Field E] [NumberField E] (t : (A ℚ)ˣ) :
   ext i j
   fin_cases i <;> fin_cases j <;> simp [em, dM, Matrix.GeneralLinearGroup.map]
 
-private theorem gl_scalarCenter_commute {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (z : (A E)ˣ) (u : G1 E) :
+private theorem gl_scalarCenter_commute {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (z : (A E)ˣ) (u : G1 E) :
     gl u * sZ D z = sZ D z * gl (cD (tau z) u) := by
   obtain ⟨-, -, -, -, -, -, -, -, hsc, -, -⟩ := UpperTheory.ConvolutionTheory.RankTwoDescent.szLaws E D
   have e : em E (dM (ideleNorm ℚ E z)⁻¹) = (dM (tau z))⁻¹ := by
@@ -47,7 +47,7 @@ private theorem gl_scalarCenter_commute {E : Type} [Field E] [NumberField E] [Is
   rw [← mul_assoc, ← UpperTheory.ConvolutionTheory.R2.scalar_comm z (gl u)]
   group
 
-private theorem cD_j {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (z : (A E)ˣ)
+private theorem cD_j {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (z : (A E)ˣ)
     (j : G1 ℚ →* G1 E) (hj : ∀ g, gl (j g) = em E (gl g)) (g : G1 ℚ) :
     cD (tau z) (j (cD (ideleNorm ℚ E z)⁻¹ g)) = j g := by
   obtain ⟨-, -, -, -, -, -, -, hc, -, -, -⟩ := UpperTheory.ConvolutionTheory.RankTwoDescent.szLaws E D
@@ -56,7 +56,7 @@ private theorem cD_j {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (
   rw [hj, ← hc, ← hj] at h1
   exact (mul_left_cancel h1).symm
 
-private theorem galoisBaseChangeSchemeAction_comp_snd {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (z : (A E)ˣ) (h u r : G1 E)
+private theorem galoisBaseChangeSchemeAction_comp_snd {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (z : (A E)ˣ) (h u r : G1 E)
     (huh : h = r * u) :
     D.act (gl h * sZ D z)⁻¹ (D.act (gl r) (rp X0)) = D.act (gl (cD (tau z) u))⁻¹ (rp X0) := by
   obtain ⟨-, -, -, -, ha, -, -, -, -, -, -⟩ := UpperTheory.ConvolutionTheory.RankTwoDescent.szLaws E D

@@ -145,7 +145,7 @@ theorem opNormAt_pos_alt [StarRing K] {n D : ℕ}
 
 end SlopeTestRemainingChoices
 
-theorem lattice_fg_ne_bot {K : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] {D : ℕ}
+theorem lattice_fg_ne_bot {K : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] {D : ℕ}
     (hD : 0 < D) (R : Submodule (𝓞 K) (Fin D → K)) (hR : Submodule.IsLattice K R) :
     R.FG ∧ R ≠ ⊥ := by
   refine ⟨hR.fg, ?_⟩

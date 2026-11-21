@@ -29,9 +29,9 @@ open UpperTheory.V.Af.Fin (emb e1 blk ext0 toLie lam)
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n r s : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem ct_growth {φ : GA E n → ℂ} {N : ℕ} (h : HasGrowth φ N) : HasGrowth (constantTerm r φ) N := by
   obtain ⟨C, hφ⟩ := h
   obtain ⟨D, hD, hsub⟩ := exists_isCompact_superset_unipFundamentalDomain (K := E) (n := n) (r := r)
@@ -103,18 +103,18 @@ private def stab (ψ : Sm E n) : Subgroup (GL (Fin n) (Af E)) where
     conv_lhs => rw [← hx]
     rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem lev_right (z g y : GA E r) (m : GA E s) :
     lev (Ad E) r s (z * (g * y), m) = lev (Ad E) r s (z * g, m) * lev (Ad E) r s (y, 1) := by
   rw [← map_mul, Prod.mk_mul_mk, mul_one, mul_assoc]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem lev_left (t : ℝ) (g y : GA E r) (m : GA E s) :
     lev (Ad E) r s (zt E r t * (y * g), m) = lev (Ad E) r s (y, 1) * lev (Ad E) r s (zt E r t * g, m) := by
   have : zt E r t * y = y * zt E r t := centralSection_mul_comm _ y
   rw [← map_mul, Prod.mk_mul_mk, one_mul, ← mul_assoc, this, mul_assoc]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem ct_right {φ : GA E (r + s) → ℂ} {y : GA E r} (h : ∀ x, φ (x * lev (Ad E) r s (y, 1)) = φ x)
     (z g : GA E r) (m : GA E s) :
     constantTerm r φ (lev (Ad E) r s (z * (g * y), m)) = constantTerm r φ (lev (Ad E) r s (z * g, m)) := by
@@ -168,7 +168,7 @@ private theorem cusp_of {φ : GA E (r + s) → ℂ} (hc : Continuous φ) (hl : I
     ← constantTermPar_eq_top hpr hc, constantTermPar_eq_bot hpr hc hl]
   simp only [h p hp hpr, integral_zero]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem killed_of {d : ℕ} {ρ : KA E (r + s) → Matrix (Fin d) (Fin d) ℂ} {φ : GA E (r + s) → ℂ}
     (hc : Continuous φ) (hK : Killed ρ φ) (hlev : ∀ k : KA E r, lev (Ad E) r s ((k : GA E r), 1) ∈ KA E (r + s))
     (z : GA E r) (m : GA E s) :
@@ -188,7 +188,7 @@ private theorem killed_of {d : ℕ} {ρ : KA E (r + s) → Matrix (Fin d) (Fin d
 end UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.ConvolutionTheory.BW.langStep :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.LangStep E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.LangStep E := by
   intro E _ _ _ S r s ρ φ hr hU hK hS h0 hsl g
   by_contra hne
   obtain ⟨b₀, hb₀, k₀, hk₀, rfl⟩ := exists_adelicBorel_mul_maxCompact g

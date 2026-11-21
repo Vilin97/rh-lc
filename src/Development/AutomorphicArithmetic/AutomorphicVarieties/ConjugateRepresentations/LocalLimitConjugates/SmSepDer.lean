@@ -11,7 +11,7 @@ open UpperTheory.V.Lit UpperTheory.V.Lit.Geo UpperTheory.V.Lit.Bor UpperTheory.V
 open scoped TensorProduct GlobalTheory.CuspRep.CuspidalL2GL
 open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
-private theorem sm_sepDer (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a) :
+private theorem sm_sepDer (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a) :
     SepDer (smK Ξ) (smLie Ξ) := by
   intro k Z h0 hk m' hm
   have h1 : ∃ j, Bor.cmp j m' ≠ 0 := by

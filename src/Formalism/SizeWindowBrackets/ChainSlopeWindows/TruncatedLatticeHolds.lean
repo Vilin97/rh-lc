@@ -285,7 +285,7 @@ end Span
 
 section Main
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 
@@ -409,7 +409,7 @@ end Main
 
 section Mod
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 

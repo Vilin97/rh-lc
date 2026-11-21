@@ -11,7 +11,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm GroundThe
 
 namespace UpperTheory.V.KernelIndexFullLattice
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem exists_split (h : SplitEq) (s : {r : ℝ // 0 < r}) :
     ∃ t : ℝ, Reduction.centralSection E a s = splitCentre E a t := by
@@ -26,7 +26,7 @@ theorem exists_split (h : SplitEq) (s : {r : ℝ // 0 < r}) :
     change s.1 = Real.exp _
     rw [mul_div_cancel₀ _ h0, Real.exp_log s.2]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem retractOne_surjective : Function.Surjective (retractOne : GA E a → G1 E a) :=
   fun x => ⟨x, retractOne_coe x⟩
 

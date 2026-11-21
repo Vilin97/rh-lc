@@ -14,7 +14,7 @@ open NumberField IsDedekindDomain Matrix GlobalTheory.CuspRep GlobalTheory.LFun 
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem tj_mem (w : Pl E) (j : ℕ) :
     Tj ℂ n (Ov E w) (exists_isUnifV w).choose j ∈ Hecke ℂ (KGL w (n := n)) := Tj_mem_hecke (exists_isUnifV w).choose_spec j
@@ -50,7 +50,7 @@ private theorem uC_fin (u : UC E n) (k : GL (Fin n) (Af E)) : Commute (uC E n u)
   have hu : u ∈ P := h (adjoin_genC (E := E) (a := n) ▸ Algebra.mem_top)
   exact (hu _ rfl).symm
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem kgl_eq (w : Pl E) : GLnLocal.integralGL (w.adicCompletion E) n = KGL w (n := n) := by
   have h : ∀ O : Subring (w.adicCompletion E), O = (ValuativeRel.valuation (w.adicCompletion E)).integer →
       GLnLocal.integralGL (w.adicCompletion E) n = GLint (Fin n) O := by
@@ -101,7 +101,7 @@ end UpperTheory.ConvolutionTheory.BW
 
 open UpperTheory.ConvolutionTheory.BW in
 theorem UpperTheory.ConvolutionTheory.BW.hkOps :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.HkOps E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.HkOps E := by
   intro E _ _ _ n w j
   refine ⟨hk_apply w j, fun u => hk_comm w j _ fun g => uC_fin u _, fun y => hk_comm w j _ fun g => ?_,
     fun S φ hw hφ => ⟨fun w' hw' k hk' => ?_, hk_zero w (hφ w hw), fun k => ⟨fun w' hw' x hx => ?_, ?_⟩, fun w' hw' j' => ?_⟩⟩

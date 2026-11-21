@@ -45,9 +45,9 @@ theorem exists_tsum_zpow_le {T s : ℝ} (hT : 1 < T) (hs : 0 < s) : ∃ B : ℝ�
     exact mul_le_mul_of_nonneg_left h1 (by positivity)
   · exact zero_le
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_absDet : Continuous fun g : GA E a => (ideleModule E (GeneralLinearGroup.det g) : ℝ) :=
   continuous_subtype_val.comp (continuous_ideleModule.comp (AdelicGLn.continuous_det E a))
 

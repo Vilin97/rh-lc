@@ -190,7 +190,7 @@ theorem iterU {ι : Type} {f : ι → AdelicGLn.AdelicGL K n → ℂ} {M : ℝ} 
 
 end Iter
 
-theorem initU (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ) [MeasurableSpace (GA E N)]
+theorem initU (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ) [MeasurableSpace (GA E N)]
     [BorelSpace (GA E N)] (μ : Measure (GA E N)) [μ.IsHaarMeasure] (α : GA E N → ℂ) (δ : ℝ) (F : Set (GA E N))
     (hα : Continuous α) (hαc : HasCompactSupport α) (hδ : 0 < δ) (hF : IsFundamentalDomain (latticeGL E N) F μ) :
     ∃ M : ℝ, ∀ (ι : Type) (f : ι → GA E N → ℂ), (∀ i, Continuous (f i)) →
@@ -259,7 +259,7 @@ theorem enorm_sq_le (a b : ℂ) : ‖a‖ₑ ^ 2 ≤ 2 * ‖a - b‖ₑ ^ 2 + 2 
 
 section Approx
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
   [MeasurableSpace (archGroup E N)] [BorelSpace (archGroup E N)] (ν : Measure (archGroup E N)) [ν.IsHaarMeasure]
 
 theorem sm_integrable {β : archGroup E N → ℝ} (hβ : Ker ν β) {f : GA E N → ℂ} (hf : Continuous f) (x : GA E N) :

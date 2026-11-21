@@ -59,8 +59,8 @@ def GlobOf : Prop :=
         ∃ σ : E ≃ₐ[F] E, (∀ τ, τ ∈ Subgroup.zpowers σ) ∧ ∀ y, galFin σ v y w = s (y w)
 
 def InflTrace : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-    [IsTotallyComplex E], (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+    [_root_.NumberField.IsTotallyComplex E], (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
     ∀ (π : CuspSub F n) (P : CuspSub E n), (∀ g : E ≃ₐ[F] E, (Cusp.cx P).ConjIso g.toRingEquiv) →
       WeakBC (Cusp.cx π).sat (Cusp.cx P).sat → ∀ (v : Pl F) (w : PlacesOver E v), (∀ w' : PlacesOver E v, w' = w) → GM.Unr E v →
     ∀ [Algebra (v.adicCompletion F) (w.1.adicCompletion E)] [ValuativeExtension (v.adicCompletion F) (w.1.adicCompletion E)]

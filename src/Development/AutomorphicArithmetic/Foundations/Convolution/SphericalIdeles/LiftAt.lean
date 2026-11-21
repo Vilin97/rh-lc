@@ -66,8 +66,8 @@ private theorem fixL_anti {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : M
   biInf_mono fun _ hu => Subgroup.map_mono h hu
 
 theorem UpperTheory.ConvolutionTheory.Sph.liftAt (hCI : UpperTheory.ConvolutionTheory.CI) (hGM : UpperTheory.ConvolutionTheory.GM.GM) :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-    [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+    [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
     ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure] (θ : Twist μE),
       IsGalTwist σ θ → ∀ (V : Submodule ℂ (LL μF)) Λ t (S₀ : Set (Pl F)), IsSummand μF V → S₀.Finite → At μF S₀ V Λ t →
       OffAll F n (bcInf (K := E) Λ) (bcSat t) → ∀ v₀ : Pl F, v₀ ∉ S₀ → GM.Unr E v₀ →

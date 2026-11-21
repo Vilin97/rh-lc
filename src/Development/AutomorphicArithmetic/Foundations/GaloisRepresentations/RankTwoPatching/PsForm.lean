@@ -113,7 +113,7 @@ theorem recTr (hG : GlobalTheory.Published.GlobalArtinReciprocity) {K : Type} [F
   exact (congrArg (ξ k) (h5 _)).symm
 
 def RatioT : Prop :=
-  ∀ (K Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (A : ValuationSubring Ω)
+  ∀ (K Ω : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (A : ValuationSubring Ω)
     (w : HeightOneSpectrum (𝓞 K)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion K) → WD h), IsRecT h rc →
     ∀ (a : ℕ) (π : CuspSub K a) (t : ℝ), WinAt π t w → ∀ σ, π.IsLocComp w σ → UpperTheory.GalN.V.RatioW (rc (algNorm σ))
 

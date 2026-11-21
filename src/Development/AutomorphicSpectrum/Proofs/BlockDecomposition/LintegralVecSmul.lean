@@ -206,7 +206,7 @@ theorem totS_eq (l : Fin k → ℤ) : totS l (k - 1) = rhoPair l := by
     have := Finset.mem_range.1 hi
     omega
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem mod_locId (hD : D0) (w : Pl E) (m : ℤ) :
     (GroundTheory.Global.IdeleGroup.ideleModule E (locId w (Iwasawa.uniformizerUnit (w.adicCompletion E) ^ m)) : ℝ) =

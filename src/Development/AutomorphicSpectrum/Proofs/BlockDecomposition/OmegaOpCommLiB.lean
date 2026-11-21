@@ -21,9 +21,9 @@ namespace GlobalTheory.CompanionTheory.HCRep
 
 open AutomorphicForm GlobalTheory.CompanionTheory.ArchSmooth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
-def smL (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) :
+def smL (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) :
     Sm E a →ₗ[ℂ] AutomorphicForm.archSmooth E a where
   toFun φ := ⟨φ.1, sm_mem_archSmooth E a φ⟩
   map_add' _ _ := rfl

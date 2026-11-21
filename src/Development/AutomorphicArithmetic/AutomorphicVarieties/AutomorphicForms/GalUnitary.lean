@@ -33,7 +33,7 @@ def AutBridge : Prop :=
   ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (n : ℕ)
     (r : G F Ω →* GL (Fin n) (Qbar l)),
     (∀ [IsTotallyReal F], IsAut ι r ↔ IsAutR ι r) ∧
-    (∀ [IsTotallyComplex F], IsAut ι r ↔ ∃ π : CuspSub F n, (CG.mk π).IsRegAlg ∧ AttC ι r π) ∧
+    (∀ [_root_.NumberField.IsTotallyComplex F], IsAut ι r ↔ ∃ π : CuspSub F n, (CG.mk π).IsRegAlg ∧ AttC ι r π) ∧
     ∀ [IsCMField F], IsAutCsd ι r → IsAut ι r
 
 def Twi : Prop :=

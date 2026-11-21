@@ -263,7 +263,7 @@ end UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.Cell
 set_option maxHeartbeats 1000000 in
 open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.Cell in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.intertw :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ →
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ →
       ∀ (f : G1 K (2 + 2) → ℂ) (β : ℝ → ℂ) (s : ℝ), IsSec τ₁ τ₂ f → D.Fix f → Continuous β → HasCompactSupport β →
         IsSec τ₂ τ₁ (fun g => ∫ X, bf β f (w0 K * nn X * (lv 1 1 (s - HH g) * g)) ∂unipMeasure K (2 + 2) 2) ∧
         D.Fix fun g => ∫ X, bf β f (w0 K * nn X * (lv 1 1 (s - HH g) * g)) ∂unipMeasure K (2 + 2) 2 := by

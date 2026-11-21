@@ -32,7 +32,7 @@ theorem slope_sq_bot {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Mo
   rw [dite_eq_left hN]
   exact muDef_bot _ _
 
-theorem slope_sq_sub_le_of_different_smul {K K' V V' : Type} [Field K] [NumberField K] [IsTotallyComplex K]
+theorem slope_sq_sub_le_of_different_smul {K K' V V' : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
     [Field K'] [NumberField K'] [Algebra K K'] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] [AddCommGroup V'] [Module K' V'] [Module (𝓞 K') V'] [IsScalarTower (𝓞 K') K' V']
     (N : (K →+* ℂ) → V → ℝ) (N' : (K' →+* ℂ) → V' → ℝ) (ι : V →ₛₗ[algebraMap K K'] V') (L : Submodule (𝓞 K) V)

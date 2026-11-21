@@ -129,7 +129,7 @@ theorem map_mem_of_normal (L : Fld) (h : j.fieldRange ≤ L) (hn : letI := algTh
 
 
 omit j in
-theorem hilbert_qb : GlobalArtinReciprocity → ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+theorem hilbert_qb : GlobalArtinReciprocity → ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     (j : E →ₐ[ℚ] Qb) (ι : Qb →+* ℂ) (M : IntermediateField ℚ ℂ), IsRayFieldIn (ι.comp j.toRingHom) ⊤ M →
     ∃ (_ : NumberField (qb ι M)) (h : j.fieldRange ≤ qb ι M),
       (letI := algThrough j _ h; IsAbelianGalois E (qb ι M)) ∧
@@ -152,7 +152,7 @@ theorem hilbert_qb : GlobalArtinReciprocity → ∀ (E : Type) [Field E] [Number
 
 
 omit j in
-theorem hilbert_qb_aut : GlobalArtinReciprocity → ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+theorem hilbert_qb_aut : GlobalArtinReciprocity → ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     (j : E →ₐ[ℚ] Qb) (ι : Qb →+* ℂ) (M : IntermediateField ℚ ℂ), IsRayFieldIn (ι.comp j.toRingHom) ⊤ M →
     ∃ _ : NumberField (qb ι M), j.fieldRange ≤ qb ι M ∧
       (∀ s ∈ GalOf j.fieldRange, ∀ x ∈ qb ι M, s x ∈ qb ι M) ∧

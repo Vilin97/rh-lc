@@ -115,7 +115,7 @@ theorem isModulus_top (H : GlobalTheory.Published.GlobalArtinReciprocity) (K M :
     rw [h2]
 
 theorem isModulus_top_of_isTotallyComplex : GlobalTheory.Published.GlobalArtinReciprocity → ∀ (K M : Type) [Field K]
-    [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [Algebra K M] [IsAbelianGalois K M],
+    [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [Algebra K M] [IsAbelianGalois K M],
     (∀ 𝔭 : HeightOneSpectrum (𝓞 K), GlobalTheory.NT.UnramIn M 𝔭) → ∀ χ : (M ≃ₐ[K] M) →* ℂˣ, GlobalTheory.NT.IsModulus M χ ⊤ :=
   fun H K M _ _ _ _ _ _ _ hM χ => isModulus_top H K M hM χ
 

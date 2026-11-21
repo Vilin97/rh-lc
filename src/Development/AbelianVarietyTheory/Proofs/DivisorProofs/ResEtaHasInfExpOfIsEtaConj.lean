@@ -41,7 +41,7 @@ theorem mk_eq (P : HeightOneSpectrum (𝓞 E)) (k : Eˣ) : FinitePlace.mk P (k :
   rw [hk, Units.val_mul, Units.val_zpow_eq_zpow_val, map_mul, map_zpow₀, GlobalTheory.EtaConjLocal.mk_unit P hu,
     GlobalTheory.EtaConjLocal.mk_unif, mul_one, ← rt_sq, sq, sq, mul_zpow]
 
-theorem prod_rt [IsTotallyComplex E] {I : Type} [Fintype I] (φ : I → E →+* ℂ)
+theorem prod_rt [_root_.NumberField.IsTotallyComplex E] {I : Type} [Fintype I] (φ : I → E →+* ℂ)
     (hφ : Function.Bijective fun i => InfinitePlace.mk (φ i)) (k : Eˣ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (hS : ∀ P, ordF P k ≠ 0 → P ∈ S) : (∏ i, ‖φ i k‖) * ∏ P ∈ S, rt P ^ ordF P k = 1 := by
   have h := prod_abs_eq_one k.ne_zero
@@ -90,7 +90,7 @@ variable {L : Type} [Field L] (ι σ : L →+* ℂ) {χ χ' : HChar E} (hu : ∀
 
 include hu hu' hy hy'
 
-theorem inf_eq [IsTotallyComplex E] {I : Type} [Fintype I] (φ : I → E →+* ℂ)
+theorem inf_eq [_root_.NumberField.IsTotallyComplex E] {I : Type} [Fintype I] (φ : I → E →+* ℂ)
     (hφ : Function.Bijective fun i => InfinitePlace.mk (φ i)) (hi : χ.HasInf φ fun _ => 1)
     (ht : ∀ k : E, ∃ t : L, ι t = ∏ i, φ i k ∧ σ t = ∏ i, φ i k) (k : Eˣ) : χ'.inf k = χ.inf k := by
   obtain ⟨t, ht1, ht2⟩ := ht k

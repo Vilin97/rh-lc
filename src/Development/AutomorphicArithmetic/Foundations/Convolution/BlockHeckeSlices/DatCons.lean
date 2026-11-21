@@ -14,7 +14,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction UpperTheory.V.C
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (Pl E)} {n r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} {n r s : ℕ}
 
 namespace Dat
 

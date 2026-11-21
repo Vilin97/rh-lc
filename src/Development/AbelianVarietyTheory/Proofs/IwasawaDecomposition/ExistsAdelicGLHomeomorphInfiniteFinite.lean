@@ -14,7 +14,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.UnitaryBC GlobalTheory.CuspR
 
 noncomputable section
 namespace GlobalTheory.CuspRep.GASplit
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
 
 theorem continuous_infEq_symm : Continuous (infEq E).symm := by
   refine continuous_pi fun w => ?_
@@ -63,7 +63,7 @@ def splitEquiv : GA E a ≃ₜ* GL (Fin a) (Cinf E) × GL (Fin a) (Af E) where
     ((continuous_cornerGL a (sInf E) (continuous_sInf E)).comp continuous_fst).mul
       ((continuous_cornerGL a (sFin E) (continuous_sFin E)).comp continuous_snd)
 
-theorem exists_split : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
+theorem exists_split : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
     ∃ e : GA E a ≃ₜ* GL (Fin a) (Cinf E) × GL (Fin a) (Af E),
       ∀ g, e g = (GeneralLinearGroup.map (pInf E) g, GeneralLinearGroup.map (pFin E) g) :=
   fun E _ _ _ a => ⟨splitEquiv E a, fun _ => rfl⟩

@@ -12,7 +12,7 @@ open NumberField MeasureTheory Topology Matrix GlobalTheory.AutomorphicL2Unitary
 
 namespace GlobalTheory.CompanionTheory.LieSkew
 
-theorem continuous_infGL_map (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) :
+theorem continuous_infGL_map (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) :
     Continuous (infGL E a) := by
   have hs : Continuous (sInf E) :=
     ((continuous_infEq E).prodMk continuous_const :
@@ -26,7 +26,7 @@ theorem inner_R_R {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup 
     inner ℂ (R Γ μ g F) (R Γ μ g F') = inner ℂ F F' :=
   (LinearIsometry.mk (R Γ μ g).toLinearMap (norm_R g)).inner_map_map F F'
 
-theorem lie_skew : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (X : GlobalTheory.CuspRep.Lie E a) (φ ψ : Sm E a) (hφ : MemL2Quotient (latticeGL E a) μ φ.1) (hψ : MemL2Quotient (latticeGL E a) μ ψ.1) (hXφ : MemL2Quotient (latticeGL E a) μ (lie E a X φ).1) (hXψ : MemL2Quotient (latticeGL E a) μ (lie E a X ψ).1), Continuous φ.1 → Continuous ψ.1 → Continuous (lie E a X φ).1 → Continuous (lie E a X ψ).1 → inner ℂ hXφ.toL2 hψ.toL2 = - inner ℂ hφ.toL2 hXψ.toL2 := by
+theorem lie_skew : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (X : GlobalTheory.CuspRep.Lie E a) (φ ψ : Sm E a) (hφ : MemL2Quotient (latticeGL E a) μ φ.1) (hψ : MemL2Quotient (latticeGL E a) μ ψ.1) (hXφ : MemL2Quotient (latticeGL E a) μ (lie E a X φ).1) (hXψ : MemL2Quotient (latticeGL E a) μ (lie E a X ψ).1), Continuous φ.1 → Continuous ψ.1 → Continuous (lie E a X φ).1 → Continuous (lie E a X ψ).1 → inner ℂ hXφ.toL2 hψ.toL2 = - inner ℂ hφ.toL2 hXψ.toL2 := by
   intro E _ _ _ a μ _ _ X φ ψ hφ hψ hXφ hXψ cφ cψ cXφ cXψ
   obtain ⟨c, hc, h0, hadd, hd, -⟩ := GlobalTheory.T.one_parameter_subgroup_exists E a X
   have hγ : Continuous fun t => infGL E a (c t) := (continuous_infGL_map E a).comp hc

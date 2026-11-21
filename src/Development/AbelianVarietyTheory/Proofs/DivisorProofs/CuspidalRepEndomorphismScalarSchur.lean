@@ -18,7 +18,7 @@ open NumberField Formalism.L2.Host GlobalTheory.CuspRep GlobalTheory.PRep Global
 
 namespace GlobalTheory.CuspSchur
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def imgPart (π : CuspSub E a) (L : Subgroup (GL (Fin a) (Af E))) {W : Type} [AddCommGroup W] [Module ℂ W]
     (ρ : Representation ℂ (Kinf E a) W) (w : W) : Submodule ℂ π.V where
@@ -54,7 +54,7 @@ theorem finiteDimensional_imgPart (π : CuspSub E a) {L : Subgroup (GL (Fin a) (
   rw [LinearMap.comp_apply, e] at h
   exact h
 
-theorem schur : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (x : CuspSub E a)
+theorem schur : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (x : CuspSub E a)
     (f : x.V →ₗ[ℂ] x.V), (∀ o φ, f (x.op o φ) = x.op o (f φ)) → ∃ c : ℂ, ∀ φ, f φ = c • φ := by
   intro E _ _ _ a π f hf
   obtain ⟨φ, hφ, h0⟩ := (Submodule.ne_bot_iff _).1 π.ne_bot

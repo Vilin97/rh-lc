@@ -12,7 +12,7 @@ open NumberField IsDedekindDomain Matrix Formalism.L2.Host GlobalTheory.CuspRep 
 open UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Geo UpperTheory.V.Lit.Bor UpperTheory.V.Cj
 open scoped TensorProduct
 
-private theorem sat_twist {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (π : CG E a)
+private theorem sat_twist {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (π : CG E a)
     {w : HeightOneSpectrum (𝓞 E)} {B : Multiset ℂˣ} (h : π.HasSat w B) {χ : HChar E} (hχ : χ.UnrAt w) :
     (π.twist χ).HasSat w (B.map (· * χ.val w)) := by
   induction π using Quotient.inductionOn

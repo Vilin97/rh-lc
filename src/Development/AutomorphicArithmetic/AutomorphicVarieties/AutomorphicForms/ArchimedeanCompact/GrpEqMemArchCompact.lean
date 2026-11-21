@@ -11,7 +11,7 @@ open scoped ContDiff Topology
 
 namespace UpperTheory.V.Cm
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in
@@ -148,7 +148,7 @@ theorem grpEq_mem_archCompact (y : GL (Fin a) (Cinf E)) :
   · intro h z
     rw [← Reduction.euclidNorm_map _ hψ, e, h, Reduction.euclidNorm_map _ hψ]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem norm_le_ht (y : GL (Fin a) (Cinf E)) :
     ‖toL y.val‖ ≤ GlobalTheory.CuspRep.height y ∧ ‖toL (y⁻¹).val‖ ≤ GlobalTheory.CuspRep.height y ∧
       GlobalTheory.CuspRep.height y ≤ 1 + ‖toL y.val‖ + ‖toL (y⁻¹).val‖ := by
@@ -176,7 +176,7 @@ theorem exists_height_le : ∃ N : ℕ, ∀ y : GL (Fin a) (Cinf E),
   rw [map_inv, Reduction.infAt_inv] at this
   exact this.trans (norm_le_ht y).2.1
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem loc_le_height (g : GA E a) (w : InfinitePlace E) :
     locHeight (Reduction.infAt w g) ≤ AutomorphicForm.height g := by
   classical

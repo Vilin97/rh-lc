@@ -82,7 +82,7 @@ private theorem arith_first_ineq (p m n c e r t : ℕ) (hp : p.Prime) (hd : m �
   exact le_trans (Nat.mul_le_mul_left _ hmn) h3
 
 theorem first_inequality_sUnits_prime :
-    ∀ (p : ℕ) (F : Type) [Field F] [NumberField F] [IsTotallyComplex F] (ζ : F) (δ : Fˣ)
+    ∀ (p : ℕ) (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] (ζ : F) (δ : Fˣ)
       (S : Finset (HeightOneSpectrum (𝓞 F))), p.Prime → IsPrimitiveRoot ζ p → AdmP p F S →
       δ ∈ sUnits F S → (∀ r : F, r ^ p ≠ (δ : F)) →
       (kNorm p (RingHom.id F) (δ : F)).relIndex (sUnits F S) ≠ 0 ∧

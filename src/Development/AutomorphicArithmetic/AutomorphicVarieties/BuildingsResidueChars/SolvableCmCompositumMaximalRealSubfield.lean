@@ -17,7 +17,7 @@ private theorem rcsup_map_real {M M' : Type} [Field M] [Field M'] (g : M →+* M
     (hx : x ∈ maximalRealSubfield M) : g x ∈ maximalRealSubfield M' :=
   fun φ => hx (φ.comp g)
 
-private theorem rcsup_cm_of_pair {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (d : K) (hd0 : d ≠ 0)
+private theorem rcsup_cm_of_pair {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (d : K) (hd0 : d ≠ 0)
     (hd : ∀ φ : K →+* ℂ, star (φ d) = - φ d)
     (hspan : ∀ y : K, ∃ a ∈ maximalRealSubfield K, ∃ b ∈ maximalRealSubfield K, y = a + b * d) :
     IsCMField K := by

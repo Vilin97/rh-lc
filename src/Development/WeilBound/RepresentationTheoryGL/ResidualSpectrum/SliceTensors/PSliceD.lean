@@ -16,7 +16,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm
 
 namespace PositivityTheory.Rg.Rs.SliceClasses
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 theorem D_chart_left (F : GA E N → ℂ) (h g : GA E N) : chart (fun x => F (h * x)) g = chart F (h * g) := by
   funext x

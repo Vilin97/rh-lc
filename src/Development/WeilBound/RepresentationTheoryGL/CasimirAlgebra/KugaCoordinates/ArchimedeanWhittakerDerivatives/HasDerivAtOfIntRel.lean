@@ -13,7 +13,7 @@ namespace PositivityTheory.Rg.Cz
 
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.CuspGeneric GlobalTheory.CuspRep.Generic
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def IntRel (M : Matrix (Fin a) (Fin a) (Cinf E)) (hM : M * M = 0) (f f' : GA E a → ℂ) : Prop :=
   ∀ g t, f (g * infGL E a (cu M hM t)) - f g = ∫ s in (0 : ℝ)..t, f' (g * infGL E a (cu M hM s))

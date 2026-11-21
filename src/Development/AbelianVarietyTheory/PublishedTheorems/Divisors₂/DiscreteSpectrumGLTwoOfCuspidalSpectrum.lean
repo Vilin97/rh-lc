@@ -17,7 +17,7 @@ open GlobalTheory.CuspRep GlobalTheory.CuspRep.CuspidalL2GL GlobalTheory.Unitary
 
 namespace GlobalTheory.DiscChar
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {ω χ : HChar E}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {ω χ : HChar E}
   {V : Submodule ℂ (Sm E a)}
 
 structure IsDiscreteWith (ω : HChar E) (V : Submodule ℂ (Sm E a)) : Prop where
@@ -40,7 +40,7 @@ theorem chiDet_scalar (χ : HChar E) (z : Neutral.B1.Ideles E) :
     simp)
   exact (congrArg χ.1 this).trans ((map_pow _ _ _).trans (MonoidHom.pow_apply χ.1 a z).symm)
 
-abbrev expId (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (t : ℝ) : Neutral.B1.Ideles E :=
+abbrev expId (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (t : ℝ) : Neutral.B1.Ideles E :=
   infId E (expU fun _ : InfinitePlace E => (t : ℂ))
 
 theorem IsDiscreteWith.apply (h : IsDiscreteWith ω V) {φ : Sm E a} (hφ : φ ∈ V) (z : Neutral.B1.Ideles E) (g : GA E a) :
@@ -126,7 +126,7 @@ namespace GlobalTheory.Published
 
 open GlobalTheory.DiscChar
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 end GlobalTheory.Published
 

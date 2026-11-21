@@ -24,7 +24,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.ClozelLie
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem Eop_add_conjugate (τ : E →+* ℂ) (i : Fin a) :
     Eop τ i i + Eop (ComplexEmbedding.conjugate τ) i i = lieS E a i i (atEmb τ 1) := by
@@ -60,7 +60,7 @@ theorem sum_Eop_diag (i : Fin a) : ∑ τ : E →+* ℂ, Eop τ i i = lieS E a i
     rw [two_smul, two_smul, h]
   exact smul_right_injective _ (two_ne_zero (α := ℂ)) h2
 
-theorem lie_oneL_eq_sum_Eop (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) :
+theorem lie_oneL_eq_sum_Eop (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) :
     lie E a (oneL E a) = ∑ τ : E →+* ℂ, ∑ i : Fin a, Eop τ i i := by
   rw [Finset.sum_comm, Finset.sum_congr rfl fun i _ => sum_Eop_diag i]
   simp only [lieS_apply]

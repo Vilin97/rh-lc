@@ -15,7 +15,7 @@ open GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory.C U
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
   {μ : Measure (normOneGL (K := E) (n := n))} [μ.IsHaarMeasure] {v : LL μ} {φ : Sm E n}
 
 private theorem out_eq (h : Umg φ) :
@@ -83,7 +83,7 @@ private theorem rep_hecke (h : Rep μ v φ) (w : Pl E) {T : GL (Fin n) (w.adicCo
 end UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.ConvolutionTheory.BW.repOps :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.RepOps E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.RepOps E := by
   intro E _ _ _ n μ _ _ v φ h
   refine ⟨fun ψ h' => Subtype.ext (funext fun g => ?_), fun v' ψ c h' => rep_comb h c h', fun hc r hr hrn => ?_,
     fun w i hw => ?_⟩

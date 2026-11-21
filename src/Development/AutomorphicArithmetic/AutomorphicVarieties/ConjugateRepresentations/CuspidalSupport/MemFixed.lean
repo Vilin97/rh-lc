@@ -20,11 +20,11 @@ private theorem blk_mul {r s : ℕ} {R : Type} [CommRing R] (a a' : GL (Fin r) R
   simp only [blk, map_mul, mul_assoc]
   rw [← mul_assoc (emb (e2 r s) b), ← UpperTheory.V.Af.Fin.emb_comm, mul_assoc]
 
-private theorem fL_apply {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (w : Pl E)
+private theorem fL_apply {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (w : Pl E)
     (b : GL (Fin n) (w.adicCompletion E)) (φ : Sm E n) (x : GA E n) :
     (fL n w b φ).1 x = φ.1 (x * finGL E n (locGL E n w b)) := rfl
 
-private theorem tOp_apply (hS : HkSum) {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (w : Pl E)
+private theorem tOp_apply (hS : HkSum) {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (w : Pl E)
     {ϖ : w.adicCompletion E} (hϖ : ϖ ∈ Ov E w) (hu : IsUnifV E w ϖ) [Fintype (satakeRes (Ov E w) ⟨ϖ, hϖ⟩)] (j : ℕ)
     (hj : j ≤ n) (φ : Sm E n) (hφ : φ ∈ fixed (fL n w) (KGL w (n := n))) (x : GA E n) :
     (tOp n w hu j φ).1 x =

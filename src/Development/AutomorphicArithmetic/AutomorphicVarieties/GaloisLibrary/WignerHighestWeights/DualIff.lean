@@ -44,7 +44,7 @@ private theorem prod_neg (m : Multiset ℂ) (u : ℂ) :
 end UpperTheory.V.AlgRepEndIrreducible.QuantumDeterminantDual
 
 theorem UpperTheory.V.AlgRepEndIrreducible.dualIff :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a) (τ : E →+* ℂ) (m : Multiset ℂ),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a) (τ : E →+* ℂ) (m : Multiset ℂ),
       UpperTheory.V.Af.AlgInfChar Ξ τ (m.map Neg.neg) ↔ GlobalTheory.WignerGL.HasDualInfChar Ξ τ m := by
   intro E _ _ _ a Ξ τ m
   have hR : Formalism.REAL.GlRel (eL Ξ.dmat τ) := (eLRel E a _ Ξ.dmat (GlobalTheory.AlgInfChar.dmat_bracket Ξ)).1 τ

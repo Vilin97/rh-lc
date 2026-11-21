@@ -40,7 +40,7 @@ namespace GlobalTheory.ColEvNorm
 
 
 open Formalism.L2.Col in
-theorem ipAt_le_of_ties {Xf : Fields} [IsTotallyComplex Xf.K]
+theorem ipAt_le_of_ties {Xf : Fields} [_root_.NumberField.IsTotallyComplex Xf.K]
     (Pr : Primes Xf) (Rk : Ranks) (W : Wts Xf Pr.Word Rk) (Ch : Chars Xf Pr Rk.m)
     (sel : HeightOneSpectrum (𝓞 Xf.F) → HeightOneSpectrum (𝓞 Xf.E)) {Sg : Set ℕ} (hX : Xf.Ok)
     (Lv : LevFam Xf.E Xf.K Rk.r Pr.vGs) (Xg : Finset (G0 Xf.E Pr.vGs Rk.r → Xf.K)) (v0 : InfinitePlace Xf.K)

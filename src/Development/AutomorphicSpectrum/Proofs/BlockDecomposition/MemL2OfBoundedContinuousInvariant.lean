@@ -18,7 +18,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.CuspInvariant
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem memL2_of_bounded_continuous_invariant (μ : Measure (GA E a)) [μ.IsHaarMeasure] {φ : GA E a → ℂ} (hc : Continuous φ)
     (hl : LeftInv (latticeGL E a) φ) {C : ℝ} (hC : ∀ g, ‖φ g‖ ≤ C) : MemL2Quotient (latticeGL E a) μ φ := by
@@ -181,8 +181,8 @@ theorem hasCompactSupport_test {U : Subgroup (GL (Fin a) (Af E))} (hU : IsCompac
   rwa [Set.indicator_of_mem h1] at hg
 
 theorem cuspInvFin (hb : GlobalTheory.Published.CuspFormsBoundedGL)
-    (hu : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), UnifAlpha E a) :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), CuspInvFin E a := by
+    (hu : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), UnifAlpha E a) :
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), CuspInvFin E a := by
   intro E _ _ _ a L hL W _ _ _ ρ hρ J hJ
   obtain ⟨U, hUL, hUo, hUc⟩ := exists_compact_open hL
   letI : MeasurableSpace (GL (Fin a) (Cinf E)) := borel _

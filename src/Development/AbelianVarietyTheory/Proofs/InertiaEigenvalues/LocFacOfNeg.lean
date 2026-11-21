@@ -28,7 +28,7 @@ def cellProd {E : Type} [Field E] [NumberField E] {n : ℕ} (T : Finset (HeightO
     (ν : HeightOneSpectrum (𝓞 E) →₀ (Fin n → ℤ)) : ℝ≥0∞ :=
   ∏ w ∈ ν.support, if h : w ∈ T then 1 else locFac (Ideal.absNorm w.asIdeal) (α ⟨w, h⟩) x (ν w)
 
-def bInt {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (ℓ : Fin a) (F : GA E a → ℂ)
+def bInt {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (ℓ : Fin a) (F : GA E a → ℂ)
     (Φ : (Fin a → Cinf E) → ℂ) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (η : Fin a → Af E) (x : ℝ) (g : GA E a) : ℝ≥0∞ :=
   ‖GlobalTheory.RSTheta.rsPsi ℓ (GlobalTheory.JSW.whit F) (GlobalTheory.JSW.whit F) Φ J η g (g.val ℓ)‖ₑ *
     ENNReal.ofReal ((ideleModule E (GeneralLinearGroup.det g) : ℝ) ^ x)

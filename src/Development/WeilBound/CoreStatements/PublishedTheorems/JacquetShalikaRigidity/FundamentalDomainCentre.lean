@@ -21,12 +21,12 @@ namespace FundamentalDomainCentre
 
 set_option synthInstance.maxHeartbeats 400000
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
-abbrev fdL (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (k : ℕ) : Set (GA E k) :=
+abbrev fdL (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (k : ℕ) : Set (GA E k) :=
   GlobalTheory.AutomorphicL2Unitary.stdDom (latticeGL E k)
 
-abbrev rhoZ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (k : ℕ) : Measure (GA E k) :=
+abbrev rhoZ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (k : ℕ) : Measure (GA E k) :=
   Measure.sum fun n : ℤ => Measure.dirac (splitCentre E k 1 ^ (-n))
 
 instance rhoZ_sFinite : SFinite (rhoZ E k) := by

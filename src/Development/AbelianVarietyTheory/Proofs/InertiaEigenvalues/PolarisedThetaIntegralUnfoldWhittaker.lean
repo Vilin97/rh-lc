@@ -25,7 +25,7 @@ open scoped ENNReal NNReal ComplexConjugate
 namespace GlobalTheory.ZUnf
 open GlobalTheory.MirTower GlobalTheory.CuspGeneric Formalism.L2.Host
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ}
 
 theorem lastRow_uGL_mul (X : GroundTheory.Automorphic.FourierWhittaker.Pos (m + 1) → Ad E) (g : GA E (m + 1)) :
     GlobalTheory.ZEul.lastRow (GroundTheory.Automorphic.FourierWhittaker.uGL X * g) = GlobalTheory.ZEul.lastRow g := by
@@ -52,7 +52,7 @@ end GlobalTheory.ZUnf
 namespace GlobalTheory.ZUnf
 open GlobalTheory.MirTower GlobalTheory.CuspGeneric Formalism.L2.Host
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ}
 
 theorem indN_eq_re (N : ℕ) (y : Fin (m + 1) → Af E) : indN N y = ((indN N y).re : ℂ) := by
   unfold indN; split_ifs <;> simp
@@ -86,7 +86,7 @@ end GlobalTheory.ZUnf
 namespace GlobalTheory.ZUnf
 open GlobalTheory.MirTower GlobalTheory.CuspGeneric Formalism.L2.Host
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ}
 
 theorem uInt_eq {Φ : (Fin (m + 1) → Cinf E) → ℂ} (hΦ : ∀ u, 0 ≤ (Φ u).re ∧ (Φ u).im = 0)
     (φ φ' : GA E (m + 1) → ℂ) (N : ℕ) (x : ℝ) (g : GA E (m + 1)) :
@@ -101,14 +101,14 @@ theorem uInt_eq {Φ : (Fin (m + 1) → Cinf E) → ℂ} (hΦ : ∀ u, 0 ≤ (Φ 
   ring
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem NE_eq_ratMirU_zero : GlobalTheory.CellDec.NE E (m + 1) = ratMirU E (m + 1) 0 := by
   have h : GlobalTheory.SmGL.unipB E (Fin (m + 1)) = mirU E (m + 1) 0 := by
     ext γ
     rw [GlobalTheory.SmGL.mem_unipB, mem_mirU_zero]
   rw [GlobalTheory.CellDec.NE, ratMirU, h]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isMir_of_mem_mirU_zero {γ : GL (Fin (m + 1)) E} (hγ : γ ∈ mirU E (m + 1) 0) : IsMir m γ := by
   intro i k h
   refine hγ i k (Nat.zero_le _) ?_
@@ -121,7 +121,7 @@ end GlobalTheory.ZUnf
 namespace GlobalTheory.ZUnf
 open GlobalTheory.MirTower GlobalTheory.CuspGeneric Formalism.L2.Host
 
-theorem enorm_uInt_self {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
+theorem enorm_uInt_self {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ}
     {Φ : (Fin (m + 1) → Cinf E) → ℂ} (hΦ : ∀ u, 0 ≤ (Φ u).re ∧ (Φ u).im = 0)
     (φ : GA E (m + 1) → ℂ) (N : ℕ) (x : ℝ) (g : GA E (m + 1)) :
     ‖GlobalTheory.ZEul.uInt φ φ Φ N x g‖ₑ = ‖GlobalTheory.JSW.whit (fT φ Φ) g‖ₑ ^ 2 * (wt N x g : ℝ≥0∞) := by
@@ -133,7 +133,7 @@ theorem enorm_uInt_self {E : Type} [Field E] [NumberField E] [IsTotallyComplex E
   ext
   simp
 
-theorem zint_unfold : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure],
+theorem zint_unfold : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure],
   ∃ c : ℝ, 0 < c ∧ ∀ (π π' : CuspSub E (m + 1)) (ω ω' : HChar E), ω.IsUnitary → ω'.IsUnitary → π.HasCentChar ω →
     π'.HasCentChar ω' → ∀ φ φ' : GA E (m + 1) → ℂ, φ ∈ GlobalTheory.JSW.mspanR π → φ' ∈ GlobalTheory.JSW.mspanR π' →
     ∀ (N : ℕ) (Φ : (Fin (m + 1) → Cinf E) → ℂ), 0 < N → ContDiff ℝ (⊤ : ℕ∞) Φ → HasCompactSupport Φ →

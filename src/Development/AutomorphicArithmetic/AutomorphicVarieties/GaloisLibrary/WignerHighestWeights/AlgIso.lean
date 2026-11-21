@@ -29,7 +29,7 @@ private def pairSub {d d' : ℕ} (T : (Fin d → ℂ) ≃ₗ[ℂ] (Fin d' → �
       Matrix.smul_mulVec, Matrix.one_mulVec, map_smul]
 
 theorem UpperTheory.V.AlgRepEndIrreducible.algIso :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ Ξ' : AlgRep E a) (m : (E →+* ℂ) → Multiset ℂ),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ Ξ' : AlgRep E a) (m : (E →+* ℂ) → Multiset ℂ),
       (∀ τ, UpperTheory.V.Af.AlgInfChar Ξ τ (m τ)) → (∀ τ, UpperTheory.V.Af.AlgInfChar Ξ' τ (m τ)) → ∃ T, IsAlgIso Ξ Ξ' T := by
   intro E _ _ _ a Ξ Ξ' m h h'
   obtain ⟨T, hT⟩ := algIsoLie E a Ξ Ξ' m h h'

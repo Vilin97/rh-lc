@@ -150,7 +150,7 @@ end Indep
 theorem deg_bot (N : (K →+* ℂ) → V → ℝ) : deg N (⊥ : Submodule (𝓞 K) V) = 0 := by
   simp [deg, Formalism.HN.rkK]
 
-theorem slope_sq_line [IsTotallyComplex K] (x : K) (hx : x ≠ 0) :
+theorem slope_sq_line [_root_.NumberField.IsTotallyComplex K] (x : K) (hx : x ≠ 0) :
     slope_sq (fun (σ : K →+* ℂ) (y : K) => ‖σ y‖) (Submodule.span (𝓞 K) {x}) =
       -((1 / (Formalism.HN.nPl K : ℝ)) * ∑ v : InfinitePlace K, 2 * Real.log (v x)) := by
   letI : StarRing K := starRingOfComm

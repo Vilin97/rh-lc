@@ -11,7 +11,7 @@ section
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.UnitaryBC
 open GroundTheory.Automorphic GroundTheory.Automorphic.CuspidalSpectrum GroundTheory.Global
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem mult_two (w : InfinitePlace E) : w.mult = 2 := by
   simp [InfinitePlace.mult, InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex w)]

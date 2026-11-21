@@ -21,7 +21,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.HCFiniteSm
 
-theorem chart_sum' {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (s : Finset ℕ) (c : ℕ → ℂ)
+theorem chart_sum' {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (s : Finset ℕ) (c : ℕ → ℂ)
     (ψ : ℕ → Sm E a) (g : GA E a) {y : Lie E a} (hy : y ∈ invSet E a) :
     chart (∑ k ∈ s, c k • ψ k).1 g y = ∑ k ∈ s, c k * chart (ψ k).1 g y := by
   have hy' : IsUnit (Matrix.of y) := hy

@@ -64,7 +64,7 @@ end Abs
 
 section Con
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ}
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ}
 
 private def lm (K : Type) [Field K] [NumberField K] (n : ℕ) : Lie K n →L[ℝ] Lie K n →L[ℝ] Lie K n :=
   LinearMap.toContinuousLinearMap
@@ -75,7 +75,7 @@ private def lm (K : Type) [Field K] [NumberField K] (n : ℕ) : Lie K n →L[ℝ
       map_add' := fun y z => ContinuousLinearMap.ext fun X => map_add (rmul X) y z
       map_smul' := fun c y => ContinuousLinearMap.ext fun X => map_smul (rmul X) c y }
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private theorem lm_equiv {y : Lie K n} (hy : y ∈ invSet K n) : ∃ e : Lie K n ≃L[ℝ] Lie K n, (e : Lie K n →L[ℝ] Lie K n) = lm K n y := by
   obtain ⟨u, hu⟩ := hy
   obtain rfl : y = toL u.val := hu.symm
@@ -85,7 +85,7 @@ private theorem lm_equiv {y : Lie K n} (hy : y ∈ invSet K n) : ∃ e : Lie K n
 private def cf (K : Type) [Field K] [NumberField K] (n : ℕ) (b : Fin (Module.finrank ℝ (Lie K n))) (y : Lie K n) : Lie K n →L[ℝ] ℝ :=
   (LinearMap.toContinuousLinearMap ((Module.finBasis ℝ (Lie K n)).coord b)).comp (lm K n y).inverse
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private theorem cf_smooth (b : Fin (Module.finrank ℝ (Lie K n))) : ContDiffOn ℝ ∞ (cf K n b) (invSet K n) := by
   intro y hy
   obtain ⟨e, he⟩ := lm_equiv hy
@@ -110,7 +110,7 @@ private theorem chart_deriv (φ : Sm K n) (g : GA K n) {y : Lie K n} (hy : y ∈
     simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply, e1, e2, ← map_smul, ← map_sum,
     Module.Basis.sum_repr]
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private theorem cf_one (b : Fin (Module.finrank ℝ (Lie K n))) (X : Lie K n) :
     cf K n b (oneL K n) X = (Module.finBasis ℝ (Lie K n)).repr X b := by
   have : lm K n (oneL K n) = ContinuousLinearMap.id ℝ _ := ContinuousLinearMap.ext fun X => Matrix.one_mul (Matrix.of X)
@@ -120,7 +120,7 @@ end Con
 
 section Main
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ}
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ}
 
 private theorem cusp_facts (hn : 1 ≤ n) {σ : CuspSub K n} (h : Cm.carrier σ ≤ centralCuspForms K n) (φ : σ.V) :
     Continuous φ.1.1 ∧ ∃ C, ∀ y, ‖φ.1.1 y‖ ≤ C := by

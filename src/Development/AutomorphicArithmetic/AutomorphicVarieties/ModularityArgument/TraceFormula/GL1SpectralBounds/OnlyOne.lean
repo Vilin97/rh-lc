@@ -15,7 +15,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.DiscSpec Positivit
 
 namespace UpperTheory.V.Z.Tf.GOne.saturation_regularity_aux
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem hasSat_of_comp {P : CuspSub E n} (hV : IsDiscrete P.V) {w : HeightOneSpectrum (𝓞 E)}
     {σ : SmIrr (GL (Fin n) (w.adicCompletion E))} (hσ : IsLocCompGL P.V w σ) {B : Multiset ℂˣ}

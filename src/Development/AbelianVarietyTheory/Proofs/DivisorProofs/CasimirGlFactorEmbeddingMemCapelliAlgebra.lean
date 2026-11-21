@@ -119,7 +119,7 @@ theorem cas_mem_of_qdet_mem {n : ℕ} (X : Fin n → Fin n → A) (hX : Formalis
   exact S.sub_mem (S.add_mem (S.sub_mem (S.mul_mem hT hT) (S.smul_mem hmem _)) (S.smul_mem (S.one_mem) _))
     (S.smul_mem hT _)
 
-theorem cas_Eop_mem_Zalg : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (τ : E →+* ℂ),
+theorem cas_Eop_mem_Zalg : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (τ : E →+* ℂ),
     Formalism.REAL.Cas (Eop (a := a) τ) ∈ Zalg E a := by
   intro E _ _ _ a τ
   refine cas_mem_of_qdet_mem (Eop τ) (glRel_Eop τ) (Zalg E a) fun u => ?_

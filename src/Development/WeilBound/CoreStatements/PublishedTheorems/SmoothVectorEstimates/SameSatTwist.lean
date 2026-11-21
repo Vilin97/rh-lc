@@ -17,7 +17,7 @@ namespace PositivityTheory.jumpWindows
 
 namespace PSmo
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem val_eq_prod {π : CuspSub E a} {ω : HChar E} (hω : π.HasCentChar ω) {w : HeightOneSpectrum (𝓞 E)}
     {B : Multiset ℂˣ} (hB : HasSatGL w (π.locRep w) B) : ω.val w = B.prod := by

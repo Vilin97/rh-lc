@@ -15,7 +15,7 @@ noncomputable section
 
 namespace UpperTheory.ConvolutionTheory.R2.Fo
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem continuous_coordE (τ : E →+* ℂ) : Continuous (coord τ) :=
   AddMonoidHomClass.continuous_of_bound (coord τ) 1 fun x => by
@@ -66,7 +66,7 @@ end UpperTheory.ConvolutionTheory.R2.Fo
 
 open UpperTheory.ConvolutionTheory.R2.Fo in
 theorem UpperTheory.ConvolutionTheory.R2.Fo.coordMk :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E), (∀ (τ : E →+* ℂ) u t, coord τ (pInf E (D.mkE u t)) = cw (pl F τ) u + τ D.θ * cw (pl F τ) t) ∧
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E), (∀ (τ : E →+* ℂ) u t, coord τ (pInf E (D.mkE u t)) = cw (pl F τ) u + τ D.θ * cw (pl F τ) t) ∧
     (∀ τ : E →+* ℂ, τ D.θ ^ 2 = cw (pl F τ) (rt D.δ) ∧ starRingEnd ℂ (τ D.θ) = -τ D.θ ∧ τ D.θ ≠ 0) ∧
     (∀ w, cw w (rt D.δ) ≠ 0) ∧ ∀ w, ∃ τ : E →+* ℂ, pl F τ = w := by
   intro F E _ _ _ _ _ _ _ D

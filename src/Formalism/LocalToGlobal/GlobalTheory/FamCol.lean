@@ -82,7 +82,7 @@ structure Pt (I : Type) where
   [i1 : Field K]
   [i2 : NumberField K]
   [i3 : StarRing K]
-  [i4 : IsTotallyComplex K]
+  [i4 : _root_.NumberField.IsTotallyComplex K]
   C : ColObj K I
   P : PlDat K I
   R : RowArg C

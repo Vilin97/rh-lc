@@ -25,7 +25,7 @@ theorem continuous_iSup_fin {X ι : Type} [TopologicalSpace X] [Fintype ι] (f :
     rw [this]
     exact Continuous.finset_sup'_apply _ fun i _ => hf i
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 theorem continuous_cW (w : HeightOneSpectrum (𝓞 E)) : Continuous (cW w : Ad E → w.adicCompletion E) :=
   (RestrictedProduct.continuous_eval w).comp continuous_snd

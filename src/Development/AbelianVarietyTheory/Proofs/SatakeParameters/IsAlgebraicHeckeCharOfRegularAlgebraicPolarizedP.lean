@@ -27,7 +27,7 @@ noncomputable section
 
 namespace GlobalTheory.RegAlgCharAlg
 
-theorem expo_mul' {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (χ χ' : HChar E) (τ : E →+* ℂ) :
+theorem expo_mul' {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (χ χ' : HChar E) (τ : E →+* ℂ) :
     expo (χ * χ') τ = expo χ τ + expo χ' τ := by
   have h := (CG.hasInfChar_ofChar χ τ).twist χ'
   rw [CG.twist_ofChar, Multiset.map_singleton] at h
@@ -35,7 +35,7 @@ theorem expo_mul' {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (χ 
   rw [CG.infChar_ofChar] at this
   simpa using this
 
-theorem expo_inv' {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (χ : HChar E) (τ : E →+* ℂ) :
+theorem expo_inv' {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (χ : HChar E) (τ : E →+* ℂ) :
     expo χ⁻¹ τ = -expo χ τ := by
   have := expo_mul' χ χ⁻¹ τ
   rw [mul_inv_cancel, CG.expo_one] at this

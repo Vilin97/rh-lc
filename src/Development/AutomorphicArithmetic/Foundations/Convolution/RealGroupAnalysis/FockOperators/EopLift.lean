@@ -11,7 +11,7 @@ open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspR
 open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Fo
 open scoped Classical
 
-private theorem coord_half {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (σ τ : E →+* ℂ) :
+private theorem coord_half {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (σ τ : E →+* ℂ) :
     (1 / 2 : ℂ) * (coord σ (atEmb τ 1) - Complex.I * coord σ (atEmb τ Complex.I)) = if σ = τ then 1 else 0 := by
   by_cases h : InfinitePlace.mk σ = InfinitePlace.mk τ
   · rcases InfinitePlace.mk_eq_iff.1 h with e | e
@@ -37,7 +37,7 @@ private theorem coord_single {E : Type} [Field E] (σ : E →+* ℂ) (i j k l : 
     simp
   · rw [if_neg h, if_neg (fun e => h ⟨e.1.symm, e.2.symm⟩), map_zero]
 
-private theorem half_comb {E N : Type} [Field E] [NumberField E] [IsTotallyComplex E] [AddCommGroup N] [Module ℂ N]
+private theorem half_comb {E N : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [AddCommGroup N] [Module ℂ N]
     (R : (E →+* ℂ) → Fin 2 → Fin 2 → N) (τ : E →+* ℂ) (i j : Fin 2) (x y : N)
     (hx : x = ∑ σ : E →+* ℂ, ∑ k, ∑ l, coord σ ((toL (Matrix.single i j (atEmb τ 1)) : Lie E 2) k l) • R σ k l)
     (hy : y = ∑ σ : E →+* ℂ, ∑ k, ∑ l, coord σ ((toL (Matrix.single i j (atEmb τ Complex.I)) : Lie E 2) k l) • R σ k l) :
@@ -57,7 +57,7 @@ private theorem half_comb {E N : Type} [Field E] [NumberField E] [IsTotallyCompl
   simp
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.eopLift :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (O : Ops F) (Λ : TR.Sm F 2 →ₗ[ℂ] S4 F →ₗ[ℂ] Sm E 2), (∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, (Λ f φ).1 = lift W M f.1 φ) → LieLift O W M π →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (O : Ops F) (Λ : TR.Sm F 2 →ₗ[ℂ] S4 F →ₗ[ℂ] Sm E 2), (∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, (Λ f φ).1 = lift W M f.1 φ) → LieLift O W M π →
     ∀ (τ : E →+* ℂ) i j, ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, Eop τ i j (Λ f φ) = Λ f (O.dE D τ i j φ) + if i = j then Λ (TR.Eop (pl F τ) 1 1 f) φ else 0 := by
   intro F E _ _ _ _ _ _ _ D W M π O Λ hΛ hL τ i j f hf φ hφ
   have hE : ∀ σ : E →+* ℂ, TR.Eop (pl F σ) 1 1 f ∈ π.V := fun σ => π.stable (.lie _) f hf

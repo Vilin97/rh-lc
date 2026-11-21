@@ -489,7 +489,7 @@ theorem glRel_dualE (Ξ : AlgRep E a) (τ : E →+* ℂ) : Formalism.REAL.GlRel 
   simp only [atEmb_mul, one_mul, mul_one, e, map_neg, dualE, ← dualL_apply]
   congr 1 <;> split_ifs <;> first | rfl | (match_scalars <;> ring)
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem dualE_comm (Ξ : AlgRep E a) {τ τ' : E →+* ℂ} (h : τ ≠ τ') (i j k l : Fin a) :
     dualE Ξ τ i j * dualE Ξ τ' k l = dualE Ξ τ' k l * dualE Ξ τ i j := by
@@ -555,7 +555,7 @@ theorem commute_dmat (Ξ : AlgRep E a) (Z : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
   simpa [dualL_apply, dualS] using (h2 i j (X i j)).neg_right
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem exists_scalar (Ξ : AlgRep E a) (Z : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ) (h : ∀ y, Z * Ξ.mat y = Ξ.mat y * Z) :
     ∃ c : ℂ, Z = c • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ) := by
   haveI : Nonempty (Fin Ξ.d) := ⟨⟨0, Ξ.pos⟩⟩
@@ -577,7 +577,7 @@ theorem qdet_scalar (Ξ : AlgRep E a) (τ : E →+* ℂ) (u : ℂ) :
     simpa [Matrix.transpose_mul] using h.symm)
   exact ⟨c, by simpa using congrArg Matrix.transpose hc⟩
 
-theorem exists_dualInfChar (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a)
+theorem exists_dualInfChar (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (Ξ : AlgRep E a)
     (τ : E →+* ℂ) : ∃ m : Multiset ℂ, HasDualInfChar Ξ τ m ∧ m.Nodup ∧
       ∀ z ∈ m, ∃ n : ℤ, z = (n : ℂ) + ((a : ℂ) - 1) / 2 := by
   haveI : Nonempty (Fin Ξ.d) := ⟨⟨0, Ξ.pos⟩⟩

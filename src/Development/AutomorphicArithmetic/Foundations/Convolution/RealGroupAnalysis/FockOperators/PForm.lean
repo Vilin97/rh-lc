@@ -27,7 +27,7 @@ private lemma p_comm {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (O :
   rw [h, h', smul_mul_smul_comm, smul_mul_smul_comm, (weyl F O w w' k k').1, mul_comm c c']
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.dComm :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (O : Ops F) w w' i j, O.d w i * O.d w' j = O.d w' j * O.d w i := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (O : Ops F) w w' i j, O.d w i * O.d w' j = O.d w' j * O.d w i := by
   intro F E _ _ _ _ _ _ _ D W O w w' i j
   have hinv : W.Om (wW F) * W.Om (wW F)⁻¹ = 1 := by
     rw [← map_mul, mul_inv_cancel, map_one]

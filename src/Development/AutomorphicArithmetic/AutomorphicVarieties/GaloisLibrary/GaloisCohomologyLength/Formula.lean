@@ -27,7 +27,7 @@ theorem vFormula_of_classicalTheorems (hP : GlobalTheory.Published.PoitouTateDua
   have h := vFormula F Ω l D e hc hcok hsha (GlobalTheory.TateLimit.local_tate_duality_h2_limit hF hT D e)
   rwa [length_H0_global_eq_nu] at h
 
-theorem ptCase_of_isTotallyComplex (F : Type) [Field F] [NumberField F] [IsTotallyComplex F] (l : ℕ) : PTCase F l :=
+theorem ptCase_of_isTotallyComplex (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] (l : ℕ) : PTCase F l :=
   Or.inr (NumberField.nrRealPlaces_eq_zero_iff.2 inferInstance)
 
 theorem VLen_le_shaLen_add (hP : GlobalTheory.Published.PoitouTateDuality) (hF : LocalFinitenessK) (hT : LocalTateDualityK)

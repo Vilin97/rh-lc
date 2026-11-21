@@ -45,7 +45,7 @@ theorem exists_extend_equivariant {S H K X : Type*} [AddCommGroup S] [Module ℂ
   · exact (ρ x).continuous.comp Φ.continuous
   · rw [hπ, hΦ, hΦ, hρ]
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem lintegral_resQ (ha : 0 < a) (μ : Measure (GA E a)) [μ.IsHaarMeasure] (ν : Measure (normOneGL (K := E) (n := a)))
     [ν.IsHaarMeasure] (c : ENNReal)
@@ -111,7 +111,7 @@ end
 noncomputable section
 namespace GlobalTheory.CompanionTheory.CuspTransfer
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 variable {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant] {ν : Measure (normOneGL (K := E) (n := a))} [ν.IsHaarMeasure]
 
 def trFn (x : GA E a) (φ : cuspidalL2Functions μ) : cuspidalL2Functions μ :=
@@ -162,7 +162,7 @@ end
 
 noncomputable section
 namespace GlobalTheory.CompanionTheory.CuspTransfer
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 variable {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant] {ν : Measure (normOneGL (K := E) (n := a))} [ν.IsHaarMeasure]
 
 theorem exists_transfer_op (ha : 0 < a) (c : ENNReal) (hct : c ≠ ⊤)
@@ -198,7 +198,7 @@ theorem comp_repOp_eq_integrated {G Y H K : Type*} [Group G] [TopologicalSpace G
   rw [h₁]
   exact integral_congr_ae (.of_forall fun x => by simp only [hact])
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 variable {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant] {ν : Measure (normOneGL (K := E) (n := a))} [ν.IsHaarMeasure]
 
 theorem comp_repOp_eq (Φ : L2cusp μ →L[ℂ] cuspidalL2 ν)
@@ -217,7 +217,7 @@ end
 
 namespace GlobalTheory.CompanionTheory.CuspTransfer
 
-theorem transfer : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 0 < a →
+theorem transfer : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 0 < a →
     ∀ (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
       (ν : Measure (GroundTheory.Automorphic.Reduction.normOneGL (K := E) (n := a))) [ν.IsHaarMeasure],
       ∃ (Φ : L2cusp μ →L[ℂ] GroundTheory.Automorphic.CuspidalSpectrum.cuspidalL2 ν) (c : ℝ), 0 < c ∧ (∀ F, ‖Φ F‖ = c * ‖F‖) ∧

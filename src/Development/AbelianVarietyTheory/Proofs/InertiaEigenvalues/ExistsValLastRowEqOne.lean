@@ -87,7 +87,7 @@ namespace GlobalTheory.CellEvalNM
 
 open GroundTheory.Automorphic.FourierWhittaker (blockGL blockMat blockMat_apply coe_blockGL)
 
-theorem eq_zero_of_comp_diag (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ)
+theorem eq_zero_of_comp_diag (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ)
     (w : HeightOneSpectrum (𝓞 E))
     (hψ : ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, (GroundTheory.Global.adelicChar _ (GlobalTheory.CuspRep.sFin _ (GlobalTheory.CuspRep.sLoc _ w (x * y))) : ℂ) = 1) ↔ x ∈ Ov E w)
     (ϖw : (w.adicCompletion E)ˣ) (hϖ : IsUnifV E w (ϖw : w.adicCompletion E)) (W : GA E N → ℂ)
@@ -278,7 +278,7 @@ theorem compV_tl {E : Type} [Field E] [NumberField E] (N : ℕ) (ϖ : ∀ w : He
     simp
   · simp [Matrix.diagonal_apply_ne _ hij]
 
-theorem cell_values (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
+theorem cell_values (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (hψ : ∀ w ∉ S, ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, (GroundTheory.Global.adelicChar _ (GlobalTheory.CuspRep.sFin _ (GlobalTheory.CuspRep.sLoc _ w (x * y))) : ℂ) = 1) ↔ x ∈ Ov E w)
     (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ) (hϖ : ∀ w, IsUnifV E w (ϖ w : w.adicCompletion E))
     (g : GA E N) (hg : g ∈ GlobalTheory.CellDec.C0 E N S) (l : GlobalTheory.CellDec.abelian₂ E N S) :
@@ -333,7 +333,7 @@ theorem cell_values (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N
     rw [hσ, hK k hk hkS, hN _ hu', e1, hK k hk hkS, hN _ hu0]
     field_simp
 
-theorem lastRow_prim (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
+theorem lastRow_prim (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (g : GA E (m + 1)) (hg : g ∈ GlobalTheory.CellDec.C0 E (m + 1) S) (w : HeightOneSpectrum (𝓞 E)) (hw : w ∉ S) :
     (∀ j, pLoc E w (pFin E (GlobalTheory.ZEul.lastRow g j)) ∈ w.adicCompletionIntegers E) ∧
       ∃ j, Valued.v (pLoc E w (pFin E (GlobalTheory.ZEul.lastRow g j))) = 1 := by
@@ -355,7 +355,7 @@ end GlobalTheory.CellEvalNM
 
 open GroundTheory.Automorphic.FourierWhittaker (blockGL) in
 open GlobalTheory.CellEvalNM in
-theorem GlobalTheory.CellEvalNM.uIntNM_cell_eval : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E))),
+theorem GlobalTheory.CellEvalNM.uIntNM_cell_eval : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E))),
     (∀ w ∉ S, ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, (GroundTheory.Global.adelicChar _ (GlobalTheory.CuspRep.sFin _ (GlobalTheory.CuspRep.sLoc _ w (x * y))) : ℂ) = 1) ↔ x ∈ Ov E w) →
     ∀ (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ), (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) →
     ∀ (α : HeightOneSpectrum (𝓞 E) → Fin (m + r + 1 + 1) → ℂˣ) (β : HeightOneSpectrum (𝓞 E) → Fin (m + 1) → ℂˣ)

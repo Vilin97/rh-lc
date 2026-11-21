@@ -14,7 +14,7 @@ open scoped ComplexConjugate nonZeroDivisors ContDiff
 
 namespace GlobalTheory.RSTheta
 
-theorem summable_tsum_norm_le_of_le_shortest (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem summable_tsum_norm_le_of_le_shortest (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (N : ℕ) (hN : Module.finrank ℝ (Fin a → Cinf E) ≤ N) :
     ∃ (M : ℕ) (C : ℝ), ∀ (h : GA E a) (A : ℝ) (c : (Fin a → E) → ℂ), 0 ≤ A →
       (∀ ξ : Fin a → E, (fun i => pFin E (((fun j => algebraMap E (Ad E) (ξ j)) ᵥ* h.val) i)) ∉ latt a J →

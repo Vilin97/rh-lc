@@ -9,7 +9,7 @@ open NumberField GlobalTheory.CuspRep
 
 namespace GlobalTheory.CuspRep.KFin
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem cptRep_lie (k : Kinf E a) (X : Lie E a) (ψ : Sm E a) :
     cptRep E a k (lie E a X ψ) =
@@ -26,7 +26,7 @@ theorem cptRep_lie (k : Kinf E a) (X : Lie E a) (ψ : Sm E a) :
   change (y.val : Matrix (Fin a) (Fin a) (Cinf E)) * Matrix.of X = (y.val * Matrix.of X * y⁻¹.val) * (y.val : Matrix (Fin a) (Fin a) (Cinf E))
   rw [mul_assoc, Units.inv_mul, mul_one]
 
-theorem kfin_lie (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (X : Lie E a) (φ : Sm E a)
+theorem kfin_lie (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (X : Lie E a) (φ : Sm E a)
     (hφ : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k => cptRep E a k φ))) :
     FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k => cptRep E a k (lie E a X φ))) := by
   set V := Submodule.span ℂ (Set.range fun k => cptRep E a k φ)

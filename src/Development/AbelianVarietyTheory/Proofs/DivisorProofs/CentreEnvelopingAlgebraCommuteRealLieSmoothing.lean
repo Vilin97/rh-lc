@@ -42,7 +42,7 @@ theorem fderiv_integral_mul (ν : Measure V) [ν.IsAddHaarMeasure] (hU : IsOpen 
 
 end Analytic
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in
@@ -97,7 +97,7 @@ end GlobalTheory.CentreSmooth
 
 namespace GlobalTheory.CentreSmooth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def JS (G : Lie E a → Cv E a) : Prop :=
   ContDiffOn ℝ ∞ (fun p : Lie E a × Lie E a => (G p.2).1 p.1) (invSet E a ×ˢ invSet E a)
@@ -193,27 +193,27 @@ end GlobalTheory.CentreSmooth
 
 namespace GlobalTheory.CentreSmooth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem not_isUnit_rmul_left {x : Lie E a} (hx : x ∉ invSet E a) (y : Lie E a) : rmul y x ∉ invSet E a := by
   intro h
   have h' : IsUnit (Matrix.of x * Matrix.of y) := h
   rw [Matrix.isUnit_iff_isUnit_det, Matrix.det_mul] at h'
   exact hx ((Matrix.isUnit_iff_isUnit_det _).2 (isUnit_of_mul_isUnit_left h'))
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem not_isUnit_rmul_right (x : Lie E a) {y : Lie E a} (hy : y ∉ invSet E a) : rmul y x ∉ invSet E a := by
   intro h
   have h' : IsUnit (Matrix.of x * Matrix.of y) := h
   rw [Matrix.isUnit_iff_isUnit_det, Matrix.det_mul] at h'
   exact hy ((Matrix.isUnit_iff_isUnit_det _).2 (isUnit_of_mul_isUnit_right h'))
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isUnit_rmul {x y : Lie E a} (hx : x ∈ invSet E a) (hy : y ∈ invSet E a) : rmul y x ∈ invSet E a :=
   IsUnit.mul hx hy
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiff_mulL : ContDiff ℝ ∞ fun p : Lie E a × Lie E a => rmul p.2 p.1 := by
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => ?_
   change ContDiff ℝ ∞ fun p : Lie E a × Lie E a => ∑ k, p.1 i k * p.2 k j
@@ -225,7 +225,7 @@ end GlobalTheory.CentreSmooth
 
 namespace GlobalTheory.CentreSmooth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def transFam (φ : Sm E a) (g : GA E a) (y : Lie E a) : Cv E a :=
   ⟨fun x => chart φ.1 g (rmul y x), by
@@ -293,7 +293,7 @@ end GlobalTheory.CentreSmooth
 
 namespace GlobalTheory.CentreSmooth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem smoothing_add (ν : Measure (Lie E a)) [ν.IsAddHaarMeasure] {α : Lie E a → ℂ}
     (hα : IsTest (invSet E a) α) (φ ψ : Sm E a) :
@@ -307,7 +307,7 @@ theorem smoothing_smul (ν : Measure (Lie E a)) (α : Lie E a → ℂ) (c : ℂ)
   refine (integral_congr_ae (.of_forall fun y => ?_)).trans (integral_const_mul c _)
   by_cases h : IsUnit (Matrix.of y) <;> simp [chart, h, mul_left_comm]
 
-theorem zalg_smoothing : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ν : Measure (Lie E a))
+theorem zalg_smoothing : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ν : Measure (Lie E a))
     [ν.IsAddHaarMeasure] (α : Lie E a → ℂ), IsTest (invSet E a) α → ∀ (ψ : Sm E a) (h : smoothing ν α ψ.1 ∈ Sm E a),
     ∀ z ∈ Zalg E a, (z ⟨smoothing ν α ψ.1, h⟩).1 = smoothing ν α (z ψ).1 := by
   intro E _ _ _ a ν _ α hα ψ h z hz

@@ -76,7 +76,7 @@ private theorem pt_eq {K : Type} [Field K] [NumberField K] (y₁ y₂ : G1 K 2) 
     ← zt_add, ← zt_add]
   congr 3 <;> ring
 
-private theorem int_pair {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (Pl E)} (b : BW.Blo S 2)
+private theorem int_pair {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} (b : BW.Blo S 2)
     {τ : Submodule ℂ (L2 (BW.mu1 E 2))} {m B} (hb : BloIn b τ m B) {v : L2 (BW.mu1 E 2)} {φ : G1 E 2 → ℂ} (hc : Continuous φ)
     (hr : Reps (BW.mu1 E 2) v φ) :
     Integrable (fun x : RightCosetSpace (Gam E 2) => φ (Quotient.out x) *
@@ -103,7 +103,7 @@ private theorem zt_zero (K : Type) [Field K] [NumberField K] : UpperTheory.V.Z.I
   have : (⟨Real.exp 0, Real.exp_pos 0⟩ : {r : ℝ // 0 < r}) = 1 := Subtype.ext Real.exp_zero
   rw [UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.zt, this, map_one]
 
-private theorem ell_swap {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (Pl E)} (b b' : BW.Blo S 2)
+private theorem ell_swap {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} (b b' : BW.Blo S 2)
     {τ τ' ρ ρ' : Submodule ℂ (L2 (BW.mu1 E 2))} {m B m' B'} (hb : BloIn b τ m B) (hb' : BloIn b' τ' m' B')
     {f : G1 E (2 + 2) → ℂ} (hf : IsSec ρ ρ' f) (k : G1 E (2 + 2)) :
     (∀ m₂ : G1 E 2, Integrable (fun m₁ : RightCosetSpace (Gam E 2) => f (lv (Quotient.out m₁) m₂ 0 * k) *
@@ -128,7 +128,7 @@ private theorem ell_swap {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
     refine integrable_finset_sum _ fun i _ => ((i₁ i).mul_prod (i₂ i)).congr (Eventually.of_forall fun p => ?_)
     ring
 
-private theorem rep_eq {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} {μ : Measure (normOneGL (K := E) (n := n))}
+private theorem rep_eq {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} {μ : Measure (normOneGL (K := E) (n := n))}
     [μ.IsHaarMeasure] {v : L2 μ} {φ : GlobalTheory.CuspRep.Sm E n} (h : BW.Rep μ v φ) {Φ : G1 E n → ℂ} (hc : Continuous Φ)
     (hr : Reps μ v Φ) (g : G1 E n) : φ.1 (g : GlobalTheory.CuspRep.GA E n) = Φ g := by
   have h1 : Continuous fun g : G1 E n => φ.1 (g : GlobalTheory.CuspRep.GA E n) := ((BW.umgOps E n).2 φ h.umg).1.comp continuous_subtype_val
@@ -142,7 +142,7 @@ private theorem rep_eq {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 
 set_option synthInstance.maxHeartbeats 200000 in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.compLine :
-    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (b b' : BW.Blo 𝔢.S 2), BloIn b 𝔵.τ₂ 𝔵.m₂ 𝔵.B₂ → BloIn b' 𝔵.τ₁ 𝔵.m₁ 𝔵.B₁ →
+    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (b b' : BW.Blo 𝔢.S 2), BloIn b 𝔵.τ₂ 𝔵.m₂ 𝔵.B₂ → BloIn b' 𝔵.τ₁ 𝔵.m₁ 𝔵.B₁ →
       ∃ c : ℂ, c ≠ 0 ∧ ∀ k ∈ KG E (2 + 2), ∀ (u : ℝ → Eu 𝔵.d') (U : L (Eu 𝔵.d')) (φ : GlobalTheory.CuspRep.Sm E (2 + 2)), Continuous u → HasCompactSupport u →
         (∀ᵐ x : ℝ, U x = u x) → BW.Rep μ (𝔵.A'.J U) φ → ∀ t : Fin (dat2 b b').len → ℝ,
           (dat2 b b').comp (GlobalTheory.CuspRep.rt E (2 + 2) ((k : G1 E (2 + 2)) : GlobalTheory.CuspRep.GA E (2 + 2)) φ).1 t =

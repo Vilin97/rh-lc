@@ -13,13 +13,13 @@ open UpperTheory.V.Lit.Geo
 open NumberField Matrix MeasureTheory GlobalTheory.CuspRep UpperTheory.V.Af GlobalTheory.UnitaryBC
 open scoped GlobalTheory.CuspRep.CuspidalL2GL
 
-private theorem one_mem {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} :
+private theorem one_mem {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} :
     (fun _ => (1 : ℂ)) ∈ Sm E a := fun g =>
   (contDiffOn_const (c := (1 : ℂ))).congr fun x hx => by
     have hx' : IsUnit (Matrix.of x) := hx
     simp [chart, hx']
 
-private theorem lie_one {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (X : Lie E a) :
+private theorem lie_one {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (X : Lie E a) :
     lie E a X ⟨fun _ => (1 : ℂ), one_mem⟩ = 0 := by
   obtain ⟨c, c0, -, -, cder, -⟩ := UpperTheory.V.Lit.Bor.oneParam E a X
   refine Subtype.ext (funext fun g => ?_)

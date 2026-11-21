@@ -170,7 +170,7 @@ def aE (a : (A E)ˣ) : GL (Fin 2) (A E) :=
   ⟨!![(a : A E), 0; 0, 1], !![((a⁻¹ : (A E)ˣ) : A E), 0; 0, 1], by ext i j; fin_cases i <;> fin_cases j <;> simp,
     by ext i j; fin_cases i <;> fin_cases j <;> simp⟩
 
-variable [IsTotallyReal F] [IsTotallyComplex E]
+variable [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 structure Weil where
   η : HChar F

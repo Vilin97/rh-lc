@@ -196,7 +196,7 @@ theorem star_form {m : ℕ} {J : Matrix (Fin m) (Fin m) E} (hJ : Jᴴ = J) (x y 
     star (star x ⬝ᵥ (J *ᵥ y)) = star y ⬝ᵥ (J *ᵥ x) := by
   rw [star_dotProduct, star_mulVec, star_star, hJ, ← dotProduct_mulVec]
 
-noncomputable def fam [IsTotallyComplex E] (hs : ∀ (φ : E →+* ℂ) (a : E), φ (star a) = starRingEnd ℂ (φ a))
+noncomputable def fam [_root_.NumberField.IsTotallyComplex E] (hs : ∀ (φ : E →+* ℂ) (a : E), φ (star a) = starRingEnd ℂ (φ a))
     {m : ℕ} (J : Matrix (Fin m) (Fin m) E) (hJ : Jᴴ = J)
     (hp : ∀ (φ : E →+* ℂ) (y : Fin m → E), y ≠ 0 → 0 < (φ (star y ⬝ᵥ (J *ᵥ y))).re) :
     ReciprocityTheory.GeometryOfNumbersTheory.HermFam E (Fin m → E) where

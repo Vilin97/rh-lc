@@ -120,7 +120,7 @@ end Index
 
 section Slope
 
-variable {K : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
 
 theorem mu_eq_log_ht {V ι : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     [Fintype ι] [DecidableEq ι] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)

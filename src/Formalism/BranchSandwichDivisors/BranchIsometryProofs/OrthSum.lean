@@ -15,7 +15,7 @@ namespace Formalism.BranchingDeterminantCap
 
 namespace OrthogonalSumAlt
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 
@@ -148,7 +148,7 @@ theorem orthogonal_sum_slope : OrthSum := by
 
 namespace OrthogonalSumAlt
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 

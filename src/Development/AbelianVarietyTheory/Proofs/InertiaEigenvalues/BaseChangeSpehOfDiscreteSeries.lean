@@ -16,7 +16,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace GlobalTheory.BcSpehProof
 
-theorem hasInfCharGL_unique {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+theorem hasInfCharGL_unique {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
     {V : Submodule ℂ (Sm E N)} (hV : V ≠ ⊥) {τ : E →+* ℂ} {m m' : Multiset ℂ} (h : HasInfCharGL V τ m)
     (h' : HasInfCharGL V τ m') : m = m' := by
   obtain ⟨φ, hφ, h0⟩ := (Submodule.ne_bot_iff _).1 hV
@@ -62,7 +62,7 @@ theorem isUnitarisable_of_isLocComp (H : GlobalTheory.Published.DiscreteSpectrum
   have hu := GlobalTheory.T.discreteAutomorphicRepGL_localComponent_isUnitarisable E a V hV w σ' hσ'
   exact isUnitarisable_of_equiv' ((GlobalTheory.LocGL.IrrGL.equivOf ρ.ρ ρ.smooth ρ.irred).trans e).symm hu
 
-theorem hasInfChar_eq_of_sigma {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a b : ℕ} {P : CuspSub E a}
+theorem hasInfChar_eq_of_sigma {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a b : ℕ} {P : CuspSub E a}
     {Q : CuspSub E b} (h : (⟨a, CG.mk P⟩ : Σ c, CG E c) = ⟨b, CG.mk Q⟩) {τ : E →+* ℂ} {m m' : Multiset ℂ}
     (hm : P.HasInfChar τ m) (hm' : Q.HasInfChar τ m') : m = m' := by
   obtain ⟨rfl, h2⟩ := Sigma.mk.inj_iff.1 h

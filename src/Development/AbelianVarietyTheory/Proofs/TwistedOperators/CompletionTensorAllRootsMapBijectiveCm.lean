@@ -40,7 +40,7 @@ theorem exists_extensionEmbedding_eq_ofReal {F : Type} [Field F] [NumberField F]
     ← InfinitePlace.Completion.ringEquivRealOfIsReal_apply, RingEquiv.apply_symm_apply]
 
 theorem PsiAll_surjective {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    {σ : E →ₐ[F] E} [IsTotallyComplex E] {r : ℕ} (P : PPol σ r) {w : InfinitePlace F} (hw : w.IsReal)
+    {σ : E →ₐ[F] E} [_root_.NumberField.IsTotallyComplex E] {r : ℕ} (P : PPol σ r) {w : InfinitePlace F} (hw : w.IsReal)
     (τ : EmbOver E w) : Function.Surjective (PsiAll P τ) := by
   intro x
   have hτ : ¬ ComplexEmbedding.IsReal τ.1 := IsTotallyComplex.complexEmbedding_not_isReal τ.1

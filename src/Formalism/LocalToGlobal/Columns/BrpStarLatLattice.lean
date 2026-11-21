@@ -167,7 +167,7 @@ theorem brp_starLat_lattice (N : Submodule (𝓞 K) (Fin n → K)) (hN : Submodu
   refine ⟨S.image star, ?_⟩
   rw [Finset.coe_image, ← brp_starLat_span, hS]
 
-variable [IsTotallyComplex K]
+variable [_root_.NumberField.IsTotallyComplex K]
 
 end StarMu
 
@@ -175,14 +175,14 @@ section ESide
 
 variable (E : Type) [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 end ESide
 
 section Tau
 
-variable {E K : Type} [Field E] [NumberField E] [StarRing E] [IsTotallyComplex E] [Field K] [NumberField K] [StarRing K]
-  [IsTotallyComplex K] {n : ℕ}
+variable {E K : Type} [Field E] [NumberField E] [StarRing E] [_root_.NumberField.IsTotallyComplex E] [Field K] [NumberField K] [StarRing K]
+  [_root_.NumberField.IsTotallyComplex K] {n : ℕ}
 
 theorem brp_mu_degT {V ι : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     [Fintype ι] [DecidableEq ι] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (hX : ∀ v, IsUnit (X v).det)

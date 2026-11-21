@@ -17,7 +17,7 @@ namespace PositivityTheory.AdelicQuotientData
 
 namespace PKLt1
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m k : ℕ}
 
 theorem lastRow_mir {p : GA E k} (g : GA E k) (hp : Mir (k - 1) p) : lastRow (p * g) = lastRow g := by
   funext c
@@ -36,11 +36,11 @@ theorem pw_eq (hK5a : TransformsEmbedding) (hk : 1 ≤ k) (hkm : k < m) {ψ : Ad
   unfold PW Wh
   rw [(hK5a E m k hk hkm ψ hψ ι hι φ hφ).2.2.2.1 g]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem unipotent_zero_of_level {j : ℕ} {u : GA E m} (h : UU j u) : UU 0 u :=
   ⟨h.1, h.2.1, fun _ _ hc => absurd hc (Nat.not_lt_zero _)⟩
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem unipotent_zero_mul {u v : GA E m} (hu : UU 0 u) (hv : UU 0 v) : UU 0 (u * v) := by
   refine ⟨fun i c hci => ?_, fun i => ?_, fun _ _ hc => absurd hc (Nat.not_lt_zero _)⟩
   · rw [Units.val_mul, Matrix.mul_apply]
@@ -56,7 +56,7 @@ theorem unipotent_zero_mul {u v : GA E m} (hu : UU 0 u) (hv : UU 0 v) : UU 0 (u 
       · rw [hv.1 j i h, mul_zero]
     · intro h; exact absurd (Finset.mem_univ i) h
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem blkU_unipotent_zero (x : UnipotentBlockColumnIndex m k k → Ad E) : UU 0 (blkU x : GA E m) := by
   have hp : ∀ i c : Fin m, (c : ℕ) ≤ i → posM (Subtype.val : UnipotentBlockColumnIndex m k k → Fin m × Fin m) x i c = 0 := by
     intro i c hci
@@ -123,7 +123,7 @@ theorem sq (hK1 : K1) (hK5a : TransformsEmbedding) (hK5b : FourierSeriesColumn) 
   refine h.trans (ENNReal.ofReal_le_ofReal (le_of_eq ?_))
   exact sq_real (hD g) M m (by omega)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem law_superdiag {F : Type} [Field F] (A : Matrix (Fin k) (Fin k) F) (hkm : k ≤ m) :
     Whittaker.superdiagSum (embM m A) = Whittaker.superdiagSum A := by
   classical

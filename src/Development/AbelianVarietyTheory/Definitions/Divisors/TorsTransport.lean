@@ -70,7 +70,7 @@ def IsLatDatum {E : Type} [Field E] [NumberField E] [Algebra K E] {I : Type} [Fi
 end Transport
 
 def PeriodEx : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (ι : K →+* ℂ), Module.finrank ℚ K = 2 →
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (ι : K →+* ℂ), Module.finrank ℚ K = 2 →
     ∀ (Λ₀ : PeriodPair) (Ω₀ : ℂ), IsLatOf ι 1 Λ₀ → Ω₀ ≠ 0 →
     ∀ (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (j : Ω →+* ℂ)
       (art : Ideles K →* Gab K Ω), j.comp (algebraMap K Ω) = ι → IsGlobalArtin art →

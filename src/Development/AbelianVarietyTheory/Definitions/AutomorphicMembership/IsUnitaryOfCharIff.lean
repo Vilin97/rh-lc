@@ -17,7 +17,7 @@ open NumberField IsDedekindDomain Topology Matrix Neutral.B1 ReciprocityTheory.N
 
 namespace GlobalTheory.CuspRep
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem map_scalar {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) (u : Rˣ) :
     GeneralLinearGroup.map p (GeneralLinearGroup.scalar (Fin a) u) =
@@ -116,11 +116,11 @@ theorem IsUnitary.norm_eq (h : π.IsUnitary) {φ : Sm E a} (hφ : φ ∈ π.V) (
 end CuspSub
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isUnitary_one : (1 : HChar E).IsUnitary := fun _ => norm_one
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isUnitary_pow {χ : HChar E} (h : χ.IsUnitary) (n : ℕ) : (χ ^ n).IsUnitary := by
   induction n with
   | zero => rw [pow_zero]; exact isUnitary_one

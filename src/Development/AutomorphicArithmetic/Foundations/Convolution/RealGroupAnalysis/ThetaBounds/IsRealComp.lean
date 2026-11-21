@@ -17,7 +17,7 @@ noncomputable section
 namespace UpperTheory.ConvolutionTheory.R2.Ff.VectorFieldOperators
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  [IsTotallyReal F] [IsTotallyComplex E]
+  [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 private def Dm (s : ℂ) (d : Fin 4 → ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![d 1, (2 : ℂ)⁻¹ * (d 2 + s⁻¹ * d 3); (2 : ℂ)⁻¹ * (d 2 - s⁻¹ * d 3), d 0]
@@ -198,7 +198,7 @@ end
 
 open UpperTheory.ConvolutionTheory.R2.Ff.VectorFieldOperators in
 theorem UpperTheory.ConvolutionTheory.R2.Ff.vfOps :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F), VfOps D O := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F), VfOps D O := by
   intro F E _ _ _ _ _ _ _ D O Y hY v x' hx φ
   rw [Finset.sum_comm, dL_apply]
   simp_rw [term D O v Y hY φ]

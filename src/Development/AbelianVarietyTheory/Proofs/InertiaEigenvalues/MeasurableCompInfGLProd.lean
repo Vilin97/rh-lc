@@ -21,7 +21,7 @@ namespace GlobalTheory.MspanROrth
 
 open GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {ω : HChar E}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {ω : HChar E}
 
 theorem measurable_chart_prod {F : GA E a → ℂ} (hF : Continuous F) :
     Measurable fun p : GA E a × Lie E a => chart F p.1 p.2 := by
@@ -135,7 +135,7 @@ theorem mspanR_pet_eq_zero (hω : ω.IsUnitary) {π : CuspSub E a} (hπ : π.Has
 
 end Lemmas
 
-theorem setIntegral_mspanR_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a →
+theorem setIntegral_mspanR_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), 1 ≤ a →
     ∀ (π π'' : CuspSub E a) (ω : HChar E), ω.IsUnitary → π.HasCentChar ω → π''.HasCentChar ω →
     ∀ (μ : Measure (GA E a)) [μ.IsHaarMeasure],
     (∀ φ ∈ π.V, ∀ φ'' ∈ π''.V, GlobalTheory.AutomorphicL2Unitary.pet (latticeGL E a) μ φ.1 φ''.1 = 0) →

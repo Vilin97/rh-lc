@@ -14,7 +14,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.SmoothRep
 
-theorem convR_lift_splitCentre_mul (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem convR_lift_splitCentre_mul (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (f : GA E a → ℂ)
     (F : L2 (latticeGL E a) μ) (hF : F ∈ L2cusp μ) (t : ℝ) (x : GA E a) :
     convR μ f (lift (latticeGL E a) F) (splitCentre E a t * x) =

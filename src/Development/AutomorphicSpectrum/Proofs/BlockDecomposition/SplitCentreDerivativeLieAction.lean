@@ -12,7 +12,7 @@ open NumberField GlobalTheory.CuspRep MeasureTheory PositivityTheory.Affgl
 
 namespace GlobalTheory.CompanionTheory.CuspFinDeriv
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
 
 def cExp (t : ℝ) : GL (Fin a) (Cinf E) :=
   Units.map (Matrix.scalar (Fin a)).toMonoidHom (expU fun _ : InfinitePlace E => (t : ℂ))
@@ -43,7 +43,7 @@ theorem hasDerivAt_cExp : HasDerivAt (fun t => toL (cExp E a t).val) (oneL E a) 
     simpa using h
   · simpa [hij] using hasDerivAt_const (0 : ℝ) (0 : ℂ)
 
-theorem hasDerivAt_splitCentre : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a) (g : GA E a) (s : ℝ),
+theorem hasDerivAt_splitCentre : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a) (g : GA E a) (s : ℝ),
     HasDerivAt (fun s : ℝ => φ.1 (g * GlobalTheory.UnitaryBC.splitCentre E a s))
       ((lie E a (oneL E a) φ).1 (g * GlobalTheory.UnitaryBC.splitCentre E a s)) s := by
   intro E _ _ _ a φ g s

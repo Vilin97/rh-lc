@@ -179,7 +179,7 @@ def BddOver : Prop := ∀ (G : Type) [Group G] (S : Subgroup G), S.FiniteIndex �
 
 def BddComm : Prop := ∀ (G : Type) [Group G] (Γ Λ : Subgroup G), Subgroup.Commensurable Γ Λ → Bdd ↥Λ → Bdd ↥Γ
 
-def BddComplex : Prop := ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ), Bdd (KT.Gm L N)
+def BddComplex : Prop := ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ), Bdd (KT.Gm L N)
 
 def FixOrb : Prop :=
   ∀ (G Z : Type) [Group G] [MulAction G Z] (σ : G →* G) (s : Z → Z), (∀ (g : G) z, s (g • z) = σ g • s z) →
@@ -241,7 +241,7 @@ def ReInv : Prop :=
     ∀ h ∈ HR L N, (∀ y, q h (sLat σ y) = q h y) ∧ ∀ g ∈ Fix N σ, g • h ∈ HR L N
 
 def GoodRe : Prop :=
-  ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (σ : 𝓞 L →+* 𝓞 L), IsConj L σ →
+  ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (σ : 𝓞 L →+* 𝓞 L), IsConj L σ →
     ConeExtensionAcyclic.Good (qr L N) (Tr L N)
 
 def ActRe : Prop :=
@@ -252,29 +252,29 @@ def ActRe : Prop :=
         (fun j => g • t j) ∈ ConeExtensionAcyclic.simp (qr L N) (Tr L N) n
 
 def SpanRe : Prop :=
-  ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (σ : 𝓞 L →+* 𝓞 L), IsConj L σ →
+  ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (σ : 𝓞 L →+* 𝓞 L), IsConj L σ →
     ∀ (p : ℕ), ∀ t ∈ ConeExtensionAcyclic.simp (qr L N) (Tr L N) (p + 1), Spans {y : Lat L N | ∀ j, q (t j).1.1 y = 1}
 
 
 open Pointwise in
 def MinOrb : Prop :=
-  ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N p : ℕ), ∃ R : Set (Fin (p + 1) → Set (Lat L N)), R.Finite ∧
+  ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N p : ℕ), ∃ R : Set (Fin (p + 1) → Set (Lat L N)), R.Finite ∧
     ∀ h : Fin (p + 1) → HS L N, (∀ j, h j ∈ Ry L N) → Spans {y : Lat L N | ∀ j, q (h j) y = 1} →
       ∃ g : Gm L N, g • (fun j => minVec (h j)) ∈ R
 
 
 open Pointwise in
 def MinStab : Prop :=
-  ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ), ∀ h ∈ Ry L N, Spans (minVec h) →
+  ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ), ∀ h ∈ Ry L N, Spans (minVec h) →
     Finite (MulAction.stabilizer (Gm L N) (minVec h))
 
 def OrbRe : Prop :=
-  ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (σ : 𝓞 L →+* 𝓞 L), IsConj L σ → ∀ p : ℕ,
+  ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (σ : 𝓞 L →+* 𝓞 L), IsConj L σ → ∀ p : ℕ,
     ∃ R : Set (Fin (p + 1) → HS L N), R.Finite ∧ ∀ t ∈ ConeExtensionAcyclic.simp (qr L N) (Tr L N) (p + 1),
       ∃ g ∈ Fix N σ, (fun j => g • (t j).1.1) ∈ R
 
 def BddFix : Prop :=
-  ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (σ : 𝓞 L →+* 𝓞 L), IsConj L σ → Bdd ↥(Fix N σ)
+  ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (σ : 𝓞 L →+* 𝓞 L), IsConj L σ → Bdd ↥(Fix N σ)
 
 def ExCM : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F], ∃ (L : Type) (_ : Field L) (_ : NumberField L)

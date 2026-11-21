@@ -12,7 +12,7 @@ open NumberField IsDedekindDomain Formalism.L2.Host GlobalTheory.CuspRep Positiv
 namespace PositivityTheory.Rg.Tf.ChR
 
 def PartA : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (P : CG E n) (ι : Type) [Fintype ι] (m : ι → ℕ)
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (P : CG E n) (ι : Type) [Fintype ι] (m : ι → ℕ)
     (Ps : ∀ i, CG E (m i)), 1 ≤ n → (∀ i, 1 ≤ m i) → 2 ≤ Fintype.card ι → ¬ IsIso P Ps
 
 end PositivityTheory.Rg.Tf.ChR

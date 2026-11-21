@@ -11,7 +11,7 @@ open scoped TensorProduct
 
 section
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem chart_prod (f h : GA E a → ℂ) (g : GA E a) :
     chart (fun x => f x * h x) g = fun y => chart f g y * chart h g y := by

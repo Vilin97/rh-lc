@@ -14,7 +14,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm
 namespace UpperTheory.V.Z.Inf
 
 def SatBd : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ) (σ : CuspSub K n), ∃ c₀ : ℝ,
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ) (σ : CuspSub K n), ∃ c₀ : ℝ,
     ∀ (w : HeightOneSpectrum (𝓞 K)) (B : Multiset ℂˣ), (CG.mk σ).HasSat w B → ∀ b ∈ B,
       ‖(b : ℂ)‖ ≤ (Ideal.absNorm w.asIdeal : ℝ) ^ c₀ ∧ ‖((b⁻¹ : ℂˣ) : ℂ)‖ ≤ (Ideal.absNorm w.asIdeal : ℝ) ^ c₀
 

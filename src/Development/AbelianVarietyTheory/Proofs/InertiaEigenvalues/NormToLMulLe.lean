@@ -23,7 +23,7 @@ noncomputable section
 
 namespace GlobalTheory.MSpanDecay.ColConvGrowth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem norm_toL_mul_le (M P : Matrix (Fin a) (Fin a) (Cinf E)) :
     ‖toL (M * P)‖ ≤ (a : ℝ) * ‖toL M‖ * ‖toL P‖ := by

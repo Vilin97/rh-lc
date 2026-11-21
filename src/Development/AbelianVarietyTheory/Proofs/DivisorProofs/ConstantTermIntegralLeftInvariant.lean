@@ -113,7 +113,7 @@ theorem unip_mul (m : GL (Fin a) R) (hm : IsBlockSL2Embedding r m.val) (hm' : Is
   change (1 + nilM x) * m.val = m.val * (1 + nilM (conjN m⁻¹.val m.val x))
   rw [nilM_conjN hm' hm, mul_add, add_mul, one_mul, mul_one, ← mul_assoc, ← mul_assoc, Units.mul_inv, one_mul]
 
-theorem constTerm_levi_invariant : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a r : ℕ) (hr : r ≤ a) [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)] (μ : Measure (BlockIx a r → Ad E)) (𝓕 : Set (BlockIx a r → Ad E)), μ.IsAddHaarMeasure → IsAddFundamentalDomain (ratN E a r) 𝓕 μ → μ 𝓕 = 1 → ∀ f : GA E a → ℂ, (∀ γ g, f (ratGL E a γ * g) = f g) → ∀ (γ : GL (Fin r) E × GL (Fin (a - r)) E) (g : GA E a), ∫ x in 𝓕, f (unip x * (ratGL E a (GlobalTheory.LeviGA.blkGL hr γ) * g)) ∂μ = ∫ x in 𝓕, f (unip x * g) ∂μ := by
+theorem constTerm_levi_invariant : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a r : ℕ) (hr : r ≤ a) [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)] (μ : Measure (BlockIx a r → Ad E)) (𝓕 : Set (BlockIx a r → Ad E)), μ.IsAddHaarMeasure → IsAddFundamentalDomain (ratN E a r) 𝓕 μ → μ 𝓕 = 1 → ∀ f : GA E a → ℂ, (∀ γ g, f (ratGL E a γ * g) = f g) → ∀ (γ : GL (Fin r) E × GL (Fin (a - r)) E) (g : GA E a), ∫ x in 𝓕, f (unip x * (ratGL E a (GlobalTheory.LeviGA.blkGL hr γ) * g)) ∂μ = ∫ x in 𝓕, f (unip x * g) ∂μ := by
   intro E _ _ _ a r hr _ _ μ 𝓕 hμ h𝓕 h1 f hf γ g
   haveI : Countable E := Countable.of_equiv _ (Module.finBasis ℚ E).equivFun.toEquiv.symm
   haveI : Countable (ratN E a r) := by

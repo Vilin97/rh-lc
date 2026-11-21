@@ -22,7 +22,7 @@ open GlobalTheory.RSTheta GlobalTheory.ShortVecDecay GlobalTheory.Petersson Glob
 
 namespace GlobalTheory.RSThetaLowM
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem mspanR_invT (π : CuspSub E a) {F : GA E a → ℂ} (hF : F ∈ GlobalTheory.JSW.mspanR π) :
     (fun g => F (invT a (Ad E) g)) ∈ GlobalTheory.JSW.mspanR π.contra :=

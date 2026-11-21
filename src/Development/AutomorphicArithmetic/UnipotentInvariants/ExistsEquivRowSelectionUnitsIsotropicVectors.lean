@@ -30,7 +30,7 @@ private theorem gl_ratS_inv {E : Type} [Field E] [NumberField E] (a : Matrix.Spe
   rw [map_inv, gl_inv]
 
 theorem UpperTheory.exists_equiv_rowSelection_units_isotropicVectors :
-    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (σ : {r : Fin 2 → E // r ≠ 0} → Matrix.SpecialLinearGroup (Fin 2) E) (Sel : Set {r : Fin 2 → E // r ≠ 0}), Orb1 → M.RowSec σ → (∀ r : {r : Fin 2 → E // r ≠ 0}, ∃! t : Eˣ, ∃ r' ∈ Sel, r'.1 = (t : E) • r.1) → ∃ e : ↥Sel × ℚˣ ≃ ↥{ξ : Fin 4 → ℚ | ξ ≠ 0 ∧ qr D.δ ξ = 0}, ∀ r s, rp (e (r, s)).1 = D.act (gl (ratS E (σ r.1)))⁻¹ (rp ![0, (s : ℚ), 0, 0]) := by
+    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (σ : {r : Fin 2 → E // r ≠ 0} → Matrix.SpecialLinearGroup (Fin 2) E) (Sel : Set {r : Fin 2 → E // r ≠ 0}), Orb1 → M.RowSec σ → (∀ r : {r : Fin 2 → E // r ≠ 0}, ∃! t : Eˣ, ∃ r' ∈ Sel, r'.1 = (t : E) • r.1) → ∃ e : ↥Sel × ℚˣ ≃ ↥{ξ : Fin 4 → ℚ | ξ ≠ 0 ∧ qr D.δ ξ = 0}, ∀ r s, rp (e (r, s)).1 = D.act (gl (ratS E (σ r.1)))⁻¹ (rp ![0, (s : ℚ), 0, 0]) := by
   intro E _ _ _ D σ Sel hO hσ hS
   obtain ⟨h1, h2, h3, h4, -⟩ := hO E D
   obtain ⟨-, -, -, -, -, -, -, -, -, -, hq⟩ := szLaws E D

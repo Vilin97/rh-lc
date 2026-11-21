@@ -15,7 +15,7 @@ open scoped InnerProductSpace
 
 namespace GlobalTheory.CuspRep.CuspidalL2GL.SpecModel
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem finiteDimensional_zero (μ : Measure (GA E 0)) [μ.IsHaarMeasure] :
     FiniteDimensional ℂ (L2 (latticeGL E 0) μ) := by

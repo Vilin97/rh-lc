@@ -39,7 +39,7 @@ private theorem cont_toL {E : Type} [Field E] [NumberField E] :
   continuous_pi fun i => continuous_pi fun j => continuous_id.matrix_elem i j
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.htLe :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], HtLe E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], HtLe E := by
   intro E _ _ _
   refine ⟨?_, fun y => ⟨?_, ?_, fun y' => ?_⟩⟩
   · unfold Ht

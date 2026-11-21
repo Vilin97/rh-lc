@@ -26,7 +26,7 @@ theorem map_mem_twKer {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V] [
     exact Submodule.subset_span ⟨n, S u, by simp [hS]⟩
   exact h ⟨v, hv, rfl⟩
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem exists_fixed_mem (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E))
     (hS : GlobalTheory.LGrp.IsSpherical (π.locRep w) (KGL w (n := a))) (U : Submodule ℂ π.V)
@@ -127,7 +127,7 @@ theorem exists_sphVec (π : CuspSub E a) (S : Finset (HeightOneSpectrum (𝓞 E)
     ∃ φ ∈ π.V, φ ≠ 0 ∧ ∀ w ∉ S, ∀ k ∈ KGL w (n := a), act (.fin (locGL E a w k)) φ = φ :=
   exists_sphVec_of_isSpherical π S fun w hw => (hS w hw).elim fun _ h => h.1
 
-theorem exists_sphVec_of_hasSat (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a)
+theorem exists_sphVec_of_hasSat (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CuspSub E a)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (B : HeightOneSpectrum (𝓞 E) → Multiset ℂˣ)
     (h : ∀ w ∉ S, HasSatGL w (π.locRep w) (B w)) :
     ∃ φ ∈ π.V, φ ≠ 0 ∧ ∀ w ∉ S, ∀ k ∈ KGL w (n := a), act (.fin (locGL E a w k)) φ = φ :=

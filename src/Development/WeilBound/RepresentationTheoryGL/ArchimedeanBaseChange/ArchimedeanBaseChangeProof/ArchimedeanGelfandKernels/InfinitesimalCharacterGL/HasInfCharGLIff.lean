@@ -13,7 +13,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.UnitaryBC Finset
 
 namespace PositivityTheory.RgBcC.Bridge
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem hasInfCharGL_iff (V : Submodule ℂ (Sm E a)) (τ : E →+* ℂ) (χ' : Fin a → ℂ) :
     HasInfCharGL V τ (Multiset.map χ' Finset.univ.val) ↔

@@ -13,7 +13,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.DualAct
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem map_invT {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) (g : GL (Fin a) R) :
     GeneralLinearGroup.map p (invT a R g) = invT a S (GeneralLinearGroup.map p g) := by
@@ -38,7 +38,7 @@ theorem invT_toUnits (k : Kinf E a) :
   rfl
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 variable (E a) in
 def trL : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap
@@ -46,11 +46,11 @@ def trL : Lie E a →L[ℝ] Lie E a :=
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem trL_apply (X : Lie E a) : trL E a X = toL (Matrix.of X)ᵀ := rfl
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem toL_invT (y : GL (Fin a) (Cinf E)) :
     toL (invT a (Cinf E) y).val = trL E a (GlobalTheory.ThetaPull.invL (toL y.val)) := by
   rw [trL_apply, GlobalTheory.ThetaPull.invL]

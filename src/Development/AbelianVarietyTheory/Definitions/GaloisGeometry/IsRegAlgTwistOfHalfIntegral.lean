@@ -55,7 +55,7 @@ def CoreUFor (m : ℕ) : Prop :=
 
 def CoreU : Prop := ∀ m : ℕ, Odd m → CoreUFor m
 
-def HalfIntegral {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (α : CG K 1) : Prop :=
+def HalfIntegral {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (α : CG K 1) : Prop :=
   ∀ τ, ∀ z ∈ α.infChar τ, ∃ k : ℤ, z = (k : ℂ) + 1 / 2
 
 namespace Basic
@@ -66,7 +66,7 @@ variable {Γ K : Type} [Group Γ] [Field K] {n k : ℕ} (r : Γ →* GL (Fin n) 
 
 end Sum
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
 
 end Basic
 

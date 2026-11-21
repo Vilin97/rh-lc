@@ -28,7 +28,7 @@ def blkM (R : Type) [CommRing R] {r s N : ℕ} (h : r + s = N) :
 def blk {R : Type} [CommRing R] {r s N : ℕ} (h : r + s = N) : GL (Fin r) R × GL (Fin s) R →* GL (Fin N) R :=
   (Units.map (blkM R h)).comp MulEquiv.prodUnits.symm.toMonoidHom
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N r s m a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N r s m a : ℕ}
 
 
 variable (E) in

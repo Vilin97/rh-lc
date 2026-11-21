@@ -47,7 +47,7 @@ theorem exists_cmCurve_toEll_of_j_eq (x : ELL K) (W : WeierstrassCurve ℂ) [W.I
   refine ⟨⟨(vcEndEquiv C hC).symm.trans E.endIso.some⟩, ?_⟩
   exact (CMCurve.toEll_eq_iff _ _).2 ⟨C⁻¹, inv_smul_eq_of_smul_eq C hC⟩
 
-variable (hK : finrank ℚ K = 2) [IsTotallyComplex K]
+variable (hK : finrank ℚ K = 2) [_root_.NumberField.IsTotallyComplex K]
 
 
 include hK in

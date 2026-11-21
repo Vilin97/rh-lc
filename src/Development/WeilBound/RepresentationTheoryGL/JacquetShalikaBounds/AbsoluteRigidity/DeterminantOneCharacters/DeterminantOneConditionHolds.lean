@@ -13,7 +13,7 @@ namespace PositivityTheory.RgJS
 
 namespace LocalDeterminantOne
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 def locU (w : HeightOneSpectrum (𝓞 E)) : (w.adicCompletion E)ˣ →* (Af E)ˣ := Units.map (corner (sLoc E w))
 

@@ -13,7 +13,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.LeviSliceGA
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a r : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a r : ℕ}
 
 def lowL (hr : r ≤ a) : Lie E (a - r) →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap
@@ -112,7 +112,7 @@ theorem lieS_slice (hr : r ≤ a) (m₁ : GA E r) (f : Sm E a) (p p' : Fin (a - 
   rw [ev.fderiv_eq, (hd.comp (oneL E (a - r)) (hasFDerivAt_affA hr _)).fderiv]
   simp only [ContinuousLinearMap.comp_apply, lowL_single]
 
-theorem slice_smooth_Eop : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a r : ℕ) (hr : r ≤ a)
+theorem slice_smooth_Eop : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a r : ℕ) (hr : r ≤ a)
     (m₁ : GA E r) (f : Sm E a),
     (fun m₂ : GA E (a - r) => f.1 (GlobalTheory.LeviGA.blkGL hr (m₁, m₂))) ∈ Sm E (a - r) ∧
       ∀ (τ : E →+* ℂ) (p p' : Fin (a - r)) (ψ : Sm E (a - r)),

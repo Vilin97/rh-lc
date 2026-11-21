@@ -150,7 +150,7 @@ theorem evalMat_exp {d : ℕ} (u : InfinitePlace E) (X : Matrix (Fin d) (Fin d) 
     LinearMap.continuous_of_finiteDimensional ((LinearMap.proj u : Cinf E →ₗ[ℝ] ℂ).mapMatrix)
   exact NormedSpace.map_exp (Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) u).mapMatrix hc X
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem map_compInf_infGL {Φ : AF F ⊗[F] E ≃+* AdeleRing (𝓞 E) E} {j : Ainf F ⊗[F] E ≃+* InfiniteAdeleRing E}
     (hΦ : ∀ z, Φ z = (j (GlobalTheory.LFun.infTens F E z), GlobalTheory.LFun.finAdEquiv F E (GlobalTheory.LFun.finTens F E z)))
@@ -194,7 +194,7 @@ open scoped TensorProduct
 open Formalism.UG (cT bc)
 open GlobalTheory.CuspRep (Cinf infEq infGL expGLi)
 
-theorem isRealLine_blockEmb_exp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E]
+theorem isRealLine_blockEmb_exp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J →
     ∀ (r : ℕ) (Xf Yf : Matrix (Fin n) (Fin r) E), IsWittFrame σ J Xf Yf →
     ∀ (l d : ℕ) (h : l + d ≤ r) (ι : GlobalTheory.CuspRep.GA E d →* GAd σ J), GlobalTheory.BlockForms.IsBlockEmb σ J Xf Yf h ι →

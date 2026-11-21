@@ -18,7 +18,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace PositivityTheory.AdelicQuotientData
 namespace height_param_nonneg
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem height_pos' (g : GA E k) {ξ : Fin k → E} (hξ : ξ ≠ 0) : 0 < height g ξ := by
   obtain ⟨ε, hε, h⟩ := exists_pos_le_height (isCompact_singleton (x := g))
@@ -36,7 +36,7 @@ end height_param_nonneg
 
 namespace height_param_nonneg
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem dt_mul (hD : D0) (g h : GA E k) : Dt (g * h) = Dt g * Dt h := (hD E k).2.1 g h
 
@@ -112,9 +112,9 @@ theorem c4 (hD : D0) (C : Set (GA E k)) (hC : IsCompact C) :
 end height_param_nonneg
 namespace height_param_nonneg
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isOpen_vecInt (S : Finset (HeightOneSpectrum (𝓞 E))) :
     IsOpen {y : Fin k → Ad E | ∀ v, v ∉ S → ∀ i, (y i).2 v ∈ v.adicCompletionIntegers E} := by
   have h := RestrictedProduct.isOpen_forall_imp_mem
@@ -128,7 +128,7 @@ theorem isOpen_vecInt (S : Finset (HeightOneSpectrum (𝓞 E))) :
   rw [e]
   exact isOpen_iInter_of_finite fun i => h.preimage (continuous_snd.comp (continuous_apply i))
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem exists_finite_vecInt {C : Set (Fin k → Ad E)} (hC : IsCompact C) :
     ∃ S : Finset (HeightOneSpectrum (𝓞 E)), ∀ y ∈ C, ∀ v, v ∉ S → ∀ i, (y i).2 v ∈ v.adicCompletionIntegers E := by
   classical
@@ -145,12 +145,12 @@ theorem exists_finite_vecInt {C : Set (Fin k → Ad E)} (hC : IsCompact C) :
   obtain ⟨S, hS, hyS⟩ := Set.mem_iUnion₂.1 (hT hy)
   exact hyS v fun h => hv (Finset.mem_sup.2 ⟨S, hS, h⟩)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem norm_finComp_le_one {y : Fin k → Ad E} {v : HeightOneSpectrum (𝓞 E)}
     (h : ∀ i, (y i).2 v ∈ v.adicCompletionIntegers E) : ‖finComp v y‖ ≤ 1 :=
   (pi_norm_le_iff_of_nonneg zero_le_one).2 fun i => norm_le_one_of_mem v (h i)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem c5 (C : Set (Fin k → Ad E)) (hC : IsCompact C) : ∃ B : ℝ, ∀ (g : GA E k) (ξ : Fin k → E), ξ ≠ 0 →
     (fun i => algebraMap E (Ad E) (ξ i)) ᵥ* g.val ∈ C → height g ξ ≤ B := by
   classical
@@ -191,7 +191,7 @@ theorem c5 (C : Set (Fin k → Ad E)) (hC : IsCompact C) : ∃ B : ℝ, ∀ (g :
 end height_param_nonneg
 namespace height_param_nonneg
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem norm_pInf_eq (a : Ad E) (w : InfinitePlace E) : ‖pInf E a w‖ = ‖a.1 w‖ :=
   (InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _) _
@@ -271,7 +271,7 @@ theorem det_norm_le_factorial (x : GL (Fin k) (Cinf E)) (w : InfinitePlace E) :
     exact (norm_le_pi_norm ((Matrix.of.symm x.val) i j) w).trans
       ((norm_le_pi_norm ((Matrix.of.symm x.val) i) j).trans (norm_le_pi_norm (Matrix.of.symm x.val) i))
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem rpow_inv_le_one_add (y : ℝ) (hy : 0 ≤ y) (k : ℕ) : y ^ ((k : ℝ)⁻¹) ≤ 1 + y := by
   rcases le_total y 1 with h | h
   · have := Real.rpow_le_one hy h (by positivity : (0 : ℝ) ≤ (k : ℝ)⁻¹); linarith
@@ -312,7 +312,7 @@ theorem dt_infGL_le (x : GL (Fin k) (Cinf E)) (T : ℝ) (hT : ‖(Matrix.of.symm
   generalize Fintype.card (InfinitePlace E) = d
   rw [← pow_mul, mul_pow, ← pow_mul]
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem height_product_arith {H H' P Dx Dxr A F Ta Tb : ℝ} (hH : H ≤ P * H') (hP : P ≤ A * Ta) (hH0 : 0 ≤ H')
     (hDxr0 : 0 ≤ Dxr) (hDxr : Dxr ≤ 1 + Dx) (hDx : Dx ≤ F * Tb) (hA : 0 ≤ A) (hTa : 0 ≤ Ta) (hF : 0 ≤ F)
     (hTb : 1 ≤ Tb) : H * Dxr ≤ A * (1 + F) * (Ta * Tb) * H' := by

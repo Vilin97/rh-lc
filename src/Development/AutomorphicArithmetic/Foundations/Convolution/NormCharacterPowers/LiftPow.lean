@@ -11,7 +11,7 @@ public import Development.WeilBound.RepresentationTheoryGL.JacquetShalikaBounds.
 open NumberField IsDedekindDomain Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep UpperTheory.V.Published UpperTheory.CBC PositivityTheory.RgJS
 open UpperTheory.ConvolutionTheory.R
 
-private theorem exPow (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] : ∃ ν : ℂ → HChar E,
+private theorem exPow (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] : ∃ ν : ℂ → HChar E,
     ∀ z v, (ν z).UnrAt v ∧ ((ν z).val v : ℂ) = (normV v : ℂ) ^ (-z) := by
   obtain ⟨a, ha⟩ : ∃ a : ℝ → HChar E, ∀ t, (a t).IsAbsPow t :=
     ⟨UnitExponent.nu E, fun t => GlobalTheory.Mem.Chr.CharModel.absChar_isAbsPow (F := E) t⟩

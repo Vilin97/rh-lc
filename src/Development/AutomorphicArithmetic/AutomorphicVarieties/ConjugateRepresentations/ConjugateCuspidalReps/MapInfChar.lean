@@ -48,7 +48,7 @@ private theorem eF_mul {f g : GL (Fin a) (Cinf E) → ℂ} (hf : f ∈ regFun E 
   simp only [eF, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, smul_eq_mul, extGL_one]
   ring
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 open Classical in
 private theorem eF_coord (t τ : E →+* ℂ) (k l i j : Fin a) :
@@ -88,7 +88,7 @@ private theorem eF_det (t τ : E →+* ℂ) (i j : Fin a) :
     split_ifs at h4 ⊢ <;> linear_combination -h4
   · simp [h3]
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 private def tw (σ : ℂ ≃+* ℂ) : ((E →+* ℂ) → ℂ) →+* ((E →+* ℂ) → ℂ) :=
   Pi.ringHom fun τ => σ.symm.toRingHom.comp (Pi.evalRingHom (fun _ : E →+* ℂ => ℂ) (σ.toRingHom.comp τ))
 
@@ -97,7 +97,7 @@ private def tE (σ : ℂ ≃+* ℂ) : Cinf E →+* ((E →+* ℂ) → ℂ) := (t
 private theorem tE_apply (σ : ℂ ≃+* ℂ) (x : Cinf E) (τ : E →+* ℂ) : σ (tE σ x τ) = coord (σ.toRingHom.comp τ) x :=
   σ.apply_symm_apply _
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 private theorem comp_inj (σ : ℂ ≃+* ℂ) (t τ : E →+* ℂ) : σ.toRingHom.comp t = σ.toRingHom.comp τ ↔ t = τ :=
   ⟨fun h => RingHom.ext fun x => σ.injective (RingHom.congr_fun h x), fun h => h ▸ rfl⟩
 
@@ -156,7 +156,7 @@ private theorem conj_fun (σ : ℂ ≃+* ℂ) {f : GL (Fin a) (Cinf E) → ℂ} 
       simp only [← one]
       exact eF_mul r1 r2 _ i j
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem stab_eOf {d : ℕ} {M : GL (Fin a) (Cinf E) → Matrix (Fin d) (Fin d) ℂ} (hM : IsReg M)
     (W : Submodule ℂ (Fin d → ℂ)) (hW : ∀ y, ∀ v ∈ W, M y *ᵥ v ∈ W) (τ : E →+* ℂ) (i j : Fin a) {v : Fin d → ℂ} (hv : v ∈ W) :
     eOf M τ i j *ᵥ v ∈ W := by
@@ -173,7 +173,7 @@ private theorem stab_eOf {d : ℕ} {M : GL (Fin a) (Cinf E) → Matrix (Fin d) (
   simp only [key, fun y => (Submodule.mem_dualAnnihilator φ).1 hφ _ (hW y v hv)]
   exact eF_const 0 τ i j
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 private theorem qdet_map (σ : ℂ ≃+* ℂ) {d : ℕ} (X : Fin a → Fin a → Matrix (Fin d) (Fin d) ℂ) (u : ℂ) :
     Formalism.REAL.qdet (fun i j => (X i j).map σ) (σ u) = (Formalism.REAL.qdet X u).map σ := by
   let f : Matrix (Fin d) (Fin d) ℂ →+* Matrix (Fin d) (Fin d) ℂ := σ.toRingHom.mapMatrix

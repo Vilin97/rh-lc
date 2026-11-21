@@ -40,7 +40,7 @@ theorem exists_monic_aeval_mem_of_le_sup {R : Type*} [Ring R] [Algebra ℂ R] (A
   rw [map_mul, Polynomial.aeval_C, ← Algebra.commutes, ← Algebra.smul_def]
   exact I.smul_mem _ hI
 
-theorem exists_monic_aeval_apply_eq_zero (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+theorem exists_monic_aeval_apply_eq_zero (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     (a : ℕ) (J : Set (Module.End ℂ (Sm E a))) (hJ : Cofin J) (z : Module.End ℂ (Sm E a))
     (hz : z ∈ Zalg E a) :
     ∃ p : Polynomial ℂ, p.Monic ∧ ∀ φ : Sm E a, (∀ j ∈ J, j φ = 0) →
@@ -59,7 +59,7 @@ theorem exists_monic_aeval_apply_eq_zero (E : Type) [Field E] [NumberField E] [I
     | smul c u _ hu => simp [hu]
   exact key _ hI
 
-theorem minpoly_on_killed : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
+theorem minpoly_on_killed : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
     ∀ J : Set (Module.End ℂ (Sm E a)), Cofin J → ∀ z ∈ Zalg E a, ∃ p : Polynomial ℂ, p.Monic ∧
       ∀ φ : Sm E a, (∀ j ∈ J, j φ = 0) → Polynomial.aeval z p φ = 0 :=
   fun E _ _ _ a J hJ z hz => exists_monic_aeval_apply_eq_zero E a J hJ z hz

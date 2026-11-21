@@ -123,7 +123,7 @@ private theorem core {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (M :
   exact (mul_eq_zero.1 hp').resolve_left hne
 
 theorem UpperTheory.ConvolutionTheory.R2.G.zeroW :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, (∀ φ ∈ Fock D.δ, W1 W M f.1 φ 1 = 0) → ∀ φ ∈ Fock D.δ, ∀ a, ∀ k ∈ KK F, w1 W f.1 φ 1 (mD a * k) = 0 := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, (∀ φ ∈ Fock D.δ, W1 W M f.1 φ 1 = 0) → ∀ φ ∈ Fock D.δ, ∀ a, ∀ k ∈ KK F, w1 W f.1 φ 1 (mD a * k) = 0 := by
   intro F E _ _ _ _ _ _ _ D W M π f hf h0 φ hφ
   obtain ⟨hc, hrow⟩ := UpperTheory.ConvolutionTheory.R2.G.contW F E D W M π f hf φ hφ
   have hE := UpperTheory.ConvolutionTheory.R2.G.expInt F E D W M π f hf φ hφ

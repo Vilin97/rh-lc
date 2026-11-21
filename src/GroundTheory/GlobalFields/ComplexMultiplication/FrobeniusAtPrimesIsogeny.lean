@@ -120,7 +120,7 @@ theorem idealLattice_one_mul_lattice (L : PeriodPair) (hL : periodLatticeEnd L =
       (mem_idealLattice σ₀).2 ⟨1, (FractionalIdeal.mem_one_iff _).2 ⟨1, map_one _⟩, map_one σ₀⟩
     simpa using Submodule.mul_mem_mul h1 hl
 
-variable (hK : finrank ℚ K = 2) [IsTotallyComplex K]
+variable (hK : finrank ℚ K = 2) [_root_.NumberField.IsTotallyComplex K]
 
 theorem homConstSet_pair_of_smul {E E' : CMCurve K} {𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ}
     (h : (ellMulAction σ₀ hK).smul (ClassGroup.mk K 𝔞) E.toEll = E'.toEll) :
@@ -232,7 +232,7 @@ end Prime
 section Degree
 
 variable {K : Type*} [Field K] [NumberField K] (σ₀ : K →+* ℂ) (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K]
+  [_root_.NumberField.IsTotallyComplex K]
 
 
 include hK in

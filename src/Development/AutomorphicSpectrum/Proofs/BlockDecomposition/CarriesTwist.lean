@@ -13,7 +13,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.LimV
 
-theorem carries_tw {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ} (e : GA E N → ℂ)
+theorem carries_tw {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ} (e : GA E N → ℂ)
     (U U' : Submodule ℂ (Sm E N)) (z : ℂ) (h : Carries e U U') : Carries e (tw U z) (tw U' z) := by
   rintro _ ⟨ψ, hψ, rfl⟩
   obtain ⟨ψ', hψ', hx⟩ := h ψ hψ

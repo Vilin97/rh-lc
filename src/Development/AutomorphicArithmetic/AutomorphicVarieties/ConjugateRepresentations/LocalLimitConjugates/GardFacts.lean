@@ -14,7 +14,7 @@ open scoped TensorProduct GlobalTheory.CuspRep.CuspidalL2GL
 open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem grow_lin {φ ψ : GA E a → ℂ} (hφ : Grow φ) (hψ : Grow ψ) : Grow (φ + ψ) := by
   intro g

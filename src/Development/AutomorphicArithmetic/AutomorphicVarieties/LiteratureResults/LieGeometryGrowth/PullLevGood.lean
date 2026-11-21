@@ -18,7 +18,7 @@ open UpperTheory.V.Lit.Geo
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af UpperTheory.V.Lit UpperTheory.V.Lit.Dr UpperTheory.V.Lit.Bor
 open scoped TensorProduct
 
-private theorem one_kills {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private theorem one_kills {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a) (m : Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ))
     (hm : m ∈ Submodule.span ℂ {x | ∃ φ v, IsLevelFn U Ξ φ ∧ x = φ ⊗ₜ[ℂ] v}) : smLie Ξ (oneL E a) m = 0 := by
   obtain ⟨r, hr⟩ := oneReal E a Ξ
@@ -34,7 +34,7 @@ private theorem one_kills {E : Type} [Field E] [NumberField E] [IsTotallyComplex
   | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul c x _ hx => rw [map_smul, hx, smul_zero]
 
-private theorem d_basic {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private theorem d_basic {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a) {q : ℕ} (α : Co Ξ q) (hα : IsLev U Ξ α)
     (X : Fin (q + 1) → Herm E a) (i : Fin (q + 1)) (hX : (X i).1 = 1) : dCo (smLie Ξ) α X = 0 := by
   rw [dCo_apply]

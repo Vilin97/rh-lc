@@ -15,7 +15,7 @@ open NumberField IsDedekindDomain Formalism.L2.Host GlobalTheory.CuspRep GlobalT
 
 namespace GlobalTheory.CuspRep.ConjZalg
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem map_qdet_semilinear {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ B] (f : A →+* B) (σ : ℂ →+* ℂ)
     (hf : ∀ c, f (algebraMap ℂ A c) = algebraMap ℂ B (σ c)) (X : Fin a → Fin a → A) (u : ℂ) :
@@ -89,7 +89,7 @@ theorem conjBy_mem_Zalg (C : Sm E a ≃ₗ⋆[ℂ] Sm E a) (hC : ∀ o φ, act o
   rw [conjBy_cap C hC]
   exact Algebra.subset_adjoin ⟨_, _, rfl⟩
 
-theorem conj_Zalg : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (C : Sm E a ≃ₗ⋆[ℂ] Sm E a),
+theorem conj_Zalg : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (C : Sm E a ≃ₗ⋆[ℂ] Sm E a),
     (∀ o φ, act o (C φ) = C (act o φ)) → ∀ z ∈ Zalg E a, ∃ z' ∈ Zalg E a, ∀ φ, z (C φ) = C (z' φ) := by
   intro E _ _ _ a C hC z hz
   exact ⟨conjBy C z, conjBy_mem_Zalg C hC hz, fun φ => by rw [conjBy_apply, LinearEquiv.apply_symm_apply]⟩

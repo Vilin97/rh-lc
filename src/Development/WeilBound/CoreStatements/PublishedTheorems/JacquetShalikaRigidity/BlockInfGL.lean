@@ -20,7 +20,7 @@ namespace PositivityTheory.AdelicQuotientData
 
 namespace BlockInfGL
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem blk_infGL {j : ℕ} {c : GL (Fin k) (Cinf E)} (hc : GlobalTheory j c) : GlobalTheory j (infGL E k c) := fun i l hil => by
   change (cornerGL k (sInf E) c).val i l = _

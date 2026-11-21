@@ -16,7 +16,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 open GroundTheory.Automorphic.CuspidalSpectrum PositivityTheory.Rg.Fx UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.bloAt :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (S : Set (BW.Pl E)) (r : ℕ) (b : Blo S r) (V : Submodule ℂ (LL (mu1 E r))),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (S : Set (BW.Pl E)) (r : ℕ) (b : Blo S r) (V : Submodule ℂ (LL (mu1 E r))),
       IsSummand (mu1 E r) V → ((cuspToL2 (mu1 E r) ⟨b.f.1, b.cusp⟩ : cuspidalL2 (mu1 E r)) : LL (mu1 E r)) ∈ V →
       At (mu1 E r) S V (fun τ => Finset.univ.val.map (b.Λ τ)) fun w => (b.sat w).map fun x : ℂˣ => (x : ℂ) := by
   intro E _ _ _ S r b V hV hf

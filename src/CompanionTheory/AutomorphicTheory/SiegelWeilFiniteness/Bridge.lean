@@ -83,7 +83,7 @@ theorem finite_volume_unitary_adelic {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (h
   exact allSome_of _ h
 
 theorem finVol_of (hC : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-      [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E] (M : ℕ)
+      [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (M : ℕ)
       (h : HermitianForm F E (Fin M → E)), AdelicCovolumeFinite.Statement h (Pi.basisFun E (Fin M)))
     (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (hσ : IsCMExt F E σ) (M : ℕ) (J : Matrix (Fin M) (Fin M) E) (hJ : IsHermND σ J) : FinVol F E σ M J := by

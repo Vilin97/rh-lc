@@ -20,7 +20,7 @@ namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.NoLogarithmTerms
 
 open SepFac
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 section Sp
 

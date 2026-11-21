@@ -61,7 +61,7 @@ theorem map_inclR_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Al
   ext i k
   simp [inclR]
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def rhoW (j : Ainf F ⊗[F] E ≃+* InfiniteAdeleRing E) (w : InfinitePlace F) : Cinf E →+* w.Completion ⊗[F] E :=
   (evTens w).comp (j.symm.toRingHom.comp (infEq E).toRingHom)
@@ -74,7 +74,7 @@ namespace GlobalTheory.BlockArch
 
 open GlobalTheory.CuspRep Formalism.UG
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex E]
 
 section Split
 
@@ -175,7 +175,7 @@ theorem evTens_pi_bijective : Function.Bijective (Pi.ringHom fun w : InfinitePla
     rw [map_sum, Finset.sum_eq_single u (fun w _ hw => evTens_rTensor_ne (Ne.symm hw) _) (by simp),
     evTens_rTensor_self]
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem rhoW_pi_bijective (j : Ainf F ⊗[F] E ≃+* InfiniteAdeleRing E) :
     Function.Bijective (Pi.ringHom fun w : InfinitePlace F => rhoW j w) :=
@@ -219,14 +219,14 @@ theorem map_blockForm {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {n 
   simp only [Matrix.map_add f (map_add f), Matrix.map_sub f (map_sub f), Matrix.map_mul,
     Matrix.map_one f (map_zero f) (map_one f)]
 
-theorem continuous_sInf [IsTotallyComplex E] : Continuous (sInf E) :=
+theorem continuous_sInf [_root_.NumberField.IsTotallyComplex E] : Continuous (sInf E) :=
   (continuous_infEq E).prodMk continuous_const
 
 end GlobalTheory.BlockArch
 
 
 open GlobalTheory.CuspRep GlobalTheory.BlockArch in
-theorem GlobalTheory.BlockForms.exists_archComp_of_isBlockEmb : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+theorem GlobalTheory.BlockForms.exists_archComp_of_isBlockEmb : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
     (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E)
     (r : ℕ) (Xf Yf : Matrix (Fin n) (Fin r) E) (l d : ℕ) (h : l + d ≤ r) (ι : GlobalTheory.CuspRep.GA E d →* GAd σ J),
     GlobalTheory.BlockForms.IsBlockEmb σ J Xf Yf h ι →

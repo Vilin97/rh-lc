@@ -13,7 +13,7 @@ namespace GlobalTheory.CompanionTheory.CutOff
 
 set_option linter.unusedSectionVars false
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem contDiff_lastEnt : ContDiff ℝ ∞ (lastEnt : (Fin k → Cinf E) → Cinf E) := by
   unfold lastEnt

@@ -53,7 +53,7 @@ private theorem orb_ne (u : G → ℂ) (hu : HasCompactSupport u) (hp : ∀ g, �
 
 end
 
-private theorem lev_iff {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (φ : Sm E a) :
+private theorem lev_iff {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (φ : Sm E a) :
     HasLev φ ↔ IsOpen (stab (finGL E a) φ.1 : Set (GL (Fin a) (Af E))) := by
   have : {k | act (.fin k) φ = φ} = (stab (finGL E a) φ.1 : Set (GL (Fin a) (Af E))) := by
     ext k

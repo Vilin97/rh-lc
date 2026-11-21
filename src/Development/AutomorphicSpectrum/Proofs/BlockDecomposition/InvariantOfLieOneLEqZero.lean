@@ -45,7 +45,7 @@ theorem cuspRapidDecaySiegelGL : GlobalTheory.Published.CuspRapidDecaySiegelGL :
 theorem cuspFormsBoundedGL : GlobalTheory.Published.CuspFormsBoundedGL :=
   GlobalTheory.CuspBoundSiegel.cuspFormsBounded_of_rapidDecay cuspRapidDecaySiegelGL
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem cuspFin_zero : CuspFin E 0 := by
   intro L hL W _ _ _ ρ hρ J hJ
@@ -104,7 +104,7 @@ theorem cuspFin_pos {a : ℕ} (ha : 0 < a) : CuspFin E a := by
   haveI := Submodule.finiteDimensional_of_le hle
   exact LinearEquiv.finiteDimensional (Submodule.equivMapOfInjective _ (mulChi a χ).injective _).symm
 
-theorem cuspFin : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), CuspFin E a := by
+theorem cuspFin : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), CuspFin E a := by
   intro E _ _ _ a
   rcases Nat.eq_zero_or_pos a with rfl | ha
   · exact cuspFin_zero

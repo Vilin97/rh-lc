@@ -67,7 +67,7 @@ private theorem unr_of_split {K M : Type} [Field K] [NumberField K] [Field M] [N
     rw [← (LinearEquiv.ofBijective _ hb).finrank_eq, Module.finrank_self]
   exact Algebra.isUnramifiedAt_iff_of_isDedekindDomain.2 (Nat.eq_one_of_mul_eq_one_right h1)
 
-private theorem sat_iff {M : Type} [Field M] [NumberField M] [IsTotallyComplex M] {n : ℕ} {μ : Measure (G1 M n)} [μ.IsHaarMeasure]
+private theorem sat_iff {M : Type} [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] {n : ℕ} {μ : Measure (G1 M n)} [μ.IsHaarMeasure]
     {π : CuspSub M n} {V : Submodule ℂ (L2 μ)} (h : Dp.Carries μ π V) (w : Pl M) (B : Multiset ℂˣ) :
     (CG.mk π).HasSat w B ↔ SSat μ V w (B.map fun b : ℂˣ => (b : ℂ)) := by
   rw [Dp.sSatIff M n μ π V h w]
@@ -77,7 +77,7 @@ private theorem sat_iff {M : Type} [Field M] [NumberField M] [IsTotallyComplex M
     rw [Multiset.map_injective Units.val_injective e]
     exact hB
 
-private theorem exAt {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (hn : 0 < n) {μ : Measure (G1 E n)}
+private theorem exAt {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (hn : 0 < n) {μ : Measure (G1 E n)}
     [μ.IsHaarMeasure] {V : Submodule ℂ (L2 μ)} (hV : IsSummand μ V) (S : Set (Pl E)) (h : ∀ w ∉ S, ∃ B, SSat μ V w B) :
     ∃ m B, At μ S V m B := by
   choose m hm using fun τ => ((Dp.parEx E n hn μ V hV).1 τ).exists

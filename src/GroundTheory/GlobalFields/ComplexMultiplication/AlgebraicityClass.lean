@@ -55,7 +55,7 @@ theorem image_idealLattice (σ : ℂ ≃+* ℂ) (hσ : ∀ k : K, σ (σ₀ k) =
   · rintro ⟨x, hx, rfl⟩
     exact ⟨σ₀ x, ⟨x, hx, rfl⟩, hσ x⟩
 
-variable (hK : finrank ℚ K = 2) [IsTotallyComplex K]
+variable (hK : finrank ℚ K = 2) [_root_.NumberField.IsTotallyComplex K]
 include hK
 
 theorem latticeHom_eq_idealLattice (L L' : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ₀)

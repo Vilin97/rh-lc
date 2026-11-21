@@ -137,7 +137,7 @@ theorem exists_pow_pair [IsAlgClosure E Ω] {v : HeightOneSpectrum (𝓞 E)} {A 
     by_contra hne
     exact h1 ⟨hI σ i1, fun h => hne (Eq.symm h)⟩
 
-theorem exists_tameRep (hP : GlobalTheory.Published.GlobalArtinReciprocity) [IsTotallyComplex E] [IsAlgClosure E Ω]
+theorem exists_tameRep (hP : GlobalTheory.Published.GlobalArtinReciprocity) [_root_.NumberField.IsTotallyComplex E] [IsAlgClosure E Ω]
     {art : Ideles E →* Gab E Ω} (ha : IsGlobalArtin art) {v : HeightOneSpectrum (𝓞 E)} {A : ValuationSubring Ω}
     (hA : IsPlaceOver A v) {g : ℕ} (hg : g.Prime) (hN : normV v = g) (hgv : ((g : ℕ) : 𝓞 E) ∈ v.asIdeal)
     (hgv2 : ((g : ℕ) : 𝓞 E) ∉ v.asIdeal ^ 2)

@@ -27,7 +27,7 @@ namespace GlobalTheory.RSPole
 
 
 open GlobalTheory.CuspRep.CuspidalL2GL in
-theorem exists_haar_fundamentalDomains : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
+theorem exists_haar_fundamentalDomains : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
     ∃ (μ : Measure (GA E a)) (_ : μ.IsHaarMeasure) (𝓕 𝓕' : Set (GA E a)),
       IsFundamentalDomain (ratGL E a).range 𝓕 μ ∧ IsFundamentalDomain (latticeGL E a) 𝓕' μ := by
   intro E _ _ _ a
@@ -41,7 +41,7 @@ theorem exists_haar_fundamentalDomains : ∀ (E : Type) [Field E] [NumberField E
 
 
 open GlobalTheory.Petersson GlobalTheory.AutomorphicL2Unitary GlobalTheory.CuspRep.CuspidalL2GL in
-theorem setIntegral_mul_conj_ne_zero_rapid {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+theorem setIntegral_mul_conj_ne_zero_rapid {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (π₀ : CuspSub E a) (ω : HChar E) (hω : ω.IsUnitary) (hωc : π₀.HasCentChar ω) (φ : Sm E a)
     (hφ : φ ∈ π₀.V ∨ φ.1 ∈ GlobalTheory.JSW.mspanR π₀) (h0 : φ ≠ 0) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     (𝓕' : Set (GA E a)) (h𝓕 : IsFundamentalDomain (latticeGL E a) 𝓕' μ) :
@@ -57,7 +57,7 @@ theorem setIntegral_mul_conj_ne_zero_rapid {E : Type} [Field E] [NumberField E] 
   rw [← (pet_eq_setIntegral hω hb hb h𝓕).2, e]
   exact_mod_cast hr.ne'
 
-theorem rs_pole_conj : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CG E a), 1 ≤ a → π.IsUnitary → ∀ T : Finset (HeightOneSpectrum (𝓞 E)), UnrOutside T π → ∃ L : ℝ → ℝ, (∀ x : ℝ, 1 < x → HasProd (fun w : {w : HeightOneSpectrum (𝓞 E) // w ∉ T} => locL (Ideal.absNorm w.1.asIdeal) (sat π w.1) ((sat π w.1).map (Units.map (starRingEnd ℂ).toMonoidHom)) (x : ℂ)) (L x : ℂ) ∧ 1 ≤ L x) ∧ ContinuousOn L (Set.Ioi 1) ∧ ∃ c : ℝ, 0 < c ∧ Tendsto (fun x => (x - 1) * L x) (𝓝[>] 1) (𝓝 c) := by
+theorem rs_pole_conj : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CG E a), 1 ≤ a → π.IsUnitary → ∀ T : Finset (HeightOneSpectrum (𝓞 E)), UnrOutside T π → ∃ L : ℝ → ℝ, (∀ x : ℝ, 1 < x → HasProd (fun w : {w : HeightOneSpectrum (𝓞 E) // w ∉ T} => locL (Ideal.absNorm w.1.asIdeal) (sat π w.1) ((sat π w.1).map (Units.map (starRingEnd ℂ).toMonoidHom)) (x : ℂ)) (L x : ℂ) ∧ 1 ≤ L x) ∧ ContinuousOn L (Set.Ioi 1) ∧ ∃ c : ℝ, 0 < c ∧ Tendsto (fun x => (x - 1) * L x) (𝓝[>] 1) (𝓝 c) := by
   intro E _ _ _ a π ha hπ T hT
   obtain ⟨α, ℓ, Φ, J, η, π₀, ω, φ, hα, hπ₀, hω, hωc, hφ, hφ0, hΦc, hΦs, hΦr, hΦpos, hΦ0, hZ⟩ := GlobalTheory.T.unfolded_theta_integral_eq_mul_schur_euler_product E a π ha hπ T hT
   set q : {w : HeightOneSpectrum (𝓞 E) // w ∉ T} → ℕ := fun w => Ideal.absNorm w.1.asIdeal with hqdef

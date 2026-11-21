@@ -82,7 +82,7 @@ private theorem exists_proj {M : Type*} [AddCommGroup M] [Module ℂ M] {C V D :
 
 section Forms
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private noncomputable def stRep (C : Submodule ℂ (Sm E a)) (hC : _root_.GlobalTheory.CuspRep.IsStable C) : Representation ℂ (GL (Fin a) (Af E)) C :=
   GlobalTheory.PRep.sub (finRep E a) C fun k => hC (.fin k)

@@ -12,7 +12,7 @@ open scoped TensorProduct GlobalTheory.CuspRep.CuspidalL2GL
 open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private def stab (ψ : Sm E a) : Subgroup (GL (Fin a) (GlobalTheory.CuspRep.Af E)) where
   carrier := {k | rt E a (finGL E a k) ψ = ψ}

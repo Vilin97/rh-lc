@@ -27,7 +27,7 @@ open NumberField IsDedekindDomain Module IntermediateField WeierstrassCurve Grou
 open scoped nonZeroDivisors
 
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K]
+  [_root_.NumberField.IsTotallyComplex K]
 
 
 omit [NumberField K] in

@@ -17,7 +17,7 @@ open PositivityTheory.Rg.Rs PositivityTheory.Rg.Rs.PExpFin
 
 namespace GlobalTheory.CompanionTheory.HullExp
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 def trans (r : ℕ) (s : ℝ) : Module.End ℂ (GA E N → ℂ) where
   toFun f g := f (aT E N r s * g)

@@ -9,7 +9,7 @@ namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 
 open NumberField Module
 
-theorem WeightedIndexBound.proof (E : Type*) [Field E] [NumberField E] [IsTotallyComplex E]
+theorem WeightedIndexBound.proof (E : Type*) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     (h₁ : CoeffLatticeBasis.Statement E) (h₂ : IndexLeDet.Statement E)
     (h₃ : WeightedNormSq.Statement E) (h₄ : WeightedSpaceDim.Statement E)
     (h₅ : ∀ [Fact (finrank ℝ (EuclideanSpace ℝ (InfinitePlace E × Fin 2)) = finrank ℚ E)],

@@ -15,7 +15,7 @@ namespace DiscreteGroups.sglob.DzType
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 def DepthZeroInertiaBig : Prop :=
-  ∀ (E Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (g : ℕ)
+  ∀ (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (g : ℕ)
     [Fact g.Prime] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w)
     (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRec h rc →
     ∀ (i : ℚ_[g] ≃+* w.adicCompletion E), Continuous i →

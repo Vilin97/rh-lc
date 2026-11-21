@@ -12,7 +12,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep GlobalTheory.LFun Positiv
 
 namespace GlobalTheory.CompanionTheory.SatakeBound
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def IsFix (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) (v : π.V) : Prop :=
   ∀ k ∈ KGL w (n := a), π.locRep w k v = v

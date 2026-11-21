@@ -151,8 +151,8 @@ end Key
 
 section Key
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-  [IsTotallyComplex E] {n : ℕ}
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+  [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem level_at (σ : E ≃ₐ[F] E) (hσ : ∀ τ, τ ∈ Subgroup.zpowers σ) (hp : (Module.finrank F E).Prime) (hn : 0 < n)
     (q : Pl F) (S : Finset (Pl F)) (hqS : q ∉ S) (hsp : ∀ v ∈ S, GM.Split E v) (U₀ : ∀ w : Pl E, Subgroup (Gw n w)) (hU₀ : Lev U₀)

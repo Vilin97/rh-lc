@@ -204,7 +204,7 @@ end DetG
 
 section NT
 
-variable (K : Type) [Field K] [NumberField K] [IsTotallyComplex K]
+variable (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
 
 theorem isEmpty_real : IsEmpty {w : InfinitePlace K // w.IsReal} := ⟨fun w => (InfinitePlace.not_isReal_iff_isComplex.mpr (IsTotallyComplex.isComplex w.1)) w.2⟩
 

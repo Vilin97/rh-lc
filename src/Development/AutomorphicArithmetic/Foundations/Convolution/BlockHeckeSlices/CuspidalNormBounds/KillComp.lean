@@ -89,7 +89,7 @@ private theorem vars_of_gen {τ κ : Type} [Fintype τ] {n : ℕ} {F : KF (τ ×
 
 section Ops
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private def Q (S : Set (Pl E)) (C : ℝ) (ψ : Sm E n) : Prop := Band C ψ ∧ Sph S ψ
 
@@ -176,7 +176,7 @@ end UpperTheory.ConvolutionTheory.BW
 
 open UpperTheory.ConvolutionTheory.BW in
 theorem UpperTheory.ConvolutionTheory.BW.killComp :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.KillComp E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.KillComp E := by
   intro E _ _ _ S n C φ w F G hC hφ hS hw hv hG hsum k d hd
   have hh := UpperTheory.ConvolutionTheory.BW.hkOps E
   have hb := UpperTheory.ConvolutionTheory.BW.bandOps E

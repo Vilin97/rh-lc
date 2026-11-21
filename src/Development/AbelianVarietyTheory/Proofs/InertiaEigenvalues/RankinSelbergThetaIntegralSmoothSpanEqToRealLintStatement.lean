@@ -13,7 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AdelicU
 open NumberField IsDedekindDomain Matrix MeasureTheory GlobalTheory.CuspRep GlobalTheory.JSW GroundTheory.Global.IdeleGroup Formalism.L2.Host
 open scoped ENNReal nonZeroDivisors
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.rankinSelbergThetaIntegral_smoothSpan_eq_toReal_lintegral : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ℓ : Fin a) (π : CuspSub E a)
+theorem _root_.GlobalTheory.T.rankinSelbergThetaIntegral_smoothSpan_eq_toReal_lintegral : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ℓ : Fin a) (π : CuspSub E a)
     (F : GA E a → ℂ), F ∈ GlobalTheory.JSW.mspanR π → Continuous F →
     ∀ (Φ : (Fin a → Cinf E) → ℂ), Continuous Φ → tsupport Φ ⊆ GlobalTheory.RSTheta.rowSet E ℓ →
     (∀ u, 0 ≤ (Φ u).re ∧ (Φ u).im = 0) →

@@ -58,7 +58,7 @@ theorem continuous_unip {r : ℕ} : Continuous (unip : (BlockIx a r → Ad E) �
 
 end Top
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 section Lattice
 
@@ -161,7 +161,7 @@ section Cusp
 variable {φ ψ : GA E a → ℂ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem integrableOn_unip (hc : Continuous φ) (hl : ∀ γ g, φ (ratGL E a γ * g) = φ g) {r : ℕ}
     [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)] (ν : Measure (BlockIx a r → Ad E))
     [ν.IsAddHaarMeasure] {𝓕 : Set (BlockIx a r → Ad E)} (h𝓕 : IsAddFundamentalDomain (ratN E a r) 𝓕 ν) (g : GA E a) :

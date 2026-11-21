@@ -92,7 +92,7 @@ end UpperTheory.ConvolutionTheory.R2.G.expIntegrability
 
 open UpperTheory.ConvolutionTheory.R2.G.expIntegrability in
 theorem UpperTheory.ConvolutionTheory.R2.G.expInt :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, ∀ R : ℝ,
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, ∀ R : ℝ,
     Integrable (fun p : IdeleGroup F × G1 F => ((Real.exp (R * sz (row (mD p.1 * p.2))) : ℝ) : ℂ) * iw (w1 W f.1 φ 1) p) M.ν := by
   intro F E _ _ _ _ _ _ _ D W M π f hf φ hφ R
   have hS := UpperTheory.ConvolutionTheory.R2.hatSt F E D W

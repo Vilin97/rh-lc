@@ -51,7 +51,7 @@ theorem exists_sub_notMem {R : Type} [CommRing R] [IsDedekindDomain R] (σ : R �
   rw [this]
   exact add_mem (sub_mem hmem h1) h2
 
-theorem prod_norm_sq {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {ι : Type} [Fintype ι]
+theorem prod_norm_sq {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {ι : Type} [Fintype ι]
     (φ : ι → E →+* ℂ) (hφ : Function.Bijective (fun v => InfinitePlace.mk (φ v))) (δ : 𝓞 E) :
     ∏ v, ‖φ v (δ : E)‖ ^ 2 = ((Algebra.norm ℤ δ).natAbs : ℝ) := by
   have h1 := InfinitePlace.prod_eq_abs_norm (δ : E)

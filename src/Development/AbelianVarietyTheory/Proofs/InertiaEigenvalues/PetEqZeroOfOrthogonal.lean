@@ -19,7 +19,7 @@ noncomputable section
 
 namespace GlobalTheory.KeepOrth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem exists_poly_central {f : Sm E a} (h : IsAutForm f) {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) :
     ∃ p : Polynomial ℂ, p ≠ 0 ∧ Polynomial.aeval z p f = 0 := by
@@ -150,11 +150,11 @@ variable (E a) in
 abbrev bas : Module.Basis (Fin (Module.finrank ℝ (Lie E a))) ℝ (Lie E a) := Module.finBasis ℝ (Lie E a)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def crd (i : Fin (Module.finrank ℝ (Lie E a))) (z : Lie E a) : Lie E a →L[ℝ] ℝ :=
   (LinearMap.toContinuousLinearMap ((bas E a).coord i)).comp (lmul (invL z))
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiffOn_crd (i : Fin (Module.finrank ℝ (Lie E a))) : ContDiffOn ℝ (⊤ : ℕ∞) (crd i) (invSet E a) :=
   contDiffOn_clm_apply.2 fun v z hz => ((LinearMap.toContinuousLinearMap ((bas E a).coord i)).contDiff.contDiffAt.comp z
     (GlobalTheory.AutGrowth.contDiff_lmul_uncurry.contDiffAt.comp z
@@ -321,7 +321,7 @@ theorem pet_translate_eq_zero (hω : ω.IsUnitary) (h' : ψ ∈ bddForms E a ω)
   exact (key ▸ Set.mem_univ y : y ∈ {y | ∀ φ : V, (T φ).1 (infGL E a y) = 0}) ⟨φ, hφ⟩
 
 theorem pet_eq_zero_of_orthogonal (hB : GlobalTheory.Published.CuspFormsBoundedGL) (E : Type) [Field E] [NumberField E]
-    [IsTotallyComplex E] (a : ℕ) (π π' : CuspSub E a) (ω : HChar E) (hω : ω.IsUnitary) (h : π.HasCentChar ω)
+    [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π π' : CuspSub E a) (ω : HChar E) (hω : ω.IsUnitary) (h : π.HasCentChar ω)
     (h' : π'.HasCentChar ω) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     (h0 : ∀ φ ∈ π.V, ∀ ψ ∈ π'.V, pet (latticeGL E a) μ φ.1 ψ.1 = 0) :
     (∀ φ ∈ π.V, ∀ ψ ∈ π'.V, ∀ y : GL (Fin a) (Cinf E),

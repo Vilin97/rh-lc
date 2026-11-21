@@ -108,7 +108,7 @@ private theorem integral_scale (a : (A F)ˣ) (G : A F → ℂ) :
 end Aux2
 
 theorem UpperTheory.ConvolutionTheory.R2.D.hatAE :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ (α : (A E)ˣ) φ y x z₀ z₁, hat (W.L (aE α) φ).1 ![y, x, z₀, z₁] =
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), ∀ (α : (A E)ˣ) φ y x z₀ z₁, hat (W.L (aE α) φ).1 ![y, x, z₀, z₁] =
       hat φ.1 ![y, (ideleNorm F E α : (A F)ˣ) * x, D.co (((α⁻¹ : (A E)ˣ) : A E) * D.mkE z₀ z₁) 0,
         D.co (((α⁻¹ : (A E)ˣ) : A E) * D.mkE z₀ z₁) 1] := by
   intro F E _ _ _ _ _ _ _ D W α φ y x z₀ z₁

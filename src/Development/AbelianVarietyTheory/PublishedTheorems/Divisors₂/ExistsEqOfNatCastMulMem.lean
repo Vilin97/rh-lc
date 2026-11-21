@@ -58,7 +58,7 @@ namespace GlobalTheory.Published
 open GlobalTheory.EllipticCM
 
 def EllipticMainTheoremCM : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Algebra K ℂ],
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Algebra K ℂ],
     Module.finrank ℚ K = 2 →
     ∀ Art : IdeleClassGroup K →* Field.absoluteGaloisGroupAbelianization K,
       IsGlobalArtinMap K Art →
@@ -68,7 +68,7 @@ def EllipticMainTheoremCM : Prop :=
       Transports σ (finitePart s) h𝔞 ξ
 
 def HilbertClassFieldJ : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Algebra K ℂ],
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Algebra K ℂ],
     Module.finrank ℚ K = 2 →
     ∀ L₀ : PeriodPair, IsIdealLattice (K := K) 1 L₀ →
       IsHilbertClassField K⟮(latticeCurve L₀).j⟯ ∧

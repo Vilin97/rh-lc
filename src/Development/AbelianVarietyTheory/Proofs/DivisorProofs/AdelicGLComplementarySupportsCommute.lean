@@ -11,7 +11,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep Formalism.UG GlobalTheory
 
 namespace GlobalTheory.JSW.MirSemi
 
-theorem supS_mul_comm : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem supS_mul_comm : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (h t : GA E a), h ∈ GlobalTheory.JSW.supS (E := E) (a := a) S →
     GeneralLinearGroup.map (pInf E) t = 1 →
     (∀ w ∈ S, GeneralLinearGroup.map ((pLoc E w).comp (pFin E)) t = 1) → h * t = t * h := by

@@ -9,7 +9,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep Matrix
 
 namespace GlobalTheory.UnitsDense
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem denseRange_embeddings' : DenseRange fun (x : E) (w : InfinitePlace E) => w.embedding x := by
   have h1 := NumberField.InfiniteAdeleRing.denseRange_algebraMap E
@@ -32,7 +32,7 @@ theorem denseRange_embeddings' : DenseRange fun (x : E) (w : InfinitePlace E) =>
   rfl
 
 theorem exists_unit_mem_open :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (V : Set (Cinf E)ˣ), IsOpen V → V.Nonempty →
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (V : Set (Cinf E)ˣ), IsOpen V → V.Nonempty →
       ∃ α : Eˣ, Units.map ((pInf E).comp (algebraMap E (Ad E))).toMonoidHom α ∈ V := by
   intro E _ _ _ V hV ⟨v, hv⟩
   have hU : IsOpen (Units.val '' V) := Units.isOpenEmbedding_val.isOpenMap V hV

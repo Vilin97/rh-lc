@@ -94,7 +94,7 @@ theorem exists_norm_eq (hτ : Function.Surjective fun i => InfinitePlace.mk (τ 
   obtain ⟨i, hi⟩ := hτ (InfinitePlace.mk φ)
   exact ⟨i, fun x => (congrArg (fun w : InfinitePlace E => w x) hi).symm⟩
 
-theorem exists_basis [IsTotallyComplex E] (hτ : Function.Bijective fun i => InfinitePlace.mk (τ i)) :
+theorem exists_basis [_root_.NumberField.IsTotallyComplex E] (hτ : Function.Bijective fun i => InfinitePlace.mk (τ i)) :
     ∃ b : Module.Basis (Module.Free.ChooseBasisIndex ℤ (𝓞 E)) ℝ (I → ℂ),
       ∀ k, b k = Pi.ringHom τ (integralBasis E k) := by
   have hli : LinearIndependent ℝ fun k => Pi.ringHom τ (integralBasis E k) := by
@@ -166,7 +166,7 @@ theorem isIntegral_hform {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {N : ℤ} (hN 
   simp only [RingHom.toIntAlgHom_apply]
   ring
 
-theorem exists_bounded_basis [IsTotallyComplex E] (hτ : Function.Bijective fun i => InfinitePlace.mk (τ i))
+theorem exists_bounded_basis [_root_.NumberField.IsTotallyComplex E] (hτ : Function.Bijective fun i => InfinitePlace.mk (τ i))
     (hσ : ∀ i x, τ i (σ x) = star (τ i x)) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hJ : J.det ≠ 0)
     (han : ∀ x, x ≠ 0 → Formalism.UG.hform σ J x x ≠ 0) :
     ∃ R : ℝ, ∀ G : Matrix (Fin n) (Fin n) (I → ℂ),
@@ -269,7 +269,7 @@ theorem gram_apply {n : ℕ} (J B : Matrix (Fin n) (Fin n) E) (a b : Fin n) :
   simp only [Formalism.UG.hform, Formalism.UG.cT, Matrix.mul_apply, Finset.sum_mul, transpose_apply, map_apply]
   exact Finset.sum_comm
 
-theorem exists_bounded_unitary [IsTotallyComplex E] (hτ : Function.Bijective fun i => InfinitePlace.mk (τ i))
+theorem exists_bounded_unitary [_root_.NumberField.IsTotallyComplex E] (hτ : Function.Bijective fun i => InfinitePlace.mk (τ i))
     (hσ : ∀ i x, τ i (σ x) = star (τ i x)) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hJ : J.det ≠ 0)
     (han : ∀ x, x ≠ 0 → Formalism.UG.hform σ J x x ≠ 0) :
     ∃ (R : ℝ) (𝓒 : Set (Matrix (Fin n) (Fin n) E)), 𝓒.Finite ∧ ∀ G : Matrix (Fin n) (Fin n) (I → ℂ),

@@ -189,7 +189,7 @@ section Prime
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
-variable [IsTotallyComplex K]
+variable [_root_.NumberField.IsTotallyComplex K]
 
 end Prime
 

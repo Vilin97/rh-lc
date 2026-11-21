@@ -10,7 +10,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibra
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.AlgRepEndIrreducible
 open scoped TensorProduct
 
-private theorem scalarDecomp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : Type} [AddCommGroup N]
+private theorem scalarDecomp {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : Type} [AddCommGroup N]
     [Module ℂ N] [Module ℝ N] [IsScalarTower ℝ ℂ N] (l : Cinf E →ₗ[ℝ] N) (x : Cinf E) :
     l x = ∑ τ : E →+* ℂ, coord τ x • ((1 / 2 : ℂ) • (l (atEmb τ 1) - Complex.I • l (atEmb τ Complex.I))) := by
   classical
@@ -53,7 +53,7 @@ private theorem scalarDecomp {E : Type} [Field E] [NumberField E] [IsTotallyComp
   match_scalars <;> ring
 
 theorem UpperTheory.V.AlgRepEndIrreducible.lieDecomp :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (N : Type) [AddCommGroup N] [Module ℂ N] [Module ℝ N] [IsScalarTower ℝ ℂ N] (L : Lie E a →ₗ[ℝ] N) (X : Matrix (Fin a) (Fin a) (Cinf E)),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (N : Type) [AddCommGroup N] [Module ℂ N] [Module ℝ N] [IsScalarTower ℝ ℂ N] (L : Lie E a →ₗ[ℝ] N) (X : Matrix (Fin a) (Fin a) (Cinf E)),
       L (toL X) = ∑ τ : E →+* ℂ, hol τ L (X.map (coord τ)) := by
   intro E _ _ _ a N _ _ _ _ L X
   let L' : Matrix (Fin a) (Fin a) (Cinf E) →ₗ[ℝ] N := L

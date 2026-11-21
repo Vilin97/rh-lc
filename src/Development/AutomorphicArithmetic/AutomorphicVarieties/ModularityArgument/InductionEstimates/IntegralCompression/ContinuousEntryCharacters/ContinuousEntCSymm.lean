@@ -119,7 +119,7 @@ end mk
 
 section co
 
-private def cF (F : Type) [Field F] [NumberField F] [IsTotallyComplex F] : mixedSpace F ≃+* (InfinitePlace F → ℂ) where
+private def cF (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] : mixedSpace F ≃+* (InfinitePlace F → ℂ) where
   toFun a w := a.2 ⟨w, IsTotallyComplex.isComplex w⟩
   invFun z := (fun v => absurd v.2 (InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex v.1)), fun v => z v.1)
   left_inv a := Prod.ext (funext fun v => absurd v.2 (InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex v.1))) rfl
@@ -127,7 +127,7 @@ private def cF (F : Type) [Field F] [NumberField F] [IsTotallyComplex F] : mixed
   map_mul' _ _ := rfl
   map_add' _ _ := rfl
 
-variable (F : Type) [Field F] [NumberField F] [IsTotallyComplex F]
+variable (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F]
 
 private theorem continuous_cF : Continuous (cF F) := by
   refine continuous_pi fun w => ?_
@@ -208,7 +208,7 @@ end co
 end UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.coEx :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F] [IsTotallyComplex E] (σ : E ≃ₐ[F] E) (D : InfD σ 1), ∃ (CF : Co F (InfinitePlace F)) (CE : Co E (Fin 2 × InfinitePlace F)),
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E) (D : InfD σ 1), ∃ (CF : Co F (InfinitePlace F)) (CE : Co E (Fin 2 × InfinitePlace F)),
       ∀ n (g : archGroup E n) s u, CE.Ψ n g (s, u) = CF.Ψ n (compA D n s g) u := by
   intro F E _ _ _ _ _ _ _ σ D
   refine ⟨mkCo (cF F) (continuous_cF F) (continuous_cF_symm F) (unitary_cF F),

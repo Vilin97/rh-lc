@@ -29,13 +29,13 @@ variable {E : Type} [Field E] [NumberField E]
 theorem L_cond (χ : HChar E) (hu : IsUnitary χ) (v : HeightOneSpectrum (𝓞 E)) (m : ℕ) (h : ExpAt χ v m) :
     multiplicity v.asIdeal (toHecke χ hu).conductor = m := GlobalTheory.T.hecke_character_conductor_exponent E χ hu v m h
 
-theorem L_inf {I : Type} [Fintype I] (φ : I → E →+* ℂ) (hφ : IsCMType φ) [IsTotallyComplex E] (χ : HChar E) (hu : IsUnitary χ)
+theorem L_inf {I : Type} [Fintype I] (φ : I → E →+* ℂ) (hφ : IsCMType φ) [_root_.NumberField.IsTotallyComplex E] (χ : HChar E) (hu : IsUnitary χ)
     (n : I → ℤ) (hi : Formalism.L2.Host.HChar.HasInf χ φ n) (i : I) :
     (toHecke χ hu).infiniteTau (InfinitePlace.mk (φ i)) = 0 ∧
       ((toHecke χ hu).infiniteWeight (InfinitePlace.mk (φ i))).natAbs = (n i).natAbs :=
   GlobalTheory.T.cm_hecke_character_infinity_type E I φ hφ χ hu n hi i
 
-theorem L_notPow {I : Type} [Fintype I] (φ : I → E →+* ℂ) (hφ : IsCMType φ) [IsTotallyComplex E] (χ : HChar E) (hu : IsUnitary χ)
+theorem L_notPow {I : Type} [Fintype I] (φ : I → E →+* ℂ) (hφ : IsCMType φ) [_root_.NumberField.IsTotallyComplex E] (χ : HChar E) (hu : IsUnitary χ)
     (n : I → ℤ) (hi : Formalism.L2.Host.HChar.HasInf χ φ n) (hn : ∃ i, n i ≠ 0) :
     ¬ ∃ τ : ℝ, ∀ x : IdeleGroup E,
       ((toHecke χ hu).toIdele x : ℂ) = ((ideleModule E x : ℝ) : ℂ) ^ ((τ : ℂ) * Complex.I) :=
@@ -162,7 +162,7 @@ theorem bijective_mk {I : Type} {φ : I → E →+* ℂ} (hφ : IsCMType φ) :
       rw [← InfinitePlace.mk_conjugate_eq, ← e, InfinitePlace.mk_embedding]
 
 section
-variable {I : Type} [Fintype I] {φ : I → E →+* ℂ} [IsTotallyComplex E] {χ : HChar E} {n : I → ℤ}
+variable {I : Type} [Fintype I] {φ : I → E →+* ℂ} [_root_.NumberField.IsTotallyComplex E] {χ : HChar E} {n : I → ℤ}
 
 theorem gammaFactor_toHecke (hφ : IsCMType φ) (hu : IsUnitary χ) (hi : Formalism.L2.Host.HChar.HasInf χ φ n) (s : ℂ) :
     (toHecke χ hu).gammaFactor s = archFactor n s := by

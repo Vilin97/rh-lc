@@ -26,7 +26,7 @@ private theorem gauss_unit {E : Type} [Field E] [NumberField E] {a : ℕ} (k : K
   unfold gauss
   rw [h3, k.2.2, h1]
 
-private theorem mom_cpt {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (ha : 1 ≤ a)
+private theorem mom_cpt {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (ha : 1 ≤ a)
     (L : AddSubgroup (Fin a → Af E)) (hL : IsLat L) (k : Kinf E a) (g : GA E a) :
     (mom L (g * infGL E a (Unitary.toUnits k))).1 = star k.1 * (mom L g).1 * k.1 := by
   ext i j w

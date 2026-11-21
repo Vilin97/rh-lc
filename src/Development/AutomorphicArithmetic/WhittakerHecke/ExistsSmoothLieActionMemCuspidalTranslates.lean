@@ -10,7 +10,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDesce
 open UpperTheory.ConvolutionTheory.R2.G (FS2 nE)
 open scoped Classical
 
-private theorem rt_infGL_lie {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private theorem rt_infGL_lie {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (y : GL (Fin a) (Cinf E)) (X : Matrix (Fin a) (Fin a) (Cinf E)) :
     rt E a (infGL E a y) * lie E a (toL X) =
       lie E a (toL (y.val * X * (y⁻¹).val)) * rt E a (infGL E a y) := by
@@ -27,7 +27,7 @@ private theorem rt_infGL_lie {E : Type} [Field E] [NumberField E] [IsTotallyComp
   exact congrArg (fun Z => fderiv ℝ (chart φ.1 g) (toL y.val) (toL Z))
     (Units.inv_mul_cancel_right (y.val * X) y).symm
 
-private theorem lie_rt_eq {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private theorem lie_rt_eq {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (X : Matrix (Fin a) (Fin a) (Cinf E)) (h : GL (Fin a) (A E)) :
     ∃ Y : Lie E a, lie E a (toL X) * rt E a h = rt E a h * lie E a Y := by
   set y := Matrix.GeneralLinearGroup.map (pInf E) h with hy
@@ -42,7 +42,7 @@ private theorem lie_rt_eq {E : Type} [Field E] [NumberField E] [IsTotallyComplex
   rw [← map_mul, ← hh]
 
 theorem UpperTheory.exists_smooth_lie_action_mem_cuspidal_translates :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (P : CuspSub E 2) (X : Lie E 2) (φ : GL (Fin 2) (A E) → ℂ), φ ∈ Tr P → ∃ f : Sm E 2, f.1 = φ ∧ (lie E 2 X f).1 ∈ Tr P := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (P : CuspSub E 2) (X : Lie E 2) (φ : GL (Fin 2) (A E) → ℂ), φ ∈ Tr P → ∃ f : Sm E 2, f.1 = φ ∧ (lie E 2 X f).1 ∈ Tr P := by
   intro E _ _ _ P X φ hφ
   induction hφ using Submodule.span_induction with
   | mem φ hφ =>

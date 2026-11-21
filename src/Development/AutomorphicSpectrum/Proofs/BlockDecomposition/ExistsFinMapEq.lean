@@ -26,7 +26,7 @@ theorem exists_fin_map_eq {a : ℕ} (m : Multiset ℂ) (hm : Multiset.card m = a
     · intro n h1 h2
       simp
 
-theorem charInt_at {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (π : CuspSub E a)
+theorem charInt_at {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (π : CuspSub E a)
     (hr : (CG.mk π).IsRegAlg) (τ : E →+* ℂ) :
     ∃ l : Fin a → ℤ, Function.Injective l ∧
       PositivityTheory.Rg.Cz.HasChar (cx τ (lieOp π)) fun k => (l k : ℂ) := by

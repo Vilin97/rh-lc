@@ -136,7 +136,7 @@ theorem tameAt_of_orderDvd {l k : ℕ} (hl : l.Prime) (h : χ.OrderDvd (l ^ k)) 
     exact Subtype.ext_iff) x (hx.trans_lt (by simpa using exp_neg_one_lt_one))
   exact congrArg Subtype.val this
 
-theorem locInf_eq_one [IsTotallyComplex E] {m : ℕ} (hm : 0 < m) (h : χ.OrderDvd m) (w : InfinitePlace E)
+theorem locInf_eq_one [_root_.NumberField.IsTotallyComplex E] {m : ℕ} (hm : 0 < m) (h : χ.OrderDvd m) (w : InfinitePlace E)
     (y : (w.Completion)ˣ) : χ.locInf w y = 1 := by
   have h1 : ∀ y, χ.1 y ^ m = 1 := fun y => congrArg (fun ξ : HChar E => ξ.1 y) h
   let e := InfinitePlace.Completion.ringEquivComplexOfIsComplex (IsTotallyComplex.isComplex w)
@@ -386,7 +386,7 @@ theorem exists_frob_inert [IsAlgClosure E Ω] (c : E ≃ₐ[F] E) (h2 : Module.f
       exact Valuation.map_add_lt _ (hτ.2 _ hx')
         (valuation_pow_sub_pow_lt A hx' (by rw [map_pow]; exact pow_le_one' hx q) (hτ.2 x hx) q)
 
-theorem IsHeckeOf.trivOn [IsAlgClosure E Ω] [IsTotallyComplex E] (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hne : c ≠ 1)
+theorem IsHeckeOf.trivOn [IsAlgClosure E Ω] [_root_.NumberField.IsTotallyComplex E] (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hne : c ≠ 1)
     (hinv : ∀ x, c (c x) = x)
     (hr : ∀ (P : HeightOneSpectrum (𝓞 E)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
     (cc : Ω ≃+* Ω) (hcc : ∀ x : E, cc (algebraMap E Ω x) = algebraMap E Ω (c x)) (hcc2 : ∀ x, cc (cc x) = x)

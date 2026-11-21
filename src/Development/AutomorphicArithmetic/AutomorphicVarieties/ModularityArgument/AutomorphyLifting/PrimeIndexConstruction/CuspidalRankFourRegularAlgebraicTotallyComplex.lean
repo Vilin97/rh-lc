@@ -16,9 +16,9 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.HC Recip
 
 namespace UpperTheory.V.Z.Win.Birth
 
-def CuspidalRankFourRegularAlgebraicTotallyComplex {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] (π : CuspSub L 4) : Prop := (CG.mk π).IsRegAlg ∧ ImaginaryQuadraticEtaCharacter.AllWin π
+def CuspidalRankFourRegularAlgebraicTotallyComplex {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (π : CuspSub L 4) : Prop := (CG.mk π).IsRegAlg ∧ ImaginaryQuadraticEtaCharacter.AllWin π
 
-theorem mkReg' {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] {π : CuspSub L 4} (h : (CG.mk π).IsRegAlg) (u : ImaginaryQuadraticEtaCharacter.AllWin π) :
+theorem mkReg' {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] {π : CuspSub L 4} (h : (CG.mk π).IsRegAlg) (u : ImaginaryQuadraticEtaCharacter.AllWin π) :
     CuspidalRankFourRegularAlgebraicTotallyComplex π := ⟨h, u⟩
 
 end UpperTheory.V.Z.Win.Birth

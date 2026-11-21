@@ -14,7 +14,7 @@ noncomputable section
 open NumberField GlobalTheory.CuspRep GlobalTheory.CuspQuot GlobalTheory.AutGrowth MeasureTheory GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Reduction
 
 theorem GlobalTheory.AutGrowth.uniform_growth_of_autForm : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀ (E : Type) [Field E]
-    [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a), IsAutForm φ → ∃ N : ℕ, ∀ l : List (Lie E a),
+    [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a), IsAutForm φ → ∃ N : ℕ, ∀ l : List (Lie E a),
     ∃ C : ℝ, ∀ y, ‖((l.map (lie E a)).prod φ).1 (infGL E a y)‖ ≤ C * height y ^ N := by
   intro hP E _ _ _ a φ hφ
   let ν : Measure (Lie E a) := Measure.addHaar

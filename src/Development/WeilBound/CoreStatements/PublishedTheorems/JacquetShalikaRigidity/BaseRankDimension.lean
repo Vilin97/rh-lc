@@ -64,7 +64,7 @@ theorem dt_invT (g : GA E k) : Dt (invT g) = (Dt g)⁻¹ := by
   rw [Dt, Dt, h, map_inv]
   rfl
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem dt_eq (g : GA E k) : Dt g =
     (∏ w : InfinitePlace E, ‖((GeneralLinearGroup.det (jumpWindows.cInf g) : (Cinf E)ˣ) : Cinf E) w‖ ^ w.mult) *
@@ -82,7 +82,7 @@ theorem dt_eq (g : GA E k) : Dt g =
 theorem inf_one : (∏ w : InfinitePlace E, ‖((GeneralLinearGroup.det (1 : GL (Fin k) (Cinf E)) : (Cinf E)ˣ) : Cinf E) w‖ ^ w.mult) = 1 := by
   simp
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem nrm_pi (l : ℤ) (w : Pl E) :
     ‖(GLnLocal.uniformizer (w.adicCompletion E) : w.adicCompletion E) ^ l‖ = (Ideal.absNorm w.asIdeal : ℝ) ^ (-l) := by
   have h0 : (GLnLocal.uniformizer (w.adicCompletion E) : w.adicCompletion E) ≠ 0 := fun h =>

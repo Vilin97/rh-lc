@@ -96,7 +96,7 @@ theorem form_self_re_nonneg {K V : Type} [Field K] [AddCommGroup V] [Module K V]
     rw [Matrix.det_unique] at hp
     simpa using (Complex.pos_iff.1 hp).1.le
 
-theorem finrank_eq_two_mul_nPl' {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] :
+theorem finrank_eq_two_mul_nPl' {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] :
     Module.finrank ℚ K = 2 * Formalism.HN.nPl K := by
   rw [IsTotallyComplex.finrank, Formalism.HN.nPl, InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces,
     IsTotallyComplex.nrRealPlaces_eq_zero, zero_add]
@@ -105,7 +105,7 @@ end GlobalTheory.FrameDeg
 
 namespace GlobalTheory.FrameDeg
 
-theorem deg_eq_neg_log_ht : ∀ (K V : Type) [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [StarRing K] [IsTotallyComplex K] [FiniteDimensional K V] (nm : HermFam K V), nm.IsConjInv → ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ), (∀ v, IsUnit (X v).det) → (∀ v x, Formalism.HermitianLatticesTheory.normAt b X v x = nm.nrm v.embedding x) → ∀ L : Submodule (𝓞 K) V, L.FG → deg nm L = -Real.log (Formalism.HN.ht b X L) / (2 * (Formalism.HN.nPl K : ℝ)) := by
+theorem deg_eq_neg_log_ht : ∀ (K V : Type) [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [StarRing K] [_root_.NumberField.IsTotallyComplex K] [FiniteDimensional K V] (nm : HermFam K V), nm.IsConjInv → ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ), (∀ v, IsUnit (X v).det) → (∀ v x, Formalism.HermitianLatticesTheory.normAt b X v x = nm.nrm v.embedding x) → ∀ L : Submodule (𝓞 K) V, L.FG → deg nm L = -Real.log (Formalism.HN.ht b X L) / (2 * (Formalism.HN.nPl K : ℝ)) := by
   intro K V _ _ _ _ _ _ _ _ _ nm hinv ι _ _ b X hX hnorm L hL
   classical
 

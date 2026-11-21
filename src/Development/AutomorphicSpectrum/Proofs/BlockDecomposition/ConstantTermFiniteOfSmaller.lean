@@ -30,9 +30,9 @@ open NumberField GlobalTheory.CuspRep MeasureTheory PositivityTheory.Affgl
 
 namespace GlobalTheory.CompanionTheory.CTFin
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
-def leftN (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) : Submodule ℂ (Sm E (r + s)) where
+def leftN (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) : Submodule ℂ (Sm E (r + s)) where
   carrier := {F | ∀ (x : BlockIx (r + s) r → Ad E) (g : GA E (r + s)), F.1 (unip x * g) = F.1 g}
   add_mem' := fun {F G} hF hG x g => by
     change F.1 _ + G.1 _ = F.1 _ + G.1 _
@@ -42,7 +42,7 @@ def leftN (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) 
     change c • F.1 _ = c • F.1 _
     rw [hF]
 
-def vanM (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) : Submodule ℂ (Sm E (r + s)) where
+def vanM (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) : Submodule ℂ (Sm E (r + s)) where
   carrier := {F | ∀ m : GA E r × GA E s, F.1 (lev (Ad E) r s m) = 0}
   add_mem' := fun {F G} hF hG m => by
     change F.1 _ + G.1 _ = 0
@@ -197,7 +197,7 @@ theorem finiteDimensional_goodCT (h₁ : GenFin E r) (h₂ : GenFin E s) (L : Su
     exact h1
   exact FiniteDimensional.of_injective Ψ hΨ
 
-theorem ctFin : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), (∀ b < a, GenFin E b) →
+theorem ctFin : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), (∀ b < a, GenFin E b) →
     ∀ r, 0 < r → r < a → CTFin E a r := by
   intro E _ _ _ a hG r h0 hr
   obtain ⟨s, rfl⟩ : ∃ s, a = r + s := ⟨a - r, by omega⟩

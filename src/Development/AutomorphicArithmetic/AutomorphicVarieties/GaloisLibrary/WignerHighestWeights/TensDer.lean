@@ -9,7 +9,7 @@ open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Al
 open scoped TensorProduct
 
 theorem UpperTheory.V.AlgRepEndIrreducible.tensDer :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a) (Ξ : AlgRep E a), SepDer (tensorK π Ξ) (tensorLie π Ξ) := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CuspSub E a) (Ξ : AlgRep E a), SepDer (tensorK π Ξ) (tensorLie π Ξ) := by
   intro E _ _ _ a π Ξ k Z h0 hk m' hm
   let e := TensorProduct.piScalarRight ℂ ℂ π.V (Fin Ξ.d)
   have h1 : e m' ≠ 0 := fun h => hm (e.map_eq_zero_iff.1 h)

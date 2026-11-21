@@ -19,7 +19,7 @@ private theorem wt_nonneg' {F : Type} [Field F] [NumberField F]
   · exact le_rfl
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.rowMaj :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), RowMaj W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), RowMaj W := by
   intro F E _ _ _ _ _ _ _ D W φ hφ y hy c hc
   obtain ⟨K, hK, hBK⟩ := hatMaj F E D W φ hφ y hy
   obtain ⟨N, hN⟩ := wtSum F

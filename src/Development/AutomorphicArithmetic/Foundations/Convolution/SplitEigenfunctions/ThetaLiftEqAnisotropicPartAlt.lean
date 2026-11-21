@@ -46,7 +46,7 @@ private theorem cD_one (g : G1 ℚ) : cD 1 g = g := by
 private theorem ab_one' : ab (1 : (A ℚ)ˣ) = 1 := by
   simp [ab]
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {D : Dat ℚ E}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {D : Dat ℚ E}
 
 private theorem act_zero (h : GL (Fin 2) (A E)) : D.act h (0 : V4 ℚ) = 0 := by
   have e : D.herm (0 : V4 ℚ) = 0 := by

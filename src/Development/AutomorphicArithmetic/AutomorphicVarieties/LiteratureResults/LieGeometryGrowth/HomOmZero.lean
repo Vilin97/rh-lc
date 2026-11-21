@@ -48,7 +48,7 @@ private theorem d_step {Γ V S : Type} [Group Γ] [NormedAddCommGroup V] [Normed
   rw [hH.2.1, homOm_zero, add_zero, sub_eq_iff_eq_add] at e
   rw [map_sub, hH.1, e, add_sub_cancel_left]
 
-private theorem corr_sub {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (ho : IsOpen (cone E a))
+private theorem corr_sub {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (ho : IsOpen (cone E a))
     (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a) {q : ℕ} {α β : Co Ξ q} {w w' : (geo ho U Ξ).Om q}
     (h : Corr U Ξ α w.1) (h' : Corr U Ξ β w'.1) : Corr U Ξ (α - β) (w - w').1 := fun g x X => by
   rw [AlternatingMap.sub_apply, map_sub, Pi.sub_apply, Matrix.mulVec_sub, ← h g x X, ← h' g x X]

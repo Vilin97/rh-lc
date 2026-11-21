@@ -14,18 +14,18 @@ namespace GlobalTheory.InfAdeleMixed
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def toMixed [IsTotallyComplex E] {R : Type} [CommRing R]
+def toMixed [_root_.NumberField.IsTotallyComplex E] {R : Type} [CommRing R]
     (θ : {w : InfinitePlace E // w.IsComplex} → (R →+* ℂ)) : R →+* mixedSpace E :=
   RingHom.prod
     (Pi.ringHom fun w : {w : InfinitePlace E // w.IsReal} =>
       (False.elim (InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex w.1) w.2) : R →+* ℝ))
     (Pi.ringHom θ)
 
-theorem mixed_ext [IsTotallyComplex E] {x y : mixedSpace E} (h : ∀ w, x.2 w = y.2 w) : x = y :=
+theorem mixed_ext [_root_.NumberField.IsTotallyComplex E] {x y : mixedSpace E} (h : ∀ w, x.2 w = y.2 w) : x = y :=
   Prod.ext (funext fun w =>
     (InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex w.1) w.2).elim) (funext h)
 
-theorem exists_place_over [IsTotallyComplex E] [IsTotallyReal F] (v : InfinitePlace F) :
+theorem exists_place_over [_root_.NumberField.IsTotallyComplex E] [IsTotallyReal F] (v : InfinitePlace F) :
     ∃ w : {w : InfinitePlace E // w.IsComplex}, InfinitePlace.mk (w.1.embedding.comp (algebraMap F E)) = v := by
   obtain ⟨w, hw⟩ := InfinitePlace.comap_surjective (k := F) (K := E) v
   refine ⟨⟨w, IsTotallyComplex.isComplex w⟩, ?_⟩

@@ -102,7 +102,7 @@ private def AF.Pt (a : AF K n) (S : Set (Pl K)) (M : (K →+* ℂ) → Multiset 
   ∃ lam : Fin a.r → ℂ, (∀ τ, M τ = Finset.univ.val.map fun i => a.Λ (τ, i) + lam (a.blk i)) ∧
     ∀ w ∉ S, t w = Finset.univ.val.map fun i => a.β (w, i) * Complex.exp (a.c w * lam (a.blk i))
 
-private theorem ke_datum [IsTotallyComplex K] (hP : ParEx) (S : Set (Pl K)) (b : Datum K n) (hb : ∃ Λ t, b.Pt S Λ t) :
+private theorem ke_datum [_root_.NumberField.IsTotallyComplex K] (hP : ParEx) (S : Set (Pl K)) (b : Datum K n) (hb : ∃ Λ t, b.Pt S Λ t) :
     ∃ a : AF K n, ∀ Λ t, b.Pt S Λ t ↔ a.Pt S Λ t := by
   classical
   obtain ⟨-, -, -, m, B, hAt, -⟩ := hb
@@ -263,7 +263,7 @@ private theorem ke_main (S : Set (Pl K)) (B : Type) [Fintype B] (a : B → AF K 
     exact (sub_eq_zero_iff _ _ _ _).1 (hG2 i) _ _ hm
 
 theorem killEx_listed (hP : ParEx)
-    (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F] [IsTotallyComplex E]
+    (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E]
     (n : ℕ) (SE : Set (Pl E)) (SF : Set (Pl F)) (hS : ∀ w : Pl E, w ∈ SE ↔ w.under (𝓞 F) ∈ SF)
     (B B' : Type) [Fintype B] [Fintype B'] (b : B → Datum E n) (b' : B' → Datum F n)
     (hb : ∀ i, ∃ Λ t, (b i).Pt SE Λ t) (hb' : ∀ i, ∃ Λ t, (b' i).Pt SF Λ t)

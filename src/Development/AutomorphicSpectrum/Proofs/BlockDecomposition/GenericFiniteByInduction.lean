@@ -13,7 +13,7 @@ open scoped NumberField.AdeleRing
 
 namespace GlobalTheory.CompanionTheory.AffglAssembly
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem isAutForm_add {φ ψ : Sm E a} (h : IsAutForm φ) (h' : IsAutForm ψ) : IsAutForm (φ + ψ) where
   left γ g := by
@@ -231,10 +231,10 @@ theorem genFin_step (hC : CuspFin E a) (hT : ∀ r, 0 < r → r < a → CTFin E 
   exact hfin
 
 theorem genFin_of_chapters :
-    (∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), CuspFin E a) →
-    (∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), (∀ b < a, GenFin E b) →
+    (∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), CuspFin E a) →
+    (∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), (∀ b < a, GenFin E b) →
       ∀ r, 0 < r → r < a → CTFin E a r) →
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), GenFin E a := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), GenFin E a := by
   intro hC hT E _ _ _ a
   induction a using Nat.strong_induction_on with
   | _ a ih => exact genFin_step (hC E a) (hT E a ih)

@@ -14,7 +14,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.
 
 namespace PositivityTheory.Rg.Rs.ParabolicProjection
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem mulChi_absC_neg (n : ℕ) (z : ℂ) (φ : Sm E n) :
     mulChi n (Model.absC E (-z)) (mulChi n (Model.absC E z) φ) = φ := by

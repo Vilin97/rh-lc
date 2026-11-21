@@ -13,7 +13,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep Formalism.UG GlobalTheory
 
 namespace GlobalTheory.JSW
 
-theorem eq_zero_of_whit_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
+theorem eq_zero_of_whit_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
     IsCuspForm φ → (∀ g, GlobalTheory.JSW.whit φ.1 g = 0) → φ = 0 := by
   intro E _ _ _ a φ hφ hW
   have hc : Continuous φ.1 := GlobalTheory.T.automorphicForm_GL_continuous E a φ hφ.1

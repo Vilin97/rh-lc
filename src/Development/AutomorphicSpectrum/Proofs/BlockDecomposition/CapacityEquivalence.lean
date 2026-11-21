@@ -15,7 +15,7 @@ open GlobalTheory.CompanionTheory.EGlue
 
 namespace GlobalTheory.CompanionTheory.EGlue
 
-theorem adjoin_lie_equiv {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+theorem adjoin_lie_equiv {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
     {U : Submodule ℂ (Sm E N)} (T : Sm E N →ₗ[ℂ] Sm E N) (hU : _root_.GlobalTheory.CuspRep.IsStable U)
     (hT : ∀ o, ∀ χ ∈ U, T (act o χ) = act o (T χ)) {z : Module.End ℂ (Sm E N)}
     (hz : z ∈ Algebra.adjoin ℂ (Set.range (lie E N))) :

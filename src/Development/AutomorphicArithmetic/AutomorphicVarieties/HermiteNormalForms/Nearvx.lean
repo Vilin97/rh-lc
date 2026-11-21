@@ -11,7 +11,7 @@ open NumberField Matrix UpperTheory.V UpperTheory.V.KT
 open scoped ComplexOrder
 
 theorem UpperTheory.V.KT.nearvx :
-    ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (A : Matrix (Fin N) (Fin N) (𝓞 L)), A.det ≠ 0 →
+    ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (A : Matrix (Fin N) (Fin N) (𝓞 L)), A.det ≠ 0 →
     (nearVx A).Finite ∧ (nearVx A).ncard ≤ ((2 * RR L N + 1) ^ dd L N + 1) ^ (dd L N * N) := by
   intro L _ _ _ N A hA
   choose f hf1 hf2 hf3 using vxdet L N

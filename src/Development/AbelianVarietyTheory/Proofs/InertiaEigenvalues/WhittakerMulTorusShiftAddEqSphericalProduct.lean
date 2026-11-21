@@ -19,7 +19,7 @@ open scoped Classical
 
 namespace GlobalTheory.RamShift
 
-theorem whittaker_torusShift_add_factorisation_induction (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ)
+theorem whittaker_torusShift_add_factorisation_induction (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ)
     (T : Finset (HeightOneSpectrum (𝓞 E))) (π : CuspSub E (m + 1))
     (α : {w : HeightOneSpectrum (𝓞 E) // w ∉ T} → Fin (m + 1) → ℂˣ)
     (hα : ∀ w, HasSatGL w.1 (π.locRep w.1) (Finset.univ.val.map (α w))) (φ) (hφV : φ ∈ π.V)
@@ -85,7 +85,7 @@ theorem whittaker_torusShift_add_factorisation_induction (E : Type) [Field E] [N
     change GlobalTheory.RSCell.sphZ (Ideal.absNorm a.asIdeal) _ b * _ = _
     ring
 
-theorem whit_mul_tl_shift_add : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E)))
+theorem whit_mul_tl_shift_add : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E)))
     (π : CuspSub E (m + 1)) (α : {w : HeightOneSpectrum (𝓞 E) // w ∉ T} → Fin (m + 1) → ℂˣ),
     (∀ w, HasSatGL w.1 (π.locRep w.1) (Finset.univ.val.map (α w))) →
     ∀ φ ∈ π.V, (∀ w ∉ T, ∀ k ∈ KGL w (n := (m + 1)), act (.fin (locGL E (m + 1) w k)) φ = φ) →

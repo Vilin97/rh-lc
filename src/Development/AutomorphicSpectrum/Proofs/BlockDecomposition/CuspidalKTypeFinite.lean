@@ -252,7 +252,7 @@ end Abstract2
 
 section Concrete
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem continuous_infGL : Continuous (infGL E a) := by
   have hs : Continuous (sInf E) := ((continuous_infEq E).prodMk continuous_const :
@@ -260,14 +260,14 @@ theorem continuous_infGL : Continuous (infGL E a) := by
   exact Continuous.units_map (corner (matN a (sInf E))) (continuous_const.add (continuous_id.matrix_map hs))
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_finGL : Continuous (finGL E a) := by
   have hs : Continuous (sFin E) := (continuous_const.prodMk continuous_id :
     Continuous fun x : Af E => ((0, x) : InfiniteAdeleRing E × Af E))
   exact Continuous.units_map (corner (matN a (sFin E))) (continuous_const.add (continuous_id.matrix_map hs))
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem locallyCompactSpace_GL : LocallyCompactSpace (GL (Fin a) (Cinf E)) := by
   haveI : LocallyCompactSpace (Matrix (Fin a) (Fin a) (Cinf E)) :=
     inferInstanceAs (LocallyCompactSpace (Fin a → Fin a → Cinf E))
@@ -360,7 +360,7 @@ theorem enoughCompact_fixedPart {H : Submodule ℂ (L2 (latticeGL E a) μ)} (hHc
 
 end Concrete
 
-theorem finiteDimensional_isotypic : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (H : Submodule ℂ (L2 (latticeGL E a) μ)), H ≤ L2cusp μ → IsIrredSubrep (R (latticeGL E a) μ) H → ∀ (U : Subgroup (GL (Fin a) (Af E))), IsOpen (U : Set (GL (Fin a) (Af E))) → ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (ρ : Representation ℂ (Kinf E a) W), FiniteDimensional ℂ ↥(⨆ (T : W →ₗ[ℂ] L2 (latticeGL E a) μ) (_ : (∀ k w, T (ρ k w) = R (latticeGL E a) μ (infGL E a (Unitary.toUnits k)) (T w)) ∧ ∀ w, T w ∈ H ∧ ∀ u ∈ U, R (latticeGL E a) μ (finGL E a u) (T w) = T w), LinearMap.range T : Submodule ℂ (L2 (latticeGL E a) μ)) := by
+theorem finiteDimensional_isotypic : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (H : Submodule ℂ (L2 (latticeGL E a) μ)), H ≤ L2cusp μ → IsIrredSubrep (R (latticeGL E a) μ) H → ∀ (U : Subgroup (GL (Fin a) (Af E))), IsOpen (U : Set (GL (Fin a) (Af E))) → ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (ρ : Representation ℂ (Kinf E a) W), FiniteDimensional ℂ ↥(⨆ (T : W →ₗ[ℂ] L2 (latticeGL E a) μ) (_ : (∀ k w, T (ρ k w) = R (latticeGL E a) μ (infGL E a (Unitary.toUnits k)) (T w)) ∧ ∀ w, T w ∈ H ∧ ∀ u ∈ U, R (latticeGL E a) μ (finGL E a u) (T w) = T w), LinearMap.range T : Submodule ℂ (L2 (latticeGL E a) μ)) := by
   intro E _ _ _ a μ _ _ H hH hI U hU W _ _ _ ρ
   obtain ⟨K0, hK0o, hK0c⟩ := GlobalTheory.GLIntegral.exists_isOpen_isCompact E a
   have hU' : IsOpen ((U ⊓ K0 : Subgroup _) : Set (GL (Fin a) (Af E))) := hU.inter hK0o

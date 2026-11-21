@@ -24,7 +24,7 @@ open UpperTheory.V.Published UpperTheory.CBC PositivityTheory.RgJS
 section SlopeTestRemainingChoices
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  [IsTotallyComplex F] [IsTotallyComplex E] {n : ℕ}
+  [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem bc_tw {χ : HChar F} {χ' : HChar E} {s : ℂ} (h : IsPow χ s) (h' : IsPow χ' s)
     (π : CuspSub F n) (P : CuspSub E n) (H : WeakBC (Cusp.cx π).sat (Cusp.cx P).sat) :

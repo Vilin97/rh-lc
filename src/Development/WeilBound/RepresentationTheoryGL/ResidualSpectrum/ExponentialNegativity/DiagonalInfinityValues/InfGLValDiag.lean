@@ -15,7 +15,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.CompanionTheory.CT
 
 namespace PositivityTheory.Rg.Rs.JFinTr
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem chart_left {a : ℕ} (φ : GA E a → ℂ) (h g : GA E a) :
     chart (fun x => φ (h * x)) g = chart φ (h * g) := by

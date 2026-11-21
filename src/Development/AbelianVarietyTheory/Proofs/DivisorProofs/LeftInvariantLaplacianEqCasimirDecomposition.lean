@@ -11,7 +11,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.LapSplit
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem Eop_conjugate (τ : E →+* ℂ) (i j : Fin a) :
     Eop (ComplexEmbedding.conjugate τ) i j =
@@ -56,7 +56,7 @@ end GlobalTheory.LapSplit
 
 namespace GlobalTheory.LapSplit
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem sum_cas_conjugate :
     ∑ τ : E →+* ℂ, Formalism.REAL.Cas (Eop (a := a) (ComplexEmbedding.conjugate τ)) =
@@ -69,7 +69,7 @@ end GlobalTheory.LapSplit
 
 namespace GlobalTheory.HCAlpha
 
-theorem lapOp_eq_casKOp_add_cas (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) :
+theorem lapOp_eq_casKOp_add_cas (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) :
     lapOp E a = (2 : ℂ) • casKOp E a + ∑ τ : E →+* ℂ, (4 : ℂ) • Formalism.REAL.Cas (Eop (a := a) τ) := by
   have h4 : ∀ τ : E →+* ℂ, (4 : ℂ) • Formalism.REAL.Cas (Eop (a := a) τ) =
       (2 : ℂ) • Formalism.REAL.Cas (Eop (a := a) τ) + (2 : ℂ) • Formalism.REAL.Cas (Eop (a := a) τ) := fun τ => by

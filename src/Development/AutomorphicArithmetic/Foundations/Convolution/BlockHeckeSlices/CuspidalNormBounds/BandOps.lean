@@ -13,7 +13,7 @@ open NumberField GlobalTheory.CuspRep GroundTheory.Automorphic UpperTheory.V.Cm
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem lie_right_translate_comm (X : Lie E n) (y : GL (Fin n) (Cinf E)) (k : GL (Fin n) (Af E)) :
     ∃ X' : Lie E n, lie E n X * rt E n (infGL E n y * finGL E n k) =
@@ -168,7 +168,7 @@ private theorem band_hk {C : ℝ} (hC : 0 ≤ C) {φ : Sm E n} (h : Band C φ) (
 end UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.ConvolutionTheory.BW.bandOps :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.BandOps E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.BandOps E := by
   intro E _ _ _ n C hC
   exact ⟨UpperTheory.ConvolutionTheory.BW.band_zero C, fun φ h => ⟨fun ψ h₂ => UpperTheory.ConvolutionTheory.BW.band_add hC h h₂, UpperTheory.ConvolutionTheory.BW.band_smul h,
     UpperTheory.ConvolutionTheory.BW.band_uC h, UpperTheory.ConvolutionTheory.BW.band_rt hC h, fun w j => UpperTheory.ConvolutionTheory.BW.band_hk hC h w j⟩⟩

@@ -14,7 +14,7 @@ open scoped TensorProduct Classical
 
 namespace GlobalTheory.LKTrip.HTGroup
 
-theorem span_real_embedding_places (F : Type) [Field F] [NumberField F] [IsTotallyComplex F] :
+theorem span_real_embedding_places (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] :
     Submodule.span ℝ (Set.range fun (a : F) (v : InfinitePlace F) => v.embedding a) = ⊤ := by
   first
   | exact @_root_.GlobalTheory.EmbeddingRangeSpanTop.span_range_embedding_eq_top

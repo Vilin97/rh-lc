@@ -15,7 +15,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.DiscSpec
 
 namespace PositivityTheory.Rg.Rs.StrStepB
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem absC_unrAt (s : ℂ) (w : HeightOneSpectrum (𝓞 E)) : (GlobalTheory.CuspRep.Model.absC E s).UnrAt w := by
   intro x hx

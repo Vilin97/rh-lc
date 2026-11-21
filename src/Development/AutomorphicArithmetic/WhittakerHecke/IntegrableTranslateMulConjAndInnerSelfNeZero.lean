@@ -18,7 +18,7 @@ private theorem out_eq_cuspQuot {E : Type} [Field E] [NumberField E] {r : ℕ}
     _ = CuspidalSpectrum.cuspQuot h y := by rw [e]
 
 theorem UpperTheory.integrable_translate_mul_conj_and_inner_self_ne_zero :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (S : Set (Pl E)) (r : ℕ) (b : Blo S r),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (S : Set (Pl E)) (r : ℕ) (b : Blo S r),
       (∀ g : GA E r, Integrable (fun y : RightCosetSpace (rationalGLOne (K := E) (n := r)) => b.f.1 (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) (quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r))) ∧
       ∫ y : RightCosetSpace (rationalGLOne (K := E) (n := r)), b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) ∂(quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)) ≠ 0 := by
   intro E _ _ _ S r b

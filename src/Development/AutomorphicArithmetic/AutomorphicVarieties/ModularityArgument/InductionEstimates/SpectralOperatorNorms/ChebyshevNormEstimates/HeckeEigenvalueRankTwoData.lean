@@ -100,7 +100,7 @@ private theorem act_cc {H V : Type} [NormedAddCommGroup H] [InnerProductSpace �
     rw [(a t).integral_comp_comm (hui.comp_add_right t), integral_add_right_eq_self]
     simp
 
-private theorem sign_data_rank_two {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (Pl E)} (b b' : BW.Blo S 2) :
+private theorem sign_data_rank_two {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} (b b' : BW.Blo S 2) :
     (dat2 b b').rho (0 : Fin 2) = -1 ∧ (dat2 b b').rho (1 : Fin 2) = 1 := by
   constructor
   · show ((∑ _l ∈ (∅ : Finset (Fin 2)), ((2 : ℕ) : ℝ)) - ((((2 : ℕ) : ℝ)) + 0)) / 2 = -1
@@ -108,7 +108,7 @@ private theorem sign_data_rank_two {E : Type} [Field E] [NumberField E] [IsTotal
   · show (((((2 : ℕ) : ℝ)) + 0) - ∑ _l ∈ (∅ : Finset (Fin 2)), ((2 : ℕ) : ℝ)) / 2 = 1
     norm_num
 
-private theorem hecke_eigenvalue_rank_two_data {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (Pl E)} (b b' : BW.Blo S 2)
+private theorem hecke_eigenvalue_rank_two_data {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} (b b' : BW.Blo S 2)
     (φ : GlobalTheory.CuspRep.Sm E (2 + 2)) (w : Pl E) (j : ℕ) (t : Fin 2 → ℝ) (h : BW.Umg φ) (hS : BW.Sph S φ) (hw : w ∉ S) (hj : j ≤ 2 + 2) :
     (dat2 b b').comp (BW.hk (2 + 2) w j φ).1 t = ∑ a ∈ Finset.piAntidiag (Finset.univ : Finset (Fin 2)) j,
       (((b.sat w).map fun x : ℂˣ => (x : ℂ)).esymm (a 0) * ((Formalism.UG.qV E w : ℕ) : ℂ) ^ (-((-1 : ℝ) : ℂ) * a 0)) *
@@ -130,7 +130,7 @@ private theorem cancel {q : ℕ} (hq : q ≠ 0) (x : ℝ) (a b : ℕ) :
   ring
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.genT :
-    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (w : Pl E), w ∉ 𝔢.S → ∀ i : Fin (2 + 2),
+    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (w : Pl E), w ∉ 𝔢.S → ∀ i : Fin (2 + 2),
       (∃ s, Act 𝔵.A'.J (Tsph μ w i) s ∧ s 0 ∘L 𝔵.a₀ = hval 𝔵.t (w, i) • 𝔵.a₀) ∧ Tsph μ w i ∘L 𝔵.P = 𝔵.P ∘L Tsph μ w i := by
   intro E _ _ _ μ _ θ 𝔢 𝔵 w hw i
   obtain ⟨⟨s, hs⟩, hP⟩ := genTk 𝔵 w hw i

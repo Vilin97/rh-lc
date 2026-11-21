@@ -63,7 +63,7 @@ theorem continuousAt_invL : ContinuousAt (invL (E := E) (a := a)) (oneL E a) := 
       exact NormedRing.inverse_continuousAt (1 : (Cinf E)ˣ))
   exact h
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem chart_inv (g : GA E a) {x : Lie E a} (hx : x ∈ invSet E a) :
     ∃ h : GA E a, ∀ f : GA E a → ℂ, chart f g x = f h :=

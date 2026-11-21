@@ -43,7 +43,7 @@ def GalAE : Prop :=
       ∀ B, (CG.mk (P.twist (GlobalTheory.HeckeGal.Model.absPow E s))).HasSat w B → FrobPol ι r w (algSat a (normV w) B)
 
 def SatTw : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (P : CuspSub E a) (s : ℝ) (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (P : CuspSub E a) (s : ℝ) (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ),
     (CG.mk P).HasSat w B → (CG.mk (P.twist (GlobalTheory.HeckeGal.Model.absPow E s))).HasSat w (B.map (· * qPow w (-s)))
 
 def SumAE : Prop :=
@@ -64,7 +64,7 @@ def SplitSat : Prop :=
     ∀ τ : SmIrr (GL (Fin n) (w.adicCompletion E)), Nonempty (τ.ρ.Equiv (locProd hn w σ)) → ∀ B, GlobalTheory.LFun.HasSatGL w τ.ρ B → B = satTot w d S
 
 def OnePart : Prop :=
-  GlobalTheory.Published.JacquetShalikaRigidity → SatTw → ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n c : ℕ), 1 ≤ n →
+  GlobalTheory.Published.JacquetShalikaRigidity → SatTw → ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n c : ℕ), 1 ≤ n →
     ∀ (a d : Fin c → ℕ) (P : ∀ i, CuspSub E (a i)) (π : CuspSub E n), (∀ i, 1 ≤ a i ∧ 1 ≤ d i) →
     (∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∃ S : Fin c → Multiset ℂˣ, (∀ i, (CG.mk (P i)).HasSat w (S i)) ∧
       (CG.mk π).HasSat w (satTot w d S)) → c = 1 ∧ ∀ i, d i = 1

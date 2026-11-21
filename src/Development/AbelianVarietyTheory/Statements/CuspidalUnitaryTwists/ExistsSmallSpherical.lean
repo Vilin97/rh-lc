@@ -43,7 +43,7 @@ def CoordInt (D : D7) (N : ℕ) (B : ℝ) (Q : ℕ) (del_vp : ℕ → ℝ) : Pro
         ∀ lam : Qbar →+* ℂ_[p], ‖lamC lam (P.coord h T)‖ ≤ (p : ℝ) ^ del_vp p
 
 def NormInt (D : D7) (N : ℕ) (B : ℝ) (Q : ℕ) (S : Finset ℕ) (del_vp : ℕ → ℝ) (b : ℝ) : Prop :=
-  ∀ (δ t0 : ℂ) (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (σ : K →+* ℂ) (ι : Type)
+  ∀ (δ t0 : ℂ) (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (σ : K →+* ℂ) (ι : Type)
     (P P' : ι → Pair D ⊤ δ t0 Q) (zA zA' : ι → K),
     (∀ i, (P i).Small N B ∧ (P' i).Small N B) →
     (∀ i, (∃ h T, (P i).coord h T ≠ 0) ∧ ∃ h T, (P' i).coord h T ≠ 0) →
@@ -58,7 +58,7 @@ def IntSt : Prop :=
 def ArchSt : Prop :=
   ∃ C : ℝ, 0 < C ∧ ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ t0 : ℂ) (Q : ℕ), Crv D cc δ →
     GL3Theta.IsTwoTorsionPointUnkilled D (lamOf D cc δ) t0 → 0 < Q →
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (σ : K →+* ℂ) (ι : Type) (N : ℕ) (B L : ℝ)
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (σ : K →+* ℂ) (ι : Type) (N : ℕ) (B L : ℝ)
       (P P' : ι → Pair D cc δ t0 Q) (zA zA' : ι → K),
       1 ≤ N → 1 ≤ B → 1 ≤ L → Real.log D.host.rdE ≤ L → |logDerivativeAtOne D| ≤ L →
       (∀ i, (P i).Small N B ∧ (P' i).Small N B) →
@@ -88,7 +88,7 @@ theorem Exponents.wt_eq (h : Exponents S del b) {p : ℕ} (hp : p.Prime) (w : Pl
   simp only [map_natCast] at this
   rw [this]; simp
 
-theorem Exponents.wt_size [IsTotallyComplex K] (h : Exponents S del b) :
+theorem Exponents.wt_size [_root_.NumberField.IsTotallyComplex K] (h : Exponents S del b) :
     (∀ w : Pl K, 0 ≤ wt S del w) ∧ ∀ F : Finset (Pl K), ∑ w ∈ F, Formalism.DivisionValues.lw w * wt S del w ≤ b := by
   obtain ⟨h1, h2, h3⟩ := Formalism.PairingDivisionLocalBalance.weight_sum' K S del
   have h0 := h3 fun l _ => h.2.1 l

@@ -85,7 +85,7 @@ def PlLat : Prop :=
       rk (Formalism.HermitianLatticesTheory.realize b X) L = Module.finrank ℚ K * rkK L ∧ 0 < ht b X L
 
 def HtGram : Prop :=
-  ∀ (K V ι : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] [AddCommGroup V] [Module K V]
+  ∀ (K V ι : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V] [Module K V]
     [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι] (b : Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ), (∀ v, IsUnit (X v).det) →
     ∀ (j : ℕ) (e : Fin j → V), LinearIndependent K e →
@@ -95,7 +95,7 @@ def HtGram : Prop :=
           L.toAddSubgroup : ℝ) = ht b X (Submodule.span (𝓞 K) (Set.range e))
 
 def SizeMu : Prop :=
-  ∀ (K V ι : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] [AddCommGroup V] [Module K V]
+  ∀ (K V ι : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V] [Module K V]
     [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι] (b : Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ), (∀ v, IsUnit (X v).det) →
     ∀ L : Submodule (𝓞 K) V, L.FG → L ≠ ⊥ →
@@ -110,7 +110,7 @@ def SizeMu : Prop :=
       (∀ L' : Submodule (𝓞 K) V, L ≤ L' → L'.FG → rkK L' = rkK L → ht b X L' ≤ ht b X L)
 
 def HtImage : Prop :=
-  ∀ (K V ι W κ : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+  ∀ (K V ι W κ : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
     [DecidableEq ι] [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
     [Fintype κ] [DecidableEq κ] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
@@ -123,7 +123,7 @@ def HtImage : Prop :=
           htQ b X A (A ⊓ (LinearMap.ker φ).restrictScalars (𝓞 K))
 
 def SizeIneq : Prop :=
-  ∀ (K V ι W κ : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+  ∀ (K V ι W κ : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
     [DecidableEq ι] [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
     [Fintype κ] [DecidableEq κ] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
@@ -135,7 +135,7 @@ def SizeIneq : Prop :=
         (∏ v, opNormAt b X b' X' v φ) ^ ((1 : ℝ) / (nPl K : ℝ))
 
 def Twist : Prop :=
-  ∀ (K V ι : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] [AddCommGroup V] [Module K V]
+  ∀ (K V ι : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V] [Module K V]
     [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι] (b : Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ) (c : InfinitePlace K → ℝ), (∀ v, IsUnit (X v).det) →
     (∀ v, 0 < c v) →
@@ -150,7 +150,7 @@ def Twist : Prop :=
       ∀ θ : ℝ, hnStep (Formalism.HermitianLatticesTheory.realize b X') L (θ + t) = hnStep (Formalism.HermitianLatticesTheory.realize b X) L θ
 
 def SlopeIneqMean : Prop :=
-  ∀ (K V ι W κ : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+  ∀ (K V ι W κ : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
     [DecidableEq ι] [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
     [Fintype κ] [DecidableEq κ] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
@@ -163,7 +163,7 @@ def SlopeIneqMean : Prop :=
         (Set.InjOn φ (A : Set V) → muMaxDef b X A ≤ muMaxDef b' X' B + htMap b X b' X' φ))
 
 def RescaleCovol : Prop :=
-  ∀ (K V ι : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] [AddCommGroup V]
+  ∀ (K V ι : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V]
     [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι]
     (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (c : InfinitePlace K → ℝ),
     (∀ v, IsUnit (X v).det) → (∀ v, 0 < c v) →

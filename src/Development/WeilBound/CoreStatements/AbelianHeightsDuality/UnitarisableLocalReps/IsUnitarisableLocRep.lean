@@ -45,10 +45,10 @@ theorem isSatVecGL_of_conj (ρ₁ : Representation ℂ (GL (Fin n) (w.adicComple
 
 end Transport
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem invA_invA (g : GA E a) : PositivityTheory.PRW.GKD.invA E a (PositivityTheory.PRW.GKD.invA E a g) = g := by
   have h := (GlobalTheory.DiscreteUnit.transInv (Ad E) a).left_inv g
   exact (congrArg (GlobalTheory.DiscreteUnit.transInv (Ad E) a) (Units.ext rfl : PositivityTheory.PRW.GKD.invA E a g =
@@ -72,17 +72,17 @@ theorem act_val (o : Op E a) {y ψ : Sm E a} (hy : ∀ g, y.1 g = star (ψ.1 (in
 abbrev invW (w : HeightOneSpectrum (𝓞 E)) (a : ℕ) : GL (Fin a) (w.adicCompletion E) ≃* GL (Fin a) (w.adicCompletion E) :=
   ConjPlace.invT (RingEquiv.refl (w.adicCompletion E)) a
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem invW_invW (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicCompletion E)) : invW w a (invW w a g) = g :=
   Units.ext (Matrix.ext fun i j => by
     rw [ConjPlace.invT_val, ← map_inv, ConjPlace.invT_val, inv_inv]; rfl)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem invW_symm (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicCompletion E)) : (invW w a).symm g = invW w a g :=
   (MulEquiv.symm_apply_eq _).2 (invW_invW w g).symm
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem invT_locGL (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicCompletion E)) :
     invT a (Af E) (locGL E a w g) = locGL E a w ((invW w a).symm g) := by
   rw [invW_symm]

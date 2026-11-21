@@ -97,7 +97,7 @@ theorem ext_alg (w : InfinitePlace E) (k : E) : extensionEmbedding w (algebraMap
 theorem norm_ext (w : InfinitePlace E) (a : w.Completion) : ‖extensionEmbedding w a‖ = ‖a‖ :=
   (isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _) a
 
-theorem params_of (χ : HChar E) (hu : χ.IsUnitary) [IsTotallyComplex E] (m : InfinitePlace E → ℤ)
+theorem params_of (χ : HChar E) (hu : χ.IsUnitary) [_root_.NumberField.IsTotallyComplex E] (m : InfinitePlace E → ℤ)
     (h : ∀ k : Eˣ, ((χ.inf k : ℂˣ) : ℂ) = ∏ w : InfinitePlace E, (w.embedding k / ((‖w.embedding k‖ : ℝ) : ℂ)) ^ m w)
     (w : InfinitePlace E) : (hc χ hu).infiniteParams w = (m w, 0) := by
   classical
@@ -172,7 +172,7 @@ theorem exists_weights {I : Type} [Fintype I] {φ : I → E →+* ℂ} (hφ : Is
       push_cast
       ring
 
-theorem heckeL_ne_zero [IsTotallyComplex E] {I : Type} [Fintype I] {φ : I → E →+* ℂ} (hφ : IsCMType φ)
+theorem heckeL_ne_zero [_root_.NumberField.IsTotallyComplex E] {I : Type} [Fintype I] {φ : I → E →+* ℂ} (hφ : IsCMType φ)
     {χ : HChar E} {n : I → ℤ} (hu : χ.IsUnitary) (hn : χ.HasInf φ n) (h0 : ∃ i, n i ≠ 0) :
     ∃ L, IsHeckeL χ L ∧ ∀ z : ℤ, (∀ i, 0 < 2 * z + |n i|) → L z ≠ 0 := by
   obtain ⟨e, m, hm, hk⟩ := exists_weights hφ hn

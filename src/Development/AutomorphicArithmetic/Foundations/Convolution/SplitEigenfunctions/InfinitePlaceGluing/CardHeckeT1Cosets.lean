@@ -144,7 +144,7 @@ end Loc
 
 section Glob
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem isUnitary_of_cenN {P : CuspSub E 2} {ω : HChar ℚ} (hc : CenN P ω) (hu : Unit1 ω) : P.IsUnitary := by
   obtain ⟨κ, hκ⟩ := Central.exists_hasCentral E 2 P

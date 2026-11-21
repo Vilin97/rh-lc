@@ -19,9 +19,9 @@ namespace PositivityTheory.AdelicQuotientData
 
 namespace SeparatedThetaSum
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isOpen_fInt (S : Finset (HeightOneSpectrum (𝓞 E))) :
     IsOpen {y : Fin k → Af E | ∀ v, v ∉ S → ∀ i, y i v ∈ v.adicCompletionIntegers E} := by
   have h := RestrictedProduct.isOpen_forall_imp_mem
@@ -35,7 +35,7 @@ theorem isOpen_fInt (S : Finset (HeightOneSpectrum (𝓞 E))) :
   rw [e]
   exact isOpen_iInter_of_finite fun i => h.preimage (continuous_apply i)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem exists_finite_fInt {C : Set (Fin k → Af E)} (hC : IsCompact C) :
     ∃ S : Finset (HeightOneSpectrum (𝓞 E)), ∀ y ∈ C, ∀ v, v ∉ S → ∀ i, y i v ∈ v.adicCompletionIntegers E := by
   classical
@@ -52,7 +52,7 @@ theorem exists_finite_fInt {C : Set (Fin k → Af E)} (hC : IsCompact C) :
   obtain ⟨S, hS, hyS⟩ := Set.mem_iUnion₂.1 (hT hy)
   exact hyS v fun h => hv (Finset.mem_sup.2 ⟨S, hS, h⟩)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem fin_bd (C : Set (Fin k → Af E)) (hC : IsCompact C) : ∃ B : ℝ, 1 ≤ B ∧ ∀ (g : GA E k) (ξ : Fin k → E), ξ ≠ 0 →
     (fun i => pFin E (((fun i => algebraMap E (Ad E) (ξ i)) ᵥ* g.val) i)) ∈ C →
       ∏ᶠ v, ‖finComp v ((fun i => algebraMap E (Ad E) (ξ i)) ᵥ* g.val)‖ ≤ B := by
@@ -114,7 +114,7 @@ end SeparatedThetaSum
 
 namespace SeparatedThetaSum
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem real_ineq (ρ : ℝ) (hρ : 0 < ρ) (d k a : ℕ) (hka : k ≤ a) :
     ((ρ ^ d) ^ k)⁻¹ * ((1 + ρ) ^ (d * a))⁻¹ ≤ ((ρ ^ d) ^ a)⁻¹ := by

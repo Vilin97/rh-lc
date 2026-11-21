@@ -67,7 +67,7 @@ theorem exists_mem_apply_unip_eq {X : Type*} {u : GA E a → X} (hl : ∀ γ g, 
 
 variable [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)]
 
-theorem lintegral_constTerm_le [IsTotallyComplex E] (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+theorem lintegral_constTerm_le [_root_.NumberField.IsTotallyComplex E] (μ : Measure (GA E a)) [μ.IsHaarMeasure]
     (ν : Measure (BlockIx a r → Ad E)) {𝓕 : Set (BlockIx a r → Ad E)} (hν𝓕 : ν 𝓕 ≠ ∞)
     {K : Set (BlockIx a r → Ad E)} (hK : IsCompact K) (hcov : ∀ x, ∃ γ ∈ ratN E a r, γ + x ∈ K) {C : Set (GA E a)}
     (hC : IsCompact C) {u : GA E a → ℂ} (hc : Continuous u) (hl : ∀ γ g, u (ratGL E a γ * g) = u g) :
@@ -91,7 +91,7 @@ theorem lintegral_constTerm_le [IsTotallyComplex E] (μ : Measure (GA E a)) [μ.
     _ ≤ ∫⁻ x in 𝓕, (∫⁻ g in (unip '' K) * C, ‖u g‖ₑ ∂μ) ∂ν := lintegral_mono hb
     _ = _ := by rw [setLIntegral_const, mul_comm]
 
-theorem continuous_constTerm [IsTotallyComplex E] (ν : Measure (BlockIx a r → Ad E)) {𝓕 : Set (BlockIx a r → Ad E)}
+theorem continuous_constTerm [_root_.NumberField.IsTotallyComplex E] (ν : Measure (BlockIx a r → Ad E)) {𝓕 : Set (BlockIx a r → Ad E)}
     (hν𝓕 : ν 𝓕 ≠ ∞) {K : Set (BlockIx a r → Ad E)} (hK : IsCompact K) (hcov : ∀ x, ∃ γ ∈ ratN E a r, γ + x ∈ K)
     {u : GA E a → ℂ} (hc : Continuous u) (hl : ∀ γ g, u (ratGL E a γ * g) = u g) :
     Continuous fun g => ∫ x in 𝓕, u (unip x * g) ∂ν := by
@@ -111,7 +111,7 @@ theorem continuous_constTerm [IsTotallyComplex E] (ν : Measure (BlockIx a r →
 
 end Adelic
 
-theorem isCuspidal_of_toL2_mem : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem isCuspidal_of_toL2_mem : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (φ : GA E a → ℂ), Continuous φ →
     (∀ γ g, φ (ratGL E a γ * g) = φ g) → (∀ t g, φ (splitCentre E a t * g) = φ g) →
     ∀ h : MemL2Quotient (latticeGL E a) μ φ, h.toL2 ∈ L2cusp μ → IsCuspidal φ := by

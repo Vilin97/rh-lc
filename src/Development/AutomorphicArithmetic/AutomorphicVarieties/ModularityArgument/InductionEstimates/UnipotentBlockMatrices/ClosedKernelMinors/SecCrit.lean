@@ -63,7 +63,7 @@ private theorem lv_ray {K : Type} [Field K] [NumberField K] (r : {r : ℝ // 0 <
   simp
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.secCrit :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ → ∀ f : G1 K (2 + 2) → ℂ, D.Fix f →
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (D : TypeDat K (2 + 2)), CuspIrr μ₂ τ₁ → CuspIrr μ₂ τ₂ → ∀ f : G1 K (2 + 2) → ℂ, D.Fix f →
       (IsSec τ₁ τ₂ f ↔ Continuous f ∧ (∃ C : ℝ, ∀ g, ‖f g‖ ≤ C) ∧ (∀ X g, f (nn X * g) = f g) ∧ (∀ t g, f (lv 1 1 t * g) = f g) ∧ Slices τ₁ τ₂ f) := by
   intro K _ _ _ μ₂ _ τ₁ τ₂ D h₁ h₂ f hf
   constructor

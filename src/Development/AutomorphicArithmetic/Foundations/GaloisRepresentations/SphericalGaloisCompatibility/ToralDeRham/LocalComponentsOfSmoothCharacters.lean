@@ -153,7 +153,7 @@ end Sph
 
 section Glob
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem exists_isUnitarisable_twist {a : ℕ} (ha : 1 ≤ a) (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E))
     (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (hσ : π.IsLocComp w σ) :

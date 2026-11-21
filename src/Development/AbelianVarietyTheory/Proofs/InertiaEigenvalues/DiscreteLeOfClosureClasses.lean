@@ -20,7 +20,7 @@ open NumberField IsDedekindDomain MeasureTheory Formalism.L2.Host GlobalTheory.A
 
 namespace GlobalTheory.DiscClosure
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 
 variable (E N) in

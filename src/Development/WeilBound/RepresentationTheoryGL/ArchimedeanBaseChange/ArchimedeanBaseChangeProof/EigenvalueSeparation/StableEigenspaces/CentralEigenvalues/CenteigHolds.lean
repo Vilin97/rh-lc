@@ -17,7 +17,7 @@ namespace centeig
 
 open Polynomial Formalism.REAL GroundTheory.BlockD.FourierDecayAlt.GaugeExists
 
-theorem trace_eq {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (V : Submodule ℂ (Sm E a))
+theorem trace_eq {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (V : Submodule ℂ (Sm E a))
     (τ : E →+* ℂ) (m : Multiset ℂ) (hm : HasInfCharGL V τ m) :
     ∀ φ ∈ V, (∑ i : Fin a, Eop τ i i) φ = m.sum • φ := by
   intro φ hφ

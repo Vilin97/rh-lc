@@ -70,7 +70,7 @@ def ptF (g : GA E a) : (Fin a → E) →+ (Fin a → Af E) where
 
 def lat (L : AddSubgroup (Fin a → Af E)) (g : GA E a) : AddSubgroup (Fin a → E) := L.comap (ptF g)
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def vInf (v : Fin a → E) : Fin a → Cinf E := fun i => pInf E (algebraMap E (Ad E) (v i))
 

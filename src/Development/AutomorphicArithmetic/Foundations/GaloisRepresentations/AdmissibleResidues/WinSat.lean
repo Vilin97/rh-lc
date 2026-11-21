@@ -14,7 +14,7 @@ open NumberField IsDedekindDomain Formalism.L2.Host Formalism.ConjugateSelfDual 
 
 namespace UpperTheory.GalN.V
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ}
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ}
 
 theorem winC_of_unitary {π : CG K n} (hu : π.IsUnitary) {w : HeightOneSpectrum (𝓞 K)} {B : Multiset ℂˣ} (hB : π.HasSat w B) :
     WinC 1 (Real.sqrt (normV w)) (B.map fun b : ℂˣ => (b : ℂ)) := by

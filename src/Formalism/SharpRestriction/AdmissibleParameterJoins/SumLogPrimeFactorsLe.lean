@@ -15,7 +15,7 @@ open Formalism.BasicNotions Formalism.HN
 
 section Scale
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι]
 
 theorem rkK_pos (b : Basis ι K V) (M : Submodule (𝓞 K) V) (hM0 : M ≠ ⊥) : 0 < rkK M := by

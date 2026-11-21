@@ -82,7 +82,7 @@ theorem hasSatGL_of_twist {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommG
     · rw [hT, loc_det_of_Tj hχ hϖ hj hc, smul_comm]
       simp
 
-theorem hasSatGL_twist (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (π : CuspSub E m)
+theorem hasSatGL_twist (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (π : CuspSub E m)
     (χ : Formalism.L2.Host.HChar E) (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ) (hχ : χ.UnrAt w)
     (h : GlobalTheory.LFun.HasSatGL w (π.locRep w) B) :
     GlobalTheory.LFun.HasSatGL w ((π.twist χ).locRep w) (B.map (· * χ.val w)) := by

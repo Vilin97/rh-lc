@@ -42,7 +42,7 @@ theorem pFin_ratGL (γ : GL (Fin a) E) :
   ext i j
   rfl
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem pFin_splitCentre (t : ℝ) : GeneralLinearGroup.map (pFin E) (splitCentre E a t) = 1 :=
   pFin_infGL _
@@ -93,7 +93,7 @@ theorem isMulRightInvariant (μ : Measure (GA E a)) [μ.IsHaarMeasure] : μ.IsMu
     rw [← quotMeasure_univ hd]; exact measure_ne_top _ _
   exact GlobalTheory.UnitU.isMulRightInvariant_of_fundamentalDomain _ μ hd (hd.measure_ne_zero (NeZero.ne μ)) h1
 
-theorem finvol : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a))
+theorem finvol : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a))
     [μ.IsHaarMeasure], IsFiniteMeasure (GlobalTheory.AutomorphicL2Unitary.quotMeasure (latticeGL E a) μ) ∧ μ.IsMulRightInvariant :=
   fun E _ _ _ a μ _ => ⟨isFiniteMeasure_quotMeasure E a μ, isMulRightInvariant E a μ⟩
 

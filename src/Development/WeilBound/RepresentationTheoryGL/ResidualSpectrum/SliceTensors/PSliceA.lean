@@ -14,7 +14,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm GroundThe
 
 namespace PositivityTheory.Rg.Rs.SliceClasses
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 set_option linter.unusedSectionVars false
 

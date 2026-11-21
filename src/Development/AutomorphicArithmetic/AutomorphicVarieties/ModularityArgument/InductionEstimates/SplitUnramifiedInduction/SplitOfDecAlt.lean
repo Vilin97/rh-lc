@@ -31,7 +31,7 @@ def PolMix : Prop :=
     S2.MixDat k₀ ι x k t r → (∃ m : ℕ, 0 < m ∧ x ^ m = 1) → Sol.Pol ι r
 
 def IndAutCs : Prop :=
-  ∀ (K M Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Field Ω]
+  ∀ (K M Ω : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Field Ω]
     [Algebra K M] [Algebra K Ω] [Algebra M Ω] [IsScalarTower K M Ω] [IsAlgClosure M Ω], Module.finrank K M = 2 →
     ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (π : CuspSub M 2) (r : G M Ω →* GL (Fin 2) (Qbar l)), AttC ι r π → Z.Bc.MixWtC K π →
     SplitBad K π → ∀ R : G K Ω →* GL (Fin 4) (Qbar l), IsSSRep R → Z.Bc.IndCh (galEmb K M Ω) r R → IsAutC ι R

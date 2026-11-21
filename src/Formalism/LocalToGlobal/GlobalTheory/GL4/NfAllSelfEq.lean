@@ -17,7 +17,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 section SlopeTestRemainingChoices
 
-theorem emb_nonreal {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (φ : E →+* ℂ) : ∃ a : E, (φ a).im ≠ 0 := by
+theorem emb_nonreal {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (φ : E →+* ℂ) : ∃ a : E, (φ a).im ≠ 0 := by
   by_contra h
   push_neg at h
   have hr : NumberField.ComplexEmbedding.IsReal φ :=

@@ -47,7 +47,7 @@ theorem norm_sq_sum_pN (ξ : Vsp dim) : ‖ξ‖ ^ 2 = ∑ σ, pN ξ σ := by
   rw [EuclideanSpace.norm_sq_eq, Fintype.sum_sigma]
   rfl
 
-theorem nS_le [IsTotallyComplex E] (ξ : Vsp dim) (σ : E →+* ℂ) : nS ξ σ ≤ ‖ξ‖ ^ 2 := by
+theorem nS_le [_root_.NumberField.IsTotallyComplex E] (ξ : Vsp dim) (σ : E →+* ℂ) : nS ξ σ ≤ ‖ξ‖ ^ 2 := by
   classical
   rw [norm_sq_sum_pN, nS]
   have hne : ComplexEmbedding.conjugate σ ≠ σ := conjugate_ne σ

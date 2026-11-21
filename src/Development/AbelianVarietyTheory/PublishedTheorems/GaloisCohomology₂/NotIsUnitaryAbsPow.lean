@@ -12,12 +12,12 @@ open NumberField IsDedekindDomain Formalism.L2.Host GlobalTheory.LFun GlobalTheo
 
 namespace GlobalTheory.Published.JacquetShalikaModel
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 
 open NumberField IsDedekindDomain in
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] in
-omit [IsTotallyComplex E] in
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem _root_.GlobalTheory.Published.JacquetShalikaModel.infinite_places : Infinite (HeightOneSpectrum (𝓞 E)) := by
   classical
   by_contra h

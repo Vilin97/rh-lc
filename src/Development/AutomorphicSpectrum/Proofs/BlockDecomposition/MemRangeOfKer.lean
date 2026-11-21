@@ -190,7 +190,7 @@ end Lin
 
 section Fn
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 def prodFn (S₁ : Submodule ℂ (Sm E r)) (S₂ : Submodule ℂ (Sm E s)) : S₁ ⊗[ℂ] S₂ →ₗ[ℂ] (GA E r × GA E s → ℂ) :=
   TensorProduct.lift (LinearMap.mk₂ ℂ (fun a b m => a.1.1 m.1 * b.1.1 m.2)
@@ -244,7 +244,7 @@ theorem prodFn_prodInv {S₁ : Submodule ℂ (Sm E r)} {S₂ : Submodule ℂ (Sm
       simp [map_sum, Finset.sum_apply, prodFn_tmul]
   rw [this, prodInv_prodFn]
 
-def cc (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) : GA E r × GA E s →* ℂˣ :=
+def cc (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) : GA E r × GA E s →* ℂˣ :=
   ((chiDet r (Model.absC E ((s : ℂ) / 2))).comp (MonoidHom.fst _ _)) *
     ((chiDet s (Model.absC E (-(r : ℂ) / 2))).comp (MonoidHom.snd _ _))
 

@@ -41,7 +41,7 @@ private theorem dM_of_fst {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
   exact h
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.finTr :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (_D : Dat F E), FinTr F E := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (_D : Dat F E), FinTr F E := by
   intro F E _ _ _ _ _ _ _ _
   let κ : GL (Fin 2) (Af E) →* GL (Fin 2) (Af F) :=
     { toFun := fun k => Matrix.GeneralLinearGroup.map (pFin F) (dM (nu F (finGL E 2 k)))

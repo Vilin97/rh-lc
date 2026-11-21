@@ -106,7 +106,7 @@ theorem coeff_zero_of_eval {R : Type} [CommRing R] [Algebra ℂ R] (P : R[X]) (�
     simpa [polyOf_coeff _ _ hj] using this
   · rw [coeff_eq_zero_of_natDegree_lt (not_le.1 hj), map_zero]
 
-theorem levi_kill : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (M : (E →+* ℂ) → Multiset ℂ), 0 < r → 0 < s →
+theorem levi_kill : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) (M : (E →+* ℂ) → Multiset ℂ), 0 < r → 0 < s →
   (∀ τ, Multiset.card (M τ) = r + s) →
   ∃ l : List ℂ, l.length = Nat.choose (r + s) r ^ Fintype.card (E →+* ℂ) ∧
     ∀ F : Sm E (r + s), (∀ (v : BlockIx (r + s) r → Ad E) (g : GA E (r + s)), F.1 (unip v * g) = F.1 g) →
@@ -202,7 +202,7 @@ theorem levi_kill : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E
 section Helpers
 open GlobalTheory.CompanionTheory.CTFin PositivityTheory.Affgl GlobalTheory.PRep GlobalTheory.CuspRep.LocEx PositivityTheory.Rg.Rs.JFinTr
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem exists_iw (r s : ℕ) (x : GA E (r + s)) : ∃ (v : BlockIx (r + s) r → Ad E) (p : GA E r × GA E s)
     (k : Kinf E (r + s)) (g : GL (Fin (r + s)) (Af E)),
@@ -287,7 +287,7 @@ theorem orbit_mem (r s : ℕ) (hr : 0 < r) (hs : 0 < s) (φ : Sm E (r + s)) (hφ
 
 end Helpers
 
-theorem killU : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N r : ℕ), 0 < r → r < N → ∃ D : ℕ, ∀ V : Submodule ℂ (Sm E N), IsDiscrete V →
+theorem killU : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N r : ℕ), 0 < r → r < N → ∃ D : ℕ, ∀ V : Submodule ℂ (Sm E N), IsDiscrete V →
   (∀ τ : E →+* ℂ, ∃ m, HasInfCharGL V τ m) → ∀ φ ∈ V, ∃ p : ℂ[X], p.Monic ∧ p.natDegree ≤ D ∧ An.Kill r φ.1 p ∧
     ∀ z, p.IsRoot z → ∃ c ∈ Exp r φ.1, z = Complex.exp c := by
   intro E _ _ _ N r hr hrN

@@ -139,7 +139,7 @@ end Card
 section Count
 
 theorem measurable_countBelow {K L : Type} [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
-    [Algebra.IsQuadraticExtension K L] [IsTotallyReal K] [IsTotallyComplex L] {W : Type} [AddCommGroup W]
+    [Algebra.IsQuadraticExtension K L] [IsTotallyReal K] [_root_.NumberField.IsTotallyComplex L] {W : Type} [AddCommGroup W]
     [Module L W] [Countable W] {ι : Type} [Fintype ι] [DecidableEq ι] {h : HermitianForm K L W}
     {v : Module.Basis ι L W} (M : Majorant h v) (VV : Set W) (t : ℝ) :
     Measurable fun a => countBelow M VV a t := by

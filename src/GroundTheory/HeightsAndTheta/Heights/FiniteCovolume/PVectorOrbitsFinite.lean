@@ -51,10 +51,10 @@ end Vectors
 section Spaces
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W]
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem unitary_smul_smul {h : HermitianForm F E W} (γ : h.unitaryGroup) (c : E) (w : W) :
     γ • (c • w) = c • (γ • w) := by
   simp only [Subgroup.smul_def, LinearEquiv.smul_def, map_smul]

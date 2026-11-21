@@ -195,7 +195,7 @@ private theorem gl_mD_aI (w : InfinitePlace F) (t : ℝ) : gl (mD (aI w t)) = TR
     · change pFin F (((aI w t)⁻¹ : (A F)ˣ) : A F) = 1
       rw [hn]; exact pFin_aI w (-t)
 
-variable {E : Type} [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex E] {D : Dat F E}
+variable {E : Type} [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex E] {D : Dat F E}
 
 private theorem om_aI (W : Weil D) (w : InfinitePlace F) (t : ℝ) (φ : S4 F) (v : V4 F) :
     (W.Om (mD (aI w t)) φ).1 v =
@@ -220,7 +220,7 @@ end
 
 open UpperTheory.ConvolutionTheory.R2.Ff.OneParameterSubgroupCurves in
 theorem UpperTheory.ConvolutionTheory.R2.Ff.curveH :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F) (W : Weil D), CurveH O W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F) (W : Weil D), CurveH O W := by
   intro F E _ _ _ _ _ _ _ D O W w
   have hS := sDiff F O
   refine ⟨fun t => mD (aI w t), cT w, ⟨cT_add w, hasDerivAt_cT w⟩, gl_mD_aI w, fun φ t v => ?_⟩

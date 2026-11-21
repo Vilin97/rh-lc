@@ -15,7 +15,7 @@ open scoped Classical
 
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction in
 theorem UpperTheory.exists_bound_cuspForm_of_unitary_centralCharacter :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (P : CuspSub E 2) (ω : HChar ℚ), CenN P ω → Unit1 ω →
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (P : CuspSub E 2) (ω : HChar ℚ), CenN P ω → Unit1 ω →
         ∀ f ∈ P.V, ∃ B : ℝ, ∀ g, ‖f.1 g‖ ≤ B := by
   intro E _ _ _ P ω hc hu f hf
   obtain ⟨φ, rfl⟩ := UpperTheory.V.Cm.mem_range_ofCusp.2 (P.cusp f hf)

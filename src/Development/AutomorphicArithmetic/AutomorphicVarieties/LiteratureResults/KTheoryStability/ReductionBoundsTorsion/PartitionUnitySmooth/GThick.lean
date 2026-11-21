@@ -77,7 +77,7 @@ private theorem qR_nonneg_of_mem_pos {L : Type} [Field L] [NumberField L] {N : �
     (hk : k ∈ Pos L N) (z : VR L N) : 0 ≤ qR k z :=
   Finset.sum_nonneg fun w _ => (hk w).posSemidef.re_dotProduct_nonneg (z w)
 
-private theorem thKB_subset_pos {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] {N : ℕ}
+private theorem thKB_subset_pos {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] {N : ℕ}
     {c C' : ℝ} (hc : 0 < c) (B : Matrix (Fin N) (Fin N) (𝓞 L)) : thKB c C' B ⊆ Pos L N := by
   intro k hk
   have hR : c⁻¹ • k ∈ Ry L N := by
@@ -134,7 +134,7 @@ private theorem exists_injective_linearMap_gram_of_det_ne_zero {L : Type} [Field
   have := congrFun (congrFun (hw w) i) j
   simpa [mat] using this
 
-private theorem isCompact_thKB_of_det_ne_zero {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] {N : ℕ}
+private theorem isCompact_thKB_of_det_ne_zero {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] {N : ℕ}
     {c D : ℝ} (hc : 0 < c) (hD : 0 ≤ D) (B : Matrix (Fin N) (Fin N) (𝓞 L)) (hB : B.det ≠ 0) :
     IsCompact (thKB c D B) := by
   obtain ⟨Φ, hinj, hΦ⟩ := exists_injective_linearMap_gram_of_det_ne_zero B hB
@@ -297,7 +297,7 @@ private theorem normSq_det_mul_re_det_le_pow_of_posDef {N : ℕ} {K : Matrix (Fi
   rw [inv_pow, mul_assoc, inv_mul_le_iff₀ (by positivity), mul_one] at h1
   exact h1
 
-private theorem prod_normSq_embedding_eq_abs_norm_of_isTotallyComplex {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] (x : L) :
+private theorem prod_normSq_embedding_eq_abs_norm_of_isTotallyComplex {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (x : L) :
     ∏ w : InfinitePlace L, Complex.normSq (w.embedding x) = |(Algebra.norm ℚ x : ℝ)| := by
   have := InfinitePlace.prod_eq_abs_norm x
   have h2 : ∀ w : InfinitePlace L, w.mult = 2 := fun w =>
@@ -307,7 +307,7 @@ private theorem prod_normSq_embedding_eq_abs_norm_of_isTotallyComplex {L : Type}
   refine Finset.prod_congr rfl fun w _ => ?_
   rw [Complex.normSq_eq_norm_sq, InfinitePlace.norm_embedding_eq]
 
-private theorem nrmDet_le_mul_div_pow_of_q_le {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] {N : ℕ}
+private theorem nrmDet_le_mul_div_pow_of_q_le {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] {N : ℕ}
     (h : HS L N) (hh : h ∈ Pos L N) {c D : ℝ} (hc : 0 < c) (hD : 0 < D)
     (hlam : ∀ v : Lat L N, v ≠ 0 → c ≤ q h v) (A : Matrix (Fin N) (Fin N) (𝓞 L))
     (hA : ∀ a, q h (fun i => A i a) ≤ D) :

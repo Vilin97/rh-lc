@@ -65,13 +65,13 @@ def SquareAtPlaceBound : Prop :=
       d * (wt S N0 w + wt Se (fun l => 1 / (l : ℝ) ^ 2) w) + 6 * δ + (p + q : ℕ) * σ
 
 def DisjointUnionFactorProduct : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (x : K) (dl : Pl K → ℝ)
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (x : K) (dl : Pl K → ℝ)
     (Bδ : ℝ), x ≠ 0 → (∀ w, 0 ≤ dl w) → (∀ w, -(3 * dl w) ≤ (vw w x : ℝ)) →
     (∀ F : Finset (Pl K), ∑ w ∈ F, lw w * dl w ≤ Bδ) →
     HtLe (fun _ => 0) x (meanInf K (fun v => Real.posLog ‖v.embedding x‖) + 6 * Bδ)
 
 def SlopeInequalityDenominators : Prop :=
-  ∀ (K V ι W κ : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+  ∀ (K V ι W κ : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
     [DecidableEq ι] [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
     [Fintype κ] [DecidableEq κ] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
@@ -85,7 +85,7 @@ def SlopeInequalityDenominators : Prop :=
         muMaxDef b' X' B + (htMap b X b' X' φ + 2 * ∑ w ∈ T, lw w * (a w : ℝ))
 
 def LargestSlopeLatticeFrames : Prop :=
-  ∀ (K W κ : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+  ∀ (K W κ : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
     [Fintype κ] [DecidableEq κ] (D : ℕ), 0 < D →
     ∀ (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ) (kap : InfinitePlace K → ℝ)

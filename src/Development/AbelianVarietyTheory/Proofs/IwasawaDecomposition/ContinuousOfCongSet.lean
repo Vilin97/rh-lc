@@ -122,7 +122,7 @@ theorem exists_reads {K : Type} [Field K] (σ : K →+* ℂ) (μ : Formalism.L2.
   · have h : μ (ratId F E k) = 1 := h1 ⟨k, rfl⟩
     rw [MonoidHom.comp_apply, MonoidHom.comp_apply, finAf_diag, h, map_one]
 
-theorem map_finPartI [IsTotallyComplex E] {ξ : HChar E} {n : ℕ} (hn : 0 < n) (h : ξ.OrderDvd n) (a : Ideles E) :
+theorem map_finPartI [_root_.NumberField.IsTotallyComplex E] {ξ : HChar E} {n : ℕ} (hn : 0 < n) (h : ξ.OrderDvd n) (a : Ideles E) :
     ξ.1 (finPartI E a) = ξ.1 a := by
   obtain ⟨y, hy⟩ := Determ.exists_prod_inf_mul_finPart a
   have key : ∀ (w : InfinitePlace E) (x : (w.Completion)ˣ), ξ.1 (infIdele E w x) = 1 := fun w x => by

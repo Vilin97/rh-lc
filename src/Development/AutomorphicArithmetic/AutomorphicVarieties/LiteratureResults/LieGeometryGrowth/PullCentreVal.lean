@@ -9,7 +9,7 @@ open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af
 open UpperTheory.V.Lit.Geo
 open scoped TensorProduct
 
-private theorem span_val {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a d : ℕ} (P : Sm E a → Prop)
+private theorem span_val {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a d : ℕ} (P : Sm E a → Prop)
     (x y : GA E a) (c : ℂ) (h : ∀ φ, P φ → φ.1 x = c * φ.1 y) (m : Sm E a ⊗[ℂ] (Fin d → ℂ))
     (hm : m ∈ Submodule.span ℂ {z : Sm E a ⊗[ℂ] (Fin d → ℂ) | ∃ φ v, P φ ∧ z = φ ⊗ₜ[ℂ] v}) : ev m x = c • ev m y := by
   induction hm using Submodule.span_induction with

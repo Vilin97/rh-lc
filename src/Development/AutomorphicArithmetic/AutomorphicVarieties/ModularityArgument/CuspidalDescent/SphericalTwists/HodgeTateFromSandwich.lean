@@ -24,7 +24,7 @@ def TypeGd : Prop :=
       Good (IrrGL.of σ.ρ σ.smooth σ.irred) ∧ Gd (rc (algNorm σ))
 
 def TwAway : Prop :=
-  GlobalTheory.Mem.LiteralAutomorphy.LitN → ∀ (K Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (l : ℕ)
+  GlobalTheory.Mem.LiteralAutomorphy.LitN → ∀ (K Ω : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (l : ℕ)
     [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (n : ℕ) (R : G K Ω →* GL (Fin n) (Qbar l)), Continuous R →
     ∀ (art : Ideles K →* Gab K Ω) (κ : HChar K) (m : (K →+* ℂ) → ℤ) (μ : G K Ω →* (Qbar l)ˣ), IsGlobalArtin art → Continuous μ →
     IsLAdicOf art ι κ m μ → ∀ (w : HeightOneSpectrum (𝓞 K)), ((l : ℕ) : 𝓞 K) ∉ w.asIdeal →
@@ -34,7 +34,7 @@ def TwAway : Prop :=
       IsWDOf ι R (rc (algNorm τ)) → IsWDOf ι (tw R μ) (rc (algNorm τ'))
 
 def OrdTw : Prop :=
-  ∀ (K Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (l : ℕ)
+  ∀ (K Ω : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (l : ℕ)
     [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (n : ℕ) (art : Ideles K →* Gab K Ω) (κ : HChar K) (μ : G K Ω →* (Qbar l)ˣ),
     IsGlobalArtin art → Continuous μ → IsLAdicOf art ι κ 0 μ → ∀ (w : HeightOneSpectrum (𝓞 K)) (A : ValuationSubring Ω)
     (h : IsPlaceOver A w) (a : Weil h →* (w.adicCompletion K)ˣ), IsLocalArtin h a →

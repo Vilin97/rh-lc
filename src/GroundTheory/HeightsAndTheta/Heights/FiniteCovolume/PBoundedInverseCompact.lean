@@ -66,11 +66,11 @@ theorem norm_mul_apply_le {m κ : Type*} [Fintype κ] (A : Matrix m κ ℂ) (B :
 end SlopeTestRemainingChoices
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 
-omit [IsTotallyComplex E] [Fintype ι] in
+omit [_root_.NumberField.IsTotallyComplex E] [Fintype ι] in
 theorem exists_rightInv (v : Basis ι E W) {n : ℕ} {e : Fin n → W}
     (he : Submodule.span E (Set.range e) = ⊤) :
     ∃ c : ι → Fin n → E, ∀ w : InfinitePlace E,
@@ -97,11 +97,11 @@ end BoundedInverseCompact
 open BoundedInverseCompact
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem BoundedInverseCompact.proof (h : HermitianForm F E W) (v : Basis ι E W) :
     BoundedInverseCompact.Statement h v := by
   intro M n e he C

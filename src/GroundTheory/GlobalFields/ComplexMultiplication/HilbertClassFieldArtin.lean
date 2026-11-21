@@ -93,7 +93,7 @@ end Frobenius
 section Main
 
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K]
+  [_root_.NumberField.IsTotallyComplex K]
 
 
 include hK in

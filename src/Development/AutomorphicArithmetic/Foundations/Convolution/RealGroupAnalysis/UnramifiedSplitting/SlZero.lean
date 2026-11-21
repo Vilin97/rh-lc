@@ -63,7 +63,7 @@ private lemma cp_rt {K : Type} [Field K] [NumberField K] (v : P K) (x : K) :
     cp v (rt x) = algebraMap K (Kv v) x := rfl
 
 private lemma key {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F) (hG : Gd D.δ v)
+    [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F) (hG : Gd D.δ v)
     (a : Kv v) (φ : S4 F) (hfix : ∀ c, IsInt c → W.Om (nU (sg v (a * c))) φ = φ) (u t : A F)
     (h : hat φ.1 ![0, 0, u, t] ≠ 0) :
     IsInt (a * (cp v u ^ 2 - algebraMap F (Kv v) D.δ * cp v t ^ 2)) := by
@@ -99,7 +99,7 @@ private lemma supp_le {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
 end UpperTheory.ConvolutionTheory.R2.H
 
 theorem UpperTheory.ConvolutionTheory.R2.H.slZero :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F) (ϖ : (Kv v)ˣ), IsU ϖ → Gd D.δ v → Aniso D.δ v → ∀ φ : S4 F,
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F) (ϖ : (Kv v)ˣ), IsU ϖ → Gd D.δ v → Aniso D.δ v → ∀ φ : S4 F,
       (∀ b, IsInt b → W.Om (nU (sg v ((ϖ : Kv v) * b))) φ = φ) →
       (∀ c, IsInt c → W.Om (wW F * nU (sg v (((ϖ⁻¹ : (Kv v)ˣ) : Kv v) * c)) * (wW F)⁻¹) φ = φ) → Sl0 φ.1 := by
   intro F E _ _ _ _ _ _ _ D W v ϖ hU hG hA φ h1 h2 u t

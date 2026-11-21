@@ -14,7 +14,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.SmoothRep
 
-theorem rt_infGL_mul_lie (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem rt_infGL_mul_lie (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (g : GL (Fin a) (Cinf E)) (X : Lie E a) :
     rt E a (infGL E a g) * lie E a X =
       lie E a (toL (g.val * Matrix.of X * (g⁻¹).val)) * rt E a (infGL E a g) := by

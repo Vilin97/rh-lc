@@ -109,7 +109,7 @@ def RowsG : Prop := A.latticeAtBaseLevel ≠ ⊥ ∧ A.latticeAtSharpLevel ≠ �
 end LevelAmb
 
 def PassageFromLevels : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (Bs : DefBase K) (Df0 Df1 : DefSide Bs)
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (Bs : DefBase K) (Df0 Df1 : DefSide Bs)
     (N : IndefNum Bs) (S0 : IndefData Df0) (S1 : IndefData Df1) (A : LevelAmb K S0.D S1.D),
     A.FramesG → A.LatG → A.EmbAt A.ι0 A.ep0 A.h0 S0.XE → A.EmbAt A.ι1 A.ep1 A.h1 S1.XE →
     A.SandAt A.ι0 A.ep0 A.h0 S0.RR → A.SandAt A.ι1 A.ep1 A.h1 S1.RR → A.Sizes N.la →

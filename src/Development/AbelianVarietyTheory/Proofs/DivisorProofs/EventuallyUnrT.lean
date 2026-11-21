@@ -16,7 +16,7 @@ noncomputable section
 
 namespace GlobalTheory.CuspRep.ParLawsT
 
-theorem eventually_unrT : ∀ (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) (hT : UpperTheory.Zero.LLC.RecTExists) (E Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (a : ℕ) (π : CG E a), ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w), (locParT hT π h).unr := by
+theorem eventually_unrT : ∀ (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) (hT : UpperTheory.Zero.LLC.RecTExists) (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (a : ℕ) (π : CG E a), ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w), (locParT hT π h).unr := by
   intro hF hT E Ω _ _ _ _ _ _ a π
   induction π using Quotient.inductionOn with | _ π =>
   filter_upwards [LocSph.locComp_spherical E a π] with w hw A h

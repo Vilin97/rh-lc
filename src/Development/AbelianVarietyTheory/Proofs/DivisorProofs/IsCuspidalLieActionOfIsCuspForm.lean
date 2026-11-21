@@ -13,7 +13,7 @@ open scoped Pointwise
 
 namespace GlobalTheory.CuspRep
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem countable_ratN (r : ℕ) : Countable (ratN E a r) := by
   have : Countable E := (Module.finBasis ℚ E).equivFun.injective.countable
@@ -145,7 +145,7 @@ theorem isCuspidal_lie (X : Lie E a) (φ : Sm E a) (hφ : IsCuspForm φ) : IsCus
   simp only [e0] at h2
   exact h2
 
-theorem isCuspidal_lie_of_isCuspForm : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem isCuspidal_lie_of_isCuspForm : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (X : Lie E a) (φ : Sm E a), IsCuspForm φ → IsCuspidal (lie E a X φ).1 :=
   fun _ _ _ _ _ X φ h => isCuspidal_lie X φ h
 

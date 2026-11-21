@@ -12,7 +12,7 @@ namespace Formalism.FourierDecayAlt.P.Jx3
 
 
 open InfinitePlace in
-theorem trace_places (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (x : E) :
+theorem trace_places (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (x : E) :
     ((Algebra.trace ℚ E x : ℚ) : ℝ) = ∑ w : InfinitePlace E, 2 * (w.embedding x).re := by
   first | exact Bl.FiberEquations.goal1 .. | (apply Bl.FiberEquations.goal1 <;> assumption) | (intros; apply Bl.FiberEquations.goal1 <;> assumption)
 
@@ -47,7 +47,7 @@ theorem t_BlockFrame : BlockFrame := by
   exact ⟨a, b, c.trans h12⟩
 
 open InfinitePlace in
-theorem orth_zero (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (z : CV E)
+theorem orth_zero (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (z : CV E)
     (h : ∀ t : E, inner ℝ z (cemb E t) = 0) : z = 0 := by
   classical
   let v : InfinitePlace E × Bool → (E →* ℂ) := fun p =>

@@ -16,7 +16,7 @@ section Conj
 
 variable {F E : Type*} [Field F] [Field E] [Algebra F E] [Algebra.IsQuadraticExtension F E]
 
-theorem embedding_conj [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E]
+theorem embedding_conj [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
     (σ : E →+* ℂ) (x : E) : σ (conj F E x) = starRingEnd ℂ (σ x) := by
   have hF : ∀ c : F, starRingEnd ℂ (σ (algebraMap F E c)) = σ (algebraMap F E c) := by
     intro c
@@ -179,7 +179,7 @@ variable (E) in
 def lineIndex (La : AddSubgroup W) (x : W) : ℕ :=
   (ringMultiples E x).relIndex (La ⊓ (Submodule.span E {x}).toAddSubgroup)
 
-variable [NumberField F] [IsTotallyReal F] [IsTotallyComplex E]
+variable [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 def archEmbed (h : HermitianForm F E W) (v : Basis ι E W) : h.unitaryGroup →* archUnitary h v :=
   MonoidHom.codRestrict

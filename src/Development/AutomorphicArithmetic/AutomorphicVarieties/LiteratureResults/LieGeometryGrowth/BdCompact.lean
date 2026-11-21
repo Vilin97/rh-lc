@@ -16,7 +16,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.CuspidalSpectrum
 open UpperTheory.V.Lit.Geo
 open scoped TensorProduct
 
-private theorem cont_ev {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+private theorem cont_ev {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     {U : Subgroup (GL (Fin a) (Af E))} (hU : IsOpen (U : Set (GL (Fin a) (Af E)))) {Ξ : AlgRep E a}
     {m : Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)}
     (hm : m ∈ Submodule.span ℂ {x | ∃ φ v, IsLevelFn U Ξ φ ∧ x = φ ⊗ₜ[ℂ] v}) : Continuous (ev m) := by

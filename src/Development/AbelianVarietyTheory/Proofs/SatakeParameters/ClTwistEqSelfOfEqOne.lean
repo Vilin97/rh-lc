@@ -30,7 +30,7 @@ private theorem clTwist_eq_self_of_eq_one {G : Type} [Group G] [TopologicalSpace
     (c : IrrCl G) (χ : G →* ℂˣ) (hχ : IsSmoothChar χ) (h1 : χ = 1) : clTwist c χ hχ = c := by
   subst h1; exact clTwist_one c hχ
 
-theorem rankOne_algNorm_locComp (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (π : CuspSub E 1)
+theorem rankOne_algNorm_locComp (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (π : CuspSub E 1)
     (ψ : HChar E) (hπ : CG.mk π = CG.ofChar ψ) (w : HeightOneSpectrum (𝓞 E))
     (σ : SmIrr (GL (Fin 1) (w.adicCompletion E))) (hσ : π.IsLocComp w σ) :
     algNorm σ = IrrGL.ofChar (ψ.loc w) (ParLaws.isSmoothChar_loc ψ w) := by

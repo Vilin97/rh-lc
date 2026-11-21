@@ -12,7 +12,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibra
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal UpperTheory.V UpperTheory.V.Base UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws
 open scoped Pointwise
 
-private theorem unit_pow (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (h : Module.finrank ℚ K = 2) :
+private theorem unit_pow (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (h : Module.finrank ℚ K = 2) :
     ∃ m : ℕ, 0 < m ∧ ∀ u : (𝓞 K)ˣ, u ^ m = 1 := by
   have hr : Units.rank K = 0 := by
     have h1 := InfinitePlace.card_add_two_mul_card_eq_rank K
@@ -111,7 +111,7 @@ private theorem unit_fermat {l : ℕ} [hl : Fact l.Prime] {x : ℤ_[l]} (hx : Is
   rw [← PadicInt.mem_nonunits, ← IsLocalRing.mem_maximalIdeal, ← PadicInt.ker_toZMod, RingHom.mem_ker, map_sub, map_pow,
     mul_comm, pow_mul, ZMod.pow_card_sub_one_eq_one (hx.map _).ne_zero, one_pow, map_one, sub_self]
 
-private theorem exists_F (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (hK : Module.finrank ℚ K = 2)
+private theorem exists_F (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (hK : Module.finrank ℚ K = 2)
     {l : ℕ} [hl : Fact l.Prime] {w : Ideal (𝓞 K)} {ι : 𝓞 K →+* ℤ_[l]}
     (hι : ∀ n x, PadicInt.toZModPow n (ι x) = 0 ↔ x ∈ w ^ n) :
     ∃ (F : Ideal (𝓞 K) → ℤ_[l]ˣ) (n : ℕ), 0 < n ∧
@@ -172,7 +172,7 @@ private theorem exists_conj {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure �
   exact (continuous_const.mul he.continuous).mul continuous_const
 
 theorem UpperTheory.V.Ws.Tw.muChar :
-    ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (K : IntermediateField ℚ Ω) [NumberField K] [IsTotallyComplex K], Module.finrank ℚ K = 2 → ∀ A : ValuationSubring Ω, A.valuation (l : Ω) < 1 → Dec (F := ℚ) A ≤ K.fixingSubgroup → ∃ (μ : G K Ω →* ℤ_[l]ˣ) (n : ℕ), 0 < n ∧ Continuous μ ∧ (∀ s, ‖(μ s : ℤ_[l]) - 1‖ < 1) ∧ (∀ c ∉ K.fixingSubgroup, ∀ s s' : G K Ω, resQ K s' = c * resQ K s * c⁻¹ → μ s * μ s' = cycZ K Ω l s ^ n) ∧ ∀ B : ValuationSubring Ω, (∃ x ∈ K, ¬ (x ∈ B ↔ x ∈ A)) → Ine (F := K) B ≤ μ.ker := by
+    ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (K : IntermediateField ℚ Ω) [NumberField K] [_root_.NumberField.IsTotallyComplex K], Module.finrank ℚ K = 2 → ∀ A : ValuationSubring Ω, A.valuation (l : Ω) < 1 → Dec (F := ℚ) A ≤ K.fixingSubgroup → ∃ (μ : G K Ω →* ℤ_[l]ˣ) (n : ℕ), 0 < n ∧ Continuous μ ∧ (∀ s, ‖(μ s : ℤ_[l]) - 1‖ < 1) ∧ (∀ c ∉ K.fixingSubgroup, ∀ s s' : G K Ω, resQ K s' = c * resQ K s * c⁻¹ → μ s * μ s' = cycZ K Ω l s ^ n) ∧ ∀ B : ValuationSubring Ω, (∃ x ∈ K, ¬ (x ∈ B ↔ x ∈ A)) → Ine (F := K) B ≤ μ.ker := by
   intro Ω _ _ _ l hl hl2 K _ _ hK A hA hDec
   haveI : IsAlgClosure K Ω := ⟨IsAlgClosure.isAlgClosed ℚ, inferInstance⟩
   obtain ⟨τ, -, hN, hconj, hsplit, -⟩ := Tw.quadFacts Ω l hl2 K hK

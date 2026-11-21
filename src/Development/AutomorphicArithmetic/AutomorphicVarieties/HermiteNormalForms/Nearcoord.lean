@@ -12,7 +12,7 @@ open NumberField Matrix UpperTheory.V UpperTheory.V.KT
 open scoped ComplexOrder
 
 theorem UpperTheory.V.KT.nearcoord :
-    ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (A B : Matrix (Fin N) (Fin N) (𝓞 L)), A.det ≠ 0 →
+    ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (A B : Matrix (Fin N) (Fin N) (𝓞 L)), A.det ≠ 0 →
     A * B = ((nrmDet A : ℕ) : 𝓞 L) • (1 : Matrix (Fin N) (Fin N) (𝓞 L)) → ∀ y ∈ nearVec A, ∀ w a, ‖embO w ((B *ᵥ y) a)‖ ≤ RR L N := by
   intro L _ _ _ N A B hA hAB y hy w a
   obtain ⟨h, hRy, hcol, hq⟩ := hy

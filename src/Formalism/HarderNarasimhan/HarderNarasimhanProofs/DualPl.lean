@@ -71,7 +71,7 @@ namespace Formalism.HN.DualPolygon
 
 open Formalism.HN
 
-theorem ident_trace_eq {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (a : K) :
+theorem ident_trace_eq {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (a : K) :
     ((Algebra.trace ℚ K a : ℚ) : ℝ) = ∑ v : InfinitePlace K, 2 * (v.embedding a).re := by
   classical
   have h := trace_eq_sum_embeddings (K := ℚ) (L := K) ℂ (x := a)
@@ -138,7 +138,7 @@ theorem ident_sum_fcoord (b : Basis ι K V) (X : InfinitePlace K → Matrix ι �
   refine Finset.sum_congr rfl fun i _ => ?_
   ring
 
-theorem inner_realize_alt [IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
+theorem inner_realize_alt [_root_.NumberField.IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (hX : ∀ v, IsUnit (X v).det) (x : V) (f : Module.Dual K V) :
     inner ℝ (Formalism.HermitianLatticesTheory.realize b X x) ((2 : ℝ) • cE (Formalism.HermitianLatticesTheory.realize b.dualBasis (dualFrame X) f)) =
       ((Algebra.trace ℚ K (f x) : ℚ) : ℝ) := by
@@ -156,7 +156,7 @@ theorem ident_mem_zl {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E
     (N : Submodule (𝓞 K) V) (w : E) : w ∈ zl ρ N ↔ ∃ x ∈ N, ρ x = w :=
   Iff.rfl
 
-theorem span_zl_top [IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
+theorem span_zl_top [_root_.NumberField.IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (hX : ∀ v, IsUnit (X v).det) (N : Submodule (𝓞 K) V) (hN : N.FG)
     (hsp : Submodule.span K (N : Set V) = ⊤) :
     Submodule.span ℝ (zl (Formalism.HermitianLatticesTheory.realize b X) N :
@@ -198,7 +198,7 @@ theorem ident_inner_spanZ_eq_zero {E : Type*} [NormedAddCommGroup E] [InnerProdu
     rw [show (c • u : E) = (c : ℝ) • u from (Int.cast_smul_eq_zsmul ℝ c u).symm,
       real_inner_smul_left, hu, mul_zero]
 
-theorem dualZ_zl_eq [IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
+theorem dualZ_zl_eq [_root_.NumberField.IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (hX : ∀ v, IsUnit (X v).det) (A : Submodule (𝓞 K) V) (hA : A.FG)
     (hsp : Submodule.span K (A : Set V) = ⊤) (N : Submodule (𝓞 K) V) :
     dualZ (zl (Formalism.HermitianLatticesTheory.realize b X) A) ⊓
@@ -689,7 +689,7 @@ theorem twist_absNorm_nat (m : ℕ) :
   have : (m : 𝓞 K) = algebraMap ℤ (𝓞 K) (m : ℤ) := by simp
   rw [this, Algebra.norm_algebraMap, RingOfIntegers.rank, Int.natAbs_pow, Int.natAbs_natCast]
 
-theorem twist_index {K W : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+theorem twist_index {K W : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
     [FiniteDimensional K W] (X : Submodule (𝓞 K) W) (hX : X.FG) (𝔟 : Ideal (𝓞 K))
     (h𝔟 : 𝔟 ≠ ⊥) :
@@ -859,7 +859,7 @@ theorem eq_mul_of_log_eq_add {a b c : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c
 
 section Key
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 
@@ -1028,7 +1028,7 @@ theorem ht_alg (f r j : ℕ) (D u cR cL cS : ℝ) (hu : u ^ 2 * D = 1)
 
 section HtDual
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 
@@ -1057,7 +1057,7 @@ theorem ht_bot (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) :
   rw [h1, h2, (Formalism.F.covolBasic _).1]
   simp
 
-omit [StarRing K] [IsTotallyComplex K] [Fintype ι] [DecidableEq ι] in
+omit [StarRing K] [_root_.NumberField.IsTotallyComplex K] [Fintype ι] [DecidableEq ι] in
 theorem annO_bot : annO (⊥ : Submodule (𝓞 K) V) = ⊤ := by
   ext f
   simp only [Submodule.mem_top, iff_true]
@@ -1091,7 +1091,7 @@ open Formalism.HN
 
 section DD
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 
@@ -1220,7 +1220,7 @@ open Formalism.HN
 
 section HNDual
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 

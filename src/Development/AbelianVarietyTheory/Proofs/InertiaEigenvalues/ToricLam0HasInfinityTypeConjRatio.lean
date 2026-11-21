@@ -11,7 +11,7 @@ open NumberField IsDedekindDomain ReciprocityTheory.Gal Formalism.ConjugateSelfD
 
 namespace GlobalTheory.LamTie.InfType
 
-theorem inf_eq_one {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] {χ : Formalism.L2.Host.HChar L} {n : ℕ} (hn : 0 < n)
+theorem inf_eq_one {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] {χ : Formalism.L2.Host.HChar L} {n : ℕ} (hn : 0 < n)
     (h : χ.OrderDvd n) (k : Lˣ) : χ.inf k = 1 := by
   have hx : ∀ x, (χ.1 x) ^ n = 1 := fun x => congrArg (fun ξ : Formalism.L2.Host.HChar L => ξ.1 x) h
   have hw : ∀ (w : InfinitePlace L) (y : (w.Completion)ˣ), χ.locInf w y = 1 := by

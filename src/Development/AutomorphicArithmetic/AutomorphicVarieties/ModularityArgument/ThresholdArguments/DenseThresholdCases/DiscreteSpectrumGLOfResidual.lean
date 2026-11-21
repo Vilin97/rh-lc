@@ -13,7 +13,7 @@ noncomputable section
 open NumberField IsDedekindDomain Formalism.L2.Host
 open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.DiscSpec
 namespace GlobalTheory.SpehInfChar
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 end GlobalTheory.SpehInfChar
 end
 end

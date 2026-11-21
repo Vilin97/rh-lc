@@ -24,7 +24,7 @@ open NumberField GroundTheory.Automorphic Module GroundTheory.Heights₂.Heights
 universe u
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 section steps
 

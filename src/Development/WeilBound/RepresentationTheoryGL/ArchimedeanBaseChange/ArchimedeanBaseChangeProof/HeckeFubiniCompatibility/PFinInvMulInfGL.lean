@@ -54,7 +54,7 @@ end Eig
 
 section Tc
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem along_smul' (w : InfinitePlace E) (g : GA E a) (c : ℂ) (φ : GA E a → ℂ) :
     along w g (c • φ) = c • along w g φ := by

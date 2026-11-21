@@ -37,7 +37,7 @@ def nm {L : Type} [Field L] [NumberField L] [Algebra K L] {v : HeightOneSpectrum
 def fdeg {L : Type} [Field L] [NumberField L] [Algebra K L] {v : HeightOneSpectrum (𝓞 K)} (w : PlacesOver L v) : ℕ :=
   v.asIdeal.inertiaDeg' w.1.asIdeal
 
-variable [IsTotallyComplex K] {n : ℕ}
+variable [_root_.NumberField.IsTotallyComplex K] {n : ℕ}
 
 def SuppAt (π : CuspSub K n) (v : HeightOneSpectrum (𝓞 K)) (s : Multiset (IrrGL (k := v.adicCompletion K))) : Prop :=
   ∃ σ, π.IsLocComp v σ ∧ HasSupport σ.ρ s
@@ -46,8 +46,8 @@ def TorAt (π : CuspSub K n) (v : HeightOneSpectrum (𝓞 K)) : Prop :=
   ∀ σ, π.IsLocComp v σ → Toral (IrrGL.of σ.ρ σ.smooth σ.irred)
 
 
-omit [IsTotallyComplex K] in
-def ThruAt {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L] (P : CuspSub L n)
+omit [_root_.NumberField.IsTotallyComplex K] in
+def ThruAt {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] [Algebra K L] (P : CuspSub L n)
     {v : HeightOneSpectrum (𝓞 K)} (w : PlacesOver L v) : Prop :=
   ∀ s, SuppAt P w.1 s → ∀ ζ hζ, IrrGL.ofChar ζ hζ ∈ s →
     ∃ χ : (v.adicCompletion K)ˣ →* ℂˣ, IsSmoothChar χ ∧ IsUnram (ζ * χ.comp (nm w))
@@ -61,7 +61,7 @@ def GamLoc : Prop :=
           algebraMap ℂ[X] (RatFunc ℂ) (P.comp (C ((Ideal.absNorm v.asIdeal : ℕ) : ℂ) * X)))
 
 def SuppFacts : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 1 ≤ n → ∀ (π : CuspSub K n) (v : HeightOneSpectrum (𝓞 K)),
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ), 1 ≤ n → ∀ (π : CuspSub K n) (v : HeightOneSpectrum (𝓞 K)),
     (∃ s, SuppAt π v s) ∧ (∀ s s', SuppAt π v s → SuppAt π v s' → s = s') ∧
     (∀ s, SuppAt π v s → (TorAt π v ↔ ∀ y ∈ s, y.1 = 1) ∧ (s.map Sigma.fst).sum = n ∧ ∀ y ∈ s, 0 < y.1) ∧
     (∀ s B, SuppAt π v s → (CG.mk π).HasSat v B → ∀ y ∈ s, y.IsUnramChar) ∧
@@ -69,13 +69,13 @@ def SuppFacts : Prop :=
       s'.map Sigma.fst = s.map Sigma.fst
 
 def LocIso : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ) (σ : CuspSub K n)
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ) (σ : CuspSub K n)
     (h : Cm.carrier σ ≤ GroundTheory.Automorphic.AutomorphicForm.centralCuspForms K n)
     (D : GroundTheory.Automorphic.AutomorphicForm.AdelicDecomposition (Cm.toRep σ h).toModule) (v : HeightOneSpectrum (𝓞 K)),
     (∀ s, SuppAt σ v s → HasSupport (D.finite.π v) s) ∧ ∀ B, (CG.mk σ).HasSat v B →
       GroundTheory.Automorphic.fixedVectors (D.finite.π v) (GroundTheory.Automorphic.GLnLocal.integralGL (v.adicCompletion K) n) ≠ ⊥
 
-def SideGAt (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} (σ : CuspSub K n) : Prop :=
+def SideGAt (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} (σ : CuspSub K n) : Prop :=
   ∀ S : Finset (HeightOneSpectrum (𝓞 K)), GroundTheory.Automorphic.GJStandardL.ramifiedPlaces K ⊆ S →
     ∀ B : HeightOneSpectrum (𝓞 K) → Multiset ℂˣ, (∀ w ∉ S, (CG.mk σ).HasSat w (B w)) →
     ∀ (s : ∀ v : HeightOneSpectrum (𝓞 K), Multiset (IrrGL (k := v.adicCompletion K))) (q : ℕ) (f : HeightOneSpectrum (𝓞 K) → ℕ),
@@ -84,11 +84,11 @@ def SideGAt (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} 
         PairG (eulerL K (cx B) S) (eulerLd K (cx B) S) β q P
 
 def SideGCen : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 2 ≤ n → ∀ σ : CuspSub K n,
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ), 2 ≤ n → ∀ σ : CuspSub K n,
     Cm.carrier σ ≤ GroundTheory.Automorphic.AutomorphicForm.centralCuspForms K n → SideGAt K σ
 
 def SideG : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 2 ≤ n → ∀ σ : CuspSub K n, SideGAt K σ
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ), 2 ≤ n → ∀ σ : CuspSub K n, SideGAt K σ
 
 def NormLoc : Prop :=
   ∀ (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] (χ : HChar K), ∃ ξ : HChar L,
@@ -126,7 +126,7 @@ def RegroupBC : Prop :=
       (s.re < -c → ∏ j ∈ Finset.range d, eulerLd K (fun p => (BK p).map (· * e p ^ j)) MainNotions s = eulerLd L BL SL s)
 
 def MatchBC : Prop :=
-  ∀ (K L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L]
+  ∀ (K L : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] [Algebra K L]
     [IsGalois K L], (Module.finrank K L).Prime → ∀ n : ℕ, 2 ≤ n → ∀ (π : CuspSub K n) (P : CuspSub L n),
     WeakBC (CG.mk π).HasSat (CG.mk P).HasSat → ∀ η : HChar K,
     (∀ᶠ v : HeightOneSpectrum (𝓞 K) in Filter.cofinite, η.UnrAt v ∧ ∀ w : PlacesOver L v,
@@ -136,21 +136,21 @@ def MatchBC : Prop :=
       ∑ j ∈ Finset.range (Module.finrank K L), cnt s (θ * (η ^ j).loc v) = ∑ w, fdeg w * cnt (s' w) (θ.comp (nm w))
 
 def MatchInd : Prop :=
-  ∀ (K M : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M],
+  ∀ (K M : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Algebra K M],
     Module.finrank K M = 2 → ∀ (P : CuspSub K (2 * 2)) (π : CuspSub M 2), IndSys (CG.mk π).HasSat (CG.mk P).HasSat →
     ∀ (v : HeightOneSpectrum (𝓞 K)) s (s' : ∀ w : PlacesOver M v, Multiset (IrrGL (k := w.1.adicCompletion M))),
       SuppAt P v s → (∀ w, SuppAt π w.1 (s' w)) → ∀ θ : (v.adicCompletion K)ˣ →* ℂˣ, IsSmoothChar θ →
       cnt s θ = ∑ w, fdeg w * cnt (s' w) (θ.comp (nm w))
 
 def UpDown : Prop :=
-  ∀ (K L : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L]
+  ∀ (K L : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] [Algebra K L]
     [IsGalois K L], (Module.finrank K L).Prime → ∀ n : ℕ, 2 ≤ n → ∀ (π : CuspSub K n) (P : CuspSub L n),
     WeakBC (CG.mk π).HasSat (CG.mk P).HasSat → ∀ v : HeightOneSpectrum (𝓞 K),
       (TorAt π v → ∀ w : PlacesOver L v, TorAt P w.1 ∧ ThruAt P w) ∧
       ((∀ w : PlacesOver L v, TorAt P w.1 ∧ ThruAt P w) → TorAt π v)
 
 def IndTor : Prop :=
-  ∀ (K M : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field M] [NumberField M] [IsTotallyComplex M] [Algebra K M],
+  ∀ (K M : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] [Algebra K M],
     Module.finrank K M = 2 → ∀ (P : CuspSub K (2 * 2)) (π : CuspSub M 2), IndSys (CG.mk π).HasSat (CG.mk P).HasSat →
     ∀ v : HeightOneSpectrum (𝓞 K), (∀ w : PlacesOver M v, TorAt π w.1 ∧ ThruAt π w) → TorAt P v
 

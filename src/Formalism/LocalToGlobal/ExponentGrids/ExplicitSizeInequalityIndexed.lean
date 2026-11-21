@@ -48,7 +48,7 @@ def SquareAtPlaceIndexed : Prop :=
       6 * δ + (p + q : ℕ) * σ
 
 def GridHeightBoundIndexed : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
       (Sq : Type) (m N : ℕ) (dl : Pl K → ℝ) (S Se : Finset ℕ) (N0 : Fin m × Fin m → ℤ → ℕ → ℝ)
       (rr : Pl K → Fin m × Fin m → K) (zA zA' : Fin m × Fin m → K)
       (zT : Fin m × Fin m → ℤ → K) (zTd : Fin m × Fin m → Bool → ℤ → K)
@@ -76,7 +76,7 @@ def GridHeightBoundIndexed : Prop :=
     ∑ w ∈ W0, lw w * (vw w (∏ ij, rr w ij) : ℝ) ≤ gridBudgetIdx m N B BN0 Bδ S0 ee qq
 
 def PassageSizeIndexed : Prop :=
-  ∀ (K W κ : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+  ∀ (K W κ : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
     [Fintype κ] [DecidableEq κ] (D : ℕ), 0 < D →
     ∀ (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ) (kap : InfinitePlace K → ℝ)

@@ -11,7 +11,7 @@ open NumberField UpperTheory.ConvolutionTheory.BW
 noncomputable section
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (Pl E)}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)}
 
 private abbrev Pt (E : Type) [Field E] [NumberField E] (n : ℕ) : Type :=
   ((E →+* ℂ) × Fin n → ℂ) × (Pl E → Multiset ℂ)
@@ -107,7 +107,7 @@ private theorem finite_inv (S : Set (Pl E)) (B : ℝ) (n : ℕ) : ∀ ρ : Typ E
 end
 
 theorem UpperTheory.ConvolutionTheory.BW.nearDat :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.NearDat E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.NearDat E := by
   intro E _ _ _ S n ρ B
   obtain ⟨D, -, hD⟩ := Set.exists_subset_bijOn {d : Dat S n | d.HasTyp ρ.ρ ∧ ∀ τ i, ‖d.lam τ i‖ ≤ B} inv
   refine ⟨D, Set.Finite.of_finite_image (by rw [hD.image_eq]; exact finite_inv S B n ρ) hD.injOn, fun d hd hB => ?_⟩

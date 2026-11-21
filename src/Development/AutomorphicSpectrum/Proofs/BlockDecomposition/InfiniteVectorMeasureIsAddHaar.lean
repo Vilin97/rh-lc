@@ -10,7 +10,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.CompanionTheory.CutOff
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (k : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (k : ℕ)
 
 noncomputable def rowInfEquiv : (Fin k → InfiniteAdeleRing E) ≃+ (Fin k → Cinf E) :=
   AddEquiv.piCongrRight fun _ => (infEq E).symm.toAddEquiv

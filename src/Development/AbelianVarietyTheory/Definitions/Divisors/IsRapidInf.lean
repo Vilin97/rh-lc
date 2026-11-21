@@ -45,7 +45,7 @@ def IsRapidInf {X : Type} [MeasurableSpace X] (ν : MeasureTheory.Measure X) (k 
   Measurable k ∧ Measurable (fun x => (γ x : Matrix (Fin a) (Fin a) (Cinf E))) ∧
     ∀ N : ℕ, MeasureTheory.Integrable (fun x => ‖k x‖ * height (γ x) ^ N) ν
 
-def mspanR [IsTotallyComplex E] (π : CuspSub E a) : Submodule ℂ (GA E a → ℂ) :=
+def mspanR [_root_.NumberField.IsTotallyComplex E] (π : CuspSub E a) : Submodule ℂ (GA E a → ℂ) :=
   sInf {S | (∀ φ ∈ π.V, φ.1 ∈ S) ∧ (∀ F ∈ S, ∀ h : GA E a, (fun g => F (g * h)) ∈ S) ∧
     ∀ F ∈ S, ∀ (X : Type) (_ : MeasurableSpace X) (ν : MeasureTheory.Measure X) (_ : MeasureTheory.SFinite ν) (k : X → ℂ)
       (γ : X → GL (Fin a) (Cinf E)), IsRapidInf ν k γ → (fun g => ∫ x, k x * F (g * infGL E a (γ x)) ∂ν) ∈ S}

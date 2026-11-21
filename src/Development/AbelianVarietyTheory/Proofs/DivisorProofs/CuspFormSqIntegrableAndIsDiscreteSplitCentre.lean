@@ -23,7 +23,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace GlobalTheory.ResW
 
 theorem cuspForm_isSqInt_and_isDiscrete :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
       (∀ φ : Sm E a, IsCuspForm φ → (∀ t g, φ.1 (splitCentre E a t * g) = φ.1 g) → IsSqInt φ.1) ∧
         ∀ x : CuspSub E a, IsNormalised x → IsDiscrete x.V := by
   intro E _ _ _ a

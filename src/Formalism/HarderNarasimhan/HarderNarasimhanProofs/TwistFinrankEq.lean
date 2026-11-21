@@ -13,7 +13,7 @@ noncomputable section
 
 namespace Formalism.HN
 
-theorem twist_finrank_eq (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] :
+theorem twist_finrank_eq (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] :
     (Module.finrank ℚ K : ℝ) = 2 * (nPl K : ℝ) := by
   have key : Module.finrank ℚ K = 2 * nPl K := by
     have h1 := NumberField.InfinitePlace.card_add_two_mul_card_eq_rank K

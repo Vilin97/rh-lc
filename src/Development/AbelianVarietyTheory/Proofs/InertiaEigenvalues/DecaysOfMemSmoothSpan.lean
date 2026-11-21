@@ -22,7 +22,7 @@ open scoped Pointwise
 
 namespace GlobalTheory.ShortVecDecay
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem continuous_pInf : Continuous (pInf E) :=
   continuous_pi fun w =>
@@ -65,7 +65,7 @@ theorem exists_norm_vecMul_le {κ : Set (GA E a)} (hκ : IsCompact κ) :
     nlinarith [norm_nonneg fun i => pInf E (x i)]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem exists_isCompact_vecMul {κ : Set (GA E a)} (hκ : IsCompact κ) {L : Set (Fin a → Af E)} (hL : IsCompact L) :
     ∃ L' : Set (Fin a → Af E), IsCompact L' ∧ ∀ y ∈ κ, ∀ x : Fin a → Ad E,
       (fun i => pFin E (x i)) ∈ L → (fun i => pFin E ((x ᵥ* y.val) i)) ∈ L' := by
@@ -82,7 +82,7 @@ theorem norm_pInf_posIdele {ρ : ℝ} (hρ : 0 < ρ) (w : InfinitePlace E) :
   exact ((InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _) _)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem pFin_vecMul_diag (r : Fin a → ℝ) (hr : ∀ i, 0 < r i) (x : Fin a → Ad E) :
     (fun i => pFin E ((x ᵥ* (diagUnits a fun i => posIdele (K := E) (r i) (hr i)).val) i)) = fun i => pFin E (x i) := by
   funext i
@@ -142,7 +142,7 @@ def Decays (F : GA E a → ℂ) : Prop :=
           (a * Module.finrank ℚ E) / (ideleModule E (GeneralLinearGroup.det g) : ℝ)) ^ N
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem ideleModule_det_eq_one {b : GA E a} (hb : b ∈ adelicBorel (K := E) (n := a))
     (h : ∀ i, ∃ u : IdeleGroup E, b.val i i = u ∧ (ideleModule E u : ℝ) = 1) :
     (ideleModule E (GeneralLinearGroup.det b) : ℝ) = 1 := by
@@ -155,7 +155,7 @@ theorem ideleModule_det_eq_one {b : GA E a} (hb : b ∈ adelicBorel (K := E) (n 
   exact Finset.prod_eq_one fun i _ => hu1 i
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem ideleModule_det_rat (γ : GL (Fin a) E) : ideleModule E (GeneralLinearGroup.det (ratGL E a γ)) = 1 := by
   have h : GeneralLinearGroup.det (ratGL E a γ) = IdeleGroup.diagonal E (GeneralLinearGroup.det γ) := by
     refine Units.ext ?_

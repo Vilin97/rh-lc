@@ -46,7 +46,7 @@ theorem coord_atEmb_of_ne {σ τ : E →+* ℂ} (h : InfinitePlace.mk σ ≠ Inf
   unfold atEmb
   exact Pi.single_eq_of_ne h _
 
-variable [NumberField E] [IsTotallyComplex E]
+variable [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem coord_conj (τ : E →+* ℂ) (x : Cinf E) :
     coord (ComplexEmbedding.conjugate τ) x = starRingEnd ℂ (coord τ x) := by
@@ -89,10 +89,10 @@ theorem continuous_cInf (e : K ≃+* M) : Continuous (cInf e) :=
 theorem norm_cInf_le (e : K ≃+* M) (x : Cinf K) : ‖cInf e x‖ ≤ ‖x‖ :=
   (pi_norm_le_iff_of_nonneg (norm_nonneg _)).2 fun _ => (norm_coord _ x).trans_le (norm_le_pi_norm x _)
 
-variable [IsTotallyComplex K] [IsTotallyComplex M]
+variable [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex M]
 
 
-omit [NumberField M] [IsTotallyComplex M] in
+omit [NumberField M] [_root_.NumberField.IsTotallyComplex M] in
 theorem coord_cInf (e : K ≃+* M) (τ : M →+* ℂ) (x : Cinf K) :
     coord τ (cInf e x) = coord (τ.comp e.toRingHom) x := by
   conv_lhs => unfold coord
@@ -242,7 +242,7 @@ theorem cFin_locGL {a : ℕ} (h : Over e v w) (g : GL (Fin a) (v.adicCompletion 
 
 end Fin
 
-variable [IsTotallyComplex K] [IsTotallyComplex M]
+variable [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex M]
 
 def cAd (e : K ≃+* M) : Ad K →+* Ad M :=
   RingHom.prod ((infEq M).toRingHom.comp ((cInf e).comp (pInf K))) ((cFin e).comp (pFin K))

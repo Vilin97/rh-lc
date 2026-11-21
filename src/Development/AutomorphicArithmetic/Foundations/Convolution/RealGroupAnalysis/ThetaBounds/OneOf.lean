@@ -10,7 +10,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Ff
 open scoped Classical
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.oneOf :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (_D : Dat F E), OneOf F E := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (_D : Dat F E), OneOf F E := by
   intro F E _ _ _ _ _ _ _ D y hy
   obtain ⟨u, hu, hn⟩ := normInf F E D (Matrix.GeneralLinearGroup.det y)
   have hu1 : u = 1 := by

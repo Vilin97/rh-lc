@@ -48,7 +48,7 @@ theorem trace_mem {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (X : Fin n → F
   simp only [ho, CapelliTop.subdet_single, mul_one] at h3
   exact hf ((map_sum f _ _).trans h3)
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 abbrev scL (a : ℕ) (z : Cinf E) : Lie E a := toL (Matrix.diagonal fun _ => z)
 
@@ -295,7 +295,7 @@ theorem continuous_char (π : CuspSub E a) (ω : Ideles E →* ℂˣ) (h : ∀ z
   exact (hinf.comp (Continuous.units_map _ RankOne.continuous_pInf)).mul
     (hfin.comp (Continuous.units_map _ continuous_snd))
 
-theorem exists_hasCentral : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem exists_hasCentral : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (π : GlobalTheory.CuspRep.CuspSub E a), ∃ ω : Formalism.L2.Host.HChar E, π.HasCentral ω := by
   intro E _ _ _ a π
   obtain ⟨φ, hφ, h0⟩ := (Submodule.ne_bot_iff _).1 π.ne_bot

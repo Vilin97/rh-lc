@@ -13,7 +13,7 @@ namespace GlobalTheory.JSW.SpanModel
 
 open GlobalTheory.CuspRep GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def leftInv (E : Type) [Field E] [NumberField E] (a : ℕ) : Submodule ℂ (GA E a → ℂ) where
   carrier := {F | ∀ γ g, F (ratGL E a γ * g) = F g}

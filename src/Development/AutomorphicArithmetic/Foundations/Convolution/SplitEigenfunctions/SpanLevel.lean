@@ -35,7 +35,7 @@ private theorem sat_below (π : TR.CuspSub ℚ 2) {E : Type} [Field E] [NumberFi
     obtain ⟨v, hv, hn⟩ := hw
     exact Set.mem_biUnion (show v ∈ {v | ¬ ∃ B, π.HasSat v B} from hn) hv
 
-private theorem span_level {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {D : Dat ℚ E} (W : Weil D) (M : Meas ℚ)
+private theorem span_level {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {D : Dat ℚ E} (W : Weil D) (M : Meas ℚ)
     (π : TR.CuspSub ℚ 2) (w : P E) (Φ : Sm E 2) (hΦ : Φ ∈ span W M π) :
     ∀ᶠ y in 𝓝 (1 : GL (Fin 2) (Kv w)), ∀ g, Φ.1 (g * lc w y) = Φ.1 g := by
   induction hΦ using Submodule.span_induction with

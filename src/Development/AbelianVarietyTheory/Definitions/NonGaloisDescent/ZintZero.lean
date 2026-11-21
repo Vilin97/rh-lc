@@ -14,7 +14,7 @@ open NumberField IsDedekindDomain MeasureTheory Neutral.B1 ReciprocityTheory.Neu
 
 namespace GlobalTheory.RSJ
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E) in

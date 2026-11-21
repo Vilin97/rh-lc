@@ -14,7 +14,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.CentEig
 
-theorem trace_Eop_eq_of_hasInfCharGL {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+theorem trace_Eop_eq_of_hasInfCharGL {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
     {V : Submodule ℂ (Sm E N)} {τ : E →+* ℂ} {m : Multiset ℂ} (hm : HasInfCharGL V τ m) :
     ∀ φ ∈ V, (∑ i : Fin N, Eop τ i i) φ = m.sum • φ := by
   intro φ hφ

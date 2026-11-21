@@ -90,7 +90,7 @@ private theorem exists_mul {E : Type} [Field E] [NumberField E] (D : Dat ℚ E) 
   rw [this]
 
 theorem UpperTheory.exists_whittakerCoeff_ne_zero_of_admissible :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2) (ω : HChar ℚ), (∀ φ ∈ Tr P, admitted D ω φ) → ∃ f ∈ P.V, ∃ h, Wo D f.1 h ≠ 0 := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (P : CuspSub E 2) (ω : HChar ℚ), (∀ φ ∈ Tr P, admitted D ω φ) → ∃ f ∈ P.V, ∃ h, Wo D f.1 h ≠ 0 := by
   intro E _ _ _ D P ω hA
   obtain ⟨f, hf, h0⟩ := (Submodule.ne_bot_iff _).1 P.ne_bot
   refine ⟨f, hf, ?_⟩

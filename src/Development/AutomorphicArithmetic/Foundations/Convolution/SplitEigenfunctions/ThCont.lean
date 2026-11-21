@@ -14,14 +14,14 @@ open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspR
 open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Ff UpperTheory.ConvolutionTheory.RankTwoDescent
 open scoped Classical
 
-private theorem om_L' {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {D : Dat ℚ E} (W : Weil D)
+private theorem om_L' {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {D : Dat ℚ E} (W : Weil D)
     (g : G1 ℚ) (h : GL (Fin 2) (A E)) (hh : nu ℚ h = 1) (φ : S4 ℚ) :
     W.Om g (W.L h φ) = W.L h (W.Om g φ) := by
   have e := congrArg (fun T : Module.End ℂ (S4 ℚ) => T φ) (W.comm h g)
   simp only [Module.End.mul_apply, hh] at e
   rw [e, UpperTheory.ConvolutionTheory.R2.M.cD_one]
 
-private theorem term_eq {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {D : Dat ℚ E} (W : Weil D)
+private theorem term_eq {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {D : Dat ℚ E} (W : Weil D)
     (g : G1 ℚ) (h : GL (Fin 2) (A E)) (hh : nu ℚ h = 1) (φ : S4 ℚ) (v : V4 ℚ) :
     (W.Om g (W.L h φ)).1 v = (W.Om g φ).1 (D.act h⁻¹ v) := by
   rw [om_L' W g h hh, W.L_apply, hh, ab_one]

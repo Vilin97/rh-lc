@@ -230,7 +230,7 @@ theorem exists_int {K G : Type} [Field K] [NumberField K] [Group G] [Finite G] (
   have h2 : ‖σ (χ g : K)‖ ^ Nat.card G = 1 := by rw [← norm_pow, ← map_pow, h, map_one, norm_one]
   exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hn.ne').1 h2
 
-theorem slope_eig {K V G C : Type} [Field K] [NumberField K] [IsTotallyComplex K] [AddCommGroup V] [Module K V]
+theorem slope_eig {K V G C : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V] [Module K V]
     [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Group G] [Fintype G] [Fintype C] [Nonempty C] [MulAction G C]
     (e : C → V →ₗ[K] V) (ρ : Representation K G V) (χ : G →* Kˣ) (Nv : (K →+* ℂ) → V → ℝ)
     (M₀ M : Submodule (𝓞 K) V) (ι : C → Type) [∀ o, Fintype (ι o)] [∀ o, DecidableEq (ι o)] [∀ o, Nonempty (ι o)]

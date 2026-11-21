@@ -17,7 +17,7 @@ open scoped ComplexConjugate
 
 namespace GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem measurable_chart_prod {φ : GA E a → ℂ} (hφ : Continuous φ) :
     Measurable fun p : GA E a × Lie E a => chart φ p.1 p.2 := by

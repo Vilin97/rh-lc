@@ -35,20 +35,20 @@ def LocUnr : Prop :=
         ∏ i, (1 - (z i : ℂ)⁻¹ * ((Ideal.absNorm v.asIdeal : ℕ) : ℂ) ^ (-t))⁻¹
 
 def SatDict : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ) (σ : CuspSub K n)
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ) (σ : CuspSub K n)
     (h : Cm.carrier σ ≤ centralCuspForms K n) (D : AdelicDecomposition (Cm.toRep σ h).toModule)
     (v : HeightOneSpectrum (𝓞 K)) (B : Multiset ℂˣ), (CG.mk σ).HasSat v B →
     ∃ z : Fin n → ℂˣ, Spherical.IsSatakeParameter (F := v.adicCompletion K) (D.finite.π v) (localHaar n v) z ∧
       B = Finset.univ.val.map z
 
 def CoefSm : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 1 ≤ n → ∀ (μ : Measure (Reduction.normOneGL (K := K) (n := n)))
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ), 1 ≤ n → ∀ (μ : Measure (Reduction.normOneGL (K := K) (n := n)))
     [μ.IsHaarMeasure] (σ : CuspSub K n), Cm.carrier σ ≤ centralCuspForms K n → ∀ φ₂ : cuspForms K n,
     ∃ T : σ.V →ₗ[ℂ] Sm K n, (∀ φ : σ.V, (T φ).1 = GJGlobal.matrixCoeff μ φ.1.1 φ₂.1) ∧
       ∀ (τ : K →+* ℂ) (u : ℂ) (φ φ' : σ.V), φ'.1 = cap τ u φ.1 → T φ' = cap τ u (T φ)
 
 def ArchShift : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 1 ≤ n → ∀ (ψ : Sm K n) (m : (K →+* ℂ) → Multiset ℂ),
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ), 1 ≤ n → ∀ (ψ : Sm K n) (m : (K →+* ℂ) → Multiset ℂ),
     (∀ τ u, cap τ u ψ = ((m τ).map (u + ·)).prod • ψ) → ∀ fi : AdelicGLn.InfiniteAdelicGL K n → ℂ,
     (∀ x, fi x = ψ.1 ((AdelicGLn.prodEquiv K n).symm (x, 1))) → (∃ x, fi x ≠ 0) →
     ∀ (μ : Measure (AdelicGLn.InfiniteAdelicGL K n)) [μ.IsHaarMeasure],
@@ -59,7 +59,7 @@ def ArchShift : Prop :=
         archZeta μ (archMatrixFourier φ') g s = k' * archZeta μ (archMatrixFourier φ) g (s + 1)
 
 def ArchBridge : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ) (μ : Measure (AdelicGLn.InfiniteAdelicGL K n))
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ) (μ : Measure (AdelicGLn.InfiniteAdelicGL K n))
     [μ.IsHaarMeasure], (∀ x, ∃ y, archComp K n (infGL K n y) = x) ∧
     (∀ y, (AdelicGLn.prodEquiv K n).symm (archComp K n (infGL K n y), 1) = infGL K n y) ∧
     (∀ y, archAbsDet (archComp K n (infGL K n y)) = nrm (toL y.val)) ∧

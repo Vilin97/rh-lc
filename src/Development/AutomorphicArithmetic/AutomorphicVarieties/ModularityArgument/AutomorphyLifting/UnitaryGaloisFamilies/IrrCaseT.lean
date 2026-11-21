@@ -85,7 +85,7 @@ def ProdT : Prop :=
       rc (cl τ) = sumList (List.ofFn fun i => rc (cl (σ i)))
 
 def SpehT : Prop :=
-  ∀ (E Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
+  ∀ (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
     (a d : ℕ) (P : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) (ρ : SmIrr (GL (Fin a) (w.adicCompletion E)))
     (σ : SmIrr (GL (Fin (d * a)) (w.adicCompletion E))), 1 ≤ a → 1 ≤ d → P.IsLocComp w ρ →
     GlobalTheory.SmGL.IsUnitarisable ρ.ρ → IsSpeh (cl ρ) d σ.ρ →
@@ -93,7 +93,7 @@ def SpehT : Prop :=
       rc (cl σ) = sumList ((List.range d).map fun k : ℕ => (rc (cl ρ)).lpTw (((d : ℝ) - 1) / 2 - k))
 
 def RecTotT : Prop :=
-  ∀ (E Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
+  ∀ (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
     (n c : ℕ) (a d : Fin c → ℕ) (hn : ∑ i, d i * a i = n) (P : ∀ i, CuspSub E (a i)) (w : HeightOneSpectrum (𝓞 E))
     (ρ : ∀ i, SmIrr (GL (Fin (a i)) (w.adicCompletion E))) (σ : ∀ i, SmIrr (GL (Fin (d i * a i)) (w.adicCompletion E))),
     (∀ i, 1 ≤ a i ∧ 1 ≤ d i) → (∀ i, (P i).IsLocComp w (ρ i)) →

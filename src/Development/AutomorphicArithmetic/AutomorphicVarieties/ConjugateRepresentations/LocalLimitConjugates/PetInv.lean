@@ -11,7 +11,7 @@ open scoped TensorProduct GlobalTheory.CuspRep.CuspidalL2GL
 open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem tw_rt (χ : HChar E) (g : GA E a) (φ : Sm E a) :
     mulChi a χ (rt E a g φ) = ((chiDet a χ g : ℂˣ) : ℂ)⁻¹ • rt E a g (mulChi a χ φ) := by

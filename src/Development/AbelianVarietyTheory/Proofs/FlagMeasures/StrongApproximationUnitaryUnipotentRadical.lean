@@ -383,7 +383,7 @@ theorem exists_sub_mem_int (x : E ⊗[F] Af F) :
 
 
 omit [NumberField F] in
-theorem exists_compact_arch [IsTotallyComplex E] (φ : InfinitePlace F → (E →+* ℂ))
+theorem exists_compact_arch [_root_.NumberField.IsTotallyComplex E] (φ : InfinitePlace F → (E →+* ℂ))
     (hφ : ∀ v (a : F), φ v (algebraMap F E a) = v.embedding a) :
     ∃ C : Set (InfinitePlace F → ℂ), IsCompact C ∧
       ∀ z : InfinitePlace F → ℂ, ∃ y : 𝓞 E, (z - fun v => φ v y) ∈ C := by

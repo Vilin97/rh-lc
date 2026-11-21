@@ -18,7 +18,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Fo
 open scoped Classical
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.capLam :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (O : Ops F) (Λ : TR.Sm F 2 →ₗ[ℂ] S4 F →ₗ[ℂ] Sm E 2), (∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, (Λ f φ).1 = lift W M f.1 φ) → LieLift O W M π → MoveE O W M π →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (O : Ops F) (Λ : TR.Sm F 2 →ₗ[ℂ] S4 F →ₗ[ℂ] Sm E 2), (∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, (Λ f φ).1 = lift W M f.1 φ) → LieLift O W M π → MoveE O W M π →
     ∀ (τ : E →+* ℂ) u, ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, cap τ u (Λ f φ) = Λ (TR.cap (pl F τ) u f) φ := by
   intro F E _ _ _ _ _ _ _ D W M π O Λ hΛ hL hE τ u f hf φ hφ
   obtain ⟨hXX, hDD, hDX, he, hfo, hh⟩ := weylX F E D W O τ

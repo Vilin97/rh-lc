@@ -18,7 +18,7 @@ namespace GlobalTheory.UnitaryBC
 
 section Linear
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in
@@ -51,7 +51,7 @@ def HasInfCharGL (V : Submodule ℂ (Sm E a)) (τ : E →+* ℂ) (m : Multiset �
 
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def locProd {c n : ℕ} {N : Fin c → ℕ} (h : ∑ i, N i = n) (w : HeightOneSpectrum (𝓞 E))
     (σ : ∀ i, SmIrr (GL (Fin (N i)) (w.adicCompletion E))) :=
   GlobalTheory.SmGL.multiProd (GlobalTheory.SmGL.stdBlocks N h) fun i => (σ i).ρ

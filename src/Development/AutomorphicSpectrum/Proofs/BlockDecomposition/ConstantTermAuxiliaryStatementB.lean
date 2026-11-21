@@ -15,7 +15,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.CompanionTheory.CTFin.Slice2
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 theorem map_lev {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (g : GL (Fin r) R × GL (Fin s) R) :
     Matrix.GeneralLinearGroup.map f (lev R r s g) =
@@ -419,7 +419,7 @@ theorem sl_growth (F : Sm E (r + s))
   rw [mul_assoc, ← mul_pow]
   exact mul_le_mul_of_nonneg_left (pow_le_pow_left₀ h0 h1 N) (abs_nonneg C)
 
-theorem slice2 : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ)
+theorem slice2 : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ)
     (L : Subgroup (GL (Fin (r + s)) (Af E))), IsOpen (L : Set (GL (Fin (r + s)) (Af E))) →
     ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (ρ : Representation ℂ (Kinf E (r + s)) W),
     GlobalTheory.Published.AutFin.IsContRep ρ → ∀ J : Set (Module.End ℂ (Sm E (r + s))), Cofin J →

@@ -13,11 +13,11 @@ namespace PositivityTheory.RgJS
 
 namespace RigidityLemmas
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 def twS (χ : HChar E) (p : Σ a, CG E a) : Σ a, CG E a := ⟨p.1, p.2.twist χ⟩
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem unrAt_inv {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (h : χ.UnrAt w) : (χ⁻¹).UnrAt w := fun x hx => by
   change (χ.1 (GlobalTheory.Mem.Chr.localIdele E w x))⁻¹ = 1
   rw [show χ.1 (GlobalTheory.Mem.Chr.localIdele E w x) = 1 from h x hx, inv_one]

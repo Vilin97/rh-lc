@@ -12,7 +12,7 @@ noncomputable section
 
 namespace GlobalTheory.GLFin
 
-theorem expGL_image_ball_mem_nhds : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), ∀ ε : ℝ, 0 < ε →
+theorem expGL_image_ball_mem_nhds : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), ∀ ε : ℝ, 0 < ε →
     (fun X : Lie E a => GlobalTheory.ExpDeriv.expGL X 1) '' {X | ‖X‖ < ε} ∈ nhds (1 : GL (Fin a) (Cinf E)) := by
   intro E _ _ _ a ε hε
   letI : NormedRing (Matrix (Fin a) (Fin a) (Cinf E)) := Matrix.linftyOpNormedRing

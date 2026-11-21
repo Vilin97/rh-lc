@@ -9,7 +9,7 @@ open UpperTheory.V.Lit UpperTheory.V.Lit.Geo UpperTheory.V.Lit.Bor UpperTheory.V
 open scoped TensorProduct GlobalTheory.CuspRep.CuspidalL2GL
 open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
-private theorem inf_cont (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) :
+private theorem inf_cont (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) :
     Continuous (infGL E a) := by
   have hs : Continuous (sInf E : Cinf E → Ad E) := (GlobalTheory.CuspRep.continuous_infEq E).prodMk continuous_const
   exact Continuous.units_map _ ((continuous_const.sub continuous_const).add (continuous_id.matrix_map hs))

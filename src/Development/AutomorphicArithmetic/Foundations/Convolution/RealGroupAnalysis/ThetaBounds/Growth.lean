@@ -28,7 +28,7 @@ private theorem growth_alg (a b c d V : ℝ) (n m : ℕ) :
   ring
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.growth :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), Growth W M π := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), Growth W M π := by
   intro F E _ _ _ _ _ _ _ D W M π f hf φ hφ h
   obtain ⟨f', hf', φ', hφ', y₀, k, -, hφk, -, hred⟩ := UpperTheory.ConvolutionTheory.R2.Ff.redLift F E D W M π f hf φ hφ h
   obtain ⟨ω, hωc, hω⟩ := UpperTheory.ConvolutionTheory.R2.cen F π

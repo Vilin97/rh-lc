@@ -16,7 +16,7 @@ attribute [local instance 10000] MeasurableSpace.pi
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 private theorem ct_sm (r : ℕ) {φ : Sm E n} (h : Good φ) : constantTerm r φ.1 ∈ Sm E n ∧
     ∀ X g, lieD X (constantTerm r φ.1) g = constantTerm r (lie E n X φ).1 g := by
@@ -74,7 +74,7 @@ private theorem lie_pas (r : ℕ) (X : Lie E n) : lie E n X ∈ (pas r : Subalge
     rw [lie_apply, hF]
     exact (ct_sm r h).2 X g⟩
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem ct_unip {r : ℕ} {φ : AdelicGLn.AdelicGL E n → ℂ} (hφ : IsLeftInvariant φ)
     (Y : UPos n r → AdeleRing (𝓞 E) E) (g : AdelicGLn.AdelicGL E n) :
     constantTerm r φ (unipGL Y * g) = constantTerm r φ g := by
@@ -91,7 +91,7 @@ private theorem ct_unip {r : ℕ} {φ : AdelicGLn.AdelicGL E n → ℂ} (hφ : I
 end UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.ConvolutionTheory.BW.ctOps :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.CtOps E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.CtOps E := by
   intro E _ _ _ r s φ h
   have hg : Good φ := ⟨h.left, h.level⟩
   refine ⟨⟨_, (UpperTheory.ConvolutionTheory.BW.ct_sm r hg).1⟩, rfl, fun x g => ?_, fun γ g => ?_, fun u =>

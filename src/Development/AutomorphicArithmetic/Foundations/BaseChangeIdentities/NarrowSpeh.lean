@@ -36,7 +36,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 namespace UpperTheory.BaseChangeIdentities
 
-theorem ascEmb_mul_eq {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N a d : ℕ}
+theorem ascEmb_mul_eq {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N a d : ℕ}
     {V : Submodule ℂ (Sm E N)} {π : CuspSub E a} (h : AscEmb V π d) : d * a = N := by
   obtain ⟨h, -⟩ := h
   simpa using h

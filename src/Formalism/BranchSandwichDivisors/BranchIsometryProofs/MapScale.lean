@@ -68,7 +68,7 @@ theorem ms_htQ_bot (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
   congr 2
   rw [← Real.rpow_natCast, Nat.cast_mul]
 
-theorem ms_mu_eq [IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
+theorem ms_mu_eq [_root_.NumberField.IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (hX : ∀ v, IsUnit (X v).det) {L : Submodule (𝓞 K) V} (hfg : L.FG) (hL : L ≠ ⊥) :
     muDef b X L = -(Real.log (ht b X L) / ((nPl K : ℝ) * (rkK L : ℝ))) := by
   have h := size_maximal_slope K V ι b X hX L hfg hL

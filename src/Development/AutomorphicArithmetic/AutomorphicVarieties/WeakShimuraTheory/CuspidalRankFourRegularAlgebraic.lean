@@ -6,4 +6,4 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Automorphic
 
 open NumberField GlobalTheory.CuspRep Formalism.BasicNotions Formalism.MainNotions.N
 
-def UpperTheory.V.Ws.CuspidalRankFourRegularAlgebraic {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] (π : CuspSub L 4) : Prop := (CG.mk π).IsRegAlg
+def UpperTheory.V.Ws.CuspidalRankFourRegularAlgebraic {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (π : CuspSub L 4) : Prop := (CG.mk π).IsRegAlg

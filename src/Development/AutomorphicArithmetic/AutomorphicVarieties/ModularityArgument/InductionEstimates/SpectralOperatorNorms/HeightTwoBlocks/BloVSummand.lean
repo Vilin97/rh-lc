@@ -12,7 +12,7 @@ open GroundTheory.Automorphic.CuspidalSpectrum PositivityTheory.Rg.Fx UpperTheor
 
 namespace UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (BW.Pl E)}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {S : Set (BW.Pl E)}
 
 noncomputable def bloV {r : ℕ} (b : Blo S r) : Submodule ℂ (LL (mu1 E r)) := b.summand.choose
 
@@ -114,7 +114,7 @@ theorem datB_pt {n : ℕ} (d : Dat S n) (h2 : 2 ≤ d.len) (Λ : (E →+* ℂ) �
 end UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.datOn :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (S : Set (BW.Pl E)) (n : ℕ) (d : Dat S n), 2 ≤ d.len →
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (S : Set (BW.Pl E)) (n : ℕ) (d : Dat S n), 2 ≤ d.len →
       ∃ b : Datum E n, ∀ Λ t, b.Pt S Λ t ↔ d.On Λ t := by
   intro E _ _ _ S n d h2
   exact ⟨UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.datB d h2, UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.datB_pt d h2⟩

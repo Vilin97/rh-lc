@@ -7,7 +7,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Automorphic
 
 open NumberField GlobalTheory.CuspRep GlobalTheory.UnitaryBC GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Global.IdeleGroup
 
-private theorem posIdele_inf {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (s : ℝ) (hs : 0 < s)
+private theorem posIdele_inf {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (s : ℝ) (hs : 0 < s)
     (w : InfinitePlace E) :
     ((posIdele s hs : GroundTheory.Global.IdeleGroup E) : AdeleRing (𝓞 E) E).1 w =
       (InfinitePlace.Completion.ringEquivComplexOfIsComplex (IsTotallyComplex.isComplex w)).symm (s : ℂ) := by

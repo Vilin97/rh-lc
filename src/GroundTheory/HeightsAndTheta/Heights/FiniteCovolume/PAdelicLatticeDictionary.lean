@@ -193,7 +193,7 @@ theorem isDIntegral_dictLattice {d : ℤ} (hd0 : d ≠ 0)
 
 end DIntegral
 
-variable [IsTotallyReal F] [IsTotallyComplex E]
+variable [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 theorem AdelicLatticeDictionary.proof (h : HermitianForm F E W) (v : Basis ι E W) :
     AdelicLatticeDictionary.Statement h v := by

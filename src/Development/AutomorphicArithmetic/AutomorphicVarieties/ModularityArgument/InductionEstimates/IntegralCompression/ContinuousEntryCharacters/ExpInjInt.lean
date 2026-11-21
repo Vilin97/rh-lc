@@ -121,7 +121,7 @@ end Abstract
 
 section
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {ι : Type} [Fintype ι] (C : Co K ι)
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {ι : Type} [Fintype ι] (C : Co K ι)
 
 private theorem un_central (i : ι) (t : ℝ) (g : G1 K 2) : Commute (C.un i (tC t t)) g := by
   obtain ⟨-, -, hun, -, hmul, -, -, hdec, -⟩ := UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.coLaws K ι C
@@ -147,7 +147,7 @@ end
 end UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.minEx :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ : Measure (G1 K 2)) [μ.IsHaarMeasure] (τ : Submodule ℂ (LL μ)), CuspIrr μ τ → ∀ i, ∃ n q, C.MinAt μ τ i n q := by
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ : Measure (G1 K 2)) [μ.IsHaarMeasure] (τ : Submodule ℂ (LL μ)), CuspIrr μ τ → ∀ i, ∃ n q, C.MinAt μ τ i n q := by
   intro K _ _ _ ι _ C μ _ τ hτ i
   obtain ⟨hP, -, -, hall⟩ := UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.piLaws K ι C μ
   have hmem : ∀ (n : ℕ) (q : ℤ) (v : LL μ), v ∈ τ → C.Pi μ i n q v ∈ τ := by

@@ -87,7 +87,7 @@ theorem pFin_diag (r : Fin n → ℝ) (hr : ∀ i, 0 < r i) :
 theorem pFin_tor (x : Fin n → ℝ) : Matrix.GeneralLinearGroup.map (pFin E) (An.tor E x) = 1 :=
   pFin_diag (fun i => Real.exp (x i)) (fun i => Real.exp_pos _)
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def dg (x : Fin n → ℝ) : GL (Fin n) (Cinf E) := diagUnits n fun i => expU fun _ : InfinitePlace E => ((x i : ℝ) : ℂ)
 
@@ -104,11 +104,11 @@ theorem pInf_tor (x : Fin n → ℝ) : Matrix.GeneralLinearGroup.map (pInf E) (A
   · rw [GlobalTheory.CuspBoundSiegel.posIdele_exp, pInf_infId]
   · exact map_zero _
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem height_inv' (y : GL (Fin n) (Cinf E)) : GlobalTheory.CuspRep.height y⁻¹ = GlobalTheory.CuspRep.height y := by
   unfold GlobalTheory.CuspRep.height; rw [inv_inv]; ring
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem height_dg (x : Fin n → ℝ) (R : ℝ) (hR : ∀ i, |x i| ≤ R) (hR0 : 0 ≤ R) :
     GlobalTheory.CuspRep.height (dg (E := E) x) ≤ 3 * Real.exp R := by
   have he : 0 ≤ Real.exp R := (Real.exp_pos R).le

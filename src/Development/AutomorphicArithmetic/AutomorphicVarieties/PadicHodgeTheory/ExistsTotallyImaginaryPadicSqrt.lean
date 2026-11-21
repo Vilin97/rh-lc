@@ -12,7 +12,7 @@ public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc GlobalTheory.WeilDeligne GlobalTheory.GalOfCusp GlobalTheory.HeckeGal GlobalTheory.LocLanglands GlobalTheory.Published UpperTheory.V.W
 
-private theorem isCM_of_conj (K : Type) [Field K] [NumberField K] [IsTotallyComplex K]
+private theorem isCM_of_conj (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
     (h : ∀ x : K, ∃ y : K, ∀ φ : K →+* ℂ, φ y = starRingEnd ℂ (φ x)) : IsCMField K :=
   _root_.UpperTheory.Reformulated.B.Qh9.isCM_of_conj K h
 

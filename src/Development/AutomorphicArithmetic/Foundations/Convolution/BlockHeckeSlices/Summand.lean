@@ -18,16 +18,16 @@ open GroundTheory.Automorphic.CuspidalSpectrum
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n r s : ℕ}
 
-def zC (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (τ : E →+* ℂ) (i : ℕ) : UpperTheory.V.Cm.UC E n :=
+def zC (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (τ : E →+* ℂ) (i : ℕ) : UpperTheory.V.Cm.UC E n :=
   ∑ j : Fin (n + 1), (Lagrange.basis Finset.univ (fun j : Fin (n + 1) => ((j : ℕ) : ℂ)) j).coeff (n - i) •
     UpperTheory.V.Cm.capC τ ((j : ℕ) : ℂ)
 
 theorem zC_mem (τ : E →+* ℂ) (i : ℕ) : zC E n τ i ∈ Subalgebra.center ℂ (UpperTheory.V.Cm.UC E n) :=
   Subalgebra.sum_mem _ fun _ _ => Subalgebra.smul_mem _ (UpperTheory.V.Cm.capC_mem_center _ _) _
 
-def evZ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) :
+def evZ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) :
     MvPolynomial ((E →+* ℂ) × Fin n) ℂ →ₐ[ℂ] Subalgebra.center ℂ (UpperTheory.V.Cm.UC E n) :=
   MvPolynomial.aeval fun p => ⟨zC E n p.1 (p.2 + 1), zC_mem _ _⟩
 

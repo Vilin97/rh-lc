@@ -12,7 +12,7 @@ open NumberField MeasureTheory Topology GlobalTheory.AutomorphicL2Unitary Global
 
 namespace GlobalTheory.CompanionTheory.CuspRank
 
-theorem isCompactOperator_repOp_Rcusp_zero (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+theorem isCompactOperator_repOp_Rcusp_zero (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     (μ : Measure (GA E 0)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (f : GA E 0 → ℂ) :
     IsCompactOperator (repOp (Rcusp μ) μ f) := by
   have := SpecModel.finiteDimensional_zero μ

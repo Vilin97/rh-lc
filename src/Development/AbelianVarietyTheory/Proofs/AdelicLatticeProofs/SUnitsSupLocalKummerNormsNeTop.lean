@@ -13,7 +13,7 @@ open scoped WithZero TensorProduct
 
 namespace GlobalTheory.CNorm
 
-theorem sUnits_sup_finNorm_ne_top : ∀ (p : ℕ) (F : Type) [Field F] [NumberField F] [IsTotallyComplex F] (ζ : F) (δ : Fˣ) (S : Finset (HeightOneSpectrum (𝓞 F))), p.Prime → IsPrimitiveRoot ζ p → AdmP p F S → δ ∈ sUnits F S → (∀ r : F, r ^ p ≠ (δ : F)) → sUnits F S ⊔ finNorm p F δ S ≠ ⊤ := by
+theorem sUnits_sup_finNorm_ne_top : ∀ (p : ℕ) (F : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] (ζ : F) (δ : Fˣ) (S : Finset (HeightOneSpectrum (𝓞 F))), p.Prime → IsPrimitiveRoot ζ p → AdmP p F S → δ ∈ sUnits F S → (∀ r : F, r ^ p ≠ (δ : F)) → sUnits F S ⊔ finNorm p F δ S ≠ ⊤ := by
   intro p F _ _ _ ζ δ S hp hζ hS hδ hr htop
   obtain ⟨h0, h1⟩ := GlobalTheory.T.first_inequality_sUnits_prime_degree p F ζ δ S hp hζ hS hδ hr
   obtain ⟨-, h2⟩ := GlobalTheory.T.pow_countPlacesNotLocalPower_le_index p F ζ δ S hp hζ

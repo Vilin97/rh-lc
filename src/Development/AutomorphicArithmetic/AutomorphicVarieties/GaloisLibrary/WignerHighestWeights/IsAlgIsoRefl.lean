@@ -155,7 +155,7 @@ section Tensor
 
 open scoped TensorProduct
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def lieA (π : CuspSub E a) (Ξ : AlgRep E a) : Lie E a →ₗ[ℝ] Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ)) where
   toFun X := (lieOp π X).rTensor _

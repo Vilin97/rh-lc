@@ -14,10 +14,10 @@ namespace GlobalTheory.JSW.RapidModel
 
 open GlobalTheory.CuspRep GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem norm_toL_mul (x y : Matrix (Fin a) (Fin a) (Cinf E)) : ‖toL (x * y)‖ ≤ a * (‖toL x‖ * ‖toL y‖) := by
   refine pi_norm_le_iff_of_nonneg (by positivity) |>.2 fun i => pi_norm_le_iff_of_nonneg (by positivity) |>.2 fun j => ?_
   change ‖(x * y) i j‖ ≤ _
@@ -27,7 +27,7 @@ theorem norm_toL_mul (x y : Matrix (Fin a) (Fin a) (Cinf E)) : ‖toL (x * y)‖
     ((norm_le_pi_norm (toL y l) j).trans (norm_le_pi_norm (toL y) l)) (norm_nonneg _) (norm_nonneg _))
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem height_mul_le (x y : GL (Fin a) (Cinf E)) : height (x * y) ≤ (1 + 2 * a) * (height x * height y) := by
   have h1 := norm_toL_mul x.val y.val
   have h2 := norm_toL_mul (y⁻¹).val (x⁻¹).val

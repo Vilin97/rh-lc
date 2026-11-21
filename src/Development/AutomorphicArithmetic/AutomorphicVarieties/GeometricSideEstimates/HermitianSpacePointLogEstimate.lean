@@ -13,7 +13,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureR
 open UpperTheory.V.Lit.Geo
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af GlobalTheory.UnitaryBC UpperTheory.V.Lit.Dr UpperTheory.V.Lit.Bor
 
-private theorem pt_ne_zero {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (g : GA E a)
+private theorem pt_ne_zero {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (g : GA E a)
     (v : Fin a → E) (hv : v ≠ 0) : pt g v ≠ 0 := by
   intro h
   apply hv

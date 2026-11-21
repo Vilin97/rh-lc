@@ -16,7 +16,7 @@ open UpperTheory.ConvolutionTheory.R2.G (FS2 nE)
 open scoped Classical
 
 theorem UpperTheory.whittakerCoeff_lieDeriv_unipotent_eq_mul :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E) (f : Sm E 2), Pp.Lf f.1 →
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (f : Sm E 2), Pp.Lf f.1 →
         (∀ X, Continuous (lie E 2 X f).1 ∧ ∃ B : ℝ, ∀ g, ‖(lie E 2 X f).1 g‖ ≤ B) → ∀ (y : (A ℚ)ˣ) (k : GL (Fin 2) (A E)),
         Wo D (lie E 2 (toL (XB D k)) f).1 (em E (aE y) * k) = (2 * Real.pi * Complex.I * (re (y : A ℚ) : ℂ)) * Wo D f.1 (em E (aE y) * k) := by
   intro E _ _ _ D f hf hl y k

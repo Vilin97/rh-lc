@@ -68,7 +68,7 @@ private theorem exT {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
     simp [ten, mul_left_comm]
 
 private theorem L_nbar {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    [IsTotallyReal F] [IsTotallyComplex E] {D : Dat F E} (W : Weil D) (v : P F) (θ : Kv v)
+    [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] {D : Dat F E} (W : Weil D) (v : P F) (θ : Kv v)
     (hθ : θ ^ 2 = algebraMap F (Kv v) D.δ) (hθ0 : θ ≠ 0) (u : V4 F → ℂ) (a a' : M2 v → ℂ) (s : Kv v)
     (ha' : ∀ m, a' m = ψl v (-(s * m.det)) * a m) (φ φ' : S4 F)
     (hφ : φ.1 = ten v θ u (Pt a)) (hφ' : φ'.1 = ten v θ u (Pt a')) :
@@ -85,7 +85,7 @@ private theorem L_nbar {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
   simp
 
 private theorem L_J {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    [IsTotallyReal F] [IsTotallyComplex E] {D : Dat F E} (W : Weil D) (v : P F) (θ : Kv v)
+    [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] {D : Dat F E} (W : Weil D) (v : P F) (θ : Kv v)
     (J : GLv v →* GL (Fin 2) (A E)) (hJ : Splt D v θ J) (u : V4 F → ℂ) (a : M2 v → ℂ) (x : GLv v)
     (φ φ' : S4 F) (hφ : φ.1 = ten v θ u (Pt a))
     (hφ' : φ'.1 = ten v θ u (Pt fun m => a ((x⁻¹).val * m * (dd x).val))) :
@@ -120,7 +120,7 @@ private theorem psi_nbar {F : Type} [Field F] [NumberField F] (v : P F) (s : Kv 
   exact (UpperTheory.ConvolutionTheory.R2.I.psiLaws F v).2.1 _
 
 theorem UpperTheory.ConvolutionTheory.R2.I.keyPure :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (v : P F) (θ : Kv v) (J : GLv v →* GL (Fin 2) (A E)), Splt D v θ J →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (v : P F) (θ : Kv v) (J : GLv v →* GL (Fin 2) (A E)), Splt D v θ J →
       ∀ h', (∀ s, Commute h' (nbar D v θ s)) → ∀ u, Mod v θ W u → ∀ a ∈ SB (M2 v), ∀ φ : S4 F, φ.1 = ten v θ u (Pt a) →
       ∀ f ∈ π.V, (fun x => W1 W M f.1 φ (h' * J x)) ∈ MC (π.locRep v) := by
   intro F E _ _ _ _ _ _ _ D W M π v θ J hJ h' hcomm u hu a ha φ hφ f hf

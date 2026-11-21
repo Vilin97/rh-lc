@@ -13,7 +13,7 @@ open NumberField IsDedekindDomain Matrix Formalism.L2.Host GlobalTheory.LFun
 
 namespace GlobalTheory.CuspRep
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 namespace CuspSub
 
@@ -135,7 +135,7 @@ theorem hasCentChar_ofChar (χ : HChar E) : (ofChar χ).HasCentChar χ := by
 theorem isUnitary_ofChar {χ : HChar E} (h : χ.IsUnitary) : (ofChar χ).IsUnitary := ⟨χ, h, hasCentChar_ofChar χ⟩
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem loc_eq_zpow {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (h : χ.UnrAt w) (x : (w.adicCompletion E)ˣ) :
     χ.loc w x = χ.val w ^ Formalism.UG.ordV E w x := by
   have h0 : Valued.v (x : w.adicCompletion E) ≠ 0 := by simp
@@ -191,7 +191,7 @@ namespace GlobalTheory.Published
 open GlobalTheory.CuspRep
 
 def JacquetShalikaRigidity : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (ι κ : Type) [Fintype ι] [Fintype κ]
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (ι κ : Type) [Fintype ι] [Fintype κ]
     (m : ι → ℕ) (m' : κ → ℕ) (π : ∀ i, CG E (m i)) (π' : ∀ j, CG E (m' j)),
     (∀ i, 1 ≤ m i) → (∀ j, 1 ≤ m' j) →
     (∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∃ (B : ι → Multiset ℂˣ) (B' : κ → Multiset ℂˣ),
@@ -199,13 +199,13 @@ def JacquetShalikaRigidity : Prop :=
     ∃ s : ι ≃ κ, ∀ i, (⟨m i, π i⟩ : Σ a, CG E a) = ⟨m' (s i), π' (s i)⟩
 
 def JacquetShalikaBound : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CG E a), π.IsUnitary →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CG E a), π.IsUnitary →
     ∀ (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ), π.HasSat w B → ∀ α ∈ B,
       (Ideal.absNorm w.asIdeal : ℝ) ^ (-(1 / 2) : ℝ) < ‖(α : ℂ)‖ ∧ ‖(α : ℂ)‖ < (Ideal.absNorm w.asIdeal : ℝ) ^ (1 / 2 : ℝ)
 
 def JacquetShalika : Prop := JacquetShalikaRigidity ∧ JacquetShalikaBound
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 namespace JacquetShalikaRigidity
 

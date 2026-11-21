@@ -21,7 +21,7 @@ section Concrete3
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Group G] [Fintype G] {Pl0 I0 Ty T : Type} {m : ℕ}
 
-theorem gram_valuation_le_extended [IsTotallyComplex K] (A3 : FamIn3 K G Pl0 I0 Ty T m) {s : ℕ} (hOk : A3.fam3.Ok3 s) (P0 : Subgroup G)
+theorem gram_valuation_le_extended [_root_.NumberField.IsTotallyComplex K] (A3 : FamIn3 K G Pl0 I0 Ty T m) {s : ℕ} (hOk : A3.fam3.Ok3 s) (P0 : Subgroup G)
     (ψ0 : P0 →* Kˣ) (Zs : DefSub A3.fam3.amb3) (S : IndefRows (A3.side3 P0 ψ0 Zs)) (y : HeightOneSpectrum (𝓞 K)) :
     (vw y ((A3.side3 P0 ψ0 Zs).Gm (ebOf (A3.side3 P0 ψ0 Zs)) (S.μ y) y) : ℝ) ≤
       (S.D : ℝ) * (vw y ((Fintype.card G * s : ℕ) : K) : ℝ) := by
@@ -248,7 +248,7 @@ variable {A3 : FamIn3 K G Pl0 I0 Ty T m} {s : ℕ} {P0 : Subgroup G} {ψ0 : P0 �
   {Pl : Type} [Fintype Pl] [DecidableEq Pl] {R : RecNums A3.fam3.base3.J Pl} {u : (Dc Pk.Zs).Mem}
   {Nu : Submodule (𝓞 K) (Fin ((Dc Pk.Zs).a u) → K)} {sg : HeightOneSpectrum (𝓞 K) → ℝ}
 
-def DivInputsDef3.toDivInputs0R [IsTotallyComplex K] (hOk : A3.fam3.Ok3 s) (hsep : A3.fam3.TypesSep3)
+def DivInputsDef3.toDivInputs0R [_root_.NumberField.IsTotallyComplex K] (hOk : A3.fam3.Ok3 s) (hsep : A3.fam3.TypesSep3)
     (I : DivInputsDef3 A3 s P0 ψ0 P1 ψ1 Dc Sp Zsc cf C CH Pk R u Nu sg) : DivInputs0R Pk.core R u Nu sg where
   Nu_lat := I.Nu_lat
   sg_fin := I.sg_fin

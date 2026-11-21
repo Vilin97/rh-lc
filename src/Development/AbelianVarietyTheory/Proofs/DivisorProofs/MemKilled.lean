@@ -12,7 +12,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.AutGrowth
 
 namespace GlobalTheory.CapKilled
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in

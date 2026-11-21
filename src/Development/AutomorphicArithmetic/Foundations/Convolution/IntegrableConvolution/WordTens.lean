@@ -36,7 +36,7 @@ private theorem conv_apply (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (β
   rw [dite_eq_left hex]
   exact hex.choose_spec g
 
-variable [IsTotallyComplex K]
+variable [_root_.NumberField.IsTotallyComplex K]
 
 private theorem lact_step (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (α β γ : TI K n) (hα : SmoothT α)
     (hβ : SmoothT β) (h : ∀ g, γ g = cv ν α β g) (y z : UC K n) (hz : z ∈ Subalgebra.center ℂ (UC K n))
@@ -123,7 +123,7 @@ private theorem conv_tens (hm : νE = Measure.map (glueA D n) (Measure.pi fun _ 
       fun_prop
     exact this.aestronglyMeasurable
 
-variable [IsTotallyComplex F] [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem a_smooth (hs : ArchSlot D νE νF b a aE aF) : SmoothT a := by
   have hc : Continuous fun x : archGroup F n => conj (b x⁻¹) := by

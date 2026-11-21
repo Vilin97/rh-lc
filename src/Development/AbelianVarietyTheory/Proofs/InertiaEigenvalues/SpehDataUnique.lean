@@ -24,7 +24,7 @@ namespace GlobalTheory.SpehPair
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N a d : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N a d : ℕ}
 
 theorem isUnitary_of_isNormalised {π : CuspSub E a} (h : IsNormalised π) : π.IsUnitary := by
   obtain ⟨ω, hω⟩ := Central.exists_hasCentral E a π

@@ -70,7 +70,7 @@ private theorem emb_eq {R : Type} [CommRing R] (g : GL (Fin r) R) : embGL (Fin.c
       simp [Matrix.one_apply, this]
     | right j => simp [Matrix.one_apply]
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private theorem uc_slice (f : Fin r ↪ Fin (r + s)) (g : GA E (r + s)) (u : UC E r) :
     ∃ u' : UC E (r + s), ∀ F, uC E r u (GlobalTheory.GLSlice.slice f g F) = GlobalTheory.GLSlice.slice f g (uC E (r + s) u' F) := by
@@ -105,7 +105,7 @@ private def stab {n : ℕ} (ψ : Sm E n) : Subgroup (GL (Fin n) (Af E)) where
 end
 
 theorem UpperTheory.constantTerm_leviRestriction_moderateGrowth :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (φ : Sm E (r + s)) (Φ : Sm E r) (x : GA E r) (m : GA E s), 0 < r → Umg φ →
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) (φ : Sm E (r + s)) (Φ : Sm E r) (x : GA E r) (m : GA E s), 0 < r → Umg φ →
           (∀ γ : GL (Fin r) E, x * ratGL E r γ = ratGL E r γ * x) →
           (∀ g, Φ.1 g = AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (x * g, m))) → Umg Φ := by
   intro E _ _ _ r s φ Φ x m _ hφ hx hΦ

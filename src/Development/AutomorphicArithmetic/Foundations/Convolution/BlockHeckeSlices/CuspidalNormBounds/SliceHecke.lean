@@ -38,7 +38,7 @@ private theorem tset_rel {w : Pl E} {ϖ : w.adicCompletion E} {a : ℕ} {x x' : 
   refine ⟨l₁ * k₁⁻¹, mul_mem g₁ (inv_mem h₁), k₂⁻¹ * l₂, mul_mem (inv_mem h₂) g₂, Units.ext ?_⟩
   simp only [Units.val_mul, e, e', mul_assoc, Units.inv_mul_cancel_left, Units.mul_inv_cancel_left]
 
-variable [IsTotallyComplex E] {S : Set (Pl E)}
+variable [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)}
 
 private theorem move (b : Blo S r) {w : Pl E} {ϖ : w.adicCompletion E} (hu : IsUnifV E w ϖ) {a : ℕ} (ha : a ≤ r)
     {Φ : GA E r → ℂ} (hΦ : AutomorphicForm.IsLeftInvariant Φ) (t : ℝ) {x : GL (Fin r) (w.adicCompletion E)}
@@ -178,7 +178,7 @@ private theorem reidx (r s j : ℕ) (G : ℕ → ℕ → ℂ) (hG : ∀ a, r < a
     rw [← hp, Nat.add_sub_cancel_left]
 
 theorem UpperTheory.ConvolutionTheory.BW.sliceHecke :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceHecke E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceHecke E := by
   intro E _ _ _ S r s b t φ ψ w j hU hS hw hj hψ
   have hu := (exists_isUnifV w).choose_spec
   have hϖ := mem_Ov_of_isUnifV hu

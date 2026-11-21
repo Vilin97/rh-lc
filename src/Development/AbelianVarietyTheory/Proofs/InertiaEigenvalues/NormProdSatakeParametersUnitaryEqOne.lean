@@ -12,7 +12,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep GlobalTheory.JSW Filter T
 
 namespace GlobalTheory.RSNonvan
 
-theorem norm_prod_sat_eq_one : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (σ : CG E a)
+theorem norm_prod_sat_eq_one : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (σ : CG E a)
     (w : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ), σ.IsUnitary → σ.HasSat w B → ‖((B.prod : ℂˣ) : ℂ)‖ = 1 := by
   intro E _ _ _ a σ w B hu hB
   obtain ⟨ω, hωu, hω⟩ := hu

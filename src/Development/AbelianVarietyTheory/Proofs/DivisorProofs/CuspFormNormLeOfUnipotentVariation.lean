@@ -15,7 +15,7 @@ noncomputable section
 
 namespace GlobalTheory.CuspRep
 
-theorem norm_le_of_unip_variation : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ψ : Sm E a),
+theorem norm_le_of_unip_variation : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ψ : Sm E a),
     IsCuspForm ψ → ∀ s : ℕ, 0 < s → s < a → ∀ (g : GA E a) (e : ℝ),
       (∀ x : BlockIx a s → Ad E, ‖ψ.1 (unip x * g) - ψ.1 g‖ ≤ e) → ‖ψ.1 g‖ ≤ e := by
   intro E _ _ _ a ψ hψ s hs0 hsa g e he

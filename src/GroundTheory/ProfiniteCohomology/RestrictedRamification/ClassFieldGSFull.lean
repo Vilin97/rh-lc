@@ -28,7 +28,7 @@ theorem sq_mem_unitsOutsidePos {u : IdeleGroup K} (hu : u ∈ unitsOutside S) :
     (map_ne_zero _).2 (Units.ne_zero _)
   exact lt_of_le_of_ne (sq_nonneg _) (Ne.symm (pow_ne_zero 2 h0))
 
-theorem mem_unitsOutsidePos_of_isTotallyComplex [IsTotallyComplex K] {u : IdeleGroup K}
+theorem mem_unitsOutsidePos_of_isTotallyComplex [_root_.NumberField.IsTotallyComplex K] {u : IdeleGroup K}
     (hu : u ∈ unitsOutside S) : u ∈ unitsOutsidePos S :=
   mem_unitsOutsidePos.2 ⟨hu, fun w ↦
     absurd w.2 (InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex w.1))⟩

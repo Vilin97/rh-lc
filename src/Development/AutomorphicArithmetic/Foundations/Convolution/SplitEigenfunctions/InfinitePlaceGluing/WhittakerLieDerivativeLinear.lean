@@ -23,7 +23,7 @@ noncomputable section
 
 namespace UpperTheory.ConvolutionTheory.RankTwoDescent.SH
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem re_iy (y : ℝ) (hy : y ≠ 0) : re ((iy y : (A ℚ)ˣ) : A ℚ) = y := by
   have h : iy y = TR.infId ℚ ⟨fun _ => y, fun _ => y⁻¹, funext fun _ => mul_inv_cancel₀ hy, funext fun _ => inv_mul_cancel₀ hy⟩ := dif_neg hy

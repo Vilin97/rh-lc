@@ -14,7 +14,7 @@ namespace UpperTheory.ConvolutionTheory.R2.Ff
 
 section SlopeTestRemainingChoices
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem fiber_eq (w : InfinitePlace E) :
     (Finset.univ.filter fun τ : E →+* ℂ => InfinitePlace.mk τ = w) =
@@ -70,7 +70,7 @@ end SlopeTestRemainingChoices
 end UpperTheory.ConvolutionTheory.R2.Ff
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.dLCen :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F), DLCen D O := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (O : Fo.Ops F), DLCen D O := by
   intro F E _ _ _ _ _ _ _ D O
   refine ⟨fun s => ?_, fun Y Y' => ?_, fun c Y => ?_, fun s => ?_⟩
   · have hz : ∀ i j, zE s i j = if i = j then s else 0 := by

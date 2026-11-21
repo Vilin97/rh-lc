@@ -18,7 +18,7 @@ private theorem rT_map_on {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (
     simp only [map_sum, LinearMap.rTensor_tmul, TensorProduct.map_tmul]
   exact Finset.sum_congr rfl fun i _ => by rw [h _ (hm i)]
 
-private theorem rT_smLie {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (Ξ : AlgRep E a)
+private theorem rT_smLie {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (Ξ : AlgRep E a)
     (N : Submodule ℂ (Sm E a)) (T : Module.End ℂ (Sm E a)) (hT : IsOp N T) (X : Lie E a)
     (m : Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)) (hm : ∀ i, cmp i m ∈ N) :
     smLie Ξ X (T.rTensor _ m) = T.rTensor _ (smLie Ξ X m) := by

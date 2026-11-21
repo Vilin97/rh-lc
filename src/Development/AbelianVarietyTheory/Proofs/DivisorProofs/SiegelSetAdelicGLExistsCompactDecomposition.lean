@@ -13,7 +13,7 @@ open Pointwise Matrix
 
 namespace GlobalTheory.SiegelSetGL
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
 
 theorem continuous_pInfC : Continuous (pInf E) :=
   continuous_pi fun w =>
@@ -26,7 +26,7 @@ theorem continuous_mapInf : Continuous (GeneralLinearGroup.map (n := Fin a) (pIn
 theorem continuous_mapFin : Continuous (GeneralLinearGroup.map (n := Fin a) (pFin E)) :=
   Continuous.units_map _ (continuous_id.matrix_map (continuous_snd : Continuous (pFin E)))
 
-theorem exists_compact_decomp : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem exists_compact_decomp : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (ω : Set (AdelicGLn.AdelicGL E a)), IsCompact ω →
     ω ⊆ (adelicBorel (K := E) (n := a) : Set (AdelicGLn.AdelicGL E a)) → ∀ t : ℝ, 0 < t →
     ∃ (Ω : Set (GL (Fin a) (Cinf E))) (Kf : Set (GL (Fin a) (Af E))), IsCompact Ω ∧ IsCompact Kf ∧

@@ -83,7 +83,7 @@ theorem log_rootDiscr_le (K H M : Type) [Field K] [NumberField K] [Field H] [Num
   field_simp
 
 theorem exists_algHom_ray (hR : RayField) (K : IntermediateField ℚ ℂ) [NumberField K]
-    [IsTotallyComplex K] (hK : Module.finrank ℚ K = 2) (hd : discr K < -4) (L : PeriodPair)
+    [_root_.NumberField.IsTotallyComplex K] (hK : Module.finrank ℚ K = 2) (hd : discr K < -4) (L : PeriodPair)
     (hL : ∀ z : ℂ, z ∈ L.lattice ↔ ∃ a : 𝓞 K, ((a : K) : ℂ) = z) (H : IntermediateField ℚ ℂ)
     (hH : H = K ⊔ ℚ⟮(GlobalTheory.latticeCurve L).j⟯) [Algebra K H]
     (hKH : ∀ x : K, ((algebraMap K H x : H) : ℂ) = x) (n : ℕ) (ho : Odd n) (h3 : 3 ≤ n) :
@@ -104,7 +104,7 @@ theorem exists_algHom_ray (hR : RayField) (K : IntermediateField ℚ ℂ) [Numbe
        commutes' := fun x => Subtype.ext (hKH x) }⟩⟩
 
 theorem invariantField (hR : RayField) (K : IntermediateField ℚ ℂ) [NumberField K]
-    [IsTotallyComplex K] (hK : Module.finrank ℚ K = 2) (hd : discr K < -4) (L : PeriodPair)
+    [_root_.NumberField.IsTotallyComplex K] (hK : Module.finrank ℚ K = 2) (hd : discr K < -4) (L : PeriodPair)
     (hL : ∀ z : ℂ, z ∈ L.lattice ↔ ∃ a : 𝓞 K, ((a : K) : ℂ) = z) (H : IntermediateField ℚ ℂ)
     (hH : H = K ⊔ ℚ⟮(GlobalTheory.latticeCurve L).j⟯) [Algebra K H]
     (hKH : ∀ x : K, ((algebraMap K H x : H) : ℂ) = x) :

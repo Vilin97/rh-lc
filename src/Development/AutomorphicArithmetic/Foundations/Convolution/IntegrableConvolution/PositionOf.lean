@@ -14,7 +14,7 @@ open scoped ComplexConjugate NumberField.LiesOver
 namespace UpperTheory.ConvolutionTheory.L1
 
 section co
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
 
 private theorem cpx (w : InfinitePlace K) : IsComplex w := IsTotallyComplex.isComplex w
 
@@ -152,9 +152,9 @@ private theorem archC_iff {n : ℕ} (x : archGroup K n) :
 end co
 
 section ext
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex F]
 
-private theorem totC (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F] :
+private theorem totC (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex F] :
     IsTotallyComplex E := ⟨fun w => by
   rw [← not_isReal_iff_isComplex]
   intro h
@@ -163,7 +163,7 @@ private theorem totC (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
   exact not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex (mk (w.embedding.comp (algebraMap F E))))
     (isReal_mk_iff.2 h2)⟩
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private theorem co_iota (τ : E →+* ℂ) (y : InfiniteAdeleRing F) :
     co τ (InfiniteAdeleRing.ringEquiv_mixedSpace E (GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap (K := F) (L := E) y)) =
@@ -190,7 +190,7 @@ private theorem co_iota (τ : E →+* ℂ) (y : InfiniteAdeleRing F) :
 end ext
 
 section intersection_update_fsHerm_neg_one
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
 
 private def P (τ : K →+* ℂ) (z : ℂ) : InfiniteAdeleRing K := (InfiniteAdeleRing.ringEquiv_mixedSpace K).symm (along τ z)
 
@@ -228,8 +228,8 @@ private theorem idem_eq (τ : K →+* ℂ) {x : InfiniteAdeleRing K} (hx : P τ 
 end intersection_update_fsHerm_neg_one
 
 section main
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F]
-  [IsTotallyComplex E] {σ : E ≃ₐ[F] E} {m : ℕ}
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex F]
+  [_root_.NumberField.IsTotallyComplex E] {σ : E ≃ₐ[F] E} {m : ℕ}
 
 private theorem cq_iota (τ : E →+* ℂ) (y : InfiniteAdeleRing F) :
     cq τ (GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap (K := F) (L := E) y) = cq (τ.comp (algebraMap F E)) y :=

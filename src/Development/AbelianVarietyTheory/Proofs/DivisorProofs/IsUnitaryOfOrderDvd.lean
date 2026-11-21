@@ -35,7 +35,7 @@ theorem isUnitary_of_orderDvd {L : Type} [Field L] [NumberField L] {χ : HChar L
     rw [← norm_pow, ← Units.val_pow_eq_pow_val, h1, Units.val_one, norm_one]
   exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hn.ne').1 h2
 
-theorem inf_eq_one {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] {χ : HChar L} {n : ℕ} (hn : 0 < n)
+theorem inf_eq_one {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] {χ : HChar L} {n : ℕ} (hn : 0 < n)
     (h : χ.OrderDvd n) (k : Lˣ) : χ.inf k = 1 := by
   have hx : ∀ x, (χ.1 x) ^ n = 1 := fun x => congrArg (fun ξ : HChar L => ξ.1 x) h
   have hw : ∀ (w : InfinitePlace L) (y : (w.Completion)ˣ), χ.locInf w y = 1 := by

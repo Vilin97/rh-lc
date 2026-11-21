@@ -185,7 +185,7 @@ private theorem exists_unit {E : Type} [Field E] [NumberField E] (k : Eˣ)
   exact ⟨Units.mkOfMulEqOne r s e, hr⟩
 
 theorem UpperTheory.V.Sd.Tw.hecke :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K], Module.finrank ℚ K = 2 → ∀ (l : ℕ), l.Prime → l ≠ 2 →
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K], Module.finrank ℚ K = 2 → ∀ (l : ℕ), l.Prime → l ≠ 2 →
         ¬ (l : ℤ) ∣ discr K → ∀ (N : ℕ), 3 ≤ N → ∀ (χ : (ZMod N)ˣ →* ℂˣ), χ ^ 2 = 1 → χ (-1) = -1 →
         ∃ (Y : HChar K) (a : (K →+* ℂ) → ℤ) (τ : K →+* ℂ), Y.IsAlg a ∧ a τ = -1 ∧ a (ComplexEmbedding.conjugate τ) = 0 ∧
           (∀ v : HeightOneSpectrum (𝓞 K), (N : 𝓞 K) ∉ v.asIdeal → Y.UnrAt v) ∧

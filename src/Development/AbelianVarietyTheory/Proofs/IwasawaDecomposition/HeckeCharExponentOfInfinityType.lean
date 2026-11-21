@@ -11,9 +11,9 @@ open NumberField IsDedekindDomain MeasureTheory Neutral.B1 ReciprocityTheory.Neu
 
 namespace GlobalTheory.CuspRep.InfType
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
-def diagInf (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] : E →+* Cinf E :=
+def diagInf (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] : E →+* Cinf E :=
   (pInf E).comp (algebraMap E (Ad E))
 
 theorem infDiag_eq (k : Eˣ) : infDiag k = infId E (Units.map (diagInf E).toMonoidHom k) := by
@@ -49,7 +49,7 @@ theorem denseRange_units : DenseRange (Units.map (diagInf E).toMonoidHom) := by
   exact ⟨v, hv, Units.mk0 k h0, Units.ext hk.symm⟩
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_coord (τ : E →+* ℂ) : Continuous (coord τ) := by
   unfold coord
   split_ifs
@@ -57,7 +57,7 @@ theorem continuous_coord (τ : E →+* ℂ) : Continuous (coord τ) := by
   · exact Complex.continuous_conj.comp (continuous_apply _)
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem coord_expU (τ : E →+* ℂ) (x : Cinf E) : coord τ (expU x : (Cinf E)ˣ) = Complex.exp (coord τ x) := by
   unfold coord
   split_ifs
@@ -123,7 +123,7 @@ theorem expo_eq_sum (χ : HChar E) {I : Type} [Fintype I] (φ : I → E →+* �
   refine congrArg _ (Finset.sum_congr rfl fun i _ => ?_)
   split_ifs <;> simp <;> ring
 
-theorem expo_of_infType : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (χ : HChar E), (∀ n : (E →+* ℂ) → ℤ, χ.IsAlg n → ∀ τ, expo χ τ = n τ) ∧ (∀ s : ℝ, χ.IsAbsPow s → ∀ τ, expo χ τ = s) ∧ ∀ (I : Type) [Fintype I] (φ : I → E →+* ℂ) (n : I → ℤ), Function.Injective (fun i => InfinitePlace.mk (φ i)) → χ.HasInf φ n → ∀ i, expo χ (φ i) = (n i : ℂ) / 2 ∧ expo χ (ComplexEmbedding.conjugate (φ i)) = -(n i : ℂ) / 2 := by
+theorem expo_of_infType : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (χ : HChar E), (∀ n : (E →+* ℂ) → ℤ, χ.IsAlg n → ∀ τ, expo χ τ = n τ) ∧ (∀ s : ℝ, χ.IsAbsPow s → ∀ τ, expo χ τ = s) ∧ ∀ (I : Type) [Fintype I] (φ : I → E →+* ℂ) (n : I → ℤ), Function.Injective (fun i => InfinitePlace.mk (φ i)) → χ.HasInf φ n → ∀ i, expo χ (φ i) = (n i : ℂ) / 2 ∧ expo χ (ComplexEmbedding.conjugate (φ i)) = -(n i : ℂ) / 2 := by
   intro E _ _ _ χ
   classical
   refine ⟨fun n h τ => ?_, fun s h τ => ?_, fun I _ φ n hφ h i => ?_⟩

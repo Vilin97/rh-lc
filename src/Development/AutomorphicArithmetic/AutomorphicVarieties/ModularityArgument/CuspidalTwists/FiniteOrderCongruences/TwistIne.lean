@@ -70,7 +70,7 @@ def TenInd : Prop :=
       TauDat ι K' g0 m c₁ τ s κ → IsInd K' (Af.tw (ρ.comp (resQ K')) κ) (tenB ρ₁ τ)
 
 def GoodJ : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K], Module.finrank ℚ K = 2 → ∀ π : CuspSub K 2, (CG.mk π).IsRegAlg →
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K], Module.finrank ℚ K = 2 → ∀ π : CuspSub K 2, (CG.mk π).IsRegAlg →
     ∀ m : ℕ, 1 ≤ m → ∃ j : ℕ, 1 ≤ j ∧ j ≤ 9 ∧ ∀ (Y : HChar K) (a : (K →+* ℂ) → ℤ) (e : K →+* ℂ), IsAlgPos Y a →
       a e = -((m * j : ℕ) : ℤ) → a (ComplexEmbedding.conjugate e) = ((m * j : ℕ) : ℤ) →
       ∃ M M' : Multiset ℂ, (π.twist Y).HasInfChar e M ∧ (π.twist Y).HasInfChar (ComplexEmbedding.conjugate e) M' ∧ M ≠ 0 ∧

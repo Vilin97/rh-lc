@@ -21,7 +21,7 @@ open Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspR
 open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Fo
 
 theorem UpperTheory.ConvolutionTheory.R2.fockSt :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), St.FockSt W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), St.FockSt W := by
   intro F E _ _ _ _ _ _ _ D W
   obtain ⟨O⟩ := opsEx F
   have one : ∀ (T : Module.End ℂ (S4 F)), (∀ φ ∈ Vac D.δ, T φ ∈ Vac D.δ) →

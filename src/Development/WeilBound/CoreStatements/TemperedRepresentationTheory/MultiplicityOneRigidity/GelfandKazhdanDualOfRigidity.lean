@@ -13,7 +13,7 @@ open scoped InnerProductSpace
 
 namespace PositivityTheory.JMult1
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem paired_of_dualSubC_iso (hB : GlobalTheory.Published.CuspFormsBoundedGL) {π : CuspSub E a} (hπ : IsNormalised π)
     (h : (dualSubC π).Iso π) : Paired π π invTOp := by

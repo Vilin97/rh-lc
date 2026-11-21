@@ -11,7 +11,7 @@ open UpperTheory.V.Lit.Geo
 
 namespace UpperTheory.V.Lit.Geo
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem retr_left (γ : GL (Fin a) E) (t : ℝ) (g : GA E a) :
     (retractOne (ratGL E a γ * splitCentre E a t * g) : KernelIndexFullLattice.G1 E a).1 = ratGL E a γ * (retractOne g : KernelIndexFullLattice.G1 E a).1 := by

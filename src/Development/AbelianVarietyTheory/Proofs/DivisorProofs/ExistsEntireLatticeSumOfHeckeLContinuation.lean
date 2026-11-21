@@ -329,7 +329,7 @@ theorem sum_char {G : Type} [CommGroup G] [Finite G] [Fintype (G →* ℂˣ)] (g
     refine sum_hom_units_eq_zero ((Units.coeHom ℂ).comp (MonoidHom.eval g)) fun e => hθ (Units.ext ?_)
     exact DFunLike.congr_fun e θ
 
-theorem zterm_princ [IsTotallyComplex E] {I : Type} [Fintype I] {φ : I → E →+* ℂ} (h : IsCMType φ) {s : ℕ} {κ : I → ℕ}
+theorem zterm_princ [_root_.NumberField.IsTotallyComplex E] {I : Type} [Fintype I] {φ : I → E →+* ℂ} (h : IsCMType φ) {s : ℕ} {κ : I → ℕ}
     (hi : HasInf χ φ fun i => (κ i : ℤ) + s) (σ : ℂ) (a : Eˣ) :
     zterm χ (s + σ) (Units.map (algebraMap E (Af E)).toMonoidHom a) = term φ (2 * s) κ σ a := by
   have h2 := term_mul_inf hi a

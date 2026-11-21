@@ -277,7 +277,7 @@ end
 
 open UpperTheory.ConvolutionTheory.R2.H.T0 in
 theorem UpperTheory.ConvolutionTheory.R2.H.integral_thetaRowZero_eq_zero_of_iwahori_invariant :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (v : P F) (ϖ : (Kv v)ˣ), IsU ϖ → Gd D.δ v → Aniso D.δ v → ∀ j, IsJ v j →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (v : P F) (ϖ : (Kv v)ˣ), IsU ϖ → Gd D.δ v → Aniso D.δ v → ∀ j, IsJ v j →
       ∀ (f : G1 F → ℂ) (φ : S4 F), (∀ γ g, f (ratS F γ * g) = f g) →
       (∀ g (x : Matrix.SpecialLinearGroup (Fin 2) (Kv v)), IsInt (x 0 0) → IsInt (x 1 1) → IsInt (((ϖ⁻¹ : (Kv v)ˣ) : Kv v) * x 0 1) → IsInt ((ϖ : Kv v) * x 1 0) →
         f (g * j x) = f g) →

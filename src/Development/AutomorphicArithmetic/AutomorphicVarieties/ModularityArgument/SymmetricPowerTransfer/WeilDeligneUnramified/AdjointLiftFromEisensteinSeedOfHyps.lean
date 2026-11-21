@@ -139,7 +139,7 @@ private theorem cc_sq {c : G ℚ Ω} (h : IsCC c) : c * c = 1 := by
   rw [AlgEquiv.mul_apply, hj, hj]; simp
 
 omit [IsAlgClosure ℚ Ω] in
-private theorem cc_not_mem (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Algebra K Ω] {c : G ℚ Ω} (h : IsCC c) :
+private theorem cc_not_mem (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Algebra K Ω] {c : G ℚ Ω} (h : IsCC c) :
     c ∉ galOf ℚ K Ω := by
   obtain ⟨j, hj⟩ := h
   intro hc

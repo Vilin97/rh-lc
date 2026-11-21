@@ -10,7 +10,7 @@ open NumberField NumberField.mixedEmbedding Matrix GlobalTheory.CuspRep GroundTh
 
 namespace UpperTheory.V.Cm
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
 
 def mixRing : Cinf E ≃+* mixedSpace E := (infEq E).trans (InfiniteAdeleRing.ringEquiv_mixedSpace E)
 

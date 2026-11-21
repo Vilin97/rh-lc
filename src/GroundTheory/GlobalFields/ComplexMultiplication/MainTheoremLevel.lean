@@ -21,9 +21,9 @@ open GroundTheory.LocalField (maximalAbelianExtension)
 open scoped nonZeroDivisors
 
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K]
+  [_root_.NumberField.IsTotallyComplex K]
 
-omit [NumberField K] [IsTotallyComplex K] in
+omit [NumberField K] [_root_.NumberField.IsTotallyComplex K] in
 theorem exists_isogeny_homConstSet_congr {L : Type} [Field L] [Algebra L ℂ]
     {A A' B B' : WeierstrassCurve L} [A.IsElliptic] [A'.IsElliptic] [B.IsElliptic] [B'.IsElliptic]
     (eA : A = A') (eB : B = B') {S : Set ℂ}
@@ -34,7 +34,7 @@ theorem exists_isogeny_homConstSet_congr {L : Type} [Field L] [Algebra L ℂ]
   subst eA eB
   exact h
 
-omit [NumberField K] [IsTotallyComplex K] [Algebra K ℂ] in
+omit [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Algebra K ℂ] in
 theorem nonempty_isogEnd_congr {L : Type} [Field L] [Algebra L ℂ] {B B' : WeierstrassCurve L}
     [B.IsElliptic] [B'.IsElliptic] (e : B = B') (h : Nonempty (isogEnd (B.baseChange ℂ) ≃+* 𝓞 K)) :
     Nonempty (isogEnd (B'.baseChange ℂ) ≃+* 𝓞 K) := by

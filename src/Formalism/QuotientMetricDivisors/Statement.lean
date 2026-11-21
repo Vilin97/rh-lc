@@ -99,7 +99,7 @@ def meanLog (κ : InfinitePlace K → ℝ) : ℝ :=
 end Defs
 
 def GramDeterminantQuotientMetric : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (K0 : Subfield K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (K0 : Subfield K),
     IsCMSub K0 → ∀ v0 : InfinitePlace K, IsConjAt v0 →
     ∀ (n D : ℕ) (H : Matrix (Fin n) (Fin n) K), (∀ i j, H i j ∈ K0) →
     (∀ v : InfinitePlace K, (H.map v.embedding).PosDef) →
@@ -110,7 +110,7 @@ def GramDeterminantQuotientMetric : Prop :=
       v0.embedding (gramR (quotGram P H) e) = (gram XQ v0 e).det
 
 def LemmaRa : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (K0 : Subfield K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (K0 : Subfield K),
     IsCMSub K0 → ∀ v0 : InfinitePlace K, IsConjAt v0 →
     ∀ (n D : ℕ) (H : Matrix (Fin n) (Fin n) K), (∀ i j, H i j ∈ K0) →
     (∀ v : InfinitePlace K, (H.map v.embedding).PosDef) →
@@ -121,7 +121,7 @@ def LemmaRa : Prop :=
       vw w (gramR (quotGram P H) e) ≤ (g : ℤ) * (D : ℤ) * vw w (l : K)
 
 def LemmaRb : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (K0 : Subfield K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (K0 : Subfield K),
     IsCMSub K0 → ∀ v0 : InfinitePlace K, IsConjAt v0 →
     ∀ (n D : ℕ) (H : Matrix (Fin n) (Fin n) K), (∀ i j, H i j ∈ K0) →
     (∀ v : InfinitePlace K, (H.map v.embedding).PosDef) →

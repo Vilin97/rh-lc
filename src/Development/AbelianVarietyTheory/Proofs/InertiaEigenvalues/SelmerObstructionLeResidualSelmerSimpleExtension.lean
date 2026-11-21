@@ -248,7 +248,7 @@ end Conn
 
 section Count
 
-variable {F Ω : Type} [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
+variable {F Ω : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
   (l : ℕ) [Fact l.Prime] {Λ M : Type} [CommRing Λ] [AddCommGroup M] [Module Λ M] [TopologicalSpace M] [DiscreteTopology M]
   (S : Finset (HeightOneSpectrum (𝓞 F))) (A : Formalism.GaloisCohomology.Places F Ω)
 
@@ -258,7 +258,7 @@ abbrev Ab : Type := {v : HeightOneSpectrum (𝓞 F) // ((l : ℕ) : 𝓞 F) ∈ 
 
 abbrev locAb (v : Ab F l) : Dec (F := F) (A.1 v.1) →* GS Ω (S : Set (HeightOneSpectrum (𝓞 F))) := locHom _ (A.1 v.1)
 
-omit [IsTotallyComplex F] [IsAlgClosure F Ω] [Fact l.Prime] in
+omit [_root_.NumberField.IsTotallyComplex F] [IsAlgClosure F Ω] [Fact l.Prime] in
 theorem continuous_locAb (v : Ab F l) : Continuous (locAb l S A v) := continuous_locHom _ _
 
 theorem card_sel (hPT : PoitouTateTotallyComplex) (hLF : LocalFiniteness) (hLE : LocalEulerChar)
@@ -372,20 +372,20 @@ section General
 
 open Formalism.GaloisCohomology
 
-variable {F Ω : Type} [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
+variable {F Ω : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
   (l : ℕ) [Fact l.Prime] {Λ M' M M'' : Type} [CommRing Λ]
   [AddCommGroup M'] [Module Λ M'] [TopologicalSpace M'] [DiscreteTopology M']
   [AddCommGroup M] [Module Λ M] [TopologicalSpace M] [DiscreteTopology M]
   [AddCommGroup M''] [Module Λ M''] [TopologicalSpace M''] [DiscreteTopology M'']
 
-omit [IsTotallyComplex F] in
+omit [_root_.NumberField.IsTotallyComplex F] in
 theorem finite_above : (placesOver F l).Finite := by
   have h0 : Ideal.span {((l : ℕ) : 𝓞 F)} ≠ ⊥ := by
     rw [Ne, Ideal.span_singleton_eq_bot]
     exact_mod_cast (Fact.out : l.Prime).ne_zero
   exact (Ideal.finite_factors h0).subset fun v hv => Ideal.dvd_span_singleton.2 hv
 
-omit [IsTotallyComplex F] [Fact l.Prime] in
+omit [_root_.NumberField.IsTotallyComplex F] [Fact l.Prime] in
 theorem finprod_above [Fintype (Ab F l)] (f : HeightOneSpectrum (𝓞 F) → ℕ) :
     ∏ᶠ v ∈ placesOver F l, f v = ∏ v : Ab F l, f v.1 := by
   rw [← finprod_eq_prod_of_fintype]

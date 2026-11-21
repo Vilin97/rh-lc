@@ -222,7 +222,7 @@ theorem g_ne_zero [Algebra K ℂ] (hK : finrank ℚ K = 2) (hd : NumberField.dis
     omega
 section Main
 
-variable [Algebra K ℂ] [IsTotallyComplex K] (hK : finrank ℚ K = 2)
+variable [Algebra K ℂ] [_root_.NumberField.IsTotallyComplex K] (hK : finrank ℚ K = 2)
 
 
 include hK in
@@ -311,7 +311,7 @@ end Main
 
 section Final
 
-variable [Algebra K ℂ] [IsTotallyComplex K] (hK : finrank ℚ K = 2)
+variable [Algebra K ℂ] [_root_.NumberField.IsTotallyComplex K] (hK : finrank ℚ K = 2)
 
 
 include hK in
@@ -425,7 +425,7 @@ theorem isRay_of_eq {M N : IntermediateField K ℂ} (h : M = N) [NumberField M] 
   subst h
   exact hM
 
-theorem isRay_rayClassField [IsTotallyComplex K] (n : ℕ) (hn : n ≠ 0) :
+theorem isRay_rayClassField [_root_.NumberField.IsTotallyComplex K] (n : ℕ) (hn : n ≠ 0) :
     IsRay ((Modulus.ofNat (K := K) n hn).rayClassField ℂ) (Ideal.span {(n : 𝓞 K)}) := by
   have hn0 : (n : 𝓞 K) ≠ 0 := by exact_mod_cast hn
   have hq : Ideal.span {(n : 𝓞 K)} ≠ ⊥ := by

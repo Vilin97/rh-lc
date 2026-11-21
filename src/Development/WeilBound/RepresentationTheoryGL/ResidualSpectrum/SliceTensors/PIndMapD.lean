@@ -14,7 +14,7 @@ open scoped ContDiff
 
 namespace PositivityTheory.Rg.Rs.InducedTensorMap
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 def res (y : GA E (r + s)) : (GA E (r + s) → ℂ) →ₗ[ℂ] (GA E r × GA E s → ℂ) :=
   LinearMap.funLeft ℂ ℂ fun m => lev (Ad E) r s m * y

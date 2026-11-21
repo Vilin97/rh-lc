@@ -77,7 +77,7 @@ theorem exists_nat (S : Finset (HeightOneSpectrum (𝓞 E)))
     have heq : q w = q v := hmax.eq_of_le hp.ne_top hle
     exact hv (hS w hw v heq.symm)
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem mem_natLat_iff {N : ℕ} (hN : 0 < N) (z : Af E) :
     z ∈ GlobalTheory.RSJ.natLat E N ↔ ∀ v : HeightOneSpectrum (𝓞 E), Valued.v (z v) ≤ Valued.v (N : v.adicCompletion E) := by
@@ -104,7 +104,7 @@ end GlobalTheory.RSParams
 
 
 open GlobalTheory.RSParams in
-theorem GlobalTheory.RSParams.exists_level_nat_bump : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ)
+theorem GlobalTheory.RSParams.exists_level_nat_bump : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))),
     (∀ w ∈ S, ∀ w' : HeightOneSpectrum (𝓞 E), Ideal.comap (algebraMap ℤ (𝓞 E)) w'.asIdeal =
       Ideal.comap (algebraMap ℤ (𝓞 E)) w.asIdeal → w' ∈ S) →

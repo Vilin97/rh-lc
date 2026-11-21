@@ -14,7 +14,7 @@ open UpperTheory.ConvolutionTheory.R2
 
 open UpperTheory.ConvolutionTheory.R2.H in
 theorem UpperTheory.ConvolutionTheory.R2.unr :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), St.Unr W M π := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), St.Unr W M π := by
   intro F E _ _ _ _ _ _ _ D W M π h0 Q hQ
   have hs : ∀ᶠ w : HeightOneSpectrum (𝓞 E) in cofinite, ∀ v : HeightOneSpectrum (𝓞 F), Below v w → ∃ B, π.HasSat v B := by
     have h1 := UpperTheory.V.Af.Gk.satAE F 2 π

@@ -31,7 +31,7 @@ theorem exists_compact_integral (E : Type) [Field E] [NumberField E] :
     exact sub_mem hu (Formalism.L2.GlobalTheoryTheory.FiltrationBoundaryCriterion.CompactFixesLatticeTheory.algebraMap_mem_intAd r)
 
 theorem exists_rat_sub_bounded_small :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (U : Set (Af E)), U ∈ nhds (0 : Af E) →
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (U : Set (Af E)), U ∈ nhds (0 : Af E) →
       ∃ R : ℝ, 0 ≤ R ∧ ∀ x : Ad E, ∃ ξ : E, ‖pInf E (x - algebraMap E (Ad E) ξ)‖ ≤ R ∧
         pFin E (x - algebraMap E (Ad E) ξ) ∈ U := by
   intro E _ _ _ U hU

@@ -13,7 +13,7 @@ open scoped ContDiff
 
 namespace UpperTheory.V.Z.Inf
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ}
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ}
 
 private theorem prod_coord (d : Cinf K) : ∏ σ : K →+* ℂ, coord σ d = ((∏ w, ‖d w‖ ^ 2 : ℝ) : ℂ) := by
   classical
@@ -39,7 +39,7 @@ private theorem prod_coord (d : Cinf K) : ∏ σ : K →+* ℂ, coord σ d = ((�
 
 private theorem nrm_eq (x : Lie K n) : ((nrm x : ℝ) : ℂ) = ∏ σ, detAt σ x := (prod_coord _).symm
 
-omit [NumberField K] [IsTotallyComplex K] in
+omit [NumberField K] [_root_.NumberField.IsTotallyComplex K] in
 private theorem detAt_ne {x : Lie K n} (hx : x ∈ invSet K n) (σ : K →+* ℂ) : detAt σ x ≠ 0 :=
   (((Matrix.isUnit_iff_isUnit_det _).1 hx).map (coord σ)).ne_zero
 
@@ -54,7 +54,7 @@ private theorem wt_eq (u : ℂ) (e : (K →+* ℂ) → ℕ) :
     (wt u e : Lie K n → ℂ) = fun x => (∏ σ, detAt σ x) ^ u * ∏ σ, (detAt σ x)⁻¹ ^ e σ := by
   funext x; rw [wt, nrm_eq]
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private theorem contDiff_detAt (σ : K →+* ℂ) : ContDiff ℝ ∞ (detAt σ : Lie K n → ℂ) := by
   let l : Cinf K →ₗ[ℝ] ℂ :=
     { toFun := coord σ, map_add' := map_add _, map_smul' := GlobalTheory.IsoPull.coord_smul σ }
@@ -81,7 +81,7 @@ private theorem det_one_add_single {R : Type} [CommRing R] (a b : Fin n) (c : R)
   · subst hab; simp [dotProduct, Pi.single_apply]
   · simp [dotProduct, Pi.single_apply, hab]
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private theorem detAt_line (σ : K →+* ℂ) (a b : Fin n) (c : Cinf K) (x : Lie K n) (s : ℝ) :
     detAt σ (x + s • rmul (toL (single a b c)) x) =
       detAt σ x * (1 + (s : ℂ) * if a = b then coord σ c else 0) := by
@@ -159,7 +159,7 @@ private theorem rd_wt (u : ℂ) (e : (K →+* ℂ) → ℕ) (τ : K →+* ℂ) (
     exact Finset.sum_congr rfl fun σ _ => by ring
   · simp
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private theorem rd_congr (τ : K →+* ℂ) (a b : Fin n) {F G : Lie K n → ℂ} {x : Lie K n}
     (h : ∀ᶠ y in nhds x, F y = G y) : rd τ a b F x = rd τ a b G x := by
   unfold rd

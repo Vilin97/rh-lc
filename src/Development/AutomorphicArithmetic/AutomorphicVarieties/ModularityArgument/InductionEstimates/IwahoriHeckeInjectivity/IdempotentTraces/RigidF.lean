@@ -41,7 +41,7 @@ private theorem summand_of_irr {K : Type} [Field K] [NumberField K] {n : ℕ} {�
     {τ : Submodule ℂ (L2 μ)} (h : CuspIrr μ τ) : IsSummand μ τ :=
   ⟨h.le, h.closed, h.inv, h.ne, h.irr⟩
 
-private theorem sat_single {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {ι : Type} {κ : ι → Type}
+private theorem sat_single {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {ι : Type} {κ : ι → Type}
     [∀ i, Fintype (κ i)] {m : (Σ i, κ i) → ℕ} (Q : ∀ a, CG E (m a))
     (hinj : Function.Injective (Sigma.fst : (Σ i, κ i) → ι)) (a : Σ i, κ i) {w : HeightOneSpectrum (𝓞 E)}
     {C : Multiset ℂˣ} (h : R.sumSat (m := fun k : κ a.1 => m ⟨a.1, k⟩) (fun k => Q ⟨a.1, k⟩) w C) : (Q a).HasSat w C := by
@@ -53,7 +53,7 @@ private theorem sat_single {E : Type} [Field E] [NumberField E] [IsTotallyComple
   rw [Fintype.sum_eq_single k₀ fun k hk => absurd (hu k) hk]
   exact hD k₀
 
-private theorem sat_of_sigma {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n n' : ℕ} {p : CG E n} {q : CG E n'}
+private theorem sat_of_sigma {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n n' : ℕ} {p : CG E n} {q : CG E n'}
     (h : (⟨n, p⟩ : Σ a, CG E a) = ⟨n', q⟩) {w : HeightOneSpectrum (𝓞 E)} {B : Multiset ℂˣ} (hq : q.HasSat w B) :
     p.HasSat w B := by
   cases h

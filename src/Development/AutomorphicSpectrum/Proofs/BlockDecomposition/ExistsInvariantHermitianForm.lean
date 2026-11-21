@@ -26,7 +26,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspRep.CuspidalL2GL MeasureT
 
 namespace GlobalTheory.CompanionTheory.ClozelHerm
 
-def petersson {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (μ : Measure (GA E a))
+def petersson {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (μ : Measure (GA E a))
     [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (π : CuspSub E a)
     (hm : ∀ φ ∈ π.V, GlobalTheory.AutomorphicL2Unitary.MemL2Quotient (GlobalTheory.UnitaryBC.latticeGL E a) μ φ.1) :
     π.V →ₗ[ℂ] π.V →ₗ⋆[ℂ] ℂ :=
@@ -37,7 +37,7 @@ def petersson {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ
     (fun φ ψ ψ' => by simp only [map_add (f := _), inner_add_left])
     (fun c φ ψ => by simp only [map_smul, inner_smul_left, smul_eq_mul])
 
-theorem exists_isHerm : GlobalTheory.Published.CuspFormsBoundedGL → ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (π : CuspSub E a), GlobalTheory.DiscSpec.IsNormalised π → ∃ B : π.V →ₗ[ℂ] π.V →ₗ⋆[ℂ] ℂ, IsHerm π B := by
+theorem exists_isHerm : GlobalTheory.Published.CuspFormsBoundedGL → ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (π : CuspSub E a), GlobalTheory.DiscSpec.IsNormalised π → ∃ B : π.V →ₗ[ℂ] π.V →ₗ⋆[ℂ] ℂ, IsHerm π B := by
   intro hB E _ _ _ a μ _ _ π hπ
   have hl := GlobalTheory.T.normalised_cusp_form_L2_bounded hB E a μ π hπ
   have hm : ∀ φ ∈ π.V, GlobalTheory.AutomorphicL2Unitary.MemL2Quotient (GlobalTheory.UnitaryBC.latticeGL E a) μ φ.1 := fun φ hφ => (hl φ hφ).1

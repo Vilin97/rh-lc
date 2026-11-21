@@ -47,7 +47,7 @@ theorem finite_sameBelow (u : HeightOneSpectrum (𝓞 E)) :
   rw [← hw', Ideal.mem_comap, map_natCast] at h1
   exact h1
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem exists_isGood_superset (T : Finset (HeightOneSpectrum (𝓞 E))) :
     ∃ T' : Finset (HeightOneSpectrum (𝓞 E)), T ⊆ T' ∧ IsGood T' := by
@@ -81,7 +81,7 @@ theorem exists_isGood_superset (T : Finset (HeightOneSpectrum (𝓞 E))) :
 
 end GlobalTheory.RSNonvan.GoodSet
 
-theorem GlobalTheory.RSNonvan.exists_isGood_superset_all : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+theorem GlobalTheory.RSNonvan.exists_isGood_superset_all : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     (T : Finset (HeightOneSpectrum (𝓞 E))), ∃ T' : Finset (HeightOneSpectrum (𝓞 E)), T ⊆ T' ∧ IsGood T' :=
   fun _ _ _ _ T => GlobalTheory.RSNonvan.GoodSet.exists_isGood_superset T
 

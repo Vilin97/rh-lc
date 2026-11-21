@@ -198,7 +198,7 @@ theorem ideleNorm_embedding_neg_one_real (D : Dat ℚ E) : ideleNorm ℚ E (idel
   rw [ideleNorm_ideleEmbedding, Module.finrank_eq_card_basis D.b, Fintype.card_fin, ← map_pow]
   simp
 
-theorem Wo_rot_pi [IsTotallyComplex E] (D : Dat ℚ E) (ω : HChar ℚ) {φ : GL (Fin 2) (A E) → ℂ}
+theorem Wo_rot_pi [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E) (ω : HChar ℚ) {φ : GL (Fin 2) (A E) → ℂ}
     (hc : ∀ z g, φ (Matrix.GeneralLinearGroup.scalar (Fin 2) z * g) = ((ω.1 (ideleNorm ℚ E z) : ℂˣ) : ℂ) * φ g) (a : (A ℚ)ˣ) (t : ℝ) :
     Wo D φ (em E (aE a * rot (t + Real.pi))) = Wo D φ (em E (aE a * rot t)) := by
   have e : em E (aE a * rot (t + Real.pi)) =

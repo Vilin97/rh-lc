@@ -161,7 +161,7 @@ private theorem fix_loc {n : ℕ} {D : TypeDat E n} {f : G1 E n → ℂ} {Kf : S
     rw [e]
     exact hw (Subgroup.mem_map_of_mem _ (locAt_int w hx))
   exact fix_inv hL hf ((hL.1 x h1).2 h2) h1 g
-private theorem blo_of [IsTotallyComplex E] {S : Set (Pl E)} {τ : Submodule ℂ (L2 (BW.mu1 E 2))} (hτ : CuspIrr (BW.mu1 E 2) τ)
+private theorem blo_of [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} {τ : Submodule ℂ (L2 (BW.mu1 E 2))} (hτ : CuspIrr (BW.mu1 E 2) τ)
     {m : (E →+* ℂ) → Multiset ℂ} {B : Pl E → Multiset ℂ} (hAt : At (BW.mu1 E 2) S τ m B) {φ : G1 E 2 → ℂ} (h0 : φ ≠ 0)
     (hφ : Rd τ φ) (hK : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : KG E 2 => fun m => φ (m * k))))
     (hS : ∀ w ∉ S, ∀ x, LocAt w x → ∀ g, φ (g * x) = φ g) :
@@ -266,7 +266,7 @@ private theorem qpos {τ : Submodule ℂ (L2 (BW.mu1 E 2))} {φ : G1 E 2 → ℂ
     simpa using h4
   exact h0 ((Continuous.ae_eq_iff_eq (BW.mu1 E 2) hφ.cont continuous_const).1 hμ)
 
-private theorem blo_gs [IsTotallyComplex E] {S : Set (Pl E)} {τ : Submodule ℂ (L2 (BW.mu1 E 2))} (hτ : CuspIrr (BW.mu1 E 2) τ)
+private theorem blo_gs [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} {τ : Submodule ℂ (L2 (BW.mu1 E 2))} (hτ : CuspIrr (BW.mu1 E 2) τ)
     {m : (E →+* ℂ) → Multiset ℂ} {B : Pl E → Multiset ℂ} (hAt : At (BW.mu1 E 2) S τ m B) {F : Submodule ℂ (G1 E 2 → ℂ)}
     [FiniteDimensional ℂ F] (r : ∀ φ ∈ F, Rd τ φ) {φ : G1 E 2 → ℂ} (hφ : φ ∈ GS S F) (h0 : φ ≠ 0) :
     ∃ b : BW.Blo S 2, BloIn b τ m B ∧ ∀ g : G1 E 2, b.f.1 (g : GlobalTheory.CuspRep.GA E 2) = φ g := by
@@ -275,7 +275,7 @@ private theorem blo_gs [IsTotallyComplex E] {S : Set (Pl E)} {τ : Submodule ℂ
     Submodule.span_le.2 (by rintro _ ⟨u, rfl⟩; exact hφ.2.1 u)
   exact Submodule.finiteDimensional_of_le hle
 
-private theorem core [IsTotallyComplex E] {S : Set (Pl E)} {τa τb : Submodule ℂ (L2 (BW.mu1 E 2))} (ha : CuspIrr (BW.mu1 E 2) τa)
+private theorem core [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} {τa τb : Submodule ℂ (L2 (BW.mu1 E 2))} (ha : CuspIrr (BW.mu1 E 2) τa)
     (hb : CuspIrr (BW.mu1 E 2) τb) {ma mb : (E →+* ℂ) → Multiset ℂ} {Ba Bb : Pl E → Multiset ℂ}
     (Aa : At (BW.mu1 E 2) S τa ma Ba) (Ab : At (BW.mu1 E 2) S τb mb Bb) {Ea Eb : Submodule ℂ (G1 E 2 → ℂ)}
     [FiniteDimensional ℂ Ea] [FiniteDimensional ℂ Eb] (ra : ∀ φ ∈ Ea, Rd τa φ) (rb : ∀ φ ∈ Eb, Rd τb φ)
@@ -336,7 +336,7 @@ private theorem core [IsTotallyComplex E] {S : Set (Pl E)} {τa τb : Submodule 
   simp only [e2]
   rw [integral_const_mul, mul_comm]
 
-private theorem slices_zero [IsTotallyComplex E] {S : Set (Pl E)} {τa τb : Submodule ℂ (L2 (BW.mu1 E 2))} (ha : CuspIrr (BW.mu1 E 2) τa)
+private theorem slices_zero [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} {τa τb : Submodule ℂ (L2 (BW.mu1 E 2))} (ha : CuspIrr (BW.mu1 E 2) τa)
     (hb : CuspIrr (BW.mu1 E 2) τb) {ma mb : (E →+* ℂ) → Multiset ℂ} {Ba Bb : Pl E → Multiset ℂ}
     (Aa : At (BW.mu1 E 2) S τa ma Ba) (Ab : At (BW.mu1 E 2) S τb mb Bb) {Ea Eb : Submodule ℂ (G1 E 2 → ℂ)}
     [FiniteDimensional ℂ Ea] [FiniteDimensional ℂ Eb] (ra : ∀ φ ∈ Ea, Rd τa φ) (rb : ∀ φ ∈ Eb, Rd τb φ)
@@ -388,7 +388,7 @@ private theorem eq_zero_of_slices {f : G1 E (2 + 2) → ℂ} (hun : ∀ X g, f (
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.bloEx :
-    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (v : Eu 𝔵.d'),
+    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (v : Eu 𝔵.d'),
       (∀ (b b' : BW.Blo 𝔢.S 2), BloIn b 𝔵.τ₂ 𝔵.m₂ 𝔵.B₂ → BloIn b' 𝔵.τ₁ 𝔵.m₁ 𝔵.B₁ → ∀ k ∈ KG E (2 + 2), ell b b' k (𝔵.A'.sec v) = 0) → v = 0 := by
   intro E _ _ _ μ _ θ 𝔢 𝔵 v hv
   have hfS := (𝔵.A'.onto (𝔵.A'.sec v)).1 ⟨v, rfl⟩

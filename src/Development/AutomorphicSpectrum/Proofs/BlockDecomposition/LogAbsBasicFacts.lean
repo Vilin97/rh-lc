@@ -11,7 +11,7 @@ open NumberField IsDedekindDomain PositivityTheory.Rg.BcB PositivityTheory.Rg.Bc
 
 namespace GlobalTheory.CompanionTheory.LogAbs
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem norm_cW_eq_one (u : Ad E) (hu : IsUnit u) : ∀ᶠ w in Filter.cofinite, ‖cW w u‖ = 1 := by
   have h := (FiniteAdeleRing.isUnit_iff.1 (hu.map (pFin E))).2

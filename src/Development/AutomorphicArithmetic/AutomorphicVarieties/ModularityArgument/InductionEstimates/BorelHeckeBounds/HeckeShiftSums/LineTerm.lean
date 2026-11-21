@@ -48,7 +48,7 @@ private theorem kerConv {d : ℕ} (κ : ℝ → Eu d →L[ℂ] Eu d) (hk : Ker �
   rw [e]
   exact ⟨c2.continuous_convolution_right _ hβ.locallyIntegrable c1, hβc.convolution _ c2⟩
 
-private theorem lineTerm [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] {μ₂ : Measure (G1 K 2)}
+private theorem lineTerm [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] {μ₂ : Measure (G1 K 2)}
     [μ₂.IsHaarMeasure] {τ₁ τ₂ : Submodule ℂ (L2 μ₂)} (h₁ : CuspIrr μ₂ τ₁) (h₂ : CuspIrr μ₂ τ₂) {D : TypeDat K (2 + 2)}
     {d d' : ℕ} (A : Line μ τ₁ τ₂ D d) (B : Line μ τ₂ τ₁ D d') (a : CC K (2 + 2)) (κ : ℝ → Eu d →L[ℂ] Eu d) (hk : Ker κ)
     (hc : Conv A.J A.J (Rop μ a) κ) (s : ℝ) (β : ℝ → ℂ) (v : Eu d) (u : L (Eu d)) (hβ : Continuous β)
@@ -143,7 +143,7 @@ private theorem lineTerm [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hq]
 
-private theorem lineIn [IsTotallyComplex K] {μ : Measure (G1 K (2 + 2))} [μ.IsHaarMeasure] {d : ℕ}
+private theorem lineIn [_root_.NumberField.IsTotallyComplex K] {μ : Measure (G1 K (2 + 2))} [μ.IsHaarMeasure] {d : ℕ}
     (J : L (Eu d) →ₗᵢ[ℂ] L2 μ) (C : Submodule ℂ (L2 μ)) (hC : IsClosed (C : Set (L2 μ)))
     (h : ∀ (β : ℝ → ℂ) (v : Eu d) (u : L (Eu d)), Continuous β → HasCompactSupport β → (∀ᵐ x : ℝ, u x = β x • v) → J u ∈ C)
     (u : L (Eu d)) : J u ∈ C := by

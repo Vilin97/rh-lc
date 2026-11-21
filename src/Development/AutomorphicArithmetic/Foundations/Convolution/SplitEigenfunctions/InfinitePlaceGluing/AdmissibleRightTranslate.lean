@@ -20,7 +20,7 @@ open scoped Classical
 
 section SlopeTestRemainingChoices
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem wo_sum (D : Dat ℚ E) {ι : Type} (s : Finset ι) (a : ι → ℂ) (F : ι → GL (Fin 2) (A E) → ℂ)
     (hF : ∀ i, Continuous (F i)) (h : GL (Fin 2) (A E)) :
@@ -94,7 +94,7 @@ end SlopeTestRemainingChoices
 
 section Main
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem one_add_pow_le (x : ℝ) (hx : 0 ≤ x) (r : ℕ) : (1 + x) ^ r ≤ 2 ^ r * (1 + x ^ r) := by
   rcases le_total x 1 with h | h

@@ -190,7 +190,7 @@ private noncomputable def Qi (a b c : ℂˣ) : PowerSeries ℂ :=
   (1 - PowerSeries.C ((a * c : ℂˣ) : ℂ) * PowerSeries.X) *
     (1 - PowerSeries.C ((b * c : ℂˣ) : ℂ) * PowerSeries.X) * (1 - PowerSeries.X ^ 2)
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private def Den (P : CuspSub E 2) (χ : HChar ℚ) (v : H.P ℚ) (Q : PowerSeries ℂ) : Prop :=
   (∃ (w w' : H.P E) (α β α' β' : ℂˣ), w ≠ w' ∧ w.under (𝓞 ℚ) = v ∧ w'.under (𝓞 ℚ) = v ∧

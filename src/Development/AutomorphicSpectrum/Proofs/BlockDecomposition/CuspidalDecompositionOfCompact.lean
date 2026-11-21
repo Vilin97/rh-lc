@@ -16,7 +16,7 @@ open NumberField MeasureTheory Topology GlobalTheory.AutomorphicL2Unitary Global
 namespace GlobalTheory.CompanionTheory.CuspGL
 
 theorem cuspDiscreteDecompositionGL_of_compact
-    (hc : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
+    (hc : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure]
       [μ.IsMulRightInvariant] (f : GA E a → ℂ), Continuous f → HasCompactSupport f →
       IsCompactOperator (repOp (Rcusp μ) μ f)) :
     GlobalTheory.Published.CuspDiscreteDecompositionGL := by

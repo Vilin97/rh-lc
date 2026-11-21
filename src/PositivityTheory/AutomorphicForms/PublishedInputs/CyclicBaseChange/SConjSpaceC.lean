@@ -33,7 +33,7 @@ def SSatUniq : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (n : ℕ) (π : Cusp F n) v B B', π.sat v B → π.sat v B' → B = B'
 
 def SConjSpaceC : Prop :=
-  ∀ (M : Type) [Field M] [NumberField M] [IsTotallyComplex M] (σ : M ≃+* M) (s : Ad M ≃+* Ad M), IsGalAd σ s →
+  ∀ (M : Type) [Field M] [NumberField M] [_root_.NumberField.IsTotallyComplex M] (σ : M ≃+* M) (s : Ad M ≃+* Ad M), IsGalAd σ s →
     ∀ (n : ℕ) (P : CuspSub M n), ∃ P' : CuspSub M n,
       (Cusp.cx P').space = (fun f : GA M n → ℂ => fun g => f (Matrix.GeneralLinearGroup.map s.toRingHom g)) '' (Cusp.cx P).space
 
@@ -43,7 +43,7 @@ def SConjSpaceR : Prop :=
       (Cusp.re P').space = (fun f : GA M n → ℂ => fun g => f (Matrix.GeneralLinearGroup.map s.toRingHom g)) '' (Cusp.re P).space
 
 def SConjSatC : Prop :=
-  ∀ (K M : Type) [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [IsTotallyComplex M] (σ : M ≃ₐ[K] M)
+  ∀ (K M : Type) [Field K] [NumberField K] [Field M] [NumberField M] [Algebra K M] [_root_.NumberField.IsTotallyComplex M] (σ : M ≃ₐ[K] M)
     (s : Ad M ≃+* Ad M), IsGalAd σ.toRingEquiv s → ∀ (n : ℕ) (P P' : CuspSub M n),
     (Cusp.cx P').space = (fun f : GA M n → ℂ => fun g => f (Matrix.GeneralLinearGroup.map s.toRingHom g)) '' (Cusp.cx P).space →
     ∃ g : HeightOneSpectrum (𝓞 M) → HeightOneSpectrum (𝓞 M), Function.Injective g ∧ (∀ w, (g w).under (𝓞 K) = w.under (𝓞 K)) ∧

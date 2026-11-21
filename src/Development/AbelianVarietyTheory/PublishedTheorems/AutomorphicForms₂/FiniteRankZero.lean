@@ -11,7 +11,7 @@ open NumberField GlobalTheory.CuspRep Formalism.L2.Host
 
 namespace GlobalTheory.Published.AutFinGL.Model
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def kerL (a : ℕ) (χ : HChar E) : Subgroup (GL (Fin a) (Af E)) := ((chiDet a χ).comp (finGL E a)).ker
 

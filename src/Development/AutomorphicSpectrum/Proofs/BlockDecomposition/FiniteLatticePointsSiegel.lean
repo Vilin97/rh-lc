@@ -252,7 +252,7 @@ theorem count_core (hn : 0 < n) {Q' ω Q : Set (AdelicGLn.AdelicGL K n)} (t₀ :
         exact_mod_cast hnat.trans this
       exact_mod_cast h2
 
-theorem count_conj_siegel : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ), ∃ M : ℝ, 0 ≤ M ∧ ∀ (Q' : Set (GA E N)) (ω : Set (GA E N)) (t₀ : ℝ)
+theorem count_conj_siegel : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ), ∃ M : ℝ, 0 ≤ M ∧ ∀ (Q' : Set (GA E N)) (ω : Set (GA E N)) (t₀ : ℝ)
   (Q : Set (GA E N)), IsCompact Q' → IsCompact ω → ω ⊆ (adelicBorel (K := E) (n := N) : Set _) → IsCompact Q → ∃ C : ℝ, ∀ b ∈ ω, ∀ x : Fin N → ℝ,
     (∀ r, -t₀ ≤ An.sr x r) → ∀ q ∈ Q,
     {γ : GA E N | γ ∈ latticeGL E N ∧ ∃ a ∈ Q', ∃ a' ∈ Q', γ = (b * An.tor E x * q) * a * a'⁻¹ * (b * An.tor E x * q)⁻¹}.encard ≤

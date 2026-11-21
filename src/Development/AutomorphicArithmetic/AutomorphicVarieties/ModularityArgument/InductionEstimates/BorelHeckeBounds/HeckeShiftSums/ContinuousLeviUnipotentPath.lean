@@ -113,7 +113,7 @@ private theorem star_hecke {K : Type} [Field K] [NumberField K] {n : ℕ} (D : T
     refine integral_congr_ae (D.supp.mono fun k hk => ?_)
     simp [D.star k hk, mul_comm]
 
-private theorem adjBd {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure]
+private theorem adjBd {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure]
     (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (hp : Pair μ₂ τ₁ τ₂) (D : TypeDat K (2 + 2))
     (d d' : ℕ) (A : Line μ τ₁ τ₂ D d) (A' : Line μ τ₂ τ₁ D d') (a : CC K (2 + 2)) (ha : D.Hecke a) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ ψ : L2 μ, ∀ᵐ s : ℝ, ‖Jd A.J (Rop μ a ψ) s‖ ≤ C * ‖ψ‖ := by
@@ -333,7 +333,7 @@ private theorem inner_exp {e : ℕ} (v w : Eu e) :
   rw [inner_smul_right, EuclideanSpace.basisFun_repr]
 
 set_option synthInstance.maxHeartbeats 400000 in
-private theorem ipSec {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure]
+private theorem ipSec {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure]
     (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ₁ τ₂ : Submodule ℂ (L2 μ₂)) (hp : Pair μ₂ τ₁ τ₂) (D : TypeDat K (2 + 2))
     (d d' : ℕ) (A : Line μ τ₁ τ₂ D d) (A' : Line μ τ₂ τ₁ D d') (κ : Measure (KG K (2 + 2))) [κ.IsHaarMeasure] (c : ℝ)
     (hU : Unf μ μ₂ κ c) (Φ : G1 K (2 + 2) → ℂ) (hΦ : Continuous Φ) (hi : ∀ γ ∈ Gam K (2 + 2), ∀ g, Φ (γ * g) = Φ g)

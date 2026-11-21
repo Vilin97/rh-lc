@@ -19,7 +19,7 @@ open scoped ENNReal
 
 namespace GlobalTheory.CompanionTheory.GrowthHaar
 
-theorem isHaarMeasure_map_restrict (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem isHaarMeasure_map_restrict (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (μ : Measure (GA E a)) [μ.IsHaarMeasure] [MeasurableSpace (AutomorphicForm.archGroup E a)]
     [BorelSpace (AutomorphicForm.archGroup E a)] (U : Set (AdelicGLn.FiniteAdelicGL E a))
     (hUc : IsCompact U) (hU1 : U ∈ 𝓝 (1 : AdelicGLn.FiniteAdelicGL E a)) :

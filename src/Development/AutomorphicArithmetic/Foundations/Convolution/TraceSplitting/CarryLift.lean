@@ -25,7 +25,7 @@ open GlobalTheory.CuspRep Formalism.ConjugateSelfDual Formalism.L2.Host UpperThe
 
 section SlopeTestRemainingChoices
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} {μ : Measure (normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} {μ : Measure (normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
 
 private theorem atEx (V : Submodule ℂ (LL μ)) (hV : IsSummand μ V) : ∃ Λ t, AtAE μ V Λ t := by
   classical
@@ -70,13 +70,13 @@ private theorem conj_iff (P : CuspSub K n) (g : K ≃+* K) :
     rw [hs s h1]
     exact h
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private theorem pull_refl : pull n (RingEquiv.refl K) = id := by
   funext f x
   refine congrArg f (Matrix.GeneralLinearGroup.ext fun i j => ?_)
   exact (UpperTheory.ConvolutionTheory.K.adBasic K).2.1 _
 
-omit [IsTotallyComplex K] in
+omit [_root_.NumberField.IsTotallyComplex K] in
 private theorem pull_trans (g g' : K ≃+* K) : pull n (g.trans g') = pull n g ∘ pull n g' := by
   funext f x
   refine congrArg f (Matrix.GeneralLinearGroup.ext fun i j => ?_)

@@ -66,7 +66,7 @@ theorem blkIxHomeo_mem (r : ℕ) (x : BlockIx a r → Ad E) :
   · rintro ⟨c, rfl⟩
     exact ⟨fun t => c (blkIxEquiv r t), rfl⟩
 
-theorem good_of_isCuspForm : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem good_of_isCuspForm : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (ψ : AddChar (Ad E) ℂ) (φ : Sm E a), IsCuspForm φ → Good ψ (a - 1) φ.1 := by
   intro E _ _ _ a ψ φ h
   have hcont : Continuous φ.1 := ContAut.continuous_of_isOpen_stab E a φ h.1.level

@@ -9,7 +9,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.WhitBump
 
-theorem adele_eq_sInf_add_sFin {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (x : Ad E) :
+theorem adele_eq_sInf_add_sFin {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (x : Ad E) :
     x = sInf E (pInf E x) + sFin E (pFin E x) := by
   refine Prod.ext ?_ ?_
   · change x.1 = infEq E ((infEq E).symm x.1) + 0
@@ -17,7 +17,7 @@ theorem adele_eq_sInf_add_sFin {E : Type} [Field E] [NumberField E] [IsTotallyCo
   · change x.2 = 0 + x.2
     simp
 
-theorem psiN_split : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (u : GA E n), GlobalTheory.JSW.psiN u = psiInf (sdM ((GeneralLinearGroup.map (pInf E) u : GL (Fin n) (Cinf E)) : Matrix (Fin n) (Fin n) (Cinf E))) * psiFin (GlobalTheory.Whittaker.superDiag (GeneralLinearGroup.map (pFin E) u)) := by
+theorem psiN_split : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (u : GA E n), GlobalTheory.JSW.psiN u = psiInf (sdM ((GeneralLinearGroup.map (pInf E) u : GL (Fin n) (Cinf E)) : Matrix (Fin n) (Fin n) (Cinf E))) * psiFin (GlobalTheory.Whittaker.superDiag (GeneralLinearGroup.map (pFin E) u)) := by
   intro E _ _ _ n u
   have h : GlobalTheory.Whittaker.superDiag u = sInf E (sdM ((GeneralLinearGroup.map (pInf E) u : GL (Fin n) (Cinf E)) : Matrix (Fin n) (Fin n) (Cinf E))) + sFin E (GlobalTheory.Whittaker.superDiag (GeneralLinearGroup.map (pFin E) u)) := by
     set_option synthInstance.maxHeartbeats 100000 in

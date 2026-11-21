@@ -12,7 +12,7 @@ open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af
 open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum
 open scoped TensorProduct
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem qht_bdd (g : GA E a) :
     BddBelow (Set.range fun γ : GL (Fin a) E => height (K := E) (ratGL E a γ * (retractOne g : KernelIndexFullLattice.G1 E a).1)) :=

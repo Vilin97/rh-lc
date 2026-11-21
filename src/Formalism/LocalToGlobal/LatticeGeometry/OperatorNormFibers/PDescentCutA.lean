@@ -39,7 +39,7 @@ theorem dense_emb {K : Type} [Field K] [NumberField K] (v : InfinitePlace K) (hv
         | simp [NumberField.InfinitePlace.Completion.extensionEmbedding_coe]
         | rfl)
 
-theorem dense_fcoord {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+theorem dense_fcoord {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
     [AddCommGroup V] [Module K V] [Fintype ι] [DecidableEq ι] (b : Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ) (hX : ∀ v, IsUnit (X v).det) (v : InfinitePlace K) :
     DenseRange fun x : V => (WithLp.toLp 2 (Formalism.HermitianLatticesTheory.fcoord b X v x) : EuclideanSpace ℂ ι) := by
@@ -79,7 +79,7 @@ private theorem vecAt_apply_linearMap {K V ι W κ : Type} [Field K] [AddCommGro
   rfl
 
 theorem opNormAt_le_of_points {K V ι W κ : Type} [Field K] [NumberField K] [StarRing K]
-    [IsTotallyComplex K] [AddCommGroup V] [Module K V] [Fintype ι] [DecidableEq ι]
+    [_root_.NumberField.IsTotallyComplex K] [AddCommGroup V] [Module K V] [Fintype ι] [DecidableEq ι]
     [AddCommGroup W] [Module K W] [Fintype κ] [DecidableEq κ] (b : Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ) (b' : Basis κ K W) (X' : InfinitePlace K → Matrix κ κ ℂ)
     (hX : ∀ v, IsUnit (X v).det) (φ : V →ₗ[K] W) (v : InfinitePlace K) (C : ℝ) (hC : 0 ≤ C)

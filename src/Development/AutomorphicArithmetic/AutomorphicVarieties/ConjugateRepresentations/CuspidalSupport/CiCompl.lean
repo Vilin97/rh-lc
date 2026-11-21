@@ -14,7 +14,7 @@ open scoped TensorProduct
 
 section
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem stable_twist (χ : HChar E) {U : Submodule ℂ (Sm E a)} (h : _root_.GlobalTheory.CuspRep.IsStable U) :
     _root_.GlobalTheory.CuspRep.IsStable (U.map (mulChi a χ).toLinearMap) := by

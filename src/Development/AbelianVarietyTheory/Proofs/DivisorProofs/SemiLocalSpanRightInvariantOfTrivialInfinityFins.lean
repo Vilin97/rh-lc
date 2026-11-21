@@ -11,7 +11,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep Formalism.UG GlobalTheory
 
 namespace GlobalTheory.JSW.MirSemi
 
-theorem infGL_mem_supS {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+theorem infGL_mem_supS {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (S : Finset (HeightOneSpectrum (𝓞 E))) (y : GL (Fin a) (Cinf E)) : infGL E a y ∈ GlobalTheory.JSW.supS (E := E) (a := a) S := by
   intro w _
   have h := pFin_infGL (E := E) (a := a) y
@@ -19,7 +19,7 @@ theorem infGL_mem_supS {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
   have := congrArg (fun z : GL (Fin a) (Af E) => (pLoc E w) ((z : Matrix (Fin a) (Fin a) (Af E)) i j)) h
   simpa [Matrix.one_apply, apply_ite] using this
 
-theorem locSpan_rightInv : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem locSpan_rightInv : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (F₀ : GA E a → ℂ) (k : GA E a),
     GeneralLinearGroup.map (pInf E) k = 1 → (∀ w ∈ S, GeneralLinearGroup.map ((pLoc E w).comp (pFin E)) k = 1) →
     (∀ g, F₀ (g * k) = F₀ g) → ∀ F ∈ GlobalTheory.JSW.MirSemi.locSpan S F₀, ∀ g, F (g * k) = F g := by

@@ -42,7 +42,7 @@ theorem exists_compact_ratN : ∃ K : Set (BlockIx a r → Ad E), IsCompact K �
   rw [map_neg, neg_add_eq_sub]
   exact hy p
 
-theorem not_isCuspidal_oneFn : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
+theorem not_isCuspidal_oneFn : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ),
     2 ≤ a → ¬ IsCuspidal (oneFn E a).1 := by
   intro E _ _ _ a ha h
   haveI : LocallyCompactSpace (Ad E) := GlobalTheory.AdelicUnitaryTop.locallyCompact_adele E

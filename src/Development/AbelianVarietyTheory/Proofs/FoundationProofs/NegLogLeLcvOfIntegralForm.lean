@@ -66,7 +66,7 @@ theorem vw_gramR_locBasis_ge {K : Type} [Field K] [NumberField K] [StarRing K] {
   simpa using hnn
 
 theorem neg_log_le_lcv_of_integral_form :
-    ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (d : ℕ) (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ), (∀ v, IsUnit (X v).det) → ∀ (Γ : Matrix (Fin d) (Fin d) K) (s : ℕ), 0 < s → Γ.det ≠ 0 → (∏ v : InfinitePlace K, ‖v.embedding Γ.det‖ ≤ ∏ v : InfinitePlace K, (gram X v (fun i => (Pi.single i 1 : Fin d → K))).det.re) → ∀ L : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K L → (∀ x ∈ L, ∀ y ∈ L, (s : K) * (star x ⬝ᵥ Γ *ᵥ y) ∈ (algebraMap (𝓞 K) K).range) → -((d : ℝ) * Real.log s) ≤ lcv X L := by
+    ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ) (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ), (∀ v, IsUnit (X v).det) → ∀ (Γ : Matrix (Fin d) (Fin d) K) (s : ℕ), 0 < s → Γ.det ≠ 0 → (∏ v : InfinitePlace K, ‖v.embedding Γ.det‖ ≤ ∏ v : InfinitePlace K, (gram X v (fun i => (Pi.single i 1 : Fin d → K))).det.re) → ∀ L : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K L → (∀ x ∈ L, ∀ y ∈ L, (s : K) * (star x ⬝ᵥ Γ *ᵥ y) ∈ (algebraMap (𝓞 K) K).range) → -((d : ℝ) * Real.log s) ≤ lcv X L := by
   intro K _ _ _ _ d X hX Γ s hs hΓ hle L hL hint
   classical
   have hli : LinearIndependent K (fun i => (Pi.single i 1 : Fin d → K)) := by

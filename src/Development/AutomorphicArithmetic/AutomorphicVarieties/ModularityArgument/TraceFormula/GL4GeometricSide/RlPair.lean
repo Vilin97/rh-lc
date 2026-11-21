@@ -23,7 +23,7 @@ private theorem adj_of_skew {M : Type} [AddCommGroup M] [Module ℂ M] (H : M �
   linear_combination (1 / 2 : ℂ) * h1 + (Complex.I / 2) * hI +
     ((H (A φ) ψ + H φ (B ψ) - H (B φ) ψ - H φ (A ψ)) / 2) * Complex.I_sq
 
-private theorem lie_single {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (π : CuspSub E n)
+private theorem lie_single {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (π : CuspSub E n)
     (τ : E →+* ℂ) (a b : Fin n) (z : ℂ) :
     lieOp π (fun i j => atEmb τ (Matrix.single a b z i j)) =
       z • cx τ (lieOp π) a b + star z • cx (PositivityTheory.Rg.Cz.barE E τ) (lieOp π) a b := by
@@ -38,12 +38,12 @@ private theorem lie_single {E : Type} [Field E] [NumberField E] [IsTotallyComple
     simp [Matrix.single_apply, hi.symm]
   · simp
 
-private theorem cx_val {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (π : CuspSub E n)
+private theorem cx_val {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (π : CuspSub E n)
     (τ : E →+* ℂ) (a b : Fin n) (ψ : π.V) : (cx τ (lieOp π) a b ψ).1 = Eop τ a b ψ.1 := by
   rw [← GlobalTheory.WigCap.res_Eop]
   rfl
 
-private theorem emb_ne {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (w : InfinitePlace E) :
+private theorem emb_ne {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (w : InfinitePlace E) :
     w.embedding ≠ ComplexEmbedding.conjugate w.embedding := by
   intro h
   have hc : w.IsComplex := IsTotallyComplex.isComplex w

@@ -13,7 +13,7 @@ open scoped TensorProduct
 
 section SlopeTestRemainingChoices
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private noncomputable def ptForm (χ : HChar E) (g : GA E a) : Sm E a →ₗ⋆[ℂ] Sm E a →ₗ[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ)

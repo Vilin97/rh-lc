@@ -11,7 +11,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Ff
 open scoped Classical
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.zFin :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ZFin W M π := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ZFin W M π := by
   intro F E _ _ _ _ _ _ _ D W M π hreg Φ hΦ
   have hcap := UpperTheory.ConvolutionTheory.R2.cap F E D W M π
   have key : ∀ z ∈ GlobalTheory.CuspRep.Zalg E 2, ∃ c : ℂ, z Φ = c • Φ := by

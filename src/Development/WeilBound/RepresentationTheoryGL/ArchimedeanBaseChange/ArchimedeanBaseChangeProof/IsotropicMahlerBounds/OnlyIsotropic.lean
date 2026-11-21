@@ -12,26 +12,26 @@ open scoped Pointwise
 
 namespace PositivityTheory.Rg.BcB
 
-def logAbs {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (u : Ad E) : ℝ :=
+def logAbs {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (u : Ad E) : ℝ :=
   ∑ v, Real.log (‖cV v u‖ ^ 2) + ∑ᶠ w, Real.log ‖cW w u‖
 
-def DegBasis : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n k : ℕ) (x : GA E n)
+def DegBasis : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n k : ℕ) (x : GA E n)
   (M : Matrix (Fin n) (Fin k) E), LinearIndependent E Mᵀ → degM x M = deg x (Submodule.span E (Set.range Mᵀ))
 
-def DegSubmod : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (x : GA E n)
+def DegSubmod : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (x : GA E n)
   (W W' : Submodule E (Fin n → E)), deg x W + deg x W' ≤ deg x (W ⊓ W') + deg x (W ⊔ W')
 
-def DegMove : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ), ∃ C : ℝ, ∀ (x : GA E n)
+def DegMove : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ), ∃ C : ℝ, ∀ (x : GA E n)
   (g : GL (Fin n) E) (W : Submodule E (Fin n → E)),
     deg x W - C * (1 + logSize (x⁻¹ * ratGL E n g * x)) ≤ deg x (img g W)
 
-def DegBdd : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ),
+def DegBdd : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ),
   (∀ x : GA E n, BddAbove (Set.range (deg x))) ∧ ∀ W : Submodule E (Fin n → E), Continuous fun x : GA E n => deg x W
 
-def DegRat : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (x : GA E n)
+def DegRat : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (x : GA E n)
   (g : GL (Fin n) E) (W : Submodule E (Fin n → E)), deg (ratGL E n g * x) (img g W) = deg x W
 
-def DegAdelic : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n k : ℕ) (x t : GA E n) (s : GA E k)
+def DegAdelic : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n k : ℕ) (x t : GA E n) (s : GA E k)
   (M : Matrix (Fin n) (Fin k) E), LinearIndependent E Mᵀ →
     t.val * M.map (algebraMap E (Ad E)) = M.map (algebraMap E (Ad E)) * s.val →
     degM (t * x) M = degM x M + logAbs s.val.det
@@ -42,7 +42,7 @@ def DegPairing : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
       deg x W ≤ deg x (W ⊓ perpD (conjE E) d W) + C * (1 + logSize (twConj (thetaA E n) x (ratGL E n d)))) ∧
     |deg x ⊤| ≤ C * (1 + logSize (twConj (thetaA E n) x (ratGL E n d)))
 
-def Mahler : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (τ : ℝ),
+def Mahler : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ) (τ : ℝ),
   IsClosed (cutSet E n τ) ∧ (∀ g x, ratGL E n g * x ∈ cutSet E n τ ↔ x ∈ cutSet E n τ) ∧
     ∃ C : Set (GA E n), IsCompact C ∧ cutSet E n τ ⊆ ((ratGL E n).range : Set (GA E n)) * C
 

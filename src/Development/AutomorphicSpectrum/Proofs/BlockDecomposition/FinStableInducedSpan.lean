@@ -13,7 +13,7 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.LimV
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 theorem act_fin_val {N : ℕ} (g : GL (Fin N) (Af E)) (φ : Sm E N) (x : GA E N) :
     (act (.fin g) φ).1 x = φ.1 (x * finGL E N g) := rfl

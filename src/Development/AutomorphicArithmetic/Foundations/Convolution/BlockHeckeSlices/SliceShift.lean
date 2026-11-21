@@ -42,7 +42,7 @@ def AbsKill : Prop :=
       pieceK k F) →
     ∀ φ x, HasSum (fun k => c (MvPolynomial.eval₂ (MvPolynomial.aeval Z).toRingHom H (G k) • φ) x) 0
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 abbrev Pl : Type := HeightOneSpectrum (𝓞 E)
 
@@ -180,7 +180,7 @@ def KillOne : Prop := ∀ (S : Set (Pl E)) (n : ℕ) (C : ℝ) (d : Dat S n) (φ
   0 ≤ C → Band C φ → Sph S φ → (∀ x ∈ F.vars, x.1 ∉ S) → d.Kills F → Gen F G →
   ∀ t, HasSum (fun k => d.comp (app (G k) φ).1 t) 0
 
-def IsSum {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+def IsSum {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
     (G : ℕ → MvPolynomial (Pl E × Fin n) (MvPolynomial ((E →+* ℂ) × Fin n) ℂ)) (φ w : Sm E n) : Prop :=
   ∃ N : ℕ, ∀ ε > (0 : ℝ), ∀ᶠ e : ℕ in Filter.atTop, ∀ g,
     ‖(w - ∑ k ∈ Finset.range e, app (G k) φ).1 g‖ ≤ ε * AutomorphicForm.height g ^ N

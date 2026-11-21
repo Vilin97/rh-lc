@@ -22,7 +22,7 @@ open GlobalTheory.ThetaPoisson GlobalTheory.RSTheta
 
 namespace GlobalTheory.RSThetaSelf
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem rsPsi_self_eq_norm (ℓ : Fin a) (F : GA E a → ℂ) {Φ : (Fin a → Cinf E) → ℂ}
     (hΦ : ∀ u, 0 ≤ (Φ u).re ∧ (Φ u).im = 0) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (η : Fin a → Af E) (g : GA E a)
@@ -39,7 +39,7 @@ theorem rsPsi_self_eq_norm (ℓ : Fin a) (F : GA E a → ℂ) {Φ : (Fin a → C
   refine key _ _ _ (hΦ _).1 (hΦ _).2 ?_
   by_cases h : (fun i => pFin E (y i)) - η ∈ latt a J <;> simp [h]
 
-theorem lintegral_ne_top : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ℓ : Fin a) (π : CuspSub E a) (ω : HChar E),
+theorem lintegral_ne_top : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ℓ : Fin a) (π : CuspSub E a) (ω : HChar E),
     ω.IsUnitary → π.HasCentChar ω → ∀ F : GA E a → ℂ, F ∈ GlobalTheory.JSW.mspanR π →
     ∀ (Φ : (Fin a → Cinf E) → ℂ), ContDiff ℝ (⊤ : ℕ∞) Φ → HasCompactSupport Φ → tsupport Φ ⊆ GlobalTheory.RSTheta.rowSet E ℓ →
     (∀ u, 0 ≤ (Φ u).re ∧ (Φ u).im = 0) →

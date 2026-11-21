@@ -25,8 +25,8 @@ def degT (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (L : Subm
 end Defs
 
 def BaseChange : Prop :=
-  ∀ (F E ι : Type) [Field F] [NumberField F] [StarRing F] [IsTotallyComplex F]
-    [Field E] [NumberField E] [StarRing E] [IsTotallyComplex E] [Algebra F E]
+  ∀ (F E ι : Type) [Field F] [NumberField F] [StarRing F] [_root_.NumberField.IsTotallyComplex F]
+    [Field E] [NumberField E] [StarRing E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
     [Fintype ι] [DecidableEq ι]
     (XF : InfinitePlace F → Matrix ι ι ℂ) (XE : InfinitePlace E → Matrix ι ι ℂ),
     (∀ v, IsUnit (XF v).det) → (∀ w, IsUnit (XE w).det) →

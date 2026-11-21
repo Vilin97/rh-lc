@@ -14,14 +14,14 @@ open scoped ContDiff
 
 namespace GlobalTheory.ConstTermSmooth
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def invM (y : Lie E a) : Lie E a := toL (Matrix.of y)⁻¹
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiffOn_invM : ContDiffOn ℝ ∞ (invM (E := E) (a := a)) (invSet E a) := by
   have h1 : ContDiffOn ℝ ∞ (fun y : Lie E a => Ring.inverse (Matrix.of y).det) (invSet E a) := fun y hy => by
     obtain ⟨u, hu⟩ := (Matrix.isUnit_iff_isUnit_det _).1 hy
@@ -60,12 +60,12 @@ theorem continuousOn_chart {φ : GA E a → ℂ} (hφ : Continuous φ) :
   exact (chart_val φ p.1.1 (IsUnit.unit (p.2.2 : IsUnit (Matrix.of p.1.2)))).symm
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def coef (i : Fin (Module.finrank ℝ (Lie E a))) (y : Lie E a) : Lie E a →L[ℝ] ℂ :=
   Complex.ofRealCLM ∘L LinearMap.toContinuousLinearMap ((Module.finBasis ℝ (Lie E a)).coord i) ∘L lmul (invM y)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiffOn_coef (i : Fin (Module.finrank ℝ (Lie E a))) : ContDiffOn ℝ ∞ (coef i) (invSet E a) := by
   refine contDiffOn_clm_apply.2 fun Y => ?_
   exact (Complex.ofRealCLM ∘L LinearMap.toContinuousLinearMap ((Module.finBasis ℝ (Lie E a)).coord i) ∘L
@@ -100,7 +100,7 @@ theorem Good.lie {φ : Sm E a} (h : Good φ) (X : Lie E a) : Good (lie E a X φ)
     exact e.symm
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem exists_bound {r : ℕ} {V : Type} [NormedAddCommGroup V] {Ψ : GA E a → Lie E a → V} {S : Set (Lie E a)}
     (hS : IsCompact S) (hc : ContinuousOn (fun p : GA E a × Lie E a => Ψ p.1 p.2) (Set.univ ×ˢ S))
     (hl : ∀ γ g, Ψ (ratGL E a γ * g) = Ψ g) (g : GA E a) :
@@ -137,7 +137,7 @@ variable {r : ℕ} [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx
   (ν : Measure (BlockIx a r → Ad E)) [IsFiniteMeasure ν]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem integrable_unip {V : Type} [NormedAddCommGroup V] {Ψ : GA E a → Lie E a → V}
     (hc : ContinuousOn (fun p : GA E a × Lie E a => Ψ p.1 p.2) (Set.univ ×ˢ invSet E a))
     (hl : ∀ γ g, Ψ (ratGL E a γ * g) = Ψ g) (g : GA E a) {y : Lie E a} (hy : y ∈ invSet E a) :
@@ -198,7 +198,7 @@ theorem contDiffOn_integral (g : GA E a) (n : ℕ) : ∀ φ : Sm E a, Good φ �
 
 end Integral
 
-theorem constTerm_mem_Sm : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a r : ℕ)
+theorem constTerm_mem_Sm : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a r : ℕ)
     [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)] (μ : Measure (BlockIx a r → Ad E))
     (𝓕 : Set (BlockIx a r → Ad E)), μ.IsAddHaarMeasure → IsAddFundamentalDomain (ratN E a r) 𝓕 μ → μ 𝓕 = 1 →
     ∀ φ : Sm E a, (∀ γ g, φ.1 (ratGL E a γ * g) = φ.1 g) → IsOpen {k | finRep E a k φ = φ} →

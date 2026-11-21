@@ -21,7 +21,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.H UpperTh
 open UpperTheory.V.Af.Smo (Eig EigAt)
 open UpperTheory.ConvolutionTheory.RankTwoDescent
 
-private theorem unit_of_normalised {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (hfr : Module.finrank ℚ E = 2)
+private theorem unit_of_normalised {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (hfr : Module.finrank ℚ E = 2)
     {P : CuspSub E 2} {ω : HChar ℚ} (hN : GlobalTheory.DiscSpec.IsNormalised P) (hC : CenN P ω) (a : (A ℚ)ˣ) :
     ‖((ω.1 a : ℂˣ) : ℂ)‖ = 1 := by
   have hu : P.IsUnitary := GlobalTheory.SpehPair.isUnitary_of_isNormalised hN

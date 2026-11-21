@@ -16,7 +16,7 @@ namespace UpperTheory.V.TC
 
 open InvT
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem infGL_invT (y : GL (Fin a) (Cinf E)) : infGL E a (invT a _ y) = invT a (Ad E) (infGL E a y) := cornerGL_invT _ y
 
@@ -57,7 +57,7 @@ theorem lie_dualFn (X : Lie E a) (φ : Sm E a) :
     ((contDiffAt_invTL (x := oneL E a) isUnit_one).differentiableAt (by simp)), e1, ContinuousLinearMap.comp_apply]
   exact congrArg _ (fderiv_invTL_one X)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem invTOp_invTOp (o : Op E a) : invTOp (invTOp o) = o := by
   cases o with
   | fin k => exact congrArg Op.fin (invT_invT k)
@@ -65,7 +65,7 @@ theorem invTOp_invTOp (o : Op E a) : invTOp (invTOp o) = o := by
   | lie X => exact congrArg Op.lie (funext fun i => funext fun j => neg_neg (X i j))
 
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem invT_toUnits (k : Kinf E a) : invT a (Cinf E) (Unitary.toUnits k) = Unitary.toUnits (barK k) := Units.ext rfl
 
 theorem act_dualFn (o : Op E a) (φ : Sm E a) : act o (dualFn E a φ) = dualFn E a (act (invTOp o) φ) := by
@@ -125,7 +125,7 @@ theorem Zalg_dualFn {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) :
     exact ⟨x' * y', mul_mem h1 h3, fun φ => by simp [h2, h4]⟩
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem height_invT (y : GL (Fin a) (Cinf E)) : height (invT a _ y) = height y := by
   unfold height
   rw [invT_val, invT_inv_val, InvT.norm_transpose, InvT.norm_transpose, add_right_comm]

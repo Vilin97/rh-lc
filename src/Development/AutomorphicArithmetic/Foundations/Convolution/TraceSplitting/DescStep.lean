@@ -26,7 +26,7 @@ private theorem occ_basic {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : M
   have h := occursBasics K n μ V w Measure.haar hV
   exact ⟨h.1, h.2.1⟩
 
-private theorem loc_iff {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ} (μ : Measure (normOneGL (K := E) (n := n)))
+private theorem loc_iff {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (μ : Measure (normOneGL (K := E) (n := n)))
     [μ.IsHaarMeasure] (π : CuspSub E n) (V : Submodule ℂ (LL μ)) (h : Dp.Carries μ π V) (w : Pl E) (σ : SmIrr (Gw n w)) :
     (Cusp.cx π).locComp w σ ↔ Occurs μ V w σ :=
   (Dp.locIff E n μ π V h w σ).trans (occursIff E n μ V h.summand w σ).symm

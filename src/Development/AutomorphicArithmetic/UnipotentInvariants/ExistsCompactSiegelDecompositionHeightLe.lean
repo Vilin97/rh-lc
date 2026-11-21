@@ -38,7 +38,7 @@ private theorem norm_pos_inv (s : ℝ) (hs : 0 < s) (w : InfinitePlace E) :
   rw [norm_mul, GroundTheory.Automorphic.Reduction.norm_posIdele_infinite, norm_one] at h
   exact eq_inv_of_mul_eq_one_left h
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 private theorem norm_pInf (x : A E) (w : InfinitePlace E) : ‖pInf E x w‖ = ‖x.1 w‖ := by
   have e : pInf E x w = InfinitePlace.Completion.extensionEmbedding w (x.1 w) := by
@@ -70,7 +70,7 @@ end SlopeTestRemainingChoices
 
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction in
 theorem UpperTheory.exists_compact_siegel_decomposition_height_le :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (c : ℝ), 0 < c → ∃ (Y : Set (G1 E)) (C₂ : ℝ), IsCompact Y ∧ ∀ (u : A E) (b : (A E)ˣ), c ≤ ab b → ∃ (γ : Matrix.SpecialLinearGroup (Fin 2) E) (z : GL (Fin 2) (Cinf E)), ∃ w ∈ Y, gl (nU u * mD b) = gl (ratS E γ) * infGL E 2 z * gl w ∧ Ht z ≤ C₂ * ab b := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (c : ℝ), 0 < c → ∃ (Y : Set (G1 E)) (C₂ : ℝ), IsCompact Y ∧ ∀ (u : A E) (b : (A E)ˣ), c ≤ ab b → ∃ (γ : Matrix.SpecialLinearGroup (Fin 2) E) (z : GL (Fin 2) (Cinf E)), ∃ w ∈ Y, gl (nU u * mD b) = gl (ratS E γ) * infGL E 2 z * gl w ∧ Ht z ≤ C₂ * ab b := by
   intro E _ _ _ c hc
   obtain ⟨S, hS, hSm⟩ := exists_isCompact_mul_mem_of_ideleModule_mem_Icc (K := E) hc c
   have hcont : Continuous fun x : InfiniteAdeleRing E => ∑ w : InfinitePlace E, ‖x w‖ :=

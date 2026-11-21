@@ -197,7 +197,7 @@ def nuFin : Measure (Fin k → Af E) := Measure.pi fun _ => GroundTheory.Global.
 
 def boxL (L : Set (Af E)) (c : Fin k → Af E) : Set (Fin k → Af E) := {f | ∀ i, f i - c i ∈ L}
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 
 variable (E k) in

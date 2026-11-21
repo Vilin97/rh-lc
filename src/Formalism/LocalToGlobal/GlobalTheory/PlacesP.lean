@@ -54,7 +54,7 @@ end General
 
 section Slopes
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι]
 
 def toFinPl (v : HeightOneSpectrum (𝓞 K)) : slopeLatticeData.FinPl K := ⟨v.asIdeal, v.isMaximal⟩

@@ -22,7 +22,7 @@ namespace CuspDecayShortRow
 
 set_option linter.unusedSectionVars false
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem pInf_posIdele (r : ℝ) (hr : 0 < r) :
     pInf E ((posIdele (K := E) r hr : GroundTheory.Global.IdeleGroup E) : Ad E) = fun _ => (r : ℂ) := by
@@ -107,7 +107,7 @@ namespace CuspDecayShortRow
 
 set_option linter.unusedSectionVars false
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem low (hH : H0) {C1 C2 : Set (GA E a)} (h1 : IsCompact C1) (h2 : IsCompact C2) :
     ∃ B : ℝ, ∃ N : ℕ, 0 ≤ B ∧ ∀ p ∈ C1, ∀ q ∈ C2, ∀ (y : GL (Fin a) (Cinf E)) (g : GA E a) ξ, ξ ≠ 0 →
@@ -199,7 +199,7 @@ namespace CuspDecayShortRow
 set_option linter.unusedSectionVars false
 
 open GroundTheory.Global in
-theorem siegel {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ha : 0 < a)
+theorem siegel {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ha : 0 < a)
     (hsc : ∀ s t, splitCentre E a (s + t) = splitCentre E a s * splitCentre E a t)
     (hcomm : ∀ t (g : GA E a), splitCentre E a t * g = g * splitCentre E a t) :
     ∃ ω : Set (GA E a), IsCompact ω ∧
@@ -290,7 +290,7 @@ namespace CuspDecayShortRow
 
 set_option linter.unusedSectionVars false
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem lam_prod (ha : 0 < a) (r : Fin a → ℝ) (hr : ∀ i, 0 < r i) (L : ℕ) :
     ∏ i, r i ^ ((Pi.single (⟨a - 1, by omega⟩ : Fin a) (L : ℝ) + Pi.single (⟨0, ha⟩ : Fin a) (-(L : ℝ)) : Fin a → ℝ) i) =

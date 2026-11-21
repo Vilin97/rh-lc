@@ -11,7 +11,7 @@ open UpperTheory.V.Lit.Geo.Cs
 
 namespace UpperTheory.V.Lit.Geo.Cs
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private noncomputable def lam0 (g : GA E a) : ℝ :=
   Real.log (Reduction.detModule E a g).1 / (a * Module.finrank ℚ E)

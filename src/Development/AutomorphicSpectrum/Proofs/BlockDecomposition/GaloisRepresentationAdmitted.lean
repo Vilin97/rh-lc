@@ -22,7 +22,7 @@ namespace GlobalTheory.CompanionTheory.HeckeAlg
 
 open GlobalTheory.CuspRep GlobalTheory.CuspRep.InfType
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem dchi_atEmb (χ : HChar E) (τ : E →+* ℂ) (z : ℂ) :
     dchi χ (atEmb τ z) = expo χ τ * z + expo χ (ComplexEmbedding.conjugate τ) * starRingEnd ℂ z := by
@@ -63,7 +63,7 @@ open Formalism.BasicNotions.Loc Neutral.B1
 
 section Char
 
-variable {E Ω : Type} [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
+variable {E Ω : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {l : ℕ} [Fact l.Prime]
 
 end Char

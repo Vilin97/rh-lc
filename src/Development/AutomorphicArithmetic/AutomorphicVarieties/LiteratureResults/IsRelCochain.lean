@@ -15,7 +15,7 @@ namespace UpperTheory.V.Lit
 
 section Defs
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
   (U : Subgroup (GL (Fin a) (Af E))) (Ξ : AlgRep E a)
 
 def smK (k : Kinf E a) : Module.End ℂ (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)) :=

@@ -92,7 +92,7 @@ structure Splt (J : GLv v →* GL (Fin 2) (A E)) : Prop where
   val : ∀ x i j, (J x).val i j = (1 : Matrix (Fin 2) (Fin 2) (A E)) i j + sE D v θ (x.val i j - (1 : M2 v) i j)
   fin : ∀ x, ∃ k, J x = finGL E 2 k
 
-variable [IsTotallyReal F] [IsTotallyComplex E] {D} (W : Weil D)
+variable [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] {D} (W : Weil D)
 
 def Mod (u : V4 F → ℂ) : Prop :=
   GoodU v D.δ θ u ∧ ∀ j, IsJ v j → ∀ (g : SL v), ∀ a ∈ SB (M2 v), ∀ φ : S4 F, φ.1 = ten v θ u (Pt a) →

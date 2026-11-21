@@ -191,7 +191,7 @@ theorem not_hasCohomology_of_central {c : ℂ} (hc : c ≠ 0) (h : ∀ m, L (one
 
 end Complex
 
-variable [IsTotallyComplex E]
+variable [_root_.NumberField.IsTotallyComplex E]
 
 def lieOp (π : CuspSub E a) : Lie E a →ₗ[ℝ] Module.End ℂ π.V where
   toFun X := π.op (.lie X)

@@ -73,7 +73,7 @@ end UpperTheory.V.AlgRepEndIrreducible
 
 open GlobalTheory.WignerGL in
 theorem UpperTheory.V.AlgRepEndIrreducible.eLRel :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (A : Type) [Ring A] [Algebra ℂ A] [Module ℝ A] [IsScalarTower ℝ ℂ A] (L : Lie E a →ₗ[ℝ] A),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (A : Type) [Ring A] [Algebra ℂ A] [Module ℝ A] [IsScalarTower ℝ ℂ A] (L : Lie E a →ₗ[ℝ] A),
       IsLieHom L → IsMultiGl (eL L) := by
   intro E _ _ _ a A _ _ _ _ L hL
   refine ⟨fun τ i j k l => ?_, fun τ τ' h i j k l => ?_⟩

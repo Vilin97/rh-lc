@@ -114,7 +114,7 @@ theorem unit_X {ι : Type} {n : ℕ} {φ : ι → E →+* ℂ} {P : ι → Matri
     rw [← RingHom.mapMatrix_apply, ← RingHom.map_det]
     exact this.map _
 
-theorem ht_index [StarRing E] [IsTotallyComplex E] {ι : Type} [Fintype ι] {n : ℕ} {φ : ι → E →+* ℂ}
+theorem ht_index [StarRing E] [_root_.NumberField.IsTotallyComplex E] {ι : Type} [Fintype ι] {n : ℕ} {φ : ι → E →+* ℂ}
     {P : ι → Matrix (Fin n) (Fin n) ℂ} {X : InfinitePlace E → Matrix (Fin n) (Fin n) ℂ}
     (h : PlaceMatch φ P X) (hP : ∀ v, IsUnit (P v)) {κ : Type} [Fintype κ] [DecidableEq κ]
     (e : κ → Fin n → E) (he : LinearIndependent E e) (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.FG)
@@ -165,7 +165,7 @@ theorem emb_injective (j : ℕ) : Function.Injective (GlobalTheory.LatFacts.emb 
   funext a
   exact w.embedding.injective (congrFun (congrFun h w) a)
 
-theorem covStd_index [IsTotallyComplex E] {ι : Type} [Fintype ι] {n : ℕ} {φ : ι → E →+* ℂ}
+theorem covStd_index [_root_.NumberField.IsTotallyComplex E] {ι : Type} [Fintype ι] {n : ℕ} {φ : ι → E →+* ℂ}
     {P : ι → Matrix (Fin n) (Fin n) ℂ} {X : InfinitePlace E → Matrix (Fin n) (Fin n) ℂ}
     (h : PlaceMatch φ P X) {j : ℕ} (Λ : Submodule (𝓞 E) (Fin j → E)) (hΛ : Submodule.IsLattice E Λ)
     (g : Fin j → Fin j → E) (hg : LinearIndependent E g) (hsp : Submodule.span E (Set.range g) = ⊤)

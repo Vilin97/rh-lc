@@ -26,7 +26,7 @@ open Formalism.REAL (qdet)
 
 namespace GlobalTheory.GLSlice
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a b : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a b : ℕ}
 
 theorem qdet_eq_cap (τ : E →+* ℂ) (u : ℂ) : qdet (Eop (a := a) τ) u = cap τ (u - ((a : ℂ) - 1) / 2) := by
   rw [cap, sub_add_cancel]
@@ -293,12 +293,12 @@ theorem exists_slice_space (f : Fin b ↪ Fin a)
   · rw [cap, aeval_qdet_slice]
     exact Subtype.ext (funext fun m => h5 τ _ m)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem ratGL_blkGL {r : ℕ} (hr : r ≤ a) (γ : GL (Fin r) E × GL (Fin (a - r)) E) :
     ratGL E a (blkGL hr γ) = blkGL hr (ratGL E r γ.1, ratGL E (a - r) γ.2) :=
   map_blkGL hr (algebraMap E (Ad E)) γ
 
-theorem slice_fst : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), (∀ a' : ℕ, a' < a → ∀ (L' : Subgroup (GL (Fin a') (Af E))), IsOpen (L' : Set (GL (Fin a') (Af E))) → ∀ W' : Submodule ℂ (Kinf E a' → ℂ), FiniteDimensional ℂ W' → ∀ X' : Set (Module.End ℂ (Sm E a') → ℂ), X'.Finite → ∀ N' : ℕ, FiniteDimensional ℂ (Submodule.span ℂ (GlobalTheory.HCF.formsGL E a' L' W' X' N'))) → ∀ (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) → ∀ W : Submodule ℂ (Kinf E a → ℂ), FiniteDimensional ℂ W → ∀ X : Set (Module.End ℂ (Sm E a) → ℂ), X.Finite → ∀ N : ℕ, ∀ (r : ℕ), 0 < r → ∀ (hr : r < a), ∀ [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)] (μ : Measure (BlockIx a r → Ad E)) (𝓕 : Set (BlockIx a r → Ad E)), μ.IsAddHaarMeasure → IsAddFundamentalDomain (ratN E a r) 𝓕 μ → μ 𝓕 = 1 → ∀ (t : GL (Fin a) (Af E)) (κ : Kinf E a), ∃ V₁ : Submodule ℂ (GA E r → ℂ), FiniteDimensional ℂ V₁ ∧ ∀ φ ∈ Submodule.span ℂ (GlobalTheory.HCF.formsGL E a L W X N), ∀ m₂ : GA E (a - r), (fun m₁ : GA E r => ∫ x in 𝓕, φ.1 (unip x * (GlobalTheory.LeviGA.blkGL hr.le (m₁, m₂) * finGL E a t * infGL E a (Unitary.toUnits κ))) ∂μ) ∈ V₁ := by
+theorem slice_fst : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), (∀ a' : ℕ, a' < a → ∀ (L' : Subgroup (GL (Fin a') (Af E))), IsOpen (L' : Set (GL (Fin a') (Af E))) → ∀ W' : Submodule ℂ (Kinf E a' → ℂ), FiniteDimensional ℂ W' → ∀ X' : Set (Module.End ℂ (Sm E a') → ℂ), X'.Finite → ∀ N' : ℕ, FiniteDimensional ℂ (Submodule.span ℂ (GlobalTheory.HCF.formsGL E a' L' W' X' N'))) → ∀ (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) → ∀ W : Submodule ℂ (Kinf E a → ℂ), FiniteDimensional ℂ W → ∀ X : Set (Module.End ℂ (Sm E a) → ℂ), X.Finite → ∀ N : ℕ, ∀ (r : ℕ), 0 < r → ∀ (hr : r < a), ∀ [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)] (μ : Measure (BlockIx a r → Ad E)) (𝓕 : Set (BlockIx a r → Ad E)), μ.IsAddHaarMeasure → IsAddFundamentalDomain (ratN E a r) 𝓕 μ → μ 𝓕 = 1 → ∀ (t : GL (Fin a) (Af E)) (κ : Kinf E a), ∃ V₁ : Submodule ℂ (GA E r → ℂ), FiniteDimensional ℂ V₁ ∧ ∀ φ ∈ Submodule.span ℂ (GlobalTheory.HCF.formsGL E a L W X N), ∀ m₂ : GA E (a - r), (fun m₁ : GA E r => ∫ x in 𝓕, φ.1 (unip x * (GlobalTheory.LeviGA.blkGL hr.le (m₁, m₂) * finGL E a t * infGL E a (Unitary.toUnits κ))) ∂μ) ∈ V₁ := by
   intro E _ _ _ a hind L hL W hW X hX N r _ hr _ _ μ 𝓕 hμ h𝓕 h1 t κ
   obtain ⟨L', W', q, hL', hW', hq, h⟩ := exists_translated hL hW hX N hr.le hμ h𝓕 h1 t κ
   obtain ⟨V, hV, hs⟩ := exists_slice_space (fstIx hr.le) (hind r hr) hL' hW' q hq

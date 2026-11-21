@@ -20,7 +20,7 @@ private theorem cmp_rT {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (T :
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul φ v => simp
 
-private theorem adj_rT {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (Ξ : AlgRep E a) (r : ℝ)
+private theorem adj_rT {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (Ξ : AlgRep E a) (r : ℝ)
     (T : Module.End ℂ (Sm E a)) (hT : ∀ X φ, lie E a X (T φ) = T (lie E a X φ)) (X : GlobalTheory.CuspRep.Lie E a)
     (x : Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)) : smAdj Ξ r X (T.rTensor _ x) = T.rTensor _ (smAdj Ξ r X x) := by
   induction x using TensorProduct.induction_on with
@@ -30,7 +30,7 @@ private theorem adj_rT {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
     simp only [smAdj, adj_apply, smA_apply, smB_apply, map_sub, LinearMap.rTensor_tmul, LinearMap.lTensor_tmul, hT,
       LinearMap.map_smul_of_tower]
 
-private theorem cocl_app {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (Ξ : AlgRep E a) (r : ℝ)
+private theorem cocl_app {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (Ξ : AlgRep E a) (r : ℝ)
     {n : ℕ} (e : Fin n → Herm E a)
     (T : Module.End ℂ (Sm E a)) (hT : ∀ X φ, lie E a X (T φ) = T (lie E a X φ)) :
     ∀ {q : ℕ} (ω : Co Ξ q), Coclosed (smAdj Ξ r) e ω → Coclosed (smAdj Ξ r) e (app T ω)

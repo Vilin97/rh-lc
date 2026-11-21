@@ -13,7 +13,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.H
 open scoped Classical
 
 theorem UpperTheory.ConvolutionTheory.R2.H.stdOm :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F), Gd D.δ v → ∀ (k : G1 F), IntAt v k → ∀ φ : S4 F, Std v φ.1 → Std v (W.Om k φ).1 := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (v : P F), Gd D.δ v → ∀ (k : G1 F), IntAt v k → ∀ φ : S4 F, Std v φ.1 → Std v (W.Om k φ).1 := by
   intro F E _ _ _ _ _ _ _ D W v hG k hk
   obtain ⟨sa, sm, sc, -⟩ := sgLaws F v
   obtain ⟨ga, gi, gm⟩ := hG.psi

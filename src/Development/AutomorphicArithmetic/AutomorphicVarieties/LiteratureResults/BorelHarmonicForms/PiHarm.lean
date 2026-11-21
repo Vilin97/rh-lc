@@ -17,7 +17,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibra
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af UpperTheory.V.AlgRepEndIrreducible UpperTheory.V.Lit UpperTheory.V.Lit.Bor
 open scoped TensorProduct
 
-private theorem piHarm_abs (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a n : ℕ) (e : Fin n → Herm E a)
+private theorem piHarm_abs (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a n : ℕ) (e : Fin n → Herm E a)
     (he : IsFrame e) (M : Type) [AddCommGroup M] [Module ℂ M] [Module ℝ M] [IsScalarTower ℝ ℂ M]
     (κ : Kinf E a → Module.End ℂ M) (A B : Lie E a →ₗ[ℝ] Module.End ℂ M) (r : ℝ)
     (a1 : IsLieHom A) (b1 : IsLieHom B) (hab : ∀ X Y, Commute (A X) (B Y))

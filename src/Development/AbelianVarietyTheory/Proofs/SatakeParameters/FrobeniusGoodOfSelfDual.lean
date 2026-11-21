@@ -33,7 +33,7 @@ open GlobalTheory.GalCut.IwaTwist GlobalTheory.GalCut7.IwahoriTwist UpperTheory.
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)}
 
-theorem loc_eq_unrChar [IsTotallyComplex E] (χ : HChar E) (hu : χ.UnrAt w) :
+theorem loc_eq_unrChar [_root_.NumberField.IsTotallyComplex E] (χ : HChar E) (hu : χ.UnrAt w) :
     χ.loc w = SmGL.unrChar (w.adicCompletion E) (χ.val w) := by
   refine MonoidHom.ext fun x => ?_
   have h2 := unif_spec w

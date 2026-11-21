@@ -18,13 +18,13 @@ theorem aInf_comm (E : Type) [Field E] (N r : ℕ) (s t : ℝ) :
   rw [Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
   congr 1; funext i; exact mul_comm _ _
 
-theorem aT_comm (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N r : ℕ) (s t : ℝ) :
+theorem aT_comm (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N r : ℕ) (s t : ℝ) :
     aT E N r s * aT E N r t = aT E N r t * aT E N r s := by
   unfold aT
   rw [← map_mul, aInf_comm, map_mul]
 
 open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm in
-theorem continuous_ctn {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ} (r : ℕ)
+theorem continuous_ctn {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ} (r : ℕ)
     {φ : GA E N → ℂ} (hφ : Continuous φ) : Continuous (An.ctn (K := E) (n := N) r φ) := by
   haveI : SecondCountableTopology (GA E N) := inferInstance
   haveI : FirstCountableTopology (GA E N) := inferInstance

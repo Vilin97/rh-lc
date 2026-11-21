@@ -51,7 +51,7 @@ def Keeps (r : G F Ω →* GL (Fin n) (Qbar l)) (L : Type) [Field L] [NumberFiel
 def RowT : Prop := UpperTheory.GalStar.Row0b fun h rc => IsRecT h rc
 
 def PlainRec : Prop :=
-  ∀ (E Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
+  ∀ (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω)
     (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (rc : IrrGL (k := w.adicCompletion E) → WD h), IsRecT h rc →
     ∀ (a : ℕ) (π : CuspSub E a) (t : ℝ), WinAt π t w → ∀ σ, π.IsLocComp w σ →
       GlobalTheory.RoadU.PlainTor (IrrGL.of σ.ρ σ.smooth σ.irred) ∧ UpperTheory.GalStar.Tor (rc (algNorm σ)) ∧ (rc (algNorm σ)).mono0

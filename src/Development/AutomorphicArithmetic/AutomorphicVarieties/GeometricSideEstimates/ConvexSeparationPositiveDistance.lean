@@ -24,11 +24,11 @@ private theorem back {R S : Type} [CommRing R] [CommRing S] {a : ℕ} (f : R →
   rwa [Matrix.mulVec_mulVec, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one,
     Units.val_one, Matrix.one_mulVec] at h2
 
-private theorem abs_inf {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (x : E) (w : InfinitePlace E) :
+private theorem abs_inf {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (x : E) (w : InfinitePlace E) :
     ‖pInf E (algebraMap E (Ad E) x) w‖ = w x := by
   rw [pInf_algebraMap, InfinitePlace.norm_embedding_eq]
 
-private theorem inf_ne {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (x : E) (hx : x ≠ 0) :
+private theorem inf_ne {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (x : E) (hx : x ≠ 0) :
     pInf E (algebraMap E (Ad E) x) ≠ 0 := by
   intro h
   obtain ⟨w⟩ : Nonempty (InfinitePlace E) := inferInstance
@@ -38,7 +38,7 @@ private theorem inf_ne {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
   simp at h1
   exact h2.ne h1
 
-private theorem sep {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (T : Set (Af E)) (hT : IsCompact T) :
+private theorem sep {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (T : Set (Af E)) (hT : IsCompact T) :
     ∃ c : ℝ, 0 < c ∧ ∀ x : E, algebraMap E (Af E) x ∈ T → x = 0 ∨ c ≤ ‖pInf E (algebraMap E (Ad E) x)‖ := by
   have hf := UpperTheory.V.Lit.Dr.finField E 1 T hT
   have hf2 := (hf.subset (Set.diff_subset (t := {0}))).image fun x => ‖pInf E (algebraMap E (Ad E) x)‖⁻¹

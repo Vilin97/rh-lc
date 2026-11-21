@@ -11,7 +11,7 @@ noncomputable section
 
 namespace Formalism.DivisionValues
 
-theorem log_abs_norm_eq_two_sum (K : Type) [Field K] [NumberField K] [IsTotallyComplex K]
+theorem log_abs_norm_eq_two_sum (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
     (a : K) (ha : a ≠ 0) :
     Real.log |((Algebra.norm ℚ a : ℚ) : ℝ)| =
       2 * ∑ v : InfinitePlace K, Real.log ‖v.embedding a‖ := by

@@ -343,7 +343,7 @@ end Proj
 set_option maxHeartbeats 1000000 in
 set_option synthInstance.maxHeartbeats 200000 in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.exists_injection_into_l2_cusp :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (G1 K 2)) [μ.IsHaarMeasure] (τ : Submodule ℂ (L2 μ)) (κ : Measure (archCompact K 2)) (p : archCompact K 2 → ℂ), CuspIrr μ τ → IdemA κ p → ∀ S : Finset (Pl K), ∃ J : Xs μ τ κ p S →ₗ[ℂ] L2 μ, Function.Injective J ∧ (∀ φ, Reps μ (J φ) φ ∧ InH μ τ κ p S (J φ)) ∧
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K 2)) [μ.IsHaarMeasure] (τ : Submodule ℂ (L2 μ)) (κ : Measure (archCompact K 2)) (p : archCompact K 2 → ℂ), CuspIrr μ τ → IdemA κ p → ∀ S : Finset (Pl K), ∃ J : Xs μ τ κ p S →ₗ[ℂ] L2 μ, Function.Injective J ∧ (∀ φ, Reps μ (J φ) φ ∧ InH μ τ κ p S (J φ)) ∧
       (∀ (h : FA K 2) (φ φ' : Xs μ τ κ p S), (∀ x, φ'.1 x = φ.1 (x * fin1 h)) → J φ' = rhoF μ h (J φ)) ∧
       ∀ U, Lev U → (∀ v, InH μ τ κ p S v → v ∈ fixF μ (levOn S U) → ∃ φ, J φ = v ∧ FixF (levOn S U) φ.1) ∧
         ∃ E : Submodule ℂ (G1 K 2 → ℂ), FiniteDimensional ℂ E ∧ ∀ φ ∈ Xs μ τ κ p S, FixF (levOn S U) φ → φ ∈ E := by

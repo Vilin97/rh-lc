@@ -22,7 +22,7 @@ open scoped InnerProductSpace
 
 namespace PositivityTheory.PRW.GKD
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in

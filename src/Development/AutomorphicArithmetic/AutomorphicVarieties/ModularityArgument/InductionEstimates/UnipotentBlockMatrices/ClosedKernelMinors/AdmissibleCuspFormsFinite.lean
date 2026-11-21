@@ -173,7 +173,7 @@ private theorem admissible_cusp_forms_finite {K : Type} [Field K] [NumberField K
     exact (hl p.1.1 p.2).symm.trans (by rw [h0]; rfl)
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.adm :
-    ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ : Submodule ℂ (L2 μ₂)), CuspIrr μ₂ τ → ∀ U : Subgroup (G1 K 2), U ≤ KG K 2 → (∃ O : Set (G1 K 2), IsOpen O ∧ ∀ g ∈ KG K 2, g ∈ U ↔ g ∈ O) →
+    ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (τ : Submodule ℂ (L2 μ₂)), CuspIrr μ₂ τ → ∀ U : Subgroup (G1 K 2), U ≤ KG K 2 → (∃ O : Set (G1 K 2), IsOpen O ∧ ∀ g ∈ KG K 2, g ∈ U ↔ g ∈ O) →
       ∀ 𝒜 : Submodule ℂ (U → ℂ), FiniteDimensional ℂ 𝒜 → (∀ a ∈ 𝒜, Continuous a ∧ ∀ u : U, (fun x => a (x * u)) ∈ 𝒜) →
       ∃ E : Submodule ℂ (G1 K 2 → ℂ), FiniteDimensional ℂ E ∧ (∀ φ ∈ E, Rd τ φ) ∧
         ∀ φ : G1 K 2 → ℂ, Continuous φ → (∃ v ∈ τ, Reps μ₂ v φ) → (∀ m, (fun u : U => φ (m * u)) ∈ 𝒜) → φ ∈ E := by

@@ -16,7 +16,7 @@ namespace GlobalTheory.LKCx
 
 variable {p : ℕ} [Fact p.Prime]
 
-theorem real_comb_integralBasis_eq_zero {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
+theorem real_comb_integralBasis_eq_zero {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
     (r : Module.Free.ChooseBasisIndex ℤ (𝓞 K) → ℝ)
     (h : ∀ w : InfinitePlace K, ∑ i, (r i : ℂ) * w.embedding (integralBasis K i) = 0) : r = 0 := by
   have hli := (mixedEmbedding.latticeBasis K).linearIndependent

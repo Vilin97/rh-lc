@@ -29,10 +29,10 @@ namespace GlobalTheory.CellBump
 
 open GlobalTheory.CellDec GlobalTheory.RSJ
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem detPow_eq (x : ℝ) {a : ℕ} (g : GA E a) :
     detPow E a x g = Real.exp (x * GlobalTheory.Mem.Chr.CharModel.logNorm E (Matrix.GeneralLinearGroup.det g)) := by
   change ‖((GlobalTheory.Mem.Chr.CharModel.absHom E (x : ℂ) (Matrix.GeneralLinearGroup.det g) : ℂˣ) : ℂ)‖ = _
@@ -40,7 +40,7 @@ theorem detPow_eq (x : ℝ) {a : ℕ} (g : GA E a) :
   congr 1
   simp [Complex.mul_re]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem single_last_eq {R : Type} [Zero R] [One R] (j : Fin (m + 1)) :
     (Pi.single (Fin.last m) (1 : R) : Fin (m + 1) → R) j = if (j : ℕ) + 1 = m + 1 then 1 else 0 := by
   by_cases h : j = Fin.last m
@@ -49,7 +49,7 @@ theorem single_last_eq {R : Type} [Zero R] [One R] (j : Fin (m + 1)) :
     rw [Pi.single_apply, if_neg h, if_neg (by omega)]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem isOpen_natLat {N : ℕ} (hN : 0 < N) : IsOpen (natLat E N) := by
   have hu : IsUnit (N : Af E) := by
     have e : (N : Af E) = algebraMap E (Af E) (N : E) := (map_natCast _ _).symm
@@ -70,7 +70,7 @@ theorem isOpen_natLat {N : ℕ} (hN : 0 < N) : IsOpen (natLat E N) := by
   exact GroundTheory.Global.isOpen_integralFiniteAdeles.preimage (continuous_const.mul continuous_id)
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_indN {N : ℕ} (hN : 0 < N) : Continuous fun y : Fin (m + 1) → Af E => indN N y := by
   set T : Set (Fin (m + 1) → Af E) :=
     {y | ∀ i : Fin (m + 1), y i - (if (i : ℕ) + 1 = m + 1 then 1 else 0) ∈ natLat E N} with hT
@@ -165,9 +165,9 @@ namespace GlobalTheory.CellBump
 open GlobalTheory.CellDec GlobalTheory.RSJ
 open scoped Pointwise
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ}
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem single_vecMul_eq_lastRow (g : GA E (m + 1)) :
     Matrix.vecMul (Pi.single (Fin.last m) (1 : Ad E)) (g : Matrix (Fin (m + 1)) (Fin (m + 1)) (Ad E)) =
       GlobalTheory.ZEul.lastRow g := by
@@ -248,7 +248,7 @@ namespace GlobalTheory.CellBump
 
 open GlobalTheory.CellDec GlobalTheory.RSJ
 
-theorem exists_cellPart_unfoldedIntegral_positive_alt : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ)
+theorem exists_cellPart_unfoldedIntegral_positive_alt : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (b : GA E (m + 1) → ℂ) (φ : GA E (m + 1) → ℂ)
     (N : ℕ) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (Φ : (Fin (m + 1) → Cinf E) → ℂ),
     0 < N → (∀ v ∈ S, 0 < FractionalIdeal.count E v (J : FractionalIdeal (𝓞 E)⁰ E)) →

@@ -15,7 +15,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 namespace DiscreteGroups.sglob.DzType
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 def NarrowBigAlt : Prop :=
-  ∀ (E E' Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field E'] [NumberField E'] [Field Ω] [Algebra E E'] [Algebra E Ω]
+  ∀ (E E' Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field E'] [NumberField E'] [Field Ω] [Algebra E E'] [Algebra E Ω]
     [Algebra E' Ω] [IsScalarTower E E' Ω] [IsAlgClosure E Ω] [IsAlgClosure E' Ω] (g : ℕ) [Fact g.Prime]
     (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w)
     (w' : HeightOneSpectrum (𝓞 E')) (h' : IsPlaceOver A w')

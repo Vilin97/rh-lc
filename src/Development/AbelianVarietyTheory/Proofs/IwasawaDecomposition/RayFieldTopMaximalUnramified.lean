@@ -12,7 +12,7 @@ open Formalism.L2.Host GlobalTheory.Published GlobalTheory.NT GlobalTheory.Mem.F
 namespace GlobalTheory.HilbertInClosure
 
 theorem rayField_top_maximal_unramified : GlobalArtinReciprocity → ∀ (E : Type) [Field E] [NumberField E]
-    [IsTotallyComplex E] (j : E →ₐ[ℚ] Qb) (ι : Qb →+* ℂ) (M : IntermediateField ℚ ℂ),
+    [_root_.NumberField.IsTotallyComplex E] (j : E →ₐ[ℚ] Qb) (ι : Qb →+* ℂ) (M : IntermediateField ℚ ℂ),
     IsRayFieldIn (ι.comp j.toRingHom) ⊤ M →
     ∃ _ : NumberField (qb ι M),
       (j.fieldRange ≤ qb ι M ∧

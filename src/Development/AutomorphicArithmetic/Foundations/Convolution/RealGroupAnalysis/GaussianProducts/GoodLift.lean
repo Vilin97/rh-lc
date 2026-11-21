@@ -24,7 +24,7 @@ private theorem delta_ne {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
   exact D.b.ne_zero 1 (by rw [D.b1, hθ])
 
 theorem UpperTheory.ConvolutionTheory.R2.G.goodLift :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ThetaLiftTrivialOrbitTermsVanish W M π → ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, Good D (lift W M f.1 φ) := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ThetaLiftTrivialOrbitTermsVanish W M π → ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, Good D (lift W M f.1 φ) := by
   intro F E _ _ _ _ _ _ _ D W M π hN f hf φ hφ
   have hδ : D.δ ≠ 0 := delta_ne D
   have hex := fun h => UpperTheory.ConvolutionTheory.R2.G.expand1 F E D W M π f hf φ hφ h

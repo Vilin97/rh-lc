@@ -101,7 +101,7 @@ structure Pt (E Ω : Type) [Field E] [Field Ω] [Algebra E Ω] (n : ℕ) : Type 
   K : Type
   [field : Field K]
   [numberField : NumberField K]
-  [cx : IsTotallyComplex K]
+  [cx : _root_.NumberField.IsTotallyComplex K]
   [algE : Algebra E K]
   [algΩ : Algebra K Ω]
   [tower : IsScalarTower E K Ω]
@@ -114,7 +114,7 @@ section Tower
 
 variable {E Ω : Type} [Field E] [Field Ω] [Algebra E Ω] {n : ℕ}
 
-def Pt.base [NumberField E] [IsTotallyComplex E] (Ω : Type) [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (π : CuspSub E n) : Pt E Ω n :=
+def Pt.base [NumberField E] [_root_.NumberField.IsTotallyComplex E] (Ω : Type) [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (π : CuspSub E n) : Pt E Ω n :=
   { K := E, π := π }
 
 def Step (X Y : Pt E Ω n) : Prop :=
@@ -126,8 +126,8 @@ def Lifts (X Y : Pt E Ω n) : Prop := Relation.ReflTransGen Step X Y
 end Tower
 
 def FinTrace : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
-    [IsTotallyComplex E], (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F]
+    [_root_.NumberField.IsTotallyComplex E], (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
     ∀ (π : CuspSub F n) (P : CuspSub E n), (∀ g : E ≃ₐ[F] E, (Cusp.cx P).ConjIso g.toRingEquiv) →
       WeakBC (Cusp.cx π).sat (Cusp.cx P).sat → ∀ (v : HeightOneSpectrum (𝓞 F)) (w : PlacesOver E v),
       ¬ UpperTheory.ConvolutionTheory.GM.Split E v → UpperTheory.ConvolutionTheory.GM.Unr E v →
@@ -166,7 +166,7 @@ def ToralOver {E M Ω : Type} [Field E] [NumberField E] [Field M] [NumberField M
       (rc x).inePol (AlgEquiv.restrictScalars E (t : G M Ω)) = ∏ j, (X - C ((ξ j (a' (ineIncl h' t)) : ℂˣ) : ℂ))
 
 def SuppBC : Prop :=
-  ∀ (E Ω : Type) [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (n : ℕ), 0 < n →
+  ∀ (E Ω : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (n : ℕ), 0 < n →
     ∀ (π : CuspSub E n) (Y : Pt E Ω n), Lifts (Pt.base Ω π) Y →
     ∀ (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 E)) (w : HeightOneSpectrum (𝓞 Y.K)) (h : IsPlaceOver A v)
       (h' : IsPlaceOver A w) (g : ℕ) [Fact g.Prime] (i : ℚ_[g] ≃+* v.adicCompletion E), Continuous i →

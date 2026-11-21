@@ -18,7 +18,7 @@ open scoped Classical
 
 namespace GlobalTheory.SchwartzBruhatMoments
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ}
 
 theorem pInfPi_eq (x : Fin m → Ad E) :
     (fun i => pInf E (x i)) = (toMixedPi E m).symm (infPartPi x) := by
@@ -84,7 +84,7 @@ theorem integrable_tensor (φ : SchwartzMap (Fin m → mixedEmbedding.mixedSpace
   exact (integrable_arch φ k).mul_prod (integrable_of_mem_finiteSchwartzBruhatPi hg).norm
 
 theorem compactSupport_and_integrable_moments :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (F : (Fin m → Ad E) → ℂ),
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (F : (Fin m → Ad E) → ℂ),
     F ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin m) →
     (∃ L : Set (Fin m → Af E), IsCompact L ∧ ∀ x, F x ≠ 0 → (fun i => pFin E (x i)) ∈ L) ∧
     ∀ k : ℕ, Integrable (fun x => ‖F x‖ * (1 + ‖fun i => pInf E (x i)‖) ^ k)

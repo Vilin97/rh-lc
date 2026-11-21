@@ -44,7 +44,7 @@ theorem mulEquiv_inv_mk (t : (Af K)ˣ) {x x' : K}
   rw [e, mul_mem_adelicIdeal_smul]
   exact neg_mem (mem_adelicIdeal_one_iff.2 h)
 
-theorem exists_curve_torsTransport : ∀ {K : Type} [Field K] [NumberField K] [IsTotallyComplex K],
+theorem exists_curve_torsTransport : ∀ {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K],
     Module.finrank ℚ K = 2 → ∀ (ι : K →+* ℂ) (Λ₀ : PeriodPair) (Ω₀ : ℂ), GlobalTheory.IndefiniteRowSideFullHecke.LatticeNormTransport.IsLatOf ι 1 Λ₀ →
     Ω₀ ≠ 0 → letI : Algebra K ℂ := ι.toAlgebra;
     ∃ (X : WeierstrassCurve ℂ) (_ : X.IsElliptic)

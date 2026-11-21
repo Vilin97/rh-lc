@@ -12,7 +12,7 @@ open PositivityTheory.Rg.BcB PositivityTheory.Rg.BcB.D1
 
 namespace GlobalTheory.CompanionTheory.DegBasisGen
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 theorem ultra (w : HeightOneSpectrum (𝓞 E)) : IsUltrametricDist (w.adicCompletion E) :=
   inferInstanceAs (@IsUltrametricDist (w.adicCompletion E)

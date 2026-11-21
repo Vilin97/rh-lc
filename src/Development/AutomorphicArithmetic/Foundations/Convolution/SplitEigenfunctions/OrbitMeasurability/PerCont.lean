@@ -50,11 +50,11 @@ def AbsUnf : Prop := ∀ (G H ι : Type) [Group G] [TopologicalSpace G] [IsTopol
 def ZDom : Prop := ∀ (E : Type) [Field E] [NumberField E], normOneMeasure E (normOneFundamentalDomain E) < ⊤ ∧
   MeasurableSet (normOneFundamentalDomain E) ∧ ∃ C : Set (A E)ˣ, IsCompact C ∧ ∀ z ∈ normOneFundamentalDomain E, ((z : IdeleGroup E) : (A E)ˣ) ∈ C
 
-def Reps : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (D : Dat ℚ E), ∃ (j : G1 ℚ →* G1 E) (r : Orb D.δ → G1 E),
+def Reps : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (D : Dat ℚ E), ∃ (j : G1 ℚ →* G1 E) (r : Orb D.δ → G1 E),
   (∀ g, gl (j g) = em E (gl g)) ∧ Continuous j ∧ Function.Injective j ∧ (∀ i, r i ∈ Gam E ∧ rp i.1 = D.act (gl (r i)) (rp X0)) ∧
   (∀ δ ∈ Gam ℚ, j δ ∈ Gam E) ∧ ∀ γ ∈ Gam E, ∃! i, ∃ δ ∈ Gam ℚ, γ = r i * j δ
 
-def BddE : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (P : CuspSub E 2), ∀ φ ∈ P.V,
+def BddE : Prop := ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (P : CuspSub E 2), ∀ φ ∈ P.V,
   ∀ C : Set (GL (Fin 2) (A E)), IsCompact C → ∃ B : ℝ, ∀ h : G1 E, ∀ k ∈ C, ‖φ.1 (gl h * k)‖ ≤ B
 
 def YInt : Prop := All fun _ _ _ _ D _ _ N P => ∀ φ ∈ P.V, Measurable (pY D) ∧ Measurable (fun y => φ.1 (el D y)) ∧

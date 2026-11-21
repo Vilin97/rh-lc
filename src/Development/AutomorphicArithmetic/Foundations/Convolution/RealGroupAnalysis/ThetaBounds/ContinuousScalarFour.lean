@@ -48,7 +48,7 @@ private theorem scalarFour_mulVec {F : Type} [Field F] [NumberField F] (a : (A F
   rw [Matrix.scalar_apply, Matrix.mulVec_diagonal]
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.omCpt :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), OmCpt W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), OmCpt W := by
   intro F E _ _ _ _ _ _ _ D W φ hφ C hC
   obtain ⟨-, hIw⟩ := iwa F
   obtain ⟨U, hUc, hU⟩ := hIw C hC

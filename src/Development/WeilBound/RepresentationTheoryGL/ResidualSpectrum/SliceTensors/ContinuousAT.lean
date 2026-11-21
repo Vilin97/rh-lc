@@ -14,7 +14,7 @@ namespace PositivityTheory.Rg.Rs
 
 namespace PDich
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a N : ℕ}
 
 
 open PExpFin in

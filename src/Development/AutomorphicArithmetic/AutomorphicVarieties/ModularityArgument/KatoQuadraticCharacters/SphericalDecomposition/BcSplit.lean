@@ -102,7 +102,7 @@ private theorem absNorm_rat {l : ℕ} (hp : l.Prime) (v : HeightOneSpectrum (�
   rw [Ideal.absNorm_eq_one_iff]
   exact v.isPrime.ne_top
 
-private theorem sat_iff (hP : Hypotheses₂) {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Algebra ℚ K]
+private theorem sat_iff (hP : Hypotheses₂) {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Algebra ℚ K]
     (π : TR.CuspSub ℚ 2) (Q : CuspSub K 2) (hBC : IsBC π Q) (v : HeightOneSpectrum (𝓞 ℚ)) (w : HeightOneSpectrum (𝓞 K))
     (i : v.adicCompletion ℚ ≃+* w.adicCompletion K) (hi : IsCompl i) (B : Multiset ℂˣ) :
     π.HasSat v B ↔ (CG.mk Q).HasSat w B := by

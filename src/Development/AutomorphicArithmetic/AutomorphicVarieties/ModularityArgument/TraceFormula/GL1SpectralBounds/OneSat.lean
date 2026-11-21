@@ -16,7 +16,7 @@ section
 
 open Formalism.L2.Host Matrix
 
-private theorem isotypic {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (π : CuspSub E a)
+private theorem isotypic {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (π : CuspSub E a)
     (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (hσ : π.IsLocComp w σ) :
     UpperTheory.V.Af.LocIsotypic π.finPart w σ := by
   refine ⟨Submodule.nontrivial_iff_ne_bot.2 π.ne_bot, ?_⟩

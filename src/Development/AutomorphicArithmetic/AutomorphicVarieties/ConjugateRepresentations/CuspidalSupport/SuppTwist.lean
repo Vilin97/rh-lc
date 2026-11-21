@@ -17,7 +17,7 @@ private theorem sum_map {ι α : Type} [Fintype ι] (f : α → α) (C : ι → 
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← Multiset.coe_mapAddMonoidHom, map_sum]
 
-private theorem sat_twist {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (π : CG E a) {w : Pl E}
+private theorem sat_twist {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} (π : CG E a) {w : Pl E}
     {B : Multiset ℂˣ} (h : π.HasSat w B) {χ : HChar E} (hχ : χ.UnrAt w) :
     (π.twist χ).HasSat w (B.map (· * χ.val w)) := by
   induction π using Quotient.inductionOn

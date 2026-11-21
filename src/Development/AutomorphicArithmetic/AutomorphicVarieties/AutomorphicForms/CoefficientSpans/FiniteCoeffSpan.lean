@@ -23,15 +23,15 @@ def CharFinite : Prop :=
       ∀ z ∈ (isExpLieAlgebra K n).centerU, uAction z φ = χ z • φ})
 
 def AutTo : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a),
     IsAutForm φ → IsAutomorphicForm (K := E) (n := a) φ.1
 
 def CptTo : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), ∃ e : archCompact E a ≃* Kinf E a,
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), ∃ e : archCompact E a ≃* Kinf E a,
     ∀ (φ : Sm E a) (k : archCompact E a) (g : GA E a), (cptRep E a (e k) φ).1 g = φ.1 (g * infEmb E a k)
 
 def CentreTo : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), ∀ z ∈ (isExpLieAlgebra E a).centerU,
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ), ∀ z ∈ (isExpLieAlgebra E a).centerU,
     ∃ z' ∈ Algebra.adjoin ℂ {x : Module.End ℂ (Sm E a) | ∃ τ u, x = cap τ u},
       ∀ (φ : Sm E a) (h : φ.1 ∈ archSmooth E a), (uAction z ⟨φ.1, h⟩).1 = (z' φ).1
 

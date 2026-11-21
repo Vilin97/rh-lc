@@ -131,7 +131,7 @@ end
 
 open UpperTheory.ConvolutionTheory.R2.I.WL in
 theorem UpperTheory.ConvolutionTheory.R2.I.thetaIntegral_exists_bilinear :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (h : GL (Fin 2) (A E)),
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (h : GL (Fin 2) (A E)),
       ∃ B : π.V →ₗ[ℂ] Fock (F := F) D.δ →ₗ[ℂ] ℂ, ∀ f φ, B f φ = W1 W M f.1.1 φ.1 h := by
   intro F E _ _ _ _ _ _ _ D W M π h
   have hint : ∀ (f : π.V) (φ : Fock (F := F) D.δ), Integrable (iw (w1 W f.1.1 φ.1 h)) M.ν :=

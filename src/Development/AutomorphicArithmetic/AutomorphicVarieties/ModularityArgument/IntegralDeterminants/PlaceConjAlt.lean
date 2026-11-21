@@ -61,7 +61,7 @@ def ProdNorm : Prop :=
     ∏ τ ∈ Ov ι w, nu ι (τ (unif w : E)) = nu ι (normV w : ℂ)
 
 def CharVal : Prop :=
-  ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (κ : HChar E) (m : (E →+* ℂ) → ℤ), κ.IsAlg m → ∀ w, κ.UnrAt w →
+  ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (κ : HChar E) (m : (E →+* ℂ) → ℤ), κ.IsAlg m → ∀ w, κ.UnrAt w →
     nu ι (κ.val w : ℂ) * ∏ τ ∈ Ov ι w, nu ι (τ (unif w : E)) ^ m τ = 1
 
 def VecForm : Prop :=

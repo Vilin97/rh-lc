@@ -88,7 +88,7 @@ private lemma occ_abs {G H A ι α : Type*} [Group G] [TopologicalSpace G] [Norm
       rw [map_smul, hc, hsw j _ (fun b => hcomm i j hne c b), hw]
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.occ :
-    ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ : Measure (G1 K 2)) [μ.IsHaarMeasure] (τ : Submodule ℂ (LL μ)), CuspIrr μ τ → ∀ (Z : Submodule ℂ (LL μ)) (s : Finset ι) (n : ι → ℕ) (q : ι → ℤ), Z ≤ τ → Z ≠ ⊥ → (∀ i a, ∀ v ∈ Z, rightRegularRep (Gam K 2) μ (C.gl i a) v ∈ Z) →
+    ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (ι : Type) [Fintype ι] (C : Co K ι) (μ : Measure (G1 K 2)) [μ.IsHaarMeasure] (τ : Submodule ℂ (LL μ)), CuspIrr μ τ → ∀ (Z : Submodule ℂ (LL μ)) (s : Finset ι) (n : ι → ℕ) (q : ι → ℤ), Z ≤ τ → Z ≠ ⊥ → (∀ i a, ∀ v ∈ Z, rightRegularRep (Gam K 2) μ (C.gl i a) v ∈ Z) →
       (∀ i n q, ∀ v ∈ Z, C.Pi μ i n q v ∈ Z) → (∀ i, ∃ v ∈ τ, C.Pi μ i (n i) (q i) v ≠ 0) → ∃ v ∈ Z, v ≠ 0 ∧ ∀ i ∈ s, C.Pi μ i (n i) (q i) v = v := by
   intro K _ _ _ ι _ C μ _ τ hτ Z s n q hZτ hZ hgl hPi hocc
   obtain ⟨-, -, hun, -, -, hcomm, -, hdec, -⟩ := coLaws K ι C

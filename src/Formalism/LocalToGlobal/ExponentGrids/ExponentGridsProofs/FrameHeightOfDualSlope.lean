@@ -38,7 +38,7 @@ theorem sum_le_finsum' {α : Type} (f : α → ℝ) (hf : ∀ a, 0 ≤ f a) (hs 
     exact Or.inl hx)]
   exact Finset.sum_le_sum_of_subset_of_nonneg Finset.subset_union_right (fun a _ _ => hf a)
 
-theorem partial_nat (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (n : ℕ)
+theorem partial_nat (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ)
     (F : Finset (Pl K)) : ∑ w ∈ F, lw w * (vw w (n : K) : ℝ) ≤ Real.log n := by
   obtain ⟨h1, h2⟩ := Formalism.PairingDivisionLocalBalance.sum_valuation_nat K n
   rw [← h2]

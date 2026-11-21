@@ -86,7 +86,7 @@ theorem MulBound.mulBoundAt_of_not_isReal (h : X.MulBound β) {σ : F →+* ℂ}
     simp only [← cnrm_map, map_mul] at this
     exact this
 
-theorem MulBound.mulBoundAt [IsTotallyComplex F] (h : X.MulBound β) (σ : F →+* ℂ) : X.MulBoundAt σ (β σ) :=
+theorem MulBound.mulBoundAt [_root_.NumberField.IsTotallyComplex F] (h : X.MulBound β) (σ : F →+* ℂ) : X.MulBoundAt σ (β σ) :=
   h.mulBoundAt_of_not_isReal (IsTotallyComplex.complexEmbedding_not_isReal σ)
 
 end Data

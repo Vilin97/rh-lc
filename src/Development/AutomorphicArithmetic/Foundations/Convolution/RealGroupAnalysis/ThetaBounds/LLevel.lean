@@ -119,7 +119,7 @@ end
 
 open UpperTheory.ConvolutionTheory.R2.Ff.TubeLevelLattice in
 theorem UpperTheory.ConvolutionTheory.R2.Ff.lLevel :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), LLevel W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), LLevel W := by
   intro F E _ _ _ _ _ _ _ D W φ
   obtain ⟨ρ, -, -, -, -, hfin⟩ := actCont F E D
   have hT : Continuous fun p : GL (Fin 2) (Af E) × (Fin 4 → Af F) => TT D p.1 p.2 :=

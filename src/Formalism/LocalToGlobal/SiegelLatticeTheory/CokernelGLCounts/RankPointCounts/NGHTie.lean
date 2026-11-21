@@ -50,7 +50,7 @@ def HTTheta : Prop :=
 
 section Asm
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem prod_inf_sq (x : E) : ∏ w : InfinitePlace E, w x ^ 2 = |((Algebra.norm ℚ x : ℚ) : ℝ)| := by
   rw [← Rat.cast_abs, ← InfinitePlace.prod_eq_abs_norm]

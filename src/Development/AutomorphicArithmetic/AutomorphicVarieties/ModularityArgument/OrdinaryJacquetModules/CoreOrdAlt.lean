@@ -20,7 +20,7 @@ namespace UpperTheory.V.Z.Ord
 
 section At
 
-variable {F Ω : Type} [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] {l : ℕ} [Fact l.Prime]
+variable {F Ω : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] {l : ℕ} [Fact l.Prime]
   {n : ℕ} (ι : Qbar l ≃+* ℂ) {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 F)} (h : IsPlaceOver A w)
 
 def ExpOf (π : CuspSub F n) (ψ : Fin n → Dec (F := F) A →* (Qbar l)ˣ) : Prop :=
@@ -29,7 +29,7 @@ def ExpOf (π : CuspSub F n) (ψ : Fin n → Dec (F := F) A →* (Qbar l)ˣ) : P
     ∀ σ, π.IsLocComp w σ → IsSubquotient σ.ρ (PS ω)
 
 
-omit [NumberField F] [IsTotallyComplex F] [IsAlgClosure F Ω] in
+omit [NumberField F] [_root_.NumberField.IsTotallyComplex F] [IsAlgClosure F Ω] in
 def Unl (ψ : Fin n → Dec (F := F) A →* (Qbar l)ˣ) : Prop := ∀ i j, ψ i ≠ ψ j * (cycBar F Ω l).comp (Dec (F := F) A).subtype
 
 
@@ -119,7 +119,7 @@ def AutUO : Prop :=
         Af.AttC ι (Y.r.comp V.pr) π ∧ ∀ v, π.IsLocComp ((hset Q τ₀).Sl v) (Y.σl v)
 
 def ExpTor : Prop :=
-  ∀ (F Ω : Type) [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime]
+  ∀ (F Ω : Type) [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime]
     (n : ℕ), 1 ≤ n → ∀ (ι : Qbar l ≃+* ℂ) (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 F)) (h : IsPlaceOver A w),
     ((l : ℕ) : 𝓞 F) ∈ w.asIdeal → ∀ (π : CuspSub F n) (ψ : Fin n → Dec (F := F) A →* (Qbar l)ˣ), ExpOf ι h π ψ → Gam.TorAt π w ∧
       (Unl ψ → TU π w) ∧ ∀ t : ℝ, ImaginaryQuadraticEtaCharacter.WinAt π t w → ∀ i j (m : ℕ), 1 ≤ m →

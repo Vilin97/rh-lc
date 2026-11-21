@@ -189,7 +189,7 @@ def HeckeEntire : Prop :=
 theorem HeckeEntire_holds : HeckeEntire := GlobalTheory.ToricDistribution.exists_isHeckeL_of_hasInf
 
 def HeckeTateFunctionalEquation : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (I : Type) [Fintype I] (φ : I → E →+* ℂ), IsCMType φ →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (I : Type) [Fintype I] (φ : I → E →+* ℂ), IsCMType φ →
     ∀ (χ : HChar E) (n : I → ℤ) (a : HeightOneSpectrum (𝓞 E) →₀ ℕ), IsUnitary χ → Formalism.L2.Host.HChar.HasInf χ φ n →
       (∃ i, n i ≠ 0) → (∀ w, ExpAt χ w (a w)) →
         ∃ Λ Λ' : ℂ → ℂ, IsCompletedL χ n Λ ∧ IsCompletedL χ⁻¹ (fun i => -n i) Λ' ∧

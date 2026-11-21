@@ -92,7 +92,7 @@ theorem gram_det_real {d m : ℕ} (X : InfinitePlace K → Matrix (Fin d) (Fin d
     rw [← h]; exact norm_nonneg _
   exact Complex.ext (by simp) (by simp [him])
 
-theorem gram_re_ne [IsTotallyComplex K] {d : ℕ}
+theorem gram_re_ne [_root_.NumberField.IsTotallyComplex K] {d : ℕ}
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (hX : ∀ v, IsUnit (X v).det)
     (e : Fin d → Fin d → K) (he : LinearIndependent K e) (v : InfinitePlace K) :
     (gram X v e).det.re ≠ 0 := by
@@ -102,7 +102,7 @@ theorem gram_re_ne [IsTotallyComplex K] {d : ℕ}
   rw [h1] at hpos
   exact (Finset.prod_ne_zero_iff.mp hpos.ne') v (Finset.mem_univ v)
 
-theorem gram_ne [IsTotallyComplex K] {d : ℕ}
+theorem gram_ne [_root_.NumberField.IsTotallyComplex K] {d : ℕ}
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (hX : ∀ v, IsUnit (X v).det)
     (e : Fin d → Fin d → K) (he : LinearIndependent K e) (v : InfinitePlace K) :
     (gram X v e).det ≠ 0 := by
@@ -127,7 +127,7 @@ theorem vec_expand {d : ℕ} (x : Fin d → K) : x = ∑ k, x k • (Pi.single k
   funext i
   simp [Finset.sum_apply, Pi.single_apply]
 
-theorem gram_image [IsTotallyComplex K] {d : ℕ}
+theorem gram_image [_root_.NumberField.IsTotallyComplex K] {d : ℕ}
     (XS XT : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (hXS : ∀ v, IsUnit (XS v).det)
     (φ : Matrix (Fin d) (Fin d) K) (e : Fin d → Fin d → K) (v : InfinitePlace K) :
     (gram XT v (fun i => φ *ᵥ e i)).det = (detRatio XS XT φ v : ℂ) * (gram XS v e).det := by
@@ -285,7 +285,7 @@ theorem vw_pow (hV : ValBasic) (w : HeightOneSpectrum (𝓞 K)) (a : K) (ha : a 
     rw [pow_succ, hmul _ _ (pow_ne_zero n ha) ha, ih]
     push_cast; ring
 
-theorem detRatio_ne [IsTotallyComplex K] {d : ℕ}
+theorem detRatio_ne [_root_.NumberField.IsTotallyComplex K] {d : ℕ}
     (XS XT : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ)
     (hXS : ∀ v, IsUnit (XS v).det) (hXT : ∀ v, IsUnit (XT v).det)
     (φ : Matrix (Fin d) (Fin d) K) (hφ : IsUnit φ.det) (v : InfinitePlace K) :
@@ -406,7 +406,7 @@ theorem supp_conj (hV : ValBasic) (F : HeightOneSpectrum (𝓞 K) → ℝ)
   exact hF.preimage hinj.injOn
 
 theorem G_finite (hV : ValBasic) (hIC : IdxChange) (hLB : LcvBasis) (hPF : ProdFormula)
-    [IsTotallyComplex K] (v0 : InfinitePlace K) (hv0 : IsConjAt v0) (D : ℕ)
+    [_root_.NumberField.IsTotallyComplex K] (v0 : InfinitePlace K) (hv0 : IsConjAt v0) (D : ℕ)
     (XQ : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ) (hXQ : ∀ v, IsUnit (XQ v).det)
     (abelian₂ : Submodule (𝓞 K) (Fin D → K)) (hLam : Submodule.IsLattice K abelian₂)
     (G : HeightOneSpectrum (𝓞 K) → K) (e : HeightOneSpectrum (𝓞 K) → Fin D → Fin D → K)

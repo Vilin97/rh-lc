@@ -16,9 +16,9 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction UpperTheory.V.C
 
 namespace UpperTheory.ConvolutionTheory.BW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
-private def aV (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (v : ℝ) : GA E (r + s) :=
+private def aV (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) (v : ℝ) : GA E (r + s) :=
   lev (Ad E) r s (zt E r v, 1)
 
 private theorem zt_add (a b : ℝ) : zt E r (a + b) = zt E r a * zt E r b := by
@@ -163,7 +163,7 @@ end UpperTheory.ConvolutionTheory.BW
 
 open UpperTheory.ConvolutionTheory.BW in
 theorem UpperTheory.ConvolutionTheory.BW.sliceShift :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceShift E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.SliceShift E := by
   intro E _ _ _ S r s b t φ m hφ
   have hsh : ∀ v, slice b.f.1 t (rt E (r + s) (aV E r s v) φ).1 m = slice b.f.1 (t + v) φ.1 m :=
     fun v => shift _ t v φ m

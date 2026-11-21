@@ -20,7 +20,7 @@ open scoped Classical
 
 section SlopeTestRemainingChoices
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem top_GL (E : Type) [Field E] [NumberField E] :
     LocallyCompactSpace (GL (Fin 2) (Cinf E)) ∧ FirstCountableTopology (GL (Fin 2) (Cinf E)) := by
@@ -80,7 +80,7 @@ private theorem th_cont (D : Dat F E) (W : Weil D) (Ψ : S4 F) (S : Set (GL (Fin
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.contOne :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ContOne W M π := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ContOne W M π := by
   intro F E _ _ _ _ _ _ _ D W M π f hf φ hφ y₀ hy₀
   obtain ⟨ρ, -, -, hnu, hinf, -⟩ := actCont F E D
   obtain ⟨hlc, hfc⟩ := top_GL E

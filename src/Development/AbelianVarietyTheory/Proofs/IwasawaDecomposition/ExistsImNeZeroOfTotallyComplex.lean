@@ -12,7 +12,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.Mem.SJ
 
-theorem exists_im_ne_zero_of_totallyComplex {K : Type} [Field K] [IsTotallyComplex K] (σ : K →+* ℂ) :
+theorem exists_im_ne_zero_of_totallyComplex {K : Type} [Field K] [_root_.NumberField.IsTotallyComplex K] (σ : K →+* ℂ) :
     ∃ a, (σ a).im ≠ 0 := by
   by_contra h
   push Not at h

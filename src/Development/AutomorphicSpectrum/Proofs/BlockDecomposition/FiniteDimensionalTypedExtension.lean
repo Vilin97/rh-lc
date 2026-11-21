@@ -14,7 +14,7 @@ open scoped ContDiff
 
 namespace GlobalTheory.CompanionTheory.LimV
 
-theorem typed_tw_finite {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+theorem typed_tw_finite {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
     (U : Submodule ℂ (Sm E N)) (z : ℂ)
     (H : ∀ (K : Subgroup (GL (Fin N) (Af E))) (W : Submodule ℂ (Kinf E N → ℂ)),
       IsOpen (K : Set (GL (Fin N) (Af E))) → FiniteDimensional ℂ W → FiniteDimensional ℂ (typed U K W))

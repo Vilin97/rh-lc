@@ -49,7 +49,7 @@ theorem discrIdeal_span {h : V →ₗ⋆[K] V →ₗ[K] K} (b : Basis (Fin (finr
     simp
 
 omit [StarRing K] in
-theorem absNorm_span_singleton_eq [IsTotallyComplex K] (g₀ : 𝓞 K) :
+theorem absNorm_span_singleton_eq [_root_.NumberField.IsTotallyComplex K] (g₀ : 𝓞 K) :
     (Ideal.absNorm (Ideal.span {g₀}) : ℝ) =
       (∏ w : InfinitePlace K, w (algebraMap (𝓞 K) K g₀)) ^ 2 := by
   have hm : ∀ w : InfinitePlace K, w.mult = 2 := by

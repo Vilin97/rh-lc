@@ -48,7 +48,7 @@ theorem map_eq_smul_of_coordinates {N V : Type*} [Group N] [TopologicalSpace N]
   rw [e, ← Measure.map_map hφ hT, hC, Measure.map_smul, smul_comm]
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 theorem RadicalTorusModulus.proof (h : HermitianForm F E W) (v : Basis ι E W) :

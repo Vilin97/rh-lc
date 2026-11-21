@@ -16,7 +16,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.
 
 namespace PositivityTheory.Rg.Rs
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N a r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N a r s : ℕ}
 
 def aInf (E : Type) [Field E] (N r : ℕ) (t : ℝ) : GL (Fin N) (Cinf E) :=
   ⟨Matrix.diagonal fun i _ => Complex.exp (if (i : ℕ) < r then (t : ℂ) else 0),
@@ -24,7 +24,7 @@ def aInf (E : Type) [Field E] (N r : ℕ) (t : ℝ) : GL (Fin N) (Cinf E) :=
     by rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]; congr 1; funext i v; simp [← Complex.exp_add],
     by rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]; congr 1; funext i v; simp [← Complex.exp_add]⟩
 
-def aT (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N r : ℕ) (t : ℝ) : GA E N := infGL E N (aInf E N r t)
+def aT (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N r : ℕ) (t : ℝ) : GA E N := infGL E N (aInf E N r t)
 
 def IsCT (r : ℕ) (φ F : GA E N → ℂ) : Prop :=
   letI : MeasurableSpace (BlockIx N r → Ad E) := borel _

@@ -100,7 +100,7 @@ theorem exists_equiv (f₁ f₂ e₁ e₂ : ℂ) (hf : ((starRingEnd ℂ) f₁ *
 
 variable {K : Type} [Field K] [NumberField K]
 
-theorem unit_eq_one [IsTotallyComplex K] (h2 : Module.finrank ℚ K = 2) {M : ℕ} (hM : 3 ≤ M)
+theorem unit_eq_one [_root_.NumberField.IsTotallyComplex K] (h2 : Module.finrank ℚ K = 2) {M : ℕ} (hM : 3 ≤ M)
     (u : (𝓞 K)ˣ) (hu : (u : 𝓞 K) - 1 ∈ Ideal.span {(M : 𝓞 K)}) : u = 1 := by
   let φ : K →+* ℂ := (Classical.arbitrary (InfinitePlace K)).embedding
   by_contra hne

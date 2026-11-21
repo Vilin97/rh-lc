@@ -15,7 +15,7 @@ open scoped TensorProduct
 
 section SlopeTestRemainingChoices
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {Ξ : AlgRep E a}
 
 private theorem lev_mono {U U' : Subgroup (GL (Fin a) (Af E))} (h : U' ≤ U) {q : ℕ} {α : Geo.Co Ξ q}
     (hα : Geo.IsLev U Ξ α) : Geo.IsLev U' Ξ α :=

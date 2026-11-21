@@ -79,7 +79,7 @@ def UiwFin : Prop :=
       (∀ x, e₁ x = r x * (iwCoset w fun i => (j : ℤ) * ν i).indicator 1 (cf w x)) → Ofin μ m e₁ = (Uiw μ w ν ^ j) ∘L Ofin μ m e₀
 
 def RepOne : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 0 < n →
+  ∀ (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (n : ℕ), 0 < n →
     ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (𝔞 : Amp μ) (ev), 𝔞.IsEv ev → ∀ w₀ ∈ 𝔞.S, ∀ ν : Fin n → ℤ, Antitone ν →
     ∀ T : Finset (Pl K), (∀ w ∈ T, w ∉ 𝔞.S) →
     ∀ (p : Pl K → MvPolynomial (Fin n) ℂ) (h : ∀ w : Pl K, GL (Fin n) (w.adicCompletion K) → ℂ), (∀ w ∈ T, IsSph w (p w) (h w)) →
@@ -124,14 +124,14 @@ def TwLin : Prop :=
       twInt θ (∑ i ∈ s, c i • f i) = ∑ i ∈ s, c i * twInt θ (f i)
 
 def SideE : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F] [IsTotallyComplex E] (σ : E ≃ₐ[F] E),
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E),
     (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
     ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ → ∀ (q : Pl F) (w₀ : PlacesOver E q), Split E q →
     ∀ (νE : Measure (archGroup E n)) [νE.IsHaarMeasure] (aE : TI E n), AmpFn μ νE aE → ∀ (L : Loc σ n q w₀) (ν : Fin n → ℤ),
       ∃ 𝔢 : Side θ (Module.finrank F E), IsSideE L νE aE ν 𝔢
 
 def SideF : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F] [IsTotallyComplex E] (σ : E ≃ₐ[F] E),
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E),
     (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
     ∀ (μ : Measure (normOneGL (K := F) (n := n))) [μ.IsHaarMeasure] (q : Pl F) (w₀ : PlacesOver E q)
       (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (aF : TI F n), AmpFn μ νF aF → ∀ (L : Loc σ n q w₀) (ν : Fin n → ℤ),
@@ -140,7 +140,7 @@ def SideF : Prop :=
 
 open Classical in
 def LocAll : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F] [IsTotallyComplex E] (σ : E ≃ₐ[F] E),
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E),
     (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
     ∀ (κ : Finset (Pl E)), (∀ w ∈ κ, Unr E (w.under (𝓞 F))) → ∀ t₀ : Pl E → Multiset ℂ, (∀ w ∈ κ, (t₀ w).card = n ∧ 0 ∉ t₀ w) → ∀ D : ℕ,
     ∃ γ : Pl E → MvPolynomial (Fin n) ℂ, (∀ w ∈ κ, eval (fun i : Fin n => (t₀ w).esymm (i + 1)) (γ w) ≠ 0) ∧
@@ -152,7 +152,7 @@ def LocAll : Prop :=
           MatchAt σ v 1 (prodFn fun w : PlacesOver E v => h w.1) f
 
 def TermEx : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F] [IsTotallyComplex E] (σ : E ≃ₐ[F] E),
+  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] (σ : E ≃ₐ[F] E),
     (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
     ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure] (θ : Twist μE)
       (q : Pl F) (w₀ : PlacesOver E q) (q₀ : PlacesOver F q), Split E q →

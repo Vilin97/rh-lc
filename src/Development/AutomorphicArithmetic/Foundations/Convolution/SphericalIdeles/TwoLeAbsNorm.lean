@@ -23,7 +23,7 @@ open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Geo UpperTheory.Convolut
 open UpperTheory.V.Published UpperTheory.CBC PositivityTheory.RgJS
 
 private theorem same_sat {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    [IsTotallyComplex F] [IsGalois F E] {n : ℕ} (hp : (Module.finrank F E).Prime) (π : CuspSub F n)
+    [_root_.NumberField.IsTotallyComplex F] [IsGalois F E] {n : ℕ} (hp : (Module.finrank F E).Prime) (π : CuspSub F n)
     {sat sat' : Pl E → Multiset ℂˣ → Prop}
     (H : WeakBC (CG.mk π).HasSat sat) (H' : WeakBC (CG.mk π).HasSat sat') :
     ∀ᶠ w : Pl E in cofinite, ∃ B, sat w B ∧ sat' w B := by

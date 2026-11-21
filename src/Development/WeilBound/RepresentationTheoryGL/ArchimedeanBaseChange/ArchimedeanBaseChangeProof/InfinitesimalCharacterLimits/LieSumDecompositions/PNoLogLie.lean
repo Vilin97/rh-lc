@@ -13,14 +13,14 @@ open NumberField Polynomial GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTh
 
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.NoLogarithmTerms
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 def Zr (N r : ℕ) : Lie E N := fun i j => if i = j ∧ (i : ℕ) < r then 1 else 0
 
 def Tr1 (r s : ℕ) (τ : E →+* ℂ) : Module.End ℂ (Sm E (r + s)) :=
   ∑ i : Fin r, Eop τ (Fin.castAdd s i) (Fin.castAdd s i)
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem aInf_add' (N r : ℕ) (s t : ℝ) : aInf E N r (s + t) = aInf E N r s * aInf E N r t := by
   apply Units.ext
   change Matrix.diagonal _ = Matrix.diagonal _ * Matrix.diagonal _
@@ -30,7 +30,7 @@ theorem aInf_add' (N r : ℕ) (s t : ℝ) : aInf E N r (s + t) = aInf E N r s * 
   simp only [Pi.mul_apply]
   split_ifs <;> simp [← Complex.exp_add]
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem aInf_zero' (N r : ℕ) : aInf E N r 0 = 1 :=
   Units.ext (by
     change Matrix.diagonal _ = 1
@@ -115,7 +115,7 @@ theorem Tr1_comm (r s : ℕ) (τ τ' : E →+* ℂ) : Commute (Tr1 (E := E) r s 
   intro j _
   exact Eop_diag_comm _ _ _ _
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem hasDerivAt_aInf (N r : ℕ) : HasDerivAt (fun t : ℝ => toL (aInf E N r t).val) (Zr N r) 0 := by
   rw [hasDerivAt_pi]; intro i
   rw [hasDerivAt_pi]; intro j

@@ -15,12 +15,12 @@ namespace PositivityTheory.RgJS
 
 namespace UnitExponent
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 def nu (E : Type) [Field E] [NumberField E] (s : ℝ) : HChar E :=
   ⟨(GlobalTheory.Mem.Chr.CharModel.absChar E s).1, (GlobalTheory.Mem.Chr.CharModel.absChar E s).2⟩
 
-def zc (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (t : ℝ) :=
+def zc (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (t : ℝ) :=
   infId E (expU fun _ : InfinitePlace E => (t : ℂ))
 
 theorem zc_add (s t : ℝ) : zc E (s + t) = zc E s * zc E t := by

@@ -14,7 +14,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerve
 open NumberField Matrix UpperTheory.V UpperTheory.V.KT
 open scoped ComplexOrder
 
-private theorem sx_basis (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N p : ℕ)
+private theorem sx_basis (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N p : ℕ)
     (t : Sx L N p) :
     ∃ A : Matrix (Fin N) (Fin N) (𝓞 L), A.det ≠ 0 ∧ ∀ j, ColsMin A (t.1 j).1 := by
   have hs : Spans {y : Lat L N | ∀ j, q (t.1 j).1 y = 1} := by
@@ -36,7 +36,7 @@ private theorem colsMin_smul {L : Type} [Field L] [NumberField L] {N : ℕ} (g :
   exact H a
 
 theorem UpperTheory.V.KT.orb :
-    ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (p : ℕ),
+    ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (p : ℕ),
     KH.OrbLe (Gm L N) (Sx L N p) (orbBound L N p) := by
   intro L _ _ _ N p
   classical

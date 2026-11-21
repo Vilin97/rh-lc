@@ -13,10 +13,10 @@ open scoped ContDiff
 
 namespace GlobalTheory.HCAlpha
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem vecF_eqOn_invSet (X : Lie E a) {f f' : Lie E a → ℂ} (h : Set.EqOn f f' (invSet E a)) :
     Set.EqOn (vecF E a X f) (vecF E a X f') (invSet E a) := fun y hy => by
   have e : f =ᶠ[nhds y] f' := Filter.eventually_of_mem (isOpen_invSet.mem_nhds hy) h
@@ -50,7 +50,7 @@ theorem chart_lapOp_eqOn_invSet (φ : Sm E a) (g : GA E a) :
   rw [← key, ← key]
   rfl
 
-theorem chart_lapOp_pow (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (φ : Sm E a)
+theorem chart_lapOp_pow (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (φ : Sm E a)
     (g : GA E a) (n : ℕ) :
     ∀ y ∈ invSet E a, chart ((lapOp E a ^ n) φ).1 g y = (lapF E a)^[n] (chart φ.1 g) y := by
   induction n with

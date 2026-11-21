@@ -15,7 +15,7 @@ namespace GlobalTheory.BCWords
 
 section Linear
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a N c : ℕ} {n : Fin c → ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a N c : ℕ} {n : Fin c → ℕ}
 
 def tensorSp (V : ∀ i, Submodule ℂ (Sm E (n i))) : Submodule ℂ ((∀ i, GA E (n i)) → ℂ) :=
   Submodule.span ℂ {F | ∃ φ : ∀ i, V i, F = fun m => ∏ i, (φ i).1.1 (m i)}

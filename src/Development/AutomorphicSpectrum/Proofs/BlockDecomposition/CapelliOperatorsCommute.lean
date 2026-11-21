@@ -35,7 +35,7 @@ theorem qdet_commute_self {A : Type} [Ring A] [Algebra ℂ A] {k : ℕ} {X : Fin
     (hX : GlRel X) (u v : ℂ) : Commute (qdet X u) (qdet X v) :=
   commute_qdet_of (fun a b => qDetCentral A k X hX u a b) v
 
-theorem capR_capS_commute (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (τ : E →+* ℂ)
+theorem capR_capS_commute (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) (τ : E →+* ℂ)
     (u v : ℂ) :
     Commute (capR r s τ u) (capR r s τ v) ∧ Commute (capR r s τ u) (capS r s τ v) ∧
       Commute (capS r s τ u) (capS r s τ v) := by

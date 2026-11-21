@@ -13,7 +13,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep Formalism.UG GlobalTheory
 
 namespace GlobalTheory.JSW.MirSemi.OpenInv
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def invSub (F : GA E a → ℂ) : Subgroup (GL (Fin a) (Af E)) where
   carrier := {k | ∀ g, F (g * finGL E a k) = F g}
@@ -90,7 +90,7 @@ end GlobalTheory.JSW.MirSemi.OpenInv
 
 
 open GlobalTheory.JSW.MirSemi.OpenInv in
-theorem GlobalTheory.JSW.MirSemi.locSpan_openInv : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem GlobalTheory.JSW.MirSemi.locSpan_openInv : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (π : CuspSub E a) (φ : Sm E a), φ ∈ π.V →
     ∀ F ∈ GlobalTheory.JSW.MirSemi.locSpan S φ.1, ∃ U : Subgroup (GL (Fin a) (Af E)),
       IsOpen (U : Set (GL (Fin a) (Af E))) ∧ ∀ u ∈ U, ∀ g, F (g * finGL E a u) = F g := by

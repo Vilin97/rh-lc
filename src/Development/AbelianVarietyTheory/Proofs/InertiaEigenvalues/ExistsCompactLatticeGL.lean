@@ -47,7 +47,7 @@ theorem isCompact_units {A : Type} [Monoid A] [TopologicalSpace A] [ContinuousMu
     have : m = ((g⁻¹ : Aˣ) : A) := MulOpposite.op_injective hm'
     rw [← this]; exact hm
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 abbrev diag : Eˣ →* (Ad E)ˣ := Units.map (algebraMap E (Ad E)).toMonoidHom
 
@@ -177,20 +177,20 @@ theorem exists_nhds_idele : ∃ W ∈ 𝓝 (1 : (Ad E)ˣ), ∀ (k : Eˣ) (n : �
 
 abbrev toGL : (Ad E)ˣ →* GA E 1 := GeneralLinearGroup.scalar (Fin 1)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem det_toGL (x : (Ad E)ˣ) : GeneralLinearGroup.det (toGL E x) = x :=
   Units.ext (by
     change (Matrix.scalar (Fin 1) (x : Ad E)).det = x
     simp)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem toGL_det (g : GA E 1) : toGL E (GeneralLinearGroup.det g) = g := by
   ext i j
   change Matrix.scalar (Fin 1) (g : Matrix (Fin 1) (Fin 1) (Ad E)).det i j = _
   rw [Subsingleton.elim i 0, Subsingleton.elim j 0, Matrix.det_fin_one]
   simp
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem continuous_toGL : Continuous (toGL E) :=
   Continuous.units_map _ (by
     change Continuous fun x : Ad E => Matrix.diagonal fun _ : Fin 1 => x
@@ -203,7 +203,7 @@ theorem det_splitCentre : GeneralLinearGroup.det (splitCentre E 1 1) = eIdele E 
   change (Matrix.scalar (Fin 1) _).det = _
   simp
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem det_ratGL (g : GL (Fin 1) E) : GeneralLinearGroup.det (ratGL E 1 g) = diag E (GeneralLinearGroup.det g) :=
   Units.ext (by rw [ratGL, GlobalTheory.CuspRep.det_map]; rfl)
 

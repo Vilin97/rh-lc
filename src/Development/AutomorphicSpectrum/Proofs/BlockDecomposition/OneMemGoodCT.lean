@@ -15,7 +15,7 @@ namespace GlobalTheory.CompanionTheory.CTFin
 abbrev lev (R : Type) [CommRing R] (r s : ℕ) : GL (Fin r) R × GL (Fin s) R →* GL (Fin (r + s)) R :=
   GlobalTheory.SmGL.emb₂ R (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 def goodCT (L : Subgroup (GL (Fin (r + s)) (Af E))) {W : Type} [AddCommGroup W] [Module ℂ W]
     (ρ : Representation ℂ (Kinf E (r + s)) W) (J : Set (Module.End ℂ (Sm E (r + s)))) :

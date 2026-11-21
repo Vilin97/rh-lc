@@ -14,7 +14,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace UpperTheory.V.Br
 
 def QuadBC0 : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E],
+  ∀ (F E : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E],
     Module.finrank F E = 2 → ∀ (a : ℕ) [Fact (a = 2)], 1 ≤ a → ∀ π : TR.CuspSub F a, π.IsRegAlg →
       (∃ η : HChar F, IsQuadCharOf E η ∧ IsoTwist π η) ∨ ∃ P : CuspSub E a, IsBC0 π P
 

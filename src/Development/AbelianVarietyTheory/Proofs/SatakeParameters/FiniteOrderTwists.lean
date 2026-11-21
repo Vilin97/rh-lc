@@ -35,7 +35,7 @@ namespace GlobalTheory.RoadU.FinTwist
 
 open GlobalTheory.ContraPair GlobalTheory.HeightCounting.Blocks
 
-theorem isAlg_zero {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {κ : HChar K} {m : ℕ} (hm : 0 < m)
+theorem isAlg_zero {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {κ : HChar K} {m : ℕ} (hm : 0 < m)
     (h : κ ^ m = 1) : κ.IsAlg 0 := fun k => isAlgPos_zero_of_orderDvd hm h k fun φ => by
   have h := IsTotallyComplex.complexEmbedding_not_isReal (Complex.ofRealHom.comp φ)
   refine absurd ?_ h
@@ -43,7 +43,7 @@ theorem isAlg_zero {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {κ
   ext x
   simp
 
-theorem infChar_twist {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} (P : CuspSub K n) {κ : HChar K}
+theorem infChar_twist {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} (P : CuspSub K n) {κ : HChar K}
     (hκ : κ.IsAlg 0) (τ : K →+* ℂ) : (CG.mk (P.twist κ)).infChar τ = (CG.mk P).infChar τ := by
   have e := ((ParLaws.hasInfChar_infChar (CG.mk P) τ).twist κ).infChar_eq
   rw [CG.twist_mk] at e

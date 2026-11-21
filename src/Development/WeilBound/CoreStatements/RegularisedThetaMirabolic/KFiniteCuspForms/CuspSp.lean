@@ -22,7 +22,7 @@ noncomputable section
 
 namespace RfCs.FrobeniusSplitPrimeDatum
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
   {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
 theorem mem_of_stable {H : Submodule ℂ (L2 (latticeGL E a) μ)} (hH : H ≤ L2cusp μ)

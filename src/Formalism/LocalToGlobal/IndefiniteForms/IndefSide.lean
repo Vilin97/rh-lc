@@ -461,7 +461,7 @@ structure IndefFace where
 
   [sK : StarRing K]
 
-  [tK : IsTotallyComplex K]
+  [tK : _root_.NumberField.IsTotallyComplex K]
 
   Bs : DefBase K
 

@@ -49,7 +49,7 @@ theorem qdet_semilinear {n : ℕ} (D : V →ₗ⋆[ℂ] V) (X Y : Fin n → Fin 
 
 end Semilinear
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in
@@ -135,12 +135,12 @@ theorem continuous_invT {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologi
   · change Continuous fun g : GL (Fin a) R => g.val j i
     exact Units.continuous_val.matrix_elem _ _
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem norm_toL_transpose_le (M : Matrix (Fin a) (Fin a) (Cinf E)) : ‖toL Mᵀ‖ ≤ ‖toL M‖ :=
   (pi_norm_le_iff_of_nonneg (norm_nonneg _)).2 fun i => (pi_norm_le_iff_of_nonneg (norm_nonneg _)).2 fun j =>
     (norm_le_pi_norm (toL M j) i).trans (norm_le_pi_norm (toL M) j)
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem height_invT_le (y : GL (Fin a) (Cinf E)) : height (invT a (Cinf E) y) ≤ height y := by
   have h1 : ‖toL (invT a (Cinf E) y).val‖ ≤ ‖toL (y⁻¹).val‖ := norm_toL_transpose_le (y⁻¹).val
   have h2 : ‖toL ((invT a (Cinf E) y)⁻¹).val‖ ≤ ‖toL y.val‖ := norm_toL_transpose_le y.val
@@ -148,7 +148,7 @@ theorem height_invT_le (y : GL (Fin a) (Cinf E)) : height (invT a (Cinf E) y) �
   linarith
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem height_invT (y : GL (Fin a) (Cinf E)) : height (invT a (Cinf E) y) = height y := by
   refine le_antisymm (height_invT_le y) ?_
   have h := height_invT_le (invT a (Cinf E) y)
@@ -191,7 +191,7 @@ theorem isAutForm_dual {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (dual E a φ
     exact h2
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem phiU_eq : PhiU a (Ad E) = ratGL E a (PhiU a E) := by
   ext i j
   change GlobalTheory.Tw.Phi a (Ad E) i j = algebraMap E (Ad E) (GlobalTheory.Tw.Phi a E i j)
@@ -208,7 +208,7 @@ theorem invA_eq (g : GA E a) :
   rw [e]
   group
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem blockMap_id_mem_ratN {r s : ℕ} (h : r + s = a) {x : BlockIx a r → Ad E} (hx : x ∈ ratN E a r) :
     blockMap h (RingHom.id (Ad E)) x ∈ ratN E a s := by
   obtain ⟨y, rfl⟩ := hx
@@ -258,7 +258,7 @@ end GlobalTheory.CompanionTheory.DualCusp
 
 
 open GlobalTheory.CompanionTheory.DualCusp in
-theorem GlobalTheory.CompanionTheory.DualCusp.isCuspForm_conj_invA {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+theorem GlobalTheory.CompanionTheory.DualCusp.isCuspForm_conj_invA {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
     (φ : Sm E a) (hψ : (fun g => star (φ.1 (invA E a g))) ∈ Sm E a) (h : IsCuspForm φ) :
     IsCuspForm (⟨fun g => star (φ.1 (invA E a g)), hψ⟩ : Sm E a) :=
   ⟨isAutForm_dual h.1, isCuspidal_dual h.1.left h.2⟩

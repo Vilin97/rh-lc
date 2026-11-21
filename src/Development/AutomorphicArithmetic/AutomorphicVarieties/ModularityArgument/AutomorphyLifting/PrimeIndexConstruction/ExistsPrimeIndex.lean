@@ -72,7 +72,7 @@ private theorem normV_under (h1 : Module.finrank K M = 1) (w : HeightOneSpectrum
   rw [GlobalTheory.DegOneLift.normV_eq_absNorm, GlobalTheory.DegOneLift.normV_eq_absNorm]
   exact GlobalTheory.IsoPull.qV_eq (over_under h1 w)
 
-variable [IsTotallyComplex K] [IsTotallyComplex M]
+variable [_root_.NumberField.IsTotallyComplex K] [_root_.NumberField.IsTotallyComplex M]
 
 private theorem win_one (h1 : Module.finrank K M = 1) {n : ℕ} (hn : 1 ≤ n) (π : CuspSub K n) (P : CuspSub M n)
     (hL : GlobalTheory.GalCut.IsLift π P) (t : ℝ) (w : HeightOneSpectrum (𝓞 M))
@@ -128,7 +128,7 @@ end Norm
 
 section Step
 
-variable {F E Ω : Type} [Field F] [NumberField F] [IsTotallyComplex F] [Field E] [NumberField E] [IsTotallyComplex E] [Field Ω]
+variable {F E Ω : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Field Ω]
   [Algebra F E] [Algebra F Ω] [Algebra E Ω] [IsScalarTower F E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ} {n : ℕ}
 
 private theorem allW_one (h1 : Module.finrank F E = 1) (hn : 2 ≤ n) (r : G F Ω →* GL (Fin n) (Qbar l))

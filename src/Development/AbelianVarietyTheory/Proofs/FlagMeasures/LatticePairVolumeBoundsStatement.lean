@@ -11,7 +11,7 @@ open Formalism.HN Formalism.HermitianLatticesTheory Matrix NumberField Finset
 open GlobalTheory.HomCover in
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.lattice_pair_volume_bounds :
-    ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (a b : ℕ)
+    ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (a b : ℕ)
       (X : InfinitePlace K → Matrix (Fin a) (Fin a) ℂ)
       (X' : InfinitePlace K → Matrix (Fin b) (Fin b) ℂ)
       (A : Submodule (𝓞 K) (Fin a → K)) (B : Submodule (𝓞 K) (Fin b → K)) (lo hi : ℝ),

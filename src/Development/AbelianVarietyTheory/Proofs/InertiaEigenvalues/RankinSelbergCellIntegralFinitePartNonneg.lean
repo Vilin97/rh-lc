@@ -40,7 +40,7 @@ namespace GlobalTheory.RSnmFT
 
 open GlobalTheory.CellDec GroundTheory.Automorphic.FourierWhittaker
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem blockGL_finGL {j n : ℕ} (hj : j ≤ n) (k : GL (Fin j) (Af E)) :
     blockGL hj (finGL E j k) = finGL E n (blockGL hj k) := by
@@ -56,7 +56,7 @@ theorem blockGL_finGL {j n : ℕ} (hj : j ≤ n) (k : GL (Fin j) (Af E)) :
   · rw [hm, pFin_finGL, pFin_finGL]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem blockGL_mem_integral {j n : ℕ} (hj : j ≤ n) {k : GL (Fin j) (Af E)}
     (hk : k ∈ GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E j) :
     blockGL hj k ∈ GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E n := by
@@ -81,9 +81,9 @@ namespace GlobalTheory.RSnmFT
 open GlobalTheory.CellDec GroundTheory.Automorphic.FourierWhittaker
 open scoped ComplexConjugate
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem map_blockGL {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) {j n : ℕ} (hj : j ≤ n)
     (g : GL (Fin j) R) :
     Matrix.GeneralLinearGroup.map p (blockGL hj g) = blockGL hj (Matrix.GeneralLinearGroup.map p g) := by
@@ -92,7 +92,7 @@ theorem map_blockGL {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) {j n 
   split_ifs <;> simp
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem blockGL_level {j n : ℕ} (hj : j ≤ n) (S : Finset (HeightOneSpectrum (𝓞 E))) {k : GL (Fin j) (Af E)}
     (hk1 : ∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := j))
     (hkS : ∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) :
@@ -176,7 +176,7 @@ theorem integrableOn_cell_pos {E : Type} [Field E] [NumberField E] {n : ℕ} (μ
     fun _ => h1
   exact ⟨i1 0, i3 0⟩
 
-theorem exists_f_t_core : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
+theorem exists_f_t_core : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (φ : GA E (m + r + 1 + 1) → ℂ) (φ' : GA E (m + 1) → ℂ) (κ : GA E (m + 1) → ℝ) (F : (Fin (m + 1) → Ad E) → ℂ),
     Continuous (GlobalTheory.JSW.whit φ) → Continuous (GlobalTheory.JSW.whit φ') →
     (∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + r + 1 + 1)), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →
@@ -301,7 +301,7 @@ namespace GlobalTheory.RSnmFT
 open GlobalTheory.RSUnfoldW GlobalTheory.CuspGeneric GlobalTheory.MirTower
 open scoped NNReal
 
-theorem lintegral_whit_sq_eq : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (π' : CuspSub E (m + 1)), π'.IsUnitary →
+theorem lintegral_whit_sq_eq : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (π' : CuspSub E (m + 1)), π'.IsUnitary →
     ∀ φ' ∈ GlobalTheory.JSW.mspanR π', ∀ G : (Fin (m + 1) → Ad E) → ℂ, Continuous G →
     ∀ (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] (𝓕₀ : Set (GA E (m + 1))),
     IsFundamentalDomain (GlobalTheory.CellDec.NE E (m + 1)) 𝓕₀ μ →
@@ -364,7 +364,7 @@ end GlobalTheory.RSnmFT
 
 namespace GlobalTheory.RSnmFT
 
-theorem lintegral_whit_sq_ne_top {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
+theorem lintegral_whit_sq_ne_top {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ}
     {π' : CuspSub E (m + 1)} (hπ : π'.IsUnitary) {φ' : GA E (m + 1) → ℂ} (hφ : φ' ∈ GlobalTheory.JSW.mspanR π')
     {G : (Fin (m + 1) → Ad E) → ℂ} (hG : G ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin (m + 1)))
     (hGc : Continuous G) (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] {𝓕₀ : Set (GA E (m + 1))}
@@ -379,7 +379,7 @@ theorem lintegral_whit_sq_ne_top {E : Type} [Field E] [NumberField E] [IsTotally
   exact ne_of_lt ((lintegral_mono_set hsub).trans_lt ((lintegral_union_le _ _ _).trans_lt
     (ENNReal.add_lt_top.2 ⟨hup.lt_top, hlow.lt_top⟩)))
 
-theorem exists_cellPart_unfoldedIntegral_positive_alt : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
+theorem exists_cellPart_unfoldedIntegral_positive_alt : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (φ : GA E (m + r + 1 + 1) → ℂ) (φ' : GA E (m + 1) → ℂ) (κ : GA E (m + 1) → ℝ) (F : (Fin (m + 1) → Ad E) → ℂ),
     Continuous (GlobalTheory.JSW.whit φ) → Continuous (GlobalTheory.JSW.whit φ') →
     (∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + r + 1 + 1)), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →

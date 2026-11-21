@@ -19,7 +19,7 @@ open Formalism.BasicNotions Formalism.L2.DIV Formalism.L2.GlobalTheoryTheory.HLa
 
 section Places
 
-variable (E K : Type) [Field E] [NumberField E] [Field K] [NumberField K] [IsTotallyComplex E] [IsTotallyComplex K]
+variable (E K : Type) [Field E] [NumberField E] [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex E] [_root_.NumberField.IsTotallyComplex K]
 
 theorem mean_over_places_comap (φ : E →+* K) (G : InfinitePlace E → ℝ) :
     (1 / (nPl K : ℝ)) * ∑ v : InfinitePlace K, G (v.comap φ) = (∑ w, G w) / (nPl E : ℝ) := by

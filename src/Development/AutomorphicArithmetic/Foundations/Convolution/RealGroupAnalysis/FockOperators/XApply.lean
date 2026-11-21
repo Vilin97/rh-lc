@@ -85,11 +85,11 @@ def Ops.h (w : InfinitePlace F) : Module.End ℂ (S4 F) := (∑ i, O.x w i * O.d
 
 end Base
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 
 variable (F) in
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 def pl (τ : E →+* ℂ) : InfinitePlace F := InfinitePlace.mk (τ.comp (algebraMap F E))
 
 variable (O : Ops F) (D : Dat F E)

@@ -366,7 +366,7 @@ theorem log_htQ (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (h
   simp only [logDisc]
   ring
 
-theorem rk_mul_mu [IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
+theorem rk_mul_mu [_root_.NumberField.IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (hX : ∀ v, IsUnit (X v).det) (L : Submodule (𝓞 K) V) (hL : L.FG) :
     (rkK L : ℝ) * muDef b X L = -Real.log (ht b X L) / (nPl K : ℝ) := by
   by_cases h0 : L = ⊥

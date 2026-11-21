@@ -81,7 +81,7 @@ theorem aut_eq_one (S : Set (HeightOneSpectrum (𝓞 E))) (hS : S.Finite) (F : T
   · rintro ⟨v, _ | _⟩
     exacts [nQ v, nP v]
 
-theorem rootOne_mem_ray [IsTotallyComplex E] (φ : E →+* ℂ) {n p : ℕ} (hn : n ≠ 0) (hp : p ∣ n)
+theorem rootOne_mem_ray [_root_.NumberField.IsTotallyComplex E] (φ : E →+* ℂ) {n p : ℕ} (hn : n ≠ 0) (hp : p ∣ n)
     {M : IntermediateField ℚ ℂ} (hM : IsRayFieldIn φ (natIdeal E n) M) : rootOne p ∈ M := by
   classical
   have hp0 : p ≠ 0 := ne_zero_of_dvd_ne_zero hn hp
@@ -109,7 +109,7 @@ theorem rootOne_mem_ray [IsTotallyComplex E] (φ : E →+* ℂ) {n p : ℕ} (hn 
   have e : (x : ℂ) = rootOne p := congrArg Subtype.val hx
   exact e ▸ x.2
 
-theorem valueField_le [IsGalois ℚ E] [IsTotallyComplex E] (φ₀ : E →+* ℂ) {𝔮 : Ideal (𝓞 E)} (h𝔮 : 𝔮 ≠ ⊥)
+theorem valueField_le [IsGalois ℚ E] [_root_.NumberField.IsTotallyComplex E] (φ₀ : E →+* ℂ) {𝔮 : Ideal (𝓞 E)} (h𝔮 : 𝔮 ≠ ⊥)
     {M : IntermediateField ℚ ℂ} [NumberField M] (hM : IsRayFieldIn φ₀ 𝔮 M) {I : Type} [Fintype I] (φ : I → E →+* ℂ)
     (hφ : Function.Bijective fun i => InfinitePlace.mk (φ i)) (χ : HChar E) (n : I → ℤ) (r : ℤ)
     (hi : χ.HasInf φ n) (he : ∀ i, Even (n i - r)) (hu : ∀ v, ¬ v.asIdeal ∣ 𝔮 → χ.UnrAt v) (ht : ∀ v, χ.TameAt v) :

@@ -22,7 +22,7 @@ theorem coord_star {E : Type} [Field E] (τ : E →+* ℂ) (c : Cinf E) :
   rw [coord_eq, coord_eq]
   split_ifs <;> simp [Pi.star_apply]
 
-theorem coord_conjugate {E : Type} [Field E] [IsTotallyComplex E] (τ : E →+* ℂ) (c : Cinf E) :
+theorem coord_conjugate {E : Type} [Field E] [_root_.NumberField.IsTotallyComplex E] (τ : E →+* ℂ) (c : Cinf E) :
     coord (ComplexEmbedding.conjugate τ) c = star (coord τ c) := by
   have hne : ComplexEmbedding.conjugate τ ≠ τ := by
     intro h

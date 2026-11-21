@@ -42,7 +42,7 @@ private theorem le_of_pow_le {x c : ℝ} {d : ℕ} (hd : d ≠ 0) (hc : 1 ≤ c)
   · exact h1.trans hc
   · exact (le_self_pow₀ h1.le hd).trans h
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem qht_le_height (g : KernelIndexFullLattice.G1 E a) (γ : GL (Fin a) E) :
     qht (E := E) (a := a) g.1 ≤ height (AdelicGLn.diagonal E a γ * g.1) := by
@@ -54,7 +54,7 @@ private theorem qht_le_height (g : KernelIndexFullLattice.G1 E a) (γ : GL (Fin 
   rw [retractOne_coe]
   exact h1
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 private theorem prod_bound {ω : Set (AdelicGLn.AdelicGL E a)} (hω : IsCompact ω) :
     ∃ c : ℝ, 1 ≤ c ∧ ∀ b ∈ ω, ∀ (ρ : Fin a → ℝ) (hρ : ∀ i, 0 < ρ i),
       ∀ kk ∈ (Reduction.maxCompact : Subgroup (AdelicGLn.AdelicGL E a)),

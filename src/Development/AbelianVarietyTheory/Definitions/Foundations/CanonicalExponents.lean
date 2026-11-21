@@ -13,7 +13,7 @@ open NumberField IsDedekindDomain MeasureTheory Module
 
 section Gram
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {V : Type} [AddCommGroup V] [Module K V]
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {V : Type} [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [StarRing K]
 
 

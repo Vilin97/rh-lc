@@ -74,7 +74,7 @@ theorem loc_eq_one_of_prod {ψ : Ideles L →* ℂˣ} (hψ : Continuous ψ) (S :
         (fun w : HeightOneSpectrum (𝓞 L) => (1 : w.adicCompletion L)))
     rw [this, map_one, map_one]
 
-theorem infId_pInf [IsTotallyComplex L] (k : Lˣ) :
+theorem infId_pInf [_root_.NumberField.IsTotallyComplex L] (k : Lˣ) :
     infId L (Units.map (pInf L).toMonoidHom (diagUnits L k)) = ∏ w, infIdele L w (atInf w k) := by
   classical
   apply Units.ext

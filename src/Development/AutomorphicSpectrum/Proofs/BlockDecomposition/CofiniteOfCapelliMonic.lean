@@ -46,7 +46,7 @@ theorem exists_finiteDimensional_sub_mem {C : Type*} [CommRing C] [Algebra ℂ C
   rw [← Ideal.Quotient.eq]
   exact hvz.symm
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ}
 
 theorem cap_mem_span_coeffs (τ : E →+* ℂ) (u : ℂ) :
     cap (a := n) τ u ∈ Submodule.span ℂ
@@ -128,7 +128,7 @@ theorem cofin_of_algHom {C : Type} [CommRing C] [Algebra ℂ C] (ι : C →ₐ[�
   rw [map_sub]
   abel
 
-theorem cofin_of_monic (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ)
+theorem cofin_of_monic (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (n : ℕ)
     (J : Set (Module.End ℂ (Sm E n))) (hJ : J ⊆ Zalg E n)
     (hq : ∀ (τ : E →+* ℂ) (u : ℂ), ∃ q : Polynomial ℂ, q.Monic ∧ Polynomial.aeval (cap (a := n) τ u) q ∈ J) :
     Cofin J := by

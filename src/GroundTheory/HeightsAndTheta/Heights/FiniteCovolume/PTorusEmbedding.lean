@@ -121,12 +121,12 @@ end Linear
 section Places
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 variable {h : HermitianForm F E W} {v : Basis ι E W}
 
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem place_pairs (h1 : HermAtPlace.Statement h v) (h2 : GramAtData.Statement h v) {x₀ w₀ : W}
     (hp : IsHyperbolicPair h x₀ w₀) (w : InfinitePlace E) :
     pair (gramAt h v w) (vecAt v x₀ w) (vecAt v x₀ w) = 0 ∧
@@ -146,7 +146,7 @@ def torusAt (w : InfinitePlace E) (a : ℂˣ) : GL ι ℂ :=
   torusGL (gramAt h v w) (vecAt v x₀ w) (vecAt v w₀ w) (place_pairs h1 h2 hp w).1
     (place_pairs h1 h2 hp w).2.1 (place_pairs h1 h2 hp w).2.2.1 (place_pairs h1 h2 hp w).2.2.2 a
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem torusAt_mem (a : InfinitePlace E → ℂˣ) :
     (fun w => torusAt h1 h2 hp w (a w)) ∈ archUnitary h v := by
   rw [mem_archUnitary]
@@ -184,7 +184,7 @@ end Places
 section Main
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 theorem proof (h : HermitianForm F E W) (v : Basis ι E W) (h1 : HermAtPlace.Statement h v)

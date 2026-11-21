@@ -14,7 +14,7 @@ open NumberField GlobalTheory.CuspRep MeasureTheory PositivityTheory.Affgl
 namespace GlobalTheory.CompanionTheory.CuspSubspace
 
 theorem mem_of_mem_span_cuspForms :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E)))
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E)))
       (W : Type) [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Kinf E a) W)
       (J : Set (Module.End ℂ (Sm E a))),
       ∀ φ ∈ Submodule.span ℂ {φ : Sm E a | φ ∈ genSpace L ρ J ∧ IsCuspidal φ.1},

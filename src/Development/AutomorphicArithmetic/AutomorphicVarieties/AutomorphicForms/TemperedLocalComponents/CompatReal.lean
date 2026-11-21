@@ -99,7 +99,7 @@ private theorem sf_quadChar_order (E : Type) [Field E] [NumberField E] [IsCMFiel
   change (Units.map (Int.castRingHom ℂ).toMonoidHom (GlobalTheory.IdeleNormChar.normSign E x)) ^ 2 = 1
   rw [← map_pow, Int.units_sq, map_one]
 
-private theorem regAlg_twist {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} {P : CuspSub K n}
+private theorem regAlg_twist {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] {n : ℕ} {P : CuspSub K n}
     (h : (CG.mk P).IsRegAlg) {κ : HChar K} {m : (K →+* ℂ) → ℤ} (hκ : κ.IsAlg m) : (CG.mk (P.twist κ)).IsRegAlg := (GlobalTheory.CuspRep.CG.isRegAlg_iff _).2 fun τ => by
   have e := ((ParLaws.hasInfChar_infChar (CG.mk P) τ).twist κ).infChar_eq
   rw [CG.twist_mk] at e

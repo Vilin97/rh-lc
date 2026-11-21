@@ -8,7 +8,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CompanionTheory.CTFin Matrix
 
 noncomputable section
 namespace GlobalTheory.CompanionTheory.CTFin.Slice1
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r s : ℕ}
 
 
 variable (E r s) in
@@ -51,7 +51,7 @@ theorem toL_val_mem_invSet (y : GL (Fin r) (Cinf E)) :
     toL (y : Matrix (Fin r) (Fin r) (Cinf E)) ∈ invSet E r :=
   show IsUnit (Matrix.of (Matrix.of.symm (y : Matrix (Fin r) (Fin r) (Cinf E)))) from y.isUnit
 
-theorem sm_lev_slice (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (F : GA E (r + s) → ℂ)
+theorem sm_lev_slice (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) (F : GA E (r + s) → ℂ)
     (hF : F ∈ Sm E (r + s)) : (fun m : GA E r => F (lev (Ad E) r s (m, 1))) ∈ Sm E r := by
   intro g
   have hmaps : Set.MapsTo (blockOne E r s) (invSet E r) (invSet E (r + s)) := by

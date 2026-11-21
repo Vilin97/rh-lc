@@ -17,7 +17,7 @@ namespace PositivityTheory.Rg.Cz
 
 open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.CuspGeneric GlobalTheory.CuspRep.Generic GlobalTheory.GKCoh GlobalTheory.WigAlg Formalism.REAL
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def dpsi (ψ : AddChar (Ad E) ℂ) (Z : Cinf E) : ℂ := deriv (fun t : ℝ => ψ (sInf E (t • Z))) 0
 

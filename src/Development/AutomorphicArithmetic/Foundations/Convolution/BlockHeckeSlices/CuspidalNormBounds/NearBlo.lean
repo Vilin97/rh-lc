@@ -34,7 +34,7 @@ private theorem trInv {R : Type} [CommRing R] {r : ℕ} (X Y Z : Matrix (Fin r) 
     Matrix.trace ((X * Y - Y * X) * Z) = -Matrix.trace (Y * (X * Z - Z * X)) := by
   rw [sub_mul, mul_sub, Matrix.trace_sub, Matrix.trace_sub, neg_sub, mul_assoc X, Matrix.trace_mul_comm X, mul_assoc, mul_assoc]
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {r : ℕ}
 
 private theorem cenScalar (z : UC E r) (hz : z ∈ Subalgebra.center ℂ (UC E r)) :
     ∃ κ : ((E →+* ℂ) → Fin r → ℂ) → ℂ, Continuous κ ∧ ∀ (f : Sm E r) Λ, (∀ τ u, cap τ u f = (∏ i, (u + Λ τ i)) • f) →
@@ -165,7 +165,7 @@ end UpperTheory.ConvolutionTheory.BW
 
 open UpperTheory.ConvolutionTheory.BW in
 theorem UpperTheory.ConvolutionTheory.BW.nearBlo :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.NearBlo E := by
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E], UpperTheory.ConvolutionTheory.BW.NearBlo E := by
   classical
   intro E _ _ _ S r ρ B
   obtain ⟨W, hW, hmem⟩ := finSpace ρ B

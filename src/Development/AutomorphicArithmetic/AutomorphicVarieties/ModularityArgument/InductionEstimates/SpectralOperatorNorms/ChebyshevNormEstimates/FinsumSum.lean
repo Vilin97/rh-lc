@@ -222,7 +222,7 @@ private theorem abs3 (T₁ T₂ T₃ : Type) (a₁ : T₁ → ℝ) (a₂ : T₂ 
       exact hj m hm m' hm'
 
 private theorem side_fin (hTr : TrExp) (hEV : EvVal) (hTS : TruncSpec) (hOS : OneSide) (hEv : EvEx) {K : Type} [Field K] [NumberField K]
-    [IsTotallyComplex K] {μ : Measure (normOneGL (K := K) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} (𝔰 : Side θ 2) :
+    [_root_.NumberField.IsTotallyComplex K] {μ : Measure (normOneGL (K := K) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} (𝔰 : Side θ 2) :
     (∀ y : ℝ × Submodule ℂ (LL μ), (IsSummand μ y.2 ∧ y.2.map (θ.U : LL μ →ₗ[ℂ] LL μ) = y.2 ∧ eigIn y.2 𝔰.toAmp.A y.1 ≠ ⊥) → 0 < y.1 →
       ExpF fun j => trOn (eigIn y.2 𝔰.toAmp.A y.1) ((𝔰.Uq 0 ^ j) ∘L Rop μ 𝔰.g ∘L θ.U)) ∧
     ∀ x : ℝ, 0 < x → {y : ℝ × Submodule ℂ (LL μ) |
@@ -243,7 +243,7 @@ private theorem side_fin (hTr : TrExp) (hEV : EvVal) (hTS : TruncSpec) (hOS : On
   · obtain ⟨η, s, h1, h2, h3⟩ := key _ hx
     exact s.finite_toSet.subset fun y hy => (h2 y).mpr ⟨hy.2 ▸ h1, hy.1⟩
 
-private theorem fam_card (hPar : ParEx) {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+private theorem fam_card (hPar : ParEx) {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.Fam 𝔢) :
     (∀ τ, (𝔵.Λ τ).card = 2 + 2) ∧ ∀ w ∉ 𝔢.S, (𝔵.t w).card = 2 + 2 ∧ 0 ∉ 𝔵.t w := by
   have h1 : IsSummand (BW.mu1 E 2) 𝔵.τ₁ :=
@@ -257,7 +257,7 @@ private theorem fam_card (hPar : ParEx) {E : Type} [Field E] [NumberField E] [Is
     exact ⟨(hPar E 2 (by norm_num) _ _ h1).2.2 w _ (𝔵.at₁.2 w hw), (hPar E 2 (by norm_num) _ _ h2).2.2 w _ (𝔵.at₂.2 w hw)⟩
 
 private theorem sep (hEV : EvVal) (hVB : ValBc) (hSep : SepPoly) {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
-    [Algebra F E] [IsTotallyComplex F] [IsTotallyComplex E] {n : ℕ} (hn : 0 < n)
+    [Algebra F E] [_root_.NumberField.IsTotallyComplex F] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} (hn : 0 < n)
     {μE : Measure (normOneGL (K := E) (n := n))} [μE.IsHaarMeasure] {μF : Measure (normOneGL (K := F) (n := n))} [μF.IsHaarMeasure] (𝔞 : Amp μE) (𝔟 : Amp μF)
     (hS : ∀ w : Pl E, w ∈ 𝔞.S ↔ w.under (𝓞 F) ∈ 𝔟.S) (Λ : (E →+* ℂ) → Multiset ℂ) (t : Pl E → Multiset ℂ)
     (hΛ : ∀ τ, (Λ τ).card = n) (ht : ∀ w ∉ 𝔞.S, (t w).card = n)

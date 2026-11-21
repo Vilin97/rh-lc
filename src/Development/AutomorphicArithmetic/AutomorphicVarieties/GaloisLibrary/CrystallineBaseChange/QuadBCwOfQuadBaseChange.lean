@@ -17,7 +17,7 @@ namespace UpperTheory.V.Br
 
 section BC
 
-variable {F E : Type} [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
+variable {F E : Type} [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E]
   {a : ℕ}
 
 structure IsBC0 (π : TR.CuspSub F a) (P : CuspSub E a) : Prop where
@@ -40,7 +40,7 @@ theorem IsBCw.of_isBC {π : TR.CuspSub F a} {P : CuspSub E a} (h : IsBC π P) : 
 end BC
 
 def QuadBCw : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E],
+  ∀ (F E : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] [Algebra F E],
     Module.finrank F E = 2 → ∀ (a : ℕ) [Fact (a = 2)], 1 ≤ a → ∀ π : TR.CuspSub F a, π.IsRegAlg →
       (∃ η : HChar F, IsQuadCharOf E η ∧ IsoTwist π η) ∨ ∃ P : CuspSub E a, IsBCw π P
 

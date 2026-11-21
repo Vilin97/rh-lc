@@ -33,7 +33,7 @@ namespace GlobalTheory.CompanionTheory.Hypotheses₂.LeviPart.MonicBlock
 
 section Res
 
-variable {D : D7} [IsTotallyComplex D.host.E] {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)} {hθ : IsInfFam θ}
+variable {D : D7} [_root_.NumberField.IsTotallyComplex D.host.E] {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)} {hθ : IsInfFam θ}
   {V : HSp D} {m : ℕ} {X Y : Matrix (Fin V.rank) (Fin m) D.host.E}
 
 
@@ -145,7 +145,7 @@ theorem entry_parts {n : ℕ} (P Q Z W : Matrix (Fin n) (Fin n) ℂ) (c s : ℂ)
     (Q * (c • (Z + s • W)) * P) a b = c * ((Q * Z * P) a b + s * (Q * W * P) a b) := by
   simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_add, Matrix.add_mul, Matrix.smul_apply, Matrix.add_apply, smul_eq_mul]
 
-variable {D : D7} [IsTotallyComplex D.host.E] {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)}
+variable {D : D7} [_root_.NumberField.IsTotallyComplex D.host.E] {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)}
   {V : HSp D} {m : ℕ} {X Y : Matrix (Fin V.rank) (Fin m) D.host.E}
 
 theorem van (hθ : IsInfFam θ) (hW : IsWittFrame D.sp.cm.sig V.gram X Y) (T : Finset (Fin m)) {l d : ℕ} (h : l + d ≤ m)
@@ -309,7 +309,7 @@ theorem derEnd_mem_leftInv (hθ : IsInfFam θ) (U : Subgroup (GA D V)) (τ : D.w
 
 
 open GlobalTheory.CuspRep in
-theorem core [IsTotallyComplex D.host.E] (hθ : IsInfFam θ) {m : ℕ} {X : Matrix (Fin V.rank) (Fin m) D.host.E} (T : Finset (Fin m))
+theorem core [_root_.NumberField.IsTotallyComplex D.host.E] (hθ : IsInfFam θ) {m : ℕ} {X : Matrix (Fin V.rank) (Fin m) D.host.E} (T : Finset (Fin m))
     {l d : ℕ} (ι : GlobalTheory.CuspRep.GA D.host.E d →* GA D V) (hN : 2 * (l + d) ≤ V.rank)
     (hsm : ∀ F : GlobalTheory.Mem.AutSpace.SmFun θ V, (fun x => F.1 (ι x)) ∈ Sm D.host.E d)
     (τ' : D.what₂.Tau) (τ : D.host.E →+* ℂ) (ck : ℕ → ℂ)
@@ -421,7 +421,7 @@ end Units
 
 
 open GlobalTheory.CuspRep in
-theorem monic_block : ∀ (D : D7) [IsTotallyComplex D.host.E] (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsInfFam θ →
+theorem monic_block : ∀ (D : D7) [_root_.NumberField.IsTotallyComplex D.host.E] (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsInfFam θ →
     ∀ (V : HSp D) (c : D.what₂.Tau → ℕ → ℂ) (m : ℕ) (X Y : Matrix (Fin V.rank) (Fin m) D.host.E),
     IsWittFrame D.sp.cm.sig V.gram X Y → ∀ (T : Finset (Fin m)) (l d : ℕ) (h : l + d ≤ m)
     (ι : GlobalTheory.CuspRep.GA D.host.E d →* GA D V), GlobalTheory.BlockForms.IsBlockEmb D.sp.cm.sig V.gram X Y h ι → 1 ≤ d →

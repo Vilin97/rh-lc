@@ -16,7 +16,7 @@ namespace GlobalTheory.JSW.MirSemi
 
 open GlobalTheory.CuspRep GlobalTheory.JSW
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def IsLocModerate (F : GA E a → ℂ) : Prop :=
   ∀ g₀ : GA E a, ∃ (C : ℝ) (N : ℕ), 0 ≤ C ∧ ∀ᶠ g in 𝓝 g₀, ∀ y, ‖F (g * infGL E a y)‖ ≤ C * height y ^ N
@@ -205,7 +205,7 @@ end GlobalTheory.JSW.MirSemi
 
 open NumberField IsDedekindDomain GlobalTheory.CuspRep Formalism.UG GlobalTheory.LFun Matrix MeasureTheory in
 theorem GlobalTheory.JSW.MirSemi.locSpan_continuous_moderate :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
       (π : CuspSub E a) (φ : Sm E a), φ ∈ π.V → ∀ F ∈ GlobalTheory.JSW.MirSemi.locSpan S φ.1, Continuous F ∧
         ∀ K : Set (GA E a), IsCompact K → ∃ (C : ℝ) (N : ℕ), ∀ g ∈ K, ∀ y : GL (Fin a) (Cinf E),
           ‖F (g * infGL E a y)‖ ≤ C * height y ^ N := by

@@ -11,7 +11,7 @@ open NumberField GlobalTheory.CuspRep
 
 namespace GlobalTheory.HCAlpha
 
-variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+variable (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
 
 def lapOp : Module.End ℂ (Sm E a) :=
   ∑ τ : E →+* ℂ, ∑ i : Fin a, ∑ j : Fin a,

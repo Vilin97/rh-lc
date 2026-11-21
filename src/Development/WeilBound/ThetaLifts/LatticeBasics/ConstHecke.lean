@@ -90,7 +90,7 @@ theorem exists_prime_norm (H : GlobalTheory.Published.HeckeLEntireAndNonzeroAtOn
   obtain ⟨t, ht⟩ := GlobalTheory.HeckeOne.exists_normChar_ne_one (K := K)
   exact ht (hchar_eq_one H _ (GlobalTheory.HeckeOne.isUnitary_normChar t) hS fun w h1 h2 => absurd h2 (hn w h1))
 
-theorem closed_eq_top [IsTotallyComplex K] (H : GlobalTheory.Published.HeckeLEntireAndNonzeroAtOne) (M : Subgroup (Ideles K))
+theorem closed_eq_top [_root_.NumberField.IsTotallyComplex K] (H : GlobalTheory.Published.HeckeLEntireAndNonzeroAtOne) (M : Subgroup (Ideles K))
     (hM : IsClosed (M : Set (Ideles K))) (h1 : ∀ k, diagUnits K k ∈ M) (h2 : GlobalTheory.IdeleCovolume.eIdele K ∈ M)
     {S : Set (HeightOneSpectrum (𝓞 K))} (hS : S.Finite)
     (h : ∀ w ∉ S, (Ideal.absNorm w.asIdeal).Prime → ∀ x, localIdele K w x ∈ M) (z : Ideles K) : z ∈ M := by

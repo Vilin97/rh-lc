@@ -11,7 +11,7 @@ public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShal
 open NumberField IsDedekindDomain
 open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.DiscSpec PositivityTheory.Rg.Rs PositivityTheory.Rg.BcB PositivityTheory.Rg.BcB.F UpperTheory.V.Z.Tf.GOne
 
-private theorem satV_of_locComp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+private theorem satV_of_locComp {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
     {V : Submodule ℂ (Sm E N)} (hV : IsDiscrete V) {w : HeightOneSpectrum (𝓞 E)}
     {σ : SmIrr (Matrix.GeneralLinearGroup (Fin N) (w.adicCompletion E))} (hσ : IsLocCompGL V w σ) {B : Multiset ℂˣ}
     (hB : GlobalTheory.LFun.HasSatGL w σ.ρ B) {φ : Sm E N} (hφ : φ ∈ V) (h0 : φ ≠ 0)

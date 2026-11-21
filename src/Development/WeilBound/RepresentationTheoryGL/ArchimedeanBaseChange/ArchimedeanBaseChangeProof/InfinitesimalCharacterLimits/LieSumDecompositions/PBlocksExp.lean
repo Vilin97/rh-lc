@@ -19,7 +19,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC PositivityTheory.Rg.Rs Positivi
 
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockExponential
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 def tl (r : ℕ) (s : ℝ) : Module.End ℂ (GA E N → ℂ) where
   toFun f g := f (aT E N r s * g)

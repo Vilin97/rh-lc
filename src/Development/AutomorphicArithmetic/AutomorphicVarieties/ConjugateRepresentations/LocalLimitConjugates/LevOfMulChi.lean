@@ -27,7 +27,7 @@ private theorem open_fix {G V : Type} [Group G] [TopologicalSpace G] [IsTopologi
   rw [e, map_mul, Module.End.mul_apply, h _ hx, hg']
 
 section
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 private theorem lie_one_comm (X : Lie E a) (φ : Sm E a) :
     lie E a (oneL E a) (lie E a X φ) = lie E a X (lie E a (oneL E a) φ) := by

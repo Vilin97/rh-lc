@@ -102,7 +102,7 @@ section Kap
 
 variable {K : Type} [Field K] [NumberField K]
 
-theorem meanEmb_eq_meanLog [IsTotallyComplex K] (κ : InfinitePlace K → ℝ) (g : (K →+* ℂ) → ℝ)
+theorem meanEmb_eq_meanLog [_root_.NumberField.IsTotallyComplex K] (κ : InfinitePlace K → ℝ) (g : (K →+* ℂ) → ℝ)
     (hg : ∀ σ, g σ = Real.log (κ (InfinitePlace.mk σ))) :
     (∑ σ, g σ) / (Module.finrank ℚ K : ℝ) = Formalism.DivisionValues.meanLog κ := by
   classical

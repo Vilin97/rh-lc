@@ -154,7 +154,7 @@ private theorem rc_hom (𝔪 : GroundTheory.Global.Modulus K) (f : Ideal (𝓞 K
 end UpperTheory.V.Ws.Tw
 
 theorem UpperTheory.V.Ws.Tw.rayChar :
-    ∀ (K Ω : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (𝔪 : Ideal (𝓞 K)), 𝔪 ≠ ⊥ → ∀ (C : Type) [CommGroup C] (f : Ideal (𝓞 K) → C), (∀ I J, I ≠ ⊥ → J ≠ ⊥ → IsCoprime I 𝔪 → IsCoprime J 𝔪 → f (I * J) = f I * f J) → (∀ a : 𝓞 K, a ≠ 0 → a - 1 ∈ 𝔪 → f (Ideal.span {a}) = 1) → ∃ κ : G K Ω →* C, IsOpen (κ.ker : Set (G K Ω)) ∧ ∀ w : HeightOneSpectrum (𝓞 K), ¬ w.asIdeal ∣ 𝔪 → ∀ A : ValuationSubring Ω, IsPlaceOver A w → Ine (F := K) A ≤ κ.ker ∧ ∀ σ : G K Ω, IsFrob A (normV w) σ → κ σ = f w.asIdeal := by
+    ∀ (K Ω : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (𝔪 : Ideal (𝓞 K)), 𝔪 ≠ ⊥ → ∀ (C : Type) [CommGroup C] (f : Ideal (𝓞 K) → C), (∀ I J, I ≠ ⊥ → J ≠ ⊥ → IsCoprime I 𝔪 → IsCoprime J 𝔪 → f (I * J) = f I * f J) → (∀ a : 𝓞 K, a ≠ 0 → a - 1 ∈ 𝔪 → f (Ideal.span {a}) = 1) → ∃ κ : G K Ω →* C, IsOpen (κ.ker : Set (G K Ω)) ∧ ∀ w : HeightOneSpectrum (𝓞 K), ¬ w.asIdeal ∣ 𝔪 → ∀ A : ValuationSubring Ω, IsPlaceOver A w → Ine (F := K) A ≤ κ.ker ∧ ∀ σ : G K Ω, IsFrob A (normV w) σ → κ σ = f w.asIdeal := by
   intro K Ω _ _ _ _ _ _ 𝔪 h𝔪 C _ f hm h1
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed K
   let M : GroundTheory.Global.Modulus K := ⟨𝔪, h𝔪, ∅⟩

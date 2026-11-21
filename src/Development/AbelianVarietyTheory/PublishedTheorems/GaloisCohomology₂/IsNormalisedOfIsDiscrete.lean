@@ -16,7 +16,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL
 
 namespace GlobalTheory.DiscSpec
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N a c d : ℕ} {n : Fin c → ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N a c d : ℕ} {n : Fin c → ℕ}
 
 def finVec {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) : Submodule ℂ V where
   carrier := {v | FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k => ρ k v))}
@@ -146,7 +146,7 @@ namespace GlobalTheory.Published
 open GlobalTheory.DiscSpec
 
 def DiscreteSpectrumGL : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ), 1 ≤ N →
+  ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ), 1 ≤ N →
     (∀ V : Submodule ℂ (Sm E N), IsDiscrete V →
       ∃ (a d : ℕ) (π : CuspSub E a), π.IsUnitary ∧ IsNormalised π ∧ IsSpehOf V π d) ∧
     (∀ (a d : ℕ) (π : CuspSub E a), d * a = N → IsNormalised π →
@@ -158,7 +158,7 @@ def DiscreteSpectrumGL : Prop :=
     ∀ V : Submodule ℂ (Sm E N), IsDiscrete V → ∀ (a d : ℕ) (π : CuspSub E a),
       IsNormalised π → IsSpehOf V π d → HasSpehComp V π d
 
-theorem DiscreteSpectrumGL.iso (H : DiscreteSpectrumGL) {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+theorem DiscreteSpectrumGL.iso (H : DiscreteSpectrumGL) {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
     {N a d : ℕ} (hN : 1 ≤ N) {V : Submodule ℂ (Sm E N)} (hV : IsDiscrete V) {π π' : CuspSub E a} (h : IsNormalised π)
     (h' : IsNormalised π') (e : IsSpehOf V π d) (e' : IsSpehOf V π' d) : π.Iso π' :=
   Quotient.exact (eq_of_heq (Sigma.mk.inj ((H E N hN).2.2.1 V hV a d a d π π' h h' e e').2).2)

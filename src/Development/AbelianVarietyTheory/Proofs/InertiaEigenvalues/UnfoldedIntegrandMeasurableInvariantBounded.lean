@@ -38,7 +38,7 @@ theorem psiN_mul_conj {E : Type} [Field E] [NumberField E] {a : ℕ} (u : GA E a
   rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
   simp [GlobalTheory.JSW.psiN, Circle.norm_coe]
 
-theorem lastRow_unip {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ} {u : GA E (m + 1)}
+theorem lastRow_unip {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ} {u : GA E (m + 1)}
     (hu : u ∈ GlobalTheory.CellDec.NA E (m + 1)) (g : GA E (m + 1)) :
     GlobalTheory.ZEul.lastRow (u * g) = GlobalTheory.ZEul.lastRow g := by
   have h := (GlobalTheory.SmGL.mem_unipB (Ad E)).1 hu
@@ -57,7 +57,7 @@ theorem detPow_unip {E : Type} [Field E] [NumberField E] {a : ℕ} {u : GA E a} 
 
 end GlobalTheory.ZEulProps
 
-theorem GlobalTheory.ZEulProps.uInt_props : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (φ φ' : GA E (m + 1) → ℂ)
+theorem GlobalTheory.ZEulProps.uInt_props : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (φ φ' : GA E (m + 1) → ℂ)
     (Φ : (Fin (m + 1) → Cinf E) → ℂ) (N : ℕ) (x : ℝ),
     Continuous (GlobalTheory.JSW.whit φ) → Continuous (GlobalTheory.JSW.whit φ') →
     (∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →

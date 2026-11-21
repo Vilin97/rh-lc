@@ -37,7 +37,7 @@ theorem ReducedBasisBound.full : ReducedBasisBound.Statement := ReducedBasisBoun
 section Closed
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 section OneSpace
 
@@ -51,24 +51,24 @@ theorem ArchCovolumeBound.full : ArchCovolumeBound.Statement h v :=
     (TraceHermNondegenerate.proof h v) (DualLatticeMultiple.proof h) (CoordLatticeFullRank.proof v)
 
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem MajorantTransport.full : MajorantTransport.Statement h v := MajorantTransport.proof h v
 
 
-omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem ComplementExtension.full : ComplementExtension.Statement h := ComplementExtension.proof h
 
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem LineNormalForm.full : LineNormalForm.Statement h := LineNormalForm.proof h
 
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem ComplementLattice.full [FiniteDimensional E W] : ComplementLattice.Statement h :=
   ComplementLattice.proof h
 
 
-omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
+omit [NumberField F] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] in
 theorem LatticePointsBelowFinite.full : LatticePointsBelowFinite.Statement h v :=
   LatticePointsBelowFinite.proof h v
 
@@ -111,7 +111,7 @@ end Closed
 section Adelic
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 theorem AdelicCovolumeFinite.of_covolume (h : HermitianForm F E W) (v : Basis ι E W)
@@ -130,7 +130,7 @@ end Adelic
 section Open
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 variable
     (hAU : ∀ (W : Type u) [AddCommGroup W] [Module E W] [FiniteDimensional E W]

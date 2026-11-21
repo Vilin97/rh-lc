@@ -146,7 +146,7 @@ theorem Tmat_eq_one {bkP : BKPh X} {i : X.Tw} {s : X.Sig i} (h : GalHyp bkP i s)
   rw [Tmat, h.1.1 v hl h1 B hB σ hσ, chiS, X.twistCharacterFamily_unramified i _ _ v hl h1 h2 B hB σ hσ]
   simp
 
-theorem nrComplexPlaces_host (D : Formalism.BasicNotions.D7) [IsTotallyComplex D.host.E] :
+theorem nrComplexPlaces_host (D : Formalism.BasicNotions.D7) [_root_.NumberField.IsTotallyComplex D.host.E] :
     InfinitePlace.nrComplexPlaces D.host.E = D.R.f := by
   have h1 := IsTotallyComplex.finrank D.host.E
   have h2 : Module.finrank ℚ D.host.E = 2 * D.R.f := by

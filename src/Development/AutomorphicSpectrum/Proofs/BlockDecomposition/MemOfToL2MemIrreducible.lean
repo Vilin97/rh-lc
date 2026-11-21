@@ -23,7 +23,7 @@ open scoped InnerProductSpace
 
 namespace GlobalTheory.CompanionTheory.FinitePart
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
   {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
 theorem enoughCompact_Rcusp : EnoughCompact (Rcusp μ) := by

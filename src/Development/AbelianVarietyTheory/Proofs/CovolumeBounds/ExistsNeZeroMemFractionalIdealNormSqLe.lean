@@ -60,7 +60,7 @@ end General
 
 section TotallyComplex
 
-variable {E : Type*} [Field E] [NumberField E] [IsTotallyComplex E] {f : ℕ}
+variable {E : Type*} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {f : ℕ}
 
 theorem exists_ne_zero_mem_fractionalIdeal_norm_sq_le (hf : finrank ℚ E = 2 * f)
     (J : FractionalIdeal (𝓞 E)⁰ E) (hJ : J ≠ 0) :

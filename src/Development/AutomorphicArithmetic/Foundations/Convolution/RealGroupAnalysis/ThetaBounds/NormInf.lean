@@ -15,7 +15,7 @@ open scoped Classical NumberField.LiesOver
 
 namespace UpperTheory.ConvolutionTheory.R2.Ff.NI
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 
 private theorem pInf_apply (x : A E) (w : InfinitePlace E) : GlobalTheory.CuspRep.pInf E x w =
     (InfinitePlace.Completion.ringEquivComplexOfIsComplex (IsTotallyComplex.isComplex w)) (x.1 w) := rfl
@@ -154,7 +154,7 @@ private theorem place_unique (D : Dat F E) {w w' : InfinitePlace E}
 end UpperTheory.ConvolutionTheory.R2.Ff.NI
 
 theorem UpperTheory.ConvolutionTheory.R2.Ff.normInf :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (_D : Dat F E), NormInf F E := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (_D : Dat F E), NormInf F E := by
   intro F E _ _ _ _ _ _ _ D s
   haveI : Module.Finite F E := Module.Finite.of_basis D.b
   have hsurj : Function.Surjective fun w : InfinitePlace E => w.comap (algebraMap F E) :=

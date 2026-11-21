@@ -26,7 +26,7 @@ private theorem actOp_apply (V : Type) [AddCommGroup V] [Module ℂ V] (d : ℕ)
     actOp V d N = MulOpposite.op (actAlg V d Nᵀ) := rfl
 
 theorem UpperTheory.V.AlgRepEndIrreducible.tensB :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CuspSub E a) (Ξ : AlgRep E a), IsLieHom (A := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) (lieB π Ξ) ∧
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (π : CuspSub E a) (Ξ : AlgRep E a), IsLieHom (A := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) (lieB π Ξ) ∧
       (∀ (k : Kinf E a) (X : Matrix (Fin a) (Fin a) (Cinf E)), tensorK π Ξ k * lieB π Ξ (toL X) = lieB π Ξ (toL (k.1 * X * star k.1)) * tensorK π Ξ k) ∧
       ∀ (τ : E →+* ℂ) (m : Multiset ℂ), GlobalTheory.WignerGL.HasDualInfChar Ξ τ m → ∀ u : ℂ,
         Formalism.REAL.qdet (fun i j => -MulOpposite.op (eL (N := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) (lieB π Ξ) τ i j)) (u + ((a : ℂ) - 1) / 2) =

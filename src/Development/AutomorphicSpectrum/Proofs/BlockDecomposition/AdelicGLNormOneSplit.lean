@@ -16,7 +16,7 @@ namespace GlobalTheory.CompanionTheory.SplitHomeo
 
 open GroundTheory.Automorphic GroundTheory.Global
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 theorem continuous_splitCentre : Continuous (splitCentre E a) := by
   have e : splitCentre E a = fun t : ℝ =>
@@ -104,7 +104,7 @@ theorem splitCentre_neg_mul_self (t : ℝ) (g : GA E a) :
     splitCentre E a (-t) * (splitCentre E a t * g) = g := by
   rw [← mul_assoc, ← splitCentre_add, neg_add_cancel, splitCentre_zero, one_mul]
 
-theorem exists_homeomorph (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ha : 0 < a) :
+theorem exists_homeomorph (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (ha : 0 < a) :
     ∃ e : Reduction.normOneGL (K := E) (n := a) × ℝ ≃ₜ GA E a, ∀ x t, e (x, t) = splitCentre E a t * (x : GA E a) := by
   refine ⟨{
     toFun := fun p => splitCentre E a p.2 * (p.1 : GA E a)

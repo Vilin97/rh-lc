@@ -109,7 +109,7 @@ theorem ofin_apply {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (m : Mea
   UnitaryRep.integrated_ccToL1_apply _ m e w
 
 set_option maxHeartbeats 2000000 in
-theorem actEx [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] {μ₂ : Measure (G1 K 2)} [μ₂.IsHaarMeasure]
+theorem actEx [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] {μ₂ : Measure (G1 K 2)} [μ₂.IsHaarMeasure]
     {τ₁ τ₂ : Submodule ℂ (L2 μ₂)} (h₁ : CuspIrr μ₂ τ₁) (h₂ : CuspIrr μ₂ τ₂) {D : TypeDat K (2 + 2)} {d : ℕ} (A : Line μ τ₁ τ₂ D d)
     {Kf : Subgroup GF} (hL : D.Level Kf) (hle : Kf ≤ AdelicGLn.integralFiniteGL K (2 + 2)) (m : Measure GF) [m.IsHaarMeasure]
     (e : TF K (2 + 2)) (he : ∀ k ∈ Kf, ∀ h, e (k * h) = e h ∧ e (h * k) = e h) :

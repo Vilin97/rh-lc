@@ -21,7 +21,7 @@ open Formalism.DivisionValues Formalism.EigenvalueLevelCeiling
 open Formalism.LatticeIndexTer (ph)
 
 def DivIneqObjU : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K] (K0 : Subfield K),
+  ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (K0 : Subfield K),
     IsCMSub K0 → ∀ v0 : InfinitePlace K, IsConjAt v0 →
     ∀ (D : ℕ) (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ), 0 < D → (∀ v, IsUnit (XE v).det) →
     ∀ (Tup : Type) (μ0 : Tup) (μ : HeightOneSpectrum (𝓞 K) → Tup), (∀ y, μ (conjPl y) = μ y) →

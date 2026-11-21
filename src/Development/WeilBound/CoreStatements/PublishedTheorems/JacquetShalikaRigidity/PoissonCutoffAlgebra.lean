@@ -18,7 +18,7 @@ namespace PositivityTheory.AdelicQuotientData
 
 namespace PoissonCutoffAlgebra
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {k : ℕ}
 
 theorem exists_pl : Nonempty (Pl E) := by
   obtain ⟨M, hM⟩ := Ideal.exists_maximal (𝓞 E)

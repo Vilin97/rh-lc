@@ -14,7 +14,7 @@ namespace PositivityTheory.Rg.Rs
 
 namespace PInfInd2A
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem prod_shift (M₁ M₂ : Multiset ℂ) (z₁ z₂ u : ℂ) (r s : ℕ) :
     (((M₁.map (· + z₁)).map (u - (s : ℂ) / 2 + ·)).prod * ((M₂.map (· + z₂)).map (u + (r : ℂ) / 2 + ·)).prod) =

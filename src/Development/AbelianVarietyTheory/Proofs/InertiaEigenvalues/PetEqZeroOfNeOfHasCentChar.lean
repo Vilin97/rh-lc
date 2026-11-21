@@ -11,7 +11,7 @@ open NumberField IsDedekindDomain MeasureTheory Formalism.L2.Host GlobalTheory.C
 
 namespace GlobalTheory.CuspOrth
 
-theorem pet_eq_zero_of_ne_of_hasCentChar : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
+theorem pet_eq_zero_of_ne_of_hasCentChar : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ)
     (μ : Measure (GA E a)) [μ.IsHaarMeasure] (π π' : CuspSub E a) (ω : HChar E), ω.IsUnitary →
     π.HasCentChar ω → π'.HasCentChar ω → CG.mk π ≠ CG.mk π' →
     ∀ φ ∈ π.V, ∀ φ' ∈ π'.V, pet (latticeGL E a) μ φ.1 φ'.1 = 0 := by

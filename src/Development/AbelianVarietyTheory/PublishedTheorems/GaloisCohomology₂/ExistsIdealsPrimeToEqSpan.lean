@@ -464,7 +464,7 @@ theorem exists_idealsPrimeTo_eq_span {F : Type} [Field F] [NumberField F] {𝔪 
   rw [Units.val_mk0, FractionalIdeal.coeIdeal_span_singleton]
   exact count_span_eq_zero h0 hc w hw
 
-theorem kills_of_rayPrincipal {F : Type} [Field F] [NumberField F] [IsTotallyComplex F] {𝔪 : Ideal (𝓞 F)}
+theorem kills_of_rayPrincipal {F : Type} [Field F] [NumberField F] [_root_.NumberField.IsTotallyComplex F] {𝔪 : Ideal (𝓞 F)}
     {A : Type} [CommGroup A] (f : idealsPrimeTo 𝔪 →* A) (hf : ∀ J : idealsPrimeTo 𝔪, J.1 ∈ rayPrincipal 𝔪 → f J = 1)
     (x : 𝓞 F) (J : idealsPrimeTo 𝔪) (hx : x - 1 ∈ 𝔪)
     (hJ : (J.1 : FractionalIdeal (𝓞 F)⁰ F) = (Ideal.span {x} : Ideal (𝓞 F))) : f J = 1 := by

@@ -11,7 +11,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.AutGrowth
 
 namespace GlobalTheory.CapKilled
 
-theorem zalg_mem_space : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (b : ℕ)
+theorem zalg_mem_space : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (b : ℕ)
     (L : Subgroup (GL (Fin b) (Af E))) (W : Submodule ℂ (Kinf E b → ℂ)), FiniteDimensional ℂ W →
     ∀ (q : (E →+* ℂ) → ℂ → Polynomial ℂ) (z : Module.End ℂ (Sm E b)), z ∈ Zalg E b →
     ∀ ψ ∈ GlobalTheory.CapKilled.space E b L W q, z ψ ∈ GlobalTheory.CapKilled.space E b L W q := by

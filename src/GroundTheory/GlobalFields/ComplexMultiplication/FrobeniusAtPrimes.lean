@@ -158,7 +158,7 @@ end DegreeOne
 section LatticeForm
 
 variable {K : Type*} [Field K] [NumberField K] (σ₀ : K →+* ℂ) (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K]
+  [_root_.NumberField.IsTotallyComplex K]
 
 
 theorem exists_unit_of_homConstSet_eq (L L' : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ₀)
@@ -205,10 +205,10 @@ end LatticeForm
 section Main
 
 variable {K : Type*} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K] {L : IntermediateField K ℂ} [NumberField L]
+  [_root_.NumberField.IsTotallyComplex K] {L : IntermediateField K ℂ} [NumberField L]
 
 
-omit [NumberField K] [IsTotallyComplex K] [NumberField L] in
+omit [NumberField K] [_root_.NumberField.IsTotallyComplex K] [NumberField L] in
 theorem algebraMap_mem_of_liesOver {𝔭 : HeightOneSpectrum (𝓞 K)} {𝔓 : HeightOneSpectrum (𝓞 L)}
     [h : 𝔓.asIdeal.LiesOver 𝔭.asIdeal] {a : 𝓞 K} (ha : a ∈ 𝔭.asIdeal) :
     algebraMap (𝓞 K) (𝓞 L) a ∈ 𝔓.asIdeal := by
@@ -216,7 +216,7 @@ theorem algebraMap_mem_of_liesOver {𝔭 : HeightOneSpectrum (𝓞 K)} {𝔓 : H
   exact ha
 
 
-omit [NumberField K] [IsTotallyComplex K] [NumberField L] in
+omit [NumberField K] [_root_.NumberField.IsTotallyComplex K] [NumberField L] in
 theorem isogBaseChange_eq_map {A A' : WeierstrassCurve L} [A.IsElliptic] [A'.IsElliptic]
     (φ : Isogeny A A') : isogBaseChange (F' := ℂ) φ = φ.map (algebraMap L ℂ) :=
   Isogeny.ext_xy
@@ -406,13 +406,13 @@ end Main
 section Global
 
 variable {K : Type*} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K] {L : IntermediateField K ℂ} [NumberField L]
+  [_root_.NumberField.IsTotallyComplex K] {L : IntermediateField K ℂ} [NumberField L]
 
 abbrev primeClass (𝔭 : HeightOneSpectrum (𝓞 K)) : ClassGroup (𝓞 K) :=
   ClassGroup.mk0 ⟨𝔭.asIdeal, mem_nonZeroDivisors_of_ne_zero 𝔭.ne_bot⟩
 
 
-omit [NumberField K] [IsTotallyComplex K] [NumberField L] in
+omit [NumberField K] [_root_.NumberField.IsTotallyComplex K] [NumberField L] in
 theorem ELL.j_eq_algebraMap_j {A : WeierstrassCurve L} [A.IsElliptic] {x : ELL K}
     {h : Nonempty (isogEnd (A.baseChange ℂ) ≃+* 𝓞 K)}
     (hx : (⟨A.baseChange ℂ, h⟩ : CMCurve K).toEll = x) : ELL.j x = algebraMap L ℂ A.j := by

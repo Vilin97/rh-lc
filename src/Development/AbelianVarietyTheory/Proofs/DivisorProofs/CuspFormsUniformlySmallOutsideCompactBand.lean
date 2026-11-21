@@ -41,7 +41,7 @@ theorem infConj : ∀ (E : Type) [Field E] [NumberField E] (a r : ℕ) (U : Set 
         GroundTheory.Automorphic.AutomorphicForm.blockEntry P * (x : Matrix (Fin a) (Fin a) (Ad E)))‖ ≤ δ →
       x⁻¹ * unip P * x ∈ U := GlobalTheory.T.conj_archUnipotent_mem_nhds_one
 
-theorem meanZero : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a r : ℕ), 0 < r → r < a →
+theorem meanZero : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a r : ℕ), 0 < r → r < a →
     ∀ φ : GA E a → ℂ, (∀ γ g, φ (ratGL E a γ * g) = φ g) → IsCuspidal φ → Continuous φ →
     ∀ M : ℕ, 0 < M → ∀ (x : GA E a) (B : ℝ),
       (∀ X ∈ GroundTheory.Automorphic.scaledUnipFD E a r M, ‖φ (unip X * x) - φ x‖ ≤ B) → ‖φ x‖ ≤ B := GlobalTheory.T.cuspidal_norm_le_of_oscillation_scaledUnipFD
@@ -78,7 +78,7 @@ theorem mem_band_ratGL_mul {γ : GL (Fin a) E} {g : GA E a} (hg : g ∈ band E a
 end Band
 
 section Span
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} {L : Subgroup (GL (Fin a) (Af E))}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} {L : Subgroup (GL (Fin a) (Af E))}
   {W : Submodule ℂ (Kinf E a → ℂ)} {X : Set (Module.End ℂ (Sm E a) → ℂ)} {N : ℕ}
 
 theorem span_left {φ : Sm E a} (hφ : φ ∈ Submodule.span ℂ (formsGL E a L W X N)) :
@@ -114,7 +114,7 @@ theorem span_cont (hL : IsOpen (L : Set (GL (Fin a) (Af E)))) {φ : Sm E a}
 end Span
 
 open GroundTheory.Automorphic.Reduction in
-theorem oneRoot (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E)))
+theorem oneRoot (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E)))
     (hL : IsOpen (L : Set (GL (Fin a) (Af E)))) (W : Submodule ℂ (Kinf E a → ℂ)) (hW : FiniteDimensional ℂ W)
     (X : Set (Module.End ℂ (Sm E a) → ℂ)) (hX : X.Finite) (N : ℕ)
     {ω : Set (GA E a)} (hω : IsCompact ω) (hωB : ω ⊆ (adelicBorel (K := E) (n := a) : Set (GA E a)))
@@ -166,7 +166,7 @@ theorem oneRoot (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : �
 
 
 open GroundTheory.Automorphic.Reduction in
-theorem tails : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E))),
+theorem tails : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (L : Subgroup (GL (Fin a) (Af E))),
     IsOpen (L : Set (GL (Fin a) (Af E))) → ∀ W : Submodule ℂ (Kinf E a → ℂ), FiniteDimensional ℂ W →
     ∀ X : Set (Module.End ℂ (Sm E a) → ℂ), X.Finite → ∀ N : ℕ, ∀ ε : ℝ, 0 < ε → ∃ C : Set (GA E a), IsCompact C ∧
     C ⊆ band E a ∧ ∀ g ∈ band E a, (∃ γ : GL (Fin a) E, ratGL E a γ * g ∈ C) ∨

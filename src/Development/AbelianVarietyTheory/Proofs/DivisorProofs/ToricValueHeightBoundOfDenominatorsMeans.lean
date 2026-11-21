@@ -40,7 +40,7 @@ theorem exists_prime_mem (w : Formalism.PairingDivisionLocalBalance.Pl K) : ∃ 
   obtain ⟨p, hp, hpw⟩ := (Ideal.IsPrime.prod_mem_iff (hp := w.isPrime)).1 hmem
   exact ⟨p, Nat.prime_of_mem_primeFactors hp, w.isPrime.mem_of_pow_mem _ hpw⟩
 
-theorem height_meanVal [StarRing K] [IsTotallyComplex K] (σ : K →+* ℂ) (β : ℂ) (p : K[X]) (n : ℕ → ℕ) (A B : ℝ)
+theorem height_meanVal [StarRing K] [_root_.NumberField.IsTotallyComplex K] (σ : K →+* ℂ) (β : ℂ) (p : K[X]) (n : ℕ → ℕ) (A B : ℝ)
     (hp : IsMinPol σ β p) (hβ : β ≠ 0) (halg : IsAlgebraic ℚ β)
     (hlow : ∀ l, l.Prime → GlobalTheory.CMVal.IntAt l ((l : ℂ) ^ ((12 * n l : ℕ) : ℤ) * β))
     (harch : Real.log |(((minpoly ℚ β).coeff 0 : ℚ) : ℝ)| ≤ (minpoly ℚ β).natDegree * (12 * A))

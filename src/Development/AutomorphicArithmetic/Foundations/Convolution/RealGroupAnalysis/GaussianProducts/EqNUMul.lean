@@ -44,7 +44,7 @@ private theorem eq_nU_mul {F : Type} [Field F] [NumberField F] {g g' : G1 F} (hr
   exact ⟨_, by rw [← hn, inv_mul_cancel_right]⟩
 
 theorem UpperTheory.ConvolutionTheory.R2.G.contW :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ,
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ,
     ContinuousOn (fun p : IdeleGroup F × G1 F => w1 W f.1 φ 1 (mD p.1 * p.2)) (Set.univ ×ˢ KK F) ∧
     ∀ g g', row g = row g' → w1 W f.1 φ 1 g = w1 W f.1 φ 1 g' := by
   intro F E _ _ _ _ _ _ _ D W M π f hf φ hφ

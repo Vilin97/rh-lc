@@ -17,7 +17,7 @@ open NumberField Formalism.L2.Host GlobalTheory.CuspRep GlobalTheory.ContraPair
 
 namespace GlobalTheory.CsdBack
 
-theorem invTOp_involutive {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} :
+theorem invTOp_involutive {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ} :
     Function.Involutive (invTOp : Op E a → Op E a) := by
   intro o
   cases o with

@@ -26,7 +26,7 @@ private theorem det_pull {L : Type} [Field L] [NumberField L] {N : ℕ} (h : HS 
     rw [mul_right_comm, Complex.star_def, Complex.conj_mul']; push_cast; rfl
   rw [this, Complex.re_ofReal_mul]
 
-private theorem prod_sq {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] (x : 𝓞 L) :
+private theorem prod_sq {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (x : 𝓞 L) :
     ∏ w : InfinitePlace L, (w (x : L)) ^ 2 = ((Algebra.norm ℤ x).natAbs : ℝ) := by
   have h1 := InfinitePlace.prod_eq_abs_norm (x : L)
   have h2 : ∀ w : InfinitePlace L, w.mult = 2 := fun w =>
@@ -37,7 +37,7 @@ private theorem prod_sq {L : Type} [Field L] [NumberField L] [IsTotallyComplex L
   rfl
 
 theorem UpperTheory.V.KT.nrmle :
-    ∀ (L : Type) [Field L] [NumberField L] [IsTotallyComplex L] (N : ℕ) (h : HS L N) (A : Matrix (Fin N) (Fin N) (𝓞 L)),
+    ∀ (L : Type) [Field L] [NumberField L] [_root_.NumberField.IsTotallyComplex L] (N : ℕ) (h : HS L N) (A : Matrix (Fin N) (Fin N) (𝓞 L)),
     h ∈ Ry L N → ColsMin A h → A.det ≠ 0 →
     nrmDet A ≤ I0 L N ∧ ∀ w, (mat (pull A h) w).PosSemidef ∧ (∀ a, (mat (pull A h) w a a).re ≤ 1) ∧
       1 ≤ (I0 L N : ℝ) * ‖(mat (pull A h) w).det‖ := by

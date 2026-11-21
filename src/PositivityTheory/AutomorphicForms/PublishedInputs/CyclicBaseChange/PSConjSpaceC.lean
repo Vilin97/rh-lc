@@ -13,7 +13,7 @@ open NumberField IsDedekindDomain Topology Matrix Neutral.B1 Formalism.L2.Host G
 
 namespace UpperTheory.CBC.SConjSpaceCAux
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 
 open Classical in
@@ -195,7 +195,7 @@ theorem conjFin_symm_conjFin (c : E ≃+* E) (x : Af E) : conjFin c.symm (conjFi
     exact h1.symm
   · rw [Function.comp_apply, (conjLoc_spec _ _).2.1, (conjLoc_spec _ _).2.1, RingEquiv.symm_apply_apply]
 
-structure GD (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] where
+structure GD (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] where
   σ : E ≃+* E
   s : Ad E ≃+* Ad E
   c : Af E ≃+* Af E

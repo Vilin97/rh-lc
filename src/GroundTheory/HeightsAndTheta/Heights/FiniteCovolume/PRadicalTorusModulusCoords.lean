@@ -45,7 +45,7 @@ theorem heisS_conj_smul (α : ℂ) (y : ι → ℂ) (t : ℝ) :
 end Mat
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
-  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [IsTotallyComplex E]
+  [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 variable {h : HermitianForm F E W} {v : Basis ι E W} {x₀ w₀ : W}
 

@@ -106,7 +106,7 @@ private theorem w_conj {K : Type} [Field K] [NumberField K] {v : P K} (ϖ : (Kv 
     ring
 
 theorem UpperTheory.ConvolutionTheory.R2.H.eigenvalue_sum_mul_thetaConstantTerm_eq_zero_of_anisotropic :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (v : P F), Gd D.δ v → Aniso D.δ v →
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2) (v : P F), Gd D.δ v → Aniso D.δ v →
       ∀ f ∈ π.V, ∀ φ ∈ Fock D.δ, ∀ (h : GL (Fin 2) (A E)) (α β : ℂˣ), EigAt v {α, β} f.1 → KAt v (dM (nu F h)) →
       (∀ g, At v g → IntAt v g → W.Om g (W.L h φ) = W.L h φ) → ((α : ℂ) + β) * T0 W M f.1 φ h = 0 := by
   intro F E _ _ _ _ _ _ _ D W M π v hG hA f hf φ hφ h α β hE hK hL

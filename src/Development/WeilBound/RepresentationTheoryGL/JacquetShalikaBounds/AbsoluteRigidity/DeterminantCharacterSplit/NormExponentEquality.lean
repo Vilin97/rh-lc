@@ -13,9 +13,9 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.UnitaryH
 
 namespace PositivityTheory.RgJS.NormExponentLemmas
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem cpow_val (s : ℂ) (x) :
     (((cpowChar E s).1 x : ℂˣ) : ℂ) = Complex.exp (s * Real.log (ideleNorm (E := E) x)) := rfl
 

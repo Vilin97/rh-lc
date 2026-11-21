@@ -18,7 +18,7 @@ open Matrix NumberField in
 open scoped TensorProduct Classical in
 variable {p : ℕ} [Fact p.Prime] in
 private theorem mem_span_infinitePlace_embedding (K : Type) [Field K] [NumberField K]
-    [IsTotallyComplex K] (w : InfinitePlace K → ℂ) :
+    [_root_.NumberField.IsTotallyComplex K] (w : InfinitePlace K → ℂ) :
     w ∈ Submodule.span ℝ (Set.range fun (f : K) (u : InfinitePlace K) => u.embedding f) := by
   have hc : ∀ u : InfinitePlace K, u.IsComplex := fun u => IsTotallyComplex.isComplex u
   let P : mixedEmbedding.mixedSpace K →ₗ[ℝ] (InfinitePlace K → ℂ) :=

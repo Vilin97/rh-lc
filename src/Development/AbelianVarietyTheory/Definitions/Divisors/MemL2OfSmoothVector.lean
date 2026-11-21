@@ -19,7 +19,7 @@ variable {Γ K : Type*} [Group Γ] [NormedAddCommGroup K] [InnerProductSpace ℂ
 
 end Abstract
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 def word (l : List (Lie E a)) : Module.End ℂ (Sm E a) := (l.map (lie E a)).prod
 

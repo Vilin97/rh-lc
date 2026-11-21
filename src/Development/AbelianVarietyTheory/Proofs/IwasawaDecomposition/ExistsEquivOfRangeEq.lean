@@ -58,7 +58,7 @@ theorem majAt_expand {V ι : Type} [AddCommGroup V] [Module K V] [Fintype ι] [D
     Complex.add_im, Complex.mul_im, Complex.conj_re, Complex.conj_im]
   ring
 
-theorem majAt_eq_of_normAt [IsTotallyComplex K] {V ι W κ : Type} [AddCommGroup V] [Module K V] [Fintype ι] [DecidableEq ι]
+theorem majAt_eq_of_normAt [_root_.NumberField.IsTotallyComplex K] {V ι W κ : Type} [AddCommGroup V] [Module K V] [Fintype ι] [DecidableEq ι]
     [AddCommGroup W] [Module K W] [Fintype κ] [DecidableEq κ] (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (b' : Basis κ K W) (X' : InfinitePlace K → Matrix κ κ ℂ) (v : InfinitePlace K) (e : V →ₗ[K] W)
     (h : ∀ x, Formalism.HermitianLatticesTheory.normAt b' X' v (e x) ^ 2 = Formalism.HermitianLatticesTheory.normAt b X v x ^ 2) (x y : V) :

@@ -37,7 +37,7 @@ theorem equiv_of_gen {D M : Submodule (𝓞 K) V} {w : V} (hw : w ∈ D) (J : Id
     exact Submodule.Quotient.mk_eq_zero _
   exact ⟨(φ.quotKerEquivOfSurjective hs).symm.trans (Submodule.quotEquivOfEq _ _ hk)⟩
 
-theorem perp_prim (H : HermSpace K V) [IsTotallyComplex K] {M : Submodule (𝓞 K) V} {S I W : Submodule K V}
+theorem perp_prim (H : HermSpace K V) [_root_.NumberField.IsTotallyComplex K] {M : Submodule (𝓞 K) V} {S I W : Submodule K V}
     (hIS : I ≤ S) (hrad : ∀ x ∈ S, (∀ y ∈ S, H.B x y = 0) ↔ x ∈ I) (hM : IsUnimodMod H M S I)
     {z : V} {T : ℕ} (hT : 1 ≤ T) (hz : H.B z z = -(T : K))
     (hp : ∀ t : K, t • z ∈ M ↔ t ∈ (1 : Submodule (𝓞 K) K))

@@ -164,7 +164,7 @@ theorem exists_mat {κ ι : Type} [Fintype κ] [DecidableEq κ] [Fintype ι]
 
 section Main
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
   [Fintype ι] [DecidableEq ι]
 

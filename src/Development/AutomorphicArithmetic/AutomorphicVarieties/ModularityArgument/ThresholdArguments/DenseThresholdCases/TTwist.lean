@@ -51,7 +51,7 @@ private theorem continuous_cyc (l : ℕ) [Fact l.Prime] :
     ((Units.continuous_val (M := ℤ_[l])).comp (continuous_cycZ ℚ Ω l))
 variable (K : Type) [Field K] [NumberField K] [Algebra K Ω]
 omit [IsAlgClosure ℚ Ω] in
-private theorem cc_notMem [IsTotallyComplex K] {c : G ℚ Ω} (hc : Sd.IsCC c) : c ∉ galOf ℚ K Ω := by
+private theorem cc_notMem [_root_.NumberField.IsTotallyComplex K] {c : G ℚ Ω} (hc : Sd.IsCC c) : c ∉ galOf ℚ K Ω := by
   obtain ⟨j, hj⟩ := hc
   intro h
   refine IsTotallyComplex.complexEmbedding_not_isReal (j.comp (algebraMap K Ω)) ?_

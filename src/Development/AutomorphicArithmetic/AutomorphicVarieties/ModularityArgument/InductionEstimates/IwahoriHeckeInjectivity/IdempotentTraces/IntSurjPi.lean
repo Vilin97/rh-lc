@@ -136,7 +136,7 @@ private theorem int_surj_pi {A K : Type} [Group A] [TopologicalSpace A] [IsTopol
 
 section Tens
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [_root_.NumberField.IsTotallyComplex F]
   {σ : E ≃ₐ[F] E} (D : InfD σ 1) {n : ℕ}
 
 private theorem tens_ec {κF : Measure (archCompact F n)} {eF : archCompact F n → ℂ} {κ : Measure (archCompact E n)}

@@ -82,7 +82,7 @@ end Sum
 
 section Weyl
 
-variable (K : Type) [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
+variable (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
 
 theorem brp_span_lattice {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] {j : ℕ}
     (e : Fin j → V) (hsp : Submodule.span K (Set.range e) = ⊤) :

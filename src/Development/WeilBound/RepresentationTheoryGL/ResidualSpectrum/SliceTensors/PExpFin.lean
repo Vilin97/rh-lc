@@ -15,9 +15,9 @@ namespace PositivityTheory.Rg.Rs
 
 namespace PExpFin
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
-omit [NumberField E] [IsTotallyComplex E] in
+omit [NumberField E] [_root_.NumberField.IsTotallyComplex E] in
 theorem aInf_add (r : ℕ) (s t : ℝ) : aInf E N r (s + t) = aInf E N r s * aInf E N r t := by
   apply Units.ext
   change Matrix.diagonal _ = Matrix.diagonal _ * Matrix.diagonal _

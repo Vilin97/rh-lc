@@ -75,7 +75,7 @@ end Compare
 section Ideal
 
 variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ K = 2)
-  [IsTotallyComplex K]
+  [_root_.NumberField.IsTotallyComplex K]
 
 variable {E₁ E₂ : WeierstrassCurve ℂ} [E₁.IsElliptic] [E₂.IsElliptic]
 

@@ -79,7 +79,7 @@ private theorem exists_sch {F : Type} [Field F] [NumberField F] [IsTotallyReal F
   rfl
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.gaussMem :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E), ∀ g ∈ finiteSchwartzBruhatPi F (ι := Fin 4), (fun v => gauss D.δ v * g (finPartPi v)) ∈ schwartzBruhatPi (K := F) (ι := Fin 4) := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E), ∀ g ∈ finiteSchwartzBruhatPi F (ι := Fin 4), (fun v => gauss D.δ v * g (finPartPi v)) ∈ schwartzBruhatPi (K := F) (ι := Fin 4) := by
   intro F E _ _ _ _ _ _ _ D g hg
   obtain ⟨f, hf⟩ := exists_sch D.δ D.neg
   have h : (fun v => gauss D.δ v * g (finPartPi v)) = schwartzBruhatTensorPi f g := by

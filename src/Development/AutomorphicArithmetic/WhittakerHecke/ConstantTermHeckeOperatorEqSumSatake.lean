@@ -16,7 +16,7 @@ open MeasureTheory NumberField IsDedekindDomain GlobalTheory.CuspRep GlobalTheor
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace UpperTheory.ConvolutionTheory.BW
 
 theorem UpperTheory.constantTerm_heckeOperator_eq_sum_satake :
-    ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (w : Pl E) (ϖ : w.adicCompletion E) (hϖ : ϖ ∈ Ov E w) (hu : IsUnifV E w ϖ)
+    ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (r s : ℕ) (w : Pl E) (ϖ : w.adicCompletion E) (hϖ : ϖ ∈ Ov E w) (hu : IsUnifV E w ϖ)
       [Fintype (satakeRes (Ov E w) ⟨ϖ, hϖ⟩)] (j : ℕ), j ≤ r + s → ∀ φ : Sm E (r + s), Umg φ → (∀ k ∈ KGL w (n := (r + s)), rw (r + s) w k φ = φ) → ∀ (x : GA E r) (m : GA E s),
       AutomorphicForm.constantTerm r (heckeVec (rw (r + s) w) (KGL w (n := (r + s))) (Tj ℂ (r + s) (Ov E w) ϖ j) φ).1 (lev (Ad E) r s (x, m)) =
         ∑ p : Fin (r + 1) × Fin (s + 1), UpperTheory.V.Cj.S.coef (qV E w) r s j p *

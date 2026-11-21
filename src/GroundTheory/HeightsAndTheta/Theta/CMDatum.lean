@@ -14,7 +14,7 @@ open NumberField GroundTheory.Automorphic
 section Datum
 
 variable (F E : Type*) [Field F] [NumberField F] [IsTotallyReal F] [Field E] [NumberField E]
-  [IsTotallyComplex E] [Algebra F E] [Algebra.IsQuadraticExtension F E]
+  [_root_.NumberField.IsTotallyComplex E] [Algebra F E] [Algebra.IsQuadraticExtension F E]
 
 
 include F in

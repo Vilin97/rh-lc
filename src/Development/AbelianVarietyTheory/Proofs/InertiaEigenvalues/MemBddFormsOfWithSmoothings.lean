@@ -16,7 +16,7 @@ noncomputable section
 
 namespace GlobalTheory.Petersson
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
 
 variable (E a) in
@@ -227,13 +227,13 @@ theorem pet_smoothing_left (hω : ω.IsUnitary) (hα : IsTest (invSet E a) α) (
   simp only [(pet_eq_setIntegral hω (chart_mem_bddForms h x) h' hD).2, ← integral_const_mul, mul_assoc]
 
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 def invL (x : Lie E a) : Lie E a := toL (Matrix.of x)⁻¹
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem invL_val (u : GL (Fin a) (Cinf E)) : invL (toL u.val) = toL (u⁻¹).val := (Matrix.coe_units_inv u).symm
 
-omit [IsTotallyComplex E] in
+omit [_root_.NumberField.IsTotallyComplex E] in
 theorem contDiffAt_invL {x : Lie E a} (h : x ∈ invSet E a) : ContDiffAt ℝ (⊤ : ℕ∞) invL x := by
   letI : NormedRing (Matrix (Fin a) (Fin a) (Cinf E)) := Matrix.linftyOpNormedRing
   letI : NormedAlgebra ℝ (Matrix (Fin a) (Fin a) (Cinf E)) := Matrix.linftyOpNormedAlgebra

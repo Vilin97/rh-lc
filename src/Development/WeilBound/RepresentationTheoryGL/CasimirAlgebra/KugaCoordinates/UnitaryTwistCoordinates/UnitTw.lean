@@ -20,7 +20,7 @@ open NumberField GlobalTheory.CuspRep GlobalTheory.CuspRep.CuspidalL2GL GlobalTh
 
 namespace PositivityTheory.Rg.Cz.J
 
-theorem conj_sum_coord {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (z : Cinf E) :
+theorem conj_sum_coord {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (z : Cinf E) :
     starRingEnd ℂ (∑ τ : E →+* ℂ, coord τ z) = ∑ τ : E →+* ℂ, coord τ z := by
   have h1 := GlobalTheory.CompanionTheory.HeckeAlg.dchi_eq_sum (Model.absC E 1) z
   have h2 := GlobalTheory.GKCoh.Tests.dchi_absC (E := E) 1 z

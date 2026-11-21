@@ -117,7 +117,7 @@ theorem modular_eq_one {k S : Type} [Field k] [Infinite k] [CommRing S] [Topolog
   rw [MonoidHom.comp_apply, MonoidHom.comp_apply, h]
   exact GlobalTheory.LevelUnimod.modular_aut _ (continuous_transInv _ n) (continuous_transInv _ n) _
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {N : ℕ}
 
 theorem countable_latticeGL : Countable (latticeGL E N) := by
   haveI : Countable E := (Module.finBasis ℚ E).equivFun.injective.countable
@@ -146,7 +146,7 @@ theorem left_latticeGL {φ : Sm E N} (h : IsAutForm φ) (h' : IsSqInt φ.1) :
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-theorem isUnitarisable_of_isLocCompGL : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ)
+theorem isUnitarisable_of_isLocCompGL : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (N : ℕ)
     (V : Submodule ℂ (Sm E N)), IsDiscrete V → ∀ (w : HeightOneSpectrum (𝓞 E)) (σ : LocIrr w N),
     IsLocCompGL V w σ → IsUnitarisable σ.ρ := by
   intro E _ _ _ N V hV w σ ⟨f, h0, hf, hρ⟩

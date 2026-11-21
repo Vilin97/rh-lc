@@ -61,7 +61,7 @@ end Places
 
 section One
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
+variable {K : Type} [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K]
 
 private theorem win_one (hO : ImaginaryQuadraticEtaCharacter.WinOf) (π : CuspSub K 1) : ∃ t : ℝ, ∀ v, WinAt π t v := by
   obtain ⟨t, ht⟩ := hO K 1 le_rfl π

@@ -26,7 +26,7 @@ theorem obo_det {R : Type} [CommRing R] (g : GL (Fin 1) R) : obo R (GeneralLinea
 theorem obo_apply {R : Type} [CommRing R] (u : Rˣ) (i j : Fin 1) : (obo R u).val i j = u := by
   simp [obo, Subsingleton.elim i 0, Subsingleton.elim j 0]
 
-variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
+variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
 
 theorem lie_rt (X : Lie E 1) (h : GA E 1) : Commute (rt E 1 h) (lie E 1 X) :=
   LinearMap.ext fun φ => Subtype.ext <| funext fun g => by
@@ -317,7 +317,7 @@ theorem exists_eq_twist (π : CuspSub E 1) : ∃ χ : HChar E, (CuspSub.triv E l
       rw [obo_det, mul_one, mul_comm, ← h1, one_mul]⟩
   exact ⟨χ, CuspSub.ext ((((CuspSub.triv E le_rfl).twist χ).irred _ hle π.stable).resolve_left π.ne_bot).symm⟩
 
-theorem ofChar_bijective : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E],
+theorem ofChar_bijective : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E],
     Function.Bijective (CG.ofChar : HChar E → CG E 1) := by
   intro E _ _ _
   refine ⟨CG.ofChar_injective, fun σ => ?_⟩
