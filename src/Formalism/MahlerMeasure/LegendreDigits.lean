@@ -1,5 +1,5 @@
 import Formalism.MahlerMeasure.MahlerMeasureProofs.DeterminantBlockLeadingTerm
-import Formalism.MahlerMeasure.MahlerMeasureProofs.TrueRing
+import Formalism.MahlerMeasure.Statement
 import Formalism.MahlerMeasure.MahlerMeasureProofs.Mahler
 import Mathlib
 

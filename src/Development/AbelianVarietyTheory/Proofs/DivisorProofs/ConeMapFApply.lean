@@ -57,9 +57,6 @@ def coneMap {U V : T} (g : U ⟶ V) : coneObj φ U ⟶ coneObj φ V :=
       · simp [comm_apply]
       · simp [comm_apply, nat_apply])
 
-@[simp] lemma coneMap_f_apply {U V : T} (g : U ⟶ V) (n : ℤ) (x : (coneObj φ U).X n) :
-    (coneMap φ g).f n x = ((C.map g).f (n + 1) x.1, (D.map g).f n x.2) := rfl
-
 def cone : T ⥤ AbCx where
   obj := coneObj φ
   map := coneMap φ

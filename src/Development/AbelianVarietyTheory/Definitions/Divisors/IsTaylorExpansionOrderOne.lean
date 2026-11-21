@@ -74,18 +74,6 @@ def perClD (q : Λ →+ R) : CatCoh.H1 (K.OD η M) := H1.mk _ (K.perZD η M q)
 
 variable (K η M) in
 
-def forgetD : CoefMap η K.Oc (K.OD η M) where
-  G := { obj S := S.T, map f := f.1 }
-  α S := RingHom.id S.T.C
-  naturality _ _ := rfl
-  smul S r b := by
-    change r • (b : S.T.C) = η r • (b : S.T.C)
-    rw [Algebra.smul_def, Algebra.smul_def, S.compat]
-
-theorem forgetD_perCl (per : Λ →+ Hol F.V) :
-    (K.forgetD η M).pull1 (K.perCl per) = K.perClD η M (η.toAddMonoidHom.comp per) :=
-  congrArg (H1.mk _) (Subtype.ext (funext fun _ ↦ funext fun S' ↦ funext fun f ↦ S'.compat (per f.1.deg)))
-
 end Charts
 
 section Theta
@@ -183,75 +171,11 @@ theorem Charts.dualD_J_ne_bot (K : Charts F) (k : K.K) (v : I → ℂ) (p : Tot 
   have h' : (DualNumber.eps : DualNumber ℂ) = 0 := Ideal.span_singleton_eq_bot.1 h
   simpa using congrArg TrivSqZeroExt.snd h'
 
-theorem isOver_dual (v z : I → ℂ) (hz : z ∈ F.V) {X : Scheme.{0}} (s : X ⟶ Sp ℂ) :
-    IsOver (F := F) (jetAt v z hz) (Ideal.span {DualNumber.eps}) s (algebraMap ℂ (Hol F.V))
-      (Ideal.span {DualNumber.eps}) (s ≫ spMap (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom)
-      (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom (RingHom.id (DualNumber ℂ)) where
-  w := rfl
-  mem _ h := h
-  red d := by
-    refine Ideal.mem_span_singleton'.2 ⟨TrivSqZeroExt.inl d.snd, ?_⟩
-    refine TrivSqZeroExt.ext ?_ ?_ <;> simp [jetAt]
-
 def Charts.Obj.toD {K : Charts F} (T : K.Obj) : K.DObj (RingHom.id _) ⊥ where
   T := T
   alg := T.alg
   compat _ := rfl
   mem d h := by rw [Ideal.mem_bot.1 h, map_zero]; exact T.J.zero_mem
-
-example : ∃ (S S' : ellFam.allCharts.DObj (RingHom.id _) ⊥) (f : S ⟶ S'), S'.T.J ≠ ⊥ ∧ f.1.deg = (0, 1) :=
-  ⟨Charts.Obj.toD _, Charts.Obj.toD _, ⟨ellFam.transl (0, 1) ≫
-      ellFam.allCharts.tangentHom ellFam.totChart 0 (fun _ ↦ Complex.I, 0) ellFam_nontrivial.1,
-        fun d ↦ AlgHom.commutes _ d⟩,
-    Charts.dualAt_J_ne_bot _ _ _ _, add_zero _⟩
-
-example : ∃ (η : Hol ellFam.V →+* DualNumber ℂ) (S : ellFam.allCharts.DObj η (Ideal.span {DualNumber.eps})),
-    S.T.J ≠ ⊥ :=
-  ⟨_, ellFam.allCharts.dualD ellFam.totChart (fun _ ↦ 1) (fun _ ↦ Complex.I, 0) ellFam_nontrivial.1,
-    Charts.dualD_J_ne_bot _ _ _ _ _⟩
-
-def resFib {W : Opens (Tot I g)} {W₀ : Opens (Tot Empty g)} (hW : ∀ p ∈ W₀, ((0 : I → ℂ), p.2) ∈ W) :
-    Hol W →ₐ[ℂ] Hol W₀ :=
-  Hol.comap (fun p ↦ (0, p.2)) (fun _ _ ↦ analyticAt_const.prod analyticAt_snd) hW
-
-def tay1 {W : Opens (Tot I g)} {W₀ : Opens (Tot Empty g)} (hW : ∀ p ∈ W₀, ((0 : I → ℂ), p.2) ∈ W) (v : I → ℂ) :
-    Hol W →+* DualNumber ℂ ⊗[ℂ] Hol W₀ where
-  toFun h := 1 ⊗ₜ resFib hW h + DualNumber.eps ⊗ₜ resFib hW (Hol.der (v, 0) h)
-  map_one' := by simp [Algebra.TensorProduct.one_def]
-  map_mul' x y := by
-    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, tmul_add, add_mul, mul_add,
-      Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one, DualNumber.eps_mul_eps, zero_tmul, add_zero]
-    rw [mul_comm (resFib hW y)]; abel
-  map_zero' := by simp
-  map_add' x y := by simp only [map_add (f := _), tmul_add]; abel
-
-theorem isTaylorExpansion_orderOne [DecidableEq I] {W : Opens (Tot I g)} {W₀ : Opens (Tot Empty g)}
-    (hW : ∀ p ∈ W₀, ((0 : I → ℂ), p.2) ∈ W) (v : I → ℂ) :
-    IsTay 1 (fun i ↦ v i • (DualNumber.eps : DualNumber ℂ)) (tay1 hW v) := by
-  intro h p hp
-  have hd : HasFDerivAt (fun z : I → ℂ ↦ h.fn (z, p.2))
-      ((fderiv ℂ h.fn (0, p.2)).comp (ContinuousLinearMap.inl ℂ _ _)) 0 :=
-    HasFDerivAt.comp (𝕜 := ℂ) (g := h.fn) (f := fun z : I → ℂ ↦ ((z, p.2) : Tot I g)) (0 : I → ℂ)
-      (h.analytic _ (hW p hp)).differentiableAt.hasFDerivAt (hasFDerivAt_prodMk_left (𝕜 := ℂ) (0 : I → ℂ) p.2)
-  have e1 : Hol.ev p hp (resFib hW h) = h.fn (0, p.2) := by rw [Hol.ev_apply]; exact Hol.fn_comap _ _ _ _ hp
-  have e2 : Hol.ev p hp (resFib hW (Hol.der (v, 0) h)) =
-      ∑ i, v i * fderiv ℂ h.fn (0, p.2) (Pi.single i 1, 0) := by
-    rw [Hol.ev_apply]
-    refine (Hol.fn_comap _ _ _ _ hp).trans ((Hol.fn_der _ _ (hW p hp)).trans ?_)
-    have : ((v, 0) : Tot I g) = ∑ i, v i • ((Pi.single i 1, 0) : Tot I g) := by
-      ext j <;> simp [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
-    set_option synthInstance.maxHeartbeats 100000 in
-      rw [this, map_sum]; simp only [map_smul, smul_eq_mul]
-  change evT _ p hp (_ + _) = _
-  rw [map_add (f := _), Algebra.TensorProduct.lift_tmul, Algebra.TensorProduct.lift_tmul, AlgHom.comp_apply,
-    AlgHom.comp_apply, e1, e2]
-  unfold GlobalTheory.PeriodFamily.taylor
-  rw [Finset.sum_range_succ, Finset.sum_range_one]
-  congr 1
-  · simp [Algebra.ofId_apply, Algebra.algebraMap_eq_smul_one]
-  · rw [← (Equiv.funUnique (Fin 1) I).symm.sum_comp]
-    simp [iteratedFDeriv_one_apply, hd.fderiv, Algebra.ofId_apply, Algebra.algebraMap_eq_smul_one, Finset.sum_smul,
-      smul_smul, mul_comm, Finset.mul_sum]
 
 end Inhabitants
 

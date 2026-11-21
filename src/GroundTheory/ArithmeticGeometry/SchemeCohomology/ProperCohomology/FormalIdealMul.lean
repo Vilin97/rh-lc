@@ -32,7 +32,6 @@ def idealPowOfMem {k : ℕ} (a : A) (ha : a ∈ I ^ k) : F ⟶ idealPow I F k :=
     obtain ⟨h, hh⟩ := exists_smulHom_eq_comp_idealSumMap F (I ^ k) ha
     rw [hh, Category.assoc, cokernel.condition, comp_zero])
 
-@[reassoc (attr := simp)]
 lemma idealPowOfMem_ι {k : ℕ} (a : A) (ha : a ∈ I ^ k) :
     idealPowOfMem I F a ha ≫ idealPowι I F k = smulHom F (algebraMap A Γ(X, ⊤) a) :=
   kernel.lift_ι _ _ _

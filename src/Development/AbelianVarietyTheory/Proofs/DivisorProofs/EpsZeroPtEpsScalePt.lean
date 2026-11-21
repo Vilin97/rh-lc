@@ -19,8 +19,6 @@ def epsZeroPt : Over.mk x ⟶ epsPtR x :=
     rw [← Spec.map_id]
     congr 1)
 
-@[simp] lemma epsZeroPt_left : (epsZeroPt x).left = spMap (TrivSqZeroExt.fstHom k k k).toRingHom := rfl
-
 @[reassoc]
 lemma epsZeroPt_epsScalePt (c : k) : epsZeroPt x ≫ epsScalePt x c = epsZeroPt x := by
   ext1
@@ -61,15 +59,9 @@ def Tan.hom (v : Tan x G) : epsPtR x ⟶ G := (Additive.toMul v : tanSub x G).1
 
 def Tan.mk (w : epsPtR x ⟶ G) (hw : w ∈ tanSub x G) : Tan x G := Additive.ofMul ⟨w, hw⟩
 
-@[simp] lemma Tan.hom_mk (w : epsPtR x ⟶ G) (hw : w ∈ tanSub x G) : (Tan.mk w hw).hom = w := rfl
-
 lemma Tan.hom_mem (v : Tan x G) : v.hom ∈ tanSub x G := (Additive.toMul v : tanSub x G).2
 
-@[ext] lemma Tan.ext {v w : Tan x G} (h : v.hom = w.hom) : v = w :=
   Additive.toMul.injective (Subtype.ext h)
-
-@[simp] lemma Tan.hom_zero : (0 : Tan x G).hom = 1 := rfl
-@[simp] lemma Tan.hom_add (v w : Tan x G) : (v + w).hom = v.hom * w.hom := rfl
 
 def Tan.homAdd : Tan x G →+ Additive (epsPtR x ⟶ G) := (tanSub x G).subtype.toAdditive
 
@@ -101,8 +93,6 @@ def Tan.map (f : G ⟶ G) [IsMonHom f] : Tan x G →ₗ[k] Tan x G where
   map_add' v w := Tan.ext (mul_comp _ _ _)
   map_smul' c v := Tan.ext (Category.assoc _ _ _)
 
-@[simp] lemma Tan.hom_map (f : G ⟶ G) [IsMonHom f] (v : Tan x G) : (Tan.map f v).hom = v.hom ≫ f := rfl
-
 def actEnd {O : Type} [Ring O] (a : OActN O G) : O →+* Module.End k (Tan x G) where
   toFun b := haveI := a.hom b; Tan.map (a.act b)
   map_one' := by
@@ -122,8 +112,5 @@ def actEnd {O : Type} [Ring O] (a : OActN O G) : O →+* Module.End k (Tan x G) 
   map_add' b c := by
     ext v
     simp [a.add, comp_mul]
-
-@[simp] lemma actEnd_hom {O : Type} [Ring O] (a : OActN O G) (b : O) (v : Tan x G) :
-    (actEnd a b v).hom = v.hom ≫ a.act b := rfl
 
 end GlobalTheory.TanPtMod

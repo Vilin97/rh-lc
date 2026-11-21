@@ -36,8 +36,6 @@ def cthL (v : σ) (n : ℕ) : MvPolynomial σ K →ₗ[K] MvPolynomial σ K wher
   map_add' := cth_add v n
   map_smul' := cth_smul v n
 
-@[simp] theorem cthL_apply (v : σ) (n : ℕ) (F : MvPolynomial σ K) : cthL v n F = cth v n F := rfl
-
 theorem cth_monomial (v : σ) (n : ℕ) (e : σ →₀ ℕ) (c : K) :
     cth v n (monomial e c) = monomial e (c * (((e v).choose n : ℕ) : K)) := by
   classical

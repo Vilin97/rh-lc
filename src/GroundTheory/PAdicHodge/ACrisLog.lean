@@ -118,13 +118,6 @@ section Log
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-local notation "𝒪" => normInteger K
-local notation "𝒪♭" => PreTilt (normInteger K) p
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-local notation "φ" => WittVector.frobeniusEquiv p (PreTilt (normInteger K) p)
-local notation "𝔭" => Ideal.span {(p : ACris K p)}
-
 omit [IsPerfectoidField K p] in
 
 theorem pow_dvd_factorial {k n : ℕ} (h : p * k ≤ n) : p ^ k ∣ n.factorial :=
@@ -226,12 +219,6 @@ section Divisibility
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
-
-local notation "𝒪♭" => PreTilt (normInteger K) p
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-local notation "φ" => WittVector.frobeniusEquiv p (PreTilt (normInteger K) p)
-local notation "𝔭" => Ideal.span {(p : ACris K p)}
 
 theorem xi_sub_pow_mem (ε : 𝒪♭) :
     AInf.xi (K := K) ε - ((φ).symm (AInf.mu ε)) ^ (p - 1) ∈ Ideal.span {(p : AInf K p)} := by

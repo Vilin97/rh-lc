@@ -1,7 +1,10 @@
 import Mathlib
 import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.RealCubicMeans.LogMeanShares.LogMeanStatements.HSClaim
 import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.OnbMat
-import Development.AutomorphicSpectrum.Statements.MetricStatements.RankBound
+import Formalism.MeanHeightDescent.CombinedAverageDegreeBound
+import Formalism.MonomialMeanResidues.FilteredDegree
+import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.GROWCountStatement
+import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Statements
 
 open GlobalTheory.CompanionTheory.Ar.HS NumberField MeasureTheory Matrix GroundTheory.Heights₂.Heights
 

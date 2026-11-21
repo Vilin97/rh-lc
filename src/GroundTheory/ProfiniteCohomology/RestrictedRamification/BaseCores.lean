@@ -129,8 +129,6 @@ section GS
 
 open IsDedekindDomain NumberField GroundTheory.Global
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 theorem surjective_gs_compactCores_three (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1)))
     (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
     {n : ℕ} (hn : n ≠ 0) (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((n : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)

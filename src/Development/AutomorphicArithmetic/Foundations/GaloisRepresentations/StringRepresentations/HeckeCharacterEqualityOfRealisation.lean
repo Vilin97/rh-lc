@@ -24,14 +24,6 @@ def IsStringRepN (D : D7) (i : D.nd.Loc) (p : Part D.naut.CG)
 theorem strN' {D : D7} {i : D.nd.Loc} {p : Part D.naut.CG} {R : G D.host.E D.nd.Om →* GL (Fin p.a) (Qbar (D.nd.l i))}
     (h : IsStringRepN D i p R) : IsStringRepN D i p R := h
 
-def HeckeCharacterEqualityOfRealisation : Prop :=
-  ∀ D : D7, Formalism.MainNotions.SumRepresentations.admitted D → ∀ (i : D.nd.Loc) (χ χ' : D.naut.CG 1) (s : ℝ)
-    (ρ : G D.host.E D.nd.Om →* GL (Fin 1) (Qbar (D.nd.l i))),
-    (∀ w, w ∉ placesOver D.host.E (D.nd.l i) →
-      RelW D.nd D.naut (D.naut.wdOf i ρ w) (D.naut.lpTw (D.naut.locG χ w) s)) →
-    (∀ w, w ∉ placesOver D.host.E (D.nd.l i) → D.naut.wdOf i ρ w = D.naut.lpTw (D.naut.locG χ' w) s) →
-    χ = χ'
-
 theorem unr_part {R : Ranks} {H : Host R} {what₂ : Rows.Data R} {N : NData R H what₂} {A : NAut N} {w : PlE H} :
     ∀ L : List (Part A.CG), A.unr (isoLoc N A L w) → ∀ p ∈ L, 1 ≤ p.d → A.unr (A.locG p.π w)
   | [], _, _, hp, _ => absurd hp List.not_mem_nil

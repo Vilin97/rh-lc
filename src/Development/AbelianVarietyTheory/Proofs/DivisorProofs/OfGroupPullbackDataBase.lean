@@ -141,15 +141,4 @@ def Pt.ofData {Z : Scheme.{0}} (t : Z ⟶ S) (A' B' : Over Z) [GrpObj A'] [GrpOb
   ⟨t, hA.1.isoPullback.inv ≫ Φ.left ≫ φB, A', B', inferInstance, inferInstance, φA, φB, Φ, hA, hB, hΦ, hI,
     hA.1.isoPullback.hom, by simp, by simp, by simp⟩
 
-@[simp] theorem Pt.ofGroupPullbackData_base {Z : Scheme.{0}} (t : Z ⟶ S) (A' B' : Over Z) [GrpObj A'] [GrpObj B']
-    (φA : A'.left ⟶ A.left) (φB : B'.left ⟶ B.left) (Φ : A' ⟶ B') (hA : IsGrpPullback A' A t φA)
-    (hB : IsGrpPullback B' B t φB) (hΦ : IsMonHom Φ) (hI : LBIso (L.pull φA) ((M.pull φB).pull Φ.left)) :
-    (Pt.ofData (L := L) (M := M) t A' B' φA φB Φ hA hB hΦ hI).t = t := rfl
-
-theorem homFun_map (hL : L.IsLB) (hM : M.IsLB) {Z Z' : Scheme.{0}} (g : Z' ⟶ Z) (x : Pt A B L M Z) :
-    (homFun A B L M hL hM).map g.op x = x.map hL hM g := rfl
-
-theorem homProj_app (hL : L.IsLB) (hM : M.IsLB) {Z : Scheme.{0}} (x : Pt A B L M Z) :
-    (homProj A B L M hL hM).app (Opposite.op Z) x = x.t := rfl
-
 end GlobalTheory.EndLoc.HomGlue

@@ -75,9 +75,6 @@ def tensComp (C : Type) [AddCommGroup C] [Module Qp C] :
       set_option synthInstance.maxHeartbeats 100000 in
         rw [← sum_tmul, ← map_sum, Finset.univ_sum_single, E.symm_apply_apply])
 
-@[simp] theorem tensComp_tmul {C : Type} [AddCommGroup C] [Module Qp C] (v : V') (c : C) (i : ι) :
-    tensComp E C (v ⊗ₜ[Qp] c) i = E v i ⊗ₜ[Qp] c := rfl
-
 theorem tensComp_map {C D : Type} [AddCommGroup C] [Module Qp C] [AddCommGroup D] [Module Qp D]
     (φ' : V' →ₗ[LL] V') (φ : ∀ i, V i →ₗ[LL] V i) (h : ∀ x i, E (φ' x) i = φ i (E x i)) (ψ : C →ₗ[Qp] D)
     (x : V' ⊗[Qp] C) (i : ι) :

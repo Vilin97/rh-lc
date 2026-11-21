@@ -1,4 +1,5 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.FrmCase
+import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.NormalisedAdaptedVectorZero
+import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.SelfDualFramesExistOfDiagonal
 
 noncomputable section
 
@@ -24,39 +25,7 @@ def NormalClausesG (Pg : Finset (Pl D.host.E)) (βY : ∀ j, GL (Fin (Yc D j).ra
 
 variable (D) in
 
-def FramesExistG (Pg : Finset (Pl D.host.E)) : Prop :=
-  ∃ (ΛY : ∀ j, Submodule (𝓞 D.host.E) (Fin (Yc D j).rank → D.host.E))
-    (ΛX : Submodule (𝓞 D.host.E) (Fin D.sp.X'.rank → D.host.E))
-    (ΛV : ∀ i, Submodule (𝓞 D.host.E) (Fin (Vc D i).rank → D.host.E))
-    (ΛW : ∀ i, Submodule (𝓞 D.host.E) (Fin (Wc D i).rank → D.host.E))
-    (βY : ∀ j, GL (Fin (Yc D j).rank) (EAf D)) (βX : GL (Fin D.sp.X'.rank) (EAf D))
-    (βV : ∀ i, GL (Fin (Vc D i).rank) (EAf D)) (βW : ∀ i, GL (Fin (Wc D i).rank) (EAf D)),
-    SDFrames ΛY ΛX ΛV ΛW βY βX βV βW ∧ NormalClausesG Pg βY βW
-
-theorem frames_by_cases_stdG (hY : ∀ j, FrmC.StdLat (D.sp.Y j)) (hX : FrmC.StdLat D.sp.X')
-    (hV : ∀ j, FrmC.StdLat (D.sp.V j)) (hW : ∀ j, FrmC.StdLat (D.sp.W j)) (Pg : Finset (Pl D.host.E)) :
-    ∃ (ΛY : ∀ j, Submodule (𝓞 D.host.E) (Fin (Yc D j).rank → D.host.E))
-      (ΛW : ∀ i, Submodule (𝓞 D.host.E) (Fin (Wc D i).rank → D.host.E))
-      (βY : ∀ j, GL (Fin (Yc D j).rank) (EAf D)) (βW : ∀ i, GL (Fin (Wc D i).rank) (EAf D)),
-      SDFrames ΛY (FrmP.coordL D.sp.X') (fun i => FrmP.coordL (Vc D i)) ΛW βY 1 (fun _ => 1) βW ∧
-        (FramesExistG D Pg → NormalClausesG Pg βY βW) := by
-  classical
-  have hXs : IsSDFrame D.sp.X' 1 (FrmP.coordL D.sp.X') 1 := FrmP.isSDFrame_std D.sp.X' hX 1
-  have hVs : ∀ i, IsSDFrame (Vc D i) 1 (FrmP.coordL (Vc D i)) 1 := fun i => FrmP.isSDFrame_std (Vc D i) (hV _) 1
-  by_cases hG : FramesExistG D Pg
-  · obtain ⟨ΛY, ΛX, ΛV, ΛW, βY, βX, βV, βW, ⟨h1, -, -, h4⟩, hN⟩ := hG
-    exact ⟨ΛY, ΛW, βY, βW, ⟨h1, hXs, hVs, h4⟩, fun _ => hN⟩
-  · obtain ⟨ΛY, ΛX, ΛV, ΛW, βY, βX, βV, βW, ⟨h1, -, -, h4⟩⟩ := FrmP.sdFramesExist_of_std hY hX hV hW
-    exact ⟨ΛY, ΛW, βY, βW, ⟨h1, hXs, hVs, h4⟩, fun h => absurd h hG⟩
-
 open Classical in
-
-theorem framesExistG_of_framesExist {T : Type} (t0 : T) {Pg : Finset (Pl D.host.E)}
-    (h : FramesExist D Pg ∅ (fun _ : T => ∅)) : FramesExistG D Pg := by
-  obtain ⟨ΛY, ΛX, ΛV, ΛW, βY, βX, βV, βW, hSD, e, ev, z, κ, s, hN, hW⟩ := h
-  have h0 := hN t0
-  simp only [Finset.union_empty] at h0
-  exact ⟨ΛY, ΛX, ΛV, ΛW, βY, βX, βV, βW, hSD, e, ev, z, κ, s, h0, hW⟩
 
 end Formalism.IndefR.Seed.Frm
 

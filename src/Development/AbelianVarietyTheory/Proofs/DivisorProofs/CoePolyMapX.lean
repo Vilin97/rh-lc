@@ -22,9 +22,6 @@ def polyMap (A : Subalgebra ℂ K) {m : ℕ} (v : Fin m → A) :
     MvPolynomial (Fin m) κ' →+* tens (κ' := κ') A :=
   MvPolynomial.eval₂Hom (rightInc A) fun i => ⟨(v i : K) ⊗ₜ 1, tmul_mem (v i).2 1⟩
 
-@[simp] theorem coe_rightInc (A : Subalgebra ℂ K) (b : κ') :
-    (rightInc A b : K ⊗[ℂ] κ') = 1 ⊗ₜ b := rfl
-
 @[simp] theorem coe_polyMap_X (A : Subalgebra ℂ K) {m : ℕ} (v : Fin m → A) (i : Fin m) :
     (polyMap (κ' := κ') A v (MvPolynomial.X i) : K ⊗[ℂ] κ') = (v i : K) ⊗ₜ 1 := by
   simp [polyMap]

@@ -52,16 +52,6 @@ theorem twiceStandardExample_le :
   rw [h]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨0, rfl⟩)
 
-example : ∃ (T : Type) (_ : Fintype T) (_ : DecidableEq T)
-    (b' : Module.Basis T ℤ (dualLattice HermLattice.twiceStandardExample)),
-    Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b')) ∧
-      Function.Bijective (Matrix.mulVecLin
-        (dualEmbMatrix (F := HermLattice.standard ℚ 1) dualBasisStandard)) ∧
-      HermLattice.twiceStandardExample.lattice ≤ (HermLattice.standard ℚ 1).lattice ∧ 1 ≤ 1 := by
-  obtain ⟨T, hT, hdT, ⟨b'⟩⟩ := DualLatticeBasisExists.proof ℚ 1 HermLattice.twiceStandardExample
-  exact ⟨T, hT, hdT, b', DualEmbBijective.proof ℚ 1 _ T b', dualEmbMatrix_standard_bijective,
-    twiceStandardExample_le, le_rfl⟩
-
 end
 
 end GroundTheory.Heights₂.Heights

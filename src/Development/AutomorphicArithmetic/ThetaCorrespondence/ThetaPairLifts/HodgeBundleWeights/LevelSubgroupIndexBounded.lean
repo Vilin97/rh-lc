@@ -1,7 +1,8 @@
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.HodgeBundleWeights.TamagawaNumberSpecialUnitary
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelIndexBoundOfPublished
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.HodgeBundleWeights.ToKnownTheoremsOf
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelIndexBoundOfPrintsStatement
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasAtOf
 
 section
 noncomputable section

@@ -18,8 +18,6 @@ namespace GlobalTheory.CompanionTheory.UGeo
 
 variable {n : ℕ} {ε : Fin n → Bool} {A : Matrix (Fin n) (Fin n) ℂ}
 
-local notation "hs" => Formalism.REAL.hs
-
 theorem continuous_hs : Continuous (fun M : Matrix (Fin n) (Fin n) ℂ => hs M) := by
   unfold Formalism.REAL.hs
   exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>

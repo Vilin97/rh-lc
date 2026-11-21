@@ -14,7 +14,6 @@ variable {P Q : PSh} (φ : P ⟶ Q) (hφ : ∀ U, Function.Surjective (φ.app U)
 def lft (c : yoneda.obj U ⟶ Q) : yoneda.obj U ⟶ P :=
   yonedaEquiv.symm (hφ (op U) (yonedaEquiv c)).choose
 
-@[reassoc (attr := simp)]
 lemma lft_comp (c : yoneda.obj U ⟶ Q) : lft φ hφ U c ≫ φ = c := by
   apply yonedaEquiv.injective
   rw [yonedaEquiv_comp, lft, Equiv.apply_symm_apply]

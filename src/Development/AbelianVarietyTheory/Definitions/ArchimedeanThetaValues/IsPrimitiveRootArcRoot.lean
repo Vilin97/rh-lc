@@ -18,9 +18,6 @@ variable {X G : Type} [AddCommGroup X] [CommGroup G]
 def rootChar (ζ : G) (f : X →ₗ[ℤ] ℤ) : Multiplicative X →* G :=
   (zpowersHom G ζ).comp (AddMonoidHom.toMultiplicative f.toAddMonoidHom)
 
-@[simp] theorem rootChar_apply (ζ : G) (f : X →ₗ[ℤ] ℤ) (χ : X) :
-    rootChar ζ f (Multiplicative.ofAdd χ) = ζ ^ f χ := rfl
-
 theorem rootChar_add (ζ : G) (f g : X →ₗ[ℤ] ℤ) : rootChar ζ (f + g) = rootChar ζ f * rootChar ζ g :=
   MonoidHom.ext fun χ => zpow_add ζ (f χ.toAdd) (g χ.toAdd)
 
@@ -104,12 +101,6 @@ theorem isIota_split (y : X) (t : Multiplicative X →* Fˣ) :
 def splitPt {n : ℕ} (y : X) (t : Multiplicative X →* Fˣ) (ht : t ^ n = 1) : QkPt (splitPre K X) F n :=
   ⟨y, pt _ F t, pt _ F 1, (isNsmul_pt _ F n t 1).2 ht.symm, (isIota_split K F y 1).2 rfl⟩
 
-@[simp] theorem splitPt_y {n : ℕ} (y : X) (t : Multiplicative X →* Fˣ) (ht : t ^ n = 1) :
-    (splitPt K F y t ht).y = y := rfl
-
-@[simp] theorem splitPt_g {n : ℕ} (y : X) (t : Multiplicative X →* Fˣ) (ht : t ^ n = 1) :
-    (splitPt K F y t ht).g = pt _ F t := rfl
-
 theorem exists_eq_splitPt {n : ℕ} (p : QkPt (splitPre K X) F n) : ∃ y t ht, p = splitPt K F y t ht := by
   obtain ⟨y, g, h, hn, hi⟩ := p
   obtain ⟨t, rfl⟩ := (pt_bijective _ F).2 g
@@ -153,10 +144,6 @@ def qkPt {n : ℕ} (ζ : Fˣ) (hζ : ζ ^ n = 1) (a : HypLattice H) : QkPt (spli
   splitPt K F a.1 (rootChar ζ (toDual H a.2)) (rootChar_pow_eq_one hζ _)
 
 variable {n : ℕ} (ζ : Fˣ) (hζ : ζ ^ n = 1)
-
-@[simp] theorem qkPt_y (a : HypLattice H) : (qkPt K ζ hζ a).y = a.1 := rfl
-
-@[simp] theorem qkPt_g (a : HypLattice H) : (qkPt K ζ hζ a).g = pt _ F (rootChar ζ (toDual H a.2)) := rfl
 
 theorem qkAdd_qkPt (a b : HypLattice H) : QkAdd (qkPt K ζ hζ a) (qkPt K ζ hζ b) (qkPt K ζ hζ (a + b)) :=
   ⟨qkPt K ζ hζ (a + b), rfl, (isAdd_pt _ F _ _ _).2 (rootChar_add ζ (toDual H a.2) (toDual H b.2)),
@@ -236,13 +223,6 @@ def tateIsoQ (ζ : ℕ → Fˣ) (hp : ∀ n, 0 < n → IsPrimitiveRoot (ζ n) n)
     ⟨qkPt K (ζ n) (pow_eq_one_of_prim hp n) a, rfl, isNsmul_qkPt K _ _ _ (hc n m hn hm) a, equiv_refl_split K F _⟩
   isom _ _ := weilQkIs_qkPt K _ _
 
-@[simp] theorem tateIsoQ_ζ (ζ : ℕ → Fˣ) (hp : ∀ n, 0 < n → IsPrimitiveRoot (ζ n) n)
-    (hc : ∀ n m, 0 < n → 0 < m → ζ (n * m) ^ m = ζ n) : (tateIsoQ H K ζ hp hc).ζ = ζ := rfl
-
-@[simp] theorem tateIsoQ_ev (ζ : ℕ → Fˣ) (hp : ∀ n, 0 < n → IsPrimitiveRoot (ζ n) n)
-    (hc : ∀ n m, 0 < n → 0 < m → ζ (n * m) ^ m = ζ n) (n : ℕ) (a : HypLattice H) :
-    (tateIsoQ H K ζ hp hc).ev n a = qkPt K (ζ n) (pow_eq_one_of_prim hp n) a := rfl
-
 end Tate
 
 variable {H : Host E} {l : Level H} (c : Coeff l) (k : Type) [CommRing k] [IsDomain k] (bF : c.F →+* k)
@@ -295,55 +275,11 @@ def arcIn : ArcIn (hypDatum H) l (RingHom.id c.F) k bF where
       exact equiv_refl_split k F _
     exact ⟨tateIsoQ H k ζ hp hc, hζ l.A l.A_pos z hz, key _, fun a _ => key _ a⟩
 
-theorem arcIn_D₀ : (arcIn c k bF).D₀ = toricPre k (𝓞 E) fun _ => 1 := rfl
-
 theorem arcIn_be_apply (y z : 𝓞 E) : (arcIn c k bF).be y z = 2 * l.M' * trForm H y z := rfl
-
-theorem arcIn_be_even (y : 𝓞 E) : (2 : ℤ) ∣ (arcIn c k bF).be y y :=
-  (dvd_mul_right 2 _).trans ((arcIn c k bF).be_dvd y y)
 
 theorem arcIn_eta_equiv_iff (a b : HypLattice H) :
     QkPt.Equiv _ _ ((arcIn c k bF).eta a) ((arcIn c k bF).eta b) ↔ ∃ e, a = b + l.M • e :=
   equiv_qkPt k (isPrimitiveRoot_arcRoot c k bF _).pow_eq_one (lt_of_lt_of_le three_pos l.three_le)
     (isPrimitiveRoot_arcRoot c k bF _) a b
-
-instance instNonemptyArcIn : Nonempty (ArcIn (hypDatum H) l (RingHom.id c.F) k bF) := ⟨arcIn c k bF⟩
-
-example : (arcIn c k bF).be (1 : 𝓞 E) (1 : 𝓞 E) = 2 * l.M' * Module.finrank ℚ E := by
-  rw [arcIn_be_apply, trForm_one_one]
-
-example : letI := H.starRing
-    Nonempty (TateIsoQ (hypDatum H) (arcIn c k bF).D₀ (arcIn c k bF).oa (AlgebraicClosure (FractionRing k))) := by
-  obtain ⟨-, I, -⟩ := (arcIn c k bF).geom (AlgebraicClosure (FractionRing k)) ⟨_, sqrtNegDisc_mem_coeffField c⟩
-    ⟨_, zeta_A_mem_coeff c⟩ rfl rfl _ rfl
-  exact ⟨I⟩
-
-example : ¬ QkPt.Equiv _ _ ((arcIn c k bF).eta ((1, 0) : HypLattice H)) ((arcIn c k bF).eta (0 : HypLattice H)) := by
-  rw [arcIn_eta_equiv_iff]
-  rintro ⟨e, he⟩
-  have h1 : (1 : 𝓞 E) = l.M • e.1 := by simpa using congrArg Prod.fst he
-  obtain ⟨g, hg⟩ : ∃ g : Module.Dual ℤ (𝓞 E), ∃ x, g x = 1 := by
-    let v := RingOfIntegers.basis E
-    obtain ⟨i⟩ := v.index_nonempty
-    exact ⟨v.coord i, v i, by simp⟩
-  obtain ⟨x, hx⟩ := hg
-  have h2 : (l.M : ℤ) * g (e.1 * x) = 1 := by
-    rw [← nsmul_eq_mul, ← map_nsmul, ← smul_mul_assoc, ← h1, one_mul, hx]
-  have h3 := Int.eq_one_of_mul_eq_one_right (Int.natCast_nonneg _) h2
-  have := l.three_le
-  omega
-
-example (f : ConjDual H) (y : 𝓞 E) :
-    WeilQkIs _ _ l.M ((arcIn c k bF).eta ((0, f) : HypLattice H)) ((arcIn c k bF).eta ((y, 0) : HypLattice H))
-      ((arcRoot c k bF (Nat.dvd_lcm_left l.M l.A) ^ toDual H f y : (FractionRing k)ˣ) : FractionRing k) := by
-  have h := weilQkIs_qkPt k (arcRoot c k bF (Nat.dvd_lcm_left l.M l.A))
-    (isPrimitiveRoot_arcRoot c k bF _).pow_eq_one ((0, f) : HypLattice H) (y, 0)
-  rwa [hypForm_apply, map_zero, sub_zero] at h
-
-example :
-    Nonempty (ArcIn (hypDatum host) (level host 5 (by norm_num)) (RingHom.id (coeff _).F) (coeff _).F (RingHom.id _)) ∧
-      Nonempty (ArcIn (hypDatum host) (level host 5 (by norm_num)) (RingHom.id (coeff _).F)
-        (PowerSeries (coeff _).F) PowerSeries.C) :=
-  ⟨inferInstance, inferInstance⟩
 
 end GlobalTheory.HostModel

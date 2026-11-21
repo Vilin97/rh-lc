@@ -78,11 +78,6 @@ def fibSmul {p : X → G ⧸ H} (hp : ∀ (g : G) (x : X), p (g • x) = g • p
     Fib p :=
   ⟨(h : G) • z.1, smul_mem_fib hp h z⟩
 
-@[simp]
-theorem fibSmul_val {p : X → G ⧸ H} (hp : ∀ (g : G) (x : X), p (g • x) = g • p x) (h : H)
-    (z : Fib p) : (fibSmul hp h z).1 = (h : G) • z.1 :=
-  rfl
-
 def fibHomeo {p : X → G ⧸ H} (hp : ∀ (g : G) (x : X), p (g • x) = g • p x) (h : H) :
     Fib p ≃ₜ Fib p where
   toFun := fibSmul hp h

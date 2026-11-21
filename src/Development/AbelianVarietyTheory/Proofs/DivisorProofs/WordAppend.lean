@@ -41,8 +41,6 @@ def Per (m : ℕ) (f : (κ → AF F) → ℂ) : Prop :=
   ∀ x z : κ → AF F, (∀ i, ∃ a : AF F, evI F a = 0 ∧ (∀ v, evFin F v a ∈ v.adicCompletionIntegers F) ∧
     z i = (m : AF F) * a) → f (x + z) = f x
 
-@[simp] theorem word_nil (f : (κ → AF F) → ℂ) : word F [] f = f := rfl
-
 @[simp] theorem word_cons (o : Op F κ) (w : List (Op F κ)) (f : (κ → AF F) → ℂ) :
     word F (o :: w) f = app F o (word F w f) := rfl
 

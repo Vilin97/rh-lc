@@ -1,6 +1,17 @@
 import Development.AutomorphicArithmetic.LocalEmbeddings.RootFrame
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNormalModelOverProjective
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LatticeModelInducesRootMetric
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFlagFrame
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TopologicalKrullDimEqSucc
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RingKrullDimLeOfIsAlgebraic
+import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.TwistingSheafOneChartEqPreimageStandardChart
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EqOfIsometricTrivShift
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsUniqueLiesUnder
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.JGenSpecializes
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FromModelNeg
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MultiplicationLatticeSecond
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsProperToroidalModelStructureMap
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoverFunctionFieldMapEq
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IoOfLeOneIff
 open CategoryTheory AlgebraicGeometry NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open Formalism.BasicNotions Formalism.L2.Pj GlobalTheory GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.Mean4O GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.TrivFlag GlobalTheory.LineNorm
 open Formalism.MainNotions.DIV.Cons (intO)
@@ -26,39 +37,3 @@ private theorem exists_cover {F : Type} [Field F] [NumberField F] (Y : Var F) {N
   show Q.j ≫ π₁ ≫ g i = 𝟙 _ ≫ (M i).j
   rw [← Category.assoc, hj, Category.id_comp]
   exact hg₁ i
-
-theorem UpperTheory.exists_cover_power_readings :
-    ∀ (F : Type) [Field F] [NumberField F] (Y : Var F) (N : ℕ) (Δ : Fin N → Y.Dv) (φ : Fin N → PtFn Y), (∀ i, FromModel Y (Δ i) (eqn (Δ i)) (φ i)) → ∃ V₀ : Cover Y, ∀ (V : Cover Y) (a : V.X ⟶ V₀.X) (g : V.G ⟶ V₀.G), V.j ≫ a = g ≫ V₀.j → g ≫ V₀.π = V.π → ∀ (p : ℕ) (i : Fin N), PowRead V p (genAt (Δ i)) (φ i) := by
-  intro F _ _ Y N Δ φ h
-  choose M L m r hL hr hv using h
-  obtain ⟨V₀, b, hb⟩ := exists_cover Y M
-  refine ⟨V₀, fun V a g hj hπ p i => ⟨m i, (m i).2, fun x _ => ?_⟩⟩
-  have hc : V.j ≫ a ≫ b i = V.π ≫ (M i).j := by
-    rw [← Category.assoc, hj, Category.assoc, hb, ← Category.assoc, hπ]
-  obtain ⟨i₀, hi₀⟩ := exists_chart (hL i) ((a ≫ b i) x)
-  have hu : ∀ z : V.G, V.j z ∈ (a ≫ b i) ⁻¹ᵁ (L i).U i₀ →
-      UnitAt (V.π z) (genAt (Δ i) (V.π z) ^ (m i : ℕ) * (r i (fun _ => i₀) : Y.Fn)) := by
-    intro z hz
-    have hg : ((m i : ℕ) • Δ i).GeneratesAt (V.π z) (genAt (Δ i) (V.π z) ^ (m i : ℕ)) := by
-      have := CartierDiv.isEqn_iff_generatesAt_inv.1 ((Base.isEqn_eqn (Δ i) (V.π z)).nsmul (m i))
-      rwa [Units.val_pow_eq_pow_val, ← inv_pow, ← Units.val_inv_eq_inv_val] at this
-    refine ((hr i).isEqn (fun _ => i₀) _ ?_).generatesAt_iff.1 hg
-    refine Set.mem_iInter.2 fun _ => ?_
-    show (V.π ≫ (M i).j) z ∈ (L i).U i₀
-    rw [← hc]
-    exact hz
-  refine ⟨(a ≫ b i) ⁻¹ᵁ (L i).U i₀, V.φ (r i (fun _ => i₀)), hi₀, fun z hz => ?_, ?_⟩
-  · rw [← map_pow, ← map_mul]
-    exact V.unitAt_φ (hu z hz)
-  · rintro v e y z yt ⟨-, -, e₁, e₂⟩ hi
-    have hz : V.j (below z) ∈ (a ≫ b i) ⁻¹ᵁ (L i).U i₀ := by
-      show (z ≫ V.j) (IsLocalRing.closedPoint _) ∈ _
-      rw [← e₂]
-      exact hi (Set.mem_univ _)
-    have hU := hu _ hz
-    have hπz : V.π (below z) = below y.1 := by
-      rw [← e₁]
-      rfl
-    have H := hv i v e y (yt ≫ a ≫ b i) (fun _ => i₀)
-      (by rw [← Category.assoc, e₂, Category.assoc, hc, ← Category.assoc, e₁]) hi
-    rw [← hπz, ← map_pow, ← map_mul, V.valAt_φ z hU.regAt, e₁, hπz, H, Units.val_mul, Units.val_pow_eq_pow_val]

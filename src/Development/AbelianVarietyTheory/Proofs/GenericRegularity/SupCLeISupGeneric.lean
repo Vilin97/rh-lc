@@ -62,10 +62,6 @@ variable {r : ℕ} {U : ∀ σ : c.F →+* ℂ, Formalism.L2.PjFree.Unf Xo c σ 
   {fn : ∀ σ : c.F →+* ℂ, FrPt Xo c (CAt σ) → Ix Dw → ℝ} (hx : 0 < xR) (hfn : FnPin U xR fn)
   {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ} {g : Rul Xo c}
 
-abbrev pn (fn : ∀ σ : c.F →+* ℂ, FrPt Xo c (CAt σ) → Ix Dw → ℝ) (σ : c.F →+* ℂ) (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ)
-    (g : Rul Xo c) (y : FrPt Xo c (CAt σ)) : ℝ :=
-  ptNorm (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) σ (fn σ) (ex Dw a n) g y
-
 include hU hx hfn
 
 end Pin

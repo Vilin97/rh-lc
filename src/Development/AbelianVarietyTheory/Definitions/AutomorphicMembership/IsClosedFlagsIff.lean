@@ -66,11 +66,6 @@ theorem finrank_step (F : Flags k V) (i : ι) (n : ℕ) : finrank k (F.step i n)
   simp only [Set.mem_setOf_eq, Fin.lt_def, Fin.val_castSucc, Fin.card_filter_val_lt]
   omega
 
-theorem Flags.ext {F F' : Flags k V} (h : ∀ i n, F.step i n = F'.step i n) : F = F' :=
-  funext fun i => FullFlag.ext (funext fun n => by
-    have := h i n
-    simpa only [Flags.step, min_eq_left (Nat.lt_succ_iff.1 n.2)] using this)
-
 def between (n : ℕ) (A B : ∀ i, Submodule k (V i)) : Closeds (Flags k V) where
   carrier := {F | ∀ i, A i ≤ F.step i n ∧ F.step i n ≤ B i}
   isClosed' := by
@@ -88,16 +83,5 @@ def between (n : ℕ) (A B : ∀ i, Submodule k (V i)) : Closeds (Flags k V) whe
         isClosed_zero (Algebra.subset_adjoin (.inl ⟨i, φ, a, rfl⟩))
 
 def dim (s : Closeds (Flags k V)) : ℕ := ((topologicalKrullDim (s : Set (Flags k V))).unbotD 0).toNat
-
-theorem dim_eq {s : Closeds (Flags k V)} {n : ℕ} (h : topologicalKrullDim (s : Set (Flags k V)) = n) : dim s = n := by
-  rw [dim, h]
-  rfl
-
-example (n : ℕ) : between (k := k) (V := V) n ⊥ ⊤ = ⊤ := Closeds.ext (Set.eq_univ_of_forall fun _ _ => ⟨bot_le, le_top⟩)
-
-example (n : ℕ) (i : ι) (h : n < finrank k (V i)) (F : Flags k V) : F ∉ between n ⊤ ⊤ := fun hF => by
-  have := finrank_step F i n
-  rw [top_le_iff.1 (hF i).1, finrank_top] at this
-  omega
 
 end GlobalTheory.FlagPts

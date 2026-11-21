@@ -64,13 +64,6 @@ variable {F L Ω : Type*} [Field F] [NumberField F] [Field L] [NumberField L] [F
 
 variable (F) in
 
-def belowV (w : HeightOneSpectrum (𝓞 L)) : HeightOneSpectrum (𝓞 F) where
-  asIdeal := w.asIdeal.comap (algebraMap (𝓞 F) (𝓞 L))
-  isPrime := Ideal.comap_isPrime _ _
-  ne_bot := by
-    obtain ⟨y, hy, hy0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot w.ne_bot
-    exact Ideal.comap_ne_bot_of_integral_mem hy0 hy (Algebra.IsIntegral.isIntegral y)
-
 end places
 
 end ReciprocityTheory.Gal

@@ -6,48 +6,6 @@ open IsLocalRing Topology
 
 variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O]
 
-theorem norm_le_one (f : O →+* PadicAlgCl l)
-    (hf : ∀ z : ℤ_[l], f (algebraMap ℤ_[l] O z) = algebraMap ℚ_[l] (PadicAlgCl l) (z : ℚ_[l]))
-    (a : O) : ‖f a‖ ≤ 1 := by
-  obtain ⟨p, hp, hp0⟩ : IsIntegral ℤ_[l] a := Algebra.IsIntegral.isIntegral a
-  by_contra hlt
-  push Not at hlt
-  rw [Polynomial.eval₂_eq_sum_range, Finset.sum_range_succ, hp.coeff_natDegree, map_one,
-    one_mul] at hp0
-  have hp1 := congrArg f hp0
-  set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add (f := _), map_sum, map_mul, map_pow, map_zero, hf] at hp1
-  set y := f a
-  have h1 : y ^ p.natDegree =
-      - ∑ i ∈ Finset.range p.natDegree,
-        algebraMap ℚ_[l] (PadicAlgCl l) (p.coeff i : ℚ_[l]) * y ^ i := by
-    linear_combination hp1
-  have hpos : 0 < ‖y‖ ^ p.natDegree := pow_pos (by linarith) _
-  have h2 : ‖∑ i ∈ Finset.range p.natDegree,
-      algebraMap ℚ_[l] (PadicAlgCl l) (p.coeff i : ℚ_[l]) * y ^ i‖ < ‖y‖ ^ p.natDegree := by
-    refine Finset.sum_induction _ (fun z => ‖z‖ < ‖y‖ ^ p.natDegree) ?_ (by simpa using hpos) ?_
-    · intro u v hu hv
-      exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max u v) (max_lt hu hv)
-    · intro i hi
-      rw [norm_mul, norm_pow]
-      have h3 : ‖algebraMap ℚ_[l] (PadicAlgCl l) (p.coeff i : ℚ_[l])‖ ≤ 1 := by
-        rw [norm_algebraMap']
-        exact (p.coeff i).2
-      calc _ ≤ 1 * ‖y‖ ^ i := by gcongr
-        _ = ‖y‖ ^ i := one_mul _
-        _ < _ := pow_lt_pow_right₀ hlt (Finset.mem_range.mp hi)
-  rw [← norm_neg, ← h1, norm_pow] at h2
-  exact lt_irrefl _ h2
-
-theorem norm_unit (f : O →+* PadicAlgCl l)
-    (hf : ∀ z : ℤ_[l], f (algebraMap ℤ_[l] O z) = algebraMap ℚ_[l] (PadicAlgCl l) (z : ℚ_[l]))
-    {a : O} (ha : IsUnit a) : ‖f a‖ = 1 := by
-  obtain ⟨b, hb⟩ := ha.exists_right_inv
-  have h : ‖f a‖ * ‖f b‖ = 1 := by rw [← norm_mul, ← map_mul, hb, map_one, norm_one]
-  refine le_antisymm (norm_le_one f hf a) ?_
-  calc (1 : ℝ) = ‖f a‖ * ‖f b‖ := h.symm
-    _ ≤ ‖f a‖ := mul_le_of_le_one_right (norm_nonneg _) (norm_le_one f hf b)
-
 open IsLocalRing Topology in
 variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] in
 theorem _root_.GlobalTheory.CoefEmbed.norm_prime_lt_one : ‖((l : ℕ) : PadicAlgCl l)‖ < 1 := by

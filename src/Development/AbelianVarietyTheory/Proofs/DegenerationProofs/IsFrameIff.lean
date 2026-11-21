@@ -39,12 +39,6 @@ def FrameAt (G : Over S) (L : LB G.left) (N : ℕ) {K : Type} [Field K] (x : Sp 
     ∀ i, ∃ s : LB.Sec (LPow G L (N : ℤ) (Over.mk (jK W ≫ χ))),
       Lin G L N (Over.homMk (spMap gam) h : Over.mk (jK W ≫ χ) ⟶ Over.mk x) (fun _ : Fin 1 => b i) (fun _ => 1) s ∧
       Lin G L N (Over.homMk (jK W) rfl : Over.mk (jK W ≫ χ) ⟶ Over.mk χ) (fun _ : Fin 1 => b' i) (fun _ => 1) s
-theorem isFrame_iff (G : Over S) (L : LB G.left) (N : ℕ) {R₁ : Type} [CommRing R₁] [IsDomain R₁]
-    (x : Sp (FractionRing R₁) ⟶ S) {n : ℕ} (b : Fin n → LB.Sec (LPow G L (N : ℤ) (Over.mk x))) :
-    IsFrame G L N x b ↔ ∀ (W : Type) [CommRing W] [IsDomain W] [IsLocalRing W], CDvr W →
-      ∀ (φ : R₁ →+* W) (gam : FractionRing R₁ →+* FractionRing W),
-      (∀ r, gam (algebraMap R₁ _ r) = algebraMap W _ (φ r)) → ∀ (χ : Sp W ⟶ S) (h : spMap gam ≫ x = jK W ≫ χ),
-      FrameAt G L N x gam χ h b := Iff.rfl
 
 def BasisBy (G : Over S) (L : LB G.left) (N : ℕ) {K : Type} [Field K] (x : Sp K ⟶ S) {W : Type} [CommRing W] [IsDomain W]
     (gam : K →+* FractionRing W) (χ : Sp W ⟶ S) (h : spMap gam ≫ x = jK W ≫ χ) {n : ℕ}

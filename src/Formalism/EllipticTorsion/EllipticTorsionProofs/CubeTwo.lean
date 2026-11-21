@@ -20,8 +20,6 @@ open WeierstrassChordSeries
 
 variable {K : Type u} [Field K]
 
-local notation "cc" => MvPowerSeries.constantCoeff
-
 theorem coeff_subst_X0_zero (H : MvPowerSeries (Fin 2) K) (e : Fin 2 →₀ ℕ) (he : e 1 = 0) :
     MvPowerSeries.coeff e (H.subst ![(MvPowerSeries.X 0 : MvPowerSeries (Fin 2) K), 0]) =
       MvPowerSeries.coeff e H := by
@@ -259,8 +257,6 @@ namespace CubeTwoAlt
 open WeierstrassChordSeries
 
 variable {K : Type u} [Field K] {W : WeierstrassCurve K} {w : PowerSeries K}
-
-local notation "cc" => MvPowerSeries.constantCoeff
 
 theorem chord_subst_inverse_mem (hw : WFixed W w) :
     (WeierstrassChordSeries.F2 W w).subst ![(MvPowerSeries.X 0 : MvPowerSeries (Fin 2) K),

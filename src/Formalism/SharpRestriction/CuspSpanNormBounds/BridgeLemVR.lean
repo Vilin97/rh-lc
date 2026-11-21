@@ -9,12 +9,6 @@ open NumberField Formalism.HermitianLatticesTheory Formalism.ThetaLiftIndependen
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
-theorem mem_loc_iff (p : Ideal (𝓞 K)) (N : Submodule (𝓞 K) K) (x : K) :
-    x ∈ loc (K := K) p N ↔ ∃ s ∈ hcompl (K := K) p, s • x ∈ N := Iff.rfl
-
-theorem mem_locR_iff (p : Ideal (𝓞 K)) (x : K) :
-    x ∈ locR (K := K) p ↔ ∃ s ∈ hcompl (K := K) p, s • x ∈ (1 : Submodule (𝓞 K) K) := Iff.rfl
-
 theorem hcompl_le_primeCompl {p : Ideal (𝓞 K)} (hp : p.IsMaximal) :
     hcompl (K := K) p ≤ p.primeCompl := by
   have := hp.isPrime

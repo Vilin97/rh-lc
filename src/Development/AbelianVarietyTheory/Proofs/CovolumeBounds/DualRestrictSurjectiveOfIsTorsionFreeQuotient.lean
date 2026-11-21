@@ -66,12 +66,6 @@ theorem right_left [DecidableEq ι] (h : IsSymplecticFamily B e f d) (hB : B.IsA
   · subst hij; simp
   · simp [hij, Ne.symm hij]
 
-theorem swap (h : IsSymplecticFamily B e f d) (hB : B.IsAlt) : IsSymplecticFamily (-B) f e d where
-  left_left i j := by simp [h.right_right]
-  right_right i j := by simp [h.left_left]
-  left_right_self i := by simp [hB.neg_eq, h.left_right_self]
-  left_right_ne i j hij := by simp [hB.neg_eq, h.left_right_ne j i hij.symm]
-
 theorem apply_left_sum [Fintype ι] (h : IsSymplecticFamily B e f d) (c : ι ⊕ ι → R) (k : ι) :
     B (e k) (∑ i, c i • Sum.elim e f i) = c (Sum.inr k) * d k := by
   classical
@@ -311,10 +305,6 @@ theorem toMatrix_eq [Fintype ι] [DecidableEq ι] (h : IsSymplecticBasisOfType B
     split_ifs <;> simp
   · simpa using IsSymplecticFamily.right_right h i j
 
-theorem swap (h : IsSymplecticBasisOfType B b d) (hB : B.IsAlt) :
-    IsSymplecticBasisOfType (-B) (b.reindex (Equiv.sumComm ι ι)) d := by
-  simpa [IsSymplecticBasisOfType] using IsSymplecticFamily.swap h hB
-
 theorem reindex {κ : Type*} (h : IsSymplecticBasisOfType B b d) (σ : ι ≃ κ) :
     IsSymplecticBasisOfType B (b.reindex (σ.sumCongr σ)) fun k => d (σ.symm k) := by
   refine ⟨fun i j => ?_, fun i j => ?_, fun i => ?_, fun i j hij => ?_⟩
@@ -372,10 +362,6 @@ theorem toMatrix_eq [Fintype ι] [DecidableEq ι] (h : IsSymplecticBasis B b) (h
     LinearMap.BilinForm.toMatrix b B = -Matrix.J ι R := by
   rw [IsSymplecticBasisOfType.toMatrix_eq h hB, Matrix.J, Matrix.fromBlocks_neg]
   simp
-
-theorem swap (h : IsSymplecticBasis B b) (hB : B.IsAlt) :
-    IsSymplecticBasis (-B) (b.reindex (Equiv.sumComm ι ι)) :=
-  IsSymplecticBasisOfType.swap h hB
 
 theorem reindex {κ : Type*} (h : IsSymplecticBasis B b) (σ : ι ≃ κ) :
     IsSymplecticBasis B (b.reindex (σ.sumCongr σ)) :=
@@ -478,28 +464,6 @@ section Isotropic
 section Maps
 
 variable {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
-
-def quotientOrthogonalToDual (B : LinearMap.BilinForm R M) (hB : B.IsAlt) (I : Submodule R M) :
-    (M ⧸ B.orthogonal I) →ₗ[R] Dual R I :=
-  (B.orthogonal I).liftQ (I.dualRestrict ∘ₗ B) fun _ hy =>
-    LinearMap.ext fun x => hB.eq_iff.1 (hy x x.2)
-
-@[simp]
-theorem quotientOrthogonalToDual_mk (B : LinearMap.BilinForm R M) (hB : B.IsAlt)
-    (I : Submodule R M) (y : M) (x : I) :
-    quotientOrthogonalToDual B hB I (Submodule.Quotient.mk y) x = B y x := rfl
-
-def orthogonalQuotientForm (B : LinearMap.BilinForm R M) (hB : B.IsAlt) (I : Submodule R M) :
-    LinearMap.BilinForm R (B.orthogonal I ⧸ I.submoduleOf (B.orthogonal I)) :=
-  LinearMap.liftQ₂ _ _ (B.restrict (B.orthogonal I))
-    (fun x hx => LinearMap.ext fun y => y.2 x hx)
-    (fun x hx => LinearMap.ext fun y => hB.eq_iff.1 (y.2 x hx))
-
-@[simp]
-theorem orthogonalQuotientForm_mk (B : LinearMap.BilinForm R M) (hB : B.IsAlt)
-    (I : Submodule R M) (x y : B.orthogonal I) :
-    orthogonalQuotientForm B hB I (Submodule.Quotient.mk x) (Submodule.Quotient.mk y) =
-      B x y := rfl
 
 theorem isTorsionFree_quotient_iff [IsDomain R] (I : Submodule R M) :
     IsTorsionFree R (M ⧸ I) ↔ ∀ (r : R) (x : M), r ≠ 0 → r • x ∈ I → x ∈ I := by

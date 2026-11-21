@@ -156,22 +156,10 @@ theorem suppF_iff_mem_range {ε : AF D.host.F} (h : IsPlaceIdem D v ε) (g : GA 
   obtain ⟨α, rfl, h1, h2⟩ := h
   exact mul_idem_iff_mem_range_emb _ _ v _ (fun _ => rfl) h1 h2 g
 
-theorem suppAt_iff_mem_range {ε : AF D.host.F} (h : IsPlaceIdem D v ε) {e : AE D}
-    (he : e + cA D e = algebraMap (AF D.host.F) (AE D) ε) (g : GA D V) :
-    SuppAt e V g ↔ g ∈ (emb D.sp.cm.sig V.gram v).range := by
-  rw [← suppF_iff_mem_range V h, ← he]; rfl
-
 theorem emb_mem_KsphC (x : GLoc D.sp.cm.sig V.gram v) :
     emb D.sp.cm.sig V.gram v x ∈ KsphC V ∅ ↔ x ∈ stabLoc D.sp.cm.sig V.gram (frameLat V) v := by
   rw [KsphC_eq]
   exact ⟨fun h => by simpa using (mem_levelOff.1 h).2.2 v (by simp), emb_mem_levelOff (by simp)⟩
-
-theorem suppF_and_mem_KsphC {ε : AF D.host.F} (h : IsPlaceIdem D v ε) (g : GA D V) :
-    (SuppF V (algebraMap (AF D.host.F) (AE D) ε) g ∧ g ∈ KsphC V ∅) ↔
-      g ∈ (stabLoc D.sp.cm.sig V.gram (frameLat V) v).map (emb D.sp.cm.sig V.gram v) := by
-  rw [suppF_iff_mem_range V h]
-  exact ⟨fun ⟨⟨x, e⟩, hk⟩ => ⟨x, (emb_mem_KsphC V x).1 (e ▸ hk), e⟩,
-    fun ⟨x, hx, e⟩ => ⟨⟨x, e⟩, e ▸ (emb_mem_KsphC V x).2 hx⟩⟩
 
 theorem fj_singleV (y : Fv D.host.F v) :
     fj D (singleV D.host.F v y) = singleTens D.host.E v (y ⊗ₜ[D.host.F] (1 : D.host.E)) := rfl
@@ -248,10 +236,6 @@ theorem isIdemAt_iff_exists {e : AE D} {P : HeightOneSpectrum (𝓞 D.host.E)} :
   by_cases hx : x = 0
   · simp [hx]
   · exact (h.2 x hx).trans ((isIdemAt_splitIdemAd τ).2 x hx).symm
-
-theorem suppAt_splitIdemAd (τ : D.host.E →ₐ[D.host.F] Fv D.host.F v) (g : GA D V) :
-    SuppAt (D := D) (splitIdemAd (isCMExt_host D) τ) V g ↔ g ∈ (emb D.sp.cm.sig V.gram v).range :=
-  suppAt_iff_mem_range V (isPlaceIdem_placeIdem D v) ((splitAt_splitIdemAd τ).2.2.trans (pl_eq D v)) g
 
 theorem finPart_fj_mem_iff (y : Fv D.host.F v) :
     finPart D (fj D (singleV D.host.F v y)) ∈ intAE D ↔ Valued.v y ≤ 1 := by

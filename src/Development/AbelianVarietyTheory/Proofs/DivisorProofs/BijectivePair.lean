@@ -51,5 +51,3 @@ theorem bijective_pair : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   exact ⟨hinj, (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).1 hinj⟩
 
 end GlobalTheory.HilbFam.EBasis
-
-example : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (ψ : E →+* ℂ) (θ : E), (ψ θ).im ≠ 0 → Function.Bijective (fun x : Fin 2 → FR E ↦ (x 0 : E) * θ + (x 1 : E)) := GlobalTheory.HilbFam.EBasis.bijective_pair

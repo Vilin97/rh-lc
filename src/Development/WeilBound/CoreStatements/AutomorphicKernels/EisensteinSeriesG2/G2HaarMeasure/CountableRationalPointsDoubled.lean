@@ -44,8 +44,6 @@ instance locCompactGL {ι : Type} [Fintype ι] [DecidableEq ι] : LocallyCompact
 
 variable {σ : E →ₐ[F] E} {n : ℕ} {Y : Spc F E n}
 
-instance t2G2 : T2Space (G2 σ Y) := inferInstance
-
 instance secondCountable_adelic_GL2 : SecondCountableTopology (G2 σ Y) :=
   (isClosed_doubled_group σ Y).isClosedEmbedding_subtypeVal.isEmbedding.secondCountableTopology
 

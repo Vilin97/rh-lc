@@ -13,8 +13,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.TwistCharRat
 
-local infixl:70 " ⬝ " => HMul.hMul
-
 variable {D : D7}
 
 theorem symplOH_add_right {S T : HSp D} (x y y' : WO S T) :

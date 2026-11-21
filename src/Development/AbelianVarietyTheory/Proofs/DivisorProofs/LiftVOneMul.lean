@@ -1,5 +1,5 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinMapsOfForall
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneMemKAt
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LatAtVAtStable
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.KFinLoc
@@ -7,20 +7,6 @@ open scoped TensorProduct Matrix
 
 noncomputable section
 namespace GlobalTheory.InertAvgDual
-
-theorem liftV_one_mul {F : Type} [Field F] [NumberField F] (v : Pl F) (b : AF F) :
-    GlobalTheory.LatVac.liftV v 1 * b = GlobalTheory.LatVac.liftV v (evFin F v b) := by
-  refine Prod.ext ?_ ?_
-  · exact zero_mul _
-  · change GlobalTheory.AdelicU.singleFin v 1 * b.2 = GlobalTheory.AdelicU.singleFin v (evFin F v b)
-    apply GlobalTheory.AdelicU.af_ext
-    intro w
-    rw [map_mul]
-    by_cases hw : w = v
-    · subst hw
-      rw [GlobalTheory.AdelicU.evalV_singleFin_self, GlobalTheory.AdelicU.evalV_singleFin_self, one_mul]
-      rfl
-    · rw [GlobalTheory.AdelicU.evalV_singleFin_ne hw, GlobalTheory.AdelicU.evalV_singleFin_ne hw, zero_mul]
 
 section Local
 
@@ -38,12 +24,6 @@ theorem eq_of_tens_eq {κ : Type} [Fintype κ] (v : Pl F) {R : (κ → AF F) →
   have hR : R (fun i => GlobalTheory.LatVac.liftV v (t i)) = R 0 := by simpa using hRv 0 _ hat
   simp only [tens, GlobalTheory.LatVac.evFin_liftV, hR] at e
   exact mul_right_cancel₀ hR0 e
-
-theorem acts_unique {κ : Type} [Fintype κ] (v : Pl F) {R : (κ → AF F) → ℂ} (hR0 : R 0 ≠ 0)
-    (hR : ∀ φ ∈ SB (κ → Fv F v), Rest (evFin F v) φ R) (T : Module.End ℂ ((κ → AF F) → ℂ))
-    {φ φ₁ φ₂ : (κ → Fv F v) → ℂ} (hφ : φ ∈ SB (κ → Fv F v)) (h₁ : Acts (evFin F v) T φ φ₁)
-    (h₂ : Acts (evFin F v) T φ φ₂) : φ₁ = φ₂ := by
-  exact eq_of_tens_eq v hR0 (hR φ hφ).1 ((h₁ R (hR φ hφ)).symm.trans (h₂ R (hR φ hφ)))
 
 theorem acts_one {κ : Type} [Fintype κ] (v : Pl F) (φ : (κ → Fv F v) → ℂ) :
     Acts (evFin F v) (1 : Module.End ℂ ((κ → AF F) → ℂ)) φ φ := fun _ _ => rfl

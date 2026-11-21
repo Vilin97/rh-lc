@@ -3,7 +3,7 @@ import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.Ration
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.HeckeTransferRankOne
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.RayFieldTheta
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.ThetaTranslateRangeGap
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.LocalDataValues
+import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.VectorLevelCharacters
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsDCOfMemDoubleCoset
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ClassPresBasic
@@ -24,17 +24,6 @@ namespace GlobalTheory.HeckeClassSums
 section Linear
 
 variable {L : Type} [Field L] {σ : L →+* ℂ} {H : Type} [AddCommGroup H] [Module ℂ H]
-
-def carried {X : Type} [AddCommGroup X] [Module ℂ X] {n : ℕ} (j : (Fin n → L) →ₛₗ[σ] H) (e : H →ₗ[ℂ] X) {I : Type}
-    (p : I → Prop) (T : I → X →ₗ[ℂ] X) (c : ℂ) : Submodule L (Fin n → L) where
-  carrier := {y | ∃ y', ∀ a, p a → e (j y') = c • T a (e (j y))}
-  add_mem' := by
-    rintro x y ⟨x', hx⟩ ⟨y', hy⟩
-    exact ⟨x' + y', fun a ha => by simp only [map_add (f := _), hx a ha, hy a ha, smul_add]⟩
-  zero_mem' := ⟨0, fun a _ => by simp⟩
-  smul_mem' := by
-    rintro s x ⟨x', hx⟩
-    exact ⟨s • x', fun a ha => by rw [map_smulₛₗ, map_smul, hx a ha, map_smulₛₗ, map_smul, map_smul, smul_comm]⟩
 
 open Formalism.L2.Pj.KsHecke
 
@@ -60,13 +49,6 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.
 section Local
 
 variable {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
-
-def ReadOverLLAt (i : Fin D.R.m) (P : Pl D.host.E) (k : ℕ) : Prop :=
-  ∃ hL : (Fin (R.nW i) → D.what₂.LL) →ₗ[D.what₂.LL] (Fin (R.nW i) → D.what₂.LL),
-    ∀ Rc, IsCosetSys R i P k Rc → ReadAs R i P k Rc hL
-
-def ReadOverLL (i : Fin D.R.m) : Prop :=
-  ∀ P : Pl D.host.E, GoodPlace R P → ∀ k : ℕ, k ≤ D.R.r → ReadOverLLAt R i P k
 
 variable {R}
 

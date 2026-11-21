@@ -21,12 +21,6 @@ def restrictR {R D A E : Type} [CommRing R] [CommRing D] [CommRing A] [CommRing 
     show f (algebraMap R A r) = algebraMap R E r
     rw [← hA r, ← hE r]; exact f.commutes _⟩
 
-@[simp] theorem restrictR_apply {R D A E : Type} [CommRing R] [CommRing D] [CommRing A] [CommRing E]
-    [Algebra R D] [Algebra R A] [Algebra R E] [Algebra D A] [Algebra D E]
-    (hA : ∀ r, algebraMap D A (algebraMap R D r) = algebraMap R A r)
-    (hE : ∀ r, algebraMap D E (algebraMap R D r) = algebraMap R E r)
-    (f : A →ₐ[D] E) (x : A) : restrictR hA hE f x = f x := rfl
-
 theorem cocycle_descends : ∀ (R : Type) [CommRing R] (D D' : Type) [CommRing D] [Algebra R D] [CommRing D'] [Algebra R D'] (ψ : D →ₐ[R] D'), (ψ : D →+* D').FaithfullyFlat → ∀ (c : ∀ (E : Type) [CommRing E] [Algebra R E], (D' →ₐ[R] E) → (D' →ₐ[R] E) → E), (∀ (E : Type) [CommRing E] [Algebra R E] (E' : Type) [CommRing E'] [Algebra R E'] (α β : D' →ₐ[R] E) (ρ : E →ₐ[R] E'), α.comp ψ = β.comp ψ → c E' (ρ.comp α) (ρ.comp β) = ρ (c E α β)) → (∀ (E : Type) [CommRing E] [Algebra R E] (f₁ f₂ f₃ : D' →ₐ[R] E), f₁.comp ψ = f₂.comp ψ → f₂.comp ψ = f₃.comp ψ → c E f₁ f₃ = c E f₁ f₂ + c E f₂ f₃) → ∃ a : D', ∀ (E : Type) [CommRing E] [Algebra R E] (α β : D' →ₐ[R] E), α.comp ψ = β.comp ψ → c E α β = β a - α a := by
   intro R _ D D' _ _ _ _ ψ hψ c hnat hcoc
   letI : Algebra D D' := (ψ : D →+* D').toAlgebra

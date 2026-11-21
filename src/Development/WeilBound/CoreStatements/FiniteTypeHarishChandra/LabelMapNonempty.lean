@@ -1,5 +1,6 @@
 import Development.WeilBound.CoreStatements.FiniteTypeHarishChandra.IntertwiningIsomorphisms.IsoIffIntertwiningHolds
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.PendTie
+import Formalism.SharpRestriction.LevelLetterCocycles.FourthHypothesisOfLifting
+import Formalism.LocalToGlobal.NormalizedHeckeFactors.GlobalDatumRegularityOfTypesCompatibility
 import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GreenLabelCharpoly.GaloisClause
 import Development.AbelianVarietyTheory.Proofs.CharacterTheory.RegularIffNatDegreeAndExistsEllipticGLStatement
 
@@ -126,8 +127,5 @@ theorem cuspParam_all (C : LabelConv K) : CuspParam K C := fun d hd =>
     GlobalTheory.T.exists_cuspidal_with_label K C d hd, fun τ τ' P => iso_of_label C hd τ τ' P⟩
 
 end
-
-def greenLab {K : Type} [Field K] [Fintype K] [DecidableEq K] (C : LabelConv K) : LabelMap K C :=
-  Formalism.L2.PT.greenO C (cuspParam_all C)
 
 end ReciprocityTheory.Ty.Fin.GreenAll

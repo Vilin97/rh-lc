@@ -6,8 +6,6 @@ namespace GroundTheory.Global
 open NumberField IntermediateField GroundTheory.LocalField.Abstract IdeleGroup
 open scoped GroundTheory.LocalField.Abstract
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 theorem eq_of_ker_le_of_natCard_le_two {A B : Type*} [Group A] [Group B] [Finite B]

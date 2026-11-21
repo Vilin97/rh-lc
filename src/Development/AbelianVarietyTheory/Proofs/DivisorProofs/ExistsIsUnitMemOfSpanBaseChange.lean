@@ -1,9 +1,10 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.StarMulOfMulStar
+import Development.AbelianVarietyTheory.Definitions.Divisors.NormSub
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsEquivalenceFiniteEtaleBaseChangeResidueField
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NatDegreeMinpolyLeBaseChange
 import GroundTheory.AutomorphicForms.StableConjCyclic
 import GroundTheory.Brauer.Degree
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankIInfKerEqOfIsBaseChangeFamily
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NatDegreeMinpolyLeBaseChange
 
 namespace GlobalTheory.LKInv
 

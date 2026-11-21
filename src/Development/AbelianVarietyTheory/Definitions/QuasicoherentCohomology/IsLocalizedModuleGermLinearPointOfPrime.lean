@@ -50,13 +50,6 @@ theorem stalkLinear_comp (φ : F ⟶ G) (ψ : G ⟶ H) (x : X) :
   rw [LinearMap.comp_apply, stalkLinear_germ, stalkLinear_germ, stalkLinear_germ]; rfl
 
 @[simp]
-theorem stalkLinear_add (φ ψ : F ⟶ G) (x : X) :
-    stalkLinear (φ + ψ) x = stalkLinear φ x + stalkLinear ψ x := by
-  ext t
-  obtain ⟨V, hV, s, rfl⟩ := F.presheaf.exists_germ_eq t
-  rw [LinearMap.add_apply, stalkLinear_germ, stalkLinear_germ, stalkLinear_germ, ← map_add (f := _)]; rfl
-
-@[simp]
 theorem stalkLinear_zero (x : X) : stalkLinear (0 : F ⟶ G) x = 0 := by
   ext t
   obtain ⟨V, hV, s, rfl⟩ := F.presheaf.exists_germ_eq t
@@ -67,10 +60,6 @@ def stalkLinearEquiv (e : F ≅ G) (x : X) :
   LinearEquiv.ofLinearMap (stalkLinear e.hom x) (stalkLinear e.inv x)
     (by rw [← stalkLinear_comp, e.inv_hom_id, stalkLinear_id])
     (by rw [← stalkLinear_comp, e.hom_inv_id, stalkLinear_id])
-
-@[simp]
-theorem stalkLinearEquiv_apply (e : F ≅ G) (x : X) (t : (F.presheaf.stalk x :)) :
-    stalkLinearEquiv e x t = stalkLinear e.hom x t := rfl
 
 theorem exact_iff_stalkLinear (S : ShortComplex X.Modules) :
     S.Exact ↔ ∀ x : X, Function.Exact (stalkLinear S.f x) (stalkLinear S.g x) := by

@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.ExistsLocExtFinrankEq
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.Langlands
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLocalExtensionOfFiniteIndexWeilSubgroup
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RecTransportFieldIso
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalArtinExistsHolds
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GaussSumNeZeroOfRamified
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BrauerDegreeZero
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.LocalArtinExists
 
@@ -39,10 +44,6 @@ theorem under_eq {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L
   show _ ↔ algebraMap (𝓞 K) (𝓞 L) x ∈ w.asIdeal
   rw [← h' (algebraMap (𝓞 K) (𝓞 L) x), IsScalarTower.algebraMap_apply K L Ω]
   rfl
-
-theorem val_le_one {L : Type} [Field L] [NumberField L] [Algebra L Ω] (A : ValuationSubring Ω) (x : 𝓞 L) :
-    A.valuation (algebraMap L Ω x) ≤ 1 :=
-  (A.valuation_le_one_iff _).mpr (mem_of_isIntegral_int A ((x.isIntegral_coe).algebraMap))
 
 section Res
 

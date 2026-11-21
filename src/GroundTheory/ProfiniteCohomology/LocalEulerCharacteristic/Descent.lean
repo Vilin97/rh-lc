@@ -87,11 +87,6 @@ theorem resFunctor_map_coindTrace :
   rw [coindTrace_hom_apply, Rep.sum_hom, Representation.IntertwiningMap.sum_apply]
   rfl
 
-instance isDiscreteRep_res_coind_res :
-    IsDiscreteRep (Rep.res (U : Subgroup G).subtype
-      (Rep.coind (U : Subgroup G).subtype (Rep.res (U : Subgroup G).subtype A))) :=
-  isDiscreteRep_res_subtype _ _
-
 instance isDiscreteRep_resFunctor_obj_coind_res :
     IsDiscreteRep ((Rep.resFunctor (U : Subgroup G).subtype).obj
       (Rep.coind (U : Subgroup G).subtype (Rep.res (U : Subgroup G).subtype A))) :=

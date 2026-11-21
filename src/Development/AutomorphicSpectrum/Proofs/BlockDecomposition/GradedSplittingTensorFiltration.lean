@@ -94,8 +94,6 @@ theorem sumMap_bij : Function.Bijective (sumMap S) := by
 
 def sumEquiv : (∀ i, S.N i) ≃ₗ[O] A := LinearEquiv.ofBijective (sumMap S) (sumMap_bij S)
 
-@[simp] theorem sumEquiv_apply (n : ∀ i, S.N i) : sumEquiv S n = sumMap S n := rfl
-
 theorem piLeft_tmul_apply (n : ∀ i, S.N i) (x : Γ) (i : Fin m) :
     TensorProduct.piLeft O Γ S.N (n ⊗ₜ x) i = n i ⊗ₜ x := by
   simp [TensorProduct.piLeft, TensorProduct.piRight]

@@ -1,6 +1,6 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.FormalEnd
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.MumfordConstruction
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
 import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissibleBaseOfCompleteDvr
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitClosed
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsGenTransl
@@ -374,7 +374,6 @@ variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {G : Over (Sp R)} 
   {X : Type} [AddCommGroup X]
 
 set_option hygiene false in
-local notation "𝔪" => IsLocalRing.maximalIdeal R
 
 omit [IsDomain R] in
 

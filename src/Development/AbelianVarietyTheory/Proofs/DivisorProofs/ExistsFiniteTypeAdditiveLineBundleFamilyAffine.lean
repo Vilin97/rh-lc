@@ -45,7 +45,6 @@ variable {R C}
 def stageMap {s t : Finset C} (h : s ⊆ t) : stage R C t ⟶ stage R C s :=
   spOMap (Subalgebra.inclusion (Algebra.adjoin_mono (Finset.coe_subset.mpr h)))
 
-@[reassoc]
 theorem toStage_stageMap {s t : Finset C} (h : s ⊆ t) : toStage R C t ≫ stageMap h = toStage R C s := by
   rw [toStage, stageMap, spOMap_comp, toStage]
   rfl

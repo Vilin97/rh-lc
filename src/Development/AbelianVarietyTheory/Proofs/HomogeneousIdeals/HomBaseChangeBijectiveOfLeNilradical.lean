@@ -159,22 +159,6 @@ def pointsEquiv (T : Over S) (X : Type u) [AddCommGroup X] :
 @[simp] theorem pointsEquiv_apply (g : T ⟶ splitTorus S X) (a : X) :
     (Additive.toMul (pointsEquiv T X g a)).val = g.left.appTop.hom (chi X a) := val_eq g a
 
-theorem pointsEquiv_mul (x y : T ⟶ splitTorus S X) :
-    pointsEquiv T X (x * y) = pointsEquiv T X x + pointsEquiv T X y := by
-  ext a
-  exact val_mul x y a
-
-def pointsMulEquiv (T : Over S) (X : Type u) [AddCommGroup X] :
-    (T ⟶ splitTorus S X) ≃* Multiplicative (X →+ Additive Γ(T.left, ⊤)ˣ) where
-  toEquiv := (pointsEquiv T X).trans Multiplicative.ofAdd
-  map_mul' x y := congrArg Multiplicative.ofAdd (pointsEquiv_mul x y)
-
-theorem pointsEquiv_comp (h : T' ⟶ T) (g : T ⟶ splitTorus S X) :
-    pointsEquiv T' X (h ≫ g) =
-      (MonoidHom.toAdditive (Units.map h.left.appTop.hom.toMonoidHom)).comp (pointsEquiv T X g) := by
-  ext a
-  exact val_comp h g a
-
 theorem charUnit_val (a : X) : (charUnit S X a).val = chi X a := by
   have h1 : chi (S := S) X a = (torusFst S X).appTop.hom
       ((Scheme.ΓSpecIso (torusRing ZU X)).inv.hom (single a 1)) := by
@@ -533,20 +517,6 @@ theorem exists_eq_torusMap [ConnectedSpace S] (f : splitTorus S X ⟶ splitTorus
 
 variable (S X Y) in
 
-def homEquiv [ConnectedSpace S] :
-    (Y →+ X) ≃ {f : splitTorus S X ⟶ splitTorus S Y // IsMonHom f} :=
-  Equiv.ofBijective (fun φ => ⟨torusMap S φ, inferInstance⟩)
-    ⟨fun _ _ h => torusMap_injective (congrArg Subtype.val h), fun ⟨f, _⟩ => by
-      obtain ⟨φ, rfl⟩ := exists_eq_torusMap f
-      exact ⟨φ, rfl⟩⟩
-
-@[simp] theorem homEquiv_apply [ConnectedSpace S] (φ : Y →+ X) :
-    (homEquiv S X Y φ).1 = torusMap S φ := rfl
-
-theorem homEquiv_comp [ConnectedSpace S] (φ : Y →+ X) (ψ : Z →+ Y) :
-    (homEquiv S X Z (φ.comp ψ)).1 = (homEquiv S X Y φ).1 ≫ (homEquiv S Y Z ψ).1 :=
-  torusMap_comp φ ψ
-
 variable (X) in
 
 def uliftMultiples : X ≃ (ULift.{u} ℤ →+ X) where
@@ -563,34 +533,7 @@ def uliftMultiples : X ≃ (ULift.{u} ℤ →+ X) where
 
 variable (S X) in
 
-def charactersEquiv [ConnectedSpace S] : X ≃ characters (splitTorus S X) :=
-  (uliftMultiples X).trans (homEquiv S X (ULift.{u} ℤ))
-
 end Characters
-
-theorem mulN_eq_pow {S : Scheme.{u}} (G : Over S) [GrpObj G] (m : ℕ) : mulN G m = (𝟙 G) ^ m := by
-  induction m with
-  | zero => rw [pow_zero]; rfl
-  | succ n ih => rw [pow_succ, ← ih]; rfl
-
-theorem isMonHom_mulN {S : Scheme.{u}} (G : Over S) [GrpObj G] [IsCommMonObj G] (m : ℕ) :
-    IsMonHom (mulN G m) := by
-  rw [mulN_eq_pow]
-  refine ⟨?_, ?_⟩
-  · rw [MonObj.comp_pow, Category.comp_id]
-    have : η[G] = 1 := by rw [Hom.one_def]; simp
-    rw [this, one_pow]
-  · have h1 : μ[G] = fst G G * snd G G := by rw [Hom.mul_def, lift_fst_snd, Category.id_comp]
-    have h2 : ((𝟙 G) ^ m ⊗ₘ (𝟙 G) ^ m) ≫ μ[G] = (fst G G ≫ (𝟙 G) ^ m) * (snd G G ≫ (𝟙 G) ^ m) := by
-      rw [Hom.mul_def]; congr 1
-    rw [h2, MonObj.comp_pow, MonObj.comp_pow, MonObj.comp_pow, Category.comp_id, Category.comp_id,
-      Category.comp_id, ← mul_pow, ← h1]
-
-theorem connectedSpace_quotient {R : Type*} [CommRing R] [ConnectedSpace (PrimeSpectrum R)]
-    (I : Ideal R) (hI : I ≤ nilradical R) : ConnectedSpace (PrimeSpectrum (R ⧸ I)) := by
-  have h := PrimeSpectrum.isHomeomorph_comap (Ideal.Quotient.mk I)
-    (fun x => ⟨1, one_pos, by simpa using Ideal.Quotient.mk_surjective x⟩) (by simpa using hI)
-  exact h.homeomorph.symm.surjective.connectedSpace h.homeomorph.symm.continuous
 
 theorem connectedSpace_of_isLocalRing (R : Type*) [CommRing R] [IsLocalRing R] :
     ConnectedSpace (PrimeSpectrum R) := by
@@ -607,7 +550,6 @@ variable {S S' : Scheme.{u}} (f : S' ⟶ S) (X Y : Type u) [AddCommGroup X] [Add
 def bcMap : (splitTorus S' X).left ⟶ (splitTorus S X).left :=
   pullback.lift (torusFst S' X) ((splitTorus S' X).hom ≫ f) (specULiftZIsTerminal.hom_ext _ _)
 
-@[reassoc] theorem bcMap_torusFst : bcMap f X ≫ torusFst S X = torusFst S' X :=
   pullback.lift_fst _ _ _
 
 @[reassoc] theorem bcMap_hom : bcMap f X ≫ (splitTorus S X).hom = (splitTorus S' X).hom ≫ f :=
@@ -718,11 +660,6 @@ theorem pullback_map_torusMap (φ : Y →+ X) :
   rw [(comm_bcMap_iff f _ _).1 (torusMap_bcMap f φ), Iso.inv_hom_id_assoc]
 
 variable (X Y) in
-
-def homBaseChange (g : {g : splitTorus S X ⟶ splitTorus S Y // IsMonHom g}) :
-    {g' : (Over.pullback f).obj (splitTorus S X) ⟶ (Over.pullback f).obj (splitTorus S Y) //
-      IsMonHom g'} :=
-  ⟨(Over.pullback f).map g.1, by have := g.2; infer_instance⟩
 
 end BaseChange
 

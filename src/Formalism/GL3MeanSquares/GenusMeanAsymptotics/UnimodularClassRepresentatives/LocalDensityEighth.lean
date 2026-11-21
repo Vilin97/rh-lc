@@ -12,8 +12,6 @@ variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberFi
 variable [Fact (IsFixF K F)]
 variable {m r : Type} [Fintype m] [Fintype r] [DecidableEq m] [DecidableEq r]
 
-local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
-
 abbrev mkk (K : Type) {F : Type} [Field K] [Field F] [Algebra F K] (𝔭 : Ideal (𝓞 F)) (k : ℕ) :
     𝓞 K →+* 𝓞 K ⧸ extP K 𝔭 ^ k := Ideal.Quotient.mk (extP K 𝔭 ^ k)
 

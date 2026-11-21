@@ -51,13 +51,6 @@ theorem FERel.unique {mu α : D.X} {s : SecFMod D (FractionRing R) 1 α} {t t' :
     (h : FERel D mu α s t) (h' : FERel D mu α s t') : t = t' :=
   sec_ext' D.P.isLB fun y J hJ => (feRel_iff.1 h y J hJ).trans (feRel_iff.1 h' y J hJ).symm
 
-theorem FERel.smul {mu α : D.X} {s : SecFMod D (FractionRing R) 1 α} {t : SecFMod D (FractionRing R) 1 (α + 1 • mu)}
-    (h : FERel D mu α s t) (c : FractionRing R) : FERel D mu α (c • s) (c • t) := by
-  refine feRel_iff.2 fun y J hJ => ?_
-  have e : (DegPre.trF D (FractionRing R) mu).left ≫ strF D (FractionRing R) = strF D (FractionRing R) := by
-    rw [← Over.comp_left, DegPre.trF, lift_fst]
-  rw [sval_smul' hJ, sval_smul' hJ, feRel_iff.1 h y J hJ, Category.assoc, e, _root_.mul_assoc]
-
 theorem exists_psi_val [IsLocalRing R] (D : DegPre R) (χ : D.X) {a₀ : R} (h : PsiCoord D χ a₀) :
     ∃ (e : LB.Gen (LB.LinComb D.P.L (K := PUnit) (fun _ => (D.c χ).left) (fun _ => -1))), e.IsGen ∧ ∃ b : Rˣ,
       ∀ (Z : Scheme.{0}) (r : Z ⟶ (TK R).left) (z : Z) (J : (Z ⟶ D.P.A.left) → D.P.L.ι), Good D.P.L z J →
@@ -335,10 +328,6 @@ def expand (hR : AdmBase R I) [GeometricallyConnected G.hom] : SecGK U →ₗ[Fr
     rw [← (expands_iff U _ _).1 this, Fin.sum_univ_one]
     simp
 
-theorem expand_bijective (hR : AdmBase R I) [GeometricallyConnected G.hom] : Function.Bijective (expand U hR) :=
-  (Function.bijective_iff_existsUnique _).2 fun F =>
-    (existsUnique_congr fun s => (expands_iff U s F).trans eq_comm).1 ((U.expand 1 le_rfl).2 F)
-
 end Sec
 
 section Coef
@@ -369,10 +358,6 @@ def coef : SecGK U →ₗ[FractionRing R] (D.toPre.X → FractionRing R) where
     exact (add_smul _ _ _).symm)).symm
   map_smul' c s := funext fun χ => ((existsUnique_coef U hR (c • s) χ).choose_spec.2 _ (by
     rw [map_smul, map_smul, (existsUnique_coef U hR s χ).choose_spec.1, smul_smul]; rfl)).symm
-
-theorem coef_spec (s : SecGK U) (χ : D.toPre.X) :
-    famComp D.toPre (FractionRing R) 1 χ (expand U hR s) = coef U hR s χ • secGenK D χ :=
-  (existsUnique_coef U hR s χ).choose_spec.1
 
 end Coef
 

@@ -14,8 +14,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 open GlobalTheory.Doubling (absE)
 
-local notation:70 X:70 " ⬝ " Y:71 => @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid X Y
-
 omit [NumberField E] in
 theorem incM_mul'' {a b c : Type} [Fintype b] (X : Matrix a b E) (Y : Matrix b c E) :
     incM F (X ⬝ Y) = incM F X ⬝ incM F Y := Matrix.map_mul

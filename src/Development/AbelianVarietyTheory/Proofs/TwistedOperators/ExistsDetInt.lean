@@ -35,10 +35,6 @@ theorem finE_val (V : HSp D) (g : GA D V) :
 theorem Stab.one (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) : Stab V β 1 :=
   ⟨Subgroup.one_mem _, by rw [map_one]; exact Subgroup.one_mem _⟩
 
-theorem Stab.mul {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {g g' : GA D V} (h : Stab V β g) (h' : Stab V β g') :
-    Stab V β (g * g') :=
-  ⟨Subgroup.mul_mem _ h.1 h'.1, by rw [map_mul]; exact Subgroup.mul_mem _ h.2 h'.2⟩
-
 theorem Stab.inv {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {g : GA D V} (h : Stab V β g) : Stab V β g⁻¹ :=
   ⟨Subgroup.inv_mem _ h.1, by rw [map_inv]; exact Subgroup.inv_mem _ h.2⟩
 

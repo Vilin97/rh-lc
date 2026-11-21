@@ -304,19 +304,6 @@ theorem smooth_of_grpObj_of_isAffine [IsAffine G] [LocallyOfFiniteType f] : Smoo
     exact isReduced_of_grpObj_of_isAffine (Limits.pullback.snd f g)
   exact smooth_of_grpObj f
 
-theorem etale_of_grpObj_of_isFinite [IsFinite f] : Etale f := by
-  have : IsAffine G := isAffine_of_isAffineHom f
-  have := isReduced_of_grpObj_of_isAffine f
-  obtain ⟨φ, hφ⟩ := Spec.map_surjective (G.isoSpec.inv ≫ f)
-  suffices h : Etale (Spec.map φ) by
-    have e : f = G.isoSpec.hom ≫ Spec.map φ := by rw [hφ, Iso.hom_inv_id_assoc]
-    rw [e]; infer_instance
-  rw [HasRingHomProperty.Spec_iff (P := @Etale)]
-  have h1 : IsFinite (Spec.map φ) := by rw [hφ]; infer_instance
-  rw [IsFinite.SpecMap_iff] at h1
-  algebraize [φ.hom]
-  exact etale_of_isReduced_of_perfectField k Γ(G, ⊤)
-
 theorem smooth_of_hopfAlgebra (k H : Type u) [Field k] [CharZero k] [CommRing H] [HopfAlgebra k H]
     [Algebra.FiniteType k H] : Algebra.Smooth k H := by
   let f : Spec (.of H) ⟶ Spec (.of k) := Spec.map (CommRingCat.ofHom (algebraMap k H))
@@ -358,26 +345,6 @@ theorem torsion_quotient_closureIdeal : Submodule.torsion V (H ⧸ closureIdeal 
     exact (IsLocalization.map_units K ⟨a, ha⟩).map _
   rw [TensorProduct.tmul_smul, Algebra.smul_def, Ideal.unit_mul_mem_iff_mem _ hu] at h1
   exact Ideal.Quotient.eq_zero_iff_mem.2 h1
-
-instance isTorsionFree_quotient_closureIdeal [IsDomain V] :
-    Module.IsTorsionFree V (H ⧸ closureIdeal K J) :=
-  Submodule.isTorsionFree_iff_torsion_eq_bot.2 (torsion_quotient_closureIdeal J)
-
-theorem map_closureIdeal :
-    (closureIdeal K J).map (Algebra.TensorProduct.includeRight : H →ₐ[V] K ⊗[V] H) = J := by
-  letI : Algebra H (K ⊗[V] H) := Algebra.TensorProduct.rightAlgebra
-  have := IsLocalization.tensorRight (R := V) (S := H) K (nonZeroDivisors V)
-  exact IsLocalization.map_under (Algebra.algebraMapSubmonoid H (nonZeroDivisors V)) (K ⊗[V] H) J
-
-noncomputable def baseChangeQuotientClosureIdealEquiv :
-    K ⊗[V] (H ⧸ closureIdeal K J) ≃ₐ[K] (K ⊗[V] H) ⧸ J :=
-  (Algebra.TensorProduct.tensorQuotientEquiv (R := V) K H K (closureIdeal K J)).trans
-    (Ideal.quotientEquivAlgOfEq K (map_closureIdeal J))
-
-@[simp]
-theorem baseChangeQuotientClosureIdealEquiv_tmul (a : K) (x : H) :
-    baseChangeQuotientClosureIdealEquiv J (a ⊗ₜ Ideal.Quotient.mk _ x) =
-      Ideal.Quotient.mk J (a ⊗ₜ x) := rfl
 
 theorem flat_quotient_closureIdeal_of_isDedekindDomain [IsDedekindDomain V] :
     Module.Flat V (H ⧸ closureIdeal K J) :=
@@ -442,10 +409,6 @@ end HopfClosure
 
 section Surjections
 
-theorem surjective_of_epi_of_finite {R S : CommRingCat} (f : R ⟶ S) [CategoryTheory.Epi f]
-    (hf : f.hom.Finite) : Function.Surjective f :=
-  RingHom.surjective_of_epi_of_finite f hf
-
 end Surjections
 
 section Examples
@@ -474,15 +437,6 @@ theorem isHopfIdeal_ker_counit (R H : Type*) [CommRing R] [CommRing H] [HopfAlge
           TensorProduct.lid_tmul, map_smul]
     rw [h2, rTensor_counit_comul, TensorProduct.lid_tmul, one_smul, h1 x, hx', zero_smul,
       TensorProduct.tmul_zero]
-
-example : Algebra.Etale ℚ (AddMonoidAlgebra ℚ (ZMod 3)) := etale_of_hopfAlgebra _ _
-
-example : Algebra.Smooth ℚ (AddMonoidAlgebra ℚ ℤ) := smooth_of_hopfAlgebra _ _
-
-example : (closureIdeal (V := ℤ) ℚ
-    (RingHom.ker (counitAlgHom ℚ (ℚ ⊗[ℤ] AddMonoidAlgebra ℤ (ZMod 3))))).IsHopfIdeal ℤ :=
-  have := isHopfIdeal_ker_counit ℚ (ℚ ⊗[ℤ] AddMonoidAlgebra ℤ (ZMod 3))
-  isHopfIdeal_closureIdeal_of_isDedekindDomain _
 
 end Examples
 

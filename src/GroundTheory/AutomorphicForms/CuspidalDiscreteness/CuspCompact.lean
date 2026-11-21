@@ -15,8 +15,6 @@ open Reduction AutomorphicForm RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-local notation "Γ₁" => rationalGLOne K n
-
 variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
 
 instance completeSpace_cuspidalL2 : CompleteSpace (cuspidalL2 μ) :=

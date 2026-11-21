@@ -1,7 +1,10 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.PointsNonemptyUnitaryRankOne
-import GroundTheory.Brauer.Splitting
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjoinRootEquivMk
+import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
+import GroundTheory.Brauer.BaseChangeCSA
+import GroundTheory.Brauer.DoubleCentralizer
+import GroundTheory.Brauer.Degree
+import Development.AbelianVarietyTheory.Definitions.Divisors.NormSub
 
 open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount GlobalTheory.LKCx
 open scoped TensorProduct Classical

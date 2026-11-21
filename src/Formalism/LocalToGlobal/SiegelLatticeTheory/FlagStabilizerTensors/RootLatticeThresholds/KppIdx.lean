@@ -27,11 +27,6 @@ theorem kind_cases (hr : r = kk + 2 * s + 1) (j : Fin r) :
   · exact Or.inr (Or.inr (Or.inr ⟨⟨j.1 - (s + kk + 1), by omega⟩,
       Fin.ext (by show j.1 = s + kk + 1 + (j.1 - (s + kk + 1)); omega)⟩))
 
-@[simp] theorem xI_val (hr : r = kk + 2 * s + 1) (a : Fin s) : (xI hr a).1 = a.1 := rfl
-@[simp] theorem wI_val (hr : r = kk + 2 * s + 1) (i : Fin kk) : (wI hr i).1 = s + i.1 := rfl
-@[simp] theorem zI_val (hr : r = kk + 2 * s + 1) : (zI hr).1 = s + kk := rfl
-@[simp] theorem yI_val (hr : r = kk + 2 * s + 1) (a : Fin s) : (yI hr a).1 = s + kk + 1 + a.1 := rfl
-
 variable {g : ℕ}
 
 theorem jPred_of (hr : r = kk + 2 * s + 1) {N : Matrix (Fin r) (Fin r) (ZMod g)}

@@ -167,9 +167,6 @@ abbrev FormsK : Submodule K (S.Cl → VV K lam) := (S.csd emb lam h).Forms
 instance formsModO : Module (𝓞 K) (S.FormsK emb lam h) :=
   (fun C : CSD K => (inferInstance : Module (𝓞 K) C.Forms)) (S.csd emb lam h)
 
-instance formsTow : IsScalarTower (𝓞 K) K (S.FormsK emb lam h) :=
-  (fun C : CSD K => (inferInstance : IsScalarTower (𝓞 K) K C.Forms)) (S.csd emb lam h)
-
 def latOf (M : S.Cl → Submodule (𝓞 K) (VV K lam)) : Submodule (𝓞 K) (S.FormsK emb lam h) :=
   { carrier := {x | ∀ c, x.1 c ∈ M c}
     add_mem' := fun ha hb c => (M c).add_mem (ha c) (hb c)

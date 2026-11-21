@@ -117,8 +117,6 @@ end Local
 
 section Adelic
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 ℚ) ℚ
-
 def pr (v : HeightOneSpectrum (𝓞 ℚ)) : ℕ := Rat.HeightOneSpectrum.natGenerator v
 
 theorem pr_prime (v : HeightOneSpectrum (𝓞 ℚ)) : (pr v).Prime := Rat.HeightOneSpectrum.prime_natGenerator v
@@ -147,9 +145,6 @@ theorem mkInt_apply (f h v) : mkInt f h v = f v := rfl
 theorem mkInt_mem (f h) : mkInt f h ∈ intAd ℚ := h
 
 variable {E : Type} [Field E] [NumberField E]
-
-local notation "𝒜" => E ⊗[ℚ] FiniteAdeleRing (𝓞 ℚ) ℚ
-local notation "𝒮" => tensInt (F := ℚ) (FiniteAdeleRing (𝓞 ℚ) ℚ) (intOE E) (intAd ℚ)
 
 theorem ext_prV {x y : 𝒜} (h : ∀ v, prV (E := E) v x = prV (E := E) v y) : x = y :=
   sub_eq_zero.1 (afsplit_inj _ fun v => by rw [map_sub, h v, sub_self])

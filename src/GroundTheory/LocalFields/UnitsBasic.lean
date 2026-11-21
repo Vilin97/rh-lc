@@ -292,10 +292,6 @@ noncomputable def unitsModPrincipalEquiv : 𝒪[K]ˣ ⧸ unitFiltration K 1 ≃*
   (QuotientGroup.quotientMulEquivOfEq (ker_unitsToResidue K).symm).trans
     (QuotientGroup.quotientKerEquivOfSurjective _ (unitsToResidue_surjective K))
 
-@[simp]
-theorem unitsModPrincipalEquiv_mk (u : 𝒪[K]ˣ) :
-    unitsModPrincipalEquiv K (QuotientGroup.mk u) = unitsToResidue K u := rfl
-
 end Residue
 
 section Graded

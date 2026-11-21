@@ -24,17 +24,6 @@ def IsSplitting (σ : ι → O →+* R) : Prop := Function.Bijective (splitMap �
 noncomputable def splitEquiv {σ : ι → O →+* R} (h : IsSplitting σ) : R ⊗[ℤ] O ≃ₐ[R] (ι → R) :=
   AlgEquiv.ofBijective (splitMap σ) h
 
-@[simp] theorem splitEquiv_apply {σ : ι → O →+* R} (h : IsSplitting σ) (t : R ⊗[ℤ] O) :
-    splitEquiv h t = splitMap σ t := rfl
-
-noncomputable def splitEquivComm {σ : ι → O →+* R} (h : IsSplitting σ) :
-    O ⊗[ℤ] R ≃+* (ι → R) :=
-  (Algebra.TensorProduct.comm ℤ O R).toRingEquiv.trans (splitEquiv h).toRingEquiv
-
-@[simp] theorem splitEquivComm_tmul {σ : ι → O →+* R} (h : IsSplitting σ) (a : O) (r : R)
-    (i : ι) : splitEquivComm h (a ⊗ₜ r) i = σ i a * r := by
-  simp [splitEquivComm, mul_comm]
-
 variable [DecidableEq ι]
 
 noncomputable def idem {σ : ι → O →+* R} (h : IsSplitting σ) (i : ι) : R ⊗[ℤ] O :=
@@ -181,9 +170,6 @@ def IsEquivariant (ρ : O →+* Module.End R N) (ρ' : O →+* Module.End R N') 
     Prop :=
   ∀ a x, f (ρ a x) = ρ' a (f x)
 
-theorem isEquivariant_id (ρ : O →+* Module.End R N) : IsEquivariant ρ ρ LinearMap.id :=
-  fun _ _ => rfl
-
 theorem isEquivariant_action (ρ : O →+* Module.End R N) (c : O) : IsEquivariant ρ ρ (ρ c) :=
   fun a x => by
     rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, mul_comm]
@@ -211,10 +197,6 @@ def IsEquivariant.eigenMap {ρ : O →+* Module.End R N} {ρ' : O →+* Module.E
     eigenSub ρ χ →ₗ[R] eigenSub ρ' χ :=
   f.restrict fun _ hx => hf.map_mem hx
 
-@[simp] theorem IsEquivariant.coe_eigenMap {ρ : O →+* Module.End R N}
-    {ρ' : O →+* Module.End R N'} {f : N →ₗ[R] N'} (hf : IsEquivariant ρ ρ' f) (χ : O →+* R)
-    (x : eigenSub ρ χ) : (hf.eigenMap χ x : N') = f x := rfl
-
 theorem IsEquivariant.eigenMap_injective {ρ : O →+* Module.End R N}
     {ρ' : O →+* Module.End R N'} {f : N →ₗ[R] N'} (hf : IsEquivariant ρ ρ' f) (χ : O →+* R)
     (hi : Function.Injective f) : Function.Injective (hf.eigenMap χ) :=
@@ -241,12 +223,6 @@ variable {ρ} in
 theorem proj_of_mem_ne {i j : ι} (hij : j ≠ i) {x : N} (hx : x ∈ eigenSub ρ (σ j)) :
     proj h ρ i x = 0 := by
   simp [proj, tensorAction_of_mem hx, hij]
-
-theorem isProj_proj (i : ι) : LinearMap.IsProj (eigenSub ρ (σ i)) (proj h ρ i) :=
-  ⟨proj_mem h ρ i, fun _ hx => proj_of_mem h hx⟩
-
-theorem range_proj (i : ι) : LinearMap.range (proj h ρ i) = eigenSub ρ (σ i) :=
-  (isProj_proj h ρ i).range
 
 theorem completeOrthogonalIdempotents_proj [Fintype ι] :
     CompleteOrthogonalIdempotents (proj h ρ) :=
@@ -288,9 +264,6 @@ noncomputable def eigenEquiv [Fintype ι] : N ≃ₗ[R] (∀ i, eigenSub ρ (σ 
     (by
       ext x
       simpa using sum_proj h ρ x)
-
-@[simp] theorem coe_eigenEquiv_apply [Fintype ι] (x : N) (i : ι) :
-    (eigenEquiv h ρ x i : N) = proj h ρ i x := rfl
 
 theorem eigenEquiv_symm_apply [Fintype ι] (v : ∀ i, eigenSub ρ (σ i)) :
     (eigenEquiv h ρ).symm v = ∑ i, (v i : N) := by
@@ -388,9 +361,6 @@ def eigenMapAlgebra (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (χ : O →+* R) :
   map_add' x y := Subtype.ext (by simp)
   map_smul' r x := Subtype.ext (by simp)
 
-@[simp] theorem coe_eigenMapAlgebra (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (χ : O →+* R)
-    (x : eigenSub ρ χ) : (eigenMapAlgebra hf χ x : M) = f x := rfl
-
 variable {σ : ι → O →+* R}
 
 theorem map_proj_algebraMap [Finite ι] [DecidableEq ι] (h : IsSplitting σ)
@@ -447,9 +417,6 @@ variable (R') (ρ)
 noncomputable def baseChangeAction : O →+* Module.End R' (R' ⊗[R] N) :=
   (Module.End.baseChangeHom R R' N).toRingHom.comp ρ
 
-@[simp] theorem baseChangeAction_apply (a : O) :
-    baseChangeAction R' ρ a = (ρ a).baseChange R' := rfl
-
 theorem mk_equivariant (a : O) (x : N) :
     TensorProduct.mk R R' N 1 (ρ a x) = baseChangeAction R' ρ a (TensorProduct.mk R R' N 1 x) := by
   simp
@@ -458,32 +425,6 @@ noncomputable def eigenBaseChangeEquiv [Finite ι] (h : IsSplitting σ) (i : ι)
     R' ⊗[R] eigenSub ρ (σ i) ≃ₗ[R']
       eigenSub (baseChangeAction R' ρ) ((algebraMap R R').comp (σ i)) :=
   (isBaseChange_eigenMapAlgebra h (mk_equivariant R' ρ) (TensorProduct.isBaseChange R N R') i).equiv
-
-@[simp] theorem coe_eigenBaseChangeEquiv_tmul [Finite ι] (h : IsSplitting σ) (i : ι) (r : R')
-    (x : eigenSub ρ (σ i)) :
-    (eigenBaseChangeEquiv R' ρ h i (r ⊗ₜ x) : R' ⊗[R] N) = r ⊗ₜ (x : N) := by
-  simp [eigenBaseChangeEquiv, IsBaseChange.equiv_tmul, TensorProduct.smul_tmul']
-
-theorem coe_eigenBaseChangeEquiv [Finite ι] (h : IsSplitting σ) (i : ι)
-    (t : R' ⊗[R] eigenSub ρ (σ i)) :
-    (eigenBaseChangeEquiv R' ρ h i t : R' ⊗[R] N)
-      = (eigenSub ρ (σ i)).subtype.baseChange R' t := by
-  induction t using TensorProduct.induction_on with
-  | zero => simp
-  | tmul r x => simp
-  | add s t hs ht => simp [hs, ht]
-
-theorem eigenSub_baseChangeAction [Finite ι] (h : IsSplitting σ) (i : ι) :
-    eigenSub (baseChangeAction R' ρ) ((algebraMap R R').comp (σ i))
-      = (eigenSub ρ (σ i)).baseChange R' := by
-  ext y
-  constructor
-  · intro hy
-    refine ⟨(eigenBaseChangeEquiv R' ρ h i).symm ⟨y, hy⟩, ?_⟩
-    rw [← coe_eigenBaseChangeEquiv R' ρ h i, LinearEquiv.apply_symm_apply]
-  · rintro ⟨t, rfl⟩
-    rw [← coe_eigenBaseChangeEquiv R' ρ h i]
-    exact Subtype.property _
 
 end BaseChange
 
@@ -609,45 +550,7 @@ variable {O : Type*} [CommRing O] {R : Type*} [CommRing R] {ι : Type*} [Fintype
   {σ : ι → O →+* R} (h : IsSplitting σ) (ρ : O →+* Module.End R N)
 include h
 
-theorem charpoly_eq_iff_rankAtStalk_eq [Module.Free R N] [Module.Finite R N] (r : ι → ℕ) :
-    (∀ a, (ρ a).charpoly = ∏ i, (X - C (σ i a)) ^ r i) ↔
-      ∀ (p : PrimeSpectrum R) i, Module.rankAtStalk (eigenSub ρ (σ i)) p = r i := by
-  have key : ∀ p : PrimeSpectrum R,
-      (∀ a, (ρ a).charpoly.map (algebraMap R (Localization.AtPrime p.asIdeal)) =
-        (∏ i, (X - C (σ i a)) ^ r i).map (algebraMap R (Localization.AtPrime p.asIdeal))) ↔
-      ∀ i, Module.rankAtStalk (eigenSub ρ (σ i)) p = r i := by
-    intro p
-    have := charpoly_eq_iff_finrank_eq (h.map (algebraMap R (Localization.AtPrime p.asIdeal)))
-      (baseChangeAction (Localization.AtPrime p.asIdeal) ρ) r
-    simp only [baseChangeAction_apply, LinearMap.charpoly_baseChange,
-      ← (eigenBaseChangeEquiv _ ρ h _).finrank_eq] at this
-    simp only [Module.rankAtStalk_eq_finrank_tensorProduct, ← this]
-    simp [Polynomial.map_prod]
-  constructor
-  · intro hr p
-    exact (key p).1 fun a => by rw [hr]
-  · intro hr a
-    ext n
-    refine Module.eq_of_localization_maximal (R := R) (fun P _ => Localization.AtPrime P)
-      (fun P _ => Algebra.linearMap R (Localization.AtPrime P)) _ _ fun m hm => ?_
-    have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q n) ((key ⟨m, hm.isPrime⟩).2 (hr _) a)
-    simp only [Polynomial.coeff_map] at this
-    exact this
-
 omit [Fintype ι] in
-
-theorem isLocallyConstant_rankAtStalk_eigenSub [Module.Projective R N] [Module.Finite R N]
-    (i : ι) : IsLocallyConstant (Module.rankAtStalk (R := R) (eigenSub ρ (σ i))) :=
-  have := finite_eigenSub h ρ i
-  have := projective_eigenSub h ρ i
-  have := Module.finitePresentation_of_projective R (eigenSub ρ (σ i))
-  Module.isLocallyConstant_rankAtStalk
-
-theorem isClopen_setOf_rankAtStalk_eq [Module.Projective R N] [Module.Finite R N] (r : ι → ℕ) :
-    IsClopen {p : PrimeSpectrum R | ∀ i, Module.rankAtStalk (eigenSub ρ (σ i)) p = r i} := by
-  rw [Set.ofPred_forall]
-  exact isClopen_iInter_of_finite fun i =>
-    (isLocallyConstant_rankAtStalk_eigenSub h ρ i).isClopen_fiber (r i)
 
 end Stalk
 
@@ -667,21 +570,6 @@ omit [DecidableEq ι] in
 theorem card_eq_of_basis (b : Module.Basis ι ℤ (𝓞 E)) :
     Fintype.card ι = Module.finrank ℚ E := by
   rw [← NumberField.RingOfIntegers.rank, Module.finrank_eq_card_basis b]
-
-theorem det_sq_eq_of_basis {O : Type*} [CommRing O] (σ : ι → O →+* R)
-    (b b' : Module.Basis ι ℤ O) :
-    (Matrix.of fun i j => σ i (b j)).det ^ 2 = (Matrix.of fun i j => σ i (b' j)).det ^ 2 := by
-  have h1 : (Matrix.of fun i j => σ i (b' j))
-      = (Matrix.of fun i j => σ i (b j)) * (b.toMatrix b').map (Int.castRingHom R) := by
-    ext i j
-    conv_lhs => rw [Matrix.of_apply, ← b.sum_toMatrix_smul_self b' j]
-    simp [Matrix.mul_apply, mul_comm]
-  have h2 : (b.toMatrix b').det ^ 2 = 1 := by
-    have hu : IsUnit (b.toMatrix b').det := by
-      rw [← Module.Basis.det_apply]; exact b.isUnit_det b'
-    rcases Int.isUnit_iff.1 hu with h | h <;> simp [h]
-  rw [h1, Matrix.det_mul, mul_pow, ← RingHom.mapMatrix_apply, ← RingHom.map_det, ← map_pow, h2]
-  simp
 
 theorem det_sq_eq_discr_map {σ : ι → 𝓞 E →+* R} {b : Module.Basis ι ℤ (𝓞 E)}
     (hd : (Matrix.of fun i j => σ i (b j)).det ^ 2 = (NumberField.discr E : R))
@@ -770,19 +658,7 @@ theorem isSplitting_of_isUnit_discr {σ : ι → 𝓞 E →+* R} (b : Module.Bas
     (hu : IsUnit (NumberField.discr E : R)) : IsSplitting σ :=
   (isSplitting_iff_isUnit_det σ b).2 ((isUnit_pow_iff two_ne_zero).1 (hd ▸ hu))
 
-theorem isUnit_discr_of_isSplitting {σ : ι → 𝓞 E →+* R} (b : Module.Basis ι ℤ (𝓞 E))
-    (hd : (Matrix.of fun i j => σ i (b j)).det ^ 2 = (NumberField.discr E : R))
-    (h : IsSplitting σ) : IsUnit (NumberField.discr E : R) :=
-  hd ▸ ((isSplitting_iff_isUnit_det σ b).1 h).pow 2
-
 omit [DecidableEq ι] in
-
-theorem isSplitting_conjugateHom {L : Type*} [Field L] [Algebra (𝓞 L) R] {φ : ι → E →+* L}
-    (hφ : Function.Injective φ) (hc : Fintype.card ι = Module.finrank ℚ E)
-    (hu : IsUnit (NumberField.discr E : R)) : IsSplitting fun i => conjugateHom L R (φ i) := by
-  classical
-  obtain ⟨b⟩ := nonempty_basis hc
-  exact isSplitting_of_isUnit_discr b (det_sq_conjugateHom hφ b) hu
 
 omit [DecidableEq ι] in
 
@@ -807,56 +683,5 @@ end Discr
 end EigenSplit
 
 open EigenSplit in
-
-theorem eigenSplitting_of_isUnit_discr {E : Type*} [Field E] [NumberField E]
-    {R : Type*} [CommRing R] :
-    (∀ (L : Type) [Field L] [CharZero L] [Algebra (𝓞 L) R] [Fintype (E →+* L)]
-      [DecidableEq (E →+* L)], (∀ x : E, ((minpoly ℚ x).map (algebraMap ℚ L)).Splits) →
-      Fintype.card (E →+* L) = Module.finrank ℚ E ∧ Nonempty (Module.Basis (E →+* L) ℤ (𝓞 E)) ∧
-        ∀ b : Module.Basis (E →+* L) ℤ (𝓞 E),
-          (Matrix.of fun φ j => conjugateHom L R φ (b j)).det ^ 2 = (NumberField.discr E : R)) ∧
-    ∀ {ι : Type} [Fintype ι] [DecidableEq ι] (σ : ι → 𝓞 E →+* R) (b : Module.Basis ι ℤ (𝓞 E)),
-      (Matrix.of fun i j => σ i (b j)).det ^ 2 = (NumberField.discr E : R) →
-      IsUnit (NumberField.discr E : R) →
-      ∃ h : IsSplitting σ,
-        (∃ e : 𝓞 E ⊗[ℤ] R ≃+* (ι → R), ∀ a r i, e (a ⊗ₜ r) i = σ i a * r) ∧
-        CompleteOrthogonalIdempotents (idem h) ∧
-        (∀ i, splitMap σ (idem h i) = Pi.single i 1) ∧
-        ∀ (N : Type) [AddCommGroup N] [Module R N] (ρ : 𝓞 E →+* Module.End R N),
-          (∀ i x, x ∈ eigenSub ρ (σ i) ↔ ∀ a, ρ a x = σ i a • x) ∧
-          DirectSum.IsInternal (fun i => eigenSub ρ (σ i)) ∧
-          (∀ i, LinearMap.IsProj (eigenSub ρ (σ i)) (tensorAction ρ (idem h i))) ∧
-          (∀ (R' : Type) [CommRing R'] [Algebra R R'] (i : ι),
-            eigenSub (baseChangeAction R' ρ) ((algebraMap R R').comp (σ i))
-              = (eigenSub ρ (σ i)).baseChange R' ∧
-            Function.Injective ((eigenSub ρ (σ i)).subtype.baseChange R')) ∧
-          (∀ (N' N'' : Type) [AddCommGroup N'] [Module R N'] [AddCommGroup N''] [Module R N'']
-            (ρ' : 𝓞 E →+* Module.End R N') (ρ'' : 𝓞 E →+* Module.End R N'')
-            (f : N →ₗ[R] N') (g : N' →ₗ[R] N'') (hf : IsEquivariant ρ ρ' f)
-            (hg : IsEquivariant ρ' ρ'' g), Function.Exact f g →
-            ∀ i, Function.Exact (hf.eigenMap (σ i)) (hg.eigenMap (σ i))) ∧
-          (Module.Finite R N → ∀ i, Module.Finite R (eigenSub ρ (σ i))) ∧
-          (Module.Projective R N → ∀ i, Module.Projective R (eigenSub ρ (σ i))) ∧
-          ∀ [Module.Free R N] [Module.Finite R N],
-            ((∀ i, Module.Free R (eigenSub ρ (σ i))) → ∀ a, (ρ a).charpoly
-              = ∏ i, (X - C (σ i a)) ^ Module.finrank R (eigenSub ρ (σ i))) ∧
-            (IsLocalRing R → (∀ i, Module.Free R (eigenSub ρ (σ i))) ∧
-              ∀ r : ι → ℕ, (∀ a, (ρ a).charpoly = ∏ i, (X - C (σ i a)) ^ r i) ↔
-                ∀ i, Module.finrank R (eigenSub ρ (σ i)) = r i) ∧
-            ∀ r : ι → ℕ, (∀ a, (ρ a).charpoly = ∏ i, (X - C (σ i a)) ^ r i) ↔
-              ∀ (p : PrimeSpectrum R) i, Module.rankAtStalk (eigenSub ρ (σ i)) p = r i := by
-  refine ⟨fun L _ _ _ _ _ hL => ⟨card_embeddings_of_splits hL,
-    nonempty_basis (card_embeddings_of_splits hL),
-    fun b => det_sq_conjugateHom Function.injective_id b⟩, fun σ b hd hu => ?_⟩
-  have h := isSplitting_of_isUnit_discr b hd hu
-  refine ⟨h, ⟨splitEquivComm h, splitEquivComm_tmul h⟩, completeOrthogonalIdempotents_idem h,
-    splitMap_idem h, fun N _ _ ρ => ⟨fun _ _ => mem_eigenSub, isInternal_eigenSub h ρ,
-    isProj_proj h ρ, fun R' _ _ i => ⟨eigenSub_baseChangeAction R' ρ h i, fun s t hst => ?_⟩,
-    fun _ _ _ _ _ _ _ _ _ _ hf hg he i => hf.eigenMap_exact h hg i he,
-    fun _ => finite_eigenSub h ρ, fun _ => projective_eigenSub h ρ,
-    ⟨charpoly_eq_prod h ρ, fun _ => ⟨free_eigenSub h ρ, charpoly_eq_iff_finrank_eq h ρ⟩,
-      charpoly_eq_iff_rankAtStalk_eq h ρ⟩⟩⟩
-  rw [← coe_eigenBaseChangeEquiv R' ρ h i, ← coe_eigenBaseChangeEquiv R' ρ h i] at hst
-  exact (eigenBaseChangeEquiv R' ρ h i).injective (Subtype.ext hst)
 
 end GlobalTheory

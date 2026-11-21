@@ -18,8 +18,6 @@ open Reduction AutomorphicForm RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-local notation "Γ₁" => rationalGLOne K n
-
 variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
 
 def ccTranslate (g : normOneGL K n) (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ) :

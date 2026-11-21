@@ -32,7 +32,6 @@ theorem incl_sq {T : Over S} (u : T ⟶ Two A) : (u ≫ incl A) ^ 2 = 1 := by
 def kpt {T : Over S} (x : T ⟶ A) (hx : x ^ 2 = 1) : T ⟶ Two A :=
   pullback.lift x (toUnit _) (by rw [comp_sq, hx, Hom.one_def])
 
-@[simp, reassoc] theorem kpt_incl {T : Over S} (x : T ⟶ A) (hx : x ^ 2 = 1) : kpt x hx ≫ incl A = x :=
   pullback.lift_fst _ _ _
 
 theorem two_ext {T : Over S} {u v : T ⟶ Two A} (h : u ≫ incl A = v ≫ incl A) : u = v :=
@@ -117,7 +116,6 @@ variable {A}
 def dif {T : Over S} (a b : T ⟶ A) (h : a ≫ sq A = b ≫ sq A) : T ⟶ Two A :=
   kpt (a⁻¹ * b) (by rw [mul_pow, inv_pow, ← comp_sq, ← comp_sq, h, inv_mul_cancel])
 
-@[simp, reassoc] theorem dif_incl {T : Over S} (a b : T ⟶ A) (h : a ≫ sq A = b ≫ sq A) :
     dif a b h ≫ incl A = a⁻¹ * b := kpt_incl _ _
 
 variable (A)

@@ -10,9 +10,6 @@ namespace GlobalTheory.SplitSep
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
-local notation3 "L⁺" => NumberField.maximalRealSubfield L
-local notation3 "cc" => IsCMField.complexConj L
-
 theorem exists_near (v : HeightOneSpectrum (𝓞 L⁺))
     (f : v.adicCompletion L⁺ → v.adicCompletion L⁺) (hf : Continuous f)
     (y₀ : v.adicCompletion L⁺) (hy₀ : Valued.v (f y₀) < 1) :

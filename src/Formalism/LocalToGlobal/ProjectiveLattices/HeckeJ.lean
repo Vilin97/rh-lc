@@ -20,14 +20,9 @@ def IsHkJ (T : WL →ₗ[L] WL) : Prop := ∀ x, em (j (T x)) = c • TF (em (j 
 
 open Classical in
 
-def hLj : WL →ₗ[L] WL := if h : ∃! T, IsHkJ σ₀ j em TF c T then h.choose else 0
-
 variable {σ₀ j em TF c}
 
 variable (σ₀ j em TF c)
-
-def HkJRow {Ks : Type*} [Field Ks] [Module Ks WL] (WK : Submodule Ks WL) : Prop :=
-  ∃ T : WL →ₗ[L] WL, IsHkJ σ₀ j em TF c T ∧ ∀ x ∈ WK, T x ∈ WK
 
 variable {σ₀ j em TF c}
 
@@ -37,9 +32,6 @@ section Inj
 
 variable {K L : Type} [Field K] [Field L] [Algebra K L] {M : Type} [AddCommGroup M] [Module K M]
   {W : Type} [AddCommGroup W] [Module ℂ W]
-
-def JIndep (σ : L →+* ℂ) (jK : M →ₛₗ[σ.comp (algebraMap K L)] W) : Prop :=
-  ∀ (n : ℕ) (b : Fin n → M), LinearIndependent K b → LinearIndependent ℂ fun i => jK (b i)
 
 end Inj
 

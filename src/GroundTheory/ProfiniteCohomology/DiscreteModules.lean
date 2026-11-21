@@ -43,14 +43,6 @@ variable (k G) in
 
 def isDiscreteRep : ObjectProperty (Rep.{w} k G) := fun A => IsDiscreteRep A
 
-@[simp]
-theorem isDiscreteRep_apply (A : Rep.{w} k G) : isDiscreteRep k G A ↔ IsDiscreteRep A :=
-  Iff.rfl
-
 variable (k G) in
-
-abbrev DiscreteRep := (isDiscreteRep.{w} k G).FullSubcategory
-
-instance (A : DiscreteRep.{w} k G) : IsDiscreteRep A.obj := A.property
 
 end GroundTheory.ProfCoh

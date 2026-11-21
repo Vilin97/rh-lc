@@ -39,8 +39,6 @@ theorem OL_resFinite : Finite (ResidueField ↥(OL LL)) := by
 
 def toOm : ↥(OL LL) →+* PadicAlgCl l := LL.1.val.toRingHom.comp (OL LL).val.toRingHom
 
-theorem toOm_apply (a : ↥(OL LL)) : toOm LL a = ((a : ↥LL.1) : PadicAlgCl l) := rfl
-
 theorem toOm_injective : Function.Injective (toOm LL) := fun a b h => Subtype.ext (Subtype.ext h)
 
 theorem inducing_toOm : Topology.IsInducing (toOm LL) :=
@@ -74,13 +72,6 @@ theorem OL_adic : IsAdic (maximalIdeal ↥(OL LL)) := by
     exact ⟨n, by
       rw [key]
       exact (Set.preimage_mono ((Metric.closedBall_subset_ball hn).trans h)).trans hts⟩
-
-def toC : ↥(OL LL) →+* ℂ_[l] := (algebraMap (PadicAlgCl l) ℂ_[l]).comp (toOm LL)
-
-theorem toC_injective : Function.Injective (toC LL) := fun a b h =>
-  toOm_injective LL ((algebraMap (PadicAlgCl l) ℂ_[l]).injective h)
-
-theorem norm_toC (a : ↥(OL LL)) : ‖toC LL a‖ = nrm LL a := PadicComplex.norm_extends l _
 
 def toFrac : ↥LL.1 →+* FractionRing ↥(OL LL) := (FractionRing.algEquiv ↥(OL LL) ↥LL.1).symm.toRingEquiv.toRingHom
 

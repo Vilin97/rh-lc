@@ -30,9 +30,6 @@ theorem mem_proLRes {g : G} :
     g ∈ proLRes l G ↔ ∀ N : OpenNormalSubgroup G, IsPGroup l (G ⧸ N.toSubgroup) → g ∈ N.toSubgroup := by
   simp only [proLRes, Subgroup.mem_iInf, Subtype.forall]
 
-instance : (proLRes l G).Normal :=
-  ⟨fun _ h g => mem_proLRes.2 fun N hN => N.isNormal'.conj_mem _ (mem_proLRes.1 h N hN) g⟩
-
 theorem isClosed_proLRes [ContinuousMul G] : IsClosed (proLRes l G : Set G) := by
   rw [proLRes, Subgroup.coe_iInf]
   exact isClosed_iInter fun N => N.1.toOpenSubgroup.isClosed

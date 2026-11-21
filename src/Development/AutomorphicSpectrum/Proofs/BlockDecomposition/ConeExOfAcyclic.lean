@@ -215,10 +215,6 @@ def gp (F : C ⥤ ModuleCat.{0} R) {m n : ℕ} (θ : Fin (m + 1) →o Fin (n + 1
     LinearMap.proj (R := R) (φ := fun c : Fin (m + 1) ⥤ C ↦ (F.obj (c.obj (Fin.last m)) : Type))
       (θ.monotone.functor ⋙ c)
 
-theorem gp_apply (F : C ⥤ ModuleCat.{0} R) {m n : ℕ} (θ : Fin (m + 1) →o Fin (n + 1)) (f : MCn F m)
-    (c : Fin (n + 1) ⥤ C) : gp F θ f c =
-      F.map (c.map (homOfLE (Fin.le_last (θ (Fin.last m))))) (f (θ.monotone.functor ⋙ c)) := rfl
-
 theorem gp_id (F : C ⥤ ModuleCat.{0} R) (n : ℕ) (f : MCn F n) : gp F OrderHom.id f = f := by
   funext c
   show (F.map (c.map (𝟙 (Fin.last n)))).hom (f c) = f c
@@ -277,9 +273,6 @@ def pb (Φ : C' ⥤ C) {F : C ⥤ ModuleCat.{0} R} {G : C' ⥤ ModuleCat.{0} R} 
     MCn F n →ₗ[R] MCn G n :=
   LinearMap.pi fun c ↦ (α.app (c.obj (Fin.last n))).hom ∘ₗ
     LinearMap.proj (R := R) (φ := fun c : Fin (n + 1) ⥤ C ↦ (F.obj (c.obj (Fin.last n)) : Type)) (c ⋙ Φ)
-
-theorem pb_apply (Φ : C' ⥤ C) {F : C ⥤ ModuleCat.{0} R} {G : C' ⥤ ModuleCat.{0} R} (α : Φ ⋙ F ⟶ G) (n : ℕ)
-    (f : MCn F n) (c : Fin (n + 1) ⥤ C') : pb Φ α n f c = (α.app (c.obj (Fin.last n))).hom (f (c ⋙ Φ)) := rfl
 
 theorem pb_gp (Φ : C' ⥤ C) {F : C ⥤ ModuleCat.{0} R} {G : C' ⥤ ModuleCat.{0} R} (α : Φ ⋙ F ⟶ G) {m n : ℕ}
     (θ : Fin (m + 1) →o Fin (n + 1)) (f : MCn F m) : pb Φ α n (gp F θ f) = gp G θ (pb Φ α m f) := by
@@ -809,8 +802,6 @@ def modOf (F : C ⥤ CommAlgCat.{0} R) : C ⥤ ModuleCat.{0} R where
   map φ := ModuleCat.ofHom (mp F φ).toLinearMap
   map_id T := ModuleCat.hom_ext (LinearMap.ext fun b ↦ mp_id F T b)
   map_comp φ ψ := ModuleCat.hom_ext (LinearMap.ext fun b ↦ mp_comp F φ ψ b)
-
-theorem mdn_modOf (F : C ⥤ CommAlgCat.{0} R) (n : ℕ) (f : Cn F n) : mdn (modOf F) n f = dn F n f := rfl
 
 def trOf {F : C ⥤ CommAlgCat.{0} R} {G : C × D ⥤ CommAlgCat.{0} R} (m : Proj F G) : Tr R C D where
   F := modOf F

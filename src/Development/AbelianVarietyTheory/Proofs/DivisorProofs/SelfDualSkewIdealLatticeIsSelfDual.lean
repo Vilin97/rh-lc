@@ -1,5 +1,16 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSplitInert
+import Development.AbelianVarietyTheory.Definitions.Divisors.FinitePrimesUnder
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.VacuumUnderAdelicPairModulusOne
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ThetaSpanRationalTranslatesVacuum
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ApplyAt0Smul
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OddEigenvectorUniqueUpToUnit
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaFunctionRationalTranslateMemStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CosetVecMemThetaSpace
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilOperatorFixesCosetVector
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilFixesCosetVectorCongruentOneModIdealStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridNuUnitTrivial
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CondESupConj
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsHalfIdem
 import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ExistsPowPrincipalFractionalIdeal
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CmThetaTaylorCoeffAlgebraicAndConjugate
 open Formalism.BasicNotions Formalism.IndefR.Links IsDedekindDomain NumberField Polynomial
@@ -13,8 +24,6 @@ noncomputable section
 namespace GlobalTheory.SkewLatSD
 
 variable (D : D7)
-
-local notation "FI" => FractionalIdeal (𝓞 D.host.E)⁰ D.host.E
 
 theorem star_eq_conj' (x : D.host.E) : (letI := D.host.cmStar; star x) = D.host.conj x := by
   have := D.host.isCMField_hostE

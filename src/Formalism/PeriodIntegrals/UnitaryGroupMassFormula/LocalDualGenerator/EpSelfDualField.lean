@@ -12,8 +12,6 @@ namespace PI.LocDualGen.EpF
 variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
 variable (L : Type) [Field L] [Algebra K L] [FiniteDimensional K L] [CharZero K]
 
-local notation "C" => integralClosure 𝒪[K] L
-
 theorem tf : Module.IsTorsionFree 𝒪[K] L := by
   first
     | exact Module.IsTorsionFree.trans_faithfulSMul 𝒪[K] K L

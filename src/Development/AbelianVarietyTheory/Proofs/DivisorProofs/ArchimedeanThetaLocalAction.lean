@@ -17,10 +17,6 @@ variable {F : Type} [Field F] [NumberField F]
 
 def mk (a : Ainf F) (b : Af F) : AF F := (a, b)
 
-@[simp] theorem mk_fst (a : Ainf F) (b : Af F) : (mk a b).1 = a := rfl
-
-@[simp] theorem mk_snd (a : Ainf F) (b : Af F) : (mk a b).2 = b := rfl
-
 theorem evI_fin (b : Af F) : evI F (((0 : Ainf F), b) : AF F) = 0 := by
   show InfiniteAdeleRing.ringEquiv_mixedSpace F 0 = 0
   exact map_zero _

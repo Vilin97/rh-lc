@@ -58,37 +58,3 @@ private theorem positionOne_invariantIntegral_exchange_step {K : Type} [Field K]
   refine hi.trans ?_
   simp only [map_mul, map_pow, AbsoluteValue.map_neg, map_one, one_pow, _root_.one_mul]
   exact mul_le_mul_of_nonneg_left (hle _) (w.nonneg _)
-
-theorem UpperTheory.exists_rows_attaining_minor_values :
-    ∀ (K : Type) [Field K] (w : AbsoluteValue K ℝ), IsNonarchimedean w → ∀ (n r : ℕ) (X : Matrix (Fin n) (Fin r) K) (ν : ℕ → ℝ), (∀ k, k ≤ r → 0 < ν k) → (∀ k (hk : k ≤ r) σ, w (colMinor X k hk σ) ≤ ν k) → (∀ k (hk : k ≤ r), ∃ σ, w (colMinor X k hk σ) = ν k) → ∃ σ : Fin r → Fin n, ∀ k (hk : k ≤ r), w (lead X σ k hk) = ν k := by
-  intro K _ w hw n r X ν hpos hle hex
-  have key : ∀ k (hk : k ≤ r), ∃ σ : Fin k → Fin n, ∀ j (hj : j ≤ k),
-      w (colMinor X j (hj.trans hk) fun a => σ (Fin.castLE hj a)) = ν j := by
-    intro k
-    induction k with
-    | zero =>
-      intro hk
-      obtain ⟨σ, hσ⟩ := hex 0 hk
-      refine ⟨σ, fun j hj => ?_⟩
-      obtain rfl : j = 0 := by omega
-      exact hσ
-    | succ k ih =>
-      intro hk
-      have hk' : k ≤ r := by omega
-      obtain ⟨σ, hσ⟩ := ih hk'
-      obtain ⟨τ, hτ⟩ := hex (k + 1) hk
-      obtain ⟨ρ, hρ⟩ := positionOne_invariantIntegral_exchange_step w hw (X.submatrix id (Fin.castLE hk)) (ν k) (hpos k hk')
-        (fun t => hle k hk' t) σ (hσ k le_rfl) τ
-      refine ⟨Fin.snoc (α := fun _ => Fin n) σ ρ, fun j hj => ?_⟩
-      rcases Nat.lt_or_ge j (k + 1) with h | h
-      · have hj' : j ≤ k := by omega
-        rw [← hσ j hj']
-        congr 2
-        funext a
-        exact Fin.snoc_castSucc (α := fun _ => Fin n) ρ σ (Fin.castLE hj' a)
-      · obtain rfl : j = k + 1 := by omega
-        refine le_antisymm (hle _ _ _) ?_
-        rw [← hτ]
-        exact hρ
-  obtain ⟨σ, hσ⟩ := key r le_rfl
-  exact ⟨σ, fun k hk => hσ k hk⟩

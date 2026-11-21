@@ -40,9 +40,6 @@ theorem dualLattice_eq_span : dualLattice L = Submodule.span ℤ
 instance : DiscreteTopology (dualLattice L) := by
   rw [dualLattice_eq_span L]; infer_instance
 
-instance : IsZLattice ℝ (dualLattice L) :=
-  ⟨by rw [dualLattice_eq_span L]; exact ZSpan.span_top _⟩
-
 end DualLattice
 
 section Summability

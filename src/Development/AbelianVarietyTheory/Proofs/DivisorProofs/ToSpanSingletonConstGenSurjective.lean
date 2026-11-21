@@ -39,9 +39,6 @@ theorem exists_algHom_pi_eq_eval {O ι : Type*} [CommRing O] [Nontrivial O] [Fin
 
 variable (p : ℕ) (O : Type) [CommRing O] [Fact p.Prime]
 
-@[simp] theorem constHom_constGen : constHom _ (constGen p O) = 𝟙 _ := by
-  rw [← LinearEquiv.eq_symm_apply, constHom_symm_apply, tateMap_id]
-
 variable [Nontrivial O]
 
 theorem toSpanSingleton_constGen_surjective

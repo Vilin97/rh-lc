@@ -24,15 +24,6 @@ def bd {n : ℕ} (w : Pt E n) (A : Matrix (Fin n) (Fin n) E) : Matrix (Fin n) (F
 def Rep {n m : ℕ} (f : Fin m → Fin n → E) (g : (Fin n → E) ≃ₗ[E] (Fin n → E))
     (s : Matrix (Fin m) (Fin m) E) : Prop := ∀ j, g (f j) = ∑ i, s i j • f i
 
-lemma Rep.mul {n m : ℕ} {f : Fin m → Fin n → E} {g h : (Fin n → E) ≃ₗ[E] (Fin n → E)}
-    {s t : Matrix (Fin m) (Fin m) E} (hg : Rep f g s) (hh : Rep f h t) : Rep f (g * h) (s * t) := by
-  intro j
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [LinearEquiv.mul_apply, hh j, map_sum]
-  simp only [map_smul, hg _, Finset.smul_sum, Matrix.mul_apply, Finset.sum_smul, smul_smul]
-  rw [Finset.sum_comm]
-  simp only [mul_comm]
-
 end Blocks
 
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]

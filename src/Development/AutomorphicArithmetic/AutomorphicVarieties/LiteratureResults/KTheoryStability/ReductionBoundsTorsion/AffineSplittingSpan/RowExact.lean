@@ -46,11 +46,6 @@ section Inv
 
 variable (pr : P →* Q)
 
-theorem PInv.add {a b : ℕ} {F G : Bi P Q a b} (hF : PInv pr F) (hG : PInv pr G) : PInv pr (F + G) := by
-  intro g x y
-  show F _ _ + G _ _ = F x y + G x y
-  rw [hF g x y, hG g x y]
-
 theorem PInv.sub {a b : ℕ} {F G : Bi P Q a b} (hF : PInv pr F) (hG : PInv pr G) : PInv pr (F - G) := by
   intro g x y
   show F _ _ - G _ _ = F x y - G x y
@@ -60,8 +55,6 @@ theorem PInv.smul {a b : ℕ} (r : ℝ) {F : Bi P Q a b} (hF : PInv pr F) : PInv
   intro g x y
   show r * F _ _ = r * F x y
   rw [hF g x y]
-
-theorem PInv.zero {a b : ℕ} : PInv pr (0 : Bi P Q a b) := fun _ _ _ => rfl
 
 theorem PInv.dh {a b : ℕ} {F : Bi P Q (a + 1) b} (hF : PInv pr F) : PInv pr (dh F) := by
   intro g x y

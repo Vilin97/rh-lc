@@ -120,15 +120,4 @@ theorem isCharFn_and_isPseudoCoeff_of_compact [T2Space H] [SecondCountableTopolo
     simp only [trace_rep_conj, integral_const, Complex.real_smul]
     field_simp
 
-example [MeasurableSpace Circle] [BorelSpace Circle] (ν : Measure Circle) [ν.IsHaarMeasure] :
-    IsPseudoCoeff circleMat ν (charRep (MonoidHom.id Circle)) fun z =>
-      conj (LinearMap.trace ℂ ℂ (charRep (MonoidHom.id Circle) z : ℂ →ₗ[ℂ] ℂ)) / ν.real univ := by
-  have e : ∀ z i j, matCoord circleMat z i j = z := fun z i j => by
-    fin_cases i; fin_cases j; simp [matCoord, circleMat]; rfl
-  have h := AutMult.isIrrUnitary_charRep (χ := MonoidHom.id Circle) continuous_id
-  refine (isCharFn_and_isPseudoCoeff_of_compact
-    (continuous_pi fun i => continuous_pi fun j => by simp only [e]; exact continuous_subtype_val) h.unitary h.irred
-    ⟨HasCompactSupport.of_compactSpace _, fun y => conj (y 0 0), ?_, fun z => by simp [e, charRep]⟩).2
-  exact Complex.conjCLE.contDiff.comp (by fun_prop)
-
 end GlobalTheory.Orb

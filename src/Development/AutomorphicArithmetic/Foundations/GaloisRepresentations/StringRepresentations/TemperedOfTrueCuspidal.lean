@@ -1,5 +1,17 @@
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.StringRepresentations.RankOneOfLong
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.RankOneUnitary
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ThetaMod
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.GoodIdempotentFixesOfOnlySeriesOfLabelActs
+import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsSpanFormsNeBot
+import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.GaloisRepOfPolarizedCuspidal
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.RankOneLocalComponentDet
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.HeckeCharLocalComponentExistsUniqueUnitary
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.AdmissibleOfRankOneUnitary
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NormEqOfSamePlace
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPadicAlgClRingEquivComplexCompEqOfCountabl
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsRecLawsSuppUnitSurj
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIsLocCompAndIsLocLoc
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TemperedOfRankOneUnitary
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ParameterLawsEmpty
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ParameterLawsEmptyStatement
@@ -39,7 +51,5 @@ theorem parLawsBare : type_of% @GlobalTheory.ParLawsBare.main := by
     ⟨GlobalTheory.RowTieLP.main D X.T, tieAut_of_side X.chr hE, tieGal_bare hE⟩
   exact ⟨htie0, ha5, bareTemp hP X, tieLab_of_lab X.T X.lab, heckeSplitOne_of_side X.chr, cancel_of_tie X.T,
     fun k v => GlobalTheory.FixedPlaceSplit.isSplitPl_plGw D k v⟩
-
-example : type_of% @GlobalTheory.T.parameter_laws_empty := parLawsBare
 
 end UpperTheory.GalN

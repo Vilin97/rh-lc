@@ -280,8 +280,6 @@ def analyticAtZero : Subalgebra ℂ (W → ℂ) where
 
 omit [Fintype σ] in
 
-@[simp] theorem mem_analyticAtZero : f ∈ analyticAtZero W ↔ AnalyticAt ℂ f 0 := Iff.rfl
-
 noncomputable def taylorDirAlgHom : analyticAtZero W →ₐ[ℂ] MvPowerSeries σ ℂ where
   toFun f := taylorDir u f
   map_one' := taylorDir_one u
@@ -389,8 +387,6 @@ theorem taylor_add (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
 
 @[simp] theorem taylor_zero : taylor (0 : (σ → ℂ) → ℂ) = 0 := taylorDir_zero _
 
-@[simp] theorem taylor_one : taylor (1 : (σ → ℂ) → ℂ) = 1 := taylorDir_one _
-
 theorem taylor_mul (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
     taylor (f * g) = taylor f * taylor g := taylorDir_mul _ hf hg
 
@@ -421,11 +417,6 @@ theorem span_range_single_one :
 theorem taylor_eq_iff (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
     taylor f = taylor g ↔ f =ᶠ[𝓝 0] g :=
   taylorDir_eq_iff _ span_range_single_one hf hg
-
-noncomputable def taylorAlgHom : analyticAtZero (σ → ℂ) →ₐ[ℂ] MvPowerSeries σ ℂ :=
-  taylorDirAlgHom fun i => (Pi.single i 1 : σ → ℂ)
-
-@[simp] theorem taylorAlgHom_apply (f : analyticAtZero (σ → ℂ)) : taylorAlgHom f = taylor f := rfl
 
 theorem taylor_eval_comp {κ : Type*} {φ : κ → (σ → ℂ) → ℂ} (hφ : ∀ k, AnalyticAt ℂ (φ k) 0)
     (P : MvPolynomial κ ℂ) :
@@ -461,29 +452,6 @@ theorem taylorDir_eq_taylor (u : σ → W) {F : W → ℂ} (hF : AnalyticAt ℂ 
 end Coord
 
 section Examples
-
-example : taylor (fun z : Fin 2 → ℂ => z 0 * z 1 + 3) =
-    MvPowerSeries.X 0 * MvPowerSeries.X 1 + MvPowerSeries.C 3 := by
-  have h := taylor_eval (MvPolynomial.X 0 * MvPolynomial.X 1 + MvPolynomial.C 3 :
-    MvPolynomial (Fin 2) ℂ)
-  simpa using h
-
-example : ReciprocityTheory.ChartRestriction.G.I2.polyDeriv (MvPolynomial.monomial (Finsupp.single 0 2) 1)
-    (fun i : Fin 1 => (Pi.single i 1 : Fin 1 → ℂ)) (fun z => z 0 ^ 2) 0 = 2 := by
-  have h := taylor_eval (MvPolynomial.X 0 ^ 2 : MvPolynomial (Fin 1) ℂ)
-  simp only [map_pow, MvPolynomial.eval_X] at h
-  rw [dirPolyDeriv_monomial_eq_coeff, ← taylor_eq_taylorDir, h, MvPolynomial.coeff_coe,
-    MvPolynomial.coeff_X_pow]
-  simp
-
-example : MvPowerSeries.pderiv (R := ℂ) 0 (taylor fun z : Fin 1 → ℂ => Complex.exp (z 0)) =
-    taylor fun z : Fin 1 → ℂ => Complex.exp (z 0) := by
-  have hd : ∀ z : Fin 1 → ℂ, HasFDerivAt (fun z : Fin 1 → ℂ => Complex.exp (z 0))
-      (Complex.exp (z 0) • ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin 1 => ℂ) 0) z :=
-    fun z => (hasFDerivAt_apply 0 z).cexp
-  rw [← taylor_fderiv (SCV.analyticAt_iff_eventually_differentiableAt.2
-    (Eventually.of_forall fun z => (hd z).differentiableAt))]
-  simp [fun z => (hd z).fderiv]
 
 end Examples
 

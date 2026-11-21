@@ -10,8 +10,6 @@ open NumberField IsDedekindDomain GroundTheory.Global Formalism.L2.Host
 
 namespace UpperTheory.ConvolutionTheory.RankTwoDescent.A
 
-local notation "𝔸[" K "]" => AdeleRing (𝓞 K) K
-
 section Ext
 
 variable {G H : Type} [CommGroup G] [TopologicalSpace G] [IsTopologicalGroup G] [SigmaCompactSpace G]

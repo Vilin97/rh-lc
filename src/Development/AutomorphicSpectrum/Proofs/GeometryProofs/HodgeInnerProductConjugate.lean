@@ -14,7 +14,6 @@ theorem cc_cc : cc ≫ cc = 𝟙 (Sp ℂ) := by
   rw [← Spec.map_comp, ← Spec.map_id]
   exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by simp))
 
-@[reassoc] theorem cc_cc_assoc' {Y : Scheme.{0}} (f : Sp ℂ ⟶ Y) : cc ≫ cc ≫ f = f := by
   rw [← Category.assoc, cc_cc, Category.id_comp]
 
 abbrev tw (T : Over (Sp ℂ)) : Over (Sp ℂ) := Over.mk (T.hom ≫ cc)
@@ -30,8 +29,6 @@ def twEquiv (A T : Over (Sp ℂ)) : (T ⟶ tw A) ≃ (tw T ⟶ A) where
     rw [← Category.assoc, this, Category.assoc, cc_cc, Category.comp_id])
   left_inv _ := by ext; rfl
   right_inv _ := by ext; rfl
-
-@[simp] theorem twEquiv_left {A T : Over (Sp ℂ)} (x : T ⟶ tw A) : (twEquiv A T x).left = x.left := rfl
 
 abbrev twF (A : Over (Sp ℂ)) [GrpObj A] : (Over (Sp ℂ))ᵒᵖ ⥤ GrpCat.{0} :=
   (Over.map cc).op ⋙ yonedaGrpObj A

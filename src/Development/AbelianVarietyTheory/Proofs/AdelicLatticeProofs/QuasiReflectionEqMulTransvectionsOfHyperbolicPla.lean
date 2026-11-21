@@ -2,29 +2,13 @@ import Mathlib
 import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.IsHermHyperbolic
 import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.Hat1
 import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.TransvectionIdentitiesUnitaryStatement
-import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.SpecialUnitaryHyperbolicPlaneMemTransvections
+import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.NontrivialTransvection
 open NumberField IsDedekindDomain Matrix GlobalTheory.UTrans GlobalTheory.AdLat
 open scoped TensorProduct
 
 namespace GlobalTheory.UTrans.PlaneRefl
 
 variable {R : Type} [CommRing R] {n : ℕ} (σ : R →+* R) (G : Matrix (Fin n) (Fin n) R)
-
-theorem hf_add_left (x y v : Fin n → R) : hf σ G (x + y) v = hf σ G x v + hf σ G y v := by
-  simp only [hf, Pi.add_apply, add_mul, Finset.sum_add_distrib]
-
-theorem hf_add_right (x y v : Fin n → R) : hf σ G v (x + y) = hf σ G v x + hf σ G v y := by
-  simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
-
-theorem hf_smul_left (a : R) (x v : Fin n → R) : hf σ G (a • x) v = a * hf σ G x v := by
-  simp only [hf, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
-
-theorem hf_smul_right (a : R) (x v : Fin n → R) : hf σ G v (a • x) = σ a * hf σ G v x := by
-  simp only [hf, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, map_mul]
-  refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
-
-theorem tv_zero (x : Fin n → R) : tv σ G x 0 = 1 := by
-  ext a b; simp [tv]
 
 open NumberField IsDedekindDomain Matrix in
 open scoped TensorProduct in

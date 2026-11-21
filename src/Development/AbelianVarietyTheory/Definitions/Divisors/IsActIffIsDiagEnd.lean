@@ -2,7 +2,9 @@ import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsChartMemberP
 import Development.AbelianVarietyTheory.Definitions.Divisors.LabRange
 import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.NormVal
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsSiegPull
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BlowPolSt
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.SiegelToroidalIntegral
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ToroidalChartsForFan
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDiagEndIsMonHom
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDegenerationEndomorphismOfAdmissibleBase
 import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.SelfTorusExtensionCoordValuesEqOne
@@ -29,17 +31,6 @@ variable {g n : ℕ} {F : SFam g n (zetaAway n)} {W : Matrix (Fin 8) (Fin 8) ℤ
 
 def IsAct (X₁ : Setup F W i) (act : Matrix (Fin 8) (Fin 8) ℤ → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)) : Prop :=
   IsDiagEnd F W X₁.ρ.P X₁.u act
-
-theorem isAct_iff_isDiagEnd {X₁ : Setup F W i} {act : Matrix (Fin 8) (Fin 8) ℤ → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)} :
-    IsAct X₁ act ↔ IsDiagEnd F W X₁.ρ.P X₁.u act := Iff.rfl
-
-theorem isAct_iff {X₁ : Setup F W i} {act : Matrix (Fin 8) (Fin 8) ℤ → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)} : IsAct X₁ act ↔
-    ∃ c : SiegPre g n (zetaAway n) (X₁.u ≫ F.s), SiegPB c F.univ X₁.u ∧ ∃ pr : Fin 8 → (X₁.ρ.P.A ⟶ c.A), (∀ a, IsMonHom (pr a)) ∧
-      (∀ (T' : Over (Sp X₁.S.R)) (y : Fin 8 → (T' ⟶ c.A)), ∃! x : T' ⟶ X₁.ρ.P.A, ∀ a, x ≫ pr a = y a) ∧
-      LBIso X₁.ρ.P.L (LB.LinComb c.P (K := Fin 8 × Fin 8) (fun ab => (lift (pr ab.1) (pr ab.2)).left) (fun ab => W ab.1 ab.2)) ∧
-      ∀ a u, act a ≫ pr u = (List.ofFn fun v => pr v ^ a u v).prod := by
-  unfold IsAct IsDiagEnd
-  simp only [List.ofFn_eq_map]
 
 theorem IsAct.isMonHom {X₁ : Setup F W i} {act : Matrix (Fin 8) (Fin 8) ℤ → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)} (h : IsAct X₁ act)
     (E : Matrix (Fin 8) (Fin 8) ℤ) : IsMonHom (act E) := by
@@ -159,12 +150,6 @@ theorem UMem.mono_mem {mu : Fin 8 → X} (h : mu ≠ 0) : mono W t δ mu ∈ max
   exact (Ideal.unit_mul_mem_iff_mem _ u.isUnit).1 this
 
 end
-
-example {X₁ : Setup F W i} {z₁ : X₁.M.Z} {act : Matrix (Fin 8) (Fin 8) ℤ → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)}
-    {V : Type} [CommRing V] [IsDomain V] [IsLocalRing V] {ev : X₁.M.Z.presheaf.stalk z₁ →+* V} :
-    IsEmpty (UMem X₁ z₁ act V ev ℤ (m := 0) Fin.elim0 Fin.elim0) :=
-  ⟨fun 𝔪 => (maximalIdeal.isMaximal V).ne_top ((Ideal.eq_top_iff_one _).2 (by
-    simpa [mono] using 𝔪.mono_mem (mu := 1) one_ne_zero))⟩
 
 theorem exists_unif_good {V : Type} [CommRing V] [IsDomain V] [IsLocalRing V] (hV : IsCN V) (P : PolAV (Sp V)) :
     letI := P.isAb.comm

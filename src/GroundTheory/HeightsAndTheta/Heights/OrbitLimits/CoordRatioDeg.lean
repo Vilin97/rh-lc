@@ -1,7 +1,8 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Intersections.ProjLineRankTwoPushforwardHypotheses
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ArithModel
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.FibreCurve
+import GroundTheory.HeightsAndTheta.Heights.Intersections.QuotientMapImageZInjective
+import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PCoordConeArithVar
 set_option maxSynthPendingDepth 1
 
 noncomputable section

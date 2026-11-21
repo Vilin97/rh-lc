@@ -1,4 +1,7 @@
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RatioParts
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.HzUnit
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.CosInj
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.UnitRatio
 import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsRootOfSUnitRatioUpToRootOfUnityClosureLaws
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.VacOfShape
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsNormLeHeightPow

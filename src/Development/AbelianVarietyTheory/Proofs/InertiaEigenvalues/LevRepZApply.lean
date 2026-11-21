@@ -26,7 +26,6 @@ theorem Lev.smul_val {c : O} (x : Lev M c) : c • x.val = 0 := by
     (Subtype.property (p := fun m => m ∈ LinearMap.ker (c • LinearMap.id : M →ₗ[O] M)) x)
   exact hx
 
-@[ext] theorem Lev.ext {c : O} {x y : Lev M c} (h : x.val = y.val) : x = y := by
   exact Subtype.ext (p := fun m => m ∈ LinearMap.ker (c • LinearMap.id : M →ₗ[O] M)) h
 
 theorem Lev.val_add {c : O} (x y : Lev M c) : (x + y).val = x.val + y.val := rfl

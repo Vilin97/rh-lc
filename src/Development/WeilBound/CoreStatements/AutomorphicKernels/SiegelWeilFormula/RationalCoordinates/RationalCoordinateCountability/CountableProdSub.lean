@@ -20,11 +20,6 @@ instance countable_prodSub {X Y : Type} [AddGroup X] [AddGroup Y] (Γ : AddSubgr
 instance mcv_sub {X : Type} [AddGroup X] [MeasurableSpace X] [MeasurableAdd X] (Γ : AddSubgroup X) :
     MeasurableConstVAdd Γ X := ⟨fun g => measurable_const_add (g : X)⟩
 
-instance mv_sub {X : Type} [AddGroup X] [MeasurableSpace X] [MeasurableAdd X] (Γ : AddSubgroup X) :
-    MeasurableVAdd Γ X where
-  measurable_const_vadd g := measurable_const_add (g : X)
-  measurable_vadd_const x := measurable_subtype_coe.add_const x
-
 instance mAdd_prod {X Y : Type} [Add X] [Add Y] [MeasurableSpace X] [MeasurableSpace Y] [MeasurableAdd X] [MeasurableAdd Y] :
     MeasurableAdd (X × Y) where
   measurable_const_add c := ((measurable_const_add c.1).comp measurable_fst).prodMk ((measurable_const_add c.2).comp measurable_snd)

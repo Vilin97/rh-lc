@@ -130,8 +130,6 @@ def entryCLM (a b : Fin n) : Matrix (Fin n) (Fin n) ℂ →L[ℂ] ℂ :=
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }
 
-@[simp] lemma entryCLM_apply (a b : Fin n) (M : Matrix (Fin n) (Fin n) ℂ) : entryCLM a b M = M a b := rfl
-
 def DkL (T : KType ε Λ) (μ : Fin n → ℤ) (x : Matrix (Fin n) (Fin n) ℂ) (k : KG ε) :
     Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] (T.V →L[ℂ] T.V) where
   toFun Y := fderiv ℂ (PhiM μ) (toMK k⁻¹ * x * toMK k)

@@ -75,11 +75,6 @@ noncomputable def coindHomotopyApply {n : ℕ} (f : (Fin (n + 1) → G) → Loca
     (hf.comp_continuous (continuous_id.finCons continuous_const)).comp fun φ => φ 1⟩
 
 omit [IsTopologicalGroup G] [CompactSpace G] [AddCommGroup X] [Module k X] in
-@[simp]
-theorem coindHomotopyApply_apply {n : ℕ} (f : (Fin (n + 1) → G) → LocallyConstant G X)
-    (hf : IsLocallyConstant f) (g : Fin n → G) (x : G) :
-    coindHomotopyApply f hf g x = f (Fin.cons x g) 1 :=
-  rfl
 
 omit [IsTopologicalGroup G] [AddCommGroup X] [Module k X] in
 theorem isLocallyConstant_coindHomotopyApply {n : ℕ}
@@ -156,9 +151,5 @@ theorem isZero_cohomology_discreteCoind (n : ℕ) :
   exact this
 
 variable (k G X) in
-
-noncomputable def cohomologyZeroDiscreteCoindIso :
-    cohomology (discreteCoind k G X) 0 ≅ ModuleCat.of k X :=
-  H0Iso (discreteCoind k G X) ≪≫ (invariantsDiscreteCoindEquiv k G X).toModuleIso
 
 end GroundTheory.ProfCoh

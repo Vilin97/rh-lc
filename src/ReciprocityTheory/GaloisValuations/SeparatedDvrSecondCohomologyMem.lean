@@ -229,9 +229,6 @@ def compatiblePairCocycles1 : Z1 rho →ₗ[R] Z1 rho' where
   map_add' f f' := Subtype.ext (funext fun g => map_add u _ _)
   map_smul' r f := Subtype.ext (funext fun g => map_smul u _ _)
 
-@[simp] theorem compatiblePairCocycles1_apply (f : Z1 rho) (g : G') :
-    (compatiblePairCocycles1 rho rho' phi hphi u hu hcompat f).1 g = u (f.1 (phi g)) := rfl
-
 def pairH1DecompositionMap : H1 rho →ₗ[R] H1 rho' :=
   Submodule.mapQ _ _ (compatiblePairCocycles1 rho rho' phi hphi u hu hcompat) fun f hf => by
     obtain ⟨m, hm⟩ := (mem_coboundaries1 rho _).1 hf
@@ -249,9 +246,6 @@ def compatiblePairCocycles2 : Z2 rho →ₗ[R] Z2 rho' where
       simpa only [map_mul] using e⟩
   map_add' f f' := Subtype.ext (funext fun g => map_add u _ _)
   map_smul' r f := Subtype.ext (funext fun g => map_smul u _ _)
-
-@[simp] theorem compatiblePairCocycles2_apply (f : Z2 rho) (g h : G') :
-    (compatiblePairCocycles2 rho rho' phi hphi u hu hcompat f).1 (g, h) = u (f.1 (phi g, phi h)) := rfl
 
 def compatiblePairH2 : H2 rho →ₗ[R] H2 rho' :=
   Submodule.mapQ _ _ (compatiblePairCocycles2 rho rho' phi hphi u hu hcompat) fun f hf => by

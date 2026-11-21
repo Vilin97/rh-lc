@@ -29,11 +29,6 @@ theorem matrixCoords_apply (g : Matrix ι ι (R ⊗[F] E)) (i j : ι) (k : κ) :
     matrixCoords b R g (i, j, k) = (Algebra.TensorProduct.basis R b).repr (g i j) k := rfl
 
 omit [Algebra.IsQuadraticExtension F E] [Fintype ι] [DecidableEq ι] in
-@[simp]
-theorem matrixCoords_zero : matrixCoords b R (0 : Matrix ι ι (R ⊗[F] E)) = 0 := by
-  funext ⟨i, j, k⟩
-  rw [matrixCoords_apply]
-  simp
 
 variable {R}
 

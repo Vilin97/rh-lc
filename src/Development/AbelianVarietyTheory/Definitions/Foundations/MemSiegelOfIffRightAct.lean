@@ -87,10 +87,6 @@ def blkGL : GL m A × GL n A →* GL ι A where
 
 @[simp] theorem val_blkGL (g : GL m A × GL n A) : (blkGL e g).1 = blkMat e g.1.1 g.2.1 := rfl
 
-theorem blkGL_injective : Function.Injective (blkGL (A := A) e) := fun _ _ h =>
-  have := (blkMat_inj e).1 (congrArg Units.val h)
-  Prod.ext (Units.ext this.1) (Units.ext this.2)
-
 theorem bc_blkGL (f : A →+* B) (x : GL m A) (y : GL n A) : bc f (blkGL e (x, y)) = blkGL e (bc f x, bc f y) :=
   Units.ext (blkMat_map e f (map_zero f) _ _)
 
@@ -171,22 +167,6 @@ theorem mem_antiSub {w : ι → A} : w ∈ antiSub A e ↔ ∃ x, w = pairVec e 
   nth_rewrite 2 [h]
   rw [neg_neg]
   exact (pairVec_eta e w).symm
-
-theorem isCompl_diagSub_antiSub [Invertible (2 : A)] : IsCompl (diagSub A e) (antiSub A e) := by
-  have h2 : ⅟(2 : A) * 2 = 1 := invOf_mul_self _
-  refine ⟨Submodule.disjoint_def.2 fun w h h' => ?_, codisjoint_iff.2 (eq_top_iff.2 fun w _ => ?_)⟩
-  · obtain ⟨x, rfl⟩ := (mem_diagSub e).1 h
-    have h3 := (pairVec_mem_antiSub e).1 h'
-    have : x = 0 := funext fun i => by
-      have := congrFun h3 i
-      simp only [Pi.neg_apply, Pi.zero_apply] at this ⊢
-      linear_combination ⅟(2 : A) * this - x i * h2
-    rw [this]; funext j; obtain ⟨i | i, rfl⟩ := e.surjective j <;> simp
-  · refine Submodule.mem_sup.2 ⟨_, (mem_diagSub e).2 ⟨fun i => ⅟(2 : A) * (w (e (.inl i)) + w (e (.inr i))), rfl⟩,
-      _, (mem_antiSub e).2 ⟨fun i => ⅟(2 : A) * (w (e (.inl i)) - w (e (.inr i))), rfl⟩, funext fun j => ?_⟩
-    obtain ⟨i | i, rfl⟩ := e.surjective j
-    · simp only [Pi.add_apply, pairVec_inl]; linear_combination w (e (.inl i)) * h2
-    · simp only [Pi.add_apply, pairVec_inr, Pi.neg_apply]; linear_combination w (e (.inr i)) * h2
 
 def leviMat (M : Matrix ι ι A) : Matrix n n A := (M.submatrix e e).toBlocks₁₁ + (M.submatrix e e).toBlocks₁₂
 
@@ -299,13 +279,6 @@ theorem quot_levi {σ : A →+* A} {J : Matrix n n A} {M : Matrix ι ι A} (hM :
   refine Eq.trans ?_ ((congrArg₂ (· + ·) h1.1 h1.2.1).trans (add_zero J))
   abel
 
-def rightAct (l : ι → A) (M : Matrix ι ι A) : ι → A := l ᵥ* (blkMat e 1 (-1) * M * blkMat e 1 (-1))
-
-def rowEval (l w : ι → A) : A := l ⬝ᵥ (blkMat e (1 : Matrix n n A) (-1) *ᵥ w)
-
-theorem sgn_mul_sgn : blkMat e (1 : Matrix n n A) (-1) * blkMat e (1 : Matrix n n A) (-1) = 1 := by
-  simp [blkMat_mul, blkMat_one]
-
 end Siegel
 
 section Levi
@@ -415,8 +388,6 @@ def leviOf : siegelOf e mat →* GL n A := (leviGL e).comp (mat.subgroupComap _)
 
 def aOf : siegelOf e mat →* Aˣ := GeneralLinearGroup.det.comp (leviOf e mat)
 
-def unipOf : Subgroup G := (leviOf e mat).ker.map (siegelOf e mat).subtype
-
 def leviSubOf : Subgroup G := siegelOf e mat ⊓ (stabGL (antiSub A e)).comap mat
 
 variable {e mat}
@@ -425,9 +396,6 @@ theorem mem_siegelOf {g : G} : g ∈ siegelOf e mat ↔ KeepsDiag e (mat g).1 :=
 
 @[simp] theorem val_leviOf (p : siegelOf e mat) : (leviOf e mat p).1 = leviMat e (mat p).1 := rfl
 @[simp] theorem val_aOf (p : siegelOf e mat) : (aOf e mat p).1 = (leviMat e (mat p).1).det := rfl
-
-theorem mem_unipOf {g : G} : g ∈ unipOf e mat ↔ g ∈ siegelOf e mat ∧ leviMat e (mat g).1 = 1 :=
-  ⟨by rintro ⟨p, hp, rfl⟩; exact ⟨p.2, congrArg Units.val hp⟩, fun h => ⟨⟨g, h.1⟩, Units.ext h.2, rfl⟩⟩
 
 variable [TopologicalSpace A] [IsTopologicalRing A] [TopologicalSpace G]
 
@@ -479,9 +447,6 @@ theorem mem_degPSOf [TopologicalSpace G] {μ : Aˣ →* Circle} {s : ℂ} {Φ : 
       Φ (p * g) = μ (aOf e mat p) * npow (ν (aOf e mat p)) (s + (Fintype.card n : ℂ) / 2) * Φ g) ∧
       Continuous Φ ∧ IsKFinite K Φ := Iff.rfl
 
-theorem flatOf_apply (Φ : G → ℂ) (s₀ s : ℂ) (g : G) :
-    flatOf e mat ν K Φ s₀ s g = Φ g * npow (hgtOf e mat ν K g) (s - s₀) := rfl
-
 theorem hgtOf_pos (g : G) : 0 < hgtOf e mat ν K g := iwAbs_pos _ _ g
 
 theorem IwasawaOf.hgtOf_mul (h : IwasawaOf e mat ν K) (p : siegelOf e mat) {k : G} (hk : k ∈ K) :
@@ -528,11 +493,6 @@ theorem coe_ioU (e : n ⊕ n ≃ ι) {J : Matrix n n A} {Q : Matrix ι ι A} (h 
     (ioU σ e h g : GL ι A) = blkGL e (g.1, g.2) := rfl
 
 end Io
-
-example (g : ℤ) : leviMat (Equiv.refl (Unit ⊕ Unit)) (blkMat (Equiv.refl _) (of fun _ _ => g) (of fun _ _ => g)) () () = g ∧
-    leviMat (Equiv.refl (Unit ⊕ Unit)) (fromBlocks (0 : Matrix Unit Unit ℤ) 1 1 0) = 1 ∧
-    quotMat (Equiv.refl (Unit ⊕ Unit)) (fromBlocks (0 : Matrix Unit Unit ℤ) 1 1 0) = -1 := by
-  simp [leviMat, quotMat, blkMat]
 
 end GlobalTheory.Doubling
 

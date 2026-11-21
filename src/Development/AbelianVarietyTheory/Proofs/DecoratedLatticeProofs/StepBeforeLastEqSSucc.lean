@@ -1,6 +1,16 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.Live
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.LevTrue
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsStdFr
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PinColL
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.FrameTopAlt
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.XiEqXiOffMul
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.HzUnit
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.CosInj
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.UnitRatio
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ChartZero
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.TailRd
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.Placed
+import Formalism.LocalToGlobal.IndefiniteReal.RealRec
 import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ContinuousLocHom
 import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ToBlocksMulFinZero
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Datum Formalism.L2.Forms MeasureTheory IsDedekindDomain NumberField Matrix
@@ -90,13 +100,5 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
   {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts}
   {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} {W : RealPack ex} {u : B.Word}
   {a : GeoAll W u} {t : W.P.T}
-
-theorem intIn_frJ (J : QJ a t) (j : ℕ) (i : Fin J.r) (e : j = (J.G i).s + 1) :
-    IntIn (J.G i).q ((I.rec7 l Z).sp.X j) (frJ J j i e) (a.g.x j).L := by
-  subst e
-  exact fun y => (J.G i).latX _ le_rfl y
-
-theorem rdAt_apply (J : QJ a t) (j : ℕ) (i : Fin J.r) (e : j = (J.G i).s + 1) (g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)) :
-    rdAt J j i e g = toSum0 (J.G i).k _ (GlobalTheory.LevIdx.locHom (J.G i).q _ (frJ J j i e) g) := rfl
 
 end GlobalTheory.PenBridge

@@ -18,7 +18,6 @@ attribute [-instance] CStarMatrix.instHMulOfFintypeOfMulOfAddCommMonoid
 open PositivityTheory.SiegelWeilFormula.TBij.Adp PositivityTheory.SiegelWeilFormula.KTunit
 local instance (priority := high)  {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] :
     MeasurableSpace (κ → AF F) := borel _
-local instance  {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] : BorelSpace (κ → AF F) := ⟨rfl⟩
 theorem tUnit_k : _root_.PositivityTheory.SiegelWeilFormula.TUnit_k := by
   intro F E _ _ _ _ _ σ d ν hν x Φ hΦ Φ' hΦ'
   obtain ⟨τ, S0, S0', C, hop, hT⟩ := _root_.PositivityTheory.SiegelWeilFormula.Tunit.T_chart_k d

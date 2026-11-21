@@ -8,8 +8,6 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory Limits NumberField IsDedekindDomain GroundTheory.Global
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section TwoTorsion
@@ -29,11 +27,6 @@ theorem two_nsmul_cohomology_unitsLimitRep {r : ℕ} (hr : 4 ≤ r) (y : cohomol
     exact card_nsmul_eq_zero'
   · have := subsingleton_localGaloisCohomology_of_isReal_of_odd v.1 v.2 ho
     exact Subsingleton.elim _ _
-
-theorem eq_zero_of_pow_nsmul_cohomology_unitsLimitRep_of_odd {ℓ : ℕ} (hℓ : ℓ.Prime) (h2 : ℓ ≠ 2) {r : ℕ}
-    (hr : 4 ≤ r) (y : cohomology (unitsLimitRep K) r) {k : ℕ} (hk : ℓ ^ k • y = 0) : y = 0 :=
-  eq_zero_of_coprime_nsmul_eq_zero ((Nat.coprime_primes Nat.prime_two hℓ).2 h2.symm)
-    (two_nsmul_cohomology_unitsLimitRep hr y) hk
 
 end TwoTorsion
 
@@ -67,40 +60,17 @@ noncomputable def sUnitsToUnitsPrimaryEquiv {r : ℕ} (hr : 4 ≤ r) :
     ((isIsoModCoprime_sUnitsToUnits_of_four_le K S hℓ hS hr).bijective_primaryComponentMap hℓ
       (isTorsion_cohomology _ (by omega)))
 
-theorem coe_sUnitsToUnitsPrimaryEquiv_apply {r : ℕ} (hr : 4 ≤ r)
-    (x : AddCommGroup.primaryComponent (cohomology (galSUnitsMax K.1 ℚ̄ S) r) ℓ) :
-    (sUnitsToUnitsPrimaryEquiv K S hℓ hS hr x : cohomology (galUnits K.1 (maxUnramifiedOutside K.1 ℚ̄ S)) r) =
-      (cohomologyMap (sUnitsToUnits S (maxUnramifiedOutside K.1 ℚ̄ S)) r).hom x :=
-  rfl
-
 noncomputable def sUnitsInflPrimaryEquiv {r : ℕ} (hr : 4 ≤ r) :
     AddCommGroup.primaryComponent (cohomology (galSUnitsMax K.1 ℚ̄ S) r) ℓ ≃+
       AddCommGroup.primaryComponent (cohomology (unitsLimitRep K) r) ℓ :=
   AddEquiv.ofBijective _
     ((isIsoModCoprime_sUnitsInfl K S hℓ hS hr).bijective_primaryComponentMap hℓ (isTorsion_cohomology _ (by omega)))
 
-theorem coe_sUnitsInflPrimaryEquiv_apply {r : ℕ} (hr : 4 ≤ r)
-    (x : AddCommGroup.primaryComponent (cohomology (galSUnitsMax K.1 ℚ̄ S) r) ℓ) :
-    (sUnitsInflPrimaryEquiv K S hℓ hS hr x : cohomology (unitsLimitRep K) r) = sUnitsInfl K S r x :=
-  rfl
-
 section Odd
 
 include hℓ hS in
 
-theorem eq_zero_of_pow_nsmul_cohomology_gsUnits_of_odd (h2 : ℓ ≠ 2) {r : ℕ} (hr : 4 ≤ r)
-    (x : cohomology (galUnits K.1 (maxUnramifiedOutside K.1 ℚ̄ S)) r) {k : ℕ} (hk : ℓ ^ k • x = 0) : x = 0 :=
-  eq_zero_of_gsUnitsInfl_eq_zero K S hℓ hS (by omega) x
-    (eq_zero_of_pow_nsmul_cohomology_unitsLimitRep_of_odd hℓ h2 hr _ (k := k)
-      ((map_nsmul _ _ _).symm.trans ((congrArg _ hk).trans (map_zero _)))) hk
-
 include hℓ hS in
-
-theorem eq_zero_of_pow_nsmul_cohomology_sUnits_of_odd (h2 : ℓ ≠ 2) {r : ℕ} (hr : 4 ≤ r)
-    (x : cohomology (galSUnitsMax K.1 ℚ̄ S) r) {k : ℕ} (hk : ℓ ^ k • x = 0) : x = 0 :=
-  (isIsoModCoprime_sUnitsInfl K S hℓ hS hr).eq_zero_of_pow_nsmul
-    (eq_zero_of_pow_nsmul_cohomology_unitsLimitRep_of_odd hℓ h2 hr _ (k := k)
-      ((map_nsmul _ _ _).symm.trans ((congrArg _ hk).trans (map_zero _)))) hk
 
 end Odd
 
@@ -130,11 +100,6 @@ noncomputable def gsUnitsRealPrimaryEquiv {r : ℕ} (hr : 4 ≤ r) :
       ∀ v : {v : InfinitePlace K.1 // v.IsReal}, localGaloisCohomology K r (.inl v.1) :=
   AddEquiv.ofBijective _ (bijective_realLocalization_comp_primaryComponent K ι hr (gsUnitsInfl K S r)
     (isIsoModCoprime_gsUnitsInfl K S Nat.prime_two h2S (by omega)) (isTorsion_cohomology _ (by omega)))
-
-theorem gsUnitsRealPrimaryEquiv_apply {r : ℕ} (hr : 4 ≤ r)
-    (x : AddCommGroup.primaryComponent (cohomology (galUnits K.1 (maxUnramifiedOutside K.1 ℚ̄ S)) r) 2) :
-    gsUnitsRealPrimaryEquiv K S ι h2S hr x = realLocalization ι (r := r) (by omega) (gsUnitsInfl K S r x) :=
-  rfl
 
 noncomputable def sUnitsRealPrimaryEquiv {r : ℕ} (hr : 4 ≤ r) :
     AddCommGroup.primaryComponent (cohomology (galSUnitsMax K.1 ℚ̄ S) r) 2 ≃+

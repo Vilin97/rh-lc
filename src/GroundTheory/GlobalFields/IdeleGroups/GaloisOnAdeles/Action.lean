@@ -39,9 +39,6 @@ theorem smul_adeleMap (σ : L ≃ₐ[K] L) (a : 𝔸[K]) : σ • adeleMap K L a
 instance : ContinuousConstSMul (L ≃ₐ[K] L) 𝔸[L] where
   continuous_const_smul σ := continuous_adeleRingEquiv (σ : L ≃+* L)
 
-instance : ContinuousSMul (L ≃ₐ[K] L) 𝔸[L] where
-  continuous_smul := continuous_prod_of_discrete_left.2 fun σ ↦ continuous_const_smul σ
-
 @[simp]
 theorem norm_smul (σ : L ≃ₐ[K] L) (y : 𝔸[L]) : Algebra.norm 𝔸[K] (σ • y) = Algebra.norm 𝔸[K] y :=
   norm_adeleRingEquiv σ y
@@ -162,9 +159,6 @@ instance : ContinuousConstSMul (L ≃ₐ[K] L) (IdeleGroup L) where
     rw [h]
     exact (ideleEquiv (σ : L ≃+* L)).continuous
 
-instance : ContinuousSMul (L ≃ₐ[K] L) (IdeleGroup L) where
-  continuous_smul := continuous_prod_of_discrete_left.2 fun σ ↦ continuous_const_smul σ
-
 omit [NumberField K] in
 
 @[simp]
@@ -205,22 +199,7 @@ theorem forall_smul_eq_iff_mem_range_ideleEmbedding (x : IdeleGroup L) :
   · rintro ⟨y, rfl⟩ σ
     exact smul_ideleEmbedding σ y
 
-theorem fixedPoints_subgroup_idele :
-    FixedPoints.subgroup (L ≃ₐ[K] L) (IdeleGroup L) = (ideleEmbedding K L).range := by
-  ext x
-  exact forall_smul_eq_iff_mem_range_ideleEmbedding x
-
 variable (K L) in
-
-def ideleFixedEquiv : IdeleGroup K ≃ₜ* FixedPoints.subgroup (L ≃ₐ[K] L) (IdeleGroup L) where
-  toMulEquiv := (MonoidHom.ofInjective (f := ideleEmbedding K L)
-      (ideleEmbedding_injective (K := K) (L := L))).trans
-    (MulEquiv.subgroupCongr fixedPoints_subgroup_idele.symm)
-  continuous_toFun := continuous_ideleEmbedding.subtype_mk _
-  continuous_invFun := by
-    rw [(isClosedEmbedding_ideleEmbedding (K := K) (L := L)).isInducing.continuous_iff]
-    convert continuous_subtype_val using 1
-    exact MonoidHom.apply_ofInjective_symm _ _
 
 end Galois
 
@@ -242,23 +221,11 @@ theorem smul_mk (σ : L ≃ₐ[K] L) (x : IdeleGroup L) :
   rw [smul_idele_eq_ideleEquiv]
   rfl
 
-instance : ContinuousConstSMul (L ≃ₐ[K] L) (IdeleClassGroup L) where
-  continuous_const_smul σ := (ideleClassEquiv (σ : L ≃+* L)).continuous
-
-instance : ContinuousSMul (L ≃ₐ[K] L) (IdeleClassGroup L) where
-  continuous_smul := continuous_prod_of_discrete_left.2 fun σ ↦ continuous_const_smul σ
-
 @[simp]
 theorem smul_ideleClassMap (σ : L ≃ₐ[K] L) (c : IdeleClassGroup K) :
     σ • ideleClassMap K L c = ideleClassMap K L c := by
   obtain ⟨x, rfl⟩ := IdeleClassGroup.mk_surjective K c
   rw [ideleClassMap_mk, smul_mk, smul_ideleEmbedding]
-
-@[simp]
-theorem ideleClassNorm_smul (σ : L ≃ₐ[K] L) (c : IdeleClassGroup L) :
-    ideleClassNorm K L (σ • c) = ideleClassNorm K L c := by
-  obtain ⟨x, rfl⟩ := IdeleClassGroup.mk_surjective L c
-  rw [smul_mk, ideleClassNorm_mk, ideleClassNorm_mk, ideleNorm_smul]
 
 section Galois
 

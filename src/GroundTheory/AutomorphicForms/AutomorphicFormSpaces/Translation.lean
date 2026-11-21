@@ -20,9 +20,6 @@ def rightTranslateL (a : AdelicGLn.AdelicGL K n) :
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-@[simp] theorem rightTranslateL_apply (a : AdelicGLn.AdelicGL K n) (φ : AdelicGLn.AdelicGL K n → ℂ) :
-    rightTranslateL a φ = rightTranslate a φ := rfl
-
 abbrev archPart (g : AdelicGLn.AdelicGL K n) : archGroup K n :=
   archEquiv K n (AdelicGLn.prodEquiv K n g).1
 
@@ -304,22 +301,6 @@ def archCompactRep : Representation ℂ (archCompact K n) (automorphicForms K n)
     rw [Subgroup.coe_mul, map_mul, mul_assoc])
 
 variable {K n}
-
-@[simp] theorem coe_finRep_apply (h : AdelicGLn.FiniteAdelicGL K n) (φ : automorphicForms K n) :
-    ((finRep K n h φ : automorphicForms K n) : AdelicGLn.AdelicGL K n → ℂ) =
-      rightTranslate (finEmb K n h) (φ : AdelicGLn.AdelicGL K n → ℂ) := rfl
-
-@[simp] theorem coe_archCompactRep_apply (k : archCompact K n) (φ : automorphicForms K n) :
-    ((archCompactRep K n k φ : automorphicForms K n) : AdelicGLn.AdelicGL K n → ℂ) =
-      rightTranslate (infEmb K n k) (φ : AdelicGLn.AdelicGL K n → ℂ) := rfl
-
-theorem finRep_archCompactRep_comm (h : AdelicGLn.FiniteAdelicGL K n) (k : archCompact K n)
-    (φ : automorphicForms K n) :
-    finRep K n h (archCompactRep K n k φ) = archCompactRep K n k (finRep K n h φ) := by
-  apply Subtype.ext
-  funext g
-  simp only [coe_finRep_apply, coe_archCompactRep_apply, GroundTheory.Automorphic.rightTranslate,
-    mul_assoc, infEmb_mul_finEmb_comm]
 
 variable (K n)
 

@@ -708,10 +708,6 @@ def toCx : CxData A.fam.amb where
   lam := R.lam
   err0 := R.err0
 
-def gEx : Representation ℂ G (R.toCx F).EE := Tw.rep (E := R.HE.H) _ R.gE
-
-def gWx (i : Fin D.R.m) : Representation ℂ G ((R.toCx F).W i) := Tw.rep (E := (R.HW i (sg0 D A)).H) _ (R.gW i (sg0 D A))
-
 end RealDat
 
 end Real

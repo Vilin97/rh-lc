@@ -43,13 +43,7 @@ def KerW.val (w : KerW α ε) : P := Subtype.val (p := fun x ↦ x ∈ RingHom.k
 
 theorem KerW.ext' {v w : KerW α ε} (h : v.val = w.val) : v = w := Subtype.ext h
 
-@[simp] theorem KerW.val_add (v w : KerW α ε) : (v + w).val = v.val + w.val := rfl
-
 @[simp] theorem KerW.val_smul (r : R) (w : KerW α ε) : (r • w).val = α r * w.val := rfl
-
-@[simp] theorem KerW.val_op_smul (r : R) (w : KerW α ε) : (MulOpposite.op r • w).val = α r * w.val := rfl
-
-@[simp] theorem KerW.val_zero : (0 : KerW α ε).val = 0 := rfl
 
 theorem KerW.eps_val (w : KerW α ε) : ε w.val = 0 := w.2
 
@@ -57,8 +51,6 @@ def pr (h : ε.comp α = RingHom.id R) (a : P) : KerW α ε :=
   ⟨a - α (ε a), by
     have e : ε (α (ε a)) = ε a := congrArg (fun f ↦ f (ε a)) h
     simp [RingHom.mem_ker, e]⟩
-
-@[simp] theorem pr_val (h : ε.comp α = RingHom.id R) (a : P) : (pr h a).val = a - α (ε a) := rfl
 
 theorem eps_alpha (h : ε.comp α = RingHom.id R) (r : R) : ε (α r) = r := congrArg (fun f ↦ f r) h
 

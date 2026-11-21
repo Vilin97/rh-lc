@@ -15,32 +15,6 @@ section Mul
 variable {B B' Z Z' : Scheme.{0}} {G : Over B} [GrpObj G] {G' : Over B'} [GrpObj G'] {f : B' ⟶ B}
   {φ : G'.left ⟶ G.left}
 
-def IsMul (G : Over B) [GrpObj G] (a b c : Z ⟶ G.left) : Prop :=
-  ∃ (s : Z ⟶ B) (x y : Over.mk s ⟶ G), x.left = a ∧ y.left = b ∧ (x * y).left = c
-
-theorem IsMul.left_eq {a b c : Z ⟶ G.left} (h : IsMul G a b c) {s : Z ⟶ B} (x y : Over.mk s ⟶ G)
-    (hx : x.left = a) (hy : y.left = b) : (x * y).left = c := by
-  obtain ⟨s', x', y', hx', hy', hc⟩ := h
-  obtain rfl : s = s' := ((Over.w x).symm.trans (congrArg (· ≫ G.hom) (hx.trans hx'.symm))).trans (Over.w x')
-  rw [(Over.OverMorphism.ext (hx.trans hx'.symm) : x = x'), (Over.OverMorphism.ext (hy.trans hy'.symm) : y = y'), hc]
-
-theorem IsMul.pre {a b c : Z ⟶ G.left} (h : IsMul G a b c) (k : Z' ⟶ Z) : IsMul G (k ≫ a) (k ≫ b) (k ≫ c) := by
-  obtain ⟨s, x, y, rfl, rfl, rfl⟩ := h
-  let D : Over.mk (k ≫ s) ⟶ Over.mk s := Over.homMk k rfl
-  exact ⟨k ≫ s, D ≫ x, D ≫ y, rfl, rfl, congrArg (·.left) (MonObj.comp_mul D x y).symm⟩
-
-theorem IsMul.push (hφ : IsGrpPullback G' G f φ) {a b c : Z ⟶ G'.left} (h : IsMul G' a b c) :
-    IsMul G (a ≫ φ) (b ≫ φ) (c ≫ φ) := by
-  obtain ⟨s, x, y, rfl, rfl, rfl⟩ := h
-  exact ⟨s ≫ f, pushPt hφ.1.w x, pushPt hφ.1.w y, rfl, rfl, hφ.2 _ x y _ _ rfl rfl⟩
-
-theorem IsMul.pull (hφ : IsGrpPullback G' G f φ) {a b c : Z ⟶ G'.left} (hb : b ≫ G'.hom = a ≫ G'.hom)
-    (hc : c ≫ G'.hom = a ≫ G'.hom) (h : IsMul G (a ≫ φ) (b ≫ φ) (c ≫ φ)) : IsMul G' a b c := by
-  let x : Over.mk (a ≫ G'.hom) ⟶ G' := Over.homMk a rfl
-  let y : Over.mk (a ≫ G'.hom) ⟶ G' := Over.homMk b hb
-  refine ⟨_, x, y, rfl, rfl, hφ.1.hom_ext ?_ ((Over.w (x * y)).trans hc.symm)⟩
-  exact (hφ.2 _ x y (pushPt hφ.1.w x) (pushPt hφ.1.w y) rfl rfl).symm.trans (h.left_eq _ _ rfl rfl)
-
 end Mul
 
 section Eps

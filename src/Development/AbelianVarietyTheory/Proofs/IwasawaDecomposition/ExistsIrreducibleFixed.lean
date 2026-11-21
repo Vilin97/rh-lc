@@ -444,9 +444,6 @@ theorem map_jumps_iff {a : ℕ} {m : Multiset ℂ} (J : Multiset ℤ) :
     exact ⟨-n, by push_cast; linear_combination hn⟩
   exact ⟨h, Multiset.map_injective Int.cast_injective (e.trans (map_jumps h).symm)⟩
 
-example : jumps 2 {1 / 2, -1 / 2} = {0, 1} :=
-  (((map_jumps_iff (a := 2) {0, 1}).1 (by norm_num)).2).symm
-
 def jumpsInf {E Q : Type} [Field E] [NumberField E] [IsTotallyComplex E] [Field Q] (ι : Q ≃+* ℂ) {a : ℕ} (π : CGu E a)
     (τ : E →+* Q) : Multiset ℤ := jumps a (π.infChar (ι.toRingHom.comp τ))
 

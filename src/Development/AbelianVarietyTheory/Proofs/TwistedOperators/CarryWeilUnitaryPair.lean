@@ -15,7 +15,7 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeCharact
 import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CartanInvolutionEqOfCommute
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsRepsOfOpenCompact
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ThetaChainLastStepIntertwinesMatchedHecke
-import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.Imports
+import Lean
 
 noncomputable section
 

@@ -29,47 +29,7 @@ namespace Line
 open GroundTheory.Heights₂.Heights (CP)
 open GroundTheory.Heights₂.Heights.Regular.ProjectiveLine
 
-theorem isConeTangent_velL :
-    IsConeTangent (Int.castRingHom ℂ) (mCoordIdeal yLine) (discL 0) velL := by
-  intro f hf
-  rw [mCoordIdeal_yLine, Ideal.mem_bot] at hf
-  subst hf
-  simp
-
-theorem projL_discL_mem_mid : projL (discL 0) ∈ cpMid 0 := by
-  have hne : vecL (discL 0) ≠ 0 := vecL_ne_zero (discL_mem 0)
-  have h0 : sChart 0 (projL (discL 0)) = 0 := by
-    rw [sChart_projL_discL]
-    funext j
-    simp
-  refine ⟨(mem_sChart_source_iff 0 _).2 ⟨?_, ?_⟩, ?_⟩
-  · unfold projL
-    rw [dite_eq_left hne, CP.mk_mem_chartDomain]
-    simp [vecL, discL]
-  · unfold projL
-    rw [dite_eq_left hne, CP.chartCoord_mk]
-    have : (fun j : Fin 1 => vecL (discL 0) ((0 : Fin 2).succAbove j) / vecL (discL 0) 0) = 0 := by
-      funext j
-      simp [vecL, discL]
-    rw [this, norm_zero]
-    norm_num
-  · show sChart 0 (projL (discL 0)) ∈ Metric.ball 0 (7 / 8)
-    rw [h0]
-    exact Metric.mem_ball_self (by norm_num)
-
 end Line
-
-theorem Line.NbarLeviChart.hyps_inhabited :
-    ∃ t : ℝ, 0 < t ∧ (Line.projLineComponentSetting Line.zeroSystem Line.zero_hII).M.atlas.Smooth
-      ((Line.projLineComponentSetting Line.zeroSystem Line.zero_hII).S.regWeight t) ∧
-    Line.discL 0 ∈ mcPts (mCoordIdeal (Line.lineData Line.zeroSystem Line.zero_hII).y) ∧
-    IsConeTangent (Int.castRingHom ℂ) (mCoordIdeal (Line.lineData Line.zeroSystem Line.zero_hII).y)
-      (Line.discL 0) Line.velL ∧
-    ∃ k : Fin (Line.projLineComponentSetting Line.zeroSystem Line.zero_hII).S.R.N,
-      (Line.projLineComponentSetting Line.zeroSystem Line.zero_hII).M.proj (Line.discL 0) ∈
-        (Line.projLineComponentSetting Line.zeroSystem Line.zero_hII).S.R.mid k := by
-  obtain ⟨t, -, ht, hs, -⟩ := NbarChartSemipos.hyps_of_setting (Line.projLineComponentSetting Line.zeroSystem Line.zero_hII) one_pos
-  exact ⟨t, ht, hs, Line.discL_mem 0, Line.isConeTangent_velL, (0 : Fin 2), Line.projL_discL_mem_mid⟩
 
 end Inhabitants
 

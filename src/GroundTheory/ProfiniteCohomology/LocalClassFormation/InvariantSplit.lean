@@ -174,11 +174,4 @@ theorem brauerInv_surjective : Function.Surjective (brauerInv F Ω) := by
 theorem brauerInv_bijective : Function.Bijective (brauerInv F Ω) :=
   ⟨brauerInv_injective F Ω, brauerInv_surjective F Ω⟩
 
-noncomputable def brauerInvEquiv : galoisBrauerGroup F Ω ≃+ QZ :=
-  AddEquiv.ofBijective (brauerInv F Ω) (brauerInv_bijective F Ω)
-
-@[simp]
-theorem brauerInvEquiv_apply (x : galoisBrauerGroup F Ω) : brauerInvEquiv F Ω x = brauerInv F Ω x :=
-  rfl
-
 end GroundTheory.ProfCoh

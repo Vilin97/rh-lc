@@ -4,7 +4,8 @@ import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsEquivPro
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsSubquotientParIndProductsFlattened
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ParabolicInductionProductBlockRenamingEquiv
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.MultiProdCompCongr
-import BuildAid.D3
+import Lean.LibrarySuggestions.Basic
+import Lean.Elab.Command
 open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.LocGL
 
 private theorem flat_strictMono (d h : ℕ) : StrictMono (fun p : Fin (d * h) =>

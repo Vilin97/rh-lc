@@ -14,9 +14,6 @@ def of (γ : Γ) : ConjSelf Γ := γ
 
 def val (γ : ConjSelf Γ) : Γ := γ
 
-@[simp] theorem val_of (γ : Γ) : val (of γ) = γ := rfl
-@[simp] theorem of_val (γ : ConjSelf Γ) : of (val γ) = γ := rfl
-
 instance : MulAction Γ (ConjSelf Γ) where
   smul η γ := of (η * val γ * η⁻¹)
   one_smul γ := by

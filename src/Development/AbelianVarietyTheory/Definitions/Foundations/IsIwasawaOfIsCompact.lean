@@ -58,11 +58,6 @@ theorem iwAbs_right (g : G) {k : G} (hk : k ∈ K) : iwAbs δ K (g * k) = iwAbs 
   obtain ⟨p', k', hk', rfl⟩ := h.1 g
   rw [mul_assoc, h.iwAbs_mul _ (mul_mem hk' hk), h.iwAbs_mul _ hk']
 
-theorem eq_iwAbs {f : G → ℝ≥0} (h1 : f 1 = 1) (hl : ∀ (p : P) g, f (p * g) = δ p * f g)
-    (hr : ∀ g, ∀ k ∈ K, f (g * k) = f g) : f = iwAbs δ K := funext fun g => by
-  obtain ⟨p, k, hk, rfl⟩ := h.1 g
-  rw [h.iwAbs_mul _ hk, hr _ _ hk, ← mul_one (p : G), hl, h1, mul_one]
-
 end IsIwasawa
 
 variable [TopologicalSpace G] [IsTopologicalGroup G]
@@ -181,53 +176,20 @@ def indSpace [TopologicalSpace G] : Submodule ℂ (G → ℂ) where
 
 def flatSec (Φ : G → ℂ) (s₀ s : ℂ) : G → ℂ := fun g => Φ g * npow (iwAbs δ K g) (s - s₀)
 
-def IsFlat (Φ : ℂ → G → ℂ) : Prop := ∀ s s', ∀ k ∈ K, Φ s k = Φ s' k
-
 variable {δ K χ t}
 
-theorem mem_indSpace [TopologicalSpace G] {Φ : G → ℂ} :
-    Φ ∈ indSpace δ K χ t ↔ IndLaw δ χ t Φ ∧ Continuous Φ ∧ IsKFinite K Φ := Iff.rfl
-
-theorem translate_mem_indSpace [TopologicalSpace G] [ContinuousMul G] {Φ : G → ℂ} (h : Φ ∈ indSpace δ K χ t) {k : G}
-    (hk : k ∈ K) : (fun g => Φ (g * k)) ∈ indSpace δ K χ t :=
-  ⟨fun p g => by simpa only [mul_assoc] using h.1 p (g * k), h.2.1.comp (continuous_mul_const k), h.2.2.translate hk⟩
-
 @[simp] theorem flatSec_self (Φ : G → ℂ) (s₀ : ℂ) : flatSec δ K Φ s₀ s₀ = Φ := funext fun g => by simp [flatSec]
-
-theorem flatSec_flatSec (Φ : G → ℂ) (s₀ s₁ s : ℂ) : flatSec δ K (flatSec δ K Φ s₀ s₁) s₁ s = flatSec δ K Φ s₀ s :=
-  funext fun g => by
-    simp only [flatSec, mul_assoc, ← npow_add (iwAbs_pos δ K g)]
-    congr 2; ring
-
-theorem norm_flatSec (Φ : G → ℂ) (s₀ s : ℂ) (g : G) :
-    ‖flatSec δ K Φ s₀ s g‖ = ‖Φ g‖ * (iwAbs δ K g : ℝ) ^ (s.re - s₀.re) := by
-  rw [flatSec, norm_mul, norm_npow (iwAbs_pos δ K g), Complex.sub_re]
-
-theorem IndLaw.ext (h : ∀ g : G, ∃ p : P, ∃ k ∈ K, g = p * k) {Φ Ψ : G → ℂ} (h1 : IndLaw δ χ t Φ) (h2 : IndLaw δ χ t Ψ)
-    (e : ∀ k ∈ K, Φ k = Ψ k) : Φ = Ψ := funext fun g => by
-  obtain ⟨p, k, hk, rfl⟩ := h g
-  rw [h1, h2, e k hk]
 
 namespace IsIwasawa
 
 variable (h : IsIwasawa δ K)
 include h
 
-theorem flatSec_of_mem (Φ : G → ℂ) (s₀ s : ℂ) {k : G} (hk : k ∈ K) : flatSec δ K Φ s₀ s k = Φ k := by
-  simp [flatSec, h.iwAbs_of_mem hk]
-
-theorem isFlat_flatSec (Φ : G → ℂ) (s₀ : ℂ) : IsFlat K (flatSec δ K Φ s₀) := fun s s' k hk => by
-  rw [h.flatSec_of_mem _ _ _ hk, h.flatSec_of_mem _ _ _ hk]
-
 theorem indLaw_flatSec {Φ : G → ℂ} {ρ s₀ : ℂ} (hΦ : IndLaw δ χ (s₀ + ρ) Φ) (s : ℂ) :
     IndLaw δ χ (s + ρ) (flatSec δ K Φ s₀ s) := fun p g => by
   rw [flatSec, flatSec, hΦ, h.iwAbs_left, npow_mul, show s + ρ = (s₀ + ρ) + (s - s₀) by ring,
     npow_add (hom_pos δ p) _ (s - s₀)]
   ring
-
-theorem eq_flatSec {Φ : ℂ → G → ℂ} {ρ : ℂ} (hΦ : ∀ s, IndLaw δ χ (s + ρ) (Φ s)) (hf : IsFlat K Φ) (s₀ s : ℂ) :
-    Φ s = flatSec δ K (Φ s₀) s₀ s :=
-  IndLaw.ext h.1 (hΦ s) (h.indLaw_flatSec (hΦ s₀) s) fun k hk => by rw [h.flatSec_of_mem _ _ _ hk, hf s s₀ k hk]
 
 theorem norm_le {Φ : G → ℂ} (hΦ : IndLaw δ χ t Φ) {C : ℝ} (hC : ∀ k ∈ K, ‖Φ k‖ ≤ C) (g : G) :
     ‖Φ g‖ ≤ C * (iwAbs δ K g : ℝ) ^ t.re := by
@@ -249,31 +211,6 @@ theorem npow_iwAbs_mem (hP : IsClosed (P : Set G)) (hδ : Continuous δ) (hK : I
 
 end IsIwasawa
 
-def IsRightSmooth [TopologicalSpace G] (Φ : G → ℂ) : Prop :=
-  ∃ U : Subgroup G, IsOpen (U : Set G) ∧ ∀ g, ∀ u ∈ U, Φ (g * u) = Φ g
-
-theorem IsRightSmooth.continuous [TopologicalSpace G] [IsTopologicalGroup G] {Φ : G → ℂ} (h : IsRightSmooth Φ) :
-    Continuous Φ := by
-  obtain ⟨U, hU, h⟩ := h
-  refine continuous_iff_continuousAt.2 fun x => (continuousAt_const (y := Φ x)).congr ?_
-  filter_upwards [(hU.preimage (continuous_const_mul x⁻¹)).mem_nhds (x := x) (by simp)] with y hy
-  rw [← h x _ hy, mul_inv_cancel_left]
-
-theorem IsRightSmooth.isKFinite [TopologicalSpace G] [IsTopologicalGroup G] {Φ : G → ℂ} (h : IsRightSmooth Φ)
-    (hK : IsCompact (K : Set G)) : IsKFinite K Φ := by
-  obtain ⟨U, hU, h⟩ := h
-  obtain ⟨T, hT⟩ := hK.elim_finite_subcover (fun x : G => (fun y => x⁻¹ * y) ⁻¹' (U : Set G))
-    (fun x => hU.preimage (continuous_const_mul x⁻¹)) fun x _ => Set.mem_iUnion.2 ⟨x, by simp⟩
-  refine isKFinite_iff.2 ⟨Submodule.span ℂ ((fun x g => Φ (g * x)) '' (T : Set G)),
-    FiniteDimensional.span_of_finite ℂ (T.finite_toSet.image _), fun k hk => ?_⟩
-  obtain ⟨x, hx, hu⟩ := Set.mem_iUnion₂.1 (hT hk)
-  refine Submodule.subset_span ⟨x, hx, funext fun g => ?_⟩
-  change Φ (g * x) = Φ (g * k)
-  rw [← h (g * x) _ hu, mul_assoc, mul_inv_cancel_left]
-
-theorem IsRightSmooth.mem_indSpace [TopologicalSpace G] [IsTopologicalGroup G] {Φ : G → ℂ} (h : IsRightSmooth Φ)
-    (hK : IsCompact (K : Set G)) (hl : IndLaw δ χ t Φ) : Φ ∈ indSpace δ K χ t := ⟨hl, h.continuous, h.isKFinite hK⟩
-
 end Induced
 
 section ZetaNonvanishing₂
@@ -282,9 +219,6 @@ variable {H : Type} {X : Type} [NormedAddCommGroup X] [InnerProductSpace ℂ X]
 
 def coef (π : H → X → X) (x y : X) : H → ℂ := fun g => inner ℂ y (π g x)
 
-theorem conj_coef (π : H → X → X) (x y : X) (g : H) : starRingEnd ℂ (coef π x y g) = inner ℂ (π g x) y :=
-  inner_conj_symm _ _
-
 variable [MeasurableSpace H] (m : Measure H)
 
 def pairInt (f c : H → ℂ) : ℂ := ∫ g, f g * starRingEnd ℂ (c g) ∂m
@@ -292,13 +226,6 @@ def pairInt (f c : H → ℂ) : ℂ := ∫ g, f g * starRingEnd ℂ (c g) ∂m
 def PairConv (f c : H → ℂ) : Prop := Integrable (fun g => f g * starRingEnd ℂ (c g)) m
 
 end ZetaNonvanishing₂
-
-example {X : Type} [NormedAddCommGroup X] [InnerProductSpace ℂ X] (x y : X) (c : ℂ) :
-    coef (fun _ : Unit => id) (c • x) y () = c * coef (fun _ : Unit => id) x y () := inner_smul_right _ _ _
-
-example {G : Type} [Group G] (δ : (⊤ : Subgroup G) →* ℝ≥0) : IsIwasawa δ ⊥ :=
-  ⟨fun g => ⟨⟨g, trivial⟩, 1, one_mem _, (mul_one g).symm⟩, fun p hp => by
-    rw [show p = 1 from Subtype.ext hp, map_one]⟩
 
 end GlobalTheory.Doubling
 

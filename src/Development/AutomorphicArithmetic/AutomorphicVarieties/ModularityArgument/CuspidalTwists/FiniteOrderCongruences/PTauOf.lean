@@ -136,8 +136,6 @@ def tau (hy : Hyp H k u g0) : Γ →* M2 R where
         Nm_conj hy hy.g0 hbg, Nm_inv, h1]
       simp only [mul_assoc, mul_one]
 
-theorem tau_apply (hy : Hyp H k u g0) (g : Γ) : tau hy g = tauF H k u g0 g := rfl
-
 theorem form_of (a b s : R) (h1 : a * a - b * b = 1) (h2 : s * s = 1) :
     (!![a, s * b; b, s * a] : M2 R)ᵀ * !![1, 0; 0, -1] * !![a, s * b; b, s * a] = !![1, 0; 0, -1] := by
   have eT : (!![a, s * b; b, s * a] : M2 R)ᵀ = !![a, b; s * b, s * a] := by

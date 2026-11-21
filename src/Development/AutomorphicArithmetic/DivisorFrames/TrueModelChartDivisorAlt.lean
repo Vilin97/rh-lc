@@ -1,6 +1,7 @@
 import Mathlib
 import Development.AutomorphicArithmetic.LocalEmbeddings.ExistsIsMapToFn
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFlagBundleIff
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsFlagBundleRankOne
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BcDensEqOfGram
 import Development.AutomorphicArithmetic.DivisorFrames.ExistsAdaptedFlagCharts
 import Development.AutomorphicArithmetic.DivisorFrames.ChartFrameDivisor
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FromModelOfLocMax
@@ -225,10 +226,3 @@ private theorem core :
     Real.log_inv, hlog ((Scheme.stalkClosedPointTo y.1).hom V), Units.val_mul, Units.val_inv_eq_inv_val,
     ← div_eq_mul_inv, mul_neg]
   rfl
-
-theorem UpperTheory.true_model_chart_divisor_alt :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β) (F : Type) [Field F] [NumberField F] (e : F ≃+* c.F) (C : FlagCpt Z e) (N : GlobalTheory.TrueGeo.Model C.Y) (τ : E →+* ℂ) (M : N.X.Modules) (dual : Bool) (A : Chart M (Dw.mult τ) → Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) C.Y.Fn) (fl : Vert.Flag M (Dw.mult τ)) (i : Fin (Dw.mult τ)) (s : ((fl.root i).pull N.j).ι → C.Y.Fnˣ) (kind : ℕ → Bool) (Ro : Option ℝ) (w : Pad.Sym E →₀ ℤ), w = Finsupp.single (kind, Ro, Sum.inl (τ, (pos dual i : ℕ))) (cond dual (-1) 1) → IsLie C.f0 τ N.j dual A → IsFlag (genericPt C.Y ≫ N.j) dual A fl → IsGrSec N.j dual A fl i s → IsLat C.f0 τ N.j dual A → (∀ p, kind p = false) → ∀ (v : HeightOneSpectrum (𝓞 F)) (ε : Ext v) (y : AlgPt C.Y) (yt : Sp ε.O ⟶ N.X) (k : ((fl.root i).pull N.j).ι), spMap ε.O.subtype ≫ yt = y.1 ≫ N.j → ⊤ ≤ yt ⁻¹ᵁ (fl.root i).U (k PUnit.unit) → lgOf C w v ε y = Real.log (ε.w (valAt y.1 (((eqn (divOf C (expo Dw w)) (below y.1))⁻¹ * s k : C.Y.Fnˣ) : C.Y.Fn))) := by
-  intro E _ _ _ H Dw l Xo c O _ β Z F _ _ e C N τ M dual A fl i s kind Ro w hw hL hF hS hLat hk v ε y yt k hy hU
-  have spec := (C.gr_spec (below y.1)).choose_spec.choose_spec.choose_spec
-  exact (dif_pos (residueCharacteristic_prime v)).trans (@core E _ _ _ H Dw l Xo c O _ β Z F _ _ e C N τ M dual A fl i s kind Ro w hw hL hF
-    hS hLat hk v (_) ε y yt k hy hU _ _ _ _ rfl spec.1 spec.2)

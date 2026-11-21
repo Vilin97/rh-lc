@@ -14,12 +14,6 @@ variable {k : ℕ}
 def blk (h : Matrix (Fin k) (Fin k) ℂ) (R : Fin k → ℂ) : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ :=
   Matrix.of (Fin.cons (Fin.cons 1 R) (fun a' => Fin.cons 0 (h a')) : Fin (k + 1) → Fin (k + 1) → ℂ)
 
-@[simp] theorem firstColumnBlockMatrix_apply_zero_zero (h : Matrix (Fin k) (Fin k) ℂ) (R : Fin k → ℂ) : blk h R 0 0 = 1 := rfl
-@[simp] theorem blk_zs (h : Matrix (Fin k) (Fin k) ℂ) (R : Fin k → ℂ) (b) : blk h R 0 b.succ = R b := rfl
-@[simp] theorem blk_sz (h : Matrix (Fin k) (Fin k) ℂ) (R : Fin k → ℂ) (a : Fin k) : blk h R a.succ 0 = 0 := rfl
-@[simp] theorem blk_ss (h : Matrix (Fin k) (Fin k) ℂ) (R : Fin k → ℂ) (a b : Fin k) :
-    blk h R a.succ b.succ = h a b := rfl
-
 theorem blk_col (h : Matrix (Fin k) (Fin k) ℂ) (R : Fin k → ℂ) (a) : blk h R a 0 = if a = 0 then 1 else 0 := by
   refine Fin.cases ?_ (fun a => ?_) a <;> simp [Fin.succ_ne_zero]
 

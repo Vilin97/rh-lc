@@ -151,9 +151,4 @@ theorem finiteDimensional_lowPartInf : GlobalTheory.ThK.KP → ∀ (F E : Type) 
 
 end GlobalTheory.IndLine
 
-example : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
-    (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W)
-    (R : RealMaps F a a') (Rf : FinMaps F a a'), IsMatched B G X om om' R Rf →
-      FiniteDimensional ℂ (lowPartInf B G.M R.p) := GlobalTheory.IndLine.finiteDimensional_lowPartInf
-
 end

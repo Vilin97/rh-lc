@@ -51,11 +51,6 @@ theorem VT.ext {z : Frame X.Ψ r} {ξ : Fin r → E} {u v : VT (X := X) z ξ} (h
 @[simp] theorem VT.val_smul {z : Frame X.Ψ r} {ξ : Fin r → E} (c : ℝ) (u : VT (X := X) z ξ) :
     (c • u).val = c • u.val := rfl
 
-@[simp] theorem VT.val_zero {z : Frame X.Ψ r} {ξ : Fin r → E} : (0 : VT (X := X) z ξ).val = 0 := rfl
-
-@[simp] theorem VT.val_neg {z : Frame X.Ψ r} {ξ : Fin r → E} (u : VT (X := X) z ξ) :
-    (-u).val = -u.val := rfl
-
 @[simp] theorem VT.val_sub {z : Frame X.Ψ r} {ξ : Fin r → E} (u v : VT (X := X) z ξ) :
     (u - v).val = u.val - v.val := rfl
 

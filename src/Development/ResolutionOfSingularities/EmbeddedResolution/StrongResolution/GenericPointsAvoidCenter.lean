@@ -127,10 +127,6 @@ theorem isIso_blowdown_restrict_ambientCenterSupportCompl (i : ℕ) (hi : i < S.
 def strictTransformOffCenter (i : ℕ) : (S.strictTransform i).Opens :=
   (TopologicalSpace.Opens.map (S.strictTransformι i).base).obj (S.ambientCenterSupportCompl i)
 
-@[simp] theorem mem_strictTransformOffCenter (i : ℕ) (x : ↥(S.strictTransform i)) :
-    x ∈ S.strictTransformOffCenter i ↔
-      (S.strictTransformι i).base x ∉ ((S.ambientCenter i).support : Set ↥(S.schemeAt i)) := Iff.rfl
-
 abbrev strictTransformMapPreimageOffCenter (i : ℕ) : (S.strictTransform (i + 1)).Opens :=
   (TopologicalSpace.Opens.map (S.strictTransformMap i).base).obj (S.strictTransformOffCenter i)
 
@@ -366,24 +362,6 @@ theorem exists_irreducibleComponent_isGenericPoint_strictTransformMap [Algebraic
     have h2 := ((S.mem_detachedComponents i _).mp hfr).2
     exact hηZ (h2 ⟨(S.strictTransformMap i).base η, subset_closure rfl, rfl⟩)
   exact ⟨closure ({(S.strictTransformMap i).base η} : Set ↥(S.strictTransform i)), hmemComp, rfl, hnotfr⟩
-
-def blowdownIterate (j : ℕ) : (n : ℕ) → (S.schemeAt (j + n) ⟶ S.schemeAt j)
-  | 0 => 𝟙 _
-  | (n + 1) => S.blowdown (j + n) ≫ blowdownIterate j n
-
-@[simp] theorem blowdownIterate_zero (j : ℕ) : S.blowdownIterate j 0 = 𝟙 _ := rfl
-
-@[simp] theorem blowdownIterate_succ (j n : ℕ) :
-    S.blowdownIterate j (n + 1) = S.blowdown (j + n) ≫ S.blowdownIterate j n := rfl
-
-def strictTransformMapIterate (j : ℕ) : (n : ℕ) → (S.strictTransform (j + n + 1) ⟶ S.strictTransform j)
-  | 0 => S.strictTransformMap j
-  | (n + 1) => S.strictTransformMap (j + n + 1) ≫ strictTransformMapIterate j n
-
-@[simp] theorem strictTransformMapIterate_zero (j : ℕ) : S.strictTransformMapIterate j 0 = S.strictTransformMap j := rfl
-
-@[simp] theorem strictTransformMapIterate_succ (j n : ℕ) :
-    S.strictTransformMapIterate j (n + 1) = S.strictTransformMap (j + n + 1) ≫ S.strictTransformMapIterate j n := rfl
 
 end EmbeddedBlowupSequence
 

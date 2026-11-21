@@ -25,7 +25,6 @@ def subschemeMapOfComap {X Y : Scheme.{u}} (g : Y ⟶ X) (Z : X.IdealSheafData) 
     (Z.comap g).subscheme ⟶ Z.subscheme :=
   (exists_comp_subschemeι_eq_subschemeι_comp g Z).choose
 
-@[reassoc]
 theorem subschemeMapOfComap_comp {X Y : Scheme.{u}} (g : Y ⟶ X) (Z : X.IdealSheafData) :
     subschemeMapOfComap g Z ≫ Z.subschemeι = (Z.comap g).subschemeι ≫ g :=
   (exists_comp_subschemeι_eq_subschemeι_comp g Z).choose_spec

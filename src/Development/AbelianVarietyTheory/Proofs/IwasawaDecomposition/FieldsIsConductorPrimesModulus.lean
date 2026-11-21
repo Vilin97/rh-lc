@@ -2,7 +2,7 @@ import Mathlib
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BaseDataEmbeddingConj
 import Formalism.LocalToGlobal.Columns.BaseLemmas
 import Formalism.LocalToGlobal.UnitaryNorms.MemFIffReal
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.OverOnePrimeOfCardLeOne
+import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
 import Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.IsCond
 
 open Formalism.BasicNotions NumberField IsDedekindDomain GlobalTheory.Mem

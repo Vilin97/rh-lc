@@ -16,9 +16,6 @@ def coeffMap {K L : Type} [Field K] [Field L] (f : K →+* L) : LaurentSeries K 
   map_zero' := by ext; simp
   map_add' _ _ := by ext; simp
 
-theorem coeffMap_coeff {K L : Type} [Field K] [Field L] (f : K →+* L) (g : LaurentSeries K) (m : ℤ) :
-    (coeffMap f g).coeff m = f (g.coeff m) := rfl
-
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits NumberField in
 theorem _root_.GlobalTheory.LetterMap.coeffMap_ofPowerSeries {K L : Type} [Field K] [Field L] (f : K →+* L)
     (g : PowerSeries K) :
@@ -63,35 +60,6 @@ theorem _root_.GlobalTheory.LetterMap.num_algebraMap {Dw : _root_.ReciprocityThe
   unfold _root_.Formalism.L2.Pj.QAt.arcNum
   rw [dite_eq_left hex]
   exact hinj hex.choose_spec
-
-theorem map_arcDet (Dw : Datum H) {K L : Type} [Field K] [Field L] (f : K →+* L) :
-    MvPolynomial.map (coeffMap f) (arcDet Dw K) = arcDet Dw L := by
-  unfold arcDet
-  rw [map_prod]
-  refine Finset.prod_congr rfl fun τ _ => ?_
-  rw [RingHom.map_det]
-  congr 1
-  ext i k : 2
-  simp
-
-def ringMap (Dw : Datum H) {K L : Type} [Field K] [Field L] (f : K →+* L) : ArcS Dw K →+* ArcS Dw L :=
-  IsLocalization.Away.lift (arcDet Dw K)
-    (g := (algebraMap (MvPolynomial (ArcLt Dw) (LaurentSeries L)) (ArcS Dw L)).comp (MvPolynomial.map (coeffMap f)))
-    (by
-      rw [RingHom.comp_apply, map_arcDet]
-      exact IsLocalization.Away.algebraMap_isUnit (arcDet Dw L))
-
-theorem ringMap_algebraMap (Dw : Datum H) {K L : Type} [Field K] [Field L] (f : K →+* L)
-    (P : MvPolynomial (ArcLt Dw) (LaurentSeries K)) :
-    ringMap Dw f (algebraMap _ _ P) = algebraMap _ (ArcS Dw L) (MvPolynomial.map (coeffMap f) P) :=
-  IsLocalization.Away.lift_eq _ _ _
-
-theorem ringMap_arcι (Dw : Datum H) {K L : Type} [Field K] [Field L] (f : K →+* L) (g : PowerSeries K) :
-    ringMap Dw f (arcι Dw K g) = arcι Dw L (PowerSeries.map f g) := by
-  unfold arcι
-  simp only [RingHom.comp_apply]
-  erw [ringMap_algebraMap, MvPolynomial.map_C, coeffMap_ofPowerSeries]
-  try rfl
 
 end GlobalTheory.LetterMap
 

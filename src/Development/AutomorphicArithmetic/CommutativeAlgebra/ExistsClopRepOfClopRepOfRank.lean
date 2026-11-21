@@ -125,10 +125,6 @@ private noncomputable def piece (T : Over S) (W : T.left.Opens) : Over S :=
 private noncomputable def pieceι (T : Over S) (W : T.left.Opens) : piece T W ⟶ T :=
   Over.homMk W.ι rfl
 
-private instance pieceι_open (T : Over S) (W : T.left.Opens) :
-    IsOpenImmersion (pieceι T W).left :=
-  inferInstanceAs (IsOpenImmersion W.ι)
-
 private lemma piece_cover {T : Over S} (W : ℕ → T.left.Opens) (hc : ∀ t, ∃ r, t ∈ W r) :
     TopologicalSpace.IsOpenCover W := by
   refine top_le_iff.1 fun t _ => ?_

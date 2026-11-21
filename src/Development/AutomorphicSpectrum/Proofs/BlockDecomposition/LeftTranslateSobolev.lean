@@ -34,8 +34,6 @@ def mulL (a : Mat n) : Mat n →L[ℝ] Mat n :=
       map_add' := fun y z => Matrix.mul_add a y z
       map_smul' := fun c y => Matrix.mul_smul a c y }
 
-@[simp] theorem mulL_apply (a y : Mat n) : mulL a y = a * y := rfl
-
 variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]
 
 theorem contDiffOn_lTr (x : G n) {f : Mat n → V} (hf : ContDiffOn ℝ ∞ f (GLs n)) :

@@ -67,14 +67,6 @@ variable (S : ShortComplex (ModuleCat.{u} R))
     (hrange : LinearMap.range ι = LinearMap.ker S.g.hom) (N : Submodule R K)
     (hN : ∀ x, x ∈ N ↔ ι x ∈ LinearMap.range S.f.hom)
 
-@[simp]
-lemma moduleLeftHomologyData_i_hom :
-    (moduleLeftHomologyData S K ι hι hrange N hN).i.hom = ι := rfl
-
-@[simp]
-lemma moduleLeftHomologyData_π_hom :
-    (moduleLeftHomologyData S K ι hι hrange N hN).π.hom = N.mkQ := rfl
-
 lemma moduleLeftHomologyData_homologyIso_hom_homologyπ [S.HasHomology]
     (z : S.cycles) (x : K) (hx : ι x = S.iCycles.hom z) :
     (moduleLeftHomologyData S K ι hι hrange N hN).homologyIso.hom.hom (S.homologyπ.hom z) =

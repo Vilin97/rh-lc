@@ -9,8 +9,6 @@ open GlobalTheory.InertUmax
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 theorem sgl_mul (v : HeightOneSpectrum (𝓞 L⁺)) (a b : v.adicCompletion L⁺) :
     sgl L v a * sgl L v b = sgl L v (a * b) := by
   refine RestrictedProduct.ext _ _ fun w => ?_
@@ -86,8 +84,6 @@ namespace GlobalTheory.SplitLift
 open GlobalTheory.InertUmax
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
-
-local notation3 "L⁺" => maximalRealSubfield L
 
 def Ep (s : SplitPlace L) (δ : L) : AL L := ιs s (1 / 2) + tt δ * ιs s (1 / (2 * s.i δ))
 
@@ -183,8 +179,6 @@ open GlobalTheory.InertUmax
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 def θ (s : SplitPlace L) (δ : L) (d : L⁺) (hd : δ * δ = algebraMap L⁺ L d) (hr : s.i δ ≠ 0) :
     s.v.adicCompletion L⁺ × s.v.adicCompletion L⁺ × AL L →+* AL L where
   toFun q := Ep s δ * ιs s q.1 + Em s δ * ιs s q.2.1 + (1 - ιs s 1) * q.2.2
@@ -210,8 +204,6 @@ namespace GlobalTheory.SplitLift
 open GlobalTheory.InertUmax
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
-
-local notation3 "L⁺" => maximalRealSubfield L
 
 theorem θ_apply (s : SplitPlace L) (δ : L) (d : L⁺) (hd : δ * δ = algebraMap L⁺ L d) (hr : s.i δ ≠ 0)
     (q : s.v.adicCompletion L⁺ × s.v.adicCompletion L⁺ × AL L) :

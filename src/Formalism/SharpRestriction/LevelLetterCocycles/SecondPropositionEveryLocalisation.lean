@@ -9,13 +9,6 @@ open Formalism.BasicNotions
 
 namespace Formalism.MainNotions.LargeLevelLemmas
 
-theorem second_proposition_every_localisation {D : D7} (i : D.nd.Loc) : Conclusion2 i :=
-  endomorphism_bound_at_good_points (Formalism.MainNotions.TruncatedSeriesCountingIdentities.second_statement D) i
-
-theorem second_statement (D : D7) : HodgeTateFromSandwich D := by
-  show ∀ i, Conclusion2 i
-  exact fun i => second_proposition_every_localisation i
-
 namespace Br
 
 open Formalism.NG Matrix Module Kronecker
@@ -132,12 +125,6 @@ def mkHom (ev : A →ₐ[O] Matrix n n (FractionRing O))
     ext a
     simp [Matrix.mulVec, dotProduct, Matrix.algebraMap_matrix_apply, Algebra.smul_def, apply_ite,
       ite_mul]
-
-@[simp] theorem mkHom_apply (ev : A →ₐ[O] Matrix n n (FractionRing O))
-    (pr : (n → FractionRing O) →ₗ[FractionRing O] (δ → FractionRing O))
-    (hpr : Function.Surjective pr) (F : A → Matrix δ δ O)
-    (h : ∀ a u, pr (ev a *ᵥ u) = ((F a).map (algebraMap O (FractionRing O))) *ᵥ pr u) (a : A) :
-    mkHom ev pr hpr F h a = F a := rfl
 
 end Hom
 

@@ -105,8 +105,6 @@ variable {K : Type} [Field K] {X : Scheme.{0}} (p : X ⟶ Sp K) (L : LB X)
 def constHom (U : X.Opens) : K →+* Γ(X, U) :=
   (p.appLE ⊤ U (fun _ _ => trivial)).hom.comp (Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom
 
-theorem constHom_apply (U : X.Opens) (a : K) : constHom p U a = constFn p U a := rfl
-
 theorem res_constHom {U V : X.Opens} (h : V ≤ U) (a : K) :
     (X.presheaf.map (homOfLE h).op).hom (constHom p U a) = constHom p V a :=
   congrArg (fun φ => φ.hom ((Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom a))

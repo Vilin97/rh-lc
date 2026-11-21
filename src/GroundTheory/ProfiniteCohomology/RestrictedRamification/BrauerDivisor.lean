@@ -10,8 +10,6 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory NumberField IsDedekindDomain IntermediateField GroundTheory.Global FiniteSubfield
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1))) (ιs : LocalEmbeddings K)
@@ -57,11 +55,6 @@ def unitsDivFun (y : Additive (maxUnramifiedOutside K.1 ℚ̄ S)ˣ) : divFun (gs
         ordEmb S (ιs.fin v.1) v.2 (Additive.ofMul (galUnitsHom K.1 _ x y.toMul))
       rw [map_mul]
       exact ordEmb_decompHomS S (ιs.fin v.1) v.2 σ _⟩
-
-theorem coe_unitsDivFun (y : Additive (maxUnramifiedOutside K.1 ℚ̄ S)ˣ) :
-    (unitsDivFun K S ιs y : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S} → galUnramifiedOutside K.1 ℚ̄ S → ℤ) =
-      fun v x => ordEmb S (ιs.fin v.1) v.2 (Additive.ofMul (galUnitsHom K.1 _ x y.toMul)) :=
-  rfl
 
 def unitsDivHom : Additive (maxUnramifiedOutside K.1 ℚ̄ S)ˣ →+ divFun (gsDecomp K S ιs) ℤ where
   toFun := unitsDivFun K S ιs
@@ -217,18 +210,6 @@ theorem Good.translate {ℓ : ℕ}
   refine ⟨N, h, galUnitsHom K.1 _ g y, fun v x => ?_⟩
   rw [← hy v (x * g), map_mul]
   rfl
-
-theorem isLocallyConstant_of_mul_right {U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)}
-    (hU : IsOpen (U : Set (galUnramifiedOutside K.1 ℚ̄ S))) {φ : galUnramifiedOutside K.1 ℚ̄ S → ℤ}
-    (h : ∀ x, ∀ u ∈ U, φ (x * u) = φ x) : IsLocallyConstant φ := by
-  rw [IsLocallyConstant.iff_eventually_eq]
-  intro x
-  have hn := (hU.preimage (continuous_const_mul x⁻¹)).mem_nhds
-    (show x⁻¹ * x ∈ (U : Set (galUnramifiedOutside K.1 ℚ̄ S)) by rw [inv_mul_cancel]; exact one_mem _)
-  filter_upwards [hn] with x' hx'
-  have : x' = x * (x⁻¹ * x') := by rw [mul_inv_cancel_left]
-  rw [this]
-  exact h x _ hx'
 
 end PicInf
 

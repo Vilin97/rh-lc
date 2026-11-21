@@ -1,6 +1,11 @@
 import Mathlib
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleIdentityIso
-import Development.AbelianVarietyTheory.BlockTheory.CMModuli.UniformizationLinear
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CubeVal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.UnifUniqSt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.IsNsmul
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.QkToAkU
+import Development.AbelianVarietyTheory.Definitions.Uniformization.IsCPPullback
 import Development.AbelianVarietyTheory.Definitions.Degenerations.ToATotal
 import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissiblePadicIntMaximalIdeal
 import Development.AbelianVarietyTheory.Definitions.Degenerations.PelSt
@@ -70,11 +75,6 @@ section Triples
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 end Triples
-
-def PelOver (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (t : SAB H (Sp R)) (D : DegData R I)
-    (A : PolAV (Sp (FractionRing R))) (U : Unif I D A t.G), U.LG = t.PP →
-    ∃ P : PELUnif I t, P.D = D ∧ P.A = A ∧ HEq P.U U ∧ P.TorsionIso
 
 end GlobalTheory.UnifDvrCompare
 end

@@ -9,8 +9,6 @@ open NumberField IntermediateField GroundTheory.Global GroundTheory.Global.Cyclo
 
 open scoped GroundTheory.LocalField.Abstract Pointwise
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 namespace CyclotomicLayer

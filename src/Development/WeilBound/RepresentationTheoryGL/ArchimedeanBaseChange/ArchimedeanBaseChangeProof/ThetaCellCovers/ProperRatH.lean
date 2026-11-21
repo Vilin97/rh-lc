@@ -44,11 +44,6 @@ def ctx (h : RatProper) (D : Dom E a b) : Ctx :=
     F := D.F
     fd := D.fd }
 
-theorem ctx_ker (h : RatProper) (D : Dom E a b) (φ : H E a b → ℂ) : ker (ctx h D).Γ φ = kerH φ := rfl
-
-theorem ctx_isOp (h : RatProper) (D : Dom E a b) {ι : Type} [Fintype ι] (Φ : Matrix ι ι (H E a b → ℂ))
-    (T : Hs (ι := ι) D →L[ℂ] Hs (ι := ι) D) : (ctx h D).IsOp Φ T ↔ IsROp D Φ T := Iff.rfl
-
 theorem wt_eq (x : H E a b) : wt x = 1 + red x.1 + red x.2 := rfl
 
 def th (x : H E a b) : H E a b := (thetaA E a x.1, thetaA E b x.2)
@@ -64,9 +59,6 @@ def WtCount : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a 
 def CutCount : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a b : ℕ) (D : Dom E a b) (Ω : Set (H E a b)),
   IsCompact Ω → ∃ (C : ℝ) (N : ℕ), 0 ≤ C ∧ ∀ τ : ℝ, 0 ≤ τ →
     ∫⁻ x, (cutSet E a τ ×ˢ cutSet E b τ).indicator (cnt (ratH E a b) Ω) x ∂D.ν ≤ ENNReal.ofReal (C * (1 + τ) ^ N)
-
-def WtDiag : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a b : ℕ) (D : Dom E a b) (φ : H E a b → ℂ),
-  IsTestH φ → ∀ M : ℕ, 2 * (a + b) ≤ M → ∫⁻ x, ENNReal.ofReal (wt x ^ (-(2 * M : ℤ))) * ‖kerH φ x x‖ₑ ∂D.ν < ⊤
 
 def SB : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a b : ℕ) (D : Dom E a b) (ι : Type) [Fintype ι]
   (Φ₁ Φ₂ : Matrix ι ι (H E a b → ℂ)) (T₁ T₂ : Hs (ι := ι) D →L[ℂ] Hs (ι := ι) D) (M : Matrix ι ι ℂ),

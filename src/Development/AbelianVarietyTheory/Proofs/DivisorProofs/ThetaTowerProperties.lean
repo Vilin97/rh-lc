@@ -131,6 +131,4 @@ theorem towerA_of (hP : GlobalTheory.FunPr.Hypotheses₂) : TowerA := by
       exact hW₁
   · exact ⟨c.heckeα, c.heckeβ, c.resα, rβ, c.expα, c.expβ, c.disj, c.sub, c.ram, c.unrα, c.unrβ, c.good⟩
 
-theorem towerA_and_towerB (hP : GlobalTheory.FunPr.Hypotheses₂) : TowerA ∧ TowerB := ⟨towerA_of hP, towerB_of hP⟩
-
 end GlobalTheory.ThK

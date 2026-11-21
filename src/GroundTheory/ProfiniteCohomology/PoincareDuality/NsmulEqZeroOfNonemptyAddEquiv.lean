@@ -21,9 +21,6 @@ variable {k G : Type u} [CommRing k] [Group G]
 abbrev dualRep (D M : Rep.{u} k G) : Rep.{u} k G :=
   Rep.of (Representation.linHom M.ρ D.ρ)
 
-theorem dualRep_eq_ihom (D M : Rep.{u} k G) : dualRep D M = (Rep.ihom M).obj D :=
-  rfl
-
 theorem dualRep_ρ_apply (D M : Rep.{u} k G) (σ : G) (f : M →ₗ[k] D) (m : M) :
     ((dualRep D M).ρ σ f : M →ₗ[k] D) m = D.ρ σ (f (M.ρ σ⁻¹ m)) :=
   rfl
@@ -36,12 +33,7 @@ def GlobalTheory.CompanionTheory.Ar.dualMap (D : Rep.{u} k G) {A B : Rep.{u} k G
     change D.ρ σ (f (B.ρ σ⁻¹ (φ.hom a))) = D.ρ σ (f (φ.hom (A.ρ σ⁻¹ a)))
     rw [Rep.hom_comm_apply]⟩
 
-@[simp]
-theorem dualMap_hom_apply (D : Rep.{u} k G) {A B : Rep.{u} k G} (φ : A ⟶ B) (f : B →ₗ[k] D)
-    (a : A) : ((GlobalTheory.CompanionTheory.Ar.dualMap D φ).hom f : A →ₗ[k] D) a = f (φ.hom a) :=
-  rfl
-
-theorem dualMap_id (D A : Rep.{u} k G) : GlobalTheory.CompanionTheory.Ar.dualMap D (𝟙 A) = 𝟙 (dualRep D A) :=
+theorem dualMap_id (D A : Rep.{u} k G) : dualMap D (𝟙 A) = 𝟙 (dualRep D A) :=
   rfl
 
 theorem dualMap_comp (D : Rep.{u} k G) {A B C : Rep.{u} k G} (φ : A ⟶ B) (ψ : B ⟶ C) :
@@ -79,11 +71,6 @@ def toDualDual (D M : Rep.{u} k G) : M ⟶ dualRep D (dualRep D M) :=
     refine LinearMap.ext fun m => LinearMap.ext fun f => ?_
     change f (M.ρ σ m) = D.ρ σ (D.ρ σ⁻¹ (f (M.ρ σ⁻¹⁻¹ m)))
     rw [inv_inv, Representation.self_inv_apply]⟩
-
-@[simp]
-theorem toDualDual_hom_apply (D M : Rep.{u} k G) (m : M) (f : M →ₗ[k] D) :
-    ((toDualDual D M).hom m : (M →ₗ[k] D) →ₗ[k] D) f = f m :=
-  rfl
 
 end Dual
 

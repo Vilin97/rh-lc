@@ -1,9 +1,12 @@
 import Mathlib
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ModelSmall
 import Development.AutomorphicSpectrum.Statements.TowerExistence.GoodTowerExistsX
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.VolumeInputs
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverLaUnique
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.ExistsUniqueStatement
+import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsEmbeddingPieces
+import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HasMultiplier
+import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.HeckeSectionsIsotropicCommutatorPairingPower
+import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverLaUnique
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.PrimeLogSum
 open NumberField IsDedekindDomain Filter Topology
@@ -12,21 +15,6 @@ open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Rec GlobalT
 attribute [-instance] GlobalTheory.CompHt.fintypePsi
 
 namespace GlobalTheory.CompanionTheory.Ar.Plug
-
-theorem log_div_pred_le_log_two {p : ℕ} (hp : p.Prime) : Real.log p / ((p : ℝ) - 1) ≤ Real.log 2 := by
-  have h2 : 2 ≤ p := hp.two_le
-  have h2' : (2 : ℝ) ≤ p := by exact_mod_cast h2
-  have hpos : (0 : ℝ) < (p : ℝ) - 1 := by linarith
-  rw [div_le_iff₀ hpos]
-  have hlt : p - 1 < 2 ^ (p - 1) := Nat.lt_two_pow_self
-  have hle : p ≤ 2 ^ (p - 1) := by omega
-  have hle' : (p : ℝ) ≤ (2 : ℝ) ^ (p - 1) := by exact_mod_cast hle
-  have h := Real.log_le_log (by linarith) hle'
-  rw [Real.log_pow] at h
-  have hc : ((p - 1 : ℕ) : ℝ) = (p : ℝ) - 1 := by
-    rw [Nat.cast_sub (by omega)]; simp
-  rw [hc] at h
-  linarith
 
 theorem sum_padicVal_log {n : ℕ} (hn : n ≠ 0) {S : Finset ℕ} (hS : ∀ p ∈ S, p.Prime) (hsub : n.primeFactors ⊆ S) :
     ∑ p ∈ S, (padicValNat p n : ℝ) * Real.log p = Real.log n := by

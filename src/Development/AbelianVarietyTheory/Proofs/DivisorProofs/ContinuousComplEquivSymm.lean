@@ -80,9 +80,6 @@ def glTr (hj : IsLocIso j) (e : n' ≃ n) : GL n k ≃ₜ* GL n' k' :=
       rw [this]
       exact (Units.continuous_val.matrix_map hj.2.1).matrix_submatrix e.symm e.symm) }
 
-@[simp] theorem glTr_val (hj : IsLocIso j) (e : n' ≃ n) (g : GL n k) : (glTr hj e g).val = trM j e e g.val :=
-  glTrEquiv_val j e g
-
 variable [MeasurableSpace k] [BorelSpace k] [MeasurableSpace k'] [BorelSpace k']
 
 def pullMeas (hj : IsLocIso j) (e : n' ≃ n) (μ : MeasureTheory.Measure (GL n' k')) : MeasureTheory.Measure (GL n k) :=

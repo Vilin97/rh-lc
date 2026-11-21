@@ -19,8 +19,6 @@ namespace GlobalTheory.HeckeStdFacts
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 theorem triv_mul {T : Set (HeightOneSpectrum (𝓞 L⁺))} {x y : GAf L n} (hx : TrivOutside T x)
     (hy : TrivOutside T y) : TrivOutside T (x * y) := by
   intro w hw

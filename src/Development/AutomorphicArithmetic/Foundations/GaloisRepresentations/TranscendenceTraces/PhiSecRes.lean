@@ -12,7 +12,6 @@ variable {R : Type} [CommRing R] {Z S : Scheme.{0}} (p : Z ⟶ S)
 def pbm {U' U : Scheme.{0}} (g : U' ⟶ U) (u : U ⟶ S) (u' : U' ⟶ S) (h : g ≫ u = u') : pullback p u' ⟶ pullback p u :=
   pullback.lift (pullback.fst p u') (pullback.snd p u' ≫ g) (by rw [Category.assoc, h, pullback.condition])
 
-@[reassoc (attr := simp)]
 theorem pbm_fst {U' U : Scheme.{0}} (g : U' ⟶ U) (u : U ⟶ S) (u' : U' ⟶ S) (h : g ≫ u = u') :
     pbm p g u u' h ≫ pullback.fst p u = pullback.fst p u' := pullback.lift_fst _ _ _
 
@@ -102,7 +101,6 @@ theorem phiSec_map {G G' : Shv R} (f : G ⟶ G') (U : Scheme.{0}) (x : DS p G U)
 def Sq.cmp {p : Z ⟶ S} (A : Sq p) : pullback p A.u ⟶ A.V :=
   A.pb.lift (pullback.fst p A.u) (pullback.snd p A.u) pullback.condition
 
-@[reassoc (attr := simp)]
 theorem Sq.cmp_v {p : Z ⟶ S} (A : Sq p) : A.cmp ≫ A.v = pullback.fst p A.u := A.pb.lift_fst _ _ _
 
 @[reassoc (attr := simp)]

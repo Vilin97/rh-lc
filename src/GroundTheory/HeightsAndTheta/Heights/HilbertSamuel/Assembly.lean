@@ -1,8 +1,22 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AssemblyBase
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PAnResToAnalyticRes
+import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.MoriwakiSt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.HSClosing
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.DoubleBlock
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.EqZeroOfSecTraceMulEqZero
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedA
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsArith
+import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsNonvanishingDense
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeB
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.CNormSt
+import ReciprocityTheory.AnalyticForms.PotentialTheory.DegreeIntB
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageChi
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMonomialDegree
+import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.ChiPSt
+import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.SupStMonoNormSqPos
+import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.GaussSt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.ABridgeSt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.CSandwichStE
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PProjFSMass
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PProjectionBounds
 import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPullFSExtension
@@ -13,9 +27,6 @@ import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PVeroneseMonoBasis
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
-
-theorem AnResToAnalyticRes.full : GroundTheory.Heights₂.Heights.HilbertSamuel.AnResToAnalyticRes.Statement :=
-  GroundTheory.Heights₂.Heights.HilbertSamuel.AnResToAnalyticRes.proof NonvanishingDense.full
 
 theorem BlockImageChi.full : GroundTheory.Heights₂.Heights.HilbertSamuel.BlockImageChi.Statement :=
   GroundTheory.Heights₂.Heights.HilbertSamuel.BlockImageChi.proof
@@ -29,14 +40,8 @@ theorem ProjectionBounds.full : GroundTheory.Heights₂.Heights.HilbertSamuel.Pr
 theorem PullFSExtension.full : GroundTheory.Heights₂.Heights.HilbertSamuel.PullFSExtension.Statement :=
   GroundTheory.Heights₂.Heights.HilbertSamuel.PullFSExtension.proof ProjFrameBasePtFree.full
 
-theorem ProjFSMass.full : GroundTheory.Heights₂.Heights.HilbertSamuel.ProjFSMass.Statement :=
-  GroundTheory.Heights₂.Heights.HilbertSamuel.ProjFSMass.proof
-
 theorem RealGramComparison.full : GroundTheory.Heights₂.Heights.HilbertSamuel.RealGramComparison.Statement :=
   GroundTheory.Heights₂.Heights.HilbertSamuel.RealGramComparison.proof ResolutionSupBound.full ProjectionBounds.full PullFSExtension.full
-
-theorem MonomialDegree.full : GroundTheory.Heights₂.Heights.HilbertSamuel.MonomialDegree.Statement :=
-  GroundTheory.Heights₂.Heights.HilbertSamuel.MonomialDegree.proof
 
 theorem ResChiIndex.full : GroundTheory.Heights₂.Heights.HilbertSamuel.ResChiIndex.Statement :=
   GroundTheory.Heights₂.Heights.HilbertSamuel.ResChiIndex.proof

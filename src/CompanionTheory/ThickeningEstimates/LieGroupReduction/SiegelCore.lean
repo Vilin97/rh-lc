@@ -49,9 +49,6 @@ def SiegelCore : Prop :=
           ∀ φ : GAd σ J → ℂ, IsSmoothModerate σ J φ → IsCuspidal σ J φ →
             ∀ N : ℕ, ∃ C : ℝ, ∀ g ∈ siegelSet σ J X Y Ω c K, ‖φ g‖ * (height σ J g : ℝ) ^ N ≤ C
 
-theorem one_mem_minPar (X : Matrix (Fin n) (Fin r) E) : (1 : GAd σ J) ∈ minPar σ J X :=
-  ⟨1, Matrix.blockTriangular_one, by simp⟩
-
 end CompanionTheory.ThKR
 
 end

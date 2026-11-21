@@ -1,6 +1,7 @@
 import GroundTheory.HeightsAndTheta.Heights.StrongApproximation.Assembly
 import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.ExistsDualBasis
-import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.CptLact
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.FundSetMeasPf
+import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.RmulScalOne
 
 noncomputable section
 

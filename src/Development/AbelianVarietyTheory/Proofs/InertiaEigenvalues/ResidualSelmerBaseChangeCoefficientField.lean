@@ -76,9 +76,6 @@ def h1MapOfAdditive : H1 rho →+ H1 rho' :=
     change u (z.1 g) = _
     rw [show z.1 g = _ from hm g, map_sub, he]
 
-theorem h1MapOfAdditive_mk (z : Z1 rho) :
-    h1MapOfAdditive rho rho' u hu he (Submodule.Quotient.mk z) = Submodule.Quotient.mk (cocycleMapOfEquivariant rho rho' u hu he z) := rfl
-
 theorem res_addH1 {H : Type} [Group H] [TopologicalSpace H] (phi : H →* Γ) (hphi : Continuous phi) (x : H1 rho) :
     resH1 rho' phi hphi (h1MapOfAdditive rho rho' u hu he x) =
       h1MapOfAdditive (rho.comp phi) (rho'.comp phi) u hu (fun g m => he (phi g) m) (resH1 rho phi hphi x) := by

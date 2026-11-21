@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.LieInj
+import Development.AbelianVarietyTheory.Definitions.Divisors.IotaScalarOne
+import Development.AbelianVarietyTheory.Definitions.Divisors.HodgeTateLatticePointFinrankTateModule
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ScholzeWeinsteinB
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.EpsilonPairingZeta
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.HodgeTateKernel

@@ -1,9 +1,7 @@
 import Mathlib
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.RealMetaplecticRepresentation
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.MetaplecticRepresentation
-import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.HolPartShear
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IteratedLineDerivMemWeylAlg
-import Development.AutomorphicSpectrum.Proofs.GlobalProofs.RealMpData
 import Development.AutomorphicSpectrum.Proofs.MembershipProofs.NormIteratedFDerivCexpCompLe
 
 noncomputable section
@@ -84,9 +82,6 @@ theorem hasDerivAt_Lp_of_dominated {E : Type*} [MeasurableSpace E] {μ : Measure
   simpa [Function.comp_def, Real.sqrt_sq (norm_nonneg _)] using h4
 
 variable {l : Type} [Fintype l]
-
-def qf (Z : Matrix l l ℂ) (x : EuclideanSpace ℝ l) : ℂ :=
-  ∑ j, ∑ k, Z j k * (x j : ℂ) * (x k : ℂ)
 
 end GlobalTheory.CompanionTheory.Hypotheses₂.GaussCurve
 

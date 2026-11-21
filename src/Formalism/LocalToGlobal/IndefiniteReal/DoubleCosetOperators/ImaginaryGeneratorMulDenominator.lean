@@ -147,9 +147,6 @@ theorem isIntegral_sqrtMinusD : IsIntegral ℤ D.host.sqrtMinusD := by
 
 def sqrtO : 𝓞 D.host.E := ⟨D.host.sqrtMinusD, isIntegral_sqrtMinusD D⟩
 
-@[simp] theorem coe_sqrtO : ((sqrtO D : 𝓞 D.host.E) : D.host.E) = D.host.sqrtMinusD :=
-  rfl
-
 theorem sqrtMinusD_ne_zero : D.host.sqrtMinusD ≠ 0 := by
   intro h0
   have hsq := Host.sqrtMinusD_sq D.host

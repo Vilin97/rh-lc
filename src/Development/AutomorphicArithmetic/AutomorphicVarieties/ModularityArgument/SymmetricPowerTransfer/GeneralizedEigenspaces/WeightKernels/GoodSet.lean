@@ -31,12 +31,6 @@ def FrobAt (w : Plc L) (s : G L Ω) : Prop := ∃ A : ValuationSubring Ω, IsPla
 
 variable [IsCMField L] [IsAlgClosure L Ω]
 
-structure GalOf {n : ℕ} (ι : Qbar l ≃+* ℂ) (σ : Submodule ℂ (UA L n → ℂ)) (r : G L Ω →* GL (Fin n) (Qbar l)) : Prop where
-  cont : Continuous r
-  comp : ∀ w, IsSplitAt w → ∃ τ, Comp σ w τ
-  loc : ∀ w, IsSplitAt w → ∀ τ, Comp σ w τ → LocGlob ι r w τ
-  pair : ∀ c : G (maximalRealSubfield L) Ω, IsConjEl c → ∃ P, IsPairing c r (cycBar L Ω l ^ (1 - (n : ℤ))) P
-
 structure GoodSet (ι : Qbar l ≃+* ℂ) (M : ℕ) (r : G L Ω →* GL (Fin 2) (Qbar l)) (σ : Submodule ℂ (UA L 2 → ℂ)) (P : Set (Plc L))
     (ψ : ∀ w : Plc L, Fin 2 → (Kw w)ˣ →* ℂˣ) : Prop where
   mem : ∀ w ∈ P, IsSplitAt w ∧ ((l : ℕ) : 𝓞 L) ∉ w.asIdeal ∧ CompEq σ w (ψ w)

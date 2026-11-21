@@ -17,7 +17,6 @@ noncomputable def baseMap {Y X S T : Scheme.{0}} (π : Y ⟶ X) (p : X ⟶ S) (f
     pullback (π ≫ p) f ⟶ pullback p f :=
   pullback.lift (pullback.fst _ _ ≫ π) (pullback.snd _ _) (by simp [pullback.condition])
 
-@[reassoc (attr := simp)]
 theorem baseMap_snd {Y X S T : Scheme.{0}} (π : Y ⟶ X) (p : X ⟶ S) (f : T ⟶ S) :
     baseMap π p f ≫ pullback.snd p f = pullback.snd (π ≫ p) f :=
   pullback.lift_snd _ _ _

@@ -221,9 +221,4 @@ theorem ampOrbCoefDD_of (hJ : PI.BesselMapUniq.BesselMapUniq) : Formalism.MainNo
 
 variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 
-theorem amplitude_uniform_of_bessel_uniq (hJ : PI.BesselMapUniq.BesselMapUniq) (hKD : Formalism.MainNotions.S.Pv.AmpDD.KDense)
-    (hRJ : Formalism.MainNotions.S.Pv.LemmaJ.RootJac) (hRH : Formalism.MainNotions.S.Pv.LemmaJ.RootHaar) (hOQ : Formalism.MainNotions.S.Pv.LemmaJ.OrbQuotEx)
-    (hRA : Formalism.MainNotions.S.Pv.LemmaJ.RelAtPt) (hBI : Formalism.MainNotions.S.Pv.BetaCut.BetaInfCoefNZ) : Formalism.MainNotions.S.Pv.LemmaJ.AmpUnif :=
-  Formalism.MainNotions.S.Pv.LemmaJ.amplitude_uniform_of_coefficients hJ hKD hRJ hRH hOQ hRA (ampOrbCoefDD_of hJ) hBI
-
 end Formalism.L2.S.Pv.AmpOrbCoef

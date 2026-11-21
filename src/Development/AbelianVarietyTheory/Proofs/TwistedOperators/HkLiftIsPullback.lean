@@ -41,10 +41,8 @@ variable {h} {x x' : Sp T ⟶ Xo.X} (hx : x = h ≫ Z.π₁) (hx' : x' = h ≫ Z
 @[reassoc] theorem hkLift_hom : hkLift Z h hx ≫ Z.o₁.t.G.hom = (Formalism.L2.PjFree.gxSnd (x)) ≫ h :=
   Z.m₁.cart.1.lift_snd _ _ _
 
-@[reassoc] theorem hkLift₂_φ : hkLift₂ Z h hx' ≫ Z.m₂.cm.F = (Formalism.L2.PjFree.gxFst (x')) :=
   Z.m₂.cart.1.lift_fst _ _ _
 
-@[reassoc] theorem hkLift₂_hom : hkLift₂ Z h hx' ≫ Z.o₂.t.G.hom = (Formalism.L2.PjFree.gxSnd (x')) ≫ h :=
   Z.m₂.cart.1.lift_snd _ _ _
 
 def hkMap : Gx x ⟶ Gx x' :=
@@ -61,7 +59,6 @@ def hkMap : Gx x ⟶ Gx x' :=
     hkMap Z hx hx' ≫ (Formalism.L2.PjFree.gxFst (x')) = hkLift Z h hx ≫ Z.ψ.left ≫ Z.m₂.cm.F :=
   pullback.lift_snd _ _ _
 
-@[reassoc] theorem hkMap_hkLift₂ : hkMap Z hx hx' ≫ hkLift₂ Z h hx' = hkLift Z h hx ≫ Z.ψ.left :=
   Z.m₂.cart.1.hom_ext (by rw [Category.assoc, hkLift₂_φ, hkMap_snd, Category.assoc])
     (by rw [Category.assoc, hkLift₂_hom, hkMap_fst_assoc, Category.assoc, Over.w Z.ψ, hkLift_hom])
 

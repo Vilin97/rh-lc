@@ -48,12 +48,6 @@ def galFixedFieldToOpen (U : OpenSubgroup Gal(Ksep/K)) :
     (fixingSubgroup_fixedField_openSubgroup U).le
       ((mem_fixingSubgroup_iff _ _).2 fun x hx => σ.commutes ⟨x, hx⟩)
 
-@[simp]
-theorem coe_galFixedFieldToOpen_apply (U : OpenSubgroup Gal(Ksep/K))
-    (σ : Gal(Ksep/fixedField (U : Subgroup Gal(Ksep/K)))) (x : Ksep) :
-    ((galFixedFieldToOpen U σ : Gal(Ksep/K)) : Ksep → Ksep) x = σ x :=
-  rfl
-
 theorem continuous_galFixedFieldToOpen (U : OpenSubgroup Gal(Ksep/K)) :
     Continuous (galFixedFieldToOpen U) :=
   (continuous_restrictScalarsHom_of_tower K (fixedField (U : Subgroup Gal(Ksep/K))) Ksep).subtype_mk _
@@ -69,10 +63,6 @@ theorem galFixedFieldToOpen_bijective (U : OpenSubgroup Gal(Ksep/K)) :
 noncomputable def galFixedFieldEquivOpen (U : OpenSubgroup Gal(Ksep/K)) :
     Gal(Ksep/fixedField (U : Subgroup Gal(Ksep/K))) ≃* (U : Subgroup Gal(Ksep/K)) :=
   MulEquiv.ofBijective (galFixedFieldToOpen U) (galFixedFieldToOpen_bijective U)
-
-theorem galFixedFieldEquivOpen_toMonoidHom (U : OpenSubgroup Gal(Ksep/K)) :
-    (galFixedFieldEquivOpen U).toMonoidHom = galFixedFieldToOpen U :=
-  rfl
 
 theorem continuous_galFixedFieldEquivOpen (U : OpenSubgroup Gal(Ksep/K)) :
     Continuous (galFixedFieldEquivOpen U).toMonoidHom :=
@@ -185,10 +175,6 @@ noncomputable def localClassFormation : ClassFormation (galUnits.{0} K Ksep) whe
   isZero_H1_open_subgroups := isZero_H1_open K Ksep
   inv_res := localInv_res K Ksep
   inv_bijective := localInv_bijective K Ksep
-
-theorem localClassFormation_inv (U : OpenSubgroup Gal(Ksep/K)) :
-    (localClassFormation K Ksep).inv U = localInv K Ksep U := by
-  simp only [localClassFormation]
 
 end Formation
 

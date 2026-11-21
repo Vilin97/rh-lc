@@ -23,9 +23,6 @@ def prodT (A : Submodule ℂ P1) (B : Submodule ℂ P2) : A ⊗[ℂ] B →ₗ[�
     (fun u v v' => by funext x; simp [mul_add])
     (fun c u v => by funext x; simp; ring))
 
-@[simp] theorem prodT_tmul (A : Submodule ℂ P1) (B : Submodule ℂ P2) (u : A) (v : B) :
-    prodT A B (u ⊗ₜ v) = fun x => u.1.1 x.1 * v.1.1 x.2 := rfl
-
 theorem prodT_sum (A : Submodule ℂ P1) (B : Submodule ℂ P2) {κ : Type} (s : Finset κ) (x : κ → A) (y : κ → B) :
     prodT A B (∑ k ∈ s, x k ⊗ₜ y k) = fun z => ∑ k ∈ s, (x k).1.1 z.1 * (y k).1.1 z.2 := by
   funext z

@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnipLeviProj
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsGenericIffIsGenericFor
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ParIndJacPlacing
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsColReduced
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsOpenSetOfLeRank
 
@@ -12,18 +13,6 @@ namespace GlobalTheory.WhitHered.CellLoc
 section Alg
 
 variable {k : Type} [Field k] {N : ℕ}
-
-def pm (σ : Equiv.Perm (Fin N)) : GL (Fin N) k :=
-  ⟨Matrix.of fun a c => if a = σ c then 1 else 0, Matrix.of fun a c => if c = σ a then 1 else 0, by
-    ext a c
-    rw [Matrix.mul_apply, Finset.sum_eq_single (σ.symm a)]
-    · simp [Matrix.one_apply, eq_comm]
-    · intro b _ hb
-      have : a ≠ σ b := fun h => hb (by simp [h])
-      simp [this]
-    · simp, by
-    ext a c
-    simp [Matrix.mul_apply, Matrix.one_apply, eq_comm]⟩
 
 end Alg
 

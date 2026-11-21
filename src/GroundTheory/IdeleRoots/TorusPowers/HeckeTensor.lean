@@ -52,11 +52,6 @@ def ideleEquiv : (AE F E)ˣ ≃* IdeleGroup E :=
 theorem coe_ideleEquiv (x : (AE F E)ˣ) : ((ideleEquiv F E x : IdeleGroup E) : 𝔸[E]) = adeleEquiv F E x :=
   rfl
 
-@[simp]
-theorem coe_ideleEquiv_symm (x : IdeleGroup E) :
-    (((ideleEquiv F E).symm x : (AE F E)ˣ) : AE F E) = (adeleEquiv F E).symm x :=
-  rfl
-
 theorem continuous_ideleEquiv_symm : Continuous (ideleEquiv F E).symm :=
   Units.continuous_iff.2 ⟨continuous_adeleEquiv_symm.comp Units.continuous_val,
     continuous_adeleEquiv_symm.comp Units.continuous_coe_inv⟩

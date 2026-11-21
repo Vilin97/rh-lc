@@ -16,8 +16,6 @@ namespace GlobalTheory.CompanionTheory.Hypotheses₂.HCA.AnalyticWords
 
 variable {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 
-local notation "Jε" => ReciprocityTheory.ChartRestriction.DS.Jm
-
 def projJ (ε : Fin n → Bool) (Y : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   (1 / 2 : ℝ) • (Y - Jε ε * Yᴴ * Jε ε)
 

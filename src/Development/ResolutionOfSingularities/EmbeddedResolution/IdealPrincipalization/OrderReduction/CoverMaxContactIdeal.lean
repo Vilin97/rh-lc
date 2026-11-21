@@ -41,33 +41,6 @@ noncomputable section
 
 namespace FunctorialResolution.EmbeddedResolution
 
-private theorem comapEtale_map_comp_affineSpaceFinToSpec {k : Type u} [Field k] {X Y : Scheme.{u}}
-    {q : Y ⟶ Spec (CommRingCat.of k)} (g : X ⟶ Y) {U : Y.Opens} {n : ℕ}
-    (c : EtaleChart q U n) :
-    (morphismRestrict g U ≫ c.map) ≫ affineSpaceFinToSpec k n =
-      AlgebraicGeometry.Scheme.Opens.ι ((TopologicalSpace.Opens.map g.base).obj U) ≫ (g ≫ q) := by
-  rw [Category.assoc, c.comp_struct, ← Category.assoc, morphismRestrict_ι, Category.assoc]
-
-private theorem etale_comapEtale_map {k : Type u} [Field k] {X Y : Scheme.{u}}
-    {q : Y ⟶ Spec (CommRingCat.of k)} (g : X ⟶ Y) [AlgebraicGeometry.Etale g]
-    {U : Y.Opens} {n : ℕ} (c : EtaleChart q U n) :
-    AlgebraicGeometry.Etale (morphismRestrict g U ≫ c.map) := by
-  have := c.isEtale
-  infer_instance
-
-def EtaleChart.comapEtale {k : Type u} [Field k] {X Y : Scheme.{u}}
-    {q : Y ⟶ Spec (CommRingCat.of k)} (g : X ⟶ Y) [AlgebraicGeometry.Etale g]
-    {U : Y.Opens} {n : ℕ} (c : EtaleChart q U n) :
-    EtaleChart (g ≫ q) ((TopologicalSpace.Opens.map g.base).obj U) n where
-  map := morphismRestrict g U ≫ c.map
-  comp_struct := comapEtale_map_comp_affineSpaceFinToSpec g c
-  isEtale := etale_comapEtale_map g c
-
-@[simp] theorem EtaleChart.comapEtale_map {k : Type u} [Field k] {X Y : Scheme.{u}}
-    {q : Y ⟶ Spec (CommRingCat.of k)} (g : X ⟶ Y) [AlgebraicGeometry.Etale g]
-    {U : Y.Opens} {n : ℕ} (c : EtaleChart q U n) :
-    (EtaleChart.comapEtale g c).map = morphismRestrict g U ≫ c.map := rfl
-
 private theorem range_ι_base_subset {X : Scheme.{u}} (U : X.Opens) :
     Set.range U.ι.base ⊆ (U : Set ↥X) :=
   (Scheme.Opens.range_ι U).subset

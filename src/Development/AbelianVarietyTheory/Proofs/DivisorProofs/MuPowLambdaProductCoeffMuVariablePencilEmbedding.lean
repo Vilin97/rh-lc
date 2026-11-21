@@ -1,5 +1,6 @@
 import Development.AbelianVarietyTheory.Definitions.Divisors.TCoefMInMMul
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PscoTCore
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeightedDetDivergenceMemIdeal
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TDualProd
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BarMSingle
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DMBlockEntries
@@ -9,7 +10,6 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LambdaMonomialCoeff
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DMuEqExtDerivation
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MuCoeffPartialDerivMuEqSuccMul
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoefMPencil
-import Mathlib
 
 section
 
@@ -18,14 +18,6 @@ noncomputable section
 open MvPolynomial
 
 namespace GlobalTheory.PsCo.Pc1.A
-
-theorem core : ∀ {A : Type} [CommRing A] [Algebra ℂ A] {I : Type} [Fintype I] [DecidableEq I]
-    (D : I → Derivation ℂ A A) (dm : Derivation ℂ A A) (J : Ideal A) (Z : Matrix I I A) (u η : I → A) (E μ r : A),
-    (∀ x y, dm (Z x y) = D x (u y)) → (∀ w x y, D w (Z x y) = D x (Z w y)) → dm E = 0 →
-    (∀ x, D x E + μ * D x r * E - E * ∑ y, Z x y * η y ∈ J) → r = ∑ y, η y * u y →
-    dm (E * Z.det) + r * (E * Z.det) -
-      ∑ x, (D x (E * ∑ y, Z.adjugate y x * u y) + μ * D x r * (E * ∑ y, Z.adjugate y x * u y)) ∈ J :=
-  GlobalTheory.psco_t_core
 
 theorem dM_comm : ∀ {n : ℕ} (ε : Fin n → Bool) (w x : Mode ε) (P : Poly n), dM ε w (dM ε x P) = dM ε x (dM ε w P) :=
   GlobalTheory.PsCo.DMComm.dM_comm

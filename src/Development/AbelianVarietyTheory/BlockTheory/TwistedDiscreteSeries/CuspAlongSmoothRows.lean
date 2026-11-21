@@ -206,8 +206,6 @@ theorem cuspAlong_iff_hasLifts (G : GridPre R) : CuspAlong G ↔ G.HasLifts := b
       exact ⟨(io ⟨F, hF⟩).1, (io ⟨F, hF⟩).2, fun p v h =>
         ⟨Lift.IsIo.integ hio ⟨F, hF⟩ p v h, Lift.IsIo.eq hio ⟨F, hF⟩ p v h⟩⟩
 
-example (G : GridDat R) (h : G.Is) : CuspAlong G.toGridPre := (cuspAlong_iff_hasLifts _).2 h.lifts.hasLifts
-
 end
 
 end GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSmoothLifts

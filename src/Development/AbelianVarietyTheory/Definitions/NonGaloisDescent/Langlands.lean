@@ -93,9 +93,6 @@ structure PlaceIso (φ : Ω ≃+* Ω') (j : E →+* E') (i : w.adicCompletion E 
 
 end Transport
 
-theorem PlaceIso.refl : PlaceIso A w A w (RingEquiv.refl Ω) (RingHom.id E) (RingEquiv.refl _) :=
-  ⟨fun _ => Iff.rfl, fun _ => rfl, continuous_id, fun _ => rfl⟩
-
 end GlobalTheory.LocLanglands
 
 end

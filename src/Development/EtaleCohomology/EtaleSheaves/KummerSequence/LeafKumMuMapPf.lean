@@ -15,8 +15,6 @@ variable (q : ℕ) [NeZero q]
 def unitOf {A : Type} [CommRing A] (ζ : Prim q A) : Aˣ :=
   (IsUnit.of_pow_eq_one (prim_pow q ζ) (NeZero.ne q)).unit
 
-@[simp] theorem unitOf_val {A : Type} [CommRing A] (ζ : Prim q A) : ((unitOf q ζ : Aˣ) : A) = ζ.1 := rfl
-
 theorem unitOf_pow {A : Type} [CommRing A] (ζ : Prim q A) : unitOf q ζ ^ q = 1 :=
   Units.ext (by simp [prim_pow])
 

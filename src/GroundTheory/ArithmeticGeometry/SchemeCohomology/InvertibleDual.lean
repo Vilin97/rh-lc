@@ -36,17 +36,8 @@ instance : SMul ℕ (DualSec P U) := ⟨fun n φ => ⟨fun V h => n • φ.app V
 instance : SMul ℤ (DualSec P U) := ⟨fun n φ => ⟨fun V h => n • φ.app V h,
   fun V W h i m => by simp only [LinearMap.smul_apply]; rw [φ.compat, map_zsmul]⟩⟩
 
-@[simp] lemma zero_app' (V : X.Opens) (h : V ≤ U) : (0 : DualSec P U).app V h = 0 := rfl
 @[simp] lemma add_app' (φ ψ : DualSec P U) (V : X.Opens) (h : V ≤ U) :
     (φ + ψ).app V h = φ.app V h + ψ.app V h := rfl
-@[simp] lemma neg_app' (φ : DualSec P U) (V : X.Opens) (h : V ≤ U) :
-    (-φ).app V h = -φ.app V h := rfl
-@[simp] lemma sub_app' (φ ψ : DualSec P U) (V : X.Opens) (h : V ≤ U) :
-    (φ - ψ).app V h = φ.app V h - ψ.app V h := rfl
-@[simp] lemma nsmul_app' (n : ℕ) (φ : DualSec P U) (V : X.Opens) (h : V ≤ U) :
-    (n • φ).app V h = n • φ.app V h := rfl
-@[simp] lemma zsmul_app' (n : ℤ) (φ : DualSec P U) (V : X.Opens) (h : V ≤ U) :
-    (n • φ).app V h = n • φ.app V h := rfl
 
 instance : AddCommGroup (DualSec P U) where
   add_assoc a b c := by ext V h m; simp [add_assoc]
@@ -108,9 +99,6 @@ def restr {U U' : X.Opens} (hU : U' ≤ U) (φ : DualSec P U) : DualSec P U' :=
 
 @[simp] lemma restr_app {U U' : X.Opens} (hU : U' ≤ U) (φ : DualSec P U) (V : X.Opens)
     (h : V ≤ U') : (restr hU φ).app V h = φ.app V (h.trans hU) := rfl
-
-lemma restr_add {U U' : X.Opens} (hU : U' ≤ U) (φ ψ : DualSec P U) :
-    restr hU (φ + ψ) = restr hU φ + restr hU ψ := rfl
 
 lemma restr_smul {U U' : X.Opens} (hU : U' ≤ U) (r : ringOn X U) (φ : DualSec P U) :
     restr hU (r • φ) = resR hU r • restr hU φ := by
@@ -337,13 +325,6 @@ noncomputable def dualIsoInv (M : X.Modules) : (preMod X).obj (dualSheaf M) ⟶ 
 
 instance (M : X.Modules) : IsIso (dualIsoHom M) :=
   ⟨dualIsoInv M, rfl, rfl⟩
-
-lemma IsInvertibleSheaf.dual {M : X.Modules} (hM : IsInvertibleSheaf M) :
-    IsInvertibleSheaf (dualSheaf M) := by
-  intro x
-  obtain ⟨U, hx, s, hs⟩ := hM x
-  exact ⟨U, hx, _, (DualSec.isBasisOn_dualBasis hs).map_of_alt (dualIsoHom M)
-    (MorphismProperty.of_isIso _ _)⟩
 
 lemma isIso_dualEval {M : X.Modules} (hM : IsInvertibleSheaf M) : IsIso (dualEval M) := by
   apply isIso_of_isBasisOn

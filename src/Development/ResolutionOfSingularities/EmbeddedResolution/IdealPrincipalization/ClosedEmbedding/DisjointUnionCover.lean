@@ -46,15 +46,6 @@ instance instIsOpenImmersionSummandι (D : FiniteOpenCoverWithIdeals T) (i : D.i
     IsOpenImmersion (D.summandι i) :=
   isOpenImmersion_summandι D i
 
-theorem isClosedImmersion_summandι (D : FiniteOpenCoverWithIdeals T) (i : D.idx) :
-    IsClosedImmersion (D.summandι i) := by
-  show IsClosedImmersion (Sigma.ι (fun j : D.idx => (D.opens j).toScheme) i)
-  infer_instance
-
-instance instIsClosedImmersionSummandι (D : FiniteOpenCoverWithIdeals T) (i : D.idx) :
-    IsClosedImmersion (D.summandι i) :=
-  isClosedImmersion_summandι D i
-
 theorem quasiCompact_summandι (D : FiniteOpenCoverWithIdeals T) (i : D.idx) :
     QuasiCompact (D.summandι i) := by
   show QuasiCompact (Sigma.ι (fun j : D.idx => (D.opens j).toScheme) i)
@@ -203,10 +194,6 @@ theorem restrictIdeal_iInfImageIdeal_summandOpen (D : FiniteOpenCoverWithIdeals 
     restrictIdeal D.iInfImageIdeal (D.summandOpen i) =
       (D.localIdeal i).comap (D.summandIso i).inv := by
   rw [restrictIdeal_summandOpen D i D.iInfImageIdeal, comap_iInfImageIdeal_summandι D i]
-
-theorem iInfImageIdeal_eq_iInf (D : FiniteOpenCoverWithIdeals T) :
-    D.iInfImageIdeal = ⨅ i : D.idx, imageIdealSheaf (D.summandι i) (D.localIdeal i) :=
-  rfl
 
 theorem restrictIdeal_comap_disjointUnionMap_summandOpen (D : FiniteOpenCoverWithIdeals T) (i : D.idx)
     (J : T.scheme.IdealSheafData) :

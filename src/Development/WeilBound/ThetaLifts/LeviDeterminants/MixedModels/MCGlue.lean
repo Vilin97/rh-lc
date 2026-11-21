@@ -13,8 +13,6 @@ open NumberField IsDedekindDomain Filter Topology Formalism.MainNotions.GlobalTh
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-local notation "pureT" => GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure
-
 abbrev stdL (F : Type) [Field F] [NumberField F] (κ : Type) (v : Pl F) : (κ → Fv F v) → ℂ :=
   Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1
 

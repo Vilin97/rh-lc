@@ -1,6 +1,8 @@
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColsReTo0S
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
-import Formalism.LocalRingCardinality.SpanPowerMembership.TwCore
+import Formalism.LocalRingCardinality.DataTies
+import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
+import Formalism.LocalRingCardinality.SpanPowerMembership.SignSplitEquivInl
 import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Formalism.L2.Host GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Mem.Top.GroupRetwisting GlobalTheory.Mem.Top.Bl GlobalTheory.Mem.Df GlobalTheory.Mem.Db NumberField IsDedekindDomain
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
@@ -12,10 +14,6 @@ namespace GlobalTheory.Mem.Db.DivTr
 section GyGen
 
 variable {D : D7} (N : ∀ u, Submodule (𝓞 D.what₂.LL) (D.div.Nu u).V) (h : D.what₂.Word → ℝ)
-
-@[reducible] def ledBack (L : SizeData₂ (setDiv D N h)) : SizeData₂ D := { L with }
-
-@[reducible] def instBack {L : SizeData₂ (setDiv D N h)} (X : G.Inst (setDiv D N h) L) : G.Inst D (ledBack N h L) := { X with }
 
 end GyGen
 

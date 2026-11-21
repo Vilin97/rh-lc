@@ -36,7 +36,6 @@ def one : Co A 0 := fun _ => 1
 
 theorem dd_add {n : ℕ} (f g : Co A n) : dd n (f + g) = dd n f + dd n g := map_add (CH.d (CH.modF A) n) f g
 theorem dd_zero {n : ℕ} : dd n (0 : Co A n) = 0 := map_zero (CH.d (CH.modF A) n)
-theorem dd_neg {n : ℕ} (f : Co A n) : dd n (-f) = -dd n f := map_neg (CH.d (CH.modF A) n) f
 theorem dd_zsmul {n : ℕ} (u : ℤ) (f : Co A n) : dd n (u • f) = u • dd n f := map_zsmul (CH.d (CH.modF A) n) u f
 
 section cp
@@ -141,7 +140,6 @@ def In (a : IdF A) {n : ℕ} (z : Co A n) : Prop := ∀ s : ComposableArrows C n
 variable {a : IdF A} {n : ℕ} {f g : Co A n}
 
 theorem In.add (hf : In a f) (hg : In a g) : In a (f + g) := fun s => (a.S _).add_mem (hf s) (hg s)
-theorem In.neg (hf : In a f) : In a (-f) := fun s => (a.S _).neg_mem (hf s)
 theorem In.sub (hf : In a f) (hg : In a g) : In a (f - g) := fun s => (a.S _).sub_mem (hf s) (hg s)
 theorem In.zsmul (u : ℤ) (hf : In a f) : In a (u • f) := fun s => zsmul_mem (hf s) u
 theorem In.zero : In a (0 : Co A n) := fun s => (a.S _).zero_mem
@@ -206,15 +204,6 @@ theorem Cob.add {m n : ℕ} {z z' : Co Φ.A n} (h : Cob Fil m n z) (h' : Cob Fil
     refine ⟨b + b', hb.add hb', ?_⟩
     have e : z + z' - dd n (b + b') = (z - dd n b) + (z' - dd n b') := by rw [dd_add]; abel
     rw [e]; exact he.add he'
-
-theorem Cob.neg {m n : ℕ} {z : Co Φ.A n} (h : Cob Fil m n z) : Cob Fil m n (-z) := by
-  cases n with
-  | zero => exact In.neg h
-  | succ n =>
-    obtain ⟨b, hb, he⟩ := h
-    refine ⟨-b, hb.neg, ?_⟩
-    have e : -z - dd n (-b) = -(z - dd n b) := by rw [dd_neg]; abel
-    rw [e]; exact he.neg
 
 theorem Cob.of_dd {m n : ℕ} {b : Co Φ.A n} (u : ℤ) (h : In (Fil (m : ℤ)) b) : Cob Fil m (n + 1) (u • dd n b) :=
   ⟨u • b, h.zsmul u, by rw [dd_zsmul, sub_self]; exact In.zero⟩

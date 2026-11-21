@@ -14,8 +14,6 @@ namespace CubeR
 
 open Univ CurveSer
 
-local notation "cc" => MvPowerSeries.constantCoeff
-
 section Tools
 
 variable {σ : Type*} {A : Type u} {B : Type v} [CommRing A] [CommRing B]

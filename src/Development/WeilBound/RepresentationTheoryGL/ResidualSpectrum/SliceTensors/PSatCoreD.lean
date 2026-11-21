@@ -28,8 +28,6 @@ theorem heckeVec_apply {N : ℕ} (w : HeightOneSpectrum (𝓞 E)) {F : Sm E N}
 def evAt {m : ℕ} (U : Submodule ℂ (Sm E m)) (x : GA E m) : U →ₗ[ℂ] ℂ :=
   LinearMap.proj x ∘ₗ (Sm E m).subtype ∘ₗ U.subtype
 
-@[simp] theorem evAt_apply {m : ℕ} (U : Submodule ℂ (Sm E m)) (x : GA E m) (ψ : U) : evAt U x ψ = ψ.1.1 x := rfl
-
 theorem exists_tensor {c : ℕ} {n : Fin c → ℕ} (U : ∀ i, Submodule ℂ (Sm E (n i)))
     {Φ : (∀ i, GA E (n i)) → ℂ} (hΦ : Φ ∈ GlobalTheory.BCWords.tensorSp U) :
     ∃ v : ⨂[ℂ] i, U i, ∀ m, Φ m = evT (fun i => evAt (U i) (m i)) v := by

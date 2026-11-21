@@ -335,9 +335,6 @@ def S1 (T : Subalgebra O (Xs → O)) (m : ℕ) : Subring (Xs → MvPolynomial (F
     show (fun x => ((-f) x).coeff α) ∈ MainNotions T
     rw [e]; exact (MainNotions T).neg_mem (hf α)
 
-lemma S1_mem_OmF {T : Subalgebra O (Xs → O)} {m : ℕ} {f : Xs → MvPolynomial (Fin m) K} :
-    f ∈ S1 T m ↔ ∀ α, FromT T (fun x => (f x).coeff α) := Iff.rfl
-
 end
 
 section

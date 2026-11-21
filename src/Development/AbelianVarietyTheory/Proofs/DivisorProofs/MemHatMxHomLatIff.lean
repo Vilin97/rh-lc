@@ -12,10 +12,6 @@ open Matrix TensorProduct NumberField IsDedekindDomain Formalism.UG Formalism.UG
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {m n : ℕ}
 
-local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
-local notation "𝒮" => Formalism.L2.Herm.intAf F E
-local notation "ι" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
-
 variable (F) in
 
 def genGrp (M : Submodule (𝓞 E) (Matrix (Fin m) (Fin n) E)) :

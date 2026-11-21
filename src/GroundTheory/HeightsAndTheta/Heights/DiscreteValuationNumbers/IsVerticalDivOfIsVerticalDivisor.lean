@@ -16,8 +16,6 @@ section Points
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 variable {R : Type*} [CommRing R] {Ω : Type*} [Field Ω] [Algebra R Ω]
 
-def coords (pt : MRingOver R ι →ₐ[R] Ω) : (Σ k, ι k) → Ω := fun p => pt (X p)
-
 theorem pointConeMap_of_isMultiHomog (y : (Σ k, ι k) → Ω) {s : MRingOver R ι} {a : K → ℕ}
     (hs : IsMultiHomog s a) :
     NumbersDVR.pointConeMap R y s = C (aeval y s) * ∏ k, X k ^ a k := by
@@ -50,10 +48,6 @@ section Flags
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 variable {R : Type*} [CommRing R] {Ω : Type*} [Field Ω] [Algebra R Ω]
 variable {E : Type*} [AddCommGroup E] [Module Ω E] {N : ℕ}
-
-def scaleBasis (u : Module.Basis (Fin N) Ω E) {ω : Fin N → Ω} (hω : ∀ l, ω l ≠ 0) :
-    Module.Basis (Fin N) Ω E :=
-  u.unitsSMul fun l => Units.mk0 (ω l) (hω l)
 
 end Flags
 
@@ -222,22 +216,11 @@ end Divisors
 
 section Monomials
 
-def listMono {σ : Type*} [DecidableEq σ] (l : List σ) : σ →₀ ℕ :=
-  Multiset.toFinsupp (l : Multiset σ)
-
 end Monomials
 
 section Koszul
 
 variable {N : ℕ}
-
-def koszulTerm (ls : List (Fin N)) (k : ℕ) : MvPolynomial (Fin N ⊕ Fin N) ℤ :=
-  ((ls.take k).map fun l => X (Sum.inr l)).prod * ((ls.drop (k + 1)).map fun l => X (Sum.inl l)).prod
-
-def koszulExp (G : MvPolynomial (Fin N) ℤ) (i : Fin N) : MvPolynomial (Fin N ⊕ Fin N) ℤ :=
-  ∑ μ ∈ G.support, C (G.coeff μ) *
-    ∑ k : Fin (IndefiniteRowSideFullHecke.NumbersDVR.monoList μ).length,
-      if (IndefiniteRowSideFullHecke.NumbersDVR.monoList μ).get k = i then koszulTerm (IndefiniteRowSideFullHecke.NumbersDVR.monoList μ) k else 0
 
 end Koszul
 
@@ -250,9 +233,6 @@ omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem vNumL_perm (W : Ideal (MRingOver O ι)) {L₁ L₂ : List (K → ℤ)} (h : L₁.Perm L₂) :
     NumbersDVR.vNumL W L₁ = NumbersDVR.vNumL W L₂ :=
   intNumL_perm (IsLocalRing.ResidueField O) _ h
-
-def koszulList (m m' : Fin N → K → ℤ) (ls : List (Fin N)) (k : ℕ) : List (K → ℤ) :=
-  (ls.take k).map m' ++ (ls.drop (k + 1)).map m
 
 end PairNumbers
 
@@ -267,26 +247,9 @@ section ProjBundle
 
 variable {Ω : Type*} [Field Ω] {Φ : Type*} [Field Φ] [Algebra Ω Φ] {N : ℕ}
 
-def lineMap (t : Fin N → Φ) : MvPolynomial (Fin N) Ω →+* Polynomial Φ :=
-  eval₂Hom (Polynomial.C.comp (algebraMap Ω Φ)) fun l => Polynomial.C (t l) * Polynomial.X
-
 variable {K : Type*}
 
-def genericLineMap (t : Fin N → Φ) : MvPolynomial (K ⊕ Fin N) Ω →+* MvPolynomial (Option K) Φ :=
-  eval₂Hom ((C : Φ →+* MvPolynomial (Option K) Φ).comp (algebraMap Ω Φ))
-    (Sum.elim (fun k => X (some k)) fun l => C (t l) * X none)
-
 variable [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {M : ℕ}
-
-def bundleToExt (ι : K → Type) (M : ℕ) :
-    (Σ o, NumbersDVR.bundleIdx ι M o) → Σ o, IndefiniteRowSideFullHecke.NumbersDVR.extIdx ι (Fin M) o
-  | ⟨none, l⟩ => ⟨none, l⟩
-  | ⟨some k, i⟩ => ⟨some k, i⟩
-
-def extToBundle (ι : K → Type) (M : ℕ) :
-    (Σ o, IndefiniteRowSideFullHecke.NumbersDVR.extIdx ι (Fin M) o) → Σ o, NumbersDVR.bundleIdx ι M o
-  | ⟨none, l⟩ => ⟨none, l⟩
-  | ⟨some k, i⟩ => ⟨some k, i⟩
 
 variable {F : Type*} [Field F] [Algebra F Ω] {E : Type*} [AddCommGroup E] [Module Ω E]
 

@@ -9,9 +9,6 @@ namespace GlobalTheory.NB.LT
 def F (R : Type) [CommRing R] (l : ℕ) : Polynomial R :=
   Polynomial.X * (Polynomial.X + Polynomial.C (l : R)) ^ (l - 1)
 
-def P (R : Type) [CommRing R] (l k : ℕ) : Polynomial R :=
-  Nat.rec (Polynomial.X + Polynomial.C (l : R)) (fun _ p => p.comp (F R l)) k
-
 abbrev EE (R : Type) [CommRing R] (l : ℕ) : Type :=
   AdicCompletion (Ideal.span {(l : Localization.Away (X : R⟦X⟧))}) (Localization.Away (X : R⟦X⟧))
 

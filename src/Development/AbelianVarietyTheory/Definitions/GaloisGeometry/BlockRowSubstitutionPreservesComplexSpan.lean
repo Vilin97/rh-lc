@@ -20,10 +20,9 @@ import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypTwA
 import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ExistsIsCGBases
 import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypLat
 import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypChi
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.TiedCls
+import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
 import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocTiesOf
 import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
 
 noncomputable section
 
@@ -226,8 +225,6 @@ def InvLeOf (S : StepIn M i hi G) (e : D.what₂.LL →+* G.Kf) : Prop :=
   BlockRationalityField → (∀ β, S.Core e β) → KAat.ChX S → ∀ β rep, RepOk S β rep → ∀ c,
     FiniteDimensional G.Kf (InvK (Hc S β) (rep c).1 (rep c).2) ∧
       finrank G.Kf (InvK (Hc S β) (rep c).1 (rep c).2) ≤ finrank ℂ (FiBc S β c)
-
-def FiBPiAll (S : StepIn M i hi G) : Prop := ∀ β, FiBPi S β
 
 theorem mk_eq_of (S : StepIn M i hi G) (β : S.Ch) {γ : GL (Fin (D.R.N i)) D.host.E}
     (hγ : γ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D i hi))
@@ -999,13 +996,6 @@ variable (S : StepLevel F E σ J T fT bad) (emb : ι → E →+* ℂ)
 
 open Classical in
 
-def foForm (y0 : UPts σ J (FiniteAdeleRing (𝓞 F) F)) (v : Formalism.L2.Forms.Frames (gramC J emb) → ℂ) :
-    UPts σ J (FiniteAdeleRing (𝓞 F) F) → Formalism.L2.Forms.Frames (gramC J emb) → ℂ := fun x =>
-  if h : ∃ γ : GL (Fin n) E, γ ∈ UJ (σ : E →+* E) J ∧ ∃ κ : S.U,
-      x.1 = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ * y0.1 * κ.1 then
-    fun y => (S.chi h.choose_spec.2.choose : ℂ) * v (foTrR emb h.choose⁻¹ y)
-  else 0
-
 variable {S emb}
 
 end Adelic
@@ -1586,9 +1576,6 @@ theorem cmpInvRaw_holds (S : StepIn M i hi G) (e : D.what₂.LL →+* G.Kf) : Cm
 
 theorem cmpLiftOf_of_evVal (S : StepIn M i hi G) (e : D.what₂.LL →+* G.Kf) (hV : ∀ β, EvValLe S β) : CmpLiftOf S e :=
   cmpLiftOf_of_raw S e hV (cmpInvRaw_holds S e)
-
-def EvValCAt (S : StepIn M i hi G) (β : S.Ch) : Prop :=
-  EvValC (Hc S β).P (S.loc β).rk S.pos (gramC (gramN D i hi) (embT D)) (atInfGL (embT D) (S.loc β).B⁻¹) (M.lam i)
 
 end Rec
 

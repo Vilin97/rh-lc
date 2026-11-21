@@ -66,7 +66,6 @@ variable {k p ρ : ℕ}
 
 local instance bsS : BorelSpace ((G.UT p → ℂ) × (Fin p → ℝ)) := Prod.borelSpace
 local instance bsRC : BorelSpace (U.RC k p ρ) := Prod.borelSpace
-local instance bsRC2 : BorelSpace (U.RC k p ρ × U.RC k p ρ) := Prod.borelSpace
 
 theorem psi_rn_mulC (z : Fin (2 * ρ + k + 1) → ℂ) (hz : inWb k ρ z) (x y : U.RC k p ρ) :
     psi k (p + ρ) (liftVec k p ρ z) cStd (U.Rn k p ρ (StabilizerDisintegration.HC.mulC x y)) =

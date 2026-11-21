@@ -32,9 +32,6 @@ lemma sectionValue_const [IsIntegral X] (V : X.Opens) (y z : V) (r : Γ(X, V)) :
 def PrimeDivisor.ofPoint (y : X) (hy : ringKrullDim (X.presheaf.stalk y) = 1) : PrimeDivisor X :=
   ⟨y, hy⟩
 
-@[simp] lemma PrimeDivisor.point_ofPoint (y : X) (hy : ringKrullDim (X.presheaf.stalk y) = 1) :
-    (PrimeDivisor.ofPoint y hy).point = y := rfl
-
 section
 
 variable [IsIntegral X] [IsLocallyNoetherian X] [IsNormalScheme X]
@@ -117,9 +114,6 @@ noncomputable instance (D : WeilDivisor X) (V : X.Opens) :
     change sectionValue V y 0 * f.1 y = 0
     rw [map_zero, zero_mul])
 
-lemma divisorSections_smul_apply (D : WeilDivisor X) (V : X.Opens) (r : Γ(X, V))
-    (f : divisorSections D V) (y : V) : (r • f).1 y = sectionValue V y r * f.1 y := rfl
-
 def divisorSectionsRes (D : WeilDivisor X) {V W : X.Opens} (h : W ≤ V) :
     divisorSections D V →+ divisorSections D W where
   toFun f := ⟨fun y => f.1 ⟨y.1, h y.2⟩, (divisorPredicate D).res (homOfLE h) f.1 f.2⟩
@@ -165,14 +159,6 @@ lemma PrimeDivisor.valuation_le_exp_iff (Z : PrimeDivisor X) {f : X.functionFiel
   have hv0 : Z.valuation f ≠ 0 := (Valuation.ne_zero_iff _).mpr hf
   rw [← WithZero.log_le_iff_le_exp hv0, PrimeDivisor.ord]
   omega
-
-lemma divisorSections_apply_eq (D : WeilDivisor X) {V : X.Opens} (t : divisorSections D V)
-    (y z : V) : t.1 y = t.1 z := by
-  obtain ⟨Wy, hyW, hy⟩ := t.2.1 y
-  obtain ⟨Wz, hzW, hz⟩ := t.2.1 z
-  obtain ⟨w, hw⟩ := nonempty_preirreducible_inter (Wy ⊓ V).isOpen (Wz ⊓ V).isOpen
-    ⟨y.1, hyW, y.2⟩ ⟨z.1, hzW, z.2⟩
-  rw [← hy ⟨w, hw.1.2⟩ hw.1.1, hz ⟨w, hw.1.2⟩ hw.2.1]
 
 end
 

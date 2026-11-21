@@ -20,10 +20,6 @@ namespace EmbeddedBlowupSequence
 variable {k : Type u} [Field k] [CharZero k] {Y : Scheme.{u}} [AlgebraicGeometry.IsAffine Y]
   {pY : Y ⟶ Spec (CommRingCat.of k)} [AlgebraicGeometry.LocallyOfFiniteType pY]
 
-instance instIsClosedImmersionEmbCompIsoZeroInv (S : EmbeddedBlowupSequence k Y pY) :
-    AlgebraicGeometry.IsClosedImmersion (S.emb ≫ S.ambientSeq.isoZero.inv) :=
-  inferInstance
-
 def detachedToCoprod (T : EmbeddedBlowupSequence k Y pY) (s : ℕ) :
     ∀ (i : ℕ), s < i → (T.detachedScheme s ⟶ T.detachedCoprod i)
   | 0, h => absurd h (Nat.not_lt_zero s)
@@ -153,10 +149,6 @@ theorem strictTransformToBase_emb (i : ℕ) :
 
 def detachedCoprodInl (i : ℕ) : S.detachedCoprod i ⟶ S.detachedCoprod (i + 1) :=
   (coprod.inl : S.detachedCoprod i ⟶ S.detachedCoprod i ⨿ S.detachedScheme i)
-
-theorem detachedCoprodInl_eq (i : ℕ) :
-    S.detachedCoprodInl i = (coprod.inl : S.detachedCoprod i ⟶ S.detachedCoprod i ⨿ S.detachedScheme i) :=
-  rfl
 
 theorem detachedCoprodInl_inr_totalTransition (i : ℕ) :
     S.detachedCoprodInl i ≫ (coprod.inr : S.detachedCoprod (i + 1) ⟶ S.totalSpace (i + 1)) ≫

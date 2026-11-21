@@ -37,14 +37,9 @@ noncomputable def innerConjMor (A : Rep.{u} k Γ) (g : Γ) : Rep.res (innerConjH
     group⟩
 
 omit [TopologicalSpace Γ] [IsTopologicalGroup Γ] in
-@[simp]
-theorem innerConjMor_hom_apply (A : Rep.{u} k Γ) (g : Γ) (a : A) :
-    (innerConjMor A g).hom a = A.ρ g a :=
-  rfl
 
 omit [TopologicalSpace Γ] [IsTopologicalGroup Γ] in
 
-@[reassoc]
 theorem innerConjMor_naturality {A B : Rep.{u} k Γ} (f : A ⟶ B) (g : Γ) :
     (Rep.resFunctor (innerConjHom g)).map f ≫ innerConjMor B g = innerConjMor A g ≫ f := by
   ext a
@@ -62,7 +57,6 @@ noncomputable def innerConjShortComplexMor (S : ShortComplex (Rep.{u} k Γ)) (g 
   comm₁₂ := (innerConjMor_naturality S.f g).symm
   comm₂₃ := (innerConjMor_naturality S.g g).symm
 
-@[reassoc]
 theorem δ_comp_cohomologyInnerConj {S : ShortComplex (Rep.{u} k Γ)} [IsDiscreteRep S.X₁]
     [IsDiscreteRep S.X₂] [IsDiscreteRep S.X₃] (hS : S.ShortExact) (i j : ℕ) (hij : i + 1 = j)
     (g : Γ) :

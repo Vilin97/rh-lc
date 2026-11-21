@@ -93,8 +93,6 @@ theorem hI_step (hM : PhiMul) (hC : CoefPow) {ε : Fin n → Bool} {lam : Fin n 
 
 def muS (ε : Fin n → Bool) : Measure (UJ ε) := muCD ε
 
-instance muS_isHaar (ε : Fin n → Bool) : (muS ε).IsHaarMeasure := muCD_isHaar ε
-
 def PP (ε : Fin n → Bool) : Measure (UJ ε × (KG ε × KG ε)) := (muS ε).prod ((dk ε).prod (dk ε))
 
 theorem lintegral_hs (hS : HsInt) {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) (μ : Fin n → ℤ) :

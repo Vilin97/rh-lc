@@ -167,23 +167,6 @@ theorem smooth_hypersurfaceStructureMap (C : MaximalContactCover p τ I c) :
   ((isSmoothDivisor_iff (C.projection ≫ p) C.toCoverData.iInfImageIdeal).mp
     C.isSmoothDivisor_iInfImageIdeal).2
 
-theorem isAffine_hypersurfaceScheme (C : MaximalContactCover p τ I c) : IsAffine C.hypersurfaceScheme := by
-  have : IsAffine C.toCoverData.disjointUnion := C.isAffine_disjointUnion
-  exact isAffine_of_isAffineHom C.toCoverData.iInfImageIdeal.subschemeι
-
-instance instIsAffineHypScheme (C : MaximalContactCover p τ I c) : IsAffine C.hypersurfaceScheme :=
-  C.isAffine_hypersurfaceScheme
-
-theorem isAffine_pullbackFiber (C : MaximalContactCover p τ I c) [IsClosedImmersion τ] :
-    IsAffine C.pullbackFiber := by
-  have : IsAffine C.toCoverData.disjointUnion := C.isAffine_disjointUnion
-  have := C.isClosedImmersion_pullbackFiberToTotal
-  exact isAffine_of_isAffineHom C.pullbackFiberToTotal
-
-instance instIsAffineStarFiber (C : MaximalContactCover p τ I c) [IsClosedImmersion τ] :
-    IsAffine C.pullbackFiber :=
-  C.isAffine_pullbackFiber
-
 theorem nonzeroOnComponents_iInfImageIdeal (C : MaximalContactCover p τ I c)
     [TopologicalSpace.NoetherianSpace ↥C.toCoverData.disjointUnion] :
     NonzeroOnComponents C.toCoverData.iInfImageIdeal := by

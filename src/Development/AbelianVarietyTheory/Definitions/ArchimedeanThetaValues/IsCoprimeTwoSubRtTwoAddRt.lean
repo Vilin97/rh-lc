@@ -93,9 +93,6 @@ def level (H : Host E) (A : ℕ) (hA : 0 < A) : Level H where
 
 @[simp] theorem level_M (H : Host E) (A : ℕ) (hA : 0 < A) : (level H A hA).M = H.d + 4 := rfl
 
-@[simp] theorem level_Mb (H : Host E) (A : ℕ) (hA : 0 < A) :
-    (level H A hA).Mb = Ideal.span {2 - H.rt} := rfl
-
 @[simp] theorem level_A (H : Host E) (A : ℕ) (hA : 0 < A) : (level H A hA).A = A := rfl
 
 theorem Mb_ne_top {H : Host E} (l : Level H) : l.Mb ≠ ⊤ := by
@@ -116,26 +113,5 @@ theorem level_goodAt (H : Host E) (A : ℕ) (hA : 0 < A) {p : ℕ} (hp : ¬ p �
   simp
 
 instance instNonemptyLevel (H : Host E) : Nonempty (Level H) := ⟨level H 1 one_pos⟩
-
-example (H : Host E) (h : H.d = 7) : (level H 5 (by norm_num)).M' = 55 := by
-  simp only [Level.M', level_M, level_A, h]
-  decide
-
-example (H : Host E) : H.bar H.rt ≠ H.rt := by
-  rw [bar_rt]
-  intro h
-  apply rt_ne_zero H
-  have : (2 : 𝓞 E) * H.rt = 0 := by linear_combination -h
-  exact (mul_eq_zero.mp this).resolve_left two_ne_zero
-
-example (H : Host E) (A : ℕ) (hA : 0 < A) :
-    (level H A hA).Mb.map (H.bar : 𝓞 E →+* 𝓞 E) ≠ (level H A hA).Mb := by
-  intro h
-  have := (level H A hA).coprime
-  rw [h, sup_idem] at this
-  exact Mb_ne_top _ this
-
-example (H : Host E) : (level H 1 one_pos).GoodAt 2 :=
-  level_goodAt H 1 one_pos (by have := H.d_mod; omega)
 
 end GlobalTheory.HostModel

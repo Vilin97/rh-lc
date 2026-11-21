@@ -365,12 +365,6 @@ theorem exists_isScalar (hψ : IsStdChar D ψ (-1)) (hf : IsFinWeil ψ S T ΛS �
   simp only [Module.End.mul_apply] at this
   rwa [← subst_mul, inv_mul_cancel, subst_one] at this
 
-theorem IsScalar.unique (hψ : IsStdChar D ψ (-1)) {p : GA D S × GA D T} {c c' : ℂ} (h : IsScalar ψ of oi p c)
-    (h' : IsScalar ψ of oi p c') : c = c' := by
-  obtain ⟨f, hf, f0⟩ := GlobalTheory.Mem.ThetaNonzero.exists_thetaO_ne_zero hψ S T
-  refine smul_left_injective ℂ (m := subst p f) (fun e => f0 ?_) ((h f hf).symm.trans (h' f hf))
-  rw [← subst_one (S := S) (T := T) f, ← inv_mul_cancel p, subst_mul, e, map_zero]
-
 theorem IsScalar.mul (hψ : IsStdChar D ψ (-1)) (hi : IsInfWeil ψ θ S T oi)
     (hcomm : ∀ p q f, IsThetaFunO ψ S T f → of p (oi q f) = oi q (of p f)) {p q : GA D S × GA D T} {c c' : ℂ}
     (h : IsScalar ψ of oi p c) (h' : IsScalar ψ of oi q c') (h1 : q.1 ∈ GQ S) (h2 : q.2 ∈ GQ T) :

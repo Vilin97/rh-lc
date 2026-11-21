@@ -77,8 +77,6 @@ variable {R A B C : Type*} [CommRing R] [CommRing A] [Algebra R A] [CommRing B] 
 noncomputable def coords (g : MvPolynomial σ R →ₐ[R] A) (p : A →ₐ[R] C) : σ → C := fun i => p (g (X i))
 
 omit [TopologicalSpace C] in
-@[simp] theorem coords_apply (g : MvPolynomial σ R →ₐ[R] A) (p : A →ₐ[R] C) (i : σ) :
-    coords g p i = p (g (X i)) := rfl
 
 omit [TopologicalSpace C] in
 theorem aeval_coords (g : MvPolynomial σ R →ₐ[R] A) (p : A →ₐ[R] C) (q : MvPolynomial σ R) :
@@ -147,18 +145,6 @@ theorem isClosedEmbedding_coords [T1Space C] [IsTopologicalRing C]
     (g : MvPolynomial σ R →ₐ[R] A) (hg : Function.Surjective g) :
     IsClosedEmbedding (coords g : (A →ₐ[R] C) → σ → C) :=
   (mvPolynomialHomeomorph R C σ).isClosedEmbedding.comp (isClosedEmbedding_comap g hg)
-
-scoped instance secondCountableTopology [T1Space C] [IsTopologicalRing C]
-    [SecondCountableTopology C] [Algebra.FiniteType R A] :
-    SecondCountableTopology (A →ₐ[R] C) := by
-  obtain ⟨n, g, hg⟩ := Algebra.FiniteType.iff_quotient_mvPolynomial''.1 ‹Algebra.FiniteType R A›
-  exact (isClosedEmbedding_coords g hg).isEmbedding.secondCountableTopology
-
-scoped instance locallyCompactSpace [T1Space C] [IsTopologicalRing C]
-    [LocallyCompactSpace C] [Algebra.FiniteType R A] :
-    LocallyCompactSpace (A →ₐ[R] C) := by
-  obtain ⟨n, g, hg⟩ := Algebra.FiniteType.iff_quotient_mvPolynomial''.1 ‹Algebra.FiniteType R A›
-  exact (isClosedEmbedding_coords g hg).locallyCompactSpace
 
 end Comm
 

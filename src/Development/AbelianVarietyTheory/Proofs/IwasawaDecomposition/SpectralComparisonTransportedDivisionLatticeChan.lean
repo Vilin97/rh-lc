@@ -5,7 +5,7 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FinXSpectral
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MultREqReL
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MvEvHolds
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MvRowJ
-import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.Imports
+import Lean
 
 noncomputable section
 

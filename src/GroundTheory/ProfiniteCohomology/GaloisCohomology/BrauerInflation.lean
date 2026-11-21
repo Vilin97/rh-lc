@@ -79,11 +79,6 @@ noncomputable def galTowerKerEquiv :
           rw [h1] at hx
           exact hx.symm, Subtype.ext (AlgEquiv.ext fun _ => rfl)⟩⟩
 
-@[simp]
-theorem coe_galTowerKerEquiv_apply (τ : Gal(F/E)) (x : F) :
-    ((galTowerKerEquiv K E F τ : Gal(F/K)) : F → F) x = τ x :=
-  rfl
-
 theorem isZero_groupCohomology_one_ker_galUnits [FiniteDimensional K F] :
     IsZero (groupCohomology (Rep.res (AlgEquiv.restrictNormalHom (F := K) (K₁ := F) E).ker.subtype
       (galUnits.{u} K F)) 1) := by

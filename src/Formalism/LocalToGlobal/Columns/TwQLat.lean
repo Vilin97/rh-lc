@@ -1,4 +1,4 @@
-import Formalism.LocalToGlobal.Columns.TwQTop
+import Formalism.LocalToGlobal.Columns.TwQRec
 import Formalism.LocalToGlobal.Columns.MemLocPOfSmul
 
 open NumberField IsDedekindDomain Matrix
@@ -23,8 +23,6 @@ abbrev qPi (q : QLoc hc n Q Θ) (P : Q) : E ⊗[F] Formalism.L2.Herm.Af F →+* 
 
 theorem qdf_at_val (q : QLoc hc n Q Θ) (P : Q) (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) :
     ((q.at P x : GL (Fin n) _) : Matrix (Fin n) (Fin n) _) = (x : Matrix (Fin n) (Fin n) _).map (qPi q P) := rfl
-
-theorem qdf_pi_iA (q : QLoc hc n Q Θ) (P : Q) (e : E) : qPi q P (iA F E e) = q.phi P e := rfl
 
 theorem qdf_phi_int (q : QLoc hc n Q Θ) (P : Q) (r : 𝓞 E) : q.phi P (r : E) ∈ (qv F P.1).adicCompletionIntegers F := by
   have h : Formalism.UG.inclE (F := F) ((qv F P.1).adicCompletion F) (r : E) ∈ Formalism.BasicNotions.intV E (qv F P.1) :=
@@ -66,11 +64,6 @@ theorem qdf_phi_intAt (q : QLoc hc n Q Θ) (P : Q) {a : E} (h : IntAt P.1 a) : q
     exact hm
   rw [ha]
   exact mul_mem (qdf_phi_int q P r) hu.2
-
-theorem qdf_gl_inv_val {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (A : GL (Fin n) R) :
-    (((bc f A)⁻¹ : GL (Fin n) S) : Matrix (Fin n) (Fin n) S) = ((A⁻¹ : GL (Fin n) R) : Matrix (Fin n) (Fin n) R).map f := by
-  rw [← map_inv]
-  rfl
 
 theorem qdf_frLat (q : QLoc hc n Q Θ) : FrLat ST SG q := by
   intro x p hx P
@@ -183,11 +176,6 @@ theorem qdf_frLat (q : QLoc hc n Q Θ) : FrLat ST SG q := by
     exact mul_mem hinv (qdf_pi_int q P (hpull i))
 
 variable {H : Subgroup (GLG E n SG)}
-
-def recClsFOf' (hS : DecoPtSurj hc n ST SG) (hQ : QOff (F := F) ST SG Q) (q : QLoc hc n Q Θ)
-    (s : DecoFCl (K := K) n ST SG Q H Θ → DecoF E n ST SG Q)
-    (hs : ∀ c, (Quotient.mk'' (s c) : DecoFCl (K := K) n ST SG Q H Θ) = c) : RecClsF hc n ST SG Q H q s :=
-  recClsFOf hS hQ q (qdf_frLat q) qdf_frExists s hs
 
 end QLat
 

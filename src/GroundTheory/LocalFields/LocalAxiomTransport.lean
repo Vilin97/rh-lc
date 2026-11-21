@@ -29,9 +29,6 @@ variable {A K L Γ M} (T : TateModel A K L Γ M)
 
 include T in
 
-theorem normal : (L.subgroupOf K).Normal :=
-  T.ker_hom ▸ T.hom.normal_ker
-
 theorem equiv_smul (σ : K) (a : fixedModule A L) (h : (σ : G) • (a : A) ∈ fixedModule A L) :
     T.equiv ⟨(σ : G) • (a : A), h⟩ = T.hom σ • T.equiv a := by
   rw [← T.equiv.apply_symm_apply (T.hom σ • T.equiv a)]
@@ -71,10 +68,6 @@ variable [(L.subgroupOf K).Normal]
 noncomputable def quotientEquiv : K ⧸ L.subgroupOf K ≃* Γ :=
   (QuotientGroup.quotientMulEquivOfEq T.ker_hom.symm).trans
     (QuotientGroup.quotientKerEquivOfSurjective T.hom T.surjective_hom)
-
-@[simp]
-theorem quotientEquiv_mk (σ : K) : T.quotientEquiv (σ : K ⧸ L.subgroupOf K) = T.hom σ :=
-  rfl
 
 include T in
 

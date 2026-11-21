@@ -103,8 +103,6 @@ section Val
 
 variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] {n : ℕ}
 
-local notation "Γ" => WithZero (Multiplicative ℤ)
-
 def MinorLe (c : Γ) (r : ℕ) (M : Matrix (Fin n) (Fin n) L) : Prop :=
   ∀ I J : Fin r → Fin n, Valued.v (M.submatrix I J).det ≤ c
 

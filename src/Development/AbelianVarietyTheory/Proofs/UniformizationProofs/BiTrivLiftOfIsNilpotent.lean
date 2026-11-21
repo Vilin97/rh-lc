@@ -25,7 +25,6 @@ variable {A : Type} [CommRing A] {J : Ideal A} {X : Type} [AddCommGroup X]
   {G : Over (Spec (CommRingCat.of A))} [GrpObj G] [IsCommMonObj G] {L : RigLB G}
 
 set_option hygiene false in
-local notation "𝕋" => splitTorus (Spec (CommRingCat.of A)) X
 
 theorem exists_red_lift {Z W : Over (Spec (CommRingCat.of A))} (hZ : ∃ s, s ≫ red J = Z.hom) (p : Z ⟶ W) :
     ∃ a : Z.left ⟶ pullback W.hom (red J), a ≫ pullback.fst _ _ = p.left := by

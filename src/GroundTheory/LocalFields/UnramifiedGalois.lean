@@ -171,12 +171,7 @@ def galoisEquivResidue (h : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.ma
     (L ≃ₐ[K] L) ≃* (𝓀[L] ≃ₐ[𝓀[K]] 𝓀[L]) :=
   MulEquiv.ofBijective (residueAlgEquiv K L) (residueAlgEquiv_bijective_of_unramified K L h)
 
-@[simp]
-theorem galoisEquivResidue_apply (h : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1) (σ : L ≃ₐ[K] L) :
-    galoisEquivResidue K L h σ = residueAlgEquiv K L σ :=
-  rfl
-
-theorem isCyclic_of_unramified (h : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1) : IsCyclic (L ≃ₐ[K] L) :=
+theorem isCyclic_of_unramified (h : ramificationIndex K L = 1) : IsCyclic (L ≃ₐ[K] L) :=
   isCyclic_of_surjective (galoisEquivResidue K L h).symm.toMonoidHom
     (galoisEquivResidue K L h).symm.surjective
 

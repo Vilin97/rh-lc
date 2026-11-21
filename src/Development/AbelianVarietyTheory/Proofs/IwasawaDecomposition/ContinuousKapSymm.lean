@@ -177,9 +177,6 @@ def kapF (g : GA D V) : GA D V' :=
 
 theorem mat_kapF (g : GA D V) : (matHom V' (I.kapF g)).1 = I.conjM (matHom V g).1 := rfl
 
-theorem kapF_one : I.kapF 1 = 1 :=
-  GlobalTheory.AutFunCounterexample.GA_ext V' (by simp only [mat_kapF, map_one, Units.val_one])
-
 theorem kapF_mul (a b : GA D V) : I.kapF (a * b) = I.kapF a * I.kapF b :=
   GlobalTheory.AutFunCounterexample.GA_ext V' (by
     rw [map_mul (matHom V'), Units.val_mul, mat_kapF, mat_kapF, mat_kapF, map_mul, Units.val_mul, map_mul])
@@ -329,8 +326,6 @@ def phi : WO S V ≃+ WO S V' where
     show HMul.hMul I.aP (HMul.hMul I.aQ x) = x
     rw [← Matrix.mul_assoc, I.aP_aQ, Matrix.one_mul]
   map_add' x y := Matrix.mul_add _ _ _
-
-theorem phi_apply (x : WO S V) : I.phi S x = HMul.hMul I.aP x := rfl
 
 theorem phi_symm_apply (y : WO S V') : (I.phi S).symm y = I.symm.phi S y := rfl
 

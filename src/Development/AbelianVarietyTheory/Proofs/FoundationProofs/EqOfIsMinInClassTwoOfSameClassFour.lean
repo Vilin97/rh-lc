@@ -73,38 +73,6 @@ theorem lt_of_global_min (hQ : Q.PosDef) (ν : X →+ ℝ) {N : ℤ} (hN : 2 ≤
   simp only [div_eq_inv_mul] at ha ⊢
   exact affine_lt_of_global_min hQ (inv_pos.mpr hN') ν hN ha hw
 
-theorem mul_map_add_le (hQ : ∀ x, 0 ≤ Q x) (j : ℤ) (a b : X) :
-    j * Q (a + b) ≤ (j + 1) * Q a + j * (j + 1) * Q b := by
-  have h1 := map_add_zsmul Q a b 1
-  have h2 := hQ (a + (-j) • b)
-  rw [one_smul] at h1
-  rw [map_add_zsmul] at h2
-  rw [h1]
-  push_cast at h2 ⊢
-  nlinarith
-
-theorem map_add_le (hQ : ∀ x, 0 ≤ Q x) {j : ℤ} (hj : 1 ≤ j) (a b : X) :
-    Q (a + b) ≤ (1 + 1 / j) * Q a + (1 + j) * Q b := by
-  have hj' : (0 : ℝ) < j := by exact_mod_cast (by omega : (0 : ℤ) < j)
-  refine le_of_mul_le_mul_left ((mul_map_add_le hQ j a b).trans_eq ?_) hj'
-  field_simp
-  ring
-
-theorem map_sum_le (hQ : ∀ x, 0 ≤ Q x) {ι : Type*} (s : Finset ι) (v : ι → X) :
-    Q (∑ i ∈ s, v i) ≤ s.card * ∑ i ∈ s, Q (v i) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | insert i s hi ih =>
-    rcases s.eq_empty_or_nonempty with rfl | hs
-    · simp
-    have hc : (0 : ℝ) < s.card := by exact_mod_cast hs.card_pos
-    rw [Finset.sum_insert hi, Finset.sum_insert hi, Finset.card_insert_of_notMem hi, add_comm (v i)]
-    have h1 := mul_map_add_le hQ s.card (∑ i ∈ s, v i) (v i)
-    push_cast at h1 ⊢
-    refine le_of_mul_le_mul_left (h1.trans ?_) hc
-    nlinarith [mul_le_mul_of_nonneg_left ih (show (0 : ℝ) ≤ s.card + 1 by positivity)]
-
 end Unique
 
 section Gram
@@ -394,18 +362,6 @@ theorem gram_ofMatrix (hA : A.IsHermitian) : gram (ofMatrix A) (Pi.basisFun ℤ 
 
 theorem realExtension_ofMatrix_posDef (hA : A.PosDef) : (realExtension (ofMatrix A)).PosDef := by
   rwa [realExtension_posDef_iff _ (Pi.basisFun ℤ (Fin d)), gram_ofMatrix hA.isHermitian]
-
-example : (realExtension (ofMatrix !![2, 1; 1, 2])).PosDef := by
-  refine realExtension_ofMatrix_posDef (posDef_iff_dotProduct_mulVec.mpr ⟨?_, fun x hx => ?_⟩)
-  · ext i j
-    fin_cases i <;> fin_cases j <;> simp
-  · have : x 0 ≠ 0 ∨ x 1 ≠ 0 := by
-      by_contra h
-      push Not at h
-      exact hx (by funext i; fin_cases i <;> simp [h.1, h.2])
-    simp [dotProduct, mulVec, Fin.sum_univ_two]
-    rcases this with h | h <;>
-      nlinarith [sq_pos_of_ne_zero h, sq_nonneg (x 0 + x 1), sq_nonneg (x 0), sq_nonneg (x 1)]
 
 end Matrix
 

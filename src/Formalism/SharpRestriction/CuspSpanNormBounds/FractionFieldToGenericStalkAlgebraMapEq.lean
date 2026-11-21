@@ -216,12 +216,6 @@ def Kk (M : Model F E) : (i : ℕ) → Pt E i → Pt E i → ℂ
   | 0, _, _ => 1
   | m + 1, w, w' => ∑' c : M.Cls m, M.BB w c * conj (M.BB w' c) / (M.nAut c : ℂ)
 
-def N0 (M : Model F E) {m : ℕ} (h h' : Pt E m) : ℂ := M.Kk m h h'
-
-def Ns (M : Model F E) {m : ℕ} (s : ℕ+) (t t' : Eˣ) (h h' : Pt E m) : ℂ :=
-  ((M.modK ((t : E) * t') ^ ((s : ℕ) * ((s : ℕ) - 1) / 2) : ℝ) : ℂ) *
-    M.Kk (m + s) (h.snoc t s) (h'.snoc t' s)
-
 def detMod (M : Model F E) {m : ℕ} (h : Pt E m) : ℝ := M.modK h.mat.det
 
 def InGLR (M : Model F E) {m : ℕ} (h : Pt E m) : Prop :=
@@ -246,11 +240,6 @@ namespace Model
 
 open scoped Classical in
 
-def CuspSpanExtension (M : Model F E) {m : ℕ} (c : E) (h h' : Pt E m) : ℂ :=
-  if hc : ∃ n : Fin 3, IsUnit (c + ((n : ℕ) : E)) then
-    M.Ns 1 hc.choose_spec.unit hc.choose_spec.unit h h'
-  else 0
-
 theorem Kk_succ (M : Model F E) (m : ℕ) (w w' : Pt E (m + 1)) :
     M.Kk (m + 1) w w' = ∑' c : M.Cls m, M.BB w c * conj (M.BB w' c) / (M.nAut c : ℂ) := rfl
 
@@ -258,24 +247,7 @@ end Model
 
 namespace Pt
 
-def cast {n n' : ℕ} (e : n = n') (w : Pt E n) : Pt E n' := ⟨w.blocks, w.size.trans e⟩
-
-@[simp] theorem cast_blocks {n n' : ℕ} (e : n = n') (w : Pt E n) : (w.cast e).blocks = w.blocks := rfl
-
 end Pt
-
-theorem add_natPred_succ (m : ℕ) (s : ℕ+) : m + (s : ℕ) = (m + s.natPred) + 1 := by
-  rw [add_assoc, PNat.natPred_add_one]
-
-def ofPoint {n : ℕ} (p : Formalism.MainNotions.S.Point E n) (hu : ∀ b ∈ p.1, IsUnit b.1) : Pt E n where
-  blocks := p.1.attach.map fun b => ((hu b.1 b.2).unit, ⟨b.1.2, by have := (p.2.1 b.1 b.2).2; omega⟩)
-  size := by
-    refine Eq.trans ?_ p.2.2
-    congr 1
-    rw [List.map_map]
-    conv_rhs => rw [← List.attach_map_subtype_val p.1]
-    rw [List.map_map]
-    rfl
 
 end Formalism.MainNotions.S.Loc
 

@@ -61,9 +61,6 @@ section Expansion
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-
 variable (p) in
 
 def logCoeff (n j : ℕ) : ℤ :=
@@ -160,13 +157,6 @@ section PhiT
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
-
-local notation "𝒪♭" => PreTilt (normInteger K) p
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-local notation "φ" => WittVector.frobeniusEquiv p (PreTilt (normInteger K) p)
-local notation "𝔭" => Ideal.span {(p : ACris K p)}
-local notation "𝔭₀" => Ideal.span {(p : ACrisZero K p)}
 
 variable {x : AInf K p}
 

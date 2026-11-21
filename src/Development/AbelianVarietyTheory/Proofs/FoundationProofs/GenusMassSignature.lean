@@ -1,6 +1,8 @@
 import Mathlib
 import Formalism.LocalToGlobal.GlobalTheory.GL5.Statement
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.SelfDualLatticeMass
+import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
+import Formalism.HermitianLattices.StatementMass
 import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.MassFormulaPositivity
 
 noncomputable section
@@ -138,8 +140,6 @@ theorem pos_iff_posDef (htc : IsTotallyComplex E)
       simpa using congrFun h i
     rw [emb_form hst]
     exact h.re_dotProduct_pos hv
-
-def withPosSig (W : HSpace E) : HSpace E := { W with sig := fun _ => (W.rank, 0) }
 
 end Field
 

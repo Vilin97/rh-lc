@@ -1,4 +1,4 @@
-import Development.EtaleCohomology.EtaleTrace.LTwoHPf
+import Development.EtaleCohomology.EtaleTrace.LCoprodInjPf
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

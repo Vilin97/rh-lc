@@ -22,11 +22,7 @@ def std : Lat O K r :=
       span_eq_top := by
         rw [Submodule.span_span_of_tower]; exact (Pi.basisFun K (Fin r)).span_eq }⟩
 
-instance instInhabitedLat : Inhabited (Lat O K r) := ⟨std O K r⟩
-
 variable {O K r}
-
-@[ext] theorem Lat.ext {L M : Lat O K r} (h : L.1 = M.1) : L = M := Subtype.ext h
 
 def glMap (g : GL (Fin r) K) (L : Submodule O (Fin r → K)) : Submodule O (Fin r → K) :=
   L.map ((Matrix.toLin' (g : Matrix (Fin r) (Fin r) K)).restrictScalars O)
@@ -287,13 +283,6 @@ theorem heckeElem_eq_zero {k : ℕ} (hk : r < k) (φ : Lat O K r → E) (L : Lat
     heckeElem k φ L = 0 := by
   simp [heckeElem, subElem_eq_empty hk]
 
-theorem heckeAll_smul (g : GL (Fin r) K) (n : ℕ) (φ : Lat O K r → E) (L : Lat O K r) :
-    heckeAll n φ (g • L) = heckeAll n (fun M => φ (g • M)) L := by
-  symm
-  refine finsum_mem_eq_of_bijOn (fun M => g • M) ⟨fun M hM => (smul_mem_subIdx_iff g n M L).2 hM,
-    (MulAction.injective g).injOn, fun M hM => ⟨g⁻¹ • M, ?_, smul_inv_smul g M⟩⟩ fun _ _ => rfl
-  rw [← smul_mem_subIdx_iff g, smul_inv_smul]; exact hM
-
 theorem heckeElem_smul (g : GL (Fin r) K) (k : ℕ) (φ : Lat O K r → E) (L : Lat O K r) :
     heckeElem k φ (g • L) = heckeElem k (fun M => φ (g • M)) L := by
   symm
@@ -309,20 +298,5 @@ theorem qRes_padicInt (p : ℕ) [Fact p.Prime] [Finite (IsLocalRing.ResidueField
     qRes ℤ_[p] = p := by
   unfold qRes
   rw [Nat.card_congr (PadicInt.residueField (p := p)).toEquiv, Nat.card_zmod]
-
-example : haveI := finite_residueField_padicInt 2
-    (heckeElem 2 : (Lat ℤ_[2] ℚ_[2] 2 → ℕ) → Lat ℤ_[2] ℚ_[2] 2 → ℕ) ≠ id := by
-  classical
-  haveI := finite_residueField_padicInt 2
-  intro h
-  have h1 := congrFun (congrFun h fun M => if M = std ℤ_[2] ℚ_[2] 2 then 1 else 0) (std ℤ_[2] ℚ_[2] 2)
-  rw [heckeElem_top] at h1
-  simp [maxMul_ne] at h1
-
-example : haveI : Fact (Nat.Prime 3) := ⟨Nat.prime_three⟩
-    (maxMul (std ℤ_[3] ℚ_[3] 2)).1.toAddSubgroup.relIndex (std ℤ_[3] ℚ_[3] 2).1.toAddSubgroup = 9 := by
-  haveI : Fact (Nat.Prime 3) := ⟨Nat.prime_three⟩
-  haveI := finite_residueField_padicInt 3
-  rw [relIndex_maxMul, qRes_padicInt]; rfl
 
 end GlobalTheory.LatHecke

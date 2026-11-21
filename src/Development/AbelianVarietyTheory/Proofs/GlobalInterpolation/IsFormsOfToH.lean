@@ -133,13 +133,6 @@ theorem pairAt_rho (g : T.G) (x : T.V) : T.pairAt v (T.ρ g x) (T.ρ g x) = T.pa
 
 include hr in
 
-theorem ipAt_sec (s : T.Sec) (φ : T.EqFun) : T.ipAt h v φ φ = letI := h.fintypeCl
-    ∑ c, ((Nat.card (MulAction.stabilizer T.G (s.rep c)) : ℕ) : ℂ)⁻¹ *
-      T.pairAt v ((φ : T.D → T.V) (s.rep c)) ((φ : T.D → T.V) (s.rep c)) := by
-  refine Finset.sum_congr rfl fun c _ => ?_
-  obtain ⟨g, hg⟩ := T.outSec.exists_smul s c
-  rw [T.wt_eq, ← hg, T.card_stab_smul, φ.2, pairAt_rho v T h hr]
-
 end Metric
 
 end GlobalTheory.PeriodOnStep

@@ -71,8 +71,6 @@ theorem row_zero {n : ℕ} {i₀ : Fin n} (c : AE F E →+* AE F E) (ε : ℤˣ)
     simp [hcol, hk]
   · simp
 
-local notation:70 X:70 " ⬝ " Y:71 => @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid X Y
-
 theorem sub_form {d : SD σ} (L : LD d) (c : AE F E →+* AE F E) (ε : AE F E)
     (M : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F E))
     (hr : ∀ b, b ≠ Sum.inr L.i₀ → M (Sum.inr L.i₀) b = 0) :

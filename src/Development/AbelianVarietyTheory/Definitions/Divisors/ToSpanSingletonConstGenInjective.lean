@@ -175,8 +175,6 @@ section Hom
 
 variable {G H K : PDivGroup p O}
 
-@[ext] theorem hom_ext {f g : G ⟶ H} (h : ∀ n, f.app n = g.app n) : f = g := Hom.ext (funext h)
-
 @[simp] theorem id_app (n : ℕ) : Hom.app (𝟙 G) n = BialgHom.id O _ := rfl
 
 @[simp] theorem comp_app (f : G ⟶ H) (g : H ⟶ K) (n : ℕ) :
@@ -363,8 +361,6 @@ variable (G H) in
 def dualHomEquiv : (G ⟶ H) ≃ₗ[ℤ_[p]] (H.dual ⟶ G.dual) :=
   LinearEquiv.ofBijective (dualHom G H) dualHom_bijective
 
-@[simp] theorem dualHomEquiv_apply (f : G ⟶ H) : dualHomEquiv G H f = dualHom G H f := rfl
-
 end Hom
 
 @[ext] structure TateOver (G : PDivGroup p O) (B : Type) [CommRing B] [Algebra O B] : Type where
@@ -487,8 +483,6 @@ variable (G B) in
 def tateEnd : End G →ₐ[ℤ_[p]] Module.End ℤ_[p] (G.TateOver B) :=
   AlgHom.ofLinearMap ((tateMap G G B).comp End.linearEquiv.toLinearMap) rfl fun _ _ => rfl
 
-@[simp] theorem tateEnd_apply (f : End G) : tateEnd G B f = tateMap G G B f.asHom := rfl
-
 variable (G) in
 
 def tatePush (g : B →ₐ[O] B') : G.TateOver B →ₗ[ℤ_[p]] G.TateOver B' where
@@ -500,22 +494,6 @@ def tatePush (g : B →ₐ[O] B') : G.TateOver B →ₗ[ℤ_[p]] G.TateOver B' w
     (G.tatePush g x).pt n a = g (x.pt n a) := rfl
 
 variable (G B) in
-
-theorem tatePush_bijective [IsIntegrallyClosedIn O B] :
-    Function.Bijective (G.tatePush (Algebra.ofId O B)) := by
-  have hi : Function.Injective (Algebra.ofId O B) := IsIntegralClosure.algebraMap_injective O O B
-  refine ⟨fun x y h => TateOver.ext (funext fun n => AlgHom.ext fun a =>
-    hi (congrArg (fun z => z.pt n a) h)), fun y => ?_⟩
-  have hm : ∀ n a, y.pt n a ∈ (Algebra.ofId O B).range := fun n a =>
-    IsIntegrallyClosedIn.isIntegral_iff.1 ((Algebra.IsIntegral.isIntegral a).map (y.pt n))
-  let e := AlgEquiv.ofInjective _ hi
-  let x : ∀ n, G.A n →ₐ[O] O := fun n =>
-    (e.symm : (Algebra.ofId O B).range →ₐ[O] O).comp ((y.pt n).codRestrict _ (hm n))
-  have hx : ∀ n a, Algebra.ofId O B (x n a) = y.pt n a := fun n a =>
-    congrArg Subtype.val (e.apply_symm_apply ⟨y.pt n a, hm n a⟩)
-  refine ⟨⟨x, fun n => AlgHom.ext fun a => hi ?_⟩, TateOver.ext (funext fun n => AlgHom.ext (hx n))⟩
-  rw [hx, ← y.pt_mulP]
-  exact hx _ _
 
 end Tate
 
@@ -607,8 +585,6 @@ def lieEnd : End G →+* Module.End O G.Lie where
   map_zero' := map_zero (lieMap G G)
   map_add' f g := map_add (lieMap G G) f.asHom g.asHom
 
-@[simp] theorem lieEnd_apply (f : End G) : lieEnd G f = lieMap G G f.asHom := rfl
-
 variable (G H) in
 
 def omegaDualMap : (G ⟶ H) →+ (G.dual.omega →ₗ[O] H.dual.omega) :=
@@ -632,8 +608,6 @@ def omegaDualEnd : End G →+* Module.End O G.dual.omega where
   map_zero' := map_zero (omegaDualMap G G)
   map_add' f g := map_add (omegaDualMap G G) f.asHom g.asHom
 
-@[simp] theorem omegaDualEnd_apply (f : End G) : omegaDualEnd G f = omegaDualMap G G f.asHom := rfl
-
 namespace Action
 
 variable {Λ : Type*} [Semiring Λ] (ρ : Action Λ G)
@@ -644,19 +618,9 @@ def onTate (B : Type) [CommRing B] [Algebra O B] : Λ →+* Module.End ℤ_[p] (
 def onTateAlg [Algebra ℤ_[p] Λ] (B : Type) [CommRing B] [Algebra O B] :
     Λ →ₐ[ℤ_[p]] Module.End ℤ_[p] (G.TateOver B) := (tateEnd G B).comp ρ.toAlgHom
 
-@[simp] theorem onTate_apply (B : Type) [CommRing B] [Algebra O B] (a : Λ) :
-    ρ.onTate B a = tateMap G G B (ρ a).asHom := rfl
-
-@[simp] theorem onTateAlg_apply [Algebra ℤ_[p] Λ] (B : Type) [CommRing B] [Algebra O B] (a : Λ) :
-    ρ.onTateAlg B a = tateMap G G B (ρ a).asHom := rfl
-
 def onLie : Λ →+* Module.End O G.Lie := (lieEnd G).comp ρ
 
 def onOmegaDual : Λ →+* Module.End O G.dual.omega := (omegaDualEnd G).comp ρ
-
-@[simp] theorem onLie_apply (a : Λ) : ρ.onLie a = lieMap G G (ρ a).asHom := rfl
-
-@[simp] theorem onOmegaDual_apply (a : Λ) : ρ.onOmegaDual a = omegaDualMap G G (ρ a).asHom := rfl
 
 def dual {Λ : Type*} [CommSemiring Λ] (ρ : Action Λ G) : Action Λ G.dual where
   toFun a := End.of (dualHom G G (ρ a).asHom)
@@ -748,12 +712,6 @@ abbrev const : PDivGroup p O := (mu p O).dual
 def constFun (n : ℕ) : (const p O).A n ≃ₐ[O] (ZMod (p ^ n) → O) :=
   CartierDual.addMonoidAlgebraEquiv O (ZMod (p ^ n))
 
-theorem constFun_res (n : ℕ) (φ : (const p O).A (n + 1)) (k : ℕ) :
-    constFun p O n ((const p O).res n φ) k = constFun p O (n + 1) φ (p * k : ℕ) := by
-  simp only [constFun, CartierDual.addMonoidAlgebraEquiv_apply, ← muT_pow]
-  change φ.ofConv ((mu p O).mulP n (muT O (p ^ n) ^ k)) = _
-  rw [map_pow, mu_mulP_muT, pow_mul]
-
 theorem constFun_mulP (n : ℕ) (φ : (const p O).A n) (k : ℕ) :
     constFun p O (n + 1) ((const p O).mulP n φ) k = constFun p O n φ k := by
   simp only [constFun, CartierDual.addMonoidAlgebraEquiv_apply, ← muT_pow, dual_mulP]
@@ -805,13 +763,6 @@ def muTate (ζ : ℕ → B) (h0 : ζ 0 = 1) (h : ∀ n, ζ (n + 1) ^ p = ζ n) :
 
 variable (p O B) in
 
-def muTateEquiv :
-    (mu p O).TateOver B ≃ {ζ : ℕ → B // ζ 0 = 1 ∧ ∀ n, ζ (n + 1) ^ p = ζ n} where
-  toFun x := ⟨muRoot x, by simpa using muRoot_pow_self x 0, muRoot_succ_pow x⟩
-  invFun ζ := muTate O ζ.1 ζ.2.1 ζ.2.2
-  left_inv _ := muRoot_ext fun _ => muRoot_muTate ..
-  right_inv _ := Subtype.ext (funext fun _ => muRoot_muTate ..)
-
 end Examples
 
 section Char
@@ -848,9 +799,6 @@ def evalPoint (u : A) (hu : IsGroupLikeElem O u) : CartierDual O A →ₐ[O] O :
     ((CartierDual.isGroupLikeElem_iff_mul u).1 hu).2
 
 omit [IsCocomm O A] in
-
-@[simp] theorem evalPoint_apply (u : A) (hu : IsGroupLikeElem O u) (φ : CartierDual O A) :
-    evalPoint u hu φ = φ u := rfl
 
 end Level
 
@@ -941,9 +889,6 @@ def charHom : G.dual.Tate ≃ₗ[ℤ_[p]] (G ⟶ mu p O) where
 
 @[simp] theorem charHom_app_muT (χ : G.dual.Tate) (n : ℕ) :
     (charHom G χ).app n (muT O _) = charElem χ n := toMuHom_app_muT χ n
-
-@[simp] theorem charHom_symm_pt (f : G ⟶ mu p O) (n : ℕ) (φ : CartierDual O (G.A n)) :
-    ((charHom G).symm f).pt n φ = φ (f.app n (muT O _)) := rfl
 
 theorem charHom_tateMap (f : G ⟶ H) (χ : H.dual.Tate) :
     charHom G (tateMap _ _ O (dualHom G H f) χ) = f ≫ charHom H χ :=
@@ -1091,12 +1036,6 @@ def hodgeTateLinear [Algebra ℤ_[p] O] : O ⊗[ℤ_[p]] G.Tate →ₗ[O] G.dual
 
 def epsHom (ζ : ℕ → O) (h0 : ζ 0 = 1) (h : ∀ n, ζ (n + 1) ^ p = ζ n) : const p O ⟶ mu p O :=
   constHom (mu p O) (muTate O ζ h0 h)
-
-theorem constFun_epsHom (ζ : ℕ → O) (h0 : ζ 0 = 1) (h : ∀ n, ζ (n + 1) ^ p = ζ n) (n k : ℕ) :
-    constFun p O n ((epsHom ζ h0 h).app n (muT O _)) k = ζ n ^ k :=
-  (constFun_constHom _ n k _).trans <|
-    (convPow_apply_groupLike _ (isGroupLikeElem_muT O _) k).trans
-      (congrArg (· ^ k) (muRoot_muTate ζ h0 h n))
 
 variable {B : Type} [CommRing B] [Algebra O B]
 
@@ -1270,23 +1209,6 @@ theorem toSpanSingleton_constGen_injective [Nontrivial O] :
   by_contra hne
   rw [Pi.single_eq_of_ne hne] at h1
   exact zero_ne_one h1
-
-example : (mu p O).height = 1 ∧ (const p O).height = 1 := ⟨rfl, rfl⟩
-
-example : hodgeTate (const p O) (constGen p O) = constDlogT p O := by
-  rw [hodgeTate_eq_omegaDualMap, show constHom _ (constGen p O) = 𝟙 _ by
-    rw [← LinearEquiv.eq_symm_apply, constHom_symm_apply, tateMap_id], omegaDualMap_id,
-    LinearMap.id_apply]
-
-example (t : (mu p O).Tate) : pairing (mu p O) O t (constGen p O) = t := by
-  rw [pairing_apply, charHom_constGen, tateMap_id]
-
-example (a : ℤ_[p]) (x : (mu p ℤ_[p]).Lie) :
-    (padicAction (mu p ℤ_[p])).onLie a x = a • x ∧ dlogT p ℤ_[p] ≠ 0 := by
-  refine ⟨?_, dlogT_ne_zero p ℤ_[p] PadicInt.prime_p.not_isUnit⟩
-  change lieMap _ _ (algebraMap ℤ_[p] (End (mu p ℤ_[p])) a).asHom x = _
-  rw [Algebra.algebraMap_eq_smul_one, End.smul_asHom, End.one_asHom]
-  exact (LinearMap.congr_fun (lieMap_smul (RingHom.id _) a (𝟙 _)) x).trans (by simp)
 
 end Values
 

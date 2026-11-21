@@ -31,8 +31,6 @@ section Local
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-local notation3 "E⁺" => NumberField.maximalRealSubfield E
-
 abbrev incl (s : SplitPlace E) : Os s →+* s.v.adicCompletion E⁺ :=
   (s.v.adicCompletionIntegers E⁺).subtype
 

@@ -72,8 +72,6 @@ noncomputable def wt (k n : ℕ) : SchwartzMap E ℂ →L[ℂ]
 theorem wt_apply (k n : ℕ) (w : SchwartzMap E ℂ) (x : E) :
     wt k n w x = (‖x‖ ^ k : ℝ) • iteratedFDeriv ℝ n w x := rfl
 
-theorem wt_eq (k n : ℕ) (w : SchwartzMap E ℂ) : wt k n w = wtFun k n w := rfl
-
 theorem continuous_iteratedFDeriv_at (n : ℕ) (x : E) :
     Continuous (fun w : SchwartzMap E ℂ => iteratedFDeriv ℝ n w x) := by
   have : (fun w : SchwartzMap E ℂ => iteratedFDeriv ℝ n w x) = fun w => wt 0 n w x := by

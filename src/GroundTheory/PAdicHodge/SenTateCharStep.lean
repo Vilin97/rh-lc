@@ -37,8 +37,6 @@ def galOver (M : IntermediateField K (PadicAlgCl p)) (σ : Gal(PadicAlgCl p/K))
     commutes' := fun m => (IntermediateField.mem_fixingSubgroup_iff _ _).1 hσ m m.2 }
 
 omit [FiniteDimensional ℚ_[p] K] in
-theorem galOver_apply (M : IntermediateField K (PadicAlgCl p)) (σ : Gal(PadicAlgCl p/K))
-    (hσ : σ ∈ M.fixingSubgroup) (y : PadicAlgCl p) : galOver M σ hσ y = σ y := rfl
 
 variable (M M' : IntermediateField K (PadicAlgCl p)) (hMM' : M ≤ M') [FiniteDimensional K M']
   {τ : Gal(PadicAlgCl p/K)} (hτM : τ ∈ M.fixingSubgroup)
@@ -68,7 +66,6 @@ variable {M M'} {hMM'}
 
 omit [FiniteDimensional ℚ_[p] K] [FiniteDimensional K M'] in
 include hτM in
-theorem pow_mem_fixingSubgroup_base (j : ℕ) : τ ^ j ∈ M.fixingSubgroup := pow_mem hτM j
 
 variable (hMM') in
 
@@ -100,11 +97,6 @@ theorem stepEmb_injective {i j : ℕ} (hi : i < p) (hj : j < p)
   rcases le_total i j with hij | hji
   · exact key hij hj h
   · exact (key hji hi h.symm).symm
-
-instance isAlgClosure_padicAlgCl_over (E : IntermediateField K (PadicAlgCl p)) :
-    IsAlgClosure E (PadicAlgCl p) :=
-  haveI : Algebra.IsAlgebraic K (PadicAlgCl p) := Algebra.IsAlgebraic.tower_top (K := ℚ_[p]) K
-  ⟨inferInstance, Algebra.IsAlgebraic.tower_top (K := K) E⟩
 
 omit [FiniteDimensional ℚ_[p] K] [FiniteDimensional K M'] in
 include hτp hgen in

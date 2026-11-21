@@ -170,5 +170,3 @@ theorem term_aff : ∀ (K : Type) [Field K] [CharZero K],
   exact s8.trans (s6.trans s9.symm)
 
 end CrystallineSemistableComparison.Om.Nt2.TermAff
-
-example : type_of% CrystallineSemistableComparison.Om.Nt2.TermAff.term_aff := CrystallineSemistableComparison.Om.Nt2.TermAff.term_aff

@@ -14,12 +14,6 @@ class TameDescentExponentData (K : Type) [NormedField K] (l e a : ℕ) [Fact l.P
   finite : FiniteDimensional ℚ_[l] K
   prim : ∃ ζ : K, IsPrimitiveRoot ζ e
 
-instance instTameDescentExponentDataPadicThree : TameDescentExponentData ℚ_[3] 3 2 1 where
-  succ_eq := rfl
-  not_dvd := by decide
-  finite := inferInstance
-  prim := ⟨-1, IsPrimitiveRoot.neg_one 0 (by decide)⟩
-
 section Group
 
 variable {K : Type} [NormedField K] (l : ℕ) {e a : ℕ} [Fact l.Prime] [NormedAlgebra ℚ_[l] K]
@@ -86,8 +80,6 @@ theorem shift_mul (g h : TameGal K l e a) : shift (g * h) = shift g + shift h :=
 @[simp] theorem shift_fr : shift (fr : TameGal K l e a) = 1 := rfl
 
 @[simp] theorem root_one (τ : ZMod a) : root (1 : TameGal K l e a) τ = 1 := by simp [root]
-
-@[simp] theorem root_fr (τ : ZMod a) : root (fr : TameGal K l e a) τ = 1 := by simp [root]
 
 @[simp] theorem root_inertia_zero (ζ : rootsOfUnity e K) :
     root (inertia ζ : TameGal K l e a) 0 = (ζ : Kˣ) := by simp [root]
@@ -474,13 +466,5 @@ def frobPeriod (l : ℕ) {e : ℕ} (c : ZMod e) : ℕ := Function.minimalPeriod 
 
 def maxPeriod (l : ℕ) {e : ℕ} (T : Finset (ZMod e)) : ℕ :=
   (T ×ˢ T).sup fun p => frobPeriod l (p.1 - p.2)
-
-example : frobPeriod 3 (1 : ZMod 8) = 2 :=
-  Function.minimalPeriod_eq_prime (p := 2) (by decide) (by decide)
-
-example : ringAct (TameGal.inertia (rootsOfUnity.mkOfPowEq (-1 : ℚ_[3]) (n := 2) (by norm_num)) :
-    TameGal ℚ_[3] 3 2 1) (fun _ => X) 0 = -X := by
-  rw [ringAct_X]
-  simp
 
 end GlobalTheory.BK

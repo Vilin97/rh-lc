@@ -45,9 +45,6 @@ def lieLevi : Submodule F (Matrix (Fin n) (Fin n) F) where
   smul_mem' c A hA i j h := by simp [hA i j h]
 
 variable {F n β} in
-theorem mem_lieLevi {A : Matrix (Fin n) (Fin n) F} :
-    A ∈ lieLevi F n β ↔ ∀ i j, β i ≠ β j → A i j = 0 :=
-  Iff.rfl
 
 variable {F n β} in
 
@@ -74,10 +71,6 @@ def leviCoord : lieLevi F n β ≃ₗ[F] (LeviIndex n β → F) where
   right_inv x := by
     funext s
     simp [s.2]
-
-@[simp] theorem leviCoord_apply (A : lieLevi F n β) (s : LeviIndex n β) :
-    leviCoord F n β A s = (A : Matrix (Fin n) (Fin n) F) s.1.1 s.1.2 :=
-  rfl
 
 def leviCoordHomeomorph : lieLevi F n β ≃ₜ (LeviIndex n β → F) where
   toEquiv := (leviCoord F n β).toEquiv

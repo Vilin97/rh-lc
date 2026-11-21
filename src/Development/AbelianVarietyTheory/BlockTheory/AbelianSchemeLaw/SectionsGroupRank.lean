@@ -86,7 +86,6 @@ instance : SMul Γ(T.left, ⊤) (Secs A L a T) :=
 
 theorem zero_f (j) : LB.Sec.f (0 : Secs A L a T) j = 0 := rfl
 theorem add_f (s t : Secs A L a T) (j) : LB.Sec.f (s + t) j = LB.Sec.f s j + LB.Sec.f t j := rfl
-theorem neg_f (s : Secs A L a T) (j) : LB.Sec.f (-s) j = - LB.Sec.f s j := rfl
 theorem smul_f (r : Γ(T.left, ⊤)) (s : Secs A L a T) (j) :
     LB.Sec.f (r • s) j = liftFun A _ r * LB.Sec.f s j := rfl
 
@@ -134,9 +133,6 @@ def pullSec {T' : Over S} (u : T' ⟶ T) (s : Secs A L a T) : Secs A L a T' wher
       (fun _ => (snd T' A).left) (fun _ => by rw [← Over.comp_left, whiskerRight_snd]) i j e
     refine (map_ev _ _ _ _).trans ((ev_map _ e _ _ _).symm.trans (h.trans ?_))
     exact congrArg₂ (· * ·) hg ((ev_map _ e _ _ _).trans (map_ev _ _ _ _).symm)
-
-theorem isPullSec_pullSec {T' : Over S} (u : T' ⟶ T) (s : Secs A L a T) :
-    IsPullSec A L a (u ▷ A) (whiskerRight_snd _ _) s (pullSec u s) := fun _ => rfl
 
 theorem pullSec_zero {T' : Over S} (u : T' ⟶ T) : pullSec u (0 : Secs A L a T) = 0 :=
   Secs.ext fun _ => map_zero _
@@ -206,25 +202,5 @@ def VVWeight (P : PolAV S) (N m : ℕ) {T : Over S} (_hodd : Odd N)
     (_hinv : IsUnit (N : Γ(T.left, ⊤))) {I : Type} (h : I → (T ⟶ P.A)) (_hh : ∀ i, h i ^ N = 1)
     (χ : I → Γ(T.left, ⊤)ˣ) : Submodule Γ(T.left, ⊤) (Secs P.A P.L N T) :=
   VV P N m T ⊓ eigenSecs P N h χ
-
-abbrev de (P : PolAV S) (T : Over S) : Type := Module.Dual Γ(T.left, ⊤) (Secs P.A P.L 1 T)
-
-def VVLocallyFree (P : PolAV S) (N m n : ℕ) (T : Over S) : Prop :=
-  ∀ p : T.left, ∃ V : T.left.Opens, p ∈ V ∧ ∃ b : Fin n → Secs P.A P.L N (overRes V),
-    ∀ W : (overRes V).left.Opens,
-      ∃ β : Module.Basis (Fin n) Γ((overRes W).left, ⊤) (VV P N m (overRes W)),
-        ∀ l, (β l : Secs P.A P.L N (overRes W)) = pullSec (overResι W) (b l)
-
-def VVRank (S : Scheme.{0}) : Prop :=
-  ∀ (P : PolAV S) (m : ℕ) (ze : Γ(S, ⊤)ˣ), Odd m → IsUnit (m : Γ(S, ⊤)) →
-    Nonempty (Level P (m ^ 2) ze) →
-    ∀ T : Over S, VVLocallyFree P (m ^ 2) m ((m ^ 2) ^ P.g) T
-
-example (P : PolAV S) (N m : ℕ) {T : Over S} (ho : Odd N) (hi : IsUnit (N : Γ(T.left, ⊤))) :
-    VVWeight P N m ho hi (I := Empty) Empty.elim (fun i => i.elim) Empty.elim = VV P N m T :=
-  inf_eq_left.2 fun _ _ _ i => i.elim
-
-example (P : PolAV S) (N m : ℕ) {T : Over S} (s : Secs P.A P.L N T) (hs : InVV P N m s) :
-    s ∈ VV P N m T := Submodule.subset_span hs
 
 end GlobalTheory.IndefiniteRowSideFullHecke.SectionsGroupRank

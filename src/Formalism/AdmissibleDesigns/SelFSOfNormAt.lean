@@ -47,24 +47,6 @@ theorem selFS_of_normAt (hN : RepresentationBoundsCohomology.NormAt D.nd r ρ π
 set_option maxHeartbeats 4000000 in
 set_option synthInstance.maxHeartbeats 400000 in
 
-theorem hRho_rec (hN : RepresentationBoundsCohomology.NormAt D.nd r ρ π)
-    (hG4 : TruncatedSeriesCountingIdentities.admG4 i r) (hdec : TruncatedSeriesCountingIdentities.SemisimpleDecomposition i r ρ π) (hFin : LargeLevelLemmas.tateH1FinitenessAtPlacesOver i)
-    (hDim : ∀ l, KTate.DimV i dc Dd ρ π l) :
-    InRhoFixReal2 (blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk 0) Dd.r Dd.χ Dd.e₁ (colIdx i dc) (decs D.host.E (Aw i dc))
-      (jN i ρ π dc) (rowsN i dc) (sN i ρ π) (tensM (D.nd.O i) _ (Dd.ρk 0).toRingHom) (v1S i Dd hT hrk)
-      (KFin.κ i dc Dd ρ π)
-      (iLM (D.nd.O i) _ (Dd.ρk 0).toRingHom) (qVM (D.nd.O i) _ (Dd.ρk 0).toRingHom)
-      (fun l => KHf.Ff i dc Dd.r Dd.χ (iLM (D.nd.O i) _ (Dd.ρk 0).toRingHom) l) (KFin.κz i dc Dd ρ π)
-      (FS i r π dc g0 eB e₁ s Dd hD hc 0)
-      (QS.Io i) (epsU D.nd i) (rho1 i Dd) (rho2 i Dd) (FirstSummandSubmodule (D.nd.O i) Dd.e₁).subtype (piS i Dd hT hrk)
-      (gamM (Dd.ρk 0)) (lamS i Dd hT hrk) := by
-  have hOrb : ∀ l : Col i dc, KHf.OrbC i dc (KFin.ρV i dc Dd l) := fun l =>
-    KOrb.orbC_uRep i dc r π g0 eB e₁ s Dd hD hc (fun c v => KOrb.latM_alg i Dd (Dd.ρk 0) c v) (colIdx i dc l)
-  exact hRho_of i r ρ π dc g0 eB e₁ s Dd hD hc hT hrk hG4 hdec
-    (fun l => KTate.finFf_of i dc Dd hFin l (hOrb l))
-    (fun l => KTate.rankFf i dc Dd ρ π l (hOrb l) (hDim l))
-    (selFS_of_normAt i r ρ π dc g0 eB e₁ s Dd hD hc hN)
-
 end Rho2
 
 end Formalism.MainNotions.N.K.StB

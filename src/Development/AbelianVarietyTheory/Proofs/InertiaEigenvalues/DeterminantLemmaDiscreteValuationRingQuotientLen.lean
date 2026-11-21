@@ -147,9 +147,6 @@ theorem addVal_det_le_length {ι V : Type} [Fintype ι] [DecidableEq ι] [AddCom
     exact h5
 
 omit [IsDiscreteValuationRing O] in
-theorem matKO_mk {k : ℕ} (A : Matrix (Fin k) (Fin k) O) (y : Fin k → FractionRing O) :
-    matKO A (Submodule.Quotient.mk y) =
-      Submodule.Quotient.mk ((A.map (algebraMap O (FractionRing O))).mulVec y) := rfl
 
 omit [IsDiscreteValuationRing O] in
 theorem mk_eq_zero_iff {k : ℕ} (y : Fin k → FractionRing O) :

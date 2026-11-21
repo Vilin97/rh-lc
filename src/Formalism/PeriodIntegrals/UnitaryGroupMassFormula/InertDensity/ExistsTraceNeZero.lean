@@ -17,7 +17,6 @@ variable (K) in
 def conj : L →+* L := (FiniteField.frobeniusAlgHom K L).toRingHom
 
 omit [Fintype L] in
-theorem conj_apply (x : L) : conj K x = x ^ Fintype.card K := rfl
 
 omit [Fintype L] in
 theorem frob_add (x y : L) :
@@ -42,9 +41,6 @@ theorem frob_algebraMap (a : K) :
 theorem frob_frob (h2 : Module.finrank K L = 2) (x : L) :
     (x ^ Fintype.card K) ^ Fintype.card K = x := by
   rw [← pow_mul, ← sq, ← card_L h2, FiniteField.pow_card]
-
-theorem conj_conj (h2 : Module.finrank K L = 2) (x : L) : conj K (conj K x) = x :=
-  frob_frob h2 x
 
 theorem card_fixed [DecidableEq L] : #{x : L | x ^ Fintype.card K = x} = Fintype.card K := by
   have hq := one_lt_q (K := K)

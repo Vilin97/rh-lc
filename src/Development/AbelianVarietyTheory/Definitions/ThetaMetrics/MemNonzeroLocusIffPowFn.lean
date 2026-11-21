@@ -248,9 +248,6 @@ theorem nonzeroLocus_secPow (s : (lbPow L m).Sec) {k : ℕ} (hk : 1 ≤ k) : non
 def secCast (h : m = n) (s : (lbPow L m).Sec) : (lbPow L n).Sec :=
   powSecOfGerm n (powFn s) fun y J J' hJ hJ' => h ▸ gs_powFn_compat s (𝟙 X) y J J' hJ hJ'
 
-@[simp] theorem powFn_secCast (h : m = n) (s : (lbPow L m).Sec) (J : PUnit → L.ι) :
-    powFn (secCast h s) J = powFn s J := rfl
-
 theorem nonzeroLocus_secCast (h : m = n) (s : (lbPow L m).Sec) : nonzeroLocus (secCast h s) = nonzeroLocus s := rfl
 
 def secOfFn (L : LB X) (c : Γ(X, ⊤)) : (lbPow L 0).Sec :=

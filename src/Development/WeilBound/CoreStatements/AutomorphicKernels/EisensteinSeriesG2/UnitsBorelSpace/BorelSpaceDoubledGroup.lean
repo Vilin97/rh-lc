@@ -51,6 +51,4 @@ instance borelGL {ι : Type} [Fintype ι] [DecidableEq ι] : BorelSpace (GL ι (
     inferInstanceAs (SecondCountableTopology (ι → ι → AE F E))
   exact units_borelSpace _
 
-instance borelSpace_doubled_group {σ : E →ₐ[F] E} {n : ℕ} {Y : Spc F E n} : BorelSpace (G2 σ Y) := Subtype.borelSpace _
-
 end GlobalTheory.EisBL.Borel

@@ -76,8 +76,6 @@ def equivH2OfIso : H2 rho ≃ₗ[R] H2 rho' :=
       show f.1 (e (e.symm g.1), e (e.symm g.2)) = f.1 g
       simp))
 
-@[simp] theorem equivH0OfIso_apply (m : H0 rho) : (equivH0OfIso e rho rho' hc m).1 = m.1 := rfl
-
 theorem equivH2OfIso_mk (f : Z2 rho) : equivH2OfIso e rho rho' hc (Submodule.Quotient.mk f) =
     Submodule.Quotient.mk (compatiblePairCocycles2 rho rho' (e : H →* G) (continuous_coe_iso e) LinearMap.id
       continuous_id hc f) := rfl

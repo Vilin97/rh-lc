@@ -15,8 +15,6 @@ namespace GlobalTheory.TwV.Xc
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
-
 theorem exists_nat_mul_isIntegral (e : E) : ∃ n : ℕ, 0 < n ∧ IsIntegral ℤ ((n : E) * e) := by
   obtain ⟨y, hy0, hy⟩ := exists_integral_multiples ℤ ℚ (L := E) {e}
   have h := hy e (Finset.mem_singleton_self e)
@@ -81,8 +79,6 @@ end GlobalTheory.TwV.Xc
 namespace GlobalTheory.TwV.Xc
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
 
 open Matrix
 
@@ -159,8 +155,6 @@ namespace GlobalTheory.TwV.Xc
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
-
 open Matrix
 
 theorem exists_pow_div_mem (w : HeightOneSpectrum (𝓞 F)) {D : ℕ} (hD : 0 < D) :
@@ -190,8 +184,6 @@ end GlobalTheory.TwV.Xc
 namespace GlobalTheory.TwV.Xc
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
 
 open Matrix
 

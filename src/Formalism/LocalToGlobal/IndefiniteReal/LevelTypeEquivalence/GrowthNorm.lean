@@ -1,4 +1,5 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ThetaGrowthRatNorm
+import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ThetaSquareIntegrable
+import Formalism.LocalToGlobal.BesselHermitianTheta.TiedSmooth
 
 noncomputable section
 

@@ -12,9 +12,6 @@ namespace OpenNormalSubgroup
 instance instNonempty : Nonempty (OpenNormalSubgroup G) :=
   ⟨{ toOpenSubgroup := ⊤, isNormal' := ⟨fun _ _ _ => Set.mem_univ _⟩ }⟩
 
-theorem mem_nhds_one (U : OpenNormalSubgroup G) : (U : Set G) ∈ 𝓝 (1 : G) :=
-  U.toOpenSubgroup.isOpen.mem_nhds U.one_mem
-
 variable [IsTopologicalGroup G]
 
 instance discreteTopology_quotient (U : OpenNormalSubgroup G) :

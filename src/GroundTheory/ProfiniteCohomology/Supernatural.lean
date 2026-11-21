@@ -11,10 +11,6 @@ def mk (f : Nat.Primes → ℕ∞) : Supernatural := f
 
 def exp (a : Supernatural) (p : Nat.Primes) : ℕ∞ := a p
 
-@[simp] theorem exp_mk (f : Nat.Primes → ℕ∞) (p : Nat.Primes) : (mk f).exp p = f p := rfl
-
-@[ext] theorem ext {a b : Supernatural} (h : ∀ p, a.exp p = b.exp p) : a = b := funext h
-
 noncomputable instance : CompleteLattice Supernatural := inferInstanceAs (CompleteLattice (Nat.Primes → ℕ∞))
 
 theorem le_def {a b : Supernatural} : a ≤ b ↔ ∀ p, a.exp p ≤ b.exp p := Iff.rfl
@@ -26,8 +22,6 @@ theorem le_def {a b : Supernatural} : a ≤ b ↔ ∀ p, a.exp p ≤ b.exp p := 
 instance : One Supernatural := ⟨mk fun _ => 0⟩
 
 instance : Mul Supernatural := ⟨fun a b => mk fun p => a.exp p + b.exp p⟩
-
-@[simp] theorem exp_one (p : Nat.Primes) : (1 : Supernatural).exp p = 0 := rfl
 
 @[simp] theorem exp_mul (a b : Supernatural) (p : Nat.Primes) :
     (a * b).exp p = a.exp p + b.exp p := rfl
@@ -53,8 +47,6 @@ def ofNat (n : ℕ) : Supernatural := mk fun p => (n.factorization p : ℕ∞)
 
 @[simp] theorem exp_ofNat (n : ℕ) (p : Nat.Primes) : (ofNat n).exp p = n.factorization p := rfl
 
-@[simp] theorem ofNat_one : ofNat 1 = 1 := by ext p; simp
-
 theorem ofNat_mul {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) : ofNat (m * n) = ofNat m * ofNat n := by
   ext p
   simp [Nat.factorization_mul hm hn]
@@ -70,11 +62,6 @@ theorem ofNat_dvd_ofNat {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) : ofNat m ∣ 
   · intro h p
     show ((m.factorization p : ℕ) : ℕ∞) ≤ n.factorization p
     exact_mod_cast h p
-
-theorem ofNat_injective {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) : ofNat m = ofNat n ↔ m = n := by
-  refine ⟨fun h => Nat.dvd_antisymm ?_ ?_, fun h => h ▸ rfl⟩
-  · exact (ofNat_dvd_ofNat hm hn).mp (h ▸ dvd_rfl)
-  · exact (ofNat_dvd_ofNat hn hm).mp (h ▸ dvd_rfl)
 
 theorem ofNat_prime_dvd_iff (p : Nat.Primes) (a : Supernatural) :
     ofNat p ∣ a ↔ 1 ≤ a.exp p := by

@@ -71,25 +71,3 @@ private lemma key {K A : Type} [NormedField K] [CommRing A] [Algebra K A] [Modul
     refine ⟨u ⟨M, hM⟩, Finset.mem_image_of_mem _ (Finset.mem_univ _), ?_⟩
     change (1 + (p - 1) • e ⟨M, hM⟩) * t = t
     rw [add_mul, smul_mul_assoc, het ⟨M, hM⟩ t htM, smul_zero, add_zero, one_mul]
-
-theorem UpperTheory.finite_unit_contractions :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : Pl F), ∃ S : Finset (Fv F v ⊗[F] E)ˣ, (∀ u ∈ S, GlobalTheory.Doubling.absEv F E v u ≠ 1) ∧
-          ∀ t : Fv F v ⊗[F] E, ¬ IsUnit t → ∃ u ∈ S, (u : Fv F v ⊗[F] E) * t = t := by
-  intro F E _ _ _ _ _ v
-  have : IsReduced (Fv F v ⊗[F] E) := by
-    have : Algebra.FormallyUnramified F E := Algebra.FormallyUnramified.of_isSeparable F E
-    exact Algebra.FormallyUnramified.isReduced_of_field (Fv F v) _
-  obtain ⟨π, hπ⟩ := v.valuation_exists_uniformizer F
-  have hv : Valued.v (algebraMap F (Fv F v) π) = WithZero.exp (-1 : ℤ) := by
-    rw [← hπ]; exact HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v π
-  have hp0 : algebraMap F (Fv F v) π ≠ 0 := by
-    intro h
-    rw [h, map_zero] at hv
-    exact WithZero.exp_ne_zero hv.symm
-  have hp1 : ‖algebraMap F (Fv F v) π‖ < 1 := by
-    rw [Valued.toNormedField.norm_lt_one_iff, hv, ← WithZero.exp_zero, WithZero.exp_lt_exp]
-    norm_num
-  obtain ⟨S, h1, h2⟩ := key (A := Fv F v ⊗[F] E) _ hp0 hp1
-  refine ⟨S, fun u hu h => h1 u hu ?_, h2⟩
-  rw [GlobalTheory.Doubling.absEv_apply] at h
-  rw [← coe_nnnorm, h, NNReal.coe_one]

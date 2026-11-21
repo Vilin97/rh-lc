@@ -12,9 +12,6 @@ open _root_.WittVector Polynomial
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "𝔹dR" => BDeRham (normInteger ℂ_[p]) p
-
 theorem exists_mul_pow_eq_of_away {R B : Type*} [CommRing R] [CommRing B] {r : R} (g : R →+* B)
     (f : Localization.Away r →+* B) (hfg : ∀ a, f (algebraMap R _ a) = g a)
     (x : Localization.Away r) : ∃ (w : R) (n : ℕ), f x * g r ^ n = g w := by

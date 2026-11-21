@@ -100,27 +100,6 @@ section Curried
 
 variable {m n d d' : ℕ}
 
-noncomputable def taylorPts (n : ℕ) (F : (Fin n → Fin d → ℂ) → ℂ) : PS ℂ n d :=
-  taylor fun z : Fin n × Fin d → ℂ => F fun j i => z (j, i)
-
-noncomputable def curryPts (n d : ℕ) : (Fin n × Fin d → ℂ) →L[ℂ] (Fin n → Fin d → ℂ) :=
-  ContinuousLinearMap.pi fun j => ContinuousLinearMap.pi fun i => ContinuousLinearMap.proj (j, i)
-
-@[simp] theorem curryPts_apply (z : Fin n × Fin d → ℂ) (j : Fin n) (i : Fin d) :
-    curryPts n d z j i = z (j, i) := rfl
-
-@[simp] theorem constantCoeff_taylorPts (F : (Fin n → Fin d → ℂ) → ℂ) :
-    constantCoeff (taylorPts n F) = F 0 := by
-  unfold taylorPts
-  rw [constantCoeff_taylor]
-  rfl
-
-@[simp] theorem taylorPts_coord (j : Fin n) (i : Fin d) :
-    taylorPts n (fun z : Fin n → Fin d → ℂ => z j i) = X (j, i) := taylor_coord (j, i)
-
-@[simp] theorem taylorPts_const (c : ℂ) :
-    taylorPts n (fun _ : Fin n → Fin d → ℂ => c) = C c := taylor_const c
-
 section Algebra
 
 variable {F G : (Fin n → Fin d → ℂ) → ℂ}

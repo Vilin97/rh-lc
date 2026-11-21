@@ -13,8 +13,6 @@ import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.La
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.LabesseWaldspurger
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.ExistsCellOfIsSubquotient
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.RadfordShufflePolynomialHolds
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.CuspidalNoRadicalFixed
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.ConstantTermVanishing
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.PseudoCoefficientSeparation
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AdelicUnitaryClosureLocalComponentsOpen
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDimensionalFixed
@@ -67,9 +65,6 @@ theorem continuous_locFin' (v : HeightOneSpectrum (𝓞 D.host.F)) : Continuous 
 
 theorem toFin_embV (v : HeightOneSpectrum (𝓞 D.host.F)) (k : Gv V v) : toFin V (embV V v k) = locFin V v k := by
   rw [← toFin_coe (locFin V v k)]; rfl
-
-example (Φ : ContinuousMultilinearMap ℂ M.H H) (X : Submodule ℂ H) (h1 : ∀ y, Φ y ∈ X) (h2 : Φ ∈ homDS M π ⊤) : Φ ∈ homDS M π X :=
-  ⟨h1, h2.2⟩
 
 end GlobalTheory.FinPartIrrAdm
 

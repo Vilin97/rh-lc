@@ -51,12 +51,6 @@ def kummerTorsHom (i : ℕ) :
   map_zero' := Subtype.ext (map_zero _)
   map_add' _ _ := Subtype.ext (map_add _ _ _)
 
-@[simp]
-theorem coe_kummerTorsHom_apply (i : ℕ) (x : cohomology (Rep.res N.subtype T) i) :
-    ((kummerTorsHom N hS i x : TorsN _ n) : cohomology (Rep.res N.subtype O) i) =
-      (cohomologyMap ((Rep.resFunctor N.subtype).map f) i).hom x :=
-  rfl
-
 include hS in
 theorem range_lsmul_le_ker_δ (i : ℕ) :
     LinearMap.range (LinearMap.lsmul ℤ (cohomology (Rep.res N.subtype O) i) (n : ℤ)) ≤

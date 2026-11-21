@@ -27,12 +27,6 @@ def fixingOpenNormalSubgroup (E : FiniteGaloisIntermediateField K L) :
   isOpen' := isOpen_fixingSubgroup_finiteGalois E
   isNormal' := normal_fixingSubgroup_finiteGalois E
 
-@[simp]
-theorem coe_fixingOpenNormalSubgroup
-    (E : FiniteGaloisIntermediateField K L) :
-    (fixingOpenNormalSubgroup E : Subgroup Gal(L/K)) = E.fixingSubgroup :=
-  rfl
-
 end FixingSubgroup
 
 section FixedField
@@ -64,11 +58,6 @@ instance isGalois_fixedField_openNormalSubgroup :
 
 noncomputable def fixedFiniteGalois : FiniteGaloisIntermediateField K L where
   toIntermediateField := fixedField (U : Subgroup Gal(L/K))
-
-@[simp]
-theorem fixedFiniteGalois_toIntermediateField :
-    (fixedFiniteGalois U).toIntermediateField = fixedField (U : Subgroup Gal(L/K)) :=
-  rfl
 
 noncomputable def quotientEquivGal :
     Gal(L/K) ⧸ (U : Subgroup Gal(L/K)) ≃* Gal(fixedField (U : Subgroup Gal(L/K))/K) :=
@@ -115,39 +104,9 @@ section Correspondence
 variable [IsGalois K L]
 
 @[simp]
-theorem fixingOpenNormalSubgroup_fixedFiniteGalois
-    (U : OpenNormalSubgroup Gal(L/K)) : fixingOpenNormalSubgroup (fixedFiniteGalois U) = U := by
-  ext σ
-  change σ ∈ (fixedField (U : Subgroup Gal(L/K))).fixingSubgroup ↔ σ ∈ (U : Subgroup Gal(L/K))
-  rw [fixingSubgroup_fixedField_openNormalSubgroup]
-
-@[simp]
 theorem fixedFiniteGalois_fixingOpenNormalSubgroup
     (E : FiniteGaloisIntermediateField K L) : fixedFiniteGalois (fixingOpenNormalSubgroup E) = E :=
   FiniteGaloisIntermediateField.val_injective (fixedField_fixingSubgroup E.toIntermediateField)
-
-noncomputable def openNormalSubgroupEquiv :
-    OpenNormalSubgroup Gal(L/K) ≃o (FiniteGaloisIntermediateField K L)ᵒᵈ where
-  toFun U := OrderDual.toDual (fixedFiniteGalois U)
-  invFun E := fixingOpenNormalSubgroup (OrderDual.ofDual E)
-  left_inv U := fixingOpenNormalSubgroup_fixedFiniteGalois U
-  right_inv E := fixedFiniteGalois_fixingOpenNormalSubgroup (OrderDual.ofDual E)
-  map_rel_iff' {U V} := by
-    change fixedField (V : Subgroup Gal(L/K)) ≤ fixedField (U : Subgroup Gal(L/K)) ↔ U ≤ V
-    rw [le_iff_le, fixingSubgroup_fixedField_openNormalSubgroup]
-    exact Iff.rfl
-
-@[simp]
-theorem openNormalSubgroupEquiv_apply (U : OpenNormalSubgroup Gal(L/K)) :
-    (OrderDual.ofDual (openNormalSubgroupEquiv U)).toIntermediateField =
-      fixedField (U : Subgroup Gal(L/K)) :=
-  rfl
-
-@[simp]
-theorem coe_openNormalSubgroupEquiv_symm_apply (E : FiniteGaloisIntermediateField K L) :
-    ((openNormalSubgroupEquiv.symm (OrderDual.toDual E) : OpenNormalSubgroup Gal(L/K)) :
-      Subgroup Gal(L/K)) = E.fixingSubgroup :=
-  rfl
 
 end Correspondence
 

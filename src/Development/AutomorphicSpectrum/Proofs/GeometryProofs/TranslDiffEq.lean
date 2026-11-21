@@ -104,10 +104,8 @@ namespace GlobalTheory.CompanionTheory.Ar.Coc
 section
 variable {X0 : Scheme.{0}} (G : Over X0) {k : Type} [Field k] (x : Sp k ⟶ X0)
 
-@[reassoc (attr := simp)]
 theorem prZ_fst (m : ℕ) : prZ G x m ≫ pullback.fst G.hom x = pb G x m := pullback.lift_fst _ _ _
 
-@[reassoc (attr := simp)]
 theorem prZ_snd (m : ℕ) : prZ G x m ≫ pullback.snd G.hom x =
     (fst (Tm x m) G).left ≫ spMap (algebraMap k (Jet k Unit m)) := pullback.lift_snd _ _ _
 
@@ -238,11 +236,9 @@ theorem jet_pt {k : Type} [Field k] {κ : Type} (m : ℕ) (q : Sp (Jet k κ m)) 
 section
 variable {X0 : Scheme.{0}} (G : Over X0) [GrpObj G] {k : Type} [Field k] (x : Sp k ⟶ X0)
 
-@[reassoc (attr := simp)]
 theorem xkZ_fst {B : Type} [CommRing B] [Algebra k B] (z : overAt x B ⟶ G) :
     xkZ G x z ≫ pullback.fst G.hom x = z.left := pullback.lift_fst _ _ _
 
-@[reassoc (attr := simp)]
 theorem xkZ_snd {B : Type} [CommRing B] [Algebra k B] (z : overAt x B ⟶ G) :
     xkZ G x z ≫ pullback.snd G.hom x = spMap (algebraMap k B) := pullback.lift_snd _ _ _
 

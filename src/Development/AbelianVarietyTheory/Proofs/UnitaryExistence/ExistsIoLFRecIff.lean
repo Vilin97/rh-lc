@@ -577,8 +577,6 @@ section Compare
 variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {l : Level H} (Dw : Datum H) (c : Coeff l) (n : ℕ)
   {a : (E →+* ℂ) × ℕ → ℕ}
 
-theorem space_eq (ha : IsPartFam Dw a) (d : Psi H → ℤ) : VVc c (lamP Dw n ha d) = CoefSp Dw c n ha d := rfl
-
 theorem pins_of_ioLF {Ix : Type} [Fintype Ix] (e : Ix ≃ Psi H) (a : (E →+* ℂ) × ℕ → ℕ) (lam : Ix → DomWeight n)
     (io : VVc c lam →ₗ[c.F] MvPolynomial (LtN Dw n) c.F) (hw : VVc c lam) (cga : Matrix (Fin n) (Fin n) E → c.F)
     (hok : hwOK c lam hw) (h : IoLF (Dw := Dw) c a io (rhoM c (fun x => embF c (e x).1) lam) cga

@@ -108,9 +108,6 @@ section conj
 
 variable {L Ω : Type*} [Field L] [NumberField L] [Field Ω] [Algebra L Ω]
 
-def mapPlace (τ : Ω ≃+* Ω) (A : ValuationSubring Ω) : ValuationSubring Ω :=
-  A.comap τ.symm.toRingHom
-
 def conjV (s : L ≃+* L) (w : HeightOneSpectrum (𝓞 L)) : HeightOneSpectrum (𝓞 L) where
   asIdeal := w.asIdeal.comap (RingOfIntegers.mapRingEquiv s.symm : 𝓞 L →+* 𝓞 L)
   isPrime := Ideal.comap_isPrime _ _

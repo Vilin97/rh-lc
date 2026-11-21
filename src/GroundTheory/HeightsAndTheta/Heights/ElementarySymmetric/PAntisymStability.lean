@@ -14,10 +14,6 @@ def antisymEvalOn {T : Type*} {N : ℕ} (Ω : Set (T × Fin N → ℝ)) :
   map_add' p q := by ext x; simp
   map_smul' c p := by ext x; simp
 
-@[simp] lemma antisymEvalOn_apply {T : Type*} {N : ℕ} (Ω : Set (T × Fin N → ℝ))
-    (p : MvPolynomial (T × Fin N) ℝ) (x : Ω) : antisymEvalOn Ω p x = eval (x : T × Fin N → ℝ) p :=
-  rfl
-
 lemma abs_coeff_le_sum_abs_coeff {σ : Type*} (p : MvPolynomial σ ℝ) (m : σ →₀ ℕ) :
     |coeff m p| ≤ ∑ m' ∈ p.support, |coeff m' p| := by
   by_cases hm : m ∈ p.support

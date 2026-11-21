@@ -33,11 +33,6 @@ def DivPushForwardLocal.Statement : Prop :=
 
 section Example
 
-abbrev LineRing : Type :=
-  ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun k => addBlock (ProjIdx 1) 0 ((Function.Embedding.some : Unit ↪ Option Unit) k))
-
-abbrev linePointIdeal : Ideal LineRing := Ideal.span {X ⟨(), (0 : Fin 2)⟩}
-
 end Example
 
 end

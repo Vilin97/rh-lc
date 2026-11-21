@@ -85,9 +85,6 @@ def crdL (T : Forms0 D u) (B : (D.mem u).C.cls 0 → GL (Fin (D.R.N 0)) D.host.E
     have h := crd_smul T B (r : D.what₂.LL) x c
     rw [Pi.smul_apply, Subring.smul_def r x, h, Subring.smul_def, owEquiv_coe]
 
-theorem crdL_apply (T : Forms0 D u) (B : (D.mem u).C.cls 0 → GL (Fin (D.R.N 0)) D.host.E) (w : D.what₂.places.Pl)
-    (x : Vl D u 0) : crdL T B w x = crd T B x := rfl
-
 theorem crdL_inj (T : Forms0 D u) (B : (D.mem u).C.cls 0 → GL (Fin (D.R.N 0)) D.host.E) (w : D.what₂.places.Pl) :
     Function.Injective (crdL T B w) := by
   intro x y hxy

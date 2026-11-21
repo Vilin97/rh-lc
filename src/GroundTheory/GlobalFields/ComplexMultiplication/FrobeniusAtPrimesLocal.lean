@@ -1,6 +1,6 @@
 import Mathlib
 import GroundTheory.GlobalFields.ComplexMultiplication.IsogenyDegreeOne
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionNumberField
+import GroundTheory.GlobalFields.ComplexMultiplication.ReductionDifferential
 import GroundTheory.GlobalFields.ComplexMultiplication.GoodReductionAlmostAll
 
 namespace GroundTheory.Global

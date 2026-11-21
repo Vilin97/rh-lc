@@ -15,17 +15,6 @@ variable {k K : Type*} [Field k] [Field K] [Algebra k K] [IsFunctionField k K]
 
 namespace Divisor
 
-theorem mul_mem_A {x : K} (hx : x ≠ 0) {E : Divisor k K} {a : Repartition k K} (ha : a ∈ A E) :
-    Repartition.mul x a ∈ A (E - divisor x) := by
-  intro v
-  rw [Repartition.mul_apply, map_mul, v.valuation_eq_exp_neg_ord hx]
-  calc WithZero.exp (-v.ord x) * v.valuation (a v)
-      ≤ WithZero.exp (-v.ord x) * WithZero.exp (E v) := mul_le_mul' le_rfl (ha v)
-    _ = WithZero.exp ((E - divisor x : Divisor k K) v) := by
-      rw [← WithZero.exp_add, Finsupp.coe_sub, Pi.sub_apply, divisor_apply]
-      congr 1
-      ring
-
 theorem A_sup_le (D E : Divisor k K) : A (D ⊔ E) ≤ A D ⊔ A E := by
   classical
   intro a ha
@@ -85,9 +74,6 @@ theorem weilSpace_sup {D E : Divisor k K} {ω : Module.Dual k (Repartition k K)}
   refine ⟨fun a ha => ?_, hD.2⟩
   obtain ⟨b, hb, c, hc, rfl⟩ := Submodule.mem_sup.1 (A_sup_le D E ha)
   rw [map_add (f := _), hD.1 b hb, hE.1 c hc, add_zero]
-
-instance (D : Divisor k K) : FiniteDimensional k (weilSpace D) :=
-  Module.Finite.equiv (Submodule.dualQuotEquivDualAnnihilator (A D ⊔ principal k K))
 
 theorem finrank_weilSpace (D : Divisor k K) : finrank k (weilSpace D) = indexOfSpeciality D := by
   change finrank k (A D ⊔ principal k K).dualAnnihilator = _
@@ -178,93 +164,6 @@ theorem toDual_mk (ω : Module.Dual k (Repartition k K)) (h : ∃ D : Divisor k 
 theorem exists_mem (ω : WeilDifferential k K) : ∃ D : Divisor k K, toDual ω ∈ weilSpace D :=
   (show weilDifferentials k K from ω).2
 
-theorem exists_comp_mul_mem (ω : WeilDifferential k K) (x : K) :
-    ∃ D : Divisor k K, toDual ω ∘ₗ Repartition.mul x ∈ weilSpace D := by
-  obtain ⟨D, hD⟩ := ω.exists_mem
-  by_cases hx : x = 0
-  · refine ⟨0, ?_⟩
-    have : Repartition.mul (0 : K) = (0 : Repartition k K →ₗ[k] Repartition k K) := by
-      ext a v
-      simp
-    rw [hx, this, LinearMap.comp_zero]
-    exact zero_mem _
-  · refine ⟨D + divisor x, ?_⟩
-    rw [mem_weilSpace] at hD ⊢
-    refine ⟨fun a ha => ?_, fun y => ?_⟩
-    · rw [LinearMap.comp_apply]
-      apply hD.1
-      have := mul_mem_A hx ha
-      rwa [add_sub_cancel_right] at this
-    · rw [LinearMap.comp_apply, Repartition.mul_diag]
-      exact hD.2 _
-
-noncomputable instance : SMul K (WeilDifferential k K) :=
-  ⟨fun x ω => mk (toDual ω ∘ₗ Repartition.mul x) (exists_comp_mul_mem ω x)⟩
-
-@[simp]
-theorem toDual_smul_apply (x : K) (ω : WeilDifferential k K) (a : Repartition k K) :
-    toDual (x • ω) a = toDual ω (Repartition.mul x a) :=
-  rfl
-
-theorem mul_add_left (x y : K) (a : Repartition k K) :
-    Repartition.mul (x + y) a = Repartition.mul x a + Repartition.mul y a := by
-  ext v
-  simp [add_mul]
-
-noncomputable instance : Module K (WeilDifferential k K) :=
-  Module.ofMinimalAxioms
-    (fun x ω₁ ω₂ => toDual_injective <| LinearMap.ext fun a => by simp)
-    (fun x y ω => toDual_injective <| LinearMap.ext fun a => by simp [mul_add_left])
-    (fun x y ω => toDual_injective <| LinearMap.ext fun a => by
-      simp only [toDual_smul_apply]
-      rw [mul_comm x y, Repartition.mul_mul])
-    (fun ω => toDual_injective <| LinearMap.ext fun a => by
-      simp only [toDual_smul_apply]
-      rw [Repartition.mul_one'])
-
-theorem algebraMap_smul (c : k) (ω : WeilDifferential k K) : algebraMap k K c • ω = c • ω := by
-  apply toDual_injective
-  ext a
-  rw [toDual_smul_apply, map_smul, LinearMap.smul_apply, ← map_smul]
-  congr 1
-  ext v
-  simp
-
-theorem smul_smul_scalar (c : k) (y : K) (ω : WeilDifferential k K) :
-    (c • y) • ω = c • (y • ω) := by
-  rw [Algebra.smul_def, mul_smul, algebraMap_smul]
-
-noncomputable def weilMap (ω : WeilDifferential k K) : K →ₗ[k] Module.Dual k (Repartition k K) where
-  toFun y := toDual (y • ω)
-  map_add' y z := by rw [add_smul, map_add (f := _)]
-  map_smul' c y := by rw [smul_smul_scalar, map_smul, RingHom.id_apply]
-
-@[simp]
-theorem weilMap_apply (ω : WeilDifferential k K) (y : K) : weilMap ω y = toDual (y • ω) :=
-  rfl
-
-theorem smul_mem_weilSpace_iff {x : K} (hx : x ≠ 0) (ω : WeilDifferential k K) (D : Divisor k K) :
-    toDual (x • ω) ∈ weilSpace D ↔ toDual ω ∈ weilSpace (D - divisor x) := by
-  rw [mem_weilSpace, mem_weilSpace]
-  constructor
-  · rintro ⟨h1, h2⟩
-    refine ⟨fun b hb => ?_, fun y => ?_⟩
-    · have hb' : Repartition.mul x⁻¹ b ∈ A D := by
-        have := mul_mem_A (inv_ne_zero hx) hb
-        rwa [divisor_inv, sub_neg_eq_add, sub_add_cancel] at this
-      have := h1 _ hb'
-      rwa [toDual_smul_apply, ← Repartition.mul_mul, mul_inv_cancel₀ hx,
-        Repartition.mul_one'] at this
-    · have := h2 (x⁻¹ * y)
-      rwa [toDual_smul_apply, Repartition.mul_diag, ← _root_.mul_assoc, mul_inv_cancel₀ hx,
-        one_mul] at this
-  · rintro ⟨h1, h2⟩
-    refine ⟨fun a ha => ?_, fun y => ?_⟩
-    · rw [toDual_smul_apply]
-      exact h1 _ (mul_mem_A hx ha)
-    · rw [toDual_smul_apply, Repartition.mul_diag]
-      exact h2 _
-
 theorem exists_ne_zero : ∃ ω : WeilDifferential k K, ω ≠ 0 := by
   obtain ⟨D, hD⟩ := exists_indexOfSpeciality_pos (k := k) (K := K)
   rw [← finrank_weilSpace] at hD
@@ -280,82 +179,6 @@ theorem exists_ne_zero : ∃ ω : WeilDifferential k K, ω ≠ 0 := by
 noncomputable def toQuotDual (D : Divisor k K) :
     weilSpace D ≃ₗ[k] Module.Dual k (Repartition k K ⧸ (A D ⊔ principal k K)) :=
   (Submodule.dualQuotEquivDualAnnihilator (A D ⊔ principal k K)).symm
-
-theorem exists_smul_eq {ω₁ : WeilDifferential k K} (h₁ : ω₁ ≠ 0) (ω₂ : WeilDifferential k K) :
-    ∃ x : K, x • ω₁ = ω₂ := by
-  classical
-  by_contra hcon
-  push Not at hcon
-  obtain ⟨D₁, hD₁⟩ := ω₁.exists_mem
-  obtain ⟨D₂, hD₂⟩ := ω₂.exists_mem
-  obtain ⟨P⟩ := Place.nonempty (k := k) (K := K)
-  set s := genusInt k K with hs
-  set N : ℕ := (3 * s - deg D₁ - deg D₂).toNat + 1 with hN
-  set B : Divisor k K := N • Finsupp.single P 1 with hB
-  have hmem : ∀ {ω : WeilDifferential k K} {D : Divisor k K}, toDual ω ∈ weilSpace D →
-      ∀ y ∈ L (B + D), weilMap ω y ∈ weilSpace (-B) := by
-    intro ω D hD y hy
-    rw [weilMap_apply]
-    by_cases hy0 : y = 0
-    · rw [hy0, zero_smul, map_zero]
-      exact zero_mem _
-    rw [smul_mem_weilSpace_iff hy0]
-    refine weilSpace_anti ?_ hD
-    have := (mem_L_iff_le hy0).1 hy
-    rw [← sub_nonneg]
-    convert this using 1
-    abel
-  let Φ₀ : L (B + D₁) × L (B + D₂) →ₗ[k] Module.Dual k (Repartition k K) :=
-    ((weilMap ω₁) ∘ₗ (L (B + D₁)).subtype).coprod ((weilMap ω₂) ∘ₗ (L (B + D₂)).subtype)
-  have hΦ₀ : ∀ p, Φ₀ p ∈ weilSpace (-B) := fun p =>
-    add_mem (hmem hD₁ _ p.1.2) (hmem hD₂ _ p.2.2)
-  have hΦ₀inj : Function.Injective Φ₀ := by
-    refine (injective_iff_map_eq_zero Φ₀).2 ?_
-    rintro ⟨⟨y, hy⟩, ⟨z, hz⟩⟩ hp
-    have hsum : y • ω₁ + z • ω₂ = 0 := by
-      apply toDual_injective
-      rw [map_add (f := _), map_zero]
-      exact hp
-    by_cases hz0 : z = 0
-    · subst hz0
-      rw [zero_smul, add_zero, smul_eq_zero] at hsum
-      rcases hsum with rfl | h
-      · rfl
-      · exact absurd h h₁
-    · exfalso
-      apply hcon (-(y / z))
-      have h' : z • ω₂ = -(y • ω₁) := eq_neg_of_add_eq_zero_right hsum
-      have e : (-(y / z)) • ω₁ = z⁻¹ • (z • ω₂) := by
-        rw [h', smul_neg, smul_smul, neg_smul, div_eq_inv_mul]
-      rw [e, smul_smul, inv_mul_cancel₀ hz0, one_smul]
-  let Φ := (toQuotDual (-B)).toLinearMap ∘ₗ LinearMap.codRestrict (weilSpace (-B)) Φ₀ hΦ₀
-  have hΦ : Function.Injective Φ :=
-    (toQuotDual (-B)).injective.comp fun p q h => hΦ₀inj (congrArg Subtype.val h)
-  have hfin := LinearMap.finrank_le_finrank_of_injective hΦ
-  rw [Module.finrank_prod, Subspace.dual_finrank_eq] at hfin
-  change _ ≤ indexOfSpeciality (-B) at hfin
-  have hi := indexOfSpeciality_eq_genusInt (-B)
-  have hP : (1 : ℤ) ≤ P.deg := by exact_mod_cast P.deg_pos
-  have hdegB : deg B = N * P.deg := by rw [hB, map_nsmul, deg_single, nsmul_eq_mul, one_mul]
-  have hNb : 3 * s - deg D₁ - deg D₂ + 1 ≤ (N : ℤ) := by
-    have := Int.self_le_toNat (3 * s - deg D₁ - deg D₂)
-    rw [hN]
-    push_cast
-    linarith
-  have hN0 : (0 : ℤ) ≤ N := Nat.cast_nonneg _
-  have hBN : (N : ℤ) ≤ deg B := by rw [hdegB]; nlinarith
-  have hl0 : finrank k (L (-B)) = 0 := by
-    rw [L_eq_bot_of_deg_neg (by rw [map_neg]; linarith)]
-    simp
-  have h1 := le_genusInt (B + D₁)
-  have h2 := le_genusInt (B + D₂)
-  rw [map_add (f := _)] at h1 h2
-  rw [hl0, map_neg] at hi
-  have : ((finrank k (L (B + D₁)) + finrank k (L (B + D₂)) : ℕ) : ℤ) ≤
-      indexOfSpeciality (-B) := by exact_mod_cast hfin
-  push_cast at this hi
-  rw [← hs] at h1 h2 hi
-  linarith
 
 theorem exists_deg_lt {ω : WeilDifferential k K} (hω : ω ≠ 0) :
     ∃ c : ℤ, ∀ D : Divisor k K, toDual ω ∈ weilSpace D → deg D < c := by
@@ -397,43 +220,6 @@ open Classical in
 
 noncomputable def divisor (ω : WeilDifferential k K) : Divisor k K :=
   if h : ω = 0 then 0 else Classical.choose (exists_divisor h)
-
-theorem mem_weilSpace_iff_le_divisor {ω : WeilDifferential k K} (hω : ω ≠ 0) (D : Divisor k K) :
-    toDual ω ∈ weilSpace D ↔ D ≤ ω.divisor := by
-  rw [divisor, dite_eq_right hω]
-  exact Classical.choose_spec (exists_divisor hω) D
-
-theorem smul_mem_weilSpace_iff_mem_L {ω : WeilDifferential k K} (hω : ω ≠ 0) (D : Divisor k K)
-    (y : K) : toDual (y • ω) ∈ weilSpace D ↔ y ∈ L (ω.divisor - D) := by
-  by_cases hy : y = 0
-  · rw [hy, zero_smul, map_zero]
-    exact ⟨fun _ => zero_mem _, fun _ => zero_mem _⟩
-  rw [smul_mem_weilSpace_iff hy, mem_weilSpace_iff_le_divisor hω, mem_L_iff_le hy,
-    ← sub_nonneg]
-  constructor <;> intro h <;> convert h using 1 <;> abel
-
-noncomputable def dualityEquiv {ω : WeilDifferential k K} (hω : ω ≠ 0) (D : Divisor k K) :
-    L (ω.divisor - D) ≃ₗ[k] Module.Dual k (Repartition k K ⧸ (A D ⊔ principal k K)) :=
-  LinearEquiv.ofBijective
-    ((toQuotDual D).toLinearMap ∘ₗ LinearMap.codRestrict (weilSpace D)
-      ((weilMap ω) ∘ₗ (L (ω.divisor - D)).subtype)
-      (fun y => (smul_mem_weilSpace_iff_mem_L hω D y).2 y.2))
-    ⟨(toQuotDual D).injective.comp fun y z h => by
-        have h' : toDual ((y : K) • ω) = toDual ((z : K) • ω) := by
-          have := congrArg Subtype.val h
-          exact this
-        exact Subtype.ext (smul_left_injective K hω (toDual_injective h')),
-      fun f => by
-        set φ := (toQuotDual D).symm f with hφ
-        obtain ⟨y, hy⟩ := exists_smul_eq hω (mk (φ : Module.Dual k (Repartition k K)) ⟨D, φ.2⟩)
-        have hyD : toDual (y • ω) = φ := by rw [hy, toDual_mk]
-        have hyL : y ∈ L (ω.divisor - D) :=
-          (smul_mem_weilSpace_iff_mem_L hω D y).1 (hyD ▸ φ.2)
-        refine ⟨⟨y, hyL⟩, ?_⟩
-        have : LinearMap.codRestrict (weilSpace D) ((weilMap ω) ∘ₗ (L (ω.divisor - D)).subtype)
-            (fun y => (smul_mem_weilSpace_iff_mem_L hω D y).2 y.2) ⟨y, hyL⟩ = φ :=
-          Subtype.ext hyD
-        rw [LinearMap.comp_apply, this, hφ, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply]⟩
 
 end WeilDifferential
 

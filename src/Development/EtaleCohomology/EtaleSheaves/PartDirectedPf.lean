@@ -1,7 +1,6 @@
 import Development.EtaleCohomology.EtaleSheaves.PartDiagCut
 
 namespace LateralTheory.E.PartDirectedPf
-local notation "PT" => LateralTheory.E.PartDiagCut.Part
 
 variable {A : Type} [CommRing A]
 

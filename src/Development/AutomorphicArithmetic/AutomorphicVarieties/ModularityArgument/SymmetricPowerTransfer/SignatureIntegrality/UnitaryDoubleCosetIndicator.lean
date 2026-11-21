@@ -88,8 +88,6 @@ def fK (ω ω' : kˣ →* ℂˣ) (Rs : Finset kˣ) (t : kˣ) (g : GL (Fin 2) k) 
 
 open Classical in
 
-def val (ω : kˣ →* ℂˣ) (t a : kˣ) : ℂ := if a / t ∈ V.H2 then (V.H.relIndex (Uo k) : ℂ) * (ω (a / t) : ℂ) else 0
-
 end Lev
 
 structure Cone (t x z : kˣ) : Prop where

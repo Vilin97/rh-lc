@@ -1,23 +1,45 @@
 import Mathlib
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.CInfGood
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.BcMapBcVec
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.FlatChernWeightEqOfIndependence
+import Formalism.LocalToGlobal.ProjectiveLattices.FamilyUniformisationBasePointOrthogonalBis
 import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.OnbMat
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.RegularFormsIsBundleProjectiveCover
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.TwistedDualRegularFormsFiniteCover
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.CuspOnto
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.AdelicGLLastRowAndDetModuleUnderLeftMultiplicati
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.WeightFunctionOnFrames
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.InterpolationModelInequalities
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.CuspidalExponentialDecay
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.ArakelovInstances.QuotientIsHausdorff
+import Formalism.LocalToGlobal.ProjectiveLattices.MulCMemSec
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.TorusAt
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.GoodOrigin
-import Development.AutomorphicSpectrum.Statements.GeometryStatements.LamLevel
+import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.UnitaryHaarVolume
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.NonvanishingNearMaximum
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.OneLeAbsNormOfLeOne
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.ProdMulLeDetIdeal
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.ValuationLeOfEqAlgebraMap
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.AbsNormSpanGalois
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.DetValuationLeOne
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.ExistsEvalNeZeroOfTotalDegreeLt
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.ExistsMonicIrreducibleCardGt
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.FiniteDetAddSmulOneEqZero
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.LargeResidueExtensionLemma
+import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.HermitianFormGramBlockBasis
+import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
+import Formalism.LocalToGlobal.ProjectiveLattices.PartitionExtendByZeroAntitone
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FundamentalDomainPointBound
+import Formalism.LocalToGlobal.Divisibility.Frames
 import Development.AutomorphicSpectrum.Statements.GeometryStatements.ThmFlatA
 import Development.AutomorphicSpectrum.Statements.GeometryStatements.FlatDegree
-import Development.AutomorphicSpectrum.Statements.MetricStatements.SmallOnTower
-import Development.AutomorphicSpectrum.Statements.MetricStatements.RankBound
-import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.ExistsUniqueStatement
+import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsEmbeddingPieces
+import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HasMultiplier
+import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.HeckeSectionsIsotropicCommutatorPairingPower
+import Formalism.MeanHeightDescent.CombinedAverageDegreeBound
+import Formalism.MonomialMeanResidues.FilteredDegree
+import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.GROWCountStatement
+import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Statements
 import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
 import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.RealCubicMeans.LogMeanShares.LogMeanStatements.HSClaim
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.RealCubicMeans.LogMeanShares.LogMeanStatements.ShareLow
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.RealCubicMeans.LogMeanShares.LogMeanStatements.LineDegreeClosedFormula
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TheoremA
 import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.SpecFirstDetFormNeZero
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ConjEmbRtOfNe
 import Development.AbelianVarietyTheory.Counterexamples.HeightSurvey.ExistsNotIntegralLie
@@ -48,8 +70,6 @@ def pushHom (v : tEpsG x₁ ⟶ t₁.G) : tEpsG x₂ ⟶ t₂.G :=
     show (v.left ≫ m.φ) ≫ t₂.G.hom = spMap (algebraMap R (DualNumber R)) ≫ x₂
     rw [Category.assoc, w, ← Category.assoc, e, ← h]
     simp)
-
-@[simp] theorem pushHom_left (v : tEpsG x₁ ⟶ t₁.G) : (pushHom m h v).left = v.left ≫ m.φ := rfl
 
 theorem pushHom_mul (u v : tEpsG x₁ ⟶ t₁.G) : pushHom m h (u * v) = pushHom m h u * pushHom m h v := by
   let T : Over X₁ := tEpsG x₁
@@ -93,8 +113,6 @@ def push : TanM x₁ t₁.G →ₗ[R] TanM x₂ t₂.G where
   map_add' u v := tv_injective (pushHom_mul m h _ _)
   map_smul' a v := tv_injective (pushHom_smT m h a (tv v))
 
-@[simp] theorem push_left (v : TanM x₁ t₁.G) : (tv (push m h v)).left = (tv v).left ≫ m.φ := rfl
-
 theorem push_injective : Function.Injective (push (x₁ := x₁) m h) := fun u v e =>
   tv_injective (pushHom_injective m h (congrArg tv e))
 
@@ -130,8 +148,6 @@ def lieT : Li →ₗ[Ω] TanM ξ t.G where
   toFun e := mkT (M.pt e) (lie_smT M e)
   map_add' e e' := tv_injective (M.add e e')
   map_smul' c e := tv_injective (Over.OverMorphism.ext (M.smul c e))
-
-@[simp] theorem tv_lieT (e : Li) : tv (lieT M e) = M.pt e := rfl
 
 theorem lieT_injective : Function.Injective (lieT M) := fun _ _ h => M.inj (congrArg tv h)
 

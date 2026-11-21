@@ -59,17 +59,5 @@ def realOfRead {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
   given := hg
   full := hf
 
-theorem exists_tied {hL : GlobalTheory.Published.LocalLanglandsGL} {D : D7} (P : GlobalTheory.NPin.Pin hL D) {cf : CharFrame D} {nch : NChoice D}
-    {tp : TupTied D cf nch} (X : GlobalTheory.NJoin.RealAt D cf nch tp) (hcf : P.cf = cf) (hC : P.C = nch) (htp : HEq P.tp tp)
-    {M : MtFam D} {rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r} (hM : P.M = M) (hrep : HEq P.rep rep)
-    (ag : GlobalTheory.NJoin.Agree X M rep) (e0 : GlobalTheory.NRows.GoodIdempotentReadsAsGoodTypeProjector X) :
-    ∃ T : GlobalTheory.NRows.Tied hL D, T.P = P ∧ HEq T.X.R X.R := by
-  subst hcf
-  subst hC
-  cases eq_of_heq htp
-  subst hM
-  cases eq_of_heq hrep
-  exact ⟨⟨P, X, ag, e0⟩, rfl, HEq.rfl⟩
-
 end GlobalTheory.HeightCounting.Up.RealOfReading
 end

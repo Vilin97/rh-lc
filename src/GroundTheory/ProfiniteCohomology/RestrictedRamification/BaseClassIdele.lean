@@ -7,8 +7,6 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory IsDedekindDomain NumberField GroundTheory.Global IdeleGroup
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section General

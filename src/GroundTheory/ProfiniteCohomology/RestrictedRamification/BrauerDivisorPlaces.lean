@@ -9,8 +9,6 @@ namespace PicInf
 open CategoryTheory NumberField IsDedekindDomain IntermediateField GroundTheory.Global GroundTheory.Global.SemiLocal
   FiniteSubfield
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield} {S : Set (HeightOneSpectrum (𝓞 K.1))}

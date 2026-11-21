@@ -1,12 +1,13 @@
 import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChange
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeDefs
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeModules
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangePlaces
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeMackey
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh
 
 open NumberField IsDedekindDomain GroundTheory.Global
-
-local notation "ℚ̄" => AlgebraicClosure ℚ
 
 noncomputable section
 

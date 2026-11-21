@@ -278,15 +278,6 @@ theorem ordRat_algEquiv (σ : Ω ≃ₐ[K] Ω) (x : Ω) : ordRat K (σ x) = ordR
 
 variable (K Ω) in
 
-def ordRatHom : Ωˣ →* Multiplicative ℚ where
-  toFun x := Multiplicative.ofAdd (ordRat K (x : Ω))
-  map_one' := by simp
-  map_mul' x y := by
-    rw [Units.val_mul, ordRat_mul x.ne_zero y.ne_zero, ofAdd_add]
-
-@[simp]
-theorem toAdd_ordRatHom (x : Ωˣ) : (ordRatHom K Ω x).toAdd = ordRat K (x : Ω) := rfl
-
 variable (K Ω) in
 
 def valueGroupRat (L : Type*) [Field L] [Algebra L Ω] : AddSubgroup ℚ where
@@ -344,11 +335,6 @@ omit [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L] [Valua
   [FiniteDimensional K L] [ValuativeExtension L Ω] in
 variable (K Ω) in
 
-theorem valueGroupRat_base_le : valueGroupRat K Ω K ≤ valueGroupRat K Ω L := by
-  rintro _ ⟨a, rfl⟩
-  refine ⟨Units.map (algebraMap K L).toMonoidHom a, ?_⟩
-  simp [← IsScalarTower.algebraMap_apply]
-
 variable (K Ω) in
 
 theorem relIndex_valueGroupRat :
@@ -383,17 +369,6 @@ section Check
 
 variable (K : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   (L : IntermediateField K (SeparableClosure K)) [FiniteDimensional K L]
-
-example : (valueGroupRat K (SeparableClosure K) K).relIndex (valueGroupRat K (SeparableClosure K) L) =
-    (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) :=
-  relIndex_valueGroupRat K (SeparableClosure K) L
-
-example : valueGroupRat K (SeparableClosure K) K = AddSubgroup.zmultiples 1 :=
-  valueGroupRat_base K (SeparableClosure K)
-
-example (σ : SeparableClosure K ≃ₐ[K] SeparableClosure K) (x : SeparableClosure K) :
-    ordRat K (σ x) = ordRat K x :=
-  ordRat_algEquiv σ x
 
 end Check
 

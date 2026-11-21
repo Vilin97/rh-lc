@@ -6,8 +6,6 @@ namespace GroundTheory.Global
 
 open NumberField IntermediateField GroundTheory.LocalField.Abstract
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 namespace FiniteSubfield
@@ -30,15 +28,6 @@ theorem coe_norm_of_eq {K L : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)} [(L.subgroupOf
       of F (FiniteSubfield.ideleClassNorm h c) := by
   subst hK hL
   exact congrArg Subtype.val (norm_fixedEquiv h c)
-
-theorem coe_norm_openSubgroup {U U' : OpenSubgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)} (hUU' : U' ≤ U)
-    (c : IdeleClassGroup (ofOpenSubgroup U').1)
-    (hc : of (ofOpenSubgroup U') c ∈ fixedModule IdeleClassLimit (U' : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄))) :
-    (norm IdeleClassLimit (U : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)) (U' : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄))
-      ⟨of (ofOpenSubgroup U') c, hc⟩ : IdeleClassLimit) =
-      of (ofOpenSubgroup U) (FiniteSubfield.ideleClassNorm (ofOpenSubgroup_le hUU') c) :=
-  coe_norm_of_eq (ofOpenSubgroup_le hUU') (fixingSubgroup_ofOpenSubgroup U).symm
-    (fixingSubgroup_ofOpenSubgroup U').symm c hc
 
 end IdeleClassLimit
 
@@ -255,11 +244,6 @@ def kerEquiv :
     · intro a ha
       obtain ⟨c, rfl⟩ := (fixedEquiv E).surjective a
       exact ⟨c, (tateNorm_eq_one_iff c).2 ha, rfl⟩))
-
-@[simp]
-theorem coe_coe_kerEquiv (c : (tateNorm (E.1 ≃ₐ[F.1] E.1) (IdeleClassGroup E.1)).ker) :
-    ((kerEquiv c : fixedModule IdeleClassLimit E.1.fixingSubgroup) : IdeleClassLimit) = of E c :=
-  rfl
 
 theorem map_augmentation_subgroupOf :
     ((GroundTheory.LocalField.augmentation (E.1 ≃ₐ[F.1] E.1) (IdeleClassGroup E.1)).subgroupOf

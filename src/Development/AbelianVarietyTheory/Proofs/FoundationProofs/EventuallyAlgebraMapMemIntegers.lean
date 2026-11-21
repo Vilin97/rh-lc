@@ -211,18 +211,6 @@ theorem existsUnique_projFinLoc_eq (x : ∀ v, GLoc σ J v) (hx : ∀ᶠ v in co
     exact (x v).2
   exact ⟨⟨u, hu⟩, fun v => matHom_injective _ σ J (Units.ext (hA' v))⟩
 
-def restrictedEquiv : GFin σ J ≃* Πʳ v, [GLoc σ J v, stabLoc σ J L v] :=
-  MulEquiv.ofBijective (F := GFin σ J →* Πʳ v, [GLoc σ J v, stabLoc σ J L v])
-    { toFun := fun g => ⟨fun v => projFinLoc σ J v g, eventually_projFinLoc_mem_stabLoc σ J L g⟩
-      map_one' := Subtype.ext (funext fun v => map_one (projFinLoc σ J v))
-      map_mul' := fun g h => Subtype.ext (funext fun v => map_mul (projFinLoc σ J v) g h) }
-    ⟨fun _ _ e => GFin_ext σ J fun v => congrFun (congrArg Subtype.val e) v, fun x =>
-      let ⟨g, hg, _⟩ := existsUnique_projFinLoc_eq σ J L x.1 x.2
-      ⟨g, Subtype.ext (funext hg)⟩⟩
-
-@[simp] theorem restrictedEquiv_apply (g : GFin σ J) (v : HeightOneSpectrum (𝓞 F)) :
-    restrictedEquiv σ J L g v = projFinLoc σ J v g := rfl
-
 end GlobalTheory.AdelicU
 
 end

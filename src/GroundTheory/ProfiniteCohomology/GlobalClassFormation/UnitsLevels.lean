@@ -6,8 +6,6 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubfield
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield}
@@ -23,11 +21,6 @@ def unitsLevelMor :
   Rep.ofHom ⟨(MonoidHom.toAdditive (IdeleLimit.unitsIncl F)).toIntLinearMap, fun _ => LinearMap.ext fun _ =>
     congrArg Additive.ofMul (Units.ext rfl)⟩
 
-@[simp]
-theorem unitsLevelMor_hom_apply (x : Additive F.1ˣ) :
-    (unitsLevelMor K F).hom x = Additive.ofMul (IdeleLimit.unitsIncl F x.toMul) :=
-  rfl
-
 variable (K F) in
 
 def unitsLevelInfl (n : ℕ) : cohomology (galUnitsZ K.1 F.1) n ⟶ cohomology (unitsLimitRep K) n :=
@@ -41,10 +34,6 @@ def levelDiag : galUnitsZ K.1 F.1 ⟶ ideleRep K.1 F.1 :=
       (smul_diagonal σ x.toMul).symm)⟩
 
 omit [F.1.fixingSubgroup.Normal] in
-@[simp]
-theorem levelDiag_hom_apply (x : Additive F.1ˣ) :
-    (levelDiag K F).hom x = Additive.ofMul (IdeleGroup.diagonal F.1 x.toMul) :=
-  rfl
 
 theorem levelDiag_cochains_comp :
     cochainsMap (levelDiag K F) ≫ cochainsMapAlong restrictHom continuous_restrictHom (levelMor K F) =

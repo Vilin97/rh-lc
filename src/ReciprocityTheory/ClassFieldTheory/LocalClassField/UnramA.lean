@@ -23,9 +23,6 @@ abbrev qT (hrho : ContAction rho) (hN : ∀ σ ∈ N, ∀ m, rho σ m = m) : TRe
     rw [← QuotientGroup.isOpenQuotientMap_mk.continuous_comp_iff]
     exact hrho.comp (continuous_id.prodMk continuous_const)
 
-scoped instance (hrho : ContAction rho) (hN : ∀ σ ∈ N, ∀ m, rho σ m = m) : DiscreteTopology (qT N rho hrho hN).V :=
-  inferInstanceAs (DiscreteTopology M)
-
 variable {N rho}
 
 theorem exists_desc1 (hN : ∀ σ ∈ N, ∀ m, rho σ m = m) (c : G → M) (hc : c ∈ Z1 rho) (h0 : ∀ σ ∈ N, c σ = 0) :

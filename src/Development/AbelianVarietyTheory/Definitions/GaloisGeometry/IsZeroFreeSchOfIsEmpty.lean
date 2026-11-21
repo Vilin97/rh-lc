@@ -129,13 +129,6 @@ lemma _root_.GlobalTheory.EtC.Tr.chainMap_free {X Z : Scheme.{0}} (g : X ⟶ Z) 
 def along {X Z : Scheme.{0}} (F : Shv R) (n : ℤ) (t : freeSch R X ⟶ freeSch R Z) : H R (sch.obj Z) F n →+ H R (sch.obj X) F n :=
   HK.pull R (chainMap R t) F n
 
-def alongL {X Z : Scheme.{0}} (F : Shv R) (n : ℤ) (t : freeSch R X ⟶ freeSch R Z) : H R (sch.obj Z) F n →ₗ[R] H R (sch.obj X) F n where
-  toFun := along R F n t
-  map_add' := map_add _
-  map_smul' r x := by
-    obtain ⟨x, rfl⟩ := x.mk_surjective
-    exact congrArg CohomologyClass.mk (Cocycle.ext (Cochain.comp_smul _ _ _ (zero_add n)))
-
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
 variable (R : Type) [CommRing R] in
 theorem _root_.GlobalTheory.EtC.Tr.along_id (X : Scheme.{0}) (F : _root_.GlobalTheory.EtC.Shv R) (n : ℤ)
@@ -161,9 +154,6 @@ theorem _root_.GlobalTheory.EtC.Tr.along_free {X Z : Scheme.{0}} (g : X ⟶ Z)
 
 def trH {Z X : Scheme.{0}} (f : Z ⟶ X) (F : Shv R) (n : ℤ) : H R (sch.obj Z) F n →+ H R (sch.obj X) F n :=
   along R F n (transfer R f)
-
-def trL {Z X : Scheme.{0}} (f : Z ⟶ X) (F : Shv R) (n : ℤ) : H R (sch.obj Z) F n →ₗ[R] H R (sch.obj X) F n :=
-  alongL R F n (transfer R f)
 
 theorem trH_id (X : Scheme.{0}) (F : Shv R) (n : ℤ) (x : H R (sch.obj X) F n) : trH R (𝟙 X) F n x = x := by
   rw [trH, transfer_id]; exact along_id R X F n x
@@ -225,13 +215,6 @@ theorem _root_.GlobalTheory.EtC.Tr.trHl_spec {Z X : Scheme.{0}} {f : Z ⟶ X} {n
     exact (congrArg (_root_.GlobalTheory.EtC.Tr.trHt (l ^ k) f n i) h1).trans
       ((map_nsmul _ _ _).trans h2.symm)
 
-def trHQ {Z X : Scheme.{0}} (f : Z ⟶ X) (n i : ℤ) : HQ l (sch.obj Z) n i →ₗ[ℚ_[l]] HQ l (sch.obj X) n i :=
-  (trHl l f n i).baseChange ℚ_[l]
-
 end Adic
-
-example (X : Scheme.{0}) (n : ℤ) (x : Ht 5 (sch.obj X) n 2) : trHt 5 (𝟙 X) n 2 x = x := trHt_id 5 X n 2 x
-
-example : transfer ℤ (𝟙 (Spec (CommRingCat.of (Polynomial ℤ)))) = 𝟙 _ := transfer_id ℤ _
 
 end GlobalTheory.EtC.Tr

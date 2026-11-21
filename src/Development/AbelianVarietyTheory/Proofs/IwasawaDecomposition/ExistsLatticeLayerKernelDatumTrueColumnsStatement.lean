@@ -3,7 +3,9 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLattic
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SameForm
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TiedColumnData
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
-import Formalism.LocalRingCardinality.SpanPowerMembership.TwCore
+import Formalism.LocalRingCardinality.DataTies
+import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
+import Formalism.LocalRingCardinality.SpanPowerMembership.SignSplitEquivInl
 import Formalism.LocalToGlobal.KernelLattices.ColumnData.KerEntHyp
 import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Formalism.L2.Host GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Mem.Top.GroupRetwisting GlobalTheory.Mem.Top.Bl GlobalTheory.Mem.Df NumberField IsDedekindDomain

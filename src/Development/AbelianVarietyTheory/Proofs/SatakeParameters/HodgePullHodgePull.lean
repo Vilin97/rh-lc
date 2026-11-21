@@ -62,6 +62,3 @@ theorem hodgePull_hodgePull {X X' X'' : Scheme.{0}} (s : X ⟶ Sp k) (f : X' ⟶
   hodgePull_comp rfl rfl (Category.assoc g f s) j q x
 
 end GlobalTheory.HodgeCoh
-
-example : ∀ {k : Type} [CommRing k] {X X' X'' : Scheme.{0}} (s : X ⟶ Sp k) (f : X' ⟶ X) (g : X'' ⟶ X') (j q : ℕ) (x : hodgeH s j q), hodgePull (s' := g ≫ f ≫ s) rfl j q (hodgePull (s' := f ≫ s) rfl j q x) = hodgePull (f := g ≫ f) (s' := g ≫ f ≫ s) (Category.assoc g f s) j q x :=
-  fun s f g j q x ↦ hodgePull_hodgePull s f g j q x

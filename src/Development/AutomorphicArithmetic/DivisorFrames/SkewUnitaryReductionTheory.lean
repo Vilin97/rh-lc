@@ -1,11 +1,9 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
 import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RatStab
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoublingConfigurationLeviIntegralImports
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsTorusUOne
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSiegelDomainReduction
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsHermNDSmulSkewForm
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ToGAdMat
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPurelyImaginaryElement
 import Development.AutomorphicArithmetic.LocalEmbeddings.LeviRedDef
 open scoped TensorProduct NNReal Matrix
@@ -51,73 +49,3 @@ private theorem exists_unit (h : IsCMExt F E σ) {s : ℝ} (hs : 0 < s) :
   · exact (le_self_pow₀ h1 hm).trans (le_add_of_nonneg_left zero_le_one)
 
 end
-
-theorem UpperTheory.skew_unitary_reduction_theory :
-    GlobalTheory.Published.SiegelSetUnitary → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n : ℕ) (W : Spc F E n) (r s : ℕ), B.IsGood σ → W.IsSkew σ B r s →
-                 ∃ (q : ℕ) (x : Fin q → Fin n → E) (Cc : Set (UA σ W.J)) (C : ℝ) (A : ℕ), (∀ i, x i ≠ 0) ∧ IsCompact Cc ∧
-                   ∀ g : UA σ W.J, ∃ γ ∈ ratU σ W.J, ∃ (τ : Fin q → (AE F E)ˣ) (a κ : UA σ W.J),
-                     (∀ i, mat a *ᵥ incV F (x i) = (τ i).1 • incV F (x i)) ∧ κ ∈ Cc ∧ γ * g = a * κ ∧
-                     (ht (γ * g) : ℝ) ≤ C * (∏ i, (1 + (absE F E (τ i) : ℝ))) ^ A := by
-  intro hP F E _ _ _ _ _ σ B n X r s hB hX
-  have hcm := hB.cm
-  have hσ := GlobalTheory.SiegelSet.sigma_sigma hcm
-  obtain ⟨e₀, he₀, he₀s⟩ := GlobalTheory.CMImag.exists_imag_ne_zero F E σ hcm
-  have hJ' : IsHermND σ (e₀ • X.J.map σ) := GlobalTheory.ThK.SqIntHerm.isHermND_smul_map F E σ B n X r s hX e₀ he₀ he₀s
-  let e : UA σ X.J ≃* GAd σ (e₀ • X.J.map σ) :=
-    MulEquiv.subgroupCongr (GlobalTheory.SiegelSet.ug_eq_hr (F := F) (J := X.J) hσ he₀)
-  have he' : Continuous e.symm := continuous_subtype_val.subtype_mk _
-  obtain ⟨q, Xf, Yf, hW⟩ := GlobalTheory.SiegelSet.exists_isWittFrame hcm hJ'
-  obtain ⟨K, Ω, c, hK, hΩ, -, hc, -, -, hcov, ⟨C₀, hC₀, hconj⟩, -⟩ := hP F E σ hcm n _ hJ' q Xf Yf hW
-  have hc'0 : 0 < min 1 c ^ q := pow_pos (lt_min one_pos hc) _
-  obtain ⟨Ch, Ah, hh0⟩ := GlobalTheory.T.siegel_set_archimedean_norm_bound F E σ hcm n _ q Xf Yf _ hc'0
-  have hh : ∀ t : Fin q → ℝ, (∀ i, min 1 c ^ q ≤ t i) → ∀ a, GlobalTheory.SiegelSet.IsTorusElt σ _ Xf Yf t a →
-      (height σ _ a : ℝ) ≤ Ch * (1 + ∏ i, t i) ^ Ah := fun t ht a ha =>
-    hh0 t ht a ha.1 (GlobalTheory.T.torus_element_archimedean_matrix_form F E σ hcm n _ hJ' q Xf Yf hW t (fun i => hc'0.trans_le (ht i)) a ha)
-  let mul2 : GAd σ (e₀ • X.J.map σ) × GAd σ (e₀ • X.J.map σ) → GAd σ (e₀ • X.J.map σ) :=
-    fun p => p.1 * p.2
-  have hCK : IsCompact (mul2 '' (C₀ ×ˢ (K : Set (GAd σ (e₀ • X.J.map σ))))) :=
-    (hC₀.prod hK).image continuous_mul
-  have hhc : Continuous fun g : GAd σ (e₀ • X.J.map σ) => (height σ (e₀ • X.J.map σ) g : ℝ) :=
-    NNReal.continuous_coe.comp ((GlobalTheory.Grow.continuous_heightGL F).comp continuous_subtype_val)
-  obtain ⟨Bd, hBd⟩ := (hCK.image hhc).bddAbove
-  have hx0 : ∀ i, (fun k => Xf k i) ≠ 0 := fun i h0 => by
-    have h1 := congrFun (congrFun hW.xy i) i
-    have h2 : ∀ k, Xf k i = 0 := fun k => congrFun h0 k
-    simp [Matrix.mul_apply, Formalism.UG.cT, h2] at h1
-  refine ⟨q, fun i k => Xf k i, e.symm '' (mul2 '' (C₀ ×ˢ (K : Set _))),
-    max Ch 0 * 2 ^ Ah * max Bd 0, Ah, hx0, hCK.image he', fun g => ?_⟩
-  obtain ⟨γ, hγ, s', ⟨p, hp, t, htc, a, ha, k, hk, rfl⟩, hgs⟩ := hcov (e g)
-  obtain ⟨u, -, hu⟩ := Subgroup.mem_map.1 (Subgroup.mem_subgroupOf.1 hγ)
-  have hr : e.symm γ ∈ ratU σ X.J := Subgroup.mem_subgroupOf.2 ⟨u, hu⟩
-  have hmem : a⁻¹ * p * a * k ∈ mul2 '' (C₀ ×ˢ (K : Set _)) := ⟨(a⁻¹ * p * a, k), ⟨hconj p hp t htc a ha, hk⟩, rfl⟩
-  choose τ hτ hτle using fun i => exists_unit hcm (htc.1 i)
-  have heq : (e.symm γ)⁻¹ * g = e.symm a * e.symm (a⁻¹ * p * a * k) := by
-    apply e.injective
-    rw [map_mul, map_mul, map_inv, MulEquiv.apply_symm_apply, MulEquiv.apply_symm_apply, MulEquiv.apply_symm_apply, hgs]
-    group
-  refine ⟨(e.symm γ)⁻¹, inv_mem hr, τ, e.symm a, e.symm (a⁻¹ * p * a * k), fun i => funext fun j => ?_,
-    ⟨_, hmem, rfl⟩, heq, ?_⟩
-  · have h1 := congrFun (congrFun (GlobalTheory.TorusMat.isTorusElt_mat F E σ hcm n _ q Xf Yf t htc.1 a ha).1 j) i
-    rw [Matrix.mul_diagonal, ← hτ, mul_comm] at h1
-    exact h1
-  · rw [heq]
-    have h1 : (ht (e.symm a * e.symm (a⁻¹ * p * a * k)) : ℝ) ≤
-        (height σ _ a : ℝ) * (height σ _ (a⁻¹ * p * a * k) : ℝ) := by
-      exact_mod_cast heightGL_mul_le F (e.symm a).1 (e.symm (a⁻¹ * p * a * k)).1
-    have h2 := hh t (GlobalTheory.SiegelHt.cone_low hc htc) a ha
-    have h3 : (height σ _ (a⁻¹ * p * a * k) : ℝ) ≤ max Bd 0 :=
-      (hBd ⟨_, hmem, rfl⟩).trans (le_max_left _ _)
-    have h4 : (0 : ℝ) ≤ height σ _ a := NNReal.coe_nonneg _
-    have h5 : (0 : ℝ) ≤ height σ _ (a⁻¹ * p * a * k) := NNReal.coe_nonneg _
-    have h6 : (0 : ℝ) ≤ ∏ i, t i := Finset.prod_nonneg fun i _ => (htc.1 i).le
-    have h7 : ∏ i, t i ≤ ∏ i, (1 + (absE F E (τ i) : ℝ)) :=
-      Finset.prod_le_prod₀ (fun i _ => (htc.1 i).le) fun i _ => hτle i
-    have h8 : (1 : ℝ) ≤ ∏ i, (1 + (absE F E (τ i) : ℝ)) :=
-      (Finset.prod_const_one (s := Finset.univ)).ge.trans
-        (Finset.prod_le_prod₀ (fun _ _ => zero_le_one) fun i _ => le_add_of_nonneg_right (NNReal.coe_nonneg _))
-    have h9 : (height σ _ a : ℝ) ≤ max Ch 0 * (2 * ∏ i, (1 + (absE F E (τ i) : ℝ))) ^ Ah :=
-      h2.trans (mul_le_mul (le_max_left _ _) (pow_le_pow_left₀ (by linarith) (by linarith) _) (by positivity)
-        (le_max_right _ _))
-    calc (ht (e.symm a * e.symm (a⁻¹ * p * a * k)) : ℝ) ≤ _ := h1
-      _ ≤ (max Ch 0 * (2 * ∏ i, (1 + (absE F E (τ i) : ℝ))) ^ Ah) * max Bd 0 := mul_le_mul h9 h3 h5 (h4.trans h9)
-      _ = _ := by rw [mul_pow]; ring

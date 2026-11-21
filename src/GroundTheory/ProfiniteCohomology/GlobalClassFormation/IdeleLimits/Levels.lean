@@ -8,8 +8,6 @@ namespace GroundTheory.ProfCoh
 open CategoryTheory NumberField IntermediateField GroundTheory.Global GroundTheory.Global.AdeleBaseChange
   FiniteSubfield IdeleLimit
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield}
@@ -51,11 +49,6 @@ variable (K F E) in
 def levelMap : Rep.res (levelRestrict K F E) (ideleRep K.1 F.1) ⟶ ideleRep K.1 E.1 :=
   Rep.ofHom ⟨(MonoidHom.toAdditive (ideleMap (Fact.out : F ≤ E))).toIntLinearMap,
     fun τ => LinearMap.ext fun x => congrArg Additive.ofMul (ideleMap_smul τ x.toMul)⟩
-
-@[simp]
-theorem levelMap_hom_apply (x : Additive (IdeleGroup F.1)) :
-    (levelMap K F E).hom x = Additive.ofMul (ideleMap (Fact.out : F ≤ E) x.toMul) :=
-  rfl
 
 variable (K F E) in
 

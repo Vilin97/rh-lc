@@ -17,8 +17,6 @@ namespace GlobalTheory.BadOnRec
 end GlobalTheory.BadOnRec
 namespace GlobalTheory.BadOnRec
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
-local instance  {D : D7} {J : CoreJ D} [inst : Algebra J.Q.c.F D.what₂.LL] (r : RunData J) :
-    Algebra r.full.J.Q.c.F D.what₂.LL := inst
 section General
 open scoped TensorProduct
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}

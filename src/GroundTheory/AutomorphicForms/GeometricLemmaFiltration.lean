@@ -196,10 +196,6 @@ def supportedIn (Y : Set (GL (Fin n) F)) : Submodule ℂ (parabolicIndSpace F n 
 
 variable {σ}
 
-theorem mem_supportedIn {Y : Set (GL (Fin n) F)} {f : parabolicIndSpace F n β σ} :
-    f ∈ supportedIn σ Y ↔ ∀ g ∉ Y, (f : GL (Fin n) F → W) g = 0 :=
-  Iff.rfl
-
 theorem supportedIn_mono {Y Y' : Set (GL (Fin n) F)} (h : Y ⊆ Y') :
     supportedIn σ Y ≤ supportedIn σ Y' :=
   fun f hf g hg => hf g fun hgY => hg (h hgY)

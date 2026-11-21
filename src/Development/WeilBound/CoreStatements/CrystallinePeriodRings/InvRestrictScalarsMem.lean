@@ -41,9 +41,6 @@ section Restrict
 
 variable {p : ℕ} [Fact p.Prime] {K L : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "𝔹dR" => BDeRham (normInteger ℂ_[p]) p
-
 theorem inv_galCp_congr (σ : Gal(PadicAlgCl p/K)) (τ : Gal(PadicAlgCl p/L)) (h : ∀ x, σ x = τ x) :
     (galCp σ : ℂ_[p] →+* ℂ_[p]) = (galCp τ : ℂ_[p] →+* ℂ_[p]) :=
   RingHom.ext (congrFun (eq_galCp_of_continuous τ (galCp σ) (continuous_galCp σ)

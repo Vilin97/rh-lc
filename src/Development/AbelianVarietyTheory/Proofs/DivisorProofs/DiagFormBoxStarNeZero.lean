@@ -22,9 +22,6 @@ variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 attribute [local instance] GlobalTheory.AdelicUnitaryTop.locallyCompact_finiteAdele
   GlobalTheory.AdelicUnitaryTop.secondCountable_finiteAdele GlobalTheory.AdelicUnitaryTop.t2Space_finiteAdeleRing_of_numberField
 
-local instance measAf' : MeasurableSpace (FiniteAdeleRing (𝓞 F) F) := borel _
-local instance borelAf' : BorelSpace (FiniteAdeleRing (𝓞 F) F) := ⟨rfl⟩
-
 instance mu_openPos : (mu F κ).IsOpenPosMeasure := by unfold mu; infer_instance
 
 theorem pureA_glue (f : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ) (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ)

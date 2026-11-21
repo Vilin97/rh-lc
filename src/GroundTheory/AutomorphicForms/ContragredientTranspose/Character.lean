@@ -230,16 +230,8 @@ def mulEquivHomeo (α : G ≃* G) (hα : Continuous α) (hα' : Continuous α.sy
 omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
   [MeasurableSpace G] [BorelSpace G] in
 
-@[simp]
-theorem mulEquivHomeo_apply (α : G ≃* G) (hα : Continuous α) (hα' : Continuous α.symm) (x : G) :
-    mulEquivHomeo α hα hα' x = α x := rfl
-
 omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
   [MeasurableSpace G] [BorelSpace G] in
-
-@[simp]
-theorem mulEquivHomeo_symm_apply (α : G ≃* G) (hα : Continuous α) (hα' : Continuous α.symm)
-    (x : G) : (mulEquivHomeo α hα hα').symm x = α.symm x := rfl
 
 omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
   [MeasurableSpace G] [BorelSpace G] in
@@ -321,9 +313,6 @@ def levelLin (h : HeckeAlgebraLevel μ K hKc hKo) : fixedVectors ρ K →ₗ[ℂ
   map_smul' c v := Subtype.ext (by
     simp only [RingHom.id_apply, HeckeAlgebraLevel.coe_smul_fixedVectors, Submodule.coe_smul]
     exact heckeAct_smul_right (h : HeckeAlgebra μ).mem c (smooth_of_mem_fixedVectors hKo v.2))
-
-theorem levelLin_apply {ρ : Representation ℂ G V} (h : HeckeAlgebraLevel μ K hKc hKo)
-    (v : fixedVectors ρ K) : levelLin hKc hKo ρ h v = h • v := rfl
 
 theorem levelLin_one (ρ : Representation ℂ G V) :
     levelLin hKc hKo ρ (1 : HeckeAlgebraLevel μ K hKc hKo) = LinearMap.id :=

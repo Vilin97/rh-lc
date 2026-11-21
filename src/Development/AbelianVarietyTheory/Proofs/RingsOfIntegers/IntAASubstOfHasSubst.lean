@@ -7,9 +7,6 @@ namespace GlobalTheory.IntSeries
 
 variable {R : Type} [CommRing R] {k : Type} [CommRing k] [Algebra R k] {σ τ : Type}
 
-theorem intAA_zero : IntAA (R := R) k (0 : MvPowerSeries σ k) := fun n => by
-  rw [map_zero]; exact Subring.zero_mem _
-
 theorem intAA_map (f : MvPowerSeries σ R) :
     IntAA (R := R) k (MvPowerSeries.map (algebraMap R k) f) := fun n => by
   rw [coeff_map]; exact ⟨_, rfl⟩
@@ -17,25 +14,9 @@ theorem intAA_map (f : MvPowerSeries σ R) :
 theorem intAA_one : IntAA (R := R) k (1 : MvPowerSeries σ k) := by
   simpa using intAA_map (k := k) (1 : MvPowerSeries σ R)
 
-theorem intAA_X (s : σ) : IntAA (R := R) k (X s : MvPowerSeries σ k) := by
-  simpa using intAA_map (k := k) (X s : MvPowerSeries σ R)
-
-theorem intAA_C (r : R) : IntAA (R := R) k (C (algebraMap R k r) : MvPowerSeries σ k) := by
-  simpa using intAA_map (k := k) (C r : MvPowerSeries σ R)
-
-theorem intAA_iff_exists_map {f : MvPowerSeries σ k} :
-    IntAA (R := R) k f ↔ ∃ g : MvPowerSeries σ R, MvPowerSeries.map (algebraMap R k) g = f := by
-  refine ⟨fun h => ?_, fun ⟨g, hg⟩ => hg ▸ intAA_map g⟩
-  choose g hg using h
-  exact ⟨g, MvPowerSeries.ext fun n => (coeff_map _ _ _).trans (hg n)⟩
-
 theorem intAA_add {f g : MvPowerSeries σ k} (hf : IntAA (R := R) k f) (hg : IntAA (R := R) k g) :
     IntAA (R := R) k (f + g) := fun n => by
   rw [map_add (f := _)]; exact Subring.add_mem _ (hf n) (hg n)
-
-theorem intAA_neg {f : MvPowerSeries σ k} (hf : IntAA (R := R) k f) :
-    IntAA (R := R) k (-f) := fun n => by
-  rw [map_neg]; exact Subring.neg_mem _ (hf n)
 
 theorem intAA_sub {f g : MvPowerSeries σ k} (hf : IntAA (R := R) k f) (hg : IntAA (R := R) k g) :
     IntAA (R := R) k (f - g) := fun n => by
@@ -47,20 +28,11 @@ theorem intAA_mul {f g : MvPowerSeries σ k} (hf : IntAA (R := R) k f) (hg : Int
   rw [coeff_mul]
   exact Subring.sum_mem _ fun p _ => Subring.mul_mem _ (hf _) (hg _)
 
-theorem intAA_smul (r : R) {f : MvPowerSeries σ k} (hf : IntAA (R := R) k f) :
-    IntAA (R := R) k (algebraMap R k r • f) := fun n => by
-  rw [map_smul, smul_eq_mul]; exact Subring.mul_mem _ ⟨r, rfl⟩ (hf n)
-
 theorem intAA_pow {f : MvPowerSeries σ k} (hf : IntAA (R := R) k f) (m : ℕ) :
     IntAA (R := R) k (f ^ m) := by
   induction m with
   | zero => simpa using intAA_one
   | succ m ih => rw [pow_succ]; exact intAA_mul ih hf
-
-theorem intAA_sum {ι : Type*} (t : Finset ι) {f : ι → MvPowerSeries σ k}
-    (hf : ∀ i ∈ t, IntAA (R := R) k (f i)) : IntAA (R := R) k (∑ i ∈ t, f i) := fun n => by
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum]; exact Subring.sum_mem _ fun i hi => hf i hi n
 
 theorem intAA_prod {ι : Type*} (t : Finset ι) {f : ι → MvPowerSeries σ k}
     (hf : ∀ i ∈ t, IntAA (R := R) k (f i)) : IntAA (R := R) k (∏ i ∈ t, f i) :=

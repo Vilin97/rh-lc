@@ -113,8 +113,6 @@ def ev (v : HeightOneSpectrum (𝓞 F)) : Af F →+* v.adicCompletion F where
 
 theorem comp_mul (a b : Af F) (v : HeightOneSpectrum (𝓞 F)) : (a * b) v = a v * b v := rfl
 theorem comp_add (a b : Af F) (v : HeightOneSpectrum (𝓞 F)) : (a + b) v = a v + b v := rfl
-theorem comp_one (v : HeightOneSpectrum (𝓞 F)) : (1 : Af F) v = 1 := rfl
-theorem comp_zero (v : HeightOneSpectrum (𝓞 F)) : (0 : Af F) v = 0 := rfl
 
 open Classical in
 

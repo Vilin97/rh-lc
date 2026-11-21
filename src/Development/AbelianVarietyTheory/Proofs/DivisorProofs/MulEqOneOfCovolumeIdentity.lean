@@ -9,7 +9,7 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitDeterminantCong
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RationalVectorMemIdealCompletedLatticeIffStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelGroupLatticeCongruence
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLatticeAutomorphismModHalfLevelStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteUnitChineseRemainder
+import Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsTwistCharacterUnitsModSpecialIdeal
 
 set_option autoImplicit false
 
@@ -288,10 +288,6 @@ theorem ind_one_iff (hι : LatEmb V ι) {Kf : Subgroup (GA D V)} (hK : IsLevelK 
 end Lev
 
 section Char
-
-theorem ext_AE {z z' : AE D} (h1 : infPart D z = infPart D z') (h2 : finPart D z = finPart D z') : z = z' := by
-  obtain ⟨e, he, -⟩ := GlobalTheory.AdSplit.exists_adele_equiv D.host.F D.host.E
-  exact e.injective (Prod.ext ((he z).1.trans (h1.trans (he z').1.symm)) ((he z).2.trans (h2.trans (he z').2.symm)))
 
 variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H}
 

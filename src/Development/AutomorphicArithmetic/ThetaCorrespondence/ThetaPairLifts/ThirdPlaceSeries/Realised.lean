@@ -95,7 +95,6 @@ theorem _root_.GlobalTheory.BigTop.PtAt.RealisedCondition.induction {Q : PtAt ex
       _root_.Formalism.IndefR.IndefiniteRealisationCompatible Qp Qr → Q (_root_.GlobalTheory.BigTop.PtAt.ofReal_alt p.P p.Del p.h0 p.hDel p.hh0 p.Dcf p.Spf p.gamDvd B Qp Qr)) : Q p :=
   let ⟨Rc, S, B, Qp, Qr, a, e⟩ := h
   Eq.subst (motive := Q) e (hQ Rc S B Qp Qr a)
-theorem _root_.GlobalTheory.BigTop.PtAt.RealisedCondition.tiedRec : _root_.Formalism.L2.ExtraDataRecursive ex := let ⟨Rc, _⟩ := h; ⟨Rc⟩
 theorem _root_.GlobalTheory.BigTop.PtAt.RealisedCondition.exists_frame : ∃ Rc : _root_.Formalism.L2.RecTAlt ex, p.R.C = Rc.T.n.cf ∧ HEq p.Tp Rc.T.n.tp ∧ p.R.ψ = Rc.T.theta.W.ψ :=
   h.induction (Q := fun p => ∃ Rc : _root_.Formalism.L2.RecTAlt ex, p.R.C = Rc.T.n.cf ∧ HEq p.Tp Rc.T.n.tp ∧ p.R.ψ = Rc.T.theta.W.ψ)
     fun Rc _ B Qp Qr _ => ⟨Rc, Qp.cfEq, Qr.tpEq, B.Q.psiPin⟩

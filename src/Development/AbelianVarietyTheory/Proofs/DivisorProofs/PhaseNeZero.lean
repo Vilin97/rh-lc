@@ -95,7 +95,4 @@ def ofChar (N : ℕ) (χ : HChar D.host.E) (n : D.what₂.Tau → ℤ) (hu : χ.
 
 @[simp] theorem inv_f {N N' : ℕ} (χ : HeckeU D N) (h) (x) : (inv N' χ h).f x = (χ.f x)⁻¹ := rfl
 
-@[simp] theorem ofChar_f (N : ℕ) (χ : HChar D.host.E) (n) (hu hi hc hn hp hr) (x) :
-    (ofChar N χ n hu hi hc hn hp hr).f x = χ.1 (finIdl D x) := rfl
-
 end GlobalTheory.HeckeUOps

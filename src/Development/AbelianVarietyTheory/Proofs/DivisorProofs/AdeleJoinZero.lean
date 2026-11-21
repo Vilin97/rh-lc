@@ -42,9 +42,6 @@ def word (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ)
     (Φ : (κ → AdeleRing (𝓞 F) F) → ℂ) : (κ → AdeleRing (𝓞 F) F) → ℂ :=
   hs.foldr (fun h g => dS F ψ h g) Φ
 
-@[simp] theorem word_nil (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (Φ : (κ → AdeleRing (𝓞 F) F) → ℂ) :
-    word F ψ [] Φ = Φ := rfl
-
 theorem word_cons (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (h) (hs) (Φ : (κ → AdeleRing (𝓞 F) F) → ℂ) :
     word F ψ (h :: hs) Φ = dS F ψ h (word F ψ hs Φ) := rfl
 

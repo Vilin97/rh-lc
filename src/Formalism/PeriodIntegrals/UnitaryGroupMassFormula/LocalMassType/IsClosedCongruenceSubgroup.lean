@@ -106,8 +106,6 @@ section Lat
 
 variable {n : ℕ} (v : HeightOneSpectrum (𝓞 F)) (Λ : Set (Fin n → E))
 
-theorem sc_one : sc (E := E) v 1 = 1 := rfl
-
 theorem mem_gLat_iff {x : Fv F v} (hx : x ≠ 0) (w : Fin n → Fv F v ⊗[F] E) :
     (∃ y ∈ latLoc (E := E) v Λ, w = sc (E := E) v x • y) ↔
       sc (E := E) v x⁻¹ • w ∈ latLoc (E := E) v Λ := by

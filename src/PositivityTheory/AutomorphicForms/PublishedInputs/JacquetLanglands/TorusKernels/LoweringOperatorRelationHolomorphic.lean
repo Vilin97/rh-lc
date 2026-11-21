@@ -93,7 +93,6 @@ theorem Eop_val (v : InfinitePlace F) (i j : Fin 2) (φ : TR.Sm F 2) (g : GA F 2
 def pP (t : ℂ) (ht : t.im ≠ 0) : P := ⟨t, ht⟩
 
 omit [NumberField F] [IsTotallyReal F] in
-@[simp] theorem pP_val (t : ℂ) (ht : t.im ≠ 0) : (pP t ht).1 = t := rfl
 
 def yU (z : X (InfinitePlace F)) : (TR.Rinf F)ˣ where
   val v := (z v).1.im

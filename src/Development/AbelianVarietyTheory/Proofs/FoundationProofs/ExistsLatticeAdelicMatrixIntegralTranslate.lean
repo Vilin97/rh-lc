@@ -74,10 +74,6 @@ def lat (β : Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E)) : Submodule (
     rw [← mul_assoc, ← map_mul]
     rfl
 
-theorem mem_lat {β : Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E)} {x : Fin n → E} :
-    x ∈ lat β ↔
-      ∀ j, ∑ k, algebraMap E (FiniteAdeleRing (𝓞 E) E) (x k) * β k j ∈ intAdeles E := Iff.rfl
-
 theorem span_lat (β : Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E)) :
     Submodule.span E (lat β : Set (Fin n → E)) = ⊤ := by
   classical

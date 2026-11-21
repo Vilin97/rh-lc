@@ -1,5 +1,5 @@
 import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WeilStabilizerVolume.VolStabFromSWW
+import Formalism.PeriodIntegrals.VolFromSW
 import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WeilStabilizerVolume.TensTop
 
 noncomputable section
@@ -78,8 +78,6 @@ section HA
 open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 
 variable {F} {E : Type} [Field E] [Algebra F E] [FiniteDimensional F E]
-
-instance secondCountable_tensAF : SecondCountableTopology (AF F ⊗[F] E) := inferInstance
 
 theorem secondCountable_HA_of (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R]
     [IsTopologicalRing R] [SecondCountableTopology R] (σ : E →ₐ[F] E) {M : ℕ}

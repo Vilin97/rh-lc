@@ -43,9 +43,6 @@ structure TopData (n r : ℕ) where
 theorem mem_block {w u : ℤ} {t : ℕ} : u ∈ block w t ↔ w ≤ u ∧ u < w + t := by
   simp [block]
 
-theorem card_block (w : ℤ) (t : ℕ) : Multiset.card (block w t) = t := by
-  simp [block]
-
 namespace TopData
 
 variable {n r : ℕ} (D : TopData n r)
@@ -76,11 +73,6 @@ def cloudRes (i : ZMod n) (u : ℤ) : ℤ :=
 def T3 (l : ℕ) : Prop :=
   ∀ i, ∀ u ∈ D.cloud i, ∀ y : ℤ, -2 * (D.sg l i : ℤ) - 2 ≤ y → y ≤ (D.η i : ℤ) + 2 * D.sg l i + 3 →
     ¬ D.cloudRes i u ≡ y [ZMOD l]
-
-theorem card_U (i : ZMod n) : Multiset.card (D.U i) = r := D.card_eq i
-
-theorem card_Ut (i : ZMod n) : Multiset.card (D.Ut i) = r + D.t := by
-  rw [Ut, Multiset.card_add, card_U, B, card_block]
 
 theorem mem_Ut (i : ZMod n) {u : ℤ} (hu : u ∈ D.Ut i) : 1 ≤ u ∧ u ≤ (D.h i : ℤ) - 1 := D.range i u hu
 
@@ -133,8 +125,6 @@ theorem exData_T1_T2_T3_fortyOne : exData.T1 41 ∧ exData.T2 41 ∧ exData.T3 4
   · rw [exData_sg] at h1 h2
     simp only [exData, TopData.cloudRes] at hu h2 h3
     split_ifs at hu h3 <;> simp at hu <;> simp only [Int.ModEq] at h3 <;> push_cast at h1 h2 h3 <;> omega
-
-example : exData.d 0 = 0 ∧ exData.d 1 = 2 := by decide
 
 section Ss
 
@@ -194,19 +184,6 @@ theorem SameFactors.of_equiv (h : IsFiniteLength R M) (e : M ≃ₗ[R] N) : Same
       obtain ⟨x', hx', hxx⟩ := hy
       obtain rfl : x' = x := e.injective hxx
       exact ⟨⟨x', hx'⟩, hx, rfl⟩
-
-example [IsSimpleModule R M] [Subsingleton N] : ¬ SameFactors R M N := by
-  rintro ⟨s, t, h1, h2, h3, h4, e, -⟩
-  have a := Module.length_compositionSeries s h1 h2
-  have b := Module.length_compositionSeries t h3 h4
-  rw [Module.length_eq_one, Fin.equiv_iff_eq.mp ⟨e⟩] at a
-  rw [Module.length_eq_zero] at b
-  exact one_ne_zero (a.symm.trans b)
-
-theorem SameFactors.length_eq (h : SameFactors R M N) : Module.length R M = Module.length R N := by
-  obtain ⟨s, t, h1, h2, h3, h4, e, -⟩ := h
-  rw [← Module.length_compositionSeries s h1 h2, ← Module.length_compositionSeries t h3 h4]
-  exact congrArg _ (Fin.equiv_iff_eq.mp ⟨e⟩)
 
 end Ss
 
@@ -320,21 +297,6 @@ theorem Ea_apply (z : ↥(Z1 (twCoef W χ X) ⊤)) (g : G) (m : M ⊗[O] X) (y :
       (coefRep W X g m + ((χ g : O) * y) • (z : G → M ⊗[O] X) g, Ideal.Quotient.mk _ ((χ g : O) * y)) := by
   rw [Ea, twistRep_apply, extRep_apply, ← twist_twCoef W χ X, twistRep_apply, Prod.smul_mk, smul_add, smul_smul]
   rfl
-
-theorem Ea_inl (z : ↥(Z1 (twCoef W χ X) ⊤)) (g : G) (m : M ⊗[O] X) :
-    Ea W χ hc z g (m, 0) = (coefRep W X g m, 0) := by
-  have h := Ea_apply W χ hc z g m 0
-  simpa using h
-
-theorem Ea_gen (z : ↥(Z1 (twCoef W χ X) ⊤)) (g : G) :
-    Ea W χ hc z g (0, 1) = (χ g : O) • (((0 : M ⊗[O] X), (1 : O ⧸ Ideal.span {c})) + ((z : G → M ⊗[O] X) g, 0)) := by
-  have h := Ea_apply W χ hc z g 0 1
-  simp only [map_one, map_zero, zero_add, mul_one] at h
-  rw [h]
-  simp [Algebra.smul_def]
-
-theorem Ea_snd (z : ↥(Z1 (twCoef W χ X) ⊤)) (g : G) (x : (M ⊗[O] X) × (O ⧸ Ideal.span {c})) :
-    (Ea W χ hc z g x).2 = (χ g : O) • x.2 := rfl
 
 theorem Ea_equiv_of_class_eq {z z' : ↥(Z1 (twCoef W χ X) ⊤)}
     (h : (Submodule.Quotient.mk z : H1 (twCoef W χ X) ⊤) = Submodule.Quotient.mk z') :
@@ -505,18 +467,6 @@ def twLat (T : LocLat G Qp LL O) (χ : G →* Oˣ) (hχ : Continuous fun g => al
     exact hχ.smul (T.cont x)
   L := twLattice T.L χ
 
-def zeroLat (G : Type) [Group G] [TopologicalSpace G] (Qp LL O : Type) [Field Qp] [Field LL] [Algebra Qp LL]
-    [CommRing O] [Algebra O LL] [TopologicalSpace LL] [IsTopologicalRing LL] : LocLat G Qp LL O where
-  V := Fin 0 → LL
-  ρ := 1
-  cont := fun _ => continuous_const
-  L :=
-    { T := ⊥
-      stable := fun _ _ hx => hx
-      fg := Submodule.fg_bot
-      free := inferInstance
-      span := Subsingleton.elim _ _ }
-
 def withLat (T : LocLat G Qp LL O) (L : Lattice (O := O) T.ρ) : LocLat G Qp LL O := { T with L := L }
 
 end Lat
@@ -561,16 +511,7 @@ def refRep (t : ℕ) :
     Representation O G (QuotSMulTop Γ.lam ↥Γ.T₀.L.T × (Fin t → QuotSMulTop Γ.lam O)) :=
   (modRep Γ.W₀ Γ.lam).prod (piRep fun c : Fin t => modRep (Γ.Wchi (c.val + 1)) Γ.lam)
 
-def twist (θ : G →* Oˣ) (hθ : Continuous fun g => algebraMap O LL (θ g)) : GalData G Qp LL O where
-  lam := Γ.lam
-  T₀ := twLat Γ.T₀ θ hθ
-  χ₁ := Γ.χ₁ * θ
-  ε := Γ.ε
-
 end GalData
-
-example (l : ℕ) [Fact l.Prime] (g : ℤ_[l]ˣ) : (exGal l).chi 2 g = g⁻¹ * g⁻¹ := by
-  rw [show (2 : ℕ) = 1 + 1 from rfl, GalData.chi_succ, GalData.chi_one]; rfl
 
 section Per
 
@@ -630,20 +571,6 @@ theorem Admissible.of_equiv {M M' : Type} [AddCommGroup M] [Module O M] [AddComm
     fun g x => ?_, fun x => ?_⟩
   · simp [hg, he]
   · simp [hk]
-
-theorem admissible_zero [IsTopologicalRing LL] {M : Type} [AddCommGroup M] [Module O M] [Subsingleton M]
-    (π : Representation O G M) : Admissible PD emb Γ t Ut π := by
-  have hV : Subsingleton (zeroLat G Qp LL O).V := inferInstanceAs (Subsingleton (Fin 0 → LL))
-  refine ⟨inferInstance, 0, zeroLat G Qp LL O, ⟨Fin.elim0, fun j => j.elim0, LinearEquiv.ofSubsingleton _ _,
-    fun _ _ j => j.elim0⟩, (zeroLat G Qp LL O).L, 0, le_rfl, fun y => ⟨0, Subsingleton.elim _ _⟩,
-    fun _ _ => Subsingleton.elim _ _, fun x => ⟨fun _ => x.2, fun _ => rfl⟩⟩
-
-theorem admissible_quotient {μ : ℕ} {T : LocLat G Qp LL O} (hT : SumFull PD emb Γ t Ut μ T)
-    (L₂ : Lattice (O := O) T.ρ) (hle : L₂.T ≤ T.L.T) [Finite (↥T.L.T ⧸ L₂.T.comap T.L.T.subtype)] :
-    Admissible PD emb Γ t Ut
-      ((latRep T.L).quotient (L₂.T.comap T.L.T.subtype) (fun g x hx => L₂.stable g x hx)) :=
-  ⟨‹_›, μ, T, hT, L₂, Submodule.mkQ _, hle, Submodule.mkQ_surjective _, fun _ _ => rfl,
-    fun _ => Submodule.Quotient.mk_eq_zero _⟩
 
 variable (PD emb Γ t Ut)
 variable {M : Type} [AddCommGroup M] [Module O M] (W : Representation O G M)

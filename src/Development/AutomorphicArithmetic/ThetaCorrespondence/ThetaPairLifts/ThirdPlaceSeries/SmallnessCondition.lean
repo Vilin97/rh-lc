@@ -11,7 +11,6 @@ namespace GlobalTheory.ExpFrame
 open Formalism.CohomologicalDescent.DepthNonnegative
 section Tests
 variable (O : Type) [CommRing O] (N : ℕ) {ι : Type} [DecidableEq ι] (lam : ι → ℕ → ℕ) (ϖ : O)
-local instance  : Ring (alg O N lam) := Subalgebra.toRing _
 end Tests
 end GlobalTheory.ExpFrame
 end

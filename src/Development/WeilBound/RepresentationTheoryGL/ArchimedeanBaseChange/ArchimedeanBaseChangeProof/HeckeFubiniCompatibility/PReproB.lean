@@ -1,7 +1,9 @@
 import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.HeckeFubiniCompatibility.PSplit
 import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.InfinitesimalCharacterGL.BridgeSt
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnitaryMemGLs
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.L1NormSectionBound
+import Mathlib
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AverageDerivativeL1Bound
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WaveKernelUniqueness
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WaveSolutionExistence
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RightDerivativeCalculusHolds
 
@@ -257,10 +259,6 @@ def Mv (W : Submodule ℂ (Kinf E N → ℂ)) (hW : FiniteDimensional ℂ W) (v 
 
 theorem toFun_rho (W : Submodule ℂ (Kinf E N → ℂ)) (hW : FiniteDimensional ℂ W) (v : InfinitePlace E) (u' : UN N)
     (w : (Mv W hW v).V) (u : UN N) : toFun W v ((Mv W hW v).ρ u' w) u = toFun W v w (u'⁻¹ * u) := rfl
-
-theorem continuous_toFun (W : Submodule ℂ (Kinf E N → ℂ)) (v : InfinitePlace E) (w : V0 W v) :
-    Continuous (toFun W v w) :=
-  w.2.1
 
 def evL (W : Submodule ℂ (Kinf E N → ℂ)) (hW : FiniteDimensional ℂ W) (v : InfinitePlace E) (u : UN N) :
     (Mv W hW v).V →L[ℂ] ℂ :=

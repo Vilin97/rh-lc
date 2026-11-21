@@ -84,8 +84,6 @@ def SegreFlagCutContraction.Statement : Prop :=
 
 section Examples
 
-def scaledDualCoordinate : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ_ (bundleIdx (bundleIdx PointIdx 1) 1)[2] := X ⟨none, (0 : Fin 1)⟩
-
 end Examples
 
 end

@@ -224,11 +224,6 @@ theorem tensor_ρ_tmul (X Y : Rep k G) (s : G) (a : X) (b : Y) :
     (X ⊗ Y).ρ s (a ⊗ₜ[k] b) = X.ρ s a ⊗ₜ[k] Y.ρ s b :=
   rfl
 
-theorem associator_hom_tmul (X Y Z : Rep k G) (a : X) (b : Y) (c : Z) :
-    (α_ X Y Z).hom.hom (((a ⊗ₜ[k] b : (X ⊗ Y : Rep k G)) ⊗ₜ[k] c : ((X ⊗ Y) ⊗ Z : Rep k G))) =
-      a ⊗ₜ[k] (b ⊗ₜ[k] c) :=
-  rfl
-
 theorem leftUnitor_hom_tmul (X : Rep k G) (c : k) (a : X) :
     (λ_ X).hom.hom ((c ⊗ₜ[k] a : (𝟙_ (Rep k G) ⊗ X : Rep k G))) = c • a :=
   rfl
@@ -245,21 +240,7 @@ def cupₗ (h : p + q = n) :
     (fun f g g' => by funext x; simp [cupCochain_apply, TensorProduct.tmul_add])
     (fun c f g => by funext x; simp [cupCochain_apply, TensorProduct.tmul_smul])
 
-@[simp]
-theorem cupₗ_apply (h : p + q = n) (f : (Fin p → G) → A) (g : (Fin q → G) → B) :
-    cupₗ h f g = cupCochain h f g :=
-  rfl
-
 variable (A B p q) in
-
-def cupCochainsTensor :
-    ((Fin p → G) → A) ⊗[k] ((Fin q → G) → B) →ₗ[k] ((Fin (p + q) → G) → (A ⊗ B : Rep k G)) :=
-  TensorProduct.lift (cupₗ rfl)
-
-@[simp]
-theorem cupCochainsTensor_tmul (f : (Fin p → G) → A) (g : (Fin q → G) → B) :
-    cupCochainsTensor A B p q (f ⊗ₜ g) = cupCochain rfl f g :=
-  rfl
 
 theorem tensorHom_cupCochain {A' B' : Rep k G} (φ : A ⟶ A') (ψ : B ⟶ B') (h : p + q = n)
     (f : (Fin p → G) → A) (g : (Fin q → G) → B) (x : Fin n → G) :
@@ -268,20 +249,6 @@ theorem tensorHom_cupCochain {A' B' : Rep k G} (φ : A ⟶ A') (ψ : B ⟶ B') (
   change φ.hom _ ⊗ₜ[k] ψ.hom _ = _
   rw [Rep.hom_comm_apply]
   rfl
-
-theorem associator_cupCochain {C : Rep k G} {r m l : ℕ} (h₁ : p + q = m) (h₂ : m + r = n)
-    (h₃ : q + r = l) (h₄ : p + l = n) (f : (Fin p → G) → A) (g : (Fin q → G) → B)
-    (e : (Fin r → G) → C) (x : Fin n → G) :
-    (α_ A B C).hom.hom (cupCochain h₂ (cupCochain h₁ f g) e x) =
-      cupCochain h₄ f (cupCochain h₃ g e) x := by
-  subst h₁ h₂ h₃
-  simp only [cupCochain_apply]
-  rw [associator_hom_tmul, tensor_ρ_tmul, ← Module.End.mul_apply,
-    ← map_mul, ← partialProd_add x (fun j : Fin (q + r) => x ⟨p + j, by omega⟩) (by omega)
-      (fun j => rfl) (by omega), partialProd_prefix x (by omega) (by omega)]
-  have hE : (fun j : Fin r => x ⟨p + (q + j), by omega⟩) = fun j : Fin r => x ⟨p + q + j, by omega⟩ :=
-    funext fun j => congrArg x (Fin.ext (by simp only; omega))
-  rw [hE]
 
 def oneCochain : (Fin 0 → G) → (𝟙_ (Rep k G) : Rep k G) := fun _ => (1 : k)
 

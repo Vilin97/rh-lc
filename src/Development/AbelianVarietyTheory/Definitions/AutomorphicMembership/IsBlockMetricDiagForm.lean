@@ -113,8 +113,6 @@ def pushL : TanM x' t'.G →ₗ[S] TanM x t.G where
     exact (key _ e _ _ rfl rfl).symm)
   map_smul' a v := tan_ext (Category.assoc _ _ _)
 
-theorem left_pushL (v : TanM x' t'.G) : (tv (pushL m x' hx v)).left = (tv v).left ≫ m.φ := rfl
-
 theorem pushL_bijective : Function.Bijective (pushL m x' hx) := by
   refine ⟨fun v w h => tan_ext (m.cart.1.hom_ext (congrArg (fun z => (tv z).left) h)
     ((isTan_tv v).1.trans (isTan_tv w).1.symm)), fun w => ?_⟩
@@ -238,11 +236,6 @@ def IsLieMetric (t : SAB H X) (f : Z ⟶ X) (R : AnRead p σ D)
       R.SmoothOn (ptsIn p σ V.1) (fun y => (g y).im) ∧
       ∀ y (hy : y ∈ ptsIn p σ V.1), g y = h y (valAt f v hy) (valAt f w hy)
 
-theorem IsLieMetric.of_anRead {f : Z ⟶ X} {R : AnRead p σ D} {h} (hh : IsLieMetric t f R h) (R' : AnRead p σ D) :
-    IsLieMetric t f R' h :=
-  ⟨hh.1, fun V v w => (hh.2 V v w).imp fun _ hg => ⟨(AnRead.smoothOn_iff R R' (isOpen_ptsIn _)).1 hg.1,
-    (AnRead.smoothOn_iff R R' (isOpen_ptsIn _)).1 hg.2.1, hg.2.2⟩⟩
-
 theorem smoothOn_dim_zero (hD : D = 0) (R : AnRead p σ D) (T : Set (CxPts p σ)) (g : CxPts p σ → ℝ) :
     R.SmoothOn T g := fun i => by
   subst hD
@@ -254,8 +247,5 @@ theorem isLieMetric_dim_zero (hD : D = 0) (f : Z ⟶ X) (R : AnRead p σ D)
   classical
   exact ⟨hh, fun V v w => ⟨fun y => if hy : y ∈ ptsIn p σ V.1 then h y (valAt f v hy) (valAt f w hy) else 0,
     smoothOn_dim_zero hD R _ _, smoothOn_dim_zero hD R _ _, fun y hy => dif_pos hy⟩⟩
-
-example (f : Z ⟶ X) (R : AnRead p σ 0) : ∃ h, IsLieMetric t f R h :=
-  ⟨_, isLieMetric_dim_zero rfl f R fun y => (exists_isBlockMetric t (y.1 ≫ f)).choose_spec⟩
 
 end GlobalTheory.LieMet

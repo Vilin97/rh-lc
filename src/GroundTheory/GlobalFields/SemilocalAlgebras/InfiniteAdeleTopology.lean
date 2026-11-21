@@ -98,10 +98,6 @@ def tensorInfiniteAdeleRingHomeomorph :
         (IsModuleTopology.continuous_of_linearMap (tmulLeft (b i))).comp
           (continuous_adeleCoord b i) }
 
-@[simp]
-theorem tensorInfiniteAdeleRingHomeomorph_apply (x : L ⊗[K] InfiniteAdeleRing K) :
-    tensorInfiniteAdeleRingHomeomorph x = tensorInfiniteAdeleRingEquiv x := rfl
-
 end InfinitePlace
 
 end GroundTheory.Global

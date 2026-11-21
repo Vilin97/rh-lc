@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SiegRel
+import Development.AbelianVarietyTheory.Definitions.Divisors.NotCompactOfMEqOne
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.ThetaUnifAV
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.SiegelToroidalIntegral
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatSurjectiveQcPow
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPullbackOneProdKernel

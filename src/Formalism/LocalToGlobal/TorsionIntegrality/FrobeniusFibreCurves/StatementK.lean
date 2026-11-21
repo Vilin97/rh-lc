@@ -22,10 +22,6 @@ def TwoTorsionKernelUnique : Prop :=
 
 open Classical in
 
-def DupBig : Prop :=
-  ∀ (K : Type) [NormedField K] [IsUltrametricDist K] (W : WeierstrassCurve K), IntCurve W →
-    ‖(2 : K)‖ = 2⁻¹ → ∀ P : W.toAffine.Point, 4 ≤ ‖px W P‖ → P + P ≠ 0 → 4 < ‖px W (P + P)‖
-
 open Classical in
 
 def TorsBound : Prop :=

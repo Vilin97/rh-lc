@@ -24,15 +24,6 @@ section Ab
 
 variable {T : TopCat.{w}} {ι : Type}
 
-def cechAbAug (P : (Opens T)ᵒᵖ ⥤ AddCommGrpCat.{v}) (V : Opens T) (U : ι → Opens T) :
-    P.obj (op V) →ₗ[ℤ] Cube.Term (cechAbCube P V U) 1 :=
-  presheafCechAug (P ⋙ abToIntModule) V U
-
-@[simp]
-theorem cechAbAug_apply (P : (Opens T)ᵒᵖ ⥤ AddCommGrpCat.{v}) (V : Opens T) (U : ι → Opens T)
-    (x : P.obj (op V)) (s : {s : Finset ι // s.card = 1}) :
-    cechAbAug P V U x s = P.map (homOfLE (cechOpen_le V U s.1)).op x := rfl
-
 variable [LinearOrder ι] [Finite ι] (F : TopCat.Sheaf AddCommGrpCat.{w} T) [F.IsFlasque]
 
 open CategoryTheory AlgebraicGeometry Limits TopologicalSpace Opposite in

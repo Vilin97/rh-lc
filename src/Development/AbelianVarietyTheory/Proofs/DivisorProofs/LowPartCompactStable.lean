@@ -289,8 +289,3 @@ theorem lowPartInf_kStab : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [N
       exact Submodule.mem_map_of_mem hg₁
 
 end GlobalTheory.IndLine
-
-example : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
-    (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W)
-    (R : RealMaps F a a') (Rf : FinMaps F a a'), IsMatched B G X om om' R Rf →
-      KStab B G.M om R.p (lowPartInf B G.M R.p) := GlobalTheory.IndLine.lowPartInf_kStab

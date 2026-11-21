@@ -37,8 +37,6 @@ def linForm (H : IsHerm c h) (x : V) : V →ₗ[R] R where
   map_add' := H.add_right x
   map_smul' a y := by simp [H.smul_right]
 
-@[simp] theorem linForm_apply (H : IsHerm c h) (x y : V) : linForm H x y = h x y := rfl
-
 structure IsHyp (h : V → V → R) (x y : V) : Prop where
   xx : h x x = 0
   yy : h y y = 0

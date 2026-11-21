@@ -49,20 +49,6 @@ end Objects
 
 section Examples
 
-example (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2))) :
-    segreY (R := ℚ) (fun _ => (0 : Fin 2)) * segreMon (fun _ => 1) -
-        segreY (fun _ => 1) * segreMon (fun _ => 0) ∈ segreLift _ ℚ W := by
-  simp only [segreLift, RingHom.mem_ker, segreY, segreMon, map_sub, map_mul, map_prod,
-    segreLiftMap, aeval_X, segreLiftVal]
-  simp only [Finset.univ_unique, Finset.prod_singleton]
-  ring
-
-example : (X ⟨Sum.inr (), (0 : Fin 2)⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (segreIdx (fun _ : Unit => Fin 2))) ∉
-    segreLift _ ℚ ⊥ := by
-  simp only [segreLift, RingHom.mem_ker, segreLiftMap, aeval_X, segreLiftVal]
-  rw [Polynomial.C_eq_zero, Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_bot]
-  exact X_ne_zero _
-
 end Examples
 
 end

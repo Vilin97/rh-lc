@@ -259,15 +259,6 @@ theorem eq_evFrac (ψ : U →+* K)
   IsLocalization.ringHom_ext (Submonoid.powers (C π * X : O⟦X⟧))
     (RingHom.ext fun f => by simp [h])
 
-def evFracₐ [Algebra O U] [IsScalarTower O O⟦X⟧ U] : U →ₐ[O] K where
-  __ := evFrac hπ K U
-  commutes' a := by
-    rw [IsScalarTower.algebraMap_apply O O⟦X⟧ U]
-    exact (evFrac_algebraMap hπ K U _).trans (by rw [AlgHom.commutes]; rfl)
-
-@[simp] theorem evFracₐ_apply [Algebra O U] [IsScalarTower O O⟦X⟧ U] (z : U) :
-    evFracₐ hπ K U z = evFrac hπ K U z := rfl
-
 end Eval
 
 theorem connected_dense_away_C_mul_X (hπ : Irreducible π) (U : Type*) [CommRing U]
@@ -338,10 +329,6 @@ theorem powerSeries_completeDVR (O : Type*) [CommRing O] [IsDomain O] [IsDiscret
     ⟨residueFieldSpanXEquiv O K, residueFieldSpanXEquiv_algebraMap K⟩,
     map_algebraMap_injective K,
     fun f => ⟨order_map_algebraMap K f, addVal_algebraMap_atPrime_X _ f⟩⟩
-
-example (p : ℕ) [Fact p.Prime] :
-    RingHom.ker (ev (PadicInt.irreducible_p (p := p))) = Ideal.span {X - C (p : ℤ_[p])} :=
-  (powerSeries_completeDVR ℤ_[p] ℚ_[p] PadicInt.irreducible_p).2.2.2.1.2.2.2.2.1
 
 end DVR
 

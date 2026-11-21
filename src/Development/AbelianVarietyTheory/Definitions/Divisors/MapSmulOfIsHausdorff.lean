@@ -51,8 +51,6 @@ theorem lev_pow (t : Tate p M) (n : ℕ) : t.lev n ^ p ^ n = 1 := ((Additive.toM
 
 theorem lev_succ (t : Tate p M) (n : ℕ) : t.lev (n + 1) ^ p = t.lev n := ((Additive.toMul (α := tateSeq p M) t).2 n).2
 
-@[ext] theorem ext {s t : Tate p M} (h : ∀ n, s.lev n = t.lev n) : s = t := Additive.toMul.injective (Subtype.ext (funext h))
-
 @[simp] theorem lev_add (s t : Tate p M) (n : ℕ) : (s + t).lev n = s.lev n * t.lev n := rfl
 
 @[simp] theorem lev_zero (n : ℕ) : (0 : Tate p M).lev n = 1 := rfl
@@ -91,9 +89,6 @@ def map {M' : Type} [CommGroup M'] (f : M →* M') : Tate p M →ₗ[ℤ_[p]] Ta
 
 @[simp] theorem lev_map {M' : Type} [CommGroup M'] (f : M →* M') (t : Tate p M) (n : ℕ) :
     (map p f t).lev n = f (t.lev n) := rfl
-
-theorem map_injective {M' : Type} [CommGroup M'] {f : M →* M'} (hf : Function.Injective f) :
-    Function.Injective (map p f) := fun s t h => Tate.ext fun n => hf (by simpa using congrArg (fun u => Tate.lev u n) h)
 
 theorem map_smul_of_isHausdorff {T O : Type} [AddCommGroup T] [Module ℤ_[p] T] [CommRing O]
     [Algebra ℤ_[p] O] [IsHausdorff (Ideal.span {(p : O)}) O] (f : T →+ O) (a : ℤ_[p]) (t : T) :

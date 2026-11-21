@@ -1,11 +1,26 @@
 import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.AutP
 import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.PurityTempered.AlgPowConst
 import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.PurityTempered.Temper
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.CompatPSOf
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.CountRankThree
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.CsdSsOfFull
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.SsCalcP
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.IsoOfFrob
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.LocCompC
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.SatLoc
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.SatFrob
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.ExistenceOfGaloisRepresentationsOfHyp
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.ExtReal
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.SignFix
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.CsdTwist
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.QuadraticTwists.AttTwist
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.UntwistS
+import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.GaloisRepIrreducibilityCriterion
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalLanglandsOfHyp
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeLAdicCharacterAndPrincipalIdealSt
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FontaineParameterInvariantUnderConjugation
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIrreducibleFixed
 import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SemisimpleLevels.FlagPol
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.LevelIso
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.LocCompC
 
 open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Polynomial
 open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.LocLanglands GlobalTheory.HeckeGal GlobalTheory.LocGL GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.Th
@@ -55,37 +70,3 @@ private theorem charpoly_of_flag {H k : Type} [Group H] [CommRing k] {n : ℕ} {
   simp only [(ha s).2] at h1
   rw [← h1]
   simp only [Units.val_mul, Matrix.coe_units_inv, Matrix.charpoly_units_conj]
-
-theorem UpperTheory.V.Th.freePU :
-    Af.HypothesesH → ∀ (K Ω : Type) [Field K] [NumberField K] [IsCMField K] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω], Module.finrank ℚ K = 2 → ∀ (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (ι : Qbar l ≃+* ℂ) (n : ℕ), 2 ≤ n → ∀ (r : G K Ω →* GL (Fin n) (Qbar l)) (M : ℕ) (m : Fin n → ℤ), 1 ≤ M → StrictAnti m → Continuous r → AutP ι r → Unl l M m r → FreeAt l r := by
-  intro PH K Ω _ _ _ _ _ _ hK l _ hl ι n hn r M m hM hm hr haut hU B hB
-  have P : Af.Hypotheses₂ := PH.toClassicalTheorems
-  obtain ⟨w, hBw, hw⟩ := place_under (F := K) (Fact.out : l.Prime).ne_zero hB
-  obtain ⟨π, hreg, hpol, hatt⟩ := haut
-  obtain ⟨A, hA, κ, hF, hunl⟩ := hU w hw
-  obtain ⟨χ, hχ, hflag, hκ⟩ := id hF
-  obtain ⟨rc, hrc⟩ := P.exists_rec hA
-  obtain ⟨⟨σ, hσ⟩, -⟩ := locCompC P K n π w
-  obtain ⟨k, hk, hpow⟩ := pow_eq_one_of_kills (F := K) (Ω := Ω) hM
-  have hflag' : W.HasFlag (r.comp (Dec (F := K) A).subtype) κ := hflag
-  obtain ⟨g, hg, hfree⟩ := purLocS P K Ω l hl ι n r hr w A hA hw (rc (algNorm σ))
-    (fun O _ _ _ Bw hj => by
-      obtain ⟨h1, h2⟩ := Lev.compatPSOf P P.ss K hK n hn l Ω ι r π hr hreg hpol hatt
-        w A hA O Bw hj
-      obtain ⟨μ, hμ, -⟩ := Lev.flagPol K Ω l ι n M hM m r hr w A hA O Bw hj κ hF h1
-      exact ⟨h1, fun _ => h2 σ hσ rc hrc ⟨μ, hμ⟩⟩)
-    (temper P K Ω n (by omega) π hreg hpol w A hA rc hrc σ hσ) κ m k hflag' hm hk
-    (fun i s hs => by
-      rw [hκ i s hs, zpow_neg, mul_inv_cancel_comm]
-      exact hpow _ _ (hχ i) _) (Or.inl hunl)
-  obtain ⟨t, rfl⟩ := exists_smul_eq_of_isPlaceOver (F := K) hA hBw
-  refine ⟨t * g * t⁻¹, ?_, ?_, fun i => κ i g, hfree, ?_⟩
-  · have h1 : (g : G K Ω) • A = A := g.2
-    show (t * (g : G K Ω) * t⁻¹) • t • A = t • A
-    rw [mul_smul, mul_smul, inv_smul_smul, h1]
-  · rw [map_mul, map_mul, map_inv, mul_inv_cancel_comm, hg]
-  · have h1 := charpoly_of_flag hflag' g (r t)
-    rw [← h1]
-    show (r (t * g * t⁻¹)).val.charpoly = _
-    rw [map_mul, map_mul, map_inv]
-    rfl

@@ -80,8 +80,6 @@ variable {E}
 def ofInt (ℓ : Nat.Primes) : 𝓞 E →+* locRing E ℓ :=
   (algebraMap (𝓞 E) E).codRestrict (locRing E ℓ) (coe_mem_locRing ℓ)
 
-@[simp] theorem coe_ofInt (ℓ : Nat.Primes) (a : 𝓞 E) : ((ofInt ℓ a : locRing E ℓ) : E) = (a : E) := rfl
-
 theorem isUnit_natCast_loc {ℓ : Nat.Primes} {n : ℕ} (hn : ¬ (ℓ : ℕ) ∣ n) :
     IsUnit ((n : locRing E ℓ)) := by
   have h0 : (n : E) ≠ 0 := fun h => hn (by simp [Nat.cast_eq_zero.1 h])

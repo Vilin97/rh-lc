@@ -186,11 +186,6 @@ theorem DiffVanish.mono {m n : ℕ} {φ : G → M} (h : DiffVanish m φ) (hmn : 
 theorem diffVanish_zero_iff {φ : G → M} : DiffVanish 0 φ ↔ φ = 0 := by
   simp [DiffVanish]
 
-theorem diffVanish_succ_iff {n : ℕ} {φ : G → M} :
-    DiffVanish (n + 1) φ ↔ ∀ a, DiffVanish n (bwdDiff a φ) := by
-  refine ⟨fun h a g ↦ by rw [← multiDiff_cons', h], fun h g ↦ ?_⟩
-  rw [← Fin.cons_self_tail g, multiDiff_cons', h]
-
 theorem DiffVanish.map {N : Type*} [AddCommGroup N] {n : ℕ} {φ : G → M} (h : DiffVanish n φ)
     (f : M →+ N) : DiffVanish n (f ∘ φ) := fun g ↦ by
   rw [multiDiff_map, h]; ext; simp

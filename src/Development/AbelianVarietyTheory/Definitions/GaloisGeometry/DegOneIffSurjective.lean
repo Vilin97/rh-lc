@@ -110,13 +110,4 @@ theorem _root_.GlobalTheory.HeckeSplit.finPart_localIdele_ne {v w : HeightOneSpe
 
 variable {L}
 
-theorem IsHeckeChar.mul {χ ψ : Ideles L →* ℂˣ} (hχ : IsHeckeChar L χ) (hψ : IsHeckeChar L ψ) :
-    IsHeckeChar L (χ * ψ) := (Formalism.L2.Host.hcharSub L).mul_mem hχ hψ
-
-theorem IsHeckeChar.inv {χ : Ideles L →* ℂˣ} (hχ : IsHeckeChar L χ) :
-    IsHeckeChar L χ⁻¹ := (Formalism.L2.Host.hcharSub L).inv_mem hχ
-
-theorem TrivAt.unrAt {χ : Ideles L →* ℂˣ} {v : HeightOneSpectrum (𝓞 L)} (h : TrivAt χ v) :
-    UnrAt χ v := fun x _ => h x
-
 end GlobalTheory.HeckeSplit

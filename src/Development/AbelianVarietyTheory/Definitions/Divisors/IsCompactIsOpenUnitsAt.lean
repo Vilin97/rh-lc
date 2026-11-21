@@ -95,8 +95,6 @@ variable (E) in
 def unitsAt (v : Pl F) : Subgroup (AE F E)ˣ :=
   idelesAt E (evFin F v) ⊓ (intLoc F E v).toSubmonoid.units.comap (unitFin F E v)
 
-theorem mem_UAtSub {X : Spc F E n} {ev : AF F → R} {g : UA σ X.J} : g ∈ UAtSub σ X ev ↔ g ∈ UAt σ X ev := Iff.rfl
-
 theorem mem_KAt {X : Spc F E n} {K : Subgroup (UA σ X.J)} {ev : AF F → R} {g : UA σ X.J} :
     g ∈ KAt K ev ↔ g ∈ K ∧ g ∈ UAt σ X ev := Iff.rfl
 
@@ -104,8 +102,6 @@ theorem mem_idelesAt {ev : AF F → R} {l : (AE F E)ˣ} : l ∈ idelesAt E ev �
 
 theorem mem_unitsAt {v : Pl F} {l : (AE F E)ˣ} : l ∈ unitsAt E v ↔ l ∈ idelesAt E (evFin F v) ∧
     compFin F E v l ∈ intLoc F E v ∧ compFin F E v (l⁻¹ : (AE F E)ˣ) ∈ intLoc F E v := Iff.rfl
-
-theorem unitsAt_le (v : Pl F) : unitsAt E v ≤ idelesAt E (evFin F v) := inf_le_left
 
 theorem isClosed_UAtSub (X : Spc F E n) (ev : AF F → R) : IsClosed (UAtSub σ X ev : Set (UA σ X.J)) := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
@@ -463,19 +459,6 @@ theorem locOp_lin {v : Pl F} {T : ((κ → AF F) → ℂ) → ((κ → AF F) →
   simp only [tens, GlobalTheory.LatVac.evFin_liftV, hrz] at e
   exact mul_right_cancel₀ h0 e
 
-theorem locOpInf_lin {T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)} (hT : IsLinearMap ℂ T)
-    (hex : ∀ f : SInf F κ, ∃ f₁ : SInf F κ, Acts (evI F) T f f₁) (a b : ℂ) (f f' : SInf F κ) :
-    locOpInf T (a • f + b • f') = a • locOpInf T f + b • locOpInf T f' := by
-  obtain ⟨r, h0, hr⟩ := exists_rest_inf F κ
-  refine DFunLike.coe_injective (eq_of_tens_inf h0 (hr f).1 ?_)
-  rw [← acts_locOpInf (hex _) r (hr _)]
-  change T (tens (evI F) (a • ⇑f + b • ⇑f') r) = tens (evI F) (a • ⇑(locOpInf T f) + b • ⇑(locOpInf T f')) r
-  rw [tens_lin, tens_lin, hT.map_add (f := _), hT.map_smul, hT.map_smul, acts_locOpInf (hex _) r (hr _),
-    acts_locOpInf (hex _) r (hr _)]
-
-theorem locOp_of_fix {v : Pl F} {T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)} (hT : ∀ Φ ∈ schA F κ, T Φ = Φ) {φ : (κ → Fv F v) → ℂ}
-    (hφ : φ ∈ SB (κ → Fv F v)) : locOp v T φ = φ := locOp_eq hφ hφ fun _ hr => hT _ hr.2
-
 variable {V : Type} [AddCommGroup V] [Module (AF F) V] {Bf : V → V → AF F}
 
 open scoped GlobalTheory.VacAny in
@@ -519,14 +502,6 @@ section Cone
 
 variable {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d}
 
-theorem smul_shiftA (H : Plane E n n₁) (H' : Plane E d d₁) (a : AF F) (l : (AE F E)ˣ) :
-    a • shiftA H H' l = (a • l.1) • Matrix.vecMulVec (incV F H.x) (incV F H'.y) := (smul_assoc _ _ _).symm
-
-theorem smul_shiftB (H : Plane E n n₁) (H' : Plane E d d₁) (a : AF F) (l : (AE F E)ˣ) :
-    a • shiftB σ H H' l = cA σ (a • l.1) • Matrix.vecMulVec (incV F H.y) (incV F H'.x) := by
-  rw [map_smul]
-  exact (smul_assoc _ _ _).symm
-
 theorem acts_locOp_om (hA : ActsEx) {B : Base F E} {M : Model σ X W} {χX χW : Chr F E} {om : Rep σ X W} {r s r' s' : ℕ}
     (hP : IsPair B M χX χW om r s r' s') {v : Pl F} {g : UA σ X.J} (hg : g ∈ UAt σ X (evFin F v)) {h : UA σ W.J}
     (hh : h ∈ UAt σ W (evFin F v)) {φ : (Fin n × Fin d → Fv F v) → ℂ} (hφ : φ ∈ SB (Fin n × Fin d → Fv F v)) :
@@ -551,66 +526,7 @@ variable {B M om v ev K μK μ u ν z}
 
 open scoped GlobalTheory.VacAny in
 
-theorem coneFinInt_eq (hψ : Continuous B.ψ) (φ : (Fin n × Fin d → Fv F v) → ℂ) (k : UA σ X.J) {l : (AE F E)ˣ}
-    (hl : l ∈ idelesAt E (evFin F v)) (y : Fin n₁ × Fin d₁ → Fv F v) :
-    coneFinInt B M om v ev u ν z φ k l y =
-      ev (schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M.co v (u l)) (locOp v (om (k, 1)) φ)) y * (ν l : ℂ) *
-        ((absEv F E v (unitFin F E v l) : ℝ) : ℂ) ^ z := by
-  rw [coneFinInt, (locOp_rho M.co hψ v (u l) (locOp_mem v _ φ)).2, absE_of_mem hl]
-
 open scoped GlobalTheory.VacAny in
-
-theorem coneFinInt_lin (hψ : Continuous B.ψ) {k : UA σ X.J}
-    (hk : ∀ φ ∈ SB (Fin n × Fin d → Fv F v), ∃ φ₁, φ₁ ∈ SB (Fin n × Fin d → Fv F v) ∧ Acts (evFin F v) (om (k, 1)) φ φ₁)
-    (a b : ℂ) {φ φ' : (Fin n × Fin d → Fv F v) → ℂ} (hφ : φ ∈ SB (Fin n × Fin d → Fv F v))
-    (hφ' : φ' ∈ SB (Fin n × Fin d → Fv F v)) (l : (AE F E)ˣ) (y : Fin n₁ × Fin d₁ → Fv F v) :
-    coneFinInt B M om v ev u ν z (a • φ + b • φ') k l y =
-      a * coneFinInt B M om v ev u ν z φ k l y + b * coneFinInt B M om v ev u ν z φ' k l y := by
-  have hT : IsLinearMap ℂ (M.co.rho B.ψ (partFin v (u l))) :=
-    ⟨fun f g => funext fun x => mul_add _ _ _, fun c f => funext fun x => mul_left_comm _ _ _⟩
-  simp only [coneFinInt]
-  rw [locOp_lin (om (k, 1)).isLinear hk a b hφ hφ', locOp_lin hT
-    (fun f hf => ⟨_, locOp_mem v _ f, (locOp_rho M.co hψ v (u l) hf).1⟩) a b (locOp_mem _ _ _) (locOp_mem _ _ _),
-    map_add, map_smul, map_smul]
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
-  ring
-
-theorem coneFin_lin (hψ : Continuous B.ψ)
-    (hk : ∀ k ∈ KAt K (evFin F v), ∀ φ ∈ SB (Fin n × Fin d → Fv F v),
-      ∃ φ₁, φ₁ ∈ SB (Fin n × Fin d → Fv F v) ∧ Acts (evFin F v) (om (k, 1)) φ φ₁)
-    (a b : ℂ) {φ φ' : (Fin n × Fin d → Fv F v) → ℂ} (hφ : φ ∈ SB (Fin n × Fin d → Fv F v))
-    (hφ' : φ' ∈ SB (Fin n × Fin d → Fv F v)) (y : Fin n₁ × Fin d₁ → Fv F v)
-    (h1 : ∀ k : KAt K (evFin F v), Integrable (fun l : idelesAt E (evFin F v) => coneFinInt B M om v ev u ν z φ k.1 l.1 y) μ)
-    (h1' : ∀ k : KAt K (evFin F v), Integrable (fun l : idelesAt E (evFin F v) => coneFinInt B M om v ev u ν z φ' k.1 l.1 y) μ)
-    (h2 : Integrable (fun k : KAt K (evFin F v) => ∫ l, coneFinInt B M om v ev u ν z φ k.1 l.1 y ∂μ) μK)
-    (h2' : Integrable (fun k : KAt K (evFin F v) => ∫ l, coneFinInt B M om v ev u ν z φ' k.1 l.1 y ∂μ) μK) :
-    coneFin B M om v ev K μK μ u ν z (a • φ + b • φ') y =
-      a * coneFin B M om v ev K μK μ u ν z φ y + b * coneFin B M om v ev K μK μ u ν z φ' y := by
-  simp only [coneFin]
-  rw [← integral_const_mul, ← integral_const_mul, ← integral_add (h2.const_mul a) (h2'.const_mul b)]
-  refine integral_congr_ae (Eventually.of_forall fun k => ?_)
-  beta_reduce
-  rw [← integral_const_mul, ← integral_const_mul, ← integral_add ((h1 k).const_mul a) ((h1' k).const_mul b)]
-  exact integral_congr_ae (Eventually.of_forall fun l => coneFinInt_lin hψ (hk k.1 k.2) a b hφ hφ' l.1 y)
-
-theorem coneFin_of_fixed (hK : IsNormK K (evFin F v) μK) {φ : (Fin n × Fin d → Fv F v) → ℂ}
-    (hφ : φ ∈ SB (Fin n × Fin d → Fv F v)) (hfix : ∀ k ∈ KAt K (evFin F v), Acts (evFin F v) (om (k, 1)) φ φ)
-    (y : Fin n₁ × Fin d₁ → Fv F v) :
-    coneFin B M om v ev K μK μ u ν z φ y =
-      ∫ l, ev (locOp v (M.co.rho B.ψ (partFin v (u l.1))) φ) y * (ν l.1 : ℂ) * ((absE F E l.1 : ℝ) : ℂ) ^ z ∂μ := by
-  haveI : IsProbabilityMeasure μK := ⟨hK.2⟩
-  have e : ∀ k : KAt K (evFin F v), locOp v (om (k.1, 1)) φ = φ := fun k => locOp_eq hφ hφ (hfix k.1 k.2)
-  simp only [coneFin, coneFinInt, e]
-  simp
-
-example : coneFin B M om v ev K μK μ u ν z 0 = 0 := by
-  have t : ∀ r, tens (evFin F v) (0 : (Fin n × Fin d → Fv F v) → ℂ) r = 0 := fun r => funext fun x => zero_mul _
-  have e : ∀ k, locOp v (om (k, 1)) 0 = 0 := fun k =>
-    locOp_eq (zero_mem _) (zero_mem _) fun r _ => by rw [t, map_zero]
-  have e' : ∀ w, locOp v (M.co.rho B.ψ w) 0 = 0 := fun w =>
-    locOp_eq (zero_mem _) (zero_mem _) fun r _ => by rw [t]; exact funext fun x => mul_zero _
-  funext y
-  simp [coneFin, coneFinInt, e, e']
 
 end Fin
 
@@ -633,91 +549,9 @@ def coneInf (f : SInf F (Fin n × Fin d)) : SInf F (Fin n₁ × Fin d₁) :=
 
 variable {B M om ei K μK μ u ν z}
 
-theorem coneInfInt_apply (f : SInf F (Fin n × Fin d)) (k : UA σ X.J) (l : (AE F E)ˣ)
-    (y : Fin n₁ × Fin d₁ → mixedEmbedding.mixedSpace F) :
-    coneInfInt B M om ei u ν z f k l y =
-      ei (locOpInf (M.co.rho B.ψ (partInf F (u l))) (locOpInf (om (k, 1)) f)) y * (ν l : ℂ) * ((absE F E l : ℝ) : ℂ) ^ z :=
-  (mul_comm _ _).trans (mul_assoc _ _ _).symm
-
-theorem coe_coneInf {f : SInf F (Fin n × Fin d)}
-    (h : ∃ g : SInf F (Fin n₁ × Fin d₁), ⇑g = coneInfFun B M om ei K μK μ u ν z f) :
-    ⇑(coneInf B M om ei K μK μ u ν z f) = coneInfFun B M om ei K μK μ u ν z f := by
-  rw [coneInf, dite_eq_left h]
-  exact h.choose_spec
-
-theorem coneInf_eq {f : SInf F (Fin n × Fin d)} {g : SInf F (Fin n₁ × Fin d₁)}
-    (h : ⇑g = coneInfFun B M om ei K μK μ u ν z f) : coneInf B M om ei K μK μ u ν z f = g :=
-  DFunLike.coe_injective ((coe_coneInf ⟨g, h⟩).trans h.symm)
-
-theorem coneInfInt_lin (hψ : IsStd B.ψ) {k : UA σ X.J}
-    (hk : ∀ f : SInf F (Fin n × Fin d), ∃ f₁ : SInf F (Fin n × Fin d), Acts (evI F) (om (k, 1)) f f₁)
-    (a b : ℂ) (f f' : SInf F (Fin n × Fin d)) (l : (AE F E)ˣ) :
-    coneInfInt B M om ei u ν z (a • f + b • f') k l =
-      a • coneInfInt B M om ei u ν z f k l + b • coneInfInt B M om ei u ν z f' k l := by
-  have hT : IsLinearMap ℂ (M.co.rho B.ψ (partInf F (u l))) :=
-    ⟨fun f g => funext fun x => mul_add _ _ _, fun c f => funext fun x => mul_left_comm _ _ _⟩
-  simp only [coneInfInt]
-  rw [locOpInf_lin (om (k, 1)).isLinear hk, locOpInf_lin hT fun g => ⟨_, (locOpInf_rho M.co hψ (u l) g).1⟩,
-    map_add, map_smul, map_smul, smul_add, smul_comm _ a, smul_comm _ b]
-
-theorem mem_KAt_inf {B : Base F E} {K : Subgroup (UA σ X.J)} (hK : IsStab B K) {k : UA σ X.J} :
-    k ∈ KAt K (evI F) ↔ k ∈ KInf σ X B.emb := by
-  refine ⟨fun h => ⟨h.2, ((hK k).1 h.1).1⟩, fun h => ⟨(hK k).2 ⟨h.2, fun y hy => ?_⟩, h.1⟩⟩
-  have h0 : realAd F 1 • y = 0 := by
-    induction hy using AddSubgroup.closure_induction with
-    | mem y hy =>
-      obtain ⟨a, ha, -, x, -, rfl⟩ := hy
-      rw [smul_comm]
-      exact at_partInf _ a ha
-    | zero => exact smul_zero _
-    | add _ _ _ _ h1 h2 => rw [smul_add, h1, h2, add_zero]
-    | neg _ _ h1 => rw [smul_neg, h1, neg_zero]
-  have key : ∀ g ∈ UAtSub σ X (evI F), mat g *ᵥ y = y := fun g hg => by
-    have h1 : (mat g - 1) *ᵥ y = 0 := by
-      rw [← partInf_of_at hg, partInf, Matrix.smul_mulVec, ← Matrix.mulVec_smul, h0, Matrix.mulVec_zero]
-    rwa [Matrix.sub_mulVec, Matrix.one_mulVec, sub_eq_zero] at h1
-  rw [key k h.1, key k⁻¹ (inv_mem (show k ∈ UAtSub σ X (evI F) from h.1))]
-  exact ⟨hy, hy⟩
-
 end Inf
 
 end Cone
-
-example (v : Pl F) (a : (Fv F v)ˣ) (ha : ‖a.1‖₊ ≠ 1) :
-    ideleAt F E v (Units.map (algebraMap (Fv F v) (Fv F v ⊗[F] E)).toMonoidHom a) ∉ unitsAt E v := fun h => by
-  haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
-  have h1 := absE_of_mem_unitsAt h
-  rw [GlobalTheory.Doubling.absE_ideleAt, GlobalTheory.Doubling.absEv_algebraMap] at h1
-  exact ha ((pow_eq_one_iff_of_nonneg zero_le' Module.finrank_pos.ne').1 h1)
-
-example (v : Pl F) : ideleAt F E v (-1) ∈ unitsAt E v := by
-  refine ⟨ideleAt_mem v _, ?_⟩
-  change unitFin F E v (ideleAt F E v (-1)) ∈ (intLoc F E v).toSubmonoid.units
-  rw [GlobalTheory.Doubling.unitFin_ideleAt_self]
-  exact (Submonoid.mem_units_iff _ _).2 ⟨(intLoc F E v).neg_mem (one_mem _), (intLoc F E v).neg_mem (one_mem _)⟩
-
-example {κ : Type} [Fintype κ] (v : Pl F) (t : κ → Fv F v) {φ : (κ → Fv F v) → ℂ} (hφ : φ ∈ SB (κ → Fv F v)) :
-    locOp v (fun Φ x => Φ (x + fun i => GlobalTheory.LatVac.liftV v (t i))) φ = fun x => φ (x + t) := by
-  refine locOp_eq hφ ⟨hφ.1.comp_continuous (continuous_add_const t),
-    hφ.2.comp_homeomorph (Homeomorph.addRight t)⟩ fun r hr => funext fun x => ?_
-  have hz : At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (t i)) := fun u hu => funext fun i => GlobalTheory.LatVac.at_liftV v _ u hu
-  simp only [tens, hr.1 x _ hz, Pi.add_apply, map_add (f := _), GlobalTheory.LatVac.evFin_liftV]
-  rfl
-
-example {b a' : ℕ} (B : Base F E) (G : Geo σ (b + 2) a') (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a'))
-    (X : Chars F E) (om : Rep σ G.V G.W) (v : Pl F)
-    (ev : ((Fin (b + 2) × Fin (b + 2 + a') → Fv F v) → ℂ) →ₗ[ℂ] (Fin b × Fin (b + a') → Fv F v) → ℂ)
-    (K : Subgroup (UA σ G.V.J)) (hK : IsCompact (K : Set (UA σ G.V.J))) :
-    ((Fin (b + 2) × Fin (b + 2 + a') → Fv F v) → ℂ) → (Fin b × Fin (b + a') → Fv F v) → ℂ :=
-  coneFin B G.M om v ev K (existsUnique_isNormK hK _).choose (existsUnique_isNormE E v).choose (shiftA H H') X.ν
-    ((b + 2 - a') / 2)
-
-example {a b : ℕ} (B : Base F E) (G : Geo σ a (b + 2)) (H : Plane E (b + 2) b) (H' : Plane E (a + (b + 2)) (a + b))
-    (X : Chars F E) (om' : Rep σ G.V' G.W) (ei : SInf F (Fin (b + 2) × Fin (a + (b + 2))) →L[ℂ] SInf F (Fin b × Fin (a + b)))
-    (K : Subgroup (UA σ G.V'.J)) (hK : IsCompact (K : Set (UA σ G.V'.J))) :
-    SInf F (Fin (b + 2) × Fin (a + (b + 2))) → SInf F (Fin b × Fin (a + b)) :=
-  coneInf B G.M' om' ei K (existsUnique_isNormK hK _).choose (exists_haar_idelesAt E (evI F)).choose (shiftB σ H H') X.ν
-    ((a - (b + 2)) / 2 + 1)
 
 end GlobalTheory.ThK
 

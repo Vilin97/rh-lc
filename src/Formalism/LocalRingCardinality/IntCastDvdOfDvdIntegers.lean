@@ -75,8 +75,6 @@ theorem q_prime : D.host.q.Prime := D.host.hyp.1
 
 theorem d_prime : D.host.d.Prime := D.host.hyp.2.1
 
-theorem n_pos : 0 < D.R.n := by unfold Ranks.n; positivity
-
 theorem one_lt_cond : 1 < D.host.QS * D.host.q * D.host.d := by
   have h1 := D.host.QS_pos
   have h2 := D.q_prime.pos

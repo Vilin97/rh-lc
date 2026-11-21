@@ -19,8 +19,6 @@ structure Idx where
 
 variable {D s M}
 
-def Idx.unit (j : J) : Idx D s M := ⟨j, 1, by simpa using M.one_mem⟩
-
 theorem app_map_apply {j k : J} (φ : j ⟶ k) (x : D.obj j) :
     (s.app k).hom ((D.map φ).hom x) = (s.app j).hom x := by
   have h := congr(($(s.naturality φ)).hom x)
@@ -38,11 +36,6 @@ instance : SmallCategory (Idx D s M) where
   id_comp _ := Subtype.ext (Category.id_comp _)
   comp_id _ := Subtype.ext (Category.comp_id _)
   assoc _ _ _ := Subtype.ext (Category.assoc _ _ _)
-
-@[simp] theorem comp_val {a b c : Idx D s M} (φ : a ⟶ b) (ψ : b ⟶ c) :
-    (φ ≫ ψ).1 = φ.1 ≫ ψ.1 := rfl
-
-@[simp] theorem id_val (a : Idx D s M) : (𝟙 a : a ⟶ a).1 = 𝟙 a.j := rfl
 
 theorem isUnit_map {a b : Idx D s M} (φ : a ⟶ b) :
     IsUnit (algebraMap (D.obj b.j) (Localization.Away b.e) ((D.map φ.1).hom a.e)) := by

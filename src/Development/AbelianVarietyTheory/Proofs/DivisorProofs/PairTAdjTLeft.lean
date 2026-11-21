@@ -79,9 +79,6 @@ def goodPoint (B : Out.PolAV (Sp R)) (o : B.OAct Λ) : Point p v O Λ :=
 
 variable {B B' : Out.PolAV (Sp R)} (o : B.OAct Λ) (o' : B'.OAct Λ)
 
-theorem goodPoint_oGt (a : Λ) : (goodPoint hv ε j B o).oGt.act a = (Over.pullback (spMap j)).map (o.act a) :=
-  pullAct_act _ B o a
-
 theorem goodPoint_oA (a : Λ) : (goodPoint hv ε j B o).oA.act a =
     (Over.pullback (spMap (algebraMap O C))).map ((Over.pullback (spMap j)).map (o.act a)) :=
   (pullAct_act _ _ (pullAct (spMap j) B o) a).trans (congrArg _ (pullAct_act _ B o a))
@@ -158,9 +155,6 @@ variable [NumberField K] {ρ : 𝓞 K} {σ₁ : K →+* ℂ} {p q : ℕ} (X : CM
 abbrev pointB : letI := H.starRing; Point ℓ v O (𝓞 E) := patPoint hv ε i X.B
 
 abbrev pointA (b : Bool) : letI := H.starRing; Point ℓ v O (𝓞 E) := patPoint hv ε i (X.A b)
-
-abbrev phiT (k : Fin p ⊕ Fin q) :
-    letI := H.starRing; (pointA hv ε i X k.isLeft).T →ₗ[ℤ_[ℓ]] (pointB hv ε i X).T := patT hv ε i (X.lin k)
 
 abbrev phiV [Algebra ℤ_[ℓ] C] (k : Fin p ⊕ Fin q) :
     letI := H.starRing; (pointA hv ε i X k.isLeft).V →ₗ[C] (pointB hv ε i X).V := patV hv ε i (X.lin k)

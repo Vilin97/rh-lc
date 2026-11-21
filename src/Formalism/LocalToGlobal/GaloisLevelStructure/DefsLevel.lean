@@ -12,8 +12,6 @@ section lvl
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
-local notation3 "L⁺" => NumberField.maximalRealSubfield L
-
 def ParaRT (s : SplitPlace L) (r : ℕ) (h : GL (Fin n) (s.v.adicCompletion L⁺)) : Prop :=
   h ∈ Formalism.UG.GLint (Fin n) (s.v.adicCompletionIntegers L⁺).toSubring ∧
     ∀ a b : Fin n, r ≤ a.val → b.val < r → Valued.v (h.val a b) < 1

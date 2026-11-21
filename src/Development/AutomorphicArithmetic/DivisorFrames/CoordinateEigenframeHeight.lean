@@ -1,6 +1,7 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinPart
-import Development.AbelianVarietyTheory.Definitions.Divisors.KernelSt
+import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.ConjSymm
+import Development.AbelianVarietyTheory.Definitions.Divisors.TorusExt
+import Development.AbelianVarietyTheory.Definitions.Divisors.SemiposAtOfPositive
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GrNormPosOfBasis
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FrameCombinationCoeffUnique
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IoOfLeOneIff
@@ -16,39 +17,6 @@ open GlobalTheory.ShFam.CoordUniq GlobalTheory.ShFam.Pad.Guard
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
-
-private theorem tri_swap {O : Type} [CommRing O] {β : O →+* c.F} {Z : Model Xo c β} {R : Type} [CommRing R]
-    {φ₁ φ₂ : c.F →+* R} {x : Sp R ⟶ Z.X}
-    (f₁ : EigFrame Z φ₁ x) (f₂ : EigFrame Z φ₂ x) {K : Type} [Field K] {ι : R →+* K} (hι : Function.Injective ι)
-    {φ₀ : c.F →+* K} {x₀ : Sp K ⟶ Z.X} {f₀ : EigFrame Z φ₀ x₀} {t₁ t₂ : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Kˣ}
-    (h₁ : f₁.Tri ι f₀ t₁) (h₂ : f₂.Tri ι f₀ t₂) {k : Type} [Field k] {ψ : R →+* k} {φ' : c.F →+* k}
-    {x' : Sp k ⟶ Z.X} {g : EigFrame Z φ' x'} {s₁ : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ} (b : f₁.Tri ψ g s₁) :
-    ∃ s₂, f₂.Tri ψ g s₂ := by
-  obtain rfl : φ₁ = φ₂ := RingHom.ext fun a => hι ((RingHom.congr_fun h₁.2.1 a).symm.trans (RingHom.congr_fun h₂.2.1 a))
-  obtain ⟨k₁, hk₁⟩ := f₁.exists_isMap _ h₁.2.1 h₁.1
-  obtain ⟨k₂, hk₂⟩ := f₂.exists_isMap _ h₁.2.1 h₁.1
-  obtain ⟨q₁, hq₁⟩ := f₁.exists_isMap _ b.2.1 b.1
-  obtain ⟨q₂, hq₂⟩ := f₂.exists_isMap _ b.2.1 b.1
-  have e1 (τ i d) : k₂.co f₀ τ d i = ∑ j, k₁.co f₀ τ j i * ι (f₂.co f₁ τ d j) := by
-    rw [← k₂.co_mul k₁, hk₂.co τ hk₁ h₁.1, Matrix.mul_apply]
-    exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
-  have hM (τ d i) (h : i < d) : f₂.co f₁ τ d i = 0 := hι ((tri_of_mul
-    (M := fun i a => ι (f₂.co f₁ τ a i)) (fun i a => (h₂.co τ hk₂).1 a i)
-    (fun i a' => (h₁.co τ hk₁).1 a' i) (fun i => (h₁.co τ hk₁).2 i ▸ (t₁ τ i).ne_zero) (e1 τ) i d h).trans
-      (map_zero _).symm)
-  have hT (τ) (a i) (h : i < a) : q₂.co g τ a i = 0 := by
-    rw [← q₂.co_mul q₁, hq₂.co τ hq₁ b.1, Matrix.mul_apply]
-    refine Finset.sum_eq_zero fun j _ => ?_
-    rcases lt_or_ge j a with hj | hj
-    · rw [Matrix.map_apply, hM τ a j hj, map_zero, zero_mul]
-    · rw [(b.co τ hq₁).1 j i (h.trans_le hj), mul_zero]
-  have hu (τ i) : q₂.co g τ i i ≠ 0 := by
-    have := q₂.isUnit_det_co g τ
-    rw [Matrix.det_of_upperTriangular (M := q₂.co g τ) fun _ _ h => hT τ _ _ h] at this
-    exact Finset.prod_ne_zero_iff.1 this.ne_zero i (Finset.mem_univ i)
-  refine ⟨fun τ i => Units.mk0 _ (hu τ i), b.1, b.2.1, fun τ i => ⟨fun a => q₂.co g τ a i, rfl, fun a ha => hT τ a i ha, ?_⟩⟩
-  rw [← funext (hq₂ τ)]
-  exact q₂.co_spec g τ i
 
 attribute [local instance] Over.cartesianMonoidalCategory in
 
@@ -100,32 +68,6 @@ private theorem sum_letters (w : Pad.Sym E →₀ ℤ) (L : Letter Dw → ℝ) :
   · rw [Finset.sum_eq_single z (fun b _ hb => by simp [hb.symm]) (by simp)]
     simp
 
-private theorem coord_move {O : Type} [CommRing O] {β : O →+* c.F} {Z : Model Xo c β} {R : Type} [CommRing R]
-    [IsLocalRing R] {φ₁ φ₂ : c.F →+* R} {x : Sp R ⟶ Z.X}
-    (f₁ : EigFrame Z φ₁ x) (f₂ : EigFrame Z φ₂ x) {K : Type} [Field K] {ι : R →+* K} (hι : Function.Injective ι)
-    {φ₀ : c.F →+* K} {x₀ : Sp K ⟶ Z.X} {f₀ : EigFrame Z φ₀ x₀} {t₁ t₂ : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Kˣ}
-    (h₁ : f₁.Tri ι f₀ t₁) (h₂ : f₂.Tri ι f₀ t₂) {k : Type} [Field k] {ψ : R →+* k} {φ' : c.F →+* k}
-    {x' : Sp k ⟶ Z.X} {g : EigFrame Z φ' x'} {s₁ : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ} (b : f₁.Tri ψ g s₁)
-    (n : Letter Dw → ℤ) {σ : K} {r₁ : R} (hr : ι r₁ = σ * ((∏ z : Letter Dw, t₁ z.1 z.2 ^ n z : Kˣ) : K)) :
-    ∃ (s₂ : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ) (r₂ : R), f₂.Tri ψ g s₂ ∧
-      ι r₂ = σ * ((∏ z : Letter Dw, t₂ z.1 z.2 ^ n z : Kˣ) : K) ∧
-      ψ r₁ * ((∏ z : Letter Dw, s₁ z.1 z.2 ^ (-n z) : kˣ) : k) =
-        ψ r₂ * ((∏ z : Letter Dw, s₂ z.1 z.2 ^ (-n z) : kˣ) : k) := by
-  obtain ⟨s₂, b₂⟩ := tri_swap f₁ f₂ hι h₁ h₂ b
-  obtain ⟨u, hu⟩ := exists_unit_ratio f₂ f₁ hι h₂ h₁
-  refine ⟨s₂, r₁ * ((∏ z : Letter Dw, u z.1 z.2 ^ n z : Rˣ) : R), b₂, ?_, ?_⟩
-  · rw [map_mul, hr, mul_assoc]
-    congr 1
-    simp only [hu _ _ _ _ h₂ h₁, mul_zpow, Finset.prod_mul_distrib, ← map_zpow, ← map_prod]
-    rfl
-  · have hs : Units.map (ψ : R →* k) (∏ z : Letter Dw, u z.1 z.2 ^ n z) *
-        ∏ z : Letter Dw, s₂ z.1 z.2 ^ (-n z) = ∏ z : Letter Dw, s₁ z.1 z.2 ^ (-n z) := by
-      simp only [hu _ _ _ _ b₂ b, mul_zpow, map_prod, map_zpow, ← Finset.prod_mul_distrib]
-      refine Finset.prod_congr rfl fun z _ => ?_
-      rw [mul_left_comm, ← zpow_add, add_neg_cancel, zpow_zero, mul_one]
-    rw [map_mul, mul_assoc, ← hs]
-    rfl
-
 private theorem core {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {R k C : Type} [CommRing R] [Field k]
     [NontriviallyNormedField C] [IsUltrametricDist C] {φ₂ : c.F →+* R} {x₀ : Sp R ⟶ Z.X} (f₂ : EigFrame Z φ₂ x₀)
     {φ : c.F →+* k} {x : Sp k ⟶ Z.X} (g : EigFrame Z φ x) {ψ : R →+* k} {s : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ}
@@ -162,32 +104,6 @@ private theorem core {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {R k C : Type}
   simp only [Real.log_zpow, Int.cast_neg, neg_mul, Finset.sum_neg_distrib]
   ring
 
-private theorem coord_at {O : Type} [CommRing O] {β : O →+* c.F} {Z : Model Xo c β} {F : Type} [Field F] [NumberField F]
-    {e : F ≃+* c.F} (Y : FlagCpt Z e) {k K : Type} [Field k] [Field K] [CharZero K] [Algebra.IsAlgebraic ℚ K]
-    {φ : c.F →+* k} {x : Sp k ⟶ Z.X} {g : EigFrame Z φ x} {q : Sp k ⟶ Y.Y.X} {n : Letter Dw → ℤ} {σ : Y.Y.Fn} {b : k}
-    (hco : IsCoord Y q g n σ b) (θ : k →+* K) (y : Sp K ⟶ Y.Y.X) (hy : y = spMap θ ≫ q)
-    {φ₂ : c.F →+* Y.Y.X.presheaf.stalk (below y)} (f₂ : EigFrame Z φ₂ (stalkPt Y.Y (below y) ≫ Y.π ≫ genι Z))
-    {t₂ : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Y.Y.Fnˣ}
-    (h : f₂.Tri (algebraMap (Y.Y.X.presheaf.stalk (below y)) Y.Y.X.functionField) Y.f0 t₂) :
-    ∃ (ψ : Y.Y.X.presheaf.stalk (below y) →+* k) (s : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ) (r : k),
-      (Scheme.stalkClosedPointTo y).hom = θ.comp ψ ∧ f₂.Tri ψ g s ∧
-      valAt y (σ * ((∏ z : Letter Dw, t₂ z.1 z.2 ^ n z : Y.Y.Fnˣ) : Y.Y.Fn)) = θ r ∧
-      b = r * ((∏ z : Letter Dw, s z.1 z.2 ^ (-n z) : kˣ) : k) := by
-  have : CharZero c.F := RingHom.charZero c.F.val.toRingHom
-  obtain ⟨y₀, ψ, φ₁, f, t, t', r, h₁, h₂, h₃, h₄, rfl⟩ := hco
-  have h0 : spMap (θ.comp ψ) ≫ Y.Y.X.fromSpecStalk y₀ =
-      spMap (Scheme.stalkClosedPointTo y).hom ≫ Y.Y.X.fromSpecStalk (below y) := by
-    refine Eq.trans ?_ (Scheme.Spec_stalkClosedPointTo_fromSpecStalk y).symm
-    rw [hy, h₁, ← Category.assoc, sp_comp]
-    rfl
-  have hE := stalk_ext (isLocalHom_of_algebraic φ₁ (θ.comp ψ)) inferInstance h0
-  obtain rfl : y₀ = below y := hE.1
-  have e' := eq_of_heq hE.2
-  obtain ⟨s, r₂, b₂, hr, hb'⟩ := coord_move f f₂
-    (IsFractionRing.injective (Y.Y.X.presheaf.stalk (below y)) Y.Y.X.functionField) h₂ h h₃ _ h₄
-  refine ⟨ψ, s, ψ r₂, e'.symm, b₂, ?_, hb'⟩
-  rw [← hr, Base.valAt_stalk, ← e', RingHom.comp_apply]
-
 end SlopeTestRemainingChoices
 
 private theorem lg_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} (Y : FlagCpt Z e) (w : Pad.Sym E →₀ ℤ) (v : HeightOneSpectrum (𝓞 F)) [hp : Fact (resP v).Prime] (ε : GlobalTheory.TrueGeo.Ext v) (y : AlgPt Y.Y) :
@@ -200,17 +116,3 @@ private theorem lg_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
 private theorem pullback_fin_relation {A A' B d lr lb S S' : ℝ} (h0 : A = A') (h1 : A' = d * lr) (h2 : B = d * lb)
     (h3 : lr + S = lb + S') : A + d * S = B + d * S' := by
   rw [h0, h1, h2, ← mul_add, h3, mul_add]
-
-theorem UpperTheory.coordinate_eigenframe_height :
-    ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} (Y : FlagCpt Z e) (φ : c.F →+* Qb) (x : Sp Qb ⟶ Z.X) (g : EigFrame Z φ x) (q : Sp Qb ⟶ Y.Y.X) (w : Pad.Sym E →₀ ℤ) (b : Qb), b ≠ 0 → IsCoord Y q g (expo Dw w) ((eqn (divOf Y (expo Dw w)) (below q))⁻¹ : Y.Y.Fnˣ) b → ∀ (v : HeightOneSpectrum (𝓞 F)) [Fact (resP v).Prime] (ε : GlobalTheory.TrueGeo.Ext v) (θ : Qb →+* AlgebraicClosure F) (y : AlgPt Y.Y), (∀ a ∈ w.support, a.1 (resP v) = false) → y.1 = spMap θ ≫ q → lgOf Y w v ε y = Real.log (ε.w (θ b)) + (-Real.log (ε.w (resP v)) / Real.log (resP v)) * w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap ((ioOf (resP v) ε).comp θ) ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((ioOf (resP v) ε).comp θ)) ≫ g.v τ i) (resP v) false a.2.2 := by
-  intro E _ _ _ H Dw l Xo c Z F _ _ e Y φ x g q w b hb hco v hp ε θ y hw hy
-  have : Algebra.IsAlgebraic ℚ (AlgebraicClosure F) := Algebra.IsAlgebraic.trans ℚ F _
-  rw [← Res.below_comp q θ, ← hy] at hco
-  obtain ⟨ψ, s, r, e1, b₂, e2, rfl⟩ := coord_at Y hco θ y.1 hy _
-    (Y.gr_spec (below y.1)).choose_spec.choose_spec.choose_spec.1
-  have hlog := log_w_eq (resP v) ε _ (ioOf_le_one_iff _ (residueCharacteristic_mem v) ε)
-  have key := core _ g b₂ ((ioOf (resP v) ε).comp θ) ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)
-    (by rw [e1, RingHom.comp_assoc]) (resP v) w hw (left_ne_zero_of_mul hb)
-  rw [mul_comm (Units.val _), ← Units.val_mul] at e2
-  rw [RingHom.comp_apply, RingHom.comp_apply] at key
-  exact (lg_eq Y w v ε y).trans (pullback_fin_relation (congrArg (fun a => Real.log (ε.w a)) e2) (hlog _) (hlog _) key)

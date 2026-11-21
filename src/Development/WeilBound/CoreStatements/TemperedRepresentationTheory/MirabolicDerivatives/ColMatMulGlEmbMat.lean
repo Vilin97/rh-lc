@@ -141,10 +141,6 @@ def psiMinus {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (τ : Represen
 
 variable (k) in
 
-def psiPlus {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (GL (Fin n) k) W) :
-    Representation ℂ (Mir k n) W :=
-  σ.comp (mirabolicProjection k n)
-
 theorem levi_stab (ψ : AddChar k Circle) (n : ℕ) (m : Mir k n) (u : MirUin k (n + 1)) :
     ∃ h : ((levi k (n + 1)).comp (Mir k n).subtype) m * (u : Mir k (n + 1)) *
         (((levi k (n + 1)).comp (Mir k n).subtype) m)⁻¹ ∈ MirUin k (n + 1),
@@ -182,15 +178,7 @@ def qRep (ψ : AddChar k Circle) {n : ℕ} {W : Type} [AddCommGroup W] [Module �
 
 variable (k) in
 
-def phiPlus (ψ : AddChar k Circle) {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (Mir k n) W) :
-    Representation ℂ (Mir k (n + 1)) (cIndSpace (Q k n) (qRep k ψ σ)) :=
-  cInd (Q k n) (qRep k ψ σ)
-
 variable (k) in
-
-def phiHat (ψ : AddChar k Circle) {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (Mir k n) W) :
-    Representation ℂ (Mir k (n + 1)) (smoothPart (ind (Q k n) (qRep k ψ σ))) :=
-  smInd (Q k n) (qRep k ψ σ)
 
 variable (k) in
 

@@ -12,8 +12,6 @@ open CategoryTheory Limits groupCohomology IntermediateField GroundTheory.Global
 
 attribute [local instance 2000] Rep.hV2 Submodule.module Submodule.Quotient.module
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section Hilbert90

@@ -30,14 +30,6 @@ variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [M
 
 omit [NumberField K] in
 
-theorem map_span (b b' : Basis (Fin N) K V) {n : ℕ} (w : Matrix (Fin N) (Fin n) K) :
-    (Submodule.span (𝓞 K) (Set.range fun k => ∑ j, w j k • b' j)).map (b.equivFun.toLinearMap.restrictScalars (𝓞 K)) =
-      Submodule.span (𝓞 K) (Set.range (b.toMatrix b' * w).col) := by
-  rw [Submodule.map_span, ← Set.range_comp]
-  congr 2
-  funext k i
-  simp [Matrix.mul_apply, Basis.toMatrix_apply, mul_comm]
-
 set_option autoImplicit false in
 open MvPolynomial NumberField Module in
 open scoped Matrix in

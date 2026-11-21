@@ -205,20 +205,6 @@ theorem det_ne_of_gram {τ : E →+* ℂ} {Y : Matrix (Fin r) (Fin r) ℂ} {p0 :
   have h3 : star (v b) = 0 := (mul_eq_zero.mp h2).resolve_left hs
   simpa using h3
 
-theorem Kset_sub (R : ℝ) : Kset X R ⊆ X.dom := by
-  intro w hw τ
-  have hg := (hw τ).1
-  refine ⟨det_ne_of_gram X hg, fun i => ?_⟩
-  have e : dmin X.Gm w τ i = ((psgn X.p0 i : ℝ) : ℂ) := by
-    unfold dmin lminor
-    rw [hg, submatrix_diagonal _ _ (Fin.castLE_injective _), det_diagonal]
-    simp only [psgn, Complex.ofReal_prod, Fin.val_castLE]
-    exact Fin.prod_univ_eq_prod_range (fun a => ((sgn X.p0 a : ℝ) : ℂ)) i
-  rw [e, Complex.ofReal_re]
-  have hne : psgn X.p0 i ≠ 0 :=
-    Finset.prod_ne_zero_iff.mpr fun a _ => by unfold sgn; split_ifs <;> norm_num
-  exact mul_self_pos.mpr hne
-
 end
 
 theorem norm_herm_le {y : X.Ψ → Matrix (Fin r) (Fin r) ℂ} (hy : IntegralBasisReduction.IsNormal X y) {C : ℝ}

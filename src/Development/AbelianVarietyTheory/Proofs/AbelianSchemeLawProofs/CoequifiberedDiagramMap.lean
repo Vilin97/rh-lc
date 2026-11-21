@@ -184,7 +184,6 @@ lemma ι_toQuot (U : Y.affineOpens) :
 
 def fromQuot : quot f g a ha p hp ⟶ Y := (glueData f g a ha p hp).toBase
 
-@[reassoc]
 lemma ι_fromQuot (U : Y.affineOpens) :
     (cover f g a ha p hp).f U ≫ fromQuot f g a ha p hp =
       Spec.map ((diagramMap f g a ha p hp).app (.op U.1)) ≫ U.2.fromSpec :=
@@ -196,7 +195,6 @@ lemma fromQuot_preimage (U : Y.affineOpens) :
   simpa using! (glueData f g a ha p hp).toBase_preimage_eq_opensRange_ι U
 
 set_option backward.isDefEq.respectTransparency false in
-@[reassoc (attr := simp)]
 lemma toQuot_fromQuot : toQuot f g a ha p hp ≫ fromQuot f g a ha p hp = f := by
   refine Scheme.Cover.hom_ext (X.openCoverOfIsOpenCover _
     (.comap (iSup_affineOpens_eq_top Y) f.base.1)) _ _ fun U ↦ ?_

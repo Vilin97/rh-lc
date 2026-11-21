@@ -46,8 +46,6 @@ theorem fermat {p : ℕ} [hp : Fact p.Prime] (r : ℚ) (hr : ‖(r : ℚ_[p])‖
 
 variable {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
 
-local notation "S" => Matrix.GeneralLinearGroup.scalar (Fin 2)
-
 theorem tp_mul {a b : F} (ha : TP a) (hb : TP b) : TP (a * b) := fun v => by
   rw [reAt_eq, map_mul, Pi.mul_apply, ← reAt_eq, ← reAt_eq]; exact mul_pos (ha v) (hb v)
 

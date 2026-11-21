@@ -40,11 +40,6 @@ theorem compAt_mt_mul (θ : InfFam D) (V : HSp D) (τ : D.what₂.Tau) (g g' : G
     compAt θ τ (mt V (g * g')) = compAt θ τ (mt V g) * compAt θ τ (mt V g') := by
   rw [GlobalTheory.WeilVacMove.mt_mul, GlobalTheory.WeilVacMove.compAt_mul]
 
-theorem InK.mul {θ : InfFam D} {V : HSp D} {s : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ} {g g' : GA D V}
-    (h : InK θ V s g) (h' : InK θ V s g') : InK θ V s (g * g') :=
-  ⟨mul_mem h.1 h'.1, fun τ => by
-    rw [compAt_mt_mul, ← Matrix.mul_assoc, h.2, Matrix.mul_assoc, h'.2, Matrix.mul_assoc]⟩
-
 theorem real_char {θ : InfFam D} (hθ : IsInfFam θ) (V : HSp D) (s : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ)
     (hs : ∀ τ, IsCartanInv (gramAt D V τ) (s τ)) (c : GA D V → ℂ)
     (hm : ∀ g g', InK θ V s g → InK θ V s g' → c (g * g') = c g * c g') (hn : ∀ g, InK θ V s g → ‖c g‖ = 1)

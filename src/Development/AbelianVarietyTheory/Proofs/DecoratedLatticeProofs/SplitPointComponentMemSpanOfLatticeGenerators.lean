@@ -104,47 +104,8 @@ def latW (L : GlobalTheory.FinPl.Lat S) : Submodule 𝒪[k] (Fin S.rank → k) w
 theorem mem_latW {L : GlobalTheory.FinPl.Lat S} (w : Fin S.rank → k) :
     w ∈ latW q L ↔ (fun i => q.sec (w i)) ∈ GlobalTheory.FinPl.latV S L (· = q.v) := Iff.rfl
 
-theorem latW_isLattice (L : GlobalTheory.FinPl.Lat S) (hL : Submodule.IsLattice D.host.E L) : (latW q L).IsLattice k := by
-  obtain ⟨G, hG⟩ := hL.fg
-  refine ⟨?_, ?_⟩
-  · refine Submodule.FG.of_le (Submodule.fg_span ((G.finite_toSet).image (aux₃ q))) ?_
-    intro w hw
-    have h := pr_mem_span q G hG hw
-    simpa only [q.pr_sec] using h
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.LocMod.FullLatFrame
 
 namespace GlobalTheory.LocMod.FullLatFrame
-
-theorem exists_frame : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-    (q : GlobalTheory.FinPl.SplitPt D k) (S : HSp D) (L : GlobalTheory.FinPl.Lat S) (Y : Type) [Fintype Y] [DecidableEq Y], q.UnitAA →
-    Submodule.IsLattice D.host.E L → Fintype.card Y = S.rank → ∃ F : GlobalTheory.LocMod.Frame k S.rank Y, ∀ y : Y → k,
-      (∀ i, y i ∈ 𝒪[k]) ↔ (fun i => q.sec ((F.β *ᵥ y) i)) ∈ GlobalTheory.FinPl.latV S L (· = q.v) := by
-  intro D k _ _ _ _ q S L Y _ _ _ hL hY
-  haveI hΛ : (latW q L).IsLattice k := latW_isLattice q L hL
-  let b := (Module.finBasisOfFinrankEq 𝒪[k] (latW q L) (((Submodule.IsFullLattice.finrank_eq k (latW q L)).trans (Module.finrank_fintype_fun_eq_card k)))).reindex
-    ((finCongr (Fintype.card_fin _)).trans (Fintype.equivFinOfCardEq hY).symm)
-  let b' := b.extendOfIsLattice k
-  have hkey : ∀ c : Y → 𝒪[k], b'.equivFun.symm (fun i => (c i : k)) = ((∑ i, c i • b i : latW q L) : _ → k) := by
-    intro c
-    rw [Module.Basis.equivFun_symm_apply, Submodule.coe_sum]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    rw [Module.Basis.extendOfIsLattice_apply]
-    rfl
-  refine ⟨⟨LinearMap.toMatrix' b'.equivFun.symm.toLinearMap, LinearMap.toMatrix' b'.equivFun.toLinearMap, ?_, ?_⟩,
-    fun y => ?_⟩
-  · rw [← LinearMap.toMatrix'_comp]; simp
-  · rw [← LinearMap.toMatrix'_comp]; simp
-  simp only [LinearMap.toMatrix'_mulVec, LinearEquiv.coe_coe]
-  rw [← mem_latW]
-  refine ⟨fun h => ?_, fun h => ?_⟩
-  · have h2 : b'.equivFun.symm y = _ := hkey fun i => ⟨y i, h i⟩
-    rw [h2]
-    exact Subtype.property _
-  · have h1 := hkey (b.repr ⟨_, h⟩)
-    rw [b.sum_repr] at h1
-    rw [← b'.equivFun.symm.injective h1]
-    exact fun i => (b.repr ⟨_, h⟩ i).2
 
 end GlobalTheory.LocMod.FullLatFrame

@@ -42,28 +42,6 @@ structure TanRep (A : Over (Sp R)) [GrpObj A] (W : Type) [AddCommGroup W] [Modul
     (β : TrivSqZeroExt B M →+* TrivSqZeroExt B' M'), IsSum β α f →
     ∀ z : Sp (TrivSqZeroExt B M) ⟶ A.left, Lifts A.hom (unitPt A B) z → Φ (spMap β ≫ z) = f ∘ₗ Φ z
 
-example {X : Scheme.{0}} (s : X ⟶ Sp R) {B M : Type} [CommRing B] [Algebra R B] [AddCommGroup M] [Module B M]
-    [Module Bᵐᵒᵖ M] [IsCentralScalar B M] (P : Sp B ⟶ X) (h : P ≫ s = spMap (algebraMap R B)) :
-    (spMap (TrivSqZeroExt.inlHom B M) ≫ P) ≫ s = spMap ((TrivSqZeroExt.inlHom B M).comp (algebraMap R B)) := by
-  rw [Category.assoc, h, GlobalTheory.Cris.spMap_comp]
-
-theorem lifts_const {X : Scheme.{0}} (s : X ⟶ Sp R) {B : Type} (M : Type) [CommRing B] [Algebra R B] [AddCommGroup M]
-    [Module B M] [Module Bᵐᵒᵖ M] [IsCentralScalar B M] (P : Sp B ⟶ X) (h : P ≫ s = spMap (algebraMap R B)) :
-    Lifts s P (spMap (TrivSqZeroExt.inlHom B M) ≫ P) := by
-  refine ⟨?_, ?_⟩
-  · rw [Category.assoc, h]
-    simp only [spMap, ← Spec.map_comp]
-    rfl
-  · rw [← Category.assoc]
-    simp only [spMap, ← Spec.map_comp]
-    have : (CommRingCat.ofHom (TrivSqZeroExt.inlHom B M) ≫
-        CommRingCat.ofHom (TrivSqZeroExt.fstHom B B M).toRingHom : CommRingCat.of B ⟶ CommRingCat.of B) = 𝟙 _ := by
-      ext b; rfl
-    rw [this, Spec.map_id, Category.id_comp]
-
-example {B M : Type} [CommRing B] [AddCommGroup M] [Module B M] [Module Bᵐᵒᵖ M] [IsCentralScalar B M] :
-    IsSum (RingHom.id (TrivSqZeroExt B M)) id id := ⟨fun _ => rfl, fun _ => rfl⟩
-
 end GlobalTheory.AbTan
 
 namespace GlobalTheory.AbTan.MultGroup
@@ -192,11 +170,5 @@ def tanRep : TanRep (G R) R where
     simp only [this, LinearMap.toSpanSingleton_apply, one_smul, LinearMap.comp_apply, RingHom.comp_apply]
     rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq (pre z (T 1)), map_add (f := _), hβ.1, hβ.2]
     simp
-
-example {B M : Type} [CommRing B] [Algebra R B] [AddCommGroup M] [Module B M] [Module Bᵐᵒᵖ M] [IsCentralScalar B M]
-    [Module R M] [IsScalarTower R B M] (φ : R[T;T⁻¹] →+* TrivSqZeroExt B M) :
-    (tanRep (R := R)).Φ (spMap φ) 1 = (φ (T 1)).snd := by
-  change LinearMap.toSpanSingleton R _ (pre (R := R) (spMap φ) (T 1)).snd 1 = _
-  simp [pre_spMap]
 
 end GlobalTheory.AbTan.MultGroup

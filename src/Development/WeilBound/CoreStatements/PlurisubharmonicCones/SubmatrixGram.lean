@@ -108,8 +108,6 @@ theorem Gr.of_contDiffAt {t₀ : V} (hl : l ≤ 𝓝 t₀) (hL : (fun _ => (1 : 
 
 end Gen
 
-local notation "𝟙" => (fun _ => (1 : ℝ))
-
 theorem Gr.const (c : ℂ) : Gr l 𝟙 E (fun _ => c) :=
   ⟨Eventually.of_forall fun _ => differentiableAt_const _, isBigO_const_const _ one_ne_zero _, by
     rw [fderiv_fun_const]; exact isBigO_zero _ _⟩

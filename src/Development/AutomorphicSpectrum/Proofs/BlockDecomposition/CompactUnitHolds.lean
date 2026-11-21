@@ -106,9 +106,6 @@ section Concrete
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-local notation "F₀" => maximalRealSubfield E
-local notation "σ₀" => (IsCMField.complexConj E : E →ₐ[maximalRealSubfield E] E)
-
 open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 
 theorem exists_HA (n : ℕ) : ∃ j : UA E n ≃ₜ* HA (AF F₀) σ₀ (1 : Matrix (Fin n) (Fin n) E),

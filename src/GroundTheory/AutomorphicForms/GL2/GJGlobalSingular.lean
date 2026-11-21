@@ -17,8 +17,6 @@ open Reduction AutomorphicForm RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-local notation "Γ₁" => rationalGLOne K n
-
 theorem isLeftInvariant_conj {ψ : AdelicGLn.AdelicGL K n → ℂ} (h : IsLeftInvariant ψ) :
     IsLeftInvariant (fun g => conj (ψ g)) := fun γ g => by
   simp only [h γ g]

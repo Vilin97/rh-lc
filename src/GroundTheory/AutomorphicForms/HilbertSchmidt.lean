@@ -191,10 +191,6 @@ theorem IsHilbertSchmidt.add {S T : H →L[𝕜] K} (hS : IsHilbertSchmidt S)
     (hT : IsHilbertSchmidt T) : IsHilbertSchmidt (S + T) :=
   (hilbertSchmidt 𝕜 H K).add_mem hS hT
 
-theorem IsHilbertSchmidt.smul {T : H →L[𝕜] K} (hT : IsHilbertSchmidt T) (c : 𝕜) :
-    IsHilbertSchmidt (c • T) :=
-  (hilbertSchmidt 𝕜 H K).smul_mem c hT
-
 theorem IsHilbertSchmidt.hasSum_norm_sq {T : H →L[𝕜] K} (hT : IsHilbertSchmidt T) {ι : Type*}
     (b : HilbertBasis ι 𝕜 H) : HasSum (fun i => ‖T (b i)‖ ^ 2) (hsNorm T ^ 2) := by
   have hfin : ∑' i, ‖T (b i)‖ₑ ^ 2 ≠ ∞ := by rw [← hsNormSq_eq_tsum b]; exact hT.ne

@@ -1,8 +1,6 @@
 import Mathlib
 import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.CechPairings.CechAugRow
 import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.CechPairings.MapHComp
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PiHBijective
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CochainExt
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ElementsBijectiveOfBijectiveAppStatement
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InitialObjectAugmentedResolutionStatement
 set_option backward.isDefEq.respectTransparency false
@@ -225,8 +223,6 @@ theorem vpA {n : ℕ} (p : Fin n) (x : Fin (n+1)) : (p.predAbove x : ℕ) = if (
 theorem vbb {n : ℕ} (i : Fin (n+1)) (x : Fin (n+2)) : bb i x = if (i:ℕ) < x then 1 else 0 := by
   unfold bb; simp [Fin.lt_def]
 
-macro "fin_tac" : tactic => `(tactic| (funext x; first | (apply Fin.ext; simp only [Function.comp_apply, vsA, vpA, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last, id]; split_ifs <;> omega) | (simp only [Function.comp_apply, vbb, vsA, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last]; split_ifs <;> first | rfl | (exfalso; omega))))
-
 theorem E1 {n : ℕ} (i : Fin (n+1)) (j : Fin (n+2)) (h : (j:ℕ) ≤ i) :
     j.succAbove ∘ i.predAbove = i.succ.predAbove ∘ j.castSucc.succAbove := by fin_tac
 theorem faceMap_comp_succAbove_castSucc {n : ℕ} (i : Fin (n+1)) (j : Fin (n+2)) (h : (j:ℕ) ≤ i) : bb i = bb i.succ ∘ j.castSucc.succAbove := by fin_tac
@@ -378,7 +374,3 @@ theorem CrystallineSemistableComparison.P.adj_mor : ∀ {R R' : Type} [CommRing 
 theorem CrystallineSemistableComparison.P.initial : ∀ {R : Type} [CommRing R] {C : Type u} [Category.{v} C] (F : C ⥤ ModuleCat.{w} R) (T₀ : C) (h : Limits.IsInitial T₀), (cx F).ResUpTo 1 (aug F fun T => (F.map (h.to T)).hom) := GlobalTheory.T.initial_object_augmented_resolution
 
 theorem CrystallineSemistableComparison.P.el_iso : ∀ {R : Type} [CommRing R] {C : Type u} [Category.{v} C] {E' E : C ⥤ Type t} (p : E' ⟶ E) (F : C ⥤ ModuleCat.{w} R), (∀ T, Function.Bijective (p.app T)) → ∀ n, Function.Bijective ((elMor p F).hom.f n) := GlobalTheory.T.elements_bijective_of_bijective_app
-
-theorem CrystallineSemistableComparison.P.pi_H : ∀ {R : Type} [CommRing R] {C : Type u} [Category.{v} C] {ι : Type w} (F : ι → (C ⥤ ModuleCat.{w} R)) (n : ℕ), Function.Bijective fun (x : H (piF F) n) (i : ι) => (piProj F i).pull n x := GlobalTheory.CompanionTheory.CatCohProd.piH_bijective
-
-theorem CrystallineSemistableComparison.P.sigma_H : ∀ {R : Type} [CommRing R] {C : Type u} [Category.{v} C] (F : C ⥤ ModuleCat.{w} R) {ι : Type t} (c : C → ι), (∀ {T T' : C}, (T ⟶ T') → c T = c T') → ∀ n, Function.Bijective fun (x : H F n) (i : ι) => (Mor.restrict F (ObjectProperty.ι fun T => c T = i)).pull n x := GlobalTheory.CompanionTheory.CatPieces.sigmaH

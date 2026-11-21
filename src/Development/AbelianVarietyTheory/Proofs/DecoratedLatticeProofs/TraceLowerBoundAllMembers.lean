@@ -1,5 +1,27 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PtRows
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsStdFr
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PinColL
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.FrameTopAlt
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.XiEqXiOffMul
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.HzUnit
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.CosInj
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.UnitRatio
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ChartZero
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.TailRd
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.Placed
+import Formalism.LocalToGlobal.IndefiniteReal.RealRec
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ThetaChr
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ColumnCompatibleSelection
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.STiesR
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SameDegreeZeroFormsSelf
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DivisionPairOfAdelicFormsFaceColumnsData
+import Formalism.LocalToGlobal.CarriedPlMap
+import Formalism.LocalToGlobal.SelSide
+import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.TwistedCharacterValue
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TwArgs
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.DivRows3GIff
+import Formalism.LocalToGlobal.Divisibility.ColPins
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.CountsIrreducibilityConstants
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BrgStdR
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsScaleWithBoundedGamma
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.VanishingGramTermsBoundParams
@@ -125,14 +147,6 @@ theorem eventually_le_trace : EvP fun _ K => ∀ β : BPt K, LocalBesselAndTopKe
   have hH := GlobalTheory.Core.Deg.hypL_of hHS
   obtain ⟨-, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, hT, -, -⟩ := hH
   exact fun u => (hT u).1
-
-theorem levelPrime_lower_at_points : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (p : Bl.Prm hL), GlobalTheory.Fc.RowE (Bl.IsGoodE p.s) (Bl.IsLinked p) (fun _ D O _ _ => ∀ u : D.what₂.Word, O.L.sc.b ^ ((1 / 2 : ℝ) * (D.R.m : ℝ)) ≤ Formalism.MainNotions.S.Tr D u) := by
-  intro hL p
-  have hA : GlobalTheory.Fc.RowE (Bl.IsGoodE p.s) (Bl.IsLinked p) (fun _ D _ _ _ => LocalBesselAndTopKernel.FamilyMidVolume D) :=
-    RowE.of_all fun _ K β _ b _ _ _ =>
-      admissibleRanks_of_mass_formula β.D β.O.ex.lev b.R.T.toTiedDataS.cols (Dstar_mass K β.X β.c.isOver β.c.dsig_eq)
-  exact (EvP.and (RowE.and hA (GlobalTheory.Fam.MemberCount.member_rankMu hL p)) eventually_le_trace).mono
-    fun _ _ _ H β hq c b hl => H.2 β (H.1 β hq c b hl).1 (H.1 β hq c b hl).2
 
 end GlobalTheory.Core.LevLow
 

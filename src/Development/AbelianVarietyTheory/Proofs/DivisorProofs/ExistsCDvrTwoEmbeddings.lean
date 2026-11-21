@@ -1,5 +1,4 @@
 import Mathlib
-
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsDvrLiftFiniteCover
 import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.AdicBaseEmbedsValuationAlgebraicClosure
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HomExtNormalSt

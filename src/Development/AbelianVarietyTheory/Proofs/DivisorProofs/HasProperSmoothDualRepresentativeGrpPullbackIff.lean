@@ -31,7 +31,6 @@ def toBase (hφ : IsGrpPullback A' A f φ) {X : Scheme.{0}} {s : X ⟶ S'} {s₀
   (lift (pushP hφ (s := (A' ⊗ Over.mk s).hom) rfl (fst A' (Over.mk s)))
     (Over.homMk (snd A' (Over.mk s)).left (toBase_w hs) : Over.mk ((A' ⊗ Over.mk s).hom ≫ f) ⟶ Over.mk s₀)).left
 
-@[reassoc]
 theorem toBase_fst (hφ : IsGrpPullback A' A f φ) {X : Scheme.{0}} {s : X ⟶ S'} {s₀ : X ⟶ S} (hs : s ≫ f = s₀) :
     toBase hφ hs ≫ (fst A (Over.mk s₀)).left = (fst A' (Over.mk s)).left ≫ φ :=
   lift_left_fst _ _
@@ -51,7 +50,6 @@ def ofBase (hφ : IsGrpPullback A' A f φ) {X : Scheme.{0}} {s : X ⟶ S'} {s₀
   (lift (liftPt hφ _ (fst A (Over.mk s₀)).left (ofBase_w hs))
     (Over.homMk (snd A (Over.mk s₀)).left rfl : Over.mk ((snd A (Over.mk s₀)).left ≫ s) ⟶ Over.mk s)).left
 
-@[reassoc]
 theorem ofBase_fst (hφ : IsGrpPullback A' A f φ) {X : Scheme.{0}} {s : X ⟶ S'} {s₀ : X ⟶ S} (hs : s ≫ f = s₀) :
     ofBase hφ hs ≫ (fst A' (Over.mk s)).left ≫ φ = (fst A (Over.mk s₀)).left := by
   rw [← Category.assoc]

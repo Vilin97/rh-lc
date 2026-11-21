@@ -23,7 +23,4 @@ theorem Fam.ev {T Y : Over S} {N : LB (A ⊗ T).left} (h : Fam A N) (y : Y ⟶ T
 
 omit [GrpObj A] in
 
-theorem Inj.fibInj {U : Over S} {M : LB (A ⊗ U).left} (h : Inj A M) : FibInj A M :=
-  fun _ _ _ _ Y _ u u' hs => h Y u u' hs
-
 end GlobalTheory.DualCon

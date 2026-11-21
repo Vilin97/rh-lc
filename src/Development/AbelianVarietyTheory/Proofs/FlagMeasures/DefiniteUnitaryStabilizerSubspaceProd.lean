@@ -68,9 +68,6 @@ noncomputable def res (h : V →ₗ⋆[K] V →ₗ[K] K) (U : Submodule K V) (g 
     (hg : g • U = U) : isom (hRes h U) :=
   ⟨g.1.ofSubmodules U U hg, fun x y => g.2 x y⟩
 
-@[simp] theorem res_apply (h : V →ₗ⋆[K] V →ₗ[K] K) (U : Submodule K V) (g : isom h)
-    (hg : g • U = U) (x : U) : (((res h U g hg).1 x : U) : V) = g.1 x := rfl
-
 open NumberField Matrix in
 open scoped ENNReal Classical in
 variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V] in

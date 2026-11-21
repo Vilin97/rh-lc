@@ -12,8 +12,6 @@ open CategoryTheory IsDedekindDomain NumberField IntermediateField GroundTheory.
 
 open scoped Pointwise
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield} {v : HeightOneSpectrum (𝓞 K.1)}

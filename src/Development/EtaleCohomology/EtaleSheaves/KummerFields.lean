@@ -1,4 +1,5 @@
-import Development.EtaleCohomology.EtaleSheaves.IsChernClassCocycle
+import Development.EtaleCohomology.EtaleSheaves.InstCommRingR
+import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
 import Development.EtaleCohomology.EtaleSheaves.KummerSequence.ResMapNsmulHomotopy
 import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuPf
 import Development.EtaleCohomology.EtaleSheaves.KummerFields.H0Naturality

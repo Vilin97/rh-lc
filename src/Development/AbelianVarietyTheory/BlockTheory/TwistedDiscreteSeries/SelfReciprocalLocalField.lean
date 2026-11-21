@@ -21,22 +21,6 @@ def SelfRecip (r : ℕ) : Type := {P : E[X] // IsSelfRecip E r P}
 
 variable {E}
 
-theorem isSelfRecip_X_sub_C {a : E} (ha : a * IsCMField.complexConj E a = 1) :
-    IsSelfRecip E 1 (X - C a) := by
-  have ha0 : a ≠ 0 := by
-    rintro rfl
-    simp at ha
-  have hc : (IsCMField.complexConj E a)⁻¹ = a := (eq_inv_of_mul_eq_one_left ha).symm
-  refine ⟨monic_X_sub_C a, irreducible_X_sub_C a, natDegree_X_sub_C a, by simpa using ha0, ?_⟩
-  have h1 : reflect 1 (X : E[X]) = 1 := by
-    simpa using reflect_monomial (R := E) 1 1
-  have h2 : C a * C (IsCMField.complexConj E a) = (1 : E[X]) := by rw [← C_mul, ha, C_1]
-  simp only [sharp, coeff_sub, coeff_X_zero, coeff_C_zero, zero_sub, map_neg, inv_neg, hc,
-    Polynomial.map_sub, map_X, map_C, reflect_sub, h1, reflect_C, RingHom.coe_coe, pow_one]
-  linear_combination (-X) * h2
-
-instance : Nonempty (SelfRecip E 1) := ⟨⟨X - C (-1), isSelfRecip_X_sub_C (by simp)⟩⟩
-
 variable {r : ℕ} (P : SelfRecip E r)
 
 instance : Fact (Irreducible P.1) := ⟨P.2.2.1⟩

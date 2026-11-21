@@ -45,8 +45,6 @@ def TwoIn : Prop :=
 
 def Good (eta Ct : ℝ) (Exc : Finset ℕ) (x : ℝ) : Prop := ∀ e ∈ Exc, (e : ℝ) ≤ x ^ Ct → (e : ℝ) ≤ x ^ eta
 
-theorem Good.mono {eta Ct x : ℝ} {S T : Finset ℕ} (h : S ⊆ T) (hT : Good eta Ct T x) : Good eta Ct S x := fun e he hle => hT e (h he) hle
-
 def ptBound (C eps x : ℝ) : ℝ := C * (1 + Real.log x) + 2 * Real.exp (C * x ^ (3 * eps / 4))
 
 end UpperTheory.V.Win

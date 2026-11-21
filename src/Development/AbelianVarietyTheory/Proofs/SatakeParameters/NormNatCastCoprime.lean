@@ -1,5 +1,7 @@
 import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.IntegralJetsPairing
+import Formalism.LocalRingCardinality.DataKerI
+import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
+import Formalism.LocalToGlobal.KernelLattices.LateralTheory
 import Formalism.SharpRestriction.GlobalSchurBounds.StandardLatticesGL3
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TauPlBijective
 

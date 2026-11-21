@@ -1,5 +1,5 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.BesselCompatibility
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsTransportAdelicCorrection
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.CombAtSingleZero
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsCombAt
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsRatDatum
@@ -20,8 +20,6 @@ namespace GlobalTheory.UkPart
 open Formalism.L2.SG.Pf.unitaryCongruence
 
 variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D)
-
-local notation "RA" => X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F
 
 theorem natCast_int (c : ℕ) : (c : RA) ∈ IntAf X.B.I.F X.B.I.E := natCast_mem _ c
 
@@ -84,7 +82,6 @@ end GlobalTheory.UkPart
 namespace GlobalTheory.UkPart
 open Formalism.L2.SG.Pf.unitaryCongruence
 variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D)
-local notation "RA" => X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F
 
 theorem hA_sum_right (p : VA X.B.I) (v : Fin D.R.rS → VA X.B.I) :
     hA X.B.I p (∑ b, v b) = ∑ b, hA X.B.I p (v b) := by
@@ -160,7 +157,6 @@ end GlobalTheory.UkPart
 namespace GlobalTheory.UkPart
 open Formalism.L2.SG.Pf.unitaryCongruence
 variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D)
-local notation "RA" => X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F
 
 theorem conj_sub (x m : X.B.I.Gf) (v : VA X.B.I) :
     (X.B.I.fmat (x⁻¹ * m * x) - 1) *ᵥ v = X.B.I.fmat x⁻¹ *ᵥ ((X.B.I.fmat m - 1) *ᵥ (X.B.I.fmat x *ᵥ v)) := by

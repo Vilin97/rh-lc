@@ -35,12 +35,6 @@ theorem app_rs {X Y : Scheme.{0}} (φ : Y ⟶ X) {U V : X.Opens} (h : V ≤ U) (
     (φ.app V).hom (rs h x) = rs (pre_mono φ h) ((φ.app U).hom x) :=
   congrArg (fun q => q.hom x) (φ.naturality (homOfLE h).op)
 
-theorem appLE_eq {X Y : Scheme.{0}} (φ : Y ⟶ X) {U : X.Opens} {V : Y.Opens} (h : V ≤ φ ⁻¹ᵁ U) (x : Γ(X, U)) :
-    (φ.appLE U V h).hom x = rs h ((φ.app U).hom x) := rfl
-
-theorem constFn_eq {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) (U : X.Opens) (a : R) :
-    constFn p U a = constHom p U a := rfl
-
 theorem rs_constHom {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) {U V : X.Opens} (h : V ≤ U) (a : R) :
     rs h (constHom p U a) = constHom p V a := rs_rs le_top h _
 

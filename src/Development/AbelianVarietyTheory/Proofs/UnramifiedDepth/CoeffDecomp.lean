@@ -158,6 +158,4 @@ theorem wFrob :
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_mul, map_prod, map_pow, MvPolynomial.eval_C, MvPolynomial.eval_X]
 
-example (p : ℕ) [Fact p.Prime] : WFrobStatement (GlobalTheory.WModel.wModel p) 1 := wFrob _ _
-
 end GlobalTheory.WFrob

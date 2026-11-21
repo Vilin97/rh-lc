@@ -16,11 +16,9 @@ noncomputable section
 namespace GlobalTheory.SplitSatLoc
 section Local
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
-local notation3 "L⁺" => NumberField.maximalRealSubfield L
 end Local
 section Key
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
-local notation3 "L⁺" => NumberField.maximalRealSubfield L
 end Key
 section Main
 set_option maxHeartbeats 800000 in

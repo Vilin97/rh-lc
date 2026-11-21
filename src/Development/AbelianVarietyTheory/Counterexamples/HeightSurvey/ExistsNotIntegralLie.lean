@@ -6,7 +6,10 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.Cha
 import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.AbelianSchemeLawsUnconditional
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FramedPointFieldFromTestRing
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.IntegralLatticeStructureUnique
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.ThetaFrameAllOfThetaFrame
+import Formalism.LocalToGlobal.ProjectiveLattices.GenFrPfS
+import Formalism.LocalToGlobal.ProjectiveLattices.VAtVNeBot
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabPull
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabComp
 import Development.AbelianVarietyTheory.Proofs.HeightProofs.IsTanAtOfGenericFibre
 
 set_option synthInstance.maxHeartbeats 400000
@@ -24,14 +27,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
 theorem spread_holds : SpreadSt Xo c :=
   GlobalTheory.Frames.framedPoint_field_fromTest GlobalTheory.abelianSchemeLaws_all.1.secBaseChange E H Dw l Xo c
 
-theorem all_hold : IntFramesSt Xo c ∧ LieFreeSt Xo c ∧ SpreadSt Xo c :=
-  ⟨intFrames Xo c Out.CubePf.cubePull (lieFree Xo c) (thetaFrame_of Xo c GlobalTheory.abelianSchemeLaws_all.2.secTwist)
-    (spread_holds Xo c), lieFree Xo c, spread_holds Xo c⟩
-
 variable {Xo c}
-
-def rescale {S : Type} [Field S] [Algebra c.F S] (y : FrPt Xo c S) (a : Sˣ) : FrPt Xo c S :=
-  { y with s := scalSec y.x (a : S) y.s, gen := isGenAt_scalSec y.gen a }
 
 theorem exists_framed {S : Type} [Field S] [Algebra c.F S] (x : Sp S ⟶ Xo.X) (hx : x ≫ Xo.s = sOf c S) :
     ∃ y : FrPt Xo c S, y.x = x := by

@@ -177,6 +177,3 @@ theorem norm_heckeL_le (E : Type) [Field E] [NumberField E] (χ : HChar E) (Λ :
   exact Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) (fun v _ => norm_eulerFactor_le hU hS v)
 
 end GlobalTheory.HeckeLBound
-
-example : ∀ (E : Type) [Field E] [NumberField E] (χ : HChar E) (Λ : ℂ → ℂ) (S : ℂ), IsUnitary χ → IsHeckeL χ Λ → 3 / 2 ≤ S.re → ‖Λ S‖ ≤ ‖riemannZeta (3 / 2)‖ ^ Module.finrank ℚ E :=
-  GlobalTheory.HeckeLBound.norm_heckeL_le

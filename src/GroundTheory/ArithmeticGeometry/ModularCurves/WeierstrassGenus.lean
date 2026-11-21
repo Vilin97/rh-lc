@@ -1,5 +1,8 @@
 import Mathlib
-import GroundTheory.ArithmeticGeometry.ModularCurves.WeierstrassCechCurve
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechNaturality.CechFunctor
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.RiemannRoch
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechNaturality.NaturalLeray
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.HasExtInstances
 import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.PSpaceFinite
 import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjTwistLeray
 
@@ -59,8 +62,6 @@ open MvPolynomial HomogeneousLocalization
 variable {R : Type u} [CommRing R] (W : WeierstrassCurve R)
 
 section CoverFacts
-
-noncomputable instance curveOver : (Curve W).Over (Spec (.of R)) := ⟨toSpec W⟩
 
 end CoverFacts
 

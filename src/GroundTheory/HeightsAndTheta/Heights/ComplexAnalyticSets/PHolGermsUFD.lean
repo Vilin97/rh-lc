@@ -100,18 +100,6 @@ theorem HolGermsUFD.proof (hP : WeierstrassPreparation.Statement) (hD : Weierstr
   exact (germAffineEquiv (LinearEquiv.funCongrLeft ℂ ℂ (Fintype.equivFin σ)).toContinuousLinearEquiv
     w).symm.toMulEquiv.uniqueFactorizationMonoid (hfin _)
 
-theorem holGerms_uniqueFactorizationMonoid : HolGermsUFD.Statement :=
-  HolGermsUFD.proof
-    (WeierstrassPreparation.proof ParametricCircleIntegralAnalytic.proof CircleArgumentPrinciple.proof
-      PowerSumsEsymmAnalytic.proof)
-    (WeierstrassDivision.proof
-      (WeierstrassPreparation.proof ParametricCircleIntegralAnalytic.proof CircleArgumentPrinciple.proof
-        PowerSumsEsymmAnalytic.proof)
-      (WeierstrassPolynomialDivision.proof ParametricCircleIntegralAnalytic.proof))
-
-instance holGerms_isUFM {σ : Type} [Fintype σ] (w : σ → ℂ) : UniqueFactorizationMonoid (holGerms w) :=
-  holGerms_uniqueFactorizationMonoid σ w
-
 end
 
 end GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.ComplexSets

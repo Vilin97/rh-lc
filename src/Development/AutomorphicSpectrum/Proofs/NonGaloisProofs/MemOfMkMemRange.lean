@@ -1,9 +1,13 @@
 import Mathlib
 import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
 import Formalism.LocalRingCardinality.AdicCompletionLocal.LocTied
-import Formalism.SharpRestriction.LevelLetterCocycles.ChainRows
+import Formalism.SharpRestriction.LevelLetterCocycles.WachCoordinates
+import Formalism.SharpRestriction.LevelLetterCocycles.PairedCharacterCondition
+import Formalism.SharpRestriction.LevelLetterCocycles.EmbeddingTypes
+import Formalism.SharpRestriction.LevelLetterCocycles.InvariantsGenerators
+import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.CrysOnCond
 import Development.AutomorphicSpectrum.Definitions.NonGaloisLines.TopLine
-import Development.AutomorphicSpectrum.Proofs.NonGaloisProofs.CupFlipContinuousCocycleStatement
+import Development.AutomorphicSpectrum.Proofs.NonGaloisProofs.CupFlipContinuousCocycle
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations Module GlobalTheory.CompanionTheory.LocDual
 
 namespace GlobalTheory.CompanionTheory.LocDual.ExactAnn
@@ -264,9 +268,6 @@ def cupBil (ρ' : Representation LL G V') (P : V →ₗ[LL] V' →ₗ[LL] LL) :
     (fun r a b => by ext x; simp [cupL])
     (fun a b b' => by ext x; simp [cupL])
     (fun r a b => by ext x; simp [cupL])
-
-theorem cupBil_apply (ρ' : Representation LL G V') (P : V →ₗ[LL] V' →ₗ[LL] LL) (a : G → V)
-    (b : G → V') : cupBil ρ' P a b = cupL ρ' P a b := rfl
 
 end Cup
 

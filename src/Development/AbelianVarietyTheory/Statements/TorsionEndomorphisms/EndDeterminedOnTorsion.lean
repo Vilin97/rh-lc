@@ -111,14 +111,6 @@ open Inh InhVV
 
 variable (S : Scheme.{0})
 
-def zeroLevel (M : ℕ) (ze : Γ(S, ⊤)ˣ) (h : IsPrimitiveRoot ze M) : Level (zeroPolAV S) M ze where
-  pt := fun i => Fin.elim0 i
-  prim := h
-  torsion := fun i => Fin.elim0 i
-  indep := fun _ _ _ _ _ _ _ => funext fun i => Fin.elim0 i
-  span := fun _ _ _ _ _ _ => ⟨fun i => Fin.elim0 i, toUnit_unique _ _⟩
-  pairing := fun i => Fin.elim0 i
-
 theorem isThetaPt_zero (k : ℕ) (hk : Odd k) {T : Over S} (hu : IsUnit (k : Γ(T.left, ⊤))) {I : Type}
     (x : I → (T ⟶ (zeroPolAV S).A)) : IsThetaPt (zeroPolAV S) k x (fun _ => 1) := by
   refine ⟨hk, hu, fun p => ⟨⊤, trivial, oneSec S 1 _, oneSec S _ _, ⟨fun _ => 1⟩, ⟨fun _ => 1⟩,

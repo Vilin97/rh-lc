@@ -60,14 +60,6 @@ theorem zcoord_formSection (p : polyGrading ι R n) (i : L.ι) :
   rw [← gammaCoord_polyToGamma R x hL, ← gammaOf_formSection, gammaRes_gammaOf,
     gammaCoord_gammaOf, sectionsOn.res_refl, LinearMap.id_apply]
 
-theorem globalEquiv_formSection (p : polyGrading ι R n) :
-    LB.globalEquiv _ ((unitTwistIso (lbZPow L n)).hom.app ⊤
-      (sectionsOn.toΓ _ ⊤ (formSection R x hL n p))) = Twist.formSec x p.2 := by
-  refine zglobal_ext fun i => ?_
-  rw [zfun_formSec, ← resG_chartEval R x i (inf_le_right : ⊤ ⊓ L.U i ≤ _) (le_inf le_top le_rfl),
-    ← zcoord_formSection R x hL]
-  exact (resG_resG _ _ _).trans (resG_resG _ _ _).symm
-
 include hL in
 
 theorem eq_zero_of_gammaCoord {F : X.Modules} {V : X.Opens} {i : L.ι} (h : V ≤ L.U i)
@@ -94,49 +86,11 @@ def formSecAdd (n : ℤ) : polyGrading ι R n →+ LB.Sec (lbZPow L n) :=
   AddMonoidHom.mk' (fun p => Twist.formSec x p.2) fun p q => zglobal_ext fun i => by
     simp only [zfun_add, zfun_formSec, Submodule.coe_add, map_add (f := _)]
 
-theorem formSec_one (h : (1 : MvPolynomial ι R) ∈ polyGrading ι R 0) :
-    Twist.formSec x h = zone L :=
-  zglobal_ext fun i => by rw [zfun_formSec, map_one, zfun_zone]
-
-theorem formSec_mul {p q : MvPolynomial ι R} (hp : p ∈ polyGrading ι R n)
-    (hq : q ∈ polyGrading ι R m) (h : p * q ∈ polyGrading ι R (n + m)) :
-    Twist.formSec x h = zmul (Twist.formSec x hp) (Twist.formSec x hq) :=
-  zglobal_ext fun i => by simp only [zfun_zmul, zfun_formSec, map_mul]
-
 theorem formSec_smul (r : R) {p : MvPolynomial ι R} (hp : p ∈ polyGrading ι R n)
     (h : r • p ∈ polyGrading ι R n) :
     Twist.formSec x h = algebraMap R Γ(X, ⊤) r • Twist.formSec x hp :=
   zglobal_ext fun i => by
     rw [zfun_smul, zfun_formSec, zfun_formSec, smul_eq_C_mul, map_mul, chartEval_C]
-
-def formsToSecRing : (⨁ n, polyGrading ι R n) →+* SecRing L :=
-  DirectSum.toSemiring (fun n => (SecRing.of n).comp (formSecAdd R x n))
-    (congrArg (SecRing.of 0) (formSec_one R x SetLike.GradedOne.one_mem))
-    (fun {n m} p q => (congrArg (SecRing.of (n + m))
-      (formSec_mul R x p.2 q.2 (SetLike.mul_mem_graded p.2 q.2))).trans
-        (SecRing.of_mul_of _ _).symm)
-
-def polyToSecRing : MvPolynomial ι R →+* SecRing L :=
-  (formsToSecRing R x).comp (DirectSum.decomposeRingEquiv (polyGrading ι R)).toRingHom
-
-theorem polyToSecRing_of_mem {p : MvPolynomial ι R} (hp : p ∈ polyGrading ι R n) :
-    polyToSecRing R x p = SecRing.of n (Twist.formSec x hp) :=
-  (congrArg (formsToSecRing R x) (DirectSum.decompose_of_mem _ hp)).trans
-    (DirectSum.toSemiring_of _ _ _ _ _)
-
-theorem polyToSecRing_bijective (h : ∀ n, Function.Bijective (formSecAdd R x n)) :
-    Function.Bijective (polyToSecRing R x) := by
-  have e : ⇑(polyToSecRing R x) = DirectSum.map (β := RingPiece L) (formSecAdd R x) ∘
-      DirectSum.decompose (polyGrading ι R) := funext fun p => by
-    induction p using Decomposition.inductionOn (polyGrading ι R) with
-    | zero => simp
-    | add a b ha hb => simp only [map_add (f := _), ha, hb, Function.comp_apply, decompose_add]
-    | homogeneous a =>
-      rw [polyToSecRing_of_mem R x a.2, Function.comp_apply, decompose_coe]
-      exact (DirectSum.map_of (β := RingPiece L) (formSecAdd R x) _ a).symm
-  rw [e]
-  exact Function.Bijective.comp ⟨(DirectSum.map_injective _).2 fun n => (h n).1,
-    (DirectSum.map_surjective _).2 fun n => (h n).2⟩ (DirectSum.decompose _).bijective
 
 end General
 
@@ -153,8 +107,6 @@ abbrev sheafO (n : ℤ) : (PSpace R N).Modules :=
 
 instance isQuasicoherent_sheafO (n : ℤ) : (sheafO R N n).IsQuasicoherent :=
   isQuasicoherent_twist (isLB_lbZPow (O1_isLB R N) n)
-
-def sheafOIso (n : ℤ) : sheafO R N n ≅ LB.toMod (On R N n) := unitTwistIso _
 
 theorem isCompact_top : IsCompact ((⊤ : (PSpace R N).Opens) : Set (PSpace R N)) := by
   rw [← iSup_chart, Opens.coe_iSup]
@@ -286,18 +238,7 @@ def formsEquivCohZero (hN : 1 ≤ N) (n : ℤ) :
 
 variable {N} in
 
-theorem formSecAdd_bijective (hN : 1 ≤ N) (n : ℤ) :
-    Function.Bijective (formSecAdd R (ProjSpace.coord R N) n) := by
-  have := (LB.globalEquiv _).bijective.comp ((ConcreteCategory.bijective_of_isIso
-    ((unitTwistIso (lbZPow (O1 R N) n)).hom.app ⊤)).comp
-      ((sectionsOn.toΓ _ ⊤).bijective.comp (formSection_bijective R hN n)))
-  convert this using 1
-  exact funext fun p => (globalEquiv_formSection R _ (O1_isLB R N) p).symm
-
 variable {N} in
-
-def polyEquivSecRing (hN : 1 ≤ N) : MvPolynomial (Fin (N + 1)) R ≃+* SecRing (O1 R N) :=
-  .ofBijective _ (polyToSecRing_bijective R (ProjSpace.coord R N) (formSecAdd_bijective R hN))
 
 variable {R N} in
 
@@ -337,12 +278,6 @@ theorem subsingleton_coh_of_neg_le {n : ℤ} (hn : -(N : ℤ) ≤ n) {p : ℕ} (
 
 variable {N} in
 
-theorem subsingleton_coh_zero (hN : 1 ≤ N) {n : ℤ} (hn : n < 0) :
-    Subsingleton (coh (sheafO R N n) 0) :=
-  have : Subsingleton (polyGrading (Fin (N + 1)) R n) := by
-    rw [polyGrading_of_neg _ R hn]; infer_instance
-  (formsEquivCohZero R hN n).symm.injective.subsingleton
-
 theorem nonempty_coh_zero_equiv (n : ℤ) : Nonempty (coh (sheafO R 0 n) 0 ≃ₗ[R] R) :=
   (nonempty_grH_zero_equiv R n).map (grHEquiv R 0 n 0).symm.trans
 
@@ -363,9 +298,6 @@ theorem finite_free_coh (n : ℤ) (p : ℕ) :
   · obtain rfl : p = N := by tauto
     obtain ⟨b⟩ := nonempty_basis_coh_top R hN n
     exact ⟨.of_basis b, .of_basis b⟩
-
-instance finite_coh (n : ℤ) (p : ℕ) : Module.Finite R (coh (sheafO R N n) p) :=
-  (finite_free_coh R N n p).1
 
 instance free_coh (n : ℤ) (p : ℕ) : Module.Free R (coh (sheafO R N n) p) :=
   (finite_free_coh R N n p).2

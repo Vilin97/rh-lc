@@ -203,8 +203,6 @@ theorem exists_bound_GL_inv (hn0 : 0 < n) {Φ : Matrix (Fin n) (Fin n) 𝔸[K] �
 
 variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
 
-local notation "Γ₁" => rationalGLOne K n
-
 theorem norm_thetaPairing_le {φ₁ φ₂ Ξ : AdelicGLn.AdelicGL K n → ℂ} (t : {r : ℝ // 0 < r}) {b : ℝ}
     (hb : ∀ x y : normOneGL K n,
       Summable (fun γ : GL (Fin n) K => ‖Ξ (centralSection K n t * (x : AdelicGLn.AdelicGL K n)⁻¹ *

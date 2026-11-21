@@ -7,8 +7,6 @@ namespace GroundTheory.Global
 open IsDedekindDomain NumberField IntermediateField
 open scoped Pointwise
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 namespace FiniteSubfield

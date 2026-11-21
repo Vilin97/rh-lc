@@ -33,8 +33,6 @@ theorem side_lv (b : Bool) :
     lv (faceOf3 I.A3 I.P0 I.ψ0 I.P1 I.ψ1 I.Dc I.Sp I.Zsc I.X.zs) b = I.A3.side3 (I.lvP b) (I.lvψ b) I.X.zs := by
   cases b <;> rfl
 
-theorem Jm_eq (b : Bool) : I.Jm b = I.Jt b I.A3.fam3.base3.μ0 := rfl
-
 theorem pFrames : I.PFrames := by
   intro s h v
   have hW := I.A3.side_well_formed h.ok ⊥ 1 I.X.zs h.stable h.inBlock h.sep

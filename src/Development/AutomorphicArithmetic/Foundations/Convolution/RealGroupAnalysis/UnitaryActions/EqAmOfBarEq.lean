@@ -53,9 +53,6 @@ theorem mkE_inj {u t u' t' : A F} (h : D.mkE u t = D.mkE u' t') : u = u' ∧ t =
   have := congrArg D.co h
   rw [co_mkE, co_mkE] at this
   exact ⟨congrFun this 0, congrFun this 1⟩
-@[simp] theorem co_am (u : A F) : D.co (am E u) = ![u, 0] := by rw [← D.mkE_base, co_mkE]
-@[simp] theorem co_zero : D.co 0 = 0 := by rw [← D.mkE_zero, co_mkE]; ext i; fin_cases i <;> rfl
-@[simp] theorem co_one : D.co 1 = ![1, 0] := by rw [← D.mkE_one, co_mkE]
 theorem co_add (z z' : A E) : D.co (z + z') = D.co z + D.co z' := by
   obtain ⟨u, t, rfl⟩ := D.exists_mkE z
   obtain ⟨u', t', rfl⟩ := D.exists_mkE z'
@@ -124,15 +121,6 @@ theorem ideleNorm_barU (z : (A E)ˣ) : ideleNorm F E (D.barU z) = ideleNorm F E 
 include D in
 theorem ideleNorm_emb (a : (A F)ˣ) : ideleNorm F E (ideleEmbedding F E a) = a ^ 2 := by
   rw [ideleNorm_ideleEmbedding, D.finrank_eq]
-theorem norm_eq (z : E) : Algebra.norm F z = D.b.repr z 0 ^ 2 - D.δ * D.b.repr z 1 ^ 2 := by
-  haveI := AdeleBaseChange.nontrivial_adeleRing F
-  by_cases hz : z = 0
-  · haveI : Module.Finite F E := Module.Finite.of_basis D.b
-    simp [hz]
-  apply (algebraMap F (A F)).injective
-  have h := D.coe_ideleNorm (IdeleGroup.diagonal E (Units.mk0 z hz))
-  rw [ideleNorm_diagonal, coe_diagonal, coe_diagonal, co_rt, co_rt] at h
-  simpa using h
 
 end Dat
 

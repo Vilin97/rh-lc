@@ -58,17 +58,6 @@ instance free_coordinateRing : Module.Free R W.toAffine.CoordinateRing :=
     .of_basis (WeierstrassCurve.Affine.CoordinateRing.basis W.toAffine)
   .trans (S := R[X])
 
-instance flat_toSpec : Flat (toSpec W) :=
-  have := HasRingHomProperty.instIsZariskiLocalAtSource (P := @Flat.{u})
-  IsZariskiLocalAtSource.of_openCover (P := @Flat) (chartCover W).openCover fun b => by
-    cases b
-    · change Flat (chartZ W ≫ toSpec W)
-      rw [chartZ_toSpec]
-      exact Flat.SpecMap_iff.2 (RingHom.flat_algebraMap_iff.2 inferInstance)
-    · change Flat (chartY W ≫ toSpec W)
-      rw [chartY_toSpec]
-      exact Flat.SpecMap_iff.2 (RingHom.flat_algebraMap_iff.2 inferInstance)
-
 section Presentation
 
 open MvPolynomial
@@ -133,7 +122,6 @@ theorem opensRange_dehomChart : (dehomChart W i).opensRange = coordOpen W i :=
   TopologicalSpace.Opens.ext (range_ptHom W i _ _
     (.of_isUnit (equation_dehomCoord W i) i (by simp)) (by simp) (bijective_awayEval_dehom W i))
 
-@[reassoc (attr := simp)]
 theorem dehomChart_toSpec : dehomChart W i ≫ toSpec W =
     Spec.map (CommRingCat.ofHom (algebraMap R (DehomRing W i))) :=
   pt_toSpec ..
@@ -153,13 +141,6 @@ theorem of_dehomChart (P : MorphismProperty Scheme.{u}) [IsZariskiLocalAtSource 
   · change P (dehomChart W i ≫ toSpec W)
     rw [dehomChart_toSpec]
     exact h i
-
-instance locallyOfFinitePresentation_toSpec : LocallyOfFinitePresentation (toSpec W) :=
-  have := HasRingHomProperty.instIsZariskiLocalAtSource (P := @LocallyOfFinitePresentation.{u})
-  of_dehomChart W @LocallyOfFinitePresentation fun _ =>
-    (HasRingHomProperty.Spec_iff (P := @LocallyOfFinitePresentation)).2
-      (RingHom.finitePresentation_algebraMap.2
-        (Algebra.FinitePresentation.quotient (Submodule.fg_span (Set.finite_range _))))
 
 section Smooth
 
@@ -266,41 +247,6 @@ theorem smoothOfRelativeDimension_toSpec_of_isUnit (hΔ : IsUnit W.Δ) :
   of_dehomChart W (@SmoothOfRelativeDimension 1) fun i =>
     (HasRingHomProperty.Spec_iff (P := @SmoothOfRelativeDimension 1)).2
       (locally_isStandardSmoothOfRelativeDimension_dehomRing W hΔ i)
-
-instance smoothOfRelativeDimension_toSpec [W.IsElliptic] :
-    SmoothOfRelativeDimension 1 (toSpec W) :=
-  smoothOfRelativeDimension_toSpec_of_isUnit W W.isUnit_Δ
-
-instance smooth_toSpec [W.IsElliptic] : Smooth (toSpec W) :=
-  SmoothOfRelativeDimension.smooth 1 _
-
-theorem locally_isStandardSmoothOfRelativeDimension_coordinateRing [W.IsElliptic] :
-    RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension 1)
-      (algebraMap R W.toAffine.CoordinateRing) := by
-  refine (HasRingHomProperty.Spec_iff (P := @SmoothOfRelativeDimension 1)
-    (φ := CommRingCat.ofHom (algebraMap R W.toAffine.CoordinateRing))).1 ?_
-  rw [← chartZ_toSpec]
-  exact inferInstanceAs (SmoothOfRelativeDimension (0 + 1) _)
-
-theorem locally_isStandardSmoothOfRelativeDimension_originRing [W.IsElliptic] :
-    RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension 1)
-      (algebraMap R (OriginRing W)) := by
-  refine (HasRingHomProperty.Spec_iff (P := @SmoothOfRelativeDimension 1)
-    (φ := CommRingCat.ofHom (algebraMap R (OriginRing W)))).1 ?_
-  rw [← chartY_toSpec]
-  exact inferInstanceAs (SmoothOfRelativeDimension (0 + 1) _)
-
-instance smooth_coordinateRing [W.IsElliptic] : Algebra.Smooth R W.toAffine.CoordinateRing := by
-  refine RingHom.smooth_algebraMap.1 ((HasRingHomProperty.Spec_iff (P := @Smooth)
-    (φ := CommRingCat.ofHom (algebraMap R W.toAffine.CoordinateRing))).1 ?_)
-  rw [← chartZ_toSpec]
-  infer_instance
-
-instance smooth_originRing [W.IsElliptic] : Algebra.Smooth R (OriginRing W) := by
-  refine RingHom.smooth_algebraMap.1 ((HasRingHomProperty.Spec_iff (P := @Smooth)
-    (φ := CommRingCat.ofHom (algebraMap R (OriginRing W)))).1 ?_)
-  rw [← chartY_toSpec]
-  infer_instance
 
 end Smooth
 
@@ -415,21 +361,6 @@ instance isReduced_scheme [_root_.IsReduced R] : AlgebraicGeometry.IsReduced (sc
   .of_openCover _ (chartCover W).openCover
 
 end Integral
-
-theorem proper_flat_geometricallyIntegral_smooth :
-    IsProper (toSpec W) ∧ Flat (toSpec W) ∧
-      (LocallyOfFinitePresentation (toSpec W) ∧ QuasiCompact (toSpec W) ∧
-        QuasiSeparated (toSpec W)) ∧
-      GeometricallyIntegral (toSpec W) ∧
-      (IsUnit W.Δ → SmoothOfRelativeDimension 1 (toSpec W)) :=
-  ⟨inferInstance, inferInstance, ⟨inferInstance, inferInstance, inferInstance⟩, inferInstance,
-    smoothOfRelativeDimension_toSpec_of_isUnit W⟩
-
-example : SmoothOfRelativeDimension 1 (toSpec (⟨0, 0, 1, -1, 0⟩ : WeierstrassCurve ℚ)) :=
-  smoothOfRelativeDimension_toSpec_of_isUnit _ (by
-    simp only [isUnit_iff_ne_zero, WeierstrassCurve.Δ, WeierstrassCurve.b₂, WeierstrassCurve.b₄,
-      WeierstrassCurve.b₆, WeierstrassCurve.b₈]
-    norm_num)
 
 end WeierstrassCurve
 

@@ -28,10 +28,6 @@ section Glob
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
-local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
-local notation "𝒮" => tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)
-local notation "ιA" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
-
 theorem incl_int (b : 𝓞 E) : ιA (algebraMap (𝓞 E) E b) ∈ 𝒮 := by
   have := Formalism.UG.P.levelaf_tmul_mem (F := F) (E := E) b (one_mem (intAd F))
   exact this
@@ -176,15 +172,5 @@ def StdLatFull : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] (n : Type) [Fintype n] [DecidableEq n],
     Module.Finite (𝓞 E) (stdLat (n := n) (A := E) (𝓞 E)) ∧
     Submodule.span E ((stdLat (n := n) (A := E) (𝓞 E) : Submodule (𝓞 E) (n → E)) : Set (n → E)) = ⊤
-
-def WeakApproxV : Prop :=
-  ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (n : Type) [Fintype n] [DecidableEq n] (σ : E →ₐ[F] E) (J : Matrix n n E),
-    (∀ τ : E →+* ℂ, τ.comp (σ : E →+* E) = (starRingEnd ℂ).comp τ) →
-    IsHerm (σ : E →+* E) J → IsUnit J.det → IsTotDef σ J →
-    ∀ (Λ : Submodule (𝓞 E) (n → E)), Module.Finite (𝓞 E) Λ →
-    Submodule.span E (Λ : Set (n → E)) = ⊤ → ∀ (v : HeightOneSpectrum (𝓞 F)),
-    ∀ g ∈ UPts σ J (v.adicCompletion F), ∃ γ ∈ UJ (σ : E →+* E) J,
-      (bc (inclE (F := F) (v.adicCompletion F)) γ)⁻¹ * g ∈ levelVL σ J v Λ
 
 end Formalism.UG.CS

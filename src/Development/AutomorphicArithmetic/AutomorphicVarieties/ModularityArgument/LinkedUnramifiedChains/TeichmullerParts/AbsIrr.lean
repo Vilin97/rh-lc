@@ -141,10 +141,6 @@ abbrev Comps.repL := piRep fun v => (C.l v).ρ
 
 abbrev Comps.repS := box (piRep fun u => (C.u u).ρ) C.o.ρ
 
-abbrev Comps.inv {c : Coef l} {m : ℕ} (τ₀ : KT n (wt s) →* GL (Fin m) c.O) :=
-  invT (KT n (wt s)) (Kc _ n 1)
-    ((Matrix.GeneralLinearGroup.map (ι.toRingHom.comp (algebraMap c.O (Qbar l)))).comp τ₀) C.repS
-
 end U
 
 end UpperTheory.V.Z.J.D

@@ -310,8 +310,6 @@ private abbrev perp (h : V →ₗ[K] V →ₗ⋆[K] K) (v : V) : Submodule K V :
 private abbrev res (h : V →ₗ[K] V →ₗ⋆[K] K) (v : V) : perp h v →ₗ[K] perp h v →ₗ⋆[K] K :=
   h.domRestrict₁₂ (perp h v) (perp h v)
 
-@[simp] private theorem res_apply (v : V) (x y : perp h v) : res h v x y = h x y := rfl
-
 private theorem finrank_perp [FiniteDimensional K V] {v : V} (hv : h v v = 1) {n : ℕ}
     (hn : finrank K V = n + 1) : finrank K (perp h v) = n := by
   have h1 := LinearMap.finrank_range_add_finrank_ker (h.flip v)
@@ -633,18 +631,6 @@ theorem card_specialLinearGroup {q : ℕ} (hq : Nat.card F = q)
 end Linear
 
 section Frobenius
-
-@[reducible] noncomputable def frobeniusStarRing (F K : Type*) [Field F] [Fintype F] [Field K]
-    [Algebra F K] (h2 : finrank F K = 2) : StarRing K :=
-  haveI : FiniteDimensional F K := Module.finite_of_finrank_pos (by omega)
-  haveI : Finite K := Module.finite_of_finite F
-  { star := FiniteField.frobeniusAlgEquivOfAlgebraic F K
-    star_involutive := fun x => by
-      have h := pow_orderOf_eq_one (FiniteField.frobeniusAlgEquivOfAlgebraic F K)
-      rw [FiniteField.orderOf_frobeniusAlgEquivOfAlgebraic, h2] at h
-      exact DFunLike.congr_fun h x
-    star_mul := fun x y => by rw [map_mul, mul_comm]
-    star_add := fun x y => map_add _ x y }
 
 end Frobenius
 

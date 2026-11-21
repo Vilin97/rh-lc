@@ -16,10 +16,6 @@ theorem _root_.GlobalTheory.QFam.HasQ.mdifferentiable {N : ℕ} {f : ℍ → ℂ
     simpa only [PowerSeries.coeff_mk] using h
   exact ((_root_.GlobalTheory.QFam.hasQ_coeff_iff_hasQExpansion N f _).1 h').mdifferentiable (by exact_mod_cast hN)
 
-theorem HasQ.isBoundedAtImInfty {N : ℕ} {f : ℍ → ℂ} {a : ℕ → ℂ} (hN : 0 < N) (h : HasQ N f a) :
-    UpperHalfPlane.IsBoundedAtImInfty f :=
-  (hasQ_powerSeries_bridge.1 N f a |>.1 h).isBoundedAtImInfty (Nat.cast_pos.mpr hN)
-
 open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators in
 
 theorem _root_.GlobalTheory.QFam.hasQ_mdifferentiable_and_isBoundedAtImInfty :

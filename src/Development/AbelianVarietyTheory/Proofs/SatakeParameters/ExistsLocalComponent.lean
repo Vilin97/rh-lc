@@ -89,8 +89,6 @@ section Adeles
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 theorem exists_imaginary (L : Type) [Field L] [NumberField L] [IsCMField L] :
     ∃ δ : 𝓞 L, (δ : L) ≠ 0 ∧ IsCMField.complexConj L (δ : L) = -(δ : L) := by
   have : ∃ y : 𝓞 L, IsCMField.complexConj L (y : L) ≠ y := by
@@ -255,8 +253,6 @@ end Adeles
 section Group
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
-
-local notation3 "L⁺" => maximalRealSubfield L
 
 open Matrix
 

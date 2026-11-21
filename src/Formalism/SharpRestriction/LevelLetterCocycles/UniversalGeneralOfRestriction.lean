@@ -2239,8 +2239,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] [CommRing O] [Algebra O LL]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
 
-local notation "ιE" => algebraMap (LetA O n) W.EE
-
 theorem sat_frac [IsDomain O] (hinj : Function.Injective (algebraMap O LL))
     (hR : Formalism.MainNotions.DeltaInvariantLattices.wachRingRelations W 1 (PD.p - 1) W.π₀
       (fun _ => Polynomial.X + Polynomial.C ((PD.p : ℕ) : O)))
@@ -2318,8 +2316,6 @@ def KillWinCore {PD : PeriodData G Qp K₀ K B BdR} (W : LocWach PD LL O v n) : 
             algebraMap (LetA O n) W.EE (letE c) * algebraMap O W.EE x)
 
 variable {PD : PeriodData G Qp K₀ K B BdR} (W : LocWach PD LL O v n)
-
-local notation "ιE" => algebraMap (LetA O n) W.EE
 
 theorem section_restriction_first [IsDomain O] [Fintype (K →ₐ[Qp] LL)] (hinj : Function.Injective (algebraMap O LL))
     (hO2 : ∀ x : LL, 0 ≤ v x → ∃ o : O, algebraMap O LL o = x) (hArc : ArcCore W)
@@ -2443,8 +2439,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] [CommRing O] [Algebra O LL]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
 
-local notation "ιE" => algebraMap (LetA O n) W.EE
-
 theorem filCris_anti (T : LocLat G Qp LL O) (τ₀ : K₀ →ₐ[Qp] LL) {u w : ℤ} (h : w ≤ u) :
     FilCris PD T.ρ u ⊓ DcrisL PD T.ρ τ₀ ≤ FilCris PD T.ρ w ⊓ DcrisL PD T.ρ τ₀ :=
   inf_le_inf_right _ (inf_le_inf_left _ (Submodule.comap_mono (filV_anti PD h)))
@@ -2528,8 +2522,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {PD : PeriodData G Qp K₀ K B BdR}
     {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] [CommRing O] [Algebra O LL]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
-
-local notation "ιE" => algebraMap (LetA O n) W.EE
 
 theorem section_restriction_second [IsDomain O] [Fintype (K →ₐ[Qp] LL)] (hinj : Function.Injective (algebraMap O LL))
     (hArc : ArcCore W)

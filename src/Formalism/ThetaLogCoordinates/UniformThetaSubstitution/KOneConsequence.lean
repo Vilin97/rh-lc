@@ -1,7 +1,7 @@
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FinalS
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.GaussElementarySymmetric
 import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TheoremCIiiMulti
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementC
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.ABArith
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.FinsuppStepInduction
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.MinorProdBlockDegree
@@ -12,15 +12,15 @@ import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.EntryATwoAndB
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.EJoint
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.MPlaces
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.PlacesAddClass
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.KOneConsequenceOf
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.CyclicPowerClassOfExpEquiv
+import Formalism.GaussJetBounds.StatementI
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FirstDeriv
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.CoeffSubstLgFOfDegreeOne
 import Formalism.GrowthSums.FactorialBaseGrowth.PathBasisOfCount
 
 namespace Formalism.InvariantFactorPaths.G7.Top
 
 open Formalism.InvariantFactorPaths.G7
-
-theorem iterate : Iterate := iterate_statement
 
 theorem e_one_identity : JetPairingHasseIdentity := e_one_identity_of
 theorem e_one_integral : HasseDerivIntegralHomogeneous := e_one_integral_of

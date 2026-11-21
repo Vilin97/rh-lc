@@ -38,7 +38,6 @@ section Restriction
 
 variable (A : Rep.{u} k G) [IsDiscreteRep A]
 
-@[reassoc]
 theorem cohomologyMap_comp_cohomologyRes {A' : Rep.{u} k G} [IsDiscreteRep A'] (g : A ⟶ A')
     (S : Subgroup G) (n : ℕ) :
     cohomologyMap g n ≫ cohomologyRes A' S n =
@@ -46,7 +45,6 @@ theorem cohomologyMap_comp_cohomologyRes {A' : Rep.{u} k G} [IsDiscreteRep A'] (
   rw [← cohomologyMapAlong_id_eq_cohomologyMap, ← cohomologyMapAlong_id_eq_cohomologyMap]
   exact cohomologyRes_naturality A g S n
 
-@[reassoc]
 theorem cohomologyRes_comp_cohomologyToGroupCohomology (S : Subgroup G) (n : ℕ) :
     cohomologyRes A S n ≫ cohomologyToGroupCohomology (Rep.res S.subtype A) n =
       cohomologyToGroupCohomology A n ≫ groupCohomology.map S.subtype (𝟙 _) n :=
@@ -58,11 +56,6 @@ section Inflation
 
 variable (A : Rep.{u} k G) [IsDiscreteRep A] (N : Subgroup G) [N.Normal]
 
-instance isDiscreteRep_quotientToInvariantsFunctor_obj :
-    IsDiscreteRep ((Rep.quotientToInvariantsFunctor k N).obj A) :=
-  isDiscreteRep_quotientToInvariants_of_normal A N
-
-@[reassoc]
 theorem cohomologyInfl_comp_cohomologyToGroupCohomology (n : ℕ) :
     cohomologyInfl A N n ≫ cohomologyToGroupCohomology A n =
       cohomologyToGroupCohomology (A.quotientToInvariants N) n ≫

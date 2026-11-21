@@ -240,12 +240,6 @@ def originUnit : Γ(scheme W, originOpen W ⊓ coordOpen W 2)ˣ :=
 
 def originLB : LB (scheme W) := twoChart (originOpen W) (coordOpen W 2) (originUnit W)
 
-@[simp] theorem originLB_U_true : (originLB W).U true = originOpen W := rfl
-
-@[simp] theorem originLB_U_false : (originLB W).U false = coordOpen W 2 := rfl
-
-@[simp] theorem originLB_g_true_false : (originLB W).g true false = originUnit W := rfl
-
 theorem originLB_isLB : (originLB W).IsLB := twoChart_isLB (originOpen_sup_coordOpen_two W) _
 
 def originSecMk (f₀ : Γ(scheme W, originOpen W)) (f₁ : Γ(scheme W, coordOpen W 2))
@@ -255,10 +249,6 @@ def originSecMk (f₀ : Γ(scheme W, originOpen W)) (f₁ : Γ(scheme W, coordOp
 
 def originSec : (originLB W).Sec :=
   originSecMk W (originParam W) 1 (by rw [map_one, mul_one]; rfl)
-
-@[simp] theorem originSec_f_true : (originSec W).f true = originParam W := rfl
-
-@[simp] theorem originSec_f_false : (originSec W).f false = (1 : Γ(scheme W, coordOpen W 2)) := rfl
 
 theorem isRegularSec_originSec : Cartier.IsRegularSec (originSec W)
   | true => isRegularFn_originParam W
@@ -365,9 +355,6 @@ theorem secPull_originSec_eq_zero_iff {T : Scheme.{0}} (g : T ⟶ scheme W) :
       rw [e, ← Category.assoc] at ht
       exact absurd ((zero_preimage_coordOpen_two W).le ht) id
     · exact ((eq_comp_zero_iff W g).1 e).2
-
-def originDivisor : EffCartierData (scheme W) :=
-  .ofSec (originLB_isLB W) (originSec W) (isRegularSec_originSec W)
 
 def coordFn (j : Fin 3) : ∀ i, Γ(scheme W, (originLB W).U i) :=
   twoChartFn (originUnit W)
@@ -705,27 +692,6 @@ theorem not_isGen_originLB [Nontrivial R] (t : (originLB W).Gen) : ¬ t.IsGen :=
   have := h.map (originValue W)
   rw [originValue_originParam] at this
   exact not_isUnit_zero this
-
-example (s : (originLB W).Sec) :
-    resG _ (inf_le_left : originOpen W ⊓ coordOpen W 2 ≤ _) (s.f true) =
-      ratioOn W _ 1 (inf_le_left.trans (originOpen_le W)) 0 * resG _ inf_le_right (s.f false) :=
-  s.compat true false
-
-example : (originUnit W : Γ(scheme W, originOpen W ⊓ coordOpen W 2)) *
-    resG _ inf_le_right (affineFnEquiv W (affineY W)) =
-      resG _ inf_le_right (affineFnEquiv W (affineX W)) := by
-  rw [affineFnEquiv_affineX, affineFnEquiv_affineY, mul_comm]
-  exact ratioOn_mul_ratioOn inf_le_right (inf_le_left.trans (originOpen_le W))
-
-example (hP : IsUnimodularSol ((⟨0, 0, 1, -1, 0⟩ : WeierstrassCurve ℚ).map (RingHom.id ℚ)) ![2, -5, 8])
-    (h : ⊤ ≤ ptHom _ _ _ hP ⁻¹ᵁ coordOpen _ 1) :
-    evalPt (ptHom _ _ _ hP) _ h (originCofactor _ _ le_rfl) = 1 / 25 := by
-  have h₀ := evalPt_ptHom_ratioOn_mul _ _ hP le_rfl h 0
-  have h₂ := evalPt_ptHom_ratioOn_mul _ _ hP le_rfl h 2
-  simp only [Matrix.cons_val_zero, Matrix.cons_val, Matrix.cons_val_one] at h₀ h₂
-  simp only [originCofactor, map_add (f := _), map_sub, map_mul, map_pow, map_one, map_zero, map_neg]
-  rw [eq_div_of_mul_eq (by norm_num) h₀, eq_div_of_mul_eq (by norm_num) h₂]
-  norm_num
 
 end WeierstrassCurve
 

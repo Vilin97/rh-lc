@@ -1,5 +1,5 @@
 import Mathlib
-import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.ComplexWhittaker.IsSmCCre
+import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.ComplexWhittaker.InstMeasurableSpaceU2
 
 namespace GroundTheory.Automorphic.ArchWhittakerC
 
@@ -297,9 +297,6 @@ def W (n : ℕ) (q : ℤ) : Submodule ℂ H where
     rw [P_smul, show P σ n q x = x from hx]
 
 theorem mem_W {n : ℕ} {q : ℤ} {x : H} : x ∈ W σ n q ↔ P σ n q x = x := Iff.rfl
-
-theorem isClosed_divisorComponent (n : ℕ) (q : ℤ) : IsClosed (W σ n q : Set H) :=
-  isClosed_eq (PL σ n q).continuous continuous_id
 
 theorem P_mem_alt (n : ℕ) (q : ℤ) (x : H) : P σ n q x ∈ W σ n q := P_P σ n q x
 

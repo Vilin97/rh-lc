@@ -22,10 +22,6 @@ def IsLocEmb (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (ι : Ω
 def Lifts {w : HeightOneSpectrum (𝓞 E)} (ι : Ω →ₐ[E] Kbar w) (g : GalLoc w) (σ : G E Ω) : Prop :=
   ∀ z, g (ι z) = ι (σ z)
 
-theorem Lifts.mul {w : HeightOneSpectrum (𝓞 E)} {ι : Ω →ₐ[E] Kbar w} {g g' : GalLoc w} {σ σ' : G E Ω}
-    (H : Lifts ι g σ) (H' : Lifts ι g' σ') : Lifts ι (g * g') (σ * σ') := fun z => by
-  rw [AlgEquiv.mul_apply, H', H]; rfl
-
 theorem Lifts.eq {w : HeightOneSpectrum (𝓞 E)} {ι : Ω →ₐ[E] Kbar w} {g : GalLoc w} {σ σ' : G E Ω}
     (H : Lifts ι g σ) (H' : Lifts ι g σ') : σ = σ' :=
   AlgEquiv.ext fun z => ι.toRingHom.injective ((H z).symm.trans (H' z))

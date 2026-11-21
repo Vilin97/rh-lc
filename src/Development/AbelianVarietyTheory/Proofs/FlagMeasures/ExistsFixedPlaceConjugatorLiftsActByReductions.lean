@@ -6,7 +6,8 @@ import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ExistsReduct
 import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.RowDictPf
 import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.RedBasicsPf
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.GoodAtReductionConjugatedUnitaryElement
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsAddEquivOfCard
+import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
+import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AdelicLatticeSpec
 import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AdelicLatticeSelfDualHermitian
 import Development.AbelianVarietyTheory.Definitions.Divisors.InstCMHostS
 import Development.AbelianVarietyTheory.Proofs.FlagMeasures.WBEqPrimeComap
@@ -167,8 +168,6 @@ theorem res_one_apply {R k : Type} [CommRing R] [CommRing k] (S : Subring R) (re
   · have hab' : a ≠ b := fun e => hij (hab.1 e)
     have : (⟨(1 : Matrix (Fin m) (Fin m) R) a b, hd⟩ : S) = 0 := Subtype.ext (by show (1 : Matrix (Fin m) (Fin m) R) a b = (0 : R); exact Matrix.one_apply_ne hab')
     rw [this, map_zero, Matrix.one_apply_ne hij, ZMod.val_zero, Nat.cast_zero]
-
-local notation "INST" D => Formalism.L2.SG.InstExistsPf.instOf D
 
 set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 4000000 in

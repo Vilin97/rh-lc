@@ -85,31 +85,13 @@ def HermRat : Prop :=
   ∀ μ j, 1 ≤ j → j ≤ D.R.m → ∀ x y : D.what₂.MtL μ j,
     ∃ c : D.what₂.LL, D.what₂.embLL c = inner ℂ (D.what₂.jMt μ j x) (D.what₂.jMt μ j y)
 
-def PrRat : Prop :=
-  ∀ μ j, 1 ≤ j → j ≤ D.R.m → ∀ x : D.what₂.MtL μ j,
-    ∃ y, D.what₂.jMt μ j y = D.what₂.eMt μ j ((D.what₂.Zj μ j).starProjection (D.what₂.jMt μ j x))
-
 def Z0 (μ : D.what₂.Tup) (j : ℕ) : Submodule ℂ (D.what₂.Mt μ j) :=
   (LinearMap.ker (D.what₂.thetaP μ j))ᗮ ⊓ LinearMap.range (D.what₂.eMt μ j)
-
-def ProjectionIsSpectralProjector : Prop :=
-  ∀ μ j, 1 ≤ j → j ≤ D.R.m → ∀ x : D.what₂.Mt μ j,
-    D.what₂.eMt μ j ((D.what₂.Zj μ j).starProjection x) = (Z0 D μ j).starProjection x
-
-def ThetaBij : Prop :=
-  ∀ μ j, 1 ≤ j → j ≤ D.R.m → Function.Bijective ((D.what₂.thetaP μ j).domRestrict (Z0 D μ j))
 
 open Classical in
 
 def hLL (μ : D.what₂.Tup) (j : ℕ) (x y : D.what₂.MtL μ j) : D.what₂.LL :=
   if h : ∃ c : D.what₂.LL, D.what₂.embLL c = inner ℂ (D.what₂.jMt μ j x) (D.what₂.jMt μ j y) then h.choose else 0
-
-theorem hLL_spec (h : HermRat D) (μ : D.what₂.Tup) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m)
-    (x y : D.what₂.MtL μ j) :
-    D.what₂.embLL (hLL D μ j x y) = inner ℂ (D.what₂.jMt μ j x) (D.what₂.jMt μ j y) := by
-  unfold hLL
-  rw [dite_eq_left (h μ j h1 h2 x y)]
-  exact (h μ j h1 h2 x y).choose_spec
 
 def gramDet (μ : D.what₂.Tup) (j : ℕ) {n : ℕ} (b : Fin n → D.what₂.MtL μ j) : D.what₂.LL :=
   (Matrix.of fun i k => hLL D μ j (b i) (b k)).det
@@ -125,19 +107,11 @@ def FactGram : Prop :=
     ∀ (n : ℕ) (b : Fin n → D.what₂.MtL μ j), IsLocBasis D (TjL D μ j) w b →
       vAdd (D.plEq w) (gramDet D μ j b) = - jwIdx D μ j w
 
-def FactJwConj : Prop :=
-  HermRat D → ∀ μ j w, 1 ≤ j → j ≤ D.R.m → (TjL D μ j).FG →
-    jwIdx D μ j (D.what₂.places.conj w) = jwIdx D μ j w
-
 variable {D} (X : DivX D)
 
 def ThetaRat : Prop :=
   ∀ μ j, 1 ≤ j → j ≤ D.R.m → ∀ x : D.what₂.MtL μ j,
     ∃ y, X.jM j y = D.what₂.thetaP μ j (D.what₂.jMt μ j x)
-
-def FullRank : Prop :=
-  ∀ μ j, 1 ≤ j → j ≤ D.R.m → (TjL D μ j).FG ∧ (thTj X μ j).FG ∧
-    Submodule.span D.what₂.LL (thTj X μ j : Set (X.MjH j).V) = ⊤
 
 theorem jM_inj (j : ℕ) : Function.Injective (X.jM j) :=
   inj_of_li D.what₂.embLL (X.jM j) (X.MjH j).b (X.jM_basis j).1
@@ -193,20 +167,6 @@ end Formalism.BasicNotions
 namespace Formalism.BasicNotions.Idx
 
 open NumberField IsDedekindDomain Formalism.BasicNotions
-
-theorem IjIdx_of_subsingleton {D : D7} (X : DivX D) (μ : D.what₂.Tup) (j : ℕ) (w : D.what₂.places.Pl)
-    [Subsingleton (X.MjH j).V] : IjIdx X μ j w = 0 := by
-  have h : (X.MjH j).L = thTj X μ j := SetLike.ext fun x => by
-    rw [Subsingleton.elim x 0]; exact ⟨fun _ => zero_mem _, fun _ => zero_mem _⟩
-  unfold IjIdx Formalism.HermitianLatticesTheory.lidx
-  rw [h]; exact sub_self _
-
-theorem jwIdx_of_subsingleton (D : D7) (μ : D.what₂.Tup) (j : ℕ) (w : D.what₂.places.Pl)
-    [Subsingleton (D.what₂.MtL μ j)] : jwIdx D μ j w = 0 := by
-  have h : TjL D μ j = TjDual D μ j := SetLike.ext fun x => by
-    rw [Subsingleton.elim x 0]; exact ⟨fun _ => zero_mem _, fun _ => zero_mem _⟩
-  unfold jwIdx Formalism.HermitianLatticesTheory.lidx
-  rw [← h]; exact sub_self _
 
 end Formalism.BasicNotions.Idx
 
@@ -297,23 +257,9 @@ variable {D : D7} {X : DivX D} {c : NChoice D} (T : NMj D X c)
 
 set_option synthInstance.maxHeartbeats 400000 in
 
-def SupTie : Prop :=
-  ∀ w j, D.what₂.muAt w ≠ D.what₂.mu0 → 1 ≤ j → j ≤ D.R.m →
-    Submodule.span (c.Oe w) (T.eMj w j '' ((X.MjH j).L : Set (X.MjH j).V)) =
-      (D.nexp.Bsup (c.twI w) j (c.sd w) ⊓
-        (NForms.V0 D (c.twI w) j (c.sd w)).restrictScalars (D.ntw.O (c.twI w))).baseChange (c.Oe w)
-
 end NMj
 
 set_option synthInstance.maxHeartbeats 400000 in
-
-def NCutCompat (D : D7) (c : NChoice D) : Prop :=
-  ∀ w j, D.what₂.muAt w ≠ D.what₂.mu0 → 1 ≤ j → j ≤ D.R.m → ∀ x x' : D.what₂.MtL (D.what₂.muTw w) j,
-    D.what₂.jMt (D.what₂.muTw w) j x' = D.what₂.eMt (D.what₂.muTw w) j
-      ((D.what₂.Zj (D.what₂.muTw w) j).starProjection (D.what₂.jMt (D.what₂.muTw w) j x)) →
-    NChoice.thPe D c w j (c.eMt w j x') =
-      (((NForms.eG D (c.twI w) j (c.sd w)).restrictScalars (D.ntw.O (c.twI w))).baseChange
-        (FractionRing (c.Oe w))) (NChoice.thPe D c w j (c.eMt w j x))
 
 end Formalism.BasicNotions
 

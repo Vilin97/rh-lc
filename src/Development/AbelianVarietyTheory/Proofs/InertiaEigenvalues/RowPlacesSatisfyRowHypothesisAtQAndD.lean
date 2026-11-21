@@ -3,7 +3,7 @@ import Formalism.SharpRestriction.LevelLetterCocycles.EmbeddingTypeJumps
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
 import Formalism.SharpRestriction.LevelLetterCocycles.LargeLevelLemmas
 import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.CommutingEndomorphismCondition
-import Formalism.SharpRestriction.LevelLetterCocycles.UsedConclusionOfUsedInputs
+import Formalism.SharpRestriction.LevelLetterCocycles.UsedLocalConclusion
 import Formalism.GaloisCohomology.LocalTateDualityK
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.RationalDualityOfAllCoefficients
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsCrystallineJumpsOfIsIsoMatrixGaloisRepresentat
@@ -14,22 +14,6 @@ noncomputable section
 namespace GlobalTheory.RowBoundB
 
 open Module
-
-theorem good_one {l : ℕ} [Fact l.Prime] {K LL : FinExt l} {s : ℕ} (hl : l ≠ 2) (h : Good K s LL)
-    (hK : K.1 ≤ Ks K 1) : Good K 1 LL := by
-  obtain ⟨hs, -, -, hτ⟩ := h
-  refine ⟨le_rfl, fun h2 => absurd h2 hl, hK, fun τ x => ?_⟩
-  have hle : Ks K 1 ≤ Ks K s := by
-    refine sup_le_sup_left (IntermediateField.adjoin.mono _ _ _ ?_) _
-    intro y hy
-    obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hs
-    simp only [Set.mem_setOf_eq] at hy ⊢
-    rw [pow_add, pow_mul, hy, one_pow]
-  obtain ⟨φ, hφ⟩ := IsAlgClosed.surjective_restrictDomain_of_isAlgebraic (K := ℚ_[l]) (L := ↥(Ks K 1))
-    (M := Om l) (E := Om l) τ
-  have := hτ (φ.comp (Ks K s).val) ⟨x.1, hle x.2⟩
-  rw [← hφ]
-  exact this
 
 theorem jump_windows (η Sc b : ℝ) (t : ℕ) (hη : 0 < η) (hS : 0 < Sc) (ht : 1 ≤ (t : ℝ))
     (hpar : Sc + η + t + 2 ≤ b) (s : ℤ) (Jc Jl : Finset ℤ)

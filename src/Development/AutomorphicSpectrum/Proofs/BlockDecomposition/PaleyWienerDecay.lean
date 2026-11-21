@@ -11,8 +11,6 @@ namespace GlobalTheory.CompanionTheory.WaveCurve.Decay
 
 open PositivityTheory.RgBcC PositivityTheory.RgBcC.Fc GlobalTheory.CompanionTheory.WaveCurve
 
-local notation "sg(" y ")" => (((y : ℝ) : ℂ) ^ (1 / 2 : ℂ))
-
 def ct (φ : ℝ → ℝ) (y : ℝ) : ℂ := ∫ t, (φ t : ℂ) * chj 0 t y
 
 def Tst (φ : ℝ → ℝ) : Prop := ContDiff ℝ ∞ φ ∧ HasCompactSupport φ

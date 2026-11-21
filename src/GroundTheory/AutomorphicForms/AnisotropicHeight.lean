@@ -214,38 +214,6 @@ theorem exists_adelicNorm_aeval_le (hd : 0 < d) (P : Fin m → MvPolynomial (Fin
         ‖algebraMap K w.Completion ((P k).coeff s)‖)
         (fun k _ => by positivity) (Finset.mem_univ k))
 
-theorem exists_pos_le_height_of_bound {n : ℕ} (G : Set (AdelicGLn.AdelicGL K n))
-    (Φ : (Fin n → 𝔸[K]) → Fin m → 𝔸[K]) {C : ℝ} (hC : 0 < C) (hd : 0 < d)
-    (hΦ : ∀ y, Reduction.HasFiniteContent y → Reduction.HasFiniteContent (Φ y) →
-      Reduction.adelicNorm (Φ y) ≤ C * Reduction.adelicNorm y ^ d)
-    (hG : ∀ g ∈ G, ∀ x : Fin n → K, x ≠ 0 → ∃ s : GroundTheory.Global.IdeleGroup K,
-      1 ≤ (GroundTheory.Global.IdeleGroup.ideleModule K s : ℝ) ∧ ∃ z : Fin m → K, z ≠ 0 ∧
-        Φ (Reduction.ratVec x ᵥ* (g : Matrix (Fin n) (Fin n) 𝔸[K])) =
-          (s : 𝔸[K]) • Reduction.ratVec z) :
-    ∃ ε : ℝ, 0 < ε ∧ ∀ g ∈ G, ∀ x : Fin n → K, x ≠ 0 → ε ≤ Reduction.height g x := by
-  refine ⟨min 1 C⁻¹, lt_min one_pos (inv_pos.2 hC), fun g hg x hx => ?_⟩
-  obtain ⟨s, hs, z, hz, he⟩ := hG g hg x hx
-  have hy := Reduction.hasFiniteContent_height g hx
-  have hfz : Reduction.HasFiniteContent
-      (Φ (Reduction.ratVec x ᵥ* (g : Matrix (Fin n) (Fin n) 𝔸[K]))) := by
-    rw [he]
-    exact (Reduction.hasFiniteContent_ratVec hz).smul s
-  have h1 : 1 ≤ Reduction.adelicNorm (Φ (Reduction.ratVec x ᵥ* (g : Matrix (Fin n) (Fin n) 𝔸[K]))) := by
-    rw [he, Reduction.adelicNorm_smul (Reduction.hasFiniteContent_ratVec hz)]
-    exact one_le_mul_of_one_le_of_one_le hs (Reduction.one_le_adelicNorm_ratVec hz)
-  have h2 := h1.trans (hΦ _ hy hfz)
-  have h0 : 0 ≤ Reduction.height g x := Reduction.height_nonneg g x
-  change 1 ≤ C * Reduction.height g x ^ d at h2
-  by_cases h1' : 1 ≤ Reduction.height g x
-  · exact (min_le_left _ _).trans h1'
-  · replace h1' := not_le.1 h1'
-    have hpow : Reduction.height g x ^ d ≤ Reduction.height g x := pow_le_of_le_one h0 h1'.le hd.ne'
-    have h3 : 1 ≤ C * Reduction.height g x := h2.trans (mul_le_mul_of_nonneg_left hpow hC.le)
-    refine (min_le_right _ _).trans ?_
-    calc C⁻¹ = C⁻¹ * 1 := (mul_one _).symm
-      _ ≤ C⁻¹ * (C * Reduction.height g x) := mul_le_mul_of_nonneg_left h3 (inv_nonneg.2 hC.le)
-      _ = Reduction.height g x := by rw [← mul_assoc, inv_mul_cancel₀ hC.ne', one_mul]
-
 end Anisotropic
 
 end

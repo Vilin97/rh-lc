@@ -65,8 +65,6 @@ theorem unipOne_mem_rationalGLOne (r : ℕ) (ξ : unipLattice K n r) :
 
 variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
 
-local notation "Γ₁" => rationalGLOne K n
-
 instance (r : ℕ) : SigmaFinite (unipMeasure K n r) := by
   unfold unipMeasure
   infer_instance
@@ -254,9 +252,6 @@ def cuspidalL2 : Submodule ℂ (Lp ℂ 2 (quotientMeasure Γ₁ μ)) where
     filter_upwards [ae_constantTermL2_smul μ r c φ, hφ r hr hrn] with y h1 h2
     rw [h1, h2]
     simp
-
-theorem mem_cuspidalL2 {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} : φ ∈ cuspidalL2 μ ↔ IsCuspidalL2 μ φ :=
-  Iff.rfl
 
 theorem isClosed_cuspidalL2 : IsClosed (cuspidalL2 μ : Set (Lp ℂ 2 (quotientMeasure Γ₁ μ))) := by
   refine isClosed_of_closure_subset fun φ hφ r hr hrn => ?_

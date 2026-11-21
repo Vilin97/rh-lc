@@ -24,9 +24,6 @@ theorem ch_restrict {U V : Y.Opens} (h : V ≤ U) (x : SecOnR s (LB.triv Y) U) :
     ch s V (SecOnR.restrict s (LB.triv Y) h x) = resG Y h (ch s U x) :=
   SecOn.chart_restrict (LB.isLB_triv Y) PUnit.unit le_top h x
 
-theorem cst_eq (V : Y.Opens) (r : K) :
-    cst s V r = (s.appLE ⊤ V le_top).hom ((Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom r) := rfl
-
 theorem ch_smul (V : Y.Opens) (r : K) (x : SecOnR s (LB.triv Y) V) :
     ch s V (r • x) = cst s V r * ch s V x := by
   rw [SecOnR.smul_def, LinearEquiv.map_smul]

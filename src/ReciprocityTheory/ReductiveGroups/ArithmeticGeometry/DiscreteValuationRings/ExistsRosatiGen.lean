@@ -31,8 +31,6 @@ theorem QVal_unique {χ : D.toPre.X} {n m : ℤ} (hn : QVal D.toPre ϖ χ n) (hm
 
 variable {Q : D.toPre.X → ℤ}
 
-macro "secTac" : tactic => `(tactic| (simp [Sum.forall, Fin.forall_fin_succ, Over.w, Over.w_assoc, eSec, Matrix.cons_val_zero, Matrix.cons_val_succ]))
-
 instance (P : PolAV (Spec (CommRingCat.of V))) : IsSeparated P.A.hom := by
   have : IsProper P.A.hom := P.isAb.proper
   infer_instance

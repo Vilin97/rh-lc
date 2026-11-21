@@ -11,8 +11,6 @@ namespace GlobalTheory.CompanionTheory.LefPair
 
 variable {n : ℕ}
 
-local notation "θ" => thetaR (starRingEnd ℂ)
-
 theorem tw_eq (x d : GL (Fin n) ℂ) : PositivityTheory.RgTw.tw x d = twConj (θ n) x d := by
   have h : PositivityTheory.RgTw.th x = θ n x := by
     apply Units.ext

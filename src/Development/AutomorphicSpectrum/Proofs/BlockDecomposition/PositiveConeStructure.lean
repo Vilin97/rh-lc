@@ -147,8 +147,6 @@ local instance : SFinite (coneMeas n) := by unfold coneMeas; infer_instance
 
 def emb : UK n →* G n := Unitary.toUnits
 
-theorem emb_val (κ : UK n) : (emb κ).val = κ.1 := rfl
-
 theorem continuous_emb : Continuous (emb : UK n → G n) := by
   rw [Units.continuous_iff]
   refine ⟨continuous_subtype_val, ?_⟩
@@ -157,9 +155,6 @@ theorem continuous_emb : Continuous (emb : UK n → G n) := by
 
 theorem val_mem (y : G n) : y.val ∈ GLs n :=
   ((Matrix.isUnit_iff_isUnit_det _).1 y.isUnit).ne_zero
-
-theorem isOpen_GLs : IsOpen (GLs n) :=
-  isOpen_ne.preimage (continuous_id.matrix_det)
 
 theorem contDiff_hOf : ContDiff ℝ ∞ (hOf (n := n)) := by
   unfold hOf

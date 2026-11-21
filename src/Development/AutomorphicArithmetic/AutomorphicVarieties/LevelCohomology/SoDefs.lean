@@ -13,17 +13,6 @@ section Dat
 variable {k Ω : Type} [Field k] [NumberField k] [Field Ω] [Algebra k Ω] (l : ℕ) [Fact l.Prime]
   {O : Type} [CommRing O] [Algebra ℤ_[l] O]
 
-structure SoDat (S : Finset (HeightOneSpectrum (𝓞 k))) (e : ℕ) (ψ : G k Ω →* Oˣ)
-    (Θ : GS Ω (S : Set (HeightOneSpectrum (𝓞 k))) →* Oˣ) : Prop where
-  odd : l ≠ 2 ∨ IsTotallyComplex k
-  above : ContainsAbove S l
-  e_pos : 1 ≤ e
-  opn : IsOpen (ψ.ker : Set (G k Ω))
-  lift : Θ.comp (toGS Ω _) = Chr.Psi l (e + 1) ψ
-
-def locSum (e : ℕ) (ψ : G k Ω →* Oˣ) (S : Finset (HeightOneSpectrum (𝓞 k))) (A : S → ValuationSubring Ω) : ℕ∞ :=
-  ∑ v : S, Chr.h0 l e ψ (Dec (F := k) (A v))
-
 end Dat
 
 section Lev
@@ -52,9 +41,6 @@ structure IsLev (a : O) (θ : Γ →* Oˣ) (ρ : Representation O Γ M) : Prop w
   act : ∀ g m, ρ g m = (θ g : O) • m
 
 theorem isLev_lev {a : O} (ha : a ≠ 0) (θ : Γ →* Oˣ) : IsLev a θ (scalRep (Lev a) θ) := ⟨ha, ⟨LinearEquiv.refl O _⟩, fun g m => scalRep_apply (Lev a) θ g m⟩
-
-theorem IsLev.comp {a : O} {θ : Γ →* Oˣ} {ρ : Representation O Γ M} (h : IsLev a θ ρ) {D : Type} [Group D] (φ : D →* Γ) :
-    IsLev a (θ.comp φ) (ρ.comp φ : Representation O D M) := ⟨h.ne, h.cyc, fun g m => h.act (φ g) m⟩
 
 def Coc (θ : Γ →* Oˣ) (z : Γ → O) : Prop := ∀ g h, z (g * h) = z g + (θ g : O) * z h
 

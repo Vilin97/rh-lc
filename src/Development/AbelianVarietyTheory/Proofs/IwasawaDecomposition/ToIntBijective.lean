@@ -14,8 +14,6 @@ variable (D : D7)
 
 def fracO : IntermediateField ℚ D.what₂.LL := IntermediateField.adjoin ℚ (Set.range D.what₂.OtoLL)
 
-instance : NumberField (fracO D) := {}
-
 theorem otoLL_mem (y : D.what₂.O) : D.what₂.OtoLL y ∈ fracO D :=
   IntermediateField.subset_adjoin ℚ _ ⟨y, rfl⟩
 

@@ -23,9 +23,6 @@ def localSchwartzBruhatPi : Submodule ℂ ((ι → F) → ℂ) where
   smul_mem' c _ hf := ⟨hf.1.comp (c • ·), hf.2.comp_left (smul_zero c)⟩
 
 omit [Field F] [ValuativeRel F] [IsNonarchimedeanLocalField F] [Fintype ι] in
-theorem mem_localSchwartzBruhatPi {f : (ι → F) → ℂ} :
-    f ∈ localSchwartzBruhatPi F ↔ IsLocallyConstant f ∧ HasCompactSupport f :=
-  Iff.rfl
 
 variable {F}
 

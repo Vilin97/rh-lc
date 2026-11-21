@@ -33,8 +33,6 @@ variable {H : Type} [Group H]
 def swTw (σ : H →* H) : H × H →* H × H :=
   (MonoidHom.prodMap σ σ).comp (MulEquiv.prodComm : H × H ≃* H × H).toMonoidHom
 
-@[simp] theorem swTw_apply (σ : H →* H) (y : H × H) : swTw σ y = (σ y.2, σ y.1) := rfl
-
 theorem mem_twCent_swTw (σ : H →* H) (hσ : ∀ g, σ (σ g) = g) (d d' : H) (g : H × H) :
     g ∈ twCent (swTw σ) (d, d') ↔
       g.1 ∈ twCent (MonoidHom.id H) (d * σ d') ∧ g.2 = d' * σ g.1 * d'⁻¹ := by

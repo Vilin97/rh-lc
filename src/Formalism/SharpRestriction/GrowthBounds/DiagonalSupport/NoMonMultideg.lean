@@ -46,12 +46,6 @@ theorem sum_split {M : Type} [AddCommMonoid M] (f : T × Fin (r + K) → M) :
   refine Finset.sum_congr rfl fun x _ => ?_
   exact Fin.sum_univ_add _
 
-theorem prod_split {M : Type} [CommMonoid M] (f : T × Fin (r + K) → M) :
-    ∏ v, f v = (∏ v : T × Fin r, f (v.1, Fin.castAdd K v.2)) * ∏ v : T × Fin K, f (v.1, Fin.natAdd r v.2) := by
-  rw [Fintype.prod_prod_type, Fintype.prod_prod_type, Fintype.prod_prod_type, ← Finset.prod_mul_distrib]
-  refine Finset.prod_congr rfl fun x _ => ?_
-  exact Fin.prod_univ_add _
-
 end Split
 
 section Mon
@@ -186,12 +180,6 @@ theorem bigM_noMon (hp : 0 < p) (hinj : Function.Injective fun x : TL J nL r => 
   ext ⟨x, b⟩
   simp only [noMon, Finsupp.coe_equivFunOnFinite_symm]
   rw [bigM_no hinj, Nat.add_mul_div_left _ _ (lowP_pos hp x), Nat.div_eq_of_lt (hrho _ _), zero_add]
-
-theorem plMon_multideg (mo : TV n' (m + 1) →₀ ℕ) (x : TL J nL r) :
-    multideg (plMon Fr p hk nL mo) x = ∑ a : Fin r, mo (plVar Fr hk nL x a) / lowP Fr p x := rfl
-
-theorem noMon_multideg (mo : TV n' (m + 1) →₀ ℕ) (x : TL J nL r) :
-    multideg (noMon Fr p hk nL mo) x = ∑ b : Fin K, mo (noVar Fr hk nL x b) / lowP Fr p x := rfl
 
 theorem bigM_inBlock (hp : 0 < p) (hinj : Function.Injective fun x : TL J nL r => posOf n' (posTL Fr x))
     (rho : TL J nL r × Fin (r + K) → ℕ) (hrho : ∀ x c, rho (x, c) < lowP Fr p x)

@@ -1,5 +1,11 @@
 import Formalism.SharpRestriction.LevelLetterCocycles.BlochKatoDuality
-import Formalism.WachLatticeTwists.LatticeDualFibres.PropLocContOfLattices
+import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.LocDualOrth
+import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.QuotLen
+import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
+import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+import Formalism.WachLatticeTwists.LatticeDualFibres.FibreDualStable
+import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.ExistsPowSmulIntegral
+import Formalism.WachLatticeTwists.LatticeDualFibres.StatDualFibreLattice
 import Formalism.WeaklyAdmissibleFiltrations.PhtGalois
 
 noncomputable section
@@ -38,10 +44,6 @@ def dualS (P : V →ₗ[LL] V' →ₗ[LL] LL) (T : Submodule O V) : Submodule O 
     obtain ⟨a, ha⟩ := hy x hx
     refine ⟨c * a, ?_⟩
     rw [← algebraMap_smul LL c y, map_smul, ha, map_mul, smul_eq_mul]
-
-theorem mem_dualS (P : V →ₗ[LL] V' →ₗ[LL] LL) (T : Submodule O V) (y : V') :
-    y ∈ dualS P T ↔ ∀ x ∈ T, ∃ a : O, P x y = algebraMap O LL a := by
-  exact Iff.rfl
 
 def shear (Y : Submodule O V) (T : Submodule O W) (ψ : V →ₗ[LL] W) : Submodule O (V × W) where
   carrier := {p | p.1 ∈ Y ∧ p.2 - ψ p.1 ∈ T}
@@ -607,11 +609,6 @@ def torsionPairing {LA : Lattice (O := O) A.ρ} {LA' : Lattice (O := O) A'.ρ}
     show (Submodule.Quotient.mk (P (t : A.V) v) : LL ⧸ L1.T) = 0
     rw [Submodule.Quotient.mk_eq_zero, hL1, ha]
     exact ⟨a, rfl⟩)
-
-theorem torsionPairing_mk {LA : Lattice (O := O) A.ρ} {LA' : Lattice (O := O) A'.ρ}
-    {P : A.V →ₗ[LL] A'.V →ₗ[LL] LL} (hd : IsDualLat1 PD LA LA' P)
-    (L1 : Lattice (O := O) (charRep (cycLL PD LL))) (hL1 : L1.T = OL O LL) (v : A'.V) (t : ↥LA.T) :
-    torsionPairing PD hd L1 hL1 (Submodule.Quotient.mk v) t = Submodule.Quotient.mk (P (t : A.V) v) := rfl
 
 theorem torsionPairing_equivariant {LA : Lattice (O := O) A.ρ} {LA' : Lattice (O := O) A'.ρ}
     {P : A.V →ₗ[LL] A'.V →ₗ[LL] LL} (hd : IsDualLat1 PD LA LA' P)
@@ -1372,11 +1369,6 @@ theorem zl_int (hO : GoodO (Qp := ℚ_[l]) LL O) (c : ℚ_[l]) (hc : ‖c‖ ≤
 end CycTop
 
 end Br
-
-theorem frobenius_lifting (D : Formalism.BasicNotions.D7) : Stmt D := by
-  rintro ⟨h1, h2, h3, h4, h5, h6⟩
-  exact ⟨fun l _ K => Br.absorption_over_period _ (h1 l K) (h2 l K) (h4 l K) (h6 l K),
-    fun l _ K => Br.length_bound_over_period _ (h1 l K) (h2 l K) (h3 l K) (h4 l K) (h5 l K) (h6 l K)⟩
 
 theorem low_degree_admissible_holds (D : Formalism.BasicNotions.D7) : ArchimedeanSignatureMatching D := by
   intro l _ K LL _ _ _ O _ _ hO

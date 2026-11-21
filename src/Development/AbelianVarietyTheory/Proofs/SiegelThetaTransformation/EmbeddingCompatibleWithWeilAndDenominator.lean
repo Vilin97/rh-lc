@@ -20,14 +20,6 @@ variable {R S : Type} [CommRing R] [CommRing S] {N : ℕ}
 def cor (c : R) (A : Matrix (Fin N) (Fin N) R) : Matrix (Fin (N + 1)) (Fin (N + 1)) R :=
   Matrix.of fun i j => Fin.cases (Fin.cases c (fun _ => 0) j) (fun i' => Fin.cases 0 (A i') j) i
 
-@[simp] theorem corner_embedding_succ_succ (c : R) (A : Matrix (Fin N) (Fin N) R) : cor c A 0 0 = c := rfl
-@[simp] theorem cor_zs (c : R) (A : Matrix (Fin N) (Fin N) R) (j : Fin N) :
-    cor c A 0 j.succ = 0 := rfl
-@[simp] theorem cor_sz (c : R) (A : Matrix (Fin N) (Fin N) R) (i : Fin N) :
-    cor c A i.succ 0 = 0 := rfl
-@[simp] theorem cor_ss (c : R) (A : Matrix (Fin N) (Fin N) R) (i j : Fin N) :
-    cor c A i.succ j.succ = A i j := rfl
-
 theorem cor_mul (a b : R) (A B : Matrix (Fin N) (Fin N) R) :
     cor a A * cor b B = cor (a * b) (A * B) := by
   ext i j

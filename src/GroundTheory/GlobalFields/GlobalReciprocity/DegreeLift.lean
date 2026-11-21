@@ -8,8 +8,6 @@ namespace Cyclotomic
 open IsDedekindDomain NumberField IntermediateField GroundTheory.LocalField.Abstract ProfiniteInteger
 open scoped Pointwise GroundTheory.LocalField.Abstract
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section FiniteLevel

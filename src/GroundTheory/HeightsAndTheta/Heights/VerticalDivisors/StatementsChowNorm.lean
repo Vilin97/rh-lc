@@ -1,5 +1,5 @@
 import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.Inhabitants
+import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.IntToFracInjective
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Vertical
@@ -82,8 +82,6 @@ def NormFormDvd.Statement : Prop :=
         normForm A x ∣ p ^ Module.finrank R A
 
 section Inhabitants
-
-def complexGens : Fin 2 → ℂ := ![1, Complex.I]
 
 end Inhabitants
 

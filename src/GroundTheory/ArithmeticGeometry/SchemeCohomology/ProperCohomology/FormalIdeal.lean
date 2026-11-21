@@ -34,7 +34,6 @@ def imageMapOf {P₁ P₂ G : X.Modules} (f₁ : P₁ ⟶ G) (f₂ : P₂ ⟶ G)
     have hfac : Abelian.factorThruImage f₁ ≫ kernel.ι (cokernel.π f₁) = f₁ := Abelian.image.fac f₁
     rw [hfac, w, Category.assoc, cokernel.condition, comp_zero])
 
-@[reassoc (attr := simp)]
 lemma imageMapOf_ι {P₁ P₂ G : X.Modules} (f₁ : P₁ ⟶ G) (f₂ : P₂ ⟶ G) (φ : G ⟶ G) (h : P₁ ⟶ P₂)
     (w : f₁ ≫ φ = h ≫ f₂) : imageMapOf f₁ f₂ φ h w ≫ kernel.ι _ = kernel.ι _ ≫ φ :=
   kernel.lift_ι _ _ _
@@ -100,7 +99,6 @@ def idealPowSucc (n : ℕ) : idealPow I F (n + 1) ⟶ idealPow I F n :=
       rw [one_mul]
       exact Ideal.pow_le_pow_right (Nat.le_succ n) (idealGen_mem _ i)).choose_spec
 
-@[reassoc (attr := simp)]
 lemma idealPowSucc_ι (n : ℕ) : idealPowSucc I F n ≫ idealPowι I F n = idealPowι I F (n + 1) := by
   rw [idealPowSucc, imageMapOf_ι, map_one, smulHom_one, Category.comp_id]
 
@@ -113,7 +111,6 @@ def idealPowMul {k n : ℕ} (a : A) (ha : a ∈ I ^ k) : idealPow I F n ⟶ idea
       have := Ideal.mul_mem_mul ha (idealGen_mem (I ^ n) i)
       rwa [← pow_add, add_comm] at this).choose_spec
 
-@[reassoc (attr := simp)]
 lemma idealPowMul_ι {k n : ℕ} (a : A) (ha : a ∈ I ^ k) :
     idealPowMul I F a ha ≫ idealPowι I F (n + k) =
       idealPowι I F n ≫ smulHom F (algebraMap A Γ(X, ⊤) a) :=
@@ -127,7 +124,6 @@ def quotPowMap (n : ℕ) : quotPow I F (n + 1) ⟶ quotPow I F n :=
   cokernel.desc _ (quotPowπ I F n) (by
     rw [← idealPowSucc_ι, Category.assoc, cokernel.condition, comp_zero])
 
-@[reassoc (attr := simp)]
 lemma quotPowπ_map (n : ℕ) : quotPowπ I F (n + 1) ≫ quotPowMap I F n = quotPowπ I F n :=
   cokernel.π_desc _ _ _
 
@@ -147,8 +143,6 @@ instance (J : Ideal A) : (⨁ fun _ : Fin (idealGenNum J) => F).IsQuasicoherent 
   isQuasicoherent_biproduct _
 
 instance (n : ℕ) : (idealPow I F n).IsQuasicoherent := inferInstance
-
-instance (n : ℕ) : (quotPow I F n).IsQuasicoherent := inferInstance
 
 abbrev toFunctions (V : X.Opens) : A →+* Γ(X, V) := (restrictTop V).comp (algebraMap A Γ(X, ⊤))
 

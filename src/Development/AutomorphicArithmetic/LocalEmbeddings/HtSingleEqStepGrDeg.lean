@@ -1,11 +1,15 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.KernelSt
+import Development.AbelianVarietyTheory.Definitions.Divisors.SemiposAtOfPositive
+import Development.AbelianVarietyTheory.Definitions.Divisors.TorusExt
 import Development.AbelianVarietyTheory.Definitions.Divisors.ToKnownTheoremsOf
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.DemaillyRegularisation
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.MatrixLemma
+import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshBasic
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsAlgAtlasAtlasOf
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ContinuousAndSmul
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.AbsoluteSiegel
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ScholzeWeinsteinB
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.QuasiPlurisubharmonic
+import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
+import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.IsPshLocallyIntegrableStatement
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExtFormAdjEqNegSecondForm
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.LieAlgebraMaps
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiFibrationLieLatticeFullStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StepLatZero
@@ -126,82 +130,5 @@ private theorem grSq_eq {D : D7} (O : Setup D) {K : Type} [Field K] [NumberField
   rw [e2, grSq, ← Complex.div_ofReal_re]
   congr 2
   exact Complex.ext rfl p2.2.symm
-
-theorem GlobalTheory.LieRead.ht_single_eq_stepGrDeg {D : D7} (O : Setup D) (x : ToroidalCompactificationData O.s) (y : Pt O.s) (hy : below y.y ∉ genBd O.s.T.Z)
-    {K : Type} [Field K] [NumberField K] (F : SemiFib K) (ι : K →+* Qb) (h : HermFam K (Fin F.P₀.g → K))
-    (hT : FibTie O y F ι) (hH : F.IsHerm h) (τ : D.host.E →+* ℂ) (i : ℕ) (hi : i < O.S.Dw.mult τ) :
-    (adlOf (O.Φ.C _) (metsOf x O.Φ _) (Finsupp.single (ArIn.ind ∅, none, .inl (τ, i)) 1)).ht (basePt O.Φ y) =
-      stepGrDeg O F h τ i := by
-  classical
-  have : Algebra.IsAlgebraic ℚ Qb := algebraicClosure.isAlgebraic ℚ ℂ
-  obtain ⟨p, hp, hc, hb⟩ := liesUnder_basePt O.Φ y
-  rw [← hb]
-  clear hb
-  generalize compPt O.s y = k at p hp hc ⊢
-  have hg : F.P₀.g = (letters O.S.Dw).length := by
-    obtain ⟨-, -, -, -, -, -, -, e, -⟩ := hT
-    exact e
-  obtain ⟨q, -, -, hfg, ⟨v₀, hv₀, hv₁, hv₂⟩, hset⟩ := UpperTheory.lie_lattice_generator D O K F τ i hi hg
-  have ha : ∃ a ∈ stepIdeal O F τ i, a ≠ 0 :=
-    ⟨v₀ q, by rw [← SetLike.mem_coe, hset]; exact ⟨v₀, hv₀, hv₁, rfl⟩, hv₂⟩
-  obtain ⟨n, c, hn, hc0, hsup, hidx⟩ := UpperTheory.ideal_norm_log_height K _ ha.choose hfg ha.choose_spec.1 ha.choose_spec.2
-  have hn' : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.2 hn.ne'
-  obtain ⟨β, hβ, hco⟩ := exists_coord_gen (O.Φ.C k) (expo O.S.Dw (Finsupp.single (ArIn.ind ∅, none, Sum.inl (τ, i)) 1 : Sym D.host.E →₀ ℤ)) hc
-  have hstr : p ≫ (O.Φ.C k).Y.str = spMap (y.fK.comp O.κ.e.toRingHom) := by
-    rw [← (O.Φ.C k).π_str, ← Category.assoc, hp, ← Category.assoc, y.y_over, ← Spec.map_comp]; rfl
-  have key := UpperTheory.height_log_norm_formula D.what₂.LL K (cxSt D.what₂.LL) (O.Φ.C k).Y (adlOf (O.Φ.C k) (metsOf x O.Φ k) (Finsupp.single (ArIn.ind ∅, none, Sum.inl (τ, i)) 1 : Sym D.host.E →₀ ℤ)) _ p ι β c
-    (n : ℝ)⁻¹ (fun s => (1 / 2) * Real.log (stepGrSq O F h τ i s)) rfl rfl hstr hβ hc0 ?_ ?_
-  · rw [key, stepGrDeg, dif_pos ha, ← Finset.mul_sum]
-    congr 2
-    field_simp
-    linarith
-  · intro θ σ z hz
-    have hσ : embOf O.κ.e σ = θ.comp y.fK := by
-      have h1 := ((O.Φ.C k).down z).2
-      have h2 : ((O.Φ.C k).down z).1 ≫ genStr O.s.T.Z = spMap (θ.comp y.fK) := by
-        show (z.1 ≫ _) ≫ _ = _
-        rw [hz, Category.assoc, Category.assoc, ← Category.assoc p, hp, y.y_over, ← Spec.map_comp]; rfl
-      exact EigLoc.spMap_inj (h1.symm.trans h2)
-    have hd : ((O.Φ.C k).down z).1 = spMap θ ≫ y.y := by
-      show z.1 ≫ _ = _
-      rw [hz, Category.assoc, hp]
-    have hx : ((O.Φ.C k).down z).1 ≫ genι O.s.T.Z = spMap θ ≫ y.y ≫ genι O.s.T.Z := by rw [hd, Category.assoc]
-    obtain ⟨g, hgm⟩ := y.frame.exists_isMap θ hσ hx
-    have h3 := coord_map _ hco θ hgm hσ hx
-    rw [← hz] at h3
-    have hpar : parOf (Finsupp.single (ArIn.ind ∅, none, Sum.inl (τ, i)) 1 : Sym D.host.E →₀ ℤ) = none := by
-      have hne : ((Finsupp.single (ArIn.ind ∅, none, Sum.inl (τ, i)) 1 : Sym D.host.E →₀ ℤ)).support.Nonempty := ⟨_, Finsupp.mem_support_iff.2 (by rw [Finsupp.single_eq_same]; exact one_ne_zero)⟩
-      rw [parOf, dif_pos hne, Finset.mem_singleton.1 (Finsupp.support_single_subset hne.choose_spec)]
-    have h4 := pn_metsOf (x := x) (parOf (Finsupp.single (ArIn.ind ∅, none, Sum.inl (τ, i)) 1 : Sym D.host.E →₀ ℤ)) (g := g) h3
-    have hpos := (x.hodge (embOf O.κ.e σ)).pos _ g τ
-    have h5 := grSq_eq O F h τ (θ.comp ι) hpos (gram_all D O x y hy K F ι h hT hH θ _ hσ _ hd g hgm τ) ⟨i, hi⟩
-    have h6 : letterOf O.S.Dw (Sum.inl (τ, i)) = some ⟨τ, ⟨i, hi⟩⟩ := dif_pos hi
-    rw [Finset.prod_eq_single (⟨τ, ⟨i, hi⟩⟩ : Letter O.S.Dw) (fun b _ hb => by
-      rw [expo_single, h6, if_neg (fun e => hb (Option.some.inj e).symm), zpow_zero]) (by simp),
-      expo_single, h6, if_pos rfl, zpow_one] at h4
-    refine (congrArg (fun r => Real.log r / 2) h4).trans ?_
-    rw [hpar]
-    have h7 := grSq_pos hpos ⟨i, hi⟩
-    show Real.log (_ * grSq ((x.hodge (embOf O.κ.e σ)).gram _ g τ) ⟨i, hi⟩) / 2 = _
-    rw [Real.log_mul (pow_ne_zero _ (norm_ne_zero_iff.2 ((map_ne_zero θ).2 hβ))) h7.ne', h5, Real.log_pow]
-    push_cast
-    ring
-  · intro v ε θ z hz
-    obtain ⟨hpr, -, hw⟩ := ioOf_spec _ v ε
-    haveI := Fact.mk hpr
-    refine (UpperTheory.coordinate_eigenframe_equation D O k y p τ i β hi hp hβ hco v ε θ z hz).trans ?_
-    rw [UpperTheory.lie_log_eq_ideal_supremum D O y K F ι hT _ _ τ i hi, hw (θ (ι c))]
-    let j : K →+* ℂ_[resP v] := ((ioOf (resP v) ε).comp θ).comp ι
-    let u : AbsoluteValue K ℝ := (NormedField.toAbsoluteValue ℂ_[resP v]).comp j.injective
-    have hu : IsNonarchimedean u := fun a b => by
-      show ‖j (a + b)‖ ≤ max ‖j a‖ ‖j b‖
-      rw [map_add (f := _)]; exact IsUltrametricDist.norm_add_le_max _ _
-    have h1 := congrArg Real.log (hsup u hu)
-    rw [Real.log_pow] at h1
-    have h2 : Real.log ‖ioOf (resP v) ε (θ (ι c))‖ = n * Real.log (sSup ((fun b => ‖((ioOf (resP v) ε).comp θ) (ι b)‖) ''
-      (stepIdeal O F τ i : Set K))) := h1.symm
-    rw [h2]
-    field_simp
-    ring
 
 end SlopeTestRemainingChoices

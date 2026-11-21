@@ -22,9 +22,6 @@ def falseEquiv (f : (Σ j, Fin (c j)) ≃ Fin t) (hc : c true = 0) : Fin (c fals
     | false => exact ⟨i, rfl⟩
     | true => exact absurd i.2 (by omega)⟩
 
-@[simp] theorem falseEquiv_apply (f : (Σ j, Fin (c j)) ≃ Fin t) (hc : c true = 0) (i : Fin (c false)) :
-    falseEquiv f hc i = f ⟨false, i⟩ := rfl
-
 theorem leviEmb_mulSingle (f : (Σ j, Fin (c j)) ≃ Fin t) (hc : c true = 0) (h : GL (Fin t) R) :
     leviEmb R f (Pi.mulSingle (M := fun j => GL (Fin (c j)) R) false (reix R (falseEquiv f hc).symm h)) = h := by
   refine Units.ext (Matrix.ext fun x y => ?_)

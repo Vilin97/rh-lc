@@ -44,10 +44,6 @@ theorem map_quad {R S ι : Type} [CommRing R] [CommRing S] [Fintype ι] (f : R �
 
 variable {F : Type} [Field F] [NumberField F] {v : HeightOneSpectrum (𝓞 F)}
 
-local notation "𝒪" => HeightOneSpectrum.adicCompletionIntegers F v
-local notation "𝓴" => IsLocalRing.ResidueField (HeightOneSpectrum.adicCompletionIntegers F v)
-local notation "res" => IsLocalRing.residue (HeightOneSpectrum.adicCompletionIntegers F v)
-
 theorem res_eq_zero_iff (a : 𝒪) : res a = 0 ↔ Valued.v (a : Fv F v) < 1 := by
   rw [IsLocalRing.residue_eq_zero_iff, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
   constructor

@@ -20,7 +20,6 @@ variable {K : Type} [Field K] (D : TwistData K) (j : Fin D.J)
 def outSeg (i : D.ML) : Prop := ¬ ∃ k, D.e0 j k = i
 
 instance : DecidablePred (D.outSeg j) := Classical.decPred _
-instance : DecidablePred (D.SegL j) := Classical.decPred _
 
 def pullE (ζ : D.EM) : Fin (D.nB j + D.r) × Fin D.r →₀ ℕ :=
   Finsupp.comapDomain (Prod.map (D.e0 j) id) ζ

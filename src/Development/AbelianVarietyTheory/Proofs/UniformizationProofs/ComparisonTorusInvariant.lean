@@ -28,9 +28,6 @@ variable {S : Scheme.{0}} {X : Type} [AddCommGroup X] {H : Over S}
 def pullTop {Z Y : Over S} (r : Z ⟶ Y) : Γ(Y.left, ⊤)ˣ →* Γ(Z.left, ⊤)ˣ :=
   Units.map r.left.appTop.hom.toMonoidHom
 
-theorem pullTop_val {Z Y : Over S} (r : Z ⟶ Y) (a : Γ(Y.left, ⊤)ˣ) :
-    (pullTop r a).val = r.left.appTop.hom a.val := rfl
-
 theorem pullTop_comp {Z Y Y' : Over S} (r : Z ⟶ Y) (s : Y ⟶ Y') (a : Γ(Y'.left, ⊤)ˣ) :
     pullTop r (pullTop s a) = pullTop (r ≫ s) a :=
   Units.ext (SplitTorusHom.appTop_comp r s _).symm

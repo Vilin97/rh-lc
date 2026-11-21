@@ -226,8 +226,6 @@ omit [IsTotallyComplex E] in
 
 def invL (x : Lie E a) : Lie E a := toL (Matrix.of x)⁻¹
 
-def starTest (α : Lie E a → ℂ) (y : Lie E a) : ℂ := conj (α (invL y)) * (|(fderiv ℝ invL y).det| : ℝ)
-
 omit [IsTotallyComplex E] in
 theorem invL_val (u : GL (Fin a) (Cinf E)) : invL (toL u.val) = toL (u⁻¹).val := (Matrix.coe_units_inv u).symm
 
@@ -252,9 +250,6 @@ theorem contDiffAt_invL {x : Lie E a} (h : x ∈ invSet E a) : ContDiffAt ℝ (�
 def withSmoothings (π : CuspSub E a) : Submodule ℂ (Sm E a) :=
   π.V ⊔ Submodule.span ℂ {F | ∃ (f : Lie E a → ℂ) (φ : Sm E a), IsTest (invSet E a) f ∧ φ ∈ π.V ∧
     F.1 = GlobalTheory.JSW.smoothInf f φ.1}
-
-theorem isTest_of_isTestInf (h : GlobalTheory.JSW.IsTestInf α) : IsTest (invSet E a) α :=
-  ⟨h.1.of_le (by first | exact le_rfl | exact le_top), h.2⟩
 
 theorem le_withSmoothings (π : CuspSub E a) : π.V ≤ withSmoothings π := le_sup_left
 

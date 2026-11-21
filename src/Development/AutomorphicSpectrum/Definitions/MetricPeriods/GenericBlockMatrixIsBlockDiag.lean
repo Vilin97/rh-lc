@@ -691,17 +691,6 @@ def MH (x : Fin 3 → Ω) (hx2 : x 2 = 0) (hx : x 0 ≠ 0 ∨ x 1 ≠ 0) : FlagM
     · simpa [FH] using regAt_int (fun q => x q.2) hQ 1
     · simpa [FH] using regAt_int (fun q => x q.2) hQ 1
 
-example : Nonempty (FlagModel (yH ℚ ![1, 1, 0]) Unit 2 2) := ⟨MH (![1, 1, 0] : Fin 3 → ℚ) rfl (Or.inl one_ne_zero)⟩
-
-example : (MH (![1, 1, 0] : Fin 3 → ℚ) rfl (Or.inl one_ne_zero)).dy ((), 0) = fun k => if k then 1 else -1 := by
-  funext k
-  cases k
-  · exact dif_pos fun p h => by simpa using (blkH_some h).2
-  · exact (dif_neg fun h => h ((), 0) rfl).trans (if_pos rfl)
-
-example : (MH (![1, 1, 0] : Fin 3 → ℚ) rfl (Or.inl one_ne_zero)).blk ((), 1) = none ∧
-    (MH (![1, 1, 0] : Fin 3 → ℚ) rfl (Or.inl one_ne_zero)).lam ((), 1) = 1 := ⟨rfl, rfl⟩
-
 end FlagEx
 
 end GlobalTheory.CompanionTheory.Ar.PB

@@ -17,18 +17,11 @@ def ops {Γ R : Type} (N : R) (ρ : Γ → R) : Option Γ → R := fun a => a.el
 
 @[simp] theorem ops_none {Γ R : Type} (N : R) (ρ : Γ → R) : ops N ρ none = N := rfl
 
-@[simp] theorem ops_some {Γ R : Type} (N : R) (ρ : Γ → R) (a : Γ) : ops N ρ (some a) = ρ a := rfl
-
 def cycL {l : ℕ} [Fact l.Prime] (L : FinExt l) : GQ l →* (↥L.1)ˣ :=
   (Units.map (algebraMap ℚ_[l] ↥L.1 : ℚ_[l] →* ↥L.1)).comp (Loc.PP l).χQ
 
 def FrobPow {l : ℕ} [Fact l.Prime] (g : GQ l) (k : ℕ) : Prop :=
   ∀ c : ↥(MaximalUnramifiedExtension l), g (c : Om l) = (((frobUr l ^ k) c : ↥(MaximalUnramifiedExtension l)) : Om l)
-
-example : IsTri (fun _ : Unit => (1 : End ℚ (Fin 2 → ℚ))) (fun _ (_ : Fin 2) => 1) :=
-  ⟨Pi.basisFun ℚ _, fun _ => ⟨fun i j h => by simp [Matrix.one_apply, h.ne'], fun i => by simp⟩⟩
-
-example {l : ℕ} [Fact l.Prime] : FrobPow (1 : GQ l) 0 := fun _ => rfl
 
 def TriSnoc : Prop :=
   ∀ (k W' W W'' ι : Type) [Field k] [AddCommGroup W'] [Module k W'] [AddCommGroup W] [Module k W] [AddCommGroup W'']

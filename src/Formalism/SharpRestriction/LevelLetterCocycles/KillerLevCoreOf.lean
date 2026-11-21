@@ -23,8 +23,6 @@ section Gen
 
 variable (W : LocWach PD LL O v n)
 
-local notation "ιE" => algebraMap (LetA O n) W.EE
-
 theorem γA_comm (g h : W.Gam) (a : LetA O n) : W.γA g (W.γA h a) = W.γA h (W.γA g a) := by
   funext i
   simp only [LocWach.γA, letγ, AlgHom.pi_apply, AlgHom.comp_apply, Pi.evalAlgHom_apply]
@@ -90,8 +88,6 @@ section Red
 
 variable (W : LocWach PD LL O v n)
 
-local notation "ιE" => algebraMap (LetA O n) W.EE
-
 abbrev numI (e : ℕ) (α : ℕ → ℤ) : LetA O n := ∏ s ∈ Finset.range e, ps W s ^ (α s).toNat
 abbrev denI (e : ℕ) (α : ℕ → ℤ) : LetA O n := ∏ s ∈ Finset.range e, ps W s ^ (-(α s)).toNat
 
@@ -106,9 +102,6 @@ theorem prod_update (P : ℕ → LetA O n) (E : ℤ → ℕ) (e : ℕ) (α : ℕ
     intro t ht
     rw [Function.update_of_ne (Finset.ne_of_mem_erase ht)]
   · rw [← Finset.mul_prod_erase _ _ hm]
-
-theorem inId_iff (a : ZMod n) (e : ℕ) (α : ℕ → ℤ) (f : W.EE) :
-    InId W a e α f ↔ ∃ u ∈ W.AΔ, ιE (denI W e α) * f = ιE (letE a * numI W e α * u) := Iff.rfl
 
 theorem inId_add {a : ZMod n} {e : ℕ} {α : ℕ → ℤ} {f g : W.EE} (hf : InId W a e α f)
     (hg : InId W a e α g) : InId W a e α (f + g) := by
@@ -206,8 +199,6 @@ section Step
 
 variable (W : LocWach PD LL O v n)
 
-local notation "ιE" => algebraMap (LetA O n) W.EE
-
 def chiL (ell : ℕ) : Oˣ := W.χΓ W.gam ^ ((PD.p : ℤ) ^ ell)
 
 def PsUnitE : Prop := ∀ s, IsUnit (ιE (ps W s))
@@ -277,8 +268,6 @@ end Step
 section Main
 
 variable (W : LocWach PD LL O v n)
-
-local notation "ιE" => algebraMap (LetA O n) W.EE
 
 theorem step (hU : PsUnitE W) (hC : PsCoprime W) (hG : LevGrad W) (hS : PsStable W)
     (hπ : W.π₀ ∈ W.AΔ) {a : ZMod n} {ell : ℕ} {α : ℕ → ℤ} {s : ℕ} (hs : s < ell) {f : W.EE}
@@ -412,8 +401,6 @@ end Main
 section Core
 
 variable (W : LocWach PD LL O v n)
-
-local notation "ιE" => algebraMap (LetA O n) W.EE
 
 theorem lE_add (κ κ' : ℕ) : lE W (κ + κ') = lE W κ * lE W κ' := by
   simp [lE, pow_add]

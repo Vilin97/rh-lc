@@ -60,10 +60,6 @@ instance isDiscreteRep_res_galRootsOfUnity (W : Subgroup Gal(Ksep/K)) :
     IsDiscreteRep (Rep.res W.subtype (galRootsOfUnity.{0} K Ksep n)) :=
   isDiscreteRep_res_subtype _ _
 
-instance isDiscreteRep_res_galUnits (W : Subgroup Gal(Ksep/K)) :
-    IsDiscreteRep (Rep.res W.subtype (galUnits.{0} K Ksep)) :=
-  isDiscreteRep_res_subtype _ _
-
 theorem subsingleton_cohomology_one_galUnits_open :
     Subsingleton (cohomology (Rep.res (V : Subgroup Gal(Ksep/K)).subtype (galUnits.{0} K Ksep)) 1) :=
   (ModuleCat.isZero_iff_subsingleton).1 ((localClassFormationOfIsSepClosure K Ksep).isZero_H1_open_subgroups V)

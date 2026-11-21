@@ -12,8 +12,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.MixedTermTranslate
 
-local infixl:70 " ⬝ " => HMul.hMul
-
 variable {D : D7}
 
 theorem symplOH_isoPart_isoPart (V W : HSp D) {r : ℕ} (C : Matrix (Fin V.rank) (Fin r) D.host.E) (hC : IsIsoFrame V C)

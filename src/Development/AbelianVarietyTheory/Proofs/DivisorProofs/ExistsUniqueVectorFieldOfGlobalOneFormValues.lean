@@ -31,11 +31,7 @@ section Main
 
 variable {R : Type} [CommRing R] (A : Over (Sp R)) (V : A.left.affineOpens)
 
-local notation "𝔰" => A.hom ≫ 𝟙 (Sp R)
-local notation "𝔅" => Sec (A.hom ≫ 𝟙 (Sp R)) (Subtype.val V)
 set_option quotPrecheck false in
-local notation "𝔄" => (Over.pullback (spMap (algebraMap R (Sec (A.hom ≫ 𝟙 (Sp R)) (Subtype.val V))))).obj A
-local notation "𝔣" => pullback.fst A.hom (spMap (algebraMap R (Sec (A.hom ≫ 𝟙 (Sp R)) (Subtype.val V))))
 
 theorem affPt_hom : affPt (𝔰) V ≫ A.hom = spMap (algebraMap R 𝔅) :=
   (congrArg (affPt (𝔰) V ≫ ·) (Category.comp_id A.hom).symm).trans (affPt_w _ V)

@@ -59,8 +59,6 @@ end Abstract
 
 variable (l : ℕ) [Fact l.Prime]
 
-local notation "𝔸" => Localization.Away (l : AInf ℂ_[l] l)
-
 theorem mem_adjoin_dpow {s : 𝔸} (hs : s ∈ ACris.ACrisZero ℂ_[l] l) :
     s ∈ Algebra.adjoin (AInf ℂ_[l] l) (Set.range fun n : ℕ => ACris.dpow n (xi0 l)) := by
   rw [← ACris.acrisZero_eq_adjoin ker_theta0]; exact hs

@@ -1,6 +1,14 @@
 import Mathlib
 import Formalism.SharpRestriction.LevelLetterCocycles.BlochKatoPhases
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.SelmerRankVanishing
+import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
+import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+import Formalism.GaloisCohomology.Statement
+import Formalism.GaloisCohomology.LocalTateDualityK
+import Formalism.WeaklyAdmissibleFiltrations.Statement
+import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
 
 noncomputable section
 

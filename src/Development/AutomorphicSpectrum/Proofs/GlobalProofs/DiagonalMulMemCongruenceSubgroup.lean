@@ -23,8 +23,6 @@ namespace GlobalTheory.CompanionTheory.WeberRay
 
 variable {K : Type} [Field K] [NumberField K]
 
-local notation "𝓘" => (FractionalIdeal (𝓞 K)⁰ K)ˣ
-
 theorem idealLattice_one [Algebra K ℂ] (L : PeriodPair)
     (hL : ∀ z, z ∈ L.lattice ↔ ∃ a : 𝓞 K, algebraMap K ℂ (a : K) = z) :
     idealLattice (algebraMap K ℂ) (((1 : 𝓘) : FractionalIdeal (𝓞 K)⁰ K)) = L.lattice := by

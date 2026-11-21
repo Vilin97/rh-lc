@@ -12,8 +12,6 @@ namespace Cyclotomic
 
 open GroundTheory.LocalField.Abstract
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 instance isAlgClosure_rat : IsAlgClosure ℚ ℚ̄ := by
   let i : Algebra ℚ ℚ̄ := AlgebraicClosure.instAlgebra ℚ (R := ℚ)
   have h : IsAlgClosure ℚ ℚ̄ := inferInstance
@@ -307,13 +305,6 @@ theorem toZModPow_toPadicInt (k : ℕ) (x : ℤ̂) :
     PadicInt.toZModPow k (toPadicInt ℓ x) =
       ProfiniteInteger.proj (primePowPNat ℓ k) x :=
   RingHom.congr_fun (PadicInt.lift_spec _ k) x
-
-theorem toPadicInt_character (σ : Gal(ℚ̄/ℚ)) :
-    toPadicInt ℓ (character σ : ℤ̂) =
-      (cyclotomicCharacter ℚ̄ ℓ (MulSemiringAction.toRingAut Gal(ℚ̄/ℚ) ℚ̄ σ) : ℤ_[ℓ]) := by
-  refine PadicInt.ext_of_toZModPow.mp fun k => ?_
-  rw [toZModPow_toPadicInt, cyclotomicCharacter.toZModPow, proj_character]
-  rfl
 
 end Padic
 

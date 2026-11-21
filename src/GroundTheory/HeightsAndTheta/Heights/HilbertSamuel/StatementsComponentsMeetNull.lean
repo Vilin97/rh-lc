@@ -1,5 +1,5 @@
 import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsComponentsAdditive
+import GroundTheory.HeightsAndTheta.Heights.Intersections.Statements
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterGood
 set_option maxSynthPendingDepth 1
 

@@ -23,10 +23,6 @@ def uTR : UEnv E a →ₐ[ℝ] Module.End ℂ (TR.Sm E a) :=
 
 variable {E a}
 
-@[simp] theorem coe_smEq (φ : TR.Sm E a) : (smEq E a φ).1 = φ.1 := rfl
-
-@[simp] theorem coe_smEq_symm (φ : archSmooth E a) : ((smEq E a).symm φ).1 = φ.1 := rfl
-
 theorem smEq_uTR (u : UEnv E a) (φ : TR.Sm E a) : smEq E a (uTR E a u φ) = uAction u (smEq E a φ) := rfl
 
 theorem uTR_ι (X : TR.Lie E a) : uTR E a (UniversalEnvelopingAlgebra.ι ℝ (lieEq E a X)) = TR.lie E a X := by

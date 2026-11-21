@@ -18,9 +18,6 @@ def rightCongr (LL V : Type) [Field LL] [Algebra Qp LL] [AddCommGroup V] [Module
     [IsScalarTower Qp LL V] (s : B ≃ₗ[Qp] B) : V ⊗[Qp] B ≃ₗ[LL] V ⊗[Qp] B :=
   AlgebraTensorModule.congr (LinearEquiv.refl LL V) s
 
-@[simp] theorem rightCongr_tmul (s : B ≃ₗ[Qp] B) (v : V) (b : B) :
-    rightCongr LL V s (v ⊗ₜ b) = v ⊗ₜ s b := rfl
-
 theorem rightCongr_map (s : B ≃ₗ[Qp] B) (f : V →ₗ[LL] V) (u u' : B →ₗ[Qp] B) (h : ∀ b, s (u b) = u' (s b))
     (x : V ⊗[Qp] B) :
     rightCongr LL V s (AlgebraTensorModule.map f u x) = AlgebraTensorModule.map f u' (rightCongr LL V s x) := by

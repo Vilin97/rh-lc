@@ -1,5 +1,5 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.MemMspan
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsAddHaarMeasureVolumeLie
 import Development.AbelianVarietyTheory.Definitions.Divisors.SmoothSpanLeMspan
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsRapidInf
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasurableToGLEntry
@@ -187,24 +187,7 @@ def plGL (w : InfinitePlace E) : GL (Fin a) ℂ →* GL (Fin a) (Cinf E) := corn
 
 open Classical in
 
-theorem plGL_apply (w : InfinitePlace E) (g : GL (Fin a) ℂ) (i j : Fin a) (w' : InfinitePlace E) :
-    (plGL w g : Matrix (Fin a) (Fin a) (Cinf E)) i j w' =
-      if w' = w then (g : Matrix (Fin a) (Fin a) ℂ) i j else (1 : Matrix (Fin a) (Fin a) ℂ) i j := by
-  change (1 : Matrix (Fin a) (Fin a) (Cinf E)) i j w' - (Pi.single w ((1 : Matrix (Fin a) (Fin a) ℂ) i j) : Cinf E) w' +
-    (Pi.single w ((g : Matrix (Fin a) (Fin a) ℂ) i j) : Cinf E) w' = _
-  simp only [Pi.single_apply, Matrix.one_apply]
-  split_ifs <;> simp_all
-
 open Classical in
-
-theorem map_plGL (w : InfinitePlace E) (g : GL (Fin a) ℂ) (w' : InfinitePlace E) :
-    Matrix.GeneralLinearGroup.map (Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) w') (plGL w g) =
-      if w' = w then g else 1 := by
-  classical
-  ext i j
-  change (plGL w g : Matrix (Fin a) (Fin a) (Cinf E)) i j w' = _
-  rw [plGL_apply]
-  split_ifs <;> rfl
 
 theorem isRapidInf_dirac (y : GL (Fin a) (Cinf E)) :
     IsRapidInf (Measure.dirac ()) (fun _ : Unit => (1 : ℂ)) (fun _ => y) :=
@@ -213,18 +196,5 @@ theorem isRapidInf_dirac (y : GL (Fin a) (Cinf E)) :
 theorem kerInf_dirac (y : GL (Fin a) (Cinf E)) (F : GA E a → ℂ) (g : GA E a) :
     kerInf (Measure.dirac ()) (fun _ : Unit => (1 : ℂ)) (fun _ => y) F g = F (g * infGL E a y) := by
   simp [kerInf]
-
-example (π : CuspSub E a) : 1 ≤ htInf (1 : GL (Fin a) (Cinf E)) ∧ rspan π ≠ ⊥ := ⟨one_le_htInf 1, rspan_ne_bot π⟩
-
-example (π : CuspSub E a) {F : GA E a → ℂ} (hF : F ∈ rspan π) (y : GL (Fin a) (Cinf E)) :
-    (fun g => F (g * infGL E a y)) ∈ rspan π := by
-  have h := kerInf_mem_rspan hF (Measure.dirac ()) (isRapidInf_dirac y)
-  rwa [show kerInf (Measure.dirac ()) (fun _ : Unit => (1 : ℂ)) (fun _ => y) F = fun g => F (g * infGL E a y) from
-    funext (kerInf_dirac y F)] at h
-
-example (w : InfinitePlace E) : htInf (plGL (a := a) w 1) = htGL (1 : GL (Fin a) ℂ) ^ Fintype.card (InfinitePlace E) := by
-  rw [map_one]
-  unfold htInf
-  simp
 
 end GlobalTheory.JSW

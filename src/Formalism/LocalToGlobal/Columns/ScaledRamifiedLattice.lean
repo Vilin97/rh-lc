@@ -19,9 +19,6 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 def Deco.IsDnA (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal) (d d' : Deco E n ST SG) : Prop :=
   d' = d.dn P (d'.f P) ∧ ∀ e ∈ d.N, d.f P e = 1 → d'.f P (q • e) = a
 
-theorem Deco.isDnA_one (P : ST) (q : 𝓞 E) (d d' : Deco E n ST SG) :
-    Deco.IsDnA P q 1 d d' ↔ Deco.IsDn P q d d' := Iff.rfl
-
 theorem Deco.IsDnA.act {P : ST} {q : 𝓞 E} {a : 𝓞 E ⧸ P.1.asIdeal} {d d' : Deco E n ST SG}
     (hdd : Deco.IsDnA P q a d d') {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n) (h : GLG E n SG) :
     Deco.IsDnA P q a (d.act g h) (d'.act g h) := by
@@ -37,8 +34,6 @@ theorem Deco.IsDnA.act {P : ST} {q : 𝓞 E} {a : 𝓞 E ⧸ P.1.asIdeal} {d d' 
 def DecoSet.dnSetA (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal) (d : DecoSet E n ST SG) :
     Set (DecoSet E n ST SG) :=
   {d' | Deco.IsDnA P q a d.1 d'.1}
-
-theorem DecoSet.dnSetA_one (P : ST) (q : 𝓞 E) (d : DecoSet E n ST SG) : d.dnSetA P q 1 = d.dnSet P q := rfl
 
 theorem DecoSet.smul_mem_dnSetA (x : UF E n × GLG E n SG) (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal)
     (d d' : DecoSet E n ST SG) : x • d' ∈ (x • d).dnSetA P q a ↔ d' ∈ d.dnSetA P q a := by
@@ -105,14 +100,6 @@ def DaG (P : ST) (q : 𝓞 X.E) (a : 𝓞 X.E ⧸ P.1.asIdeal) : Module.End X.K 
 
 def DG (P : ST) (q : 𝓞 X.E) : Module.End X.K (formGSD C Λ).EqFun := DaG C Λ P q 1
 
-def GsG (P : ST) (ψ : AddChar (𝓞 X.E ⧸ P.1.asIdeal) X.K) : Module.End X.K (formGSD C Λ).EqFun :=
-  letI : Fintype (𝓞 X.E ⧸ P.1.asIdeal)ˣ := Fintype.ofFinite _
-  ∑ c : (𝓞 X.E ⧸ P.1.asIdeal)ˣ, ψ (c : 𝓞 X.E ⧸ P.1.asIdeal) • diamondOperatorOnForms' C Λ P c
-
-def FFG (P : ST) (q : 𝓞 X.E) (ψ : AddChar (𝓞 X.E ⧸ P.1.asIdeal) X.K) : Module.End X.K (formGSD C Λ).EqFun :=
-  letI : Fintype (𝓞 X.E ⧸ P.1.asIdeal) := Fintype.ofFinite _
-  ∑ a : 𝓞 X.E ⧸ P.1.asIdeal, ψ a • DaG C Λ P q a
-
 end Ops
 
 section Cols
@@ -129,13 +116,6 @@ def NmOp (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) : Module.End X.K (Co
 def UOp (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) : Module.End X.K (ColV W Ch u j) :=
   UG (colVal W u j (Pr.vT u) Pr.vGs) (colLev Ch j) P (Pr.T u : 𝓞 X.E)
 
-def DaOp (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) (a : 𝓞 X.E ⧸ P.1.asIdeal) :
-    Module.End X.K (ColV W Ch u j) :=
-  DaG (colVal W u j (Pr.vT u) Pr.vGs) (colLev Ch j) P (Pr.T u : 𝓞 X.E) a
-
-def DOp (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) : Module.End X.K (ColV W Ch u j) :=
-  DG (colVal W u j (Pr.vT u) Pr.vGs) (colLev Ch j) P (Pr.T u : 𝓞 X.E)
-
 end Cols
 
 structure CharT (X : Fields) (Pr : Primes X) where
@@ -150,12 +130,6 @@ structure CharT.Ok {X : Fields} {Pr : Primes X} (Ps : CharT X Pr) : Prop where
 section Cols2
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m) (Ps : CharT X Pr)
-
-def GsOp (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) : Module.End X.K (ColV W Ch u j) :=
-  GsG (colVal W u j (Pr.vT u) Pr.vGs) (colLev Ch j) P (Ps.psiT u P)
-
-def FFOp (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) : Module.End X.K (ColV W Ch u j) :=
-  FFG (colVal W u j (Pr.vT u) Pr.vGs) (colLev Ch j) P (Pr.T u : 𝓞 X.E) (Ps.psiT u P)
 
 def ColRamV (u : Pr.Word) (j : ℕ) : Submodule X.K (ColV W Ch u j) :=
   ⨅ P : {P // P ∈ Pr.vT u}, LinearMap.ker (NmOp W Ch u j P)
@@ -238,29 +212,6 @@ def scaledRamifiedLattice (u : Pr.Word) (w : HeightOneSpectrum (𝓞 X.K)) : Sub
 
 def NlamG (u : Pr.Word) (w : HeightOneSpectrum (𝓞 X.K)) : Submodule (𝓞 X.K) (MramV W Ch u) :=
   (scaledRamifiedLattice W Ch u w).comap ((MramV W Ch u).subtype.restrictScalars (𝓞 X.K))
-
-def NlamC (u : Pr.Word) (w : HeightOneSpectrum (𝓞 X.K)) : Submodule (Ow w) (MramV W Ch u) :=
-  atW w (NlamG W Ch u w)
-
-def BvC (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) : Submodule (𝓞 X.K) (ColV W Ch u j) :=
-  (colGSD W Ch u j).intOf fun d => BvLat W u j P d
-
-def SwC (u : Pr.Word) (j : ℕ) (w : HeightOneSpectrum (𝓞 X.K)) : Submodule (Ow w) (ColV W Ch u j) :=
-  atW w (ColL W Ch u j)
-
-def SwNabC (u : Pr.Word) (j : ℕ) (w : HeightOneSpectrum (𝓞 X.K)) : Submodule (Ow w) (ColV W Ch u j) :=
-  atW w (ColLnab W Ch u j)
-
-def BvNabC (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) : Submodule (𝓞 X.K) (ColV W Ch u j) :=
-  (colGSD W Ch u j).intOf fun d => nabAtr X.emb (W.lamTrue u j) (d.1.LshKer P)
-
-def BvNabWC (u : Pr.Word) (j : ℕ) (w : HeightOneSpectrum (𝓞 X.K)) (P : {P // P ∈ Pr.vT u}) :
-    Submodule (Ow w) (ColV W Ch u j) :=
-  atW w (BvNabC W Ch u j P)
-
-def BvWC (u : Pr.Word) (j : ℕ) (w : HeightOneSpectrum (𝓞 X.K)) (P : {P // P ∈ Pr.vT u}) :
-    Submodule (Ow w) (ColV W Ch u j) :=
-  atW w (BvC W Ch u j P)
 
 end Nlam
 

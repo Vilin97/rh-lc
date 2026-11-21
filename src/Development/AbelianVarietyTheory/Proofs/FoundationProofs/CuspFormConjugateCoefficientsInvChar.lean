@@ -32,11 +32,6 @@ def twist (γ : SL(2, ℤ)) : SL(2, ℤ) :=
     rw [Matrix.det_fin_two_of]
     linarith⟩
 
-@[simp] lemma twist_00 (γ : SL(2, ℤ)) : twist γ 0 0 = γ 0 0 := rfl
-@[simp] lemma twist_01 (γ : SL(2, ℤ)) : twist γ 0 1 = -γ 0 1 := rfl
-@[simp] lemma twist_10 (γ : SL(2, ℤ)) : twist γ 1 0 = -γ 1 0 := rfl
-@[simp] lemma twist_11 (γ : SL(2, ℤ)) : twist γ 1 1 = γ 1 1 := rfl
-
 lemma refl_smul (γ : SL(2, ℤ)) (τ : ℍ) : refl (γ • τ) = twist γ • refl τ := by
   apply UpperHalfPlane.ext
   have e := UpperHalfPlane.coe_specialLinearGroup_apply γ τ

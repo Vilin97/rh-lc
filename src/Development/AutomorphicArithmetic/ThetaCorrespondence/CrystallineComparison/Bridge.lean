@@ -1,4 +1,6 @@
-import Development.AutomorphicArithmetic.ThetaCorrespondence.CrystallineComparison.ContinuousToBdRPlus
+import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.Comparison
+import Mathlib
+import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.Action
 import Development.AutomorphicArithmetic.ThetaCorrespondence.CrystallineComparison.IsCrisDRAToBdRPlusIff
 
 noncomputable section

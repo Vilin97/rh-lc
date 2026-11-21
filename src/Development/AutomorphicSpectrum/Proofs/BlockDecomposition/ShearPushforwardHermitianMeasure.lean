@@ -70,8 +70,6 @@ end Gen
 
 section Mat
 
-local notation "cTr" => HeckeCharacterZeroLocus.SiegelWeilU.cT
-
 variable {K : Type} [CommRing K] (s : K →+* K) {n : ℕ}
 
 theorem cT_one : cTr s (1 : Matrix (Fin n) (Fin n) K) = 1 := by

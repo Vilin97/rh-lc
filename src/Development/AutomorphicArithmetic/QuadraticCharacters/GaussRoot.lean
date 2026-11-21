@@ -1,5 +1,5 @@
-import Development.AutomorphicArithmetic.QuadraticCharacters.FieldOf
-import Development.AutomorphicArithmetic.QuadraticCharacters.A0InfStabilizerTrivial
+import Development.AutomorphicArithmetic.QuadraticCharacters.MemRealCyclotomicSubgroup
+import Development.AutomorphicArithmetic.QuadraticCharacters.PreHostA
 
 open NumberField IntermediateField
 

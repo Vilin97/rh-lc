@@ -36,7 +36,6 @@ theorem inflation_comp_restriction (n : ℕ) :
   rw [← map_comp, Category.comp_id, groupCohomology.congr (QuotientGroup.mk'_comp_subtype S)
     (fun f φ => map f φ (n + 1)), map_one_succ]
 
-@[simps X₁ X₂ X₃ f g]
 noncomputable def infResShortComplex (n : ℕ) : ShortComplex (ModuleCat k) where
   X₁ := groupCohomology (A.quotientToInvariants S) (n + 1)
   X₂ := groupCohomology A (n + 1)
@@ -58,8 +57,6 @@ lemma invariants_map_surjective {X : ShortComplex (Rep k G)} (hX : X.ShortExact)
 
 noncomputable def toCoindOne : A ⟶ coindOne k G A :=
   ofHom ⟨LinearMap.pi fun x => A.ρ x, fun g => by ext a x; simp⟩
-
-lemma toCoindOne_hom_apply (a : A) (x : G) : (toCoindOne A).hom a x = A.ρ x a := rfl
 
 lemma toCoindOne_injective : Function.Injective (toCoindOne A).hom := fun a b h => by
   have h' : A.ρ 1 a = A.ρ 1 b := congrFun h 1

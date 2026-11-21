@@ -14,11 +14,6 @@ namespace ACris
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-local notation "𝒪" => normInteger ℂ_[p]
-local notation "𝒪♭" => PreTilt (normInteger ℂ_[p]) p
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "φW" => WittVector.frobeniusEquiv p (PreTilt (normInteger ℂ_[p]) p)
-
 section Teichmuller
 
 omit hp in
@@ -129,9 +124,6 @@ def padicToBCrisPlus : ℚ_[p] →+* BCrisPlus ℂ_[p] p :=
     fun y => isUnit_padicIntToBCrisPlus (nonZeroDivisors.coe_ne_zero y)
 
 instance algebraPadicBCrisPlus : Algebra ℚ_[p] (BCrisPlus ℂ_[p] p) := padicToBCrisPlus.toAlgebra
-
-theorem algebraMap_padic_bCrisPlus : algebraMap ℚ_[p] (BCrisPlus ℂ_[p] p) = padicToBCrisPlus :=
-  rfl
 
 theorem iotaPlus_algebraMap_padic (q : ℚ_[p]) :
     iotaPlus ℂ_[p] p (algebraMap ℚ_[p] (BCrisPlus ℂ_[p] p) q) = algebraMap ℚ_[p] 𝔹 q := by
@@ -354,18 +346,6 @@ theorem exists_bCrisPlus_fixed {k : PadicAlgCl p} (hk : k ∈ maxUnramified p K)
   rw [iotaPlus_gal_smul, hx, gal_smul_algClToBdR]
   congr 1
   exact σ.commutes ⟨k, hk.1⟩
-
-theorem image_iotaPlus_fixedPoints :
-    iotaPlus ℂ_[p] p '' MulAction.fixedPoints Gal(PadicAlgCl p/K) (BCrisPlus ℂ_[p] p) =
-      algClToBdR p '' (maxUnramified p K : Set (PadicAlgCl p)) := by
-  ext b
-  constructor
-  · rintro ⟨x, hx, rfl⟩
-    obtain ⟨k, hk, hxk⟩ := bCrisPlus_fixed x hx
-    exact ⟨k, hk, hxk.symm⟩
-  · rintro ⟨k, hk, rfl⟩
-    obtain ⟨x, hx, hxk⟩ := exists_bCrisPlus_fixed hk
-    exact ⟨x, hx, hxk⟩
 
 end Invariants
 

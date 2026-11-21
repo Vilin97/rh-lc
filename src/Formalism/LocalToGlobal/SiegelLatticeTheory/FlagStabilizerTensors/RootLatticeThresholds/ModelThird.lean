@@ -12,8 +12,6 @@ open Formalism.MainNotions.BigCellDensity Formalism.FourierDecayAlt.P.Dx2.Rad
 
 variable {r : ℕ} (pN : Formalism.MainNotions.S.Point ℂ (r + 1))
 
-local notation "W" => wPt pN
-
 theorem w_symm (x : Fin (r + 1)) : (W).symm x = W x := (Equiv.symm_apply_eq _).2 (wPt_invol pN x).symm
 
 def sw (q : Formalism.FourierDecayAlt.C2.Lstidx W) : Formalism.FourierDecayAlt.C2.Lstidx W :=
@@ -22,16 +20,6 @@ def sw (q : Formalism.FourierDecayAlt.C2.Lstidx W) : Formalism.FourierDecayAlt.C
     refine ⟨?_, ?_⟩
     · rw [← w_symm, ← w_symm]; exact h.2
     · rw [w_symm, w_symm, wPt_invol, wPt_invol]; exact h.1⟩
-
-theorem sw_sw (q : Formalism.FourierDecayAlt.C2.Lstidx W) : sw pN (sw pN q) = q := by
-  apply Subtype.ext
-  exact Prod.ext (wPt_invol pN _) (wPt_invol pN _)
-
-def swE : Formalism.FourierDecayAlt.C2.Lstidx W ≃ Formalism.FourierDecayAlt.C2.Lstidx W where
-  toFun := sw pN
-  invFun := sw pN
-  left_inv := sw_sw pN
-  right_inv := sw_sw pN
 
 variable (d : Fin (r + 1) → ℂ)
 

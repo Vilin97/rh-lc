@@ -106,12 +106,6 @@ def del (H : HermSpace K V) (M : Submodule R V) : ℝ := Real.sqrt (gidx (dual H
 
 def smulLat (g : R) (M : Submodule R V) : Submodule R V := M.map (g • (LinearMap.id : V →ₗ[R] V))
 
-def LocGen (M M' : Submodule R V) (e : ℕ) : Prop :=
-  ∀ P : Ideal R, P.IsMaximal → ∃ v : Fin e → V, (∀ i, v i ∈ M) ∧
-    M ≤ M' ⊔ P • M ⊔ Submodule.span R (Set.range v)
-
-def IsPrim (L M : Submodule R V) : Prop := M = L ⊓ rs R (Submodule.span K (M : Set V))
-
 def IsModIso (H : HermSpace K V) (g : R) (L' L : Submodule R V) (Γ : Submodule R (V × V)) : Prop :=
   Γ ≤ L'.prod L ∧ (smulLat g L').prod (smulLat g L) ≤ Γ ∧
   (∀ y' ∈ L', ∃ y, (y', y) ∈ Γ) ∧ (∀ y ∈ L, ∃ y', (y', y) ∈ Γ) ∧
@@ -330,16 +324,6 @@ end Mass
 section Examples
 
 omit [IsScalarTower R K V] [Algebra R K] [StarRing K] [Field K] [Module K V] in
-example (M : Submodule R V) : idx M M = 1 := by simp [idx]
-
-example {H : HermSpace K V} {M : Submodule R V} (h : IsUnimod H M) : del H M = 1 := by
-  simp [del, gidx, idx, h.2]
-
-example : idx (⊤ : Submodule ℤ ℤ) (Ideal.span {2}) = 2 := by
-  have : (Ideal.span {(2 : ℤ)}).toAddSubgroup = AddSubgroup.zmultiples 2 := by
-    ext x; simp [Ideal.mem_span_singleton', AddSubgroup.mem_zmultiples_iff]
-  rw [idx, this]
-  simp [Int.index_zmultiples]
 
 def ratLine : HermSpace ℚ ℚ where
   B := LinearMap.mk₂'ₛₗ (RingHom.id ℚ) (starRingEnd ℚ) (fun x y => x * y)
@@ -361,10 +345,11 @@ theorem ratLine_isTraceDef : IsTraceDef ratLine := by
 theorem ratLine_isLattice :
     Submodule.IsLattice ℚ (1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) := by
   refine ⟨by rw [Submodule.one_eq_span]; exact Submodule.fg_span_singleton _, ?_⟩
-  intro s hs hli
-  exact (LinearIndependent.iff_fractionRing _ _).mp hli
-example : genusMean ratLine (1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) (fun _ => 1) = 1 :=
-  genusMean_one ratLine_isTraceDef ratLine_isLattice
+  rw [eq_top_iff]
+  intro x _
+  have h1 : (1 : ℚ) ∈ Submodule.span ℚ ((1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) : Set ℚ) :=
+    Submodule.subset_span (Submodule.mem_one.2 ⟨1, map_one _⟩)
+  simpa using Submodule.smul_mem _ x h1
 
 end Examples
 

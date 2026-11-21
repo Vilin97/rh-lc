@@ -41,10 +41,6 @@ def iteratedPreimage (U₀ : (s.toSequenceOfBlowups.schemeAt 0).Opens) :
   | 0 => U₀
   | t + 1 => s.toSequenceOfBlowups.transitionMapSucc t ⁻¹ᵁ iteratedPreimage U₀ t
 
-@[simp]
-theorem iteratedPreimage_zero (U₀ : (s.toSequenceOfBlowups.schemeAt 0).Opens) :
-    iteratedPreimage T j hj I₀ E₀ s U₀ 0 = U₀ := rfl
-
 theorem iteratedPreimage_succ (U₀ : (s.toSequenceOfBlowups.schemeAt 0).Opens) (t : ℕ) :
     iteratedPreimage T j hj I₀ E₀ s U₀ (t + 1) =
       s.toSequenceOfBlowups.transitionMapSucc t ⁻¹ᵁ iteratedPreimage T j hj I₀ E₀ s U₀ t := rfl

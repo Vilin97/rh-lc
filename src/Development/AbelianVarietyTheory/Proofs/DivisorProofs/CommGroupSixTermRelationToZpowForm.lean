@@ -1,6 +1,7 @@
 import Development.AbelianVarietyTheory.Definitions.Divisors.EvenDefect
 import Development.AbelianVarietyTheory.Definitions.Divisors.HasPolChartOf
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ToroidalPolChartsKS
+import Mathlib
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ToroidalCompactificationBis
 import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.SecCmp
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.NormalisedPolarisation
 import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.AllSixAbelianSchemeLawsHold

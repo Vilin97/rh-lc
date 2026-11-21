@@ -1,12 +1,94 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MultW
+import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.DiscreteSpectrumKFiniteDecomposition
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HarishChandraFinite
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsNormLeHeightPow
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.DiscreteSeriesUpqUniqueOfClassification
+import Formalism.UnipotentAdelicQuotients.SiegelWeilUnitaryConvergent
+import Formalism.PeriodIntegrals.BesselMapUniq
+import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+import Development.AbelianVarietyTheory.Definitions.Foundations.CdScaleTieIff
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ThetaChr
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.UpLReStage
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsSplittingCharacterSelf
+import Formalism.LocalToGlobal.IndefiniteReal.DatumVec
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.WeilRepresentationUnitaryPair
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HasDRepIffHasDerivAt
+import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.HarishChandraModulesOn
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NonzeroPlacesOverPrimes
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FieldTies
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MovedReadingSameMapsBaseReadingAgrees
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LargeFor
+import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.NotIsCompactUnivFv
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CmHostRootComplexEqPmSqrt
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NonzeroPlacesOverPrimesLifts
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsIsBIffCoreB
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.DsExistsOfDiscreteSeriesExists
+import Formalism.LocalToGlobal.IndefiniteReal.LinksStage
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.IsPrincipalMapOfAlgHom
+import Development.AbelianVarietyTheory.PublishedTheorems.PublishedFoundations.NonemptyAlgHomOfIsRayOfDvd
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
+import Development.AbelianVarietyTheory.PublishedTheorems.WeberRayClassFields.WeberRayFieldSt
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.StrictHenselianAcyclic
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PositionMv
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NotGeoClFalse
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnivChar
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NoFormsOff
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.VpBounds
+import Formalism.SharpRestriction.LevelLetterCocycles.BlochKatoPhases
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsGlIntertwinerOfResidualSpanEqTop
+import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.UnramifiedNoJump
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsAuxiliaryHeckeCharacter
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RankOneCuspidalUnitaryCharEquivApplySymm
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsLamTie0OfIsLamTie
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SumThEmptyNeZero
+import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.TwistSeries
+import Development.AbelianVarietyTheory.Statements.HeckeThetaIntegrals.HkSupSizedOfHkSup
+import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.HeckeValueIntegrality
+import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.SplitOffDetection
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistAllPowersOfGaloisCohomologyClassField
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CoreEq
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalGlobalAboveL
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CenUsedOfCenReal
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsRhoPtOfSplitting
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsComp
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinRepApply
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ColumnCompatibleSelection
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.STiesR
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SameDegreeZeroFormsSelf
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DivisionPairOfAdelicFormsFaceColumnsData
+import Formalism.LocalToGlobal.CarriedPlMap
+import Formalism.LocalToGlobal.SelSide
+import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.TwistedCharacterValue
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TwArgs
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.DivRows3GIff
+import Formalism.LocalToGlobal.Divisibility.ColPins
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.AllRows
+import Development.AutomorphicArithmetic.CharacterBoxes.ExS
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.CountsIrreducibilityConstants
+import Formalism.SharpRestriction.GlobalSchurBounds.LinkTied
+import Formalism.SharpRestriction.GlobalSchurBounds.MainSup
+import Formalism.LocalToGlobal.GroupLattices.AdmissibleAtGeneratorPlaces
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.WuDecayAll
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RowsPos
+import Formalism.LocalToGlobal.GlobalTheory.GL5.PNamed
+import Formalism.LocalToGlobal.GlobalTheory.GL5.DiscreteSeriesOfFormalDegree
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.EventuallyAllScaleContextsAndOfBoth
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SettingsFormsExistList
+import Development.AbelianVarietyTheory.Definitions.Divisors.Params
+import Development.AbelianVarietyTheory.PublishedTheorems.SiegelWeil₂.SiegelWeilUnitaryConvergent
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.HeckeFormNSOfHeckeForm
+import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.WeilSiegelFormulaUnitary
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeckeFormOfDoubling
+import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.RegularisedSiegelWeilFirstTerm
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FieldValuesMemFixedField
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsWeilDatumOOneOfRankZero
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CoefAEqOfHeq
+import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.AdmissibleDiscreteSeriesOfHasParam
+import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.GreenCuspidalIff
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.AdmissibleCoefficientsAnalytic
 import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.DiscreteSeriesClassificationIff
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.RealLowestKTypeCoeffSquareIntegrable
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinRepApply
 import Development.AbelianVarietyTheory.Definitions.Divisors.HasTypeVec
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsNormLeHeightPow
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HarishChandraFinite
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.CuspDiscreteDecompositionOfTraceClass
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.IsClosedEmbeddingOfLocallyCompact
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.ExistsFactorisationCuspidal
@@ -16,7 +98,6 @@ import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.La
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.LabesseWaldspurger
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.ExistsCellOfIsSubquotient
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.RadfordShufflePolynomialHolds
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.GreenCuspidalIff
 import Formalism.LocalToGlobal.IndefiniteReal.BaseLiftsPackageOfPrimitiveLinks
 import Formalism.LocalToGlobal.IndefiniteReal.NormalDecomposition.LiftHeckeOperators
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisGeometry₂.HoweUnram
@@ -32,22 +113,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Mem GlobalTheory.Mem.Top GlobalTheory.Mem.Top.Bl GlobalTheory.Mem.Col2
 open GlobalTheory.Mem.R3 GlobalTheory.Mem.R3.Rw
 
-structure PrM : Prop where
-  m1 : GlobalTheory.Published.HarishChandraAnalyticity
-  m2 : GlobalTheory.Published.DiscreteSeriesClassification
-  m3 : GlobalTheory.Published.CuspRapidDecay
-  m4 : GlobalTheory.Published.HarishChandraFinite
-  m5 : GlobalTheory.Published.CuspTraceClass
-  m6 : GlobalTheory.Published.DixmierMalliavinFactorisation
-  m7 : GlobalTheory.Published.FlathFactorisation
-  m8 : GlobalTheory.Published.PseudoCoefficientUpq
-  m9 : GlobalTheory.Published.HarishChandraCharacters
-  m10 : GlobalTheory.Published.LanglandsClassification
-  m11 : GlobalTheory.Published.LabesseWaldspurger
-  m12 : GlobalTheory.Published.ZelevinskyPolynomialRing
-  m13 : GlobalTheory.Published.GeometricLemma
-  m14 : GlobalTheory.Published.GreenCuspidal
-
 def Mult0 : Prop := Ev fun K => ∀ (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (hX : B.fields.Ok)
   (Wt : Set B.places.Pl) (z : Dat (w.st Z) w.I hX T Wt), K.Over B.toPre → GrpTrue Z.N f →
     (famR (w.st Z) w.I hX (usedOf w.I T Wt) z.Xg z.tr).fam3.Ok3 1 → z.R.toRealDat.ExAt → GlobalTheory.CuspMult.MultEq z.R.toRealDat
@@ -60,12 +125,6 @@ def RowRatW : Prop := StepW Start fun K B f T w => ∀ (Z : w.Lt) (hX : B.fields
   (z : Dat (w.st Z) w.I hX T Wt), GrpTrue Z.N f → GrpAt (w.st Z) w.I → DV.KapDef (w.D Z) → z.R.toRealDat.ExAt →
     GlobalTheory.RealGeo.InGeo z.geo → CoreP z → GIs2 K w Z.G → Wt = z.W1 (F0K K.s (w.D Z)) → (∀ v ∈ Wt, B.places.resChar v ∈ T.pl) →
     Formalism.IndefR.Rat.RowTest (z.R.toCx3 z.F)
-
-theorem hypH_of (c : GlobalTheory.Published.DiscreteSeriesCover) (h1 : GlobalTheory.PrimIn.Hypotheses3) (h2 : GlobalTheory.Published.RegularisedSiegelWeilFirstTerm)
-    (h3 : GlobalTheory.Published.HeckeLPartialContinuation) (m : MultL) (r : RowRatW) : HypH :=
-  ⟨c, h1, h2, h3, m,
-    (StepW.and ((StepW.of_all fun _ _ _ _ _ _ _ s => s.1 : StepW Start Pinned).trans m) r).trans
-      (StepW.of_all fun _ _ _ _ _ _ _ G Z hX Wt z a b k c d e g u v => ⟨G.1 Z hX Wt z a b c d, G.2 Z hX Wt z a b k c d e g u v⟩)⟩
 
 end GlobalTheory.Mem.LiteralAutomorphy
 

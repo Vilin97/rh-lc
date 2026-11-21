@@ -52,8 +52,6 @@ def WT : Submodule ℂ (GL (Fin m) k → ℂ) where
     simp only [Pi.smul_apply, smul_eq_mul, h1 u hu g]
     ring
 
-theorem mem_WT {f : GL (Fin m) k → ℂ} : f ∈ WT ψ ↔ IsWhitTest ψ f := Iff.rfl
-
 def rhoW : Representation ℂ (GL (Fin m) k) (WT (m := m) ψ) where
   toFun x :=
     { toFun := fun f => ⟨fun g => (f : GL (Fin m) k → ℂ) (g * x), by
@@ -134,10 +132,6 @@ variable (ψ) in
 def Good (K : Subgroup (GL (Fin m) k)) : Prop :=
   IsOpen (K : Set (GL (Fin m) k)) ∧ IsCompact (K : Set (GL (Fin m) k)) ∧
     ∀ u ∈ unipB k (Fin m), u ∈ K → ψ (superDiag u) = 1
-
-theorem Good.mono {K K' : Subgroup (GL (Fin m) k)} (hK : Good ψ K) (h : K' ≤ K)
-    (ho : IsOpen (K' : Set (GL (Fin m) k))) : Good ψ K' :=
-  ⟨ho, hK.2.1.of_isClosed_subset (Subgroup.isClosed_of_isOpen _ ho) h, fun u hu hu' => hK.2.2 u hu (h hu')⟩
 
 theorem circle_eq_one {z : Circle} (h : ∀ n : ℕ, 0 < ((z ^ n : Circle) : ℂ).re) : z = 1 := by
   by_contra hz

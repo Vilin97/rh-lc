@@ -1,6 +1,5 @@
 import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameDeterminant.FrameB
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameDeterminant.DetOfFrame
+import Formalism.SharpRestriction.CuspSpanNormBounds.LatticeIndexAndWeightTheory
 
 noncomputable section
 

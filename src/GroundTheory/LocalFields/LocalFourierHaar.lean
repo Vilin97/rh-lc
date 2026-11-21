@@ -138,10 +138,6 @@ theorem modulus_pos {x : K} (hx : x ≠ 0) : 0 < modulus x := by
 
 theorem modulus_ne_zero {x : K} (hx : x ≠ 0) : modulus x ≠ 0 := (modulus_pos hx).ne'
 
-@[simp]
-theorem modulus_eq_zero {x : K} : modulus x = 0 ↔ x = 0 :=
-  ⟨fun h => by_contra fun hx => modulus_ne_zero hx h, fun h => h ▸ modulus_zero⟩
-
 theorem modulus_mul (x y : K) : modulus (x * y) = modulus x * modulus y := by
   by_cases hx : x = 0
   · simp [hx]
@@ -158,14 +154,6 @@ theorem modulus_inv (x : K) : modulus x⁻¹ = (modulus x)⁻¹ := by
   by_cases hx : x = 0
   · simp [hx]
   rw [modulus_of_ne_zero hx, modulus_of_ne_zero (inv_ne_zero hx), ord_inv hx, zpow_neg]
-
-theorem modulus_le_one_iff {x : K} : modulus x ≤ 1 ↔ x ∈ 𝒪[K] := by
-  by_cases hx : x = 0
-  · simp only [hx, modulus_zero, zero_le, true_iff]
-    exact zero_mem _
-  rw [modulus_of_ne_zero hx, ← mem_valBall_zero_iff, mem_valBall_iff_le_ord hx,
-    zpow_le_one_iff_right₀ one_lt_residueCard_nnreal]
-  omega
 
 theorem modulus_eq_one_iff {x : K} : modulus x = 1 ↔ x ≠ 0 ∧ ord x = 0 := by
   by_cases hx : x = 0

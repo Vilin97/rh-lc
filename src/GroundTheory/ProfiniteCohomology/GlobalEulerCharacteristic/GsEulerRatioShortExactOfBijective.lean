@@ -124,8 +124,6 @@ theorem ratio_mul_eq {a b c nA nB nC PA PB PC κ : ℚ} (r : ℕ) (hPA : PA ≠ 
   rw [div_mul_div_comm, div_eq_div_iff hPB (mul_ne_zero hPA hPC), hP, hn, mul_pow]
   linear_combination (-(nA ^ r * nC ^ r * PB)) * hχ
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion)
   {T : ShortComplex (Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S))}

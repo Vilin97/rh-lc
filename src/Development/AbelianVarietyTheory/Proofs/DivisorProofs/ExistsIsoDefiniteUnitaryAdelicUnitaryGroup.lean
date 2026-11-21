@@ -85,8 +85,6 @@ section Ring
 
 variable (E : Type) [Field E] [NumberField E] [IsCMField E]
 
-local notation "F₀" => maximalRealSubfield E
-
 theorem exists_ring : ∃ (ψ : Ad E ≃+* AF F₀ ⊗[F₀] E) (Θ : Ainf F₀ ⊗[F₀] E ≃+* Cinf E),
     Continuous ψ ∧ Continuous ψ.symm ∧ (∀ x : E, ψ (algebraMap E (Ad E) x) = inclR (AF F₀) x) ∧
     (∀ a, ψ (conjAd E a) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AF F₀) (IsCMField.complexConj E : E →ₐ[F₀] E) (ψ a)) ∧
@@ -163,9 +161,6 @@ end Ring
 section Group
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
-
-local notation "F₀" => maximalRealSubfield E
-local notation "σ₀" => (IsCMField.complexConj E : E →ₐ[maximalRealSubfield E] E)
 
 theorem conj_eq_one_iff {G : Type} [Group G] (a x : G) : a * x * a⁻¹ = 1 ↔ x = 1 := by
   rw [mul_inv_eq_one, mul_eq_left]

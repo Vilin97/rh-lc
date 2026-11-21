@@ -133,9 +133,6 @@ theorem isAffineOpen_nonzeroLocus_inf (hM : M.IsLB) (s : M.Sec) {V : Y.Opens} (h
   have h := (hV.preimage (nonzeroLocus s).ι).image_of_isOpenImmersion (nonzeroLocus s).ι
   rwa [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι] at h
 
-theorem isAffineOpen_nonzeroLocus [IsAffine Y] (hM : M.IsLB) (s : M.Sec) : IsAffineOpen (nonzeroLocus s) := by
-  simpa using isAffineOpen_nonzeroLocus_inf hM s (isAffineOpen_top Y)
-
 theorem nonzeroLocus_secOfIso {A B : LB Y} {u : LB.Iso A B} (t : B.Sec) (hu : u.IsGen) (hA : A.IsLB) (hB : B.IsLB) :
     nonzeroLocus (DVR.secOfIso t hu hA hB) = nonzeroLocus t := by
   refine nonzeroLocus_eq_of _ _ (fun y _ => exists_chart hA y) fun y a ha => ?_

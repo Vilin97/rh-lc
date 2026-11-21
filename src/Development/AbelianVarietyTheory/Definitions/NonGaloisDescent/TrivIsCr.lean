@@ -182,19 +182,6 @@ structure Hodge (C : Core l) (ξ : Ainf l) {a : ℕ} (ρ : ↥(GK K) → Matrix 
 def IsZ (bk : BK K) (g : ↥(GK K)) (z : ℂ_[l]) : Prop :=
   ∃ w : Ainf l, Per.σA (g : GQ l) (bk.ev bk.E) = bk.ev bk.E * w ∧ z * Per.θD l (aDp l w) = 1
 
-def Frame.triv (bk : BK K) (d : ℕ) : Frame bk 0 d (fun _ => 1) where
-  T := 1
-  unit := isUnit_one
-  A := 1
-  A' := 1
-  A_mul := by simp
-  φ := by simp [Matrix.map_one]
-  fix g _ := by simp [zW, Matrix.map_one]
-  ε _ := 1
-  gal g := by simp [zW, Matrix.map_one]
-
-theorem Frame.triv_isCr (bk : BK K) (d : ℕ) : (Frame.triv bk d).IsCr := fun _ i j => by simp [Frame.triv]
-
 end GlobalTheory.BKLim
 
 end

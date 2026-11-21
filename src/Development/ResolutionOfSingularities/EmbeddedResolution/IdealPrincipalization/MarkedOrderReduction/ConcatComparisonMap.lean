@@ -71,14 +71,6 @@ def empty (X : Scheme.{u}) : BlowupSequenceData X := emptyBlowupSequenceData X
 theorem empty_length (X : Scheme.{u}) : (empty X).length = 0 :=
   emptyBlowupSequenceData_length X
 
-@[simp]
-theorem empty_schemeAt (X : Scheme.{u}) (i : ℕ) : (empty X).obj i = X :=
-  emptyBlowupSequenceData_schemeAt X i
-
-@[simp]
-theorem empty_isoObjZero (X : Scheme.{u}) : (empty X).isoZero = Iso.refl X :=
-  emptyBlowupSequenceData_isoObjZero X
-
 theorem append_schemeAt_eq_last_of_eq_length {X : Scheme.{u}} (s : BlowupSequenceData X)
     (t : BlowupSequenceData (s.obj s.length)) {j : ℕ} (h : j = s.length) :
     (s.append t).obj j = s.obj s.length := by

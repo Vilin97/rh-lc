@@ -95,11 +95,6 @@ section Defs
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-local notation "𝒪" => normInteger K
-local notation "𝒪♭" => PreTilt (normInteger K) p
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-
 theorem isUnit_natCast {m : ℕ} (hm : m ≠ 0) : IsUnit (m : 𝔸) :=
   WittVector.isUnit_natCast_away hm
 
@@ -182,10 +177,6 @@ section Theta
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
-local notation "𝒪" => normInteger K
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-
 variable (K p) in
 
 def thetaAway : 𝔸 →+* K :=
@@ -256,20 +247,12 @@ theorem theta_algebraMap (x : AInf K p) :
     theta K p (algebraMap (AInf K p) (ACris K p) x) = θ x := by
   rw [AdicCompletion.algebraMap_apply, theta_of, thetaZero_algebraMap]
 
-theorem theta_surjective : Function.Surjective (theta K p) := fun y => by
-  obtain ⟨x, rfl⟩ := IsPerfectoidField.surjective_fontaineTheta (K := K) p y
-  exact ⟨_, theta_algebraMap x⟩
-
 end Theta
 
 section Frobenius
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
-
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-local notation "φ" => WittVector.frobeniusEquiv p (PreTilt (normInteger K) p)
 
 theorem exists_natCast_mul_eq_pow {n k : ℕ} (hn : n ≠ 0) (hk : n.factorization p ≤ k) :
     ∃ w : AInf K p, (n : AInf K p) * w = (p : AInf K p) ^ k := by

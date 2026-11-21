@@ -21,9 +21,6 @@ namespace CapPs
 
 open ReciprocityTheory.ChartRestriction.DS.Lap.Capelli
 
-local notation "𝕄" => Matrix (Fin n) (Fin n) ℂ
-local notation "𝕋" => Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ
-
 section Chains
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]

@@ -1,5 +1,5 @@
 import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionNumberField
+import GroundTheory.GlobalFields.ComplexMultiplication.ReductionDifferential
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

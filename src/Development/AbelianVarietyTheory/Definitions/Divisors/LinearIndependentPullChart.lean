@@ -21,8 +21,6 @@ def extSpace (V : Submodule K X) : Submodule E X' := Submodule.span E (ι '' V)
 def extMap (V : Submodule K X) : V →ₛₗ[j] extSpace ι V :=
   (ι.domRestrict V).codRestrict _ fun x => Submodule.subset_span ⟨x, x.2, rfl⟩
 
-@[simp] theorem coe_extMap (V : Submodule K X) (x : V) : (extMap ι V x : X') = ι x := rfl
-
 theorem isExtension_extMap
     (h : ∀ (n : ℕ) (v : Fin n → X), LinearIndependent K v → LinearIndependent E fun i => ι (v i))
     (V : Submodule K X) : IsExtension (extMap ι V) := by
@@ -250,25 +248,7 @@ theorem cval_mem (f : H0 p B ⊤) : cval σ f ∈ fibSec p σ B := by
   obtain ⟨s, rfl⟩ := bijective_ofSec_top.2 f
   exact cval_ofSec σ s ▸ secVal_mem s
 
-theorem cval_mem_holSec {D : ℕ} (R : AnRead p σ D) (f : H0 p B ⊤) : cval σ f ∈ R.holSec B := by
-  obtain ⟨s, rfl⟩ := bijective_ofSec_top.2 f
-  exact cval_ofSec σ s ▸ R.secVal_mem_holSec s
-
 variable {σ}
-
-def assocVal : ((tens (tens P B) N).ι → CxPts p σ → ℂ) →ₗ[ℂ] ((tens P (tens B N)).ι → CxPts p σ → ℂ) :=
-  LinearMap.funLeft ℂ _ fun c => ((c.1, c.2.1), c.2.2)
-
-theorem assocVal_mem_holSec {D : ℕ} {R : AnRead p σ D} {f : (tens (tens P B) N).ι → CxPts p σ → ℂ}
-    (hf : f ∈ R.holSec _) : assocVal f ∈ R.holSec _ := by
-  have e (c : (tens P (tens B N)).ι) : (tens P (tens B N)).U c = (tens (tens P B) N).U ((c.1, c.2.1), c.2.2) :=
-    (inf_assoc _ _ _).symm
-  refine ⟨⟨fun c c' y h h' => ?_, fun c y h => hf.1.2 _ y (e c ▸ h)⟩, fun c => e c ▸ hf.2 _⟩
-  have g := e c ▸ h
-  have g' := e c' ▸ h'
-  refine (hf.1.1 _ _ y g g').trans (congrArg (· * _) ?_)
-  rw [gv_tens g g', gv_tens h h', gv_tens (mem_ptsIn_inf.1 g).1 (mem_ptsIn_inf.1 g').1,
-    gv_tens (mem_ptsIn_inf.1 h).2 (mem_ptsIn_inf.1 h').2, mul_assoc]
 
 end General
 
@@ -369,11 +349,6 @@ theorem csq_pointHerm (τ : E →+* ℂ) {ι : Type*} [Fintype ι] (c : ι → �
   simp only [← Fintype.sum_prod_type']
   exact Fintype.sum_equiv ⟨fun t => (t.2.2, t.2.1, t.1), fun t => (t.2.2, t.2.1, t.1), fun _ => rfl, fun _ => rfl⟩
     _ _ fun t => by simp only [Equiv.coe_fn_mk]; ring
-
-theorem nrm_pointHerm_sq (τ : E →+* ℂ) (g : H0 q B ⊤) :
-    (pointHerm hf he φ).nrm τ g ^ 2 = ∑ᶠ y, (φ τ).nsq (cval τ g) y := by
-  rw [← cnrm_one, cnrm_sq, csq_pointHerm]
-  simp
 
 end Points
 

@@ -7,8 +7,6 @@ noncomputable section
 namespace GlobalTheory.Ex.NumD.Hom
 variable {O O' : Type} [CommRing O] [CommRing O'] {f : O →+* O'} {N : NumD O} {N' : NumD O'} (I : NumD.Hom f N N')
 
-local notation "F" => Units.map (RingHom.toMonoidHom f)
-
 theorem cubN_eq (k : ℕ) (m x : N.A) :
     cubN N'.θ k 1 (I.φ m) (I.φ x) * I.h (m ^ k) * I.h x * I.h (m * x) ^ k =
       F (cubN N.θ k 1 m x) * I.h (m ^ k * x) * I.h m ^ k * I.h x ^ k := by
@@ -237,22 +235,6 @@ def ofIso {M M' : NumD O} (J : NumD.Iso M M') : NumD.Hom (RingHom.id O) M M' whe
 
 theorem ofIso_rel {M M' : NumD O} (J : NumD.Iso M M') (g : M.Gt) (g' : M'.Gt) :
     (ofIso J).Rel g g' ↔ J.Rel g g' := Iff.rfl
-
-def isoOfBijective {M M' : NumD O} (J : NumD.Hom (RingHom.id O) M M') (hJ : Function.Bijective J.φ) :
-    NumD.Iso M M' where
-  φ := MulEquiv.ofBijective J.φ hJ
-  h := J.h
-  h_one := J.h_one
-  θ_eq := J.θ_eq
-  σ_eq := J.σ_eq
-  lam := J.lam
-  th_eq := J.th_eq
-  e := J.e
-  c_eq := J.c_eq
-  ψ_eq := J.ψ_eq
-
-theorem isoOfBijective_rel {M M' : NumD O} (J : NumD.Hom (RingHom.id O) M M') (hJ : Function.Bijective J.φ)
-    (g : M.Gt) (g' : M'.Gt) : (J.isoOfBijective hJ).Rel g g' ↔ J.Rel g g' := Iff.rfl
 
 end GlobalTheory.Ex.NumD.Hom
 

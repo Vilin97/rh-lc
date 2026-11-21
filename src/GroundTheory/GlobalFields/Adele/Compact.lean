@@ -23,30 +23,4 @@ theorem isCompact_integralFiniteAdeles :
   rw [RestrictedProduct.range_structureMap] at h
   exact h
 
-abbrev AdeleQuotient : Type _ := 𝔸[K] ⧸ AdeleRing.principalSubgroup (𝓞 K) K
-
-instance : IsClosed (AdeleRing.principalSubgroup (𝓞 K) K : Set 𝔸[K]) :=
-  isClosed_principalSubgroup K
-
-instance compactSpace_adeleQuotient : CompactSpace (AdeleQuotient K) := by
-  obtain ⟨C, hC, hx⟩ := exists_isCompact_forall_exists_sub_mem K
-  have hD : IsCompact (C ×ˢ (integralFiniteAdeles (𝓞 K) K : Set (FiniteAdeleRing (𝓞 K) K)) :
-      Set 𝔸[K]) := hC.prod (isCompact_integralFiniteAdeles K)
-  refine ⟨?_⟩
-  convert hD.image (QuotientAddGroup.continuous_mk (N := AdeleRing.principalSubgroup (𝓞 K) K))
-  refine (Set.eq_univ_of_forall fun q => ?_).symm
-  induction q using QuotientAddGroup.induction_on with
-  | H x =>
-    obtain ⟨k, hk⟩ := hx x
-    refine ⟨x - algebraMap K 𝔸[K] k, hk, ?_⟩
-    rw [QuotientAddGroup.eq]
-    exact ⟨k, by simp⟩
-
-instance t2Space_adeleQuotient : T2Space (AdeleQuotient K) := inferInstance
-
-theorem compactSpace_and_t2Space_adeleQuotient :
-    CompactSpace (𝔸[K] ⧸ AdeleRing.principalSubgroup (𝓞 K) K) ∧
-      T2Space (𝔸[K] ⧸ AdeleRing.principalSubgroup (𝓞 K) K) :=
-  ⟨compactSpace_adeleQuotient K, t2Space_adeleQuotient K⟩
-
 end GroundTheory.Global

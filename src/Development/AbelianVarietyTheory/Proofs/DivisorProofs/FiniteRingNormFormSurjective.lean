@@ -1,5 +1,5 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemIntRing
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvMemIntV
 open IsDedekindDomain GlobalTheory.TauNorm Polynomial
 open scoped TensorProduct
 

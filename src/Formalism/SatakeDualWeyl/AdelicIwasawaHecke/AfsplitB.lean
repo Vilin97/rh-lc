@@ -9,8 +9,6 @@ open Formalism.UG
 section Tens
 variable {F : Type} [Field F] [NumberField F] {E : Type} [CommRing E] [Algebra F E]
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
-
 def afsplitIE (v : HeightOneSpectrum (𝓞 F)) : E ⊗[F] v.adicCompletion F →ₙ+* E ⊗[F] 𝔸 where
   toFun := LinearMap.lTensor E (afsplitI v)
   map_zero' := map_zero _
@@ -108,8 +106,6 @@ end Tens
 
 section Inj
 variable {F : Type} [Field F] [NumberField F] {E : Type} [CommRing E] [Algebra F E]
-
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
 
 theorem afsplit_coord_prV (b : Module.Basis (Module.Free.ChooseBasisIndex F E) F E)
     (i : Module.Free.ChooseBasisIndex F E) (w : HeightOneSpectrum (𝓞 F)) (y : E ⊗[F] 𝔸) :

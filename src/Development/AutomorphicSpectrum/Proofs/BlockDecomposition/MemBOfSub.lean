@@ -36,15 +36,6 @@ theorem cls_congr (K : Cx.{w} R) {n : ℕ} {x y : K.X n} (e : x = y) (hx : K.d n
   subst e
   rfl
 
-theorem cls_add (K : Cx.{w} R) {n : ℕ} (x y : K.X n) (hx : K.d n x = 0) (hy : K.d n y = 0) (hz : K.d n (x + y) = 0) :
-    K.cls (x + y) hz = K.cls x hx + K.cls y hy := rfl
-
-theorem cls_sub (K : Cx.{w} R) {n : ℕ} (x y : K.X n) (hx : K.d n x = 0) (hy : K.d n y = 0) (hz : K.d n (x - y) = 0) :
-    K.cls (x - y) hz = K.cls x hx - K.cls y hy := rfl
-
-theorem mapH_cls (φ : Cx.Hom K L (RingHom.id R)) (n : ℕ) (x : K.X n) (hx : K.d n x = 0) (h : L.d n (φ.f n x) = 0) :
-    φ.mapH n (K.cls x hx) = L.cls (φ.f n x) h := rfl
-
 theorem mem_B_of_sub {n : ℕ} (h : Subsingleton (K.H n)) (x : K.X n) (hx : K.d n x = 0) : x ∈ K.B n :=
   (cls_eq_zero K x hx).1 (Subsingleton.elim _ _)
 
@@ -70,40 +61,6 @@ def AD.ofH (h : ∀ n, K.X n →ₗ[R] L.X n) : AD K L where
     rw [map_sub, L.dd, K.dd, map_zero]
     abel
 
-def NH.ofH (h : ∀ n, K.X n →ₗ[R] L.X n) : NH (AD.ofH h) := ⟨h, fun n x => rfl⟩
-
-def altCx (R : Type) [CommRing R] : Cx.{0} R where
-  X _ := R
-  d n := if Even n then LinearMap.id else 0
-  dd n x := by
-    by_cases h : Even n
-    · have h' : ¬ Even (n + 1) := by rw [Nat.even_add_one]; exact not_not.2 h
-      simp [h, h']
-    · simp [h]
-
-def exH (R : Type) [CommRing R] : ∀ n, (altCx R).X n →ₗ[R] (altCx R).X n :=
-  fun n => if n = 0 then LinearMap.id else 0
-
-theorem exH_zero (R : Type) [CommRing R] (y : R) : (show R from exH R 0 y) = y := by
-  change (if (0 : ℕ) = 0 then LinearMap.id else 0 : R →ₗ[R] R) y = y
-  simp
-
-theorem exH_one (R : Type) [CommRing R] (y : R) : (show R from exH R 1 y) = 0 := by
-  change (if (1 : ℕ) = 0 then LinearMap.id else 0 : R →ₗ[R] R) y = 0
-  simp
-
-theorem alt_zero (R : Type) [CommRing R] (y : R) : (show R from (altCx R).d 0 y) = y := by
-  change (if Even 0 then LinearMap.id else 0 : R →ₗ[R] R) y = y
-  simp
-
-theorem exAD_ne (R : Type) [CommRing R] [Nontrivial R] : ∃ x : (altCx R).X 0, (AD.ofH (exH R)).r 0 x ≠ 0 := by
-  refine ⟨(1 : R), fun h0 => one_ne_zero (α := R) ?_⟩
-  have e : (show R from (altCx R).d 0 (show R from exH R 0 (1 : R))) - (show R from exH R 1 (show R from (altCx R).d 0 (1 : R))) = 0 := h0
-  rwa [exH_zero, alt_zero, exH_one, sub_zero] at e
-
-theorem exNH_ne (R : Type) [CommRing R] [Nontrivial R] : ∃ x : (altCx R).X 0, (NH.ofH (exH R)).h 0 x ≠ 0 :=
-  ⟨(1 : R), fun h0 => one_ne_zero (α := R) ((exH_zero R 1).symm.trans h0)⟩
-
 def cone (t : AD K L) : Cx.{w} R where
   X n := L.X n × K.X n
   d n := ((L.d n).comp (LinearMap.fst R _ _) + (t.r n).comp (LinearMap.snd R _ _)).prod ((K.d n).comp (LinearMap.snd R _ _))
@@ -111,9 +68,6 @@ def cone (t : AD K L) : Cx.{w} R where
     refine Prod.ext ?_ (K.dd n x.2)
     change L.d (n + 1) (L.d n x.1 + t.r n x.2) + t.r (n + 1) (K.d n x.2) = 0
     rw [map_add (f := _), L.dd, zero_add, t.anti]
-
-theorem cone_d (t : AD K L) (n : ℕ) (b : L.X n) (x : K.X n) :
-    (cone t).d n ((b, x) : L.X n × K.X n) = ((L.d n b + t.r n x, K.d n x) : L.X (n + 1) × K.X (n + 1)) := rfl
 
 def inc (t : AD K L) : Cx.Hom L (cone t) (RingHom.id R) where
   f n := LinearMap.inl R _ _
@@ -344,9 +298,6 @@ def eZ (A : Cx.{w} R) (n : ℕ) : (sh A).Z (n + 1) →ₗ[R] A.Z n :=
 def eH (A : Cx.{w} R) (n : ℕ) : (sh A).H (n + 1) →ₗ[R] A.H n :=
   Submodule.mapQ _ _ (eZ A n) fun z hz => mem_B_sh z.1 hz
 
-theorem eH_cls (n : ℕ) (x : (sh A).X (n + 1)) (hx : (sh A).d (n + 1) x = 0) :
-    eH A n ((sh A).cls x hx) = A.cls (show A.X n from x) (sh_cocycle x hx) := rfl
-
 theorem eH_shF (φ : Cx.Hom A A' (RingHom.id R)) (n : ℕ) (y : (sh A).H (n + 1)) :
     eH A' n ((shF φ).mapH (n + 1) y) = φ.mapH n (eH A n y) := by
   obtain ⟨x, hx, rfl⟩ := cls_surj _ _ y
@@ -497,25 +448,6 @@ structure Dat (A B : Sy.{w} R ι) where
   ρ : ∀ S n, (A.K S).X n →ₗ[R] (B.K S).X (n + 2)
   hρ : ∀ S n x, (B.K S).d (n + 2) (ρ S n x) = ρ S (n + 1) ((A.K S).d n x)
   hn : ∀ {S T : Finset ι} (h : S ⊆ T) n x, ρ T n ((A.res h).f n x) = (B.res h).f _ (ρ S n x)
-
-def flatCx (R : Type) [CommRing R] : Cx.{0} R where
-  X _ := R
-  d _ := 0
-  dd _ _ := rfl
-
-def flatSy (R : Type) [CommRing R] (ι : Type) : Sy.{0} R ι where
-  K _ := flatCx R
-  res _ := ⟨fun _ => LinearMap.id, fun _ _ => rfl⟩
-  res_id _ _ _ _ := rfl
-  res_comp _ _ _ _ := rfl
-
-def exDat (R : Type) [CommRing R] (ι : Type) [DecidableEq ι] : Dat (flatSy R ι) (flatSy R ι) where
-  ρ _ _ := LinearMap.id
-  hρ _ _ _ := rfl
-  hn _ _ _ := rfl
-
-theorem exDat_ne (R : Type) [CommRing R] [Nontrivial R] (ι : Type) [DecidableEq ι] :
-    ∃ x : ((flatSy R ι).K ∅).X 0, (exDat R ι).ρ ∅ 0 x ≠ 0 := ⟨(1 : R), one_ne_zero (α := R)⟩
 
 variable {A B : Sy.{w} R ι}
 

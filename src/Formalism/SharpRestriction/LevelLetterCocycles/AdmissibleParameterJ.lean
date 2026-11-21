@@ -178,14 +178,6 @@ section admitted
 
 variable (D)
 
-def DeRhamFamilyAway : Prop := ∀ i r, GoodR D.nd i r → SumRepresentations.At.G2 D.nd D.naut i r
-
-def DeRhamFamilyTypePrimes : Prop :=
-  ∀ i r, GoodR D.nd i r → (D.nd.l i = D.host.g 0 ∨ D.nd.l i = D.host.g 1) →
-    ∀ w ∈ placesOver D.host.E (D.nd.l i), ∀ x,
-      D.naut.IsdRW i (rQ D i r x) w ∧
-      ∀ τ₀, InducesW D.nd i τ₀ w → D.naut.jumpsW i (rQ D i r x) τ₀ = D.naut.locAutHodgeTateWeightsLevelZero i τ₀
-
 def AdmDict : Prop :=
   ∃ ep : Bool, ∀ (i : D.nd.Loc) (τ₀ : D.host.E →+* Qbar (D.nd.l i)) g ρ, ReadAt D i τ₀ g ρ →
     ∃ (sg : ℚ) (cτ : ℤ), (TypeU D ep g → sg = 1) ∧ (¬ TypeU D ep g → sg = -1) ∧
@@ -230,12 +222,7 @@ def AdmPar : Prop :=
   L.etaSz + D.R.t + L.Sc < L.sc.w'' D.R.n ∧ 3 * L.sc.w'' D.R.n ≤ L.sc.b ∧
     (∀ tt, (L.bT tt : ℝ) + L.sc.b' / L.sc.x ≤ L.sc.b) ∧ (D.R.t : ℝ) ≤ L.etaSz
 
-def AdmJ : Prop :=
-  DeRhamFamilyAway D ∧ CrysIffWD D.nd D.naut ∧ DeRhamFamilyTypePrimes D ∧ AdmDict D ∧ AdmRead D ∧ AdmPar L
-
 variable (D) in
-
-def JumpBoundClosedForm : Prop := ∀ L : SizeData₂ D, AdmJ L → JumpConditions L
 
 end admitted
 

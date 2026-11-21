@@ -359,10 +359,4 @@ def NonSS {R S G : Type} [CommRing R] [CommRing S] [Group G] (I : Set (MonoidAlg
 def GenBy (O : Type) {B : Type} [CommRing O] [CommRing B] [Algebra O B] [IsLocalRing B] (S : Set B) : Prop :=
   ∀ (N : ℕ) (b : B), ∃ a ∈ Algebra.adjoin O S, b - a ∈ maximalIdeal B ^ N
 
-structure IsCompl (R : Type) [CommRing R] (q : Ideal R) (B : Type) [CommRing B] [Algebra R B] [IsLocalRing B] : Prop where
-  noeth : IsNoetherianRing B
-  complete : IsAdicComplete (maximalIdeal B) B
-  dense : ∀ (N : ℕ) (b : B), ∃ a s : R, s ∉ q ∧ algebraMap R B s * b - algebraMap R B a ∈ maximalIdeal B ^ N
-  mem_iff : ∀ (N : ℕ) (a : R), algebraMap R B a ∈ maximalIdeal B ^ N ↔ ∃ s, s ∉ q ∧ s * a ∈ q ^ N
-
 end UpperTheory.V.Pa

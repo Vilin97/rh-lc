@@ -105,11 +105,6 @@ def latOf (β : K → ℤ) (i : Fin (N + 1)) : AddSubgroup Ω where
 
 variable {y k₀ e}
 
-theorem mem_latOf (β : K → ℤ) (i : Fin (N + 1)) (t : Ω) :
-    t ∈ latOf (S := S) y k₀ e β i ↔
-      ∀ d : ∀ k, ι k, (∀ k, y ⟨k, d k⟩ ≠ 0) → t * genInv y β d ∈ overRing (S := S) y k₀ e d i :=
-  Iff.rfl
-
 theorem genInv_ne_zero (β : K → ℤ) {d : ∀ k, ι k} (hd : ∀ k, y ⟨k, d k⟩ ≠ 0) : genInv y β d ≠ 0 :=
   Finset.prod_ne_zero_iff.mpr fun k _ => zpow_ne_zero _ (hd k)
 

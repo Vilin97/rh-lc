@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Jets.TauZero
+import Development.AbelianVarietyTheory.Definitions.Jets.SideFam
+import Formalism.HermitianCurvature.StatementTBB
 import Formalism.PeriodIntegrals.BesselPeriodGGP
 import Development.AbelianVarietyTheory.Proofs.JetHarmonics.PieriTensorDecomposition
 import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorMomentEstimate

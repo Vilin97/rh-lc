@@ -26,10 +26,6 @@ def resResHom {U V : Subgroup G} (h : V ≤ U) :
   Rep.ofHom ⟨LinearMap.id, fun _ => rfl⟩
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] in
-@[simp]
-theorem resResHom_hom_apply {U V : Subgroup G} (h : V ≤ U) (a : A) :
-    (resResHom A h).hom a = a :=
-  rfl
 
 variable [IsDiscreteRep A]
 

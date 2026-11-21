@@ -13,8 +13,6 @@ namespace RationalSymbol
 
 open _root_.GroundTheory.Global.Cyclotomic GroundTheory.LocalField.Abstract
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 instance isGalois_maxCyclotomic : IsGalois ℚ maxCyclotomic := by
   have : IsGalois ℚ ℚ̄ := IsAlgClosure.isGalois ℚ ℚ̄
   have h : @IsGalois ℚ _ maxCyclotomic _ (IntermediateField.algebra' maxCyclotomic) := by
@@ -74,16 +72,6 @@ def unitPart : IdeleClassGroup ℚ →* ℤ̂ˣ :=
   (Units.map padicEquiv.symm.toRingHom.toMonoidHom).comp
     ((MonoidHom.snd _ _).comp RationalIdeles.ideleClassGroupEquiv.toMulEquiv.toMonoidHom)
 
-theorem unitPart_surjective : Function.Surjective unitPart := by
-  intro w
-  obtain ⟨x, hx⟩ := RationalIdeles.ideleClassGroupEquiv.surjective
-    (1, Units.map padicEquiv.toRingHom.toMonoidHom w)
-  refine ⟨x, Units.ext ?_⟩
-  simp only [unitPart, MonoidHom.comp_apply, MonoidHom.coe_snd, Units.coe_map]
-  change padicEquiv.symm ((RationalIdeles.ideleClassGroupEquiv x).2 : _) = _
-  rw [hx]
-  simp [ofPadics_toPadics]
-
 theorem toPadicInt_unitPart (x : IdeleClassGroup ℚ) (q : Nat.Primes) :
     toPadicInt q (unitPart x : ℤ̂) =
       ((RationalIdeles.ideleClassGroupEquiv x).2 : Π p : Nat.Primes, ℤ_[p]) q := by
@@ -97,22 +85,6 @@ def reciprocityMap : IdeleClassGroup ℚ →* Gal(maxCyclotomic/ℚ) :=
 theorem cycCharacter_reciprocityMap (x : IdeleClassGroup ℚ) :
     cycCharacter (reciprocityMap x) = (unitPart x)⁻¹ := by
   simp [reciprocityMap]
-
-theorem reciprocityMap_surjective : Function.Surjective reciprocityMap := by
-  intro τ
-  obtain ⟨x, hx⟩ := unitPart_surjective (cycCharacter τ)⁻¹
-  refine ⟨x, cycCharacter.injective ?_⟩
-  rw [cycCharacter_reciprocityMap, hx, inv_inv]
-
-theorem reciprocityMap_eq_one_iff (x : IdeleClassGroup ℚ) :
-    reciprocityMap x = 1 ↔ (RationalIdeles.ideleClassGroupEquiv x).2 = 1 := by
-  rw [← cycCharacter.injective.eq_iff, map_one, cycCharacter_reciprocityMap, inv_eq_one]
-  have h : unitPart x =
-      Units.map padicEquiv.symm.toRingHom.toMonoidHom (RationalIdeles.ideleClassGroupEquiv x).2 :=
-    rfl
-  rw [h, ← map_one (Units.map padicEquiv.symm.toRingHom.toMonoidHom)]
-  exact (Units.map_injective (f := padicEquiv.symm.toRingHom.toMonoidHom)
-    padicEquiv.symm.injective).eq_iff
 
 end RationalSymbol
 

@@ -1,9 +1,15 @@
 import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.HookProductDictionary
+import Formalism.LocalToGlobal.IndefiniteReal.OneMapT
+import Formalism.LocalToGlobal.IndefiniteReal.FWTie
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.AdelicScalarSectionLift
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitDetOfSplitDetermines
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCentralIdempotentOfGoodSeriesIdempotent
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.MemCuspSpaceIffOfFinite
+import Formalism.LocalToGlobal.ProjectiveLattices.JFDFree
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.Signature
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.ModerateCoefficientPositivity
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.TransvectionPeriodicity
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.OntoStatementPfS
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ClassPresBasic
 import Development.AbelianVarietyTheory.Proofs.HeightProofs.IsFundamentalDomainOfHaar
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IpMSelfEqZero
@@ -47,10 +53,6 @@ end Places
 section Coord
 
 variable {V : HSp D} (c : CoefA V) {β : GL (Fin V.rank) (Lev.EAf D)} {L : LevDat D.host.E ℂ V.rank}
-
-def cx (ℓ : c.W →ₗ[ℂ] ℂ) : (Bridge.Gf V → c.W) →ₗ[ℂ] (GA D V → ℂ) := ℓ.compLeft (GA D V) ∘ₗ c.ext
-
-theorem cx_apply (ℓ : c.W →ₗ[ℂ] ℂ) (f : Bridge.Gf V → c.W) (h : GA D V) : cx c ℓ f h = ℓ (c.ρ h⁻¹ (f (fin V h))) := rfl
 
 variable {c}
 

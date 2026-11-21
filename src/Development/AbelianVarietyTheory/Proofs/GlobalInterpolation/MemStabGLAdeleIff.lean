@@ -101,8 +101,6 @@ section Adelic
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : Type}
   (N : Submodule (𝓞 E) (n → E))
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
-
 theorem mem_latS_adele_iff [Module.Finite (𝓞 E) N] (u : n → E ⊗[F] 𝔸) :
     u ∈ latS 𝔸 (tensInt (F := F) 𝔸 (intOE E) (intAd F)) N ↔
       ∀ v : HeightOneSpectrum (𝓞 F), (fun i => prV (E := E) v (u i)) ∈

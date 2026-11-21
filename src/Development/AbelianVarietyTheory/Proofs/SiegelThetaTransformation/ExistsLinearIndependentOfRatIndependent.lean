@@ -132,9 +132,6 @@ noncomputable def rowEmb {E m n : Type} [Field E] [Fintype n] (W : Matrix n m E)
       map_zero' := by ext p; simp
       map_add' := fun s t => by ext p; simp [add_vecMul] }
 
-@[simp] theorem rowEmb_apply {E m n : Type} [Field E] [Fintype n] (W : Matrix n m E) (t : n → E)
-    (p : (E →+* ℂ) × m) : rowEmb W t p = p.1 ((t ᵥ* W) p.2) := rfl
-
 open Classical in
 
 theorem det_gram_rowEmb {E m : Type} [Field E] [NumberField E] [Fintype m] {N : ℕ}

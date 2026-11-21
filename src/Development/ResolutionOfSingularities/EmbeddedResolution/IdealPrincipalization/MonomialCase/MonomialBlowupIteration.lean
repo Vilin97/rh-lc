@@ -49,11 +49,6 @@ theorem monomialBlowupStep_center_zero (s : MarkedBlowupSequenceData p I m E) (h
   ofSingleBlowup_center_zero h.2.1 h.2.2.1 h.2.2.2.1 h.2.2.2.2
 
 @[simp]
-theorem monomialBlowupStep_blowupMorphism_zero (s : MarkedBlowupSequenceData p I m E) (h : IsAdmissibleCenter s) :
-    (monomialBlowupStep s h).map 0 = Blowup.blowup.proj (centerAtLast s) :=
-  ofSingleBlowup_blowupMorphism_zero h.2.1 h.2.2.1 h.2.2.2.1 h.2.2.2.2
-
-@[simp]
 theorem monomialBlowupStep_projectionToBase_one (s : MarkedBlowupSequenceData p I m E) (h : IsAdmissibleCenter s) :
     (monomialBlowupStep s h).proj 1 = Blowup.blowup.proj (centerAtLast s) :=
   ofSingleBlowup_projectionToBase_one h.2.1 h.2.2.1 h.2.2.2.1 h.2.2.2.2
@@ -707,18 +702,6 @@ variable {k : Type u} [Field k] {X : Scheme.{u}} {p : X ⟶ Spec (CommRingCat.of
 def monomialStallIndex (hinv : ComapIsoInvariance.{u}) (s : MarkedBlowupSequenceData p I m E) : ℕ :=
   sInf {n : ℕ | IsStationaryAt hinv s n}
 
-theorem monomialStallIndex_eq_sInf (hinv : ComapIsoInvariance.{u}) (s : MarkedBlowupSequenceData p I m E) :
-    monomialStallIndex hinv s = sInf {n : ℕ | IsStationaryAt hinv s n} :=
-  rfl
-
-def monomialIterateUntilStall (hinv : ComapIsoInvariance.{u}) (s : MarkedBlowupSequenceData p I m E) :
-    MarkedBlowupSequenceData p I m E :=
-  monomialBlowupIterate hinv s (monomialStallIndex hinv s)
-
-theorem monomialIterateUntilStall_eq_monomialBlowupIterate (hinv : ComapIsoInvariance.{u}) (s : MarkedBlowupSequenceData p I m E) :
-    monomialIterateUntilStall hinv s = monomialBlowupIterate hinv s (monomialStallIndex hinv s) :=
-  rfl
-
 theorem monomialStallIndex_eq_zero_of_not_isAdmissibleCenter (hinv : ComapIsoInvariance.{u})
     (s : MarkedBlowupSequenceData p I m E) (h : ¬ IsAdmissibleCenter s) : monomialStallIndex hinv s = 0 := by
   have h0 : IsStationaryAt hinv s 0 := (isStationaryAt_iff_not_isAdmissibleCenter hinv s 0).mpr h
@@ -738,13 +721,6 @@ theorem monomialStallIndex_eq_monomialStallIndex_empty (hinv : ComapIsoInvarianc
     (E : List X.IdealSheafData) :
     monomialStallIndex hinv p I m E =
       MarkedBlowupSequenceData.monomialStallIndex hinv (emptyMarkedBlowupSequenceData p I m E) :=
-  rfl
-
-theorem monomialBlowupSeq_eq_monomialIterateUntilStall (hinv : ComapIsoInvariance.{u})
-    (p : X ⟶ Spec (CommRingCat.of k)) (I : X.IdealSheafData) (m : ℕ)
-    (E : List X.IdealSheafData) :
-    monomialBlowupSeq hinv p I m E =
-      MarkedBlowupSequenceData.monomialIterateUntilStall hinv (emptyMarkedBlowupSequenceData p I m E) :=
   rfl
 
 end

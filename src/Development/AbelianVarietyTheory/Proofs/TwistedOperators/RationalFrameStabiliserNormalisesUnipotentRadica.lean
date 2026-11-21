@@ -13,8 +13,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-local infixl:70 " ⋆ₘ " => HMul.hMul
-
 theorem incA_injective (D : D7) : Function.Injective (incA D) :=
   Algebra.TensorProduct.includeRight_injective (NumberField.AdeleRing.algebraMap_injective (𝓞 D.host.F) D.host.F)
 

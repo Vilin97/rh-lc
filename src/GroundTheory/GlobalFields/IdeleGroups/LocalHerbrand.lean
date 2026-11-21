@@ -118,11 +118,6 @@ instance decompositionMulSemiringActionIntegers :
   smul_mul σ x y := Subtype.ext (MulSemiringAction.smul_mul σ (x : w.adicCompletion L) y)
 
 variable {w} in
-@[simp]
-theorem coe_decomposition_smul_integers (σ : MulAction.stabilizer Gal(L/K) w.asIdeal)
-    (x : w.adicCompletionIntegers L) :
-    ((σ • x : w.adicCompletionIntegers L) : w.adicCompletion L) = σ • (x : w.adicCompletion L) :=
-  rfl
 
 instance decompositionUnitsAction :
     MulDistribMulAction (MulAction.stabilizer Gal(L/K) w.asIdeal) (w.adicCompletion L)ˣ :=
@@ -210,12 +205,6 @@ def adicCompletionIntegersEquivInteger :
 def integerUnitsAddEquiv :
     Additive (w.adicCompletionIntegers L)ˣ ≃+ Additive 𝒪[w.adicCompletion L]ˣ :=
   MulEquiv.toAdditive (Units.mapEquiv (adicCompletionIntegersEquivInteger w).toMulEquiv)
-
-@[simp]
-theorem coe_integerUnitsAddEquiv (x : Additive (w.adicCompletionIntegers L)ˣ) :
-    ((((integerUnitsAddEquiv w x).toMul : 𝒪[w.adicCompletion L]ˣ) : 𝒪[w.adicCompletion L]) :
-      w.adicCompletion L) = ((x.toMul : w.adicCompletionIntegers L) : w.adicCompletion L) :=
-  rfl
 
 variable [Algebra (v.adicCompletion K) (w.adicCompletion L)]
   [ContinuousSMul (v.adicCompletion K) (w.adicCompletion L)]

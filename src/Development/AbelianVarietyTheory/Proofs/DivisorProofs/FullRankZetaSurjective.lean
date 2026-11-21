@@ -12,8 +12,6 @@ namespace GlobalTheory.FullRankOnto
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n d : ℕ}
 
-local notation "Yo" => GlobalTheory.FullRankCoinv.Y0 k n d
-
 theorem Y0_mul_apply (hnd : n ≤ d) {β : Type*} (M : Matrix (Fin d) β k) (i : Fin n) (j : β) :
     (Yo * M) i j = M ⟨d - n + i, by omega⟩ j := by
   have e : ∀ l : Fin d, ((l : ℕ) = d - n + i) ↔ l = ⟨d - n + i, by omega⟩ := fun l => by rw [Fin.ext_iff]

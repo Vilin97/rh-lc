@@ -145,29 +145,6 @@ def ConjAt (ph : ℂ) (c₀ : VsV D i D.what₂.LL →ₛₗ[D.what₂.embLL] (R
 
 end Datum
 
-def GalLiftFor (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (F : Face D A)
-    (κw : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec)
-    (O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0)) (ph : Fin D.R.m → ℂ) : Prop :=
-  R.Char F → ∀ fw : FWTie T R κw v₀, ∀ i : Fin D.R.m, OMPins T R κw v₀ O i → PhaseTie T R κw v₀ O ph i →
-    (∀ x, ∃! y, IsRatLift R i (ph i) x y) ∧
-    (∀ gramR c0R c0L,
-      Bridge.FamTie R.B R.pl (R.Sb : Set (Pl D.host.E)) R.Q (labLL D) (fun τ => Bridge.lamRdef (Ptw D) τ)
-        (fun i τ => Bridge.lamLdef (Vc D i).rank ((i : ℕ) + 1) τ) gramR c0R c0L →
-      ∀ σ, OverK σ → ConjAt R i σ (ph i) (c0L i)) ∧
-    ∀ σ, ¬ OverK σ → OverK ((starRingEnd ℂ).comp σ) ∧
-      (BarTie fw → ∀ y y', ⟪(R.FW i).j σ y, (R.FW i).j σ y'⟫_ℂ =
-        starRingEnd ℂ ⟪(R.FW i).j ((starRingEnd ℂ).comp σ) y, (R.FW i).j ((starRingEnd ℂ).comp σ) y'⟫_ℂ)
-
-def GalLift : Prop :=
-  ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m)
-    (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (F : Face D A)
-    (κw : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec)
-    (O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0)) (ph : Fin D.R.m → ℂ), GalLiftFor T R F κw v₀ O ph
-
-theorem overK_base : OverK (D := D) D.what₂.embLL := by
-  intro x _
-  exact Eq.refl _
-
 end GlobalTheory.IndefiniteRowSideFullHecke.WeilGramSignature
 
 end

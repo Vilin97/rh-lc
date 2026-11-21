@@ -23,8 +23,6 @@ theorem formOn_isSymm {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (X : Su
 
 def incl (X : Submodule K V) : ↥X →ₗ[𝓞 K] V := X.subtype.restrictScalars (𝓞 K)
 
-theorem incl_apply (X : Submodule K V) (x : ↥X) : incl X x = x := rfl
-
 theorem incl_injective (X : Submodule K V) : Function.Injective (incl X) := Subtype.val_injective
 
 def push (X : Submodule K V) (L : Submodule (𝓞 K) ↥X) : Submodule (𝓞 K) V := L.map (incl X)
@@ -46,9 +44,6 @@ theorem coe_mem_push {X : Submodule K V} {L : Submodule (𝓞 K) ↥X} {x : ↥X
 theorem push_le (X : Submodule K V) (L : Submodule (𝓞 K) ↥X) : ∀ v ∈ push X L, v ∈ X := by
   rintro v ⟨x, -, rfl⟩
   exact x.2
-
-theorem pull_push (X : Submodule K V) (L : Submodule (𝓞 K) ↥X) : pull X (push X L) = L :=
-  Submodule.comap_map_eq_of_injective (incl_injective X) L
 
 theorem push_pull {X : Submodule K V} {L : Submodule (𝓞 K) V} (hL : ∀ v ∈ L, v ∈ X) :
     push X (pull X L) = L := by

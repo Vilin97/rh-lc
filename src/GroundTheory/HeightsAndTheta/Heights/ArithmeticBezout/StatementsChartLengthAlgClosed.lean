@@ -1,6 +1,5 @@
 import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.SectionLineAnyField
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsSectionOrder
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

@@ -156,10 +156,6 @@ theorem conj_mkE (a b : R) :
     TensorProduct.tmul_neg, TensorProduct.neg_tmul]
 
 include hΔ in
-theorem mkE_norm (a b : R) :
-    mkE (F := F) δ R a b * mkE (F := F) δ R a (-b) = mkE (F := F) δ R (a * a - algebraMap F R Δ * (b * b)) 0 := by
-  rw [mkE_mul δ Δ hΔ R, show a * a + algebraMap F R Δ * (b * -b) = a * a - algebraMap F R Δ * (b * b) by ring,
-    show a * -b + b * a = 0 by ring]
 
 theorem incl_eq_mkE (α β : F) :
     (Algebra.TensorProduct.includeRight : E →ₐ[F] R ⊗[F] E) (algebraMap F E α + algebraMap F E β * δ) =

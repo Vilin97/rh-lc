@@ -16,68 +16,6 @@ def JointlySmooth {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] (Φ : E 
 
 variable {ρ A e}
 
-theorem JointlySmooth.translate {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] {Φ : E → K}
-    (h : JointlySmooth ρ A e Φ) (m : List (P × (E → ℝ)))
-    (hm : ∀ a ∈ m, a.1 ∈ A ∧ ContDiff ℝ ∞ a.2) :
-    JointlySmooth ρ A e fun t => ρ (m.map fun a => e a.1 (a.2 t)).prod (Φ t) := by
-  intro F _ _ g hg l hl
-  have h1 := h F g hg (l ++ m.map fun a => (a.1, a.2 ∘ g)) (by
-    intro a ha
-    rcases List.mem_append.1 ha with ha | ha
-    · exact hl a ha
-    · obtain ⟨b, hb, rfl⟩ := List.mem_map.1 ha
-      exact ⟨(hm b hb).1, (hm b hb).2.comp hg⟩)
-  simp only [List.map_append, List.prod_append, map_mul, List.map_map] at h1
-  exact h1
-
-theorem JointlySmooth.extra {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] {Φ : E → K}
-    (h : JointlySmooth ρ A e Φ) {p : P} (hp : p ∈ A)
-    (F : Type) [NormedAddCommGroup F] [NormedSpace ℝ F] (g : F → E) (hg : ContDiff ℝ ∞ g)
-    (l : List (P × (F → ℝ))) (hl : ∀ a ∈ l, a.1 ∈ A ∧ ContDiff ℝ ∞ a.2) :
-    ContDiff ℝ ∞ fun y : F × ℝ =>
-      ρ (l.map fun a => e a.1 (a.2 y.1)).prod (ρ (e p y.2) (Φ (g y.1))) := by
-  have h1 := h (F × ℝ) (g ∘ Prod.fst) (hg.comp contDiff_fst)
-    ((l.map fun a => (a.1, a.2 ∘ Prod.fst)) ++ [(p, Prod.snd)]) (by
-    intro a ha
-    rcases List.mem_append.1 ha with ha | ha
-    · obtain ⟨b, hb, rfl⟩ := List.mem_map.1 ha
-      exact ⟨(hl b hb).1, (hl b hb).2.comp contDiff_fst⟩
-    · obtain rfl := List.mem_singleton.1 ha
-      exact ⟨hp, contDiff_snd⟩)
-  simp only [List.map_append, List.prod_append, map_mul, List.map_map, List.map_cons,
-    List.map_nil, List.prod_cons, List.prod_nil, mul_one] at h1
-  exact h1
-
-theorem JointlySmooth.deriv {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] {Φ : E → K}
-    (h : JointlySmooth ρ A e Φ) {p : P} (hp : p ∈ A) :
-    JointlySmooth ρ A e fun t => deriv (fun r : ℝ => ρ (e p r) (Φ t)) 0 := by
-  intro F _ _ g hg l hl
-  have h1 := h.extra hp F g hg l hl
-  have h0 := h.extra hp F g hg [] (by simp)
-  simp only [List.map_nil, List.prod_nil, map_one, one_apply_eq_self] at h0
-  have hd : ∀ x : F, DifferentiableAt ℝ (fun r : ℝ => ρ (e p r) (Φ (g x))) 0 := fun x =>
-    ((h0.comp (contDiff_const.prodMk contDiff_id : ContDiff ℝ ∞ fun r : ℝ => (x, r))).differentiable
-      (by simp)) 0
-  have h2 : ContDiff ℝ ∞ fun x : F => fderiv ℝ (fun r : ℝ =>
-      ρ (l.map fun a => e a.1 (a.2 x)).prod (ρ (e p r) (Φ (g x)))) 0 :=
-    ContDiff.fderiv (f := fun (x : F) (r : ℝ) =>
-      ρ (l.map fun a => e a.1 (a.2 x)).prod (ρ (e p r) (Φ (g x)))) (g := fun _ => (0 : ℝ))
-      (m := ∞) h1 contDiff_const (by simp)
-  have h3 := h2.clm_apply (contDiff_const (c := (1 : ℝ)))
-  convert h3 using 2 with x
-  have h4 := ((ρ (l.map fun a => e a.1 (a.2 x)).prod).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt
-    (0 : ℝ) (hd x).hasDerivAt
-  exact h4.deriv.symm
-
-theorem JointlySmooth.foldr {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] {Φ : E → K}
-    (h : JointlySmooth ρ A e Φ) (l : List P) (hl : ∀ p ∈ l, p ∈ A) :
-    JointlySmooth ρ A e fun t =>
-      l.foldr (fun p w => _root_.deriv (fun r : ℝ => ρ (e p r) w) 0) (Φ t) := by
-  induction l with
-  | nil => exact h
-  | cons p l ih =>
-    exact (ih fun q hq => hl q (List.mem_cons_of_mem _ hq)).deriv (hl p List.mem_cons_self)
-
 end CurveProductSmooth
 
 open MeasureTheory in

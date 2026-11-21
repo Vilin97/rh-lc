@@ -17,8 +17,6 @@ open AutomorphicForm RightCosetSpace Reduction
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-local notation "Γ₁" => Reduction.rationalGLOne K n
-
 variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
 
 def CuspL2 : Type _ := cuspidalL2 μ

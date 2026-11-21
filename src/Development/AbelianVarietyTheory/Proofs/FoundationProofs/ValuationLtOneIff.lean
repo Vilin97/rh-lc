@@ -1,6 +1,14 @@
 import Mathlib
 import Formalism.SharpRestriction.LevelLetterCocycles.BlochKatoPhases
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.SelmerRankVanishing
+import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
+import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+import Formalism.GaloisCohomology.Statement
+import Formalism.GaloisCohomology.LocalTateDualityK
+import Formalism.WeaklyAdmissibleFiltrations.Statement
+import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions.BlochKatoReduction GlobalTheory.IndefiniteRowSideFullHecke.LengthValuationTwists
 
 noncomputable section
@@ -92,13 +100,5 @@ theorem algHom_ext (τ τ' : ↥B.Kw.1 →ₐ[ℚ_[l]] ↥B.LL.1)
   linarith
 
 end Local
-
-theorem valuation_lt_one_iff {Ω : Type} [Field Ω] (A : ValuationSubring Ω) (x : Ω) :
-    A.valuation x < 1 ↔ x = 0 ∨ x⁻¹ ∉ A := by
-  by_cases hx : x = 0
-  · simp [hx]
-  · have : A.valuation x ≠ 0 := by simpa using hx
-    rw [← A.valuation_le_one_iff, map_inv₀, inv_le_one₀ (zero_lt_iff.2 this)]
-    simp [hx]
 
 end GlobalTheory.EmbInj

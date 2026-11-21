@@ -172,9 +172,6 @@ lemma eI_back (a : Fin r) (h) : (⟨(eI k r a).val, h⟩ : Fin r) = a := Fin.ext
 lemma wI_back (j : Fin (k + 1)) (h) : (⟨(wI k r j).val - r, h⟩ : Fin (k + 1)) = j := Fin.ext (by simp only [Fin.val_mk, wI_val]; omega)
 lemma esI_back (b : Fin r) (h) : (⟨2 * r + k - (esI k r b).val, h⟩ : Fin r) = b := Fin.ext (by simp only [Fin.val_mk, esI_val]; have := b.isLt; omega)
 
-macro "nbt" : tactic => `(tactic| (simp only [unipotentBlockMatrix, Matrix.of_apply]; split_ifs <;>
-  (try (exfalso; simp only [Fin.ext_iff, eI_val, wI_val, esI_val] at *; omega)) <;> simp [eI_back, wI_back, esI_back]))
-
 lemma nb_ee (a b : Fin r) : unipotentBlockMatrix k r Bm S (eI k r a) (eI k r b) = if a = b then 1 else 0 := by
   nbt
 lemma nb_we (j : Fin (k + 1)) (b : Fin r) : unipotentBlockMatrix k r Bm S (wI k r j) (eI k r b) = 0 := by
@@ -472,16 +469,8 @@ theorem nb_fwd {z : Fin (2 * r + k + 1) → ℂ} (hz : C2.StdZ k r z) (n : B.Mat
 
 end NBk
 
-theorem unipotentBlock_mem : ∀ (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ), C2.StdZ k r z →
-    ∀ (Bm : Matrix (Fin r) (Fin (k + 1)) ℂ) (S : Matrix (Fin r) (Fin r) ℂ),
-      Bm *ᵥ zW k r z = 0 → Sᴴ = -S → unipotentBlockMatrix k r Bm S ∈ C2.N0set k r z := fun k r z hz Bm S hB hS => NBk.nb_mem Bm S hz hB hS
-
 theorem unipotent_eq_block : ∀ (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ), C2.StdZ k r z →
     ∀ n ∈ C2.N0set k r z, ∃ (Bm : Matrix (Fin r) (Fin (k + 1)) ℂ) (S : Matrix (Fin r) (Fin r) ℂ),
       Bm *ᵥ zW k r z = 0 ∧ Sᴴ = -S ∧ n = unipotentBlockMatrix k r Bm S := fun k r z hz n hn => NBk.nb_fwd hz n hn
-
-theorem unipotent_block_form : UnipotentBlockCoordinates := by
-  intro k r z hz
-  exact ⟨unipotent_eq_block k r z hz, unipotentBlock_mem k r z hz⟩
 
 end PI.UnitaryGroupMassFormula.DLm

@@ -82,17 +82,6 @@ variable (O ι) in
 
 def galCoef (g : GQ l) : (ι → OW l O) →ₗ[O] (ι → OW l O) := (galOW O g).toLinearMap.compLeft ι
 
-theorem galCoef_phiW {g : GQ l} (hg : g ∈ ϖ.GfieldInf a) (v : ι → OW l O) :
-    galCoef O ι g (phiW t ϖ P v) = phiW t ϖ P (galCoef O ι g v) := by
-  ext1 i
-  change galOW O g (∑ j, ϖ.iW t K _ * frobOW l O (v j)) = ∑ j, ϖ.iW t K _ * frobOW l O (galOW O g (v j))
-  set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_mul, ϖ.galOW_iW t K hg, galOW_frobOW]
-
-theorem galCoef_mem_Treal {g : GQ l} (hg : g ∈ ϖ.GfieldInf a) {v : ι → OW l O} (hv : v ∈ Treal t ϖ P) :
-    galCoef O ι g v ∈ Treal t ϖ P := by
-  rw [mem_Treal, ← galCoef_phiW t ϖ P hg, mem_Treal.1 hv]
-
 abbrev ME : Submodule (invE l e (A O K)) (Vec K a ι) := P.Mext (invE l e (A O K))
 
 variable {P} in
@@ -264,30 +253,11 @@ theorem homW_phiW (F : BK.Hom P Q) (v : ι → OW l O) :
   ext1 i
   exact (RingHom.map_mulVec (frobOW l O).toRingHom _ _ i).symm
 
-def homT (F : BK.Hom P Q) : Treal t ϖ P →ₗ[O] Treal t ϖ Q :=
-  ((homW t ϖ F).restrictScalars O).restrict fun v hv =>
-    mem_Treal.2 ((homW_phiW t ϖ F v).symm.trans (congrArg _ (mem_Treal.1 hv)))
-
-theorem coe_homT (F : BK.Hom P Q) (v : Treal t ϖ P) : (homT t ϖ F v : κ → OW l O) = homW t ϖ F v := rfl
-
 theorem homW_injective : Function.Injective (homW t ϖ : BK.Hom P Q → _) := by
   rintro ⟨F, hF, _⟩ ⟨G, hG, _⟩ h
   have h1 := Matrix.toLin'.injective h
   obtain rfl : F = G := funext fun τ => Matrix.ext fun i j => congrArg Subtype.val
     (congrFun (ϖ.iTot_injective t K (inclO_injective (congrFun₂ h1 i j))) τ)
-  rfl
-
-theorem homW_comp (G : BK.Hom Q R) (F : BK.Hom P Q) (v : ι → OW l O) :
-    homW t ϖ (G.comp F) v = homW t ϖ G (homW t ϖ F v) := by
-  rw [homW_apply, homW_apply, homW_apply, Matrix.mulVec_mulVec, ← Matrix.map_mul]
-  congr 2
-  ext1 i j
-  change _ = ∑ k, ϖ.iTot t K _ * ϖ.iTot t K _
-  simp only [← map_mul]
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [← map_sum]
-  refine congrArg (ϖ.iTot t K) (funext fun τ => Subtype.ext ?_)
-  rw [Finset.sum_apply, AddSubmonoidClass.coe_finsetSum]
   rfl
 
 theorem homW_scalar (c : O) (v : ι → OW l O) : homW t ϖ (BK.Hom.scalar P c) v = c • v := by
@@ -316,10 +286,6 @@ def resLoc {Qp LL O : Type} [Field Qp] [Field LL] [Algebra Qp LL] [CommRing O] [
   ρ := T.ρ.comp f
   cont x := (T.cont x).comp hf
   L := ⟨T.L.T, fun g => T.L.stable (f g), T.L.fg, T.L.free, T.L.span⟩
-
-abbrev resGK {LL O : Type} [Field LL] [Algebra ℚ_[l] LL] [CommRing O] [Algebra O LL] [TopologicalSpace LL]
-    (T : LocLat (GQ l) ℚ_[l] LL O) (F : FinExt l) : LocLat ↥(GK F) ℚ_[l] LL O :=
-  resLoc T (GK F).subtype continuous_subtype_val
 
 def latW {T T' : LocLat G ℚ_[l] K O} (f : LatHom T.L T'.L) : TW (OW l O) T →ₗ[O] TW (OW l O) T' :=
   TensorProduct.map LinearMap.id ((f.f.restrictScalars O).restrict f.T_le)
@@ -363,8 +329,6 @@ theorem range_ofT : LinearMap.range I.ofT = Treal t ϖ P := by
 
 def equivT : ↥T.L.T ≃ₗ[O] Treal t ϖ P :=
   (LinearEquiv.ofInjective I.ofT I.ofT_injective).trans (LinearEquiv.ofEq _ _ I.range_ofT)
-
-theorem coe_equivT (x : ↥T.L.T) : (I.equivT x : ι → OW l O) = I.ofT x := rfl
 
 include I in
 
@@ -419,12 +383,6 @@ def IsLMat (s : GQ l) (g : G) (Γ : Matrix ι ι (OA l O)) : Prop :=
   ∀ c : ι → OA l O, I.act s g (inclL t ϖ P c) = inclL t ϖ P (Γ *ᵥ fun i => galOA O s (c i))
 
 variable {I} in
-
-theorem IsLMat.unique {s : GQ l} {g : G} {Γ Γ' : Matrix ι ι (OA l O)} (h : I.IsLMat s g Γ)
-    (h' : I.IsLMat s g Γ') : Γ = Γ' := by
-  ext1 i j
-  have h1 := congrFun (inclL_injective t ϖ P ((h (Pi.single j 1)).symm.trans (h' (Pi.single j 1)))) i
-  simpa [Matrix.mulVec, dotProduct, Pi.single_apply, apply_ite (galOA O s)] using h1
 
 theorem exists_isLMat_iff (s : GQ l) (g : G) :
     (∃ Γ, I.IsLMat s g Γ) ↔ ∀ v ∈ LA t ϖ P, I.act s g v ∈ LA t ϖ P := by
@@ -538,16 +496,6 @@ structure BKMod (T : Lat a O K ϖ) where
   I : Ident t ϖ P T
   isBK : IsBK I
 
-theorem Ident.card_eq {G : Type} [Group G] [TopologicalSpace G] {t : Wq l a →ₐ[ℤ_[l]] O} {ϖ : PiSys l e}
-    {P : PhiMod O K l e a ι} {T : LocLat G ℚ_[l] K O} (I : Ident t ϖ P T) :
-    Fintype.card ι = Module.finrank O ↥T.L.T := by
-  have : Nontrivial O := (algebraMap O K).domain_nontrivial
-  have : Nontrivial (OW l O) := (GlobalTheory.WittTensorFixed.baseChange_flat (O := O) (frobW l)
-    (GlobalTheory.ArtinSchreierWitt.main l).1 (GlobalTheory.ArtinSchreierWitt.main l).2.1
-    (GlobalTheory.WittTensorFixed.algebraMap_WCb_injective l)).2.2.nontrivial
-  have := T.L.free
-  rw [← Module.finrank_fintype_fun_eq_card (OW l O), I.j.finrank_eq, Module.finrank_baseChange]
-
 structure BKFunctor (C : Lat a O K ϖ → Prop) where
 
   obj : ∀ T, C T → BKMod t ϖ T
@@ -584,23 +532,6 @@ theorem map_smul {T : Lat a O K ϖ} (hT : C T) (c : O) :
     rw [← tmul_smul]
     exact congrArg (fun y : ↥T.L.T => w ⊗ₜ[O] y) (Subtype.ext (algebraMap_smul K c (x : T.V)).symm)
   | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
-
-theorem map_id {T : Lat a O K ϖ} (hT : C T) : F.map hT hT (latId T) = BK.Hom.scalar _ 1 := by
-  refine (F.isMapOf hT hT _).unique fun v => ?_
-  rw [homW_scalar, one_smul]
-  induction (F.obj T hT).I.j v using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
-  | tmul w x => rfl
-  | add x y hx hy => rw [map_add (f := _), ← hx, ← hy]
-
-theorem map_comp {T T' T'' : Lat a O K ϖ} (hT : C T) (hT' : C T') (hT'' : C T'') (g : LatHom T'.L T''.L)
-    (f : LatHom T.L T'.L) : F.map hT hT'' (latComp g f) = (F.map hT' hT'' g).comp (F.map hT hT' f) := by
-  refine (F.isMapOf hT hT'' _).unique fun v => ?_
-  rw [homW_comp, F.isMapOf, F.isMapOf]
-  induction (F.obj T hT).I.j v using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
-  | tmul w x => rfl
-  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end BKFunctor
 
@@ -995,43 +926,16 @@ omit [NeZero e] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [Algebra ℤ_[
 
 theorem isTriv_unitLat : IsTriv (unitLat ↥(GK (ϖ.field a)) : Lat a O K ϖ) := fun _ _ => rfl
 
-example : ((trivFunctor (K := K) t ϖ).obj _ (isTriv_unitLat ϖ)).n = 1 := by
-  have : Nontrivial O := (algebraMap O K).domain_nontrivial
-  exact (LinearEquiv.ofInjective (Algebra.linearMap O K) IsUnitBall.inj).finrank_eq.symm.trans
-    (Module.finrank_self O)
-
-example (v : ι → OW l O) : v ∈ Treal t ϖ (unitMod l a e O K ι) ↔ ∀ i, ∃ c : O, v i = algebraMap O _ c := by
-  rw [mem_Treal, phiW_apply, frobMat_unitMod, Matrix.one_mulVec, funext_iff]
-  exact forall_congr' fun i => ⟨(GlobalTheory.WittTensorFixed.baseChange_flat (O := O) (frobW l)
-    (GlobalTheory.ArtinSchreierWitt.main l).1 (GlobalTheory.ArtinSchreierWitt.main l).2.1
-    (GlobalTheory.WittTensorFixed.algebraMap_WCb_injective l)).2.1 _,
-    fun ⟨c, hc⟩ => by rw [hc]; exact (frobOW l O).commutes c⟩
-
-example (v : Unit → OW l O) : v ∈ Treal t ϖ (rankOne O K l e fun _ : ZMod a => 1) ↔
-    inclO l O (1 ⊗ₜ ϖ.ev a (eis l a e)) * frobOW l O (v ()) = v () := by
-  have h : frobMat t ϖ (rankOne O K l e fun _ : ZMod a => 1) () () = inclO l O (1 ⊗ₜ ϖ.ev a (eis l a e)) := by
-    rw [← ϖ.iTot_E t K, ← ϖ.iW_of_mem t K]
-    exact congrArg (ϖ.iW t K) (funext fun τ => Subtype.ext
-      ((mx_rankOne (j := fun _ : ZMod a => 1) (τ := τ) (n := 1) rfl).trans (pow_one _)))
-  rw [mem_Treal, phiW_apply, funext_iff, Unique.forall_iff, ← h]
-  simp [Matrix.mulVec, dotProduct]
-
 end Triv
 
 section FinExt
 
 variable (LL : FinExt l) {G : Type} [Group G] [TopologicalSpace G]
 
-theorem zlLat_eq (T : LocLat G ℚ_[l] ↥LL.1 ↥(OL LL)) : zlLat T = Formalism.MainNotions.LocalSituation.zlMod LL T := rfl
-
-theorem actZ_eq (T : LocLat G ℚ_[l] ↥LL.1 ↥(OL LL)) : actZ T = fun g => Formalism.MainNotions.LocalSituation.actTZ LL T g := rfl
-
 variable (a) in
 
 abbrev CrysBKFunctorOL [HasUnr a LL] (Pl : LocPrime l) : Type 1 :=
   CrysBKFunctor ↥LL.1 (thetaW a LL) ϖ Pl
-
-example [HasUnr a LL] : Nonempty (trivFunctor (K := ↥LL.1) (thetaW a LL) ϖ).IntConn := ⟨trivConn _ _⟩
 
 end FinExt
 

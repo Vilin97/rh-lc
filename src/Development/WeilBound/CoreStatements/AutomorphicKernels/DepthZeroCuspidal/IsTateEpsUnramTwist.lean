@@ -1,6 +1,5 @@
 import Mathlib
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.DepthZeroCuspidalLL
-import Development.WeilBound.CoreStatements.AutomorphicKernels.DepthZeroCuspidal.IsLevelOne
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RecTransportFieldIso
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BrauerDegreeZero
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilDeligneInductionPrincipleStatement
@@ -45,11 +44,6 @@ theorem lpOfChar_lpTwist {p q r : Weil h →* ℂˣ} (hp : GlobalTheory.WeilDeli
   ring
 
 end WDLemmas
-
-def TwPow (ε : EpsFamily A) (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a)
-    (ψ : AddChar (w.adicCompletion E) Circle) (ϖ : (w.adicCompletion E)ˣ) (x : WD h) : Prop :=
-  ∃ j : ℤ, ∀ χ : {μ : (w.adicCompletion E)ˣ →* ℂˣ // IsUnram μ},
-    ε E w h ψ (x.lpTwist (χ.1.comp a) (ha.smooth (isSmoothChar_of_isUnram χ.2))) = χ.1 ϖ ^ j * ε E w h ψ x
 
 end PositivityTheory.LocalParametersCuspidal.DepthZeroGlueing
 

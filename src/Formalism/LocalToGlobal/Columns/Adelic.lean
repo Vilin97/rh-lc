@@ -200,10 +200,6 @@ instance : Group (AdG hc n ST SG H) := inferInstanceAs (Group (URat hc n × (JH 
 def adHom : AdG hc n ST SG H →* UF E n × H :=
   show URat hc n × (JH hc n ST SG H ⧸ (redH hc n ST SG H).ker) →* UF E n × H from MonoidHom.prodMap (ratHom hc n) (QuotientGroup.kerLift (redH hc n ST SG H))
 
-theorem adHom_mk (γ : URat hc n) (k : JH hc n ST SG H) :
-    adHom hc n ST SG H ((γ, (k : JH hc n ST SG H ⧸ (redH hc n ST SG H).ker)) : AdG hc n ST SG H) =
-      (ratHom hc n γ, redH hc n ST SG H k) := rfl
-
 def rawSm (γ : URat hc n) (k : J0 hc n ST) (x : UAd hc n) : UAd hc n :=
   ratIn hc n γ * x * (ToUnitaryAdelic hc n ST k)⁻¹
 
@@ -228,31 +224,6 @@ def adSmul (g : URat hc n × (JH hc n ST SG H ⧸ (redH hc n ST SG H).ker)) (q :
 theorem adSmul_mk (γ : URat hc n) (k : JH hc n ST SG H) (x : UAd hc n) :
     adSmul hc n ST SG H (γ, (k : JH hc n ST SG H ⧸ (redH hc n ST SG H).ker)) (x : adPt hc n ST SG) =
       (rawSm hc n ST γ k.1 x : adPt hc n ST SG) := rfl
-
-instance (priority := high) adAct : MulAction (AdG hc n ST SG H) (adPt hc n ST SG) where
-  smul := adSmul hc n ST SG H
-  one_smul q := by
-    induction q using QuotientGroup.induction_on with
-    | H x =>
-      show adSmul hc n ST SG H (1, ((1 : JH hc n ST SG H) : JH hc n ST SG H ⧸ _)) (x : adPt hc n ST SG) = x
-      rw [adSmul_mk]
-      congr 1
-      simp [rawSm]
-  mul_smul g g' q := by
-    obtain ⟨γ, k⟩ := g
-    obtain ⟨γ', k'⟩ := g'
-    induction k using QuotientGroup.induction_on with
-    | H k =>
-    induction k' using QuotientGroup.induction_on with
-    | H k' =>
-    induction q using QuotientGroup.induction_on with
-    | H x =>
-      show adSmul hc n ST SG H (γ * γ', ((k * k' : JH hc n ST SG H) : JH hc n ST SG H ⧸ _)) (x : adPt hc n ST SG) =
-        adSmul hc n ST SG H (γ, (k : JH hc n ST SG H ⧸ _)) (adSmul hc n ST SG H (γ', (k' : JH hc n ST SG H ⧸ _)) x)
-      rw [adSmul_mk, adSmul_mk, adSmul_mk]
-      congr 1
-      simp only [rawSm, map_mul, Subgroup.coe_mul, _root_.mul_inv_rev]
-      group
 
 end Levels
 
@@ -287,37 +258,6 @@ section Iso
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
-def pullGSD (S : GSD K) (G' D' : Type) [Group G'] [MulAction G' D'] (φ : G' →* S.G) (p : D' → S.D) : GSD K where
-  G := G'
-  D := D'
-  V := S.V
-  ιV := S.ιV
-  bV := S.bV
-  pair := S.pair
-  ρ := S.ρ.comp φ
-  Nab := S.Nab ∘ p
-  Del := S.Del ∘ p
-
-theorem repr_self_mem (S : GSD K) (i j : S.ιV) : S.bV.repr (S.bV j) i ∈ Formalism.DivisionValues.cmMax K := by
-  rw [S.bV.repr_self, Finsupp.single_apply]
-  split_ifs
-  · exact one_mem _
-  · exact zero_mem _
-
-def pullIso (S : GSD K) (G' D' : Type) [Group G'] [MulAction G' D'] (φ : G' →* S.G) (p : D' → S.D)
-    (hφ : Function.Bijective φ) (hp : Function.Bijective p) (heq : ∀ (g : G') (d : D'), p (g • d) = φ g • p d) :
-    GSD.Iso (pullGSD S G' D' φ p) S where
-  eG := MulEquiv.ofBijective φ hφ
-  eD := Equiv.ofBijective p hp
-  eV := LinearEquiv.refl K S.V
-  smul := heq
-  rho _ _ := rfl
-  pair _ _ := rfl
-  nab _ := (Submodule.map_id _).symm
-  del _ := (Submodule.map_id _).symm
-  rat i j := repr_self_mem S i j
-  rat_symm i j := repr_self_mem S i j
-
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
 
@@ -331,35 +271,14 @@ structure OnDeco (S : GSD K) where
 
 variable {hc n ST SG H}
 
-def adGSD (hc : Formalism.BasicNotions.CMData F E) {S : GSD K} (o : OnDeco n ST SG H S) : GSD K :=
-  pullGSD S (AdG hc n ST SG H) (adPt hc n ST SG) (o.eG.toMonoidHom.comp (adHom hc n ST SG H)) (o.eD ∘ decoPt hc n ST SG)
-
 variable (hc n ST SG H)
 
 def DecoOfOk : Prop := ∀ x ∈ UAd hc n, (decoRaw ST SG x).Ok
-
-def DecoPtBij : Prop := Function.Bijective (decoPt hc n ST SG)
 
 def DecoPtEqv : Prop :=
   ∀ (g : AdG hc n ST SG H) (q : adPt hc n ST SG), decoPt hc n ST SG (adSmul hc n ST SG H g q) = adHom hc n ST SG H g • decoPt hc n ST SG q
 
 def RedHSurj : Prop := Function.Surjective (redH hc n ST SG H)
-
-theorem adHom_bijective (hR : RedHSurj hc n ST SG H) : Function.Bijective (adHom hc n ST SG H) := by
-  have h1 := ratHom_bijective hc n
-  have h2 : Function.Bijective (QuotientGroup.kerLift (redH hc n ST SG H)) := by
-    refine ⟨QuotientGroup.kerLift_injective _, fun h => ?_⟩
-    obtain ⟨k, rfl⟩ := hR h
-    exact ⟨(k : JH hc n ST SG H ⧸ (redH hc n ST SG H).ker), rfl⟩
-  show Function.Bijective (Prod.map (ratHom hc n) (QuotientGroup.kerLift (redH hc n ST SG H)))
-  exact ⟨h1.1.prodMap h2.1, h1.2.prodMap h2.2⟩
-
-def adelicIso {S : GSD K} (o : OnDeco n ST SG H S) (hB : DecoPtBij hc n ST SG) (hE : DecoPtEqv hc n ST SG H)
-    (hR : RedHSurj hc n ST SG H) : GSD.Iso (adGSD hc o) S :=
-  pullIso S _ _ _ _ (o.eG.bijective.comp (adHom_bijective hc n ST SG H hR)) (o.eD.bijective.comp hB) (by
-    intro g q
-    show o.eD (decoPt hc n ST SG (adSmul hc n ST SG H g q)) = o.eG (adHom hc n ST SG H g) • o.eD (decoPt hc n ST SG q)
-    rw [hE, o.smul])
 
 end Iso
 

@@ -19,21 +19,6 @@ section Coinv
 
 variable {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
-theorem twKer_le_comap {π : Representation ℂ G V} {σ : Representation ℂ G W} (φ : π.Equiv σ)
-    (U : Subgroup G) (θ : U →* ℂˣ) :
-    twKer π U θ ≤ (twKer σ U θ).comap φ.toIntertwiningMap.toLinearMap := by
-  refine Submodule.span_le.2 ?_
-  rintro w ⟨u, v, rfl⟩
-  refine Submodule.subset_span ⟨u, φ.toIntertwiningMap v, ?_⟩
-  rw [map_sub, map_smul, ← φ.toIntertwiningMap.isIntertwining]
-  rfl
-
-def twJacquetEquiv {π : Representation ℂ G V} {σ : Representation ℂ G W} (φ : π.Equiv σ)
-    (U : Subgroup G) (θ : U →* ℂˣ) : TwJacquet π U θ ≃ₗ[ℂ] TwJacquet σ U θ :=
-  Submodule.Quotient.equiv _ _ φ.toLinearEquiv (le_antisymm
-    (Submodule.map_le_iff_le_comap.2 (twKer_le_comap φ U θ))
-    (fun y hy => ⟨φ.symm y, twKer_le_comap φ.symm U θ hy, φ.apply_symm_apply y⟩))
-
 end Coinv
 
 def piFinTwoTensor (X : Fin 2 → Type) [∀ a, AddCommGroup (X a)] [∀ a, Module ℂ (X a)] :
@@ -66,10 +51,6 @@ theorem nonempty_prod2_equiv (π₁ : Representation ℂ (GL (Fin r) k) V) (π�
 end Two
 
 section Main
-
-def deg (r t : ℕ) : Fin 2 → ℕ := Fin.cases r fun _ => t
-
-def fam {r t : ℕ} (π₁ : GRep k r) (π₂ : GRep k t) : ∀ a, GRep k (deg r t a) := Fin.cases π₁ fun _ => π₂
 
 end Main
 

@@ -12,13 +12,6 @@ def IsClassTerm {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I] (φ 
     (c : Ideal (OF E)) (χ : HChar E) (y : (Af E)ˣ) (T : ℂ) : Prop :=
   ∃ S : ℂ → ℂ, IsLatSum φ (2 * s) κ (lattice c y) S ∧ T = ((finPart χ y : ℂ) * ((modF y ^ s : ℝ) : ℂ))⁻¹ * S 0
 
-theorem IsClassTerm.unique {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I] {φ : I → E →+* ℂ} {s : ℕ} {κ : I → ℕ}
-    {c : Ideal (OF E)} {χ : HChar E} {y : (Af E)ˣ} {T T' : ℂ} (h : IsClassTerm φ s κ c χ y T) (h' : IsClassTerm φ s κ c χ y T') :
-    T = T' := by
-  obtain ⟨S, hS, rfl⟩ := h
-  obtain ⟨S', hS', rfl⟩ := h'
-  rw [hS.unique hS']
-
 theorem isToricSum_iff {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I] (φ : I → E →+* ℂ) (s : ℕ) (κ : I → ℕ)
     (c : Ideal (OF E)) (χ : HChar E) (T : ℂ) :
     IsToricSum φ s κ c χ T ↔ Finite (PicO c) ∧ ∃ t : PicO c → ℂ, (∀ q, IsClassTerm φ s κ c χ q.out (t q)) ∧ T = ∑ᶠ q, t q := by

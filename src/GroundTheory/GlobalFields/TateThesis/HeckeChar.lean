@@ -33,10 +33,6 @@ theorem primeIdealUnit_mem_idealsPrimeTo {𝔪 : Ideal (𝓞 K)} {v : HeightOneS
   rintro rfl
   exact hv hw
 
-theorem idealsPrimeTo_top : idealsPrimeTo (⊤ : Ideal (𝓞 K)) = ⊤ := by
-  exact eq_top_iff.2 fun I _ v hv ↦
-    absurd (top_le_iff.1 (Ideal.le_of_dvd hv)) v.isPrime.ne_top
-
 namespace IdeleGroup
 
 theorem exists_uniformizer (v : HeightOneSpectrum (𝓞 K)) :
@@ -105,12 +101,6 @@ theorem finiteEmbedding_mem_primeToLevel {𝔪 : Ideal (𝓞 K)} {v : HeightOneS
     exact hv hw
   rw [finiteProj_finiteEmbedding_of_ne hwv]
   exact one_mem _
-
-theorem toFractionalIdeal_mem_idealsPrimeTo {𝔪 : Ideal (𝓞 K)} {x : IdeleGroup K}
-    (hx : x ∈ primeToLevel 𝔪) : toFractionalIdeal x ∈ idealsPrimeTo 𝔪 := by
-  intro v hv
-  rw [count_toFractionalIdeal]
-  exact ord_eq_zero_of_mem_unitsLevel ((mem_primeToLevel.1 hx).2 v hv)
 
 theorem exists_mem_primeToLevel {𝔪 : Ideal (𝓞 K)} {I : (FractionalIdeal (𝓞 K)⁰ K)ˣ}
     (hI : I ∈ idealsPrimeTo 𝔪) : ∃ x ∈ primeToLevel 𝔪, toFractionalIdeal x = I := by

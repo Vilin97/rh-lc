@@ -10,8 +10,6 @@ namespace GlobalTheory.IsoTypScalar
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 theorem heckeD_eq_sum_of {v : HeightOneSpectrum (𝓞 L⁺)} {J : Subgroup (GAf L n)}
     (hJ : ∀ κ, TrivOutside {v} κ → (κ ∈ J ↔ κ ∈ Umax L n)) {D : Set (GAf L n)} (hD : ∀ x ∈ D, TrivOutside {v} x)
     {R : Finset (GAf L n)} (h1 : ∀ γ ∈ R, γ ∈ D) (h2 : ∀ x ∈ D, ∃! γ, γ ∈ R ∧ γ⁻¹ * x ∈ Umax L n)

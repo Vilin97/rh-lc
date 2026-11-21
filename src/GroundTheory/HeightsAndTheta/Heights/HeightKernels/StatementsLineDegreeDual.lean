@@ -221,9 +221,6 @@ theorem dualEmbMatrix_standard_bijective :
     refine ⟨fun _ => z (), ?_⟩
     rw [hv]
 
-example : HermLine (dualBlocks Unit) :=
-  dualLine (HermLattice.standard ℚ 1) dualBasisStandard dualEmbMatrix_standard_bijective
-
 end
 
 end GroundTheory.Heights₂.Heights

@@ -15,8 +15,6 @@ open _root_.GroundTheory.Global.Cyclotomic GroundTheory.LocalField.Abstract
 
 attribute [local instance] galCommGroup
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 section Unit
 
 def unitAt (y : RationalIdeles.positiveSubgroup) (v : HeightOneSpectrum (𝓞 ℚ)) :

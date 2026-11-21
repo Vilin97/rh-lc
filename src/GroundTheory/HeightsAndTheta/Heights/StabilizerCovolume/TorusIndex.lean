@@ -1,5 +1,9 @@
 import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.StabilizerCovolume.Objects
+import GroundTheory.HeightsAndTheta.Heights.StabilizerCovolume.ThreeLeLevel
+import GroundTheory.HeightsAndTheta.Heights.StabilizerCovolume.GaussCM
+import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.DataHodge
+import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.IsFrameOverLine
+import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.Values
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -76,9 +80,5 @@ theorem isoFam_nz : IsNzFamily isoLine 1 isoFam := by
     exact one_ne_zero
 
 end Gauss
-
-example : (∀ σ : Gauss.Em →+* ℂ, ∃ t : Gauss.Em →+* Gauss.Em, Gauss.φ₀.comp t = σ) ∧
-    IsNzFamily Gauss.isoLine 1 Gauss.isoFam :=
-  ⟨Gauss.split Gauss.φ₀, Gauss.isoFam_nz⟩
 
 end GroundTheory.Heights₂.Heights.NineStatements

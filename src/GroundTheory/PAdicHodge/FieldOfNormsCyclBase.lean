@@ -1,6 +1,12 @@
 import Mathlib
 import GroundTheory.PAdicHodge.FieldOfNormsResidue
-import GroundTheory.PAdicHodge.FWCyclotomic
+import GroundTheory.PAdicHodge.CyclotomicTower
+import GroundTheory.PAdicHodge.TiltValuation
+import GroundTheory.PAdicHodge.TiltAlgebra
+import GroundTheory.PAdicHodge.UntiltIndep
+import GroundTheory.PAdicHodge.PerfectoidField
+import GroundTheory.PAdicHodge.AxLemma
+import GroundTheory.PAdicHodge.TiltAlgClosed
 import GroundTheory.LocalFields.KroneckerWeber
 set_option maxSynthPendingDepth 1
 

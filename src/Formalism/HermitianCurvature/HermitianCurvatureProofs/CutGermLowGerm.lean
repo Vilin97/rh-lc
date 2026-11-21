@@ -253,53 +253,6 @@ theorem lhs_eq_sum {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] (
 end GLG
 
 open GLG in
-theorem low_level_germ : GLGerm := by
-  intro _hA Wp Wq _ _ _ _ _ _ P p nn F Y N Cb _hCb hF hnn b s hb hs hbs h hh w _hw _hN H _ _ _ Vec hVec K hK hK0
-  obtain ⟨m, rfl⟩ : ∃ m, s = m + 2 := ⟨s - 2, by omega⟩
-  have hF0 := hF
-  obtain ⟨hCk, hsupp, δ, hδ, hG⟩ := hF
-  have heq : ∀ g ∈ B.GV P.k P.r, D.cutF p.T.base Formalism.FourierDecayAlt.P.Topx2.chi0 F δ g = F g :=
-    cutF_eq_on_gv p.T.base Formalism.FourierDecayAlt.P.Topx2.base_cutoff_is_truncation hG hδ le_rfl
-  have hRR : ∀ a a', p.RR F (b + (m + 2) - 1) w a a' =
-      p.RR (D.cutF p.T.base Formalism.FourierDecayAlt.P.Topx2.chi0 F δ) (b + (m + 2) - 1) w a a' :=
-    fun a a' => rr_congr_belowG p hF0 (fun g hg => (heq g hg).symm) _ hbs (by omega) w a a'
-  have hsz : D.ptSize h + (m + 2) = b + (m + 2) - 1 := by rw [hh.2]; omega
-  have hloc : D.IsLocPt h (D.ptSize h) := ⟨hh.1, rfl⟩
-  obtain ⟨V, i1, i2, i3, Bf, Φ, Cp, Cst, hCp, hBf, hker, hgerm⟩ :=
-    Formalism.FourierDecayAlt.P.germ_at_place Wp Wq P p.T (M.sgn P p.l0) w F Formalism.FourierDecayAlt.P.Topx2.chi0 δ h m (b + (m + 2) - 1) hbs
-      hsz hCk hsupp Formalism.FourierDecayAlt.P.Topx2.base_cutoff_is_truncation hδ p.hl.2.2 hloc K hK hK0
-  set Mv : ℕ := U.Mlev P.k (P.r - (b + (m + 2) - 1)) with hMv
-  have hM : 2 ≤ Mv := by rw [hMv]; unfold U.Mlev; omega
-  set nH : ℝ := C.nAux P.k P.r 0 (fun _ _ => 1) 1 h with hnH
-  have hnH0 : 0 ≤ nH := Formalism.FourierDecayAlt.P.FormNormSumIdentities.weight_product_nonneg P.k P.r (fun _ _ => 1) (fun _ _ => zero_le_one) 1 h
-  set μ0 : ℝ := √nH / √(TBB.normC nn w) with hμ0
-  refine ⟨Cp * |μ0 * Real.pi ^ ((m + 2) * (m + 1) / 2)| * Cst, fun x hx Dv hDv => ?_⟩
-  have hD0 : Dv ≠ 0 := fun e => hK0 (e ▸ hDv)
-  rw [lhs_eq_sum]
-  have hy := np_PP p nn hnn F _ w b m hb hbs hRR h hh hsz Bf Φ K hker x Dv hx hDv hD0
-  have hle := Formalism.FourierDecayAlt.P.FormNormSumIdentities.norm_sum_le_of_form (TBB.NP p nn F (b + (m + 2) - 1) w) Vec hVec Bf Cp hCp hBf
-    (Finset.insertNone (G.rootSet (m + 2) ((-1) ^ (m + 3) * Dv))) (aC m x) (PP m h x Dv)
-    (fun j => ((lam p nn w (PP m h x Dv j) : ℝ) : ℂ) • FormNormSumIdentities.yG U.betaU m Φ (qG m x Dv j)) hy
-  have hl1 : lam p nn w (PP m h x Dv none) =
-      μ0 * ((‖x⁻¹‖ ^ ((m + 1) * (Mv + m))) * ‖x ^ (m + 1) * Dv‖ ^ (Mv - 2)) := by
-    show √(TBB.nPt P.k P.r (TBB.TTp p) (h ++ [(m + 1, x⁻¹), (1, x ^ (m + 1) * Dv)])) / √(TBB.normC nn w) = _
-    rw [nPt_block (TBB.TTp p) b m hb hbs h hh.2, Real.sqrt_mul hnH0, ← mul_pow, Real.sqrt_sq (by positivity), hμ0]
-    ring
-  have hl2 : ∀ z ∈ G.rootSet (m + 2) ((-1) ^ (m + 3) * Dv),
-      lam p nn w (PP m h x Dv (some z)) = μ0 * ‖z‖ ^ ((m + 2) * (Mv + m - 1)) := by
-    intro z _
-    show √(TBB.nPt P.k P.r (TBB.TTp p) (h ++ [(m + 2, z)])) / √(TBB.normC nn w) = _
-    rw [nPt_long (TBB.TTp p) b m hb hbs h hh.2, Real.sqrt_mul hnH0, Real.sqrt_sq (by positivity), hμ0]
-    ring
-  have hcs := conjSum_TBB m Mv hM Φ x Dv hx hD0 μ0 (fun j => lam p nn w (PP m h x Dv j)) hl1 hl2
-  rw [hcs, norm_smul, Complex.norm_real, Real.norm_eq_abs] at hle
-  have hg' := hgerm x⁻¹ Dv (inv_ne_zero hx) hDv
-  rw [norm_inv] at hg'
-  calc _ ≤ Cp * (|μ0 * Real.pi ^ ((m + 2) * (m + 1) / 2)| *
-        ‖U.uD U.betaU m Mv Φ x⁻¹ Dv - U.aD U.betaU m Mv Φ x⁻¹ Dv‖) := hle
-    _ ≤ Cp * (|μ0 * Real.pi ^ ((m + 2) * (m + 1) / 2)| * (Cst * ‖x‖⁻¹)) :=
-        mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left hg' (abs_nonneg _)) hCp
-    _ = _ := by ring
 
 end
 

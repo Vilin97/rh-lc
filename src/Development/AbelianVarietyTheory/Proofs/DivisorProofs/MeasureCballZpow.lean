@@ -11,10 +11,6 @@ end GlobalTheory.OrdShellInt
 
 namespace GlobalTheory.OrdShellInt
 
-def wt (q : ℝ) : ℕ → ℝ
-  | 0 => 1
-  | m + 1 => q ^ (m + 1) - q ^ m
-
 end GlobalTheory.OrdShellInt
 
 namespace GlobalTheory.OrdShellInt

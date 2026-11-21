@@ -175,11 +175,4 @@ theorem pair_subst (g : κ → κ → R) (P Q : MvPolynomial κ R) :
     intro i _
     rw [pair_C_mul_right, hp, mul_left_comm, pair_C_mul_left, pair_mul_X]
 
-theorem main :
-  (∀ (C : Type) [Field C] [CharZero C] (κ : Type) [Fintype κ] [DecidableEq κ] (g : Matrix κ κ C) (P Q : MvPolynomial κ C),
-    (∑ A ∈ (P).support, AddMonoidAlgebra.coeff (P) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (MvPolynomial.aeval (fun i => ∑ j, MvPolynomial.C (g i j) * MvPolynomial.X j) Q) A) =
-    (∑ A ∈ (MvPolynomial.aeval (fun i => ∑ j, (MvPolynomial.C (g j i) * MvPolynomial.X j : MvPolynomial κ C)) P).support, AddMonoidAlgebra.coeff (MvPolynomial.aeval (fun i => ∑ j, (MvPolynomial.C (g j i) * MvPolynomial.X j : MvPolynomial κ C)) P) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (Q) A)) := by
-  intro C _ _ κ _ _ g P Q
-  exact pair_subst (fun i j => g i j) P Q
-
 end GlobalTheory.PolyPairingAdjoint

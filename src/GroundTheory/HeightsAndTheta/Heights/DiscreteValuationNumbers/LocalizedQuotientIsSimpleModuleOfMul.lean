@@ -81,15 +81,6 @@ variable {K : Type} {ι : K → Type} {J : Type} {O : Type*} [CommRing O] [IsDom
 theorem liftForm_const (a : O) : liftForm (J := J) (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = C a :=
   (liftForm (J := J) (ι := ι) (R := O)).commutes a
 
-def constChart (ϖ : O) (n : J → ℕ) (j₀ : J) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) →ₐ[O] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) :=
-  aeval fun v => match v with
-    | ⟨none, j⟩ => C (ϖ ^ (n j - n j₀)) * X (⟨none, j₀⟩ : Σ o, extIdx ι J o)
-    | ⟨some k, i⟩ => X ⟨some k, i⟩
-
-def constChartPrime (ϖ : O) (n : J → ℕ) (j₀ : J) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)) :=
-  RingHom.ker ((MvPolynomial.map (Ideal.Quotient.mk (Ideal.span {ϖ}))).comp
-    (constChart ϖ n j₀).toRingHom)
-
 end Constants
 
 end Examples

@@ -13,13 +13,6 @@ open scoped Classical in
 noncomputable def automorphismOrder (W : WeierstrassCurve F) : ℕ :=
   if W.a₆ = 0 then 4 else if W.a₄ = 0 then 6 else 2
 
-theorem automorphismOrder_of_a₆_eq_zero {W : WeierstrassCurve F} (hb : W.a₆ = 0) : automorphismOrder W = 4 := by
-  simp [automorphismOrder, hb]
-
-theorem automorphismOrder_of_a₄_eq_zero {W : WeierstrassCurve F} (ha : W.a₄ = 0) (hb : W.a₆ ≠ 0) :
-    automorphismOrder W = 6 := by
-  simp [automorphismOrder, ha, hb]
-
 def automorphismScale (W : WeierstrassCurve F) :
     MulAction.stabilizer (VariableChange F) W →* Fˣ where
   toFun ξ := ξ.1.u
@@ -37,14 +30,6 @@ variable [CharZero F] {W : WeierstrassCurve F}
 theorem automorphism_rst_eq_zero (hW : IsShortForm W)
     (ξ : MulAction.stabilizer (VariableChange F) W) : ξ.1.r = 0 ∧ ξ.1.s = 0 ∧ ξ.1.t = 0 :=
   variableChange_rst_eq_zero hW ((MulAction.mem_stabilizer_iff.mp ξ.2).symm ▸ hW)
-
-theorem automorphismScale_injective (hW : IsShortForm W) :
-    Function.Injective (automorphismScale W) := by
-  intro ξ η h
-  obtain ⟨hr, hs, ht⟩ := automorphism_rst_eq_zero hW ξ
-  obtain ⟨hr', hs', ht'⟩ := automorphism_rst_eq_zero hW η
-  apply Subtype.ext
-  exact VariableChange.ext h (hr.trans hr'.symm) (hs.trans hs'.symm) (ht.trans ht'.symm)
 
 theorem mem_range_automorphismScale (hW : IsShortForm W) (u : Fˣ) :
     u ∈ (automorphismScale W).range ↔
@@ -102,22 +87,6 @@ theorem scale_conditions_iff (hW : IsShortForm W) (w : F) :
       refine ⟨?_, ?_⟩
       · rw [show w ^ 4 = (w ^ 2) ^ 2 by ring, h, one_pow]
       · rw [show w ^ 6 = (w ^ 2) ^ 3 by ring, h, one_pow]
-
-theorem range_automorphismScale (hW : IsShortForm W) :
-    (automorphismScale W).range = rootsOfUnity (automorphismOrder W) F := by
-  ext u
-  rw [mem_range_automorphismScale hW, mem_rootsOfUnity', Units.val_inv_eq_inv_val]
-  exact scale_conditions_iff hW _
-
-noncomputable def automorphismEquivRootsOfUnity (hW : IsShortForm W) :
-    MulAction.stabilizer (VariableChange F) W ≃* rootsOfUnity (automorphismOrder W) F :=
-  (MonoidHom.ofInjective (automorphismScale_injective hW)).trans
-    (MulEquiv.subgroupCongr (range_automorphismScale hW))
-
-@[simp]
-theorem automorphismEquivRootsOfUnity_apply (hW : IsShortForm W)
-    (ξ : MulAction.stabilizer (VariableChange F) W) :
-    ((automorphismEquivRootsOfUnity hW ξ : Fˣ)) = ξ.1.u := rfl
 
 theorem weberFunction_automorphismPoint (hW : IsShortForm W)
     (ξ : MulAction.stabilizer (VariableChange F) W) (P : W.toAffine.Point) :

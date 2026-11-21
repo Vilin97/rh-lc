@@ -9,8 +9,6 @@ namespace GroundTheory.ProfCoh
 
 open IsDedekindDomain NumberField CategoryTheory MonoidalCategory GroundTheory.Global GroundTheory.LocalField
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 attribute [local instance 2000] Rep.hV2

@@ -199,10 +199,6 @@ variable (X)
 def v0 (i : X.Tw) (j : ℕ) (b : Bool) : ℝ≥0∞ :=
   lenN (X.O i) (X.l i) (X.B i j b ⧸ X.Theta i j b)
 
-def lenPsi (i : X.Tw) (j : ℕ) (b : Bool) (k : ℕ) (Q : Finset (HeightOneSpectrum (𝓞 D.host.E)))
-    (ψ : GE N →* (X.Ok i k)ˣ) : ℝ≥0∞ :=
-  lenN (X.Ok i k) (X.l i) (TensorProduct (X.O i) (X.Ok i k) (X.B i j b) ⧸ X.ThetaPsi i j b k Q ψ)
-
 def kMap (i : X.Tw) (k : ℕ) : FractionRing (X.O i) →+* FractionRing (X.Ok i k) :=
   IsFractionRing.lift (g := (algebraMap (X.Ok i k) (FractionRing (X.Ok i k))).comp
     (algebraMap (X.O i) (X.Ok i k)))
@@ -231,18 +227,9 @@ def TrivAbove {A : Type} [Group A] (ψ : GE N →* A) (l : ℕ) : Prop :=
   ∀ v ∈ placesOver D.host.E l, ∀ A' : ValuationSubring N.Om, IsPlaceOver A' v →
     ∀ σ ∈ Dec (F := D.host.E) A', ψ σ = 1
 
-def NC (i : X.Tw) : Prop :=
-  X.l i = 2 ∨
-  (∀ P ∈ placesOver D.host.E (X.l i),
-    P.asIdeal.ramificationIdx ℤ = 1) ∨
-  ∃ z : N.Om, IsPrimitiveRoot z (X.l i) ∧
-    D.R.t * D.R.r < Module.finrank D.host.E (IntermediateField.adjoin D.host.E {z})
-
 def eps0 (i : X.Tw) : GE N →* (X.O0 i)ˣ :=
   (Units.map (algebraMap ℤ_[X.l i] (X.O0 i)).toMonoidHom).comp
     (cycZ (F := D.host.E) (Ω := N.Om) (X.l i))
-
-def ind2 (l : ℕ) : ℝ := if l = 2 then 1 else 0
 
 def nu (i : X.Tw) : ℕ :=
   KStar.Tree.nuOf (X.l i) (cycZ (F := D.host.E) (Ω := N.Om) (X.l i)) (D.R.t * D.R.r)
@@ -307,13 +294,6 @@ def partAT (i : X.Tw) (Q : Finset (HeightOneSpectrum (𝓞 D.host.E))) (k' : ℕ
     ∀ s, goodS bkP i s → sLen bkP i s k' Q (psiAt (X.side i s) (ψ'.comp (X.art i Q))) ≤
       ENNReal.ofReal ((nu X i : ℝ) + epsT s)
 
-def partB (i : X.Tw) (Q : Finset (HeightOneSpectrum (𝓞 D.host.E))) (k' : ℕ)
-    (ψ' : X.RCG i Q →* (X.Ok i k')ˣ) (eps' : ℝ) : Prop :=
-  ∃ epsB : ℕ → Bool → ℝ, (∀ j b, 0 ≤ epsB j b) ∧
-    ∑ j ∈ Finset.Icc 1 D.R.m, ∑ b : Bool, epsB j b ≤ eps' ∧
-    ∀ j ∈ Finset.Icc 1 D.R.m, ∀ b : Bool,
-      lenPsi X i j b k' Q (psiAt b (ψ'.comp (X.art i Q))) ≤ v0 X i j b + ENNReal.ofReal (epsB j b)
-
 def partC (N0 : X.Tw → ℕ) (i : X.Tw) (Q : Finset (HeightOneSpectrum (𝓞 D.host.E))) (k' : ℕ)
     (ψ' : X.RCG i Q →* (X.Ok i k')ˣ) (eps' : ℝ) : Prop :=
   ∀ lam : X.abelian₂ i, thEval X i Q lam k' (psiAt (X.sideL i lam) ψ') ≠ 0 ∧
@@ -330,17 +310,6 @@ def SetHyp (i : X.Tw) : Prop :=
     ∀ k, 2 * D.R.r ≤ D.host.g k
 
 def ProjectionDerivativeEstimate (N0 : X.Tw → ℕ) (i : X.Tw) : Prop :=
-  SetHyp bkP i → ∀ eps' : ℝ, 0 < eps' → ∀ A : Finset (HeightOneSpectrum (𝓞 D.host.E)),
-  ∃ (Q : Finset (HeightOneSpectrum (𝓞 D.host.E))) (k' : ℕ) (ψ' : X.RCG i Q →* (X.Ok i k')ˣ),
-    PsiOk i A Q k' ψ' ∧ partA bkP i Q k' ψ' eps' ∧ partAT bkP i Q k' ψ' eps' ∧
-    partC N0 i Q k' ψ' eps' ∧ partD i Q k' ψ' eps'
-
-def AutomorphicLevelRaisingAtTwist (i : X.Tw) : Prop :=
-  SetHyp bkP i → ∀ eps' : ℝ, 0 < eps' → ∀ A : Finset (HeightOneSpectrum (𝓞 D.host.E)),
-  ∃ (Q : Finset (HeightOneSpectrum (𝓞 D.host.E))) (k' : ℕ) (ψ' : X.RCG i Q →* (X.Ok i k')ˣ),
-    PsiOk i A Q k' ψ' ∧ partA bkP i Q k' ψ' eps' ∧ partAT bkP i Q k' ψ' eps' ∧ partD i Q k' ψ' eps'
-
-def AutomorphicLevelRaisingWithLevels (N0 : X.Tw → ℕ) (i : X.Tw) : Prop :=
   SetHyp bkP i → ∀ eps' : ℝ, 0 < eps' → ∀ A : Finset (HeightOneSpectrum (𝓞 D.host.E)),
   ∃ (Q : Finset (HeightOneSpectrum (𝓞 D.host.E))) (k' : ℕ) (ψ' : X.RCG i Q →* (X.Ok i k')ˣ),
     PsiOk i A Q k' ψ' ∧ partA bkP i Q k' ψ' eps' ∧ partAT bkP i Q k' ψ' eps' ∧
@@ -447,52 +416,12 @@ def adm10 : Prop :=
               (((normV P : ℕ) : FractionRing (X.Ok i k)) ^ (-s)) (normV P) *
             thEval X i ((Q.erase P).erase Pb) lam k ψ
 
-def specB (i : X.Tw) (j : ℕ) (b : Bool) (Q : Finset (HeightOneSpectrum (𝓞 D.host.E))) (k : ℕ)
-    (w : X.RCG i Q → X.B i j b) (ψ : X.RCG i Q →* (X.Ok i k)ˣ) : X.Ok i k ⊗[X.O i] X.B i j b :=
-  ∑ δ, ((ψ δ : (X.Ok i k)ˣ) : X.Ok i k) ⊗ₜ[X.O i] w δ
-
-def PqOp (i : X.Tw) (j : ℕ) (b : Bool) (k : ℕ) (P : HeightOneSpectrum (𝓞 D.host.E)) (Y : X.Ok i k) :
-    Module.End (X.Ok i k) (X.Ok i k ⊗[X.O i] X.B i j b) :=
-  ∑ n ∈ Finset.range (D.R.r + 1),
-    ((-1 : X.Ok i k) ^ n * ((normV P : ℕ) : X.Ok i k) ^ (n * (n - 1) / 2) * Y ^ n) •
-      (X.hk i j b n P).baseChange (X.Ok i k)
-
-def ClassQ (Q : Finset (HeightOneSpectrum (𝓞 D.host.E))) : Prop :=
-  ∀ P ∈ Q, ∃ p : ℕ, p.Prime ∧ Odd p ∧ D.host.cls p = .splitK ∧ ((p : 𝓞 D.host.E) ∈ P.asIdeal)
-
 open Classical in
-
-def admB : Prop :=
-  ∀ i, X.NonzeroIndexPlace i → ∀ j ∈ Finset.Icc 1 D.R.m, ∀ b : Bool,
-  ∃ (n : ℕ) (w : ∀ Q : Finset (HeightOneSpectrum (𝓞 D.host.E)), Fin n → X.RCG i Q → X.B i j b)
-    (ch : Set (HeightOneSpectrum (𝓞 D.host.E))) (sg : Bool),
-    (∀ P P', IsConjPl D.host P P' → P ≠ P' → (P ∈ ch ↔ P' ∉ ch)) ∧
-    LinearIndependent (X.O i) (fun a => ∑ δ, w ∅ a δ) ∧
-    Submodule.span (X.O i) (Set.range fun a => ∑ δ, w ∅ a δ) = X.Theta i j b ∧
-    (∀ Q, QOk X i Q → ClassQ (D := D) Q → ∀ (k : ℕ) (ψ : X.RCG i Q →* (X.Ok i k)ˣ),
-      RamExactly (ψ.comp (X.art i Q)) ↑Q → TrivAbove (ψ.comp (X.art i Q)) (X.l i) →
-      ∀ a, specB X i j b Q k (w Q a) ψ ∈ X.ThetaPsi i j b k Q (ψ.comp (X.art i Q))) ∧
-    (∀ Q, QOk X i Q → ClassQ (D := D) Q → ∀ (P Pb : HeightOneSpectrum (𝓞 D.host.E)) (_hP : P ∈ Q) (_hPb : Pb ∈ Q),
-      P ≠ Pb → IsConjPl D.host P Pb → P ∈ ch →
-      ∀ (k : ℕ) (ψ : X.RCG i ((Q.erase P).erase Pb) →* (X.Ok i k)ˣ),
-      TrivAbove (ψ.comp (X.art i ((Q.erase P).erase Pb))) (X.l i) →
-      ∀ σ : GE N, IsFrob (N.plOm.1 P) (normV P) σ → ∀ a,
-        specB X i j b Q k (w Q a) (ψ.comp (X.res i Q ((Q.erase P).erase Pb)
-            ((Finset.erase_subset _ _).trans (Finset.erase_subset _ _)))) =
-          PqOp X i j b k P ((psiAt sg ψ (X.art i ((Q.erase P).erase Pb) σ) : (X.Ok i k)ˣ) : X.Ok i k)
-            (specB X i j b ((Q.erase P).erase Pb) k (w ((Q.erase P).erase Pb) a) ψ))
 
 variable {X}
 
 def AdmACD (N0 : X.Tw → ℕ) : Prop :=
   adm1 bkP ∧ adm2 X ∧ adm3 D ∧ ArchimedeanSignatureMatching ∧ adm9 X N0 ∧ adm10 X
-
-def admitted (N0 : X.Tw → ℕ) : Prop :=
-  adm1 bkP ∧ adm2 X ∧ adm3 D ∧ ArchimedeanSignatureMatching ∧ adm8 X bkP.ex ∧ adm9 X N0 ∧ adm10 X ∧ admB X ∧ X.SigSpan
-
-def Stmt : Prop := ∀ N0 : X.Tw → ℕ, admitted bkP N0 → aux₃ bkP N0
-
-def SelmerBoundFromLocalInputs : Prop := ∀ N0 : X.Tw → ℕ, AdmACD bkP N0 → ∀ i, X.NonzeroIndexPlace i → AutomorphicLevelRaisingWithLevels bkP N0 i
 
 end Gen
 
@@ -505,8 +434,6 @@ def bk0 : BK D := ⟨D.ntwbr, D.nexp⟩
 variable {D} in
 
 def pin (bkP : BK D) : BK D := ⟨bkP.br, D.nexp⟩
-
-def SigGood : Prop := ∀ (i : D.ntw.Tw) (s : D.ntw.Sig i), Gen.goodS (bk0 D) i s
 
 variable {D} in
 
@@ -524,25 +451,10 @@ def adm9 (N0 : D.ntw.Tw → ℕ) : Prop := Gen.adm9 D.ntw N0
 
 def adm10 : Prop := Gen.adm10 D.ntw
 
-def admB : Prop := Gen.admB D.ntw
-
-def EigenvectorSpanning : Prop := D.ntw.SigSpan
-
-def admitted (bkP : BK D) (N0 : D.ntw.Tw → ℕ) : Prop :=
-  adm1 bkP ∧ adm2 D ∧ adm3 D ∧ ArchimedeanSignatureMatching ∧ adm8 D ∧ adm9 D N0 ∧ adm10 D ∧ admB D ∧ EigenvectorSpanning D
-
 def AdmACD (bkP : BK D) (N0 : D.ntw.Tw → ℕ) : Prop :=
   adm1 bkP ∧ adm2 D ∧ adm3 D ∧ ArchimedeanSignatureMatching ∧ adm9 D N0 ∧ adm10 D
 
 def aux₃ (bkP : BK D) (N0 : D.ntw.Tw → ℕ) : Prop := Gen.aux₃ (pin bkP) N0
-
-def LevelRaisingFamilyWithLevels (bkP : BK D) (N0 : D.ntw.Tw → ℕ) : Prop := ∀ i, D.ntw.NonzeroIndexPlace i → Gen.AutomorphicLevelRaisingWithLevels (pin bkP) N0 i
-
-def LevelRaisingFamily (bkP : BK D) : Prop := ∀ i, D.ntw.NonzeroIndexPlace i → Gen.AutomorphicLevelRaisingAtTwist (pin bkP) i
-
-def Stmt (bkP : BK D) : Prop := ∀ N0 : D.ntw.Tw → ℕ, admitted D bkP N0 → aux₃ D bkP N0
-
-def SelmerBoundFromLocalInputs (bkP : BK D) : Prop := ∀ N0 : D.ntw.Tw → ℕ, AdmACD D bkP N0 → LevelRaisingFamilyWithLevels D bkP N0
 
 end Formalism.MainNotions.BlochKatoReduction
 

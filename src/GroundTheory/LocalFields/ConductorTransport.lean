@@ -21,11 +21,6 @@ def integerAlgEquivOfAlgEquiv (e : L₁ ≃ₐ[K] L₂) : 𝒪[L₁] ≃ₐ[𝒪
   AlgEquiv.ofAlgHom (integerAlgHom e.toAlgHom) (integerAlgHom e.symm.toAlgHom)
     (by ext; simp) (by ext; simp)
 
-@[simp]
-theorem coe_integerAlgEquivOfAlgEquiv_apply (e : L₁ ≃ₐ[K] L₂) (x : 𝒪[L₁]) :
-    (integerAlgEquivOfAlgEquiv e x : L₂) = e x :=
-  rfl
-
 omit [IsNonarchimedeanLocalField K] in
 
 theorem addVal_ringEquiv {R S : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]

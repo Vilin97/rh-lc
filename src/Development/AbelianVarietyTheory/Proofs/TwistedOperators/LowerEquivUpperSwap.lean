@@ -26,15 +26,6 @@ section Blocks
 variable (R : Type) [CommRing R] {a b n : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
   [Fintype n] [DecidableEq n]
 
-theorem emb₂_swap (e : a ⊕ b ≃ n) (g : GL a R × GL b R) :
-    emb₂ R e g = emb₂ R ((Equiv.sumComm b a).trans e) (g.2, g.1) := by
-  apply Units.ext
-  rw [val_emb₂, val_emb₂]
-  ext i j
-  obtain ⟨i, rfl⟩ := e.surjective i
-  obtain ⟨j, rfl⟩ := e.surjective j
-  rcases i with i | i <;> rcases j with j | j <;> simp
-
 end Blocks
 
 section Local

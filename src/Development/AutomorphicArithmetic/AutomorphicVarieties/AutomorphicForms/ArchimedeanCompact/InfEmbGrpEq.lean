@@ -46,8 +46,6 @@ def grpEq : GL (Fin a) (Cinf E) ≃* archGroup E a :=
 
 variable {E a}
 
-@[simp] theorem coe_lieEq (X : Lie E a) : (lieEq E a X : ArchMatrix E a) = matEq E a (Matrix.of X) := rfl
-
 @[simp] theorem coe_grpEq (y : GL (Fin a) (Cinf E)) :
     (((grpEq E a y : archGroup E a) : (ArchMatrix E a)ˣ) : ArchMatrix E a) = matEq E a y.val := rfl
 

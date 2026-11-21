@@ -43,10 +43,6 @@ open GlobalTheory.CompanionTheory.SW.LGPrim
 
 variable {F : Type} [Field F] [NumberField F] {v : HeightOneSpectrum (𝓞 F)}
 
-local notation "𝒪" => HeightOneSpectrum.adicCompletionIntegers F v
-local notation "𝓴" => IsLocalRing.ResidueField (HeightOneSpectrum.adicCompletionIntegers F v)
-local notation "res" => IsLocalRing.residue (HeightOneSpectrum.adicCompletionIntegers F v)
-
 theorem coreSharp (hSC : SharpCount) (lam : Measure (Fv F v)) (hlam : IsStdV v lam) (h2 : Valued.v (2 : Fv F v) = 1)
     (ι : Type) [Fintype ι] [DecidableEq ι] (B : Matrix ι ι (Fv F v)) (hBs : B.IsSymm)
     (hBint : ∀ i j, B i j ∈ v.adicCompletionIntegers F) (hBdet : Valued.v B.det = 1)

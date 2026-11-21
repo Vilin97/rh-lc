@@ -2,7 +2,9 @@ import Development.WeilBound.RepresentationTheoryGL.TubeMeasures.DisjointTubes.L
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasureTranslateLevelRealBoxLeIndexMulStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinitePartMemFullLevelOfKeepsSelfDualLatticeStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsContinuousRealComponentHomUnitaryAdelicStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelIndexBoundOfPrintsStatement
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelIndexBoundOfPublished
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasAtOf
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianMassUpperBound
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsCompactParahoricLevelAndContainsLifts
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UpqLocallyCompactGroup
@@ -181,9 +183,6 @@ theorem up_core (hV : VolSt) (hS : StabSt) (hN : NumSt) (D : D7) (Tu : Type) (C 
 end MainStatements.Tam.A
 
 namespace MainStatements.Tam
-
-theorem up : VolSt → StabSt → NumSt → UpSt := fun hV hS hN hP D Tu C t0 hC i P μ 𝓕 hF L hL =>
-  MainStatements.Tam.A.up_core hV hS hN D Tu C t0 hC i P μ 𝓕 hF L hL (GlobalTheory.T.level_index_bound_of_classicalTheorems hP D Tu C t0 hC i P)
 
 end MainStatements.Tam
 

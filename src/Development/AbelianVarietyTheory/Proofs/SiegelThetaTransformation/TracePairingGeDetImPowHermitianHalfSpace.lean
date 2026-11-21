@@ -9,14 +9,6 @@ namespace GlobalTheory.SW.TracePair
 
 variable {E : Type} [Field E] [NumberField E]
 
-theorem card_pos {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) : 0 < Ψ.card := by
-  obtain ⟨σ⟩ : Nonempty (E →+* ℂ) := inferInstance
-  by_cases h : σ ∈ Ψ
-  · exact Finset.card_pos.2 ⟨σ, h⟩
-  · refine Finset.card_pos.2 ⟨ComplexEmbedding.conjugate σ, ?_⟩
-    by_contra h'
-    exact h ((hΨ σ).2 h')
-
 open Matrix NumberField in
 open scoped ComplexOrder in
 private lemma ratCast_algebra_norm_eq_prod_embeddings {E : Type} [Field E] [NumberField E] (x : E) :

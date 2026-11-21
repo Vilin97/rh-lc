@@ -62,11 +62,9 @@ abbrev bm {Y B S S' : Scheme.{0}} (p : Y ⟶ B) (t : S ⟶ B) (a : S' ⟶ S) : p
     bm p t a ≫ pullback.fst p t = pullback.fst p (a ≫ t) :=
   (pullback.lift_fst _ _ _).trans (Category.comp_id _)
 
-@[reassoc] theorem bm_snd {Y B S S' : Scheme.{0}} (p : Y ⟶ B) (t : S ⟶ B) (a : S' ⟶ S) :
     bm p t a ≫ pullback.snd p t = pullback.snd p (a ≫ t) ≫ a :=
   pullback.lift_snd _ _ _
 
-@[reassoc] theorem fib_fst {Y1 Y0 B S : Scheme.{0}} (g : Y1 ⟶ Y0) (p : Y0 ⟶ B) (s : S ⟶ B) :
     fibMap g p s ≫ pullback.fst p s = pullback.fst (g ≫ p) s ≫ g :=
   pullback.lift_fst _ _ _
 

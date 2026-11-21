@@ -88,25 +88,7 @@ lemma map_comp (f : F ⟶ G) (g : G ⟶ K) (n : ℕ) (U : C) (x : Sheaf.H'.{w'} 
       (y.comp (Ext.mk₀ f) (add_zero n)).comp (Ext.mk₀ g) (add_zero n) := by simp
   exact this x
 
-@[simp] lemma map_zero_hom (n : ℕ) (U : C) (x : Sheaf.H'.{w'} F n U) :
-    map (0 : F ⟶ G) n U x = 0 := by
-  have (y : Ext.{w'} ((freeYoneda J).obj U) F n) :
-      y.comp (Ext.mk₀ (0 : F ⟶ G)) (add_zero n) = 0 := by simp
-  exact this x
-
-lemma map_add_hom (f g : F ⟶ G) (n : ℕ) (U : C) (x : Sheaf.H'.{w'} F n U) :
-    map (f + g) n U x = map f n U x + map g n U x := by
-  have (y : Ext.{w'} ((freeYoneda J).obj U) F n) :
-      y.comp (Ext.mk₀ (f + g)) (add_zero n) =
-        y.comp (Ext.mk₀ f) (add_zero n) + y.comp (Ext.mk₀ g) (add_zero n) := by
-    simp [Ext.mk₀_add]
-  exact this x
-
 @[simp] lemma res_id (n : ℕ) (U : C) (x : Sheaf.H'.{w'} F n U) : res F n (𝟙 U) x = x := by
-  simp [res]
-
-lemma res_comp (n : ℕ) {U V W : C} (i : V ⟶ U) (j : W ⟶ V) (x : Sheaf.H'.{w'} F n U) :
-    res F n (j ≫ i) x = res F n j (res F n i x) := by
   simp [res]
 
 lemma res_map (f : F ⟶ G) (n : ℕ) {U V : C} (i : V ⟶ U) (x : Sheaf.H'.{w'} F n U) :
@@ -179,10 +161,6 @@ theorem injective_zero (U : C) : Function.Injective (map.{w'} S.f 0 U) :=
 @[simp] lemma δ_map (n : ℕ) (U : C) (x : Sheaf.H'.{w'} S.X₂ n U) :
     δ hS n U (map S.g n U x) = 0 :=
   (exact₃ hS n U).apply_apply_eq_zero x
-
-@[simp] lemma map_δ (n : ℕ) (U : C) (x : Sheaf.H'.{w'} S.X₃ n U) :
-    map S.f (n + 1) U (δ hS n U x) = 0 :=
-  (exact₁ hS n U).apply_apply_eq_zero x
 
 theorem δ_naturality {S₁ S₂ : ShortComplex (Sheaf J AddCommGrpCat.{v})} (h₁ : S₁.ShortExact)
     (h₂ : S₂.ShortExact) (φ : S₁ ⟶ S₂) (n : ℕ) (U : C) (x : Sheaf.H'.{w'} S₁.X₃ n U) :
@@ -259,10 +237,6 @@ theorem subsingleton₁ (n : ℕ) (U : C) (h₃ : Subsingleton (Sheaf.H'.{w'} S.
     Subsingleton (Sheaf.H'.{w'} S.X₁ (n + 1) U) :=
   (δ_surjective_of_subsingleton hS n U h₂).subsingleton
 
-theorem subsingleton₁_zero (U : C) (h₂ : Subsingleton (Sheaf.H'.{w'} S.X₂ 0 U)) :
-    Subsingleton (Sheaf.H'.{w'} S.X₁ 0 U) :=
-  (injective_zero hS U).subsingleton
-
 theorem subsingleton₁_one_of_sections_surjective (U : C)
     (h : Function.Surjective (S.g.hom.app (op U)))
     (h₂ : Subsingleton (Sheaf.H'.{w'} S.X₂ 1 U)) : Subsingleton (Sheaf.H'.{w'} S.X₁ 1 U) :=
@@ -331,19 +305,12 @@ instance : (toAbSheaf X).Additive :=
   inferInstanceAs (SheafOfModules.toSheaf X.ringCatSheaf).Additive
 instance : (toAbSheaf X).Faithful :=
   inferInstanceAs (SheafOfModules.toSheaf X.ringCatSheaf).Faithful
-instance : (toAbSheaf X).ReflectsIsomorphisms :=
-  inferInstanceAs (SheafOfModules.toSheaf X.ringCatSheaf).ReflectsIsomorphisms
 instance : PreservesFiniteLimits (toAbSheaf X) :=
   inferInstanceAs (PreservesFiniteLimits (SheafOfModules.toSheaf X.ringCatSheaf))
 instance : PreservesFiniteColimits (toAbSheaf X) :=
   inferInstanceAs (PreservesFiniteColimits (SheafOfModules.toSheaf X.ringCatSheaf))
 
 variable {X}
-
-@[simp] lemma toAbSheaf_obj_obj (M : X.Modules) : ((toAbSheaf X).obj M).obj = M.presheaf := rfl
-
-@[simp] lemma toAbSheaf_map_hom {M N : X.Modules} (φ : M ⟶ N) :
-    ((toAbSheaf X).map φ).hom = φ.mapPresheaf := rfl
 
 theorem shortExact_map_toAbSheaf {S : ShortComplex X.Modules} (hS : S.ShortExact) :
     (S.map (toAbSheaf X)).ShortExact :=

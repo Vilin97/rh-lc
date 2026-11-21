@@ -12,8 +12,6 @@ open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubf
 
 open scoped TensorProduct Pointwise NumberField.LiesOver
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield} {v : NumberField.InfinitePlace K.1}

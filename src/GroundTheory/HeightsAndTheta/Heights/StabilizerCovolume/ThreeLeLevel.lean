@@ -118,12 +118,6 @@ variable {II : IntersectionSystem} {Ψ : Type} [Fintype Ψ] {K : Type} [Fintype 
   [∀ τ, Module Ω (E τ)] {Em : Type} [Field Em] [NumberField Em] [IsCMField Em]
   (D : FullerData II Ψ K ι Ω E Em)
 
-def nz (z : (Σ k, ι k) → ℂ) (I : Submodule (𝓞 Em) (Fin D.N → Em)) : ℝ :=
-  D.herm.nz (D.j_le.trans (Nat.sub_le _ _)) (D.per z) I
-
-def cuspU (z : (Σ k, ι k) → ℂ) : ℝ :=
-  max 0 (⨆ s, -Real.log (D.nz z (D.torLat s)))
-
 end FullerData
 
 end GroundTheory.Heights₂.Heights.NineStatements

@@ -161,62 +161,16 @@ theorem negExp_empty {s : Fin r → ℂ} : NegExp S ∅ s ↔ ∀ k ∈ S, ∑ i
 
 end Empty
 
-theorem isAutOn_const (K : Subgroup (GAd σ J)) (c : ℂ) : IsAutOn σ J X Y S K fun _ => c := by
-  have h := isSmoothModerate_const σ J c
-  have h1 : ∀ l : List (ℝ → GAd σ J), ∃ c' : ℂ, l.foldr lineDer (fun _ => c) = fun _ => c' := fun l => by
-    induction l with
-    | nil => exact ⟨c, rfl⟩
-    | cons γ l ih =>
-      obtain ⟨c', h⟩ := ih
-      exact ⟨0, by rw [List.foldr_cons, h]; funext g; simp [lineDer]⟩
-  choose d hd using h1
-  refine ⟨fun _ _ _ => rfl, fun _ _ _ _ => rfl, h.level, h.cont, h.smooth, h.growth, ?_, ?_⟩ <;>
-    refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ {(fun _ => 1 : GAd σ J → ℂ)}) (Submodule.span_le.2 ?_)
-  · rintro _ ⟨k, rfl⟩
-    exact Submodule.mem_span_singleton.2 ⟨c, by funext g; simp⟩
-  · rintro _ ⟨z, -, rfl⟩
-    exact Submodule.mem_span_singleton.2 ⟨z.sum fun l a => a * d l, by funext g; simp [dop, hd]⟩
-
 omit [NumberField E] in
 
 theorem isConstAlong_const (c : ℂ) : IsConstAlong σ J X S (fun _ => c) fun _ => c := fun μ 𝓕 _ _ h _ => by
   simp [Measure.real, h]
 
-theorem isCuspOn_univ {K : Subgroup (GAd σ J)} {ψ : GAd σ J → ℂ} :
-    IsCuspOn σ J X Y Finset.univ K ψ ↔ IsAutOn σ J X Y Finset.univ K ψ :=
-  and_iff_left fun _ h => absurd (Finset.subset_univ _) h.2
-
 variable (n r) in
 
 def negRho (i : Fin r) : ℂ := ((i.val - (n - 1) / 2 : ℝ) : ℂ)
 
-theorem expChar_negRho (v : Fin r → ℝ) : expChar F n (negRho n r) v = 1 := by
-  have h : (modulus F n fun i => Real.exp (v i)) =
-      Real.exp (-(2 * Module.finrank ℚ F * ∑ i : Fin r, (i.val - (n - 1) / 2 : ℝ) * v i)) ^ 2 := by
-    rw [← Real.exp_nat_mul, Finset.mul_sum, ← Finset.sum_neg_distrib, Finset.mul_sum, Real.exp_sum, modulus]
-    refine Finset.prod_congr rfl fun i _ => ?_
-    rw [← Real.rpow_intCast, ← Real.exp_mul]
-    congr 1
-    push_cast
-    ring
-  rw [expChar, h, Real.sqrt_sq (Real.exp_pos _).le, Complex.ofReal_exp, ← Complex.exp_add]
-  simp [negRho]
-
 variable {σ J X Y} in
-
-theorem isExponent_one (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFrame σ J X Y) :
-    IsExponent σ J X Y S (fun _ => 1) (negRho n r) :=
-  let ⟨a, ha⟩ := exists_isTorusElt h hJ hW (t := fun i => Real.exp (stepSum S 0 i)) fun _ => Real.exp_ne_zero _
-  ⟨_, Submodule.subset_span ⟨0, a, ha, rfl⟩, one_ne_zero, fun _ _ _ _ => by rw [expChar_negRho, one_mul]⟩
-
-example : NegExp Finset.univ ∅ (negRho 2 1) ∧ ¬ NegExp Finset.univ ∅ (-negRho 2 1) := by
-  simp only [negExp_empty, Finset.mem_univ, forall_const, Fin.forall_fin_one, Finset.sum_filter, Fin.sum_univ_one]
-  norm_num [negRho]
-
-example (s : Fin 2 → ℂ) : NegExp Finset.univ {1} s ↔ (s 0).re < (s 1).re := by
-  simp only [NegExp, stepSum, Finset.mem_univ, forall_const, Fin.forall_fin_two, Finset.sum_filter, Fin.sum_univ_two]
-  simp
-  exact ⟨fun ⟨y, h1, h2⟩ => by linarith, fun h => ⟨fun _ => ((s 0).re + (s 1).re) / 2, by linarith, by linarith⟩⟩
 
 section Single
 
@@ -420,9 +374,6 @@ theorem exists_haar_leviOne : ∃ (μ : Measure (leviOne σ J X Y S)) (𝓕 : Se
     IsFundamentalDomain ((ratPts σ J).subgroupOf (leviOne σ J X Y S)) 𝓕 μ :=
   haveI := (isClosed_levi S h hJ hW).2.locallyCompactSpace
   ⟨Measure.haar, _, inferInstance, GlobalTheory.AutomorphicL2Unitary.isFundamentalDomain_stdDom _ _⟩
-
-theorem exists_isSplitElt (u : Fin r → ℝ) : ∃ a, IsSplitElt σ J X Y S u a :=
-  exists_isTorusElt h hJ hW fun _ => Real.exp_ne_zero _
 
 end Closed
 

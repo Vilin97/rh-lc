@@ -14,8 +14,6 @@ namespace GlobalTheory.CompanionTheory.UGeo
 
 variable {n : ℕ} {ε : Fin n → Bool} {A : Matrix (Fin n) (Fin n) ℂ}
 
-local notation "hs" => Formalism.REAL.hs
-
 def Pz (A : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ := 1 - A * A
 
 def nsq (y : Fin n → ℂ) : ℝ := ∑ i, ‖y i‖ ^ 2
@@ -79,14 +77,8 @@ theorem Pp_idem (hA : IsGrad ε A) : Pp A * Pp A = Pp A := by
 theorem Pz_eq : Pz A = 1 - Pm A - Pp A := by
   rw [← sum_proj (A := A)]; abel
 
-theorem Pz_Pm (hA : IsGrad ε A) : Pz A * Pm A = 0 := by
-  rw [Pz_eq, Matrix.sub_mul, Matrix.sub_mul, Matrix.one_mul, Pm_idem hA, Pp_Pm hA]; simp
-
 theorem Pm_Pz (hA : IsGrad ε A) : Pm A * Pz A = 0 := by
   rw [Pz_eq, Matrix.mul_sub, Matrix.mul_sub, Matrix.mul_one, Pm_idem hA, Pm_Pp hA]; simp
-
-theorem Pz_Pp (hA : IsGrad ε A) : Pz A * Pp A = 0 := by
-  rw [Pz_eq, Matrix.sub_mul, Matrix.sub_mul, Matrix.one_mul, Pp_idem hA, Pm_Pp hA]; simp
 
 theorem Pp_Pz (hA : IsGrad ε A) : Pp A * Pz A = 0 := by
   rw [Pz_eq, Matrix.mul_sub, Matrix.mul_sub, Matrix.mul_one, Pp_idem hA, Pp_Pm hA]; simp

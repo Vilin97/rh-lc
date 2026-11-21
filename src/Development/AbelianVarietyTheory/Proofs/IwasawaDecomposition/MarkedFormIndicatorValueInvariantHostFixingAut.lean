@@ -75,8 +75,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 def twPi (σ : 𝓞 E ≃+* 𝓞 E) (n : ℕ) : (Fin n → 𝓞 E) ≃+ (Fin n → 𝓞 E) :=
   AddEquiv.piCongrRight fun _ => σ.toAddEquiv
 
-@[simp] theorem twPi_apply (σ : 𝓞 E ≃+* 𝓞 E) (n : ℕ) (a : Fin n → 𝓞 E) : twPi σ n a = fun j => σ (a j) := rfl
-
 def twForm (σ : 𝓞 E ≃+* 𝓞 E) (n : ℕ) :
     LinearMap.BilinForm ℤ (Fin n → 𝓞 E) ≃+ LinearMap.BilinForm ℤ (Fin n → 𝓞 E) where
   toFun β := β.compl₁₂ (twPi σ n).toIntLinearEquiv.toLinearMap (twPi σ n).toIntLinearEquiv.toLinearMap
@@ -139,11 +137,6 @@ theorem markVal_twist : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
         have := hβ (fun j => σ.symm (a j)) (fun j => σ.symm (b j))
         simpa using this⟩
     rw [dite_eq_right h1, dite_eq_right h2]
-
-example (H : Host E) (i n : ℕ) (B : (Fin n → 𝓞 E) → (Fin n → 𝓞 E) → ℝ) :
-    markVal H.bar (zeroFun (𝓞 E)) (zeroFun (𝓞 E)) i n (fun a b => B (fun j => (RingEquiv.refl _) (a j))
-      (fun j => (RingEquiv.refl _) (b j))) = markVal H.bar (zeroFun (𝓞 E)) (zeroFun (𝓞 E)) i n B :=
-  markVal_twist E H _ _ i (fun _ _ _ _ => by simp [zeroFun]) (fun _ _ _ _ => by simp [zeroFun]) _ rfl n B
 
 end Main
 

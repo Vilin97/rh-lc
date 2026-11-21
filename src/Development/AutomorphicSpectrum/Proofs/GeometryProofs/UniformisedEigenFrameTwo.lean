@@ -19,8 +19,6 @@ namespace GlobalTheory.CompanionTheory.Ar.Flat
 open Matrix GlobalTheory.CompanionTheory.Ar.LinFlat
 open scoped ComplexOrder
 
-local notation "HF" => ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm
-
 theorem det_rows_mul_det_rows {p q : ℕ} (A C : Matrix (Fin p) (Fin q ⊕ Fin p) ℂ)
     (F : Matrix (Fin q) (Fin q ⊕ Fin p) ℂ) (hAF : A * Fᵀ = 0) (hAC : A * Cᵀ = 1) :
     (fromRows (Fᵀ)ᴴ A).det * (fromRows F C).det = ((Fᵀ)ᴴ * Fᵀ).det := by

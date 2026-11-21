@@ -16,11 +16,6 @@ namespace GlobalTheory.Mem.R3.Rw.LiftExt
 def DSTie {D D' : D7} {V : HSp D} {V' : HSp D'} {S : D.what₂.Tau → SPar} {S' : D'.what₂.Tau → SPar} (M' : DSModel V' S') (M : DSModel V S) : Prop :=
   HEq M'.H M.H ∧ HEq M'.nacg M.nacg ∧ HEq M'.ips M.ips ∧ HEq M'.σ M.σ ∧ HEq M'.lam M.lam ∧ HEq M'.ε M.ε ∧ HEq M'.fr M.fr
 
-local macro "ksub " h:ident x:ident y:term : tactic => `(tactic| (
-  have e : @Eq (type_of% $x) (by kexactB $y) $x := by kexactB (@eq_of_heq (type_of% $x) $x (by kexactB $y) (by kexactB $h)).symm
-  clear $h
-  subst e))
-
 section Free
 
 variable {D : D7}
@@ -50,34 +45,7 @@ variable {B B' : Base} {C : Cols B} {C' : Cols B'} {a : Late B C} {a' : Late B' 
 
 set_option hygiene false in
 
-local macro "tie_cases" : tactic => `(tactic| (
-  rcases B' with ⟨P'⟩
-  change P' = B.toPre at hP
-  subst hP
-  ksub hW W' W
-  obtain ⟨H', s', l', ε', f', _, _, _, _⟩ := M'
-  rename_i n' i' _ _ _ _
-  obtain ⟨h1, h2, h3, h4, h5, h6, h7⟩ := h
-  dsimp only at h1 h2 h3 h4 h5 h6 h7
-  ksub h1 H' M.H
-  ksub h2 n' M.nacg
-  ksub h3 i' M.ips
-  ksub h4 s' M.σ
-  ksub h5 l' M.lam
-  ksub h6 ε' M.ε
-  ksub h7 f' M.fr))
-
 set_option hygiene false in
-
-local macro "coef_cases" : tactic => `(tactic| (
-  ksub hV V' V
-  obtain ⟨W₁, ρ₁⟩ := c'
-  rename_i nW' iW' _
-  dsimp only at c1 c2 c3 c4
-  ksub c1 W₁ c.W
-  ksub c3 nW' c.nW
-  ksub c4 iW' c.iW
-  ksub c2 ρ₁ c.ρ))
 
 theorem isAutFunSm_iff (hP : B'.toPre = B.toPre) (hW : HEq W' W) {θ : InfFam a.D} {θ' : InfFam a'.D} (hθ : HEq θ' θ)
     {φ : GA a.D W → ℂ} {φ' : GA a'.D W' → ℂ} (hφ : HEq φ' φ) : IsAutFunSm θ' W' φ' ↔ IsAutFunSm θ W φ := by
@@ -179,14 +147,6 @@ section Fields
 variable {B B' : Base} {C : Cols B} {C' : Cols B'} {a : Late B C} {a' : Late B' C'}
 
 set_option hygiene false in
-
-local macro "pre_cases" : tactic => `(tactic| (
-  rcases B' with ⟨P'⟩
-  change P' = B.toPre at hP
-  subst hP
-  have e : @Eq (type_of% i') (by kexactB i) i' := by kexactB (Fin.ext h : @Eq (type_of% i') (by kexactB i) i')
-  clear h
-  subst e))
 
 theorem m_eq (hP : B'.toPre = B.toPre) : a'.D.R.m = a.D.R.m := by
   rcases B' with ⟨P'⟩

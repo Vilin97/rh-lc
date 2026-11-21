@@ -109,41 +109,12 @@ theorem symplOH_two (x y : WO S T) : symplOH S T x y + symplOH S T x y = symplO 
   rw [← add_mul, ← map_add (f := _)]
   norm_num
 
-theorem ratW_add (a b : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
-    ratW T S (a + b) = ratW T S a + ratW T S b := by
-  exact Matrix.map_add _ (map_add (incA D)) a b
-
-theorem ratW_neg (a : Matrix (Fin T.rank) (Fin S.rank) D.host.E) : ratW T S (-a) = -ratW T S a := by
-  exact Matrix.map_neg _ (map_neg (incA D)) a
-
-theorem ratW_zero : ratW T S (0 : Matrix (Fin T.rank) (Fin S.rank) D.host.E) = 0 := by
-  exact Matrix.map_zero _ (map_zero (incA D))
-
-theorem mem_ratL_iff (x : WO S T) : x ∈ ratL T S ↔ ∃ a, ratW T S a = x := by
-  unfold ratL
-  simp only [AddMonoidHom.mem_range]
-  exact Iff.rfl
-
 theorem incA_eq_tmul (e : D.host.E) : incA D e = (1 : AF D.host.F) ⊗ₜ[D.host.F] e := rfl
 
 theorem trace_incA (e : D.host.E) :
     Algebra.trace (AF D.host.F) (AE D) (incA D e) = algebraMap D.host.F (AF D.host.F) (Algebra.trace D.host.F D.host.E e) := by
   rw [incA_eq_tmul]
   exact Formalism.IndefR.PHeisTh.trace_tmul _
-
-theorem hO_rat (a b : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
-    ∃ e : D.host.E, hO S T (ratW T S a) (ratW T S b) = incA D e := by
-  refine ⟨∑ i, ∑ j, ∑ k, ∑ l, (HSpace.gram S)⁻¹ i j * D.sp.cm.sig (b k j) * HSpace.gram T k l * a l i, ?_⟩
-  unfold hO ratW
-  set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Matrix.map_apply, Formalism.IndefR.PHeisTh.cA_incA, map_sum, map_mul]
-
-theorem symplO_rat (a b : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
-    ∃ q : D.host.F, symplO S T (ratW T S a) (ratW T S b) = algebraMap D.host.F (AF D.host.F) q := by
-  obtain ⟨e, he⟩ := hO_rat S T a b
-  refine ⟨Algebra.trace D.host.F D.host.E (D.host.xi0 * e), ?_⟩
-  unfold symplO
-  rw [he, ← map_mul, trace_incA]
 
 end Formalism.IndefR.Fin
 

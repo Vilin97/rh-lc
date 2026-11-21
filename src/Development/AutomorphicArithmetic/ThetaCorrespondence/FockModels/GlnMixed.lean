@@ -34,8 +34,6 @@ theorem prod₂_detRep' (_H : GlobalTheory.Published.BernsteinUnitaryProductIrre
     (u : IsUnitarisable π) {χ : kˣ →* ℂˣ} (hs : IsSmoothChar χ) (hu : IsUnitaryChar χ) :
     (prod₂ π (detRep (Fin t) χ)).IsIrreducible := mixed t s i u hs hu
 
-example : type_of% @GlobalTheory.Published.BernsteinUnitaryProductIrreducible.prod₂_detRep := @prod₂_detRep'
-
 end UpperTheory.Lit.Mix
 
 end

@@ -64,9 +64,6 @@ end Univ
 
 namespace Fgl1
 
-local notation "L" i => MvPowerSeries.coeff (Finsupp.single i 1)
-local notation "cc" => MvPowerSeries.constantCoeff
-
 section Tools
 
 variable {R : Type u} {S : Type v} [CommRing R] [CommRing S]
@@ -372,9 +369,6 @@ theorem fgl_map : MvPowerSeries.map φ (fgl W) = fgl (W.map φ) := by
   simp only [fgl]
   rw [map_mul, mv_map_invOfUnit φ _ (-1) (-1) (by simpa using dd_cc W) (by simp)]
   simp [map_add (f := _), map_mul, uThird_map, wThird_map]
-
-theorem wSer_univ : wSer W = PowerSeries.map (Univ.φ_of W) (wSer Univ.W₀) := by
-  rw [wSer_map, Univ.map_eq]
 
 theorem fgl_univ : fgl W = MvPowerSeries.map (Univ.φ_of W) (fgl Univ.W₀) := by
   rw [fgl_map, Univ.map_eq]

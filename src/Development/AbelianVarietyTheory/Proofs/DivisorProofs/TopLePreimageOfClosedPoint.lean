@@ -18,19 +18,6 @@ noncomputable section
 
 namespace GlobalTheory.ChartDer
 
-def resEps {R : Type} [CommRing R] [IsLocalRing R] [Algebra ℤ R] (δ : Derivation ℤ R R) : R →+* DualNumber (ResidueField R) where
-  toFun r := TrivSqZeroExt.inl (residue R r) + TrivSqZeroExt.inr (residue R (δ r))
-  map_one' := by ext <;> simp
-  map_zero' := by ext <;> simp
-  map_add' a b := by ext <;> simp
-  map_mul' a b := by ext <;> simp [Derivation.leibniz, mul_comm, add_comm]
-
-@[simp] theorem resEps_fst {R : Type} [CommRing R] [IsLocalRing R] [Algebra ℤ R] (δ : Derivation ℤ R R) (r : R) :
-    (resEps δ r).fst = residue R r := by simp [resEps]
-
-@[simp] theorem resEps_snd {R : Type} [CommRing R] [IsLocalRing R] [Algebra ℤ R] (δ : Derivation ℤ R R) (r : R) :
-    (resEps δ r).snd = residue R (δ r) := by simp [resEps]
-
 theorem top_le_preimage_of_closedPoint {R : Type} [CommRing R] [IsLocalRing R] {X : Scheme.{0}} (f : Sp R ⟶ X)
     (V : X.Opens) (h : f (closedPoint R) ∈ V) : ⊤ ≤ f ⁻¹ᵁ V := by
   intro p _

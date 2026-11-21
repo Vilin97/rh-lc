@@ -45,8 +45,6 @@ instance : Module (AEF F E) (XFF F E nS nT) := inferInstanceAs (Module (AEF F E)
 
 @[coe] def XFF.val (x : XFF F E nS nT) : WOF F E nS nT := Subtype.val x
 
-instance : CoeOut (XFF F E nS nT) (WOF F E nS nT) := ⟨XFF.val⟩
-
 def XFF.mk (u : WOF F E nS nT) (hu : u.map (infPartF F E) = 0) : XFF F E nS nT := (⟨u, hu⟩ : finSubF F E nS nT)
 
 theorem XFF.fin (x : XFF F E nS nT) : (x : WOF F E nS nT).map (infPartF F E) = 0 := Subtype.property x
@@ -58,8 +56,6 @@ theorem XFF.coe_mk (u : WOF F E nS nT) (hu : u.map (infPartF F E) = 0) : (XFF.mk
 theorem XFF.coe_add (x y : XFF F E nS nT) : ((x + y : XFF F E nS nT) : WOF F E nS nT) = x + y := rfl
 
 theorem XFF.coe_sub (x y : XFF F E nS nT) : ((x - y : XFF F E nS nT) : WOF F E nS nT) = x - y := rfl
-
-theorem XFF.coe_neg (x : XFF F E nS nT) : ((-x : XFF F E nS nT) : WOF F E nS nT) = -x := rfl
 
 theorem XFF.coe_nsmul (n : ℕ) (x : XFF F E nS nT) : ((n • x : XFF F E nS nT) : WOF F E nS nT) = n • (x : WOF F E nS nT) :=
   rfl

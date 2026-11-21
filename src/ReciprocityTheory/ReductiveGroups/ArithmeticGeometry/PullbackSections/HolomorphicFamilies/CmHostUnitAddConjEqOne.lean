@@ -1,4 +1,6 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.ChartValueIntegralGood
+import Formalism.LocalToGlobal.ProjectiveLattices.RecPJThAllNeBot
+import Formalism.LocalToGlobal.ProjectiveLattices.ChartDirectionsIntegral
+import Formalism.LocalToGlobal.ProjectiveLattices.PlaceBelow
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ConnectionKillsSeries
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ChartChg
 

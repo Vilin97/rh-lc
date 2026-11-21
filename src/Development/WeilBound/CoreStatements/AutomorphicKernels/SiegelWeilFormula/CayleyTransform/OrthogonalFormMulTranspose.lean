@@ -35,8 +35,6 @@ theorem QR_map {K L : Type} [Field K] [Field L] (f : K →+* L) (ε : ℤˣ) : (
   ext i j
   rcases i with i | i <;> rcases j with j | j <;> rcases eq_or_ne i j with rfl | hij <;> simp [QR, Matrix.one_apply, *]
 
-theorem Qc_eq (ε : ℤˣ) : Qc n ε = QR ℂ n ε := rfl
-
 theorem inU_iff (ε : ℤˣ) (h : M2 n) : InU (Qc n ε)ᵀ h ↔ hᵀ * Qc n ε * h.map star = Qc n ε := by
   have e : ∀ A : M2 n, (hᴴ * A * h)ᵀ = hᵀ * Aᵀ * h.map star := fun A => by
     rw [Matrix.transpose_mul, Matrix.transpose_mul, ← Matrix.mul_assoc]

@@ -61,9 +61,6 @@ structure Cx (Γ I : Type) [Group Γ] [MulAction Γ I] where
   comp : ∀ {m n : ℕ} (f : Fin m → Fin n) (t : Fin n → I), t ∈ S n → t ∘ f ∈ S m
   smul : ∀ {n : ℕ} (g : Γ) (t : Fin n → I), t ∈ S n → (fun j => g • t j) ∈ S n
 
-instance (Γ I : Type) [Group Γ] [MulAction Γ I] : Inhabited (Cx Γ I) :=
-  ⟨⟨fun _ => Set.univ, fun _ _ _ => trivial, fun _ _ _ => trivial⟩⟩
-
 namespace Cx
 
 variable {Γ I : Type} [Group Γ] [MulAction Γ I] (K : Cx Γ I)
@@ -74,8 +71,6 @@ instance (p : ℕ) : MulAction Γ (K.Tup p) where
   smul g t := ⟨fun j => g • t.1 j, K.smul g t.1 t.2⟩
   one_smul t := Subtype.ext (funext fun j => one_smul _ (t.1 j))
   mul_smul g k t := Subtype.ext (funext fun j => mul_smul g k (t.1 j))
-
-theorem smul_val {p : ℕ} (g : Γ) (t : K.Tup p) (j : Fin (p + 1)) : (g • t).1 j = g • t.1 j := rfl
 
 def re {p q : ℕ} (f : Fin (p + 1) → Fin (q + 1)) (t : K.Tup q) : K.Tup p := ⟨t.1 ∘ f, K.comp f t.1 t.2⟩
 

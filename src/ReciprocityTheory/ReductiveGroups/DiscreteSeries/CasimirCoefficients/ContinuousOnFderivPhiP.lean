@@ -17,8 +17,6 @@ variable {n : ℕ}
 
 namespace Ps1
 
-local notation "𝕄" => Fin n → Fin n → ℂ
-
 lemma contDiffAt_zpow {f : 𝕄 → ℂ} {x : 𝕄}
     (hf : ContDiffAt ℂ 1 f x) (hx : f x ≠ 0) (m : ℤ) : ContDiffAt ℂ 1 (fun y => f y ^ m) x := by
   obtain ⟨k, rfl | rfl⟩ := Int.eq_nat_or_neg m
@@ -74,8 +72,6 @@ def conjLin (A B : Matrix (Fin n) (Fin n) ℂ) :
 
 def conjCLM (A B : Matrix (Fin n) (Fin n) ℂ) : 𝕄 →L[ℂ] 𝕄 :=
   LinearMap.toContinuousLinearMap (conjLin A B : 𝕄 →ₗ[ℂ] 𝕄)
-
-lemma conjCLM_apply (A B H : Matrix (Fin n) (Fin n) ℂ) : conjCLM A B H = A * H * B := rfl
 
 variable {ε : Fin n → Bool} {Λ : Fin n → ℝ}
 

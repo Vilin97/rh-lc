@@ -13,9 +13,6 @@ namespace EndoZ
 
 open PowerSeries TaylorWp
 
-theorem T.congr {f g : ℂ → ℂ} {F : PowerSeries ℂ} (hf : T f F) (h : f =ᶠ[𝓝 0] g) : T g F :=
-  ⟨hf.1.congr h, (taylor_ring.2.2.2 f g h).symm.trans hf.2⟩
-
 private theorem T_const (c : ℂ) : T (fun _ => c) (C c) :=
   ⟨analyticAt_const, taylor_ring.2.1 c⟩
 

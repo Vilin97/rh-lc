@@ -15,10 +15,6 @@ namespace ProjTopology
 lemma continuous_mk' : Continuous (Projectivization.mk' K : {v : V // v ≠ 0} → ℙ K V) :=
   continuous_coinduced_rng
 
-lemma isClosed_iff {s : Set (ℙ K V)} :
-    IsClosed s ↔ IsClosed ((Projectivization.mk' K) ⁻¹' s : Set {v : V // v ≠ 0}) :=
-  isClosed_coinduced
-
 lemma isOpen_iff {s : Set (ℙ K V)} :
     IsOpen s ↔ IsOpen ((Projectivization.mk' K) ⁻¹' s : Set {v : V // v ≠ 0}) :=
   isOpen_coinduced

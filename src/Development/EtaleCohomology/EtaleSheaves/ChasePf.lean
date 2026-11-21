@@ -24,12 +24,6 @@ theorem psi_hom_fst {Z : Scheme.{0}} (A B C : Z.Opens) (hC : C = A ⊓ B) :
     (psi A B C hC).hom ≫ C.ι = pullback.fst A.ι B.ι ≫ A.ι :=
   IsOpenImmersion.isoOfRangeEq_hom_fac _ _ _
 
-@[reassoc]
-theorem psi_hom_snd {Z : Scheme.{0}} (A B C : Z.Opens) (hC : C = A ⊓ B) :
-    (psi A B C hC).hom ≫ C.ι = pullback.snd A.ι B.ι ≫ B.ι := by
-  rw [psi_hom_fst, pullback.condition]
-
-@[reassoc (attr := simp)]
 theorem psi_inv_fst {Z : Scheme.{0}} (A B C : Z.Opens) (hC : C = A ⊓ B) :
     (psi A B C hC).inv ≫ pullback.fst A.ι B.ι ≫ A.ι = C.ι :=
   IsOpenImmersion.isoOfRangeEq_inv_fac _ _ _
@@ -65,12 +59,6 @@ theorem rL_rT {l k : J} (g : l ⟶ k) (f : k ⟶ j0) (f' : l ⟶ j0) (h : g ≫ 
   rw [← cancel_mono (Scheme.Opens.ι _)]
   simp [rL, rT, Scheme.Hom.resLE_comp_ι, Scheme.Hom.resLE_comp_ι_assoc]
 
-theorem rT_rT {l' l k : J} (g' : l' ⟶ l) (g : l ⟶ k) (f : k ⟶ j0) (f' : l ⟶ j0) (f'' : l' ⟶ j0)
-    (h : g ≫ f = f') (h' : g' ≫ f' = f'') :
-    rT D j0 W g' f' f'' h' ≫ rT D j0 W g f f' h = rT D j0 W (g' ≫ g) f f'' (by rw [Category.assoc, h, h']) := by
-  rw [← cancel_mono (Scheme.Opens.ι _)]
-  simp [rT, Scheme.Hom.resLE_comp_ι, Scheme.Hom.resLE_comp_ι_assoc]
-
 end
 
 theorem pp3' {R : Type} [CommRing R] {F : Shv R} {n : ℤ} {A B C E B' C' : Scheme.{0}} {f : A ⟶ B} {g : B ⟶ C}
@@ -101,12 +89,6 @@ theorem pp24 {R : Type} [CommRing R] {F : Shv R} {n : ℤ} {A B E B' C' E' : Sch
     pull R (sch.map f) F n (pull R (sch.map g) F n y) = pull R (sch.map f') F n (pull R (sch.map g') F n
       (pull R (sch.map k') F n (pull R (sch.map l') F n y))) := by
   simp only [← pull_comp, ← Functor.map_comp]; rw [h]
-
-macro "meq" : tactic => `(tactic| first
-  | (apply pullback.hom_ext <;> rw [← cancel_mono (Scheme.Opens.ι _)] <;>
-      simp [rL, rT, Scheme.Hom.resLE_comp_ι_assoc, pullback.condition_assoc, ← Functor.map_comp_assoc, Cone.w_assoc, Cone.w, pullback.map])
-  | (rw [← cancel_mono (Scheme.Opens.ι _)];
-      simp [rL, rT, Scheme.Hom.resLE_comp_ι_assoc, pullback.condition_assoc, ← Functor.map_comp_assoc, Cone.w_assoc, Cone.w, pullback.map]))
 
 theorem Chase_of : DiagramChase₂ := by
   intro hH hmv q J _ _ D c hc ha hcs hqs hu j0 X e U V hUV pU pV pW n i

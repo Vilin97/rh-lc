@@ -118,7 +118,6 @@ open Matrix (fromBlocks fromRows GeneralLinearGroup)
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 set_option hygiene false in
-local notation "𝟙" => (1 : Matrix (Fin n) (Fin n) (Fv F v))
 
 theorem locUnrSplit : LocUnrSplit := by
   rintro F E _ _ _ _ _ σ B n Y r s hB hY χ - hr K e hK he v ⟨τ⟩ hu μ hμ hμ1 z f hz hf

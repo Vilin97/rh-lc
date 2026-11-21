@@ -15,23 +15,6 @@ section Split
 
 variable {K K' : Type}
 
-abbrev blockCompl (j : K ↪ K') : Type := {k' : K' // k' ∉ Set.range j}
-
-abbrev splitCoord (j : K ↪ K') (ι' : K' → Type) : K ⊕ blockCompl j → Type :=
-  Sum.elim (fun k => ι' (j k)) (fun l => ι' l.1)
-
-def splitVar (j : K ↪ K') (ι' : K' → Type) : (Σ s, splitCoord j ι' s) → (Σ k', ι' k')
-  | ⟨Sum.inl k, i⟩ => ⟨j k, i⟩
-  | ⟨Sum.inr l, i⟩ => ⟨l.1, i⟩
-
-def splitPrime {F : Type u} [Field F] (j : K ↪ K') {ι' : K' → Type} (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) :
-    Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (splitCoord j ι')) :=
-  P'.comap (rename (splitVar j ι'))
-
-instance splitPrime.isPrime {F : Type u} [Field F] (j : K ↪ K') {ι' : K' → Type}
-    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime] : (splitPrime j P').IsPrime :=
-  Ideal.comap_isPrime _ _
-
 end Split
 
 def RenameMultiHomog.Statement : Prop :=
@@ -56,14 +39,6 @@ def RenameMultiProjPrime.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] (S K' : Type) [DecidableEq S] [DecidableEq K'] (κ : S → Type)
     (ι' : K' → Type) (E : S ≃ K') (σ : (Σ s, κ s) ≃ (Σ k', ι' k')), (∀ v, (σ v).1 = E v.1) →
     ∀ P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι'), IsMultiProjPrime P → IsMultiProjPrime (P.comap (rename σ))
-
-def SplitRelDeg.Statement : Prop :=
-  ∀ (F : Type u) [Field F] (K K' : Type) [DecidableEq K] [DecidableEq K'] (j : K ↪ K')
-    (ι' : K' → Type) (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime],
-      relDeg j P' = relDeg (Function.Embedding.inl : K ↪ K ⊕ blockCompl j) (splitPrime j P')
-
-abbrev swapVar : (Σ _ : Bool, Fin 2) ≃ (Σ _ : Bool, Fin 2) :=
-  Equiv.sigmaCongrLeft (β := fun _ : Bool => Fin 2) (Equiv.swap true false)
 
 end
 

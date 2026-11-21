@@ -53,8 +53,6 @@ def alpha (Q : Poly Φ) (Fil : ℤ → IdF Φ.A) {E : Frame Φ (d + 1)} (σ : �
     gr Fil r ⟶ Cut.Pσ Q σ ⋙ Cut.U E ⋙ gr Fil r :=
   Functor.whiskerRight (Cut.jσ Q σ) (gr Fil r)
 
-example (Fil : ℤ → IdF Φ.A) (E : Frame Φ (d + 1)) (r : ℤ) : gr (Fl Fil E) r = Cut.U E ⋙ gr Fil r := rfl
-
 universe w in
 theorem cls_congr {K : Cx.{w} R} {n : ℕ} {x y : K.X n} (h : x = y) (hx : K.d n x = 0)
     (hy : K.d n y = 0) : K.cls x hx = K.cls y hy := by

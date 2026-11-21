@@ -106,18 +106,6 @@ abbrev C2 : Type := Multiplicative (ZMod 2)
 
 instance : MeasurableSpace C2 := ⊤
 
-instance : MeasurableMul C2 := ⟨fun _ => measurable_from_top, fun _ => measurable_from_top⟩
-
-instance : (Measure.count : Measure C2).IsMulLeftInvariant :=
-  ⟨fun g => by
-    ext s hs
-    rw [Measure.map_apply (measurable_from_top) hs]
-    have he : (fun x : C2 => g * x) ⁻¹' s = (fun x => g⁻¹ * x) '' s := by
-      ext x
-      simp
-    rw [he, Measure.count_apply MeasurableSpace.measurableSet_top, Measure.count_apply hs]
-    exact congrArg _ ((mul_right_injective (g⁻¹ : C2)).injOn.encard_image)⟩
-
 end Inhabitants
 
 end

@@ -23,9 +23,6 @@ def BlockData.lettersAt (D : BlockData N) (j : Fin D.T.t → ℕ) (jp : ℕ) : L
   deg := fun a => D.LL.deg a - (∑ i, if (a : ℕ) = D.T.pos i ∨ (a : ℕ) = D.T.pos i + 1 then j i else 0) -
     (if a = D.uPos then jp else 0)
 
-def BlockData.withMargin (D : BlockData N) (cap : Fin D.T.q → WithTop ℤ) (m : ℕ) : BlockData N :=
-  { D with T := { D.T with thr := fun k => (cap k).map (fun x => x - (m : ℤ)) } }
-
 def chainEmb (N r t : ℕ) : Fin N × Fin r → BVar N r t := fun x => Sum.inl (Fin.castSucc x.1, x.2)
 
 def xiVar (N r t : ℕ) (c : Fin r) : BVar N r t := Sum.inl (Fin.last N, c)

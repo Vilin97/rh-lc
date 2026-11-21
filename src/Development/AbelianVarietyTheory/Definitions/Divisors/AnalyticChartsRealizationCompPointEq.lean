@@ -322,13 +322,4 @@ theorem isPeriod_zero_zero {s : X ⟶ Sp B} {σ : B →+* Hol F.V} (u : Unif F s
   funext T T' f
   exact (@map_zero _ _ _ _ _ _ _ (@algebraMap _ T'.C _ _ T'.alg)).symm
 
-example (σ : B →+* Hol (MulGrp.fam I).V) (per : ℤ →+ Hol (MulGrp.fam I).V) :
-    IsPeriod (MulGrp.unif σ) 0 per ↔ per = 0 :=
-  ⟨fun h ↦ MulGrp.isPeriod_unique σ h (isPeriod_zero_zero _), fun e ↦ e ▸ isPeriod_zero_zero _⟩
-
-example : ∃ (u : Unif (MulGrp.fam Unit) (MulGrp.str ℂ) (algebraMap ℂ _)) (K : Charts (MulGrp.fam Unit))
-    (r : Real K (MulGrp.str ℂ) (algebraMap ℂ _)), u.Based ∧ K.Rich ∧ K.Based ∧ r.IsFor u ∧ ∃ p q, u.E p ≠ u.E q :=
-  ⟨MulGrp.unif _, _, MulGrp.real _ _, MulGrp.based _, Fam.allCharts_rich _, Fam.allCharts_based _, MulGrp.isFor _ _,
-    _, _, MulGrp.unif_ne _ 0⟩
-
 end GlobalTheory.AnPer

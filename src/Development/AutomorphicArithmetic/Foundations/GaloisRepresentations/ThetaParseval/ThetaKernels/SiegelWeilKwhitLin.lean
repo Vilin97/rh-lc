@@ -25,7 +25,6 @@ def linRhoL_k (v : Mx F E d.m d.n) : d.Fn →ₗ[ℂ] d.Fn where
     funext y
     simp only [Darboux.rho, schr, Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
     ring
-theorem lin_T_eq_k (Φ : d.Fn) (X : Mx F E d.m d.n) : d.T Φ X = d.l (_root_.PositivityTheory.SiegelWeilFormula.KWhit.linRhoL_k d X Φ) := rfl
 theorem lin_T_sum_k {ι : Type} (s : Finset ι) (c : ι → ℂ) (Φs : ι → d.Fn) (X : Mx F E d.m d.n) :
     d.T (∑ i ∈ s, c i • Φs i) X = ∑ i ∈ s, c i * d.T (Φs i) X := by
   set_option synthInstance.maxHeartbeats 100000 in

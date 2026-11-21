@@ -36,8 +36,6 @@ theorem combLine_equiv {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype 
 
 def relab {Ψ : Type} (π : Ψ ≃ Ψ) (N : ℕ) : Ψ × Fin N ≃ Ψ × Fin N := Equiv.prodCongr π (Equiv.refl _)
 
-@[simp] theorem relab_apply {Ψ : Type} (π : Ψ ≃ Ψ) (N : ℕ) (a : Ψ × Fin N) : relab π N a = (π a.1, a.2) := rfl
-
 end GlobalTheory.CompanionTheory.Ar.Cmp.PairTop
 
 namespace GlobalTheory.CompanionTheory.Ar.Cmp.PairTop

@@ -39,8 +39,6 @@ instance : IsScalarTower R Bᵐᵒᵖ (Tw R p M) := ⟨fun r b m ↦ by
   change p (r • b.unop) • (show M from m) = p (algebraMap R B r) • p b.unop • (show M from m)
   rw [Algebra.smul_def, map_mul, mul_smul]⟩
 
-theorem smul_def (b : B) (m : Tw R p M) : b • m = (p b • (show M from m) : M) := rfl
-
 end Tw
 
 section Ext

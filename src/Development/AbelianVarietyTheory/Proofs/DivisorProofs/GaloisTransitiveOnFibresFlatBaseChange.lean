@@ -31,8 +31,6 @@ variable {X Z : Scheme.{0}} {f : X ⟶ Sp R} {p : Z ⟶ X} {s : Z ⟶ Sp R'}
 def act (σ : Gal ρ) : Z ⟶ Z :=
   hpb.lift p (s ≫ spMap (Gal.hom σ)) (by rw [Category.assoc, spMap_gal_comp, hpb.w])
 
-@[reassoc] theorem act_p (σ : Gal ρ) : act hpb σ ≫ p = p := hpb.lift_fst _ _ _
-
 @[reassoc] theorem galoisBaseChangeSchemeAction_comp_snd (σ : Gal ρ) : act hpb σ ≫ s = s ≫ spMap (Gal.hom σ) := hpb.lift_snd _ _ _
 
 theorem act_one : act hpb 1 = 𝟙 Z :=

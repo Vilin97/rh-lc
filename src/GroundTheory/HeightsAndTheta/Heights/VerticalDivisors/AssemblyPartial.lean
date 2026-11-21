@@ -2,7 +2,7 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PNormLength
 import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PVertTermEq
 import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.IsChowFormCMul
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PPrimitiveUnit
+import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.Statements
 import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PGaussEq
 import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PParAlgIndep
 import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PSecBLinInj
@@ -35,7 +35,6 @@ open MvPolynomial NumberField IsDedekindDomain
 
 theorem NormLength.full : NormLength.Statement := NormLength.proof
 theorem VertTermEq.full : VertTermEq.Statement := VertTermEq.proof
-theorem PrimitiveUnit.full : PrimitiveUnit.Statement := PrimitiveUnit.proof
 theorem ParAlgIndep.full : ParAlgIndep.Statement := ParAlgIndep.proof
 theorem NormFormEval.full : NormFormEval.Statement := NormFormEval.proof
 theorem ChartTorsion.full : ChartTorsion.Statement := ChartTorsion.proof

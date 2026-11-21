@@ -563,9 +563,6 @@ def kerEquiv {V : X.Opens} (hD : ∀ i, D i ≤ V) (hc : V ≤ ⨆ i, D i) :
   LinearEquiv.ofInjective _ (toCech_injective M f hD hc) ≪≫ₗ
     LinearEquiv.ofEq _ _ (exact_toCech M f hD hc).linearMap_ker_eq.symm
 
-@[simp] theorem kerEquiv_val {V : X.Opens} (hD : ∀ i, D i ≤ V) (hc : V ≤ ⨆ i, D i)
-    (x : SecOnR f M V) : (kerEquiv M f hD hc x).1 = toCech M f D hD x := rfl
-
 def secKerEquiv (hc : ⨆ i, D i = ⊤) :
     LB.Sec M ≃+ LinearMap.ker ((cechLB f M D).d 0 1).hom :=
   (SecOnR.topEquiv f M).symm.toAddEquiv.trans (kerEquiv M f (fun _ => le_top) hc.ge).toAddEquiv

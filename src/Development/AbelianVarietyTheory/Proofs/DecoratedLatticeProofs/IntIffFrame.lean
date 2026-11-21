@@ -32,11 +32,6 @@ section Gen
 
 variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-def reFrame {N n : ℕ} {Y : Type} [Fintype Y] [DecidableEq Y] (M : Matrix (Fin N) (Fin n) k) (M' : Matrix (Fin n) (Fin N) k)
-    (h : M * M' = 1) (h' : M' * M = 1) (e : Y ≃ Fin n) : Frame k N Y :=
-  ⟨M.submatrix id e, M'.submatrix e id, by rw [submatrix_mul_equiv, h, submatrix_id_id],
-    by rw [← Equiv.coe_refl, submatrix_mul_equiv, h', submatrix_one_equiv]⟩
-
 variable {u : D.what₂.Word}
 
 end Gen

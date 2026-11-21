@@ -217,8 +217,6 @@ theorem smul_ratWF (c : AF F) (γ : Matrix (Fin nT) (Fin nS) E) :
   simp [ratWF, tm, Matrix.smul_apply, Matrix.map_apply, incAF, inclR, Algebra.TensorProduct.algebraMap_apply,
     Algebra.TensorProduct.tmul_mul_tmul]
 
-theorem intAf_eq : Formalism.MainNotions.StandardLattice.intAf F = (GroundTheory.Global.integralFiniteAdeles (𝓞 F) F : Set (Af F)) := rfl
-
 theorem tm_mem_latOF {Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) E)} {β : Af F}
     (hβ : β ∈ GroundTheory.Global.integralFiniteAdeles (𝓞 F) F) {γ : Matrix (Fin nT) (Fin nS) E} (hγ : γ ∈ Λ) :
     tm F (pairA F 0 β) γ ∈ latOF F E nS nT Λ :=

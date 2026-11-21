@@ -17,16 +17,6 @@ theorem _root_.GlobalTheory.CuspGL.minpoly_natDegree_dvd_iff_pow (α : Algebraic
     minpoly.dvd_iff]
   simp [sub_eq_zero]
 
-theorem exists_algHom_pow_card_pow (i : ℕ) :
-    ∃ f : AlgebraicClosure F →ₐ[F] AlgebraicClosure F, ∀ x, f x = x ^ Nat.card F ^ i := by
-  letI := Fintype.ofFinite F
-  refine ⟨FiniteField.frobeniusAlgHom F (AlgebraicClosure F) ^ i, fun x => ?_⟩
-  induction i with
-  | zero => simp
-  | succ i ih =>
-    rw [pow_succ', AlgHom.mul_apply, ih, FiniteField.coe_frobeniusAlgHom, pow_succ, pow_mul,
-      Nat.card_eq_fintype_card]
-
 open Polynomial in
 variable {F : Type} [Field F] [Finite F] in
 

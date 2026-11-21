@@ -33,12 +33,3 @@ private theorem frame_pull {E : Type} [Field E] [NumberField E] [IsCMField E] {H
     simpa only [e] using this
 
 end
-
-theorem UpperTheory.frame_models_compat :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O₁ O₂ : Type) [CommRing O₁] [CommRing O₂] (β₁ : O₁ →+* c.F) (β₂ : O₂ →+* c.F) (Z₁ : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β₁) (Z₂ : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β₂) (R : Type) [CommRing R] (y : Sp R ⟶ Xo.XF c) (f : c.F →+* R) (u₂ : Vecs Dw Z₂.t R), LocM.IsFrame Z₂.t f (y ≫ Z₂.j) u₂ → ∃ u₁ : Vecs Dw Z₁.t R, LocM.IsFrame Z₁.t f (y ≫ Z₁.j) u₁ ∧ ∀ σ i, Transp Z₁ Z₂ y (u₁ σ i) (u₂ σ i) := by
-  intro E _ _ _ H Dw l Xo c O₁ O₂ _ _ β₁ β₂ Z₁ Z₂ R _ y f u₂ h₂
-  obtain ⟨w₂, F₂, e₂⟩ := frame_pull Z₂.m (x' := y) rfl h₂
-  have F₀ := GlobalTheory.ShFam.Pad.Pull.frame_push (c := c) (f := f) Z₂.m0.toSABMap rfl (fun _ _ => rfl) F₂
-  obtain ⟨w₁, F₁, e₁⟩ := frame_pull Z₁.m0.toSABMap (x' := y) rfl F₀
-  exact ⟨_, GlobalTheory.ShFam.Pad.Pull.frame_push (c := c) (f := f) Z₁.m rfl (fun _ _ => rfl) F₁,
-    fun σ i => ⟨w₁ σ i, w₂ σ i, (F₁.1 σ i).1.1, (F₂.1 σ i).1.1, e₁ σ i, rfl, e₂ σ i⟩⟩

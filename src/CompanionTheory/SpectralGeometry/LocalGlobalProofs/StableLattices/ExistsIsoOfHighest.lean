@@ -26,10 +26,6 @@ def sndL (V V' : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [NormedA
 
 def pair (x : V) (y : V') : WithLp 2 (V × V') := WithLp.toLp 2 (x, y)
 
-@[simp] theorem fstL_pair (x : V) (y : V') : fstL V V' (pair x y) = x := rfl
-
-@[simp] theorem sndL_pair (x : V) (y : V') : sndL V V' (pair x y) = y := rfl
-
 theorem ext2 {x y : WithLp 2 (V × V')} (h₁ : fstL V V' x = fstL V V' y) (h₂ : sndL V V' x = sndL V V' y) : x = y :=
   WithLp.ofLp_injective _ (Prod.ext h₁ h₂)
 

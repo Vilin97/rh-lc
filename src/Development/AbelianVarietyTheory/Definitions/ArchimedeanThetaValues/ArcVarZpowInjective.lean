@@ -288,19 +288,7 @@ theorem left_baseMap (f : K →+* K') (q' : X → (FractionRing K')ˣ) {T : Over
     (x : T ⟶ (toricPre K' X q').P.A) : x.left ≫ baseMap q f q' = T.hom ≫ spMap f :=
   congrArg (· ≫ spMap f) (left_eq_hom x)
 
-theorem baseMap_pb {K' : Type} [CommRing K'] [IsDomain K'] (f : K →+* K') (q' : X → (FractionRing K')ˣ) :
-    IsGrpPullback (toricPre K' X q').P.A (toricPre K X q).P.A (spMap f) (baseMap q f q') :=
-  ⟨(IsPullback.of_vert_isIso ⟨(Category.comp_id _).trans (Category.id_comp _).symm⟩ :
-      IsPullback (spMap f) (𝟙 _) (𝟙 _) (spMap f)),
-    fun _ _ _ _ _ _ _ => (left_eq_hom _).trans (left_baseMap q f q' _).symm⟩
-
 variable (f : K →+* K') (q' : X → (FractionRing K')ˣ)
-
-theorem eSec_baseMap :
-    eSec (toricPre K' X q').P.A ≫ baseMap q f q' = spMap f ≫ eSec (toricPre K X q).P.A :=
-  (left_baseMap q f q' η[(toricPre K' X q').P.A]).trans
-    ((Category.id_comp _).trans ((Category.comp_id _).symm.trans
-      (congrArg (spMap f ≫ ·) (left_eq_hom η[(toricPre K X q).P.A]).symm)))
 
 theorem end_baseMap (g' : (toricPre K' X q').P.A ⟶ (toricPre K' X q').P.A)
     (g : (toricPre K X q).P.A ⟶ (toricPre K X q).P.A) :
@@ -308,41 +296,6 @@ theorem end_baseMap (g' : (toricPre K' X q').P.A ⟶ (toricPre K' X q').P.A)
   (left_baseMap q f q' g').trans
     ((Category.id_comp _).trans ((Category.comp_id _).symm.trans
       (congrArg (spMap f ≫ ·) (left_eq_hom g).symm)))
-
-theorem c_baseMap (y' y : X) :
-    ((toricPre K' X q').c y').left ≫ baseMap q f q' = spMap f ≫ ((toricPre K X q).c y).left :=
-  end_baseMap q f q' ((toricPre K' X q').c y') ((toricPre K X q).c y)
-
-theorem baseIso_isGen : (baseIso q f q').IsGen := by
-  intro i j
-  have hg : (LB.div ((toricPre K X q).P.L.pull (baseMap q f q')) (toricPre K' X q').P.L).g i j = 1 := by
-    simp only [LB.div]
-    erw [linComb_triv_g]
-    repeat erw [map_one]
-    erw [inv_one, _root_.one_mul]
-    all_goals rfl
-  rw [hg, _root_.one_mul]
-  exact (map_one _).trans (map_one _).symm
-
-theorem baseIso_rig (he : eSec (toricPre K' X q').P.A ≫ baseMap q f q' = spMap f ≫ eSec (toricPre K X q).P.A) :
-    LB.Gen.Maps (LB.linCombIso (baseIso q f q') (K := PUnit) (fun _ => eSec (toricPre K' X q').P.A) (fun _ => 1))
-      (toricPre K' X q').rig
-      (rigPullOf (baseMap q f q') (spMap f) he (toricPre K X q).P.L (toricPre K X q).rig) := by
-  intro p
-  have h1 : (rigPullOf (baseMap q f q') (spMap f) he (toricPre K X q).P.L (toricPre K X q).rig).s p.1 = 1 := by
-    simp only [rigPullOf]
-    erw [cg_isConst, gv]
-    repeat erw [map_one]
-    all_goals rfl
-  have h2 : (toricPre K' X q').rig.s p.2 = 1 := map_one (res _)
-  have h3 : (LB.linCombIso (baseIso q f q') (K := PUnit) (fun _ => eSec (toricPre K' X q').P.A)
-      (fun _ => 1)).s p = 1 := by
-    simp only [LB.linCombIso, baseIso]
-    refine Finset.prod_eq_one fun _ _ => ?_
-    repeat erw [map_one]
-    exact one_zpow _
-  rw [h1, h2, h3, map_one, map_one]
-  exact (_root_.mul_one _).symm
 
 theorem valF_gv_unitOn {F : Type} [Field F] {V : (Sp F).Opens} (hV : V = ⊤) (a : Fˣ) :
     valF (𝟙 (Sp F)) V (gv (unitOn a) V).val = a := by
@@ -401,22 +354,6 @@ theorem pointF_baseMap
 
 omit [Algebra (FractionRing K') F] in
 
-theorem psiF_isConst (y : X) :
-    IsConst (LB.pullGen _ _ _ ((toricPre K X q).psi y) (jFK (R := K) F))
-      (unitOn (Units.map (algebraMap (FractionRing K) F).toMonoidHom (q y))) :=
-  (isConst_pullGen (psi_isConst q y) _).of_eq (pullTop_unitOn _ _)
-
-theorem genRel_psi_iff
-    (hF : ∀ x, algebraMap (FractionRing K) F (algebraMap K _ x) = algebraMap (FractionRing K') F (algebraMap K' _ (f x)))
-    (y' y : X) (x : F) :
-    GenRel (baseIso q f q') (LB.pullGen _ _ _ ((toricPre K' X q').psi y') (jFK (R := K') F))
-        (LB.pullGen _ _ _ ((toricPre K X q).psi y) (jFK (R := K) F)) x ↔
-      algebraMap (FractionRing K') F (q' y') = x * algebraMap (FractionRing K) F (q y) := by
-  refine (genRel_baseIso_iff q f q' (psiF_isConst q' F y') (psiF_isConst q F y) x).trans (and_iff_right fun _ => ?_)
-  exact pointF_baseMap q f q' F hF
-    ((Over.homMk (jFK (R := K') F) rfl : TF (R := K') F ⟶ TK K') ≫ toUnit (TK K') ≫ (toricPre K' X q').c y')
-    ((Over.homMk (jFK (R := K) F) rfl : TF (R := K) F ⟶ TK K) ≫ toUnit (TK K) ≫ (toricPre K X q).c y)
-
 theorem genRel_pt_iff
     (hF : ∀ x, algebraMap (FractionRing K) F (algebraMap K _ x) = algebraMap (FractionRing K') F (algebraMap K' _ (f x)))
     (t' t : Multiplicative X →* Fˣ) (χ' χ : X) (x : F) :
@@ -426,19 +363,6 @@ theorem genRel_pt_iff
   fin_cases i <;> exact pointF_baseMap q f q' F hF _ _
 
 end Base
-
-theorem genRel_arcData_psi (k : Type) [Field k] (be : LinearMap.BilinForm ℤ X) (hs : ∀ y z, be y z = be z y)
-    (hp : ∀ y, y ≠ 0 → 0 < be y y) (he : ∀ y, (2 : ℤ) ∣ be y y)
-    (F : Type) [Field F] [Algebra (FractionRing (PowerSeries k)) F] [Algebra (FractionRing k) F] (u : F)
-    (hF : ∀ x, algebraMap (FractionRing k) F (algebraMap k _ x) =
-      algebraMap (FractionRing (PowerSeries k)) F (algebraMap (PowerSeries k) _ (PowerSeries.C x)))
-    (hu : u = algebraMap (FractionRing (PowerSeries k)) F (algebraMap (PowerSeries k) _ PowerSeries.X))
-    (y' y : X) (h : be y' y' = be y y) :
-    GenRel (baseIso (fun _ : X => (1 : (FractionRing k)ˣ)) (PowerSeries.C (R := k)) (arcExp k be))
-      (LB.pullGen _ _ _ ((arcData k be hs hp he).toPre.psi y') (jFK (R := PowerSeries k) F))
-      (LB.pullGen _ _ _ ((toricPre k X fun _ => 1).psi y) (jFK (R := k) F)) (u ^ (be y y / 2)) :=
-  (genRel_psi_iff _ _ _ F hF y' y _).2 (by
-    rw [arcExp_val, map_zpow₀, h, hu, Units.val_one, map_one, _root_.mul_one])
 
 section Examples
 
@@ -453,39 +377,6 @@ def arcDataInt (k : Type) [Field k] : DegData (PowerSeries k) (Ideal.span {Power
   arcData k twoMul (fun a b => by rw [twoMul_apply, twoMul_apply, mul_comm a])
     (fun a ha => by rw [twoMul_apply]; exact mul_pos two_pos (mul_self_pos.2 ha))
     (fun a => ⟨a * a, twoMul_apply a a⟩)
-
-example : (arcDataInt ℚ).toPre = tatePre :=
-  (congrArg (toricPre _ ℤ) (funext (arcExp_twoMul ℚ))).trans toricPre_tate
-
-example (k : Type) [Field k] :
-    (arcDataInt k).toPre.PsiIn (2 : ℤ) (Ideal.span {PowerSeries.X} ^ 4) ∧
-      ¬ (arcDataInt k).toPre.PsiIn (2 : ℤ) (Ideal.span {PowerSeries.X} ^ 5) ∧
-      ¬ (arcDataInt k).toPre.PsiIn (0 : ℤ) (Ideal.span {PowerSeries.X} ^ 1) :=
-  ⟨(psiIn_arcExp_iff k twoMul 2 4).2 (by decide), fun h => absurd ((psiIn_arcExp_iff k twoMul 2 5).1 h) (by decide),
-    fun h => absurd ((psiIn_arcExp_iff k twoMul 0 1).1 h) (by decide)⟩
-
-example (k : Type) [Field k] :
-    IsConst ((arcDataInt k).toPre.tau (1 : ℤ) (1 : ℤ)) (unitOn (arcVar k ^ (2 : ℤ))) ∧
-      IsConst ((arcDataInt k).toPre.tau (1 : ℤ) (-1 : ℤ)) (unitOn (arcVar k ^ (-2 : ℤ))) ∧
-      arcVar k ^ (2 : ℤ) ≠ arcVar k ^ (-2 : ℤ) :=
-  ⟨arcData_tau_isConst k twoMul _ _ _ 1 1, arcData_tau_isConst k twoMul _ _ _ 1 (-1),
-    fun h => absurd (arcVar_zpow_injective k h) (by decide)⟩
-
-example (k : Type) [Field k] (h) : ∃ o : (arcDataInt k).toPre.OAct ℤ, ∀ x,
-    (o.onB.act x).left ≫ baseMap (fun _ : ℤ => 1) (PowerSeries.C (R := k)) (arcExp k twoMul) =
-      baseMap (fun _ : ℤ => 1) (PowerSeries.C (R := k)) (arcExp k twoMul) ≫
-        ((toricOAct (K := k) (fun _ : ℤ => 1) ℤ h).onB.act x).left :=
-  ⟨arcOAct k twoMul _ _ _ ℤ fun a y z => by
-      rw [twoMul_apply, twoMul_apply, star_trivial, smul_eq_mul, smul_eq_mul]
-      ring,
-    fun _ => end_baseMap _ _ _ _ _⟩
-
-example {K' : Type} [CommRing K'] [IsDomain K'] (q : X → (FractionRing K)ˣ) (f : K →+* K')
-    (q' : X → (FractionRing K')ˣ) (F : Type) [Field F] [Algebra (FractionRing K') F] [Algebra (FractionRing K) F]
-    (hF : ∀ x, algebraMap (FractionRing K) F (algebraMap K _ x) = algebraMap (FractionRing K') F (algebraMap K' _ (f x)))
-    (t : Multiplicative X →* Fˣ) (χ : X) (x : F) :
-    GenRel (baseIso q f q') ((pt q' F t).s χ) ((pt q F t).s χ) x ↔ x = 1 := by
-  rw [genRel_pt_iff q f q' F hF, eq_comm, mul_eq_right₀ (Units.ne_zero _)]
 
 end Examples
 

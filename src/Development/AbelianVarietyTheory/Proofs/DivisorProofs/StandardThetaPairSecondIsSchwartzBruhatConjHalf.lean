@@ -20,8 +20,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle StandardFirstTheta
 
 variable {D : D7}
 
-local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
-
 private theorem isIntM_rightBlock {k d a : ℕ} {Y : Matrix (Fin k) (Fin d) (EAf D)} (h : IsIntM Y) :
     IsIntM (rightBlock a Y) := fun i j => by
   unfold rightBlock

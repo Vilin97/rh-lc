@@ -1,6 +1,7 @@
 import Mathlib
 import GroundTheory.GlobalFields.ComplexMultiplication.GoodReductionAlmostAll
-import GroundTheory.GlobalFields.ComplexMultiplication.FunctionFieldIntegral
+import GroundTheory.GlobalFields.ComplexMultiplication.PrimeLocalization
+import GroundTheory.GlobalFields.ComplexMultiplication.ReductionGauss
 import GroundTheory.GlobalFields.TateThesis.DegreeOneDensity
 
 namespace GroundTheory.Global

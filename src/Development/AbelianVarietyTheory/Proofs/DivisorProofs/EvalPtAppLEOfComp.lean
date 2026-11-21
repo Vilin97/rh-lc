@@ -1,5 +1,5 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsHomWeightHomWeight
+import Development.AbelianVarietyTheory.Definitions.Divisors.VolMeasureOfAdd
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimeSpectrumDualNumberEq
 
 set_option autoImplicit false

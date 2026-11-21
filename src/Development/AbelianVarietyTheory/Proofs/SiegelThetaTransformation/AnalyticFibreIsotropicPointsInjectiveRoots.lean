@@ -29,12 +29,6 @@ theorem epi_spMap {K k : Type} [Field K] [Field k] (β : K →+* k) : Epi (spMap
   obtain ⟨h1, h2⟩ := (AlgebraicGeometry.flat_and_surjective_SpecMap_iff (CommRingCat.ofHom β)).2 hff
   exact AlgebraicGeometry.Flat.epi_of_flat_of_surjective _
 
-noncomputable def ptHom : (Fin r → E) →+ Additive (ptO Xo y.x ⟶ Xo.univ.t.G) :=
-  AddMonoidHom.mk' (fun v => Additive.ofMul (A.ex (pv X idx x v))) fun u v => by
-    rw [← ofMul_mul, ← A.ex_add, pv, per_add]; rfl
-
-theorem ex_eq (v : Fin r → E) : A.ex (pv X idx x v) = (ptHom A v).toMul := rfl
-
 theorem ex_add (u v : Fin r → E) : A.ex (pv X idx x (u + v)) = A.ex (pv X idx x u) * A.ex (pv X idx x v) := by
   have h : pv X idx x (u + v) = pv X idx x u + pv X idx x v := by
     funext j

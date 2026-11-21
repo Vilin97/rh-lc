@@ -18,25 +18,6 @@ variable {Γ G V : Type} [Group Γ] [Group G] [AddCommGroup V] [Module ℂ V]
 def twRel (ρ : Representation ℂ Γ V) (ψ : Γ →* ℂˣ) : Submodule ℂ V :=
   Submodule.span ℂ {w | ∃ (γ : Γ) (v : V), w = ρ γ v - (ψ γ : ℂ) • v}
 
-theorem twRel_stable (τ : Representation ℂ (Γ × G) V) (ψ : Γ →* ℂˣ) (g : G) (v : V)
-    (hv : v ∈ twRel (τ.comp (MonoidHom.inl Γ G)) ψ) :
-    τ (1, g) v ∈ twRel (τ.comp (MonoidHom.inl Γ G)) ψ := by
-  have h : twRel (τ.comp (MonoidHom.inl Γ G)) ψ ≤
-      (twRel (τ.comp (MonoidHom.inl Γ G)) ψ).comap (τ (1, g)) := by
-    refine Submodule.span_le.2 ?_
-    rintro _ ⟨γ, u, rfl⟩
-    refine Submodule.subset_span ⟨γ, τ (1, g) u, ?_⟩
-    have e : τ (1, g) (τ (γ, 1) u) = τ (γ, 1) (τ (1, g) u) := by
-      rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul]
-      simp
-    simp [e]
-  exact h hv
-
-def coinv (τ : Representation ℂ (Γ × G) V) (ψ : Γ →* ℂˣ) :
-    Representation ℂ G (V ⧸ twRel (τ.comp (MonoidHom.inl Γ G)) ψ) :=
-  Representation.quotient (τ.comp (MonoidHom.inr Γ G) : Representation ℂ G V) _
-    (fun g v hv => twRel_stable τ ψ g v hv)
-
 end Abstract
 
 section Fibre

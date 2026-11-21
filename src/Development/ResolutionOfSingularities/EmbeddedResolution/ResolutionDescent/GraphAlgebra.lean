@@ -30,15 +30,6 @@ theorem algebraMap_graphAlgebra (f : τ → MvPolynomial σ R) (p : MvPolynomial
     algebraMap (MvPolynomial τ R) (GraphAlgebra f) p = graphAlgebraEquiv f (MvPolynomial.aeval f p) :=
   rfl
 
-private theorem algebraMap_graphAlgebra_eq_algebraMap_mvPolynomial (f : τ → MvPolynomial σ R) (r : R) :
-    algebraMap R (GraphAlgebra f) r
-      = algebraMap (MvPolynomial τ R) (GraphAlgebra f) (algebraMap R (MvPolynomial τ R) r) := by
-  rw [algebraMap_graphAlgebra, AlgHom.commutes, AlgEquiv.commutes]
-
-instance instIsScalarTowerGraphAlgebra (f : τ → MvPolynomial σ R) :
-    IsScalarTower R (MvPolynomial τ R) (GraphAlgebra f) :=
-  IsScalarTower.of_algebraMap_eq (algebraMap_graphAlgebra_eq_algebraMap_mvPolynomial f)
-
 def graphRelation (f : τ → MvPolynomial σ R) (i : τ) : MvPolynomial σ (MvPolynomial τ R) :=
   MvPolynomial.C (MvPolynomial.X i)
     - MvPolynomial.map (MvPolynomial.C : R →+* MvPolynomial τ R) (f i)

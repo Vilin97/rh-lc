@@ -18,8 +18,6 @@ open Matrix
 
 variable {D : D7}
 
-local notation "𝒪" => Formalism.L2.Herm.intAf D.host.F D.host.E
-
 set_option maxHeartbeats 1000000 in
 
 theorem exists_unit_res (Pg : Finset (Formalism.L2.DIV.Pl D.host.E)) (d : ∀ PP : Formalism.L2.DIV.Pl D.host.E, (Formalism.L2.DIV.kP PP)ˣ) :

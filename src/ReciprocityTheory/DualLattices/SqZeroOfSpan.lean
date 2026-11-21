@@ -18,8 +18,6 @@ attribute [instance] LAlg.cr LAlg.alg LAlg.loc
 
 variable {R₀ : Type u} [CommRing R₀]
 
-instance : CoeSort (LAlg R₀) (Type u) := ⟨LAlg.carrier⟩
-
 def LHom (R S : LAlg R₀) : Type u := {f : R →ₐ[R₀] S // IsLocalHom (f : R →+* S)}
 
 def LHom.id (R : LAlg R₀) : LHom R R := ⟨AlgHom.id R₀ R, ⟨fun _ h => h⟩⟩

@@ -5,7 +5,10 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.T
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.Splits
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.GtBaseChangeSt
 import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.AuxiliaryInertOddPrime
-import Development.AbelianVarietyTheory.Statements.HeckeInFamilies.GenericMemChart
+import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissiblePadicIntMaximalIdeal
+import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.OneAddZeta21PowSevenAddPowFourteenEqZero
+import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.IsCoprimeTwoSubRtTwoAddRt
+import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.ToMatrixTrFormBaseChange
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsFormEqOne
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ModNOfDvdModulus
 
@@ -17,21 +20,6 @@ open GlobalTheory.Models
 namespace GlobalTheory.SimMb
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} (D : Datum H) (l : Level H)
-
-theorem bar_bar (a : 𝓞 E) : H.bar (H.bar a) = a := by
-  apply RingOfIntegers.ext
-  have h1 := H.bar_eq (H.bar a)
-  have h2 := H.bar_eq a
-  exact h1.trans (by rw [h2, IsCMField.complexConj_apply_apply])
-
-theorem bar_mem {a : 𝓞 E} (ha : a ∈ l.Mb) : H.bar a ∈ l.Mb.map (H.bar : 𝓞 E →+* 𝓞 E) :=
-  Ideal.mem_map_of_mem (H.bar : 𝓞 E →+* 𝓞 E) ha
-
-theorem M_mem : (l.M : 𝓞 E) ∈ l.Mb := by
-  have h : (l.M : 𝓞 E) ∈ l.Mb * l.Mb.map (H.bar : 𝓞 E →+* 𝓞 E) := by
-    rw [l.prod]
-    exact Ideal.mem_span_singleton_self _
-  exact (Ideal.mem_inf.mp (Ideal.mul_le_inf h)).1
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
 open scoped CategoryTheory.Obj TensorProduct Pointwise in

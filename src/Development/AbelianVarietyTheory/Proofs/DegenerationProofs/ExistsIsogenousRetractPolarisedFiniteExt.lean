@@ -61,13 +61,6 @@ theorem Pair.pullback {S S' : Scheme.{0}} (f : S' ⟶ S) {A B : Over S} [GrpObj 
   rw [← Functor.map_comp, e, ← CategoryTheory.Functor.map_id]
   exact map_pow ((Over.pullback f).homMonoidHom) _ _
 
-theorem Pair.baseChange {S S' : Scheme.{0}} {f : S' ⟶ S} {A B : Over S} {A' B' : Over S'} [GrpObj A] [GrpObj B]
-    [GrpObj A'] [GrpObj B'] {m : ℕ} {φ : A'.left ⟶ A.left} {ψ : B'.left ⟶ B.left}
-    (hA : IsGrpPullback A' A f φ) (hB : IsGrpPullback B' B f ψ) (h : Pair A B m) : Pair A' B' m := by
-  obtain ⟨a, ha, -⟩ := grpPullback_iso hA (isGrpPullback_pullback A f)
-  obtain ⟨b, hb, -⟩ := grpPullback_iso hB (isGrpPullback_pullback B f)
-  exact (h.pullback f).of_iso a b
-
 theorem spMap_comp {R₁ R₂ R₃ : Type} [CommRing R₁] [CommRing R₂] [CommRing R₃] (f : R₁ →+* R₂) (g : R₂ →+* R₃)
     (h : R₁ →+* R₃) (e : ∀ x, g (f x) = h x) : spMap g ≫ spMap f = spMap h := by
   obtain rfl : h = g.comp f := RingHom.ext fun x => (e x).symm

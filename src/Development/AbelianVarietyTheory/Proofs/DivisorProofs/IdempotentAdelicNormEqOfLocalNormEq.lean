@@ -35,9 +35,6 @@ def iotaL (v : HeightOneSpectrum (𝓞 F)) : Fv F v →ₗ[F] AF F where
     · subst hw; simp only [evalV_single_same]
     · simp only [evalV_single_ne hw, smul_zero]
 
-theorem iotaL_apply (v : HeightOneSpectrum (𝓞 F)) (a : Fv F v) :
-    iotaL v a = pairA F 0 (singleV F v a) := rfl
-
 theorem iotaL_mul (v : HeightOneSpectrum (𝓞 F)) (a b : Fv F v) :
     iotaL v (a * b) = iotaL v a * iotaL v b := by
   refine Prod.ext (by change (0 : Ainf F) = 0 * 0; simp) ?_

@@ -20,19 +20,8 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL)
 
 include hF in
-theorem locPar_twist (π : CG E a) (χ : HChar E) (h : IsPlaceOver A w)
-    (hg : Good (⟨a, ParLaws.toCl (π.loc w)⟩ : IrrGL (w.adicCompletion E))) :
-    ParLaws.locPar hL (π.twist χ) h = (ParLaws.locPar hL π h).lpChar (ParLaws.locPar hL (CG.ofChar χ) h) := by
-  obtain ⟨_, _, _, -, H⟩ := ParLaws.isRec_locRec hL h
-  rw [ParLaws.locPar_ofChar, ParLaws.locPar, ParLaws.locPar, cls_loc_twist]
-  have _ := hF
-  exact Old.twist H _ _ _ hg
 
 include hF in
-theorem locPar_tw (π : CG E a) (χ : CG E 1) (h : IsPlaceOver A w)
-    (hg : Good (⟨a, ParLaws.toCl (π.loc w)⟩ : IrrGL (w.adicCompletion E))) :
-    ParLaws.locPar hL (π.tw χ) h = (ParLaws.locPar hL π h).lpChar (ParLaws.locPar hL χ h) := by
-  rw [CG.tw, locPar_twist hL hF _ _ _ hg, CG.ofChar_toChar]
 
 end Twist
 

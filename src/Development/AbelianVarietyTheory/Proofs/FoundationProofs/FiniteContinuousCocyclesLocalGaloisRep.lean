@@ -1,6 +1,14 @@
 import Mathlib
 import Formalism.SharpRestriction.LevelLetterCocycles.BlochKatoPhases
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.SelmerRankVanishing
+import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
+import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+import Formalism.GaloisCohomology.Statement
+import Formalism.GaloisCohomology.LocalTateDualityK
+import Formalism.WeaklyAdmissibleFiltrations.Statement
+import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosurePadicInt
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FixingSubgroupEquivBicontinuous
 
@@ -9,16 +17,6 @@ noncomputable section
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions.BlochKatoReduction GlobalTheory.IndefiniteRowSideFullHecke.LengthValuationTwists
 
 namespace GlobalTheory.LocalH1Finiteness
-
-theorem finite_cocycles_of_finite_h1 {R G M : Type} [CommRing R] [Group G] [TopologicalSpace G]
-    [AddCommGroup M] [Module R M] [TopologicalSpace M] [IsTopologicalAddGroup M]
-    [ContinuousConstSMul R M] [Finite M] (rho : Representation R G M) (h : Finite (H1 rho)) :
-    Finite (Z1 rho) := by
-  have hB : Finite (B1 rho) := Finite.of_surjective _ (d0 rho).surjective_rangeRestrict
-  have hB' : Finite ((B1 rho).comap (Z1 rho).subtype) :=
-    Finite.of_injective (fun x : (B1 rho).comap (Z1 rho).subtype => (⟨x.1.1, x.2⟩ : B1 rho))
-      (fun a b hab => Subtype.ext (Subtype.ext (congrArg (fun x : B1 rho => x.1) hab)))
-  exact @Finite.of_addSubgroup_quotient _ _ ((B1 rho).comap (Z1 rho).subtype).toAddSubgroup hB' h
 
 section General
 

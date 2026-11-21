@@ -10,8 +10,6 @@ universe u
 
 open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubfield
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 abbrev unitsRep : Rep ℤ (ℚ̄ ≃ₐ[ℚ] ℚ̄) := galUnitsZ ℚ ℚ̄
@@ -29,19 +27,9 @@ def diagMor : unitsRep ⟶ IdeleLimit.rep :=
   Rep.ofHom ⟨(MonoidHom.toAdditive IdeleLimit.diag).toIntLinearMap, fun σ => LinearMap.ext fun x =>
     congrArg Additive.ofMul (IdeleLimit.diag_map σ x.toMul)⟩
 
-@[simp]
-theorem diagMor_hom_apply (x : Additive ℚ̄ˣ) :
-    diagMor.hom x = Additive.ofMul (IdeleLimit.diag x.toMul) :=
-  rfl
-
 def toClassMor : IdeleLimit.rep ⟶ classRep :=
   Rep.ofHom ⟨(MonoidHom.toAdditive IdeleLimit.toClassLimit).toIntLinearMap, fun σ => LinearMap.ext
     fun x => congrArg Additive.ofMul (IdeleLimit.toClassLimit_smul σ x.toMul)⟩
-
-@[simp]
-theorem toClassMor_hom_apply (x : Additive IdeleLimit) :
-    toClassMor.hom x = Additive.ofMul (IdeleLimit.toClassLimit x.toMul) :=
-  rfl
 
 def idelesShortComplex : ShortComplex (Rep ℤ (ℚ̄ ≃ₐ[ℚ] ℚ̄)) :=
   ShortComplex.mk diagMor toClassMor (by

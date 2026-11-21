@@ -16,9 +16,6 @@ namespace Formalism.L2.Th1.A
 
 namespace ZSer
 
-local notation "FF[" W "](" a ", " b ")" =>
-  MvPowerSeries.subst (![a, b] : Fin 2 → PowerSeries _) (fgl W)
-
 section Tools
 
 variable {R : Type u} [CommRing R]
@@ -58,10 +55,6 @@ theorem map_subst_pair {S : Type v} [CommRing S] (φ : R →+* S) {a b : R⟦X�
   congr 1
   funext s
   fin_cases s <;> rfl
-
-theorem map_cc {S : Type v} [CommRing S] (φ : R →+* S) {a : R⟦X⟧} (ha : constantCoeff a = 0) :
-    constantCoeff (PowerSeries.map φ a) = 0 := by
-  rw [← coeff_zero_eq_constantCoeff_apply, coeff_map, coeff_zero_eq_constantCoeff_apply, ha, map_zero]
 
 theorem subst_C_mul {s : R⟦X⟧} (hs : HasSubst s) (r : R) (f : R⟦X⟧) :
     (C r * f).subst s = C r * f.subst s := by

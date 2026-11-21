@@ -162,9 +162,6 @@ scoped instance fixAct (h : V →ₗ⋆[K] V →ₗ[K] K) (U : Submodule K V) :
   one_smul := autSub_gmap_one
   mul_smul a b Λ := autSub_gmap_mul a.1 b.1 Λ
 
-theorem smul_def {h : V →ₗ⋆[K] V →ₗ[K] K} {U : Submodule K V} (g : isomFix h U)
-    (Λ : Submodule (𝓞 K) V) : g • Λ = Formalism.HermitianLatticesTheory.gmap g.1 Λ := rfl
-
 def stabEquiv (h : V →ₗ⋆[K] V →ₗ[K] K) (U : Submodule K V) (Λ : Submodule (𝓞 K) V) :
     MulAction.stabilizer (isomFix h U) Λ ≃ stabFix h U Λ where
   toFun a := ⟨a.1.1, a.1.2, MulAction.mem_stabilizer_iff.mp a.2⟩

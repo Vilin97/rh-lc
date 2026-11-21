@@ -101,9 +101,4 @@ def LevRepInf (E : Type) [Field E] [NumberField E] (n r : ℕ) (lam : (GL (Fin n
     ∃ T : (GL (Fin n) (Cinf E) → ℂ) → Y → GL (Fin n) (Cinf E) → ℂ, IsKerOpInf T ∧
       ∀ W, IsModGrowthInf W → IsWhitInf W → ∀ y, ∀ g ∈ levSetInf E n r, T W y g = B (y, matInf g) * lam W
 
-example (r : ℕ) : (1 : GL (Fin n) (Cinf E)) ∈ levSetInf E n r ∧
-    IsKerOpInf (fun W (_ : ℝ) g => W (g * (1 : GL (Fin n) (Cinf E)))) := by
-  refine ⟨mem_levSetInf.2 fun i _ => ⟨fun j hj => ?_, by simp⟩, isKerOpInf_dirac ℝ 1⟩
-  simp [Matrix.one_apply, hj.ne']
-
 end GlobalTheory.JSW.MirCinf

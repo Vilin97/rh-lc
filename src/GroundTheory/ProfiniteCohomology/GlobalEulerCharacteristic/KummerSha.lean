@@ -9,8 +9,6 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory NumberField IsDedekindDomain GroundTheory.Global
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
@@ -140,15 +138,6 @@ theorem mem_ptSha_iff_cohomologyMap_eq_zero (hK : Odd ℓ ∨ IsTotallyComplex K
     exact (ptRes_eq_zero_iff S ιs ℓ hℓS v x).2 ((congrArg _ hy).trans (map_zero _))
 
 include hℓS hℓ in
-
-theorem mem_ptSha_iff_exists_δ (hK : Odd ℓ ∨ IsTotallyComplex K.1) (x : cohomology (gsRoots S ℓ) 2) :
-    x ∈ ptSha (gsFinFamily S ιs) (gsRoots S ℓ) 2 ↔
-      ∃ z : cohomology (galSUnitsMax K.1 ℚ̄ S) 1,
-        (δ (sUnitsKummerSequence_shortExact (Ω := ℚ̄) S ℓ hℓS) 1 2 rfl).hom z = x := by
-  refine (mem_ptSha_iff_cohomologyMap_eq_zero S ιs hℓS hℓ hK x).trans ⟨fun h => ?_, ?_⟩
-  · exact exists_δ_eq_of_cohomologyMap_f_eq_zero (sUnitsKummerSequence_shortExact (Ω := ℚ̄) S ℓ hℓS) 1 2 rfl x h
-  · rintro ⟨z, rfl⟩
-    exact congrArg (fun φ => φ.hom z) (δ_comp (sUnitsKummerSequence_shortExact (Ω := ℚ̄) S ℓ hℓS) 1 2 rfl)
 
 end
 

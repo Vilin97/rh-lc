@@ -181,18 +181,6 @@ theorem ker_ramificationToUnits (n : ℕ) :
     Subgroup.mem_subgroupOf, Subgroup.mem_subgroupOf,
     mem_lowerRamificationGroup_iff_uniformizerRatio hϖ hσ0]
 
-def ramificationQuotientToUnits (n : ℕ) :
-    lowerRamificationGroup K L n ⧸
-        (lowerRamificationGroup K L (n + 1 : ℕ)).subgroupOf (lowerRamificationGroup K L n) →*
-      unitFiltration L n ⧸ unitFiltrationSucc L n :=
-  (QuotientGroup.kerLift (ramificationToUnits hϖ n)).comp
-    (QuotientGroup.quotientMulEquivOfEq (ker_ramificationToUnits hϖ n).symm).toMonoidHom
-
-@[simp]
-theorem ramificationQuotientToUnits_mk (n : ℕ) (σ : lowerRamificationGroup K L n) :
-    ramificationQuotientToUnits hϖ n (QuotientGroup.mk σ) = ramificationToUnits hϖ n σ :=
-  rfl
-
 end Ratio
 
 end GroundTheory.LocalField

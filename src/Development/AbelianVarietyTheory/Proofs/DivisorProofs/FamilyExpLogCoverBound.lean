@@ -1,6 +1,6 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsTjCorrDiagModel
-import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.IsStableFlag
+import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.ChainOfKernelsUnique
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsTorsionFiniteFlat
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BetaEquivariantFrobenius
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormalModuleActionLaws

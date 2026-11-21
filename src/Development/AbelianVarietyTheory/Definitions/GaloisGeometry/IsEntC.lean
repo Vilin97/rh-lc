@@ -25,14 +25,6 @@ def At (ex : Extra D L hT Gi Gl K Y cX) (E : KerEnt D Y ex.tw) : Prop :=
 
 variable {ex : Extra D L hT Gi Gl K Y cX}
 
-structure Pins (t : KerEntTied ex) : Prop where
-  adapted : t.Adapted
-  top : t.TopPinned
-  mem : t.MemSideU
-  mtTw : t.MtTwTie
-  chr : ∃ (C : CharFrame D) (nch : NChoice D), Nonempty (DtTied D C) ∧ Nonempty (TupTied D C nch)
-  tw : ∃ (_ : LevelData D) (inQ : D.what₂.Tup → HeightOneSpectrum (𝓞 D.host.F) → Prop), Nonempty (Formalism.L2.Herm.TwChTied D inQ)
-
 def IsEntC (t : KerEntTied ex) : Prop :=
   ∃ (P : Examples₂.EntPl D) (B : PlaceMatrixFamily D) (h : KerEntHyp P t.O B Y ex.tw), t.ent = kerEntC P t.O B h
 

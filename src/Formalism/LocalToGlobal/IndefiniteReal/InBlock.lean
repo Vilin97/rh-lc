@@ -1,6 +1,6 @@
 import Mathlib
 import Formalism.LocalToGlobal.IndefiniteReal.CutPassage3S
-import Formalism.LocalToGlobal.GlobalTheory.PassageAtBaseSymmetricLevels
+import Formalism.LocalToGlobal.GlobalTheory.DivPassage
 import Formalism.LocalToGlobal.IndefiniteReal.LevelAmbTransfer
 
 open Module NumberField IsDedekindDomain

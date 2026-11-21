@@ -91,13 +91,6 @@ section L2
 
 variable {k r : ℕ} {Vp : Type*} [NormedAddCommGroup Vp] [InnerProductSpace ℂ Vp]
 
-def equivariantL2Space (z : Fin (2 * r + k + 1) → ℂ) (ψ : Mat k r → ℂ) (π : Mat k r → (Vp →L[ℂ] Vp))
-    (μG ν : Measure (Mt k r)) : Set (Mat k r → Vp) :=
-  {W | AEStronglyMeasurable (fun x => W (Matrix.of x)) μG ∧ AEStronglyMeasurable (fun x => W (Matrix.of x)) ν ∧
-    Formalism.MainNotions.S.IsSPsiEquiv z ψ π W ∧ Formalism.MainNotions.S.l2SG ν W < ⊤}
-
-def rtr (g : Mat k r) (W : Mat k r → Vp) : Mat k r → Vp := fun x => W (x * g)
-
 end L2
 
 end ReciprocityTheory.ChartRestriction.DS.Lap

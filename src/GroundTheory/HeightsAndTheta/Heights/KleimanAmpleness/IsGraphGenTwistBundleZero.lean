@@ -139,15 +139,8 @@ def graphDeg (n : ℤ) : Unit ⊕ Unit → ℤ := Sum.elim (fun _ => -n) (fun _ 
 def graphChart (i : Fin (N + 1)) (j : Fin m) : ∀ k, graphIdx N m k :=
   IndefiniteRowSideFullHecke.Kleiman2.joinChart (fun _ : Unit => i) (fun _ : Unit => j)
 
-@[simp] theorem graphVec_inl (x : Fin (N + 1) → Ω) (s : Fin m → Ω) (a : Fin (N + 1)) :
-    graphVec x s ⟨Sum.inl (), a⟩ = x a := rfl
-
 @[simp] theorem graphVec_inr (x : Fin (N + 1) → Ω) (s : Fin m → Ω) (b : Fin m) :
     graphVec x s ⟨Sum.inr (), b⟩ = s b := rfl
-
-@[simp] theorem graphChart_inl (i : Fin (N + 1)) (j : Fin m) : graphChart i j (Sum.inl ()) = i := rfl
-
-@[simp] theorem graphChart_inr (i : Fin (N + 1)) (j : Fin m) : graphChart i j (Sum.inr ()) = j := rfl
 
 @[simp] theorem graphDeg_inl (n : ℤ) : graphDeg n (Sum.inl ()) = -n := rfl
 

@@ -223,9 +223,6 @@ def ChainL (D : D7) : Prop := ∀ c : Com D, c.Is → ∀ B : GlobalTheory.LFun.
   GlobalTheory.LFun.Bounded (GlobalTheory.LFun.above D.host.E (c.S : Set (HeightOneSpectrum (𝓞 D.host.F)))) B D.R.r (((D.R.r : ℝ) - 1) / 2) →
   ∀ k < D.R.m, LNe c (c.chT (k + 1)) (chainPar c B k)
 
-example (c : Com D) (s₀ : PiLocalization₂ D) : Reach c s₀ 0 s₀ LinearMap.id ∧ Function.Surjective (LinearMap.id : s₀.CC c →ₗ[ℂ] s₀.CC c) :=
-  ⟨Reach.zero, Function.surjective_id⟩
-
 theorem chainPar_succ (c : Com D) (B : GlobalTheory.LFun.Fam D.host.E) (k : ℕ) :
     chainPar c B (k + 1) = stepPar (c.chS (k + 1)) (c.chT (k + 1)) D.R.t (chainPar c B k) := rfl
 

@@ -33,9 +33,6 @@ theorem bd_P (m : ℕ) (f : SchwartzMap V ℂ) : Bd m f (2 ^ m * P V m f) := fun
 theorem Bd.nonneg {m : ℕ} {f : V → ℂ} {C : ℝ} (h : Bd m f C) : 0 ≤ C :=
   le_trans (by positivity) (h 0 (Nat.zero_le _) 0)
 
-theorem Bd.mono {m : ℕ} {f : V → ℂ} {C C' : ℝ} (h : Bd m f C) (hC : C ≤ C') : Bd m f C' :=
-  fun j hj x => (h j hj x).trans hC
-
 theorem Bd.succ {m : ℕ} {f : V → ℂ} {C : ℝ} (h : Bd (m + 1) f C) : Bd m f C := fun j hj x =>
   le_trans (mul_le_mul_of_nonneg_right (pow_le_pow_right₀ (by linarith [norm_nonneg x]) (Nat.le_succ m)) (norm_nonneg _))
     (h j (hj.trans (Nat.le_succ m)) x)

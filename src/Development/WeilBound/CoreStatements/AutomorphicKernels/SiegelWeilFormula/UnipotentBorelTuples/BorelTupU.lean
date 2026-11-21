@@ -13,11 +13,6 @@ attribute [-instance] CStarMatrix.instHMulOfFintypeOfMulOfAddCommMonoid
 
 open PositivityTheory.SiegelWeilFormula.TBij.Adp PositivityTheory.SiegelWeilFormula.KTunit
 
-local instance (priority := high) measTupU {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] :
-    MeasurableSpace (κ → AF F) := borel _
-
-local instance borelTupU {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] : BorelSpace (κ → AF F) := ⟨rfl⟩
-
 theorem uniq : Uniq := by
   classical
   intro F E _ _ _ _ _ σ d ν hν Λ hΛ hinv

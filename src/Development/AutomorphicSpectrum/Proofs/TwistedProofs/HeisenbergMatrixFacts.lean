@@ -246,8 +246,6 @@ theorem mem_KU_rad (hσσ : ∀ x, σ (σ x) = x) (hσ : ∀ x, Valued.v (σ x) 
 
 def ext (v : Fin N → L) : Fin (N + 2) → L := Fin.cons 0 (Fin.snoc (α := fun _ => L) v 0)
 
-@[simp] theorem ext_zero (v : Fin N → L) : ext v 0 = 0 := rfl
-
 @[simp] theorem ext_mid (v : Fin N → L) (j : Fin N) : ext v (mid j) = v j := by
   rw [GlobalTheory.CompanionTheory.InertHeis.ext, mid, Fin.cons_succ, Fin.snoc_castSucc]
 

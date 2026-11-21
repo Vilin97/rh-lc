@@ -22,11 +22,6 @@ open scoped ENNReal NNReal
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-local instance mA : MeasurableSpace (κ → AF F) := borel _
-local instance bA : BorelSpace (κ → AF F) := ⟨rfl⟩
-local instance mV (v : Pl F) : MeasurableSpace (κ → Fv F v) := borel _
-local instance bV (v : Pl F) : BorelSpace (κ → Fv F v) := ⟨rfl⟩
-
 theorem continuous_evFin (v : Pl F) : Continuous (evFin F v) :=
   (RestrictedProduct.continuous_eval v).comp continuous_snd
 

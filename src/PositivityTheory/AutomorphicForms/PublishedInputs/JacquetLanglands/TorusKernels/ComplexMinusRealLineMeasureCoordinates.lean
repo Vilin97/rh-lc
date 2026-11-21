@@ -13,7 +13,6 @@ instance : TopologicalSpace P := inferInstanceAs (TopologicalSpace {z : ℂ // z
 instance : MeasurableSpace P := inferInstanceAs (MeasurableSpace {z : ℂ // z.im ≠ 0})
 instance : BorelSpace P := inferInstanceAs (BorelSpace {z : ℂ // z.im ≠ 0})
 instance : SecondCountableTopology P := inferInstanceAs (SecondCountableTopology {z : ℂ // z.im ≠ 0})
-instance : T2Space P := inferInstanceAs (T2Space {z : ℂ // z.im ≠ 0})
 
 instance : MeasureSpace P where
   volume := (Measure.comap (Subtype.val : {z : ℂ // z.im ≠ 0} → ℂ) volume).withDensity fun z => ENNReal.ofReal (1 / z.1.im ^ 2)

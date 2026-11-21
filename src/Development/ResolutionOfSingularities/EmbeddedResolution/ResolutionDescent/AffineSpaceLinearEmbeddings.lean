@@ -267,45 +267,6 @@ theorem isomorphic_of_isPullbackSequenceOfBlowups_id {X : Scheme.{u}} (s t : Seq
   exact IsStrictPullbackBlowupSeq.isomorphic (h.isStrictPullback_of_surjective hc)
     (IsStrictPullbackBlowupSeq.id t)
 
-private theorem smooth_affineSpaceIndexedByToSpec (hsm : AffineSpaceIsSmooth.{u}) (k : Type u)
-    [Field k] (n : ℕ) :
-    AlgebraicGeometry.Smooth (affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin n))) :=
-  hsm k n
-
-private theorem inStrictNormalCrossingPosition_nil_affineSpace (hsm : AffineSpaceIsSmooth.{u}) (k : Type u)
-    [Field k] (n : ℕ) :
-    InStrictNormalCrossingPosition (affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin n))) [] := by
-  have : AlgebraicGeometry.Smooth (affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin n))) := hsm k n
-  exact inStrictNormalCrossingPosition_nil (affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin n)))
-
-def EmbeddingDatum.ofClosedImmersionAffineSpace (hsm : AffineSpaceIsSmooth.{u}) {k : Type u} [Field k] [CharZero k]
-    {Y : Scheme.{u}} {p : Y ⟶ Spec (CommRingCat.of k)} (n : ℕ)
-    (e : Y ⟶ affineSpaceIndexedBy k (ULift.{u, 0} (Fin n))) [IsClosedImmersion e]
-    (hker : NonzeroOnComponents (Scheme.Hom.ker e))
-    (hcomp : e ≫ affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin n)) = p) :
-    EmbeddingDatum k Y p where
-  ambient := affineSpaceIndexedBy k (ULift.{u, 0} (Fin n))
-  ambientStruct := affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin n))
-  emb := e
-  isAffine_ambient := by unfold affineSpaceIndexedBy; infer_instance
-  smooth_ambientStruct := smooth_affineSpaceIndexedByToSpec hsm k n
-  locallyOfFiniteType_ambientStruct := by unfold affineSpaceIndexedByToSpec; infer_instance
-  quasiCompact_ambientStruct := by unfold affineSpaceIndexedByToSpec; infer_instance
-  isClosedImmersion_emb := inferInstance
-  nonzeroOnComponents_ker := hker
-  comp_eq := hcomp
-  sncEmpty := inStrictNormalCrossingPosition_nil_affineSpace hsm k n
-
-@[simp]
-theorem EmbeddingDatum.ofClosedImmersionAffineSpace_ambient (hsm : AffineSpaceIsSmooth.{u}) {k : Type u} [Field k]
-    [CharZero k] {Y : Scheme.{u}} {p : Y ⟶ Spec (CommRingCat.of k)} (n : ℕ)
-    (e : Y ⟶ affineSpaceIndexedBy k (ULift.{u, 0} (Fin n))) [IsClosedImmersion e]
-    (hker : NonzeroOnComponents (Scheme.Hom.ker e))
-    (hcomp : e ≫ affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin n)) = p) :
-    (EmbeddingDatum.ofClosedImmersionAffineSpace hsm n e hker hcomp).ambient =
-      affineSpaceIndexedBy k (ULift.{u, 0} (Fin n)) :=
-  rfl
-
 end FunctorialResolution.EmbeddedResolution
 
 end

@@ -14,8 +14,6 @@ namespace GlobalTheory.IsoMeanProd
 
 variable {D : D7}
 
-local infixl:70 " ⬝ " => HMul.hMul
-
 theorem symplOH_iso_mid {V V' W : HSp D} {r : ℕ} {C : Matrix (Fin V.rank) (Fin r) D.host.E}
     {B : Matrix (Fin V.rank) (Fin V'.rank) D.host.E} (hs : IsIsoSplit V V' C B)
     (q₀ : Matrix (Fin W.rank) (Fin r) D.host.E) (a : Mx D W.rank r) (x : WO V' W) :

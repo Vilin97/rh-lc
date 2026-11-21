@@ -48,11 +48,6 @@ def mulLC (ψ : G → ℂ) (hψ : IsLocallyConstant ψ) : SB G →ₗ[ℂ] SB G 
     show ψ x * (c * (α : G → ℂ) x) = c * (ψ x * (α : G → ℂ) x)
     ring
 
-@[simp]
-theorem mulLC_apply (ψ : G → ℂ) (hψ : IsLocallyConstant ψ) (α : SB G) (x : G) :
-    ((mulLC ψ hψ α : SB G) : G → ℂ) x = ψ x * (α : G → ℂ) x :=
-  rfl
-
 def ind (K : OpenSubgroup G) (hK : IsCompact (K : Set G)) : SB G :=
   ⟨(K : Set G).indicator (fun _ => (1 : ℂ)),
     indicator_mem_locallyConstantCompactSupport (R := ℂ) hK K.isOpen 1⟩

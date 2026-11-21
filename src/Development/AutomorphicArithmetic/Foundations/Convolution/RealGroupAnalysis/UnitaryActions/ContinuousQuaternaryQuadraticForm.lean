@@ -13,12 +13,10 @@ variable {F : Type} [Field F] [NumberField F]
 
 theorem continuous_quaternaryQuadraticForm (δ : F) : Continuous (q4 δ) := by unfold q4; fun_prop
 
-def tr2 (δ : F) (v : V4 F) : A F := v 0 ^ 2 + v 1 ^ 2 + 2 * (v 2 ^ 2 - rt δ * v 3 ^ 2)
 end Base
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (D : Dat F E)
 
-@[simp] theorem nu_one : nu F (1 : GL (Fin 2) (A E)) = 1 := by simp [nu]
 theorem nu_mul (h h' : GL (Fin 2) (A E)) : nu F (h * h') = nu F h * nu F h' := by simp [nu]
 @[simp] theorem nu_gl (g : G1 E) : nu F (gl g) = 1 := by rw [nu, det_gl, map_one]
 @[simp] theorem nu_aE (a : (A E)ˣ) : nu F (aE a) = ideleNorm F E a := by rw [nu, det_aE]
@@ -92,17 +90,6 @@ def actL : GL (Fin 2) (A E) →* (V4 F ≃ₗ[A F] V4 F) where
       map_add' := D.act_add h, map_smul' := D.act_smul h }
   map_one' := LinearEquiv.ext D.act_one
   map_mul' h h' := LinearEquiv.ext (D.act_mul h h')
-@[simp] theorem actL_apply (h : GL (Fin 2) (A E)) (v : V4 F) : D.actL h v = D.act h v := rfl
-
-def actT (h : GL (Fin 2) (A E)) : V4 F ≃ₜ+ V4 F where
-  toFun := D.act h
-  invFun := D.act h⁻¹
-  left_inv := D.act_inv_act h
-  right_inv := D.act_act_inv h
-  map_add' := D.act_add h
-  continuous_toFun := D.continuous_act' continuous_const continuous_id
-  continuous_invFun := D.continuous_act' continuous_const continuous_id
-@[simp] theorem actT_apply (h : GL (Fin 2) (A E)) (v : V4 F) : D.actT h v = D.act h v := rfl
 
 def actM (h : GL (Fin 2) (A E)) : Matrix (Fin 4) (Fin 4) (A F) := Matrix.of fun i j => D.act h (Pi.single j 1) i
 theorem actM_eq (h : GL (Fin 2) (A E)) : D.actM h = LinearMap.toMatrix' (D.actL h).toLinearMap := by
@@ -112,10 +99,6 @@ theorem actM_mulVec (h : GL (Fin 2) (A E)) (v : V4 F) : D.actM h *ᵥ v = D.act 
 theorem actM_one : D.actM 1 = 1 := by ext i j; simp [actM, Matrix.one_apply, Pi.single_apply]
 theorem actM_mul (h h' : GL (Fin 2) (A E)) : D.actM (h * h') = D.actM h * D.actM h' := by
   rw [actM_eq, actM_eq, actM_eq, ← LinearMap.toMatrix'_mul, map_mul]; rfl
-
-def actG : GL (Fin 2) (A E) →* GL (Fin 4) (A F) :=
-  MonoidHom.toHomUnits { toFun := D.actM, map_one' := D.actM_one, map_mul' := D.actM_mul }
-@[simp] theorem actG_val (h : GL (Fin 2) (A E)) : (D.actG h).val = D.actM h := rfl
 
 theorem quadForm_act (h : GL (Fin 2) (A E)) (v : V4 F) : q4 D.δ (D.act h v) = (nu F h : (A F)ˣ) * q4 D.δ v := by
   have e := congrArg Matrix.det (D.herm_act h v)

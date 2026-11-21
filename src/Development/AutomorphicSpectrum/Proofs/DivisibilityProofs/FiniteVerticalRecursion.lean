@@ -46,11 +46,7 @@ theorem mem_of_divCycle_ne (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.
   by_contra hc
   exact h (divCycle_eq_zero_of_not_mem P s W hc)
 
-theorem divCycle_support_finite (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) :
-    (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ)))).Finite :=
-  (ReciprocityTheory.ChartRestriction.G.Geo.divSupp_finite P s).subset fun W hW => mem_of_divCycle_ne P s W hW
-
-theorem multAt_eq (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι))
+theorem multAt_eq (P : Ideal (MRing ι ℤ)) (s : MRing ι ℤ) (W : Ideal (MRing ι ℤ))
     (h : W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P s) :
     ((ReciprocityTheory.ChartRestriction.G.Geo.multAt (P ⊔ Ideal.span {s}) W : ℕ) : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) := by
   rw [← VocabDivCycle.proof ℤ K ι P s W]

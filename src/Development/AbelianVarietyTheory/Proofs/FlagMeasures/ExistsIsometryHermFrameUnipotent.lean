@@ -15,8 +15,6 @@ variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V]
 
 def bl (y : V) : V →ₗ[K] K := H.B.flip y
 
-@[simp] theorem bl_apply (y v : V) : bl H y v = H.B v y := rfl
-
 def crd (e f : Fin r → V) (z : V) (g h : Fin r → V) (t : V) : V →ₗ[K] V :=
   ∑ a, (bl H (f a)).smulRight (g a) + ∑ a, (bl H (e a)).smulRight (h a) +
     ((H.B z z)⁻¹ • bl H z).smulRight t

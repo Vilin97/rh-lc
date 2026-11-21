@@ -6,8 +6,6 @@ namespace GroundTheory.ProfCoh
 
 open NumberField IntermediateField GroundTheory.Global FiniteSubfield IsDedekindDomain IdeleGroup
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 attribute [local instance] FiniteSubfield.isGalois_of_normal galCommGroup

@@ -357,15 +357,6 @@ theorem sizeAt_of {PP A : ℝ} (hH : HostNum D L PP A 1) (hW : WtNum p i PP) : S
       linarith
     linarith
 
-theorem size_of (h1 : HostN 1) (h2 : WtN) : Size := by
-  refine (Closed.and h1 h2).imp fun Fm CH _ h => ?_
-  obtain ⟨⟨A, hA, hH⟩, _, _, hW⟩ := h
-  refine ⟨A + 2, by linarith, ?_⟩
-  obtain ⟨x0, h⟩ := hH.and hW
-  exact ⟨x0, fun x hx hle ι p hp i => sizeAt_of p i ((h x hx hle ι p hp).1 i) ((h x hx hle ι p hp).2 i)⟩
-
-theorem size : Size := size_of (GlobalTheory.CovTop.Sizes.hostN 1) GlobalTheory.CovTop.WtShape.wtN
-
 end GlobalTheory.CovTop.SizeRows
 
 end

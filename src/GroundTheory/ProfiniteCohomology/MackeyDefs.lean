@@ -88,11 +88,6 @@ theorem isOpen_mackeySubgroup (x : G) : IsOpen (mackeySubgroup (V : Subgroup G) 
 def mackeyOpenSubgroup (x : G) : OpenSubgroup H :=
   ⟨mackeySubgroup (V : Subgroup G) ι x, isOpen_mackeySubgroup V hι x⟩
 
-@[simp]
-theorem coe_mackeyOpenSubgroup (x : G) :
-    (mackeyOpenSubgroup V hι x : Subgroup H) = mackeySubgroup (V : Subgroup G) ι x :=
-  rfl
-
 include hι in
 
 theorem continuous_mackeyConj (x : G) : Continuous (mackeyConj (V : Subgroup G) ι x) :=

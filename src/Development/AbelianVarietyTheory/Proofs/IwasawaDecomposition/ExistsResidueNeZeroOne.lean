@@ -32,16 +32,4 @@ theorem two_ne_zero_one (g : ℕ) (hg : 3 ≤ g) : (2 : ZMod g) ≠ 0 ∧ (2 : Z
     rw [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt (by omega)] at h'
     omega
 
-theorem main : ∀ hL : GlobalTheory.Published.LocalLanglandsGL, AtMem hL fun _ _ _ _ w Z _ _ t _ _ c =>
-    ∀ PP ∈ t.r.z.R.Pg, ∃ x : Formalism.L2.DIV.kP PP, x ≠ 0 ∧ x ≠ 1 := by
-  intro hL
-  refine GlobalTheory.HeightCounting.JumpsAt.evLgG_of_forall fun K B f T _ w Z Wt p0 t nch n xd c hE hR hP => ?_
-  intro PP hPP
-  obtain ⟨plg, iso, -, -, -, -⟩ := t.r.z.pins.keep.grp
-  obtain ⟨h0, h1⟩ := two_ne_zero_one _ (GlobalTheory.IndefiniteRowSideFullHecke.HalfLevelCoefficients.three_le_g (w.st Z).toD7 (plg.symm ⟨PP, hPP⟩).1)
-  have e := iso (plg.symm ⟨PP, hPP⟩)
-  rw [Equiv.apply_symm_apply] at e
-  exact ⟨e 2, fun h => h0 (e.injective (by rw [h, map_zero])),
-    fun h => h1 (e.injective (by rw [h, map_one]))⟩
-
 end GlobalTheory.ResThree

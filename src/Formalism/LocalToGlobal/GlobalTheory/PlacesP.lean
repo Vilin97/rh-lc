@@ -55,9 +55,6 @@ variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComple
 
 def toFinPl (v : HeightOneSpectrum (𝓞 K)) : slopeLatticeData.FinPl K := ⟨v.asIdeal, v.isMaximal⟩
 
-theorem lenLoc_eq_lenAt (v : HeightOneSpectrum (𝓞 K)) (M N : Submodule (𝓞 K) V) :
-    DV.lenLoc v N M = slopeLatticeData.lenAt (toFinPl v) M N := rfl
-
 theorem mu_index_sum (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (hX : ∀ v, IsUnit (X v).det)
     {M N : Submodule (𝓞 K) V} (hM : M.FG) (hNM : N ≤ M) (hN0 : N ≠ ⊥) (hrk : rkK N = rkK M) :
     (∀ v, DV.lenLoc v N M ≠ ⊤) ∧ ∀ S : Finset (HeightOneSpectrum (𝓞 K)), (∀ v, v ∉ S → DV.lenLoc v N M = 0) →
@@ -786,11 +783,3 @@ end Link
 end Formalism.L2.GlobalTheoryTheory.Places
 
 end
-
-example {eps : ℝ} (Fm : Formalism.MainNotions.FamP eps) (crystallineComparison : ℝ) (a : Formalism.MainNotions.product_first_zeroth_parts.ConclusionOnFamily Fm crystallineComparison) (b : Formalism.MainNotions.GlobalTheoryTheory.SettingEventually Fm) (c : Formalism.MainNotions.TuSize Fm)
-    (d : Formalism.MainNotions.J.MuRank Fm) : Formalism.MainNotions.LinkG Fm → Formalism.MainNotions.LinkMu Fm → Formalism.MainNotions.Lnk.PlacesF Fm :=
-  Formalism.L2.GlobalTheoryTheory.Places.placesF_of Fm crystallineComparison a b c d
-
-example {eps : ℝ} (Fm : Formalism.MainNotions.FamP eps) (Cabs CH C0 crystallineComparison : ℝ) (h : 0 < C0) (a : Formalism.MainNotions.product_first_zeroth_parts.ConclusionOnFamily Fm crystallineComparison) (c : Formalism.MainNotions.TuSize Fm) :
-    Formalism.MainNotions.ChosenE Fm C0 CH → Formalism.MainNotions.GlobalTheoremInputs Fm Cabs CH C0 → Formalism.MainNotions.LocalQuadraticParts.SlopeLemmaFamily Fm :=
-  Formalism.L2.GlobalTheoryTheory.Places.slope_lemma_link_form Fm Cabs CH C0 crystallineComparison h a c

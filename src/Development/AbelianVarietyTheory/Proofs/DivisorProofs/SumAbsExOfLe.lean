@@ -391,7 +391,3 @@ theorem htCmp [IsGalois ℚ E] : HTCmp Xo c := by
   exact ⟨_, ⟨q, hq, inst, T, io, e, y₀, k, y, ho, hy, h, rfl⟩, fun u f hf => val_le hy h ho u hf⟩
 
 end GlobalTheory.CovHt.FrameCmp
-
-theorem GlobalTheory.CovHt.htCmp_of_hypotheses : GlobalTheory.CovTop.Hypotheses2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
-    [IsGalois ℚ E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l),
-    HTCmp Xo c := fun _ _ _ _ _ _ _ _ _ _ _ => GlobalTheory.CovHt.FrameCmp.htCmp

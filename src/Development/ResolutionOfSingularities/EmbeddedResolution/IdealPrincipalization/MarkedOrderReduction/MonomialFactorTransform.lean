@@ -50,11 +50,6 @@ def MarkedSequenceOfBlowups.monomialFactor (s : MarkedSequenceOfBlowups p N μ E
       (MarkedSequenceOfBlowups.monomialFactor s M m i).comap (s.transitionMapSucc i) * s.exceptionalDivisor i ^ (μ - m)
 
 @[simp]
-theorem MarkedSequenceOfBlowups.monomialFactor_zero (s : MarkedSequenceOfBlowups p N μ E) (M : X.IdealSheafData)
-    (m : ℕ) : MarkedSequenceOfBlowups.monomialFactor s M m 0 = M.comap s.isoZero.hom :=
-  rfl
-
-@[simp]
 theorem MarkedSequenceOfBlowups.monomialFactor_succ (s : MarkedSequenceOfBlowups p N μ E) (M : X.IdealSheafData)
     (m i : ℕ) :
     MarkedSequenceOfBlowups.monomialFactor s M m (i + 1) =
@@ -347,36 +342,6 @@ def MarkedIdealWithBoundary.withIdealAndMult (T : MarkedIdealWithBoundary.{u}) (
     ideal := N
     mult := μ
     boundary := T.boundary }
-
-@[simp]
-theorem MarkedIdealWithBoundary.withIdealAndMult_baseField (T : MarkedIdealWithBoundary.{u}) (N : T.scheme.IdealSheafData)
-    (μ : ℕ) : (T.withIdealAndMult N μ).base = T.base :=
-  rfl
-
-@[simp]
-theorem MarkedIdealWithBoundary.withIdealAndMult_scheme (T : MarkedIdealWithBoundary.{u}) (N : T.scheme.IdealSheafData)
-    (μ : ℕ) : (T.withIdealAndMult N μ).scheme = T.scheme :=
-  rfl
-
-@[simp]
-theorem MarkedIdealWithBoundary.withIdealAndMult_structureMorphism (T : MarkedIdealWithBoundary.{u}) (N : T.scheme.IdealSheafData)
-    (μ : ℕ) : (T.withIdealAndMult N μ).structMap = T.structMap :=
-  rfl
-
-@[simp]
-theorem MarkedIdealWithBoundary.withIdealAndMult_ideal (T : MarkedIdealWithBoundary.{u}) (N : T.scheme.IdealSheafData)
-    (μ : ℕ) : (T.withIdealAndMult N μ).ideal = N :=
-  rfl
-
-@[simp]
-theorem MarkedIdealWithBoundary.withIdealAndMult_mult (T : MarkedIdealWithBoundary.{u}) (N : T.scheme.IdealSheafData)
-    (μ : ℕ) : (T.withIdealAndMult N μ).mult = μ :=
-  rfl
-
-@[simp]
-theorem MarkedIdealWithBoundary.withIdealAndMult_boundary (T : MarkedIdealWithBoundary.{u}) (N : T.scheme.IdealSheafData)
-    (μ : ℕ) : (T.withIdealAndMult N μ).boundary = T.boundary :=
-  rfl
 
 theorem MarkedIdealWithBoundary.IsAdmissible.withIdealAndMult {T : MarkedIdealWithBoundary.{u}} (hT : T.IsAdmissible)
     {M N : T.scheme.IdealSheafData} (hsplit : IsMonomialSplitting T.boundary T.ideal M N)

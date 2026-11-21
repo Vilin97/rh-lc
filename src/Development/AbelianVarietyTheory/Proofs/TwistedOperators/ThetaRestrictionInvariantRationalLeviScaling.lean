@@ -11,8 +11,6 @@ noncomputable section
 
 namespace GlobalTheory.LeviRes
 
-local infixl:70 " ⬝ " => HMul.hMul
-
 variable {D : D7}
 
 theorem adj_rat {m n : ℕ} (M : Matrix (Fin m) (Fin n) D.host.E) :

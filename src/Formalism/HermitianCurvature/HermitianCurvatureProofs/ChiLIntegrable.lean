@@ -18,11 +18,6 @@ instance borelXiH : BorelSpace (U.XiH r 0 σ) := by
   have : BorelSpace ((Fin 0 → Fin r → ℂ) × (Fin r → Fin 0 → ℂ)) := Prod.borelSpace
   exact Prod.borelSpace
 
-instance borelXi : BorelSpace (U.Xi k r 0 0 σ) := by
-  have : BorelSpace (U.RC k r 0 × U.RC k r 0) := Prod.borelSpace
-  have := borelXiH (r := r) σ
-  exact Prod.borelSpace
-
 end inst
 
 section cont

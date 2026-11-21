@@ -1,5 +1,5 @@
 import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.AlgebraMapAEEqZero
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.RestrictedBlockMemBlockTriangular
+import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.TameAtOne
 import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.InfPartOfSplitIdem
 import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SplitOrInertP
 import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceFinal
@@ -66,11 +66,6 @@ variable {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {χS χT : (AE D)ˣ →*
   {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
   {βS : GL (Fin S.rank) (Lev.EAf D)} {βT : GL (Fin T.rank) (Lev.EAf D)}
   {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} {es : Formalism.L2.DIV.Pl D.host.E → AE D}
-
-def facAt (χS χT : (AE D)ˣ →* Circle) (es : Formalism.L2.DIV.Pl D.host.E → AE D) {S T : HSp D} (g : GA D S) (h : GA D T)
-    (PP : Formalism.L2.DIV.Pl D.host.E) : ℂ :=
-  (splitFacO χS χT (detAt (es PP) S (resG S (sA (belowPl PP) 1) g)) (detAt (es PP) T (resG T (sA (belowPl PP) 1) h)) :
-    ℂ)
 
 end Chain
 

@@ -1,5 +1,4 @@
 import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.LowerUnipotentMinors
 import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.BottomMinor
 
 noncomputable section

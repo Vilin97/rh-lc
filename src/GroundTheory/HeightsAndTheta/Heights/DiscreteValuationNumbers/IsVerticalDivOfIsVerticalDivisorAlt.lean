@@ -62,68 +62,17 @@ theorem isMultiProjPrime_iff (P : Ideal (ReciprocityTheory.ChartRestriction.G.Ge
 
 omit [DecidableEq K] in
 
-theorem intCyc_divCycle [IsNoetherianRing R] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
-    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
-    GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.intCyc (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W =
-      ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) := by
-  classical
-  have hc : (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℕ) W =
-      if W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P s then
-        ReciprocityTheory.ChartRestriction.G.Geo.multAt (P ⊔ Ideal.span {s}) W else 0 := by
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
-    rw [Finsupp.ofSupportFinite_coe]
-  rw [GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.intCyc, Finsupp.mapRange_apply, hc, divCycle]
-  by_cases h : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes ∧ IsRelevant W
-  · have h' : W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P s := h
-    rw [if_pos h', dite_eq_left h, ReciprocityTheory.ChartRestriction.G.Geo.multAt, dite_eq_left h.1.1.1]
-    all_goals rfl
-  · have h' : W ∉ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P s := h
-    rw [if_neg h', dite_eq_right h, Nat.cast_zero]
-
 end Ring
 
 section DVR
 
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem divO_eq_ratDiv (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
-    GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.divO P f g W = ratDiv P f g W := by
-  rw [GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.divO, Finsupp.sub_apply, intCyc_divCycle,
-    intCyc_divCycle, ratDiv]
-
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
-
-theorem redEval_eq_cycEval (J : Ideal (MRing ι (IsLocalRing.ResidueField O)) → ℤ)
-    (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) →₀ ℤ) :
-    GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.redEval J Z =
-      cycEval (fun W => J (specialIdeal W)) Z := by
-  classical
-  rw [GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.redEval, cycEval,
-    finsum_eq_sum_of_support_subset _ (s := Z.support) fun W hW =>
-      Finsupp.mem_support_iff.mpr (left_ne_zero_of_mul (Function.mem_support.mp hW))]
-  rfl
 
 omit [IsDomain O] [IsDiscreteValuationRing O] in
 
-theorem isModelOver_iff (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ) :
-    IsModelOver P d ↔ GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.IsModelOver P d :=
-  ⟨fun h => ⟨(isMultiProjPrime_iff P).mp h.multiProj, h.noTorsion, h.dim⟩,
-    fun h => ⟨(isMultiProjPrime_iff P).mpr h.1, h.2.1, h.2.2⟩⟩
-
 end DVR
-
-theorem equiv (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] :
-    (∀ (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (b : K → ℕ), IsMultiHomog f b ↔ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f b) ∧
-    (∀ P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiProjPrime P ↔ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiProjPrime P) ∧
-    (∀ (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)),
-      GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.intCyc (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W =
-        ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ)) ∧
-    (∀ (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)),
-      GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.divO P f g W = ratDiv P f g W) ∧
-    (∀ (J : Ideal (MRing ι (IsLocalRing.ResidueField O)) → ℤ) (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) →₀ ℤ),
-      GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.redEval J Z =
-        cycEval (fun W => J (specialIdeal W)) Z) :=
-  ⟨isMultiHomog_iff, isMultiProjPrime_iff, intCyc_divCycle, divO_eq_ratDiv, redEval_eq_cycEval⟩
 
 end Objects
 

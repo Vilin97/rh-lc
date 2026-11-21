@@ -221,16 +221,6 @@ theorem isPotential_phi_sub {s : G →* GQ l} {η H : ℕ} {D : BKDat O K l e a 
       rw [toBcris_apply, toB, AlgHom.comp_apply, ← ϖ.iC_of_mem t K, ← ϖ.iB_of_mem t K]
       rfl
 
-theorem classOf_phi_sub {s : G →* GQ l} {η H : ℕ} {D : BKDat O K l e a ι η H} {T : LocLat G ℚ_[l] K O}
-    (R : GalDat t ϖ s D T) {m : Vec K a ι} (hm : m ∈ D.Minv) : R.ClassOf (D.phi m - m) 0 :=
-  ⟨0, isPotential_phi_sub t ϖ R hm, fun g n x hx => by
-    obtain rfl : x = 0 := Subtype.ext (by simpa using hx)
-    simp⟩
-
-theorem covers_one {g : GQ l} (hg : g ∈ ϖ.GfieldInf a) : Covers K t ϖ g (1 : TameGal K l e a) := fun f f' h => by
-  obtain rfl : f' = f := funext fun τ => Subtype.ext (by rw [h τ, map_one]; rfl)
-  exact ϖ.galOA_iTot t K hg f'
-
 theorem fix_Kur {F : FinExt l} {g : ↥(GK F)} (hg : g ∈ IK F) : (g : GQ l) ∈ (MaximalUnramifiedExtension l).fixingSubgroup := by
   refine (Subgroup.closure_le ((MaximalUnramifiedExtension l).fixingSubgroup.comap (GK F).subtype)).2 (fun σ hσ => ?_) hg
   change (σ : GQ l) ∈ (MaximalUnramifiedExtension l).fixingSubgroup
@@ -303,9 +293,5 @@ theorem finrank_unitLat : Module.finrank O ↥(unitLat G : LocLat G ℚ_[l] K O)
   have : Nontrivial O := (algebraMap O K).domain_nontrivial
   exact (LinearEquiv.ofInjective (Algebra.linearMap O K) IsUnitBall.inj).finrank_eq.symm.trans
     (Module.finrank_self O)
-
-example {LL : FinExt l} [HasUnr a LL] [TameDescentExponentData ↥LL.1 l e a] :
-    (unitPack (a := a) ϖ 1 2 (unitLat (Gl l) : QLat LL) fun _ _ => rfl).n = 1 :=
-  finrank_unitLat l ↥(OL LL) ↥LL.1 (Gl l)
 
 end GlobalTheory.BKGal.UnitModel

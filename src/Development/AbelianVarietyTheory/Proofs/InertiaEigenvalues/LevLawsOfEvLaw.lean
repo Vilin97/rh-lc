@@ -95,9 +95,6 @@ theorem one_crys : IsCrys (P.PD K) (H.W K s LL h).one.ρ :=
   haveI : FiniteDimensional ℚ_[l] ↥LL.1 := LL.2
   GlobalTheory.TrivCrys.isCrys_lat_of_trivial _ (H.W K s LL h).one_triv
 
-theorem laws_of_cmp (C : LocCmpT l P AI H F) : Laws H F h :=
-  ⟨⟨(C.C K s LL h).tie.lev_Γ, (C.C K s LL h).tie.lev_φ⟩, ioLaws_tie H F h, one_crys H h⟩
-
 end Concrete
 
 theorem laws : ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} (H : LocHW l P) (F : LocFon l P AI H)

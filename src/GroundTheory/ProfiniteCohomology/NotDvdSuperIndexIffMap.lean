@@ -69,16 +69,6 @@ theorem isProSylow_iff {P : Subgroup G} (hP : IsClosed (P : Set G)) :
   rw [IsProSylow, isProPGroup_subgroup_iff_isPGroup_map, not_dvd_superIndex_iff_map, ← forall_and]
   exact ⟨fun h => h.2, fun h => ⟨hP, h⟩⟩
 
-noncomputable def IsProSylow.toSylow {P : Subgroup G} (hP : IsProSylow p P)
-    (U : OpenNormalSubgroup G) : Sylow p (G ⧸ (U : Subgroup G)) :=
-  IsPGroup.toSylow (isProPGroup_subgroup_iff_isPGroup_map.mp hP.2.1 U)
-    ((not_dvd_superIndex_iff_map P).mp hP.2.2 U)
-
-@[simp] theorem IsProSylow.coe_toSylow {P : Subgroup G} (hP : IsProSylow p P)
-    (U : OpenNormalSubgroup G) :
-    (hP.toSylow U : Subgroup (G ⧸ (U : Subgroup G))) = P.map (QuotientGroup.mk' (U : Subgroup G)) :=
-  rfl
-
 omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 
 noncomputable def sylowSystem (p : ℕ) [Fact p.Prime] (H : Subgroup G) :

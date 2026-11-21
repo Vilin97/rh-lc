@@ -74,8 +74,6 @@ open scoped ComplexConjugate
 
 variable {k j ρ : ℕ}
 
-local notation "∞'" => ((⊤ : ℕ∞) : WithTop ℕ∞)
-
 theorem ms_skewOf {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] {x : E}
     {f : E → (G.UT j → ℂ) × (Fin j → ℝ)} (hf : ContDiffAt ℝ ∞' f x) : MS (fun y => skewOf (f y)) x := by
   have hU : MS (fun y => G.strictUpper (f y).1) x := by
@@ -147,8 +145,6 @@ open Formalism.FourierDecayAlt.P.PBI.Sm
 
 variable {k j ρ : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
   [InnerProductSpace ℂ Wq]
-
-local notation "∞'" => ((⊤ : ℕ∞) : WithTop ℕ∞)
 
 theorem continuous_gN' : Continuous (fun g : B.Mat k (j + ρ) => B.gN g) := by
   unfold B.gN

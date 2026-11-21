@@ -154,8 +154,4 @@ theorem rspan_bdd_pet_eq_zero {π : CuspSub E a} {ω : HChar E} (hω : ω.IsUnit
   · rw [pet_kerInf_left μ hω hF.1 (hψh h) ν hk]
     exact integral_eq_zero_of_ae (.of_forall fun x => mul_eq_zero_of_right _ ((htr F hF _).2 h))
 
-example {π : CuspSub E a} {ω : HChar E} (hπ : π.HasCentChar ω) {φ : Sm E a} (hφ : φ ∈ π.V) (z : Ideles E) (g : GA E a) :
-    φ.1 (GeneralLinearGroup.scalar (Fin a) z * g) = ((ω.1 z : ℂˣ) : ℂ) * φ.1 g :=
-  rspan_central hπ (mem_rspan hφ) z g
-
 end GlobalTheory.JSW

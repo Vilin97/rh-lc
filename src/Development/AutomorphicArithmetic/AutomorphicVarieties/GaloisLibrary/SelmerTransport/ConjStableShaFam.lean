@@ -188,15 +188,11 @@ def levU (U : Subgroup (G k Ω)) (n : ℕ) : Subgroup (G k Ω) := U ⊓ (KStar.T
 
 def cycU (U : Subgroup (G k Ω)) : Subgroup (G k Ω) := U ⊓ (cycZ k Ω l).ker
 
-def delU (U : Subgroup (G k Ω)) : Subgroup (G k Ω) := U ⊓ (CommGroup.torsion ℤ_[l]ˣ).comap (cycZ k Ω l)
-
 def qExp (l : ℕ) : ℕ := if l = 2 then 2 else 1
 
 abbrev gamU (U : Subgroup (G k Ω)) : Subgroup (G k Ω) := levU l U (qExp l)
 
-instance (U : Subgroup (G k Ω)) [U.Normal] (n : ℕ) : (levU l U n).Normal := by unfold levU; infer_instance
 instance (U : Subgroup (G k Ω)) [U.Normal] : (cycU l U).Normal := by unfold cycU; infer_instance
-instance (U : Subgroup (G k Ω)) [U.Normal] : (delU l U).Normal := by unfold delU; infer_instance
 
 theorem levU_le (U : Subgroup (G k Ω)) (n : ℕ) : levU l U n ≤ U := inf_le_left
 theorem cycU_le (U : Subgroup (G k Ω)) : cycU l U ≤ U := inf_le_left

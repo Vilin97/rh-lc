@@ -15,9 +15,6 @@ section Integrable
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
   [MeasurableSpace E] [BorelSpace E]
 
-def ofIntegrable {h : E → ℂ} (hh : Integrable h) : 𝓢'(E, ℂ) :=
-  MeasureTheory.Lp.toTemperedDistribution (hh.toL1 h)
-
 end Integrable
 
 theorem integrable_smul_of_locallyIntegrableOn {E : Type*} [NormedAddCommGroup E]

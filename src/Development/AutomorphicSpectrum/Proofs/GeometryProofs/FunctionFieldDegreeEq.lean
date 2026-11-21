@@ -15,11 +15,6 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.GeoDeg
 open MvPolynomial GroundTheory.FunctionField GroundTheory.Heights₂.Heights.Inter IsLocalRing
 
-local notation "T_eft" => GlobalTheory.T.local_ring_ess_finite_type
-local notation "T_geo" => GlobalTheory.T.geometric_number_zero_finrank
-local notation "T_ex1" => GlobalTheory.T.exists_multihomog_prime_of_place
-local notation "T_ex2" => GlobalTheory.T.multihomog_prime_mem_divisor_support
-
 section
 variable {B : Type} [Fintype B] {J : B → Type} [∀ k, Fintype (J k)]
 variable {p : ℕ} [Fact p.Prime] {K : Type} [Field K] [Algebra (ZMod p) K] [IsFunctionField (ZMod p) K]

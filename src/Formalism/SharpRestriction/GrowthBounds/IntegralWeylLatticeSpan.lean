@@ -35,18 +35,6 @@ variable (D : D7) (H : FullTiedNoG D)
   (hd : ∀ u w h, ((packC D (fun u => H.base.lev0 u) (idStd D H I0 B hBs) ψ u w h).gat (rSc sc D.R.k (D.what₂.places.resChar w))
     (epSc D.R sc Ce (D.what₂.places.resChar w))).d = Module.finrank ℂ (D.mem u).A.Mu0)
 
-structure ChosenDataCompatibility : Prop where
-
-  joint : ∀ u, Joint0 H.base.lev0 u (T u)
-
-  psi0 : ∀ u, LevelZeroCharacterRational (D := (recC D sc Ce (fun u => H.base.lev0 u) (idStd D H I0 B hBs) ψ hd)) (formsOfRecursion D sc Ce (fun u => H.base.lev0 u) (idStd D H I0 B hBs) ψ hd T) u
-
-  psi : ∀ u (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)),
-    PsiTied (LL := D.what₂.LL) (O := ORec D w (nFr D (D.what₂.places.resChar w)))
-      (Kf := KfRec D w (nFr D (D.what₂.places.resChar w)))
-      (((formsOfRecursion D sc Ce (fun u => H.base.lev0 u) (idStd D H I0 B hBs) ψ hd T) u).cls0).lev (H.base.lev0 u) (D.what₂.places.resChar w) (rank_eq_first_level D.R) D.what₂.embLL
-      ((cmpInC D sc Ce (fun u => H.base.lev0 u) (idStd D H I0 B hBs) ψ hd (levelZeroHermitianTransport D sc Ce (fun u => H.base.lev0 u) (idStd D H I0 B hBs) ψ hd H (fun _ => rfl)) (fun _ => rfl) B hBs (idStd_fr D H I0 B hBs)).embW u w hg) (ψ u w hg)
-
 variable {D H I0 B hBs sc Ce T ψ hd}
 
 end Formalism.L2.G.RelativeIndexFlags

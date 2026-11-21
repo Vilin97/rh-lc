@@ -67,10 +67,6 @@ theorem IsSatVecU.unique (hU : IsUnramInv ϖ σ q) (h : IsSatVecU ϖ q ρ x α) 
     WeylConjU α β :=
   (satU_eq_iff_weylConj hU).1 fun t ht => smul_left_injective ℂ h.1 ((h.2.2 t ht).symm.trans (h'.2.2 t ht))
 
-theorem HasSatU.unique (hU : IsUnramInv ϖ σ q) (h : HasSatU ϖ q ρ α) (h' : HasSatU ϖ q ρ β) : WeylConjU α β := by
-  obtain ⟨x, hx⟩ := h.exists_vec
-  exact hx.unique hU (h'.2 x hx.2.1 hx.1)
-
 end Local
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
@@ -126,9 +122,6 @@ variable {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {L : Subm
   {S : Set (HeightOneSpectrum (𝓞 F))} {V : Type} [AddCommGroup V] [Module ℂ V]
   {Vl : HeightOneSpectrum (𝓞 F) → Type} [∀ v, AddCommGroup (Vl v)] [∀ v, Module ℂ (Vl v)]
   {π : ∀ v, Representation ℂ (GLoc σ J v) (Vl v)} {c c' : Fam E} {w : HeightOneSpectrum (𝓞 E)}
-
-theorem HasParamOff.unique (h : HasParamOff σ J L S π c) (h' : HasParamOff σ J L S π c') (hw : w ∉ above E S) :
-    c w = c' w := (h _ hw w rfl).unique (h' _ hw w rfl)
 
 theorem IsParamVecOff.unique {ρ : Representation ℂ (GAd σ J) V} {x : V} (h : IsParamVecOff σ J L S ρ x c)
     (h' : IsParamVecOff σ J L S ρ x c') (hw : w ∉ above E S) : c w = c' w :=

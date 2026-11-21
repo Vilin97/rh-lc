@@ -14,8 +14,6 @@ variable {Ω : Type*} [Field Ω] [IsAlgClosed Ω] (l : ℕ) [Fact l.Prime]
 def rootSeq (a : Ω) (n : ℕ) : Ω :=
   Nat.rec a (fun _ y => (IsAlgClosed.exists_pow_nat_eq y (Fact.out : l.Prime).pos).choose) n
 
-@[simp] theorem rootSeq_zero (a : Ω) : rootSeq l a 0 = a := rfl
-
 theorem rootSeq_succ_pow (a : Ω) (n : ℕ) : rootSeq l a (n + 1) ^ l = rootSeq l a n :=
   (IsAlgClosed.exists_pow_nat_eq (rootSeq l a n) (Fact.out : l.Prime).pos).choose_spec
 

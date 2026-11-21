@@ -216,10 +216,6 @@ noncomputable def balTensorEquiv {w : O} (hw : w + star w = 1) [Module.Finite O 
     ((X ⊗[ℤ] X) ⧸ balTensorRel O X) ≃+ BalSq O X :=
   AddEquiv.ofBijective _ (balTensorLift_bijective hw)
 
-@[simp] theorem balTensorEquiv_mk {w : O} (hw : w + star w = 1) [Module.Finite O X]
-    [Module.Projective O X] [Module.IsTorsionFree ℤ O] (y x : X) :
-    balTensorEquiv hw (balTensorMk O y x) = BalSq.mk O y x := rfl
-
 theorem isTorsionFree_balTensor {w : O} (hw : w + star w = 1) [Module.Finite O X]
     [Module.Projective O X] [Module.IsTorsionFree ℤ O] :
     Module.IsTorsionFree ℤ ((X ⊗[ℤ] X) ⧸ balTensorRel O X) :=
@@ -247,10 +243,6 @@ def bilOfMul {X G : Type*} [AddCommGroup X] [CommGroup G] (t : X → X → G)
     Bil X (Additive G) :=
   (AddMonoidHom.mk' (fun y => (AddMonoidHom.mk' (fun x => Additive.ofMul (t y x))
     (h₂ y)).toIntLinearMap) fun y y' => LinearMap.ext fun x => h₁ y y' x).toIntLinearMap
-
-@[simp] theorem bilOfMul_apply {X G : Type*} [AddCommGroup X] [CommGroup G] (t : X → X → G)
-    (h₁ : ∀ y y' x, t (y + y') x = t y x * t y' x) (h₂ : ∀ y x x', t y (x + x') = t y x * t y x')
-    (y x : X) : bilOfMul t h₁ h₂ y x = Additive.ofMul (t y x) := rfl
 
 noncomputable def expTwoPiI : ℂ →+ Additive ℂˣ :=
   AddMonoidHom.mk' (fun z => Additive.ofMul

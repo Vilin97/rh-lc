@@ -61,11 +61,4 @@ theorem isSplitPl_of_split {R : Ranks} (H : Host R) {p : ℕ} (hp : p.Prime)
   have : y = H.conj • x := RingOfIntegers.ext hy
   rwa [this]
 
-theorem auxiliary_primes_split : PrN → ∀ hL : GlobalTheory.Published.LocalLanglandsGL, AllSt fun _ _ _ _ _ _ x => ∀ _ : LC hL x, ∀ v, v ∈ placesOver (Dof x).host.E (Dof x).host.pde ∨ v ∈ placesOver (Dof x).host.E (Dof x).host.pde' → IsSplitPl (Dof x).host v := by
-  intro _ hL
-  refine StepW.of_all fun K B f T w _ _ _ P x _ v hv => ?_
-  rcases hv with hv | hv
-  · exact isSplitPl_of_split B.host B.host.pde_prime B.toPre.pde_split.1 v hv
-  · exact isSplitPl_of_split B.host B.host.pde'_prime B.toPre.pde_split.2 v hv
-
 end GlobalTheory.SplitPrimeAuxiliary

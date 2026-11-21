@@ -18,8 +18,6 @@ section Form
 
 variable {K : Type} [Field K] [StarRing K] {n : ℕ}
 
-local notation "h" => Formalism.UG.hform (starRingEnd K)
-
 theorem hform_eq (J : Matrix (Fin n) (Fin n) K) (x y : Fin n → K) :
     h J x y = star x ⬝ᵥ J *ᵥ y := by
   simp [Formalism.UG.hform, dotProduct, mulVec, Finset.mul_sum, mul_assoc, starRingEnd_apply]
@@ -121,9 +119,6 @@ end Form
 section Norm
 
 variable {n : ℕ}
-
-theorem hs_nonneg' (a : Matrix (Fin n) (Fin n) ℂ) : 0 ≤ hs a := by
-  unfold hs; positivity
 
 theorem hs_sub_le (a b : Matrix (Fin n) (Fin n) ℂ) : hs (a - b) ≤ 2 * hs a + 2 * hs b := by
   unfold hs

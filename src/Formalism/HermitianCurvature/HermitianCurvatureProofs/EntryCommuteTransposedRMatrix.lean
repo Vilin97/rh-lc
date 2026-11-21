@@ -87,8 +87,6 @@ theorem EC.one (z : B) : EC z (1 : M2 B) := by
   · subst h; simp
   · simp [Matrix.one_apply_ne h]
 
-theorem EC.transpose {z : B} {M : M2 B} (hM : EC z M) : EC z Mᵀ := fun i j => hM j i
-
 theorem diag_comm {z : B} {M : M2 B} (h : EC z M) :
     (Matrix.diagonal fun _ => z) * M = M * (Matrix.diagonal fun _ => z) := by
   ext i j

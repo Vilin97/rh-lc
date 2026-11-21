@@ -370,8 +370,6 @@ theorem dominated_L2_truncation_bound_holds : DominatedL2TruncationBound := by
           TBB.Ew p (fun _ => 1) (B.opApply Th (ψ n)) (P.r + 1) [] (TBB.bigPt P.r c)) := by ring
     _ ≤ 2 * (Hn c).toReal := by linarith
 
-theorem nfApxDomAll_of_ptw (hP : NFDomPtw) : NFApxDomAll := nfApxDomAll_of_cut domination_at_zero_holds hP dominated_L2_truncation_bound_holds
-
 end
 
 end Formalism.FourierDecayAlt.P.CutBP

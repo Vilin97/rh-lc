@@ -1,6 +1,7 @@
 import Formalism.SharpRestriction.GrowthBounds.BaseLevels.LevelsGEmpty
 import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsCharted1AtInTw
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.MemAll
+import Formalism.SharpRestriction.GrowthBounds.ChartComparison.OneChartLev
+import Formalism.SharpRestriction.GrowthBounds.ChartComparison.BadQNotOver
 
 noncomputable section
 
@@ -98,10 +99,6 @@ def lv : Levels Fl :=
   levelsG (X0.g u w hg) Fl D.R.m (fun i => (D.sp.X (i + 1)).rank) (fun i hi => rank_of X0 Fl ht i hi)
     (fun i hi => (Z.Fo i hi).Ch) (fun i hi β => (Z.S i hi).chart β)
 
-theorem lv_empty (j : ℕ) (hj : D.R.m < j) : IsEmpty ((Z.lv Fl ht).comp j) :=
-  haveI := Z.chFin
-  levelsG_empty _ _ _ _ _ _ _ j hj
-
 set_option maxHeartbeats 4000000 in
 
 def loc (i : ℕ) (hi : i + 1 ≤ D.R.m) : LocIn X0 u w hg (Z.lv Fl ht) i (Z.Fo i hi).Ch :=
@@ -114,14 +111,6 @@ def loc (i : ℕ) (hi : i + 1 ≤ D.R.m) : LocIn X0 u w hg (Z.lv Fl ht) i (Z.Fo 
     (fun β => levelsG_tie (X0.g u w hg) Fl D.R.m (fun i => (D.sp.X (i + 1)).rank) (fun i hi => rank_of X0 Fl ht i hi)
       (fun i hi => (Z.Fo i hi).Ch) (fun i hi β => (Z.S i hi).chart β) i hi β)
     (Z.S i hi).B
-
-theorem loc_B (i : ℕ) (hi : i + 1 ≤ D.R.m) : (Z.loc Fl ht i hi).B = (Z.S i hi).B := rfl
-
-theorem loc_psi (i : ℕ) (hi : i + 1 ≤ D.R.m) : (Z.loc Fl ht i hi).ψ = (Z.S i hi).ψ := rfl
-
-theorem loc_Uloc (i : ℕ) (hi : i + 1 ≤ D.R.m) : (Z.loc Fl ht i hi).Uloc = fun β => ulocOf (Z.Fo i hi) β := rfl
-
-theorem loc_Lb (i : ℕ) (hi : i + 1 ≤ D.R.m) : (Z.loc Fl ht i hi).Lb = fun β => lbOf (Z.Fo i hi) β := rfl
 
 theorem frRat (i : ℕ) (hi : i + 1 ≤ D.R.m) (β : (Z.Fo i hi).Ch) : FrRatJ ((Z.loc Fl ht i hi).t β) (Z.loc Fl ht i hi).B :=
   fun _ _ => rfl
@@ -136,23 +125,9 @@ end SiteD
 
 variable {Tw : TwForms D} {μ : D.what₂.Tup}
 
-def SiteD.atIn (Z : SiteD X0 u w hg (Tw.fm u μ)) (Fl : Fills (D.gat u w hg)) (ht : Fl.t = D.R.t) :
-    AtIn X0 Tw u μ w hg (Z.lv Fl ht) where
-  Fo := Z.Fo
-  Lc := Z.loc Fl ht
-
-def SiteD.inTw (Z : SiteD X0 u w hg (Tw.fm u μ)) (Fl : Fills (D.gat u w hg)) (ht : Fl.t = D.R.t) (Gt : GatTies D) :
-    CmpJIn Tw u μ w hg (Z.lv Fl ht) := (Z.atIn Fl ht).I Gt
-
 def SiteD.inMem (Z : SiteD X0 u w hg (D.fm u)) (Tw : TwForms D) (Fl : Fills (D.gat u w hg)) (ht : Fl.t = D.R.t) (Gt : GatTies D) :
     CmpJIn Tw u D.what₂.mu0 w hg (Z.lv Fl ht) :=
   ⟨fun j hj => StepAt.ofMem (Z.st Fl ht Gt j hj)⟩
-
-theorem SiteD.inTw_st (Z : SiteD X0 u w hg (Tw.fm u μ)) (Fl : Fills (D.gat u w hg)) (ht : Fl.t = D.R.t) (Gt : GatTies D) (j : ℕ)
-    (hj : j + 1 ≤ D.R.m) : ((Z.inTw Fl ht Gt).at' j hj).st = Z.st Fl ht Gt j hj := rfl
-
-theorem SiteD.inMem_st (Z : SiteD X0 u w hg (D.fm u)) (Tw : TwForms D) (Fl : Fills (D.gat u w hg)) (ht : Fl.t = D.R.t) (Gt : GatTies D)
-    (j : ℕ) (hj : j + 1 ≤ D.R.m) : ((Z.inMem Tw Fl ht Gt).at' j hj).st = Z.st Fl ht Gt j hj := rfl
 
 end Formalism.MainNotions.G.ChartsLv
 

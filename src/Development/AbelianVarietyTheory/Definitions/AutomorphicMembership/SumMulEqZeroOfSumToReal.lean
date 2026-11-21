@@ -50,13 +50,6 @@ theorem balForms_eq_levelForms {E : Type} [Field E] [NumberField E] [IsCMField E
   ext β
   simp [mem_balForms, mem_levelForms]
 
-theorem mem_realForms_iff_symB {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host E) {X : Type}
-    [AddCommGroup X] [Module (𝓞 E) X] {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} :
-    B ∈ realForms H.bar X ↔ B ∈ Formalism.MainNotions.ModuliIntegralCharts.SymB (fun x : E => IsCMField.complexConj E x) X :=
-  and_congr_right' ⟨fun h c c' hc a b => by
-    rw [show c' = H.bar c from RingOfIntegers.ext (hc.trans (H.bar_eq c).symm)]; exact h c a b,
-    fun h c a b => h c _ (H.bar_eq c) a b⟩
-
 theorem mem_balForms_int {X : Type} [AddCommGroup X] {β : LinearMap.BilinForm ℤ X} :
     β ∈ balForms (id : ℤ → ℤ) X ↔ ∀ y z, β y z = β z y :=
   ⟨fun h => h.1, fun h => ⟨h, fun a y z => by simp⟩⟩
@@ -286,11 +279,6 @@ def IsStrict (γ : Fin m → LinearMap.BilinForm ℤ X) : Prop :=
     ∀ β ∈ balForms bar X, (∀ y, 0 ≤ β y y) → N * φ.evalZ β = ℓ β →
       ∃ (k : ℕ) (c : Fin m → ℕ), 0 < k ∧ k • β = ∑ i, c i • γ i
 
-theorem isStrict_iff_isStrictAt {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host E) (φ : InvFun (𝓞 E))
-    {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X] (γ : Fin m → LinearMap.BilinForm ℤ X) :
-    IsStrict H.bar φ γ ↔ IsStrictAt H φ γ := by
-  simp only [IsStrict, IsStrictAt, IsPiece, balForms_eq_levelForms, and_assoc]
-
 structure IsCone (γ : Fin m → LinearMap.BilinForm ℤ X) : Prop where
 
   mem : ∀ i, γ i ∈ balForms bar X
@@ -370,15 +358,6 @@ theorem linearOn_smul (h : IsCone bar φ γ) (M : ℕ) : φ.LinearOn fun i => (M
   simp only [h.evalZ_smul]
   simpa [mul_assoc] using this
 
-theorem isStrict_smul (h : IsCone bar φ γ) {M : ℕ} (hM : M ≠ 0) : IsStrict bar φ fun i => (M : ℤ) • γ i := by
-  obtain ⟨N, ℓ, hN, h1, h2, h3⟩ := h.strict
-  refine ⟨N, ℓ, hN, fun i => ?_, h2, fun β hβ hp he => ?_⟩
-  · rw [h.evalZ_smul, map_smul, smul_eq_mul, Int.cast_mul, h1]; push_cast; ring
-  · obtain ⟨k, c, hk, hc⟩ := h3 β hβ hp he
-    refine ⟨M * k, c, by positivity, ?_⟩
-    rw [mul_smul, hc, Finset.smul_sum]
-    exact Finset.sum_congr rfl fun i _ => by simp only [natCast_zsmul]; rw [smul_comm]
-
 end IsCone
 
 theorem IsCone.isPartOfBasis_level {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {φ : InvFun (𝓞 E)}
@@ -438,12 +417,6 @@ def NoSelfInt (bar : O → O) (q : ℕ) (φ : InvFun O) : Prop :=
 
 variable {bar φ X}
 
-theorem IsPolFan.mono {q q' : ℕ} (h : IsPolFan bar q φ) (hq : q' ≤ q) : IsPolFan bar q' φ :=
-  fun X _ _ _ _ hX => h X (hX.trans hq)
-
-theorem NoSelfInt.mono {q q' : ℕ} (h : NoSelfInt bar q φ) (hq : q' ≤ q) : NoSelfInt bar q' φ :=
-  fun X _ _ _ _ hX => h X (hX.trans hq)
-
 theorem IsPolFanOn.evalZ_nonneg (h : IsPolFanOn bar φ X) {β : LinearMap.BilinForm ℤ X} (hβ : β ∈ balForms bar X)
     (hp : ∀ y, 0 ≤ β y y) : 0 ≤ φ.evalZ β := by
   rcases eq_or_ne β 0 with rfl | h0
@@ -456,19 +429,6 @@ theorem IsPolFanOn.exists_nat (h : IsPolFanOn bar φ X) {β : LinearMap.BilinFor
   have : (0 : ℝ) ≤ n := hn ▸ h.evalZ_nonneg hβ hp
   lift n to ℕ using by exact_mod_cast this
   exact ⟨n, by simpa using hn⟩
-
-theorem IsPolFanOn.evalR_nonneg (h : IsPolFanOn bar φ X) {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (hB : B ∈ psdCone bar X) :
-    0 ≤ evalR φ B := by
-  obtain ⟨m, γ, c, hγ, hc, rfl⟩ := h.cover B hB
-  rw [(linearOn_iff φ γ).1 hγ.linear c hc]
-  exact Finset.sum_nonneg fun i _ => mul_nonneg (hc i) (h.evalZ_nonneg (hγ.mem i) (hγ.nonneg i))
-
-theorem evalR_smul_of_linearOn {γ : Fin m → LinearMap.BilinForm ℤ X} (hγ : φ.LinearOn γ) {c : Fin m → ℝ}
-    (hc : ∀ i, 0 ≤ c i) {t : ℝ} (ht : 0 ≤ t) :
-    evalR φ (t • ∑ i, c i • toReal (γ i)) = t * evalR φ (∑ i, c i • toReal (γ i)) := by
-  rw [(linearOn_iff φ γ).1 hγ c hc, Finset.smul_sum, Finset.mul_sum]
-  simp only [smul_smul, ← mul_assoc]
-  exact (linearOn_iff φ γ).1 hγ _ fun i => mul_nonneg ht (hc i)
 
 theorem IsPolFanOn.of_equiv (h : IsPolFanOn bar φ X) (e : X ≃ₗ[O] X₁) : IsPolFanOn bar φ X₁ where
   homog B hB t ht := by
@@ -496,10 +456,6 @@ theorem IsPolFanOn.of_equiv (h : IsPolFanOn bar φ X) (e : X ≃ₗ[O] X₁) : I
     exact ⟨e.symm.trans (g.trans e), fun i => ⟨_, hg i, rfl⟩⟩
 
 omit [Module.Finite O X] [Module.Finite O X₁] in
-
-theorem NoEquivRays.of_pull_equiv {γ : Fin m → LinearMap.BilinForm ℤ X₁} (e : X ≃ₗ[O] X₁)
-    (h : NoEquivRays O fun i => pull e.toLinearMap (γ i)) : NoEquivRays O γ := fun g i j hg =>
-  h (e.trans (g.trans e.symm)) i j (LinearMap.ext₂ fun a b => by simpa using LinearMap.congr_fun₂ hg (e a) (e b))
 
 theorem isPolFanOn_of_subsingleton [Subsingleton X] : IsPolFanOn bar φ X := by
   have h0 : ∀ β : LinearMap.BilinForm ℤ X, β = 0 := fun β => Subsingleton.elim _ _
@@ -534,71 +490,15 @@ def IsFine (N : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X) : Prop :=
 
 variable {N : ℕ} {γ : Fin m → LinearMap.BilinForm ℤ X}
 
-theorem IsFine.comp (h : IsFine N γ) (s : Fin m' → Fin m) : IsFine N fun i => γ (s i) :=
-  fun y => (h y).imp fun _ h i => h (s i)
-
-theorem IsFine.exists_min (h : IsFine N γ) (y : X) : ∃ μ₀ : X, ∀ c : Fin m → ℝ, (∀ i, 0 ≤ c i) → ∀ μ,
-    ∑ i, c i * (γ i (y + N • μ₀) (y + N • μ₀) : ℝ) ≤ ∑ i, c i * (γ i (y + N • μ) (y + N • μ) : ℝ) :=
-  (h y).imp fun _ h c hc μ => Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left (by exact_mod_cast h i μ) (hc i)
-
-theorem IsFine.sum (h : IsFine N γ) (a : Fin m' → Fin m → ℕ) : IsFine N fun j => ∑ i, a j i • γ i :=
-  fun y => (h y).imp fun _ h j μ => by
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply]
-    exact Finset.sum_le_sum fun i _ => nsmul_le_nsmul_right (h i μ) _
-
-theorem IsFine.smul (h : IsFine N γ) (M : ℕ) : IsFine N fun i => (M : ℤ) • γ i :=
-  fun y => (h y).imp fun _ h i μ => mul_le_mul_of_nonneg_left (h i μ) (Int.natCast_nonneg M)
-
-theorem isFine_pull_iff {O : Type} [CommRing O] [Module O X] [Module O X₁] {r : X →ₗ[O] X₁} (hr : Function.Surjective r)
-    {γ : Fin m → LinearMap.BilinForm ℤ X₁} : (IsFine N fun i => pull r (γ i)) ↔ IsFine N γ := by
-  constructor
-  · intro h y
-    obtain ⟨y, rfl⟩ := hr y
-    obtain ⟨μ₀, h⟩ := h y
-    refine ⟨r μ₀, fun i μ => ?_⟩
-    obtain ⟨μ, rfl⟩ := hr μ
-    simpa only [pull_apply, r.map_add (f := _), map_nsmul r] using h i μ
-  · intro h y
-    obtain ⟨μ₀, h⟩ := h (r y)
-    obtain ⟨μ₀, rfl⟩ := hr μ₀
-    exact ⟨μ₀, fun i μ => by simpa only [pull_apply, r.map_add (f := _), map_nsmul r] using h i (r μ)⟩
-
-theorem isFine_one (h : ∀ i y, 0 ≤ γ i y y) : IsFine 1 γ := fun y => ⟨-y, fun i μ => by simpa using h i (y + μ)⟩
-
-theorem isFine_single {β : LinearMap.BilinForm ℤ X} (h : ∀ y, 0 ≤ β y y) (N : ℕ) : IsFine N ![β] := fun y => by
-  obtain ⟨μ₀, -, h0⟩ := (measure fun μ : X => (β (y + N • μ) (y + N • μ)).toNat).wf.has_min Set.univ ⟨0, trivial⟩
-  refine ⟨μ₀, fun i μ => ?_⟩
-  obtain rfl : i = 0 := Subsingleton.elim _ _
-  have h1 : ¬ (β (y + N • μ) (y + N • μ)).toNat < (β (y + N • μ₀) (y + N • μ₀)).toNat := h0 μ trivial
-  have := h (y + N • μ)
-  have := h (y + N • μ₀)
-  simp only [Matrix.cons_val_zero]
-  omega
-
 def sqForm (l : X →ₗ[ℤ] ℤ) : LinearMap.BilinForm ℤ X := (LinearMap.mul ℤ ℤ).compl₁₂ l l
 
 @[simp] theorem sqForm_apply (l : X →ₗ[ℤ] ℤ) (a b : X) : sqForm l a b = l a * l b := rfl
-
-example : ¬ IsFine 2 ![sqForm (LinearMap.fst ℤ ℤ ℤ + LinearMap.snd ℤ ℤ ℤ),
-    sqForm (LinearMap.fst ℤ ℤ ℤ - LinearMap.snd ℤ ℤ ℤ)] := fun h => by
-  obtain ⟨⟨a, b⟩, h⟩ := h (1, 1)
-  have h0 := h 0 (0, -1)
-  have h1 := h 1 (0, 0)
-  simp at h0 h1
-  have e0 : 1 + 2 * a + (1 + 2 * b) = 0 := by nlinarith
-  have e1 : 1 + 2 * a - (1 + 2 * b) = 0 := by nlinarith
-  omega
-
-example : ¬ NoEquivRays ℤ ![sqForm (LinearMap.fst ℤ ℤ ℤ), sqForm (LinearMap.snd ℤ ℤ ℤ)] := fun h =>
-  absurd (h (LinearEquiv.prodComm ℤ ℤ ℤ) 0 1 rfl) (by decide)
 
 end Fine
 
 section RankOne
 
 def mulForm : LinearMap.BilinForm ℤ ℤ := LinearMap.mul ℤ ℤ
-
-@[simp] theorem mulForm_apply (a b : ℤ) : mulForm a b = a * b := rfl
 
 theorem real_apply_int (B : ℤ →ₗ[ℤ] ℤ →ₗ[ℤ] ℝ) (a b : ℤ) : B a b = B 1 1 * (a * b) := by
   conv_lhs => rw [← mul_one a, ← mul_one b, ← smul_eq_mul, ← smul_eq_mul, map_smul, map_smul]
@@ -666,11 +566,6 @@ theorem IsCone.eq_mulForm {φ : InvFun ℤ} {m : ℕ} {γ : Fin m → LinearMap.
   have := h.nonneg i 1
   rw [eq_smul_mulForm (γ i), show γ i 1 1 = 1 by rcases Int.isUnit_iff.1 hu with h | h <;> omega, one_smul]
 
-theorem toReal_mulForm_mem_psdCone : toReal mulForm ∈ psdCone (id : ℤ → ℤ) ℤ :=
-  ((isPosDef_iff_basis (Module.Basis.singleton Unit ℤ) _).2 fun c hc => by
-    have : c () ≠ 0 := fun h => hc (funext fun _ => h)
-    simpa using mul_self_pos.2 this).mem_psdCone (toReal_mem (mem_balForms_int.2 mul_comm))
-
 theorem isPolFanOn_minVal_int : IsPolFanOn id (InvFun.minVal ℤ) ℤ where
   homog B hB t ht := by
     have := nonneg_of_mem_psdCone hB 1
@@ -705,17 +600,6 @@ theorem isPolFan_minVal_one : IsPolFan id 1 (InvFun.minVal ℤ) := fun X _ _ _ _
   rcases subsingleton_or_equiv_int X hX with h | ⟨⟨e⟩⟩
   · exact isPolFanOn_of_subsingleton
   · exact isPolFanOn_minVal_int.of_equiv e
-
-theorem noSelfInt_int_one (φ : InvFun ℤ) : NoSelfInt id 1 φ := fun X _ _ _ _ hX m γ hγ _ i j _ => by
-  rcases subsingleton_or_equiv_int X hX with h | ⟨⟨e⟩⟩
-  · exact (hγ.linearIndependent.ne_zero i (Subsingleton.elim _ _)).elim
-  · have h := hγ.pull_equiv e
-    exact h.injective ((h.eq_mulForm i).trans (h.eq_mulForm j).symm)
-
-example (φ : InvFun ℤ) : ¬ IsCone id φ ![(2 : ℤ) • mulForm] := fun h => by
-  simpa using LinearMap.congr_fun₂ (h.eq_mulForm 0) 1 1
-
-example : (InvFun.minVal ℤ).evalZ mulForm = 1 := by simp [evalZ_minVal_int]
 
 end RankOne
 

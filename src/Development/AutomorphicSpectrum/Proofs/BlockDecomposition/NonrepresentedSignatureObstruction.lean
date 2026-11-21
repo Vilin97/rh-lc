@@ -9,7 +9,7 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MemMultTOfEq
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DenseRangeRealEmbeddings
 import Development.AbelianVarietyTheory.PublishedTheorems.AdelicLattices₂.AlgebraMapNormOfBasisOneSqrt
 import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.InfFam
-import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCS
+import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCI
 import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.SignatureExists
 open scoped Matrix NNReal ENNReal ComplexConjugate TensorProduct
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.L2.Pj Formalism.IndefR.Datum MeasureTheory

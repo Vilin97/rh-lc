@@ -39,9 +39,6 @@ variable {𝒪 : Type*} [CommRing 𝒪] [IsDomain 𝒪] [IsDiscreteValuationRing
   (K : Type*) [Field K] [Algebra 𝒪 K] [IsFractionRing 𝒪 K] (W : WeierstrassCurve 𝒪)
   [(W.map (algebraMap 𝒪 K)).IsElliptic] [DecidableEq K] [DecidableEq (ResidueField 𝒪)]
 
-local notation "ι" => algebraMap 𝒪 K
-local notation "ρ" => residue 𝒪
-
 theorem nsmul_ne_zero_of_notMem_range {n : ℕ} (hn : (n : ResidueField 𝒪) ≠ 0) {X Y : K}
     (h : (curveK K W).Nonsingular X Y) (hX : X ∉ Set.range ι) :
     n • WeierstrassCurve.Affine.Point.some _ _ h ≠ 0 := by
@@ -133,27 +130,6 @@ theorem eq_of_reductionHom_eq_of_nsmul {n : ℕ} (hn : (n : ResidueField 𝒪) �
     (by rw [nsmul_sub, hP, hQ, sub_zero])
     (by rw [← reductionHom_apply, map_sub, h, sub_self]))
 
-theorem reductionHom_torsionBy_injective {n : ℕ} (hn : (n : ResidueField 𝒪) ≠ 0) :
-    Function.Injective
-      ((reductionHom K W).comp (AddSubgroup.torsionBy (curveK K W).Point n).subtype) :=
-  fun P Q h => Subtype.ext (eq_of_reductionHom_eq_of_nsmul K W hn
-    (AddSubgroup.torsionBy.nsmul_iff.mp P.2) (AddSubgroup.torsionBy.nsmul_iff.mp Q.2) h)
-
-def reductionTorsionHom (n : ℕ) :
-    AddSubgroup.torsionBy (curveK K W).Point n →+ AddSubgroup.torsionBy (curveRed W).Point n :=
-  ((reductionHom K W).comp (AddSubgroup.torsionBy (curveK K W).Point n).subtype).codRestrict _
-    fun P => by
-      rw [AddSubgroup.torsionBy.nsmul_iff, AddMonoidHom.comp_apply, ← map_nsmul,
-        AddSubgroup.subtype_apply, AddSubgroup.torsionBy.nsmul_iff.mp P.2, map_zero]
-
-theorem coe_reductionTorsionHom_apply (n : ℕ) (P : AddSubgroup.torsionBy (curveK K W).Point n) :
-    (reductionTorsionHom K W n P : (curveRed W).Point) = reductionHom K W P :=
-  rfl
-
-theorem reductionTorsionHom_injective {n : ℕ} (hn : (n : ResidueField 𝒪) ≠ 0) :
-    Function.Injective (reductionTorsionHom K W n) := fun _ _ h =>
-  reductionHom_torsionBy_injective K W hn (congrArg Subtype.val h)
-
 end Good
 
 section Localization
@@ -162,28 +138,6 @@ open IsDedekindDomain
 
 variable {R : Type*} [CommRing R] [IsDedekindDomain R] {F : Type*} [Field F] [Algebra R F]
   [IsFractionRing R F] (v : HeightOneSpectrum R)
-
-instance isDiscreteValuationRing_valuationSubringAtPrime :
-    IsDiscreteValuationRing (v.valuationSubringAtPrime F) :=
-  IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain R v.ne_bot _
-
-theorem residue_algebraMap_ne_zero {a : R} (ha : a ∉ v.asIdeal) :
-    residue (v.valuationSubringAtPrime F) (algebraMap R (v.valuationSubringAtPrime F) a) ≠ 0 := by
-  rw [ne_eq, residue_eq_zero_iff, IsLocalization.AtPrime.to_map_mem_maximal_iff _ v.asIdeal]
-  exact ha
-
-theorem residue_natCast_ne_zero {n : ℕ} (hn : (n : R) ∉ v.asIdeal) :
-    (n : ResidueField (v.valuationSubringAtPrime F)) ≠ 0 := by
-  have := residue_algebraMap_ne_zero v (F := F) hn
-  rwa [map_natCast, map_natCast] at this
-
-theorem isElliptic_map_valuationSubringAtPrime (W : WeierstrassCurve R) (hΔ : W.Δ ∉ v.asIdeal) :
-    (W.map (algebraMap R (v.valuationSubringAtPrime F))).IsElliptic := by
-  rw [WeierstrassCurve.isElliptic_iff, WeierstrassCurve.map_Δ]
-  by_contra hu
-  apply residue_algebraMap_ne_zero v (F := F) hΔ
-  rw [residue_eq_zero_iff, mem_maximalIdeal, mem_nonunits_iff]
-  exact hu
 
 end Localization
 
@@ -194,16 +148,6 @@ open NumberField IsDedekindDomain
 variable {F : Type*} [Field F] [NumberField F] (𝔮 : HeightOneSpectrum (𝓞 F))
   (W : WeierstrassCurve (𝔮.valuationSubringAtPrime F)) [W.IsElliptic] [DecidableEq F]
   [DecidableEq (ResidueField (𝔮.valuationSubringAtPrime F))]
-
-theorem reductionHom_torsionBy_injective_of_notMem {n : ℕ} (hn : (n : 𝓞 F) ∉ 𝔮.asIdeal) :
-    Function.Injective
-      ((reductionHom F W).comp (AddSubgroup.torsionBy (curveK F W).Point n).subtype) :=
-  reductionHom_torsionBy_injective F W (residue_natCast_ne_zero 𝔮 hn)
-
-theorem eq_of_reductionHom_eq_of_nsmul_of_notMem {n : ℕ} (hn : (n : 𝓞 F) ∉ 𝔮.asIdeal)
-    {P Q : (curveK F W).Point} (hP : n • P = 0) (hQ : n • Q = 0)
-    (h : reductionHom F W P = reductionHom F W Q) : P = Q :=
-  eq_of_reductionHom_eq_of_nsmul F W (residue_natCast_ne_zero 𝔮 hn) hP hQ h
 
 end NumberField
 

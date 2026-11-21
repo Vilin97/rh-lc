@@ -31,25 +31,6 @@ def RelevantPrimeDimGe.Statement : Prop :=
     [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
     ((Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)
 
-theorem EventuallyPolyUnique.hypotheses_example :
-    EventuallyPoly (hilbFn (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)))) (X () + 1) ∧
-      EventuallyPoly (hilbFn (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)))) (X () + 1) :=
-  ⟨eventuallyPoly_projectiveLine, eventuallyPoly_projectiveLine⟩
-
-theorem EventuallyPolyShift.hypotheses_example :
-    EventuallyPoly (hilbFn (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1)))) (X () + 1) :=
-  eventuallyPoly_projectiveLine
-
-theorem HilbIrrelevantZero.hypotheses_example :
-    ¬ IsRelevant (Ideal.span (Set.range X) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) := by
-  intro h
-  obtain ⟨i, hi⟩ := h ()
-  exact hi (Ideal.subset_span ⟨_, rfl⟩)
-
-theorem RelevantPrimeDimGe.hypotheses_example :
-    IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (ProjIdx 1))) :=
-  isMultiProjPrime_bot
-
 end
 
 end GroundTheory.Heights₂.Heights.FieldNumbers

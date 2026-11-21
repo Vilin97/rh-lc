@@ -73,7 +73,6 @@ section
 
 variable (c : R →+* A) (v : Fin (N + 1) → A) (hv : Ideal.span (Set.range v) = ⊤)
 
-@[reassoc] theorem pt_str : pt c v hv ≫ PSpace.str R N = spMap c := by
   rw [pt, PSpace.str, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
   congr 1
   ext1
@@ -91,16 +90,8 @@ include hv in
 theorem span_range_comp_eq_top (ψ : A →+* B) : Ideal.span (Set.range (ψ ∘ v)) = ⊤ := by
   rw [Set.range_comp, ← Ideal.map_span, hv, Ideal.map_top]
 
-@[reassoc] theorem spMap_pt (ψ : A →+* B) :
     spMap ψ ≫ pt c v hv = pt (ψ.comp c) (ψ ∘ v) (span_range_comp_eq_top v hv ψ) := by
   refine (ProjPoint.SpecMap_ofHom _ _ _ ψ).trans ?_
-  unfold pt
-  congr 1
-  exact ringHom_ext (fun r => by simp) (fun i => by simp)
-
-@[reassoc] theorem pt_baseChange {R₀ : Type} [CommRing R₀] (φ : R₀ →+* R) :
-    pt c v hv ≫ baseChange N φ = pt (c.comp φ) v hv := by
-  refine (ProjPoint.ofHom_map _ _ _ _).trans ?_
   unfold pt
   congr 1
   exact ringHom_ext (fun r => by simp) (fun i => by simp)
@@ -260,23 +251,6 @@ theorem exists_eq_pt [Subsingleton (CommRing.Pic A)] (c : R →+* A) (φ : Sp A 
 abbrev Unimodular (A : Type) [CommRing A] (N : ℕ) : Type :=
   {v : Fin (N + 1) → A // Ideal.span (Set.range v) = ⊤}
 
-def unitSetoid (A : Type) [CommRing A] (N : ℕ) : Setoid (Unimodular A N) where
-  r v w := ∃ u : Aˣ, w.1 = u • v.1
-  iseqv := ⟨fun _ => ⟨1, (one_smul _ _).symm⟩, fun ⟨u, h⟩ => ⟨u⁻¹, by rw [h, inv_smul_smul]⟩,
-    fun ⟨u, h⟩ ⟨u', h'⟩ => ⟨u' * u, by rw [h', h, mul_smul]⟩⟩
-
-def ptEquiv [Subsingleton (CommRing.Pic A)] (c : R →+* A) (N : ℕ) :
-    Quotient (unitSetoid A N) ≃ {φ : Sp A ⟶ PSpace R N // φ ≫ PSpace.str R N = spMap c} :=
-  Equiv.ofBijective (Quotient.lift (fun v => ⟨pt c v.1 v.2, pt_str c v.1 v.2⟩)
-      fun v w h => Subtype.ext ((pt_eq_pt_iff c v.2 w.2).2 h))
-    ⟨fun a b => Quotient.inductionOn₂ a b fun v w h =>
-        Quotient.sound ((pt_eq_pt_iff c v.2 w.2).1 (congrArg Subtype.val h)),
-      fun φ => (exists_eq_pt c φ.1 φ.2).elim fun v h => h.elim fun hv e =>
-        ⟨Quotient.mk _ ⟨v, hv⟩, Subtype.ext e.symm⟩⟩
-
-@[simp] theorem ptEquiv_mk [Subsingleton (CommRing.Pic A)] (c : R →+* A) (v : Unimodular A N) :
-    (ptEquiv c N (Quotient.mk _ v)).1 = pt c v.1 v.2 := rfl
-
 theorem span_range_eq_top_iff_of_isLocalRing [IsLocalRing A] {ι : Type} {v : ι → A} :
     Ideal.span (Set.range v) = ⊤ ↔ ∃ i, IsUnit (v i) := by
   refine ⟨fun h => ?_, fun ⟨i, hi⟩ => Ideal.eq_top_of_isUnit_mem _ (Ideal.subset_span ⟨i, rfl⟩) hi⟩
@@ -338,19 +312,6 @@ theorem existsUnique_extend (c : R →+* V) (φ : Sp K ⟶ PSpace R N)
   refine ⟨pt c w hw, ⟨pt_str c w hw, e⟩, fun ψ hψ => ?_⟩
   obtain ⟨w', hw', rfl⟩ := exists_eq_pt c ψ hψ.1
   exact pt_eq_pt_of_injective c (IsFractionRing.injective V K) hw' hw (hψ.2.trans e.symm)
-
-theorem existsUnique_extend_of_isProjOver {f : Y ⟶ Sp R} (hf : IsProjOver f) (c : R →+* V) (φ : Sp K ⟶ Y)
-    (hφ : φ ≫ f = spMap ((algebraMap V K).comp c)) :
-    ∃! ψ : Sp V ⟶ Y, ψ ≫ f = spMap c ∧ spMap (algebraMap V K) ≫ ψ = φ := by
-  have hp : IsProper f := ReciprocityTheory.ChartRestriction.G.Geo.Tor.projProper R Y f hf
-  have hv : ValuativeCriterion f := by
-    rw [IsProper.eq_valuativeCriterion] at hp
-    exact hp.1.1.1
-  let S : ValuativeCommSq f :=
-    { R := V, K := K, i₁ := φ, i₂ := spMap c, commSq := ⟨by rw [hφ, ← Spec.map_comp]; rfl⟩ }
-  obtain ⟨U⟩ := hv S
-  refine ⟨U.default.l, ⟨U.default.fac_right, U.default.fac_left⟩, fun ψ hψ => ?_⟩
-  exact congrArg CommSq.LiftStruct.l (U.uniq ⟨ψ, hψ.2, hψ.1⟩)
 
 end Valuation
 
@@ -432,8 +393,6 @@ def vPlusι : VPlus I ⟶ PSpace R N :=
 
 instance isClosedImmersion_vPlusι : IsClosedImmersion (vPlusι I) :=
   isClosedImmersion_projMap _ Ideal.Quotient.mk_surjective _
-
-theorem isProjOver_vPlus : IsProjOver (vPlusι I ≫ PSpace.str R N) := ⟨N, vPlusι I, inferInstance, rfl⟩
 
 theorem vPlusι_app_formOn_eq_zero_iff (i : Fin (N + 1)) {n : ℕ} {f : MvPolynomial (Fin (N + 1)) R}
     (hf : f.IsHomogeneous n) :
@@ -540,13 +499,6 @@ theorem mem_range_vPlusι_iff (x : PSpace R N) : x ∈ Set.range (vPlusι I) ↔
 theorem range_vPlusι : Set.range (vPlusι I) = ProjectiveSpectrum.zeroLocus (grading R N) I :=
   Set.ext fun x => mem_range_vPlusι_iff I x
 
-theorem exists_eq_pt_vPlus [Subsingleton (CommRing.Pic A)] (c : R →+* A) (ψ : Sp A ⟶ VPlus I)
-    (hψ : ψ ≫ vPlusι I ≫ PSpace.str R N = spMap c) :
-    ∃ (v : Fin (N + 1) → A) (hv : Ideal.span (Set.range v) = ⊤),
-      (∀ f ∈ I, eval₂ c v f = 0) ∧ ψ ≫ vPlusι I = pt c v hv := by
-  obtain ⟨v, hv, e⟩ := exists_eq_pt c (ψ ≫ vPlusι I) (by rw [Category.assoc, hψ])
-  exact ⟨v, hv, (exists_comp_vPlusι_eq_pt_iff I c v hv).1 ⟨ψ, e⟩, e⟩
-
 theorem isProjOver_comp_of_isClosedImmersion (g : Z ⟶ Y) [IsClosedImmersion g] {f : Y ⟶ Sp R}
     (h : IsProjOver f) : IsProjOver (g ≫ f) := by
   obtain ⟨N, φ, _, rfl⟩ := h
@@ -601,7 +553,6 @@ theorem linearι_preimage_chart_of_notMem {k : Fin (M + 1)} (hk : k ∉ Set.rang
   have : killHom R he (X k) = 0 := (aeval_X _ k).trans (dif_neg hk)
   exact (congrArg (Proj.basicOpen (grading R N)) this).trans (Proj.basicOpen_zero _)
 
-@[reassoc] theorem linearι_str : linearι R he ≫ PSpace.str R M = PSpace.str R N := by
   refine (Proj.mapAffineOpenCover (killHom R he)
     (irrelevant_le_map_of_surjective _ (killHom_surjective R he))).openCover.hom_ext _ _ fun s => ?_
   have key : ∀ (d : ℕ) (hd : 0 < d) (s : MvPolynomial (Fin (M + 1)) R) (hs : s ∈ grading R M d),
@@ -666,24 +617,6 @@ theorem isProjOver_of_disjoint_cover {ι : Type} [Finite ι] (f : Y ⟶ Sp R) (U
   convert isProjOver_sigmaDesc _ h using 1
   exact Sigma.hom_ext _ _ fun i => by rw [Sigma.ι_desc_assoc, Sigma.ι_desc]
 
-theorem pt_linearι {M : ℕ} {e : Fin (N + 1) → Fin (M + 1)} (he : Function.Injective e) (c : R →+* A)
-    (v : Fin (N + 1) → A) (hv : Ideal.span (Set.range v) = ⊤)
-    (hw : Ideal.span (Set.range (Function.extend e v 0)) = ⊤) :
-    pt c v hv ≫ linearι R he = pt c (Function.extend e v 0) hw := by
-  refine (ProjPoint.ofHom_map _ _ _ _).trans ?_
-  unfold pt
-  congr 1
-  refine ringHom_ext (fun r => ?_) (fun k => ?_)
-  · exact (congrArg (eval₂Hom c v) (killCompl_C he r)).trans ((eval₂Hom_C _ _ r).trans (eval₂Hom_C _ _ r).symm)
-  · rw [eval₂Hom_X']
-    by_cases hk : k ∈ Set.range e
-    · obtain ⟨i, rfl⟩ := hk
-      rw [he.extend_apply]
-      exact (congrArg (eval₂Hom c v) ((congrArg (killCompl he) (rename_X e i).symm).trans
-        (killCompl_rename_app he _))).trans (eval₂Hom_X' _ _ i)
-    · rw [Function.extend_apply' _ _ _ hk]
-      exact (congrArg (eval₂Hom c v) ((aeval_X _ k).trans (dif_neg hk))).trans (map_zero _)
-
 variable (R N) in
 
 theorem points_and_stability :
@@ -726,9 +659,5 @@ theorem points_and_stability :
     exact ψ.comp_algebraMap
   · have : Subsingleton (CommRing.Pic A) := h.elim (fun _ => inferInstance) id
     exact exists_eq_pt _ φ hφ
-
-example (h : Ideal.span (Set.range ![(2 : ℤ), 3]) = ⊤) (h' : Ideal.span (Set.range ![(-2 : ℤ), -3]) = ⊤) :
-    pt (RingHom.id ℤ) ![2, 3] h = pt (RingHom.id ℤ) ![-2, -3] h' :=
-  (pt_eq_pt_iff _ h h').2 ⟨-1, by decide⟩
 
 end GlobalTheory.ProjSpace

@@ -18,8 +18,6 @@ open Reduction AutomorphicForm RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-local notation "Γ₁" => rationalGLOne K n
-
 theorem exists_archProj_eq {g : normOneGL K n} (hg : (AdelicGLn.prodEquiv K n g).2 = 1) :
     ∃ C : ArchUnits K n, archProj K n C = g ∧
       (C : ArchMatrix K n) = archMat K n ((g : AdelicGLn.AdelicGL K n) :

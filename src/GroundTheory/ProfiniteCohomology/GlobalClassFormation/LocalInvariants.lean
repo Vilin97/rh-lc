@@ -12,8 +12,6 @@ open NumberField GroundTheory.Global FiniteSubfield IsDedekindDomain
 
 open scoped NumberField.LiesOver DirectSum
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield}

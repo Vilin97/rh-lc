@@ -139,11 +139,6 @@ def tanPt (hu : IsTanAtG t (chart U) u) : tEpsG (chart U) ⟶ t.G := Over.homMk 
 def transl (hu : IsTanAtG t (chart U) u) : tEpsG (chart U) ⊗ t.G ⟶ t.G :=
   snd _ t.G * (fst _ t.G ≫ tanPt t U u hu)
 
-def redPt : Over.mk (chart U) ⟶ tEpsG (chart U) :=
-  Over.homMk (spMap (TrivSqZeroExt.fstHom Γ(X, U.1) Γ(X, U.1) Γ(X, U.1)).toRingHom) (by
-    change _ ≫ spMap _ ≫ chart U = chart U
-    rw [← Category.assoc, spMap_fst_comp, Category.id_comp])
-
 end Group
 
 section Group2

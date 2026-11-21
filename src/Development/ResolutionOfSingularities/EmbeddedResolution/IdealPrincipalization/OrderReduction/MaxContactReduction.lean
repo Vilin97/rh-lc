@@ -191,14 +191,6 @@ def dropTrivialBoundary (T : MarkedIdealWithBoundary.{u}) : MarkedIdealWithBound
 theorem dropTrivialBoundary_def (T : MarkedIdealWithBoundary.{u}) :
     dropTrivialBoundary T = T.withBoundary (T.boundary.filter (fun D => decide (D ≠ ⊤))) := rfl
 
-@[simp] theorem dropTrivialBoundary_baseField (T : MarkedIdealWithBoundary.{u}) : (dropTrivialBoundary T).base = T.base := rfl
-
-@[simp] theorem dropTrivialBoundary_scheme (T : MarkedIdealWithBoundary.{u}) : (dropTrivialBoundary T).scheme = T.scheme := rfl
-
-@[simp] theorem dropTrivialBoundary_structureMorphism (T : MarkedIdealWithBoundary.{u}) : (dropTrivialBoundary T).structMap = T.structMap := rfl
-
-@[simp] theorem dropTrivialBoundary_ideal (T : MarkedIdealWithBoundary.{u}) : (dropTrivialBoundary T).ideal = T.ideal := rfl
-
 @[simp] theorem dropTrivialBoundary_mult (T : MarkedIdealWithBoundary.{u}) : (dropTrivialBoundary T).mult = T.mult := rfl
 
 @[simp] theorem dropTrivialBoundary_dim (T : MarkedIdealWithBoundary.{u}) : (dropTrivialBoundary T).krullDimSucc = T.krullDimSucc := rfl

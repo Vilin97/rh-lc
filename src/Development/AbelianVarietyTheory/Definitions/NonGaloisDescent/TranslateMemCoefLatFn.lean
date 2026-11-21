@@ -246,20 +246,6 @@ theorem Weight.first_good {p q : D.what₂.Tau → ℕ} (c : D.what₂.Tau → �
     simp only [Weight.first]
     split_ifs <;> first | omega | simp
 
-example (p : D.what₂.Tau → ℕ) (y : GLR D n) (τ : D.what₂.Tau) (i a : Fin n) (hi : i.val < p τ) :
-    aeval (fockPt (m := n) p y) (X (τ, i, a) : PolF D n n) = (y τ).val a i := by
-  simp [fockPt, hi]
-
-example (y : GLR D (n + 1)) (τ : D.what₂.Tau) (a : Fin (n + 1)) :
-    aeval (fockPt (m := 1) (fun _ => 0) y) (X (τ, 0, a) : PolF D 1 (n + 1)) = ((y τ)⁻¹).val (Fin.last n) a := by
-  simp [fockPt]
-
-example (w : Weight D n) (B u : GLR D n) :
-    fockGL m w B u 1 = ((∏ τ, GeneralLinearGroup.det (u τ) ^ (-w.c τ) : ℂˣ) : ℂ) • (1 : PolF D m n) := by
-  rw [fockGL_apply, map_one]
-  congr 2
-  simp [detFam, Finset.prod_inv_distrib]
-
 end GlobalTheory.ExportSeries
 
 end

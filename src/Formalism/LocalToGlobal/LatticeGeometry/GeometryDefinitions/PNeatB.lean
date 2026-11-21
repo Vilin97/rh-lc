@@ -12,10 +12,6 @@ section LG
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
-local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
-local notation "𝒮" => tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)
-
 theorem latS_mul_mem {R : Type} [CommRing R] [Algebra F R] (S : Subring (E ⊗[F] R))
     (Λ : Submodule (𝓞 E) (n → E)) {c : E ⊗[F] R} (hc : c ∈ S) {w : n → E ⊗[F] R}
     (hw : w ∈ latS (F := F) R S Λ) : (fun i => c * w i) ∈ latS (F := F) R S Λ :=

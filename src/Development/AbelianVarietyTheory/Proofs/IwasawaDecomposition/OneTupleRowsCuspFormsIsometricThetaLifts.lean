@@ -411,9 +411,6 @@ theorem famCast_heq (Sp : ℕ → Type) [∀ j, NormedAddCommGroup (Sp j)] [∀ 
   subst h
   rfl
 
-@[simp] theorem famCast_rfl (Sp : ℕ → Type) [∀ j, NormedAddCommGroup (Sp j)] [∀ j, InnerProductSpace ℂ (Sp j)] {i : ℕ}
-    (x : Sp i) : famCast Sp (rfl : i = i) x = x := rfl
-
 theorem yc_eq (D : D7) {j : ℕ} (hj : j < D.R.m) : Yc D j = D.sp.Y j := by
   unfold Yc
   rw [min_eq_left hj.le]

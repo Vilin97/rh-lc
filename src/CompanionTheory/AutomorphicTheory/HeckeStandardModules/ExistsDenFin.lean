@@ -10,8 +10,6 @@ namespace CompanionTheory.Split
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 theorem ALint_eq : ALint L = tensInt (F := L⁺) (AFplus L) (intOE L) (intAd L⁺) := by
   rw [ALint, tensInt]
   congr 2 <;> ext x

@@ -1,5 +1,8 @@
 import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.PeriodLowerBounds
+import Formalism.LocalRingCardinality.DataErr
+import Formalism.LocalRingCardinality.DataParams₂
+import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
+import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
 
 noncomputable section
 

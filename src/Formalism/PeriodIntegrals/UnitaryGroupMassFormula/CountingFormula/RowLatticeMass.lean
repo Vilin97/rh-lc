@@ -64,4 +64,3 @@ theorem row_lattice_mass : RowsMass := by
 end PI.UnitaryGroupMassFormula.CntFormula.RowsMassW
 
 variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
-example : Formalism.L2.SG.Pf.Cnt.RowsMass := PI.UnitaryGroupMassFormula.CntFormula.RowsMassW.row_lattice_mass

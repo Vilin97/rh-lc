@@ -19,11 +19,6 @@ variable {F E Ω : Type*} [Field F] [Field E] [Field Ω] [Algebra F E] [Algebra 
 def equivFieldRange (i : E →ₐ[F] Ω) : E ≃ₐ[F] i.fieldRange :=
   AlgEquiv.ofInjectiveField i
 
-@[simp]
-theorem coe_equivFieldRange (i : E →ₐ[F] Ω) (y : E) :
-    ((equivFieldRange i y : i.fieldRange) : Ω) = i y :=
-  rfl
-
 end Range
 
 section NormResidue

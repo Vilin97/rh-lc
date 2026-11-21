@@ -10,8 +10,6 @@ open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubf
 
 open scoped DirectSum
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield}
@@ -24,11 +22,6 @@ def unitsInvariantLimit (a : K.1ˣ) : (unitsLimitRep K).ρ.invariants :=
     apply Units.ext
     change (g : ℚ̄ ≃ₐ[ℚ] ℚ̄) (algebraMap K.1 ℚ̄ (a : K.1)) = algebraMap K.1 ℚ̄ (a : K.1)
     exact (IntermediateField.mem_fixingSubgroup_iff _ _).1 g.2 _ (a : K.1).2⟩
-
-@[simp]
-theorem coe_unitsInvariantLimit (a : K.1ˣ) :
-    ((Additive.toMul (unitsInvariantLimit K a : Additive ℚ̄ˣ) : ℚ̄ˣ) : ℚ̄) = algebraMap K.1 ℚ̄ (a : K.1) :=
-  rfl
 
 def globalCupClass (χ : Additive K.1.fixingSubgroup →ₜ+ QZ) (a : K.1ˣ) : cohomology (unitsLimitRep K) 2 :=
   (cupCharClassProf (unitsLimitRep K) χ).hom (unitsInvariantLimit K a)

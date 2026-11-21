@@ -6,8 +6,6 @@ open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheo
 
 namespace PositivityTheory.Lit1.GEN.W_killed_c
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 section GS
 
 theorem ratio_eq_one_of_cyclic (ℓ : ℕ) [Fact ℓ.Prime] (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1))) (hS : S.Finite)

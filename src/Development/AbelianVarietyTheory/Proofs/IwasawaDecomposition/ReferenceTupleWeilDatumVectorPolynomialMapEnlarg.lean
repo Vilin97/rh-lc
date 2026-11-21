@@ -15,20 +15,7 @@ namespace GlobalTheory.Mem.R3.Rw.WeilAtExt
 
 open Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.WeilFull GlobalTheory.Mem.R3.Rw.LiftExt
 
-local macro "ksub " h:ident x:ident y:term : tactic => `(tactic| (
-  have e : @Eq (type_of% $x) (by kexactB $y) $x := by kexactB (@eq_of_heq (type_of% $x) $x (by kexactB $y) (by kexactB $h)).symm
-  clear $h
-  subst e))
-
 set_option hygiene false in
-
-local macro "pre_sub" : tactic => `(tactic| (
-  rcases B' with ⟨P'⟩
-  change P' = B.toPre at hP
-  subst hP))
-
-local macro "keq " n:ident x:term:max y:term:max h:term:max : tactic => `(tactic|
-  have $n : @Eq (type_of% $x) $x (by kexactB $y) := by kexactB (@eq_of_heq (type_of% $x) $x (by kexactB $y) (by kexactB $h)))
 
 section Leaves
 
@@ -158,21 +145,6 @@ variable {S : a.D.what₂.Tau → SPar} {S' : a'.D.what₂.Tau → SPar} {M : DS
 
 set_option hygiene false in
 
-local macro "tie_cases" : tactic => `(tactic| (
-  pre_sub
-  ksub hW W' W
-  obtain ⟨H', s', l', ε', f', _, _, _, _⟩ := M'
-  rename_i n' i' _ _ _ _
-  obtain ⟨h1, h2, h3, h4, h5, h6, h7⟩ := h
-  dsimp only at h1 h2 h3 h4 h5 h6 h7
-  ksub h1 H' M.H
-  ksub h2 n' M.nacg
-  ksub h3 i' M.ips
-  ksub h4 s' M.σ
-  ksub h5 l' M.lam
-  ksub h6 ε' M.ε
-  ksub h7 f' M.fr))
-
 private theorem cart_heq (hP : B'.toPre = B.toPre) (hW : HEq W' W) (h : DSTie M' M) : HEq (cart M') (cart M) := by
   tie_cases
   exact (by with_unfolding_all exact ((HEq.refl (cart M)) :))
@@ -209,12 +181,6 @@ section Fields
 variable {B B' : Base} {C : Cols B} {C' : Cols B'} {a : Late B C} {a' : Late B' C'}
 
 set_option hygiene false in
-
-local macro "pre_cases" : tactic => `(tactic| (
-  pre_sub
-  have e : @Eq (type_of% i') (by kexactB i) i' := by kexactB (Fin.ext h : @Eq (type_of% i') (by kexactB i) i')
-  clear h
-  subst e))
 
 private theorem delta_heq (hP : B'.toPre = B.toPre) {i : Fin a.D.R.m} {i' : Fin a'.D.R.m} (h : (i : ℕ) = i') :
     HEq (RealDat.Delta i') (RealDat.Delta i) := by

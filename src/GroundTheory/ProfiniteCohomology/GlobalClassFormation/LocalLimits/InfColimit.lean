@@ -11,8 +11,6 @@ open CategoryTheory IsDedekindDomain NumberField IntermediateField GroundTheory.
 
 open scoped Pointwise NumberField.LiesOver
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield} {v : NumberField.InfinitePlace K.1}

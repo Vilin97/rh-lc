@@ -25,9 +25,6 @@ def trueEquiv (f : (Σ j, Fin (c j)) ≃ Fin t) (hc : c false = 0) : Fin (c true
     | false => exact absurd i.2 (by omega)
     | true => exact ⟨i, rfl⟩⟩
 
-@[simp] theorem trueEquiv_apply (f : (Σ j, Fin (c j)) ≃ Fin t) (hc : c false = 0) (i : Fin (c true)) :
-    trueEquiv f hc i = f ⟨true, i⟩ := rfl
-
 def reindexGL {m n : Type} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n] (e : m ≃ n) :
     GL m R →* GL n R :=
   Units.map (Matrix.reindexAlgEquiv R R e).toRingEquiv.toMonoidHom

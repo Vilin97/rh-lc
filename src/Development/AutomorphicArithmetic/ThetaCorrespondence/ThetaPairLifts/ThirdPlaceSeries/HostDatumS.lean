@@ -10,7 +10,6 @@ noncomputable section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions
 namespace Formalism.L2
 namespace Host
-local instance  (L : Fld) [FiniteDimensional ℚ L] : NumberField L := {}
 end Host
 section
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {K : MainNotions.G.Consts} {Y : DivX D}

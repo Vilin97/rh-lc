@@ -573,29 +573,6 @@ theorem classMass_bot {G : Type} [Group G] (K : Subgroup G) [K.FiniteIndex] :
     ⟨one_mem_stabAt _ _ _, fun _ _ => Subsingleton.elim _ _⟩, e]
   rfl
 
-theorem finiteClasses_of_finite {G : Type} [Group G] [Finite G] (Γ K : Subgroup G) : FiniteClasses Γ K :=
-  ⟨Quotient.finite _, fun _ => inferInstance⟩
-
-example : classMass (⊤ : Subgroup (Equiv.Perm (Fin 3))) ⊤ = 1 / 6 := by
-  rw [classMass_top_top, Nat.card_eq_fintype_card, Fintype.card_perm]
-  norm_num [Nat.factorial]
-
-example : classMass (⊥ : Subgroup (Equiv.Perm (Fin 3))) ⊥ = 6 := by
-  rw [classMass_bot, Subgroup.index_bot, Nat.card_eq_fintype_card, Fintype.card_perm]
-  norm_num [Nat.factorial]
-
-example : ¬ FiniteClasses (⊤ : Subgroup (Multiplicative ℤ)) ⊤ := fun h => by
-  haveI := h.2 1
-  exact not_finite_iff_infinite.2 inferInstance (Finite.of_injective
-    (fun n : Multiplicative ℤ => (⟨⟨n, trivial⟩, Subgroup.mem_top _⟩ : stabAt (⊤ : Subgroup (Multiplicative ℤ)) ⊤ 1))
-    fun x y e => congrArg (fun z => z.1.1) e)
-
 open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
-
-example {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
-    (J : Matrix (Fin 0) (Fin 0) E) : unitaryMass σ J ⊤ = 1 := by
-  haveI : Subsingleton (HA (Af F) σ J) := ⟨fun x y => Subtype.ext (Units.ext (Subsingleton.elim _ _))⟩
-  rw [unitaryMass, Subsingleton.elim (ratIn (Af F) σ J) ⊥, classMass_bot]
-  simp
 
 end GlobalTheory.Mass

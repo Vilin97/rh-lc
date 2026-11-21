@@ -27,9 +27,6 @@ section Generic
 
 variable {K : Type*} (R : Type*) [CommRing R] [IsDomain R] (ι : K → Type*)
 
-def genericPt : (Σ k, ι k) → FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :=
-  fun p => algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (X p)
-
 end Generic
 
 section Charts
@@ -169,12 +166,6 @@ end Joins
 section GenericJoin
 
 variable {K K' : Type*} (R : Type*) [CommRing R] [IsDomain R] (ι : K → Type) (ι' : K' → Type)
-
-def genericLeft : (Σ k, ι k) → FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (Sum.elim ι ι')) :=
-  fun p => genericPt R (Sum.elim ι ι') ⟨Sum.inl p.1, p.2⟩
-
-def genericRight : (Σ k, ι' k) → FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (Sum.elim ι ι')) :=
-  fun p => genericPt R (Sum.elim ι ι') ⟨Sum.inr p.1, p.2⟩
 
 end GenericJoin
 

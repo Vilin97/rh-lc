@@ -1,6 +1,6 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RegularLocalRingNormalDomain
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRegularAdjoinRoots
+import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.Integral
 
 open IsLocalRing TensorProduct
 

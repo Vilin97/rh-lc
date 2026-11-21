@@ -56,6 +56,3 @@ theorem exists_finset_eq_sum_cind {X : Type} [AddCommGroup X] [TopologicalSpace 
     rw [← QuotientAddGroup.eq_iff_sub_mem.mpr hYy0]
 
 end GlobalTheory.LinSchur
-
-example : ∀ {X : Type} [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup X] (L : AddSubgroup X), IsOpen (L : Set X) → ∀ f ∈ GlobalTheory.WeilM.SB X, (∀ Y, ∀ C ∈ L, f (Y + C) = f Y) → ∃ F : Finset X, f = ∑ y ∈ F, f y • GlobalTheory.LinSchur.cind L y :=
-  fun L hL f hf hp => GlobalTheory.LinSchur.exists_finset_eq_sum_cind L hL f hf hp

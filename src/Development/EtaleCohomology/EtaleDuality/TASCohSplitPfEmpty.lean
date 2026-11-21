@@ -1,4 +1,4 @@
-import Development.EtaleCohomology.EtaleDuality.PointClasses
+import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC Opposite CochainComplex.HomComplex

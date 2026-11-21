@@ -1,5 +1,4 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.IsOneCocycleOnSubgroup
 import Development.AbelianVarietyTheory.Definitions.Foundations.IsTopWTopWOfExists
 open GlobalTheory.KCoh Polynomial
 

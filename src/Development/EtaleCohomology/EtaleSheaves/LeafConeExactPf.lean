@@ -1,4 +1,4 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafDiagCut
+import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
 
 noncomputable section
 open CategoryTheory Limits CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

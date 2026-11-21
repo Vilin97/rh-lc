@@ -127,22 +127,4 @@ theorem TautBase.c₀_zero {o W : Type} [CommRing o] [CommRing W] [IsLocalRing W
   rw [add_zero] at h
   exact (mul_eq_left.mp h.symm)
 
-theorem TautBase.c₀_neg {o W : Type} [CommRing o] [CommRing W] [IsLocalRing W] (T : TautBase o W) (a : Fin T.r → ℤ) :
-    T.c₀ (-a) = (T.c₀ a)⁻¹ := by
-  have h := T.c₀_add (-a) a
-  rw [neg_add_cancel, T.c₀_zero] at h
-  exact eq_inv_of_mul_eq_one_left h.symm
-
-example {o W : Type} [CommRing o] [CommRing W] [IsLocalRing W] (b : o →+* W) (r : ℕ) :
-    (TautBase.torus b r 1 0 (fun _ _ => rfl)).r = r := rfl
-
-example : ∃ T : TautBase ℤ ℚ, T.g = 1 ∧ T.r = 1 := by
-  let E : _root_.WeierstrassCurve ℚ := ⟨0, 0, 0, 0, 1⟩
-  have : E.IsElliptic := ⟨by
-    rw [isUnit_iff_ne_zero]
-    norm_num [E, _root_.WeierstrassCurve.Δ, _root_.WeierstrassCurve.b₂, _root_.WeierstrassCurve.b₄,
-      _root_.WeierstrassCurve.b₆, _root_.WeierstrassCurve.b₈]⟩
-  obtain ⟨T, -, -, h₁, h₂, -⟩ := TautBase.exists_ell (Int.castRingHom ℚ) E 1
-  exact ⟨T, h₁, h₂⟩
-
 end GlobalTheory.PolDeg

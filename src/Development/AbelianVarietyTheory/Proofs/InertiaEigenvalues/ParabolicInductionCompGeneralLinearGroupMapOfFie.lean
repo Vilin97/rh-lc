@@ -40,15 +40,6 @@ def pullFun (e : (Σ a, m a) ≃ n) {ρ₁ : Representation ℂ (Levi K₁ m) W}
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
-@[simp] theorem pullFun_apply (e : (Σ a, m a) ≃ n) {ρ₁ : Representation ℂ (Levi K₁ m) W}
-    {ρ₂ : Representation ℂ (Levi K₂ m) W}
-    (s : GL n K₂ →* GL n K₁) (hs : Continuous s) (t : Levi K₂ m →* Levi K₁ m)
-    (hP : ∀ p : parab K₂ e, s p ∈ parab K₁ e)
-    (hL : ∀ p : parab K₂ e, leviProj K₁ e ⟨s p, hP p⟩ = t (leviProj K₂ e p))
-    (hρ : ∀ L, ρ₂ L = ρ₁ (t L)) (hδ : ∀ L, deltaHalf K₁ m (t L) = deltaHalf K₂ m L)
-    (f : IndSp e ρ₁) (x : GL n K₂) :
-    (pullFun e s hs t hP hL hρ hδ f).1.1 x = f.1.1 (s x) := rfl
-
 end Gen
 
 section Gen2

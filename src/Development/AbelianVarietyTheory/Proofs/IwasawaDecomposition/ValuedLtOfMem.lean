@@ -13,8 +13,6 @@ namespace GlobalTheory.Mem.Col2.PtExist
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-local notation "ι" => Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F)
-
 theorem ad_ext {a b : AfE F E} (h : ∀ P, adAt F P a = adAt F P b) : a = b :=
   (afIso F E).injective (FiniteAdeleRing.ext _ h)
 
@@ -61,8 +59,6 @@ theorem hasRes_redA [StarRing E] (P : HeightOneSpectrum (𝓞 E)) {a : AfE F E} 
   exact h1
 
 variable [StarRing E] (hc : CMData F E)
-
-local notation "σ" => Formalism.UG.sigR (CMData.sig hc) (FiniteAdeleRing (𝓞 F) F)
 
 theorem sig_sig (z : AfE F E) : σ (σ z) = z := DetClass.sigR_sigR (fun x => star_star x) z
 
@@ -350,8 +346,5 @@ theorem exists_isPtOf_cm (n : ℕ) (ST SG Q : Finset (HeightOneSpectrum (𝓞 E)
     rfl
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-theorem exists_isPtOf : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (n : ℕ) (ST SG Q : Finset (HeightOneSpectrum (𝓞 H.E))) (p : DecoF H.E n ST SG Q), Disjoint ST SG → Disjoint ST Q → Disjoint SG Q → (∀ P ∈ uSG ST (uSG SG Q), conjPrime₂ P ∉ uSG ST (uSG SG Q)) → ∃ g : GL (Fin n) (AfE H.F H.E), IsPtOf (host_cmData R H) g p :=
-  fun R H n ST SG Q p => exists_isPtOf_cm (host_cmData R H) n ST SG Q p
 
 end GlobalTheory.Mem.Col2.PtExist

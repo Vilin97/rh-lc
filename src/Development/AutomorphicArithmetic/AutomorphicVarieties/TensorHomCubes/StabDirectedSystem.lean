@@ -38,24 +38,6 @@ theorem stab_apply {n m : ℕ} (h : n ≤ m) (g : GL (Fin n) R) (i j : Fin m) :
       if h : (i : ℕ) < n ∧ (j : ℕ) < n then (g : Matrix (Fin n) (Fin n) R) ⟨i, h.1⟩ ⟨j, h.2⟩
       else if i = j then 1 else 0 := rfl
 
-instance stab_directedSystem : DirectedSystem (fun n : ℕ => GL (Fin n) R) (fun n m h => stab R n m h) where
-  map_self n g := by
-    ext i j
-    simp [stab_apply]
-  map_map k m n hnm hmk g := by
-    ext i j
-    simp only [stab_apply]
-    split_ifs <;> simp_all [Fin.ext_iff] <;> omega
-
-def GLinf : Type := DirectLimit (fun n : ℕ => GL (Fin n) R) (stab R)
-
-instance : Group (GLinf R) := inferInstanceAs (Group (DirectLimit (fun n : ℕ => GL (Fin n) R) (stab R)))
-
-def toGLinf (n : ℕ) : GL (Fin n) R →* GLinf R where
-  toFun g := (⟦⟨n, g⟩⟧ : DirectLimit (fun n : ℕ => GL (Fin n) R) (stab R))
-  map_one' := (DirectLimit.one_def n).symm
-  map_mul' g g' := (DirectLimit.mul_def (G := fun n : ℕ => GL (Fin n) R) (f := stab R) n g g').symm
-
 def Unimodular {n : ℕ} (v : Fin n → R) : Prop := Ideal.span (Set.range v) = ⊤
 
 def StableRangeLe (s : ℕ) : Prop :=

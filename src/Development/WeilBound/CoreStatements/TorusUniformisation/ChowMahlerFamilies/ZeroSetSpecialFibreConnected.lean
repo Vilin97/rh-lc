@@ -2,7 +2,7 @@ import Mathlib
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.LevelSectionsExactKernelLocusOpen
 import Development.AutomorphicSpectrum.Proofs.GeometryProofs.StalkClosedPointToGermTop
 import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenPtSpecializesOfSpecializes
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ZariskiConnected
+import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ZariskiSplit
 import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.FormalFunctions
 open AlgebraicGeometry CategoryTheory Limits GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Flat
 

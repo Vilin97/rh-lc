@@ -93,11 +93,6 @@ def blockOne {k : Type} [Field k] {n : ℕ} (Q : Matrix (Fin n) (Fin n) k) : Mat
 section
 variable {k : Type} [Field k] {n : ℕ}
 
-@[simp] theorem blockOne_zero_zero (Q : Matrix (Fin n) (Fin n) k) : blockOne Q 0 0 = 1 := rfl
-@[simp] theorem blockOne_zero_succ (Q : Matrix (Fin n) (Fin n) k) (b : Fin n) : blockOne Q 0 b.succ = 0 := rfl
-@[simp] theorem blockOne_succ_zero (Q : Matrix (Fin n) (Fin n) k) (a : Fin n) : blockOne Q a.succ 0 = 0 := rfl
-@[simp] theorem blockOne_succ_succ (Q : Matrix (Fin n) (Fin n) k) (a b : Fin n) : blockOne Q a.succ b.succ = Q a b := rfl
-
 theorem blockOne_mul (Q R : Matrix (Fin n) (Fin n) k) : blockOne Q * blockOne R = blockOne (Q * R) := by
   ext a b
   cases a using Fin.cases <;> cases b using Fin.cases <;> simp [Matrix.mul_apply, Fin.sum_univ_succ]

@@ -298,10 +298,6 @@ variable (K L) in
 def herbrandPhiOrderIso : ℝ ≃o ℝ :=
   StrictMono.orderIsoOfSurjective (herbrandPhi K L) herbrandPhi_strictMono herbrandPhi_surjective
 
-@[simp]
-theorem herbrandPhiOrderIso_apply (u : ℝ) : herbrandPhiOrderIso K L u = herbrandPhi K L u :=
-  rfl
-
 variable (K L) in
 
 def herbrandPsi (v : ℝ) : ℝ :=

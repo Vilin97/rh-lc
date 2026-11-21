@@ -32,9 +32,6 @@ theorem cst_sum {A : Type} [CommRing A] {Z : Scheme.{0}} (q : Z ⟶ Sp A) (z : Z
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [cst, gs_eq q z ⊤ trivial, map_sum]
 
-theorem cst_zero {A : Type} [CommRing A] {Z : Scheme.{0}} (q : Z ⟶ Sp A) (z : Z) : cst q z 0 = 0 := by
-  simp only [cst, gs_eq q z ⊤ trivial, map_zero]
-
 theorem exists_coeff {A : Type} [CommRing A] {X Y : Scheme.{0}} {L : LB X} (hL : L.IsLB) {K K' : Type} [Fintype K]
     [Fintype K'] {φ : K → (Y ⟶ X)} {ε : K → ℤ} {φ' : K' → (Sp A ⟶ X)} {ε' : K' → ℤ}
     (s : LB.Sec (LB.LinComb L φ ε)) (e : Sp A ⟶ Y) (t : LB.Gen (LB.LinComb L φ' ε')) (ht : t.IsGen)

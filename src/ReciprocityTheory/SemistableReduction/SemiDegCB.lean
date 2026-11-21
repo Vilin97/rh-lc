@@ -16,12 +16,6 @@ def consZero (K : Type) [Field K] (k : ℕ) : (Fin k → K) →ₗ[K] (Fin (k + 
     ext i
     refine Fin.cases ?_ (fun j => ?_) i <;> simp
 
-@[simp] theorem consZero_zero (K : Type) [Field K] {k : ℕ} (y : Fin k → K) :
-    consZero K k y 0 = 0 := rfl
-
-@[simp] theorem consZero_succ (K : Type) [Field K] {k : ℕ} (y : Fin k → K) (i : Fin k) :
-    consZero K k y i.succ = y i := rfl
-
 theorem consZero_injective (K : Type) [Field K] (k : ℕ) : Function.Injective (consZero K k) := by
   intro x y h
   funext i

@@ -22,8 +22,6 @@ def datR : PG.Dat (R ⊗[F] E) (Fin M) r where
   z := ratV (F := F) R P.z
   tz := inclR (F := F) R ((algebraMap F E (-T))⁻¹)
 
-theorem datR_h (x y : Fin M → R ⊗[F] E) : (datR R σ J P T).h x y = hR R σ J x y := rfl
-
 theorem sigR_inclR (x : E) : sigR R σ (inclR (F := F) R x) = inclR (F := F) R (σ x) := by
   show Algebra.TensorProduct.map (AlgHom.id F R) σ (Algebra.TensorProduct.includeRight x) =
     Algebra.TensorProduct.includeRight (σ x)

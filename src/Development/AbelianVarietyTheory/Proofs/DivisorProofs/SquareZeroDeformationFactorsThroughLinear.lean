@@ -24,10 +24,6 @@ def derOf (h : B →+* DualNumber K) (hfst : ∀ b, (h b).fst = algebraMap B K b
         RingHom.id_apply]
       ring)
 
-@[simp] lemma derOf_apply (h : B →+* DualNumber K) (hfst : ∀ b, (h b).fst = algebraMap B K b)
-    (hc : ∀ a : R₀, (h (algebraMap R₀ B a)).snd = 0) (b : B) :
-    derOf h hfst hc b = (h b).snd := rfl
-
 lemma derOf_injective (h h' : B →+* DualNumber K) (hfst : ∀ b, (h b).fst = algebraMap B K b)
     (hc : ∀ a : R₀, (h (algebraMap R₀ B a)).snd = 0)
     (hfst' : ∀ b, (h' b).fst = algebraMap B K b)

@@ -5,4 +5,4 @@ import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeries₂.Zuck
 import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeries₂.Poulsen
 import Formalism.PeriodIntegrals.DSInfCharCap
 import Formalism.PeriodIntegrals.LowCyc
-import Formalism.PeriodIntegrals.HCFdeg
+import Formalism.PeriodIntegrals.UpqRep

@@ -14,9 +14,6 @@ variable {𝒪 : Type*} [CommRing 𝒪] [IsDomain 𝒪] [IsDiscreteValuationRing
   (K : Type*) [Field K] [Algebra 𝒪 K] [IsFractionRing 𝒪 K] (W : WeierstrassCurve 𝒪)
   [(W.map (algebraMap 𝒪 K)).IsElliptic] [DecidableEq K] [DecidableEq (ResidueField 𝒪)]
 
-local notation "ι" => algebraMap 𝒪 K
-local notation "ρ" => residue 𝒪
-
 omit [DecidableEq (ResidueField 𝒪)] in
 
 theorem add_notMem_of_notMem_range {X₁ Y₁ X₂ Y₂ : K} (h₁ : (curveK K W).Nonsingular X₁ Y₁)
@@ -94,9 +91,6 @@ def E0Subgroup : AddSubgroup (curveK K W).Point where
   zero_mem' := zero_mem_E0Set K W
   add_mem' hP hQ := (add_mem_E0Set_and_reducePoint_add K W hP hQ).1
   neg_mem' hP := (neg_mem_and_reduce K W hP).1
-
-theorem mem_E0Subgroup_iff (P : (curveK K W).Point) : P ∈ E0Subgroup K W ↔ P ∈ E0Set K W :=
-  Iff.rfl
 
 def reduceE0Hom : E0Subgroup K W →+ (curveRed W).Point where
   toFun P := reducePoint K W P

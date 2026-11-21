@@ -132,10 +132,6 @@ theorem cls_cubeLB {T : Over S} (x : Fin n → (T ⟶ G)) {L : LB G.left} (hL : 
     cls (cubeLB G x L) (LB.isLB_linComb hL _ _) = cubeCls x (cls L hL) :=
   cls_linComb hL _ _ _
 
-theorem cubeCls_add {T : Over S} (x : Fin n → (T ⟶ G)) (c d : Pic G.left) :
-    cubeCls x (c + d) = cubeCls x c + cubeCls x d := by
-  simp only [cubeCls, map_add (f := _), smul_add, Finset.sum_add_distrib]
-
 theorem pull_cubeCls {T T' : Over S} (ρ : T' ⟶ T) (x : Fin n → (T ⟶ G)) (c : Pic G.left)
     (y : Fin n → (T' ⟶ G)) (h : ∀ i, y i = ρ ≫ x i) : cubeCls y c = pull ρ.left (cubeCls x c) := by
   set_option synthInstance.maxHeartbeats 100000 in
@@ -148,8 +144,6 @@ end Cube
 section Triple
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {S : Scheme.{0}} (t : SAB H S) {T : Over S}
-
-abbrev ppCls : Pic t.G.left := cls t.PP.L t.PP.isLB
 
 end Triple
 

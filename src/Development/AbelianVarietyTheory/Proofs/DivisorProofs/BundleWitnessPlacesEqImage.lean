@@ -1,8 +1,20 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.MapBaseTiedSel
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.IsLinked
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RealPins3RealTOf
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RealPinsRealTOf
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ColumnCompatibleSelection
+import Development.AbelianVarietyTheory.Definitions.Divisors.BaseRankDimension
+import Development.AbelianVarietyTheory.Definitions.Divisors.RowSideOfCompatibleThetaPair
+import Formalism.LocalToGlobal.IndefiniteReal.NonzeroIndexPlaceIndepConstants
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ThetaChr
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.STiesR
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SameDegreeZeroFormsSelf
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DivisionPairOfAdelicFormsFaceColumnsData
+import Formalism.LocalToGlobal.CarriedPlMap
+import Formalism.LocalToGlobal.SelSide
+import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.TwistedCharacterValue
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TwArgs
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.DivRows3GIff
+import Formalism.LocalToGlobal.Divisibility.ColPins
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ComplexSidePlacesIffMemNonzeroIndexPlaces
+import Formalism.LocalToGlobal.Divisibility.TupUsed
 open Formalism.BasicNotions Formalism.MainNotions NumberField IsDedekindDomain
 open Formalism.L2 Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Cx Formalism.IndefR.Lev
 open GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Top GlobalTheory.Mem.Top.Bl GlobalTheory.Mem.R3
@@ -34,20 +46,5 @@ theorem image_refl {E : Type} [Field E] [NumberField E] (f : E ≃+* E) (hf : f 
 
 open Classical in
 set_option maxHeartbeats 4000000 in
-
-theorem pgEq_of_linked : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (p : Prm hL), GlobalTheory.Fc.EvP fun _ K => ∀ (q : WPt p.s K) (c : ℝ) (b : GlobalTheory.Fc.Bundle (q.w.D q.Z) q.O c) (w : BWit q b), q.O.L.sc = K.s → (open Classical in w.x.R.Pg = b.R.T.ker.Pr.vGs.image (Formalism.L2.Host.CT.plMap b.R.T.ker.seam.iE)) := by
-  intro hL p
-  refine GlobalTheory.Fc.EvP.of_all ?_
-  intro _ K _ q c b w _
-  have hk := w.recPin.k.std
-  rw [image_congr hk.X_eq hk.seam hk.Pr]
-  have hl := q.x.what₂.r.z.lev.Pg
-  obtain ⟨x, a, ax, y, _⟩ := w
-  cases ax
-  obtain ⟨Dc, Sp, Zsc, lam, err, lam_eq, x, pack, _⟩ := a
-  obtain ⟨G, grp, fin, Pl0, I0, T0, A3, core, alg, R, F, cG, _⟩ := x
-  dsimp only at pack ⊢
-  cases pack
-  exact hl.trans (image_refl _ rfl _).symm
 
 end GlobalTheory.Div.PgTie

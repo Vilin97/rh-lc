@@ -149,18 +149,6 @@ theorem framepf_Ψα_Lam (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (x :
   rw [mem_LamPS]
   exact ⟨hP1, hΔ, hl⟩
 
-def framepf_α (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) :
-    ↥(LamLA W T π' Eπ h' c ⊤) →ₗ[O] QLamP W T π' Eπ h' M c :=
-  (Submodule.mkQ _).comp (LinearMap.codRestrict (LamPS W T Eπ h' c)
-    (((framepf_Ψα Bs π' c hπ0 hΔπ hR2 γ0 hu H).restrictScalars O).comp (LamLA W T π' Eπ h' c ⊤).subtype)
-    (fun x => framepf_Ψα_Lam Bs π' c hπ0 hΔπ hR2 γ0 hu Eπ hEu hEΔ h' H x x.2))
-
-theorem framepf_α_apply (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (x : W.EE ⊗[O] LcQ W T π' c)
-    (hx : x ∈ LamLA W T π' Eπ h' c ⊤) :
-    framepf_α Bs π' c hπ0 hΔπ hR2 γ0 hu Eπ hEu hEΔ h' M H ⟨x, hx⟩ =
-      mkP W T π' Eπ h' M c (framepf_Ψα Bs π' c hπ0 hΔπ hR2 γ0 hu H x)
-        (framepf_Ψα_Lam Bs π' c hπ0 hΔπ hR2 γ0 hu Eπ hEu hEΔ h' H x hx) := rfl
-
 include hπ0 hΔπ γ0 in
 
 theorem framepf_Ψα_J (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (x : W.EE ⊗[O] LcQ W T π' c)
@@ -171,14 +159,6 @@ theorem framepf_Ψα_J (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (x : W
   exact Submodule.mem_map.2 ⟨_, framepf_Ψα_toLA Bs π' c hπ0 hΔπ hR2 γ0 hu H t, rfl⟩
 
 include hπ0 hΔπ γ0 in
-
-theorem framepf_α_J (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (x : W.EE ⊗[O] LcQ W T π' c)
-    (hx : x ∈ LamLA W T π' Eπ h' c ⊤) (hJ : x ∈ JLA W T π' Eπ h' M c) :
-    framepf_α Bs π' c hπ0 hΔπ hR2 γ0 hu Eπ hEu hEΔ h' M H ⟨x, hx⟩ = 0 := by
-  rw [framepf_α_apply]
-  unfold mkP
-  rw [Submodule.Quotient.mk_eq_zero, Submodule.mem_comap, Submodule.coe_subtype]
-  exact framepf_Ψα_J Bs π' c hπ0 hΔπ hR2 γ0 hu Eπ h' M H x hJ
 
 end Local
 

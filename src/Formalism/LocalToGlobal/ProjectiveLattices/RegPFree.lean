@@ -42,10 +42,4 @@ def regular₂ {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) : Prop :=
 
 variable {Xo c}
 
-theorem regular₂.int {r : ℕ} {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} (h : regular₂ Xo c U) {a n} (hd : Dom a n)
-    {f : Rul Xo c} (hf : f ∈ cusp Xo c U a n)
-    (h0 : ∀ la, ∀ v ∈ valSet Xo c (algCls Xo c) la, 0 ≤ v f) :
-    ∀ la, ∀ v ∈ valSet Xo c (trivialClassCondition Xo c) la, 0 ≤ v f :=
-  fun la v hv => (h.1.1 ⟨(a, n), hd⟩ ⟨f, hf⟩ fun la y => h0 la y.1 y.2).1 la ⟨v, hv⟩
-
 end Formalism.L2.PjFree

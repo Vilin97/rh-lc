@@ -1,6 +1,5 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.Regularisation.Statements
-
 import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshMoll
 import GroundTheory.HeightsAndTheta.Heights.Regularisation.StatementsTruncPsh
 import GroundTheory.HeightsAndTheta.Heights.Regularisation.StatementsTruncTransfer

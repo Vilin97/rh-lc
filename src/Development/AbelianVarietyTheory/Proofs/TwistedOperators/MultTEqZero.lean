@@ -276,11 +276,6 @@ private theorem sum_smul_T_update_eq_zero_of_sum_eq_zero {D : D7} {θ : D.what�
 variable {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)} {V : HSp D}
   {S : D.what₂.Tau → SPar} {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ}
 
-theorem intersection_update_fsHerm_neg_one {T : MMap M} (hT : IsMultMap θ M J χ T) (τ : D.what₂.Tau) (A : M.sm τ →ₗ[ℂ] M.sm τ) {ι : Type} [Fintype ι]
-    (c : ι → ℂ) (v : ι → M.Vec) (h : ∑ i, c i • T (v i) = 0) :
-    ∑ i, c i • T (Function.update (v i) τ (A (v i τ))) = 0 := by
-  exact sum_smul_T_update_eq_zero_of_sum_eq_zero hT.equiv hT.cont τ A c v h
-
 private theorem sum_smul_T_map_eq_zero_of_sum_eq_zero {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)} {V : HSp D}
     {S : D.what₂.Tau → SPar} {M : DSModel V S} {T : MMap M} (heq : ∀ τ, ∀ g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ), ∀ (v : M.Vec) (w : M.sm τ),
       (w : M.H τ) = M.rep τ g (v τ) → T (Function.update v τ w) = rTr V (atTau θ V τ g) (T v))
@@ -310,10 +305,6 @@ private theorem sum_smul_T_map_eq_zero_of_sum_eq_zero {D : D7} {θ : D.what₂.T
       simp only [hv]
       exact h1
   simpa using step Finset.univ
-
-theorem slots {T : MMap M} (hT : IsMultMap θ M J χ T) (A : ∀ τ, M.sm τ →ₗ[ℂ] M.sm τ) {ι : Type} [Fintype ι]
-    (c : ι → ℂ) (v : ι → M.Vec) (h : ∑ i, c i • T (v i) = 0) : ∑ i, c i • T (fun τ => A τ (v i τ)) = 0 := by
-  exact sum_smul_T_map_eq_zero_of_sum_eq_zero hT.equiv hT.cont A c v h
 
 private theorem sobCont_zero_twisted_operators {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (Lie : Set (Matrix (Fin n) (Fin n) ℂ)) (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) :

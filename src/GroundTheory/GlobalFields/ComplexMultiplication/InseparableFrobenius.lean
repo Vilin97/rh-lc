@@ -87,9 +87,6 @@ noncomputable def frobeniusPoint (L : Type*) [Field L] [Algebra F L] [CharP L p]
 
 variable {L : Type*} [Field L] [Algebra F L] [CharP L p]
 
-@[simp]
-theorem frobeniusPoint_zero : frobeniusPoint E p L 0 = 0 := rfl
-
 theorem frobeniusPoint_some {x y : L} (h : (E.baseChange L).toAffine.Nonsingular x y) :
     frobeniusPoint E p L (.some x y h) = .some (x ^ p) (y ^ p) (nonsingular_pow E p h) := rfl
 

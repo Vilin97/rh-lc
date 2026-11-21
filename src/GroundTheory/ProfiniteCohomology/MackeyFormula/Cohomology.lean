@@ -48,11 +48,6 @@ def mackeyConjₜ (x : G) : mackeySubgroup (V : Subgroup G) ι.toMonoidHom x →
   ⟨mackeyConj (V : Subgroup G) ι.toMonoidHom x,
     continuous_mackeyConj V (continuous_toMonoidHom ι) x⟩
 
-@[simp]
-theorem mackeyConjₜ_toMonoidHom (x : G) :
-    (mackeyConjₜ V ι x).toMonoidHom = mackeyConj (V : Subgroup G) ι.toMonoidHom x :=
-  rfl
-
 end Conj
 
 variable [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]

@@ -63,10 +63,6 @@ lemma ofNatB (n : ℕ) [n.AtLeastTwo] : (OfNat.ofNat n : K) ∈ unitBall K := by
 
 end
 
-macro "change_aux_intm" : tactic => `(tactic| (repeat (first
-  | assumption | apply ofNatB
-  | apply add_mem | apply sub_mem | apply mul_mem | apply pow_mem | apply neg_mem)))
-
 lemma bmem {K : Type u} [NormedField K] [IsUltrametricDist K] (W : WeierstrassCurve K)
     (h1 : W.a₁ ∈ unitBall K) (h2 : W.a₂ ∈ unitBall K) (h3 : W.a₃ ∈ unitBall K)
     (h4 : W.a₄ ∈ unitBall K) (h6 : W.a₆ ∈ unitBall K) :

@@ -190,11 +190,6 @@ private theorem hasSat_invT {F : Type} [Field F] [NumberField F] [IsTotallyReal 
   refine InvT.hasSatGL_invT e (fun g x => ?_) hB
   rw [TR.CuspSub.locRep_eq, TR.CuspSub.locRep_eq, he, InvT.locGL_invT]
 
-private theorem exDual : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (a : ℕ) (π : TR.CuspSub F a),
-    ∃ π' : TR.CuspSub F a, IsInvTOf π π' := fun F _ _ _ a π =>
-  let ⟨π', h, _⟩ := UpperTheory.exists_contragredient_cuspSub F a π
-  ⟨π', h⟩
-
 private theorem isTwistOf_twist {F : Type} [Field F] [NumberField F] [IsTotallyReal F] {a : ℕ} (π : TR.CuspSub F a)
     (χ : HChar F) : IsTwistOf π χ (π.twist χ) := by
   refine ⟨π.toTwist χ, (TR.dchi χ).toLinearMap, fun z u hu => ?_, fun k φ => ?_, fun k φ => ?_, fun X φ => ?_⟩
@@ -202,20 +197,3 @@ private theorem isTwistOf_twist {F : Type} [Field F] [NumberField F] [IsTotallyR
     rw [e]
     exact TR.chiInf_expU χ z
   all_goals simp [TR.CuspSub.op_toTwist, TR.opMul, TR.opAdd]
-
-theorem UpperTheory.V.Af.selfDualQ :
-    UpperTheory.V.Af.Hypotheses₂ → UpperTheory.V.Af.SelfDualQ := by
-  intro H n hn wt l _ Ω _ _ _ ι r π θ hθ hr hπ
-  obtain ⟨art, ha⟩ := H.litN.aut.art ℚ Ω
-  obtain ⟨χ, a, h1, h2⟩ := exists_hchar ha ι hθ ((n : ℤ) - 1)
-  refine ⟨χ, ?_, art, a, ha, h1, h2⟩
-  obtain ⟨π₁, h₁⟩ := exDual ℚ n π
-  obtain ⟨B, hl, hr', hf, hc, hX⟩ := H.gkR ℚ n π
-  refine isSelfDualBy_of_iso B hl hr' hf hc hX h₁ (isTwistOf_twist π₁ χ) (H.smoR ℚ n hn _ _ ?_)
-  have h0 : Ideal.span {((l : ℕ) : 𝓞 ℚ)} ≠ 0 := by
-    rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]
-    exact_mod_cast (Fact.out : l.Prime).ne_zero
-  have hl : ∀ᶠ v : HeightOneSpectrum (𝓞 ℚ) in Filter.cofinite, ((l : ℕ) : 𝓞 ℚ) ∉ v.asIdeal :=
-    (Ideal.finite_factors h0).subset fun v hv => Ideal.dvd_span_singleton.mpr (not_not.1 hv)
-  filter_upwards [hπ.2, hl, (GlobalTheory.Mem.UnrAe.unr_ae_and_level ℚ χ).1] with w ⟨S, hS, hE⟩ hw hu
-  exact ⟨S, hS, sat_stable hr ha h2 hw hu hE ▸ (hasSat_invT h₁ hS).twist hu⟩

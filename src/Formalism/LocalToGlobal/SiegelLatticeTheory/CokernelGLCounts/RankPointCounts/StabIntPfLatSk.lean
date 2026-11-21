@@ -82,12 +82,6 @@ def TwistC : Prop :=
 
 variable (D) in
 
-def SelfIdxC : Prop :=
-  ∀ (w : Point D.host.E (D.R.rS + 1)) (q : FreeE w), selfP w q →
-    (Λq w q).relIndex ((Iq w q : Submodule (𝓞 D.host.E) D.host.E).toAddSubgroup) ≠ 0
-
 variable (D) in
-
-def OddC : Prop := Odd (gS D)
 
 end Formalism.L2.SG.Pf.StabIntLat

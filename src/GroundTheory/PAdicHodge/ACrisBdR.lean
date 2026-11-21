@@ -16,9 +16,6 @@ section Span
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-
 def dpowSpan (ξ : AInf K p) : Submodule (AInf K p) 𝔸 :=
   Submodule.span (AInf K p) (Set.range fun n => dpow n ξ)
 
@@ -106,10 +103,6 @@ theorem subring_pow_dvd_iff {S : Subring Q} (n : ℕ) (x : S) :
     exact ⟨s, s.2, by simp⟩
   · rintro ⟨s, hs, h⟩
     exact ⟨⟨s, hs⟩, Subtype.ext (by simpa using h)⟩
-
-private theorem mem_span_singleton_pow_smul_top {R : Type*} [CommRing R] (x y : R) (n : ℕ) :
-    y ∈ (Ideal.span {x} ^ n • ⊤ : Submodule R R) ↔ x ^ n ∣ y := by
-  rw [Ideal.smul_eq_mul, Ideal.mul_top, Ideal.span_singleton_pow, Ideal.mem_span_singleton]
 
 theorem isPrecomplete_of_surjective {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B)
     (hf : Function.Surjective f) (a : A) [IsPrecomplete (Ideal.span {a}) A] :
@@ -201,9 +194,6 @@ section Quot
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
-
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
 
 variable (K p) in
 
@@ -324,9 +314,6 @@ section Iota
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
-
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
 
 variable (K p) in
 

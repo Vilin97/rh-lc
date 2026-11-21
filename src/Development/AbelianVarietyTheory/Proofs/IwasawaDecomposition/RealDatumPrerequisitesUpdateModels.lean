@@ -2,7 +2,7 @@ import Mathlib
 import Formalism.LocalToGlobal.IndefiniteReal.LinksExistW
 import Formalism.LocalToGlobal.IndefiniteReal.ZeroPartEigenvalueConvention
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IoPOfIsIoWAt
-import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.Imports
+import Lean
 
 noncomputable section
 
@@ -14,8 +14,6 @@ open scoped TensorProduct InnerProductSpace
 namespace GlobalTheory.Mem.KeepRef
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-scoped macro "obt " p:Lean.Parser.Tactic.rcasesPatMed " := " e:term : tactic => `(tactic| (have x := $e; obtain $p := x))
 
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]

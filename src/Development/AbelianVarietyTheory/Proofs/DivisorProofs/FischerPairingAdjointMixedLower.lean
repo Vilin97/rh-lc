@@ -229,21 +229,4 @@ end GlobalTheory.CharPair.SDown
 
 namespace GlobalTheory.CharPair
 
-theorem fockAct1_Eab_inr_inl_embS_pair : ∀ (P Q S : ℕ) (h : Q ≤ S) (k' : ℕ) (a : Fin P) (b : Fin Q) (G : Mdl P Q)
-    (f : Pol P Q 0 S), GlobalTheory.DefLift.BilFischer.pair (fockAct1 P Q 0 S (Eab (Sum.inr b) (Sum.inl a)) f)
-      (embS P Q S h k' G) = GlobalTheory.DefLift.BilFischer.pair f (embS P Q S h k' (opS P Q S k' (Sum.inr b) (Sum.inl a) G)) := by
-  intro P Q S h k' a b G f
-  rw [fockAct1_Eab, LinearMap.sum_apply, Fintype.sum_sum_type]
-  simp only [Finset.univ_eq_empty, Finset.sum_empty, zero_add]
-  have hterm : ∀ c : Fin S, omE ((Sum.inr b : Ix P Q), (Sum.inr c : Ix 0 S)) (Sum.inl a, Sum.inr c) f =
-      (f * X (Sum.inr b, Sum.inr c)) * X (Sum.inl a, Sum.inr c) := by
-    intro c
-    simp [omE, raiB, lowB, linePos]
-    ring
-  set_option synthInstance.maxHeartbeats 100000 in
-    simp only [hterm, map_sum, LinearMap.sum_apply, GlobalTheory.DefLift.BilFischer.pair_mul_X]
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [← map_sum]
-  exact congrArg _ (SDown.key h k' a b G)
-
 end GlobalTheory.CharPair

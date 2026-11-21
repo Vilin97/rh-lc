@@ -15,8 +15,6 @@ variable {F E K : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Sta
   (hint : ∀ r : 𝓞 E, Valued.v (φ (algebraMap (𝓞 E) E r)) ≤ 1)
   (hPv : ∀ r : 𝓞 E, Valued.v (φ (algebraMap (𝓞 E) E r)) < 1 ↔ r ∈ P.asIdeal)
 
-local notation "Kv" => v.adicCompletion F
-
 def qbIota : ↥(GLint E n P) →* GL (Fin n) Kv :=
   (bc φ).comp ((toGLm E n).toMonoidHom.comp (GLint E n P).subtype)
 
@@ -98,9 +96,6 @@ def qbU : Subgroup (GL (Fin n) Kv) where
   inv_mem' := by
     rintro a ⟨ha1, ha2, g, hg, ka⟩
     exact ⟨ha2, by rw [inv_inv]; exact ha1, g⁻¹, Θ.H.inv_mem hg, qbU_inv_wit P φ cm (qbIota_int P φ hint hPv) (qbIota_int_inv P φ hint hPv) ka⟩
-
-theorem mem_qbU {k : GL (Fin n) Kv} : k ∈ qbU P φ hint hPv Θ cm ↔ qbInt (k : Matrix (Fin n) (Fin n) Kv) ∧
-    qbInt ((k⁻¹ : GL (Fin n) Kv) : Matrix (Fin n) (Fin n) Kv) ∧ ∃ g : ↥(GLint E n P), g ∈ Θ.H ∧ (qbIota P φ g)⁻¹ * k ∈ qbK cm := Iff.rfl
 
 variable {N : ℕ} (d : E) (hd : d ≠ 0) (hdN : P.valuation E d ≤ WithZero.exp (-(N : ℤ)))
 

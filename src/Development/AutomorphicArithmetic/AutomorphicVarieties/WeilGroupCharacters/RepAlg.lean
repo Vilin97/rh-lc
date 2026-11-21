@@ -51,7 +51,6 @@ namespace GDet
 
 variable {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet n A G)
 
-@[ext] theorem ext {D D' : GDet n A G} (h : ∀ (B : Type) [CommRing B] [Algebra A B] (x), D.D B x = D'.D B x) : D = D' := by
   cases D; cases D'; congr; funext B _ _; exact MonoidHom.ext (h B)
 
 def map {A' : Type} [CommRing A'] (f : A →+* A') : GDet n A' G where
@@ -122,7 +121,5 @@ def closureIdeal {A G : Type} [CommRing A] [Group G] [TopologicalSpace G] (I : I
     TwoSidedIdeal (MonoidAlgebra A G) :=
   ⨅ (N : ℕ) (H : OpenNormalSubgroup G), TwoSidedIdeal.span
     (S ∪ {z | ∃ a ∈ I ^ N, z = MonoidAlgebra.single 1 a} ∪ {z | ∃ h ∈ H, z = MonoidAlgebra.single h 1 - 1})
-
-example (A G : Type) [CommRing A] [Group G] (n : ℕ) : GDet n A G := GDet.ofRep 1
 
 end UpperTheory.V.W

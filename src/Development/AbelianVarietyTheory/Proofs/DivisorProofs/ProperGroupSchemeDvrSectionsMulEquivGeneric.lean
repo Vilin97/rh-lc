@@ -39,10 +39,6 @@ noncomputable def pullPtsEquiv {S S' : Scheme.{0}} (A : Over S') [GrpObj A] (G :
           simp only [Over.mk_hom, Category.assoc]
           rw [h.1.w, ← Category.assoc, Over.w])) rfl rfl).symm)
 
-@[simp] lemma pullPtsEquiv_left {S S' : Scheme.{0}} (A : Over S') [GrpObj A] (G : Over S) [GrpObj G] (f : S' ⟶ S)
-    (φ : A.left ⟶ G.left) (h : IsGrpPullback A G f φ) (T : Over S') (x : T ⟶ A) :
-    (pullPtsEquiv A G f φ h T x).left = x.left ≫ φ := rfl
-
 noncomputable def precompEquiv {C : Type*} [Category C] [CartesianMonoidalCategory C] {T₁ T₂ M : C} [GrpObj M]
     (i : T₁ ≅ T₂) : (T₂ ⟶ M) ≃* (T₁ ⟶ M) where
   toFun x := i.hom ≫ x

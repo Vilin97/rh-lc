@@ -289,17 +289,7 @@ theorem levGTop_PsymF (w : Pr.vGs) : levGTop Ch (rPsymF Ch) w =
 
 variable {sel mu} in
 
-theorem mem_levQTop (c : ℕ) (Q : QE sel (mu : Chr X.F X.E X.K)) (k : GLint X.E (R.N R.m) Q.1) :
-    k ∈ (levQTop R sel mu c Q).H ↔ ∃ h ∈ (levQX R sel mu Q).H, ∀ x ∈ stdAt X.E (R.N R.m) Q.1,
-      ((qOf Q.1 : X.E) ^ (c + 1))⁻¹ • (k.1 x - sumE (N_m_succ R) h.1 1 x) ∈ stdAt X.E (R.N R.m) Q.1 := mem_levCong_iff _ _ _ k
-
 variable {sel mu} in
-
-theorem levQTop_lam (c : ℕ) (Q : QE sel (mu : Chr X.F X.E X.K)) (k : (levQTop R sel mu c Q).H) (h : (levQX R sel mu Q).H)
-    (e : ∀ x ∈ stdAt X.E (R.N R.m) Q.1,
-      ((qOf Q.1 : X.E) ^ (c + 1))⁻¹ • (k.1.1 x - sumE (N_m_succ R) h.1.1 1 x) ∈ stdAt X.E (R.N R.m) Q.1) :
-    (levQTop R sel mu c Q).lam k = (levQX R sel mu Q).lam h :=
-  levCong_lam _ c _ k.2 h.2 ((inv_mul_mem_prinCong (c + 1) (extI (N_m_succ R) Q.1 h.1) k.1).2 e)
 
 variable {sel mu} in
 
@@ -437,37 +427,6 @@ theorem levQAt_of_le (Tp : TopLev X Pr R (QE sel (mu : Chr X.F X.E X.K))) {j : �
   obtain ⟨_ | b, hb⟩ := b
   · rfl
   · exact absurd (hb.1 rfl) (by omega)
-
-example (u : Pr.Word) : ∃ p, (topLev Ch sel mu cst P).pref u R.m p :=
-  ⟨_, (topLev_pref_m Ch sel mu cst P u _).2 ⟨DecoF.base _ _ _ _ _, rfl⟩⟩
-
-example (c : ℕ) (Q : QE sel (mu : Chr X.F X.E X.K)) (h : (levQX R sel mu Q).H)
-    (hk : extI (N_m_succ R) Q.1 h.1 ∈ (levQTop R sel mu c Q).H) :
-    (levQTop R sel mu c Q).lam ⟨_, hk⟩ *
-      lamQP (mu : Chr X.F X.E X.K) Q.1 (R.N R.m - 1) R.r (R.m * R.t) ⟨redGL _ Q.1 h.1, h.2⟩ = 1 := by
-  rw [show (levQTop R sel mu c Q).lam ⟨_, hk⟩ = (levQX R sel mu Q).lam h from levCong_lam_extI _ _ _ hk h.2]
-  exact inv_mul_cancel _
-
-example (w : Pr.vGs) : ((topLev Ch sel mu cst P).levG R.m w).H ≤ fixCol _ _ (R.r + R.m * R.t) := by
-  rw [topLev_levG_m, levGTop_eq]
-  exact inf_le_right
-
-example (Q : QE sel (mu : Chr X.F X.E X.K)) (k : GLint X.E (R.N R.m) Q.1) (hk : k ∈ ((topLev Ch sel mu cst P).levQ R.m Q).H)
-    (x : Sp X.E (R.N R.m)) (hx : x ∈ stdAt X.E (R.N R.m) Q.1) :
-    IntAt Q.1 (((qOf Q.1 : X.E) ^ max (4 * R.m + 1) (2 * R.m + 2 * cst.M))⁻¹ * (k.1 x (Br.iL (N_m_succ R)) - x (Br.iL (N_m_succ R)))) := by
-  rw [topLev_levQ_m] at hk
-  rw [← topDep_succ]
-  exact levCong_last _ _ _ hk hx
-
-example (h : R.m = 2) : topDep R 1 + 1 = 9 ∧ topDep R 5 + 1 = 14 := by
-  rw [topDep_succ, topDep_succ, h]
-  exact ⟨rfl, rfl⟩
-
-example (hPr : Pr.Ok) (cst : LocCst X (rowSG Pr sel (mu0 X.F X.E X.K S))) : (topLev Ch sel (mu0 X.F X.E X.K S) cst P).Ok :=
-  topLev_ok Ch sel _ cst P hPr fun u Q => by
-    obtain ⟨Q, hQ⟩ := Q
-    rw [twistPrimes_trivialTuple_empty] at hQ
-    simp at hQ
 
 end Top
 

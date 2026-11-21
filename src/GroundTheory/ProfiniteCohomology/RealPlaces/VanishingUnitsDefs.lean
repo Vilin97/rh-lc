@@ -18,8 +18,6 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory NumberField IsDedekindDomain GroundTheory.Global
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section NSMul
@@ -105,12 +103,6 @@ def sUnitsLocalMor : Rep.res θ (galSUnitsMax K.1 ℚ̄ S) ⟶ galUnits.{0} Kv �
       (((Additive.toMul x : sUnitsMax K.1 ℚ̄ S) : (maxUnramifiedOutside K.1 ℚ̄ S)ˣ) :
         maxUnramifiedOutside K.1 ℚ̄ S)))⟩
 
-theorem sUnitsLocalMor_hom_apply (x : Additive (sUnitsMax K.1 ℚ̄ S)) :
-    ((Additive.toMul ((sUnitsLocalMor S θ j hj).hom x) : Ωvˣ) : Ωv) =
-      j (((Additive.toMul x : sUnitsMax K.1 ℚ̄ S) : (maxUnramifiedOutside K.1 ℚ̄ S)ˣ) :
-        maxUnramifiedOutside K.1 ℚ̄ S) :=
-  rfl
-
 def rootsLocalMor : Rep.res θ (galRootsOfUnity.{0} K.1 (maxUnramifiedOutside K.1 ℚ̄ S) 2) ⟶ galUnits.{0} Kv Ωv :=
   Rep.ofHom ⟨uliftIntLinearMap (MonoidHom.toAdditive (α := rootsOfUnity 2 (maxUnramifiedOutside K.1 ℚ̄ S))
       (β := Ωvˣ) ((Units.map j.toMonoidHom).comp (rootsOfUnity 2 (maxUnramifiedOutside K.1 ℚ̄ S)).subtype)),
@@ -138,10 +130,6 @@ def localKummerSeq : ShortComplex (Rep.{0} (ULift.{0} ℤ) Gal(Ωv/Kv)) :=
         (maxUnramifiedOutside K.1 ℚ̄ S)ˣ)) ^ 2 = 1 := (mem_rootsOfUnity 2 _).1 (Additive.toMul x).2
     change ((Additive.toMul ((rootsLocalMor S θ j hj).hom x) : Ωvˣ) : Ωv) ^ 2 = 1
     rw [rootsLocalMor_hom_apply, ← map_pow, ← Units.val_pow_eq_pow_val, hx2, Units.val_one, map_one])
-
-theorem localKummerSeq_f : (localKummerSeq S θ j hj).f = rootsLocalMor S θ j hj := rfl
-
-theorem localKummerSeq_g : (localKummerSeq S θ j hj).g = 2 • 𝟙 (galUnits.{0} Kv Ωv) := rfl
 
 theorem localKummerSeq_shortExact [IsAlgClosed Ωv] : (localKummerSeq S θ j hj).ShortExact := by
   have h2' : (2 : maxUnramifiedOutside K.1 ℚ̄ S) ≠ 0 := two_ne_zero
@@ -291,18 +279,6 @@ theorem unitsLocalRes_sUnitsInfl (r : ℕ) (y : cohomology (galSUnitsMax K.1 ℚ
   exact unitsLocalRes_gsBrauerInfl_sUnitsToUnitsZ S ι r _
 
 end Compat
-
-def realLocalEmbeddings (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion) :
-    LocalEmbeddings K where
-  fin _ := Classical.choice nonempty_algHom_of_isSepClosed
-  inf v := by
-    classical
-    exact if h : v.IsReal then ιr ⟨v, h⟩ else Classical.choice nonempty_algHom_of_isSepClosed
-
-theorem realLocalEmbeddings_inf (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion)
-    (w : {v : InfinitePlace K.1 // v.IsReal}) : (realLocalEmbeddings ιr).inf w.1 = ιr w := by
-  unfold realLocalEmbeddings
-  exact dif_pos w.2
 
 end
 

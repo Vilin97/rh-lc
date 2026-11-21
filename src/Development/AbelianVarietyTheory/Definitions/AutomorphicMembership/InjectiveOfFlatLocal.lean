@@ -115,9 +115,6 @@ attribute [instance] BDat.ring BDat.dom BDat.loc BDat.ch0 BDat.noeth BDat.normal
 
 def BDat.Exact {X : Scheme.{0}} {t₀ : SAB H X} {x : X} (A : BDat t₀ x) : Prop := Function.Bijective (algebraMap (Cpl X x) A.R)
 
-def SplitAt {X : Scheme.{0}} (t₀ : SAB H X) (x : X) : Prop :=
-  ∃ S : SplitExt (Sp (X.residueField x)), S.IsGt ((Over.pullback (X.fromSpecResidueField x)).obj t₀.G)
-
 theorem split_pull {S : Scheme.{0}} {t₀ : SAB H S} {k : Type} [Field k] (q : Sp k ⟶ S) {S' : SplitExt (Sp k)}
     (hS : S'.IsGt ((Over.pullback q).obj t₀.G)) {R : Type} [CommRing R] [IsLocalRing R] (j : k →+* ResidueField R)
     {ι : Sp R ⟶ S} (hq : spMap j ≫ q = spMap (residue R) ≫ ι) {t : SAB H (Sp R)} (m : SABMap t t₀ ι) :
@@ -247,22 +244,9 @@ theorem nonempty_bdat (hp : p ≠ 0) (hW : (p : ℂ) ∈ W.nonunits) (Z : Mdl Y 
       (Category.assoc _ _ _).symm) m'
   exact ⟨A⟩
 
-theorem exists_exact (hp : p ≠ 0) (hW : (p : ℂ) ∈ W.nonunits) (Z : Mdl Y i₀) (hU : (Y Z.i).N3)
-    (x : Z.X) [IsDomain (Cpl Z.X x)] [IsIntegrallyClosed (Cpl Z.X x)] (hs : SplitAt Z.t x) : ∃ A : BDat Z.t x, A.Exact := by
-  have := isNoetherianRing_stalk hp hW Z x
-  obtain ⟨S', hS'⟩ := hs
-  have : IsLocalHom (algebraMap (Cpl Z.X x) (Cpl Z.X x)) := ⟨fun _ h => h⟩
-  obtain ⟨A, hA⟩ := exists_bdat hp hW Z hU x (Cpl Z.X x) fun t m _ => split_pull _ hS' _ (residue_comp x) m
-  exact ⟨A, hA Function.bijective_id⟩
-
 open Classical in
 
 def pick {X : Scheme.{0}} {t₀ : SAB H X} {x : X} (h : Nonempty (BDat t₀ x)) : BDat t₀ x :=
   if h' : ∃ A : BDat t₀ x, A.Exact then h'.choose else h.some
-
-theorem pick_exact {X : Scheme.{0}} {t₀ : SAB H X} {x : X} (h : Nonempty (BDat t₀ x)) (h' : ∃ A : BDat t₀ x, A.Exact) :
-    (pick h).Exact := by
-  rw [pick, dite_eq_left h']
-  exact h'.choose_spec
 
 end GlobalTheory.LocM.Bdy

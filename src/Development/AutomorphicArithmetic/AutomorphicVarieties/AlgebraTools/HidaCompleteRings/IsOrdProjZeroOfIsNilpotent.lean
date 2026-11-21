@@ -60,11 +60,6 @@ structure OrdAdm (I : Ideal R) : Prop where
   complete : IsAdicComplete I M
   finLen : ∀ k : ℕ, IsFiniteLength R (M ⧸ (I ^ k • ⊤ : Submodule R M))
 
-theorem IsOrdProj.mono {I J : Ideal R} (hIJ : I ≤ J) {U e : Module.End R M} (h : IsOrdProj I U e) :
-    IsOrdProj J U e :=
-  ⟨h.idem, h.comm, h.bij, fun k => (h.nil k).imp fun _ hn x =>
-    Submodule.smul_mono (Ideal.pow_right_mono hIJ k) le_rfl (hn x)⟩
-
 end Ord
 
 section Map
@@ -79,67 +74,12 @@ theorem pow_intertwine {U : Module.End A M} {U' : Module.End A' M'} {f : M →�
   | zero => simp
   | succ n ih => simp only [pow_succ', Module.End.mul_apply, h, ih]
 
-theorem map_mem_ordPart {U : Module.End A M} {U' : Module.End A' M'} {f : M →ₗ[A] M'}
-    (h : ∀ x, f (U x) = U' (f x)) {x : M} (hx : x ∈ ordPart U) : f x ∈ ordPart U' := by
-  refine mem_ordPart.2 fun n => ?_
-  obtain ⟨y, rfl⟩ := mem_ordPart.1 hx n
-  exact ⟨f y, (pow_intertwine h n y).symm⟩
-
-def ordMap {U : Module.End A M} {U' : Module.End A' M'} (f : M →ₗ[A] M')
-    (h : ∀ x, f (U x) = U' (f x)) : ordPart U →ₗ[A] ordPart U' where
-  toFun x := ⟨f x, map_mem_ordPart h x.2⟩
-  map_add' x y := Subtype.ext (by simp)
-  map_smul' c x := Subtype.ext (by simp)
-
-@[simp] theorem coe_ordMap {U : Module.End A M} {U' : Module.End A' M'} (f : M →ₗ[A] M')
-    (h : ∀ x, f (U x) = U' (f x)) (x : ordPart U) : (ordMap f h x : M') = f x := rfl
-
-def ordEnd {U : Module.End A M} (V : Module.End A M) (h : Commute V U) : Module.End A (ordPart U) :=
-  ordMap (A' := A) V fun x => LinearMap.congr_fun h.eq x
-
-@[simp] theorem coe_ordEnd {U : Module.End A M} (V : Module.End A M) (h : Commute V U)
-    (x : ordPart U) : (ordEnd V h x : M) = V x := rfl
-
 end Map
 
 section Lim
 
 variable {R : Type*} [CommRing R] {P : ℕ → Type*} [∀ b, AddCommGroup (P b)] [∀ b, Module R (P b)]
   {Q : ℕ → Type*} [∀ b, AddCommGroup (Q b)] [∀ b, Module R (Q b)]
-
-def towerLim (t : ∀ b, P (b + 1) →ₗ[R] P b) : Submodule R (∀ b, P b) where
-  carrier := {x | ∀ b, t b (x (b + 1)) = x b}
-  zero_mem' := fun b => by simp
-  add_mem' := fun hx hy b => by simp [hx b, hy b]
-  smul_mem' := fun c x hx b => by simp [hx b]
-
-def towerProj (t : ∀ b, P (b + 1) →ₗ[R] P b) (b : ℕ) : towerLim t →ₗ[R] P b :=
-  (LinearMap.proj b).comp (towerLim t).subtype
-
-@[simp] theorem towerProj_apply (t : ∀ b, P (b + 1) →ₗ[R] P b) (b : ℕ) (x : towerLim t) :
-    towerProj t b x = x.1 b := rfl
-
-def towerLift (t : ∀ b, P (b + 1) →ₗ[R] P b) {X : Type*} [AddCommGroup X] [Module R X]
-    (f : ∀ b, X →ₗ[R] P b) (h : ∀ b x, t b (f (b + 1) x) = f b x) : X →ₗ[R] towerLim t :=
-  LinearMap.codRestrict _ (LinearMap.pi f) fun x b => h b x
-
-@[simp] theorem towerProj_towerLift (t : ∀ b, P (b + 1) →ₗ[R] P b) {X : Type*} [AddCommGroup X]
-    [Module R X] (f : ∀ b, X →ₗ[R] P b) (h : ∀ b x, t b (f (b + 1) x) = f b x) (b : ℕ) (x : X) :
-    towerProj t b (towerLift t f h x) = f b x := rfl
-
-def towerMap (t : ∀ b, P (b + 1) →ₗ[R] P b) (s : ∀ b, Q (b + 1) →ₗ[R] Q b) (f : ∀ b, P b →ₗ[R] Q b)
-    (h : ∀ b x, s b (f (b + 1) x) = f b (t b x)) : towerLim t →ₗ[R] towerLim s :=
-  towerLift s (fun b => (f b).comp (towerProj t b)) fun b x => by
-    simp only [LinearMap.comp_apply, towerProj_apply, h, x.2 b]
-
-@[simp] theorem towerProj_towerMap (t : ∀ b, P (b + 1) →ₗ[R] P b) (s : ∀ b, Q (b + 1) →ₗ[R] Q b)
-    (f : ∀ b, P b →ₗ[R] Q b) (h : ∀ b x, s b (f (b + 1) x) = f b (t b x)) (b : ℕ) (x : towerLim t) :
-    towerProj s b (towerMap t s f h x) = f b (towerProj t b x) := rfl
-
-structure IsTowerComplete (I : ℕ → Ideal R) : Prop where
-  anti : Antitone I
-  sep : ⨅ b, I b = ⊥
-  lim : ∀ a : ℕ → R, (∀ b, a (b + 1) - a b ∈ I b) → ∃ L : R, ∀ b, L - a b ∈ I b
 
 end Lim
 

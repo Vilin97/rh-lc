@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.SignatureAndNodeGaps
+import Formalism.LocalRingCardinality.DataParams
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsStepWeil
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ChainParIffStepGap
 
 noncomputable section

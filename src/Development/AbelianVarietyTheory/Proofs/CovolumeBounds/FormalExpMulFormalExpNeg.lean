@@ -85,18 +85,6 @@ theorem eq_formalLog_of_pderiv {g u : MvPowerSeries σ A} (hg : constantCoeff g 
 @[simp] theorem formalLog_one : formalLog (1 : MvPowerSeries σ A) = 0 :=
   (eq_formalLog_of_pderiv (by simp) (by simp) fun i => by simp).symm
 
-theorem formalExp_add {f g : MvPowerSeries σ A} (hf : constantCoeff f = 0)
-    (hg : constantCoeff g = 0) : formalExp (f + g) = formalExp f * formalExp g := by
-  refine (eq_formalExp_of_pderiv (by simp [hf, hg])
-    (by simp [constantCoeff_formalExp hf, constantCoeff_formalExp hg]) fun i => ?_).symm
-  rw [Derivation.leibniz, pderiv_formalExp hf, pderiv_formalExp hg, map_add (f := _), smul_eq_mul,
-    smul_eq_mul]
-  ring
-
-theorem formalExp_mul_formalExp_neg {f : MvPowerSeries σ A} (hf : constantCoeff f = 0) :
-    formalExp f * formalExp (-f) = 1 := by
-  rw [← formalExp_add hf (by simp [hf]), add_neg_cancel, formalExp_zero]
-
 theorem formalLog_mul {f g : MvPowerSeries σ A} (hf : constantCoeff f = 1)
     (hg : constantCoeff g = 1) : formalLog (f * g) = formalLog f + formalLog g := by
   refine (eq_formalLog_of_pderiv (by simp [hf, hg])

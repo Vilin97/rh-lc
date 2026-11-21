@@ -57,12 +57,6 @@ section Pull
 variable (f : Weil h' →* Weil h) (hdeg : ∀ σ, deg (f σ) = deg σ) (hq : normV w = normV w')
     (hs : ∀ (M : Type) [Monoid M] (g : Weil h →* M), IsSmooth g → IsSmooth (g.comp f))
 
-@[simp] theorem pull_ρ {V : Type} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
-    (a : WDRep h V) (σ : Weil h') : (pull f hdeg hq hs a).ρ σ = a.ρ (f σ) := rfl
-
-@[simp] theorem pull_N {V : Type} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
-    (a : WDRep h V) : (pull f hdeg hq hs a).N = a.N := rfl
-
 theorem iso_pull {V V' : Type} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
     [AddCommGroup V'] [Module ℂ V'] [FiniteDimensional ℂ V'] {a : WDRep h V} {b : WDRep h V'}
     (hab : a.Iso b) : (pull f hdeg hq hs a).Iso (pull f hdeg hq hs b) := by

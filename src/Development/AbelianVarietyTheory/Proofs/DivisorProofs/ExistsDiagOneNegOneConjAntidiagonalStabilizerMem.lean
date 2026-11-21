@@ -1,5 +1,5 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinMapsOfForall
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneMemKAt
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AntiCols
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LatAtVAtStable
@@ -37,8 +37,6 @@ theorem idem_mul_self (v : Pl F) : GlobalTheory.LatVac.liftV v 1 * GlobalTheory.
   have h := mul_idem_eq_zero v (x := GlobalTheory.LatVac.liftV v 1 - 1)
     (by rw [map_sub, GlobalTheory.LatVac.evFin_liftV, map_one, sub_self])
   rwa [sub_mul, one_mul, sub_eq_zero] at h
-
-local notation:70 A:70 " ⬝ₘ " B:71 => @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid A B
 
 def flipM (d : ℕ) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E) := fromBlocks 1 0 0 (-1)
 
@@ -117,9 +115,6 @@ def flipPt (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) : UD σ W :
   ⟨⟨flipAt v d, flipAt v d, flipAt_mul_self v d, flipAt_mul_self v d⟩, flipAt_unitary σ W v⟩
 
 theorem matD_flipPt (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) : matD (flipPt σ W v) = flipAt v d := rfl
-
-theorem matD_flipPt_inv (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) :
-    matD (flipPt σ W v)⁻¹ = flipAt v d := rfl
 
 theorem matD_mul {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} (g h : UD σ W) : matD (g * h) = matD g * matD h := rfl
 

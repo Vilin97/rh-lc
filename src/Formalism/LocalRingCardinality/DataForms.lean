@@ -252,16 +252,6 @@ def deg (τ : Tau) : ℤ :=
 
 def KRat (i : ℕ) : Prop := ∀ x, ∃ y, M.emb (i + 1) y = C.K i (M.emb i x)
 
-def KL (i : ℕ) (h : M.KRat i) : (M.lat i).V →ₗ[LL] (M.lat (i + 1)).V :=
-  descend (M.emb i) (M.emb (i + 1)) (M.emb_inj (i + 1)) (C.Klin i) h
-
-theorem KL_spec (i : ℕ) (h : M.KRat i) (x : (M.lat i).V) :
-    M.emb (i + 1) (M.KL i h x) = C.K i (M.emb i x) :=
-  descend_spec (M.emb i) (M.emb (i + 1)) (M.emb_inj (i + 1)) (C.Klin i) h x
-
-def KIntAt (i : ℕ) (h : M.KRat i) (w : Pl.Pl) : Prop :=
-  ∀ x ∈ (M.lat i).L, M.KL i h x ∈ M.S (i + 1) w
-
 def PRat : Prop := ∀ x, ∃ y, M.ptEmb y = P.lowerMap (P.evz (M.emb R.m x))
 
 def PtL (h : M.PRat) : (M.lat R.m).V →ₗ[LL] M.ptLat.V :=
@@ -276,16 +266,6 @@ def PtilIntegral (h : M.PRat) : Prop := ∀ x ∈ (M.lat R.m).L, M.PtL h x ∈ M
 def SgInterlace : Prop := ∀ τ (i : Fin (R.N R.m - 1)),
   (M.sg τ).w i ≤ (M.lam R.m τ).w ⟨i.1, by omega⟩ ∧
   (M.lam R.m τ).w ⟨i.1 + 1, by omega⟩ ≤ (M.sg τ).w i
-
-def DnUp : Prop := ∀ i, i ≤ R.m → ∀ v c (x : M.lv i v c), M.fv i v c x = 1 →
-  ∃ e : M.lk i v (M.up i v c x) ≃ₗ[A.Fv v] M.lv i v c,
-    e (M.te i v (M.up i v c x)) = x ∧
-      M.dn i v (M.up i v c x) ((M.fv i v c).comp e.toLinearMap) = c
-
-def DnFv : Prop := ∀ i, i ≤ R.m → ∀ v c (g : Module.Dual (A.Fv v) (M.lk i v c)), g ≠ 0 →
-  ∃ e : M.lv i v (M.dn i v c g) ≃ₗ[A.Fv v] M.lk i v c,
-    M.fv i v (M.dn i v c g) = g.comp e.toLinearMap ∧
-      (g (M.te i v c) = 1 → M.up i v (M.dn i v c g) (e.symm (M.te i v c)) = c)
 
 end MemberForms
 
@@ -308,9 +288,6 @@ variable {LL : Type} [Field LL] [NumberField LL] {Tau : Type} (G : GlobalExtra L
 
 def logOmMean (τ : Tau) : ℝ :=
   (∑ s : LL →+* ℂ, Real.log (G.Om τ s)) / (Fintype.card (LL →+* ℂ) : ℝ)
-
-def OmValue (v logDerivativeAtOne : ℝ) : Prop :=
-  ∀ τ, G.logOmMean τ = Real.eulerMascheroniConstant + Real.log (Real.pi / v) - logDerivativeAtOne
 
 end GlobalExtra
 

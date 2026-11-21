@@ -28,8 +28,6 @@ noncomputable def betaL (d : ℕ) (H : Matrix (Fin g) (Fin g) ℂ) (z : Fin g �
   map_add' x y := beta_add_left d H x y z
   map_smul' c x := beta_smul_left d H c x z
 
-lemma rankOne_base_weight_eq_cmTheta (d : ℕ) : w0 d = wK d := rfl
-
 end GlobalTheory.MomOne.OrthFrame
 
 open scoped ComplexConjugate BigOperators ComplexOrder in

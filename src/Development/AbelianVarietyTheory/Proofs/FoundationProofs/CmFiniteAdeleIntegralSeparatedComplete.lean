@@ -15,9 +15,6 @@ open Formalism.UG Formalism.UG.P
 
 variable {E : Type} [Field E] [NumberField E]
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 ℚ) ℚ
-local notation "𝒮" => tensInt (F := ℚ) (FiniteAdeleRing (𝓞 ℚ) ℚ) (intOE E) (intAd ℚ)
-
 def ratBasis (E : Type) [Field E] [NumberField E] :
     Module.Basis (Fin (Module.finrank ℤ (𝓞 E))) ℚ E :=
   (Module.finBasis ℤ (𝓞 E)).localizationLocalization ℚ (nonZeroDivisors ℤ) E

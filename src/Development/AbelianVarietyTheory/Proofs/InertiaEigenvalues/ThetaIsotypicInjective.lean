@@ -25,13 +25,6 @@ theorem thetaT_inj_real : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 
   intro D G _ _ Pl0 I0 T A3 Ks _ _ _ R F cG X0 Y hP hH i σ y hy h0
   exact GlobalTheory.T.adjoint_concrete_theta_injective_reference_tuple D G Pl0 I0 T A3 Ks R F cG X0 Y hP hH i σ y hy (GlobalTheory.T.adjointTheta_kills_referenceTuple D G Pl0 I0 T A3 Ks R F cG X0 Y hP hH i σ y hy h0)
 
-theorem main : PrN → ∀ hL : GlobalTheory.Published.LocalLanglandsGL, GlobalTheory.LiftRef.AtRows hL fun D _ _ _ _ _ => ∀ (j : ℕ) (_ : 1 ≤ j) (_ : j ≤ D.R.m) (σ : D.what₂.FT), ∀ y ∈ D.what₂.isot j σ, D.what₂.thetaT D.what₂.mu0 j y = 0 → y = 0 := by
-  intro _ _
-  unfold GlobalTheory.LiftRef.AtRows OverRows
-  refine GlobalTheory.HeightCounting.JumpsAt.evLgG_of_forall fun K B f T _ w _ Z Wt hX z p0 Y hH _ _ _ _ Rw a M tup Q _ _ j h1 h2 σ y hy h0 => ?_
-  obtain ⟨i, rfl⟩ : ∃ i : Fin (w.st Z).toD7.R.m, j = (i : ℕ) + 1 := ⟨⟨j - 1, by omega⟩, by simp only; omega⟩
-  exact thetaT_inj_real _ _ _ _ _ _ _ z.R z.F z.cG p0 Y z.pins hH i σ y hy h0
-
 end GlobalTheory.LiftRef.UpInjRows
 
 end

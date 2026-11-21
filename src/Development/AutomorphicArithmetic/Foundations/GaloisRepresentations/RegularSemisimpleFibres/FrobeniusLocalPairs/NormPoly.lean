@@ -6,10 +6,6 @@ import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.Regul
 import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.RegularSemisimpleFibres.FrobeniusLocalPairs.InflFacts
 import GroundTheory.LocalFields.Uniqueness
 import GroundTheory.LocalFields.UnitsPowers
-import Development.AutomorphicArithmetic.FrobeniusTwistedNorms.IsAdicCompleteAdjoinRootOfMonic
-import Development.AutomorphicArithmetic.FrobeniusTwistedNorms.ExistsTwistedTraceEqOneOfResidueFrobenius
-import Development.AutomorphicArithmetic.FrobeniusTwistedNorms.ExistsFrobeniusTwistedNormDvdSubX
-import Development.AutomorphicArithmetic.FrobeniusTwistedNorms.ExistsTwistedNormDvdSubXOfAdicComplete
 
 noncomputable section
 
@@ -122,8 +118,6 @@ private def resE (s : K ≃ₐ[k] K) : 𝒪[K] ≃+* 𝒪[K] where
   right_inv x := Subtype.ext (s.apply_symm_apply (x : K))
   map_mul' x y := Subtype.ext (map_mul s (x : K) (y : K))
   map_add' x y := Subtype.ext (map_add s (x : K) (y : K))
-
-private theorem resE_coe (s : K ≃ₐ[k] K) (x : 𝒪[K]) : ((resE s x : 𝒪[K]) : K) = s (x : K) := rfl
 
 end
 

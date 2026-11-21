@@ -18,8 +18,6 @@ namespace GlobalTheory.SeeSaw.IdeleIdeal
 
 variable {D : D7}
 
-local notation "ZF" => Af D.host.F ⊗[D.host.F] D.host.E
-
 theorem one_tmul_mem (o : 𝓞 D.host.E) : (1 : Af D.host.F) ⊗ₜ[D.host.F] (o : D.host.E) ∈ intAE D :=
   GlobalTheory.FinPl.Conductor.tmul_mem (fun v => by rw [map_one]; exact one_mem _) o
 

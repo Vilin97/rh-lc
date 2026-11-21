@@ -25,8 +25,6 @@ def denIdeal {ι : Type*} (x : ι → K) : Ideal A where
     exact ⟨c * u, by rw [map_mul, hu, smul_eq_mul, map_mul, mul_assoc]⟩
 
 omit [IsDomain A] [IsFractionRing A K] in
-lemma mem_denIdeal {ι : Type*} {x : ι → K} {r : A} :
-    r ∈ denIdeal (A := A) x ↔ ∀ i, algebraMap A K r * x i ∈ (algebraMap A K).range := Iff.rfl
 
 lemma exists_assoc [IsNoetherianRing A] {ι : Type*} (x : ι → K)
     (hx : ∃ i, x i ∉ (algebraMap A K).range) :

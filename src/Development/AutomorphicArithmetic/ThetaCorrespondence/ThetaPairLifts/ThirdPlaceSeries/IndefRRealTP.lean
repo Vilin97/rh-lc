@@ -1,4 +1,4 @@
-import Formalism.LocalToGlobal.IndefiniteReal.RealTP
+import Formalism.LocalToGlobal.IndefiniteReal.TrISepWith
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LayerTwoFamilyClass
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.STiesR

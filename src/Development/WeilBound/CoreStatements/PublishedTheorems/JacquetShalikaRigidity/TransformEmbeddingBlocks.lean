@@ -185,12 +185,6 @@ def sig {k m j : ℕ} (hkm : k ≤ m) (hj : j < k) : UnipotentBlockColumnIndex k
   left_inv _ := rfl
   right_inv _ := rfl
 
-@[simp] theorem sig_fst {k m j : ℕ} (hkm : k ≤ m) (hj : j < k) (t : UnipotentBlockColumnIndex k j j) :
-    ((sig hkm hj t).1.1 : ℕ) = t.1.1 := rfl
-
-@[simp] theorem sig_snd {k m j : ℕ} (hkm : k ≤ m) (hj : j < k) (t : UnipotentBlockColumnIndex k j j) :
-    ((sig hkm hj t).1.2 : ℕ) = t.1.2 := rfl
-
 def eqv {k m j : ℕ} (hkm : k ≤ m) (hj : j < k) : (UnipotentBlockColumnIndex k j j → Ad E) ≃ₜ+ (UnipotentBlockColumnIndex m j j → Ad E) where
   toFun x t := x ((sig hkm hj).symm t)
   invFun y t := y (sig hkm hj t)

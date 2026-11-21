@@ -118,10 +118,6 @@ def glue {A V₁ κ ι κ₁ : Type} [AddCommGroup A] [Module R A] [AddCommGroup
     (((LinearEquiv.sumArrowLequivProdArrow ι κ₁ R R).symm ≪≫ₗ LinearEquiv.funCongrLeft R R eq).prodCongr
       ((LinearEquiv.sumArrowLequivProdArrow ι κ₁ R R).symm ≪≫ₗ LinearEquiv.funCongrLeft R R eq))
 
-theorem glue_apply {A V₁ κ ι κ₁ : Type} [AddCommGroup A] [Module R A] [AddCommGroup V₁] [Module R V₁] (eq : κ ≃ ι ⊕ κ₁)
-    (p q : A ≃ₗ[R] (ι → R)) (e₁ : V₁ ≃ₗ[R] (κ₁ → R) × (κ₁ → R)) (b a : A) (z : V₁) :
-    glue eq p q e₁ ((b, a), z) = (fun k => Sum.elim (q b) (e₁ z).1 (eq k), fun k => Sum.elim (p a) (e₁ z).2 (eq k)) := rfl
-
 theorem dot_elim {κ ι κ₁ : Type} [Fintype κ] [Fintype ι] [Fintype κ₁] (eq : κ ≃ ι ⊕ κ₁) (f f' : ι → R) (g g' : κ₁ → R) :
     (fun k => Sum.elim f g (eq k)) ⬝ᵥ (fun k => Sum.elim f' g' (eq k)) = f ⬝ᵥ f' + g ⬝ᵥ g' := by
   simp only [dotProduct]

@@ -56,9 +56,6 @@ theorem integrable_of_continuous_real {M : Type*} [TopologicalSpace M] [T2Space 
     (hc.comp_left Complex.ofReal_zero)
   simpa using h.re
 
-theorem Smooth.integrable {M : Type*} [TopologicalSpace M] [T2Space M] [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M] (n : ℕ) (z : M → V n) (hz : IsLocalHomeomorph z) (f : M → ℂ) (hf : Smooth n z f) (hc : HasCompactSupport f) :
-    Integrable f (vol n z) := integrable_of_continuous n z hz f (Smooth.continuous n z hz f hf) hc
-
 theorem chart_extend {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n)
     (e : OpenPartialHomeomorph M (V n)) (he : IsChart n z e) (h : M → ℂ) (hh : Ck n z 1 h)
     (hc : HasCompactSupport h) (hs : tsupport h ⊆ e.source) :
@@ -126,12 +123,6 @@ theorem integral_db_chart_eq_zero {M : Type*} [TopologicalSpace M] [T2Space M] [
     refine setIntegral_eq_integral_of_forall_compl_eq_zero fun y hy => ?_
     exact (wdb_congr n j _ _ y (hHo y hy)).trans (wdb_zero_fun n j y)
   rw [h1, h2, integral_wdb_eq_zero n j H hH1 hHc]
-
-theorem Ck.finset_sum {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) {ι : Type*}
-    (s : Finset ι) (F : ι → M → ℂ) (hF : ∀ i, Ck n z 1 (F i)) :
-    Ck n z 1 (fun y => ∑ i ∈ s, F i y) := by
-  intro e he
-  exact ContDiffOn.sum fun i _ => hF i e he
 
 private theorem wd_wdb_finset_sum {ι : Type*} {n : ℕ} (s : Finset ι) (G : ι → V n → ℂ) (y : V n)
     (hG : ∀ i ∈ s, DifferentiableAt ℝ (G i) y) (j : Fin n) :

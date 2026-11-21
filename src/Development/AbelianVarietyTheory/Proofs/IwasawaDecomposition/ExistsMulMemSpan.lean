@@ -31,16 +31,8 @@ theorem exists_mul_mem_span (P : HeightOneSpectrum (𝓞 E)) {q : 𝓞 E} (hq : 
   obtain ⟨t, ht⟩ := Ideal.mem_span_singleton'.1 this
   exact ⟨t, by rw [mul_comm s r, ← ht, mul_comm]⟩
 
-theorem ufGL_mulVec (γ : UF E n) (x : Sp E n) :
-    Matrix.mulVec ((ufGL E n γ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) x = γ.1 x :=
-  LinearMap.toMatrix'_mulVec (γ.1 : Sp E n →ₗ[E] Sp E n) x
-
 end Gen
 
 variable {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 X.E))}
-
-theorem mv_dia {y : Ys X n} (p : PtY ST SG Q y) (c : DiaG X.E ST) :
-    p.mv (DecoSet.dia c p.1.1.deco) =
-      ⟨(⟨(DecoSet.dia c p.1.1.deco, p.1.1.1.2), p.1.1.2⟩, p.1.2), p.2⟩ := dif_pos ⟨p.1.1.2, p.2⟩
 
 end GlobalTheory.Mem.Col2.LevLaws

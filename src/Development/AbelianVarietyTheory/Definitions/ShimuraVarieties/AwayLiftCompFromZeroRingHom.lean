@@ -195,7 +195,6 @@ theorem hom_ext (φ : A →+* B) (hφ : (irrelevant 𝒜).toIdeal.map φ = ⊤) 
   exact h (Localization.Away (φ i.1)) (algebraMap B _) i.1 n hn hf
     (IsLocalization.Away.algebraMap_isUnit _)
 
-@[reassoc]
 theorem SpecMap_ofHom (φ : A →+* B) (hφ : (irrelevant 𝒜).toIdeal.map φ = ⊤) (ψ : B →+* C) :
     Spec.map (CommRingCat.ofHom ψ) ≫ ofHom 𝒜 φ hφ =
       ofHom 𝒜 (ψ.comp φ) (map_irrelevant_comp 𝒜 hφ ψ) := by
@@ -231,7 +230,6 @@ theorem map_irrelevant_comp_graded (g : 𝒜₀ →+*ᵍ ℬ) (hg : irrelevant �
   rw [← Ideal.map_map, _root_.eq_top_iff, ← hφ]
   exact Ideal.map_mono hg
 
-@[reassoc]
 theorem ofHom_map (g : 𝒜₀ →+*ᵍ ℬ) (hg : irrelevant ℬ ≤ (irrelevant 𝒜₀).map g)
     (φ : A' →+* B) (hφ : (irrelevant ℬ).toIdeal.map φ = ⊤) :
     ofHom ℬ φ hφ ≫ Proj.map g hg =

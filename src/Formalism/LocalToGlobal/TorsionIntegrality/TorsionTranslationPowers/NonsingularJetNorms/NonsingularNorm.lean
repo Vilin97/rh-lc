@@ -47,14 +47,6 @@ theorem i_ofNat (n : ℕ) [n.AtLeastTwo] : ‖(OfNat.ofNat n : K)‖ ≤ 1 := by
 
 theorem s_add {a b : K} (ha : ‖a‖ < 1) (hb : ‖b‖ < 1) : ‖a + b‖ < 1 := (IsUltrametricDist.norm_add_le_max a b).trans_lt (max_lt ha hb)
 
-theorem s_neg {a : K} (ha : ‖a‖ < 1) : ‖-a‖ < 1 := by
-  rw [norm_neg]
-  exact ha
-
-theorem s_sub {a b : K} (ha : ‖a‖ < 1) (hb : ‖b‖ < 1) : ‖a - b‖ < 1 := by
-  rw [sub_eq_add_neg]
-  exact s_add ha (s_neg hb)
-
 theorem s_mul {a b : K} (ha : ‖a‖ < 1) (hb : ‖b‖ ≤ 1) : ‖a * b‖ < 1 := by
   rw [norm_mul]
   calc ‖a‖ * ‖b‖ ≤ ‖a‖ * 1 := mul_le_mul_of_nonneg_left hb (norm_nonneg a)
@@ -66,16 +58,6 @@ theorem s_mul' {a b : K} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ < 1) : ‖a * b‖ <
   calc ‖a‖ * ‖b‖ ≤ 1 * ‖b‖ := mul_le_mul_of_nonneg_right ha (norm_nonneg b)
     _ = ‖b‖ := one_mul _
     _ < 1 := hb
-
-macro "integ" : tactic =>
-  `(tactic| repeat' (first
-    | assumption
-    | exact i_ofNat _
-    | apply i_add
-    | apply i_sub
-    | apply i_mul
-    | apply i_neg
-    | apply i_pow))
 
 theorem i_of_quadratic {t b c : K} (hb : ‖b‖ ≤ 1) (hc : ‖c‖ ≤ 1) (h : t ^ 2 + b * t = c) : ‖t‖ ≤ 1 := by
   by_contra hlt

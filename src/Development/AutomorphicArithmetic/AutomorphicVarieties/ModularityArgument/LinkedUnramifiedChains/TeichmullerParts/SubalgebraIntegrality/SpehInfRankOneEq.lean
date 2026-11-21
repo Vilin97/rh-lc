@@ -182,11 +182,3 @@ private theorem assemble (H : HypothesesH) (hB : GlobalTheory.BcSpeh.BcSpeh) (hF
     simpa using hsum
   subst ha
   exact onePart H hLink hE hn π hπ hsum P ρ m σ hP hS hsplit
-
-theorem UpperTheory.V.Z.J.D.bcOf :
-    BcOf := fun H =>
-  assemble H (GlobalTheory.BcSpeh.bcSpeh_of_baseChange (GlobalTheory.BaseChangeBridge.main H.litN.aut.bc H.litN.loc.bern)
-      (GlobalTheory.SpehInfChar.discreteSpectrumGL_of_residual H.litN.aut.mw))
-    (UpperTheory.sum_family_of_reductions (UpperTheory.sum_two_of_hodge_tate H UpperTheory.galoisRep_direct_sum_away_from_places UpperTheory.sum_hodge_tate) UpperTheory.finiteSum_reduction)
-    (UpperTheory.half_of_compatible_polarization H UpperTheory.eta_condition UpperTheory.twist_local_components_compatible (UpperTheory.compatible_polarization_of_link H (compatCsd H) (UpperTheory.satake_galois_compatibility_of_hecke_eigensystem H)))
-    UpperTheory.speh_parameter_strings UpperTheory.building_component_uniqueness (UpperTheory.total_reciprocity H) (UpperTheory.total_frobenius_compatibility H) (UpperTheory.satake_galois_compatibility_of_hecke_eigensystem H) H

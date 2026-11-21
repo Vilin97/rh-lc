@@ -44,8 +44,6 @@ def dotL (ρ : ι → O) : (ι → O) →ₗ[O] O where
   map_add' := dotProduct_add ρ
   map_smul' c w := by rw [dotProduct_smul, RingHom.id_apply]
 
-@[simp] theorem dotL_apply (ρ w : ι → O) : dotL ρ w = ρ ⬝ᵥ w := rfl
-
 end GlobalTheory.LattIota
 
 namespace GlobalTheory.LattIota

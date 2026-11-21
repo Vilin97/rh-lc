@@ -1,7 +1,36 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GKeyFin
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RowRatW
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.GoodReductionCondition
+import Development.AutomorphicArithmetic.CharacterBoxes.ExS
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.CountsIrreducibilityConstants
+import Formalism.SharpRestriction.GlobalSchurBounds.LinkTied
+import Formalism.SharpRestriction.GlobalSchurBounds.MainSup
+import Formalism.LocalToGlobal.GroupLattices.AdmissibleAtGeneratorPlaces
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.WuDecayAll
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RowsPos
+import Formalism.LocalToGlobal.GlobalTheory.GL5.PNamed
+import Formalism.LocalToGlobal.GlobalTheory.GL5.DiscreteSeriesOfFormalDegree
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.DivRows3GIff
+import Formalism.LocalToGlobal.FiniteTOf
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ThetaChr
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ColumnCompatibleSelection
+import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.STiesR
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SameDegreeZeroFormsSelf
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DivisionPairOfAdelicFormsFaceColumnsData
+import Formalism.LocalToGlobal.CarriedPlMap
+import Formalism.LocalToGlobal.SelSide
+import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.TwistedCharacterValue
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TwArgs
+import Formalism.LocalToGlobal.Divisibility.ColPins
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.AllRows
+import Development.AbelianVarietyTheory.Definitions.Divisors.BaseRankDimension
+import Development.AbelianVarietyTheory.Definitions.Divisors.RowSideOfCompatibleThetaPair
+import Formalism.LocalToGlobal.IndefiniteReal.NonzeroIndexPlaceIndepConstants
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ClassSumPin
+import Development.AbelianVarietyTheory.Definitions.Divisors.CovolXOfCovol
+import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.SingleIndexPlacesAreTwisted
+import Development.AbelianVarietyTheory.Definitions.Divisors.SlopeTestRemainingChoicesAlt
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.SerFixOne
 import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
 import Development.AbelianVarietyTheory.Statements.CuspidalUnitaryTwists.ExistsSmallSpherical
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PositionMv
@@ -39,7 +68,5 @@ theorem evLgG_gridA_of_exGrid : ExGrid → ∃ CF0 : ℝ, ∀ CF, CF0 ≤ CF →
     have h2 := hHas.2 z
     simp only [dif_pos hfin] at h2
     exact h2 hz
-
-example : ExGrid → ∃ CF0 : ℝ, ∀ CF, CF0 ≤ CF → EvLgG (GridA CF) := evLgG_gridA_of_exGrid
 
 end GlobalTheory.Mem.LiteralAutomorphy

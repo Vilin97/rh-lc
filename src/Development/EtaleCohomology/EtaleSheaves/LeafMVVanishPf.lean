@@ -1,6 +1,7 @@
 import Development.EtaleCohomology.EtaleSheaves.LeafAffCoverVanishPf
 import Development.EtaleCohomology.EtaleSheaves.MVSpcPf
-import Development.EtaleCohomology.EtaleSheaves.LeafOneHighPf
+import Development.EtaleCohomology.EtaleSheaves.PullInjOfIso
+import Development.EtaleCohomology.EtaleSheaves.LeafKillCut
 import Development.EtaleCohomology.TateTwists.EtaleSheafSectionsGlueOfForgetIsSheaf
 import Development.EtaleCohomology.TateTwists.EtaleSheafSectionLocallyIffOfPresheafFacts
 import Development.EtaleCohomology.TateTwists.EtaleLocalPropertyBasicClosureProperties

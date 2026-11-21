@@ -130,8 +130,6 @@ instance (U : Opens (ProjectiveSpectrum.top 𝒜)) :
   Module.compHom _ (toLocFun U)
 
 open ProjectiveSpectrum in
-lemma smul_apply' {U : Opens (ProjectiveSpectrum.top 𝒜)} (t : (Proj.structureSheaf 𝒜).obj.obj (op U))
-    (f : ∀ x : U, Loc 𝒜 x.1) (x : U) : (t • f) x = (t.1 x).val * f x := rfl
 
 open ProjectiveSpectrum in
 
@@ -151,9 +149,6 @@ def sectionsSubmodule (k : ℤ) (U : Opens (ProjectiveSpectrum.top 𝒜)) :
     rfl
 
 open ProjectiveSpectrum in
-instance (k : ℤ) (U : (Opens (ProjectiveSpectrum.top 𝒜))ᵒᵖ) :
-    Module ((Proj.structureSheaf 𝒜).obj.obj U) ((twistSheafInType 𝒜 k).obj.obj U) :=
-  (sectionsSubmodule k U.unop).module
 
 variable (𝒜) in
 
@@ -192,24 +187,8 @@ lemma isLocallyFraction_val (s : Γ(twistingSheaf 𝒜 k, U)) :
 def mkSection (f : ∀ x : U, Loc 𝒜 x.1) (hf : (isLocallyFraction 𝒜 k).pred f) :
     Γ(twistingSheaf 𝒜 k, U) := ⟨f, hf⟩
 
-@[simp] lemma val_mkSection (f : ∀ x : U, Loc 𝒜 x.1) (hf : (isLocallyFraction 𝒜 k).pred f) :
-    val (mkSection f hf) = f := rfl
-
-@[ext] lemma ext {s t : Γ(twistingSheaf 𝒜 k, U)} (h : val s = val t) : s = t := Subtype.ext h
-
-@[simp] lemma val_add (s t : Γ(twistingSheaf 𝒜 k, U)) : val (s + t) = val s + val t := rfl
-
-@[simp] lemma val_zero : val (0 : Γ(twistingSheaf 𝒜 k, U)) = 0 := rfl
-
-@[simp] lemma val_neg (s : Γ(twistingSheaf 𝒜 k, U)) : val (-s) = -val s := rfl
-
-@[simp] lemma val_sub (s t : Γ(twistingSheaf 𝒜 k, U)) : val (s - t) = val s - val t := rfl
-
 lemma val_smul (t : Γ(Proj 𝒜, U)) (s : Γ(twistingSheaf 𝒜 k, U)) (x : U) :
     val (t • s) x = (t.1 x).val * val s x := rfl
-
-lemma val_res (h : V ≤ U) (s : Γ(twistingSheaf 𝒜 k, U)) (x : V) :
-    val ((twistingSheaf 𝒜 k).presheaf.map (homOfLE h).op s) x = val s ⟨x.1, h x.2⟩ := rfl
 
 end ProjTwist
 

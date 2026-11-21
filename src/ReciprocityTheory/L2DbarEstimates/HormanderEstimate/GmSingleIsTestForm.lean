@@ -1,6 +1,9 @@
 import ReciprocityTheory.L2DbarEstimates.Localization.UnweightBackStatement
 import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.Imports
-import ReciprocityTheory.L2DbarEstimates.MinimalSolutions.HilbertLemmas
+import ReciprocityTheory.L2DbarEstimates.MinimalSolutions.CvxOfConvex
+import ReciprocityTheory.L2DbarEstimates.MinimalSolutions.MinimalSolution
+import ReciprocityTheory.L2DbarEstimates.MinimalSolutions.HormanderLemma
+import ReciprocityTheory.L2DbarEstimates.MinimalSolutions.OntoWithBoundTop
 
 namespace ReciprocityTheory.L2DbarEstimates.F
 

@@ -137,8 +137,6 @@ theorem frobLat_colLat (p : ℕ) [Fact p.Prime] [CharP K p] (g g' : C.I → Matr
   · rw [frame_apply, frame_apply]
     rfl
 
-local notation "VV" K:max d:max => ((Fin d → K) × (Fin d → K))
-
 def stdBasis (K : Type) [Field K] (d : ℕ) : Module.Basis (Fin d ⊕ Fin d) K (VV K d) :=
   (Pi.basisFun K (Fin d)).prod (Pi.basisFun K (Fin d))
 

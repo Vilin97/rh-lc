@@ -134,9 +134,6 @@ theorem covAt_dual (b : Basis (Idx E j) ℝ (VecInf E j)) :
 def act (M : InfinitePlace E → Matrix (Fin j) (Fin j) ℂ) : VecInf E j →ₗ[ℝ] VecInf E j :=
   LinearMap.pi fun w => ((Matrix.toLin' (M w)).restrictScalars ℝ).comp (LinearMap.proj w)
 
-theorem act_apply (M : InfinitePlace E → Matrix (Fin j) (Fin j) ℂ) (x : VecInf E j) (w : InfinitePlace E) :
-    act E j M x w = M w *ᵥ x w := rfl
-
 theorem det_act (M : InfinitePlace E → Matrix (Fin j) (Fin j) ℂ) :
     LinearMap.det (act E j M) = ∏ w, ‖(M w).det‖ ^ 2 := by
   rw [act, LinearMap.det_pi]

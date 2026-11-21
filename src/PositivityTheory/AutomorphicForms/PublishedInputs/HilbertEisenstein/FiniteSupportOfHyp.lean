@@ -82,8 +82,6 @@ omit [IsTotallyReal F] in
 theorem pFin_algebraMap (x : F) : pFin F (algebraMap F (Ad F) x) = algebraMap F (Af F) x := rfl
 
 omit [IsTotallyReal F] in
-theorem pFin_units (a : Ideles F) :
-    pFin F ((a : Ideles F) : Ad F) = ((IdeleGroup.toFinite F a : (Af F)ˣ) : Af F) := rfl
 
 theorem exists_den_row (c : HeightOneSpectrum (𝓞 F) → ℕ) (g : GA F 2) {C : Set (Ideles F)} (hC : IsCompact C) :
     ∃ d : 𝓞 F, d ≠ 0 ∧ ∀ a ∈ C, ∀ ξ : Fin 2 → F,

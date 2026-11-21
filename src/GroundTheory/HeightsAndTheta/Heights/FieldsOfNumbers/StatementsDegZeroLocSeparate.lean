@@ -22,8 +22,6 @@ def DegZeroLocSeparate.Statement : Prop :=
 
 section Example
 
-abbrev lineOtherPointIdeal : Ideal LineRing := Ideal.span {X ⟨(), (1 : Fin 2)⟩}
-
 end Example
 
 end

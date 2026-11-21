@@ -23,9 +23,6 @@ section Compl
 variable {R : Type} [CommRing R] [IsDedekindDomain R] {L : Type} [Field L] [Algebra R L]
   [IsFractionRing R L] (w : HeightOneSpectrum R)
 
-local notation "Lw" => adicCompletion L w
-local notation "Ow" => adicCompletionIntegers L w
-
 lemma v_algebraMap (l : L) : Valued.v (algebraMap L Lw l) = w.valuation L l :=
   valuedAdicCompletion_eq_valuation' w l
 

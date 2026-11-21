@@ -23,9 +23,6 @@ def letterLin (T : D →ₗ[LL] D') (hT : ∀ c, T ∘ₗ m c = m' c ∘ₗ T) :
     rw [LinearMap.baseChange_comp, LinearMap.baseChange_comp, LinearMap.comp_apply, LinearMap.comp_apply] at this
     simp [this])
 
-@[simp] theorem letterLin_mk (T : D →ₗ[LL] D') (hT : ∀ c, T ∘ₗ m c = m' c ∘ₗ T) (x : D) :
-    letterLin m m' F τ T hT (letterMk m F τ x) = letterMk m' F τ (T x) := rfl
-
 end Letter
 
 section Dmap
@@ -36,8 +33,6 @@ variable {l : ℕ} [Fact l.Prime] (P : LocPrime l) {K : FinExt l} {LL : Type} [F
   (ρ : Representation LL ↥(GK K) V) (ρ' : Representation LL ↥(GK K) V') (f : V →ₗ[LL] V')
 
 def tensV : V ⊗[ℚ_[l]] Bst P →ₗ[LL] V' ⊗[ℚ_[l]] Bst P := AlgebraTensorModule.map f LinearMap.id
-
-@[simp] theorem tensV_tmul (v : V) (b : Bst P) : tensV P f (v ⊗ₜ b) = f v ⊗ₜ b := rfl
 
 theorem tensV_onB (T : End ℚ_[l] (Bst P)) (x : V ⊗[ℚ_[l]] Bst P) :
     tensV P f (onB P LL V T x) = onB P LL V' T (tensV P f x) := by
@@ -62,9 +57,6 @@ theorem tensV_mem_Dpst (hf : ∀ g v, f (ρ g v) = ρ' g (f v)) (x : V ⊗[ℚ_[
 
 def dmap (hf : ∀ g v, f (ρ g v) = ρ' g (f v)) : ↥(Dpst P ρ) →ₗ[LL] ↥(Dpst P ρ') :=
   (tensV P f).restrict (tensV_mem_Dpst P hf)
-
-@[simp] theorem coe_dmap (hf : ∀ g v, f (ρ g v) = ρ' g (f v)) (x : ↥(Dpst P ρ)) :
-    (dmap P hf x : V' ⊗[ℚ_[l]] Bst P) = tensV P f x := rfl
 
 variable (hf : ∀ g v, f (ρ g v) = ρ' g (f v))
 include hf

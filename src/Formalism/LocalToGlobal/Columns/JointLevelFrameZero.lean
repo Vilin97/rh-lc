@@ -1,5 +1,11 @@
-import Formalism.LocalToGlobal.Columns.CharactersLevelZeroAgree
-import Formalism.LocalToGlobal.Columns.TiedGlRec
+import Formalism.LocalToGlobal.Columns.HermOwed
+import Formalism.LocalToGlobal.Columns.TiedCls
+import Formalism.LocalToGlobal.Columns.TiedXp
+import Formalism.LocalToGlobal.Columns.TiedGlPl
+import Formalism.LocalToGlobal.Columns.TiedGlMat
+import Formalism.LocalToGlobal.Columns.RecLevelDiv
+import Formalism.LocalToGlobal.HermitianForms.FormsTied
+import Formalism.LocalToGlobal.HermitianForms.DefsChi
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct
@@ -62,28 +68,5 @@ def levelZeroCompatibility (L0 : LevelZeroConditions a hS hH hP hK S hI O) :
     fM_pi := (L0 u).fM_pi
     fMe := (L0 u).fMe
     fv0 := (L0 u).fv0 }
-
-theorem piGConst (L0 : LevelZeroConditions a hS hH hP hK S hI O) :
-    CH.PiGConst (d.colRec a) (hermCols a hS hP hK S hI) (hermAtT a hS hH O) (levelZeroCompatibility a hS hH hP hK S hI O L0) :=
-  fun _ _ => rfl
-
-theorem th_joint_sp (hCh : d.Ch.Ok) (u : d.what₂.Word) : (recGLoc a S hCh).sp = ((hermCols a hS hP hK S hI).lev0 u).splitG := rfl
-
-theorem th_joint_piG (hCh : d.Ch.Ok) (L0 : LevelZeroConditions a hS hH hP hK S hI O) (u : d.what₂.Word) :
-    (recGLoc a S hCh).piG = (levelZeroCompatibility a hS hH hP hK S hI O L0 u).piG := rfl
-
-theorem jointLevel_frame_zero (hCh : d.Ch.Ok) (hl : d.lev = colLevS d.Ch) (u : d.what₂.Word) (i : Fin 2) (v : HeightOneSpectrum (𝓞 d.host.F))
-    (h : (d.host.g i : 𝓞 d.host.F) ∈ v.asIdeal) :
-    (recGLev a S hCh hl hS hH hP u 0 (Nat.zero_le _)).fr i v h =
-      Formalism.L2.Forms.reGL (Formalism.L2.Forms.rank_eq_first_level d.R) _ (((hermCols a hS hP hK S hI).lev0 u).frG i v h) := by
-  rw [recGLev_fr]
-  have h0 : recUnit S u 0 i v h = 1 := by
-    unfold recUnit
-    rw [if_neg]
-    have := d.R.two_le_m
-    omega
-  show glvD (d.R.N 0) v (recUnit S u 0 i v h) = _
-  rw [h0, glvD_one]
-  exact (map_one (Formalism.L2.Forms.reGL (Formalism.L2.Forms.rank_eq_first_level d.R) (v.adicCompletion d.host.F))).symm
 
 end Formalism.L2.Col

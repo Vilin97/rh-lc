@@ -18,9 +18,6 @@ def comp (π : BanachRep G E) (f : G' →* G) (hf : Continuous f) : BanachRep G'
   toHom := π.toHom.comp f
   continuous_orbit' v := (π.continuous_orbit v).comp hf
 
-@[simp] theorem comp_apply (π : BanachRep G E) (f : G' →* G) (hf : Continuous f) (g : G') :
-    π.comp f hf g = π (f g) := rfl
-
 end BanachRep
 
 namespace CuspidalSpectrum
@@ -40,12 +37,6 @@ theorem continuous_archP : Continuous (archP K n) :=
   continuous_archProj.comp continuous_subtype_val
 
 variable (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure]
-
-def cuspBanachRep : BanachRep (Reduction.normOneGL K n) (cuspidalL2 μ) :=
-  BanachRep.ofUnitary (cuspRep μ)
-
-def archRep : BanachRep (archGroup K n) (cuspidalL2 μ) :=
-  BanachRep.comp (cuspBanachRep μ) (archP K n) continuous_archP
 
 end CuspidalSpectrum
 

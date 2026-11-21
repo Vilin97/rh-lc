@@ -13,9 +13,6 @@ attribute [local instance 100] LieRing.ofAssociativeRing
 
 def leftTranslate {M : Type*} [Mul M] {F : Type*} (a : M) (f : M → F) (g : M) : F := f (a * g)
 
-@[simp] theorem leftTranslate_apply {M : Type*} [Mul M] {F : Type*} (a : M) (f : M → F) (g : M) :
-    leftTranslate a f g = f (a * g) := rfl
-
 variable {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [CompleteSpace 𝔸] [FiniteDimensional ℝ 𝔸]
 variable {G : Subgroup 𝔸ˣ} {𝔤 : Submodule ℝ 𝔸}
 
@@ -39,9 +36,6 @@ def leftTranslateEnd (a : G) : Module.End ℂ (h.smoothFuns (F := F)) where
   toFun f := ⟨leftTranslate a f, h.isSmoothFun_leftTranslate f.2 a⟩
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
-
-@[simp] theorem coe_leftTranslateEnd (a : G) (f : h.smoothFuns (F := F)) :
-    ((h.leftTranslateEnd a f : h.smoothFuns (F := F)) : G → F) = leftTranslate a f := rfl
 
 theorem leftTranslateEnd_mul (a b : G) :
     h.leftTranslateEnd (F := F) a * h.leftTranslateEnd b = h.leftTranslateEnd (b * a) :=

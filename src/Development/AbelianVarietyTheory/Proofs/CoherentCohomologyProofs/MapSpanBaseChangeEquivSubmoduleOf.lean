@@ -28,11 +28,6 @@ noncomputable def baseChangeQuotEquiv (B : Submodule R V) :
     S ⊗[R] (V ⧸ B) ≃ₗ[S] (S ⊗[R] V) ⧸ B.baseChange S :=
   TensorProduct.AlgebraTensorModule.tensorQuotientEquiv S R S B
 
-@[simp]
-theorem baseChangeQuotEquiv_tmul (B : Submodule R V) (s : S) (x : V) :
-    baseChangeQuotEquiv S B (s ⊗ₜ Submodule.Quotient.mk x) = Submodule.Quotient.mk (s ⊗ₜ x) :=
-  rfl
-
 variable [Module.Flat R S]
 
 theorem baseChange_ker (f : V →ₗ[R] V') :
@@ -64,10 +59,6 @@ theorem baseChange_injective {f : V →ₗ[R] V'} (hf : Function.Injective f) :
 noncomputable def baseChangeEquiv (A : Submodule R V) : S ⊗[R] A ≃ₗ[S] A.baseChange S :=
   LinearEquiv.ofInjective (A.subtype.baseChange S) (baseChange_injective S A.injective_subtype)
 
-@[simp]
-theorem coe_baseChangeEquiv_apply (A : Submodule R V) (x : S ⊗[R] A) :
-    (baseChangeEquiv S A x : S ⊗[R] V) = A.subtype.baseChange S x := rfl
-
 theorem map_baseChangeEquiv_submoduleOf (A B : Submodule R V) :
     ((B.submoduleOf A).baseChange S).map (baseChangeEquiv S A : S ⊗[R] A →ₗ[S] A.baseChange S) =
       (B.baseChange S).submoduleOf (A.baseChange S) := by
@@ -83,12 +74,6 @@ noncomputable def baseChangeSubquotEquiv (A B : Submodule R V) :
       A.baseChange S ⧸ (B.baseChange S).submoduleOf (A.baseChange S) :=
   baseChangeQuotEquiv S (B.submoduleOf A) ≪≫ₗ
     Submodule.Quotient.equiv _ _ (baseChangeEquiv S A) (map_baseChangeEquiv_submoduleOf S A B)
-
-@[simp]
-theorem baseChangeSubquotEquiv_tmul (A B : Submodule R V) (s : S) (x : A) :
-    baseChangeSubquotEquiv S A B (s ⊗ₜ Submodule.Quotient.mk x) =
-      Submodule.Quotient.mk ⟨s ⊗ₜ (x : V), Submodule.tmul_mem_baseChange_of_mem s x.2⟩ :=
-  rfl
 
 theorem lift_rank_baseChange.{u, v, w} {R : Type u} (S : Type v) [CommRing R] [CommRing S]
     [Algebra R S] [Module.Flat R S] [NoZeroDivisors S] [FaithfulSMul R S]
@@ -139,13 +124,6 @@ theorem spanBaseChange_eq_map (M : Submodule R V) :
 
 omit [Algebra R K] [IsScalarTower R K V] [IsScalarTower R K V'] [Algebra R S] [Algebra R L]
   [IsScalarTower R K L] [IsScalarTower R S L] in
-
-theorem spanBaseChange_map [LinearMap.CompatibleSMul V V' R K] (f : V →ₗ[K] V')
-    (M : Submodule R V) :
-    spanBaseChange K S L (M.map (f.restrictScalars R)) =
-      (spanBaseChange K S L M).map ((f.baseChange L).restrictScalars S) := by
-  simp only [spanBaseChange, Submodule.map_span, Submodule.map_coe, Set.image_image]
-  rfl
 
 variable [IsFractionRing R K] [FaithfulSMul S L]
 
@@ -250,10 +228,5 @@ theorem flat_spanBaseChange_inf_subspace.{u, v} {R : Type*} (K S : Type*) (L : T
       Module.finrank L (W.baseChange L) = Module.finrank K W :=
   ⟨spanBaseChange_inf_subspace K S L M W, lift_rank_spanBaseChange K S L M,
     lift_rank_baseChange L W, finrank_spanBaseChange K S L M, finrank_baseChange L W⟩
-
-example (p : ℕ) [Fact p.Prime] (M : Submodule ℤ (Fin 2 → ℚ)) (W : Submodule ℚ (Fin 2 → ℚ)) :
-    spanBaseChange ℚ ℤ_[p] ℚ_[p] (M ⊓ W.restrictScalars ℤ) =
-      spanBaseChange ℚ ℤ_[p] ℚ_[p] M ⊓ (W.baseChange ℚ_[p]).restrictScalars ℤ_[p] :=
-  (flat_spanBaseChange_inf_subspace ℚ ℤ_[p] ℚ_[p] M W).1
 
 end GlobalTheory

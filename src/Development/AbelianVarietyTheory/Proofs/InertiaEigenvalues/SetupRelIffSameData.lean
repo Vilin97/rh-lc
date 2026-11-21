@@ -18,18 +18,6 @@ namespace GlobalTheory.TwInputs.Move
 
 variable {D D' : D7}
 
-scoped macro "set_cases " h1:ident h2:ident N:ident N':ident X:ident X':ident : tactic =>
-  `(tactic| (
-    obtain ⟨-, -, -, nOm, ninstOm, nalgOm, -, nPlG⟩ := $h1
-    obtain ⟨-, xTw, -, fixedFieldTransport_baseIntegerRing_heq, fixedFieldTransport_baseIntegerCommRing_heq, -, -, xO, xcrO, xalgO, xOk, xcrOk, xalgOk, -, xpD, -, -, -, -, -, -, fixedFieldTransport_initialPlaceSet_heq, -⟩ := $h2
-    cases $N:ident; cases $N':ident
-    dsimp only at nOm ninstOm nalgOm nPlG
-    subst nOm; subst ninstOm; subst nalgOm; subst nPlG
-    cases $X:ident; cases $X':ident
-    dsimp only at xTw fixedFieldTransport_baseIntegerRing_heq fixedFieldTransport_baseIntegerCommRing_heq xO xcrO xalgO xOk xcrOk xalgOk xpD fixedFieldTransport_initialPlaceSet_heq
-    subst xTw; subst fixedFieldTransport_baseIntegerRing_heq; subst fixedFieldTransport_baseIntegerCommRing_heq; subst xO; subst xcrO; subst xalgO; subst xOk; subst xcrOk; subst xalgOk; subst xpD
-    subst fixedFieldTransport_initialPlaceSet_heq))
-
 theorem exists_setupRel (h : SameGeo D D') {N : NData D.R D.host D.what₂} {N' : NData D'.R D'.host D'.what₂}
     {X : NTw D.R D.host D.what₂ D.LL0 N} {X' : NTw D'.R D'.host D'.what₂ D'.LL0 N'}
     (h1 : GlobalTheory.TwistChoice.SameGalois N N') (h2 : GlobalTheory.TwistChoice.TwistDataAgreeAcrossCoefficients X X') (ρ : Setup X) :

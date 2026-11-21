@@ -12,8 +12,6 @@ open NumberField IntermediateField GroundTheory.Global FiniteSubfield IsDedekind
 
 open scoped GroundTheory.Global.SemiLocal Pointwise
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K E : FiniteSubfield} [Fact (K ≤ E)] [IsGalois K.1 E.1]

@@ -76,7 +76,6 @@ def point (o : Type) [CommRing o] [Algebra o L] (t : Fin (r + 1) → L) (ht : t 
 
 variable {t : Fin (r + 1) → L} {ht : t ≠ 0}
 
-@[reassoc]
 theorem point_str : point o t ht ≫ PSpace.str o r = spMap (algebraMap o L) := by
   simp only [point, PSpace.str, spMap, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
   congr 1

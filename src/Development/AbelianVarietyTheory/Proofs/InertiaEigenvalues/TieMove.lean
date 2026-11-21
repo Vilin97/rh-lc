@@ -12,8 +12,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 noncomputable section
 
-local macro:max "kc% " e:term:max : term => `((by kexactB $e))
-
 namespace GlobalTheory.TwInputs.Move.TieUp
 
 theorem rds_eq {D : D7} {r : Rest D} {ι : D.what₂.LL →+* (overD D r).what₂.LL} {e : ↥(overD D r).LL0 ≃+* ↥D.LL0}

@@ -47,19 +47,6 @@ def interp (m₀ m₁ : ConeMetric ℂ J) (t : ℝ) : ConeMetric ℂ J where
         = (‖c‖ ^ (1 - t) * ‖c‖ ^ t) * (m₀.ρ z ^ (1 - t) * m₁.ρ z ^ t) := by ring
       _ = ‖c‖ * (m₀.ρ z ^ (1 - t) * m₁.ρ z ^ t) := by rw [key]
 
-def IsDensityFor {D : ℕ} (μ : Measure (J → ℂ)) (U : Set (Fin D → ℂ)) (γ : (Fin D → ℂ) → J → ℂ)
-    (ν : (Fin D → ℂ) → ℝ) : Prop :=
-  ContDiffOn ℝ 1 ν U ∧ (∀ y ∈ U, 0 < ν y) ∧
-    ∀ g : (J → ℂ) → ℝ, Measurable g → IsDegZero g → (∀ z, 0 ≤ g z) →
-      ∫⁻ z in coneOver U γ, ENNReal.ofReal (g z) ∂μ = ∫⁻ y in U, ENNReal.ofReal (g (γ y) * ν y)
-
-def IsBergDensity (P : Ideal (MvPolynomial J ℤ)) (D : ℕ) (μ : Measure (J → ℂ))
-    (m : ConeMetric ℂ J) (β : (J → ℂ) → ℝ) : Prop :=
-  IsDegZero β ∧ ∀ (U : Set (Fin D → ℂ)) (γ : (Fin D → ℂ) → J → ℂ) (ν : (Fin D → ℂ) → ℝ),
-    IsParam P U γ → IsDensityFor μ U γ ν → ∀ y ∈ U,
-      β (γ y) * ((D.factorial : ℝ) * ν y) =
-        maDensity (fun _ : Fin D => fun y' => Real.log (m.ρ (γ y'))) y
-
 def mixPot (m₀ m₁ : ConeMetric ℂ J) (D i : ℕ) : Fin D → (J → ℂ) → ℝ :=
   fun j z => if j.val < i then Real.log (m₁.ρ z) else Real.log (m₀.ρ z)
 

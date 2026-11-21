@@ -247,71 +247,6 @@ theorem exists_unit_torus {A : Type} [CommRing A] {s : A →+* A} (hs : ∀ a, s
   exact ⟨⟨M d, M d⁻¹, hM d, hM'⟩, show cT s (M d) * J * M d = J by rw [hU, Matrix.mul_assoc, hM', Matrix.mul_one],
     hX d, hY d, rfl⟩
 
-theorem exists_isTorusElt (h : IsCMExt F E σ) (hJ : IsHermND σ J) {X Y : Matrix (Fin n) (Fin r) E}
-    (hW : IsWittFrame σ J X Y) {t : Fin r → ℝ} (ht : ∀ i, t i ≠ 0) : ∃ a, IsTorusElt σ J X Y t a := by
-  have := h.1
-  let ρ : ℝ →* AF F :=
-    { toFun := fun x => ((fun w => (InfinitePlace.Completion.ringEquivRealOfIsReal (IsTotallyReal.isReal w)).symm x :
-        Ainf F), (1 : Af F))
-      map_one' := Prod.ext (funext fun w => map_one _) rfl
-      map_mul' := fun x y => Prod.ext (funext fun w => map_mul _ _ _) (mul_one _).symm }
-  let ι : AF F →* AF F ⊗[F] E := (Algebra.TensorProduct.includeLeftRingHom : AF F →+* AF F ⊗[F] E)
-  let d : Fin r → (AF F ⊗[F] E)ˣ := fun i => Units.map (ι.comp ρ) (Units.mk0 (t i) (ht i))
-  have c1 : ∀ {a b : ℕ} (Z : Matrix (Fin a) (Fin b) E), cT (sigR (AF F) σ) (adMat F Z) = adMat F (cT (σ : E →+* E) Z) :=
-    fun Z => rfl
-  have c2 : ∀ Z Z' : Matrix (Fin n) (Fin r) E, (cT (sigR (AF F) σ) (adMat F Z) * JR (F := F) (AF F) J : Matrix (Fin r) (Fin n) (AF F ⊗[F] E)) * adMat F Z' =
-      adMat F (cT (σ : E →+* E) Z * J * Z') := fun Z Z' => by
-    rw [c1]; simp only [adMat, JR, Matrix.map_mul]
-  obtain ⟨m, hm, hX, hY, he⟩ := exists_unit_torus (s := sigR (AF F) σ) (J := JR (F := F) (AF F) J) (X := adMat F X) (Y := adMat F Y)
-    (fun a => by
-      induction a using TensorProduct.induction_on with
-      | zero => simp
-      | add x y hx hy => simp only [map_add (f := _), hx, hy]
-      | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (sigma_sigma h x))
-    ((c1 J).trans (congrArg (adMat F) (Matrix.ext fun i j => hJ.1 i j)))
-    ((c2 X X).trans (hW.xx ▸ Matrix.map_zero _ (map_zero _))) ((c2 Y Y).trans (hW.yy ▸ Matrix.map_zero _ (map_zero _)))
-    ((c2 X Y).trans (hW.xy ▸ Matrix.map_one _ (map_zero _) (map_one _))) d
-    (fun i => congrArg (ρ (t i) ⊗ₜ[F] ·) (map_one σ))
-  refine ⟨⟨m, hm⟩, Units.ext (Matrix.ext fun i j => ?_), fun w τ => ?_⟩
-  · let ψ := (Algebra.TensorProduct.map (sndA F) (AlgHom.id F E)).toRingHom
-    have h1 : ∀ k, ψ (d k).1 = 1 := fun k => rfl
-    have h2 : ∀ k, ψ (d k)⁻¹.1 = 1 := fun k => rfl
-    change ψ (m.1 i j) = (1 : Matrix (Fin n) (Fin n) _) i j
-    rw [he]
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Matrix.add_apply, Matrix.mul_apply (N := cT _ _ * _), mul_diagonal, map_add (f := _), map_sum, map_mul, map_sub, h1,
-      h2, map_one, sub_self, mul_zero, zero_mul, Finset.sum_const_zero, add_zero, Matrix.one_apply, apply_ite ψ, map_zero]
-  · let φ := (infEmb τ).comp (compInf F E w)
-    have h0 : ∀ x : E, φ (inclR (F := F) (AF F) x) = τ.1 x := fun x => by
-      change infEmb τ (evInf F w 1 ⊗ₜ[F] x) = _
-      simp
-    have h1 : ∀ x : ℝ, φ (ι (ρ x)) = x := fun x => by
-      change infEmb τ ((InfinitePlace.Completion.ringEquivRealOfIsReal (IsTotallyReal.isReal w)).symm x ⊗ₜ[F] 1) = _
-      rw [infEmb_tmul, map_one, mul_one,
-        ← InfinitePlace.Completion.extensionEmbeddingOfIsReal_apply (IsTotallyReal.isReal w)]
-      exact congrArg _ ((InfinitePlace.Completion.ringEquivRealOfIsReal (IsTotallyReal.isReal w)).apply_symm_apply x)
-    have h2 : ∀ Z : Matrix (Fin n) (Fin r) E, (adMat F Z).map φ = Z.map τ.1 := fun Z => Matrix.ext fun i j => h0 _
-    have h3 : archMat σ J τ (projArch σ J w ⟨m, hm⟩) = m.1.map φ := rfl
-    rw [h3]
-    refine ⟨?_, ?_, fun z hz hz' => ?_⟩
-    · rw [← h2, ← Matrix.map_mul, hX, Matrix.map_mul, diagonal_map (map_zero _)]
-      exact congrArg (_ * diagonal ·) (funext fun i => h1 _)
-    · rw [← h2, ← Matrix.map_mul, hY, Matrix.map_mul, diagonal_map (map_zero _)]
-      exact congrArg (_ * diagonal ·) (funext fun i => (h1 (t i)⁻¹).trans (Complex.ofReal_inv _))
-    · have h4 : ∀ Z : Matrix (Fin n) (Fin r) E, (cT (σ : E →+* E) Z * J) *ᵥ z = 0 →
-          (cT (sigR (AF F) σ) (adMat F Z) * JR (F := F) (AF F) J : Matrix (Fin r) (Fin n) (AF F ⊗[F] E)) *ᵥ (inclR (F := F) (AF F) ∘ z) = 0 := fun Z hZ => funext fun i => by
-        have e : (cT (sigR (AF F) σ) (adMat F Z) * JR (F := F) (AF F) J : Matrix (Fin r) (Fin n) (AF F ⊗[F] E)) =
-          (cT (σ : E →+* E) Z * J).map (inclR (F := F) (AF F)) := by
-          rw [c1, Matrix.map_mul]; rfl
-        rw [e, ← RingHom.map_mulVec, hZ]; exact map_zero _
-      have h5 : m.1 *ᵥ (inclR (F := F) (AF F) ∘ z) = inclR (F := F) (AF F) ∘ z := by
-        rw [he, add_mulVec, add_mulVec, ← mulVec_mulVec, h4 Y hz', mulVec_zero, ← mulVec_mulVec, h4 X hz]
-        simp
-      funext i
-      rw [show (fun i => τ.1 (z i)) = φ ∘ inclR (F := F) (AF F) ∘ z from funext fun i => (h0 _).symm,
-        ← RingHom.map_mulVec, h5]
-      exact h0 _
-
 theorem exists_isRealLine (h : IsCMExt F E σ) (hJ : IsHermND σ J) {w : InfinitePlace F} (τ : EmbOver E w)
     {Z : Matrix (Fin n) (Fin n) ℂ} (hZ : Zᴴ * J.map τ.1 + J.map τ.1 * Z = 0) :
     ∃ γ, IsRealLine σ J γ ∧ ∀ t : ℝ, archMat σ J τ (projArch σ J w (γ t)) = NormedSpace.exp (t • Z) := by
@@ -342,11 +277,6 @@ theorem isSmoothModerate_const (c : ℂ) : IsSmoothModerate σ J fun _ => c := b
       exact ⟨0, by simp, by rw [List.foldr_cons, h]; funext g; simp [lineDer]⟩
   obtain ⟨c', h, e⟩ := this l
   simpa [e] using h
-
-example (t : Fin 1 → ℝ) : modulus F 2 t = t 0 ^ (2 * Module.finrank ℚ F) := by
-  simp [modulus, ← zpow_natCast]
-
-example {c : ℝ} (h1 : c ≤ 1) : (fun _ => 1) ∈ cone r c := ⟨fun _ => one_pos, fun _ _ _ => by simpa, fun _ _ => h1⟩
 
 theorem exists_isCompact_projFin {X Y : Matrix (Fin n) (Fin r) E} {Ω : Set (GAd σ J)} (hΩ : IsCompact Ω) (c : ℝ)
     {K : Subgroup (GAd σ J)} (hK : IsCompact (K : Set (GAd σ J))) :
@@ -451,9 +381,6 @@ theorem isSmoothModerate_of_isAutFunSm (hθ : IsInfFam θ) (h : IsAutFunSm θ V 
         obtain ⟨p, hp, rfl⟩ := (hl γ List.mem_cons_self).eq_oneP hθ
         exact ⟨p :: l', List.forall_mem_cons.2 ⟨hp, h1⟩, by rw [List.foldr_cons, h2]; rfl⟩
     exact h2 ▸ hN l' h1
-
-example (D : D7) : ¬ IsCuspidal D.sp.cm.sig (GlobalTheory.CuspDecay.Model.plane D).gram fun _ => 1 :=
-  GlobalTheory.CuspDecay.Model.not_isCuspFun_one_plane D
 
 end Record
 

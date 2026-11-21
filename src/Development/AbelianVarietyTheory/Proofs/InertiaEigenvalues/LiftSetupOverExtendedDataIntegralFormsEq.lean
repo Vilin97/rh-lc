@@ -12,8 +12,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 noncomputable section
 
-local macro:max "kc% " e:term:max : term => `((by kexactB $e))
-
 namespace GlobalTheory.TwInputs.Move.TieUp
 
 variable {D : D7} (r : Rest D)
@@ -192,12 +190,6 @@ theorem cellUp_rdV {hρ : ρ.Good} (hρ' : (setupUp r ρ).Good) {rd : Rd ρ D.ne
     HEq t.rdV (cellUp r hc hρ' t).rdV := HEq.rfl
 
 include hc in
-
-theorem rat_up (hρ : ρ.Good) (hρ' : (setupUp r ρ).Good) (rd : Rd ρ D.nexp i j b) :
-    SeriesTie.Rat hρ' (Y := (overD D r).nexp) (i := (by with_unfolding_all exact (i :))) (j := (by with_unfolding_all exact (j :))) (b := b) ((by with_unfolding_all exact (rd :))) ↔ SeriesTie.Rat hρ rd := by
-  conv_lhs => delta SeriesTie.Rat RatBase RatTwist RatUniv
-  rewrite [liftSetupOverExtendedData_isDatum_eq ρ i j b hc, liftSetupOverExtendedData_theta_eq r ρ i j b, liftSetupOverExtendedData_gens_eq r ρ i j b, liftSetupOverExtendedData_xi_eq r ρ i j b]
-  exact (by with_unfolding_all exact ((Iff.refl (SeriesTie.Rat hρ rd)) :))
 
 end Cell
 

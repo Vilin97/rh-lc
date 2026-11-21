@@ -38,8 +38,6 @@ section Fields
 
 variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
 
-local notation "G" => Ω ≃ₐ[K] Ω
-
 def fixingOpenSubgroup (L : IntermediateField K Ω) [FiniteDimensional K L] : OpenSubgroup G :=
   ⟨L.fixingSubgroup, L.fixingSubgroup_isOpen⟩
 
@@ -59,10 +57,6 @@ instance finiteDimensional_fixedField_openSubgroup (U : OpenSubgroup G) :
   (InfiniteGalois.isOpen_iff_finite _).1 (by
     rw [fixingSubgroup_fixedField_openSubgroup]
     exact U.isOpen)
-
-theorem fixedField_fixingOpenSubgroup (L : IntermediateField K Ω) [FiniteDimensional K L] :
-    fixedField (fixingOpenSubgroup L : Subgroup G) = L :=
-  InfiniteGalois.fixedField_fixingSubgroup L
 
 theorem fixingOpenSubgroup_fixedField (U : OpenSubgroup G) :
     fixingOpenSubgroup (fixedField (U : Subgroup G)) = U :=
@@ -90,8 +84,6 @@ end Fields
 section Units
 
 variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
-
-local notation "G" => Ω ≃ₐ[K] Ω
 
 omit [IsGalois K Ω] in
 
@@ -122,11 +114,6 @@ def unitsEquivOfForall {k : Type*} [Field k] [Algebra k Ω] (H : Subgroup G)
     rfl
 
 omit [IsGalois K Ω] in
-@[simp]
-theorem coe_unitsEquivOfForall {k : Type*} [Field k] [Algebra k Ω] (H : Subgroup G)
-    (F : IntermediateField k Ω) (hF : ∀ x : Ω, x ∈ F ↔ ∀ σ ∈ H, σ x = x) (a : fixedModule Ωˣ H) :
-    (((unitsEquivOfForall H F hF a : Fˣ) : F) : Ω) = ((a : Ωˣ) : Ω) :=
-  rfl
 
 omit [IsGalois K Ω] in
 @[simp]
@@ -144,18 +131,6 @@ theorem mem_fixedModule_units_iff (L : IntermediateField K Ω) (a : Ωˣ) :
 
 def fixedModuleUnitsEquiv (L : IntermediateField K Ω) : fixedModule Ωˣ L.fixingSubgroup ≃* Lˣ :=
   unitsEquivOfForall L.fixingSubgroup L (mem_iff_forall_fixingSubgroup L)
-
-@[simp]
-theorem coe_fixedModuleUnitsEquiv (L : IntermediateField K Ω)
-    (a : fixedModule Ωˣ L.fixingSubgroup) :
-    (((fixedModuleUnitsEquiv L a : Lˣ) : L) : Ω) = ((a : Ωˣ) : Ω) :=
-  rfl
-
-@[simp]
-theorem coe_fixedModuleUnitsEquiv_symm (L : IntermediateField K Ω) (u : Lˣ) :
-    ((((fixedModuleUnitsEquiv L).symm u : fixedModule Ωˣ L.fixingSubgroup) : Ωˣ) : Ω) =
-      ((u : L) : Ω) :=
-  rfl
 
 noncomputable def baseUnitsEquiv : fixedModule Ωˣ (⊤ : Subgroup G) ≃* Kˣ :=
   (MulEquiv.subgroupCongr (by rw [IntermediateField.fixingSubgroup_bot])).trans <|
@@ -188,8 +163,6 @@ end Units
 section Norm
 
 variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
-
-local notation "G" => Ω ≃ₐ[K] Ω
 
 variable (L : IntermediateField K Ω)
 
@@ -241,12 +214,6 @@ noncomputable def cosetEmbeddingEquiv :
      fun τ => by
       obtain ⟨σ, rfl⟩ := restrictEmbedding_surjective L τ
       exact ⟨((⟨σ, Subgroup.mem_top σ⟩ : (⊤ : Subgroup G)) : _ ⧸ _), rfl⟩⟩
-
-@[simp]
-theorem cosetEmbeddingEquiv_mk (σ : (⊤ : Subgroup G)) :
-    cosetEmbeddingEquiv L (σ : (⊤ : Subgroup G) ⧸ L.fixingSubgroup.subgroupOf ⊤) =
-      restrictEmbedding L σ :=
-  rfl
 
 variable [FiniteDimensional K L]
 
@@ -370,12 +337,6 @@ noncomputable def galoisTateModel :
     rw [coe_restrictHom_apply]
     rfl
 
-@[simp]
-theorem coe_galoisTateModel_equiv (a : fixedModule Ωˣ L') :
-    ((((galoisTateModel K' L' hEF hK hL).equiv a : (extendScalars hEF)ˣ) : extendScalars hEF) : Ω) =
-      ((a : Ωˣ) : Ω) :=
-  rfl
-
 end Normal
 
 section Relative
@@ -394,10 +355,6 @@ def restrictEmbeddingRel (σ : K') : extendScalars hEF →ₐ[E] Ω :=
     (extendScalars hEF).val
 
 omit [IsGalois K Ω] in
-@[simp]
-theorem restrictEmbeddingRel_apply (σ : K') (x : extendScalars hEF) :
-    restrictEmbeddingRel K' hEF hK σ x = (σ : Ω ≃ₐ[K] Ω) x :=
-  rfl
 
 omit [IsGalois K Ω] in
 include hL in

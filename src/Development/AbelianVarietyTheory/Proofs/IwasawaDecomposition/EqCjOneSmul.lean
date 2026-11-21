@@ -66,12 +66,6 @@ theorem ratAt_of_geo {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T0 : Type
 theorem eq_cj_one_smul {H : Type} [AddCommGroup H] [Module ℂ H] (s : Bool) (v : H) : v = Formalism.IndefR.Links.cj s (1 : ℂ) • v := by
   rw [map_one, one_smul]
 
-local macro "qmove " h:term : tactic => `(tactic| (
-  obtain ⟨i, u, a, l, e, m, w, b, x, k⟩ := $h
-  refine ⟨⟨i.tie, i.onto, i.hR, i.hL, i.SF⟩, ⟨u.mu_off, u.mu_used, u.mu_ne, u.mu_conj, u.mu_on⟩, a, l, e, m, w, b, x, fun c hc => ?_⟩
-  have kv := k c hc
-  exact ⟨kv.std, kv.signs, kv.frames, kv.beta, kv.prX, kv.grp, kv.psi, kv.guard, kv.valKs, kv.frameKs, kv.levKs⟩))
-
 set_option maxHeartbeats 8000000 in
 
 theorem charW_keep (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B px) (hX : X.B.fields.Ok) (U : Set I.ι)

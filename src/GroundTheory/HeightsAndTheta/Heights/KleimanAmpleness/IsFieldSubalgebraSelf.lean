@@ -479,17 +479,6 @@ theorem isNormalModel_ptOne : IsNormalModel F (ptOne F) := by
 theorem isModelWithBase_ptOne : IsModelWithBase F (ptOne F) () :=
   ⟨fun _ => ⟨0, one_ne_zero⟩, rfl⟩
 
-theorem FiniteSections.hypotheses_example :
-    IsNoetherianRing F ∧ IsModelWithBase F (pnPt F 1) () ∧
-      IsLocalization (⊥ : Submonoid F) F :=
-  ⟨inferInstance, isModelWithBase_pnPt F 1, IsLocalization.self bot_le⟩
-
-theorem FiniteTwists.hypotheses_example :
-    IsNoetherianRing F ∧ (∀ k, ∃ i, pnPt F 1 ⟨k, i⟩ ≠ 0) ∧
-      (∀ j, pnPt F 1 ⟨(), j⟩ ∈ secOver F (pnPt F 1) (baseDeg ())) ∧
-      GeneratesOver F (pnPt F 1) (baseDeg ()) (fun j : Fin 2 => pnPt F 1 ⟨(), j⟩) :=
-  ⟨inferInstance, fun _ => ⟨0, pnPt_ne_zero F 1 _⟩, pnPt_mem_secOver F 1, pnPt_generates F 1⟩
-
 theorem Domination.hypotheses_example :
     (IsNoetherianRing F ∧ (∀ k, ∃ i, pnPt F 1 ⟨k, i⟩ ≠ 0) ∧ IsModelWithBase F (pnPt F 1) () ∧
       Dominates F (pnPt F 1) (pnPt F 1) ∧ IsFractionRing F F ∧ SameModel F (pnPt F 1) (pnPt F 1)) ∧
@@ -509,42 +498,9 @@ theorem SurjectiveClosed.hypotheses_example :
   rw [mIdealOver_pnPt]
   exact ⟨∅, fun _ h => absurd h (Set.notMem_empty _), by rw [Ideal.span_empty]⟩
 
-theorem Restriction.hypotheses_example :
-    SameModel F (pnPt F 1) (pnPt F 1) ∧ (∀ k, pnPt F 1 ⟨k, (fun _ => 0 : ∀ k, pnIdx 1 k) k⟩ ≠ 0) ∧
-      (⊥ : Ideal (chartRingOver F (pnPt F 1) (fun _ => 0))).IsPrime ∧
-      locIn (chartRingOver F (pnPt F 1) (fun _ => 0)) ⊥ =
-        locIn (chartRingOver F (pnPt F 1) (fun _ => 0)) ⊥ :=
-  ⟨rfl, fun _ => pnPt_ne_zero F 1 _, Ideal.isPrime_bot, rfl⟩
-
-theorem HilbertPoint.hypotheses_example :
-    (∃ i, (fun j : Fin 1 => pnPt F 0 ⟨(), j⟩) i ≠ 0) ∧
-      relDim (mIdealOver F (oneBlock (fun j : Fin 1 => pnPt F 0 ⟨(), j⟩))) =
-        ((0 : ℕ) : WithBot (WithTop ℤ)) :=
-  ⟨⟨0, pnPt_ne_zero F 0 _⟩, relDim_pnPt F 0⟩
-
-theorem HilbertPositive.hypotheses_example :
-    (∃ i, (fun j : Fin 2 => pnPt F 1 ⟨(), j⟩) i ≠ 0) ∧ 1 ≤ 1 ∧
-      relDim (mIdealOver F (oneBlock (fun j : Fin 2 => pnPt F 1 ⟨(), j⟩))) =
-        ((1 : ℕ) : WithBot (WithTop ℤ)) :=
-  ⟨⟨0, pnPt_ne_zero F 1 _⟩, le_rfl, relDim_pnPt F 1⟩
-
-theorem SectionCount.hypotheses_example :
-    IsModelWithBase F (pnPt F 1) () ∧
-      relDim (mIdealOver F (pnPt F 1)) = ((0 + 1 : ℕ) : WithBot (WithTop ℤ)) ∧
-      VeryAmple F (pnPt F 1) (baseDeg ()) ∧ 1 ≤ 1 :=
-  ⟨isModelWithBase_pnPt F 1, relDim_pnPt F 1, veryAmple_pnPt F 1, le_rfl⟩
-
 theorem multipleVeryAmple_pnPt :
     MultipleVeryAmple F (pnPt F 1) (0 : Unit → ℤ) (baseDeg ()) 1 :=
   ⟨1, 1, le_rfl, by norm_num, by simpa using veryAmple_pnPt F 1⟩
-
-theorem SectionExists.hypotheses_example :
-    IsModelWithBase F (pnPt F 1) () ∧
-      relDim (mIdealOver F (pnPt F 1)) = ((0 + 1 : ℕ) : WithBot (WithTop ℤ)) ∧
-      IsNef F (pnPt F 1) 0 ∧ (0 : ℚ) < 1 / 2 ∧ (1 / 2 : ℚ) < 1 / ((0 : ℕ) + 1) ∧
-      MultipleVeryAmple F (pnPt F 1) (0 : Unit → ℤ) (baseDeg ()) 1 :=
-  ⟨isModelWithBase_pnPt F 1, relDim_pnPt F 1, isNef_zero F _, by norm_num, by norm_num,
-    multipleVeryAmple_pnPt F⟩
 
 theorem isStepData_example :
     IsStepData F (pnPt F 1) () 1 0 (1 / 2) 2 1 1 1 := by
@@ -558,12 +514,6 @@ theorem isStepData_example :
     Subalgebra.mem_toSubmodule]
   intro c _
   simp
-
-theorem VeryAmpleNefPlusAmple.hypotheses_example :
-    IsModelWithBase F (pnPt F 1) () ∧
-      relDim (mIdealOver F (pnPt F 1)) = ((1 : ℕ) : WithBot (WithTop ℤ)) ∧
-      IsNef F (pnPt F 1) 0 ∧ (0 : ℚ) < 1 :=
-  ⟨isModelWithBase_pnPt F 1, relDim_pnPt F 1, isNef_zero F _, one_pos⟩
 
 theorem isAmpleByFiniteMap_pnPt (N : ℕ) : IsAmpleByFiniteMap F (pnPt F N) (baseDeg ()) := by
   refine ⟨1, N + 1, fun j => pnPt F N ⟨(), j⟩, le_rfl, ?_, ?_, ?_⟩
@@ -590,11 +540,6 @@ theorem isAmpleByFiniteMap_pnPt (N : ℕ) : IsAmpleByFiniteMap F (pnPt F N) (bas
     have := Submodule.smul_mem _ (⟨s, hs''⟩ : ReciprocityTheory.ChartRestriction.G.Geo.chartRing F (fun j => pnPt F N ⟨(), j⟩) j) h1
     simpa [Subalgebra.smul_def] using this
 
-theorem NefPlusAmple.hypotheses_example :
-    (∀ k, ∃ i, pnPt F 1 ⟨k, i⟩ ≠ 0) ∧ IsAmpleByFiniteMap F (pnPt F 1) (baseDeg ()) ∧
-      IsNef F (pnPt F 1) 0 ∧ (0 : ℚ) < 1 :=
-  ⟨fun _ => ⟨0, pnPt_ne_zero F 1 _⟩, isAmpleByFiniteMap_pnPt F 1, isNef_zero F _, one_pos⟩
-
 theorem NefProductNonneg.hypotheses_example :
     (∀ k, ∃ i, pnPt F 1 ⟨k, i⟩ ≠ 0) ∧
       relDim (mIdealOver F (pnPt F 1)) = ((1 : ℕ) : WithBot (WithTop ℤ)) ∧
@@ -614,69 +559,6 @@ theorem NefGeneric.hypotheses_example :
 section Fit
 
 variable (F : Type) [Field F]
-
-example (h : FiniteSections.Statement) :=
-  h F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) () inferInstance (isModelWithBase_pnPt F 1) (baseDeg ())
-
-example (h : FiniteTwists.Statement) :=
-  h F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) 0 (baseDeg ()) 2 (fun j => pnPt F 1 ⟨(), j⟩)
-    inferInstance (fun _ => ⟨0, pnPt_ne_zero F 1 _⟩) (pnPt_mem_secOver F 1) (pnPt_generates F 1)
-
-example (h : Domination.Statement) :=
-  haveI : IsFractionRing F F := (Domination.hypotheses_example F).1.2.2.2.2.1
-  And.intro ((h F Unit (pnIdx 1) Unit (pnIdx 1) (pnField F 1) (pnPt F 1) (pnPt F 1) () inferInstance
-    (fun _ => ⟨0, pnPt_ne_zero F 1 _⟩) (isModelWithBase_pnPt F 1) (dominates_self _)).1 F rfl)
-   ((h F Unit (fun _ => Fin 1) Unit (fun _ => Fin 1) F (ptOne F) (ptOne F) () inferInstance
-    (fun _ => ⟨0, one_ne_zero⟩) (isModelWithBase_ptOne F) (dominates_self _)).2.1
-      (isBirational_ptOne F) (isBirational_ptOne F) (isNormalModel_ptOne F))
-
-example (h : SurjectiveClosed.Statement) :=
-  h F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) () (mIdealOver F (pnPt F 1)) le_rfl inferInstance
-    (isModelWithBase_pnPt F 1) (SurjectiveClosed.hypotheses_example F).2.2.1 (baseDeg ())
-
-example (h : Restriction.Statement) :=
-  h F Unit (pnIdx 1) Unit (pnIdx 1) (pnField F 1) (pnPt F 1) (pnPt F 1) rfl (fun _ => 0) ⊥
-    (fun _ => pnPt_ne_zero F 1 _)
-
-example (h : HilbertPoint.Statement) :=
-  h F (Fin 1) (pnField F 0) (fun j => pnPt F 0 ⟨(), j⟩) ⟨0, pnPt_ne_zero F 0 _⟩ (relDim_pnPt F 0)
-
-example (h : HilbertPositive.Statement) :=
-  h F (Fin 2) (pnField F 1) (fun j => pnPt F 1 ⟨(), j⟩) 1 ⟨0, pnPt_ne_zero F 1 _⟩ le_rfl
-    (relDim_pnPt F 1)
-
-example (h : SectionCount.Statement) :=
-  h F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) () 0 (baseDeg ()) 1 (isModelWithBase_pnPt F 1)
-    (relDim_pnPt F 1) (veryAmple_pnPt F 1) le_rfl
-
-example (h : SectionExists.Statement) :=
-  h F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) () 0 0 1 (1 / 2) (isModelWithBase_pnPt F 1)
-    (relDim_pnPt F 1) (isNef_zero F _) (by norm_num) (by norm_num) (multipleVeryAmple_pnPt F)
-
-example (h : VeryAmpleNefPlusAmple.Statement) :=
-  h 1 F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) () (isModelWithBase_pnPt F 1) (relDim_pnPt F 1) 0
-    (isNef_zero F _) 1 one_pos
-
-example (h : StepTwo.Statement) (hK : ∀ d' < 1, KAt d') :=
-  h 1 hK F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) () 0 (1 / 2) 2 1 1 1 (isStepData_example F)
-
-example (h : ClaimVanish.Statement) (hK : ∀ d' < 1, KAt d') :=
-  h 1 hK F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) () 0 (1 / 2) 2 1 1 1 (isStepData_example F)
-
-example (h : StepThree.Statement) (hK : ∀ d' < 1, KAt d') :=
-  h 1 hK F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) () 0 (1 / 2) 2 1 1 1 (isStepData_example F)
-
-example (h : NefPlusAmple.Statement) :=
-  h F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) (baseDeg ()) 0 1 (fun _ => ⟨0, pnPt_ne_zero F 1 _⟩)
-    (isAmpleByFiniteMap_pnPt F 1) (isNef_zero F _) one_pos
-
-example (h : NefProductNonneg.Statement) :=
-  h F Unit (pnIdx 1) (pnField F 1) (pnPt F 1) 1 ![0] (fun _ => ⟨0, pnPt_ne_zero F 1 _⟩)
-    (relDim_pnPt F 1) (NefProductNonneg.hypotheses_example F).2.2
-
-example (h : NefGeneric.Statement) :=
-  h (PowerSeries ℚ) Unit (fun _ => Fin 2) ⊥ 1 0 NefGeneric.hypotheses_example.1
-    NefGeneric.hypotheses_example.2
 
 end Fit
 

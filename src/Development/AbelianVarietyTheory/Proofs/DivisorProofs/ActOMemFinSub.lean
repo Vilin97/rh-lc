@@ -44,8 +44,6 @@ instance (S T : HSp D) : Module (AE D) (XF S T) := inferInstanceAs (Module (AE D
 
 @[coe] def XF.val {S T : HSp D} (x : XF S T) : WO S T := Subtype.val x
 
-instance (S T : HSp D) : CoeOut (XF S T) (WO S T) := ⟨XF.val⟩
-
 def XF.mk {S T : HSp D} (u : WO S T) (hu : u.map (infPart D) = 0) : XF S T := (⟨u, hu⟩ : finSub S T)
 
 theorem XF.fin {S T : HSp D} (x : XF S T) : (x : WO S T).map (infPart D) = 0 := Subtype.property x
@@ -55,8 +53,6 @@ theorem XF.ext {S T : HSp D} {x y : XF S T} (h : (x : WO S T) = y) : x = y := Su
 theorem XF.coe_mk {S T : HSp D} (u : WO S T) (hu : u.map (infPart D) = 0) : (XF.mk u hu : WO S T) = u := rfl
 
 theorem XF.coe_add {S T : HSp D} (x y : XF S T) : ((x + y : XF S T) : WO S T) = x + y := rfl
-
-theorem XF.coe_sub {S T : HSp D} (x y : XF S T) : ((x - y : XF S T) : WO S T) = x - y := rfl
 
 theorem XF.coe_nsmul {S T : HSp D} (n : ℕ) (x : XF S T) : ((n • x : XF S T) : WO S T) = n • (x : WO S T) := rfl
 

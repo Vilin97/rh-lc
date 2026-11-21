@@ -76,5 +76,3 @@ theorem InH_zero (g : GL (Fin (m + 1)) k) (hg : InH 0 g) : g = 1 :=
   Units.ext (Matrix.ext fun p q => hg p q (by simp))
 
 end DiscreteGroups.sglob.LConvKir
-
-example {K : Type} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] : ContinuousInv₀ K := inferInstance

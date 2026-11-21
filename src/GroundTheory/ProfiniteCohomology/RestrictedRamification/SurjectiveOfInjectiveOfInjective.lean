@@ -10,8 +10,6 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory NumberField IsDedekindDomain IntermediateField GroundTheory.Global
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 theorem surjective_of_injective_of_injective {α β : Type*} [Finite α] {f : α → β} {g : β → α}

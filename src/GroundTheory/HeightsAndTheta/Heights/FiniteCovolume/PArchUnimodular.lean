@@ -120,8 +120,6 @@ section Example
 
 open GaussianPlane
 
-example : muG.IsMulRightInvariant := ArchUnimodular.proof hG vG muG
-
 end Example
 
 end

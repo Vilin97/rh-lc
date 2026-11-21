@@ -101,10 +101,6 @@ variable {K : FiniteSubfield} (v : InfinitePlace K.1) (hv : v.IsReal)
 
 include hv in
 
-theorem card_cohomology_one_eq_two_of_isReal :
-    Nat.card (cohomology M 1) = Nat.card (cohomology M 2) :=
-  OrderTwo.card_cohomology_one_eq_two M (eq_one_or_eq_realConj v hv) (realConj_ne_one v hv)
-
 include hv in
 
 theorem eulerChar_eq_card_cohomology_zero_of_isReal :
@@ -125,20 +121,10 @@ section GS
 
 open NumberField IsDedekindDomain GroundTheory.Global
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion)
   (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M] [Finite M]
   (v : {v : InfinitePlace K.1 // v.IsReal})
-
-instance finite_res_gsRealFamily : Finite (Rep.res (gsRealFamily S ιr v).toMonoidHom M) :=
-  inferInstanceAs (Finite M)
-
-theorem gsReal_card_cohomology_one_eq_two :
-    Nat.card (cohomology (Rep.res (gsRealFamily S ιr v).toMonoidHom M) 1) =
-      Nat.card (cohomology (Rep.res (gsRealFamily S ιr v).toMonoidHom M) 2) :=
-  card_cohomology_one_eq_two_of_isReal v.1 v.2 _
 
 theorem gsReal_eulerChar_eq_card_cohomology_zero :
     eulerChar (Rep.res (gsRealFamily S ιr v).toMonoidHom M) =

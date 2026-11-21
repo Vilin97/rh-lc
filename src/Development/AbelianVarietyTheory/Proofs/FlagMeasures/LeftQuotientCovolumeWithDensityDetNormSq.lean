@@ -56,8 +56,6 @@ theorem measurable_detNorm : Measurable (detNorm E j) := (continuous_detNorm E j
 
 def scal (t : ℝ) (x : MatInf E j) : MatInf E j := fun w a b => (t : ℂ) * x w a b
 
-theorem scal_eq (t : ℝ) (x : InfinitePlace E → Fin j → Fin j → ℂ) : scal E j t x = t • x := rfl
-
 theorem measurable_scal (t : ℝ) : Measurable (scal E j t) :=
   (continuous_const_smul t : Continuous fun x : InfinitePlace E → Fin j → Fin j → ℂ => t • x).measurable
 

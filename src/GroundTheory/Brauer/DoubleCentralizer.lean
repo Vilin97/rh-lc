@@ -78,15 +78,6 @@ theorem finrank_mul_finrank_end :
 variable (K R M) in
 include K in
 
-theorem isSimpleRing_end [Nontrivial M] : IsSimpleRing (Module.End R M) := by
-  classical
-  obtain ⟨S, r, m, hS, hr, -, ⟨eM⟩⟩ := exists_linearEquiv_pi_simple K R M
-  have : NeZero m := ⟨by rintro rfl; exact not_subsingleton M eM.subsingleton⟩
-  have : IsSimpleRing (Module.End R S) := DivisionRing.isSimpleRing (Module.End R S)
-  let e : Matrix (Fin m) (Fin m) (Module.End R S) ≃+* Module.End R M :=
-    ((eM.conjAlgEquiv K).trans (endVecAlgEquivMatrixEnd (Fin m) K R S)).symm.toRingEquiv
-  exact IsSimpleRing.of_ringEquiv (R := Matrix (Fin m) (Fin m) (Module.End R S)) e inferInstance
-
 end EndOfModule2
 
 section Centralizer
@@ -110,9 +101,6 @@ noncomputable def mulRight (c : Subalgebra.centralizer K (B : Set A)) :
       congr 2
       exact (Subalgebra.mem_centralizer_iff K).mp c.2 _ b.unop.2
     | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, add_mul, hr, hs]
-
-theorem mulRight_val (c : Subalgebra.centralizer K (B : Set A)) (x : Twist B.val) :
-    (mulRight B c x).val = x.val * c := rfl
 
 noncomputable def endAlgEquiv :
     Module.End (A ⊗[K] Bᵐᵒᵖ) (Twist B.val) ≃ₐ[K] (Subalgebra.centralizer K (B : Set A))ᵐᵒᵖ where
@@ -149,13 +137,6 @@ open CentralizerModule
 
 variable [Algebra.IsCentral K A] [IsSimpleRing A] [FiniteDimensional K A] [IsSimpleRing B]
 
-theorem isSimpleRing_centralizer : IsSimpleRing (Subalgebra.centralizer K (B : Set A)) := by
-  have : Nontrivial (Twist B.val) := inferInstanceAs (Nontrivial A)
-  have h := isSimpleRing_end K (A ⊗[K] Bᵐᵒᵖ) (Twist B.val)
-  have hop : IsSimpleRing (Subalgebra.centralizer K (B : Set A))ᵐᵒᵖ :=
-    IsSimpleRing.of_ringEquiv (endAlgEquiv B).toRingEquiv h
-  exact IsSimpleRing.of_ringEquiv (RingEquiv.opOp _).symm inferInstance
-
 theorem finrank_mul_finrank_centralizer :
     finrank K B * finrank K (Subalgebra.centralizer K (B : Set A)) = finrank K A := by
   have h := finrank_mul_finrank_end K (A ⊗[K] Bᵐᵒᵖ) (Twist B.val)
@@ -166,46 +147,7 @@ theorem finrank_mul_finrank_centralizer :
   apply Nat.eq_of_mul_eq_mul_left hA
   rw [← mul_assoc, h, sq]
 
-theorem centralizer_centralizer :
-    Subalgebra.centralizer K (Subalgebra.centralizer K (B : Set A) : Set A) = B := by
-  set C := Subalgebra.centralizer K (B : Set A)
-  have : IsSimpleRing C := isSimpleRing_centralizer B
-  have h1 := finrank_mul_finrank_centralizer B
-  have h2 := finrank_mul_finrank_centralizer C
-  have hC : 0 < finrank K C := Module.finrank_pos
-  have hle : B ≤ Subalgebra.centralizer K (C : Set A) := Subalgebra.le_centralizer_centralizer K
-  have hdim : finrank K B = finrank K (Subalgebra.centralizer K (C : Set A)) := by
-    apply Nat.eq_of_mul_eq_mul_left hC
-    rw [h2, mul_comm, h1]
-  exact (Subalgebra.toSubmodule_injective
-    (Submodule.eq_of_le_of_finrank_eq (Subalgebra.toSubmodule.monotone hle) hdim)).symm
-
 variable [Algebra.IsCentral K B]
-
-noncomputable def tensorCentralizerHom :
-    B ⊗[K] Subalgebra.centralizer K (B : Set A) →ₐ[K] A :=
-  Algebra.TensorProduct.lift B.val (Subalgebra.centralizer K (B : Set A)).val fun b c ↦
-    ((Subalgebra.mem_centralizer_iff K).mp c.2 b b.2)
-
-noncomputable def tensorCentralizerAlgEquiv :
-    B ⊗[K] Subalgebra.centralizer K (B : Set A) ≃ₐ[K] A := by
-  have : IsSimpleRing (Subalgebra.centralizer K (B : Set A)) := isSimpleRing_centralizer B
-  have hinj := RingHom.injective (tensorCentralizerHom B).toRingHom
-  refine AlgEquiv.ofBijective (tensorCentralizerHom B) ⟨hinj, ?_⟩
-  have h := LinearMap.injective_iff_surjective_of_finrank_eq_finrank
-    (f := (tensorCentralizerHom B).toLinearMap)
-    (by rw [Module.finrank_tensorProduct, finrank_mul_finrank_centralizer])
-  exact h.mp hinj
-
-@[simp]
-theorem tensorCentralizerAlgEquiv_tmul (b : B) (c : Subalgebra.centralizer K (B : Set A)) :
-    tensorCentralizerAlgEquiv B (b ⊗ₜ[K] c) = (b : A) * c := by
-  simp only [tensorCentralizerAlgEquiv, tensorCentralizerHom, AlgEquiv.ofBijective_apply]
-  rfl
-
-theorem nonempty_algEquiv_tensor_centralizer :
-    Nonempty (A ≃ₐ[K] B ⊗[K] Subalgebra.centralizer K (B : Set A)) :=
-  ⟨(tensorCentralizerAlgEquiv B).symm⟩
 
 end Centralizer
 

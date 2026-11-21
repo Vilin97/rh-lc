@@ -165,5 +165,3 @@ theorem eigenvalue_product_maps_letter_lattice_of_conclusions : ∀ (D : Formali
     (fun _ => GlobalTheory.T.wachOperatorProduct_shift_mem_lattice D HW F Cm hN l K LL hCAl) hCA
 
 end GlobalTheory.PrimeSequence
-
-example : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F), Formalism.MainNotions.DeltaInvariantLattices.DeltaInvariantNormBound D HW F Cm → Formalism.MainNotions.N.LetterConditionGlobal D HW F := GlobalTheory.PrimeSequence.eigenvalue_product_maps_letter_lattice_of_conclusions

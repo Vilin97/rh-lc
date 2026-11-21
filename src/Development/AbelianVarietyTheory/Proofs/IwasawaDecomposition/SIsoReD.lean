@@ -3,7 +3,7 @@ import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ECure
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SpectralRedivisionTermEquivKeepsTermDataStatement
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.KeepPuVolAR
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsoPairToTermSymm
-import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.Imports
+import Lean
 
 noncomputable section
 

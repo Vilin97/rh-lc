@@ -13,8 +13,6 @@ namespace GroundTheory.ProfCoh
 
 open IsDedekindDomain NumberField CategoryTheory MonoidalCategory GroundTheory.Global
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 attribute [local instance 2000] Rep.hV2
 
 theorem natCast_mem_of_natCard_mem {R : Type*} [CommRing R] {P : Ideal R} (hP : P.IsPrime)

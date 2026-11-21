@@ -51,34 +51,9 @@ def tripleAtLastBlowup (T : MarkedIdealWithBoundary.{u})
     (s.proj s.length ≫ T.structMap) (s.ideal s.length) T.mult (s.boundary s.length)
 
 @[simp]
-theorem tripleAtLastBlowup_baseField (T : MarkedIdealWithBoundary.{u})
-    (s : MarkedBlowupSequenceData T.structMap T.ideal T.mult T.boundary) :
-    (tripleAtLastBlowup T s).base = T.base := rfl
-
-@[simp]
 theorem tripleAtLastBlowup_scheme (T : MarkedIdealWithBoundary.{u})
     (s : MarkedBlowupSequenceData T.structMap T.ideal T.mult T.boundary) :
     (tripleAtLastBlowup T s).scheme = s.obj s.length := rfl
-
-@[simp]
-theorem tripleAtLastBlowup_structureMorphism (T : MarkedIdealWithBoundary.{u})
-    (s : MarkedBlowupSequenceData T.structMap T.ideal T.mult T.boundary) :
-    (tripleAtLastBlowup T s).structMap = s.proj s.length ≫ T.structMap := rfl
-
-@[simp]
-theorem tripleAtLastBlowup_ideal (T : MarkedIdealWithBoundary.{u})
-    (s : MarkedBlowupSequenceData T.structMap T.ideal T.mult T.boundary) :
-    (tripleAtLastBlowup T s).ideal = s.ideal s.length := rfl
-
-@[simp]
-theorem tripleAtLastBlowup_mult (T : MarkedIdealWithBoundary.{u})
-    (s : MarkedBlowupSequenceData T.structMap T.ideal T.mult T.boundary) :
-    (tripleAtLastBlowup T s).mult = T.mult := rfl
-
-@[simp]
-theorem tripleAtLastBlowup_boundary (T : MarkedIdealWithBoundary.{u})
-    (s : MarkedBlowupSequenceData T.structMap T.ideal T.mult T.boundary) :
-    (tripleAtLastBlowup T s).boundary = s.boundary s.length := rfl
 
 noncomputable abbrev monomialIterateFromEmpty (hinv : ComapIsoInvariance.{u}) (T : MarkedIdealWithBoundary.{u}) (n : ℕ) :
     MarkedBlowupSequenceData T.structMap T.ideal T.mult T.boundary :=

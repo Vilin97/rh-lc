@@ -50,8 +50,6 @@ theorem γD_smulA (T : LocLat G Qp LL O) (g : W.Gam) (a : LetA O n₀) (x : W.DD
   rw [algebraMap_smul, W.γE_ext, algebraMap_smul] at this
   exact this
 
-theorem γA_apply (g : W.Gam) (a : LetA O n₀) (i : ZMod n₀) : W.γA g a i = W.γ₀ g (a i) := rfl
-
 theorem trace_mem (T : LocLat G Qp LL O) (x : W.DD T) : ∑ δ ∈ W.DelF, W.γD T δ x ∈ DΔ W T := by
   intro d hd
   set_option synthInstance.maxHeartbeats 100000 in

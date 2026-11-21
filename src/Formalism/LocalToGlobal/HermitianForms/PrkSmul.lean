@@ -115,20 +115,6 @@ def UpTie (P : LvTied u A i hi) (K : ClsTied u i hi) (W : ValTied u A.eV i hi K)
 
 set_option maxHeartbeats 1000000 in
 
-def DnTie (P : LvTied u A i hi) (K : ClsTied u i hi) (W : ValTied u A.eV i hi K) : Prop :=
-  ∀ v c (g : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk i v c)), g ≠ 0 →
-    ∃ (γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D i hi))
-      (η : UPts (sigD D) (gramN D i hi) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) (κ : K.lev.U),
-      (∀ v', v' ≠ (A.eV v).1 → bc (prV (E := D.host.E) v') η.1 = 1) ∧
-      bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ.1 *
-        (K.y ((D.fm u).dn i v c g)).1 = (K.y c).1 * η.1 * κ.1 ∧
-      Formalism.HermitianLatticesTheory.localization₂ (A.Pv v) (mulLat γ.1.1 (Ld D u i hi ((D.fm u).dn i v c g))) =
-        Formalism.HermitianLatticesTheory.localization₂ (A.Pv v) (clsCrd D u i hi c) ∧
-      (∀ (x : ↥(Ld D u i hi ((D.fm u).dn i v c g))) (hx : γ.1.1 *ᵥ x.1 ∈ Lk A i hi v c),
-        (D.fm u).fv i v _ (P.pr v _ x) = g (P.prk v c ⟨_, hx⟩)) ∧
-      ∀ f ∈ AdFun K.lev (embT D),
-        (D.fm u).dnT i v c g (fun s => f (K.y ((D.fm u).dn i v c g)) (W.eY s)) = fun s => f (K.y c * η) (W.eY s)
-
 set_option maxHeartbeats 1000000 in
 
 def UpNatTie (P : LvTied u A i hi) (K : ClsTied u i hi) (W : ValTied u A.eV i hi K) : Prop :=

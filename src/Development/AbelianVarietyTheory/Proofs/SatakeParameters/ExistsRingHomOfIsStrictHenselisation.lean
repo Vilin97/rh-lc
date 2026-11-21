@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsSepClosedResidueFieldPowerSeriesComplex
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsMatrixForm
+import Development.AbelianVarietyTheory.BlockTheory.CMModuli.ProjectiveSpaceOverSpec
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveResidueCompEtaleHenselian
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.FlatMapMaximalIdealIsSeparable
 open CategoryTheory Limits AlgebraicGeometry IsLocalRing
@@ -93,22 +94,5 @@ theorem exists_ringHom_of_isStrictHenselisation {R S T : Type} [CommRing R] [IsL
   simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
   rw [h1, ι.commutes]
   rfl
-
-theorem lift : ∀ {X Y : Scheme.{0}} (f : X ⟶ Y) {x : X} (L : GlobalTheory.NCyc.StrictLoc X x)
-    (M : GlobalTheory.NCyc.StrictLoc Y (f x)), ∃ h : L.scheme ⟶ M.scheme, h ≫ M.toX = L.toX ≫ f := by
-  intro X Y f x L M
-  haveI : IsLocalHom L.φ := L.isStrictHenselisation.2.2.1
-  haveI : HenselianLocalRing L.A := L.henselian
-  haveI : IsSepClosed (ResidueField L.A) := L.isSepClosed
-  haveI : IsLocalHom (L.φ.comp (f.stalkMap x).hom) := inferInstance
-  obtain ⟨g, hg⟩ := exists_ringHom_of_isStrictHenselisation M.φ M.isStrictHenselisation (L.φ.comp (f.stalkMap x).hom)
-  refine ⟨Spec.map (CommRingCat.ofHom g), ?_⟩
-  have e : CommRingCat.ofHom M.φ ≫ CommRingCat.ofHom g = f.stalkMap x ≫ CommRingCat.ofHom L.φ := by
-    ext r; exact DFunLike.congr_fun hg r
-  simp only [GlobalTheory.NCyc.StrictLoc.toX, Category.assoc]
-  rw [← Category.assoc (Spec.map _), ← Spec.map_comp, e]
-  have key : Spec.map (f.stalkMap x ≫ CommRingCat.ofHom L.φ) =
-      Spec.map (CommRingCat.ofHom L.φ) ≫ Spec.map (f.stalkMap x) := Spec.map_comp _ _
-  rw [key, Category.assoc, Scheme.SpecMap_stalkMap_fromSpecStalk]
 
 end GlobalTheory.NCyc.StrictLocLift

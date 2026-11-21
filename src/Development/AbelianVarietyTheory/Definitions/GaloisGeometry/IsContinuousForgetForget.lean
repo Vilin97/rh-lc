@@ -43,8 +43,6 @@ def bc : X.Etale ⥤ Y.Etale := MorphismProperty.Over.pullback @Etale ⊤ f
 
 set_option backward.isDefEq.respectTransparency.types false in
 
-theorem bc_forget : bc f ⋙ Scheme.Etale.forget Y = Scheme.Etale.forget X ⋙ Over.pullback f := rfl
-
 set_option backward.isDefEq.respectTransparency.types false in
 instance : PreservesFiniteLimits (bc f) :=
   inferInstanceAs (PreservesFiniteLimits (MorphismProperty.Over.pullback @Etale ⊤ f))
@@ -69,8 +67,6 @@ variable (R : Type) [CommRing R]
 
 abbrev ShvS (X : Scheme.{0}) : Type 2 := Sheaf X.smallEtaleTopology (ModuleCat.{1} (ULift.{1} R))
 
-abbrev ShvO (X : Scheme.{0}) : Type 2 := Sheaf (Scheme.etaleTopology.{0}.over X) (ModuleCat.{1} (ULift.{1} R))
-
 instance (X : Scheme.{0}) : HasSheafify X.smallEtaleTopology (ModuleCat.{1} (ULift.{1} R)) := by
   have : EssentiallySmall.{1} X.Etale := inferInstance
   infer_instance
@@ -79,23 +75,7 @@ instance (X : Scheme.{0}) : IsGrothendieckAbelian.{1} (ShvS R X) := by
   have : EssentiallySmall.{1} X.Etale := inferInstance
   exact Sheaf.isGrothendieckAbelian_of_essentiallySmall _ (ModuleCat.{1} (ULift.{1} R))
 
-instance (X : Scheme.{0}) : HasSheafify (Scheme.etaleTopology.{0}.over X) (ModuleCat.{1} (ULift.{1} R)) := by
-  have : EssentiallySmall.{1} (Over X) := inferInstance
-  infer_instance
-
-instance (X : Scheme.{0}) : IsGrothendieckAbelian.{1} (ShvO R X) := by
-  have : EssentiallySmall.{1} (Over X) := inferInstance
-  exact Sheaf.isGrothendieckAbelian_of_essentiallySmall _ (ModuleCat.{1} (ULift.{1} R))
-
 instance (X : Scheme.{0}) : HasDerivedCategory (ShvS R X) := HasDerivedCategory.standard _
-
-instance (X : Scheme.{0}) : HasDerivedCategory (ShvO R X) := HasDerivedCategory.standard _
-
-def resO (X : Scheme.{0}) : Shv R ⥤ ShvO R X :=
-  (Over.forget X).sheafPushforwardContinuous _ _ _
-
-def resS (X : Scheme.{0}) : ShvO R X ⥤ ShvS R X :=
-  (Scheme.Etale.forget X).sheafPushforwardContinuous _ _ _
 
 def res (X : Scheme.{0}) : Shv R ⥤ ShvS R X :=
   (Scheme.Etale.forget X ⋙ Over.forget X).sheafPushforwardContinuous _ _ _
@@ -114,31 +94,18 @@ def pull : ShvS R X ⥤ ShvS R Y := (bc f).sheafPullback _ _ _
 
 variable (R) in
 
-def pushO : ShvO R Y ⥤ ShvO R X := (Over.pullback f).sheafPushforwardContinuous _ _ _
-
 variable (R) in
-
-def pullO : ShvO R X ⥤ ShvO R Y := (Over.pullback f).sheafPullback _ _ _
 
 def adj : pull R f ⊣ push R f := (bc f).sheafAdjunctionContinuous _ _ _
 
 instance : (push R f).Additive where
   map_add := rfl
 
-instance : (pushO R f).Additive where
-  map_add := rfl
-
 instance : (pull R f).Additive := (adj f).left_adjoint_additive
 
 variable (R) in
 
-def Rpush : DerivedCategory.Plus (ShvS R Y) ⥤ DerivedCategory.Plus (ShvS R X) :=
-  (push R f).rightDerivedFunctorPlus
-
 variable (R) in
-
-def RpushO : DerivedCategory.Plus (ShvO R Y) ⥤ DerivedCategory.Plus (ShvO R X) :=
-  (pushO R f).rightDerivedFunctorPlus
 
 def resInj (F : ShvS R Y) : CochainComplex (ShvS R Y) ℤ := (injectiveResolution F).cochainComplex
 
@@ -146,9 +113,6 @@ def RpushC (F : ShvS R Y) : CochainComplex (ShvS R X) ℤ :=
   ((push R f).mapHomologicalComplex _).obj (resInj F)
 
 variable (R) in
-
-def pullC : CochainComplex (ShvS R X) ℤ ⥤ CochainComplex (ShvS R Y) ℤ :=
-  (pull R f).mapHomologicalComplex _
 
 variable (R) in
 
@@ -170,19 +134,6 @@ def HX.one (X : Scheme.{0}) : HX R X (unitD R X) 0 :=
 
 variable (R) in
 
-def CmpStatement : Prop :=
-  ∀ (X : Scheme.{0}) (F : Shv R) (n : ℤ),
-    Nonempty (HX R X ((DerivedCategory.singleFunctor (ShvS R X) 0).obj ((res R X).obj F)) n ≃+ H R (sch.obj X) F n)
-
-example (F : Shv R) (U : X.Etale) : ((res R X).obj F).obj.obj (op U) = F.obj.obj (op U.left) := rfl
-
-example (F : ShvS R Y) (U : X.Etale) : ((push R f).obj F).obj.obj (op U) = F.obj.obj (op ((bc f).obj U)) := rfl
-
 set_option backward.isDefEq.respectTransparency.types false in
-example (U : X.Etale) : ((bc f).obj U).left = pullback U.hom f := rfl
-
-example (K : Type) [Field K] : HX ℤ (Spec (CommRingCat.of K)) (unitD ℤ _) 0 := HX.one ℤ _
-
-example : AddCommGroup (HX R X (unitD R X) 3) := inferInstance
 
 end GlobalTheory.EtC.Rel

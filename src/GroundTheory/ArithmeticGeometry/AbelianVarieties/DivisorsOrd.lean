@@ -230,8 +230,6 @@ noncomputable def ordPoint : W.toAffine.Point → W.toAffine.FunctionField → �
   | .zero => ordInfty W
   | .some _ _ h => ordAtIdeal W (heightOneOfNonsingular h)
 
-theorem ordPoint_zero : ordPoint W 0 = ordInfty W := rfl
-
 theorem ordPoint_some {x y : F} (h : W.toAffine.Nonsingular x y) :
     ordPoint W (.some x y h) = ordAtIdeal W (heightOneOfNonsingular h) := rfl
 

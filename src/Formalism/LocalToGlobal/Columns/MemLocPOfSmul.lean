@@ -49,9 +49,6 @@ section Mat
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] {n : ℕ}
 
-def matA (f : Sp E n ≃ₗ[E] Sp E n) : Matrix (Fin n) (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F) :=
-  (iA F E).mapMatrix (LinearMap.toMatrix' (f : Sp E n →ₗ[E] Sp E n))
-
 end Mat
 
 section Unit

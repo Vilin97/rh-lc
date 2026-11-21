@@ -39,25 +39,4 @@ noncomputable def cohomologyCoindCokernelIso (n : ℕ) :
     cohomology (coindCokernel A) (n + 1) ≅ cohomology A (n + 2) :=
   asIso (coindδ A (n + 1))
 
-@[simp]
-theorem cohomologyCoindCokernelIso_hom (n : ℕ) :
-    (cohomologyCoindCokernelIso A n).hom = coindδ A (n + 1) :=
-  rfl
-
-theorem coindδ_zero_exact :
-    (ShortComplex.mk (cohomologyMap (coindCokernelπ A) 0) (coindδ A 0)
-      (comp_δ (coindShortComplex_shortExact A) 0 1 rfl)).Exact :=
-  cohomology_exact₃ (coindShortComplex_shortExact A) 0 1 rfl
-
-noncomputable def cokernelCohomologyMapCoindCokernelπIso :
-    cokernel (cohomologyMap (coindCokernelπ A) 0) ≅ cohomology A 1 :=
-  IsColimit.coconePointUniqueUpToIso (cokernelIsCokernel _) (coindδ_zero_exact A).gIsCokernel
-
-@[reassoc (attr := simp)]
-theorem cokernel_π_cokernelCohomologyMapCoindCokernelπIso_hom :
-    cokernel.π (cohomologyMap (coindCokernelπ A) 0) ≫
-      (cokernelCohomologyMapCoindCokernelπIso A).hom = coindδ A 0 :=
-  IsColimit.comp_coconePointUniqueUpToIso_hom (cokernelIsCokernel _)
-    (coindδ_zero_exact A).gIsCokernel WalkingParallelPair.one
-
 end GroundTheory.ProfCoh

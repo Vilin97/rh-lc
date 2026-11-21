@@ -57,35 +57,3 @@ private theorem exists_equiv {X W : Scheme.{0}} [IsIntegral X] [IsIntegral W]
   change _ = Spec.map ψ ≫ Spec.map φ ≫ _
   rw [← Spec.map_comp_assoc, e₃, Spec.map_id]
   exact (Category.id_comp _).symm
-
-theorem UpperTheory.exists_normal_proj_common_model :
-    ∀ (k : Type) [Field k] [CharZero k] (X₁ X₂ : Scheme.{0}) [IsIntegral X₁] [IsIntegral X₂] (s₁ : X₁ ⟶ Sp k) (s₂ : X₂ ⟶ Sp k) (θ : X₂.functionField →+* X₁.functionField), IsProjOver s₁ → IsProjOver s₂ → spMap θ ≫ gpt X₂ ≫ s₂ = gpt X₁ ≫ s₁ → ∃ (W : Scheme.{0}) (_ : IsIntegral W) (p₁ : W ⟶ X₁) (p₂ : W ⟶ X₂) (ε : X₁.functionField ≃+* W.functionField), GlobalTheory.IsNormalScheme W ∧ IsProjOver (p₁ ≫ s₁) ∧ p₂ ≫ s₂ = p₁ ≫ s₁ ∧ gpt W ≫ p₁ = spMap ε.toRingHom ≫ gpt X₁ ∧ gpt W ≫ p₂ = spMap ε.toRingHom ≫ spMap θ ≫ gpt X₂ := by
-  intro k _ _ X₁ X₂ _ _ s₁ s₂ θ h₁ h₂ w
-  have : IsProper s₁ := ((isProjOver_iff_isProper_and_exists_isAmpleLB s₁).mp h₁).1
-  have hP : IsProjOver (pullback.fst s₁ s₂ ≫ s₁) := ProjSpace.isProjOver_pullback h₁ h₂
-  have : IsProper (pullback.fst s₁ s₂ ≫ s₁) :=
-    ((isProjOver_iff_isProper_and_exists_isAmpleLB _).mp hP).1
-  obtain ⟨h, e₁, e₂⟩ : ∃ h : Sp X₁.functionField ⟶ pullback s₁ s₂,
-      h ≫ pullback.fst s₁ s₂ = gpt X₁ ∧ h ≫ pullback.snd s₁ s₂ = spMap θ ≫ gpt X₂ :=
-    ⟨pullback.lift (gpt X₁) (spMap θ ≫ gpt X₂) (by rw [Category.assoc, w]),
-      pullback.lift_fst _ _ _, pullback.lift_snd _ _ _⟩
-  have : IsFinite h.fromNormalization := by
-    refine isFinite_fromNormalization_of_genericPoints (o := .of k) h (pullback.fst s₁ s₂ ≫ s₁)
-      (fun x _ => charZero_of_injective_ringHom
-        ((Scheme.ΓSpecIso (.of k)).inv ≫ (gpt X₁ ≫ s₁).appTop ≫
-          (Sp X₁.functionField).Γevaluation x).hom.injective) fun x _ => ?_
-    have h1 : ((h ≫ pullback.fst s₁ s₂).stalkMap x).hom.EssFiniteType := by
-      rw [e₁]
-      exact (RingHom.FiniteType.of_surjective _
-        (Scheme.Hom.stalkMap_surjective _ _)).essFiniteType
-    rw [Scheme.Hom.stalkMap_comp] at h1
-    exact RingHom.EssFiniteType.residueFieldMap (.of_comp _ h1)
-  obtain ⟨ε, hε⟩ := exists_equiv h.toNormalization (h.fromNormalization ≫ pullback.fst s₁ s₂)
-    (by simp [e₁])
-  refine ⟨h.normalization, inferInstance, h.fromNormalization ≫ pullback.fst s₁ s₂,
-    h.fromNormalization ≫ pullback.snd s₁ s₂, ε, inferInstance, ?_, ?_, ?_, ?_⟩
-  · rw [Category.assoc]
-    exact isProjOver_comp_of_isFinite _ hP
-  · rw [Category.assoc, Category.assoc, pullback.condition]
-  · rw [hε]; simp [e₁]
-  · rw [hε]; simp [e₂]

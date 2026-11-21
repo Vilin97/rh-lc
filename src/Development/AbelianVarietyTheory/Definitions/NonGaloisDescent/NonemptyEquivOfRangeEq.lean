@@ -95,9 +95,6 @@ def IsCosocle (σ : Representation ℂ G W) (π : Representation ℂ G V) : Prop
   σ.IsIrreducible ∧ ∃ f : π.IntertwiningMap σ, Function.Surjective f ∧
     ∀ S : Subrepresentation π, IsCoatom S → S = f.ker
 
-theorem IsSocle.embeds {σ : Representation ℂ G W} {π : Representation ℂ G V} (h : IsSocle σ π) : Embeds σ π :=
-  let ⟨_, f, hf, _⟩ := h; ⟨f, hf⟩
-
 theorem IsSocle.isSubquotient {σ : Representation ℂ G W} {π : Representation ℂ G V} (h : IsSocle σ π) :
     IsSubquotient σ π :=
   let ⟨_, f, hf, _⟩ := h; .of_injective f hf
@@ -236,9 +233,6 @@ theorem IsCosocle.equiv_of_surjective {σ : Representation ℂ G W} {τ : Repres
   obtain ⟨-, f, hf, hS⟩ := h
   exact nonempty_equiv_of_ker_eq g hg f hf (hS _ (isCoatom_ker hτ g hg))
 
-theorem IsSocle.unique {σ : Representation ℂ G W} {τ : Representation ℂ G X} {π : Representation ℂ G V}
-    (h : IsSocle σ π) (h' : IsSocle τ π) : Nonempty (τ.Equiv σ) := h.equiv_of_embeds h'.1 h'.embeds
-
 theorem IsCosocle.unique {σ : Representation ℂ G W} {τ : Representation ℂ G X} {π : Representation ℂ G V}
     (h : IsCosocle σ π) (h' : IsCosocle τ π) : Nonempty (τ.Equiv σ) :=
   let ⟨hi, g, hg, _⟩ := h'; h.equiv_of_surjective hi g hg
@@ -287,23 +281,6 @@ theorem isotypic_ne_bot_iff_embeds {σ : Representation ℂ G V} {τ : Represent
     have := Model.nontrivial_of_isIrreducible h
     obtain ⟨w, hw⟩ := exists_ne (0 : W)
     exact ⟨f, fun e => hw (hf (by rw [e, map_zero]; rfl))⟩
-
-theorem map_mem_isotypic {σ : Representation ℂ G V} {σ' : Representation ℂ G X} (φ : σ.IntertwiningMap σ')
-    (τ : Representation ℂ G W) {v : V} (hv : v ∈ isotypic σ τ) : φ v ∈ isotypic σ' τ := by
-  refine Submodule.iSup_induction _ (motive := fun v => φ v ∈ isotypic σ' τ) hv ?_ ?_ fun x y hx hy => ?_
-  · rintro f _ ⟨w, rfl⟩
-    exact apply_mem_isotypic (φ.comp f) w
-  · rw [map_zero]; exact (isotypic σ' τ).toSubmodule.zero_mem
-  · rw [map_add (f := _)]; exact (isotypic σ' τ).toSubmodule.add_mem hx hy
-
-def isotypicMap {σ : Representation ℂ G V} {σ' : Representation ℂ G X} (φ : σ.IntertwiningMap σ')
-    (τ : Representation ℂ G W) :
-    (isotypic σ τ).toRepresentation.IntertwiningMap (isotypic σ' τ).toRepresentation where
-  toLinearMap := φ.toLinearMap.restrict fun _ hv => map_mem_isotypic φ τ hv
-  isIntertwining' g := LinearMap.ext fun v => Subtype.ext (φ.isIntertwining _ _ g v)
-
-@[simp] theorem isotypicMap_apply {σ : Representation ℂ G V} {σ' : Representation ℂ G X} (φ : σ.IntertwiningMap σ')
-    (τ : Representation ℂ G W) (v : (isotypic σ τ).toSubmodule) : (isotypicMap φ τ v : X) = φ v := rfl
 
 def charIdem [Fintype G] (σ : Representation ℂ G V) (τ : Representation ℂ G W) [FiniteDimensional ℂ W] : V →ₗ[ℂ] V :=
   ((Module.finrank ℂ W : ℂ) / Fintype.card G) • ∑ g : G, LinearMap.trace ℂ W (τ g⁻¹) • σ g
@@ -454,16 +431,6 @@ theorem orbitMap_surjective {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Rep
 
 variable (G) in
 
-instance small_irrCl : Small.{0} (IrrCl G) := by
-  have hv : ∀ c : IrrCl G, ∃ v : c.rep.V, v ≠ 0 := fun c =>
-    haveI := Model.nontrivial_of_isIrreducible c.rep.irr
-    exists_ne 0
-  choose v hv using hv
-  refine small_of_injective (f := fun c => (orbitMap c.rep.ρ (v c)).ker) fun c d h => ?_
-  rw [← c.cl_rep, ← d.cl_rep]
-  exact IrrRep.cl_eq_iff.2 (nonempty_equiv_of_ker_eq _ (orbitMap_surjective c.rep.irr (hv c)) _
-    (orbitMap_surjective d.rep.irr (hv d)) h)
-
 variable {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
 theorem cl_eq_iff_rep {σ : IrrRep G} {c : IrrCl G} : σ.cl = c ↔ Nonempty (σ.ρ.Equiv c.rep.ρ) := by
@@ -508,15 +475,5 @@ theorem clTwist_ofChar (χ ψ : G →* ℂˣ) (hχ : IsSmoothChar χ) (hψ : IsS
   exact .refl _
 
 end Classes
-
-example {G W : Type} [Group G] [AddCommGroup W] [Module ℂ W] {χ ψ : G →* ℂˣ} (h : χ ≠ ψ) (σ : Representation ℂ G W) :
-    ¬ IsSocle σ ((ofChar χ).prod (ofChar ψ)) := fun hs => by
-  obtain ⟨a⟩ := hs.equiv_of_embeds (isIrreducible_ofChar χ)
-    ⟨.inl ℂ (ofChar χ) (ofChar ψ), fun _ _ e => congrArg Prod.fst e⟩
-  obtain ⟨b⟩ := hs.equiv_of_embeds (isIrreducible_ofChar ψ)
-    ⟨.inr ℂ (ofChar χ) (ofChar ψ), fun _ _ e => congrArg Prod.snd e⟩
-  have h1 := Model.jhMult_ofChar_ne h
-  rw [jhMult_congr_left (a.trans b.symm), jhMult_self (isIrreducible_ofChar ψ)] at h1
-  exact one_ne_zero h1
 
 end GlobalTheory.LocGL

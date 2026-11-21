@@ -325,8 +325,6 @@ def mulD : ↥(MaximalUnramifiedExtension l) →+* End LL ↥(Dpst P ρ) where
 
 @[simp] theorem coe_phiD (x : ↥(Dpst P ρ)) : (phiD P ρ x : V ⊗[ℚ_[l]] Bst P) = phiV P LL V x := rfl
 
-@[simp] theorem coe_monD (x : ↥(Dpst P ρ)) : (monD P ρ x : V ⊗[ℚ_[l]] Bst P) = monV P LL V x := rfl
-
 @[simp] theorem coe_actD (g : ↥(GK K)) (x : ↥(Dpst P ρ)) :
     (actD P ρ g x : V ⊗[ℚ_[l]] Bst P) = stRep P ρ g x := rfl
 
@@ -362,8 +360,6 @@ instance : AddCommGroup (DpstUr P ρ) := inferInstanceAs (AddCommGroup ↥(Dpst 
 instance : Module ↥(MaximalUnramifiedExtension l) (DpstUr P ρ) := Module.compHom ↥(Dpst P ρ) (mulD P ρ)
 
 def toUr : ↥(Dpst P ρ) ≃+ DpstUr P ρ := AddEquiv.refl _
-
-theorem smul_toUr (c : ↥(MaximalUnramifiedExtension l)) (x : ↥(Dpst P ρ)) : c • toUr P ρ x = toUr P ρ (mulD P ρ c x) := rfl
 
 def urEnd (T : End LL ↥(Dpst P ρ)) (hT : ∀ c, T * mulD P ρ c = mulD P ρ c * T) :
     End ↥(MaximalUnramifiedExtension l) (DpstUr P ρ) where

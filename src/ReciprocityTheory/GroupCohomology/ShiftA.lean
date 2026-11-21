@@ -25,16 +25,6 @@ theorem contAction_of_disc {V : Type u} [AddCommGroup V] [Module R V] [Topologic
 theorem orbit_cont (B : TRep R G) (v : B.V) : Continuous fun g => B.rho g v :=
   B.cont.comp (f := fun g : G => (g, v)) (continuous_id.prodMk continuous_const)
 
-def subRep (B : TRep R G) [DiscreteTopology B.V] (S : Submodule R B.V)
-    (hS : ∀ g, S ≤ S.comap (B.rho g)) : TRep R G where
-  V := S
-  ccs := ⟨fun _ => continuous_of_discreteTopology⟩
-  rho := B.rho.subrepresentation S hS
-  cont := contAction_of_disc _ fun v => (orbit_cont B v.1).subtype_mk _
-
-instance (B : TRep R G) [DiscreteTopology B.V] (S : Submodule R B.V) (hS) :
-    DiscreteTopology (subRep B S hS).V := inferInstanceAs (DiscreteTopology S)
-
 theorem disc_quot {V : Type u} [AddCommGroup V] [Module R V] [TopologicalSpace V] [DiscreteTopology V]
     (S : Submodule R V) : DiscreteTopology (V ⧸ S) :=
   discreteTopology_iff_forall_isOpen.2 fun _ =>
@@ -53,9 +43,6 @@ def quotRep (B : TRep R G) [DiscreteTopology B.V] (S : Submodule R B.V)
 
 instance (B : TRep R G) [DiscreteTopology B.V] (S : Submodule R B.V) (hS) :
     DiscreteTopology (quotRep B S hS).V := disc_quot S
-
-def subIncl (B : TRep R G) [DiscreteTopology B.V] (S : Submodule R B.V) (hS) : Pair (subRep B S hS) B :=
-  Pair.ofMap S.subtype continuous_of_discreteTopology fun _ _ => rfl
 
 def quotMk (B : TRep R G) [DiscreteTopology B.V] (S : Submodule R B.V) (hS) : Pair B (quotRep B S hS) :=
   Pair.ofMap (M' := quotRep B S hS) S.mkQ continuous_of_discreteTopology fun _ _ => rfl

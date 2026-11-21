@@ -235,13 +235,9 @@ def MAIN (u : D.what₂.Word) : ℝ :=
 
 def NuH (u : D.what₂.Word) : HLat D.what₂.LL := { D.div.Nu u with L := L.NuLat u }
 
-def VV (l : ℕ) : ℚ := ∑ e ∈ Finset.Ico 1 D.R.t, D.what₂.shaLen l e
-
 def vonMangoldtClassSum (j : ℕ) (t : D.host.TT) (p : ℕ) : ℝ :=
   ∑ i ∈ Finset.range (Nat.log p (L.aT t).toNat + 2),
     if Odd i then max 0 ((L.aT t : ℝ) / (p : ℝ) ^ i - L.wPart j t p i) else 0
-
-def EtaSupp : Prop := ∀ j w, 1 ≤ j → j ≤ D.R.m → w ∉ L.supp → D.what₂.etaJ j w = 0
 
 def ZeroAbove : Prop := ∀ u, ∀ j ∈ lifts D, ∀ w, L.sc.X'' D.R.n < (D.what₂.places.resChar w : ℝ) →
   D.what₂.places.resChar w ≠ (D.mem u).A.T →

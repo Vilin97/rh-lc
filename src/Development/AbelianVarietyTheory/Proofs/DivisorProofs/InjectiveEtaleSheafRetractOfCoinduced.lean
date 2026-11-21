@@ -18,14 +18,6 @@ def adj : restr φ ⊣ coind φ :=
 instance restr_faithful : (restr φ).Faithful :=
   show (sheafCompose (Scheme.etaleTopology.{0}) (ModuleCat.restrictScalars.{1} (liftHom φ))).Faithful from inferInstance
 
-instance restr_preservesMono : (restr φ).PreservesMonomorphisms where
-  preserves {X Y} f hf := by
-    haveI : Mono ((restr φ).map f).hom := by
-      rw [NatTrans.mono_iff_mono_app]
-      intro U
-      exact (ModuleCat.restrictScalars.{1} (liftHom φ)).map_mono (f.hom.app U)
-    exact Sheaf.Hom.mono_of_presheaf_mono _ _ _
-
 instance coind_preservesMono : (coind φ).PreservesMonomorphisms := by
   haveI : (coind φ).IsRightAdjoint := (adj φ).isRightAdjoint
   infer_instance

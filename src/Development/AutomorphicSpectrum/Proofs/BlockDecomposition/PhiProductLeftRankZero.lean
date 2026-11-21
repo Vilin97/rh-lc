@@ -21,9 +21,6 @@ def trT (ρ : Representation ℂ G V) (W : Type) [AddCommGroup W] [Module ℂ W]
     rw [map_mul]
     exact LinearMap.rTensor_mul _ _ _
 
-@[simp] theorem trT_tmul (ρ : Representation ℂ G V) (g : G) (v : V) (w : W) :
-    trT ρ W g (v ⊗ₜ[ℂ] w) = ρ g v ⊗ₜ[ℂ] w := rfl
-
 theorem twist_trT (ρ : Representation ℂ G V) (χ : G →* ℂˣ) : twist (trT ρ W) χ = trT (twist ρ χ) W := by
   ext g v w
   simp [TensorProduct.smul_tmul']

@@ -50,31 +50,9 @@ section Vec
 variable {R R' : Type} [CommRing R] [CommRing R'] {f : R →+* R'} {G : Over (Sp R)} {G' : Over (Sp R')} [GrpObj G]
   [GrpObj G'] {φ : G'.left ⟶ G.left}
 
-def push (h : IsGrpPullback G' G (spMap f) φ) (w : epsR R' ⟶ G') : epsAt (spMap f) ⟶ G :=
-  Over.homMk (w.left ≫ φ) (by
-    change (w.left ≫ φ) ≫ G.hom = (epsR R').hom ≫ spMap f
-    rw [Category.assoc, h.1.w, ← Category.assoc, Over.w w])
-
 variable (h : IsGrpPullback G' G (spMap f) φ)
 
 variable [IsCommMonObj G'] {n : ℕ} {v : Fin n → (epsR R' ⟶ G')} (hv : IsLieBasis v)
-
-def comb (c : Fin n → R') : epsR R' ⟶ G' := ((LieComb.lieComb_algebra R' G' n v hv.1).1 c).exists.choose
-
-theorem isLieComb_iff (c : Fin n → R') (w : epsR R' ⟶ G') : IsLieComb c v w ↔ w = comb hv c :=
-  have a := ((LieComb.lieComb_algebra R' G' n v hv.1).1 c).exists.choose_spec
-  ⟨fun b => ((LieComb.lieComb_algebra R' G' n v hv.1).1 c).unique b a, fun b => b ▸ a⟩
-
-theorem isLieComb_comb (c : Fin n → R') : IsLieComb c v (comb hv c) := (isLieComb_iff hv c _).2 rfl
-
-theorem isTangent_iff (w : epsR R' ⟶ G') : IsTangent w ↔ ∃ c, comb hv c = w :=
-  ⟨fun a => (hv.2 w a).exists.imp fun c b => ((isLieComb_iff hv c w).1 b).symm,
-    fun ⟨c, a⟩ => a ▸ (LieComb.lieComb_algebra R' G' n v hv.1).2.1 _ _ (isLieComb_comb hv c)⟩
-
-theorem comb_injective : Function.Injective (comb hv) := fun a b e =>
-  (hv.2 _ ((isTangent_iff hv _).2 ⟨a, rfl⟩)).unique (isLieComb_comb hv a) (e ▸ isLieComb_comb hv b)
-
-def vecOf (c : Fin n → R') : epsAt (spMap f) ⟶ G := push h (comb hv c)
 
 end Vec
 
@@ -126,11 +104,7 @@ section Types
 
 variable {K : Type} [Field K] [NumberField K] {A : Out.PolAV (Sp (𝓞 K))} {x : KeyIn K} {φ : x.P.A.left ⟶ A.A.left}
 
-def vec (hf : abelian₂.IsFibreOf A x (abelian₂.gmap K) φ) (i : Fin x.P.g) : epsAt (genPt K) ⟶ A.A := push hf.1 (x.v i)
-
 variable {E : Type} [Field E] [NumberField E]
-
-def resLab (lab : (E →+* ℂ) → (E →+* K)) (t : E →+* ℂ) : 𝓞 E →+* K := (lab t).comp (algebraMap (𝓞 E) E)
 
 end Types
 
@@ -144,9 +118,6 @@ section Main
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
-def conjType (H : Host E) : {τ : E →+* ℂ // τ (H.rt : E) ≠ H.rt0} ≃ psiBar H :=
-  Equiv.subtypeEquivRight (LamF.host_mem_compl_psiSet H)
-
 variable [StarRing (𝓞 E)] {l : Level H} {c : Coeff l} {p q : ℕ}
 
 def Readable (o : abelian₂.LamObj c p q) : Prop :=
@@ -154,40 +125,6 @@ def Readable (o : abelian₂.LamObj c p q) : Prop :=
     (∀ i, IsMonHom (o.φΨ i)) ∧ (∀ i, IsMonHom (o.φ' i)) ∧
     (∀ i (a : 𝓞 E), o.oaΨ.act a ≫ o.φΨ i = o.φΨ i ≫ o.oa.act a) ∧
     ∀ i (a : 𝓞 E), o.oa'.act a ≫ o.φ' i = o.φ' i ≫ o.oa.act a
-
-theorem Readable.fibP {o : abelian₂.LamObj c p q} (h : Readable o) : abelian₂.IsFibreOf o.AΨ o.xΨ (abelian₂.gmap o.K₁) o.φΨg := h.1
-theorem Readable.fibC {o : abelian₂.LamObj c p q} (h : Readable o) : abelian₂.IsFibreOf o.A' o.x' (abelian₂.gmap o.K₁) o.φ'g := h.2.1
-theorem Readable.homP {o : abelian₂.LamObj c p q} (h : Readable o) (i : Fin p) : IsMonHom (o.φΨ i) := h.2.2.1 i
-theorem Readable.homC {o : abelian₂.LamObj c p q} (h : Readable o) (i : Fin q) : IsMonHom (o.φ' i) := h.2.2.2.1 i
-theorem Readable.linP {o : abelian₂.LamObj c p q} (h : Readable o) (i : Fin p) (a : 𝓞 E) :
-    o.oaΨ.act a ≫ o.φΨ i = o.φΨ i ≫ o.oa.act a := h.2.2.2.2.1 i a
-theorem Readable.linC {o : abelian₂.LamObj c p q} (h : Readable o) (i : Fin q) (a : 𝓞 E) :
-    o.oa'.act a ≫ o.φ' i = o.φ' i ≫ o.oa.act a := h.2.2.2.2.2 i a
-
-def TargetLines (o : abelian₂.LamObj c p q) : Prop :=
-  abelian₂.IsFibreOf o.B o.xB (abelian₂.gmap o.K₁) o.φB ∧ o.Tl.Good ∧ o.LamL.Good ∧ (∀ v, KeyLocAt o.xB o.Tl o.LamL v) ∧
-    (∀ σ, KeyArchAt o.xB o.Tl o.LamL σ) ∧ ∀ v, ∃ M, abelian₂.IsModelAt o.B o.xB o.φB v M ∧ IsLocGen v M.det o.LamL.I
-
-def toCM (o : abelian₂.LamObj c p q) (h : Readable o) : CMObj c p q where
-  K := o.K₁
-  B := o.B
-  AP := o.AΨ
-  AC := o.A'
-  ιB := o.oa.toRingAct
-  ιP := o.oaΨ.toRingAct
-  ιC := o.oa'.toRingAct
-  φP := o.φΨ
-  φP_hom := h.homP
-  φP_lin := h.linP
-  φC := o.φ'
-  φC_hom := h.homC
-  φC_lin := h.linC
-  hP := o.hΨ
-  hC := o.h'
-  ηP t := vec h.fibP (o.τΨ.symm t)
-  ηC t := vec h.fibC ((o.τ'.trans (conjType H)).symm t)
-  ℓP t := o.ℓΨ (o.τΨ.symm t)
-  ℓC t := o.ℓ' ((o.τ'.trans (conjType H)).symm t)
 
 variable (hs : ∀ a : 𝓞 E, star a = H.bar a) (o : abelian₂.LamObj c p q) (h : Readable o)
 

@@ -2,7 +2,7 @@ import Mathlib
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LatAtLattice
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.JEvExists
 import Formalism.LocalToGlobal.IndefiniteReal.ZeroPartEigenvalueConvention
-import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.Imports
+import Lean
 import Development.AbelianVarietyTheory.Proofs.HeightProofs.HaarUpqEqOfOmegaDensity
 
 noncomputable section
@@ -18,13 +18,7 @@ abbrev Late.st {B : Base} {C : Cols B} (a : Late B C) : Stages := ⟨B, C, a.W, 
 
 abbrev Late.D {B : Base} {C : Cols B} (a : Late B C) : D7 := a.st.toD7
 
-abbrev Stages.toLate (X : Stages) : Late X.B X.C := ⟨X.W, X.V, X.S, X.N, X.G⟩
-
-theorem Stages.late_st (X : Stages) : X.toLate.st = X := rfl
-
 namespace R3.Tr
-
-scoped macro:max "kc% " e:term:max : term => `((by kexactB $e))
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
@@ -125,8 +119,6 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
 
 def fam {m : ℕ} (A : FamIn a.D.what₂.LL G Pl0 T m) : FamIn b.D.what₂.LL G Pl0 T m := (A)
 
-def fam3 {Ty : Type} {m : ℕ} (A : FamIn3 a.D.what₂.LL G Pl0 I0 Ty T m) : FamIn3 b.D.what₂.LL G Pl0 I0 Ty T m := (A)
-
 @[reducible] def alg {Ks : Type} [Field Ks] (i : Algebra Ks a.D.what₂.LL) : Algebra Ks b.D.what₂.LL := (i)
 
 def famReal {m : ℕ} {A : FamIn a.D.what₂.LL G Pl0 T m} {cR cL lR lL} (x : Bridge.FamReal a.D A cR cL lR lL) :
@@ -168,13 +160,7 @@ theorem autFun_imp : ∀ V f, @IsAutFun a.D V f → @IsAutFun b.D ((V)) ((f)) :=
 
 variable (a) in
 
-def autFunB : type_of% (@IsAutFun b.D) := @fun V f => @IsAutFun a.D ((V)) ((f))
-
 variable (a) in
-
-theorem autFun_eq : @IsAutFun b.D = @autFunB B C a b := by
-  funext V f
-  exact propext ⟨fun h => (autFun_imp a V f h), fun h => (@autFun_imp B C a b V f h)⟩
 
 theorem autFunSm_imp : ∀ θ V f, @IsAutFunSm a.D θ V f → @IsAutFunSm b.D ((θ)) ((V)) ((f)) := fun θ V f h =>
   { toIsAutFun := (autFun_imp b V f h.toIsAutFun)
@@ -187,10 +173,6 @@ variable (a) in
 def autFunSmB : type_of% (@IsAutFunSm b.D) := @fun θ V f => @IsAutFunSm a.D ((θ)) ((V)) ((f))
 
 variable (a) in
-
-theorem autFunSm_eq : @IsAutFunSm b.D = @autFunSmB B C a b := by
-  funext θ V f
-  exact propext ⟨fun h => (autFunSm_imp a θ V f h), fun h => (@autFunSm_imp B C a b θ V f h)⟩
 
 theorem multMap_imp : ∀ V S θ M J χ f, @IsMultMap a.D V S θ M J χ f → @IsMultMap b.D ((V)) ((S)) ((θ)) ((ds b M)) ((J)) ((χ)) ((f)) := fun V S θ M J χ f h =>
   { aut := fun v => (autFunSm_imp b θ V (f v) (h.aut v))

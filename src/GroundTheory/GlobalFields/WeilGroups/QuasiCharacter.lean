@@ -27,10 +27,6 @@ def circleToUnits : Circle →ₜ* ℂˣ where
     rw [Units.val_inv_eq_inv_val]
     rfl⟩
 
-@[simp]
-theorem coe_circleToUnits (z : Circle) : ((circleToUnits z : ℂˣ) : ℂ) = z :=
-  rfl
-
 def ofUnitary : HeckeCharacter K →* QuasiCharacter K where
   toFun χ := circleToUnits.comp χ
   map_one' := by

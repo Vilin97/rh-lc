@@ -286,24 +286,6 @@ def tunedTriple (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible) : Marked
   mult := MaxContactCoverData.tunedMult T
   boundary := T.boundary
 
-@[simp] theorem tunedTriple_baseField (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible) :
-    (tunedTriple T hv).base = T.base := rfl
-
-@[simp] theorem tunedTriple_scheme (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible) :
-    (tunedTriple T hv).scheme = T.scheme := rfl
-
-@[simp] theorem tunedTriple_structureMorphism (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible) :
-    (tunedTriple T hv).structMap = T.structMap := rfl
-
-@[simp] theorem tunedTriple_ideal (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible) :
-    (tunedTriple T hv).ideal = MaxContactCoverData.balancedTunedIdeal T hv := rfl
-
-@[simp] theorem tunedTriple_mult (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible) :
-    (tunedTriple T hv).mult = MaxContactCoverData.tunedMult T := rfl
-
-@[simp] theorem tunedTriple_boundary (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible) :
-    (tunedTriple T hv).boundary = T.boundary := rfl
-
 theorem isAdmissible_tunedTriple (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)
     (hnz : NonzeroOnComponents (MaxContactCoverData.balancedTunedIdeal T hv)) :
     (tunedTriple T hv).IsAdmissible :=

@@ -483,8 +483,3 @@ end final
 end
 
 end Formalism.FourierDecayAlt.P.FormNormSumIdentities
-
-theorem Formalism.FourierDecayAlt.P.pb_germRateLowB_of_parts :
-    Formalism.FourierDecayAlt.P.FormNormSumIdentities.GermPlace → Formalism.FourierDecayAlt.P.FormNormSumIdentities.GNSetC → Formalism.FourierDecayAlt.P.FormNormSumIdentities.GermConst →
-      Formalism.FourierDecayAlt.P.GermRateSplit.GermRateLowB :=
-  Formalism.FourierDecayAlt.P.FormNormSumIdentities.germRateLowB_of

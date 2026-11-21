@@ -31,8 +31,6 @@ def totalSpaceToBase (j : ℕ) : S.totalSpace j ⟶ Y :=
   Nat.rec (motive := fun j => S.totalSpace j ⟶ Y) S.totalSpaceZeroIso.hom
     (fun j ih => S.transitionMap j ≫ ih) j
 
-@[simp] theorem totalSpaceToBase_zero : S.totalSpaceToBase 0 = S.totalSpaceZeroIso.hom := rfl
-
 @[simp] theorem totalSpaceToBase_succ (j : ℕ) :
     S.totalSpaceToBase (j + 1) = S.transitionMap j ≫ S.totalSpaceToBase j := rfl
 

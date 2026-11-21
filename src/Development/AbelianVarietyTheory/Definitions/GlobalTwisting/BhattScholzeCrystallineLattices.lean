@@ -80,18 +80,4 @@ structure HypothesesU : Prop where
   localTateDuality : ReciprocityTheory.Gal.LocalTateDuality
   localEulerChar : ReciprocityTheory.Gal.LocalEulerChar
 
-theorem Hypotheses2.toU (P : Hypotheses2) : HypothesesU :=
-  ⟨P.clozelCohomological, P.greenCuspidal, P.cohomologicalCsdTempered, P.heckeLAdicCharacter, P.chebotarevDegreeOne, P.discreteSpectrumGL, P.galoisRepOfPolarizedCuspidal, P.baseChangeDefiniteUnitary, P.bhattScholzeCrystallineLattices, P.heckeLAdicCharacterAbove, P.cuspRapidDecay, P.weilSiegelFormulaUnitary, P.siegelWeilUnitaryConvergent, P.doublingMethod, P.unramifiedDoublingGL, P.bernsteinZelevinskyFiniteness, P.formalDegreeCompactDual, P.bernsteinUnitaryProductIrreducible, P.geometricLemmaFiltration, P.unlinkedProductIrreducible, P.depthZeroJacquetInjective, P.howeDualityGL, P.jacquetShalika, P.automorphicFormsFiniteGL, P.localGlobalAboveL, P.regularAlgebraicPurity, P.globalArtinReciprocity, P.heckeLAdicParameterAbove, P.deRhamPotSemistable, P.harishChandraFinite, P.greenRegularCharacters, P.zelevinskyPolynomialRing, P.depthZeroInertia, P.rayClassFieldSt, P.rayCharacterArtin, P.genericUnitaryDualGL, P.standardCosocleGL, P.cheb, P.discreteSeriesCover, P.harishChandraModules, P.casselmanWallach, P.weilRepresentationUnitaryPair, P.discreteSeriesExists, P.discreteSeriesClassification, P.strongApproxSU, P.siegelWeilUnitaryConvergent2, P.harishChandraAnalyticity, P.cuspTraceClass, P.dixmierMalliavinFactorisation, P.flathFactorisation, P.pseudoCoefficientUpq, P.harishChandraCharacters, P.langlandsClassification, P.labesseWaldspurger, P.cMCurveGoodOutsidePrimeSt, P.weberRayFieldSt, P.discreteSeriesCoverExists, P.besselUniquenessReal, P.siegelWeilUnitarySchrodinger, P.siegelEisensteinContinuation, P.siegelEisensteinSimplePole, P.schurOrthogonalitySquareIntegrable, P.regularisedSiegelWeilFirstTerm, P.litN, P.toHypothesesX, P.nLink, P.depthZeroWild', P.depthZeroSupport', P.localFiniteness, P.localTateDuality, P.localEulerChar⟩
-
-theorem HypothesesU.geometricLemma (P : HypothesesU) : GlobalTheory.Published.GeometricLemma :=
-  GlobalTheory.geometricLemma_of_filtration P.bernsteinZelevinskyFiniteness P.geometricLemmaFiltration
-
-example (P : Hypotheses2) : GlobalTheory.Published.GeometricLemmaFiltration := P.toU.geometricLemmaFiltration
-
-example (P : Hypotheses2) : GlobalTheory.Published.SiegelWeilUnitarySchrodinger := P.toU.siegelWeilUnitarySchrodinger
-
-example (P : Hypotheses2) : GlobalTheory.NLink.Hypotheses₂ := P.toU.nLink
-
-example (P : Hypotheses2) : GlobalTheory.Published.GeometricLemma := P.toU.geometricLemma
-
 end GlobalTheory.Fc.S0

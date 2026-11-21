@@ -25,11 +25,4 @@ theorem typesTrue_rows {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : 
   rw [h2]
   exact hg
 
-theorem types_atMem : PrN → ∀ hL : GlobalTheory.Published.LocalLanglandsGL, AtMem hL fun _ _ _ _ w Z _ _ t _ _ _ => TypesTrue (w.D Z).ntypes t.r.z.R.C.P t.r.z.R.C.W := by
-  intro _ hL
-  refine EvG.imp evG_good fun K _ _ _ _ _ => ?_
-  refine ⟨fun _ _ _ => ∅, fun _ _ _ _ => ∅, fun _ _ _ _ _ => ∅, fun _ _ _ _ _ => ∅, by simp, by simp, ?_⟩
-  intro B f T _ _ _ _ _ w Z Wt p0 t nch n xd c _ _ _
-  exact typesTrue_rows t
-
 end GlobalTheory.HeightCounting.Up.TypesAt

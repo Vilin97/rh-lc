@@ -270,7 +270,6 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] {H : HermSpace K V}
 
 omit [StarRing K] in
-theorem mem_line {A : Submodule (𝓞 K) K} {v x : V} : x ∈ line A v ↔ ∃ t ∈ A, t • v = x := Iff.rfl
 
 omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem B_smul (a b : K) (x y : V) : H.B (a • x) (b • y) = a * star b * H.B x y := by

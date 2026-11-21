@@ -103,8 +103,6 @@ def invT (n : ℕ) : GL (Fin n) k →* GL (Fin n) k where
     apply Units.ext
     simp only [Units.val_mul, mul_inv_rev, Matrix.transpose_mul]
 
-theorem invT_val (n : ℕ) (g : GL (Fin n) k) : (invT n g).val = (g⁻¹).val.transpose := rfl
-
 theorem invT_invT (n : ℕ) (g : GL (Fin n) k) : invT n (invT n g) = g := by
   apply Units.ext
   show ((invT n g)⁻¹).val.transpose = g.val

@@ -100,12 +100,6 @@ private theorem htPoint_exists_e_left_eq_linearMap (P : HTPoint C O c κ N V Ω)
 
 omit [IsAlgClosed C] [CharZero C] in
 
-theorem exists_vec (P : HTPoint C O c κ N V Ω) (g : P.T →ₗ[O] O) :
-    ∃ w : V, ∀ y : P.T, P.e w y = algebraMap O C (g y) := by
-  obtain ⟨ℓ, hℓ⟩ := htPoint_exists_linearMap_ext_of_T P g
-  obtain ⟨w, hw⟩ := htPoint_exists_e_left_eq_linearMap P ℓ
-  exact ⟨w, fun y => by rw [hw]; exact hℓ y y.2⟩
-
 omit [IsAlgClosed C] [CharZero C] in
 private theorem htPoint_exists_smul_mem_T (hv : v.Integers O) (P : HTPoint C O c κ N V Ω) (y : V) :
     ∃ s : O, algebraMap O C s ≠ 0 ∧ s • y ∈ P.T := by

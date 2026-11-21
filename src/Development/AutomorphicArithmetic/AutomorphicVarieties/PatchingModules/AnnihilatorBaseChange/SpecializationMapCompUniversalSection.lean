@@ -136,7 +136,6 @@ instance : Module (Spo A) (X0 m) := inferInstanceAs (Module (Spo A) (Spo A ⊗[B
 instance : Module W.R (X0 m) := Module.compHom (X0 m) m.π.toRingHom
 instance : Module (abelian₂ O Unit D) (X0 m) := Module.compHom (X0 m) ((algebraMap B (Spo A)).comp A.b.lam.toRingHom)
 
-theorem X0.smul_def (a : W.R) (x : X0 m) : a • x = m.π a • x := rfl
 theorem X0.lam_smul_def (a : abelian₂ O Unit D) (x : X0 m) : a • x = algebraMap B (Spo A) (A.b.lam a) • x := rfl
 
 def IsApproximateAnnihilatorAtLevels (a : W.R) : Prop :=

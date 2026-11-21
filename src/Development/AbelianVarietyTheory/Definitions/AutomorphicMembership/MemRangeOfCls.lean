@@ -272,15 +272,6 @@ theorem IsReading.pos {O : Type} [Ring O] [StarRing O] [Module O Dg.toPre.X] {t}
   mem_range_of_cls (mul_ne_zero (coord_ne Dg a) (coord_ne Dg a)) (by
     rw [h.cls, tauCls_self, toK_mul (coord_ne Dg a) (coord_ne Dg a), sq]; rfl)
 
-theorem IsReading.pos_max [CharZero R] [IsIntegrallyClosed R] {O : Type} [Ring O] [StarRing O] [Module O Dg.toPre.X] {t}
-    (h : IsReading Dg O t) {a : Dg.toPre.X} (ha : a ≠ 0) :
-    ∃ r ∈ maximalIdeal R, algebraMap R (FractionRing R) r = t a a := by
-  obtain ⟨r, hr, h0, hm, -⟩ := (GlobalTheory.PsiCoordLocal.main R Dg inferInstance a).1
-  have e : (t a a : Cls R) = toK (r * r) (mul_ne_zero h0 h0) := by
-    rw [h.cls, tauCls_self, psiCls_eq Dg hr, toK_mul h0 h0, sq]; rfl
-  obtain ⟨u, hu⟩ := cls_eq_iff.1 e.symm
-  exact ⟨r * r * u, Ideal.mul_mem_right _ _ (Ideal.mul_mem_right _ _ (hm ha)), (map_mul _ _ _).trans hu⟩
-
 end Coord
 
 end GlobalTheory.LocM.Bdy

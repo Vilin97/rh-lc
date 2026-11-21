@@ -1,5 +1,6 @@
 import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsAmpleCountAlongMultiples
+import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
+import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsLiftModel
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets

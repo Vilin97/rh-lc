@@ -16,8 +16,6 @@ abbrev pendG (X : Sys p) [IsFractionRing X.G.O X.G.Kf] (E : CEmb X.G)
     Pend X :=
   pendC X E hfin hst (beLT hLT) (thFOf X pos F)
 
-def wittFractionToCoefficients {X : Sys p} (Y : Pend X) : K0 p →+* Y.Kc := algebraMap (K0 p) Y.Kc
-
 section Ties
 
 variable (X : Sys p) [IsFractionRing X.G.O X.G.Kf] (E : CEmb X.G)

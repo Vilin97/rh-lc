@@ -142,10 +142,6 @@ def restr {G V : Type} [Monoid G] [AddCommGroup V] [Module ℂ V] (ρ : Represen
   map_one' := by ext v; simp
   map_mul' a b := by ext v; simp
 
-@[simp] theorem restr_apply {G V : Type} [Monoid G] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V)
-    (S : Submodule ℂ V) (hS : ∀ g, ∀ v ∈ S, ρ g v ∈ S) (g : G) (v : S) :
-    ((restr ρ S hS g v : S) : V) = ρ g v := rfl
-
 theorem exists_minimal {G V : Type} [Monoid G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
     [Nontrivial V] (ρ : Representation ℂ G V) :
     ∃ S : Submodule ℂ V, S ≠ ⊥ ∧ (∀ g, ∀ v ∈ S, ρ g v ∈ S) ∧

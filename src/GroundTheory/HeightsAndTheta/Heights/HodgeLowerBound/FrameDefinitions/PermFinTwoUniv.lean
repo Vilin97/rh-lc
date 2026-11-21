@@ -27,22 +27,6 @@ def flagInt (P : RootPoly Ψ N) : ℚ := AddMonoidAlgebra.coeff (antisym Ψ N P)
 
 variable (j : ℕ)
 
-def IsBlockPerm (w : Ψ → Equiv.Perm (Fin N)) : Prop := ∀ τ i, ((w τ i : ℕ) < j ↔ (i : ℕ) < j)
-
-instance (w : Ψ → Equiv.Perm (Fin N)) : Decidable (IsBlockPerm Ψ N j w) := by
-  unfold IsBlockPerm; infer_instance
-
-def rhoBlock : Ψ × Fin N →₀ ℕ :=
-  Finsupp.equivFunOnFinite.symm fun p => if (p.2 : ℕ) < j then j - 1 - (p.2 : ℕ) else N - 1 - (p.2 : ℕ)
-
-def blockInt (P : RootPoly Ψ N) : ℚ :=
-  AddMonoidAlgebra.coeff (∑ w ∈ Finset.univ.filter (IsBlockPerm Ψ N j), weylSign Ψ N w • rename (weylAct Ψ N w) P)
-    (rhoBlock Ψ N j)
-
-def la0 (p : Ψ × Fin N) : ℤ := if (p.2 : ℕ) < j then 0 else -1
-
-def c1L (la : Ψ × Fin N → ℤ) : RootPoly Ψ N := -∑ p, (la p : ℚ) • X p
-
 def muPoly : RootPoly Ψ N := ∑ p ∈ Finset.univ.filter (fun p : Ψ × Fin N => ¬ (p.2 : ℕ) < j), X p
 
 def vandBlocks : RootPoly Ψ N :=
@@ -51,8 +35,6 @@ def vandBlocks : RootPoly Ψ N :=
     (X (τ, ab.1) - X (τ, ab.2))
 
 def fib (cf : ℚ) : RootPoly Ψ N := C cf * vandBlocks Ψ N j
-
-def fdeg : ℚ := blockInt Ψ N j (vandBlocks Ψ N j)
 
 def dimN : ℕ := Fintype.card Ψ * j * (N - j)
 
@@ -100,15 +82,6 @@ theorem Jint_line (cf : ℚ) : Jint Unit 2 1 cf = -cf := by
     coeff_smul, smul_eq_mul, weylAct]
   rw [coeff_X_mul', coeff_X_mul']
   simp [coeff_C, Finsupp.single_apply, Equiv.swap_apply_of_ne_of_ne]
-
-theorem fdeg_line : fdeg Unit 2 1 = 1 := by
-  unfold fdeg blockInt
-  rw [vandBlocks_line]
-  rw [show (Finset.univ.filter (IsBlockPerm Unit 2 1)) = {fun _ => 1} by decide]
-  have : rhoBlock Unit 2 1 = 0 := by
-    ext ⟨u, i⟩
-    fin_cases i <;> simp [rhoBlock]
-  simp [this, weylSign]
 
 theorem FA_line (cf : ℚ) : FA Unit 2 1 cf = C cf * X ((), 1) ^ 2 := by
   unfold FA fib

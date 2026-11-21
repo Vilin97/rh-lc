@@ -21,8 +21,6 @@ def neOrder (m : α → Type) [Fintype α] [LinearOrder α] [∀ a, Fintype (m a
 def blockSize (m : α → Type) [Fintype α] [LinearOrder α] [∀ a, Fintype (m a)] (i : Fin (numBlocks m)) : ℕ :=
   Fintype.card (m (neOrder m i).1)
 
-theorem blockSize_pos (i : Fin (numBlocks m)) : 0 < blockSize m i := (neOrder m i).2
-
 def blockNum (i : Fin (numBlocks m)) : Fin (blockSize m i) ≃ m (neOrder m i).1 := (Fintype.equivFin _).symm
 
 def stdSigma (m : α → Type) [Fintype α] [LinearOrder α] [∀ a, Fintype (m a)] :
@@ -249,12 +247,5 @@ end GlobalTheory.BlockReorder
 namespace GlobalTheory
 
 open BlockReorder in
-
-theorem inductionFiniteLength_of_standard : GlobalTheory.Published.StandardFunctorsFiniteLength →
-    ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k],
-      GlobalTheory.SmGL.InductionFiniteLength k := by
-  intro hP k _ _ _ _ α n m _ _ _ _ _ _ e W _ _ ρ hρ hl
-  refine hasFiniteLength_parInd e ρ ((hP k (numBlocks m) (blockSize m) blockSize_pos).2 W (ρ.comp (leviMap k e))
-    (isSmooth_comp hρ _ (continuous_leviMap e)) ((hasFiniteLength_comp_iff _ _ (leviMap_surjective e)).2 hl))
 
 end GlobalTheory

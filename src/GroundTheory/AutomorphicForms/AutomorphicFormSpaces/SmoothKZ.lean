@@ -200,13 +200,6 @@ theorem IsSmoothKZ.uAction {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : IsSmooth
   isKFinite := hφ.isKFinite_uAction u
   isZFinite := hφ.isZFinite.uAction u
 
-theorem IsSmoothKZ.rightTranslate_finEmb {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : IsSmoothKZ φ)
-    (h : AdelicGLn.FiniteAdelicGL K n) : IsSmoothKZ (rightTranslate (finEmb K n h) φ) where
-  isLeftInvariant := hφ.isLeftInvariant.translate _
-  isSmooth := hφ.isSmooth.rightTranslate_finEmb h
-  isKFinite := IsKFinite.rightTranslate_finEmb hφ.isSmooth hφ.isKFinite h
-  isZFinite := hφ.isZFinite.map_rtFin h
-
 theorem IsSmoothKZ.rightTranslate_infEmb {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : IsSmoothKZ φ)
     {a : archGroup K n} (ha : a ∈ archCompact K n) : IsSmoothKZ (rightTranslate (infEmb K n a) φ) where
   isLeftInvariant := hφ.isLeftInvariant.translate _

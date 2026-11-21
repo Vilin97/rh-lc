@@ -14,8 +14,6 @@ open IsDedekindDomain NumberField CategoryTheory GroundTheory.Global
 
 open scoped DirectSum
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section ULiftCompare

@@ -25,16 +25,6 @@ def PairNumberRelabel.Statement : Prop :=
 
 section Examples
 
-def swapFactors : (Σ _ : Fin 2, Fin 2) ≃ (Σ _ : Fin 2, Fin 2) where
-  toFun v := ⟨Equiv.swap 0 1 v.1, v.2⟩
-  invFun v := ⟨Equiv.swap 0 1 v.1, v.2⟩
-  left_inv := by
-    rintro ⟨a, b⟩
-    simp
-  right_inv := by
-    rintro ⟨a, b⟩
-    simp
-
 end Examples
 
 end

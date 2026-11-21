@@ -31,11 +31,6 @@ theorem z_mem_orth {T : E} (F : LFlag S r T) : F.fl.z ∈ orth S (Xsp F) := by
   intro x hx
   exact key x hx
 
-theorem e_mem {T : E} (F : LFlag S r T) (a : Fin r) : F.fl.e a ∈ Xflag F (a.val + 1) := by
-  have ha : a ∈ {i : Fin r | i.1 < a.val + 1} := Nat.lt_succ_self _
-  show F.fl.e a ∈ Submodule.span E (F.fl.e '' {i | i.1 < a.val + 1})
-  exact Submodule.subset_span (Set.mem_image_of_mem _ ha)
-
 end Formalism.MainNotions.S.Lem.Comparison₂
 
 end A
@@ -132,10 +127,6 @@ namespace Formalism.MainNotions.S.Lem.Glob
 variable {D : Formalism.BasicNotions.D7}
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar in
-theorem Dmin_eq {n : ℕ} (w : Point D.host.E n) (l : ℕ) : Dmin w l = leadMinorE (ptMat w) l := by
-  first
-    | rfl
-    | (unfold Dmin leadMinorE; by_cases hl : l ≤ n <;> simp [hl])
 
 end Formalism.MainNotions.S.Lem.Glob
 end E

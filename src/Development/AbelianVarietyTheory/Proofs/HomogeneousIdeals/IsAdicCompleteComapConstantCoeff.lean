@@ -92,9 +92,6 @@ theorem eq_of_forall_sub_mem_pow {x y : S} (h : ∀ n, x - y ∈ J ^ n) : x = y 
       simp [coeff_trunc, hi, coeff_X, Polynomial.coeff_X, eq_comm]
   simpa using add_mem h1 h2
 
-@[simp] theorem evalAdic_C (a : A) : evalAdic A J hs (C a) = algebraMap A S a :=
-  (evalAdic A J hs).commutes a
-
 theorem algHom_ext_of_isHausdorff (J : Ideal S) [IsHausdorff J S] {φ ψ : A⟦X⟧ →ₐ[A] S}
     (hφ : φ X ∈ J) (h : φ X = ψ X) : φ = ψ := by
   refine AlgHom.ext fun f => ?_

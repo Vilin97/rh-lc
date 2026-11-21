@@ -21,11 +21,6 @@ noncomputable def integerUnitsToUnits : galIntegerUnitsZ K L ⟶ galUnitsZ K L :
     ext x
     rfl⟩
 
-@[simp]
-theorem integerUnitsToUnits_hom_apply (x : Additive 𝒪[L]ˣ) :
-    (integerUnitsToUnits K L).hom x = Additive.ofMul (unitsIncl L x.toMul) :=
-  rfl
-
 noncomputable def unitsValuation : galUnitsZ K L ⟶ Rep.trivial ℤ Gal(L/K) ℤ :=
   Rep.ofHom ⟨(unitsOrd L).toIntLinearMap, fun σ => by
     ext x

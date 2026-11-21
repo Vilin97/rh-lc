@@ -115,5 +115,3 @@ theorem zetaNe_of_real : ∀ D : D7, MetEx D → RealZeta D → ZetaNe D := by
       rw [hoff g hg, zero_mul]
 
 end GlobalTheory.EvenOnto.ZetaNeProof
-
-example : ∀ D : D7, MetEx D → RealZeta D → ZetaNe D := GlobalTheory.EvenOnto.ZetaNeProof.zetaNe_of_real

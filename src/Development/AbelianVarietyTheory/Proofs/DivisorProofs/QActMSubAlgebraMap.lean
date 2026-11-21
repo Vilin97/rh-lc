@@ -34,9 +34,6 @@ def rAct (σ : O →+* Module.End k H) (X : Submodule k H) (h : ∀ a, ∀ x ∈
   map_zero' := by ext; simp
   map_add' a b := by ext; simp
 
-@[simp] theorem rAct_apply (σ : O →+* Module.End k H) (X : Submodule k H) (h : ∀ a, ∀ x ∈ X, σ a x ∈ X)
-    (a : O) (x : X) : ((rAct σ X h a x : X) : H) = σ a x := rfl
-
 def qAct (σ : O →+* Module.End k H) (X : Submodule k H) (h : ∀ a, ∀ x ∈ X, σ a x ∈ X) :
     O →+* Module.End k (H ⧸ X) where
   toFun a := X.mapQ X (σ a) (fun x hx => h a x hx)

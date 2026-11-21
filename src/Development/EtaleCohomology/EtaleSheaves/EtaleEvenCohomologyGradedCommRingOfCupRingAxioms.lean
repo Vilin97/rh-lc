@@ -41,7 +41,6 @@ def gmul {k l : ℕ} (a : A q E k) (b : A q E l) : A q E (k + l) :=
 
 def gone (q : ℕ) (E : Spc) : A q E 0 := (one q E).cast (by simp) (by simp)
 
-instance : GradedMonoid.GMul (A q E) := ⟨gmul⟩
 instance : GradedMonoid.GOne (A q E) := ⟨gone q E⟩
 
 theorem negOnePow_even (i j : ℕ) : (2 * (i : ℤ) * (2 * (j : ℤ))).negOnePow = 1 :=

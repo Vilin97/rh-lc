@@ -16,8 +16,6 @@ namespace GlobalTheory.TypePlacesCover
 
 variable {D : D7}
 
-local notation "cO" => IsCMField.ringOfIntegersComplexConj D.host.E
-
 theorem isConjPl_conjPlE (P : PlE D.host) : Formalism.BasicNotions.IsConjPl D.host P (GlobalTheory.SplitConjPlace.conjPlE P) := by
   intro x y hxy
   rw [GlobalTheory.SplitConjPlace.mem_conjPlE]
@@ -99,8 +97,5 @@ theorem gPlaces (D : D7) : GPlaces D := by
 end GlobalTheory.TypePlacesCover
 
 open GlobalTheory.TypePlacesCover in
-
-theorem GlobalTheory.TypePlacesCover.gPlaces_all : ∀ hL : GlobalTheory.Published.LocalLanglandsGL, AllSt fun _ _ _ _ _ _ x => LA hL x → GPlaces (Dof x) :=
-  fun _ => StepW.of_all fun _ _ _ _ _ _ _ _ _ x _ => gPlaces (Dof x)
 
 end

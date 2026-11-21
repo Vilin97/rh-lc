@@ -402,8 +402,6 @@ section IsoStable
 
 variable [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e] [NeZero a] [TameDescentExponentData K l e a]
 
-local instance : Fintype (rootsOfUnity e K) := Fintype.ofFinite _
-
 theorem smulTot_mem_MMHigh (P : PhiMod O K l e a ι) {f : ZMod a → K⟦X⟧} (hf : ∀ τ, f τ ∈ A O K)
     {v : Vec K a ι} (hv : v ∈ MMHigh P) : f • v ∈ MMHigh P := by
   change v ∈ SHigh O K l e • P.MM at hv

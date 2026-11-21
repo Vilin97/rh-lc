@@ -1,5 +1,7 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExtAComap
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.ConjTupRefl
+import Formalism.LocalToGlobal.IndefiniteReal.LinksComap
+import Formalism.LocalToGlobal.IndefiniteReal.LinksExistW
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HeckeCharacterIdeleCharacterMatchUnique
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HeckeCharEqOneOfTrivialFinitePartOne
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IdelicCharacterPowEqOneFiniteIdelesOfOrderDvd
@@ -83,10 +85,6 @@ theorem exists_conj_pow {L : LevCh D T} {μ0 : T} (hL : L.Is μ0) (t : T) : ∃ 
   have e : (L.xi t ^ a) ^ b = L.xi t := MonoidHom.ext fun x => Circle.ext (by
     rw [← pow_mul, h2, pow_mul, ← h _ (h1 x), ← h' _ (by rw [← map_pow, h1, map_one]), RingEquiv.symm_apply_apply])
   exact GlobalTheory.ChrEqUnique.hchar_unique D (L.xi t) _ _ (e ▸ chrEq_pow (chrEq_pow (hL.xi t) a) b) (hL.xi t)
-
-def SamePlaces (L : LevCh D T) (S : Set (ℂ ≃+* ℂ)) : Prop :=
-  ∀ (t t' : T) (τ τ' : ℂ ≃+* ℂ), τ ∈ S → (τ' ∈ S ∨ τ' = RingEquiv.refl ℂ) →
-    (∀ x, τ ((L.xi t x : Circle) : ℂ) = τ' ((L.xi t' x : Circle) : ℂ)) → L.Q t' = L.Q t
 
 end GlobalTheory.ConjExt
 

@@ -15,9 +15,6 @@ def lvl (S : ℕ → Subobject P) : ℕ → Subobject P
   | 0 => ⊤
   | e + 1 => S e
 
-@[simp] lemma lvl_zero (S : ℕ → Subobject P) : lvl S 0 = ⊤ := rfl
-@[simp] lemma lvl_succ (S : ℕ → Subobject P) (e : ℕ) : lvl S (e + 1) = S e := rfl
-
 lemma lvl_succ_le {S : ℕ → Subobject P} (hS : ∀ e, S (e + 1) ≤ S e) (e : ℕ) :
     lvl S (e + 1) ≤ lvl S e := by
   cases e with
@@ -40,7 +37,6 @@ def grπ {S : ℕ → Subobject P} (hS : ∀ e, S (e + 1) ≤ S e) (e : ℕ) :
     (lvl S e : X.Modules) ⟶ gr hS e :=
   cokernel.π _
 
-@[reassoc (attr := simp)]
 lemma incl_grπ {S : ℕ → Subobject P} (hS : ∀ e, S (e + 1) ≤ S e) (e : ℕ) :
     incl hS e ≫ grπ hS e = 0 :=
   cokernel.condition _

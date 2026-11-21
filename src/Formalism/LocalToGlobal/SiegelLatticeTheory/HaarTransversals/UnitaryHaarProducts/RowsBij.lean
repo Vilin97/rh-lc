@@ -7,7 +7,6 @@ import Formalism.SharpRestriction.CuspSpanNormBounds.UnimodularSchurMeasures.Rrg
 import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ModularCharacterEqOneOnExpHermitian
 import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.ProjRows
 import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.RowsDef
-import Lemmata.GeneralBFactRightLast.Slot
 
 noncomputable section
 
@@ -55,9 +54,6 @@ def linOfInner (ψ : E → F) (C : ℂ) (h : ∀ y y', ⟪ψ y, ψ y'⟫_ℂ = C
         calc RCLike.re (C * ⟪y, y⟫_ℂ) ≤ ‖C * ⟪y, y⟫_ℂ‖ := RCLike.re_le_norm _
           _ = ‖C‖ * ‖y‖ ^ 2 := by rw [norm_mul, inner_self_eq_norm_sq_to_K]; simp
       exact (pow_le_pow_iff_left₀ (norm_nonneg _) (by positivity) two_ne_zero).1 h1)
-
-@[simp] theorem linOfInner_apply (ψ : E → F) (C : ℂ) (h : ∀ y y', ⟪ψ y, ψ y'⟫_ℂ = C * ⟪y, y'⟫_ℂ)
-    (y : E) : linOfInner ψ C h y = ψ y := rfl
 
 end Lin
 

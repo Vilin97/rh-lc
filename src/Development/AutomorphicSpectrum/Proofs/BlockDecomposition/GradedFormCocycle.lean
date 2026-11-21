@@ -12,9 +12,6 @@ open GlobalTheory.CompanionTheory.TowerEnd (Q dQ val Vals cl d_cl dQ_apply)
 noncomputable section
 namespace GlobalTheory.CompanionTheory.GrForm.Coc
 
-local macro "fa" : tactic =>
-  `(tactic| (simp only [sa_val, Fin.val_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero]; split_ifs <;> omega))
-
 theorem alt_sum {B : Type*} [CommRing B] {j : ℕ} (w : Fin j → Fin (j + 2) → B) :
     ∑ i : Fin (j + 2), (-1 : B) ^ (i : ℕ) *
       ∏ k : Fin j, (w k (i.succAbove k.succ) - w k (i.succAbove k.castSucc)) = 0 := by

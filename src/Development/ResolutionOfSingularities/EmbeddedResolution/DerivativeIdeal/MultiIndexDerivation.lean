@@ -419,10 +419,6 @@ theorem multiIndexDeriv_add {h : ℕ} (D : Fin h → Derivation k R R)
 
 def unitMultiIndex {h : ℕ} (i : Fin h) : Fin h → ℕ := fun j => if j = i then 1 else 0
 
-@[simp]
-theorem unitMultiIndex_apply {h : ℕ} (i j : Fin h) :
-    unitMultiIndex i j = if j = i then 1 else 0 := rfl
-
 theorem sum_unitMultiIndex {h : ℕ} (i : Fin h) : ∑ j, unitMultiIndex i j = 1 := by
   simp [unitMultiIndex]
 

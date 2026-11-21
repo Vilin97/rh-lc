@@ -171,19 +171,6 @@ theorem algebraMap_eq_sumEval (p : MvPolynomial (ι ⊕ κ) k) :
       = C (coord k ι S i) := by
   simp [algebraMap_eq_sumEval, sumEval]
 
-@[simp] theorem algebraMap_X_inr (j : κ) :
-    algebraMap (MvPolynomial (ι ⊕ κ) k) (MvPolynomial κ S) (X (Sum.inr j))
-      = (X j : MvPolynomial κ S) := by
-  simp [algebraMap_eq_sumEval, sumEval]
-
-@[simp] theorem coord_inl (i : ι) :
-    coord k (ι ⊕ κ) (MvPolynomial κ S) (Sum.inl i) = C (coord k ι S i) :=
-  (coord_def k (ι ⊕ κ) (MvPolynomial κ S) (Sum.inl i)).trans (algebraMap_X_inl k ι κ S i)
-
-@[simp] theorem coord_inr (j : κ) :
-    coord k (ι ⊕ κ) (MvPolynomial κ S) (Sum.inr j) = (X j : MvPolynomial κ S) :=
-  (coord_def k (ι ⊕ κ) (MvPolynomial κ S) (Sum.inr j)).trans (algebraMap_X_inr k ι κ S j)
-
 private theorem algebraMap_eq_sumEvalIter (p : MvPolynomial (ι ⊕ κ) k) :
     algebraMap (MvPolynomial (ι ⊕ κ) k) (MvPolynomial κ (MvPolynomial ι k)) p
       = sumEvalIter k ι κ p := rfl

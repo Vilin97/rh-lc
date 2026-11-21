@@ -21,8 +21,4 @@ def SegreFibreIdeal.Statement : Prop :=
     ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), (mIdealOver O y).map (MvPolynomial.map φ) ≤ W →
       (mIdealOver O (segreJoin y)).map (MvPolynomial.map φ) ≤ segreLift ι F W
 
-example (h : SegreFibreIdeal.Statement) :=
-  h exO exΩ (IsLocalRing.ResidueField exO) (IsLocalRing.residue exO) Unit (fun _ => Fin (1 + 1))
-    (IndefiniteRowSideFullHecke.Kleiman2.oneBlock (Kleiman.lineX exF))
-
 end GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization

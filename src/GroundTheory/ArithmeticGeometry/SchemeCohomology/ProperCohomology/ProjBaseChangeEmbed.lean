@@ -21,12 +21,10 @@ def baseChangeIso :
       pullback (toSpecBase A n) (Spec.map (CommRingCat.ofHom (algebraMap A B))) :=
   (isPullback_baseChange A B n).isoPullback
 
-@[reassoc (attr := simp)]
 lemma baseChangeIso_inv_baseChangeMap :
     (baseChangeIso A B n).inv ≫ baseChangeMap A B n = pullback.fst _ _ :=
   (isPullback_baseChange A B n).isoPullback_inv_fst
 
-@[reassoc (attr := simp)]
 lemma baseChangeIso_inv_toSpecBase :
     (baseChangeIso A B n).inv ≫ toSpecBase B n = pullback.snd _ _ :=
   (isPullback_baseChange A B n).isoPullback_inv_snd
@@ -40,13 +38,11 @@ instance (ι : Y ⟶ pullback (toSpecBase A n) (Spec.map (CommRingCat.ofHom (alg
   rw [toBaseChange]
   infer_instance
 
-@[reassoc (attr := simp)]
 lemma toBaseChange_baseChangeMap
     (ι : Y ⟶ pullback (toSpecBase A n) (Spec.map (CommRingCat.ofHom (algebraMap A B)))) :
     toBaseChange ι ≫ baseChangeMap A B n = ι ≫ pullback.fst _ _ := by
   simp [toBaseChange]
 
-@[reassoc (attr := simp)]
 lemma toBaseChange_toSpecBase
     (ι : Y ⟶ pullback (toSpecBase A n) (Spec.map (CommRingCat.ofHom (algebraMap A B)))) :
     toBaseChange ι ≫ toSpecBase B n = ι ≫ pullback.snd _ _ := by

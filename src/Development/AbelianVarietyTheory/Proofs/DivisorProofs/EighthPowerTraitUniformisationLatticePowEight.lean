@@ -1,7 +1,9 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.NotOrdGeOfNotMem
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsUnimodMod
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsSiegPull
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BlowPolSt
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.SiegelToroidalIntegral
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ToroidalChartsForFan
 import Development.AbelianVarietyTheory.Definitions.Divisors.LabRange
 import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.FinrankOfExpBij
 import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.PsiInOfComponent
@@ -31,11 +33,6 @@ open Classical
 noncomputable section
 namespace GlobalTheory.EighthTorsion
 open MonObj
-
-def precomp {S : Scheme.{0}} {T T' G : Over S} [GrpObj G] (x : T' ⟶ T) : (T ⟶ G) →* (T' ⟶ G) where
-  toFun g := x ≫ g
-  map_one' := by simp
-  map_mul' a b := by simp [MonObj.comp_mul]
 
 def postcomp {S : Scheme.{0}} {T G H : Over S} [GrpObj G] [GrpObj H] (f : G ⟶ H) [IsMonHom f] :
     (T ⟶ G) →* (T ⟶ H) where

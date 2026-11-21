@@ -217,10 +217,6 @@ def PtilFF (P : LevFam X.E X.K R.r Pr.vGs) (h : (mtildeGSD W Ch sel mu P).Ok) (u
   (mtildeGSD W Ch sel mu P).csOf h (mtildeGSD W Ch sel mu P).outSec fun d' =>
     (pairBK (K := X.K) W.sgTrue).compl₁₂ (brC W u ∘ₗ LinearMap.proj d') (LinearMap.proj d')
 
-def PtilC (P : LevFam X.E X.K R.r Pr.vGs) (h : (mtildeGSD W Ch sel mu P).Ok) (u : Pr.Word) :
-    ColV W Ch u R.m →ₗ[X.K] MtildeV W Ch sel mu P →ₗ[X.K] X.K :=
-  (PtilFF W Ch sel mu P h u).compl₁₂ (evzC W Ch sel mu u) (Submodule.subtype _)
-
 def evRho (P : LevFam X.E X.K R.r Pr.vGs) (u : Pr.Word) :
     FormG (rowTy Ch sel mu P).inv →* Module.End X.K (colVal W u R.m (Pr.vT u) (rowSG Pr sel mu)).V where
   toFun a := ((((rowTy Ch sel mu P).inv.chr a.2)⁻¹ : X.Kˣ) : X.K) •
@@ -753,9 +749,6 @@ def JG (k₀ r t n c : ℕ) : Subgroup (Sp E (n + c) ≃ₗ[E] Sp E (n + c)) :=
   stabL E (n + c) (lamY P q n c fun i => i + 1) ⊓
     flagU (flagG P q k₀ n c) (bvecG E q k₀ n c) r {s | ∃ i, s = r + i * t}
 
-def JGsharp (k₀ r t n c : ℕ) : Subgroup (Sp E (n + c) ≃ₗ[E] Sp E (n + c)) :=
-  JG P q k₀ r t n c ⊓ flagU (fun _ => flagG P q k₀ n c 0) (fun _ => bvecG E q k₀ n c k₀) 1 ∅
-
 def bd5 (k₀ rS s : ℕ) : ℕ := if s = rS + k₀ then rS else s
 
 def flagS (k₀ rS n c s : ℕ) : Submodule (𝓞 E) (Sp E (n + c)) :=
@@ -1260,20 +1253,6 @@ structure ChTh.Ok (cst : LocCst X (rowSG Pr sel mu)) {u : Pr.Word} {m2 : ℕ} (T
   top : ThDist.Ok T.top (Sall sel mu u) (cAof sel mu cst * cBof sel mu cst u) (colValF W sel mu u (m2 + 1)).rho
     (colVal W u R.m (Pr.vT u) (rowSG Pr sel mu)).rho (rhoS Ch sel mu (m2 + 1)) (rhoT Ch sel mu (m2 + 1))
 
-structure ChKer.Shape {P : LevFam X.E X.K R.r Pr.vGs} {u : Pr.Word} {m2 : ℕ} {b : L.β (m2 + 1)}
-    {hY : YbHyp (R := R) sel mu cst L u m2 b} (A : ChKer W Ch sel mu cst L P u m2 b hY) (T : ChTh W sel mu u m2) : Prop where
-
-  lev : (cst.sharp = false ∧ P = rP0 Ch) ∨ (cst.sharp = true ∧ P = rPsymF Ch)
-  mat : ∀ i, i < m2 → ∀ (al : L.β i) (be : L.β (i + 1)) (p : ChPt (R := R) sel mu u i) (p' : ChPt (R := R) sel mu u (i + 1)),
-    (A.kk i al be).k p p' = kerOf (T.th i) (Sall sel mu u) (cAof sel mu cst) (cBof sel mu cst u) p.deco.1.N (frsF sel mu p)
-      p'.deco.1.N (frsF sel mu p') (XiEntry Ch sel mu cst L i al be p p')
-  cp1 : ∀ (al : L.β m2) (p₀ : ChPt (R := R) sel mu u m2) (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Set (Sp X.E (R.N (m2 + 1)))),
-    Y ∈ ybSet sel mu cst p.deco.1.N → (A.cp al).k1 p₀ p Y = kerOf (T.th m2) (Sall sel mu u) (cAof sel mu cst) (cBof sel mu cst u) p₀.deco.1.N (frsF sel mu p₀)
-      p.deco.1.N (frsF sel mu p) (XiCpl1 Ch sel mu cst L m2 al p₀ p Y)
-  cp2 : ∀ (al : L.β m2) (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Set (Sp X.E (R.N (m2 + 1)))) (d : RowPt Pr R sel mu),
-    Y ∈ ybSet sel mu cst p.deco.1.N → (A.cp al).k2 p Y d = kerOf T.top (Sall sel mu u) (cAof sel mu cst) (cBof sel mu cst u) p.deco.1.N (frsF sel mu p)
-      (tilQ sel mu u d).1.N (frsT sel mu u d) (XiCpl2 Ch sel mu cst m2 p Y d)
-
 def ChKer.colF {P : LevFam X.E X.K R.r Pr.vGs} {u : Pr.Word} {m2 : ℕ} {b : L.β (m2 + 1)}
     {hY : YbHyp (R := R) sel mu cst L u m2 b} (A : ChKer W Ch sel mu cst L P u m2 b hY) (hF : ∀ j, (chF W sel mu L u j).Ok) :
     (chF W sel mu L u 0).Forms →ₗ[X.K] (evGSD W Ch sel mu P u).EqFun :=
@@ -1294,18 +1273,6 @@ def BtOf (P : LevFam X.E X.K R.r Pr.vGs) (h : (mtildeGSD W Ch sel mu P).Ok) (Xg 
     ((mtildeKGSD W Ch sel mu).EqFun.subtype ∘ₗ (V0X W Ch sel mu Xg P).subtype)
 
 variable {W Ch sel mu}
-
-def PerKillsU {P : LevFam X.E X.K R.r Pr.vGs} {Xg : Finset (G0 X.E Pr.vGs R.r → X.K)} {u : Pr.Word}
-    (B : MramV W Ch u →ₗ[X.K] ↥(V0X W Ch sel mu Xg P) →ₗ[X.K] X.K) (U : Submodule X.K ↥(V0X W Ch sel mu Xg P)) : Prop :=
-  ∀ φ, ∀ F ∈ U, B φ F = 0
-
-def BkOf {P : LevFam X.E X.K R.r Pr.vGs} {Xg : Finset (G0 X.E Pr.vGs R.r → X.K)} {u : Pr.Word}
-    (B : MramV W Ch u →ₗ[X.K] ↥(V0X W Ch sel mu Xg P) →ₗ[X.K] X.K) (U : Submodule X.K ↥(V0X W Ch sel mu Xg P))
-    (hU : PerKillsU B U) : MramV W Ch u →ₗ[X.K] (↥(V0X W Ch sel mu Xg P) ⧸ U) →ₗ[X.K] X.K :=
-  (U.liftQ B.flip fun F hF => by
-    rw [LinearMap.mem_ker]
-    ext φ
-    exact hU φ F hF).flip
 
 end Bt
 
@@ -1350,32 +1317,9 @@ section NuPrime
 
 variable {K : Type} [Field K] [NumberField K]
 
-def toFinPl (w : HeightOneSpectrum (𝓞 K)) : Formalism.LFunctionChainParameters.slopeLatticeData.FinPl K := ⟨w.asIdeal, w.isMaximal⟩
-
-def ofFinPl (w : Formalism.LFunctionChainParameters.slopeLatticeData.FinPl K) : HeightOneSpectrum (𝓞 K) where
-  asIdeal := w.1
-  isPrime := w.2.isPrime
-  ne_bot := fun h => by
-    have h1 := w.2
-    rw [h] at h1
-    exact RingOfIntegers.not_isField K (Ring.isField_iff_maximal_bot.mpr h1)
-
-def sgFloor (s : HeightOneSpectrum (𝓞 K) → ℝ) (w : HeightOneSpectrum (𝓞 K)) : ℤ := ⌊(eW w : ℝ) * s w⌋
-
 open Classical in
 
-def sgFin (s : HeightOneSpectrum (𝓞 K) → ℝ) : Formalism.LFunctionChainParameters.slopeLatticeData.FinPl K →₀ ℤ :=
-  if h : (Function.support fun w : Formalism.LFunctionChainParameters.slopeLatticeData.FinPl K => sgFloor s (ofFinPl w)).Finite
-  then Finsupp.ofSupportFinite _ h else 0
-
-def sgSumOf (m : ℕ) (gain F Eu : ℕ → HeightOneSpectrum (𝓞 K) → ℝ) (w : HeightOneSpectrum (𝓞 K)) : ℝ :=
-  ∑ j ∈ Finset.Icc 1 m, (gain j w + F j w) - ∑ j ∈ Finset.Icc 1 m, Eu j w
-
 end NuPrime
-
-def NuPrimeC {X : Fields} {Pr : Primes X} {R : Ranks} {W : Wts X Pr.Word R} {Ch : Chars X Pr R.m} {u : Pr.Word}
-    (Sv : Serv W Ch u) (gain F Eu : ℕ → HeightOneSpectrum (𝓞 X.K) → ℝ) : Submodule (𝓞 X.K) (MramV W Ch u) :=
-  Formalism.LFunctionChainParameters.slopeLatticeData.modLat (sgFin (sgSumOf R.m gain F Eu)) (NuC Sv)
 
 section ColOp
 
@@ -1417,20 +1361,6 @@ def colC {P : LevFam X.E X.K R.r Pr.vGs} {u : Pr.Word} {m2 : ℕ} {b : L.β (m2 
     MfV W Ch u →ₗ[X.K] (evGSD W Ch sel mu P u).EqFun :=
   A.colF hF ∘ₗ startC hL u
 
-def BtC {P : LevFam X.E X.K R.r Pr.vGs} {u : Pr.Word} {m2 : ℕ} {b : L.β (m2 + 1)} {hY : YbHyp (R := R) sel mu cst L u m2 b}
-    (A : ChKer W Ch sel mu cst L P u m2 b hY) (hF : ∀ j, (chF W sel mu L u j).Ok) {G : ChGlob X R.m} (hL : L.Ok Ch sel mu cst G m2)
-    (h : (mtildeGSD W Ch sel mu P).Ok) (Xg : Finset (G0 X.E Pr.vGs R.r → X.K)) (_hXg : ∀ χ ∈ Xg, IsAbsIrrChar χ)
-    (_hS : Pr.T u ∈ S ∧ ∀ i, Pr.g i ∈ S) :
-    MramV W Ch u →ₗ[X.K] ↥(V0X W Ch sel mu Xg P) →ₗ[X.K] X.K :=
-  BtOf W Ch sel mu P h Xg u (colC A hF hL)
-
-def BkC {P : LevFam X.E X.K R.r Pr.vGs} {u : Pr.Word} {m2 : ℕ} {b : L.β (m2 + 1)} {hY : YbHyp (R := R) sel mu cst L u m2 b}
-    (A : ChKer W Ch sel mu cst L P u m2 b hY) (hF : ∀ j, (chF W sel mu L u j).Ok) {G : ChGlob X R.m} (hL : L.Ok Ch sel mu cst G m2)
-    (h : (mtildeGSD W Ch sel mu P).Ok) (Xg : Finset (G0 X.E Pr.vGs R.r → X.K)) (hXg : ∀ χ ∈ Xg, IsAbsIrrChar χ)
-    (hS : Pr.T u ∈ S ∧ ∀ i, Pr.g i ∈ S) (U : Submodule X.K ↥(V0X W Ch sel mu Xg P))
-    (hU : PerKillsU (BtC A hF hL h Xg hXg hS) U) : MramV W Ch u →ₗ[X.K] (↥(V0X W Ch sel mu Xg P) ⧸ U) →ₗ[X.K] X.K :=
-  BkOf (BtC A hF hL h Xg hXg hS) U hU
-
 end ColOp
 
 section Names
@@ -1438,21 +1368,6 @@ section Names
 variable {X : Fields} {Pr : Primes X} {R : Ranks} {W : Wts X Pr.Word R} {Ch : Chars X Pr R.m}
   {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} {S : Set ℕ}
   {mu : Tup X.F X.E X.K S} {cst : LocCst X (rowSG Pr sel mu)} {L : ChIdx X Pr R (QE sel (mu : Chr X.F X.E X.K))}
-
-def Kop {P : LevFam X.E X.K R.r Pr.vGs} {u : Pr.Word} {m2 : ℕ} {b : L.β (m2 + 1)} {hY : YbHyp (R := R) sel mu cst L u m2 b}
-    (A : ChKer W Ch sel mu cst L P u m2 b hY) (hF : ∀ j, (chF W sel mu L u j).Ok) (i : ℕ) :
-    (chF W sel mu L u i).Forms →ₗ[X.K] (chF W sel mu L u (i + 1)).Forms :=
-  A.kk.step hF i
-
-def KopLast {P : LevFam X.E X.K R.r Pr.vGs} {u : Pr.Word} {m2 : ℕ} {b : L.β (m2 + 1)} {hY : YbHyp (R := R) sel mu cst L u m2 b}
-    (A : ChKer W Ch sel mu cst L P u m2 b hY) (hF : ∀ j, (chF W sel mu L u j).Ok) (al : L.β m2) :
-    ((chF W sel mu L u m2).mem al).EqFun →ₗ[X.K] (evGSD W Ch sel mu P u).EqFun :=
-  ((A.cp al).comp (hF (m2 + 1) b) (midGSD W sel mu L u m2 b).outSec).opOf (hF m2 al) ((chF W sel mu L u m2).mem al).outSec
-
-def PerInv (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m) (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E))
-    (mu : Tup X.F X.E X.K S) (P : LevFam X.E X.K R.r Pr.vGs) (u : Pr.Word) : Prop :=
-  ∀ (g : FormG (rowTy Ch sel mu P).inv) (x : VV X.K (W.lamTrue u R.m)) (y : VV X.K W.sgTrue),
-    pairBK W.sgTrue (brC W u (evRho W Ch sel mu P u g x)) ((mtildeGSD W Ch sel mu P).ρ g y) = pairBK W.sgTrue (brC W u x) y
 
 end Names
 

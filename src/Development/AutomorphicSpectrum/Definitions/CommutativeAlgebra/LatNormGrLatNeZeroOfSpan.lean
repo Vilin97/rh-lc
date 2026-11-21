@@ -78,9 +78,6 @@ section Norms
 variable {C : Type} [Field C] (v : Valuation C NNReal) {O : Type} [CommRing O] [Algebra O C]
   {V : Type} [AddCommGroup V] [Module C V] [Module O V] [IsScalarTower O C V]
 
-theorem mem_latIn {L : Submodule O V} {U : Submodule C V} {x : U} :
-    x ∈ latIn L U ↔ (x : V) ∈ L := Iff.rfl
-
 theorem map_latIn (L : Submodule O V) (U : Submodule C V) :
     (latIn L U).map (U.subtype.restrictScalars O) = L ⊓ U.restrictScalars O := by
   ext x
@@ -104,10 +101,6 @@ theorem latNorm_eq (L : Submodule O V) (x : V) : latNorm v L x = GlobalTheory.HT
   · rintro ⟨a, ⟨y, hy, e⟩, h⟩; exact ⟨a, h, y, hy, e.symm⟩
 
 omit [Algebra O C] [IsScalarTower O C V] in
-
-theorem latNorm_le {L : Submodule O V} (a : C) {y : V} (hy : y ∈ L) :
-    latNorm v L (a • y) ≤ v a :=
-  csInf_le (OrderBot.bddBelow _) ⟨a, rfl, y, hy, rfl⟩
 
 theorem latNorm_span (hv : v.Integers O) {g : V} (hg : g ≠ 0) (c : C) :
     latNorm v (Submodule.span O {g}) (c • g) = v c := by
@@ -161,25 +154,6 @@ theorem grLat_diag {n : ℕ} (b : Basis (Fin n) C V) (c : Fin n → C) (i : Fin 
   · rw [Submodule.span_singleton_le_iff_mem]
     refine ⟨c i • b i, ⟨Submodule.subset_span ⟨i, rfl⟩, ?_⟩, by simp⟩
     exact Submodule.smul_mem (b.flag i.succ) _ (b.self_mem_flag Fin.castSucc_lt_succ)
-
-example (hv : v.Integers O) {n : ℕ} (b : Basis (Fin n) C V) (c : Fin n → C) (i : Fin n)
-    (hc : c i ≠ 0) :
-    grLog v (Submodule.span O (Set.range fun j => c j • b j)) b i = -Real.log (v (c i)) :=
-  grLog_of_eq_span v hv hc (grLat_diag b c i)
-
-example {c : C} (hc : c ≠ 0) :
-    dualLat (LinearMap.mul C C) (Submodule.span O {c}) = Submodule.span O {c⁻¹} := by
-  ext y
-  constructor
-  · intro h
-    obtain ⟨o, ho⟩ := h c (Submodule.mem_span_singleton_self c)
-    refine Submodule.mem_span_singleton.2 ⟨o, ?_⟩
-    rw [Algebra.smul_def, ho]; simp; field_simp
-  · intro h x hx
-    obtain ⟨o, rfl⟩ := Submodule.mem_span_singleton.1 h
-    obtain ⟨o', rfl⟩ := Submodule.mem_span_singleton.1 hx
-    refine ⟨o' * o, ?_⟩
-    simp [Algebra.smul_def]; field_simp
 
 end Norms
 
@@ -321,62 +295,11 @@ theorem regAct_basis (k) :
       Algebra.TensorProduct.basis K (RingOfIntegers.basis E) k := by
   simp [regAct, Algebra.TensorProduct.basis_apply]
 
-theorem isFreeOn_reg :
-    IsFreeOn (A := A) (regAct K E)
-      (Submodule.span A (Set.range (Algebra.TensorProduct.basis K (RingOfIntegers.basis E))))
-      (fun _ : Fin 1 => 1) := by
-  refine ⟨?_, ?_, ?_⟩
-  · simp only [regAct_basis]
-    exact (Algebra.TensorProduct.basis K (RingOfIntegers.basis E)).linearIndependent.comp
-      (fun q : Fin 1 × _ => q.2) (fun p q h => Prod.ext (Subsingleton.elim _ _) h)
-  · rw [Submodule.span_span_of_tower, Basis.span_eq]
-  · simp only [regAct_basis]
-    congr 1
-    ext x
-    simp
-
-example (σ : E →+* K) : eigProj (regAct K E) σ 1 ≠ 0 := by
-  intro h
-  let φ : K ⊗[ℤ] 𝓞 E →ₐ[K] K := Algebra.TensorProduct.lift (AlgHom.id K K)
-    (σ.comp (algebraMap (𝓞 E) E)).toIntAlgHom (fun _ _ => Commute.all _ _)
-  have h1 := congrArg φ h
-  set_option synthInstance.maxHeartbeats 100000 in
-    simp only [eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, regAct_basis,
-    Algebra.TensorProduct.basis_apply, map_zero] at h1
-  have h2 : ∑ k, σ (dualInt E k * integralBasis E k) = 0 := by
-    simpa [φ] using h1
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [← map_sum, sum_dualInt_mul, map_one] at h2
-  exact one_ne_zero h2
-
 omit [NumberField E] in
 
 theorem val_le_one (v : Valuation K NNReal) (σ : E →+* K) (x : 𝓞 E) : v (σ (x : E)) ≤ 1 :=
   (Valuation.integer.integers v).isIntegral_iff_v_le_one.1
     ((map_isIntegral_int σ (RingOfIntegers.isIntegral_coe x)).tower_top)
-
-theorem bddAbove_diff (v : Valuation K NNReal) (σ : E →+* K) :
-    BddAbove (Set.range fun x : differentIdeal ℤ (𝓞 E) => v (σ ((x : 𝓞 E) : E))) :=
-  ⟨1, by rintro _ ⟨x, rfl⟩; exact val_le_one v σ x⟩
-
-theorem le_diffAbs (v : Valuation K NNReal) (σ : E →+* K) {x : 𝓞 E}
-    (hx : x ∈ differentIdeal ℤ (𝓞 E)) : v (σ (x : E)) ≤ diffAbs v σ :=
-  le_ciSup (bddAbove_diff v σ) ⟨x, hx⟩
-
-theorem diffAbs_pos (v : Valuation K NNReal) (σ : E →+* K) : 0 < diffAbs v σ := by
-  obtain ⟨x, hx, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot
-    (differentIdeal_ne_bot (A := ℤ) (B := 𝓞 E))
-  refine lt_of_lt_of_le ?_ (le_diffAbs v σ hx)
-  rw [pos_iff_ne_zero, Valuation.ne_zero_iff, map_ne_zero]
-  exact_mod_cast hx0
-
-theorem diffAbs_of_span (v : Valuation K NNReal) (σ : E →+* K) {δ : 𝓞 E}
-    (h : differentIdeal ℤ (𝓞 E) = Ideal.span {δ}) : diffAbs v σ = v (σ (δ : E)) := by
-  refine le_antisymm (ciSup_le fun x => ?_)
-    (le_diffAbs v σ (h ▸ Ideal.mem_span_singleton_self δ))
-  obtain ⟨y, hy⟩ := Ideal.mem_span_singleton'.1 (h.le x.2)
-  rw [← hy, RingOfIntegers.coe_eq_algebraMap, map_mul, map_mul, map_mul]
-  exact mul_le_of_le_one_left' (val_le_one v σ y)
 
 end Eigen
 

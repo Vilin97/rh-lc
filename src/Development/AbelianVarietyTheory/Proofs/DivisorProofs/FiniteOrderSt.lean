@@ -47,9 +47,4 @@ def SerreAmpleSt : Prop :=
 
 open GlobalTheory.RealMult in
 
-def LevelRigidSt : Prop :=
-  ∀ (F : Type) [Field F] [NumberField F] (𝔠 : FracId F) (N : ℕ), 3 ≤ N →
-    ∀ (R : Type) [CommRing R], IsUnit (N : R) → ∀ (X : Obj F 𝔠 (Sp R)) (β : X.Level N)
-      (g : X.A.left ⟶ X.A.left), X.IsPullBy X (𝟙 _) g → (∀ i, (β.pt i).left ≫ g = (β.pt i).left) → g = 𝟙 _
-
 end GlobalTheory.AmpleRigid

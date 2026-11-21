@@ -1,7 +1,6 @@
 import Mathlib
 import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TranslateMemIndOrder
 import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ExistsUnitFormLocalizationEtaleNbhd
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.Models
 import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.DualOrder
 import Development.AutomorphicSpectrum.Proofs.GeometryProofs.BtOrderEqOfHopfEmbeddingStatement
 import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsUniqueBtOrderEmbeddingStatement
@@ -71,9 +70,6 @@ def transl {A : Subalgebra R (T → R)} (hA : IsHopfOrder A) (s : T) : A →+* A
   map_mul' _ _ := rfl
   map_zero' := rfl
   map_add' _ _ := rfl
-
-@[simp] theorem transl_apply {A : Subalgebra R (T → R)} (hA : IsHopfOrder A) (s : T) (f : A) (h : T) :
-    (transl hA s f : T → R) h = (f : T → R) (s * h) := rfl
 
 variable [IsDomain R] {R' : Type} [CommRing R'] [IsDomain R'] [Algebra R R']
 

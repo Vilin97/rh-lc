@@ -26,7 +26,6 @@ theorem shiftNegOne_d_succ_hom_apply (n : ℕ) (y : L.X n) :
   rw [shiftNegOne_d]
   rfl
 
-@[reassoc]
 theorem shiftNegOneSuccHom_d (n : ℕ) :
     shiftNegOneSuccHom L n ≫ (shiftNegOne L).d (n + 1) (n + 1 + 1) =
       -(L.d n (n + 1) ≫ shiftNegOneSuccHom L (n + 1)) :=
@@ -96,16 +95,6 @@ noncomputable def shiftNegOneHomologyIso (n : ℕ) :
     (shiftNegOne L).homology (n + 1) ≅ L.homology n :=
   (asIso (shiftNegOneHomologyHom L n)).symm
 
-@[simp]
-theorem shiftNegOneHomologyIso_inv (n : ℕ) :
-    (shiftNegOneHomologyIso L n).inv = shiftNegOneHomologyHom L n :=
-  rfl
-
-@[simp]
-theorem shiftNegOneHomologyIso_symm_hom (n : ℕ) :
-    (shiftNegOneHomologyIso L n).symm.hom = shiftNegOneHomologyHom L n :=
-  rfl
-
 theorem iCycles_shiftNegOneSuccHom_d (n : ℕ) :
     (L.iCycles n ≫ shiftNegOneSuccHom L n) ≫ (shiftNegOne L).d (n + 1) (n + 1 + 1) = 0 := by
   rw [Category.assoc, shiftNegOneSuccHom_d, Preadditive.comp_neg, L.iCycles_d_assoc, zero_comp,
@@ -135,7 +124,6 @@ namespace mappingCoconeNat
 
 variable {K L : CochainComplex (ModuleCat.{u} k) ℕ} (f : K ⟶ L)
 
-@[reassoc (attr := simp)]
 theorem inr_fst : inr f ≫ fst f = 0 :=
   HomologicalComplex.hom_ext _ _ fun _ => ModuleCat.hom_ext (LinearMap.ext fun _ => rfl)
 
@@ -154,7 +142,6 @@ theorem shortExact : (shortComplex f).ShortExact :=
 noncomputable def inlX (n : ℕ) : K.X n ⟶ (mappingCoconeNat f).X n :=
   ModuleCat.ofHom (LinearMap.inl k (K.X n) (shiftNegOneX L n))
 
-@[reassoc (attr := simp)]
 theorem inlX_fst (n : ℕ) : inlX f n ≫ (fst f).f n = 𝟙 _ :=
   ModuleCat.hom_ext (LinearMap.ext fun _ => rfl)
 
@@ -205,7 +192,6 @@ theorem δ_eq (n : ℕ) :
 noncomputable def homologyδ (n : ℕ) : L.homology n ⟶ (mappingCoconeNat f).homology (n + 1) :=
   shiftNegOneHomologyHom L n ≫ HomologicalComplex.homologyMap (inr f) (n + 1)
 
-@[reassoc (attr := simp)]
 theorem homologyMap_homologyδ (n : ℕ) :
     HomologicalComplex.homologyMap f n ≫ homologyδ f n = 0 := by
   rw [homologyδ, ← Category.assoc, ← δ_eq]

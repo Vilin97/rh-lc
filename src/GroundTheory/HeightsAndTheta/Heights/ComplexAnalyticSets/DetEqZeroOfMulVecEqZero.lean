@@ -28,11 +28,6 @@ def analyticAtComp {σ τ : Type} [Fintype σ] [Fintype τ] (x : σ → ℂ) (L 
   map_zero' := rfl
   map_add' _ _ := rfl
 
-@[simp] theorem analyticAtComp_apply {σ τ : Type} [Fintype σ] [Fintype τ] (x : σ → ℂ)
-    (L : (σ → ℂ) →L[ℂ] (τ → ℂ)) (g : analyticAtSubring (L x)) (z : σ → ℂ) :
-    (analyticAtComp x L g : (σ → ℂ) → ℂ) z = (g : (τ → ℂ) → ℂ) (L z) :=
-  rfl
-
 def analyticAtEval {σ : Type} [Fintype σ] (p y : σ → ℂ) : analyticAtSubring p →+* ℂ :=
   (Pi.evalRingHom (fun _ : σ → ℂ => ℂ) y).comp (analyticAtSubring p).subtype
 

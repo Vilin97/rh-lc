@@ -473,12 +473,6 @@ theorem kills_of_rayPrincipal {F : Type} [Field F] [NumberField F] [IsTotallyCom
   · rw [coe_toPrincipalIdeal, hJ, FractionalIdeal.coeIdeal_span_singleton]
     rfl
 
-example {F : Type} [Field F] [NumberField F] [IsTotallyComplex F] (𝔪 : Ideal (𝓞 F)) (x : 𝓞 F) (J : idealsPrimeTo 𝔪)
-    (hx : x - 1 ∈ 𝔪) (hJ : (J.1 : FractionalIdeal (𝓞 F)⁰ F) = (Ideal.span {x} : Ideal (𝓞 F))) :
-    (QuotientGroup.mk J : RayClassGroup 𝔪) = 1 :=
-  kills_of_rayPrincipal (A := RayClassGroup 𝔪) (QuotientGroup.mk' ((rayPrincipal 𝔪).subgroupOf (idealsPrimeTo 𝔪)))
-    (fun I h => (QuotientGroup.eq_one_iff I).2 h) x J hx hJ
-
 end GlobalTheory.Published
 
 end

@@ -192,17 +192,7 @@ lemma torusToPoint_injective : Function.Injective (torusToPoint L) := by
   rw [torusToPoint_mk, toPoint_eq_zero_iff] at hx
   exact (QuotientAddGroup.eq_zero_iff z).2 hx
 
-lemma torusToPoint_surjective : Function.Surjective (torusToPoint L) := fun P ↦ by
-  obtain ⟨z, hz⟩ := toPoint_surjective (L := L) P
-  exact ⟨Torus.mk L z, hz⟩
-
 variable (L) in
-
-def torusEquivPoint : Torus L ≃+ (weierstrassCurve L).toAffine.Point :=
-  AddEquiv.ofBijective (torusToPoint L) ⟨torusToPoint_injective, torusToPoint_surjective⟩
-
-@[simp]
-theorem torusEquivPoint_mk (z : ℂ) : torusEquivPoint L (Torus.mk L z) = toPoint L z := rfl
 
 end Elliptic
 end GroundTheory.Global

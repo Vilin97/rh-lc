@@ -207,9 +207,6 @@ theorem integral_kR {y ξ : ℝ} (hy : 0 < y) (hξ : ξ ≠ 0) :
 
 variable {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
 
-theorem locInf_eq (ω : HChar F) (v : InfinitePlace F) (z : (v.Completion)ˣ) :
-    ω.1 (infiniteEmbedding v z) = ω.locInf v z := rfl
-
 theorem omega_ofInfinite (ω : HChar F) (a : (InfiniteAdeleRing F)ˣ) :
     ((ω.1 (ofInfinite a) : ℂˣ) : ℂ) = ∏ v, ((ω.locInf v (infiniteComponent v a) : ℂˣ) : ℂ) := by
   rw [ofInfinite_eq_prod, map_prod, Units.coe_prod]

@@ -6,7 +6,8 @@ import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsCuspidalOfIs
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdMapInjective
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EvalMapLaw
 import CompanionTheory.AutomorphicTheory.HeckeStandardModules.EqZeroOfCompAt
-import BuildAid.D3
+import Lean.LibrarySuggestions.Basic
+import Lean.Elab.Command
 open GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.LocGL GlobalTheory.JHMult GlobalTheory.SmGL.Exponents
 
 noncomputable section

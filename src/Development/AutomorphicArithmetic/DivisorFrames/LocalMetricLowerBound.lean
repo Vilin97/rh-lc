@@ -1,6 +1,51 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsHolAdapted
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WirtConst
+import Development.AbelianVarietyTheory.Definitions.Divisors.SemiposAtOfPositive
+import Development.AbelianVarietyTheory.Definitions.Divisors.TorusExt
+import Development.AbelianVarietyTheory.Definitions.Divisors.ToKnownTheoremsOf
+import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshBasic
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsAlgAtlasAtlasOf
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ContinuousAndSmul
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.AbsoluteSiegel
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ScholzeWeinsteinB
+import ReciprocityTheory.AnalyticForms.PotentialTheory.IsPotentialOfFun
+import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.IsPshLocallyIntegrableStatement
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExtFormAdjEqNegSecondForm
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.LieAlgebraMaps
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PerValNeZero
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsIsHodgeFrameIff
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EigenMetricOnSet
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ToroidalBoundaryMetricData
+import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.DifferentiableAtChart
+import Development.AbelianVarietyTheory.Definitions.Divisors.FirstChernIntegralEqDegree
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UniformizedFamilyChartIndex
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PeriodFamilyChartDomain
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsFramedComplexPointOfEigenFrameOffBoundaryStatement
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GramSmoothOfHolomorphicFrames
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsExponentialModelFiberOfUniformisationExp
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExpCoordinatesTangentFieldHolomorphicPeriodMapStatement
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsExponentialChartAtPoint
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsContinuousOnFrameDirectionsInverse
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PosDefUniformBoundsNearPointStatement
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsAffineStableLieEigenspaceFrame
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLocalEquationComplexPoints
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsHolomorphicLieFrame
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsLinearEquivLift
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsStalkFactor
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsBlockMetricDiagForm
+import Development.AbelianVarietyTheory.Definitions.Divisors.DetJacMatCoordsEqTransitionJacobianDet
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsConstantPeriodMarkingUniversalCover
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsFrPtPtFOfEigFrame
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExponentialKernelsIsHolomorphicLatticeFamily
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PullbackAnalytic
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PunctPolydiscUniversalCoverOpenConvexExpAnalytic
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HermFormPeriodsAlternatingNondegRankEqTwoMul
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLagrangianDualPairInCoisotropic
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsotropicDualFamilyLinearIndependentRankEqTwoMul
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DetNeZeroOfRealIndependentIsotropicHermitian
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RiemannRelationsPeriodMatrixHermitian
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PeriodMatrixPolynomialGrowthPuncturedPolydisc
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PolynomialGrowthUpperHalfLog
 open NumberField Formalism.BasicNotions Formalism.MainNotions ReciprocityTheory.GeometryOfNumbersTheory GlobalTheory.CovTop GlobalTheory.CovHt GlobalTheory.Mean4 GlobalTheory.Mean4O GlobalTheory.LieHt GlobalTheory.HeightParts
 open CategoryTheory AlgebraicGeometry GlobalTheory.CxPts GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.TrueGeo
 open GlobalTheory.MatDeriv GlobalTheory.GradedNorm Matrix
@@ -62,36 +107,3 @@ private theorem local_bounds {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ 
   calc _ ≤ m * B * (m * (B * ‖ξ‖) * ‖v‖) := b1.trans (mul_le_mul_of_nonneg_left b2 (by positivity))
     _ = m * B * (m * B) * ‖ξ‖ * ‖v‖ := by ring
     _ ≤ _ := by gcongr; exact le_max_right _ _
-
-theorem UpperTheory.local_metric_lower_bound :
-    OnCore fun D O x P => ∀ (c : O.s.Comp) (σ : D.what₂.LL →+* ℂ) (ch : GlobalTheory.AlgChart (O.var c).str σ (O.var c).dim) (U : Set (GlobalTheory.CxPts (O.var c).str σ)) (g : ∀ p : GlobalTheory.CxPts (O.var c).str σ, (O.Φ.C c).FrameAt p), GlobalTheory.BdGram.IsHolAdapted O ch U g →
-      ∀ y₀ ∈ U, ∃ (V : Set (GlobalTheory.CxPts (O.var c).str σ)) (c₀ C₀ : ℝ), IsOpen V ∧ y₀ ∈ V ∧ V ⊆ U ∧ 0 < c₀ ∧
-        ∀ y ∈ V, ∀ τ : D.host.E →+* ℂ, (∀ a b, DifferentiableAt ℝ (fun w => GlobalTheory.BdGram.gramIn O (x.eigMet (embOf O.κ.e σ)) ch g τ w a b) (ch.e y)) ∧
-          ∀ v : Fin (O.S.Dw.mult τ) → ℂ, c₀ * ‖v‖ ^ 2 ≤ (star v ⬝ᵥ GlobalTheory.BdGram.gramIn O (x.eigMet (embOf O.κ.e σ)) ch g τ (ch.e y) *ᵥ v).re ∧
-            (star v ⬝ᵥ GlobalTheory.BdGram.gramIn O (x.eigMet (embOf O.κ.e σ)) ch g τ (ch.e y) *ᵥ v).re ≤ C₀ * ‖v‖ ^ 2 ∧
-            ∀ ξ : ReciprocityTheory.L2DbarEstimates.V (O.var c).dim, ‖((GlobalTheory.BdGram.gramIn O (x.eigMet (embOf O.κ.e σ)) ch g τ (ch.e y))⁻¹ * wirt (GlobalTheory.BdGram.gramIn O (x.eigMet (embOf O.κ.e σ)) ch g τ) (ch.e y) ξ) *ᵥ v‖ ≤ C₀ * ‖ξ‖ * ‖v‖ := by
-  intro D O x P _ _ _ c σ ch U g hA y₀ hy₀
-  have hF := hA.2.2.2.2.2 (x.eigMet (embOf O.κ.e σ)) Set.univ isOpen_univ (OddPrimesWithRootsOfUnity.smoothOn_eigMet _ _)
-  have hmem : ch.e y₀ ∈ ch.e '' (U ∩ {p | (O.Φ.C c).down p ∈ Set.univ}) := ⟨y₀, ⟨hy₀, Set.mem_univ _⟩, rfl⟩
-  have hloc := fun τ : D.host.E →+* ℂ => local_bounds (GlobalTheory.BdGram.gramIn O (x.eigMet (embOf O.κ.e σ)) ch g τ) (ch.e y₀)
-    (fun a b => (((hF τ).smooth b a).contDiffAt ((hF τ).isOpen.mem_nhds hmem)).of_le (by exact_mod_cast le_top))
-    (by simpa using ((hF τ).posDef _ hmem).transpose)
-  choose c₀ C₀ hc₀ hC₀ hev using hloc
-  have hcont : ContinuousAt ch.e y₀ := ch.e.continuousAt (hA.2.1 hy₀)
-  have hall := hcont.eventually (Filter.eventually_all.2 hev)
-  obtain ⟨V, hV, hVo, hyV⟩ := eventually_nhds_iff.1 hall
-  have hS : 0 ≤ ∑ τ, 1 / c₀ τ := Finset.sum_nonneg fun τ _ => (one_div_pos.2 (hc₀ τ)).le
-  have hcle : ∀ τ, 1 / (1 + ∑ τ, 1 / c₀ τ) ≤ c₀ τ := fun τ => by
-    have h1 : 1 / c₀ τ ≤ ∑ τ, 1 / c₀ τ :=
-      Finset.single_le_sum (f := fun τ => 1 / c₀ τ) (fun τ _ => (one_div_pos.2 (hc₀ τ)).le) (Finset.mem_univ τ)
-    exact (one_div_le (by positivity) (hc₀ τ)).2 (by linarith)
-  have hCle : ∀ τ, C₀ τ ≤ ∑ τ, C₀ τ := fun τ =>
-    Finset.single_le_sum (fun τ _ => hC₀ τ) (Finset.mem_univ τ)
-  refine ⟨V ∩ U, 1 / (1 + ∑ τ, 1 / c₀ τ), ∑ τ, C₀ τ, hVo.inter hA.1, ⟨hyV, hy₀⟩, Set.inter_subset_right,
-    by positivity, fun y hy τ => ?_⟩
-  obtain ⟨hd, hb⟩ := hV y hy.1 τ
-  refine ⟨hd, fun v => ?_⟩
-  obtain ⟨b1, b2, b3⟩ := hb v
-  exact ⟨(mul_le_mul_of_nonneg_right (hcle τ) (by positivity)).trans b1,
-    b2.trans (mul_le_mul_of_nonneg_right (hCle τ) (by positivity)), fun ξ => (b3 ξ).trans
-      (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right (hCle τ) (norm_nonneg _)) (norm_nonneg _))⟩

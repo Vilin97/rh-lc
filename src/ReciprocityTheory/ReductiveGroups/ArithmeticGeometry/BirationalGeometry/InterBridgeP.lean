@@ -10,10 +10,6 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {e : �
 
 open Classical in
 
-def linW (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (j : Fin (e + 1)) :
-    MvPolynomial ((k : K) → ι k) ℂ :=
-  ∑ i, C (Ψ (fun i' => if i = i' then 1 else 0) j) * X i
-
 set_option maxHeartbeats 1600000 in
 theorem exists_monic_rel (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ))
     (P : Ideal (MRing ι)) (hPh : IsMultiHomogIdeal P) (hΨ : IsGoodProj P Ψ)

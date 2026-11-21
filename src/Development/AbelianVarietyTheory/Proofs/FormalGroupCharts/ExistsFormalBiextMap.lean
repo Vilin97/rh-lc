@@ -84,19 +84,6 @@ theorem nc_law (G : FGLaw R d) : NoConst G.F := G.const
 theorem nc_act {O : Type} [CommRing O] {G : FGLaw R d} (A : OAct O G) (a : O) :
     NoConst (A.act a) := A.const a
 
-local macro "no_const" : tactic =>
-  `(tactic| repeat' first
-    | exact nc_zero
-    | exact nc_pt _
-    | exact nc_law _
-    | exact nc_act _ _
-    | apply nc_comp1
-    | apply nc_addOf)
-
-local macro "push_map" h:ident : tactic =>
-  `(tactic| simp (disch := no_const) only [map_mul, map_one, map_ev1, map_ev2, map_ev3,
-    mapPt_zero, mapPt_pt, mapPt_comp1, mapPt_addOf, FGLaw.add] at $h:ident)
-
 def mapLaw (G : FGLaw R d) : FGLaw k d where
   F := mapPt f G.F
   const i := by simp [mapPt, G.const i]

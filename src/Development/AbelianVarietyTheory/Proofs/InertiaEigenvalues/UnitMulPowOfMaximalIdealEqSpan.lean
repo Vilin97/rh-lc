@@ -1,5 +1,5 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.ProjectionSurjective
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FiniteCocycles
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsEqPowMulUnit
 open IsLocalRing GlobalTheory.Pat
 

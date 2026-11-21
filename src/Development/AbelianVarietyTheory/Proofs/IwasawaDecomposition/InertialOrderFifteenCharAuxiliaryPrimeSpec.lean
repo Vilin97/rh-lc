@@ -186,7 +186,6 @@ theorem IsGal.pow_eq_one (ha : IsGlobalArtin art) (h : IsGal art κ ι χ 0 r) {
   exact this
 
 omit [TopologicalSpace O] in
-theorem sideIso_true (ι : Qbar l ≃+* ℂ) : sideIso ι true = ι := rfl
 
 omit [TopologicalSpace O] in
 theorem sideIso_false (ι : Qbar l ≃+* ℂ) (x : Qbar l) : sideIso ι false x = starRingEnd ℂ (ι x) := rfl
@@ -447,13 +446,6 @@ theorem sideIso_read {l : ℕ} [Fact l.Prime] {L K : Type} [Field L] [Field K] {
   cases b
   · rw [sideIso_false, if_neg (by simp), hf', Complex.conj_conj]
   · exact hf x
-
-theorem read_conj {l : ℕ} [Fact l.Prime] {L LL : Type} [Field L] [Field LL] [CharZero LL] [StarRing LL]
-    (LL0 : IntermediateField ℚ LL) (ε : LL →+* ℂ) (hε : ∀ x, ε (star x) = starRingEnd ℂ (ε x))
-    (h0 : ∀ x : LL0, star (x : LL) ∈ LL0) {κ : L →+* Qbar l} {ι : Qbar l ≃+* ℂ} {f f' : LL0 →+* L}
-    (hc : ∀ x y : LL0, (y : LL) = star (x : LL) → f' x = f y) (hf : ∀ x : LL0, ι (κ (f x)) = ε x) (x : LL0) :
-    ι (κ (f' x)) = starRingEnd ℂ (ε x) := by
-  rw [hc x ⟨_, h0 x⟩ rfl, hf, ← hε]
 
 variable {R : Ranks} {H : Formalism.BasicNotions.Host R} {Ω : Type} [Field Ω] [Algebra H.E Ω] {cc : Ω ≃+* Ω}
   {e : Fin R.m → R.Psi → ℚ} (C : GlobalTheory.Mem.Chr.HFrame H e) {art : Ideles H.E →* Gab H.E Ω}

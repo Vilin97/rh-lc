@@ -124,18 +124,3 @@ theorem chernPart_pullW (R : AnRead p σ D) (R' : AnRead q σ' D) (h : φ.IsCInf
 end GlobalTheory.ChernTransfer
 
 open GlobalTheory GlobalTheory.ChernTransfer in
-
-theorem GlobalTheory.chernInt_transfer (k k' : Type) [CommRing k] [CommRing k'] (X Y : Scheme.{0})
-    (p : X ⟶ Sp k) (q : Y ⟶ Sp k') (σ : k →+* ℂ) (σ' : k' →+* ℂ) (D : ℕ) (j : Y ⟶ X)
-    (Φ : CxPts q σ' ≃ₜ CxPts p σ) (hΦ : ∀ z, (Φ z).1 = z.1 ≫ j)
-    [SecondCountableTopology (CxPts p σ)] [SecondCountableTopology (CxPts q σ')]
-    (hR : Nonempty (AnRead p σ D)) (hR' : Nonempty (AnRead q σ' D)) (B : LB X) (φ : Weight p σ B)
-    (h : φ.IsCInf) :
-    (φ.linComb (κ := PUnit) (fun _ => j) (fun _ => 1) (fun _ => Φ) (fun _ => hΦ)).IsCInf ∧
-      (φ.linComb (κ := PUnit) (fun _ => j) (fun _ => 1) (fun _ => Φ) (fun _ => hΦ)).chernInt D
-        Set.univ (fun _ => 1) = φ.chernInt D Set.univ (fun _ => 1) := by
-  obtain ⟨R⟩ := hR
-  obtain ⟨R'⟩ := hR'
-  refine ⟨isCInf_pullW hΦ h, ?_⟩
-  change (pullW hΦ φ).chernInt D _ _ = _
-  simp only [Weight.chernInt, Measure.restrict_univ, chernPart_pullW hΦ R R' h, integral_map_equiv]

@@ -215,9 +215,6 @@ structure StableAffineOpens : Type u where
 
   stable : ∀ g, toOpens ≤ (ρ g).hom ⁻¹ᵁ toOpens
 
-def StableAffineOpens.top [IsAffine X] : StableAffineOpens ρ :=
-  ⟨⊤, isAffineOpen_top X, fun _ ↦ le_top⟩
-
 instance StableAffineOpens.preorder : Preorder (StableAffineOpens ρ) where
   le U V := ∃ f : Γ(X, V.toOpens), X.basicOpen f = U.toOpens
   le_refl U := ⟨1, Scheme.basicOpen_of_isUnit _ isUnit_one⟩
@@ -246,13 +243,6 @@ noncomputable def quotientDiagram : StableAffineOpens ρ ⥤ Scheme.{u} where
     congr 1
     ext s
     exact (presheaf_map_map_apply _ _ _).symm
-
-theorem quotientDiagram_obj (U : StableAffineOpens ρ) :
-    (quotientDiagram ρ).obj U = Spec (.of (invariantSections ρ U.toOpens U.stable)) := rfl
-
-instance isAffine_quotientDiagram_obj (U : StableAffineOpens ρ) :
-    IsAffine ((quotientDiagram ρ).obj U) :=
-  inferInstanceAs (IsAffine (Spec _))
 
 namespace StableAffineOpens
 
@@ -422,7 +412,6 @@ theorem exists_mem_opensRange_chart (y : finiteQuotient ρ) : ∃ U, y ∈ (char
   obtain ⟨U, x, hx⟩ := Scheme.IsLocallyDirected.ι_jointly_surjective (quotientDiagram ρ) y
   exact ⟨U, x, hx⟩
 
-@[reassoc]
 theorem map_chart {U V : StableAffineOpens ρ} (f : U ⟶ V) :
     (quotientDiagram ρ).map f ≫ chart ρ V = chart ρ U := by exact colimit.w (quotientDiagram ρ) f
 
@@ -435,7 +424,6 @@ noncomputable def π : X ⟶ finiteQuotient ρ :=
   (stableAffineCover ρ).glueMorphismsOfLocallyDirected (fun U ↦ U.toChart ≫ chart ρ U)
     (trans_toChart_chart ρ)
 
-@[reassoc]
 theorem fromSpec_π (U : StableAffineOpens ρ) : U.isAffineOpen.fromSpec ≫ π ρ = U.toChart ≫ chart ρ U := by exact Scheme.OpenCover.map_glueMorphismsOfLocallyDirected (stableAffineCover ρ) _ _ U
 
 theorem π_preimage_opensRange_chart (U : StableAffineOpens ρ) :
@@ -468,7 +456,6 @@ theorem π_preimage_opensRange_chart (U : StableAffineOpens ρ) :
     refine ⟨U.toChart x', ?_⟩
     rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, fromSpec_π]
 
-@[reassoc (attr := simp)]
 theorem comp_π (g : G) : (ρ g).hom ≫ π ρ = π ρ := by
   refine (stableAffineCover ρ).hom_ext _ _ fun U ↦ ?_
   change U.isAffineOpen.fromSpec ≫ (ρ g).hom ≫ π ρ = U.isAffineOpen.fromSpec ≫ π ρ
@@ -485,48 +472,17 @@ theorem isAffineQuotient : IsAffineQuotient ρ (π ρ) := by
     specAction_fromSpec ρ U.isAffineOpen U.stable, U.isAffineQuotient_toChart⟩
   rw [π_preimage_opensRange_chart, U.isAffineOpen.opensRange_fromSpec]
 
-instance isIntegralHom_π : IsIntegralHom (π ρ) := (isAffineQuotient ρ).isIntegralHom
-
 instance surjective_π : Surjective (π ρ) := (isAffineQuotient ρ).surjective
-
-instance epi_π : Epi (π ρ) := (isAffineQuotient ρ).epi
-
-instance isSchemeTheoreticallyDominant_π : IsSchemeTheoreticallyDominant (π ρ) :=
-  (isAffineQuotient ρ).isSchemeTheoreticallyDominant
-
-theorem π_apply_eq_iff (x y : X) : π ρ x = π ρ y ↔ ∃ g, (ρ g).hom x = y := by exact (isAffineQuotient ρ).apply_eq_iff x y
-
-theorem isOpenQuotientMap_π : IsOpenQuotientMap (π ρ) := by exact ⟨(π ρ).surjective, (π ρ).continuous, (isAffineQuotient ρ).isOpenMap⟩
-
-theorem app_injective_and_range (W : (finiteQuotient ρ).Opens) :
-    Function.Injective ((π ρ).app W) ∧
-      Set.range ((π ρ).app W) = {s | IsInvariantSection ρ (π ρ ⁻¹ᵁ W) s} := by exact ⟨(isAffineQuotient ρ).app_injective W, (isAffineQuotient ρ).range_app W⟩
 
 noncomputable def desc (f : X ⟶ Z) (hf : ∀ g, (ρ g).hom ≫ f = f) : finiteQuotient ρ ⟶ Z :=
   (isAffineQuotient ρ).desc f hf
 
-@[reassoc (attr := simp)]
 theorem π_desc (f : X ⟶ Z) (hf : ∀ g, (ρ g).hom ≫ f = f) : π ρ ≫ desc ρ f hf = f := by exact (isAffineQuotient ρ).comp_desc f hf
 
-@[ext]
 theorem hom_ext {a b : finiteQuotient ρ ⟶ Z} (e : π ρ ≫ a = π ρ ≫ b) : a = b := by exact (isAffineQuotient ρ).hom_ext e
-
-theorem existsUnique_π_comp_eq (f : X ⟶ Z) (hf : ∀ g, (ρ g).hom ≫ f = f) :
-    ∃! f' : finiteQuotient ρ ⟶ Z, π ρ ≫ f' = f := by exact (isAffineQuotient ρ).existsUnique_comp_eq f hf
-
-instance isReduced [IsReduced X] : IsReduced (finiteQuotient ρ) := (isAffineQuotient ρ).isReduced
-
-instance isIntegral [IsIntegral X] : IsIntegral (finiteQuotient ρ) :=
-  (isAffineQuotient ρ).isIntegral
-
-instance isNormalScheme [IsNormalScheme X] : IsNormalScheme (finiteQuotient ρ) :=
-  (isAffineQuotient ρ).isNormalScheme
 
 theorem comp_π_eq_iff {k : Type u} [Field k] (x y : Spec (.of k) ⟶ X) :
     x ≫ π ρ = y ≫ π ρ ↔ ∃ g, x ≫ (ρ g).hom = y := by exact (isAffineQuotient ρ).comp_eq_comp_iff x y
-
-theorem exists_comp_π_eq {k : Type u} [Field k] [IsAlgClosed k]
-    (y : Spec (.of k) ⟶ finiteQuotient ρ) : ∃ x : Spec (.of k) ⟶ X, x ≫ π ρ = y := by exact (isAffineQuotient ρ).exists_comp_eq_of_isAlgClosed y
 
 section Free
 
@@ -546,10 +502,6 @@ variable {S S' : Scheme.{u}} (f : X ⟶ S) (hf : ∀ g, (ρ g).hom ≫ f = f)
 
 include hf in
 
-theorem isFinite_π [LocallyOfFiniteType f] : IsFinite (π ρ) := by
-  have : LocallyOfFiniteType (π ρ ≫ desc ρ f hf) := by rwa [π_desc]
-  exact (isAffineQuotient ρ).isFinite (desc ρ f hf)
-
 instance locallyOfFiniteType_desc [IsLocallyNoetherian S] [LocallyOfFiniteType f] :
     LocallyOfFiniteType (desc ρ f hf) :=
   have : LocallyOfFiniteType (π ρ ≫ desc ρ f hf) := by rwa [π_desc]
@@ -563,43 +515,7 @@ instance isSeparated_desc [IsSeparated f] : IsSeparated (desc ρ f hf) :=
   have : IsSeparated (π ρ ≫ desc ρ f hf) := by rwa [π_desc]
   (isAffineQuotient ρ).isSeparated _
 
-instance isProper_desc [IsLocallyNoetherian S] [IsProper f] : IsProper (desc ρ f hf) :=
-  have : IsProper (π ρ ≫ desc ρ f hf) := by rwa [π_desc]
-  (isAffineQuotient ρ).isProper _
-
 variable (t : S' ⟶ S)
-
-noncomputable abbrev pullbackπ : pullback f t ⟶ pullback (desc ρ f hf) t :=
-  pullback.map f t (desc ρ f hf) t (π ρ) (𝟙 _) (𝟙 _) (by simp) (by simp)
-
-instance orbitsInAffineOpens_pullbackAction : OrbitsInAffineOpens (pullbackAction ρ f hf t) :=
-  have : IsAffineHom (pullbackπ ρ f hf t) := MorphismProperty.of_isPullback
-    (isPullback_pullbackMap f t (π ρ) _ (π_desc ρ f hf)) inferInstance
-  .of_invariant _ (pullbackπ ρ f hf t) fun g ↦ by
-    apply pullback.hom_ext <;>
-      simp [pullback.map, pullback.lift_fst, pullback.lift_snd]
-
-noncomputable def pullbackIso [Flat t] :
-    finiteQuotient (pullbackAction ρ f hf t) ≅ pullback (desc ρ f hf) t :=
-  (isAffineQuotient _).uniqueIso ((isAffineQuotient ρ).pullbackMap hf t _ (π_desc ρ f hf))
-
-@[reassoc (attr := simp)]
-theorem π_pullbackIso_hom [Flat t] :
-    π (pullbackAction ρ f hf t) ≫ (pullbackIso ρ f hf t).hom = pullbackπ ρ f hf t := by
-  unfold pullbackIso
-  exact IsAffineQuotient.comp_uniqueIso_hom _ _
-
-noncomputable def pullbackIsoOfIsFreeAction (hρ : IsFreeAction ρ) :
-    finiteQuotient (pullbackAction ρ f hf t) ≅ pullback (desc ρ f hf) t :=
-  (isAffineQuotient _).uniqueIso
-    ((isAffineQuotient ρ).pullbackMap_of_isFreeAction hf t _ (π_desc ρ f hf) hρ)
-
-@[reassoc (attr := simp)]
-theorem π_pullbackIsoOfIsFreeAction_hom (hρ : IsFreeAction ρ) :
-    π (pullbackAction ρ f hf t) ≫ (pullbackIsoOfIsFreeAction ρ f hf t hρ).hom =
-      pullbackπ ρ f hf t := by
-  unfold pullbackIsoOfIsFreeAction
-  exact IsAffineQuotient.comp_uniqueIso_hom _ _
 
 end Base
 
@@ -624,7 +540,6 @@ theorem map_id (hp) : map ρ ρ (𝟙 X) hp = 𝟙 _ := by
   apply hom_ext
   simp
 
-@[reassoc]
 theorem map_comp {K : Type*} [Group K] [Finite K] (σ : K →* Aut Z) [OrbitsInAffineOpens σ]
     (p : X ⟶ Y) (q : Y ⟶ Z) (hp hq hpq) :
     map ρ σ (p ≫ q) hpq = map ρ τ p hp ≫ map τ σ q hq := by
@@ -637,14 +552,6 @@ noncomputable def specIso (B A : Type u) [CommRing B] [CommRing A]
     [MulSemiringAction G A] [Algebra B A] [SMulCommClass G B A] [FaithfulSMul B A]
     [Algebra.IsInvariant B A G] : finiteQuotient (specAction G A) ≅ Spec (.of B) :=
   (isAffineQuotient _).uniqueIso (isAffineQuotient_spec B A)
-
-@[reassoc (attr := simp)]
-theorem π_specIso_hom (B A : Type u) [CommRing B] [CommRing A]
-    [MulSemiringAction G A] [Algebra B A] [SMulCommClass G B A] [FaithfulSMul B A]
-    [Algebra.IsInvariant B A G] : π (specAction G A) ≫ (specIso B A).hom =
-      Spec.map (CommRingCat.ofHom (algebraMap B A)) := by
-  unfold specIso
-  exact IsAffineQuotient.comp_uniqueIso_hom _ _
 
 end finiteQuotient
 
@@ -702,48 +609,9 @@ theorem IsAffineQuotient.isAffineOpen_of_preimage [Finite G] {ρ : G →* Aut X}
   rw [hW.fromSpec_preimage_basicOpen] at hx3
   exact hx3 hbQ
 
-theorem exists_isAffineOpen_of_finite_opens_proj {σ : Type*} {A : Type u} [CommRing A]
-    [SetLike σ A] [AddSubgroupClass σ A] (𝒜 : ℕ → σ) [GradedRing 𝒜] (O : (Proj 𝒜).Opens)
-    (s : Set O.toScheme) (hs : s.Finite) :
-    ∃ U : O.toScheme.Opens, IsAffineOpen U ∧ s ⊆ U := by exact FiniteSubsetsInAffineOpens.exists_isAffineOpen s hs
-
 section Stages
 
 variable {H : Type w} [Group H] {ρ : G →* Aut X} {φ : H →* G} {π : X ⟶ Y}
-
-theorem comp_hom_comp_eq_of_normal [hφ : φ.range.Normal] (hπ : ∀ k, (ρ.comp φ k).hom ≫ π = π)
-    (g : G) (k : H) : (ρ.comp φ k).hom ≫ (ρ g).hom ≫ π = (ρ g).hom ≫ π := by
-  obtain ⟨k', hk'⟩ : g * φ k * g⁻¹ ∈ φ.range := hφ.conj_mem _ ⟨k, rfl⟩ g
-  have e : g * φ k = φ k' * g := by rw [hk']; group
-  have h1 : (ρ (φ k)).hom ≫ (ρ g).hom = (ρ g).hom ≫ (ρ (φ k')).hom := by
-    have := congrArg (fun a ↦ (ρ a).hom) e
-    simp only [map_mul, Aut.Aut_mul_def] at this
-    exact this
-  show (ρ (φ k)).hom ≫ (ρ g).hom ≫ π = (ρ g).hom ≫ π
-  rw [reassoc_of% h1]
-  exact congrArg ((ρ g).hom ≫ ·) (hπ k')
-
-noncomputable def IsAffineQuotient.residualAction [Finite H] [φ.range.Normal]
-    (h : IsAffineQuotient (ρ.comp φ) π) : G →* Aut Y :=
-  have key := comp_hom_comp_eq_of_normal h.comp_eq
-  have mul (g g' : G) : h.desc _ (key (g * g')) = h.desc _ (key g') ≫ h.desc _ (key g) :=
-    h.hom_ext (by
-      have e : (ρ (g * g')).hom = (ρ g').hom ≫ (ρ g).hom := by rw [map_mul]; rfl
-      simp [-map_mul, e])
-  have one : h.desc _ (key 1) = 𝟙 Y := h.hom_ext (by
-    have e : (ρ 1).hom = 𝟙 X := by rw [map_one]; rfl
-    simp [-map_one, e])
-  MonoidHom.mk' (fun g ↦
-    { hom := h.desc _ (key g)
-      inv := h.desc _ (key g⁻¹)
-      hom_inv_id := by rw [← mul, ← one]; simp only [inv_mul_cancel]
-      inv_hom_id := by rw [← mul, ← one]; simp only [mul_inv_cancel] }) fun g g' ↦
-    Iso.ext (mul g g')
-
-@[reassoc]
-theorem IsAffineQuotient.comp_residualAction [Finite H] [φ.range.Normal]
-    (h : IsAffineQuotient (ρ.comp φ) π) (g : G) :
-    π ≫ (h.residualAction g).hom = (ρ g).hom ≫ π := by exact h.comp_desc _ (comp_hom_comp_eq_of_normal h.comp_eq g)
 
 theorem IsAffineQuotient.comp (h : IsAffineQuotient (ρ.comp φ) π) {τ : G →* Aut Y}
     (hτ : ∀ g, π ≫ (τ g).hom = (ρ g).hom ≫ π) {π' : Y ⟶ Z} (h' : IsAffineQuotient τ π') :
@@ -778,28 +646,6 @@ theorem IsAffineQuotient.comp (h : IsAffineQuotient (ρ.comp φ) π) {τ : G →
     obtain ⟨s₂, rfl⟩ := h'.mem_range_app W s₁ hs₁
     exact ⟨s₂, rfl⟩
 
-instance normal_range_subtype (N : Subgroup G) [hN : N.Normal] : N.subtype.range.Normal := by
-  rwa [Subgroup.range_subtype]
-
-instance IsAffineQuotient.orbitsInAffineOpens_residualAction [Finite G] [Finite H]
-    [φ.range.Normal] [OrbitsInAffineOpens ρ] (h : IsAffineQuotient (ρ.comp φ) π) :
-    OrbitsInAffineOpens h.residualAction := ⟨fun y ↦ by
-  have := h.surjective
-  obtain ⟨x, rfl⟩ := π.surjective y
-  obtain ⟨V, hV, hst, hx⟩ := exists_stable_isAffineOpen ρ x
-  obtain ⟨W, rfl⟩ := h.exists_preimage_eq (U := V) fun k ↦ hst (φ k)
-  refine ⟨W, h.isAffineOpen_of_preimage hV, fun g ↦ ?_⟩
-  rw [← Scheme.Hom.comp_apply, h.comp_residualAction]
-  exact hst g hx⟩
-
-noncomputable def finiteQuotient.stagesIso [Finite G] (ρ : G →* Aut X) [OrbitsInAffineOpens ρ]
-    (N : Subgroup G) [N.Normal] :
-    finiteQuotient ρ ≅
-      finiteQuotient (finiteQuotient.isAffineQuotient (ρ.comp N.subtype)).residualAction :=
-  (finiteQuotient.isAffineQuotient ρ).uniqueIso
-    ((finiteQuotient.isAffineQuotient (ρ.comp N.subtype)).comp
-      (IsAffineQuotient.comp_residualAction _) (finiteQuotient.isAffineQuotient _))
-
 end Stages
 
 section Over
@@ -809,90 +655,13 @@ variable {S : Scheme.{u}} {X : Over S}
 def overAction (ρ : G →* Aut X) : G →* Aut X.left :=
   ((Over.forget S).mapAut X).comp ρ
 
-@[simp]
-theorem overAction_hom (ρ : G →* Aut X) (g : G) : (overAction ρ g).hom = (ρ g).hom.left := rfl
-
-theorem overAction_comp (ρ : G →* Aut X) (g : G) : (overAction ρ g).hom ≫ X.hom = X.hom := by
-  rw [overAction_hom]
-  exact Over.w (ρ g).hom
-
 variable (ρ : G →* Aut X) [Finite G] [OrbitsInAffineOpens (overAction ρ)]
-
-noncomputable def finiteQuotientOver : Over S :=
-  Over.mk (finiteQuotient.desc (overAction ρ) X.hom (overAction_comp ρ))
-
-noncomputable def finiteQuotientOver.π : X ⟶ finiteQuotientOver ρ :=
-  Over.homMk (finiteQuotient.π (overAction ρ)) (finiteQuotient.π_desc _ _ (overAction_comp ρ))
-
-@[simp]
-theorem finiteQuotientOver.π_left :
-    (finiteQuotientOver.π ρ).left = finiteQuotient.π (overAction ρ) := rfl
-
-theorem finiteQuotientOver.isAffineQuotient :
-    IsAffineQuotient (overAction ρ) (finiteQuotientOver.π ρ).left := by
-  rw [finiteQuotientOver.π_left]
-  exact finiteQuotient.isAffineQuotient _
-
-@[reassoc (attr := simp)]
-theorem finiteQuotientOver.comp_π (g : G) :
-    (ρ g).hom ≫ finiteQuotientOver.π ρ = finiteQuotientOver.π ρ := by
-  apply Over.OverMorphism.ext
-  rw [Over.comp_left, finiteQuotientOver.π_left, ← overAction_hom]
-  exact finiteQuotient.comp_π _ g
-
-theorem finiteQuotientOver.existsUnique_π_comp_eq {T : Over S} (f : X ⟶ T)
-    (hf : ∀ g, (ρ g).hom ≫ f = f) :
-    ∃! f' : finiteQuotientOver ρ ⟶ T, finiteQuotientOver.π ρ ≫ f' = f := by
-  have hf' : ∀ g, (overAction ρ g).hom ≫ f.left = f.left := fun g ↦ by
-    rw [overAction_hom, ← Over.comp_left, hf]
-  refine ⟨Over.homMk (finiteQuotient.desc _ f.left hf') (finiteQuotient.hom_ext _ ?_), ?_, ?_⟩
-  · simp [finiteQuotientOver]
-  · apply Over.OverMorphism.ext
-    exact finiteQuotient.π_desc _ _ hf'
-  · intro y hy
-    apply Over.OverMorphism.ext
-    apply finiteQuotient.hom_ext
-    have := congrArg (fun m ↦ m.left) hy
-    exact this.trans (finiteQuotient.π_desc _ _ hf').symm
 
 end Over
 
-example [Finite G] : ∃ _ : OrbitsInAffineOpens (1 : G →* Aut X),
-    IsIso (finiteQuotient.π (1 : G →* Aut X)) := by
-  have h : IsAffineQuotient (1 : G →* Aut X) (𝟙 X) :=
-    ⟨fun _ ↦ Category.id_comp _, inferInstance, fun _ ↦ Function.injective_id,
-      fun _ s _ ↦ ⟨s, rfl⟩⟩
-  have := h.orbitsInAffineOpens
-  refine ⟨this, ?_⟩
-  rw [← h.comp_uniqueIso_hom (finiteQuotient.isAffineQuotient _)]
-  infer_instance
-
-example (K L : Type u) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] [IsGalois K L] :
-    Nonempty (finiteQuotient (specAction Gal(L/K) L) ≅ Spec (.of K)) ∧
-      Etale (finiteQuotient.π (specAction Gal(L/K) L)) ∧
-      ∀ y, (finiteQuotient.π (specAction Gal(L/K) L)).finrank y = Module.finrank K L :=
-  have h := (isFreeAction_specAction_iff L).mpr (FreeQuotient.isFreeRingAction_of_field Gal(L/K) L)
-  ⟨⟨finiteQuotient.specIso K L⟩, finiteQuotient.etale_π h,
-    fun y ↦ (finiteQuotient.finrank_π h y).trans (IsGalois.card_aut_eq_finrank K L)⟩
-
-example : ¬ IsFreeAction (1 : ℤˣ →* Aut (Spec (.of ℤ))) := fun h ↦
-  absurd (h.eq_one (𝟙 _) (g := -1) (Category.id_comp _)) (by decide)
-
 open NumberField in
-
-example (K L : Type u) [Field K] [Field L] [NumberField K] [NumberField L] [Algebra K L]
-    [IsGalois K L] :
-    Nonempty (finiteQuotient (specAction Gal(L/K) (𝓞 L)) ≅ Spec (.of (𝓞 K))) :=
-  ⟨finiteQuotient.specIso _ _⟩
 
 attribute [local instance] MvPolynomial.gradedAlgebra in
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
-
-example (N : ℕ) [Finite G] (ρ : G →* Aut (PSpace ℤ N)) :
-    IsSeparated (terminal.from (finiteQuotient ρ)) :=
-  have : IsSeparated (finiteQuotient.π ρ ≫ terminal.from (finiteQuotient ρ)) := by
-    rw [terminal.comp_from]
-    exact (Proj.instIsSeparated _).isSeparated_terminal_from
-  (finiteQuotient.isAffineQuotient ρ).isSeparated _
 
 end GlobalTheory

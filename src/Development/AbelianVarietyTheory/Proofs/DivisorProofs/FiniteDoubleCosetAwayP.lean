@@ -1,6 +1,13 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemSimR
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDoubleCosetOfInvolutive
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
+import Development.AbelianVarietyTheory.Definitions.Divisors.NormSub
+import Formalism.LocalToGlobal.Divisibility.Tuples
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.FiniteAdeleVectorAnnihilatorsCompactOpenBasis
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FiniteAdeleStrongApproximationModNat
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdelesFiniteClassDecomposition
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsPowNormOneIdeleEqPrincipalMulIntegralUnit
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsFiniteAdeleBaseChangeEquiv
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FixedUnitsFinitelyManyNorms
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalConjugacyClassClosed
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalUnitsLocallyCompactStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompactCentralizerTranslate
@@ -13,17 +20,33 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyCompactUn
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousUnitaryAdelicComponentAtPlaceExplicitStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIntegralUnitaryPointsAtPlaceMulMemStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCompactIntegralUnitaryPointsAtPlaceStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteTwistedDoubleCosetsLocal
+import Development.AbelianVarietyTheory.Definitions.Divisors.MapInclKMemTwCentResOne
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SigResIterateEqSelf
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SigIterateApply
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitarySimilitudeIntegralSubgroupCommensuratedFrStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ConjugatesSeparableMatrixCompactModCentralizer
+import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtC
+import Development.AbelianVarietyTheory.Definitions.Divisors.MaxWeightGL1EqOne
+import Development.AbelianVarietyTheory.Definitions.Divisors.TwOrbMEqTwOrbUOfNormal
+import ReciprocityTheory.ClassFieldTheory.LocalClassField.ExistsDvdQKPowSubOne
+import ReciprocityTheory.ClassFieldTheory.LocalClassField.CycFieldA
+import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsB
+import Development.AbelianVarietyTheory.Definitions.Divisors.ShiftTw
+import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsD
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitarySimilitudeIntegralSubgroupCommensuratedFr
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsMulCommutativeCentRealUJ
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentralizerRegularRationalPointFiniteAdelicComm
+import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtA
+import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsC
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MarkedSimilitudePairMinpolyRootsNormSqEq
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteOfSurjective
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorusOntoAdelicCentralizer
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsContinuousFiniteAdeleEquivRatIntStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousRestrStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RatFiniteAdelesSplitAwayFromPrimePadicStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NatDegreeMinpolyLeBaseChange
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSplitIdempotentConjugation
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsPowerBasisOfCharpolySeparable
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapCentralizerRegularTwistedCentraliserStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SimilitudePairRegularImageAtPStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsContinuousFiniteAdeleEquivRatIntStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousRestrStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RatFiniteAdelesSplitAwayFromPrimePadicStatement
 
 noncomputable section
 
@@ -35,13 +58,6 @@ namespace GlobalTheory.CentTorus.AdelicSplit
 section Tmap
 
 variable {A B L : Type} [CommRing A] [Algebra ℚ A] [CommRing B] [Algebra ℚ B] [CommRing L] [Algebra ℚ L]
-
-def tmap (π : A →ₐ[ℚ] B) : L ⊗[ℚ] A →ₐ[ℚ] B ⊗[ℚ] L :=
-  Algebra.TensorProduct.lift Algebra.TensorProduct.includeRight (Algebra.TensorProduct.includeLeft.comp π)
-    (fun _ _ => Commute.all _ _)
-
-@[simp] theorem tmap_tmul (π : A →ₐ[ℚ] B) (l : L) (a : A) : tmap π (l ⊗ₜ[ℚ] a) = π a ⊗ₜ[ℚ] l := by
-  simp [tmap]
 
 end Tmap
 

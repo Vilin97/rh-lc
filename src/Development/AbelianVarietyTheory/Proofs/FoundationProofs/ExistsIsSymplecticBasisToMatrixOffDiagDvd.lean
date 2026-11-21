@@ -588,14 +588,6 @@ variable {S R Λ l : Type*} [CommRing S] [CommRing R] [AddCommGroup Λ] [Module 
 
 omit [Fintype l] in
 
-theorem IsSymplecticBasis.baseChange [Algebra S R] {b : Basis (l ⊕ l) S Λ}
-    (hb : IsSymplecticBasis B b) : IsSymplecticBasis (B.baseChange R) (b.baseChange R) := by
-  refine ⟨fun i j => ?_, fun i j => ?_, fun i => ?_, fun i j hij => ?_⟩
-  · simp [hb.left_left]
-  · simp [hb.right_right]
-  · simp [IsSymplecticFamily.left_right_self hb i]
-  · simp [IsSymplecticFamily.left_right_ne hb i j hij]
-
 theorem IsSymplecticBasis.exists_adapted_mod [Finite (MaximalSpectrum R)] {f : S →+* R}
     (hf : Surjective f) (hB : B.IsAlt) {b : Basis (l ⊕ l) S Λ} (hb : IsSymplecticBasis B b)
     {P Q : Submodule S Λ} (hIP : RingHom.ker f • ⊤ ≤ P) (hIQ : RingHom.ker f • ⊤ ≤ Q)

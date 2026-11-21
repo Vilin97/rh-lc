@@ -1,6 +1,12 @@
 import Formalism.SharpRestriction.GrowthBounds.FlipOneThree
 import Formalism.MahlerMeasure.CoarseLevelSlackInequalities
-import Formalism.PolynomialDimension.FinalM
+import Formalism.MahlerMeasure.FinalT
+import Formalism.MahlerMeasure.MahlerMeasureProofs.WeightSpaceDimensionMonotone
+import Formalism.MahlerMeasure.MahlerMeasureProofs.SmithZp
+import Formalism.MahlerMeasure.MahlerMeasureProofs.TheoremM
+import Formalism.PolynomialDimension.MultinomialDepth.MonoCount
+import Formalism.PolynomialDimension.MultinomialDepth.PartnerM
+import Formalism.PolynomialDimension.MultinomialDepth.TieOps
 import Formalism.ThetaLogCoordinates.TraceIsometryWeights.DischargeHeightBound
 import Formalism.ThetaLogCoordinates.PartnerMeanCoordinates.LatticeTheoremEps28Valid
 import Formalism.SharpRestriction.GrowthBounds.GLWeightTheory
@@ -11,10 +17,6 @@ noncomputable section
 namespace Formalism.MainNotions.G.CountingStatementReduction
 
 open Formalism.MainNotions.flipOneThree Formalism.GM Formalism.GM.M Formalism.InvariantFactorPaths.PW Formalism.InvariantFactorPaths.L4 Finset
-
-theorem eps_eq (X : InstM) (i : Fin X.T.t) :
-    X.eps i = Formalism.CountingSumsFrames.epsSeg (X.T.S (X.LL.setTies X.T X.top) i : ℝ) (X.Yl i) (Formalism.CountingSumsFrames.kapSeg X.p X.a X.r X.s)
-      (Formalism.CountingSumsFrames.lgSeg X.p X.a X.r) X.E := rfl
 
 theorem alternative_mean_value_theorem (D : Formalism.BasicNotions.D7) (X : InstM) : ModelLatticeRank D X := fun hX =>
   Formalism.InvariantFactorPaths.MC.Top.theoremMV7 X.p X.s X.r X.LL X.T X.a X.E X.Yl X.n₀ X.dd X.ρ hX.1 hX.2.1 hX.2.2.1 hX.2.2.2.1
@@ -298,15 +300,6 @@ def lowM (γ : A) (v : Fin n → A) (b' : Matrix (Fin n) (Fin n) A) : Matrix (Fi
 
 variable (W : Fin n → A) (Dm : Matrix (Fin n) (Fin n) A) (γ : A) (v : Fin n → A) (b' : Matrix (Fin n) (Fin n) A)
 
-@[simp] theorem blk_00 : blk W Dm 0 0 = 1 := rfl
-@[simp] theorem blk_0s (j : Fin n) : blk W Dm 0 j.succ = W j := rfl
-@[simp] theorem cornerScalarBlockMatrix_apply_succ_zero (i : Fin n) : blk W Dm i.succ 0 = 0 := rfl
-@[simp] theorem blk_ss (i j : Fin n) : blk W Dm i.succ j.succ = Dm i j := rfl
-@[simp] theorem lowM_00 : lowM γ v b' 0 0 = γ := rfl
-@[simp] theorem lowM_0s (j : Fin n) : lowM γ v b' 0 j.succ = 0 := rfl
-@[simp] theorem lowerMatrix_succ_zero (i : Fin n) : lowM γ v b' i.succ 0 = v i := rfl
-@[simp] theorem lowM_ss (i j : Fin n) : lowM γ v b' i.succ j.succ = b' i j := rfl
-
 theorem blk_det : (blk W Dm).det = Dm.det := by
   rw [Matrix.det_succ_column_zero, Fin.sum_univ_succ]
   have h : (blk W Dm).submatrix Fin.succ Fin.succ = Dm := by
@@ -504,9 +497,6 @@ theorem corner_entry_ne_zero : g00 O n ≠ 0 := by
   exact X_ne_zero (R := O) _ (GL_inj O (n + 1) (h.trans (map_zero _).symm))
 
 abbrev CA := Localization.Away (g00 O n)
-
-instance instDomCA : IsDomain (CA O n) :=
-  IsLocalization.isDomain_localization (powers_le_nonZeroDivisors_of_noZeroDivisors (corner_entry_ne_zero O n))
 
 theorem CA_inj : Function.Injective (algebraMap (GLCoord O (n + 1)) (CA O n)) :=
   IsLocalization.injective _ (powers_le_nonZeroDivisors_of_noZeroDivisors (corner_entry_ne_zero O n))
@@ -1778,29 +1768,6 @@ theorem r_ge (C0 CYb Cde Ck CD Cb Cc : ℝ) (X : flipOneThree.Inst) (hH : flipOn
 
 theorem p_prime (X : flipOneThree.Inst) : X.p.Prime := X.std.1.prime
 
-theorem lat_facts (p n' : ℕ) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (S0 : UniformizedDVR p O)
-    (hG : AdmissibleDVR p n' O) :
-    CharZero (KK O) ∧ ∀ (N r : ℕ) (Lt : Letters (Fin N)),
-      (∀ S : Set (Fin N), ∀ u ∈ UZgens (glOps (KK O) r Lt S),
-        (∀ F ∈ IntPol O (Fin N × Fin r), u F ∈ IntPol O (Fin N × Fin r)) ∧
-        ∀ F ∈ bbSpec O p (Fin N × Fin r) 1, u F ∈ bbSpec O p (Fin N × Fin r) 1) ∧
-      ∀ d : Fin N → ℕ, (latticeMultidegreePart (IntPol O (Fin N × Fin r)) d).FG ∧
-        MQ (K := KK O) (latticeMultidegreePart (IntPol O (Fin N × Fin r)) d) = ⊤ ∧
-        (latticeMultidegreePart (bbSpec O p (Fin N × Fin r) 1) d).FG ∧
-        MQ (K := KK O) (latticeMultidegreePart (bbSpec O p (Fin N × Fin r) 1) d) = ⊤ := by
-  obtain ⟨hc, h⟩ := integral_formula_lattice_holds p n' O S0 hG
-  refine ⟨hc, fun N r Lt => ?_⟩
-  obtain ⟨-, h2, BBs, hBB, h3⟩ := h r (Fin N) Lt
-  have hV := valuation_properties_hold hG.1 S0
-  have hEq : bbSpec O p (Fin N × Fin r) 1 = BBs := by
-    ext F
-    rw [mem_bbSpec_one_iff hV, hBB]
-  refine ⟨fun S u hu => ⟨(h2 S u hu).1, fun F hF => ?_⟩, fun d => ?_⟩
-  · rw [mem_bbSpec_one_iff hV] at hF ⊢
-    exact (h2 S u hu).2 F hF
-  · rw [hEq]
-    exact h3 d
-
 end Formalism.MainNotions.G.CountingStatementReduction
 
 namespace Formalism.MainNotions.G.CountingStatementReduction
@@ -2473,16 +2440,6 @@ def AdmNoK (D : Formalism.BasicNotions.D7) (C0 CYb Cde Ck CD Cb CE1 CE2 Ckap Cc 
 theorem admissible_without_key_of_admissible {D : Formalism.BasicNotions.D7} {C0 CYb Cde Ck CD Cb CE1 CE2 Ckap Cc Cs : ℝ} {X : flipOneThree.Inst}
     (h : admitted D C0 CYb Cde Ck CD Cb CE1 CE2 Ckap Cc Cs X) : AdmNoK D C0 CYb Cde Ck CD Cb CE1 CE2 Ckap Cc Cs X :=
   ⟨h.1, h.2.1, h.2.2.1, h.2.2.2.2.2.2.2.1, h.2.2.2.2.2.2.2.2.1, h.2.2.2.2.2.2.2.2.2.1, h.2.2.2.2.2.2.2.2.2.2⟩
-
-def BlockFormRemaining (D : Formalism.BasicNotions.D7) (C0 CYb Cde Ck CD Cb CE1 CE2 Ckap Cc Cs C : ℝ) : Prop :=
-  ∀ X : flipOneThree.Inst, AdmNoK D C0 CYb Cde Ck CD Cb CE1 CE2 Ckap Cc Cs X → RemainingCountingStatement C0 CYb Cde Ck CD Cb CE1 CE2 Cc C X
-
-def BlockFormRemainingUniform (D : Formalism.BasicNotions.D7) : Prop :=
-  TransportedAlt fun C0 CYb Cde Ck CD Cb CE1 CE2 Cc => ∀ Ckap Cs : ℝ, ∃ C : ℝ, 0 < C ∧
-    BlockFormRemaining D C0 CYb Cde Ck CD Cb CE1 CE2 Ckap Cc Cs C
-
-def RemainingCountingBound : Prop :=
-  TransportedAlt fun C0 CYb Cde Ck CD Cb CE1 CE2 Cc => ∃ C : ℝ, 0 < C ∧ ∀ X : flipOneThree.Inst, RemainingCountingStatement C0 CYb Cde Ck CD Cb CE1 CE2 Cc C X
 
 end Formalism.MainNotions.G.CountingStatementReduction
 

@@ -20,9 +20,6 @@ def specOverMap (g : A →ₐ[R] B) : specOver R B ⟶ specOver R A :=
     change Spec.map _ ≫ Spec.map _ = Spec.map _
     rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, g.comp_algebraMap])
 
-@[simp] theorem specOverMap_left (g : A →ₐ[R] B) :
-    (specOverMap g).left = Spec.map (CommRingCat.ofHom (g : A →+* B)) := rfl
-
 theorem exists_eq_specOverMap (x : specOver R B ⟶ specOver R A) :
     ∃ g : A →ₐ[R] B, x = specOverMap g := by
   obtain ⟨g, hg⟩ := Spec.map_surjective x.left
@@ -51,7 +48,6 @@ attribute [local instance] MvPolynomial.gradedAlgebra
 
 variable {R : Type u} [CommRing R] (W : WeierstrassCurve R)
 
-@[reassoc]
 theorem specOverMap_ptOver {A B : Type u} [CommRing A] [CommRing B] [Algebra R A] [Algebra R B]
     (g : A →ₐ[R] B) (P : Fin 3 → A) (h : IsUnimodularSol (W.baseChange A) P) :
     specOverMap g ≫ ptOver W P h = ptOver W (g ∘ P) (h.baseChange g) :=
@@ -127,7 +123,6 @@ theorem ptHom_linearHom : ptHom W' ρ P hP ≫ linearHom W L hL h hs =
   simp only [this]
   rfl
 
-@[reassoc (attr := simp)]
 theorem linearHom_toSpec : linearHom W L hL h hs ≫ toSpec W = toSpec W' := by
   apply scheme_hom_ext
   · rw [chartY, pt_toSpec, pt_eq_ptHom, ptHom_linearHom_assoc, ptHom_toSpec]
@@ -194,20 +189,15 @@ theorem ptHom_negHom {A : Type u} [CommRing A] (ρ : R →+* A) (P : Fin 3 → A
     simp [WeierstrassCurve.Projective.neg, WeierstrassCurve.Projective.negY,
       WeierstrassCurve.baseChange]
 
-@[reassoc (attr := simp)]
 theorem negHom_toSpec : negHom W ≫ toSpec W = toSpec W := linearHom_toSpec ..
 
 def negOver : schemeOver W ⟶ schemeOver W := Over.homMk (negHom W) (negHom_toSpec W)
 
-@[simp] theorem negOver_left : (negOver W).left = negHom W := rfl
-
-@[reassoc]
 theorem ptOver_negOver {A : Type u} [CommRing A] [Algebra R A] (P : Fin 3 → A)
     (hP : IsUnimodularSol (W.baseChange A) P) :
     ptOver W P hP ≫ negOver W = ptOver W ((W.baseChange A).toProjective.neg P) hP.neg :=
   Over.OverMorphism.ext (ptHom_negHom W _ P hP)
 
-@[reassoc]
 theorem negHom_mapHom {R' : Type u} [CommRing R'] {W' : WeierstrassCurve R'} (f : R →+* R')
     (h : W.map f = W') : negHom W' ≫ mapHom W f h = mapHom W f h ≫ negHom W := by
   subst h
@@ -218,8 +208,6 @@ theorem negHom_mapHom {R' : Type u} [CommRing R'] {W' : WeierstrassCurve R'} (f 
     rfl
 
 def zeroUnit : 𝟙_ (Over (Spec (.of R))) ⟶ schemeOver W := Over.homMk (zero W) (zero_toSpec W)
-
-@[simp] theorem zeroUnit_left : (zeroUnit W).left = zero W := rfl
 
 theorem toUnit_zeroUnit (A : Type u) [CommRing A] [Algebra R A] :
     toUnit (specOver R A) ≫ zeroUnit W = zeroOver W A := rfl

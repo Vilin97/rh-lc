@@ -87,8 +87,6 @@ end Infinite
 
 section Global
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 theorem subsingleton_cohomology_three_galUnitsZ_adicCompletion {K : FiniteSubfield}
     (v : HeightOneSpectrum (𝓞 K.1)) :
     Subsingleton (cohomology (galUnitsZ (v.adicCompletion K.1)

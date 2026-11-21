@@ -144,9 +144,6 @@ section Fam
 
 variable {eps : ℝ} (Fm : FamP eps)
 
-def deg_VandLineF (Cg cb Cu cT CT C0 C1 : ℝ) : Prop :=
-  ∀ Cn : ℝ, OwnEv Fm fun C' Cl x i => deg_VandLine (Fm.D x i) (Fm.L x i) C' Cl Cg cb Cu cT CT C0 Cn C1
-
 end Fam
 
 end Formalism.MainNotions.BridgeLemma₂

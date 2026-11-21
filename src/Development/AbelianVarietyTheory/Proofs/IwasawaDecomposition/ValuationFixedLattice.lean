@@ -15,9 +15,4 @@ theorem valLL0_colW {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T) (
   subst C_eq
   exact val _ _ _ _ _ _
 
-theorem valLL0_allSt : PrN → AllSt fun _ _ _ _ _ _ x => ValLL0 (Dof x) (cfOf x) := by
-  intro _
-  refine StepW.of_all fun K B f T w _ _ _ P x => ?_
-  exact valLL0_colW w x.o.Z
-
 end GlobalTheory.HeightCounting.Up

@@ -35,12 +35,6 @@ theorem Stalk.mem {M : LieModel G ξ E} {p : Cpt ξ} (e : Stalk M p) : e.val ∈
 theorem Stalk.ext {M : LieModel G ξ E} {p : Cpt ξ} {e e' : Stalk M p} (h : e.val = e'.val) : e = e' :=
   Subtype.ext h
 
-@[simp] theorem Stalk.val_add {M : LieModel G ξ E} {p : Cpt ξ} (e e' : Stalk M p) :
-    (e + e').val = e.val + e'.val := rfl
-
-@[simp] theorem Stalk.val_smul {M : LieModel G ξ E} {p : Cpt ξ} (s : X.presheaf.stalk p.1) (e : Stalk M p) :
-    (s • e).val = genMap ξ p s • e.val := rfl
-
 def Stalk.tan {M : LieModel G ξ E} {p : Cpt ξ} (e : Stalk M p) :
     epsAt (R := X.presheaf.stalk p.1) (X.fromSpecStalk p.1) ⟶ G :=
   ((M.mem_lat_iff p e.val).1 e.mem).choose

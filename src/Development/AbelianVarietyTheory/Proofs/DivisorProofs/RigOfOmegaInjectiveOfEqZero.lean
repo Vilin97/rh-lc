@@ -71,29 +71,9 @@ variable [IsCocomm R A] [IsCocomm R' A']
 
 variable (R A) in
 
-def levelRel : A →ₗ[R] symCocycles R A × Cot R A :=
-  ((cobOne R A).codRestrict _ fun _ => cobOne_mem _).prod (AugCot.d (counitAlgHom R A))
-
 variable (R A) in
 
-abbrev LevelRig : Type := (symCocycles R A × Cot R A) ⧸ LinearMap.range (levelRel R A)
-
 omit [IsCocomm R A] [IsCocomm R' A'] in
-
-def SemiBialgHom.levelPair (f : SemiBialgHom σ A A') :
-    symCocycles R A × Cot R A →ₛₗ[σ] symCocycles R' A' × Cot R' A' where
-  toFun x := (⟨f.two x.1.1, f.two_mem x.1.2⟩, f.cot x.2)
-  map_add' _ _ := Prod.ext (Subtype.ext (map_add f.two _ _)) (map_add f.cot _ _)
-  map_smul' _ _ := Prod.ext (Subtype.ext (map_smulₛₗ f.two _ _)) (map_smulₛₗ f.cot _ _)
-
-def SemiBialgHom.levelRig (f : SemiBialgHom σ A A') : LevelRig R A →ₛₗ[σ] LevelRig R' A' :=
-  Submodule.mapQ _ _ f.levelPair (by
-    rintro _ ⟨b, rfl⟩
-    exact ⟨f b, Prod.ext (Subtype.ext (f.two_cobOne b).symm) (f.cot_d b).symm⟩)
-
-@[simp] theorem SemiBialgHom.levelRig_mk (f : SemiBialgHom σ A A')
-    (x : symCocycles R A × Cot R A) :
-    f.levelRig (Submodule.Quotient.mk x) = Submodule.Quotient.mk (f.levelPair x) := rfl
 
 end Level
 
@@ -190,17 +170,6 @@ def primLie : LinearMap.ker (cobOne R (G.A 1)) →ₗ[R] G.dual.Lie :=
 theorem primLie_apply (b : LinearMap.ker (cobOne R (G.A 1))) (w : G.dual.omega)
     (φ : CartierDual R (G.A 1)) (h : w.1 1 = dUnit R φ) : G.primLie b w = φ b.1 :=
   (congrArg (primTangent R (G.A 1) b) h).trans (primTangent_d b φ)
-
-def cocyclesLevel (n : ℕ) : G.cocycles →ₗ[R] symCocycles R (G.A n) :=
-  (LinearMap.proj n ∘ₗ G.cocycles.subtype).codRestrict _ fun c => (c.2 n).1
-
-def rigLevel (n : ℕ) : G.RigExt →ₗ[R] LevelRig R (G.A n) :=
-  Submodule.mapQ _ _ ((G.cocyclesLevel n).prodMap (G.omegaLevel n)) (by
-    rintro _ ⟨b, rfl⟩
-    exact ⟨b.1 n, rfl⟩)
-
-@[simp] theorem rigLevel_mk (n : ℕ) (c : G.cocycles) (w : G.omega) :
-    G.rigLevel n (G.rigMk (c, w)) = Submodule.Quotient.mk (⟨c.1 n, (c.2 n).1⟩, w.1 n) := rfl
 
 end PDivGroup
 

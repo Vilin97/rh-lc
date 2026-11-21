@@ -38,9 +38,6 @@ theorem euclidNorm_le_sqrt_mul (y : Fin n → E) : euclidNorm y ≤ √n * ‖y�
 theorem norm_le_euclidNorm_pi (y : Fin n → E) : ‖y‖ ≤ euclidNorm y :=
   (pi_norm_le_iff_of_nonneg (euclidNorm_nonneg y)).2 fun i => norm_le_euclidNorm y i
 
-theorem euclidNorm_pos {y : Fin n → E} (hy : y ≠ 0) : 0 < euclidNorm y :=
-  lt_of_lt_of_le (norm_pos_iff.2 hy) (norm_le_euclidNorm_pi y)
-
 theorem continuous_euclidNorm : Continuous (euclidNorm : (Fin n → E) → ℝ) :=
   Real.continuous_sqrt.comp (continuous_finsetSum _ fun i _ =>
     (continuous_norm.comp (continuous_apply i)).pow 2)
@@ -188,12 +185,6 @@ theorem HasFiniteContent.vecMul {y : Fin n → 𝔸[K]} (hy : HasFiniteContent y
   rw [finComp_vecMul_GL, finAt, norm_vecMul_integralGL v h2, h1]
 
 def ratVec (x : Fin n → K) : Fin n → 𝔸[K] := fun i => algebraMap K 𝔸[K] (x i)
-
-theorem finComp_ratVec (v : HeightOneSpectrum (𝓞 K)) (x : Fin n → K) (i : Fin n) :
-    finComp v (ratVec x) i = (x i : v.adicCompletion K) := rfl
-
-theorem infComp_ratVec (w : InfinitePlace K) (x : Fin n → K) (i : Fin n) :
-    infComp w (ratVec x) i = (x i : w.Completion) := rfl
 
 theorem ratVec_smul (c : K) (x : Fin n → K) :
     ratVec (c • x) = algebraMap K 𝔸[K] c • ratVec x := by

@@ -151,12 +151,6 @@ namespace Fr
 
 variable {M : RatModel F Ω} {k : ι → ℕ}
 
-def ofBasis (M : RatModel F Ω) (k : ι → ℕ) (A : Mat m Ω) (hA : ∀ τ, (A τ).det ≠ 0) : Fr M m k where
-  S z := {A' | Par k (M.O z).toSubring (A' * A⁻¹)}
-  loc _ := ⟨⊤, A, trivial, hA, fun _ _ _ => Iff.rfl⟩
-
-instance : Inhabited (Fr M m k) := ⟨ofBasis M k 1 fun _ => by simp⟩
-
 variable (S : Fr M m k)
 
 theorem nonempty (z : M.Z) : (S.S z).Nonempty := by

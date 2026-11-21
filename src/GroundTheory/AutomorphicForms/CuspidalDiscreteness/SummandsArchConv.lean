@@ -111,9 +111,6 @@ def archGroupEquiv : archGroup K n ≃ₜ* ArchUnits K n where
   continuous_toFun := continuous_subtype_val
   continuous_invFun := continuous_id.subtype_mk _
 
-@[simp] theorem archGroupEquiv_apply (a : archGroup K n) :
-    archGroupEquiv K n a = (a : ArchUnits K n) := rfl
-
 theorem isHaarMeasure_map_val (ν' : Measure (archGroup K n)) [ν'.IsHaarMeasure] :
     (ν'.map (fun a : archGroup K n => (a : ArchUnits K n))).IsHaarMeasure :=
   (archGroupEquiv K n).isHaarMeasure_map ν'

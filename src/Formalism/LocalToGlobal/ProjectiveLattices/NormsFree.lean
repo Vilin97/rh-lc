@@ -69,10 +69,6 @@ open Classical in
 
 def goodOf (σ : c.F →+* ℂ) : c.F →+* ℂ := if GoodEmb c σ then σ else (starRingEnd ℂ).comp σ
 
-theorem norm_goodOf (σ : c.F →+* ℂ) (x : c.F) : ‖goodOf c σ x‖ = ‖σ x‖ := by
-  unfold goodOf
-  split_ifs <;> simp
-
 theorem goodEmb_goodOf (σ : c.F →+* ℂ) : GoodEmb c (goodOf c σ) := by
   unfold goodOf
   split_ifs with hσ
@@ -109,10 +105,6 @@ theorem goodEmb_goodOf (σ : c.F →+* ℂ) : GoodEmb c (goodOf c σ) := by
     · exact absurd h hσ
     · rw [h, map_neg, hconj, neg_neg]
 
-theorem IsNormOn.of_goodOf {C : Submodule c.F (Rul Xo c)} {σ : c.F →+* ℂ} {N : Rul Xo c → ℝ}
-    (h : IsNormOn C (goodOf c σ) N) : IsNormOn C σ N := by
-  exact ⟨h.nonneg, h.defin, fun a f hf => by rw [h.smul a f hf, norm_goodOf], h.add⟩
-
 def lieFac (Dw : Datum H) (x : ℝ) (a : (E →+* ℂ) × ℕ → ℕ) : ℝ :=
   Real.exp (-((∑ τ : E →+* ℂ, ∑ i : Fin (Dw.mult τ), (a (τ, i) : ℝ)) / 2) * Real.log (2 * Real.pi * x))
 
@@ -135,33 +127,8 @@ theorem supE_cusp_ne_top {a n} {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) {f : Ru
   have h2 := (Submodule.mem_iInf _).mp ((Submodule.mem_iInf _).mp h1 σ) hσ
   exact supE_ne_top _ _ (Submodule.mem_comap.mp h2)
 
-theorem isNormOn_supC (x : ℝ) (h : SupDef Xo c U) {a n} (hd : Dom a n) {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) :
-    IsNormOn (cusp Xo c U a n) σ (supC Xo c U x σ a n) where
-  nonneg f _ := mul_nonneg (lieFac_pos _ _ _).le (supN_nonneg _ _ _)
-  defin f hf h0 := h a n hd σ hσ f hf ((mul_eq_zero.mp h0).resolve_left (lieFac_pos _ _ _).ne')
-  smul y f _ := by
-    unfold supC supN
-    rw [map_smulₛₗ, supE_smul, ENNReal.toReal_mul, ENNReal.toReal_ofReal (norm_nonneg _)]
-    ring
-  add f hf g hg := by
-    unfold supC supN
-    rw [← mul_add, map_add (f := _), ← ENNReal.toReal_add (supE_cusp_ne_top hσ hf) (supE_cusp_ne_top hσ hg)]
-    refine mul_le_mul_of_nonneg_left (ENNReal.toReal_mono ?_ (supE_add_le _ _ _ _)) (lieFac_pos _ _ _).le
-    exact ENNReal.add_ne_top.mpr ⟨supE_cusp_ne_top hσ hf, supE_cusp_ne_top hσ hg⟩
-
 variable (U)
 
-def rdC (σ : c.F →+* ℂ) (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) : cusp Xo c U a n →ₛₗ[σ] FDSec (U σ).X :=
-  (rdU (U σ)).comp (cusp Xo c U a n).subtype
-
 variable {U} {σ : c.F →+* ℂ}
-
-theorem rdC_continuousOn (hU : IsUnf (U σ)) {a n} (hd : Dom a n) (f : cusp Xo c U a n) (k : (U σ).Comp) :
-    ContinuousOn (rdC U σ a n f k) ((U σ).X k).dom := by
-  have hf : (f : Rul Xo c) ∈ sec Xo c a n := by
-    have h0 := f.2
-    unfold cusp at h0
-    exact (Submodule.mem_inf.mp h0).1
-  exact (hU.2.2.2.2.1 a n hd f hf k).1.continuousOn
 
 end Formalism.L2.PjFree

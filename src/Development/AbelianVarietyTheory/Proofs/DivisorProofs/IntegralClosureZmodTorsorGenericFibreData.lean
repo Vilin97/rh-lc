@@ -62,9 +62,6 @@ def restr (σ : D ≃ₐ[GenFib A R] D) :
     map_add' := fun c c' => Subtype.ext (map_add σ (c : D) (c' : D))
     commutes' := fun r => Subtype.ext (σ.commutes (algebraMap R (GenFib A R) r)) }
 
-@[simp] theorem restr_coe (σ : D ≃ₐ[GenFib A R] D) (c : closure A R D) :
-    ((letI := closureAlg A R D; restr σ c : closure A R D) : D) = σ c := rfl
-
 end
 
 section

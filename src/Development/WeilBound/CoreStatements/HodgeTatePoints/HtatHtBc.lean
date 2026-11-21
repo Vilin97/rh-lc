@@ -33,10 +33,6 @@ abbrev qmap {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] (N : ℕ) :
       simp only [SetLike.mem_coe, Ideal.mem_comap, map_natCast]
       exact Ideal.subset_span rfl))
 
-theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) := by
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
-
 end PositivityTheory.HtPt.Htat.HTBaseChange
 
 open PositivityTheory.HtPt.Htat.HTBaseChange in

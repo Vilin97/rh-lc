@@ -168,7 +168,6 @@ def homMk (φ : ∀ W : X.Opens, W ≤ V → (Γ(F, W) →ₗ[Γ(X, W)] Γ(G, W)
 @[simp] theorem homApp_homMk (φ : ∀ W : X.Opens, W ≤ V → (Γ(F, W) →ₗ[Γ(X, W)] Γ(G, W))) (hφ)
     (h : W ≤ V) : homApp (homMk φ hφ) h = φ W h := rfl
 
-@[ext] theorem hom_ext {φ ψ : Γ(homMod F G, V)}
     (e : ∀ (W : X.Opens) (h : W ≤ V) (s : Γ(F, W)), homApp φ h s = homApp ψ h s) : φ = ψ := by
   have key := @Subtype.ext _ _ (show homGroup F G V from φ) (show homGroup F G V from ψ)
     (funext fun T => LinearMap.ext (e T.1 T.2))
@@ -201,9 +200,6 @@ def homGlobalEquiv : Γ(homMod F G, ⊤) ≃+ (F ⟶ G) where
   right_inv _ := rfl
   map_add' _ _ := rfl
 
-@[simp] theorem homGlobalEquiv_app (φ : Γ(homMod F G, ⊤)) (s : Γ(F, V)) :
-    (homGlobalEquiv F G φ).app V s = homApp φ le_top s := rfl
-
 def homMap {F' G' : X.Modules} (α : F' ⟶ F) (β : G ⟶ G') : homMod F G ⟶ homMod F' G' :=
   homOfLinear (fun V =>
     { toFun φ := homMk (fun W h => appLinear β W ∘ₗ homApp φ h ∘ₗ appLinear α W)
@@ -232,10 +228,6 @@ def dualMk (l : ∀ W : X.Opens, W ≤ V → (Γ(F, W) →ₗ[Γ(X, W)] Γ(X, W)
       l W' (h'.trans h) (resM F h' s) = resG X h' (l W h s)) : Γ(dual F, V) :=
   homMk (G := structureModule X) l hl
 
-@[simp] theorem dualApp_dualMk (l : ∀ W : X.Opens, W ≤ V → (Γ(F, W) →ₗ[Γ(X, W)] Γ(X, W))) (hl)
-    (h : W ≤ V) : dualApp (dualMk l hl) h = l W h := rfl
-
-@[ext] theorem dual_ext {l l' : Γ(dual F, V)}
     (e : ∀ (W : X.Opens) (h : W ≤ V) (s : Γ(F, W)), dualApp l h s = dualApp l' h s) : l = l' := by
   exact hom_ext e
 
@@ -291,16 +283,8 @@ theorem dualMap_add (φ ψ : F ⟶ G) : GlobalTheory.CompanionTheory.Ar.dualMap 
 
 variable (X) in
 
-@[simps] def dualFunctor : X.Modulesᵒᵖ ⥤ X.Modules where
-  obj F := dual F.unop
-  map φ := GlobalTheory.CompanionTheory.Ar.dualMap φ.unop
-
-instance : (dualFunctor X).Additive where
-  map_add := dualMap_add _ _
-
-@[simps] def dualIso (φ : F ≅ G) : dual G ≅ dual F where
-  hom := GlobalTheory.CompanionTheory.Ar.dualMap φ.hom
-  inv := GlobalTheory.CompanionTheory.Ar.dualMap φ.inv
+  hom := dualMap φ.hom
+  inv := dualMap φ.inv
   hom_inv_id := by rw [← dualMap_comp, φ.inv_hom_id, dualMap_id]
   inv_hom_id := by rw [← dualMap_comp, φ.hom_inv_id, dualMap_id]
 
@@ -448,9 +432,6 @@ theorem IsVB.isIso_toBidual_of_local_frames (h : IsVB F r) : IsIso (cartierDualT
 
 variable (X) in
 
-def dualFreeIso (ι : Type) [Fintype ι] : freeModule X ι ≅ dual (freeModule X ι) :=
-  (isFrame_freeFrame X ι).iso (isFrame_freeFrame X ι).dual
-
 namespace IsFrame
 
 variable [DecidableEq ι] {U' U'' : X.Opens} {e : ι → Γ(F, U)} {e' : ι → Γ(F, U')}
@@ -497,13 +478,6 @@ theorem detUnit_mul (he : IsFrame e) (he' : IsFrame e') (he'' : IsFrame e'') (h 
     (h' : V ≤ U') (h'' : V ≤ U'') :
     he.detUnit he' h h' * he'.detUnit he'' h' h'' = he.detUnit he'' h h'' := by
   exact Units.ext (Module.Basis.det_mul_det (he.basis h) (he'.basis h') (he''.basis h''))
-
-theorem det_eq_detUnit_mul (he : IsFrame e) (he' : IsFrame e') (h : V ≤ U) (h' : V ≤ U')
-    (s : ι → Γ(F, V)) :
-    (he.basis h).det s = he.detUnit he' h h' * (he'.basis h').det s := by
-  show (he.basis h).det s = (he.basis h).det (he'.basis h') * (he'.basis h').det s
-  rw [Module.Basis.det_apply, Module.Basis.det_apply, Module.Basis.det_apply, ← Matrix.det_mul,
-    Module.Basis.toMatrix_mul_toMatrix]
 
 theorem detUnit_dual (he : IsFrame e) (he' : IsFrame e') (h : V ≤ U) (h' : V ≤ U') :
     he.dual.detUnit he'.dual h h' = (he.detUnit he' h h')⁻¹ := by
@@ -610,77 +584,7 @@ theorem isLB_det_iff : (det F r).IsLB ↔ IsVB F r := by
 
 theorem IsVB.isLB_det (h : IsVB F r) : (det F r).IsLB := isLB_det_iff.2 h
 
-def wedgeFun (s : Fin r → Γ(F, V)) : Γ(toMod (det F r), V) :=
-  LB.mkSec (fun c : Chart F r =>
-      (c.isFrame.basis (inf_le_right : V ⊓ c.U ≤ c.U)).det fun i => resM F inf_le_left (s i))
-    fun c c' => by
-      refine (c.isFrame.resG_det _ _ _).trans (Eq.trans ?_ (congrArg₂ (· * ·)
-        (congrArg Units.val (IsFrame.res_detUnit _ _ _ _ _)) (c'.isFrame.resG_det _ _ _)).symm)
-      exact (c.isFrame.det_eq_detUnit_mul c'.isFrame _ inf_le_right _).trans
-        (congrArg _ (congrArg _ (funext fun i => (resM_resM _ _ _).trans (resM_resM _ _ _).symm)))
-
-def detCoord (t : Γ(toMod (det F r), V)) (c : Chart F r) : Γ(X, V ⊓ c.U) := LB.coord t c
-
-theorem det_sec_ext {t t' : Γ(toMod (det F r), V)} (h : ∀ c, detCoord t c = detCoord t' c) :
-    t = t' := LB.sec_ext h
-
-@[simp] theorem detCoord_add (t t' : Γ(toMod (det F r), V)) (c : Chart F r) :
-    detCoord (t + t') c = detCoord t c + detCoord t' c := rfl
-
-@[simp] theorem detCoord_smul (a : Γ(X, V)) (t : Γ(toMod (det F r), V)) (c : Chart F r) :
-    detCoord (a • t) c = resG X inf_le_left a * detCoord t c := rfl
-
-@[simp] theorem detCoord_zero (c : Chart F r) : detCoord (0 : Γ(toMod (det F r), V)) c = 0 := rfl
-
-theorem detCoord_wedgeFun (s : Fin r → Γ(F, V)) (c : Chart F r) :
-    detCoord (wedgeFun s) c =
-      (c.isFrame.basis (inf_le_right : V ⊓ c.U ≤ c.U)).det fun i => resM F inf_le_left (s i) := rfl
-
 variable (F r V) in
-
-def wedge : Γ(F, V) [⋀^Fin r]→ₗ[Γ(X, V)] Γ(toMod (det F r), V) where
-  toFun := wedgeFun
-  map_update_add' s j a b := det_sec_ext fun c => by
-    simp only [detCoord_add, detCoord_wedgeFun,
-      Function.apply_update (fun _ => resM F (inf_le_left : V ⊓ c.U ≤ V)) s j,
-      map_add, AlternatingMap.map_update_add]
-  map_update_smul' s j a b := det_sec_ext fun c => by
-    simp only [detCoord_smul, detCoord_wedgeFun,
-      Function.apply_update (fun _ => resM F (inf_le_left : V ⊓ c.U ≤ V)) s j,
-      resM_smul, AlternatingMap.map_update_smul, smul_eq_mul]
-  map_eq_zero_of_eq' s i j e hij := det_sec_ext fun c => by
-    rw [detCoord_wedgeFun, detCoord_zero]
-    exact AlternatingMap.map_eq_zero_of_eq _ _ (congrArg (resM F inf_le_left) e) hij
-
-theorem detCoord_wedge (s : Fin r → Γ(F, V)) (c : Chart F r) :
-    detCoord (wedge F V r s) c =
-      (c.isFrame.basis (inf_le_right : V ⊓ c.U ≤ c.U)).det fun i => resM F inf_le_left (s i) := rfl
-
-theorem resM_wedge (h : W ≤ V) (s : Fin r → Γ(F, V)) :
-    resM _ h (wedge F V r s) = wedge F W r fun i => resM F h (s i) := by
-  refine det_sec_ext fun c => ?_
-  rw [detCoord_wedge (V := W)]
-  have e : detCoord (resM (toMod (det F r)) h (wedge F V r s)) c =
-      resG X (inf_le_inf_right c.U h) (detCoord (wedge F V r s) c) := rfl
-  rw [e, detCoord_wedge, IsFrame.resG_det]
-  simp only [resM_resM]
-
-theorem wedge_frame (h : IsVB F r) (c : Chart F r) :
-    wedge F c.U r c.e = LB.chartSec h.isLB_det c := by
-  refine det_sec_ext fun c' => ?_
-  rw [detCoord_wedge]
-  refine Eq.trans ?_ (LB.coord_chartSec (L := det F r) h.isLB_det c c').symm
-  refine Eq.trans ?_ (congrArg (resG X _) (IsFrame.val_detUnit c'.isFrame c.isFrame inf_le_left inf_le_right)).symm
-  refine Eq.trans ?_ (IsFrame.resG_det c'.isFrame _ _ _).symm
-  congr 1
-  funext i
-  exact (resM_resM _ _ (c.e i)).symm
-
-theorem IsFrame.wedge (h : IsVB F r) {e : Fin r → Γ(F, U)} (he : IsFrame e) :
-    IsFrame fun _ : Fin 1 => wedge F U r e := by
-  have H := isFrame_chartSec h.isLB_det (⟨U, e, he⟩ : Chart F r)
-  rw [← wedge_frame h (⟨U, e, he⟩ : Chart F r)] at H
-  exact H
 
 theorem lbIso_det_of_frames {L : LB X} (hL : L.IsLB) (e : ∀ i, Fin r → Γ(F, L.U i))
     (he : ∀ i, IsFrame (e i))
@@ -760,31 +664,5 @@ theorem lbIso_det_toMod {L : LB X} (hL : L.IsLB) : LBIso L (det (toMod L) 1) := 
   rw [key, map_smul, ← IsFrame.basis_apply (isFrame_chartSec hL i) inf_le_left (default : Fin 1),
     Module.Basis.repr_self]
   simp
-
-def IsVB.isoDet (h : IsVB F 1) : F ≅ toMod (det F 1) :=
-  let φ : F ⟶ toMod (det F 1) := homOfLinear
-    (fun V => (AlternatingMap.ofSubsingleton _ _ _ (0 : Fin 1)).symm (wedge F V 1))
-    fun hW s => (resM_wedge hW fun _ => s).symm
-  haveI : IsIso φ := isIso_of_frames _ fun x =>
-    have ⟨U, e, hx, he⟩ := h x
-    ⟨U, e, hx, he, by
-      have (i : Fin 1) : φ.app U (e i) = wedge F U 1 e :=
-        congrArg (wedge F U 1) (funext fun j => congrArg e (Subsingleton.elim _ _))
-      rw [funext this]
-      exact he.wedge h⟩
-  asIso φ
-
-theorem IsFrame.cls_det_eq_zero {e : Fin r → Γ(F, ⊤)} (he : IsFrame e) (h : (det F r).IsLB) :
-    CechPic.cls _ h = 0 := by
-  have H := (lbIso_det_of_frames (LB.isLB_triv X) (fun _ => e) (fun _ => he)
-    (fun _ _ => (IsFrame.detUnit_self he _ _).symm)).2
-  exact ((CechPic.cls_eq_iff (LB.isLB_triv X) h).2 H).symm.trans rfl
-
-example {e : Fin 2 → Γ(F, U)} (he : IsFrame e) :
-    (he.detUnit (he.comp_equiv (Equiv.swap 0 1)) le_rfl le_rfl : Γ(X, U)) = -1 := by
-  rw [IsFrame.val_detUnit]
-  have := (he.basis le_rfl).det.map_swap (he.basis le_rfl) (i := 0) (j := 1) (by decide)
-  rw [Module.Basis.det_self, he.coe_basis] at this
-  exact this
 
 end GlobalTheory.VB

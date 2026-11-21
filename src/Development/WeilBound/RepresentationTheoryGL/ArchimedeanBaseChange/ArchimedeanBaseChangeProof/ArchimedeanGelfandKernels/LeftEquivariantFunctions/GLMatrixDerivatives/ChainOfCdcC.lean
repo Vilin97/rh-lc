@@ -16,8 +16,6 @@ variable {n : ℕ}
 
 def mulLL (a : Mat n) : Mat n →L[ℝ] Mat n := LinearMap.toContinuousLinearMap (LinearMap.mulLeft ℝ a)
 
-@[simp] theorem mulLL_apply (a y : Mat n) : mulLL a y = a * y := rfl
-
 theorem hb_conj_back' (k : Matrix.unitaryGroup (Fin n) ℂ) (X : Mat n) :
     (k.1)ᴴ * (k.1 * X * (k.1)ᴴ) * k.1 = X := by
   rw [show (k.1)ᴴ * (k.1 * X * (k.1)ᴴ) * k.1 = (k.1)ᴴ * (((k.1 * X * (k.1)ᴴ)) * k.1) by simp only [Matrix.mul_assoc],

@@ -21,8 +21,6 @@ variable {S : Type} [CommRing S]
 
 def fstH (S : Type) [CommRing S] : DualNumber S →+* S := (TrivSqZeroExt.fstHom S S S).toRingHom
 
-@[simp] theorem fstH_apply (x : DualNumber S) : fstH S x = x.fst := rfl
-
 def swap (S : Type) [CommRing S] : DualNumber (DualNumber S) →+* DualNumber (DualNumber S) where
   toFun x := TrivSqZeroExt.inl (TrivSqZeroExt.inl x.fst.fst + TrivSqZeroExt.inr x.snd.fst) +
     TrivSqZeroExt.inr (TrivSqZeroExt.inl x.fst.snd + TrivSqZeroExt.inr x.snd.snd)
@@ -60,9 +58,6 @@ theorem swap_dualMap_inc (φ : R →+* S) : (swap S).comp (GlobalTheory.Companio
 
 theorem fst_comp_dualMap (φ : R →+* S) : (fstH S).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = φ.comp (fstH R) := by
   refine RingHom.ext fun x => ?_; simp [GlobalTheory.CompanionTheory.Ar.dualMap]
-
-theorem inc_comp_fst : (inc R).comp (fstH R) = ((tm (0 • LinearMap.id : R →ₗ[R] R)) : DualNumber R →+* DualNumber R) := by
-  refine RingHom.ext fun x => ?_; ext <;> simp [tm, TrivSqZeroExt.algebraMap_eq_inl]
 
 end Rings2
 

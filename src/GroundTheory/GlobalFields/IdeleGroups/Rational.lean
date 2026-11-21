@@ -171,30 +171,6 @@ def positiveSubgroupEquiv : positiveSubgroup ≃ₜ* Units.posSubgroup ℝ ×
       ((realUnitsEquiv.symm.continuous.comp (continuous_subtype_val.comp continuous_fst)).prodMk
         continuous_snd))).subtype_mk _
 
-@[simp]
-theorem coe_positiveSubgroupEquiv_apply_fst (x : positiveSubgroup) :
-    ((positiveSubgroupEquiv x).1 : ℝˣ) = realPart x :=
-  rfl
-
-@[simp]
-theorem coe_positiveSubgroupEquiv_apply_snd (x : positiveSubgroup) (v : HeightOneSpectrum (𝓞 ℚ)) :
-    (((positiveSubgroupEquiv x).2 v : v.adicCompletionIntegers ℚ) : v.adicCompletion ℚ) =
-      ((x : IdeleGroup ℚ) : 𝔸[ℚ]).2 v :=
-  rfl
-
-@[simp]
-theorem realPart_positiveSubgroupEquiv_symm_apply (p : Units.posSubgroup ℝ ×
-    Π v : HeightOneSpectrum (𝓞 ℚ), (v.adicCompletionIntegers ℚ)ˣ) :
-    realPart (positiveSubgroupEquiv.symm p : IdeleGroup ℚ) = p.1 :=
-  congrArg (fun q ↦ (q.1 : ℝˣ)) (positiveSubgroupEquiv.apply_symm_apply p)
-
-@[simp]
-theorem coe_positiveSubgroupEquiv_symm_apply_snd (p : Units.posSubgroup ℝ ×
-    Π v : HeightOneSpectrum (𝓞 ℚ), (v.adicCompletionIntegers ℚ)ˣ) (v : HeightOneSpectrum (𝓞 ℚ)) :
-    ((positiveSubgroupEquiv.symm p : IdeleGroup ℚ) : 𝔸[ℚ]).2 v =
-      ((p.2 v : v.adicCompletionIntegers ℚ) : v.adicCompletion ℚ) :=
-  rfl
-
 def integersRingEquiv :
     (Π v : HeightOneSpectrum (𝓞 ℚ), v.adicCompletionIntegers ℚ) ≃+* Π p : Nat.Primes, ℤ_[p] :=
   (RingEquiv.piCongrRight fun v ↦
@@ -225,11 +201,6 @@ def integerUnitsEquiv :
     (unitsContinuousMulEquiv integersRingEquiv.toMulEquiv continuous_integersRingEquiv
       continuous_integersRingEquiv_symm)
 
-def integerUnitsEquivPi :
-    (Π v : HeightOneSpectrum (𝓞 ℚ), (v.adicCompletionIntegers ℚ)ˣ) ≃ₜ*
-      Π p : Nat.Primes, ℤ_[p]ˣ :=
-  integerUnitsEquiv.trans ContinuousMulEquiv.piUnits
-
 def mulMap : ℚˣ × positiveSubgroup →* IdeleGroup ℚ :=
   (diagonal ℚ).coprod positiveSubgroup.subtype
 
@@ -253,18 +224,9 @@ theorem mulMap_bijective : Function.Bijective mulMap := by
     obtain ⟨u, hu, _, ⟨a, rfl⟩, rfl⟩ := Subgroup.mem_sup.1 hx
     exact ⟨(a, ⟨u, hu⟩), mul_comm _ _⟩
 
-def ideleEquiv : IdeleGroup ℚ ≃* ℚˣ × Units.posSubgroup ℝ × Π p : Nat.Primes, ℤ_[p]ˣ :=
-  (MulEquiv.ofBijective mulMap mulMap_bijective).symm.trans
-    (MulEquiv.prodCongr (MulEquiv.refl _) (positiveSubgroupEquiv.toMulEquiv.trans
-      (MulEquiv.prodCongr (MulEquiv.refl _) integerUnitsEquivPi.toMulEquiv)))
-
 def ideleClassGroupEquiv : IdeleClassGroup ℚ ≃ₜ* Units.posSubgroup ℝ × (Π p : Nat.Primes, ℤ_[p])ˣ :=
   positiveSubgroupEquivIdeleClassGroup.symm.trans (positiveSubgroupEquiv.trans
     (continuousMulEquivProdCongr (ContinuousMulEquiv.refl _) integerUnitsEquiv))
-
-def ideleClassGroupEquivPi : IdeleClassGroup ℚ ≃ₜ* Units.posSubgroup ℝ × Π p : Nat.Primes, ℤ_[p]ˣ :=
-  positiveSubgroupEquivIdeleClassGroup.symm.trans (positiveSubgroupEquiv.trans
-    (continuousMulEquivProdCongr (ContinuousMulEquiv.refl _) integerUnitsEquivPi))
 
 theorem ideleClassGroupEquiv_mk (x : positiveSubgroup) :
     ideleClassGroupEquiv (IdeleClassGroup.mk ℚ x) =

@@ -11,7 +11,10 @@ import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.T
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.Splits
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.GtBaseChangeSt
 import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.AuxiliaryInertOddPrime
-import Development.AbelianVarietyTheory.Statements.HeckeInFamilies.GenericMemChart
+import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissiblePadicIntMaximalIdeal
+import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.OneAddZeta21PowSevenAddPowFourteenEqZero
+import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.IsCoprimeTwoSubRtTwoAddRt
+import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.ToMatrixTrFormBaseChange
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
@@ -52,10 +55,6 @@ structure PairModel {S S₀ U T : Scheme.{0}} (f : S ⟶ S₀) (p : U ⟶ S) (a 
 attribute [instance] PairModel.smooth PairModel.sep PairModel.qc PairModel.opn PairModel.qca
 
 variable {S S₁ S₀ U T : Scheme.{0}} {f : S ⟶ S₀} {p : U ⟶ S} {a : T ⟶ U}
-
-def PairModel.refl (p : U ⟶ S) (a : T ⟶ U) [Smooth p] [IsSeparated p] [QuasiCompact p] [IsOpenImmersion a]
-    [QuasiCompact a] : PairModel (𝟙 S) p a :=
-  ⟨U, T, p, a, 𝟙 _, 𝟙 _, ‹_›, ‹_›, ‹_›, ‹_›, ‹_›, .of_horiz_isIso ⟨by simp⟩, .of_horiz_isIso ⟨by simp⟩⟩
 
 theorem isPullback_lift {X X₀ : Scheme.{0}} {q : X ⟶ S} {q₀ : X₀ ⟶ S₀} {φ : X ⟶ X₀} (h : IsPullback φ q q₀ f)
     (σ : S ⟶ S₁) (g : S₁ ⟶ S₀) (e : σ ≫ g = f) :

@@ -156,5 +156,3 @@ theorem torEx : GlobalTheory.IndefiniteRowSideFullHecke.LatticeNormTransport.Tra
   exact (hk.1 ∅ _ _ ⟨hAux, hV, by simpa [condQ] using hTS Λ hΛ⟩).1
 
 end GlobalTheory.ToricExist
-
-example : GlobalTheory.IndefiniteRowSideFullHecke.LatticeNormTransport.Transport → GlobalTheory.SqTop.FieldDat → GlobalTheory.SqTop.LNe → GlobalTheory.SqTop.TorEx := GlobalTheory.ToricExist.torEx

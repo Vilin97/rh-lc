@@ -15,14 +15,8 @@ variable {R M V : Type*} [CommRing R] [AddCommGroup M] [Module R M] [AddCommGrou
 def IsLagSection (ω : LinearMap.BilinForm R M) (π : M →ₗ[R] V) (σ : V →ₗ[R] M) : Prop :=
   (∀ z, π (σ z) = z) ∧ ∀ z w, ω (σ z) (σ w) = 0
 
-def KerIsotropic (ω : LinearMap.BilinForm R M) (π : M →ₗ[R] V) : Prop :=
-  ∀ m m', π m = 0 → π m' = 0 → ω m m' = 0
-
 def beta (ω : LinearMap.BilinForm R M) (σ σ' : V →ₗ[R] M) : LinearMap.BilinForm R V :=
   LinearMap.compl₁₂ ω σ σ'
-
-@[simp] theorem beta_apply (ω : LinearMap.BilinForm R M) (σ σ' : V →ₗ[R] M) (z w : V) :
-    beta ω σ σ' z w = ω (σ z) (σ' w) := rfl
 
 end Defs
 

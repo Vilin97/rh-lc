@@ -196,16 +196,6 @@ theorem algebraicValuativeRel_valuativeExtension :
   rw [← algebraicNormedField_norm_algebraMap K L a, ← algebraicNormedField_norm_algebraMap K L b]
   rfl
 
-theorem algebraicValuativeRel_isNontrivial :
-    letI := algebraicValuativeRel K L
-    IsNontrivial L := by
-  let := algebraicNormedField K L
-  have := algebraicNormedField_isUltrametricDist K L
-  let := algebraicValuativeRel K L
-  have hc : (NormedField.valuation (K := L)).Compatible := Valuation.Compatible.ofValuation _
-  rw [isNontrivial_iff_isNontrivial (NormedField.valuation (K := L))]
-  infer_instance
-
 theorem algebraicTopology_isValuativeTopology :
     letI := algebraicValuativeRel K L
     letI := algebraicTopology K L
@@ -234,9 +224,6 @@ instance separableClosure_valuativeExtension : ValuativeExtension K (SeparableCl
 
 instance separableClosure_isValuativeTopology : IsValuativeTopology (SeparableClosure K) :=
   algebraicTopology_isValuativeTopology K (SeparableClosure K)
-
-instance separableClosure_isNontrivial : IsNontrivial (SeparableClosure K) :=
-  algebraicValuativeRel_isNontrivial K (SeparableClosure K)
 
 end SeparableClosure
 
@@ -360,28 +347,12 @@ theorem continuous_algEquiv_of_isAlgebraic (σ : Ω ≃ₐ[K] Ω) : Continuous �
   rw [valuation_algEquiv_apply_of_isAlgebraic]
   exact hx
 
-def homeomorphOfIsAlgebraic (σ : Ω ≃ₐ[K] Ω) : Ω ≃ₜ Ω where
-  toEquiv := σ.toEquiv
-  continuous_toFun := continuous_algEquiv_of_isAlgebraic σ
-  continuous_invFun := continuous_algEquiv_of_isAlgebraic σ.symm
-
-@[simp]
-theorem coe_homeomorphOfIsAlgebraic (σ : Ω ≃ₐ[K] Ω) : ⇑(homeomorphOfIsAlgebraic σ) = σ :=
-  rfl
-
 end Finite
 
 section Check
 
 variable (K : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   (L : IntermediateField K (SeparableClosure K)) [FiniteDimensional K L]
-
-example : IsNonarchimedeanLocalField L := inferInstance
-example : ValuativeExtension K L := inferInstance
-example : ValuativeExtension L (SeparableClosure K) := inferInstance
-example (σ : SeparableClosure K ≃ₐ[K] SeparableClosure K) (x : SeparableClosure K) :
-    valuation (SeparableClosure K) (σ x) = valuation (SeparableClosure K) x :=
-  valuation_algEquiv_apply_of_isAlgebraic σ x
 
 end Check
 

@@ -4,7 +4,8 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CodimOneIntegralSub
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlagBundleProductOfEach
 import Development.AbelianVarietyTheory.Definitions.Divisors.GenericPointAsIdeal
 import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.SheetUnsheet
-import Development.AutomorphicSpectrum.PublishedTheorems.Divisibility₂.PairingExists
+import Mathlib
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.EqOfIsometricTrivShift
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Filter Topology MeasureTheory
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)

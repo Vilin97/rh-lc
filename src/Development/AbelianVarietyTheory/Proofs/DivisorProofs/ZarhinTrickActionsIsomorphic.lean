@@ -42,10 +42,6 @@ def preHom {X Y M : Over S} [GrpObj M] (f : X ⟶ Y) : (Y ⟶ M) →* (X ⟶ M) 
 def postHom {X M N : Over S} [GrpObj M] [GrpObj N] (g : M ⟶ N) [IsMonHom g] : (X ⟶ M) →* (X ⟶ N) :=
   MonoidHom.mk' (fun f => f ≫ g) (fun a b => MonObj.mul_comp a b g)
 
-@[simp] theorem preHom_apply {X Y M : Over S} [GrpObj M] (f : X ⟶ Y) (g : Y ⟶ M) : preHom f g = f ≫ g := rfl
-@[simp] theorem postHom_apply {X M N : Over S} [GrpObj M] [GrpObj N] (g : M ⟶ N) [IsMonHom g] (f : X ⟶ M) :
-    postHom g f = f ≫ g := rfl
-
 theorem comp_zpow' {X Y M : Over S} [GrpObj M] (f : X ⟶ Y) (g : Y ⟶ M) (n : ℤ) : f ≫ g ^ n = (f ≫ g) ^ n :=
   map_zpow (preHom f) g n
 

@@ -18,15 +18,6 @@ lemma pullbackUnitApp_smul_at (g : T ⟶ U) (N : U.Modules) (O : U.Opens) (a : �
     Etale.pullbackUnitApp g N O (a • n) = g.app O a • Etale.pullbackUnitApp g N O n :=
   Scheme.Modules.Hom.app_smul _ a n
 
-def sectionLinearAt {X : Scheme.{u}} {P P' : X.Modules} (θ : P ⟶ P') (O : X.Opens) :
-    Γ(P, O) →ₗ[Γ(X, O)] Γ(P', O) where
-  toFun := θ.app O
-  map_add' := map_add _
-  map_smul' := Scheme.Modules.Hom.app_smul θ
-
-@[simp] lemma sectionLinearAt_apply {X : Scheme.{u}} {P P' : X.Modules} (θ : P ⟶ P')
-    (O : X.Opens) (x : Γ(P, O)) : sectionLinearAt θ O x = θ.app O x := rfl
-
 def IsBaseChangeAt (g : T ⟶ U) (N : U.Modules) (O : U.Opens) : Prop :=
   ∀ (Q : Type u) [AddCommGroup Q] [Module Γ(T, g ⁻¹ᵁ O) Q] (ψ : Γ(N, O) →+ Q),
     (∀ (a : Γ(U, O)) (n : Γ(N, O)), ψ (a • n) = g.app O a • ψ n) →

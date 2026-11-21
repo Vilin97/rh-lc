@@ -14,8 +14,6 @@ open Ad3 Ad3.R
 
 namespace GlobalTheory.CompanionTheory.RSLift
 
-local notation "𝔸f" => FiniteAdeleRing (𝓞 ℚ) ℚ
-
 set_option linter.unusedSectionVars false
 set_option linter.unnecessarySimpa false
 

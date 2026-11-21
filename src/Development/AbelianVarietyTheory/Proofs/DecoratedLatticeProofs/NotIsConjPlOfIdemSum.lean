@@ -1,7 +1,6 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.TowerIsChain
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.MiPinnedWithFinIff
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.LevelLawOfPairLaw
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IdemOfIsPrimeIdem
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ContDiffDerivSnoc
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ParahoricLevelLiftsExist

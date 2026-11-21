@@ -2,9 +2,8 @@ import ReciprocityTheory.GroupCohomology.TransgressionStatement
 import ReciprocityTheory.GroupCohomology.DEqZeroOfMemB
 import ReciprocityTheory.GroupCohomology.ConnNatHolds
 import ReciprocityTheory.GroupCohomology.FinGen
-import ReciprocityTheory.GroupCohomology.FiberFirstH0Injective
-import ReciprocityTheory.GroupCohomology.ProdHolds
-import ReciprocityTheory.GroupCohomology.EqZeroOfLe
+import ReciprocityTheory.GroupCohomology.CupConnRightStatement
+import Mathlib
 import ReciprocityTheory.GroupCohomology.RankLenA
 
 namespace ReciprocityTheory.Coh

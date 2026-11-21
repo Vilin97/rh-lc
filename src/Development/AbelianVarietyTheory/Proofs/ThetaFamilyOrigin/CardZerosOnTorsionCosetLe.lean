@@ -77,8 +77,6 @@ variable {K : Type} [Field K] {X : Scheme.{0}}
 def constHom (p : X ⟶ Sp K) (U : X.Opens) : K →+* Γ(X, U) :=
   RingHom.comp (p.appLE ⊤ U le_top).hom (Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom
 
-theorem constHom_apply (p : X ⟶ Sp K) (U : X.Opens) (a : K) : constHom p U a = constFn p U a := rfl
-
 theorem res_constFn (p : X ⟶ Sp K) {U V : X.Opens} (h : V ≤ U) (a : K) :
     resG X h (constFn p U a) = constFn p V a :=
   congrArg (fun q => q.hom ((Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom a))

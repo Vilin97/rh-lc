@@ -13,9 +13,6 @@ variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 def compE (e : W ≃ₗ[ℂ] W') : (GAf L n → W) ≃ₗ[ℂ] (GAf L n → W') :=
   LinearEquiv.piCongrRight fun _ => e
 
-@[simp] theorem compE_apply (e : W ≃ₗ[ℂ] W') (f : GAf L n → W) (g : GAf L n) :
-    compE (L := L) (n := n) e f g = e (f g) := rfl
-
 theorem compE_symm (e : W ≃ₗ[ℂ] W') : compE (L := L) (n := n) e.symm = (compE e).symm :=
   LinearEquiv.ext fun _ => rfl
 

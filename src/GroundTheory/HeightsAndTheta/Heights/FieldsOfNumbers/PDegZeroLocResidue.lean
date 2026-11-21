@@ -18,9 +18,6 @@ namespace DegZeroLocResidue
 
 variable {F : Type u} [Field F] {K : Type} [DecidableEq K] {ι : K → Type}
 
-local notation "fr" Q:max h:max =>
-  algebraMap (_ ⧸ Q) (FractionRing (_ ⧸ Q)) (Ideal.Quotient.mk Q h)
-
 omit [DecidableEq K] in
 
 theorem fr_ne_zero (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [Q.IsPrime] {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hh : h ∉ Q) :

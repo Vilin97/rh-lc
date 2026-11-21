@@ -1,4 +1,3 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.BaseChangeUnits.LiftC
 import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.CyclicBaseChangeC
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Hypotheses2
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.BcDefs
@@ -10,12 +9,6 @@ open GlobalTheory.CuspRep GlobalTheory.HeckeGal GlobalTheory.GalOfCusp UpperTheo
 open scoped Matrix
 
 namespace UpperTheory.V.Sd
-
-structure Hypotheses₂ : Prop where
-  af : Af.Hypotheses₂
-  hida : Published.HidaGal
-  adj : Published.AdjointLift
-  bc : Z.Bc.LiftC
 
 section Sym
 
@@ -44,8 +37,6 @@ variable {Γ k : Type} [Group Γ] [Field k]
 
 def ad0 (ρ : Γ →* GL (Fin 2) k) : Γ →* GL (Fin 3) k :=
   tw ((Units.map (symSquareMatrixHom k)).comp ρ) (Matrix.GeneralLinearGroup.det.comp ρ)⁻¹
-
-def sym3 (ρ : Γ →* GL (Fin 2) k) : Γ →* GL (Fin 4) k := (Units.map (symCubeMatrixHom k)).comp ρ
 
 def IrrOpen [TopologicalSpace Γ] {n : ℕ} (r : Γ →* GL (Fin n) k) : Prop :=
   ∀ H : Subgroup Γ, IsOpen (H : Set Γ) → IsIrr (r.comp H.subtype)

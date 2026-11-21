@@ -49,8 +49,6 @@ def fixRep : Representation R D (fix ρ J) where
     show ρ (g * h) m = ρ g (ρ h m)
     rw [map_mul]; rfl
 
-@[simp] theorem fixRep_apply (g : D) (m : fix ρ J) : ((fixRep ρ J g m : fix ρ J) : M) = ρ g m := rfl
-
 theorem contAction_fixRep (h : ContAction ρ) : ContAction (fixRep ρ J) :=
   continuous_induced_rng.2 (h.comp (continuous_fst.prodMk (continuous_subtype_val.comp continuous_snd)))
 

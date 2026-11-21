@@ -20,9 +20,6 @@ structure NewLev (D : D7) (N : Type) where
   Q : N → Finset (Pl D.host.E)
   xiR : N → ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ
 
-def NewLev.ofTuples (L : LevCh D T) (s : N → T) : NewLev D N :=
-  ⟨fun n => L.xiH (s n), fun n => L.xi (s n), fun n => L.Q (s n), fun n => L.xiR (s n)⟩
-
 def extL (L : LevCh D T) (V : NewLev D N) : LevCh D (T ⊕ N) :=
   { L with
     xiH := Sum.elim L.xiH V.xiH
@@ -57,9 +54,6 @@ def extA {K : Type} [Field K] [NumberField K] [StarRing K] {m : ℕ} (A : FamIn 
   MtCSD j := Sum.elim (A.MtCSD j) (X.SL j)
   leftGroupActionLift j τ := Sum.rec (A.leftGroupActionLift j) (X.actL j) τ
   heckeL j τ := Sum.rec (A.heckeL j) (X.opL j) τ
-
-theorem extA_comap {K : Type} [Field K] [NumberField K] [StarRing K] {m : ℕ} (A : FamIn K G Pl0 T m)
-    (X : NewFam A N) : (extA A X).comap Sum.inl A.μ0 = A := rfl
 
 variable {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
@@ -164,8 +158,6 @@ def extR (R : RealDat D A Ks) {V : NewLev D N} {X : NewFam A N} (Y : NewReal R V
   err0 := R.err0
 
 set_option maxHeartbeats 4000000 in
-theorem extR_comap (R : RealDat D A Ks) {V : NewLev D N} {X : NewFam A N} (Y : NewReal R V X) :
-    (extR R Y).comap Sum.inl A.μ0 R.mu R.twPl R.FW R.kap R.lam R.err0 = R := rfl
 
 section Ties
 

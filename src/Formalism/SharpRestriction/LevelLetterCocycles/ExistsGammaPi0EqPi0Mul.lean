@@ -18,8 +18,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
 
 variable (W : LocWach PD LL O v n)
 
-local notation "ιE" => algebraMap (LetA O n) W.EE
-
 abbrev γL : Module.End O W.EE := (W.γE W.gam).toLinearMap
 
 def fac (e : ℕ) (i : ℤ) : Polynomial O :=
@@ -79,13 +77,6 @@ theorem inFr_lE {a : ZMod n} {num den : LetA O n} {f : W.EE} (h : InFr W a num d
 theorem inFr_congr {a : ZMod n} {num num' den den' : LetA O n} {f : W.EE} (hn : num = num')
     (hd : den = den') (h : InFr W a num den f) : InFr W a num' den' f := by
   subst hn hd; exact h
-
-theorem prod_ps_split (hπ : W.π₀ ∈ W.AΔ) (e : ℕ) (b a d : ℕ → ℕ)
-    (h : ∀ s ∈ Finset.range e, b s = a s + d s) :
-    (∏ s ∈ Finset.range e, ps W s ^ b s) =
-      (∏ s ∈ Finset.range e, ps W s ^ a s) * ∏ s ∈ Finset.range e, ps W s ^ d s := by
-  rw [← Finset.prod_mul_distrib]
-  exact Finset.prod_congr rfl fun s hs => by rw [h s hs, pow_add]
 
 theorem prod_ps_mem (hπ : W.π₀ ∈ W.AΔ) (e : ℕ) (d : ℕ → ℕ) :
     (∏ s ∈ Finset.range e, ps W s ^ d s) ∈ W.AΔ := by
@@ -273,9 +264,6 @@ theorem inFr_of_inId {a : ZMod n} (e : ℕ) (α δ : ℕ → ℕ) (h : ∀ s ∈
   refine inFr_congr W ?_ ?_ hf
   · exact Finset.prod_congr rfl fun s hs => by rw [(toNat_sub_of (α s) (δ s) (h s hs)).1]
   · exact Finset.prod_congr rfl fun s hs => by rw [(toNat_sub_of (α s) (δ s) (h s hs)).2]
-
-theorem prod_zero_pow (e : ℕ) : (∏ s ∈ Finset.range e, ps W s ^ (fun _ => (0 : ℕ)) s) = 1 := by
-  simp
 
 section Pi0
 
@@ -489,9 +477,6 @@ theorem mem_JS_down (A : ArcP n) {c : ZMod n} {s : ℕ} (hs : s < A.len c) {b : 
   refine ⟨s, Finset.mem_range.2 hs, ?_⟩
   rw [hτ]
   exact hi
-
-theorem lam_eq (A : ArcP n) (c : ZMod n) (e : ℕ) :
-    abelian₂ W A c e = ∏ s ∈ Finset.range e, ps W s ^ A.Hs c e s := rfl
 
 theorem inId_Lam {A : ArcP n} {c : ZMod n} {e : ℕ} {f : W.EE} (h : InFr W c 1 (abelian₂ W A c e) f) :
     InId W c e (fun s => ((0 : ℕ) : ℤ) - (A.Hs c e s : ℕ)) f := by

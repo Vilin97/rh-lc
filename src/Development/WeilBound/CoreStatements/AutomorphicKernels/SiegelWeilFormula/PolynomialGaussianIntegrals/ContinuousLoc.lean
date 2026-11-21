@@ -37,18 +37,6 @@ theorem continuous_fin : Continuous (fin d) := by
   unfold fin
   exact continuous_pi fun k => continuous_snd.comp ((continuous_apply k).comp (KFock.continuous_crd d))
 
-theorem loc_add (R : RD d) (w : InfinitePlace F) (X Y : Mx F E d.m d.n) :
-    R.loc w (X + Y) = R.loc w X + R.loc w Y := by
-  unfold RD.loc SD.cw
-  rw [Matrix.map_add _ (map_add _), Matrix.mul_add, Matrix.map_add _ (fun a b => star_add a b)]
-  rfl
-
-theorem arc_add' (R : RD d) (X Y : Mx F E d.m d.n) : arc R (X + Y) = arc R X + arc R Y := by
-  unfold arc
-  rw [← map_add (f := _)]
-  congr 1
-  split_ifs <;> simp
-
 theorem homeo_symm_eq (x : mixedEmbedding.mixedSpace F) :
     (GroundTheory.Global.homeomorphMixedSpace F).symm x = (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm x := by
   apply (InfiniteAdeleRing.ringEquiv_mixedSpace F).injective

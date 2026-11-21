@@ -1,7 +1,6 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
 import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThLiftDef
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StrongApproximationSplitPlaceSkewHermitianUnitar
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsPlaceSplitsCompletelyNotMemEmbedding
 open scoped TensorProduct NNReal Matrix
@@ -34,7 +33,5 @@ def N1 (σ : E →ₐ[F] E) : Subgroup (AE F E)ˣ where
       _ = 1 := by rw [h1, Units.inv_mul, one_mul]
 
 theorem mem_normOneIdeles {σ : E →ₐ[F] E} {z : (AE F E)ˣ} : z ∈ N1 F E σ ↔ (z : AE F E) * cA σ (z : AE F E) = 1 := Iff.rfl
-
-example (σ : E →ₐ[F] E) : (1 : (AE F E)ˣ) ∈ N1 F E σ := (N1 F E σ).one_mem
 
 end GlobalTheory.NormOneIdele

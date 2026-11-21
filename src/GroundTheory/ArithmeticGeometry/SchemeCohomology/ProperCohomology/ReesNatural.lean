@@ -119,19 +119,9 @@ section Base
 
 variable {A : Type u} [CommRing A] (I : Ideal A) (X : Scheme.{u}) [X.Over (Spec (.of A))]
 
-instance [LocallyOfFiniteType (X ↘ Spec (.of A))] :
-    LocallyOfFiniteType (reesScheme I X ↘ Spec (.of (reesAlgebra I))) := by
-  change LocallyOfFiniteType (pullback.snd (X ↘ Spec (.of A)) (reesStructure I))
-  infer_instance
-
 variable {I X}
 
 attribute [local instance] algebraOfOver in
-
-lemma reesInr_eq_resO_algebraMap (V : X.Opens) (r : reesAlgebra I) :
-    reesInr I V r = resO (le_top : reesPr I X ⁻¹ᵁ V ≤ ⊤)
-      (algebraMap (reesAlgebra I) Γ(reesScheme I X, ⊤) r) :=
-  rfl
 
 end Base
 

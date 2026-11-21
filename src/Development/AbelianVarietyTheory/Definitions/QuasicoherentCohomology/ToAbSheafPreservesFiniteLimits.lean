@@ -19,19 +19,8 @@ def toAbSheaf : X.Modules ⥤ Sheaf (Opens.grothendieckTopology X) AddCommGrpCat
 instance toAbSheaf_additive : (toAbSheaf X).Additive :=
   inferInstanceAs (SheafOfModules.toSheaf X.ringCatSheaf).Additive
 
-instance toAbSheaf_faithful : (toAbSheaf X).Faithful :=
-  inferInstanceAs (SheafOfModules.toSheaf X.ringCatSheaf).Faithful
-
-instance toAbSheaf_reflectsIsomorphisms : (toAbSheaf X).ReflectsIsomorphisms :=
-  inferInstanceAs (SheafOfModules.toSheaf X.ringCatSheaf).ReflectsIsomorphisms
-
 instance toAbSheaf_preservesFiniteLimits : PreservesFiniteLimits (toAbSheaf X) :=
   inferInstanceAs (PreservesFiniteLimits (SheafOfModules.toSheaf X.ringCatSheaf))
-
-@[simp] lemma toAbSheaf_obj_obj (F : X.Modules) : ((toAbSheaf X).obj F).obj = F.presheaf := rfl
-
-@[simp] lemma toAbSheaf_map_hom_app {F G : X.Modules} (φ : F ⟶ G) (U : X.Opens) :
-    ((toAbSheaf X).map φ).hom.app (op U) = φ.app U := rfl
 
 abbrev restrictGlobal (X : Scheme.{u}) (U : X.Opens) : Γ(X, ⊤) →+* Γ(X, U) :=
   (X.presheaf.map (homOfLE le_top : U ⟶ ⊤).op).hom
@@ -72,12 +61,10 @@ lemma smulHom_mul (F : X.Modules) (r s : Γ(X, ⊤)) :
     smulHom F (r * s) = smulHom F s ≫ smulHom F r := by
   ext U x; rw [smulHom_app_apply, map_mul, mul_smul]; rfl
 
-@[reassoc] lemma smulHom_comp {F G : X.Modules} (φ : F ⟶ G) (r : Γ(X, ⊤)) :
     smulHom F r ≫ φ = φ ≫ smulHom G r := by
   ext U x
   exact φ.app_smul (restrictGlobal X U r) x
 
-@[simps] def smulEnd (F : X.Modules) : Γ(X, ⊤) →+* End F where
   toFun := smulHom F
   map_one' := smulHom_one F
   map_mul' := smulHom_mul F
@@ -103,9 +90,6 @@ lemma smul_hom_def {F G : X.Modules} (r : Γ(X, ⊤)) (φ : F ⟶ G) : r • φ 
 
 lemma smulHom_eq_smul_id (F : X.Modules) (r : Γ(X, ⊤)) : smulHom F r = r • 𝟙 F :=
   (Category.id_comp _).symm
-
-@[simp] lemma smul_app_apply {F G : X.Modules} (r : Γ(X, ⊤)) (φ : F ⟶ G) (U : X.Opens)
-    (x : Γ(F, U)) : (r • φ).app U x = restrictGlobal X U r • φ.app U x := rfl
 
 @[reducible] def addCommGroupOfAction {A M : Type*} [CommRing A] (inst : AddCommGroup M)
     (ρ : A →+* AddMonoid.End M) : AddCommGroup M :=
@@ -153,9 +137,6 @@ instance instModule : Module R (WithAction ρ) where
     change ρ (algebraMap R A 0) x = _
     rw [map_zero, map_zero]; rfl
 
-example : instModule ρ ℤ = AddCommGroup.toIntModule (WithAction ρ) := by
-  with_reducible_and_instances rfl
-
 variable {R} in
 
 lemma toBase_smul (r : R) (x : WithAction ρ) :
@@ -166,12 +147,6 @@ instance instIsScalarTower (S : Type*) [CommRing S] [Algebra S A] [Algebra R S]
   .of_algebraMap_smul fun r x ↦ by
     apply (toBase ρ).injective
     rw [toBase_smul, toBase_smul, ← IsScalarTower.algebraMap_apply]
-
-instance instSMulCommClass (S : Type*) [CommRing S] [Algebra S A] :
-    SMulCommClass R S (WithAction ρ) where
-  smul_comm r s x := by
-    rw [← algebraMap_smul A r, ← algebraMap_smul A s, ← algebraMap_smul A r,
-      ← algebraMap_smul A s (_ • x), smul_smul, smul_smul, mul_comm]
 
 def linearMap (f : M →+ N) (h : ∀ a x, f (ρ a x) = σ a (f x)) :
     WithAction ρ →ₗ[R] WithAction σ where
@@ -191,12 +166,8 @@ def linearEquiv (f : M ≃+ N) (h : ∀ a x, f (ρ a x) = σ a (f x)) :
   map_add' := f.map_add
   map_smul' _ x := h _ x
 
-lemma toBase_linearEquiv (f : M ≃+ N) (h : ∀ a x, f (ρ a x) = σ a (f x)) (x : WithAction ρ) :
-    toBase σ (linearEquiv ρ σ R f h x) = f (toBase ρ x) := rfl
-
 end WithAction
 
-@[simps] def functorEndRingHom {C D : Type*} [Category C] [Category D] [Preadditive C]
     [Preadditive D] (G : C ⥤ D) [G.Additive] (Y : C) : End Y →+* End (G.obj Y) where
   toFun f := G.map f
   map_one' := G.map_id Y

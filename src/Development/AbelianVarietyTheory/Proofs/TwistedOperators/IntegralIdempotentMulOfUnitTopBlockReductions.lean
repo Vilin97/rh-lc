@@ -17,8 +17,6 @@ namespace GlobalTheory.HalfUnit
 
 variable {D : D7}
 
-local notation "SI" => Formalism.L2.Herm.intAf D.host.F D.host.E
-
 def liftI {b a : ℕ} (N : Matrix (Fin b) (Fin a) (EAf D)) (h : IsIntM N) : Matrix (Fin b) (Fin a) SI :=
   Matrix.of fun i j => ⟨N i j, h i j⟩
 
@@ -111,12 +109,6 @@ theorem topL_mul {m n : ℕ} (hnm : n ≤ m) (A : Matrix (Fin m) (Fin n) (EAf D)
   rw [topL_pos _ ⟨hi, j.2⟩, Matrix.mul_apply, Matrix.mul_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [topL_pos _ ⟨hi, k.2⟩]
-
-theorem topL_smul {m n : ℕ} (c : EAf D) (A : Matrix (Fin m) (Fin n) (EAf D)) : topL n (c • A) = c • topL n A := by
-  ext i j
-  by_cases h : i.val < m ∧ j.val < n
-  · rw [topL_pos _ h, Matrix.smul_apply, Matrix.smul_apply, topL_pos _ h]
-  · rw [topL_neg _ h, Matrix.smul_apply, topL_neg _ h, smul_zero]
 
 end GlobalTheory.HalfUnit
 

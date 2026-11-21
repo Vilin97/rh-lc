@@ -1,6 +1,6 @@
 import Mathlib
 import Formalism.LocalToGlobal.IndefiniteReal.ExistsChosenExtremalVector
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.WeightFlagWeyl
+import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
 
 noncomputable section
 

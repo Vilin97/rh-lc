@@ -78,9 +78,6 @@ def lieVal (K : Type) [Field K] (B : Over (Sp K)) [GrpObj B] [IsCommMonObj B] :
   map_add' v w := LinearMap.ext fun f ↦ tanVal_mul v.isTangent w.isTangent f
   map_smul' r v := LinearMap.ext fun f ↦ tanVal_epsScale r v.hom f
 
-theorem lieVal_apply (K : Type) [Field K] (B : Over (Sp K)) [GrpObj B] [IsCommMonObj B]
-    (v : Serre.Lie (Serre.intAct B)) : lieVal K B v = tanVal v.hom := rfl
-
 theorem eq_of_tanVal_eq : GlobalTheory.Published.CrystallineSmoothLift → GlobalTheory.Published.AbelianHodgeDeRham → ∀ (K : Type) [Field K] (B : Over (Sp K)) [GrpObj B] (g : ℕ), IsAbelianScheme B → SmoothOfRelativeDimension g B.hom → ∀ v w : epsR K ⟶ B, IsTangent v → IsTangent w → (∀ f : Form (B.hom ≫ 𝟙 (Sp K)), tanVal v f = tanVal w f) → v = w := by
   intro hC hH K _ B _ g hab hdim v w hv hw h
   haveI := hab.comm

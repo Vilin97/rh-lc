@@ -8,8 +8,6 @@ namespace GroundTheory.ProfCoh
 
 open NumberField IsDedekindDomain GroundTheory.Global DirectSum
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 theorem QZ.nsmul_mk (j : ℕ) (r : ℚ) : j • QZ.mk r = QZ.mk (j * r) := by

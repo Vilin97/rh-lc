@@ -46,9 +46,6 @@ theorem trans_comp_proj (e : ℕ) (G : Over (Spec (CommRingCat.of R))) :
 variable {D : DegData R I} {A : PolAV (Spec (CommRingCat.of (FractionRing R)))}
   {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G] (U : UnifPre I D A G)
 
-theorem pG_left (e : ℕ) :
-    (U.gt e).pG.left = (U.gt e).q.left ≫ (fstG I e D.toPre.P.A).left := rfl
-
 theorem trans_comp_q (e : ℕ) :
     thickMap R I e G ≫ (U.gt (e + 1)).q.left = (U.gt e).q.left ≫ thickMap R I e D.toPre.P.A := by
   apply pullback.hom_ext

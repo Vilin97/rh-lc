@@ -82,9 +82,6 @@ theorem sa_val {n : ℕ} (i : Fin (n + 1)) (m : Fin n) :
   unfold Fin.succAbove
   split_ifs <;> simp_all [Fin.lt_def]
 
-local macro "fa" : tactic =>
-  `(tactic| (simp only [sa_val, Fin.val_castSucc, Fin.val_succ, Fin.val_last]; split_ifs <;> omega))
-
 theorem ga_congr (i : Fin d) {n : ℕ} (s : ComposableArrows C n) {p q p' q' : Fin (n + 1)} (h : p ≤ q) (h' : p' ≤ q')
     (hp : (p : ℕ) = p') (hq : (q : ℕ) = q') : ga E σ i s p q h = ga E σ i s p' q' h' := by
   obtain rfl := Fin.ext hp

@@ -168,19 +168,6 @@ theorem trace_coord (B : Basis (Fin 2) R S) (hB : B 0 = 1) {a b : R}
   rw [this, repr_coord_one B hB]
   ring
 
-theorem norm_coord (B : Basis (Fin 2) R S) (hB : B 0 = 1) {a b : R}
-    (hab : B 1 * B 1 = algebraMap R S b + algebraMap R S a * B 1) (r s : R) :
-    Algebra.norm R (algebraMap R S r + algebraMap R S s * B 1)
-      = r * (r + s * a) - s * b * s := by
-  have : (algebraMap R S r + algebraMap R S s * B 1) * B 1
-      = algebraMap R S (s * b) + algebraMap R S (r + s * a) * B 1 := by
-    simp only [map_add (f := _), map_mul]
-    linear_combination (algebraMap R S s) * hab
-  rw [Algebra.norm_eq_matrix_det B, Matrix.det_fin_two, Algebra.leftMulMatrix_eq_repr_mul,
-    Algebra.leftMulMatrix_eq_repr_mul, Algebra.leftMulMatrix_eq_repr_mul,
-    Algebra.leftMulMatrix_eq_repr_mul, hB, mul_one, this, repr_coord_zero B hB,
-    repr_coord_zero B hB, repr_coord_one B hB, repr_coord_one B hB]
-
 theorem isUnit_different [Algebra.FormallyUnramified R S] (B : Basis (Fin 2) R S) (hB : B 0 = 1)
     {a b : R} (hab : B 1 * B 1 = algebraMap R S b + algebraMap R S a * B 1) :
     IsUnit (2 * B 1 - algebraMap R S a) := by
@@ -315,31 +302,6 @@ theorem add_apply_eq_trace (hrank : finrank R S = 2) (σ : S ≃ₐ[R] S) (hσ :
   simp only [map_add (f := _), map_mul, AlgEquiv.commutes, h, map_ofNat]
   ring
 
-theorem apply_apply (hrank : finrank R S = 2) (σ : S ≃ₐ[R] S) (hσ : σ ≠ 1) (x : S) :
-    σ (σ x) = x := by
-  have h := add_apply_eq_trace hrank σ hσ x
-  have h2 := congrArg σ h
-  rw [map_add (f := _), AlgEquiv.commutes] at h2
-  linear_combination h2 - h
-
-theorem exists_isUnit_sub (hrank : finrank R S = 2) (σ : S ≃ₐ[R] S) (hσ : σ ≠ 1) :
-    ∃ ω, IsUnit (ω - σ ω) := by
-  obtain ⟨B, hB⟩ := exists_basis_one hrank
-  have hab := eq_coord B hB (B 1 * B 1)
-  refine ⟨B 1, ?_⟩
-  rw [apply_eq_of_ne_one B hB hab σ hσ]
-  convert isUnit_different B hB hab using 1
-  ring
-
-theorem mem_range_of_fixed (hrank : finrank R S = 2) (σ : S ≃ₐ[R] S) (hσ : σ ≠ 1) (x : S)
-    (hx : σ x = x) : x ∈ (algebraMap R S).range := by
-  obtain ⟨t, ht⟩ := exists_add_eq_one (σ : S →+* S) (apply_apply hrank σ hσ)
-    (exists_isUnit_sub hrank σ hσ)
-  refine ⟨Algebra.trace R S (t * x), ?_⟩
-  rw [← add_apply_eq_trace hrank σ hσ, map_mul, hx]
-  simp only [RingHom.coe_coe] at ht
-  linear_combination x * ht
-
 theorem existsUnique_ne_one (hrank : finrank R S = 2) : ∃! σ : S ≃ₐ[R] S, σ ≠ 1 := by
   haveI : Nontrivial S := Module.nontrivial_of_finrank_pos (R := R) (by omega)
   refine existsUnique_of_exists_of_unique ?_ fun σ τ hσ hτ => ?_
@@ -387,19 +349,6 @@ theorem existsUnique_ne_one (hrank : finrank R S = 2) : ∃! σ : S ≃ₐ[R] S,
   rw [show 2 * B 1 - algebraMap R S a = 0 by linear_combination h2] at h3
   exact not_isUnit_zero h3
 
-theorem trace_surjective (hrank : finrank R S = 2) :
-    Function.Surjective (Algebra.trace R S) := by
-  haveI : Nontrivial S := Module.nontrivial_of_finrank_pos (R := R) (by omega)
-  obtain ⟨σ, hσ, -⟩ := existsUnique_ne_one hrank
-  obtain ⟨t, ht⟩ := exists_add_eq_one (σ : S →+* S) (apply_apply hrank σ hσ)
-    (exists_isUnit_sub hrank σ hσ)
-  have h1 : Algebra.trace R S t = 1 := by
-    apply FaithfulSMul.algebraMap_injective R S
-    rw [← add_apply_eq_trace hrank σ hσ, map_one]
-    exact ht
-  intro r
-  exact ⟨r • t, by rw [map_smul, h1, smul_eq_mul, mul_one]⟩
-
 section Star
 
 variable [StarRing S]
@@ -407,13 +356,5 @@ variable [StarRing S]
 end Star
 
 end Unramified
-
-example (R : Type) [CommRing R] [IsLocalRing R] : ∃! σ : (R × R) ≃ₐ[R] (R × R), σ ≠ 1 := by
-  haveI : Algebra.FormallyUnramified R (Fin 2 → R) :=
-    (Algebra.FormallyUnramified.pi_iff (R := R) fun _ : Fin 2 => R).2 fun _ => inferInstance
-  haveI : Algebra.FormallyUnramified R (R × R) :=
-    Algebra.FormallyUnramified.of_equiv
-      (AlgEquiv.ofRingEquiv (f := RingEquiv.piFinTwo fun _ : Fin 2 => R) fun _ => rfl)
-  exact existsUnique_ne_one (by simp)
 
 end GlobalTheory.QuadraticEtale

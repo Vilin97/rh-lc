@@ -78,9 +78,6 @@ open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 
 variable (F : Type) [Field F] [NumberField F]
 
-def ratV (r : ℕ) : AddSubgroup (Fin r → AF F) :=
-  (AddMonoidHom.compLeft (algebraMap F (AF F)).toAddMonoidHom (Fin r)).range
-
 end Cent
 
 section Frame

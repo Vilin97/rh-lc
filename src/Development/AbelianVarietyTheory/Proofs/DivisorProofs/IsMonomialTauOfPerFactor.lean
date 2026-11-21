@@ -1,7 +1,6 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsUnifOfIsMumfordOf
-import Development.AbelianVarietyTheory.Definitions.Divisors.PerFactor
-import ReciprocityTheory.CommutativeAlgebra.PowerSeriesPresentations.PresentationStatement
+import ReciprocityTheory.CommutativeAlgebra.ChainConnInDim
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsMumfordFamOfSubsingleton
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsOfPoint
 

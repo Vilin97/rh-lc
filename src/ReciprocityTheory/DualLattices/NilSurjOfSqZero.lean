@@ -51,9 +51,6 @@ lemma LHom.exists_unit_lift {R S : LAlg R₀} (π : LHom R S) (hs : Function.Sur
 def unitSub {A : Type u} [CommRing A] (e : A) (he : e * e = 0) : Aˣ :=
   ⟨1 - e, 1 + e, by linear_combination -he, by linear_combination -he⟩
 
-@[simp] lemma unitSub_val {A : Type u} [CommRing A] (e : A) (he : e * e = 0) :
-    (unitSub e he : A) = 1 - e := rfl
-
 section FP
 
 variable {R₁ R₂ R : LAlg R₀} (f₁ : LHom R₁ R) (f₂ : LHom R₂ R)
@@ -106,10 +103,6 @@ def FP.p₂ : LHom (FP f₁ f₂) R₂ :=
   ⟨(AlgHom.snd R₀ R₁ R₂).comp (fpSub f₁ f₂).val, ⟨fun x h => fp_isUnit f₁ f₂ x
     (f₁.2.map_nonunit _ (by convert h.map f₂.1 using 1; exact FP.mem f₁ f₂ x))⟩⟩
 
-@[simp] lemma FP.p₁_apply (x : (FP f₁ f₂ : Type u)) : (FP.p₁ f₁ f₂).1 x = x.1.1 := rfl
-
-@[simp] lemma FP.p₂_apply (x : (FP f₁ f₂ : Type u)) : (FP.p₂ f₁ f₂).1 x = x.1.2 := rfl
-
 lemma FP.ext {x y : (FP f₁ f₂ : Type u)} (h1 : x.1.1 = y.1.1) (h2 : x.1.2 = y.1.2) : x = y :=
   Subtype.ext (Prod.ext h1 h2)
 
@@ -123,14 +116,6 @@ def FP.lift {T : LAlg R₀} (g₁ : LHom T R₁) (g₂ : LHom T R₂)
     (h : ∀ t, f₁.1 (g₁.1 t) = f₂.1 (g₂.1 t)) : LHom T (FP f₁ f₂) :=
   ⟨(g₁.1.prod g₂.1).codRestrict (fpSub f₁ f₂) (fun t => (mem_fpSub f₁ f₂ _).2 (h t)),
     ⟨fun t ht => g₁.2.map_nonunit t (ht.map (FP.p₁ f₁ f₂).1)⟩⟩
-
-@[simp] lemma FP.lift_fst {T : LAlg R₀} (g₁ : LHom T R₁) (g₂ : LHom T R₂)
-    (h : ∀ t, f₁.1 (g₁.1 t) = f₂.1 (g₂.1 t)) (t : (T : Type u)) :
-    ((FP.lift f₁ f₂ g₁ g₂ h).1 t).1.1 = g₁.1 t := rfl
-
-@[simp] lemma FP.lift_snd {T : LAlg R₀} (g₁ : LHom T R₁) (g₂ : LHom T R₂)
-    (h : ∀ t, f₁.1 (g₁.1 t) = f₂.1 (g₂.1 t)) (t : (T : Type u)) :
-    ((FP.lift f₁ f₂ g₁ g₂ h).1 t).1.2 = g₂.1 t := rfl
 
 end FP
 

@@ -207,10 +207,6 @@ def cechH.linearMap {F G : X.Modules} (φ : F ⟶ G) (n : ℕ) :
     rw [← cechHMap_comp, ← cechHMap_comp]
     exact congrArg (fun f => cechHMap U f n x) h
 
-lemma cechH.linearMap_apply {F G : X.Modules} (φ : F ⟶ G) (n : ℕ)
-    (x : cechH (modulesAb F).obj U n) :
-    cechH.linearMap U A φ n x = cechHMap U (modulesAbMap φ).hom n x := rfl
-
 end Module
 
 end

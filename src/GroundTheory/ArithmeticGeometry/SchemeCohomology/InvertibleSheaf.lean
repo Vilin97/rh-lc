@@ -58,18 +58,11 @@ noncomputable def tensorLift {M N G : X.Modules}
     (e : (preMod X).obj M ⊗ (preMod X).obj N ⟶ (preMod X).obj G) : M ⊗ N ⟶ G :=
   (tensorIso M N).inv ≫ ((sheafifyModAdj X).homEquiv _ _).symm e
 
-@[reassoc]
 lemma tensorToSheaf_tensorLift {M N G : X.Modules}
     (e : (preMod X).obj M ⊗ (preMod X).obj N ⟶ (preMod X).obj G) :
     tensorToSheaf M N ≫ (preMod X).map (tensorLift e) = e := by
   rw [tensorToSheaf, tensorLift, Category.assoc, ← Functor.map_comp, Iso.hom_inv_id_assoc,
     ← Adjunction.homEquiv_unit, Equiv.apply_symm_apply]
-
-lemma tensorLift_unique {M N G : X.Modules}
-    (e : (preMod X).obj M ⊗ (preMod X).obj N ⟶ (preMod X).obj G) (f : M ⊗ N ⟶ G)
-    (hf : tensorToSheaf M N ≫ (preMod X).map f = e) : f = tensorLift e := by
-  rw [← hf, tensorLift, tensorToSheaf, Category.assoc, ← Functor.map_comp,
-    ← Adjunction.homEquiv_unit, Equiv.symm_apply_apply, Iso.inv_hom_id_assoc]
 
 lemma W_tensorToSheaf (M N : X.Modules) :
     ModulesTensor.W (Opens.grothendieckTopology X) X.sheaf.obj (tensorToSheaf M N) := by
@@ -124,9 +117,6 @@ lemma resM_smul (P : PMod X) {U V : X.Opens} (h : V ≤ U) (r : ringOn X U) (x :
 lemma resM_add (P : PMod X) {U V : X.Opens} (h : V ≤ U) (x y : P.obj (op U)) :
     resM P h (x + y) = resM P h x + resM P h y :=
   map_add _ _ _
-
-lemma resM_zero (P : PMod X) {U V : X.Opens} (h : V ≤ U) : resM P h (0 : P.obj (op U)) = 0 :=
-  map_zero _
 
 lemma resM_smul_res (P : PMod X) {U V W : X.Opens} (h : V ≤ U) (i : W ≤ V) (r : ringOn X V)
     (x : P.obj (op U)) : resM P i (r • resM P h x) = resR i r • resM P (i.trans h) x := by
@@ -264,23 +254,6 @@ lemma IsBasisOn.map_iso {M N : X.Modules} (e : M ≅ N) {U : X.Opens}
 def IsInvertibleSheaf (M : X.Modules) : Prop :=
   ∀ x : X, ∃ (U : X.Opens) (_ : x ∈ U) (s : ((preMod X).obj M).obj (op U)),
     IsBasisOn ((preMod X).obj M) U s
-
-lemma isInvertibleSheaf_unit : IsInvertibleSheaf (𝟙_ X.Modules) :=
-  fun _ => ⟨⊤, trivial, (1 : ringOn X ⊤), isBasisOn_one ⊤⟩
-
-lemma IsInvertibleSheaf.of_iso {M N : X.Modules} (e : M ≅ N) (hM : IsInvertibleSheaf M) :
-    IsInvertibleSheaf N := by
-  intro x
-  obtain ⟨U, hx, s, hs⟩ := hM x
-  exact ⟨U, hx, _, hs.map_iso e⟩
-
-lemma IsInvertibleSheaf.tensor {M N : X.Modules} (hM : IsInvertibleSheaf M)
-    (hN : IsInvertibleSheaf N) : IsInvertibleSheaf (M ⊗ N) := by
-  intro x
-  obtain ⟨U, hxU, s, hs⟩ := hM x
-  obtain ⟨V, hxV, t, ht⟩ := hN x
-  refine ⟨U ⊓ V, ⟨hxU, hxV⟩, _, ((hs.restrict inf_le_left).tmul (ht.restrict inf_le_right)).map_of_alt
-    (tensorToSheaf M N) (W_tensorToSheaf M N)⟩
 
 lemma isIso_of_locally_bijective {M N : X.Modules} (f : M ⟶ N)
     (hf : ∀ x : X, ∃ U : X.Opens, x ∈ U ∧ ∀ V ≤ U, Function.Bijective (f.app V)) : IsIso f := by

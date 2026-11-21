@@ -837,10 +837,6 @@ theorem IsPoly.sub {f g : ℂ → B} (hf : IsPoly f) (hg : IsPoly g) : IsPoly fu
   obtain ⟨p, hp⟩ := hf; obtain ⟨q, hq⟩ := hg
   exact ⟨p - q, fun y => by show f y - g y = _; rw [hp, hq, map_sub]⟩
 
-theorem IsPoly.neg {f : ℂ → B} (hf : IsPoly f) : IsPoly fun y => -f y := by
-  obtain ⟨p, hp⟩ := hf
-  exact ⟨-p, fun y => by show -f y = _; rw [hp, map_neg]⟩
-
 theorem IsPoly.mul {f g : ℂ → B} (hf : IsPoly f) (hg : IsPoly g) : IsPoly fun y => f y * g y := by
   obtain ⟨p, hp⟩ := hf; obtain ⟨q, hq⟩ := hg
   exact ⟨p * q, fun y => by show f y * g y = _; rw [hp, hq, map_mul]⟩
@@ -1028,19 +1024,6 @@ theorem mul_Pf_apply (X : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) B) (p : Fin 2
   fin_cases j <;> fin_cases l <;> simp [Matrix.mul_apply, Pf, Fintype.sum_prod_type]
 
 end Entries
-
-theorem ofEntries : Formalism.FourierDecayAlt.M.QQRTTOfEntries := by
-  intro H P hP Y Y'
-  apply Matrix.ext
-  rintro ⟨i, k⟩ ⟨j, l⟩
-  rw [Matrix.mul_assoc, Matrix.sub_mul, Matrix.mul_sub, Matrix.smul_mul, Matrix.mul_smul,
-    Matrix.one_mul, Matrix.mul_one, Matrix.sub_apply, Matrix.sub_apply, Matrix.smul_apply,
-    Matrix.smul_apply, Pf_mul_apply, mul_Pf_apply, kronecker_E1_E2_apply, kronecker_E1_E2_apply, kronecker_embed_mul_apply,
-    kronecker_embed_mul_apply]
-  have h := H P hP Y' Y i j k l
-  rw [smul_sub] at h
-  rw [sub_eq_sub_iff_sub_eq_sub]
-  exact h
 
 end
 
@@ -1844,9 +1827,5 @@ namespace Formalism.FourierDecayAlt.P
 
 theorem transfer_rtt_entries : Formalism.FourierDecayAlt.M.QQRTTEntries :=
   Mx6.entries_of shift_norm_relation shift_commute_relation shift_mixed_relation nabla_shift_relation m_curvature_proof
-
-theorem transfer_rtt_of_entries : Formalism.FourierDecayAlt.M.QQRTTOfEntries := Mx6.PC.ofEntries
-
-theorem transfer_rtt : Formalism.FourierDecayAlt.M.QQRTT := transfer_rtt_of_entries transfer_rtt_entries
 
 end Formalism.FourierDecayAlt.P

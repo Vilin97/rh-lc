@@ -17,9 +17,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] [CommRing O] [Algebra O LL]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
 
-local notation "ιE" => algebraMap (LetA O n) W.EE
-local notation "aev" => Polynomial.aeval (AlgHom.toLinearMap (W.γE W.gam) : Module.End O W.EE)
-
 theorem single_mem_span {d : ℕ} {ι : Type} [Fintype ι] (V : ι → Fin d → W.EE) (k : Fin d) (x : W.EE)
     (i : ι) (hV : V i = Pi.single k x) : Pi.single k x ∈ Submodule.span O (Set.range fun j : Fin (Fintype.card ι) =>
       V ((Fintype.equivFin ι).symm j)) := by

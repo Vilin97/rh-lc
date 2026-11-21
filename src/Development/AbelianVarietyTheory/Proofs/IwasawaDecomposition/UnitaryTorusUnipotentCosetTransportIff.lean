@@ -83,8 +83,6 @@ section CosetTransport2
 
 variable {K : Type} [Field K] [Valued K (WithZero (Multiplicative ℤ))]
 
-local notation "⟪" b "⟫" => (((b : GU _ _) : GL (Fin _) K) : Matrix (Fin _) (Fin _) K)
-
 theorem cosetT_tMat_map (g : K →+* K) (x : K) (n m : ℕ) (a : Fin m → ℤ) :
     (tMat x n m a).map g = tMat (g x) n m a := by
   unfold tMat

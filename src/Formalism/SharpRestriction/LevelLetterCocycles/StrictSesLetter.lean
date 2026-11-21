@@ -25,13 +25,6 @@ variable {V V' : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTow
     [AddCommGroup V'] [Module LL V'] [Module Qp V'] [IsScalarTower Qp LL V']
     {ρ : Representation LL G V} {ρ' : Representation LL G V'} (f : V →ₗ[LL] V')
 
-theorem ιV_crisMap (z : V ⊗[Qp] B) :
-    ιV PD (LL := LL) (V := V') (crisMap B f z) = crisMap BdR f (ιV PD (LL := LL) (V := V) z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
-  | tmul v b => simp [crisMap, ιV]
-  | add x y hx hy => simp only [map_add (f := _), hx, hy]
-
 theorem crisMap_mulVB (c : K₀) (z : V ⊗[Qp] B) :
     crisMap B f (mulVB (LL := LL) (V := V) (B := B) c z) = mulVB (LL := LL) (V := V') (B := B) c (crisMap B f z) := by
   induction z using TensorProduct.induction_on with
@@ -48,11 +41,6 @@ end Funct
 section SES
 
 variable {v : AddValuation LL (WithTop ℚ)} {n : ℕ}
-
-def StrictOne (W : LocWach PD LL O v n) : Prop :=
-  ∀ (T₂ Y : LocLat G Qp LL O) (ι : LatHom T₂.L Y.L) (π : LatHom Y.L W.one.L), IsSESLat (Qp := Qp) ι π →
-    IsCrys PD T₂.ρ → IsCrys PD Y.ρ → ∀ u : ℤ,
-      (FilCris PD Y.ρ u).comap (crisMap B ι.f) ⊓ Dcris PD T₂.ρ = FilCris PD T₂.ρ u
 
 end SES
 

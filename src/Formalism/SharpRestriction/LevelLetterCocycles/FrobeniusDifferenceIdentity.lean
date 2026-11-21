@@ -107,9 +107,6 @@ def letterIdempotentMap (i : ZMod n) : W.DD T →ₗ[O] W.DD T where
   map_add' x y := smul_add _ x y
   map_smul' r x := Formalism.MainNotions.N.Pv.LocalLengthBound.osmul_comm W T (letE i) r x
 
-@[simp] theorem letterIdempotentMap_apply (i : ZMod n) (x : W.DD T) :
-    letterIdempotentMap W T i x = (letE i : LetA O n) • x := rfl
-
 variable {W T}
 
 theorem frobenius_lift_identity (N s₁ σ : ℕ) (yv : W.DD T) (ms t μ : ZMod n → W.DD T) (c : ZMod n) :

@@ -59,12 +59,10 @@ def comapSubschemeIso {X Y : Scheme.{u}} (f : X ≅ Y) (I : Y.IdealSheafData) :
     (I.comap f.hom).subscheme ≅ I.subscheme :=
   (exists_iso_subscheme_comap_comm f I).choose
 
-@[reassoc]
 theorem comapSubschemeIso_hom_comp {X Y : Scheme.{u}} (f : X ≅ Y) (I : Y.IdealSheafData) :
     (comapSubschemeIso f I).hom ≫ I.subschemeι = (I.comap f.hom).subschemeι ≫ f.hom :=
   (exists_iso_subscheme_comap_comm f I).choose_spec
 
-@[reassoc]
 theorem preimageOpens_ι_comp_hom {X Y : Scheme.{u}} (e : X ≅ Y) (U : Y.Opens) :
     (preimageOpens e U).ι ≫ e.hom = (preimageOpensIso e U).hom ≫ U.ι := by
   rw [preimageOpensIso_hom, Scheme.Hom.resLE_comp_ι]

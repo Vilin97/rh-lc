@@ -30,9 +30,6 @@ def wdMap (T : End ↥LL.1 ↥(Dpst P ρ)) (hT : ∀ c, T * mulD P ρ c = mulD P
     End ℂ (WDSpace P ι ρ) :=
   @letterMap ↥LL.1 ↥(MaximalUnramifiedExtension l) ↥(Dpst P ρ) _ _ _ _ (mulD P ρ) ℂ _ (algC ι LL) (urC ι) T hT
 
-@[simp] theorem wdMap_mk (T : End ↥LL.1 ↥(Dpst P ρ)) (hT : ∀ c, T * mulD P ρ c = mulD P ρ c * T)
-    (x : ↥(Dpst P ρ)) : wdMap P ι ρ T hT (wdMk P ι ρ x) = wdMk P ι ρ (T x) := rfl
-
 @[simp] theorem wdMk_zero : wdMk P ι ρ 0 = 0 := letI := algC ι LL; letterMk_zero _ _ _
 
 theorem wdMk_add (x y : ↥(Dpst P ρ)) : wdMk P ι ρ (x + y) = wdMk P ι ρ x + wdMk P ι ρ y :=
@@ -218,9 +215,6 @@ theorem IsModel.unique {LL' : FinExt l} {r₁ r₂ : ↥Gw →* GL (Fin a) ↥LL
 
 omit [NumberField E] in
 
-theorem isModel_one : IsModel Bw (1 : ↥Gw →* GL (Fin a) (Om l)) Bw.LL 1 :=
-  ⟨le_rfl, MonoidHom.ext fun _ => by simp [Formalism.MainNotions.N.mapRep]⟩
-
 end Model
 
 section At
@@ -303,20 +297,6 @@ theorem smul_phiB_tInv : (l : ℚ_[l]) • P.φB (tInv P) = tInv P := by
   have h := congrArg P.φB (tInv_mul P)
   rw [map_mul, map_one, localPrime_frobenius_periodT, mul_smul_comm, ← smul_mul_assoc] at h
   exact (isUnit_tB P).mul_right_cancel (h.trans (tInv_mul P).symm)
-
-def tateRep : Representation ℚ_[l] ↥(GK K) (ℚ_[l] × ℚ_[l]) where
-  toFun g := LinearMap.prod ((P.χQ (g : GQ l) : ℚ_[l]) • LinearMap.fst ℚ_[l] ℚ_[l] ℚ_[l] +
-    (kummer P (g : GQ l) : ℚ_[l]) • LinearMap.snd ℚ_[l] ℚ_[l] ℚ_[l]) (LinearMap.snd ℚ_[l] ℚ_[l] ℚ_[l])
-  map_one' := by ext <;> simp
-  map_mul' g h := by ext <;> simp [kummer_mul, add_comm]
-
-def tateX : (ℚ_[l] × ℚ_[l]) ⊗[ℚ_[l]] Bst P := (1, 0) ⊗ₜ C (tInv P)
-
-def tateY : (ℚ_[l] × ℚ_[l]) ⊗[ℚ_[l]] Bst P := (0, 1) ⊗ₜ 1 - (1, 0) ⊗ₜ (C (tInv P) * X)
-
-example (ρ : Representation ℚ_[l] ↥(GK K) (Fin 0 → ℚ_[l])) : IsPst P ρ := by
-  have : Subsingleton (DpstUr P ρ) := inferInstanceAs (Subsingleton ↥(Dpst P ρ))
-  rw [IsPst, rank_subsingleton', rank_subsingleton']
 
 end Examples
 

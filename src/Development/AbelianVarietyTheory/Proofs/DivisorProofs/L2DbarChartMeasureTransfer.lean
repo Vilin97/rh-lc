@@ -1,5 +1,10 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemTChartSource
+import Development.AbelianVarietyTheory.Definitions.Divisors.ReferenceMetricMulDualEqOne
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFlagFrame
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RingKrullDimLeOfIsAlgebraic
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.JGenSpecializes
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.InducedMetricPullback
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValAtAlgebraMap
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChartDensityChangeFormula
 
 set_option autoImplicit false

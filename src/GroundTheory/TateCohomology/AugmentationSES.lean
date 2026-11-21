@@ -294,13 +294,6 @@ noncomputable def augSES : Rep.{u} k G ⥤ ShortComplex (Rep.{u} k G) where
   map_comp _ _ := ShortComplex.hom_ext _ _ (MonoidalCategory.whiskerLeft_comp _ _ _)
     (MonoidalCategory.whiskerLeft_comp _ _ _) rfl
 
-@[simp] theorem augSES_obj_X₁ (X : Rep.{u} k G) : ((augSES k G).obj X).X₁ = augIdeal k G ⊗ X := rfl
-
-@[simp] theorem augSES_obj_X₂ (X : Rep.{u} k G) :
-    ((augSES k G).obj X).X₂ = Rep.leftRegular k G ⊗ X := rfl
-
-@[simp] theorem augSES_obj_X₃ (X : Rep.{u} k G) : ((augSES k G).obj X).X₃ = X := rfl
-
 theorem augSES_decomp (X : Rep.{u} k G) (t : (Rep.leftRegular k G ⊗ X : Rep k G)) :
     (augIdealι k G ▷ X).hom (LinearMap.rTensor X.V (augIdealRetract k G) t) +
       (MonoidAlgebra.single 1 1 ⊗ₜ[k] (augX X).hom t : (Rep.leftRegular k G ⊗ X : Rep k G)) = t := by
@@ -341,9 +334,6 @@ theorem augSES_tensorLeft_shortExact (A B : Rep.{u} k G) :
     (Function.LeftInverse.injective (whiskerLeft_retract _ _ (augSES_f_retract B) A))
 
 variable [Fintype G]
-
-theorem tateAcyclic_augSES_X₂ (X : Rep.{u} k G) : TateAcyclic ((augSES k G).obj X).X₂ :=
-  tateAcyclic_leftRegular_tensor X
 
 theorem tateAcyclic_augSES_tensorRight_X₂ (A B : Rep.{u} k G) :
     TateAcyclic (((augSES k G).obj A).map (tensorRight B)).X₂ :=

@@ -2,7 +2,9 @@ import Mathlib
 import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.GlobSpecOfExists
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FractionRingFrobeniusAlgebraMap
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsDvrExtensionEmbedding
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsFieldsOkEleven
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsDvrFrobeniusLift
+import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsAbsoluteValueOfIsDiscreteValuationRing
+import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Decomp
 
 open NumberField IsDedekindDomain IsLocalRing Formalism.MainNotions.G Formalism.L2.Col Formalism.BasicNotions
 
@@ -168,15 +170,6 @@ theorem exists_good (Q : HeightOneSpectrum (𝓞 E)) (hQ : (p : 𝓞 E) ∈ Q.as
 variable {Q : HeightOneSpectrum (𝓞 E)} {i : E →+* Qn p n}
 
 omit [NumberField E] in
-theorem Good.twist (h : Good Q i) : Good Q ((Fr p n).toRingHom.comp i) := by
-  obtain ⟨g, hg, hs, hk⟩ := h
-  have e : ∀ x : Wn p n, WittVector.constantCoeff (WittVector.frobenius x) = frobenius _ p (WittVector.constantCoeff x) :=
-    fun x => WittVector.coeff_frobenius_charP p x 0
-  refine ⟨WittVector.frobenius.comp g, fun x => ?_, fun y => ?_, fun x => ?_⟩
-  · exact (congrArg (Fr p n) (hg x)).trans (SqrtUnif.fractionRing_frobenius_algebraMap p _)
-  · obtain ⟨x, hx⟩ := ((surjective_frobenius (GaloisField p n) p).comp hs) y
-    exact ⟨x, (e _).trans hx⟩
-  · rw [hk, RingHom.comp_apply, e, map_eq_zero (frobenius (GaloisField p n) p)]
 
 theorem Good.intAt (h : Good Q i) (x : E) : IntAt Q x ↔ i x ∈ Set.range (algebraMap (Wn p n) (Qn p n)) := by
   obtain ⟨g, hg, hs, hk⟩ := h
@@ -252,8 +245,6 @@ theorem Ov.eq {ψ : E →+* Kf} {Q Q' : HeightOneSpectrum (𝓞 E)} (h : Ov O ψ
   HeightOneSpectrum.ext (Ideal.ext fun x => (h x).trans (h' x).symm)
 
 omit [IsFractionRing O Kf] in
-theorem Ov.conj [StarRing E] {ψ : E →+* Kf} (h : Ov O ψ Q) : Ov O (ψ.comp (starRingEnd E)) (conjPrime₂ Q) :=
-  fun x => h (cO E x)
 
 omit [NumberField E] in
 theorem ov_iff {ψ : E →+* Kf} {g : 𝓞 E →+* O} (hg : ∀ x : 𝓞 E, algebraMap O Kf (g x) = ψ x) :

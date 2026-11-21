@@ -20,8 +20,6 @@ def hL (y : V) : V →ₗ[E] E where
   map_add' x x' := H.h_add_left x x' y
   map_smul' a x := H.h_smul_left a x y
 
-@[simp] lemma hL_apply (x y : V) : hL H y x = H.h x y := rfl
-
 lemma h_sub_left (x x' y : V) : H.h (x - x') y = H.h x y - H.h x' y := map_sub (hL H y) x x'
 
 lemma h_sum_left {ι : Type} (s : Finset ι) (g : ι → V) (y : V) :

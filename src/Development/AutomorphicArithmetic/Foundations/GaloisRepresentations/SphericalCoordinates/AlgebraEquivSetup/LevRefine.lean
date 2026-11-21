@@ -70,21 +70,12 @@ def IntConj : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n 
   (sim g ∈ ZU → comp w g ∈ KGL w n → comp (CertificateRingHomMap.cj w) g ∈ KGL (CertificateRingHomMap.cj w) n) ∧
   ((∀ u, comp u g ∈ KGL u n) → sim g ∈ ZU) ∧ {u : Plc E | comp u g ∉ KGL u n}.Finite
 
-def LevRefine : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ), 0 < n → ∀ (S₀ U : Finset (Plc E))
-  (Kw Kw' : ∀ w : Plc E, Subgroup (GL (Fin n) (w.adicCompletion E))), (∀ u ∈ U, u ∉ S₀ ∧ CertificateRingHomMap.cj u ∉ S₀) → (∀ w ∈ S₀, Kw' w = Kw w) →
-  (∀ u ∈ U, Kw' u ≤ KGL u n ∧ IsOpen (Kw' u : Set (GL (Fin n) (u.adicCompletion E)))) →
-  IsOpen (lev S₀ Kw : Set (GUf E n)) → IsCompact (lev S₀ Kw : Set (GUf E n)) →
-  lev (S₀ ∪ U) Kw' ≤ lev S₀ Kw ∧ IsOpen (lev (S₀ ∪ U) Kw' : Set (GUf E n)) ∧ IsCompact (lev (S₀ ∪ U) Kw' : Set (GUf E n))
-
 def KNOpen : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A : Arith E) (n p : ℕ) [Fact p.Prime] (S : Setup A n p)
   (T : Tr S) (N : ℕ), 0 < N → IsOpen (((S.L.KN N).comap T.j : Subgroup (GUf E n)) : Set (GUf E n))
 
 def KNIdx : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A : Arith E) (n p : ℕ) [Fact p.Prime] (S : Setup A n p)
   (T : Tr S) (N : ℕ), 0 < N → IsCommensurated (S.L.KN N) ∧ ∀ K : Subgroup (GUf E n), IsCompact (K : Set (GUf E n)) →
     IsOpen (K : Set (GUf E n)) → (S.L.KN N).relIndex (T.lv K) ≠ 0
-
-def KNBasis : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A : Arith E) (n p : ℕ) [Fact p.Prime] (S : Setup A n p)
-  (T : Tr S) (O : Subgroup (GUf E n)), IsOpen (O : Set (GUf E n)) → ∃ N : ℕ, 0 < N ∧ N.Coprime p ∧ S.L.KN N ≤ T.lv O
 
 def PPart : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (A : Arith E) (n p : ℕ) [Fact p.Prime] (S : Setup A n p)
   (T : Tr S) (g : GUf E n), ∃ k : GUf E n, g = T.sec (T.j g) * k ∧ (∀ w : Plc E, (p : 𝓞 E) ∉ w.asIdeal → comp w k = 1) ∧

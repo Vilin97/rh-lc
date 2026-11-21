@@ -1,6 +1,7 @@
 import Mathlib
 import Development.AutomorphicArithmetic.LocalEmbeddings.ExistsIsMapToFn
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFlagBundleIff
+import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsFlagBundleRankOne
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BcDensEqOfGram
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsAffineStableLieEigenspaceFrameStatement
 open CategoryTheory AlgebraicGeometry NumberField IsDedekindDomain Matrix
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.L2.Pj
@@ -44,29 +45,3 @@ private theorem exists_local {E : Type} [Field E] [NumberField E] [IsCMField E] 
   have hm : k.IsMap (toFn z) f' := fun τ i => by
     rw [hf', hk, GlobalTheory.GradedPieces.dual_comp, hcomp]
   exact ⟨_, k, (fits_iff hc' hm).2 rfl⟩
-
-theorem UpperTheory.exists_divisor_frame_generic :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β) (F : Type) [Field F] [NumberField F] (e : F ≃+* c.F) (Y : Var F) (ρ : Y.X ⟶ gen Z) (_ : ρ ≫ genStr Z ≫ spMap e.toRingHom = Y.str) (g₀ : GenFrame e ρ) (τ : E →+* ℂ), ∃ (Δ : Y.Dv) (t : Y.X → Y.Fnˣ), (∀ y, Δ.IsEqn y (t y)) ∧ ∀ y, ∃ φ f P, Fits g₀ τ y φ f P ∧ (t y : Y.Fn) * P.det = 1 := by
-  intro E _ _ _ H Dw l Xo c O _ β Z F _ _ e Y ρ hρ g₀ τ
-  choose U P hU hP using exists_local hρ g₀ τ
-  have hdet : ∀ y, IsUnit (P y).det := fun y => by
-    obtain ⟨φ, f, h⟩ := hP y y (hU y)
-    exact h.isUnit_det
-  let t : Y.X → Y.Fnˣ := fun y => (hdet y).unit⁻¹
-  have ht : ∀ y, (t y : Y.Fn) = ((P y).det)⁻¹ := fun y => by
-    simp only [t, Units.val_inv_eq_inv_val, IsUnit.unit_spec]
-  have hgerm : ∀ y z, ρ z ∈ U y → germOf z (t z) = germOf z (t y) := fun y z hz => by
-    obtain ⟨φ, f, h⟩ := hP y z hz
-    obtain ⟨φ', f', h'⟩ := hP z z (hU z)
-    obtain rfl := h.φ_eq h'
-    rw [germOf_eq_iff]
-    refine ⟨_, f.isUnit_det_co f' τ, ?_⟩
-    have h1 := congrArg Matrix.det (h.eq_mul h')
-    rw [det_mul, ← RingHom.mapMatrix_apply, ← RingHom.map_det] at h1
-    have h2 : (t y : Y.Fn) / (t z : Y.Fn) = toFn z (f.co f' τ).det := by
-      rw [ht, ht, h1, div_inv_eq_mul, inv_mul_cancel_left₀ (hdet y).ne_zero]
-    exact h2.symm
-  refine ⟨show cartierGroup Y.X from ⟨fun y => germOf y (t y), fun y =>
-    ⟨ρ ⁻¹ᵁ U y, hU y, t y, fun z hz => hgerm y z hz⟩⟩, t, fun _ => rfl, fun y => ?_⟩
-  obtain ⟨φ, f, h⟩ := hP y y (hU y)
-  exact ⟨φ, f, P y, h, by rw [ht, inv_mul_cancel₀ (hdet y).ne_zero]⟩

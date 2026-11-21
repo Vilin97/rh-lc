@@ -1,7 +1,10 @@
 import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.KernelFromKOneK
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.ThetaLogIsSubstitution
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.EdgeNoTrunc
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.EChain
 import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementN
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementE
+import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.CyclicPowerClassOfExpEquiv
+import Formalism.GaussJetBounds.StatementI
 
 namespace Formalism.InvariantFactorPaths.G7.Top
 

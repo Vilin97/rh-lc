@@ -11,9 +11,6 @@ open PositivityTheory.RgTw (Mat hb)
 
 variable {n : ℕ} {lam : Fin n → ℤ}
 
-local notation "𝟙W" => (1 : Matrix (Jd n lam × Jd n lam) (Jd n lam × Jd n lam) ℂ)
-local notation "𝟙Λ" => (1 : Matrix (Finset (Md n)) (Finset (Md n)) ℂ)
-
 theorem cj_smul_one (hu : IsUnit (sqQ lam)) (c : ℂ) : cjL lam (c • (1 : Matrix (Ix n lam) (Ix n lam) ℂ)) = c • 1 := by
   rw [map_smul, cj_one hu]
 

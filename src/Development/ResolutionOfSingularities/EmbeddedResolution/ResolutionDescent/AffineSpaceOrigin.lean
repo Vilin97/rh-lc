@@ -32,12 +32,6 @@ theorem affineSpaceOrigin_comp_toSpec (k : Type u) [Field k] (m : ℕ) :
   unfold affineSpaceOrigin
   simp
 
-@[simp]
-theorem affineSpaceOrigin_comp_toSpec_assoc (k : Type u) [Field k] (m : ℕ) {Z : Scheme.{u}}
-    (g : Spec (CommRingCat.of k) ⟶ Z) :
-    affineSpaceOrigin k m ≫ affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin m)) ≫ g = g := by
-  rw [← Category.assoc, affineSpaceOrigin_comp_toSpec, Category.id_comp]
-
 theorem pullbackCoord_affineSpaceOrigin (k : Type u) [Field k] (m : ℕ)
     (i : ULift.{u, 0} (Fin m)) :
     pullbackCoord (affineSpaceOrigin k m) i = 0 := by
@@ -298,12 +292,6 @@ theorem affineSpaceInrEmbedding_comp_projRight (k : Type u) [Field k] (n m : ℕ
         projRight_appTop_coord, ← pullbackCoord_def, pullbackCoord_affineSpaceInrEmbedding_inr]
     rw [← pullbackCoord_def, h]
     simp
-
-@[simp]
-theorem affineSpaceInrEmbedding_comp_projRight_assoc (k : Type u) [Field k] (n m : ℕ) {Z : Scheme.{u}}
-    (g : affineSpaceIndexedBy k (ULift.{u, 0} (Fin m)) ⟶ Z) :
-    affineSpaceInrEmbedding k n m ≫ projRight k n m ≫ g = g := by
-  rw [← Category.assoc, affineSpaceInrEmbedding_comp_projRight, Category.id_comp]
 
 theorem affineSpaceInl_comp_projRight (k : Type u) [Field k] (n m : ℕ) :
     affineSpaceInl k n m ≫ projRight k n m =

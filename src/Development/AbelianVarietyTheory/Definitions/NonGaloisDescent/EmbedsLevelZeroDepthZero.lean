@@ -197,19 +197,9 @@ theorem mem_proRad {e : (Σ a, m a) ≃ n} {g : GL n k} : g ∈ proRad k e ↔ g
 theorem proRad_le_parahoric (e : (Σ a, m a) ≃ n) : proRad k e ≤ parahoric k e :=
   levelPre_mono (unipRad_le_parab _ e)
 
-theorem parahoric_le_normalizer (e : (Σ a, m a) ≃ n) :
-    parahoric k e ≤ Subgroup.normalizer (proRad k e : Set (GL n k)) :=
-  levelPre_le_normalizer (parab_le_normalizer _ e)
-
 theorem parahoricProj_eq_one_iff (e : (Σ a, m a) ≃ n) (p : parahoric k e) :
     parahoricProj k e p = 1 ↔ (p : GL n k) ∈ proRad k e :=
   (coe_mem_unipRad _ _).symm.trans (coe_mem_levelPre (H := unipRad 𝓀[k] e) ⟨(p : GL n k), levelPre_le_KO _ p.2⟩).symm
-
-theorem parahoricProj_surjective (e : (Σ a, m a) ≃ n) : Function.Surjective (parahoricProj k e) := by
-  intro x
-  obtain ⟨g, hg⟩ := redK_surjective (leviEmb 𝓀[k] e x)
-  refine ⟨⟨g, (coe_mem_levelPre g).2 (hg ▸ leviEmb_mem_parab _ e x)⟩, ?_⟩
-  exact (congrArg (leviProj 𝓀[k] e) (Subtype.ext hg)).trans (leviProj_leviEmb 𝓀[k] e x)
 
 omit [Fintype α] [LinearOrder α] in
 
@@ -228,10 +218,6 @@ theorem redLevi_eq_one_iff (g : leviK k m) : redLevi k m g = 1 ↔ (g : Levi k m
     fun h => funext fun a => (redK_eq_one_iff ⟨g.1 a, g.2 a trivial⟩).2 (h a trivial)⟩
 
 omit [Fintype α] [LinearOrder α] in
-
-theorem leviK_le_normalizer : leviK k m ≤ Subgroup.normalizer (leviKOne k m : Set (Levi k m)) := fun g hg =>
-  Subgroup.mem_normalizer_iff.2 fun u => forall₂_congr fun a _ =>
-    Subgroup.mem_normalizer_iff.1 (KO_le_normalizer (hg a trivial)) (u a)
 
 omit [LinearOrder α] in
 
@@ -279,8 +265,6 @@ theorem jLevi_le_KOne (e : (Σ a, m a) ≃ n) : jLevi k e ≤ KOne k n := by
   refine (redK_eq_one_iff ⟨_, leviEmb_mem_KO e h⟩).1 ?_
   rw [redK_leviEmb e ⟨g, h⟩, (redLevi_eq_one_iff _).2 hg, map_one]
 
-theorem jMinus_le_proRad (e : (Σ a, m a) ≃ n) : jMinus k e ≤ proRad k e := inf_le_right.trans (KOne_le_proRad e)
-
 theorem jLevi_le_proRad (e : (Σ a, m a) ≃ n) : jLevi k e ≤ proRad k e := (jLevi_le_KOne e).trans (KOne_le_proRad e)
 
 theorem jPlus_le_proRad (e : (Σ a, m a) ≃ n) : jPlus k e ≤ proRad k e := fun g hg =>
@@ -288,40 +272,7 @@ theorem jPlus_le_proRad (e : (Σ a, m a) ≃ n) : jPlus k e ≤ proRad k e := fu
     rw [mem_parab_iff.1 (mem_unipRad.1 hg.1).1 a b i j h]; simp⟩, fun a i j => by
     rw [(mem_unipRad.1 hg.1).2]; simp⟩
 
-def parahoricInv (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n k) V) :
-    Representation ℂ (Levi 𝓀[k] m) (fixed π (proRad k e)) :=
-  levelRep π (parahoric_le_normalizer e) (parahoricProj k e) (parahoricProj_surjective e)
-    fun p => (parahoricProj_eq_one_iff e p).1
-
-@[simp] theorem parahoricInv_apply (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n k) V) (p : parahoric k e)
-    (v : fixed π (proRad k e)) : (parahoricInv e π (parahoricProj k e p) v : V) = π p v :=
-  levelRep_apply _ _ _ _ _ p v
-
-@[simp] theorem parahoricInv_redLevi (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n k) V) (g : leviK k m)
-    (v : fixed π (proRad k e)) : (parahoricInv e π (redLevi k m g) v : V) = π (leviEmb k e g) v := by
-  rw [← parahoricProj_leviEmb e, parahoricInv_apply]
-
-def leviLevelZero {α : Type} {m : α → Type} [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)]
-    (τ : Representation ℂ (Levi k m) W) : Representation ℂ (Levi 𝓀[k] m) (fixed τ (leviKOne k m)) :=
-  levelRep τ leviK_le_normalizer (redLevi k m) redLevi_surjective fun g => (redLevi_eq_one_iff g).1
-
 omit [Fintype α] [LinearOrder α] in
-
-@[simp] theorem leviLevelZero_apply (τ : Representation ℂ (Levi k m) W) (g : leviK k m) (v : fixed τ (leviKOne k m)) :
-    (leviLevelZero τ (redLevi k m g) v : W) = τ g v := levelRep_apply _ _ _ _ _ g v
-
-def toJacquet (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n k) V) :
-    (parahoricInv e π).IntertwiningMap (leviLevelZero (jacU e π)) where
-  toLinearMap := (twKer π (unipRad k e) 1).mkQ.restrict fun v hv => mem_fixed.2 fun g hg =>
-    congrArg Submodule.Quotient.mk (mem_fixed.1 hv _ (jLevi_le_proRad e ⟨g, hg, rfl⟩))
-  isIntertwining' x := by
-    obtain ⟨g, rfl⟩ := redLevi_surjective x
-    refine LinearMap.ext fun v => Subtype.ext ?_
-    refine Eq.trans ?_ (leviLevelZero_apply (jacU e π) g _).symm
-    exact congrArg Submodule.Quotient.mk (parahoricInv_redLevi e π g v)
-
-@[simp] theorem toJacquet_apply (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n k) V) (v : fixed π (proRad k e)) :
-    (toJacquet e π v : Jacquet π (unipRad k e)) = Submodule.Quotient.mk (v : V) := rfl
 
 theorem detChar_of_mem_KO {ν : kˣ →* ℂˣ} (hν : IsUnram ν) {g : GL n k} (hg : g ∈ KO k n) : detChar n ν g = 1 :=
   hν _ (StepData.valuation_det_of_mem_KO hg)
@@ -334,148 +285,13 @@ section Two
 
 variable {a b : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
 
-def parahoricInv₂ (e : a ⊕ b ≃ n) (π : Representation ℂ (GL n k) V) :
-    Representation ℂ (GL a 𝓀[k] × GL b 𝓀[k]) (fixed π (proRad k (two e))) :=
-  (parahoricInv (two e) π).comp (leviTwo 𝓀[k] a b).toMonoidHom
-
 variable (k a b) in
-
-def redProd : (KO k a).prod (KO k b) →* GL a 𝓀[k] × GL b 𝓀[k] :=
-  ((redK k a).prodMap (redK k b)).comp ((KO k a).prodEquiv (KO k b)).toMonoidHom
-
-theorem redProd_surjective : Function.Surjective (redProd k a b) := fun x => by
-  obtain ⟨g, hg⟩ := redK_surjective x.1
-  obtain ⟨h, hh⟩ := redK_surjective x.2
-  exact ⟨⟨(g, h), g.2, h.2⟩, Prod.ext hg hh⟩
-
-def prodLevelZero (τ : Representation ℂ (GL a k × GL b k) W) :
-    Representation ℂ (GL a 𝓀[k] × GL b 𝓀[k]) (fixed τ ((KOne k a).prod (KOne k b))) :=
-  levelRep τ (P := (KO k a).prod (KO k b))
-    (fun g hg => Subgroup.mem_normalizer_iff.2 fun u => and_congr
-      (Subgroup.mem_normalizer_iff.1 (KO_le_normalizer hg.1) u.1)
-      (Subgroup.mem_normalizer_iff.1 (KO_le_normalizer hg.2) u.2))
-    (redProd k a b) redProd_surjective fun g hg =>
-      ⟨(redK_eq_one_iff ⟨g.1.1, g.2.1⟩).1 (congrArg Prod.fst hg), (redK_eq_one_iff ⟨g.1.2, g.2.2⟩).1 (congrArg Prod.snd hg)⟩
-
-@[simp] theorem prodLevelZero_apply (τ : Representation ℂ (GL a k × GL b k) W) (g : (KO k a).prod (KO k b))
-    (v : fixed τ ((KOne k a).prod (KOne k b))) : (prodLevelZero τ (redProd k a b g) v : W) = τ g v :=
-  levelRep_apply _ _ _ _ _ g v
-
-@[simp] theorem parahoricInv₂_apply (e : a ⊕ b ≃ n) (π : Representation ℂ (GL n k) V) (g : (KO k a).prod (KO k b))
-    (v : fixed π (proRad k (two e))) : (parahoricInv₂ e π (redProd k a b g) v : V) = π (emb₂ k e g) v := by
-  have hg : leviTwo k a b g ∈ leviK k (Two a b) := by
-    rintro (_ | _) -
-    exacts [g.2.1, g.2.2]
-  have h : leviTwo 𝓀[k] a b (redProd k a b g) = redLevi k _ ⟨_, hg⟩ := by
-    funext x; cases x <;> rfl
-  show (parahoricInv (two e) π (leviTwo 𝓀[k] a b (redProd k a b g)) v : V) = _
-  rw [h, parahoricInv_redLevi]; rfl
-
-def toJacquet₂ (e : a ⊕ b ≃ n) (π : Representation ℂ (GL n k) V) :
-    (parahoricInv₂ e π).IntertwiningMap (prodLevelZero (jacU₂ e π)) where
-  toLinearMap := (twKer π (unipRad k (two e)) 1).mkQ.restrict fun v hv => mem_fixed.2 fun g hg =>
-    congrArg Submodule.Quotient.mk (mem_fixed.1 hv _ (jLevi_le_proRad (two e) ⟨leviTwo k a b g, by
-      rintro (_ | _) -
-      exacts [hg.1, hg.2], rfl⟩))
-  isIntertwining' x := by
-    obtain ⟨g, rfl⟩ := redProd_surjective x
-    refine LinearMap.ext fun v => Subtype.ext ?_
-    refine Eq.trans ?_ (prodLevelZero_apply (jacU₂ e π) g _).symm
-    exact congrArg Submodule.Quotient.mk (parahoricInv₂_apply e π g v)
-
-@[simp] theorem toJacquet₂_apply (e : a ⊕ b ≃ n) (π : Representation ℂ (GL n k) V) (v : fixed π (proRad k (two e))) :
-    (toJacquet₂ e π v : Jacquet π (unipRad k (two e))) = Submodule.Quotient.mk (v : V) := rfl
 
 end Two
 
 section Finite
 
 variable {R : Type} [Field R] {N h : ℕ} {d : Fin h → ℕ}
-
-theorem unipRad_eq_of_le (e : (Σ a, m a) ≃ Fin N) {c : Fin N → ℕ} (hc : ∀ i j, c j ≤ c i ↔ blk e j ≤ blk e i) :
-    unipRad R e = FiniteGL.unipRadical R c := by
-  ext g
-  rw [mem_unipRad, FiniteGL.mem_unipRadical, mem_parab_iff]
-  simp only [hc, Matrix.sub_apply, sub_eq_zero]
-  constructor
-  · rintro ⟨h1, h2⟩ i j hij
-    obtain ⟨⟨a, i⟩, rfl⟩ := e.surjective i
-    obtain ⟨⟨b, j⟩, rfl⟩ := e.surjective j
-    simp only [blk_apply] at hij
-    rcases hij.eq_or_lt with rfl | h
-    · rw [h2]; simp [Matrix.one_apply]
-    · rw [h1 a b i j h, Matrix.one_apply_ne fun e' => h.ne' (congrArg Sigma.fst (e.injective e'))]
-  · intro hg
-    refine ⟨fun a b i j h => ?_, fun a i j => ?_⟩
-    · rw [hg _ _ (by simpa using h.le), Matrix.one_apply_ne fun e' => h.ne' (congrArg Sigma.fst (e.injective e'))]
-    · rw [hg _ _ (by simp)]; simp [Matrix.one_apply]
-
-theorem unipRad_eq_unipRadical (e : (Σ a, Fin (d a)) ≃ Fin N) :
-    unipRad R e = FiniteGL.unipRadical R (Parabolic.blockOf e) := unipRad_eq_of_le e fun _ _ => Iff.rfl
-
-theorem unipRad_two_eq {r t : ℕ} (hN : r + t = N) :
-    unipRad R (two (stdSum hN)) = FiniteGL.unipRadical R (FiniteGL.twoBlocks N r) := by
-  refine unipRad_eq_of_le _ fun i j => ?_
-  obtain ⟨⟨_ | _, i⟩, rfl⟩ := (two (stdSum hN)).surjective i <;>
-    obtain ⟨⟨_ | _, j⟩, rfl⟩ := (two (stdSum hN)).surjective j <;>
-    simp only [blk_apply] <;> simp [FiniteGL.twoBlocks]
-
-theorem coe_leviEquiv_symm (e : (Σ a, Fin (d a)) ≃ Fin N) (x : Levi R fun a => Fin (d a)) :
-    ((Parabolic.leviEquiv e).symm x : GL (Fin N) R) = leviEmb R e x := by
-  obtain ⟨g, rfl⟩ := (Parabolic.leviEquiv e).surjective x
-  rw [MulEquiv.symm_apply_apply]
-  ext i j
-  obtain ⟨⟨a, i⟩, rfl⟩ := e.surjective i
-  obtain ⟨⟨b, j⟩, rfl⟩ := e.surjective j
-  by_cases h : a = b
-  · subst h; rw [leviEmb_apply_same]; rfl
-  · rw [leviEmb_apply_ne R e _ h]
-    exact g.2 _ _ (by simpa [Fin.val_inj] using h)
-
-theorem coe_leviTwo_symm {r t : ℕ} (hN : r + t = N) {c : Fin N → ℕ} (hc : Parabolic.IsTwoBlock r c)
-    (x : GL (Fin r) R × GL (Fin t) R) :
-    ((Parabolic.leviTwo hN hc).symm x : GL (Fin N) R) = emb₂ R (stdSum hN) x :=
-  Units.ext (val_emb₂ R (stdSum hN) x).symm
-
-def finInd (e : (Σ a, Fin (d a)) ≃ Fin N) (σ : Representation ℂ (Levi R fun a => Fin (d a)) W) :=
-  Parabolic.hcInd (Parabolic.blockOf e) (σ.comp (Parabolic.leviEquiv e).toMonoidHom)
-
-def finRes (e : (Σ a, Fin (d a)) ≃ Fin N) (κ : Representation ℂ (GL (Fin N) R) V) :
-    Representation ℂ (Levi R fun a => Fin (d a)) (fixed κ (FiniteGL.unipRadical R (Parabolic.blockOf e))) :=
-  (Parabolic.hcRes (Parabolic.blockOf e) κ).comp (Parabolic.leviEquiv e).symm.toMonoidHom
-
-def fixedLevelPre (π : Representation ℂ (GL n k) V) {U U' : Subgroup (GL n 𝓀[k])} (hU : U = U') :
-    fixed π (levelPre U) ≃ₗ[ℂ] fixed (levelZero π) U' where
-  toFun v := ⟨⟨v, mem_fixed.2 fun g hg => mem_fixed.1 v.2 g (KOne_le_levelPre U hg)⟩, mem_fixed.2 fun x hx => by
-    obtain ⟨g, rfl⟩ := redK_surjective x
-    exact Subtype.ext ((levelZero_apply π g _).trans (mem_fixed.1 v.2 _ ((coe_mem_levelPre g).2 (hU ▸ hx))))⟩
-  invFun w := ⟨w.1, mem_fixed.2 fun g hg => by
-    obtain ⟨h, hg⟩ := mem_levelPre.1 hg
-    exact (levelZero_apply π ⟨g, h⟩ w.1).symm.trans (congrArg Subtype.val (mem_fixed.1 w.2 _ (hU ▸ hg)))⟩
-  map_add' _ _ := rfl
-  map_smul' _ _ := rfl
-  left_inv _ := rfl
-  right_inv _ := rfl
-
-def parahoricInvEquiv (e : (Σ a, Fin (d a)) ≃ Fin N) (π : Representation ℂ (GL (Fin N) k) V) :
-    (parahoricInv e π).Equiv (finRes e (levelZero π)) :=
-  .mk (fixedLevelPre π (unipRad_eq_unipRadical e)) fun x => by
-    obtain ⟨g, rfl⟩ := redLevi_surjective x
-    refine LinearMap.ext fun v => Subtype.ext (Subtype.ext ?_)
-    refine (parahoricInv_redLevi e π g v).trans ?_
-    show _ = (levelZero π ((Parabolic.leviEquiv e).symm (redLevi k _ g) : GL (Fin N) 𝓀[k]) _ : V)
-    rw [coe_leviEquiv_symm, ← redK_leviEmb, levelZero_apply]; rfl
-
-def parahoricInv₂Equiv {r t : ℕ} (hN : r + t = N) (π : Representation ℂ (GL (Fin N) k) V) :
-    (parahoricInv₂ (stdSum hN) π).Equiv
-      (Parabolic.twoRes hN (Parabolic.isTwoBlock_twoBlocks N r) (levelZero π)) :=
-  .mk (fixedLevelPre π (unipRad_two_eq hN)) fun x => by
-    obtain ⟨g, hg⟩ := redLevi_surjective (leviTwo 𝓀[k] _ _ x)
-    refine LinearMap.ext fun v => Subtype.ext (Subtype.ext ?_)
-    show (parahoricInv (two (stdSum hN)) π (leviTwo 𝓀[k] _ _ x) v : V) =
-      (levelZero π ((Parabolic.leviTwo hN (Parabolic.isTwoBlock_twoBlocks N r)).symm x : GL (Fin N) 𝓀[k]) _ : V)
-    rw [coe_leviTwo_symm, emb₂, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, ← hg, ← redK_leviEmb, levelZero_apply,
-      parahoricInv_redLevi]; rfl
 
 end Finite
 
@@ -497,9 +313,6 @@ theorem valuation_eq_one_iff {x : kˣ} : valuation k (x : k) = 1 ↔ ∃ u, unit
     exact (Valuation.integer.integers (valuation k)).one_of_isUnit u.isUnit
 
 def IsTameLift (χ' : kˣ →* ℂˣ) (χ : 𝓀[k]ˣ →* ℂˣ) : Prop := ∀ u : 𝒪[k]ˣ, χ' (unitIncl k u) = χ (unitRes k u)
-
-theorem IsTameLift.mul {χ' ψ' : kˣ →* ℂˣ} {χ ψ : 𝓀[k]ˣ →* ℂˣ} (h : IsTameLift χ' χ) (h' : IsTameLift ψ' ψ) :
-    IsTameLift (χ' * ψ') (χ * ψ) := fun u => by rw [MonoidHom.mul_apply, MonoidHom.mul_apply, h, h']
 
 theorem IsTameLift.detChar_eq {χ' : kˣ →* ℂˣ} {χ : 𝓀[k]ˣ →* ℂˣ} (h : IsTameLift χ' χ) (g : KO k n) :
     detChar n χ' g = detChar n χ (redK k n g) := by
@@ -718,67 +531,10 @@ theorem canon_injective (ρ : Representation ℂ (GL n 𝓀[k]) W) (ω : kˣ →
   have h2 : ∀ v, canonFun ρ ω h v 1 = v := fun v => (dif_pos (one_mem _)).trans (LinearMap.congr_fun (map_one _) v)
   rwa [h2, h2] at h1
 
-def conjK (ρ : Representation ℂ (GL n 𝓀[k]) W) (g : GL n k) :
-    Representation ℂ ↥(KO k n ⊓ (KO k n).comap (MulAut.conj g⁻¹).toMonoidHom) W :=
-  (inflateK ρ).comp (((MulAut.conj g⁻¹).toMonoidHom.comp (Subgroup.subtype _)).codRestrict _ fun x => x.2.2)
-
-def resK (ρ : Representation ℂ (GL n 𝓀[k]) W) (g : GL n k) :
-    Representation ℂ ↥(KO k n ⊓ (KO k n).comap (MulAut.conj g⁻¹).toMonoidHom) W :=
-  (inflateK ρ).comp (Subgroup.inclusion inf_le_left)
-
-def InertEquiv (π : Representation ℂ (GL n k) V) (σ : Representation ℂ (GL n k) W) : Prop :=
-  ∃ ν : kˣ →* ℂˣ, IsUnram ν ∧ Nonempty (σ.Equiv (twist π (detChar n ν)))
-
 theorem isUnram_mul {ν μ : kˣ →* ℂˣ} (h : IsUnram ν) (h' : IsUnram μ) : IsUnram (ν * μ) := fun x hx => by
   rw [MonoidHom.mul_apply, h x hx, h' x hx, one_mul]
 
 theorem isUnram_inv {ν : kˣ →* ℂˣ} (h : IsUnram ν) : IsUnram ν⁻¹ := fun x hx => by
   rw [MonoidHom.inv_apply, h x hx, inv_one]
-
-theorem InertEquiv.of_equiv {π : Representation ℂ (GL n k) V} {σ : Representation ℂ (GL n k) W} (e : π.Equiv σ) :
-    InertEquiv π σ :=
-  ⟨1, fun _ _ => rfl, ⟨by rw [show detChar n (1 : kˣ →* ℂˣ) = 1 from rfl, twist_one]; exact e.symm⟩⟩
-
-theorem InertEquiv.symm {π : Representation ℂ (GL n k) V} {σ : Representation ℂ (GL n k) W} (h : InertEquiv π σ) :
-    InertEquiv σ π := by
-  obtain ⟨ν, hν, ⟨e⟩⟩ := h
-  refine ⟨ν⁻¹, isUnram_inv hν, ⟨?_⟩⟩
-  have e' := twistEquiv e (detChar n ν⁻¹)
-  rw [twist_twist, show detChar n ν⁻¹ * detChar n ν = 1 from MonoidHom.ext fun g => by simp, twist_one] at e'
-  exact e'.symm
-
-theorem InertEquiv.trans {X : Type} [AddCommGroup X] [Module ℂ X] {π : Representation ℂ (GL n k) V}
-    {σ : Representation ℂ (GL n k) W} {τ : Representation ℂ (GL n k) X} (h : InertEquiv π σ) (h' : InertEquiv σ τ) :
-    InertEquiv π τ := by
-  obtain ⟨ν, hν, ⟨e⟩⟩ := h
-  obtain ⟨μ, hμ, ⟨f⟩⟩ := h'
-  have e' := twistEquiv e (detChar n μ)
-  rw [twist_twist] at e'
-  exact ⟨μ * ν, isUnram_mul hμ hν, ⟨f.trans e'⟩⟩
-
-def levelZeroTwist (π : Representation ℂ (GL n k) V) {ν : kˣ →* ℂˣ} (hν : IsUnram ν) :
-    (levelZero (twist π (detChar n ν))).Equiv (levelZero π) :=
-  .mk (LinearEquiv.ofEq _ _ (Submodule.ext fun v => by
-      simp only [mem_fixed]
-      exact forall₂_congr fun u hu => by rw [twist_apply, detChar_of_mem_KO hν (StepData.KOne_le_KO hu)]; simp))
-    fun x => by
-      obtain ⟨g, rfl⟩ := redK_surjective x
-      refine LinearMap.ext fun v => Subtype.ext ((levelZero_apply _ g v).trans ((levelZero_apply π g _).trans ?_).symm)
-      rw [twist_apply, detChar_of_mem_KO hν g.2]; simp
-
-theorem InertEquiv.levelZero {π : Representation ℂ (GL n k) V} {σ : Representation ℂ (GL n k) W} (h : InertEquiv π σ) :
-    Nonempty ((levelZero σ).Equiv (levelZero π)) := by
-  obtain ⟨ν, hν, ⟨e⟩⟩ := h
-  refine ⟨(equivOfBijective (levelZeroMap e.toIntertwiningMap) ⟨fun v w h =>
-    Subtype.ext (e.toLinearEquiv.injective (congrArg Subtype.val h)), fun w =>
-    ⟨levelZeroMap e.symm.toIntertwiningMap w, Subtype.ext (e.apply_symm_apply _)⟩⟩).trans (levelZeroTwist π hν)⟩
-
-example {χ' : kˣ →* ℂˣ} {χ : 𝓀[k]ˣ →* ℂˣ} (h : IsTameLift χ' χ) :
-    ExtendsCentral (χ' ^ Fintype.card n) (detRep n χ) := fun z hz w => by
-  show ofChar _ _ _ = _
-  have : GeneralLinearGroup.det (GeneralLinearGroup.scalar n z) = z ^ Fintype.card n := by
-    ext; simp [GeneralLinearGroup.scalar]
-  rw [ofChar_apply, ← h.detChar_eq, detChar_apply, this]
-  simp
 
 end GlobalTheory.LocGL

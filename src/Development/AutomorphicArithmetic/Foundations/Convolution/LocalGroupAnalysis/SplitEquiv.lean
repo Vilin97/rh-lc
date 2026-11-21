@@ -49,8 +49,6 @@ def cen (f : G →* Gi) (g : G) : Subgroup.centralizer {g} →* Subgroup.central
   map_one' := Subtype.ext (map_one f)
   map_mul' s t := Subtype.ext (map_mul f _ _)
 
-@[simp] theorem coe_cen (f : G →* Gi) (g : G) (t : Subgroup.centralizer {g}) : (cen f g t : Gi) = f t := rfl
-
 end
 
 def QPush : Prop :=

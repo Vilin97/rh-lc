@@ -252,8 +252,6 @@ theorem bwd_loc (hJ : J.det ≠ 0) (L : Submodule (𝓞 E) (Fin n → E)) (hL : 
   linear_combination (-(C j * inclE (F := F) (v.adicCompletion F) (yb j i))) * hus'
 
 omit [NumberField E] in
-theorem prV_tmul (v : HeightOneSpectrum (𝓞 F)) (e : E) (a : Ad F) :
-    prV (E := E) v (e ⊗ₜ[F] a) = e ⊗ₜ[F] (a v) := rfl
 
 theorem prV_int (v : HeightOneSpectrum (𝓞 F)) (c : E ⊗[F] Ad F) (hc : c ∈ OAd F E) :
     prV (E := E) v c ∈ intV E v := by

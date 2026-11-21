@@ -11,7 +11,14 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedPlaneComplem
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedPlaneComplementDualLattice
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedPlaneComplementCartan
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedPlaneComplementSplitBasis
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ThetaPairPolynomialCompactStatement
+import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolActs
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolynomialDatumActionOfPairStatement
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeisenbergLineDerivativeFiniteSpanStatement
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockVacuaSpanFiniteDimensionalStatement
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.CompactUnitaryMovesHeisenbergDerivativeStatement
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.GaussianCompactActionEigen
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsFiniteDimensionalOrbitOfBoundedRankGeneratStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilActionPreservesLintegralStatement
 
 open scoped TensorProduct NNReal Matrix
@@ -87,25 +94,5 @@ end GlobalTheory.KFixedVanish
 namespace GlobalTheory.KFixedVanish
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
-
-theorem kInf_mul {n : ℕ} {X : Spc F E n} {τ : ∀ w : InfinitePlace F, EmbOver E w} {k k' : UA σ X.J}
-    (hk : k ∈ KInf σ X τ) (hk' : k' ∈ KInf σ X τ) : k * k' ∈ KInf σ X τ := by
-  refine ⟨fun u hu => ?_, fun w => ?_⟩
-  · have e : mat (k * k') - 1 = (mat k - 1) * mat k' + (mat k' - 1) := by
-      change mat k * mat k' - 1 = _
-      rw [Matrix.sub_mul, Matrix.one_mul]
-      abel
-    rw [e, smul_add, ← Matrix.smul_mul, hk.1 u hu, hk'.1 u hu, Matrix.zero_mul, add_zero]
-  · change Commute ((mat k * mat k').map (piInf (τ w))) (X.θ w)
-    rw [Matrix.map_mul]
-    exact (hk.2 w).mul_left (hk'.2 w)
-
-theorem kInf_one {n : ℕ} {X : Spc F E n} {τ : ∀ w : InfinitePlace F, EmbOver E w} : (1 : UA σ X.J) ∈ KInf σ X τ := by
-  refine ⟨fun u _ => ?_, fun w => ?_⟩
-  · change u • ((1 : Matrix (Fin n) (Fin n) (AE F E)) - 1) = 0
-    rw [sub_self, smul_zero]
-  · change Commute ((1 : Matrix (Fin n) (Fin n) (AE F E)).map (piInf (τ w))) (X.θ w)
-    rw [Matrix.map_one _ (map_zero _) (map_one _)]
-    exact Commute.one_left _
 
 end GlobalTheory.KFixedVanish

@@ -26,7 +26,3 @@ theorem iwasawa_stdMaxParab : ∀ (k : Type) [Field k] [ValuativeRel k] [Topolog
   rw [← mul_inv_rev, ← e, inv_inv]
 
 end GlobalTheory.MaxParabIwasawa
-
-example : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (r a b : ℕ)
-    (h : a + b = r) (g : GL (Fin r) k), (∃ κ ∈ KO k (Fin r), ∃ p ∈ stdMaxParab k h, g = κ * p) ∧
-    ∃ p ∈ stdMaxParab k h, ∃ κ ∈ KO k (Fin r), g = p * κ := GlobalTheory.MaxParabIwasawa.iwasawa_stdMaxParab

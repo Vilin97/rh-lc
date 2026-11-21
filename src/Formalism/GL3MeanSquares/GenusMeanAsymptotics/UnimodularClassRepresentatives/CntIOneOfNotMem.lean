@@ -10,8 +10,6 @@ open NormLifting
 
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 
-local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
-
 def mulW (𝔭 : Ideal (𝓞 F)) {w : 𝓞 K} (hw : w ∈ extP K 𝔭) (j : ℕ) : AQ K 𝔭 (j + 1) →+ AQ K 𝔭 (j + 2) :=
   (Submodule.mapQ (extP K 𝔭 ^ (j + 1)) (extP K 𝔭 ^ (j + 2)) (LinearMap.mulLeft (𝓞 K) w) (by
     intro z hz
@@ -174,19 +172,5 @@ theorem cntI_one_of_mem (hF : IsFixF K F) (𝔭 : Ideal (𝓞 F)) (M : ℕ) {n :
     simp only [Pi.zero_apply, mul_zero, Finset.sum_const_zero]
     rw [Ideal.Quotient.eq_zero_iff_mem, pow_one]
     exact hn
-
-theorem cntI_one_of_notMem (hF : IsFixF K F) (𝔭 : Ideal (𝓞 F)) (M : ℕ) {n : 𝓞 K}
-    (hn : n ∉ extP K 𝔭) : cntI hF 𝔭 1 M n = 0 := by
-  unfold cntI
-  rw [Nat.card_eq_zero]
-  left
-  constructor
-  rintro ⟨x, hx1, hx2⟩
-  apply hn
-  have h0 : ∑ i, sg hF 𝔭 1 (x i) * x i = 0 :=
-    Finset.sum_eq_zero fun i _ => by rw [eq_zero_of_inQ_one (hx1 i), mul_zero]
-  rw [h0] at hx2
-  have := Ideal.Quotient.eq_zero_iff_mem.1 hx2.symm
-  rwa [pow_one] at this
 
 end Formalism.HermitianLattices.Ext.L3.unitaryAbsoluteValueBounds

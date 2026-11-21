@@ -238,23 +238,10 @@ def affineFnEquiv : W.toAffine.CoordinateRing ≃+* Γ(scheme W, coordOpen W 2) 
 def originFnEquiv : OriginRing W ≃+* Γ(scheme W, coordOpen W 1) :=
   (awayEquivOrigin W).symm.trans (awayFnEquiv W 1)
 
-@[simp] theorem originFnEquiv_originZ : originFnEquiv W (originZ W) = -ratio W 1 0 := by
-  have : awayEquivOrigin W (-awayCoord W 1 0) = originZ W :=
-    ((map_neg _ _).trans (mul_neg_one _).symm).trans (awayEval_awayCoord_mul W 1 (algebraMap R _)
-      ![originZ W, -1, originW W] (equation_originZ_originW W) isUnit_one.neg 0)
-  simp [originFnEquiv, ← this]
-
 @[simp] theorem originFnEquiv_originW : originFnEquiv W (originW W) = -ratio W 1 2 := by
   have : awayEquivOrigin W (-awayCoord W 1 2) = originW W :=
     ((map_neg _ _).trans (mul_neg_one _).symm).trans (awayEval_awayCoord_mul W 1 (algebraMap R _)
       ![originZ W, -1, originW W] (equation_originZ_originW W) isUnit_one.neg 2)
-  simp [originFnEquiv, ← this]
-
-@[simp] theorem originFnEquiv_algebraMap (r : R) :
-    originFnEquiv W (algebraMap R _ r) = constOn W _ r := by
-  have : awayEquivOrigin W (awayConst W 1 r) = algebraMap R _ r :=
-    awayEval_awayConst W 1 (algebraMap R _) ![originZ W, -1, originW W]
-      (equation_originZ_originW W) isUnit_one.neg r
   simp [originFnEquiv, ← this]
 
 theorem originW_mem_nonZeroDivisors : originW W ∈ nonZeroDivisors (OriginRing W) := by
@@ -290,13 +277,6 @@ theorem mapHom_app_constOn (U : (scheme W).Opens) (r : R) :
   rfl
 
 end BaseChange
-
-example (hP : IsUnimodularSol ((⟨0, 0, 1, -1, 0⟩ : WeierstrassCurve ℚ).map (RingHom.id ℚ)) ![2, -5, 8])
-    (h : ⊤ ≤ ptHom _ _ _ hP ⁻¹ᵁ coordOpen _ 2) :
-    evalPt (ptHom _ _ _ hP) _ h (ratio _ 2 0) = 1 / 4 := by
-  have := evalPt_ptHom_ratioOn_mul _ _ hP le_rfl h 0
-  simp only [Matrix.cons_val_zero, Matrix.cons_val] at this
-  linarith
 
 end WeierstrassCurve
 

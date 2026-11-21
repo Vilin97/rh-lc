@@ -57,8 +57,6 @@ section Near
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
 
-local notation "ι" => Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F)
-
 def dep (P : HeightOneSpectrum (𝓞 E)) (c : ℕ) : WithZero (Multiplicative ℤ) := P.valuation E ((qOf P : E) ^ c)
 
 def locM (P : HeightOneSpectrum (𝓞 E)) (x : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (P.adicCompletion E) :=

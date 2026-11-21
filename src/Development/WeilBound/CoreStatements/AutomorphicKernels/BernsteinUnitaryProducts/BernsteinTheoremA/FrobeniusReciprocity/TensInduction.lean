@@ -57,10 +57,6 @@ def tensR (a : SB A) : SB B →ₗ[ℂ] SB (A × B) where
     show (a : A → ℂ) q.1 * (c * (b : B → ℂ) q.2) = c * ((a : A → ℂ) q.1 * (b : B → ℂ) q.2)
     ring)
 
-@[simp]
-theorem tensR_apply (a : SB A) (b : SB B) : tensR a b = tens a b :=
-  rfl
-
 end Tens
 
 theorem span_transfer {A : Type*} [TopologicalSpace A] {M : Type*} [AddCommGroup M] [Module ℂ M]
@@ -124,11 +120,6 @@ def intB (w : B → ℂ) (hw : Continuous w) : SB (A × B) →ₗ[ℂ] SB A wher
     simp only [mul_assoc]
     exact integral_const_mul c _)
 
-@[simp]
-theorem intB_apply (w : B → ℂ) (hw : Continuous w) (F : SB (A × B)) (a : A) :
-    ((intB μ w hw F : SB A) : A → ℂ) a = ∫ b, (F : A × B → ℂ) (a, b) * w b ∂μ :=
-  rfl
-
 theorem intB_tens (w : B → ℂ) (hw : Continuous w) (a : SB A) (b : SB B) :
     intB μ w hw (tens a b) = (∫ y, (b : B → ℂ) y * w y ∂μ) • a := by
   apply Subtype.ext
@@ -149,11 +140,6 @@ variable {A : Type} [TopologicalSpace A] [T2Space A] [LocallyCompactSpace A]
 
 def rtr (k : K) : SB (A × K) →ₗ[ℂ] SB (A × K) :=
   pullHomeo ((Homeomorph.refl A).prodCongr (Homeomorph.mulRight k))
-
-@[simp]
-theorem rtr_apply (k : K) (F : SB (A × K)) (q : A × K) :
-    ((rtr k F : SB (A × K)) : A × K → ℂ) q = (F : A × K → ℂ) (q.1, q.2 * k) :=
-  rfl
 
 theorem factor_intB (uK : IsUnimod K) (b0 : SB K) (hb0 : ∫ y, (b0 : K → ℂ) y ∂μ = 1)
     (M : SB (A × K) →ₗ[ℂ] ℂ) (hM : ∀ (k : K) (F : SB (A × K)), M (rtr k F) = M F)

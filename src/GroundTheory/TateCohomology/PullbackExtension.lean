@@ -37,10 +37,6 @@ noncomputable def pullbackFst : pullbackRep S β ⟶ S.X₂ :=
 noncomputable def pullbackSnd : pullbackRep S β ⟶ Y :=
   Rep.ofHom ⟨LinearMap.snd k S.X₂.V Y.V ∘ₗ (pullbackSubmodule S β).subtype, fun _ => rfl⟩
 
-@[simp] theorem pullbackFst_apply (p : pullbackRep S β) : (pullbackFst S β).hom p = p.1.1 := rfl
-
-@[simp] theorem pullbackSnd_apply (p : pullbackRep S β) : (pullbackSnd S β).hom p = p.1.2 := rfl
-
 theorem g_apply_f_apply (x : S.X₁) : S.g.hom (S.f.hom x) = 0 := by
   change (S.f ≫ S.g).hom x = 0
   rw [S.zero]
@@ -58,22 +54,12 @@ noncomputable def pullbackι : S.X₁ ⟶ pullbackRep S β :=
     · simp [pullbackιLinear, Rep.hom_comm_apply]
     · simp [pullbackιLinear]⟩
 
-@[simp] theorem pullbackι_apply_fst (x : S.X₁) : ((pullbackι S β).hom x).1.1 = S.f.hom x := rfl
-
-@[simp] theorem pullbackι_apply_snd (x : S.X₁) : ((pullbackι S β).hom x).1.2 = 0 := rfl
-
 theorem pullbackι_pullbackSnd : pullbackι S β ≫ pullbackSnd S β = 0 := by
   ext x
   rfl
 
 noncomputable def pullbackSES : ShortComplex (Rep.{u} k G) :=
   ShortComplex.mk (pullbackι S β) (pullbackSnd S β) (pullbackι_pullbackSnd S β)
-
-@[simp] theorem pullbackSES_X₁ : (pullbackSES S β).X₁ = S.X₁ := rfl
-@[simp] theorem pullbackSES_X₂ : (pullbackSES S β).X₂ = pullbackRep S β := rfl
-@[simp] theorem pullbackSES_X₃ : (pullbackSES S β).X₃ = Y := rfl
-@[simp] theorem pullbackSES_f : (pullbackSES S β).f = pullbackι S β := rfl
-@[simp] theorem pullbackSES_g : (pullbackSES S β).g = pullbackSnd S β := rfl
 
 variable {S} in
 
@@ -93,20 +79,5 @@ theorem pullbackSES_shortExact (hS : S.ShortExact) : (pullbackSES S β).ShortExa
       rw [(mem_pullbackSubmodule.1 p.2), hp2, map_zero]
     obtain ⟨x, hx⟩ := (hex p.1.1).1 hg
     refine ⟨x, Subtype.ext (Prod.ext hx hp2.symm)⟩
-
-noncomputable def pullbackSESHom : pullbackSES S β ⟶ S where
-  τ₁ := 𝟙 S.X₁
-  τ₂ := pullbackFst S β
-  τ₃ := β
-  comm₁₂ := by
-    ext x
-    rfl
-  comm₂₃ := by
-    ext p
-    exact mem_pullbackSubmodule.1 p.2
-
-@[simp] theorem pullbackSESHom_τ₁ : (pullbackSESHom S β).τ₁ = 𝟙 S.X₁ := rfl
-@[simp] theorem pullbackSESHom_τ₂ : (pullbackSESHom S β).τ₂ = pullbackFst S β := rfl
-@[simp] theorem pullbackSESHom_τ₃ : (pullbackSESHom S β).τ₃ = β := rfl
 
 end GroundTheory.GroupCoh

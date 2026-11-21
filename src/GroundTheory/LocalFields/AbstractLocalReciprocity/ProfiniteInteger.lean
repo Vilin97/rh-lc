@@ -9,8 +9,6 @@ def profiniteIntegers : Subring (∀ n : ℕ+, ZMod n) :=
 
 abbrev ProfiniteInteger : Type := profiniteIntegers
 
-@[inherit_doc] scoped notation "ℤ̂" => ProfiniteInteger
-
 theorem mem_profiniteIntegers {x : ∀ n : ℕ+, ZMod n} :
     x ∈ profiniteIntegers ↔
       ∀ (m n : ℕ+) (h : (m : ℕ) ∣ n), ZMod.castHom h (ZMod m) (x n) = x m := by
@@ -27,10 +25,7 @@ theorem castHom_proj {m n : ℕ+} (h : (m : ℕ) ∣ n) (x : ℤ̂) :
     ZMod.castHom h (ZMod m) (proj n x) = proj m x :=
   mem_profiniteIntegers.1 x.2 m n h
 
-@[ext] theorem ext {x y : ℤ̂} (h : ∀ n, proj n x = proj n y) : x = y :=
   Subtype.ext (funext h)
-
-@[simp] theorem proj_intCast (n : ℕ+) (m : ℤ) : proj n (m : ℤ̂) = m := map_intCast _ m
 
 theorem isClosed_profiniteIntegers :
     IsClosed (profiniteIntegers : Set (∀ n : ℕ+, ZMod n)) := by

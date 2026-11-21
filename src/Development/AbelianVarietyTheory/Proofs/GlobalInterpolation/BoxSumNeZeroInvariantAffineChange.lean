@@ -36,9 +36,6 @@ def lat (P : HeightOneSpectrum (𝓞 E)) (ι : Type) (c : E) : AddSubgroup (ι �
     have := IndefiniteRowSideFullHecke.SourceLatticeInvariance.intAt_neg (ha i)
     simpa using this
 
-theorem mem_lat {P : HeightOneSpectrum (𝓞 E)} {ι : Type} {c : E} {u : ι → E} :
-    u ∈ lat P ι c ↔ ∀ i, IntAt P (c * u i) := Iff.rfl
-
 theorem lat_le {P : HeightOneSpectrum (𝓞 E)} {ι : Type} {c c' : E} (k : ℕ) (h : c' = (qOf P : E) ^ k * c) :
     lat P ι c ≤ lat P ι c' := fun u hu i => by
   rw [h, mul_assoc]

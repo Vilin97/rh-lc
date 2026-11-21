@@ -24,8 +24,6 @@ theorem ujEq (k : ℕ) : Formalism.REAL.UJ (εT k) = ReciprocityTheory.ChartRest
 
 def eU (k : ℕ) : ↥(Formalism.REAL.UJ (εT k)) ≃* ↥(ReciprocityTheory.ChartRestriction.DS.UNgrp k) := MulEquiv.subgroupCongr (ujEq k)
 
-theorem eU_val (k : ℕ) (g : ↥(Formalism.REAL.UJ (εT k))) : ((eU k g : (Matrix (Fin k) (Fin k) ℂ)ˣ)) = g := rfl
-
 theorem cont_eU (k : ℕ) : Continuous (eU k) := continuous_induced_rng.2 continuous_subtype_val
 theorem cont_eU_symm (k : ℕ) : Continuous (eU k).symm := continuous_induced_rng.2 continuous_subtype_val
 
@@ -185,12 +183,6 @@ open Formalism.MainNotions.S ReciprocityTheory.ChartRestriction.DS
 variable {k : ℕ}
 
 abbrev Low (k : ℕ) : Type := {ab : Fin k × Fin k // ab.2 < ab.1}
-
-theorem skMat_low (x : UCo k) (p : Low k) : skMat x p.1.1 p.1.2 = x.2 p := skMat_low_om x p
-
-theorem skMat_up (x : UCo k) (p : Low k) : ‖skMat x p.1.2 p.1.1‖ = ‖x.2 p‖ := by
-  obtain ⟨⟨a, b⟩, h⟩ := p
-  simp [skMat, h, h.ne, not_lt.2 h.le]
 
 theorem norm_skMat_sq (x : UCo k) :
     ‖RLk (skMat x)‖ ^ 2 = ∑ a, (x.1 a) ^ 2 + 2 * ∑ p : Low k, ‖x.2 p‖ ^ 2 := by

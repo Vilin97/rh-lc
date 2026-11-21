@@ -5,8 +5,6 @@ namespace GroundTheory.Global
 
 open NumberField IntermediateField IdeleGroup
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 namespace CyclotomicSymbol

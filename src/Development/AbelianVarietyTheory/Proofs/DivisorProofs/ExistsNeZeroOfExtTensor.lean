@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.OneSubOfIsIrreducible
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsParahoricVec
+import Development.AbelianVarietyTheory.Definitions.Foundations.SecondCountableAndT2LocalField
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.WeilTensorLiftConclusion
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BzfinHolds
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CharInCuspidalSupportOfJacquetSubquotientFactor
@@ -32,12 +33,6 @@ theorem nontrivial_of_irr {ρ : Representation ℂ G V} (h : ρ.IsIrreducible) :
   ext x
   rw [Subsingleton.elim x 0]
   exact iff_of_true (zero_mem _) (zero_mem _)
-
-def equivOfBijective {ρ : Representation ℂ G V} {σ : Representation ℂ G W} (f : ρ.IntertwiningMap σ)
-    (hf : Function.Bijective f) : ρ.Equiv σ :=
-  Representation.Equiv.mk (LinearEquiv.ofBijective f.toLinearMap hf) fun g => by
-    ext v
-    exact f.isIntertwining _ _ g v
 
 end General
 

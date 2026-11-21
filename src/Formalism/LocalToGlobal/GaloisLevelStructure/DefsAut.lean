@@ -10,8 +10,6 @@ section aut
 
 variable (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ)
 
-local notation3 "L⁺" => NumberField.maximalRealSubfield L
-
 def Cong (N : ℕ) (κ : GAf L n) : Prop :=
   κ ∈ Umax L n ∧ ∀ i j, ∃ y ∈ ALint L,
     (κ.1 : Matrix (Fin n) (Fin n) (AL L)) i j - (1 : Matrix (Fin n) (Fin n) (AL L)) i j = (N : AL L) * y

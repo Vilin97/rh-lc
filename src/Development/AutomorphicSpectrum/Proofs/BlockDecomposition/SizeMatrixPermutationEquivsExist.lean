@@ -5,7 +5,8 @@ import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.Se
 import Development.AutomorphicSpectrum.Proofs.GlobalProofs.GeometricLemma
 import Development.AutomorphicSpectrum.Proofs.GlobalProofs.BernsteinZelevinskyFiniteness
 import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IsSubquotientCompMulSingle
-import BuildAid.D3
+import Lean.LibrarySuggestions.Basic
+import Lean.Elab.Command
 
 noncomputable section
 

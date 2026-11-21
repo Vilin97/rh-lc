@@ -102,22 +102,6 @@ abbrev Pts (j : ℕ) : Type := PtC (T0.Q.Xo j) T0.Q.c (embC YS iC b)
 
 def kurAt : Subfield (FractionRing (D.ntw.O i)) := (kurC (embC YS iC b)).comap iC
 
-theorem sideK_mem_kurAt (a : T0.Q.c.F) : sideK YS i b a ∈ kurAt YS iC b := mem_kurC (embC YS iC b) a
-
-theorem kurAt_eq (h : ∀ x : S.Ks, ∃ y : S.Ks, algebraMap S.Ks D.what₂.LL y = star (algebraMap S.Ks D.what₂.LL x)) :
-    kurAt YS iC true = kurAt YS iC false := by
-  have key : ∀ x y : S.Ks, algebraMap S.Ks D.what₂.LL y = star (algebraMap S.Ks D.what₂.LL x) →
-      embC YS iC false (eKs YS x) = embC YS iC true (eKs YS y) := fun x y hxy => by
-    change iC (sideK YS i false _) = iC (sideK YS i true _)
-    rw [sideK_eKs, sideK_eKs]
-    exact congrArg (fun z => iC (IsFractionRing.map (K := FractionRing (D.ntw.O0 i)) (D.ntw.O_inj i) z))
-      (D.ntw.restX_coefficientEmbedding_conj i (S.kKs x) (S.kKs y) (by rw [S.kKs_spec, S.kKs_spec, hxy]))
-  have : (embC YS iC true).fieldRange = (embC YS iC false).fieldRange := by
-    refine le_antisymm ?_ ?_ <;> rintro _ ⟨a, rfl⟩ <;> obtain ⟨x, rfl⟩ := (eKs YS).surjective a <;> obtain ⟨y, hy⟩ := h x
-    · exact ⟨_, key y x (by rw [hy, star_star])⟩
-    · exact ⟨_, (key x y hy).symm⟩
-  rw [kurAt, kurAt, kurC_congr _ this]
-
 variable {iC b} in
 
 def valAt (j : Fin D.R.m) (z : FrC YS iC b ((j : ℕ) + 1)) : NX.Fm S i ((j : ℕ) + 1) b →+ ℂ_[D.ntw.l i] :=
@@ -202,15 +186,6 @@ theorem span_ratForms (j : ℕ) (L : Subfield (FractionRing (D.ntw.O i))) :
       have e : (a • ((1 : NX.KB S i b) ⊗ₜ[S.Ks] f) : NX.KB S i b ⊗[S.Ks] NX.FmK S j) = a ⊗ₜ[S.Ks] f := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
       exact e ▸ h
-  exact key x
-
-theorem ratForms_top (j : ℕ) : ratForms S j b (⊤ : Subfield (FractionRing (D.ntw.O i))) = ⊤ := by
-  refine eq_top_iff.2 fun x _ => ?_
-  have key : ∀ x : NX.KB S i b ⊗[S.Ks] NX.FmK S j, x ∈ ratForms S j b (⊤ : Subfield (FractionRing (D.ntw.O i))) := fun x => by
-    induction x using TensorProduct.induction_on with
-    | zero => exact zero_mem _
-    | add x y hx hy => exact add_mem hx hy
-    | tmul a f => exact tmul_mem_ratForms (Subfield.mem_top _) f
   exact key x
 
 variable (iC b) (j : Fin D.R.m)

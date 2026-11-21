@@ -43,9 +43,6 @@ def valEquiv {β : Type} {n : β → ℕ} {t : ℕ} (a₀ : β) (ha₀ : n a₀ 
       omega
   right_inv x := rfl
 
-@[simp] theorem val_valEquiv {β : Type} {n : β → ℕ} {t : ℕ} (a₀ : β) (ha₀ : n a₀ = t)
-    (h0 : ∀ j, j ≠ a₀ → n j = 0) (p : Σ j, Fin (n j)) : (valEquiv a₀ ha₀ h0 p).val = p.2.val := rfl
-
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 theorem deltaHalf_eq_one_of_single {β : Type} [Fintype β] [LinearOrder β] {n : β → ℕ} (a₀ : β)

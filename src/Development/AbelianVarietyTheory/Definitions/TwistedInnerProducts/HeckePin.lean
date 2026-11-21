@@ -25,13 +25,4 @@ def Reads (hL : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)) 
 
 set_option synthInstance.maxHeartbeats 400000 in
 
-def HeckePin : Prop :=
-  ∀ (hL : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)) (hs : ∀ j, 1 ≤ j → j ≤ D.R.m → HeckeStabR S j (hL j)),
-    Reads Rl cG S Y hL → ∃ u : ∀ i : D.ntw.Tw, Bool → PlE D.host → (D.ntw.O i)ˣ,
-      ∀ i j b (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (k : ℕ) (P : PlE D.host) (x : D.nexp.Fm i j b), P ∉ D.ntw.S0 i →
-        Formalism.BasicNotions.IsSplitPl D.host P → k ≤ D.R.r →
-        Y.eF i j b h1 h2 (D.nexp.hkF i j b k P x) =
-          (algebraMap (D.ntw.O i) (FractionRing (D.ntw.O i)) (u i b P)) ^ k •
-            hkFR S i j b (hL j) (hs j h1 h2) k P (Y.eF i j b h1 h2 x)
-
 end GlobalTheory.ExportPin

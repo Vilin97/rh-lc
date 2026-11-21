@@ -18,24 +18,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} {Ψ : Fins
 
 omit [NumberField E] [IsCMField E]
 
-theorem frame_ext {x y : Frame Ψ r} (h : ∀ τ, mat x τ = mat y τ) : x = y := funext fun τ => h τ
-
-theorem mat_rmul (x b : Frame Ψ r) (τ : Ψ) : mat (rmul x b) τ = mat x τ * mat b τ := rfl
-
-theorem mat_lact (γ : GL (Fin r) E) (x : Frame Ψ r) (τ : Ψ) :
-    mat (lact γ x) τ = (γ : Matrix (Fin r) (Fin r) E).map τ.1 * mat x τ := rfl
-
-theorem lact_rmul (γ : GL (Fin r) E) (x b : Frame Ψ r) : lact γ (rmul x b) = rmul (lact γ x) b :=
-  frame_ext fun τ => by simp only [mat_rmul, mat_lact, Matrix.mul_assoc]
-
-theorem lact_mul (a b : GL (Fin r) E) (x : Frame Ψ r) : lact (a * b) x = lact a (lact b x) :=
-  frame_ext fun τ => by simp only [mat_lact, Units.val_mul, Matrix.map_mul, Matrix.mul_assoc]
-
-theorem lact_one' (x : Frame Ψ r) : lact (1 : GL (Fin r) E) x = x :=
-  frame_ext fun τ => by rw [mat_lact, Units.val_one, Matrix.map_one _ (map_zero _) (map_one _), Matrix.one_mul]
-
-def scal (s : Ψ → ℂ) : Frame Ψ r := fun τ => (s τ • (1 : Matrix (Fin r) (Fin r) ℂ) : Matrix (Fin r) (Fin r) ℂ)
-
 end frames
 
 theorem levelFacts : LevelFacts := by

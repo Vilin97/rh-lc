@@ -47,8 +47,6 @@ instance : InnerProductSpace ℂ (Cj H) where
 
 instance [CompleteSpace H] : CompleteSpace (Cj H) := inferInstanceAs (CompleteSpace H)
 
-instance [Nontrivial H] : Nontrivial (Cj H) := inferInstanceAs (Nontrivial H)
-
 def opCj (A : H →L[ℂ] H) : Cj H →L[ℂ] Cj H where
   toFun x := toCj (A (ofCj x))
   map_add' x y := A.map_add (ofCj x) (ofCj y)

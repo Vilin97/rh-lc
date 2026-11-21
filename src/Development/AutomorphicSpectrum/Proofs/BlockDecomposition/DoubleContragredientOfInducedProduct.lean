@@ -3,7 +3,8 @@ import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.GenericUnli
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContragredientProductIrreducible
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DualClassInvolutive
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SmoothContragredientIrreducibleAndReflexive
-import BuildAid.D3
+import Lean.LibrarySuggestions.Basic
+import Lean.Elab.Command
 
 noncomputable section
 

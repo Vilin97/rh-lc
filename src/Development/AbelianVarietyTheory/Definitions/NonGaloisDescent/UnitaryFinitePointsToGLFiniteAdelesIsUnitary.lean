@@ -11,8 +11,6 @@ namespace GlobalTheory.FormDict.Model
 
 variable (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ)
 
-local notation "F₀" => maximalRealSubfield L
-
 def kappa : AL L ≃+* FiniteAdeleRing (𝓞 L) L :=
   (Algebra.TensorProduct.comm F₀ L (FiniteAdeleRing (𝓞 F₀) F₀)).toRingEquiv.trans (GlobalTheory.LFun.finAdEquiv F₀ L)
 
@@ -86,8 +84,6 @@ def finIso : FinIso L n where
     · exact (pInf_finGL _).trans (MonoidHom.mem_ker.1 hgf).symm
     · exact (pFin_finGL _).trans (Units.ext hU)
 
-instance : Nonempty (FinIso L n) := ⟨finIso L n⟩
-
 variable {L n}
 
 theorem kappa_eq (F G : FinIso L n) : F.κ = G.κ := by
@@ -116,64 +112,7 @@ theorem kappa_eq (F G : FinIso L n) : F.κ = G.κ := by
     change F.κ (1 ⊗ₜ a) w = G.κ (1 ⊗ₜ a) w
     rw [h1, h2, this]
 
-theorem j_eq (F G : FinIso L n) : F.j = G.j := by
-  refine MonoidHom.ext fun x => Subtype.ext (ga_ext ?_ ?_)
-  · exact (MonoidHom.mem_ker.1 (F.fin x)).trans (MonoidHom.mem_ker.1 (G.fin x)).symm
-  · refine Units.ext (Matrix.ext fun s t => FiniteAdeleRing.ext _ fun w => ?_)
-    have a := F.loc x w s t
-    rw [kappa_eq F G] at a
-    exact a.trans (G.loc x w s t).symm
-
-theorem j_injective (F : FinIso L n) : Function.Injective F.j := fun x y h => by
-  refine Subtype.ext (Units.ext (Matrix.ext fun s t => F.κ.injective (FiniteAdeleRing.ext _ fun w => ?_)))
-  have a := F.loc x w s t
-  rw [h] at a
-  exact a.symm.trans (F.loc y w s t)
-
 variable (L n) in
-
-def trivRep : NG.AutRep L n where
-  W := ℂ
-  ρ := Representation.trivial ℂ (GQ L n) ℂ
-  alg := ⟨inferInstance, Unit, inferInstance, inferInstance, Module.Basis.singleton Unit ℂ, fun _ _ => 1, fun γ γ₀ _ => by
-    ext i j
-    simp [LinearMap.toMatrix_apply]⟩
-  irr := by
-    have hb : (⊥ : Subrepresentation (Representation.trivial ℂ (GQ L n) ℂ)) ≠ ⊤ := fun h => by
-      have := congrArg Subrepresentation.toSubmodule h
-      exact bot_ne_top (α := Submodule ℂ ℂ) this
-    haveI : Nontrivial (Subrepresentation (Representation.trivial ℂ (GQ L n) ℂ)) := ⟨_, _, hb⟩
-    refine ⟨fun a => ?_⟩
-    rcases eq_bot_or_eq_top a.toSubmodule with h | h
-    · exact Or.inl (Subrepresentation.toSubmodule_injective h)
-    · exact Or.inr (Subrepresentation.toSubmodule_injective h)
-  S := Submodule.span ℂ {(fun _ => 1 : GAf L n → ℂ)}
-  irrS := by
-    have h0 : (fun _ => 1 : GAf L n → ℂ) ≠ 0 := fun h => one_ne_zero (congrFun h 1)
-    refine ⟨⟨fun φ hφ => ?_, fun h φ hφ => ?_⟩, by simpa using h0,
-      fun W _ hW => (nonzero_span_atom _ h0).le_iff.1 hW⟩
-    · obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hφ
-      exact ⟨fun _ _ => rfl, 1, one_pos, fun _ _ _ => rfl⟩
-    · obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hφ
-      exact hφ
-
-theorem dict_triv (F : FinIso L n) : Dict F (trivRep L n) (Submodule.span ℂ {(fun _ => 1 : UA L n → ℂ)}) := by
-  refine ⟨isAutRepU_const, ?_⟩
-  rw [Submodule.map_span, Set.image_singleton]
-  refine le_antisymm (Submodule.span_mono ?_) (Submodule.span_le.2 ?_)
-  · rintro _ rfl
-    exact ⟨fun _ => (1 : ℂ), Submodule.mem_span_singleton_self (R := ℂ) (fun _ => 1 : GAf L n → ℂ), (LinearMap.id : ℂ →ₗ[ℂ] ℂ), rfl⟩
-  · rintro _ ⟨f, hf, lam, rfl⟩
-    obtain ⟨c, rfl⟩ := (Submodule.mem_span_singleton (R := ℂ) (M := GAf L n → ℂ)).1 hf
-    exact Submodule.mem_span_singleton.2 ⟨lam (c • (1 : ℂ)), funext fun x => mul_one _⟩
-
-theorem not_dict_bot (F : FinIso L n) (π : NG.AutRep L n) : ¬ Dict F π ⊥ := fun h => h.1.ne_bot rfl
-
-theorem restrict_translate (F : FinIso L n) (φ : UA L n → ℂ) (h : GAf L n) :
-    LinearMap.funLeft ℂ ℂ F.j (RU L n (F.j h) φ) = NG.rt L n h (LinearMap.funLeft ℂ ℂ F.j φ) := by
-  funext g
-  change φ (F.j g * F.j h) = φ (F.j (g * h))
-  rw [map_mul]
 
 end GlobalTheory.FormDict.Model
 

@@ -11,8 +11,6 @@ open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubf
 
 open scoped NumberField.LiesOver NumberField.AdeleRing
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield}
@@ -93,11 +91,6 @@ def idelesLocalMor :
   Rep.ofHom ⟨(MonoidHom.toAdditive (idelesProj ι)).toIntLinearMap,
     fun σ => LinearMap.ext fun z => congrArg Additive.ofMul (idelesProj_smul ι σ z.toMul)⟩
 
-@[simp]
-theorem idelesLocalMor_hom_apply (z : Additive IdeleLimit) :
-    (idelesLocalMor ι).hom z = Additive.ofMul (idelesProj ι z.toMul) :=
-  rfl
-
 def idelesLocalRes (n : ℕ) :
     cohomology (limitRep K) n ⟶
       cohomology (galUnitsZ (v.adicCompletion K.1) (AlgebraicClosure (v.adicCompletion K.1))) n :=
@@ -175,11 +168,6 @@ def infIdelesLocalMor :
     Rep.res (globalDecomp v.Completion ι) (limitRep K) ⟶ galUnitsZ v.Completion (AlgebraicClosure v.Completion) :=
   Rep.ofHom ⟨(MonoidHom.toAdditive (infIdelesProj ι)).toIntLinearMap,
     fun σ => LinearMap.ext fun z => congrArg Additive.ofMul (infIdelesProj_smul ι σ z.toMul)⟩
-
-@[simp]
-theorem infIdelesLocalMor_hom_apply (z : Additive IdeleLimit) :
-    (infIdelesLocalMor ι).hom z = Additive.ofMul (infIdelesProj ι z.toMul) :=
-  rfl
 
 def infIdelesLocalRes (n : ℕ) :
     cohomology (limitRep K) n ⟶ cohomology (galUnitsZ v.Completion (AlgebraicClosure v.Completion)) n :=

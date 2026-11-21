@@ -36,8 +36,6 @@ theorem map_smul_of_algebraMap {A A' : Type} [CommRing A] [Algebra R A] [CommRin
 
 namespace SemiBialgHom
 
-instance : CoeFun (SemiBialgHom σ A A') fun _ => A → A' := ⟨fun f => f.toRingHom⟩
-
 variable (f : SemiBialgHom σ A A')
 
 def lin : A →ₛₗ[σ] A' := ⟨⟨f.toRingHom, f.toRingHom.map_add⟩, f.smul_map⟩
@@ -58,16 +56,10 @@ def ofBialgHom {B : Type} [CommRing B] [Bialgebra R B] (g : A →ₐc[R] B) :
   counit_map := CoalgHomClass.counit_comp_apply g
   comul_map a := (pullTwo_comul g a).symm
 
-@[simp] theorem ofBialgHom_apply {B : Type} [CommRing B] [Bialgebra R B] (g : A →ₐc[R] B) (a : A) :
-    ofBialgHom g a = g a := rfl
-
 def toBialgHom {B : Type} [CommRing B] [Bialgebra R B] (g : SemiBialgHom (RingHom.id R) A B) :
     A →ₐc[R] B :=
   .ofAlgHom { g.toRingHom with commutes' := g.map_algebraMap } (AlgHom.ext g.counit_map)
     (AlgHom.ext g.two_comul)
-
-@[simp] theorem toBialgHom_apply {B : Type} [CommRing B] [Bialgebra R B]
-    (g : SemiBialgHom (RingHom.id R) A B) (a : A) : g.toBialgHom a = g a := rfl
 
 theorem two_two (g : SemiBialgHom τ A' A'') {ρ : R →+* R''} (k : A →ₛₗ[ρ] A'')
     (h : ∀ a, k a = g (f a)) (c : A ⊗[R] A) : g.two (f.two c) = TensorProduct.map k k c := by
@@ -83,8 +75,6 @@ def comp (g : SemiBialgHom τ A' A'') (f : SemiBialgHom σ A A') :
   comul_map a := by
     rw [RingHom.comp_apply, ← g.two_comul, ← f.two_comul]
     exact f.two_two g _ (fun _ => rfl) _
-
-@[simp] theorem comp_apply (g : SemiBialgHom τ A' A'') (a : A) : g.comp f a = g (f a) := rfl
 
 section Points
 
@@ -104,9 +94,6 @@ def pts : WithConv (A' →ₐ[R'] B) →* WithConv (A →ₐ[R] B) where
     induction c with
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a b => rfl)
-
-@[simp] theorem pts_apply (x : WithConv (A' →ₐ[R'] B)) (a : A) :
-    (f.pts B hB x).ofConv a = x.ofConv (f a) := rfl
 
 end Points
 
@@ -290,9 +277,6 @@ def ofHom (f : G ⟶ H) : SemiHom (RingHom.id O) G H :=
 def toHom (s : SemiHom (RingHom.id O) G H) : G ⟶ H :=
   ⟨fun n => (s.app n).toBialgHom, fun n => BialgHom.ext (s.res_app n)⟩
 
-@[simp] theorem toHom_app (s : SemiHom (RingHom.id O) G H) (n : ℕ) (a : H.A n) :
-    s.toHom.app n a = s.app n a := rfl
-
 def comp (t : SemiHom τ G'' G') (s : SemiHom σ G' G) : SemiHom (τ.comp σ) G'' G :=
   ⟨fun n => (t.app n).comp (s.app n), fun n a => by simp [t.res_app, s.res_app]⟩
 
@@ -305,8 +289,6 @@ def funs : G.funs →ₛₗ[σ] G'.funs where
   toFun b := ⟨fun n => s.app n (b.1 n), fun n => (s.res_app n _).trans (congrArg _ (b.2 n))⟩
   map_add' _ _ := Subtype.ext (funext fun n => map_add (s.app n).lin _ _)
   map_smul' _ _ := Subtype.ext (funext fun n => (s.app n).smul_map _ _)
-
-@[simp] theorem funs_val (b : G.funs) (n : ℕ) : (s.funs b).1 n = s.app n (b.1 n) := rfl
 
 theorem res_two (n : ℕ) (c : G.A (n + 1) ⊗[O] G.A (n + 1)) :
     pullbackTwo (G'.res n) ((s.app (n + 1)).two c) = (s.app n).two (pullbackTwo (G.res n) c) := by
@@ -387,8 +369,6 @@ end Comp
 theorem comp_rig (t : SemiHom τ G'' G') (x : G.RigExt) : (t.comp s).rig x = t.rig (s.rig x) :=
   (s.rig_rig t _ (fun _ _ => rfl) x).symm
 
-@[simp] theorem ofHom_cocycles (f : G ⟶ H) : (ofHom f).cocycles = cocyclesMap f := rfl
-
 variable [Fact p.Prime]
 
 @[simp] theorem ofHom_omega (f : G ⟶ H) : (ofHom f).omega = omegaMap G H f :=
@@ -400,19 +380,6 @@ variable [Fact p.Prime]
   LinearMap.ext fun x => by
     obtain ⟨⟨c, w⟩, rfl⟩ := Submodule.mkQ_surjective _ x
     exact congrArg G.rigMk (Prod.ext rfl (LinearMap.congr_fun (ofHom_omega f) w))
-
-theorem rig_naturality (s' : SemiHom σ H' H) (f : G ⟶ H) (f' : G' ⟶ H')
-    (h : ∀ n a, s.app n (f.app n a) = f'.app n (s'.app n a)) (x : H.RigExt) :
-    s.rig (rigExtMap f x) = rigExtMap f' (s'.rig x) := by
-  rw [← ofHom_rig, ← ofHom_rig, ← comp_rig]
-  exact (s'.rig_rig (ofHom f') _ h x).symm
-
-theorem omega_naturality (s' : SemiHom σ H' H) (f : G ⟶ H) (f' : G' ⟶ H')
-    (h : ∀ n a, s.app n (f.app n a) = f'.app n (s'.app n a)) (w : H.omega) :
-    s.omega (omegaMap G H f w) = omegaMap G' H' f' (s'.omega w) := by
-  rw [← ofHom_omega, ← ofHom_omega]
-  exact ((ofHom f).omega_omega s (s.comp (ofHom f)) (fun _ _ => rfl) w).trans
-    (s'.omega_omega (ofHom f') _ h w).symm
 
 end SemiHom
 
@@ -472,7 +439,6 @@ theorem baseChange_hom_ext {G' : PDivGroup p O'} {f g : G' ⟶ G.baseChange O'}
 
 variable (p O) in
 
-@[simps] def baseChangeFunctor : PDivGroup p O ⥤ PDivGroup p O' where
   obj G := G.baseChange O'
   map := baseChangeMap O'
   map_id _ := baseChange_hom_ext fun _ _ => rfl
@@ -512,11 +478,6 @@ end BaseChange
 section Examples
 
 variable [Fact p.Prime]
-
-example [Algebra O O'] (n : ℕ) : (((mu p O).toBase O').omega (dlogT p O)).1 n =
-    dUnit O' ((1 : O') ⊗ₜ[O] muT O (p ^ n)) := SemiBialgHom.cot_d _ _
-
-example [Algebra O O'] : ((mu p O).baseChange O').height = 1 := rfl
 
 end Examples
 

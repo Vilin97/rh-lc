@@ -13,8 +13,6 @@ namespace GroundTheory.ProfCoh
 
 open IsDedekindDomain NumberField CategoryTheory MonoidalCategory GroundTheory.Global GroundTheory.LocalField
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 attribute [local instance 2000] Rep.hV2
 
 theorem bijective_of_bijective_precomp {X Y Y' Z : Type*} [AddCommGroup X] [AddCommGroup Y]
@@ -83,10 +81,6 @@ abbrev resEvalPairing :
     Rep.res ψ.toMonoidHom M ⊗ Rep.res ψ.toMonoidHom (dualRep D M) ⟶ Rep.res ψ.toMonoidHom D :=
   (Rep.resFunctor ψ.toMonoidHom).map (evalPairing D M)
 
-instance finite_res_toMonoidHom (M : Rep.{0} (ULift.{0} ℤ) G) [Finite M] :
-    Finite (Rep.res ψ.toMonoidHom M) :=
-  inferInstanceAs (Finite M)
-
 instance isDiscreteRep_cartierDual_res : IsDiscreteRep (cartierDual F Fsep (Rep.res ψ.toMonoidHom M)) :=
   isDiscreteRep_cartierDual _
 
@@ -96,9 +90,6 @@ def dualToCartierDual :
 
 omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [IsSepClosure F Fsep]
   [IsTopologicalGroup G] [IsDiscreteRep D] [IsDiscreteRep M] [Finite M] in
-theorem dualToCartierDual_hom_apply (f : M →ₗ[ULift.{0} ℤ] D) (m : M) :
-    ((dualToCartierDual ψ D ρ M).hom f : M →ₗ[ULift.{0} ℤ] galUnits.{0} F Fsep) m = ρ.hom (f m) :=
-  rfl
 
 omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [IsTopologicalGroup G]
   [IsDiscreteRep D] [IsDiscreteRep M] in
@@ -200,14 +191,6 @@ def gsRootsToLocalUnits (v : S) :
         (Units.ext (gsFinFamily_apply S ιs v σ
           (((Additive.toMul ζ : rootsOfUnity n _) : (maxUnramifiedOutside K.1 ℚ̄ S)ˣ) :
             maxUnramifiedOutside K.1 ℚ̄ S)))⟩
-
-theorem gsRootsToLocalUnits_hom_apply (v : S)
-    (ζ : Additive (rootsOfUnity n (maxUnramifiedOutside K.1 ℚ̄ S))) :
-    ((Additive.toMul ((gsRootsToLocalUnits S ιs n v).hom ζ) :
-        (AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))ˣ) :
-      AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1)) =
-      ιs v (((Additive.toMul ζ : rootsOfUnity n _) : (maxUnramifiedOutside K.1 ℚ̄ S)ˣ) : ℚ̄) :=
-  rfl
 
 theorem gsRootsToLocalUnits_injective (v : S) :
     Function.Injective (gsRootsToLocalUnits S ιs n v).hom := by

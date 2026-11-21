@@ -82,36 +82,10 @@ end Expo
 
 variable {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} {κ : Lv A} (s : FinalTheorems S κ) (Φ : s.Flag) (L : CmList A)
 
-theorem carriedC_un (k : s.Comp) (x : ((s.U κ.σ₀).X k).dom) : CarriedC (Φ.C k) ((s.U κ.σ₀).un k x) := by
-  letI := κ.σ₀.toAlgebra
-  let P : FrPt s.Xo κ.c ℂ := (s.U κ.σ₀).un k x
-  have key : ∀ (x' : Sp ℂ ⟶ s.T.Z.X) (g : EigFrame s.T.Z (algebraMap κ.c.F ℂ) x'),
-      x' = (GlobalTheory.AllWt.ptF P ≫ s.T.Z.jQ) ≫ genι s.T.Z → ∃ (i : s.Comp) (p : Sp ℂ ⟶ (Φ.C i).Y.X),
-        p ≫ (Φ.C i).π = GlobalTheory.AllWt.ptF P ≫ s.T.Z.jQ ∧ (Φ.C i).Carries p g := by
-    rintro _ g rfl
-    obtain ⟨⟨i, p⟩, h, -⟩ := Φ.lifts ℂ _ _ (by rw [Category.assoc, s.T.Z.jQ_over, Descent.ptF_snd]) g
-    exact ⟨i, p, h⟩
-  obtain ⟨i, p, hp, hc⟩ := key _ (frameOf s.T.Z P) (Category.assoc _ _ _).symm
-  let pt : Sp ℂ := IsLocalRing.closedPoint ℂ
-  have hs : ∀ a : Sp ℂ, a = pt := fun a => Subsingleton.elim (α := PrimeSpectrum ℂ) _ _
-  obtain rfl : i = k := by
-    refine (PtComp.existsUnique_onComp s ((GlobalTheory.AllWt.ptF P ≫ s.T.Z.jQ) pt)).unique
-      ⟨⟨_, ReciprocityTheory.ChartRestriction.G.AR.Up.KU.orth_dom _ (isOrth_x0F _)⟩, fun a => ?_⟩
-      ⟨x, fun a => by rw [hs a]; exact mem_connectedComponent⟩
-    exact (isPreconnected_range (Φ.C i).π.continuous).subset_connectedComponent ⟨p pt, by rw [← hp]; rfl⟩
-      (Φ.label i _ a)
-  exact ⟨p, hp, hc⟩
-
 abbrev cmAt (k : s.Comp) : D.what₂.Tau ≃ ((s.U κ.σ₀).X k).Ψ := cmEquiv _ s.isUnf L.ψ k
 
 def bettiCo (k : s.Comp) (τ : D.what₂.Tau) (x : Frame ((s.U κ.σ₀).X k).Ψ N) : ℂ :=
   (hodgeC ((s.U κ.σ₀).X k) (cmAt s L k) τ : ℂ) ^ S.Dw.q * horizGen (cmAt s L k τ) x
-
-theorem bettiCo_ne_zero (k : s.Comp) (τ : D.what₂.Tau) (x : ((s.U κ.σ₀).X k).dom) : bettiCo s L k τ x.1 ≠ 0 :=
-  mul_ne_zero (pow_ne_zero _ (Complex.ofReal_ne_zero.2 (hodgeC_pos _ _ _).ne')) (inv_ne_zero (x.2 _).1)
-
-example (hq : S.Dw.q = 0) (k : s.Comp) (τ : D.what₂.Tau) (x : Frame ((s.U κ.σ₀).X k).Ψ N) :
-    bettiCo s L k τ x = (mat x (cmAt s L k τ)).det⁻¹ := by simp [bettiCo, hq, horizGen]
 
 abbrev detEx (S : Sig A N j) (τ : D.what₂.Tau) : Letter S.Dw → ℤ :=
   expo S.Dw (detSym S.Dw (fun _ => false) none (DV.tauEmb D τ))
@@ -130,23 +104,5 @@ def flBetti (k : s.Comp) (τ : D.what₂.Tau) : ℂˣ :=
   if h : ∃ b, IsBetti s Φ L k τ (flatSec s Φ k τ) b then h.choose else 1
 
 variable {s Φ L} {k : s.Comp} {τ : D.what₂.Tau} {σ : (Φ.C k).Y.Fn} {b b' : ℂˣ}
-
-theorem IsBetti.coordAtC (h : IsBetti s Φ L k τ σ b) (x : ((s.U κ.σ₀).X k).dom) :
-    CoordAtC (Φ.C k) ((s.U κ.σ₀).un k x) (detEx S τ) σ (b * bettiCo s L k τ x.1) := (h x _).2 rfl
-
-theorem IsBetti.unique (h : IsBetti s Φ L k τ σ b) (h' : IsBetti s Φ L k τ σ b') : b = b' :=
-  have x : ((s.U κ.σ₀).X k).dom := ⟨_, ReciprocityTheory.ChartRestriction.G.AR.Up.KU.orth_dom _ (isOrth_x0F _)⟩
-  Units.ext (mul_right_cancel₀ (bettiCo_ne_zero s L k τ x) ((h' x _).1 (h.coordAtC x)))
-
-theorem IsBetti.const_mul (h : IsBetti s Φ L k τ σ b) {a : κ.c.F} (ha : a ≠ 0) :
-    IsBetti s Φ L k τ (constF κ.e (Φ.C k).Y a * σ) (Units.mk0 (κ.σ₀ a) ((map_ne_zero _).2 ha) * b) := fun x z => by
-  letI := κ.σ₀.toAlgebra
-  refine (coordAt_const_mul_iff (k := ℂ) ha).trans ((h x _).trans ?_)
-  show κ.σ₀ a⁻¹ * z = _ ↔ z = κ.σ₀ a * b * _
-  rw [map_inv₀, inv_mul_eq_iff_eq_mul₀ ((map_ne_zero _).2 ha), mul_assoc]
-
-theorem isBetti_flBetti (h : ∃ b, IsBetti s Φ L k τ (flatSec s Φ k τ) b) :
-    IsBetti s Φ L k τ (flatSec s Φ k τ) (flBetti s Φ L k τ) := by
-  rw [flBetti, dif_pos h]; exact h.choose_spec
 
 end GlobalTheory.ShFam.Pad

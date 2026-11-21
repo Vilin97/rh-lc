@@ -74,8 +74,6 @@ theorem cf_sq (σ : B.KO →+* ℂ) : Nt.cf σ * Nt.cf σ = (Fintype.card (Nt.NN
   unfold cf
   rw [← mul_inv, Real.mul_self_sqrt (Nat.cast_nonneg _)]
 
-theorem cf_nonneg (σ : B.KO →+* ℂ) : 0 ≤ Nt.cf σ := inv_nonneg.mpr (Real.sqrt_nonneg _)
-
 theorem norm_euclideanEmbedding_eq_netNorm (σ : B.KO →+* ℂ) (F : B.Cusp j ka) : ‖Nt.e0 σ F‖ = Nt.netN σ F := by
   classical
   rw [EuclideanSpace.norm_eq, netN]
@@ -201,8 +199,6 @@ abbrev Bp (hM : NetMax Nt) (hL : NetLeSup Nt) : WeightFamilies.Prov D :=
 theorem Bp_L2N_run (hM : NetMax Nt) (hL : NetLeSup Nt) : (Nt.Bp hM hL).l2NormAlt j ka = Nt.netN := by
   funext σ F
   simp [Bp, Formalism.L2.Pj.withNormOnWeights, Formalism.L2.Pj.l2nOn, covRun, Nt.runN_run]
-
-theorem Bp_supN (hM : NetMax Nt) (hL : NetLeSup Nt) : (Nt.Bp hM hL).supN = B.supN := rfl
 
 end NetData
 

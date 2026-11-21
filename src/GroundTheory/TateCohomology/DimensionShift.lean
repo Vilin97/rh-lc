@@ -72,10 +72,6 @@ noncomputable def coindSES : Rep.{u} k G ⥤ ShortComplex (Rep.{u} k G) where
 @[simp] theorem coindSES_obj_X₂ (A : Rep.{u} k G) :
     (coindSES.obj A).X₂ = coind (⊥ : Subgroup G).subtype (res (⊥ : Subgroup G).subtype A) := rfl
 
-@[simp] theorem coindSES_obj_f (A : Rep.{u} k G) : (coindSES.obj A).f = toCoind A := rfl
-
-@[simp] theorem coindSES_map_τ₁ {A B : Rep.{u} k G} (f : A ⟶ B) : (coindSES.map f).τ₁ = f := rfl
-
 theorem coindSES_shortExact (A : Rep.{u} k G) : (coindSES.obj A).ShortExact where
   exact := ShortComplex.exact_of_g_is_cokernel _ (cokernelIsCokernel (toCoind A))
   mono_f := inferInstanceAs (Mono (toCoind A))
@@ -144,10 +140,6 @@ noncomputable def indSES : Rep.{u} k G ⥤ ShortComplex (Rep.{u} k G) where
 
 @[simp] theorem indSES_obj_X₃ (A : Rep.{u} k G) : (indSES.obj A).X₃ = A := rfl
 
-@[simp] theorem indSES_obj_g (A : Rep.{u} k G) : (indSES.obj A).g = fromInd A := rfl
-
-@[simp] theorem indSES_map_τ₃ {A B : Rep.{u} k G} (f : A ⟶ B) : (indSES.map f).τ₃ = f := rfl
-
 theorem indSES_shortExact (A : Rep.{u} k G) : (indSES.obj A).ShortExact where
   exact := ShortComplex.exact_of_f_is_kernel _ (kernelIsKernel (fromInd A))
   mono_f := equalizer.ι_mono
@@ -164,10 +156,6 @@ noncomputable def indShiftIso (A : Rep.{u} k G) (n : ℤ) :
     tateCohomology A n ≅ tateCohomology (indShift A) (n + 1) :=
   @asIso _ _ _ _ (TateCohomology.δ (indSES_shortExact A) n)
     (isIso_δ_of_tateAcyclic (indSES_shortExact A) (tateAcyclic_indSES_X₂ A) n)
-
-theorem isIso_δ_indSES (A : Rep.{u} k G) (n : ℤ) :
-    IsIso (TateCohomology.δ (indSES_shortExact A) n) :=
-  isIso_δ_of_tateAcyclic _ (tateAcyclic_indSES_X₂ A) n
 
 end Ind
 

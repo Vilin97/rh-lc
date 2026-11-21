@@ -124,8 +124,6 @@ theorem galChar_spec (m : ℕ) [NeZero m] (g : G ℚ Ω) (ζ : Ω) (hζ : ζ ^ m
 
 def abU (A : AbF) : Subgroup (G ℚ Ω) := A.H.comap (galChar Ω A.m)
 
-instance (A : AbF) : (abU Ω A).Normal := by unfold abU; infer_instance
-
 end
 
 end Two

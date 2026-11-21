@@ -56,8 +56,6 @@ variable {D : D7}
 
 variable {a b : ℕ} (τ : D.what₂.Tau) (ε : Fin a → Bool) (ε' : Fin b → Bool)
 
-local notation "cc" => MvPolynomial.constantCoeff
-
 theorem sgn_sq (e : Bool) : sgn e * sgn e = 1 := by cases e <;> simp [sgn]
 
 theorem cc_rai_low (i i' : Fin b) (j j' : Fin a) :
@@ -314,8 +312,6 @@ open scoped Classical
 
 variable {D : D7}
 
-local notation "cc" => MvPolynomial.constantCoeff
-
 theorem der_add {θ : InfFam D} (hθ : IsInfFam θ) {U : HSp D} (𝒮 : Set (GA D U → ℂ)) (hc : ∀ φ ∈ 𝒮, Continuous φ)
     (hd : ∀ φ ∈ 𝒮, ∀ τ, ∀ X ∈ lieAt U τ, ∃ φ' ∈ 𝒮, ∀ g, HasDerivAt (fun t : ℝ => φ (g * oneP θ U τ X t)) (φ' g) 0)
     {φ : GA D U → ℂ} (hφ : φ ∈ 𝒮) {τ : D.what₂.Tau} {X Y : Matrix (Fin U.rank) (Fin U.rank) ℂ}
@@ -411,8 +407,6 @@ open scoped Classical
 
 variable {D : D7} {V W : HSp D} {θ : InfFam D} {ψ : AddChar (AF D.host.F) ℂ} {χS χT : (AE D)ˣ →* Circle}
   {ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)}
-
-local notation "cc" => MvPolynomial.constantCoeff
 
 theorem cc_smul_one {ι' : Type} (c : ℂ) : cc (c • (1 : MvPolynomial ι' ℂ)) = c := by
   simp [MvPolynomial.smul_eq_C_mul]

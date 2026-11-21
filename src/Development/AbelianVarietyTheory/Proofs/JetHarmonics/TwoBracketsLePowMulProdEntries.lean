@@ -1,5 +1,4 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.InterlacedShiftedDistanceBracketBound
 open Finset
 
 namespace GlobalTheory

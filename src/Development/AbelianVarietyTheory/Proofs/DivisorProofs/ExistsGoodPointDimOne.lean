@@ -1,7 +1,56 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PairTAdjTLeft
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateKernelAtPoint
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfForallDual
+import Development.AbelianVarietyTheory.Definitions.Divisors.HodgeTateLatticePointFinrankTateModule
+import Development.AbelianVarietyTheory.Definitions.Divisors.TorsionTowersOfDivisibleGroup
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.EpsilonPairingZeta
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.HodgeTateKernel
+import Development.AbelianVarietyTheory.Definitions.Divisors.ToKnownTheoremsOf
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateSandwichOfPrismaticDieudonne
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilCharSurjectiveAndMapRangeAl
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ExistsCobOneOfIntegral
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateInclusionRaynaudExtensionAlgebraicPoint
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsLatBasisHtLatIffSpanEq
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsAdicCompleteOfFiniteBasis
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsAdicCompleteDualNumber
+import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.LePreimageOfClosedPoint
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsAdicCompleteOfPowLeOfPowLe
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpecialFibreNotInClosureOfValuationRing
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.GeometricallyIntegralIffGeometricallyConnectedOf
+import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.RigidifiedOfChart
+import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.IsIntegralOfSmoothFieldOfConnectedSpace
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ValuationRingHenselianAndSmoothPointsLift
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.WeilRos
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteAlgebrasOverHenselianAndComplete
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.PowEqScaleAndExistsUniqueTorsion
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsPullbackBaseChange
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.QuasiCompactZeroSec
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIsoToBidualOfLocalFrames
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentPhiSqZeroNaturality
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentPhiSmul
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SqZeroPointEqOfCotangentFormEqStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentSurjective
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteProjectiveCotangentGlobalSectionsGroupScheStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCotangentFrameSmoothGroupSchemeStatement
+import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.NonemptyTorusExtensionOfIsGt
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.TorusExtensionPointsDivisible
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PDivGroupOmegaFiniteFreeAndPSqMemDlogSpanStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTatePairingSandwich
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegrallyClosedInOfIntegers
+import Development.AbelianVarietyTheory.Definitions.Divisors.IotaScalarOne
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.InjectiveOfSmulMemRange
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OmegaFreeFiniteBijectiveOfSmooth
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTorusLeLieSpan
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.StAvDefs
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.FiniteAlgebraLocalCompletion
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.AlWellDefSt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.RosatiAdj
+import ReciprocityTheory.DualLattices.CotangentSurjective
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CotangentBidualToTangentFunctionInjective
+import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.FiniteResidueFieldAdicCompletionIntegers
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.GeometricallyConnectedOfIsPullbackOfSurjective
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.NonemptyPadicIntRingHomOfIsAdicComplete
+import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsTorusAndQuotientHom
+import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.SplitTorusHomProperTrivialLocal
 
 set_option autoImplicit false
 
@@ -21,38 +70,11 @@ variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] {v : Valuation C ℝ≥0}
   [Algebra O C] {Λ : Type} [CommRing Λ] [StarRing Λ] {P P' : Point p v O Λ}
   (α : P.A.A ⟶ P'.A.A) [IsMonHom α]
 
-theorem mapT_actT (h : ∀ a, P.oA.act a ≫ α = α ≫ P'.oA.act a) (a : Λ) (t : P.T) :
-    mapT P P' α (P.actT a t) = P'.actT a (mapT P P' α t) := Tate.ext fun n => by
-  change (t.lev n ≫ P.oA.act a) ≫ α = (t.lev n ≫ α) ≫ P'.oA.act a
-  rw [Category.assoc, Category.assoc, h]
-
 section Lattices
 
 variable [Algebra ℤ_[p] C]
 
-theorem isEquivariant_mapV (h : ∀ a, P.oA.act a ≫ α = α ≫ P'.oA.act a) :
-    IsEquivariant P.actV P'.actV (mapV P P' α) := fun a x => by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
-  | add x y hx hy => simp only [map_add (f := _), hx, hy]
-  | tmul c t => exact congrArg (c ⊗ₜ ·) (mapT_actT α h a t)
-
-theorem mapV_mem_eigV (h : ∀ a, P.oA.act a ≫ α = α ≫ P'.oA.act a) (τ : Λ →+* O) {x : P.V}
-    (hx : x ∈ P.eigV τ) : mapV P P' α x ∈ P'.eigV τ :=
-  mem_eigenSub.2 fun b => by rw [← isEquivariant_mapV α h, mem_eigenSub.1 hx b, map_smul]
-
 variable [Algebra ℤ_[p] O] [IsScalarTower ℤ_[p] O C]
-
-theorem mapV_mem_latT {x : P.V} (hx : x ∈ P.latT) : mapV P P' α x ∈ P'.latT := by
-  obtain ⟨x, rfl⟩ := hx
-  induction x using TensorProduct.induction_on with
-  | zero => simp
-  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha hb
-  | tmul c t => exact ⟨c ⊗ₜ mapT P P' α t, by rw [Point.inclT_tmul, Point.inclT_tmul]; rfl⟩
-
-theorem mapV_mem_latTSub (h : ∀ a, P.oA.act a ≫ α = α ≫ P'.oA.act a) (τ : Λ →+* O) {x : P.V}
-    (hx : x ∈ P.latTSub τ) : mapV P P' α x ∈ P'.latTSub τ :=
-  ⟨mapV_mem_latT α hx.1, mapV_mem_eigV α h τ hx.2⟩
 
 end Lattices
 
@@ -106,14 +128,6 @@ theorem mapV_bLie (x : LieG P.Gt) : mapV P P' α (P.bLie x) = P'.bLie (lieMap β
   P'.eq_of_pairV fun t => by
     rw [pairV_mapV, adjV_tmul, Point.pairV_bLie, Point.pairV_bLie, al₀_adjT α β he hβ]
 
-theorem mapV_mem_wRec (h : ∀ a, P.oGt.act a ≫ β = β ≫ P'.oGt.act a) (τ : Λ →+* O) {x : P.V}
-    (hx : x ∈ P.wRec τ) : mapV P P' α x ∈ P'.wRec τ := by
-  obtain ⟨y, rfl⟩ := hx
-  refine ⟨⟨lieMap β y.1, fun a => Subtype.ext ?_⟩, (mapV_bLie α β he hβ y.1).symm⟩
-  have h1 : y.1.1 ≫ P.oGt.act a = ptMap (dualScale (τ a)) ≫ y.1.1 := congrArg Subtype.val (y.2 a)
-  change (y.1.1 ≫ β) ≫ P'.oGt.act a = ptMap (dualScale (τ a)) ≫ y.1.1 ≫ β
-  rw [Category.assoc, ← h, ← Category.assoc, h1, Category.assoc]
-
 end General
 
 section Good
@@ -121,22 +135,6 @@ section Good
 variable {Λ : Type} [CommRing Λ] [StarRing Λ] {p : ℕ} [Fact p.Prime] {C : Type} [Field C]
   {v : Valuation C ℝ≥0} {O : Type} [CommRing O] [Algebra O C] (hv : v.Integers O) (ε : Eps p C) {R : Type}
   [CommRing R] (j : R →+* O) {B B' B'' : Out.PolAV (Sp R)} (o : B.OAct Λ) (o' : B'.OAct Λ) (o'' : B''.OAct Λ)
-
-theorem homO_act {f : B.A ⟶ B'.A} (h : ∀ a, o.act a ≫ f = f ≫ o'.act a) (a : Λ) :
-    (goodPoint hv ε j B o).oGt.act a ≫ homO hv ε j o o' f =
-      homO hv ε j o o' f ≫ (goodPoint hv ε j B' o').oGt.act a := by
-  rw [goodPoint_oGt, goodPoint_oGt]
-  exact ((Over.pullback _).map_comp _ _).symm.trans ((congrArg _ (h a)).trans ((Over.pullback _).map_comp _ _))
-
-theorem homC_comp (f : B.A ⟶ B'.A) (g : B'.A ⟶ B''.A) :
-    homC hv ε j o o'' (f ≫ g) = homC hv ε j o o' f ≫ homC hv ε j o' o'' g :=
-  (congrArg _ ((Over.pullback _).map_comp _ _)).trans ((Over.pullback _).map_comp _ _)
-
-theorem homC_act {f : B.A ⟶ B'.A} (h : ∀ a, o.act a ≫ f = f ≫ o'.act a) (a : Λ) :
-    (goodPoint hv ε j B o).oA.act a ≫ homC hv ε j o o' f =
-      homC hv ε j o o' f ≫ (goodPoint hv ε j B' o').oA.act a := by
-  rw [goodPoint_oA, goodPoint_oA]
-  exact (homC_comp hv ε j o o o' _ f).symm.trans ((congrArg _ (h a)).trans (homC_comp hv ε j o o' o' f _))
 
 theorem homT_act (a : Λ) [IsMonHom (o.act a)] : homT hv ε j o o (o.act a) = (goodPoint hv ε j B o).actT a :=
   LinearMap.ext fun t => Tate.ext fun n => congrArg (t.lev n ≫ ·) (goodPoint_oA hv ε j o a).symm
@@ -150,17 +148,9 @@ section Linear
 
 variable {f : B.A ⟶ B'.A} [IsMonHom f]
 
-theorem homT_actT (h : ∀ a, o.act a ≫ f = f ≫ o'.act a) (a : Λ) (t : (goodPoint hv ε j B o).T) :
-    homT hv ε j o o' f ((goodPoint hv ε j B o).actT a t) = (goodPoint hv ε j B' o').actT a (homT hv ε j o o' f t) :=
-  mapT_actT (P := goodPoint hv ε j B o) (P' := goodPoint hv ε j B' o') _ (homC_act hv ε j o o' h) a t
-
 variable [Algebra ℤ_[p] C]
 
 variable [Algebra ℤ_[p] O] [IsScalarTower ℤ_[p] O C]
-
-theorem homV_mem_latTSub (h : ∀ a, o.act a ≫ f = f ≫ o'.act a) (τ : Λ →+* O) {x : (goodPoint hv ε j B o).V}
-    (hx : x ∈ (goodPoint hv ε j B o).latTSub τ) : homV hv ε j o o' f x ∈ (goodPoint hv ε j B' o').latTSub τ :=
-  mapV_mem_latTSub (P := goodPoint hv ε j B o) (P' := goodPoint hv ε j B' o') _ (homC_act hv ε j o o' h) τ hx
 
 end Linear
 
@@ -189,15 +179,6 @@ variable {f : B.A ⟶ B'.A} [IsMonHom f]
 
 omit [Algebra ℤ_[p] C] [IsScalarTower ℤ_[p] O C] in
 
-theorem al₀_adjT_homC (t : (goodPoint hv ε j B' o').T) (x : LieG (goodPoint hv ε j B o).Gt) :
-    ((goodPoint hv ε j B o).al₀ (adjT _ _ (homC hv ε j o o' f) t)).1 x = ((goodPoint hv ε j B' o').al₀ t).1 (homLie hv ε j o o' f x) :=
-  al₀_adjT (P := goodPoint hv ε j B o) (P' := goodPoint hv ε j B' o') _ (homO hv ε j o o' f) rfl (toA_homO hv ε j o o' f) t x
-
-theorem homV_mem_wRec (h : ∀ a, o.act a ≫ f = f ≫ o'.act a) (τ : Λ →+* O) {x : (goodPoint hv ε j B o).V}
-    (hx : x ∈ (goodPoint hv ε j B o).wRec τ) : homV hv ε j o o' f x ∈ (goodPoint hv ε j B' o').wRec τ :=
-  mapV_mem_wRec (P := goodPoint hv ε j B o) (P' := goodPoint hv ε j B' o') _ (homO hv ε j o o' f) rfl (toA_homO hv ε j o o' f)
-    (homO_act hv ε j o o' h) τ hx
-
 end Good
 
 section Triples
@@ -207,21 +188,9 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {K : Ty
   (ε : Eps ℓ C) (i : K →+* C) {T T' : PAT H (Sp (𝓞 K))} {f g : T.t.G ⟶ T'.t.G}
   (hf : Serre.IsLinearHom T.t.act T'.t.act f) (hg : Serre.IsLinearHom T.t.act T'.t.act g)
 
-theorem patT_actT : letI := H.starRing
-    ∀ a t, patT hv ε i hf ((patPoint hv ε i T).actT a t) = (patPoint hv ε i T').actT a (patT hv ε i hf t) :=
-  letI := H.starRing
-  haveI : IsMonHom (C := Over (Sp (𝓞 K))) (M := T.pol.A) (N := T'.pol.A) f := hf.isMonHom
-  homT_actT (B := T.pol) (B' := T'.pol) hv ε (embO hv i) (patAct T) (patAct T') hf.comm
-
 variable [Algebra ℤ_[ℓ] C]
 
 variable [Algebra ℤ_[ℓ] O] [IsScalarTower ℤ_[ℓ] O C]
-
-theorem patV_mem_latTSub (τ : 𝓞 E →+* O) : letI := H.starRing
-    ∀ x ∈ (patPoint hv ε i T).latTSub τ, patV hv ε i hf x ∈ (patPoint hv ε i T').latTSub τ :=
-  letI := H.starRing
-  haveI : IsMonHom (C := Over (Sp (𝓞 K))) (M := T.pol.A) (N := T'.pol.A) f := hf.isMonHom
-  fun _ => homV_mem_latTSub (B := T.pol) (B' := T'.pol) hv ε (embO hv i) (patAct T) (patAct T') hf.comm τ
 
 variable [Fact ¬IsUnit (ℓ : O)] [IsAdicComplete (Ideal.span {(ℓ : O)}) O] [IsAlgClosed C] [CharZero C]
 
@@ -231,23 +200,6 @@ theorem patV_bLie : letI := H.starRing
   haveI : IsMonHom (C := Over (Sp (𝓞 K))) (M := T.pol.A) (N := T'.pol.A) f := hf.isMonHom
   homV_bLie (B := T.pol) (B' := T'.pol) hv ε (embO hv i) (patAct T) (patAct T') f
 
-theorem patV_mem_wRec (τ : 𝓞 E →+* O) : letI := H.starRing
-    ∀ x ∈ (patPoint hv ε i T).wRec τ, patV hv ε i hf x ∈ (patPoint hv ε i T').wRec τ :=
-  letI := H.starRing
-  haveI : IsMonHom (C := Over (Sp (𝓞 K))) (M := T.pol.A) (N := T'.pol.A) f := hf.isMonHom
-  fun _ => homV_mem_wRec (B := T.pol) (B' := T'.pol) hv ε (embO hv i) (patAct T) (patAct T') hf.comm τ
-
 end Triples
-
-example {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {K : Type} [Field K] [NumberField K]
-    {ρ : 𝓞 K} {σ₁ : K →+* ℂ} {p q : ℕ} (X : CMObj H K ρ σ₁ p q) (ℓ : ℕ) [Fact ℓ.Prime] (ε : Eps ℓ ℂ_[ℓ])
-    (i : K →+* ℂ_[ℓ]) (k : Fin p ⊕ Fin q) :
-    letI := H.starRing; letI := algPadicInt ℓ; letI := algPadicField ℓ; haveI := towerPadic ℓ; haveI := factPadic ℓ
-    haveI := PadicComplexHost.isAdicComplete ℓ
-    ∀ x, phiV (PadicComplexInt.integers ℓ) ε i X k ((pointA (PadicComplexInt.integers ℓ) ε i X k.isLeft).bLie x) =
-      (pointB (PadicComplexInt.integers ℓ) ε i X).bLie (phiLie (PadicComplexInt.integers ℓ) ε i X k x) := by
-  letI := H.starRing; letI := algPadicInt ℓ; letI := algPadicField ℓ; haveI := towerPadic ℓ; haveI := factPadic ℓ
-  haveI := PadicComplexHost.isAdicComplete ℓ
-  exact patV_bLie (PadicComplexInt.integers ℓ) ε i (X.lin k)
 
 end GlobalTheory.PointMap

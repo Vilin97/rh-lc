@@ -13,8 +13,6 @@ open CategoryTheory IsDedekindDomain NumberField IntermediateField GroundTheory.
 
 open scoped TensorProduct Pointwise
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section Idempotents

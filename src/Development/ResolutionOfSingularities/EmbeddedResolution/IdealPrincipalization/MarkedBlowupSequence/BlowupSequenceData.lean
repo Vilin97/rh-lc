@@ -121,9 +121,6 @@ def tower (d : BlowupSequenceData X) : ℕᵒᵖ ⥤ Scheme.{u} where
   map_id n := towerMorphism_refl d n.unop
   map_comp f g := (towerMorphism_comp d (leOfHom g.unop) (leOfHom f.unop)).symm
 
-@[simp]
-theorem tower_obj (d : BlowupSequenceData X) (i : ℕ) : d.tower.obj (op i) = d.obj i := rfl
-
 private theorem iteratedBlowupMorphism_one (d : BlowupSequenceData X) (i : ℕ) :
     homAdd d i 1 = d.map i := by
   show d.map (i + 0) ≫ homAdd d i 0 = d.map i
@@ -164,9 +161,6 @@ def toSequenceOfBlowups (d : BlowupSequenceData X) : SequenceOfBlowups X where
 
 @[simp]
 theorem toSequenceOfBlowups_length (d : BlowupSequenceData X) : d.toSequenceOfBlowups.length = d.length := rfl
-
-@[simp]
-theorem toSequenceOfBlowups_tower (d : BlowupSequenceData X) : d.toSequenceOfBlowups.tower = d.tower := rfl
 
 theorem toSequenceOfBlowups_schemeAt (d : BlowupSequenceData X) (i : ℕ) : d.toSequenceOfBlowups.schemeAt i = d.obj i := rfl
 
@@ -252,19 +246,6 @@ def emptyBlowupSequenceData (X : Scheme.{u}) : BlowupSequenceData X where
 
 @[simp]
 theorem emptyBlowupSequenceData_length (X : Scheme.{u}) : (emptyBlowupSequenceData X).length = 0 := rfl
-
-@[simp]
-theorem emptyBlowupSequenceData_schemeAt (X : Scheme.{u}) (i : ℕ) : (emptyBlowupSequenceData X).obj i = X := rfl
-
-@[simp]
-theorem emptyBlowupSequenceData_blowupMorphism (X : Scheme.{u}) (i : ℕ) : (emptyBlowupSequenceData X).map i = 𝟙 X := rfl
-
-@[simp]
-theorem emptyBlowupSequenceData_center (X : Scheme.{u}) (i : ℕ) : (emptyBlowupSequenceData X).center i = ⊤ := rfl
-
-@[simp]
-theorem emptyBlowupSequenceData_isoObjZero (X : Scheme.{u}) :
-    (emptyBlowupSequenceData X).isoZero = Iso.refl X := rfl
 
 structure MarkedBlowupSequenceData {k : Type u} [Field k] {X : Scheme.{u}}
     (p : X ⟶ Spec (CommRingCat.of k)) (I : X.IdealSheafData) (m : ℕ)
@@ -451,16 +432,8 @@ theorem ofMarkedSequence_projectionToBase (s : MarkedSequenceOfBlowups p I m E) 
     (ofMarkedSequence s).proj i = s.toSequenceOfBlowups.projectionToBase i := rfl
 
 @[simp]
-theorem ofMarkedSequence_blowupMorphism (s : MarkedSequenceOfBlowups p I m E) (i : ℕ) :
-    (ofMarkedSequence s).toBlowupSequenceData.map i = s.toSequenceOfBlowups.transitionMapSucc i := rfl
-
-@[simp]
 theorem ofMarkedSequence_ideal (s : MarkedSequenceOfBlowups p I m E) (i : ℕ) :
     (ofMarkedSequence s).ideal i = s.ideal i := rfl
-
-@[simp]
-theorem ofMarkedSequence_boundary_apply (s : MarkedSequenceOfBlowups p I m E) (i : ℕ) :
-    (ofMarkedSequence s).boundary i = s.boundary i := rfl
 
 @[simp]
 theorem ofMarkedSequence_center (s : MarkedSequenceOfBlowups p I m E) (i : ℕ) :
@@ -502,12 +475,6 @@ theorem emptyMarkedBlowupSequenceData_schemeAt {k : Type u} [Field k] {X : Schem
     (p : X ⟶ Spec (CommRingCat.of k)) (I : X.IdealSheafData) (m : ℕ)
     (E : List X.IdealSheafData) (i : ℕ) :
     (emptyMarkedBlowupSequenceData p I m E).toBlowupSequenceData.obj i = X := rfl
-
-@[simp]
-theorem emptyMarkedBlowupSequenceData_center {k : Type u} [Field k] {X : Scheme.{u}}
-    (p : X ⟶ Spec (CommRingCat.of k)) (I : X.IdealSheafData) (m : ℕ)
-    (E : List X.IdealSheafData) (i : ℕ) :
-    (emptyMarkedBlowupSequenceData p I m E).toBlowupSequenceData.center i = ⊤ := rfl
 
 @[simp]
 theorem emptyMarkedBlowupSequenceData_projectionToBase {k : Type u} [Field k] {X : Scheme.{u}}

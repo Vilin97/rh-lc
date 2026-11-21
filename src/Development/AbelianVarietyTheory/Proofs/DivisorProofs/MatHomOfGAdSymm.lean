@@ -39,8 +39,6 @@ def ofGAd : GAd σ Jᵀ ≃* UA σ J := MulEquiv.subgroupCongr (UG_eq_HR σ J).s
 
 theorem mat_ofGAd (g : GAd σ Jᵀ) : mat (ofGAd σ J g) = (matHom (AF F) σ Jᵀ g).1 := rfl
 
-theorem matHom_ofGAd_symm (g : UA σ J) : (matHom (AF F) σ Jᵀ ((ofGAd σ J).symm g)).1 = mat g := rfl
-
 def lineStab (x : Fin n → E) : Subgroup (UA σ J) where
   carrier := {g | ∃ a : (AE F E)ˣ, mat g *ᵥ incV F x = (a : AE F E) • incV F x}
   one_mem' := ⟨1, by simp [mat, Matrix.one_mulVec]⟩
