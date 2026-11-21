@@ -59,7 +59,7 @@ theorem cuspRep_integrated_eq_smul (μ : Measure (normOneGL (K := K) (n := n))) 
     have hae : (fun z : normOneGL (K := K) (n := n) =>
         ((cuspToL2 μ φ : cuspidalL2 μ) : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (mk Γ₁ z)) =ᵐ[μ]
           fun z => cuspQuot φ.2.1.isLeftInvariant (mk Γ₁ z) :=
-      (quasiMeasurePreserving_mk Γ₁ μ).ae_eq (coeFn_cuspToL2 μ φ)
+      QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ) (coeFn_cuspToL2 μ φ)
     unfold rconv
     have h2 : ∫ z, F (y⁻¹ * z) *
         ((cuspToL2 μ φ : cuspidalL2 μ) : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (mk Γ₁ z) ∂μ =

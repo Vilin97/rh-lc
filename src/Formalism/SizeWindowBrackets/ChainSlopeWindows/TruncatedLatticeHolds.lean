@@ -413,13 +413,14 @@ variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberFi
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι]
   [DecidableEq ι]
 
-theorem log_absNorm_inv (I : FI) :
+theorem log_absNorm_inv (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) :
     Real.log ((FractionalIdeal.absNorm I⁻¹ : ℚ) : ℝ) =
       -Real.log ((FractionalIdeal.absNorm I : ℚ) : ℝ) := by
   rw [map_inv₀, Rat.cast_inv, Real.log_inv]
 
 theorem deg_fractional (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
-    (hX : ∀ v, IsUnit (X v).det) {N : Submodule (𝓞 K) V} (hN : N.FG) {I : FI} (hI : I ≠ 0) :
+    (hX : ∀ v, IsUnit (X v).det) {N : Submodule (𝓞 K) V} (hN : N.FG)
+    {I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K} (hI : I ≠ 0) :
     deg (realize b X) (idealSmul (I : Submodule (𝓞 K) K) N) = deg (realize b X) N -
       (rkK N : ℝ) * Real.log ((FractionalIdeal.absNorm I : ℚ) : ℝ) := by
   have h := ht_fractional b X hX hN hI
@@ -445,14 +446,15 @@ theorem deg_fractional (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι 
   ring
 
 theorem rk_fractional (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
-    (hX : ∀ v, IsUnit (X v).det) {N : Submodule (𝓞 K) V} (hN : N.FG) {I : FI} (hI : I ≠ 0) :
+    (hX : ∀ v, IsUnit (X v).det) {N : Submodule (𝓞 K) V} (hN : N.FG)
+    {I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K} (hI : I ≠ 0) :
     rk (realize b X) (idealSmul (I : Submodule (𝓞 K) K) N) = rk (realize b X) N := by
   rw [(place_lattice_structure K V ι b X hX _ (idealSmul_fg I hN)).2.1, (place_lattice_structure K V ι b X hX _ hN).2.1,
     rkK_idealSmul hI]
 
 theorem muMin_fractional_ge (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
-    (hX : ∀ v, IsUnit (X v).det) {L : Submodule (𝓞 K) V} (hL : L.FG) (hL0 : L ≠ ⊥) {I : FI}
-    (hI : I ≠ 0) :
+    (hX : ∀ v, IsUnit (X v).det) {L : Submodule (𝓞 K) V} (hL : L.FG) (hL0 : L ≠ ⊥)
+    {I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K} (hI : I ≠ 0) :
     muMin (realize b X) L - Real.log ((FractionalIdeal.absNorm I : ℚ) : ℝ) /
       (Module.finrank ℚ K : ℝ) ≤ muMin (realize b X) (idealSmul (I : Submodule (𝓞 K) K) L) := by
   have hfd : FiniteDimensional K V := Module.Finite.of_basis b
@@ -464,9 +466,11 @@ theorem muMin_fractional_ge (b : Basis ι K V) (X : InfinitePlace K → Matrix �
   rw [(slope_characterization (𝓞 K) V _ (realize b X) _ hlatI hIL0).2.1]
   intro N hN
   have hI' : I⁻¹ ≠ 0 := inv_ne_zero hI
-  set N' := idealSmul ((I⁻¹ : FI) : Submodule (𝓞 K) K) N with hN'
+  set N' := idealSmul ((I⁻¹ : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) : Submodule (𝓞 K) K) N
+    with hN'
   have hN'L : N' ≤ L := by
-    have := idealSmul_mono_right ((I⁻¹ : FI) : Submodule (𝓞 K) K) hN
+    have := idealSmul_mono_right
+      ((I⁻¹ : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) : Submodule (𝓞 K) K) hN
     rwa [idealSmul_inv_cancel hI] at this
   have hNeq : N = idealSmul (I : Submodule (𝓞 K) K) N' := (idealSmul_cancel_inv hI N).symm
   have hN'fg : N'.FG := fg_of_le hL hN'L
@@ -484,8 +488,8 @@ theorem muMin_fractional_ge (b : Basis ι K V) (X : InfinitePlace K → Matrix �
   nlinarith [hch, e1]
 
 theorem muMin_fractional (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
-    (hX : ∀ v, IsUnit (X v).det) {L : Submodule (𝓞 K) V} (hL : L.FG) (hL0 : L ≠ ⊥) {I : FI}
-    (hI : I ≠ 0) :
+    (hX : ∀ v, IsUnit (X v).det) {L : Submodule (𝓞 K) V} (hL : L.FG) (hL0 : L ≠ ⊥)
+    {I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K} (hI : I ≠ 0) :
     muMin (realize b X) (idealSmul (I : Submodule (𝓞 K) K) L) = muMin (realize b X) L -
       Real.log ((FractionalIdeal.absNorm I : ℚ) : ℝ) / (Module.finrank ℚ K : ℝ) := by
   have hfd : FiniteDimensional K V := Module.Finite.of_basis b
@@ -501,8 +505,8 @@ theorem muMin_fractional (b : Basis ι K V) (X : InfinitePlace K → Matrix ι �
   · exact muMin_fractional_ge b X hX hL hL0 hI
 
 theorem muMaxDef_fractional (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
-    (hX : ∀ v, IsUnit (X v).det) {L : Submodule (𝓞 K) V} (hL : L.FG) (hL0 : L ≠ ⊥) {I : FI}
-    (hI : I ≠ 0) :
+    (hX : ∀ v, IsUnit (X v).det) {L : Submodule (𝓞 K) V} (hL : L.FG) (hL0 : L ≠ ⊥)
+    {I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K} (hI : I ≠ 0) :
     muMaxDef b X (idealSmul (I : Submodule (𝓞 K) K) L) = muMaxDef b X L -
       2 * Real.log ((FractionalIdeal.absNorm I : ℚ) : ℝ) / (Module.finrank ℚ K : ℝ) := by
   have hfd : FiniteDimensional K V := Module.Finite.of_basis b

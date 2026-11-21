@@ -13,6 +13,7 @@ public import Formalism.WachLatticeTwists.Statement
 public import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.MinimalExponentAttained
 public import Formalism.WachLatticeTwists.HodgeTateChains.InvariantsCohomologyData
 public import Formalism.CharacterColumnKernels.Statement
+public import Formalism.CharacterColumnKernels.StatementPsi
 public import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.Imports
 public import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.Complete
 public import Formalism.WachLatticeTwists.TorsionLengthCounts.SubmoduleLengthBoundStatement
@@ -31,6 +32,8 @@ public import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.Fi
 public import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.TheoremNFiveDeltaClause
 public import Formalism.WachLatticeTwists.CharacterSplitJumps.CharacterJumpProofs.PropLocBK
 public import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.Bridge
+public import Formalism.WachLatticeTwists.CoprimeLiftBounds.Statement
+public import Formalism.WachLatticeTwists.ShapeRowIsomorphisms.Statement
 public import Formalism.CharacterColumnKernels.IdempotentNormalForms.CharacterColumnKernelsOfBlockChiCOfBlockChiOne
 public import Formalism.WachLatticeTwists.TorsionLengthCounts.RowCol
 public import Formalism.CharacterColumnKernels.CharacterColumnKernelEqualityForm
@@ -56,9 +59,10 @@ noncomputable section
 
 namespace Formalism.RepresentationBoundsCohomology.FIN
 
-open Formalism.NG Formalism.RepresentationBoundsCohomology.BR Formalism.RepresentationBoundsCohomology.TorsionBoundCyclotomic Formalism.RepresentationBoundsCohomology.JL Formalism.RepresentationBoundsCohomology.JT Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology Formalism.RepresentationBoundsCohomology.T2
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.RepresentationBoundsCohomology.LOC
-open ReciprocityTheory.ChartRestriction.T2 (PadicCoeff FracTop IsFGTop cupFG IsCycOn)
+open Formalism.NG (uElt Ymod ColNNJ colPsi uRep colRelJ KO)
+open Formalism.RepresentationBoundsCohomology.BR (yY)
+open Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology (lcH1)
+open ReciprocityTheory.ChartRestriction.T2 (PadicCoeff IsFGTop)
 
 theorem lc_of_torsion (p : ℕ) {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     [TopologicalSpace O] [TopologicalSpace (FractionRing O)]

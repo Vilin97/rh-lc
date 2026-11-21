@@ -28,7 +28,7 @@ theorem bar_mem_adjoin (H : Host E) {a : 𝓞 E} (ha : a ∈ Algebra.adjoin ℤ 
   | algebraMap r =>
     rw [eq_intCast, map_intCast]
     exact intCast_mem _ r
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 theorem map_bar_span_bar (H : Host E) (al : 𝓞 E) :
@@ -95,7 +95,7 @@ def minCoeff {H : Host E} (l : Level H) : Coeff l :=
       (IntermediateField.mem_adjoin_simple_self ℚ _)
   { F := IntermediateField.normalClosure ℚ E ℂ ⊔ IntermediateField.adjoin ℚ {zeta l.M'}
     fin := by
-      haveI := IntermediateField.adjoin.finiteDimensional (isIntegral_zeta (M'_pos l))
+      have := IntermediateField.adjoin.finiteDimensional (isIntegral_zeta (M'_pos l))
       infer_instance
     conj := hconj
     zeta_mem := hz

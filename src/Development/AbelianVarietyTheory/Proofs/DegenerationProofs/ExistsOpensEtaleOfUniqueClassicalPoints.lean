@@ -14,6 +14,10 @@ open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj Alg
 open scoped CategoryTheory.Obj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 
+local notation "OO" p:max => (Valuation.valuationSubring (Valued.v : Valuation (PadicAlgCl p) NNReal))
+local notation "cPt" p:max => (IsLocalRing.closedPoint (OO p) : Sp (OO p))
+local notation "gPt" p:max => spMap (ValuationSubring.subtype (OO p))
+
 set_option backward.isDefEq.respectTransparency false
 
 namespace GlobalTheory
@@ -266,7 +270,7 @@ theorem exists_opens_etale_of_unique_classical_points :
     rw [this]
 
   obtain ⟨O, hO, hOw⟩ : ∃ O : Set ↥(pullback u₀ g₁), IsOpen O ∧ O ∩ f₁ ⁻¹' {f₁ w₁} = {w₁} :=
-    isDiscrete_iff_forall_exists_isOpen.mp (f₁.isDiscrete_preimage_singleton (f₁ w₁)) w₁ rfl
+    isDiscrete_iff_forall_mem_exists_isOpen.mp (f₁.isDiscrete_preimage_singleton (f₁ w₁)) w₁ rfl
   let O' : (pullback u₀ g₁).Opens := ⟨O, hO⟩
   let w₂ : O' := ⟨w₁, (hOw.ge rfl).1⟩
   let f₂ := O'.ι ≫ f₁

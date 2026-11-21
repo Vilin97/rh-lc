@@ -67,15 +67,55 @@ section Gen
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : ℕ} {T : E}
 
-theorem exists_smul_mem_lat (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E L) (x : S.V) :
+theorem span_eq_top_of_unimodular (L : Submodule (𝓞 E) S.V)
+    (hL : Submodule.IsLattice E L)
+    (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT L) :
+    Submodule.span E (L : Set S.V) = ⊤ := by
+  by_contra hspan
+  obtain ⟨φ, hφ₀, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
+  obtain ⟨μ, hμ⟩ := GlobalTheory.LoopC.FunIdx.exists_vec S φ
+  have hμ₀ : μ ≠ 0 := by
+    intro h
+    apply hφ₀
+    ext y
+    simpa [h] using hμ y
+  have hline (a : E) : a • μ ∈ L := by
+    rw [← hU]
+    change a • μ ∈ Formalism.E.hdual S.hT L
+    simp only [Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
+      LinearMap.restrictScalars_apply]
+    intro y hy
+    have hy₀ := LinearMap.mem_ker.mp (hφ (Submodule.subset_span hy))
+    simp [← S.herm.eq (a • μ) y, LinearMap.map_smulₛₗ, ← hμ, hy₀]
+  obtain ⟨ψ, hψ, -⟩ := Submodule.exists_le_ker_of_notMem
+    (show μ ∉ (⊥ : Submodule E S.V) by simpa using hμ₀)
+  let f := ψ.restrictScalars (𝓞 E)
+  have hmap (x : E) : x ∈ L.map f := by
+    refine ⟨(x / ψ μ) • μ, hline _, ?_⟩
+    change ψ ((x / ψ μ) • μ) = x
+    rw [map_smul, smul_eq_mul, div_mul_cancel₀ _ hψ]
+  obtain ⟨d, hd₀, hd⟩ := FractionalIdeal.isFractional_of_fg
+    (S := nonZeroDivisors (𝓞 E)) (hL.fg.map f)
+  have hinj := IsFractionRing.injective (𝓞 E) E
+  have hne {a : 𝓞 E} (ha : a ≠ 0) : algebraMap (𝓞 E) E a ≠ 0 :=
+    fun h => ha (hinj (h.trans (map_zero _).symm))
+  have hinteger (x : E) : IsLocalization.IsInteger (𝓞 E) x := by
+    have hx := hd _ (hmap ((algebraMap (𝓞 E) E d)⁻¹ * x))
+    rwa [Algebra.smul_def, ← mul_assoc, mul_inv_cancel₀ (hne (nonZeroDivisors.ne_zero hd₀)),
+      one_mul] at hx
+  apply RingOfIntegers.not_isField E
+  refine ⟨⟨0, 1, zero_ne_one⟩, mul_comm, ?_⟩
+  intro a ha
+  obtain ⟨b, hb⟩ := hinteger ((algebraMap (𝓞 E) E a)⁻¹)
+  refine ⟨b, hinj ?_⟩
+  rw [map_mul, hb, map_one, mul_inv_cancel₀ (hne ha)]
+
+theorem exists_smul_mem_lat (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E L)
+    (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT L) (x : S.V) :
     ∃ r : 𝓞 E, r ≠ 0 ∧ r • x ∈ L := by
-  first
-  | exact @_root_.GlobalTheory.NonzeroIntegerSmulMem.exists_ne_zero_smul_mem
-  | exact _root_.GlobalTheory.NonzeroIntegerSmulMem.exists_ne_zero_smul_mem
-  | (apply _root_.GlobalTheory.NonzeroIntegerSmulMem.exists_ne_zero_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NonzeroIntegerSmulMem.exists_ne_zero_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NonzeroIntegerSmulMem.exists_ne_zero_smul_mem <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.NonzeroIntegerSmulMem.exists_ne_zero_smul_mem ..)
+  have hfull : Submodule.IsFullLattice E L :=
+    { toIsLattice := hL, span_eq_top := span_eq_top_of_unimodular L hL hU }
+  exact GlobalTheory.NonzeroIntegerSmulMem.exists_ne_zero_smul_mem L hfull x
 
 theorem z_not_mem_X (Λ : Submodule (𝓞 E) S.V) (F : LFlag S r T)
     (hprim : ∀ c : E, c • F.fl.z ∈ Lsub Λ F → ∃ o : 𝓞 E, (o : E) = c) : F.fl.z ∉ Xsp F := by
@@ -100,7 +140,7 @@ theorem exists_partner_rep (Λ : Submodule (𝓞 E) S.V) (F : LFlag S r T)
     refine ⟨inf_le_left, le_antisymm (le_inf inf_le_left fun x hx => Submodule.subset_span hx) ?_⟩
     refine inf_le_inf_left _ ?_
     intro x hx
-    exact (Submodule.span_le (p := U)).2 (fun y hy => hy.2) hx
+    exact (Submodule.span_le (p := U)).2 (fun y (hy : y ∈ M0) => hy.2) hx
   have hint : ∀ x : M0, ∃ o : 𝓞 E, (o : E) = φ x := by
     rintro ⟨x, hxΛ, hxU⟩
     obtain ⟨y, hy, w, hw, rfl⟩ := Submodule.mem_sup.1 (show x ∈ U from hxU)
@@ -134,7 +174,7 @@ theorem exists_partner_rep (Λ : Submodule (𝓞 E) S.V) (F : LFlag S r T)
   · show (w : S.V) ∈ orth S (Xsp F)
     rw [mem_orth_iff]
     intro x hx
-    obtain ⟨c, hc0, hcx⟩ := exists_smul_mem_lat Λ hlat x
+    obtain ⟨c, hc0, hcx⟩ := exists_smul_mem_lat Λ hlat hU x
     have hcX : c • x ∈ Xsp F := by
       rw [← algebraMap_smul E c x]; exact (Xsp F).smul_mem _ hx
     have hm : c • x ∈ M0 := ⟨hcx, Submodule.mem_sup_left hcX⟩

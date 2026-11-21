@@ -90,7 +90,7 @@ theorem lift_through_split (hK : Known) {K V F : Type} [CommRing K] [IsDomain K]
       {s₁ : ∀ T : Over (Sp R'), (T ⟶ D₁.P.A) → Out.GtPt D₁ T}
       (hG : Out.GlobalFnsSt) (h₀ : IsSplit D₀ n s₀) (h₁ : IsSplit D₁ n s₁)
       {v : epsR R ⟶ D₀.P.A} {v₁ : epsR R' ⟶ D₁.P.A}
-      (hv : v₁.left ≫ prj p = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ v.left) :
+      (hv : v₁.left ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ v.left) :
       LetBC p (s₀ (epsR R) v) (s₁ (epsR R') v₁) := by
     open ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.DVR GlobalTheory.TorusModel in
       have a₀ : ∀ x k, DegPre.gtφT D₀ _ (s₀ (epsR R) v).b x k = v.left ≫ DegPre.gtφT D₀ _ (s₀ D₀.P.A (𝟙 _)).b x k := by
@@ -106,12 +106,12 @@ theorem lift_through_split (hK : Known) {K V F : Type} [CommRing K] [IsDomain K]
         rw [(TorusCoord.comp_eq_of_left _ (s₁ (epsR R') v₁).b v₁.left (𝟙 _) (e.symm.trans (Category.id_comp _).symm)).1 x k,
           Category.id_comp, TorusCoord.gtφT_eq]
       have hψ : ∀ χ k, DegPre.gtφT D₁ _ (s₁ (epsR R') v₁).b χ k ≫ prj p =
-          spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ DegPre.gtφT D₀ _ (s₀ (epsR R) v).b (p.xe χ) k := fun χ k => by
+          spMap (Formalism.L2.Pj.dualMap f) ≫ DegPre.gtφT D₀ _ (s₀ (epsR R) v).b (p.xe χ) k := fun χ k => by
         rw [a₀, a₁, Category.assoc, (GlobalTheory.SplitBC.univ_corr p hG h₀ h₁ χ).1, ← Category.assoc, hv, Category.assoc]
       have letBC_iff (ν : GtPt D₀ (epsR R)) (ν₁ : GtPt D₁ (epsR R')) :
-          LetBC p ν ν₁ ↔ ν₁.b.left ≫ prj p = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ ν.b.left ∧ ∀ χ,
-            (∀ i, DegPre.gtφT D₁ (epsR R') ν₁.b χ i ≫ prj p = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ DegPre.gtφT D₀ (epsR R) ν.b (p.xe χ) i) ∧
-            PMaps p.w _ _ DegPre.gtε (ν₁.s χ) (ν.s (p.xe χ)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f)) :=
+          LetBC p ν ν₁ ↔ ν₁.b.left ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ ν.b.left ∧ ∀ χ,
+            (∀ i, DegPre.gtφT D₁ (epsR R') ν₁.b χ i ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ DegPre.gtφT D₀ (epsR R) ν.b (p.xe χ) i) ∧
+            PMaps p.w _ _ DegPre.gtε (ν₁.s χ) (ν.s (p.xe χ)) (spMap (Formalism.L2.Pj.dualMap f)) :=
         and_congr Iff.rfl (forall_congr' fun χ =>
           ⟨fun ⟨hψ, hm⟩ => ⟨hψ, (maps_iff p.w _ _ _ (ν₁.s χ) (ν.s (p.xe χ)) _ _
             (GeneratorPullback.pullAlong_le _ _ _ _ _ hψ) (fun _ => rfl)).1 hm⟩,

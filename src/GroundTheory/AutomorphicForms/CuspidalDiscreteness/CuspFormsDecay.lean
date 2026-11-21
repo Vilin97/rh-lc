@@ -93,7 +93,7 @@ theorem cuspToL2_eq_zero_iff (φ : cuspForms K n) :
       rw [h]
       exact Lp.coeFn_zero _ _ _
     have h2 : (fun y : Reduction.normOneGL (K := K) (n := n) => (φ : AdelicGLn.AdelicGL K n → ℂ) y) =ᵐ[μ] 0 :=
-      (quasiMeasurePreserving_mk Γ₁ μ).ae_eq h1
+      QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ) h1
     have h3 := (Continuous.ae_eq_iff_eq μ (φ.2.1.continuous.comp continuous_subtype_val)
       continuous_const).1 h2
     exact congrFun h3 ⟨x, hx⟩

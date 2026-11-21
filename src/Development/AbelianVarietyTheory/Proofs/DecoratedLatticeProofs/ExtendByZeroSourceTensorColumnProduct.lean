@@ -49,6 +49,7 @@ theorem rd_sum_inr {p : SplitPt D k} {n n' : Type} [Fintype n] [DecidableEq n] [
   have h1 : (t * o.jB) *ᵥ (fun j => incA D (ζ j)) = t *ᵥ ratV (vecB o ζ) := by
     rw [← Matrix.mulVec_mulVec]
     congr 1
+    funext i
     exact (RingHom.map_mulVec (incA D) o.iB ζ i).symm
   have hs' : α₀.b = fromCols (o.jA.map p.pr * α.b) (replicateCol (Fin 1) fun i => p.pr (ratV (vecB o ζ) i)) := hs
   funext i

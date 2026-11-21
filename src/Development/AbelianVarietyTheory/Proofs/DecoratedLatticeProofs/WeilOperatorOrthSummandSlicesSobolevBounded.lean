@@ -136,10 +136,14 @@ theorem word_bound {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) 
         rw [List.length_cons, show k + (l.length + 1) = k + 1 + l.length by omega, ← mul_assoc, ENNReal.ofReal,
           ENNReal.coe_mul]
 
-theorem l2O_le_supN_of_measure_eq_one {μ : Measure (WO S T)} {𝓕 : Set (WO S T)} (h1 : μ 𝓕 = 1) (φ : WO S T → ℂ) :
+theorem l2O_le_supN_of_measure_eq_one {μ : Measure (WO S T)} {𝓕 : Set (WO S T)} (h1 : μ 𝓕 = 1) (φ : WO S T → ℂ) (hφ : Continuous φ) :
     l2O μ 𝓕 φ ≤ supN φ := by
   have h : l2O μ 𝓕 φ ^ 2 ≤ supN φ ^ 2 := by
-    rw [l2O_sq_eq_lintegral]
+    have : BorelSpace (WO S T) := ⟨rfl⟩
+    have he : l2O μ 𝓕 φ ^ 2 = ∫⁻ w in 𝓕, ‖φ w‖ₑ ^ 2 ∂μ := by
+      simpa [l2O] using eLpNorm_nnreal_pow_eq_lintegral (μ := μ.restrict 𝓕) (p := 2)
+        two_ne_zero hφ.measurable.aestronglyMeasurable
+    rw [he]
     calc ∫⁻ w in 𝓕, ‖φ w‖ₑ ^ 2 ∂μ ≤ ∫⁻ _ in 𝓕, supN φ ^ 2 ∂μ :=
           lintegral_mono fun w => by gcongr; exact le_iSup (fun w => ‖φ w‖ₑ) w
       _ = supN φ ^ 2 := by rw [setLIntegral_const, h1, mul_one]
@@ -170,8 +174,13 @@ theorem sobO_slice_le {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1
   refine Finset.sum_le_sum fun a _ => ?_
   have hkd : k ≤ d := Nat.lt_succ_iff.1 (Finset.mem_range.1 hk)
   rw [word_slice ψ hθ o]
+  have hg : IsThetaFunO ψ S T (wordAct (opA ψ θ o) (List.ofFn a) f) :=
+    wordAct_rel (B := opA ψ θ o) (R := fun x _ => IsThetaFunO ψ S T x) (List.ofFn a)
+      (fun a _ _ _ h => theta_dRho hθ hψ a.1 _ h) (y := f) hf
+  have hs : Continuous (slA o (wordAct (opA ψ θ o) (List.ofFn a) f)) :=
+    hg.cont.comp ((o.continuous_resS_symm T).comp (continuous_id.prodMk continuous_const))
   calc l2O μ 𝓕 (slA o (wordAct (opA ψ θ o) (List.ofFn a) f)) ≤ supN (wordAct (opA ψ θ o) (List.ofFn a) f) :=
-        (l2O_le_supN_of_measure_eq_one h1 _).trans (supN_slice o _)
+        (l2O_le_supN_of_measure_eq_one h1 _ hs).trans (supN_slice o _)
     _ = wordSum (heisDer ψ θ) supN 0 (wordAct (opA ψ θ o) (List.ofFn a) f) := (wordSum_zero _ _ _).symm
     _ ≤ c (List.ofFn a) * wordSum (heisDer ψ θ) supN (0 + (List.ofFn a).length) f := hc _ f hf 0
     _ ≤ c (List.ofFn a) * wordSum (heisDer ψ θ) supN d f := by

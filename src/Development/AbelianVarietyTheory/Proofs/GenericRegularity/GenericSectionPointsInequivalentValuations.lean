@@ -198,7 +198,7 @@ variable {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : X.Forms →ₐ[B.KO] Ω)
 theorem ev_sec {F : Type} [Field F] (ev : Rp X la N →+* F) (τ : Ω →+* F) (σ : F)
     (hc : ∀ (k : ℕ) (G : X.Forms), emb X la N G ∈ Vw X la N (addL (wt0 D j) wL k) →
       ev (emb X la N G) = τ (gF G) * σ ^ k) (i : Fin (WeightFamilies.dimY D j + 1)) :
-    ev (sec X la w i) = (∑ k, evK X la N ev (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (i, k))) *
+    ev (sec X la w i) = (∑ k, evK X la N ev (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (i, k))) *
       τ (gF (X.inc wL (w k)))) * σ := by
   unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
   set_option synthInstance.maxHeartbeats 100000 in
@@ -360,7 +360,7 @@ theorem overGauss {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : (xplus X E hM).
     (hc : ∀ (k : ℕ) (F : (xplus X E hM).Forms),
       emb (xplus X E hM) la G.N F ∈ Vw (xplus X E hM) la G.N (addL (wt0 D j) wL k) →
       h.ev (emb (xplus X E hM) la G.N F) = τ (gF F) * σ ^ k) :
-    OverGauss la ((@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp
+    OverGauss la ((@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ _ _).comp
         (algebraMap (Pol (xplus X E hM) la G.N) (Op (xplus X E hM) la G.N)))
       (algebraMap ((xplus X E hM).Kl la) (Kp (xplus X E hM) la G.N))
       (fun k => gF ((xplus X E hM).inc wL (G.w k))) (valT h.T) τ (evK (xplus X E hM) la G.N h.ev) := by
@@ -377,7 +377,7 @@ theorem overGauss {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : (xplus X E hM).
     exact (mul_eq_zero.1 e.symm).resolve_right hσ
 
 theorem kl_eq (Xr : PJ D B P j) (N : ℕ) (o : Xr.Ol la) :
-    algebraMap (Xr.Kl la) (Kp Xr la N) o = ((@algebraMap (Op Xr la N) (Kp Xr la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp
+    algebraMap (Xr.Kl la) (Kp Xr la N) o = ((@algebraMap (Op Xr la N) (Kp Xr la N) _ _ _).comp
       (algebraMap (Pol Xr la N) (Op Xr la N))) (MvPolynomial.C o) := by
   rw [RingHom.comp_apply, ← MvPolynomial.algebraMap_eq,
     ← IsScalarTower.algebraMap_apply (Xr.Ol la) (Pol Xr la N) (Op Xr la N),
@@ -385,15 +385,15 @@ theorem kl_eq (Xr : PJ D B P j) (N : ℕ) (o : Xr.Ol la) :
   exact (IsScalarTower.algebraMap_apply (Xr.Ol la) (Xr.Kl la) (Kp Xr la N) o).symm
 
 theorem kp_frac (Xr : PJ D B P j) (N : ℕ) (c : Kp Xr la N) : ∃ a b,
-    ((@algebraMap (Op Xr la N) (Kp Xr la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp (algebraMap (Pol Xr la N) (Op Xr la N))) b ≠ 0 ∧
-    ((@algebraMap (Op Xr la N) (Kp Xr la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp (algebraMap (Pol Xr la N) (Op Xr la N))) b * c =
-      ((@algebraMap (Op Xr la N) (Kp Xr la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp (algebraMap (Pol Xr la N) (Op Xr la N))) a := by
+    ((@algebraMap (Op Xr la N) (Kp Xr la N) _ _ _).comp (algebraMap (Pol Xr la N) (Op Xr la N))) b ≠ 0 ∧
+    ((@algebraMap (Op Xr la N) (Kp Xr la N) _ _ _).comp (algebraMap (Pol Xr la N) (Op Xr la N))) b * c =
+      ((@algebraMap (Op Xr la N) (Kp Xr la N) _ _ _).comp (algebraMap (Pol Xr la N) (Op Xr la N))) a := by
   obtain ⟨o, o', ho', rfl⟩ := IsFractionRing.div_surjective (A := Op Xr la N) c
   obtain ⟨⟨a, s⟩, hs⟩ := IsLocalization.surj (gI Xr la N).primeCompl o
   obtain ⟨⟨a', s'⟩, hs'⟩ := IsLocalization.surj (gI Xr la N).primeCompl o'
-  have h0 : @algebraMap (Op Xr la N) (Kp Xr la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o' ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors ho'
-  have h1 := ((IsLocalization.map_units (Op Xr la N) s).map (@algebraMap (Op Xr la N) (Kp Xr la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))))).ne_zero
-  have h2 := ((IsLocalization.map_units (Op Xr la N) s').map (@algebraMap (Op Xr la N) (Kp Xr la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))))).ne_zero
+  have h0 : @algebraMap (Op Xr la N) (Kp Xr la N) _ _ _ o' ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors ho'
+  have h1 := ((IsLocalization.map_units (Op Xr la N) s).map (@algebraMap (Op Xr la N) (Kp Xr la N) _ _ _)).ne_zero
+  have h2 := ((IsLocalization.map_units (Op Xr la N) s').map (@algebraMap (Op Xr la N) (Kp Xr la N) _ _ _)).ne_zero
   simp only at hs hs'
   refine ⟨a * s', s * a', ?_, ?_⟩
   · simp only [RingHom.comp_apply, map_mul, ← hs']

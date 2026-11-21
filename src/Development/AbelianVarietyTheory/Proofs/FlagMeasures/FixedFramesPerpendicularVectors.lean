@@ -194,8 +194,23 @@ theorem main : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D),
     rw [← (hw b).2 σ hσ.2]
     have huni : Formalism.HermitianLatticesTheory.dual (hS D).hT Λ = Λ := hrow.2.1.2.1
     exact (mem_dual _ _ _).1 (huni.symm ▸ hfΛ b) _ (iXY_mem D F0 Λ hb.1 hsp σ hσ.1)
-  · obtain ⟨c, hc, hcw⟩ := exists_smul_mem (L0X D Λ (lf D F0)) (w b)
-      (by rw [hlat.span_eq_top]; trivial)
+  · obtain ⟨c, hc, hcΛ⟩ := exists_smul_mem Λ (D.sp.iXY 0 (w b))
+      (by rw [Submodule.IsFullLattice.span_eq_top (self := hrow.1.1)]; trivial)
+    have hworth : D.sp.iXY 0 (w b) ∈ orth (hS D) (Xplus (lf D F0)) :=
+      hW.1.le (Submodule.mem_sup_left ⟨w b, rfl⟩)
+    have hcorth : D.sp.iXY 0 (c • w b) ∈ orth (hS D) (Xplus (lf D F0)) := by
+      rw [map_smul]
+      exact (orth (hS D) (Xplus (lf D F0))).smul_mem c hworth
+    have hcΛ' : D.sp.iXY 0 (c • w b) ∈ Λ := by simpa using hcΛ
+    have hcX : D.sp.iXY 0 (c • w b) ∈ orth (hS D) (Xsp (lf D F0)) := by
+      apply (mem_orth (hS D) _ _).2
+      intro x hx
+      exact (mem_orth (hS D) _ _).1 hcorth x (Submodule.mem_sup_left hx)
+    have hcz : (hS D).hT F0.z (D.sp.iXY 0 (c • w b)) = 0 :=
+      (mem_orth (hS D) _ _).1 hcorth _
+        (Submodule.mem_sup_right (Submodule.mem_span_singleton_self _))
+    have hcw : c • w b ∈ L0X D Λ (lf D F0) := by
+      exact ⟨⟨Submodule.mem_sup_left ⟨hcΛ', hcX⟩, hcX⟩, hcz⟩
     have hc1 : algebraMap (𝓞 D.host.E) D.host.E c ≠ 0 := by simpa using hc
     have hm : c • w b ∈ perpW D (L0X D Λ (lf D F0)) P :=
       ⟨hcw, ((perpE D P).restrictScalars (𝓞 D.host.E)).smul_mem c (hw b).1⟩

@@ -6,7 +6,8 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFor
 
 @[expose] public section
 
-open MeasureTheory GlobalTheory.SmGL GlobalTheory.PRep PositivityTheory.Rg.BcN.F2 GlobalTheory.JHMult
+open MeasureTheory GlobalTheory.SmGL GlobalTheory.PRep GlobalTheory.JHMult
+open PositivityTheory.Rg.BcN.F2 (FinSubq)
 
 namespace GlobalTheory.CompanionTheory.RepFinSubq
 

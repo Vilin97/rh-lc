@@ -159,20 +159,21 @@ theorem line_vec {L : HSp D} {ζ : Fin L.rank → D.host.E} (h : IsLineVec L ζ)
   rw [mul_right_comm, ← RingHom.map_mul, inv_mul_cancel₀ h0, RingHom.map_one, one_mul]
 
 theorem line_gen {L : HSp D} {ζ : Fin L.rank → D.host.E} (h : IsLineVec L ζ) {Λ : Lat L}
-    (hΛ : Submodule.IsLattice D.host.E Λ) (x : Pl D) : ∃ e : D.host.E, e ≠ 0 ∧ ∀ a ∈ idAt D (· = x),
+    (hΛ : IsSelfDualC L Λ) (x : Pl D) : ∃ e : D.host.E, e ≠ 0 ∧ ∀ a ∈ idAt D (· = x),
       a • ratV ζ ∈ latV L Λ (· = x) ↔ incA D e⁻¹ * a ∈ intAt D (· = x) := by
   obtain ⟨i₀, hi, h0⟩ := line_coord h
   let I : Submodule (𝓞 D.host.E) D.host.E := Λ.map (LinearMap.proj (R := 𝓞 D.host.E) (φ := fun _ => D.host.E) i₀)
-  have hI : I.FG := hΛ.fg.map _
+  have hI : I.FG := hΛ.1.fg.map _
   let 𝔞 : FI D := ⟨I, FractionalIdeal.isFractional_of_fg hI⟩
   have hc : ∀ y : Fin L.rank → D.host.E, y = fun _ => y i₀ := fun y => funext fun i => by rw [hi i]
   have h𝔞 : 𝔞 ≠ 0 := fun h' => by
     have h1 : ∀ y ∈ Λ, y = 0 := fun y hy => by
       have : y i₀ = 0 := FractionalIdeal.eq_zero_iff.1 h' _ ⟨y, hy, rfl⟩
       rw [hc y, this]; rfl
-    have h2 : Submodule.span D.host.E (Λ : Set (Fin L.rank → D.host.E)) ≤ ⊥ := Submodule.span_le.2 h1
-    rw [hΛ.span_eq_top] at h2
-    exact h0 (congrFun (h2 (Submodule.mem_top (x := ζ))) i₀)
+    have hζ : ζ ∈ Λ := (hΛ.2 ζ).2 fun y hy => by
+      refine ⟨0, ?_⟩
+      simp [h1 y hy]
+    exact h0 (congrFun (h1 ζ hζ) i₀)
   obtain ⟨g, hg, hgen⟩ := GlobalTheory.IdVGen.idV_gen D x 𝔞 h𝔞
   have key : ∀ y : Fin L.rank → AE D, y ∈ latV L Λ (· = x) ↔ y i₀ ∈ idV 𝔞 x := fun y => by
     constructor
@@ -240,7 +241,7 @@ theorem line_idele {X T L : HSp D} (o : OrthDec X T L) {ζ : Fin L.rank → D.ho
     by_cases hx : P x
     · exact ⟨1, fun h' => absurd hx h'⟩
     · obtain ⟨ΛL, hL, ho⟩ := h x hx
-      obtain ⟨e, he, hg⟩ := line_gen hζ hL.1 x
+      obtain ⟨e, he, hg⟩ := line_gen hζ hL x
       exact ⟨inU e he, fun _ a ha => by rw [← orth_line o ho, hg a ha, inU_inv]⟩
   choose u hu using h1
   have hz : vecB o ζ ≠ 0 := fun h0 => by

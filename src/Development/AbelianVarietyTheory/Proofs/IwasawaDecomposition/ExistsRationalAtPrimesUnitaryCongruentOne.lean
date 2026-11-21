@@ -77,6 +77,9 @@ theorem locM_sub_one_apply (w : HeightOneSpectrum (𝓞 E)) (x : GL (Fin n) (AfE
 
 variable [StarRing E] (hc : CMData F E)
 
+local notation "ι" => Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F)
+local notation "σ" => Formalism.UG.sigR (CMData.sig hc) (FiniteAdeleRing (𝓞 F) F)
+
 theorem inv_sub_one_apply {u : GL (Fin n) (AfE F E)} (hu : u ∈ UAd hc n) (i j : Fin n) :
     ((u⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j - (1 : Matrix (Fin n) (Fin n) (AfE F E)) i j =
       σ ((u : Matrix (Fin n) (Fin n) (AfE F E)) j i - (1 : Matrix (Fin n) (Fin n) (AfE F E)) j i) := by
@@ -153,15 +156,15 @@ theorem glue_approx {Q : Finset (HeightOneSpectrum (𝓞 E))} (hQ : ∀ P ∈ Q,
       rw [Matrix.mul_apply, map_sum]
     simp only [map_mul, hG, hG']
     split_ifs with h h'
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [← map_mul, ← map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_mul, ← map_sum]
       rw [← Matrix.mul_apply, hCi w h, hone]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [← map_mul, ← map_sum, ← star_mul, ← star_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_mul, ← map_sum, ← star_mul, ← star_sum]
       rw [← Matrix.mul_apply, hCi _ h', hone, Matrix.one_apply, Matrix.one_apply]
       by_cases e : i = j <;> simp [e, eq_comm]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [← map_mul, ← map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_mul, ← map_sum]
       rw [← Matrix.mul_apply, Units.inv_mul]
   let g : GL (Fin n) (AfE F E) := ⟨G, G', mul_eq_one_comm.1 h1, h1⟩
   have hg : g ∈ UAd hc n := by

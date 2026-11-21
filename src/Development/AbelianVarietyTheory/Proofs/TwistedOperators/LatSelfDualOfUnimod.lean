@@ -182,10 +182,11 @@ local notation "ι" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
 theorem isFrame_lat (β : GL (Fin n) 𝒜) : IsFrame β (lat β) := lat_span β
 
 theorem eq_lat {β : GL (Fin n) 𝒜} {Λ : Submodule (𝓞 E) (Fin n → E)} (h : IsFrame β Λ)
-    (hΛ : Submodule.IsLattice E Λ) : Λ = lat β := by
+    (hΛ : Submodule.IsFullLattice E Λ) : Λ = lat β := by
+  letI := hΛ
   ext x
   rw [mem_lat, ← h]
-  conv_lhs => rw [← global_lattice_one_holds F E (Fin n) Λ (Module.Finite.iff_fg.2 hΛ.fg) hΛ.span_eq_top]
+  conv_lhs => rw [← global_lattice_one_holds F E (Fin n) Λ (Module.Finite.iff_fg.2 hΛ.fg) (Submodule.IsFullLattice.span_eq_top (A := E) (M := Λ))]
   change ((1⁻¹ : GL (Fin n) 𝒜) : Matrix (Fin n) (Fin n) 𝒜) *ᵥ (fun i => ι (x i)) ∈ Formalism.L2.Herm.hatL (F := F) Λ ↔ _
   rw [inv_one, Units.val_one, one_mulVec]
 
@@ -472,6 +473,47 @@ theorem isLattice_crdLat (V : HSp D) {L : Submodule (𝓞 D.host.E) V.V} (h : Su
     Submodule.IsLattice D.host.E (crdLat V L) := by
   exact Submodule.IsLattice.of_fg D.host.E (h.fg.map _)
 
+theorem isFullLattice_crdLat (V : HSp D) :
+    Submodule.IsFullLattice D.host.E (crdLat V V.L0) := by
+  letI := isLattice_crdLat V V.standardTuple_isLattice
+  constructor
+  have hspan : Submodule.span D.host.E (V.L0 : Set V.V) = ⊤ := by
+    let W := Submodule.span D.host.E (V.L0 : Set V.V)
+    change W = ⊤
+    by_contra h
+    let e : V.V ≃ₗ⋆[D.host.E] V.V :=
+      (V.frame.equivFun.trans (starLinearEquiv D.host.E)).trans V.frame.equivFun.symm
+    let g : V.V →ₗ[D.host.E] Module.Dual D.host.E W :=
+      (LinearMap.domRestrict' W).comp (V.hT.comp e.toLinearMap)
+    have hdim : Module.finrank D.host.E (Module.Dual D.host.E W) <
+        Module.finrank D.host.E V.V := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt h
+    obtain ⟨z, hz, hz₀⟩ :=
+      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    have hsmul (a : D.host.E) : a • e z ∈ V.L0 := by
+      rw [← V.baseLattice_isUnimodular]
+      simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual,
+        Submodule.mem_iInf, Submodule.mem_comap, LinearMap.restrictScalars_apply]
+      intro y hy
+      have hzy : V.hT (e z) y = 0 :=
+        congrArg (fun f : Module.Dual D.host.E W => f ⟨y, Submodule.subset_span hy⟩)
+          (LinearMap.mem_ker.mp hz)
+      have hyz : V.hT y (e z) = 0 := by
+        have hh := V.herm.eq (e z) y
+        simpa [hzy] using hh.symm
+      simp [hyz]
+    let i : D.host.E →ₗ[𝓞 D.host.E] V.L0 :=
+      ((LinearMap.toSpanSingleton D.host.E _ (e z)).restrictScalars (𝓞 D.host.E)).codRestrict V.L0 hsmul
+    let : Module.Finite (𝓞 D.host.E) V.L0 := Module.Finite.iff_fg.mpr V.standardTuple_isLattice.fg
+    let : Module.Finite (𝓞 D.host.E) D.host.E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective D.host.E (fun hzero => hz₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField D.host.E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 D.host.E) D.host.E) (Field.toIsField D.host.E))
+  have h := congrArg (Submodule.map (V.frame.equivFun : V.V →ₗ[D.host.E] (Fin V.rank → D.host.E))) hspan
+  rw [Submodule.map_span, Submodule.map_top, LinearEquiv.range] at h
+  exact h
+
 theorem isSD_one {V : HSp D} {β : GL (Fin V.rank) (Ef D)} (h : crdLat V V.L0 = lat β) :
     IsSDFrame V β (crdLat V V.L0) 1 := by
   refine ⟨0, h ▸ isFrame_lat β, GlobalTheory.LevelChoices.dualL_crdLat V, one_pos, fun x hx => ?_, fun x hx => ?_⟩
@@ -481,8 +523,9 @@ theorem isSD_one {V : HSp D} {β : GL (Fin V.rank) (Ef D)} (h : crdLat V V.L0 = 
     exact hx
 
 theorem exists_base (V : HSp D) : ∃ β : GL (Fin V.rank) (Ef D), crdLat V V.L0 = lat β := by
-  have hL := isLattice_crdLat V V.standardTuple_isLattice
-  obtain ⟨β, hβ⟩ := GlobalTheory.AdelicFrame.exists_isFrame D.host.F _ hL.fg hL.span_eq_top
+  have hL := isFullLattice_crdLat V
+  letI := hL
+  obtain ⟨β, hβ⟩ := GlobalTheory.AdelicFrame.exists_isFrame D.host.F _ hL.fg (Submodule.IsFullLattice.span_eq_top (A := D.host.E) (M := crdLat V V.L0))
   exact ⟨β, eq_lat hβ hL⟩
 
 theorem unimod_of_isSD {V : HSp D} {β : GL (Fin V.rank) (Ef D)}
@@ -605,7 +648,7 @@ theorem exists_unitary (V : HSp D) (γ : GL (Fin V.rank) (Ef D)) (hγ : Unimod (
       rw [hT_crd D.sp.cm]
       exact h _ hy
   obtain ⟨k, -, hk⟩ := GlobalTheory.VolumeRatioTypings.exists_conj V L h1 h2
-  refine ⟨Formalism.IndefR.Lev.finE V k, GlobalTheory.LevSplit.finE_mem_UA V k, eq_lat (fun x => ?_) (isLattice_crdLat V V.standardTuple_isLattice)⟩
+  refine ⟨Formalism.IndefR.Lev.finE V k, GlobalTheory.LevSplit.finE_mem_UA V k, eq_lat (fun x => ?_) (isFullLattice_crdLat V)⟩
   have hk' : ∀ y, y ∈ GlobalTheory.AdLat.hat D.host.F (crdLat V V.L0 : Set (Fin V.rank → D.host.E)) ↔
       finMat D.sp.cm.sig V.gram k *ᵥ y ∈ GlobalTheory.AdLat.hat D.host.F (lat γ : Set (Fin V.rank → D.host.E)) := by
     rw [← hL, GlobalTheory.LevelChoices.coe_crdLat]

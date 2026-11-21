@@ -4,5 +4,4 @@ public import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.Degenerat
 
 @[expose] public section
 
-theorem GlobalTheory.T.degenerationData_baseChanges_exist_pid :=
-  @GlobalTheory.ArcQBC.baseChanges
+alias GlobalTheory.T.degenerationData_baseChanges_exist_pid := GlobalTheory.ArcQBC.baseChanges

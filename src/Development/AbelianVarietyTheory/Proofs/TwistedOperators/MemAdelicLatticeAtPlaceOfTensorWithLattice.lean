@@ -118,7 +118,7 @@ def coefSub {d : ℕ} (W : Spc F E d) (v : GlobalTheory.IndefiniteRowSideFullHec
     rw [this]; exact mulL_int_mem W v o hc
 
 theorem extract (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F))
-    (q : Fin d → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (hn : 0 < n) (hL : X.L.IsLattice E)
+    (q : Fin d → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (hn : 0 < n) (hL : X.L.IsFullLattice E)
     (h : ∀ x ∈ X.L, Matrix.vecMulVec (fun i => inclR (F := F) (AF F) (x i)) q ∈ latAtV X W v) :
     q ∈ GlobalTheory.InertSph.latAt W v := by
   set i₀ : Fin n := ⟨0, hn⟩
@@ -135,7 +135,7 @@ theorem extract (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (v : GlobalTheory.In
       have : x i₀ ∈ 𝔟 := (hmem _).2 ⟨x, hx, rfl⟩
       rw [h0, FractionalIdeal.mem_zero_iff] at this
       simpa using this
-    rw [hL.span_eq_top] at hle
+    rw [Submodule.IsFullLattice.span_eq_top (self := hL)] at hle
     have := hle (Submodule.mem_top (x := Pi.single i₀ (1 : E)))
     simp at this
   have hone : (1 : E) ∈ ((𝔟⁻¹ * 𝔟 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) : Submodule (𝓞 E) E) := by
@@ -161,7 +161,7 @@ end GlobalTheory.LatExtract
 
 theorem GlobalTheory.LatExtract.main : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n d : ℕ)
     (X : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n) (W : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F))
-    (q : Fin d → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), 0 < n → X.L.IsLattice E →
+    (q : Fin d → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), 0 < n → X.L.IsFullLattice E →
     (∀ x ∈ X.L, Matrix.vecMulVec (fun i => Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F) (x i)) q ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.latAtV X W v) →
     q ∈ GlobalTheory.InertSph.latAt W v := fun F E _ _ _ _ _ n d X W v q hn hL h =>
   GlobalTheory.LatExtract.extract n d X W v q hn hL h

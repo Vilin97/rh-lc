@@ -118,7 +118,7 @@ theorem jetCoef_comp (f : S →+* S₂) (g : S₂ →+* S₃) (κ : Type) (m : �
 structure IsBC (f : S →+* S₂) (g : GermAt t x d) (g₂ : GermAt t x₂ d) : Prop where
   map : IsMapOf f g.B g₂.B
   tg : ∀ l, g₂.tg l =
-    spMap (_root_.GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ g.tg l
+    spMap (_root_.GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ g.tg l
   jet : ∀ m, (g₂.x m).left = spMap (jetCoef f (Fin 1 × Fin d) m) ≫ (g.x m).left
   fr : ∀ m (Z : Scheme.{0}) (r : Z ⟶ Sp (Jet S₂ (Fin 2 × Fin d) m)) (z : Z) (J), Good t.PP.L z J →
     vE g₂ m r z J = vE g m (r ≫ spMap (jetCoef f (Fin 2 × Fin d) m)) z J
@@ -127,7 +127,7 @@ theorem exists_bc (f : S →+* S₂) (e : x₂ = spMap f ≫ x) (g : GermAt t x 
   subst e
   obtain ⟨e₂, h1, h2⟩ := Bc.exists_frBC t f x g.x g.e g.frame.gen
   exact ⟨⟨FBMap.mapFB f g.B, Bc.yBC t f x g.x, e₂,
-    fun l => spMap (_root_.GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ g.tg l,
+    fun l => spMap (_root_.GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ g.tg l,
     Bc.chart_bc t f x g.x g.chart, fun l => Bc.tan_bc t f x (g.tan l), Bc.basis_bc t f x g.tan g.basis,
     h2.frame h1 g.frame, h2.trunc g.trunc, h2.axes g.axes⟩,
     ⟨fun _ => rfl, fun _ _ => rfl, rfl, rfl, rfl, fun _ => rfl⟩, fun _ => rfl, fun _ => rfl, h2⟩
@@ -357,7 +357,7 @@ theorem key_loc (hs : ∀ a : 𝓞 E, star a = H.bar a) (hp : PowFns t) {f : S �
 theorem key_dir {f : S →+* S₂} {g : GermAt t x d} {g₀ gq : GermAt t x₂ d} (h : IsBC f g gq) {φ ψ : Q S₂ d 1}
     {lam : PS S₂ 2 d} (c : Cmp g₀ gq φ ψ lam) (l : Fin d) :
     ((lieM g₀).pt ((lin φ.1 1).mulVec (Pi.single l 1))).left =
-      spMap (_root_.GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ g.tg l := by
+      spMap (_root_.GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ g.tg l := by
   have := (comb_iff g₀ _ _).1 (coord_tan c.hφ l)
   have e₂ : (fun j => lin φ.1 1 j l) = (lin φ.1 1).mulVec (Pi.single l 1) := by
     funext j; simp

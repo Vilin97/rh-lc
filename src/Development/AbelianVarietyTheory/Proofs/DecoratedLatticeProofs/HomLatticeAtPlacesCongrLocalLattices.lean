@@ -92,7 +92,7 @@ theorem latO_le_left (S T : HSp D) (N M : Lat S) (LT : Set (Fin T.rank → D.hos
 
 set_option maxHeartbeats 2000000 in
 theorem latV_le_of_local (S : HSp D) (N M : Lat S) (hN : Submodule.IsLattice D.host.E N)
-    (hM : Submodule.IsLattice D.host.E M) (P : Pl D → Prop)
+    (hM : Submodule.IsFullLattice D.host.E M) (P : Pl D → Prop)
     (h : ∀ p, P p → latV S N (· = p) ≤ latV S M (· = p)) : latV S N P ≤ latV S M P := by
   classical
   obtain ⟨d, hd, hNM⟩ := exists_int_smul_le N M hN.fg hM.span_eq_top
@@ -183,12 +183,71 @@ theorem latO_congr : ∀ (D : D7) (S T : HSp D) (N M : Lat S) (N' M' : Lat T), I
     (∀ p, P p → latV S N (· = p) = latV S M (· = p) ∧ latV T N' (· = p) = latV T M' (· = p)) →
     latO S T (N : Set _) (N' : Set _) P = latO S T (M : Set _) (M' : Set _) P := by
   intro D S T N M N' M' hN hM hN' hM' P hloc
+  have hfull : ∀ (V : HSp D) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)),
+      IsSelfDualC V Λ → Submodule.IsFullLattice D.host.E Λ := by
+    intro V Λ hΛ
+    haveI : Submodule.IsLattice D.host.E Λ := hΛ.1
+    refine ⟨?_⟩
+    obtain ⟨s, hs⟩ := hΛ.1.fg
+    apply eq_top_iff.mpr
+    intro y _
+    let f : (Fin V.rank → D.host.E) → D.host.E := fun x =>
+      ∑ i, ∑ j, star (x i) * V.gram i j * y j
+    obtain ⟨a, ha⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 D.host.E)) s f
+    have ha0 : (algebraMap (𝓞 D.host.E) D.host.E a) ≠ 0 := by
+      exact (FaithfulSMul.algebraMap_injective _ _).ne (mem_nonZeroDivisors_iff_ne_zero.mp a.2)
+    let P : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E) := {
+      carrier := {x | ∃ b : 𝓞 D.host.E, (b : D.host.E) = (algebraMap (𝓞 D.host.E) D.host.E a) * f x}
+      zero_mem' := by refine ⟨0, ?_⟩; simp [f]
+      add_mem' := by
+        rintro x z ⟨b, hb⟩ ⟨c, hc⟩
+        refine ⟨b + c, ?_⟩
+        change (b : D.host.E) + c = _
+        rw [hb, hc]
+        simp [f, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+      smul_mem' := by
+        rintro c x ⟨b, hb⟩
+        refine ⟨RingOfIntegers.mapRingHom (starRingEnd D.host.E) c * b, ?_⟩
+        simp only [map_mul, hb, f, Pi.smul_apply, Algebra.smul_def, map_mul, RingOfIntegers.mapRingHom_apply, star_mul]
+        simp only [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro i _
+        apply Finset.sum_congr rfl
+        intro j _
+        change star (c : D.host.E) * _ = _
+        ring }
+    have hsP : (s : Set (Fin V.rank → D.host.E)) ⊆ P := by
+      intro x hx
+      obtain ⟨b, hb⟩ := ha x hx
+      exact ⟨b, by simpa [Algebra.smul_def] using hb⟩
+    have hy : (algebraMap (𝓞 D.host.E) D.host.E a) • y ∈ Λ := by
+      apply (hΛ.2 _).2
+      intro x hx
+      have hxP : x ∈ P := (hs ▸ Submodule.span_le.mpr hsP) hx
+      obtain ⟨b, hb⟩ := hxP
+      refine ⟨b, ?_⟩
+      rw [hb]
+      dsimp only [f, Pi.smul_apply]
+      simp only [smul_eq_mul, Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      ring
+    have hy' : (algebraMap (𝓞 D.host.E) D.host.E a) • y ∈ Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E)) :=
+      Submodule.subset_span hy
+    have := (Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E))).smul_mem
+      (algebraMap (𝓞 D.host.E) D.host.E a)⁻¹ hy' 
+    change (algebraMap (𝓞 D.host.E) D.host.E a)⁻¹ •
+      ((algebraMap (𝓞 D.host.E) D.host.E a) • y) ∈ _ at this
+    rw [← smul_assoc, smul_eq_mul, inv_mul_cancel₀ ha0, one_smul] at this
+    exact this
   have hS : latV S N P = latV S M P := le_antisymm
-    (latV_le_of_local S N M hN.1 hM.1 P fun p hp => (hloc p hp).1.le)
-    (latV_le_of_local S M N hM.1 hN.1 P fun p hp => (hloc p hp).1.ge)
+    (latV_le_of_local S N M hN.1 (hfull S M hM) P fun p hp => (hloc p hp).1.le)
+    (latV_le_of_local S M N hM.1 (hfull S N hN) P fun p hp => (hloc p hp).1.ge)
   have hT : latV T N' P = latV T M' P := le_antisymm
-    (latV_le_of_local T N' M' hN'.1 hM'.1 P fun p hp => (hloc p hp).2.le)
-    (latV_le_of_local T M' N' hM'.1 hN'.1 P fun p hp => (hloc p hp).2.ge)
+    (latV_le_of_local T N' M' hN'.1 (hfull T M' hM') P fun p hp => (hloc p hp).2.le)
+    (latV_le_of_local T M' N' hM'.1 (hfull T N' hN') P fun p hp => (hloc p hp).2.ge)
   apply le_antisymm
   · exact (latO_le_right S T _ N' M' P hT.le).trans (latO_le_left S T N M _ P hS.le)
   · exact (latO_le_right S T _ M' N' P hT.ge).trans (latO_le_left S T M N _ P hS.ge)

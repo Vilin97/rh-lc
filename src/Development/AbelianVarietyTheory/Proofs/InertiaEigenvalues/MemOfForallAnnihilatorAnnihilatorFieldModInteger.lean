@@ -17,10 +17,11 @@ namespace GlobalTheory.DoubleAnnihilator
 section
 variable {LL O : Type} [Field LL] [CommRing O] [Algebra O LL]
 
+local notation "QE" => LL ⧸ LinearMap.range (Algebra.linearMap O LL)
+
 theorem mk_eq_zero_iff (z : LL) :
     (Submodule.Quotient.mk z : QE) = 0 ↔ ∃ b : O, algebraMap O LL b = z := by
-  rw [Submodule.Quotient.mk_eq_zero, LinearMap.mem_range]
-  simp [Algebra.linearMap_apply]
+  simp only [Submodule.Quotient.mk_eq_zero, LinearMap.mem_range, Algebra.linearMap_apply]
 
 theorem baer [IsDomain O] [IsPrincipalIdealRing O] (hinj : Function.Injective (algebraMap O LL)) :
     Module.Baer O QE := by
@@ -43,8 +44,7 @@ theorem baer [IsDomain O] [IsPrincipalIdealRing O] (hinj : Function.Injective (a
     rw [this, map_smul, ← hz, LinearMap.toSpanSingleton_apply, ← Submodule.Quotient.mk_smul,
       ← Submodule.Quotient.mk_smul]
     congr 1
-    rw [Algebra.smul_def, Algebra.smul_def, map_mul]
-    field_simp
+    simp only [Algebra.smul_def, map_mul, mul_assoc, mul_inv_cancel_left₀ haL]
 
 theorem endo_on_torsion (ℓ : O) (hℓ : algebraMap O LL ℓ ≠ 0) (h : QE →ₗ[O] QE) (n : ℕ) :
     ∃ c : O, ∀ e : QE, ℓ ^ n • e = 0 → h e = c • e := by
@@ -174,7 +174,8 @@ theorem mem_of_forall_annihilator_annihilator :
       rw [hexp, mk_eq_zero_iff]; exact hT ⟨s, hs⟩)
     rw [hexp, mk_eq_zero_iff] at h1
     exact h1
-  obtain ⟨F, hF⟩ := (hKc.diff hUo).elim_finite_subfamily_closed T hTcl hempty
+  obtain ⟨F, hF⟩ := (hKc.diff hUo).elim_finite_subfamily_closed T hTcl
+    (Set.disjoint_iff_inter_eq_empty.mpr hempty)
   have hfin : ∀ d : M, (∀ s ∈ F, β d s.1 = 0) → β d c = 0 := by
     intro d hd
     obtain ⟨a, rfl⟩ := hspan d
@@ -187,7 +188,7 @@ theorem mem_of_forall_annihilator_annihilator :
         have h2 := hd s hs
         rw [hexp, mk_eq_zero_iff] at h2
         exact h2
-    rw [hF] at hx
+    rw [Set.disjoint_iff_inter_eq_empty.mp hF] at hx
     exact hx
 
   let τ : M →ₗ[O] (F → LL ⧸ LinearMap.range (Algebra.linearMap O LL)) :=

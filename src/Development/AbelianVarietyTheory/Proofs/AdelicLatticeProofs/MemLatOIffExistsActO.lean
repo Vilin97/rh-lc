@@ -32,12 +32,10 @@ theorem toEAf_tmul (x : AF D.host.F) (e : D.host.E) :
     toEAf D (x ⊗ₜ[D.host.F] e) = e ⊗ₜ[D.host.F] (sndA D.host.F x) := rfl
 
 theorem finEmb_mul (a : AE D) (x : EAf D) : finEmb D (toEAf D a * x) = a * finEmb D x := by
-  induction a using TensorProduct.induction_on with
-  | zero => simp
+  induction a using TensorProduct.inductionOn with
   | add a b ha hb => simp only [map_add (f := _), add_mul, ha, hb]
   | tmul y e =>
-    induction x using TensorProduct.induction_on with
-    | zero => simp
+    induction x using TensorProduct.inductionOn with
     | add a b ha hb => simp only [map_add (f := _), mul_add, ha, hb]
     | tmul f α =>
       rw [toEAf_tmul, Algebra.TensorProduct.tmul_mul_tmul, finEmb_tmul, finEmb_tmul,
@@ -51,8 +49,7 @@ theorem cF_tmul (e : D.host.E) (α : Af D.host.F) :
     cF D (e ⊗ₜ[D.host.F] α) = star e ⊗ₜ[D.host.F] α := rfl
 
 theorem toEAf_cA (a : AE D) : toEAf D (cA D a) = cF D (toEAf D a) := by
-  induction a using TensorProduct.induction_on with
-  | zero => simp
+  induction a using TensorProduct.inductionOn with
   | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul y e => rfl
 
@@ -160,10 +157,10 @@ theorem rankOne_mem_latO (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.r
       exact ⟨β * α, (mul_mem hβ hα : β * α ∈ Formalism.UG.intAd D.host.F), fun _ h => absurd trivial h, a, ha, x, hx, y, hy,
         rankOne_pure S T a x y α β⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => simp only [map_add]; exact add_mem hy hz
     | neg y _ hy => rw [map_neg]; exact neg_mem hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => simp only [map_add, AddMonoidHom.add_apply]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 theorem mt_mul (V : HSp D) (g g' : GA D V) : mt V (g * g') = mt V g * mt V g' := by

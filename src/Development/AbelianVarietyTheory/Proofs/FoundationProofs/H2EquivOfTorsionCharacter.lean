@@ -392,7 +392,7 @@ theorem exists_gen (hχ : Continuous fun g => (χ g : ℤ_[l]))
         mul_one]
   let inv : Module.Dual (ZMod (l ^ r)) M →ₗ[ZMod (l ^ r)]
       H0 ((twDual (redChar χ r) rho).comp (MonoidHom.id G)) :=
-    { toFun := fun φ => ⟨TDual.mk φ, fun g => TDual.ext fun m => by
+    { toFun := fun φ => ⟨TDual.mk φ, fun g => DFunLike.ext _ _ fun m => by
         change (redChar χ r g : ZMod (l ^ r)) * φ ((redChar χ r g⁻¹ : ZMod (l ^ r)) • m) = φ m
         rw [map_smul, smul_eq_mul, ← mul_assoc, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one,
           Units.val_one, one_mul]⟩

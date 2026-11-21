@@ -262,7 +262,7 @@ theorem exists_gamma (hW : IntVal W) (n j : ℕ) (hj : 1 ≤ j) :
   have hlt : m < l ^ (n + m + 1) := lt_of_lt_of_le (Nat.lt_pow_self hp.one_lt) (Nat.pow_le_pow_right hp.pos (by omega))
   have hpos : 0 < l ^ (n + m + 1) := pow_pos hp.pos _
   have : NeZero (l ^ (n + m + 1)) := ⟨hpos.ne'⟩
-  obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (PadicAlgCl l) (l ^ (n + m + 1))
+  obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot (PadicAlgCl l) (l ^ (n + m + 1))
   have hint : IsIntegral W z := Algebra.IsIntegral.isIntegral z
   have hdeg : (l ^ (n + m + 1)).totient ≤ (minpoly W z).natDegree := by
     by_contra hlt
@@ -313,7 +313,7 @@ theorem sp_stable (n m : ℕ) (z : PadicAlgCl l) (hz : IsPrimitiveRoot z (l ^ (n
     refine Submodule.subset_span ⟨a * k, fun h => hk (hac'.dvd_of_dvd_mul_left h), ?_⟩
     rw [map_pow, ← ha, pow_mul]
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [gal_smul]; exact Submodule.smul_mem _ c hx
 
 theorem sp_fixed (N : ℕ) (z : PadicAlgCl l) (g : PadicAlgCl l ≃ₐ[W] PadicAlgCl l) (hg : g (z ^ N) = z ^ N)
@@ -389,7 +389,7 @@ theorem small_top (hW : IntVal W) (j : ℕ) (hj : 1 ≤ j) : Small (W := W) j �
   have hδ0 : 0 < δ := norm_pos_iff.2 (sub_ne_zero.2 hγ1.symm)
   obtain ⟨m, hm⟩ := exists_pow_lt_of_lt_one (show 0 < δ / (4 * D) by positivity) hq1
   have : NeZero (l ^ (n + m + 1)) := ⟨(pow_pos hp.pos _).ne'⟩
-  obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (PadicAlgCl l) (l ^ (n + m + 1))
+  obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot (PadicAlgCl l) (l ^ (n + m + 1))
   have hw : IsPrimitiveRoot (z ^ (l ^ m)) (l ^ (n + 1)) := hz.pow (pow_pos hp.pos _) (by ring)
   refine ⟨2 * (D / δ + D), fun x ε H => ?_⟩
   have hε : 0 ≤ ε := (norm_nonneg _).trans (H 1 trivial)
@@ -446,7 +446,7 @@ theorem small_inf (j : ℕ) (H : Subgroup (PadicAlgCl l ≃ₐ[W] PadicAlgCl l))
     rw [mem_rootSet_of_ne (minpoly.ne_zero hint)]
     change aeval ((σ : PadicAlgCl l ≃ₐ[W] PadicAlgCl l) α) _ = 0
     rw [aeval_algHom_apply, minpoly.aeval, map_zero]
-  haveI : Fintype (MulAction.orbit H α) := hfin.fintype
+  have : Fintype (MulAction.orbit H α) := hfin.fintype
   have hτ : ∀ t : MulAction.orbit H α, ∃ τ : PadicAlgCl l ≃ₐ[W] PadicAlgCl l, τ ∈ H ∧ τ α = t := by
     rintro ⟨_, σ, rfl⟩
     exact ⟨σ, σ.2, rfl⟩

@@ -30,10 +30,10 @@ section Valuation
 
 variable {K}
 
-theorem exists_norm_eq_zpow_maxUnramified {x : K₀} (hx : x ≠ 0) :
+theorem exists_norm_eq_zpow_maxUnramified {x : maxUnramified p K} (hx : x ≠ 0) :
     ∃ D : ℤ, ‖(x : PadicAlgCl p)‖ = ‖(p : PadicAlgCl p)‖ ^ D :=
   (isACrisFraction_of_mem (mem_maxUnramified.1 x.2).2).exists_norm_eq_zpow
-    (by simpa using hx)
+    (fun h => hx (Subtype.ext h))
 
 theorem norm_p_algCl_pos : 0 < ‖(p : PadicAlgCl p)‖ :=
   norm_pos_iff.2 (Nat.cast_ne_zero.2 hp.out.ne_zero)

@@ -252,9 +252,48 @@ theorem exists_short_vector : ∀ (E : Type) [Field E] [NumberField E] [StarRing
     intro σ x y
     rw [hform, hform, ComplexEmbedding.conjugate_coe_eq]
   have hfg : Λ.FG := hΛ.fg
+  have hspan : Submodule.span E (Λ : Set (Fin 2 → E)) = ⊤ := by
+    by_contra hspan
+    obtain ⟨φ, hφ0, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
+    have hinj : Function.Injective J.mulVecLin := by
+      apply LinearMap.ker_eq_bot.mp
+      rw [LinearMap.ker_eq_bot']
+      intro x hx
+      by_contra hx0
+      obtain ⟨σ⟩ : Nonempty (E →+* ℂ) := inferInstance
+      have ht := hp σ x hx0
+      change J *ᵥ x = 0 at hx
+      simp [hx] at ht
+    obtain ⟨u, hu⟩ := (LinearMap.injective_iff_surjective.mp hinj)
+      (fun i => star (φ (Pi.single i 1)))
+    have hpair (y : Fin 2 → E) : star y ⬝ᵥ (J *ᵥ u) = star (φ y) := by
+      change J *ᵥ u = _ at hu
+      rw [hu, dotProduct, map_sum]
+      conv_rhs => rw [φ.pi_apply_eq_sum_univ y, map_sum]
+      simp only [map_smul, smul_eq_mul, map_mul, Pi.star_apply, Pi.smul_apply]
+      exact Finset.sum_congr rfl fun i _ => by rw [mul_comm]
+    have hu0 : u ≠ 0 := by
+      intro hzero
+      apply hφ0
+      ext y
+      have := hpair y
+      simp [hzero] at this
+      exact star_eq_zero.mp this.symm
+    have hline (a : E) : a • u ∈ Λ := (hdual _).2 fun y hy => by
+      have hy0 : φ y = 0 := LinearMap.mem_ker.mp (hφ (Submodule.subset_span hy))
+      have he : J *ᵥ (a • u) = a • (J *ᵥ u) := map_smul J.mulVecLin a u
+      rw [he, dotProduct_smul, hpair, hy0]
+      simp
+    let i : E →ₗ[𝓞 E] Λ :=
+      ((LinearMap.toSpanSingleton E _ u).restrictScalars (𝓞 E)).codRestrict Λ hline
+    let : Module.Finite (𝓞 E) Λ := Module.Finite.iff_fg.mpr hfg
+    let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective E hu0 (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
   have hrank : latRank E Λ = 2 := by
     unfold latRank
-    rw [hΛ.span_eq_top, finrank_top, Module.finrank_fin_fun]
+    rw [hspan, finrank_top, Module.finrank_fin_fun]
   obtain ⟨v, hv⟩ : ∃ v : Fin 2 → (Fin 2 → E), IsFrame E Λ v := by
     have := exists_isFrame (K := E) Λ hfg
     rw [hrank] at this

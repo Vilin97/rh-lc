@@ -144,7 +144,7 @@ theorem stab_iff (L : Submodule (𝓞 E) (Fin n → E)) {A : FractionalIdeal (�
       rw [map_smul, e]
       exact AddSubgroup.subset_closure ⟨a, ha, _, add_mem hy hz, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := k)]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem cong_iff (L : Submodule (𝓞 E) (Fin n → E)) {A : FractionalIdeal (𝓞 E)⁰ E} (hA : A ≠ 0)

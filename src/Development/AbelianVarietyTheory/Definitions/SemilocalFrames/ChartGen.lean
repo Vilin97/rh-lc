@@ -52,7 +52,7 @@ def idxN {W : Type*} [AddCommGroup W] [Module R W] (A B : Submodule R W) : ℕ :
 def discN (h : V →ₗ⋆[K] V →ₗ[K] K) (M : Submodule R V) : ℕ := idxN (Formalism.HermitianLatticesTheory.dual h M) M
 
 def IsIntLat (h : V →ₗ⋆[K] V →ₗ[K] K) (M : Submodule R V) : Prop :=
-  Submodule.IsLattice K M ∧ Formalism.HermitianLatticesTheory.IsIntegralLat h M
+  Submodule.IsFullLattice K M ∧ Formalism.HermitianLatticesTheory.IsIntegralLat h M
 
 def IsMaxLat (h : V →ₗ⋆[K] V →ₗ[K] K) (M : Submodule R V) : Prop :=
   IsIntLat h M ∧ ∀ N : Submodule R V, IsIntLat h N → M ≤ N → N = M

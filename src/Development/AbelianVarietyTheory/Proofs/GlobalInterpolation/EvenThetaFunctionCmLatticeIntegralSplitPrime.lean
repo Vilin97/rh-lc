@@ -94,7 +94,13 @@ theorem latInt_th0_of_split_prime : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (�
     rw [← Formalism.L2.Th1.F.thetaZeroCharacter] at hl
     rw [← Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SC.char_eq (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SO.hst B) B.omega_mem (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SO.hθ B)
       (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SO.hθ' B) (by omega) _ hω, hkey, hkey] at hl
-    have ha := (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SC.semi (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SO.hst B)).2.1 _ hω
+    have ha : Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SC.aa B.L D.host.d (δ * N * x) = 1 ∨
+        Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SC.aa B.L D.host.d (δ * N * x) = -1 := by
+      rw [Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SC.char_eq
+        (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SO.hst B) B.omega_mem
+        (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SO.hθ B)
+        (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SO.hθ' B) (by omega) _ hω]
+      exact Formalism.L2.Th1.H.th0Char_pm B.L B.ω₀ _ B.omega_mem hω
     have hq1 : Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SC.q1 B.L D.host.d (δ * N * x) = N * Complex.normSq x := by
       rw [Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SC.q1, hkey, h1, Complex.mul_conj]
       have : ((N : ℂ) * (((2 / Real.sqrt D.host.d : ℝ) : ℂ) * ((Complex.normSq x : ℝ) : ℂ))).re
@@ -136,13 +142,13 @@ theorem latInt_th0_of_split_prime : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (�
     ((δ * N)⁻¹ • ContinuousLinearMap.id ℂ ℂ) G hGd.contDiff ?_ hspan
   · convert hpull using 1
     funext z
-    simp only [hG, ContinuousLinearMap.smul_apply, ContinuousLinearMap.id_apply, smul_eq_mul]
+    simp only [hG, smul_apply, ContinuousLinearMap.id_apply, smul_eq_mul]
     congr 1
     field_simp
   · intro x hx
     obtain ⟨y, -, hy⟩ := (hmem x).1 hx
     refine ⟨N, hcop, (hmem1 _).2 ⟨y, trivial, ?_⟩⟩
-    simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.id_apply, smul_eq_mul, nsmul_eq_mul, hy]
+    simp only [smul_apply, ContinuousLinearMap.id_apply, smul_eq_mul, nsmul_eq_mul, hy]
     field_simp
 
 end GlobalTheory.MomN

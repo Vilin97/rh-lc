@@ -129,7 +129,7 @@ theorem integral_chg (T : CDVR) (io : c.F →+* T.Fr) : letI := io.toAlgebra
   have ep : pm = 𝟙 _ := by
     apply pullback.hom_ext
     · refine h2.trans ?_
-      simp only [spMap, CommRingCat.ofHom_id, Spec.map_id, Category.comp_id, Category.id_comp]
+      simp only [spMap, CommRingCat.ofHom_id, Spec.map_id, Category.id_comp]
       rfl
     · exact h1.trans (Category.id_comp _).symm
   subst ep
@@ -189,7 +189,7 @@ theorem exists_tie_cell (hT : Out.SecTwistSt) {O : Type} [CommRing O] {β : O �
   choose ix u b _ h0 h1 hb hd hub using fun τ =>
     GlobalTheory.exists_integral_pivot_decomposition R ⊤ _ _ (g τ) (hli τ)
   have hdet : ∀ τ, IsUnit (b τ).det := fun τ => by
-    rw [Matrix.det_of_upperTriangular (hb τ)]
+    rw [Matrix.det_of_isUpperTriangular (hb τ)]
     exact (Finset.prod_ne_zero_iff.2 fun i _ => hd τ i).isUnit
   have hu : ∀ τ a, (u τ).mulVec a = (g τ).mulVec ((b τ)⁻¹.mulVec a) := fun τ a => by
     rw [hub, Matrix.mulVec_mulVec, Matrix.mul_assoc, Matrix.mul_nonsing_inv _ (hdet τ), Matrix.mul_one]
@@ -245,7 +245,7 @@ theorem exists_finset_of_lift (hT : Out.SecTwistSt) (hbc : FrBC Xo c) {Y : Model
       have e : (ψ.toRingHom.comp f) (algebraMap (𝓞 c.F) _ o) = io (algebraMap (𝓞 c.F) c.F o) :=
         (congrArg ψ (RingHom.congr_fun hfα o)).trans (ψ.commutes _)
       rw [e]; exact int_mem_range io o
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   choose u₀ hu₀ using fun τ j i => hin (u τ j i) (by
     simp only [S₀, Finset.mem_union, Finset.mem_biUnion]

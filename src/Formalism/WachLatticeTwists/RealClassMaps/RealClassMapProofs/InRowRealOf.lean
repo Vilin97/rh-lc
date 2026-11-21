@@ -24,8 +24,12 @@ theorem ko_tors (O : Type) [CommRing O] [IsDomain O] (z : KO O) : ∃ c : O, c �
   rw [Algebra.smul_def, mul_comm]
   exact hq.symm
 
-theorem psiCont : StatPsiCont := by
-  intro p O _ _ _ _ _ _ _ A _ _ _ _ _ Y hO hA ψ
+theorem psiCont (p : ℕ) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
+    [TopologicalSpace O] [TopologicalSpace (FractionRing O)]
+    [IsTopologicalAddGroup (FractionRing O)] [ContinuousSMul O (FractionRing O)]
+    (A : Type) [Ring A] [Algebra O A] [TopologicalSpace A] [IsTopologicalAddGroup A]
+    [ContinuousConstSMul O A] (Y : Submodule A A) (hO : PadicCoeff p O) (hA : IsFGTop O A)
+    (ψ : Y →ₗ[O] KO O) : Continuous ψ := by
   have hfg : IsFGTop O Y := by
     have := hA.fg
     have := hA.t2

@@ -221,9 +221,15 @@ theorem bd_prod (P Q : MvPolynomial σ ℂ) (u : σ → W) (hu : ∀ s, star (u 
   simp only [mul_comm (f _)]
   rw [polyDeriv_const_mul _ _ _ (hf 0), mul_comm]
 
+private noncomputable def quadPoint {r : ℕ} (κ : ℂ) (G S A : Matrix (Fin r) (Fin r) ℂ) :
+    Matrix (Fin r) (Fin r) ℂ := (κ / 4) • ((A⁻¹ * S * A)ᵀ * G)
+
 private noncomputable def quadMatrix {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
     (X : Data E r) (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) : Matrix (Fin r) (Fin r) ℂ :=
-  KernSym.expM (τ.1 X.κ0) (X.Gm.map τ.1) (-sgnM X) (aLin X x₁ x₂ τ) (aAnti X x₁ x₂ τ)
+  (-(τ.1 X.κ0 / 2) * (τ.1 X.κ0 / 2)) •
+    ((aLin X x₁ x₂ τ)⁻¹ᵀ * X.Gm.map τ.1 *
+      (imH (quadPoint (τ.1 X.κ0) (X.Gm.map τ.1) (-sgnM X) (aLin X x₁ x₂ τ)))⁻¹ *
+      X.Gm.map τ.1 * (aAnti X x₁ x₂ τ)⁻¹)
 
 private theorem kZero_quad_expansion {E : Type} [Field E] [NumberField E] [IsCMField E]
     {r g n : ℕ} (X : Data E r) (idx : Fin g ≃ X.Ψ × Fin r)
@@ -235,11 +241,11 @@ private theorem kZero_quad_expansion {E : Type} [Field E] [NumberField E] [IsCMF
   refine Finset.prod_congr rfl fun τ _ => ?_
   congr 3
   refine Finset.sum_congr rfl fun k _ => ?_
-  have h : dblZ X x₁ x₂ τ = KernSym.ptZ (τ.1 X.κ0) (X.Gm.map τ.1) (-sgnM X)
+  have h : dblZ X x₁ x₂ τ = quadPoint (τ.1 X.κ0) (X.Gm.map τ.1) (-sgnM X)
       (aLin X x₁ x₂ τ) := by
-    rw [KernSym.ptZ, sgnM, diagonal_neg]
+    rw [quadPoint, sgnM, diagonal_neg]
     rfl
-  rw [h, quadMatrix, KernSym.expM]
+  rw [h, quadMatrix]
   change ((τ.1 X.κ0 / 2) • ((_ *ᵥ KernSym.mixV X idx τ (w k) (z k)) ᵥ* _)) ⬝ᵥ _ *ᵥ
     ((-(τ.1 X.κ0 / 2)) • (_ *ᵥ _ *ᵥ KernSym.mixV X idx τ (z k) (w k))) = _
   rw [smul_dotProduct, mulVec_smul, dotProduct_smul, smul_mulVec, dotProduct_smul, smul_smul,

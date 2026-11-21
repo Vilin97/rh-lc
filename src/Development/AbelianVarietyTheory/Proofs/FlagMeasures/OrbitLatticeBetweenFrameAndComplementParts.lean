@@ -18,8 +18,9 @@ namespace GlobalTheory.FrameProj
 
 set_option maxHeartbeats 1600000 in
 open GlobalTheory.ThetaMove.CommonRef in
-theorem lattice_between_parts : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), ∀ (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (w : Point D.host.E (D.R.rS + 1)), ZhatOM (ZhatL F F') = ptMat w → Gval F F' ≠ 0 → ∀ (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS), Based Z FP (Tu D u) (Tu D u') F F' → (∀ p, (FP p).RelG (LocNG.theta (Z.M p))) → ∀ Λ₀ : LV D, Submodule.IsLattice D.host.E Λ₀ → ∃ N : ℕ, 0 < N ∧ ∀ Λ : LV D, Submodule.IsLattice D.host.E Λ → (∀ p, ∃ h ∈ (FP p).UW0, LocNG.img h (lattice₂ D Z.M p Λ₀) = lattice₂ D Z.M p Λ) → ∀ x ∈ Λ, (N : D.host.E) • x ∈ Λ ⊓ toO (VS D) (Xplus F ⊔ Xplus F') ⊔ Λ ⊓ toO (VS D) (orth (VS D) (Xplus F ⊔ Xplus F')) := by
+theorem lattice_between_parts : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), ∀ (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (w : Point D.host.E (D.R.rS + 1)), ZhatOM (ZhatL F F') = ptMat w → Gval F F' ≠ 0 → ∀ (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS), Based Z FP (Tu D u) (Tu D u') F F' → (∀ p, (FP p).RelG (LocNG.theta (Z.M p))) → ∀ Λ₀ : LV D, Submodule.IsFullLattice D.host.E Λ₀ → ∃ N : ℕ, 0 < N ∧ ∀ Λ : LV D, Submodule.IsLattice D.host.E Λ → (∀ p, ∃ h ∈ (FP p).UW0, LocNG.img h (lattice₂ D Z.M p Λ₀) = lattice₂ D Z.M p Λ) → ∀ x ∈ Λ, (N : D.host.E) • x ∈ Λ ⊓ toO (VS D) (Xplus F ⊔ Xplus F') ⊔ Λ ⊓ toO (VS D) (orth (VS D) (Xplus F ⊔ Xplus F')) := by
   intro D X Y u u' F F' w hZ hG Z FP hB hRel Λ₀ hΛ₀
+  letI := hΛ₀
   have hU : ∀ y ∈ Xplus F ⊔ Xplus F', y ∈ orth (VS D) (Xplus F ⊔ Xplus F') → y = 0 := by
     intro y hyU hyW
     by_contra hy
@@ -32,7 +33,7 @@ theorem lattice_between_parts : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u
       projP Z p (Xplus F ⊔ Xplus F') (h y) = h (projP Z p (Xplus F ⊔ Xplus F') y) :=
     fun p h hh y => localOrthogonalProj_comm_complementUnitary Z p F F' (FP p) (hB p).1 (hB p).2.1 h hh y
   generalize Xplus F ⊔ Xplus F' = U at hU hdet hcomm ⊢
-  obtain ⟨N, hN, hNmem⟩ := exists_nat_smul_le (full_of_span hΛ₀.span_eq_top)
+  obtain ⟨N, hN, hNmem⟩ := exists_nat_smul_le (full_of_span (Submodule.IsFullLattice.span_eq_top (A := D.host.E) (M := Λ₀)))
     (hΛ₀.fg.map ((proj U).restrictScalars (𝓞 D.host.E)))
   have hcast : ∀ v : (VS D).V, (N : D.host.E) • v = (N : 𝓞 D.host.E) • v := fun v => by
     rw [Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul]
@@ -49,8 +50,7 @@ theorem lattice_between_parts : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u
     intro p x
     rw [hQx, LinearMap.smul_apply, baseChange_smul₂, baseChangeAt_proj Z p, map_natCast]
   have hlat' : Submodule.IsLattice D.host.E (Λ ⊔ Λ.map (Q.restrictScalars (𝓞 D.host.E))) :=
-    ⟨hΛ.fg.sup (hΛ.fg.map _), top_le_iff.1 (hΛ.span_eq_top ▸ Submodule.span_mono (by
-      intro y hy; exact Submodule.mem_sup_left hy))⟩
+    Submodule.IsLattice.of_fg D.host.E (hΛ.fg.sup (hΛ.fg.map _))
   have heq : Λ ⊔ Λ.map (Q.restrictScalars (𝓞 D.host.E)) = Λ := by
     refine ((GlobalTheory.Unfold.LatLoc.lattices_local_global D Z).1 _ Λ hlat' hΛ).2 fun p => ?_
     rw [localLattice_sup, sup_eq_left, localLattice_map Z p Q _ (hQp p)]

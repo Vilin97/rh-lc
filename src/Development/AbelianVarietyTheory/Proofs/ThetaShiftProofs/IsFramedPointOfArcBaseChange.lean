@@ -5,6 +5,7 @@ public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValue
 public import Development.AbelianVarietyTheory.Definitions.RegularCharts.ModelAt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.UnifUniqSt
 public import Formalism.LocalToGlobal.ProjectiveLattices.ArcTheta
+public import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
 public import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.TangentVectorsThetaSectionArcWitnessBaseChange
 
 @[expose] public section

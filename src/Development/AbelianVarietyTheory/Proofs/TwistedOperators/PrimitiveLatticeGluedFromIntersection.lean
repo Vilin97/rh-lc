@@ -50,7 +50,7 @@ theorem exists_smul_mem {E : Type} [Field E] [NumberField E] {V : Type} [AddComm
 
 theorem isLattice_capX_and_exists_glue (D : D7) (u : D.what₂.Word) (Y X : HSp D) (ι : X.V →ₗ[D.host.E] Y.V) (z : Y.V)
     (hl : IsLine Y X ι z u) (L : Submodule (𝓞 D.host.E) Y.V) (hL : IsSDIn Y (flatSp Y X ι z) L) (hp : IsPrim Y z L) :
-    Submodule.IsLattice D.host.E (capX Y X ι L) ∧ ∃ x₀ : X.V, L = glueLat Y X ι z u (capX Y X ι L) x₀ := by
+    Submodule.IsFullLattice D.host.E (capX Y X ι L) ∧ ∃ x₀ : X.V, L = glueLat Y X ι z u (capX Y X ι L) x₀ := by
   obtain ⟨hi, ho, hz⟩ := hl
   obtain ⟨hfg, hsp, hsd⟩ := hL
   have hT := Tu_ne_zero u
@@ -77,11 +77,32 @@ theorem isLattice_capX_and_exists_glue (D : D7) (u : D.what₂.Word) (Y X : HSp 
     rw [this]
     congr 2
     field_simp
-  refine ⟨GlobalTheory.StdFrames.isLattice_crdLat X ⟨?_, ?_⟩, ?_⟩
-  · refine Submodule.fg_of_fg_map_injective (ι.restrictScalars (𝓞 D.host.E)) hinj (hfg.of_le ?_)
-    exact Submodule.map_comap_le _ _
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  have hlat : Submodule.IsLattice D.host.E (capX Y X ι L) := by
+    refine GlobalTheory.StdFrames.isLattice_crdLat X ⟨?_, ?_⟩
+    · refine Submodule.fg_of_fg_map_injective (ι.restrictScalars (𝓞 D.host.E)) hinj (hfg.of_le ?_)
+      exact Submodule.map_comap_le _ _
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  refine ⟨{ toIsLattice := hlat, span_eq_top := ?_ }, ?_⟩
+  · apply Submodule.eq_top_iff'.2
+    intro y
+    let x := (Formalism.L2.Herm.crd X).symm y
+    have hx : ι x ∈ Submodule.span D.host.E (L : Set Y.V) := by
+      rw [hsp]
+      exact Submodule.mem_sup_left (LinearMap.mem_range_self ι x)
+    obtain ⟨c, hc, hcx⟩ := exists_smul_mem L hx
+    have hcy : c • y ∈ capX Y X ι L := by
+      change c • y ∈ Formalism.L2.Herm.crdLat X (L.comap (ι.restrictScalars (𝓞 D.host.E)))
+      refine ⟨c • x, ?_, ?_⟩
+      · change ι (c • x) ∈ L
+        simpa using hcx
+      · simp [x]
+    have hcy' : c • y ∈ Submodule.span D.host.E (capX Y X ι L : Set (Fin X.rank → D.host.E)) :=
+      Submodule.subset_span hcy
+    rw [← algebraMap_smul D.host.E c] at hcy'
+    have := (Submodule.span D.host.E (capX Y X ι L : Set (Fin X.rank → D.host.E))).smul_mem
+      (c : D.host.E)⁻¹ hcy'
+    simpa only [smul_smul, inv_mul_cancel₀ (RingOfIntegers.coe_ne_zero_iff.2 hc), one_smul] using this
   · let I : Ideal (𝓞 D.host.E) :=
       (L.map ((Y.hT z).restrictScalars (𝓞 D.host.E))).comap (Algebra.linearMap (𝓞 D.host.E) D.host.E)
     have hI : ∀ i : 𝓞 D.host.E, i ∈ I ↔ ∃ y ∈ L, Y.hD y z = (i : D.host.E) := fun i => Iff.rfl

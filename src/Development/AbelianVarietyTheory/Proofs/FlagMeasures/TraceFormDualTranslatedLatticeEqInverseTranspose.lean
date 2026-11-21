@@ -82,14 +82,8 @@ theorem eq_zero_of_sum_re (hE : IsTotallyComplex E) (c : InfinitePlace E → ℂ
   rw [← hd1 w]; exact hz _
 
 theorem exists_int_smul_mem {j : ℕ} (Λ : Submodule (𝓞 E) (Fin j → E))
-    (hΛ : Submodule.IsLattice E Λ) (x : Fin j → E) : ∃ n : ℤ, n ≠ 0 ∧ (n : E) • x ∈ Λ := by
-  first
-  | exact @_root_.GlobalTheory.IntegralMultiple.main
-  | exact _root_.GlobalTheory.IntegralMultiple.main
-  | (apply _root_.GlobalTheory.IntegralMultiple.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IntegralMultiple.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IntegralMultiple.main <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.IntegralMultiple.main ..)
+    (hΛ : Submodule.IsFullLattice E Λ) (x : Fin j → E) : ∃ n : ℤ, n ≠ 0 ∧ (n : E) • x ∈ Λ := by
+  exact _root_.GlobalTheory.IntegralMultiple.main Λ hΛ x
 
 theorem pairing_rational (hE : IsTotallyComplex E) {j : ℕ} (x y : Fin j → E) :
     ∑ w : InfinitePlace E,
@@ -101,7 +95,7 @@ theorem pairing_rational (hE : IsTotallyComplex E) {j : ℕ} (x y : Fin j → E)
     simp only [dotProduct, map_sum, map_mul]
 
 theorem exists_trDual (hE : IsTotallyComplex E) {j : ℕ} (Λ : Submodule (𝓞 E) (Fin j → E))
-    (hΛ : Submodule.IsLattice E Λ) (u : InfinitePlace E → Fin j → ℂ)
+    (hΛ : Submodule.IsFullLattice E Λ) (u : InfinitePlace E → Fin j → ℂ)
     (hu : ∀ x ∈ Λ, ∃ z : ℤ, ∑ w : InfinitePlace E, ((fun a => w.embedding (x a)) ⬝ᵥ u w).re = z) :
     ∃ y ∈ trDual E j Λ, ∀ w a, u w a = w.embedding (y a) := by
   classical
@@ -177,7 +171,7 @@ end GlobalTheory.MeanDual.LatticeDual
 namespace GlobalTheory.MeanDual
 open LatticeDual
 
-theorem dualAt_latAt_eq_latAt_trDual : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ (j : ℕ) (Λ : Submodule (𝓞 E) (Fin j → E)), Submodule.IsLattice E Λ → ∀ g : MatInf E j, 0 < detNorm E j g → dualAt E j (latAt E j Λ g) = latAt E j (trDual E j Λ) (invT E j g) := by
+theorem dualAt_latAt_eq_latAt_trDual : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ (j : ℕ) (Λ : Submodule (𝓞 E) (Fin j → E)), Submodule.IsFullLattice E Λ → ∀ g : MatInf E j, 0 < detNorm E j g → dualAt E j (latAt E j Λ g) = latAt E j (trDual E j Λ) (invT E j g) := by
   intro E _ _ hE j Λ hΛ g hg
   have hdet : ∀ w, IsUnit (of (g w)).det := fun w =>
     isUnit_iff_ne_zero.2 ((detNorm_pos_iff E j g).1 hg w)

@@ -23,7 +23,7 @@ variable {E V : Type} [Field E] [NumberField E] [StarRing E] [AddCommGroup V] [M
 
 theorem finite_of_fix (hT : V →ₗ⋆[E] V →ₗ[E] E) (U : Submodule E V)
     (hpos : ∀ x ∈ (⨅ u ∈ U, LinearMap.ker (hT u)), x ≠ 0 → 0 < Algebra.trace ℚ E (hT x x))
-    (Λ₀ : Submodule (𝓞 E) V) (hΛ : Submodule.IsLattice E Λ₀) :
+    (Λ₀ : Submodule (𝓞 E) V) (hΛ : Submodule.IsFullLattice E Λ₀) :
     {h : V ≃ₗ[E] V | h ∈ Formalism.HermitianLatticesTheory.isom hT ∧ (∀ u ∈ U, h u = u) ∧ Formalism.HermitianLatticesTheory.gmap h Λ₀ = Λ₀}.Finite := by
   set W : Submodule E V := ⨅ u ∈ U, LinearMap.ker (hT u) with hWdef
   have memW : ∀ y, y ∈ W ↔ ∀ x ∈ U, hT x y = 0 := fun y => by
@@ -63,7 +63,7 @@ theorem finite_of_fix (hT : V →ₗ⋆[E] V →ₗ[E] E) (U : Submodule E V)
     have h5 := Submodule.finrank_le (U ⊔ W)
     omega
   have hmul : ∀ v : V, ∃ d : 𝓞 E, d ≠ 0 ∧ d • v ∈ Λ₀ := fun v => by
-    have hv : v ∈ Submodule.span E (Λ₀ : Set V) := by rw [hΛ.span_eq_top]; trivial
+    have hv : v ∈ Submodule.span E (Λ₀ : Set V) := by rw [Submodule.IsFullLattice.span_eq_top (self := hΛ)]; trivial
     obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 E)) E _ v hv
     rw [Submodule.span_eq] at ht
     exact ⟨t, nonZeroDivisors.ne_zero t.2, ht⟩
@@ -71,9 +71,7 @@ theorem finite_of_fix (hT : V →ₗ⋆[E] V →ₗ[E] E) (U : Submodule E V)
   have hfg : L.FG := by
     apply Submodule.fg_of_fg_map_injective (W.subtype.restrictScalars (𝓞 E)) Subtype.val_injective
     exact hΛ.fg.of_le (Submodule.map_comap_le _ _)
-  haveI : Submodule.IsLattice E L := ⟨hfg, by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  haveI : Submodule.IsLattice E L := Submodule.IsLattice.of_fg E hfg
   let hW := hT.domRestrict₁₂ W W
   have hposW : ∀ w : W, w ≠ 0 → 0 < Algebra.trace ℚ E (hW w w) := fun w hw =>
     hpos w w.2 fun h0 => hw (Subtype.ext h0)
@@ -124,7 +122,7 @@ theorem finite_of_fix (hT : V →ₗ⋆[E] V →ₗ[E] E) (U : Submodule E V)
 
 end Core
 
-theorem stab_finite : ∀ (D : D7) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T'), (∀ x ∈ orth (VS D) (Xplus F ⊔ Xplus F'), x ≠ 0 → 0 < Algebra.trace ℚ D.host.E ((VS D).hT x x)) → ∀ Λ₀ : LV D, Submodule.IsLattice D.host.E Λ₀ → {h | h ∈ H0 F F' ∧ Formalism.HermitianLatticesTheory.gmap h Λ₀ = Λ₀}.Finite := by
+theorem stab_finite : ∀ (D : D7) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T'), (∀ x ∈ orth (VS D) (Xplus F ⊔ Xplus F'), x ≠ 0 → 0 < Algebra.trace ℚ D.host.E ((VS D).hT x x)) → ∀ Λ₀ : LV D, Submodule.IsFullLattice D.host.E Λ₀ → {h | h ∈ H0 F F' ∧ Formalism.HermitianLatticesTheory.gmap h Λ₀ = Λ₀}.Finite := by
   intro D T T' F F' hpos Λ₀ hΛ
   refine (finite_of_fix (VS D).hT (Xplus F ⊔ Xplus F') hpos Λ₀ hΛ).subset ?_
   rintro h ⟨⟨hiso, hF, hF'⟩, hlat⟩

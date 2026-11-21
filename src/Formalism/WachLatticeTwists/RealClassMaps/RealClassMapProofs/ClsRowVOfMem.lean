@@ -14,8 +14,16 @@ noncomputable section
 
 namespace Formalism.RepresentationBoundsCohomology.FIN
 
-theorem kRowRange : StatKRowRange := by
-  intro O _ _ _ _ _ _ _ VT VT' _ _ _ _ _ _ _ _ _ _ G _ _ D M _ _ ρM u hu hopen
+theorem kRowRange (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
+    [TopologicalSpace O] [TopologicalSpace (FractionRing O)]
+    [IsTopologicalAddGroup (FractionRing O)] [ContinuousSMul O (FractionRing O)]
+    (VT VT' : Type)
+    [AddCommGroup VT] [Module O VT] [TopologicalSpace VT] [IsTopologicalAddGroup VT] [ContinuousSMul O VT]
+    [AddCommGroup VT'] [Module O VT'] [TopologicalSpace VT'] [IsTopologicalAddGroup VT'] [ContinuousSMul O VT']
+    (G : Type) [Group G] [TopologicalSpace G] (D : LatData O G VT VT')
+    (M : Type) [AddCommGroup M] [Module O M] (ρM : Representation O G M)
+    (u : M ≃ₗ[O] (VT ⧸ D.T)) (hu : ∀ g m, u (ρM g m) = D.ρA g (u m))
+    (hopen : IsOpen (D.T : Set VT)) : LinearMap.range (kRow D ρM u hu) = lcH1 ρM := by
   have hdisc : DiscreteTopology (VT ⧸ D.T) :=
     QuotientAddGroup.discreteTopology (N := D.T.toAddSubgroup) hopen
   apply le_antisymm
@@ -36,8 +44,9 @@ theorem kRowRange : StatKRowRange := by
     change u.symm (u ((c : G → M) g)) = _
     rw [LinearEquiv.symm_apply_apply]
 
-theorem resLC : StatResLC := by
-  intro O G M _ _ _ _ _ ρ Dw
+theorem resLC (O G M : Type) [CommRing O] [Group G] [TopologicalSpace G] [AddCommGroup M] [Module O M]
+    (ρ : Representation O G M) (Dw : Subgroup G) :
+    lcH1 ρ ≤ (lcH1 (resRep ρ Dw)).comap (resH1 ρ Dw) := by
   rintro _ ⟨c, hc, rfl⟩
   have hc' : IsLocallyConstant (c : G → M) := hc
   refine ⟨restrictCocycles1 ρ Dw c, ?_, rfl⟩

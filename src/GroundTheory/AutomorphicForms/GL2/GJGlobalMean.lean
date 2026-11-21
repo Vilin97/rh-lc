@@ -33,13 +33,15 @@ theorem exists_ae_eq_const_of_forall_eq {c : Lp ℂ 2 (quotientMeasure Γ₁ μ)
     intro g
     have h := coeFn_rightRegularRep Γ₁ μ g c
     rw [hc g] at h
-    have h2 := (quasiMeasurePreserving_mk Γ₁ μ).ae h
+    have h2 := QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk Γ₁ μ) h
     filter_upwards [h2] with x hx
     rw [rightMul_mk] at hx
     exact hx.symm
   have hset : MeasurableSet {p : normOneGL (K := K) (n := n) × normOneGL (K := K) (n := n) | C (p.1 * p.2) = C p.1} :=
     measurableSet_eq_fun (hCm.measurable.comp continuous_mul.measurable)
       (hCm.measurable.comp measurable_fst)
+  have : SFinite μ :=
+    @instSFiniteOfSigmaFinite _ _ μ (SigmaFinite.of_isFiniteMeasureOnCompacts μ)
   have h2 : ∀ᵐ x ∂μ, ∀ᵐ g ∂μ, C (x * g) = C x :=
     (Measure.ae_ae_comm hset).2 (ae_of_all _ h1)
   have : (ae μ).NeBot := ae_neBot.2 (NeZero.ne μ)
@@ -118,7 +120,8 @@ theorem setIntegral_fundamentalDomain_eq_zero (hn : 2 ≤ n) {ψ : AdelicGLn.Ade
     have h1 := coeFn_rightRegularRep Γ₁ μ g (hone.toLp _)
     have h2 : (fun x => (hone.toLp _ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (rightMul Γ₁ g x))
         =ᵐ[quotientMeasure Γ₁ μ] fun _ => (1 : ℂ) :=
-      (measurePreserving_rightMul μ g).quasiMeasurePreserving.ae_eq (MemLp.coeFn_toLp hone)
+      QuasiMeasurePreserving.ae_eq_comp (measurePreserving_rightMul μ g).quasiMeasurePreserving
+        (MemLp.coeFn_toLp hone)
     exact h1.trans (h2.trans (MemLp.coeFn_toLp hone).symm)
 
   have hcomm := ((rightRegularRep Γ₁ μ).isInvariant_iff_commute_starProjection (cuspidalL2 μ)).1

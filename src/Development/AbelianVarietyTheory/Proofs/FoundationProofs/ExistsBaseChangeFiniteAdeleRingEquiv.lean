@@ -43,7 +43,7 @@ theorem mem_intAE_iff_comm (D : D7) (y : Af D.host.F ⊗[D.host.F] D.host.E) :
       exact mul_mem (Subring.subset_closure (Or.inl ⟨⟨_, x, rfl⟩, rfl⟩))
         (Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩))
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | neg a _ ha => rw [map_neg]; exact neg_mem ha
   · intro hw
     let c := (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E).symm
@@ -58,7 +58,7 @@ theorem mem_intAE_iff_comm (D : D7) (y : Af D.host.F ⊗[D.host.F] D.host.E) :
       | one =>
         rw [map_one]
         exact AddSubgroup.subset_closure ⟨1, one_mem (Formalism.UG.intAd D.host.F), 1, rfl⟩
-      | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
       | neg a _ ha => rw [map_neg]; exact neg_mem ha
       | mul a b _ _ ha hb => rw [map_mul]; exact intAE_mul_mem D ha hb
     have := key _ hw

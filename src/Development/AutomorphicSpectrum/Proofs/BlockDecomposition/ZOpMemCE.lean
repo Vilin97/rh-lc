@@ -14,7 +14,6 @@ namespace GlobalTheory.CompanionTheory.WaveWords
 
 open PositivityTheory.RgTw (Mat G)
 open PositivityTheory.RgBcC
-open PositivityTheory.RgBcC.Mult
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 

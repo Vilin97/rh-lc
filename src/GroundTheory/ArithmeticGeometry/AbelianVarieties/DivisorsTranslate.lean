@@ -163,6 +163,9 @@ theorem translate_translate_neg (R : W.toAffine.Point) (f : W.toAffine.FunctionF
     translate W R (translate W (-R) f) = f :=
   DFunLike.congr_fun (translate_comp_translate_neg W R) f
 
+local notation "ι" => algebraMap F (WeierstrassCurve.Affine.FunctionField
+  (WeierstrassCurve.toAffine W))
+
 omit [DecidableEq F] [IsAlgClosed F] [W.IsElliptic] in
 theorem valuationInfty_genX : valuationInfty W (genX W) = exp 2 := by
   have h := ordInfty_X W

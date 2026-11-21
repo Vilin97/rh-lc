@@ -86,7 +86,7 @@ def AntisymStability.Statement : Prop :=
     ∃ C : ℝ, ∀ P ∈ antisymSpace T N j, ∃ l ∈ antisymInv T N j,
       ∀ M : ℝ, 0 ≤ M →
         (∀ (τ : T) (a b : Fin N), a.val < j → j ≤ b.val → ∀ x ∈ Om τ a b, |eval x P| ≤ M) →
-        ∀ m : T × Fin N →₀ ℕ, |(P - antisymDelta T N * l).coeff m| ≤ C * M
+        ∀ m, |AddMonoidAlgebra.coeff (P - antisymDelta T N * l) m| ≤ C * M
 
 def AntisymPerturbation.Statement : Prop :=
   ∀ (T : Type) [Fintype T] [DecidableEq T] (N j : ℕ) (hj : 0 < j) (hjN : j < N) (h : MvPolynomial (T × Fin N) ℝ)
@@ -99,7 +99,7 @@ def AntisymPerturbation.Statement : Prop :=
       ∀ x ∈ Kτ τ, eval x h = 0) →
     ∃ C : ℝ, ∀ (P : MvPolynomial (T × Fin N) ℝ) (v ε : ℝ), P - v • h ∈ antisymSpace T N j →
       (∀ τ : T, ∀ x ∈ Kτ τ, |eval x P| ≤ ε) →
-      ∃ l ∈ antisymInv T N j, ∀ m : T × Fin N →₀ ℕ, |(P - v • h - antisymDelta T N * l).coeff m| ≤ C * ε
+      ∃ l ∈ antisymInv T N j, ∀ m, |AddMonoidAlgebra.coeff (P - v • h - antisymDelta T N * l) m| ≤ C * ε
 
 section Inhabitants
 

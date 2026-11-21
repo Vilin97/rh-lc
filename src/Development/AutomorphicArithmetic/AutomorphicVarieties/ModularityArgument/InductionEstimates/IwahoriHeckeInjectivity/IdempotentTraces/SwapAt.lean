@@ -29,8 +29,7 @@ private theorem swap_one {E : Type} [Field E] [NumberField E] [_root_.NumberFiel
     (hV : IsSummand μ V) (e : V'.map (θ.U : L2 μ →ₗ[ℂ] L2 μ) = V) :
     (∀ (τ : E →+* ℂ) m, SInf μ V τ m ↔ SInf μ V' (τ.comp σ.toRingHom) m) ∧
       ∀ w B, SSat μ V (plMap σ w) B → SSat μ V' w B := by
-  have hex : ∃! π : GlobalTheory.CuspRep.CuspSub E n, Dp.Carries μ π V := Dp.exCusp E n μ V hV
-  obtain ⟨π, hπ, -⟩ := hex
+  obtain ⟨π, hπ, -⟩ := Dp.exCusp E n μ V hV
   obtain ⟨s, hs⟩ := UpperTheory.CBC.SGalAdEx_holds E σ
   have h1 := UpperTheory.ConvolutionTheory.K.adUnique E σ s.toRingHom hs.1 hs.2.1
   have h2 := UpperTheory.ConvolutionTheory.K.adUnique E σ (adm σ) (continuous_adm σ) (adm_algebraMap σ)

@@ -50,7 +50,7 @@ theorem conj_of_isRepOf (D : D7) {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ
   have hcp := GlobalTheory.TwistLG.charpoly_eq_of_dense ρ₁ ρ₂ c₁ c₂ _ (hC hfin.toFinset).closure_eq (by
     rintro g ⟨w, hw, -, B, hB, hg⟩
     rw [Set.Finite.mem_toFinset] at hw
-    simp only [Set.mem_union, Set.mem_setOf_eq, not_or, not_not] at hw
+    simp only [Set.mem_union, Set.mem_ofPred_eq, not_or, not_not] at hw
     apply Polynomial.map_injective ι.toRingHom ι.injective
     rw [hw.1 B g hB hg, hw.2 B g hB hg])
   obtain ⟨P, hP⟩ := Formalism.MainNotions.SumRepresentations.brauerNesbitt_matrix ρ₂ ρ₁ s₂ s₁ (fun g => (hcp g).symm)
@@ -87,7 +87,7 @@ theorem rhoOfRow_isRepOf (D : D7) (hG : GalRepEx D) (hC : ClassFieldHeckeAlgebra
   rw [awayχ w hwl', hu1, Multiset.map_singleton, Multiset.prod_singleton, charpoly_fin_one, Polynomial.map_sub,
     Polynomial.map_X, Polynomial.map_C] at hwd
   have hχu : D.naut.iotaQC a ((Matrix.GeneralLinearGroup.det.comp χ1 σ : (Qbar (D.nd.l a))ˣ) : Qbar (D.nd.l a)) = u := by
-    have := congrArg (Polynomial.coeff · 0) hwd
+    have := congrArg (fun p : Polynomial ℂ => p.coeff 0) hwd
     simp only [Polynomial.coeff_sub, Polynomial.coeff_X_zero, Polynomial.coeff_C_zero, zero_sub, neg_inj] at this
     show D.naut.iotaQC a ((χ1 σ : Matrix (Fin 1) (Fin 1) _).det) = u
     rw [Matrix.det_unique]

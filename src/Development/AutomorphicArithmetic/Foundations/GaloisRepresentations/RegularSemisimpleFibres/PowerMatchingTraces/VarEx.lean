@@ -30,8 +30,7 @@ theorem varEx : VarEx := by
   have hlocEx := locGalEx F E σ hp n v w hv
   rcases hlocEx with ⟨hw, s, hs, hloc⟩
   refine ⟨s, hs, fun τ' hτ' => ?_⟩
-  obtain ⟨χ', hχ', V, hV⟩ := Dp.exTwist E n μE P hn
-  obtain ⟨z, hz'⟩ := hχ'
+  obtain ⟨χ', ⟨z, hz'⟩, V, hV⟩ := Dp.exTwist E n μE P hn
   obtain ⟨hex, htw⟩ := T.powTwist F E
   obtain ⟨χ, hz⟩ := (hex z).1
   obtain ⟨-, -, h1⟩ := htw z χ χ' hz hz'

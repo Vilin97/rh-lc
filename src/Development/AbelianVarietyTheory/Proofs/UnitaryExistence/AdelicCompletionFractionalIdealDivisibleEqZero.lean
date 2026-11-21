@@ -70,8 +70,7 @@ theorem lim_nsmul_cancel {M : Type} [AddCommGroup M] [Module F M] {d : ℕ} (hd 
 
 theorem lim_sg_smul (c : E ≃ₐ[F] E) (a : FiniteAdeleRing (𝓞 F) F) (z : RA F E) :
     sg (FiniteAdeleRing (𝓞 F) F) c (a • z) = a • sg (FiniteAdeleRing (𝓞 F) F) c z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul b y => simp [sg, TensorProduct.smul_tmul']
   | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
@@ -101,7 +100,7 @@ theorem lim_herm_mem (c : E ≃ₐ[F] E) (G : Matrix (Fin n) (Fin n) E) {Λ : Se
   intro a ha x hx
   refine lim_hat_induction F (fun y => hermBil F c G (a • fv F x) y ∈ hat1 F J) ?_ ?_ ?_ ?_ hy
   · simp
-  · intro x y hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · intro x y hx hy; rw [map_add]; exact add_mem hx hy
   · intro x hx; rw [map_neg]; exact neg_mem hx
   intro b hb y hy
   rw [map_smul, map_smul, LinearMap.smul_apply, smul_smul, lim_herm_fv, TensorProduct.smul_tmul',

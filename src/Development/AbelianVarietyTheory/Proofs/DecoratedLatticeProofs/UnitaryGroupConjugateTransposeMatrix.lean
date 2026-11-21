@@ -22,13 +22,7 @@ theorem integral_adelic_lattice_mul_mem {z w : GlobalTheory.AdLat.RA F E}
     (hz : z ∈ GlobalTheory.AdLat.hat1 F ((1 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) : Set E))
     (hw : w ∈ GlobalTheory.AdLat.hat1 F ((1 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) : Set E)) :
     z * w ∈ GlobalTheory.AdLat.hat1 F ((1 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) : Set E) := by
-  first
-  | exact @_root_.GlobalTheory.AdelicLatticeClosure.adelic_hat_one_mul_mem
-  | exact _root_.GlobalTheory.AdelicLatticeClosure.adelic_hat_one_mul_mem
-  | (apply _root_.GlobalTheory.AdelicLatticeClosure.adelic_hat_one_mul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.AdelicLatticeClosure.adelic_hat_one_mul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.AdelicLatticeClosure.adelic_hat_one_mul_mem <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.AdelicLatticeClosure.adelic_hat_one_mul_mem ..)
+  exact GlobalTheory.AdelicLatticeClosure.adelic_hat_one_mul_mem hz hw
 
 theorem one_int_af : ∀ v : HeightOneSpectrum (𝓞 F),
     (1 : FiniteAdeleRing (𝓞 F) F) v ∈ v.adicCompletionIntegers F := fun v => by
@@ -52,7 +46,7 @@ theorem mem_integral_adelic_lattice_iff (z : GlobalTheory.AdLat.RA F E) :
       refine mul_mem (Subring.subset_closure (Or.inl ⟨⟨_, x', rfl⟩, rfl⟩))
         (Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩))
     | zero => rw [map_zero]; exact zero_mem _
-    | add u u' _ _ hu hu' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hu'
+    | add u u' _ _ hu hu' => rw [map_add]; exact add_mem hu hu'
     | neg u _ hu => rw [map_neg]; exact neg_mem hu
   · intro hz
     have key : ∀ s ∈ Formalism.L2.Herm.intAf F E, ∃ t ∈ GlobalTheory.AdLat.hat1 F

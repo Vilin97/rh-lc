@@ -14,8 +14,6 @@ noncomputable section
 
 namespace GlobalTheory.Proof.ColumnInclusionRenaming
 
-open GlobalTheory.IndefiniteRowSideFullHecke
-
 theorem fockS_rename {σ τ : Type} {e : σ → τ} (he : Function.Injective e) (f g : MvPolynomial σ ℂ) :
     fockS (rename e f) (rename e g) = fockS f g := by
   classical

@@ -74,7 +74,7 @@ section Nondeg
 omit [StarRing K] [FiniteDimensional K V] in
 theorem gidx_pos {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (hB : Submodule.IsLattice K B) :
     0 < gidx A B :=
-  div_pos (Nat.cast_pos.2 (Nat.pos_of_ne_zero (idxN_ne_zero hB hA.fg)))
+  div_pos (Nat.cast_pos.2 (Nat.pos_of_ne_zero (idxN_ne_zero hB.toIsLattice hA.fg)))
     (Nat.cast_pos.2 (Nat.pos_of_ne_zero (idxN_ne_zero hA hB.fg)))
 
 omit [StarRing K] [FiniteDimensional K V] in
@@ -95,23 +95,26 @@ theorem gidx_mul {A B C : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (
 variable (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h.Nondegenerate)
 include hs hn
 
-theorem gidx_dual {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (hB : Submodule.IsLattice K B) :
+theorem gidx_dual {A B : Submodule (𝓞 K) V} (hA : Submodule.IsFullLattice K A) (hB : Submodule.IsFullLattice K B) :
     gidx (Formalism.HermitianLatticesTheory.dual h A) (Formalism.HermitianLatticesTheory.dual h B) = gidx B A := by
   have dl := Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K V h hs hn Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range
   have an := (Formalism.HermitianLatticesTheory.dualBasic (𝓞 K) K V h hs Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range).1
-  have hL : Submodule.IsLattice K (A ⊔ B) := Submodule.IsLattice.sup K A B
+  haveI : Submodule.IsFullLattice K A := hA
+  haveI : Submodule.IsFullLattice K B := hB
+  have hL : Submodule.IsFullLattice K (A ⊔ B) :=
+    Submodule.IsFullLattice.of_le K (le_sup_left : A ≤ A ⊔ B)
   rw [gidx_of_le (an _ _ (le_sup_left : A ≤ A ⊔ B)) (an _ _ (le_sup_right : B ≤ A ⊔ B))
-      (idxN_ne_zero (dl _ hL).1 (dl _ hA).1.fg),
-    gidx_of_ge (le_sup_right : B ≤ A ⊔ B) (le_sup_left : A ≤ A ⊔ B) (idxN_ne_zero hB hL.fg)
-      (idxN_ne_zero hB hA.fg)]
-  rw [idx_eq (Formalism.HermitianLatticesTheory.dual h A), idx_eq (Formalism.HermitianLatticesTheory.dual h B), idxN_dual h hs hn hA _ _ hL le_sup_left rfl,
-    idxN_dual h hs hn hB _ _ hL le_sup_right rfl]
+      (idxN_ne_zero (dl _ hL).1.toIsLattice (dl _ hA).1.fg),
+    gidx_of_ge (le_sup_right : B ≤ A ⊔ B) (le_sup_left : A ≤ A ⊔ B) (idxN_ne_zero hB.toIsLattice hL.fg)
+      (idxN_ne_zero hB.toIsLattice hA.fg)]
+  rw [idx_eq (Formalism.HermitianLatticesTheory.dual h A), idx_eq (Formalism.HermitianLatticesTheory.dual h B), idxN_dual h hs hn hA.toIsLattice _ _ hL.toIsLattice le_sup_left rfl,
+    idxN_dual h hs hn hB.toIsLattice _ _ hL.toIsLattice le_sup_right rfl]
   rfl
 
-theorem gidx_disc {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (hB : Submodule.IsLattice K B) :
+theorem gidx_disc {A B : Submodule (𝓞 K) V} (hA : Submodule.IsFullLattice K A) (hB : Submodule.IsFullLattice K B) :
     gidx (Formalism.HermitianLatticesTheory.dual h B) B = gidx A B ^ 2 * gidx (Formalism.HermitianLatticesTheory.dual h A) A := by
   have dl := Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K V h hs hn Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range
-  rw [← gidx_mul (dl _ hB).1 (dl _ hA).1 hB, ← gidx_mul (dl _ hA).1 hA hB, gidx_dual h hs hn hB hA]
+  rw [← gidx_mul (dl _ hB).1.toIsLattice (dl _ hA).1.toIsLattice hB.toIsLattice, ← gidx_mul (dl _ hA).1.toIsLattice hA.toIsLattice hB.toIsLattice, gidx_dual h hs hn hB hA]
   ring
 
 end Nondeg
@@ -154,39 +157,46 @@ theorem le_of_latMod {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
   obtain ⟨⟨N, -, hN⟩, hs⟩ := hM
   exact ⟨hN ▸ le_sup_right, fun x hx => hs ▸ Submodule.subset_span hx⟩
 
-omit [NumberField K] [StarRing K] [FiniteDimensional K V] in
+omit [StarRing K] [FiniteDimensional K V] in
 include hCS hpC hpI hI hC in
 theorem latIn_isLattice {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
-    Submodule.IsLattice K (latIn C M) := by
+    Submodule.IsFullLattice K (latIn C M) := by
   obtain ⟨h1, h2⟩ := le_of_latMod hM
   obtain ⟨⟨N, hfg, hN⟩, hs⟩ := hM
   have hp : ∀ x ∈ M, p x ∈ M := fun x hx => by simpa using M.sub_mem hx (h1 (hpI x))
-  constructor
-  · apply Submodule.fg_of_fg_map_injective (C.subtype.restrictScalars (𝓞 K)) C.injective_subtype
-    have : (latIn C M).map (C.subtype.restrictScalars (𝓞 K)) = N.map (p.restrictScalars (𝓞 K)) := by
-      ext x
-      constructor
-      · rintro ⟨y, hy, rfl⟩
-        have hy' : (y : V) ∈ N ⊔ rs (𝓞 K) I := hN ▸ hy
-        obtain ⟨n, hn, i, hi, e⟩ := Submodule.mem_sup.1 hy'
-        refine ⟨n, hn, ?_⟩
-        change p n = y
-        rw [← hC y y.2, ← e, map_add (f := _), hI i hi, add_zero]
-      · rintro ⟨n, hn, rfl⟩
-        have hn' : n ∈ M := hN ▸ Submodule.mem_sup_left hn
-        exact ⟨⟨p n, hpC n (h2 hn')⟩, hp n hn', rfl⟩
-    rw [this]
-    exact hfg.map _
+  refine { toIsLattice := ?_, span_eq_top := ?_ }
+  · constructor
+    · apply Submodule.fg_of_fg_map_injective (C.subtype.restrictScalars (𝓞 K)) C.injective_subtype
+      have : (latIn C M).map (C.subtype.restrictScalars (𝓞 K)) = N.map (p.restrictScalars (𝓞 K)) := by
+        ext x
+        constructor
+        · rintro ⟨y, hy, rfl⟩
+          have hy' : (y : V) ∈ N ⊔ rs (𝓞 K) I := hN ▸ hy
+          obtain ⟨n, hn, i, hi, e⟩ := Submodule.mem_sup.1 hy'
+          refine ⟨n, hn, ?_⟩
+          change p n = y
+          rw [← hC y y.2, ← e, map_add (f := _), hI i hi, add_zero]
+        · rintro ⟨n, hn, rfl⟩
+          have hn' : n ∈ M := hN ▸ Submodule.mem_sup_left hn
+          exact ⟨⟨p n, hpC n (h2 hn')⟩, hp n hn', rfl⟩
+      rw [this]
+      exact hfg.map _
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · have key : ∀ x ∈ Submodule.span K (M : Set V),
         p x ∈ (Submodule.span K (latIn C M : Set C)).map C.subtype := by
       intro x hx
       induction hx using Submodule.span_induction with
       | mem x hx => exact ⟨⟨p x, hpC x (h2 hx)⟩, Submodule.subset_span (hp x hx), rfl⟩
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ a b => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b
+      | add x y _ _ a b => rw [map_add]; exact add_mem a b
       | smul r x _ a => rw [map_smul]; exact Submodule.smul_mem _ _ a
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply eq_top_iff.mpr
+    intro x _
+    have hx : (x : V) ∈ Submodule.span K (M : Set V) := by rw [hs]; exact hCS x.2
+    obtain ⟨y, hy, he⟩ := key x hx
+    have : y = x := Subtype.ext (he.trans (hC x x.2))
+    simpa [this] using hy
 end Compl
 
 theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (H : HermSpace K V), Formalism.HermitianLatticesTheory.IsCMUnram K → ∀ (M M' : Submodule (𝓞 K) V) (S I : Submodule K V), I ≤ S → (∀ x ∈ S, (∀ y ∈ S, H.B x y = 0) ↔ x ∈ I) → IsLatMod M S I → IsLatMod M' S I → 0 < del H M ∧ 0 < gidx M M' ∧ del H M' = gidx M M' * del H M ∧ (IsIntegralLat H M → 1 ≤ del H M ∧ del H M ^ 2 = idx (dual H M) M) := by
@@ -247,8 +257,8 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
       gidx A B = gidx (latIn C A) (latIn C B) := fun h1 h2 h3 h4 => by
     rw [gidx, gidx, idx_latIn p hpC hpI h1 h2 h3, idx_latIn p hpC hpI h3 h4 h1]
   have p1 : 0 < gidx (dual H M) M := by
-    rw [g d1 d2 a b, d3]; exact gidx_pos (dl _ L).1 L
-  have p2 : 0 < gidx M M' := by rw [g a b a' b']; exact gidx_pos L L'
+    rw [g d1 d2 a b, d3]; exact gidx_pos (dl _ L).1.toIsLattice L.toIsLattice
+  have p2 : 0 < gidx M M' := by rw [g a b a' b']; exact gidx_pos L.toIsLattice L'.toIsLattice
   have p3 : gidx (dual H M') M' = gidx M M' ^ 2 * gidx (dual H M) M := by
     rw [g d1 d2 a b, g d1' d2' a' b', g a b a' b', d3, d3']
     exact gidx_disc h hs hn L L'

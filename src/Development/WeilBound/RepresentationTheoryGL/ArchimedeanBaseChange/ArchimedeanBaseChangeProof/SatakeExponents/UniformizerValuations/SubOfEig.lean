@@ -1,5 +1,6 @@
 module
 
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsUnitarisableOfCharIff
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.SubOfNonNil
 public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.InvTransposeGLInvTransposeGL
 
@@ -7,7 +8,8 @@ public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.Integr
 
 noncomputable section
 
-open MeasureTheory GlobalTheory.SmGL GlobalTheory.PRep PositivityTheory.Rg.Tf.Loc
+open GlobalTheory.PRep (IsSmooth fixed)
+open GlobalTheory.SmGL (HasFiniteLength IsSubquotient)
 
 namespace PositivityTheory.Rg.BcN.F2
 

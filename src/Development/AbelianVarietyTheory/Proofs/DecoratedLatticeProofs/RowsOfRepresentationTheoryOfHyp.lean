@@ -174,13 +174,6 @@ end Args
 
 end General
 
-section Wit
-
-variable {hL : GlobalTheory.Published.LocalLanglandsGL} {p : Bl.Prm hL} {K : Ctx} {q : Bl.WPt p.s K} {c : ℝ} {b : Bundle (q.w.D q.Z) q.O c}
-
-
-end Wit
-
 theorem gapHyp_of_hd {D : D7} {L C' Cl Cg cb Cu cT CT : ℝ} (hCl : 1801 ≤ Cl) (H : GlobalTheory.Core.Rk.HD D L C' Cl Cg cb Cu cT CT) :
     Formalism.L2.SG.ConcreteSettingExists.GapHyp D := by
   have HL := H.2.2.1

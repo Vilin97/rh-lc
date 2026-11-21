@@ -28,13 +28,10 @@ theorem lattice_of_idx {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K 
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
-omit [NumberField K] in
 theorem lattice_map {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
     {A : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (f : V →ₗ[K] W) (hf : Function.Surjective f) :
     Submodule.IsLattice K (A.map (f.restrictScalars (𝓞 K))) := by
-  refine ⟨hA.fg.map _, ?_⟩
-  have : ((A.map (f.restrictScalars (𝓞 K)) : Submodule (𝓞 K) W) : Set W) = f '' A := rfl
-  rw [this, ← Submodule.map_span, hA.span_eq_top, Submodule.map_top, LinearMap.range_eq_top.2 hf]
+  exact Submodule.IsLattice.of_fg K (hA.fg.map _)
 
 theorem exists_rat_basis [Module ℚ V] [Module.Finite ℚ V] {A : Submodule (𝓞 K) V}
     (hA : Submodule.IsLattice K A) :
@@ -45,6 +42,8 @@ theorem exists_rat_basis [Module ℚ V] [Module.Finite ℚ V] {A : Submodule (�
     refine ⟨Module.Finite.iff_fg.mp hfinZ, ?_⟩
     intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  have : Module.Finite ℤ (A.restrictScalars ℤ) := Submodule.IsLattice.finite ℚ _
+  have : Module.Free ℤ (A.restrictScalars ℤ) := Submodule.IsLattice.free ℚ _
   have hr : Module.finrank ℤ (A.restrictScalars ℤ) = Module.finrank ℚ V := by
     unfold Module.finrank
     rw [Submodule.IsLattice.rank' ℚ]
@@ -280,7 +279,7 @@ theorem exists_same_index {U : Submodule K V} (p : V →ₗ[K] U) (p1 : ∀ t : 
     obtain ⟨m, ⟨hm1, hm2⟩, _, ⟨y, hy, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hb
     exact ⟨⟨m, hm2⟩, hm1, y, hy, rfl⟩
   have hC : Submodule.IsLattice K (D.map P ⊔ D) :=
-    Submodule.IsLattice.of_le_of_isLattice_of_fg K le_sup_right ((hD.fg.map P).sup hD.fg)
+    Submodule.IsLattice.of_fg K ((hD.fg.map P).sup hD.fg)
   have e1 : D.map P ⊔ B = D.map P ⊔ D := by
     refine le_antisymm (sup_le le_sup_left (sup_le (inf_le_left.trans le_sup_right) ?_))
       (sup_le le_sup_left fun y hy => ?_)

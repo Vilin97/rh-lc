@@ -20,6 +20,8 @@ section GridFacts
 
 variable (D : D7) (τ : D.what₂.Tau)
 
+local notation "Γ" => grid D τ
+
 theorem e_eq {l : ℕ} (h1 : 1 ≤ l) (h2 : l ≤ D.R.m) : (((Γ).e l : ℤ) : ℚ) = (D.hc τ).e ⟨l - 1, by omega⟩ := by
   obtain ⟨l, rfl⟩ : ∃ l', l = l' + 1 := ⟨l - 1, by omega⟩
   exact GlobalTheory.SignedHC.GridData.extend_cast 1 (D.hc τ).e_int ⟨l, by omega⟩
@@ -194,7 +196,7 @@ theorem shape_below {n T : ℕ} (c : ℝ) (lam : Fin n → ℝ) (hl : StrictAnti
     · have : (((a : ℕ) - n : ℕ) : ℝ) < (((b : ℕ) - n : ℕ) : ℝ) := by exact_mod_cast (by omega : (a : ℕ) - n < b - n)
       linarith
   have key : lam' = L := by
-    rw [← StrictAnti.range_inj h' hL]
+    rw [← StrictAnti.range_inj_of_wellFoundedGT h' hL]
     ext x
     rw [hr]
     constructor

@@ -100,12 +100,13 @@ theorem span_colLat_one : Submodule.span K (colLat (1 : GL (Fin n) K) : Set (Fin
   funext a
   simp [Matrix.one_apply, Pi.single_apply]
 
-theorem exists_isBasisAt_one (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsLattice K M) :
+theorem exists_isBasisAt_one (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsFullLattice K M) :
     ∃ a : 𝓞 K, a ≠ 0 ∧ ∀ w : HeightOneSpectrum (𝓞 K), a ∉ w.asIdeal → IsBasisAt w M 1 := by
+  letI : Submodule.IsFullLattice K M := hM
   obtain ⟨a, ha0, ha⟩ := exists_smul_le_of_fg (colLat (1 : GL (Fin n) K)) M hM.fg
     (fun x _ => by rw [span_colLat_one]; trivial)
   obtain ⟨b, hb0, hb⟩ := exists_smul_le_of_fg M (colLat (1 : GL (Fin n) K))
-    (Submodule.fg_span (Set.finite_range _)) (fun x _ => by rw [hM.span_eq_top]; trivial)
+    (Submodule.fg_span (Set.finite_range _)) (fun x _ => by rw [Submodule.IsFullLattice.span_eq_top]; trivial)
   refine ⟨a * b, mul_ne_zero ha0 hb0, fun w hw => le_antisymm ?_ ?_⟩
   · exact localization_le_of_smul_mem w (fun h => hw (w.asIdeal.mul_mem_right _ h)) ha
   · exact localization_le_of_smul_mem w (fun h => hw (w.asIdeal.mul_mem_left _ h)) hb
@@ -160,7 +161,7 @@ theorem transLat_colLat (lam : ι → DomWeight n) (T : Submodule (𝓞 K) (Pol 
 
 theorem locP_transLat (lam : ι → DomWeight n) (T : Submodule (𝓞 K) (Pol K ι n))
     (hT : Submodule.span K (T : Set (Pol K ι n)) = VV K lam)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ))
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ))
     (hI : ∀ (w : HeightOneSpectrum (𝓞 K)) (B B' : ι → GL (Fin n) K), (∀ τ, IsBasisAt w (M τ) (B τ)) →
       (∀ τ, IsBasisAt w (M τ) (B' τ)) → ∀ F : Pol K ι n,
       (actP lam B⁻¹ F ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T ↔ actP lam B'⁻¹ F ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T))

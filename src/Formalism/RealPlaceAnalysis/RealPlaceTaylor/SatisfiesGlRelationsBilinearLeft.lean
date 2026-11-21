@@ -45,6 +45,7 @@ section ops
 variable {σ : Type*} [DecidableEq σ]
 
 set_option quotPrecheck false
+
 local notation "D" v => ((pderiv v : Derivation ℂ (MvPolynomial σ ℂ) (MvPolynomial σ ℂ)).toLinearMap :
   Module.End ℂ (MvPolynomial σ ℂ))
 local notation "Mx" v => (LinearMap.mulLeft ℂ (X v : MvPolynomial σ ℂ) : Module.End ℂ (MvPolynomial σ ℂ))

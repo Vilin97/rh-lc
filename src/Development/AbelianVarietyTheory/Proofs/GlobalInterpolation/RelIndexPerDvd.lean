@@ -63,7 +63,7 @@ theorem mem_localization_perO {AA : Submodule (𝓞 E) E} {N : Submodule (𝓞 E
       rw [← Finset.prod_erase_mul S s hv, LinearMap.smul_apply, mul_smul]
       exact N'.smul_mem _ (hsy v hv)
     | zero => simp
-    | add v w _ _ hv hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hv hw
+    | add v w _ _ hv hw => rw [map_add]; exact add_mem hv hw
     | smul r v _ hv => rw [LinearMap.map_smul_of_tower]; exact N'.smul_mem r hv
   obtain ⟨t, ht, h1⟩ := (mem_locP P AA 1).1 (hA ▸ le_locP P _ (Submodule.one_le.1 le_rfl))
   refine mem_localization_of_smul_mem P _ hP (mem_localization_of_smul_mem P _ ht (le_locP P _ (Submodule.subset_span ⟨_, h1, _, hh, ?_⟩)))

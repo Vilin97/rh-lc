@@ -13,6 +13,8 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsScalarS
 
 open MeasureTheory NumberField Matrix Finset Formalism.MainNotions.S GlobalTheory.Count GlobalTheory.FlagMeas GlobalTheory.FlagBase
 
+open scoped Pointwise
+
 namespace GlobalTheory.FlagBase.LeviInt
 
 theorem lintegral_pi_succ {a : ℕ} {X : Fin (a + 1) → Type} [∀ i, MeasurableSpace (X i)] (ν : ∀ i, Measure (X i))
@@ -520,7 +522,7 @@ theorem covol_leviGroup_le : ∀ (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf :
         rw [hmeas, lintegral_smul_measure, smul_eq_mul]
         have hle : ∫⁻ m, (Θ '' ((Set.univ.pi D) ×ˢ D₀)).indicator (fun m => F (sizesAt I xf S m)) m
             ∂Measure.map Θ ρ ≤ ∫⁻ z, ((Set.univ.pi D) ×ˢ D₀).indicator (fun z => ψ z.1) z ∂ρ := by
-          refine le_trans (lintegral_map_le _ Θ) (lintegral_mono_ae ?_)
+          refine le_trans (lintegral_map_le _ hΘm.aemeasurable) (lintegral_mono_ae ?_)
           have hae : ∀ᵐ z ∂ρ, ∀ i, 0 < detNorm I.E (j i) (z.1 i) := by
             rw [hρ]
             exact Measure.QuasiMeasurePreserving.ae Measure.quasiMeasurePreserving_fst

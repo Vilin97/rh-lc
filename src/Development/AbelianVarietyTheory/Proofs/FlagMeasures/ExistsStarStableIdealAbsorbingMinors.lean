@@ -401,7 +401,7 @@ private theorem sig_mem_mul_of_sig_mem {I J : Ideal (𝓞 K)}
   intro x hx
   refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) (fun a b ha hb => ?_)
   · rw [map_mul]; exact Ideal.mul_mem_mul (hI a ha) (hJ b hb)
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  · rw [map_add]; exact add_mem ha hb
 
 open NumberField in
 open scoped Pointwise ENNReal Classical nonZeroDivisors in
@@ -437,7 +437,7 @@ private theorem sig_mem_mul_map_sig (A : Ideal (𝓞 K)) :
   · obtain ⟨c, hc, rfl⟩ := (Ideal.mem_map_of_equiv _ _).1 hb
     rw [map_mul, sig_sig_eq, mul_comm ((_root_.GlobalTheory.DegCnt.Absorb.sig K) a) c]
     exact Ideal.mul_mem_mul hc (Ideal.mem_map_of_mem _ ha)
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  · rw [map_add]; exact add_mem ha hb
 
 
 open NumberField in

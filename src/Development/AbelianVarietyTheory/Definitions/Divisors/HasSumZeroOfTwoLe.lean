@@ -55,8 +55,6 @@ theorem modF_princ (k : Eˣ) :
   rw [h1, WithZeroMulInt.toNNReal_neg_apply _ h0]
   push_cast
   congr 1
-  conv_lhs => rw [← WithZero.coe_unzero h0]
-  rfl
 
 theorem hatO_integral {c : Ideal (OF E)} {y : Af E} (hy : y ∈ hatO c) (v : HeightOneSpectrum (𝓞 E)) :
     Valued.v (y v) ≤ 1 := by
@@ -89,9 +87,10 @@ theorem modF_unit {c : Ideal (OF E)} {u : (Af E)ˣ} (hu : u ∈ hatOUnits c) : m
       _ = _ := mul_one _
   simp [h4]
 
-variable {I : Type} [Fintype I]
+variable {I : Type}
 
-theorem prod_normSq [_root_.NumberField.IsTotallyComplex E] {φ : I → E →+* ℂ} (h : IsCMType φ) (x : E) :
+theorem prod_normSq [Fintype I] [_root_.NumberField.IsTotallyComplex E] {φ : I → E →+* ℂ}
+    (h : IsCMType φ) (x : E) :
     ∏ i, ‖φ i x‖ ^ 2 = |((Algebra.norm ℚ x : ℚ) : ℝ)| := by
   have h1 := InfinitePlace.prod_eq_abs_norm x
   push_cast at h1
@@ -114,10 +113,5 @@ theorem prod_cpow (t : Finset I) (r : I → ℝ) (hr : ∀ i, 0 ≤ r i) (z : �
   | insert a t ha ih =>
     rw [Finset.prod_insert ha, Finset.prod_insert ha, ih, Complex.ofReal_mul,
       Complex.mul_cpow_ofReal_nonneg (hr a) (Finset.prod_nonneg fun i _ => hr i)]
-
-section RatL
-open GlobalTheory.CMVal.ValEx Rat.HeightOneSpectrum
-
-end RatL
 
 end GlobalTheory.CMVal.ObjModel

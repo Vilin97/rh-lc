@@ -15,6 +15,8 @@ namespace Formalism.HermitianLattices.Ext.L3.unitaryAbsoluteValueBounds
 
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+
 private lemma coe_conjO_eq_star (x : 𝓞 K) : ((conjO K x : 𝓞 K) : K) = star (x : K) := rfl
 
 private lemma conjO_conjO_unimodular_class_representatives (x : 𝓞 K) : conjO K (conjO K x) = x := by
@@ -57,7 +59,7 @@ private lemma exists_algebraMap_eq_of_conjO_eq (hF : IsFixF K F) (y : 𝓞 K) (h
   have h1 : star (y : K) = y := by rw [← coe_conjO_eq_star, hy]
   obtain ⟨f, hf⟩ := (hF _).mp h1
   have hint : IsIntegral ℤ f := by
-    rw [← isIntegral_algebraMap_iff , hf]
+    rw [← isIntegral_algebraMap_iff (B := K), hf]
     exact RingOfIntegers.isIntegral_coe y
   let a : 𝓞 F := ⟨f, (mem_integralClosure_iff ℤ F).mpr hint⟩
   refine ⟨a, RingOfIntegers.ext ?_⟩
@@ -81,7 +83,7 @@ private lemma extP_comap_eq_inf_conjIdeal_of_isMaximal (hK : Formalism.Hermitian
     rw [Ideal.mem_inf, mem_conjIdeal_iff'] at hx
     obtain ⟨hxP, hxc⟩ := hx
     have h𝔭 : (P.comap (algebraMap (𝓞 F) (𝓞 K))).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := 𝓞 F) P
     obtain ⟨θ, t, ht, hθ⟩ := hK.2.2 P hP
     have htc : t = conjO K θ := RingOfIntegers.ext (by rw [coe_conjO_eq_star]; exact ht)
     subst htc

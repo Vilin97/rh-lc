@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+import all Mathlib.MeasureTheory.Constructions.Pi
 public import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.ConvolutionSmoothL2
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsLimitOfChart
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.EventuallyBallSubset
@@ -36,12 +37,17 @@ theorem le_smul_pi {ι : Type} [Fintype ι] {α : ι → Type} [∀ i, Measurabl
           rfl
   refine Measure.le_iff.2 fun A hA => ?_
   have hA' := hout A
-  rw [Measure.smul_apply, smul_eq_mul, Measure.pi_def, toMeasure_apply _ _ hA]
+  have hpi : OuterMeasure.pi (fun i => (μ i).toOuterMeasure) A ≤ Measure.pi μ A := by
+    rw [Measure.pi]
+    exact le_toMeasure_apply _ _ _
   calc ν A = K * (K⁻¹ * ν A) := by
         rw [← mul_assoc, ENNReal.mul_inv_cancel h0 h1, one_mul]
     _ ≤ K * OuterMeasure.pi (fun i => (μ i).toOuterMeasure) A := by
         gcongr
         exact hA'
+    _ ≤ (K • Measure.pi μ) A := by
+        rw [Measure.smul_apply, smul_eq_mul]
+        gcongr
 
 theorem exp_sub_one_le {x : ℝ} (h0 : 0 ≤ x) (h1 : x ≤ 1) : Real.exp x - 1 ≤ 2 * x := by
   have hq := Real.abs_exp_sub_one_sub_id_le (x := x) (by rw [abs_of_nonneg h0]; exact h1)

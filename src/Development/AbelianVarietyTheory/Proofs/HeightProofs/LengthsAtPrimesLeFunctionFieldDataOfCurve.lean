@@ -153,7 +153,7 @@ variable {D' N' : ℕ} (hD : D' = WeightFamilies.dimY D j) (eN : Fin (N' + 1) �
       algebraMap (X.Kl la) (Kp X la N) (algebraMap B.KO (X.Kl la) a))
   (hT : ∀ p, algebraMap (KTf B.KO D' N') (Kp X la N)
     (algebraMap (KTp B.KO D' N') (KTf B.KO D' N') (MvPolynomial.X p)) =
-      @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (eVar hD eN p)))
+      @algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (eVar hD eN p)))
   {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : X.Forms →ₐ[B.KO] Ω) (j₀ : Fin (N' + 1)) (x : Fin N' → Ω)
   [Algebra (KTf B.KO D' N') (OmS Ω D' N')]
   (hS : ∀ p : KTp B.KO D' N', algebraMap (KTf B.KO D' N') (OmS Ω D' N')
@@ -182,7 +182,7 @@ theorem exists_comp_maps (u : WeightFamilies.Wt D j) :
     rw [← Algebra.smul_def, algebraMap_smul, ← Algebra.smul_def, TensorProduct.tmul_smul]
   have hsum : ∀ i : Fin (WeightFamilies.dimY D j + 1),
       ∑ k, algebraMap (Kp X la N) (Kp X la N ⊗[KTf B.KO (WeightFamilies.dimY D j) N'] OmS Ω (WeightFamilies.dimY D j) N')
-        (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (i, k))) *
+        (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (i, k))) *
           (1 ⊗ₜ algebraMap Ω (OmS Ω (WeightFamilies.dimY D j) N') (gF (X.inc wL (w k)))) =
       1 ⊗ₜ ∑ k, sImg j₀ x (i, k) * algebraMap Ω (OmS Ω (WeightFamilies.dimY D j) N') (gF (X.inc wL (w (eN k)))) := by
     intro i
@@ -221,7 +221,7 @@ theorem ev_eq_zero (htr : Algebra.trdeg B.KO Ω = D')
     (k : ℕ) (g : Rp X la N) (hg : g ∈ Vw X la N (addL (wt0 D j) wL k)) (h : Θ g = 0) : ev g = 0 := by
   subst hD
   obtain ⟨χ, h1, h2⟩ := GlobalTheory.exists_ringHom_tensor_OmS_of_point B.KO Ω (Kp X la N) U (WeightFamilies.dimY D j) N' j₀ x (GlobalTheory.SecPoint.evK X la N ev) τ
-    (fun p => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (eVar rfl eN p))) htr hS hT
+    (fun p => @algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (eVar rfl eN p))) htr hS hT
     (fun a => by rw [hC, hτ]) (fun i => by
       have h3 := GlobalTheory.SecPoint.ev_sec X la N w gF ev τ σ hc i.succ
       rw [honS, eq_comm, mul_eq_zero, or_iff_left hσ, ← eN.sum_comp, Fin.sum_univ_succAbove _ j₀] at h3
@@ -308,7 +308,7 @@ theorem ila_le (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectrum (𝓞 B
   letI := ReciprocityTheory.ChartRestriction.G.T0.algOpKT (K := B.KO) d.D d.N la
   haveI := ReciprocityTheory.ChartRestriction.G.T0.isFractionRing_Op (K := B.KO) d.D d.N la
   letI : Algebra (ReciprocityTheory.ChartRestriction.G.T0.Op d.D d.N la) (Kp X la G.N) :=
-    ((@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp f).toAlgebra
+    ((@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _).comp f).toAlgebra
   haveI : IsScalarTower (ReciprocityTheory.ChartRestriction.G.T0.Op d.D d.N la) (KTf B.KO d.D d.N) (Kp X la G.N) :=
     IsScalarTower.of_algebraMap_eq fun r => (hφ r).symm
   haveI : IsScalarTower (ReciprocityTheory.ChartRestriction.G.T0.Op d.D d.N la) (Op X la G.N) (Kp X la G.N) :=
@@ -408,7 +408,7 @@ theorem ila_le (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectrum (𝓞 B
     rw [← coord_smul_self hgen a, h1, zero_smul]
   · intro a ha c w hw u hu1 hu0
     have halg : ∀ r : Op X la G.N, ψ c (algebraMap (Op X la G.N) (OsK X la G.w) r) =
-        @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r ⊗ₜ 1 := fun r => by
+        @algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r ⊗ₜ 1 := fun r => by
       rw [IsScalarTower.algebraMap_apply (Op X la G.N) (Kp X la G.N) (OsK X la G.w), AlgHom.commutes]
       rfl
     obtain ⟨ζ, hζ⟩ := hval (u.comap (ψ c).toRingHom) (fun r => by

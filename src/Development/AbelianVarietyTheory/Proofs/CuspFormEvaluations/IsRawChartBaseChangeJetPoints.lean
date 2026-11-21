@@ -18,7 +18,6 @@ noncomputable section
 
 namespace GlobalTheory.RawChartBC
 
-open Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar (dualMap)
 open ReciprocityTheory.ChartRestriction.G.PullbackSections
 
 theorem spMap_spMap {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (f : R' →+* R'')

@@ -22,6 +22,8 @@ namespace GlobalTheory.UnitaryEmbeddingLattice
 
 variable {D : D7} {Y V : HSp D}
 
+local notation "inc" => (Formalism.UG.inclE (F := D.host.F) (Formalism.L2.Herm.Af D.host.F))
+
 def phiRow (d : HermitianOrthogonalExtensionData Y V 1 1) : Matrix (Fin 1) (Fin V.rank) D.host.E :=
   Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) d.a * V.gram
 
@@ -101,8 +103,8 @@ theorem mulVec_mem_of {m n : ℕ} (M : Matrix (Fin m) (Fin n) D.host.E) (L : Sub
         rw [Matrix.mulVec_zero]; exact S.zero_mem
       smul_mem' := fun c x hx => by
         show M.map inc *ᵥ (c • x) ∈ S
-        convert S.smul_mem c hx using 1
-        exact Finset.sum_congr rfl fun j _ => by ring }
+        rw [Matrix.mulVec_smul]
+        exact S.smul_mem c hx }
   have hle : Formalism.L2.Herm.hatL (F := D.host.F) L ≤ S' := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨v, hv, rfl⟩
@@ -117,6 +119,8 @@ end GlobalTheory.UnitaryEmbeddingLattice
 namespace GlobalTheory.UnitaryEmbeddingLattice
 
 variable {D : D7} {Y V : HSp D}
+
+local notation "inc" => (Formalism.UG.inclE (F := D.host.F) (Formalism.L2.Herm.Af D.host.F))
 
 theorem mulVec_incl {m n : ℕ} (M : Matrix (Fin m) (Fin n) D.host.E) (v : Fin n → D.host.E) :
     M.map inc *ᵥ (fun i => inc (v i)) = fun i => inc ((M *ᵥ v) i) := by

@@ -82,7 +82,7 @@ theorem sig_int (R : Type) [CommRing R] [Algebra F R] (S : Subring R) (c : E ⊗
       exact this.symm
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
@@ -171,7 +171,7 @@ theorem exists_dual_basis (hJ : J.det ≠ 0) (L : Submodule (𝓞 E) (Fin n → 
     congr 1
     exact σ.commutes _
   rw [smul_right, ← hsz, ha, sum_left]
-  simp only [smul_left, hdu', mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [smul_left, hdu', mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   exact PI.SelfDualLoc.W.intOE_map σ ⟨a j, rfl⟩
 
 theorem isLat_dual (hJ : J.det ≠ 0) (L : Submodule (𝓞 E) (Fin n → E)) (hL : IsLat L) : IsLat (dualL σ J L) := by
@@ -240,7 +240,7 @@ theorem bwd_loc (hJ : J.det ≠ 0) (L : Submodule (𝓞 E) (Fin n → E)) (hL : 
       unfold hR at h4 ⊢
       rw [sum_right]
       simp only [smul_right, h4, hdu, apply_ite (inclE (F := F) (v.adicCompletion F)),
-        map_one, map_zero, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+        map_one, map_zero, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
     rw [h3] at h1
     exact h1
   rw [hyC]
@@ -266,7 +266,7 @@ theorem prV_int (v : HeightOneSpectrum (𝓞 F)) (c : E ⊗[F] Ad F) (hc : c ∈
     · exact Subring.subset_closure (Or.inr ⟨⟨b v, hb v⟩, rfl⟩)
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 

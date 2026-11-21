@@ -14,7 +14,9 @@ noncomputable section
 
 namespace Formalism.RepresentationBoundsCohomology.SplitClassesAll
 
-open Formalism.NG Formalism.RepresentationBoundsCohomology.BR Formalism.RepresentationBoundsCohomology.TorsionBoundCyclotomic Formalism.RepresentationBoundsCohomology.JL Formalism.RepresentationBoundsCohomology.JT
+open Formalism.NG (KO H1z coZ1s resRep resH1 uRep IsEquivMap)
+open Formalism.RepresentationBoundsCohomology.BR (unrH1)
+open Formalism.RepresentationBoundsCohomology.JT (InRowRhoNoBK)
 
 section Defs
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]

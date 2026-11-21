@@ -16,7 +16,7 @@ noncomputable section
 
 namespace Formalism.L2.DIV
 
-open Formalism.BasicNotions
+open Formalism.BasicNotions Formalism.L2.Col
 
 section Gen
 
@@ -93,8 +93,8 @@ variable {K : Type} [Field K] [NumberField K]
 
 theorem nb_mem_span_ow {V : Type} [AddCommGroup V] [Module (𝓞 K) V] (w : HeightOneSpectrum (𝓞 K)) [Module (Ow w) V]
     [IsScalarTower (𝓞 K) (Ow w) V] (T : Set V) (x : V) :
-    x ∈ Submodule.span (Ow w) T ↔ x ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (Submodule.span (𝓞 K) T) := by
-  first | exact GlobalTheory.LocalSpanCriterion.span_local_iff .. | (apply GlobalTheory.LocalSpanCriterion.span_local_iff <;> assumption) | (intros; apply GlobalTheory.LocalSpanCriterion.span_local_iff <;> assumption) | (apply @GlobalTheory.LocalSpanCriterion.span_local_iff <;> assumption) | (intros; apply @GlobalTheory.LocalSpanCriterion.span_local_iff <;> assumption) | (apply @GlobalTheory.LocalSpanCriterion.span_local_iff <;> first | assumption | infer_instance) | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› ‹_› V ‹_› ‹_› w ‹_› ‹_› T x | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› ‹_› V ‹_› ‹_› w ‹_› ‹_› T | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› ‹_› V ‹_› ‹_› w ‹_› ‹_› | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› ‹_› V ‹_› ‹_› w ‹_› | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› ‹_› V ‹_› ‹_› w | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› ‹_› V ‹_› ‹_› | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› ‹_› V ‹_› | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› ‹_› V | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› ‹_› | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K ‹_› | exact @GlobalTheory.LocalSpanCriterion.span_local_iff K
+    x ∈ Submodule.span (Ow w) T ↔ x ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (Submodule.span (𝓞 K) T) :=
+  GlobalTheory.LocalSpanCriterion.span_local_iff w T x
 
 variable {ι : Type} [Fintype ι] {n : ℕ}
 

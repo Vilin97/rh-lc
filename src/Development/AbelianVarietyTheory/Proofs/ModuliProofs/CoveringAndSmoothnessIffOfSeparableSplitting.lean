@@ -16,7 +16,6 @@ namespace GlobalTheory.CoveringCompare
 open AlgebraicGeometry CategoryTheory Limits NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open scoped CategoryTheory.Obj
-open GlobalTheory.IndefiniteRowSideFullHecke
 
 section Fibres
 

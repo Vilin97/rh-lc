@@ -195,7 +195,8 @@ def coverEtaleChart (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)
     (c : EtaleChart T.structMap ((MaxContactCoverData.chosenCoverData T hv).opens i) n) :
     EtaleChart (MaxContactCoverData.coverMap T hv ≫ T.structMap) (coverTripleOpen T hv i) n where
   map := (coverPieceIso T hv i).inv ≫ c.map
-  comp_struct := coverPieceIso_inv_comp_map_comp_affineSpaceFinToSpec T hv i c
+  comp_struct := by
+    exact coverPieceIso_inv_comp_map_comp_affineSpaceFinToSpec T hv i c
   isEtale := etale_coverPieceIso_inv_comp_map T hv i c
 
 theorem coverEtaleChart_coordIdeal (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)

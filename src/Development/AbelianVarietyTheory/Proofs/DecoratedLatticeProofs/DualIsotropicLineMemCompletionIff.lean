@@ -55,7 +55,7 @@ theorem cA_mem_idV_one {v : Pl D} {c : AE D} (hc : c ∈ idV (1 : FI D) v) : cA 
     show pairA D.host.F 0 α ⊗ₜ[D.host.F] star ((o : D.host.E)) = _
     rw [ho']
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem mul_incA_mem {S : HSp D} {L : Lat S} {v : Pl D} {c : AE D} (hc : c ∈ idV (1 : FI D) v)
@@ -145,8 +145,7 @@ namespace GlobalTheory.DualLine
 variable {D : D7}
 
 theorem cA_cA' (x : AE D) : cA D (cA D x) = x := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | tmul c e => show c ⊗ₜ[D.host.F] star (star e) = _; rw [star_star]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 

@@ -64,7 +64,7 @@ theorem glue_mul {A : Type} [CommRing A] {n : ℕ} {f : A} (hf : f * f = f) {σ 
   have h1 : (1 - f) * (1 - f) = 1 - f := by linear_combination hf
   have h2 : (1 - f) * f = 0 := by linear_combination -hf
   have h3 : f * (1 - f) = 0 := by linear_combination -hf
-  simp only [add_mul, mul_add, Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_smul, h, h1, h2, h3, hf, zero_smul,
+  simp only [add_mul, mul_add, Matrix.smul_mul, Matrix.mul_smul, smul_smul, h, h1, h2, h3, hf, zero_smul,
     Matrix.mul_one, add_zero, zero_add]
   rw [← add_smul, sub_add_cancel, one_smul]
 
@@ -163,7 +163,8 @@ theorem exists_local_component : ∀ (D : D7) (n q : ℕ), q.Prime → ∀ s : M
       push_cast at huv' c2
       have := add_mem (zsmul_mem c1 u) (zsmul_mem c2 v)
       convert this using 1
-      simp only [zsmul_eq_mul, smul_eq_mul]
+      ext j
+      simp only [← Int.cast_smul_eq_zsmul D.host.E, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
       linear_combination (-x j) * huv'
 
 end GlobalTheory.LocalComponent

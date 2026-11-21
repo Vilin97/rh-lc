@@ -74,7 +74,7 @@ theorem IsContRep.translate {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F : norm
     show F (γ * y * x) = F (y * x)
     rw [mul_assoc, h.2.1 γ hγ], ?_⟩
   have h2 : (fun y => φ (mk Γ₁ (y * x))) =ᵐ[μ] fun y => F (y * x) :=
-    (measurePreserving_mul_right μ x).quasiMeasurePreserving.ae_eq_comp h.2.2
+    QuasiMeasurePreserving.ae_eq_comp (measurePreserving_mul_right μ x).quasiMeasurePreserving h.2.2
   filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ) (coeFn_rightRegularRep Γ₁ μ x φ), h2]
     with y hy1 hy2
   simp only [Function.comp_apply, rightMul_mk] at hy1

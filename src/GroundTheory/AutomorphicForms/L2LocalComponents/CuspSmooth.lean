@@ -38,7 +38,8 @@ theorem isContRep_cuspToL2 (φ : cuspForms K n) :
     change (φ : AdelicGLn.AdelicGL K n → ℂ) ((γ : AdelicGLn.AdelicGL K n) * y) = _
     rw [← hγ']
     exact φ.2.1.isLeftInvariant γ' _
-  · filter_upwards [(quasiMeasurePreserving_mk Γ₁ μ).ae_eq (coeFn_cuspToL2 μ φ)] with y hy
+  · filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ)
+      (coeFn_cuspToL2 μ φ)] with y hy
     exact hy.trans (cuspQuot_mk _ y)
 
 

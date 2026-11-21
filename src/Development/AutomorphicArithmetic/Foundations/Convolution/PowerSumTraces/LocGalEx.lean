@@ -279,3 +279,4 @@ theorem UpperTheory.ConvolutionTheory.C.locGalEx :
   have e2 : τ'.ρ (s g) = τ.ρ g := congrArg τ.ρ (s.symm_apply_apply g)
   rw [e2] at e
   exact e
+

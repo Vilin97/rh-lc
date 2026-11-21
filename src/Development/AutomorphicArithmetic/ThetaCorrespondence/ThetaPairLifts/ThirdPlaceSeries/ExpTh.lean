@@ -3,10 +3,12 @@ module
 public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CarriedThTw
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CenUsedOfCenReal
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FinTypRepCast
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SettingsFormsExistList
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PlaceModelImp
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DofOTw
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NonemptyPtsOfReading
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SideTw
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.StateB2OfRationalData
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.SameGaloisLevelExists
@@ -35,7 +37,7 @@ def ysTh_alt (x : St P) (l : _root_.GlobalTheory.HeightCounting.Up.SecondInterme
   chi := (by with_unfolding_all exact (l.b.YS.chi :))
   eF := (by with_unfolding_all exact (l.b.YS.eF :))
   bsup := (by with_unfolding_all exact (l.b.YS.bsup :))
-  act := kc% l.b.YS.act
+  act := by with_unfolding_all exact (l.b.YS.act :)
 def exponentOfTheta (x : St P) (l : _root_.GlobalTheory.HeightCounting.Up.SecondIntermediateLevel hL x) (th : NTh (Dof x).R (Dof x).host (Dof x).what₂ (Dof x).LL0 (Dof x).nd (Dof x).ntw (Dof x).nexp) :
     NExpTied (w.st (oTw x (thTw (Dof x) th)).Z).toD7 :=
   (by with_unfolding_all exact ((bsTw l.b.Bs th).exp :))

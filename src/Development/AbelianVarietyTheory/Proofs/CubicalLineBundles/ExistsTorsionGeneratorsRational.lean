@@ -123,7 +123,7 @@ theorem exists_finite_coordinates {Ω : Type} [Field Ω] {X : Scheme.{0}} (p : X
     induction hy using Algebra.adjoin_induction with
     | mem y hy => exact h2 _ ⟨y, hy, rfl⟩
     | algebraMap c => exact (congr($hc c) : φ.hom (algebraMap R A c) = t c) ▸ h1 c
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | mul y z _ _ hy hz => rw [map_mul]; exact mul_mem hy hz
   let e : B ≃+* io.range := RingEquiv.ofBijective io.rangeRestrict
     ⟨fun a b h => hio (congrArg Subtype.val h), io.rangeRestrict_surjective⟩

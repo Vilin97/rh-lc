@@ -33,9 +33,10 @@ open GlobalTheory.FinPl (SplitPt Frame)
 open GlobalTheory.SeeSaw (idV FI)
 
 theorem exists_matrix_of_isLattice {O K : Type} [CommRing O] [IsDomain O] [IsPrincipalIdealRing O] [Field K] [Algebra O K]
-    [IsFractionRing O K] {n : ℕ} (Λ : Submodule O (Fin n → K)) (hΛ : Λ.IsLattice K) :
+    [IsFractionRing O K] {n : ℕ} (Λ : Submodule O (Fin n → K)) (hΛ : Λ.IsFullLattice K) :
     ∃ b : Matrix (Fin n) (Fin n) K, Function.Injective b.mulVec ∧
       ∀ x : Fin n → K, (∀ i, x i ∈ (1 : Submodule O K)) ↔ b *ᵥ x ∈ Λ := by
+  letI : Λ.IsFullLattice K := hΛ
   haveI : Module.Free O Λ := Submodule.IsLattice.free K Λ
   haveI : Module.Finite O Λ := Module.Finite.iff_fg.2 hΛ.fg
   let B := Module.finBasisOfFinrankEq O Λ ((((Submodule.IsFullLattice.finrank_eq K Λ).trans (Module.finrank_fintype_fun_eq_card K))).trans (Fintype.card_fin n))
@@ -175,7 +176,21 @@ theorem exists_matrix_lat {S : HSp D} {L : Lat S} (hL : IsSelfDualC S L) :
       ∀ x : Fin S.rank → k, (∀ i, x i ∈ (1 : Submodule 𝒪[k] k)) ↔ (fun i => p.sec ((b *ᵥ x) i)) ∈ latV S L (· = p.v) := by
   obtain ⟨β, hβ⟩ := ((GlobalTheory.InhPt.exists_splitPt_frame_char D).2 k p).1 S (Fin S.rank) 1 1 (mul_one _) (mul_one _)
   obtain ⟨Λ, h1, h2, -⟩ := GlobalTheory.FinPl.FrameLat.exists_lat D k p S _ β L hL
-  obtain ⟨b, hb, hx⟩ := exists_matrix_of_isLattice Λ h1
+  have hfull : Λ.IsFullLattice k := by
+    letI : Λ.IsLattice k := h1
+    refine { span_eq_top := ?_ }
+    apply top_unique
+    intro x _
+    obtain ⟨m, s, c, hs, hc, _⟩ := GlobalTheory.FinPl.FrameLat.exists_gen (p := p) hL
+    rw [hc x]
+    apply Submodule.sum_mem
+    intro l _
+    apply Submodule.smul_mem
+    apply Submodule.subset_span
+    apply (h2 _).2
+    rw [hβ, one_mulVec]
+    exact GlobalTheory.FinPl.FrameLat.sec_inc_mem (hs l)
+  obtain ⟨b, hb, hx⟩ := exists_matrix_of_isLattice Λ hfull
   refine ⟨b, hb, fun x => (hx x).trans ((h2 _).trans ?_)⟩
   rw [hβ, one_mulVec]
 

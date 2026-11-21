@@ -66,7 +66,7 @@ theorem ext_latP (Z : LocDat D) (p : PlF D) {β : (VS D).V ≃ₗ[D.host.E] (VS 
     rw [← hβΛ]
     exact Submodule.mem_map_of_mem hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul o v _ hv =>
     have e : g (o • v) = o • g v := by rw [Subring.smul_def, Subring.smul_def, map_smul]
     rw [e]; exact Submodule.smul_mem _ o hv
@@ -82,7 +82,7 @@ theorem ext_smulLat (Z : LocDat D) (p : PlF D) {β : (VS D).V ≃ₗ[D.host.E] (
     rw [map_smul]
     exact Submodule.subset_span ⟨g w, ext_latP Z p hg hβΛ hw, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul o v _ hv =>
     have e : g (o • v) = o • g v := by rw [Subring.smul_def, Subring.smul_def, map_smul]
     rw [e]; exact Submodule.smul_mem _ o hv

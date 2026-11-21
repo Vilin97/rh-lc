@@ -98,10 +98,10 @@ theorem brAt_eq_pullback {K : Type} [Field K] [CharZero K] {ι : Type} [Fintype 
     (h : ∀ τ, IsBlock hN (g' τ : Matrix (Fin N) (Fin N) K) (g τ : Matrix (Fin n) (Fin n) K) (t τ)) (G : VV K lam) :
     brStd hN lam sg (rhoK lam g'⁻¹ G) = rhoK sg g⁻¹ (brAt hN lam sg t G) := by
   have h1 := brStd_rhoK hN hI hS g g' t h (rhoK lam g'⁻¹ G)
-  rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply] at h1
+  rw [← mul_apply_eq_comp, ← map_mul, mul_inv_cancel, map_one, one_apply_eq_self] at h1
   rw [brAt, LinearMap.smul_apply, h1, smul_smul, ← Finset.prod_mul_distrib,
     Finset.prod_eq_one fun τ _ => by rw [← zpow_add₀ (ht τ), neg_add_cancel, zpow_zero], one_smul,
-    ← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
+    ← mul_apply_eq_comp, ← map_mul, inv_mul_cancel, map_one, one_apply_eq_self]
 
 section One
 
@@ -220,7 +220,7 @@ theorem map_mem_delSq {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {n
     simp only
     rw [← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, Formalism.GradedWeylDivisibility.lclosedeq_hw_map]
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact add_mem hy hz
   | smul a y _ hy =>
     rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hy
@@ -442,7 +442,7 @@ theorem brStd_mem_delStd (h1 : OnePlace) {K : Type} [Field K] [NumberField K] {�
     rw [← e τ]
     exact brOne_mem_del h1 hN (hI τ) (hS τ) (hf0 τ)
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact add_mem hy hz
   | smul a y _ hy =>
     rw [LinearMap.map_smul_of_tower]
     exact Submodule.smul_mem _ _ hy

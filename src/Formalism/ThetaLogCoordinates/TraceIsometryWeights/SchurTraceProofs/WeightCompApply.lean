@@ -85,12 +85,7 @@ noncomputable def GAe (p : ℕ) [Fact p.Prime] (LL : Letters N) (j : ℕ) (e : F
   idem := by
     classical
     intro μ ν x
-    ext d
-    by_cases h : μ = ν
-    · subst h; simp only [ite_true, coeff_weightedHomogeneousComponent]; split_ifs <;> rfl
-    · simp only [ite_eq_right h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
-        coeff_weightedHomogeneousComponent]
-      split_ifs with h1 h2 <;> first | rfl | (exfalso; exact h (h1.symm.trans h2))
+    exact weightedHomogeneousComponent_of_mem (weightedHomogeneousComponent_mem _ x ν)
   diag := by
     classical
     intro c μ x

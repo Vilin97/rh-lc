@@ -20,15 +20,9 @@ section Gen
 variable {E V : Type*} [Field E] [NumberField E] [AddCommGroup V] [Module E V] [Module (𝓞 E) V]
   [IsScalarTower (𝓞 E) E V]
 
-theorem exists_smul_mem_lat (Λ : Submodule (𝓞 E) V) (hL : Submodule.IsLattice E Λ) (v : V) :
+theorem exists_smul_mem_lat (Λ : Submodule (𝓞 E) V) (hL : Submodule.IsFullLattice E Λ) (v : V) :
     ∃ o : 𝓞 E, o ≠ 0 ∧ o • v ∈ Λ := by
-  first
-  | exact @_root_.GlobalTheory.NonzeroSmulMemSpanLattice.exists_ne_zero_smul_mem
-  | exact _root_.GlobalTheory.NonzeroSmulMemSpanLattice.exists_ne_zero_smul_mem
-  | (apply _root_.GlobalTheory.NonzeroSmulMemSpanLattice.exists_ne_zero_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NonzeroSmulMemSpanLattice.exists_ne_zero_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NonzeroSmulMemSpanLattice.exists_ne_zero_smul_mem <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.NonzeroSmulMemSpanLattice.exists_ne_zero_smul_mem ..)
+  exact _root_.GlobalTheory.NonzeroSmulMemSpanLattice.exists_ne_zero_smul_mem Λ hL v
 
 end Gen
 

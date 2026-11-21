@@ -87,7 +87,7 @@ theorem cA_mem {z : AE D} (hz : z ∈ finInt D) : cA D z ∈ finInt D := by
     rw [cA_tmul]
     exact gen_mem hα (star_int hx)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem mul_mem' {z w : AE D} (hz : z ∈ finInt D) (hw : w ∈ finInt D) : z * w ∈ finInt D := by
@@ -120,7 +120,7 @@ theorem psi_trace {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {
 
 theorem exists_den {ι : Type} [Fintype ι] (f : ι → D.host.E) :
     ∃ d : ℕ, 0 < d ∧ ∀ i, IsIntegral ℤ ((d : D.host.E) * f i) := by
-  haveI : Algebra.IsAlgebraic ℤ D.host.E :=
+  have : Algebra.IsAlgebraic ℤ D.host.E :=
     (IsFractionRing.comap_isAlgebraic_iff (A := ℤ) (K := ℚ) (C := D.host.E)).2 inferInstance
   obtain ⟨y, hy, h⟩ := Algebra.IsAlgebraic.exists_integral_multiples ℤ (Finset.univ.image f)
   refine ⟨y.natAbs, Int.natAbs_pos.2 hy, fun i => ?_⟩

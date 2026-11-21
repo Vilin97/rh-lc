@@ -27,21 +27,4 @@ theorem weilIs_baseChange_of_comm : ∀ (S S' : Scheme.{0}) (G : Over S) (G' : O
   fun S S' G G' _ _ _ f φ h L L' hL hL' hw _ _ t n x' y' x y c ex ey =>
     weilIs_grpPullback_of_comm' S S' G G' f φ L L' hL hL' h hw (Over.mk t) n x' y' x y (unitOn c) ex ey
 
-namespace WeilNoncomm
-
-open ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.H1
-
-variable {S : Scheme.{0}} (G : Over S) [GrpObj G]
-
-namespace Heis
-
-variable {R R' : Type} [CommRing R] [CommRing R']
-
-end Heis
-
-attribute [local instance] heisGrp
-
-end WeilNoncomm
-
-
 end GlobalTheory

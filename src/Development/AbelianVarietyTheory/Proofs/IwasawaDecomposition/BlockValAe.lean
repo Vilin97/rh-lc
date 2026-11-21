@@ -52,8 +52,9 @@ theorem _root_.GlobalTheory.BlockVal.block_val_ae : ∀ {E : Type} [Field E] [Nu
     ∃ y : K, ε y = (((_root_.GlobalTheory.GalChar.block μ η r).val v : ℂˣ) : ℂ)⁻¹ := by
   intro E _ _ K _ ε μ η hμ hη r hr μH ηH hμH hηH
   have hχ : (μH * ηH⁻¹).χ = ((μ * η⁻¹ : _root_.Formalism.L2.Host.HChar E) : _root_.Neutral.B1.Ideles E →* ℂˣ) := by
-    rw [_root_.Formalism.L2.NC.HC.mul_χ, _root_.Formalism.L2.NC.HC.inv_χ, hμH, hηH]
-    simp
+    change μH.χ * ηH.χ⁻¹ = _
+    rw [hμH, hηH]
+    rfl
   have hblock := _root_.GlobalTheory.GalChar.AlmostIn.block hμ hη hr
   unfold _root_.GlobalTheory.GalChar.AlmostIn at hblock
   filter_upwards [hblock, _root_.GlobalTheory.GalChar.unr_ae (μ * η⁻¹)] with v hv hunr

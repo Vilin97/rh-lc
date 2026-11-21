@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspCompact
 public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsContRep
 public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.FixedOpen
 
@@ -194,7 +195,8 @@ theorem isContRep_integrated_archRepT {w : CuspL2 μ} {W : normOneGL (K := K) (n
       rw [inner_smul_right, L2.inner_indicatorConstLp_one, ← integral_const_mul]
       refine setIntegral_congr_ae hs ?_
       have h1 := coeFn_rightRegularRep Γ₁ μ (archP K n a) (toLp μ w)
-      have h2 := (measurePreserving_rightMul μ (archP K n a)).quasiMeasurePreserving.ae_eq_comp hwQ
+      have h2 := QuasiMeasurePreserving.ae_eq_comp
+        (measurePreserving_rightMul μ (archP K n a)).quasiMeasurePreserving hwQ
       filter_upwards [h1, h2] with x hx1 hx2
       intro _
       simp only [Function.comp_apply] at hx2
@@ -203,7 +205,7 @@ theorem isContRep_integrated_archRepT {w : CuspL2 μ} {W : normOneGL (K := K) (n
     refine (integral_integral_swap (hint s)).trans ?_
     exact setIntegral_congr_fun hs fun x _ => (hΨQ_eq x).symm
   have hcoe := (toLp_integrated_archRepT μ ν hγ hγc w).trans hV.symm
-  filter_upwards [(quasiMeasurePreserving_mk Γ₁ μ).ae_eq_comp hVeq] with y hy
+  filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ₁ μ) hVeq] with y hy
   simp only [Function.comp_apply] at hy
   refine (congrArg (fun f : Lp ℂ 2 (quotientMeasure Γ₁ μ) =>
     (f : RightCosetSpace Γ₁ → ℂ) (mk Γ₁ y)) hcoe).trans ?_

@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.SplitPart
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CongAt
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ClassLatticeSelfDual
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValuedInvMulLe
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ValSubLtOfHasRes
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AdelicMatrixCongruenceBadPrimeIffCompletion
@@ -24,15 +25,14 @@ theorem mem_localization_iff {n : ℕ} {g : GL (Fin n) (AfE F E)} {N : Submodule
     z ∈ Formalism.HermitianLatticesTheory.localization₂ P.asIdeal N ↔ ∀ i, Valued.v (adAt F P (Col2.pullV g z i)) ≤ 1 := by
   classical
   have e : N = Formalism.UG.CS.globLat g (stdLat E n) := by
-    have h1 := Formalism.UG.P.global_lattice_one_holds F E (Fin n) N (Module.Finite.iff_fg.2 hN.fg) hN.span_eq_top
-    ext v
-    conv_lhs => rw [← h1]
-    have e1 : ∀ (x : GL (Fin n) (AfE F E)) (Λ : Submodule (𝓞 E) (Fin n → E)) (v : Fin n → E),
-        v ∈ Formalism.UG.CS.globLat x Λ ↔ ((x⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) *ᵥ
-          (fun i => Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F) (v i)) ∈ Formalism.L2.Herm.hatL (F := F) Λ :=
-      fun _ _ _ => Iff.rfl
-    rw [e1, e1, inv_one, Units.val_one, Matrix.one_mulVec]
-    exact hg _
+    have hspan : Submodule.span E (stdLat E n : Set (Sp E n)) = ⊤ := by
+      rw [stdLat_eq_span, Submodule.span_span_of_tower]
+      convert (Pi.basisFun E (Fin n)).span_eq using 1
+      congr 2
+      ext i
+      exact congrFun (Pi.basisFun_apply E (Fin n) i).symm _
+    exact GlobalTheory.ClassLatticeSelfDual.eq_globLat (F := F) (stdLat E n) N
+      (Module.Finite.iff_fg.2 stdLat_lattice.fg) hspan (Module.Finite.iff_fg.2 hN.fg) g hg
   rw [e]
   constructor
   · intro hz i

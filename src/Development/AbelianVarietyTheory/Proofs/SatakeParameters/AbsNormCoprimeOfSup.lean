@@ -57,7 +57,7 @@ theorem modLI_li {S V V' V'' : Type} [CommRing S] [Algebra R S] [AddCommGroup V]
   let := Classical.propDecidable
   let g' i := if h : i ∈ s then g'' i h else 0
   have hg' : ∀ i ∈ s, algebraMap _ _ (g' i) = a * g i := by
-    intro i hi; exact (congr_arg _ (dif_pos hi)).trans (hg'' i hi)
+    intro i hi; exact (congr_arg _ (dite_eq_left hi)).trans (hg'' i hi)
   have hgI : algebraMap R S (g' j) ≠ 0 := by
     simp only [FractionalIdeal.mem_coeIdeal, not_exists, not_and'] at hgI
     exact hgI _ (hg' j hjs)
@@ -122,7 +122,7 @@ theorem modLI_gen (P : Ideal R) [hP : P.IsMaximal] {n : ℕ} (L : Submodule R (F
     refine Submodule.add_mem_sup (Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ ?_) hdiff'
     refine Submodule.subset_span ⟨⟨j.val, lt_of_lt_of_le j.2 hmn⟩, ?_⟩
     dsimp only
-    rw [dif_pos j.2]
+    rw [dite_eq_left j.2]
 
 end FrAlg
 
@@ -139,7 +139,7 @@ theorem absNorm_coprime_of_sup (I : Ideal (𝓞 E)) (hI : I ≠ ⊥) (D : ℕ) (
   have : Finite (𝓞 E ⧸ I) := Ideal.finiteQuotientOfFreeOfNeBot I hI
   have := Fintype.ofFinite (𝓞 E ⧸ I)
   have hcard : p ∣ Fintype.card (𝓞 E ⧸ I) := by
-    rw [← Nat.card_eq_fintype_card]; exact h1
+    simpa only [Ideal.absNorm_eq_natCard, Nat.card_eq_fintype_card] using h1
   obtain ⟨x, hx⟩ := exists_prime_addOrderOf_dvd_card p hcard
   have hpx : p • x = 0 := by rw [← hx]; exact addOrderOf_nsmul_eq_zero x
   have hx0 : x ≠ 0 := by
@@ -303,6 +303,9 @@ end FrAd
 section FrGlue
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
+
+local notation "𝒜" => E ⊗[F] Af F
+local notation "ιA" => inclE (F := F) (E := E) (Af F)
 
 theorem mem_hatL_incl {L : Submodule (𝓞 E) (Fin n → E)} {l : Fin n → E} (hl : l ∈ L) :
     (fun i => ιA (l i)) ∈ hatL (F := F) L :=

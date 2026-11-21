@@ -229,8 +229,8 @@ def Real.tenFunctor : K.Obj ⥤ Thick κ s' where
       dp := letI := T'.tenRat (D := D); isDPMorphism_of_rat (T.tenδ π) (T'.tenδ π)
         (Charts.Hom.ten D f : T.ten D →+* T'.ten D) fun _ h ↦ Charts.Hom.ten_mem π f h
       pt := r.analyticChartsRealization_comp_point_eq f }
-  map_id T := Thick.hom_ext fun b ↦ mp_id (K.Ten D) T b
-  map_comp f f' := Thick.hom_ext fun b ↦ mp_comp (K.Ten D) f f' b
+  map_id T := Thick.Hom.ext' (AlgHom.ext fun b ↦ mp_id (K.Ten D) T b)
+  map_comp f f' := Thick.Hom.ext' (AlgHom.ext fun b ↦ mp_comp (K.Ten D) f f' b)
 
 def Real.tenCoef : CoefMap ι (O κ s') (K.Ten D) where
   G := r.tenFunctor π hσ κ hs ι hι hπ

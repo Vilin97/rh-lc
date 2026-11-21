@@ -68,6 +68,9 @@ end Univ
 
 namespace Fgl1
 
+local notation "L" i => MvPowerSeries.coeff (Finsupp.single i 1)
+local notation "cc" => MvPowerSeries.constantCoeff
+
 section Tools
 
 variable {R : Type u} {S : Type v} [CommRing R] [CommRing S]

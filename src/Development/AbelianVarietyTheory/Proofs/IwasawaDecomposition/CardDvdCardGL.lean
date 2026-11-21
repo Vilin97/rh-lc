@@ -112,7 +112,7 @@ theorem finrank_red (N : Submodule (𝓞 E) V) (hN : Submodule.IsLattice E N) (w
       refine ⟨fun s => ?_, fun y => ?_, fun {a b} hab => ⟨1, by simpa using hab⟩⟩
       · have := isLocalizedModule_id (nonZeroDivisors (𝓞 E)) V E
         exact IsLocalizedModule.map_units (S := nonZeroDivisors (𝓞 E)) (LinearMap.id : V →ₗ[𝓞 E] V) s
-      · have hy : y ∈ Submodule.span E (N : Set V) := hN.span_eq_top ▸ Submodule.mem_top
+      · have hy : y ∈ Submodule.span E (N : Set V) := (Submodule.IsLattice.span_eq_top (self := hN)) ▸ Submodule.mem_top
         obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 E)) E _ y hy
         rw [Submodule.span_eq] at ht
         exact ⟨(⟨_, ht⟩, t), rfl⟩
@@ -145,7 +145,7 @@ theorem card_dvd_card_GL (N : Submodule (𝓞 E) V) (hN : Submodule.IsLattice E 
   rw [injective_iff_map_eq_one]
   intro γ hγ
   have h1 : ρ γ = 1 := φ.injective (by rw [map_one]; exact congrArg Units.val hγ)
-  refine Subtype.ext (stab0 hw.ne_top hN.fg hN.span_eq_top hg hgw hbig ⟨hΓ γ.2, 1, fun x hx => ?_⟩
+  refine Subtype.ext (stab0 hw.ne_top hN.fg (Submodule.IsLattice.span_eq_top (self := hN)) hg hgw hbig ⟨hΓ γ.2, 1, fun x hx => ?_⟩
     (Submonoid.isOfFinOrder_coe.mpr (isOfFinOrder_of_finite γ)))
   have h2 : (1 : 𝓞 E ⧸ w) ⊗ₜ[𝓞 E] (resHom N ⟨γ.1, hΓ γ.2⟩ ⟨x, hx⟩) = (1 : 𝓞 E ⧸ w) ⊗ₜ[𝓞 E] (⟨x, hx⟩ : N) :=
     LinearMap.congr_fun h1 ((1 : 𝓞 E ⧸ w) ⊗ₜ[𝓞 E] (⟨x, hx⟩ : N))

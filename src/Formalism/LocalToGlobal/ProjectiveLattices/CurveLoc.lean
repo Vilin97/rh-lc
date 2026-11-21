@@ -32,7 +32,7 @@ def xw (i : Fin N) : ↥(Frac0 X la w) := fr0 X la N w 1 (X.inc wL (w i)) (emb_i
 def polX (Pw : MvPolynomial (Fin N) B.KO) : ↥(Frac0 X la w) := MvPolynomial.eval₂ (constF X la N w) (xw X la N w) Pw
 
 def secOf (g : Fin N → B.Cusp j wL) : Rp X la N :=
-  ∑ k, (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (0, k))) • emb X la N (X.inc wL (g k))
+  ∑ k, (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (0, k))) • emb X la N (X.inc wL (g k))
 
 theorem secOf_self : secOf X la N w = Formalism.MainNotions.Gaps.EtaleWeightGaps.sec X la w 0 := rfl
 

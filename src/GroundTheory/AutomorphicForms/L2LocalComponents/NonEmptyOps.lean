@@ -1,6 +1,8 @@
 module
 
 public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsIsOpenForallCuspRepTFinOneEq
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsArchConv
 public import GroundTheory.AutomorphicForms.L2LocalComponents.Summand
 public import GroundTheory.AutomorphicForms.L2LocalComponents.CenterCommute
 public import GroundTheory.AutomorphicForms.L2LocalComponents.ArchBump
@@ -59,7 +61,7 @@ theorem uAction_of_commute (S : E →L[ℂ] E) (hS : ∀ g, S ∘L π g = π g �
     rw [uAction_ι, coe_derivEnd, coe_derivEnd]
     exact h.derivOp_of_commute π S hS v.2 _
   | mul a b iha ihb =>
-    rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply]
+    rw [map_mul, map_mul, mul_apply_eq_comp, mul_apply_eq_comp]
     have e : (h.uAction π (UniversalEnvelopingAlgebra.mkAlgHom ℝ h.lieSubalgebra b)
         ⟨S v, h.isSmoothVector_of_commute π S hS v.2⟩) =
         ⟨S (h.uAction π (UniversalEnvelopingAlgebra.mkAlgHom ℝ h.lieSubalgebra b) v),
@@ -90,8 +92,8 @@ def archOp {κ : archGroup K n → ℂ} (hκ : (isExpLieAlgebra K n).IsTestFunct
     CuspL2 μ →L[ℂ] CuspL2 μ :=
   LinearMap.mkContinuous
     { toFun := (archRepT μ).integrated ν κ
-      map_add' := (isExpLieAlgebra K n).integrated_add (archRepT μ) hκ
-      map_smul' := fun c x => IsExpLieAlgebra.integrated_smul (archRepT μ) κ c x }
+      map_add' := (isExpLieAlgebra K n).integrated_add (archRepT μ) (μ := ν) hκ
+      map_smul' := IsExpLieAlgebra.integrated_smul (archRepT μ) (μ := ν) κ }
     (∫ a, ‖κ a‖ ∂ν) fun x =>
       (isExpLieAlgebra K n).norm_integrated_le (archRepT μ) ν (norm_archRepT_le μ) hκ x
 

@@ -165,10 +165,20 @@ theorem isLattice_map {O : Type} [CommRing O] [Algebra O F] {V W : Type} [AddCom
   have hm := (linearIndepOn_id_imageₛ_iff (f := φ.toLinearMap) φ.injective.injOn).2 hf
   simpa [Set.image_image, Function.comp_def] using hm
 
+theorem isFullLattice_map {O : Type} [CommRing O] [Algebra O F] {V W : Type}
+    [AddCommGroup V] [Module F V] [Module O V] [IsScalarTower O F V]
+    [AddCommGroup W] [Module F W] [Module O W] [IsScalarTower O F W]
+    (φ : V ≃ₗ[F] W) (L : Submodule O V) (hL : Submodule.IsFullLattice F L) :
+    Submodule.IsFullLattice F (L.map (φ.toLinearMap.restrictScalars O)) := by
+  haveI := isLattice_map φ L hL.toIsLattice
+  refine { span_eq_top := ?_ }
+  change Submodule.span F (φ '' (L : Set V)) = ⊤
+  rw [← Submodule.map_span, hL.span_eq_top, Submodule.map_top, LinearEquiv.range]
+
 theorem latticeNormalFormCoord_of : GlobalTheory.IndefiniteRowSideFullHecke.FlagUnipotentSemidirect.LatticeNormalForm → GlobalTheory.IndefiniteRowSideFullHecke.FlagUnipotentSemidirect.LatticeNormalFormCoord := by
   intro H O F _ _ _ _ _ _ q hq n c L hL Λ hΛ
   let φ := LinearEquiv.ofInjective (Loc.inX F n c) inX_injective
-  obtain ⟨r, e, z, hr, ⟨z', rfl⟩, h⟩ := H O F (Fin (n + c) → F) q hq c _ _ isFrame _ (isLattice_map φ L hL) Λ hΛ
+  obtain ⟨r, e, z, hr, ⟨z', rfl⟩, h⟩ := H O F (Fin (n + c) → F) q hq c _ _ isFrame _ (isFullLattice_map φ L hL) Λ hΛ
   refine ⟨r, mem_unipotentRadical_of_isSemidirect hr, e, z', ?_⟩
   rw [h]
   congr 1

@@ -118,7 +118,11 @@ theorem map_nmul [MeasurableSpace (nilrad W₁ W₂)] [BorelSpace (nilrad W₁ W
     Continuous.subtype_mk (continuous_const.matrix_mul continuous_subtype_val) _
   have hsh : Measure.map (fun X => X + P X) ν = ν :=
     GlobalTheory.CompanionTheory.NilChangeVar.map_shear ν (GlobalTheory.CompanionTheory.NilChangeVar.nilrad2 W₁ W₂) P hPc
-      (fun X => GlobalTheory.CompanionTheory.NilChangeVar.nil_mul_mem A.2 X.2)
+      (fun X => ⟨fun y => by
+        rw [← Matrix.mulVec_mulVec]
+        exact A.2.2.1 _ (X.2.1 y), fun y hy => by
+        rw [← Matrix.mulVec_mulVec]
+        exact A.2.2.2 _ (X.2.2.1 y hy)⟩)
       (fun X Y hY => Subtype.ext (by
         change A.1 * (X.1 + Y.1) = A.1 * X.1
         rw [mul_add]
@@ -188,7 +192,7 @@ theorem quotVanish : QuotVanish := by
     rw [← GlobalTheory.CompanionTheory.FlagCent.perpD_perpD _ hσ, h₁, h₂]
   have g₂ : img (d * thetaR (starRingEnd ℂ) n d) W₂ = W₂ := by
     rw [← GlobalTheory.CompanionTheory.FlagCent.perpD_perpD _ hσ, h₂, h₁]
-  obtain ⟨V₂, V₃, c₁, d₁, c₂, d₂, s₂, s₃⟩ := exists_levi_spaces (d * thetaR (starRingEnd ℂ) n d) hs hW g₁ g₂
+  obtain ⟨V₂, V₃, c₁, d₁, c₂, d₂, s₂, s₃⟩ := exists_levi_spaces _ hs hW g₁ g₂
   haveI := isHaar_radHomeo hW ν
   refine absVanish μ (flagStab W₁ W₂) (uK n) (isClosed_flagStab W₁ W₂) (isCompact_uK n) ?_
     ((uniRad hW).subgroupOf (flagStab W₁ W₂)) ((flagStab V₂ V₃).subgroupOf (flagStab W₁ W₂))

@@ -25,13 +25,16 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 theorem exists_unimodular_ge {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.Nondegenerate)
-    {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) (hu : IsUnimodular h M)
+    {M : Submodule (𝓞 K) V} (hM : Submodule.IsFullLattice K M) (hu : IsUnimodular h M)
     {G : Submodule (𝓞 K) V} (hG : G.FG) (hi : G ≤ dual h G) :
-    ∃ Λ : Submodule (𝓞 K) V, Submodule.IsLattice K Λ ∧ IsUnimodular h Λ ∧ G ≤ Λ := by
+    ∃ Λ : Submodule (𝓞 K) V, Submodule.IsFullLattice K Λ ∧ IsUnimodular h Λ ∧ G ≤ Λ := by
   have hsup := (dualBasic (𝓞 K) K V h hs star_algebraMap_ringOfIntegers_mem_range).2.2.1
-  have lat : ∀ A : Submodule (𝓞 K) V, Submodule.IsLattice K A → Submodule.IsLattice K (A ⊔ G : Submodule (𝓞 K) V) :=
-    fun A hA => ⟨hA.fg.sup hG, top_le_iff.1 (hA.span_eq_top.ge.trans
-      (Submodule.span_mono (le_sup_left (a := A) (b := G))))⟩
+  have lat : ∀ A : Submodule (𝓞 K) V, Submodule.IsFullLattice K A → Submodule.IsFullLattice K (A ⊔ G : Submodule (𝓞 K) V) :=
+    fun A hA => by
+      letI := hA
+      exact { toIsLattice := Submodule.IsLattice.of_fg K (hA.fg.sup hG)
+              span_eq_top := top_le_iff.1 (Submodule.IsFullLattice.span_eq_top (A := K) (M := A)).ge.trans
+                (Submodule.span_mono (le_sup_left (a := A) (b := G))) }
   obtain ⟨h1, h2, -⟩ := dualLattice (𝓞 K) K V h hs hn star_algebraMap_ringOfIntegers_mem_range _ (lat M hM)
   refine ⟨dual h (M ⊔ G) ⊔ G, lat _ h1, ?_, le_sup_right⟩
   unfold IsUnimodular at hu ⊢
@@ -40,13 +43,14 @@ theorem exists_unimodular_ge {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) 
 
 omit [FiniteDimensional K V] in
 theorem exists_pair {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.Nondegenerate) [Nontrivial V]
-    {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) (hu : IsUnimodular h M) (T : 𝓞 K) (hT : T ≠ 0) :
+    {M : Submodule (𝓞 K) V} (hM : Submodule.IsFullLattice K M) (hu : IsUnimodular h M) (T : 𝓞 K) (hT : T ≠ 0) :
     ∃ x ∈ M, ∃ y ∈ M, ∃ o : 𝓞 K, h x y = 1 + o * T := by
   have hint : ∀ x ∈ M, ∀ y ∈ M, h x y ∈ (1 : Submodule (𝓞 K) K) := fun x hx y hy => by
     rw [← hu, dualBasic_mem_dual] at hy
     exact hy x hx
+  letI := hM
   have ne : ∀ φ : V →ₗ[K] K, (∀ y ∈ M, φ y = 0) → φ = 0 := fun φ H =>
-    LinearMap.ext_on hM.span_eq_top fun y hy => H y hy
+    LinearMap.ext_on (Submodule.IsFullLattice.span_eq_top (A := K) (M := M)) fun y hy => H y hy
   obtain ⟨v, hv, y, hy, hvy⟩ : ∃ v ∈ M, ∃ y ∈ M, h v y ≠ 0 := by
     by_contra H
     push Not at H
@@ -124,7 +128,7 @@ theorem exists_idem (P : Ideal (𝓞 K)) (T : 𝓞 K) (hc : IsCoprime P (conjIde
 
 omit [FiniteDimensional K V] in
 theorem exists_norm {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.Nondegenerate) [Nontrivial V]
-    {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) (hu : IsUnimodular h M) (T : ℕ) (hT : T ≠ 0)
+    {M : Submodule (𝓞 K) V} (hM : Submodule.IsFullLattice K M) (hu : IsUnimodular h M) (T : ℕ) (hT : T ≠ 0)
     (P : Ideal (𝓞 K)) (hc : IsCoprime P (conjIdeal (K := K) P))
     (hP : P * conjIdeal (K := K) P = Ideal.span {(T : 𝓞 K)}) :
     ∃ w, h w w - (T : K)⁻¹ ∈ (1 : Submodule (𝓞 K) K) := by
@@ -154,12 +158,12 @@ theorem exists_norm {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.N
   linear_combination (-(T : K)) * h1 - (a : K) * h2
 
 theorem exists_adapted {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.Nondegenerate)
-    {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) (hu : IsUnimodular h M) {r : ℕ} (e f : Fin r → V)
+    {M : Submodule (𝓞 K) V} (hM : Submodule.IsFullLattice K M) (hu : IsUnimodular h M) {r : ℕ} (e f : Fin r → V)
     (I : Fin r → FractionalIdeal (𝓞 K)⁰ K) (hI : ∀ a, (1 : K) ∈ I a) (hee : ∀ a b, h (e a) (e b) = 0)
     (hff : ∀ a b, h (f a) (f b) = 0) (hef : ∀ a b, h (e a) (f b) = if a = b then 1 else 0) (z g : V)
     (hez : ∀ a, h (e a) z = 0) (hfz : ∀ a, h (f a) z = 0) (heg : ∀ a, h (e a) g = 0) (hfg : ∀ a, h (f a) g = 0)
     (hzz : h z z ∈ (1 : Submodule (𝓞 K) K)) (hgg : h g g ∈ (1 : Submodule (𝓞 K) K)) (hgz : h g z = 1) :
-    ∃ Λ : Submodule (𝓞 K) V, Submodule.IsLattice K Λ ∧ IsUnimodular h Λ ∧ z ∈ Λ ∧ g ∈ Λ ∧
+    ∃ Λ : Submodule (𝓞 K) V, Submodule.IsFullLattice K Λ ∧ IsUnimodular h Λ ∧ z ∈ Λ ∧ g ∈ Λ ∧
       Λ ⊓ (Submodule.span K (Set.range e)).restrictScalars (𝓞 K) =
         Submodule.span (𝓞 K) {y | ∃ (a : Fin r) (x : K), x ∈ I a ∧ y = x • e a} := by
   have hI0 : ∀ a, I a ≠ 0 := fun a k => by simpa [k] using hI a

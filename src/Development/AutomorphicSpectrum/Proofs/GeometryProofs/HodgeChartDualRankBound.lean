@@ -129,10 +129,8 @@ theorem eq_zero_of_forms [CharZero Ω] [Fact p.Prime] (σ : E →+* Ω) {e : Li}
   have h2 : ∀ u : Module.Dual Ω Li, u e = 0 := by
     intro u
     have hu : u ∈ Submodule.span Ω (D.om : Set (Module.Dual Ω Li)) := by
-      first
-      | letI : D.om.IsFullLattice Ω := D.om_lat
-        rw [Submodule.IsFullLattice.span_eq_top (A := Ω) (M := D.om)]; trivial
-      | rw [Submodule.IsLattice.span_eq_top (self := D.om_lat)]; trivial
+      letI : D.om.IsFullLattice Ω := D.om_lat
+      rw [Submodule.IsFullLattice.span_eq_top (A := Ω) (M := D.om)]; trivial
     induction hu using Submodule.span_induction with
     | mem x hx => exact h1 x hx
     | zero => simp

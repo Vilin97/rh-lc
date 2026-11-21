@@ -82,7 +82,7 @@ def SameGenus (h : V →ₗ⋆[K] V →ₗ[K] K) (L M : Submodule R V) : Prop :=
   ∀ p : Ideal R, p.IsMaximal → ∃ g ∈ isom h, gmap g (loc (K := K) p L) = loc (K := K) p M
 
 def genus (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule R V) : Set (Submodule R V) :=
-  {M | Submodule.IsLattice K M ∧ SameGenus h L M}
+  {M | Submodule.IsFullLattice K M ∧ SameGenus h L M}
 
 def conjIdeal (P : Ideal R) : Ideal R :=
   Ideal.span {r | ∃ s ∈ P, algebraMap R K r = star (algebraMap R K s)}

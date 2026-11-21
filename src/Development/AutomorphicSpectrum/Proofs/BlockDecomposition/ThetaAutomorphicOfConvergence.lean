@@ -88,7 +88,10 @@ theorem l2_om_tendsto (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ)
   rw [hz] at hsq
   have e : ∀ x : GA D S, l2O μ 𝓕 (om (x, 1) f - f) =
       (∫⁻ w, ‖(om (x, 1) f - f) w‖ₑ ^ 2 ∂μ.restrict 𝓕) ^ (1 / 2 : ℝ) := fun x => by
-    rw [← l2O_sq_eq_lintegral, ← ENNReal.rpow_natCast, ← ENNReal.rpow_mul]
+    first
+    | rw [← l2O_sq_eq_lintegral μ 𝓕 _ ((hom.om_pres _ f hf).cont.sub hf.cont)]
+    | rw [← l2O_sq_eq_lintegral μ 𝓕 _]
+    rw [← ENNReal.rpow_natCast, ← ENNReal.rpow_mul]
     norm_num
   simp only [e]
   have := (ENNReal.continuous_rpow_const (y := (1 / 2 : ℝ))).tendsto 0 |>.comp hsq

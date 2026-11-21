@@ -115,8 +115,7 @@ theorem Core.exists_opens_smoothOfRelativeDimension (C : Core) (hT : C.HasTests)
     (𝔸(Fin C.g; C.Z) ↘ C.Z ≫ C.π) hN W.toScheme v ⟨w, hw⟩ U' hc' hqf hU' (by
       intro p _ a a' h hp hr hg _
       refine huniq p a a' ?_ ?_ hp hr fun i => ?_
-      · change Set.range (gPt p ≫ (a ≫ W.ι ≫ C.GG.hom)) ⊆ C.U
-        rintro _ ⟨z, rfl⟩
+      · rintro _ ⟨z, rfl⟩
         exact hg ⟨z, rfl⟩
       · change a ≫ t = a' ≫ t
         rw [← hv, reassoc_of% h]

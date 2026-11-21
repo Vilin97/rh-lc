@@ -112,7 +112,7 @@ theorem bcP_mem_X (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (D.sp.Y 0
     rw [e]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [(baseChange₂ D p).map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [baseChange_smul₂]; exact Submodule.smul_mem _ _ hx
 
 theorem X_le_span (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T)

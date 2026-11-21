@@ -289,7 +289,7 @@ theorem mem_locR_iff (w : HeightOneSpectrum (𝓞 K)) (k : K) :
 
 end NumberField
 
-theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (h : V →ₗ⋆[K] V →ₗ[K] K), IsCMUnram K → h.IsSymm → h.Nondegenerate → ∀ (M : Submodule (𝓞 K) V), Submodule.IsLattice K M → ∀ P : Ideal (𝓞 K), P.IsMaximal → ∃ b : Module.Basis (Fin (Module.finrank K V)) K V, (∀ i l, i ≠ l → h (b i) (b l) = 0) ∧ ∀ x, x ∈ loc (K := K) P M ↔ ∀ i, b.repr x i ∈ locR (K := K) P := by
+theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (h : V →ₗ⋆[K] V →ₗ[K] K), IsCMUnram K → h.IsSymm → h.Nondegenerate → ∀ (M : Submodule (𝓞 K) V), Submodule.IsFullLattice K M → ∀ P : Ideal (𝓞 K), P.IsMaximal → ∃ b : Module.Basis (Fin (Module.finrank K V)) K V, (∀ i l, i ≠ l → h (b i) (b l) = 0) ∧ ∀ x, x ∈ loc (K := K) P M ↔ ∀ i, b.repr x i ∈ locR (K := K) P := by
   intro K V _ _ _ _ _ _ _ _ h hK hs hnd M hM P hP
   let w : IsDedekindDomain.HeightOneSpectrum (𝓞 K) :=
     ⟨P, hP.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hP (RingOfIntegers.not_isField K)⟩
@@ -299,8 +299,9 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   have hΛ : ∀ x, x ∈ loc (K := K) P M ↔ x ∈ Λ := fun x => by
     rw [← hS]; exact mem_loc_span_iff w _ x
   have htop : Submodule.span K (Λ : Set V) = ⊤ := by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply top_unique
+    rw [← hM.span_eq_top, ← hS, Submodule.span_span_of_tower]
+    exact Submodule.span_mono (fun _ hx => Submodule.subset_span hx)
   obtain ⟨m, e, he1, he2, he3⟩ := exists_orth_gens (w.valuation K) h hs (algebraMap (𝓞 K) K θ)
     (int_mem_biInt w θ) (by
       rw [← ht, ← map_sub]; exact w.valuation_eq_one_iff_notMem.2 hθ) _ Λ

@@ -79,7 +79,7 @@ open GlobalTheory.SphGlob in
 theorem GlobalTheory.SphGlob.fixes_pure : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n d : ℕ)
     (X : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n) (W : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d) (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ X W) (ψ : AddChar (AF F) ℂ)
     (χX χW : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chr F E) (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ X W) (S : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F))),
-    0 < n → X.L.IsLattice E → W.L.IsLattice E → M.IsGood ψ → M.IsWeil ψ χX χW om →
+    0 < n → X.L.IsFullLattice E → W.L.IsLattice E → M.IsGood ψ → M.IsWeil ψ χX χW om →
     (∀ v, v ∉ S → ∀ k ∈ GlobalTheory.InertSph.KAt σ W v,
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.AdelicU.evFin F v) (om (1, k)) (M.vac v) (M.vac v)) →
     ∀ k : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.UA σ W.J,
@@ -110,11 +110,11 @@ theorem GlobalTheory.SphGlob.fixes_pure : ∀ (F E : Type) [Field F] [NumberFiel
   have hcut : ∀ v, v ∉ S → loc (idem F v) (idem_mul_self v) k ∈ GlobalTheory.InertSph.KAt σ W v := by
     intro v hv
     refine loc_mem_KAt F E σ d W v k fun z hz => ⟨?_, ?_⟩
-    · refine GlobalTheory.T.mem_adelicLatticeAtPlace_of_tensor_with_lattice F E n d X W v _ hn hXL fun x hx => ?_
+    · refine GlobalTheory.T.mem_adelicLatticeAtPlace_of_tensor_with_lattice F E n d X W v _ hn (by letI := hXL; infer_instance) fun x hx => ?_
       have h0 := GlobalTheory.InertSphStab.vecMulVec_mem X W v hx hz
       rw [← GlobalTheory.InertSphStab.vecMulVec_mul_transpose]
       exact (hlat v hv _).2 h0
-    · refine GlobalTheory.T.mem_adelicLatticeAtPlace_of_tensor_with_lattice F E n d X W v _ hn hXL fun x hx => ?_
+    · refine GlobalTheory.T.mem_adelicLatticeAtPlace_of_tensor_with_lattice F E n d X W v _ hn (by letI := hXL; infer_instance) fun x hx => ?_
       have h0 := GlobalTheory.InertSphStab.vecMulVec_mem X W v hx hz
       refine (hlat v hv _).1 ?_
       rw [GlobalTheory.InertSphStab.vecMulVec_mul_transpose, Matrix.mulVec_mulVec, mat_mul_inv, Matrix.one_mulVec]

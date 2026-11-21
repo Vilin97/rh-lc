@@ -39,28 +39,28 @@ theorem rD_sum (β : Idx D j G.N →₀ ℕ) {ι : Type*} (s : Finset ι) (f : �
   map_sum (rDh G la β) f s
 
 theorem hasse_smul_Op (β : Idx D j G.N →₀ ℕ) (r : Op X la G.N) (x : ↥(HK X la G.w wF)) :
-    hasse X la G.w β ((@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x : ↥(HK X la G.w wF)) : Lw X la G.w) =
-      ∑ q ∈ antidiagonal β, @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (hasseOp X la G.N q.1 r) •
+    hasse X la G.w β ((@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x : ↥(HK X la G.w wF)) : Lw X la G.w) =
+      ∑ q ∈ antidiagonal β, @algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ (hasseOp X la G.N q.1 r) •
         hasse X la G.w q.2 (x : Lw X la G.w) := by
   have hA : ∀ (q : Idx D j G.N →₀ ℕ) (a : Op X la G.N), PI.HJP.H X la G.w q
       (algebraMap (Rp X la G.N) (Lw X la G.w) (algebraMap (Op X la G.N) (Rp X la G.N) a)) =
       algebraMap (Rp X la G.N) (Lw X la G.w) (algebraMap (Op X la G.N) (Rp X la G.N) (hasseOp X la G.N q a)) :=
     fun q a => hasse_algebraMap_Op X la G.w q a
-  have e0 : ((@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x : ↥(HK X la G.w wF)) : Lw X la G.w) =
+  have e0 : ((@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x : ↥(HK X la G.w wF)) : Lw X la G.w) =
       algebraMap (Rp X la G.N) (Lw X la G.w) (algebraMap (Op X la G.N) (Rp X la G.N) r) * (x : Lw X la G.w) :=
     (algebraMap_Op_mul la G.w r x).symm
-  show PI.HJP.H X la G.w β _ = ∑ q ∈ antidiagonal β, @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))
+  show PI.HJP.H X la G.w β _ = ∑ q ∈ antidiagonal β, @algebraMap (Op X la G.N) (Kp X la G.N) _ _ _
     (hasseOp X la G.N q.1 r) • PI.HJP.H X la G.w q.2 (x : Lw X la G.w)
   rw [e0, PI.HJP.H_mul]
   simp only [hA, algebraMap_Op_mul la G.w]
 
 theorem rD_smul (β : Idx D j G.N →₀ ℕ) (r : Op X la G.N) (x : ↥(HK X la G.w wF)) :
-    rD G la β (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x) =
+    rD G la β (@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x) =
       ∑ q ∈ antidiagonal β, hasseOp X la G.N q.1 r • rD G la q.2 x := by
   have hP := hasse_preserves_kernel G la
-  rw [rD_eq G la β _ (hP β _ (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x).2)]
-  have e : (⟨_, hP β _ (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x).2⟩ : ↥(HK X la G.w wF)) =
-      ∑ q ∈ antidiagonal β, @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (hasseOp X la G.N q.1 r) •
+  rw [rD_eq G la β _ (hP β _ (@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x).2)]
+  have e : (⟨_, hP β _ (@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x).2⟩ : ↥(HK X la G.w wF)) =
+      ∑ q ∈ antidiagonal β, @algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ (hasseOp X la G.N q.1 r) •
         (⟨_, hP q.2 _ x.2⟩ : ↥(HK X la G.w wF)) := by
     apply Subtype.ext
     rw [Submodule.coe_sum]
@@ -133,7 +133,7 @@ theorem good_of_mem (hC : Q.InCurve) {T : ℕ} {m : PtsG G la → ℕ} (ha : 0 <
   exact le_top
 
 theorem good_smul (hC : Q.InCurve) {T : ℕ} {m : PtsG G la → ℕ} {x : ↥(HK X la G.w wF)} (hx : GoodP Q T m x)
-    (r : Op X la G.N) : GoodP Q T m (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x) := fun β hβ ζ => by
+    (r : Op X la G.N) : GoodP Q T m (@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x) := fun β hβ ζ => by
   rw [rD_smul]
   refine le_ordA_sum Q hC ζ _ _ _ fun q hq => le_ordA_smul_Op Q hC ζ _ _ _ (hx q.2 ?_ ζ)
   rw [mem_antidiagonal] at hq
@@ -168,11 +168,11 @@ theorem good_of_mem_AAp (hC : Q.InCurve) {T : ℕ} {m : PtsG G la → ℕ} (ha :
   | smul r z _ h =>
     intro x hx
     obtain ⟨x1, rfl⟩ := toWK_surjective X la G.w wF _ z
-    have e : toWK X la G.w wF (a0 D j T) (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x1) =
+    have e : toWK X la G.w wF (a0 D j T) (@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x1) =
         r • toWK X la G.w wF (a0 D j T) x1 := by
       rw [LinearMap.map_smul_of_tower]
       rfl
-    have hd : x - @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x1 ∈
+    have hd : x - @algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x1 ∈
         Jid X la G.w ^ a0 D j T • (⊤ : Submodule ↥(Frac0 X la G.w) ↥(HK X la G.w wF)) := by
       rw [← toWK_eq_zero_iff, map_sub, hx, e, sub_self]
     have := good_add hC (good_smul hC (h x1 rfl) r) (good_of_mem hC ha hd)

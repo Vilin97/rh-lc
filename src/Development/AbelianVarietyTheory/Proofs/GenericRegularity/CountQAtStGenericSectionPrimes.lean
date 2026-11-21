@@ -24,7 +24,7 @@ theorem mem_one (k : Fin N) : emb X la N (X.inc wL (w k)) ∈ Vw X la N (addL (w
   rw [add_zero_weight_one_eq]; exact emb_mem_Vw X la N wL (w k)
 
 theorem sfr_eq_sum (i : Fin (WeightFamilies.dimY D j + 1)) :
-    sfr X la w i = ∑ k, algebraMap (Kp X la N) ↥(Frac0 X la w) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (i, k))) *
+    sfr X la w i = ∑ k, algebraMap (Kp X la N) ↥(Frac0 X la w) (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (i, k))) *
       CurveLoc.fr0 X la N w 1 (X.inc wL (w k)) (mem_one X la N w k) := by
   apply Subtype.ext
   set_option synthInstance.maxHeartbeats 100000 in

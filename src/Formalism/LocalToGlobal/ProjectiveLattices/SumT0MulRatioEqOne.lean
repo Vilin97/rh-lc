@@ -43,24 +43,24 @@ variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} 
   (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ)
 
 theorem exists_derKp (p : Idx D j N) : ∃ δ : Kp X la N → Kp X la N, IsDer δ ∧
-    (∀ f : Pol X la N, δ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) f)) =
-      @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f))) ∧
+    (∀ f : Pol X la N, δ (@algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (Pol X la N) (Op X la N) f)) =
+      @algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f))) ∧
     ∀ c : X.Kl la, δ (algebraMap (X.Kl la) (Kp X la N) c) = 0 := by
   obtain ⟨δ, hδ, hf⟩ := IsDer.ofLoc (gI X la N).primeCompl
     (fun f => algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f))
     (fun x y => by simp only [map_add (f := _)])
     (fun x y => by simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul])
   obtain ⟨δ', hδ', h'⟩ := IsDer.ofLoc (nonZeroDivisors (Op X la N))
-    (fun z => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (δ z))
+    (fun z => @algebraMap (Op X la N) (Kp X la N) _ _ _ (δ z))
     (fun x y => by simp only [hδ.add, map_add (f := _)]) (fun x y => by simp only [hδ.mul, map_add (f := _), map_mul])
-  have hval : ∀ f : Pol X la N, δ' (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) f)) =
-      @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f)) := by
+  have hval : ∀ f : Pol X la N, δ' (@algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (Pol X la N) (Op X la N) f)) =
+      @algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f)) := by
     intro f
     rw [h', hf]
   have hOl : ∀ a : X.Ol la, δ' (algebraMap (X.Ol la) (Kp X la N) a) = 0 := by
     intro a
     have e : algebraMap (X.Ol la) (Kp X la N) a =
-        @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.C a)) := by
+        @algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.C a)) := by
       rw [IsScalarTower.algebraMap_apply (X.Ol la) (Op X la N) (Kp X la N),
         IsScalarTower.algebraMap_apply (X.Ol la) (Pol X la N) (Op X la N), MvPolynomial.algebraMap_eq]
     rw [e, hval, MvPolynomial.pderiv_C, map_zero, map_zero]
@@ -74,15 +74,15 @@ def dK (p : Idx D j N) : Kp X la N → Kp X la N := Classical.choose (exists_der
 theorem dK_isDer (p : Idx D j N) : IsDer (dK X la N p) := (Classical.choose_spec (exists_derKp X la N p)).1
 
 theorem dK_pol (p : Idx D j N) (f : Pol X la N) :
-    dK X la N p (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) f)) =
-      @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f)) :=
+    dK X la N p (@algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (Pol X la N) (Op X la N) f)) =
+      @algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f)) :=
   (Classical.choose_spec (exists_derKp X la N p)).2.1 f
 
 theorem dK_Kl (p : Idx D j N) (c : X.Kl la) : dK X la N p (algebraMap (X.Kl la) (Kp X la N) c) = 0 :=
   (Classical.choose_spec (exists_derKp X la N p)).2.2 c
 
 theorem dK_Tv (p q : Idx D j N) :
-    dK X la N p (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N q)) = if q = p then 1 else 0 := by
+    dK X la N p (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N q)) = if q = p then 1 else 0 := by
   classical
   have := dK_pol X la N p (MvPolynomial.X q)
   rw [MvPolynomial.pderiv_X, Pi.single_apply] at this
@@ -245,14 +245,14 @@ theorem exists_derOsK : ∃ δ : OsK X la w → OsK X la w, IsDer δ ∧
   obtain ⟨δ, hδ, h⟩ := (dF_isDer X la w l).quot (Jid X la w) (fun x hx => dF_Jid X la w l hx)
   exact ⟨δ, hδ, fun x => h x⟩
 
-theorem sum_T0_mul_ratio_eq_one : ∑ k, algebraMap (Kp X la N) (Frac0 X la w) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (0, k))) *
+theorem sum_T0_mul_ratio_eq_one : ∑ k, algebraMap (Kp X la N) (Frac0 X la w) (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (0, k))) *
     xr X la w k = 1 := by
-  have e : ∀ k, algebraMap (Kp X la N) (Lw X la w) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (0, k))) *
+  have e : ∀ k, algebraMap (Kp X la N) (Lw X la w) (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (0, k))) *
       frac X la w 1 (emb X la N (X.inc wL (w k))) = frac X la w 1
-        ((@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (0, k))) • emb X la N (X.inc wL (w k))) := by
+        ((@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (0, k))) • emb X la N (X.inc wL (w k))) := by
     intro k
     rw [LinearMap.map_smul, Algebra.smul_def]
-  have hL : ∑ k, algebraMap (Kp X la N) (Lw X la w) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (0, k))) *
+  have hL : ∑ k, algebraMap (Kp X la N) (Lw X la w) (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (0, k))) *
       frac X la w 1 (emb X la N (X.inc wL (w k))) = 1 := by
     simp_rw [e]
     set_option synthInstance.maxHeartbeats 100000 in

@@ -125,7 +125,7 @@ theorem bcP_X {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (f : Fin (D.R.rS + 
     rw [this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
   · rw [map_zero]; exact zero_mem _
-  · intro a b _ _ ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  · intro a b _ _ ha hb; rw [map_add]; exact add_mem ha hb
   · intro c a _ ha; rw [Formalism.L2.SG.TermLoc.baseChange_smul₂]; exact Submodule.smul_mem _ _ ha
 
 theorem rep_of_lsub {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) {Λ₁ Λ₂ : LV D} (h : Lsub Λ₁ G = Lsub Λ₂ G)

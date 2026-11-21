@@ -25,6 +25,8 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     [CommRing O] [Algebra O LL] {v : AddValuation LL (WithTop ℚ)} {n : ℕ}
     (W : LocWach PD LL O v n)
 
+local notation "mkI" x:max => Ideal.Quotient.mk (DualFramesAlt.eigenRingInvariants.Ia x)
+
 theorem u2ringPfT_natCast_unit [IsLocalRing O] (p : ℕ) [hp : Fact p.Prime]
     (hpm : (p : O) ∈ IsLocalRing.maximalIdeal O) {s : ℕ} (hs1 : 1 ≤ s) (hsp : s < p) : IsUnit (s : O) := by
   have : CharP (IsLocalRing.ResidueField O) p :=
@@ -68,7 +70,7 @@ theorem u2ringPfT_deriv [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
   have hqv0 : qv = 0 := by
     have h1 := congrArg (Ideal.Quotient.mk (DualFramesAlt.eigenRingInvariants.Ia x)) W.q₀_def
     have e1 : (mkI x) (PowerSeries.X * W.q₀) = (mkI x) (PowerSeries.C (x * qv)) := by
-      rw [map_mul, DualFramesAlt.eigenRingInvariants.mk_X, hqv, ← map_mul, ← map_mul]
+      simp only [map_mul, DualFramesAlt.eigenRingInvariants.mk_X, hqv]
     have e2 : (mkI x) ((1 + PowerSeries.X) ^ p - 1) = (mkI x) (PowerSeries.C ((1 + x) ^ p - 1)) := by
       simp only [map_sub, map_pow, map_add (f := _), map_one, DualFramesAlt.eigenRingInvariants.mk_X]
     rw [e1, e2, hx1, sub_self] at h1
@@ -76,14 +78,11 @@ theorem u2ringPfT_deriv [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
 
   have hyu : y = uv * x ^ s' := by
     apply DualFramesAlt.eigenRingInvariants.ev_inj hxm
-    rw [← hy, hπu, map_mul, map_pow, huv, DualFramesAlt.eigenRingInvariants.mk_X, ← map_pow, ← map_mul]
-    congr 1
-    rw [map_mul, map_pow]
+    rw [← hy]
+    simp only [hπu, map_mul, map_pow, huv, DualFramesAlt.eigenRingInvariants.mk_X]
   have hEy : Ec.eval y = 0 := by
     have h4 : (mkI x) W.q₀ = (mkI x) (PowerSeries.C (wv * Ec.eval y)) := by
-      rw [hQ, map_mul, hwv, u2ringPfE_mk_aeval hy, ← map_mul]
-      congr 1
-      rw [map_mul]
+      simp only [hQ, map_mul, hwv, u2ringPfE_mk_aeval hy]
     rw [hqv, hqv0] at h4
     exact (mul_eq_zero.1 (DualFramesAlt.eigenRingInvariants.ev_inj hxm h4).symm).resolve_left hwvu.ne_zero
 

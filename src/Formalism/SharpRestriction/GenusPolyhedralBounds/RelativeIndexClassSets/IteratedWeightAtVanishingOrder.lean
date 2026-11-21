@@ -17,7 +17,7 @@ section Maps
 variable (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ)
 
 def jK : MvPolynomial (Idx D j N) (X.Kl la) →+* Kp X la N :=
-  MvPolynomial.eval₂Hom (algebraMap (X.Kl la) (Kp X la N)) fun p => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p)
+  MvPolynomial.eval₂Hom (algebraMap (X.Kl la) (Kp X la N)) fun p => @algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N p)
 
 def jF : MvPolynomial (Idx D j N) B.KO →+* Kp X la N :=
   (jK X la N).comp (MvPolynomial.map (algebraMap B.KO (X.Kl la)))
@@ -30,9 +30,9 @@ theorem jF_C (a : B.KO) :
   simp [jF, jK_C]
 
 theorem jK_map (q : Pol X la N) : jK X la N (MvPolynomial.map (algebraMap (X.Ol la) (X.Kl la)) q) =
-    @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) q) := by
+    @algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (Pol X la N) (Op X la N) q) := by
   have h : (jK X la N).comp (MvPolynomial.map (algebraMap (X.Ol la) (X.Kl la))) =
-      (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp (algebraMap (Pol X la N) (Op X la N)) := by
+      (@algebraMap (Op X la N) (Kp X la N) _ _ _).comp (algebraMap (Pol X la N) (Op X la N)) := by
     apply MvPolynomial.ringHom_ext
     · intro a
       rw [RingHom.comp_apply, RingHom.comp_apply, MvPolynomial.map_C, jK_C,
@@ -48,7 +48,7 @@ theorem val_algebraMap (a : B.KO) : Valued.v (algebraMap B.KO (X.Kl la) a) = la.
   HeightOneSpectrum.valuedAdicCompletion_eq_valuation' la a
 
 theorem jF_C_mem (a : B.KO) (ha : la.valuation B.KO a ≤ 1) :
-    jF X la N (MvPolynomial.C a) ∈ Set.range (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))) := by
+    jF X la N (MvPolynomial.C a) ∈ Set.range (@algebraMap (Op X la N) (Kp X la N) _ _ _) := by
   have hm : algebraMap B.KO (X.Kl la) a ∈ la.adicCompletionIntegers B.KO := by
     rw [HeightOneSpectrum.mem_adicCompletionIntegers, val_algebraMap]; exact ha
   refine ⟨algebraMap (X.Ol la) (Op X la N) ⟨_, hm⟩, ?_⟩
@@ -57,12 +57,12 @@ theorem jF_C_mem (a : B.KO) (ha : la.valuation B.KO a ≤ 1) :
   rfl
 
 theorem jF_monomial_mem (β : Idx D j N →₀ ℕ) :
-    jF X la N (MvPolynomial.monomial β 1) ∈ Set.range (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))) := by
+    jF X la N (MvPolynomial.monomial β 1) ∈ Set.range (@algebraMap (Op X la N) (Kp X la N) _ _ _) := by
   refine ⟨β.prod fun p k => Tv X la N p ^ k, ?_⟩
   simp [jF, jK, MvPolynomial.eval₂_monomial, Finsupp.prod, map_prod, map_pow]
 
 theorem val_le_one_of_mem {x : X.Kl la}
-    (hx : algebraMap (X.Kl la) (Kp X la N) x ∈ Set.range (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))))) : Valued.v x ≤ 1 := by
+    (hx : algebraMap (X.Kl la) (Kp X la N) x ∈ Set.range (@algebraMap (Op X la N) (Kp X la N) _ _ _)) : Valued.v x ≤ 1 := by
   by_contra hlt
   rw [not_le] at hlt
   obtain ⟨s, hs⟩ := hx
@@ -83,7 +83,7 @@ theorem val_le_one_of_mem {x : X.Kl la}
   exact absurd this hinv.ne
 
 theorem addVal_le_vAdd (p : MvPolynomial (Idx D j N) B.KO) (β : Idx D j N →₀ ℕ) (r : Op X la N) (hβ : p.coeff β ≠ 0)
-    (hr : @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r = jF X la N p) :
+    (hr : @algebraMap (Op X la N) (Kp X la N) _ _ _ r = jF X la N p) :
     IsDiscreteValuationRing.addVal (Op X la N) r ≤ ((vAdd la (p.coeff β)).toNat : ℕ∞) := by
   classical
 
@@ -119,7 +119,7 @@ theorem addVal_le_vAdd (p : MvPolynomial (Idx D j N) B.KO) (β : Idx D j N →�
     exact (Ideal.ne_top_iff_one _).mp (IsLocalRing.maximalIdeal.isMaximal _).ne_top this
   obtain ⟨uq, huq⟩ := hqu
   have hfac : jF X la N p = algebraMap (X.Kl la) (Kp X la N) (algebraMap B.KO (X.Kl la) c0) *
-      @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (uq : Op X la N) := by
+      @algebraMap (Op X la N) (Kp X la N) _ _ _ (uq : Op X la N) := by
     rw [huq, ← jK_map, hq, ← jF_C]
     show _ = jF X la N (MvPolynomial.C c0) * jF X la N (MvPolynomial.C c0⁻¹ * p)
     rw [← map_mul, ← mul_assoc, ← map_mul, mul_inv_cancel₀ hc0, map_one, one_mul]
@@ -137,23 +137,23 @@ theorem addVal_le_vAdd (p : MvPolynomial (Idx D j N) B.KO) (β : Idx D j N →�
   have hϖ0 : (ϖ : X.Kl la) ≠ 0 := by
     intro h; exact hϖ.ne_zero (Subtype.ext h)
   have hmem : algebraMap (X.Kl la) (Kp X la N) (algebraMap B.KO (X.Kl la) c0 * ((ϖ : X.Kl la) ^ (n + 1))⁻¹) ∈
-      Set.range (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))) := by
+      Set.range (@algebraMap (Op X la N) (Kp X la N) _ _ _) := by
     refine ⟨s * ((uq⁻¹ : (Op X la N)ˣ) : Op X la N), ?_⟩
     have hϖK : algebraMap (X.Kl la) (Kp X la N) (ϖ : X.Kl la) =
-        @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (X.Ol la) (Op X la N) ϖ) := by
+        @algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (X.Ol la) (Op X la N) ϖ) := by
       rw [← IsScalarTower.algebraMap_apply (X.Ol la) (Op X la N) (Kp X la N),
         IsScalarTower.algebraMap_apply (X.Ol la) (X.Kl la) (Kp X la N)]
       rfl
     have hne : algebraMap (X.Kl la) (Kp X la N) (ϖ : X.Kl la) ≠ 0 := (map_ne_zero _).mpr hϖ0
-    have h1 : @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (uq : Op X la N) *
-        @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) ((uq⁻¹ : (Op X la N)ˣ) : Op X la N) = 1 := by
+    have h1 : @algebraMap (Op X la N) (Kp X la N) _ _ _ (uq : Op X la N) *
+        @algebraMap (Op X la N) (Kp X la N) _ _ _ ((uq⁻¹ : (Op X la N)ˣ) : Op X la N) = 1 := by
       rw [← map_mul, Units.mul_inv, map_one]
-    have h2 := hr.symm.trans (congrArg (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))) hs)
-    rw [hfac, map_mul (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))), map_pow, ← hϖK] at h2
-    rw [map_mul (algebraMap (X.Kl la) (Kp X la N)), map_inv₀, map_pow, map_mul (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))))]
+    have h2 := hr.symm.trans (congrArg (@algebraMap (Op X la N) (Kp X la N) _ _ _) hs)
+    rw [hfac, map_mul (@algebraMap (Op X la N) (Kp X la N) _ _ _), map_pow, ← hϖK] at h2
+    rw [map_mul (algebraMap (X.Kl la) (Kp X la N)), map_inv₀, map_pow, map_mul (@algebraMap (Op X la N) (Kp X la N) _ _ _)]
     rw [eq_mul_inv_iff_mul_eq₀ (pow_ne_zero _ hne)]
-    calc _ = (algebraMap (X.Kl la) (Kp X la N) (ϖ : X.Kl la) ^ (n + 1) * @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) s) *
-          @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) ((uq⁻¹ : (Op X la N)ˣ) : Op X la N) := by ring
+    calc _ = (algebraMap (X.Kl la) (Kp X la N) (ϖ : X.Kl la) ^ (n + 1) * @algebraMap (Op X la N) (Kp X la N) _ _ _ s) *
+          @algebraMap (Op X la N) (Kp X la N) _ _ _ ((uq⁻¹ : (Op X la N)ˣ) : Op X la N) := by ring
       _ = _ := by rw [← h2, mul_assoc, h1, mul_one]
   have hv := val_le_one_of_mem X la N hmem
   rw [map_mul, map_inv₀, map_pow, val_algebraMap] at hv
@@ -243,7 +243,7 @@ theorem integralForms_eq_span_image : M1 X la N ka = Submodule.span (Op X la N) 
 
 def psi : MvPolynomial (Idx D j N) X.Forms →+* Rp X la N :=
   MvPolynomial.eval₂Hom (emb X la N)
-    fun p => algebraMap (Kp X la N) (Rp X la N) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p))
+    fun p => algebraMap (Kp X la N) (Rp X la N) (@algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N p))
 
 theorem psi_monomial (β : Idx D j N →₀ ℕ) (F : X.Forms) :
     psi X la N (MvPolynomial.monomial β F) = jF X la N (MvPolynomial.monomial β 1) • emb X la N F := by

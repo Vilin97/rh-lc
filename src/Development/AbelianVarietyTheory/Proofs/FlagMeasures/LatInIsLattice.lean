@@ -18,15 +18,9 @@ section
 variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V]
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-theorem exists_smul_mem (L : Submodule (𝓞 K) V) (hL : Submodule.IsLattice K L) (x : V) :
-    ∃ r : 𝓞 K, r ≠ 0 ∧ r • x ∈ L := by
-  first
-  | exact @_root_.GlobalTheory.SmulMemSpan.exists_smul_mem
-  | exact _root_.GlobalTheory.SmulMemSpan.exists_smul_mem
-  | (apply _root_.GlobalTheory.SmulMemSpan.exists_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SmulMemSpan.exists_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SmulMemSpan.exists_smul_mem <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.SmulMemSpan.exists_smul_mem ..)
+theorem exists_smul_mem (L : Submodule (𝓞 K) V) (hL : Submodule.IsFullLattice K L) (x : V) :
+    ∃ r : 𝓞 K, r ≠ 0 ∧ r • x ∈ L :=
+  _root_.GlobalTheory.SmulMemSpan.exists_smul_mem L hL x
 
 theorem latIn_isLattice (L : Submodule (𝓞 K) V) (hL : Submodule.IsLattice K L) (U : Submodule K V) :
     Submodule.IsLattice K (latIn U L) := by

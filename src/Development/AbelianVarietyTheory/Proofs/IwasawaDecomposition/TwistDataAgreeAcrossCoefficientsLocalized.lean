@@ -92,9 +92,9 @@ def ysL : NExpRealS (datL x L).R (datL x L).cG (SL L l.rat) where
   geq := (l.b.YS.geq)
   rho := (l.b.YS.rho)
   chi := (l.b.YS.chi)
-  eF := kc% l.b.YS.eF
-  bsup := kc% l.b.YS.bsup
-  act := kc% l.b.YS.act
+  eF := by with_unfolding_all exact (l.b.YS.eF :)
+  bsup := by with_unfolding_all exact (l.b.YS.bsup :)
+  act := by with_unfolding_all exact (l.b.YS.act :)
 
 def hkH : NExpRealH x.m.z.R x.m.z.cG l.rat.S l.b.YS where
   hL := l.rat.In.hL
@@ -113,7 +113,7 @@ def hkHL : NExpRealH (datL x L).R (datL x L).cG (SL L l.rat) (ysL L l) where
   cHk_zero := ((hkH l).cHk_zero)
   cHk_unit := ((hkH l).cHk_unit)
   cHk_pow := ((hkH l).cHk_pow)
-  hkEq := kc% (hkH l).hkEq
+  hkEq := by with_unfolding_all exact ((hkH l).hkEq :)
 
 abbrev cfD (x : St P) (L : LocAll (lay0 (Dof x))) : CharFrame (DL x L) := TC.cf w.I w.l (oL x L).Z
 
@@ -124,7 +124,7 @@ def tpD : TupTied (DL x L) (cfD x L) (chD L l) := (tpL L l.c.tp)
 def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) := (X)
 
 theorem fitsL : (oL x L).Fits :=
-  ⟨⟨(x.fits.div.left), fun _ _ G => kc% (x.fits.div.2 x.o.S x.o.N G)⟩,
+  ⟨⟨(x.fits.div.left), fun _ _ G => by with_unfolding_all exact (x.fits.div.2 x.o.S x.o.N G :)⟩,
     ⟨(x.fits.grp.pl), (x.fits.grp.teich), (x.fits.grp.chi), (x.fits.grp.ser)⟩,
     ⟨(x.fits.grpAt.pl), (x.fits.grpAt.idem), (x.fits.grpAt.cen)⟩,
     fun eR h => ⟨((x.fits.cen eR h).amb), ((x.fits.cen eR h).mt)⟩⟩

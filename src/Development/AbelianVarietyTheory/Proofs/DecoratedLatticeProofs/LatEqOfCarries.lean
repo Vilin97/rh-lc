@@ -24,13 +24,14 @@ section Gen
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] {n : ℕ}
 
 theorem lat_eq_of_carries {g : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} {N₁ N₂ : Submodule (𝓞 E) (Fin n → E)}
-    (h₁ : Submodule.IsLattice E N₁) (h₂ : Submodule.IsLattice E N₂)
+    (h₁ : Submodule.IsFullLattice E N₁) (h₂ : Submodule.IsFullLattice E N₂)
     (c₁ : Formalism.L2.Herm.Carries g (Formalism.L2.Col.stdLat E n) N₁) (c₂ : Formalism.L2.Herm.Carries g (Formalism.L2.Col.stdLat E n) N₂) :
     N₁ = N₂ := by
-  have key : ∀ N : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E N → ∀ x : Fin n → E,
+  have key : ∀ N : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E N → ∀ x : Fin n → E,
       (x ∈ N ↔ (fun j => Formalism.UG.inclE (F := F) (Formalism.L2.Herm.Af F) (x j)) ∈ Formalism.L2.Herm.hatL (F := F) N) := by
     intro N hN x
-    have hone := Formalism.UG.P.global_lattice_one_holds F E (Fin n) N (Module.Finite.iff_fg.mpr hN.fg) hN.span_eq_top
+    let : Submodule.IsFullLattice E N := hN
+    have hone := Formalism.UG.P.global_lattice_one_holds F E (Fin n) N (Module.Finite.iff_fg.mpr hN.fg) (Submodule.IsFullLattice.span_eq_top (A := E) (M := N))
     conv_lhs => rw [← hone]
     show (((1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))⁻¹ : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) : Matrix (Fin n) (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) *ᵥ (fun i => Formalism.UG.inclE (F := F) (Formalism.L2.Herm.Af F) (x i)) ∈ Formalism.L2.Herm.hatL (F := F) N ↔ _
     rw [inv_one, Units.val_one, Matrix.one_mulVec]

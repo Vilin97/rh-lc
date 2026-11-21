@@ -85,7 +85,7 @@ theorem spansFlag_flagAt : ∀ (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf : I
     refine Submodule.sum_mem _ fun i _ => ?_
     by_cases hik : i.castSucc < k
     ·
-      have htop := eq_top_of_map_lattice_mem (I.φ v) (Λ i) (hlat i).span_eq_top
+      have htop := eq_top_of_map_lattice_mem (I.φ v) (Λ i) (Submodule.IsFullLattice.span_eq_top (self := hlat i))
         ((flagAt I S v k).comap (Matrix.mulVecLin ((I.P v)⁻¹ * (T i).map (I.φ v)))) (by
           intro t ht
           rw [Submodule.mem_comap, Matrix.mulVecLin_apply]

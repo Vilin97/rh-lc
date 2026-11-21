@@ -62,7 +62,7 @@ theorem mem_latRat (S T : HSp D) (hS : S.gram = 1) (hc : D.host.ccK = ⊤)
     refine sum_mem fun i _ => AddSubgroup.subset_closure ⟨r, ?_, s' i, (hs i).2, x (s i), hx _ (hs i).1, rfl⟩
     rw [AA_eq hc]; exact hr
   · rw [map_zero]; exact zero_mem _
-  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
   · intro c x _ hx
     have : c • x = ((c : D.host.E)) • x := (algebraMap_smul D.host.E c x).symm
     rw [this, map_smul]
@@ -103,7 +103,7 @@ theorem exists_trace_one_xi0_mul_star_eq_of_ccK_eq_top (hc : D.host.ccK = ⊤) :
   have hint : IsIntegral ℤ ((1 + s) / 2) := by
     refine ⟨Polynomial.X ^ 2 - Polynomial.X + Polynomial.C (((D.host.d + 1) / 4 : ℕ) : ℤ), by monicity!, ?_⟩
     simp only [Polynomial.eval₂_add, Polynomial.eval₂_sub, Polynomial.eval₂_X_pow, Polynomial.eval₂_X,
-      Polynomial.eval₂_C, eq_intCast, Int.cast_natCast, Polynomial.eval₂_natCast, map_natCast]
+      Int.cast_natCast, Polynomial.eval₂_natCast, map_natCast]
     push_cast at hm
     linear_combination (1 / 4 : D.host.E) * hsq - (1 / 4 : D.host.E) * hm
   refine ⟨⟨_, hint⟩, ?_, ?_⟩

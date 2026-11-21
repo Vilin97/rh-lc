@@ -76,7 +76,7 @@ theorem galoisAut_mem_adelicCompletionOfElementSet (c : E ≃ₐ[F] E) {I J : Se
     obtain ⟨a, ha, x, hx, rfl⟩ := hx
     exact tmul_mem_adelicCompletion_of_integral F ha (h x hx)
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact add_mem h1 h2
   | neg y _ h1 => rw [map_neg]; exact neg_mem h1
 
 theorem mem_range_iff_adele_integral (x : F) :

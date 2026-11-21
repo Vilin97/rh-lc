@@ -12,8 +12,6 @@ open scoped BigOperators
 
 namespace PI.SzCt.UnitaryGroupMassFormula
 
-open PI.SzCt.W
-
 theorem five_le_k (D : D7) : 5 ≤ D.R.k := by
   have h1 := D.R.m_add_three_le_k
   have h2 := D.R.two_le_m

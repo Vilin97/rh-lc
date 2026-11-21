@@ -50,7 +50,7 @@ theorem twSt_chrOk (hN : ∀ i, i < m2 → TwNormAt (Ch := Ch) (cst := cst) (twS
       by_cases h1 : i + 1 ≤ m2
       · have hi : i < m2 := Nat.lt_of_succ_le h1
         obtain ⟨hb, hnf, ⟨al, hal⟩, hint⟩ :=
-          @twSt_cand X Pr R Ch sel S mu cst m2 i h1 (hN i hi) b P hP
+          twSt_cand (m2 := m2) (i := i) h1 (hN i hi) b P hP
         have hs := twSt_of_twNormAt hN i hi al P hP
         exact hC.1 i hi P hP hd _ _ hs.1 hs.2 hb hnf hint hal
       · have hle : i + 1 ≤ m2 + 1 := twSt_le Ch sel mu cst m2 (i + 1) b

@@ -318,10 +318,11 @@ theorem Tv_add (F : Germ.FGLaw S d)
     unfold jetCopy
     rw [tanV_comp_jetMap]
     congr 1
+    funext p
     rw [Finset.sum_eq_single (i, p.2)]
     · simp
     · intro b _ hb
-      rw [if_neg (fun h => hb (Finsupp.single_left_injective one_ne_zero h).symm), zero_mul]
+      rw [MvPolynomial.coeff_X, if_neg (fun h => hb (Finsupp.single_left_injective one_ne_zero h).symm), zero_mul]
     · intro h; exact absurd (Finset.mem_univ _) h
   have hL : (tanV ψv : Jet S (Fin 2 × Fin d) (0 + 1) →ₐ[S] DualNumber S).comp
       (jetSubstP 1 fun p : Fin 1 × Fin d => psTrunc 1 (F.F p.2)) = tanV (v + w) := by

@@ -237,7 +237,7 @@ def tayKp : Kp X la N →+* MvPowerSeries (Idx D j N) (Kp X la N) :=
 theorem tayKp_isTay : Tay.IsTay (tayKp X la N) := Tay.loc_isTay (nonZeroDivisors (Op X la N)) (Kp X la N) (tayOp X la N) (tayOp_isTay X la N)
 
 theorem tayKp_isCst_Ol (a : X.Ol la) : Tay.IsCst (tayKp X la N) (algebraMap (X.Ol la) (Kp X la N) a) := by
-  have e : algebraMap (X.Ol la) (Kp X la N) a = @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (X.Ol la) (Op X la N) a) := by
+  have e : algebraMap (X.Ol la) (Kp X la N) a = @algebraMap (Op X la N) (Kp X la N) _ _ _ (algebraMap (X.Ol la) (Op X la N) a) := by
     first | exact IsScalarTower.algebraMap_apply _ _ _ _ | rfl
   rw [e]
   exact Tay.loc_isCst (nonZeroDivisors (Op X la N)) (Kp X la N) (tayOp X la N) (tayOp_isTay X la N)
@@ -335,8 +335,8 @@ theorem pdOp_Tv (p q : Idx D j N) : pdOp X la N p (Tv X la N q) = if p = q then 
   · rw [if_neg h, if_neg]; exact fun h' => h (Finsupp.single_left_injective one_ne_zero h')
 
 theorem hasseKp_algebraMap (β : Idx D j N →₀ ℕ) (x : Op X la N) :
-    hasseKp X la N β (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) x) =
-      @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (hasseOp X la N β x) := Tay.loc_co (nonZeroDivisors (Op X la N)) (Kp X la N) (tayOp X la N) (tayOp_isTay X la N) β x
+    hasseKp X la N β (@algebraMap (Op X la N) (Kp X la N) _ _ _ x) =
+      @algebraMap (Op X la N) (Kp X la N) _ _ _ (hasseOp X la N β x) := Tay.loc_co (nonZeroDivisors (Op X la N)) (Kp X la N) (tayOp X la N) (tayOp_isTay X la N) β x
 
 theorem hasseRp_single (p : Idx D j N) (x : Rp X la N) : hasseRp X la N (Finsupp.single p 1) x = pdRp X la N p x := rfl
 
@@ -437,8 +437,8 @@ section
 variable (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) {N : ℕ} {wL : WeightFamilies.Wt D j} (w : Fin N → B.Cusp j wL)
 
 theorem hasseRp_sec (β : Idx D j N →₀ ℕ) (i : Fin (WeightFamilies.dimY D j + 1)) : hasseRp X la N β (sec X la w i) =
-    ∑ k, @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (hasseOp X la N β (Tv X la N (i, k))) • emb X la N (X.inc wL (w k)) := by
-  show hasseRp X la N β (∑ k, @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (i, k)) • emb X la N (X.inc wL (w k))) = _
+    ∑ k, @algebraMap (Op X la N) (Kp X la N) _ _ _ (hasseOp X la N β (Tv X la N (i, k))) • emb X la N (X.inc wL (w k)) := by
+  show hasseRp X la N β (∑ k, @algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N (i, k)) • emb X la N (X.inc wL (w k))) = _
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_

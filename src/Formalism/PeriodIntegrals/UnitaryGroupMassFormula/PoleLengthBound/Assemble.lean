@@ -70,7 +70,7 @@ theorem psiRaw_add (a : Fin G.N → OsK X la G.w) (k : ℕ) (x y : ↥(HK X la G
 
 theorem psiRaw_smul (a : Fin G.N → OsK X la G.w) (k : ℕ) (r : Op X la G.N) (x : ↥(HK X la G.w wF))
     (hx : x ∈ Jid X la G.w ^ k • (⊤ : Submodule ↥(Frac0 X la G.w) ↥(HK X la G.w wF))) :
-    psiRaw G la a k (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x) = r • psiRaw G la a k x := by
+    psiRaw G la a k (@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x) = r • psiRaw G la a k x := by
   funext α
   simp only [psiRaw, Pi.smul_apply, Finset.smul_sum]
   refine Finset.sum_congr rfl fun col _ => ?_
@@ -104,7 +104,7 @@ theorem exists_of_mem_Fk {T k : ℕ} {z : WK X la G.w wF (a0 D j T)} (hz : z ∈
     exact ⟨x1 + x2, Submodule.add_mem _ hx1 hx2, map_add _ _ _⟩
   | smul r z _ h =>
     obtain ⟨x, hx, rfl⟩ := h
-    refine ⟨@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r • x, Submodule.smul_of_tower_mem _ _ hx, ?_⟩
+    refine ⟨@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x, Submodule.smul_of_tower_mem _ _ hx, ?_⟩
     rw [LinearMap.map_smul_of_tower]
     rfl
 

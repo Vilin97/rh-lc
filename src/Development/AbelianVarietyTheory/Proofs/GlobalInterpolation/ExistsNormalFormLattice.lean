@@ -100,8 +100,8 @@ theorem exists_shape : GlobalTheory.IndefiniteRowSideFullHecke.FlagUnipotentSemi
       rintro ⟨s, hs, hm⟩
       exact (Ideal.IsPrime.mul_mem_pow _ hm).elim hs hd.2
   obtain ⟨r, hr, e, z, hz⟩ := H A E _ hq n c _
-    (isLattice_span_basis (Pi.basisFun E (Fin n))).toIsLattice _
-    (isLattice_span_basis ((Pi.basisFun E (Fin (n + c))).map h)).toIsLattice
+    (isLattice_span_basis (Pi.basisFun E (Fin n))) _
+    (isLattice_span_basis ((Pi.basisFun E (Fin (n + c))).map h))
   refine ⟨r, hr, e, z, ?_⟩
   have hqE : algebraMap A E (algebraMap (𝓞 E) A ((qOf P : ℕ) : 𝓞 E)) = (qOf P : E) := by
     rw [map_natCast, map_natCast]

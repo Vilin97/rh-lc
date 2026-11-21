@@ -120,11 +120,8 @@ theorem surjective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finit
   obtain ⟨I, Q, _, _, _, _, i, p, w, hS, hnI, hnQ, hI⟩ := H.exists_devissage M hM
   let S := ShortComplex.mk i p w
   have hT : (dualShortComplex D S).ShortExact :=
-    { exact := dualShortComplex_exact hS
-      mono_f := (Rep.mono_iff_injective _).2 (dualShortComplex_injective_f hS)
-      epi_g := (Rep.epi_iff_surjective _).2
-        (dualShortComplex_surjective_g (n := n) H.nonempty_addEquiv hS hnI) }
-  have hsurj : Function.Surjective (tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D i) 3).hom := by
+    dualShortComplex_shortExact H.nonempty_addEquiv hS hnI
+  have hsurj : Function.Surjective (tateCompactCohomologyResMap φ ψ (dualMap D i) 3).hom := by
     intro y
     have : Subsingleton (tateCompactCohomologyRes φ ψ (dualRep D Q) 4) :=
       H.subsingleton_four (dualRep D Q) (nsmul_dualRep_eq_zero H.nsmul_D)
@@ -132,23 +129,14 @@ theorem surjective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finit
       (Subsingleton.elim _ _)
   intro l
   obtain ⟨v, hv⟩ := (hI (rfl : 0 + 3 = 3) (by norm_num)).2
-    (l.comp (tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D i) 3).hom.toAddMonoidHom)
+    (l.comp (tateCompactCohomologyResMap φ ψ (dualMap D i) 3).hom.toAddMonoidHom)
   have hpv : (cohomologyMap p 0).hom v = 0 := by
     apply (injective_iff_map_eq_zero _).1 (H.injective_zero Q hnQ)
     ext y
     rw [tateCompactDualityMap_cohomologyMap φ ψ D (rfl : 0 + 3 = 3) t p v y, hv]
-    change l ((tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D p) 3 ≫
-      tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D i) 3).hom y) = 0
-    have hzero : GlobalTheory.CompanionTheory.Ar.dualMap D (0 : M ⟶ Q) = 0 := by
-      ext
-      apply DFunLike.ext
-      intro f
-      apply DFunLike.ext
-      intro a
-      change f ((0 : M ⟶ Q).hom a) = 0
-      rw [Rep.zero_hom]
-      exact map_zero f
-    rw [← tateCompactCohomologyResMap_comp, ← dualMap_comp, w, hzero,
+    change l ((tateCompactCohomologyResMap φ ψ (dualMap D p) 3 ≫
+      tateCompactCohomologyResMap φ ψ (dualMap D i) 3).hom y) = 0
+    rw [← tateCompactCohomologyResMap_comp, ← dualMap_comp, w, dualMap_zero,
       tateCompactCohomologyResMap_zero]
     exact map_zero l
   obtain ⟨m, hm⟩ := (ShortComplex.moduleCat_exact_iff _).1 (cohomology_exact₂ hS 0) v hpv
@@ -179,10 +167,7 @@ theorem injective_succ
   obtain ⟨I, Q, _, _, _, _, i, p, w, hS, hnI, hnQ, hI⟩ := H.exists_devissage M hM
   let S := ShortComplex.mk i p w
   have hT : (dualShortComplex D S).ShortExact :=
-    { exact := dualShortComplex_exact hS
-      mono_f := (Rep.mono_iff_injective _).2 (dualShortComplex_injective_f hS)
-      epi_g := (Rep.epi_iff_surjective _).2
-        (dualShortComplex_surjective_g (n := n) H.nonempty_addEquiv hS hnI) }
+    dualShortComplex_shortExact H.nonempty_addEquiv hS hnI
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   have h1 : tateCompactDualityMap φ ψ D h₁ t I ((cohomologyMap i (r + 1)).hom x) = 0 := by
@@ -193,7 +178,7 @@ theorem injective_succ
     (injective_iff_map_eq_zero _).1 (hI h₁ hs).1 _ h1
   obtain ⟨q, hq⟩ :=
     (ShortComplex.moduleCat_exact_iff _).1 (cohomology_exact₁ hS r (r + 1) rfl) x hix
-  have hker : ((tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D p) (s + 1)).hom.toAddMonoidHom).ker ≤
+  have hker : ((tateCompactCohomologyResMap φ ψ (dualMap D p) (s + 1)).hom.toAddMonoidHom).ker ≤
       (tateCompactDualityMap φ ψ D h₀ t Q q).ker := by
     intro z hz
     obtain ⟨y, hy⟩ := (ShortComplex.moduleCat_exact_iff _).1 (tateCompactRes_exact₁ φ ψ hT s) z hz
@@ -224,28 +209,17 @@ theorem surjective_succ
   obtain ⟨I, Q, _, _, _, _, i, p, w, hS, hnI, hnQ, hI⟩ := H.exists_devissage M hM
   let S := ShortComplex.mk i p w
   have hT : (dualShortComplex D S).ShortExact :=
-    { exact := dualShortComplex_exact hS
-      mono_f := (Rep.mono_iff_injective _).2 (dualShortComplex_injective_f hS)
-      epi_g := (Rep.epi_iff_surjective _).2
-        (dualShortComplex_surjective_g (n := n) H.nonempty_addEquiv hS hnI) }
+    dualShortComplex_shortExact H.nonempty_addEquiv hS hnI
   intro l
-  obtain ⟨v, hv⟩ := (hI h₁ hs).2 (l.comp (tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D i) s).hom.toAddMonoidHom)
+  obtain ⟨v, hv⟩ := (hI h₁ hs).2
+    (l.comp (tateCompactCohomologyResMap φ ψ (dualMap D i) s).hom.toAddMonoidHom)
   have hpv : (cohomologyMap p (r + 1)).hom v = 0 := by
     apply (injective_iff_map_eq_zero _).1 (H.injective_succ h₁ h₀ hs ih Q hnQ)
     ext y
     rw [tateCompactDualityMap_cohomologyMap φ ψ D h₁ t p v y, hv]
-    change l ((tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D p) s ≫
-      tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D i) s).hom y) = 0
-    have hzero : GlobalTheory.CompanionTheory.Ar.dualMap D (0 : M ⟶ Q) = 0 := by
-      ext
-      apply DFunLike.ext
-      intro f
-      apply DFunLike.ext
-      intro a
-      change f ((0 : M ⟶ Q).hom a) = 0
-      rw [Rep.zero_hom]
-      exact map_zero f
-    rw [← tateCompactCohomologyResMap_comp, ← dualMap_comp, w, hzero,
+    change l ((tateCompactCohomologyResMap φ ψ (dualMap D p) s ≫
+      tateCompactCohomologyResMap φ ψ (dualMap D i) s).hom y) = 0
+    rw [← tateCompactCohomologyResMap_comp, ← dualMap_comp, w, dualMap_zero,
       tateCompactCohomologyResMap_zero]
     exact map_zero l
   obtain ⟨x', hx'⟩ := (ShortComplex.moduleCat_exact_iff _).1 (cohomology_exact₂ hS (r + 1)) v hpv
@@ -254,8 +228,8 @@ theorem surjective_succ
     intro y hy
     obtain ⟨z, hz⟩ := (ShortComplex.moduleCat_exact_iff _).1 (tateCompactRes_exact₃ φ ψ hT s) y hy
     rw [AddMonoidHom.mem_ker, ← hz, hν, AddMonoidHom.sub_apply, sub_eq_zero]
-    change l ((tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D i) s).hom z) =
-      tateCompactDualityMap φ ψ D h₁ t M x' ((tateCompactCohomologyResMap φ ψ (GlobalTheory.CompanionTheory.Ar.dualMap D i) s).hom z)
+    change l ((tateCompactCohomologyResMap φ ψ (dualMap D i) s).hom z) =
+      tateCompactDualityMap φ ψ D h₁ t M x' ((tateCompactCohomologyResMap φ ψ (dualMap D i) s).hom z)
     rw [← tateCompactDualityMap_cohomologyMap φ ψ D h₁ t i x' z]
     change _ = tateCompactDualityMap φ ψ D h₁ t I ((cohomologyMap S.f (r + 1)).hom x') z
     rw [hx', hv]

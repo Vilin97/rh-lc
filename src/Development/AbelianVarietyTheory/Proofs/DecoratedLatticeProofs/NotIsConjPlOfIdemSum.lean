@@ -20,7 +20,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.ChainOnto.FlagAct
 
-open GlobalTheory.ChainOnto.FlagModel
 
 variable {D : D7} {c : Com D} {s : PiLocalization₂ D}
 

@@ -43,12 +43,12 @@ theorem adapt_map_xflag {T : D.host.E} {g : GV D} {A B : LFlag (D.sp.Y 0) D.R.rS
     have h1 := hg.2 a.castSucc
     have e1 : frame A a.castSucc = A.fl.e a := by simp [frame, FlagG.fvec]
     have e2 : frame B a.castSucc = B.fl.e a := by simp [frame, FlagG.fvec]
-    rw [e1, e2, Fin.coe_castSucc] at h1
+    rw [e1, e2, Fin.val_castSucc] at h1
     have h2 : B.fl.e a ∈ Xflag B j := Submodule.subset_span ⟨a, ha', rfl⟩
     have h3 := xflag_mono B (le_of_lt ha') h1
     simpa using add_mem h3 h2
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem adapt_mul {T : D.host.E} {g h : GV D} {A B C : LFlag (D.sp.Y 0) D.R.rS T} (hg : Adapt g B C)
@@ -56,7 +56,7 @@ theorem adapt_mul {T : D.host.E} {g h : GV D} {A B C : LFlag (D.sp.Y 0) D.R.rS T
   refine ⟨mul_mem hg.1 hh.1, fun a => ?_⟩
   have e : (g * h) (frame A a) - frame C a =
       g (h (frame A a) - frame B a) + (g (frame B a) - frame C a) := by
-    simp only [LinearEquiv.mul_apply, map_sub]; abel
+    simp only [mul_apply_eq_comp, map_sub]; abel
   rw [e]
   exact add_mem (adapt_map_xflag hg _ (hh.2 a)) (hg.2 a)
 
@@ -79,12 +79,12 @@ theorem adapt_of_nlam {T : D.host.E} {Λ : LV D} {F : LFlag (D.sp.Y 0) D.R.rS T}
       Submodule.span_mono fun _ ⟨i, h⟩ => ⟨i, i.2, h⟩
     exact hX (hn.2.2 _ hzo)
   · have hi : frame F i.castSucc = F.fl.e i := by simp [frame, FlagG.fvec]
-    rw [hi, Fin.coe_castSucc]
+    rw [hi, Fin.val_castSucc]
     exact hn.2.1 i.1 _ (Submodule.subset_span ⟨i, by simp, rfl⟩)
 
 theorem frame_mapLF' {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) {g : GV D}
     (hg : g ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) (a : Fin (D.R.rS + 1)) : frame (mapLF g F) a = g (frame F a) := by
-  simp only [mapLF, dif_pos hg, frame, FlagG.fvec, mapFlag]
+  simp only [mapLF, dite_eq_left hg, frame, FlagG.fvec, mapFlag]
   refine Fin.lastCases ?_ (fun i => ?_) a <;> simp
 
 end GlobalTheory.RowTermReal
@@ -149,7 +149,7 @@ theorem exists_term_of_locOver : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (
     have e : g * n * t.lin = g' * n'⁻¹ := by rw [hlin]; group
     refine ⟨mul_mem hg.1 hn.1.1, fun a => ?_⟩
     show (g * n) (frame (mapLF t.lin (lf D (X.Fu u'))) a) - frame F' a ∈ _
-    rw [frame_mapLF' _ htl, ← LinearEquiv.mul_apply, e]
+    rw [frame_mapLF' _ htl, ← mul_apply_eq_comp, e]
     exact hA.2 a
   · show Λ = Formalism.HermitianLatticesTheory.gmap (g * n) Λ₁
     have hn1 : Formalism.HermitianLatticesTheory.gmap n Λ₁ = Λ₁ := hn.1.2

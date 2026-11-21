@@ -45,7 +45,7 @@ theorem stHt : SquareStatements.StHt := by
       show _ = (A'.M.pt (j₀ w)).left ≫ A'.m.φ
       rw [hmh, ← Category.assoc (A'.M.pt (j₀ w)).left, hj₀ w, Category.assoc]
     · rw [Over.w, Over.w]
-  have hj : ∀ e, (A'.M.pt (j e)).left ≫ mh.φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar.dualMap i)) ≫ (A.M.pt e).left :=
+  have hj : ∀ e, (A'.M.pt (j e)).left ≫ mh.φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap i)) ≫ (A.M.pt e).left :=
     fun e => by rw [hjj e]; exact hj₀ e
   have hsm : Smooth A.t.G.hom := A.t.semi.smooth
   obtain ⟨-, hspan, -⟩ := GlobalTheory.CompanionTheory.Ar.LiePull.main A.X A'.X Ω Ω' A.ξ A'.ξ h i A.t.G A'.t.G mh.φ A.Li A'.Li A.M A'.M j hgen hgen' hdom

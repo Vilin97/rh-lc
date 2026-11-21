@@ -92,12 +92,12 @@ theorem emb_indep (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ
 
 theorem eval_injective (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ) :
     Function.Injective (MvPolynomial.eval₂Hom (kap X la N)
-      (fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p))) := by
+      (fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N p))) := by
   classical
   let f : Op X la N →+* Kp X la N :=
     @algebraMap (Op X la N) (Kp X la N) _
-      (inferInstanceAs (Semiring (_root_.FractionRing _)))
-      (inferInstanceAs (Algebra _ (_root_.FractionRing _)))
+      _
+      _
   have key : ∀ Q : MvPolynomial (Idx D j N) (X.Ol la),
       MvPolynomial.aeval (f ∘ Tv X la N) Q =
         f (algebraMap (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N) Q) := by
@@ -126,9 +126,9 @@ theorem eval_injective (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N 
   have hmap : Function.Injective (MvPolynomial.map (σ := Idx D j N) (algebraMap B.KO (X.Kl la))) :=
     MvPolynomial.map_injective _ (algebraMap B.KO (X.Kl la)).injective
   have e : ⇑(MvPolynomial.eval₂Hom (kap X la N)
-        (fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p))) =
+        (fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N p))) =
       ⇑(MvPolynomial.aeval (R := X.Kl la)
-        fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p)) ∘
+        fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N p)) ∘
         MvPolynomial.map (algebraMap B.KO (X.Kl la)) := by
     funext Q
     simp only [Function.comp_apply, MvPolynomial.coe_eval₂Hom, MvPolynomial.aeval_def,
@@ -155,7 +155,7 @@ theorem reading_transfer :
   have hcoef : ∀ q : MvPolynomial (Idx D j N) X.Forms, OfWt X u q →
       ∀ m, q.coeff m ∈ Submodule.span B.KO (Set.range v) := fun q hq m => hspan ▸ hq m
   let φ : MvPolynomial (Idx D j N) B.KO →+* Kp X la N :=
-    MvPolynomial.eval₂Hom (kap X la N) (fun p => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p))
+    MvPolynomial.eval₂Hom (kap X la N) (fun p => @algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N p))
   let ψ : MvPolynomial (Idx D j N) B.KO →+* ℂ := MvPolynomial.eval₂Hom R.σ t
   have hφ : Function.Injective φ := eval_injective X la N
   have hψ : Function.Injective ψ := (injective_iff_map_eq_zero ψ).2 fun Q hQ => by
@@ -172,7 +172,7 @@ theorem reading_transfer :
         toRp X la N q = LK fun k => φ (c k) := by
     rintro q c rfl
     exact eval_comb (kap X la N) (emb X la N) (emb_smul' X la N)
-      (fun p => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p))
+      (fun p => @algebraMap (Op X la N) (Kp X la N) _ _ _ (Tv X la N p))
       (fun p => algebraMap (Op X la N) (Rp X la N) (Tv X la N p))
       (fun p => IsScalarTower.algebraMap_apply (Op X la N) (Kp X la N) (Rp X la N) _) v c
   have hC : ∀ (q : MvPolynomial (Idx D j N) X.Forms) (c : Fin (Module.finrank B.KO (B.Cusp j u)) → MvPolynomial (Idx D j N) B.KO),

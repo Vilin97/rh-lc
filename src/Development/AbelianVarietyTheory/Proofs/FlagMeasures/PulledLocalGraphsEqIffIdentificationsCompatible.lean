@@ -100,7 +100,7 @@ theorem fam_pt (iso : H.X f ≤ H.perp (H.X f)) (iso' : H.X f' ≤ H.perp (H.X f
 
 theorem famL_iff {f₀ f₁ : Fin (r + 1) → V} (gβ gn : V ≃ₗ[E] V)
     (hΛ : ∀ v, gβ v ∈ Λ ↔ v ∈ Λ)
-    (hX : ∀ v, gβ v ∈ H.X f₁ ↔ v ∈ H.X f₀)
+    (_hX : ∀ v, gβ v ∈ H.X f₁ ↔ v ∈ H.X f₀)
     (hP : ∀ v, gβ v ∈ H.perp (H.X f₁) ↔ v ∈ H.perp (H.X f₀))
     (hnX : ∀ z, gn z ∈ H.X f₀ ↔ z ∈ H.X f₁)
     (hm : ∀ x ∈ H.perp (H.X f₀), gn (gβ x) - x ∈ H.X f₀)
@@ -209,7 +209,7 @@ theorem nu_keepX {f : Fin (r + 1) → V} {g : V ≃ₗ[E] V} (hg : g ∈ NU H f)
     have e : g (f a.castSucc) = (g (f a.castSucc) - f a.castSucc) + f a.castSucc := by abel
     rw [e]; exact add_mem (h2 h1) (Submodule.subset_span ⟨a, rfl⟩)
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem nu_X_iff {f : Fin (r + 1) → V} {g : V ≃ₗ[E] V} (hg : g ∈ NU H f) (hg' : g.symm ∈ NU H f) (z : V) :

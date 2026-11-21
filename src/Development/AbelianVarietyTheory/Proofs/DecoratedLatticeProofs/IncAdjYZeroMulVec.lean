@@ -166,7 +166,13 @@ theorem isU_xi (h : p.UnitAA) : IsU p.v (xiU D : AE D) :=
 theorem isU_alpha (h : p.UnitAA) {L : HSp D} {ζ : Fin L.rank → D.host.E} (hζ : IsLineVec L ζ) {α : (AE D)ˣ}
     (hα : ∀ (S : HSp D) (L : Lat S) y, y ∈ latA S L (· = p.v) ↔ ((α⁻¹ : (AE D)ˣ) : AE D) • y ∈ latV S L (· = p.v)) :
     IsU p.v (α : AE D) := by
-  obtain ⟨e, he, hg⟩ := line_gen hζ (GlobalTheory.WeilAtPlace.isSelfDualC_frameLat L).1 p.v
+  have hgen : ∃ e : D.host.E, e ≠ 0 ∧ ∀ a ∈ idAt D (· = p.v),
+      a • ratV ζ ∈ latV L (GlobalTheory.AdelicU.frameLat L) (· = p.v) ↔
+        incA D e⁻¹ * a ∈ intAt D (· = p.v) := by
+    first
+    | exact GlobalTheory.GoodPos.line_gen hζ (GlobalTheory.WeilAtPlace.isSelfDualC_frameLat L) p.v
+    | exact GlobalTheory.GoodPos.line_gen hζ (GlobalTheory.WeilAtPlace.isSelfDualC_frameLat L).1 p.v
+  obtain ⟨e, he, hg⟩ := hgen
   refine IsU.inv (fun a ha => ?_) α.inv_mul
   have h1 := hα L (GlobalTheory.AdelicU.frameLat L) ((incA D e * a) • ratV ζ)
   have e1 : incA D e⁻¹ * incA D e = 1 := (inU e he).inv_mul

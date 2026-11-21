@@ -77,7 +77,7 @@ theorem AntisymStability.proof (hB1 : AntisymDivisible.Statement) : AntisymStabi
   have hvan : ∀ x ∈ Ω, eval x ((P' - Q : antisymSpace T N j) : MvPolynomial (T × Fin N) ℝ) = 0 := by
     intro x hx
     have := congrArg (fun f : C(Ω, ℝ) => f ⟨x, hx⟩) hker
-    simpa [Φ] using this
+    simpa [Φ, antisymEvalOn] using this
   obtain ⟨l, hl, hPl⟩ := hB1 T N j _ (P' - Q).2 (fun τ a b ha hb => by
     obtain ⟨_, _, O, hO, hne, hOsub⟩ := hOm τ a b ha hb
     refine ⟨O, hO, hne, fun x hx => hvan x ?_⟩
@@ -95,7 +95,7 @@ theorem AntisymStability.proof (hB1 : AntisymDivisible.Statement) : AntisymStabi
     have hx' := hx
     simp only [hΩdef, Set.mem_iUnion] at hx'
     obtain ⟨τ, a, b, ⟨ha, hb⟩, hxO⟩ := hx'
-    simpa [Φ, P', Real.norm_eq_abs] using hbd τ a b ha hb x hxO
+    simpa [Φ, P', antisymEvalOn, Real.norm_eq_abs] using hbd τ a b ha hb x hxO
   calc |(Q : MvPolynomial (T × Fin N) ℝ).coeff m| ≤ C * ‖y‖ := hC y m
     _ ≤ C * M := mul_le_mul_of_nonneg_left hy hC0
 

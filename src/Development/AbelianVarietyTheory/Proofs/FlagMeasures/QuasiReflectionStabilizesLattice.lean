@@ -282,7 +282,7 @@ theorem qrefl_inverted : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalS
       have : c (u i) = u i := hbi (Sum.inl i.succ)
       rw [this]; exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+    | add x y _ _ h1 h2 => rw [map_add c]; exact add_mem h1 h2
     | smul t x _ h => rw [hs]; exact Submodule.smul_mem _ _ h
   · intro v hv
     induction hv using Submodule.span_induction with
@@ -290,7 +290,7 @@ theorem qrefl_inverted : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalS
       obtain ⟨i, rfl⟩ := h
       rw [hbi]; exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+    | add x y _ _ h1 h2 => rw [map_add c]; exact add_mem h1 h2
     | smul t x _ h =>
       have : c (t • x) = (⟨L.cj t, cj_mem_O L t.2⟩ : L.O) • c x := hs t x
       rw [this]; exact Submodule.smul_mem _ _ h

@@ -191,7 +191,11 @@ theorem glue : ∀ (D : D7) (V A : HSp D) (e : GA D A →* GA D V) (g : GA D V) 
       ((algebraMap (𝓞 D.host.E) D.host.E a) • y) ∈ _ at this
     rw [← smul_assoc, smul_eq_mul, inv_mul_cancel₀ ha0, one_smul] at this
     exact this
-  obtain ⟨T, hT⟩ := GlobalTheory.FinPl.latV_eq_off_finite D V M' M (hfull V M' hM'sd) hM.1
+  have hcompare := by
+    first
+    | exact GlobalTheory.FinPl.latV_eq_off_finite D V M' M (hfull V M' hM'sd) (hfull V M hM)
+    | exact GlobalTheory.FinPl.latV_eq_off_finite D V M' M (hfull V M' hM'sd) hM.1
+  obtain ⟨T, hT⟩ := hcompare
   have hoff : ∀ v ∉ T, Moves V g L M (· = v) := fun v hv y hy => by
     rw [hgM' _ y hy, hT v hv]
   obtain ⟨α, hαG, hαC, ζ, hζC, hin, hout⟩ := glue_finset e he a c z ha hz hzm T

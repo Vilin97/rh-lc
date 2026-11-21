@@ -80,6 +80,8 @@ end Alg
 section Mser
 variable {K : Type u} [Field K]
 
+local notation "cc" => MvPowerSeries.constantCoeff
+
 abbrev TT (W : WeierstrassCurve K) (σ : Type) : Subring (MvPowerSeries σ K) :=
   (MvPowerSeries.map (algebraMap (Sadj W) K)).range
 

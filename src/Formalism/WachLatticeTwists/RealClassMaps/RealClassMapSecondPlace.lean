@@ -11,9 +11,9 @@ noncomputable section
 
 namespace Formalism.RepresentationBoundsCohomology.FIN
 
-open Formalism.NG Formalism.RepresentationBoundsCohomology.BR Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology
-open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.RepresentationBoundsCohomology.LOC
-open ReciprocityTheory.ChartRestriction.T2 (PadicCoeff FracTop IsFGTop cupFG)
+open Formalism.NG (KO H1z coZ1s resRep uRep IsEquivMap resH1 uElt)
+open Formalism.RepresentationBoundsCohomology.BR (unrH1)
+open Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology (lcH1)
 
 section Defs
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]

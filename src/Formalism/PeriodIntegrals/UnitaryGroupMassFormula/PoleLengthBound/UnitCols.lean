@@ -24,13 +24,13 @@ theorem uSpec_wfr (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectrum (�
 
 theorem sum_T_wfr (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectrum (𝓞 B.KO)) :
     ∑ col, algebraMap (Kp X la G.N) ↥(Frac0 X la G.w)
-      (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la G.N ((0 : Fin (WeightFamilies.dimY D j + 1)), col))) *
+      (@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ (Tv X la G.N ((0 : Fin (WeightFamilies.dimY D j + 1)), col))) *
         PoleLengthBounds.wfr G la col = 1 := by
   apply Subtype.ext
   have h : ∀ col, ((algebraMap (Kp X la G.N) ↥(Frac0 X la G.w)
-      (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la G.N ((0 : Fin (WeightFamilies.dimY D j + 1)), col))) *
+      (@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ (Tv X la G.N ((0 : Fin (WeightFamilies.dimY D j + 1)), col))) *
         PoleLengthBounds.wfr G la col : ↥(Frac0 X la G.w)) : Lw X la G.w) =
-      frac X la G.w 1 ((@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la G.N ((0 : Fin (WeightFamilies.dimY D j + 1)), col))) •
+      frac X la G.w 1 ((@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ (Tv X la G.N ((0 : Fin (WeightFamilies.dimY D j + 1)), col))) •
         emb X la G.N (X.inc wL (G.w col))) := by
     intro col
     rw [LinearMap.map_smul, Algebra.smul_def]

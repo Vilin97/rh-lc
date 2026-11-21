@@ -19,6 +19,8 @@ namespace GlobalTheory.CompanionTheory.Ar.Flat.KerGeom
 
 open PositivityTheory.Xgn.JetKernelRank Formalism.L2.Pj Formalism.MainNotions.ModuliIntegralCharts.H1.GermD ReciprocityTheory.ChartRestriction.G.DVR TensorProduct Algebra.TensorProduct TrivSqZeroExt
 
+local notation "hm" φ:max => Formalism.L2.Pj.homAt (𝟙 (Sp _)) φ
+
 theorem ker_data (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)]
     (hs : ∀ a : 𝓞 E, star a = H.bar a) (k : Type) [Field k] [IsAlgClosed k] (t : SAB H (Sp k))
     (hpr : IsProper t.G.hom) (hK : Out.KTriv t.G t.PP.L) (d : ℕ) (g : GermAt t (𝟙 (Sp k)) d) (a : 𝓞 E)

@@ -121,41 +121,6 @@ theorem exists_local_data (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (
 
 variable [Fact (IsFixF K F)] {m : Type} [Fintype m] [DecidableEq m]
 
-private theorem exists_solve_matrix (hF : IsFixF K F) {𝔭 : Ideal (𝓞 F)}
-    (h𝔭 : 𝔭.IsMaximal) {c k : ℕ} (hck : c + 1 ≤ k) {H X : Matrix m m (𝓞 K)} {D : 𝓞 F}
-    (hD : H.det = ι D) (hDc : D ∉ 𝔭 ^ (c + 1)) (hX : ∀ i j, (Xᴴ * H * X - H) i j ∈ extP K 𝔭 ^ k)
-    {W : Matrix m m (𝓞 K)} (hW : ∀ i j, W i j ∈ extP K 𝔭 ^ k) :
-    ∃ Y : Matrix m m (𝓞 K), (∀ i j, Y i j ∈ extP K 𝔭 ^ (k - c)) ∧
-      ∀ i j, (Xᴴ * H * Y - W) i j ∈ extP K 𝔭 ^ (k + 1) := by
-  have hck' : c ≤ k := by omega
-  have hfill := fun i j => exists_fillO (K := K) h𝔭 hDc hck' (hW i j)
-  choose V hV hV' using hfill
-  obtain ⟨R, hR⟩ : ∃ R : Matrix m m (𝓞 K), R = H.adjugate * Matrix.of V := ⟨_, rfl⟩
-  have hRmem : ∀ i j, R i j ∈ extP K 𝔭 ^ (k - c) := by
-    intro i j
-    rw [hR]
-    exact mul_entries_mem _ (fun a b => hV a b) i j
-  refine ⟨X * R, fun i j => mul_entries_mem X hRmem i j, ?_⟩
-  intro i j
-  have e : Xᴴ * H * (X * R) - W = (Xᴴ * H * X - H) * R + (H * R - W) := by
-    first
-    | noncomm_ring
-    | (simp only [Matrix.sub_mul, Matrix.mul_assoc]; abel)
-  have e1 : H * R = H.det • Matrix.of V := by
-    rw [hR, ← Matrix.mul_assoc, Matrix.mul_adjugate, Matrix.smul_mul, Matrix.one_mul]
-  rw [e, Matrix.add_apply]
-  refine Ideal.add_mem _ ?_ ?_
-  · rw [Matrix.mul_apply]
-    refine Ideal.sum_mem _ (fun l _ => ?_)
-    have h1 : (Xᴴ * H * X - H) i l * R l j ∈ extP K 𝔭 ^ (k + (k - c)) := by
-      rw [pow_add]
-      exact Ideal.mul_mem_mul (hX i l) (hRmem l j)
-    exact Ideal.pow_le_pow_right (by omega) h1
-  · rw [Matrix.sub_apply, e1, Matrix.smul_apply, Matrix.of_apply, hD, smul_eq_mul]
-    have h2 := neg_mem (hV' i j)
-    rw [neg_sub] at h2
-    exact h2
-
 theorem akM_succ (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal)
     {H : Matrix m m (𝓞 K)} (hH : Hᴴ = H) {D : 𝓞 F} (hD : H.det = ι D) {c k : ℕ}
     (hDc : D ∉ 𝔭 ^ (c + 1)) (hk : 2 * c + 1 ≤ k) :

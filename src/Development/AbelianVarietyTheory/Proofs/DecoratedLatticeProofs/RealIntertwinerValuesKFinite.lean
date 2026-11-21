@@ -100,6 +100,6 @@ theorem itKFin : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPar) (M :
   | smul_tprod r n =>
     rw [map_smul, PiTensorProduct.map_tprod]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨fun τ => (n τ : M.sm τ), fun τ => Submodule.subset_span (n τ).2, rfl⟩)
-  | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b ha hb => rw [map_add]; exact add_mem ha hb
 
 end GlobalTheory.ItKFin

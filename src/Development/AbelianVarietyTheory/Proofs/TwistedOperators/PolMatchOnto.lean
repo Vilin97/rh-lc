@@ -48,10 +48,10 @@ theorem polMatch_onto : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
   have hφ'SB : ∀ i v, φ' i v ∈ GlobalTheory.WeilM.SB _ := by
     intro i v
     by_cases hv : v ∈ T
-    · simp only [φ', if_pos hv]; exact hφ₀ i v
-    · simp only [φ', if_neg hv]; exact hvac' v
+    · simpa only [φ', ite_eq_left hv] using hφ₀ i v
+    · simpa only [φ', ite_eq_right hv] using hvac' v
   have hφ'out : ∀ i, ∀ v ∉ T, φ' i v = G.M'.vac v := by
-    intro i v hv; simp only [φ', if_neg hv]
+    intro i v hv; simp only [φ', ite_eq_right hv]
   have hpure : ∀ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (c i • f i) (φ i) = c i • (g i : (Fin a × Fin (a + a') → AF F) → ℂ) := by
     intro i
     rw [hg i]
@@ -66,7 +66,10 @@ theorem polMatch_onto : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
   · exact Finset.sum_congr rfl fun i _ => (hpure i).symm
   · refine Finset.sum_congr rfl fun i _ => ?_
     rw [hf'eq i]
-    congr 2
+    apply congrArg (fun z => R.p (c i • f i) ⊗ₜ[ℂ] z)
+    apply congrArg (PiTensorProduct.tprod ℂ)
+    funext v
+    simp only [φ', ite_eq_left v.property]
     exact (hφ₀eq i v).symm
 
 end GlobalTheory.SquareAgree

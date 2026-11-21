@@ -33,11 +33,11 @@ theorem det_Hb (k : ℕ) : (Hb k).det = -1 := by
 
 theorem exists_pseudo (K W : Type) [Field K] [NumberField K] [AddCommGroup W] [Module K W] [FiniteDimensional K W]
     [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W] (m : ℕ) (hm : Module.finrank K W = m) (L : Submodule (𝓞 K) W)
-    (hL : Submodule.IsLattice K L) :
+    (hL : L.FG ∧ Submodule.span K (L : Set W) = ⊤) :
     ∃ (e : Module.Basis (Fin m) K W) (c : Fin m → FractionalIdeal (𝓞 K)⁰ K), (∀ i, c i ≠ 0) ∧
       ∀ x, x ∈ L ↔ ∀ i, e.repr x i ∈ c i := by
   obtain ⟨-, f, c, hf, hc, hΛ, -⟩ :=
-    GlobalTheory.exists_pseudoCoords (R := 𝓞 K) (K := K) m W hm L ⊥ hL.fg hL.span_eq_top
+    GlobalTheory.exists_pseudoCoords (R := 𝓞 K) (K := K) m W hm L ⊥ hL.1 hL.2
   have hinj : Function.Injective (LinearMap.pi f) := by
     rw [injective_iff_map_eq_zero]
     intro v hv

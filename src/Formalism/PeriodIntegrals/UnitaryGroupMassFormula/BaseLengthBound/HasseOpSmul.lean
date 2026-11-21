@@ -21,10 +21,10 @@ variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} 
   {la : HeightOneSpectrum (𝓞 B.KO)} {N : ℕ} {w : Fin N → B.Cusp j wL}
 
 theorem hasse_Op_smul (o : Op X la N) (x : ↥(HK X la w wF)) (β : Idx D j N →₀ ℕ) :
-    hasse X la w β (((@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o • x : ↥(HK X la w wF))) : Lw X la w) =
+    hasse X la w β (((@algebraMap (Op X la N) (Kp X la N) _ _ _ o • x : ↥(HK X la w wF))) : Lw X la w) =
       ∑ q ∈ Finset.HasAntidiagonal.antidiagonal β,
-        @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (hasseOp X la N q.1 o) • hasse X la w q.2 (x : Lw X la w) := by
-  have e1 : ((@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o • x : ↥(HK X la w wF)) : Lw X la w) =
+        @algebraMap (Op X la N) (Kp X la N) _ _ _ (hasseOp X la N q.1 o) • hasse X la w q.2 (x : Lw X la w) := by
+  have e1 : ((@algebraMap (Op X la N) (Kp X la N) _ _ _ o • x : ↥(HK X la w wF)) : Lw X la w) =
       algebraMap (Rp X la N) (Lw X la w) (algebraMap (Op X la N) (Rp X la N) o) * (x : Lw X la w) := by
     rw [Submodule.coe_smul_of_tower, Algebra.smul_def,
       IsScalarTower.algebraMap_apply (Kp X la N) (Rp X la N) (Lw X la w),
@@ -86,16 +86,16 @@ theorem aaRep_holds : AARep := by
     have hg' : ∀ q : (Idx D j G.N →₀ ℕ) × (Idx D j G.N →₀ ℕ), ∀ hq : (q.2.sum fun _ n => n) ≤ a0 D j T - 1,
         g q = ⟨_, h1 q.2 hq⟩ := fun q hq => dif_pos (h1 q.2 hq)
     let F : (Idx D j G.N →₀ ℕ) → ↥(HK X la G.w wF) := fun β =>
-      ∑ q ∈ Finset.HasAntidiagonal.antidiagonal β, @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (hasseOp X la G.N q.1 o) • g q
+      ∑ q ∈ Finset.HasAntidiagonal.antidiagonal β, @algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ (hasseOp X la G.N q.1 o) • g q
     have he : ∀ β : Idx D j G.N →₀ ℕ, (β.sum fun _ n => n) ≤ a0 D j T - 1 →
-        hasse X la G.w β ((@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o • x0 : ↥(HK X la G.w wF)) : Lw X la G.w) =
+        hasse X la G.w β ((@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ o • x0 : ↥(HK X la G.w wF)) : Lw X la G.w) =
           ((F β : ↥(HK X la G.w wF)) : Lw X la G.w) := by
       intro β hβ
       rw [hasse_Op_smul, Submodule.coe_sum]
       refine Finset.sum_congr rfl fun q hq => ?_
       rw [Submodule.coe_smul_of_tower, hg' q ((sum_snd_le hq).trans hβ)]
       rfl
-    refine ⟨@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o • x0, ⟨fun β hβ => ?_, fun β hβ => ?_⟩, ?_⟩
+    refine ⟨@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ o • x0, ⟨fun β hβ => ?_, fun β hβ => ?_⟩, ?_⟩
     · rw [he β hβ]
       exact Submodule.coe_mem _
     · have hm : toA0K X la G.w wF (F β) ∈ Q.A0 := by

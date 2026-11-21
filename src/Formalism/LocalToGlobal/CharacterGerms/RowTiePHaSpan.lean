@@ -55,6 +55,8 @@ theorem rowShift_map {k k' : Type} [Field k] [Field k'] (φ : k →+* k') (σ0 :
     rowShift r n k' σ0 i i' (φ t) (map φ p) = map φ (rowShift r n k σ0 i i' t p) := by
   simp only [rowShift, aeval_def, algebraMap_eq, map_eval₂]
   congr 1
+  funext ℓ
+  simp only [Function.comp_apply]
   split_ifs <;> simp
 
 end Maps
@@ -68,7 +70,7 @@ def comp (lam : K →ₗ[ℚ] ℚ) (P : MvPolynomial σ K) : MvPolynomial σ ℚ
 
 theorem coeff_comp (lam : K →ₗ[ℚ] ℚ) (P : MvPolynomial σ K) (m : σ →₀ ℕ) :
     AddMonoidAlgebra.coeff (comp lam P) m = lam (AddMonoidAlgebra.coeff P m) := by
-  by_cases h : AddMonoidAlgebra.coeff P m = 0 <;> simp [comp, coeff_sum, coeff_monomial, h]
+  by_cases h : AddMonoidAlgebra.coeff P m = 0 <;> simp [comp, coeff_monomial, h]
 
 theorem comp_zero (lam : K →ₗ[ℚ] ℚ) : comp lam (0 : MvPolynomial σ K) = 0 := by
   simp [comp]
@@ -172,14 +174,14 @@ theorem coeff_poly {R : Type} [CommRing R] (Bd : Finset (L →₀ ℕ)) (v : Bd 
   · rw [Finset.sum_eq_single ⟨m, h⟩]
     · simp
     · intro b _ hb
-      rw [if_neg]
+      rw [ite_eq_right]
       intro hbm
       exact hb (Subtype.ext hbm)
     · intro h'
       exact absurd (Finset.mem_univ _) h'
   · apply Finset.sum_eq_zero
     intro b _
-    rw [if_neg]
+    rw [ite_eq_right]
     intro hbm
     exact h (hbm ▸ b.2)
 
@@ -200,7 +202,7 @@ def Wsub (Bd : Finset (Letter Ty r n →₀ ℕ)) : Submodule ℤ (Bd → ℤ) w
     have e : map (Int.castRingHom ℚ) (poly Bd (x + y)) =
         map (Int.castRingHom ℚ) (poly Bd x) + map (Int.castRingHom ℚ) (poly Bd y) := by
       ext m
-      rw [MvPolynomial.coeff_add, coeff_map_poly, coeff_map_poly, coeff_map_poly]
+      simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply, coeff_map_poly]
       split_ifs <;> simp
     show map (Int.castRingHom ℚ) (poly Bd (x + y)) ∈ HHa r n ℚ cc isX a
     rw [e]
@@ -208,7 +210,7 @@ def Wsub (Bd : Finset (Letter Ty r n →₀ ℕ)) : Submodule ℤ (Bd → ℤ) w
   zero_mem' := by
     have e : map (Int.castRingHom ℚ) (poly Bd (0 : Bd → ℤ)) = 0 := by
       ext m
-      rw [coeff_zero, coeff_map_poly]
+      rw [AddMonoidAlgebra.coeff_zero, coeff_map_poly]
       split_ifs <;> simp
     show map (Int.castRingHom ℚ) (poly Bd (0 : Bd → ℤ)) ∈ HHa r n ℚ cc isX a
     rw [e]
@@ -306,17 +308,17 @@ theorem haSpanSt_of (hS : SatRetrSt) (hR : RowInvUpSt) : HaSpanSt := by
     rw [coeff_sum]
     simp only [coeff_smul, coeff_map_poly, smul_eq_mul]
     by_cases h : m ∈ Bd
-    · simp only [dif_pos h, eq_intCast]
+    · simp only [dite_eq_left h, eq_intCast]
       exact key ⟨m, h⟩
-    · simp only [dif_neg h, mul_zero, Finset.sum_const_zero]
+    · simp only [dite_eq_right h, mul_zero, Finset.sum_const_zero]
       by_contra hc
       exact h (by rw [hBd]; exact mem_support_iff.mpr hc)
-  have hsum : ∑ i : Fin (Fintype.card Bd), coeff ((Fintype.equivFin Bd).symm i).1 P •
+  have hsum : ∑ i : Fin (Fintype.card Bd), P.coeff ((Fintype.equivFin Bd).symm i).1 •
       map (Int.castRingHom K) (poly Bd (ρ (Pi.single ((Fintype.equivFin Bd).symm i) 1))) =
       ∑ b : Bd, AddMonoidAlgebra.coeff P b.1 • map (Int.castRingHom K) (poly Bd (ρ (Pi.single b 1))) :=
     Equiv.sum_comp (Fintype.equivFin Bd).symm
       (fun b : Bd => AddMonoidAlgebra.coeff P b.1 • map (Int.castRingHom K) (poly Bd (ρ (Pi.single b 1))))
-  refine ⟨Fintype.card Bd, fun i => coeff ((Fintype.equivFin Bd).symm i).1 P,
+  refine ⟨Fintype.card Bd, fun i => P.coeff ((Fintype.equivFin Bd).symm i).1,
     fun i => poly Bd (ρ (Pi.single ((Fintype.equivFin Bd).symm i) 1)), fun i => hPO _,
     fun i K' _ _ => map_int_mem hR K' _ (hρW _), ?_⟩
   exact hmain.trans hsum.symm

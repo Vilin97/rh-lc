@@ -105,7 +105,7 @@ def NabDelFree : Prop :=
 
 def NabDelLoc : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι] (n : ℕ) (lam : ι → DomWeight n)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsLattice K (M τ)) →
+    (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsFullLattice K (M τ)) →
     ∀ (w : HeightOneSpectrum (𝓞 K)) (B : ι → GL (Fin n) K), (∀ τ, IsBasisAt w (M τ) (B τ)) →
       Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (nabP lam M) =
         (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (nabStd K lam)).map ((actP lam B).restrictScalars (𝓞 K)) ∧
@@ -114,7 +114,7 @@ def NabDelLoc : Prop :=
 
 def NabLeVV : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι] (n : ℕ) (lam : ι → DomWeight n)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsLattice K (M τ)) →
+    (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsFullLattice K (M τ)) →
     ∀ F ∈ nabP lam M, F ∈ VV K lam
 
 def NabDelLattice : Prop :=

@@ -155,7 +155,6 @@ namespace GlobalTheory.CompanionTheory.Ar.Flat.Cmp
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
   {Xo : Moduli D l} {c : Coeff l}
 
-open GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar (dualMap) in
 def vecAt {S : Scheme.{0}} {G : Over S} {R R' : Type} [CommRing R] [CommRing R'] (χ : R →+* R') {x : Sp R ⟶ S}
     {y : Sp R' ⟶ S} (e : spMap χ ≫ x = y) (v : epsAt x ⟶ G) : epsAt y ⟶ G :=
   Over.homMk (spMap (dualMap χ) ≫ v.left) (by
