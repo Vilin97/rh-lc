@@ -363,13 +363,9 @@ theorem internal_prod {F G : GMod B R k} (hF : DirectSum.IsInternal F.gr)
   internal_prod' F.gr G.gr hF hG
 
 theorem isGr_prod (𝒜 : Deg k → Submodule B R) {F G : GMod B R k} (hF : F.IsGr 𝒜) (hG : G.IsGr 𝒜) :
-    (gprod F G).IsGr 𝒜 where
-  smul_mem := fun ha hx => ⟨hF.smul_mem ha hx.1, hG.smul_mem ha hx.2⟩
-  internal := internal_prod hF.internal hG.internal
-  fin := by
-    have := hF.fin
-    have := hG.fin
-    exact Module.Finite.prod
+    (gprod F G).IsGr 𝒜 := by
+  exact ⟨fun ha hx => ⟨hF.smul_mem ha hx.1, hG.smul_mem ha hx.2⟩,
+    internal_prod hF.internal hG.internal, Module.Finite.prod (hM := hF.fin) (hN := hG.fin)⟩
 
 theorem secs_perm {ts ts' : List (Deg k × R)} (hp : ts.Perm ts') : secs ts = secs ts' := by
   unfold secs

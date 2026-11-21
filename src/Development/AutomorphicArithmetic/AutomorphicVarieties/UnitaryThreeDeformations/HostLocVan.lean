@@ -97,25 +97,25 @@ private theorem vanish_k (hTD : LocalTateDuality) (hEC : LocalEulerChar) (F Ω :
     obtain ⟨m, hm⟩ := (mem_coboundaries1 rho' _).1 hB
     exact (mem_coboundaries1 _ _).2 ⟨m, hm⟩
 
-private theorem gb_ext {k : Type} [CommRing k] {j : ℤ} {X Y : Gb k j} (h : X.val = Y.val) : X = Y :=
+private theorem gb_ext {k : Type} [CommRing k] {j : ℤ} {X Y : Gb (k := k) j} (h : X.val = Y.val) : X = Y :=
   Subtype.ext h
 
-private theorem gb_finite (k : Type) [CommRing k] [Finite k] (j : ℤ) : Finite (Gb k j) :=
-  Finite.of_injective (fun X : Gb k j => X.val) fun _ _ h => gb_ext h
+private theorem gb_finite (k : Type) [CommRing k] [Finite k] (j : ℤ) : Finite (Gb (k := k) j) :=
+  Finite.of_injective (fun X : Gb (k := k) j => X.val) fun _ _ h => gb_ext h
 
 private theorem gRep_bij {k D : Type} [Field k] [Finite k] [Group D] (η : D →* ℤˣ) (Ψ : D →* kˣ) {j : ℤ}
     (hj : j ≠ 0) (x : D) (hη : η x = 1) (hΨ : Ψ x ^ 2 ≠ 1) :
-    Function.Bijective fun m : Gb k j => gRep η Ψ j x m - m := by
+    Function.Bijective fun m : Gb (k := k) j => gRep η Ψ j x m - m := by
   haveI := gb_finite k j
   rw [← Finite.injective_iff_bijective]
   have h1 : Ψ x ≠ 1 := fun h => hΨ (by rw [h, one_pow])
-  have hker : ∀ m : Gb k j, gRep η Ψ j x m = m → m = 0 := by
+  have hker : ∀ m : Gb (k := k) j, gRep η Ψ j x m = m → m = 0 := by
     intro m hm
     apply gb_ext
     ext a b
     show m.val a b = 0
     by_cases hab : wt a b = j
-    · have e := congrArg (fun X : Gb k j => X.val a b) hm
+    · have e := congrArg (fun X : Gb (k := k) j => X.val a b) hm
       simp only [gRep_val, adRep_baseLift_apply, hη, if_true] at e
       have hne : (Ψ x ^ wt a b : kˣ) ≠ 1 := by
         have h0 : wt a b ≠ 0 := hab ▸ hj
@@ -131,7 +131,7 @@ private theorem gRep_bij {k D : Type} [Field k] [Finite k] [Group D] (η : D →
       rcases mul_eq_zero.1 e' with h | h
       · exact absurd (Units.ext (sub_eq_zero.1 h)) hne
       · exact h
-    · exact Subtype.property (p := fun X => X ∈ gw k j) m a b hab
+    · exact Subtype.property (p := fun X => X ∈ gw (R := k) j) m a b hab
   intro m m' h
   have h' : gRep η Ψ j x m - m = gRep η Ψ j x m' - m' := h
   refine sub_eq_zero.1 (hker _ ?_)
@@ -143,7 +143,7 @@ private theorem gRep_cont {k D D' : Type} [CommRing k] [Group D] [TopologicalSpa
     (φ : D' →* D) (hφ : Continuous φ) : ContAction (G := D') ((gRep η Ψ j).comp φ) := by
   unfold ReciprocityTheory.Gal.ContAction
   apply IsLocallyConstant.continuous
-  have h1 : IsLocallyConstant fun p : D' × Gb k j => ((η (φ p.1), Ψ (φ p.1)), p.2) :=
+  have h1 : IsLocallyConstant fun p : D' × Gb (k := k) j => ((η (φ p.1), Ψ (φ p.1)), p.2) :=
     ((hη.comp_continuous (hφ.comp continuous_fst)).prodMk (hΨ.comp_continuous (hφ.comp continuous_fst))).prodMk
       ((IsLocallyConstant.iff_continuous _).2 continuous_snd)
   rw [IsLocallyConstant.iff_eventually_eq] at h1 ⊢

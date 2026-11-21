@@ -16,9 +16,21 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {r s : ℕ}
 
 theorem map_lev {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) (g : GL (Fin r) R × GL (Fin s) R) :
     GeneralLinearGroup.map p (lev R r s g) = lev S r s (GeneralLinearGroup.map p g.1, GeneralLinearGroup.map p g.2) := by
+  have val_lev : ∀ (T : Type) [CommRing T] (g : GL (Fin r) T × GL (Fin s) T),
+      (lev T r s g : Matrix (Fin (r + s)) (Fin (r + s)) T) =
+        Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+          (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (Matrix.fromBlocks g.1.val 0 0 g.2.val) := by
+    intro T _ g
+    ext i j
+    obtain ⟨i, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
+    obtain ⟨j, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j
+    simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+    rcases i with i | i <;> rcases j with j | j <;>
+      simp [lev, GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb,
+        GlobalTheory.SmGL.leviTwo, GlobalTheory.SmGL.two, Matrix.blockDiagonal']
   ext i j
   change p ((lev R r s g : Matrix _ _ R) i j) = (lev S r s _ : Matrix _ _ S) i j
-  rw [GlobalTheory.SmGL.val_emb₂, GlobalTheory.SmGL.val_emb₂]
+  rw [val_lev, val_lev]
   simp only [Matrix.reindex_apply, Matrix.submatrix_apply]
   generalize (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm i = i'
   generalize (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm j = j'
@@ -41,7 +53,19 @@ theorem lev_finGL (k₁ : GL (Fin r) (Af E)) (k₂ : GL (Fin s) (Af E)) :
 theorem star_val_lev (k : Kinf E r) :
     star ((lev (Cinf E) r s (Unitary.toUnits k, 1) : GL _ _) : Matrix (Fin (r + s)) (Fin (r + s)) (Cinf E)) =
       ((lev (Cinf E) r s (Unitary.toUnits (star k), 1) : GL _ _) : Matrix _ _ _) := by
-  rw [GlobalTheory.SmGL.val_emb₂, GlobalTheory.SmGL.val_emb₂, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_reindex,
+  have val_lev : ∀ (T : Type) [CommRing T] (g : GL (Fin r) T × GL (Fin s) T),
+      (lev T r s g : Matrix (Fin (r + s)) (Fin (r + s)) T) =
+        Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+          (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (Matrix.fromBlocks g.1.val 0 0 g.2.val) := by
+    intro T _ g
+    ext i j
+    obtain ⟨i, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
+    obtain ⟨j, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j
+    simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+    rcases i with i | i <;> rcases j with j | j <;>
+      simp [lev, GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb,
+        GlobalTheory.SmGL.leviTwo, GlobalTheory.SmGL.two, Matrix.blockDiagonal']
+  rw [val_lev, val_lev, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_reindex,
     Matrix.fromBlocks_conjTranspose]
   simp
   rfl
@@ -72,12 +96,24 @@ theorem infGL_levK (k : Kinf E r) :
   rw [toUnits_levK, ← lev_infGL, map_one]
 
 theorem continuous_levK : Continuous (levK E r s) := by
+  have val_lev : ∀ (T : Type) [CommRing T] (g : GL (Fin r) T × GL (Fin s) T),
+      (lev T r s g : Matrix (Fin (r + s)) (Fin (r + s)) T) =
+        Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+          (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (Matrix.fromBlocks g.1.val 0 0 g.2.val) := by
+    intro T _ g
+    ext i j
+    obtain ⟨i, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
+    obtain ⟨j, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j
+    simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+    rcases i with i | i <;> rcases j with j | j <;>
+      simp [lev, GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb,
+        GlobalTheory.SmGL.leviTwo, GlobalTheory.SmGL.two, Matrix.blockDiagonal']
   refine Continuous.subtype_mk ?_ _
   have e : (fun k : Kinf E r => ((lev (Cinf E) r s (Unitary.toUnits k, 1) : GL _ _) : Matrix (Fin (r + s)) (Fin (r + s)) (Cinf E))) =
       fun k : Kinf E r => Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
         (Matrix.fromBlocks k.1 0 0 1) := by
     funext k
-    rw [GlobalTheory.SmGL.val_emb₂]
+    rw [val_lev]
     rfl
   change Continuous (fun k : Kinf E r => ((lev (Cinf E) r s (Unitary.toUnits k, 1) : GL _ _) : Matrix (Fin (r + s)) (Fin (r + s)) (Cinf E)))
   rw [e]

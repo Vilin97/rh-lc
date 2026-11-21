@@ -25,7 +25,7 @@ theorem lpChar_lpTw (x y : WD h) (s : ℝ) : (x.lpTw s).lpChar y = (x.lpChar y).
   · simp only [WDRep.tensor_ρ, WDRep.tw_ρ, LinearEquiv.refl_apply, TensorProduct.map_smul_left]
   · rfl
 
-theorem lpTw_lpZero (s : ℝ) : (WD.lpZero h).lpTw s = WD.lpZero h := by
+theorem lpTw_lpZero (s : ℝ) : (WD.lpZero (h := h)).lpTw s = WD.lpZero := by
   rw [WD.lpZero, WD.lpTw_mk]
   exact WD.sound ⟨.refl _ _, fun σ v => Subsingleton.elim _ _, fun v => Subsingleton.elim _ _⟩
 

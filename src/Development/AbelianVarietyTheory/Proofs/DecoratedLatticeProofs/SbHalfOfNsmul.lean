@@ -42,10 +42,7 @@ theorem isModel_ext : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolo
     exact hζ.2 (by simp)
   have hlat : Submodule.IsLattice D.host.E
       (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
-    refine ⟨Submodule.fg_span_singleton ζ, ?_⟩
-    rw [Submodule.span_span_of_tower]
-    apply Submodule.eq_top_of_finrank_eq
-    rw [finrank_span_singleton hζ0, Module.finrank_fin_fun, hζ.1]
+    exact Submodule.IsLattice.of_fg _ (Submodule.fg_span_singleton ζ)
   have hA : ∀ u ∈ latO L S ((Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) : Set _) (LS : Set _)
       (fun _ => True), IsHalf p.e u →
       u ∈ latO L S ((Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) : Set _) (LS : Set _) (· = p.v) :=

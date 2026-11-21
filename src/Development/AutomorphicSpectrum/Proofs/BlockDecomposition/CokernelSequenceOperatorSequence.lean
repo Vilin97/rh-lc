@@ -30,14 +30,14 @@ theorem app_apply_eq_of_comp_eq {X : Scheme.{0}} {A B B' C : X.Modules} (f : A �
 
 theorem cokOpSeq {X : Scheme.{0}} {k : ℕ} {M : ℕ → X.Modules}
     {T : Fin (k + 1) → ∀ e, M e ⟶ M (e + 1)} {d : ℕ} (hM : OpSeq (k + 1) M T d) :
-    OpSeq k (cokSeq M T) (cokOps hM.comm) d where
-  coherent e := by
-    haveI := (hM.coherent e).1
+    OpSeq k (cokSeq M T) (cokOps hM.comm) d := by
+  refine ⟨?_, cokOps_comm hM.comm, ?_⟩
+  · intro e
+    have := (hM.coherent e).1
     exact isCoherent_cokernel (T (Fin.last k) e) (hM.coherent (e + 1))
-  comm := cokOps_comm hM.comm
-  gen e he U := by
-    haveI := (hM.coherent (e + 1)).1
-    haveI := (hM.coherent (e + 1 + 1)).1
+  · intro e he U
+    have := (hM.coherent (e + 1)).1
+    have := (hM.coherent (e + 1 + 1)).1
     rw [eq_top_iff]
     rintro y -
     obtain ⟨z, rfl⟩ := surjective_cokernel_π_app (T (Fin.last k) (e + 1)) U.2 y

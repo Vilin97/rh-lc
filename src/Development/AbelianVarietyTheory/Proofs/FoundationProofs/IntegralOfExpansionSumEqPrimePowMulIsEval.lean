@@ -28,7 +28,7 @@ theorem divide_ev : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra
   have hev : Ev ψ c (∑ t, e t * ψ (algebraMap (Lau p) (O0 p) (a t)))
       (∑ t, e t * ψ (algebraMap (Lau p) (O0 p) (thL (a t)))) :=
     ⟨d, e, a, he, fun r => rfl, rfl, rfl⟩
-  have hcong : Cong p v (∑ t, e t * ψ (algebraMap (Lau p) (O0 p) (a t))) 0 :=
+  have hcong : Cong (p := p) v (∑ t, e t * ψ (algebraMap (Lau p) (O0 p) (a t))) 0 :=
     ⟨o, ho, by rw [sub_zero, hsum]⟩
   have hcr := ((GlobalTheory.T.evalSeries_cong_iff_coeff_and_isUnit p Ω hc T n ψ h v c _ _ hev).1.1 hcong)
   choose y hy hcy using hcr

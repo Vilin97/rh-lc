@@ -114,6 +114,8 @@ theorem exists_char (hψ : Continuous ψ) (hlat : ∀ M, IsCompact (lat F (k + 1
     simp only [avg]
     rw [smul_eq_mul, ← integral_const_mul]
     congr 1
+    funext x
+    simp
     ring
   · intro a v w
     let M := max (m (v + w) a) (max (m v a) (m w a))
@@ -130,6 +132,8 @@ theorem exists_char (hψ : Continuous ψ) (hlat : ∀ M, IsCompact (lat F (k + 1
     simp only [avg]
     rw [smul_eq_mul, ← integral_const_mul]
     congr 1
+    funext x
+    simp
     ring
   · intro u u'
     exact ⟨m u u', fun M hM => hf u' u M hM⟩

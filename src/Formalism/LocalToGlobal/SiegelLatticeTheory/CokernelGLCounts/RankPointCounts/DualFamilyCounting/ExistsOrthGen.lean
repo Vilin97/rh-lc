@@ -61,7 +61,7 @@ theorem exists_orth_gen (hS : IsHermSemilocal S) (hπ : IsUnif S π) :
     have hmem' : (U0.gram (π⁻¹ • h) x).det ∈ S := det_mem x hx'
     have hN : m + 1 ≤ N := by
       by_contra hlt
-      push_neg at hlt
+      push Not at hlt
       apply hdet
       have hd : (U0.gram h x).det = π ^ (m + 1) * (U0.gram (π⁻¹ • h) x).det := by
         rw [hdet', ← mul_assoc, ← mul_pow, mul_inv_cancel₀ hπ0, one_pow, one_mul]
@@ -78,7 +78,7 @@ theorem exists_orth_gen (hS : IsHermSemilocal S) (hπ : IsUnif S π) :
     rw [smul_apply'] at h0
     exact (mul_eq_zero.mp h0).resolve_left (inv_ne_zero hπ0)
   ·
-    push_neg at hall
+    push Not at hall
     obtain ⟨i₀, r, hr, hu⟩ := exists_pivot hS hπ hs x hx hall
     generalize hf : x i₀ + r = f at hu
     obtain ⟨ha0, haS, hainv⟩ := hu

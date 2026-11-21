@@ -39,7 +39,7 @@ theorem continuous_coeff_rowAct {r m : ℕ} (f : MvPolynomial (Fin r × Fin m) �
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [mul_left_comm, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_mul_X']
     simp only [key]
-    refine continuous_finset_sum _ fun b _ => ?_
+    refine continuous_finsetSum _ fun b _ => ?_
     refine ((continuous_id.matrix_elem v.1 b)).mul ?_
     split_ifs
     · exact hp _
@@ -98,7 +98,7 @@ theorem continuous_sqRep_coeff {n : ℕ} (lam : DomWeight n) (f : nablaSq ℂ n 
     Continuous fun g : GL (Fin n) ℂ => φ (GlobalTheory.Branching.sqRep ℂ n lam g f) := by
   obtain ⟨S, c, h⟩ := exists_finset_factor (nablaSq ℂ n lam) φ
   simp only [h]
-  exact continuous_finset_sum _ fun s _ => continuous_const.mul (continuous_coeff_sqAct lam f.1 s.1)
+  exact continuous_finsetSum _ fun s _ => continuous_const.mul (continuous_coeff_sqAct lam f.1 s.1)
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 

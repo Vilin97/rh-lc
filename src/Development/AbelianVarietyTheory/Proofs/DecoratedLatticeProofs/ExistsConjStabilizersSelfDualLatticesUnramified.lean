@@ -49,7 +49,7 @@ theorem exists_sq_conj_sub (h : IsCMExt F E σ) (hU : Algebra.Unramified (𝓞 F
     change (σ x - (x : E)) ^ 2 = _
     ring
   have hi : IsIntegral ℤ d := by
-    rw [← isIntegral_algebraMap_iff , hd, ← e]
+    rw [← isIntegral_algebraMap_iff (B := E), hd, ← e]
     exact RingOfIntegers.isIntegral_coe _
   refine ⟨x, ⟨d, hi⟩, fun hm => hx (hQ.isPrime.mem_of_pow_mem 2 ?_), hd⟩
   have : (s • x - x) ^ 2 = algebraMap (𝓞 F) (𝓞 E) ⟨d, hi⟩ := RingOfIntegers.ext (e.trans hd.symm)

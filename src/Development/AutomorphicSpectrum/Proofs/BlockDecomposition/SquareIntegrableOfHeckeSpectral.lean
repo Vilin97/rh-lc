@@ -84,15 +84,20 @@ theorem isSqIntCoeff_of_heckeSpectral : ∀ (k : Type) [Field k] [ValuativeRel k
     intro g
     obtain ⟨z, hz⟩ := QuotientGroup.mk_out_eq_mul (Subgroup.center (GL (Fin N) k)) g
     rw [hz, Subgroup.mem_center_iff.1 z.2 g, map_mul, Module.End.mul_apply, hcen _ z.2]
-  refine ⟨fun q => ‖l (π q.out v)‖, hF, ?_, ?_⟩
-  · refine Continuous.aestronglyMeasurable ((QuotientGroup.isQuotientMap_mk _).continuous_iff.2 ?_)
+  have hmeas : AEStronglyMeasurable (fun q : AdGL k N => ‖l (π q.out v)‖) μ := by
+    refine Continuous.aestronglyMeasurable ((QuotientGroup.isQuotientMap_mk _).continuous_iff.2 ?_)
     rw [show (fun q : AdGL k N => ‖l (π q.out v)‖) ∘ QuotientGroup.mk = fun g => ‖l (π g v)‖ from funext hF]
     exact ((SqIntBridge.isLocallyConstant_orbit hs v).comp fun w => ‖l w‖).continuous
-  rw [show ENNReal.ofReal 2 = 2 by simp, eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
+  refine ⟨fun q => ‖l (π q.out v)‖, hF, ?_⟩
+  unfold MemLp
+  rw [show ENNReal.ofReal 2 = 2 by simp, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero ENNReal.ofNat_ne_top hmeas]
   simp only [ENNReal.toReal_ofNat]
   rcases Nat.eq_zero_or_pos N with rfl | hN
   · have : Subsingleton (GL (Fin 0) k) := inferInstance
-    have h1 : Subsingleton (AdGL k 0) := inferInstance
+    have h1 : Subsingleton (AdGL k 0) := ⟨fun x y => by
+      obtain ⟨a, rfl⟩ := QuotientGroup.mk_surjective x
+      obtain ⟨b, rfl⟩ := QuotientGroup.mk_surjective y
+      rw [Subsingleton.elim a b]⟩
     have h2 : μ Set.univ < ⊤ := isCompact_univ.measure_lt_top
     refine lintegral_sq_lt_top_of_cover μ _ (fun _ _ : Unit => Set.univ) (fun _ => ⟨(), (), trivial⟩)
       (fun _ _ => ‖l (π (1 : AdGL k 0).out v)‖) (fun _ _ => 1) (fun _ _ => zero_le_one) _ h2 ?_ (by simp)

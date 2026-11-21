@@ -118,7 +118,7 @@ theorem finite_compare (V : HSp D) (n : ℕ)
       (Fin V.rank → Fin n → Af D.host.F ⊗[D.host.F] D.host.E) :=
     fun p i j => ∑ k, finPart D (Formalism.L2.Theta.mt V p.1 i k) * p.2 k j
   have hΦ : Continuous Φ := by
-    refine continuous_pi fun i => continuous_pi fun j => continuous_finset_sum _ fun k _ => ?_
+    refine continuous_pi fun i => continuous_pi fun j => continuous_finsetSum _ fun k _ => ?_
     refine Continuous.mul ?_ ?_
     · exact GlobalTheory.SchwartzSch.continuous_finPart'.comp
         (((GlobalTheory.RealWeil.continuous_mt V).1.comp continuous_fst).matrix_elem i k)

@@ -28,16 +28,17 @@ private theorem chart_add_rename {O A X τ τ' : Type} [CommRing O] [IsDomain O]
     [AddCommGroup X] {𝒜 : X → Submodule O A} {x : A →ₐ[O] O} {wt : τ → X}
     {φ : A →ₐ[O] MvPowerSeries τ (FractionRing O)} (h : IsChart 𝒜 x wt φ) (ε : τ ≃ τ') (wt' : τ' → X)
     (hw : ∀ s, wt' s = wt (ε.symm s)) :
-    IsChart 𝒜 x wt' (((rename ε).restrictScalars O).comp φ) where
-  graded j f hf n hn := by
+    IsChart 𝒜 x wt' (((rename ε).restrictScalars O).comp φ) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro j f hf n hn
     show coeff n (rename ε (φ f)) = 0
     rw [chart_add_coeff]
     refine h.graded j f hf _ ?_
     rwa [chart_add_weight, ← funext hw]
-  const f := by
+  · intro f
     show constantCoeff (rename ε (φ f)) = _
     rw [constantCoeff_rename, h.const]
-  onto i := by
+  · intro i
     obtain ⟨f, h1, h2⟩ := h.onto (ε.symm i)
     refine ⟨f, ?_, fun i' hi' => ?_⟩
     · show coeff _ (rename ε (φ f)) ≠ 0
@@ -45,7 +46,7 @@ private theorem chart_add_rename {O A X τ τ' : Type} [CommRing O] [IsDomain O]
     · show coeff _ (rename ε (φ f)) = 0
       rw [chart_add_coeff, Finsupp.mapDomain_single]
       exact h2 _ fun h3 => hi' (ε.symm.injective h3)
-  inj f hx hf := by
+  · intro f hx hf
     refine h.inj f hx fun i => ?_
     have h1 : coeff _ (rename ε (φ f)) = 0 := hf (ε i)
     rwa [chart_add_coeff, Finsupp.mapDomain_single, ε.symm_apply_apply] at h1

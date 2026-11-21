@@ -63,7 +63,9 @@ private def rho : Lsq R (algebraMap F R Δ) →+* R ⊗[F] Lsq F Δ where
 private def psi : R ⊗[F] Lsq F Δ →+* Lsq R (algebraMap F R Δ) :=
   (Algebra.TensorProduct.lift (IsScalarTower.toAlgHom F R (Lsq R (algebraMap F R Δ)))
     { qm (algebraMap F R) rfl with
-      commutes' := fun r => by ext <;> simp [qm, QuadraticAlgebra.algebraMap_eq, IsScalarTower.algebraMap_apply F R (Lsq R (algebraMap F R Δ))] }
+      commutes' := fun r => by
+        refine QuadraticAlgebra.ext rfl ?_
+        exact map_zero (algebraMap F R) }
     fun _ _ => Commute.all _ _).toRingHom
 
 private theorem psi_tmul (a : R) (x : Lsq F Δ) : psi Δ R (a ⊗ₜ x) = a • qm (algebraMap F R) rfl x := by
@@ -75,7 +77,8 @@ private theorem psi_rho (x : Lsq R (algebraMap F R Δ)) : psi Δ R (rho Δ R x) 
   ext <;> simp [qm, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one]
 
 private def sg : Lsq F Δ →ₐ[F] Lsq F Δ :=
-  { starRingEnd (Lsq F Δ) with commutes' := fun r => by ext <;> simp [QuadraticAlgebra.algebraMap_eq, starRingEnd_apply] }
+  { starRingEnd (Lsq F Δ) with commutes' := fun r =>
+      (QuadraticAlgebra.starAlgEquiv (R := F) (a := Δ) (b := 0)).commutes r }
 
 private theorem rho_star (x : Lsq R (algebraMap F R Δ)) :
     rho Δ R (star x) = Algebra.TensorProduct.map (AlgHom.id F R) (sg Δ) (rho Δ R x) := by
@@ -94,15 +97,15 @@ private theorem int_star {O K : Type} [CommRing O] [Field K] [Algebra O K] {Δ :
 private theorem int_coord {O K : Type} [CommRing O] [Field K] [Algebra O K] {Δ : K} (hΔ : IsIntegral O Δ) {x : Lsq K Δ}
     (h : IsIntegral O x) : IsIntegral O (2 * x.re) ∧ IsIntegral O (2 * Δ * x.im) := by
   have hi : Function.Injective (IsScalarTower.toAlgHom O K (Lsq K Δ)) := fun a b e => by
-    simpa [QuadraticAlgebra.algebraMap_eq] using congrArg QuadraticAlgebra.re e
+    exact congrArg QuadraticAlgebra.re e
   have h1 : ∀ y : Lsq K Δ, IsIntegral O y → IsIntegral O (2 * y.re) := fun y hy => by
     rw [← isIntegral_algHom_iff _ hi]
     convert hy.add (int_star hy) using 1
-    ext <;> simp [QuadraticAlgebra.algebraMap_eq, two_mul]
+    ext <;> simp [two_mul]
   have hω : IsIntegral O (QuadraticAlgebra.omega : Lsq K Δ) := by
     refine IsIntegral.of_pow two_pos ?_
     convert hΔ.map (IsScalarTower.toAlgHom O K (Lsq K Δ)) using 1
-    ext <;> simp [QuadraticAlgebra.algebraMap_eq, pow_two]
+    ext <;> simp [pow_two]
   refine ⟨h1 x h, ?_⟩
   convert h1 _ (hω.mul h) using 1
   simp [mul_assoc]
@@ -273,7 +276,7 @@ private theorem emb_star [IsTotallyReal F] (hneg : ∀ σ : F →+* ℝ, σ Δ <
   have h1 : τ QuadraticAlgebra.omega * τ QuadraticAlgebra.omega = f Δ := by
     rw [← map_mul, ← h0]
     congr 1
-    ext <;> simp [QuadraticAlgebra.algebraMap_eq]
+    ext <;> simp
   have h2 : (τ QuadraticAlgebra.omega).re = 0 := by
     have hre := congrArg Complex.re h1
     have him := congrArg Complex.im h1
@@ -285,9 +288,9 @@ private theorem emb_star [IsTotallyReal F] (hneg : ∀ σ : F →+* ℝ, σ Δ <
       exact (mul_eq_zero.1 this).resolve_left hne
     nlinarith [mul_self_nonneg (τ QuadraticAlgebra.omega).re]
   have e1 : a = algebraMap F _ a.re + algebraMap F _ a.im * QuadraticAlgebra.omega := by
-    ext <;> simp [QuadraticAlgebra.algebraMap_eq]
+    ext <;> simp
   have e2 : star a = algebraMap F _ a.re - algebraMap F _ a.im * QuadraticAlgebra.omega := by
-    ext <;> simp [QuadraticAlgebra.algebraMap_eq]
+    ext <;> simp
   rw [e2]
   conv_rhs => rw [e1]
   simp only [map_add (f := _), map_sub, map_mul, h0, Complex.conj_ofReal]

@@ -10,7 +10,7 @@ public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClas
 
 namespace UpperTheory.Small
 
-open Formalism.BasicNotions NumberField IsDedekindDomain Ideal UpperTheory.InertGen
+open Formalism.BasicNotions NumberField IsDedekindDomain Ideal
 open scoped Pointwise
 
 variable {R : Ranks} (H : Host R)

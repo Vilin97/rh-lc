@@ -66,7 +66,7 @@ private theorem lc_JMJ {R : Type} [CommRing R] (M : Matrix (Fin 3) (Fin 3) R) (a
   fin_cases a <;> fin_cases b <;>
     simp [Matrix.mul_apply, Fin.sum_univ_three, Jmat, Fin.rev]
 
-private theorem lc_emb {E τ : Type} [CommRing E] (w : τ → ℤ) (x : GG 3 (MvPowerSeries τ E))
+private theorem lc_emb {E τ : Type} [CommRing E] (w : τ → ℤ) (x : GG (m := 3) (R := MvPowerSeries τ E))
     (hx : ∀ a b, x.mat a b ∈ wtPart E w (wt a b)) (a b : Fin 3 ⊕ Fin 3) :
     emb x a b ∈ wtPart E w (wt6 a - wt6 b) := by
   have hθ : ∀ a b, (theta x.left : Matrix (Fin 3) (Fin 3) (MvPowerSeries τ E)) a b ∈ wtPart E w (wt1 a - wt1 b) := by

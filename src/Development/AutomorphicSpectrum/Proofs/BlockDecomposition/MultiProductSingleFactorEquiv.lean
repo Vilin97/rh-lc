@@ -57,8 +57,9 @@ theorem exists_equiv_tensor {α : Type} [Fintype α] [DecidableEq α] (X : α �
           exact ((hc i h').2 (f i)).symm
       have e2 : PiTensorProduct.tprod ℂ f =
           (∏ i, d i) • PiTensorProduct.tprod ℂ (Function.update x i₀ (f i₀)) := by
-        rw [← MultilinearMap.map_smul_univ]
-        exact congrArg _ e1
+        calc
+          _ = PiTensorProduct.tprod ℂ (fun i => d i • Function.update x i₀ (f i₀) i) := congrArg _ e1
+          _ = _ := by simpa using (PiTensorProduct.tprod ℂ).map_smul_univ d (Function.update x i₀ (f i₀))
       exact ⟨r • (∏ i, d i) • f i₀, by rw [map_smul, map_smul, hT, e2]⟩
     · obtain ⟨u, rfl⟩ := hy
       obtain ⟨v, rfl⟩ := hz

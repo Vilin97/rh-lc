@@ -47,6 +47,9 @@ theorem main_term (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
       (nkCount h L 𝔭 k n : ℝ) = kap S (locF 𝔭 M₂) 𝔭 n J k *
         ((Ideal.absNorm 𝔭 : ℝ) ^ vd h L 𝔭 * nu h L 𝔭) *
         ∑ T ∈ s, (fibLoc S L 𝔭 T : ℝ) * (nu h' T 𝔭)⁻¹ := by
+  have hL_gmap (g : V ≃ₗ[K] V) :
+      Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap g L) :=
+    Submodule.IsLattice.of_fg K (hL.fg.map _)
   obtain ⟨R, hR⟩ := exists_mReps hK hF hs hd S hL hLi h𝔭 hn hx hsr
   have h1 := nkCount_eq_sum hK hF hs hd S hL hLi h𝔭 hn hx hR
   have h2 : ∀ M ∈ R, ∀ᶠ J in atTop, ∀ᶠ k in atTop,
@@ -54,7 +57,7 @@ theorem main_term (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     intro M hM
     obtain ⟨⟨⟨g, hg, rfl⟩, hxM⟩, -⟩ := hR.1 M hM
     rw [LocalizedFibreSets.gmap_locF] at hxM ⊢
-    exact kap_eq hK hF hs hd S (LocalizedFibreSets.isLattice_gmap g hL) (UnimodularLocalization.isIntegralLat_gmap hg hLi) hM₂ hM₂i
+    exact kap_eq hK hF hs hd S (hL_gmap g) (UnimodularLocalization.isIntegralLat_gmap hg hLi) hM₂ hM₂i
       h𝔭 hn hx hxM hx₂
   have h3 : ∀ᶠ J in atTop, ∀ᶠ k in atTop, ∀ M ∈ R,
       kap S M 𝔭 n J k = kap S (locF 𝔭 M₂) 𝔭 n J k := by
@@ -72,15 +75,15 @@ theorem main_term (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
   obtain ⟨e1, e2⟩ := nu_gmap_locF hK hF hs hd hL hLi h𝔭 hg
   have hν : 0 < nu h L 𝔭 := by
     rw [← e1, LocalizedFibreSets.gmap_locF]
-    exact nu_pos hK hF hs hd (LocalizedFibreSets.isLattice_gmap g hL) (UnimodularLocalization.isIntegralLat_gmap hg hLi) h𝔭
+    exact nu_pos hK hF hs hd (hL_gmap g) (UnimodularLocalization.isIntegralLat_gmap hg hLi) h𝔭
   have hν' : 0 < nu h' (S.cut (Formalism.HermitianLatticesTheory.gmap g (locF 𝔭 L))) 𝔭 := by
     rw [LocalizedFibreSets.gmap_locF, LocalizedFibreSets.cut_locF]
     exact nu_pos hK hF (S.isSymm hs) (S.isTotPosDef hd)
-      (StabilizerLattices.isLattice_cut S (LocalizedFibreSets.isLattice_gmap g hL))
+      (StabilizerLattices.isLattice_cut S (hL_gmap g))
       (UnimodularLocalization.isIntegralLat_cut S (UnimodularLocalization.isIntegralLat_gmap hg hLi)) h𝔭
   have ho : (oM S (Formalism.HermitianLatticesTheory.gmap g (locF 𝔭 L)) : ℝ) ≠ 0 := by
     rw [LocalizedFibreSets.gmap_locF] at hxM ⊢
-    exact_mod_cast oM_ne_zero hs S (LocalizedFibreSets.isLattice_gmap g hL) h𝔭 hxM
+    exact_mod_cast oM_ne_zero hs S (hL_gmap g) h𝔭 hxM
   unfold kap
   rw [e1, e2]
   have hq' := pow_pos hq (vd h L 𝔭)

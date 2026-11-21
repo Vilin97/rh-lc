@@ -27,10 +27,4 @@ def TpIntegrandLimit.Statement : Prop :=
           Tendsto (fun t' => X.wSt B p q t t' z) (𝓝[>] 0)
             (𝓝 (cuspCorr X.H X.Cd z - (Real.log (X.S.ref.h z) + X.S.regWeight t (X.M.proj z))))
 
-namespace Line
-
-open GroundTheory.Heights₂.Heights.Regular.ProjectiveLine
-
-end Line
-
 end GroundTheory.Heights₂.Heights.LowerBoundFree

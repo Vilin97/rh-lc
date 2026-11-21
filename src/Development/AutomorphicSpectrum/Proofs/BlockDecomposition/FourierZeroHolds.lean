@@ -101,7 +101,8 @@ theorem pr_sym (γ : Matrix (Fin n) (Fin n) D.host.E) {x : Mx D n n} (hx : adj x
     pr (γ + γᴴ) x = trA (Matrix.trace (HMul.hMul (rat γ) x : Mx D n n)) := by
   have e1 : Matrix.trace (HMul.hMul (adj (rat γ)) x : Mx D n n) =
       cA D (Matrix.trace (HMul.hMul (rat γ) x : Mx D n n)) := by
-    rw [← trace_adj, adj_mul, hx]
+    rw [← trace_adj, show adj (rat γ * x) = adj x * adj (rat γ) by
+      simp [adj, Matrix.map_mul, Matrix.transpose_mul], hx]
     exact Matrix.trace_mul_comm _ _
   have e2 : (γ + γᴴ).map (incA D) = rat γ + adj (rat γ) := by
     rw [Matrix.map_add _ (map_add _)]
@@ -148,7 +149,7 @@ theorem ker_of_rat {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ)
     (AddMonoidHom.map_trace (incA D) _).symm
   have e2 : -pr a x.1 = algebraMap D.host.F (AF D.host.F)
       (-((1 / 2) * Algebra.trace D.host.F D.host.E (Matrix.trace (a * η)))) := by
-    rw [pr, hη', show (HMul.hMul (a.map (incA D)) (rat η) : Mx D n n) = rat (a * η) from (rat_mul a η).symm, e,
+    rw [pr, hη', show (HMul.hMul (a.map (incA D)) (rat η) : Mx D n n) = rat (a * η) from Matrix.map_mul.symm, e,
       halfTr, trA, GlobalTheory.LatVac.trace_tmul, one_mul, map_neg, map_mul]
   rw [e2]
   exact hψ.2.2.1 _
@@ -271,7 +272,8 @@ theorem nb_rat {nb : hermA D n → G D n} (h : IsNMap nb) (γ : hermA D n) (hγ 
   apply rat_injective (D := D)
   have h2 : adj (mat (nb γ)) * JR (AF D.host.F) (Jst D n) * mat (nb γ) = JR (AF D.host.F) (Jst D n) := (nb γ).2
   rw [h γ, ← hm] at h2
-  erw [rat_mul, rat_mul]
+  change ((Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) x.1 * Jst D n * x.1).map (incA D)) = _
+  rw [Matrix.map_mul, Matrix.map_mul]
   exact h2
 
 

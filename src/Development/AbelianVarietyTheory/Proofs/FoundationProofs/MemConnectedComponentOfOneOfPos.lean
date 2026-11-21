@@ -214,8 +214,9 @@ theorem mem_connectedComponentOfOne_of_pos (k : Kˣ) (hk : ∀ φ : K →+* ℝ,
       algebraMap K w.Completion (k : K) ∈ S := fun w => by
     rcases w.isReal_or_isComplex with hw | hw
     · let e := InfinitePlace.Completion.ringEquivRealOfIsReal hw
-      have he : e (algebraMap K w.Completion (k : K)) = InfinitePlace.embedding_of_isReal hw (k : K) :=
-        InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw ((WithAbs.equiv w.1).symm (k : K))
+      have he : e (algebraMap K w.Completion (k : K)) = InfinitePlace.embedding_of_isReal hw (k : K) := by
+        rw [InfinitePlace.Completion.algebraMap_apply]
+        simpa [e, WithAbs.toAbs] using InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw ((WithAbs.equiv w.1).symm (k : K))
       refine ⟨e ⁻¹' Set.Ioi 0, (InfinitePlace.Completion.isometryEquivRealOfIsReal hw).toHomeomorph.isPreconnected_preimage.2
         isPreconnected_Ioi, by simp, by simp, ?_⟩
       rw [Set.mem_preimage, he]
@@ -348,7 +349,8 @@ theorem div_mem_rayIdl_iff {𝔪 : Ideal (𝓞 K)} (hm : 𝔪 ≠ ⊥) (J : idea
   have e2 : ∀ v : HeightOneSpectrum (𝓞 K), v.asIdeal ∣ 𝔪 →
       Valued.v (ev v ((diagUnits K k * (unifIdl 𝔪 J)⁻¹ : Ideles K) : AdeleRing (𝓞 K) K) - 1) =
         v.valuation K ((k : K) - 1) := fun v hv => by
-    rw [e0, ev_unifIdl, J.2 v hv, zpow_zero, inv_one, mul_one, ← valued_algebraMap, RingHom.map_sub (algebraMap K _), map_one]
+    rw [e0, ev_unifIdl, J.2 v hv, zpow_zero, inv_one, mul_one, ← valued_algebraMap]
+    simp only [map_sub, map_one]
   have e3 : infPart (diagUnits K k * (unifIdl 𝔪 J)⁻¹) =
       Units.map (algebraMap K (InfiniteAdeleRing K)).toMonoidHom k := by
     rw [map_mul, map_inv, infPart_unifIdl, inv_one, mul_one]

@@ -78,17 +78,19 @@ private theorem twist_kills {x : A →ₐ[O] O} {r s r' s' m : ℕ} (Q : Eqns �
     rw [smul_eq_mul, hE'', hb0, hξ' b hb]
     simp
 
-private theorem cob_smul {G C : Type} [Group G] [CommRing C] {m : ℕ} (r : G →* GG m C) (a : C)
+private theorem cob_smul {G C : Type} [Group G] [CommRing C] {m : ℕ} (r : G →* GG (m := m) (R := C)) (a : C)
     (X : Matrix (Fin m) (Fin m) C) : cob r (a • X) = a • cob r X := by
   funext g
   simp only [cob, map_smul, Pi.smul_apply, smul_sub]
 
-private theorem zmat_map {G R R' : Type} [Group G] [CommRing R] [CommRing R'] (f : R →+* R') (r : G →* GG 3 R)
+private theorem zmat_map {G R R' : Type} [Group G] [CommRing R] [CommRing R'] (f : R →+* R')
+    (r : G →* GG (m := 3) (R := R))
     (c g₁ : G) (a b : Fin 3) : zmat c g₁ ((GG.map f).comp r) a b = f (zmat c g₁ r a b) := by
   simp [zmat]
 
 private theorem normalised_map {G R R' : Type} [Group G] [CommRing R] [CommRing R'] (f : R →+* R')
-    (r : G →* GG 3 R) (c g₁ : G) (h : Normalised c g₁ r) : Normalised c g₁ ((GG.map f).comp r) := by
+    (r : G →* GG (m := 3) (R := R)) (c g₁ : G) (h : Normalised c g₁ r) :
+    Normalised c g₁ ((GG.map f).comp r) := by
   refine ⟨?_, ?_, ?_⟩
   · simp [GG.map_mat, h.atc]
   · rw [zmat_map, h.z12, map_zero]

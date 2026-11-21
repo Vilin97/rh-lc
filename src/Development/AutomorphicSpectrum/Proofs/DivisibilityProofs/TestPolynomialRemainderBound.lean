@@ -226,13 +226,13 @@ theorem psumAt_eq (e : Ψ ≃ Fin f) (m : ℕ) (τ : Ψ) :
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [RestTerms.psumAt, pk, map_sum, map_pow, rl_X]
 
-theorem isFlag (e : Ψ ≃ Fin f) (hf : Fintype.card Ψ = f) : RestTerms.IsFlagIntegral f j k (flagI e j k) where
-  kills m τ G h1 _ _ := by
+theorem isFlag (e : Ψ ≃ Fin f) (hf : Fintype.card Ψ = f) : RestTerms.IsFlagIntegral f j k (flagI e j k) := by
+  refine ⟨?_, ?_⟩
+  · intro m τ G h1 _ _
     obtain ⟨t, rfl⟩ := e.surjective τ
     rw [flagI_apply, psumAt_eq, map_mul, rli_rl]
     exact GlobalTheory.T.flag_degree_power_sum_mul_zero Ψ (j + k) t m _ h1
-  ne_zero := by
-    subst hf
+  · subst hf
     refine ⟨rl e j k (monomial (permExp fun _ => 1) 1), ?_, ?_⟩
     · have h := (isHomogeneous_monomial (R := ℝ) (1 : ℝ) (permExp_degree (Ψ := Ψ) (j + k))).rename_isHomogeneous
         (f := fun x : Ψ × Fin (j + k) => (e x.1, x.2))

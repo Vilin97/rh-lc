@@ -85,3 +85,4 @@ theorem mulBy_coefLe_of_kernel_prime_to :
     exact (hint P).2
 
 end GlobalTheory.Honda
+

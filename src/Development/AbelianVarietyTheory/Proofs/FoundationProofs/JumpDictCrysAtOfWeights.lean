@@ -109,7 +109,8 @@ theorem exists_finite_split : ∃ A : Set (HeightOneSpectrum (𝓞 H.E)), A.Fini
     have : y = c x := RingOfIntegers.ext hy
     rwa [this]
   have : Fact (Ideal.absNorm v.asIdeal).Prime := ⟨hp⟩
-  have hcard : Nat.card (𝓞 H.E ⧸ v.asIdeal) = Ideal.absNorm v.asIdeal := rfl
+  have hcard : Nat.card (𝓞 H.E ⧸ v.asIdeal) = Ideal.absNorm v.asIdeal :=
+    (Ideal.absNorm_eq_natCard v.asIdeal).symm
   have := v.isPrime
   have htop : AddSubgroup.zmultiples (1 : 𝓞 H.E ⧸ v.asIdeal) = ⊤ :=
     zmultiples_eq_top_of_prime_card hcard one_ne_zero

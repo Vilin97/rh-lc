@@ -9,7 +9,7 @@ public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.Dua
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
-open GlobalTheory.CompanionTheory.Ar.BT GroundTheory.PAdicHodge
+open GlobalTheory.CompanionTheory.Ar.BT
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.btOrder_isHopfOrder : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (U : Γ.G.left.Opens), Γ.IsFinOpenSub U → IsHopfOrder (Γ.btOrder U) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.BT.btOrder_isHopfOrder_of_finOpenSub | exact GlobalTheory.CompanionTheory.Ar.BT.btOrder_isHopfOrder_of_finOpenSub | (intros; apply GlobalTheory.CompanionTheory.Ar.BT.btOrder_isHopfOrder_of_finOpenSub <;> assumption)
+  exact @GlobalTheory.CompanionTheory.Ar.BT.btOrder_isHopfOrder_of_finOpenSub

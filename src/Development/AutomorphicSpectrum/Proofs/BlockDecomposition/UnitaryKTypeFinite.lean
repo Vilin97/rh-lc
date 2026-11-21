@@ -110,7 +110,21 @@ theorem finiteDimensional_isoPart_gl [CompleteSpace H] {σ : GL (Fin a) (ι → 
     (ρ : Representation ℂ (Matrix.unitaryGroup (Fin a) (ι → ℂ)) W) :
     FiniteDimensional ℂ (isoPart (σ.comp Unitary.toUnits) ρ) := by
   let e := Fintype.equivFin (Fin a × ι)
-  have hLR := isLinRed_blkG e
+  have hLR : GlobalTheory.LinRed.IsLinRed (blkG e) := by
+    refine
+      { one_mem := ⟨1, isUnit_one, blk_one e⟩
+        mul_mem := ?_
+        isUnit := fun g hg => ((mem_blkG_iff e).1 hg).1
+        inv_mem := ?_
+        closed := fun g hg hcl => (mem_blkG_iff e).2 ⟨hg, blk_unblk_of_mem_closure e hcl⟩
+        connected := isPreconnected_blkG e
+        star_mem := ?_ }
+    · rintro _ ⟨M, hM, rfl⟩ _ ⟨N, hN, rfl⟩
+      exact ⟨M * N, IsUnit.mul hM hN, blk_mul e M N⟩
+    · rintro _ ⟨M, hM, rfl⟩
+      exact ⟨M⁻¹, (Matrix.isUnit_nonsing_inv_iff).2 hM, (blk_inv e hM).symm⟩
+    · rintro _ ⟨M, hM, rfl⟩
+      exact ⟨Mᴴ, IsUnit.star hM, blk_conjTranspose e M⟩
   have hA := GlobalTheory.CompanionTheory.admitted.isAdmissible_of_unitary_irreducible hLR
     (GlobalTheory.CompanionTheory.AdmIwa.RamifiedPrimeLengthBound hLR (GlobalTheory.CompanionTheory.IwaGen.iwaOn_of_isLinRed hLR)) H (blkRep e σ)
     (isURepOn_blkRep e hσ) (isIrredOn_blkRep e hi)

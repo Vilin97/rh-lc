@@ -507,7 +507,7 @@ theorem res_subring {A B : Subring L} (h : A ≤ B) [IsLocalRing A]
   let _ := inclAlg h
   rw [FiniteBirationalLength.length_quot_maximal_eq_inertiaDeg]
   have hm : (RingHom.ker e).under A = IsLocalRing.maximalIdeal A :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _)
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal _)
   have : (RingHom.ker e).LiesOver (IsLocalRing.maximalIdeal A) := ⟨hm.symm⟩
   rw [Ideal.inertiaDeg_eq_of_isMaximal (IsLocalRing.maximalIdeal A)]
   congr 1
@@ -584,7 +584,7 @@ theorem Setup.exists_centre (S : Setup φ P 𝒲) (V : ValuationSubring L) (hV :
     intro p
     induction p using MvPolynomial.induction_on with
     | C a => rw [dehom, eval₂Hom_C]; exact hV a
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [(dehom φ c).map_add]; exact add_mem hp hq
     | mul_X p v hp =>
       rw [map_mul]
       refine mul_mem hp ?_
@@ -1021,7 +1021,7 @@ theorem ffield_aeval {O : Type} [CommRing O] [Algebra O L] (y : (Σ k, ι k) →
       | C a =>
         rw [dehom, eval₂Hom_C, RingHom.comp_apply, hC]
         exact Subfield.subset_closure (Or.inl ⟨a, rfl⟩)
-      | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+      | add p q hp hq => rw [(dehom φ c).map_add]; exact add_mem hp hq
       | mul_X p v hp =>
         rw [map_mul]
         refine mul_mem hp ?_
@@ -1054,16 +1054,16 @@ theorem loc_facts {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing 
   have := S.mp.isPrime
   have hrel := (S.mpW W rfl).relevant
   obtain ⟨e, he⟩ := S.exists_equiv
-  obtain ⟨h1, h2, h3⟩ := A_s_divcyclehomloc.homLocRingLocal O K ι P S.mp c f hf hfP W hW hrel
   have hz : qm P f / qm P g ∈ homLocRing P W := Subring.subset_closure ⟨c, f, g, hf, hg, hgW, rfl⟩
   have h4 := t_s_divcyclehomloc O K ι P S.mp c f hf hfP W hW hrel g hg hgW hz
+  obtain ⟨h1, h2, h3⟩ := A_s_divcyclehomloc.homLocRingLocal O K ι P S.mp c f hf hfP W hW hrel
   refine ⟨e.isLocalRing, isNoetherianRing_of_ringEquiv _ e,
     (ringKrullDim_eq_of_ringEquiv e).symm.trans h3, ?_⟩
   have e1 : (⟨_, hα⟩ : loc φ {W}) = e ⟨_, hz⟩ := Subtype.ext (he ⟨_, hz⟩ f g c hf hg hgW rfl).symm
   rw [e1, ord_ringEquiv]
   have : W.IsPrime := hW.1.1
   have htop : multAt (P ⊔ Ideal.span {f}) W ≠ ⊤ := length_localizedQuot_ne_top _ W hW
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+  unfold divCycle
   rw [dite_eq_left ⟨hW, hrel⟩, Int.toNat_natCast, ENat.coe_toNat htop]
   exact h4.symm
 
@@ -1072,7 +1072,7 @@ theorem divCycle_ne_zero {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuati
     {P W : Ideal (MRing ι O)} {f : MRing ι O}
     (hW : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes) (hrel : IsRelevant W) : divCycle P f W ≠ 0 := by
   have : W.IsPrime := hW.1.1
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+  unfold divCycle
   rw [dite_eq_left ⟨hW, hrel⟩]
   have := localizedQuot_nontrivial_of_le (P ⊔ Ideal.span {f}) W hW.1.2
   have h0 : multAt (P ⊔ Ideal.span {f}) W ≠ 0 :=
@@ -1085,7 +1085,7 @@ omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem divCycle_supp {P W : Ideal (MRing ι R)} {f : MRing ι R} (h : divCycle P f W ≠ 0) :
     W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W := by
   by_contra hc
-  exact h (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right hc])
+  exact h (by unfold divCycle; rw [dite_eq_right hc])
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem divCycle_nonneg (P W : Ideal (MRing ι R)) (f : MRing ι R) : 0 ≤ divCycle P f W := by
@@ -1105,19 +1105,22 @@ def rr (R : Type) [CommRing R] : MRing (fun k => ι' (j k)) R →+* MRing ι' R 
   (rename (blockIncl j ι') : MRing (fun k => ι' (j k)) R →ₐ[R] MRing ι' R).toRingHom
 
 omit [Fintype K] [Fintype K'] [∀ k, Fintype (ι' k)] in
-theorem proj_rr (R : Type) [CommRing R] : Proj (rr j ι' R) where
-  hom := ⟨fun b => Function.extend j b 0, fun F b hF => by
+theorem proj_rr (R : Type) [CommRing R] : Proj (rr j ι' R) := by
+  refine ⟨?_, ?_, ?_⟩
+  · refine ⟨fun b => Function.extend j b 0, ?_⟩
+    intro F b hF
     have h := GroundTheory.Heights₂.Heights.FieldNumbers.ContractRelevant.rename_weightedHomogeneousComponent (g := blockIncl j ι') (j := j) (fun _ => rfl)
       j.injective (blockIncl_injective j ι') b F
     rw [IsWeightedHomogeneous.weightedHomogeneousComponent_same hF] at h
     change IsMultiHomog (rename (blockIncl j ι') F) _
     rw [h]
-    exact weightedHomogeneousComponent_isWeightedHomogeneous _ _⟩
-  map_C a := rename_C _ a
-  comap y hy := GroundTheory.Heights₂.Heights.FieldNumbers.ContractRelevant.isMultiProjPrime_comap_rename (g := blockIncl j ι') (j := j) (fun _ => rfl)
-    j.injective (blockIncl_injective j ι') (by
-      rintro ⟨k', i⟩ ⟨k, rfl⟩
-      exact ⟨⟨k, i⟩, rfl⟩) hy
+    exact weightedHomogeneousComponent_isWeightedHomogeneous _ _
+  · exact rename_C _
+  · intro y hy
+    exact GroundTheory.Heights₂.Heights.FieldNumbers.ContractRelevant.isMultiProjPrime_comap_rename (g := blockIncl j ι') (j := j) (fun _ => rfl)
+      j.injective (blockIncl_injective j ι') (by
+        rintro ⟨k', i⟩ ⟨k, rfl⟩
+        exact ⟨⟨k, i⟩, rfl⟩) hy
 
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : O}
 

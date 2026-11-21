@@ -77,9 +77,8 @@ def piIncl (m : ℕ) (i : Fin m) : Representation.IntertwiningMap π (piRep π m
   toLinearMap := LinearMap.single ℂ (fun _ => V) i
   isIntertwining' g := by
     ext x j
-    by_cases h : j = i
-    · subst h; simp
-    · simp [h]
+    change (Pi.single i (π g x) : Fin m → V) j = π g ((Pi.single i x : Fin m → V) j)
+    exact (LinearMap.apply_single (fun _ : Fin m => π g) i j x).symm
 
 
 

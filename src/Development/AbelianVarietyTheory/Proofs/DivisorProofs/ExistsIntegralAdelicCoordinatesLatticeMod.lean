@@ -333,7 +333,8 @@ theorem coord_adelic (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
 
 end Adelic
 
-open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.L2.Theta Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Pj Formalism.IndefR.Lev GlobalTheory.IndefiniteRowSideFullHecke
+open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.L2.Theta Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Pj Formalism.IndefR.Lev
+open GlobalTheory.IndefiniteRowSideFullHecke
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem gLat_one_eq {D : D7} (V : HSp D) :

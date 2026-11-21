@@ -45,8 +45,10 @@ theorem finite_on_compacts_prodRFJ : ∀ (k : Type) [Field k] [ValuativeRel k] [
   by_cases hf : AEMeasurable (prodRFJ (k := k) (n := n) (c := c) ρ) M
   · rw [Measure.map_apply_of_aemeasurable hf hK.isClosed.measurableSet]
     exact (measure_mono hsub).trans_lt hD2.measure_lt_top
-  · rw [Measure.map_of_not_aemeasurable hf]
-    simp
+  · by_cases hzero : M = 0
+    · simp [hzero]
+    · rw [Measure.map_of_not_aemeasurable_of_ne_zero hf hzero]
+      exact measure_lt_top _ _
 
 end GlobalTheory.HaarR
 end

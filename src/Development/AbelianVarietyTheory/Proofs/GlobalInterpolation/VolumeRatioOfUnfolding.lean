@@ -38,7 +38,8 @@ public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.Hermit
 
 noncomputable section
 
-open NumberField IsDedekindDomain MeasureTheory Matrix Formalism.BasicNotions Formalism.MainNotions.StandardLattice Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.IndefiniteRowSideFullHecke
+open NumberField IsDedekindDomain MeasureTheory Matrix Formalism.BasicNotions Formalism.MainNotions.StandardLattice Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open GlobalTheory.IndefiniteRowSideFullHecke
 open scoped ENNReal TensorProduct
 
 namespace GlobalTheory.VolRatioUnfold

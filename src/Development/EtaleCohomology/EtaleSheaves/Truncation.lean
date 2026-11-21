@@ -11,6 +11,8 @@ open CochainComplex.HomComplex
 namespace LateralTheory.E.TruncationInclusionIso
 
 section Gen
+open ComplexShape renaming embeddingUpIntGE → eG
+
 variable {C : Type*} [Category C] [HasZeroMorphisms C] [HasZeroObject C]
 
 abbrev sT (K : CochainComplex C ℤ) (a : ℤ) : CochainComplex C ℤ := (K.restriction (eG a)).extend (eG a)

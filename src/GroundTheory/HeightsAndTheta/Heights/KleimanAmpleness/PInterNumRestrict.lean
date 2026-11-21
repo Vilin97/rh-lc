@@ -33,7 +33,7 @@ theorem inr_foldl_restrict {n : ℕ} (L : Fin n → LineBundle k x) (L' : Fin n 
         RestrictData P.toSubSystem hxy P'.toSubSystem s
   | [], Q, Q', r, h => ⟨Q, Q', r, rfl, rfl, h⟩
   | i :: l, Q, Q', r, h => by
-    obtain ⟨s, hs⟩ := RestrictTwist.proof.2 k Ω N x K' y hxy Q (L i) Q' (L' i) r (rr i) h (hL i)
+    obtain ⟨s, hs⟩ := RestrictTwist.restrictData_twist h (hL i)
     exact inr_foldl_restrict L L' rr hL l (Q.tensorProd (L i)) (Q'.tensorProd (L' i)) s hs
 
 theorem proof (hRL : RestrLenRestrict.Statement.{u, w}) : InterNumRestrict.Statement.{u, w} := by
@@ -42,7 +42,9 @@ theorem proof (hRL : RestrLenRestrict.Statement.{u, w}) : InterNumRestrict.State
       restrLen pp ((tensorSub (fun i => (L' i).toSubSystem) T).twist (twistSys k y (c : ℤ))) =
         restrLen pp ((tensorSub (fun i => (L i).toSubSystem) T).twist (twistSys k x (c : ℤ))) := by
     intro T
-    obtain ⟨r0, h0⟩ := RestrictTwist.proof.1 k Ω N x K' y hxy hle 0
+    have hTwist : RestrictTwist.Statement.{u, w} := RestrictTwist.proof
+    unfold RestrictTwist.Statement at hTwist
+    obtain ⟨r0, h0⟩ := hTwist.1 k Ω N x K' y hxy hle 0
     obtain ⟨P, P', s, hP, hP', hs⟩ := inr_foldl_restrict L L' rr hL
       ((List.finRange n).filter (· ∈ T)) (twistBundle k x 0) (twistBundle k y 0) r0 h0
     have e1 : tensorSub (fun i => (L i).toSubSystem) T = P.toSubSystem := hP

@@ -31,6 +31,7 @@ theorem piTensor_twist (ρ : ∀ a, Representation ℂ (Γ a) (X a)) (χ : ∀ a
     congr 1
     simp only [twist_apply]
     rw [MultilinearMap.map_smul_univ, Units.coe_prod]
+    simp only [RingHom.id_apply]
   | add y₁ y₂ h₁ h₂ => rw [map_add (f := _), map_add (f := _), h₁, h₂, smul_add]
 
 end Tensor
@@ -176,12 +177,38 @@ theorem isSatVecGL_of_levi (hs : ∀ a, IsSmooth (π a)) (S : Fin c → Multiset
     rw [hGK _ _ (by rw [hKO]; exact hx)]
     show evT ev (f.1.1 (p * x)) = _
     rw [apply_mul_of_fixed _ hf p hx]
-    obtain ⟨u, hu, hpu⟩ := exists_levi_mul_unip _ (stdBlocks N h) ⟨p, hp⟩
+    have hEmb (g : ∀ a, GL (Fin (N a)) (w.adicCompletion E)) :
+        leviEmb (w.adicCompletion E) (stdBlocks N h) g ∈ parab (w.adicCompletion E) (stdBlocks N h) :=
+      mem_parab_iff.2 fun _ _ i j hab => by
+        classical
+        simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+    have hdecomp (q : parab (w.adicCompletion E) (stdBlocks N h)) :
+        ∃ u ∈ unipRad (w.adicCompletion E) (stdBlocks N h),
+          (q : GL (Fin n) (w.adicCompletion E)) =
+            leviEmb (w.adicCompletion E) (stdBlocks N h)
+              (leviProj (w.adicCompletion E) (stdBlocks N h) q) * u := by
+      let L : parab (w.adicCompletion E) (stdBlocks N h) :=
+        ⟨leviEmb _ _ (leviProj _ _ q), hEmb _⟩
+      refine ⟨((L⁻¹ * q : parab (w.adicCompletion E) (stdBlocks N h)) : GL (Fin n) (w.adicCompletion E)),
+        (coe_mem_unipRad _ _).2 ?_, ?_⟩
+      · have hL : leviProj (w.adicCompletion E) (stdBlocks N h) L = leviProj (w.adicCompletion E) (stdBlocks N h) q := by
+          funext a
+          ext i j
+          simp [L, leviEmb, Matrix.blockDiagonal'_apply_eq]
+        rw [map_mul, map_inv, hL, inv_mul_cancel]
+      · rw [Subgroup.coe_mul, Subgroup.coe_inv]
+        exact (mul_inv_cancel_left _ _).symm
+    obtain ⟨u, hu, hpu⟩ := hdecomp ⟨p, hp⟩
     have hlaw := parInd_law (stdBlocks N h) (piTensor π') f ⟨p, hp⟩ 1
     rw [mul_one] at hlaw
     generalize leviProj (w.adicCompletion E) (stdBlocks N h) ⟨p, hp⟩ = μ at hpu hlaw
-    have hN := leviEmb_mem_normalizer (w.adicCompletion E) (stdBlocks N h) μ
-    have hu' := (Subgroup.mem_normalizer_iff.1 hN u).1 hu
+    have hu' : leviEmb (w.adicCompletion E) (stdBlocks N h) μ * u *
+        (leviEmb (w.adicCompletion E) (stdBlocks N h) μ)⁻¹ ∈ unipRad (w.adicCompletion E) (stdBlocks N h) := by
+      let P : parab (w.adicCompletion E) (stdBlocks N h) := ⟨_, hEmb μ⟩
+      let U : parab (w.adicCompletion E) (stdBlocks N h) := ⟨u, unipRad_le_parab _ _ hu⟩
+      have hU : leviProj (w.adicCompletion E) (stdBlocks N h) U = 1 := (coe_mem_unipRad _ U).1 hu
+      show ((P * U * P⁻¹ : parab (w.adicCompletion E) (stdBlocks N h)) : GL (Fin n) (w.adicCompletion E)) ∈ _
+      rw [coe_mem_unipRad, map_mul, map_mul, map_inv, hU, mul_one, mul_inv_cancel]
     have hG1 : G p = G (leviEmb (w.adicCompletion E) (stdBlocks N h) μ) := by
       have e : p = (leviEmb (w.adicCompletion E) (stdBlocks N h) μ * u *
           (leviEmb (w.adicCompletion E) (stdBlocks N h) μ)⁻¹) * leviEmb (w.adicCompletion E) (stdBlocks N h) μ := by

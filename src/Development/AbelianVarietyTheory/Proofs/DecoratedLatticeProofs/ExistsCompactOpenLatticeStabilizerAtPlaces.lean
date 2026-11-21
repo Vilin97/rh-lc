@@ -89,8 +89,8 @@ theorem exists_latticeCompletion_cut_to_places_finiteReal (S : HSp D) (L : Lat S
     | add z z' _ _ h h' =>
       obtain ⟨y, hy, h1, h2⟩ := h
       obtain ⟨y', hy', h1', h2'⟩ := h'
-      exact ⟨y + y', add_mem hy hy', fun i => by rw [Pi.add_apply, (infPart D).map_add (f := _), h1, h1', add_zero],
-        fun i => by rw [Pi.add_apply, (finPart D).map_add (f := _), h2, h2', Pi.add_apply, mul_add]⟩
+      exact ⟨y + y', add_mem hy hy', fun i => by rw [Pi.add_apply, (infPart D).map_add, h1, h1', add_zero],
+        fun i => by rw [Pi.add_apply, (finPart D).map_add, h2, h2', Pi.add_apply, mul_add]⟩
     | neg z _ h =>
       obtain ⟨y, hy, h1, h2⟩ := h
       refine ⟨-y, neg_mem hy, fun i => ?_, fun i => ?_⟩
@@ -224,7 +224,7 @@ theorem isClosed_grpAt (S : HSp D) (P : Pl D → Prop) : IsClosed (grpAt S P : S
 theorem exists_compact_open : ∀ (D : D7) (V : HSp D) (L : Lat V), IsSelfDualC V L → ∀ P : Pl D → Prop, ∃ K : Subgroup (GA D V), (∀ g, g ∈ K ↔ InK V L P g) ∧ IsCompact (K : Set (GA D V)) ∧ IsOpen ((K.subgroupOf (grpAt V P) : Subgroup _) : Set (grpAt V P)) := by
   intro D V L hL P
   haveI : Submodule.IsLattice D.host.E L := hL.1
-  have hfg : L.FG := Submodule.IsLattice.fg (A := D.host.E)
+  have hfg : L.FG := Submodule.IsLattice.fg (A := D.host.E) L
   let U : Subgroup (GA D V) := GlobalTheory.AdelicU.levelOpen D.sp.cm.sig V.gram L
   have hU : IsOpen (U : Set (GA D V)) := GlobalTheory.AdelicU.isOpen_levelOpen D.sp.cm.sig V.gram L
   refine ⟨grpAt V P ⊓ U, fun g => ⟨fun h => ⟨h.1, moves_of_levelOpen V L hfg P h.2⟩,

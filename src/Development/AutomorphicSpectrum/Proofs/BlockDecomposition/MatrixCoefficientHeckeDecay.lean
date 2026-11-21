@@ -23,7 +23,7 @@ theorem exists_radius {W : Type} [AddCommGroup W] [Module ℂ W] [FiniteDimensio
     (hb : ∀ μ : ℂ, T.HasEigenvalue μ → ‖μ‖ < b) :
     ∃ ρ : ℝ, 0 ≤ ρ ∧ ρ < b ∧ ∀ μ : ℂ, T.HasEigenvalue μ → ‖μ‖ < ρ := by
   classical
-  have hfin : Set.Finite (T.HasEigenvalue : Set ℂ) := Module.End.finite_hasEigenvalue T
+  have hfin : Set.Finite {μ : ℂ | T.HasEigenvalue μ} := Module.End.finite_hasEigenvalue T
   let s : Finset ℝ := insert 0 (hfin.toFinset.image fun μ => ‖μ‖)
   have hs : s.Nonempty := Finset.insert_nonempty _ _
   have hM : s.max' hs < b := by

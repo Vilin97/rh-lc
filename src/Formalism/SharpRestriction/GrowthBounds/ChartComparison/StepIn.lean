@@ -186,18 +186,20 @@ theorem Core.blk {e : D.what₂.LL →+* G.Kf} {β : S.Ch} (H : S.Core e β) (hS
   exact (tEL_emb D τ _).symm
 
 theorem Core.toHyp {e : D.what₂.LL →+* G.Kf} {β : S.Ch} (H : S.Core e β) (hS : BlockRationalityField) :
-    S.charts.Hyp e S.pos (tEL D) β where
-  std := H.std
-  actB := H.actB
-  gamU := H.gamU
-  away := awayEx_of H.good (S.K β).lev H.gam
-  ex := valEx_of_rep' (tEL D) (tEL_emb D) (embT_conj D) H.std (S.adExt β)
-    (ptEx_of H.good (S.K β).lev (S.K β).y (S.K β).y_bij.2) (ptOne_of (S.K β).lev H.int H.hypP H.bad_p)
-    (S.evRatRep β H.chRat (H.blk hS)) H.chiRat
-  pos_emb := H.pos_emb
-  chi := H.chi
-  ptEx := ptEx_of H.good (S.K β).lev (S.K β).y (S.K β).y_bij.2
-  ptAll := ptAll_of H.good (S.K β).lev (S.K β).y H.comp
+    S.charts.Hyp e S.pos (tEL D) β := by
+  exact {
+    std := H.std
+    actB := H.actB
+    gamU := H.gamU
+    away := awayEx_of H.good (S.K β).lev H.gam
+    ex := valEx_of_rep' (tEL D) (tEL_emb D) (embT_conj D) H.std (S.adExt β)
+      (ptEx_of H.good (S.K β).lev (S.K β).y (S.K β).y_bij.2) (ptOne_of (S.K β).lev H.int H.hypP H.bad_p)
+      (S.evRatRep β H.chRat (H.blk hS)) H.chiRat
+    pos_emb := H.pos_emb
+    chi := H.chi
+    ptEx := ptEx_of H.good (S.K β).lev (S.K β).y (S.K β).y_bij.2
+    ptAll := ptAll_of H.good (S.K β).lev (S.K β).y H.comp
+  }
 
 variable (S)
 

@@ -57,7 +57,7 @@ theorem cc_lgF (l : ℕ) : PowerSeries.constantCoeff (lgF K l) = 0 := by
   simp
 
 theorem lgF_deriv_int {l : ℕ} (hl : 2 ≤ l) (n : ℕ) :
-    PowerSeries.coeff n (PowerSeries.derivative K (lgF K l)) ∈ R := by
+    PowerSeries.coeff n (PowerSeries.derivative (R := K) (lgF K l)) ∈ R := by
   rw [PowerSeries.coeff_derivative]
   unfold lgF
   rw [PowerSeries.coeff_mk, Finset.sum_mul]

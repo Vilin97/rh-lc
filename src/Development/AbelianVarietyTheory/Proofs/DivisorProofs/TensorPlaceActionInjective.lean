@@ -12,7 +12,7 @@ namespace GlobalTheory.FactorKernel
 
 variable {ι : Type} [Fintype ι] [hd : DecidableEq ι] {V : Type} [AddCommGroup V] [Module ℂ V]
 
-noncomputable def contrML (w₀ : ι) (μ : ι → Module.Dual ℂ V) : MultilinearMap ℂ (fun _ : ι => V) V where
+noncomputable def contrML (w₀ : ι) (μ : ι → Module.Dual ℂ V) : (ι → V) →ₘₗ[ℂ] V where
   toFun x := (∏ i ∈ Finset.univ.erase w₀, μ i (x i)) • x w₀
   map_update_add' := by
     intro inst x i a b
@@ -33,6 +33,7 @@ noncomputable def contrML (w₀ : ι) (μ : ι → Module.Dual ℂ V) : Multilin
   map_update_smul' := by
     intro inst x i c a
     obtain rfl : inst = hd := Subsingleton.elim _ _
+    simp only [RingHom.id_apply]
     by_cases h : i = w₀
     · subst h
       have e : ∀ c, ∏ k ∈ Finset.univ.erase i, μ k (Function.update x i c k) =

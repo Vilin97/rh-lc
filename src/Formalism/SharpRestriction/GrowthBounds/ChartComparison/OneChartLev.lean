@@ -156,18 +156,17 @@ def oneChart (K : ClsTied u i hi) (β : Unit) :
 
 set_option maxHeartbeats 2000000 in
 theorem valTied_toG (V : ValTied u eV i hi K) :
-    ValuationCompatibleChart (D.fm u) V.eY (fun _ => True) (chU u i) (lat := clsCrd D u i hi) (oneChart K) where
-  Fi := fun φ => by
-    rw [V.Fi φ]
-    constructor
-    · intro h β
-      exact (FiC_comp K.lev (embT D) (lamT u i) K.y (fun c : {c // chU u i c = β} => c.1)
-        (fun c => ⟨⟨c, Subsingleton.elim _ _⟩, rfl⟩) (fun c z => φ c (V.eY.symm z))).2 h
-    · intro h
-      exact (FiC_comp K.lev (embT D) (lamT u i) K.y (fun c : {c // chU u i c = ()} => c.1)
-        (fun c => ⟨⟨c, Subsingleton.elim _ _⟩, rfl⟩) (fun c z => φ c (V.eY.symm z))).1 (h ())
-  rat := fun φ => V.rat φ
-  lat := fun w _ x => locWCritI V w x
+    ValuationCompatibleChart (D.fm u) V.eY (fun _ => True) (chU u i) (lat := clsCrd D u i hi) (oneChart K) := by
+  refine ⟨?_, V.rat, fun w _ x => locWCritI V w x⟩
+  intro φ
+  rw [V.Fi φ]
+  constructor
+  · intro h β
+    exact (FiC_comp K.lev (embT D) (lamT u i) K.y (fun c : {c // chU u i c = β} => c.1)
+      (fun c => ⟨⟨c, Subsingleton.elim _ _⟩, rfl⟩) (fun c z => φ c (V.eY.symm z))).2 h
+  · intro h
+    exact (FiC_comp K.lev (embT D) (lamT u i) K.y (fun c : {c // chU u i c = ()} => c.1)
+      (fun c => ⟨⟨c, Subsingleton.elim _ _⟩, rfl⟩) (fun c z => φ c (V.eY.symm z))).1 (h ())
 
 variable {p : ℕ}
 

@@ -10,7 +10,8 @@ public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.FiniteAde
 
 noncomputable section
 
-open NumberField IsDedekindDomain GlobalTheory.CMVal GlobalTheory.IndefiniteRowSideFullHecke.PolarisationModuleIndex
+open NumberField IsDedekindDomain GlobalTheory.CMVal
+open GlobalTheory.IndefiniteRowSideFullHecke.PolarisationModuleIndex
 
 namespace GlobalTheory.CMVal.LatBound
 

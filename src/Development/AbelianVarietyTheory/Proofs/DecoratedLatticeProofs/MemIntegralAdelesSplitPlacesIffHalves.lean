@@ -29,8 +29,8 @@ theorem sum_idem {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsN
   classical
   rw [← sub_eq_zero]
   apply GlobalTheory.FinPlLoc.eq_zero_of_comp
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sub, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     simp only [GlobalTheory.FinPlLoc.idem, GlobalTheory.FinPlLoc.infPart_pair, Finset.sum_const_zero, sub_zero]
   · intro w
     set_option synthInstance.maxHeartbeats 100000 in
@@ -45,10 +45,29 @@ theorem sum_idem {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsN
 theorem mem_intAt_iff_halves : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ι : Type) (p : ι → SplitPt D k) (I : List ι) (P : Pl D → Prop), Places p I P → ∀ a : AE D, a ∈ intAt D P ↔ a ∈ idAt D P ∧ ∀ i, (p i).pr a ∈ 𝒪[k] ∧ (p i).pr (cA D a) ∈ 𝒪[k] := by
   intro D k _ _ _ _ ι p I P hP a
   classical
+  have hpr (q : SplitPt D k) (c : k) : q.pr (cA D (q.sec c)) = 0 := by
+    have he : q.pr q.e = 1 := by rw [← GlobalTheory.FinPl.FrameLat.sec_one, q.pr_sec]
+    have h0 : q.e * cA D (q.sec c) = 0 := by
+      rw [← cA_cA q.e, ← map_mul, ← GlobalTheory.FinPl.FrameLat.e_mul_sec q c,
+        ← mul_assoc, GlobalTheory.FinPl.FrameLat.cAe_mul_e, zero_mul, map_zero]
+    have h1 := congrArg q.pr h0
+    rwa [RingHom.map_mul, he, one_mul, RingHom.map_zero] at h1
+  have hs (q : SplitPt D k) (a : AE D) (t : k) :
+      a * q.sec t ∈ intAt D (· = q.v) ↔ q.pr a * t ∈ 𝒪[k] := by
+    rw [mul_comm, GlobalTheory.FinPl.FrameLat.sec_mul_right,
+      GlobalTheory.SeeSaw.CoreGlue.mem_intAt_iff q (GlobalTheory.FinPl.FrameLat.sec_mem_idAt q _),
+      hpr, q.pr_sec, and_iff_left (zero_mem _), mul_comm]
+  have hcs (q : SplitPt D k) (a : AE D) (t : k) :
+      a * cA D (q.sec t) ∈ intAt D (· = q.v) ↔ q.pr (cA D a) * t ∈ 𝒪[k] := by
+    have hm : cA D (q.sec t) * a = cA D (q.sec (t * q.pr (cA D a))) := by
+      rw [← GlobalTheory.FinPl.FrameLat.sec_mul_right, RingHom.map_mul, GlobalTheory.SeeSaw.cA_cA]
+    rw [mul_comm, hm, GlobalTheory.SeeSaw.CoreGlue.mem_intAt_iff q
+      (GlobalTheory.FinPl.FrameLat.csec_mem_idAt _), hpr, GlobalTheory.SeeSaw.cA_cA, q.pr_sec,
+      and_iff_right (zero_mem _), mul_comm]
   have hsec1 : ∀ i, (p i).sec 1 ∈ intAt D (· = (p i).v) := fun i => by
-    simpa using (GlobalTheory.Core.Mi.LatMatch.mul_sec_mem_intAt_iff (p i) 1 1).2 (by simp)
+    simpa using (hs (p i) 1 1).2 (by simp)
   have hcsec1 : ∀ i, cA D ((p i).sec 1) ∈ intAt D (· = (p i).v) := fun i => by
-    simpa using (GlobalTheory.Core.Mi.LatMatch.mul_cA_sec_mem_intAt_iff (p i) 1 1).2 (by simp)
+    simpa using (hcs (p i) 1 1).2 (by simp)
   constructor
   · intro h
     have hr := (GlobalTheory.IwaIdeals.mem_intAt_iff.1 h).2
@@ -56,11 +75,11 @@ theorem mem_intAt_iff_halves : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k
     · have h1 : a * (p i).sec 1 ∈ intAt D (· = (p i).v) := GlobalTheory.IwaIdeals.mem_intAt_iff.2
         ⟨Ideal.mul_mem_left _ _ (GlobalTheory.FinPl.FrameLat.sec_mem_idAt _ _),
           mul_mem hr (GlobalTheory.IwaIdeals.mem_intAt_iff.1 (hsec1 i)).2⟩
-      simpa using (GlobalTheory.Core.Mi.LatMatch.mul_sec_mem_intAt_iff (p i) a 1).1 h1
+      simpa using (hs (p i) a 1).1 h1
     · have h1 : a * cA D ((p i).sec 1) ∈ intAt D (· = (p i).v) := GlobalTheory.IwaIdeals.mem_intAt_iff.2
         ⟨Ideal.mul_mem_left _ _ (GlobalTheory.FinPl.FrameLat.csec_mem_idAt (p := p i) 1),
           mul_mem hr (GlobalTheory.IwaIdeals.mem_intAt_iff.1 (hcsec1 i)).2⟩
-      simpa using (GlobalTheory.Core.Mi.LatMatch.mul_cA_sec_mem_intAt_iff (p i) a 1).1 h1
+      simpa using (hcs (p i) a 1).1 h1
   · rintro ⟨hid, hh⟩
     refine ⟨hid, ?_⟩
     have ha : a = ∑ i ∈ I.toFinset, (a * (p i).sec 1 + a * cA D ((p i).sec 1)) := by
@@ -82,8 +101,8 @@ theorem mem_intAt_iff_halves : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k
       rw [ha, map_sum]
     refine AddSubgroup.sum_mem _ fun i _ => ?_
     rw [map_add (f := _)]
-    exact add_mem ((GlobalTheory.Core.Mi.LatMatch.mul_sec_mem_intAt_iff (p i) a 1).2 (by simpa using (hh i).1)).2
-      ((GlobalTheory.Core.Mi.LatMatch.mul_cA_sec_mem_intAt_iff (p i) a 1).2 (by simpa using (hh i).2)).2
+    exact add_mem ((hs (p i) a 1).2 (by simpa using (hh i).1)).2
+      ((hcs (p i) a 1).2 (by simpa using (hh i).2)).2
 
 end GlobalTheory.FinPl.SplitHalves
 

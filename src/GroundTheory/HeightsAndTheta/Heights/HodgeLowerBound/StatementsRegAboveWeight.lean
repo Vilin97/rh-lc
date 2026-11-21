@@ -22,10 +22,4 @@ def RegAboveWeight.Statement : Prop :=
       ∀ t : ℝ, 0 < t → t ≤ t₂ → ∀ z ∈ mcPts (mCoordIdeal D.y), z ∉ N →
         phMu X.H z ≤ Real.log (X.S.ref.h z) + X.S.regWeight t (X.M.proj z)
 
-namespace Line
-
-open GroundTheory.Heights₂.Heights.Regular.ProjectiveLine
-
-end Line
-
 end GroundTheory.Heights₂.Heights.LowerBoundFree

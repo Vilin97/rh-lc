@@ -19,7 +19,6 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.GeometryOfNumbersTheory
 open GlobalTheory GlobalTheory.LieHt GlobalTheory.Cartier GlobalTheory.ThetaOnto GlobalTheory.CxPts GlobalTheory.Points
 open scoped CategoryTheory.Obj
-open GlobalTheory.MBLit
 
 noncomputable section
 
@@ -27,10 +26,10 @@ namespace GlobalTheory.MBDesc
 
 theorem lbIso_pullComp {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) (f : Y ⟶ X) (g : Z ⟶ Y) :
     LBIso (L.pull (g ≫ f)) ((L.pull f).pull g) :=
-  LBIso.chartPull (RigidBundleGlue.chartPullComp L f g _ rfl) (chartPullId _)
-    ⟨idIso _, idIso_isGen (pull_isLB (pull_isLB hL f) g)⟩
+  ClosedPol.lbIso_pull_comp hL f g (g ≫ f) rfl
 
 theorem lbIso_pull_congr {X Y : Scheme.{0}} {L : LB X} (hL : L.IsLB) {f g : Y ⟶ X} (h : f = g) :
-    LBIso (L.pull f) (L.pull g) := h ▸ ⟨idIso _, idIso_isGen (pull_isLB hL f)⟩
+    LBIso (L.pull f) (L.pull g) :=
+  h ▸ RigidBundleGlue.LBIso.pull (GlobalTheory.lbIso_refl hL) f
 
 end GlobalTheory.MBDesc

@@ -275,12 +275,25 @@ private theorem exists_isPullback_comapSubscheme {X Y : Scheme.{u}} (W : X.Ideal
   exact (IsPullback.of_iso_pullback ⟨hsq⟩ e he rfl).flip
 
 def comapSubschemeHom {X Y : Scheme.{u}} (W : X.IdealSheafData) (g : Y ⟶ X) :
-    (W.comap g).subscheme ⟶ W.subscheme :=
-  (exists_isPullback_comapSubscheme W g).choose
+    (W.comap g).subscheme ⟶ W.subscheme := by
+  have h : ∃ c : (W.comap g).subscheme ⟶ W.subscheme,
+      IsPullback c (W.comap g).subschemeι W.subschemeι g := by
+    let e := W.comapIso g
+    refine ⟨e.hom ≫ Limits.pullback.snd g W.subschemeι, ?_⟩
+    have he : e.hom ≫ Limits.pullback.fst g W.subschemeι =
+        (W.comap g).subschemeι := W.comapIso_hom_fst g
+    have hsq : (W.comap g).subschemeι ≫ g =
+        (e.hom ≫ Limits.pullback.snd g W.subschemeι) ≫ W.subschemeι := by
+      rw [← he]
+      simp only [Category.assoc, Limits.pullback.condition]
+    exact (IsPullback.of_iso_pullback ⟨hsq⟩ e he rfl).flip
+  exact h.choose
 
 theorem isPullback_comapSubschemeHom {X Y : Scheme.{u}} (W : X.IdealSheafData) (g : Y ⟶ X) :
-    IsPullback (comapSubschemeHom W g) (W.comap g).subschemeι W.subschemeι g :=
-  (exists_isPullback_comapSubscheme W g).choose_spec
+    IsPullback (comapSubschemeHom W g) (W.comap g).subschemeι W.subschemeι g := by
+  change IsPullback (exists_isPullback_comapSubscheme W g).choose
+    (W.comap g).subschemeι W.subschemeι g
+  exact (exists_isPullback_comapSubscheme W g).choose_spec
 
 theorem comapSubschemeHom_comp_subschemeι {X Y : Scheme.{u}} (W : X.IdealSheafData) (g : Y ⟶ X) :
     comapSubschemeHom W g ≫ W.subschemeι = (W.comap g).subschemeι ≫ g :=

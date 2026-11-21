@@ -40,10 +40,13 @@ theorem twistPows_sub_mono {F G : SubSystem S x E} (h : ∀ I, F.sub I ≤ G.sub
 theorem exists_subFamily_twistPows (hB : SubFamilyTwist.Statement.{u, v, w}) (F : SubFamily S x E)
     (hF : ∀ I, (F.sub I).FG) : ∀ (t : ℕ) (L : Fin t → LineBundle S x) (n : Fin t → ℕ),
       ∃ H : SubFamily S x E, H.toSubSystem = F.toSubSystem.twistPows t (fun j => (L j).toSubSystem) n ∧
-        ∀ I, (H.sub I).FG
-  | 0, _, _ => ⟨F, rfl, hF⟩
-  | t + 1, L, n => by
-    obtain ⟨H, hH, hHfg⟩ := exists_subFamily_twistPows hB F hF t (fun j => L j.castSucc) (fun j => n j.castSucc)
+        ∀ I, (H.sub I).FG := by
+  intro t
+  induction t with
+  | zero => exact fun _ _ => ⟨F, rfl, hF⟩
+  | succ t ih =>
+    intro L n
+    obtain ⟨H, hH, hHfg⟩ := ih (fun j => L j.castSucc) (fun j => n j.castSucc)
     obtain ⟨P, hP⟩ := exists_lineBundle_twistMul (L (Fin.last t)) (n (Fin.last t)) 0
     obtain ⟨G, hG, hGfg⟩ := hB S Ω N x E H P hHfg
     refine ⟨G, ?_, hGfg⟩

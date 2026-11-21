@@ -324,11 +324,12 @@ theorem continuous_entireForm_inv :
   exact (((continuous_fst.mul hz).mul hΛ).sub (hz.mul hf)).add
     ((continuous_fst.mul continuous_const).mul hg)
 
-theorem isEpCont : IsEpCont Ψ ω fun z m ↦ entireForm (pairAt w hΨ hω m⁻¹) z where
-  entire m := differentiable_entireForm _
-  cont := continuous_entireForm_inv w hΨ hω
-  eq := by
-    intro z hz m
+theorem isEpCont : IsEpCont Ψ ω fun z m ↦ entireForm (pairAt w hΨ hω m⁻¹) z := by
+  refine { entire := fun _ ↦ differentiable_entireForm _
+           cont := continuous_entireForm_inv w hΨ hω
+           eq := ?_
+           strip := ?_ }
+  · intro z hz m
     have hN : (0 : ℝ) < Fintype.card ι := by exact_mod_cast Fintype.card_pos
     have hz0 : z ≠ 0 := by
       rintro rfl
@@ -342,7 +343,11 @@ theorem isEpCont : IsEpCont Ψ ω fun z m ↦ entireForm (pairAt w hΨ hω m⁻�
       linarith
     have hm := ((pairAt w hΨ hω m⁻¹).hasMellin (s := z) hz).2
     have he := (GlobalTheory.CompanionTheory.EpsteinUnfold.Hd.epstein_eq_mellin w ω hΨ hz m).2
-    rw [GlobalTheory.CompanionTheory.EisRk1.archExponent_eq_zero_of_mul_self w hω] at he
+    have hArch : archExponent w ω = 0 := by
+      have h : archExponent w ω = -archExponent w ω := by
+        rw [← archExponent_inv, ← eq_inv_of_mul_eq_one_left hω]
+      linarith
+    rw [hArch] at he
     simp only [Complex.ofReal_zero, zero_mul, add_zero] at he
     show entireForm (pairAt w hΨ hω m⁻¹) z = _
     rw [entireForm_eq _ hz0 hzk, he]
@@ -351,8 +356,7 @@ theorem isEpCont : IsEpCont Ψ ω fun z m ↦ entireForm (pairAt w hΨ hω m⁻�
       simp
     rw [hk, ← hm]
     rfl
-  strip := by
-    intro a b C hC
+  · intro a b C hC
     have hC' : IsCompact ((fun m : GL ι 𝔸[k] ↦ m⁻¹) '' C) := hC.image continuous_inv
     set N : ℝ := (Fintype.card ι : ℝ) with hNdef
     have hN : 0 ≤ N := Nat.cast_nonneg _

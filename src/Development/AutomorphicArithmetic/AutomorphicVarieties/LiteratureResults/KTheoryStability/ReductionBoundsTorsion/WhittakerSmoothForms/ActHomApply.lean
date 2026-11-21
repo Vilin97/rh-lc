@@ -36,19 +36,17 @@ theorem actHom_apply (γ : Gm L N) (h : HS L N) : actHom L N γ h = actL (emb L 
 theorem actHom_inv (γ : Gm L N) (h : HS L N) : actHom L N γ⁻¹ h = actL (emb L N γ)⁻¹ h := by
   rw [actHom_apply, map_inv]
 
-theorem hyp_of {Ht : Gp L N → ℝ} (P : PU L N Ht) : Hyp (Pos L N) (actHom L N) P.φ where
-  isOpen := (pos_open_convex L N).1
-  convex := (pos_open_convex L N).2
-  mapsTo g _ hh := actL_pos (emb L N g) hh
-  smooth := P.smooth
-  locFin := by
+theorem hyp_of {Ht : Gp L N → ℝ} (P : PU L N Ht) : Hyp (Pos L N) (actHom L N) P.φ := by
+  obtain ⟨hOpen, hConvex⟩ := pos_open_convex L N
+  refine Hyp.mk hOpen hConvex (fun g _ hh => actL_pos (emb L N g) hh) P.smooth ?_ ?_
+  ·
     have e : (fun γ : Gm L N => {h : Pos L N | P.φ (actHom L N γ⁻¹ h) ≠ 0}) =
         fun γ => {h : Pos L N | P.φ (actL (emb L N γ)⁻¹ h.1) ≠ 0} := by
       funext γ
       simp only [actHom_inv]
     rw [e]
     exact P.locFin
-  sum_one h hh := by
+  · intro h hh
     simp only [actHom_inv]
     exact P.sum_one h hh
 
@@ -116,7 +114,7 @@ theorem sWhit_of (_hEv : SEv) (hSt : SStokes) : SWhit := by
   ·
     intro γ h hh
     have e1 := (hE H k c hoc.inv (actHom L N γ) γ⁻¹ (fun h hh => H.mapsTo γ h hh) (fun γ' h _ => by
-      simp only [WhittakerCocycle.psi, _root_.mul_inv_rev, inv_inv, map_mul, ContinuousLinearMap.mul_apply]) (k + 1)
+      simp only [WhittakerCocycle.psi, _root_.mul_inv_rev, inv_inv, map_mul, mul_apply_eq_comp]) (k + 1)
       (fun _ => 1) h hh).1
     have e2 := eta_top H hD hC c hoc (fun _ => γ⁻¹ * 1) (fun _ => 1) h hh
     exact finv_of s _ (actHom L N γ) h (e1.trans e2)
@@ -149,6 +147,7 @@ theorem sWhit_of (_hEv : SEv) (hSt : SStokes) : SWhit := by
     beta_reduce
     rw [intS_eq]
     congr 2
+    simp only [MonoidHom.id_apply, smul_eq_mul, mul_one, actHom_apply]
     rfl
   ·
     obtain ⟨Cφ, hCφ⟩ := P.deriv

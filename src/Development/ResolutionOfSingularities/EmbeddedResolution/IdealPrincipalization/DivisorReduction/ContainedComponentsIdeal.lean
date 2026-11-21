@@ -163,9 +163,11 @@ theorem exists_etaleChart_containedComponentsIdeal (T : MarkedIdealWithBoundary.
       | some b => exact ⟨b, rfl⟩
     refine ⟨U₀ ⊓ U₁, hxU, n, c.restrict hUle, a, b, hb, ?_, ?_, ?_, ?_⟩
     · intro i hi hai
-      exact restrictIdeal_eq_top_of_le _ hUle (hnone i hi hai)
+      refine restrictIdeal_eq_top_of_le _ hUle ?_
+      simpa only [List.get_eq_getElem] using hnone i hi hai
     · intro i hi t hai
-      exact restrictIdeal_eq_restrict_coordIdeal_of_le hUle c _ {t} (hsome i hi t hai)
+      refine restrictIdeal_eq_restrict_coordIdeal_of_le hUle c _ {t} ?_
+      simpa only [List.get_eq_getElem] using hsome i hi t hai
     · intro i i' hi hi' t h4 h5
       exact hinj i hi i' hi' t h4 h5
     · rw [hrestr]

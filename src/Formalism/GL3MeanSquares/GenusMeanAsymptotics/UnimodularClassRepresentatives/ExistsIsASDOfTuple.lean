@@ -51,9 +51,9 @@ theorem expand_orth [FiniteDimensional K V] {y : Fin (finrank K V) → V}
       (by simp)] at hj
     exact (mul_eq_zero.mp hj).resolve_right (hne j)
   by_cases h0 : finrank K V = 0
-  · haveI : Subsingleton V := Module.finrank_zero_iff.mp h0
+  · have : Subsingleton V := Module.finrank_zero_iff.mp h0
     exact Subsingleton.elim _ _
-  haveI : Nonempty (Fin (finrank K V)) := ⟨⟨0, Nat.pos_of_ne_zero h0⟩⟩
+  have : Nonempty (Fin (finrank K V)) := ⟨⟨0, Nat.pos_of_ne_zero h0⟩⟩
   set b := basisOfLinearIndependentOfCardEqFinrank hli (Fintype.card_fin _) with hb
   have hbi : ∀ i, b i = y i := fun i => by
     rw [hb, coe_basisOfLinearIndependentOfCardEqFinrank]
@@ -144,8 +144,8 @@ theorem exists_isASD_of_tuple [FiniteDimensional K V] (hS : IsHermSemilocal S) (
       have h1 := hall (fun i => (if i = i₁ then l else 1) • y i) (by
         intro i
         by_cases hi : i = i₁
-        · simp only [hi, if_true]; exact hl
-        · simp only [hi, if_false, one_smul]; exact hyM i) (by
+        · simp only [hi, ite_true]; exact hl
+        · simp only [hi, ite_false, one_smul]; exact hyM i) (by
         intro i j hij
         simp only [map_smulₛₗ, LinearMap.smul_apply, horth i j hij, smul_zero])
       rw [gram_det_smul_orth horth] at h1

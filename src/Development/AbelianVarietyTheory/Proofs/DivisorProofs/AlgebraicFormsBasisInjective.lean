@@ -74,7 +74,7 @@ end Block
 
 section Content
 
-open Formalism.BasicNotions Formalism.DivisionValues Formalism.EigenvalueLevelCeiling Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Indef.Tree.DepthCond GlobalTheory.IndefiniteRowSideFullHecke.TwistChoiceExample
+open Formalism.BasicNotions Formalism.DivisionValues Formalism.EigenvalueLevelCeiling Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Indef.Tree.DepthCond
 
 end Content
 
@@ -96,13 +96,6 @@ theorem isForm_tw {K X E : Type} [Field K] [AddCommGroup X] [Module K X] [Normed
     rfl
   · obtain ⟨a, ha⟩ := h3 x y
     exact ⟨a, (congrArg (cj s) ha).trans (h a).symm⟩
-
-variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
-  {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A)
-
-variable {R F}
-
-open GlobalTheory.IndefiniteRowSideFullHecke.TwistChoiceExample
 
 end Real
 

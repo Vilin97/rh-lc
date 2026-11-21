@@ -9,7 +9,7 @@ public import ReciprocityTheory.DualLattices.TensorSpan
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
-open GlobalTheory.CompanionTheory.Ar.BT GroundTheory.PAdicHodge
+open GlobalTheory.CompanionTheory.Ar.BT
 
 namespace PositivityTheory.HtPt.Mk
 

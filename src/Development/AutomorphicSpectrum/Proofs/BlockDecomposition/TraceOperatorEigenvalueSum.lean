@@ -48,8 +48,12 @@ theorem coeff_eq_zero_of_forall {V : Type} [AddCommGroup V] [Module ℂ V] (N : 
     simp only [eval_finsetSum, eval_mul, eval_C, eval_pow, eval_X, eval_zero]
     rw [← this]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
-  have := congrArg (fun p => coeff p i) hP
-  simpa [finsetSum_coeff, coeff_C_mul, coeff_X_pow, hi] using this
+  have := congrArg (fun p : ℂ[X] => p.coeff i) hP
+  rw [finsetSum_coeff, Finset.sum_eq_single i] at this
+  · simpa using this
+  · intro j _ hji
+    simp [coeff_C_mul_X_pow, Ne.symm hji]
+  · simp [hi]
 
 section Gen
 

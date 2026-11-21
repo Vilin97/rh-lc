@@ -124,6 +124,7 @@ private def eY {S : Scheme.{0}} (g : S ⟶ C) (s : S ⟶ B) (h : g ≫ π = s) :
     pullback (pullback.snd p π) g ≅ pullback p s :=
   pullbackLeftPullbackSndIso p π g ≪≫ pullback.congrHom rfl h
 
+private theorem eY_hom_fst {S : Scheme.{0}} (g : S ⟶ C) (s : S ⟶ B) (h : g ≫ π = s) :
     (eY p π g s h).hom ≫ pullback.fst _ _ = pullback.fst _ _ ≫ pullback.fst _ _ := by
   subst h; simp [eY]
 

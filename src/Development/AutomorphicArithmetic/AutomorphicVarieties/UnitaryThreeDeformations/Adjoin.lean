@@ -305,8 +305,9 @@ theorem UpperTheory.V.UnitaryThreeInertia.sring_eq_adjoin :
     ∀ {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (maximalIdeal O) O] [CharZero O] [Finite (ResidueField O)]
       {G Γ ι : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
       [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] [TotallyDisconnectedSpace Γ] [Finite ι] (F : Frame O G Γ ι), F.Ok →
-    ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG 3 R), F.IsUniv g₁ u →
-    Module.Finite O (wpart O u 0) → Sring O u = Algebra.adjoin O {x | ∃ g a b, F.η g = 1 ∧ x = (u g).mat a b} ∧ ∀ j, Module.Finite O (wpart O u j) := by
+    ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R]
+      (u : Γ →* GG (m := 3) (R := R)), F.IsUniv g₁ u →
+    Module.Finite O (wpart O u 0) → Sring (O := O) u = Algebra.adjoin O {x | ∃ g a b, F.η g = 1 ∧ x = (u g).mat a b} ∧ ∀ j, Module.Finite O (wpart O u j) := by
   intro O _ _ _ _ _ _ G Γ ι _ _ _ _ _ _ _ _ _ _ _ _ _ F hOk g₁ hg₁ R _ _ _ u hu hfin
   classical
   obtain ⟨W, hW, -⟩ := exists_adapted F hOk g₁ hg₁ u hu

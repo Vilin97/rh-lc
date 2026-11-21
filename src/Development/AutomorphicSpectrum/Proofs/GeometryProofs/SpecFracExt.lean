@@ -27,8 +27,8 @@ def tanW (Y : Model Xo c β) {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt X
     (w : Spec (CommRingCat.of (DualNumber S)) ⟶ Xo.univ.t.G.left)
     (hw : w ≫ Xo.univ.t.G.hom = spMap (algebraMap S (DualNumber S)) ≫ y.x) :
     Spec (CommRingCat.of (DualNumber S)) ⟶ Y.t.G.left :=
-  Y.m0.cart.1.lift w (spMap (algebraMap S (DualNumber S)) ≫ Small.ptF y) (by
-    rw [hw, Category.assoc, Small.ptF_fst]) ≫ Y.m.φ
+  Y.m0.cart.1.lift w (spMap (algebraMap S (DualNumber S)) ≫ GlobalTheory.AllWt.ptF y) (by
+    rw [hw, Category.assoc, GlobalTheory.AllWt.ptF, Limits.pullback.lift_fst]) ≫ Y.m.φ
 
 theorem isComb_cast {V : Type} [CommRing V] {G : CategoryTheory.Over (Spec (CommRingCat.of V))} [GrpObj G] {r m : ℕ} (h : r = m)
     (v : Fin m → (epsOver V V ⟶ G)) (cf : Fin m → V) (w : epsOver V V ⟶ G) (hc : IsComb v cf w) :

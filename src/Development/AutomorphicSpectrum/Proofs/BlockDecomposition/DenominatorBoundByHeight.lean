@@ -29,7 +29,7 @@ theorem local_exponent {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {y
   have hval : WithZeroMulInt.toNNReal (HeightOneSpectrum.absNorm_ne_zero v) (WithZero.exp n) =
       (Ideal.absNorm v.asIdeal : ℝ≥0) ^ n := by
     rw [WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero]
-    simp [WithZero.exp]
+    rw [WithZero.log_exp]
   refine ⟨n.toNat, ?_, ?_⟩
   · rw [hn]
     exact WithZero.exp_le_exp.2 (Int.self_le_toNat n)

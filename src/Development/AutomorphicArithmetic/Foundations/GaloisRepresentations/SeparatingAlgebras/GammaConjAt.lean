@@ -60,16 +60,17 @@ def RInt : Prop :=
     ∫ θ : Fin n → UnitAddCircle, evalAt (pt θ) (hlR (t : ℂ) l) * dens (t : ℂ) (pt θ) = if l = 0 then (n.factorial : ℂ) else 0
 
 def StarEx : Prop :=
-  ∀ (n : ℕ), ∀ p ∈ symmetricLaurent n, ∃ q ∈ symmetricLaurent n, ∀ z : Fin n → ℂˣ, (∀ i, ‖(z i : ℂ)‖ = 1) →
+  ∀ (n : ℕ), ∀ p ∈ symmetricLaurent (n := n), ∃ q ∈ symmetricLaurent (n := n),
+    ∀ z : Fin n → ℂˣ, (∀ i, ‖(z i : ℂ)‖ = 1) →
     evalAt z q = (starRingEnd ℂ) (evalAt z p)
 
 def SymEx : Prop :=
-  ∀ (n : ℕ) (Φ : MvPolynomial (Fin n) ℂ), ∃ p ∈ symmetricLaurent n,
+  ∀ (n : ℕ) (Φ : MvPolynomial (Fin n) ℂ), ∃ p ∈ symmetricLaurent (n := n),
     (∀ z : Fin n → ℂˣ, evalAt z p = ∏ σ : Equiv.Perm (Fin n), MvPolynomial.eval (fun i => (z (σ i) : ℂ)) Φ) ∧
     (Φ ≠ 0 → ∃ Ψ : MvPolynomial (Fin n) ℂ, Ψ ≠ 0 ∧ ∀ z : Fin n → ℂˣ, evalAt z p = MvPolynomial.eval (fun i => (z i : ℂ)) Ψ)
 
 def Small : Prop :=
-  ∀ (n : ℕ) (Φ : MvPolynomial (Fin n) ℂ), Φ ≠ 0 → ∀ δ : ℝ, 0 < δ → ∃ p ∈ symmetricLaurent n,
+  ∀ (n : ℕ) (Φ : MvPolynomial (Fin n) ℂ), Φ ≠ 0 → ∀ δ : ℝ, 0 < δ → ∃ p ∈ symmetricLaurent (n := n),
     (∀ z : Fin n → ℂˣ, MvPolynomial.eval (fun i => (z i : ℂ)) Φ = 0 → evalAt z p = 1) ∧
     ∫ θ : Fin n → UnitAddCircle, ‖evalAt (pt θ) p‖ ^ 2 ≤ δ
 

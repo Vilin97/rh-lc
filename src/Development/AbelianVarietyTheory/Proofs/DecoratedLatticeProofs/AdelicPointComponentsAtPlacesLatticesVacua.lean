@@ -503,8 +503,8 @@ theorem part_lat (P : Pl D → Prop) (S : HSp D) (L : Lat S) (y : Fin S.rank →
       funext i
       rw [← sub_eq_zero]
       apply eq_zero_of_comp
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sub, map_sum]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum]
         simp only [infPart_pair, Finset.sum_const_zero, sub_zero]
         exact infPart_of_idAt (hid i)
       · intro w

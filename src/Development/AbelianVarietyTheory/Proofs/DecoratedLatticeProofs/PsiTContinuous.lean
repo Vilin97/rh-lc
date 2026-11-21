@@ -76,7 +76,7 @@ theorem psiT_continuous (τ : D.what₂.Tau) : Continuous (psiT D τ) := by
   have hfun : (⇑(psiT D τ) : AE D → ℂ) = fun x => ∑ c, psiT D τ (algebraMap (AF D.host.F) (AE D)
       ((basAF D).repr x c)) * psiT D τ (basAF D c) := funext hsum
   rw [hfun]
-  exact continuous_finset_sum _ fun c _ => (halg.comp (hc c)).mul continuous_const
+  exact continuous_finsetSum _ fun c _ => (halg.comp (hc c)).mul continuous_const
 
 open Formalism.IndefR.Eqv in
 theorem inB_eq (V : HSp D) (B : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) (g : GA D V) (τ : D.what₂.Tau) :

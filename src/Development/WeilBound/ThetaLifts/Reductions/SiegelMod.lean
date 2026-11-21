@@ -380,7 +380,21 @@ theorem char_conj [Invertible (2 : R)] (h : Fr s J X Y) (hs : Continuous s) (ω 
     (((((continuous_cT hs (c1.comp continuous_snd)).matrix_mul continuous_const).matrix_mul (c1.comp continuous_fst)).sub
       (((continuous_cT hs (c1.comp continuous_fst)).matrix_mul continuous_const).matrix_mul
         (c1.comp continuous_snd))).const_smul (⅟2 : R)).subtype_mk fun p => (h.β p.1 p.2).2
-  have := Heis.isTopologicalGroup h.β hβ
+  have hg (A B : Type) [AddCommGroup A] [AddCommGroup B] [TopologicalSpace A] [TopologicalSpace B]
+      [IsTopologicalAddGroup A] [IsTopologicalAddGroup B] (β : A →+ A →+ B)
+      (cβ : Continuous fun p : A × A => β p.1 p.2) : IsTopologicalGroup (Heis β) := by
+    as_aux_lemma =>
+      refine { toContinuousMul := ⟨?_⟩, toContinuousInv := ⟨?_⟩ }
+      · change Continuous fun p : (A × B) × (A × B) =>
+          ((p.1.1 + p.2.1, p.1.2 + p.2.2 + β p.1.1 p.2.1) : A × B)
+        exact (continuous_fst.fst.add continuous_snd.fst).prodMk
+          ((continuous_fst.snd.add continuous_snd.snd).add
+            (cβ.comp (continuous_fst.fst.prodMk continuous_snd.fst)))
+      · change Continuous fun p : A × B =>
+          ((-p.1, -p.2 + β p.1 p.1) : A × B)
+        exact continuous_fst.neg.prodMk
+          (continuous_snd.neg.add (cβ.comp (continuous_fst.prodMk continuous_fst)))
+  have : IsTopologicalGroup (Heis h.β) := hg _ _ h.β hβ
   have hu2 : s (u * u).1 = (u * u).1 := by rw [Units.val_mul, map_mul, hu]
   let θ₁ := scal (W1 s J X Y) u (smul_mem_frame_annihilator _) (smul_mem_frame_annihilator _)
   let θ := scal (W2 s k) u (smul_mem_skew_hermitian hu) (smul_mem_skew_hermitian (s_inv hu))

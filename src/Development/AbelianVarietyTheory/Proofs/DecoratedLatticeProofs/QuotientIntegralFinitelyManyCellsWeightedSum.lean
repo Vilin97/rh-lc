@@ -140,7 +140,6 @@ theorem GlobalTheory.CellInt.quotInt_finiteCells : ∀ (G : Type) [Group G] [Top
     (fun q => (((μ (K : Set G)).toReal / (ρ (cellSet R K q q)).toReal : ℝ) : ℂ) * f q) fun q _ => by
       have := (isQuotientIntegral_indicator_doubleCoset R K hR hKc hKo ρ μ q).smul (f q)
       convert this using 1
-      · funext h; simp [smul_eq_mul]
       · ring
   convert hS using 1
   exact funext key

@@ -133,7 +133,13 @@ theorem convR_tst_mul_infGL (μ : Measure (GA E a)) [μ.IsMulLeftInvariant] (U :
   by_cases h : GeneralLinearGroup.map (pFin E) v⁻¹ ∈ U
   · have h' : GeneralLinearGroup.map (pFin E) (infGL E a y * v)⁻¹ ∈ U := hf ▸ h
     simp only [tst, ker, if_pos h, if_pos h', hb, psi, hi]
-    simp [toL, mul_assoc]
+    have he : toL ((GeneralLinearGroup.map (pInf E) v⁻¹ * y⁻¹).val * y.val) =
+        toL (GeneralLinearGroup.map (pInf E) v⁻¹).val := by
+      rw [← Units.val_mul, inv_mul_cancel_right]
+    simp only [show ∀ m, Matrix.of (toL m) = m from fun m => Matrix.of.apply_symm_apply m, mul_assoc]
+    change β (toL (GeneralLinearGroup.map (pInf E) v⁻¹).val) * Fl (g * (infGL E a y * v)) =
+      β (toL ((GeneralLinearGroup.map (pInf E) v⁻¹ * y⁻¹).val * y.val)) * Fl (g * (infGL E a y * v))
+    rw [he]
   · have h' : GeneralLinearGroup.map (pFin E) (infGL E a y * v)⁻¹ ∉ U := hf ▸ h
     simp only [tst, ker, if_neg h, if_neg h']
     simp

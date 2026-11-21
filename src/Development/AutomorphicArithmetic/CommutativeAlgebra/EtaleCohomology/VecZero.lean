@@ -25,7 +25,7 @@ def tA : Acris l := ACris.periodT (untilt_epsilon (p := l))
 
 
 variable (l) in
-def phiA : Acris l →+* Acris l := ACris.phi ℂ_[l] l
+def phiA : Acris l →+* Acris l := ACris.phi (K := ℂ_[l]) (p := l)
 
 def galA (g : K.fixingSubgroup) : Acris l →+* Acris l := ACris.galCris (IntermediateField.fixingSubgroupEquiv K g)
 

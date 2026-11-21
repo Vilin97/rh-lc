@@ -284,16 +284,16 @@ private theorem norm_facts {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [Alg
 
 private theorem zero_facts {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsLocalRing O] [Algebra ℤ_[l] O]
     [Module.Finite ℤ_[l] O] [Algebra O (PadicAlgCl l)] [IsScalarTower ℤ_[l] O (PadicAlgCl l)] {Γ R : Type} [Group Γ]
-    [CommRing R] [IsLocalRing R] [Algebra O R] (u : Γ →* GG 3 R) (hfin : Module.Finite O (wpart O u 0))
-    (ξ : Sring O u →ₐ[O] PadicAlgCl l) (x : R) (hx : x ∈ wpart O u 0) :
+    [CommRing R] [IsLocalRing R] [Algebra O R] (u : Γ →* GG (m := 3) (R := R)) (hfin : Module.Finite O (wpart (O := O) u 0))
+    (ξ : Sring (O := O) u →ₐ[O] PadicAlgCl l) (x : R) (hx : x ∈ wpart (O := O) u 0) :
     ‖ξ ⟨x, mem_Sring u hx⟩‖ ≤ 1 ∧ (x ∈ maximalIdeal R → ‖ξ ⟨x, mem_Sring u hx⟩‖ < 1) := by
-  let T : Subalgebra O R := (wpart O u 0).toSubalgebra SetLike.GradedOne.one_mem fun x y hx hy => by
+  let T : Subalgebra O R := (wpart (O := O) u 0).toSubalgebra SetLike.GradedOne.one_mem fun x y hx hy => by
     simpa using SetLike.GradedMul.mul_mem hx hy
   haveI : Module.Finite O T := hfin
   haveI : IsLocalHom (T.val : T →+* R) := ⟨fun a ha => by
     obtain ⟨b, hb⟩ := ha.exists_right_inv
     have hb' : (a : R) * b = 1 := hb
-    have hbT : b ∈ wpart O u 0 := fun R' _ _ _ f f' t h => by
+    have hbT : b ∈ wpart (O := O) u 0 := fun R' _ _ _ f f' t h => by
       have h1 := a.2 R' f f' t h
       rw [zpow_zero, Units.val_one, one_mul] at h1 ⊢
       calc f' b = f' b * f ((a : R) * b) := by rw [hb', map_one, mul_one]
@@ -307,27 +307,27 @@ private theorem zero_facts {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsL
 private theorem exists_loc {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing O]
     [IsAdicComplete (maximalIdeal O) O] [Algebra ℤ_[l] O]
     [Module.Finite ℤ_[l] O] [Algebra O (PadicAlgCl l)] [IsScalarTower ℤ_[l] O (PadicAlgCl l)] {Γ R : Type} [Group Γ]
-    [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG 3 R) (hfin : Module.Finite O (wpart O u 0))
-    (ξ : Sring O u →ₐ[O] PadicAlgCl l) (W : WPres O ℤ R) (hW : ∀ j, W.part j = wpart O u j)
-    (hzw : ∀ i, W.z i ∈ wpart O u (W.wt i)) {A : Type} [CommRing A] [IsLocalRing A] [Algebra O A] [Module.Finite O A]
+    [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG (m := 3) (R := R)) (hfin : Module.Finite O (wpart (O := O) u 0))
+    (ξ : Sring (O := O) u →ₐ[O] PadicAlgCl l) (W : WPres O ℤ R) (hW : ∀ j, W.part j = wpart (O := O) u j)
+    (hzw : ∀ i, W.z i ∈ wpart (O := O) u (W.wt i)) {A : Type} [CommRing A] [IsLocalRing A] [Algebra O A] [Module.Finite O A]
     (v : A →ₐ[O] PadicAlgCl l) (hv : Function.Injective v) (t : (PadicAlgCl l)ˣ) (b : W.σ → A)
     (hb : ∀ i, v (b i) = ((t ^ W.wt i : (PadicAlgCl l)ˣ) : PadicAlgCl l) * ξ ⟨W.z i, mem_Sring u (hzw i)⟩)
     (ht : ∀ i, ‖v (b i)‖ < 1) :
-    ∃ Ξ : R →ₐ[O] A, IsLocalHom Ξ ∧ ∀ j x (hx : x ∈ wpart O u j),
+    ∃ Ξ : R →ₐ[O] A, IsLocalHom Ξ ∧ ∀ j x (hx : x ∈ wpart (O := O) u j),
       v (Ξ x) = ((t ^ j : (PadicAlgCl l)ˣ) : PadicAlgCl l) * ξ ⟨x, mem_Sring u hx⟩ := by
   obtain ⟨B, hB, hBl, hBm⟩ := exists_co (O := O) (A := A)
   have hm : ∀ i, b i ∈ maximalIdeal A := fun i => (norm_facts v _).2.2 (ht i)
   obtain ⟨Φ, ⟨-, hΦ⟩, -⟩ := co_ev O O B W.σ (Algebra.ofId O B) (fun i => ⟨_, hBm _ (hm i)⟩)
     fun i hi => hm i (hi.map B.val)
-  have hP : ∀ {j f}, f ∈ wtPart O W.wt j → f ∈ (Sring O u).comap W.π := fun {j f} hf =>
+  have hP : ∀ {j f}, f ∈ wtPart O W.wt j → f ∈ (Sring (O := O) u).comap W.π := fun {j f} hf =>
     mem_Sring u (j := j) (hW j ▸ ⟨f, hf, rfl⟩)
   have hX : ∀ i, (v.comp (B.val.comp Φ)) (MvPowerSeries.X i) = v (b i) := fun i => by
     simp only [AlgHom.comp_apply, hΦ]
     rfl
   have key : ∀ j f (hf : f ∈ wtPart O W.wt j), v (Φ f : A) =
       ((t ^ j : (PadicAlgCl l)ˣ) : PadicAlgCl l) * ξ ⟨W.π f, hP hf⟩ :=
-    ev_eq W ((Sring O u).comap W.π) hP
-      (ξ.comp ((W.π.comp ((Sring O u).comap W.π).val).codRestrict (Sring O u) fun x => x.2))
+    ev_eq W ((Sring (O := O) u).comap W.π) hP
+      (ξ.comp ((W.π.comp ((Sring (O := O) u).comap W.π).val).codRestrict (Sring (O := O) u) fun x => x.2))
       (v.comp (B.val.comp Φ)) t (fun f => (norm_facts v _).1)
       (fun f hf => (zero_facts u hfin ξ _ (hW 0 ▸ ⟨f, hf, rfl⟩)).1) (fun i => (hX i).trans (hb i))
       (fun i => by rw [hX]; exact ht i)
@@ -340,7 +340,7 @@ private theorem exists_loc {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsL
         rw [← RingHom.mem_ker, hJ]
         exact Ideal.subset_span ⟨i, rfl⟩
       have h2 := key _ _ (hf i)
-      rw [show (⟨W.π (f i), hP (hf i)⟩ : Sring O u) = 0 from Subtype.ext h1, map_zero, mul_zero] at h2
+      rw [show (⟨W.π (f i), hP (hf i)⟩ : Sring (O := O) u) = 0 from Subtype.ext h1, map_zero, mul_zero] at h2
       exact Subtype.ext (hv (h2.trans (map_zero v).symm))
     intro g hg
     rw [hJ] at hg
@@ -368,11 +368,11 @@ theorem UpperTheory.V.UnitaryThreeInertia.isCharZeroPt_of_isPtHom :
       [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [Algebra O (PadicAlgCl l)] [IsScalarTower ℤ_[l] O (PadicAlgCl l)] [FaithfulSMul O (PadicAlgCl l)]
       {G Γ ι : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
       [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] [TotallyDisconnectedSpace Γ] [Finite ι] (F : Frame O G Γ ι), F.Ok →
-    ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG 3 R), F.IsUniv g₁ u →
-    Module.Finite O (wpart O u 0) → ∀ (ξ : Sring O u →ₐ[O] (PadicAlgCl l)) (r : Γ →* GG 3 (PadicAlgCl l)), IsPtHom u ξ r → F.IsCharZeroPt g₁ r := by
+    ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG (m := 3) (R := R)), F.IsUniv g₁ u →
+    Module.Finite O (wpart (O := O) u 0) → ∀ (ξ : Sring (O := O) u →ₐ[O] (PadicAlgCl l)) (r : Γ →* GG (m := 3) (R := PadicAlgCl l)), IsPtHom u ξ r → F.IsCharZeroPt g₁ r := by
   intro l _ O _ _ _ _ _ _ _ _ _ _ _ G Γ ι _ _ _ _ _ _ _ _ _ _ _ _ _ F hF g₁ hg R _ _ _ u hu hfin ξ r hr
   obtain ⟨W, hW, -⟩ := exists_adapted F hF g₁ hg u hu
-  have hzw : ∀ i, W.z i ∈ wpart O u (W.wt i) := fun i => hW.part _ ▸ W.z_mem i
+  have hzw : ∀ i, W.z i ∈ wpart (O := O) u (W.wt i) := fun i => hW.part _ ▸ W.z_mem i
   have hzm : ∀ i, W.z i ∈ maximalIdeal R := fun i => by
     obtain ⟨g, a, b, -, -, e⟩ := hW.var i
     rw [e]
@@ -380,7 +380,7 @@ theorem UpperTheory.V.UnitaryThreeInertia.isCharZeroPt_of_isPtHom :
   obtain ⟨t, ht⟩ := exists_scale W.wt (fun i => ξ ⟨W.z i, mem_Sring u (hzw i)⟩)
     (fun i hi => (zero_facts u hfin ξ _ (hi ▸ hzw i)).2 (hzm i))
     (fun i h hi hh => by
-      have h1 : W.z i ^ (W.wt h).natAbs * W.z h ^ (W.wt i).natAbs ∈ wpart O u 0 := by
+      have h1 : W.z i ^ (W.wt h).natAbs * W.z h ^ (W.wt i).natAbs ∈ wpart (O := O) u 0 := by
         have h2 := SetLike.mul_mem_graded (SetLike.pow_mem_graded (W.wt h).natAbs (hzw i))
           (SetLike.pow_mem_graded (W.wt i).natAbs (hzw h))
         have h3 : (W.wt h).natAbs • W.wt i + (W.wt i).natAbs • W.wt h = 0 := by

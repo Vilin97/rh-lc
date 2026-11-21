@@ -26,8 +26,11 @@ theorem stdBlocks_ones (N : ℕ) (a : Fin N) (i : Fin (ones N a)) :
 theorem tor_offDiag {N : ℕ} {x : GL (Fin N) k} (hx : x ∈ Tor k N) {i j : Fin N} (hij : i ≠ j) :
     (x : Matrix (Fin N) (Fin N) k) i j = 0 := by
   obtain ⟨s, rfl⟩ := hx
-  have h := leviEmb_apply_ne k (stdBlocks (ones N) (sum_ones N)) s hij
-    (⟨0, by simp [ones]⟩ : Fin (ones N i)) (⟨0, by simp [ones]⟩ : Fin (ones N j))
+  have h : (leviEmb k (stdBlocks (ones N) (sum_ones N)) s : Matrix (Fin N) (Fin N) k)
+      (stdBlocks (ones N) (sum_ones N) ⟨i, ⟨0, by simp [ones]⟩⟩)
+      (stdBlocks (ones N) (sum_ones N) ⟨j, ⟨0, by simp [ones]⟩⟩) = 0 := by
+    classical
+    simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hij]
   rwa [stdBlocks_ones, stdBlocks_ones] at h
 
 theorem mem_tor_of_offDiag {N : ℕ} (x : GL (Fin N) k)
@@ -50,15 +53,21 @@ theorem mem_tor_of_offDiag {N : ℕ} (x : GL (Fin N) k)
   ext i j
   by_cases hij : i = j
   · subst hij
-    have h1 := leviEmb_apply_same k (stdBlocks (ones N) (sum_ones N))
-      (fun a => Units.map (algebraMap k (Matrix (Fin (ones N a)) (Fin (ones N a)) k)).toMonoidHom
-        (Units.mk0 _ (hd a))) i (⟨0, by simp [ones]⟩ : Fin (ones N i)) (⟨0, by simp [ones]⟩ : Fin (ones N i))
+    have h1 : (leviEmb k (stdBlocks (ones N) (sum_ones N))
+        (fun a => Units.map (algebraMap k (Matrix (Fin (ones N a)) (Fin (ones N a)) k)).toMonoidHom
+          (Units.mk0 _ (hd a))) : Matrix (Fin N) (Fin N) k)
+        (stdBlocks (ones N) (sum_ones N) ⟨i, ⟨0, by simp [ones]⟩⟩)
+        (stdBlocks (ones N) (sum_ones N) ⟨i, ⟨0, by simp [ones]⟩⟩) = (x : Matrix (Fin N) (Fin N) k) i i := by
+      simp [leviEmb, Matrix.blockDiagonal'_apply_eq, Matrix.algebraMap_matrix_apply]
     rw [stdBlocks_ones] at h1
     rw [h1]
-    simp [Matrix.algebraMap_matrix_apply]
-  · have h1 := leviEmb_apply_ne k (stdBlocks (ones N) (sum_ones N))
-      (fun a => Units.map (algebraMap k (Matrix (Fin (ones N a)) (Fin (ones N a)) k)).toMonoidHom
-        (Units.mk0 _ (hd a))) hij (⟨0, by simp [ones]⟩ : Fin (ones N i)) (⟨0, by simp [ones]⟩ : Fin (ones N j))
+  · have h1 : (leviEmb k (stdBlocks (ones N) (sum_ones N))
+        (fun a => Units.map (algebraMap k (Matrix (Fin (ones N a)) (Fin (ones N a)) k)).toMonoidHom
+          (Units.mk0 _ (hd a))) : Matrix (Fin N) (Fin N) k)
+        (stdBlocks (ones N) (sum_ones N) ⟨i, ⟨0, by simp [ones]⟩⟩)
+        (stdBlocks (ones N) (sum_ones N) ⟨j, ⟨0, by simp [ones]⟩⟩) = 0 := by
+      classical
+      simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hij]
     rw [stdBlocks_ones, stdBlocks_ones] at h1
     rw [h i j hij]
     exact h1

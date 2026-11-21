@@ -32,7 +32,8 @@ theorem kap_divFin_stLoc_dataOf : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     ((GlobalTheory.differentials_iff_trdegD_and_genericSection _ _ _ _ _ (fun _ _ => ⊥) _ Z (hFG Z) (hTr Z) (hw Z)).1).1 (hA Z)
   refine ⟨hfg, htr, ?_, ?_⟩
   · exact divFin_of_trdeg E H Dw l Xo c _ hD hDd (fun Z j => valC_mem h uL.1 uL.2 (wR j) Z) hw hT
-  · refine stLoc_of_trdeg E H Dw l Xo c h Dd N uL wR jc hFG hTr hjc (fun Z => ?_)
+  · apply stLoc_of_trdeg E H Dw l Xo c h Dd N uL wR jc hFG hTr hjc
+    intro Z
     have hZ := hT Z
     unfold ReciprocityTheory.ChartRestriction.G.AR.Up.TrdegD at hZ
     have key : (fun j => ReciprocityTheory.ChartRestriction.G.T0.ratio (Ω := Om Z) ((dataOf h δ fn yP Dd N T i g0 cc uL uF uka ude uet uta1 uta2 wR jc np thpR n0 th0R uF0 nk thkR MR etR ta1R ta2R nu ip wsize DF PN PQ tableDegreeThreeBase PP0' Pd Gc PI4 Pet tableLineDegreeFive tableLineDegreeTwo Prw PO f r).w j Z) ((dataOf h δ fn yP Dd N T i g0 cc uL uF uka ude uet uta1 uta2 wR jc np thpR n0 th0R uF0 nk thkR MR etR ta1R ta2R nu ip wsize DF PN PQ tableDegreeThreeBase PP0' Pd Gc PI4 Pet tableLineDegreeFive tableLineDegreeTwo Prw PO f r).w ((dataOf h δ fn yP Dd N T i g0 cc uL uF uka ude uet uta1 uta2 wR jc np thpR n0 th0R uF0 nk thkR MR etR ta1R ta2R nu ip wsize DF PN PQ tableDegreeThreeBase PP0' Pd Gc PI4 Pet tableLineDegreeFive tableLineDegreeTwo Prw PO f r).jc Z) Z)) =

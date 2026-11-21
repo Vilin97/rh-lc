@@ -132,10 +132,9 @@ theorem cofin_of_monic (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]
     (J : Set (Module.End ℂ (Sm E n))) (hJ : J ⊆ Zalg E n)
     (hq : ∀ (τ : E →+* ℂ) (u : ℂ), ∃ q : Polynomial ℂ, q.Monic ∧ Polynomial.aeval (cap (a := n) τ u) q ∈ J) :
     Cofin J := by
-  have hcomm : ∀ x ∈ {z : Module.End ℂ (Sm E n) | ∃ (τ : E →+* ℂ) (u : ℂ), z = cap (a := n) τ u},
-      ∀ y ∈ {z : Module.End ℂ (Sm E n) | ∃ (τ : E →+* ℂ) (u : ℂ), z = cap (a := n) τ u}, x * y = y * x :=
-    fun x hx y hy => (GlobalTheory.AutGrowth.KilledFin.Zalg_commute (Algebra.subset_adjoin hx) (Algebra.subset_adjoin hy)).eq
-  exact @cofin_of_algHom E _ _ _ n (Zalg E n) (Algebra.adjoinCommRingOfComm ℂ hcomm) (Subalgebra.algebra _)
+  letI : CommRing (Zalg E n) := { (inferInstance : Ring (Zalg E n)) with
+    mul_comm := fun x y => Subtype.ext (GlobalTheory.AutGrowth.KilledFin.Zalg_commute x.property y.property).eq }
+  exact @cofin_of_algHom E _ _ _ n (Zalg E n) inferInstance (Subalgebra.algebra _)
     (Zalg E n).val Subtype.val_injective (Subalgebra.range_val _) J hJ hq
 
 end GlobalTheory.CompanionTheory.CTFin.MonicCofin

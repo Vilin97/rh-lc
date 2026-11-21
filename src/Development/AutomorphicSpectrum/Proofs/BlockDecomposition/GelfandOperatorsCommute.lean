@@ -33,7 +33,7 @@ theorem pow_bracket (e : Matrix (Fin n) (Fin n) A)
   | zero =>
     intro a b c d
     have hcb : (c = b) ↔ (b = c) := eq_comm
-    simp only [pow_zero, one_apply, hcb]
+    simp only [pow_zero, Matrix.one_apply, hcb]
     by_cases h1 : c = d <;> by_cases h2 : b = c <;> by_cases h3 : a = d <;> simp_all
   | succ m ih =>
     intro a b c d
@@ -137,7 +137,7 @@ theorem pow_intertw (e : Matrix (Fin n) (Fin n) (Module.End ℂ M)) (e' : Matrix
   induction m with
   | zero =>
     intro a b x
-    simp only [pow_zero, one_apply]
+    simp only [pow_zero, Matrix.one_apply]
     split_ifs <;> simp
   | succ m ih =>
     intro a b x
@@ -362,13 +362,13 @@ theorem Epow_val (s : Bool) {F : Mat n → V} (x : Sm n V) (hx : Set.EqOn F x.1 
   induction m with
   | zero =>
     intro a b g hg
-    simp only [pow_zero, one_apply, Epow]
+    simp only [pow_zero, Matrix.one_apply, Epow]
     by_cases h : a = b
     · simpa [h] using hx hg
     · simp [h]
   | succ m ih =>
     intro a b g hg
-    simp only [Epow, pow_succ', mul_apply, LinearMap.sum_apply, Module.End.mul_apply, Finset.sum_apply,
+    simp only [Epow, pow_succ', Matrix.mul_apply, LinearMap.sum_apply, Module.End.mul_apply, Finset.sum_apply,
       AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [Eu_congr' s a c (ih c b) hg, Eu_val s a c _ hg]

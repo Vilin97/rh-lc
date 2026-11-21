@@ -222,15 +222,13 @@ def Eqv (Λ Λ' : Submodule (𝓞 D.host.E) (VS D).V) : Prop :=
 def dc (hK : X.LevelSubgroupCharacter) (h h' : Hfin X u) : Prop :=
   ∃ (g : Gam X u) (κ : Ku X u hK), h' = iotaF X u g * h * (κ : Hfin X u)
 
-theorem dc_equiv (hK : X.LevelSubgroupCharacter) : Equivalence (dc X u hK) where
-  refl h := ⟨1, 1, by simp⟩
-  symm := by
-    rintro h h' ⟨g, κ, rfl⟩
+theorem dc_equiv (hK : X.LevelSubgroupCharacter) : Equivalence (dc X u hK) := by
+  refine ⟨fun h => ⟨1, 1, by simp⟩, ?_, ?_⟩
+  · rintro h h' ⟨g, κ, rfl⟩
     refine ⟨g⁻¹, κ⁻¹, ?_⟩
     simp only [map_inv, Subgroup.coe_inv]
     group
-  trans := by
-    rintro h h' h'' ⟨g, κ, rfl⟩ ⟨g', κ', rfl⟩
+  · rintro h h' h'' ⟨g, κ, rfl⟩ ⟨g', κ', rfl⟩
     refine ⟨g' * g, κ * κ', ?_⟩
     simp only [map_mul, Subgroup.coe_mul]
     group

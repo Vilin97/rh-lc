@@ -76,7 +76,7 @@ theorem chiDet_absC_cpt (s : ℂ) (k : Kinf E a) :
       simpa using h3
     nlinarith [norm_nonneg ((k.1.det : Cinf E) w)]
   have e : ∀ w, ‖((Matrix.GeneralLinearGroup.det (Unitary.toUnits k) : (Cinf E)ˣ) : Cinf E) w‖ = 1 := hn
-  simp [e, hn]
+  simp [hn]
 
 theorem dchi_absC_trace (s : ℂ) :
     dchi (Model.absC E s) (Matrix.of (oneL E a)).trace = s * (a * (2 * Fintype.card (InfinitePlace E))) := by
@@ -104,7 +104,7 @@ theorem twist_central : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCompl
     rw [dchi_absC_trace, hs]
     field_simp
   refine ⟨Model.absC E s, L ⊓ GlobalTheory.Published.AutFinGL.Model.kerL a (Model.absC E s), conjChi a (Model.absC E s) '' J,
-    ?_, cofin_conj _ hJ, fun φ hφ hc he => ⟨⟨hφ.1.mulChi _, fun k hk => ?_, fun g => ?_, ?_⟩, ?_, ?_⟩⟩
+    ?_, cofin_conj _ hJ, fun φ hφ hc he => ⟨⟨(IsCuspForm.mulChi (⟨hφ.1, hc⟩ : IsCuspForm φ) _).1, fun k hk => ?_, fun g => ?_, ?_⟩, ?_, ?_⟩⟩
   · exact hL.inter (GlobalTheory.Published.AutFinGL.Model.isOpen_kerL _)
   · have h2 : chiDet a (Model.absC E s) (finGL E a k) = 1 := hk.2
     change rt E a (finGL E a k) _ = _

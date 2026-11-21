@@ -45,8 +45,7 @@ theorem frameCoords_mem_selfDualLatticeCoords_iff (D : D7) (S : HSp D) (u : S.V)
 
 theorem isSelfDualC_selfDualLatticeCoordsInFrame (D : D7) (S : HSp D) : IsSelfDualC S (selfDualLatticeCoordsInHermitianFrame D S) := by
   refine ⟨⟨S.standardTuple_isLattice.fg.map _, ?_⟩, ?_⟩
-  · have : (selfDualLatticeCoordsInHermitianFrame D S : Set (Fin S.rank → D.host.E)) = S.frame.equivFun.toLinearMap '' (S.L0 : Set S.V) := rfl
-    rw [this, ← Submodule.map_span, S.standardTuple_isLattice.span_eq_top, Submodule.map_top, LinearEquiv.range]
+  · exact fun _ _ => (LinearIndependent.iff_fractionRing (𝓞 D.host.E) D.host.E).mp
   · intro y
     obtain ⟨v, rfl⟩ := S.frame.equivFun.surjective y
     have h2 : v ∈ S.L0 ↔ ∀ u ∈ S.L0, S.hT u v ∈ (1 : Submodule (𝓞 D.host.E) D.host.E) := by

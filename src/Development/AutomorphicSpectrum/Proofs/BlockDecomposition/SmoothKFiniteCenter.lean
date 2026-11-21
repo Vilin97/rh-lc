@@ -154,6 +154,7 @@ theorem moderate_growth : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCom
   have h1O : (1 : AdelicGLn.FiniteAdelicGL E a) ∈ {k | finRep E a k φ = φ} := by
     change finRep E a 1 φ = φ
     rw [map_one]; rfl
+  set_option synthInstance.maxHeartbeats 200000 in
   obtain ⟨U, hU1, hUO, hUc⟩ := local_compact_nhds (hlev.mem_nhds h1O)
   obtain ⟨p, hpdef⟩ : ∃ p : GA E a → AutomorphicForm.archGroup E a,
       p = fun h => AutomorphicForm.archEquiv E a (AdelicGLn.prodEquiv E a h).1 := ⟨_, rfl⟩
@@ -202,7 +203,7 @@ theorem moderate_growth : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCom
   obtain ⟨hli, hmem⟩ := (memL2_iff_fundamental_domain hF).1 hL
   obtain ⟨I, hI⟩ : ∃ I, I = ∫⁻ x in stdDom (latticeGL E a), ‖φ.1 x‖ₑ ^ 2 ∂μ := ⟨_, rfl⟩
   have hItop : I ≠ ⊤ := by
-    have h := (eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (p := 2) (by norm_num) (by norm_num)).1 hmem.eLpNorm_lt_top
+    have h := (eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top (p := 2) (by norm_num) (by norm_num) hmem.aestronglyMeasurable).1 hmem.eLpNorm_lt_top
     rw [hI]
     simpa using h.ne
   have hfm : Measurable fun x => ‖φ.1 x‖ₑ ^ 2 := (hφc.enorm.measurable).pow_const 2

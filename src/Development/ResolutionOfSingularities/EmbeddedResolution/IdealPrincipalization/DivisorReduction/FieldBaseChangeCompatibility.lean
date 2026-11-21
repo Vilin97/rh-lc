@@ -315,5 +315,9 @@ theorem divisorFamily_isPullbackSequenceOfBlowups_fieldBaseChange (hres : Functo
   have hstrict := divisorFamily_isStrictPullbackBlowupSeq_fieldBaseChange hres hfacts hbc hfbc n L j hlow hshape
     T hV hdim hO hbal hj K f E' hBE htake hV' hdim' hO' hDB' hjE
   refine hstrict.isPullbackSequenceOfBlowups_withoutIsoBlowups.of_isomorphic ?_
+  refine hprune _ _ ?_
+  intro i hi
+  exact (Scheme.IdealSheafData.support_nonempty_iff_ne_top _).mp
+    (hcenters ((T.baseChange K f).withBoundary E') hV' hdim' hO' hDB' hjE i hi)
 
 end FunctorialResolution.EmbeddedResolution

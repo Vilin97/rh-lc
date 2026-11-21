@@ -26,7 +26,7 @@ theorem isCompact_setOf_toL_mem {K : Set (Lie E a)} (hK : IsCompact K) (hs : K �
     ext m
     constructor
     · rintro ⟨y, hy, rfl⟩
-      exact ⟨toL y.val, hy, by simp [toL]⟩
+      exact ⟨toL y.val, hy, by ext i j; rfl⟩
     · rintro ⟨x, hx, rfl⟩
       obtain ⟨u, hu⟩ := hs hx
       refine ⟨u, ?_, hu⟩

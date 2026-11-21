@@ -187,26 +187,30 @@ theorem height_bar (y : GL (Fin a) (Cinf E)) :
   unfold height
   rw [← map_inv, h1, h1]
 
-theorem isAutForm_pull {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (pull E a φ) where
-  left γ g := by rw [pull_apply, map_mul, barA_ratGL, h.left, pull_apply]
-  level := by
+theorem isAutForm_pull {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (pull E a φ) := by
+  constructor
+  case left =>
+    intro γ g
+    rw [pull_apply, map_mul, barA_ratGL, h.left, pull_apply]
+  case level =>
     convert h.level.preimage (continuous_mapGL (cFin E) (continuous_conjFin _)) using 1
     ext k
     exact (Eq.congr_left (act_pull (.fin k) φ)).trans (pull E a).injective.eq_iff
-  kfin := by
+  case kfin =>
     have := h.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (Set.range fun k => cptRep E a k φ)).map
       (pull E a).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     exact ⟨_, Submodule.subset_span ⟨_, rfl⟩, (act_pull (.cpt k) φ).symm⟩
-  zfin := by
+  case zfin =>
     have := h.zfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) ''
       Zalg E a)).map (pull E a).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     obtain ⟨z', h1, h2⟩ := Zalg_pull hz
     exact ⟨_, Submodule.subset_span ⟨z', h1, rfl⟩, (h2 φ).symm⟩
-  growth g := by
+  case growth =>
+    intro g
     obtain ⟨C, N, h1⟩ := h.growth (barA E a g)
     refine ⟨C, N, fun y => ?_⟩
     rw [pull_apply, map_mul, barA_infGL, ← height_bar]

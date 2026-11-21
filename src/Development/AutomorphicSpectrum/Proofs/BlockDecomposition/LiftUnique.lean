@@ -71,7 +71,7 @@ theorem lift_unique {I' : Ideal R'} {J : Ideal D} {B : Type} [CommRing B]
     rw [hφ, map_one, map_one, one_mul]
   · rintro φ₂ ⟨h1, h2⟩
     refine Ideal.Quotient.ringHom_ext (RingHom.ext fun w => ?_)
-    refine TensorProduct.induction_on w (by simp) (fun r x => ?_) (fun u v hu hv => ?_)
+    refine TensorProduct.inductionOn w (fun r x => ?_) (fun u v hu hv => ?_)
     · have t : r ⊗ₜ[R] x = (r ⊗ₜ[R] (1 : D)) * ((1 : R') ⊗ₜ[R] x) := by simp
       have e1 := RingHom.congr_fun h1 (Ideal.Quotient.mk I' r)
       have e2 := RingHom.congr_fun h2 (Ideal.Quotient.mk J x)

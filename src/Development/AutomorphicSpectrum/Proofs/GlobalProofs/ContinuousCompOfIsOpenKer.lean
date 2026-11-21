@@ -515,8 +515,9 @@ theorem annihilators_of (χ : D →* (ZMod n)ˣ) (hχ : ContAction (charRep χ))
   have hcT : ContAction (twDual χ rho) := GlobalTheory.DualSide.contAction_twDual hχ hrho
   have hIT : ∀ σ ∈ I, twDual χ rho σ = 1 := fun σ hσ => by
     have hinv : rho σ⁻¹ = 1 := hI _ (I.inv_mem hσ)
-    refine LinearMap.ext fun f => TDual.ext fun m => ?_
-    simp [twDual_apply, hχI σ hσ, hinv]
+    refine LinearMap.ext fun f => LinearMap.ext fun m => ?_
+    change ((χ σ : (ZMod n)ˣ) : ZMod n) * f (rho σ⁻¹ m) = f m
+    simp [hχI σ hσ, hinv]
   have hIP : ∀ σ ∈ I, charRep χ σ = 1 := fun σ hσ => by
     refine LinearMap.ext fun x => ?_
     simp [charRep_apply, hχI σ hσ]

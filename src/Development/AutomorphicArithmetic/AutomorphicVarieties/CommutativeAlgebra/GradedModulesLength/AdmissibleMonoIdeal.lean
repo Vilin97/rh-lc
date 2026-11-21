@@ -18,12 +18,9 @@ section
 
 variable {k : ℕ} {B R : Type} [CommRing B] [CommRing R] [Algebra B R] (𝒜 : Deg k → Submodule B R)
 
-private theorem self_isGr [GradedAlgebra 𝒜] : (GMod.self 𝒜).IsGr 𝒜 where
-  smul_mem {d m a x} ha hx := by
-    have h : a * (show R from x) ∈ 𝒜 (d + m) := SetLike.mul_mem_graded ha hx
-    exact h
-  internal := DirectSum.Decomposition.isInternal 𝒜
-  fin := Module.Finite.self R
+private theorem self_isGr [GradedAlgebra 𝒜] : (GMod.self 𝒜).IsGr 𝒜 := by
+  refine ⟨?_, DirectSum.Decomposition.isInternal 𝒜, Module.Finite.self R⟩
+  exact fun ha hx => SetLike.mul_mem_graded (A := 𝒜) ha hx
 
 private theorem mem_quo_ann_of_smul_mem {k : ℕ} {B R : Type} [CommRing B] [CommRing R] [Algebra B R] (F : GMod B R k)
     (N : Submodule R F.M) (x : R) (h : ∀ y : F.M, x • y ∈ N) : x ∈ (F.quo N).Ann := by

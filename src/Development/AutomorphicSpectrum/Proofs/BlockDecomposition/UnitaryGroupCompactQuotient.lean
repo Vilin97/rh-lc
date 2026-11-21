@@ -62,7 +62,7 @@ theorem toGLH_rat (H : Matrix (Fin n) (Fin n) E) (t : HH H)
   obtain ⟨γ₀, hγ₀, e⟩ := ht
   refine ⟨γ₀, hγ₀, Units.ext (Matrix.ext fun i j => ?_)⟩
   have e' : t.1 = Formalism.UG.bc (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (AFr E)) γ₀ := e.symm
-  change AEq (t.1.val i j) = algebraMap E (Af E) (γ₀.val i j)
+  change AEq (E := E) (t.1.val i j) = algebraMap E (Af E) (γ₀.val i j)
   rw [e']
   exact AEq_inclR _
 
@@ -133,7 +133,7 @@ theorem exists_compact_cover (H : Matrix (Fin n) (Fin n) E) (hnd : Formalism.Mai
     toGLH H '' ((fun k => Quotient.out q * k) '' (GlobalTheory.Mass.stdLevel (sg E) H : Set (HH H))),
     isCompact_iUnion fun q => (hK.image (continuous_const.mul continuous_id)).image (continuous_toGLH H), fun g hg => ?_⟩
   obtain ⟨h, rfl⟩ := exists_toGLH H g hg
-  obtain ⟨a, b, ha, hb, e⟩ := DoubleCoset.mk_out_eq_mul (GlobalTheory.Mass.ratIn (AFr E) (sg E) H) (GlobalTheory.Mass.stdLevel (sg E) H) h
+  obtain ⟨a, ha, b, hb, e⟩ := DoubleCoset.mk_out_eq_mul (GlobalTheory.Mass.ratIn (AFr E) (sg E) H) (GlobalTheory.Mass.stdLevel (sg E) H) h
   obtain ⟨γ, hγ, hγe⟩ := toGLH_rat H a⁻¹ (inv_mem ha)
   refine ⟨γ, hγ, _, Set.mem_iUnion.2 ⟨DoubleCoset.mk (GlobalTheory.Mass.ratIn (AFr E) (sg E) H) (GlobalTheory.Mass.stdLevel (sg E) H) h,
     ⟨_, ⟨b⁻¹, inv_mem hb, rfl⟩, rfl⟩⟩, ?_⟩

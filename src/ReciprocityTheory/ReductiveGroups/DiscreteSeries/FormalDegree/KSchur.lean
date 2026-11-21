@@ -25,7 +25,9 @@ lemma muK_univ_ne_zero (ε : Fin n → Bool) : muK ε Set.univ ≠ 0 := ((ENNRea
 lemma muK_univ_ne_top (ε : Fin n → Bool) : muK ε Set.univ ≠ ⊤ := ((ENNReal.toReal_pos_iff.mp (muK_univ_pos ε)).2).ne
 
 instance dk_isProb (ε : Fin n → Bool) : IsProbabilityMeasure (dk ε) :=
-  ⟨by simp [dk]⟩
+  ⟨by
+    simp only [dk, smul_apply, smul_eq_mul]
+    exact ENNReal.inv_mul_cancel (muK_univ_ne_zero ε) (muK_univ_ne_top ε)⟩
 
 instance dk_left (ε : Fin n → Bool) : (dk ε).IsMulLeftInvariant := by
   unfold dk; infer_instance
@@ -55,7 +57,7 @@ lemma muK_inv (ε : Fin n → Bool) : Measure.map (fun x : KG ε => x⁻¹) (muK
 
 lemma dk_inv (ε : Fin n → Bool) : Measure.map (fun x : KG ε => x⁻¹) (dk ε) = dk ε := by
   unfold dk
-  rw [Measure.map_smul, muK_inv]
+  rw [Measure.map_smul _ measurable_inv.aemeasurable, muK_inv]
 
 end CompactHaarProbability
 

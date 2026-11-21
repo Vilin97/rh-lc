@@ -76,7 +76,8 @@ theorem exists_normOne_integral : ∀ (E : Type) [Field E] [NumberField E] [IsTo
   obtain ⟨f₁, hf₁⟩ := exists_fibreIntegral (fun p : normOneGL (K := E) (n := a) × ℝ => f (e p))
     (hf.comp e.continuous) (hs.comp_homeomorph e) ((c.toReal : ℂ)⁻¹)
   refine ⟨f₁, fun K _ _ _ W hW hinv => ?_⟩
-  exact integral_eq_of_map e ν μ c hc0 hct hmap f hf hs f₁ hf₁ W (fun x => W (x : GA E a)) hW
-    (fun x t => by rw [he, hinv])
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact integral_eq_of_map e ν μ c hc0 hct hmap f hf hs f₁ hf₁ W (fun x => W (x : GA E a)) hW
+      (fun x t => by rw [he, hinv])
 
 end GlobalTheory.CompanionTheory.CuspTransfer.FubiniCentre

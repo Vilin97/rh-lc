@@ -12,7 +12,7 @@ set_option maxSynthPendingDepth 1
 open NumberField NumberField.mixedEmbedding IsDedekindDomain IsDedekindDomain.HeightOneSpectrum
   Matrix MeasureTheory Filter Topology
 open scoped NumberField.AdeleRing SchwartzMap Classical nonZeroDivisors Pointwise
-open PositivityTheory.EisRk1 GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Adele2
+open GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Adele2
   GroundTheory.Automorphic.GodementSection IdeleGroup
 
 set_option synthInstance.maxSize 1000
@@ -23,7 +23,7 @@ noncomputable section
 
 variable {K : Type*} [Field K] [NumberField K]
 
-def infC (a : 𝔸[K]) : mixedSpace K := homeomorphMixedSpace K a.1
+def infC (a : 𝔸[K]) : mixedSpace K := GroundTheory.Global.homeomorphMixedSpace K a.1
 
 theorem infC_mul (a b : 𝔸[K]) : infC (a * b) = infC a * infC b :=
   homeomorphMixedSpace_mul _ _
@@ -79,9 +79,9 @@ theorem exists_ideal_of_isCompact {S : Set 𝔸ᶠ[K]} (hS : IsCompact S) :
 
 theorem norm_le_norm_infC_moduleSection_mul (w : InfinitePlace K) {t : {x : ℝ // 0 < x}}
     (ht : 1 ≤ (t : ℝ)) (x : mixedSpace K) :
-    ‖x‖ ≤ ‖infC ((moduleSection w t : IdeleGroup K) : 𝔸[K]) * x‖ := by
-  set e := infC ((moduleSection w t : IdeleGroup K) : 𝔸[K])
-  set e' := infC ((moduleSection w t⁻¹ : IdeleGroup K) : 𝔸[K])
+    ‖x‖ ≤ ‖infC ((moduleSection w t : NumberField.IdeleGroup (𝓞 K) K) : 𝔸[K]) * x‖ := by
+  set e := infC ((moduleSection w t : NumberField.IdeleGroup (𝓞 K) K) : 𝔸[K])
+  set e' := infC ((moduleSection w t⁻¹ : NumberField.IdeleGroup (𝓞 K) K) : 𝔸[K])
   have hee : e' * e = 1 := by
     rw [← infC_mul, ← Units.val_mul, ← map_mul, inv_mul_cancel, map_one, Units.val_one]
     simp only [infC, homeomorphMixedSpace_apply]
@@ -97,7 +97,7 @@ theorem norm_le_norm_infC_moduleSection_mul (w : InfinitePlace K) {t : {x : ℝ 
     _ ≤ ‖e * x‖ := norm_mul_le_of_normAtPlace_le_one he' _
 
 theorem norm_infC_moduleSection (w : InfinitePlace K) (t : {x : ℝ // 0 < x}) :
-    mixedEmbedding.norm (infC ((moduleSection w t : IdeleGroup K) : 𝔸[K])) = t := by
+    mixedEmbedding.norm (infC ((moduleSection w t : NumberField.IdeleGroup (𝓞 K) K) : 𝔸[K])) = t := by
   have h := mixedEmbedding_norm_toInfinite (moduleSection w t)
   rw [infiniteModule_moduleSection] at h
   exact h

@@ -117,8 +117,8 @@ theorem pet_lie_add (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInv
     (fun t q => lieD X φ.1 (q.out * infGL E a (c t))) (fun t q => lieD X ψ.1 (q.out * infGL E a (c t))) C
     (fun t q => hasDerivAt_translate h0 hadd hX φ q.out t) (fun t q => hasDerivAt_translate h0 hadd hX ψ q.out t)
     (fun _ _ => bφ _) (fun _ _ => bψ _) (fun _ _ => bφ' _) (fun _ _ => bψ' _)
-    (fun t => (hφ.mul_right (infGL E a (c t))).2.1) (fun t => (hψ.mul_right (infGL E a (c t))).2.1)
-    (by simp only [e0, mul_one]; exact hφ'.2.1) (by simp only [e0, mul_one]; exact hψ'.2.1)
+    (fun t => (hφ.mul_right (infGL E a (c t))).2.aestronglyMeasurable) (fun t => (hψ.mul_right (infGL E a (c t))).2.aestronglyMeasurable)
+    (by simp only [e0, mul_one]; exact hφ'.2.aestronglyMeasurable) (by simp only [e0, mul_one]; exact hψ'.2.aestronglyMeasurable)
     (fun t => by
       have h1 := pet_mul_right μ hφ hψ (infGL E a (c t))
       simp only [e0, mul_one]

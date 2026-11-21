@@ -58,7 +58,7 @@ open GlobalTheory GlobalTheory.PDivGroup GlobalTheory.Sandwich
 
 section Proofs
 
-open GlobalTheory.PrismHodge GlobalTheory.Dieudonne GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta
+open GlobalTheory.Dieudonne GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta
 
 variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [Fact ¬IsUnit (p : O)]
   [IsAdicComplete (span {(p : O)}) O]

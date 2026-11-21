@@ -67,7 +67,7 @@ theorem gram_tower (R : RiemLat E g Λ) {I : Submodule (𝓞 E) Λ} (hI : IsIsoS
   rw [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Complex.ofRealHom_eq_coe, hre]
   simp only [towerZBasis_apply, R.act]
   rw [ip_act_act]
-  simp only [mul_apply, conjTranspose_apply, kroneckerMap_apply, one_apply, transpose_apply,
+  simp only [Matrix.mul_apply, conjTranspose_apply, kroneckerMap_apply, Matrix.one_apply, transpose_apply,
     blockDiagonal_apply, Fintype.sum_prod_type, basisMatrix_apply']
   simp only [ite_mul, one_mul, zero_mul, mul_ite, mul_zero, star_zero, apply_ite star,
     Finset.sum_ite_eq', Finset.mem_univ, if_true]
@@ -260,7 +260,7 @@ theorem det_gram_index (f : Λ →+ Λ →+ ℝ) {I : Submodule (𝓞 E) Λ} {ρ
     ext p q
     rw [Matrix.of_apply, hexp p, hexp q]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_zsmul, AddMonoidHom.finset_sum_apply, AddMonoidHom.coe_smul, Pi.smul_apply]
+      simp only [map_sum, map_zsmul, AddMonoidHom.finsetSum_apply, AddMonoidHom.coe_smul, Pi.smul_apply]
     simp only [zsmul_eq_mul, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply,
       Matrix.submatrix_apply, Matrix.of_apply, Finset.sum_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

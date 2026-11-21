@@ -84,7 +84,7 @@ theorem coord_int (D : D7) (S : HSp D) (L : GlobalTheory.FinPl.Lat S)
     rw [Pi.zero_apply, (toEAf D).map_zero, (Formalism.UG.prV (E := D.host.E) v).map_zero]
     exact Subring.zero_mem _
   | add a b _ _ ha hb =>
-    rw [Pi.add_apply, (toEAf D).map_add (f := _), (Formalism.UG.prV (E := D.host.E) v).map_add (f := _)]
+    rw [Pi.add_apply, (toEAf D).map_add, (Formalism.UG.prV (E := D.host.E) v).map_add]
     exact Subring.add_mem _ ha hb
   | neg a _ ha =>
     rw [Pi.neg_apply, (toEAf D).map_neg, (Formalism.UG.prV (E := D.host.E) v).map_neg]

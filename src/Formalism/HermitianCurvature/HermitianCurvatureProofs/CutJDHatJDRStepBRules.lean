@@ -21,17 +21,21 @@ variable {k r : ℕ}
 
 theorem tailW (c : Fin r → ℂ) (hc : ∀ a, c a ≠ 0) (b : Fin r) : ∀ n : ℕ, ∀ i : Fin (r + 1), i.val = b.val + 1 + n →
     ∃ T : Mx k r, wCell k r i c = wCell k r b.succ c * T ∧ T ∈ Glev k r b.succ ∧
-      (∀ v, inWb k r v → T *ᵥ v = v)
-  | 0, i, hi => by
+      (∀ v, inWb k r v → T *ᵥ v = v) := by
+  intro n
+  induction n with
+  | zero =>
+    intro i hi
     have : i = b.succ := Fin.ext (by simp [hi])
     subst this
     exact ⟨1, by simp, glev_one _, fun v _ => by simp⟩
-  | n + 1, i, hi => by
+  | succ n ih =>
+    intro i hi
     have hl : b.val + 1 + n < r := by have := i.isLt; omega
     set l : Fin r := ⟨b.val + 1 + n, hl⟩ with hldef
     have hil : i = l.succ := Fin.ext (by simp [l, hi]; omega)
     subst hil
-    obtain ⟨T, hT, hTG, hTv⟩ := tailW c hc b n l.castSucc (by simp [l])
+    obtain ⟨T, hT, hTG, hTv⟩ := ih l.castSucc (by simp [l])
     have hw := (Formalism.FourierDecayAlt.P.weyl_level_element_properties k r l (c l) (hc l)).1
     refine ⟨T * w1 k r l (c l), ?_, ?_, ?_⟩
     · rw [Formalism.FourierDecayAlt.P.Qx6.wCell_succ, hT, Matrix.mul_assoc]
@@ -90,7 +94,23 @@ theorem leftRuleB (z : Fin (2 * r + k + 1) → ℂ) (D : Set (Mx k r)) (f : Mx k
     (hWD : wCell k r (Fin.last r) c * g ∈ D) (b : Fin r) (hb : b.val + 1 < r) (v : Fin (k + 1)) :
     EH k r (wI k r v) (eI k r b) f (wCell k r (Fin.last r) c * g) = 0 := by
   have hcne : ∀ l, c l ≠ 0 := hc
-  obtain ⟨hW0, hWcomm⟩ := head_comm (k := k) c hcne b.val b.castSucc (by simp)
+  have head_comm : ∀ (i : Fin (r + 1)),
+      wCell k r i c ∈ Glev k r 0 ∧
+        ∀ j : Fin (r + 1), i ≤ j → ∀ x ∈ Glev k r j, wCell k r i c * x = x * wCell k r i c := by
+    intro i
+    induction i using Fin.induction with
+    | zero =>
+      rw [Formalism.FourierDecayAlt.P.Qx6.wCell_zero]
+      exact ⟨glev_one _, fun _ _ x _ => by simp⟩
+    | succ l ih =>
+      obtain ⟨ih0, ihc⟩ := ih
+      have hw := Formalism.FourierDecayAlt.P.weyl_level_element_properties k r l (c l) (hcne l)
+      rw [Formalism.FourierDecayAlt.P.Qx6.wCell_succ]
+      refine ⟨glev_mul ih0 (glev_mono (zero_le' _) hw.1), fun j hj x hx => ?_⟩
+      have hx1 : x ∈ Glev k r l.succ := glev_mono hj hx
+      have hcj : l.castSucc ≤ j := le_trans (by rw [Fin.le_def]; simp) hj
+      rw [Matrix.mul_assoc, (hw.2 x hx1).2.1, ← Matrix.mul_assoc, ihc j hcj x hx, Matrix.mul_assoc]
+  obtain ⟨hW0, hWcomm⟩ := head_comm b.castSucc
   obtain ⟨T, hT, hTG, hTv⟩ := tailW (k := k) c hcne b (r - b.val - 1) (Fin.last r) (by simp; omega)
   have hg₁ : T * g ∈ Glev k r b.succ := glev_mul hTG (glev_mono (Fin.le_last _) hg)
   have hsplit : wCell k r (Fin.last r) c * g = wCell k r b.castSucc c * (w1 k r b (c b) * (T * g)) := by

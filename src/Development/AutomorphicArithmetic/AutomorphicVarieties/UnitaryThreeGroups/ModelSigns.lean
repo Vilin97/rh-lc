@@ -105,7 +105,7 @@ section Mon
 
 variable {O R K Γ : Type} [CommRing O] [CommRing R] [Algebra O R] [Field K] [Algebra O K] [Group Γ]
 
-private theorem mon_zero (r : Γ →* GG 3 R) (f : R →ₐ[O] K) (e : ℤ)
+private theorem mon_zero (r : Γ →* GG (m := 3) (R := R)) (f : R →ₐ[O] K) (e : ℤ)
     (h : ∀ g a b, e * wt a b < 0 → f ((r g).mat a b) = 0) (j : ℤ) (hj : e * j < 0) :
     ∀ y ∈ entMon r j, f y = 0 := by
   rintro y ⟨L, rfl, rfl⟩
@@ -118,7 +118,7 @@ private theorem mon_zero (r : Γ →* GG 3 R) (f : R →ₐ[O] K) (e : ℤ)
     · rw [h _ _ _ hs, zero_mul]
     · rw [ih (by omega), mul_zero]
 
-private theorem mon_tor (r : Γ →* GG 3 R) (f f' : R →ₐ[O] K) (t : Kˣ)
+private theorem mon_tor (r : Γ →* GG (m := 3) (R := R)) (f f' : R →ₐ[O] K) (t : Kˣ)
     (h : ∀ g a b, f' ((r g).mat a b) = ((t ^ wt a b : Kˣ) : K) * f ((r g).mat a b)) (j : ℤ) :
     ∀ y ∈ entMon r j, f' y = ((t ^ j : Kˣ) : K) * f y := by
   rintro y ⟨L, rfl, rfl⟩
@@ -129,7 +129,7 @@ private theorem mon_tor (r : Γ →* GG 3 R) (f f' : R →ₐ[O] K) (t : Kˣ)
       Units.val_mul]
     ring
 
-private theorem mat_ker (η : Γ →* ℤˣ) (r : Γ →* GG 3 R) (c : Γ) (hc : η c = -1) (h1 : (r c).mat = 1) (g : Γ) :
+private theorem mat_ker (η : Γ →* ℤˣ) (r : Γ →* GG (m := 3) (R := R)) (c : Γ) (hc : η c = -1) (h1 : (r c).mat = 1) (g : Γ) :
     ∃ g' ∈ η.ker, (r g).mat = (r g').mat := by
   rcases Int.units_eq_one_or (η g) with h | h
   · exact ⟨g, h, rfl⟩

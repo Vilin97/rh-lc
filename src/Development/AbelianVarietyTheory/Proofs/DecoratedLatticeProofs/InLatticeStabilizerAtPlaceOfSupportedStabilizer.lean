@@ -61,7 +61,7 @@ theorem exists_fin_lift (b : Af D.host.F ⊗[D.host.F] D.host.E) : ∃ a : AE D,
   | add x y hx hy =>
     obtain ⟨a, ha1, ha2⟩ := hx
     obtain ⟨b, hb1, hb2⟩ := hy
-    exact ⟨a + b, by rw [(infPart D).map_add (f := _), ha1, hb1, add_zero], by rw [(finPart D).map_add (f := _), ha2, hb2]⟩
+    exact ⟨a + b, by rw [(infPart D).map_add, ha1, hb1, add_zero], by rw [(finPart D).map_add, ha2, hb2]⟩
 
 end GlobalTheory.KStabBridge
 
@@ -121,8 +121,8 @@ theorem exists_lift_latV (S : HSp D) (L : Lat S) (v : Pl D) {z : Fin S.rank → 
   | add z z' _ _ h h' =>
     obtain ⟨y, hy, h1, h2⟩ := h
     obtain ⟨y', hy', h1', h2'⟩ := h'
-    exact ⟨y + y', add_mem hy hy', fun i => by rw [Pi.add_apply, (infPart D).map_add (f := _), h1, h1', add_zero],
-      fun i => by rw [Pi.add_apply, (finPart D).map_add (f := _), h2, h2', Pi.add_apply, mul_add]⟩
+    exact ⟨y + y', add_mem hy hy', fun i => by rw [Pi.add_apply, (infPart D).map_add, h1, h1', add_zero],
+      fun i => by rw [Pi.add_apply, (finPart D).map_add, h2, h2', Pi.add_apply, mul_add]⟩
   | neg z _ h =>
     obtain ⟨y, hy, h1, h2⟩ := h
     refine ⟨-y, neg_mem hy, fun i => ?_, fun i => ?_⟩

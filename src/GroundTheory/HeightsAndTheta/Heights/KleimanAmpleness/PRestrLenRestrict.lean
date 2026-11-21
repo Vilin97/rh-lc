@@ -261,17 +261,18 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {K' K
 theorem restrictData_comp {hxy : ∀ i, y i ≠ 0 → x i ≠ 0} {hyz : ∀ i, z i ≠ 0 → y i ≠ 0}
     {Q : SubSystem S x Ω} {Q' : SubSystem S y K'} {Q'' : SubSystem S z K''} {r : Ω → K'}
     {r' : K' → K''} (h1 : RestrictData Q hxy Q' r) (h2 : RestrictData Q' hyz Q'' r') :
-    RestrictData Q (fun i hi => hxy i (hyz i hi)) Q'' (r' ∘ r) where
-  mem I q hq := h2.mem I _ (h1.mem (liftChart hyz I) q hq)
-  add I q hq q' hq' := by
+    RestrictData Q (fun i hi => hxy i (hyz i hi)) Q'' (r' ∘ r) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · exact fun I q hq => h2.mem I _ (h1.mem (liftChart hyz I) q hq)
+  · intro I q hq q' hq'
     simp only [Function.comp_apply]
     rw [h1.add (liftChart hyz I) q hq q' hq',
       h2.add I _ (h1.mem (liftChart hyz I) q hq) _ (h1.mem (liftChart hyz I) q' hq')]
-  smul I q hq f s e hs hf hse := by
+  · intro I q hq f s e hs hf hse
     simp only [Function.comp_apply]
     rw [h1.smul (liftChart hyz I) q hq f s e hs hf hse,
       h2.smul I (r q) (h1.mem (liftChart hyz I) q hq) f s e hs hf hse]
-  span I := by
+  · intro I
     rw [← h2.span I]
     apply le_antisymm
     · refine Submodule.span_le.mpr ?_

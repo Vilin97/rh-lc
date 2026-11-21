@@ -124,8 +124,14 @@ def tw (c : L) (g : M →ₗ[L] M') : Laur L M →+ Laur L M' where
   toFun x := mk (fun k => c ^ k • g (co x k)) (by
     obtain ⟨m, hm⟩ := isLaurent_co x
     exact ⟨m, fun k hk => by simp [hm k hk]⟩)
-  map_zero' := co_injective (by funext k; simp)
-  map_add' x y := co_injective (by funext k; simp)
+  map_zero' := co_injective (by
+    funext k
+    simp
+    rfl)
+  map_add' x y := co_injective (by
+    funext k
+    simp
+    rfl)
 
 @[simp] theorem co_tw (c : L) (g : M →ₗ[L] M') (x : Laur L M) (k : ℤ) :
     co (tw c g x) k = c ^ k • g (co x k) := rfl

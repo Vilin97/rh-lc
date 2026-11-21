@@ -40,7 +40,10 @@ theorem exists_diag_frame : ∀ {D : D7} {n : ℕ} (ρ k : ℕ) (Pg : Finset (Pl
     rw [Units.val_mul] at e
     rw [e]
     simp only [w, dif_pos (And.intro hPP h), IsUnit.unit_spec]
-  choose u hu using fun j : Fin n => GlobalTheory.FrameRescale.exists_unit_res (D := D) Pg (fun PP => d PP j)
+  have hex : ∀ j : Fin n, ∃ u : (Formalism.L2.Herm.intAf D.host.F D.host.E)ˣ,
+      ∀ PP ∈ Pg, Formalism.L2.DIV.resS D.host.F PP u = d PP j :=
+    fun j => GlobalTheory.FrameRescale.exists_unit_res (D := D) Pg (fun PP => d PP j)
+  choose u hu using hex
   have hSt : ∀ M, M ∈ Formalism.L2.DIV.St (β₀ * Formalism.L2.DIV.intGL D.host.F D.host.E n (GlobalTheory.SeeConjRead.diagGL u)) ↔ M ∈ Formalism.L2.DIV.St β₀ := by
     intro M
     constructor

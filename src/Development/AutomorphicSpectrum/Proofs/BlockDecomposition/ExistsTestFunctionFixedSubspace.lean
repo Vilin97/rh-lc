@@ -49,7 +49,8 @@ theorem exists_isTest_Rop_injective : ∀ (E : Type) [Field E] [NumberField E] [
     have h1 : Metric.closedBall (0 : X →L[ℂ] L2 (latticeGL E a) μ) (1 / 2) ∈ 𝓝 (Φ 1) := by
       rw [hΦ1]; exact Metric.closedBall_mem_nhds _ (by norm_num)
     have h2 := hΦ.continuousAt.preimage_mem_nhds h1
-    simpa [Metric.closedBall, dist_zero_right] using h2
+    change {y | dist (Φ y) 0 ≤ 1 / 2} ∈ 𝓝 (1 : GL (Fin a) (Cinf E)) at h2
+    simpa only [dist_zero_right] using h2
   obtain ⟨β₀, h0, hpos, htest, hconj, hsupp⟩ := GlobalTheory.T.exists_nonneg_test_function_near_one E a _ hN
   refine ⟨fun x => (β₀ x : ℂ), htest, hconj, fun v hv hRv => ?_⟩
   obtain ⟨hc, hcs⟩ := GlobalTheory.T.test_function_continuous_compact_support E a U hU hUc _ htest

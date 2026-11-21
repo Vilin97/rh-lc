@@ -430,7 +430,7 @@ theorem rep_tensor (hstr : algebraMap O Γ(X, V) = strV q V)
       refine evalAt_specMap hV (φ₂.comp g) y'.1.2 ?_ hy'
       rw [← b, h2, ← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     refine Ideal.Quotient.ringHom_ext (RingHom.ext fun x => ?_)
-    refine TensorProduct.induction_on x (by simp) (fun r f => ?_) (fun u v hu hv => ?_)
+    refine TensorProduct.inductionOn x (fun r f => ?_) (fun u v hu hv => ?_)
     · have t : r ⊗ₜ[O] f = (r ⊗ₜ[O] (1 : Γ(X, V))) * ((1 : R) ⊗ₜ[O] f) := by
         simp
       change φ₂ (Ideal.Quotient.mk _ (r ⊗ₜ[O] f)) = φ (Ideal.Quotient.mk _ (r ⊗ₜ[O] f))

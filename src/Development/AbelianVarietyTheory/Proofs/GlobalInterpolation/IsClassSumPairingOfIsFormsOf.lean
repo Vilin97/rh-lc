@@ -14,7 +14,9 @@ noncomputable section
 
 namespace GlobalTheory.PeriodOnStep
 
-open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.DivisionValues GlobalTheory.IndefiniteRowSideFullHecke GlobalTheory.PeriodClassSum GlobalTheory.Mem.Col2
+open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.DivisionValues
+open GlobalTheory.IndefiniteRowSideFullHecke
+open GlobalTheory.PeriodClassSum GlobalTheory.Mem.Col2
 open scoped Matrix ComplexOrder
 
 section Step

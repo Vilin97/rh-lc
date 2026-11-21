@@ -46,7 +46,7 @@ theorem flatFB_mulcol : ∀ (D : D7), GlobalTheory.FinPl.FlatLaws D → OmLoc D 
   let i₀ : Fin (σ + 1) := ⟨i.val, by omega⟩
   let zk : Matrix (Fin (σ + 1)) (Fin B.V.rank) k :=
     Matrix.of fun i' β => if i' = i₀ then b * (s * p.xi ^ (σ + 1 - i.val)) * FV.γ r β else 0
-  let a : Mx D B.V.rank (σ + 1) := giA B.V ⬝ adj (zk.map p.ι : Mx D (σ + 1) B.V.rank)
+  let a : Mx D B.V.rank (σ + 1) := giA B.V * adj (zk.map p.ι : Mx D (σ + 1) B.V.rank)
   have ha : IsHalf (cA D p.e) a := isHalf_mul_left _ (isHalf_adj p zk)
   have hy : IsHalf (cA D p.e) (J.d.extY B.V a) := isHalf_mul_right _ ha
   have hW : ∀ j : Fin (σ + 1), (FV.γ * (xLast B.d (vecB B.o B.ζ)).map p.π) r j = (s * p.xi ^ (σ + 1 - j.val))⁻¹ *

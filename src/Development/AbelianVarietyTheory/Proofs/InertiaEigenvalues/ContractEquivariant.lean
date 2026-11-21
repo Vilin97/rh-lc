@@ -64,14 +64,15 @@ def scaled {Y : Type} [AddCommGroup Y] [Module ℤ_[l] Y] (ψ : Y →ₗ[ℤ_[l]
     (h : ∀ y, ‖ψ y‖ ≤ (l : ℝ) ^ r) : Y →ₗ[ℤ_[l]] ℤ_[l] where
   toFun y := ⟨(l : ℚ_[l]) ^ r * ψ y, by
     have hl : (0 : ℝ) < l := by exact_mod_cast (Fact.out : l.Prime).pos
-    rw [norm_mul, norm_pow, Padic.norm_p, inv_pow, inv_mul_le_iff₀ (by positivity), mul_one]
+    rw [PadicInt.mem_subring_iff, norm_mul, norm_pow, Padic.norm_p, inv_pow,
+      inv_mul_le_iff₀ (by positivity), mul_one]
     exact h y⟩
   map_add' y y' := by
     apply Subtype.ext
     change _ = (l : ℚ_[l]) ^ r * ψ y + (l : ℚ_[l]) ^ r * ψ y'
     rw [← mul_add, ← map_add (f := _)]
   map_smul' z y := by
-    apply Subtype.ext
+    apply PadicInt.ext
     change (l : ℚ_[l]) ^ r * ψ (z • y) = (z : ℚ_[l]) * ((l : ℚ_[l]) ^ r * ψ y)
     rw [map_smul, Algebra.smul_def, PadicInt.algebraMap_apply]
     ring

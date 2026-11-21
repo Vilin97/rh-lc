@@ -375,8 +375,12 @@ theorem exists_iso_Cl : ∃ (e : ℕ) (_ : 0 < e) (M : ℕ) (z : Fin (M + 1) →
   obtain ⟨φ, _, h₁, h₂, h₃⟩ := exists_isClosedImmersion o t ht he hv hz hs c hc
   have := IsSchemeTheoreticallyDominant.of_isDominant (nmPoint o t ht)
   let ν := (asIso (closureToClosed (point o z hz) (nmPoint o t ht) φ h₁)).symm
-  have hν : ν.hom ≫ clι o z hz = φ := by simp [ν, IsIso.inv_comp_eq]
-  refine ⟨e, he, M, z, hz, hv, hs, fun j => ⟨c j, hc j⟩, ν, by simp [ν, IsIso.comp_inv_eq], ?_⟩
+  have hν : ν.hom ≫ clι o z hz = φ := by
+    simp only [ν, Iso.symm_hom, asIso_inv, IsIso.inv_comp_eq]
+    exact (closureToClosed_comp (point o z hz) (nmPoint o t ht) φ h₁).symm
+  refine ⟨e, he, M, z, hz, hv, hs, fun j => ⟨c j, hc j⟩, ν, by
+    simp only [ν, Iso.symm_hom, asIso_inv, IsIso.comp_inv_eq]
+    exact (toImage_closureToClosed (point o z hz) (nmPoint o t ht) φ h₁).symm, ?_⟩
   rw [hν]
   refine ⟨h₂, fun j k hk => ?_,
     exists_iso_lbPow (nmPoint_toProj o t ht) h₁ c hc fun j => (h₃ j).ge⟩

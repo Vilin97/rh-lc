@@ -123,8 +123,8 @@ theorem cp_bu : ∀ i, (bu a c d i).1 = K a c d 0 i ∧ (bu a c d (i + 1)).2 = d
   | 0 => ⟨rfl, by simp [bu, K]⟩
   | 1 => ⟨by simp [bu, K], by simp [bu, K]⟩
   | i + 2 => by
-    obtain ⟨h1, h1'⟩ := cp_bu (i + 1)
-    obtain ⟨-, h0'⟩ := cp_bu i
+    obtain ⟨h1, h1'⟩ : _ ∧ _ := cp_bu (i + 1)
+    obtain ⟨-, h0'⟩ : _ ∧ _ := cp_bu i
     have e : (bu a c d (i + 2)).1 = K a c d 0 (i + 2) := by
       show a (i + 1) * (bu a c d (i + 1)).1 - c (i + 1) * (bu a c d (i + 1)).2 = _
       rw [h1, h0']
@@ -150,8 +150,8 @@ theorem cp_td (h : Sep a c d) (r : ℕ) : ∀ m, m ≤ r →
       simp [K]
     · simp only [td, show ¬ (0 + 2 ≤ r) by omega, if_false, show ¬ (1 + 1 ≤ r) by omega]
   | m + 2, hm => by
-    obtain ⟨i1, i1'⟩ := cp_td h r (m + 1) (by omega)
-    obtain ⟨i0, i0'⟩ := cp_td h r m (by omega)
+    obtain ⟨i1, i1'⟩ : _ ∧ _ := cp_td h r (m + 1) (by omega)
+    obtain ⟨i0, i0'⟩ : _ ∧ _ := cp_td h r m (by omega)
     have hb := cp_K_both h m (r - (m + 2))
     rw [show r - (m + 2) + 1 = r - (m + 1) by omega, show r - (m + 2) + 2 = r - m by omega] at hb
     refine ⟨?_, ?_⟩
@@ -228,7 +228,7 @@ theorem cp_vAB (Y : ℂ) : ∀ i, i ≤ r → ∀ f : WSm r X,
       (Q.vAB r Y i).2 (f : (Fin r → ℂ) → X) = (((bu (aS X Y) (eS X · 1) (eS X · 2) i).2 f : WSm r X) : (Fin r → ℂ) → X)
   | 0, _, f => ⟨rfl, rfl⟩
   | i + 1, hi, f => by
-    obtain ⟨h1, h2⟩ := cp_vAB Y i (by omega) f
+    obtain ⟨h1, h2⟩ : _ ∧ _ := cp_vAB Y i (by omega) f
     have hir : i < r := by omega
     simp only [Q.vAB, dif_pos hir, bu, aS, eS, dif_pos hir]
     refine ⟨?_, ?_⟩
@@ -335,7 +335,7 @@ theorem loc_tdU (Y : ℂ) (b : Fin 2) : ∀ m, Loc (tdU (X := X) r Y m b)
 theorem loc_vAB (Y : ℂ) : ∀ i, Loc (X := X) (Q.vAB r Y i).1 ∧ Loc (X := X) (Q.vAB r Y i).2
   | 0 => ⟨loc_id, loc_zero⟩
   | i + 1 => by
-    obtain ⟨h1, h2⟩ := loc_vAB Y i
+    obtain ⟨h1, h2⟩ : _ ∧ _ := loc_vAB Y i
     by_cases hi : i < r
     · simp only [Q.vAB, dif_pos hi]
       exact ⟨loc_sub (loc_add (loc_smul Y h1) (loc_comp (loc_pOp _) h1)) (loc_comp (loc_cOp _) h2),

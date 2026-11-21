@@ -53,7 +53,7 @@ theorem isFibreFamily_restrict {V X Y : Type} [TopologicalSpace V] [MeasurableSp
   refine ⟨fun b => ?_, fun φ hφ => ?_, fun φ hc hs ht => ?_⟩
   · by_cases hb : b ∈ B
     · simp only [hb, if_true]
-      refine measure_mono_null (Set.compl_subset_compl.2 fun v hv => ⟨hv.1, ?_⟩) (h1 b)
+      refine measure_mono_null (Set.compl_subset_compl.2 fun v (hv : v ∈ f ⁻¹' {ι b} ∩ W) => ⟨hv.1, ?_⟩) (h1 b)
       exact (hUB v b hv.1).2 hb
     · simp [hb]
   · have key := h2 (U.indicator φ) (hφ.indicator hU)

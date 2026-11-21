@@ -16,7 +16,8 @@ noncomputable section
 
 namespace GlobalTheory.WordJumpsCompare
 
-open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.FrobeniusOrbits Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N GlobalTheory.HTW GlobalTheory.IndefiniteRowSideFullHecke
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.FrobeniusOrbits Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N GlobalTheory.HTW
+open GlobalTheory.IndefiniteRowSideFullHecke
 
 section Clauses
 

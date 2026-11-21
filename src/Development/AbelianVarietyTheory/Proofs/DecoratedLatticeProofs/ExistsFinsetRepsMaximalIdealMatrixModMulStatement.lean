@@ -70,7 +70,7 @@ theorem _root_.GlobalTheory.T.exists_finset_reps_maximalIdealMatrix_mod_mul :
             simp only [Matrix.mul_assoc]
         _ = _ := by rw [e1, Matrix.mul_one, hD0, Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul, e2]
   obtain ⟨Q, hQ, hgQ⟩ := existsRightInverse
-  let M : AddSubgroup (Matrix D A k) := maxLat
+  let M : AddSubgroup (Matrix D A k) := maxLat k A D
   let H := (mulLat (A := A) g.1).addSubgroupOf M
   have scaleMem {x : k} (hx : valuation k x < 1) : (ϖ : k)⁻¹ * x ∈ 𝒪[k] := by
     change valuation k _ ≤ 1

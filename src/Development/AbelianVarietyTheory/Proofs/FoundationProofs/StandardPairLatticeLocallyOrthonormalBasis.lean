@@ -163,7 +163,7 @@ theorem exists_local_ring : ∀ (K : Type) [Field K] [CharZero K] (p : ℕ), p.P
     exact ⟨s, hs, by simpa using hx.neg⟩
   · rintro ⟨s, hs, hx⟩
     have h1 : IsIntegral ℤ ((s : ℚ) * r) := by
-      rw [← isIntegral_algebraMap_iff ]
+      rw [← isIntegral_algebraMap_iff (B := K)]
       simpa using hx
     obtain ⟨n, hn'⟩ := IsIntegrallyClosed.isIntegral_iff.1 h1
     have h2 : padicNorm p (s : ℚ) = 1 :=

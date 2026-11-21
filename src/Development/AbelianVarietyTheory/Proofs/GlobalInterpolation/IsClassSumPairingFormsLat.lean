@@ -16,7 +16,8 @@ noncomputable section
 
 namespace GlobalTheory.PeriodClassSum
 
-open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV GlobalTheory.IndefiniteRowSideFullHecke
+open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV
+open GlobalTheory.IndefiniteRowSideFullHecke
 open scoped Matrix ComplexOrder
 
 section Herm

@@ -11,17 +11,21 @@ open MvPolynomial Matrix
 
 namespace PositivityTheory.Rg.Sw.SP.Mi
 
+open scoped IsMulCommutative
+
 variable {R : Type} [CommRing R]
 
 def Aop (α : R) (ρ : ℕ) : Matrix (Fin ρ) (Fin ρ) (Algebra.adjoin R (gens α ρ)) :=
   fun p q => ⟨opE α p q, Algebra.subset_adjoin ⟨(p, q), rfl⟩⟩
 
 theorem coe_det_sub (α : R) (ρ r : ℕ) (I J : Fin r → Fin ρ) :
-    letI : CommRing (Algebra.adjoin R (gens α ρ)) := Algebra.isMulCommutative_adjoin R (gens_comm α ρ)
+    letI : IsMulCommutative (Algebra.adjoin R (gens α ρ)) :=
+      Algebra.isMulCommutative_adjoin R fun a ha b hb _ => gens_comm α ρ a ha b hb
     ((((Aop α ρ).submatrix I J).det : Algebra.adjoin R (gens α ρ)) : Module.End R (Pm R ρ)) =
       ∑ σ : Equiv.Perm (Fin r), ((Equiv.Perm.sign σ : ℤ) : R) •
         ((List.finRange r).map (fun k => opE α (I k) (J (σ k)))).prod := by
-  letI : CommRing (Algebra.adjoin R (gens α ρ)) := Algebra.isMulCommutative_adjoin R (gens_comm α ρ)
+  let : IsMulCommutative (Algebra.adjoin R (gens α ρ)) :=
+    Algebra.isMulCommutative_adjoin R fun a ha b hb _ => gens_comm α ρ a ha b hb
   rw [← det_transpose, det_apply']
   rw [AddSubmonoidClass.coe_finsetSum]
   refine Finset.sum_congr rfl fun σ _ => ?_
@@ -43,7 +47,7 @@ theorem prod_ren (α : R) {r s : ℕ} (I J : Fin r ↪ Fin s) (σ : Equiv.Perm (
   induction l with
   | nil => rfl
   | cons a l ih =>
-    simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, ih]
+    simp only [List.map_cons, List.prod_cons, mul_apply_eq_comp, ih]
     exact renInt R r s I J α a (σ a) _
 
 theorem core : Core := by
@@ -51,9 +55,10 @@ theorem core : Core := by
   induction ρ with
   | zero =>
     rw [detE_eq_sum]
-    simp [Xm]
+    simp
   | succ ρ ih =>
-    letI : CommRing (Algebra.adjoin R (gens α (ρ + 1))) := Algebra.isMulCommutative_adjoin R (gens_comm α (ρ + 1))
+    let : IsMulCommutative (Algebra.adjoin R (gens α (ρ + 1))) :=
+      Algebra.isMulCommutative_adjoin R fun a ha b hb _ => gens_comm α (ρ + 1) a ha b hb
     have hfull := coe_det_sub α (ρ + 1) (ρ + 1) id id
     simp only [submatrix_id_id, id] at hfull
     rw [detE_eq_sum, ← hfull, det_succ_row_zero, AddSubmonoidClass.coe_finsetSum, LinearMap.sum_apply]
@@ -92,9 +97,8 @@ theorem core : Core := by
           (C α * X (j, 0) * ((Xm R (ρ + 1)).submatrix j.succAbove Fin.succ).det +
             del 0 j ((Xm R (ρ + 1)).submatrix j.succAbove Fin.succ).det)) := by
       intro j
-      rw [Subalgebra.coe_mul, Subalgebra.coe_mul]
-      push_cast
-      rw [Module.End.mul_apply, Module.End.mul_apply, hsub]
+      rw [Subalgebra.coe_mul, Subalgebra.coe_mul, Subalgebra.coe_pow, Subalgebra.coe_neg,
+        Subalgebra.coe_one, mul_apply_eq_comp, mul_apply_eq_comp, hsub]
       have hA : ((Aop α (ρ + 1) 0 j : Algebra.adjoin R (gens α (ρ + 1))) : Module.End R (Pm R (ρ + 1))) = opE α 0 j := rfl
       rw [hA, opE_C_mul]
       have e1 : ((-1 : Module.End R (Pm R (ρ + 1))) ^ (j : ℕ)) = ((-1 : R) ^ (j : ℕ)) • LinearMap.id := by

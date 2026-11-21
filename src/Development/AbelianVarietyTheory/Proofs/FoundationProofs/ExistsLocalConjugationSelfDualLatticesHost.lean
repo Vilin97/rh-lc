@@ -27,7 +27,7 @@ theorem isLattice_coordLat (V : Formalism.BasicNotions.HSpace E) (L : Submodule 
     ReciprocityTheory.MultiplicativeHeights.IsLattice (coordLat V L) := by
   refine ⟨h.fg.map _, ?_⟩
   have : (coordLat V L : Set (Fin V.rank → E)) = V.frame.equivFun.toLinearMap '' (L : Set V.V) := rfl
-  rw [this, ← Submodule.map_span, h.span_eq_top, Submodule.map_top, LinearEquiv.range]
+  rw [this, ← Submodule.map_span, (Submodule.IsLattice.span_eq_top (self := h)), Submodule.map_top, LinearEquiv.range]
 
 theorem herm_coord (V : Formalism.BasicNotions.HSpace E) (x y : V.V) :
     herm V.gramᵀ (V.frame.equivFun x) (V.frame.equivFun y) = V.hT y x := by
@@ -72,6 +72,8 @@ theorem mem_latLoc_iff (V : Formalism.BasicNotions.HSpace E) (v : HeightOneSpect
       have := Submodule.smul_mem (locLattice v (coordLat V V.L0)) (⟨a, ha⟩ : v.adicCompletionIntegers (maximalRealSubfield E))
         (Submodule.subset_span ⟨_, ⟨x, hx, rfl⟩, rfl⟩)
       convert this using 1
+      funext i
+      simp only [Pi.smul_apply, locEmb_apply, key, mul_one]
       rfl
     | zero => exact zero_mem _
     | add x y _ _ hx hy => exact add_mem hx hy

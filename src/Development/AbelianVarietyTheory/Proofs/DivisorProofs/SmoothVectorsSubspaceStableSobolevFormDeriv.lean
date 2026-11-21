@@ -112,13 +112,12 @@ theorem pr_conj {g : Mt n} (hg : IsUnit g.det) : ∀ {k : ℕ} (Xs : Fin k → M
   | k + 1, Xs, t => by
     have e : ∀ (s : ℝ) (X : Mt n), NormedSpace.exp (s • X) * g = g * NormedSpace.exp (s • (g⁻¹ * X * g)) := by
       intro s X
-      have e1 : s • X = g * (s • (g⁻¹ * X * g)) * g⁻¹ := by
+      have e1 : s • (g⁻¹ * X * g) = g⁻¹ * (s • X) * g := by
         rw [Matrix.mul_smul, Matrix.smul_mul]
-        congr 1
-        calc X = (g * g⁻¹) * X * (g * g⁻¹) := by rw [mul_nonsing_inv _ hg, one_mul, mul_one]
-          _ = _ := by simp only [Matrix.mul_assoc]
-      rw [e1, Matrix.exp_conj _ _ ((isUnit_iff_isUnit_det g).2 hg), mul_assoc _ g⁻¹, nonsing_inv_mul _ hg, mul_one]
-    rw [pr_succ, pr_succ, mul_assoc, e, ← mul_assoc, pr_conj hg, mul_assoc]
+      rw [e1, Matrix.exp_conj' _ _ ((isUnit_iff_isUnit_det g).2 hg),
+        ← Matrix.mul_assoc g, Matrix.mul_nonsing_inv_cancel_left _ _ hg]
+    rw [pr_succ, pr_succ, Matrix.mul_assoc, e, ← Matrix.mul_assoc,
+      pr_conj hg (Fin.init Xs) (Fin.init t), Matrix.mul_assoc]
     rfl
 
 end Lin
@@ -144,7 +143,7 @@ theorem SmFam.comp {c : E → H} (hc : SmFam Hm σ c) {φ : F → E} (hφ : Cont
 theorem SmFam.contDiff (hσ : IsURepOn (Formalism.QuantumDeterminants.UH Hm) σ) {c : E → H} (hc : SmFam Hm σ c) : ContDiff ℝ ∞ c := by
   have h := (hc 0 (fun i => i.elim0) (fun i => i.elim0)).comp
     ((contDiff_const (c := (0 : Fin 0 → ℝ))).prodMk contDiff_id)
-  simpa only [Function.comp_def, pr_zero, hσ.1.1, ContinuousLinearMap.one_apply, id] using h
+  simpa only [Function.comp_def, pr_zero, hσ.1.1, one_apply_eq_self, id] using h
 
 theorem SmFam.hasDerivAt (hσ : IsURepOn (Formalism.QuantumDeterminants.UH Hm) σ) {c : ℝ → H} (hc : SmFam Hm σ c) :
     HasDerivAt c (deriv c 0) 0 :=
@@ -236,7 +235,7 @@ theorem dRep_skew (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.QuantumDetermi
       ((σ (NormedSpace.exp (t • X)) : H →L[ℂ] H) : H →ₗ[ℂ] H)).1 (hσ.2.1 _ (exp_mem hu hX t)) v w
   rw [e] at h
   have h0 := h.unique (hasDerivAt_const (0 : ℝ) _)
-  simp only [zero_smul, NormedSpace.exp_zero, hσ.1.1, ContinuousLinearMap.one_apply] at h0
+  simp only [zero_smul, NormedSpace.exp_zero, hσ.1.1, one_apply_eq_self] at h0
   exact eq_neg_of_add_eq_zero_left h0
 
 theorem SmFam.deriv_dRep (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.QuantumDeterminants.UH Hm) σ) {c : ℝ → H} (hc : SmFam Hm σ c)
@@ -263,7 +262,7 @@ theorem SmFam.word (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.QuantumDeterm
       _root_.deriv (fun t => l.foldr (Formalism.L2.Theta.dRep σ) (c t)) 0 = l.foldr (Formalism.L2.Theta.dRep σ) (_root_.deriv c 0)
   | [], _ => ⟨hc, rfl⟩
   | X :: l, h => by
-    obtain ⟨h1, h2⟩ := hc.word hu hσ l fun Y hY => h Y (List.mem_cons_of_mem _ hY)
+    obtain ⟨h1, h2⟩ := SmFam.word hu hσ hc l fun Y hY => h Y (List.mem_cons_of_mem _ hY)
     have hX := h X List.mem_cons_self
     refine ⟨h1.dRep hu hσ hX, ?_⟩
     simp only [List.foldr_cons]
@@ -290,6 +289,8 @@ theorem word_comb (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.QuantumDetermi
     rw [word_comb hu hσ a hx hy hz l h']
     refine HasDerivAt.deriv ?_
     convert (((hd x hx).sub (hd y hy)).const_smul a).sub (hd z hz) using 1
+    funext t
+    simp only [Pi.sub_apply, Pi.smul_apply, map_sub, map_smul]
 
 theorem SmFam.hasDerivAt_form (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.QuantumDeterminants.UH Hm) σ) {c : ℝ → H} (hc : SmFam Hm σ c)
     {ℓ : H →ₗ[ℂ] ℂ} (hℓ : Sobolev₂ (lieH Hm) σ ℓ) : HasDerivAt (fun t => ℓ (c t)) (ℓ (_root_.deriv c 0)) 0 := by

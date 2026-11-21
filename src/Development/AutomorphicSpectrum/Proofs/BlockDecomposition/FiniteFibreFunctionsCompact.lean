@@ -50,12 +50,13 @@ theorem finite_fibV_image (k : Type) [Field k] [ValuativeRel k] [TopologicalSpac
         intro a ha κ
         have ha' : ∀ κ, GlobalTheory.CompanionTheory.BZPsiPG.fibV f (κ * a) = GlobalTheory.CompanionTheory.BZPsiPG.fibV f κ := ha
         rw [← ha' (κ * a⁻¹), mul_assoc, inv_mul_cancel, mul_one] }
-  have hcont := (GlobalTheory.CompanionTheory.BZPsiPG.continuous_levi_uM_mirProj k (i + t)).1
+  have hcont := GlobalTheory.CompanionTheory.BZMirFun.continuous_levi k (i + t)
   have hO := hcont.isOpen_preimage _ hst
   have hone : (1 : GL (Fin (i + t)) k) ∈ GlobalTheory.BZMir.levi k (i + t) ⁻¹'
       {m : GlobalTheory.BZMir.Mir k (i + t) | GlobalTheory.BZMir.Leib.prodPG τ σ m f = f} := by
     show GlobalTheory.BZMir.Leib.prodPG τ σ (GlobalTheory.BZMir.levi k (i + t) 1) f = f
-    simp
+    rw [map_one, map_one]
+    rfl
   have hsub : GlobalTheory.BZMir.levi k (i + t) ⁻¹'
       {m : GlobalTheory.BZMir.Mir k (i + t) | GlobalTheory.BZMir.Leib.prodPG τ σ m f = f} ⊆ (H : Set _) := by
     intro g hg κ

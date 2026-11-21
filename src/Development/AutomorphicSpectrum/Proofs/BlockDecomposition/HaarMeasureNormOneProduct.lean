@@ -19,6 +19,7 @@ theorem map_prod_eq_smul (E : Type) [Field E] [NumberField E] [IsTotallyComplex 
     (μ : Measure (GA E a)) [μ.IsHaarMeasure] (ν : Measure (normOneGL (K := E) (n := a))) [ν.IsHaarMeasure] :
     ∃ c : ENNReal, c ≠ 0 ∧ c ≠ ⊤ ∧
       Measure.map (fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) (ν.prod volume) = c • μ := by
+  set_option synthInstance.maxHeartbeats 200000 in
   obtain ⟨e, he⟩ := GlobalTheory.CompanionTheory.SplitHomeo.exists_homeomorph E a ha
   have hfun : (fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) = e := by
     funext p

@@ -8,7 +8,7 @@ public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.Valuat
 
 @[expose] public section
 
-open NumberField IsDedekindDomain Polynomial GlobalTheory.CMRam GlobalTheory.FieldSize
+open NumberField IsDedekindDomain Polynomial GlobalTheory.FieldSize
 open scoped nonZeroDivisors
 
 namespace GlobalTheory.CMRam

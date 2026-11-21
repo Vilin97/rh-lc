@@ -159,8 +159,19 @@ section Levi
 variable {R S : Type} [CommRing R] [CommRing S] {r s : ℕ}
 
 theorem blockDiag_lev (g : GL (Fin r) R × GL (Fin s) R) : BlockDiag r (lev R r s g).val := by
+  have val_emb₂ {T : Type} [CommRing T] (g : GL (Fin r) T × GL (Fin s) T) :
+      (GlobalTheory.SmGL.emb₂ T (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) g : Matrix (Fin (r+s)) (Fin (r+s)) T) =
+        Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (Matrix.fromBlocks g.1.val 0 0 g.2.val) := by
+    ext i j
+    obtain ⟨u, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
+    obtain ⟨v, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j
+    simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+    rcases u with u | u <;> rcases v with v | v
+    all_goals simp [GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb,
+      GlobalTheory.SmGL.leviTwo, GlobalTheory.SmGL.two, Matrix.blockDiagonal'_apply_eq,
+      Matrix.blockDiagonal'_apply_ne]
   intro i j hij
-  rw [lev, GlobalTheory.SmGL.val_emb₂]
+  rw [lev, val_emb₂]
   obtain ⟨u, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
   obtain ⟨v, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j
   rcases u with u | u <;> rcases v with v | v
@@ -172,10 +183,21 @@ theorem blockDiag_lev (g : GL (Fin r) R × GL (Fin s) R) : BlockDiag r (lev R r 
 theorem map_lev (f : R →+* S) (g : GL (Fin r) R × GL (Fin s) R) :
     lev S r s (Matrix.GeneralLinearGroup.map f g.1, Matrix.GeneralLinearGroup.map f g.2) =
       Matrix.GeneralLinearGroup.map f (lev R r s g) := by
+  have val_emb₂ {T : Type} [CommRing T] (g : GL (Fin r) T × GL (Fin s) T) :
+      (GlobalTheory.SmGL.emb₂ T (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) g : Matrix (Fin (r+s)) (Fin (r+s)) T) =
+        Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (Matrix.fromBlocks g.1.val 0 0 g.2.val) := by
+    ext i j
+    obtain ⟨u, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
+    obtain ⟨v, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j
+    simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+    rcases u with u | u <;> rcases v with v | v
+    all_goals simp [GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb,
+      GlobalTheory.SmGL.leviTwo, GlobalTheory.SmGL.two, Matrix.blockDiagonal'_apply_eq,
+      Matrix.blockDiagonal'_apply_ne]
   apply Units.ext
-  rw [lev, GlobalTheory.SmGL.val_emb₂]
+  rw [lev, val_emb₂]
   change _ = (lev R r s g).val.map f
-  rw [lev, GlobalTheory.SmGL.val_emb₂]
+  rw [lev, val_emb₂]
   ext i j
   obtain ⟨u, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
   obtain ⟨v, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j

@@ -20,7 +20,7 @@ theorem contDiff_lastEnt : ContDiff ℝ ∞ (lastEnt : (Fin k → Cinf E) → Ci
   refine ContDiff.sum fun c _ => ?_
   by_cases h : (c : ℕ) + 1 = k
   · simp only [if_pos h]
-    exact contDiff_apply ℝ (Cinf E) c
+    exact contDiff_apply ℝ (fun _ : Fin k => Cinf E) c
   · simp only [if_neg h]
     exact contDiff_const
 
@@ -50,7 +50,7 @@ theorem contDiffOn_tauM :
     · simp only [rowI, if_pos hc]
       exact hinv
     · simp only [rowI, if_neg hc]
-      exact ((contDiff_apply ℝ (Cinf E) c).contDiffOn.mul hinv).neg
+      exact ((contDiff_apply ℝ (fun _ : Fin k => Cinf E) c).contDiffOn.mul hinv).neg
   · have e : ∀ x : Fin k → Cinf E, tauM x i c = (1 : Matrix (Fin k) (Fin k) (Cinf E)) i c :=
       fun x => rowM_apply_ne _ i c hi
     simp only [e]

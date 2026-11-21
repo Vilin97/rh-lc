@@ -13,7 +13,7 @@ noncomputable section
 namespace GlobalTheory.InertialTypesCmp
 
 open Formalism.BasicNotions Formalism.MainNotions.N NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Polynomial
-open Formalism.MainNotions.SumRepresentations.At GlobalTheory.IndefiniteRowSideFullHecke.InertiaTypeCancellation
+open Formalism.MainNotions.SumRepresentations.At
 
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R H what₂) (A : NAut N)
 

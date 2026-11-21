@@ -27,7 +27,11 @@ theorem orthAt_sumLatO : ∀ (D : D7) (S A B : HSp D) (o : OrthDec S A B) (LA : 
       rw [GlobalTheory.Core.Rk.SumBox.qB_split]; exact hx₂
   · rintro ⟨hA, hB⟩
     have e : y = o.jA *ᵥ (o.pA *ᵥ y) + o.jB *ᵥ (o.pB *ᵥ y) := by
-      rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, ← Matrix.add_mulVec, o.sum_eq_one, Matrix.one_mulVec]
+      have hs : o.jA * o.pA + o.jB * o.pB = 1 := by
+        change (o.iA.map (incA D)) * (o.qA.map (incA D)) + (o.iB.map (incA D)) * (o.qB.map (incA D)) = 1
+        rw [← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_add _ (map_add (incA D)),
+          o.iA_qA_add, Matrix.map_one _ (map_zero (incA D)) (map_one (incA D))]
+      rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, ← Matrix.add_mulVec, hs, Matrix.one_mulVec]
     rw [e]
     exact add_mem
       (GlobalTheory.SeeSaw.SplitLat.rat_mulVec_mem_latV o.iA
