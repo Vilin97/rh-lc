@@ -92,12 +92,12 @@ theorem DT_subst_mulS (a : ℤ_[q]) (f : ℂ_[q]⟦X⟧) :
   have hs := hasSubst_mulS a
   have h2 := DT_mulS a
   have h1 : (DT f).subst (mulS a : ℂ_[q]⟦X⟧) =
-      (1 + mulS a) * (derivative ℂ_[q] f).subst (mulS a : ℂ_[q]⟦X⟧) := by
+      (1 + mulS a) * (derivative f).subst (mulS a : ℂ_[q]⟦X⟧) := by
     rw [DT, ← coe_substAlgHom hs, map_mul, map_add (f := _), map_one, substAlgHom_X]
   rw [h1]
   unfold DT at h2 ⊢
   rw [derivative_subst hs]
-  linear_combination ((derivative ℂ_[q] f).subst (mulS a : ℂ_[q]⟦X⟧)) * h2
+  linear_combination ((derivative f).subst (mulS a : ℂ_[q]⟦X⟧)) * h2
 
 theorem constantCoeff_subst_mulS (a : ℤ_[q]) {f : ℂ_[q]⟦X⟧} (hf : constantCoeff f = 0) :
     constantCoeff (f.subst (mulS a : ℂ_[q]⟦X⟧)) = 0 := by

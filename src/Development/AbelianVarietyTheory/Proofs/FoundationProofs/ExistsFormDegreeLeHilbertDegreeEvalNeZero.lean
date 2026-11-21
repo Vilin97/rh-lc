@@ -328,7 +328,7 @@ theorem le_factorial_mul_leadingCoeff [Finite ι] {I : Ideal (MvPolynomial ι k)
       rw [Nat.sub_add_cancel hdn] at this
       rw [Int.cast_natCast] at hn
       rw [Polynomial.eval_sub, Polynomial.eval_C_mul,
-        Polynomial.preHilbertPoly_eq_choose_add_sub _ _ (by omega), Nat.add_sub_comm hdn, ← hn, sub_nonneg]
+        Polynomial.preHilbertPoly_eq_choose_add_sub _ _ (by omega), Nat.sub_add_comm hdn, ← hn, sub_nonneg]
       exact_mod_cast this
   rw [Polynomial.coeff_sub, Polynomial.coeff_C_mul, Polynomial.coeff_preHilbertPoly_self,
     sub_nonneg] at h1

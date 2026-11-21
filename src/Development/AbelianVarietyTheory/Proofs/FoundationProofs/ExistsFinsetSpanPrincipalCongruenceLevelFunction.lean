@@ -239,7 +239,8 @@ private lemma exists_differentiableOn_eventuallyEq_div_of_monic_root {U : Set �
       fun z hz => hus ⟨hz.1.1.1, hz.2⟩
     set B : ℝ := ∑ i ∈ Finset.range d, (‖c i z₀‖ + 1) with hB
     have hdiff : DifferentiableOn ℂ φ₀ (s \ {z₀}) :=
-      (ha.mono (fun z hz => hsU hz.1)).div (hb.mono (fun z hz => hsU hz.1))
+      (ha.mono (show s \ {z₀} ⊆ U from fun z hz => hsU hz.1)).div
+        (hb.mono (show s \ {z₀} ⊆ U from fun z hz => hsU hz.1))
         (fun z hz => (hP z hz).1)
     have hbdd : BddAbove (norm ∘ φ₀ '' (s \ {z₀})) := by
       refine ⟨max 1 (d * B), ?_⟩

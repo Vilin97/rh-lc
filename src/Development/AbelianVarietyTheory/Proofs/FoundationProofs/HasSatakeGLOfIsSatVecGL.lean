@@ -187,7 +187,9 @@ theorem isSphericalGL_iff (α : Fin n → ℂˣ) (φ : GL (Fin n) (w.adicComplet
     refine MonoidHom.ext fun t => ?_
     rw [unrTorus_apply, unrTorus_apply]
     refine Finset.prod_congr rfl fun i _ => ?_
-    rw [unrChar_eq, GlobalTheory.SmGL.unrChar_apply, GlobalTheory.SmGL.SphCompletion.ord_completion]
+    rw [unrChar_apply, unrChar_apply]
+    change (α i) ^ GlobalTheory.SmGL.ord (w.adicCompletion E) (t i) = _
+    rw [GlobalTheory.SmGL.SphCompletion.ord_completion]
     rfl
   have e := GlobalTheory.LGrp.BorelCompletion.deltaHalf_mul_unrTorus E w n α
   rw [e0]
@@ -287,6 +289,7 @@ theorem exists_algHom_extend {A : Type} [CommRing A] [Algebra ℂ A] (B : Subalg
     rw [(RingHom.injective_iff_ker_eq_bot _).1 Subtype.val_injective]; exact bot_le)
   have key : ∀ b : B, Ideal.Quotient.mk Q b = algebraMap ℂ (A ⧸ Q) (χ b) := fun b => by
     have : b - algebraMap ℂ B (χ b) ∈ Q.comap (algebraMap B A) := by
+      change b - algebraMap ℂ B (χ b) ∈ Ideal.under B Q
       rw [e, RingHom.mem_ker]; simp
     exact Ideal.Quotient.eq.2 this
   letI := Ideal.Quotient.field Q
@@ -358,14 +361,16 @@ theorem labInd_eq {d : List ℤ} {t : GU σ n}
 theorem exists_labInd_eq (hU : IsUnramInv ϖ σ q) (g : GU σ n) :
     ∃ d, Good n d ∧ labInd σ n ϖ d = dosetInd ℂ (KU σ n) g := by
   obtain ⟨d, hd, a, ha, b, hb, e⟩ := GlobalTheory.T.exists_symmetric_elementaryDivisors_unitary L ϖ σ q n hU g
-  obtain ⟨t, ht⟩ := exists_diag hU hd
+  obtain ⟨t, ht, -⟩ := P.fSatake_diag_exists (σ := σ) (fun i : Fin n => ϖ ^ d.getD i.1 0) fun i => by
+    rw [map_zpow₀, hU.2.2.1, hd.rev, ← zpow_add₀ (unif_ne_zero hU), add_neg_cancel, zpow_zero]
   refine ⟨d, hd, (labInd_eq ht).trans (GlobalTheory.WeylGL.dosetInd_congr ?_).symm⟩
   exact GlobalTheory.T.unitaryDoubleCoset_of_GLintDoubleCoset L ϖ σ q n hU t g a b ha hb (Units.ext (by rw [e, ← ht]; rfl))
 
 theorem eq_zero_of_satU (hU : IsUnramInv ϖ σ q) {f : GU σ n → ℂ} (hf : f ∈ Hecke ℂ (KU σ n))
     (h : ∀ α : Fin (n / 2) → ℂˣ, SatU ϖ q f (fun i => (α i : ℂ)) = 0) : f = 0 := by
   have hm : ∀ d, Good n d → labInd σ n ϖ d ∈ Hecke ℂ (KU σ n) := fun d hd => by
-    obtain ⟨t, ht⟩ := exists_diag hU hd
+    obtain ⟨t, ht, -⟩ := P.fSatake_diag_exists (σ := σ) (fun i : Fin n => ϖ ^ d.getD i.1 0) fun i => by
+      rw [map_zpow₀, hU.2.2.1, hd.rev, ← zpow_add₀ (unif_ne_zero hU), add_neg_cancel, zpow_zero]
     rw [labInd_eq ht]
     exact Final.DosetIndMem _ _ ℂ t
   have h1 : f ∈ Submodule.span ℂ (labInd σ n ϖ '' {d | Good n d}) :=

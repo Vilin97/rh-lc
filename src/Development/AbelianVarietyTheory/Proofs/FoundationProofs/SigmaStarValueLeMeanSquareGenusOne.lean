@@ -107,7 +107,7 @@ theorem sup_le_mean (Λ : AddSubgroup ℂ) (a v : ℝ) (F : Set ℂ) (g : ℂ �
   have hA : ∀ x, x ∈ A ↔ φ x ∈ Λ := fun _ => Iff.rfl
   have hF' : IsAddFundamentalDomain A (φ ⁻¹' F) volume := by
     refine hF.preimage_of_equiv (f := φ) (e := fun y : Λ => (⟨φ.symm y, (hA _).2 (by simp)⟩ : A))
-      ⟨hmp.measurable, ?_⟩ ⟨?_, ?_⟩ ?_
+      ⟨hmp.measurable.aemeasurable, ?_⟩ ⟨?_, ?_⟩ ?_
     · rw [hmp.map_eq]; exact Measure.smul_absolutelyContinuous
     · intro x y h
       exact Subtype.ext (φ.symm.injective (congrArg Subtype.val h))

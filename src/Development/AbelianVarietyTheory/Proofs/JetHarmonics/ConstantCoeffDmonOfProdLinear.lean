@@ -225,7 +225,7 @@ theorem constantCoeff_dof_X {R k : Type} [CommRing R] [CommRing k] (φ : R →+*
     (G : FGLaw R d) (v : Fin d → k) (j : Fin d) :
     constantCoeff (Dof (G.mapF φ) v (X ((0 : Fin 1), j))) = v j := by
   have h : ∀ i j : Fin d, constantCoeff (ev (n := 1) ![pt k d 0, 0]
-      (pderiv k ((1 : Fin 2), i) (G.mapF φ j))) = if j = i then 1 else 0 := by
+      (pderiv ((1 : Fin 2), i) (G.mapF φ j))) = if j = i then 1 else 0 := by
     intro i j
     rw [← coeff_zero_eq_constantCoeff_apply, WickVanishing.coeff_ev_zero_right, Finsupp.embDomain_zero,
       coeff_pderiv, FGLaw.mapF, coeff_map, zero_add, coeff_law]

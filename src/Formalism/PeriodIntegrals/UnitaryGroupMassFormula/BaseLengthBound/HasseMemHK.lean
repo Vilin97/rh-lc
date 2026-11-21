@@ -34,7 +34,7 @@ theorem bcol_sum {N : ℕ} (jj : Fin N) (α : Fin (WeightFamilies.dimY D j) → 
   simp [bcol, Fintype.sum_prod_type, Fin.sum_univ_succ]
 
 theorem smulOp_HK (o : Op X la G.N) (x : ↥(HK X la G.w wF)) :
-    o • x = (algebraMap (Op X la G.N) (Kp X la G.N) o) • x := by
+    o • x = (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o) • x := by
   apply Subtype.ext
   rw [Submodule.coe_smul_of_tower, Submodule.coe_smul_of_tower, algebraMap_smul]
 

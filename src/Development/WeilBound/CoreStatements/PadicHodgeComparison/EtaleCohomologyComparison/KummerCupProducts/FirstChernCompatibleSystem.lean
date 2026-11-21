@@ -83,28 +83,28 @@ def EdgeCup : Prop := ∀ (R : Type) [CommRing R] (C : Type 1) [Category.{0} C] 
 open GlobalTheory.EtC
 
 def EvExt : Prop := ∀ (R : Type) [CommRing R] (E : Spc) (I : GlobalTheory.EtC.Cx R) (n : ℤ) (α β : Cochain ((chains R).obj E) I n),
-  ((∀ (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U), ev R α p s h U x = ev R β p s h U x) → α = β) ∧
+  ((∀ (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U), ev α p s h U x = ev β p s h U x) → α = β) ∧
   ∀ (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U),
-    ev R (α + β) p s h U x = ev R α p s h U x + ev R β p s h U x ∧ ev R (α - β) p s h U x = ev R α p s h U x - ev R β p s h U x ∧
-    ev R (0 : Cochain ((chains R).obj E) I n) p s h U x = 0
+    ev (α + β) p s h U x = ev α p s h U x + ev β p s h U x ∧ ev (α - β) p s h U x = ev α p s h U x - ev β p s h U x ∧
+    ev (0 : Cochain ((chains R).obj E) I n) p s h U x = 0
 
 def EvNat : Prop := ∀ (R : Type) [CommRing R] (E : Spc) (I : GlobalTheory.EtC.Cx R) (n : ℤ) (α : Cochain ((chains R).obj E) I n)
   (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}),
-  (∀ (V : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), ev R α p s h V (Sx.res g x) = Sec.res g (ev R α p s h U x)) ∧
+  (∀ (V : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), ev α p s h V (Sx.res g x) = Sec.res g (ev α p s h U x)) ∧
   ∀ (E' : Spc) (f : E' ⟶ E) (x : Sx E' p U),
-    ev R ((Cochain.ofHom ((chains R).map f)).comp α (zero_add n)) p s h U x = ev R α p s h U (Sx.map f x)
+    ev ((Cochain.ofHom ((chains R).map f)).comp α (zero_add n)) p s h U x = ev α p s h U (Sx.map f x)
 
 def EvDel : Prop := ∀ (R : Type) [CommRing R] (E : Spc) (I : GlobalTheory.EtC.Cx R) (n m : ℤ) (hm : n + 1 = m) (β : Cochain ((chains R).obj E) I n)
   (U : Scheme.{0}),
-  (∀ x : Sx E 0 U, ev R (δ n m β) 0 m (by simp) U x = Sec.map (I.d n m) (ev R β 0 n (by simp) U x)) ∧
+  (∀ x : Sx E 0 U, ev (δ n m β) 0 m (by simp) U x = Sec.map (I.d n m) (ev β 0 n (by simp) U x)) ∧
   ∀ (p : ℕ) (s t : ℤ) (hs : -((p + 1 : ℕ) : ℤ) + n = s) (ht : -(p : ℤ) + n = t) (x : Sx E (p + 1) U),
-    ev R (δ n m β) (p + 1) t (by push_cast; omega) U x = Sec.map (I.d s t) (ev R β (p + 1) s hs U x) +
-      m.negOnePow • ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) • ev R β p t ht U (x.face i)
+    ev (δ n m β) (p + 1) t (by push_cast; omega) U x = Sec.map (I.d s t) (ev β (p + 1) s hs U x) +
+      m.negOnePow • ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) • ev β p t ht U (x.face i)
 
 def IsConc {R : Type} [CommRing R] {I : GlobalTheory.EtC.Cx R} {X : Scheme.{0}} {n : ℤ} (α : Cochain ((chains R).obj (sch.obj X)) I n)
     (a : Sec (I.X n) X) : Prop :=
-  (∀ (U : Scheme.{0}) (x : U ⟶ X), ev R α 0 n (by simp) U x = Sec.res x a) ∧
-  ∀ (p : ℕ) (s : ℤ) (h : -((p + 1 : ℕ) : ℤ) + n = s) (U : Scheme.{0}) (x : U ⟶ X), ev R α (p + 1) s h U x = 0
+  (∀ (U : Scheme.{0}) (x : U ⟶ X), ev α 0 n (by simp) U x = Sec.res x a) ∧
+  ∀ (p : ℕ) (s : ℤ) (h : -((p + 1 : ℕ) : ℤ) + n = s) (U : Scheme.{0}) (x : U ⟶ X), ev α (p + 1) s h U x = 0
 
 def RepBasic : Prop := ∀ (R : Type) [CommRing R] (I : GlobalTheory.EtC.Cx R) (X : Scheme.{0}) (n : ℤ),
   (∀ x : CohomologyClass ((chains R).obj (sch.obj X)) I n, ∃ a, Rep x a) ∧

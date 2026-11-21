@@ -68,7 +68,7 @@ private theorem lc_ker [IsNoetherianRing A] {I K : Ideal A} (hs : I * K = ⊥) {
   rw [Matrix.sub_apply, Matrix.sub_apply, sub_eq_zero.1 (h0 _ hd hK)]
 
 private theorem map_sgn (f : A →+* C) (s : ℤˣ) (g : GL (Fin n) A) :
-    GeneralLinearGroup.map f (sgnAct s g) = sgnAct s (GeneralLinearGroup.map f g) := by
+    GeneralLinearGroup.map f (sgnAct n A s g) = sgnAct n C s (GeneralLinearGroup.map f g) := by
   rcases Int.units_eq_one_or s with rfl | rfl
   · simp
   · simpa using map_theta f g

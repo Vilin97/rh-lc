@@ -40,6 +40,9 @@ theorem trdeg_adjoin_eq_iff_exists_linearIndependent_D {K F κ : Type} [Field K]
     refine ⟨J, ?_⟩
     have := b.linearIndependent.comp e.symm e.symm.injective
     convert this using 1
+    funext k
+    rw [hJ k]
+    exact (hbD (e.symm k)).symm
   · rintro ⟨J, hJ⟩
     have hind : AlgebraicIndependent K fun k => x (J k) :=
       ReciprocityTheory.ChartRestriction.G.AR.differentialIndependence K F D _ hJ

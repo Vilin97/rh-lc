@@ -57,7 +57,7 @@ def realOf (C : Ctx S T) (σ : (D.what₂.Tau → ℂ) →+ AE D) : WR C.X S.ran
         (fun τ => conj (x (C.m.e τ) k a)) + fun τ => conj (y (C.m.e τ) k a) := by
       funext τ; simp
     show σ _ = σ _ + σ _
-    rw [this, σ.map_add (f := _)]
+    rw [this, map_add σ]
 
 theorem realPt_apply (C : Ctx S T) (w : WO S T) (s : C.X.Ψ) (k : Fin S.rank) (a : Fin T.rank) :
     C.realPt w s k a = conj (C.θ (C.m.e.symm s) (infPart D (w a k))) := rfl
@@ -118,7 +118,7 @@ theorem real_points : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∃ R : WR C.X S
     intro w hw
     have hw' : w.map (finPart D) = 0 := hw
     refine Matrix.ext fun a k => sub_eq_zero.mp (hσ.ext _ ?_ fun τ => ?_)
-    · have h1 : finPart D (w a k) = 0 := by simpa using congrFun (congrFun hw' a) k
+    · have h1 : finPart D (w a k) = 0 := congrArg (fun M => M a k) hw'
       rw [map_sub, hRfin, h1, sub_zero]
     · rw [map_sub, map_sub, hRcomp, realPt_apply]
       simp

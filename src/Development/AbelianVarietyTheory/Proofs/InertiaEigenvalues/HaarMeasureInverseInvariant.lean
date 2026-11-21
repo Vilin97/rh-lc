@@ -174,6 +174,7 @@ theorem modularCharacter_map_equiv {G : Type} [Group G] [TopologicalSpace G] [Is
     have hφ : Measurable (φ : G → G) := (map_continuous φ).measurable
     rw [Measure.map_map (measurable_mul_const _) hφ, e,
       ← Measure.map_map hφ (measurable_mul_const g), R μ g, Measure.map_smul]
+    exact hφ.aemeasurable
   have h2 := R ν (φ g)
   rw [h1] at h2
   obtain ⟨K⟩ : Nonempty (TopologicalSpace.PositiveCompacts G) := inferInstance
@@ -256,6 +257,7 @@ theorem NA_isInvInvariant : ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) [
   have hs : ν.inv = s • ν := Measure.isMulLeftInvariant_eq_smul ν.inv ν
   have e1 : Measure.map Inv.inv (Measure.map Inv.inv ν) = s ^ 2 • ν := by
     rw [← Measure.inv_def ν, hs, Measure.map_smul, ← Measure.inv_def ν, hs, smul_smul, pow_two]
+    exact continuous_inv.measurable.aemeasurable
   have e2 : ν = s ^ 2 • ν := by
     rw [Measure.map_map continuous_inv.measurable continuous_inv.measurable] at e1
     simpa only [inv_involutive, Function.Involutive.comp_self, Measure.map_id] using e1

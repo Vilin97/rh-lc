@@ -15,13 +15,13 @@ variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} 
 theorem algebraMap_Op_mul {N : ℕ} (la : HeightOneSpectrum (𝓞 B.KO)) (w : Fin N → B.Cusp j wL) (a : Op X la N)
     (y : Lw X la w) :
     algebraMap (Rp X la N) (Lw X la w) (algebraMap (Op X la N) (Rp X la N) a) * y =
-      algebraMap (Op X la N) (Kp X la N) a • y := by
+      @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) a • y := by
   rw [algebraMap_smul, Algebra.smul_def, IsScalarTower.algebraMap_apply (Op X la N) (Rp X la N) (Lw X la w)]
 
 theorem restricted_derivative_linear (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectrum (𝓞 B.KO)) : LinOp G la := by
   intro k β r x hx hβ
   have hP := hasse_preserves_kernel G la
-  set c := algebraMap (Op X la G.N) (Kp X la G.N) r with hc
+  set c := @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) r with hc
   have h1 : hasse X la G.w β ((c • x : ↥(HK X la G.w wF)) : Lw X la G.w) ∈ HK X la G.w wF := hP β _ (c • x).2
   have h2 : hasse X la G.w β (x : Lw X la G.w) ∈ HK X la G.w wF := hP β _ x.2
   unfold rD

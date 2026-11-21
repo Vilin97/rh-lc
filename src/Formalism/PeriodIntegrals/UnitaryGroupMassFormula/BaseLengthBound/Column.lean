@@ -50,9 +50,9 @@ theorem ord_wfr_nonneg (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectrum
   simpa using le_of_coe_le_toE key
 
 theorem one_eq_sum_wfr (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectrum (𝓞 B.KO)) :
-    (1 : ↥(Frac0 X la G.w)) = ∑ k, (algebraMap (Op X la G.N) (Kp X la G.N) (Tv X la G.N (0, k))) • wfr G la k := by
+    (1 : ↥(Frac0 X la G.w)) = ∑ k, (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la G.N (0, k))) • wfr G la k := by
   have h1 : frac X la G.w 1 (sec X la G.w 0) = 1 := by rw [frac_apply, pow_one, section_mul_inverse_eq_one]
-  have h2 : frac X la G.w 1 (sec X la G.w 0) = ∑ k, (algebraMap (Op X la G.N) (Kp X la G.N) (Tv X la G.N (0, k))) •
+  have h2 : frac X la G.w 1 (sec X la G.w 0) = ∑ k, (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la G.N (0, k))) •
       frac X la G.w 1 (emb X la G.N (X.inc wL (G.w k))) := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [sec, map_sum]

@@ -91,7 +91,7 @@ theorem exists_pair (u₁ : Unif F₁ s₁ σ₁) (u₂ : Unif F₂ s₂ σ₂) 
     let O₂ := {q : Tot I₂ g₂ | q.1 ∈ F₂.V ∧ ⊤ ≤ u₂.E q ⁻¹ᵁ U₂}
     have hO₂ : IsOpen O₂ := isOpen_dom u₂ U₂
     have hO₁ : IsOpen (O₁ ∩ Φ ⁻¹' O₂) :=
-      (hcont.mono fun q hq ↦ hq.1).isOpen_inter_preimage (isOpen_dom u₁ U₁) hO₂
+      (hcont.mono fun (q : Tot I₁ g₁) (hq : q ∈ O₁) ↦ hq.1).isOpen_inter_preimage (isOpen_dom u₁ U₁) hO₂
     refine ⟨⟨(⟨O₁ ∩ Φ ⁻¹' O₂, hO₁⟩, ⟨O₂, hO₂⟩),
       ⟨fun q hq ↦ hq.1.1, U₁, hU₁, fun q hq ↦ hq.1.2⟩, ⟨fun q hq ↦ hq.1, U₂, hU₂, fun q hq ↦ hq.2⟩,
       fun q hq ↦ hq.2⟩, ?_⟩

@@ -152,7 +152,7 @@ lemma DT_sS_pow (ζ : ℂ_[q]) (m : ℕ) :
     DT (sS ζ ^ m) = C (m : ℂ_[q]) * (sS ζ ^ (m - 1) + sS ζ ^ m) := by
   unfold DT
   rw [Derivation.leibniz_pow]
-  have hd : derivative ℂ_[q] (sS ζ) = C ζ := by simp [sS]
+  have hd : PowerSeries.derivative (sS ζ) = C ζ := by simp [sS]
   have h1 : (1 + X) * C ζ = sS ζ + 1 := by
     unfold sS
     ring

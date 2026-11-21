@@ -25,8 +25,10 @@ theorem norm_natCast (p : ℕ) [Fact p.Prime] {N : ℕ} (hN : N ≠ 0) :
   have h2 : (((N : ℚ_[p]) : PadicAlgCl p) : ℂ_[p]) = (N : ℂ_[p]) := by simp
   have h3 : ‖(N : ℚ_[p])‖ = (p : ℝ) ^ (-(padicValNat p N : ℤ)) := by
     rw [Padic.norm_eq_zpow_neg_valuation (by exact_mod_cast hN), Padic.valuation_natCast]
+    simp only [Nat.padicValNat_def]
   rw [← h2, h1, h3, Nat.factorization_def _ Fact.out, ← Real.rpow_intCast, Int.cast_neg,
     Int.cast_natCast]
+  simp only [Nat.padicValNat_def]
 
 variable {E : Type} [Field E] [NumberField E]
 

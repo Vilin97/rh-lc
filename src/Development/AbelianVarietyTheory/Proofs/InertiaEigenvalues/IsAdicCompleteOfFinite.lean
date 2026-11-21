@@ -58,7 +58,8 @@ theorem isAdicComplete_of_finite (R S : Type) [CommRing R] [IsLocalRing R] [IsNo
     have h2 : P.comap (algebraMap R S) = maximalIdeal R :=
       ((maximalIdeal.isMaximal R).eq_of_le (Ideal.comap_ne_top _ hprime.ne_top) h1).symm
     have h3 : P.IsMaximal :=
-      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := R) P
+      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap R S)
+        (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) P
         (h2 ▸ maximalIdeal.isMaximal R)
     exact (eq_maximalIdeal h3).ge
   obtain ⟨k, hk⟩ := Ideal.exists_pow_le_of_le_radical_of_fg hrad (IsNoetherian.noetherian _)

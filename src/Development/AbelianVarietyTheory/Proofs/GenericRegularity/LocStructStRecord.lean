@@ -240,10 +240,10 @@ variable {y : PtsG G la → E.Pt' la} (hs : ∀ ζ, SecPt ζ (y ζ))
 
 theorem op_mem_RGL (hU : IsUnif (OsK (xplus X E hM) la G.w) (unifO (xplus X E hM) la G.N)) [∀ ζ : PtsG G la, IsDVRAt ζ] (o : Op (xplus X E hM) la G.N) :
     ιW hs (algebraMap (Rp (xplus X E hM) la G.N) (Lw (xplus X E hM) la G.w) (algebraMap (Kp (xplus X E hM) la G.N) (Rp (xplus X E hM) la G.N)
-      (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) o))) ∈ RGL hs := by
+      (@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o))) ∈ RGL hs := by
   refine mem_RGL_of_stable hs (S := Set.range fun o : Op (xplus X E hM) la G.N =>
     ιW hs (algebraMap (Rp (xplus X E hM) la G.N) (Lw (xplus X E hM) la G.w) (algebraMap (Kp (xplus X E hM) la G.N) (Rp (xplus X E hM) la G.N)
-      (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) o)))) ?_ ?_ ⟨o, rfl⟩
+      (@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o)))) ?_ ?_ ⟨o, rfl⟩
   · rintro β _ ⟨o, rfl⟩
     refine ⟨hasseOp (xplus X E hM) la G.N β o, ?_⟩
     show _ = hdL hs β (ιW hs _)
@@ -275,7 +275,7 @@ def liftable (hU : IsUnif (OsK (xplus X E hM) la G.w) (unifO (xplus X E hM) la G
     · rw [Subalgebra.coe_add, Subalgebra.coe_mul, Subalgebra.coe_mul, Subalgebra.coe_mul, map_add (f := _), map_mul, map_mul,
         map_mul, hf, hf']; ring
   algebraMap_mem' o := by
-    refine ⟨algebraMap (Kp (xplus X E hM) la G.N) _ (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) o), 1, fun ζ => ?_, ?_, _,
+    refine ⟨algebraMap (Kp (xplus X E hM) la G.N) _ (@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o), 1, fun ζ => ?_, ?_, _,
       op_mem_RGL hs hU o, ?_⟩
     · rw [Subalgebra.coe_one, map_one]; exact one_ne_zero
     · rw [map_one, one_mul, AlgHom.commutes]; rfl
@@ -386,7 +386,7 @@ section Point
 variable {ζ : PtsG G la} {y₀ : E.Pt' la} (h : SecPt ζ y₀)
 
 theorem ev_sec (i : Fin (WeightFamilies.dimY D j + 1)) : h.ev (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec (xplus X E hM) la G.w i) =
-    ∑ k, h.ev (algebraMap (Kp (xplus X E hM) la G.N) (Rp (xplus X E hM) la G.N) (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) (Tv (xplus X E hM) la G.N (i, k)))) *
+    ∑ k, h.ev (algebraMap (Kp (xplus X E hM) la G.N) (Rp (xplus X E hM) la G.N) (@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv (xplus X E hM) la G.N (i, k)))) *
       h.ev (emb (xplus X E hM) la G.N (X.inc wL (G.w k))) := by
   unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
   set_option synthInstance.maxHeartbeats 100000 in
@@ -471,11 +471,11 @@ theorem residue_at (hU : IsUnif (OsK (xplus X E hM) la G.w) (unifO (xplus X E hM
     ∃ d ∈ Subring.closure ({u | u ∈ Set.range jz ∧ valV h.T.V u ≤ 1} ∪ Set.range t),
       valV h.T.V d = 1 ∧ valV h.T.V (phiPt h b * d - a) < 1 := by
   let ψ : Kp (xplus X E hM) la G.N →+* h.T.Fr := h.ev.comp (algebraMap (Kp (xplus X E hM) la G.N) (Rp (xplus X E hM) la G.N))
-  have hψ : ∀ o : Op (xplus X E hM) la G.N, ψ (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) o) =
+  have hψ : ∀ o : Op (xplus X E hM) la G.N, ψ (@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o) =
       phiPt h (algebraMap (Op (xplus X E hM) la G.N) (OsK (xplus X E hM) la G.w) o) := fun o => (phiPt_Kp h _).symm
-  have hint : ∀ o : Op (xplus X E hM) la G.N, valV h.T.V (ψ (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) o)) ≤ 1 := fun o => by
+  have hint : ∀ o : Op (xplus X E hM) la G.N, valV h.T.V (ψ (@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) o)) ≤ 1 := fun o => by
     rw [hψ]; exact phiPt_int hU h ((As (Op (xplus X E hM) la G.N) (OsK (xplus X E hM) la G.w)).algebraMap_mem o)
-  have hϖ : valV h.T.V (ψ (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) (unifO (xplus X E hM) la G.N))) < 1 := by
+  have hϖ : valV h.T.V (ψ (@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (unifO (xplus X E hM) la G.N))) < 1 := by
     rw [hψ]
     have he := ep_pos ζ hU
     rcases ord_cases (ord_phiPt h (algebraMap (Op (xplus X E hM) la G.N) (OsK (xplus X E hM) la G.w) (unifO (xplus X E hM) la G.N))) with
@@ -483,7 +483,7 @@ theorem residue_at (hU : IsUnif (OsK (xplus X E hM) la G.w) (unifO (xplus X E hM
     · rw [h1, map_zero]; exact zero_lt_one
     · rw [ord_unif ζ hU, WithTop.coe_inj] at h2
       rw [h1, ← WithZero.exp_zero, WithZero.exp_lt_exp]; omega
-  have ht' : t = fun q => ψ (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) (Tv (xplus X E hM) la G.N q)) :=
+  have ht' : t = fun q => ψ (@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv (xplus X E hM) la G.N q)) :=
     funext fun q => (ht q).trans (hψ _).symm
   obtain ⟨g1, g2, g3⟩ := GlobalTheory.T.gauss_valuation_density_generation_localisation D B P j (xplus X E hM) la G.N h.T.Fr (valV h.T.V) ψ hint hϖ
   obtain ⟨S', hS'⟩ := GlobalTheory.T.exists_subfield_valuation_closure' h.T.Fr (valV h.T.V) (Subfield.closure (Set.range jz ∪ Set.range t))

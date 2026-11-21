@@ -42,13 +42,13 @@ theorem exists_gen_pull {S T : Scheme.{0}} {A : Over S} {B : Over T} {β : B.lef
     ∃ u : ((P.pull β₂).pull a.left).Gen, u.IsGen := by
   obtain ⟨u, hu⟩ := h
   have i₁ : LBIso ((P.pull β₂).pull a.left) (P.pull (a.left ≫ β₂)) :=
-    GlobalTheory.ZM.SiegPull.lbIso_pull_comp (GlobalTheory.lbIso_refl (pull_isLB hP β₂)) a.left
+    GlobalTheory.ZM.SiegPull.lbIso_pull_comp (GlobalTheory.lbIso_refl (LB.isLB_pull hP β₂)) a.left
   have i₂ : LBIso ((P.pull a'.left).pull β) (P.pull (β ≫ a'.left)) :=
-    GlobalTheory.ZM.SiegPull.lbIso_pull_comp (GlobalTheory.lbIso_refl (pull_isLB hP a'.left)) β
+    GlobalTheory.ZM.SiegPull.lbIso_pull_comp (GlobalTheory.lbIso_refl (LB.isLB_pull hP a'.left)) β
   rw [e] at i₁
-  have i := LBIso.trans (pull_isLB (pull_isLB hP _) _) (pull_isLB hP _) (pull_isLB (pull_isLB hP _) _) i₁ i₂.symm
+  have i := LBIso.trans (LB.isLB_pull (LB.isLB_pull hP _) _) (LB.isLB_pull hP _) (LB.isLB_pull (LB.isLB_pull hP _) _) i₁ i₂.symm
   obtain ⟨w, hw⟩ := i.symm
-  obtain ⟨v, hv, -⟩ := GlobalTheory.WtTower.exists_gen_of_iso (pull_isLB (pull_isLB hP _) _) (pull_isLB (pull_isLB hP _) _)
+  obtain ⟨v, hv, -⟩ := GlobalTheory.WtTower.exists_gen_of_iso (LB.isLB_pull (LB.isLB_pull hP _) _) (LB.isLB_pull (LB.isLB_pull hP _) _)
     w hw (pullGenLB u β) (pullGenLB_isGen hu β)
   exact ⟨v, hv⟩
 

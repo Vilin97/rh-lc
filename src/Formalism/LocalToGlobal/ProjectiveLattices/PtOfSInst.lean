@@ -28,14 +28,14 @@ def PtOfSSt (h : LawsP T) (j : ℕ) (hj : InR D j) (hG : GenFrEx (T.Q.Xo j) T.Q.
           (algebraMap T.Q.c.F ((recPlus h j hj).Kl la) a))) ∧
       letI := alg.toAlgebra
       (∑ k, algebraMap (Kp (recPlus h j hj) la G.N) L
-          (algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) (Tv (recPlus h j hj) la G.N (0, k))) *
+          (@algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv (recPlus h j hj) la G.N (0, k))) *
           evR (T.Q.Xo j) T.Q.c ((G.w k : T.R j)) y) ≠ 0 ∧
       ∀ (k : ℕ) (g : (recB h.toLawsCore).Cusp j (addL (wt0 D j) wL k)),
         φ (toOsK (recPlus h j hj) la G.w (fr0 (recPlus h j hj) la G.w k
           ⟨emb (recPlus h j hj) la G.N ((recPlus h j hj).inc _ g), emb_mem_Vw (recPlus h j hj) la G.N _ g⟩)) =
         evR (T.Q.Xo j) T.Q.c ((g : T.R j)) y /
           (∑ k', algebraMap (Kp (recPlus h j hj) la G.N) L
-            (algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) (Tv (recPlus h j hj) la G.N (0, k'))) *
+            (@algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv (recPlus h j hj) la G.N (0, k'))) *
             evR (T.Q.Xo j) T.Q.c ((G.w k' : T.R j)) y) ^ k
 
 end Formalism.L2.Pj

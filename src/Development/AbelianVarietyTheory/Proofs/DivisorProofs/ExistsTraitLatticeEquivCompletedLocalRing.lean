@@ -48,8 +48,8 @@ theorem exists_trait_lattice_equiv : ∀ (E : Type) [Field E] [NumberField E] [I
   have hβ : IsGrpPullback tW.G G (spMap ψ) β := hgm.cancel (by rw [hβgm]; exact hβ') hβG
   have hLBW : LBIso PW.U.LG.L (U.LG.L.pull β) := by
     rw [PW.bundle]
-    exact LBIso.trans tW.PP.isLB (pull_isLB out.L.isLB _) (pull_isLB U.LG.isLB _)
-      (LBIso.trans tW.PP.isLB (pull_isLB T.t.PP.isLB _) (pull_isLB out.L.isLB _)
+    exact LBIso.trans tW.PP.isLB (LB.isLB_pull out.L.isLB _) (LB.isLB_pull U.LG.isLB _)
+      (LBIso.trans tW.PP.isLB (LB.isLB_pull T.t.PP.isLB _) (LB.isLB_pull out.L.isLB _)
         (GlobalTheory.LN.GenericPoint.lbIso_of_sabMap mW) (GlobalTheory.LN.GenericPoint.lbIso_pull hLT mW.φ rfl))
       (GlobalTheory.LN.GenericPoint.lbIso_pull hLB β hβgm.symm).symm
 

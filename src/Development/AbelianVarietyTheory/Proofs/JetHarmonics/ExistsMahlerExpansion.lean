@@ -9,7 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsMeasure
 
 @[expose] public section
 
-open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric Formalism.L2.Ker GlobalTheory.IndefiniteRowSideFullHecke.ParabolicPointMembership
+open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric Formalism.L2.Ker
 
 namespace GlobalTheory.MonomialDense
 open GlobalTheory.MultiMahler

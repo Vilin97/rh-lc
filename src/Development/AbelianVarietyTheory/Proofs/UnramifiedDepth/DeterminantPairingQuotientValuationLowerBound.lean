@@ -58,7 +58,7 @@ theorem main : (∀ (C : Type) [Field C] [CharZero C] (v : AddValuation C (WithT
   intro C _ _ v l hl hvl i n₀ s Q hs hn₀ hQ
   have hvnat : ∀ m : ℕ, m ≠ 0 → v (m : C) = ((padicValNat l m : ℝ) : WithTop ℝ) := by
     intro m hm
-    rw [natCast_eq_factorization v hl hvl hm, Nat.factorization_def m hl]
+    rw [natCast_eq_factorization v hl hvl hm, Nat.factorization_def m hl, ← Nat.padicValNat_def]
   obtain ⟨-, hL2, hL3⟩ := GlobalTheory.LegendreBounds.legendre_bounds l hl
   have hk0 : l ^ i * s ≠ 0 := Nat.mul_ne_zero (pow_ne_zero _ hl.ne_zero) (by omega)
 

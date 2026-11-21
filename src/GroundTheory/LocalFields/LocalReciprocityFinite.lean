@@ -21,7 +21,7 @@ noncomputable def transportReciprocity {K' L' : OpenSubgroup (Ω ≃ₐ[K] Ω)} 
     (u : fixedModule Ωˣ (K' : Subgroup (Ω ≃ₐ[K] Ω)) ≃* M) (N : Subgroup M)
     (hN : (norm Ωˣ (K' : Subgroup (Ω ≃ₐ[K] Ω)) (L' : Subgroup (Ω ≃ₐ[K] Ω))).range.map
       (u : fixedModule Ωˣ (K' : Subgroup (Ω ≃ₐ[K] Ω)) →* M) = N) :
-    Abelianization Γ ≃* M ⧸ N :=
+    Group.Abelianization Γ ≃* M ⧸ N :=
   haveI := isDiscreteModule_units (K := K) (Ω := Ω)
   e.abelianizationCongr.symm.trans
     (((localClassFieldData K Ω).reciprocityAbEquiv hLK (classFieldAxiom_units K Ω)).trans
@@ -116,7 +116,7 @@ theorem map_baseUnitsEquiv_range_norm :
     change baseUnitsEquiv (Abstract.norm Ωˣ ⊤ L.fixingSubgroup _) = _
     rw [baseUnitsEquiv_norm, MulEquiv.apply_symm_apply]
 
-noncomputable def localReciprocity : Abelianization (L ≃ₐ[K] L) ≃* Kˣ ⧸ (normUnits K L).range :=
+noncomputable def localReciprocity : Group.Abelianization (L ≃ₐ[K] L) ≃* Kˣ ⧸ (normUnits K L).range :=
   transportReciprocity (K' := ⊤) (L' := fixingOpenSubgroup L) le_top (baseQuotientEquiv L)
     baseUnitsEquiv (normUnits K L).range (map_baseUnitsEquiv_range_norm L)
 
@@ -164,7 +164,7 @@ variable (L : IntermediateField K Ω) [FiniteDimensional K L] [IsGalois K L]
 theorem localReciprocity_symm_mk_of_le_maximalUnramifiedExtension
     (hL : L ≤ maximalUnramifiedExtension K Ω) (x : Kˣ) :
     (localReciprocity L).symm (x : Kˣ ⧸ (normUnits K L).range) =
-      Abelianization.of (unramifiedFrobenius K Ω L) ^ ord (x : K) := by
+      Group.Abelianization.of (unramifiedFrobenius K Ω L) ^ ord (x : K) := by
   haveI := isDiscreteModule_units (K := K) (Ω := Ω)
   set σ := (maximalUnramifiedExtensionFrobenius K Ω).liftNormal Ω with hσdef
   have hσ : σ.restrictNormal (maximalUnramifiedExtension K Ω) =

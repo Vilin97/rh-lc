@@ -106,15 +106,15 @@ theorem frob_mem_tySet : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [lo, Prod.fst_sum, Finset.sum_apply, ← PowerSeries.coe_substAlgHom hsub, map_sum, map_smul, key,
       rescale_smul', Finset.smul_sum]
-    exact Finset.sum_comm
+      exact Finset.sum_comm
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [lo, Prod.snd_sum, Finset.sum_apply, ← PowerSeries.coe_substAlgHom hsub, map_sum, map_sub, key,
       Finset.sum_sub_distrib]
-    congr 1
-    rw [Finset.sum_comm]
-    refine Finset.sum_congr rfl fun c _ => ?_
-    split_ifs
-    · simp only [map_smul, key, rescale_smul', Finset.smul_sum]
-    · simp
+      congr 1
+      rw [Finset.sum_comm]
+      refine Finset.sum_congr rfl fun c _ => ?_
+      split_ifs
+      · simp only [map_smul, key, rescale_smul', Finset.smul_sum]
+      · simp
 
 end GlobalTheory.RowLaw.FrobCurve

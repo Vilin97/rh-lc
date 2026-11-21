@@ -180,7 +180,7 @@ end Alg
 
 section Geo
 
-open Formalism.L2.Pj
+open Formalism.L2.Pj (IsCombAtG)
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {X0 : Scheme.{0}}
 

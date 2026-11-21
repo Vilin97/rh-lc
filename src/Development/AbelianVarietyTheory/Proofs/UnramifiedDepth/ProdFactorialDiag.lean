@@ -130,9 +130,12 @@ theorem coeff_kill (p : σ → Prop) [DecidablePred p] (m : σ →₀ ℕ) (hm :
         apply Finset.prod_eq_zero hx
         rw [if_neg hpx]
         exact zero_pow (Finsupp.mem_support_iff.1 hx)
-      rw [hz, mul_zero, MvPolynomial.coeff_zero, MvPolynomial.coeff_monomial, if_neg]
-      rintro rfl
-      exact hpx (hm x hx)
+      have hne : u ≠ m := by
+        intro h
+        subst u
+        exact hpx (hm x hx)
+      rw [hz, mul_zero]
+      simp [MvPolynomial.coeff_monomial, hne]
   · rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ]
 
 def Lead (p : σ → Prop) [DecidablePred p] (α : σ →₀ ℕ) (P : MvPolynomial σ C) : Prop :=
@@ -449,8 +452,8 @@ theorem val_nat {l : ℕ} (hl : l.Prime) (hv : v (l : C) = 1) {n : ℕ} (hn : n 
     rintro rfl
     exact hm (dvd_zero l)
   have hfact := Fact.mk hl
-  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hl.ne_zero) hm0, padicValNat.prime_pow,
-    padicValNat.eq_zero_of_not_dvd hm, add_zero, Nat.cast_mul, Nat.cast_pow, AddValuation.map_mul,
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hl.ne_zero) hm0, Nat.padicValNat_def, padicValNat.prime_pow,
+    Nat.padicValNat_def, padicValNat.eq_zero_of_not_dvd hm, add_zero, Nat.cast_mul, Nat.cast_pow, AddValuation.map_mul,
     AddValuation.map_pow, hv, val_coprime v hl hv hm, add_zero, ← WithTop.coe_one, ← WithTop.coe_nsmul,
     nsmul_eq_mul, mul_one]
 

@@ -336,6 +336,7 @@ theorem riemLie_eq_smul_formLie (E : Type) [Field E] [NumberField E] [IsCMField 
     rw [hdetτ, abs_det_re_trace D hD hDc (Y τ) (hYli τ) (hYsk τ)]
   · funext c
     exact hf0 c
+  · exact hcF.measurable.aemeasurable
 
 end Main
 

@@ -370,7 +370,7 @@ theorem torus_jets (hk : IsField (R ⧸ I ^ (e + 1))) (c : D.toPre.P.A.left → 
       exact ⟨s, by rw [hs]; simp [RingHom.mem_ker, aug]⟩
     · rintro _ (⟨j, rfl⟩ | ⟨l, rfl⟩)
       · obtain ⟨s, hs⟩ := hconst (w j)⁻¹.val
-        exact Or.inr ⟨j, s, -1, by rw [hs, map_neg, map_one, ← sub_eq_add_neg]⟩
+        exact Or.inr ⟨j, s, -1, by rw [hs, f.map_neg, f.map_one, ← sub_eq_add_neg]⟩
       · exact Or.inl ⟨zR n l, congrArg ψ (jetCoeff_zR n l).symm⟩
     · obtain ⟨u, hu⟩ := exists_unit_prod f v hmul b a
       rw [← hu, mul_comm (v _).val, ← _root_.mul_assoc, ← map_mul]

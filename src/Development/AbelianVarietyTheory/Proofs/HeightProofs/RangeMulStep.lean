@@ -191,7 +191,7 @@ variable {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : X.Forms →ₐ[B.KO] Ω)
 theorem ev_sec {F : Type} [Field F] (ev : Rp X la N →+* F) (τ : Ω →+* F) (σ : F)
     (hc : ∀ (k : ℕ) (G : X.Forms), emb X la N G ∈ Vw X la N (addL (wt0 D j) wL k) →
       ev (emb X la N G) = τ (gF G) * σ ^ k) (i : Fin (WeightFamilies.dimY D j + 1)) :
-    ev (sec X la w i) = (∑ k, evK X la N ev (algebraMap (Op X la N) (Kp X la N) (Tv X la N (i, k))) *
+    ev (sec X la w i) = (∑ k, evK X la N ev (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (i, k))) *
       τ (gF (X.inc wL (w k)))) * σ := by
   unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
   set_option synthInstance.maxHeartbeats 100000 in

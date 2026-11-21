@@ -19,7 +19,7 @@ theorem height_le_of_isCompact : ∀ (E : Type) [Field E] [NumberField E] [IsTot
   let f : Lie E a → Lie E a := fun w => toL ((Matrix.of w)⁻¹)
   have hdetc : Continuous (fun x : Lie E a => (Matrix.of x).det) := by
     simp only [Matrix.det_apply', Matrix.of_apply]
-    refine continuous_finset_sum _ fun σ _ => continuous_const.mul (continuous_finset_prod _ fun i _ => ?_)
+    refine continuous_finsetSum _ fun σ _ => continuous_const.mul (continuous_finsetProd _ fun i _ => ?_)
     exact (continuous_apply i).comp (continuous_apply (σ i))
   have hadj : Continuous (fun x : Lie E a => (Matrix.of x).adjugate) :=
     Continuous.matrix_adjugate (continuous_id : Continuous fun x : Lie E a => x)

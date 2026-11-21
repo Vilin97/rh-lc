@@ -97,7 +97,7 @@ private theorem exists_pow_X_mem {O σ A : Type} [CommRing O] [IsLocalRing O] [C
     have := (IsLocalRing.maximalIdeal.isMaximal O).eq_of_le (Ideal.comap_isPrime _ P).ne_top hle
     rw [← this]
     exact IsLocalRing.maximalIdeal.isMaximal O
-  have hPm : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hmax
+  have hPm : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := O) P hmax
   have h2 : (Ideal.comap (π : MvPowerSeries σ O →+* A) P).IsMaximal :=
     Ideal.comap_isMaximal_of_surjective (π : MvPowerSeries σ O →+* A) hπ
   have h3 := IsLocalRing.eq_maximalIdeal h2

@@ -50,6 +50,8 @@ theorem subst_endomorphismSeries_expAt (H : RLaw X V) {ω : Type} [Fintype ω] (
   simp only [hl]
   unfold expAt
   congr 1
+  funext x
+  simp only [Matrix.mulVec, dotProduct, Finset.sum_smul, Finset.smul_sum, smul_smul]
   exact Finset.sum_comm
 
 theorem subst_hEnd_expAt (H : RLaw X V) {ω : Type} [Fintype ω] (v : ω → κ → C) (A B : Matrix κ κ C) :

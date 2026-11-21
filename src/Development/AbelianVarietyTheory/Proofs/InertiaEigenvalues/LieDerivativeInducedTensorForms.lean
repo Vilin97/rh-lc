@@ -60,9 +60,8 @@ theorem map_leviEmb {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) {c N 
   change p ((leviEmb R e x).val _ _) = _
   by_cases h : i = j
   · subst h
-    rw [leviEmb_apply_same, leviEmb_apply_same]
-    rfl
-  · rw [leviEmb_apply_ne _ _ _ h, leviEmb_apply_ne _ _ _ h, map_zero]
+    simp [leviEmb, Matrix.blockDiagonal'_apply_eq]
+  · simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ h]
 
 theorem infGL_leviEmb {c N : ℕ} {n : Fin c → ℕ} (e : (Σ i, Fin (n i)) ≃ Fin N) (x : ∀ i, GL (Fin (n i)) (Cinf E)) :
     infGL E N (leviEmb (Cinf E) e x) = leviEmb (Ad E) e fun i => infGL E (n i) (x i) := by
@@ -116,11 +115,11 @@ theorem lie_block_tensor {c N : ℕ} (n : Fin c → ℕ)
       (Matrix.reindex e e (Matrix.blockDiagonal' Z) (e ⟨i, a⟩) (e ⟨j, b⟩)) 0
     by_cases hij : i = j
     · subst hij
-      simp only [leviEmb_apply_same, Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply,
-        Matrix.blockDiagonal'_apply_eq]
+      simp [leviEmb, Matrix.reindex_apply, Matrix.submatrix_apply,
+        Equiv.symm_apply_apply, Matrix.blockDiagonal'_apply_eq]
       exact hasDerivAt_pi.1 (hasDerivAt_pi.1 (hγ i) a) b
-    · simp only [leviEmb_apply_ne _ _ _ hij, Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply,
-        Matrix.blockDiagonal'_apply_ne _ _ _ hij]
+    · simp [leviEmb, Matrix.reindex_apply, Matrix.submatrix_apply,
+        Equiv.symm_apply_apply, Matrix.blockDiagonal'_apply_ne _ _ _ hij]
       exact hasDerivAt_const _ _
   convert hG using 1
   funext m

@@ -39,6 +39,7 @@ theorem nnnorm_evInf_halfInf (F : Type) [Field F] [NumberField F] (w : InfiniteP
   have e : ‖((2⁻¹ : F) : w.Completion)‖ = 2⁻¹ := (InfinitePlace.Completion.norm_coe w _).trans h2
   apply NNReal.eq
   rw [NNReal.coe_inv, NNReal.coe_ofNat]
+  rw [InfinitePlace.Completion.algebraMap_apply]
   exact e
 
 theorem absE_halfE (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)

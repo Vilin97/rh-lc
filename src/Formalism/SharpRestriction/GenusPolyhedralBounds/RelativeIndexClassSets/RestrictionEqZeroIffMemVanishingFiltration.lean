@@ -236,7 +236,7 @@ instance OsK.algFrac0 : Algebra ↥(Frac0 X la w) (OsK X la w) :=
 instance OsK.algKp : Algebra (Kp X la N) (OsK X la w) :=
   inferInstanceAs (Algebra (Kp X la N) (↥(Frac0 X la w) ⧸ Jid X la w))
 instance OsK.algOp : Algebra (Op X la N) (OsK X la w) :=
-  ((algebraMap (Kp X la N) (OsK X la w)).comp (algebraMap (Op X la N) (Kp X la N))).toAlgebra
+  ((algebraMap (Kp X la N) (OsK X la w)).comp (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))))).toAlgebra
 instance OsK.towOp : IsScalarTower (Op X la N) (Kp X la N) (OsK X la w) :=
   IsScalarTower.of_algebraMap_eq fun _ => rfl
 
@@ -285,7 +285,7 @@ instance WK.towKp (u : WeightFamilies.Wt D j) (a : ℕ) : IsScalarTower (Kp X la
   inferInstanceAs (IsScalarTower (Kp X la N) ↥(Frac0 X la w)
     (↥(HK X la w u) ⧸ (Jid X la w ^ a • (⊤ : Submodule ↥(Frac0 X la w) ↥(HK X la w u)))))
 instance WK.modOp (u : WeightFamilies.Wt D j) (a : ℕ) : Module (Op X la N) (WK X la w u a) :=
-  Module.compHom _ (algebraMap (Op X la N) (Kp X la N))
+  Module.compHom _ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))))
 instance WK.towOp (u : WeightFamilies.Wt D j) (a : ℕ) : IsScalarTower (Op X la N) (Kp X la N) (WK X la w u a) :=
   IsScalarTower.of_algebraMap_smul fun _ _ => rfl
 
@@ -325,7 +325,7 @@ instance SectionSheafQuotient.towKpOsK (u : WeightFamilies.Wt D j) : IsScalarTow
     show (algebraMap ↥(Frac0 X la w) (OsK X la w) (c • x)) • m = c • (algebraMap ↥(Frac0 X la w) (OsK X la w) x) • m
     rw [algebraMap_smul, algebraMap_smul, smul_assoc]
 instance SectionSheafQuotient.modOp (u : WeightFamilies.Wt D j) : Module (Op X la N) (SectionSheafQuotient X la w u) :=
-  Module.compHom _ (algebraMap (Op X la N) (Kp X la N))
+  Module.compHom _ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))))
 instance SectionSheafQuotient.towOp (u : WeightFamilies.Wt D j) : IsScalarTower (Op X la N) (Kp X la N) (SectionSheafQuotient X la w u) :=
   IsScalarTower.of_algebraMap_smul fun _ _ => rfl
 instance SectionSheafQuotient.towOpOsK (u : WeightFamilies.Wt D j) : IsScalarTower (Op X la N) (OsK X la w) (SectionSheafQuotient X la w u) :=

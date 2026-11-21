@@ -24,8 +24,11 @@ namespace GlobalTheory.Cyc.LogClass
 variable {l : ℕ} [Fact l.Prime]
 
 theorem ks_le_kinf (K : FinExt l) (s : ℕ) : Ks K s ≤ Kinf K :=
-  sup_le_sup_left (IntermediateField.adjoin.mono _ _ _ fun (x : Om l) (hx : x ^ (l ^ s) = 1) =>
-    (⟨s, hx⟩ : ∃ j : ℕ, x ^ (l ^ j) = 1)) _
+  by
+    apply sup_le_sup_left _ _
+    apply IntermediateField.adjoin.mono
+    intro x hx
+    exact ⟨s, hx⟩
 
 theorem hinf_le_gj (K : FinExt l) (s : ℕ) : Hinf K ≤ Gj K s :=
   IntermediateField.fixingSubgroup_antitone (ks_le_kinf K s)

@@ -123,6 +123,20 @@ theorem pull (T : Trait F) {W : Type} [CommRing W] [IsDomain W] [IsLocalRing W] 
       LBIso L (U'.LG.L.pull (pullback.fst G''.hom (jK W))) ∧
       LBIso (abelian₂ ((Over.pullback (jK W)).obj G'') L) (F.univ.P.pull α₂) ∧
       ∀ y r, PsiCoord T.D.toPre (ε y) r → ∃ u : Wˣ, PsiCoord D'.toPre y (u * f r) := by
+  have pull_isLB {X Y : Scheme.{0}} {L : LB X} (hL : L.IsLB) (F : Y ⟶ X) : (L.pull F).IsLB := by
+    refine { cover := top_le_iff.1 ?_, g_self := ?_, cocycle := ?_ }
+    · intro y _
+      obtain ⟨i, hi⟩ := exists_chart hL (F y)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
+    · intro J
+      refine unit_ext fun y hy => ?_
+      rw [gm_res (𝟙 Y) y _ hy, map_one, gm_pull_g L F (𝟙 Y) y J J hy hy]
+      exact gm_self hL _ y (mem_pull.1 hy)
+    · intro I J K
+      refine unit_ext fun y hy => ?_
+      rw [map_mul, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_pull_g L F (𝟙 Y) y I J hy.1.1 hy.1.2,
+        gm_pull_g L F (𝟙 Y) y J K hy.1.2 hy.2, gm_pull_g L F (𝟙 Y) y I K hy.1.1 hy.2]
+      exact gm_cocycle hL _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
   have hΛ := lamPull T fK G'' β κ hκ hκβ α₂ hα₂
   have gB := (isGrpPullback_pullback G'' (jK W)).comp hβ
   obtain ⟨hr, hs⟩ := GlobalTheory.T.rigidified_symmetric_lineBundle_groupPullback _ _ _ T.G _ _ gB T.U.LG T.U.symG T.U.symG_gen
@@ -142,10 +156,35 @@ namespace GlobalTheory.Poinc.TraitUniq
 
 theorem traitUniq : TraitUniqSt := by
   intro g n o _ ζ F T T' W _ _ _ f f' fK fK' hW hdvr hf hf' hl hl' hK hK' hy w m m' hw hm hm'
+  have pull_isLB {X Y : Scheme.{0}} {L : LB X} (hL : L.IsLB) (F : Y ⟶ X) : (L.pull F).IsLB := by
+    refine { cover := top_le_iff.1 ?_, g_self := ?_, cocycle := ?_ }
+    · intro y _
+      obtain ⟨i, hi⟩ := exists_chart hL (F y)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
+    · intro J
+      refine unit_ext fun y hy => ?_
+      rw [gm_res (𝟙 Y) y _ hy, map_one, gm_pull_g L F (𝟙 Y) y J J hy hy]
+      exact gm_self hL _ y (mem_pull.1 hy)
+    · intro I J K
+      refine unit_ext fun y hy => ?_
+      rw [map_mul, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_pull_g L F (𝟙 Y) y I J hy.1.1 hy.1.2,
+        gm_pull_g L F (𝟙 Y) y J K hy.1.2 hy.2, gm_pull_g L F (𝟙 Y) y I K hy.1.1 hy.2]
+      exact gm_cocycle hL _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
+  have semiPull {S S' : Scheme.{0}} (f : S' ⟶ S) (G : Over S) [GrpObj G]
+      (h : IsSemiAbelian G) : IsSemiAbelian ((Over.pullback f).obj G) := by
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · have := h.comm; infer_instance
+    · have := h.smooth; change Smooth (pullback.snd G.hom f); infer_instance
+    · have := h.separated; change IsSeparated (pullback.snd G.hom f); infer_instance
+    · have := h.quasiCompact; change QuasiCompact (pullback.snd G.hom f); infer_instance
+    · have := h.geomConnected; change GeometricallyConnected (pullback.snd G.hom f); infer_instance
+    · intro Ω _ _ q
+      obtain ⟨E⟩ := h.fibres Ω (q ≫ f)
+      exact ⟨torusExtOfIso (pullCompIso q f G) E⟩
   haveI := hdvr
   have hWC := isCN_of_base hW
-  have hs₁ : IsSemiAbelian ((Over.pullback (spMap f)).obj T.G) := IsSemiAbelian.pullback (spMap f) T.G T.semi
-  have hs₂ : IsSemiAbelian ((Over.pullback (spMap f')).obj T'.G) := IsSemiAbelian.pullback (spMap f') T'.G T'.semi
+  have hs₁ : IsSemiAbelian ((Over.pullback (spMap f)).obj T.G) := semiPull (spMap f) T.G T.semi
+  have hs₂ : IsSemiAbelian ((Over.pullback (spMap f')).obj T'.G) := semiPull (spMap f') T'.G T'.semi
   obtain ⟨κ₁, hκ₁, hκβ₁⟩ := genFib T f fK hK
   obtain ⟨κ₂, hκ₂, hκβ₂⟩ := genFib T' f' fK' hK'
   have hα₁ := hκ₁.comp T.cart

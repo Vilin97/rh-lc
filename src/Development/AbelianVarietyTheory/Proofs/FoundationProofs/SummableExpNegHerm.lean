@@ -24,7 +24,7 @@ theorem exists_mul_norm_sq_le {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ
       rw [LinearMap.map_smulₛₗ, smul_eq_mul, mul_comm]
     have : Continuous fun x : V => H x x := by
       rw [e]
-      refine continuous_finset_sum _ fun i _ => ?_
+      refine continuous_finsetSum _ fun i _ => ?_
       have h1 : Continuous fun x : V => H x (b i) :=
         (H.flip (b i)).continuous_of_finiteDimensional
       have h2 : Continuous fun x : V => b.repr x i :=

@@ -235,8 +235,7 @@ theorem hk_cocycle_coboundary_conj : ∀ (Γ : Subgroup SL(2, ℤ)) (w : ℕ) (�
     simp only [cj, hk, LinearMap.pi_apply]
     split_ifs with h
     set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply, Polynomial.map_sum, polySlash_map]
-      rfl
-    · simp
+      · simp only [LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply, Polynomial.map_sum, polySlash_map, cj]
+    · simp [cj]
 
 end GlobalTheory.HeckeFamilyMatrices.HkC

@@ -204,7 +204,7 @@ theorem pdLw_w0inv (p : Idx D j N) (hp : p.1 ≠ 0) : pdLw X la w p (w0inv X la 
     _ = w0inv X la w * (algebraMap (Rp X la N) (Lw X la w) (sec X la w 0) * pdLw X la w p (w0inv X la w)) := by ring
     _ = 0 := by rw [h, mul_zero]
 
-def t0 (κ : Fin N) : Kp X la N := algebraMap (Op X la N) (Kp X la N) (Tv X la N (0, κ))
+def t0 (κ : Fin N) : Kp X la N := @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (0, κ))
 
 def dSec (l : Fin (WeightFamilies.dimY D j)) : Derivation (X.Kl la) (Lw X la w) (Lw X la w) :=
   ∑ κ, algebraMap (Kp X la N) (Lw X la w) (t0 X la κ) • pdLw X la w (l.succ, κ)

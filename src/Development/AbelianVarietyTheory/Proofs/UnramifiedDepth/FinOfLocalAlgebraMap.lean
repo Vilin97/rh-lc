@@ -31,13 +31,15 @@ lemma finOf_local_of_comp {O Q S : Type} [CommRing O] [CommRing Q] [CommRing S] 
     ((local_hom_TFAE (g.comp (algebraMap O Q))).out 1 5).1 h
   have h2 : (((maximalIdeal S).comap g).comap (algebraMap O Q)).IsMaximal := by
     rw [Ideal.comap_comap, h1]; infer_instance
-  have h3 := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap _ h2
+  have h3 := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap O Q)
+    (algebraMap_isIntegral_iff.mpr inferInstance) ((maximalIdeal S).comap g) h2
   exact ((local_hom_tfae g).out 5 1).1 (eq_maximalIdeal h3)
 
 lemma finOf_local_algebraMap {O Q : Type} [CommRing O] [CommRing Q] [IsLocalRing O]
     [IsLocalRing Q] [Algebra O Q] [Algebra.IsIntegral O Q] : IsLocalHom (algebraMap O Q) :=
   ((local_hom_TFAE (algebraMap O Q)).out 5 1).1
-    (eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal Q)))
+    (eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _)
+      (algebraMap_isIntegral_iff.mpr inferInstance) (maximalIdeal Q)))
 
 variable {R₀ : Type} [CommRing R₀]
 

@@ -115,8 +115,10 @@ theorem count_eq_of_valuation {E : Type} [Field E] [NumberField E] (w : HeightOn
     (t : 𝓞 E) (ht : t ≠ 0) (m : ℤ) (h : w.valuation E (t : E) = WithZero.exp m) :
     (((normalizedFactors (Ideal.span {t})).count w.asIdeal : ℕ) : ℤ) = -m := by
   have h1 : w.valuation E (t : E) = w.intValuation t := w.valuation_of_algebraMap t
-  rw [h1, w.intValuation_if_neg ht, WithZero.exp_inj,
-    count_associates_factors_eq (by simpa using ht) w.isPrime w.ne_bot] at h
+  rw [h1, w.intValuation_if_neg ht, WithZero.exp_inj] at h
+  have hc := Ideal.count_associates_factors_eq (I := Ideal.span {t}) (J := w.asIdeal)
+    (by simpa using ht) w.isPrime w.ne_bot
+  rw [hc] at h
   omega
 
 section Quad

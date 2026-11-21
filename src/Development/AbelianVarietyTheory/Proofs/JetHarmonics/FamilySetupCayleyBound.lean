@@ -50,9 +50,9 @@ theorem iterate_bound {X M ι : Type} [MeasurableSpace X] [NormedAddCommGroup M]
           refine Finset.sum_congr rfl fun c _ => ?_
           rw [ENNReal.ofReal_sum_of_nonneg (fun e _ => mul_nonneg (hk0 x) (hf0 _ x))]
       _ = ∑ c, ∑ e, ∫⁻ x, ENNReal.ofReal (κ x ^ (2 * q) * f (T c e w) x) ∂μ := by
-          rw [lintegral_finset_sum' _ (fun c _ => Finset.aemeasurable_fun_sum _ fun e _ => hm _)]
+          rw [lintegral_finsetSum' _ (fun c _ => Finset.aemeasurable_fun_sum _ fun e _ => hm _)]
           refine Finset.sum_congr rfl fun c _ => ?_
-          rw [lintegral_finset_sum' _ (fun e _ => hm _)]
+          rw [lintegral_finsetSum' _ (fun e _ => hm _)]
       _ ≤ ∑ c, ∑ e, ENNReal.ofReal (B ^ (2 * q) * ‖T c e w‖ ^ 2) :=
           Finset.sum_le_sum fun c _ => Finset.sum_le_sum fun e _ =>
             ih (j + 2) (by omega) _ (hL j w hw c e)

@@ -63,7 +63,7 @@ instance Kp.algOp : Algebra (Op X la N) (Kp X la N) :=
 instance Kp.isFrac : IsFractionRing (Op X la N) (Kp X la N) :=
   inferInstanceAs (IsFractionRing (Op X la N) (FractionRing (Op X la N)))
 instance Kp.algOl : Algebra (X.Ol la) (Kp X la N) :=
-  ((algebraMap (Op X la N) (Kp X la N)).comp (algebraMap (X.Ol la) (Op X la N))).toAlgebra
+  ((@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp (algebraMap (X.Ol la) (Op X la N))).toAlgebra
 instance Kp.towOp : IsScalarTower (X.Ol la) (Op X la N) (Kp X la N) :=
   IsScalarTower.of_algebraMap_eq fun _ => rfl
 
@@ -166,7 +166,7 @@ section
 variable (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) {N : ℕ} {wL : WeightFamilies.Wt D j} (w : Fin N → B.Cusp j wL)
 
 def sec (i : Fin (WeightFamilies.dimY D j + 1)) : Rp X la N :=
-  ∑ k, (algebraMap (Op X la N) (Kp X la N) (Tv X la N (i, k))) • emb X la N (X.inc wL (w k))
+  ∑ k, (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (i, k))) • emb X la N (X.inc wL (w k))
 
 theorem sec_mem_Vw (i : Fin (WeightFamilies.dimY D j + 1)) : sec X la w i ∈ Vw X la N wL :=
   Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (emb_mem_Vw X la N wL (w k))

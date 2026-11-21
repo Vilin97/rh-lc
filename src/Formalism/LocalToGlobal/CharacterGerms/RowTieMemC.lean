@@ -31,7 +31,7 @@ structure SelfConjugatePlaceSetting {C : Type} [Field C] {V : VF C} {T : Type} (
     {J : Orb → Fin 2 → Type} [∀ o g, Fintype (J o g)]
     (X : ∀ o, RowData C V 2 (fun _ => IIs r tau o) (J o)) (F : ∀ o, Flag (X o))
     (gaC : Orb → ZMod 2 → ℕ → ℕ) (N : ℕ) (L : Orb → List (GlobalTheory 2 × ℝ))
-    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt X L o i)) → Fin N) : Prop where
+    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt (X := X) L o i)) → Fin N) : Prop where
 
   inj : Function.Injective fun x : Orb × ZMod 2 => tau x.1 x.2
   conj : ∀ o t, cc (tau o t) = tau o (t + 1)
@@ -56,7 +56,7 @@ def IsotropicToStdSubstHarmonic : Prop :=
     (J : Orb → Fin 2 → Type) [∀ o g, Fintype (J o g)]
     (X : ∀ o, RowData C V 2 (fun _ => IIs r tau o) (J o)) (F : ∀ o, Flag (X o))
     (gaC : Orb → ZMod 2 → ℕ → ℕ) (N : ℕ) (L : Orb → List (GlobalTheory 2 × ℝ))
-    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt X L o i)) → Fin N),
+    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt (X := X) L o i)) → Fin N),
     SelfConjugatePlaceSetting r cc a tau gm X F gaC N L pl → ∀ (n : ℕ) (plc : Fin N × Fin 2 ↪ Fin n) (isX : T → Prop),
       subG r tau gm plc (blkProd X F N L pl) ∈ harmK r n C cc isX (fun _ => 1)
 
@@ -66,7 +66,7 @@ def IsotropicToStdSubstLineInvariant : Prop :=
     (J : Orb → Fin 2 → Type) [∀ o g, Fintype (J o g)]
     (X : ∀ o, RowData C V 2 (fun _ => IIs r tau o) (J o)) (F : ∀ o, Flag (X o))
     (gaC : Orb → ZMod 2 → ℕ → ℕ) (N : ℕ) (L : Orb → List (GlobalTheory 2 × ℝ))
-    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt X L o i)) → Fin N),
+    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt (X := X) L o i)) → Fin N),
     SelfConjugatePlaceSetting r cc a tau gm X F gaC N L pl → ∀ (n : ℕ) (plc : Fin N × Fin 2 ↪ Fin n),
       RowInv r n C (subG r tau gm plc (blkProd X F N L pl))
 
@@ -76,7 +76,7 @@ def IsotropicToStdSubstLineDegree : Prop :=
     (J : Orb → Fin 2 → Type) [∀ o g, Fintype (J o g)]
     (X : ∀ o, RowData C V 2 (fun _ => IIs r tau o) (J o)) (F : ∀ o, Flag (X o))
     (gaC : Orb → ZMod 2 → ℕ → ℕ) (N : ℕ) (L : Orb → List (GlobalTheory 2 × ℝ))
-    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt X L o i)) → Fin N),
+    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt (X := X) L o i)) → Fin N),
     SelfConjugatePlaceSetting r cc a tau gm X F gaC N L pl → ∀ (n : ℕ) (plc : Fin N × Fin 2 ↪ Fin n),
       RowDeg r n C a (subG r tau gm plc (blkProd X F N L pl))
 
@@ -86,7 +86,7 @@ def IsotropicToStdSubstIntegral : Prop :=
     (J : Orb → Fin 2 → Type) [∀ o g, Fintype (J o g)]
     (X : ∀ o, RowData C V 2 (fun _ => IIs r tau o) (J o)) (F : ∀ o, Flag (X o))
     (N : ℕ) (L : Orb → List (GlobalTheory 2 × ℝ))
-    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt X L o i)) → Fin N) (n : ℕ) (plc : Fin N × Fin 2 ↪ Fin n)
+    (pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt (X := X) L o i)) → Fin N) (n : ℕ) (plc : Fin N × Fin 2 ↪ Fin n)
     (O : Subring C), (∀ o t q s, gm o t q s ∈ O) → ∀ m, (subG r tau gm plc (blkProd X F N L pl)).coeff m ∈ O
 
 section Mem

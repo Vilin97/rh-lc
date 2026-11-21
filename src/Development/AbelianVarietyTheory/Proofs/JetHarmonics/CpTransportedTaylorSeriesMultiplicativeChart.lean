@@ -32,7 +32,9 @@ lemma hatmul_DT_hat {q : ℕ} [Fact q.Prime] (ι : ℂ ≃+* ℂ_[q]) (ω : ℂ_
   obtain ⟨-, -, -, -, hl, -⟩ := GlobalTheory.T.cpBinomialPowerSubOneSeries_integrality_composition_log q
   have h1 : DT (C ω * logS : ℂ_[q]⟦X⟧) = C ω := by rw [hatmul_DT_C_mul, hl, mul_one]
   unfold DT at h1 ⊢
-  rw [hd G hG, ← mul_assoc, h1]
+  have hd' : d⁄dX (hat ι (C ω * logS) G) =
+      d⁄dX (C ω * logS) * hat ι (C ω * logS) (deriv G) := hd G hG
+  rw [hd', ← mul_assoc, h1]
 
 lemma hatmul_iter {q : ℕ} [Fact q.Prime] (ι : ℂ ≃+* ℂ_[q]) (ω : ℂ_[q]) (k : ℕ) :
     ∀ (G : ℂ → ℂ), AnalyticAt ℂ G 0 →

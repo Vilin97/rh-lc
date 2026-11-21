@@ -12,7 +12,8 @@ namespace LateralTheory.EtaleFoundations
 def EtaleCochainEvaluationNaturalInRestriction : Prop :=
   ∀ {R : Type} [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (α : Cochain ((chains R).obj E) I n) (p : ℕ) (s : ℤ)
     (h : -(p : ℤ) + n = s) {V U : Scheme.{0}} (g : V ⟶ U) (x : Sx E p U),
-    ev R α p s h V ((E.obj (op (SimplexCategory.mk p))).map g.op x) = Sec.res g (ev R α p s h U x)
+    ev (R := R) α p s h V ((E.obj (op (SimplexCategory.mk p))).map g.op x) =
+      Sec.res g (ev (R := R) α p s h U x)
 
 theorem freeGen_nat {R : Type} [CommRing R] (P : PSh) {V U : Scheme.{0}} (g : V ⟶ U) (x : P.obj (op U)) :
     (((free R).obj P).obj.map g.op).hom (freeGen R P U x) = freeGen R P V (P.map g.op x) := by

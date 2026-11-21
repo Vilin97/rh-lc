@@ -106,8 +106,7 @@ theorem exists_splitIdem' (v : HeightOneSpectrum (𝓞 D.host.F)) (s : v.adicCom
     | (simp [single, hw]; done)
     | (simp [single]; convert Pi.single_eq_of_ne hw t; done)
     | (simp [single]; rfl)
-  have hAF : ∀ x y : AF D.host.F, x.1 = y.1 → (∀ w, x.2 w = y.2 w) → x = y :=
-by
+  have hAF : ∀ x y : AF D.host.F, x.1 = y.1 → (∀ w, x.2 w = y.2 w) → x = y := by
     intro x y h1 h2
     refine Prod.ext h1 ?_
     apply RestrictedProduct.ext
@@ -121,8 +120,9 @@ by
   have hb2v : b.2 v = (2 * s)⁻¹ := by rw [hb]; exact hsv _
   have ha2w : ∀ w, w ≠ v → a.2 w = 0 := by intro w hw; rw [ha]; exact hsw _ w hw
   have hb2w : ∀ w, w ≠ v → b.2 w = 0 := by intro w hw; rw [hb]; exact hsw _ w hw
-  have hDAv : (DA Δ).2 v = s * s := by rw [hs]; exact finite_adele_snd_algebraMap Δ v
-  have A1 : a * a + DA Δ * (b * b) = a := by
+  let ΔA := algebraMap D.host.F (AF D.host.F) Δ
+  have hDAv : ΔA.2 v = s * s := by rw [hs]; exact finite_adele_snd_algebraMap Δ v
+  have A1 : a * a + ΔA * (b * b) = a := by
     apply hAF
     · simp only [finite_adele_fst_add, finite_adele_fst_mul, ha1, hb1]
       ring
@@ -148,7 +148,7 @@ by
         ring
       · rw [ha2w w hw, hb2w w hw]
         ring
-  have A3 : a * a - DA Δ * (b * b) = 0 := by
+  have A3 : a * a - ΔA * (b * b) = 0 := by
     apply hAF
     · simp only [finite_adele_fst_sub, finite_adele_fst_mul, ha1, hb1]
       rw [show (0 : AF D.host.F).1 = 0 from rfl]
@@ -177,15 +177,15 @@ by
   obtain ⟨ι, hι⟩ : ∃ f : AF D.host.F →+* AE D, f = algebraMap (AF D.host.F) (AE D) := ⟨_, rfl⟩
   have hιt : ∀ x : AF D.host.F, ι x = x ⊗ₜ[D.host.F] (1 : D.host.E) := by intro x; rw [hι]; rfl
   obtain ⟨d, hd⟩ : ∃ d : AE D, d = (1 : AF D.host.F) ⊗ₜ[D.host.F] δ := ⟨_, rfl⟩
-  have kd : d * d = ι (DA Δ) := by
+  have kd : d * d = ι ΔA := by
     rw [hd, Algebra.TensorProduct.tmul_mul_tmul, mul_one, ← hΔ, hιt,
       show algebraMap D.host.F D.host.E Δ = Δ • (1 : D.host.E) from Algebra.algebraMap_eq_smul_one Δ,
       ← TensorProduct.smul_tmul, Algebra.smul_def, mul_one]
-  have k1 : ι a * ι a + ι (DA Δ) * (ι b * ι b) = ι a := by
+  have k1 : ι a * ι a + ι ΔA * (ι b * ι b) = ι a := by
     simpa only [map_add (f := _), map_mul] using congrArg ι A1
   have k2 : ι a * ι b + ι a * ι b = ι b := by
     simpa only [map_add (f := _), map_mul] using congrArg ι A2
-  have k3 : ι a * ι a - ι (DA Δ) * (ι b * ι b) = 0 := by
+  have k3 : ι a * ι a - ι ΔA * (ι b * ι b) = 0 := by
     simpa only [map_sub, map_mul, map_zero] using congrArg ι A3
   have k4 : ι a + ι a = ι (epv v) := by
     simpa only [map_add (f := _)] using congrArg ι A4

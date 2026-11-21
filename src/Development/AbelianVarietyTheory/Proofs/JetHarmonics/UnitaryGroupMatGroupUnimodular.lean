@@ -30,5 +30,10 @@ theorem unitaryGroup_matGroup_unimodular : ∀ (k r : ℕ), PI.IsMatGroup (GG k 
   intro s hs
   have h3 : μ.map (PI.rmulQ s) = μ := h2 s hs
   rw [hc, Measure.map_smul, h3]
+  apply Measurable.aemeasurable
+  apply Continuous.measurable
+  refine continuous_pi fun i => continuous_pi fun j => ?_
+  simp only [PI.rmulQ, Matrix.mul_apply, Matrix.of_apply]
+  fun_prop
 
 end GlobalTheory

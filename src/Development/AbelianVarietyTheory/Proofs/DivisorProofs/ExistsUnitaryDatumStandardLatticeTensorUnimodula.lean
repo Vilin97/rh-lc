@@ -59,7 +59,9 @@ instance : Module.Projective (𝓞 E) (Lat ρ g) := by
   exact Module.Flat.projective_of_finitePresentation
 
 theorem cx_cx (x : Lat ρ g) : cx ρ g (cx ρ g x) = -x := by
-  ext i k <;> simp [cx_apply, neg_apply]
+  apply funext
+  intro i
+  apply Prod.ext <;> funext k <;> simp [cx_apply, neg_apply]
 
 theorem form_cx_cx (S : Matrix (Fin r) (Fin r) ℤ) (x y : Lat ρ g) :
     form ρ g S (cx ρ g x) (cx ρ g y) = form ρ g S x y := by
@@ -67,7 +69,9 @@ theorem form_cx_cx (S : Matrix (Fin r) (Fin r) ℤ) (x y : Lat ρ g) :
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem cx_smul (a : 𝓞 E) (x : Lat ρ g) : cx ρ g (a • x) = a • cx ρ g x := by
-  ext i k <;> simp [cx_apply, smul_apply, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply]
+  apply funext
+  intro i
+  apply Prod.ext <;> funext k <;> simp [cx_apply, smul_apply, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply]
 
 theorem form_self (S : Matrix (Fin r) (Fin r) ℤ) (hS : S.transpose = S) (x : Lat ρ g) : form ρ g S x x = 0 := by
   have hS' : ∀ i j, S j i = S i j := fun i j => by rw [← Matrix.transpose_apply S i j, hS]

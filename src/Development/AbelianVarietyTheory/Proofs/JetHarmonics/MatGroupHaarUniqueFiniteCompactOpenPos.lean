@@ -160,7 +160,7 @@ theorem eq_smul_haar (hG : IsMatGroup G) (μ : Measure (MtM m)) (hμ : IsHaarOnM
   have e := Measure.haarMeasure_unique (pull hG μ) (Classical.arbitrary _)
   have e' : μ = (pull hG μ (Classical.arbitrary (TopologicalSpace.PositiveCompacts (Grp G hG)) :
       TopologicalSpace.PositiveCompacts (Grp G hG))) • (haar0 hG).map inc := by
-    rw [← Measure.map_smul]
+    rw [← Measure.map_smul _ inc_cont.measurable.aemeasurable]
     refine (map_pull (hG := hG) μ h3).symm.trans ?_
     exact congrArg (Measure.map inc) e
   obtain ⟨a, b⟩ := factor_pos_lt_top μ _ h2 _ e'

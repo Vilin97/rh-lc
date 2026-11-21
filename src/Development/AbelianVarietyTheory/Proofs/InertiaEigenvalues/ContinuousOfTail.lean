@@ -45,7 +45,7 @@ theorem continuous_of_tail {O : Type} [CommRing O] [TopologicalSpace O] {n : ℕ
     (hmono j).comp (continuous_pi fun i =>
       (PowerSeries.WithPiTopology.continuous_coeff O j).comp (continuous_apply i))
   let S : LetA O n → M := fun a => ∑ j ∈ Finset.range k, (mono j a - mono j a₀)
-  have hS : Continuous S := continuous_finset_sum _ fun j _ => (hcont j).sub continuous_const
+  have hS : Continuous S := continuous_finsetSum _ fun j _ => (hcont j).sub continuous_const
   have hS0 : S a₀ = 0 := by simp [S]
   have hSV : ∀ᶠ a in 𝓝 a₀, S a ∈ V := by
     have := hS.continuousAt (x := a₀)

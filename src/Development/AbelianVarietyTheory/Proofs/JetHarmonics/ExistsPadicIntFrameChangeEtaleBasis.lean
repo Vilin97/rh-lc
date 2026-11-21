@@ -167,7 +167,8 @@ theorem frameChange : ∀ (q : ℕ) [Fact q.Prime] (ι : ℂ ≃+* ℂ_[q]) (g :
     rw [div_eq_mul_inv, map_mul, hu, hn]
     exact map_mul (zcHom q) _ _
   have e1 : M * N = 1 := by
-    ext i k : 2
+    apply Matrix.ext
+    intro i k
     apply zcHom_injective q
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Matrix.mul_apply, map_sum]
@@ -176,7 +177,8 @@ theorem frameChange : ∀ (q : ℕ) [Fact q.Prime] (ι : ℂ ≃+* ℂ_[q]) (g :
       rw [← map_sum, hMN, Matrix.one_apply]
     split_ifs <;> simp
   have e2 : N * M = 1 := by
-    ext i k : 2
+    apply Matrix.ext
+    intro i k
     apply zcHom_injective q
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Matrix.mul_apply, map_sum]

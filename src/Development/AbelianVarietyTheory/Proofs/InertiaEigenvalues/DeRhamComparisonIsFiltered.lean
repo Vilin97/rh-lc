@@ -182,7 +182,7 @@ theorem filtered
   have hle : min c₀ a ≤ a := min_le_right _ _
   have key : ∀ c, min c₀ a ≤ c → c ≤ a → y ∈ Submodule.span ℤ (gens ρ F FM c) := by
     intro c hc
-    induction c, hc using Int.le_induction with
+    induction c, hc using Int.leInduction with
     | base =>
       intro _
       rw [hsum]

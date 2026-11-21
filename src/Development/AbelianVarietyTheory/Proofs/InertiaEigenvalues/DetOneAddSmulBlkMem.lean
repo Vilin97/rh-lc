@@ -79,9 +79,12 @@ theorem det_sum_smul_mem {O X B : Type} [CommRing O] [CommRing B] (T : Subalgebr
         AddMonoidAlgebra.coeff (MvPolynomial.map (Pi.evalRingHom (fun _ : X => O) x) D) d := by
       rw [MvPolynomial.coeff_map]; rfl
     rw [this, hD, RingHom.map_det]
-    congr 2
-    ext i j : 1
-    simp [swapM, Matrix.sum_apply]
+    have hm : (∑ k, (MvPolynomial.X k : MvPolynomial (Fin m) (X → O)) •
+        (swapM (a k)).map MvPolynomial.C).map (MvPolynomial.map (Pi.evalRingHom (fun _ : X => O) x)) =
+        ∑ k, (MvPolynomial.X k : MvPolynomial (Fin m) O) • (a k x).map (MvPolynomial.C (σ := Fin m)) := by
+      ext i j
+      simp [swapM, Matrix.sum_apply]
+    exact congrArg (fun M => AddMonoidAlgebra.coeff (Matrix.det M) d) hm
   have hev : (∑ k, c k • (swapM (a k)).map ι).det = MvPolynomial.eval₂Hom ι c D := by
     rw [hD, RingHom.map_det]
     congr 1

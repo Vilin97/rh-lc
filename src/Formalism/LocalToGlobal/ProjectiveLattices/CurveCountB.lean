@@ -69,23 +69,23 @@ variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} 
   (N : ℕ) {wL : WeightFamilies.Wt D j} (w : Fin N → B.Cusp j wL)
 
 theorem tv_indep :
-    AlgebraicIndependent (X.Kl la) (fun p : Idx D j N => algebraMap (Op X la N) (Kp X la N) (Tv X la N p)) := by
+    AlgebraicIndependent (X.Kl la) (fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p)) := by
   have h0 := MvPolynomial.algebraicIndependent_X (Idx D j N) (X.Ol la)
   have hinj1 : Function.Injective (algebraMap (Pol X la N) (Op X la N)) :=
     IsLocalization.injective (Op X la N) (Ideal.primeCompl_le_nonZeroDivisors (gI X la N))
-  have hinj2 : Function.Injective (algebraMap (Op X la N) (Kp X la N)) := IsFractionRing.injective _ _
+  have hinj2 : Function.Injective (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))) := IsFractionRing.injective _ _
   let g : Pol X la N →ₐ[X.Ol la] Kp X la N :=
     (IsScalarTower.toAlgHom (X.Ol la) (Op X la N) (Kp X la N)).comp
       (IsScalarTower.toAlgHom (X.Ol la) (Pol X la N) (Op X la N))
   have h1 : AlgebraicIndependent (X.Ol la)
-      (fun p : Idx D j N => algebraMap (Op X la N) (Kp X la N) (Tv X la N p)) :=
+      (fun p : Idx D j N => @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p)) :=
     h0.map' (f := g) (hinj2.comp hinj1)
   have : Algebra.IsAlgebraic (X.Ol la) (X.Kl la) := IsLocalization.isAlgebraic (X.Kl la) (nonZeroDivisors (X.Ol la))
   exact h1.extendScalars (X.Kl la)
 
 theorem sfr_eq (i : Fin (WeightFamilies.dimY D j + 1)) :
     sfr X la w i = ∑ k, algebraMap (Kp X la N) ↥(Frac0 X la w)
-      (algebraMap (Op X la N) (Kp X la N) (Tv X la N (i, k))) * xw X la N w k := by
+      (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (i, k))) * xw X la N w k := by
   apply Subtype.ext
   set_option synthInstance.maxHeartbeats 100000 in
     rw [coe_sfr, Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum]
@@ -128,7 +128,7 @@ theorem countQAt_of (v : Fin N → Ω) (hv : ∀ i, gF (X.inc wL (w i)) = v i)
     @IsScalarTower.of_algebraMap_eq B.KO (X.Kl la) κ _ _ _ _ algKl algK (fun _ => rfl)
   let x : Fin N → κ := fun i => ρ (xw X la N w i)
   let t : Fin (WeightFamilies.dimY D j + 1) × Fin N → κ :=
-    fun p => ρK (algebraMap (Op X la N) (Kp X la N) (Tv X la N p))
+    fun p => ρK (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N p))
   have ht : AlgebraicIndependent B.KO t := by
     let g : Kp X la N →ₐ[X.Kl la] κ := { ρK with commutes' := fun _ => rfl }
     have h1 := (tv_indep X la N).map' (f := g) ρK.injective

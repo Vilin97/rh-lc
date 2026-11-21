@@ -46,10 +46,10 @@ theorem alg_main : ∀ (F E K L : Type) [NontriviallyNormedField F] [IsUltrametr
   obtain ⟨vE, hEloc, hEv⟩ := NormSign.exists_valuativeRel_of_normed E
   obtain ⟨vK, tK, hKloc, hKv⟩ := GlobalTheory.T.exists_localField_structure_spectralNorm F K
   obtain ⟨vL, tL, hLloc, hLv⟩ := GlobalTheory.T.exists_localField_structure_spectralNorm F L
-  haveI : ValuativeExtension F E := ⟨fun a b => by rw [hEv, hFv, norm_algebraMap', norm_algebraMap']⟩
-  haveI : ValuativeExtension F K := ⟨fun a b => by
+  haveI : ValuativeExtension F E := ⟨fun {a b} => by rw [hEv, hFv, norm_algebraMap', norm_algebraMap']⟩
+  haveI : ValuativeExtension F K := ⟨fun {a b} => by
     rw [hKv, hFv, spectralNorm_extends, spectralNorm_extends]⟩
-  haveI : ValuativeExtension K L := ⟨fun a b => by rw [hLv, hKv, ntow, ntow]⟩
+  haveI : ValuativeExtension K L := ⟨fun {a b} => by rw [hLv, hKv, ntow, ntow]⟩
   have heF : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation F))) = 1 := by
     obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[E]
     obtain ⟨x, hx⟩ := hunr (ϖ : E)

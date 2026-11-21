@@ -28,7 +28,7 @@ theorem cyc_succ (p n : ℕ) (hp : p.Prime) :
     cyc R p (n + 1) = ∑ i ∈ Finset.range p, ((1 + X : PowerSeries R) ^ (p ^ n)) ^ i := by
   unfold cyc
   rw [Polynomial.cyclotomic_prime_pow_eq_geom_sum hp]
-  simp [Polynomial.eval₂_finset_sum, Polynomial.eval₂_pow, Polynomial.eval₂_X]
+  simp [Polynomial.eval₂_finsetSum, Polynomial.eval₂_pow, Polynomial.eval₂_X]
 
 theorem om_succ (p n : ℕ) (hp : p.Prime) :
     (1 + X : PowerSeries R) ^ (p ^ (n + 1)) - 1 = cyc R p (n + 1) * ((1 + X : PowerSeries R) ^ (p ^ n) - 1) := by

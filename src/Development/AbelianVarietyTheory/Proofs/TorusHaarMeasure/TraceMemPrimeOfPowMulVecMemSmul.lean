@@ -70,7 +70,7 @@ theorem _root_.GlobalTheory.trace_mem_prime_of_pow_mulVec_mem_smul : ∀ (K : Ty
     rintro _ ⟨y, rfl⟩
     rw [Submodule.mem_smul_top_iff, hf]
     exact hNm _ y.2
-  obtain ⟨q, hqm, -, hqc, hq0⟩ := LinearMap.exists_monic_and_coeff_mem_pow_and_aeval_eq_zero_of_range_le_smul (𝓞 K) f P hrange
+  obtain ⟨q, hqm, -, hqc, hq0⟩ := LinearMap.exists_monic_and_natDegree_eq_and_coeff_mem_pow_and_aeval_eq_zero (𝓞 K) f P hrange
   have hzero : aeval (N ^ m) q = 0 := by
     have hon : ∀ x ∈ L, (aeval (N ^ m) q) *ᵥ x = 0 := by
       intro x hx

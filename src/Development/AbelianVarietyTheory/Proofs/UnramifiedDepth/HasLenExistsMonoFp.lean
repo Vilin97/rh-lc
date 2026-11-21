@@ -32,8 +32,26 @@ private theorem hasLen_of_fp {C : Type} [Field C] {v : Valuation C NNReal} {O : 
   obtain ⟨n, f, hf⟩ := Module.Finite.exists_fin' O M
   have hk : (LinearMap.ker f).FG := Module.FinitePresentation.fg_ker f hf
   obtain ⟨m, g, hg⟩ := Submodule.fg_iff_exists_fin_generating_family.1 hk
+  have hsmith : ∀ (b : ℕ) {idx : Type} [Fintype idx] (g : idx → Fin b → O),
+      ∃ c : Fin b → O, Nonempty (((Fin b → O) ⧸ Submodule.span O (Set.range g)) ≃ₗ[O]
+        ((i : Fin b) → O ⧸ Ideal.span {c i})) := by
+    intro b
+    induction b with
+    | zero =>
+      intro idx _ g
+      exact ⟨Fin.elim0, ⟨LinearEquiv.ofSubsingleton _ _⟩⟩
+    | succ b ih =>
+      intro idx _ g
+      obtain ⟨i0, a, u, s, hu, hau, hs, -, -⟩ := Smith.exists_pivot hv g
+      obtain ⟨e1⟩ := Smith.pivot_equiv g i0 a u s hu hau hs
+      obtain ⟨c, ⟨e2⟩⟩ := ih (fun j => Fin.removeNth i0 (g j - s j • a • u))
+      exact ⟨Fin.cons a c, ⟨(e1.trans ((LinearEquiv.refl O _).prodCongr e2)).trans
+        (Smith.consEquiv a c)⟩⟩
+  obtain ⟨c, e⟩ := hsmith n g
+  have hc : HasLen v O ((Fin n → O) ⧸ Submodule.span O (Set.range g))
+      (∏ i, v (algebraMap O C (c i))) := ⟨n, c, e, rfl⟩
   exact ⟨_, hasLen_of_equiv ((Submodule.quotEquivOfEq _ _ hg).trans
-    (f.quotKerEquivOfSurjective hf)).symm (Smith.hasLen_coker_gen hv g)⟩
+    (f.quotKerEquivOfSurjective hf)).symm hc⟩
 
 private theorem hasLen_mono {C : Type} [Field C] {v : Valuation C NNReal} {R : Type} [CommRing R]
     [Algebra R C] (hv : v.Integers R) {M M' : Type} [AddCommGroup M] [Module R M]

@@ -121,7 +121,7 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
   letI : Algebra (X.Kl la) (OsK X la w ⧸ m) :=
     ((algebraMap (Kp X la N) (OsK X la w ⧸ m)).comp (algebraMap (X.Kl la) (Kp X la N))).toAlgebra
   let T : Fin (WeightFamilies.dimY D j + 1) × Fin N → OsK X la w ⧸ m := fun q =>
-    algebraMap (Kp X la N) (OsK X la w ⧸ m) (algebraMap (Op X la N) (Kp X la N) (Tv X la N q))
+    algebraMap (Kp X la N) (OsK X la w ⧸ m) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N q))
   let y : Fin N → OsK X la w ⧸ m := fun k => π (toOsK X la w (xr X la w k))
   have hKF : ∀ z : Kp X la N, algebraMap (Kp X la N) (OsK X la w ⧸ m) z =
       π (toOsK X la w (algebraMap (Kp X la N) (Frac0 X la w) z)) := fun z => rfl
@@ -137,7 +137,7 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
     | C a =>
       rw [MvPolynomial.map_C, MvPolynomial.aeval_C]
       show algebraMap (Kp X la N) (OsK X la w ⧸ m) (algebraMap (X.Kl la) (Kp X la N) (algebraMap (X.Ol la) (X.Kl la) a)) =
-        algebraMap (Kp X la N) (OsK X la w ⧸ m) (algebraMap (Op X la N) (Kp X la N)
+        algebraMap (Kp X la N) (OsK X la w ⧸ m) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))
           (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.C a)))
       rw [← IsScalarTower.algebraMap_apply (X.Ol la) (X.Kl la) (Kp X la N), ← MvPolynomial.algebraMap_eq,
         ← IsScalarTower.algebraMap_apply (X.Ol la) (Pol X la N) (Op X la N),
@@ -150,7 +150,7 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
       algebraMap (Op X la N) (OsK X la w ⧸ m) (algebraMap (X.Ol la) (Op X la N) a) := by
     intro a
     show algebraMap (Kp X la N) (OsK X la w ⧸ m) (algebraMap (X.Kl la) (Kp X la N) (algebraMap (X.Ol la) (X.Kl la) a)) =
-      algebraMap (Kp X la N) (OsK X la w ⧸ m) (algebraMap (Op X la N) (Kp X la N) (algebraMap (X.Ol la) (Op X la N) a))
+      algebraMap (Kp X la N) (OsK X la w ⧸ m) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (X.Ol la) (Op X la N) a))
     rw [← IsScalarTower.algebraMap_apply (X.Ol la) (X.Kl la) (Kp X la N),
       ← IsScalarTower.algebraMap_apply (X.Ol la) (Op X la N) (Kp X la N)]
   have hmaxOl : ∀ a : X.Ol la, a ∈ maximalIdeal (X.Ol la) →
@@ -209,14 +209,14 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
     exact (hmaxOl _ (hg α)).ne hα
   have hδ0 : ∀ l k, δ l (T (0, k)) = if k = l then 1 else 0 := by
     intro l k
-    show δ l (algebraMap (Kp X la N) (OsK X la w ⧸ m) (algebraMap (Op X la N) (Kp X la N) (Tv X la N (0, k)))) = _
+    show δ l (algebraMap (Kp X la N) (OsK X la w ⧸ m) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (0, k)))) = _
     rw [hδK, dK_Tv]
     by_cases hk : k = l
     · subst hk; simp
     · rw [if_neg (fun h => hk (Prod.mk.inj h).2), if_neg hk, map_zero]
   have hδs : ∀ l (i : Fin (WeightFamilies.dimY D j)) k, δ l (T (i.succ, k)) = 0 := by
     intro l i k
-    show δ l (algebraMap (Kp X la N) (OsK X la w ⧸ m) (algebraMap (Op X la N) (Kp X la N) (Tv X la N (i.succ, k)))) = 0
+    show δ l (algebraMap (Kp X la N) (OsK X la w ⧸ m) (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (i.succ, k)))) = 0
     rw [hδK, dK_Tv, if_neg (fun h => Fin.succ_ne_zero i (Prod.mk.inj h).1), map_zero]
   have hδKl : ∀ l (c : X.Kl la), δ l (algebraMap (X.Kl la) (OsK X la w ⧸ m) c) = 0 := by
     intro l c
@@ -248,7 +248,7 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
       exact hmemS _
     have hinj : Function.Injective (algebraMap (Pol X la N) (OsK X la w ⧸ m)) := by
       show Function.Injective ((algebraMap (Kp X la N) (OsK X la w ⧸ m)).comp
-        ((algebraMap (Op X la N) (Kp X la N)).comp (algebraMap (Pol X la N) (Op X la N))))
+        ((@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp (algebraMap (Pol X la N) (Op X la N))))
       exact (algebraMap (Kp X la N) _).injective.comp ((IsFractionRing.injective _ _).comp
         (IsLocalization.injective (Op X la N) (gI X la N).primeCompl_le_nonZeroDivisors))
     let ψ : Pol X la N →+* Sa := (algebraMap (Pol X la N) (OsK X la w ⧸ m)).codRestrict Sa hPS
@@ -316,7 +316,7 @@ theorem generic_section_minimum_integral {D : D7} {B : WeightFamilies.Prov D} {P
     rw [h0]
     rfl
   have hT : ∀ k, algebraMap (Kp (xplus X E hM) la G.N) (OsK (xplus X E hM) la G.w)
-      (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) (Tv (xplus X E hM) la G.N (0, k))) ∈
+      (@algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv (xplus X E hM) la G.N (0, k))) ∈
         As (Op (xplus X E hM) la G.N) (OsK (xplus X E hM) la G.w) := fun k =>
     isIntegral_algebraMap (x := Tv (xplus X E hM) la G.N (0, k))
   let s : ↥(As (Op (xplus X E hM) la G.N) (OsK (xplus X E hM) la G.w)) := ∑ k, ⟨_, hT k⟩ * ⟨_, hint k⟩

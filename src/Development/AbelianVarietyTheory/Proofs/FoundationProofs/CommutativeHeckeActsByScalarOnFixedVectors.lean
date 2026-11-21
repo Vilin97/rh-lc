@@ -32,16 +32,16 @@ theorem heckeVec_dosetInd_eq_idem (hπ : GlobalTheory.LGrp.IsIrrSmooth π) (hc :
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [← idem_of_mem hπ.1 hc (heckeVec_mem_fixed hK hm hz), heckeVec,
       finsum_eq_sum_of_support_subset (s := hfin.toFinset), map_sum, Nat.cast_smul_eq_nsmul, ← Finset.sum_const]
-    · refine Finset.sum_congr rfl fun c hcS => ?_
-      have h1 := (hS c).1 hcS
-      obtain ⟨a, ha, b, hb, e⟩ := DoubleCoset.mem_doubleCoset.1 h1
-      rw [dosetInd, Set.indicator_of_mem h1, e, map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply,
-        GlobalTheory.LGrp.mem_fixed.1 hz b hb]
-      simpa using idem_apply_mem hπ.1 hc ha (π g z)
-    · intro c hc'
-      refine Finset.mem_coe.2 ((hS c).2 ?_)
-      by_contra h0
-      exact hc' (by simp [dosetInd, h0])
+      · refine Finset.sum_congr rfl fun c hcS => ?_
+        have h1 := (hS c).1 hcS
+        obtain ⟨a, ha, b, hb, e⟩ := DoubleCoset.mem_doubleCoset.1 h1
+        rw [dosetInd, Set.indicator_of_mem h1, e, map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply,
+          GlobalTheory.LGrp.mem_fixed.1 hz b hb]
+        simpa using idem_apply_mem hπ.1 hc ha (π g z)
+      · intro c hc'
+        refine Finset.mem_coe.2 ((hS c).2 ?_)
+        by_contra h0
+        exact hc' (by simp [dosetInd, h0])
 
 theorem exists_scalar : ∀ (G V : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup V]
     [Module ℂ V] (π : Representation ℂ G V) (K : Subgroup G), IsCompact (K : Set G) → IsCommensurated K →

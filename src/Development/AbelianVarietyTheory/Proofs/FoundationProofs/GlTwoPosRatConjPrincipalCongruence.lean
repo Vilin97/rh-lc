@@ -63,9 +63,9 @@ theorem conj_Gamma_den_mul (g : GL (Fin 2) ℚ) (M : ℕ) (y : SL(2, ℤ))
   rw [CongruenceSubgroup.Gamma_mem', Subtype.ext_iff]
   change z.map (Int.cast : ℤ → ZMod M) = 1
   ext i j
-  simp only [z, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, nsmul_eq_mul,
-    Int.cast_add, Int.cast_mul, Int.cast_natCast, ZMod.natCast_self, zero_mul, add_zero]
-  simp [Matrix.one_apply]
+  change (↑((1 : Matrix (Fin 2) (Fin 2) ℤ) i j +
+    M • (A₁.num * k * A₂.num) i j) : ZMod M) = (1 : Matrix (Fin 2) (Fin 2) (ZMod M)) i j
+  simp [nsmul_eq_mul, Matrix.one_apply]
 
 theorem exists_conj_principal_congruence :
     ∀ g : GQ, ∃ n : ℕ, 0 < n ∧ ∀ N : ℕ, ∀ δ ∈ CongruenceSubgroup.Gamma (N * n),

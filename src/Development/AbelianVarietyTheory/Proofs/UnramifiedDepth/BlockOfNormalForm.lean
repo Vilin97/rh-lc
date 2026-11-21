@@ -412,8 +412,8 @@ theorem block_of_normal_form (X : RowData K V d I J) (g : Fin 2) (a : ZMod d) (i
       simp only [γ]
       split_ifs
       · rw [map_one, map_one]
-      set_option synthInstance.maxHeartbeats 100000 in
-        · simp only [map_mul, map_pow, map_sum, map_smul, substAlgHom_X]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_mul, map_pow, map_sum, map_smul, substAlgHom_X]
         simp only [coe_substAlgHom, subst_upG _ (cc_rowForm g E v' ρ)]
         have e1 : (fun x => rowForm g E v' ρ ⟨g, x⟩) = fun x => ∑ c, E c x •
             (MvPowerSeries.X (Sum.inl (ρ, c)) : MvPowerSeries (PVar X.n) K) := by

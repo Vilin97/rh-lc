@@ -33,7 +33,7 @@ theorem fderiv_prod_iteratedDeriv {g : ℕ} (f : Fin g → ℂ → ℂ) (hf : �
       exact (hd (z i)).hasDerivAt
     exact h1.comp_hasFDerivAt z
       (ContinuousLinearMap.proj i : (Fin g → ℂ) →L[ℂ] ℂ).hasFDerivAt
-  have h2 := HasFDerivAt.finset_prod h
+  have h2 := HasFDerivAt.finsetProd h
   refine h2.congr_fderiv (Eq.symm ?_)
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [smul_smul, ← Finset.prod_erase_mul _ _ (Finset.mem_univ a)]

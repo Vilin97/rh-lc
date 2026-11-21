@@ -95,13 +95,13 @@ theorem exists_comb {V F κ : Type} [CommRing V] [Field F] [Finite κ] (φ : V �
   have hc : ∀ i, 0 ≤ v (∑ m ∈ S, MvPowerSeries.coeff m g * φ (b m i)) := fun i =>
     AddValuation.map_le_sum v fun m _ => by rw [AddValuation.map_mul]; exact add_nonneg (hg m) (hφ _)
   refine ⟨fun i => ∑ m ∈ S, MvPowerSeries.coeff m g * φ (b m i), hc, fun mo => ?_, fun mo hmo => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine AddValuation.map_le_sum v fun i _ => ?_
     rw [MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_map, AddValuation.map_mul]
     exact add_nonneg (hc i) (hφ _)
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_map, Finset.sum_mul]
     rw [Finset.sum_comm]
     have : ∀ m ∈ S, ∑ i, MvPowerSeries.coeff m g * φ (b m i) * φ (MvPowerSeries.coeff mo (gi i)) =

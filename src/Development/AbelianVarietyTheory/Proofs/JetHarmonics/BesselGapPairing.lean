@@ -19,14 +19,22 @@ theorem besselIntegral_sesquilinear : Hyps → ∀ (k r : ℕ) (ε : Fin (2 * r 
   · unfold be
     rw [← integral_add ((hc v hv).1 w hw) ((hc v hv).1 w' hw')]
     congr 1
+    funext p
+    simp [beInt, add_mul, add_smul]
   · unfold be
     rw [← integral_smul]
     congr 1
+    funext p
+    simp [beInt, smul_smul, mul_assoc]
   · unfold be
     rw [← integral_add ((hc v hv).1 w hw) ((hc v' hv').1 w hw)]
     congr 1
+    funext p
+    simp [beInt, add_mul, add_smul]
   · unfold be
     rw [← integral_smul]
     congr 1
+    funext p
+    simp [beInt, smul_smul, mul_assoc, mul_left_comm]
 
 end GlobalTheory

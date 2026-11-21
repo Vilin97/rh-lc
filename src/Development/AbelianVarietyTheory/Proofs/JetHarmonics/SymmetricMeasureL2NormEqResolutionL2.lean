@@ -48,7 +48,9 @@ theorem haar_unique {U : Set (Mat k r)} (hU : IsClosedSubgroup U) {μ ν : Measu
     intro h; apply n2; rw [← en, h, Measure.map_zero])
   have e := measure_eq_div_smul (pull hU μ) (pull hU ν) s0 s1
   generalize pull hU μ s / pull hU ν s = c at e
-  have e' : μ = c • ν := by rw [← em, e, Measure.map_smul, en]
+  have e' : μ = c • ν := by
+    rw [← em, e, Measure.map_smul, en]
+    exact inc_memb.measurable.aemeasurable
   refine ⟨c, ?_, ?_, e'⟩
   · rintro rfl
     exact m2 (by rw [e', zero_smul])

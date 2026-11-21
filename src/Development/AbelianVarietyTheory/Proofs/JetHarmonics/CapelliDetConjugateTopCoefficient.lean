@@ -21,6 +21,7 @@ theorem prod_ofFn_sum_smul {t n : ℕ} (q : Fin t → Fin n → ℂ) (x : Fin t 
     rw [← MultilinearMap.mkPiAlgebraFin_apply (R := ℂ), MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [MultilinearMap.map_smul_univ, MultilinearMap.mkPiAlgebraFin_apply]
+  simp only [RingHom.id_apply]
 
 theorem qminor_eq_zero {n : ℕ} (E : Fin n → Fin n → A) (hE : GlRel E) (d : Fin n → Fin n)
     (hd : ¬ Function.Injective d) (u : ℂ) : qminor E id d u = 0 := by

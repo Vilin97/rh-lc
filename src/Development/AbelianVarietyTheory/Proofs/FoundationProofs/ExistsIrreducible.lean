@@ -132,7 +132,7 @@ theorem exists_sqrt (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
   have hαs : sig α = -α := by rw [hα, map_sub, hss]; ring
   obtain ⟨a, ha⟩ := hfix (α ^ 2) (by rw [map_pow, hαs]; ring)
   have hai : IsIntegral ℤ a := by
-    rw [← isIntegral_algebraMap_iff , ha]
+    rw [← isIntegral_algebraMap_iff (B := E), ha]
     exact hint.pow 2
   refine ⟨⟨α, hint⟩, ⟨a, hai⟩, hα0, hαs, ?_, fun y => ?_⟩
   · ext; exact ha
@@ -311,7 +311,7 @@ theorem nonempty_splitAt : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     rw [Ideal.map_pow, map_natCast] at this
     exact Ideal.pow_right_mono (Ideal.map_le_iff_le_comap.2 hPl.over.le) 2 this)
   have hpv := val_eq_of p _ hgp hp2
-  have he : p.asIdeal.ramificationIdx' w.asIdeal = 1 := by
+  have he : w.asIdeal.ramificationIdx (𝓞 F) = 1 := by
     have := hrel (resChar p)
     rw [map_natCast (algebraMap (𝓞 F) (𝓞 E)), hw, hpv, ← WithZero.exp_nsmul, WithZero.exp_inj] at this
     simpa using this

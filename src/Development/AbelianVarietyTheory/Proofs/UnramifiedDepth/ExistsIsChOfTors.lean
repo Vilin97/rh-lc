@@ -101,7 +101,9 @@ theorem exists_isCh_of_tors : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] 
     rw [map_sub, ← hsame (le_max_right N k) φ hk] at h2
     rw [← neg_sub]
     exact neg_mem h2
-  obtain ⟨inst, hsum, hzero, hkill⟩ := GlobalTheory.T.exists_addCommMonoid_algHom_powerSeries_fgLaw p C v O hv d F
+  obtain ⟨inst, hinst⟩ := GlobalTheory.T.exists_addCommMonoid_algHom_powerSeries_fgLaw p C v O hv d F
+  letI := inst
+  obtain ⟨hsum, hzero, hkill⟩ := hinst
   refine ⟨u, ⟨?_, ?_⟩, hval⟩
   · apply hinj
     rw [← hzero u, hval _ ⟨0, (hkill _ _).1 (smul_zero _)⟩, hone _ hzero, map_one]

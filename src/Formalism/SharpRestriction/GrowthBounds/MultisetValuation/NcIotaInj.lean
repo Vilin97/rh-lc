@@ -49,7 +49,7 @@ theorem nc_topsOn : Formalism.MainNotions.G.topsOn X (D.what₂.places.resChar w
     decide
   have hst : G.stepP D (D.what₂.places.resChar w) = G.hP D (D.what₂.places.resChar w) := by
     unfold G.stepP
-    exact if_neg hsg
+    exact ite_eq_right hsg
   let step := G.hP D (D.what₂.places.resChar w)
   have hiter (t : G.HH D) (i : ℕ) : X.bs step (t + i • step) = X.bs step t := by
     induction i with
@@ -92,7 +92,7 @@ theorem nc_isV (s : Fin ((D.gat u w hg).P.n' (Y.vOf u w hg t0))) :
     decide
   have hst : G.stepP D (D.what₂.places.resChar w) = G.hP D (D.what₂.places.resChar w) := by
     unfold G.stepP
-    exact if_neg hsg
+    exact ite_eq_right hsg
   let step := G.hP D (D.what₂.places.resChar w)
   have hiter (t : G.HH D) (i : ℕ) : X.bs step (t + i • step) = X.bs step t := by
     induction i with
@@ -106,13 +106,14 @@ theorem nc_isV (s : Fin ((D.gat u w hg).P.n' (Y.vOf u w hg t0))) :
     simpa only [hi] using (hiter (X.bs step t) i).symm
   have hnP : Formalism.MainNotions.G.nP D (D.what₂.places.resChar w) =
       addOrderOf (Formalism.MainNotions.G.hP D (D.what₂.places.resChar w)) := by
-    simp only [Formalism.MainNotions.G.nP, if_neg hsg]
+    simp only [Formalism.MainNotions.G.nP, ite_eq_right hsg]
   have hs := lt_of_lt_of_eq s.isLt hn
   have key : ¬ IsOddPos s ↔ Even s.val := by
     show ¬ (s.val % 2 = 1) ↔ _
     rw [← Nat.odd_iff, Nat.not_odd_iff_even]
   rw [key]
-  have hbs : X.bs step (t0 + s.val • step) = t0 := (hiter t0 s.val).trans hb
+  have hbs : X.bs (G.hP D (D.what₂.places.resChar w))
+      (t0 + s.val • G.hP D (D.what₂.places.resChar w)) = t0 := (hiter t0 s.val).trans hb
   simp only [Formalism.MainNotions.G.IsV, hst, hnP, nc_iota, hbs]
   constructor
   · rintro ⟨i, hi, hev, heq⟩

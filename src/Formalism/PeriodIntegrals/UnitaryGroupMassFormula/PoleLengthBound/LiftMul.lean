@@ -106,7 +106,7 @@ theorem intD_sfr (hC : Q.InCurve) (u : Fin G.N → OsK X la G.w) (hu : uSpec G l
   choose mq hmq hfq using fun q : Idx D j G.N →₀ ℕ => PI.HasseOrdBdW.compositionalInverseSymm X la G.w 1 q
   intro γ
   set c : (Idx D j G.N →₀ ℕ) → Fin G.N → Kp X la G.N :=
-    fun q k => algebraMap (Op X la G.N) (Kp X la G.N) (hasseOp X la G.N q (Tv X la G.N (i, k))) with hc
+    fun q k => @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (hasseOp X la G.N q (Tv X la G.N (i, k))) with hc
   refine ⟨∑ q ∈ antidiagonal γ, (mq q.2 : ↥(Frac0 X la G.w)) *
       ((∑ k, c q.1 k • fk k) * ∏ k, fk k ^ q.2 ((0 : Fin (WeightFamilies.dimY D j + 1)), k)), ?_, fun ζ => ?_⟩
   · have e0 : (sfr X la G.w i : Lw X la G.w) =

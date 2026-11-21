@@ -31,7 +31,8 @@ theorem kernel_mem_bddForms {ω : HChar E} {F : GA E a → ℂ} (h : F ∈ bddFo
   have hbd : ∀ g, ∀ᵐ x ∂ν, ‖k x * F (g * infGL E a (γ x))‖ ≤ ‖k x‖ * C := fun g =>
     .of_forall fun x => (norm_mul _ _).trans_le (mul_le_mul_of_nonneg_left (hC _) (norm_nonneg _))
   refine ⟨?_, fun γ' g => ?_, fun z g => ?_, ∫ x, ‖k x‖ * C ∂ν, fun g => ?_⟩
-  · exact continuous_of_dominated hm hbd (hki.mul_const C)
+  · set_option synthInstance.maxHeartbeats 200000 in
+    exact continuous_of_dominated hm hbd (hki.mul_const C)
       (.of_forall fun x => continuous_const.mul (h.1.comp (continuous_id.mul continuous_const)))
   · simp only [mul_assoc, h.2.1]
   · simp only [mul_assoc, h.2.2.1]

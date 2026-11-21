@@ -79,8 +79,8 @@ theorem bd_translate : ∀ (d q : ℕ) [Fact q.Prime] (M : Mdl q) (ω : ℂ_[q])
   have hs0 : (s : ℂ) ≠ 0 := by exact_mod_cast hs.ne'
   obtain ⟨hdiff, h0, hev, -, hz⟩ := id hth
   have hθt : θ t ≠ 0 := fun h => hnt (hz t h)
-  have hP := GlobalTheory.T.scaledThetaTranslationQuotient_elliptic d q M ω θ hd h16 hsp hOK hch hth t s hs hsq hst
-  have hN := GlobalTheory.T.scaledThetaTranslationQuotient_elliptic d q M ω θ hd h16 hsp hOK hch hth (-t) s hs hsq
+  have hP := GlobalTheory.MomOne.ScaledQuot.scaled_quotient_elliptic d q M ω θ hd h16 hsp hOK hch hth t s hs hsq hst
+  have hN := GlobalTheory.MomOne.ScaledQuot.scaled_quotient_elliptic d q M ω θ hd h16 hsp hOK hch hth (-t) s hs hsq
     (by have := inOK_neg hst; rwa [← mul_neg] at this)
   simp only at hP hN
   set φp : ℂ → ℂ := fun z => U1 d t θ ((s : ℂ) * z) / θ ((s : ℂ) * z) with hφp

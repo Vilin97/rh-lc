@@ -88,7 +88,7 @@ theorem span_image_eq {R K σ : Type} [CommRing R] [Field K] [CharZero K] [Algeb
     induction hx' using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | smul a y _ hy => rw [map_zsmul]; exact zsmul_mem hy a
   exact le_antisymm (key S T h.le) (key T S h.ge)
 
@@ -113,6 +113,8 @@ theorem image_wordSet {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (n
   unfold wordSet
   rw [← Set.range_comp]
   congr 1
+  funext w
+  change MvPolynomial.map φ (Formalism.GradedWeylDivisibility.applyWord R w _) = _
   rw [← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, Formalism.GradedWeylDivisibility.lclosedeq_hw_map]
 
 theorem dualWeyl_eq (R : Type) [CommRing R] [IsDomain R] (n : ℕ) (ν : Fin n → ℕ) :

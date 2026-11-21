@@ -32,7 +32,7 @@ theorem exists_nat_eq_mul {F : Type} [Field F] [NumberField F] {O : Type} [CommR
   set q := IsLocalization.integerNormalization (nonZeroDivisors ℤ) (minpoly ℚ y) with hqdef
   have hq : Polynomial.aeval y q = 0 :=
     IsLocalization.integerNormalization_aeval_eq_zero (nonZeroDivisors ℤ) (minpoly ℚ y) (minpoly.aeval ℚ y)
-  obtain ⟨b, hb⟩ := IsLocalization.integerNormalization_map_to_map (nonZeroDivisors ℤ) (minpoly ℚ y)
+  obtain ⟨b, hb0, hb⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) (minpoly ℚ y)
   set c := q.coeff 0 with hcdef
   have hc : c ≠ 0 := by
     intro h
@@ -40,7 +40,7 @@ theorem exists_nat_eq_mul {F : Type} [Field F] [NumberField F] {O : Type} [CommR
     simp only [Polynomial.coeff_map, Polynomial.coeff_smul] at h'
     rw [← hcdef, h, map_zero, eq_comm, smul_eq_zero] at h'
     rcases h' with h' | h'
-    · exact nonZeroDivisors.ne_zero b.2 h'
+    · exact nonZeroDivisors.ne_zero hb0 h'
     · exact hp0 h'
   have hO : Polynomial.aeval x q = 0 := by
     apply IsFractionRing.injective O F

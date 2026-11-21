@@ -115,18 +115,18 @@ theorem hasse_smul_Kl (β : Idx D j G.N →₀ ℕ) (c0 : X.Kl la) (z : Lc X la 
       (algebraMap (X.Kl la) (Kp X la G.N) c0) • hasse X la G.w β z := by
   rw [smul_Lc_eq, map_smul, smul_Lc_eq]
 
-theorem unifO_pow_eq (e : ℕ) : algebraMap (Op X la G.N) (Kp X la G.N) (unifO X la G.N ^ e) =
+theorem unifO_pow_eq (e : ℕ) : @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (unifO X la G.N ^ e) =
     algebraMap (X.Kl la) (Kp X la G.N) (algebraMap (X.Ol la) (X.Kl la) (unif X la ^ e)) := by
   unfold unifO
   rw [← map_pow, ← IsScalarTower.algebraMap_apply (X.Ol la) (Op X la G.N) (Kp X la G.N),
     IsScalarTower.algebraMap_apply (X.Ol la) (X.Kl la) (Kp X la G.N)]
 
 theorem ordA_unif_smul (hC : Q.InCurve) (ζ : PtsG G la) (e : ℕ) (a : SectionSheafQuotient X la G.w wF) :
-    Q.ordA ζ (algebraMap (Op X la G.N) (Kp X la G.N) (unifO X la G.N ^ e) • a) =
+    Q.ordA ζ (@algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (unifO X la G.N ^ e) • a) =
       (((e : ℤ) * (ep (unifO X la G.N) ζ : ℤ) : ℤ) : WithTop ℤ) + Q.ordA ζ a := by
   have := isDVRAt_of_curve Q hC ζ
   have hU := isUnif_of_curve Q hC
-  have h1 : algebraMap (Op X la G.N) (Kp X la G.N) (unifO X la G.N ^ e) • a =
+  have h1 : @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (unifO X la G.N ^ e) • a =
       (algebraMap (Op X la G.N) (OsK X la G.w) (unifO X la G.N ^ e)) • a := by
     rw [IsScalarTower.algebraMap_apply (Op X la G.N) (Kp X la G.N) (OsK X la G.w)]
     exact (algebraMap_smul (OsK X la G.w) _ a).symm
@@ -140,7 +140,7 @@ theorem smul_AAp_mem (hC : Q.InCurve) (e : ℕ) (m m' : PtsG G la → ℕ)
   | mem x hx =>
     obtain ⟨x0, ⟨hx0, hb0⟩, rfl⟩ := hx
     have hc := unifO_pow_eq (X := X) (G := G) (la := la) e
-    set c : Kp X la G.N := algebraMap (Op X la G.N) (Kp X la G.N) (unifO X la G.N ^ e) with hcdef
+    set c : Kp X la G.N := @algebraMap (Op X la G.N) (Kp X la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (unifO X la G.N ^ e) with hcdef
     have hh : ∀ β, hasse X la G.w β ((c • x0 : ↥(HK X la G.w wF)) : Lw X la G.w) =
         c • hasse X la G.w β (x0 : Lw X la G.w) := fun β => by
       rw [hc]; exact hasse_smul_Kl β _ _

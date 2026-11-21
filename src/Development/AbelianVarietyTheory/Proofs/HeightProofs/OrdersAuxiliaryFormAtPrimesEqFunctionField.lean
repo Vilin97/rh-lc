@@ -119,7 +119,7 @@ theorem exists_equiv_places {D : D7} {B : WeightFamilies.Prov D} {P : ModuliInte
   letI : Algebra (KTf B.KO d.D d.N) (Kp X la N) := φ.toAlgebra
   letI : Algebra (ReciprocityTheory.ChartRestriction.G.T0.Op d.D d.N la) (Op X la N) := f.toAlgebra
   letI : Algebra (ReciprocityTheory.ChartRestriction.G.T0.Op d.D d.N la) (Kp X la N) :=
-    ((algebraMap (Op X la N) (Kp X la N)).comp f).toAlgebra
+    ((@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _)))).comp f).toAlgebra
   haveI : IsScalarTower (ReciprocityTheory.ChartRestriction.G.T0.Op d.D d.N la) (Op X la N) (Kp X la N) :=
     IsScalarTower.of_algebraMap_eq fun _ => rfl
   haveI : IsScalarTower (ReciprocityTheory.ChartRestriction.G.T0.Op d.D d.N la) (KTf B.KO d.D d.N) (Kp X la N) :=

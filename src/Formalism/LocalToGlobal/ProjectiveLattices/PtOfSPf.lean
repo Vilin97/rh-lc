@@ -138,10 +138,10 @@ theorem pos_sec_ne :
 
 theorem pos_sec_eval :
     χ (algebraMap (RZ X la N Ω) (RZs X la N Ω gF w) (rzMap X la N Ω gF (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec X la w 0))) =
-      ∑ k, algebraMap (Kp X la N) L (algebraMap (Op X la N) (Kp X la N) (Tv X la N (0, k))) *
+      ∑ k, algebraMap (Kp X la N) L (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (0, k))) *
         χ (CurveLoc.psiZ X la N w gF (gF (X.inc wL (w k)))) := by
   have e : rzMap X la N Ω gF (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec X la w 0) =
-      ∑ k, (algebraMap (Op X la N) (Kp X la N) (Tv X la N (0, k))) • rzMap X la N Ω gF (emb X la N (X.inc wL (w k))) := by
+      ∑ k, (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N (0, k))) • rzMap X la N Ω gF (emb X la N (X.inc wL (w k))) := by
     unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]
@@ -193,14 +193,14 @@ def PtOfSBody (h : LawsP T) (j : ℕ) (hj : InR D j) (hG : GenFrEx (T.Q.Xo j) T.
           (algebraMap T.Q.c.F ((recPlus h j hj).Kl la) a))) ∧
       letI := alg.toAlgebra
       (∑ k, algebraMap (Kp (recPlus h j hj) la G.N) L
-          (algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) (Tv (recPlus h j hj) la G.N (0, k))) *
+          (@algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv (recPlus h j hj) la G.N (0, k))) *
           evR (T.Q.Xo j) T.Q.c ((G.w k : T.R j)) y) ≠ 0 ∧
       ∀ (k : ℕ) (g : (recB h.toLawsCore).Cusp j (addL (wt0 D j) wL k)),
         φ (toOsK (recPlus h j hj) la G.w (fr0 (recPlus h j hj) la G.w k
           ⟨emb (recPlus h j hj) la G.N ((recPlus h j hj).inc _ g), emb_mem_Vw (recPlus h j hj) la G.N _ g⟩)) =
         evR (T.Q.Xo j) T.Q.c ((g : T.R j)) y /
           (∑ k', algebraMap (Kp (recPlus h j hj) la G.N) L
-            (algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) (Tv (recPlus h j hj) la G.N (0, k'))) *
+            (@algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv (recPlus h j hj) la G.N (0, k'))) *
             evR (T.Q.Xo j) T.Q.c ((G.w k' : T.R j)) y) ^ k
 
 
@@ -256,7 +256,7 @@ theorem ptOfS_all [Finite (Comp (T.Q.Xo j) T.Q.c)] (hS : ReciprocityTheory.Chart
   have hs : χ (algebraMap (RZ (recPlus h j hj) la G.N (Om Z)) (RZs (recPlus h j hj) la G.N (Om Z) (formsEvR j hG hFT Z) G.w)
       (rzMap (recPlus h j hj) la G.N (Om Z) (formsEvR j hG hFT Z) (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec (recPlus h j hj) la G.w 0))) =
       ∑ k, algebraMap (Kp (recPlus h j hj) la G.N) L
-        (algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) (Tv (recPlus h j hj) la G.N (0, k))) *
+        (@algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv (recPlus h j hj) la G.N (0, k))) *
         evR (T.Q.Xo j) T.Q.c ((G.w k : (recB h.toLawsCore).Cusp j wL) : T.R j) y :=
     (pos_sec_eval (recPlus h j hj) la G.N G.w (formsEvR j hG hFT Z) χ).trans
       (Finset.sum_congr rfl fun k _ => congrArg _ (hF (G.w k)))

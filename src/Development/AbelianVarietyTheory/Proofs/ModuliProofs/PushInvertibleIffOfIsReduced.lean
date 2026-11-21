@@ -18,7 +18,7 @@ namespace GlobalTheory.ModelCompare
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.ModuliCompare GlobalTheory.ObjPull
+open GlobalTheory.ObjPull
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
 

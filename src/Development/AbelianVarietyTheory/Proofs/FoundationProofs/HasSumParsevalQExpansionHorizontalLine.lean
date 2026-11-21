@@ -64,6 +64,8 @@ theorem hasSum_parseval_unit (a b : ℕ → ℂ) (ha : Summable fun n => ‖a n�
   have hi : ∀ p, ∫ x in Set.Ioc (0 : ℝ) 1, T p x = conj (b p.1) * a p.2 * if p.1 = p.2 then 1 else 0 := fun p => by
     rw [← hch_orth, ← intervalIntegral.integral_of_le zero_le_one, ← intervalIntegral.integral_const_mul]
     congr 1
+    funext x
+    simp only [T, map_mul]
     ring
   simp only [hs, hi] at h
   rw [← intervalIntegral.integral_of_le zero_le_one] at h

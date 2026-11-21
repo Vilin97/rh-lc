@@ -93,7 +93,7 @@ theorem exists_infinite_equiv (F E : Type) [Field F] [NumberField F] [Field E] [
   rw [RingEquiv.trans_apply, RingEquiv.symm_apply_eq]
   funext w
   rw [he, h1]
-  exact (InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ x)).symm
+  simpa [p] using (InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ x)).symm
 
 theorem isPlIdem_parts (D : D7)
     (ι : (Af D.host.F ⊗[D.host.F] D.host.E) ≃+* FiniteAdeleRing (𝓞 D.host.E) D.host.E)
