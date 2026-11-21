@@ -240,11 +240,12 @@ theorem exists_hom_near :
             rw [Formalism.LFunctionChainParameters.slopeLatticeData.ht_ideal _ X hX hNfg hd,
               hrk, hnorm, Real.mul_rpow
                 (Formalism.LFunctionChainParameters.slopeLatticeData.ht_pos _ X hX hNfg).le
-                (abs_nonneg _), ← Real.rpow_natCast, ← Real.rpow_mul (abs_nonneg _)]
+                (pow_nonneg (abs_nonneg (discr K : ℝ)) (Formalism.HN.rkK N)),
+              ← Real.rpow_natCast, ← Real.rpow_mul (abs_nonneg _)]
             congr 2
             field_simp [hn0.ne', hj]
           rw [div_le_iff₀ hrd0, ← hsize]
-          exact hlow N hle hne
+          exact hlow _ hle hne
         have hLpos : 0 < Formalism.HN.largestSize (Pi.basisFun K (Fin b)) X' B := by
           rw [(Formalism.HN.sizeMu K _ _ (Pi.basisFun K (Fin b)) X' hX' B hB hB0).2.2.2.2.1]
           exact Real.exp_pos _
@@ -256,7 +257,7 @@ theorem exists_hom_near :
             (Pi.basisFun K (Fin b)) X' (Pi.basisFun K (Fin a)) X hX' hX φ B A'
             hB hA'fg le_rfl hA'0)
           rw [← div_div]
-          exact div_le_div₀ (div_pos hlo hrd0).le hleast hLpos hup
+          exact div_le_div₀ ((div_pos hlo hrd0).le.trans hleast) hleast hLpos hup
         calc
           _ ≤ _ := mul_le_mul_of_nonneg_left
             (pow_le_pow_left₀ (by positivity) hgeom 2) (Nat.cast_nonneg _)
