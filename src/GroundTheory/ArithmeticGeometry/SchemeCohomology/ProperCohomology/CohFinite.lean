@@ -85,7 +85,7 @@ theorem FiniteH.of_shortExact₁ {S : ShortComplex X.Modules} (hS : S.ShortExact
     exact (H.map_zero_injective.{w'} (abSC S).f (hy.trans (map_zero _).symm)).symm
   | succ p =>
     have := h₃ p
-    have δ : Sheaf.H.{w'} (modulesAb S.X₃) p →ₗ[A]
+    let δ : Sheaf.H.{w'} (modulesAb S.X₃) p →ₗ[A]
         Sheaf.H.{w'} (modulesAb S.X₁) (p + 1) :=
       { toFun := H.δ hS' p (p + 1) rfl
         map_add' := map_add _
@@ -98,8 +98,10 @@ theorem FiniteH.of_shortExact₁ {S : ShortComplex X.Modules} (hS : S.ShortExact
               comm₁₂ := smulAbRingHom_comp S.f r
               comm₂₃ := smulAbRingHom_comp S.g r }
           exact H.δ_naturality hS' hS' α p (p + 1) rfl x }
-    exact finite_of_exact_noetherian δ (H.linearMapV436 A S.f (p + 1))
-      fun x hx => H.exact₁ hS' rfl x hx
+    refine finite_of_exact_noetherian δ (H.linearMapV436 A S.f (p + 1)) ?_
+    intro x hx
+    change ∃ y, H.δ hS' p (p + 1) rfl y = x
+    exact H.exact₁ hS' rfl x hx
 
 end
 

@@ -421,8 +421,13 @@ theorem rowLat_gmap (g : G0 F0) {Λ : Submodule (𝓞 D.host.E) (VS D).V} (h : I
   obtain ⟨⟨hL, hG⟩, ⟨hL', hU, hLift, hFC⟩, hX⟩ := h
   have hβ := G0.isom g
   have hl := G0.lf g
-  refine ⟨⟨Formalism.HermitianLattices.Ext.L3.LocalizedFibreSets.isLattice_gmap _ hL, fun p hp => ?_⟩,
-    ⟨Formalism.HermitianLattices.Ext.L3.LocalizedFibreSets.isLattice_gmap _ hL', ?_, ?_, ?_⟩, ?_⟩
+  have hmap : ∀ {L : Submodule (𝓞 D.host.E) (VS D).V}, Submodule.IsLattice D.host.E L →
+      Submodule.IsLattice D.host.E (Formalism.HermitianLatticesTheory.gmap (g : (VS D).V ≃ₗ[D.host.E] (VS D).V) L) := by
+    intro L hL
+    refine ⟨hL.fg.map _, ?_⟩
+    exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
+  refine ⟨⟨hmap hL, fun p hp => ?_⟩,
+    ⟨hmap hL', ?_, ?_, ?_⟩, ?_⟩
   · obtain ⟨k, hk, hkL⟩ := hG p hp
     refine ⟨(g : (VS D).V ≃ₗ[D.host.E] (VS D).V) * k, (Formalism.HermitianLatticesTheory.isom _).mul_mem hβ hk, ?_⟩
     rw [gmap_mul_sat, hkL, Formalism.HermitianLattices.Ext.L3.loc_gmap]

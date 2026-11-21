@@ -266,14 +266,14 @@ theorem dl_cont {r : ℕ} (l : ℕ) : Continuous (fun Z : Matrix (Fin (r + 1)) (
 
 theorem wt_cont (u u' : D.what₂.Word) : Continuous (wt X u u') := by
   unfold wt
-  refine continuous_finset_prod _ fun v _ => ?_
+  refine continuous_finsetProd _ fun v _ => ?_
   have hd : Continuous (fun c : Cinf X => Matrix.diagonal (c v)) := (continuous_apply v).matrix_diagonal
   have hD : ∀ l, Continuous (fun c : Cinf X => Dl (Matrix.diagonal (c v)) l) := fun l => (dl_cont l).comp hd
   refine Continuous.mul ?_ ?_
   · unfold Gv
     exact ((((hD _).norm.pow 2).sub (continuous_const.mul ((hD _).norm.pow 2)))).pow _
   · unfold JacV modC
-    exact continuous_finset_prod _ fun l _ => ((hD l).norm.pow 2).pow 2
+    exact continuous_finsetProd _ fun l _ => ((hD l).norm.pow 2).pow 2
 
 end Conc
 

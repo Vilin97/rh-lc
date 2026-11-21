@@ -31,8 +31,15 @@ end IsPerfectoidField
 
 section Cp
 
+open PowerSeries
+
 variable {p : ℕ} [Fact p.Prime]
 
+local notation "𝒪" => normInteger ℂ_[p]
+local notation "𝒪♭" => PreTilt 𝒪 p
+local notation "𝔹" => BDeRhamPlus 𝒪 p
+local notation "𝔪" => maximalIdeal 𝔹
+local notation "φi" => RingEquiv.symm (_root_.frobeniusEquiv 𝒪♭ p)
 
 variable (p) in
 def muBdR (ε : PreTilt (normInteger ℂ_[p]) p) : BDeRhamPlus (normInteger ℂ_[p]) p :=
@@ -52,8 +59,18 @@ def fontaineT (ε : PreTilt (normInteger ℂ_[p]) p) (hε : PreTilt.untilt ε = 
 
 theorem fontaineT_sub_sum_mem {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) (n : ℕ) :
     fontaineT ε hε - ∑ i ∈ Finset.Ico 1 n, algebraMap ℚ 𝔹 ((-1) ^ (i + 1) / i) * muBdR p ε ^ i ∈
-      𝔪 ^ n :=
-  logOnePlus_sub_sum_mem _ n
+      𝔪 ^ n := by
+  have hs : ∑ i ∈ Finset.Ico 1 n, algebraMap ℚ 𝔹 ((-1) ^ (i + 1) / i) * muBdR p ε ^ i =
+      ∑ i ∈ Finset.range n, algebraMap ℚ 𝔹 (coeff i (log ℚ)) * muBdR p ε ^ i := by
+    rcases n with _ | n
+    · simp
+    · rw [Finset.range_eq_Ico, Finset.sum_eq_sum_Ico_succ_bot (Nat.succ_pos n), coeff_log,
+        ite_eq_left rfl, map_zero, zero_mul, zero_add]
+      refine Finset.sum_congr rfl fun i hi => ?_
+      rw [coeff_log, ite_eq_right (Nat.ne_of_gt (Finset.mem_Ico.1 hi).1), Algebra.algebraMap_self,
+        RingHom.id_apply]
+  rw [hs]
+  exact seriesEval_sub_sum_mem (muBdR_mem hε) (log ℚ) n
 
 theorem isUnit_of_sub_one_mem {u : 𝔹} (hu : u - 1 ∈ 𝔪) : IsUnit u := by
   by_contra h
@@ -76,7 +93,19 @@ theorem maximalIdeal_eq_span_fontaineT {ε : 𝒪♭} (hε : PreTilt.untilt ε =
     rw [pow_one, pow_one] at h3
     rw [h3] at h2
     exact hζ (sub_eq_zero.1 (Subtype.ext h2))
-  obtain ⟨u, hu1, ht⟩ := logOnePlus_eq_mul (muBdR_mem hε)
+  let tail : ℚ⟦X⟧ := PowerSeries.mk fun n => coeff (n + 1) (log ℚ)
+  have hlog : log ℚ = X * tail := by
+    conv_lhs => rw [eq_X_mul_shift_add_const (log ℚ)]
+    rw [constantCoeff_log, map_zero, add_zero]
+  let u := seriesEval 𝔪 (muBdR p ε) (muBdR_mem hε) tail
+  have hu1 : u - 1 ∈ 𝔪 := by
+    have hcoeff : coeff 0 tail = 1 := by
+      dsimp only [tail]
+      rw [PowerSeries.coeff_mk, zero_add, coeff_one_log]
+    have h := seriesEval_sub_sum_mem (muBdR_mem hε) tail 1
+    rwa [Finset.sum_range_one, pow_zero, mul_one, pow_one, hcoeff, map_one] at h
+  have ht : logOnePlus 𝔪 (muBdR p ε) (muBdR_mem hε) = muBdR p ε * u := by
+    rw [logOnePlus, hlog, map_mul, seriesEval_X]
   have hu := isUnit_of_sub_one_mem hu1
   have hμ : muBdR p ε = wittToBDeRhamPlus 𝒪 p (AInf.xi ε) *
       wittToBDeRhamPlus 𝒪 p ((WittVector.frobeniusEquiv p 𝒪♭).symm (AInf.mu ε)) := by
@@ -91,8 +120,8 @@ theorem fontaineT_ne_zero {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
   exact IsDiscreteValuationRing.not_a_field 𝔹 h1
 
 theorem exists_isPrimitiveRoot_p : ∃ ζ : ℂ_[p], IsPrimitiveRoot ζ p := by
-  haveI : NeZero p := ⟨(Fact.out : p.Prime).ne_zero⟩
-  exact HasEnoughRootsOfUnity.exists_primitiveRoot ℂ_[p] p
+  have : NeZero p := ⟨(Fact.out : p.Prime).ne_zero⟩
+  exact HasEnoughRootsOfUnity.exists_isPrimitiveRoot ℂ_[p] p
 
 
 variable (p) in

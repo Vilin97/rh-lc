@@ -482,6 +482,22 @@ theorem globStep_holds (hK : X.LevelSubgroupCharacter) : GlobalCondition X u hK 
         one_smul]
 
   have hlat := qLat_isLattice Λ W ⊥
+  have hfull : Submodule.IsFullLattice D.host.E (qLat Λ W ⊥) := by
+    letI := hlat
+    refine ⟨?_⟩
+    rw [eq_top_iff]
+    intro q _
+    induction q using Submodule.Quotient.induction_on with | H w => ?_
+    obtain ⟨s, hs, hsw⟩ := exists_smul_mem Λ w.val
+    have hmem : Submodule.Quotient.mk (s • w) ∈ qLat Λ W ⊥ :=
+      mem_qLat.2 ⟨s • w, by simpa using hsw, rfl⟩
+    have hsE : algebraMap (𝓞 D.host.E) D.host.E s ≠ 0 := by simpa using hs
+    have : (Submodule.Quotient.mk w : QW W ⊥) =
+        (algebraMap (𝓞 D.host.E) D.host.E s)⁻¹ • (Submodule.Quotient.mk (s • w) : QW W ⊥) := by
+      rw [Submodule.Quotient.mk_smul, ← algebraMap_smul D.host.E s, smul_smul,
+        inv_mul_cancel₀ hsE, one_smul]
+    rw [this]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
   have haut := q_aut δ W hWmap hX Λ hδΛ
   have hunip : ∀ PP : Ideal (𝓞 D.host.E), ((X.B.g : ℕ) : 𝓞 D.host.E) ∈ PP →
       Formalism.L2.Col.UnipMod PP (qLat Λ W ⊥) (qEquiv δ W ⊥ hWmap hX) := by
@@ -519,7 +535,7 @@ theorem globStep_holds (hK : X.LevelSubgroupCharacter) : GlobalCondition X u hK 
   obtain ⟨P₂, hP₂, hg₂P⟩ := Formalism.L2.SG.LemmaN.exists_prime_over D.host.E (D.host.g_prime 1)
   have hmul : ((X.B.g : ℕ) : 𝓞 D.host.E) = ((D.host.g 0 : ℕ) : 𝓞 D.host.E) * ((D.host.g 1 : ℕ) : 𝓞 D.host.E) := by
     rw [X.g_eq, Nat.cast_mul]
-  have hone := Formalism.L2.SG.LemmaN.lemmaNcGlob_of_exists D.host.E (QW W ⊥) (qLat Λ W ⊥) hlat _ hQfin
+  have hone := Formalism.L2.SG.LemmaN.lemmaNcGlob_of_exists D.host.E (QW W ⊥) (qLat Λ W ⊥) hfull _ hQfin
     (D.host.g_prime 0) (D.host.g_prime 1) D.host.g_ne hP₁.ne_top hP₂.ne_top hg₁P hg₂P
     (hunip P₁ (by rw [hmul]; exact Ideal.mul_mem_right _ _ hg₁P))
     (hunip P₂ (by rw [hmul]; exact Ideal.mul_mem_left _ _ hg₂P))

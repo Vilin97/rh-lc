@@ -182,6 +182,7 @@ theorem ringKrullDim_quotient_le_of_chartIdeal_le {P : Ideal (MvPolynomial (Σ k
       (mem_nonZeroDivisors_of_ne_zero (X_ne_zero q.1))
       ((Subalgebra.mem_algebraicClosure _ _).mp (hRAC _ (hXk q.1)))
       ((Subalgebra.mem_algebraicClosure _ _).mp (hRAC _ (hXq q))))
+  set_option synthInstance.maxHeartbeats 200000 in
   have hCAC : ∀ f : (MvPolynomial (Σ k, ι k) ℂ), C (Ideal.Quotient.mk 𝔮 f) ∈ AC := by
     intro f
     refine MvPolynomial.induction_on (motive := fun f => C (Ideal.Quotient.mk 𝔮 f) ∈ AC) f ?_ ?_ ?_
@@ -191,7 +192,9 @@ theorem ringKrullDim_quotient_le_of_chartIdeal_le {P : Ideal (MvPolynomial (Σ k
       simp only [θ, aeval_C, MvPolynomial.algebraMap_apply]
       rfl
     · intro f g hf hg
-      rw [map_add (f := _), map_add (f := _)]
+      rw [map_add (Ideal.Quotient.mk 𝔮),
+        map_add (MvPolynomial.C : (MvPolynomial (Σ k, ι k) ℂ ⧸ 𝔮) →+*
+          MvPolynomial K (MvPolynomial (Σ k, ι k) ℂ ⧸ 𝔮))]
       exact AC.add_mem hf hg
     · intro f q hf
       rw [map_mul, map_mul]

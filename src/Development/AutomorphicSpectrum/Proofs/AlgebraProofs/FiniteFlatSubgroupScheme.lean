@@ -111,7 +111,7 @@ theorem exists_sp_iso (T : Over (Spec (CommRingCat.of R))) [IsAffine T.left] :
 variable {A : Over (Spec (CommRingCat.of R))} [GrpObj A] {B : Type} [CommRing B] [Algebra R B]
   {h : sp (R₀ := R) B ⟶ A}
 
-theorem affine_mono (H : IsFinFlatSub B h) {T : Over (Spec (CommRingCat.of R))} [IsAffine T.left]
+theorem affine_mono (H : IsFinFlatSub A B h) {T : Over (Spec (CommRingCat.of R))} [IsAffine T.left]
     (a b : T ⟶ sp (R₀ := R) B) (hab : a ≫ h = b ≫ h) : a = b := by
   obtain ⟨S, _, _, j, _⟩ := exists_sp_iso T
   obtain ⟨φ, hφ⟩ := exists_eq_spMap (j ≫ a)
@@ -119,7 +119,7 @@ theorem affine_mono (H : IsFinFlatSub B h) {T : Over (Spec (CommRingCat.of R))} 
   have := H.mono S φ φ' (by rw [← hφ, ← hφ', Category.assoc, Category.assoc, hab])
   rw [← cancel_epi j, hφ, hφ', this]
 
-theorem affine_mul (H : IsFinFlatSub B h) {T : Over (Spec (CommRingCat.of R))} [IsAffine T.left]
+theorem affine_mul (H : IsFinFlatSub A B h) {T : Over (Spec (CommRingCat.of R))} [IsAffine T.left]
     (a b : T ⟶ sp (R₀ := R) B) : ∃ c : T ⟶ sp (R₀ := R) B, c ≫ h = (a ≫ h) * (b ≫ h) := by
   obtain ⟨S, _, _, j, _⟩ := exists_sp_iso T
   obtain ⟨φ, hφ⟩ := exists_eq_spMap (j ≫ a)
@@ -129,13 +129,13 @@ theorem affine_mul (H : IsFinFlatSub B h) {T : Over (Spec (CommRingCat.of R))} [
   rw [Category.assoc, hχ, ← hφ, ← hφ', MonObj.comp_mul, Category.assoc, Category.assoc,
     IsIso.inv_hom_id_assoc, IsIso.inv_hom_id_assoc]
 
-theorem affine_one (H : IsFinFlatSub B h) {T : Over (Spec (CommRingCat.of R))} [IsAffine T.left] :
+theorem affine_one (H : IsFinFlatSub A B h) {T : Over (Spec (CommRingCat.of R))} [IsAffine T.left] :
     ∃ c : T ⟶ sp (R₀ := R) B, c ≫ h = 1 := by
   obtain ⟨S, _, _, j, _⟩ := exists_sp_iso T
   obtain ⟨χ, hχ⟩ := H.one S
   exact ⟨inv j ≫ spMap χ, by rw [Category.assoc, hχ, MonObj.comp_one]⟩
 
-theorem affine_inv (H : IsFinFlatSub B h) {T : Over (Spec (CommRingCat.of R))} [IsAffine T.left]
+theorem affine_inv (H : IsFinFlatSub A B h) {T : Over (Spec (CommRingCat.of R))} [IsAffine T.left]
     (a : T ⟶ sp (R₀ := R) B) : ∃ c : T ⟶ sp (R₀ := R) B, (c ≫ h) * (a ≫ h) = 1 := by
   obtain ⟨S, _, _, j, _⟩ := exists_sp_iso T
   obtain ⟨φ, hφ⟩ := exists_eq_spMap (j ≫ a)
@@ -146,7 +146,7 @@ theorem affine_inv (H : IsFinFlatSub B h) {T : Over (Spec (CommRingCat.of R))} [
   simp only [MonObj.comp_mul, MonObj.comp_one, Category.assoc, IsIso.inv_hom_id_assoc] at this
   simpa [Category.assoc] using this
 
-theorem mono_of_isFinFlatSub (H : IsFinFlatSub B h) : Mono h := by
+theorem mono_of_isFinFlatSub (H : IsFinFlatSub A B h) : Mono h := by
   constructor
   intro T a b hab
   apply Over.OverMorphism.ext
@@ -158,7 +158,7 @@ theorem mono_of_isFinFlatSub (H : IsFinFlatSub B h) : Mono h := by
   exact congrArg (·.left) this
 
 theorem grpObj_of_isFinFlatSub (R : Type) [CommRing R] (A : Over (Spec (CommRingCat.of R))) [GrpObj A] (B : Type)
-    [CommRing B] [Algebra R B] (h : sp (R₀ := R) B ⟶ A) (H : IsFinFlatSub B h) :
+    [CommRing B] [Algebra R B] (h : sp (R₀ := R) B ⟶ A) (H : IsFinFlatSub A B h) :
     ∃ _ : GrpObj (sp (R₀ := R) B), IsMonHom h ∧ Mono h := by
   have hmono := mono_of_isFinFlatSub H
   haveI : IsAffine (sp (R₀ := R) B).left := inferInstanceAs (IsAffine (Spec _))

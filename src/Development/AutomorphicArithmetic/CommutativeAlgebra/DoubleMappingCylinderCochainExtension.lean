@@ -55,7 +55,10 @@ end UpperTheory.PushoutCovers
 open UpperTheory.PushoutCovers in
 theorem UpperTheory.doubleMappingCylinder_cochain_extension :
     ∀ (R : Type) [CommRing R] (P : Arrow Spc), (∀ (p : ℕ) (U : Scheme.{0}) (w : Sx (dbl P) p U), (∃ z : Sx P.right p U, z.map (dbl.inl P) = w) ∨ ∃ z : Sx P.right p U, z.map (dbl.inr P) = w) ∧
-    ∀ (K : Cx R) (m N : ℤ) (x : (famDC (Sub.img P.hom) K m).Tot), ∃ γ : Cochain ((chains R).obj (dbl P)) K N, Comp (dbl.inl P) γ x ∧ ∀ (p : ℕ) (s : ℤ) h (U : Scheme.{0}) (z : Sx P.right p U), ev γ p s h U (z.map (dbl.inr P)) = 0 := by
+    ∀ (K : Cx R) (m N : ℤ) (x : (famDC (Sub.img P.hom) K m).Tot),
+      ∃ γ : Cochain ((chains R).obj (dbl P)) K N, Comp (dbl.inl P) γ x ∧
+        ∀ (p : ℕ) (s : ℤ) h (U : Scheme.{0}) (z : Sx P.right p U),
+          ev (R := R) γ p s h U (z.map (dbl.inr P)) = 0 := by
   intro R _ P
   refine ⟨fun p U w => cover P p U w, ?_⟩
   intro K m N x

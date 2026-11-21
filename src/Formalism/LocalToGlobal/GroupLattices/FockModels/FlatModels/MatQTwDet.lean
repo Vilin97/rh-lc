@@ -179,13 +179,11 @@ theorem lift_eq {S : Type} [Fintype S] [DecidableEq S] (h : HidaSetting p n' W Q
       obtain ⟨x, c⟩ := v
       simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom, liftSubst, aeval_X, map_X, Lin]
       by_cases hv : LL.vec x
-      set_option synthInstance.maxHeartbeats 100000 in
-        · simp only [hv, if_true, Bm, map_sum, map_mul]
+      · simp only [hv, if_true, Bm, map_sum, map_mul]
         refine Finset.sum_congr rfl fun b _ => ?_
         rw [map_C, hinv]
         split_ifs <;> simp [map_C, map_X, kapR_alg, C_mul] <;> ring
-      set_option synthInstance.maxHeartbeats 100000 in
-        · simp only [hv, Bool.false_eq_true, if_false, Bm, map_sum, map_mul]
+      · simp only [hv, Bool.false_eq_true, if_false, Bm, map_sum, map_mul]
         refine Finset.sum_congr rfl fun b _ => ?_
         rw [map_C, hmat]
         split_ifs <;> simp [map_C, map_X, kapR_alg, C_mul] <;> ring

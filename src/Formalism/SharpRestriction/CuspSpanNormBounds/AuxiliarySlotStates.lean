@@ -191,14 +191,48 @@ end Waves
 
 namespace Lev
 
+def UUset (L : Lev) (g : Mat L.k0 L.r) : Set (Mat L.k0 L.r) :=
+  {h | h ∈ UWset (L.k0 + 1) L.r L.z' ∧ h *ᵥ (g⁻¹ *ᵥ L.z) = g⁻¹ *ᵥ L.z}
+
+def blockU (L : Lev) (h : Matrix (Fin L.k0) (Fin L.k0) ℂ) : Mat L.k0 L.r :=
+  fun i j =>
+    if hi : L.r ≤ i.val ∧ i.val < L.r + L.k0 then
+      (if hj : L.r ≤ j.val ∧ j.val < L.r + L.k0 then h ⟨i.val - L.r, by omega⟩ ⟨j.val - L.r, by omega⟩ else 0)
+    else (if i = j then 1 else 0)
+
+def IsFrameU (L : Lev) (g f : Mat L.k0 L.r) : Prop :=
+  f ∈ UH (Hpk (L.k0 + 1) L.r) ∧
+    (∀ a : Fin L.r, f *ᵥ bvec (eI (L.k0 + 1) L.r a) = bvec (eI (L.k0 + 1) L.r a) ∧
+      f *ᵥ bvec (esI (L.k0 + 1) L.r a) = bvec (esI (L.k0 + 1) L.r a)) ∧
+    ∀ j : Fin L.k0,
+      herm (Hpk (L.k0 + 1) L.r) (f *ᵥ bvec (wI (L.k0 + 1) L.r j.castSucc.castSucc)) (g⁻¹ *ᵥ L.z) = 0 ∧
+      herm (Hpk (L.k0 + 1) L.r) (f *ᵥ bvec (wI (L.k0 + 1) L.r j.castSucc.castSucc)) L.z' = 0
+
+open Classical in
+def frameU (L : Lev) (g : Mat L.k0 L.r) : Mat L.k0 L.r :=
+  if h : ∃ f, L.IsFrameU g f then Classical.choose h else 1
+
+def isoSub (L : Lev) (g : Mat L.k0 L.r) (ρ : Fin L.k0 → ℝ) : Submodule ℂ L.Wq :=
+  sSup {S | Formalism.MainNotions.S.IsKTypeOf (Formalism.MainNotions.S.allPos L.k0)
+    (fun h => L.π' (L.frameU g * L.blockU h * (L.frameU g)⁻¹)) (lowK (Formalism.MainNotions.S.allPos L.k0) ρ) S}
 
 def HomU (L : Lev) (g : Mat L.k0 L.r) : Set L.Hom :=
   {T | ∀ h ∈ L.UUset g, (L.π (g * h * g⁻¹)).comp T = T.comp (L.π' h)}
+
+def lineSet (L : Lev) (g : Mat L.k0 L.r) (ρ : Fin L.k0 → ℝ) : Set L.Hom :=
+  {T | T ∈ L.HomU g ∧ ∀ v ∈ (L.isoSub g ρ)ᗮ, T v = 0}
 
 def IsHSProj (L : Lev) (P : L.Hom →L[ℂ] L.Hom) (S : Set L.Hom) : Prop :=
   P.comp P = P ∧ (∀ A B, Formalism.MainNotions.S.hsInner (P A) B = Formalism.MainNotions.S.hsInner A (P B)) ∧
     (∀ A, P A ∈ S) ∧ ∀ A ∈ S, P A = A
 
+open Classical in
+def lineP (L : Lev) (g : Mat L.k0 L.r) (ρ : Fin L.k0 → ℝ) : L.Hom →L[ℂ] L.Hom :=
+  if h : ∃ P, L.IsHSProj P (L.lineSet g ρ) then Classical.choose h else 0
+
+def pt (L : Lev) (x : Fin (L.r + 1) → ℂ) : Mat L.k0 L.r := bigCell (L.k0 + 1) L.r (cOf x) (L.μsec (zOf x))
+
+def GGx (L : Lev) (x : Fin (L.r + 1) → ℂ) : ℝ := Complex.normSq (zOf x) - L.T * L.T'
 
 end Lev
 

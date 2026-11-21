@@ -43,7 +43,7 @@ theorem sum_le_sum_shift (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
     refine ⟨by rw [Set.Finite.mem_toFinset]; exact ⟨hny, hAB n hnA⟩, ?_⟩
     have hle : (Ideal.absNorm (Ideal.span {n}) : ℝ) ≤ (Ideal.absNorm (Ideal.span {n + y}) : ℝ) := by
       rw [absNorm_eq_prod_of_mem hK hF hnb, absNorm_eq_prod_of_mem hK hF hny]
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro w _
         exact (hb w).1.le
       · intro w _

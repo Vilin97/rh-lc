@@ -100,5 +100,8 @@ theorem rigDescent : H90 → RigDescent := by
   refine ⟨N, hN, (triv_ev_iff hN _ _).2 ?_, (cls_eq_iff hM (pull_isLB hN _)).1 ?_⟩
   · show CechPic.pull eY (cls N hN) = 0
     rw [hc', map_sub, ← pull_comp, e₁, pull_id, sub_self]
+  · show cls M hM = CechPic.pull f (cls N hN)
+    rw [hc', map_sub, ← pull_comp f pY, ← pull_comp (f ≫ pY) eY, Category.assoc, e₂, pull_comp pX, pull_comp eX, ← hm, z, map_zero,
+      sub_zero, hm]
 
 end GlobalTheory.CompanionTheory.RigDesc

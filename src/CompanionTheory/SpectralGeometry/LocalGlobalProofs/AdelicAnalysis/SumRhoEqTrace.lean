@@ -38,7 +38,7 @@ def latN (N : ℕ) : AddSubgroup (ι → A F) where
     exact ⟨-y, oh_neg hy, by simp [e]⟩
 
 def indC (N : ℕ) (a : ι → F) : (ι → A F) → ℂ :=
-  Set.indicator {x | x - toA a ∈ latN N} fun _ => 1
+  Set.indicator {x | x - toA a ∈ latN F ι N} fun _ => 1
 
 def emb (ρ : InfinitePlace F → (F →+* ℝ)) (x : ι → F) : ι × InfinitePlace F → ℝ :=
   fun p => ρ p.2 (x p.1)

@@ -334,13 +334,9 @@ def cokerπ {F F' : C ⥤ ModuleCat.{0} R} (φ : F ⟶ F') : F' ⟶ coker φ whe
   naturality x y g := ModuleCat.hom_ext (LinearMap.ext fun v ↦ rfl)
 
 theorem ptSES_coker {F F' : C ⥤ ModuleCat.{0} R} {φ : F ⟶ F'} (h : ∀ x, Function.Injective (φ.app x).hom) :
-    PtSES φ (cokerπ φ) where
-  inj := h
-  ex x v := by
-    show Submodule.mkQ _ v = 0 ↔ _
-    rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
-    rfl
-  surj x := Submodule.mkQ_surjective _
+    PtSES φ (cokerπ φ) :=
+  ⟨h, fun x ↦ LinearMap.exact_map_mkQ_range (φ.app x).hom,
+    fun x ↦ Submodule.mkQ_surjective (LinearMap.range (φ.app x).hom)⟩
 
 end Maps
 
@@ -749,10 +745,8 @@ def coneSES (h : ∀ T, Function.Injective (τ.fib T)) :
     (fun n f ↦ funext fun c ↦ τ.comm _ _) (fun n f ↦ rfl)
 
 theorem ptFib (T : C) : PtSES (Functor.whiskerLeft (CategoryTheory.Prod.sectR T D) τ.ηG)
-    (Functor.whiskerLeft (CategoryTheory.Prod.sectR T D) (cokerπ τ.ηG)) where
-  inj x := τ.ηG_pt.inj _
-  ex x := τ.ηG_pt.ex _
-  surj x := τ.ηG_pt.surj _
+    (Functor.whiskerLeft (CategoryTheory.Prod.sectR T D) (cokerπ τ.ηG)) :=
+  ⟨fun x ↦ τ.ηG_pt.inj (T, x), fun x ↦ τ.ηG_pt.ex (T, x), fun x ↦ τ.ηG_pt.surj (T, x)⟩
 
 def augSES (h : ∀ T, Function.Injective (τ.fib T)) (T : C) : SES (τ.aug T) (τ.up.aug T) (τ.quo.aug T) where
   i :=

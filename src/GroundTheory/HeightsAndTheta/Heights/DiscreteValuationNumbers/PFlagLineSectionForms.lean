@@ -104,8 +104,8 @@ def IsChartForm (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
 
 theorem IsChartForm.pad {y : (Σ k, ι k) → Ω} {w : Module.Basis (Fin N) Ω E}
     {φ : Fin M → Module.Dual Ω E} {t : Fin N → Φ} {c : ∀ k, ι k} {a : Ω} {n : ℕ}
-    {A : MRing (bundleIdx ι M) F} (h : IsChartForm (F := F) y w φ t c a n A) (m : ℕ) :
-    IsChartForm (F := F) y w φ t c a (n + m) (A * chartMon F M c (fun _ => m)) := by
+    {A : MRing (bundleIdx ι M) F} (h : IsChartForm (F := F) (M := M) y w φ t c a n A) (m : ℕ) :
+    IsChartForm (F := F) (M := M) y w φ t c a (n + m) (A * chartMon F M c (fun _ => m)) := by
   refine ⟨?_, ?_⟩
   · have := h.1.mul (isMultiHomog_chartMon (F := F) (M := M) c (fun _ => m))
     rwa [← liftN_add] at this
@@ -118,7 +118,7 @@ theorem IsChartForm.pad {y : (Σ k, ι k) → Ω} {w : Module.Basis (Fin N) Ω E
 theorem exists_chartForm (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k) (hc : segreVec y c ≠ 0)
     {a : Ω} (ha : a ∈ chartRing F (segreVec y) c) :
-    ∃ (n : ℕ) (A : MRing (bundleIdx ι M) F), IsChartForm (F := F) y w φ t c a n A := by
+    ∃ (n : ℕ) (A : MRing (bundleIdx ι M) F), IsChartForm (F := F) (M := M) y w φ t c a n A := by
   induction ha using Algebra.adjoin_induction with
   | mem x hx =>
     obtain ⟨j, rfl⟩ := hx
@@ -158,7 +158,7 @@ theorem exists_chartForm_family (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k) (hc : segreVec y c ≠ 0)
     {J : Type*} [Fintype J] (a : J → Ω) (ha : ∀ j, a j ∈ chartRing F (segreVec y) c) :
     ∃ n : ℕ, ∀ m, n ≤ m → ∀ j, ∃ A : MRing (bundleIdx ι M) F,
-      IsChartForm (F := F) y w φ t c (a j) m A := by
+      IsChartForm (F := F) (M := M) y w φ t c (a j) m A := by
   choose n A hA using fun j => exists_chartForm (M := M) y w φ t c hc (ha j)
   refine ⟨∑ j, n j, fun m hm j => ?_⟩
   have hle : n j ≤ m := (Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ j)).trans hm

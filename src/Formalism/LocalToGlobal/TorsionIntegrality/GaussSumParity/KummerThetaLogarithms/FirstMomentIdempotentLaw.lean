@@ -391,9 +391,9 @@ lemma keep_zXY {l d : ℕ} [NeZero d] {ι : Type} [Fintype ι] (σ : K →+* K) 
     simp only [not_forall] at h
     obtain ⟨x, hx, hPx⟩ := h
     unfold zXY
-    split_ifs with hj
     set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum]
+    split_ifs with hj
+    · rw [map_sum]
       refine Finset.sum_eq_zero fun r _ => ?_
       rw [MvPowerSeries.coeff_C_mul, Formalism.InvariantFactorPaths.G7.coeff_single_variable_series, if_neg, mul_zero]
       intro hn
@@ -404,8 +404,7 @@ lemma keep_zXY {l d : ℕ} [NeZero d] {ι : Type} [Fintype ι] (σ : K →+* K) 
         exact hx rfl
       subst hxr
       simp [hj]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum]
+    · rw [map_sum]
       refine Finset.sum_eq_zero fun r _ => ?_
       rw [MvPowerSeries.coeff_C_mul, Formalism.InvariantFactorPaths.G7.coeff_single_variable_series, if_neg, mul_zero]
       intro hn

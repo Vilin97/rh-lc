@@ -53,7 +53,7 @@ end Levels
 abbrev Family (p : ℕ) : Type 1 :=
   ∀ ⦃R : Type⦄ [CommRing R], IsAdicComplete (Ideal.span {(p : R)}) R → ∀ ⦃A : Over (Sp R)⦄ [GrpObj A],
     IsAbelianScheme A → (∃ g : ℕ, SmoothOfRelativeDimension g A.hom) →
-    ∀ ⦃G : PDivGroup p R⦄, G.TorsionTower A → (primDR A ≃ₗ[R] G.RigExt)
+    ∀ ⦃G : PDivGroup p R⦄, G.TorsionTower A → (primDR A ≃ₗ[R] ((G.cocycles × G.omega) ⧸ _root_.LinearMap.range (G.cob.prod (_root_.LinearMap.codRestrict G.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G.A i))).domRestrict G.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n)))))))
 
 variable {p : ℕ} (E : Family p)
 

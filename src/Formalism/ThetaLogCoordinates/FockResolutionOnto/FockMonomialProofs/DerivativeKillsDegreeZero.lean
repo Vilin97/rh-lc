@@ -353,13 +353,17 @@ theorem latData (hU : UDivInt) (hD : DWDivInt) (hs : 1 ≤ s) (hv : LL.vec (Fin.
     (hcd : c < LL.total)
     (G : GlW ℚ_[p] (MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (s + 1)) (hE : G.E = EX p LL c)
     (hcomp : ∀ μ x m, AddMonoidAlgebra.coeff (G.comp μ x) m = if wtX LL c m = μ then AddMonoidAlgebra.coeff x m else 0) :
-    LatData p G (Wtot p LL J M (Fin.last s)) (IntPol p (Fin (K + 1) × Fin (s + 1))).toAddSubgroup (4 * LL.total) where
-  stable := wtot_stable LL J M c hs hv k0 hk0 hc hmin G hE
-  fd := wtot_fd LL J M c hs hv k0 hk0 hc
-  finW := wtot_finW LL J M c hs hv k0 hk0 hc G hcomp
-  bound := wtot_bound LL J M c hs hv k0 hk0 hc hcd G hcomp
-  closed := fun a ha x hx => smul_int a ha x hx
-  div := by
+    LatData p G (Wtot p LL J M (Fin.last s)) (IntPol p (Fin (K + 1) × Fin (s + 1))).toAddSubgroup (4 * LL.total) := by
+  refine {
+    stable := wtot_stable LL J M c hs hv k0 hk0 hc hmin G hE
+    fd := wtot_fd LL J M c hs hv k0 hk0 hc
+    finW := wtot_finW LL J M c hs hv k0 hk0 hc G hcomp
+    bound := wtot_bound LL J M c hs hv k0 hk0 hc hcd G hcomp
+    closed := fun a ha x hx => smul_int a ha x hx
+    div := ?_
+    graded := ?_
+    basis := ?_ }
+  ·
     rw [hE]
     intro a b hab k x hx
     show _ ∈ IntPol p (Fin (K + 1) × Fin (s + 1))
@@ -375,7 +379,7 @@ theorem latData (hU : UDivInt) (hD : DWDivInt) (hs : 1 ≤ s) (hv : LL.vec (Fin.
       · rw [EX_succ_succ]
         refine Formalism.InvariantFactorPaths.PW.Top.divInt p (K + 1) (s + 1) LL (K + 1) _ _ (fun h => hab ?_) k x hx'
         rw [Fin.castSucc_injective s h]
-  graded := by
+  ·
     intro μ x hx
     show _ ∈ IntPol p (Fin (K + 1) × Fin (s + 1))
     have hx' : x ∈ IntPol p (Fin (K + 1) × Fin (s + 1)) := hx
@@ -385,7 +389,7 @@ theorem latData (hU : UDivInt) (hD : DWDivInt) (hs : 1 ≤ s) (hv : LL.vec (Fin.
     split_ifs
     · exact hx' m
     · simp
-  basis := by
+  ·
     intro U hUW
     have := wtot_fd (p := p) LL J M c hs hv k0 hk0 hc
     exact Formalism.InvariantFactorPaths.PW.Top.latBasisPol p _ U (Submodule.finiteDimensional_of_le hUW)

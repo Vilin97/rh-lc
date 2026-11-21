@@ -299,6 +299,7 @@ theorem div_okc (cc : Ideal (𝓞 D.host.K)) (hcc : cc ≠ ⊥) (δ : ℂ) (hδ 
     refine ⟨y, ?_⟩
     rw [Bf_lat, hz, im_coord]; ring
   have hne : ∃ w₁ ∈ lamOf D cc δ, ∃ w₂ ∈ lamOf D cc δ, Bf w₁ w₂ ≠ 0 := by
+    set_option synthInstance.maxHeartbeats 200000 in
     obtain ⟨c, hc, hc0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hcc
     refine ⟨δ * ph D c, AddSubgroup.subset_closure ⟨c, hc, rfl⟩,
       δ * ph D (c * om D), AddSubgroup.subset_closure ⟨c * om D, cc.mul_mem_right _ hc, rfl⟩, ?_⟩

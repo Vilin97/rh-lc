@@ -342,7 +342,7 @@ theorem weil_bound (hSG : SGroup X u) (hWI : WuNormInv X u) (hWM : WeightMeas X 
   have hweil := X.nuQ_weil u (fun x => wt X u x * a x) ((wt_meas X u hWM).mul ha)
   rw [hweil, ← lintegral_mul_const' _ _ hB]
   refine lintegral_mono fun x => ?_
-  refine (lintegral_map_le (fun s => wt X u (s * x) * a (s * x)) (fun p : X.B.I.Ginf × X.B.I.Ginf => p.1 * p.2)).trans ?_
+  refine (lintegral_map_le (fun s => wt X u (s * x) * a (s * x)) (g := fun p : X.B.I.Ginf × X.B.I.Ginf => p.1 * p.2) ((continuous_fst.mul continuous_snd).measurable.aemeasurable)).trans ?_
   have hae2 : ∀ᵐ p ∂((X.muN u).prod (X.muH u)),
       wt X u (p.1 * p.2 * x) * a (p.1 * p.2 * x) = wt X u x * a (p.1 * p.2 * x) := by
     filter_upwards [ae_NH X u] with p hp
@@ -555,7 +555,7 @@ theorem wuNormInv_holds : WuNormInv X u := by
 
 theorem normInf_continuous : Continuous (WuDecay.normInf X) := by
   unfold WuDecay.normInf
-  refine continuous_finset_prod _ fun v _ => ?_
+  refine continuous_finsetProd _ fun v _ => ?_
   unfold WuDecay.opn
   have hlin : Continuous fun M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) ℂ => Matrix.toEuclideanCLM (𝕜 := ℂ) M :=
     LinearMap.continuous_of_finiteDimensional

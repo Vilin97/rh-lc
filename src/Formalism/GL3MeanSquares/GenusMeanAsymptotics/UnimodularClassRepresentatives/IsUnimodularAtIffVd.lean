@@ -52,7 +52,10 @@ theorem isUnimodularAt_iff_vd (hK : Formalism.HermitianLatticesTheory.IsCMUnram 
   constructor
   · intro hu
     apply LocF.vd_eq_zero_of_not_le
-    obtain ⟨x, hxM, hxo, hxu⟩ := LocF.exists_orth_unit_frame (WA.isHermSemilocal_locRing hK hP)
+    have hS : WA.IsHermSemilocal (WA.locRing P) :=
+      ⟨fun _ ha => WA.star_mem_locRing hPp ha, WA.frac_locRing P, WA.unram_locRing hK hP,
+        WA.principal_locRing hK hP, WA.unit_or_locRing hPp⟩
+    obtain ⟨x, hxM, hxo, hxu⟩ := LocF.exists_orth_unit_frame hS
       (LocF.locRing_local hPp) hs hda (WA.isSelfDualMod_loc hL hPp hu)
     choose s hs' hsx using fun i => Formalism.HermitianLatticesTheory.locBasic_mem_locS.mp
       (show x i ∈ Formalism.HermitianLatticesTheory.locS (Formalism.HermitianLatticesTheory.hcompl (K := K) P) L from hxM i)

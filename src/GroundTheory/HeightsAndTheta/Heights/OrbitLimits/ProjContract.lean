@@ -97,7 +97,7 @@ theorem blockIncl_blockEquiv (hv : AI.I1.IsBlockMap κ v) (p : Σ k, ι k) :
   simp [blockEquiv, Equiv.apply_ofInjective_symm]
 
 theorem imageVar_eq (hv : AI.I1.IsBlockMap κ v) (V' : Ideal (Geo.MRingOver F ι')) :
-    AI.I1.imageVar v V' = (FieldNumbers.contractPrime (emb hv) V').comap
+    AI.I1.imageVar F v V' = (FieldNumbers.contractPrime (emb hv) V').comap
       (rename (blockEquiv hv) : Geo.MRingOver F ι →ₐ[F] _).toRingHom := by
   ext x
   simp only [AI.I1.imageVar, FieldNumbers.contractPrime, Ideal.mem_comap, AlgHom.toRingHom_eq_coe,
@@ -106,7 +106,7 @@ theorem imageVar_eq (hv : AI.I1.IsBlockMap κ v) (V' : Ideal (Geo.MRingOver F ι
   rw [this]
 
 theorem ringKrullDim_imageVar (hv : AI.I1.IsBlockMap κ v) (V' : Ideal (Geo.MRingOver F ι')) :
-    ringKrullDim (Geo.MRingOver F ι ⧸ AI.I1.imageVar v V') =
+    ringKrullDim (Geo.MRingOver F ι ⧸ AI.I1.imageVar F v V') =
       ringKrullDim (NumbersDVR.MRing (fun k => ι' (emb hv k)) F ⧸
         FieldNumbers.contractPrime (emb hv) V') := by
   rw [imageVar_eq hv]

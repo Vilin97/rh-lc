@@ -134,11 +134,14 @@ theorem tower_ef {p : ℕ} (hp : p.Prime)
   have hf' := Ideal.inertiaDeg'_algebra_tower (Ideal.span {(p : ℤ)}) v.asIdeal Q
   rw [hf] at hf'
   have hQb : Q ≠ ⊥ := by
-    intro h0; apply v.ne_bot; rw [← hQv, h0, Ideal.comap_bot_of_injective _ hinj]
+    intro h0; apply v.ne_bot; rw [← hQv, h0]
+    exact Ideal.comap_bot_of_injective _ hinj
   have hmap1 : Ideal.map (algebraMap (𝓞 K) (𝓞 L)) v.asIdeal ≠ ⊥ := Ideal.map_ne_bot_of_ne_bot v.ne_bot
   have hmap2 : Ideal.map (algebraMap ℤ (𝓞 L)) (Ideal.span {(p : ℤ)}) ≠ ⊥ := Ideal.map_ne_bot_of_ne_bot hq0
   have hle : Ideal.map (algebraMap (𝓞 K) (𝓞 L)) v.asIdeal ≤ Q := by
-    rw [Ideal.map_le_iff_le_comap, hQv]
+    rw [Ideal.map_le_iff_le_comap]
+    change v.asIdeal ≤ Ideal.under (𝓞 K) Q
+    rw [hQv]
   have he' := Ideal.ramificationIdx'_algebra_tower (p := Ideal.span {(p : ℤ)}) hmap1 hmap2 hle
   rw [he] at he'
   exact ⟨Nat.eq_one_of_mul_eq_one_right he'.symm, Nat.eq_one_of_mul_eq_one_right hf'.symm⟩

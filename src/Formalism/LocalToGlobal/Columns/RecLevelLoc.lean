@@ -219,8 +219,41 @@ variable (n : ℕ) [NeZero n] (ST : Finset (Pl E))
 theorem rll_mem_baseLb (x : Fin n → E) :
     x ∈ baseLb E n ST ↔ ∃ r : Fin n → 𝓞 E, (∀ i, algebraMap (𝓞 E) E (r i) = x i) ∧
       ∀ P ∈ ST, r (lastIdx n) ∈ P.asIdeal := by
+  classical
   unfold baseLb
-  rw [(Deco.base_ok (E := E) (n := n) (ST := ST) (SG := ∅)).mem_L]
+  have hmem : ∀ x : Fin n → E, x ∈ (Deco.base E n ST (∅ : Finset (Pl E))).L ↔
+      x ∈ stdLat E n ∧ ∀ P : ST, (Deco.base E n ST (∅ : Finset (Pl E))).f P x = 0 := by
+    intro x
+    constructor
+    · intro hx
+      induction hx using Submodule.span_induction with
+      | mem y hy => exact hy
+      | zero =>
+        refine ⟨zero_mem _, fun P => ?_⟩
+        simp only [Deco.base, if_pos (le_locP _ _ (zero_mem (stdLat E n))), Pi.zero_apply]
+        simpa using (reduction_coe P.1 (0 : 𝓞 E))
+      | add y z _ _ hy hz =>
+        refine ⟨add_mem hy.1 hz.1, fun P => ?_⟩
+        have hxy := le_locP P.1 _ (add_mem hy.1 hz.1)
+        have hy' := le_locP P.1 _ hy.1
+        have hz' := le_locP P.1 _ hz.1
+        have hy0 := hy.2 P
+        have hz0 := hz.2 P
+        simp only [Deco.base, if_pos hy'] at hy0
+        simp only [Deco.base, if_pos hz'] at hz0
+        simp only [Deco.base, if_pos hxy, Pi.add_apply]
+        rw [reduction_add ((mem_localization_standardLattice _ _).1 hy' _) ((mem_localization_standardLattice _ _).1 hz' _), hy0, hz0, add_zero]
+      | smul a y _ hy =>
+        refine ⟨Submodule.smul_mem _ _ hy.1, fun P => ?_⟩
+        have hay := le_locP P.1 _ (Submodule.smul_mem (stdLat E n) a hy.1)
+        have hy' := le_locP P.1 _ hy.1
+        have hy0 := hy.2 P
+        simp only [Deco.base, if_pos hy'] at hy0
+        simp only [Deco.base, if_pos hay, Pi.smul_apply]
+        rw [redP_osmul a ((mem_localization_standardLattice _ _).1 hy' _), hy0, mul_zero]
+    · intro hx
+      exact Submodule.subset_span hx
+  rw [hmem]
   constructor
   · rintro ⟨hN, hf⟩
     have hN' : x ∈ stdLat E n := hN
@@ -377,10 +410,10 @@ theorem mirabolicLevel_maps_baseLattice {k : GL (Fin n) (E ⊗[F] Formalism.L2.H
     rw [← hu j]; rfl
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.sum_eq_single (lastIdx n)]
-    · rw [map_mul, huP P hP, mul_zero]
-    · intro j _ hj
-      rw [map_mul, ← hr P, hm P hP j, if_neg hj, zero_mul]
-    · intro h; exact absurd (Finset.mem_univ _) h
+      · rw [map_mul, huP P hP, mul_zero]
+      · intro j _ hj
+        rw [map_mul, ← hr P, hm P hP j, if_neg hj, zero_mul]
+      · intro h; exact absurd (Finset.mem_univ _) h
 
 theorem mirabolicLevel_le_stabilizer_base : J0 hc n ST ≤ stabGL (Formalism.L2.Herm.hatL (F := F) (baseLb E n ST)) := fun k hk =>
   rll_stab_of_maps _ k (mirabolicLevel_maps_baseLattice hc n ST hk) (mirabolicLevel_maps_baseLattice hc n ST (Subgroup.inv_mem _ hk))

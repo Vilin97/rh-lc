@@ -733,7 +733,8 @@ theorem totPosDef_of_sig (S : HSpace E) (hσ : ∀ (σ : E →+* ℂ) a, σ (sta
     rw [← hU, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mulVec] at this
     exact this
   obtain ⟨i, hi⟩ := Function.ne_iff.1 hYz
-  have hpos : 0 < ‖(Y.mulVec fun j => σ (S.frame.repr x j)) i‖ ^ 2 := by positivity
+  have hpos : 0 < ‖(Y.mulVec fun j => σ (S.frame.repr x j)) i‖ ^ 2 := by
+    exact pow_pos (norm_pos_iff.mpr hi) _
   calc (0 : ℝ) < ‖(Y.mulVec fun j => σ (S.frame.repr x j)) i‖ ^ 2 := hpos
     _ ≤ ∑ k, ‖(Y.mulVec fun j => σ (S.frame.repr x j)) k‖ ^ 2 :=
       Finset.single_le_sum (f := fun k => ‖(Y.mulVec fun j => σ (S.frame.repr x j)) k‖ ^ 2)

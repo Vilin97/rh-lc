@@ -28,6 +28,8 @@ theorem posSemidef_of_hasSum {ι J : Type*} [Fintype ι] (f : J → ι → ℂ) 
     simp only [Matrix.conjTranspose_apply]
     refine h1.unique ?_
     convert h2 using 1
+    funext j
+    simp only [star_mul, Complex.star_def, Complex.conj_ofReal, Complex.conj_conj]
     ring
   refine ⟨hherm, fun v => ?_⟩
   simp only [Finsupp.sum]
@@ -180,6 +182,8 @@ theorem topTerm_eq_tsum (p : PlF D) (w w' : Point D.host.E (D.R.rS + 1)) :
         (dfac M δ T T' p w * starRingEnd ℂ (dfac M δ T T' p w')) * (∑' c : (M p).Cls D.R.rS,
         (M p).BB a c * starRingEnd ℂ ((M p).BB b c) / (((M p).nAut c : ℕ) : ℂ)) by ring, ← tsum_mul_left]
     congr 1
+    funext c
+    simp only [map_mul]
     ring
 
 theorem hasSum_locF {p : PlF D} {w w' : Point D.host.E (D.R.rS + 1)} (hs : Summable (locF M δ T T' p w w')) :
@@ -296,6 +300,8 @@ theorem ktopG_hasSum {θ0 : ∀ p, Option ((M p).Cls D.R.rS)} {S : Finset (PlF D
     exact ⟨⟨θ.1, hoff⟩, rfl⟩
   rw [← hg.hasSum_iff hz]
   convert hsum using 1
+  funext θ
+  simp only [Function.comp_apply]
   rw [bbG_eq_prod hu θ.2 rfl, bbG_eq_prod hu' θ.2 hk.symm, autG_eq_prodS hu θ.2, map_prod,
     ← Finset.prod_mul_distrib, ← Finset.prod_div_distrib]
   rfl

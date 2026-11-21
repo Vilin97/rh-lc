@@ -23,7 +23,7 @@ namespace DeRhamVectorExtension
 
 abbrev Family (p : ℕ) : Type 1 :=
   ∀ ⦃R : Type⦄ [CommRing R], IsNilpotent (p : R) → ∀ ⦃A : Over (Sp R)⦄ [GrpObj A],
-    IsAbelianScheme A → ∀ ⦃G : PDivGroup p R⦄, G.TorsionTower A → (primDR A ≃ₗ[R] G.RigExt)
+    IsAbelianScheme A → ∀ ⦃G : PDivGroup p R⦄, G.TorsionTower A → (primDR A ≃ₗ[R] ((G.cocycles × G.omega) ⧸ _root_.LinearMap.range (G.cob.prod (_root_.LinearMap.codRestrict G.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G.A i))).domRestrict G.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n)))))))
 
 variable {p : ℕ} (e : Family p)
 

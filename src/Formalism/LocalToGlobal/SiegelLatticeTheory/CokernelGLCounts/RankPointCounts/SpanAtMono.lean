@@ -47,9 +47,8 @@ theorem psiV_add (p q : (VS D).V) : psiV X v (p + q) = psiV X v p + psiV X v q :
   simp only [psiV, rv]
   rw [← Matrix.mulVec_add]
   congr 1
-  rw [← map_add (f := _)]
-  congr 1
-  simp [crdOf, map_add (f := _)]
+  funext i
+  simp [HidaSetting.crd, crdOf]
 
 theorem psiV_smul (c : D.host.E) (p : (VS D).V) : psiV X v (c • p) = embS D (X.pl v) c • psiV X v p := by
   unfold psiV rv HidaSetting.crd crdOf

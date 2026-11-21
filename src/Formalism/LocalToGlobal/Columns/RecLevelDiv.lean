@@ -155,8 +155,10 @@ omit [StarRing E] in
 theorem rld_ofLocal_chi (Hl : ∀ PP : SG, Subgroup (GL (Fin r) (kP PP.1))) (cl : ∀ PP : SG, Hl PP →* Kˣ)
     (y : (Subgroup.pi Set.univ Hl : Subgroup (Formalism.L2.DIV.G0 SG r))) :
     (Formalism.L2.DIV.LevelP.ofLocal Hl cl).chi y = ∏ PP : SG, cl PP ⟨y.1 PP, y.2 PP (Set.mem_univ PP)⟩ := by
+  letI {M : Type} [Monoid M] : IsOneApply (M →* Kˣ) := {}
+  letI {M : Type} [Monoid M] : IsMulApply (M →* Kˣ) := {}
   show (∏ PP : SG, (cl PP).comp (Formalism.L2.DIV.LevelP.prj Hl PP)) y = _
-  rw [MonoidHom.finset_prod_apply]
+  rw [prod_apply]
   rfl
 
 omit [StarRing E] in
@@ -182,10 +184,13 @@ theorem levChr_parFam_eq_levChar (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af 
       ∏ w : SG, ((P w).lam ⟨Formalism.L2.DIV.upperLeftBlock h (redFn (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) w.1 x), (hw' w).2⟩ *
         ∏ c ∈ Finset.range s, χ w c (Formalism.L2.DIV.dBlk (Formalism.L2.DIV.blkOf r t) (c + 1)
           (redFn (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) w.1 x))) := by
+    letI {M : Type} [Monoid M] : IsOneApply (M →* Kˣ) := {}
+    letI {M : Type} [Monoid M] : IsMulApply (M →* Kˣ) := {}
     simp only [levChr, MonoidHom.comp_apply]
     rw [k1]
     unfold LevFam.chr piChar
-    erw [MonoidHom.finset_prod_apply]
+    unfold LevFam.grp at hx ⊢
+    rw [prod_apply]
     refine Finset.prod_congr rfl fun w _ => ?_
     show (P w).lam (HPar0 h (List.replicate s t) (P w).H ⟨_, hw w⟩) *
       detChar (χ w) n r (List.replicate s t) ⟨_, HPar_le h _ _ (hw w)⟩ = _
@@ -193,7 +198,7 @@ theorem levChr_parFam_eq_levChar (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af 
     · congr 1
       apply Subtype.ext
       exact blockZero_eq_restrictedBlock h _ _ (mem_blockTri_blk2_of_mem_blockTri_blkOf (hw' w).1)
-    · rw [detChar, MonoidHom.finset_prod_apply, List.length_replicate]
+    · rw [detChar, prod_apply, List.length_replicate]
       refine Finset.prod_congr rfl fun c _ => ?_
       rw [MonoidHom.comp_apply, rld_blkDet_eq ht hn]
   have hD := (Formalism.L2.DIV.mem_lev.mp h2).2

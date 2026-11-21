@@ -112,7 +112,7 @@ theorem wtV_nonneg (u u' : D.what₂.Word) {cv : Fin (D.R.rS + 1) → ℂ} (h : 
 theorem wtV_cont (u u' : D.what₂.Word) : Continuous (wtV u u') := by
   have hJ : Continuous (fun cv : Fin (D.R.rS + 1) → ℂ => JacV (Matrix.diagonal cv)) := by
     unfold JacV
-    refine continuous_finset_prod _ fun l hl => ?_
+    refine continuous_finsetProd _ fun l hl => ?_
     have h : l ≤ D.R.rS + 1 := (Finset.mem_Icc.mp hl).2.trans (Nat.le_succ _)
     simp only [modC, Dl, dif_pos h]
     fun_prop

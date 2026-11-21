@@ -141,8 +141,8 @@ theorem cW_map (k : ℕ) : φ (cW g2 g3 k) = cW (φ g2) (φ g3) k := by
     · rw [map_div₀]
       congr 1
       exact_mod_cast map_natCast φ 28
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [map_mul, map_div₀, map_sum, map_ofNat, map_natCast, map_sub, map_add (f := _), map_one]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_div₀, map_sum, map_ofNat, map_natCast, map_sub, map_add (f := _), map_one]
       congr 1
       refine Finset.sum_congr rfl fun m _ => ?_
       have hm := m.2

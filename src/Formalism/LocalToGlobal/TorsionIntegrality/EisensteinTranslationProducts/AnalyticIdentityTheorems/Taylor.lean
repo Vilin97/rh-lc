@@ -57,7 +57,7 @@ theorem taylor0_congr {f g : ℂ → ℂ} (h : f =ᶠ[nhds 0] g) : taylor0 f = t
   ext n
   rw [coeff_taylor0, coeff_taylor0, h.iteratedDeriv_eq]
 
-theorem taylor0_deriv (f : ℂ → ℂ) : taylor0 (deriv f) = derivative ℂ (taylor0 f) := by
+theorem taylor0_deriv (f : ℂ → ℂ) : taylor0 (deriv f) = derivative (taylor0 f) := by
   ext n
   rw [coeff_derivative, coeff_taylor0, coeff_taylor0, ← iteratedDeriv_succ', Nat.factorial_succ]
   have h3 : (n.factorial : ℂ) ≠ 0 := by exact_mod_cast n.factorial_ne_zero
@@ -111,7 +111,7 @@ theorem taylor0_inj {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : Analytic
   filter_upwards [ht] with z hz
   exact sub_eq_zero.mp hz
 
-theorem ode_zero {a Y : PowerSeries ℂ} (h : derivative ℂ Y = a * Y) (h0 : constantCoeff Y = 0) :
+theorem ode_zero {a Y : PowerSeries ℂ} (h : derivative Y = a * Y) (h0 : constantCoeff Y = 0) :
     Y = 0 := by
   have key : ∀ n, coeff n Y = 0 := by
     intro n
@@ -146,11 +146,11 @@ theorem taylor0_exp {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (h0 : f 0 = 0) :
     have := (hz.differentiableAt.hasDerivAt.cexp).deriv
     rw [mul_comm] at this
     exact this
-  have h1 : derivative ℂ (taylor0 fun z => Complex.exp (f z))
-      = derivative ℂ (taylor0 f) * taylor0 fun z => Complex.exp (f z) := by
+  have h1 : derivative (taylor0 fun z => Complex.exp (f z))
+      = derivative (taylor0 f) * taylor0 fun z => Complex.exp (f z) := by
     rw [← taylor0_deriv, taylor0_congr he, taylor0_mul hf.deriv hE, taylor0_deriv]
-  have h2 : derivative ℂ (Formalism.L2.Th1.B.fExp (taylor0 f))
-      = derivative ℂ (taylor0 f) * Formalism.L2.Th1.B.fExp (taylor0 f) := by
+  have h2 : derivative (Formalism.L2.Th1.B.fExp (taylor0 f))
+      = derivative (taylor0 f) * Formalism.L2.Th1.B.fExp (taylor0 f) := by
     unfold Formalism.L2.Th1.B.fExp
     rw [derivative_subst hS, derivative_exp, mul_comm]
   have h3 : constantCoeff (taylor0 fun z => Complex.exp (f z)) = 1 := by
@@ -164,7 +164,7 @@ theorem taylor0_exp {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (h0 : f 0 = 0) :
     have h7 : constantCoeff ((exp ℂ - 1).subst (taylor0 f) : PowerSeries ℂ) = 0 :=
       constantCoeff_subst_eq_zero hc _ (by simp)
     rw [h5, subst_add hS, h6, map_add (f := _), map_one, h7, add_zero]
-  refine sub_eq_zero.mp (ode_zero (a := derivative ℂ (taylor0 f)) ?_ ?_)
+  refine sub_eq_zero.mp (ode_zero (a := derivative (taylor0 f)) ?_ ?_)
   · rw [map_sub, h1, h2, mul_sub]
   · rw [map_sub, h3, h4, sub_self]
 

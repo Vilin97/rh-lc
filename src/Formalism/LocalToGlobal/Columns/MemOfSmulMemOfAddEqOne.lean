@@ -50,10 +50,20 @@ section Lat
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
 theorem conjPrime_ne_conjPrime {P Q : HeightOneSpectrum (𝓞 E)} (h : Q ≠ P) : conjPrime₂ Q ≠ conjPrime₂ P := fun e =>
-  h (by rw [← conjugatePrime_conjugatePrime Q, e, conjugatePrime_conjugatePrime])
+  h (by
+    have hinv (R : HeightOneSpectrum (𝓞 E)) : conjPrime₂ (conjPrime₂ R) = R := by
+      apply HeightOneSpectrum.ext
+      ext r
+      rw [mem_conjP, mem_conjP, cO_cO]
+    exact (hinv Q).symm.trans ((congrArg conjPrime₂ e).trans (hinv P)))
 
 theorem ne_conjPrime_symm {P Q : HeightOneSpectrum (𝓞 E)} (h : Q ≠ conjPrime₂ P) : P ≠ conjPrime₂ Q := fun e =>
-  h (by rw [e, conjugatePrime_conjugatePrime])
+  h (by
+    have hinv : conjPrime₂ (conjPrime₂ Q) = Q := by
+      apply HeightOneSpectrum.ext
+      ext r
+      rw [mem_conjP, mem_conjP, cO_cO]
+    exact hinv.symm.trans (congrArg conjPrime₂ e.symm))
 
 theorem neighbour_inf_eq_sup {P Q : HeightOneSpectrum (𝓞 E)} (hQP' : Q ≠ conjPrime₂ P) (hQbP : conjPrime₂ Q ≠ conjPrime₂ P) {i j : ℕ}
     {N e M : Submodule (𝓞 E) (Sp E n)} (h1 : IsHeckeNbr P.asIdeal i N e) (h2 : IsHeckeNbr Q.asIdeal j e M) :

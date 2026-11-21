@@ -297,7 +297,9 @@ theorem three_le_level_prime (hS : Formalism.MainNotions.product_first_zeroth_pa
   have h1 := hS.1
   have hf : 0 < D.R.f := by
     show 0 < 2 * D.R.n
-    have : 0 < D.R.n := by unfold Ranks.n; positivity
+    have hm := D.R.two_le_m
+    have hmf := D.R.m_le_f
+    unfold Ranks.n
     omega
   have hN : 0 < D.R.N D.R.m := D.R.N_pos _
   have : 1 ≤ D.R.f * D.R.N D.R.m := Nat.one_le_iff_ne_zero.2 (Nat.mul_ne_zero hf.ne' hN.ne')

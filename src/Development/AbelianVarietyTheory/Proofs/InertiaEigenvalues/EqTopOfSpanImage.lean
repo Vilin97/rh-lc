@@ -313,7 +313,7 @@ theorem exact_of_tie (hm : ∀ m : Ideal W.EE, m.IsMaximal → m.map E.ioE.toRin
   have hιR : Function.Injective ((latMap ι).baseChange RW) := by
     obtain ⟨s, hs⟩ := (latMap π).exists_rightInverse_of_surjective (LinearMap.range_eq_top.2 hπ)
     obtain ⟨r, hr⟩ : ∃ r, r ∘ₗ latMap ι = LinearMap.id :=
-      ((hex.split_tfae hι hπ).out 0 1).1 (show ∃ s, latMap π ∘ₗ s = LinearMap.id from ⟨s, hs⟩)
+      ((hex.split_tfae hι hπ).out 1 2).1 (show ∃ s, latMap π ∘ₗ s = LinearMap.id from ⟨s, hs⟩)
     refine Function.LeftInverse.injective (g := r.baseChange RW) fun x => ?_
     rw [← LinearMap.comp_apply, ← LinearMap.baseChange_comp, hr, LinearMap.baseChange_id]
     rfl
@@ -419,12 +419,14 @@ theorem sep_RW (LL : FinExt l) (x : RW LL) (hx : ∀ k : ℕ, (l : RW LL) ^ k �
   let e := TensorProduct.equivFinsuppOfBasisLeft (N := WCb l)
     (Module.Free.chooseBasis ℤ_[l] ↥(OL LL))
   apply e.injective
-  rw [map_zero]
+  rw [e.map_zero]
   ext i : 1
   refine sep_WCb _ fun k => ?_
   obtain ⟨y, hy⟩ := hx k
   refine ⟨e y i, ?_⟩
-  rw [hy, ← Nat.cast_pow, ← nsmul_eq_mul, map_nsmul, Finsupp.smul_apply, nsmul_eq_mul, Nat.cast_pow]
+  have hsmul : e (l ^ k • y) = l ^ k • e y :=
+    e.toLinearMap.toAddMonoidHom.map_nsmul (l ^ k) y
+  rw [hy, ← Nat.cast_pow, ← nsmul_eq_mul, hsmul, Finsupp.smul_apply, nsmul_eq_mul, Nat.cast_pow]
 
 end Concrete
 

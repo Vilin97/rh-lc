@@ -395,8 +395,7 @@ theorem index_pos (U : Subgroup P) : (0 : ℝ) < (U.index : ℝ) := by
 
 theorem card_pos (U : Subgroup P) : (0 : ℝ) < (Nat.card U : ℝ) := by
   have h : 0 < Nat.card U := Nat.card_pos
-  push_cast [ENat.card_eq_coe_natCard]
-  exact h
+  exact_mod_cast h
 
 theorem matLat_one' {d : ℕ} (L : Submodule (𝓞 K) (Fin d → K)) :
     matLat (1 : Matrix (Fin d) (Fin d) K) L = L := by
@@ -909,6 +908,7 @@ private theorem exists_place_lemma (p : ℕ) (hp : p.Prime) : ∃ w : HeightOneS
   obtain ⟨Q, hQmax, hQ⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (Ideal.span {(p : ℤ)}) hker
   have hpQ : ((p : ℕ) : 𝓞 K) ∈ Q := by
     have h1 : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := by
+      change (p : ℤ) ∈ Ideal.under ℤ Q
       rw [hQ]
       exact Ideal.mem_span_singleton_self _
     rw [Ideal.mem_comap] at h1

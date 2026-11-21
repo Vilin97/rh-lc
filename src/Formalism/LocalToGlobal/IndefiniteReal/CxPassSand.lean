@@ -393,25 +393,11 @@ theorem glue_lattice {D : ℕ} {T : Type} [Finite T] (t0 : T) (μ : HeightOneSpe
     intro x
     unfold glueLat
     exact Submodule.mem_iInf _
-  choose a ha0 ha using fun t => GluingInclusion.denom (K := K) (L t0) (L t) (Submodule.IsLattice.fg (self := hL t0))
-    (Submodule.IsLattice.span_eq_top (self := hL t))
-  have hc0 : (∏ t, a t) ≠ 0 := Finset.prod_ne_zero_iff.mpr (fun t _ => ha0 t)
-  have hcL : ∀ x ∈ L t0, (∏ t, a t) • x ∈ glueLat (fun w => L (μ w)) := by
-    intro x hx
-    rw [hGmem]
-    intro w
-    obtain ⟨r, hr⟩ := Finset.dvd_prod_of_mem a (Finset.mem_univ (μ w))
-    rw [hr, mul_comm, mul_smul]
-    exact Formalism.HermitianLatticesTheory.locBasic_le_locS _ _ ((L (μ w)).smul_mem r (ha (μ w) x hx))
   have hle : glueLat (fun w => L (μ w)) ≤ ⨆ t, L t := by
     intro x hx
     refine GluingInclusion.lg (RingOfIntegers.not_isField K) _ x fun w => ?_
     exact Formalism.HermitianLatticesTheory.locBasic_locS_mono _ (le_iSup L (μ w)) ((hGmem x).mp hx w)
   have hNfg : (⨆ t, L t).FG := Submodule.fg_iSup L fun t => Submodule.IsLattice.fg (self := hL t)
-  have hinvsmul : ∀ (r : 𝓞 K), r ≠ 0 → ∀ y : Fin D → K, (algebraMap (𝓞 K) K r)⁻¹ • (r • y) = y := by
-    intro r hr y
-    have : algebraMap (𝓞 K) K r ≠ 0 := by simpa using (IsFractionRing.injective (𝓞 K) K).ne hr
-    rw [← algebraMap_smul K r y, smul_smul, inv_mul_cancel₀ this, one_smul]
   refine ⟨Submodule.FG.of_le hNfg hle, ?_⟩
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli

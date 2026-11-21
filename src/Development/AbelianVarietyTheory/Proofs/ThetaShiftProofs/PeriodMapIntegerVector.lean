@@ -79,7 +79,7 @@ end Model
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
-theorem exists_datum_Lam : letI := H.starRing
+theorem exists_datum_Lam : letI := H.starRing;
     ∀ (A : AnArc (𝓞 E)) (p q : ℕ) (ty : Fin A.gB → (E →+* ℂ)), IsTypeFn H p q ty →
       (∀ a z i, A.F a z i = ty i (a : E) * z i) →
       ∃ (DB : Datum H) (e : DB.La ≃+ A.abelian₂), DB.p = p ∧ DB.q = q ∧ (∀ (a : 𝓞 E) x, e (a • x) = A.FLam a (e x)) ∧
@@ -110,7 +110,7 @@ theorem exists_anArc_of_period (D : Datum H) {g : ℕ} {ty : Fin g → (E →+* 
     (hker : ∀ v, y v = 0 ↔ ∀ t ∈ Hh, D.EF t v = 0)
     (be : LinearMap.BilinForm ℤ Y) (be_symm : ∀ x x', be x x' = be x' x) (be_pos : ∀ x, x ≠ 0 → 0 < be x x)
     (be_adj : ∀ (a : 𝓞 E) x x', be (a • x) x' = be x (H.bar a • x')) (be_even : ∀ x, (2 : ℤ) ∣ be x x) :
-    letI := H.starRing
+    letI := H.starRing;
     ∃ (A : AnArc (𝓞 E)) (e : A.X ≃ₗ[𝓞 E] Y) (gam : D.La ≃ₗ[𝓞 E] A.La) (h : (Fin g → ℂ) ≃ₗ[ℂ] A.V),
       (∀ x x', A.be x x' = be (e x) (e x')) ∧
       (∀ l, A.chi l = (-1) ^ A.Ef (A.FLam H.w0 l) l) ∧

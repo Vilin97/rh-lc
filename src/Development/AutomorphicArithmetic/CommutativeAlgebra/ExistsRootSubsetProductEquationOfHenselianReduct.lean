@@ -174,7 +174,8 @@ theorem UpperTheory.exists_root_subset_product_equation_of_henselian_reduction :
       rw [hk]
       exact I.mul_mem_right k hα1
     have hunit : IsUnit ((derivative χ).eval α) := by
-      haveI := isLocalHom_of_le_jacobson_bot I (HenselianRing.jac (I := I))
+      haveI := isLocalHom_of_le_jacobson_bot I (by
+        simpa only [Ideal.jacobson_bot] using (HenselianRing.jac (I := I)))
       exact isUnit_of_map_unit (Ideal.Quotient.mk I) _ (by rw [hcong, hE1]; exact isUnit_one)
     refine ⟨α, hunit.unit, hα1, ?_⟩
     intro S _ _ x hx

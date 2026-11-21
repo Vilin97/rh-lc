@@ -56,8 +56,8 @@ def Coefficients : Prop :=
         SamePot Re.R.A Set.univ (potOf Re.R H) (thH.pullback Re.π Re.holo.1) →
         (∀ a t, 0 < t → t ≤ S.t₀ → VertClose P T α (Re.line a t) (Re'.line a t)) →
         (∀ p ∈ T, NefAt P p H.a ∧ ∀ a, NefAt P p ((Re.ref a).a + H.a) ∧ NefAt P p ((Re'.ref a).a + H.a)) →
-        (∀ m, |AddMonoidAlgebra.coeff (Re.PBs II) m - coeff m (Re'.PBs II)| ≤ C₂ * ∑ p ∈ T, α p * Real.log p) ∧
-          ∀ m, |AddMonoidAlgebra.coeff (Re.PBwt II) m - coeff m (Re'.PBwt II)| ≤ C₂ * ∑ p ∈ T, α p * Real.log p
+        (∀ m, |(Re.PBs II).coeff m - (Re'.PBs II).coeff m| ≤ C₂ * ∑ p ∈ T, α p * Real.log p) ∧
+          ∀ m, |(Re.PBwt II).coeff m - (Re'.PBwt II).coeff m| ≤ C₂ * ∑ p ∈ T, α p * Real.log p
 
 def Proportional : Prop :=
   Inputs → ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] [Nonempty Ψ] (N j : ℕ), 2 ≤ N → j ≤ N →

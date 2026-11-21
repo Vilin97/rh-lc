@@ -21,7 +21,11 @@ theorem emb_G {T T' : ℕ} (Z : MatZ D) (φ : D.host.E →+* ℂ) :
     φ (GZ (T : D.host.E) (T' : D.host.E) Z) =
       ((Complex.normSq (φ Z.det) - (T : ℝ) * T' * Complex.normSq (φ (leadMinorE Z D.R.rS)) : ℝ) : ℂ) := by
   have hφ : ∀ a, φ (star a) = starRingEnd ℂ (φ a) := D.sp.cm.cmUnram.2.1 φ
-  rw [GZ, PI.UnitaryGroupMassFormula.CntFormula.DetGa.leadMinorE_full D Z]
+  have hfull : leadMinorE Z (D.R.rS + 1) = Z.det := by
+    unfold leadMinorE
+    rw [dite_eq_left le_rfl]
+    rfl
+  rw [GZ, hfull]
   simp only [map_sub, map_mul, map_natCast, hφ, Complex.mul_conj]
   push_cast
   ring
@@ -30,7 +34,9 @@ theorem det_ne_of_totPos {T T' : ℕ} (Z : MatZ D) (hP : Formalism.MainNotions.S
     Z.det ≠ 0 := by
   intro h0
   have : Nonempty D.what₂.Tau := Fintype.card_pos_iff.1 (by
-    rw [D.what₂.card_Tau]; unfold Formalism.BasicNotions.Ranks.f Formalism.BasicNotions.Ranks.n; positivity)
+    rw [D.what₂.card_Tau]; have h := D.R.m_le_f; have h₂ := D.R.two_le_m
+    unfold Formalism.BasicNotions.Ranks.f Formalism.BasicNotions.Ranks.n
+    omega)
   obtain ⟨τ⟩ := this
   have h1 := hP τ
   rw [emb_G D Z, Complex.ofReal_re, h0, map_zero, Complex.normSq_zero, zero_sub] at h1
@@ -40,8 +46,12 @@ theorem det_ne_of_totPos {T T' : ℕ} (Z : MatZ D) (hP : Formalism.MainNotions.S
 
 theorem inv_last (Z : MatZ D) (hdet : Z.det ≠ 0) :
     Z⁻¹ (Fin.last D.R.rS) (Fin.last D.R.rS) = leadMinorE Z D.R.rS / Z.det := by
+  have hprev : leadMinorE Z D.R.rS = (Z.submatrix Fin.castSucc Fin.castSucc).det := by
+    unfold leadMinorE
+    rw [dite_eq_left (Nat.le_succ _)]
+    rfl
   rw [Matrix.inv_def, Matrix.smul_apply, Matrix.adjugate_apply,
-    PI.UnitaryGroupMassFormula.CntFormula.DetGa.det_updateRow_last_single, ← PI.UnitaryGroupMassFormula.CntFormula.DetGa.leadMinorE_prev D Z,
+    PI.UnitaryGroupMassFormula.CntFormula.DetGa.det_updateRow_last_single, ← hprev,
     Ring.inverse_eq_inv', smul_eq_mul, div_eq_inv_mul]
 
 theorem gam'_last (N' : ℕ) (Z : MatZ D) :

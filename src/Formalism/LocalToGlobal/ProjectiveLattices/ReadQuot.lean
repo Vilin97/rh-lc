@@ -80,10 +80,11 @@ theorem quotSupp_of (V : HSp D) (hV : FinVol V) (hP : ∃ p : Measure (GA D V) �
     · exact absurd (ENNReal.inv_eq_zero.mp h) hV.2
     · exact h
   have hmeas : AEMeasurable (autMk V) ((volPair V).1.restrict (volPair V).2) := by
-    by_contra hnm
-    apply hV.1
-    unfold muQ
-    simp [Measure.map_of_not_aemeasurable hnm]
+    have hm : Measurable (autMk V) := by
+      first
+      | exact measurable_quotient_mk'
+      | exact fun _ hs => hs
+    exact hm.aemeasurable
   have hpre : autMk V ⁻¹' S = O := by
     ext g
     have hrel := Quotient.mk_out (s := QuotientGroup.rightRel (GQ V)) g

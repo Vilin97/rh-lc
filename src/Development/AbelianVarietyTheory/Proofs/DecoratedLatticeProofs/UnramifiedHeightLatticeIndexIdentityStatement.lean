@@ -7,7 +7,8 @@ public import Formalism.LocalToGlobal.Columns.HeckeSp
 
 @[expose] public section
 
-open MeasureTheory ValuativeRel Matrix GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.Doubling GlobalTheory.GLDoubling GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection GlobalTheory.ZonalCellDecomposition GlobalTheory.SatakeBound GlobalTheory.ParHecke GlobalTheory.HeckeLatIndex
+open MeasureTheory ValuativeRel Matrix GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.SmGL GlobalTheory.Doubling GlobalTheory.GLDoubling GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection GlobalTheory.ZonalCellDecomposition GlobalTheory.SatakeBound GlobalTheory.ParHecke
+open GlobalTheory.HeckeLatIndex in
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.unramifiedHeight_lattice_index_identity : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (D : Type) [Fintype D] [DecidableEq D] (ϖ : kˣ), valuation k (ϖ : k) = uniformizer k → ∀ H : GL D k → ℝ, IsHgt ϖ H → ∀ (m g : GL D k) (s : Finset D), (∃ κ ∈ KO k D, ∃ κ' ∈ KO k D, g = κ * torusElt k D ϖ (indic s) * κ') → ∀ (L Lm large₂ : AddSubgroup (D → k)), (∀ v, v ∈ L ↔ ∀ i, valuation k (v i) < 1) → (∀ v, v ∈ Lm ↔ m.1.mulVec v ∈ L) → (∀ v, v ∈ large₂ ↔ (g⁻¹).1.mulVec v ∈ L) → (((Lm ⊓ large₂).relIndex (Lm ⊓ L) : ℕ) : ℝ) ^ 2 * H (m * g) = (resCard k : ℝ) ^ s.card * H m := by
   intro k _ _ _ _ D _ _ ϖ hϖ H hH m g s hg L Lm large₂ hL hLm hLg
@@ -16,7 +17,30 @@ theorem _root_.GlobalTheory.T.unramifiedHeight_lattice_index_identity : ∀ (k :
       (hL : ∀ v, v ∈ L ↔ ∀ i, valuation k (v i) < 1)
       (hP : ∀ v, v ∈ P ↔ h.1.mulVec v ∈ L) :
       H h * (((P ⊓ L).relIndex P : ℕ) : ℝ) * (((P ⊓ L).relIndex L : ℕ) : ℝ) = 1 := by
-    obtain ⟨x, hx, y, hy, e, rfl⟩ := GlobalTheory.LocalCartan.cartan_decomposition k D ϖ h hϖ
+    have decompose (g : GL D k) :
+        ∃ x ∈ KO k D, ∃ y ∈ KO k D, ∃ e : D → ℤ, g = x * torusElt k D ϖ e * y := by
+      obtain ⟨x, hx, y, hy, a, rfl⟩ := GlobalTheory.LocalCartan.exists_diagT g
+      let ordHom : kˣ →* Multiplicative ℤ :=
+        MonoidHom.mk' (fun z => Multiplicative.ofAdd (ord k z))
+          (fun z w => by rw [ord_mul, ofAdd_add])
+      let e : D → ℤ := fun i => ord k (a i)
+      let u : D → kˣ := fun i => a i / ϖ ^ e i
+      have hu (i : D) : valuation k (u i : k) = 1 := by
+        apply ord_eq_zero_iff.mp
+        have he := congrArg Multiplicative.toAdd (map_zpow ordHom ϖ (e i))
+        have hp : ord k (ϖ ^ e i) = e i := by
+          simpa [ordHom, toAdd_zpow, ord_eq_one hϖ] using he
+        have hz := ord_mul k (u i) (ϖ ^ e i)
+        rw [show u i * ϖ ^ e i = a i by simp [u], hp] at hz
+        change e i = _ at hz
+        omega
+      refine ⟨x * diagT k D u, mul_mem hx (GlobalTheory.LocalCartan.diagT_mem_KO hu),
+        y, hy, e, ?_⟩
+      have ha : a = u * fun i => ϖ ^ e i := funext fun i => by simp [u]
+      unfold torusElt
+      rw [ha, map_mul]
+      simp only [mul_assoc]
+    obtain ⟨x, hx, y, hy, e, rfl⟩ := decompose h
     let t : GL D k := torusElt k D ϖ e
     let Pt : AddSubgroup (D → k) := L.comap (Matrix.mulVecLin t.1).toAddMonoidHom
     have hPt : ∀ v, v ∈ Pt ↔ t.1.mulVec v ∈ L := fun v => Iff.rfl

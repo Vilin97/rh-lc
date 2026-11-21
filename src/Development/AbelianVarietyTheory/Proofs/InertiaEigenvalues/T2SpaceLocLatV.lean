@@ -52,7 +52,7 @@ theorem lTensor_inj {T Y Z : LocLat G Qp LL O} {ι : LatHom T.L Y.L} {π : LatHo
     Function.Injective ((onT ι).lTensor R) := by
   haveI := Z.L.free
   obtain ⟨s, hs⟩ := Module.projective_lifting_property (onT π) LinearMap.id (onT_surj h)
-  have h3 := ((onT_exact h).split_tfae (onT_inj h) (onT_surj h)).out 0 1
+  have h3 := ((onT_exact h).split_tfae (onT_inj h) (onT_surj h)).out 1 2
   obtain ⟨r, hr⟩ := h3.1 ⟨s, hs⟩
   apply Function.LeftInverse.injective (g := r.lTensor R)
   intro x

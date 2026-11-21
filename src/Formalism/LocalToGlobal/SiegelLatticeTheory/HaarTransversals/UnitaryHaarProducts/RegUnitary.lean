@@ -783,11 +783,16 @@ theorem ind_tendsto {s : Set I.GA} (hs : MeasurableSet s) (hμs : (I.muA μf).re
     exact h0.comp hE0
   have hind : ∀ g : I.Ginf, eLpNorm ((E g).indicator fun _ => (1 : ℂ)) 2 ((I.muA μf).restrict fund)
       ≤ ((I.muA μf).restrict fund (E g)) ^ (1 / (2 : ℝ≥0∞).toReal) := fun g =>
-    (eLpNorm_indicator_const_le (1 : ℂ) 2).trans (by simp)
+    (eLpNorm_indicator_const_le (1 : ℂ) 2 (by
+      have hAm : MeasurableSet A := by
+        rw [hA]
+        exact MeasurableSet.iUnion fun γ => hs'.preimage (measurable_const_mul _)
+      rw [hE]
+      exact ((hAm.preimage (measurable_mul_const _)).symmDiff hAm).nullMeasurableSet)).trans (by simp)
   have he : Tendsto (fun g : I.Ginf =>
       eLpNorm ⇑(R (g, 1) X - X) 2 ((I.muA μf).restrict fund)) (𝓝 1) (𝓝 0) :=
     tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hpow (fun _ => zero_le)
-      (fun g => (eLpNorm_mono_ae (hpt g)).trans (hind g))
+      (fun g => (eLpNorm_mono_ae (Lp.aestronglyMeasurable (R (g, 1) X - X)) (hpt g)).trans (hind g))
   rw [tendsto_iff_norm_sub_tendsto_zero]
   have h2 : Tendsto (fun g : I.Ginf =>
       (eLpNorm ⇑(R (g, 1) X - X) 2 ((I.muA μf).restrict fund)).toReal) (𝓝 1) (𝓝 0) := by

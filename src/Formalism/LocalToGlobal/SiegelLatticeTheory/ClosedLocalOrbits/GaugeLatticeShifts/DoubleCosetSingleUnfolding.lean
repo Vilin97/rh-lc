@@ -382,7 +382,8 @@ theorem ooLint_of (h : OOLintSum X u u' F0 F0' what₂ rows') : OOLint F0 F0' wh
   unfold OOLintSum at h
   unfold OOLint
   intro t
-  exact lt_of_le_of_lt (ENNReal.le_tsum t) h
+  exact lt_of_le_of_lt (ENNReal.le_tsum (f := fun t : GTerm X u u' F0 F0' what₂ rows' =>
+    ∫⁻ x in FundOf t, ‖X.Wu u x‖ₑ * ‖X.Wu u' (t.pt.1⁻¹ * x)‖ₑ ∂(Formalism.L2.SG.ProjRows.muInf X.B.I)) t) h
 
 theorem norm_OOt_le (t : GTerm X u u' F0 F0' what₂ rows') :
     ‖OOt t‖ ≤ (∫⁻ x in FundOf t, ‖X.Wu u x‖ₑ * ‖X.Wu u' (t.pt.1⁻¹ * x)‖ₑ
@@ -786,8 +787,9 @@ theorem tsum_lintegral_le {α ι : Type*} [MeasurableSpace α] {μ : Measure α}
     (hf : ∀ i, AEMeasurable (f i) μ) : ∑' i, ∫⁻ x, f i x ∂μ ≤ ∫⁻ x, ∑' i, f i x ∂μ := by
   rw [ENNReal.tsum_eq_iSup_sum]
   refine iSup_le fun s => ?_
-  rw [← lintegral_finset_sum' s (fun i _ => hf i)]
-  exact lintegral_mono fun x => ENNReal.sum_le_tsum s
+  calc
+    _ = ∫⁻ x, ∑ i ∈ s, f i x ∂μ := (lintegral_finsetSum' s (fun i _ => hf i)).symm
+    _ ≤ _ := lintegral_mono fun x => ENNReal.sum_le_tsum s
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
@@ -956,10 +958,10 @@ theorem termsLEC_of (hMaj : MajPtC) (hInv : RInvC) (hCnt : CountC) : TermsLEC :=
             ∫⁻ x in FundOf t.1, c * ∑ i, ∑ j, F i j t.1 x ∂(Formalism.L2.SG.ProjRows.muInf X.B.I) =
               c * ∑ i, ∑ j, ∫⁻ x in FundOf t.1, F i j t.1 x ∂(Formalism.L2.SG.ProjRows.muInf X.B.I) := by
           intro t
-          rw [lintegral_const_mul' _ _ hc, lintegral_finset_sum _ (fun i _ => Finset.measurable_sum _
+          rw [lintegral_const_mul' _ _ hc, lintegral_finsetSum _ (fun i _ => Finset.measurable_sum _
             (fun j _ => hFm i j t.1))]
           congr 1
-          exact Finset.sum_congr rfl fun i _ => lintegral_finset_sum _ (fun j _ => hFm i j t.1)
+          exact Finset.sum_congr rfl fun i _ => lintegral_finsetSum _ (fun j _ => hFm i j t.1)
         rw [tsum_congr hint, ENNReal.tsum_mul_left]
         congr 1
         rw [Summable.tsum_finsetSum (fun _ _ => ENNReal.summable)]

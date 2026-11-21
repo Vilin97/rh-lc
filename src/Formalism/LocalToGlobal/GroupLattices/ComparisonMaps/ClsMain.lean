@@ -74,7 +74,7 @@ theorem clsC_tupOf (I : LocId L p nV W Qq) (hdet : IsUnit sp.gram0.det) (hk : m 
     (g : Fin nV → GL (Fin (m + 1)) Qq) :
     clsC I hdet hk i (tupOf W g) = Fib.mkC (HA sp) (KA L) (repP L p i * jQ I hdet hk g) := by
   rw [clsC_eq]
-  refine ((fibP I hdet hk hH).cls_iff (HA sp) (repP L p) (repP_mk L p) (prP_repP I hk) i i _ _).2
+  refine ((fibP I hdet hk hH).cls_iff (HA sp) (repP L p) i i _ _ (repP_mk L p) (prP_repP I hk)).2
     ⟨rfl, 1, Subgroup.one_mem _, ?_, ?_⟩
   · rw [mul_one, inv_mul_cancel]
     exact Subgroup.one_mem _
@@ -96,7 +96,7 @@ theorem class_eq_iff_translate_level_zero (i i' : compL L p) (Lt Lt' : Fin nV �
       i = i' ∧ ∃ γ : gamC sp.cm.sig sp.gram0 (Formalism.L2.Herm.awayFrom₂ L p) (repP L p i : GL (Fin R.k) _),
         Lt' = fun v => gMap W (prP I hk (ratA sp γ.1) v) (Lt v) := by
   rw [clsC_eq, clsC_eq]
-  refine ((fibP I hdet hk hH).cls_iff (HA sp) (repP L p) (repP_mk L p) (prP_repP I hk) i i' (gOf Lt) (gOf Lt')).trans
+  refine ((fibP I hdet hk hH).cls_iff (HA sp) (repP L p) i i' (gOf Lt) (gOf Lt') (repP_mk L p) (prP_repP I hk)).trans
     (and_congr_right fun _ => ?_)
   refine (orb_iff I hk (repP L p i) (gOf Lt) (gOf Lt')).trans (exists_congr fun γ => ?_)
   rw [← gOf_spec Lt' h', ← gOf_spec Lt h]

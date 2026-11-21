@@ -50,7 +50,7 @@ theorem eq_zero_of_id_eq_zero {G : PDivGroup p k} (hG : P k G) (h0 : 𝟙 G = 0)
   exact h2
 
 theorem rigExtMap_rigExtMap {k : Type} [CommRing k] {X Y Z : PDivGroup p k} (f : X ⟶ Y) (g : Y ⟶ Z)
-    (x : Z.RigExt) : rigExtMap f (rigExtMap g x) = rigExtMap (f ≫ g) x := by
+    (x : ((Z.cocycles × Z.omega) ⧸ _root_.LinearMap.range (Z.cob.prod (_root_.LinearMap.codRestrict Z.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (Z.A i))).domRestrict Z.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) : rigExtMap f (rigExtMap g x) = rigExtMap (f ≫ g) x := by
   rw [rigExtMap_comp]; rfl
 
 theorem rigExtMap_zero' {X Y : PDivGroup p k} : rigExtMap (0 : X ⟶ Y) = 0 := by
@@ -59,30 +59,30 @@ theorem rigExtMap_zero' {X Y : PDivGroup p k} : rigExtMap (0 : X ⟶ Y) = 0 := b
   simpa using h
 
 theorem rig_split₀ {G G₀ G₁ : PDivGroup p k} (i₀ : G₀ ⟶ G) (q₀ : G ⟶ G₀) (q₁ : G ⟶ G₁)
-    (h₀ : i₀ ≫ q₀ = 𝟙 G₀) (z : i₀ ≫ q₁ = 0) (r₀ : G₀.RigExt) (r₁ : G₁.RigExt) :
+    (h₀ : i₀ ≫ q₀ = 𝟙 G₀) (z : i₀ ≫ q₁ = 0) (r₀ : ((G₀.cocycles × G₀.omega) ⧸ _root_.LinearMap.range (G₀.cob.prod (_root_.LinearMap.codRestrict G₀.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₀.A i))).domRestrict G₀.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) (r₁ : ((G₁.cocycles × G₁.omega) ⧸ _root_.LinearMap.range (G₁.cob.prod (_root_.LinearMap.codRestrict G₁.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₁.A i))).domRestrict G₁.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) :
     rigExtMap i₀ (rigExtMap q₀ r₀ + rigExtMap q₁ r₁) = r₀ := by
   rw [LinearMap.map_add (f := _), rigExtMap_rigExtMap, rigExtMap_rigExtMap, h₀, z, rigExtMap_zero', rigExtMap_id]
   simp
 
 theorem rig_split₁ {G G₀ G₁ : PDivGroup p k} (i₁ : G₁ ⟶ G) (q₀ : G ⟶ G₀) (q₁ : G ⟶ G₁)
-    (h₁ : i₁ ≫ q₁ = 𝟙 G₁) (z : i₁ ≫ q₀ = 0) (r₀ : G₀.RigExt) (r₁ : G₁.RigExt) :
+    (h₁ : i₁ ≫ q₁ = 𝟙 G₁) (z : i₁ ≫ q₀ = 0) (r₀ : ((G₀.cocycles × G₀.omega) ⧸ _root_.LinearMap.range (G₀.cob.prod (_root_.LinearMap.codRestrict G₀.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₀.A i))).domRestrict G₀.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) (r₁ : ((G₁.cocycles × G₁.omega) ⧸ _root_.LinearMap.range (G₁.cob.prod (_root_.LinearMap.codRestrict G₁.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₁.A i))).domRestrict G₁.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) :
     rigExtMap i₁ (rigExtMap q₀ r₀ + rigExtMap q₁ r₁) = r₁ := by
   rw [LinearMap.map_add (f := _), rigExtMap_rigExtMap, rigExtMap_rigExtMap, h₁, z, rigExtMap_zero', rigExtMap_id]
   simp
 
 def redSum {W : Type} [CommRing W] (τ : W →+* k) {M₀ M₁ : Type} [AddCommGroup M₀] [Module W M₀]
     [AddCommGroup M₁] [Module W M₁] {G G₀ G₁ : PDivGroup p k} (q₀ : G ⟶ G₀) (q₁ : G ⟶ G₁)
-    (r₀ : M₀ →ₛₗ[τ] G₀.RigExt) (r₁ : M₁ →ₛₗ[τ] G₁.RigExt) : M₀ × M₁ →ₛₗ[τ] G.RigExt :=
+    (r₀ : M₀ →ₛₗ[τ] ((G₀.cocycles × G₀.omega) ⧸ _root_.LinearMap.range (G₀.cob.prod (_root_.LinearMap.codRestrict G₀.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₀.A i))).domRestrict G₀.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) (r₁ : M₁ →ₛₗ[τ] ((G₁.cocycles × G₁.omega) ⧸ _root_.LinearMap.range (G₁.cob.prod (_root_.LinearMap.codRestrict G₁.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₁.A i))).domRestrict G₁.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) : M₀ × M₁ →ₛₗ[τ] ((G.cocycles × G.omega) ⧸ _root_.LinearMap.range (G.cob.prod (_root_.LinearMap.codRestrict G.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G.A i))).domRestrict G.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n)))))) :=
   ((rigExtMap q₀).comp r₀).comp (LinearMap.fst W M₀ M₁) + ((rigExtMap q₁).comp r₁).comp (LinearMap.snd W M₀ M₁)
 
 theorem redSum_apply {W : Type} [CommRing W] (τ : W →+* k) {M₀ M₁ : Type} [AddCommGroup M₀] [Module W M₀]
     [AddCommGroup M₁] [Module W M₁] {G G₀ G₁ : PDivGroup p k} (q₀ : G ⟶ G₀) (q₁ : G ⟶ G₁)
-    (r₀ : M₀ →ₛₗ[τ] G₀.RigExt) (r₁ : M₁ →ₛₗ[τ] G₁.RigExt) (m : M₀ × M₁) :
+    (r₀ : M₀ →ₛₗ[τ] ((G₀.cocycles × G₀.omega) ⧸ _root_.LinearMap.range (G₀.cob.prod (_root_.LinearMap.codRestrict G₀.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₀.A i))).domRestrict G₀.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) (r₁ : M₁ →ₛₗ[τ] ((G₁.cocycles × G₁.omega) ⧸ _root_.LinearMap.range (G₁.cob.prod (_root_.LinearMap.codRestrict G₁.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₁.A i))).domRestrict G₁.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) (m : M₀ × M₁) :
     redSum τ q₀ q₁ r₀ r₁ m = rigExtMap q₀ (r₀ m.1) + rigExtMap q₁ (r₁ m.2) := rfl
 
 theorem rig_semiThrough {k' : Type} [CommRing k'] {σ : k →+* k'} {G' A' : PDivGroup p k'} {G A : PDivGroup p k}
     (i : A' ⟶ G') (q' : G' ⟶ A') (s : SemiHom σ G' G) (q : G ⟶ A)
-    (h : ∀ n a, q'.app n (i.app n (s.app n (q.app n a))) = s.app n (q.app n a)) (r : A.RigExt) :
+    (h : ∀ n a, q'.app n (i.app n (s.app n (q.app n a))) = s.app n (q.app n a)) (r : ((A.cocycles × A.omega) ⧸ _root_.LinearMap.range (A.cob.prod (_root_.LinearMap.codRestrict A.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (A.A i))).domRestrict A.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) :
     rigExtMap q' ((semiThrough i s q).rig r) = s.rig (rigExtMap q r) := by
   rw [← SemiHom.ofHom_rig, ← SemiHom.ofHom_rig, SemiHom.rig_rig (semiThrough i s q) (SemiHom.ofHom q') (s.comp (SemiHom.ofHom q))
     (fun n a => (h n a).symm)]

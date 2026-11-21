@@ -339,6 +339,8 @@ theorem hom_lower {N N' : ℕ} (L : Submodule (𝓞 D.host.E) (Fin N → D.host.
     IsIntegral.sum _ fun k _ => (hA i k).mul (hupL x hx k)
   have h2 := hlowL' _ hz
   convert h2 using 1
+  funext i
+  simp only [Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   push_cast; ring
 
@@ -434,8 +436,8 @@ theorem La_lower {N N' : ℕ} (L : Submodule (𝓞 D.host.E) (Fin N → D.host.E
   have hcE : ((c0 : D.host.K) : D.host.E) ≠ 0 := by
     intro h
     apply hc0ne
-    have h1 : (c0 : D.host.K) = 0 := by exact_mod_cast h
-    exact_mod_cast h1
+    have h1 : (c0 : D.host.K) = 0 := Subtype.val_injective h
+    exact Subtype.val_injective h1
   let b0 : 𝓞 D.host.E := ⟨((c0 : D.host.K) : D.host.E) * M1, (intK D c0).mul isIntegral_algebraMap⟩
   have hb0 : b0 ≠ 0 := by
     intro h

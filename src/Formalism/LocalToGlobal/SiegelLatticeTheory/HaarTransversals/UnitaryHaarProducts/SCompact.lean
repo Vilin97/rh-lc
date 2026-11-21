@@ -30,7 +30,7 @@ theorem Ksub_coe : ((Ksub I : Subgroup I.Gf) : Set I.Gf) = I.Kset := rfl
 
 theorem hs_continuous {n : ℕ} : Continuous (fun M : Matrix (Fin n) (Fin n) ℂ => Formalism.REAL.hs M) := by
   unfold Formalism.REAL.hs
-  refine continuous_finset_sum _ (fun i _ => continuous_finset_sum _ (fun j _ => ?_))
+  refine continuous_finsetSum _ (fun i _ => continuous_finsetSum _ (fun j _ => ?_))
   exact ((continuous_id.matrix_elem i j).norm).pow 2
 
 theorem omCover_holds : OmCover I := by

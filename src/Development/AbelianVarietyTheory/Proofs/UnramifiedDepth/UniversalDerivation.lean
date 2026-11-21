@@ -37,8 +37,6 @@ omit [CommRing O] [AddCommGroup M] [Module O M] in
 lemma ext {x y : SqExt O M} (h1 : x.fst = y.fst) (h2 : x.snd = y.snd) : x = y :=
   Prod.ext h1 h2
 
-omit [CommRing O] [AddCommGroup M] [Module O M] in
-omit [CommRing O] [AddCommGroup M] [Module O M] in
 @[simp] lemma fst_mul (x y : SqExt O M) : (x * y).fst = x.fst * y.fst := rfl
 @[simp] lemma snd_mul (x y : SqExt O M) : (x * y).snd = x.fst • y.snd + y.fst • x.snd := rfl
 
@@ -66,7 +64,8 @@ instance [IsLocalRing O] : IsLocalRing (SqExt O M) := by
   haveI : Nontrivial (SqExt O M) := (fstHom (O := O) (M := M)).domain_nontrivial
   refine IsLocalRing.of_isUnit_or_isUnit_of_isUnit_add ?_
   intro a b h
-  rw [isUnit_iff, fst_add] at h
+  rw [isUnit_iff] at h
+  change IsUnit (a.fst + b.fst) at h
   rw [isUnit_iff, isUnit_iff]
   exact IsLocalRing.isUnit_or_isUnit_of_isUnit_add h
 
@@ -229,7 +228,9 @@ lemma snd_smul (φ : LHom A (sqAlg O M)) (h1 : φ.comp sO = sqIncl O M) (o : (O 
   have h : φ.1 (sO.1 o) = SqExt.mk (M := M) o 0 := congrArg (fun ψ => ψ.1 o) h1
   rw [map_mul, h]
   refine (SqExt.snd_mul (O := (O : Type)) (M := M) _ _).trans ?_
-  simp
+  change o • (φ.1 f : SqExt (O : Type) M).snd +
+    (φ.1 f : SqExt (O : Type) M).fst • (0 : M) = _
+  rw [smul_zero, add_zero]
 
 lemma snd_leibniz (φ : LHom A (sqAlg O M)) (h2 : (sqProj O M).comp φ = ε) (f f' : (A : Type)) :
     SqExt.snd (O := (O : Type)) (M := M) (φ.1 (f * f')) =

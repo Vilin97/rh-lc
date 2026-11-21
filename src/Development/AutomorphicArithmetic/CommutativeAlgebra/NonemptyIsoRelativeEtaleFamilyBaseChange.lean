@@ -48,6 +48,7 @@ private def baseI {B : Scheme.{0}} (U : B.Etale) : U.left ≅ pullback (𝟙 B) 
     apply pullback.hom_ext
     · have h := pullback.condition (f := 𝟙 B) (g := U.hom)
       simp only [Category.comp_id] at h
+      simpa using h.symm
     · simp [pullback.lift_snd]
 
 theorem UpperTheory.nonempty_iso_relativeEtaleFamily_baseChange :

@@ -13,7 +13,7 @@ open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.
 namespace GlobalTheory.Dieu.EtFromConn
 
 theorem rigToLie_toBase_rig {p : ℕ} [Fact p.Prime] {k k' : Type} [Field k] [CharP k p] [Field k']
-    [CharP k' p] [Algebra k k'] (G : PDivGroup p k) (r : G.RigExt) (w : G.dual.omega) :
+    [CharP k' p] [Algebra k k'] (G : PDivGroup p k) (r : ((G.cocycles × G.omega) ⧸ _root_.LinearMap.range (G.cob.prod (_root_.LinearMap.codRestrict G.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G.A i))).domRestrict G.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) (w : G.dual.omega) :
     (G.baseChange k').rigToLie (p_eq_zero p k') ((G.toBase k').rig r)
       (omegaMap _ _ (PerfdLat.dualBaseChange k' G).hom ((G.dual.toBase k').omega w)) =
       algebraMap k k' (G.rigToLie (p_eq_zero p k) r w) := by

@@ -188,7 +188,7 @@ variable {r : ℕ} (Γ : GCtx E r)
 def cminor (n : ℕ) (hn : n ≤ r) (u : ℂ) : GOp Γ.nV E := fun f g =>
   ∑ b : Fin n → Fin Γ.nV, if StrictMono b then
     (Matrix.det (Matrix.of fun (a j : Fin n) =>
-      Γ.form (g.mulVec (Pi.single (b j) 1)) (Pi.single (Γ.eIdx ⟨a, by omega⟩) 1))) •
+      herm Γ.H (g.mulVec (Pi.single (b j) 1)) (Pi.single (Γ.eIdx ⟨a, by omega⟩) 1))) •
       qminorOp Γ.Eop (fun a : Fin n => Γ.eIdx ⟨a, by omega⟩) b u f g
   else 0
 

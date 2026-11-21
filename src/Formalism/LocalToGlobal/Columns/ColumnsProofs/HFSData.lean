@@ -126,9 +126,7 @@ theorem LevFam.coefMap_chr {SG : Finset (HeightOneSpectrum (𝓞 E))} (Λ : LevF
       (∏ i, ((Units.map ι.toMonoidHom).comp (Λ i).lam).comp (piProj (fun w : SG => (Λ w).H) i)) y =
         Units.map ι.toMonoidHom ((∏ i, (Λ i).lam.comp (piProj (fun w : SG => (Λ w).H) i)) y) := by
     intro y
-    first
-    | simp only [MonoidHom.finset_prod_apply, MonoidHom.comp_apply, map_prod]
-    | simp [MonoidHom.finset_prod_apply, map_prod]
+    simp [map_prod]
   first
   | exact key x
   | (simp only [LevFam.chr, piChar, LevFam.coefMap, Lev.coefMap]

@@ -16,12 +16,15 @@ open LocalSpans idealPowerSpanBounds
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 variable {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+
 theorem le_locF (𝔭 : Ideal (𝓞 F)) [𝔭.IsPrime] (L : Submodule (𝓞 K) V) : L ≤ locF 𝔭 L := fun x hx =>
   (mem_locF 𝔭 L x).2 ⟨1, fun h => (Ideal.ne_top_iff_one 𝔭).1 (Ideal.IsPrime.ne_top inferInstance) h,
     by simpa using hx⟩
 
-theorem ι_mem_pow {𝔭 : Ideal (𝓞 F)} {k : ℕ} {a : 𝓞 F} (ha : a ∈ 𝔭 ^ k) : ι a ∈ extP K 𝔭 ^ k :=
-  (mem_pow_iff 𝔭 k a).2 ha
+theorem ι_mem_pow {𝔭 : Ideal (𝓞 F)} {k : ℕ} {a : 𝓞 F} (ha : a ∈ 𝔭 ^ k) : ι a ∈ extP K 𝔭 ^ k := by
+  rw [extP, ← Ideal.map_pow]
+  exact Ideal.mem_map_of_mem _ ha
 
 theorem exists_approx {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (L : Submodule (𝓞 K) V) (k : ℕ) {w : V}
     (hw : w ∈ locF 𝔭 L) : ∃ c : 𝓞 F, c - 1 ∈ 𝔭 ^ k ∧ ι c • w ∈ L := by
@@ -228,10 +231,15 @@ theorem vd_locF (hF : IsFixF K F) (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submod
         simp only [Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
         exact form_smul hF h t t _ _
       rw [this, Matrix.det_smul, Fintype.card_fin, map_mul, ez, map_pow, map_pow]
-    have h2 : (t * t) ^ finrank K V ∉ 𝔭 ^ (0 + 1) := by
-      rw [zero_add, pow_one]
+    have h2 : (t * t) ^ finrank K V ∉ 𝔭 := by
       intro hm
       exact (h𝔭.isPrime.mem_or_mem (h𝔭.isPrime.mem_of_pow_mem _ hm)).elim ht ht
-    exact mem_of_mul_mem h𝔭 h2 (by rw [zero_add]; exact hle h1)
+    obtain ⟨u, hu⟩ := MeanA.exists_mul_sub_one_mem_pow h𝔭 h2 e
+    have hmul : ι u * (ι ((t * t) ^ finrank K V) * z) ∈ extP K 𝔭 ^ e :=
+      Ideal.mul_mem_left _ _ (hle h1)
+    have hsub : ι (u * (t * t) ^ finrank K V - 1) * z ∈ extP K 𝔭 ^ e :=
+      Ideal.mul_mem_right _ _ (ι_mem_pow hu)
+    simpa only [map_sub, map_mul, map_one, sub_mul, one_mul, mul_assoc, sub_sub_cancel]
+      using sub_mem hmul hsub
 
 end Formalism.HermitianLattices.Ext.L3.localizedQuotients

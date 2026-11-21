@@ -54,7 +54,7 @@ private theorem irr_of_conn {G K : Type} [Group G] [Field K] {n : ℕ} {a : G �
   · simp [hk]
 
 private theorem jtj {K : Type} [CommRing K] {n : ℕ} (m : Matrix (Fin n) (Fin n) K) (i j : Fin n) :
-    (Jmat K n * mᵀ * Jmat K n) i j = m j.rev i.rev := by
+    (Jmat (R := K) n * mᵀ * Jmat (R := K) n) i j = m j.rev i.rev := by
   have h : ∀ k : Fin n, (j = k.rev) = (k = j.rev) := fun k => propext ⟨fun e => by simp [e], fun e => by simp [e]⟩
   simp [Matrix.mul_apply, Jmat, h]
 

@@ -39,7 +39,8 @@ theorem normGrp_maxExp (hK : FiniteDimensional ℚ_[p] K) {n : ℕ} (hn : 0 < n)
     normGrp p K L = (powMonoidHom n : Kˣ →* Kˣ).range := by
   have hle : (powMonoidHom n : Kˣ →* Kˣ).range ≤ normGrp p K L := by
     rintro _ ⟨a, rfl⟩
-    have h1 : IsRecip p K L (a ^ n) 1 := by
+    have h1 : ∀ χ : charGrp (GK p K), TrivOn p K L χ →
+        χ.1 (Additive.ofMul (1 : GK p K)) = pairK p K (a ^ n) χ := by
       intro χ hχ
       rw [pairK_pow, ← pairK_nsmul, (hL' χ).1 hχ, pairK_zero]
       exact map_zero χ.1
@@ -84,7 +85,7 @@ theorem exists_normGrp_le_pow (hK : FiniteDimensional ℚ_[p] K) {n : ℕ} (hn :
   obtain ⟨L, hL, hL'⟩ := exists_maxExp hfinM hn hfin
   have hMst : ∀ (σ : GK p K), ∀ x ∈ M, σ x ∈ M := (subG_normal_iff hM.le).1 hM.normal
   have hst : ∀ (σ : GK p K), ∀ x ∈ L, σ x ∈ L := fun σ x hx => maxExp_stable hM.le hMst hL hL' σ x hx
-  have : (subG p K L).Normal := subG_normal_of_stable p K L hst
+  have : (subG p K L).Normal := subG_normal_of_stable hst
   have hKL : K ≤ L := hM.le.trans hL.le
   have hsol := isSolvable_of_ab_of_ab hM hL
   obtain ⟨E, hE, hEL, hE'⟩ := exists_maxAb hL.fin hKL
