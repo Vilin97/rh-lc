@@ -26,13 +26,12 @@ namespace GlobalTheory.LieVB
 
 variable {X Y : Scheme.{0}} {F G H : X.Modules} {O : Type} [CommRing O]
 
-
-    cartierDualToBidual (dual F) ≫ dualMap (cartierDualToBidual F) = 𝟙 _ := by
-  ext V l : 3
-  exact dual_ext fun W h s => congrArg (dualApp l h) (resM_self _ s)
-
-instance mono_toBidual_dual : Mono (cartierDualToBidual (dual F)) :=
-  mono_of_mono_fac (toBidual_dual_comp_dualMap F)
+instance mono_toBidual_dual : Mono (cartierDualToBidual (dual F)) := by
+  have h : cartierDualToBidual (dual F) ≫
+      GlobalTheory.CompanionTheory.Ar.dualMap (cartierDualToBidual F) = 𝟙 _ := by
+    ext V l : 3
+    exact dual_ext fun W h s => congrArg (dualApp l h) (resM_self _ s)
+  exact mono_of_mono_fac h
 
 theorem mono_toBidual_of_mono (i : G ⟶ F) [Mono i] [Mono (cartierDualToBidual F)] : Mono (cartierDualToBidual G) :=
   mono_of_mono_fac (toBidual_naturality_dualSheafTranspose i).symm
@@ -85,15 +84,15 @@ def eigenImι : eigenIm ρ σ ⟶ dual (eigen (dualAct ρ) σ) := image.ι _
 
 instance epi_eigenImπ : Epi (eigenImπ ρ σ) := inferInstanceAs (Epi (factorThruImage _))
 
-instance mono_eigenImι : Mono (eigenImι ρ σ) := inferInstanceAs (Mono (image.ι _))
-
-  image.fac _
+instance mono_eigenImι : Mono (eigenImι ρ σ) :=
+  inferInstanceAs (Mono (image.ι (eigenEval ρ σ)))
 
 instance mono_toBidual_eigenImage : Mono (cartierDualToBidual (eigenIm ρ σ)) :=
   mono_toBidual_of_mono (eigenImι ρ σ)
 
 theorem act_eigenImπ (a : O) : act ρ a ≫ eigenImπ ρ σ = σ a • eigenImπ ρ σ := by
-  rw [← cancel_mono (eigenImι ρ σ), Category.assoc, Linear.smul_comp, eigenImπ_ι, eigenEval_eq,
+  have h : eigenImπ ρ σ ≫ eigenImι ρ σ = eigenEval ρ σ := image.fac _
+  rw [← cancel_mono (eigenImι ρ σ), Category.assoc, Linear.smul_comp, h, eigenEval_eq,
     ← Category.assoc, act_eigenπ, Linear.smul_comp]
 
 def quotToIm : eigenQuot ρ σ ⟶ eigenIm ρ σ := eigenDesc (eigenImπ ρ σ) (act_eigenImπ ρ σ)
@@ -104,8 +103,9 @@ theorem comp_eq_zero_of_comp_eigenImπ [Mono (cartierDualToBidual G)] {φ : F �
     (h : ∀ a, act ρ a ≫ φ = σ a • φ) {k : H ⟶ F} (hk : k ≫ eigenImπ ρ σ = 0) : k ≫ φ = 0 := by
   have h' (a : O) : GlobalTheory.CompanionTheory.Ar.dualMap φ ≫ act (dualAct ρ) a = σ a • GlobalTheory.CompanionTheory.Ar.dualMap φ := by
     rw [act_dualAct, ← dualMap_comp, h, dualMap_smul]
+  have hfac : eigenImπ ρ σ ≫ eigenImι ρ σ = eigenEval ρ σ := image.fac _
   rw [← cancel_mono (cartierDualToBidual G), Category.assoc, toBidual_naturality_dualSheafTranspose, ← eigenLift_ι _ _ _ h',
-    dualMap_comp, zero_comp, ← Category.assoc (cartierDualToBidual F), ← eigenEval, ← eigenImπ_ι,
+    dualMap_comp, zero_comp, ← Category.assoc (cartierDualToBidual F), ← eigenEval, ← hfac,
     Category.assoc, reassoc_of% hk, zero_comp]
 
 def eigenImDesc [Mono (cartierDualToBidual G)] (φ : F ⟶ G) (h : ∀ a, act ρ a ≫ φ = σ a • φ) :
@@ -164,12 +164,13 @@ theorem comp_eq_smul {φ : F ⟶ G} (hφ : ∀ a, act ρ a ≫ φ = σ a • φ)
 theorem isEquivariant : IsEquivariant ρ ρ ε := fun a => by
   obtain ⟨n, c, b, rfl, -⟩ := h.exists_sum
   have e (x : O) : act ρ a ≫ act ρ x = act ρ x ≫ act ρ a :=
-    (map_mul ρ x a).symm.trans ((congrArg ρ (mul_comm x a)).trans (map_mul ρ a x))
+    congrArg End.asHom ((map_mul ρ x a).symm.trans
+      ((congrArg ρ (mul_comm x a)).trans (map_mul ρ a x)))
   simp only [Preadditive.comp_sum, Preadditive.sum_comp, Linear.comp_smul, Linear.smul_comp, e]
 
 theorem comp_act (a : O) : ε ≫ act ρ a = σ a • ε := (h.isEquivariant a).symm.trans (h.act_comp a)
 
-theorem dual : IsEigenProj (dualAct ρ) σ (dualMap ε) D where
+theorem dual : IsEigenProj (dualAct ρ) σ (GlobalTheory.CompanionTheory.Ar.dualMap ε) D where
   act_comp a := by rw [act_dualAct, ← dualMap_comp, h.comp_act, dualMap_smul]
   exists_sum := by
     obtain ⟨n, c, b, rfl, e⟩ := h.exists_sum
@@ -224,7 +225,7 @@ open Polynomial
 variable (F G)
 
 def twoAct : ℤ[X] →+* End (F ⊞ G) :=
-  eval₂RingHom' (Int.castRingHom _) (2 • (biprod.snd ≫ biprod.inr : F ⊞ G ⟶ F ⊞ G))
+  eval₂RingHom' (Int.castRingHom _) (End.of (2 • (biprod.snd ≫ biprod.inr)))
     fun n => Int.cast_commute n _
 
 
@@ -232,16 +233,18 @@ variable (X) in
 def zeroChar : ℤ[X] →+* Γ(X, ⊤) := (Int.castRingHom _).comp constantCoeff
 
 theorem act_twoAct_X : act (twoAct F G) Polynomial.X = 2 • (biprod.snd ≫ biprod.inr) :=
-  eval₂_X (S := End (F ⊞ G)) _ _
+  congrArg End.asHom (eval₂_X (S := End (F ⊞ G)) _ _)
 
 
 variable {F G} in
 theorem act_comp_of_X {ρ : ℤ[X] →+* End F} {φ : F ⟶ G} (h : act ρ Polynomial.X ≫ φ = 0)
     (a : ℤ[X]) : act ρ a ≫ φ = zeroChar X a • φ := by
   have e : act ρ a = act ρ a.divX ≫ act ρ Polynomial.X + smulHom F (zeroChar X a) := by
-    conv_lhs => rw [← X_mul_divX_add a, act, map_add (f := _), map_mul]
-    exact congrArg _ congr($(RingHom.ext_int (ρ.comp C) (scalarAct F (Int.castRingHom _)))
-      (a.coeff 0))
+    change (ρ a).asHom = _
+    conv_lhs => rw [← X_mul_divX_add a, map_add (f := ρ), map_mul]
+    change act ρ a.divX ≫ act ρ Polynomial.X + act ρ (C (a.coeff 0)) = _
+    exact congrArg (fun e : End F => act ρ a.divX ≫ act ρ Polynomial.X + e.asHom)
+      congr($(RingHom.ext_int (ρ.comp C) (scalarAct F (Int.castRingHom _))) (a.coeff 0))
   rw [e, Preadditive.add_comp, Category.assoc, h, Limits.comp_zero, zero_add, smulHom_comp]
   rfl
 
@@ -249,7 +252,7 @@ theorem isEigenProj_twoAct :
     IsEigenProj (twoAct F G) (zeroChar X) (2 • (biprod.fst ≫ biprod.inl)) 2 where
   act_comp := act_comp_of_X (by simp [act_twoAct_X])
   exists_sum := ⟨2, ![2, -1], ![1, Polynomial.X], by
-    have e : act (twoAct F G) 1 = 𝟙 _ := map_one (twoAct F G)
+    have e : act (twoAct F G) 1 = 𝟙 _ := congrArg End.asHom (map_one (twoAct F G))
     simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, act_twoAct_X, e,
       two_smul, neg_smul, one_smul, ← biprod.total]
     abel, by simp [zeroChar]⟩

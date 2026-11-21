@@ -96,7 +96,7 @@ theorem mem_int_iff (y : Af F ⊗[F] E) :
         rw [show finAdEquiv F E (a ⊗ₜ[F] (x : E)) = _ from toFinAd_tmul a (x : E)]
         exact mul_mem (GlobalTheory.AdeleBaseChange.adMap_int ha) (GlobalTheory.AdeleBaseChange.algebraMap_int_mem x)
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [RingEquiv.map_add]; exact add_mem hx hy
       | neg x _ hx => rw [map_neg]; exact neg_mem hx
     exact this
   · intro hy
@@ -197,7 +197,7 @@ theorem locChar_eq_of_chrEq (h : ChrEq c χ) (w : HeightOneSpectrum (𝓞 D.host
         (toFinAd_tmul 1 (k : D.host.E)).trans (by rw [map_one, one_mul])
       change finAdEquiv D.host.F D.host.E (finPart D (1 + e * (incA D k - 1))) P =
         Neutral.B1.finiteSingle D.host.E w (algebraMap D.host.E _ (k : D.host.E)) P
-      rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, RingEquiv.map_add (f := _), RingEquiv.map_mul,
+      rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, RingEquiv.map_add (e := _), RingEquiv.map_mul,
         RingEquiv.map_sub, RingEquiv.map_one, e1]
       change 1 + finAdEquiv D.host.F D.host.E (finPart D e) P * (algebraMap D.host.E _ (k : D.host.E) - 1) = _
       by_cases hP : P = w
@@ -246,8 +246,7 @@ theorem valuation_up (h : w.under (𝓞 F) = v) (x : F) :
     w.valuation E (algebraMap F E x) = v.valuation F x ^ w.asIdeal.ramificationIdx (𝓞 F) := by
   subst h
   have : w.asIdeal.LiesOver (w.under (𝓞 F)).asIdeal := ⟨rfl⟩
-  rw [← HeightOneSpectrum.valuation_liesOver E (w.under (𝓞 F)) w x,
-    Ideal.ramificationIdx'_eq_ramificationIdx _ _ (w.under (𝓞 F)).ne_bot]
+  rw [← HeightOneSpectrum.valuation_liesOver E (w.under (𝓞 F)) w x]
 
 theorem valued_complMap (h : w.under (𝓞 F) = v) {a : Fv F v} (ha : a ≠ 0) :
     Valued.v (complMap h a) = Valued.v a ^ w.asIdeal.ramificationIdx (𝓞 F) := by

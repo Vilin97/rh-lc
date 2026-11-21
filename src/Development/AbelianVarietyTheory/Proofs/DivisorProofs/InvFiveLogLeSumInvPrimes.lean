@@ -117,7 +117,8 @@ theorem okAll_sound : ∀ (T : List (ℕ × ℕ × ℕ × ℕ × List ℕ)) (lo 
         (1 : ℝ) / p
   | [], lo, hi, h, N, h1, h2 => by simp [okAll] at h; omega
   | (a, b, j, c, L) :: rest, lo, hi, h, N, h1, h2 => by
-    simp only [okAll, Bool.and_eq_true, decide_eq_true_eq] at h
+    change ((decide (a ≤ lo) && okIv a b j c L) && okAll b rest hi) = true at h
+    simp only [Bool.and_eq_true, decide_eq_true_eq] at h
     obtain ⟨⟨hal, hiv⟩, hrest⟩ := h
     by_cases hNb : N < b
     · exact okIv_sound hiv N (by omega) hNb

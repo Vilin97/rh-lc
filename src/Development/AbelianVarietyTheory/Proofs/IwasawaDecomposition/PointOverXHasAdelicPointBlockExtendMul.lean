@@ -180,10 +180,10 @@ theorem pt_tilF_gen : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → P
         rw [Units.val_mul, Units.val_mul, Matrix.mul_apply, map_sum, Finset.sum_eq_single j]
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [map_mul, Matrix.mul_apply, map_sum, Finset.sum_eq_single j, map_mul, hkP, Matrix.one_apply_eq, mul_one]
-        · rfl
-        · intro l _ hl
-          rw [map_mul, hkP, Matrix.one_apply_ne hl, mul_zero]
-        · simp
+          · rfl
+          · intro l _ hl
+            rw [map_mul, hkP, Matrix.one_apply_ne hl, mul_zero]
+          · simp
       · intro l _ hl
         rw [map_mul, htP P l j, if_neg hl, map_zero, mul_zero]
       · simp

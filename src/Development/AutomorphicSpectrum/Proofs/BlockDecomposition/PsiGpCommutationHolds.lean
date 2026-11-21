@@ -91,7 +91,7 @@ theorem coinv_intertwine (H U : Subgroup G) (Q : Subgroup M) (s : M →* G) (χ 
     (g : M) (f : cIndSpace H σ) :
     E ((χ g : ℂ) • Submodule.Quotient.mk (cInd H σ (s g) f)) = smInd Q σ' g (E (Submodule.Quotient.mk f)) := by
   refine Subtype.ext (Subtype.ext (funext fun x => ?_))
-  rw [map_smul]
+  rw [LinearEquiv.map_smul]
   show (χ g : ℂ) • (E (Submodule.Quotient.mk (cInd H σ (s g) f))).1.1 x = (E (Submodule.Quotient.mk f)).1.1 (x * g)
   rw [hE, hE, map_mul, smul_smul, Units.val_mul, mul_comm]
   show _ • c (f.1.1.1 (s x * s g)) = _ • c (f.1.1.1 (s (x * g)))
@@ -201,8 +201,14 @@ theorem cc_tmul (a : ρ.V) (b : τ.V) : cc ρ τ ((a : Vt (j := j) ρ) ⊗ₜ[�
     PiTensorProduct.tprod ℂ (pair a (mkY τ b)) :=
   cMap_tmul _ _ _ _
 
-theorem levi_mem_HGP (p : GL (Fin (m + j)) k) (hp : p ∈ parab k (eMJ m j)) : levi k (m + j) p ∈ MirabolicParabolic k m j :=
-  (GlobalTheory.T.mem_mirabolicParabolic_iff_parabolic k m j _).2 (by rwa [GlobalTheory.CompanionTheory.BZMirAdj.mirProj_levi])
+theorem levi_mem_HGP (p : GL (Fin (m + j)) k) (hp : p ∈ parab k (eMJ m j)) : levi k (m + j) p ∈ MirabolicParabolic k m j := by
+  have hproj : mirabolicProjection k (m + j) (levi k (m + j) p) = p := by
+    apply Units.ext
+    ext a b
+    change blockMat k (m + j) (glEmbMat k (m + j) (p : Matrix (Fin (m + j)) (Fin (m + j)) k)) a b = _
+    simp [blockMat, glEmbMat]
+  apply (GlobalTheory.T.mem_mirabolicParabolic_iff_parabolic k m j _).2
+  rwa [hproj]
 
 theorem hcomp (p : parab k (eMJ m j)) (w : Vt (j := j) ρ ⊗[ℂ] Zt τ m) :
     ((dpow (m + j) (-1 / 2) (p : GL (Fin (m + j)) k) : ℂˣ) : ℂ) •
@@ -348,11 +354,39 @@ theorem exE (hρ : IsSmooth ρ.ρ) (hτ : IsSmooth τ.ρ) :
       ∀ (f : cIndSpace (MirabolicParabolic k m j) (sig ρ τ)) (x : GL (Fin (m + j)) k), (E (Submodule.Quotient.mk f)).1.1 x =
         ((dpow (m + j) (-1 / 2) x : ℂˣ) : ℂ) • cc ρ τ (f.1.1.1 (levi k (m + j) x)) := by
   have hPK := parab_mul_KO (k := k) (eMJ m j)
-  have hker : ∀ g, mirabolicProjection k (m + j) g = 1 ↔ g ∈ MirUin k (m + j) := fun g =>
-    ⟨GlobalTheory.CompanionTheory.BZMirAdj.mem_of_mirProj_eq_one k _ g, GlobalTheory.CompanionTheory.BZMirAdj.mirProj_eq_one_of_mem k _ g⟩
+  have hker : ∀ g, mirabolicProjection k (m + j) g = 1 ↔ g ∈ MirUin k (m + j) := by
+    intro g
+    constructor
+    · intro hg
+      let A : Matrix (Fin (m + j + 1)) (Fin (m + j + 1)) k := (g : GL (Fin (m + j + 1)) k)
+      have hrow : A (Fin.last (m + j)) = eLast k (m + j) := (mem_Mir_iff k g.1).1 g.2
+      have hblock (a b : Fin (m + j)) : A a.castSucc b.castSucc = (1 : Matrix (Fin (m + j)) (Fin (m + j)) k) a b :=
+        congrArg (fun u : GL (Fin (m + j)) k => (u : Matrix (Fin (m + j)) (Fin (m + j)) k) a b) hg
+      refine ⟨Multiplicative.ofAdd (fun a => A a.castSucc (Fin.last (m + j))), ?_⟩
+      apply Units.ext
+      ext a b
+      change ((1 : Matrix (Fin (m + j + 1)) (Fin (m + j + 1)) k) +
+        colMat k (m + j) (fun i => A i.castSucc (Fin.last (m + j)))) a b = A a b
+      rw [Matrix.add_apply, colMat]
+      rcases Fin.eq_castSucc_or_eq_last a with ⟨a, rfl⟩ | rfl <;>
+        rcases Fin.eq_castSucc_or_eq_last b with ⟨b, rfl⟩ | rfl
+      · simp [Matrix.one_apply, hblock]
+      · simp [Matrix.one_apply, Fin.castSucc_ne_last]
+      · simp [Matrix.one_apply, Fin.castSucc_ne_last, (Fin.castSucc_ne_last _).symm, hrow, eLast]
+      · simp [hrow, eLast]
+    · intro hg
+      obtain ⟨v, hv⟩ := (hg : (g : GL (Fin (m + j + 1)) k) ∈ MirU k (m + j))
+      have hv' : unip k (m + j) v = g.1 := hv
+      apply Units.ext
+      ext a b
+      change blockMat k (m + j) (g.1 : Matrix (Fin (m + j + 1)) (Fin (m + j + 1)) k) a b = _
+      rw [blockMat, ← hv']
+      change ((1 : Matrix (Fin (m + j + 1)) (Fin (m + j + 1)) k) + colMat k (m + j) v.toAdd)
+        a.castSucc b.castSucc = (1 : Matrix (Fin (m + j)) (Fin (m + j)) k) a b
+      simp [colMat, Matrix.one_apply, Fin.castSucc_ne_last]
   have hUH : MirUin k (m + j) ≤ MirabolicParabolic k m j := fun g hg => by
     refine (GlobalTheory.T.mem_mirabolicParabolic_iff_parabolic k m j g).2 ?_
-    rw [GlobalTheory.CompanionTheory.BZMirAdj.mirProj_eq_one_of_mem k _ g hg]
+    rw [(hker g).2 hg]
     exact one_mem _
   have hN : (MirUin k (m + j)).Normal := by
     have : MirUin k (m + j) = (mirabolicProjection k (m + j)).ker := by
@@ -360,15 +394,34 @@ theorem exE (hρ : IsSmooth ρ.ρ) (hτ : IsSmooth τ.ρ) :
       rw [MonoidHom.mem_ker, hker]
     rw [this]
     infer_instance
+  have hproj_levi (g : GL (Fin (m + j)) k) : mirabolicProjection k (m + j) (levi k (m + j) g) = g := by
+    apply Units.ext
+    ext a b
+    change blockMat k (m + j) (glEmbMat k (m + j) (g : Matrix (Fin (m + j)) (Fin (m + j)) k)) a b = _
+    simp [blockMat, glEmbMat]
+  have hproj_cont : Continuous (mirabolicProjection k (m + j)) := by
+    have hval : Continuous fun g : Mir k (m + j) =>
+        (g.1 : Matrix (Fin (m + j + 1)) (Fin (m + j + 1)) k) :=
+      Units.continuous_val.comp continuous_subtype_val
+    have hblock : Continuous fun g : Mir k (m + j) =>
+        (mirabolicProjection k (m + j) g : Matrix (Fin (m + j)) (Fin (m + j)) k) := by
+      refine continuous_pi fun a => continuous_pi fun b => ?_
+      exact (continuous_apply b.castSucc).comp ((continuous_apply a.castSucc).comp hval)
+    refine Units.continuous_iff.2 ⟨hblock, ?_⟩
+    have hblock_inv : Continuous fun g : Mir k (m + j) =>
+        (mirabolicProjection k (m + j) g⁻¹ : Matrix (Fin (m + j)) (Fin (m + j)) k) :=
+      hblock.comp continuous_inv
+    simpa only [map_inv] using hblock_inv
   exact GlobalTheory.CompanionTheory.CIndCoinv.coinv_equiv (MirabolicParabolic k m j) (MirUin k (m + j)) (parab k (eMJ m j)) (levi k (m + j))
     (mirabolicProjection k (m + j)) (GlobalTheory.T.isClosed_mirabolicParabolic k m j) (GlobalTheory.CompanionTheory.BZMirOnto.exists_compactOpen k (m + j))
-    (GlobalTheory.CompanionTheory.BZMirFun.continuous_levi k (m + j)) (GlobalTheory.CompanionTheory.BZMirFun.continuous_mirProj k (m + j))
-    (GlobalTheory.CompanionTheory.BZMirAdj.mirProj_levi k (m + j)) hker hUH (fun g hg => (GlobalTheory.T.mem_mirabolicParabolic_iff_parabolic k m j g).1 hg)
+    (GlobalTheory.CompanionTheory.BZMirFun.continuous_levi k (m + j)) hproj_cont
+    hproj_levi hker hUH (fun g hg => (GlobalTheory.T.mem_mirabolicParabolic_iff_parabolic k m j g).1 hg)
     (fun p hp => levi_mem_HGP p hp) (GlobalTheory.SplitWeil.KO k (Fin (m + j))) GlobalTheory.SplitFlip.isCompact_KO hPK
     (dpow (m + j) (-1 / 2)) (isOpen_dpow_ker _ _) (sig ρ τ) (isSmooth_sig ρ τ hρ hτ) (sigP ρ τ)
     (cc ρ τ) (cMap_surjective _ _ (mkZ_surjective τ)) (hck ρ τ) (hcomp ρ τ)
     (GlobalTheory.T.compact_induction_twisted_kernel _ _ hUH (GlobalTheory.CompanionTheory.BZMirOnto.exists_compactOpen k (m + j)) _ (isSmooth_sig ρ τ hρ hτ))
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem psiMinus_cInd_equiv_smInd (hρ : IsSmooth ρ.ρ) (hτ : IsSmooth τ.ρ) :
     Nonempty ((twist (psiMinus k (cInd (MirabolicParabolic k m j) (sig ρ τ))) (dpow (m + j) (-1 / 2))).Equiv
       (smInd (parab k (eMJ m j)) (sigP ρ τ))) := by

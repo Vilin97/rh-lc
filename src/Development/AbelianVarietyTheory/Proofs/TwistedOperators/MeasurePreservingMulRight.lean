@@ -34,21 +34,11 @@ def infMatHom (V : HSp D) (φ : Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ) 
   map_mul' := GlobalTheory.PointAtPlaceHom.infMat_mul V φ
 
 theorem list_prod_map_ite {α M : Type} [Monoid M] [DecidableEq α] (a : M) (σ : α) :
-    ∀ l : List α, l.Nodup → σ ∈ l → (l.map fun ρ => if ρ = σ then a else 1).prod = a
-  | [], _, h => by simp at h
-  | x :: l, hn, h => by
-    rw [List.map_cons, List.prod_cons]
-    rw [List.nodup_cons] at hn
-    by_cases hx : x = σ
-    · subst σ
-      have hprod : (l.map fun ρ => if ρ = x then a else 1).prod = 1 := by
-        apply List.prod_eq_one
-        intro y hy
-        obtain ⟨z, hz, rfl⟩ := List.exists_of_mem_map hy
-        exact ite_eq_right fun (e : z = x) => hn.1 (e ▸ hz)
-      rw [ite_eq_left rfl, hprod, mul_one]
-    · rw [ite_eq_right hx, one_mul]
-      exact list_prod_map_ite a σ l hn.2 ((List.mem_cons.1 h).resolve_left (Ne.symm hx))
+    ∀ l : List α, l.Nodup → σ ∈ l → (l.map fun ρ => if ρ = σ then a else 1).prod = a := by
+  intro l hn h
+  rw [List.prod_map_eq_pow_single σ (fun ρ => if ρ = σ then a else 1)
+    (fun _ hρ _ => ite_eq_right hρ), hn.count_of_mem h]
+  simp
 
 def IsRealAll (θ : InfFam D) (V : HSp D) (M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) (h : GA D V) : Prop :=
   h ∈ GinfC V ∧ ∀ ρ, infMat D.sp.cm.sig V.gram (θ ρ) h = M ρ

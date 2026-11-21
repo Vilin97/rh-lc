@@ -56,8 +56,8 @@ private theorem F_ins (u : K → K → A) (v : K → A) (hs : ∀ a b, u a b = u
       F u v (2 * E) g * v x
   | 0, g => by simp [F]
   | E + 1, g => by
-    obtain ⟨a, tail, hg⟩ := Fin.exists_cons (n := 2 * E + 1) g
-    obtain ⟨b, rest, htail⟩ := Fin.exists_cons (n := 2 * E) tail
+    obtain ⟨a, tail, hg⟩ := Fin.exists_cons (n := 2 * E + 1) (α := fun _ => K) g
+    obtain ⟨b, rest, htail⟩ := Fin.exists_cons (n := 2 * E) (α := fun _ => K) tail
     rw [hg, htail]
     change ∑ i : Fin (2 * E + 1 + 1 + 1), (-1 : A) ^ (i : ℕ) * F u v (2 * E + 1 + 2)
       (Fin.insertNth (α := fun _ => K) i x (Fin.cons a (Fin.cons b rest : Fin (2 * E + 1) → K) : Fin (2 * E + 1 + 1) → K)) =

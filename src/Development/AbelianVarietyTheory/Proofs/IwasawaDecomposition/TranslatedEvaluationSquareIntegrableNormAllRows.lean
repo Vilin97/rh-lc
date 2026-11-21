@@ -71,7 +71,7 @@ theorem GlobalTheory.EvalAllRows.evalTranslate_norm_all : GlobalTheory.Dec.DSInf
   by_contra hne
   have hre := re_ipM_eq (hSch S hS) hv'
   have hint : IntegrableOn (fun x => ‖S v x‖ ^ 2) R.fd0 R.ν0 :=
-    (memLp_two_iff_integrable_sq_norm (hL2 S hS v).1).1 (hL2 S hS v)
+    (memLp_two_iff_integrable_sq_norm (hL2 S hS v).aestronglyMeasurable).1 (hL2 S hS v)
   have hp := Formalism.IndefR.PeterssonHilbertSpace.petPos (D.sp.Y 0) R.ν0 R.fd0 hνH hν0.2 (S v) (hcont S hS v).1 (hcont S hS v).2 hne hint
   rw [← hre, h0] at hp
   exact lt_irrefl _ hp

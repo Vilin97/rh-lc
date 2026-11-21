@@ -15,6 +15,8 @@ open CategoryTheory Limits NumberField IsDedekindDomain GroundTheory.Global
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section TwoTorsion
 
 variable {K : FiniteSubfield}

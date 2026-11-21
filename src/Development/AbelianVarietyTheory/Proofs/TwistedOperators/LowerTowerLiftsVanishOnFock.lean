@@ -200,7 +200,8 @@ theorem lowFock : ∀ (D : D7) (X : ProvA), GlobalTheory.PairLift.Inputs D X →
               fockT τ₀ (A.ε τ₀) (M'.ε τ₀) (M'.fr τ₀ * Y * (M'.fr τ₀)⁻¹) (glue (Function.update p τ₀ Q)) +
                 ((aS τ₀ : ℂ) * Y.trace) • glue (Function.update p τ₀ Q) := by
             rw [((GlobalTheory.T.gluing_law_holds D V'.rank W.rank).2 τ₀ _ _ _).2, Function.update_idem, Function.update_self]
-            simp only [← glueM_apply, MultilinearMap.map_update_add, MultilinearMap.map_update_smul]
+            simp only [← glueM_apply, MultilinearMap.map_update_add, MultilinearMap.map_update_smul,
+              RingHom.id_apply]
           have eq2 : Function.update y τ₀ (a' τ₀ Y z) = Function.update (Function.update y τ₀ z) τ₀
               (a' τ₀ Y (Function.update y τ₀ z τ₀)) := by
             rw [Function.update_idem, Function.update_self]

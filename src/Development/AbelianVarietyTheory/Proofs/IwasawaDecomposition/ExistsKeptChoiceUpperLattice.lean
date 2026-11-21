@@ -27,7 +27,29 @@ variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z
   {xd : ThData (w.D Z)}
 
 theorem nchT_up (n : NchT w Z Wt nch) : Nonempty (NchT w (upL Z S' N h) Wt (nchUp S' N h nch)) :=
-  ⟨{ tp := by kcopy n.tp, xi := kc% n.xi, psi := kc% n.psi, tie := by kcopy n.tie, Q := n.Q, chrPsi := by kcopy n.chrPsi }⟩
+  ⟨{ tp := {
+       xi := by with_unfolding_all exact (n.tp.xi :)
+       xi_inj := by with_unfolding_all exact (n.tp.xi_inj :)
+       xi_fin := by with_unfolding_all exact (n.tp.xi_fin :)
+       xi_triv := by with_unfolding_all exact (n.tp.xi_triv :)
+       xi_tame := by with_unfolding_all exact (n.tp.xi_tame :)
+       psi := by with_unfolding_all exact (n.tp.psi :)
+       trueColumnChoices_heckeChar_reference_eq_one := by with_unfolding_all exact (n.tp.trueColumnChoices_heckeChar_reference_eq_one :)
+       xi_star := by with_unfolding_all exact (n.tp.xi_star :)
+       xi_star' := by with_unfolding_all exact (n.tp.xi_star' :)
+       xi_tw := by with_unfolding_all exact (n.tp.xi_tw :)
+       psi_is := by with_unfolding_all exact (n.tp.psi_is :)
+       psi_un := by with_unfolding_all exact (n.tp.psi_un :) }
+     xi := by with_unfolding_all exact (n.xi :)
+     psi := by with_unfolding_all exact (n.psi :)
+     tie := {
+       twOf_eq := by with_unfolding_all exact (n.tie.twOf_eq :)
+       twSide_eq := by with_unfolding_all exact (n.tie.twSide_eq :)
+       Q_eq := by with_unfolding_all exact (n.tie.Q_eq :)
+       psi_eq := by with_unfolding_all exact (n.tie.psi_eq :)
+       embedding_baseField_condition := by with_unfolding_all exact (n.tie.embedding_baseField_condition :) }
+     Q := n.Q
+     chrPsi := by with_unfolding_all exact (n.chrPsi :) }⟩
 
 theorem kept_up (nch : NChoice (w.D Z)) : Kept nch (nchUp S' N h nch) := by
   refine ⟨?_, ?_, ?_, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl⟩ <;> constructor <;> first | rfl | exact HEq.rfl
@@ -35,7 +57,7 @@ theorem kept_up (nch : NChoice (w.D Z)) : Kept nch (nchUp S' N h nch) := by
 theorem goodO_up (g : GoodO (w.D Z) nch xd) : GoodO (w.D (upL Z S' N h)) (nchUp S' N h nch) (xdUp S' N h xd) := by
   obtain ⟨⟨E, N0, S⟩, h1, h2, h3⟩ := g.tw
   cases h1
-  exact ⟨⟨⟨twEOf (xdUp S' N h xd), N0, S⟩, rfl, kc% h2, kc% h3⟩, g.sep⟩
+  exact ⟨⟨⟨twEOf (xdUp S' N h xd), N0, S⟩, rfl, (by with_unfolding_all exact (h2 :)), (by with_unfolding_all exact (h3 :))⟩, g.sep⟩
 end
 
 end GlobalTheory.LayerMove

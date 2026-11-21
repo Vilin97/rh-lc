@@ -343,13 +343,13 @@ theorem GlobalTheory.shortValAt_std_cover_eq_thValAt : Formalism.MainNotions.Mod
   obtain ⟨u, hu⟩ := FramedBaseChange.exists_frMap hL E H Dw l Xo c k Ω ψ y
   have hy' : FrOver d u₂ u :=
     FrameLift.frOver_map d (ψ := ψ) (ψ₂ := χ.comp φ₁) rfl hy hu (FramedBaseChange.trans φ₁ χ hm₁ hu₂)
-  obtain ⟨w, hw, e₃⟩ := exists_value hd hn hn₂ hN.1 (hd.1.1.trans hN.2.1) hP hq (fun _ => rfl) hy' (ht q₀)
+  obtain ⟨w, hw, e₃⟩ := GlobalTheory.StdCover.exists_value (q := fun b => levRep (q₀ b)) hd hn hn₂ hN.1 (hd.1.1.trans hN.2.1) hP hq (fun _ => rfl) hy' (ht q₀)
   have e₄ := GlobalTheory.thetaValue_natural hL hCI E H Dw l Xo c nab hn k Ω ψ y u hu a m x P hP v' w hv' hw
   apply ψ.toRingHom.injective
   change χ (φ₁ v) = ψ v'
   rw [e₄, e₁, finsum_eq_single _ q₀ (fun q hq => by rw [if_neg hq, map_zero, zero_mul]), if_pos rfl, map_mul,
     map_mul χ, e₂, χ.commutes, χ.commutes,
-    Finset.sum_congr rfl fun i _ => e₃ (z i) (F q₀ i) (pow_eq_one_of_inZh (hz i)) (hF q₀ i),
+    Finset.sum_congr rfl fun i _ => e₃ (z i) (F q₀ i) (GlobalTheory.StdCover.pow_eq_one_of_inZh (hz i)) (hF q₀ i),
     Finset.sum_const, Finset.card_univ, Fintype.card_fin]
   have h₁ : GenLat.zCard (⟨stdLat E m⟩ : GenLat E m) N (Dw.p + Dw.q) =
       GenLat.mIdx (⟨stdLat E m⟩ : GenLat E m) N (Dw.p + Dw.q) := by

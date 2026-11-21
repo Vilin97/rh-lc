@@ -19,6 +19,8 @@ attribute [local instance 2000] Rep.hV2
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
   (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion)
@@ -121,7 +123,8 @@ theorem mem_of_natCast_mem_of_dvd {n d : ℕ} (hd : d ∣ n)
 theorem eq_zero_gsTateCompactCohomology_of_coind
     (hC : (∀ v : HeightOneSpectrum (𝓞 K.1), ((2 : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S) →
       ∀ (W : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S)) {r : ℕ}, 4 ≤ r →
-        ∀ x : gsTateCompactCohomology S ιr ιs (Rep.coind (W : Subgroup _).subtype
+        ∀ x : gsTateCompactCohomology S ιr ιs
+          (Rep.coind (W : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).subtype
           (zmodRep.{0} (W : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)) 2)) r, x = 0)
     {r : ℕ} (hr : 4 ≤ r) :
     ∀ (n : ℕ), n ≠ 0 → (∀ v : HeightOneSpectrum (𝓞 K.1), ((n : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S) →

@@ -113,7 +113,8 @@ theorem GlobalTheory.CompRamified.exists_unit_ne_one : ∀ (D : D7) (cf : CharFr
   intro D cf j ξH s ξ htr hta hq hc
   set η := cf.mu0 j * ξH with hη
   have htame : ∀ u, η.TameAt u := fun u x hx h1 => by
-    rw [hη, HChar.loc_mul, (cf.isMu0 j).tame u x hx h1, hta u x hx h1, one_mul]
+    change (cf.mu0 j).loc u x * ξH.loc u x = 1
+    rw [(cf.isMu0 j).tame u x hx h1, hta u x hx h1, one_mul]
   have htriv : ∀ k : (D.host.F)ˣ, ∏ P ∈ aboveF (L := D.host.E) D.host.F s.v, η.locK P (upF D.host.F k) = 1 := fun k => by
     have h1 := (cf.isMu0 j).triv.1 s.v k
     have h2 := htr.1 s.v k

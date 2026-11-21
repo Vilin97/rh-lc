@@ -73,11 +73,15 @@ theorem rowPairing_add {M N : ℕ} (J : Matrix (Fin M) (Fin M) E) (D : Matrix (F
     (v w : Fin M → E) : rowP σ J D (v + w) = rowP σ J D v + rowP σ J D w := by
   rw [rowP, rowP, rowP, ← Matrix.add_vecMul]
   congr 1
+  funext i
+  simp
 
 theorem rowPairing_smul {M N : ℕ} (J : Matrix (Fin M) (Fin M) E) (D : Matrix (Fin M) (Fin N) E)
     (c : E) (v : Fin M → E) : rowP σ J D (c • v) = σ c • rowP σ J D v := by
   rw [rowP, rowP, ← Matrix.smul_vecMul]
   congr 1
+  funext i
+  simp
 
 section Two
 

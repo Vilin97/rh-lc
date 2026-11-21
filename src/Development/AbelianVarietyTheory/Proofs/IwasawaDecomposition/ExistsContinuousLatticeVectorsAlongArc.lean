@@ -241,8 +241,8 @@ theorem exists_lattice_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCM
         (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ u)) ≫ fr.v (e j).1 (e j).2) := fun u => by
     by_cases hu : u ∈ Metric.ball (0 : ℂ) ρ
     · obtain ⟨D, hD⟩ := LatSec.exists_lieEquiv Z.t (hexp u hu).1 (hA u hu) (hexp u hu).2.2.2.2
-      obtain ⟨f, hf⟩ := GlobalTheory.T.exists_eigFrame_baseChange' E H Dw l Xo c O β Z A ℂ φ _ fr (ψ u)
-      obtain ⟨b, hb⟩ := exists_basis f
+      obtain ⟨f, hf⟩ := GlobalTheory.ShFam.EigFrame.exists_baseChange E H Dw l Xo c O β Z A ℂ φ _ fr (ψ u)
+      obtain ⟨b, hb⟩ := LatSec.exists_basis f
       refine ⟨((b.reindex e.symm).equivFun.symm.trans D.symm).toContinuousLinearEquiv, fun _ => ⟨⟨_, rfl⟩, fun j => ?_⟩⟩
       have h1 := hD (D.symm (f.vec (e j).1 (e j).2))
       rw [D.apply_symm_apply] at h1

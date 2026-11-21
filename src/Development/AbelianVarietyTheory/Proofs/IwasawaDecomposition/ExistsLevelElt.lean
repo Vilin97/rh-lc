@@ -140,7 +140,10 @@ theorem exists_level_elt : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok 
   · rw [map_pow]
     exact hchi ⟨w, hw⟩ fun v' hv' => hwv v' fun e => hbad (e ▸ hv')
   · show bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v') (w ^ n) = 1
-    rw [map_pow, hwv v' hv', one_pow]
+    calc
+      bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v') (w ^ n) =
+          (bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v') w) ^ n := map_pow _ _ _
+      _ = 1 := (congrArg (fun x => x ^ n) (hwv v' hv')).trans (one_pow n)
   · have e := hz' r s
     have h2 := hM2 r s
     rw [← e] at h2

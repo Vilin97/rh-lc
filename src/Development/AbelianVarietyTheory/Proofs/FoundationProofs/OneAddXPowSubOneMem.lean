@@ -124,15 +124,15 @@ theorem ev_of_mem_pow : ∀ (R : Type) [CommRing R] (p m N : ℕ) [Fact p.Prime]
     · rw [Ideal.mem_comap, map_mul, map_pow]; exact Ideal.mul_mem_right _ _ hXp
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [trunc_apply, ← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
-      refine Ideal.sum_mem _ fun i hi => ?_
-      have hi' : i < p ^ m := (Finset.mem_Ico.1 hi).2
-      rw [Polynomial.coeToPowerSeries.ringHom_apply, Polynomial.coe_monomial, monomial_eq_C_mul_X_pow]
-      have hc : coeff i g ∈ Ideal.span {(p : R)} := Ideal.pow_le_self (by omega) (hg i)
-      obtain ⟨d, hd⟩ := Ideal.mem_span_singleton'.1 hc
-      have e : (C (coeff i g) * X ^ i : PowerSeries R) = (p : PowerSeries R) * (C d * X ^ i) := by
-        rw [← hd, map_mul, map_natCast]; ring
-      rw [e, Ideal.mem_comap, map_mul, map_natCast]
-      exact Ideal.mul_mem_right _ _ (Ideal.subset_span rfl)
+        refine Ideal.sum_mem _ fun i hi => ?_
+        have hi' : i < p ^ m := (Finset.mem_Ico.1 hi).2
+        rw [Polynomial.coeToPowerSeries.ringHom_apply, Polynomial.coe_monomial, monomial_eq_C_mul_X_pow]
+        have hc : coeff i g ∈ Ideal.span {(p : R)} := Ideal.pow_le_self (by omega) (hg i)
+        obtain ⟨d, hd⟩ := Ideal.mem_span_singleton'.1 hc
+        have e : (C (coeff i g) * X ^ i : PowerSeries R) = (p : PowerSeries R) * (C d * X ^ i) := by
+          rw [← hd, map_mul, map_natCast]; ring
+        rw [e, Ideal.mem_comap, map_mul, map_natCast]
+        exact Ideal.mul_mem_right _ _ (Ideal.subset_span rfl)
   have h2 : g ∈ (Ideal.comap (ev R p m) (Ideal.span {(p : lev R p m)})) ^ N := by
     rw [pow_mul] at hg
     exact Ideal.pow_right_mono hJP N hg

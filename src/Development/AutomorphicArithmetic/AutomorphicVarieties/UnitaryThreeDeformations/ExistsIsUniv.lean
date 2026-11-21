@@ -87,15 +87,15 @@ private theorem map_max {R' : Type} [CommRing R'] [Algebra O R'] [IsCO O R'] (f 
   rwa [← res_eq_zero_iff O, res_map f, res_eq_zero_iff]
 
 private theorem red_push {D : Type} [Group D] {η : D →* ℤˣ} {Ψ : D →* Oˣ} {r : D →* GG (m := 3) (R := R)} (hr : Red η Ψ r)
-    {R' : Type} [CommRing R'] [Algebra O R'] [IsCO O R'] (f : R →ₐ[O] R') : Red η Ψ (UnitaryThreeInertia.push f r) where
-  mult g := hr.mult g
-  red := by
-    intro g a b
-    change f ((r g).mat a b) -
-      algebraMap O R' ((r0 η Ψ g).mat a b) ∈ maximalIdeal R'
-    have h : (r g).mat a b - algebraMap O R ((r0 η Ψ g).mat a b) ∈ maximalIdeal R :=
-      hr.red g a b
-    simpa only [map_sub, AlgHom.commutes] using map_max f h
+    {R' : Type} [CommRing R'] [Algebra O R'] [IsCO O R'] (f : R →ₐ[O] R') : Red η Ψ (UnitaryThreeInertia.push f r) := by
+  refine ⟨fun g => hr.mult g, ?_⟩
+  intro g a b
+  have hm : (UnitaryThreeInertia.push f r g).mat = (r g).mat.map f := GG.map_mat _ _
+  change ((UnitaryThreeInertia.push f r g).mat - ((r0 η Ψ g).mat).map (algebraMap O R')) a b ∈ maximalIdeal R'
+  rw [hm, Matrix.sub_apply, Matrix.map_apply, Matrix.map_apply]
+  have h : (r g).mat a b - algebraMap O R ((r0 η Ψ g).mat a b) ∈ maximalIdeal R :=
+    hr.red g a b
+  simpa only [map_sub, AlgHom.commutes] using map_max f h
 
 private theorem cont_push {D : Type} [Group D] [TopologicalSpace D] {r : D →* GG (m := 3) (R := R)}
     (hr : UnitaryThreeInertia.AdicCont (maximalIdeal R) r)

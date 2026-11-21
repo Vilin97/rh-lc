@@ -23,6 +23,8 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory NumberField IsDedekindDomain GroundTheory.Global
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 section NSMul

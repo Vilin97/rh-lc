@@ -111,12 +111,16 @@ private theorem lc_univ {L Ω : Type} [Field L] [NumberField L] [Field Ω] [Alge
     (hΦg : ∀ i, Φ (H.gen θ a K' i) = H.gen θ a K i) (hΦA : ∀ b, Φ (algebraMap A _ b) = algebraMap A _ b)
     (D : W.GDet n (H.TK θ a K') H.Gq) (ψ : ∀ v, Fin n → Dec (F := L) (H.pl v) →* (H.TK θ a K')ˣ)
     (hU : H.IsUniv θ a K' (maximalIdeal _) D ψ) :
-    H.IsUniv θ a K (maximalIdeal _) (D.map Φ.toRingHom) fun v i => W.pushCh Φ.toRingHom (ψ v i) where
-  cont := lc_cont Φ D hU.cont
-  ψ_cont v i := lc_pcont Φ (ψ v i) (hU.ψ_cont v i)
-  frob w B σ hB hσ := lc_frob Φ D _ _ (fun j => 0 < j ∧ j - 1 < n) _ _ (fun _ _ => hΦg _) (hU.frob w B σ hB hσ)
-  ψ_unit v i s g u hg hs := lc_unit H Φ v g (ψ v i) i _ _ (hΦA _) (hU.ψ_unit v i s g u hg hs)
-  ψ_unif v j s g hg hs := lc_unif H Φ v g (ψ v) j _ _ (hΦg _) (hU.ψ_unif v j s g hg hs)
+    H.IsUniv θ a K (maximalIdeal _) (D.map Φ.toRingHom) fun v i => W.pushCh Φ.toRingHom (ψ v i) := by
+  refine { cont := lc_cont Φ D hU.cont, ψ_cont := ?_, frob := ?_, ψ_unit := ?_, ψ_unif := ?_ }
+  · intro v i
+    exact lc_pcont Φ (ψ v i) (hU.ψ_cont v i)
+  · intro w B σ hB hσ
+    exact lc_frob Φ D _ _ (fun j => 0 < j ∧ j - 1 < n) _ _ (fun _ _ => hΦg _) (hU.frob w B σ hB hσ)
+  · intro v i s g u hg hs
+    exact lc_unit H Φ v g (ψ v i) i _ _ (hΦA _) (hU.ψ_unit v i s g u hg hs)
+  · intro v j s g hg hs
+    exact lc_unif H Φ v g (ψ v) j _ _ (hΦg _) (hU.ψ_unif v j s g hg hs)
 
 set_option maxHeartbeats 1600000 in
 theorem UpperTheory.V.Hi.levelUR2Compat :

@@ -35,9 +35,9 @@ theorem exists_int_cong_tg : ∀ (D : D7) (k : Fin 2) (v : D.nd.PlG k), ∃ (u :
   have hζn : ζ ^ (normV w - 1) = 1 := by
     rw [hζ, div_pow, ← map_pow, hπ, AlgEquiv.commutes, ← hπ, div_self (pow_ne_zero _ h0)]
   have hv1 : A.valuation ζ = 1 := by
-    refine pow_left_injective hn.ne' ?_
-    show _ ^ _ = 1 ^ _
-    rw [← map_pow, hζn, map_one, one_pow]
+    have heq : (A.valuation ζ) ^ (normV w - 1) = (1 : A.ValueGroup) ^ (normV w - 1) := by
+      rw [← map_pow, hζn, map_one, one_pow]
+    exact pow_left_injective hn.ne' heq
 
   have hζA : ζ ∈ A := (A.valuation_le_one_iff ζ).mp hv1.le
   haveI hcp : CharP (IsLocalRing.ResidueField A) (D.host.g k) := by

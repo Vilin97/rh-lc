@@ -73,7 +73,14 @@ theorem global_amp_local : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' :
     intro p _ hp
     have hBB := (hgood p (fun hm => hm ((hW p).2.2.2.1 hp))).1
     unfold Frames.amp
-    exact (tsum_congr fun o => if_neg fun hh => hh.2 (hBB _ _ hh.1)).trans tsum_zero
+    calc
+      _ = ∑' _ : MulAction.orbitRel.Quotient (G.S p).St (Submodule _ (G.S p).V), (0 : ℂ) := by
+        apply tsum_congr
+        intro o
+        rw [if_neg]
+        rintro ⟨ht, hb⟩
+        exact hb (hBB _ _ ht)
+      _ = 0 := tsum_zero
   congr 1
   symm
   let emb : {p // p ∈ S1} ↪ PlF D := Function.Embedding.subtype _

@@ -193,7 +193,7 @@ end Formalism.L2.GlobalTheoryTheory.GenusMassVolumes
 
 namespace Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.ClosedKudlaFamilyStandardLattice
 
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.StandardLattice Formalism.L2.GlobalTheoryTheory.ConcTop
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.StandardLattice
 
 
 

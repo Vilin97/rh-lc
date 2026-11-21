@@ -88,7 +88,7 @@ theorem nrat_map_Xsp {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) {n : (VS D).
     have h2 : F.fl.e a ∈ Xsp F := Submodule.subset_span ⟨a, rfl⟩
     simpa using (Xsp F).add_mem h h2
   | zero => simp
-  | add y y' _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
+  | add y y' _ _ h h' => rw [map_add]; exact add_mem h h'
   | smul c y _ h => rw [map_smul]; exact Submodule.smul_mem _ c h
 
 theorem one_mem_NRat {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) : (1 : (VS D).V ≃ₗ[D.host.E] (VS D).V) ∈ NRat F :=

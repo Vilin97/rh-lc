@@ -66,7 +66,7 @@ theorem avgK_coeff {K : Type} [Field K] {G H : Type} [Group G] [Fintype G] [Grou
   simp only [avgK, avgC, MonoidAlgebra.of_apply]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [MonoidAlgebra.coeff_smul, MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single,
-    Finsupp.smul_apply, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.single_apply, smul_eq_mul, map_mul, map_inv₀,
+    Finsupp.smul_apply, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.single_apply, smul_eq_mul, map_mul, map_inv₀,
     map_natCast, map_sum, apply_ite, map_one, map_zero]
   rw [Fintype.card_congr e.toEquiv]
   congr 1
@@ -98,7 +98,7 @@ theorem lin_center {G W : Type} [Group G] [Fintype G] [AddCommGroup W] [Module �
   rw [← Finset.sum_smul]
   congr 1
   conv_rhs => rw [center_eq_sum _ z.2]
-  simp [MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_smul, Finsupp.coe_finset_sum, Finset.sum_apply]
+  simp [MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_smul, Finsupp.coe_finsetSum, Finset.sum_apply]
 
 theorem avgK_comm (K : Type) [Field K] {G : Type} [Group G] [Fintype G] (g : G) (b : MonoidAlgebra K G) :
     b * avgK K g = avgK K g * b := by
@@ -115,7 +115,7 @@ theorem avgK_conj (K : Type) [Field K] {G : Type} [Group G] [Fintype G] (g c y :
   classical
   simp only [avgK, MonoidAlgebra.of_apply]
   simp only [MonoidAlgebra.coeff_smul, MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single,
-    Finsupp.smul_apply, Finsupp.coe_finset_sum, Finset.sum_apply, smul_eq_mul]
+    Finsupp.smul_apply, Finsupp.coe_finsetSum, Finset.sum_apply, smul_eq_mul]
   congr 1
   refine (Fintype.sum_equiv (Equiv.mulLeft c) _ _ fun h => ?_).symm
   rw [Finsupp.single_apply, Finsupp.single_apply]

@@ -249,10 +249,10 @@ theorem rep_indep : ∀ (D : D7), Inp D → ∀ (cc : Ideal (𝓞 D.host.K)) (δ
   refine ⟨fun γ hγ k hk x h T => term_inv hI P hF hγ hk x h T, fun γ hγ j hj h => sq_inv hI P hF hγ hj h,
     fun s hs h T => ?_, fun s hs => ?_, ?_⟩
   · refine finsum_congr fun q => ?_
-    obtain ⟨γ, hγ, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 ((hs q).trans (DoubleCoset.out_eq' _ _ q).symm)
+    obtain ⟨γ, hγ, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 ((hs q).trans (DoubleCoset.out_eq' q).symm)
     rw [e, term_inv hI P hF hγ hk, (GlobalTheory.T.unitaryRationalConjIntersectionCard_dvd_invariant D _ _ le_rfl (s q)).2.2 γ hγ k hk]
   · refine finsum_congr fun q => ?_
-    obtain ⟨γ, hγ, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 ((hs q).trans (DoubleCoset.out_eq' _ _ q).symm)
+    obtain ⟨γ, hγ, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 ((hs q).trans (DoubleCoset.out_eq' q).symm)
     rw [e, sq_inv hI P hF hγ hk, (GlobalTheory.T.unitaryRationalConjIntersectionCard_dvd_invariant D _ _ P.J_le (s q)).2.2 γ hγ k hk]
   · rintro ⟨h, T, hT⟩
     haveI := ((GlobalTheory.T.unitaryDoubleCosetClasses_finite_card_le D P.d).2.2 P.J P.J_le P.idx_ne).1
@@ -264,7 +264,7 @@ theorem rep_indep : ∀ (D : D7), Inp D → ∀ (cc : Ideal (𝓞 D.host.K)) (δ
     refine Finset.sum_pos' (fun q _ => mul_nonneg (by positivity) (h1 _))
       ⟨DoubleCoset.mk _ _ h, Finset.mem_univ _, ?_⟩
     obtain ⟨γ, hγ, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
-      (DoubleCoset.out_eq' _ _ (DoubleCoset.mk (ratG D P.d) P.J h)).symm
+      (DoubleCoset.out_eq' (DoubleCoset.mk (ratG D P.d) P.J h)).symm
     rw [e, sq_inv hI P hF hγ hk]
     have h2 := (GlobalTheory.T.unitaryRationalConjIntersectionCard_dvd_invariant D _ _ P.J_le (γ * h * k)).1
     positivity

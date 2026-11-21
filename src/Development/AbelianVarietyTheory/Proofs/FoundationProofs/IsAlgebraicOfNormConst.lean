@@ -141,7 +141,12 @@ theorem ConstSec.exists_eq_smul (hU : ∀ σ, GoodEmb c σ → IsUnf (U σ)) (hF
     calc t.sig = t.sig * s.inv * s.sig := by
           rw [mul_assoc, mul_comm s.inv, s.mul_inv, mul_comm, t.idem_sig]
       _ = a • s.sig := by rw [ha', smul_mul_assoc, s.idem_sig]
-  have h0 : a ≠ 0 := fun h0 => t.sig_ne_zero (by rw [h, h0, zero_smul])
+  have h0 : a ≠ 0 := by
+    intro h0
+    apply t.sig_ne_zero
+    rw [h, h0]
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact zero_smul c.F s.sig
   exact ⟨a, h0, ConstSec.ext h⟩
 
 theorem ConstSec.deg_eq (hU : ∀ σ, GoodEmb c σ → IsUnf (U σ)) (hF : FnAlgClosed (Xo := Xo) (c := c)) {Z : Comp Xo c}

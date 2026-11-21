@@ -108,16 +108,18 @@ theorem act_le_std (D : D7) (S T : HSp D) (g : GA D T) : ∃ N : ℕ, 0 < N ∧
   rw [mul_smul]
   refine hKm _ (Matrix.ext fun i j => ?_) fun i j => ?_
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [Matrix.map_apply, Matrix.smul_apply, nsmul_eq_mul, RingHom.map_mul, hact, map_sum, Finset.sum_eq_zero,
-      mul_zero, Matrix.zero_apply]
-    intro k _
-    rw [RingHom.map_mul, GlobalTheory.LatVac.infPart_of_mem hu k j, mul_zero]
+    · have hz : ∑ k, (infPart D) (mt T g i k * u k j) = 0 := by
+        apply Finset.sum_eq_zero
+        intro k _
+        rw [RingHom.map_mul, GlobalTheory.LatVac.infPart_of_mem hu k j, mul_zero]
+      rw [Matrix.map_apply, Matrix.smul_apply, nsmul_eq_mul, RingHom.map_mul, hact, map_sum, hz,
+        mul_zero, Matrix.zero_apply]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Matrix.smul_apply, nsmul_eq_mul, RingHom.map_mul, map_natCast, hact, map_sum, Finset.mul_sum]
-    refine sum_mem fun k _ => ?_
-    have h3 := mul_mem (h' i k) (hden u hu k j)
-    rw [Matrix.map_apply, mul_mul_mul_comm, ← Nat.cast_mul, ← RingHom.map_mul] at h3
-    exact h3
+      refine sum_mem fun k _ => ?_
+      have h3 := mul_mem (h' i k) (hden u hu k j)
+      rw [Matrix.map_apply, mul_mul_mul_comm, ← Nat.cast_mul, ← RingHom.map_mul] at h3
+      exact h3
 
 end GlobalTheory.AnnSum
 
@@ -167,7 +169,12 @@ theorem ann_sum_gen (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1))
     ∃ a ∈ Mh, ∃ b ∈ Mh, Z = e • a + actO S T 1 g (e • b) := by
   classical
   have hee : e * e = e := GlobalTheory.PlaceVec.idemSum_mul_self he
-  have hχ := GlobalTheory.PlaceModel.isBichar_symplO S T ψ
+  have hχ : GlobalTheory.PlaceModel.IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro a b y; rw [GlobalTheory.PlaceModel.symplO_add_left, AddChar.map_add_eq_mul]
+    · intro a b y; rw [GlobalTheory.PlaceModel.symplO_add_right, AddChar.map_add_eq_mul]
+    · intro y; rw [GlobalTheory.PlaceModel.symplO_zero_left, AddChar.map_zero_eq_one]
+    · intro y; rw [GlobalTheory.PlaceModel.symplO_zero_right, AddChar.map_zero_eq_one]
   let f1 : WO S T →+ WO S T := AddMonoidHom.mk' (fun v => e • v) (fun a b => smul_add e a b)
   let f2 : WO S T →+ WO S T := AddMonoidHom.mk' (fun v => actO S T 1 g (e • v))
     (fun a b => by rw [smul_add, GlobalTheory.CosDual.actO_add])

@@ -35,9 +35,19 @@ theorem isLattice_of_lrel {A : Places F E sig} {r k : ℕ} (G : GFrames A r k) {
   obtain ⟨g, -, rfl⟩ := h
   refine ⟨hΓ.fg.map _, ?_⟩
   rw [Submodule.map_coe]
-  have : (((g : G.V →ₗ[E] G.V).restrictScalars (𝓞 E)) : G.V → G.V) = ((g : G.V →ₗ[E] G.V) : G.V → G.V) := rfl
-  rw [this, Submodule.span_image, hΓ.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-  exact g.surjective
+  have hf : (((g : G.V →ₗ[E] G.V).restrictScalars (𝓞 E)) : G.V → G.V) = ((g : G.V →ₗ[E] G.V) : G.V → G.V) := rfl
+  rw [hf]
+  intro s hs hi
+  have hsub : (g : G.V →ₗ[E] G.V) ⁻¹' s ⊆ (Γ : Set G.V) := by
+    intro x hx
+    obtain ⟨y, hy, he⟩ := hs hx
+    exact g.injective he ▸ hy
+  have heq : (g : G.V →ₗ[E] G.V) '' ((g : G.V →ₗ[E] G.V) ⁻¹' s) = s := Set.image_preimage_eq s g.surjective
+  rw [← heq] at hi ⊢
+  have hi' : LinearIndepOn (𝓞 E) id ((g : G.V →ₗ[E] G.V) ⁻¹' s) := by
+    apply (linearIndepOn_id_imageₛ_iff (f := (g : G.V →ₗ[E] G.V).restrictScalars (𝓞 E)) g.injective.injOn).1
+    exact hi
+  exact (linearIndepOn_id_imageₛ_iff (f := (g : G.V →ₗ[E] G.V)) g.injective.injOn).2 (hΓ.linearIndepOn _ hsub hi')
 
 theorem term_of_lrel {A : Places F E sig} {r k : ℕ} (G : GFrames A r k) (hk : 4 * r + 7 ≤ k) {d : G.Dat}
     (hex : ∃ Λ₀, G.IsTerm d Λ₀) {Γ Γ' : G.Lt} (hΓ : G.IsTerm d Γ) (h : G.LRel Γ Γ') : G.IsTerm d Γ' := by

@@ -102,8 +102,37 @@ theorem theta_spans_isLatIn : ∀ (D : D7) (B : WeightFamilies.Prov D) (P6 : Mod
     exact X.inc_inj ka e ▸ hg
   · rw [ht.Th_eq]
     apply span_spanK_eq_top
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply top_unique
+    rw [← hSp]
+    apply Submodule.span_le.2
+    intro f hf
+    let a : 𝓞 B.KO := (scalOfP B hinj EX p ka wL wF T).sK
+    let b : 𝓞 B.KO := ((D.host.g 0 * D.host.g 1 : ℕ) : 𝓞 B.KO) ^ (D.R.f * D.R.r * ka.n)
+    have ha : (a : B.KO) ≠ 0 := by
+      exact_mod_cast scalOfP_sK_ne_zero B hinj EX p hp ka wL wF T
+    have hb : (b : B.KO) ≠ 0 := by
+      dsimp [b]
+      exact_mod_cast pow_ne_zero (D.R.f * D.R.r * ka.n) (mul_ne_zero (D.host.g_prime 0).ne_zero (D.host.g_prime 1).ne_zero)
+    have hm : X.inc ka (a • (b • f)) ∈ X.Theta (scalOfP B hinj EX p ka wL wF T) ka wL wF T := by
+      apply (le_sup_right : X.emb ka (X.Thc a ka) ≤ X.Theta (scalOfP B hinj EX p ka wL wF T) ka wL wF T)
+      apply Submodule.mem_map.2
+      refine ⟨a • (b • f), ?_, rfl⟩
+      exact Submodule.mem_map.2 ⟨b • f, Submodule.mem_map.2 ⟨f, hf, rfl⟩, rfl⟩
+    have hs := Submodule.subset_span (R := B.KO) (s := {F | X.inc ka F ∈ X.Theta (scalOfP B hinj EX p ka wL wF T) ka wL wF T}) hm
+    have he : a • (b • f) = ((a : B.KO) * (b : B.KO)) • f := by
+      rw [← algebraMap_smul B.KO a (b • f), ← algebraMap_smul B.KO b f, smul_smul]
+    rw [he] at hs
+    have := (Submodule.span B.KO {F | X.inc ka F ∈ X.Theta (scalOfP B hinj EX p ka wL wF T) ka wL wF T}).smul_mem (((a : B.KO) * (b : B.KO))⁻¹) hs
+    change f ∈ Submodule.span B.KO {F | X.inc ka F ∈ X.Theta (scalOfP B hinj EX p ka wL wF T) ka wL wF T}
+    simpa only [smul_smul, inv_mul_cancel₀ (mul_ne_zero ha hb), one_smul] using this
+  · apply top_unique
+    have hs : Submodule.span K (spanK z (X.shortTh ka : Set _) : Set (Fin (O.nZ i) → K)) = ⊤ := span_spanK_eq_top z _ hSp
+    rw [← hs]
+    apply Submodule.span_mono
+    intro x hx
+    apply ht.ThK_ge
+    exact spanK_mono z (fun f hf => by
+      change X.inc ka f ∈ thetaPlain X ka wL wF T
+      apply (le_sup_right : X.emb ka (X.shortTh ka) ≤ thetaPlain X ka wL wF T)
+      exact Submodule.mem_map.2 ⟨f, hf, rfl⟩) hx
 end GlobalTheory.FormTies

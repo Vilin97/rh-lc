@@ -77,7 +77,10 @@ theorem isPolyFn_pairing (L : SmT M' →ₗ[ℂ] SmT M) (a b : M.Vec) (a' b' : M
       (∏ τ, if τ ∈ t then (1 : ℂ) else (s : ℂ)) • PiTensorProduct.tprod ℂ (t.piecewise a' b') := fun s => by
     rw [MultilinearMap.map_add_univ]
     refine Finset.sum_congr rfl fun t _ => ?_
-    rw [← MultilinearMap.map_smul_univ]
+    have hm := (PiTensorProduct.tprod ℂ).map_smul_univ
+      (fun τ => if τ ∈ t then (1 : ℂ) else (s : ℂ)) (t.piecewise a' b')
+    simp only [RingHom.id_apply] at hm
+    rw [← hm]
     congr 1
     funext τ
     by_cases hτ : τ ∈ t <;> simp [Finset.piecewise, hτ]
@@ -105,7 +108,10 @@ theorem pairing_nrm (L : SmT M' →ₗ[ℂ] SmT M) (w : M.Vec) (v : M'.Vec) :
     pairing M M' L w v = (∏ τ, ((‖(w τ : M.H τ)‖ : ℝ) : ℂ)) * ((∏ τ, ((‖(v τ : M'.H τ)‖ : ℝ) : ℂ)) *
       pairing M M' L (nrm M w) (nrm M' v)) := by
   have h1 : PiTensorProduct.tprod ℂ v = (∏ τ, ((‖(v τ : M'.H τ)‖ : ℝ) : ℂ)) • PiTensorProduct.tprod ℂ (nrm M' v) := by
-    rw [← MultilinearMap.map_smul_univ, smul_nrm]
+    have hm := (PiTensorProduct.tprod ℂ).map_smul_univ
+      (fun τ => ((‖(v τ : M'.H τ)‖ : ℝ) : ℂ)) (nrm M' v)
+    simp only [RingHom.id_apply] at hm
+    rw [← hm, smul_nrm]
   have h2 : ∀ x, ellT M (fun τ => (w τ : M.H τ)) x =
       (∏ τ, ((‖(w τ : M.H τ)‖ : ℝ) : ℂ)) * ellT M (fun τ => (nrm M w τ : M.H τ)) x := fun x => by
     rw [← ellT_smul M (fun τ => ‖(w τ : M.H τ)‖)]

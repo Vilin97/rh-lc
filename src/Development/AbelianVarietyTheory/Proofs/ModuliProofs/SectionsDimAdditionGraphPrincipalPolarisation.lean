@@ -104,17 +104,11 @@ def pointsEquiv (e : B ≅ A ⊗ A) [IsMonHom (e.hom ≫ fst A A)] [IsMonHom (e.
 
 
 omit [IsCommMonObj B] in
-theorem isMonHom_mul (p q : B ⟶ A) [IsMonHom p] [IsMonHom q] : IsMonHom (p * q) where
-  one_hom := by
-    rw [MonObj.comp_mul, IsMonHom.one_hom, IsMonHom.one_hom]
-    have e₁ : (η[A] : 𝟙_ _ ⟶ A) = 1 := by rw [Hom.one_def]; simp
-    rw [e₁, _root_.mul_one]
-  mul_hom := by
-    have e₁ : μ[B] = fst B B * snd B B := by simp [Hom.mul_def]
-    have e₂ : ((p * q) ⊗ₘ (p * q)) ≫ μ[A] = (fst B B ≫ (p * q)) * (snd B B ≫ (p * q)) := by
-      rw [Hom.mul_def (fst B B ≫ (p * q))]
-      congr 1
-    rw [e₂, e₁]
+theorem isMonHom_mul (p q : B ⟶ A) [IsMonHom p] [IsMonHom q] : IsMonHom (p * q) := by
+  refine ⟨?_, ?_⟩
+  · rw [MonObj.comp_mul, IsMonHom.one_hom p, IsMonHom.one_hom q,
+      MonObj.one_eq_one A, _root_.mul_one]
+  · rw [← lift_fst_comp_snd_comp (p * q) (p * q), ← Hom.mul_def, MonObj.mul_eq_mul B]
     simp only [MonObj.comp_mul, MonObj.mul_comp]
     exact mul_mul_mul_comm _ _ _ _
 

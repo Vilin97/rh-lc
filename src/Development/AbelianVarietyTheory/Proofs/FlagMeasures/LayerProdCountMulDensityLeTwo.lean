@@ -64,14 +64,14 @@ theorem layerProd_le_exp (n f : ℕ) {a : ℕ} (j : Fin a → ℕ) (τ : Fin a �
   have key : layerProd n f j τ G ≤ layerProd n f j τ (fun _ => Real.exp x) := by
     simp only [layerProd]
     apply mul_le_mul
-    · apply Finset.prod_le_prod
+    · apply Finset.prod_le_prod₀
       · intro i _
         apply Finset.prod_nonneg
         intro k hk
         have hik := (Finset.mem_filter.1 hk).2
         exact mul_nonneg (hb _ (hr i k hik).1 (hr i k hik).2 _).1 (hb _ (hp i k).1 (hp i k).2 _).1
       · intro i _
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro k hk
           have hik := (Finset.mem_filter.1 hk).2
           exact mul_nonneg (hb _ (hr i k hik).1 (hr i k hik).2 _).1 (hb _ (hp i k).1 (hp i k).2 _).1
@@ -79,7 +79,7 @@ theorem layerProd_le_exp (n f : ℕ) {a : ℕ} (j : Fin a → ℕ) (τ : Fin a �
           have hik := (Finset.mem_filter.1 hk).2
           exact mul_le_mul (hb _ (hr i k hik).1 (hr i k hik).2 _).2 (hb _ (hp i k).1 (hp i k).2 _).2
             (hb _ (hp i k).1 (hp i k).2 _).1 (pow_nonneg hex _)
-    · apply Finset.prod_le_prod
+    · apply Finset.prod_le_prod₀
       · intro i _
         exact mul_nonneg (hb _ (hpos i) (hlt i) _).1 (hb _ (hs i).1 (hs i).2 _).1
       · intro i _
@@ -147,13 +147,13 @@ theorem layerProd_count_mul_density_le_two :
       apply Finset.prod_nonneg
       intro k _
       exact mul_nonneg (pow_nonneg (div_pos (hpos i) (hpos k)).le _) (pow_nonneg (mul_pos (hpos i) (hpos k)).le _)
-    · apply Finset.prod_le_one
+    · apply Finset.prod_le_one₀
       · intro i _
         apply Finset.prod_nonneg
         intro k _
         exact mul_nonneg (pow_nonneg (div_pos (hpos i) (hpos k)).le _) (pow_nonneg (mul_pos (hpos i) (hpos k)).le _)
       · intro i _
-        apply Finset.prod_le_one
+        apply Finset.prod_le_one₀
         · intro k _
           exact mul_nonneg (pow_nonneg (div_pos (hpos i) (hpos k)).le _) (pow_nonneg (mul_pos (hpos i) (hpos k)).le _)
         · intro k hk

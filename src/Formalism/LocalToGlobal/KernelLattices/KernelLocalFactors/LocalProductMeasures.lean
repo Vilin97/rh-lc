@@ -28,17 +28,24 @@ section Sys
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem LocSys.mul' {A : Type} [CommGroup A] {l₁ l₂ : HeightOneSpectrum (𝓞 F) → Eˣ →* A} {R₁ R₂ R : Set (HeightOneSpectrum (𝓞 F))}
-    (h₁ : LocSys l₁ R₁) (h₂ : LocSys l₂ R₂) (s₁ : R₁ ⊆ R) (s₂ : R₂ ⊆ R) : LocSys (fun v => l₁ v * l₂ v) R where
-  wild v a h := by rw [MonoidHom.mul_apply, h₁.wild v a h, h₂.wild v a h, one_mul]
-  trivF v k := by rw [MonoidHom.mul_apply, h₁.trivF v k, h₂.trivF v k, one_mul]
-  unr v hv a h := by
+    (h₁ : LocSys l₁ R₁) (h₂ : LocSys l₂ R₂) (s₁ : R₁ ⊆ R) (s₂ : R₂ ⊆ R) : LocSys (fun v => l₁ v * l₂ v) R := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro v a h
+    rw [MonoidHom.mul_apply, h₁.wild v a h, h₂.wild v a h, one_mul]
+  · intro v k
+    rw [MonoidHom.mul_apply, h₁.trivF v k, h₂.trivF v k, one_mul]
+  · intro v hv a h
     rw [MonoidHom.mul_apply, h₁.unr v (fun h' => hv (s₁ h')) a h, h₂.unr v (fun h' => hv (s₂ h')) a h, one_mul]
 
 theorem LocSys.map' {A B : Type} [CommGroup A] [CommGroup B] {l : HeightOneSpectrum (𝓞 F) → Eˣ →* A} {R : Set (HeightOneSpectrum (𝓞 F))}
-    (h : LocSys l R) (f : A →* B) : LocSys (fun v => f.comp (l v)) R where
-  wild v a h' := by rw [MonoidHom.comp_apply, h.wild v a h', map_one]
-  trivF v k := by rw [MonoidHom.comp_apply, h.trivF v k, map_one]
-  unr v hv a h' := by rw [MonoidHom.comp_apply, h.unr v hv a h', map_one]
+    (h : LocSys l R) (f : A →* B) : LocSys (fun v => f.comp (l v)) R := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro v a h'
+    rw [MonoidHom.comp_apply, h.wild v a h', map_one]
+  · intro v k
+    rw [MonoidHom.comp_apply, h.trivF v k, map_one]
+  · intro v hv a h'
+    rw [MonoidHom.comp_apply, h.unr v hv a h', map_one]
 
 theorem OneAt.one (P : HeightOneSpectrum (𝓞 E)) : OneAt P (1 : E) := by
   unfold OneAt

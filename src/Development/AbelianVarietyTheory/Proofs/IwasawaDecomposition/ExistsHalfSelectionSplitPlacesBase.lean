@@ -32,7 +32,10 @@ theorem exists_mem_of_prime (L : Type) [Field L] [NumberField L] {p : ℕ} (hp :
   obtain ⟨Q, hQ, hQ'⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (S := 𝓞 L) (Ideal.span {(p : ℤ)})
     (by rw [(RingHom.injective_iff_ker_eq_bot _).1 (algebraMap ℤ (𝓞 L)).injective_int]; exact bot_le)
   have hmem : ((p : ℕ) : 𝓞 L) ∈ Q := by
-    have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 L)) := by rw [hQ']; exact Ideal.mem_span_singleton_self _
+    have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 L)) := by
+      change (p : ℤ) ∈ Ideal.under ℤ Q
+      rw [hQ']
+      exact Ideal.mem_span_singleton_self _
     simpa [Ideal.mem_comap] using this
   refine ⟨⟨Q, hQ.isPrime, ?_⟩, hmem⟩
   rintro rfl

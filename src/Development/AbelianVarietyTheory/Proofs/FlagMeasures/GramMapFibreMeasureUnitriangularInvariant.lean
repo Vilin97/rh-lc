@@ -175,7 +175,7 @@ theorem fibre_unitri_invariant : ∀ (F E : Type) [Field F] [NumberField F] [Fie
   have hcont : ∀ m : Matrix (Fin a) (Fin a) (Fv F v ⊗[F] E),
       Continuous (fun (X : Fin a → Fin n → Fv F v ⊗[F] E) b => ∑ c, m c b • X c) := by
     intro m
-    refine continuous_pi fun b => continuous_finset_sum _ fun c _ => ?_
+    refine continuous_pi fun b => continuous_finsetSum _ fun c _ => ?_
     exact (continuous_apply c).const_smul (m c b)
   let e : (Fin a → Fin n → Fv F v ⊗[F] E) ≃ₜ (Fin a → Fin n → Fv F v ⊗[F] E) :=
     { toFun := fun X b => ∑ c, u c b • X c

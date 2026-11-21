@@ -149,7 +149,9 @@ theorem mem_span_solutions {R O : Type} [CommRing R] [CommRing O] [Algebra R O] 
       simp [Algebra.smul_def, mul_comm]
     rw [this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c.1, fun k => congrFun c.2 k, rfl⟩)
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy =>
+    simp only [map_add] at *
+    exact Submodule.add_mem _ hx hy
 
 theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : IntermediateField ℚ LL) {Ks : Type} [Field Ks]
     [Algebra Ks LL] (kKs : Ks →+* L0) (hk : ∀ x, ((kKs x : L0) : LL) = algebraMap Ks LL x)
@@ -243,6 +245,8 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
       exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
     have h3 := ((Module.Basis.mk h1 h2).baseChange K).linearIndependent
     convert h3 using 1
+    funext k
+    simp
   have hrel : ∀ a k, ∑ t, algebraMap O K (o t) * rd (α (t, a, k)) = 0 := by
     intro a
     refine Fintype.linearIndependent_iff.mp hli _ ?_

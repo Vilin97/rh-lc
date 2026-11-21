@@ -336,7 +336,8 @@ theorem tau_nonempty (D : D7) : Nonempty D.what₂.Tau :=
     rw [D.what₂.card_Tau]
     show 0 < 2 * D.R.n
     unfold Formalism.BasicNotions.Ranks.n
-    positivity)
+    have := D.R.ord_pos
+    omega)
 
 theorem pt_ne_zero {V W : HSp D} {S S' : D.what₂.Tau → SPar} {θ : InfFam D} {M : DSModel V S} {M' : DSModel W S'}
     {ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} {pt : PolF D W.rank V.rank → (WO V W → ℂ)}

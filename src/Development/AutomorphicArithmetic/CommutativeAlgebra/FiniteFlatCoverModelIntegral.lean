@@ -10,7 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IsReduce
 @[expose] public section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Hecke GlobalTheory.UPel.HT.ES GlobalTheory.UPel.HT.EtLev GlobalTheory.crystallineComparison UpperTheory.SubgroupJ UpperTheory.D3
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel.HT GlobalTheory.UPel.HT.Hecke GlobalTheory.UPel.HT.ES GlobalTheory.UPel.HT.EtLev
 
 private theorem eq_zero_or_of_mul_eq_zero_of_add_reg {A : Type} [CommRing A] [IsLocalRing A] [IsIntegrallyClosed A]
     {a b : A} (hab : a * b = 0) (hreg : a + b ∈ nonZeroDivisors A) : a = 0 ∨ b = 0 := by

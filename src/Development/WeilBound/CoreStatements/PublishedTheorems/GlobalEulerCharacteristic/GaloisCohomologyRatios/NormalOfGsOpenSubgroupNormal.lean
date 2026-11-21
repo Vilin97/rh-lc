@@ -14,6 +14,8 @@ open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheo
 
 namespace PositivityTheory.Lit1.GEN.X
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K L : FiniteSubfield} [Fact (K ≤ L)] {S : Set (HeightOneSpectrum (𝓞 K.1))} {ℓ : ℕ} [Fact ℓ.Prime]
   (hL : ∀ x : L.1, algebraMap L.1 ℚ̄ x ∈ maxUnramifiedOutside K.1 ℚ̄ S)
 
@@ -53,7 +55,8 @@ theorem normal_of_gsOpenSubgroup_normal
       fun y => g'.restrictNormal_commutes _ y
     have hxS : x ∈ maxUnramifiedOutside K.1 ℚ̄ S := hL ⟨x, hx⟩
     have he : gsEmbedding hL ⟨x, hx⟩ = ⟨x, hxS⟩ := Subtype.ext rfl
-    have key := mem_of_forall_gsOpenSubgroup_fixes S hL (gS ⟨x, hxS⟩) (fun σ hσ => by
+    have hfixed : ∀ σ ∈ gsOpenSubgroup S hL, σ (gS ⟨x, hxS⟩) = gS ⟨x, hxS⟩ := by
+      intro σ hσ
       have hc : gS⁻¹ * σ * gS ∈ gsOpenSubgroup S hL := by
         have := h.conj_mem σ hσ gS⁻¹
         simpa [mul_assoc] using this
@@ -63,7 +66,17 @@ theorem normal_of_gsOpenSubgroup_normal
       calc σ (gS ⟨x, hxS⟩) = gS ((gS⁻¹ * σ * gS) ⟨x, hxS⟩) := by
             simp only [AlgEquiv.mul_apply]
             rw [← AlgEquiv.mul_apply gS, mul_inv_cancel, AlgEquiv.one_apply]
-        _ = gS ⟨x, hxS⟩ := by rw [hfx])
+        _ = gS ⟨x, hxS⟩ := by rw [hfx]
+    have hmem : gS ⟨x, hxS⟩ ∈
+        IntermediateField.fixedField (gsEmbedding (S := S) hL).fieldRange.fixingSubgroup := by
+      intro σ
+      refine hfixed σ ((mem_gsOpenSubgroup_iff S hL σ).2 fun y => ?_)
+      exact σ.2 ⟨_, ⟨y, rfl⟩⟩
+    rw [InfiniteGalois.fixedField_fixingSubgroup] at hmem
+    obtain ⟨y, hy⟩ := hmem
+    have key : (gS ⟨x, hxS⟩ : ℚ̄) ∈ L.1 := by
+      rw [← hy]
+      exact y.2
     rwa [hgS] at key
   have : (L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal := ⟨fun n hn g => by
     rw [Subgroup.mem_subgroupOf, IntermediateField.mem_fixingSubgroup_iff] at hn ⊢

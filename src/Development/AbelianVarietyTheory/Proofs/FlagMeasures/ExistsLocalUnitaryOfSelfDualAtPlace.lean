@@ -224,7 +224,7 @@ theorem intV_induction {p : E ⊗[F] v.adicCompletion F → Prop} (h0 : p 0)
 theorem sigR_mem (z : E ⊗[F] v.adicCompletion F) (hz : z ∈ intV E v) :
     sigR σ (v.adicCompletion F) z ∈ intV E v := by
   refine intV_induction v (p := fun z => sigR σ (v.adicCompletion F) z ∈ intV E v) (by simp)
-    (fun x a => ?_) (fun x y hx hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy) hz
+    (fun x a => ?_) (fun x y hx hy => by rw [map_add]; exact add_mem hx hy) hz
   have := mul_mem (inclE_mem v ⟨σ x, map_isIntegral_int σ x.isIntegral_coe⟩) (one_tmul_mem v a)
   convert this using 1
   change _ = (σ x ⊗ₜ[F] (1 : v.adicCompletion F)) * ((1 : E) ⊗ₜ[F] (a : v.adicCompletion F))

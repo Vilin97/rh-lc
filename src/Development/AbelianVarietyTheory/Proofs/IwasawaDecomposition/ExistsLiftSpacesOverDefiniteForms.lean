@@ -101,7 +101,7 @@ theorem GlobalTheory.LiftSpaces.exists_lift_spaces : ∀ (D : D7) (G : Type) [Gr
   choose EJ hEJ using hE
 
   let jMJ : ∀ j (hj : 1 ≤ j ∧ j ≤ D.R.m), EuclideanSpace ℂ (Fin (d j)) →ₗ[ℂ] (y.L F.lv2).AmbW ⟨j - 1, Nat.lt_of_lt_of_le (Nat.sub_lt hj.1 Nat.one_pos) hj.2⟩ :=
-    fun j hj => (PiTensorProduct.lift : MultilinearMap ℂ (fun τ : D.what₂.Tau => (R.toRealDat.MW ⟨j - 1, Nat.lt_of_lt_of_le (Nat.sub_lt hj.1 Nat.one_pos) hj.2⟩ (sg0 D A3.A)).sm τ)
+    fun j hj => (PiTensorProduct.lift : MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => (R.toRealDat.MW ⟨j - 1, Nat.lt_of_lt_of_le (Nat.sub_lt hj.1 Nat.one_pos) hj.2⟩ (sg0 D A3.A)).sm τ)
       (GA D (Wc D ⟨j - 1, Nat.lt_of_lt_of_le (Nat.sub_lt hj.1 Nat.one_pos) hj.2⟩) → ℂ) ≃ₗ[ℂ] _).toLinearMap ∘ₗ (R.toRealDat.HW ⟨j - 1, Nat.lt_of_lt_of_le (Nat.sub_lt hj.1 Nat.one_pos) hj.2⟩ (sg0 D A3.A)).e ∘ₗ EJ j hj
   have hjM : ∀ j (hj : 1 ≤ j ∧ j ≤ D.R.m), Function.Injective (jMJ j hj) ∧
       LinearMap.range (jMJ j hj) = (y.L F.lv2).Wc ⟨j - 1, Nat.lt_of_lt_of_le (Nat.sub_lt hj.1 Nat.one_pos) hj.2⟩ ∧

@@ -53,18 +53,18 @@ theorem symp_add_right (ξ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.Weil
 theorem isLin_smul {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ) {v : Pl (F := F)}
     {π₁ π₀ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) →+* Fv F v} {co : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Matrix (Fin n) (Fin d) (Fv F v)}
     {ι : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Matrix (Fin n) (Fin d) (Fv F v) → ℂ)} (h : M.IsLin ψ π₁ π₀ co ι)
-    {z : ℂ} (hz : z ≠ 0) : M.IsLin ψ π₁ π₀ co (z • ι) where
-  bij := by
-    refine ⟨fun φ hφ => ?_, fun φ hφ φ' hφ' e => ?_, fun g hg => ?_⟩
+    {z : ℂ} (hz : z ≠ 0) : M.IsLin ψ π₁ π₀ co (z • ι) := by
+  refine ⟨?_, ?_, ?_⟩
+  · refine ⟨fun φ hφ => ?_, fun φ hφ φ' hφ' e => ?_, fun g hg => ?_⟩
     · simp only [LinearMap.smul_apply]; exact Submodule.smul_mem _ z (h.bij.mapsTo hφ)
     · simp only [LinearMap.smul_apply] at e
       exact h.bij.injOn hφ hφ' (smul_right_injective _ hz e)
     · obtain ⟨φ, hφ, e⟩ := h.bij.surjOn (Submodule.smul_mem _ z⁻¹ hg)
       refine ⟨φ, hφ, ?_⟩
       simp only [LinearMap.smul_apply, e, smul_smul, mul_inv_cancel₀ hz, one_smul]
-  trans := fun u hu h0 φ hφ φ₁ hφ₁ hA Y => by
+  · intro u hu h0 φ hφ φ₁ hφ₁ hA Y
     simp only [LinearMap.smul_apply, Pi.smul_apply, h.trans u hu h0 φ hφ φ₁ hφ₁ hA Y]
-  mult := fun u hu h1 φ hφ φ₁ hφ₁ hA x hx hx0 => by
+  · intro u hu h1 φ hφ φ₁ hφ₁ hA x hx hx0
     simp only [LinearMap.smul_apply, Pi.smul_apply, smul_eq_mul, h.mult u hu h1 φ hφ φ₁ hφ₁ hA x hx hx0]
     ring
 

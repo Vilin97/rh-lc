@@ -216,7 +216,7 @@ theorem prodC_holds : ProdC := by
     rw [hPF, hPdef, ← Finset.prod_pow]
     refine Finset.prod_congr rfl fun τ _ => ?_
     rw [hgram τ ⟨jT t, hjr⟩]
-    simp only [labT, if_pos le_rfl]
+    simp only [labT, ite_eq_left le_rfl]
   set De : D.what₂.Tau → ℝ := fun τ => Finset.univ.fold max 1 fun l => (Dm τ l)⁻¹ with hDedef
   have hDeOK : ∀ τ, GlobalTheory.Amp.DeOK D.R.k D.R.rS (zB X (C.Qi τ) u τ) (zB X (C.Qi τ) u τ) (gamT C t τ) (De τ) := by
     intro τ
@@ -237,7 +237,7 @@ theorem prodC_holds : ProdC := by
   have hsgle : ∏ τ, GlobalTheory.Amp.sgV D.R.k D.R.rS (zB X (C.Qi τ) u τ) (zB X (C.Qi τ) u τ) (gamT C t τ) (H1C large₂ CH) ^
       (-(Cs * D.R.k)) ≤ k2S D (H1C large₂ CH) (jT t) (labT t) ^ (-(Cs * (D.R.k : ℝ))) := by
     unfold k2S
-    rw [← Real.finset_prod_rpow _ _ (fun τ _ => zero_le_one.trans (one_le_minor_sigma _ _ _ τ))]
+    rw [← Real.finsetProd_rpow _ _ (fun τ _ => zero_le_one.trans (one_le_minor_sigma _ _ _ τ))]
     refine Finset.prod_le_prod₀ (fun τ _ => ?_) fun τ _ => ?_
     · refine Real.rpow_nonneg ?_ _
       unfold GlobalTheory.Amp.sgV

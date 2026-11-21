@@ -39,7 +39,7 @@ theorem FamGrowth.bdd_of_isCompact {N : ℕ} {F : List (Mx n) → Mx n → ℂ} 
     _ ≤ |C| * (1 + max M 0) ^ N :=
         mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (by linarith) (by linarith) N) (abs_nonneg C)
 
-def expSweep (K : Set (Mx n)) (X : Mx n) : Set (Mx n) :=
+noncomputable def expSweep (K : Set (Mx n)) (X : Mx n) : Set (Mx n) :=
   (fun p : Mx n × ℝ => p.1 * NormedSpace.exp (p.2 • X)) '' (K ×ˢ Set.Icc (-1 : ℝ) 1)
 
 theorem isCompact_expSweep {K : Set (Mx n)} (hK : IsCompact K) (X : Mx n) : IsCompact (expSweep K X) :=

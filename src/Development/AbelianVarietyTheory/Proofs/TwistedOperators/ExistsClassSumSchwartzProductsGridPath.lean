@@ -85,7 +85,7 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
     have ⟨hnot, hnd1⟩ : edgeOf a ∉ edges p ∧ (edges p).Nodup := by
       simpa only [edges_snoc, ← List.concat_eq_append, List.nodup_concat] using hnd
     have ha := hg.last
-    obtain ⟨ι₁, s₁, φa, r₁, hφa, hexp⟩ := arrow_sb B ρ hL he n ha
+    have hArrow := arrow_sb B ρ hL (t := t) he n ha (Y := ArgT G p × U)
       (fun x (z : ArgT G p × U) => K (fun w => Function.update (pathArgs B t w p z.1) (edgeOf a) (locArg B t w a x)) z.2)
       (fun x u (z : ArgT G p × U) hu => by
         have e1 : (fun w => Function.update (pathArgs B t w p z.1) (edgeOf a) (locArg B t w a (x + u))) =
@@ -107,6 +107,7 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
         have h := hK2 _ z.2 h0 w hw (edgeOf a) (by rw [edges_snoc]; exact List.mem_append_right _ (List.mem_singleton_self _))
         rw [Function.update_self] at h
         exact GlobalTheory.SplitFlip.mem_matLat_stdLat.1 h r c)
+    obtain ⟨ι₁, s₁, φa, r₁, hφa, hexp⟩ := hArrow
     obtain ⟨ι₂, s₂, φ₂, d₂, r₂, hv, hexp₂⟩ := exists_classSum_schwartzProducts_pathInduction hL B ρ t he n p hg.init hnd1 (U := ι₁ × U)
       (fun Xa (z : ι₁ × U) => K (fun w => Function.update (Xa w) (edgeOf a) (locArg B t w a (r₁ z.1))) z.2)
       (fun x z y hz => by

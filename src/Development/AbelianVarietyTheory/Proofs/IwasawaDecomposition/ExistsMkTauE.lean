@@ -52,7 +52,8 @@ theorem comp_eq [StarRing E] {Θ : Ainf F ⊗[F] E →+* InfiniteAdeleRing E}
     refine ⟨fun x => ?_, ?_⟩
     · change InfinitePlace.Completion.extensionEmbedding w (Θ (1 ⊗ₜ[F] x) w) = _
       rw [hΘ, map_one, one_mul]
-      exact InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ x)
+      rw [InfiniteAdeleRing.algebraMap_apply]
+      simpa using InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ x)
     · have : (fun a : Ainf F => p (a ⊗ₜ[F] (1 : E))) = fun a =>
           InfinitePlace.Completion.extensionEmbedding w (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.infiniteAdeleMap F E a w) := by
         funext a
@@ -60,7 +61,7 @@ theorem comp_eq [StarRing E] {Θ : Ainf F ⊗[F] E →+* InfiniteAdeleRing E}
         rw [hΘ, map_one, mul_one]
       rw [this]
       exact (InfinitePlace.Completion.isometry_extensionEmbedding w).continuous.comp
-        ((LiesOver.continuous_completionMap (v := w.comap (algebraMap F E)) (w := w)).comp
+        ((AbsoluteValue.Completion.continuous_map (w.comap (algebraMap F E)).1 w.1).comp
           (continuous_apply _))
   refine (InfinitePlace.Completion.extensionEmbedding w).injective ?_
   change p y = p y'

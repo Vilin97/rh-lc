@@ -26,12 +26,12 @@ theorem isCorrect_canonicalAlgorithmRules_of_hypotheses
     (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
     (hdiv : DivisorReduction.DivisorReductionHypotheses hres)
     (hG : PrincipalizationGeometryHypotheses.{u}) :
-    (canonicalAlgorithmRules hres).ReducesInductivelyOnDimension where
-  divisorSpec := isBoundaryDivisorReduction_divisorFamily_canonicalAlgorithmRules hres hdiv
-  divisorShift := isBoundaryPositionInvariant_divisorFamily_canonicalAlgorithmRules hres hdiv
-  maxOrderSpec := fun n A L hspec =>
-    MaxOrderReduction.isMaxOrderReduction_canonicalAlgorithmRules hG hres n A L hspec
-  orderSpec := OrderReductionProperties.isOrderReduction_orderFamily_of_strictTransformIsBlowup hres
+    (canonicalAlgorithmRules hres).ReducesInductivelyOnDimension :=
+  { divisorSpec := isBoundaryDivisorReduction_divisorFamily_canonicalAlgorithmRules hres hdiv
+    divisorShift := isBoundaryPositionInvariant_divisorFamily_canonicalAlgorithmRules hres hdiv
+    maxOrderSpec := fun n A L hspec =>
+      MaxOrderReduction.isMaxOrderReduction_canonicalAlgorithmRules hG hres n A L hspec
+    orderSpec := OrderReductionProperties.isOrderReduction_orderFamily_of_strictTransformIsBlowup hres }
 
 theorem isCorrect_canonicalAlgorithmRules
     (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u}) :

@@ -401,7 +401,7 @@ structure CopyTw (D D' : D7) (ι : D.what₂.LL →+* D'.what₂.LL) (e : ↥D'.
 namespace CopyTw
 
 theorem refl (D : D7) : CopyTw D D (RingHom.id _) (RingEquiv.refl _) where
-  toSameExport := .refl D
+  toSameExport := GlobalTheory.TwistChoice.SameExport.refl D
   sp := HEq.rfl
   Tau := rfl
   eTau := HEq.rfl
@@ -621,13 +621,23 @@ def refl (X : RealSide D) : RealMove X X (RingHom.id _) where
   BV _ _ h := by cases Fin.ext h; rfl
   vacP _ _ h := by cases Fin.ext h; rfl
   MW _ _ h := by cases Fin.ext h; exact .refl _
-  v₀ _ _ h := by cases Fin.ext h; exact .refl _
-  read _ _ h _ := by cases Fin.ext h; exact .refl _
+  v₀ _ _ h := by
+    cases Fin.ext h
+    intro τ τ' hτ
+    cases eq_of_heq hτ
+    rfl
+  read _ _ h _ := by
+    cases Fin.ext h
+    intro v v' hv g g' hg
+    have hv' : v = v' := funext fun τ => Subtype.ext (eq_of_heq (hv τ τ HEq.rfl))
+    cases hv'
+    cases eq_of_heq hg
+    rfl
   io := by
     obtain ⟨c, hc⟩ := exists_isCoef X
     refine ⟨c, c, hc, hc, fun j j' h u u' hu F F' hF => ?_⟩
     cases Fin.ext h
-    obtain rfl : u = u' := funext fun τ => Subtype.ext (congrFun hu.eq τ)
+    obtain rfl : u = u' := funext fun τ => Subtype.ext (Subtype.ext (eq_of_heq (hu τ τ HEq.rfl)))
     obtain rfl : F = F' := Subtype.ext ((MvPolynomial.map_id _).symm.trans (eq_of_heq hF))
     rfl
 

@@ -14,7 +14,7 @@ private def outL {n : ℕ} (w : Fin n → ℂ) : (Fin n → ℂ) →ₗ[ℂ] Mat
   map_smul' c u := by ext; simp [vecMulVec_apply, mul_assoc]
 
 private theorem eps_left_mul_eq_det_smul {M : Type} [AddCommGroup M] [Module ℂ M] {n : ℕ}
-    (μ : MultilinearMap ℂ (fun _ : Fin n => Matrix (Fin n) (Fin n) ℂ) M) (g : Matrix (Fin n) (Fin n) ℂ) :
+    (μ : (Π _ : Fin n, Matrix (Fin n) (Fin n) ℂ) →ₘₗ[ℂ] M) (g : Matrix (Fin n) (Fin n) ℂ) :
     eps (fun x => μ fun i => g * x i) = g.det • eps μ := by
   have hs : ∀ a b : Fin n, g * single a b (1 : ℂ) = ∑ c, g c a • single c b (1 : ℂ) := by
     intro a b
@@ -51,7 +51,7 @@ private theorem eps_left_mul_eq_det_smul {M : Type} [AddCommGroup M] [Module ℂ
     set_option synthInstance.maxHeartbeats 100000 in
       rw [MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
-    rw [MultilinearMap.map_smul_univ]
+    simp only [MultilinearMap.map_smul_univ, RingHom.id_apply]
   have hc : ∀ c : Fin n → Fin n, ∑ σ : Equiv.Perm (Fin n),
       ((Equiv.Perm.sign τ : ℤ) * (Equiv.Perm.sign σ : ℤ)) • (∏ k, g (c k) (σ k)) •
         μ (fun k => single (c k) (τ k) (1 : ℂ)) =
@@ -72,7 +72,7 @@ private theorem eps_left_mul_eq_det_smul {M : Type} [AddCommGroup M] [Module ℂ
   ring
 
 theorem UpperTheory.V.AlgRepEndIrreducible.epsGrp :
-    ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (n : ℕ) (μ : MultilinearMap ℂ (fun _ : Fin n => Matrix (Fin n) (Fin n) ℂ) M) (g g' : Matrix (Fin n) (Fin n) ℂ), g' * g = 1 →
+    ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (n : ℕ) (μ : (Π _ : Fin n, Matrix (Fin n) (Fin n) ℂ) →ₘₗ[ℂ] M) (g g' : Matrix (Fin n) (Fin n) ℂ), g' * g = 1 →
       eps (fun x => μ fun i => g * x i * g') = eps μ := by
   intro M _ _ n μ g g' h
   have hT : ∀ ν : (Fin n → Matrix (Fin n) (Fin n) ℂ) → M, eps (fun x => ν fun i => (x i)ᵀ) = eps ν := by

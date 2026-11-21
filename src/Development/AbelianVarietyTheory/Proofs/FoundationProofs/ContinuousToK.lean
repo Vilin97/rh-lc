@@ -116,7 +116,7 @@ theorem over_iff (X : Tower Ω ε) (M : ℕ) (B : ValuationSubring (topBar X M))
       intro P
       induction P using Polynomial.induction_on with
       | C c => exact h _ (Or.inr ⟨c, ((coe_jPoly X _ _).trans (by rw [aeval_C])).symm⟩)
-      | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+      | add p q hp hq => rw [map_add]; exact add_mem hp hq
       | monomial k c hk =>
         rw [pow_succ, ← mul_assoc, map_mul]
         exact mul_mem hk (h _ (Or.inl ((coe_jPoly X _ _).trans (by rw [aeval_X]))))

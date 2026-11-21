@@ -25,11 +25,13 @@ variable {X : Scheme.{0}}
 
 abbrev fn (V : X.Opens) : Γ(𝟙_ X.Modules, V) ≃ₗ[Γ(X, V)] Γ(X, V) := structureModuleSectionsEquiv V
 
-def subOf (J : X.IdealSheafData) : Subobject (𝟙_ X.Modules) := Subobject.mk (idealModuleι J)
+def subOf (J : X.IdealSheafData) : Subobject (𝟙_ X.Modules) :=
+  Subobject.mk (X := structureModule X) (idealModuleι J)
 
 theorem mem_secs_subOf (J : X.IdealSheafData) (V : X.affineOpens) (x : Γ(𝟙_ X.Modules, V.1)) :
     x ∈ secs (subOf J) V.1 ↔ fn V.1 x ∈ J.ideal V := by
-  unfold secs subOf
+  change x ∈ secs (E := structureModule X) (Subobject.mk (idealModuleι J)) V.1 ↔ _
+  unfold secs
   rw [← Subobject.underlyingIso_hom_comp_eq_mk, range_app_iso_comp,
     ← exists_idealModuleι_app_eq_iff_mem]
   constructor

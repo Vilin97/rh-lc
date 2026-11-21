@@ -87,7 +87,7 @@ theorem rd_mem_span (rd : Rd ρ Y i j b) (S : Set (Y.Fm i ((j : ℕ) + 1) b)) {y
   induction hy using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
+  | add x z _ _ hx hz => rw [map_add]; exact add_mem hx hz
   | smul c x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 theorem mem_span_of_faithful {rd : Rd ρ Y i j b} (hf : Faithful rd) (S : Set (Y.Fm i ((j : ℕ) + 1) b))
@@ -103,13 +103,13 @@ theorem mem_span_of_faithful {rd : Rd ρ Y i j b} (hf : Faithful rd) (S : Set (Y
     rw [Submodule.map_span, Submodule.map_top, Submodule.range_subtype, ← Set.range_comp] at this
     exact this
   have hli : LinearIndependent (FractionRing (X.O i)) (Fin.cons x v : Fin _ → Y.Fm i ((j : ℕ) + 1) b) :=
-    linearIndependent_fin_cons.2 ⟨hv, by rw [hspan]; exact hxW⟩
+    linearIndependent_finCons.2 ⟨hv, by rw [hspan]; exact hxW⟩
   have hC := hf _ _ hli
   have hC' : LinearIndependent ℂ (Fin.cons (rd x) (fun k => rd (v k)) : Fin _ → (GA D (Wc D j) → ℂ)) := by
     convert hC using 1
     funext k
     refine Fin.cases ?_ (fun k => ?_) k <;> simp
-  refine (linearIndependent_fin_cons.1 hC').2 ?_
+  refine (linearIndependent_finCons.1 hC').2 ?_
   refine Submodule.span_le.2 ?_ hx
   rintro _ ⟨s, hs, rfl⟩
   have hsW : s ∈ Submodule.span (FractionRing (X.O i)) (Set.range v) := by

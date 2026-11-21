@@ -44,25 +44,26 @@ def expL (L : LocAll (lay0 D)) (X : NExpTied D) : NExpTied (withLoc L) :=
 
 set_option maxHeartbeats 4000000 in
 theorem nctL {L : LocAll (lay0 D)} {Pl : PlSide D} {M : MtFam D} {C : NChoice D} {big : D.what₂.places.Pl → Finset ℂ}
-    (Sp : NdSpec Pl M C big L.X L.T) (h : NChTie D C) : NChTie (withLoc L) (chL L C) where
-  twOf_eq := Sp.twOf_eq
-  twSide_eq := Sp.twSide_eq
-  Q_eq a := (Sp.Q_eq _ _ a ((L.X.locs_mem _ _ a).2 ⟨rfl, rfl⟩)).trans (Sp.Qc_eq _ _)
-  psi_eq := by
-    obtain ⟨ψ0, h1, h2, -⟩ := h.psi_eq
-    exact ⟨ψ0, h1, h2, fun a g => Sp.psi_eq a g _ (h2 _ g)⟩
-  embedding_baseField_condition := h.embedding_baseField_condition
+    (Sp : NdSpec Pl M C big L.X L.T) (h : NChTie D C) : NChTie (withLoc L) (chL L C) := by
+  obtain ⟨ψ0, h1, h2, -⟩ := h.psi_eq
+  exact {
+    twOf_eq := Sp.twOf_eq
+    twSide_eq := Sp.twSide_eq
+    Q_eq a := (Sp.Q_eq _ _ a ((L.X.locs_mem _ _ a).2 ⟨rfl, rfl⟩)).trans (Sp.Qc_eq _ _)
+    psi_eq := ⟨ψ0, h1, h2, fun a g => Sp.psi_eq a g _ (h2 _ g)⟩
+    embedding_baseField_condition := h.embedding_baseField_condition }
 
 set_option maxHeartbeats 4000000 in
 theorem chSideL {L : LocAll (lay0 D)} {Pl : PlSide D} {M : MtFam D} {C : NChoice D} {big : D.what₂.places.Pl → Finset ℂ}
     (Sp : NdSpec Pl M C big L.X L.T) {cf : CharFrame D} {X : NExpTied D} {tp : TupTied D cf C}
-    (h : ChoiceSide D cf M X C tp) : ChoiceSide (withLoc L) (cfL L cf) (mtL L M) (expL L X) (chL L C) (tpL L tp) where
-  nct := nctL Sp h.nct
-  choice := choiceL L h.choice
-  off := h.off
-  adm := h.adm
-  psi := h.psi
-  eMt_level := h.eMt_level
+    (h : ChoiceSide D cf M X C tp) : ChoiceSide (withLoc L) (cfL L cf) (mtL L M) (expL L X) (chL L C) (tpL L tp) := by
+  exact {
+    nct := nctL Sp h.nct
+    choice := choiceL L h.choice
+    off := h.off
+    adm := h.adm
+    psi := h.psi
+    eMt_level := h.eMt_level }
 
 
 

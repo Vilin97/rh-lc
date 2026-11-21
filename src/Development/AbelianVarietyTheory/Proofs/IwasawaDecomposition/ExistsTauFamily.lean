@@ -75,8 +75,9 @@ theorem GlobalTheory.TwInputs.tauG_read (hGAR : GlobalTheory.Published.GlobalArt
   obtain ⟨h1, -, h3, -, h5⟩ := GlobalTheory.GalChar.inertialOrderFifteenChar_auxiliaryPrime_spec (GlobalTheory.Triple.hframe cf) (l := D.ntw.l i)
   have hdel : (cf.delAt (D.ntw.l i)).UnrAt (D.naut.plGw k v) :=
     h5.unr _ (GlobalTheory.GalChar.notMem_of_ne (D.host.g_prime k) h1 (h3 k).symm (D.naut.plGw_over k v))
-  rw [GlobalTheory.Triple.blockChar, GlobalTheory.GalChar.block_loc (cf.isEta.unr _) hxu, GlobalTheory.Triple.muBase, HChar.loc_mul,
-    hdel _ hxu, mul_one] at e1
+  rw [GlobalTheory.Triple.blockChar, GlobalTheory.GalChar.block_loc (cf.isEta.unr _) hxu, GlobalTheory.Triple.muBase] at e1
+  change _ = (((cf.mu0 j).loc _ _ * (cf.delAt (D.ntw.l i)).loc _ _ : ℂˣ) : ℂ) at e1
+  rw [hdel _ hxu, mul_one] at e1
   have hm : ((normV (D.naut.plGw k v) - 1 : ℕ) : 𝓞 D.host.E) ∉ (D.naut.plGw k v).asIdeal := by
     rw [hN]
     intro h

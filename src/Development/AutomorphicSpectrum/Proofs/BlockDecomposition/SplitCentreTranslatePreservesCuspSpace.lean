@@ -24,34 +24,32 @@ theorem rt_injective (h : GA E a) : Function.Injective (rt E a h) := fun φ ψ e
   simpa using this
 
 theorem isAutForm_rt_of_central {h : GA E a} (hc : ∀ g : GA E a, h * g = g * h) {φ : Sm E a}
-    (hφ : IsAutForm φ) : IsAutForm (rt E a h φ) where
-  left γ g := by
+    (hφ : IsAutForm φ) : IsAutForm (rt E a h φ) := by
+  refine { left := ?_, level := ?_, kfin := ?_, zfin := ?_, growth := ?_ }
+  · intro γ g
     change φ.1 (ratGL E a γ * g * h) = φ.1 (g * h)
     rw [mul_assoc, hφ.left]
-  level := by
-    have e : {k | finRep E a k (rt E a h φ) = rt E a h φ} = {k | finRep E a k φ = φ} := by
+  · have e : {k | finRep E a k (rt E a h φ) = rt E a h φ} = {k | finRep E a k φ = φ} := by
       ext k
       change rt E a (finGL E a k) (rt E a h φ) = rt E a h φ ↔ rt E a (finGL E a k) φ = φ
       rw [rt_comm_of_central hc]
       exact (rt_injective h).eq_iff
     rw [e]
     exact hφ.level
-  kfin := by
-    have := hφ.kfin
+  · have := hφ.kfin
     refine Submodule.finiteDimensional_of_le
       (S₂ := (Submodule.span ℂ (Set.range fun k => cptRep E a k φ)).map (rt E a h))
       (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     exact ⟨cptRep E a k φ, Submodule.subset_span ⟨k, rfl⟩, (rt_comm_of_central hc _ φ).symm⟩
-  zfin := by
-    have := hφ.zfin
+  · have := hφ.zfin
     refine Submodule.finiteDimensional_of_le
       (S₂ := (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) '' Zalg E a)).map (rt E a h))
       (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     refine ⟨z φ, Submodule.subset_span ⟨z, hz, rfl⟩, ?_⟩
     exact (LinearMap.congr_fun (GlobalTheory.CompanionTheory.CTFin.Slice1.commute_rt_of_mem_Zalg hz h).eq φ).symm
-  growth g := by
+  · intro g
     obtain ⟨C, N, hb⟩ := hφ.growth (g * h)
     refine ⟨C, N, fun y => ?_⟩
     have e : (rt E a h φ).1 (g * infGL E a y) = φ.1 (g * h * infGL E a y) := by
@@ -81,7 +79,7 @@ theorem rt_splitCentre_mem : ∀ (E : Type) [Field E] [NumberField E] [_root_.Nu
     rw [e]
     exact hK (g * h)
   · have e := LinearMap.congr_fun (GlobalTheory.CompanionTheory.CTFin.Slice1.commute_rt_of_mem_Zalg (hJ hz) h).eq φ
-    rw [Module.End.mul_apply, Module.End.mul_apply] at e
+    rw [mul_apply_eq_comp, mul_apply_eq_comp] at e
     rw [e, hZ z hz, map_zero]
   · intro r hr hr' inst1 inst2 μ 𝓕 hμ hF g
     have e : ∀ x : BlockIx a r → Ad E, (rt E a h φ).1 (unip x * g) = φ.1 (unip x * (g * h)) :=

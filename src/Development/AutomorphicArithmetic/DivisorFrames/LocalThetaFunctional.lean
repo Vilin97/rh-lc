@@ -15,7 +15,6 @@ open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK
 open GlobalTheory.Doubling (absE)
-open GlobalTheory.ConeSmallUnf
 
 private theorem kill_fin {V Y S : Type} [AddCommGroup V] [Module ℂ V] [TopologicalSpace Y] (N : Submodule ℂ V)
     (ι : V →ₗ[ℂ] (Y → ℂ)) (hι : Set.BijOn ι (N : Set V) (SB Y : Set _)) (L : V →ₗ[ℂ] ℂ) (χ : S → Y → ℂ)

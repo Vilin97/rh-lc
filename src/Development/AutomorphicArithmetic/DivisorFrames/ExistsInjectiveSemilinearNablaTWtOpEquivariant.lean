@@ -65,7 +65,7 @@ private instance instMod {R S : Type} [CommRing R] [CommRing S] (σ : R →+* S)
 variable {R S : Type} [CommRing R] [CommRing S] {ι : Type} (N : ℕ) (mu : ι → ℕ → ℕ)
 
 private def mlin (σ : R →+* S) :
-    MultilinearMap R (fun τ : ι => Formalism.GradedWeylDivisibility.dualWeyl R N N (Formalism.CohomologicalDescent.LD.res N (mu τ)))
+    MultilinearMap (RingHom.id R) (fun τ : ι => Formalism.GradedWeylDivisibility.dualWeyl R N N (Formalism.CohomologicalDescent.LD.res N (mu τ)))
       (Tw σ (NablaT S N mu)) where
   toFun x := (PiTensorProduct.tprod S (fun τ => onFactor σ N N _ (x τ)) : NablaT S N mu)
   map_update_add' := by
@@ -117,9 +117,9 @@ private theorem onFactor_rep (σ : R →+* S) (u : GL (Fin N) R) (ν : Fin N →
   unfold Formalism.UG.dwAct Formalism.GradedWeylDivisibility.rowAct
   rw [aeval_eq_bind₁, aeval_eq_bind₁, map_bind₁]
   congr 2
-  refine Finset.sum_congr rfl fun b _ => ?_
+  funext v
   rw [← map_inv]
-  rfl
+  simp only [map_sum, map_mul, map_C, map_X, Matrix.GeneralLinearGroup.map_apply]
 
 private theorem semi_grp [DecidableEq ι] (σ : R →+* S) (h : ι → GL (Fin N) R) (y : NablaT R N mu) :
     semi N mu σ (grp R N mu h y) =

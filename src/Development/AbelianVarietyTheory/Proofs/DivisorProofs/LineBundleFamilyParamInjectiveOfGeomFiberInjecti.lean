@@ -25,7 +25,8 @@ theorem mono_of_points_tangents {X Y : Scheme.{0}} (f : X ⟶ Y) [LocallyOfFinit
         w = TangentCrit.dualBase k ≫ TangentCrit.dualPt k ≫ w) : Mono f := by
   have hu : FormallyUnramified f := TangentCrit.formallyUnramified_of_tangent f h₂
   have hs : Surjective (pullback.diagonal f) := by
-    refine ((tfae_universallyInjective f).out 1 3).1 fun (k : Type) [Field k] y y' e => ?_
+    apply ((tfae_universallyInjective f).out 2 4).1
+    intro k _ y y' e
     let x : Sp (AlgebraicClosure k) ⟶ Sp k := Spec.map (CommRingCat.ofHom (algebraMap k (AlgebraicClosure k)))
     have : Surjective x :=
       ⟨fun z => ⟨(default : PrimeSpectrum (AlgebraicClosure k)), Subsingleton.elim (α := PrimeSpectrum k) _ _⟩⟩
@@ -39,12 +40,12 @@ theorem mono_of_points_tangents {X Y : Scheme.{0}} (f : X ⟶ Y) [LocallyOfFinit
 variable {S : Scheme.{0}} {A U : Over S} [GrpObj A]
 
 theorem fam_ev {M : LB (A ⊗ U).left} (hM : Fam A M) {T : Over S} (t : T ⟶ U) :
-    Fam A (ev M (fst A T) (snd A T ≫ t)) where
-  isLB := pull_isLB hM.isLB _
-  add := (isAdditive_iff (pull_isLB hM.isLB _)).2 fun Y a a' y => by
-    rw [evc_ev hM.isLB, evc_ev hM.isLB, evc_ev hM.isLB]
-    simp only [lift_fst, lift_snd_assoc]
-    exact (isAdditive_iff hM.isLB).1 hM.add Y a a' (y ≫ t)
+    Fam A (ev M (fst A T) (snd A T ≫ t)) := by
+  have hPull : (ev M (fst A T) (snd A T ≫ t)).IsLB := pull_isLB hM.isLB _
+  refine ⟨hPull, (isAdditive_iff hPull).2 ?_⟩
+  intro Y a a' y
+  simpa only [evc_ev hM.isLB, lift_fst, lift_snd_assoc] using
+    (isAdditive_iff hM.isLB).1 hM.add Y a a' (y ≫ t)
 
 
 omit [GrpObj A] in

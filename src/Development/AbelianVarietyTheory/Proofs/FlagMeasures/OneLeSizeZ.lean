@@ -268,8 +268,10 @@ theorem main : ∀ Cg cb Cu cT CT C0 A Ad C₁ : ℝ, 0 ≤ C₁ → ∃ C₀ : 
     obtain ⟨-, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, -, h, -⟩ := hyp.1.1
     exact (h u).2
   have hf : 1 ≤ D.R.f := by
-    have : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
-    exact this
+    have := D.R.m_le_f
+    have := D.R.two_le_m
+    unfold Ranks.f Ranks.n
+    omega
   have hm1 : (1 : ℝ) ≤ D.R.m := by have := D.R.two_le_m; exact_mod_cast (by omega : 1 ≤ D.R.m)
   have hm : (D.R.m : ℝ) = 2 * D.R.rS + 2 := by exact_mod_cast (GlobalTheory.real_places_facts D).2.2.2.1
   have hN1 : 1 ≤ NT D u := one_le_pow₀ (by exact_mod_cast (show 1 ≤ Tu D u by omega))

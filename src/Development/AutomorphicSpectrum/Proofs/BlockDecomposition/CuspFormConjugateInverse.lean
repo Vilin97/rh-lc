@@ -155,31 +155,29 @@ theorem height_invT (y : GL (Fin a) (Cinf E)) : height (invT a (Cinf E) y) = hei
   have e : invT a (Cinf E) (invT a (Cinf E) y) = y := Units.ext (Matrix.transpose_transpose y.val)
   rwa [e] at h
 
-theorem isAutForm_dual {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (dual E a φ) where
-  left γ g := by
+theorem isAutForm_dual {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (dual E a φ) := by
+  refine { left := ?_, level := ?_, kfin := ?_, zfin := ?_, growth := ?_ }
+  · intro γ g
     rw [dual_apply, dual_apply, map_mul]
     have e : invA E a (ratGL E a γ) = ratGL E a (invT a E γ) :=
       (GlobalTheory.CompanionTheory.DualAct.map_invT (algebraMap E (Ad E)) γ).symm
     rw [e, h.left]
-  level := by
-    convert h.level.preimage (continuous_invT (a := a) (R := Af E)) using 1
+  · convert h.level.preimage (continuous_invT (a := a) (R := Af E)) using 1
     ext k
     exact (Eq.congr_left (act_dual (.fin k) φ)).trans dual_injective.eq_iff
-  kfin := by
-    have := h.kfin
+  · have := h.kfin
     have := finiteDimensional_map _ this
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (Set.range fun k => cptRep E a k φ)).map
       (dual E a)) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     exact ⟨_, Submodule.subset_span ⟨_, rfl⟩, (act_dual (.cpt k) φ).symm⟩
-  zfin := by
-    have := finiteDimensional_map _ h.zfin
+  · have := finiteDimensional_map _ h.zfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) ''
       Zalg E a)).map (dual E a)) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     obtain ⟨z', h1, h2⟩ := Zalg_dual hz
     exact ⟨_, Submodule.subset_span ⟨z', h1, rfl⟩, (h2 φ).symm⟩
-  growth g := by
+  · intro g
     obtain ⟨C, N, h1⟩ := h.growth (invA E a g)
     refine ⟨C, N, fun y => ?_⟩
     have e : (dual E a φ).1 (g * infGL E a y) =

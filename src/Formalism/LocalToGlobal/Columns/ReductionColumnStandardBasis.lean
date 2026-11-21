@@ -22,11 +22,16 @@ variable {E : Type} [Field E] [NumberField E] {P : HeightOneSpectrum (𝓞 E)} {
 
 theorem cq_rep_int (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) (hp : q.Prime)
     (hcard : Nat.card (𝓞 E ⧸ P.asIdeal) = q) :
-    ∀ (D : ℕ) (y : E), IntAt P y → ∃ i : ℕ, i < q ^ D ∧ IntAt P ((y - i) / (q : E) ^ D)
-  | 0, y, hy => ⟨0, by simp, by simpa using hy⟩
-  | D + 1, y, hy => by
+    ∀ (D : ℕ) (y : E), IntAt P y → ∃ i : ℕ, i < q ^ D ∧ IntAt P ((y - i) / (q : E) ^ D) := by
+  intro D
+  induction D with
+  | zero =>
+    intro y hy
+    exact ⟨0, by simp, by simpa using hy⟩
+  | succ D ih =>
+    intro y hy
     have hq0 : (q : E) ≠ 0 := ciQ_ne_zero hu
-    obtain ⟨i, hi, hz⟩ := cq_rep_int hq hu hp hcard D y hy
+    obtain ⟨i, hi, hz⟩ := ih y hy
     obtain ⟨d, hd, hdr⟩ := ocbS_natCast_surj hq hp hcard (redP P ((y - i) / (q : E) ^ D))
     have hzd : IntAt P (((y - i) / (q : E) ^ D - d) / q) := by
       refine ciIntAt_div hq hu (ciIntAt_sub hz (ocbS_intAt_natCast d)) ?_

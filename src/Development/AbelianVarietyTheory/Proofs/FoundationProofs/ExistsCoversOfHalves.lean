@@ -271,7 +271,13 @@ theorem exists_covers (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat 
       T.Q.c.F ≤ c₁.F ∧ D.what₂.embLL.toRatAlgHom.fieldRange ≤ c₁.F ∧
       ∀ (c' : Coeff T.Q.l) (hle : T.Q.c.F ≤ c'.F), c₁.F ≤ c'.F →
         CoversAt T R i n pd (fun t => coverHalf D (R.Q t)) l₂ c' hle := by
-  choose pd l₂ h1 h2 using exists_half_of_laws T.toCore R hT.toLawsM hL hO hG
+  have hh (t : T0) : ∃ (pd : ℕ) (l₂ : Level T.Q.H),
+      IsCoverLevel T.Q.l pd (coverHalf D (R.Q t)) l₂ ∧
+      HalfIs R t T.Q.l.Mb (coverHalf D (R.Q t)) := by
+    refine exists_cover_of_places T.Q R hT.toLawsM.pins.1 hT.toLawsM.pins.2.1 (fun PP => ?_) hG t (hL.Q_pl t)
+    rw [hL.Pg, hT.toLawsM.half.2, prod_map_le_iff, hO]
+    rfl
+  choose pd l₂ h1 h2 using hh
   exact ⟨pd, l₂, exists_covers_of_halves T R hT hL i n pd _ l₂ h1 h2⟩
 
 theorem finite_tuples {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)

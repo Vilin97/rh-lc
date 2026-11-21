@@ -160,14 +160,14 @@ def picSequence : ShortComplex (Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.
     intro p
     exact (Submodule.Quotient.mk_eq_zero _).2 ⟨p, rfl⟩)
 
-theorem picSequence_shortExact : (picSequence K S ιs).ShortExact where
-  exact := by
-    apply shortComplex_exact_of_forall_exists
+theorem picSequence_shortExact : (picSequence K S ιs).ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+  · apply shortComplex_exact_of_forall_exists
     intro f hf
     obtain ⟨p, hp⟩ := (Submodule.Quotient.mk_eq_zero _).1 hf
     exact ⟨p, hp⟩
-  mono_f := (Rep.mono_iff_injective _).2 (sUnitsQuotDiv_injective K S ιs)
-  epi_g := (Rep.epi_iff_surjective _).2 (picQuot_surjective K S ιs)
+  · exact (Rep.mono_iff_injective _).2 (sUnitsQuotDiv_injective K S ιs)
+  · exact (Rep.epi_iff_surjective _).2 (picQuot_surjective K S ιs)
 
 namespace PicInf
 
@@ -225,10 +225,10 @@ namespace PicInf
 variable {K S ιs}
 
 
-open Classical in
 noncomputable def zuInd (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})
     (U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)) : galUnramifiedOutside K.1 ℚ̄ S → ℤ :=
-  fun g => if ∃ z ∈ (gsDecomp K S ιs v).range, ∃ u ∈ U, g = z * u then 1 else 0
+  fun g => @ite ℤ (∃ z ∈ (gsDecomp K S ιs v).range, ∃ u ∈ U, g = z * u)
+    (Classical.propDecidable _) 1 0
 
 
 open Classical in
@@ -267,6 +267,10 @@ theorem good_single_of_base {ℓ : ℕ} (v : {v : HeightOneSpectrum (𝓞 K.1) /
     intro z hz u hu
     rw [hφU _ u hu, hφZ z hz]
   obtain ⟨ψ, hψ⟩ : ∃ ψ : galUnramifiedOutside K.1 ℚ̄ S → ℤ, ψ = fun g => φ g - φ x₀ * χ g := ⟨_, rfl⟩
+  let decZU (g : galUnramifiedOutside K.1 ℚ̄ S) : Decidable (∃ z ∈ Z, ∃ u ∈ U, g = z * u) :=
+    Classical.propDecidable _
+  let decZxU (g : galUnramifiedOutside K.1 ℚ̄ S) : Decidable (∃ z ∈ Z, ∃ u ∈ U, g = z * x₀ * u) :=
+    Classical.propDecidable _
   have hχ1 : ∀ g, χ g = if ∃ z ∈ Z, ∃ u ∈ U, g = z * x₀ * u then 1 else 0 := by
     intro g
     simp only [hχ, zuInd, ← hZ, hmemD g]
@@ -305,7 +309,7 @@ theorem good_single_of_base {ℓ : ℕ} (v : {v : HeightOneSpectrum (𝓞 K.1) /
         rwa [mul_inv_rev, inv_inv] at this
       apply hψx
       have hD : ∃ z ∈ Z, ∃ u' ∈ U, x₀ * u = z * x₀ * u' := ⟨1, Z.one_mem, u, hu, by rw [one_mul]⟩
-      simp only [hψ, hχ1, if_pos hD, hφU x₀ u hu, mul_one, sub_self]
+      simp only [hψ, hχ1, ite_eq_left hD, hφU x₀ u hu, mul_one, sub_self]
   · intro x u hu
     have hAB : (∃ z ∈ Z, ∃ u' ∈ U, x * u = z * x₀ * u') ↔ ∃ z ∈ Z, ∃ u' ∈ U, x = z * x₀ * u' := by
       constructor
@@ -438,7 +442,7 @@ namespace PicInf
 variable {K S ιs}
 
 
-open Classical in
+open Classical GroundTheory.Global.SemiLocal in
 theorem good_base (ℓ : ℕ) (hℓ : ℓ.Prime)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})
@@ -475,28 +479,121 @@ theorem good_base (ℓ : ℕ) (hℓ : ℓ.Prime)
   let x' : ℚ̄ →ₐ[K.1] ℚ̄ := ((x : maxUnramifiedOutside K.1 ℚ̄ S ≃ₐ[K.1] maxUnramifiedOutside K.1 ℚ̄ S).liftNormal ℚ̄)
   have hx' : ∀ z : maxUnramifiedOutside K.1 ℚ̄ S, x' z = ((x z : maxUnramifiedOutside K.1 ℚ̄ S) : ℚ̄) :=
     fun z => AlgEquiv.liftNormal_commutes _ _ z
-  rw [ordEmb_galUnitsHom_eq (ιs.fin v'.1) v'.2 x x' hx' α]
+  have hord : ordEmb S (ιs.fin v'.1) v'.2 (Additive.ofMul (galUnitsHom K.1 _ x α)) =
+      ordEmbFun ((ιs.fin v'.1).comp x') (maxUnitsToUnits S α) := by
+    obtain ⟨F, hKF, hgal, hFS, hαF⟩ := exists_galois_level S (α : maxUnramifiedOutside K.1 ℚ̄ S).2
+    have : Normal K.1 F.1 := hgal.to_normal
+    let gF : F.1 ≃ₐ[K.1] F.1 := x'.restrictNormal' F.1
+    have hgF (z : F.1) : ((gF z : F.1) : ℚ̄) = x' z := AlgHom.restrictNormal_commutes x' F.1 z
+    have hw := placeOfEmbedding_eq_inv_smul (ιs.fin v'.1) gF ((ιs.fin v'.1).comp x') fun z => by
+      rw [AlgHom.comp_apply, hgF]
+    have hmem : ((maxUnitsToUnits S (galUnitsHom K.1 _ x α) : ℚ̄ˣ) : ℚ̄) ∈ F.1 := by
+      change ((x (α : maxUnramifiedOutside K.1 ℚ̄ S) : maxUnramifiedOutside K.1 ℚ̄ S) : ℚ̄) ∈ F.1
+      rw [← hx', ← hgF ⟨_, hαF⟩]
+      exact (gF _).2
+    have hsame : (⟨_, hmem⟩ : F.1) = gF ⟨(maxUnitsToUnits S α : ℚ̄ˣ), hαF⟩ :=
+      Subtype.ext ((hgF ⟨_, hαF⟩).trans (hx' α)).symm
+    have e1 := valuation_placeOfEmbedding_eq S (ιs.fin v'.1) v'.2 F hFS _ hmem
+    have e2 := valuation_placeOfEmbedding_eq S ((ιs.fin v'.1).comp x') v'.2 F hFS
+      (maxUnitsToUnits S α) hαF
+    rw [hw, valuation_inv_smul_placesOver, ← hsame, e1] at e2
+    rw [ordEmb_apply]
+    exact neg_injective (WithZero.exp_injective e2)
+  rw [hord]
   have hroot := ordEmbFun_root L ((ιs.fin v'.1).comp x') v'.2 (ℓ ^ a)
     (Global.SUnit.placeUnit (placeOfEmbedding (ιs.fin v.1) (levelOfField L)).1) α hα
   rw [hval] at hroot
-  have hiff := placeOfEmbedding_comp_eq_iff L ιs v.1 v'.1 x x' hx'
+  have hiff : (placeOfEmbedding ((ιs.fin v'.1).comp x') (levelOfField L)).1 =
+      (placeOfEmbedding (ιs.fin v.1) (levelOfField L)).1 ↔
+      v'.1 = v.1 ∧ ∃ z ∈ (gsDecomp K S ιs v).range, ∃ u ∈ L.fixingSubgroup, x = z * u := by
+    constructor
+    · intro h
+      have hvv : v'.1 = v.1 := by
+        have h₁ := (placeOfEmbedding ((ιs.fin v'.1).comp x') (levelOfField L)).2
+        have h₂ := (placeOfEmbedding (ιs.fin v.1) (levelOfField L)).2
+        rw [h] at h₁
+        exact HeightOneSpectrum.ext (h₁.over.trans h₂.over.symm)
+      have hvv' : v' = v := Subtype.ext hvv
+      subst v'
+      refine ⟨rfl, ?_⟩
+      let F := levelOfField L
+      let ι := ιs.fin v.1
+      let w := placeOfEmbedding ι F
+      have hplace : w = placeOfEmbedding (ι.comp x') F := Subtype.ext h.symm
+      have hc : ∃ c : w.1.adicCompletion F.1 →ₐ[v.1.adicCompletion K.1]
+          AlgebraicClosure (v.1.adicCompletion K.1),
+          ∀ z : F.1, c (algebraMap F.1 _ z) = (ι.comp x') z := by
+        have key (w' : PlacesOver F.1 v.1) (hw' : w' = placeOfEmbedding (ι.comp x') F) :
+            ∃ c : w'.1.adicCompletion F.1 →ₐ[v.1.adicCompletion K.1]
+              AlgebraicClosure (v.1.adicCompletion K.1),
+              ∀ z : F.1, c (algebraMap F.1 _ z) = (ι.comp x') z := by
+          subst w'
+          exact ⟨completionEmbedding (ι.comp x') F, completionEmbedding_algebraMap (ι.comp x') F⟩
+        exact key w hplace
+      obtain ⟨c₁, hc₁⟩ := hc
+      have := finiteDimensional_adicCompletion_placesOver (K := K) (E := F) w
+      let c₂ := completionEmbedding ι F
+      let : Algebra (w.1.adicCompletion F.1) (AlgebraicClosure (v.1.adicCompletion K.1)) :=
+        c₂.toRingHom.toAlgebra
+      have : IsScalarTower (v.1.adicCompletion K.1) (w.1.adicCompletion F.1)
+          (AlgebraicClosure (v.1.adicCompletion K.1)) :=
+        IsScalarTower.of_algebraMap_eq fun z => (c₂.commutes z).symm
+      have : Algebra.IsAlgebraic (w.1.adicCompletion F.1) (AlgebraicClosure (v.1.adicCompletion K.1)) :=
+        Algebra.IsAlgebraic.tower_top (K := v.1.adicCompletion K.1) _
+      obtain ⟨φ, hφ⟩ := IsAlgClosed.surjective_domRestrict_of_isAlgebraic
+        (K := v.1.adicCompletion K.1) (L := w.1.adicCompletion F.1)
+        (M := AlgebraicClosure (v.1.adicCompletion K.1))
+        (E := AlgebraicClosure (v.1.adicCompletion K.1)) c₁
+      let σ := AlgEquiv.ofBijective φ (Algebra.IsAlgebraic.algHom_bijective φ)
+      have hσ (z : F.1) : (ι.comp x') z = σ (ι z) := by
+        have e := DFunLike.congr_fun hφ (algebraMap F.1 (w.1.adicCompletion F.1) z)
+        change φ (c₂ (algebraMap F.1 _ z)) = c₁ (algebraMap F.1 _ z) at e
+        rw [← hc₁, ← e, completionEmbedding_algebraMap]
+        rfl
+      let z := gsDecomp K S ιs v σ
+      refine ⟨z, ⟨σ, rfl⟩, z⁻¹ * x, ?_, (mul_inv_cancel_left z x).symm⟩
+      rw [IntermediateField.mem_fixingSubgroup_iff]
+      intro y hy
+      have hxy : x y = z y := by
+        have e := hσ ⟨(y : ℚ̄), (mem_levelOfField L).2 ⟨y, hy, rfl⟩⟩
+        change ι (x' (y : ℚ̄)) = σ (ι (y : ℚ̄)) at e
+        rw [hx'] at e
+        apply Subtype.val_injective
+        apply ι.injective
+        exact e.trans (decompHom_apply (Kv := v.1.adicCompletion K.1)
+          (ι.comp (maxUnramifiedOutside K.1 ℚ̄ S).val) σ y).symm
+      rw [AlgEquiv.mul_apply, hxy, AlgEquiv.aut_inv, AlgEquiv.symm_apply_apply]
+    · rintro ⟨hvv, z, ⟨σ, rfl⟩, u, hu, hxu⟩
+      have hvv' : v' = v := Subtype.ext hvv
+      subst v'
+      apply congrArg Subtype.val
+      rw [← placeOfEmbedding_comp_algEquiv (ιs.fin v.1) σ]
+      refine (eq_placeOfEmbedding ((ιs.fin v.1).comp x') (levelOfField L)
+        (completionEmbedding ((σ.restrictScalars K.1).toAlgHom.comp (ιs.fin v.1)) (levelOfField L))
+        fun a => ?_).symm
+      rw [completionEmbedding_algebraMap]
+      obtain ⟨y, hy, hya⟩ := (mem_levelOfField L).1 a.2
+      change σ ((ιs.fin v.1) (a : ℚ̄)) = (ιs.fin v.1) (x' (a : ℚ̄))
+      rw [← hya, hx', hxu, AlgEquiv.mul_apply, (IntermediateField.mem_fixingSubgroup_iff _ _).1 hu y hy]
+      exact (decompHom_apply (Kv := v.1.adicCompletion K.1)
+        ((ιs.fin v.1).comp (maxUnramifiedOutside K.1 ℚ̄ S).val) σ y).symm
   have hM0 : ((ℓ ^ a : ℕ) : ℤ) ≠ 0 := by exact_mod_cast pow_ne_zero a hℓ.ne_zero
   by_cases hpl : (placeOfEmbedding ((ιs.fin v'.1).comp x') (levelOfField L)).1 =
       (placeOfEmbedding (ιs.fin v.1) (levelOfField L)).1
-  · rw [if_pos hpl, WithZero.log_exp, neg_neg, hh] at hroot
+  · rw [ite_eq_left hpl, WithZero.log_exp, neg_neg, hh] at hroot
     obtain ⟨hvv, z, hz, u, hu, hxzu⟩ := hiff.1 hpl
     have hvv' : v' = v := Subtype.ext hvv
     subst hvv'
-    rw [Pi.single_eq_same, zuInd, if_pos ⟨z, hz, u, hu, hxzu⟩, mul_one]
+    rw [Pi.single_eq_same, zuInd, ite_eq_left ⟨z, hz, u, hu, hxzu⟩, mul_one]
     push_cast at hroot
     have hM0' : ((ℓ : ℤ)) ^ a ≠ 0 := pow_ne_zero _ (by exact_mod_cast hℓ.ne_zero)
     exact mul_left_cancel₀ hM0' hroot
-  · rw [if_neg hpl, WithZero.log_one, neg_zero] at hroot
+  · rw [ite_eq_right hpl, WithZero.log_one, neg_zero] at hroot
     have h0 := (mul_eq_zero.1 hroot).resolve_left hM0
     rw [h0]
     by_cases hvv : v' = v
     · subst hvv
-      rw [Pi.single_eq_same, zuInd, if_neg, mul_zero]
+      rw [Pi.single_eq_same, zuInd, ite_eq_right, mul_zero]
       exact fun hx => hpl (hiff.2 ⟨rfl, hx⟩)
     · rw [Pi.single_eq_of_ne hvv, Pi.zero_apply, mul_zero]
 

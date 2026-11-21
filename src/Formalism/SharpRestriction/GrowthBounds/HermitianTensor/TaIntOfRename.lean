@@ -143,7 +143,7 @@ theorem ta_sat (w : O) (hw : Irreducible w) (m : ℕ) (hm : 1 ≤ m) (b : MvPoly
     have hu : AddMonoidAlgebra.coeff β u ∈ Ideal.span {w} := by
       rw [← Ideal.Quotient.eq_zero_iff_mem]
       have := congrArg (AddMonoidAlgebra.coeff · u) e4
-      rwa [coeff_map, coeff_zero] at this
+      rwa [coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
     obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp hu
     refine ⟨c, ?_⟩
     have e5 := congrArg (AddMonoidAlgebra.coeff · u) hβ

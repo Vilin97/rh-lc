@@ -59,7 +59,9 @@ theorem card_GL_residue_typePrime_dvd_card_typeGroup (D : D7) (k : Fin 2) :
   rw [D.nd.restN_card_levelGroup_eq]
   have hf : D.R.f ≠ 0 := by
     unfold Formalism.BasicNotions.Ranks.f Formalism.BasicNotions.Ranks.n
-    positivity
+    have := Nat.one_le_two_pow (n := D.R.e)
+    have := D.R.ord_pos
+    omega
   exact (dvd_pow_self _ hf).trans (Finset.dvd_prod_of_mem _ (Finset.mem_univ k))
 
 theorem coeff_zIdem_mem {Γ : Type} [Group Γ] [Fintype Γ] {L : Type} [Field L] (e : L →+* ℂ) {n : ℕ} (hn : 0 < n)

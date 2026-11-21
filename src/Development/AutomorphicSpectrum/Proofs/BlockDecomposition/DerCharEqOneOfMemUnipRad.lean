@@ -42,19 +42,72 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 theorem iterPhi_quotient (ψ : AddChar k Circle) (n : ℕ) : ∀ (j : ℕ) (τ : MRep k (n + j)),
     ∃ q : τ.V →ₗ[ℂ] TwJacquet (iterPhi k ψ j τ).ρ (MirUin k n) 1, Function.Surjective q ∧
       LinearMap.ker q = twKer τ.ρ (derUnipM k (n + j) n) (derCharM k ψ (n + j) n) ∧
-      ∀ g v, q (τ.ρ (embedding₂ k n j g) v) = psiMinus k (iterPhi k ψ j τ).ρ g (q v)
-  | 0, τ => ⟨Submodule.mkQ _, Submodule.mkQ_surjective _,
+      ∀ g v, q (τ.ρ (embedding₂ k n j g) v) = psiMinus k (iterPhi k ψ j τ).ρ g (q v) := by
+  intro j
+  induction j with
+  | zero =>
+    intro τ
+    exact ⟨Submodule.mkQ _, Submodule.mkQ_surjective _,
       (Submodule.ker_mkQ _).trans (GlobalTheory.CompanionTheory.BZMir.twKer_MirUin_eq_derUnipM k ψ n τ.V τ.ρ), fun _ _ => rfl⟩
-  | j + 1, τ => by
-    obtain ⟨q', hs, hk, hi⟩ := iterPhi_quotient ψ n j (MRep.phiM k ψ τ)
+  | succ j ih =>
+    intro τ
+    obtain ⟨q', hs, hk, hi⟩ := ih (MRep.phiM k ψ τ)
     have hnm : n ≤ n + j := Nat.le_add_right n j
-    obtain ⟨e, hle⟩ := GlobalTheory.CompanionTheory.BZMirStep.twKer_twAct_eq_map τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j)) _
-      (levi_stab ψ (n + j)) (derUnipM k (n + j) n) (derCharM k ψ (n + j) n) (derUnipM k (n + j + 1) n)
-      (derCharM k ψ (n + j + 1) n) (GlobalTheory.CompanionTheory.BZMirStep.MirUin_step ψ hnm) (GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ hnm)
-      (GlobalTheory.CompanionTheory.BZMirStep.derUnipM_decomp hnm)
-    refine ⟨q' ∘ₗ Submodule.mkQ _, hs.comp (Submodule.mkQ_surjective _), ?_, fun g v => ?_⟩
-    · exact ker_comp_mkQ _ _ q' (hk.trans e) hle
-    · exact hi g (Submodule.Quotient.mk v)
+    let N₁ := MirUin k (n + j + 1)
+    let θ₁ := mirChar k ψ (n + j)
+    let N₂ := derUnipM k (n + j) n
+    let θ₂ := derCharM k ψ (n + j) n
+    let N := derUnipM k (n + j + 1) n
+    let θ := derCharM k ψ (n + j + 1) n
+    let s := (levi k (n + j + 1)).comp (Mir k (n + j)).subtype
+    let K₁ := twKer τ.ρ N₁ θ₁
+    let K := twKer τ.ρ N θ
+    let L : Submodule ℂ (τ.V ⧸ K₁) :=
+      twKer (twAct τ.ρ N₁ θ₁ s (levi_stab ψ (n + j))) N₂ θ₂
+    have hle : K₁ ≤ K := by
+      refine Submodule.span_le.2 ?_
+      rintro w ⟨u, v, rfl⟩
+      obtain ⟨hu, hθ⟩ := GlobalTheory.CompanionTheory.BZMirStep.MirUin_step ψ hnm u
+      exact Submodule.subset_span ⟨⟨u, hu⟩, v, by rw [hθ]⟩
+    have e : L = K.map K₁.mkQ := by
+      apply le_antisymm
+      · refine Submodule.span_le.2 ?_
+        rintro w ⟨a, x, rfl⟩
+        induction x using Submodule.Quotient.induction_on with
+        | H v =>
+          obtain ⟨ha, hθ⟩ := GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ hnm a
+          refine ⟨τ.ρ (s a) v - (θ ⟨s a, ha⟩ : ℂ) • v,
+            Submodule.subset_span ⟨⟨s a, ha⟩, v, rfl⟩, ?_⟩
+          change K₁.mkQ (τ.ρ (s a) v - (θ ⟨s a, ha⟩ : ℂ) • v) =
+            K₁.mkQ (τ.ρ (s a) v) - (θ₂ a : ℂ) • K₁.mkQ v
+          rw [map_sub, map_smul, hθ]
+      · rw [Submodule.map_le_iff_le_comap]
+        refine Submodule.span_le.2 ?_
+        rintro w ⟨u, v, rfl⟩
+        obtain ⟨u₁, a, hu⟩ := GlobalTheory.CompanionTheory.BZMirStep.derUnipM_decomp hnm u
+        obtain ⟨hu₁, hθ₁⟩ := GlobalTheory.CompanionTheory.BZMirStep.MirUin_step ψ hnm u₁
+        obtain ⟨ha, hθ₂⟩ := GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ hnm a
+        have hθ : θ u = θ₁ u₁ * θ₂ a := by
+          have hu' : u = ⟨u₁, hu₁⟩ * ⟨s a, ha⟩ := Subtype.ext hu
+          rw [hu', map_mul, hθ₁, hθ₂]
+        have hdec : τ.ρ (u : Mir k (n + j + 1)) v - (θ u : ℂ) • v =
+            (τ.ρ u₁ (τ.ρ (s a) v) - (θ₁ u₁ : ℂ) • τ.ρ (s a) v) +
+              (θ₁ u₁ : ℂ) • (τ.ρ (s a) v - (θ₂ a : ℂ) • v) := by
+          rw [hθ, hu, map_mul, mul_apply_eq_comp, Units.val_mul, smul_sub, mul_smul]
+          abel
+        have hz : τ.ρ u₁ (τ.ρ (s a) v) - (θ₁ u₁ : ℂ) • τ.ρ (s a) v ∈ K₁ :=
+          Submodule.subset_span ⟨u₁, _, rfl⟩
+        have hzero : K₁.mkQ (τ.ρ u₁ (τ.ρ (s a) v) - (θ₁ u₁ : ℂ) • τ.ρ (s a) v) = 0 :=
+          (Submodule.Quotient.mk_eq_zero K₁).2 hz
+        change K₁.mkQ _ ∈ L
+        rw [hdec, map_add, hzero, zero_add, map_smul]
+        refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, K₁.mkQ v, ?_⟩)
+        change K₁.mkQ (τ.ρ (s a) v - (θ₂ a : ℂ) • v) =
+          K₁.mkQ (τ.ρ (s a) v) - (θ₂ a : ℂ) • K₁.mkQ v
+        rw [map_sub, map_smul]
+    refine ⟨q' ∘ₗ K₁.mkQ, hs.comp K₁.mkQ_surjective, ?_, fun g v => ?_⟩
+    · exact ker_comp_mkQ K₁ K q' (hk.trans e) hle
+    · exact hi g (K₁.mkQ v)
 
 end IterRep
 
@@ -87,15 +140,16 @@ theorem emb_inr_inr {n t N : ℕ} (h : n + t = N) (g : GL (Fin n) k × GL (Fin t
 theorem one_inr_inr {n t N : ℕ} (h : n + t = N) (i j : Fin t) :
     (1 : Matrix (Fin N) (Fin N) k) (stdSum h (Sum.inr i)) (stdSum h (Sum.inr j)) =
       (1 : Matrix (Fin t) (Fin t) k) i j := by
-  simp [one_apply]
+  rw [Matrix.one_apply, Matrix.one_apply]
+  simp only [Equiv.apply_eq_iff_eq, Sum.inr.injEq]
 
 theorem one_inl_inr {n t N : ℕ} (h : n + t = N) (i : Fin n) (j : Fin t) :
     (1 : Matrix (Fin N) (Fin N) k) (stdSum h (Sum.inl i)) (stdSum h (Sum.inr j)) = 0 := by
-  simp [one_apply]
+  simp
 
 theorem one_inr_inl {n t N : ℕ} (h : n + t = N) (i : Fin t) (j : Fin n) :
     (1 : Matrix (Fin N) (Fin N) k) (stdSum h (Sum.inr i)) (stdSum h (Sum.inl j)) = 0 := by
-  simp [one_apply]
+  simp
 
 end Concrete
 
@@ -131,7 +185,8 @@ theorem glEmbMat_block_apply {n m : ℕ} (hnm : n ≤ m) (g : Matrix (Fin n) (Fi
       · rw [dite_eq_left h, dite_eq_left (by simpa using h)]
         rfl
       · rw [dite_eq_right h, dite_eq_right (by simpa using h)]
-        simp [one_apply]
+        rw [Matrix.one_apply, Matrix.one_apply]
+        simp only [Fin.castSucc_inj]
 
 theorem iotaM_apply (n : ℕ) (g : GL (Fin n) k) : ∀ (j : ℕ) (r s : Fin (n + j + 1)),
     (((embedding₂ k n j g : Mir k (n + j)) : GL (Fin (n + j + 1)) k) : Matrix (Fin (n + j + 1)) (Fin (n + j + 1)) k) r s =

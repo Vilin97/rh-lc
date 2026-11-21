@@ -12,7 +12,7 @@ noncomputable section
 
 open MeasureTheory Matrix Finset Filter Topology
 open scoped ContDiff ComplexConjugate InnerProductSpace ENNReal
-open PositivityTheory.RgBcC GlobalTheory.CompanionTheory.WaveCp GlobalTheory.CompanionTheory.WaveCp.Rep
+open PositivityTheory.RgBcC
 open PositivityTheory.RgTw (Mat G)
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace

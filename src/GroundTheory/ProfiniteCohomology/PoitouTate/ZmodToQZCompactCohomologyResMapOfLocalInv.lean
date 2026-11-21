@@ -75,6 +75,8 @@ theorem zmodToQZ_compactCohomologyResMap_of_localInv [Fintype ι] {q n : ℕ}
 
 end Natural
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
 
@@ -113,9 +115,16 @@ theorem finite_compactCohomologyRes_gs_of_nsmul [Finite S]
 
 include hS in
 theorem nonempty_addEquiv_gsRoots_of_mem : Nonempty (gsRoots S n ≃+ ZMod n) := by
+  have hroots : Nat.card (rootsOfUnity n (maxUnramifiedOutside K.1 ℚ̄ S)) = n := by
+    obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot ℚ̄ n
+    have hmem : ζ ∈ maxUnramifiedOutside K.1 ℚ̄ S :=
+      mem_maxUnramifiedOutside_of_pow_eq_one S (NeZero.ne n) (fun v hv h => hv (hS v h)) hζ.pow_eq_one
+    have hζ' : IsPrimitiveRoot (⟨ζ, hmem⟩ : maxUnramifiedOutside K.1 ℚ̄ S) n :=
+      IsPrimitiveRoot.of_map_of_injective (f := (maxUnramifiedOutside K.1 ℚ̄ S).val) hζ
+        Subtype.val_injective
+    exact hζ'.card_rootsOfUnity
   have hcard : Nat.card (rootsOfUnity n (maxUnramifiedOutside K.1 ℚ̄ S)) = Nat.card (Multiplicative (ZMod n)) := by
-    rw [card_rootsOfUnity_maxUnramifiedOutside K S n (NeZero.ne n) (fun v hv h => hv (hS v h)),
-      Nat.card_eq_fintype_card, Fintype.card_multiplicative, ZMod.card]
+    rw [hroots, Nat.card_eq_fintype_card, Fintype.card_multiplicative, ZMod.card]
   exact ⟨MulEquiv.toAdditive (mulEquivOfCyclicCardEq hcard)⟩
 
 

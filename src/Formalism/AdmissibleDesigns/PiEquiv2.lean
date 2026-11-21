@@ -18,7 +18,7 @@ open Finset Classical Formalism.BasicNotions
 
 namespace Formalism.MainNotions.N.K.St
 
-open Formalism.NG Formalism.RepresentationBoundsCohomology.BR Formalism.RepresentationBoundsCohomology.TorsionBoundCyclotomic Formalism.RepresentationBoundsCohomology.JL Formalism.RepresentationBoundsCohomology.JT Formalism.RepresentationBoundsCohomology.JS Formalism.RepresentationBoundsCohomology.SplitClassesAll Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology Formalism.RepresentationBoundsCohomology.FIN
+open Formalism.NG Formalism.RepresentationBoundsCohomology.BR Formalism.RepresentationBoundsCohomology.TorsionBoundCyclotomic Formalism.RepresentationBoundsCohomology.JL Formalism.RepresentationBoundsCohomology.JT Formalism.RepresentationBoundsCohomology.SplitClassesAll Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology Formalism.RepresentationBoundsCohomology.FIN
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.RepresentationBoundsCohomology.LOC
 open ReciprocityTheory.ChartRestriction.T2 (PadicCoeff FracTop IsFGTop cupFG)
 open Formalism.RepresentationBoundsCohomology.ringDataObjects (RingData RingDef)
@@ -79,13 +79,17 @@ theorem hKm : ContinuousMul (FractionRing (D.nd.O i)) := by
   infer_instance
 
 theorem hEps : Continuous fun g : GE D.nd => ((epsU D.nd i g : (D.nd.O i)ˣ) : D.nd.O i) :=
-  KLat.eps_cont_nf (D.nd.l i) (Topo.padicCoeff_O i) (epsU D.nd i) (Topo.isCyc_eps i)
+  have hO : PadicCoeff (D.nd.l i) (D.nd.O i) :=
+    ⟨D.nd.trO i, Topo.compact_O i, Topo.t2Space_nd_O i, D.nd.O_adic i, Topo.l_mem_max i, Topo.l_ne_zero i⟩
+  KLat.eps_cont_nf (D.nd.l i) hO (epsU D.nd i) (Topo.isCyc_eps i)
 
 theorem hM0 (hD : RingDef (D.nd.O i) (D.nd.T i) (RepresentationBoundsCohomology.repX D.nd r) π (chiU D.nd i 1) (epsU D.nd i) g0 eB e₁ s Dd)
     (hc : TruncatedSeriesCountingIdentities.FamilyContinuous (D := D) i r) :
     ∀ a b, Continuous fun g => KLat.M0 Dd.r Dd.χ (RepresentationBoundsCohomology.blk D.R) Dd.ρk g a b :=
   haveI := Topo.rTop_addGroup_RD i r π g0 eB e₁ s Dd hD
-  KLat.block_zero_continuous Dd.r Dd.χ (RepresentationBoundsCohomology.blk D.R) Dd.ρk (Topo.padicCoeff_O i) (Topo.fgTop_RD i r π g0 eB e₁ s Dd hD)
+  have hO : PadicCoeff (D.nd.l i) (D.nd.O i) :=
+    ⟨D.nd.trO i, Topo.compact_O i, Topo.t2Space_nd_O i, D.nd.O_adic i, Topo.l_mem_max i, Topo.l_ne_zero i⟩
+  KLat.block_zero_continuous Dd.r Dd.χ (RepresentationBoundsCohomology.blk D.R) Dd.ρk hO (Topo.fgTop_RD i r π g0 eB e₁ s Dd hD)
     (Topo.uElt_cont i r π g0 eB e₁ s Dd hD hc)
 
 variable (hD : RingDef (D.nd.O i) (D.nd.T i) (RepresentationBoundsCohomology.repX D.nd r) π (chiU D.nd i 1) (epsU D.nd i) g0 eB e₁ s Dd)
@@ -122,9 +126,11 @@ theorem hpDS (w : ℕ) :
     haveI := Topo.rTop_addGroup_RD i r π g0 eB e₁ s Dd hD
     Continuous fun t => vDS i r π dc g0 eB e₁ s Dd hD hc w (piS i Dd hT hrk t) :=
   haveI := Topo.rTop_addGroup_RD i r π g0 eB e₁ s Dd hD
+  have hO : PadicCoeff (D.nd.l i) (D.nd.O i) :=
+    ⟨D.nd.trO i, Topo.compact_O i, Topo.t2Space_nd_O i, D.nd.O_adic i, Topo.l_mem_max i, Topo.l_ne_zero i⟩
   KLat.hpD Dd.r Dd.χ (RepresentationBoundsCohomology.blk D.R) Dd.ρk (epsU D.nd i) (Aw i dc) (hKm i) (hEps i)
     (hM0 i r π g0 eB e₁ s Dd hD hc) (piS i Dd hT hrk)
-    (piM_cont (Topo.padicCoeff_O i) (Topo.fgTop_RD i r π g0 eB e₁ s Dd hD) (Dd.ρk 0) Dd.e₁
+    (piM_cont hO (Topo.fgTop_RD i r π g0 eB e₁ s Dd hD) (Dd.ρk 0) Dd.e₁
       (wDd Dd (D.nd.T i) (RepresentationBoundsCohomology.one_le_letterBlockLength D.R) hT hrk)) (Topo.fracTop_O i) w
 
 theorem heDS (w : ℕ) (g : decs D.host.E (Aw i dc) w) (t : FirstSummandSubmodule (D.nd.O i) Dd.e₁) :

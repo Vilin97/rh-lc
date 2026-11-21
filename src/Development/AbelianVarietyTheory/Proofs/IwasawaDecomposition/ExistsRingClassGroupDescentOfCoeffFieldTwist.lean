@@ -98,7 +98,7 @@ theorem exists_pulls_twOK : ∀ (D : D7) (i : D.ntw.Tw) (k : ℕ) (b : Bool) (v 
   obtain ⟨χ, hv, hχ⟩ := exists_reads (ρ := ρ) ψ₀ hp
   have hfin : IsOfFinOrder (D.ntw.zk i k) := isOfFinOrder_iff_pow_eq_one.2
     ⟨_, pow_pos (D.ntw.lPrime i).out.pos k, (IsPrimitiveRoot.coe_units_iff.mp (D.ntw.zk_prim i k)).pow_eq_one⟩
-  haveI : Finite (Subgroup.zpowers (D.ntw.zk i k)) := (finite_zpowers.2 hfin).to_subtype
+  haveI : Finite (Subgroup.zpowers (D.ntw.zk i k)) := finite_zpowers.2 hfin
   have hker : (χ.ker : Set (G D.host.E D.nd.Om)) = ψ₀.ker := Set.ext fun g => by
     simp only [SetLike.mem_coe, MonoidHom.mem_ker]
     exact one_iff_of_reads hχ g

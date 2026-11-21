@@ -94,7 +94,7 @@ theorem pi_lft (h : IsCMExt F E σ) (τ) (c) (w : InfinitePlace F) : piInf (τ w
 theorem cont_lft (h : IsCMExt F E σ) (τ) : Continuous (lft h τ) := by
   haveI := isTopologicalRing_tens (F := F) (E := E) (R := AF F)
   classical
-  refine continuous_finset_sum _ fun w _ => ?_
+  refine continuous_finsetSum _ fun w _ => ?_
   have hc : Continuous (inInf (F := F) w) := (continuous_single w).prodMk continuous_const
   exact (GlobalTheory.AutFunCompare.continuous_tensNU (R' := AF F) (inInf w) (inInf_mul w) hc).comp
     ((GlobalTheory.AdelicU.Frames.continuous_infEmb_symm h (τ w)).comp (continuous_apply w))
@@ -235,32 +235,34 @@ theorem openEmb (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w)
   · rintro ⟨l, rfl⟩ w; exact pi_ne _ _
   · exact funext fun w => pi_uv h τ _ w
 
-theorem isLift_lft (B : Base F E) (hB : B.IsGood σ) : IsLift σ B (lft hB.cm B.emb) where
-  supp c := at_of_fin (fin_lft _ _ c)
-  pi := pi_lft _ _
-  inv a ha := ext_at hB.cm B.emb (fun v => by rw [fin_lft, fin_of_at ha]) (pi_lft _ _ _)
-  part a := ⟨at_of_fin fun v => compFin_eps v a, fun w => pi_eps _ a⟩
-  conj a w := pi_conj hB.cm _ a
-  incl x w := by
-    change piInf (B.emb w) ((1 : AF F) ⊗ₜ[F] x) = _
-    rw [pi_tmul]
-    exact (congrArg (· * _) (map_one _)).trans (one_mul _)
-  cont w := cont_pi _
-  psi a ha := by
-    rw [hB.std.2.2 _ fun u hu => by rw [← map_smul, ha u hu, map_zero],
-      trace_mixed hB.cm _ _ fun w => emb_trace hB.cm (B.emb w) a]
-  abs l hl := by
-    rw [absE_apply, finprod_eq_one_of_forall_eq_one fun v => by rw [at_unit_iff.1 hl v, map_one], mul_one]
-    push_cast
-    refine Finset.prod_congr rfl fun w _ => ?_
-    rw [absEw_eq_sq hB.cm (B.emb w)]; rfl
-  idAt l := mem_idAt
-  unit c hc := ⟨(un hB.cm B.emb ⟨c, hc⟩).1, mem_idAt.1 (un hB.cm B.emb ⟨c, hc⟩).2, pi_uv _ _ _⟩
-  haar x hx := by
-    haveI := isTopologicalRing_tens (F := F) (E := E) (R := AF F)
-    letI : MeasurableSpace (Loc.idAt E (evI F)) := borel _
-    haveI : BorelSpace (Loc.idAt E (evI F)) := ⟨rfl⟩
-    exact haar_units _ (openEmb hB.cm B.emb).1 (openEmb hB.cm B.emb).2 (fun a b => funext fun w => map_mul (piInf (B.emb w)) _ _) x
+theorem isLift_lft (B : Base F E) (hB : B.IsGood σ) : IsLift σ B (lft hB.cm B.emb) := by
+  exact
+    { supp c := at_of_fin (fin_lft _ _ c)
+      pi := pi_lft _ _
+      inv a ha := ext_at hB.cm B.emb (fun v => by rw [fin_lft, fin_of_at ha]) (pi_lft _ _ _)
+      part a := ⟨at_of_fin fun v => compFin_eps v a, fun w => pi_eps _ a⟩
+      conj a w := pi_conj hB.cm _ a
+      incl x w := by
+        change piInf (B.emb w) ((1 : AF F) ⊗ₜ[F] x) = _
+        rw [pi_tmul]
+        exact (congrArg (· * _) (map_one _)).trans (one_mul _)
+      cont w := cont_pi _
+      psi a ha := by
+        rw [hB.std.2.2 _ fun u hu => by rw [← map_smul, ha u hu, map_zero],
+          trace_mixed hB.cm _ _ fun w => emb_trace hB.cm (B.emb w) a]
+      abs l hl := by
+        rw [absE_apply, finprod_eq_one_of_forall_eq_one fun v => by rw [at_unit_iff.1 hl v, map_one], mul_one]
+        push_cast
+        refine Finset.prod_congr rfl fun w _ => ?_
+        rw [absEw_eq_sq hB.cm (B.emb w)]; rfl
+      idAt l := mem_idAt
+      unit c hc := ⟨(un hB.cm B.emb ⟨c, hc⟩).1, mem_idAt.1 (un hB.cm B.emb ⟨c, hc⟩).2, pi_uv _ _ _⟩
+      haar x hx := by
+        haveI := isTopologicalRing_tens (F := F) (E := E) (R := AF F)
+        letI : MeasurableSpace (Loc.idAt E (evI F)) := borel _
+        haveI : BorelSpace (Loc.idAt E (evI F)) := ⟨rfl⟩
+        exact haar_units _ (openEmb hB.cm B.emb).1 (openEmb hB.cm B.emb).2
+          (fun a b => funext fun w => map_mul (piInf (B.emb w)) _ _) x }
 
 theorem archDict_of : ArchDict := fun _ _ _ _ _ _ _ _ B hB => ⟨_, isLift_lft B hB⟩
 

@@ -88,7 +88,8 @@ lemma Bd.inv_nat {n M : ℕ} (hM : M ≠ 0) (h : n ∣ M) :
   have hp : (1 : ℝ) ≤ p := by exact_mod_cast (Fact.out : p.Prime).one_le
   apply pow_le_pow_right₀ hp
   rw [← (by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hM]
-  exact (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans h
+  simpa only [_root_.Nat.padicValNat_def] using
+    (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)).trans h
 
 lemma order_dvd {f r N : ℕ} (h : r ≤ 2 * N) :
     8 ^ (2 * f * r) * (2 * (2 * f * r)).factorial ∣ 8 ^ (4 * f * N) * (8 * f * N).factorial := by

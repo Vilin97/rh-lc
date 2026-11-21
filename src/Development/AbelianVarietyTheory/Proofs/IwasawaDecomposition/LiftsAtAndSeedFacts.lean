@@ -144,8 +144,9 @@ theorem not_isConjPl_union (hL : L.Is μ0) (t : T) {P P' : Pl D.host.E} (h : P �
       obtain ⟨⟨q, hq, hcard, -, hne⟩, -⟩ := hL.Q_pl t P h
       obtain ⟨k, hk⟩ := (hL.Pg P').1 h'
       have h1 : (q : 𝓞 D.host.E) ∈ P.asIdeal := by
-        rw [← hcard]
-        exact Ideal.absNorm_mem P.asIdeal
+        have hzero : Nat.card (kP P) • (1 : kP P) = 0 := card_nsmul_eq_zero'
+        rw [hcard, nsmul_one] at hzero
+        exact Ideal.Quotient.eq_zero_iff_mem.1 ((map_natCast _ q).trans hzero)
       exact hne k (GlobalTheory.ChainEquiv.eq_of_natCast_mem P' hq (D.host.g_prime k)
         (GlobalTheory.ChainEquiv.natCast_mem_of_isConjPl hc h1) (L.C.P.overP hk))
     · exact (hL.Q_pl t P h).2 P' h'

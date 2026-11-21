@@ -17,7 +17,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.T2SpaceGener
 
 noncomputable section
 
-open GlobalTheory.WeilM GlobalTheory.KSTransfer GlobalTheory.ParAvg MeasureTheory MeasureTheory.Measure
+open GlobalTheory.WeilM MeasureTheory MeasureTheory.Measure
 open scoped Matrix NNReal
 
 namespace GlobalTheory.ParAvg

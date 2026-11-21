@@ -20,7 +20,8 @@ namespace GlobalTheory.TwTameCell
 
 theorem tameAt_mul {L : Type} [Field L] [NumberField L] {χ χ' : HChar L} {v : HeightOneSpectrum (𝓞 L)}
     (h : χ.TameAt v) (h' : χ'.TameAt v) : (χ * χ').TameAt v := fun y hy hy1 => by
-  rw [HChar.loc_mul, h y hy hy1, h' y hy hy1, mul_one]
+  change χ.loc v y * χ'.loc v y = 1
+  rw [h y hy hy1, h' y hy hy1, mul_one]
 
 theorem tameAt_one {L : Type} [Field L] [NumberField L] (v : HeightOneSpectrum (𝓞 L)) : (1 : HChar L).TameAt v :=
   fun _ _ _ => rfl

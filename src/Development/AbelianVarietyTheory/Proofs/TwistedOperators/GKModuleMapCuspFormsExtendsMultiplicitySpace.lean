@@ -78,7 +78,7 @@ theorem extExists : GlobalTheory.Published.HarishChandraModules → GlobalTheory
       obtain ⟨x, hx⟩ := (hrange _).2 ⟨ha.cont, ha.left, (hTU u).1, hT₀.2.1 u, hT₀.2.2.1 u, (hTU u).2⟩
       exact ⟨x, hx⟩
     let e := LinearEquiv.ofInjective ι hinj
-    let T₀' : MultilinearMap ℂ (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension.kFin M τ) E :=
+    let T₀' : (Π τ : D.what₂.Tau, GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension.kFin M τ) →ₘₗ[ℂ] E :=
       e.symm.toLinearMap.compMultilinearMap (T₀.codRestrict (LinearMap.range ι) hmem)
     have hT₀' : ∀ u, ι (T₀' u) = T₀ u := fun u => by
       have h1 := congrArg Subtype.val (e.apply_symm_apply ⟨T₀ u, hmem u⟩)

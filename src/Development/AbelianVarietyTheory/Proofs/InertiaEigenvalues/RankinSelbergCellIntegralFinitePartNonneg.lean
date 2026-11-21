@@ -176,6 +176,7 @@ theorem integrableOn_cell_pos {E : Type} [Field E] [NumberField E] {n : ℕ} (μ
     fun _ => h1
   exact ⟨i1 0, i3 0⟩
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_f_t_core : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (φ : GA E (m + r + 1 + 1) → ℂ) (φ' : GA E (m + 1) → ℂ) (κ : GA E (m + 1) → ℝ) (F : (Fin (m + 1) → Ad E) → ℂ),
     Continuous (GlobalTheory.JSW.whit φ) → Continuous (GlobalTheory.JSW.whit φ') →
@@ -301,6 +302,7 @@ namespace GlobalTheory.RSnmFT
 open GlobalTheory.RSUnfoldW GlobalTheory.CuspGeneric GlobalTheory.MirTower
 open scoped NNReal
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem lintegral_whit_sq_eq : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (π' : CuspSub E (m + 1)), π'.IsUnitary →
     ∀ φ' ∈ GlobalTheory.JSW.mspanR π', ∀ G : (Fin (m + 1) → Ad E) → ℂ, Continuous G →
     ∀ (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] (𝓕₀ : Set (GA E (m + 1))),
@@ -364,6 +366,7 @@ end GlobalTheory.RSnmFT
 
 namespace GlobalTheory.RSnmFT
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem lintegral_whit_sq_ne_top {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {m : ℕ}
     {π' : CuspSub E (m + 1)} (hπ : π'.IsUnitary) {φ' : GA E (m + 1) → ℂ} (hφ : φ' ∈ GlobalTheory.JSW.mspanR π')
     {G : (Fin (m + 1) → Ad E) → ℂ} (hG : G ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin (m + 1)))
@@ -371,14 +374,50 @@ theorem lintegral_whit_sq_ne_top {E : Type} [Field E] [NumberField E] [_root_.Nu
     (h𝓕 : IsFundamentalDomain (GlobalTheory.CellDec.NE E (m + 1)) 𝓕₀ μ) {x : ℝ} (hx : 1 < x) :
     ∫⁻ g in 𝓕₀, ‖GlobalTheory.JSW.whit φ' g‖ₑ ^ 2 * ‖G (GlobalTheory.ZEul.lastRow g)‖ₑ * ENNReal.ofReal (GlobalTheory.RSnm.detAbs g ^ x) ∂μ ≠ ⊤ := by
   obtain ⟨𝓕, h1, h2⟩ := lintegral_whit_sq_eq E m π' hπ φ' hφ G hGc μ 𝓕₀ h𝓕
-  have hup := GlobalTheory.T.lintegral_theta_above_det_one E m π' hπ φ' hφ G hG μ 𝓕 h1 x
-  have hlow := GlobalTheory.T.lintegral_theta_below_det_one E m π' hπ φ' hφ G hG μ 𝓕 h1 x hx
+  let B : GA E (m + 1) → ℝ≥0∞ := fun g =>
+    ‖φ' g‖ₑ ^ 2 * (∑' ξ : {ξ : Fin (m + 1) → E // ξ ≠ 0},
+      ‖G (Matrix.vecMul (fun j => algebraMap E (Ad E) (ξ.1 j)) g.val)‖ₑ) *
+      ENNReal.ofReal (GlobalTheory.RSnm.detAbs g ^ x)
+  have hup : ∫⁻ g in 𝓕 ∩ {g | 1 ≤ GlobalTheory.RSnm.detAbs g}, B g ∂μ ≠ ⊤ := by
+    have hd := GlobalTheory.MSpanDecay.Good.decays (GlobalTheory.MSpanDecay.mspanR_le_goodSub hπ hφ)
+    obtain ⟨C, hC⟩ := (GlobalTheory.SBThetaUpper.isSmallKernel_sq_mul hd hG).tsum_le
+      (N := ⌈x⌉₊ + 1) (by omega)
+    have hI := ((GlobalTheory.RSTheta.integrableOn_absDet_rpow_neg (Nat.succ_pos m) μ h1
+      (s := (⌈x⌉₊ + 1 : ℕ) - x) (by push_cast; linarith [Nat.le_ceil x])).const_mul C).lintegral_lt_top
+    refine ne_top_of_le_ne_top hI.ne (lintegral_mono fun g => ?_)
+    obtain ⟨hs, hle⟩ := hC g
+    have h0 := GlobalTheory.RSnm.detAbs_pos g
+    change _ ≤ C * GlobalTheory.RSnm.detAbs g ^ _ at hle
+    change B g ≤ ENNReal.ofReal (C * GlobalTheory.RSnm.detAbs g ^ _)
+    dsimp only [B]
+    have hsum := ENNReal.ofReal_tsum_of_nonneg (fun _ => norm_nonneg _) hs
+    simp only [ofReal_norm, eNorm_mul, eNorm_pow] at hsum
+    rw [← ENNReal.tsum_mul_left, ← hsum,
+      ← ENNReal.ofReal_mul (tsum_nonneg fun _ => norm_nonneg _), neg_sub, sub_eq_neg_add,
+      Real.rpow_add h0, ← mul_assoc]
+    exact ENNReal.ofReal_le_ofReal (mul_le_mul_of_nonneg_right hle (by positivity))
+  have hlow : ∫⁻ g in 𝓕 ∩ {g | GlobalTheory.RSnm.detAbs g ≤ 1}, B g ∂μ ≠ ⊤ := by
+    obtain ⟨C, hC⟩ := GlobalTheory.ThetaSqLow.exists_bound hπ hφ hG
+    have hi : IntegrableOn (fun g : GA E (m + 1) => GlobalTheory.RSnm.detAbs g ^ (x - 1))
+        (𝓕 ∩ {g | GlobalTheory.RSnm.detAbs g ≤ 1}) μ :=
+      GlobalTheory.T.integrableOn_absDet_rpow_le_one_fundamentalDomain
+        E (m + 1) m.succ_pos μ 𝓕 h1 (x - 1) (by linarith)
+    refine ne_top_of_le_ne_top (hi.const_mul C).lintegral_lt_top.ne (lintegral_mono fun g => ?_)
+    have hδ := GlobalTheory.RSnm.detAbs_pos g
+    dsimp only [B]
+    refine (mul_le_mul_left (hC g) _).trans ?_
+    rw [mul_comm, ← ENNReal.ofReal_mul (Real.rpow_nonneg hδ.le _)]
+    refine ENNReal.ofReal_le_ofReal (le_of_eq ?_)
+    rw [Real.rpow_sub_one hδ.ne']
+    ring
   have hsub : 𝓕 ⊆ (𝓕 ∩ {g | 1 ≤ GlobalTheory.RSnm.detAbs g}) ∪ (𝓕 ∩ {g | GlobalTheory.RSnm.detAbs g ≤ 1}) := fun g hg =>
     (le_total 1 (GlobalTheory.RSnm.detAbs g)).imp (fun h => ⟨hg, h⟩) fun h => ⟨hg, h⟩
   rw [h2 x]
+  change (∫⁻ g in 𝓕, B g ∂μ) ≠ ⊤
   exact ne_of_lt ((lintegral_mono_set hsub).trans_lt ((lintegral_union_le _ _ _).trans_lt
     (ENNReal.add_lt_top.2 ⟨hup.lt_top, hlow.lt_top⟩)))
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_cellPart_unfoldedIntegral_positive_alt : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (φ : GA E (m + r + 1 + 1) → ℂ) (φ' : GA E (m + 1) → ℂ) (κ : GA E (m + 1) → ℝ) (F : (Fin (m + 1) → Ad E) → ℂ),
     Continuous (GlobalTheory.JSW.whit φ) → Continuous (GlobalTheory.JSW.whit φ') →

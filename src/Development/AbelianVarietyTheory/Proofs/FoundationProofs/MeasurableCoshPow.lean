@@ -73,7 +73,7 @@ def coshSum (n : ℕ) (B : Matrix (Fin p) (Fin q) ℂ) : Matrix (Fin q) (Fin q) 
 
 theorem continuous_coshSum (n : ℕ) : Continuous (coshSum n : Matrix (Fin p) (Fin q) ℂ → _) := by
   unfold coshSum
-  refine continuous_finset_sum _ fun k _ => ?_
+  refine continuous_finsetSum _ fun k _ => ?_
   have h : Continuous fun B : Matrix (Fin p) (Fin q) ℂ => Bᴴ * B :=
     continuous_id.matrix_conjTranspose.matrix_mul continuous_id
   exact (h.pow k).const_smul ((((2 * k).factorial : ℕ) : ℂ)⁻¹)
@@ -133,7 +133,7 @@ theorem measurable_coshPow : ∀ (p q : ℕ) (c : ℝ), Measurable (coshPow c : 
   have e : (coshPow c : UpqT p q → ℝ) = fun g =>
       (∏ i ∈ Finset.range (min p q), Real.cosh (singVal (cartanB g) i)) ^ (-c) := by
     funext g
-    exact Real.finset_prod_rpow _ _ (fun i _ => (Real.cosh_pos _).le) _
+    exact Real.finsetProd_rpow _ _ (fun i _ => (Real.cosh_pos _).le) _
   rw [e]
   exact h.pow_const _
 

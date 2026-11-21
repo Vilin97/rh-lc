@@ -31,7 +31,7 @@ public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.Abe
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField IsDedekindDomain
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.GeometryOfNumbersTheory
 open scoped CategoryTheory.Obj
-open GlobalTheory GlobalTheory.CM GlobalTheory.IndefiniteRowSideFullHecke.TensorObjectExistence
+open GlobalTheory GlobalTheory.CM
 
 noncomputable section
 namespace GlobalTheory.CMExistsCompare

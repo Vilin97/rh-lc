@@ -28,15 +28,15 @@ namespace GlobalTheory.CuspRep.Generic
 variable {E : Type} [Field E] [NumberField E] {a : ℕ} {ψ : AddChar (Ad E) ℂ}
 
 theorem good_colT (hψ : StdPsi ψ) {m : ℕ} {f : GA E a → ℂ} (h : m + 1 < a) (hf : Good ψ (m + 1) f) :
-    Good ψ m (colT ψ (m + 1) f) where
-  cont := GlobalTheory.T.continuous_unipotentColumnWhittakerTransform E a ψ hψ m f hf
-  left := GlobalTheory.T.unipotentColumnWhittakerTransform_mirabolic_invariant E a ψ hψ m f h hf
-  law k hk y g := by
-    rcases Nat.lt_or_ge (m + 1) k with h1 | h1
-    · exact GlobalTheory.T.columnWhittakerTransform_keeps_later_law E a ψ m f hf k h1 y g
-    · obtain rfl : k = m + 1 := by omega
-      exact GlobalTheory.T.unipotentColumnWhittakerTransform_column_law E a ψ hψ m f hf y g
-  van := GlobalTheory.T.quotientAverage_unipotentBlock_columnTransform_eq_zero E a ψ hψ m f h hf
+    Good ψ m (colT ψ (m + 1) f) := by
+  refine ⟨GlobalTheory.T.continuous_unipotentColumnWhittakerTransform E a ψ hψ m f hf,
+    GlobalTheory.T.unipotentColumnWhittakerTransform_mirabolic_invariant E a ψ hψ m f h hf,
+    ?_, GlobalTheory.T.quotientAverage_unipotentBlock_columnTransform_eq_zero E a ψ hψ m f h hf⟩
+  intro k hk y g
+  rcases Nat.lt_or_ge (m + 1) k with h1 | h1
+  · exact GlobalTheory.T.columnWhittakerTransform_keeps_later_law E a ψ m f hf k h1 y g
+  · obtain rfl : k = m + 1 := by omega
+    exact GlobalTheory.T.unipotentColumnWhittakerTransform_column_law E a ψ hψ m f hf y g
 
 theorem hl_of_good {m : ℕ} {f : GA E a → ℂ} (hf : Good ψ m f) {k : ℕ} (hk : k ≤ m) (c : UnipotentBlockColumnIndex a k k → E) (g : GA E a) :
     f (ratGL E a (blkU c) * g) = f g := by
@@ -92,6 +92,8 @@ theorem whit_rt (m : ℕ) (f : GA E a → ℂ) (h g : GA E a) : whit ψ m (fun x
   | succ m ih =>
     rw [whit_succ, whit_succ, ← ih]
     congr 1
+    funext x
+    simp only [colT, coefF, mul_assoc]
 
 def locPsi (hψ : StdPsi ψ) (w : HeightOneSpectrum (𝓞 E)) : AddChar (w.adicCompletion E) Circle where
   toFun y := ⟨ψ (sFin E (sLoc E w y)), by simpa [Submonoid.unitSphere] using hψ.norm _⟩

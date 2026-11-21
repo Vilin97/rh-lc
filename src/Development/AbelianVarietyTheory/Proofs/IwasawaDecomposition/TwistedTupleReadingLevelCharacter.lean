@@ -86,8 +86,8 @@ theorem isPtOf_mul_rat [NeZero n] {hcm : CMData F E} {SG Q : Finset (HeightOneSp
       rfl
     rw [e]
     exact (hInt hzi i j).2 w.1
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [inv_inv, Pi.inv_apply, inv_inv, Units.val_mul, Matrix.mul_apply, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [inv_inv, Pi.inv_apply, inv_inv, Units.val_mul, Matrix.mul_apply, map_sum]
     have e : ∀ x, adAt F P.1 ((g : Matrix (Fin n) (Fin n) (AfE F E)) i x * (z : Matrix (Fin n) (Fin n) (AfE F E)) x j) =
         algebraMap E (P.1.adicCompletion E) (p.fr P (Pi.single x 1) i * (c P).1 (Pi.single j 1) x) := fun x => by
       rw [map_mul, map_mul, hg.fr P, hcz P]

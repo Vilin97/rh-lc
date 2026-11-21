@@ -84,8 +84,8 @@ theorem support_aconv {G : Type} [AddMonoid G] (p : G → Prop) (h0 : p 0) (hadd
   | cons e l ih =>
     intro w hw
     rw [aconv_cons] at hw
-    obtain ⟨x, hx, hw2⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hw)
-    obtain ⟨y, hy, hw3⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hw2)
+    obtain ⟨x, hx, hw2⟩ := Finset.mem_biUnion.1 (Finsupp.support_finsetSum hw)
+    obtain ⟨y, hy, hw3⟩ := Finset.mem_biUnion.1 (Finsupp.support_finsetSum hw2)
     have h3 := Finsupp.support_single_subset hw3
     rw [Finset.mem_singleton] at h3
     exact h3 ▸ hadd x y (hl e List.mem_cons_self x hx) (ih (fun e' he' => hl e' (List.mem_cons_of_mem _ he')) y hy)
@@ -94,9 +94,9 @@ theorem comb_aconv_cons (e : WO S T →₀ ℂ) (l : List (WO S T →₀ ℂ))
     (h : ∀ x ∈ e.support, ∀ y ∈ (aconv l).support, symplO S T x y = 0) (f : WO S T → ℂ) :
     comb ψ S T (aconv (e :: l)) f = comb ψ S T e (comb ψ S T (aconv l) f) := by
   rw [GlobalTheory.HeisComb.comb_comb, GlobalTheory.HeisComb.comb_eq_sum, aconv_cons]
-  rw [← Finsupp.sum_finset_sum_index (fun u => zero_smul ℂ (heisO ψ S T u f)) (fun u a b => add_smul a b (heisO ψ S T u f))]
+  rw [Finsupp.sum_finsetSum _ _ _ (fun u => zero_smul ℂ (heisO ψ S T u f)) (fun u a b => add_smul a b (heisO ψ S T u f))]
   refine Finset.sum_congr rfl fun x hx => ?_
-  rw [← Finsupp.sum_finset_sum_index (fun u => zero_smul ℂ (heisO ψ S T u f)) (fun u a b => add_smul a b (heisO ψ S T u f))]
+  rw [Finsupp.sum_finsetSum _ _ _ (fun u => zero_smul ℂ (heisO ψ S T u f)) (fun u a b => add_smul a b (heisO ψ S T u f))]
   refine Finset.sum_congr rfl fun y hy => ?_
   have h0 : symplOH S T x y = 0 := by
     unfold symplOH

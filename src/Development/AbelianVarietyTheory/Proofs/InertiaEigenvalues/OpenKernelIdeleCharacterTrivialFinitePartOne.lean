@@ -19,7 +19,6 @@ open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor F
 open ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.Member GlobalTheory.CoverHalf Formalism.IndefR.FWT Formalism.L2.DIV
 open scoped TensorProduct Matrix
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
-open GlobalTheory.UnivCover
 
 namespace GlobalTheory.UnivCover.OpenKerChar
 

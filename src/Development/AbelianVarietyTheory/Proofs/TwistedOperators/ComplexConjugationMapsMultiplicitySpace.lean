@@ -57,7 +57,7 @@ theorem span_conj (hJ : IsUnit J.det) (c : H' ≃ₗᵢ⋆[ℂ] H)
   induction hw using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span (smoothVec_conj hJ c hc hx)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 theorem dRep_conj (hJ : IsUnit J.det) (c : H' ≃ₗᵢ⋆[ℂ] H)
@@ -167,7 +167,7 @@ theorem rep_mem_sm (M : DSModel V S) (τ : D.what₂.Tau) {g : Matrix (Fin V.ran
   | mem x hx =>
     exact Submodule.subset_span (smoothVec_act (GlobalTheory.SmoothAutCheck.gramAt_unit V τ) (rep_mul M τ) hg hx)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem value_mem_homFun {θ : InfFam D} {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ} {T : MMap M}
@@ -221,7 +221,8 @@ theorem conj_mult : ∀ {D : D7} {V : HSp D} {S S' : D.what₂.Tau → SPar} (θ
         rw [hup, hup, hup, this, T.map_update_add, star_add]
       map_update_smul' := fun v τ a x => by
         have : cs τ (a • x) = star a • cs τ x := Subtype.ext (map_smulₛₗ (c τ) _ _)
-        rw [hup, hup, this, T.map_update_smul, star_smul, star_star] }
+        rw [hup, hup, this, T.map_update_smul, star_smul]
+        simp only [RingHom.id_apply, star_star] }
   have hT' : ∀ v, T' v = star (T (cv v)) := fun _ => rfl
   refine ⟨T', Submodule.subset_span ⟨fun v => isAutFunSm_star (h.aut _) (value_mem_homFun h _), fun v => ?_,
     fun v k hk g => ?_, fun τ g hg v w hw => ?_, fun τ v x => ?_⟩, fun v' v hv g => ?_⟩

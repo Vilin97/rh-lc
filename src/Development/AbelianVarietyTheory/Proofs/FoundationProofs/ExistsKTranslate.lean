@@ -156,7 +156,7 @@ theorem exists_fdeg (T : GrpData p q) (σ : URep T) (hσ : IrrU σ) (v : σ.H) (
   haveI := (GlobalTheory.HolDS.haar_unimodular p q T).1
   obtain ⟨h1, d, hd, h2⟩ := GlobalTheory.Published.schurOrthogonalitySquareIntegrable' T.G T.haar σ.H σ.π σ.isom σ.cont
     hσ.2 ⟨v, v, hv, hv, h⟩
-  refine ⟨d, hd, fun x y => ⟨(memLp_two_iff_integrable_sq_norm (h1 x y).1).1 (h1 x y), ?_⟩⟩
+  refine ⟨d, hd, fun x y => ⟨(memLp_two_iff_integrable_sq_norm (h1 x y).aestronglyMeasurable).1 (h1 x y), ?_⟩⟩
   have h3 := (h2 x y x y).2
   have e : ∀ z : ℂ, z * star z = ((‖z‖ ^ 2 : ℝ) : ℂ) := fun z => by
     rw [Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]

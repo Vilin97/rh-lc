@@ -72,10 +72,12 @@ theorem word_mem (hψ : IsStdInf F ψ) : ∀ (w : List ((κ → mixedEmbedding.m
 
 theorem word_sum (hψ : IsStdInf F ψ) {m : ℕ} (g : Fin m → (κ → FiniteAdeleRing (𝓞 F) F) → ℂ) :
     ∀ (w : List ((κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F))) (f : Fin m → SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ), ∃ f' : Fin m → SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ,
-      word F ψ w (∑ i, GlobalTheory.WeilM.pureA F (f i) (g i)) = ∑ i, GlobalTheory.WeilM.pureA F (f' i) (g i)
-  | [], f => ⟨f, rfl⟩
-  | h :: w, f => by
-    obtain ⟨f1, e1⟩ := word_sum hψ g w f
+      word F ψ w (∑ i, GlobalTheory.WeilM.pureA F (f i) (g i)) = ∑ i, GlobalTheory.WeilM.pureA F (f' i) (g i) := by
+  intro w f
+  induction w with
+  | nil => exact ⟨f, rfl⟩
+  | cons h w ih =>
+    obtain ⟨f1, e1⟩ := ih
     obtain ⟨f2, e2⟩ := GlobalTheory.T.archDerivative_keeps_sums_fixed_finite_parts F κ ψ hψ m g f1 h
     exact ⟨f2, by rw [word_cons, e1, e2]⟩
 

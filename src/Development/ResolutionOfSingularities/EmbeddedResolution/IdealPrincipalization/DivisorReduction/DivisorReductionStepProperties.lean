@@ -300,30 +300,31 @@ structure DivisorReductionStepProperties (hres : FunctorialResolution.Blowup.Str
 
 theorem DivisorReductionStepProperties.toDivisorReductionTerminationProperties {hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u}}
     {hno : BlowupPreservesNoetherian.{u}} (h : DivisorReductionStepProperties hres hno) :
-    DivisorReductionTerminationProperties hres hno where
-  exists_ideal_mul_preIdeal_pow := h.exists_ideal_mul_preIdeal_pow
-  isMarked_pushedTop := h.isMarked_pushedTop
-  isMarked_pushedPre := h.isMarked_pushedPre
-  isBlowup_id_preIdeal := h.isBlowup_id_preIdeal
-  lowerTriple_dim_lt := fun T hV hne j hj I₀ E₀ => dim_restrictToBoundaryDivisor_lt T hV hne j hj I₀ E₀
-  valid_lowerTop := h.valid_lowerTop
-  valid_lowerPre := h.valid_lowerPre
-  orderAt_ctrlIdeal_le_top := h.orderAt_ctrlIdeal_le_top
-  orderAt_ctrlIdeal_le_pre := h.orderAt_ctrlIdeal_le_pre
-  coSupport_inter_ker_eq_empty_top := h.coSupport_inter_ker_eq_empty_top
-  coSupport_inter_ker_eq_empty_pre := h.coSupport_inter_ker_eq_empty_pre
-  properCenters := fun T hV hm s => centersContainNoComponent_of_isAdmissible T hV hm s
-  isPullbackSeq_ambientTower := h.isPullbackSeq_ambientTower
-  isStrictPullbackSeq_ambientTower := h.isStrictPullbackSeq_ambientTower
-  comap_ctrlIdeal_top := h.comap_ctrlIdeal_top
-  comap_ctrlIdeal_pre := h.comap_ctrlIdeal_pre
-  preIdeal_baseChange := h.preIdeal_baseChange
-  preIdeal_pullbackAlong := h.preIdeal_pullbackAlong
-  preIdeal_eq_top_of_imageIdeal := h.preIdeal_eq_top_of_imageIdeal
-  isOpen_preLocus := fun T hV j hj => isOpen_setOf_connectedComponent_subset_orderAtLeastLocus T hV j hj
-  smooth_preIdeal := h.smooth_preIdeal
-  hasSNCWith_preIdeal := h.hasSNCWith_preIdeal
-  support_preIdeal_subset := h.support_preIdeal_subset
+    DivisorReductionTerminationProperties hres hno := by
+  exact
+    { exists_ideal_mul_preIdeal_pow := h.exists_ideal_mul_preIdeal_pow
+      isMarked_pushedTop := h.isMarked_pushedTop
+      isMarked_pushedPre := h.isMarked_pushedPre
+      isBlowup_id_preIdeal := h.isBlowup_id_preIdeal
+      lowerTriple_dim_lt := dim_restrictToBoundaryDivisor_lt
+      valid_lowerTop := h.valid_lowerTop
+      valid_lowerPre := h.valid_lowerPre
+      orderAt_ctrlIdeal_le_top := h.orderAt_ctrlIdeal_le_top
+      orderAt_ctrlIdeal_le_pre := h.orderAt_ctrlIdeal_le_pre
+      coSupport_inter_ker_eq_empty_top := h.coSupport_inter_ker_eq_empty_top
+      coSupport_inter_ker_eq_empty_pre := h.coSupport_inter_ker_eq_empty_pre
+      properCenters := centersContainNoComponent_of_isAdmissible
+      isPullbackSeq_ambientTower := h.isPullbackSeq_ambientTower
+      isStrictPullbackSeq_ambientTower := h.isStrictPullbackSeq_ambientTower
+      comap_ctrlIdeal_top := h.comap_ctrlIdeal_top
+      comap_ctrlIdeal_pre := h.comap_ctrlIdeal_pre
+      preIdeal_baseChange := h.preIdeal_baseChange
+      preIdeal_pullbackAlong := h.preIdeal_pullbackAlong
+      preIdeal_eq_top_of_imageIdeal := h.preIdeal_eq_top_of_imageIdeal
+      isOpen_preLocus := isOpen_setOf_connectedComponent_subset_orderAtLeastLocus
+      smooth_preIdeal := h.smooth_preIdeal
+      hasSNCWith_preIdeal := h.hasSNCWith_preIdeal
+      support_preIdeal_subset := h.support_preIdeal_subset }
 
 end FunctorialResolution.EmbeddedResolution
 

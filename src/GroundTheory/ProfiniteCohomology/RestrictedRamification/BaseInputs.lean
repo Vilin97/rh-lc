@@ -15,6 +15,8 @@ namespace GroundTheory.ProfCoh
 
 open IsDedekindDomain NumberField CategoryTheory GroundTheory.Global
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 theorem finite_of_exact_of_finite {A B C : Type*} [AddCommGroup A] [AddCommGroup B] [AddCommGroup C] [Finite A]
@@ -120,8 +122,14 @@ include hnk hS in
 theorem natCard_gsRoots : Nat.card (gsRoots S n) = n := by
   change Nat.card (Additive (rootsOfUnity n (maxUnramifiedOutside K.1 ℚ̄ S))) = n
   rw [Nat.card_congr Additive.toMul]
-  exact card_rootsOfUnity_maxUnramifiedOutside K S n (NeZero.ne n)
-    (fun v hv h => hv (mem_of_natCast_pow_mem S n ℓ k hnk hS v h))
+  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot ℚ̄ n
+  have hmem : ζ ∈ maxUnramifiedOutside K.1 ℚ̄ S :=
+    mem_maxUnramifiedOutside_of_pow_eq_one S (NeZero.ne n)
+      (fun v hv h => hv (mem_of_natCast_pow_mem S n ℓ k hnk hS v h)) hζ.pow_eq_one
+  have hζS : IsPrimitiveRoot (⟨ζ, hmem⟩ : maxUnramifiedOutside K.1 ℚ̄ S) n :=
+    IsPrimitiveRoot.of_map_of_injective (f := (maxUnramifiedOutside K.1 ℚ̄ S).val) hζ
+      Subtype.val_injective
+  exact hζS.card_rootsOfUnity
 
 
 omit [Finite S] in

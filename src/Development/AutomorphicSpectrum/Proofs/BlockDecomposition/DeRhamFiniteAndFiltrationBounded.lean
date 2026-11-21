@@ -156,13 +156,13 @@ theorem toSq_comp (a b c : IdF A) (ha : ∀ T, a.S T = ⊤) (hcb : ∀ T, c.S T 
 
 end Gen
 
-theorem tfBase (K : Type) [Field K] [CharZero K] (s : ℕ) (hs : 0 < s) : TFBase (dividedPowersBot K) 1 s where
-  nil := by
-    refine Ideal.span_eq_bot.2 ?_
+theorem tfBase (K : Type) [Field K] [CharZero K] (s : ℕ) (hs : 0 < s) : TFBase (dividedPowersBot K) 1 s := by
+  refine ⟨?_, ?_, ?_⟩
+  · refine Ideal.span_eq_bot.2 ?_
     rintro _ ⟨l, hl, hr, rfl⟩
     have : ∃ q ∈ l, q.1 ≠ 0 := by
       by_contra hc
-      push_neg at hc
+      push Not at hc
       have : (l.map Prod.fst).sum = 0 := by
         refine List.sum_eq_zero ?_
         intro x hx
@@ -174,8 +174,10 @@ theorem tfBase (K : Type) [Field K] [CharZero K] (s : ℕ) (hs : 0 < s) : TFBase
     have e : q.2 = 0 := (Ideal.mem_bot).1 (hl q hq)
     rw [e]
     exact DividedPowers.dpow_eval_zero _ h0
-  tf r x h := by simpa using h
-  dv n hn := ⟨0, (n : K)⁻¹, by simp [Nat.cast_ne_zero.2 hn]⟩
+  · intro r x h
+    simpa using h
+  · intro n hn
+    exact ⟨0, (n : K)⁻¹, by simp [Nat.cast_ne_zero.2 hn]⟩
 
 end GlobalTheory.CompanionTheory.KFin
 

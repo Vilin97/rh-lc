@@ -98,9 +98,9 @@ theorem isLocallyNoetherian_of_isPreimmersion {W Z : Scheme.{0}} (j : W ⟶ Z) [
     (top_le_iff.1 fun w _ => TopologicalSpace.Opens.mem_iSup.2 ⟨w, hV w⟩) hN
 
 theorem isPreimmersion_of_comp {W Z Y : Scheme.{0}} (u : W ⟶ Z) (p : Z ⟶ Y) [IsPreimmersion (u ≫ p)] :
-    IsPreimmersion u where
-  toSurjectiveOnStalks := SurjectiveOnStalks.of_comp u p
-  isEmbedding := Topology.IsEmbedding.of_comp u.continuous p.continuous (u ≫ p).isEmbedding
+    IsPreimmersion u := by
+  have : SurjectiveOnStalks u := SurjectiveOnStalks.of_comp u p
+  exact ⟨Topology.IsEmbedding.of_comp u.continuous p.continuous (u ≫ p).isEmbedding⟩
 
 theorem flat_of_isPreimmersion {W Z : Scheme.{0}} (u : W ⟶ Z) [IsPreimmersion u] [QuasiCompact u]
     [IsSchemeTheoreticallyDominant u] : Flat u := by

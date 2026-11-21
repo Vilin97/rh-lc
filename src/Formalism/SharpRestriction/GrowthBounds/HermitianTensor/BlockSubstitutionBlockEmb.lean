@@ -97,14 +97,14 @@ theorem block_substitution_blockEmb (b : Bool) (v : MvPolynomial (Fin (r + 1 + 1
   induction v using MvPolynomial.induction_on
   next a =>
     rw [qa_blockEmb_C, block_substitution_C]
-    simp [subY, qa_blockEmb_C]
+    simp [subY]
   next p q hp hq =>
     rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
   next p x hp =>
     rw [map_mul, map_mul, hp, qa_blockEmb_X, block_substitution_X, map_mul, map_mul]
 
 theorem qa_blockEmb_comp_C (b : Bool) :
-    ((blockEmb K (k := r) (n := r) b).toRingHom).comp C = (C : K →+* MvPolynomial (Bool × (Fin r × Fin r)) K) := RingHom.ext fun a => by simp [qa_blockEmb_C]
+    ((blockEmb K (k := r) (n := r) b).toRingHom).comp C = (C : K →+* MvPolynomial (Bool × (Fin r × Fin r)) K) := RingHom.ext fun a => by simp
 
 theorem qa_lamOf_apply (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K)
     (x : MvPolynomial (Bool × (Fin (r + 1 + 1) × Fin (r + 1 + 1))) K) : lamOf K r L x = lcoef L (sub2 K r x) := rfl
@@ -119,6 +119,8 @@ theorem qa_eval_map_block (b : Bool)
     (MvPolynomial.eval₂ (RingHom.id _) (idPoint (MvPolynomial (Fin r × Fin r) K) (r + 1 + 1) (r + 1 + 1)) h)
   rw [MvPolynomial.eval₂_comp_left, RingHom.comp_id]
   congr 1
+  funext i
+  simp only [Function.comp_apply, idPoint]
   split_ifs <;> simp
 
 end S2
@@ -166,7 +168,7 @@ theorem lamEquivP : LamEquivP := by
           (map (blockEmb K (k := r) (n := r) b).toRingHom) :
         MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) (MvPolynomial (Fin r × Fin r) K) →+*
           MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) (MvPolynomial (Bool × (Fin r × Fin r)) K)))
-      (fun c => by simp [rowAct]) (fun i => by simp [rowAct, Matrix.map_apply, map_sum, qa_blockEmb_C])
+      (fun c => by simp [rowAct]) (fun i => by simp [rowAct, Matrix.map_apply, map_sum])
     simpa using RingHom.congr_fun e P
   rw [qa_lamOf_apply, qa_lamOf_apply, map_mul (sub2 K r), map_mul (sub2 K r), block_substitution_blockEmb,
     block_substitution_blockEmb, block_substitution_blockEmb, block_substitution_blockEmb, qa_subY_rowAct, qa_subY_rowAct, hcomm, hcomm,

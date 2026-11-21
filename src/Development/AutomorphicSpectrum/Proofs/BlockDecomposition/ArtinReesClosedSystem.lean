@@ -254,10 +254,8 @@ lemma qc_restrict (hS : ClosedSys I E S) (hE : E.IsQuasicoherent) (hD : QC D) (c
 lemma closedSys_restrict (hS : ClosedSys I E S) (hE : E.IsQuasicoherent) (hD : QC D)
     {c k : ℕ} (hc : ∀ e, S (e + c) ≤ D ⊔ powSub I E (e + 1))
     (ar : ∀ n, D ⊓ powSub I E (n + k) ≤ (Subobject.map D.arrow).obj (powSub I (D : X.Modules) n)) :
-    ClosedSys I (D : X.Modules) (restrictSys I D S k) where
-  qcoh := qc_restrict hS hE hD k
-  pow_le _ := le_sup_right
-  succ := restrict_succ hS hE hD hc ar
+    ClosedSys I (D : X.Modules) (restrictSys I D S k) :=
+  ⟨qc_restrict hS hE hD k, fun _ => le_sup_right, restrict_succ hS hE hD hc ar⟩
 
 lemma secs_sys_univ (hS : ClosedSys I E S) (hE : E.IsQuasicoherent) {U : X.Opens} (hU : IsAffineOpen U)
     (h0 : secs (S 0) U = Set.univ) (n : ℕ) : secs (S n) U = Set.univ := by

@@ -51,7 +51,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} {sel : HeightOneSpectrum (𝓞
 theorem mv_dia (q : PtAt R sel mu cst u j) (P : Pr.vT u) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) :
     PtY.mv q (DecoSet.dia1 P a q.1.1.deco) = ⟨(⟨(DecoSet.dia1 P a q.1.1.deco, q.1.1.1.2), q.1.1.2⟩, q.1.2), q.2⟩ := by
   unfold PtY.mv
-  exact dif_pos ⟨q.1.1.2, q.2⟩
+  exact dite_eq_left ⟨q.1.1.2, q.2⟩
 
 theorem cosetIn_dia (q : PtAt R sel mu cst u j) (P : Pr.vT u) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) :
     cosetIn (PtY.mv q (DecoSet.dia1 P a q.1.1.deco) : PtAt R sel mu cst u j) = cosetIn q := by

@@ -62,7 +62,7 @@ theorem gram_single {d : ℕ} (X : InfinitePlace K → Matrix (Fin d) (Fin d) �
   have h : (Matrix.of (fun i => (Pi.single i 1 : Fin d → K)))ᵀ.map v.embedding = 1 := by
     ext a b
     by_cases hab : a = b
-    · subst hab; simp
+    · subst hab; simp [Function.swap, Pi.single_apply]
     · simp [hab, Matrix.one_apply]
   rw [gram_eq, h, Matrix.mul_one]
 
@@ -97,13 +97,7 @@ theorem GlobalTheory.neg_rank_mul_log_le_lcv : ∀ (K : Type) [Field K] [NumberF
     exact this
   have hfg : L'.FG :=
     Submodule.fg_of_fg_map_injective (ψ.restrictScalars (𝓞 K)) hψ (by rw [hmap]; exact hL)
-  have hlat : Submodule.IsLattice K L' := by
-    refine ⟨hfg, ?_⟩
-    apply Submodule.map_injective_of_injective hψ
-    rw [← Submodule.span_image, Submodule.map_top, hrange]
-    have : ψ '' (L' : Set (Fin j → K)) = (L : Set (Fin d → K)) := by
-      rw [← hmap]; rfl
-    rw [this]
+  have hlat : Submodule.IsLattice K L' := Submodule.IsLattice.of_fg K hfg
   have hnorm : ∀ v x, Formalism.HermitianLatticesTheory.normAt (Pi.basisFun K (Fin d)) X v (ψ x) =
       Formalism.HermitianLatticesTheory.normAt (Pi.basisFun K (Fin j)) X' v x := by
     intro v x

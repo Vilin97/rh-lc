@@ -28,8 +28,27 @@ theorem exists_basis_latSpanV_eq_of_finrank_two (F E : Type) [Field F] [NumberFi
         latSpanV (Fin.snoc (α := fun _ => FractionalIdeal (nonZeroDivisors (𝓞 F)) F) (fun _ => 1) b) e := by
   have hL := fractionalIdeal_restrictScalars_isLattice_of_tower F E c hc
   haveI : FiniteDimensional F E := Module.finite_of_finrank_eq_succ hE
+  have hfull : Submodule.IsFullLattice F ((c : Submodule (𝓞 E) E).restrictScalars (𝓞 F)) := by
+    letI := hL
+    refine ⟨?_⟩
+    apply top_le_iff.mp
+    intro z _
+    obtain ⟨x, hxc, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot (p := (c : Submodule (𝓞 E) E))
+      (by rwa [Ne, FractionalIdeal.coeToSubmodule_eq_bot])
+    obtain ⟨n, hn, hi⟩ := (IsFractionRing.isAlgebraic_iff ℤ ℚ E |>.mpr (.of_finite ℚ (z / x))).exists_integral_multiple
+    let y : 𝓞 E := ⟨n • (z / x), hi⟩
+    have hym : (y : E) * x ∈ (c : Submodule (𝓞 E) E) :=
+      (c : Submodule (𝓞 E) E).smul_mem y hxc
+    have hs : (n : F) • z ∈ Submodule.span F
+        (((c : Submodule (𝓞 E) E).restrictScalars (𝓞 F)) : Set E) := by
+      apply Submodule.subset_span
+      convert hym using 1
+      simp [y, Algebra.smul_def, div_eq_mul_inv, hx0, mul_assoc]
+    have hnF : (n : F) ≠ 0 := Int.cast_ne_zero.mpr hn
+    have := (Submodule.span F (((c : Submodule (𝓞 E) E).restrictScalars (𝓞 F)) : Set E)).smul_mem (n : F)⁻¹ hs
+    simpa [smul_smul, hnF] using this
   let w := Module.finBasisOfFinrankEq F E hE
-  obtain ⟨e, b, he, -, hb, heq⟩ := satBasisV_holds F E _ hL 1 w w.linearIndependent (fun _ => 1)
+  obtain ⟨e, b, he, -, hb, heq⟩ := satBasisV_holds F E _ hfull 1 w w.linearIndependent (fun _ => 1)
     (fun _ => one_ne_zero)
   refine ⟨e, b, he, hb, ?_⟩
   rw [← heq, w.span_eq]

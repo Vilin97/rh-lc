@@ -16,6 +16,8 @@ open CategoryTheory Limits NumberField IsDedekindDomain IntermediateField Ground
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section Primary
 
 variable {X Y : Type*} [AddCommGroup X] [AddCommGroup Y] {ℓ : ℕ} {f : X →+ Y}

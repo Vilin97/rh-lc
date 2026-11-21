@@ -22,13 +22,11 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G
   {A : AdData t u μ St} {dtU : Formalism.L2.Herm.unitaryOneFiniteAdeles D.sp.cm →* D.Dt} {a : 𝓞 D.host.E}
 
 theorem isPtAd_cls (H : AdTie A dtU a) (i : ℕ) (hi : i ≤ D.R.m) (c : (D.chTw u μ).cls i) :
-    IsPtAd A a i hi ((St i hi).chOf c) ((St i hi).y c) (A.pt i hi c) where
-  lat := by
-    rw [← H.N_eq i hi c]
+    IsPtAd A a i hi ((St i hi).chOf c) ((St i hi).y c) (A.pt i hi c) := by
+  refine ⟨?_, H.frame i hi c, ?_⟩
+  · rw [← H.N_eq i hi c]
     exact H.lat i hi c
-  frame := fun P => H.frame i hi c P
-  fnl := by
-    intro P v h hv
+  · intro P v h hv
     exact Classical.epsilon_spec (H.fnl i hi ((St i hi).chOf c) P v h hv) c rfl
 
 theorem exists_cls_eq (i : ℕ) (hi : i ≤ D.R.m) (β : (St i hi).Ch) (x : UA D i hi) :

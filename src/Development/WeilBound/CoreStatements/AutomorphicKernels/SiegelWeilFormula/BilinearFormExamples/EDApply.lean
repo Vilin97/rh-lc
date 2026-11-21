@@ -29,12 +29,10 @@ theorem Pm_unit [FiniteDimensional F E] (σ : E →ₐ[F] E) (hσ : ∀ a, σ (�
 def eD (σ : E →ₐ[F] E) (J : Matrix (Fin m) (Fin m) E) (bs : Module.Basis (Fin 2) F E) (b : GL (Fin n ⊕ Fin n) E)
     (hP : IsUnit (Pm (n := n) σ J bs).det) :
     Matrix (Fin m) (Fin n ⊕ Fin n) (AE F E) ≃ₗ[AF F] (Fin m × Fin n × Fin 2 → AF F) × (Fin m × Fin n × Fin 2 → AF F) :=
-  (eQ b).trans ((LinearEquiv.prodComm (AF F) _ _).trans (by
-    first
-    | exact (bM bs).equivFun.prodCongr ((bM bs).equivFun.trans
-        (@Matrix.toLinearEquiv' _ _ _ _ _ (Pm σ J bs) (Matrix.invertibleOfIsUnitDet _ hP)))
-    | exact (bM bs).equivFun.prod ((bM bs).equivFun.trans
-        (@Matrix.toLinearEquiv' _ _ _ _ _ (Pm σ J bs) (Matrix.invertibleOfIsUnitDet _ hP)))))
+  let coords := (bM (m := m) (n := n) bs).equivFun
+  let P := Pm (n := n) σ J bs
+  (eQ b).trans ((LinearEquiv.prodComm (AF F) (Mx F E m n) (Mx F E m n)).trans
+    (coords.prodCongr (coords.trans (P.toLinearEquiv' (P.invertibleOfIsUnitDet hP)))))
 
 theorem eD_apply (σ : E →ₐ[F] E) (J : Matrix (Fin m) (Fin m) E) (bs : Module.Basis (Fin 2) F E) (b : GL (Fin n ⊕ Fin n) E)
     (hP : IsUnit (Pm (n := n) σ J bs).det) (w : Matrix (Fin m) (Fin n ⊕ Fin n) (AE F E)) :
@@ -43,7 +41,8 @@ theorem eD_apply (σ : E →ₐ[F] E) (J : Matrix (Fin m) (Fin m) E) (bs : Modul
 theorem eD_frame [FiniteDimensional F E] (σ : E →ₐ[F] E) (J : Matrix (Fin m) (Fin m) E) (bs : Module.Basis (Fin 2) F E)
     (b : GL (Fin n ⊕ Fin n) E) (hP : IsUnit (Pm (n := n) σ J bs).det) (Z X : Mx F E m n) :
     eD σ J bs b hP (Z * ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) b.1.toCols₁)ᵀ + X * ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) b.1.toCols₂)ᵀ) = (crdB bs X, fun k => Bf σ J Z (Ek bs k)) := by
-  rw [eD_apply, eQ_frame]
+  rw [eD_apply]
+  erw [eQ_frame b Z X]
   refine Prod.ext (funext fun k => ?_) (funext fun k => ?_)
   · exact bM_repr bs X k
   · show (Pm σ J bs *ᵥ (bM bs).equivFun Z) k = Bf σ J Z (Ek bs k)
@@ -61,7 +60,8 @@ theorem eD_form [FiniteDimensional F E] (σ : E →ₐ[F] E) (J : Matrix (Fin m)
       (eD σ J bs b hP w).1 ⬝ᵥ (eD σ J bs b hP w').2 - (eD σ J bs b hP w').1 ⬝ᵥ (eD σ J bs b hP w).2 := by
   obtain ⟨⟨Z, X⟩, rfl⟩ := (eQ (m := m) b).symm.surjective w
   obtain ⟨⟨Z', X'⟩, rfl⟩ := (eQ (m := m) b).symm.surjective w'
-  rw [eQ_symm_apply, eQ_symm_apply, symp_frame σ J YJ b ε hb, eD_frame, eD_frame]
+  rw [eQ_symm_apply, eQ_symm_apply]
+  erw [symp_frame σ J YJ b ε hb Z X Z' X', eD_frame σ J bs b hP Z X, eD_frame σ J bs b hP Z' X']
   simp only [dotProduct]
   rw [← Bf_eq_sum_right σ J bs Z' X, ← Bf_eq_sum_right σ J bs Z X', hsym X Z']
   have h1 : ((ε : ℤ) : AF F) * (u : AF F) = -1 := by rw [← Int.cast_mul, hεu]; norm_num

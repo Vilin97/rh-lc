@@ -320,22 +320,27 @@ theorem lf_mem_inv (hDL : DualLoc) (Z : LocDat D) (y : D.host.E) (hy : y ∈ (dd
     exact mul_mem (iE_mem_O D p a) hx
 
 theorem lf_mem_pow (hDL : DualLoc) (Z : LocDat D) :
-    ∀ (m : ℕ) (x : D.host.E), x ∈ (ddS D)⁻¹ ^ m → (D.s.atP p).ιE x * cP p Z ^ m ∈ (D.s.atP p).O
-  | 0, x, hx => by
-      rw [pow_zero] at hx
-      obtain ⟨o, rfl⟩ := (FractionalIdeal.mem_one_iff _).1 hx
-      rw [pow_zero, mul_one]; exact iE_mem_O D p o
-  | m + 1, x, hx => by
-      rw [pow_succ] at hx
-      refine FractionalIdeal.mul_induction_on hx ?_ ?_
-      · intro i hi j hj
-        have := mul_mem (lf_mem_pow hDL Z m i hi) (lf_mem_inv p hDL Z j hj)
-        rw [map_mul, pow_succ]
-        convert this using 1
-        ring
-      · intro a b ha hb
-        rw [map_add (f := _), add_mul]
-        exact add_mem ha hb
+    ∀ (m : ℕ) (x : D.host.E), x ∈ (ddS D)⁻¹ ^ m → (D.s.atP p).ιE x * cP p Z ^ m ∈ (D.s.atP p).O := by
+  intro m
+  induction m with
+  | zero =>
+    intro x hx
+    rw [pow_zero] at hx
+    obtain ⟨o, rfl⟩ := (FractionalIdeal.mem_one_iff (𝓞 D.host.E)⁰).1 hx
+    rw [pow_zero, mul_one]
+    exact iE_mem_O D p o
+  | succ m ih =>
+    intro x hx
+    rw [pow_succ] at hx
+    refine FractionalIdeal.mul_induction_on hx ?_ ?_
+    · intro i hi j hj
+      have := mul_mem (ih i hi) (lf_mem_inv p hDL Z j hj)
+      rw [map_mul, pow_succ]
+      convert this using 1
+      ring
+    · intro a b ha hb
+      rw [map_add (f := _), add_mul]
+      exact add_mem ha hb
 
 end Diff2
 
@@ -461,11 +466,53 @@ theorem lf_riesz (φ : (VS D).V →ₗ[D.host.E] D.host.E) : ∃ μ : (VS D).V, 
     simp only [hs, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
   rw [key]
 
+private theorem lf_span_eq_top_of_unimodular {Λ : Submodule (𝓞 D.host.E) (VS D).V}
+    (hL : Λ.FG) (hU : Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ) :
+    Submodule.span D.host.E (Λ : Set (VS D).V) = ⊤ := by
+  by_contra hspan
+  obtain ⟨φ, hφ₀, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
+  obtain ⟨μ, hμ⟩ := lf_riesz φ
+  have hμ₀ : μ ≠ 0 := by
+    intro h
+    apply hφ₀
+    ext y
+    simpa [h] using (hμ y).symm
+  have hline (a : D.host.E) : a • μ ∈ Λ := by
+    rw [← hU]
+    change a • μ ∈ Formalism.E.hdual (VS D).hT Λ
+    rw [lf_mem_hdual]
+    intro y hy
+    have hy₀ := LinearMap.mem_ker.mp (hφ (Submodule.subset_span hy))
+    simp [← (VS D).herm.eq (a • μ) y, LinearMap.map_smulₛₗ, hμ, hy₀]
+  obtain ⟨ψ, hψ, -⟩ := Submodule.exists_le_ker_of_notMem
+    (show μ ∉ (⊥ : Submodule D.host.E (VS D).V) by simpa using hμ₀)
+  let f := ψ.restrictScalars (𝓞 D.host.E)
+  have hmap (x : D.host.E) : x ∈ Λ.map f := by
+    refine ⟨(x / ψ μ) • μ, hline _, ?_⟩
+    change ψ ((x / ψ μ) • μ) = x
+    rw [map_smul, smul_eq_mul, div_mul_cancel₀ _ hψ]
+  obtain ⟨d, hd₀, hd⟩ := FractionalIdeal.isFractional_of_fg
+    (S := nonZeroDivisors (𝓞 D.host.E)) (hL.map f)
+  have hinj := IsFractionRing.injective (𝓞 D.host.E) D.host.E
+  have hne {a : 𝓞 D.host.E} (ha : a ≠ 0) : algebraMap (𝓞 D.host.E) D.host.E a ≠ 0 :=
+    fun h => ha (hinj (h.trans (map_zero _).symm))
+  have hinteger (x : D.host.E) : IsLocalization.IsInteger (𝓞 D.host.E) x := by
+    have hx := hd _ (hmap ((algebraMap (𝓞 D.host.E) D.host.E d)⁻¹ * x))
+    rwa [Algebra.smul_def, ← mul_assoc, mul_inv_cancel₀ (hne (nonZeroDivisors.ne_zero hd₀)),
+      one_mul] at hx
+  apply RingOfIntegers.not_isField D.host.E
+  refine ⟨⟨0, 1, zero_ne_one⟩, mul_comm, ?_⟩
+  intro a ha
+  obtain ⟨b, hb⟩ := hinteger ((algebraMap (𝓞 D.host.E) D.host.E a)⁻¹)
+  refine ⟨b, hinj ?_⟩
+  rw [map_mul, hb, map_one, mul_inv_cancel₀ (hne ha)]
+
 theorem lf_riesz_lat {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hL : Submodule.IsLattice D.host.E Λ)
     (hU : Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ) (f : Λ →ₗ[𝓞 D.host.E] 𝓞 D.host.E) :
     ∃ μ ∈ Λ, ∀ y : Λ, (VS D).hT μ (y : (VS D).V) = ((f y : 𝓞 D.host.E) : D.host.E) := by
   classical
-  obtain ⟨s, _, b, hb, hsΛ⟩ := Formalism.HermitianLatticesTheory.dualLattice_basis (R := 𝓞 D.host.E) Λ hL.span_eq_top
+  obtain ⟨s, _, b, hb, hsΛ⟩ := Formalism.HermitianLatticesTheory.dualLattice_basis
+    (R := 𝓞 D.host.E) Λ (lf_span_eq_top_of_unimodular hL.fg hU)
   let φ : (VS D).V →ₗ[D.host.E] D.host.E := b.constr D.host.E
     (fun j => ((f ⟨(j : (VS D).V), hsΛ j.2⟩ : 𝓞 D.host.E) : D.host.E))
   have hφ : ∀ y : Λ, φ (y : (VS D).V) = ((f y : 𝓞 D.host.E) : D.host.E) := by
@@ -529,7 +576,7 @@ theorem locUnimodC_holds (D : D7) (Z : LocDat D) : LocUnimodC D Z := by
       have hL2 : ∀ v, L2 v = ∑ i, (VS D).hT (μ i) v • ((g i : Λ) : (VS D).V) := by
         intro v; simp [L2]
       have heq : LinearMap.id = L2 := by
-        apply LinearMap.ext_on hL.span_eq_top
+        apply LinearMap.ext_on (LocFacts.lf_span_eq_top_of_unimodular hL.fg hU)
         intro y hy
         have e1 := congrArg (fun z : Λ => (z : (VS D).V)) (hgf ⟨y, hy⟩)
         rw [LinearMap.id_apply, hL2]

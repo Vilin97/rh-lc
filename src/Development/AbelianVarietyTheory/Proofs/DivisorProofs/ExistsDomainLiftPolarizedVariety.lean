@@ -131,7 +131,7 @@ section Main
 open CategoryTheory AlgebraicGeometry Limits NumberField IsLocalRing
 open MonoidalCategory CartesianMonoidalCategory
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory GlobalTheory.BdDim GlobalTheory.SiegelTor GlobalTheory.ZM GlobalTheory.CM GlobalTheory.Models
+open GlobalTheory GlobalTheory.SiegelTor GlobalTheory.ZM GlobalTheory.CM GlobalTheory.Models
 open scoped CategoryTheory.Obj
 
 end Main

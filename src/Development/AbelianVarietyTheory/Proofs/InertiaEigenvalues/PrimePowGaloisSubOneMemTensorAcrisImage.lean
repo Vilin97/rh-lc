@@ -214,7 +214,9 @@ theorem lpow_galDiff_eq_jB_toOB : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZe
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [← LinearEquiv.map_smul, ← map_sum]
     congr 1
-    rw [mul_comm, hA k]
+    ext k
+    simpa only [Pi.smul_apply, Finset.sum_apply, nsmul_eq_mul, Nat.cast_pow,
+      smul_eq_mul, mul_comm] using hA k
   have hgb : (l ^ n₁) • (actB (sQ l) T g (R.jB (toBcris t ϖ D.toPhiMod σ)) - R.jB (toBcris t ϖ D.toPhiMod σ)) =
       ∑ j, toOB l O (galOCr O (sQ l g) (β j) - β j) • R.jB (X j) := by
     set_option synthInstance.maxHeartbeats 100000 in

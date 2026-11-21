@@ -43,9 +43,18 @@ include h5 h2 he r ψ e c hc Ch hr1 hr2 hfin in
 def ptRec : ∀ j, (sysRec D u h L h5 h2 he r Lc I ψ e c hc hg hpg Cb Sx Ch hr1 hr2 hfin).Lt j →
     PtD D.host.F D.host.E (((sysRec D u h L h5 h2 he r Lc I ψ e c hc hg hpg Cb Sx Ch hr1 hr2 hfin).Pj j).m + 1)
   | 0, La => ptStep0 (I := I) (isUnit_det_gram0 D.sp) (k_pred D.R) (repP Lc p) a bad La.1 La.2
-  | i + 1, La => ptStep (((Sx i La.1.1 La.1.2.1).toStepAt hg hpg).toG (gram_herm D.sp.cm (D.sp.X (i + 1)))
-      (gram_det_unit D.sp.cm (D.sp.X (i + 1))) (Sx i La.1.1 La.1.2.1).lev.U (Sx i La.1.1 La.1.2.1).lev.U_eq)
-      (by exact rank_step D i La.1.1) a bad La.1.2.2 La.2
+  | i + 1, La =>
+      let X := Sx i La.1.1 La.1.2.1
+      let S : StepG I (D.sp.X (i + 1)).rank :=
+        { J := (D.sp.X (i + 1)).gram
+          hJ := gram_herm D.sp.cm (D.sp.X (i + 1))
+          hdet := gram_det_unit D.sp.cm (D.sp.X (i + 1))
+          Lb := X.lev.Lb
+          Uloc := X.lev.Uloc
+          fr := X.fr
+          U := X.lev.U
+          U_eq := X.lev.U_eq }
+      ptStep S (rank_step D i La.1.1) a bad La.1.2.2 La.2
 
 variable {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Base D cc δ) (χ : TaylorLogMetric.IdE D → ℂ) (lam : TaylorLogMetric.Qbar →+* ℂ_[p])
   (SS : Finset (HeightOneSpectrum (𝓞 D.host.E))) (cl : ℕ)

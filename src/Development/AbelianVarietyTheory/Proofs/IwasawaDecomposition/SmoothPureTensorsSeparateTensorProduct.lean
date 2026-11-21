@@ -47,7 +47,7 @@ theorem exists_ellT_ne_zero : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SP
     by_contra h
     push_neg at h
     apply hy
-    apply B.repr.injective
+    apply B.repr.injective (show B.repr y = B.repr 0 from ?_)
     ext k
     simp [h k]
   refine ⟨fun τ => ((ob τ (k τ) : W τ) : M.sm τ), ?_⟩

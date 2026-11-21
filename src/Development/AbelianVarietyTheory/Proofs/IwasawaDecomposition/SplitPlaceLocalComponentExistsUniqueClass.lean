@@ -280,7 +280,9 @@ theorem isLocS_unique {n : ℕ} (π π' : NG.AutRep L n) (s : SplitPlace L)
     have h2 := DFunLike.congr_fun h a
     have h3 : T0.symm ⟨T' a, hTm' a⟩ = 0 := h2
     have h4 := congrArg (fun y => ((T0 y : π'.S) : GAf L n → π'.W)) h3
-    simpa using h4
+    rw [T0.apply_symm_apply] at h4
+    rw [T0.map_zero] at h4
+    exact h4
   have hcomm : ∀ (x : GAf L n), ∃ u, ∀ y, Commute ((e u)⁻¹ * x) (e y) := fun x =>
     ⟨s.loc n x, fun y => GlobalTheory.SplitLocComm.commute_of_loc_eq_one L n s _ _ (by rw [map_mul, map_inv, he2, inv_mul_cancel]) (he1 y)⟩
   obtain ⟨-, hiso⟩ := GlobalTheory.CuspRep.CompUniq.isotypic (GAf L n) _ π.S σ.V σ'.V (rtOf π) e (σ.ρ.comp φ) (σ'.ρ.comp φ)

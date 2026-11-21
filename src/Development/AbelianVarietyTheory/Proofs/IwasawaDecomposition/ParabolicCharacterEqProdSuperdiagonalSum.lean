@@ -253,7 +253,7 @@ theorem parabolicCharacter_eq_prod_superdiagonalSum {Pg : Finset (Pl D.host.E)} 
     (((Formalism.L2.DIV.P0 Pg r ψ).chi ⟨x, hx⟩ : D.what₂.LLˣ) : D.what₂.LL) =
       ∏ PP : ↥Pg, ψ PP.1 (Formalism.IndefR.Mi.supSum ((x PP : GL (Fin r) (kP PP.1)) : Matrix (Fin r) (Fin r) (kP PP.1))) := by
   unfold Formalism.L2.DIV.P0 LevelP.ofLocal
-  rw [MonoidHom.finset_prod_apply, Units.coe_prod]
+  rw [MonoidHom.finsetProd_apply, Units.coe_prod]
   refine Finset.prod_congr rfl fun PP _ => ?_
   rw [← edgeSum_eq_supSum]
   rfl

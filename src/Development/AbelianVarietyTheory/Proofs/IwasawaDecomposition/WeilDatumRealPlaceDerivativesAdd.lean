@@ -31,7 +31,26 @@ theorem hasDerivAt_apply {u : ℝ → BB ψ S T} {A : BB ψ S T} (hu : HasDerivA
 theorem theta_nOp {θ : InfFam D} {σ : (D.what₂.Tau → ℂ) →+ AE D} (h : GlobalTheory.FockCompare.Chart θ σ)
     (hψ : IsStdChar D ψ (-1)) (X : Matrix (Ix S T) (Ix S T) ℂ) (F : BB ψ S T) (hF : IsThetaFunO ψ S T F.1)
     (l : ℂ) : IsThetaFunO ψ S T (nOp (rhoV hψ σ S T) (HM S T) X F + l • F).1 := by
-  obtain ⟨x, d, -, hxd⟩ := GlobalTheory.Mem.Lift.exists_isCCR_theta D θ σ h ψ hψ S T
+  let J : thetaSub ψ S T →ₗ[ℂ] BB ψ S T :=
+    { toFun := fun f => toB hψ f.1 f.2
+      map_add' := fun f g => QB_ext fun x => rfl
+      map_smul' := fun a f => QB_ext fun x => rfl }
+  have hc : ∀ f, ((J f).1 : WO S T → ℂ) = f.1 := fun f => coe_toB hψ f.1 f.2
+  have hJ : Function.Injective J := fun f g e => Subtype.ext (by rw [← hc, ← hc, e])
+  have ht : ∀ f, IsThetaFunO ψ S T (J f).1 := fun f => (hc f).symm ▸ f.2
+  have hs : ∀ f, Sm (rhoV hψ σ S T) (J f) := fun f => sm_of_theta h hψ _ (ht f)
+  have hk : ∀ v f, ∃ g, J g = dH (rhoV hψ σ S T) v (J f) := by
+    intro v f
+    obtain ⟨F', hF', hd⟩ := exists_deriv h hψ (J f) (ht f) v
+    refine ⟨⟨F'.1, hF'⟩, QB_ext fun w => ?_⟩
+    rw [hc]
+    exact (hd w).unique (((ev _ _ w).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) (hasDerivAt_dH v (hs f)))
+  obtain ⟨x, d, -, hn⟩ := GlobalTheory.Mem.Lift.ThOps.exists_ops (HM S T) HM_herm HM_det (rhoV hψ σ S T) (isHeis_rhoB h hψ) J hJ hs hk
+  have hxd : ∀ (X : Matrix (Ix S T) (Ix S T) ℂ) (f : thetaSub ψ S T) (F : BB ψ S T),
+      (F.1 : WO S T → ℂ) = f.1 → ((∑ k, ∑ l, X k l • (x k * d l)) f).1 = (nOp (rhoV hψ σ S T) (HM S T) X F).1 := by
+    intro X f F hF
+    have e : F = J f := QB_ext fun w => by rw [hF, hc]
+    rw [e, ← hn, hc]
   have h1 := ((∑ k, ∑ l, X k l • (x k * d l)) ⟨F.1, hF⟩).2
   rw [hxd X ⟨F.1, hF⟩ F rfl] at h1
   exact (thetaSub ψ S T).add_mem h1 ((thetaSub ψ S T).smul_mem l hF)

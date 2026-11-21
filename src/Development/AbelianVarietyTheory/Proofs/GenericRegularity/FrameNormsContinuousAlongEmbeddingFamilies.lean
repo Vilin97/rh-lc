@@ -87,13 +87,15 @@ theorem nrmAlong_of_fnPin : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   have hne : FnNe Xo c fn := (GlobalTheory.FrameNorm.Comparison₂.ptNorm_eq_pnorm E H Dw l Xo c r U hU xR fn hx hp).1
   have main : NrmAlong fn yP := by
     intro Z sg G f _ _ X _ W Q hQ hQc
-    obtain ⟨C, ψ, z, t, hz, hb⟩ := (GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c).2.2.2 h (Om Z) (genFr h Z)
+    have ha : Atlas h := (GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c).2.2.2 h
+    obtain ⟨C, ψ, z, t, hz, hb⟩ := ha (Om Z) (genFr h Z)
+    letI : Algebra c.F C.R := C.R.algebra
     haveI := C.sm
     have hsg : ∀ x : W, sgOf (Q x) = sg := fun x => hQ x x.2
     choose w hw using fun x : W => exists_frMap_along (algOver sg (Q x) (hsg x)) z
     have hQ' : ∀ a, Continuous (fun x : W => Q x a) := fun a => continuousOn_iff_continuous_restrict.1 (hQc a)
     have hcont := GlobalTheory.FrameNorm.fn_continuousOn_smooth E H Dw l Xo c r U hU xR fn hx hp sg C.R C.y W Set.univ
-      (fun x => (algOver sg (Q x) (hsg x)).comp ψ) w (fun a => (hQ' (ψ a)).continuousOn)
+      (fun x => (algOver sg (Q x) (hsg x)).comp ψ) w (fun (a : C.R) => (hQ' (ψ a)).continuousOn)
       (fun x _ => frMap_trans _ _ _ ψ _ C.y z (w x) hz (hw x))
     have hfn : ∀ i, Continuous (fun x : W => |fn _ (yP Z (Q x)) i|) := by
       intro i
@@ -103,7 +105,7 @@ theorem nrmAlong_of_fnPin : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
       exact (hQ' _).norm.mul (continuousOn_univ.1 (hcont i))
     rw [continuousOn_iff_continuous_restrict]
     show Continuous (fun x : W => ‖Q x (f.coeff G)‖ * ∏ i, |fn _ (yP Z (Q x)) i| ^ (-exZ Dw G i))
-    refine (hQ' _).norm.mul (continuous_finset_prod _ fun i _ => ?_)
+    refine (hQ' _).norm.mul (continuous_finsetProd _ fun i _ => ?_)
     exact (hfn i).zpow₀ _ fun x => Or.inl (abs_ne_zero.2 (hne _ _ _))
   exact ⟨main, fun Dd N uL wR jc hst htr hw =>
     nrmContOff_of h fn yP Dd N uL wR jc hst main hne htr (GlobalTheory.FlagDim.fnFG_fnTrdeg E H Dw l Xo c).1 hw⟩

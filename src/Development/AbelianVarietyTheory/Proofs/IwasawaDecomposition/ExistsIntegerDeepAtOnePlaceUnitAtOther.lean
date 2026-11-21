@@ -22,10 +22,10 @@ theorem exists_deep_one_sub :
   have hQ : (primeBelow (F := E) A).under (𝓞 E) = P.asIdeal := under_primeBelow hA
   have hQ' : (primeBelow (F := E) A').under (𝓞 E) = P.asIdeal := under_primeBelow hA'
   haveI : (primeBelow (F := E) A).IsMaximal :=
-    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := 𝓞 E) _
+    Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := 𝓞 E) _
       (by change (Ideal.under (𝓞 E) (primeBelow (F := E) A)).IsMaximal; rw [hQ]; exact P.isMaximal)
   haveI : (primeBelow (F := E) A').IsMaximal :=
-    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := 𝓞 E) _
+    Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := 𝓞 E) _
       (by change (Ideal.under (𝓞 E) (primeBelow (F := E) A')).IsMaximal; rw [hQ']; exact P.isMaximal)
   have hQne : primeBelow (F := E) A ≠ primeBelow (F := E) A' := by
     intro h

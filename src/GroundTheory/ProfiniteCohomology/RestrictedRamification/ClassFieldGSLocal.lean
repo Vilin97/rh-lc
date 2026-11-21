@@ -127,6 +127,8 @@ theorem brauerInvZ_galCupClass_decompHomS [IsAlgClosure K Ω] (hS : S.Finite) [N
     contCharComp_apply, charEquiv_finiteEmbedding hS h χ v ι a (liftNormal_localArtinMap_apply v a)]
   rfl
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem placeInv_galCupClass_decompHomS {K : FiniteSubfield} {S : Set (HeightOneSpectrum (𝓞 K.1))}
     (hS : S.Finite) [NeZero n] (h : Odd n ∨ IsTotallyComplex K.1)
     (χ : ContinuousMonoidHom (galUnramifiedOutside K.1 ℚ̄ S) (Multiplicative (ZMod n)))

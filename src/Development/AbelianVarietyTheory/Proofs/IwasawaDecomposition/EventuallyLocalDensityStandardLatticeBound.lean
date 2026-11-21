@@ -289,7 +289,7 @@ theorem vol_fibre (hσ : IsCMExt F E σ) (h2 : Valued.v (2 : Fv F v) = 1)
         ← fib_const σ b J v hσ h2 lam ν hl hν β c hβ hc m (fib c) hm ⟨fib, hf, rfl⟩]
       refine measure_congr ?_
       filter_upwards [hae] with X hX
-      exact propext ⟨fun h => h.1, fun h => ⟨h, show qR (Fv F v) σ J (X 0) ∈ S from hX ▸ hc⟩⟩
+      exact ⟨fun h => h.1, fun h => ⟨h, show qR (Fv F v) σ J (X 0) ∈ S from hX ▸ hc⟩⟩
     · rw [Set.indicator_of_notMem hc]
       refine measure_mono_null ?_ hae
       intro X hX hX'

@@ -200,7 +200,6 @@ theorem genericMass_le_heightPow_mul_glueSum : ∀ (D : D7) (X : HidaSetting D) 
         hZiso.symm
       unfold Gval Formalism.MainNotions.S.Gflag Formalism.MainNotions.S.Dl
       rw [h']
-      rfl
     rw [e, GlobalTheory.T.flagPairValue_invariant_unitriangularChange D F G F' G'' A A' hA hA' hZG]
     exact hTP
   · rw [← hZiso, hZG]

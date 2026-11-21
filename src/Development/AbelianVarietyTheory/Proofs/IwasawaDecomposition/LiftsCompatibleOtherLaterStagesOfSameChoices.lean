@@ -59,11 +59,11 @@ theorem lfT_of_same : ∀ (B : Base) (C : Cols B) (a b : Late B C) (G : Type) [G
     isot := fun i π v => by
       unfold Hd.prtW
       rw [isotL_eq a b]
-      kexactB (t.isot i π v)
+      exact (t.isot i π v)
     disj := fun i π π' hne => by
       unfold Hd.prtW
       rw [isotL_eq a b]
-      kexactB (t.disj i π π' hne)
+      exact (t.disj i π π' hne)
     read := (by with_unfolding_all exact (t.read :)) }, (by with_unfolding_all exact ((HEq.refl t.eW) :)), (by with_unfolding_all exact ((HEq.refl t.jMt) :))⟩
 
 end GlobalTheory.Mem.R3.Rw

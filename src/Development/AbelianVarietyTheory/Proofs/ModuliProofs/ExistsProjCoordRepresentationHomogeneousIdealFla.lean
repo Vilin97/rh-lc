@@ -133,23 +133,23 @@ theorem appLE_pt_aeval (c : R →+* A) (v : Fin (n + 1) → A) (hv : Ideal.span 
     {W : (Sp A).Opens} (h : W ≤ pt c v hv ⁻¹ᵁ chart R n i) {t : ℕ} {G : MvPolynomial (Fin (n + 1)) R}
     (hG : G.IsHomogeneous t) :
     ((pt c v hv).appLE _ W h).hom (aeval (ratio R n i) G) * fnOn W (v i) ^ t = fnOn W (eval₂ c v G) := by
-  have e := congrArg (fun θ => θ G) (appLE_comp_aeval_ratio (φ := pt c v hv) (hi := h))
-  rw [pt_str, baseRingHom_spMap] at e
-  refine (congrArg (· * _) e).trans ?_
-  rw [eval₂_comp_left, coe_eval₂Hom, ← ReciprocityTheory.AnForm.R.eval₂_mul_const_of_isHomogeneous _ _ _ hG]
-  exact congrArg (eval₂ _ · G) (funext fun j => pullRatio_pt_mul c v hv i j h)
+  simpa only [formOn_eq_aeval] using appLE_pt_formOn_mul c v hv i h hG
 
 theorem formIdeal_le_ker_pt_iff (J : Ideal (MvPolynomial (Fin (n + 1)) R)) (c : R →+* A) (v : Fin (n + 1) → A)
     (hv : Ideal.span (Set.range v) = ⊤) :
     formIdeal J ≤ (pt c v hv).ker ↔ ∀ t G, G.IsHomogeneous t → G ∈ J → eval₂ c v G = 0 := by
+  have hchart (i : Fin (n + 1)) : pt c v hv ⁻¹ᵁ chart R n i = spOpen (v i) := by
+    rw [pt, chart, ProjPoint.ofHom_preimage_basicOpen _ _ _ one_pos (X_mem R n i),
+      MvPolynomial.eval₂Hom_X']
+    rfl
   constructor
   · intro h t G hG jG
     refine eq_zero_of_fnOn_eq_zero hv fun i => ?_
     have h1 := (pt c v hv).ideal_ker_le _
       (h _ ((aeval_mem_formIdeal_iff J i hG).2 ⟨0, by rwa [pow_zero, _root_.one_mul]⟩))
-    rw [← appLE_pt_aeval c v hv i (pt_preimage_chart c v hv i).ge hG]
-    have h2 : ((pt c v hv).appLE _ _ (pt_preimage_chart c v hv i).ge).hom (aeval (ratio R n i) G) = 0 :=
-      (congrArg (resG _ (pt_preimage_chart c v hv i).ge) h1).trans (map_zero _)
+    rw [← appLE_pt_aeval c v hv i (hchart i).ge hG]
+    have h2 : ((pt c v hv).appLE _ _ (hchart i).ge).hom (aeval (ratio R n i) G) = 0 :=
+      (congrArg (resG _ (hchart i).ge) h1).trans (map_zero _)
     rw [h2, zero_mul]
   · intro h
     have := isProper_str R n
@@ -162,7 +162,7 @@ theorem formIdeal_le_ker_pt_iff (J : Ideal (MvPolynomial (Fin (n + 1)) R)) (c : 
     have e := appLE_pt_aeval c v hv i le_rfl p.2.1
     rw [h _ _ p.2.1 p.2.2, map_zero] at e
     have hu : IsUnit (fnOn (pt c v hv ⁻¹ᵁ chart R n i) (v i)) := isUnit_of_basicOpen_eq _ (by
-      rw [basicOpen_fnOn, pt_preimage_chart, inf_idem])
+      rw [basicOpen_fnOn, hchart, inf_idem])
     exact (hu.pow _).mul_left_eq_zero.1 e
 
 theorem of_baseRingHom {P : MorphismProperty Scheme.{0}}
@@ -224,7 +224,10 @@ theorem projRep_emb (hI : ∀ F ∈ I, ∀ t, homogeneousComponent t F ∈ I) :
       ((formIdeal_le_ker_pt_iff _ β _ hv').2 ((vanish_iff e I hI β v).2 h))
     have hl := IsClosedImmersion.lift_fac (emb e I) _ hle
     have hs : (IsClosedImmersion.lift (emb e I) _ hle ≫ emb e I) ≫ PSpace.str R n = spMap β := by
-      rw [hl, pt_str]
+      rw [hl, pt, PSpace.str, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+      congr 1
+      ext1
+      exact RingHom.ext fun r => eval₂Hom_C β _ r
     refine ⟨_, ⟨(Category.assoc _ _ _).symm.trans hs, (ProjCoord.secCoord_iff e _ β _ hs v).2 ⟨hv', hl⟩⟩,
       fun x hx => ?_⟩
     obtain ⟨_, hp⟩ := (ProjCoord.secCoord_iff e _ β x ((Category.assoc _ _ _).trans hx.1) v).1 hx.2

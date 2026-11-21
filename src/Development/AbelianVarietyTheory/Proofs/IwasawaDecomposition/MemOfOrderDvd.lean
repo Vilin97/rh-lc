@@ -30,8 +30,7 @@ theorem locInf_eq_one {E : Type} [Field E] [NumberField E] [_root_.NumberField.I
 theorem inf_eq_one {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (χ : HChar E) {n : ℕ} (hn : 0 < n)
     (h : χ.OrderDvd n) (k : Eˣ) : χ.inf k = 1 := by
   show χ.1 (infDiag k) = 1
-  rw [infDiag, MonoidHom.finset_prod_apply, map_prod]
-  exact Finset.prod_eq_one fun w _ => locInf_eq_one χ hn h w _
+  simp [infDiag, map_prod, locInf_eq_one χ hn h]
 
 theorem mem_of_orderDvd : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (χ : HChar E) (M : IntermediateField ℚ ℂ), (∃ n : ℕ, 0 < n ∧ χ.OrderDvd n) → valueField χ 0 ≤ M → ∀ x, ((χ.1 x : ℂˣ) : ℂ) ∈ M := by
   intro E _ _ _ χ M hn hM x

@@ -82,7 +82,8 @@ theorem mixT_bump_smul : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCha
   have h1 := hsw (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger S T) Φ') y
   rw [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj_cj _ _ (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger_dagger T S)] at h1
   have h2 := hmix (incA D D.host.xi0⁻¹ • y)
-  simp only at h2
+  change I195MixedCoordinates_8df3303fbb03152b340aba95.source d S ψ μ' 𝓕' Φ'
+    (incA D D.host.xi0⁻¹ • y) = _ at h2
   rw [h2, smul_smul, hc', one_smul] at h1
   funext z
   have h3 := congrFun h1 (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger S T₀ z)
@@ -90,6 +91,7 @@ theorem mixT_bump_smul : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCha
     Complex.conj_conj] at h3
   have h4 := congrArg (starRingEnd ℂ) h3
   simp only [map_mul, Complex.conj_conj] at h4
-  rw [Pi.smul_apply, smul_eq_mul, ← h4]
+  simp only [Pi.smul_apply, smul_eq_mul]
+  exact h4.symm
 
 end GlobalTheory.MixAdj

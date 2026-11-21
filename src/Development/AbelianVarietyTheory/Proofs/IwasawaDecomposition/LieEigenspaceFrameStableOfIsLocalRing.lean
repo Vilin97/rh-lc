@@ -33,8 +33,8 @@ theorem basis_fixed_bc {L k : Type} [CommRing L] [CommRing k] (ψ : L →+* k) {
     simp [Finset.sum_apply, Pi.single_apply]
   have hinv : ∀ i, (fun i' => ∑ j, e i j * M j i') = Pi.single i 1 := fun i => by
     refine (hb _ (he i)).unique ?_ ?_
-    set_option synthInstance.maxHeartbeats 100000 in
-      · conv_lhs => rw [← he i, ← hs (e i), map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← he i, ← hs (e i), map_sum]
       simp only [map_smul, hM, Finset.smul_sum, Finset.sum_smul, smul_smul]
       exact Finset.sum_comm
     · simp [Pi.single_apply]
@@ -70,7 +70,8 @@ theorem exists_proj_bc {L : Type} [CommRing L] [IsLocalRing L] (φ : c.F →+* L
     {k : Type} [CommRing k] (ψ : L →+* k) :
     ∃ (xc' : ∀ m : ℕ, sp (R₀ := k) (ReciprocityTheory.ChartRestriction.G.Chart.JetR k (Fin n) m) ⟶ (Over.pullback (spMap ψ ≫ x)).obj t.G)
       (hx' : IsUnivChart _ n xc'),
-      (∀ cc : Fin n → L, vec t (spMap ψ ≫ x) xc' (ψ ∘ cc) = spMap (dualMap ψ) ≫ vec t x xc cc) ∧
+      (∀ cc : Fin n → L, vec t (spMap ψ ≫ x) xc' (ψ ∘ cc) =
+        spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ vec t x xc cc) ∧
       ∀ τ, ∃ (P : Module.End L (Fin n → L)) (P' : Module.End k (Fin n → k)), (∀ cc, P (P cc) = P cc) ∧
         (∀ cc, P' (ψ ∘ cc) = ψ ∘ P cc) ∧ (∀ cc, P cc = cc ↔ cc ∈ eig c φ hx τ) ∧
         ∀ cc, P' cc = cc ↔ cc ∈ eig c (ψ.comp φ) hx' τ := by

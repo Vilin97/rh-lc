@@ -126,7 +126,9 @@ theorem cosShape : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → ∀ 
       exact Set.mem_singleton_iff.mp h
     ext z
     simp [cosetIn, h0]
-  · obtain ⟨y₀, hy₀, hYeq⟩ := PtAt.mem_ybSet p hi
+  · have hY := PtAt.mem_ybSet p hi
+    unfold ybSet at hY
+    obtain ⟨y₀, hy₀, hYeq⟩ := hY
 
     have hfr : ∀ x, (frsF I.sel (I.tup a) p.1.1 P) x ∈ Formalism.HermitianLatticesTheory.localization₂ P.1.asIdeal p.1.1.deco.1.N ↔
         x ∈ stdAt B.fields.E (B.R.N i) P.1 := by

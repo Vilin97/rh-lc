@@ -103,7 +103,9 @@ abbrev algCR (gen : Γ → Prod' H d) (h1 : ∀ x y, Commute (gen x) (gen y))
   { (inferInstance : Ring (Alg gen)) with
     mul_comm := by
       haveI := StarAlgebra.isMulCommutative_adjoin ℂ (s := Set.range gen)
-        (by rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩; exact (h1 x y).eq) (by rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩; exact (h2 x y).eq)
+        (by rintro _ ⟨x, rfl⟩; exact ⟨(h2 x x).symm.eq⟩)
+        (by rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩ _; exact h1 x y)
+        (by rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩ _; exact h2 x y)
       exact mul_comm' }
 
 def Rb (gen : Γ → Prod' H d) (s : ι) : Alg gen →⋆ₐ[ℂ] (H s →L[ℂ] H s) :=

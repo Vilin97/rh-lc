@@ -29,7 +29,7 @@ noncomputable section
 
 namespace GlobalTheory.UnrCharZeta
 
-open GlobalTheory.LFun GlobalTheory.PRep GlobalTheory.Core.Rk.TrivCoef
+open GlobalTheory.LFun GlobalTheory.PRep
 open Formalism.MainNotions.SchurIrreducible (IsSplit)
 open Formalism.L2.Host (HChar aboveF)
 open GlobalTheory.CMVal (eulerFactor IsHeckeL)

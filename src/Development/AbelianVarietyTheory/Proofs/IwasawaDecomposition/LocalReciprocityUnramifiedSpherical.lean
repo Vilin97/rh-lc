@@ -85,10 +85,10 @@ theorem mem_Umax_of_mem_KO (s : SplitPlace L)
   have key : ∀ y, ValuativeRel.valuation _ (i y) ≤ 1 → Valued.v y ≤ 1 := fun y hy =>
     (GlobalTheory.CuspRep.ParLaws.valuation_le_one_iff s.v y).1 (le_one_of_map i.toRingHom hi hy)
   rw [GlobalTheory.SplitFlip.mem_KO_iff] at hk
-  refine GlobalTheory.TSetFin.mem_Umax_of_loc s x hx (fun a b => key _ (hk.1 a b)) (fun a b => key _ ?_)
-  have h2 := hk.2 a b
-  rw [← map_inv, ← map_inv] at h2
-  exact h2
+  refine GlobalTheory.TSetFin.mem_Umax_of_loc s x hx (fun a b => key _ (hk.1 a b)) (fun a b => key _ (by
+    have h2 := hk.2 a b
+    rw [← map_inv, ← map_inv] at h2
+    exact h2))
 
 theorem isSpherical_of_sphAt (π : NG.AutRep L n) (s : SplitPlace L)
     (σ : GlobalTheory.SmGL.IrrRep (GL (Fin n) (s.w.adicCompletion L))) (hσ : IsLocS π.S s σ) (hs : π.SphAt s.v) :

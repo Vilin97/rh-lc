@@ -20,6 +20,7 @@ namespace GlobalTheory.LevCmp.ParaPlace
 
 theorem unr_mul {L : Type} [Field L] [NumberField L] {χ χ' : HChar L} {u : HeightOneSpectrum (𝓞 L)}
     (h : χ.UnrAt u) (h' : χ'.UnrAt u) : (χ * χ').UnrAt u := fun y hy => by
-  rw [HChar.loc_mul, h y hy, h' y hy, one_mul]
+  change χ.loc u y * χ'.loc u y = 1
+  rw [h y hy, h' y hy, one_mul]
 
 end GlobalTheory.LevCmp.ParaPlace

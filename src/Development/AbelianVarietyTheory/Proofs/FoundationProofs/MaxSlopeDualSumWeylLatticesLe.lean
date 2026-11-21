@@ -71,11 +71,28 @@ theorem testLatticeCondition_dualFr_sumLat_delK : ∀ (K : Type) [Field K] [Numb
   have hint' := dualForm_integral_on_dualFr K N (sumGram lam e G) hH.1 hHu _ s hint
   have hD := (GlobalTheory.T.dualLattice_isLattice_and_hermitianDual.1 K N (sumGram lam e G) _ hHu hlat).1
   have hne : dualFr (sumLat lam e fun c => delK lam (M c)) ≠ ⊥ := by
+    classical
+    let i : Fin N := ⟨0, hN⟩
+    obtain ⟨S, hS⟩ := hlat.fg
+    obtain ⟨⟨d, hd⟩, hden⟩ := IsLocalization.exist_integer_multiples_of_finset
+      (nonZeroDivisors (𝓞 K)) (S.image (fun x => x i))
+    have hd0 : d ≠ 0 := nonZeroDivisors.ne_zero hd
+    have hm : (Pi.single i (algebraMap (𝓞 K) K d) : Fin N → K) ∈
+        dualFr (sumLat lam e fun c => delK lam (M c)) := by
+      intro x hx
+      rw [← hS] at hx
+      induction hx using Submodule.span_induction with
+      | mem x hx =>
+        rw [single_dotProduct]
+        exact Submodule.mem_one.2 (hden _ (Finset.mem_image.mpr ⟨x, hx, rfl⟩))
+      | zero => simp
+      | add x y _ _ hx hy => simpa [dotProduct_add] using add_mem hx hy
+      | smul c x _ hx => simpa [dotProduct_smul] using Submodule.smul_mem (1 : Submodule (𝓞 K) K) c hx
     intro h0
-    have htop := hD.span_eq_top
-    rw [h0] at htop
-    haveI : Nonempty (Fin N) := ⟨⟨0, hN⟩⟩
-    simp at htop
+    rw [h0, Submodule.mem_bot] at hm
+    have := congrFun hm i
+    simp only [Pi.single_eq_same, Pi.zero_apply] at this
+    exact hd0 (RingOfIntegers.coe_injective (by simpa using this))
   refine ⟨hD.fg, hne, fun v => (hX v).1, le_trans ?_ hsb⟩
   exact GlobalTheory.T.maxSlope_le_log_of_integral_hermitian_form K v₀ hv N _ X ⟨hHi.2.1, hX⟩ s hs _ hD.fg hne hint'
 

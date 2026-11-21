@@ -33,6 +33,7 @@ theorem selfDual_complex_eq {ι : Type} [Fintype ι] {n : ℕ} (d : ι → Fin n
   rw [h1, Measure.map_smul, hT.map_eq]
   congr 2
   simp only [Fintype.prod_prod_type, Fintype.prod_bool, Real.mul_self_sqrt (abs_nonneg _)]
+  exact hT.measurable.aemeasurable
 
 theorem eq_zero_of_cubes {ι : Type} [Fintype ι] {K : (ι → ℝ) → ℂ} {U : Set (ι → ℝ)} (hK : ContinuousOn K U)
     {b : ι → ℝ} (hU : U ∈ 𝓝 b)
@@ -101,7 +102,7 @@ theorem density_eq_prod_of_isDens (ι : Type) [Fintype ι] (n : ℕ) (ε : ι �
         ∫ b in S, G b)
     (b : ι → ℝ) (hb : ∀ v, b v ≠ 0) : G b = ((∏ v, D v (b v) : ℝ) : ℂ) := by
   have hH : ContinuousOn (fun x : ι → ℝ => ((∏ v, D v (x v) : ℝ) : ℂ)) {b | ∀ v, b v ≠ 0} :=
-    Complex.continuous_ofReal.comp_continuousOn (continuousOn_finset_prod _ fun v _ =>
+    Complex.continuous_ofReal.comp_continuousOn (continuousOn_finsetProd _ fun v _ =>
       (hD v).1.comp (continuous_apply v).continuousOn fun x hx => hx v)
   have hU : {b : ι → ℝ | ∀ v, b v ≠ 0} ∈ 𝓝 b :=
     Filter.eventually_all.2 fun v => (continuous_apply v).continuousAt.eventually_ne (hb v)

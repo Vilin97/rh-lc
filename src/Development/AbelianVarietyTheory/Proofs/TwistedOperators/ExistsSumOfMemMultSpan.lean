@@ -43,9 +43,12 @@ def gkGen (ψ : GA D V → ℂ) : Submodule ℂ (GA D V → ℂ) :=
 theorem mem_gkGen (ψ : GA D V → ℂ) : ψ ∈ gkGen θ M ψ :=
   Submodule.mem_sInf.2 fun _ h => h.1
 
-theorem isGKSub_gkGen (ψ : GA D V → ℂ) : IsGKSub θ M (gkGen θ M ψ) where
-  k τ g hg f hf := Submodule.mem_sInf.2 fun A hA => hA.2.k τ g hg f (Submodule.mem_sInf.1 hf A hA)
-  lie τ X hX f hf := Submodule.mem_sInf.2 fun A hA => hA.2.lie τ X hX f (Submodule.mem_sInf.1 hf A hA)
+theorem isGKSub_gkGen (ψ : GA D V → ℂ) : IsGKSub θ M (gkGen θ M ψ) := by
+  constructor
+  · intro τ g hg f hf
+    exact Submodule.mem_sInf.2 fun A hA => hA.2.k τ g hg f (Submodule.mem_sInf.1 hf A hA)
+  · intro τ X hX f hf
+    exact Submodule.mem_sInf.2 fun A hA => hA.2.lie τ X hX f (Submodule.mem_sInf.1 hf A hA)
 
 theorem gkGen_le {ψ : GA D V → ℂ} {A : Submodule ℂ (GA D V → ℂ)} (hψ : ψ ∈ A) (hA : IsGKSub θ M A) :
     gkGen θ M ψ ≤ A :=
@@ -73,13 +76,16 @@ def IsKFinCuspOfType (f : GA D V → ℂ) : Prop :=
       M.fr τ * g * (M.fr τ)⁻¹ ∈ Formalism.REAL.Kset (M.ε τ) → ∀ h ∈ W, rTr V (atTau θ V τ g) h ∈ W
 
 theorem IsGKMult.smul {F : MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ))
-    (GA D V → ℂ)} (h : IsGKMult θ M F) (c : ℂ) : IsGKMult θ M (c • F) where
-  aut u := Formalism.IndefR.Mult.isAutFunSm_smul θ V (h.aut u) c
-  cusp u := Formalism.IndefR.Mult.isCuspFun_smul V (h.cusp u) c
-  equivK τ g hg hk u w hw := by
+    (GA D V → ℂ)} (h : IsGKMult θ M F) (c : ℂ) : IsGKMult θ M (c • F) := by
+  constructor
+  · intro u
+    exact Formalism.IndefR.Mult.isAutFunSm_smul θ V (h.aut u) c
+  · intro u
+    exact Formalism.IndefR.Mult.isCuspFun_smul V (h.cusp u) c
+  · intro τ g hg hk u w hw
     rw [smul_apply, smul_apply, h.equivK τ g hg hk u w hw]
     rfl
-  equivLie τ X hX u w hw := by
+  · intro τ X hX u w hw
     rw [smul_apply, smul_apply, h.equivLie τ X hX u w hw,
       Formalism.IndefR.Mult.rder_smul]
 

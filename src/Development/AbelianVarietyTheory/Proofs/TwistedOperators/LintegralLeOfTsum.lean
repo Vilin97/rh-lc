@@ -106,10 +106,12 @@ theorem uni_bound (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀ W W₀ : HSp
     have key : ∀ γ : UXQ D ρ, (_root_.I195MixedCoordinates_6e87f5aea1eb7b4a07c1c83e.source dV) W ψ s.vS.μ s.vS.𝓕 (s.om (g, h) Φ) ((rat x : Mx D W.rank ρ) ⬝ (γ.1 * (γ₀ * k)).1.1) =
         (_root_.I195MixedCoordinates_6e87f5aea1eb7b4a07c1c83e.source dV) W ψ s.vS.μ s.vS.𝓕 (s.om (dV.levi k.1 * g, h) Φ) (φ γ) := by
       intro γ
+      change (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source dV) W ψ s.vS.μ s.vS.𝓕 (s.om (g, h) Φ) _ = (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source dV) W ψ s.vS.μ s.vS.𝓕 (s.om (dV.levi k.1 * g, h) Φ) _
       rw [hom, GlobalTheory.Unf.TermLaw.mixS_levi_uni dV (hMS _ (s.weil.om_pres _ _ hΦ)) k.2, ← mul_assoc]
       congr 1
       exact (Matrix.mul_assoc _ _ _).symm
-    simp only [key]
+    change (∑' γ : UXQ D ρ, ‖(_root_.I195MixedCoordinates_6e87f5aea1eb7b4a07c1c83e.source dV) W ψ s.vS.μ s.vS.𝓕 (s.om (g, h) Φ) ((rat x : Mx D W.rank ρ) ⬝ (γ.1 * (γ₀ * k)).1.1) w‖ₑ) ≤ _
+    simp_rw [show ∀ γ : UXQ D ρ, (_root_.I195MixedCoordinates_6e87f5aea1eb7b4a07c1c83e.source dV) W ψ s.vS.μ s.vS.𝓕 (s.om (g, h) Φ) ((rat x : Mx D W.rank ρ) ⬝ (γ.1 * (γ₀ * k)).1.1) w = (_root_.I195MixedCoordinates_6e87f5aea1eb7b4a07c1c83e.source dV) W ψ s.vS.μ s.vS.𝓕 (s.om (dV.levi k.1 * g, h) Φ) (φ γ) w from fun γ => congrFun (key γ) w]
     refine (ENNReal.tsum_comp_le_tsum_of_injective hφ
       (fun y : ratMx D W.rank ρ => ‖dV.mixS W ψ s.vS.μ s.vS.𝓕 (s.om (dV.levi k.1 * g, h) Φ) y w‖ₑ)).trans
       ((hC _ h w).trans (ENNReal.ofReal_le_ofReal ?_))
@@ -166,9 +168,10 @@ theorem flat_sup_growth : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀ 
     have e1 : ‖star (psiUni ψ u.1)‖ₑ = 1 := by
       rw [← ofReal_norm, norm_star, show ‖psiUni ψ u.1‖ = 1 from hn _, ENNReal.ofReal_one]
     rw [enorm_mul, e1, one_mul]
-    unfold _root_.I195MixedCoordinates_6e87f5aea1eb7b4a07c1c83e.target
+    unfold _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target
     refine (enorm_integral_le_lintegral_enorm _).trans (lintegral_mono fun ξ => le_of_eq ?_)
     simp only [F]
+    change ‖heisO ψ V₀ W (dW.incX V₀ ξ) (heisO ψ V₀ W (dW.incAdj V₀ y) (heisO ψ V₀ W (dW.inc0 V₀ w) (dV.mixS W ψ s.vS.μ s.vS.𝓕 (s.om (g, h) Φ) ((rat x : Mx D W.rank ρ) ⬝ u.1.1)))) 0‖ₑ = _
     rw [dW.integrandT_eq, enorm_mul, hne, one_mul]
   have h2 : ‖flatS dV dW s (rat x) y (s.om (g, h) Φ) w‖ₑ ≤ ENNReal.ofReal (C * (height V g * height W h) ^ A) := by
     unfold flatS flatAt

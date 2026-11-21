@@ -290,7 +290,7 @@ theorem haar_S_local : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
         (p : {p : Fin (r + 1) × Fin (r + 1) // p.1 < p.2}) => (u * umat x) p.1.1 p.1.2) := by
       refine continuous_pi fun p => ?_
       simp only [Matrix.mul_apply]
-      exact continuous_finset_sum _ fun c _ => continuous_const.mul (umat_entry_continuous c p.1.2)
+      exact continuous_finsetSum _ fun c _ => continuous_const.mul (umat_entry_continuous c p.1.2)
     refine ⟨_, hφc.measurable, GlobalTheory.UnitriHaar.map_unitri_mul F E v r μU hμU u (umat_utri _).1 (umat_utri _).2, ?_⟩
     intro x
     have h1 : Coef P (s * t0 x) (u * umat x) := coef_mul (hνcoef ⟨s, hs⟩) (ht0coef x)

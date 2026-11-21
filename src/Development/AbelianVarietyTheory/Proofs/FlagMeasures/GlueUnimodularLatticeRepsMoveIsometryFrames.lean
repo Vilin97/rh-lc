@@ -97,12 +97,7 @@ theorem dual_gmap (h : V →ₗ⋆[K] V →ₗ[K] K) (n : V ≃ₗ[K] V) (hn : n
 
 theorem isLattice_gmap (n : V ≃ₗ[K] V) (L : Submodule (𝓞 K) V) (hL : Submodule.IsLattice K L) :
     Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap n L) := by
-  refine ⟨hL.fg.map _, ?_⟩
-  have hspan : Submodule.span K ((Formalism.HermitianLatticesTheory.gmap n L : Submodule (𝓞 K) V) : Set V) =
-      (Submodule.span K (L : Set V)).map (n : V →ₗ[K] V) := by
-    rw [Submodule.map_span]
-    rfl
-  rw [hspan, hL.span_eq_top, Submodule.map_top, LinearEquiv.range]
+  exact Submodule.IsLattice.of_fg K (hL.fg.map _)
 
 theorem gmap_inf_map (n : V ≃ₗ[K] V) (Λ : Submodule (𝓞 K) V) (U : Submodule K V) :
     Formalism.HermitianLatticesTheory.gmap n Λ ⊓ (U.map (n : V →ₗ[K] V)).restrictScalars (𝓞 K) =

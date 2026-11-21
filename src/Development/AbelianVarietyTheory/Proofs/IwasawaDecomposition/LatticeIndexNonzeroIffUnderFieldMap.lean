@@ -130,7 +130,7 @@ theorem exists_lidx_eq_mul (K K' : Type) [Field K] [NumberField K] [Field K'] [N
     rw [IsScalarTower.algebraMap_apply (𝓞 K) (𝓞 K') O', ← IsScalarTower.algebraMap_apply (𝓞 K') O' K',
       ← IsScalarTower.algebraMap_apply]
   letI : Algebra O O' := Localization.AtPrime.algebraOfLiesOver P.asIdeal P'.asIdeal
-  have : Localization.AtPrime.IsLiesOverAlgebra P.asIdeal P'.asIdeal := ⟨rfl⟩
+  have : Localization.AtPrime.IsLiesOverAlgebra P.asIdeal P'.asIdeal := inferInstance
   have : IsScalarTower (𝓞 K) O O' := inferInstance
   have : IsLocalHom (algebraMap O O') := inferInstance
   have : IsDiscreteValuationRing O :=

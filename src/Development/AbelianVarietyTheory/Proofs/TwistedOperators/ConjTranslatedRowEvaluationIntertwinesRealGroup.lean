@@ -35,8 +35,11 @@ private lemma ae_comp_of_map_eq (B : RowsAut) (φ : B.I.GA → B.I.GA)
   · rw [h0]; simp
   · have hm : AEMeasurable φ (B.I.muA B.μf) := by
       by_contra hn
-      rw [Measure.map_of_not_aemeasurable hn] at hφ
-      exact h0 hφ.symm
+      rw [Measure.map_of_not_aemeasurable_of_ne_zero hn h0] at hφ
+      apply hn
+      rw [← hφ]
+      haveI : T2Space B.I.Gf := (GlobalTheory.T.finiteAdelicUnitary_congruenceTopology B.I).1
+      exact aemeasurable_dirac
     exact ae_of_ae_map hm (by rw [hφ]; exact hp)
 
 private lemma ext_ae_eq_of_leftInvariant (B : RowsAut) (f : B.I.GA → ℂ) (hf : ∀ γ ∈ B.I.GFset, ∀ y, f (γ * y) = f y)

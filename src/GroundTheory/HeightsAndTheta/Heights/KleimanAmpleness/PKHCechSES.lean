@@ -185,13 +185,15 @@ theorem cechMap_exact (h𝓜' : KH.IsMGraded S ι 𝓜') (h𝓜 : KH.IsMGraded S
 theorem cechBc_lift (h𝓜 : KH.IsMGraded S ι 𝓜) (h𝓜'' : KH.IsMGraded S ι 𝓜'')
     (hh : KH.IsMGradedMap S ι 𝓜 𝓜'' h) (hsurj : Function.Surjective h) {c : K → ℤ} :
     ∀ {n : ℕ} {x : KH.CechC S ι M'' n}, x ∈ KH.cechBc ι 𝓜'' c n →
-      ∃ b ∈ KH.cechBc ι 𝓜 c n, KH.cechMap S ι h n b = x
-  | 0, x, hx => by
+      ∃ b ∈ KH.cechBc ι 𝓜 c n, KH.cechMap S ι h n b = x := by
+  intro n x hx
+  cases n with
+  | zero =>
     have hx0 : x = 0 := (Submodule.mem_bot S).mp hx
     exact ⟨0, zero_mem _, by rw [hx0, map_zero]⟩
-  | n + 1, x, hx => by
-    change ∃ y ∈ KH.cechCc ι 𝓜'' c n, KH.cechD S ι M'' n y = x at hx
-    obtain ⟨y, hy, rfl⟩ := hx
+  | succ n =>
+    change x ∈ (KH.cechCc ι 𝓜'' c n).map ((KH.cechD S ι M'' n).restrictScalars S) at hx
+    obtain ⟨y, hy, rfl⟩ := Submodule.mem_map.mp hx
     obtain ⟨z, hz, rfl⟩ := cechMap_lift h𝓜 h𝓜'' hh hsurj (c := c) (n := n) hy
     exact ⟨KH.cechD S ι M n z, ⟨z, hz, rfl⟩, (KHTheoremS.cechD_cechMap h n z).symm⟩
 

@@ -21,7 +21,7 @@ namespace GlobalTheory.PlaceOverSplit
 
 theorem eq_or_eq_cP : ∀ (D : D7), D.host.F = maximalRealSubfield D.host.E → ∀ (s : SplitPlace D.host.E) (Q : Formalism.L2.DIV.Pl D.host.E), Q.asIdeal.comap (algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E)) = s.v.asIdeal → Q = s.w ∨ Q = GlobalTheory.IdemSupport.cP s.w := by
   intro D _ s Q hQ
-  rcases GlobalTheory.SplitConjPlace.eq_or_eq_conjPlE s.w Q (hQ.trans s.w_under.symm) with e | e
+  rcases GlobalTheory.SplitConjPlace.eq_or_eq_conjPlE (D := D) s.w Q (hQ.trans s.w_under.symm) with e | e
   · exact Or.inl e
   · refine Or.inr (e.trans (HeightOneSpectrum.ext (Ideal.ext fun x => ?_)))
     rw [GlobalTheory.SplitConjPlace.mem_conjPlE, GlobalTheory.IdemSupport.mem_cP]

@@ -158,7 +158,8 @@ theorem sdW_change (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
   have hpos := (hb _ hu).1
   rw [hdet] at hpos
   have h3 := GlobalTheory.T.selfDual_sqrt_smul_comp_of_invariant _ (r • tupMeas lam 1 M) (fun X Y => ψ0 (BR R σ 1 X Y)) (actHomeo (n := 1) _ hu)
-    _ hpos.ne' (by rw [Measure.map_smul, smul_comm, ← hm]) (fun X Y => by
+    _ hpos.ne' (by
+      rw [Measure.map_smul r (actHomeo (n := 1) _ hu).continuous.aemeasurable, smul_comm, ← hm]) (fun X Y => by
       show ψ0 (BR R σ 1 X fun c => (JR R (a • J)).mulVec (Y c)) =
         ψ0 (BR R σ 1 (fun c => (JR R (a • J)).mulVec (X c)) Y)
       simp only [BR, hR_one_mulVec, hR_one_mulVec' R σ _ hJ'.1]) hμ

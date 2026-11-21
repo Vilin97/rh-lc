@@ -65,7 +65,7 @@ theorem continuous_psiUni' {ψ : AddChar (AF D.host.F) ℂ} (hψ : Continuous ψ
   have hc : Continuous fun u : UX D ρ => (u.1.1 : Mx D ρ ρ) := Units.continuous_val.comp continuous_subtype_val
   have hu : Continuous fun u : UX D ρ => upSum (u.1.1 : Mx D ρ ρ) := by
     unfold upSum
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     split_ifs
     · exact (continuous_apply j).comp ((continuous_apply i).comp hc)
     · exact continuous_const
@@ -79,9 +79,16 @@ theorem flatS_ne_zero : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar
   obtain ⟨w, hw⟩ := Function.ne_iff.1 hg
   set F : UX D ρ → ℂ := fun u => star (psiUni ψ u.1) * (β₁ (x ⬝ u.1.1) : ℂ) with hF
   have hval : flatS dV dW s x y Φ w = (∫ u, F u ∂s.vU.ν) * (β₂ y * g w) := by
-    simp only [flatS, flatAt, flatFun, evalAt, hS, mixT_smul', hT, Pi.smul_apply, smul_eq_mul, hF]
+    simp only [flatS, flatAt, flatFun, evalAt, hF]
     rw [← integral_mul_const]
-    congr 1; funext u; ring
+    congr 1
+    funext u
+    change star (psiUni ψ u.1) *
+      ((_root_.I195MixedCoordinates_b2d3c8435fe2def8ca9d7dd4.target dW) V₀ ψ s.vT.μ s.vT.𝓕
+        ((_root_.I195MixedCoordinates_b2d3c8435fe2def8ca9d7dd4.source dV) W ψ s.vS.μ s.vS.𝓕 Φ (x ⬝ u.1.1)) y w) = _
+    rw [hS, mixT_smul', hT]
+    simp only [Pi.smul_apply, smul_eq_mul]
+    ring
   have hxc : Continuous fun u : UX D ρ => x ⬝ u.1.1 :=
     continuous_const.matrix_mul (Units.continuous_val.comp continuous_subtype_val)
   have hβc' : Continuous fun u : UX D ρ => β₁ (x ⬝ u.1.1) := hβc.comp hxc

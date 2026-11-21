@@ -42,12 +42,16 @@ def jacDec {σ : ℕ} (d : HermitianOrthogonalExtensionData A B c ε) (h : c = 2
   e'e' := by
     refine (gram_sub' d _ _).trans (Matrix.ext fun i j => ?_)
     have := i.2; have := j.2
+    have hi : (i : ℕ) + 1 ≤ c := by omega
+    have hj : (j : ℕ) + 1 ≤ c := by omega
     simp only [submatrix_apply, antiDiagonalSignGramMatrix, Fin.val_rev, Fin.val_castLE, Matrix.zero_apply]
     rw [if_neg (by omega)]
   e'e := by
     refine (gram_sub' d _ _).trans (Matrix.ext fun i j => ?_)
     have := i.2; have := j.2
-    simp only [submatrix_apply, antiDiagonalSignGramMatrix, Fin.val_rev, Fin.val_castLE, one_apply, Fin.ext_iff]
+    have hi : (i : ℕ) + 1 ≤ c := by omega
+    have hsub : c - ((i : ℕ) + 1) + (i : ℕ) + 1 = c := by omega
+    simp only [submatrix_apply, antiDiagonalSignGramMatrix, Fin.val_rev, Fin.val_castLE, Matrix.one_apply, Fin.ext_iff]
     split_ifs <;> first | rfl | omega
   iso := frameMat_isom d
   i₀e := perp_sub d _
@@ -112,16 +116,24 @@ def besDec {σ : ℕ} (d : HermitianOrthogonalExtensionData A B c (-1)) (h : c =
   e'e' := by
     refine (gram_sub' d _ _).trans (Matrix.ext fun i j => ?_)
     have := i.2; have := j.2
+    have hi : (i : ℕ) + 1 ≤ c := by omega
+    have hj : (j : ℕ) + 1 ≤ c := by omega
     simp only [submatrix_apply, antiDiagonalSignGramMatrix, Fin.val_rev, Fin.val_castLE, Matrix.zero_apply]
     rw [if_neg (by omega)]
   e'e := by
     refine (gram_sub' d _ _).trans (Matrix.ext fun i j => ?_)
     have := i.2; have := j.2
-    simp only [submatrix_apply, antiDiagonalSignGramMatrix, Fin.val_rev, Fin.val_castLE, one_apply, Fin.ext_iff]
+    have hi : (i : ℕ) + 1 ≤ c := by omega
+    have hsub : c - ((i : ℕ) + 1) + (i : ℕ) + 1 = c := by omega
+    simp only [submatrix_apply, antiDiagonalSignGramMatrix, Fin.val_rev, Fin.val_castLE, Matrix.one_apply, Fin.ext_iff]
     split_ifs <;> first | rfl | omega
   iso := coreMat_gram d h
   i₀e := coreMat_perp d h _ fun i => by have := i.2; simp only [Fin.val_castLE]; omega
-  i₀e' := coreMat_perp d h _ fun i => by have := i.2; simp only [Fin.val_rev, Fin.val_castLE]; omega
+  i₀e' := coreMat_perp d h (fun i : Fin σ => (Fin.castLE (by omega : σ ≤ c) i).rev) fun i => by
+    have := i.2
+    have hi : (i : ℕ) + 1 ≤ c := by omega
+    simp only [Fin.val_rev, Fin.val_castLE]
+    omega
   rank_add := by have := d.rank; show A.rank + 1 + 2 * σ = B.rank; omega
 
 section Grid

@@ -30,9 +30,9 @@ theorem eq_map_of_resolution {E R : Type} [CommRing E] [CommRing R] (ι : E →+
     ext i j
     have hi := congrFun hx i
     simp only [mulVec, dotProduct] at hi
-    simp only [mul_apply, vecMulVec_apply]
+    change (∑ k, M i k * (ι (x k) * ι (u j))) = ι (x i) * ι (u j)
     rw [← hi, Finset.sum_mul]
-    exact Finset.sum_congr rfl fun k _ => (mul_assoc _ _ _).symm
+    exact Finset.sum_congr rfl fun k _ => (mul_assoc (M i k) (ι (x k)) (ι (u j))).symm
   calc M = M * (vecMulVec x u + A * A').map ι := by rw [h1, Matrix.mul_one]
     _ = (vecMulVec x u + A * g * A').map ι := by
       rw [Matrix.map_add _ (map_add ι), Matrix.map_add _ (map_add ι), Matrix.map_mul, Matrix.map_mul, Matrix.map_mul, hvm,

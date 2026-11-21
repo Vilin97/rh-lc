@@ -41,19 +41,19 @@ theorem FamTie.comap {B : FamReal D A cR cL lR lL} {pl : Pl0 → Pl D.host.E} {S
     {gramR : Matrix (Fin D.sp.X'.rank) (Fin D.sp.X'.rank) D.host.E}
     {c0R : VV D.what₂.LL lamR →ₛₗ[D.what₂.embLL] cR.W} {c0L : ∀ i : Fin m, VV D.what₂.LL (lamL i) →ₛₗ[D.what₂.embLL] (cL i).W}
     (h : FamTie B pl S Qt tauL lamR lamL gramR c0R c0L) (f : T → T') (t0 : T) :
-    FamTie (B.comap f t0) pl S (fun t => Qt (f t)) tauL lamR lamL gramR c0R c0L where
-  ranks := h.ranks
-  v0 := h.v0
-  tauL_ok := h.tauL_ok
-  pl_inj := h.pl_inj
-  q := h.q
-  S_fin := h.S_fin
-  ok t P := h.ok (f t) P
-  gramR_eq := h.gramR_eq
-  mapR := h.mapR
-  mapL := h.mapL
-  coefR t := h.coefR (f t)
-  coefL i t := h.coefL i (f t)
+    FamTie (B.comap f t0) pl S (fun t => Qt (f t)) tauL lamR lamL gramR c0R c0L :=
+  { ranks := h.ranks
+    v0 := h.v0
+    tauL_ok := h.tauL_ok
+    pl_inj := h.pl_inj
+    q := h.q
+    S_fin := h.S_fin
+    ok t P := h.ok (f t) P
+    gramR_eq := h.gramR_eq
+    mapR := h.mapR
+    mapL := h.mapL
+    coefR t := h.coefR (f t)
+    coefL i t := h.coefL i (f t) }
 
 end Formalism.IndefR.Bridge
 
@@ -87,30 +87,31 @@ def LevCh.comap {T T' : Type} (L : LevCh D T') (f : T → T') : LevCh D T where
   βW := L.βW
 
 theorem LevCh.comap_is {T T' : Type} {L : LevCh D T'} {μ0 : T'} (h : L.Is μ0) {f : T → T'} (hf : Function.Injective f) {t0 : T}
-    (h0 : f t0 = μ0) : (L.comap f).Is t0 where
-  mu0 := h.mu0
-  eta := h.eta
-  xi t := h.xi (f t)
-  xi_inj := h.xi_inj.comp hf
-  xi_base := by
-    show L.xiH (f t0) = 1
-    rw [h0]; exact h.xi_base
-  xi_fin t := h.xi_fin (f t)
-  xi_triv t := h.xi_triv (f t)
-  xi_tame t := h.xi_tame (f t)
-  Pg := h.Pg
-  Q_pl t := h.Q_pl (f t)
-  Q_off t := h.Q_off (f t)
-  Q_de p hp := by
-    obtain ⟨P, hP⟩ := h.Q_de p hp
-    exact ⟨P, fun t => hP (f t)⟩
-  Q_ram t := h.Q_ram (f t)
-  chi := h.chi
-  xiR t := h.xiR (f t)
-  βY := h.βY
-  βX := h.βX
-  βV := h.βV
-  βW := h.βW
+    (h0 : f t0 = μ0) : (L.comap f).Is t0 :=
+  { mu0 := h.mu0
+    eta := h.eta
+    xi t := h.xi (f t)
+    xi_inj := h.xi_inj.comp hf
+    xi_base := by
+      show L.xiH (f t0) = 1
+      rw [h0]
+      exact h.xi_base
+    xi_fin t := h.xi_fin (f t)
+    xi_triv t := h.xi_triv (f t)
+    xi_tame t := h.xi_tame (f t)
+    Pg := h.Pg
+    Q_pl t := h.Q_pl (f t)
+    Q_off t := h.Q_off (f t)
+    Q_de p hp := by
+      obtain ⟨P, hP⟩ := h.Q_de p hp
+      exact ⟨P, fun t => hP (f t)⟩
+    Q_ram t := h.Q_ram (f t)
+    chi := h.chi
+    xiR t := h.xiR (f t)
+    βY := h.βY
+    βX := h.βX
+    βV := h.βV
+    βW := h.βW }
 
 variable {G : Type} [Group G] [Fintype G] {Pl0 I0 T T' : Type} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 

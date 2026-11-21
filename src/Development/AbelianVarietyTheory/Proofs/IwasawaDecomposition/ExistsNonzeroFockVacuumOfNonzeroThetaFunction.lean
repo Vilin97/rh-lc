@@ -66,7 +66,7 @@ theorem exists_isVacF_ne_zero : ∀ (D : D7) (V W : HSp D) (A : GlobalTheory.Cha
     rw [e] at hlt
     exact lt_irrefl _ hlt
   have h0 : ∀ᵐ x ∂μ.restrict 𝓕, f x = 0 :=
-    (eLpNorm_eq_zero_iff hf.cont.aestronglyMeasurable two_ne_zero).1 hl
+    (eLpNorm_eq_zero_iff two_ne_zero).1 hl
   exact hf0 (GlobalTheory.WeilVacMove.eq_zero_of_ae_fundamentalDomain (ratL W V) μ 𝓕 h𝓕 f hf.cont
     (GlobalTheory.WeilVacMove.norm_periodic hψ hf) h0)
 

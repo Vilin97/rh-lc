@@ -200,6 +200,8 @@ theorem flowTie_of_onOrbit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
         (U.X k).flow ξ' (fun τ => (s₁ τ - w₁ * (((τ.1 sE).re : ℝ) : ℂ)) + w * (((τ.1 sE).re : ℝ) : ℂ)) x := by
       rw [ReciprocityTheory.ChartRestriction.G.FD.EmbeddingHermitianPairs.flow_flow (U.X k) hξ'0]
       congr 1
+      funext τ
+      simp only [Pi.add_apply]
       ring
     obtain ⟨q1, q2⟩ := point_exp_eq_of_isometry_levels hK Uw.F Ha.i (Uw.ik k) (Ha.Pw w) (Uw.Pm k ⟨_, hxw⟩) gm L
       hpq hσ hty hlevA (Ha.period w hw) (Uw.period k _) hEF hlev (fun u => by

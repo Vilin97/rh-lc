@@ -83,7 +83,7 @@ theorem mem_span_part : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T 
     have h3' : F.cr.toL (R.toCx3 F).zs false i t a =
         LiftForms.lvlForm (A3.A.fam.L i t).S (A3.A.fam.L i t).r (A3.A.fam.lvlA F.P0 F.ψ0).P (A3.A.fam.lvlA F.P0 F.ψ0).ψ
           (lZ0 D A3.A F.P0 F.ψ0 (A3.fam3.toSub2 (zsOf R F)) i t *ᵥ a) :=
-      (GlobalTheory.Mem.LiftTheta.levelFormCoordinateMap_levelZero F.lv2 hOk (A3.fam3.toSub2 (zsOf R F)) i t a).symm
+      (LiftForms.lvlForm_lE (v0 := A3.A.v0) ⟨hOk.conj, hOk.irr, hOk.lifts i t⟩ a).symm
     rw [hP.phs i, one_smul, e1, h3']
     rfl
 

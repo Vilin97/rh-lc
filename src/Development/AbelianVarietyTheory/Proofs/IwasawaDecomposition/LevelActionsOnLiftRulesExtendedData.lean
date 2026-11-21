@@ -63,8 +63,9 @@ theorem act_heq (D : D7) (i : Fin D.R.m) (n : ℕ) {H H' : ReciprocityTheory.Cha
   obtain rfl := eq_of_heq he
   obtain rfl := eq_of_heq hg
   obtain rfl := eq_of_heq hr
-  rw [GlobalTheory.OneMapAllCompare.actLev_congr (lev := fun g => (lev' g, LinearMap.id)) (lev' := fun g => (lev g, LinearMap.id)) c' hA
-    (hU lev' lev h' h)]
+  exact heq_of_eq (congrArg (fun f => f g' r')
+    (GlobalTheory.OneMapAllCompare.actLev_congr (lev := fun g => (lev' g, LinearMap.id))
+      (lev' := fun g => (lev g, LinearMap.id)) c' hA (hU lev' lev h' h)))
 
 end GlobalTheory.Mem.R3.ActExt
 end

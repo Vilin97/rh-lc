@@ -72,7 +72,7 @@ theorem posLog_sum_le {ι : Type} [Fintype ι] (w : ι → ℚ) (hw : ∀ i, 0 �
   have h3 : ‖∑ i, (w i : ℂ) * (a i * b i)‖ ^ 2 ≤
       (∑ i, (w i : ℝ) * ‖a i‖ ^ 2) * ∑ i, (w i : ℝ) * ‖b i‖ ^ 2 :=
     (pow_le_pow_left₀ (norm_nonneg _) h1 2).trans h2
-  have h4 := (Real.posLog_le_posLog (by positivity) h3).trans Real.posLog_mul
+  have h4 := (Real.posLog_le_posLog (le_trans (by norm_num) (sq_nonneg _)) h3).trans Real.posLog_mul
   rw [Real.posLog_pow] at h4
   push_cast at h4
   linarith

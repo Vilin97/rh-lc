@@ -273,6 +273,7 @@ def recBE : BesselTied D (recXE hP hT hB hL hE hθ hψ Wf hW Tw Rc) (recTE hP hT
 
 theorem realisesE : RealisesE (θ := θ) (recBE hP hT hB hL hE hθ hψ Wf hW Tw Rc) Wf Tw Rc where
   inf := hθ
+  eqRank := hW
   forms V := Set.ext fun φ => ⟨fun ⟨x, hx⟩ => hx ▸ aut hθ x, fun h => ⟨⟨φ, Submodule.subset_span h⟩, rfl⟩⟩
   typ V P F := Iff.rfl
   sch V V' := range_ThS V V'

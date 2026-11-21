@@ -54,10 +54,12 @@ lemma powSub_succ_le (E : X.Modules) (n : ℕ) : powSub I E (n + 1) ≤ powSub I
   Subobject.mk_le_mk_of_comm (idealPowSucc I E n) (idealPowSucc_ι I E n)
 
 theorem closedSys_pow (E : X.Modules) [E.IsQuasicoherent] :
-    ClosedSys I E (fun e => powSub I E (e + 1)) where
-  qcoh e := (SheafOfModules.isQuasicoherent X.ringCatSheaf).prop_of_iso
-    (Subobject.underlyingIso (idealPowι I E (e + 1))).symm inferInstance
-  pow_le _ := le_rfl
-  succ e := (sup_eq_right.2 (powSub_succ_le I E (e + 1))).symm
+    ClosedSys I E (fun e => powSub I E (e + 1)) := by
+  refine { qcoh := ?_, pow_le := fun _ => le_rfl, succ := ?_ }
+  · intro e
+    exact (SheafOfModules.isQuasicoherent X.ringCatSheaf).prop_of_iso
+      (Subobject.underlyingIso (idealPowι I E (e + 1))).symm inferInstance
+  · intro e
+    exact (sup_eq_right.2 (powSub_succ_le I E (e + 1))).symm
 
 end GlobalTheory.CompanionTheory.GE

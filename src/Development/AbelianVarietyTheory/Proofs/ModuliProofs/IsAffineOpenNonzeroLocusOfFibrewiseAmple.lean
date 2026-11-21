@@ -64,7 +64,7 @@ theorem isFinite_of_fibres {R : Type} [CommRing R] {X : Scheme.{0}} {m : ℕ} (�
 theorem isAffineOpen_nonzeroLocus_of_fibres : ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (f : X ⟶ Sp R) (M : LB X) (d : ℕ) (m : ℕ) (u : Fin (m + 1) → LB.Sec (pw M d)), 1 ≤ d → IsProper f → M.IsLB → (⨆ i, Out.nonzeroLocus (u i) = ⊤) → (∀ q : Ideal R, q.IsPrime → ∃ (k : Type) (_ : Field k) (β : R →+* k), RingHom.ker β = q ∧ Out.RelAmple (Over.mk (pullback.snd f (spMap β))) (M.pull (pullback.fst f (spMap β)))) → ∀ i, IsAffineOpen (Out.nonzeroLocus (u i)) := by
   intro R _ X f M d m u hd _ hM hu H i
   have : IsFinite (ProjSpace.toProj f u hu) :=
-    isFinite_of_fibres _ f (ProjSpace.toProj_str f u hu) fun q hq => by
+    isFinite_of_fibres (ProjSpace.toProj f u hu) f (ProjSpace.toProj_str f u hu) fun q hq => by
       obtain ⟨k, _, β, hβ, hA⟩ := H q hq
       refine ⟨k, _, β, hβ, fun j => ?_⟩
       rw [ProjSpace.toProj_preimage_chart]

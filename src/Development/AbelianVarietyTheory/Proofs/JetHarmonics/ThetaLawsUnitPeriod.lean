@@ -46,7 +46,7 @@ theorem norm_period (M : Mdl q) (ω : ℂ_[q]) (h : M.MChart ω) : ‖ω‖ * �
   obtain ⟨han, -⟩ := hsmall 0 (Or.inl (zero_mem _))
   obtain ⟨-, -, -, hcc, hder, -, -⟩ := TaylorRead.hat_laws q M.ι (C ω * logS) h0
 
-  have hd0 : ∀ f : ℂ_[q]⟦X⟧, constantCoeff (derivative ℂ_[q] f) = coeff 1 f := by
+  have hd0 : ∀ f : ℂ_[q]⟦X⟧, constantCoeff (PowerSeries.derivative f) = coeff 1 f := by
     intro f
     rw [← coeff_zero_eq_constantCoeff_apply, coeff_derivative]
     simp

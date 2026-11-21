@@ -294,6 +294,7 @@ theorem twist_prodGP {m j : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V] [A
 def eqvOfEq {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] {ρ ρ' : Representation ℂ G V} (h : ρ = ρ') :
     ρ.Equiv ρ' := h ▸ Representation.Equiv.refl ρ
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem main_twisted (ψ : AddChar k Circle) (hψ1 : ψ ≠ 1) {m j : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V]
     [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (GL (Fin m) k) V)
     (τ : Representation ℂ (Mir k (j + 1)) W) (hρ : IsSmooth ρ) (hτ : IsSmooth τ) (s₀ s₁ t r : ℝ) (hs : r + s₀ = s₁) :
@@ -320,7 +321,7 @@ theorem main_twisted (ψ : AddChar k Circle) (hψ1 : ψ ≠ 1) {m j : ℕ} {V W 
 
 end Final
 
-theorem phiGP : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], PhiGP k := by
+theorem phiGP : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.RgGu.Leib.PhiGP k := by
   intro k _ _ _ _ ψ _ hψ1 m j ρ τ hρ hτ
   have X := main_twisted ψ hψ1 ρ.ρ τ.ρ hρ hτ (((j + 1 + 1 : ℕ) : ℝ) / 2) (((j + 1 : ℕ) : ℝ) / 2) (-((m : ℕ) : ℝ) / 2)
     (-1 / 2) (by push_cast; ring)

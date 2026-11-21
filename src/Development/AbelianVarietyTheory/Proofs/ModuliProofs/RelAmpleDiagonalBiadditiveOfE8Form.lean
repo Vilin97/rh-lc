@@ -64,7 +64,7 @@ theorem relAmple_diag : ∀ (W : Matrix (Fin 8) (Fin 8) ℤ) (S : Scheme.{0}) [I
   refine (cls_eq_iff (LB.isLB_pull hL _) (LB.isLB_linComb hD _ _)).1 ?_
   set_option synthInstance.maxHeartbeats 100000 in
     rw [cls_linComb hD, Fintype.sum_unique, pull_id, cls_pull hL, (cls_eq_iff hL (LB.isLB_linComb hP _ _)).2 hiso, cls_linComb hP, map_sum,
-    cls_pull hP, ← natCast_zsmul, Int.toNat_of_nonneg hpos.le]
+    cls_pull hP, Int.toNat_of_nonneg hpos.le]
   refine Eq.trans (Finset.sum_congr rfl fun uv _ => ?_)
     (sum_single (G := A ⟶ A) (fun a b => pull (lift a b).left (cls P hP)) (fun a a' b => ?_) (fun a a' b => ?_)
       W (𝟙 A))

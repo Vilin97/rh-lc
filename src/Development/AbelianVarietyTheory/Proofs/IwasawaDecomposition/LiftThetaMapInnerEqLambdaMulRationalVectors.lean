@@ -34,7 +34,7 @@ theorem inner_theta_rat_eq_lam : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (
     intro c
     rw [GlobalTheory.T.thetaMap_hilbertModel_eq_concreteThetaMap_familyThree D G Pl0 I0 T A3 Ks R F cG X0 Y Z hP hH i t, CxData.tC_cpt_eq]
     show Tw.out (R.phs i • Tw.map _ (R.thG i t) (Tw.semi _ R.toRealDat.emb0 (R.jV i t) _)) = _
-    have h3 := GlobalTheory.Mem.LiftTheta.levelFormCoordinateMap_levelZero F.lv2 hOk (A3.fam3.toSub2 (zsOf R F)) i t c
+    have h3 := GlobalTheory.Mem.LiftForms.lvlForm_lE (Z := (A3.fam3.toSub2 (zsOf R F)).Zl i t) (⟨hOk.conj, hOk.irr, hOk.lifts i t⟩ : BlockHyp (A3.A.fam.L i t) (A3.A.fam.lvlA F.P0 F.ψ0) A3.A.v0 1) c
     have h3' : ((crdOf3 A3 F.P0 F.ψ0 F.P1 F.ψ1 F.Dc F.Sp F.Zsc).toL (R.toCx3 F).zs false i t) c = liftForm A3.A F.P0 F.ψ0 i t (lZ0 D A3.A F.P0 F.ψ0 (A3.fam3.toSub2 (zsOf R F)) i t *ᵥ c) := h3.symm
     rw [hP.phs i, one_smul]
     show R.thG i t (R.jV i t (((crdOf3 A3 F.P0 F.ψ0 F.P1 F.ψ1 F.Dc F.Sp F.Zsc).toL (R.toCx3 F).zs false i t) c)) = _
@@ -71,7 +71,7 @@ theorem inner_theta_rat_eq_lam : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (
     rw [← hN, ← hL, hA, hmaj, hv, hU]
     rfl
   have h2 := congrArg (cj (twAt D.what₂.embLL A3.A.v0)) h1
-  rw [cj_cj, map_mul, cj_ofReal, cj_cj] at h2
+  rw [Links.cj_cj, map_mul, cj_ofReal, Links.cj_cj] at h2
   have hnp : ((RealDat.nP F.lv2 false : ℝ) : ℂ) ≠ 0 := by exact_mod_cast (RealDat.nP_pos (F := F.lv2) false).ne'
   apply mul_left_cancel₀ hnp
   rw [h2]

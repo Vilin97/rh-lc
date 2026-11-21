@@ -135,10 +135,10 @@ theorem exists_conj (D : D7) (Q : Par D) (χ₀ : (AE D)ˣ →* Circle) (hH : Is
     ⟨(hb x).1, (hb x).2 ▸ hx.1, by rw [← map_inv, (hb _).2]; exact hx.2⟩
   let A : (AE D)ˣ →* Circle := ∏ τ, angle D (θ (relab Q.c σ (tauE D τ))) ^ k τ
   have hA : ∀ x, A x = ∏ τ, angle D (θ (relab Q.c σ (tauE D τ))) x ^ k τ := fun x => by
-    simp only [A, MonoidHom.finset_prod_apply, MonoidHom.zpow_apply]
+    simp only [A, MonoidHom.finsetProd_apply, MonoidHom.zpow_apply]
   have Ac : Continuous A := by
     rw [show (A : _ → _) = _ from funext hA]
-    exact continuous_finset_prod _ fun τ _ => (continuous_angle D (θc _)).zpow _
+    exact continuous_finsetProd _ fun τ _ => (continuous_angle D (θc _)).zpow _
   have key : ∀ (e : D.host.Eˣ) (r : (AF D.host.F)ˣ) (x : (AE D)ˣ), Units.map (incA D).toMonoidHom e * idF D r = x →
       ∃ w : Q.c.F, ((χ₀ (b x) : Circle) : ℂ) = Q.c.F.val.toRingHom w⁻¹ ∧ ((A x : Circle) : ℂ) = σ w := by
     intro e r x hx

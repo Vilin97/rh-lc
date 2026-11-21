@@ -21,6 +21,7 @@ theorem sum_val_log_le (S : Finset ℕ) (hS : ∀ l ∈ S, l.Prime) (n : ℕ) :
     ∑ l ∈ S, (padicValNat l n : ℝ) * Real.log l ≤ Real.log n := by
   rw [Real.log_nat_eq_sum_factorization,
     Finsupp.sum_of_support_subset _ (Finset.subset_union_right (s₁ := S)) _ (by simp)]
+  simp_rw [Nat.padicValNat_def]
   rw [← Finset.sum_congr rfl fun (l : ℕ) (hl : l ∈ S) =>
     congrArg (fun t : ℕ => (t : ℝ) * Real.log l) (Nat.factorization_def n (hS l hl))]
   exact Finset.sum_le_sum_of_subset_of_nonneg Finset.subset_union_left fun l _ _ =>
@@ -69,7 +70,7 @@ theorem exists_exponents (f N d Q : ℕ) (B L : ℝ) (S : Finset ℕ) (dl : ℕ 
         Nat.mem_primeFactors, true_and, ne_eq, hM0, hQ.ne', not_false_eq_true] at hl
       obtain ⟨⟨⟨a1, a2⟩, a3⟩, a4⟩ := hl
       unfold expo_vp
-      rw [← hM, padicValNat.eq_zero_of_not_dvd a1, padicValNat.eq_zero_of_not_dvd a4, hz l a2, if_neg a3]
+      rw [← hM, Nat.padicValNat_def, Nat.padicValNat_def, padicValNat.eq_zero_of_not_dvd a1, padicValNat.eq_zero_of_not_dvd a4, hz l a2, if_neg a3]
       simp
     · rfl
   · have e1 := sum_val_log_le S' hP M

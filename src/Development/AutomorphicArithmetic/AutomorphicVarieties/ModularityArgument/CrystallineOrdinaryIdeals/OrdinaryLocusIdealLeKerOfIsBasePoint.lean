@@ -49,11 +49,8 @@ theorem push_red (f : U.R →ₐ[O] B) (hf : ∀ a, π (f a) = algebraMap O E (x
 
 include hx hPC in
 theorem inDcr_push (f : U.R →ₐ[O] B) (hf : ∀ a, π (f a) = algebraMap O E (x a))
-    (hI : J ≤ RingHom.ker f) : D.InDcr (π : B →+* E) (push f U.r.hom) where
-  mult := U.r.hasMult
-  red := push_red D U E x hx π f hf
-  cont := push_cont D U f
-  cr := hPC B f hI
+    (hI : J ≤ RingHom.ker f) : D.InDcr (π : B →+* E) (push f U.r.hom) := by
+  exact ⟨U.r.hasMult, push_red D U E x hx π f hf, push_cont D U f, hPC B f hI⟩
 
 variable (hπ : ∀ a, π a = 0 → IsNilpotent a)
 

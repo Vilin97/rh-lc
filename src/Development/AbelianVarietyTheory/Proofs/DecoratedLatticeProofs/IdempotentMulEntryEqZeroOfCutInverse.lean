@@ -177,11 +177,9 @@ theorem mt_list_prod (V : HSp D) {W : Type} (h : W → GA D V) (E : W → AE D)
     rw [List.map_cons, List.prod_cons, mt_mul, mt_list_prod V h E M hh horth l hl.2, hh, List.map_cons,
       List.sum_cons]
     apply cut_mul
-    rw [← List.sum_map_mul_left]
-    apply List.sum_eq_zero
-    intro x hx
-    obtain ⟨y, hy, rfl⟩ := (List.mem_map (f := fun y => E w * E y) (l := l)).mp hx
-    exact horth w y (fun e => hl.1 (e ▸ hy))
+    rw [← List.sum_map_mul_left l E (E w)]
+    exact List.sum_eq_zero (List.forall_mem_map.mpr fun y hy =>
+      horth w y (fun e => hl.1 (e ▸ hy)))
 
 
 set_option maxHeartbeats 800000 in

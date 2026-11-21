@@ -19,7 +19,7 @@ namespace GlobalTheory.Mem.RankSize
 theorem rank_ge_hundred : EvLgG fun K B f _ => KPx B f → ∀ (T : TwDat B) (w : ColW B f T) (Z : w.Lt), 100 ≤ (w.D Z).R.r := by
   refine ⟨1, one_pos, fun _ _ _ _ _ _ _ _ _ => ⟨⟨0, fun _ => 0, fun _ => 0, fun _ => 0⟩, fun _ _ _ _ =>
     ⟨0, fun _ _ => ⟨0, fun _ _ => ⟨100, fun K _ _ _ _ hx _ => ?_⟩⟩⟩⟩⟩
-  refine ⟨fun _ _ _ => ∅, fun _ _ _ _ => ∅, fun _ _ _ _ _ => ∅, fun _ _ _ _ _ => ∅, by simp, by simp,
+  refine ⟨fun _ _ _ => ∅, fun _ _ _ _ => ∅, fun _ _ _ _ _ => ∅, fun _ _ _ _ _ => ∅, by simp_all, by simp_all,
     fun B f _ hO _ _ _ _ T w Z => ?_⟩
   show 100 ≤ B.R.r
   obtain ⟨sp, hT, hY, hA, hV, hz, hB, -⟩ := hO

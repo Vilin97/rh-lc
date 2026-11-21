@@ -37,12 +37,12 @@ theorem not_unr_of_delta {R : Ranks} {H : Host R} {p : ℕ} {δ : HChar H.E} (h�
 
 theorem unr_of_mul_left {L : Type} [Field L] [NumberField L] {χ χ' : HChar L} {u : HeightOneSpectrum (𝓞 L)}
     (h : χ.UnrAt u) (h' : (χ * χ').UnrAt u) : χ'.UnrAt u := fun y hy => by
-  have e := h' y hy
-  rwa [HChar.loc_mul, h y hy, one_mul] at e
+  have e : χ.loc u y * χ'.loc u y = 1 := h' y hy
+  simpa only [h y hy, one_mul] using e
 
 theorem unr_of_mul_right {L : Type} [Field L] [NumberField L] {χ χ' : HChar L} {u : HeightOneSpectrum (𝓞 L)}
     (h : χ'.UnrAt u) (h' : (χ * χ').UnrAt u) : χ.UnrAt u := fun y hy => by
-  have e := h' y hy
-  rwa [HChar.loc_mul, h y hy, mul_one] at e
+  have e : χ.loc u y * χ'.loc u y = 1 := h' y hy
+  simpa only [h y hy, mul_one] using e
 
 end GlobalTheory.LevCmp.BadV

@@ -135,20 +135,20 @@ theorem cols_mem {s : Fin m → AE F E} (hs : ∀ j, piE h (s j) ∈ Ov E w) : C
 include hw hC eC in
 theorem isLagAt_cols {c : w.adicCompletion E →+* w.adicCompletion E} (hc : IsConjAt σ h c) (hn : n = 2 * m)
     (hf : Function.Injective f) (h0 : ∀ i j, (a.1ᵀ * W.J.map (algebraMap E _) * a.1.map c : Matrix _ _ _) (f i) (f j) = 0) :
-    IsLagAt σ W v C where
-  rank := hn
-  supp := hC
-  iso := mat_inj hw h (at_sub (at_mul_right _ (at_map hC)) at_zero) (by
+    IsLagAt σ W v C := by
+  refine ⟨hn, hC, ?_, ?_⟩
+  · refine mat_inj hw h (at_sub (at_mul_right _ (at_map hC)) at_zero) ?_
     rw [map_gram hc, eC, Matrix.map_zero _ (map_zero _)]
-    exact Matrix.ext h0)
-  free := fun t ht e => vec_inj hw h (at_sub ht at_zero) (funext fun i => by
+    exact Matrix.ext h0
+  · intro t ht e
+    refine vec_inj hw h (at_sub ht at_zero) (funext fun i => ?_)
     have e1 := congrArg (fun y => ((a⁻¹).1 *ᵥ (piE h ∘ y)) (f i)) e
     have e2 : (a⁻¹).1 * a.1.submatrix id f = (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)).submatrix id f := by
       rw [← a.inv_mul]
       rfl
     simp only [piE_mulVec, eC, Matrix.mulVec_mulVec, e2] at e1
     rw [show piE h ∘ (0 : Fin n → AE F E) = 0 from funext fun _ => map_zero _, Matrix.mulVec_zero] at e1
-    simpa [Matrix.mulVec, dotProduct, Matrix.one_apply, hf.eq_iff] using e1)
+    simpa [Matrix.mulVec, dotProduct, Matrix.one_apply, hf.eq_iff] using e1
 
 end Frame
 

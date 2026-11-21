@@ -41,7 +41,7 @@ private theorem cont_rowAct (n : ℕ) (f : MvPolynomial (Fin n × Fin n) ℂ) :
       rw [mul_left_comm, ← MvPolynomial.smul_eq_C_mul, map_smul, smul_eq_mul]
       rfl
     simp only [e]
-    refine continuous_finset_sum _ fun b _ => ?_
+    refine continuous_finsetSum _ fun b _ => ?_
     exact (continuous_id.matrix_elem v.1 b).mul (hp _)
 
 private theorem cont_rep (n : ℕ) (ν : Fin n → ℕ) (ℓ : Formalism.GradedWeylDivisibility.dualWeyl ℂ n n ν →ₗ[ℂ] ℂ)
@@ -58,7 +58,7 @@ private theorem cont_rep (n : ℕ) (ν : Fin n → ℕ) (ℓ : Formalism.GradedW
 
 private theorem cont_multi {X ι : Type} [TopologicalSpace X] [Fintype ι] [DecidableEq ι] {V : ι → Type}
     [∀ i, AddCommGroup (V i)] [∀ i, Module ℂ (V i)] [∀ i, FiniteDimensional ℂ (V i)]
-    (m : MultilinearMap ℂ V ℂ) (F : ∀ i, X → V i) (hF : ∀ i (ℓ : V i →ₗ[ℂ] ℂ), Continuous fun x => ℓ (F i x)) :
+    (m : (∀ i, V i) →ₘₗ[ℂ] ℂ) (F : ∀ i, X → V i) (hF : ∀ i (ℓ : V i →ₗ[ℂ] ℂ), Continuous fun x => ℓ (F i x)) :
     Continuous fun x => m fun i => F i x := by
   let b := fun i => Module.finBasis ℂ (V i)
   have e : ∀ x, (m fun i => F i x) = ∑ r : ∀ i, Fin (Module.finrank ℂ (V i)),
@@ -70,10 +70,10 @@ private theorem cont_multi {X ι : Type} [TopologicalSpace X] [Fintype ι] [Deci
     set_option synthInstance.maxHeartbeats 100000 in
       rw [h1, MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
-    rw [MultilinearMap.map_smul_univ]
+    simp only [MultilinearMap.map_smul_univ, RingHom.id_apply]
   simp only [e]
-  refine continuous_finset_sum _ fun r _ => ?_
-  exact (continuous_finset_prod _ fun i _ => hF i _).smul continuous_const
+  refine continuous_finsetSum _ fun r _ => ?_
+  exact (continuous_finsetProd _ fun i _ => hF i _).smul continuous_const
 
 theorem UpperTheory.finiteDimensional_nablaT_and_continuous_wtOp :
     ∀ (n : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι] (mu : ι → ℕ → ℕ) (sh : ι → ℤ),
@@ -96,7 +96,7 @@ theorem UpperTheory.finiteDimensional_nablaT_and_continuous_wtOp :
   simp only [wtOp_apply, map_smul]
   have h2 : Continuous fun g : ι → GL (Fin n) ℂ =>
       (∏ τ, Matrix.GeneralLinearGroup.det (g τ) ^ (-sh τ) : ℂˣ) := by
-    refine continuous_finset_prod _ fun τ _ => ?_
+    refine continuous_finsetProd _ fun τ _ => ?_
     refine Continuous.zpow ?_ _
     exact Matrix.GeneralLinearGroup.continuous_det.comp (continuous_apply τ)
   exact (Units.continuous_val.comp h2).smul h1

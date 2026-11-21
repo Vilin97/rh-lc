@@ -50,8 +50,7 @@ theorem exists_multR_eval_of_star_mem : GlobalTheory.Dec.DSInfChar → GlobalThe
       rw [ev_apply]
       refine (GlobalTheory.ConjRowMult.conjMap_apply X (MP R) c Φ h t v₀ _).trans ?_
       rw [hw, hΦw, GlobalTheory.ConjRowMult.contRepL_spec X hψ]
-      have e : ∀ a b : GA D (D.sp.Y 0), a * b * b⁻¹ = a := fun a b => mul_inv_cancel_right a b
-      erw [e, ContinuousMulEquiv.apply_symm_apply]
+      simp
     filter_upwards [hψ.2.2, Lp.coeFn_star φ] with x h1 h2
     rw [key x, ← h1, h2, Pi.star_apply, star_star]
 

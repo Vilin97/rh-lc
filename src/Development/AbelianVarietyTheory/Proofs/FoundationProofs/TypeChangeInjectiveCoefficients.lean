@@ -216,7 +216,7 @@ theorem length_eq (hb : Gen O b) : Module.length O' A' = Module.length O' (O' �
       obtain ⟨d, hd, hx⟩ := S.tors x
       obtain ⟨s, r, c', rfl⟩ := hb d hd c
       refine ⟨∑ a ∈ s, Finsupp.single a (r a • x), ?_⟩
-      rw [← Finsupp.sum_finset_sum_index (by simp) (by simp [TensorProduct.tmul_add])]
+      rw [Finsupp.sum_finsetSum _ _ _ (by simp) (by simp [TensorProduct.tmul_add])]
       simp [TensorProduct.add_tmul, TensorProduct.sum_tmul, ← Algebra.smul_def, TensorProduct.smul_tmul, hx]
     | add x y hx hy =>
       obtain ⟨m, rfl⟩ := hx

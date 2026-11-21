@@ -157,8 +157,11 @@ theorem jPer_van {M : Vol G} (hN : ∀ X, DefNode D.R.m X → X ≠ .top D.R.m �
     (F : I → Fn G (.grid D.R.m D.R.m)) (hF : ∀ i ∈ S, GlobalTheory.Unf.IsContAut _ (F i)) :
     ∀ σ j (hj : j + 2 * σ + 2 = D.R.m), Even j → ∀ φ : I → Fn G (.top j), (∀ i ∈ S, GlobalTheory.Unf.IsContAut _ (φ i)) →
       (∀ g u h', ∑ i ∈ S, a i * F i h' * φ i g * ∏ k ∈ Finset.range (σ + 1), cv (C i) u (j + 2 * k) = 0) →
-      ∑ i ∈ S, a i * jPer W M t (C i) (F i) σ j hj (φ i) = 0
-  | 0, j, hj, hev, φ, hφ, h => by
+      ∑ i ∈ S, a i * jPer W M t (C i) (F i) σ j hj (φ i) = 0 := by
+  intro σ
+  induction σ with
+  | zero =>
+    intro j hj hev φ hφ h
     have h0 := hN (.top j) (show j ≤ D.R.m by omega) (fun e => by injection e; omega)
     have h1 := hN (.top (j + 1)) (show j + 1 ≤ D.R.m by omega) (fun e => by injection e; omega)
     have h2 := hN (.grid D.R.m D.R.m) ⟨le_rfl, rfl⟩ (by simp)
@@ -176,10 +179,11 @@ theorem jPer_van {M : Vol G} (hN : ∀ X, DefNode D.R.m X → X ≠ .top D.R.m �
         show cv (C i) (setPair 0 j u v) j = _
         rw [cv, setPair_fst, setPair_snd]
       simpa only [zero_add, Finset.prod_range_one, e2] using e
-  | σ + 1, j, hj, hev, φ, hφ, h => by
+  | succ σ ih =>
+    intro j hj hev φ hφ h
     have h0 := hN (.top j) (show j ≤ D.R.m by omega) (fun e => by injection e; omega)
     have h1 := hN (.top (j + 1)) (show j + 1 ≤ D.R.m by omega) (fun e => by injection e; omega)
-    refine jPer_van hN S a C hC F hF σ (j + 1 + 1) (by omega) (by rw [add_assoc]; exact hev.add even_two)
+    refine ih (j + 1 + 1) (by omega) (by rw [add_assoc]; exact hev.add even_two)
       (fun i => biL W M t j (φ i) (C i j))
       (fun i hi => biL_contAut W t (by omega) (hC i hi j hev (by omega)) h0 (hφ i hi) h1) fun g u h' => ?_
     have key := biL_van W t (by omega) h0 h1 S

@@ -67,7 +67,9 @@ theorem GlobalTheory.BKGal.HatVal.Epow_smul_jB_toBcris_eq_sum : ∀ (l : ℕ) [F
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [← LinearEquiv.map_smul, ← map_sum]
   congr 1
-    ← map_sum]
+  ext i
+  simp only [Pi.smul_apply, Finset.sum_apply, hcj, hB, toBcris_apply, hE, smul_eq_mul,
+    ← map_pow, ← map_mul, ← map_sum]
   congr 1
   funext τ
   apply Subtype.ext

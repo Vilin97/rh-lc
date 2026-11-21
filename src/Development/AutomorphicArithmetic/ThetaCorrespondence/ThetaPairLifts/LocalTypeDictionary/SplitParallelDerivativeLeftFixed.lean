@@ -65,8 +65,9 @@ theorem splitParallel_derivative_fixes_left : _root_.GlobalTheory.FunPr.ThetaLoc
       chr_det_eq_one G.V' hTr.geo.hV'.lat v X.β (fun w h => hTr.chars.unrβ w (hw w h)) t htp.1 htp.2, div_one]
   have hb := GlobalTheory.IntegralDetModule.modu_norm_det G.V' hTr.geo.hV'.lat v t htp.1 htp.2
   rw [ha, hb] at hS
-  rw [hc, map_smul, smul_eq_mul] at hS
   simp only [Circle.coe_one, NNReal.coe_one, Real.one_rpow, Complex.ofReal_one, one_mul] at hS
+  change omd p (GlobalTheory.InertDbl.dblFun Ψ) = c • GlobalTheory.InertDbl.dblFun Ψ at hc
+  rw [hc, map_smul, smul_eq_mul] at hS
   have h1 : c = 1 := (mul_eq_right₀ hl0).mp hS
   rw [hc, h1, one_smul]
 end GlobalTheory.SplitParLeft
@@ -75,7 +76,6 @@ end
 
 section
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
-open GlobalTheory.KFinLoc
 open scoped TensorProduct Matrix
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.split_parallel_derivative_left_fixed : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)

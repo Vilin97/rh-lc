@@ -248,6 +248,7 @@ namespace GlobalTheory.CellBump
 
 open GlobalTheory.CellDec GlobalTheory.RSJ
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem exists_cellPart_unfoldedIntegral_positive_alt : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ)
     (S : Finset (HeightOneSpectrum (𝓞 E))) (b : GA E (m + 1) → ℂ) (φ : GA E (m + 1) → ℂ)
     (N : ℕ) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (Φ : (Fin (m + 1) → Cinf E) → ℂ),

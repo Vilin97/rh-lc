@@ -183,7 +183,9 @@ theorem idem_mul_incA (P : Pl D → Prop) (x : D.host.E) :
 
 noncomputable def intRing (D : D7) (P : Pl D → Prop) : NonUnitalSubring (AE D) where
   carrier := intAt D P
-  add_mem' ha hb := ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha.2 hb.2⟩
+  add_mem' ha hb := ⟨add_mem ha.1 hb.1, by
+    rw [(finPart D).map_add]
+    exact add_mem ha.2 hb.2⟩
   zero_mem' := ⟨zero_mem _, by rw [map_zero]; exact zero_mem _⟩
   mul_mem' ha hb := ⟨Ideal.mul_mem_right _ _ ha.1, by rw [map_mul]; exact FrameLat.mul_mem_intAE ha.2 hb.2⟩
   neg_mem' ha := ⟨neg_mem ha.1, by rw [map_neg]; exact neg_mem ha.2⟩

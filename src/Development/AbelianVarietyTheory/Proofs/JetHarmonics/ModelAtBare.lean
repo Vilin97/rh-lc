@@ -19,7 +19,6 @@ namespace GlobalTheory.Proof.ModelAtPrimeToLevel
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.IndefiniteRowSideFullHecke.UniformizationClosedSplit
 open scoped CategoryTheory.Obj
 
 section General

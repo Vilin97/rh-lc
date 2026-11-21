@@ -82,7 +82,9 @@ theorem IsQuot.epi {X X' : Scheme.{0}} {ρ : Γ →* Aut X} {π : X ⟶ X'} (h :
 
 theorem IsQuot.epi_of_isPullback {X X' Y Y' : Scheme.{0}} {ρ : Γ →* Aut X} {π : X ⟶ X'} (h : IsQuot ρ π)
     {φ : Y ⟶ Y'} {p : Y ⟶ X} {p' : Y' ⟶ X'} (H : IsPullback φ p p' π) (hp : Flat p') : Epi φ := by
-  obtain ⟨⟨τ, hτ⟩, hall⟩ := quotient_flat_baseChange Γ X X' Y Y' ρ π φ p p' h H hp
+  have hbase := quotient_flat_baseChange Γ X X' Y Y' ρ π φ p p' h H hp
+  obtain ⟨hex, hall⟩ := hbase
+  obtain ⟨τ, hτ⟩ := hex
   exact IsQuot.epi (hall τ hτ)
 
 omit [Finite Γ] in

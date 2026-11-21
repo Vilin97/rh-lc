@@ -103,6 +103,8 @@ def convAlg (LL : FinExt l) (n : ℕ) : Subalgebra ↥LL.1 (LetA ↥LL.1 n) wher
 
 variable {n : ℕ}
 
+attribute [local instance 1100] Subalgebra.algebra
+
 def exFun (i : ZMod n) (ζ : ↥LL.1) (f : ↥(convAlg LL n)) : PowerSeries ↥LL.1 :=
   ((conv_expansion l LL (pt ζ) (norm_sub_one_lt (prim_pt ζ))).1 (f.1 i) (f.2 i)).exists.choose
 
@@ -133,11 +135,17 @@ def evalAlg {S : Type} [CommRing S] [Algebra ↥LL.1 S] (J : LetA ↥LL.1 n → 
     (hadd : ∀ a b, (∀ i, Conv (a i)) → (∀ i, Conv (b i)) → J (a + b) = J a + J b)
     (hmul : ∀ a b, (∀ i, Conv (a i)) → (∀ i, Conv (b i)) → J (a * b) = J a * J b)
     (hsmul : ∀ (c : ↥LL.1) a, (∀ i, Conv (a i)) → J (c • a) = c • J a) (hone : J 1 = 1) :
-    ↥(convAlg LL n) →ₐ[↥LL.1] S :=
-  AlgHom.ofLinearMap
-    { toFun := fun a => J a.1
-      map_add' := fun a b => hadd _ _ a.2 b.2
-      map_smul' := fun c a => hsmul c _ a.2 } hone fun a b => hmul _ _ a.2 b.2
+    ↥(convAlg LL n) →ₐ[↥LL.1] S where
+  toFun a := J a.1
+  map_one' := hone
+  map_zero' := by
+    simpa using hsmul 0 1 (1 : ↥(convAlg LL n)).2
+  map_add' a b := hadd _ _ a.2 b.2
+  map_mul' a b := hmul _ _ a.2 b.2
+  commutes' c := by
+    change J (algebraMap ↥LL.1 (LetA ↥LL.1 n) c) = algebraMap ↥LL.1 S c
+    rw [Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one,
+      hsmul c 1 (1 : ↥(convAlg LL n)).2, hone]
 
 variable {P : LocPrime l} {K : FinExt l} {s : ℕ} {Γ : GamS P K s LL}
 
@@ -214,6 +222,7 @@ theorem ζQ_pow (P : LocPrime l) (s : ℕ) : P.ζQ s ^ l ^ s = 1 := by
   | zero => simp [P.ζQ_zero]
   | succ s ih => rw [pow_succ', pow_mul, P.ζQ_succ, ih]
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem unit_pi {AI : LocAinf l P} (T : LocTied l P AI) {R : WSer Γ} (I : IoS AI R)
     (β : RA LL →+* ↥LL.1 ⊗[ℚ_[l]] P.R.B) (hβ : IsBeta AI β) : IsUnit (β (I.io letπ)) := by
   rw [I.io_π, hβ]

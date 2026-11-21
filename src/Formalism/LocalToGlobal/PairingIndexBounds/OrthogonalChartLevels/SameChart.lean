@@ -62,10 +62,9 @@ def MuTie (muT : ℕ → (D.host.E ⊗[D.host.F] FiniteAdeleRing (𝓞 D.host.F)
 include h5 h2 he r ψ e c hc hg hpg Ch hr1 hr2 hfin in
 def baseComp : ∀ j, (sysRec D u h L h5 h2 he r Lc I ψ e c hc hg hpg Cb Sx Ch hr1 hr2 hfin).Lt j → Submodule (𝓞 D.host.E) (Fin (((sysRec D u h L h5 h2 he r Lc I ψ e c hc hg hpg Cb Sx Ch hr1 hr2 hfin).Pj j).m + 1) → D.host.E)
   | 0, _ => (compan (sp := D.sp) D.sp.gram0 a Lc.Lb).map
-      (((reE (E := D.host.E) (n := ((sysRec D u h L h5 h2 he r Lc I ψ e c hc hg hpg Cb Sx Ch hr1 hr2 hfin).Pj 0).m + 1) (by exact (k_pred D.R).symm) : _ ≃ₗ[D.host.E] _) : _ →ₗ[D.host.E] _).restrictScalars (𝓞 D.host.E))
+      ((reE (E := D.host.E) (k_pred D.R).symm).toLinearMap.restrictScalars (𝓞 D.host.E))
   | i + 1, La => (compan (sp := D.sp) (D.sp.X (i + 1)).gram a (Sx i La.1.1 La.1.2.1).lev.Lb).map
-      (((reE (E := D.host.E) (n := ((sysRec D u h L h5 h2 he r Lc I ψ e c hc hg hpg Cb Sx Ch hr1 hr2 hfin).Pj (i + 1)).m + 1) (by exact (rank_step D i La.1.1).symm) : _ ≃ₗ[D.host.E] _) :
-        _ →ₗ[D.host.E] _).restrictScalars (𝓞 D.host.E))
+      ((reE (E := D.host.E) (rank_step D i La.1.1).symm).toLinearMap.restrictScalars (𝓞 D.host.E))
 
 
 

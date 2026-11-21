@@ -24,7 +24,7 @@ theorem goodPage_run : ∀ (D : D7) (L : SizeData₂ D) (Pm : ParameterChoice' D
   have hj2 : j ≤ D.R.m := hj.2
   have hm2 := D.R.two_le_m
   have hmk := D.R.m_add_three_le_k
-  have hn : 0 < D.R.n := by unfold Ranks.n; positivity
+  have hn : 0 < D.R.n := by unfold Ranks.n; have := D.R.m_le_f; omega
   have hf : 1 ≤ D.R.f := by unfold Ranks.f; omega
   have hr : 2 ≤ D.R.r := by unfold Ranks.r; omega
   have hDp : 1 ≤ Tp.Dp := by

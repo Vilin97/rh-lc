@@ -272,10 +272,10 @@ theorem tenRepF_toMatrix (emb : ι → L →+* K) (lam : ι → DomWeight n) (γ
       (γ₀ : Matrix (Fin n) (Fin n) L).map (Algebra.TensorProduct.includeLeftRingHom)) :
     LinearMap.toMatrix (bVV K lam) (bVV K lam) (tenRepF emb lam γ) =
       fun i j => MvPolynomial.eval (fun p => p.1 ((γ₀ : Matrix _ _ L) p.2.1 p.2.2)) (tenPF emb lam i j) := by
-  obtain rfl := ratHom_eq_of_match γ γ₀ hm
+  rw [ratHom_eq_of_match γ γ₀ hm]
   ext i j
   rw [LinearMap.toMatrix_apply, ← coord_spec, show (fun p : (L →+* K) × Fin n × Fin n =>
-    p.1 (((ratHom γ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L) p.2.1 p.2.2)) = pt (ratHom γ : Matrix (Fin n) (Fin n) L) from rfl,
+    p.1 (((ratHom (L := L) (n := n) γ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L) p.2.1 p.2.2)) = pt (ratHom (L := L) (n := n) γ : Matrix (Fin n) (Fin n) L) from rfl,
     tenPF_eval, detTwistPolynomial_eval_point _ _ _ (ratHom_mem γ)]
   simp only [tenRepF, MonoidHom.comp_apply, rhoK, MonoidHom.coe_mk, OneHom.coe_mk, LinearMap.coe_restrict_apply, bVV_coe,
     actP, trAct, LinearMap.smul_apply, AlgHom.toLinearMap_apply, map_smul, smul_eq_mul]
@@ -389,7 +389,7 @@ theorem dd_hwAt : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : �
   classical
   have hinj := hd.1
   have hcm := hd.2
-  refine ⟨VVIdx lam, inferInstance, inferInstance, bDD lam, tenPF emb lam,
+  refine ⟨VVIdx lam, inferInstance, inferInstance, bDD (K := K) lam, tenPF emb lam,
     fun γ γ₀ hm => by rw [dd_toMatrix]; exact tenRepF_toMatrix emb lam γ γ₀ hm,
     ⇑((bVV K lam).repr (hwV (K := K) lam)), ?_, ?_⟩
   · intro hv

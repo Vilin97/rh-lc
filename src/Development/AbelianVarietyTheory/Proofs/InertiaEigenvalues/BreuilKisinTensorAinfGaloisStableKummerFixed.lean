@@ -119,7 +119,7 @@ theorem add_step {P : PhiMod O K l e a ι} {T : Lat a O K ϖ} (I : Ident t ϖ P 
       I.j (v + v') = kappa T (j (z + z')) := by
   letI := zlLat T
   intro j z z' v v' hv hw
-  rw [I.j.map_add (f := _), hv, hw, j.map_add (f := _), (kappa T).map_add (f := _)]
+  rw [I.j.map_add, hv, hw, j.map_add, (kappa T).map_add]
 
 theorem smul_step {P : PhiMod O K l e a ι} {T : Lat a O K ϖ} (I : Ident t ϖ P T) (E : FCrys l ↥(OL (ϖ.field a))) :
     letI := zlLat T

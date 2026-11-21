@@ -47,6 +47,8 @@ theorem card_cohomology_zero_of_forall_eq_one (A : Rep.{u} k G) [IsDiscreteRep A
 
 end General
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M]
 

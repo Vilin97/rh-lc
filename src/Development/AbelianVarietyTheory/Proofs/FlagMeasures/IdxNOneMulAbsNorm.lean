@@ -170,7 +170,24 @@ theorem latDetH_pseudo [DecidableEq ι] (hK : IsCMUnram K) (h : V →ₗ⋆[K] V
     have a : (pseudo v I).toAddSubgroup = P.toAddSubgroup.map φ.toAddMonoidHom := rfl
     have c : Submodule.span K (pseudo v I : Set V) = LinearMap.range φ := by
       change Submodule.span K (φ '' P) = _
-      rw [← Submodule.map_span, hPl.span_eq_top, Submodule.map_top]
+      have hspan : Submodule.span K (P : Set (ι → K)) = ⊤ := by
+        apply top_unique
+        intro x _
+        rw [← Finset.univ_sum_single x]
+        apply Submodule.sum_mem
+        intro i _
+        have hi : Pi.single i (1 : K) ∈ P := by
+          intro j _
+          by_cases h : j = i
+          · subst j
+            simpa using hI i (FractionalIdeal.one_mem_one _)
+          · simp [Pi.single_apply, h]
+        have := (Submodule.span K (P : Set (ι → K))).smul_mem (x i) (Submodule.subset_span hi)
+        have heq : x i • Pi.single i (1 : K) = Pi.single i (x i) := by
+          ext j
+          by_cases h : j = i <;> simp [Pi.single_apply, h]
+        rwa [heq] at this
+      rw [← Submodule.map_span, hspan, Submodule.map_top]
     have b : (dualInH h (pseudo v I)).toAddSubgroup = (dual h' P).toAddSubgroup.map φ.toAddMonoidHom := by
       rw [dualInH, c]
       ext x

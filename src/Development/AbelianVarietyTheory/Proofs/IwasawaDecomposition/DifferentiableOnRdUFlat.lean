@@ -38,6 +38,7 @@ theorem exists_generic_units (hpq : 1 ≤ Dw.p + Dw.q) (h : GenFrEx Xo c) :
     charZero_of_injective_algebraMap (algebraMap c.F (Om Z)).injective
   choose Ψ hΨ using fun Z : Comp Xo c => exists_tied E H Dw l Xo c _ e (Om Z) (genFr h Z) hpq
   refine ⟨fun Z => κ (Om Z) (Ψ Z).key, fun C => ?_⟩
+  letI : Algebra c.F C.R := Subalgebra.algebra C.R
   haveI := C.sm
   haveI : IsIntegrallyClosed C.R := isIntegrallyClosed_of_smooth c.F C.R
   haveI : IsNoetherianRing C.R := Algebra.FiniteType.isNoetherianRing c.F C.R

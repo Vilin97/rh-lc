@@ -63,13 +63,14 @@ theorem cT_mul_apply (Jm : Matrix (Fin n) (Fin n) R) {k l : ℕ} (M : Matrix (Fi
   exact Finset.sum_comm
 
 theorem isHerm_hform (hc : ∀ a, c (c a) = a) (Jm : Matrix (Fin n) (Fin n) R)
-    (hJ : ∀ i j, c (Jm j i) = Jm i j) : IsHerm c (Formalism.UG.hform c Jm) where
-  add_right x y z := by
+    (hJ : ∀ i j, c (Jm j i) = Jm i j) : IsHerm c (Formalism.UG.hform c Jm) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro x y z
     simp only [Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
-  smul_right a x y := by
+  · intro a x y
     simp only [Formalism.UG.hform, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
-  symm x y := by
+  · intro x y
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Formalism.UG.hform, map_sum, map_mul, hc]
     rw [Finset.sum_comm]
@@ -78,8 +79,9 @@ theorem isHerm_hform (hc : ∀ a, c (c a) = a) (Jm : Matrix (Fin n) (Fin n) R)
     ring
 
 theorem isPerfect_hform (hc : ∀ a, c (c a) = a) (Jm : Matrix (Fin n) (Fin n) R)
-    (hd : IsUnit Jm.det) : IsPerfect (Formalism.UG.hform c Jm) where
-  nondeg x hx := by
+    (hd : IsUnit Jm.det) : IsPerfect (Formalism.UG.hform c Jm) := by
+  refine ⟨?_, ?_⟩
+  · intro x hx
     have h1 : (fun i => c (x i)) ᵥ* Jm = 0 := by
       funext j
       have h2 := hx (Pi.single j 1)
@@ -93,7 +95,7 @@ theorem isPerfect_hform (hc : ∀ a, c (c a) = a) (Jm : Matrix (Fin n) (Fin n) R
     have h4 : c (x i) = 0 := h3
     rw [← hc (x i), h4, map_zero]
     rfl
-  repr f := by
+  · intro f
     let w : Fin n → R := fun j => f (fun k => if j = k then 1 else 0)
     let u : Fin n → R := w ᵥ* Jm⁻¹
     refine ⟨fun i => c (u i), fun y => ?_⟩

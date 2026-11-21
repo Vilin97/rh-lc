@@ -27,8 +27,8 @@ def unitLat (K : Type) [Field K] [NumberField K] [StarRing K] (n : ℕ) : HLat K
   HLat.ofCoord (Submodule.span (𝓞 K) (Set.range (Pi.basisFun K (Fin n)))) fun _ => 1
 
 theorem ofCoord_good {d : ℕ} {L : Submodule (𝓞 K) (Fin d → K)} {X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ}
-    (hL : Submodule.IsLattice K L) (hX : ∀ v, IsUnit (X v).det) : (HLat.ofCoord L X).Good :=
-  ⟨hX, hL.fg, hL.span_eq_top⟩
+    (hL : Submodule.IsFullLattice K L) (hX : ∀ v, IsUnit (X v).det) : (HLat.ofCoord L X).Good :=
+  ⟨hX, hL.toIsLattice.fg, hL.span_eq_top⟩
 
 theorem unitLat_good (n : ℕ) : (unitLat K n).Good :=
   ⟨fun _ => by
@@ -150,7 +150,43 @@ theorem mjH_succ (i : Fin D.R.m) : mjH Z ((i : ℕ) + 1) = HLat.ofCoord ((s0Of R
 
 theorem mjH_good (hH : Holds R F) (j : ℕ) : (mjH Z j).Good :=
   mapSeq_ind_all _ _ D.what₂.Mj Z.jW (fun _ A _ => A.Good)
-    (fun i => ofCoord_good (hH.prim.mLat i) fun v => frame_gram_unit _ (RealDat3.kForm_of (F := F) hH.prim.unif false i v).1)
+    (fun i => by
+      have : Submodule.IsLattice D.what₂.LL ((s0Of R F).M i) := hH.prim.mLat i
+      refine ofCoord_good (L := (s0Of R F).M i) ⟨?_⟩ fun v =>
+        frame_gram_unit _ (RealDat3.kForm_of (F := F) hH.prim.unif false i v).1
+      let A := R.FW i
+      let b := R.toRealDat.bL F.lv2 false i
+      let S : Set (Fin (R.nW i) → D.what₂.LL) := A.MK
+      have hS : Submodule.span D.what₂.LL S = ⊤ := by
+        obtain ⟨_, _, -, -, hspanKs, -, hspanLL⟩ := (hH.aux.integral i).1
+        have hMK : Submodule.span Ks S = A.WK := (hH.aux.integral i).2.1.2
+        rw [← Submodule.span_span_of_tower Ks D.what₂.LL S, hMK]
+        change Submodule.span D.what₂.LL ((R.FW i).WK : Set (Fin (R.nW i) → D.what₂.LL)) = ⊤
+        rw [← hspanKs, Submodule.span_span_of_tower, hspanLL]
+      apply top_unique
+      intro c hcTop
+      clear hcTop
+      change Fin (Module.finrank D.what₂.LL (R.toRealDat.WL F.lv2 false i)) → D.what₂.LL at c
+      let f := Fintype.linearCombination D.what₂.LL b
+      have hf : f c ∈ R.toRealDat.WL F.lv2 false i := by
+        change Fintype.linearCombination D.what₂.LL b c ∈ _
+        rw [Fintype.linearCombination_apply]
+        exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Module.finBasis _ _ k).2
+      have hfc : f c ∈ Submodule.span D.what₂.LL S := hS.symm ▸ Submodule.mem_top
+      obtain ⟨a, hay⟩ := multiple_mem_span_of_mem_localization_span
+        (nonZeroDivisors (𝓞 D.what₂.LL)) D.what₂.LL S (f c) hfc
+      let t : D.what₂.LL := (a : 𝓞 D.what₂.LL)
+      have hac : t • c ∈ (s0Of R F).M i := by
+        change f (t • c) ∈ A.Mj _ _ _
+        rw [map_smul]
+        have hg := (R.toRealDat.WL F.lv2 false i).smul_mem t hf
+        change (a : 𝓞 D.what₂.LL) • f c ∈ Submodule.span (𝓞 D.what₂.LL) S at hay
+        rw [← algebraMap_smul D.what₂.LL] at hay
+        exact ⟨⟨hay, hg.1⟩, hg.2⟩
+      have ht : t ≠ 0 := RingOfIntegers.coe_ne_zero_iff.mpr (nonZeroDivisors.coe_ne_zero a)
+      let S₀ : Set (Fin ((s0Of R F).dW i) → D.what₂.LL) := (s0Of R F).M i
+      have htc : t • c ∈ Submodule.span D.what₂.LL S₀ := Submodule.subset_span (s := S₀) hac
+      exact inv_smul_smul₀ ht c ▸ (Submodule.span D.what₂.LL S₀).smul_mem t⁻¹ htc)
     (fun _ => unitLat_good _) j
 
 theorem jM_basis (hH : Holds R F) (j : ℕ) : LinearIndependent ℂ (fun k => jM Z j ((mjH Z j).b k)) ∧
@@ -186,9 +222,12 @@ def mjIds (Xd : DivX D) (h : Xd.MjH = mjH Z) : MjHIds D A3.A Xd (A3.indefDown (s
   eW i := castV ((mjH_succ Z i).symm.trans (congrFun h _).symm)
 
 theorem mjHTie_of_eq (Xd : DivX D) (h : Xd.MjH = mjH Z) (hj : HEq Xd.jM (jM Z)) :
-    MjHTie D A3.A Xd (A3.indefDown (s0Of R F)) Z.jW (mjIds Z Xd h) where
-  j_eq i x := map_castV _ _ D.what₂.Mj Z.jW h hj i _ x
-  hlat i := hLatTie_castV ((mjH_succ Z i).symm.trans (congrFun h _).symm)
+    MjHTie D A3.A Xd (A3.indefDown (s0Of R F)) Z.jW (mjIds Z Xd h) := by
+  constructor
+  · intro i x
+    exact map_castV _ _ D.what₂.Mj Z.jW h hj i _ x
+  · intro i
+    exact hLatTie_castV ((mjH_succ Z i).symm.trans (congrFun h _).symm)
 
 theorem exists_mjHTie (Xd : DivX D) (h : Xd.MjH = mjH Z) (hj : HEq Xd.jM (jM Z)) :
     ∃ JM, MjHTie D A3.A Xd (A3.indefDown (s0Of R F)) Z.jW JM :=

@@ -49,7 +49,39 @@ theorem kerEntHyp_latS : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok �
     have hlat := (V.lat w trivial x).1 hx
     refine ⟨hrat.1, fun c => ?_⟩
     obtain ⟨Bm, hBm⟩ := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places.resChar w) _ _
-      ((I.stp u μ i).rep c).1.1.deco.2.lat.fg ((I.stp u μ i).rep c).1.1.deco.2.lat.span_eq_top
+      ((I.stp u μ i).rep c).1.1.deco.2.lat.fg (by
+        open Formalism.HermitianLatticesTheory Module in
+        let L := ((I.stp u μ i).rep c).1.1.deco.1.N
+        have hL := ((I.stp u μ i).rep c).1.1.deco.2.lat
+        have hu : IsUnimodular (Formalism.L2.Col.hStd B.fields.E (B.R.N i)) L :=
+          ((I.stp u μ i).rep c).1.1.deco.2.uni
+        let W := Submodule.span B.fields.E (L : Set (Sp B.fields.E (B.R.N i)))
+        change W = ⊤
+        by_contra h
+        let e : Sp B.fields.E (B.R.N i) ≃ₗ⋆[B.fields.E] Sp B.fields.E (B.R.N i) := starLinearEquiv B.fields.E
+        let g : Sp B.fields.E (B.R.N i) →ₗ[B.fields.E] Module.Dual B.fields.E W :=
+          (LinearMap.domRestrict' W).comp ((Formalism.L2.Col.hStd B.fields.E (B.R.N i)).comp e.toLinearMap)
+        have hdim : finrank B.fields.E (Module.Dual B.fields.E W) <
+            finrank B.fields.E (Sp B.fields.E (B.R.N i)) := by
+          rw [Subspace.dual_finrank_eq]
+          exact Submodule.finrank_lt h
+        obtain ⟨x, hx, hx₀⟩ :=
+          Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+        have hsmul (a : B.fields.E) : a • e x ∈ L := by
+          rw [← hu, dualBasic_mem_dual]
+          intro y hy
+          apply hStd_mem_one_symm
+          have hxy : Formalism.L2.Col.hStd B.fields.E (B.R.N i) (e x) y = 0 :=
+            congrArg (fun f : Module.Dual B.fields.E W => f ⟨y, Submodule.subset_span hy⟩)
+              (LinearMap.mem_ker.mp hx)
+          simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+        let j : B.fields.E →ₗ[𝓞 B.fields.E] L :=
+          ((LinearMap.toSpanSingleton B.fields.E _ (e x)).restrictScalars (𝓞 B.fields.E)).codRestrict L hsmul
+        let : Module.Finite (𝓞 B.fields.E) L := Module.Finite.iff_fg.mpr hL.fg
+        let : Module.Finite (𝓞 B.fields.E) B.fields.E := Module.Finite.of_injective j fun a b hab =>
+          smul_left_injective B.fields.E (fun hz => hx₀ (e.map_eq_zero_iff.mp hz)) (congrArg Subtype.val hab)
+        exact RingOfIntegers.not_isField B.fields.E
+          (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 B.fields.E) B.fields.E) (Field.toIsField B.fields.E)))
     have hBm' := (GlobalTheory.T.dualLattice_localBasis_iff_unimodularCompanion I hOk hPins l Z Y u μ w hw i hi.le c Bm).2 hBm
     exact (GlobalTheory.T.formsLattice_atClass_iff_twistedPolynomial I hOk hPins l Z Y O Pl Bs hQp hStd hBas hEnt u μ w hw i hi (Equiv.refl _) hY c _ (hrat.2 c) Bm
       hBm).1 (hlat c Bm hBm')

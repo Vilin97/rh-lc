@@ -308,8 +308,8 @@ theorem pt_of_conds {g s : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} {h : GL
     exact k1
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Units.val_mul, Matrix.mul_apply, map_sum, fr_smul, adAt_mul_fr hg θ P i j]
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_mul, h5 P k j]
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [map_mul, h5 P k j]
 
 end Gen3
 

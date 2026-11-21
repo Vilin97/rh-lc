@@ -37,7 +37,7 @@ def ring (hN : GradedFam c₀ N) : Subring F[X] where
 
 theorem monomial_mem (hN : GradedFam c₀ N) {k : ℕ} {b : F} (hb : b ∈ N k) : monomial k b ∈ ring hN := by
   intro j
-  rw [coeff_monomial]
+  rw [coeff_monomial_apply]
   split_ifs with h
   · subst h; exact hb
   · exact hN.zero j
@@ -54,12 +54,12 @@ theorem mem_piece_iff (hN : GradedFam c₀ N) {k : ℕ} {p : ring hN} :
   constructor
   · intro hp
     ext j
-    rw [coeff_monomial]
+    rw [coeff_monomial_apply]
     split_ifs with h
     · rw [h]
     · exact hp j (Ne.symm h)
   · intro hp j hj
-    rw [hp, coeff_monomial, if_neg (Ne.symm hj)]
+    rw [hp, coeff_monomial_of_ne _ hj]
 
 def hel (hN : GradedFam c₀ N) (k : ℕ) (b : F) (hb : b ∈ N k) : ring hN := ⟨monomial k b, monomial_mem hN hb⟩
 
@@ -67,17 +67,17 @@ def hel (hN : GradedFam c₀ N) (k : ℕ) (b : F) (hb : b ∈ N k) : ring hN := 
     (hel hN k b hb : F[X]) = monomial k b := rfl
 
 theorem hel_mem (hN : GradedFam c₀ N) (k : ℕ) (b : F) (hb : b ∈ N k) : hel hN k b hb ∈ piece hN k := by
-  rw [mem_piece_iff, coe_hel, coeff_monomial, if_pos rfl]
+  rw [mem_piece_iff, coe_hel, coeff_monomial_same]
 
 theorem hel_ne_zero (hN : GradedFam c₀ N) {k : ℕ} {b : F} (hb : b ∈ N k) (h : b ≠ 0) : hel hN k b hb ≠ 0 := by
   intro e
   have := congrArg (fun p : ring hN => (p : F[X]).coeff k) e
-  simp [coeff_monomial] at this
+  simp at this
   exact h this
 
 def comp (hN : GradedFam c₀ N) (k : ℕ) : ring hN →+ piece hN k where
   toFun p := ⟨⟨monomial k ((p : F[X]).coeff k), monomial_mem hN (p.2 k)⟩, by
-    intro j hj; simp [coeff_monomial, Ne.symm hj]⟩
+    intro j hj; exact coeff_monomial_of_ne _ hj⟩
   map_zero' := by ext; simp
   map_add' p q := by ext; simp
 
@@ -114,7 +114,7 @@ instance gradedMonoid (hN : GradedFam c₀ N) : SetLike.GradedMonoid (piece hN) 
   mul_mem i j a b ha hb := by
     rw [mem_piece_iff] at ha hb
     intro l hl
-    rw [Subring.coe_mul, ha, hb, monomial_mul_monomial, coeff_monomial, if_neg (Ne.symm hl)]
+    rw [Subring.coe_mul, ha, hb, monomial_mul_monomial, coeff_monomial_of_ne _ hl]
 
 instance gradedRing (hN : GradedFam c₀ N) : GradedRing (piece hN) :=
   { gradedMonoid hN with
@@ -177,7 +177,7 @@ theorem valL_mk (g : NumDenSameDeg (piece hN) P.primeCompl) :
     algebraMap F[X] _ ((g.den : ring hN) : F[X]) * algebraMap F[X] _ (C _)
   rw [← map_mul]
   congr 1
-  rw [hnum, hden, coeff_monomial, if_pos rfl, coeff_monomial, if_pos rfl, monomial_mul_C, mul_div_cancel₀ _ hs]
+  rw [hnum, hden, coeff_monomial_same, coeff_monomial_same, monomial_mul_C, mul_div_cancel₀ _ hs]
 
 
 variable (F) in

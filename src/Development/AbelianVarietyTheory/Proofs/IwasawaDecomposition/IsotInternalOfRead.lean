@@ -196,8 +196,32 @@ theorem span_all : GlobalTheory.Published.WeilRepresentationUnitaryPair → Glob
         Tw.mk (twAt D.what₂.embLL A3.A.v0) (Y.mj.eW i (Z.jW i y)) := by
     intro y
     rw [Z.jW_read]
-    refine (GlobalTheory.Mem.LiftTheta.liftWeight_complexPoint_eq_twist R.toRealDat F.lv2 false i y).trans ?_
+    have hn : (((Real.sqrt (RealDat.nP F.lv2 false) : ℝ) : ℂ)) *
+        (((Real.sqrt (RealDat.nP F.lv2 false))⁻¹ : ℝ) : ℂ) = 1 := by
+      rw [← Complex.ofReal_mul, mul_inv_cancel₀ (Real.sqrt_pos.2 (RealDat.nP_pos (F := F.lv2) false)).ne', Complex.ofReal_one]
+    have hs : sg0 D A3.A = D.what₂.embLL := sgAt_mk _ R.toRealDat.hv0
+    have h1 : (R.toCx3 F).w0C false i (cpt A3.A.v0.embedding y) =
+        ∑ k, A3.A.v0.embedding (y k) • (R.toCx3 F).eW false i ((R.toCx3 F).bW false i A3.A.v0 k) := by
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [CxData.w0C, CxData.wC, lin, LinearMap.comp_apply, Fintype.linearCombination_apply, map_sum, map_smul]
+      rfl
+    apply_fun (Tw.out (s := twAt D.what₂.embLL A3.A.v0))
+    case inj =>
+      intro a b h
+      exact congrArg (Tw.mk (twAt D.what₂.embLL A3.A.v0)) h
+    rw [h1]
+    change Tw.out (∑ k, A3.A.v0.embedding (y k) • (R.toCx3 F).eW false i ((R.toCx3 F).bW false i A3.A.v0 k)) = _
+    change (∑ k, Tw.out (s := twAt D.what₂.embLL A3.A.v0) (E := (R.HW i (sg0 D A3.A)).H) (A3.A.v0.embedding (y k) • (R.toCx3 F).eW false i ((R.toCx3 F).bW false i A3.A.v0 k))) =
+      (R.FW i).j (sg0 D A3.A) (∑ k, y k • R.toRealDat.bL F.lv2 false i k)
+    rw [map_sum]
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [map_smulₛₗ]
+    show cj (twAt D.what₂.embLL A3.A.v0) (A3.A.v0.embedding (y k)) •
+      ((((Real.sqrt (RealDat.nP F.lv2 false) : ℝ) : ℂ)) • ((((Real.sqrt (RealDat.nP F.lv2 false))⁻¹ : ℝ) : ℂ) •
+        (R.FW i).j (sg0 D A3.A) (R.toRealDat.bL F.lv2 false i k))) = _
+    rw [smul_smul (((Real.sqrt (RealDat.nP F.lv2 false) : ℝ) : ℂ)), hn, one_smul, R.toRealDat.emb0, cj_cj]
     congr 1
+    exact (DFunLike.congr_fun hs (y k)).symm
   have hnP : 0 < RealDat.nP F.lv2 false := RealDat.nP_pos (F := F.lv2) false
   have hinj : Function.Injective (Y.mj.eW i) := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']

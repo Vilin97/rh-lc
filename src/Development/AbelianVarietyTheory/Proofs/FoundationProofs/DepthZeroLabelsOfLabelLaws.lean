@@ -44,7 +44,8 @@ theorem normV_eq_of_split {E : Type} [Field E] [NumberField E] {p : ℕ} (hp : p
     exact Nat.le_self_pow (by rintro rfl; simp at h1) p
   have hwM : w.asIdeal ∈ M := (Ideal.mem_normalizedFactors_iff hI0).2
     ⟨w.isPrime, by rw [hI, Ideal.span_singleton_le_iff_mem]; exact hw⟩
-  have e : normV w = Ideal.absNorm w.asIdeal := rfl
+  have e : normV w = Ideal.absNorm w.asIdeal := by
+    simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
   rw [e]
   refine le_antisymm ?_ (hge _ hwM)
   obtain ⟨M', hM'⟩ := Multiset.exists_cons_of_mem hwM

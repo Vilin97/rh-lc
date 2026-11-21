@@ -396,7 +396,10 @@ theorem single_mem_divFun (j : I) (F : G → QZ) (hF : IsLocallyConstant F ∧ �
 
 theorem divFunSuppSequence_shortExact (T : Finset I) (j : I) (hj : j ∉ T) :
     (divFunSuppSequence φ T j hj).ShortExact := by
-  refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+  have hmono : Mono (divFunSuppSequence φ T j hj).f :=
+    (Rep.mono_iff_injective _).2
+      (Submodule.inclusion_injective (divFunSupp_mono φ (Finset.subset_insert j T)))
+  refine ShortComplex.ShortExact.mk' ?_ hmono ?_
   · apply shortComplex_exact_of_forall_exists
     intro f hf
     have hj0 : ((f.1 : divFun φ QZ) : I → G → QZ) j = 0 := congrFun (congrArg Subtype.val hf) PUnit.unit
@@ -405,8 +408,6 @@ theorem divFunSuppSequence_shortExact (T : Finset I) (j : I) (hj : j ∉ T) :
     · subst hij
       exact hj0
     · exact (mem_divFunSupp_iff φ _ f.1).1 f.2 i (by simp [hij, hi])
-  · apply (Rep.mono_iff_injective _).2
-    exact Submodule.inclusion_injective (divFunSupp_mono φ (Finset.subset_insert j T))
   · apply (Rep.epi_iff_surjective _).2
     intro e
     refine ⟨⟨⟨Pi.single j ((e.1 : PUnit → G → QZ) PUnit.unit),

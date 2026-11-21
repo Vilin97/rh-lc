@@ -41,7 +41,7 @@ def vacOff (M : Model σ Y W) (T : Finset (Pl F)) (x : Fin n × Fin d → AF F) 
   ∏ᶠ w, if w ∈ T then (1 : ℂ) else M.vac w fun i => evFin F w (x i)
 
 def prodT (T : Finset (Pl F)) (x : Fin n × Fin d → AF F) :
-    MultilinearMap ℂ (fun v : T => ↥(SB (Fin n × Fin d → Fv F v.1))) ℂ :=
+    (Π v : T, ↥(SB (Fin n × Fin d → Fv F v.1))) →ₘₗ[ℂ] ℂ :=
   (MultilinearMap.mkPiAlgebra ℂ T ℂ).compLinearMap fun v =>
     (LinearMap.proj (fun i => evFin F v.1 (x i)) : ((Fin n × Fin d → Fv F v.1) → ℂ) →ₗ[ℂ] ℂ) ∘ₗ (SB _).subtype
 
@@ -50,7 +50,7 @@ theorem prodT_apply (T : Finset (Pl F)) (x : Fin n × Fin d → AF F) (φ : ∀ 
   simp [prodT]
 
 def multi (M : Model σ Y W) (T : Finset (Pl F)) (f : SInf F (Fin n × Fin d)) :
-    MultilinearMap ℂ (fun v : T => ↥(SB (Fin n × Fin d → Fv F v.1))) ((Fin n × Fin d → AF F) → ℂ) :=
+    (Π v : T, ↥(SB (Fin n × Fin d → Fv F v.1))) →ₘₗ[ℂ] ((Fin n × Fin d → AF F) → ℂ) :=
   MultilinearMap.pi fun x => (f (fun i => evI F (x i)) * vacOff M T x) • prodT T x
 
 theorem multi_apply (M : Model σ Y W) (T : Finset (Pl F)) (f : SInf F (Fin n × Fin d))
@@ -60,7 +60,7 @@ theorem multi_apply (M : Model σ Y W) (T : Finset (Pl F)) (f : SInf F (Fin n ×
 
 def multiL (M : Model σ Y W) (T : Finset (Pl F)) :
     SInf F (Fin n × Fin d) →ₗ[ℂ]
-      MultilinearMap ℂ (fun v : T => ↥(SB (Fin n × Fin d → Fv F v.1))) ((Fin n × Fin d → AF F) → ℂ) where
+      ((Π v : T, ↥(SB (Fin n × Fin d → Fv F v.1))) →ₘₗ[ℂ] ((Fin n × Fin d → AF F) → ℂ)) where
   toFun := multi M T
   map_add' f g := by
     ext φ x

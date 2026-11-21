@@ -21,8 +21,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem mirProj_iotaM (n : ℕ) (y : Mir k n) :
-    mirabolicProjection k (n + 1) (embedding₂ k n y) = (y : GL (Fin (n + 1)) k) :=
-by
+    mirabolicProjection k (n + 1) (embedding₂ k n y) = (y : GL (Fin (n + 1)) k) := by
   apply Units.ext
   ext i j
   change GlobalTheory.BZMir.blockMat k (n + 1) (GlobalTheory.BZMir.glEmbMat k (n + 1) ((y : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k)) i j = _

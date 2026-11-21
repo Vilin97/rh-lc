@@ -110,7 +110,7 @@ theorem finrank_typeSp_cx : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
       funext i
       have := congrArg (fun z => β.repr z α) (hcoord g i)
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, mul_comm (c _), hβ1, map_zero,
+        simp only [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, mul_comm (c _), hβ1, map_zero,
         Finsupp.coe_zero, Pi.zero_apply] at this
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul, map_zero, Pi.zero_apply]
@@ -140,9 +140,10 @@ theorem finrank_typeSp_cx : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
       intro α
       refine ⟨fun γ g => b.equivFun.injective (funext fun i => ?_), fun κ g => b.equivFun.injective (funext fun i => ?_)⟩
       set_option synthInstance.maxHeartbeats 100000 in
-        · rw [hfa, hF1, hρ', hρ, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
-        simp only [hβ1, hfa]
-      · rw [hfa, hFk, map_smul, Pi.smul_apply, smul_eq_mul, hβ1, map_smul, Pi.smul_apply, smul_eq_mul, hfa]
+        · rw [hfa, hF1, hρ', hρ, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
+          simp only [hβ1, hfa]
+      · rw [hfa, hFk]
+        simp only [map_smul, Pi.smul_apply, smul_eq_mul, hβ1, hfa]
     obtain ⟨P, hP⟩ := exists_finset_eval_eq_zero V
     let S := P.biUnion fun g => Finset.univ.biUnion fun i => (β.repr (b'.equivFun (F g) i)).support
     have hzero : ∀ α ∉ S, fa α = 0 := by

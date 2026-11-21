@@ -55,7 +55,10 @@ theorem perp_lift [FiniteDimensional K V] {F G : FlagD H r} {Λ : Submodule (�
         ring }
   obtain ⟨m, hm, hφ⟩ := GlobalTheory.UnimodQuot.exists_lattice_rep H hU F.X φ
   refine ⟨m, hm, (mem_perp_iff H _ _).2 fun u hu => orth_symm ?_⟩
-  obtain ⟨s, hs⟩ := GlobalTheory.UnimodQuot.exists_smul_mem ((isLatMod_top_bot_iff Λ).1 hU.1) u
+  have hΛ := (isLatMod_top_bot_iff Λ).1 hU.1
+  have hfull : Submodule.IsFullLattice K Λ :=
+    { toIsLattice := Submodule.IsLattice.of_fg K hΛ.1, span_eq_top := hΛ.2 }
+  obtain ⟨s, hs⟩ := GlobalTheory.UnimodQuot.exists_smul_mem (K := K) hfull u
   have hs0 : algebraMap (𝓞 K) K s ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors s.2
   have hs' : algebraMap (𝓞 K) K s • u ∈ Λ := by rw [algebraMap_smul]; exact hs
   have e : H.B (algebraMap (𝓞 K) K s • u) m = (g : K)⁻¹ * H.B (algebraMap (𝓞 K) K s • u) l :=

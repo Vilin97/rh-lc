@@ -511,11 +511,12 @@ theorem isGen_base {F F' : Type} [Field F] [Field F'] (f : F →+* F') {y : Sp F
     exact (map_ne_zero f).2 hd
   · rw [← RingHom.map_det, ← RingHom.map_det, ← map_mul, ← map_mul, e]
 
-theorem isLineFn_repFn : IsLineFn U τ (repFn Z τ a b) where
-  ne F _ βF y v w hfr := by
+theorem isLineFn_repFn : IsLineFn U τ (repFn Z τ a b) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro F _ βF y v w hfr
     obtain ⟨r, hr, h⟩ := exists_isGen hβ hτ hg hfr
     rwa [repFn_eq hβ hτ hg h]
-  chg F _ βF y v w v' w' A B hfr hfr' hA hB := by
+  · intro F _ βF y v w v' w' A B hfr hfr' hA hB
     obtain ⟨r, -, h⟩ := exists_isGen hβ hτ hg hfr
     obtain ⟨v₀, w₀, r₀, A₀, B₀, hR, a₀, b₀, d₀, e₀⟩ := id h
     have hR' := hR
@@ -530,7 +531,7 @@ theorem isLineFn_repFn : IsLineFn U τ (repFn Z τ a b) where
     have : r = r₀ * B₀.det / A₀.det := by field_simp; exact e₀
     rw [this]
     field_simp
-  nat F F' _ _ f βF y v w y' v' w' hfr hy hv hw := by
+  · intro F F' _ _ f βF y v w y' v' w' hfr hy hv hw
     subst hy
     obtain ⟨r, -, h⟩ := exists_isGen hβ hτ hg hfr
     rw [repFn_eq hβ hτ hg h, repFn_eq hβ hτ hg (isGen_base f hv hw h)]

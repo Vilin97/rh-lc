@@ -14,6 +14,8 @@ open scoped NumberField.LiesOver
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section Complex
 
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] [IsGalois K L]
@@ -59,7 +61,7 @@ theorem infPlaceOfEmbedding_eq_inv_smul (ι ι' : ℚ̄ →ₐ[K.1] AlgebraicClo
     change infCompletionEmbedding ι L (AdeleBaseChange.infiniteCompletionMap
       (τ : L.1 ≃+* L.1) w₀ (algebraMap L.1 _ x)) = ι' x
     rw [AdeleBaseChange.infiniteCompletionMap_algebraMap, infCompletionEmbedding_algebraMap,
-      AlgEquiv.coe_ringEquiv, h x]
+      AlgEquiv.coe_toRingEquiv, h x]
   have e := congrArg Subtype.val (eq_infPlaceOfEmbedding ι' L j hj)
   rw [← e]
   exact hcomap

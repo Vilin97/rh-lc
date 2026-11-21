@@ -161,7 +161,8 @@ theorem notMem_vGs : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B 
     rwa [map_natCast] at h2
   have h2 : ((p : ℕ) : 𝓞 X.B.fields.E) ∈ P.asIdeal := by
     have h0 := Ideal.absNorm_mem P.asIdeal
-    rwa [show Ideal.absNorm P.asIdeal = p from hc] at h0
+    change Nat.card (𝓞 X.B.fields.E ⧸ P.asIdeal) = p at hc
+    rwa [Ideal.absNorm_eq_natCard, hc] at h0
   have h3 : IsCoprime ((p : ℕ) : 𝓞 X.B.fields.E) ((X.toD7.host.g k : ℕ) : 𝓞 X.B.fields.E) :=
     Nat.Coprime.cast ((Nat.coprime_primes hp (X.toD7.host.g_prime k)).2 (hne k))
   obtain ⟨a, b, hab⟩ := h3

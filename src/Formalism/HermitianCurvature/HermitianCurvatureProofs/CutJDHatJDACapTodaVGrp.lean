@@ -40,9 +40,8 @@ theorem iteratedOperator_eqOn_of_eqOn (w : ℂ) : ∀ (m : ℕ) (f₁ f₂ : (Fi
       rw [h c' hc', pbN_locO _ h hc']
     have ih1 := iteratedOperator_eqOn_of_eqOn w m _ _ hin
     have ih2 := iteratedOperator_eqOn_of_eqOn w m f₁ f₂ h
+    simp only [kvP.eq_2, Pi.sub_apply]
     refine ⟨?_, (ih2 c hc).1⟩
-    show (kvP r w m).1 _ c - cbN r (r - m) (cbiN r (r - m - 1) ((kvP r w m).2 f₁)) c =
-      (kvP r w m).1 _ c - cbN r (r - m) (cbiN r (r - m - 1) ((kvP r w m).2 f₂)) c
     rw [(ih1 c hc).1]
     congr 1
     unfold cbN cbiN

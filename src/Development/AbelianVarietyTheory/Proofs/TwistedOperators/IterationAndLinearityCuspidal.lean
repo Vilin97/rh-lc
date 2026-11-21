@@ -65,8 +65,8 @@ theorem per_indep {ρ : ℕ} (B : GlobalTheory.Unf.BesLev D ρ) {ψ : AddChar (A
   have hI : IsIsoSub B.V B.d.e := ⟨GlobalTheory.Core.Mi.PerCmp.hyp_linIndep B.d, by rw [cT_sig]; exact B.d.ee⟩
   obtain rfl : ν = B.vN.ν := unitN_unique hI hu B.vN.unit
   subst hA
-  rw [GlobalTheory.Core.Mi.PerCmp.besPer_domN B.d B.o B.ζ hψ 1 _ _ B.vN.ν B.vN.unit.1 hu.2.1 B.vN.unit.2.1 φ f hf]
-  exact GlobalTheory.Core.Mi.PerCmp.besPer_domA B hψ h2 φ f hφ hf
+  exact (GlobalTheory.Core.Mi.PerCmp.besPer_domN B.d B.o B.ζ hψ 1 _ _ B.vN.ν B.vN.unit.1 hu.2.1 B.vN.unit.2.1 φ f hf).trans
+    (GlobalTheory.Core.Mi.PerCmp.besPer_domA B hψ h2 φ f hφ hf)
 
 theorem hN_top {M : Vol G} {t : T} (hM : M.Is t) : NFlag (G.V (.grid D.R.m 0)) G.besTop.e = flagN (topLev G hM).d :=
   (nFlag_diag (GlobalTheory.RowUnf.rowBes G 0 (by have := D.R.two_le_m; omega) ((D.R.m - 2) / 2)

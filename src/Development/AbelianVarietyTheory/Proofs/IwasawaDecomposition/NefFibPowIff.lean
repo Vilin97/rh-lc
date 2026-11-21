@@ -25,7 +25,11 @@ theorem interNum_one_lbPow_of_curve {κ : Type} [Field κ] {C : Scheme.{0}} [Alg
     simp
   | succ n ih =>
     rw [interNum_one_of_cls_eq_add hH hd (isLB_lbPow hN (n + 1)) (isLB_lbPow hN n) hN
-      (by rw [cls_lbPow hN, cls_lbPow hN, succ_nsmul]), ih]
+      (by
+        calc
+          _ = (n + 1) • cls N hN := cls_lbPow hN (n + 1) _
+          _ = n • cls N hN + cls N hN := succ_nsmul _ _
+          _ = _ := by rw [cls_lbPow hN n _]), ih]
     push_cast
     ring
 

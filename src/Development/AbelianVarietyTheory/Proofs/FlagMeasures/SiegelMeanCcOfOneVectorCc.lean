@@ -248,6 +248,19 @@ theorem test_eq_term (θ : InfinitePlace I.F → (Ainf I.F ⊗[I.F] I.E →+* �
       Matrix.mul_nonsing_inv_cancel_right _ _ ((Matrix.isUnit_iff_isUnit_det _).1 (I.P_unit v)),
       ← Matrix.mulVec_mulVec]
     congr 1
+    funext i
+    let p : AF I.F ⊗[I.F] I.E →+* Ainf I.F ⊗[I.F] I.E :=
+      (Algebra.TensorProduct.map (fstA I.F) (AlgHom.id I.F I.E)).toRingHom
+    have e := RingHom.map_mulVec ((θ v).comp p) (HA.mat (AF I.F) I.cm.sig I.J h⁻¹).1
+      (ratTup (F := I.F) (AF I.F) X 0) i
+    refine e.trans ?_
+    have e2 : ((θ v).comp p) ∘ ratTup (F := I.F) (AF I.F) X 0 = fun i => I.φ v (X 0 i) := by
+      funext j
+      rw [← (hθ v).1]
+      show θ v (Algebra.TensorProduct.map (fstA I.F) (AlgHom.id I.F I.E) (1 ⊗ₜ X 0 j)) = _
+      rw [Algebra.TensorProduct.map_tmul, map_one]
+      rfl
+    rw [e2]
     rfl
   unfold term
   by_cases hx : X 0 ∈ lamX I (T h)
@@ -298,7 +311,7 @@ theorem siegelMeanCc_of_oneVectorCc : OneVectorCc → SiegelMeanCc := by
     refine (lintegral_congr fun x => ENNReal.tsum_eq_zero.2 fun y => ?_).trans lintegral_zero
     rw [Finset.prod_eq_zero (Finset.mem_univ v) (eq_zero_of_isDens (hc v) (hK v) (h0 v) (hφ v).2.2.2 (hs1 ℝ) hv
       (qEps_frame I s y.1 y.2.2 v _)), ENNReal.ofReal_zero]
-  have hL : Submodule.IsLattice I.E I.L := ⟨I.L_fg, I.L_span⟩
+  have hL : Submodule.IsLattice I.E I.L := Submodule.IsLattice.of_fg I.E I.L_fg
   haveI : FiniteDimensional I.F I.E := Module.finite_of_finrank_eq_succ hCM.2.2.1
   let b := Module.finBasis I.F I.E
   obtain ⟨g1, g2, g3⟩ := test_smooth I φ θ hθ (fun v => (hφ v).1) hK _ rfl

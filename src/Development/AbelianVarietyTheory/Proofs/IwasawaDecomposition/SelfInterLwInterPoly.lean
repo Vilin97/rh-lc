@@ -21,5 +21,7 @@ theorem selfInter_Lw_interPoly : ∀ {E : Type} [Field E] [NumberField E] [IsCMF
   push_cast at h
   rw [h]
   congr 2
+  funext i
+  simp [FlagCpt.Lw, FlagCpt.LEx, Finset.sum_neg_distrib]
 
 end GlobalTheory.Member

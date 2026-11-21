@@ -91,8 +91,8 @@ theorem gauss_fix [IsAlgClosure ℚ Ω] (hl : l ≠ 2) (s : G ℚ Ω) (hs : ∀ 
     rfl
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [gaussSum, map_sum]
-    refine Finset.sum_congr rfl fun x _ => ?_
-    rw [map_mul, hχa, map_intCast, hψdef, AddChar.zmodChar_apply, map_pow, hs ζ hζ.pow_eq_one]
+      refine Finset.sum_congr rfl fun x _ => ?_
+      rw [map_mul, hχa, map_intCast, hψdef, AddChar.zmodChar_apply, map_pow, hs ζ hζ.pow_eq_one]
 
 theorem fix_sqrt_int [IsAlgClosure ℚ Ω] (hl : l ≠ 2) {A : ValuationSubring Ω} (hA : OverL l A) {s : G ℚ Ω}
     (hs : s ∈ Ine (F := ℚ) A) (hmu : ∀ ζ : Ω, ζ ^ l = 1 → s ζ = ζ) :

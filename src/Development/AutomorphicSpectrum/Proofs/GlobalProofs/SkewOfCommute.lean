@@ -18,7 +18,7 @@ public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.KTypes
 
 @[expose] public section
 
-open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.GKModule GlobalTheory.GKLie GlobalTheory.CompanionTheory.GKClosure GlobalTheory.CompanionTheory.Hypotheses₂
+open Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.GKModule GlobalTheory.GKLie
 open GlobalTheory.SmoothGlob (lieSet)
 open scoped InnerProductSpace
 

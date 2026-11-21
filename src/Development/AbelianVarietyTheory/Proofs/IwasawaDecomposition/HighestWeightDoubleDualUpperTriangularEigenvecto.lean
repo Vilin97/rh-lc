@@ -152,8 +152,8 @@ theorem hw_eigvec_transport : ∀ (L : Type) [Field L] [NumberField L] [IsCMFiel
     intro a a' γ₀ hγ
     obtain ⟨γ, rfl⟩ := ratHom_surjective L n γ₀ hγ
     have hm : (((γ : GAf L n) : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) =
-        ((ratHom γ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L).map Algebra.TensorProduct.includeLeftRingHom := by
-      rw [show ratHom γ = ratFun γ from rfl, ← incGL_ratFun γ]
+        ((ratHom (L := L) (n := n) γ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L).map Algebra.TensorProduct.includeLeftRingHom := by
+      rw [show ratHom (L := L) (n := n) γ = ratFun γ from rfl, ← incGL_ratFun γ]
       rfl
     have h1 := congrFun (congrFun (hP' γ _ hm) a) a'
     have h2 : LinearMap.toMatrix b' b' ((wtRepF emb lam).dual γ) =

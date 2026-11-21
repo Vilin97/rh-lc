@@ -123,7 +123,33 @@ theorem sd_lat (hok : s.Ok) {n : ℕ} {N : Submodule (𝓞 X.E) (Sp X.E n)} (hN 
   · rw [eq_top_iff]
     intro y _
     have h1 : (fun i => s.iE.symm (y i) : Sp X.E n) ∈ Submodule.span X.E (N : Set (Sp X.E n)) := by
-      rw [hN.1.span_eq_top]; trivial
+      have hspan : Submodule.span X.E (N : Set (Sp X.E n)) = ⊤ := by
+        let W := Submodule.span X.E (N : Set (Sp X.E n))
+        change W = ⊤
+        by_contra h
+        let e : Sp X.E n ≃ₗ⋆[X.E] Sp X.E n := starLinearEquiv X.E
+        let g : Sp X.E n →ₗ[X.E] Module.Dual X.E W :=
+          (LinearMap.domRestrict' W).comp ((hStd X.E n).comp e.toLinearMap)
+        have hdim : Module.finrank X.E (Module.Dual X.E W) < Module.finrank X.E (Sp X.E n) := by
+          rw [Subspace.dual_finrank_eq]
+          exact Submodule.finrank_lt h
+        obtain ⟨x, hx, hx₀⟩ :=
+          Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+        have hsmul (a : X.E) : a • e x ∈ N := by
+          rw [← hN.2, dualBasic_mem_dual]
+          intro z hz
+          apply hStd_mem_one_symm
+          have hxz : hStd X.E n (e x) z = 0 :=
+            congrArg (fun f : Module.Dual X.E W => f ⟨z, Submodule.subset_span hz⟩) (LinearMap.mem_ker.mp hx)
+          simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxz]
+        let i : X.E →ₗ[𝓞 X.E] N :=
+          ((LinearMap.toSpanSingleton X.E _ (e x)).restrictScalars (𝓞 X.E)).codRestrict N hsmul
+        let : Module.Finite (𝓞 X.E) N := Module.Finite.iff_fg.mpr hN.1.fg
+        let : Module.Finite (𝓞 X.E) X.E := Module.Finite.of_injective i fun a b hab =>
+          smul_left_injective X.E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+        exact NumberField.RingOfIntegers.not_isField X.E
+          (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 X.E) X.E) (Field.toIsField X.E))
+      rw [hspan]; trivial
     have h2 := vec_spanE s _ h1
     rw [vec_surj s] at h2
     exact Submodule.span_mono (fun z hz => Submodule.subset_span hz) h2

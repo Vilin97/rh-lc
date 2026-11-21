@@ -181,13 +181,9 @@ theorem sobO_slice_le {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1
 
 theorem isSobForm_slice {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (hθ : IsInfFam θ) (o : OrthDec S A B)
     {χ χ' : (AE D)ˣ →* Circle} {om : Om A T} (hom : IsWeilDatumO ψ A T χ χ' om) (p : GA D A × GA D T) :
-    IsSobForm ψ θ S T fun f => om p (fun u => f ((o.resS T).symm (u, 0))) 0 where
-  add f g _ _ := by
-    show om p (slA o f + slA o g) 0 = _
-    rw [map_add (f := _)]; rfl
-  smul c f _ := by
-    show om p (c • slA o f) 0 = _
-    rw [map_smul]; rfl
+    IsSobForm ψ θ S T (fun f => om p (fun u => f ((o.resS T).symm (u, 0))) 0) where
+  add f g _ _ := congrFun ((om p).map_add (slA o f) (slA o g)) 0
+  smul c f _ := congrFun ((om p).map_smul c (slA o f)) 0
   bound U hU := by
     have hψ := hom.std
     let U' : AddSubgroup (WO A T) := U.comap (extA o T)

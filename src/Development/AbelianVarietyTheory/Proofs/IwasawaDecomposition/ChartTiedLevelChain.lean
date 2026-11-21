@@ -102,6 +102,7 @@ theorem exists_equiv (h : BasePi ST π) (hP : P ∈ ST) (hov : IsOver v P) {T : 
   subst hΛ
   have hker : ∀ t, rll_psi hc n v h P t = 0 → f t = 0 := by
     intro t ht
+    change rll_rho v P ⟨_, rll_last_mem hc n v h t⟩ = 0 at ht
     obtain ⟨w, hw, e⟩ := rll_rho_eq_zero v h (h.over_unique hc hP hov) _ ht
     replace e : inclE (F := F) (v.adicCompletion F) (star (π : E)) * t.1 (lastIdx n) =
       inclE (F := F) (v.adicCompletion F) (π : E) * w := e
@@ -252,7 +253,7 @@ theorem exists_equiv_level {T f₀ : ℕ} {bad : Set (HeightOneSpectrum (𝓞 F)
     have hm : inclE (F := F) (v.adicCompletion F) (algebraMap (𝓞 E) E r) * ((1 : intV E v) : E ⊗[F] v.adicCompletion F) ∈
         intV E v := mul_mem (rll_incl_int _ r) (one_mem _)
     refine (he t (e1 ▸ hm)).trans ?_
-    refine (congrArg (rll_rho v P) (Subtype.ext e1 : _ = ⟨_, hm⟩)).trans ?_
+    refine (congrArg (rll_rho v P) (Subtype.ext e1 : (⟨_, e1 ▸ hm⟩ : intV E v) = ⟨_, hm⟩)).trans ?_
     rw [rll_rho_incl_mul, rll_rho_one _ hov, mul_one]
 
 end Loc
@@ -301,7 +302,7 @@ theorem fv_of_smul {D : D7} {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.
   exact mul_left_cancel₀ hs h
 
 
-set_option maxHeartbeats 4000000 in
+set_option maxHeartbeats 12000000 in
 set_option synthInstance.maxHeartbeats 400000 in
 theorem fvTieG : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (Ch : Type) (chOf : (I.stp u a i).Cl → Ch) (K : ∀ β : Ch, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1))) (eV : (I.atT l u a).vT ≃ {v : HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) // (B.T u : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∈ v.asIdeal}) (L : LevelCompatibleLattices (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (I.fm l u a) (B.T u) (I.resT l u a) i hi fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)), I.ReadsK l Z u a i hi chOf K → I.IdV l u a eV → I.IdL l Z u a i hi L → (∀ (β : Ch) (v : HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) (h : ((B.T u : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∈ v.asIdeal) (t t' : latS (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (v.adicCompletion (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (intV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E v) (Submodule.span (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (dualSet (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (K β).lev.Lb))), t'.1 = (fun a => inclE (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (v.adicCompletion (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (show (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E from ((X.piT u : 𝓞 B.host.E) : B.host.E)) * t.1 a) → (K β).lev.fT v h t' = 0) → ∃ fMe, FvTieG L eV K fMe ∧ ∀ β v (x : Fin (B.R.N i) → (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (j : Fin (B.R.N i)) (r : 𝓞 B.host.E) (t : latS (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ((eV v).1.adicCompletion (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (intV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (eV v).1) (Submodule.span (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (dualSet (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (K β).lev.Lb))), j.1 + 1 = B.R.N i → t.1 = (fun s => inclE (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ((eV v).1.adicCompletion (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (x s)) → (r : B.host.E) = B.host.conj (X.piT u : B.host.E) * (show B.host.E from x j) → fMe β v ((K β).lev.fT (eV v).1 (eV v).2 t) = I.resT l u a v r := by
   intro B X I hI hP l Z u a i hi bad Ch chOf K eV L hK hV hL hS
@@ -316,7 +317,7 @@ theorem fvTieG : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pin
   have hW := @exists_equiv_level (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E _ _ _ _ _ _
   have hE := fun β (v : (I.atT l u a).vT) => hW
     (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm (n := B.R.N i) (ST := (B.primes X).vT u) (π := X.piT u) (P := v.1)
-    (K β).lev hJ (hLb β) hB v.2 (eV v).2 (congrArg HeightOneSpectrum.asIdeal (hV v)) (l.pr.T_prime u) (l.pr.vT_norm u v.1 v.2)
+    (K β).lev hJ (hLb β) hB v.2 (eV v).2 (congrArg HeightOneSpectrum.asIdeal (hV v)) (l.pr.T_prime u) (by rw [← Ideal.absNorm_eq_natCard]; exact l.pr.vT_norm u v.1 v.2)
     (hS β _ _)
   choose e he1 he2 using hE
   refine ⟨e, ?_, ?_⟩

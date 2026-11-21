@@ -22,7 +22,7 @@ open MvPowerSeries ReciprocityTheory.PGsh GlobalTheory.FGDepth GlobalTheory.Form
 variable {C : Type} [Field C]
 
 theorem cc_pderiv {σ : Type} (i : σ) (f : MvPowerSeries σ C) :
-    constantCoeff (pderiv C i f) = coeff (Finsupp.single i 1) f := by
+    constantCoeff (pderiv i f) = coeff (Finsupp.single i 1) f := by
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
   simp
 
@@ -56,7 +56,7 @@ theorem pderiv_of_mul (g : MvPowerSeries (Fin d) C)
     (h : subst (fun a : Fin d => (X (Sum.inl a) + X (Sum.inr a) : MvPowerSeries (Fin d ⊕ Fin d) C)) g =
       subst (fun a : Fin d => (X (Sum.inl a) : MvPowerSeries (Fin d ⊕ Fin d) C)) g *
         subst (fun a : Fin d => (X (Sum.inr a) : MvPowerSeries (Fin d ⊕ Fin d) C)) g) (i : Fin d) :
-    pderiv C i g = coeff (Finsupp.single i 1) g • g := by
+    pderiv i g = coeff (Finsupp.single i 1) g • g := by
   classical
   have hS : HasSubst (fun a : Fin d => (X (Sum.inl a) + X (Sum.inr a) : MvPowerSeries (Fin d ⊕ Fin d) C)) :=
     hasSubst_of_constantCoeff_zero fun _ => by simp
@@ -66,7 +66,7 @@ theorem pderiv_of_mul (g : MvPowerSeries (Fin d) C)
     hasSubst_of_constantCoeff_zero fun _ => by simp
   let Z : Fin d ⊕ Fin d → MvPowerSeries (Fin d) C := Sum.elim X fun _ => 0
   have hZ : HasSubst Z := hasSubst_of_constantCoeff_zero fun s => by cases s <;> simp [Z]
-  have hd := congrArg (fun f => subst Z (pderiv C (Sum.inr i) f)) h
+  have hd := congrArg (fun f => subst Z (pderiv (Sum.inr i) f)) h
   simp only [Derivation.leibniz, pderiv_subst hS, pderiv_subst hL, pderiv_subst hR, map_add (f := _), pderiv_X,
     Pi.single_apply, reduceCtorEq, if_false, Sum.inr.injEq, zero_add, mul_ite, mul_one, mul_zero,
     Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.sum_const_zero, smul_zero, add_zero,
@@ -77,21 +77,21 @@ theorem pderiv_of_mul (g : MvPowerSeries (Fin d) C)
   rw [subst_zero_fun, cc_pderiv] at hd
   have e : (fun s : Fin d => (X s : MvPowerSeries (Fin d) C)) = X := rfl
   rw [e, subst_self] at hd
-  rw [show pderiv C i g = id (pderiv C i g) from rfl, hd, id, mul_comm, smul_eq_C_mul]
+  rw [show pderiv i g = id (pderiv i g) from rfl, hd, id, mul_comm, smul_eq_C_mul]
 
 variable [CharZero C]
 
 
 open Formalism.L2.Th1.C in
 theorem coeff_of_pderiv (g : MvPowerSeries (Fin d) C) (c : Fin d → C) (h0 : constantCoeff g = 1)
-    (h : ∀ i, pderiv C i g = c i • g) (α : Fin d →₀ ℕ) :
+    (h : ∀ i, pderiv i g = c i • g) (α : Fin d →₀ ℕ) :
     coeff α g = α.prod fun e n => c e ^ n / (n.factorial : C) := by
   classical
   rw [← CharBound.coeff_mvExp_lin]
   set L : MvPowerSeries (Fin d) C := ∑ s, c s • (X s : MvPowerSeries (Fin d) C) with hLdef
   have hL : constantCoeff L = 0 := by simp [hLdef]
   have hnL : constantCoeff (-L) = 0 := by rw [map_neg, hL, neg_zero]
-  have hpL : ∀ i, pderiv C i L = c i • (1 : MvPowerSeries (Fin d) C) := fun i => by
+  have hpL : ∀ i, pderiv i L = c i • (1 : MvPowerSeries (Fin d) C) := fun i => by
     simp [hLdef, pderiv_X, Pi.single_apply]
   have key : g * mvExp (-L) = 1 := by
     refine pderiv.ext (fun i => ?_) ?_

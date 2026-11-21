@@ -314,14 +314,39 @@ theorem level_step (hM : MulNSt) [IsNoetherianRing R] [IsAlgClosed F] [CharZero 
       IsLocalization.ringHom_ext (nonZeroDivisors R) (RingHom.ext fun r => by
         show σ (algebraMap (FractionRing R) F (algebraMap R _ r)) = algebraMap (FractionRing R) F (algebraMap R _ r)
         rw [← hφ]; exact hσ _ (φ r).2)
-    obtain ⟨a, ha, hg⟩ := (equiv_iff hB _ _).1 (hfix σ hσ p _ ((qkExt_iff hB _ hσ' _ _).2 rfl))
+    obtain ⟨g, h₁, h₂⟩ := p.eq
+    have hg₁ : GtPtF.IsNsmul k (gtExt D σ.toRingHom hσ' p.g) (gtExt D σ.toRingHom hσ' g) := by
+      rw [isNsmul_iff_eq] at h₁ ⊢
+      rw [h₁, map_nsmul]
+    have hg₂ : GtPtF.IsIota p.y (gtExt D σ.toRingHom hσ' g) := by
+      obtain ⟨hb, hv⟩ := (isIota_iff _ _).1 h₂
+      apply (isIota_iff _ _).2
+      refine ⟨by rw [gtExt_b, hb, comp_cP], fun χ y J hJ => ?_⟩
+      exact (gtExt_val σ.toRingHom hσ' _ χ hJ).trans ((val_corr hJ (h₂.2 χ) _).trans
+        ((val_pull hJ _ _ _).trans (congrArg (fun r => val (D.tau p.y χ) r y J) (extMap_jFK σ.toRingHom hσ'))))
+    let q : QkPt D F k := ⟨p.y, gtExt D σ.toRingHom hσ' p.g, _, hg₁, hg₂⟩
+    have hq : QkExt σ.toRingHom p q := ⟨rfl, (eq_gtExt_iff σ.toRingHom hσ' _ _).1 rfl⟩
+    obtain ⟨a, ha, g', hi, hadd⟩ := hfix σ hσ p q hq
     have a0 : a = 0 := by
       have : k • a = 0 := left_eq_add.1 ha
       exact (smul_eq_zero.1 (show (k : ℤ) • a = 0 by rw [natCast_zsmul, this])).resolve_left (Int.natCast_ne_zero.2 hk)
-    rw [a0, map_zero, add_zero] at hg
+    subst a
+    have hg0 : g' = 0 := isIota_unique hi (by
+      apply (isIota_iff_val _ _).2
+      refine ⟨by rw [zero_b, cPoint_zero], fun χ y J hJ => ?_⟩
+      rw [zero_val χ hJ]
+      have C : IsCub (th D (T := TF (R := R) F) y J) := isCub_cubV D.cub hJ
+      have e := tau_mul (𝟙 (TF (R := R) F)) hJ hB 0 0 χ
+      rw [add_zero, cPoint_zero, C.face, _root_.mul_one] at e
+      exact (mul_eq_left.1 e.symm).symm)
+    have hg : gtExt D σ.toRingHom hσ' p.g = p.g := by
+      have := (isAdd_iff_eq _ _ _).1 hadd
+      simpa [q, hg0] using this
     exact charVal_fixed σ.toRingHom hσ' p.g hg χ hJ
   have e₁ := w_nsmul ρ hJ w hint p.g b hb χ k
-  rw [qk_nsmul hB, iota_val hB _ _ hJ, w_tau ρ hJ w hint, hψ, hψ, hψ, hv _ u v hu, ← zpow_natCast, ← zpow_mul,
+  obtain ⟨g, hg₁, hg₂⟩ := p.eq
+  have hg : k • p.g = g := ((isNsmul_iff_eq _ _ _).1 hg₁).symm
+  rw [hg, ((isIota_iff_val _ _).1 hg₂).2 χ z J hJ, w_tau ρ hJ w hint, hψ, hψ, hψ, hv _ u v hu, ← zpow_natCast, ← zpow_mul,
     ← zpow_sub, ← zpow_sub] at e₁
   exact ⟨v, (inj _ _ e₁).trans (mul_comm _ _)⟩
 

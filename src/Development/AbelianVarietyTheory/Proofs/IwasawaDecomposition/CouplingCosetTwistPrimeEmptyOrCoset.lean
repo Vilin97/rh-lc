@@ -18,7 +18,9 @@ theorem cqOf_empty_or_coset : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} {sel 
   have hP : P.1 ∉ Pr.vGs := hQ P.1 P.2
   by_cases hj : j + 1 = R.m
   · right
-    obtain ⟨y0, -, hY⟩ := r.mem_ybSet hj
+    have hyb := r.mem_ybSet hj
+    simp only [ybSet, Set.mem_setOf_eq] at hyb
+    obtain ⟨y0, -, hY⟩ := hyb
     have hq : ((qOf P.1 : X.E) ^ cst.M) ≠ 0 := pow_ne_zero _ (by
       rw [Nat.cast_ne_zero]
       unfold qOf

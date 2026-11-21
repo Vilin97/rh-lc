@@ -32,7 +32,7 @@ open Classical
 namespace GlobalTheory.EvalLowType
 
 theorem zero_of_span {ι : Type} [Fintype ι] [DecidableEq ι] {L : ι → Type} [∀ j, AddCommGroup (L j)] [∀ j, Module ℂ (L j)]
-    {X : Type} [AddCommGroup X] [Module ℂ X] (F : MultilinearMap ℂ L X) (v₀ : ∀ j, L j) (P : ∀ j, L j → Prop)
+    {X : Type} [AddCommGroup X] [Module ℂ X] (F : (∀ j, L j) →ₘₗ[ℂ] X) (v₀ : ∀ j, L j) (P : ∀ j, L j → Prop)
     (hspan : ∀ j, Submodule.span ℂ {u | P j u} = ⊤)
     (hstep : ∀ (v : ∀ j, L j) (j : ι) (u : L j), v j = v₀ j → P j u → F v = 0 → F (Function.update v j u) = 0)
     (h0 : F v₀ = 0) : ∀ v, F v = 0 := by
@@ -124,9 +124,9 @@ theorem GlobalTheory.EvalLowType.lowType_of_eval : ∀ (D : D7) (G : Type) [Grou
       map_add' := fun a b => by funext g; simp [Datum.thetaKO, map_add (f := _)]
       map_smul' := fun a b => by funext g; simp [Datum.thetaKO, map_smul] }
   let act := Formalism.IndefR.Links.actL (Wc D i) (R.βW i) (R.datWp i R.triv) (R.eG ((u : G)⁻¹))
-  let Rt : MultilinearMap ℂ (fun ρ => lowT (R.MW i (sg0 D A)) ρ) (GA D (Wc D i) → ℂ) :=
+  let Rt : (∀ ρ, lowT (R.MW i (sg0 D A)) ρ) →ₘₗ[ℂ] (GA D (Wc D i) → ℂ) :=
     (D.what₂.embLL c • (act ∘ₗ Lin)).compMultilinearMap (PiTensorProduct.tprod ℂ)
-  let Lf : MultilinearMap ℂ (fun ρ => lowT (R.MW i (sg0 D A)) ρ) (GA D (Wc D i) → ℂ) :=
+  let Lf : (∀ ρ, lowT (R.MW i (sg0 D A)) ρ) →ₘₗ[ℂ] (GA D (Wc D i) → ℂ) :=
     (adForm R i (cuspTo hT.p fw i (f u))).compLinearMap fun ρ => (lowT (R.MW i (sg0 D A)) ρ).subtype
   have hRt : ∀ w, Rt w = D.what₂.embLL c • act (singleSeries R i ω φ' h ((O i).c0' y) w) := fun w => rfl
   have hLf : ∀ w, Lf w = adForm R i (cuspTo hT.p fw i (f u)) (fun ρ => (w ρ : (R.MW i (sg0 D A)).sm ρ)) := fun w => rfl

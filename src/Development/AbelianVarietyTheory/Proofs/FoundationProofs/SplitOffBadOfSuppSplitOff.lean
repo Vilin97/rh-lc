@@ -256,7 +256,7 @@ theorem isLattice_hLat (V : HSp D) (g : Bridge.Gf V) : Submodule.IsLattice D.hos
   obtain ⟨-, -, hfg, hsp, -⟩ := latHat_eq_hat_and_gram D V
   obtain ⟨Λ, hΛ, h1, h2, -⟩ := exists_lattice_latOf D.host.F D.host.E V.rank (latC V) g.1 hfg hsp
   rw [SetLike.coe_injective ((coe_hLat V g).trans hΛ.symm)]
-  exact ⟨h1, h2⟩
+  exact Submodule.IsLattice.of_fg D.host.E h1
 
 end Lattices
 

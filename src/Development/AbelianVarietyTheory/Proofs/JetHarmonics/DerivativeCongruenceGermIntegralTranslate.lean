@@ -332,12 +332,12 @@ theorem eigen_germ : Laws → Laws4 → TwistBCSpanStatement → JetSer.JetAlgSt
       · rw [← map_mul, ← map_mul, Units.mul_inv, map_one, map_one]
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [hfe, map_sum, Finset.sum_mul, eV]
-        refine Finset.sum_congr rfl fun i _ => ?_
-        have mm : MvPowerSeries.map (algebraMap (TWO.Ov y.v) F) (MvPowerSeries.map (TWO.fO y.v y.hϖ y.hv) (S i)) =
-            MvPowerSeries.map (algebraMap V F) (S i) := by
-          rw [← hβ]; rfl
-        rw [map_mul, map_mul, map_pow, map_pow, map_mul, MvPowerSeries.map_C, mm, _root_.mul_assoc]
-        rfl) mo
+          refine Finset.sum_congr rfl fun i _ => ?_
+          have mm : MvPowerSeries.map (algebraMap (TWO.Ov y.v) F) (MvPowerSeries.map (TWO.fO y.v y.hϖ y.hv) (S i)) =
+              MvPowerSeries.map (algebraMap V F) (S i) := by
+            rw [← hβ]; rfl
+          rw [map_mul, map_mul, map_pow, map_pow, map_mul, MvPowerSeries.map_C, mm, _root_.mul_assoc]
+          rfl) mo
   obtain ⟨x', rfl⟩ := Ideal.mem_span_singleton'.1 hx
   refine le_of_le_of_eq ?_ (congrArg y.v hxe).symm
   rw [map_mul, map_natCast (algebraMap (TWO.Ov y.v) F), AddValuation.map_mul]

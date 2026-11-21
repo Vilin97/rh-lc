@@ -67,18 +67,15 @@ theorem neZero_pow (k : ℕ) : NeZero (l ^ k) := ⟨pow_ne_zero _ (Fact.out : l.
 
 theorem isSys (hI : ZIn) (X : Scheme.{0}) (hX : IsUnit (l : Γ(X, ⊤))) (n i : ℤ)
     (hfin : ∀ k, Finite (Ht (l ^ k) (sch.obj X) n i)) :
-    Adic.IsSys l (fun k => HtL l k (sch.obj X) n i) (fun m m' => red (l ^ m) (l ^ m') (sch.obj X) n i) where
-  smul := fun k r x => HtL.smul_eq l k k le_rfl _ n i r x
-  id := by
-    intro m x
+    Adic.IsSys l (fun k => HtL l k (sch.obj X) n i) (fun m m' => red (l ^ m) (l ^ m') (sch.obj X) n i) := by
+  refine ⟨fun k r x => HtL.smul_eq l k k le_rfl _ n i r x, ?_, ?_, ?_, hfin⟩
+  · intro m x
     have := neZero_pow l m
     exact (hI.a11 (l ^ m) (l ^ m) dvd_rfl (sch.obj X)).2.2.1 n i x
-  trans := by
-    intro m m' p x h1 h2
+  · intro m m' p x h1 h2
     have := neZero_pow l m
     exact (hI.a11 (l ^ m) (l ^ m') (pow_dvd_pow l h2) (sch.obj X)).2.2.2 (l ^ p) (pow_dvd_pow l h1) n i x
-  bock := fun a b z h => hI.bock l a b X hX n i z h
-  fin := hfin
+  · exact fun a b z h => hI.bock l a b X hX n i z h
 
 theorem cup_mem (hI : ZIn) (E : Spc) {n m i j n' i' : ℤ} (h1 : n + m = n') (h2 : i + j = i') (x : Hl l E n i) (y : Hl l E m j) :
     (fun k => ((cup (l ^ k) (x.1 k) (y.1 k)).cast h1 h2 : HtL l k E n' i')) ∈ HlSub l E n' i' := by

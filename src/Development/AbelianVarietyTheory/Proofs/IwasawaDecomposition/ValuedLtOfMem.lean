@@ -214,7 +214,15 @@ theorem valued_symm_le {N : Submodule (𝓞 E) (Sp E n)} {P : HeightOneSpectrum 
 theorem carries_globLat (x : GL (Fin n) (AfE F E)) :
     Formalism.L2.Herm.Carries x (stdLat E n) (Formalism.UG.CS.globLat x (stdLat E n)) :=
   Formalism.UG.P.span_recovery_of_integral_adelic_approx Formalism.UG.P.integral_adele_approximation_holds F E (Fin n) (stdLat E n)
-    (Module.Finite.iff_fg.2 stdLat_lattice.fg) stdLat_lattice.span_eq_top x
+    (Module.Finite.iff_fg.2 stdLat_lattice.fg) (by
+      apply top_unique
+      intro v _
+      have hv : v = ∑ i, v i • (Pi.single i (1 : E) : Fin n → E) := by
+        funext j
+        simp [Finset.sum_apply, Pi.single_apply]
+      rw [hv]
+      exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+        (Submodule.subset_span (by simpa using single_mem_stdLat (E := E) i 1))) x
 
 
 omit [StarRing E] in
@@ -250,14 +258,14 @@ theorem exists_modify (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {x : GL (Fin n) (
     split_ifs with h h'
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [← map_mul, ← map_sum]
-      rw [← Matrix.mul_apply, mat_symm_mul, hone]
+        rw [← Matrix.mul_apply, mat_symm_mul, hone]
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [← map_mul, ← map_sum, ← star_mul, ← star_sum]
-      rw [← Matrix.mul_apply, mat_symm_mul, hone, Matrix.one_apply, Matrix.one_apply]
-      by_cases e : i = j <;> simp [e, eq_comm]
+        rw [← Matrix.mul_apply, mat_symm_mul, hone, Matrix.one_apply, Matrix.one_apply]
+        by_cases e : i = j <;> simp [e, eq_comm]
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [← map_mul, ← map_sum]
-      rw [← Matrix.mul_apply, Units.inv_mul]
+        rw [← Matrix.mul_apply, Units.inv_mul]
   let g : GL (Fin n) (AfE F E) := ⟨G, G', mul_eq_one_comm.1 h1, h1⟩
   have hg : g ∈ UAd hc n := by
     rw [mem_uad_iff, ← h1]
@@ -279,8 +287,8 @@ theorem exists_modify (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {x : GL (Fin n) (
       exact this
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [← map_mul, ← map_sum]
-      rw [← Matrix.mul_apply, Units.inv_mul, Matrix.one_apply]
-      split_ifs <;> simp
+        rw [← Matrix.mul_apply, Units.inv_mul, Matrix.one_apply]
+        split_ifs <;> simp
   have k2 : ∀ w, conjPrime₂ w ∉ Q → ∀ i j,
       Valued.v (adAt F w ((((x⁻¹ * g)⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j)) ≤ 1 := by
     intro w hw i j
@@ -296,8 +304,8 @@ theorem exists_modify (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {x : GL (Fin n) (
       exacts [one_mem _, zero_mem _]
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [← map_mul, ← map_sum]
-      rw [← Matrix.mul_apply, Units.inv_mul, Matrix.one_apply]
-      split_ifs <;> simp
+        rw [← Matrix.mul_apply, Units.inv_mul, Matrix.one_apply]
+        split_ifs <;> simp
   have i1 := int_of_uni hQ hk k1 k2
   have i2 := int_of_uni hQ (inv_mem hk) k2 (by rw [inv_inv]; exact k1)
   refine ⟨g, hg, fun z => (carries_globLat x z).trans ?_, fun P hP i j => ?_, fun w h h' v i => ?_⟩

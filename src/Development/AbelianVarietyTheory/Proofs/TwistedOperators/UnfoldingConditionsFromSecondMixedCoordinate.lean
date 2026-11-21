@@ -61,10 +61,8 @@ theorem mixT_smul {T T₀ : HSp D} {ρ : ℕ} (d : HypDec T T₀ ρ) {S : HSp D}
     (μ : Measure (Mx D ρ S.rank)) (𝓕 : Set (Mx D ρ S.rank)) (c : ℂ) (f : WO S T → ℂ) (y : Mx D S.rank ρ) :
     (_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target d) S ψ μ 𝓕 (c • f) y = c • (_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target d) S ψ μ 𝓕 f y := by
   funext w₀
-  simp only [GlobalTheory.MixModel.Check.mixT_eq, Pi.smul_apply, smul_eq_mul, ← integral_const_mul]
-  congr 1
-  funext a
-  ring
+  simp only [I195MixedCoordinates_2eaa982f095d86fcb3cef527.target, Pi.smul_apply,
+    heisO_smul, smul_eq_mul, ← integral_const_mul]
 
 theorem isHalf_of_wittHyperbolic_inclusion {T T₀ : HSp D} {ρ : ℕ} (d : HypDec T T₀ ρ) {S : HSp D} {e : AE D} {w : WO S T₀}
     (h : IsHalf e (d.inc0 S w)) : IsHalf e w := by
@@ -93,6 +91,7 @@ theorem main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1
   have inj : ∀ f f' : WO V₀ W → ℂ, IsThetaFunO ψ V₀ W f → IsThetaFunO ψ V₀ W f' →
       (∀ y', (_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target dW) V₀ ψ vT.μ vT.𝓕 f y' = (_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target dW) V₀ ψ vT.μ vT.𝓕 f' y') → f = f' :=
     fun f f' hf hf' h => (GlobalTheory.T.thetaFunction_determined_by_mixedCoordinates D ψ hψ V₀ W f f' hf hf').2 W₀ σ dW vT h
+  change (∀ ξ y, (_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target dW) V₀ ψ vT.μ vT.𝓕 (heisO ψ V₀ W (dW.incX V₀ ξ) g') y = ψ (symplO V₀ W (dW.incAdj V₀ y) (dW.incX V₀ ξ)) • (_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target dW) V₀ ψ vT.μ vT.𝓕 g' y) ∧ (∀ w y, (_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target dW) V₀ ψ vT.μ vT.𝓕 (heisO ψ V₀ W (dW.inc0 V₀ w) g') y = heisO ψ V₀ W₀ w ((_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target dW) V₀ ψ vT.μ vT.𝓕 g' y)) ∧ _ at L
   have th : ∀ u, IsThetaFunO ψ V₀ W (heisO ψ V₀ W u g') := GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ hg'
   refine ⟨?_, ?_, ?_, ?_⟩
   · intro ξ hξ
@@ -119,7 +118,10 @@ theorem main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1
     obtain ⟨b, hb⟩ := incAdj_surj dW V₀ η
     rw [← hb]
     refine inj _ _ (th _) hg' fun y' => ?_
-    rw [GlobalTheory.MixModel.Check.mixT_heis_incAdj, hmix, hmix, hinv η hη b hb y']
+    change dW.mixT V₀ ψ vT.μ vT.𝓕 (heisO ψ V₀ W (dW.incAdj V₀ b) g') y' = dW.mixT V₀ ψ vT.μ vT.𝓕 g' y'
+    rw [GlobalTheory.MixModel.Check.mixT_heis_incAdj]
+    change (_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target dW) V₀ ψ vT.μ vT.𝓕 g' (y' + b) = (_root_.I195MixedCoordinates_2eaa982f095d86fcb3cef527.target dW) V₀ ψ vT.μ vT.𝓕 g' y'
+    rw [hmix, hmix, hinv η hη b hb y']
   · intro u hu
     obtain ⟨w, hw, rfl⟩ := AddSubgroup.mem_map.1 hu
     rw [← map_nsmul]

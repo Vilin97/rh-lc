@@ -40,11 +40,11 @@ variable {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel V S} {H 
 
 open Classical in
 theorem norm_apply_eq (hπ : IsUnitaryRep π) {Ψ : ContinuousMultilinearMap ℂ M.H H} (hΨ : Ψ ∈ homDS M π ⊤)
-    (y : ∀ τ, M.H τ) : ‖Ψ y‖ = ‖Ψ (fun τ => unitVec (M.H τ))‖ * ∏ τ, ‖y τ‖ := by
+    (y : ∀ τ, M.H τ) : ‖Ψ y‖ = ‖Ψ (fun τ => unitVec (H := M.H τ))‖ * ∏ τ, ‖y τ‖ := by
   have h := inner_eq_bePi (isIrrUnitary_dsRep M) hπ hΨ hΨ y y
   rw [bePi] at h
   simp only [inner_self_eq_norm_sq_to_K] at h
-  have h2 : ‖Ψ y‖ ^ 2 = (‖Ψ (fun τ => unitVec (M.H τ))‖ * ∏ τ, ‖y τ‖) ^ 2 := by
+  have h2 : ‖Ψ y‖ ^ 2 = (‖Ψ (fun τ => unitVec (H := M.H τ))‖ * ∏ τ, ‖y τ‖) ^ 2 := by
     rw [mul_pow, ← Finset.prod_pow]
     exact_mod_cast h
   exact (pow_left_inj₀ (norm_nonneg _)
@@ -57,7 +57,7 @@ theorem isClosed_homDS : IsClosed (homDS M π ⊤ : Set (ContinuousMultilinearMa
   have hc : IsClosed {Ψ : ContinuousMultilinearMap ℂ M.H H |
       Ψ (Function.update y i (dsRep M i g (y i))) = π (embW V (placeOf D i) g) (Ψ y)} :=
     isClosed_eq (continuous_eval_const _) ((π _).continuous.comp (continuous_eval_const _))
-  exact closure_minimal (fun Ψ hΨ => hΨ.2 i g y) hc hΦ
+  exact closure_minimal (fun Ψ (hΨ : Ψ ∈ homDS M π ⊤) => hΨ.2 i g y) hc hΦ
 
 end GlobalTheory.SmoothAvg
 
@@ -70,7 +70,7 @@ theorem nonarchimedeanGroup_GfC (D : D7) (V : HSp D) : NonarchimedeanGroup (GfC 
 
 theorem exists_smooth_ne_zero : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (π : GA D V →* (H →L[ℂ] H)), IsUnitaryRep π → ∀ (hU : IsSubrep π ⊤) (Φ : homDS M π ⊤), Φ ≠ 0 → ∃ Ψ ∈ GlobalTheory.PRep.smoothPart (finPartDS M hU), Ψ ≠ 0 := by
   intro D V S M H _ _ _ π hπ hU Φ hΦ
-  let u : ∀ τ, M.H τ := fun τ => unitVec (M.H τ)
+  let u : ∀ τ, M.H τ := fun τ => unitVec (H := M.H τ)
   let f : homDS M π ⊤ →L[ℂ] H :=
     (ContinuousMultilinearMap.apply ℂ M.H H u).comp (homDS M π ⊤).subtypeL
   have hnorm : ∀ Ψ : homDS M π ⊤, ‖Ψ‖ ≤ ‖f Ψ‖ := fun Ψ => by

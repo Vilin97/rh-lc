@@ -105,7 +105,8 @@ def tensML {κ H : Type} [Fintype κ] {E : κ → Type} [∀ v, NormedAddCommGro
     rw [inner_add_right, inner_update t h, inner_update t h, inner_update t h, inner_add_right, add_mul]
   map_update_smul' x i c a := by
     refine (eq_of_inner_eq t hd fun z => ?_)
-    rw [inner_smul_right, inner_update t h, inner_update t h, inner_smul_right, mul_assoc]
+    rw [inner_smul_right, inner_update t h, inner_update t h, inner_smul_right, mul_assoc,
+      RingHom.id_apply]
   cont := continuous_tens t h
 
 variable {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel V S}

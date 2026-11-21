@@ -11,19 +11,20 @@ namespace GlobalTheory.PsChar
 theorem alt_pow_eq_prod {M A : Type*} [Monoid M] [CommRing A] (T : M → A) (y : M)
     (hy : ∀ m : ℕ, 2 ≤ m → T (y ^ m) = 0) :
     ∀ (n : ℕ) (z : Fin n → M), (∀ i, ∃ a : ℕ, 1 ≤ a ∧ z i = y ^ a) →
-      alt T n z = ∏ i, T (z i)
-  | 0, _, _ => by simp [alt]
-  | n + 1, z, hz => by
-    rw [alt, alt_pow_eq_prod T y hy n (Fin.tail z) (fun i => hz i.succ), Fin.prod_univ_succ]
-    have hz0 : ∃ a : ℕ, 1 ≤ a ∧ z 0 = y ^ a := hz 0
-    obtain ⟨a, ha, hza⟩ := hz0
+      alt T n z = ∏ i, T (z i) := by
+  intro n
+  induction n with
+  | zero => simp [alt]
+  | succ n ih =>
+    intro z hz
+    obtain ⟨a, ha, hza⟩ := hz 0
     have hs : ∑ i : Fin n, alt T n (Function.update (Fin.tail z) i (z 0 * Fin.tail z i)) = 0 := by
       apply Finset.sum_eq_zero
       intro i _
       obtain ⟨b, hb, hzb⟩ := hz i.succ
       have he : z 0 * Fin.tail z i = y ^ (a + b) := by
         rw [pow_add, ← hza, ← hzb]; rfl
-      rw [he, alt_pow_eq_prod T y hy n]
+      rw [he, ih]
       · refine Finset.prod_eq_zero (Finset.mem_univ i) ?_
         rw [Function.update_self]
         exact hy _ (by omega)
@@ -33,8 +34,8 @@ theorem alt_pow_eq_prod {M A : Type*} [Monoid M] [CommRing A] (T : M → A) (y :
           exact ⟨a + b, by omega, by rw [Function.update_self]⟩
         · rw [Function.update_of_ne hj]
           exact hz j.succ
-    simp only [Fin.tail_def] at hs ⊢
-    rw [hs, sub_zero]
+    rw [alt, ih (Fin.tail z) (fun i => hz i.succ), hs, sub_zero, Fin.prod_univ_succ]
+    simp only [Fin.tail_def]
 
 theorem IsPsChar.apply_eq_zero_of_pow {M A : Type*} [Monoid M] [CommRing A] [IsReduced A] {d : ℕ} {T : M → A}
     (hT : IsPsChar d T) (y : M) (hy : ∀ m : ℕ, 2 ≤ m → T (y ^ m) = 0) : T y = 0 := by

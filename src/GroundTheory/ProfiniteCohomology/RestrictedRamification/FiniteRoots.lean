@@ -81,6 +81,8 @@ section Brauer
 
 open GroundTheory.Global FiniteSubfield DirectSum
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1)))
 
 theorem mem_of_dvd_of_mem {d n : ℕ} (hd : d ∣ n)
@@ -110,10 +112,51 @@ theorem eq_zero_of_nsmul_eq_zero_of_sUnitsBrauer_eq_zero (n : ℕ) (hn0 : n ≠ 
     rw [pow_zero, one_mul] at hn
     exact hm (hn ▸ Nat.minFac_dvd n)
   have hmy : m • y = 0 := by
-    refine eq_zero_of_sUnitsBrauer_eq_zero K S _ hℓ
-      (mem_of_dvd_of_mem K S (Nat.minFac_dvd _) hS) (m • y) a ?_ ?_
-    · rw [smul_smul, ← hn, hy]
-    · rw [map_nsmul, hy', nsmul_zero]
+    have ht : n.minFac ^ a • (m • y) = 0 := by rw [smul_smul, ← hn, hy]
+    have hb : sUnitsBrauer K S (m • y) = 0 := by rw [map_nsmul, hy', nsmul_zero]
+    have hmap : (cohomologyMap (sUnitsQuotSequence K.1 ℚ̄ S).f 2).hom (m • y) = 0 := by
+      rw [sUnitsBrauer_apply] at hb
+      have hf := gsBrauerInfl_injective K S (hb.trans (map_zero _).symm)
+      exact (cohomologyULiftIntAddEquiv _ 2).injective (hf.trans (map_zero _).symm)
+    have hE := sUnitsQuotSequence_shortExact K.1 ℚ̄ S
+    obtain ⟨p, hp⟩ := exists_δ_eq_of_cohomologyMap_f_eq_zero hE 1 2 rfl (m • y) hmap
+    have hpt : n.minFac ^ a • p = 0 := by
+      obtain ⟨z, hz⟩ := exists_cohomologyMap_g_eq_of_δ_eq_zero hE 1 2 rfl (n.minFac ^ a • p)
+        (by
+          rw [map_nsmul, hp]
+          exact ht)
+      have : Subsingleton (cohomology (sUnitsQuotSequence K.1 ℚ̄ S).X₂ 1) :=
+        subsingleton_cohomology_one_galUnits
+      rw [← hz, Subsingleton.elim z 0, map_zero]
+    obtain ⟨ιs⟩ := nonempty_localEmbeddings K
+    have : CompactSpace (galUnramifiedOutside K.1 ℚ̄ S) :=
+      (galUnramifiedOutside_isProfinite (F := K.1) (Ω := ℚ̄) S).1
+    have : TotallyDisconnectedSpace (galUnramifiedOutside K.1 ℚ̄ S) :=
+      (galUnramifiedOutside_isProfinite (F := K.1) (Ω := ℚ̄) S).2.2
+    have : IsDiscreteRep (picSequence K S ιs).X₁ :=
+      inferInstanceAs (IsDiscreteRep (sUnitsQuotSequence K.1 ℚ̄ S).X₃)
+    have : IsDiscreteRep (picSequence K S ιs).X₂ :=
+      inferInstanceAs (IsDiscreteRep (gsDiv K S ιs ℤ))
+    have : IsDiscreteRep (picSequence K S ιs).X₃ :=
+      inferInstanceAs (IsDiscreteRep (picInfRep K S ιs))
+    have hP : (picSequence K S ιs).ShortExact := by
+      refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+      · apply shortComplex_exact_of_forall_exists
+        intro f hf
+        obtain ⟨q, hq⟩ := (Submodule.Quotient.mk_eq_zero _).1 hf
+        exact ⟨q, hq⟩
+      · exact (Rep.mono_iff_injective _).2 (sUnitsQuotDiv_injective K S ιs)
+      · exact (Rep.epi_iff_surjective _).2 (picQuot_surjective K S ιs)
+    have hD : Subsingleton (cohomology (picSequence K S ιs).X₂ 1) :=
+      ModuleCat.subsingleton_of_isZero (isZero_cohomology_one_divFunRep_int (gsDecomp K S ιs))
+    obtain ⟨q, hq⟩ := exists_δ_eq_of_cohomologyMap_f_eq_zero hP 0 1 rfl
+      (p : cohomology (picSequence K S ιs).X₁ 1) (Subsingleton.elim _ _)
+    have hp0 : p = 0 :=
+      eq_zero_of_mem_range_δ_of_coprime hP 0 1 rfl ⟨q, hq⟩ n.minFac
+        (fun z => exists_coprime_smul_cohomology_eq_zero (picInfRep K S ιs) n.minFac
+          (exists_coprime_smul_picInfRep K S ιs n.minFac hℓ
+            (mem_of_dvd_of_mem K S (Nat.minFac_dvd _) hS)) 0 z) a hpt
+    exact hp.symm.trans ((congrArg (δ hE 1 2 rfl).hom hp0).trans (map_zero _))
   have hlt : m < n := by
     have h2 : 1 < n.minFac ^ a := Nat.one_lt_pow ha hℓ.one_lt
     rw [hn]
@@ -145,8 +188,27 @@ theorem finite_nsmul_eq_zero_sUnits_two [Finite S] (n : ℕ) (hn0 : n ≠ 0)
     · by_cases hw : w ∈ S
       · exact placeInv_injective (.inr w)
           (congrArg Subtype.val (congrFun (congrArg Prod.snd h) ⟨w, hw⟩))
-      · exact (brauerLocal_sUnitsBrauer_inr K S ιs y.1 w hw).trans
-          (brauerLocal_sUnitsBrauer_inr K S ιs z.1 w hw).symm
+      · have hzero (x : cohomology (galSUnitsMax K.1 ℚ̄ S) 2) :
+            t x (.inr w) = 0 := by
+          change brauerLocal ιs (sUnitsBrauer K S x) (.inr w) = 0
+          rw [sUnitsBrauer_apply, brauerLocal_gsBrauerInfl_inr]
+          apply (gsLocalRes_eq_zero_iff S (ιs.fin w) hw _).2
+          rw [cohomologyMapAlong_cohomologyMap_apply]
+          have hcomp :
+              (Rep.resFunctor (decompHomS (w.adicCompletion K.1) S (ιs.fin w))).map
+                (sUnitsToUnits S (maxUnramifiedOutside K.1 ℚ̄ S)) ≫
+                  ordEmbMor S (ιs.fin w) hw = 0 := by
+            apply Rep.hom_ext
+            apply Representation.IntertwiningMap.ext
+            apply LinearMap.ext
+            intro a
+            change (ordEmbMor S (ιs.fin w) hw).hom
+              ((sUnitsToUnits S (maxUnramifiedOutside K.1 ℚ̄ S)).hom a) = 0
+            rw [sUnitsToUnits_hom_apply, ordEmbMor_hom_apply]
+            exact ordEmb_eq_zero_of_mem S (ιs.fin w) hw (Additive.toMul a).2
+          rw [hcomp, cohomologyMapAlong, cochainsMapAlong_zero, HomologicalComplex.homologyMap_zero]
+          rfl
+        exact (hzero y.1).trans (hzero z.1).symm
   have hyz : sUnitsBrauer K S (y.1 - z.1) = 0 := by
     refine brauerLocal_injective ιs ?_
     rw [map_sub, map_sub, map_zero]

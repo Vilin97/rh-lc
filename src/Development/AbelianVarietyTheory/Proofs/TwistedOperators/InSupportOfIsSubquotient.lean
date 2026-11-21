@@ -79,7 +79,7 @@ theorem jacMap_injective (e : (Σ a, Fin (d a)) ≃ n) {σ : Representation ℂ 
   obtain ⟨v, rfl⟩ := Submodule.Quotient.mk_surjective _ x
   have h1 : f v ∈ twKer τ (unipRad k e) 1 := (Submodule.Quotient.mk_eq_zero _).1 hx
   let c : n → ℤ := fun i => (blk e i).val
-  have hN : unipRad k e = unipOf k c := unipRad_eq_unipOf fun i j => by simp [c]
+  have hN : unipRad k e = unipOf k c := unipRad_eq_unipOf k fun i j => by simp [c]
   obtain ⟨S, hS, h2⟩ := exists_finset_of_mem_twKer h1
   have hcompact : ∃ H : Subgroup (GL n k), H ≤ unipOf k c ∧
       IsCompact (H : Set (GL n k)) ∧ ∀ u ∈ S, u ∈ H := by

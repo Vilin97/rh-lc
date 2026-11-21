@@ -117,6 +117,7 @@ theorem psi_inv (hT : LawsJ T) (hj : InR D j) {a : (D.host.E →+* ℂ) × ℕ �
   have hl : ((lieFac (T.Q.Dw j) (xiR D) a : ℝ) : ℂ) ≠ 0 := by exact_mod_cast (lieFac_pos _ _ _).ne'
   exact mul_left_cancel₀ hl h
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem psi_indep (hT : LawsJ T) (hj : InR D j) {a : (D.host.E →+* ℂ) × ℕ → ℕ} {n : ℕ} (hD : Dom a n) (m : ℕ)
     (b : Fin m → T.cuspA j a n) (hb : LinearIndependent T.Q.c.F b) :
     LinearIndependent ℂ fun l => psi T j hV (b l : T.R j) := by
@@ -139,6 +140,7 @@ theorem InForms.inv (hT : LawsJ T) (hj : InR D j) {a : (D.host.E →+* ℂ) × �
   intro γ hγ g
   simp only [Finset.sum_apply, Pi.smul_apply, psi_inv T j hV hT hj hD (fs _).2 γ hγ g]
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem InForms.ratio (hT : LawsJ T) (hj : InR D j) {a : (D.host.E →+* ℂ) × ℕ → ℕ} {n : ℕ} (hD : Dom a n)
     {K₀ K' : IntermediateField ℚ ℂ} (h0 : K₀ ≤ K') (hc : T.Q.c.F ≤ K') {Φ Φ' : GA D W → ℂ} (h : InForms T j hV a n K₀ Φ)
     (h' : InForms T j hV a n K' Φ') {ρ : ℂ} (e : Φ = ρ • Φ') (hne : Φ ≠ 0) : ρ ∈ K' := by

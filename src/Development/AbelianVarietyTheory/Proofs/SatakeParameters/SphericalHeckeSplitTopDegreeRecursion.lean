@@ -45,17 +45,12 @@ theorem pos_iff_lt : ∀ {n : ℕ} (d : Fin n → ℤ), Antitone d →
       · simp [h0]
       · simp [ih j]
     · have hnil : (List.ofFn fun j : Fin n => d j.succ).filter (fun x => 0 < x) = [] := by
-        rw [List.filter_eq_nil_iff]
-        intro x hx
-        obtain ⟨j, rfl⟩ := (List.mem_ofFn (f := fun j : Fin n => d j.succ)).1 hx
-        have := hd (Fin.zero_le j.succ)
-        simp only [decide_eq_true_eq, not_lt]
-        omega
-      simp only [h0, decide_false, Bool.false_eq_true, if_false, hnil, List.length_nil]
-      have := hd (Fin.zero_le i)
-      constructor
-      · intro h; omega
-      · intro h; omega
+        rw [List.filter_eq_nil_iff, List.forall_mem_ofFn_iff]
+        intro j
+        simpa only [decide_eq_true_eq] using
+          (fun hj : 0 < d j.succ => h0 (lt_of_lt_of_le hj (hd (Fin.zero_le j.succ))))
+      have hi : ¬ 0 < d i := fun hi => h0 (lt_of_lt_of_le hi (hd (Fin.zero_le i)))
+      simp [h0, hnil, hi]
 
 theorem dualLab_splitLab (n k : ℕ) (hk : k ≤ n) :
     dualLab (splitLab n k) = List.ofFn fun i : Fin n => if (i : ℕ) < k then (1 : ℤ) else 0 := by

@@ -73,11 +73,13 @@ set_option maxHeartbeats 4000000 in
 theorem chX_stepInOf (Fo : FormsIn M (i + 1) hi) (Lc : LocIn X u w hg Lv i Fo.Ch)
     (pos : (Σ v : Fin (Fl.Pj (i + 1)).nV, Fin ((Fl.Pj (i + 1)).n' v)) ≃ D.what₂.Tau)
     (hU : ∀ β, SameUlocJ hi (Fo.K β).lev (Lc.Uloc β)) (hB : ∀ β, FrRatJ (Lc.t β) Lc.B) (hTc : ∀ β, HypTJC (Lc.t β)) :
-    ChX (stepInOf hi Fo Lc pos) where
-  hypC := fun (β : Fo.Ch) => locHypC_locJ hi (Lc.t β) Lc.B (Fo.K β).lev (hU β) (hB β) (hTc β)
-  inj := fun (β : Fo.Ch) a => gamI_inj_locJ hi (Lc.t β) Lc.B a
-  onto := fun (β : Fo.Ch) a => gamOnto_locJ hi (Lc.t β) Lc.B (Fo.K β).lev (hU β) a
-  cinj := fun (β : Fo.Ch) => compInj_locJ hi (Lc.t β) Lc.B (Fo.K β).lev (hU β)
+    ChX (stepInOf hi Fo Lc pos) := by
+  exact {
+    hypC := fun (β : Fo.Ch) => locHypC_locJ hi (Lc.t β) Lc.B (Fo.K β).lev (hU β) (hB β) (hTc β)
+    inj := fun (β : Fo.Ch) a => gamI_inj_locJ hi (Lc.t β) Lc.B a
+    onto := fun (β : Fo.Ch) a => gamOnto_locJ hi (Lc.t β) Lc.B (Fo.K β).lev (hU β) a
+    cinj := fun (β : Fo.Ch) => compInj_locJ hi (Lc.t β) Lc.B (Fo.K β).lev (hU β)
+  }
 
 end Formalism.MainNotions.G.KAat
 

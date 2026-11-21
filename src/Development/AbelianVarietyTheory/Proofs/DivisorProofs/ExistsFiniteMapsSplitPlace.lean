@@ -48,12 +48,16 @@ theorem mapA_add {z : ℂ} {l : (Matrix (Fin a) (Fin a) k → ℂ) → ℂ} (hl 
   funext x
   rw [Pi.add_apply, mapA, mapA, mapA, ← hl.1 _ (restrict_X0 (omA_mem_SB ν β 1 x h)) _ (restrict_X0 (omA_mem_SB ν β 1 x h'))]
   congr 1
+  funext y
+  simp only [omA, Pi.add_apply, mul_add]
 
 theorem mapA_smul {z : ℂ} {l : (Matrix (Fin a) (Fin a) k → ℂ) → ℂ} (hl : IsEqv ν z l) (c : ℂ)
     {Φ : Matrix (Fin a) (Fin (a + a')) k → ℂ} (h : Φ ∈ SB _) : mapA a' l ν β (c • Φ) = c • mapA a' l ν β Φ := by
   funext x
   rw [Pi.smul_apply, smul_eq_mul, mapA, mapA, ← hl.2.1 c _ (restrict_X0 (omA_mem_SB ν β 1 x h))]
   congr 1
+  funext y
+  simp only [omA, Pi.smul_apply, smul_eq_mul]
   ring
 
 theorem mapA_omA_left {l : (Matrix (Fin a) (Fin a) k → ℂ) → ℂ} (hl : IsEqv ν (((a + a' : ℕ) : ℂ) / 2) l) (g : GL (Fin a) k)
@@ -64,7 +68,8 @@ theorem mapA_omA_left {l : (Matrix (Fin a) (Fin a) k → ℂ) → ℂ} (hl : IsE
     rw [← omA_mul, ← omA_mul, one_mul, mul_one, one_mul, mul_one]
   rw [mapA, mapA, e, ← hl.2.2 g⁻¹ 1 _ hs, ← hl.2.1 _ _ (comp_mul_mem_SB g⁻¹ 1 hs)]
   congr 1
-    Fintype.card_fin, apow_inv, Matrix.mul_assoc, neg_div, inv_one, Matrix.one_mul, one_mul]
+  funext y
+  simp [omA, Fintype.card_fin, apow_inv, Matrix.mul_assoc, ← neg_div]
 
 theorem mapA_ne_zero {l : (Matrix (Fin a) (Fin a) k → ℂ) → ℂ} (hl : ∃ φ ∈ SB _, l φ ≠ 0) :
     ∃ Φ ∈ SB (Matrix (Fin a) (Fin (a + a')) k), mapA a' l ν β Φ 1 ≠ 0 := by
@@ -99,7 +104,7 @@ theorem map_eq_top {U H : Type} [AddCommGroup U] [Module ℂ U] [Group H] (S : S
 
 section Adelic
 
-open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.KFinLoc
+open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK
 open GlobalTheory.SplitFlip (omA omB)
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField

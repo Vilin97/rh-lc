@@ -171,7 +171,9 @@ theorem emb_ext (hA : l.A = 1) {β β' : KA l →+* ℂ} (h : β (baseKA l).ρ =
   have hz : zeta l.A = 1 := by rw [hA, zeta]; simp [Complex.exp_two_pi_mul_I]
   have := IntermediateField.algHom_ext_of_eq_adjoin ℚ (S := KA l) (s := {H.rt0, zeta l.A}) rfl
     (φ₁ := β.toRatAlgHom) (φ₂ := β'.toRatAlgHom) (by
-      rintro x (rfl | rfl)
+      intro x hx
+      simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx
+      rcases hx with (rfl | rfl)
       · exact h
       · have e : ∀ hx, (⟨zeta l.A, hx⟩ : KA l) = 1 := fun hx => Subtype.ext hz
         rw [e]

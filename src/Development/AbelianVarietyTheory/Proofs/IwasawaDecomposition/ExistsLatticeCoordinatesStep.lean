@@ -38,7 +38,7 @@ set_option autoImplicit false
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits NumberField
-open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory GlobalTheory.LocM GlobalTheory.LieMet GlobalTheory.DRFlag GlobalTheory.GrCl
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory GlobalTheory.LocM GlobalTheory.LieMet GlobalTheory.DRFlag
 open ReciprocityTheory.ChartRestriction.G.PullbackSections (TanM tv)
 open GlobalTheory.FlagMod (ev tanPull ev_res ev_appLE le_preimage_inf le_preimage_map le_preimage_mono)
 open GlobalTheory.Twist (resM resM_resM app_resM)
@@ -91,17 +91,87 @@ theorem tanEv_sum_smul (h : ⊤ ≤ x ⁻¹ᵁ V) {v : Sp (DualNumber S) ⟶ t.G
     simpa using this
   | insert j s hj ih => rw [Finset.sum_insert hj, Finset.sum_insert hj, tanEv_add, tanEv_smul, ih]; rfl
 
+open TopologicalSpace MonoidalCategory MonObj GlobalTheory.LieVB GlobalTheory.Conormal in
+open GlobalTheory.QCoh (pullbackSections) in
+open GlobalTheory.DualPull (appLE_resG resG_appLE) in
+open ReciprocityTheory.ChartRestriction.G.Pdiv (specO) in
+open GlobalTheory.CompanionTheory.Ar (dualMap) in
 theorem tanLin_tanPull {S' : Type} [CommRing S'] (φ : S →+* S') {x' : Sp S' ⟶ X} (e : spMap φ ≫ x = x') (h : ⊤ ≤ x ⁻¹ᵁ V)
     (h' : ⊤ ≤ x' ⁻¹ᵁ V) {n : ℕ} (s : Fin n → Γ(GlobalTheory.LieVB.omega t.G, V)) (v : TanM x t.G) :
     tanLin t h' s (tanPull φ e v) = φ ∘ tanLin t h s v := by
   subst e
-  exact funext fun l => GlobalTheory.LocM.tanEv_baseChange E H X t S x V h _ (isTan_tv v) S' φ _ h' (s l)
+  funext l
+  change tanEv t (isTan_tv (tanPull φ rfl v)) h' (s l) = φ (tanEv t (isTan_tv v) h (s l))
+  let v₁ := (tv v).left
+  let dφ := spMap (dualMap φ)
+  have hv : IsTanAtG t x v₁ := isTan_tv v
+  have hv' : IsTanAtG t (spMap φ ≫ x) (dφ ≫ v₁) := isTan_tv (tanPull φ rfl v)
+  have hcomp : dφ ≫ (specO S (DualNumber S)).hom = (specO S' (DualNumber S')).hom ≫ spMap φ := by
+    change Spec.map _ ≫ Spec.map _ = Spec.map _ ≫ Spec.map _
+    rw [← Spec.map_comp, ← Spec.map_comp]
+    congr 1
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have heps : dφ.appLE ⊤ ⊤ (le_preimage_top _ _) (epsFn S) = epsFn S' := by
+    refine congr($(Scheme.ΓSpecIso_inv_naturality
+      (CommRingCat.ofHom (dualMap φ))) DualNumber.eps).symm.trans ?_
+    refine congrArg (Scheme.ΓSpecIso (.of (DualNumber S'))).inv.hom ?_
+    change dualMap φ DualNumber.eps = _
+    ext <;> simp [dualMap]
+  let σ := s l
+  have hform : ((tanForm t hv').app ⊤ (pullbackSections _ (omega t.G) h' σ) : Γ(Sp S', ⊤)) =
+      (spMap φ).appLE ⊤ ⊤ (le_preimage_top _ _)
+        ((tanForm t hv).app ⊤ (pullbackSections x (omega t.G) h σ) : Γ(Sp S, ⊤)) := by
+    have := t.semi
+    have key (y : (⊤ : (Sp S').Opens)) : ∃ T' : (Sp S').Opens, y.1 ∈ T' ∧
+        resG (Sp S') (le_top : T' ≤ ⊤) ((tanForm t hv').app ⊤ (pullbackSections _ (omega t.G) h' σ) : Γ(Sp S', ⊤)) =
+        resG (Sp S') (le_top : T' ≤ ⊤) ((spMap φ).appLE ⊤ ⊤ (le_preimage_top _ _)
+          ((tanForm t hv).app ⊤ (pullbackSections x (omega t.G) h σ) : Γ(Sp S, ⊤))) := by
+      obtain ⟨U, W, hU, hle, c⟩ := exists_isChart (sec_hom (MonObj.one (X := t.G))) (V := V)
+        (x := x (spMap φ y.1)) (h trivial)
+      obtain ⟨T, hT, hyT, hTU⟩ := QCoh.exists_affine_mem_le (U := x ⁻¹ᵁ U) (spMap φ y.1) hU
+      obtain ⟨f, hf⟩ := c.d_surjective (sec_hom (MonObj.one (X := t.G))) (resM _ hle σ)
+      have hf' : dUnit t.G c.le f = resM (omega t.G) hle σ := hf
+      have hTU' : spMap φ ⁻¹ᵁ T ≤ (spMap φ ≫ x) ⁻¹ᵁ U := (spMap φ).preimage_mono hTU
+      obtain ⟨⟨a, b⟩, hfibre⟩ := (bijective_add_mul_epsFn S T hT).2
+        (v₁.appLE W _ (preimage_le_of_isTanAtG t hv c.le hTU) f)
+      have h₁ := tanForm_dUnit t hv c.le hTU f a b hfibre.symm
+      have hpre : (specO S' (DualNumber S')).hom ⁻¹ᵁ spMap φ ⁻¹ᵁ T ≤
+          dφ ⁻¹ᵁ (specO S (DualNumber S)).hom ⁻¹ᵁ T := (le_preimage_of_comp hcomp).2 le_rfl
+      have hpre' : (specO S' (DualNumber S')).hom ⁻¹ᵁ spMap φ ⁻¹ᵁ T ≤
+          ((specO S' (DualNumber S')).hom ≫ spMap φ) ⁻¹ᵁ T := le_rfl
+      have hcoeff (z : Γ(Sp S, T)) : dφ.appLE _ _ hpre
+          ((specO S (DualNumber S)).hom.appLE T _ le_rfl z) =
+          (specO S' (DualNumber S')).hom.appLE _ _ le_rfl ((spMap φ).appLE T _ le_rfl z) :=
+        (appLE_appLE hcomp _ _ hpre' z).trans (appLE_appLE rfl _ _ hpre' z).symm
+      have heps' : dφ.appLE _ _ hpre (resG _ le_top (epsFn S)) = resG _ le_top (epsFn S') :=
+        (appLE_resG _ _ _ _).trans ((resG_appLE _ le_top (le_preimage_top _ _) _).symm.trans (congrArg _ heps))
+      have h₂ := tanForm_dUnit t hv' c.le hTU' f ((spMap φ).appLE T _ le_rfl a)
+        ((spMap φ).appLE T _ le_rfl b) (by
+          refine (appLE_appLE rfl (preimage_le_of_isTanAtG t hv c.le hTU) hpre _ f).symm.trans ?_
+          refine (congrArg (dφ.appLE _ _ hpre) hfibre.symm).trans ?_
+          refine (map_add _ _ _).trans ?_
+          exact congrArg₂ (· + ·) (hcoeff a) ((map_mul _ _ _).trans (congrArg₂ (· * ·) (hcoeff b) heps')))
+      rw [hf', QCoh.pullbackSections_res] at h₁ h₂
+      refine ⟨spMap φ ⁻¹ᵁ T, hyT, ?_⟩
+      refine (app_resM (tanForm t hv') le_top _).symm.trans ?_
+      rw [QCoh.res_pullbackSections, h₂, ← h₁]
+      refine .trans ?_ ((appLE_resG (spMap φ) (le_top : T ≤ ⊤) le_rfl _).trans
+        (resG_appLE (spMap φ) le_top (le_preimage_top _ _) _).symm)
+      refine congrArg _ ?_
+      refine .trans ?_ (app_resM (tanForm t hv) le_top _)
+      rw [QCoh.res_pullbackSections]
+    choose T hT hs using key
+    exact LB.fun_ext_of_cover T (fun _ => le_top) (fun y hy => Opens.mem_iSup.2 ⟨⟨y, hy⟩, hT _⟩) hs
+  unfold tanEv
+  refine (congrArg (Scheme.ΓSpecIso (.of S')).hom hform).trans ?_
+  refine (congrArg (Scheme.ΓSpecIso (.of S')).hom (appLE_top (spMap φ) _)).trans ?_
+  exact congr($(Scheme.ΓSpecIso_naturality (CommRingCat.ofHom φ)) _)
 
 theorem tanLin_injective (h : ⊤ ≤ x ⁻¹ᵁ V) {n : ℕ} (s : Fin n → Γ(GlobalTheory.LieVB.omega t.G, V)) {U : X.Opens} (e : U ≤ V)
     (hU : ⊤ ≤ x ⁻¹ᵁ U) (hs : VB.IsFrame fun l => resM _ e (s l)) : Function.Injective (tanLin t h s) := fun v w hvw =>
   tan_ext ((GlobalTheory.TanFibre.existsUnique_tanEv E H X t S x U hU n _ hs (tanLin t h s w)).unique
     ⟨isTan_tv v, fun l => (tanEv_resM t _ hU e _).trans (congrFun hvw l)⟩
-    ⟨isTan_tv w, fun l => tanEv_resM t _ hU e _⟩)
+    ⟨isTan_tv w, fun _ => tanEv_resM t _ hU e _⟩)
 
 end Lin
 

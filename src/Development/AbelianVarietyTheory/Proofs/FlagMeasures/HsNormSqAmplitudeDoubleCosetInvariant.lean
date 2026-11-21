@@ -254,6 +254,6 @@ theorem hsNormSq_amp_doubleCoset : ∀ (D : D7) τ w w' θ (W : LocW D.R.k D.R.r
   obtain ⟨V, hV⟩ := exists_isometry hπ' hψ' hΦ' ha'
   unfold LocS.J
   rw [← key]
-  exact hsNormSq_ampJ_translate (ae_mem_of_quot (fun x hx => hx.1.1) hG hH hν) _ hγ hu U V hU hV
+  exact hsNormSq_ampJ_translate (ae_mem_of_quot (R := Rset D.R.k D.R.rS γ) (fun x hx => hx.1.1) hG hH hν) _ hγ hu U V hU hV
 
 end GlobalTheory.AmpCoset

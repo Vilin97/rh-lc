@@ -386,7 +386,7 @@ theorem exists_lift_last : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T 
     have hf : IsThetaFunO R.ψ _ _ (R.vX t) := by
       have := hpt t 1
       rwa [RealDat.ptX, GlobalTheory.FiniteFock.pureTensorO_one] at this
-    refine ioExists_definite (R.MY (D.R.m - 1)) R.MX hM.inf (hω t) (D.sp.Y_sig _) D.sp.X'_sig ?_
+    refine ioExists_definite (J := levS _ (R.βY (D.R.m - 1)) (R.datYt t (D.R.m - 1) R.triv)) (R.MY (D.R.m - 1)) R.MX hM.inf (hω t) (D.sp.Y_sig _) D.sp.X'_sig ?_
       (allPlus_of_le _ (le_min le_rfl (Nat.sub_le _ _)) _) (allPlus_of_le _ (Nat.sub_le _ _) _) (hpt t)
       (isFockVacAt_stepVec (hv t) hf) (hIt t) (fun κ hκ => ⟨hκ.1, ?_⟩) (GlobalTheory.GoodFiniteDim.exists_open_subgroup _ _ _)
       (hM.νX t).1.1 (hM.νX t).2 hC

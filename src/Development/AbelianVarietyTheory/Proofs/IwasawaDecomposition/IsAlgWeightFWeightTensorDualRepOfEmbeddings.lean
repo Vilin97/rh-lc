@@ -44,7 +44,7 @@ theorem isAlgWeightF_of_embPoly {W : Type} [AddCommGroup W] [Module K W] (ρ : R
     {ι : Type} [Fintype ι] [DecidableEq ι] (b : Module.Basis ι K W)
     (Q : ι → ι → MvPolynomial ((L →+* K) × Fin n × Fin n) K)
     (hQ : ∀ γ : GQ L n, LinearMap.toMatrix b b (ρ γ) =
-      fun i j => MvPolynomial.eval (awfPt ((ratHom γ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L)) (Q i j)) :
+      fun i j => MvPolynomial.eval (awfPt (ratHom (L := L) (n := n) γ : Matrix (Fin n) (Fin n) L)) (Q i j)) :
     NX.IsAlgWeightF L n K ρ := by
   let e := Module.finBasis ℚ L
   refine ⟨Module.Finite.of_basis b, ι, inferInstance, inferInstance, b, _, inferInstance, e,
@@ -182,7 +182,8 @@ theorem awfTenP_eval (emb : ι → L →+* K) (lam : ι → DomWeight n) (i j : 
 
 theorem tenRepF_toMatrix (emb : ι → L →+* K) (lam : ι → DomWeight n) (γ : GQ L n) :
     LinearMap.toMatrix (bVV K lam) (bVV K lam) (tenRepF emb lam γ) =
-      fun i j => MvPolynomial.eval (awfPt ((ratHom γ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L)) (awfTenP emb lam i j) := by
+      fun i j => MvPolynomial.eval (awfPt (ratHom (L := L) (n := n) γ : Matrix (Fin n) (Fin n) L))
+        (awfTenP emb lam i j) := by
   classical
   ext i j
   rw [LinearMap.toMatrix_apply, ← awfCoord_spec, awfTenP_eval, awfTwP_eval _ _ _ (ratHom_mem γ)]
@@ -200,7 +201,7 @@ variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {ι : Type
 open Classical in
 theorem wtRepF_toMatrix (emb : ι → L →+* K) (lam : ι → DomWeight n) (γ : GQ L n) :
     LinearMap.toMatrix (bVV K lam).dualBasis (bVV K lam).dualBasis (wtRepF emb lam γ) =
-      fun i j => MvPolynomial.eval (awfPt ((ratHom γ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L))
+      fun i j => MvPolynomial.eval (awfPt (ratHom (L := L) (n := n) γ : Matrix (Fin n) (Fin n) L))
         (MvPolynomial.rename (fun p : (L →+* K) × Fin n × Fin n =>
           (p.1.comp (IsCMField.complexConj L : L →+* L), p.2.2, p.2.1)) (awfTenP emb lam j i)) := by
   have e : LinearMap.toMatrix (bVV K lam).dualBasis (bVV K lam).dualBasis (wtRepF emb lam γ) =
@@ -208,7 +209,8 @@ theorem wtRepF_toMatrix (emb : ι → L →+* K) (lam : ι → DomWeight n) (γ 
     rw [wtRepF, Representation.dual_apply, LinearMap.toMatrix_transpose]
   rw [e, tenRepF_toMatrix]
   ext i j
-  show MvPolynomial.eval (awfPt ((ratHom γ⁻¹ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L)) (awfTenP emb lam j i) = _
+  show MvPolynomial.eval (awfPt (ratHom (L := L) (n := n) γ⁻¹ : Matrix (Fin n) (Fin n) L))
+    (awfTenP emb lam j i) = _
   rw [MvPolynomial.eval_rename]
   refine congrArg (fun f => MvPolynomial.eval f (awfTenP emb lam j i)) (funext fun p => ?_)
   simp only [Function.comp_apply, awfPt, RingHom.comp_apply, map_inv]

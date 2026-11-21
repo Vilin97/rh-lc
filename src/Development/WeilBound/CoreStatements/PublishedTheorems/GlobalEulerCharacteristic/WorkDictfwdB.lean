@@ -325,7 +325,9 @@ theorem exists_cc_gen (K : FiniteSubfield) (v : {v : InfinitePlace K.1 // v.IsRe
     show κA (algebraMap K.1 (AlgebraicClosure v.1.Completion) x) = _
     rw [hsc, hκr, InfinitePlace.Completion.ringEquivRealOfIsReal_apply, ← InfinitePlace.embedding_of_isReal_apply hv]
     congr 1
-    exact InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hv _
+    rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+      Algebra.algebraMap_self_apply]
+    simp
 
 theorem real_H0_card_eq_fixed (K : FiniteSubfield) (S' : Set (HeightOneSpectrum (𝓞 K.1)))
     (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal},

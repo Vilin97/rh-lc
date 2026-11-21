@@ -105,12 +105,13 @@ theorem transL (hO : ArchOp) (hL : ArchLie) (hQ : ArchUniq) (hp : IsPair B M χX
 theorem quot_trans (hO : ArchOp) (hL : ArchLie) (hQ : ArchUniq) (hp : IsPair B M χX χW om r s r' s')
     (hp₂ : IsPair B M₂ χX χW om r s r' s') {g h T} (hg : Moves B X X₂ g) (hT : IsArchOp om (g, h) T)
     (hP : (M₂.Pol B.ψ B.emb).map (T : _ →ₗ[ℂ] _) = M.Pol B.ψ B.emb) {P : Type} [AddCommGroup P] [Module ℂ P]
-    {p : SInf F (Fin n × Fin d) →ₗ[ℂ] P} (q : RealQuot B M om p) : RealQuot B M₂ om (p ∘ₗ (T : _ →ₗ[ℂ] _)) where
-  onto := by rw [Submodule.map_comp, hP, q.onto]
-  lie := fun γ hγ f hf f₁ ha => q.lie _ (conj_line hg.1 hγ) (T f) (hP ▸ ⟨f, hf, rfl⟩) (T f₁)
-    (transL hO hL hQ hp hp₂ hT hP (conj_line hg.1 hγ) one_line hγ one_line (fun t => cj1 g (γ t) h) hf ha)
-  cpt := fun k hk f hf f₁ ha => q.cpt _ (hg.up hk) (T f) (hP ▸ ⟨f, hf, rfl⟩) (T f₁)
-    (transK hO hQ hp hT (hg.up hk).1 (one_at _) (cj1 g k h) ha)
+    {p : SInf F (Fin n × Fin d) →ₗ[ℂ] P} (q : RealQuot B M om p) : RealQuot B M₂ om (p ∘ₗ (T : _ →ₗ[ℂ] _)) := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [Submodule.map_comp, hP, q.onto]
+  · exact fun γ hγ f hf f₁ ha => q.lie _ (conj_line hg.1 hγ) (T f) (hP ▸ ⟨f, hf, rfl⟩) (T f₁)
+      (transL hO hL hQ hp hp₂ hT hP (conj_line hg.1 hγ) one_line hγ one_line (fun t => cj1 g (γ t) h) hf ha)
+  · exact fun k hk f hf f₁ ha => q.cpt _ (hg.up hk) (T f) (hP ▸ ⟨f, hf, rfl⟩) (T f₁)
+      (transK hO hQ hp hT (hg.up hk).1 (one_at _) (cj1 g k h) ha)
 
 theorem exists_linop (hO : ArchOp) (hL : ArchLie) (hQ : ArchUniq) (hp : IsPair B M χX χW om r s r' s') (i) :
     ∃ A : M.Pol B.ψ B.emb →ₗ[ℂ] SInf F (Fin n × Fin d), ∀ x, A x ∈ M.Pol B.ψ B.emb ∧ ∀ y, RInf B om i x y ↔ y = A x := by

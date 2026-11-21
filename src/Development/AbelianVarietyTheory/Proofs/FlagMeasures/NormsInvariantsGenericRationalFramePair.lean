@@ -52,7 +52,7 @@ theorem rd_pow_f (D : D7) : D.host.rdE ^ D.R.f = |(NumberField.discr D.host.F : 
 theorem one_le_tprod_real {ι : Type} (a : ι → ℝ) (ha : ∀ i, 1 ≤ a i) : 1 ≤ ∏' i, a i := by
   by_cases h : Multipliable a
   · refine ge_of_tendsto' h.hasProd fun s => ?_
-    exact Finset.one_le_prod (fun i _ => ha i)
+    exact Finset.one_le_prod₀ (fun i _ => ha i)
   · rw [tprod_eq_one_of_not_multipliable h]
 
 theorem one_le_nM {K V : Type} [Field K] [NumberField K] [StarRing K] (F : Type) [Field F] [NumberField F]

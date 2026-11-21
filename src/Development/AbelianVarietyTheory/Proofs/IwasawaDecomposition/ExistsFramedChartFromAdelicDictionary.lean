@@ -74,7 +74,9 @@ theorem topU_dense {U : Subgroup (GL (Fin n) (AfE F E))} {Λ : LevFam E K n SG} 
   have hkt : k * t ∈ UAd hc n := mul_mem hk (principal_le_adelic_unitary hc n ST SG ht)
   obtain ⟨z, hz, hsm, p, hp⟩ := GlobalTheory.T.exists_K1_point_congruent F E hc n ST SG Q hQ (g * (k * t)) (mul_mem hg hkt) e
   have hzU := principal_le_adelic_unitary hc n ST SG hz
-  refine ⟨(k * t) * z * (k * t)⁻¹, ⟨?_, ?_⟩, p, ?_⟩
+  refine ⟨(k * t) * z * (k * t)⁻¹, ?_, p, ?_⟩
+  change (k * t) * z * (k * t)⁻¹ ∈ U ∧ _
+  constructor
   · refine (hU _ (mul_mem (mul_mem hkt hzU) (inv_mem hkt))).2 ?_
     have e1 : k⁻¹ * ((k * t) * z * (k * t)⁻¹) * k = t * z * t⁻¹ := by group
     rw [e1]

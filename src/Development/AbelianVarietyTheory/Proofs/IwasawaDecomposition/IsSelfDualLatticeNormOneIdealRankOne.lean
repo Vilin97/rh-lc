@@ -298,7 +298,7 @@ theorem chiRec_eq_chi {idl : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z
   have h4 := h2.trans h3
   obtain ⟨x, hx⟩ := QuotientGroup.mk_surjective (relDetQ B.host I.SQ 1 (Th.stdL B.host 1) (Submodule.pi Set.univ fun _ : Fin 1 => 𝔞))
   have h5 : idl (QuotientGroup.mk x) = 𝔞 := (congrArg idl hx).trans h4
-  have h6 := GlobalTheory.Mem.ChiDet.tildeD_eq_chiId B.R B.host I.C.chiPsi I.C.isChi 1 (Submodule.pi Set.univ fun _ : Fin 1 => 𝔞) ⟨hs.1, hs.2.1⟩
+  have h6 := GlobalTheory.Mem.ChiDet.tildeD_eq_chiId B.R B.host I.C.chiPsi I.C.isChi 1 (Submodule.pi Set.univ fun _ : Fin 1 => 𝔞) (Submodule.IsLattice.of_fg B.host.E hs.1)
     (toDtT B.host I.SQ x) (congrArg (toDtTMod B.host I.SQ) hx)
   replace h6 := h6.trans (congrArg (chiId I.C.chiPsi) (detId_rank_one B.host 𝔞))
   refine ((congrArg _ h5.symm).trans (TaylorLogMetric.chiRec_idl _ _ hidl.1 _)).trans (Eq.trans ?_ h6)

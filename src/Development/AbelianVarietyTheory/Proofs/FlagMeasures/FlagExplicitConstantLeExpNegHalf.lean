@@ -62,7 +62,7 @@ theorem zeta_prod (E : Type) [Field E] [NumberField E] (J : ℕ) :
   have h0 : ∀ l ∈ Finset.Icc 2 J, 0 ≤ zetaE E l := fun l hl =>
     zero_le_one.trans (GlobalTheory.T.one_le_dedekindZetaRealValue_and_le_zeta_pow E l (Finset.mem_Icc.1 hl).1).1
   refine ⟨Finset.prod_nonneg h0, ?_⟩
-  refine (Finset.prod_le_prod h0 fun l hl => (GlobalTheory.T.one_le_dedekindZetaRealValue_and_le_zeta_pow E l (Finset.mem_Icc.1 hl).1).2).trans ?_
+  refine (Finset.prod_le_prod₀ h0 fun l hl => (GlobalTheory.T.one_le_dedekindZetaRealValue_and_le_zeta_pow E l (Finset.mem_Icc.1 hl).1).2).trans ?_
   rw [Finset.prod_pow, ← Real.exp_one_pow]
   apply pow_le_pow_left₀ (Finset.prod_nonneg fun l _ => GlobalTheory.ZetaProd.zeta_nonneg l)
   have := GlobalTheory.zetaProd_sphereVolume_bounds.1 J

@@ -144,8 +144,7 @@ theorem sE_norm_le_one_of_pull : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDis
     rw [← Category.assoc, dualMap_comp, htoS, hr]
   rw [hrq] at hrB0 hval
 
-  have hW2 : ⊤ ≤ r ⁻¹ᵁ LB.wchart D.toPre.P.L (fun k => (D.toPre.prB C).left ≫ D.toPre.famφB β k) j :=
-by
+  have hW2 : ⊤ ≤ r ⁻¹ᵁ LB.wchart D.toPre.P.L (fun k => (D.toPre.prB C).left ≫ D.toPre.famφB β k) j := by
     intro z hz
     have h' : (r ≫ (D.toPre.prB C).left).base z ∈
         ⋂ k, (D.toPre.famφB β k).base ⁻¹' (D.toPre.P.L.U (j k) : Set _) := hrB0 hz

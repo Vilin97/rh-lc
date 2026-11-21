@@ -33,7 +33,7 @@ noncomputable section
 
 open scoped NNReal
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.L2.Pj Formalism.IndefR.Datum
-open GlobalTheory.Doubling GlobalTheory.MixModel GlobalTheory.RegSW PositivityTheory.RegularEisensteinLemmas
+open GlobalTheory.Doubling GlobalTheory.MixModel GlobalTheory.RegSW
 open GlobalTheory.Core.Rk.SWLaw (zeroSp)
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar

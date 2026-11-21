@@ -377,7 +377,7 @@ theorem TypeVec.factor {α : Type} [Fintype α] [DecidableEq α] {m : α → Typ
     apply (Basis.piTensorProduct B).repr.injective
     ext r
     simp [hq0 r]
-  let Φm : MultilinearMap ℂ X (X a) :=
+  let Φm : MultilinearMap (RingHom.id ℂ) X (X a) :=
     { toFun := fun x => (∏ b ∈ Finset.univ.erase a, (B b).coord (q b) (x b)) • x a
       map_update_add' := by
         intro _ x i u v

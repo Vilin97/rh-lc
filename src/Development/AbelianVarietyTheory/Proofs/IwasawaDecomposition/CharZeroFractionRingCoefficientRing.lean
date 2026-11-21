@@ -26,7 +26,7 @@ theorem injective_of_finite_dvr {A B : Type} [CommRing A] [IsDomain A] [IsPrinci
   have hmax : ((⊥ : Ideal B).comap (algebraMap A B)).IsMaximal :=
     Ideal.IsPrime.isMaximal inferInstance hker
   have hbot : (⊥ : Ideal B).IsMaximal :=
-    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := A) _ hmax
+    Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := A) ⊥ hmax
   exact IsDiscreteValuationRing.not_a_field B (IsLocalRing.eq_maximalIdeal hbot).symm
 
 theorem charZero_of_injective {R S : Type*} [NonAssocSemiring R] [NonAssocSemiring S] [CharZero R]

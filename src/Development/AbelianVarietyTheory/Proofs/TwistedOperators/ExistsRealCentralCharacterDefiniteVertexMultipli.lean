@@ -89,6 +89,7 @@ theorem rTr_atTau_of_scalar {θ : InfFam D} {V : HSp D} {S : D.what₂.Tau → S
   classical
   have e := hT.equiv τ g hg v (c • v τ) (by rw [hc]; rfl)
   rw [← e, T.map_update_smul, Function.update_eq_self]
+  rfl
 
 theorem rTr_realAll {θ : InfFam D} (hθ : IsInfFam θ) {V : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel V S}
     {J : Set (GA D V)} {χ : GA D V → ℂ} {T : MMap M} (hT : IsMultMap θ M J χ T)

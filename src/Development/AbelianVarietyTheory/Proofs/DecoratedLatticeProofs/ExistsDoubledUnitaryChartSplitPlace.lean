@@ -86,10 +86,12 @@ theorem exists_dbl_chart : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   let β := Formalism.UG.bc (φ.symm : w.adicCompletion E →+* Fv F v) (blkGL finSumFinEquiv (a, a))
   have hβ : IsSplitBasis τ (sumLat finSumFinEquiv L L) β := by
     apply (ConjPlace.isFrameAt_iff hc h hτ β).1
-    convert GlobalTheory.T.isLatticeFrameAtPlace_directSum_blockDiagonal E w n L a ha using 1
-    apply Units.ext
-    ext i j
-    exact φ.apply_symm_apply _
+    have heq : Formalism.UG.bc (φ : Fv F v →+* w.adicCompletion E) β =
+        blkGL finSumFinEquiv (a, a) := by
+      apply Units.ext
+      exact Matrix.ext fun i j => φ.apply_symm_apply _
+    rw [heq]
+    exact GlobalTheory.T.isLatticeFrameAtPlace_directSum_blockDiagonal E w n L a ha
   obtain ⟨f₀, ⟨⟨b, hb, e0⟩, hK⟩⟩ :=
     ConjPlace.exists_isSplitChart_of_basis hc hQ' (isSelfDualAt_dbl hQ hL) h hτ hβ
   have hk := hb.inv_mul_mem (GlobalTheory.T.isLatticeFrameAtPlace_directSum_blockDiagonal E w n L a ha)

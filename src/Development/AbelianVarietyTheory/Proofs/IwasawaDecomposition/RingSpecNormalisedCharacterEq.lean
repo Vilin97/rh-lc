@@ -75,8 +75,27 @@ set_option maxHeartbeats 4000000 in
 set_option maxRecDepth 100000 in
 theorem sigSpan_copy {D D' : D7} {ι : D.what₂.LL →+* D'.what₂.LL} {e : ↥D'.LL0 ≃+* ↥D.LL0} (h : CopyAll D D' ι e)
     (hs : D.ntw.SigSpan) : D'.ntw.SigSpan := by
-  copy_cases h D D'
-  exact hs
+  have transfer {D D' : D7} {N : NData D.R D.host D.what₂} {N' : NData D'.R D'.host D'.what₂}
+      {X : NTw D.R D.host D.what₂ D.LL0 N} {X' : NTw D'.R D'.host D'.what₂ D'.LL0 N'}
+      (g : GlobalTheory.TwistChoice.SameGalois N N')
+      (t : GlobalTheory.TwistChoice.TwistDataAgreeAcrossCoefficients X X')
+      (b : HEq X.B X'.B) (ab : HEq X.acgB X'.acgB)
+      (mb : HEq X.modB X'.modB) (hk : HEq X.hk X'.hk)
+      (s : X.SigSpan) : X'.SigSpan := by
+    obtain ⟨a1, a2, a3, nOm, ninstOm, nalgOm, nplOm, nPlG⟩ := g
+    obtain ⟨xcc, xTw, xl, xO0, xcrO0, xalgO0, xtopO0, xO, xcrO, xalgO, xOk, xcrOk, xalgOk, xzk, xpD, xchi1, xSig, xfinSig, xjS, xside, xrhoS, xS0, xhEig, xLam, xsideL, xRCG, xgrpRCG, xfinRCG, xart, xth⟩ := t
+    cases D; cases D'
+    dsimp only at a1 a2 a3
+    subst a1; subst a2; subst a3
+    cases N; cases N'
+    dsimp only at nOm ninstOm nalgOm nplOm nPlG
+    subst nOm; subst ninstOm; subst nalgOm; subst nplOm; subst nPlG
+    cases X; cases X'
+    dsimp only at xcc xTw xl xO0 xcrO0 xalgO0 xtopO0 xO xcrO xalgO xOk xcrOk xalgOk xzk xpD xchi1 xSig xfinSig xjS xside xrhoS xS0 xhEig xLam xsideL xRCG xgrpRCG xfinRCG xart xth b ab mb hk
+    subst xcc; subst xTw; subst xl; subst xO0; subst xcrO0; subst xalgO0; subst xtopO0; subst xO; subst xcrO; subst xalgO; subst xOk; subst xcrOk; subst xalgOk; subst xzk; subst xpD; subst xchi1; subst xSig; subst xfinSig; subst xjS; subst xside; subst xrhoS; subst xS0; subst xhEig; subst xLam; subst xsideL; subst xRCG; subst xgrpRCG; subst xfinRCG; subst xart; subst xth
+    subst b; subst ab; subst mb; subst hk
+    exact s
+  exact transfer h.cp.gal h.cp.set h.cp.B h.cp.acgB h.cp.modB h.cp.hk hs
 
 end GlobalTheory.HeightCounting.SideCopy
 

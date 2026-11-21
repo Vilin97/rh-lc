@@ -124,8 +124,6 @@ variable (ρ : S.Real) (c : CubicalStr ρ.P.A ⟨ρ.P.L, ρ.rig, ρ.P.isLB, ρ.r
 
 section Support
 
-open PreModel
-
 include ρ
 
 end Support

@@ -426,7 +426,7 @@ theorem exists_ringSpec (hA : GlobalTheory.Published.GlobalArtinReciprocity) : �
         · intro hx
           let z : ↥(K0 w).1 := ⟨j0 w x, hj0K w x⟩
           have hz : z ∈ Loc.OL (K0 w) := (mem_OL_iff _ _ z).2 hx.le
-          refine ⟨⟨z, hz⟩, (mem_maximalIdeal_OL_iff _ _ _).2 hx, ?_⟩
+          refine ⟨⟨z, hz⟩, (mem_maximalIdeal_OL_iff (lw w) (K0 w) _).2 hx, ?_⟩
           apply (φ w).injective
           rw [hφalg, hemb0]
           rfl
@@ -434,7 +434,7 @@ theorem exists_ringSpec (hA : GlobalTheory.Published.GlobalArtinReciprocity) : �
           have e2 : ((φ w (algebraMap _ _ y) : ↥(K0 w).1) : PadicAlgCl (lw w)) = ((φ w (emb0 w x) : ↥(K0 w).1) : PadicAlgCl (lw w)) :=
             congrArg (fun t => ((φ w t : ↥(K0 w).1) : PadicAlgCl (lw w))) e
           rw [hφalg, hemb0] at e2
-          rw [(mem_maximalIdeal_OL_iff _ _ _)] at hy
+          rw [(mem_maximalIdeal_OL_iff (lw w) (K0 w) _)] at hy
           rw [← show ((jK w x : ↥(K0 w).1) : PadicAlgCl (lw w)) = j0 w x from rfl, ← e2]
           exact hy⟩
       K0 := K0

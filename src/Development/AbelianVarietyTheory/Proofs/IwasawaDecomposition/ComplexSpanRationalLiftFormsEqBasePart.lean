@@ -34,7 +34,6 @@ theorem span_jW_wp : GlobalTheory.Published.WeilRepresentationUnitaryPair → Gl
     intro y
     rw [Z.jW_read]
     refine (GlobalTheory.Mem.LiftTheta.liftWeight_complexPoint_eq_twist R.toRealDat F.lv2 false i y).trans ?_
-    congr 1
   have hmem : ∀ y, y ∈ (s0Of R F).Wp i p ↔ Z.jW i y ∈ (R.Wp3 i p).comap (Y.mj.eW i) := by
     intro y
     show (R.toCx3 F).w0C false i (cpt A3.A.v0.embedding y) ∈ (R.toCx3 F).Wp i p ↔ _

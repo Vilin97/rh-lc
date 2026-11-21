@@ -220,7 +220,7 @@ theorem exists_io_poly (D : D7) (V W : HSp D) (θ : InfFam D) (Sp : D.what₂.Ta
           hhU.2.2.1 u' u (fun τ => mem_KC_of_K (hu' τ)) (fun τ => mem_KC_of_K (hu τ)), Module.End.mul_apply]
     | zero => exact ⟨by rw [map_zero]; exact zero_mem _, fun u _ => by simp only [map_zero]⟩
     | add a b _ _ ha hb =>
-      exact ⟨by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha.1 hb.1, fun u hu => by simp only [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), ha.2 u hu, hb.2 u hu]⟩
+      exact ⟨by rw [map_add]; exact add_mem ha.1 hb.1, fun u hu => by simp only [map_add, ha.2 u hu, hb.2 u hu]⟩
     | smul s a _ ha =>
       exact ⟨by rw [map_smul]; exact Submodule.smul_mem _ _ ha.1, fun u hu => by simp only [map_smul, ha.2 u hu]⟩
   have hjm : ∀ w, j w ∈ VV ℂ lam := fun w => hj1 ▸ LinearMap.mem_range_self j w
@@ -266,7 +266,8 @@ theorem exists_io_poly (D : D7) (V W : HSp D) (θ : InfFam D) (Sp : D.what₂.Ta
   · rw [MultilinearMap.map_smul_univ]
     rw [map_smul, map_smul, LinearMap.smul_apply, hio, smul_smul, smul_smul, hψ0, hmv _ hbK, factK]
     have : (fun τ => (((κ τ).map star)⁻¹)ᵀ) = κ := funext fun τ => invT_conj (hκ τ).1
-    rw [this, hΔ, Finset.prod_inv_distrib]
+    rw [this, hΔ]
+    simp only [RingHom.id_apply, Finset.prod_inv_distrib]
     have hP : (∏ ρ, N ρ) ≠ 0 := Finset.prod_ne_zero_iff.2 fun ρ _ => hN' ρ
     convert one_smul ℂ _ using 2
     field_simp

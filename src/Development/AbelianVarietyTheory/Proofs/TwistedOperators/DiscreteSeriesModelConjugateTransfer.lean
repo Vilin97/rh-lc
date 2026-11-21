@@ -31,7 +31,8 @@ theorem comp_update [DecidableEq ι] (c : ∀ i, X₁ i ≃ₛₗ[starRingEnd �
     (fun j => c j (Function.update v i x j)) = Function.update (fun j => c j (v j)) i (c i x) :=
   funext fun j => Function.apply_update (fun j => (c j : X₁ j → X j)) v i x j
 
-def cmul (c : ∀ i, X₁ i ≃ₛₗ[starRingEnd ℂ] X i) : MultilinearMap ℂ X₁ (Tw (⨂[ℂ] i, X i)) where
+def cmul (c : ∀ i, X₁ i ≃ₛₗ[starRingEnd ℂ] X i) :
+    MultilinearMap (RingHom.id ℂ) X₁ (Tw (⨂[ℂ] i, X i)) where
   toFun v := (PiTensorProduct.tprod ℂ (fun i => c i (v i)) : ⨂[ℂ] i, X i)
   map_update_add' v i x y := by
     classical
@@ -43,7 +44,7 @@ def cmul (c : ∀ i, X₁ i ≃ₛₗ[starRingEnd ℂ] X i) : MultilinearMap ℂ
     classical
     show PiTensorProduct.tprod ℂ (fun j => c j (Function.update v i (a • x) j)) =
       (starRingEnd ℂ a) • PiTensorProduct.tprod ℂ (fun j => c j (Function.update v i x j))
-    rw [comp_update, comp_update, map_smulₛₗ, MultilinearMap.map_update_smul]
+    rw [comp_update, comp_update, map_smulₛₗ, MultilinearMap.map_update_smul, RingHom.id_apply]
 
 def kapF (c : ∀ i, X₁ i ≃ₛₗ[starRingEnd ℂ] X i) : (⨂[ℂ] i, X₁ i) →+ ⨂[ℂ] i, X i where
   toFun x := (PiTensorProduct.lift (cmul c) x : Tw (⨂[ℂ] i, X i))

@@ -18,7 +18,7 @@ theorem exists_matches : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have := Z.jQ_open
   have : IsLocalRing (CAt (ψ.comp φ)) := inferInstanceAs (IsLocalRing ℂ)
   let ψ' : A →+* CAt (ψ.comp φ) := ψ
-  obtain ⟨g, hg⟩ := GlobalTheory.T.exists_eigFrame_baseChange' E H Dw l Xo c O β Z A (CAt (ψ.comp φ)) φ (x ≫ genι Z) fr ψ'
+  obtain ⟨g, hg⟩ := GlobalTheory.ShFam.EigFrame.exists_baseChange E H Dw l Xo c O β Z A (CAt (ψ.comp φ)) φ (x ≫ genι Z) fr ψ'
   have hr : Set.range (spMap ψ' ≫ x) ⊆ Set.range Z.jQ := by
     rintro _ ⟨s, rfl⟩
     exact not_not.1 (hb s)
@@ -32,7 +32,7 @@ theorem exists_matches : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have hp : GlobalTheory.AllWt.ptF y = xF := by
     apply pullback.hom_ext
     · rw [← hy]; exact pullback.lift_fst _ _ _
-    · rw [hs]
+    · rw [hs]; exact pullback.lift_snd _ _ _
   refine ⟨y, by rw [hp]; exact hxF, fun τ i => ⟨w τ i, by rw [hp]; exact (hw τ i).1, (hw τ i).2.1, ?_⟩⟩
   exact (hw τ i).2.2.trans (hg τ i)
 

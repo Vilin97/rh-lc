@@ -41,7 +41,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 theorem exists_pull (hC : Out.CubePullSt) {S S' : Scheme.{0}} (f : S' ⟶ S) (t : SAB H S) :
     ∃ t' : SAB H S', Nonempty (SABMap t' t f) := by
-  obtain ⟨_, _, _, _, _, m, -⟩ := sabPull hC f t
+  obtain ⟨PP, cub, sym, adj, prim, m, hm⟩ := sabPull hC f t
   exact ⟨_, ⟨m⟩⟩
 
 theorem exists_section {S S' : Scheme.{0}} {f : S' ⟶ S} {t : SAB H S} {t' : SAB H S'} (m : SABMap t' t f)

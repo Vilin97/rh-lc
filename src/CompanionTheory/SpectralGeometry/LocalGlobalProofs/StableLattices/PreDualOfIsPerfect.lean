@@ -22,12 +22,12 @@ namespace GlobalTheory.CompanionTheory.DualScheme
 
 theorem preDual_of_isPerfect {S : Scheme.{0}} [IsLocallyNoetherian S] {A B : Over S} [GrpObj A] [GrpObj B]
     (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) {P : LB (A ⊗ B).left} (h : IsPerfect A B P) :
-    PreDual A B P where
-  isLB := h.isLB
-  add₁ := CubeNoeth.isAdditive_of_triv_axes hA hB h.isLB h.zero_left h.zero_right
-  add₂ := CubeNoeth.isAdditive_swap_of_triv_axes hA hB h.isLB h.zero_left h.zero_right
-  right := h.ker_right
-  left k _ _ t := (Set.finite_singleton (1 : Over.mk t ⟶ A)).subset fun x hx ↦ h.ker_left _ x hx
+    PreDual A B P := by
+  refine ⟨h.isLB, ?_, ?_, h.ker_right, ?_⟩
+  · exact CubeNoeth.isAdditive_of_triv_axes hA hB h.isLB h.zero_left h.zero_right
+  · exact CubeNoeth.isAdditive_swap_of_triv_axes hA hB h.isLB h.zero_left h.zero_right
+  · intro k _ _ t
+    exact (Set.finite_singleton (1 : Over.mk t ⟶ A)).subset fun x hx ↦ h.ker_left _ x hx
 
 theorem pull_lam_of_left {S : Scheme.{0}} {G T T' : Over S} [GrpObj G] (c : Pic G.left) (u : T'.left ⟶ T.left)
     {a b : T ⟶ G} {a' b' : T' ⟶ G} (ha : u ≫ a.left = a'.left) (hb : u ≫ b.left = b'.left) :

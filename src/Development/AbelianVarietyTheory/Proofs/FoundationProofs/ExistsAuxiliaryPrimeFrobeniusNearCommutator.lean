@@ -104,7 +104,7 @@ theorem root_mod {B : ValuationSubring Ω} {p m N : ℕ} (hp : p.Prime) (hpB : B
     rw [map_sub, map_pow, sub_eq_zero] at this
     exact this.symm
   have hP : (Polynomial.X ^ p - Polynomial.X : Polynomial (IsLocalRing.ResidueField B)) ≠ 0 :=
-    FiniteField.X_pow_card_sub_X_ne_zero _ hp.one_lt
+    Polynomial.X_pow_sub_X_ne_zero hp.one_lt
   have hsub : Finset.univ.image φ ⊆
       (Polynomial.X ^ p - Polynomial.X : Polynomial (IsLocalRing.ResidueField B)).roots.toFinset := by
     intro y hy
@@ -149,7 +149,9 @@ theorem natCast_mem_iff (v : Pl) (n : ℕ) : (n : 𝓞 ℚ) ∈ v.asIdeal ↔ no
   exact Ideal.mul_mem_right _ _ (Ideal.absNorm_mem _)
 
 theorem normV_prime' (v : Pl) : (normV v).Prime := by
-  have h1 : 1 < normV v := NumberField.HeightOneSpectrum.one_lt_absNorm v
+  have h1 : 1 < normV v := by
+    rw [normV_eq_absNorm]
+    exact NumberField.HeightOneSpectrum.one_lt_absNorm v
   refine Nat.prime_def.2 ⟨h1, fun m hm => ?_⟩
   obtain ⟨c, hc⟩ := hm
   have h2 := (natCast_mem_iff v _).2 dvd_rfl

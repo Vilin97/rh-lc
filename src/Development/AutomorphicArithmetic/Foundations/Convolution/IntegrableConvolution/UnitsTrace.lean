@@ -41,7 +41,7 @@ private def RR (r : Fin (m + 1) → (Mt d →ₐ[ℂ] Module.End ℂ W))
     (show Pairwise (fun i j => ∀ x y, Commute (MonoidHomClass.toMonoidHom (r i) x)
       (MonoidHomClass.toMonoidHom (r j) y)) from fun i j h x y => hc i j h x y)
 
-variable (r : Fin (m + 1) → (Mt d →ₐ[ℂ] Module.End ℂ W))
+variable (r : Fin (m + 1) → (Matrix (Fin d) (Fin d) ℂ →ₐ[ℂ] Module.End ℂ W))
     (hc : ∀ i j, i ≠ j → ∀ a b, Commute (r i a) (r j b))
 
 private theorem RR_single (i : Fin (m + 1)) (x : Mt d) : RR r hc (Pi.mulSingle i x) = r i x := by
@@ -63,7 +63,7 @@ private theorem RR_mem (Q : Submonoid (Module.End ℂ W)) (a : Fin (m + 1) → M
   simp only [MonoidHom.noncommPiCoprod, MonoidHom.coe_mk, OneHom.coe_mk]
   exact Submonoid.noncommProd_mem _ _ _ _ (fun i _ => h i)
 
-private def RM : MultilinearMap ℂ (fun _ : Fin (m + 1) => Mt d) (Module.End ℂ W) where
+private def RM : (Fin (m + 1) → Mt d) →ₘₗ[ℂ] Module.End ℂ W where
   toFun := RR r hc
   map_update_add' := by
     intro inst a i x y
@@ -72,7 +72,8 @@ private def RM : MultilinearMap ℂ (fun _ : Fin (m + 1) => Mt d) (Module.End �
   map_update_smul' := by
     intro inst a i c x
     obtain rfl : inst = instDecidableEqFin (m + 1) := Subsingleton.elim _ _
-    rw [RR_update r hc a i (c • x), RR_update r hc a i x, map_smul, smul_mul_assoc]
+    rw [RR_update r hc a i (c • x), RR_update r hc a i x, map_smul, smul_mul_assoc,
+      RingHom.id_apply]
 
 private theorem RM_apply (a : Fin (m + 1) → Mt d) : RM r hc a = RR r hc a := rfl
 
@@ -328,7 +329,7 @@ private theorem exists_scalar [FiniteDimensional ℂ W] [Nontrivial W] (o : Fin 
       rintro _ ⟨b, rfl⟩
       have h1 : f * RR r hc b * f = (∏ i, b i o o) • f := by
         have h := (RM r hc).map_smul_univ (fun i => b i o o) (fun _ => uu o o)
-        simp only [RM_apply] at h
+        simp only [RM_apply, RingHom.id_apply] at h
         rw [hf]
         unfold FF
         rw [← h, ← map_mul, ← map_mul]

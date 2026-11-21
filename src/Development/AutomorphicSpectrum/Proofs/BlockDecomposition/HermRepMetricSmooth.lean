@@ -78,8 +78,11 @@ theorem mchart_succ {m : ℕ} {n : Fin (m + 2) → ℕ} (c : ∀ k, Bk n k) :
 
 theorem add_one_pow_eq_ringHom_image_add_prime_mul_zero : ∀ (m : ℕ) (n : Fin (m + 1) → ℕ) (c : ∀ k, Bk n k) (W : (MP ℤ m n).Opens), W = mchart c →
     ∀ h : ∀ k, W ≤ blockChart n k (c k),
-      IsAffineOpen W ∧ Subring.closure (Set.range (rtOn c W h)) = ⊤
-  | 0, n, c, W, hW, h => by
+      IsAffineOpen W ∧ Subring.closure (Set.range (rtOn c W h)) = ⊤ := by
+  intro m
+  induction m with
+  | zero =>
+    intro n c W hW h
     have e : W = (chart ℤ (n 0) (c 0) : (MP ℤ 0 n).Opens) := by
       rw [hW]
       refine TopologicalSpace.Opens.ext (Set.ext fun x => ⟨fun hx => Set.mem_iInter.1 hx 0, fun hx => ?_⟩)
@@ -99,12 +102,10 @@ theorem add_one_pow_eq_ringHom_image_add_prime_mul_zero : ∀ (m : ℕ) (n : Fin
     rintro _ ⟨j, rfl⟩
     refine ⟨⟨0, j⟩, ?_⟩
     exact (Conormal.id_appLE _ _).trans (resG_self _ _)
-  | m + 1, n, c, W, hW, h => by
+  | succ m ih =>
+    intro n c W hW h
     let c' : ∀ k, Bk (Fin.tail n) k := fun k => c k.succ
-    have htail : IsAffineOpen (mchart c') ∧
-        Subring.closure (Set.range (rtOn c' _ (mchart_le c'))) = ⊤ :=
-      add_one_pow_eq_ringHom_image_add_prime_mul_zero m (Fin.tail n) c' _ rfl (mchart_le c')
-    obtain ⟨ha, hc⟩ := htail
+    obtain ⟨ha, hc⟩ := ih (Fin.tail n) c' _ rfl (mchart_le c')
     have H := IsPullback.of_hasPullback (toSpecBase ℤ (n 0)) (mpStr ℤ m (Fin.tail n))
     obtain ⟨h1, h2⟩ := GlobalTheory.Conormal.isAffineOpen_and_isPushout H (U := ⊤) (isAffineOpen_top _) ha
       (isAffineOpen_chart ℤ (n 0) (c 0)) le_top le_top

@@ -65,8 +65,8 @@ theorem nRows0_eq_finrank_isotE : GlobalTheory.Published.WeilRepresentationUnita
     rw [hT.ee x y]
     unfold ChainReal.ipE ipMT
     refine Eq.trans ?_ key
-    have e1 : ((Y.Iz.jE x : _) : _) = f x := rfl
-    have e2 : ((Y.Iz.jE y : _) : _) = f y := rfl
+    have e1 : (Y.Iz.jE x).val = f x := rfl
+    have e2 : (Y.Iz.jE y).val = f y := rfl
     rw [e1, e2, ← hax, ← hby]
     congr 1
     · exact LinearEquiv.symm_apply_apply _ a

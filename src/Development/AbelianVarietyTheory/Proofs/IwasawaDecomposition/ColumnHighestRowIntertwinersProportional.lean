@@ -111,10 +111,10 @@ theorem colHighest_intertwiner_proportional :
     refine ⟨∑ u ∈ s, c u • π τ u x, ?_, ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [← hc _ ((hd₁ x).trans (le_max_left _ _)), map_sum]
-      exact Finset.sum_congr rfl fun u _ => by rw [map_smul, (heq τ u x).1]
+        exact Finset.sum_congr rfl fun u _ => by rw [map_smul, (heq τ u x).1]
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [← hc _ ((hd₂ x).trans (le_max_right _ _)), map_sum]
-      exact Finset.sum_congr rfl fun u _ => by rw [map_smul, (heq τ u x).2]
+        exact Finset.sum_congr rfl fun u _ => by rw [map_smul, (heq τ u x).2]
   obtain ⟨_, ⟨x, rfl⟩, hx0, hhi, κ, hκ⟩ := GlobalTheory.exists_highest_vector
     (fun τ k l => (rowLie n τ k l : Module.End ℂ (Pol ι m n)))
     (fun t t' i k l => by convert rowLie_diag_comm (n := n) t t' i k l)

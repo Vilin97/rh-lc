@@ -134,8 +134,8 @@ theorem splitOffBad_of_suppSplit (V : HSp D) (N : ℕ) (h : GA D V) (hh : h ∈ 
     exact hid v
   · rw [Finset.sum_image fun v _ w _ hvw => hinj hvw]
     exact Finset.sum_congr rfl fun v _ => (hinj.extend_apply _ _ v).symm
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum, Finset.sum_mul_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul_sum]
     refine Finset.sum_eq_zero fun v _ => Finset.sum_eq_zero fun w _ => ?_
     by_cases hvw : v = w
     · subst hvw; exact (hsp v).2.1

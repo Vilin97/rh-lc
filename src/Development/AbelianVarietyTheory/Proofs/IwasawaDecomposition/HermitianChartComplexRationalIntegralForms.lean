@@ -510,7 +510,40 @@ theorem val_tied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
       exact (key Bm hB).1 h
     · intro h
       have : Fact ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places.resChar w).Prime := ⟨hp⟩
-      obtain ⟨Bm, hB⟩ := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places.resChar w) B.host.E _ l1.fg l1.span_eq_top
+      have hfull : ∀ {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
+          {L : Submodule (𝓞 E) (Sp E n)}, Submodule.IsLattice E L →
+          IsUnimodular (hStd E n) L → Submodule.span E (L : Set (Sp E n)) = ⊤ := by
+        intro E _ _ _ n L hL hu
+        let W := Submodule.span E (L : Set (Sp E n))
+        change W = ⊤
+        by_contra h
+        let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+        let g : Sp E n →ₗ[E] Module.Dual E W :=
+          (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+        have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Sp E n) := by
+          rw [Subspace.dual_finrank_eq]
+          exact Submodule.finrank_lt h
+        obtain ⟨x, hx, hx₀⟩ :=
+          Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+        have hsmul (a : E) : a • e x ∈ L := by
+          rw [← hu, dualBasic_mem_dual]
+          intro y hy
+          apply hStd_mem_one_symm
+          have hxy : hStd E n (e x) y = 0 :=
+            congrArg (fun f : Module.Dual E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+          simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+        let j : E →ₗ[𝓞 E] L :=
+          ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict L hsmul
+        let : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.mpr hL.fg
+        let : Module.Finite (𝓞 E) E := Module.Finite.of_injective j fun a b hab =>
+          smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+        exact RingOfIntegers.not_isField E
+          (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+      have hspan : Submodule.span B.host.E (((I.stp u a i).rep c).1.1.deco.1.Lsh : Set (Sp B.host.E (B.R.N i))) = ⊤ := by
+        apply top_unique
+        rw [← hfull ((I.stp u a i).rep c).1.1.deco.2.lat ((I.stp u a i).rep c).1.1.deco.2.uni]
+        exact Submodule.span_mono ((I.stp u a i).rep c).1.1.deco.2.N_le_Lsh
+      obtain ⟨Bm, hB⟩ := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places.resChar w) B.host.E _ l1.fg hspan
       exact (key Bm hB).2 (h Bm (by rw [hd c]; exact hB))
 
 end GlobalTheory.Mem.Col2.TC

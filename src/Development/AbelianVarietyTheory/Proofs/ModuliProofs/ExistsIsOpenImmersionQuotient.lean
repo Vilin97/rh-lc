@@ -79,7 +79,7 @@ theorem exists_isOpenImmersion_quotient (Γ : Type) [Group Γ] [Finite Γ] (Y Y'
     refine ⟨fun h => ?_, hst g y⟩
     have h1 := hst g⁻¹ _ h
     have e : (τ g).asIso.hom ≫ (τ g⁻¹).asIso.hom = 𝟙 Y := by
-      rw [map_inv]; exact (τ g).hom_inv_id
+      rw [map_inv]; exact (τ g).asIso.hom_inv_id
     rwa [← Scheme.Hom.comp_apply, e] at h1)
   let φ' : U ⟶ V := IsOpenImmersion.lift V.ι (j ≫ φ) (by
     rintro _ ⟨u, rfl⟩

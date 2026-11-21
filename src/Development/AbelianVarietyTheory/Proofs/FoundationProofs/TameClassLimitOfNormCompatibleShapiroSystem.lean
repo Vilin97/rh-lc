@@ -190,7 +190,7 @@ theorem core (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] (W
       exact lt_of_le_of_lt (hYap s x i r) hr
     refine hu.continuous (Filter.Frequently.of_forall fun r => ?_)
     simp only [hYr_apply]
-    exact continuous_finset_sum _ fun x' _ => continuous_const.mul (hcont r (x, x') i)
+    exact continuous_finsetSum _ fun x' _ => continuous_const.mul (hcont r (x, x') i)
 
   obtain ⟨b', hb'K, φ, hφ, hφt⟩ := (isCompact_univ_pi (fun _ : Fin 2 => GlobalTheory.Coef.isCompact_O l c)).tendsto_subseq
     (x := b) (fun r => Set.mem_univ_pi.mpr (hb r))

@@ -100,13 +100,15 @@ theorem finite_cohomology_of_res_top {H : Type} [Group H] [TopologicalSpace H] [
 
 end ULiftLinear
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1)))
 
 theorem exists_isPrimitiveRoot_maxUnramifiedOutside (d : ℕ) (hd0 : d ≠ 0)
     (hdS : ∀ v ∉ S, ((d : ℕ) : 𝓞 K.1) ∉ v.asIdeal) :
     ∃ ζ : maxUnramifiedOutside K.1 ℚ̄ S, IsPrimitiveRoot ζ d := by
   have : NeZero d := ⟨hd0⟩
-  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot ℚ̄ d
+  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot ℚ̄ d
   refine ⟨⟨ζ, mem_maxUnramifiedOutside_of_pow_eq_one S hd0 hdS hζ.pow_eq_one⟩, ?_⟩
   exact IsPrimitiveRoot.of_map_of_injective (f := (maxUnramifiedOutside K.1 ℚ̄ S).val) hζ
     Subtype.val_injective

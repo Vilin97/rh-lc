@@ -106,7 +106,9 @@ theorem unit_part_c (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
     show algebraMap F K (y : F) = _
     rw [hyF, map_mul]
     rfl
-  have hy2 : y ∈ 𝔭 ^ (2 * vF 𝔭 a) := (idealPowerSpanBounds.mem_pow_iff (K := K) _ _ _).mp (hyz ▸ hz)
+  have hy2 : y ∈ 𝔭 ^ (2 * vF 𝔭 a) := by
+    rw [← MeanB.comap_extP_pow (K := K), Ideal.mem_comap, hyz]
+    exact hz
   have hy1 : y ∈ 𝔭 ^ (vF 𝔭 a + 1) := Ideal.pow_le_pow_right (by omega) hy2
   obtain ⟨C, hCdef⟩ : ∃ C : 𝓞 F, C = y - t * a := ⟨_, rfl⟩
   have hCF : (C : F) = (t : F) * c := by

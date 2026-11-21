@@ -68,7 +68,7 @@ def trLin (V : HSp D) (m : D.what₂.Tau → ℤ) : GlobalTheory.SmoothForms.Lie
 
 def trCL (V : HSp D) (m : D.what₂.Tau → ℤ) : GlobalTheory.SmoothForms.LieN V →L[ℝ] ℂ where
   toLinearMap := trLin V m
-  cont := continuous_finset_sum _ fun ρ _ =>
+  cont := continuous_finsetSum _ fun ρ _ =>
     continuous_const.mul ((continuous_subtype_val.comp (continuous_apply ρ)).matrix_trace)
 
 theorem trCL_apply (V : HSp D) (m : D.what₂.Tau → ℤ) (Y : GlobalTheory.SmoothForms.LieN V) : trCL V m Y = trLin V m Y := rfl

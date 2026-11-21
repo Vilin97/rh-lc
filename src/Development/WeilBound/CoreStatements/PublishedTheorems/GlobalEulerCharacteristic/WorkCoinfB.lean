@@ -42,6 +42,7 @@ theorem cosetEquiv_symm_smul (g : G) (y : Γ ⧸ D) :
 
 end Equiv
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
 
 set_option maxHeartbeats 1000000 in
 theorem coind_eq_infl_funRep (ℓ : ℕ) [Fact ℓ.Prime] (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1)))

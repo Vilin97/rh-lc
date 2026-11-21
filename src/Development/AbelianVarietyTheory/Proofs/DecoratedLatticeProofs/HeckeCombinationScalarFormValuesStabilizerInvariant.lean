@@ -74,7 +74,6 @@ theorem rTrans_list_prod {G α : Type} [Monoid G] (f : α → G) (F : G → ℂ)
 end GlobalTheory.AdForm.StabTrans
 
 
-set_option profiler true in
 set_option maxHeartbeats 12000000 in
 set_option synthInstance.maxHeartbeats 400000 in
 theorem GlobalTheory.AdForm.trans_stab : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → ∀ θ, IsInfFam θ → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ι : Type)

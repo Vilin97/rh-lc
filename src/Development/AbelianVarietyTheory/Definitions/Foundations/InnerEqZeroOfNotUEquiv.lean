@@ -147,7 +147,8 @@ theorem IsIsotypic.homIn_ne_bot [Nontrivial K] (h : IsIsotypic π ρ) : homIn π
 
 
 open Classical in
-def unitVec : H := if h : ∃ x : H, ‖x‖ = 1 then h.choose else 0
+def unitVec (H : Type) [NormedAddCommGroup H] : H :=
+  if h : ∃ x : H, ‖x‖ = 1 then h.choose else 0
 
 
 variable (H) in

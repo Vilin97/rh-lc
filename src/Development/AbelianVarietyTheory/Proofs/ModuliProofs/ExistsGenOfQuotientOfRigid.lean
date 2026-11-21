@@ -194,12 +194,12 @@ theorem exists_gen_of_quotient_of_rigid :
   obtain ⟨⟨τ, hτ⟩, hall⟩ := quotient_flat_baseChange Γ X X' P.left P'.left ρ π φ P.hom P'.hom hq hpb hfl
   obtain ⟨-, -, hφ⟩ := hall τ hτ
   have hρπ : ∀ g, (ρ g).asIso.hom ≫ π = π := hq.2.1
-  have heτ : ∀ g, e ≫ (τ g).hom = (ρ g).asIso.hom ≫ e := fun g => hpb.hom_ext
+  have heτ : ∀ g, e ≫ (τ g).asIso.hom = (ρ g).asIso.hom ≫ e := fun g => hpb.hom_ext
     (by simp only [Category.assoc, (hτ g).1, hee, reassoc_of% (hρπ g)])
     (by simp only [Category.assoc, (hτ g).2, reassoc_of% he, he, Category.comp_id])
   have hpt : ∀ x, φ (e x) = e' (π x) := fun x => congrArg (fun h : X ⟶ P'.left => h.base x) hee
   have hρpt : ∀ g x, π ((ρ g).asIso.hom x) = π x := fun g x => congrArg (fun h : X ⟶ X' => h.base x) (hρπ g)
-  have hτpt : ∀ g y, φ ((τ g).hom y) = φ y := fun g y =>
+  have hτpt : ∀ g y, φ ((τ g).asIso.hom y) = φ y := fun g y =>
     congrArg (fun h : P.left ⟶ P'.left => h.base y) (hτ g).1
   obtain ⟨a, ha⟩ := exists_compat t ht
   obtain ⟨ar, har⟩ := exists_compat r hr
@@ -224,12 +224,12 @@ theorem exists_gen_of_quotient_of_rigid :
     rw [hAm W (k ≫ e) w i hi', hc0g, ← ha2' W k w i hi, hdX W k w i hi, Category.assoc, he,
       Category.comp_id, _root_.mul_comm (gm k w ⊤ dX), _root_.mul_inv_cancel_right]
   have hinv : ∀ g (i : N.ι) (y : P.left), φ y ∈ N.U i →
-      gm (τ g).hom y _ (a i * res (le_top : φ ⁻¹ᵁ N.U i ≤ ⊤)
+      gm (τ g).asIso.hom y _ (a i * res (le_top : φ ⁻¹ᵁ N.U i ≤ ⊤)
         (res hT (pullU P.hom ⊤ dX⁻¹))) =
       gm (𝟙 P.left) y _ (a i * res (le_top : φ ⁻¹ᵁ N.U i ≤ ⊤)
         (res hT (pullU P.hom ⊤ dX⁻¹))) := by
     intro g
-    obtain ⟨b, hb, hb'⟩ := Compat.pull hA (τ g).hom φ (hτ g).1
+    obtain ⟨b, hb, hb'⟩ := Compat.pull hA (τ g).asIso.hom φ (hτ g).1
     obtain ⟨cg, hcg⟩ := Compat.ratio hN hb hA
     have hcge : ∀ x : X, gm e x ⊤ cg = 1 := by
       intro x
@@ -262,7 +262,7 @@ theorem exists_gen_of_quotient_of_rigid :
     rw [hb' P.left (𝟙 _) y i hy, Category.id_comp, hcg1, _root_.one_mul] at h1
     exact h1
   exact exists_gen_of_range hA (fun V => (hφ V).1)
-    (fun i => (hφ (N.U i)).2 _ fun g h => (appLE_unit_val_and_inv_eq_of_gm_invariant (τ g).hom h _ fun y hy => hinv g i y hy).1)
-    (fun i => (hφ (N.U i)).2 _ fun g h => (appLE_unit_val_and_inv_eq_of_gm_invariant (τ g).hom h _ fun y hy => hinv g i y hy).2)
+    (fun i => (hφ (N.U i)).2 _ fun g h => (appLE_unit_val_and_inv_eq_of_gm_invariant (τ g).asIso.hom h _ fun y hy => hinv g i y hy).1)
+    (fun i => (hφ (N.U i)).2 _ fun g h => (appLE_unit_val_and_inv_eq_of_gm_invariant (τ g).asIso.hom h _ fun y hy => hinv g i y hy).2)
 
 end GlobalTheory

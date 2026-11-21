@@ -198,10 +198,10 @@ theorem nearSet_eq (I : AutInst) (x : I.GA) (de : ℝ) (hde : 0 < de) (hde' : de
   have hlow := lowers I x de hde γ a h1 h2 h3 ha 2 two_pos
   have hbot : stepLe I x (de * 2) = ⊥ :=
     ((GlobalTheory.T.canonicalLatticeFiltration_size_properties I x (de * 2) (by positivity)).2.2.2.2.2.2.2.2 hn1).2.1.2 (by linarith)
-  have hlat := GlobalTheory.NearLowerCompare.lamX_isLattice I x
+  have hspan := (GlobalTheory.PointLattice.lamX_selfDual I x).2.2.1
   have h0 : lamX I x ≠ ⊥ := by
     intro h0
-    have h1 := hlat.span_eq_top
+    have h1 := hspan
     rw [h0] at h1
     have : Nonempty (Fin I.n) := ⟨⟨0, Nat.pos_of_ne_zero hn⟩⟩
     simp at h1
@@ -210,7 +210,7 @@ theorem nearSet_eq (I : AutInst) (x : I.GA) (de : ℝ) (hde : 0 < de) (hde' : de
     rw [(GlobalTheory.T.orthogonal_canonicalFiltration_steps_autPoint I x).2.1 hn1]
     exact inv_le_of_inv_le₀ two_pos (by linarith)
   have hz : Matrix.toLin' ((γ : Matrix (Fin I.n) (Fin I.n) I.E) - 1) = 0 := by
-    refine LinearMap.ext_on hlat.span_eq_top fun y hy => ?_
+    refine LinearMap.ext_on hspan fun y hy => ?_
     have := hlow ⟨y, hle hy, rfl⟩
     rw [hbot, Submodule.mem_bot] at this
     exact this

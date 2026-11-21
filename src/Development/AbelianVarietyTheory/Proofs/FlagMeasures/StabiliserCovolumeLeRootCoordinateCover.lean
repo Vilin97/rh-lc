@@ -37,7 +37,9 @@ theorem GlobalTheory.LoopVol.packing_pinned {D : D7} {X : HidaSetting D} {Y : Fu
     (Formalism.L2.SG.Pf.rClosedC_holds D X Y u u' s).measurableSet
   have hRc : μR (Formalism.L2.SG.TermOp.Vanish.Rset s)ᶜ = 0 := by
     rw [hμR, Measure.map_apply hcm hRm.compl]
-    exact measure_mono_null (fun y hy hySt => hy (Formalism.L2.SG.LoopTerm.stInf_conj hg hg' hdec hySt)) hconc
+    apply measure_mono_null _ hconc
+    intro y hy
+    exact fun hySt => hy (Formalism.L2.SG.LoopTerm.stInf_conj hg hg' hdec hySt)
   have hinv : ∀ q ∈ Γ, μR.map (fun x => q * x) = μR := by
     intro q hq
     have hq' := Formalism.L2.SG.LoopTerm.stInf_conj_inv hg hg' hdec (Formalism.L2.SG.Pf.LoopBPin.roinf_sub_rset s hq)

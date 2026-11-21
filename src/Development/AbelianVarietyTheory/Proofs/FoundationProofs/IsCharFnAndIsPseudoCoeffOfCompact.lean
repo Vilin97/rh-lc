@@ -21,7 +21,7 @@ variable {H : Type} [Group H] [TopologicalSpace H]
 theorem continuous_trace_rep (hD : IsUnitaryRep D) :
     Continuous fun g => LinearMap.trace ℂ V (D g : V →ₗ[ℂ] V) := by
   simp only [LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℂ V)]
-  exact continuous_finset_sum _ fun i _ => continuous_const.inner (hD.continuous_apply _)
+  exact continuous_finsetSum _ fun i _ => continuous_const.inner (hD.continuous_apply _)
 
 
 omit [TopologicalSpace H] in

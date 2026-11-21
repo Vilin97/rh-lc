@@ -77,7 +77,14 @@ theorem flatBF_source {ρ : ℕ} {B : BesLev D ρ} {J : JacLev D ρ} (s : StepBF
       rw [psiBes_nB, psiBes_nB, ← Matrix.mulVec_mulVec, dotProduct_mulVec (ell D ρ) (v * u').1.1, ell_vecMul (v * u').2]
     rw [t5] at t4
     unfold evalAt
-    rw [e, t1, t2, t3]
+    rw [e]
+    change I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.target J.d B.V₀ ψ s.vT.μ s.vT.𝓕
+      (I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source B.d J.W ψ s.vS.μ s.vS.𝓕 _ _) _ = _
+    rw [t1, t2]
+    change I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source B.d J.W ψ s.vS.μ s.vS.𝓕
+      (s.om (B.d.nC c, 1) Ψ) (xZero J.d ⬝ (v * u').1.1) =
+      I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source B.d J.W ψ s.vS.μ s.vS.𝓕 Ψ (xZero J.d ⬝ (v * u').1.1) at t3
+    rw [t3]
     exact t4
   have : BorelSpace (UX D ρ) := ⟨rfl⟩
   obtain ⟨i1, i2, i3⟩ := GlobalTheory.UnitU.topology D ρ

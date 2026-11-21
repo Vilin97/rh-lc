@@ -37,6 +37,8 @@ theorem subsingleton_cohomology_of_cdp_le_two {n : ℕ} (hn : n ≠ 0)
 
 end Abstract
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section Global
 
 variable (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1)))
@@ -54,7 +56,7 @@ theorem nonempty_zmod_addEquiv_rootsOfUnity_gs {ℓ : ℕ} (hℓ : ℓ.Prime)
     Nonempty (ZMod ℓ ≃+ Additive (rootsOfUnity ℓ (maxUnramifiedOutside K.1 ℚ̄ S))) := by
   have : Fact ℓ.Prime := ⟨hℓ⟩
   have : NeZero ℓ := ⟨hℓ.ne_zero⟩
-  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot ℚ̄ ℓ
+  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot ℚ̄ ℓ
   have hmem : ζ ∈ maxUnramifiedOutside K.1 ℚ̄ S :=
     mem_maxUnramifiedOutside_of_pow_eq_one S hℓ.ne_zero (fun v hv h => hv (hS v h)) hζ.pow_eq_one
   have hζ' : IsPrimitiveRoot (⟨ζ, hmem⟩ : maxUnramifiedOutside K.1 ℚ̄ S) ℓ :=

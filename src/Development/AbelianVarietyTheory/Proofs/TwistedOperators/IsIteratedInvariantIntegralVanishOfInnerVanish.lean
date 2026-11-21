@@ -46,14 +46,20 @@ theorem niter_update (q : (∀ i, H i) → ℂ) (i : ι) (g : H i) :
 
 theorem niter_unique (q : (∀ i, H i) → ℂ) : ∀ l : List ι,
     (∀ i ∈ l, ∀ (f : H i → ℂ) (z z' : ℂ), IsQuotIntL1 (ρ i) (μ i) f z → IsQuotIntL1 (ρ i) (μ i) f z' → z = z') →
-    ∀ h z z', NIter ρ μ q l h z → NIter ρ μ q l h z' → z = z'
-  | [], _, h, z, z', h1, h2 => by simp only [NIter] at h1 h2; rw [h1, h2]
-  | i :: l, hu, h, z, z', h1, h2 => by
+    ∀ h z z', NIter ρ μ q l h z → NIter ρ μ q l h z' → z = z' := by
+  intro l
+  induction l with
+  | nil =>
+    intro _ h z z' h1 h2
+    simp only [NIter] at h1 h2
+    exact h1.trans h2.symm
+  | cons i l ih =>
+    intro hu h z z' h1 h2
     simp only [NIter] at h1 h2
     obtain ⟨f, hf, hg⟩ := h1
     obtain ⟨f', hf', hg'⟩ := h2
     have e : f = f' := funext fun g =>
-      niter_unique q l (fun j hj => hu j (List.mem_cons_of_mem _ hj)) _ _ _ (hg g) (hg' g)
+      ih (fun j hj => hu j (List.mem_cons_of_mem _ hj)) _ _ _ (hg g) (hg' g)
     subst e
     exact hu i (List.mem_cons_self ..) f z z' hf hf'
 

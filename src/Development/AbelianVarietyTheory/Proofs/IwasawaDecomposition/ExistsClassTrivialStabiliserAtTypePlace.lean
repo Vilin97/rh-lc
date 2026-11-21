@@ -138,8 +138,8 @@ theorem exists_class (m r : ℕ) (hr : 2 ≤ r) (s : SplitPlace L) {p : ℕ} (hp
   classical
   obtain ⟨-, -, hlift⟩ := GlobalTheory.T.unitaryFiniteAdeles_splitPlace_decomposition L (m + 2) s
   let A₀ : GL (Fin (m + 2)) ℤ := Matrix.nonsingInvUnit (frameM m) (by rw [det_frameM]; exact isUnit_one)
-  let A : GL (Fin (m + 2)) (s.v.adicCompletion L⁺) := Matrix.GeneralLinearGroup.map (Int.castRingHom _) A₀
-  have hA : ∀ i j, A.1 i j = ((frameM m i j : ℤ) : s.v.adicCompletion L⁺) := fun i j => rfl
+  let A : GL (Fin (m + 2)) (s.v.adicCompletion (maximalRealSubfield L)) := Matrix.GeneralLinearGroup.map (Int.castRingHom (s.v.adicCompletion (maximalRealSubfield L))) A₀
+  have hA : ∀ i j, A.1 i j = ((frameM m i j : ℤ) : s.v.adicCompletion (maximalRealSubfield L)) := fun i j => rfl
   obtain ⟨g, ⟨hgT, hgA⟩, -⟩ := hlift A
   have hgU : g ∈ Umax L (m + 2) := by
     rw [← GlobalTheory.HeckeScalarSph.loc_mem_GLint_iff s hgT, hgA, GlobalTheory.HeckeScalarSph.mem_GLint_iff]
@@ -170,8 +170,8 @@ theorem exists_class (m r : ℕ) (hr : 2 ≤ r) (s : SplitPlace L) {p : ℕ} (hp
       rw [hloc, hσ0 i k hk, map_zero, zero_mul]
     · simp
   have hAint : ∀ i j, Valued.v (A.1 i j) ≤ 1 := fun i j =>
-    (intCast_mem (s.v.adicCompletionIntegers L⁺) (frameM m i j) :)
-  have hcong : ∀ (i b) (x : Fin (m + 2) → s.v.adicCompletion L⁺), (∀ l, Valued.v (H.1 l b - x l) < 1) →
+    (intCast_mem (s.v.adicCompletionIntegers (maximalRealSubfield L)) (frameM m i j) :)
+  have hcong : ∀ (i b) (x : Fin (m + 2) → s.v.adicCompletion (maximalRealSubfield L)), (∀ l, Valued.v (H.1 l b - x l) < 1) →
       Valued.v (s.i ((c : Matrix _ _ L) i (σ i)) * A.1 (σ i) b - ∑ l, A.1 i l * x l) < 1 := by
     intro i b x hx
     rw [hrow, ← Finset.sum_sub_distrib]
@@ -205,7 +205,7 @@ theorem exists_class (m r : ℕ) (hr : 2 ≤ r) (s : SplitPlace L) {p : ℕ} (hp
       simpa [eζ] using h3)
     exact congrArg (fun y : 𝓞 L => (y : L)) this
   have h10 : (1 : Fin (m + 2)) ≠ 0 := by simp
-  have hsh : ∀ i, Valued.v (((((σ i).val : ℤ) - (i.val : ℤ) : ℤ) : s.v.adicCompletion L⁺) - H.1 0 1) < 1 := by
+  have hsh : ∀ i, Valued.v (((((σ i).val : ℤ) - (i.val : ℤ) : ℤ) : s.v.adicCompletion (maximalRealSubfield L)) - H.1 0 1) < 1 := by
     intro i
     have h3 := hcong i 1 (Pi.single 0 (H.1 0 1) + Pi.single 1 1) (by
       intro l
