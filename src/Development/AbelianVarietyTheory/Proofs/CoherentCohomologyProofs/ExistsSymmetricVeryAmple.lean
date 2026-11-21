@@ -20,12 +20,26 @@ namespace GlobalTheory.SymVeryAmple
 
 theorem exists_iso_pull_of_triv {X : Scheme.{0}} {H : LB X} (hH : H.IsLB) (f : X ⟶ X)
     (h : Triv (LB.LinComb H (K := Fin 2) ![f, 𝟙 X] ![1, -1])) : ∃ w : LB.Iso H (H.pull f), w.IsGen := by
-  have e := (CechPic.cls_eq_zero_iff (LB.isLB_linComb hH _ _)).2 h
-  rw [CechPic.cls_linComb hH, Fin.sum_univ_two] at e
-  refine (CechPic.cls_eq_iff hH (LB.isLB_pull hH f)).1 ?_
-  rw [CechPic.cls_pull hH]
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, CechPic.pull_id, one_smul, neg_smul] at e
-  exact (add_neg_eq_zero.1 e).symm
+  classical
+  obtain ⟨t, ht⟩ := h
+  let idx : (PUnit.{1} → H.ι) × H.ι → Fin 2 → H.ι :=
+    fun p => ![p.1 PUnit.unit, p.2]
+  have le : ∀ p : (PUnit.{1} → H.ι) × H.ι,
+      (LB.div (H.pull f) H).U p ≤ (LB.LinComb H ![f, 𝟙 X] ![1, -1]).U (idx p) := by
+    intro p y hy
+    apply Set.mem_iInter.2
+    intro k
+    fin_cases k
+    · exact ReciprocityTheory.ChartRestriction.G.Geo.Tor.mem_pull.1 hy.1
+    · exact hy.2
+  exact ReciprocityTheory.ChartRestriction.G.Geo.Tor.gen_chartPull (A := LB.LinComb H ![f, 𝟙 X] ![1, -1]) (h := 𝟙 X)
+    ⟨idx, (fun p y hy => le p hy), by
+      intro y p q hp hq
+      change (PUnit.{1} → H.ι) × H.ι at p q
+      refine (CechPic.gm_div' (H.pull f) H (𝟙 X) y p q hp hq).trans ?_
+      refine (congrArg (· * _) (ReciprocityTheory.ChartRestriction.G.Geo.Tor.gm_pull_g H f (𝟙 X) y p.1 q.1 hp.1 hq.1)).trans ?_
+      refine Eq.trans ?_ (ReciprocityTheory.ChartRestriction.G.Geo.Tor.gm_linComb H ![f, 𝟙 X] ![1, -1] (𝟙 X) y (idx p) (idx q) (le p hp) (le q hq)).symm
+      simp [Fin.prod_univ_two, idx]; rfl⟩ t ht
 
 theorem exists_symmetric_veryAmple : ∀ (K : Type) [Field K] [IsAlgClosed K] (B : Over (Spec (CommRingCat.of K))) [GrpObj B], IsAbelianScheme B → ∃ (H : LB B.left) (m : ℕ) (s : Fin (m + 1) → LB.Sec H), H.IsLB ∧ VeryAmpleBy B.hom H s ∧ ∃ w : LB.Iso H (H.pull (GrpObj.inv : B ⟶ B).left), w.IsGen := by
   intro K _ _ B _ hB

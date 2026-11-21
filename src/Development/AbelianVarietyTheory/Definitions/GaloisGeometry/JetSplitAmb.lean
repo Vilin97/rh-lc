@@ -36,12 +36,12 @@ def TiesAt (D : D7) (EX : ErrX D) (Dx : DivX D) (μ : D.what₂.Tup) : Prop :=
 
 
 open GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Col2.KerRat in
-def RowPin {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (h : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (a : (I.rec7 l Z).what₂.Tup) : Prop :=
-  ∀ u : B.Word, ∃ e : (I.per l u a).Mt ≃ₗ[ℂ] (I.rec7 l Z).what₂.Amb a,
-    (a = (I.rec7 l Z).what₂.mu0 → HEq e ((I.rec7 l Z).eMt u)) ∧ (a ≠ (I.rec7 l Z).what₂.mu0 → e = (I.rec7 l Z).eMtTw u a) ∧
-    (∀ v ∈ ((I.rec7 l Z).what₂.Mtilde a).gen, ∃ z, e (rowForm I l h u a z) = v) ∧
-    ∀ z, z ∈ Formalism.L2.Col.MtildeL (Pr := B.primes X) B.wts I.Ch I.sel (I.tup a) I.Ps ↔ ∃ c : (I.rec7 l Z).what₂.Amb a → 𝓞 (I.rec7 l Z).what₂.LL,
-      e (rowForm I l h u a z) = ∑ v ∈ ((I.rec7 l Z).what₂.Mtilde a).gen, (I.rec7 l Z).what₂.embLL ((c v : 𝓞 (I.rec7 l Z).what₂.LL) : (I.rec7 l Z).what₂.LL) • v
+def RowPin {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (h : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (a : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup) : Prop :=
+  ∀ u : B.Word, ∃ e : (I.per l u a).Mt ≃ₗ[ℂ] (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Amb a,
+    (a = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0 → HEq e ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eMt u)) ∧ (a ≠ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0 → e = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eMtTw u a) ∧
+    (∀ v ∈ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Mtilde a).gen, ∃ z, e (rowForm I l h u a z) = v) ∧
+    ∀ z, z ∈ Formalism.L2.Col.MtildeL (Pr := B.primes X) B.wts I.Ch I.sel (I.tup a) I.Ps ↔ ∃ c : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Amb a → 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL,
+      e (rowForm I l h u a z) = ∑ v ∈ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Mtilde a).gen, (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.embLL ((c v : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL) • v
 
 end GlobalTheory.AtG
 

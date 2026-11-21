@@ -74,8 +74,6 @@ end General
 
 section Group
 
-open GlobalTheory.IndefiniteRowSideFullHecke.CubicalPullbackLaw
-
 variable {S S' : Scheme.{0}}
 
 end Group

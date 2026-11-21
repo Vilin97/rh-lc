@@ -6,7 +6,6 @@ public import Development.EtaleCohomology.EtaleSheaves.LeafDescendChainPf
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite LateralTheory.E.E4 LateralTheory.E.LeafDescendVCut LateralTheory.E.LeafDescendChainPf
-  LateralTheory.E.LeafPropsDescendPf
 
 namespace LateralTheory.E.LeafPropsDescendPf.BaseChange
 

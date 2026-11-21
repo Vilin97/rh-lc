@@ -699,11 +699,11 @@ theorem hform_one_single {A : Type} [CommRing A] {ι : Type} [Fintype ι] [Decid
 
 variable (l : I.Laws) (Z : TC.Later B (I.cols l))
 
-theorem hermitianForm_lastCoordinateUniformizerVector_self (hg : gramN (I.rec7 l Z) B.R.m le_rfl = 1) (u : B.Word) :
-    hform (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) B.R.m le_rfl) (z0v B X u) (z0v B X u) =
-      ((((I.rec7 l Z).mem u).A.T : ℕ) : (I.rec7 l Z).host.E) := by
+theorem hermitianForm_lastCoordinateUniformizerVector_self (hg : gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl = 1) (u : B.Word) :
+    hform (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl) (z0v B X u) (z0v B X u) =
+      ((((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.T : ℕ) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) := by
   rw [hg, lastCoordinateUniformizerVector_eq_single]
-  refine (hform_one_single (A := B.host.E) (ι := Fin (B.R.N B.R.m)) (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (Br.iL (N_m_succ B.R)) _ _).trans ?_
+  refine (hform_one_single (A := B.host.E) (ι := Fin (B.R.N B.R.m)) (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (Br.iL (N_m_succ B.R)) _ _).trans ?_
   rw [Pi.single_eq_same]
   have h := congrArg (algebraMap (𝓞 B.fields.E) B.fields.E) ((base_fields_primes_ok B X).2.1.piT_norm u)
   rw [map_mul, map_natCast] at h
@@ -773,20 +773,20 @@ theorem hT_co {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [
 
 variable {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l))
 
-theorem lastCoordinateUniformizerVector_spans_orthogonal_line (hg : gramN (I.rec7 l Z) B.R.m le_rfl = 1)
-    (hiX : ∀ x j, iXc (I.rec7 l Z) x j = if h : j.1 < B.R.N B.R.m - 1 then x ⟨j.1, h⟩ else 0) (u : B.Word) :
-    ∃ a : (I.rec7 l Z).host.E, z0v B X u = a • zc (I.rec7 l Z) := by
+theorem lastCoordinateUniformizerVector_spans_orthogonal_line (hg : gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl = 1)
+    (hiX : ∀ x j, iXc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) x j = if h : j.1 < B.R.N B.R.m - 1 then x ⟨j.1, h⟩ else 0) (u : B.Word) :
+    ∃ a : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E, z0v B X u = a • zc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) := by
   rw [lastCoordinateUniformizerVector_eq_single]
-  refine line_of_orth (N_m_succ B.R) (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) ?_ (iXc (I.rec7 l Z)) hiX ?_ _
+  refine line_of_orth (N_m_succ B.R) (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) ?_ (iXc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) hiX ?_ _
   · intro h0
-    letI := (I.rec7 l Z).host.cmStar
-    have h1 : (I.rec7 l Z).sp.z = 0 := (Crd.co ((I.rec7 l Z).sp.X (I.rec7 l Z).R.m) (rankN (I.rec7 l Z) _ le_rfl)).map_eq_zero_iff.1 h0
-    exact (I.rec7 l Z).sp.z_anis (by rw [h1]; simp)
+    letI := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.cmStar
+    have h1 : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.z = 0 := (Crd.co ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ le_rfl)).map_eq_zero_iff.1 h0
+    exact (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.z_anis (by rw [h1]; simp)
   · intro x
-    letI := (I.rec7 l Z).host.cmStar
-    have h1 := (I.rec7 l Z).sp.z_orth ((Crd.co (I.rec7 l Z).sp.X' (rankP (I.rec7 l Z))).symm x)
-    rw [hT_co (I.rec7 l Z).sp.cm ((I.rec7 l Z).sp.X (I.rec7 l Z).R.m) (rankN (I.rec7 l Z) _ le_rfl)] at h1
-    have h2 : hform (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) B.R.m le_rfl) (iXc (I.rec7 l Z) x) (zc (I.rec7 l Z)) = 0 := h1
+    letI := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.cmStar
+    have h1 := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.z_orth ((Crd.co (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X' (rankP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))).symm x)
+    rw [hT_co (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ le_rfl)] at h1
+    have h2 : hform (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl) (iXc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) x) (zc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) = 0 := h1
     rw [hg] at h2
     exact h2
 
@@ -843,11 +843,11 @@ theorem TDat.fv_mk {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ} {S
 variable {B : Base} {X : PreX B.toPre} (I : TC B X)
 
 theorem til_lat_eq (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
-    (hiX : ∀ x j, iXc (I.rec7 l Z) x j = if h : j.1 < B.R.N B.R.m - 1 then x ⟨j.1, h⟩ else 0) (u : B.Word) (c : (I.stX I.mu0).Cl) :
+    (hiX : ∀ x j, iXc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) x j = if h : j.1 < B.R.N B.R.m - 1 then x ⟨j.1, h⟩ else 0) (u : B.Word) (c : (I.stX I.mu0).Cl) :
     Formalism.L2.Forms.mulLat (((I.stp u I.mu0 B.R.m).gam _ ((I.stp u I.mu0 B.R.m).mv (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c)) : GL _ _) : Matrix _ _ _)
       ((I.stp u I.mu0 B.R.m).rep ((I.perIn u I.mu0).tilC c)).1.1.deco.1.L =
-    (((I.stX I.mu0).rep c).1.1.deco.1.N).map ((iXc (I.rec7 l Z)).restrictScalars (𝓞 (I.rec7 l Z).host.E)) ⊔
-      Submodule.span (𝓞 (I.rec7 l Z).host.E) {z0v B X u} := by
+    (((I.stX I.mu0).rep c).1.1.deco.1.N).map ((iXc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)).restrictScalars (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)) ⊔
+      Submodule.span (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) {z0v B X u} := by
   have hPr := (base_fields_primes_ok B X).2.1
   have hm := (I.stp u I.mu0 B.R.m).mv_smul (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c)
   obtain ⟨m, hmm⟩ : ∃ m, m = (I.stp u I.mu0 B.R.m).mv (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c) := ⟨_, rfl⟩
@@ -860,7 +860,7 @@ theorem til_lat_eq (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
     exact this.symm
   have e2 := L_act ((I.stp u I.mu0 B.R.m).rep ((I.perIn u I.mu0).tilC c)).1.1.deco.2 m.1.2 m.2.1.1
   rw [← e1, e0, til_L_eq (N_m_succ B.R) (conj_piT_notMem hPr u) (piT_notMem_vGs hPr u) (fun P => decoFin_mem_of_mem_divs P.2)
-    (piT_dvd_of_mem (base_fields_primes_ok B X).1 hPr u) _ (iXc (I.rec7 l Z)) hiX (z0v B X u) (fun j => rfl)] at e2
+    (piT_dvd_of_mem (base_fields_primes_ok B X).1 hPr u) _ (iXc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) hiX (z0v B X u) (fun j => rfl)] at e2
   exact (mulLat_toGLm m.1.1 _).trans e2.symm
 
 end GlobalTheory.Mem.Col2.TilX
@@ -872,27 +872,27 @@ variable {B : Base} {X : PreX B.toPre} (I : TC B X)
 
 set_option maxHeartbeats 1600000 in
 theorem til_fv_eq (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
-    (hg : gramN (I.rec7 l Z) B.R.m le_rfl = 1) (u : B.Word)
-    (hsu : ∀ c, clsCrd (I.rec7 l Z) u B.R.m le_rfl c = ((I.stp u I.mu0 B.R.m).rep c).1.1.deco.1.L)
-    (A : AtTTied (D := I.rec7 l Z) u) (L : LvTied (D := I.rec7 l Z) u A B.R.m le_rfl) (hres : A.res = I.resT l u I.mu0)
-    (hL : ∀ v c (z : Ld (I.rec7 l Z) u B.R.m le_rfl c) (h : z.1 ∈ ((I.stp u I.mu0 B.R.m).rep c).1.1.deco.1.N),
+    (hg : gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl = 1) (u : B.Word)
+    (hsu : ∀ c, clsCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u B.R.m le_rfl c = ((I.stp u I.mu0 B.R.m).rep c).1.1.deco.1.L)
+    (A : AtTTied (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u) (L : LvTied (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u A B.R.m le_rfl) (hres : A.res = I.resT l u I.mu0)
+    (hL : ∀ v c (z : Ld (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u B.R.m le_rfl c) (h : z.1 ∈ ((I.stp u I.mu0 B.R.m).rep c).1.1.deco.1.N),
       L.pr v c z = Submodule.Quotient.mk ⟨z.1, h⟩)
-    (v : ((I.rec7 l Z).mem u).A.vT) (c : (I.stX I.mu0).Cl) (x : ↥(Ld (I.rec7 l Z) u B.R.m le_rfl (((I.rec7 l Z).fm u).til c)))
-    (r : 𝓞 (I.rec7 l Z).host.E)
-    (hr : (r : (I.rec7 l Z).host.E) = hform (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) B.R.m le_rfl) (z0v B X u)
+    (v : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.vT) (c : (I.stX I.mu0).Cl) (x : ↥(Ld (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u B.R.m le_rfl (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).til c)))
+    (r : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)
+    (hr : (r : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) = hform (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl) (z0v B X u)
       (((I.stp u I.mu0 B.R.m).gam _ ((I.stp u I.mu0 B.R.m).mv (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c))).1 *ᵥ x.1)) :
-    ((I.rec7 l Z).fm u).fv B.R.m v (((I.rec7 l Z).fm u).til c) (L.pr v _ x) = A.res v r := by
+    ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).fv B.R.m v (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).til c) (L.pr v _ x) = A.res v r := by
   have hPr := (base_fields_primes_ok B X).2.1
   have hm := (I.stp u I.mu0 B.R.m).mv_smul (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c)
   obtain ⟨m, hmm⟩ : ∃ m, m = (I.stp u I.mu0 B.R.m).mv (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c) := ⟨_, rfl⟩
   rw [← hmm] at hm hr
   have hx1 : x.1 ∈ ((I.stp u I.mu0 B.R.m).rep ((I.perIn u I.mu0).tilC c)).1.1.deco.1.Lsh := by
     have h1 := x.2
-    have h2 : x.1 ∈ dualL (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) B.R.m le_rfl)
-      (clsCrd (I.rec7 l Z) u B.R.m le_rfl (((I.rec7 l Z).fm u).til c)) := h1
+    have h2 : x.1 ∈ dualL (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl)
+      (clsCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u B.R.m le_rfl (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).til c)) := h1
     rw [hg] at h2
-    have h3 := Eq.mp (congrArg (fun M => x.1 ∈ dualL (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) 1 M)
-      (hsu (((I.rec7 l Z).fm u).til c))) h2
+    have h3 := Eq.mp (congrArg (fun M => x.1 ∈ dualL (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) 1 M)
+      (hsu (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).til c))) h2
     exact dualL_le_Lsh (E := B.host.E) _ (fun _ => rfl) _ h3
   obtain ⟨xv, hxv⟩ : ∃ xv : Sp B.fields.E (B.R.N B.R.m), xv = x.1 := ⟨_, rfl⟩
   obtain ⟨s, hs⟩ : ∃ s : 𝓞 B.fields.E, s = cO B.fields.E ((B.primes X).piT u) := ⟨_, rfl⟩
@@ -900,9 +900,9 @@ theorem til_fv_eq (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
     refine ((I.stp u I.mu0 B.R.m).rep ((I.perIn u I.mu0).tilC c)).1.1.deco.2.smul_Lsh_mem_N (fun P => ?_) (hxv ▸ hx1)
     rw [hs, cO_cO]
     exact decoFin_mem_of_mem_divs P.2
-  have h0 : ((show 𝓞 (I.rec7 l Z).host.E from s) • x).1 = s • xv := by rw [hxv]; rfl
-  have h1 := hL v _ ((show 𝓞 (I.rec7 l Z).host.E from s) • x) (h0 ▸ hsN)
-  have h2 := L.pr_smul v _ (show 𝓞 (I.rec7 l Z).host.E from s) x
+  have h0 : ((show 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E from s) • x).1 = s • xv := by rw [hxv]; rfl
+  have h1 := hL v _ ((show 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E from s) • x) (h0 ▸ hsN)
+  have h2 := L.pr_smul v _ (show 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E from s) x
   have hne := ((l.fmL u I.mu0).lev B.R.m).fv_ne v ((I.perIn u I.mu0).tilC c)
   have h3 := TDat.fv_mk ((I.atIn u I.mu0).A B.R.m) v ((I.perIn u I.mu0).tilC c) hne ⟨s • xv, hsN⟩
   have hlev := (l.lev u I.mu0).lev B.R.m
@@ -939,7 +939,7 @@ theorem til_fv_eq (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
     rw [Ne, Ideal.Quotient.eq_zero_iff_mem, hs]
     exact conj_piT_notMem hPr u v
   obtain ⟨pv, hpv⟩ : ∃ pv : ((I.atIn u I.mu0).A B.R.m).lv v ((I.perIn u I.mu0).tilC c), pv = L.pr v _ x := ⟨_, rfl⟩
-  have h2' : (L.pr v _ ((show 𝓞 (I.rec7 l Z).host.E from s) • x) : ((I.atIn u I.mu0).A B.R.m).lv v ((I.perIn u I.mu0).tilC c)) =
+  have h2' : (L.pr v _ ((show 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E from s) • x) : ((I.atIn u I.mu0).A B.R.m).lv v ((I.perIn u I.mu0).tilC c)) =
       (Ideal.Quotient.mk v.1.asIdeal s : Res v.1) • pv := by
     rw [hpv]
     have h2a := h2
@@ -1093,7 +1093,7 @@ end GlobalTheory.Mem.Col2.TilX
 
 
 set_option maxHeartbeats 4000000 in
-theorem GlobalTheory.Mem.Col2.TC.til_ties : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (A : AtTTied (D := (I.rec7 l Z)) u) (K : ClsTied (D := (I.rec7 l Z)) u B.R.m le_rfl) (KP : ClsPTied (D := (I.rec7 l Z)) u) (L : LvTied (D := (I.rec7 l Z)) u A B.R.m le_rfl) (W : ValTied (D := (I.rec7 l Z)) u A.eV B.R.m le_rfl K), A.res = I.resT l u I.mu0 → (∃ k, I.Reads u I.mu0 B.R.m (fun _ => ()) (fun _ => K.lev.Lb) (fun _ => K.lev.U) (fun _ => K.lev.chi) (fun c => (K.y c).1) (fun c s => (K.stabI c s).1) k) → I.ReadsP I.mu0 KP.lev.Lb KP.lev.U KP.lev.chi (fun c => (KP.y c).1) KP.lat (fun c s => (KP.stabI c s).1) → (∀ v c (z : Ld (I.rec7 l Z) u B.R.m le_rfl c) (h : z.1 ∈ ((I.stp u I.mu0 B.R.m).rep c).1.1.deco.1.N), L.pr v c z = Submodule.Quotient.mk ⟨z.1, h⟩) → I.IdY l Z u I.mu0 B.R.m le_rfl W.eY → ∃ (Tl : TilTied (D := (I.rec7 l Z)) u A KP L) (Ta : TilAd Tl K), (∀ j, Tl.z0 j = if j.1 + 1 = B.R.N B.R.m then ((X.piT u : 𝓞 B.host.E) : B.host.E) else 0) ∧ TilBaseLat Tl K ∧ ∃ e, (∀ z, e z = z) ∧ EvzTie (D := (I.rec7 l Z)) Ta W e := by
+theorem GlobalTheory.Mem.Col2.TC.til_ties : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (A : AtTTied (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u) (K : ClsTied (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u B.R.m le_rfl) (KP : ClsPTied (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u) (L : LvTied (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u A B.R.m le_rfl) (W : ValTied (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u A.eV B.R.m le_rfl K), A.res = I.resT l u I.mu0 → (∃ k, I.Reads u I.mu0 B.R.m (fun _ => ()) (fun _ => K.lev.Lb) (fun _ => K.lev.U) (fun _ => K.lev.chi) (fun c => (K.y c).1) (fun c s => (K.stabI c s).1) k) → I.ReadsP I.mu0 KP.lev.Lb KP.lev.U KP.lev.chi (fun c => (KP.y c).1) KP.lat (fun c s => (KP.stabI c s).1) → (∀ v c (z : Ld (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u B.R.m le_rfl c) (h : z.1 ∈ ((I.stp u I.mu0 B.R.m).rep c).1.1.deco.1.N), L.pr v c z = Submodule.Quotient.mk ⟨z.1, h⟩) → I.IdY l Z u I.mu0 B.R.m le_rfl W.eY → ∃ (Tl : TilTied (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u A KP L) (Ta : TilAd Tl K), (∀ j, Tl.z0 j = if j.1 + 1 = B.R.N B.R.m then ((X.piT u : 𝓞 B.host.E) : B.host.E) else 0) ∧ TilBaseLat Tl K ∧ ∃ e, (∀ z, e z = z) ∧ EvzTie (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) Ta W e := by
   intro B X I hI hP l Z u A K KP L W hres hRd hRP hL hY
   obtain ⟨k, hk⟩ := hRd
   obtain ⟨-, -, hiX, hsp⟩ := GlobalTheory.T.trueColumn_spaces_standard_in_frameCoords I hI hP l Z
@@ -1102,13 +1102,13 @@ theorem GlobalTheory.Mem.Col2.TC.til_ties : ∀ {B : Base} {X : PreX B.toPre} (I
   have hN := N_m_succ B.R
   have hPr := (base_fields_primes_ok B X).2.1
   have hga : ∀ c, (I.stp u I.mu0 B.R.m).gam _ ((I.stp u I.mu0 B.R.m).mv (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c)) ∈
-      UJ (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) B.R.m le_rfl) := by
+      UJ (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl) := by
     intro c
     rw [hg]
     show cT _ _ * 1 * _ = 1
     rw [mul_one]
     exact ((l.ch u I.mu0).step B.R.m).unit _ _
-  let Tl : TilTied (D := I.rec7 l Z) u A KP L :=
+  let Tl : TilTied (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u A KP L :=
     { z0 := TilX.z0v B X u
       lastCoordinateUniformizerVector_spans_orthogonal_line := TilX.lastCoordinateUniformizerVector_spans_orthogonal_line I l Z hg hiX u
       hermitianForm_lastCoordinateUniformizerVector_self := TilX.hermitianForm_lastCoordinateUniformizerVector_self I l Z hg u
@@ -1138,11 +1138,11 @@ theorem GlobalTheory.Mem.Col2.TC.til_ties : ∀ {B : Base} {X : PreX B.toPre} (I
         rw [e']
         exact hka1 c }
   refine ⟨Tl, Ta, fun j => rfl, ?_, LinearEquiv.refl ℂ _, fun _ => rfl, ?_⟩
-  · exact TilX.baseL_sup u (hk.lb ()) hRP.lb (iXc (I.rec7 l Z)) hiX
+  · exact TilX.baseL_sup u (hk.lb ()) hRP.lb (iXc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) hiX
   · intro φ c s s' hs
     have hy1 : (W.eY s).1 = s.1 := hY s
     have hy2 : (W.eY s').1 = s'.1 := hY s'
-    have hemb : ∀ τ, Formalism.L2.Forms.atInf (Formalism.L2.Forms.embT (I.rec7 l Z)) (Tl.ga c).1.1 τ =
+    have hemb : ∀ τ, Formalism.L2.Forms.atInf (Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (Tl.ga c).1.1 τ =
         (((I.stp u I.mu0 B.R.m).gam _ ((I.stp u I.mu0 B.R.m).mv (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c))).1).map (embAt B.embLL B.fields.emb τ) := fun τ =>
       congrArg (fun f : B.host.E →+* ℂ => ((I.stp u I.mu0 B.R.m).gam _ ((I.stp u I.mu0 B.R.m).mv (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c))).1.map f) (B.fields_embC τ).symm
     have e1 := TilX.frMul_inv_eq B.fields.emb B.embLL ((I.stp u I.mu0 B.R.m).gam _ ((I.stp u I.mu0 B.R.m).mv (I.perIn u I.mu0).b0 ((I.perIn u I.mu0).tilPt c))) s s'

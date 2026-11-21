@@ -82,14 +82,14 @@ theorem det_reGL {a b : ℕ} (h : a = b) {A : Type} [CommRing A] (g : GL (Fin a)
   refine Units.ext ?_
   simp [reGL, Matrix.GeneralLinearGroup.det]
 
-variable (l : I.Laws) (Z : TC.Later B (I.cols l)) (C : ColsTiedSym (I.rec7 l Z))
+variable (l : I.Laws) (Z : TC.Later B (I.cols l)) (C : ColsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))
 
 
 include I in
-theorem det_normOne_classStepZero_trueColumns (hI : I.Ok) (hS : I.StdC l Z C) (u : B.Word) (c : ((I.rec7 l Z).mem u).C.cls 0)
+theorem det_normOne_classStepZero_trueColumns (hI : I.Ok) (hS : I.StdC l Z C) (u : B.Word) (c : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).C.cls 0)
     (x : Formalism.L2.Herm.unitaryOneFiniteAdeles (host_cmData B.R B.host))
     (hx : Matrix.GeneralLinearGroup.det x.1 = Matrix.GeneralLinearGroup.det ((C.herm.base.lev0 u).y c).1) :
-    (I.rec7 l Z).detCls u 0 c = u1Dt B.host I.SQ x := by
+    (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).detCls u 0 c = u1Dt B.host I.SQ x := by
   obtain ⟨k, hk⟩ := (hS u).ends 0 (Nat.zero_le _) (Or.inl rfl)
   refine detPt_of_reads I hI u 0 hk c x ?_
   have e := (C.car0 u).y_eq c
@@ -99,10 +99,10 @@ theorem det_normOne_classStepZero_trueColumns (hI : I.Ok) (hS : I.StdC l Z C) (u
 
 include I in
 theorem detI_std (hI : I.Ok) (hS : I.StdC l Z C) (u : B.Word) (i : ℕ) (h1 : 1 ≤ i) (hm : i ≤ B.R.m)
-    (c : ((I.rec7 l Z).mem u).C.cls i) (x : Formalism.L2.Herm.unitaryOneFiniteAdeles (host_cmData B.R B.host))
+    (c : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).C.cls i) (x : Formalism.L2.Herm.unitaryOneFiniteAdeles (host_cmData B.R B.host))
     (hx : Matrix.GeneralLinearGroup.det x.1 = Matrix.GeneralLinearGroup.det
       ((C.herm.base.cls u i h1 hm (C.herm.base.chOf u i c)).y ⟨c, rfl⟩).1) :
-    (I.rec7 l Z).detCls u i c = u1Dt B.host I.SQ x := by
+    (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).detCls u i c = u1Dt B.host I.SQ x := by
   by_cases h2 : i + 1 ≤ B.R.m
   · obtain ⟨k, hk⟩ := (hS u).mid i h1 h2
     refine detPt_of_reads I hI u i hk c x ?_
@@ -121,7 +121,7 @@ theorem detI_std (hI : I.Ok) (hS : I.StdC l Z C) (u : B.Word) (i : ℕ) (h1 : 1 
     rw [hx, ← key _ (chOf_m C.herm.base u c)]
     exact (e ▸ det_reGL _ _).symm
 
-def hermS (hI : I.Ok) (hS : I.StdC l Z C) : Formalism.L2.Herm.SymmetricHermitianColumns (I.rec7 l Z) :=
+def hermS (hI : I.Ok) (hS : I.StdC l Z C) : Formalism.L2.Herm.SymmetricHermitianColumns (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) :=
   { C.herm.base with
     dt := u1Dt B.host I.SQ
     dt_surj := normOneFiniteAdeleDetClass_surjective B.host I.SQ
@@ -132,17 +132,17 @@ def hermS (hI : I.Ok) (hS : I.StdC l Z C) : Formalism.L2.Herm.SymmetricHermitian
     det0 := fun u c x h => det_normOne_classStepZero_trueColumns I l Z C hI hS u c x h
     detI := fun u i h1 hm c x h => detI_std I l Z C hI hS u i h1 hm c x h }
 
-theorem relDet_std (hI : I.Ok) (hS : I.StdC l Z C) : Formalism.L2.Herm.SymmetricRelativeDeterminant (I.rec7 l Z) (hermS I l Z C hI hS) := by
+theorem relDet_std (hI : I.Ok) (hS : I.StdC l Z C) : Formalism.L2.Herm.SymmetricRelativeDeterminant (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (hermS I l Z C hI hS) := by
   intro N L L' g _ hg x hx
-  obtain ⟨idl, hp⟩ := GlobalTheory.Mem.NormOneIdeal.pinned_of_finer (I.rec7 l Z) I.SQ (MulEquiv.refl _)
+  obtain ⟨idl, hp⟩ := GlobalTheory.Mem.NormOneIdeal.pinned_of_finer (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) I.SQ (MulEquiv.refl _)
     (by ext t; exact ⟨fun h => ⟨t, h, rfl⟩, fun ⟨_, h, e⟩ => e ▸ h⟩) (fun _ => rfl)
     (fun N L L' t h => h)
-  exact GlobalTheory.Mem.NormOneIdeal.relDet_eq_of_pinned (I.rec7 l Z) idl hp _ (hermS I l Z C hI hS).dt (hermS I l Z C hI hS).dt_ker
+  exact GlobalTheory.Mem.NormOneIdeal.relDet_eq_of_pinned (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) idl hp _ (hermS I l Z C hI hS).dt (hermS I l Z C hI hS).dt_ker
     (hermS I l Z C hI hS).dt_UO (hermS I l Z C hI hS).dt_rat L L' g x hg hx
 
-theorem exists_colsFullS : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (C : ColsTiedSym (I.rec7 l Z)) (g : Formalism.L2.Herm.SymmetricGroupCompatibility (I.rec7 l Z) C.herm.base), I.StdC l Z C → Formalism.L2.Herm.VolumeCompatible (I.rec7 l Z) → ∃ Fu : ColsFullS C, HEq Fu.1.g g ∧ I.StdDt l Z Fu.1.base.dt := by
+theorem exists_colsFullS : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (C : ColsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (g : Formalism.L2.Herm.SymmetricGroupCompatibility (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) C.herm.base), I.StdC l Z C → Formalism.L2.Herm.VolumeCompatible (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) → ∃ Fu : ColsFullS C, HEq Fu.1.g g ∧ I.StdDt l Z Fu.1.base.dt := by
   intro B X I hI _ l Z C g hS hV
-  let Fu : Formalism.L2.Herm.FullTiedS (I.rec7 l Z) :=
+  let Fu : Formalism.L2.Herm.FullTiedS (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) :=
     { base := hermS I l Z C hI hS
       atT := C.herm.atT
       vol := hV

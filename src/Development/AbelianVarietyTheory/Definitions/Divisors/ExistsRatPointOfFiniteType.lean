@@ -136,13 +136,13 @@ theorem uOver_baseChange_iff {R₁ : Type} [CommRing R₁] {P₁ : PolAV (Sp R�
   have e : spMap σ₁ ≫ spMap τ = spMap (σ₁.comp τ) := by rw [← Spec.map_comp]; rfl
   constructor
   · rintro ⟨G, _, α, β, hα, hβ, h⟩
-    exact ⟨G, _, α ≫ φ, β, (hα.comp hφ).congr e rfl, hβ, LBIso.trans (pull_isLB P.isLB _) (pull_isLB P₁.isLB _)
-      (pull_isLB Xo.univ.t.PP.isLB _) (GenSpread.lbIso_pull_of_lbIso hL α rfl).symm h⟩
+    exact ⟨G, _, α ≫ φ, β, (hα.comp hφ).congr e rfl, hβ, LBIso.trans (LB.isLB_pull P.isLB _) (LB.isLB_pull P₁.isLB _)
+      (LB.isLB_pull Xo.univ.t.PP.isLB _) (GenSpread.lbIso_pull_of_lbIso hL α rfl).symm h⟩
   · rintro ⟨G, _, α, β, hα, hβ, h⟩
     have w : α ≫ P.A.hom = (G.hom ≫ spMap σ₁) ≫ spMap τ := by rw [Category.assoc, e]; exact hα.1.w
     have e₁ := hφ.1.lift_fst _ _ w
     exact ⟨G, _, hφ.1.lift _ _ w, β, hφ.cancel (hα.congr e.symm e₁.symm) (hφ.1.lift_snd _ _ w), hβ,
-      LBIso.trans (pull_isLB P₁.isLB _) (pull_isLB P.isLB _) (pull_isLB Xo.univ.t.PP.isLB _)
+      LBIso.trans (LB.isLB_pull P₁.isLB _) (LB.isLB_pull P.isLB _) (LB.isLB_pull Xo.univ.t.PP.isLB _)
         (GenSpread.lbIso_pull_of_lbIso hL _ e₁.symm) h⟩
 
 theorem exists_pol_baseChange {S S' : Scheme.{0}} (P : PolAV S) (f : S' ⟶ S) :
@@ -157,8 +157,8 @@ theorem exists_uOver_id (u : Sp R' ⟶ Xo.XF c) : ∃ P : PolAV (Sp R'), UOver X
   obtain ⟨P, g, hG, hL⟩ := exists_pol_baseChange (Obj.toPolAV Xo.univ) (u ≫ pullback.fst _ _)
   haveI : IsMonHom (Iso.refl P.A).hom := inferInstanceAs (IsMonHom (𝟙 P.A))
   refine ⟨P, P.A, inferInstance, 𝟙 _, g, (isGrpPullback_of_iso (Iso.refl P.A)).congr (Spec.map_id _).symm rfl, hG, ?_⟩
-  exact LBIso.trans (pull_isLB P.isLB _) P.isLB (pull_isLB Xo.univ.t.PP.isLB _)
-    (LBIso.chartPull (chartPullId _) (chartPullUnpull P.L _ rfl) (PolBaseChange.lbIso_refl (pull_isLB P.isLB _))) hL
+  exact LBIso.trans (LB.isLB_pull P.isLB _) P.isLB (LB.isLB_pull Xo.univ.t.PP.isLB _)
+    (LBIso.chartPull (chartPullId _) (chartPullUnpull P.L _ rfl) (PolBaseChange.lbIso_refl (LB.isLB_pull P.isLB _))) hL
 
 theorem exists_uOver_finiteType [IsDomain R'] [IsLocalRing R'] (u : Sp R' ⟶ Xo.XF c) :
     ∃ (R : Subring R') (P : PolAV (Sp R)), Algebra.FiniteType ℤ R ∧ UOver Xo c P R.subtype u := by
@@ -251,25 +251,41 @@ theorem UOver.exists_spread {Xo : Moduli D l} {c : Coeff l} {R : Subalgebra o Ω
   have q₁ := p₁.cancel (hα.congr (spMap_val_toRat R).symm (pullback.lift_fst _ _ w₁).symm) (pullback.lift_snd _ _ w₁)
   have q₂ := p₂.cancel (hβ.congr (Category.assoc _ _ _) (pullback.lift_fst _ _ w₂).symm) (pullback.lift_snd _ _ w₂)
   haveI := fr R le_rfl
-  have a₁ := PolPull.isAbelianScheme_of_isGrpPullback P.isAb p₁
+  have pullAb : ∀ {S S' : Scheme.{0}} {f : S' ⟶ S} {G : Over S} {G' : Over S'}
+      [GrpObj G] [GrpObj G'] {φ : G'.left ⟶ G.left},
+      IsAbelianScheme G → IsGrpPullback G' G f φ → IsAbelianScheme G' := by
+    intro S S' f G G' instG instG' φ hG h
+    letI : GrpObj G := instG
+    letI : GrpObj G' := instG'
+    refine ⟨?_, MorphismProperty.of_isPullback (P := @Smooth) h.1 hG.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) h.1 hG.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) h.1 hG.geomConnected⟩
+    letI := hG.comm
+    rw [isCommMonObj_iff_isMulCommutative]
+    intro T
+    open scoped CategoryTheory.MonObj
+    refine ⟨⟨fun x y => Over.OverMorphism.ext (h.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+    rw [← h.2 T x y (pushPt h.1.w x) (pushPt h.1.w y) rfl rfl,
+      ← h.2 T y x (pushPt h.1.w y) (pushPt h.1.w x) rfl rfl, _root_.mul_comm]
+  have a₁ := pullAb P.isAb p₁
   obtain ⟨a, ha, H₁⟩ := exists_spread_grp (B := ratHull R) (Ω := Ω) a₁
-    (PolPull.isAbelianScheme_of_isGrpPullback (Obj.toPolAV Xo.univ).isAb p₂) q₁ q₂
+    (pullAb (Obj.toPolAV Xo.univ).isAb p₂) q₁ q₂
   obtain ⟨R₁, h₁, f₁, u₁⟩ := exists_le_isUnit hR ha
   obtain ⟨β₁, φ, g₂, gφ, e₁, e₂⟩ := H₁ _ _ (ratHull R₁).val.toRingHom u₁ Subtype.val_injective rfl
   have g₁ := isGrpPullback_pullback ((Over.pullback (spMap (toRat R))).obj P.A)
     (spMap (Subalgebra.inclusion (ratHull_mono h₁)).toRingHom)
   haveI := fr R₁ h₁
-  haveI := (PolPull.isAbelianScheme_of_isGrpPullback a₁ g₁).proper
+  haveI := (pullAb a₁ g₁).proper
   have eα : φ ≫ pullback.fst _ _ ≫ pullback.fst P.A.hom (spMap (toRat R)) = α :=
     (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ _) e₁).trans (pullback.lift_fst _ _ _))
   have eβ : φ ≫ β₁ ≫ pullback.fst Xo.univ.t.G.hom (u ≫ pullback.fst _ _) = β :=
     (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ _) e₂).trans (pullback.lift_fst _ _ _))
   have hP := P.isLB
   have hU := Xo.univ.t.PP.isLB
-  obtain ⟨a', ha', H₂⟩ := GenSpread.exists_lbIso (R := ratHull R₁) (K := Ω) _ gφ.1 (pull_isLB hP _) (pull_isLB hU _)
-    (LBIso.trans (pull_isLB (pull_isLB hP _) _) (pull_isLB hP _) (pull_isLB (pull_isLB hU _) _)
+  obtain ⟨a', ha', H₂⟩ := GenSpread.exists_lbIso (R := ratHull R₁) (K := Ω) _ gφ.1 (LB.isLB_pull hP _) (LB.isLB_pull hU _)
+    (LBIso.trans (LB.isLB_pull (LB.isLB_pull hP _) _) (LB.isLB_pull hP _) (LB.isLB_pull (LB.isLB_pull hU _) _)
       (GenSpread.lbIso_pull_pull hP φ eα.symm).symm
-      (LBIso.trans (pull_isLB hP _) (pull_isLB hU _) (pull_isLB (pull_isLB hU _) _) hL
+      (LBIso.trans (LB.isLB_pull hP _) (LB.isLB_pull hU _) (LB.isLB_pull (LB.isLB_pull hU _) _) hL
         (GenSpread.lbIso_pull_pull hU φ eβ.symm)))
   obtain ⟨R₂, h₂, f₂, u₂⟩ := exists_le_isUnit f₁ ha'
   have g₃ := isGrpPullback_pullback ((Over.pullback (spMap (Subalgebra.inclusion (ratHull_mono h₁)).toRingHom)).obj
@@ -277,9 +293,9 @@ theorem UOver.exists_spread {Xo : Moduli D l} {c : Coeff l} {R : Subalgebra o Ω
   refine ⟨R₂, h₁.trans h₂, f₂, _, _, _, _, (g₃.comp (g₁.comp p₁)).congr ?_ rfl, (g₃.comp (g₂.comp p₂)).congr ?_ rfl, ?_⟩
   · rw [← Spec.map_comp, ← Spec.map_comp]; rfl
   · rw [← Category.assoc, ← Spec.map_comp, Category.assoc]; rfl
-  · exact LBIso.trans (pull_isLB hP _) (pull_isLB (pull_isLB hP _) _) (pull_isLB hU _)
-      (GenSpread.lbIso_pull_pull hP _ rfl) (LBIso.trans (pull_isLB (pull_isLB hP _) _) (pull_isLB (pull_isLB hU _) _)
-        (pull_isLB hU _) (H₂ _ _ u₂ _ _ _ g₃.1.w) (GenSpread.lbIso_pull_pull hU _ rfl).symm)
+  · exact LBIso.trans (LB.isLB_pull hP _) (LB.isLB_pull (LB.isLB_pull hP _) _) (LB.isLB_pull hU _)
+      (GenSpread.lbIso_pull_pull hP _ rfl) (LBIso.trans (LB.isLB_pull (LB.isLB_pull hP _) _) (LB.isLB_pull (LB.isLB_pull hU _) _)
+        (LB.isLB_pull hU _) (H₂ _ _ u₂ _ _ _ g₃.1.w) (GenSpread.lbIso_pull_pull hU _ rfl).symm)
 
 end Spread
 

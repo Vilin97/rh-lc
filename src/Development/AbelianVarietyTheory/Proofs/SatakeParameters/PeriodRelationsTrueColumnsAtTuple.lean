@@ -37,13 +37,13 @@ theorem ambOf_baseCast {D : D7} {X : Fields} (s : Seam D X) {cc cc' : Ideal (�
   subst e; rfl
 
 def exOf {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} {I : GlobalTheory.Mem.Col2.TC B X} {l : I.Laws}
-    {Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)} (EX : ErrX (I.rec7 l Z)) (h1 : EX.piG = X.piG) (h2 : EX.piT = X.piT) :
-    ErrX (I.rec7 l Z) :=
+    {Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)} (EX : ErrX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (h1 : EX.piG = X.piG) (h2 : EX.piT = X.piT) :
+    ErrX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) :=
   ⟨X.piG, h1 ▸ EX.piG_K, h1 ▸ EX.piG_norm, X.piT, h2 ▸ EX.piT_K, h2 ▸ EX.piT_norm, h2 ▸ EX.piT_cong, EX.vPl, EX.vPl_inj,
     EX.norm_mem_place_ideal⟩
 
 theorem exOf_eq {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} {I : GlobalTheory.Mem.Col2.TC B X} {l : I.Laws}
-    {Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)} (EX : ErrX (I.rec7 l Z)) (h1 : EX.piG = X.piG) (h2 : EX.piT = X.piT) :
+    {Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)} (EX : ErrX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (h1 : EX.piG = X.piG) (h2 : EX.piT = X.piT) :
     exOf EX h1 h2 = EX := by
   obtain ⟨piG, _, _, piT, _, _, _, _, _, _⟩ := EX
   obtain rfl : piG = X.piG := h1
@@ -51,7 +51,7 @@ theorem exOf_eq {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} 
   rfl
 
 theorem badS_subset {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} {I : GlobalTheory.Mem.Col2.TC B X} (h : I.Ok) (l : I.Laws)
-    (Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)) : badS (I.rec7 l Z) ⊆ I.S := by
+    (Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)) : badS (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ⊆ I.S := by
   rintro p (hp | ⟨u, rfl⟩ | hp)
   · rcases hp with rfl | rfl | rfl | rfl | rfl
     · exact h.two_q_d_mem.1
@@ -143,41 +143,41 @@ theorem span_range_comp_eq_top {K V W U : Type} [Field K] [AddCommGroup V] [Modu
   rw [LinearMap.coe_comp, Set.range_comp, Submodule.span_image, h, Submodule.map_top, LinearEquiv.range]
 
 theorem perCol_eq {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} (I : GlobalTheory.Mem.Col2.TC B X) (h : I.Ok) (l : I.Laws)
-    (Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)) (u : B.Word) (a : (I.rec7 l Z).what₂.Tup)
-    (eM : ((I.rec7 l Z).div.Nu u).V ≃+ MramV (Pr := B.primes X) B.wts I.Ch u)
-    (heM3 : ∀ x, (I.rec7 l Z).nuIn u x = KerRat.colForm I l h u I.mu0 (eM x).1)
+    (Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)) (u : B.Word) (a : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup)
+    (eM : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).div.Nu u).V ≃+ MramV (Pr := B.primes X) B.wts I.Ch u)
+    (heM3 : ∀ x, (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).nuIn u x = KerRat.colForm I l h u I.mu0 (eM x).1)
     (heM4 : ∀ a φ, (I.fm l u a).emb 0 (KerRat.colForm I l h u a φ) =
       (I.cols l).e0Tw u a ((I.fm l u I.mu0).emb 0 (KerRat.colForm I l h u I.mu0 φ)))
-    (e : (I.per l u a).Mt ≃ₗ[ℂ] (I.rec7 l Z).what₂.Amb a)
-    (he1 : a = (I.rec7 l Z).what₂.mu0 → HEq e ((I.rec7 l Z).eMt u))
-    (he2 : a ≠ (I.rec7 l Z).what₂.mu0 → e = (I.rec7 l Z).eMtTw u a) (φ : ((I.rec7 l Z).div.Nu u).V)
+    (e : (I.per l u a).Mt ≃ₗ[ℂ] (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Amb a)
+    (he1 : a = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0 → HEq e ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eMt u))
+    (he2 : a ≠ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0 → e = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eMtTw u a) (φ : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).div.Nu u).V)
     (z : MtildeV (Pr := B.primes X) B.wts I.Ch I.sel (I.tup a) I.Ps) :
-    (I.rec7 l Z).what₂.perCol u a ((I.rec7 l Z).jN u φ) (e (KerRat.rowForm I l h u a z)) =
+    (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.perCol u a ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).jN u φ) (e (KerRat.rowForm I l h u a z)) =
       (I.per l u a).PtilCol ((I.fm l u a).emb 0 (KerRat.colForm I l h u a (eM φ).1)) (KerRat.rowForm I l h u a z) := by
-  have hj := (I.rec7 l Z).nuIn_jN u φ
+  have hj := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).nuIn_jN u φ
   rw [heM3 φ] at hj
-  by_cases ha : a = (I.rec7 l Z).what₂.mu0
+  by_cases ha : a = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0
   · subst ha
-    have e1 : e = (I.rec7 l Z).eMt u := eq_of_heq (he1 rfl)
-    rw [(I.rec7 l Z).perCol_base_eq_PtilCol u, hj, e1]
+    have e1 : e = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eMt u := eq_of_heq (he1 rfl)
+    rw [(_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).perCol_base_eq_PtilCol u, hj, e1]
     erw [LinearEquiv.symm_apply_apply]
     rfl
-  · rw [(I.rec7 l Z).perCol_tie u a ha, hj, he2 ha]
+  · rw [(_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).perCol_tie u a ha, hj, he2 ha]
     erw [LinearEquiv.symm_apply_apply]
     exact congrArg (fun w => (I.per l u a).PtilCol w (KerRat.rowForm I l h u a z)) (heM4 a (eM φ).1).symm
 
 
 set_option maxHeartbeats 40000000 in
-theorem tiesAt_true : ∀ {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} (I : GlobalTheory.Mem.Col2.TC B X) (h : I.Ok) (l : I.Laws) (Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)) (l0 : I.Law0 l), GlobalTheory.Mem.Col2.ColIn.JetsIn I → ∀ (EX : ErrX (I.rec7 l Z)) (Dx : DivX (I.rec7 l Z)) (a : I.ι), EX.piG = X.piG → EX.piT = X.piT → I.QpIs Dx.Qp → RowPin I h l Z a → TiesAt (I.rec7 l Z) EX Dx a := by
+theorem tiesAt_true : ∀ {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} (I : GlobalTheory.Mem.Col2.TC B X) (h : I.Ok) (l : I.Laws) (Z : GlobalTheory.Mem.Col2.TC.Later B (I.cols l)) (l0 : I.Law0 l), GlobalTheory.Mem.Col2.ColIn.JetsIn I → ∀ (EX : ErrX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (Dx : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (a : I.ι), EX.piG = X.piG → EX.piT = X.piT → I.QpIs Dx.Qp → RowPin I h l Z a → TiesAt (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) EX Dx a := by
   intro B X I h l Z l0 hJ EX Dx a h1 h2 hQ hR
-  change (I.rec7 l Z).what₂.Tup at a
+  change (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup at a
   rw [← exOf_eq EX h1 h2]
-  have hA : ambOf (recSeam (I.rec7 l Z)) (baseCast B.ccK_top.symm (I.J.toRec B (I.cols l) Z.W Z.V Z.S Z.N Z.G)) I.chi I.J.cD = I.A :=
+  have hA : ambOf (recSeam (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (baseCast B.ccK_top.symm (I.J.toRec B (I.cols l) Z.W Z.V Z.S Z.N Z.G)) I.chi I.J.cD = I.A :=
     (ambOf_baseCast _ _ _ _ _).trans (AmbIn.amb_eq_ambOf B (I.cols l) Z.W Z.V Z.S Z.N Z.G I.J I.chi).symm
   have hX := base_fields_primes_ok B X
-  have hcc : TaylorLogMetric.IsCurveIdeal (I.rec7 l Z) ⊤ := ⟨top_ne_bot, by simp⟩
+  have hcc : TaylorLogMetric.IsCurveIdeal (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ⊤ := ⟨top_ne_bot, by simp⟩
   have hδ := (I.J.ok_iff B (I.cols l) Z.W Z.V Z.S Z.N Z.G).1 h.amb_ok
-  have hχ : TaylorLogMetric.IsChi (I.rec7 l Z) I.chi := GlobalTheory.Mem.ChiIdeal.isChi_chiId _ _ I.C.isChi
+  have hχ : TaylorLogMetric.IsChi (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) I.chi := GlobalTheory.Mem.ChiIdeal.isChi_chiId _ _ I.C.isChi
   have hFL : KerRat.FamilyLaws I l Z := ⟨GlobalTheory.Mem.NatEqui.eqP _ _ _ (I.J.toRec B (I.cols l) Z.W Z.V Z.S Z.N Z.G) I.chi hcc hδ.1 hχ,
     (GlobalTheory.NatFamily.family _ _ _ (I.J.toRec B (I.cols l) Z.W Z.V Z.S Z.N Z.G) I.chi hcc hδ.1 hχ).1⟩
   have hFam := KerRat.kernels_rational I l Z h hJ (Or.inr (hFL))
@@ -185,8 +185,8 @@ theorem tiesAt_true : ∀ {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX
   · obtain ⟨c1, c2, c3, c4, -, -, c7, -⟩ := GlobalTheory.Core.Ht2.host_fields_primes_ties I h hX.1 l Z
     exact ⟨c1, c2, c3, c4, c7⟩
   · exact ⟨h.ch_ok, h.ch_tied, h.weil, h.sel_ok⟩
-  · exact ⟨by rw [show (I.rec7 l Z).host.ccK = ⊤ from B.ccK_top]; exact hδ.1, hχ, hδ.2⟩
-  · have hC : ∀ A : Amb B.fields, A = I.A → ChainTie (D := I.rec7 l Z) (EX := exOf EX h1 h2) I.Ch I.sel Dx I.C.mu0 A u a := by
+  · exact ⟨by rw [show (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.ccK = ⊤ from B.ccK_top]; exact hδ.1, hχ, hδ.2⟩
+  · have hC : ∀ A : Amb B.fields, A = I.A → ChainTie (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (EX := exOf EX h1 h2) I.Ch I.sel Dx I.C.mu0 A u a := by
       rintro A rfl
       obtain ⟨hne, hb⟩ := (hFam.1 u a).period
       obtain ⟨hY, hK, hF, hM, hper⟩ := hb hne.some
@@ -195,8 +195,8 @@ theorem tiesAt_true : ∀ {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX
       let rE := GlobalTheory.PeriodOnStep.rowEmb (Pr := B.primes X) (I := I.chIn u a) B.wts I.Ch I.sel (I.tup a) I.Ps (I.perIn u a).b0
         (I.perIn u a).til (I.perIn u a).ext (I.perIn u a).tz (I.perIn u a).H (KerRat.tilOk I h u a).2.2 B.embLL
       have hrf : ⇑rE = KerRat.rowForm I l h u a := rfl
-      refine chainTie_of (D := I.rec7 l Z) (EX := exOf EX h1 h2) I.Ch I.sel Dx I.C.mu0 I.A u a (I.tup a) (mem_tupGrp_of_subset (badS_subset h l Z) (I.tup a).2) ?_
-      refine ⟨I.cst a, I.idx a, h.idx_ok a, hne.some, hY, hK, hF, hM, (show ((I.rec7 l Z).div.Nu u).V ≃+ MramV (recWts (exOf EX h1 h2)) I.Ch u from eM).toLinearEquiv heM1, LinearMap.comp (σ₁₃ := B.embLL) e.toLinearMap rE, h.sharp a, ?_, ?_, ?_, ?_, ?_⟩
+      refine chainTie_of (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (EX := exOf EX h1 h2) I.Ch I.sel Dx I.C.mu0 I.A u a (I.tup a) (mem_tupGrp_of_subset (badS_subset h l Z) (I.tup a).2) ?_
+      refine ⟨I.cst a, I.idx a, h.idx_ok a, hne.some, hY, hK, hF, hM, (show ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).div.Nu u).V ≃+ MramV (recWts (exOf EX h1 h2)) I.Ch u from eM).toLinearEquiv heM1, LinearMap.comp (σ₁₃ := B.embLL) e.toLinearMap rE, h.sharp a, ?_, ?_, ?_, ?_, ?_⟩
       · refine ⟨?_, fun e0 => by rw [e0]; exact congrArg Subtype.val I.trueColumn_tuple_trivial_eq_one⟩
         have hfin : (Qprime (I.tup a : Chr B.fields.F B.fields.E B.fields.K)).Finite :=
           GlobalTheory.OpenChrRam.qprime_finite _ _ _ _ (I.tup a).2.1.1.1.1.2

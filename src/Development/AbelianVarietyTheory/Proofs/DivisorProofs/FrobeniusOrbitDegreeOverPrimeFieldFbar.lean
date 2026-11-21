@@ -14,7 +14,7 @@ noncomputable section
 
 namespace GlobalTheory.GoodCharsCompare
 
-open Polynomial Formalism.CyclotomicNorms GlobalTheory.IndefiniteRowSideFullHecke.CuspValueComparison GlobalTheory.IndefiniteRowSideFullHecke.TameCharacterTorusValues
+open Polynomial Formalism.CyclotomicNorms GlobalTheory.IndefiniteRowSideFullHecke.CuspValueComparison
 
 variable {g : ℕ} [Fact g.Prime]
 

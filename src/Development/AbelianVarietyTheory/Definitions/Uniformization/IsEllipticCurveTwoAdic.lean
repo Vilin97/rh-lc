@@ -46,7 +46,12 @@ theorem exists_even_one {S : Scheme.{0}} {G H : Over S} [GrpObj G] [IsCommMonObj
   have v : ∀ (Z : Scheme.{0}) (r : Z ⟶ H.left) (z : Z) (J), Good P.L.L z J → val t r z J = 1 :=
     fun Z r z J hJ => (hv Z r z J hJ).trans (val_one _)
   refine ⟨⟨t, ht, fun T x y u z J hJ => ?_⟩, fun T x z J hJ => ?_⟩
-  · simp only [v _ _ z J hJ, MonObj.comp_one, (isCub_cubV P.c hJ).face, _root_.mul_one]
+  · simp only [v _ _ z J hJ, MonObj.comp_one, _root_.mul_one]
+    have e := val_corr hJ (P.c.face 0) (lift (1 : T ⟶ G) (1 : T ⟶ G)).left
+    rw [val_one] at e
+    refine (Eq.trans ?_ e).symm
+    refine Eq.trans ?_ (val_cub P.c (lift (1 : T ⟶ G) (1 : T ⟶ G)) hJ (pzero G _) (x2 G 0) (x2 G 1)).symm
+    congr 1 <;> simp [x2, pzero, Hom.one_def]
   · show val t _ z J = _ * val t _ z J
     rw [v _ _ z J hJ, v _ _ z J hJ, MonObj.comp_one, P.val_sym_one hJ, _root_.mul_one]
 

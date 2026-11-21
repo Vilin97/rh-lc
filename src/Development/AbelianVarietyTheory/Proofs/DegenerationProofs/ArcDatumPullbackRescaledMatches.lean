@@ -33,7 +33,8 @@ theorem genRel_rescale {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [Is
     rw [Category.assoc, hx, ← Category.assoc (jK R'), ← Category.assoc]
     exact (congrArg (· ≫ _) hj).trans (Category.assoc _ _ _)
   have z : Sp F := (default : PrimeSpectrum F)
-  refine (ArcPsiOn.genRel_iff_val D'.P.isLB D.P.isLB hD.w _ _ _ z).2 ⟨hpt, fun J J' hJ hJ' => ?_⟩
+  refine (ArcPsiOn.genRel_iff_val D'.P.isLB D.P.isLB hD.w _ _ _ z).2 ⟨hpt, ?_⟩
+  intro J J' hJ hJ'
   have e := ArcPull.psi_val hD (jFK (R := R) F) (jFK (R := R') F) hj hJ hJ' x
   have e₁ := TauTwist.val_psi_rescale q x (jFK (R := R') F) hJ'
   have e₂ := TauTwist.unitAt_spMap (𝟙 (Sp F)) (algebraMap (FractionRing R') F) z (q x)
@@ -76,6 +77,8 @@ theorem exists_match_rescale : GlobalFnsSt → ∀ (E : Type) [Field E] [NumberF
         pullback.fst a.D₀.P.A.hom (specOf f) = pullback.fst _ _ ≫ (a.oa.onB.act x).left :=
       pullback.lift_fst _ _ _
     simp only [Over.comp_left, Category.assoc, e₂] at e₀
+    change (o'.onB.act x).left ≫ (hD.e.hom.left ≫ pullback.fst _ _) =
+      (hD.e.hom.left ≫ pullback.fst _ _) ≫ (a.oa.onB.act x).left
     exact e₀.trans (Category.assoc _ _ _).symm
   · exact (hD.c_pr (e.symm y)).trans (by rw [he])
   · have k := genRel_rescale hD (fun y => uK ^ a.be (hD.xe y) (hD.xe (H.w0 • y))) F hF (e.symm y)

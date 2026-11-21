@@ -23,7 +23,7 @@ theorem sqMap_val {A : C ⥤ CommAlgCat.{0} R} (a b : IdF A) {T T' : C} (φ : T 
   obtain rfl : x = _ := h
   rfl
 
-variable {d : ℕ} (Q : Poly Φ) (E : Frame Φ (d + 1)) (σ : ∀ T : C, E.D ⟶ T)
+variable {d : ℕ} (Q : Poly Φ) (E : Frame (Φ := Φ) (d + 1)) (σ : ∀ T : C, E.D ⟶ T)
 
 theorem Pmap_j_apply {T T' : C} (φ : T ⟶ T') (u : Φ.A.obj T) :
     (Φ.A.map (Cut.Pmap Q (X := (Pt.Sσ σ).obj T) (Y := (Pt.Sσ σ).obj T') φ)).hom ((Φ.A.map (Q.j T)).hom u) =
@@ -108,7 +108,7 @@ theorem alt_sum {S S' F : Type*} [CommRing S] [CommRing S'] [FunLike F S S'] [Ri
   ring
 
 theorem gr_delta {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF R C} (Q : Poly Φ) {Fil : ℤ → IdF Φ.A}
-    (hF : IsFil Φ Fil) {d : ℕ} (E : Frame Φ (d + 1)) (σ : ∀ T : C, E.D ⟶ T) (hc : E.GrConst Fil) (j q : ℕ) (r : ℤ)
+    (hF : IsFil Φ Fil) {d : ℕ} (E : Frame (Φ := Φ) (d + 1)) (σ : ∀ T : C, E.D ⟶ T) (hc : E.GrConst Fil) (j q : ℕ) (r : ℤ)
     (hr : r = j + 1 + q) (I : Fin j → Fin d) (x : Φ.A.obj E.D) (hx : x ∈ (Fil q).S E.D)
     (y : CH.Cn (Cut.Pσ Q σ ⋙ Cut.U E ⋙ gr Fil r) j) (w : CH.Cn (gr Fil r) (j + 1))
     (hy : ∀ s, (show sqM _ _ _ from y s).1 = Ideal.Quotient.mk _

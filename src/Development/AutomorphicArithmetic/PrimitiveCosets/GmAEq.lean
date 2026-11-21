@@ -13,9 +13,10 @@ open UpperTheory.Comparison₂ Deduction.CH Formalism Formalism.HC Formalism.D5 
 
 private theorem UpperTheory.Comparison₂.character_trivial_on_generator_iff (φ : Frame) (ψ : AddChar (E0 × φ.A) ℂ) (s : φ.A) :
     chr φ ψ (φ.tau1 s) = 1 ↔ ψ (0, s) = 1 := by
-  rw [← Units.val_eq_one, (chr_bij φ).2.2.2.2.1 ψ (φ.tau1 s)]
-  simp [toE, Frame.tau1, Frame.iotaInv, Frame.iota]
-  exact Iff.rfl
+  rw [← Units.val_eq_one]
+  change ψ (Multiplicative.toAdd (toE φ (φ.tau1 s))) = 1 ↔ _
+  rw [(toE_bij φ).2.2.2.1 s]
+  rfl
 
 private theorem UpperTheory.Comparison₂.gmA_eq_triv (φ : Frame) (θ : φ.Char) (hi : θ φ.iod = 1) :
     (∀ h : φ.A, θ (φ.tau1 h) = 1) ↔ θ = 1 ∨ θ = φ.psC := by
@@ -68,7 +69,27 @@ theorem UpperTheory.Comparison₂.gmA_eq :
         GmA (arith H.toHostRaw) ell (keptA Λ H.toHostRaw) (3 * (Λ.o : ℝ) + 1)⁻¹ y = Λ.Gm y := by
   intro Λ φ H TT x eps C ell hE hell y
   classical
-  obtain ⟨hbij, -, -, -, -⟩ := chr_bij φ
+  have htoE := (toE_bij φ).1
+  have hbij : Function.Bijective (chr φ) := by
+    let e := MulEquiv.ofBijective (toE φ) htoE
+    constructor
+    · intro ψ ψ' h
+      apply AddChar.ext
+      intro a
+      obtain ⟨g, hg⟩ := htoE.2 (Multiplicative.ofAdd a)
+      have hv := congrArg (fun θ : φ.Char => (θ g : ℂ)) h
+      change ψ (Multiplicative.toAdd (toE φ g)) = ψ' (Multiplicative.toAdd (toE φ g)) at hv
+      simpa only [hg, toAdd_ofAdd] using hv
+    · intro θ
+      let ψ : AddChar (E0 × φ.A) ℂ :=
+        { toFun := fun a => (θ (e.symm (Multiplicative.ofAdd a)) : ℂ)
+          map_zero_eq_one' := by simp only [ofAdd_zero, map_one, Units.val_one]
+          map_add_eq_mul' := by
+            intro a b
+            simp only [ofAdd_add, map_mul, Units.val_mul] }
+      refine ⟨ψ, MonoidHom.ext fun g => Units.ext ?_⟩
+      change (θ (e.symm (Multiplicative.ofAdd (Multiplicative.toAdd (e g)))) : ℂ) = (θ g : ℂ)
+      rw [ofAdd_toAdd, MulEquiv.symm_apply_apply]
   obtain ⟨hpinj, hp1⟩ := prim_inj φ H
   have hmem : ∀ ψ, ψ ∈ keptA Λ H.toHostRaw ↔ H.prim (chr φ ψ) ∈ Λ.KEPT := by
     intro ψ
@@ -105,9 +126,9 @@ theorem UpperTheory.Comparison₂.gmA_eq :
     obtain ⟨hps1, hps2⟩ := hE.ps
     unfold wtA
     by_cases hA : ∀ h : φ.A, ψ (0, h) = 1
-    · rw [if_pos hA]
+    · rw [ite_eq_left hA]
       rcases htriv.1 hA with h1 | h1
-      · rw [h1, hp1, if_pos rfl]
+      · rw [h1, hp1, ite_eq_left rfl]
       · have hK : H.toHostRaw.Kept Λ.KEPT φ.psC := by
           rw [HostRaw.kept_iff, ← h1]
           exact (hmem ψ).1 hψ
@@ -120,19 +141,73 @@ theorem UpperTheory.Comparison₂.gmA_eq :
             have e := hps1 p hk
             rw [HostRaw.isPrimOf_iff] at e
             simp [Level.wt, hk, e]
-    · rw [if_neg hA]
+    · rw [ite_eq_right hA]
       have hn1 : chr φ ψ ≠ 1 := fun h => hA (htriv.2 (Or.inl h))
       have hnps : chr φ ψ ≠ φ.psC := fun h => hA (htriv.2 (Or.inr h))
-      rw [if_neg (fun h => hn1 (hpinj (h.trans hp1.symm)))]
+      rw [ite_eq_right (fun h => hn1 (hpinj (h.trans hp1.symm)))]
       unfold Level.wt
-      rw [if_neg]
+      rw [ite_eq_right]
       intro hk
       have e := hps1 _ hk
       rw [HostRaw.isPrimOf_iff] at e
       exact hnps (hpinj e)
+  have hmax (n : ℕ) (hn : n ∈ Finset.Icc 1 ⌊y⌋₊) : max (y / n - 1) 0 = y / n - 1 := by
+    obtain ⟨hn1, hny⟩ := Finset.mem_Icc.mp hn
+    have hnpos : (0 : ℝ) < n := by exact_mod_cast hn1
+    have hy : 1 ≤ y := Nat.floor_pos.mp (by omega)
+    have hle : (n : ℝ) ≤ y := (Nat.cast_le.mpr hny).trans (Nat.floor_le (by linarith))
+    exact max_eq_left (sub_nonneg.mpr ((one_le_div hnpos).mpr hle))
+  have hGz : Formalism.Gz y = An.G y := by
+    unfold Formalism.Gz Sz An.G
+    rw [Finset.sum_congr rfl fun n hn => congrArg (fun t => An.abelian₂ n * t) (hmax n hn)]
+    ring
   have hG : ∀ ψ, (GPsi (arith H.toHostRaw) ell ψ y).re = (An.gChi (H.prim (chr φ ψ)).χ y).re := by
     intro ψ
-    rw [(prim_read φ H ell hell ψ).2 y]
+    let R := H.toHostRaw
+    have hdir : R.dir (chr φ ψ) = dirChar (recH R) ψ := by
+      refine MulChar.ext fun u => ?_
+      rw [R.dir_unit, dirChar_unit]
+      rfl
+    have hval (n : ℕ) (hn : n ≠ 0) : (R.prim (chr φ ψ)).χ n = primVal (arith R) ψ n := by
+      show (R.dir (chr φ ψ)).primitiveCharacter n = _
+      rw [hdir]
+      exact (primitive_value_primitive (H := φ.A) R.condN R.q R.d (recH R) ψ n
+        (HostRaw.condN_pos R).ne' hn).symm
+    have hχ : (R.prim (chr φ ψ)).χ = 1 ↔ ψ = 0 := by
+      show (R.dir (chr φ ψ)).primitiveCharacter = 1 ↔ ψ = 0
+      rw [hdir]
+      constructor
+      · intro h
+        have hd : dirChar (recH R) ψ = 1 := by
+          rw [← DirichletCharacter.changeLevel_primitiveCharacter (dirChar (recH R) ψ), h, map_one]
+        rw [AddChar.eq_zero_iff]
+        intro a
+        obtain ⟨g, hg⟩ := htoE.2 (Multiplicative.ofAdd a)
+        obtain ⟨u, hu⟩ := HostDer.art_surj H.der g
+        have hre : recH R u = Multiplicative.ofAdd a := by
+          change toE φ (R.art u) = _
+          rw [hu, hg]
+        have hv : (dirChar (recH R) ψ) u = 1 := by rw [hd, MulChar.one_apply_coe]
+        rwa [dirChar_unit, hre, toAdd_ofAdd] at hv
+      · rintro rfl
+        have hd : dirChar (recH R) (0 : AddChar (E0 × φ.A) ℂ) = 1 := by
+          refine MulChar.ext fun u => ?_
+          rw [dirChar_unit, AddChar.zero_apply, MulChar.one_apply_coe]
+        rw [hd, DirichletCharacter.primitiveCharacter_one]
+    change (GPsi (arith R) ell ψ y).re = (An.gChi (R.prim (chr φ ψ)).χ y).re
+    apply congrArg Complex.re
+    unfold GPsi An.gChi
+    by_cases hψ : ψ = 0
+    · rw [ite_eq_left hψ, ite_eq_left (hχ.mpr hψ), hGz]
+    · have hellψ : ell ψ = An.logDerivativeAtOne (R.prim (chr φ ψ)).χ :=
+        @hell ψ hψ _ (R.prim (chr φ ψ)).ne _ (R.prim (chr φ ψ)).prim hval
+      rw [ite_eq_right hψ, ite_eq_right (fun h => hψ (hχ.mp h)), ← hellψ, An.sumLamChi]
+      congr 1
+      refine Finset.sum_congr rfl fun n hn => ?_
+      have hn0 : n ≠ 0 := by
+        have := (Finset.mem_Icc.mp hn).1
+        omega
+      rw [hval n hn0, hmax n hn]
   have key : ∑ ψ ∈ keptA Λ H.toHostRaw,
       (if H.prim (chr φ ψ) = PChar.one then 1 else Λ.wt (H.prim (chr φ ψ))) *
         (An.gChi (H.prim (chr φ ψ)).χ y).re =
@@ -141,13 +216,13 @@ theorem UpperTheory.Comparison₂.gmA_eq :
   have hone : (An.gChi PChar.one.χ y).re = An.G y := by
     have h1 : PChar.one.χ = 1 := rfl
     unfold An.gChi
-    rw [if_pos h1]
+    rw [ite_eq_left h1]
     simp
   unfold GmA Level.Gm Level.Nt
   rw [Finset.sum_congr rfl (fun ψ hψ => by rw [hw ψ hψ, hG ψ]), key,
     ← Finset.add_sum_erase _ _ Λ.one_mem]
   congr 1
-  · rw [if_pos rfl, one_mul, (Gz_eq y).1, hone]
+  · rw [ite_eq_left rfl, one_mul, hGz, hone]
   · apply Finset.sum_congr rfl
     intro p hp
-    rw [if_neg (Finset.ne_of_mem_erase hp)]
+    rw [ite_eq_right (Finset.ne_of_mem_erase hp)]

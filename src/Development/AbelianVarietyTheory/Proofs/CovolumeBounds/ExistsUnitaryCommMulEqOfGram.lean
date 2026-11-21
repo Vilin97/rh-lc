@@ -7,7 +7,7 @@ public import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
 
 @[expose] public section
 
-open Matrix MeasureTheory Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.B2 GlobalTheory.HCXi
+open Matrix MeasureTheory Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.B2
 open scoped ENNReal ComplexOrder
 
 namespace GlobalTheory.HCXi
@@ -27,7 +27,28 @@ private lemma exists_unitary_fix_proj_of_gram_eq_of_mul_eq_zero {n m : ℕ} (Q :
     · simpa [Matrix.mul_apply] using congrFun (congrFun e2 i) j
     · simpa [Matrix.mul_apply] using congrFun (congrFun e3 i) j
     · simp [Matrix.mul_apply]
-  obtain ⟨W, hWu, hW⟩ := _root_.GlobalTheory.UnitaryExtension.exists_unitary_mul_eq _ _ hG
+  have hExtension : ∃ W : Matrix (Fin n) (Fin n) ℂ,
+      Wᴴ * W = 1 ∧ W * fromCols X Q = fromCols Y Q := by
+    have inner_gram (C : Matrix (Fin n) (Fin m ⊕ Fin n) ℂ)
+        (x : EuclideanSpace ℂ (Fin m ⊕ Fin n)) :
+        inner ℂ (C.toEuclideanLin x) (C.toEuclideanLin x) =
+          inner ℂ x ((Cᴴ * C).toEuclideanLin x) := by
+      rw [Matrix.toLpLin_mul_same, LinearMap.comp_apply,
+        Matrix.toEuclideanLin_conjTranspose_eq_adjoint, LinearMap.adjoint_inner_right]
+    obtain ⟨u, hu⟩ := _root_.GlobalTheory.UnitaryExtension.exists_isometry_comp
+      (fromCols X Q).toEuclideanLin (fromCols Y Q).toEuclideanLin (by
+        intro x
+        rw [@norm_eq_sqrt_re_inner ℂ, @norm_eq_sqrt_re_inner ℂ _ _ _ _ ((fromCols X Q).toEuclideanLin x),
+          inner_gram, inner_gram, hG])
+    refine ⟨Matrix.toEuclideanLin.symm u.toLinearMap, ?_, ?_⟩
+    · apply Matrix.toEuclideanLin.injective
+      rw [Matrix.toLpLin_mul_same, Matrix.toEuclideanLin_conjTranspose_eq_adjoint,
+        LinearEquiv.apply_symm_apply, Matrix.toLpLin_one]
+      exact u.adjoint_comp_self'
+    · apply Matrix.toEuclideanLin.injective
+      rw [Matrix.toLpLin_mul_same, LinearEquiv.apply_symm_apply]
+      exact LinearMap.ext hu
+  obtain ⟨W, hWu, hW⟩ := hExtension
   rw [mul_fromCols, fromCols_inj.eq_iff] at hW
   exact ⟨W, hWu, hW.2, hW.1⟩
 

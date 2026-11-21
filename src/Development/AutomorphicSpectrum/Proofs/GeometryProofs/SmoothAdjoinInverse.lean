@@ -12,7 +12,7 @@ namespace GlobalTheory.CompanionTheory.Ar.SncBase.Mdl
 
 theorem isLocalizationAway_invAdj {Ω : Type} [Field Ω] [Algebra ℚ Ω] {A : Subalgebra ℚ Ω} {g : Ω}
     (hg : g ∈ A) (h0 : g ≠ 0) :
-    letI : Algebra A (invAdj A g) := (Subalgebra.inclusion (le_invAdj A g)).toRingHom.toAlgebra
+    letI : Algebra A (invAdj A g) := (Subalgebra.inclusion (le_invAdj A g)).toRingHom.toAlgebra;
     IsLocalization.Away (⟨g, hg⟩ : A) (invAdj A g) := by
   letI : Algebra A (invAdj A g) := (Subalgebra.inclusion (le_invAdj A g)).toRingHom.toAlgebra
   have hmap : ∀ a : A, ((algebraMap A (invAdj A g) a : invAdj A g) : Ω) = a := fun _ => rfl

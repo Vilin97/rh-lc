@@ -35,30 +35,30 @@ theorem stdSp_is {D : D7} {V : HSp D} (hs : V.SigOK) (h : V.gram = 1) : (stdSp V
 
 variable {B : Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {u : B.Word} {a : I.ι}
 
-theorem gram_X (hI : I.Ok) (j : ℕ) : ((I.rec7 l Z).sp.X j).gram = 1 := by
+theorem gram_X (hI : I.Ok) (j : ℕ) : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).gram = 1 := by
   obtain ⟨hs, hX, -⟩ := hI.spaces
   exact VacStd.gram_of_eq _ hs _ (hX j)
 
 theorem lat_X (hI : I.Ok) (j : ℕ) :
-    (GlobalTheory.PlaceModel.latFrame ((I.rec7 l Z).sp.X j) : Set (Fin ((I.rec7 l Z).sp.X j).rank → (I.rec7 l Z).host.E)) =
-      GlobalTheory.AdForm.intVec (I.rec7 l Z) _ := by
+    (GlobalTheory.PlaceModel.latFrame ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) : Set (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank → (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)) =
+      GlobalTheory.AdForm.intVec (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ := by
   obtain ⟨hs, hX, -⟩ := hI.spaces
   exact VacStd.coe_latFrame_of_eq _ hs _ (hX j)
 
-theorem exists_vac (hI : I.Ok) {ψ : AddChar (AF (I.rec7 l Z).host.F) ℂ} {θ : InfFam (I.rec7 l Z)}
-    (hψ : IsStdChar (I.rec7 l Z) ψ (-1)) (hθ : IsInfFam θ) (i : ℕ) :
-    ∃ f, IsVacO ψ θ ((I.rec7 l Z).sp.X i) ((I.rec7 l Z).sp.X (i + 1)) (fun _ => 1) (fun _ => 1) (intVec _ _) (intVec _ _) f := by
-  obtain ⟨f, hf⟩ := GlobalTheory.Member.vacuum_oriented_exists (I.rec7 l Z) ψ θ hψ hθ ((I.rec7 l Z).sp.X i) ((I.rec7 l Z).sp.X (i + 1))
-    (fun _ => 1) (fun _ => 1) ((I.rec7 l Z).sp.X_sig _) ((I.rec7 l Z).sp.X_sig _)
+theorem exists_vac (hI : I.Ok) {ψ : AddChar (AF (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ℂ} {θ : InfFam (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
+    (hψ : IsStdChar (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ψ (-1)) (hθ : IsInfFam θ) (i : ℕ) :
+    ∃ f, IsVacO ψ θ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (i + 1)) (fun _ => 1) (fun _ => 1) (intVec _ _) (intVec _ _) f := by
+  obtain ⟨f, hf⟩ := GlobalTheory.Member.vacuum_oriented_exists (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ψ θ hψ hθ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (i + 1))
+    (fun _ => 1) (fun _ => 1) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X_sig _) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X_sig _)
     (fun τ => VacStd.cartan_of_gram (gram_X hI _) τ) (fun τ => VacStd.cartan_of_gram (gram_X hI _) τ)
     _ _ (GlobalTheory.PlaceModel.isSelfDualC_latFrame _) (GlobalTheory.PlaceModel.isSelfDualC_latFrame _)
   rw [lat_X hI i, lat_X hI (i + 1)] at hf
   exact ⟨f, hf⟩
 
-theorem volLev_ne_zero (hI : I.Ok) {θ : InfFam (I.rec7 l Z)} (hθ : IsInfFam θ) {Ch : ℕ → Type}
-    {A : TwDat I l Z u a Ch} (j : ℕ) (v : GlobalTheory.Unf.Vol ((I.rec7 l Z).sp.X j)) (β : Ch j)
-    (hr : IsReps ((I.rec7 l Z).sp.X j) (A.U j β) (A.h j β)) : volLev v (A.U j β) ≠ 0 := by
-  have hu := GlobalTheory.SeeSaw.ontoUni_inB _ θ ((I.rec7 l Z).sp.X j) (fun _ => 1) hθ fun τ => by
+theorem volLev_ne_zero (hI : I.Ok) {θ : InfFam (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} (hθ : IsInfFam θ) {Ch : ℕ → Type}
+    {A : TwDat I l Z u a Ch} (j : ℕ) (v : GlobalTheory.Unf.Vol ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)) (β : Ch j)
+    (hr : IsReps ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) (A.U j β) (A.h j β)) : volLev v (A.U j β) ≠ 0 := by
+  have hu := GlobalTheory.SeeSaw.ontoUni_inB _ θ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) (fun _ => 1) hθ fun τ => by
     rw [gramAt_one (gram_X hI j)]; simp
   obtain ⟨-, -, -, ν, -, -, h⟩ := GlobalTheory.SeeSaw.integral_eq_classSum _ θ _ _ hθ hu
   letI : Fintype {c : (I.stp u a j).Cl // A.chOf j c = β} := @Subtype.fintype _ _ _ ((I.chain l u a).clsFin j)

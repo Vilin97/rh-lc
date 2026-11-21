@@ -137,8 +137,8 @@ end Restr
 section Place
 variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {u : B.Word} {a : I.ι}
   {Ch₀ : ℕ → Type} (A : TwDat I l Z u a Ch₀)
-  {c : Comm (I.rec7 l Z)} {v : VCom c} {Bs : GlobalTheory.Fam.Base c} {PP : Pl (I.rec7 l Z).host.E} {G : QGeo v Bs PP}
-  {χ : ℕ → (AE (I.rec7 l Z))ˣ →* Circle} (E : QExt G χ)
+  {c : Comm (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {v : VCom c} {Bs : GlobalTheory.Fam.Base c} {PP : Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E} {G : QGeo v Bs PP}
+  {χ : ℕ → (AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))ˣ →* Circle} (E : QExt G χ)
 
 abbrev Orb := SameOrb ((G.T E.δ E.tame E.η).lev (G.s + 1) 0 rfl).J (box (XIx (Fin B.R.k) (Fin B.R.t) (G.s + 1)) (G.ϖ ^ E.M))
 
@@ -156,7 +156,7 @@ variable {A E} {P : BadPr I a} {hψ : Continuous G.ψk} {sg : ℂ}
 
 set_option maxHeartbeats 1000000 in
 theorem orb_iff (hI : I.Ok)
-    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
+    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) G.s (E.tw hψ sg))
     (hM : E.M = (I.cst a).M) (b : Idx I.sel (I.tup a) (I.idx a) (G.s + 1)) (hQ : P.1 ∈ I.Q a) {e}
     (he : GlobalTheory.SymBridge.IsOrd GlobalTheory.SymBridge.xPos e) (z z') :
     Orb E (Submodule.Quotient.mk (locV G e z)) (Submodule.Quotient.mk (locV G e z')) ↔
@@ -177,7 +177,7 @@ theorem orb_iff (hI : I.Ok)
   rfl
 
 theorem locV_mem_iff
-    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
+    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) G.s (E.tw hψ sg))
     (M : ℕ) (e) (z) : locV G e z ∈ box _ (G.ϖ ^ M)⁻¹ ↔
       (Formalism.L2.Col.qOf P.1 : B.fields.E) ^ M • z ∈ Formalism.L2.Col.stdAt B.fields.E (B.R.N (G.s + 1)) P.1 := by
   letI := GlobalTheory.Mem.Col2.starE B
@@ -197,7 +197,7 @@ theorem orbAt_unique {j : ℕ} (hj : j + 1 = B.R.m) {y y' : E.Ch j} {β : Ch₀ 
 
 set_option maxHeartbeats 1000000 in
 theorem exists_orbAt (hI : I.Ok) (hA : A.Is)
-    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
+    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) G.s (E.tw hψ sg))
     (hM : E.M = (I.cst a).M) {j : ℕ} (hj : j + 1 = B.R.m) (β : Ch₀ j) (hk : A.kb j β = TC.kStd X u (B.R.N j)) :
     ∃ y, InBox E j y ∧ OrbAt A E j y β := by
   have hs : G.s + 1 + 1 = B.R.m := G.hs
@@ -219,7 +219,7 @@ theorem exists_orbAt (hI : I.Ok) (hA : A.Is)
 
 set_option maxHeartbeats 1000000 in
 theorem lev_of_orbAt (hI : I.Ok) (hA : A.Is)
-    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
+    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) G.s (E.tw hψ sg))
     (hM : E.M = (I.cst a).M) {j : ℕ} (hj : j + 1 = B.R.m) (b : Idx I.sel (I.tup a) (I.idx a) j) (hQ : P.1 ∈ I.Q a) {y : E.Ch j}
     {β β' : Ch₀ j} (hk : A.kb j β = TC.kStd X u (B.R.N j)) (hk' : A.kb j β' = TC.kStd X u (B.R.N j))
     (h : OrbAt A E j y β) (h' : OrbAt A E j y β') :
@@ -236,7 +236,7 @@ theorem lev_of_orbAt (hI : I.Ok) (hA : A.Is)
 
 set_option maxHeartbeats 1000000 in
 theorem exists_vec (hI : I.Ok) (hA : A.Is)
-    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
+    (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) G.s (E.tw hψ sg))
     (hM : E.M = (I.cst a).M) {j : ℕ} (hj : j + 1 = B.R.m) (b : Idx I.sel (I.tup a) (I.idx a) j) {y : E.Ch j} (hy : InBox E j y) :
     ∃ z : Formalism.L2.Col.Sp B.fields.E (B.R.N j),
       (Formalism.L2.Col.qOf P.1 : B.fields.E) ^ (I.cst a).M • z ∈ Formalism.L2.Col.stdAt B.fields.E (B.R.N j) P.1 ∧

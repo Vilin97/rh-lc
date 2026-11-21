@@ -126,7 +126,18 @@ theorem exists_nonzeroLocus_eq : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyN
     rw [stalkId_vanishingIdeal_compl U x a h]
     exact exists_radical_span_singleton_eq ha0
   obtain ⟨D, hD⟩ := EffCartierData.exists_idealSheaf_eq hE
-  refine ⟨D.lb, D.canonical, D.isLB_lb, TopologicalSpace.Opens.ext ?_⟩
+  have hLB : D.lb.IsLB := by
+    refine { cover := D.cover, g_self := ?_, cocycle := ?_ }
+    · intro i
+      exact Units.ext (D.eq_trans_on i i le_rfl le_rfl (c := 1) (_root_.one_mul _).symm).symm
+    · intro i j k
+      have hi : D.U i ⊓ D.U j ⊓ D.U k ≤ D.U i := inf_le_left.trans inf_le_left
+      have hj : D.U i ⊓ D.U j ⊓ D.U k ≤ D.U j := inf_le_left.trans inf_le_right
+      have hk : D.U i ⊓ D.U j ⊓ D.U k ≤ D.U k := inf_le_right
+      refine Units.ext (D.eq_trans_on i k hi hk ?_)
+      rw [D.trans_spec_on i j hi hj, D.trans_spec_on j k hj hk, ← _root_.mul_assoc]
+      rfl
+  refine ⟨D.lb, D.canonical, hLB, TopologicalSpace.Opens.ext ?_⟩
   refine D.coe_nonzeroLocus_canonical.trans ?_
   rw [hD]
   exact compl_compl _

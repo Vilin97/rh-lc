@@ -336,10 +336,10 @@ theorem exists_stab_equiv (hss : ∀ x, σ (σ x) = x) {M : ℕ} {J : Matrix (Fi
   have hQ : P⁻¹ * P = 1 := Matrix.nonsing_inv_mul P ((Matrix.isUnit_iff_isUnit_det P).mp hPu)
   have hP0 : (fun i => P i 0) = x 0 := by
     funext i
-    simp [P, v]
+    simp [P, v, Function.swap]
   have hPs : ∀ j : Fin M', (fun i => P i j.succ) = (b j : Fin (M' + 1) → E) := fun j => by
     funext i
-    simp [P, v]
+    simp [P, v, Function.swap]
   have h01 : ∀ j : Fin M', (cT (σ : E →+* E) P * J * P) 0 j.succ = 0 := fun j => by
     rw [cT_mul_mul_apply_eq_hform, hP0, hPs]
     exact LinearMap.mem_ker.mp (b j).2

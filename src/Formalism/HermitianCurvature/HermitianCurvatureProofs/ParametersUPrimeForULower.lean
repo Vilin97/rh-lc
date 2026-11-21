@@ -745,36 +745,26 @@ def parametersUForUPrime (P : M.Par) : M.Par := { P with u' := P.u }
 
 def parametersUPrimeForU (P : M.Par) : M.Par := { P with u := P.u' }
 
-theorem parameters_u_for_u_prime_ok {P : M.Par} (h : P.OK) : (parametersUForUPrime P).OK where
-  k_pos := h.k_pos
-  T_pos := h.T_pos
-  T'_pos := h.T'_pos
-  int_u := h.int_u
-  int_u' := h.int_u
-  gap := by
-    intro i hi
-    have g := h.gap i hi
-    simp only [M.Par.lo, M.Par.hi, parametersUForUPrime, max_self, min_self] at g ⊢
-    have a1 := le_max_left (P.u (i + 1)) (P.u' (i + 1))
-    have a2 := min_le_left (P.u i) (P.u' i)
-    linarith
+theorem parameters_u_for_u_prime_ok {P : M.Par} (h : P.OK) : (parametersUForUPrime P).OK := by
+  refine ⟨h.k_pos, h.T_pos, h.T'_pos, h.int_u, h.int_u, ?_⟩
+  intro i hi
+  have g := h.gap i hi
+  simp only [M.Par.lo, M.Par.hi, parametersUForUPrime, max_self, min_self] at g ⊢
+  have a1 := le_max_left (P.u (i + 1)) (P.u' (i + 1))
+  have a2 := min_le_left (P.u i) (P.u' i)
+  linarith
 
-theorem parameters_u_prime_for_u_ok {P : M.Par} (h : P.OK) : (parametersUPrimeForU P).OK where
-  k_pos := h.k_pos
-  T_pos := h.T_pos
-  T'_pos := h.T'_pos
-  int_u := by
-    intro i hi
+theorem parameters_u_prime_for_u_ok {P : M.Par} (h : P.OK) : (parametersUPrimeForU P).OK := by
+  refine ⟨h.k_pos, h.T_pos, h.T'_pos, ?_, ?_, ?_⟩
+  · intro i hi
     obtain ⟨a, ha⟩ := h.int_u' i hi
     obtain ⟨b, hb⟩ := h.int_u' 1 (by simp [Finset.mem_Icc]; exact h.k_pos)
     exact ⟨a - b, by simp only [parametersUPrimeForU]; push_cast; linarith⟩
-  int_u' := by
-    intro i hi
+  · intro i hi
     obtain ⟨a, ha⟩ := h.int_u' i hi
     obtain ⟨b, hb⟩ := h.int_u' 1 (by simp [Finset.mem_Icc]; exact h.k_pos)
     exact ⟨a - b, by simp only [parametersUPrimeForU]; push_cast; linarith⟩
-  gap := by
-    intro i hi
+  · intro i hi
     have g := h.gap i hi
     simp only [M.Par.lo, M.Par.hi, parametersUPrimeForU, max_self, min_self] at g ⊢
     have a1 := le_max_right (P.u (i + 1)) (P.u' (i + 1))

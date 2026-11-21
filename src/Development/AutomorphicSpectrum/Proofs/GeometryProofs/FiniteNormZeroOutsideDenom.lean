@@ -99,7 +99,6 @@ theorem lie_lift {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] [Smoo
   · refine eq_top_iff.2 fun y _ => ?_
     obtain ⟨z, rfl⟩ := f.surjective y
     induction z using hj.inductionOn with
-    | zero => simp
     | tmul m => exact Submodule.subset_span ⟨m, rfl⟩
     | smul s n h => rw [map_smul]; exact Submodule.smul_mem _ _ (h trivial)
     | add m n h h' => rw [map_add (f := _)]; exact Submodule.add_mem _ (h trivial) (h' trivial)
@@ -207,7 +206,7 @@ theorem exists_point {X : Scheme.{0}} {F : Type} [Field F] (s : X ⟶ Sp F) [Loc
   have hr : Set.range hW.fromSpec = (W : Set X) := hW.range_fromSpec
   obtain ⟨q, -⟩ : x ∈ Set.range hW.fromSpec := hr ▸ hxW
   haveI : Nontrivial Γ(X, W) := PrimeSpectrum.nonempty_iff_nontrivial.1 ⟨q⟩
-  obtain ⟨m, hm⟩ := Ideal.exists_maximal Γ(X, W)
+  obtain ⟨m, hm⟩ := Ideal.exists_maximal (α := Γ(X, W))
   letI := Ideal.Quotient.field m
   refine ⟨Γ(X, W) ⧸ m, inferInstance, (Ideal.Quotient.mk m).comp ψ.hom,
     spMap (Ideal.Quotient.mk m) ≫ hW.fromSpec, ?_, ?_, ?_⟩

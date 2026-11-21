@@ -54,12 +54,12 @@ variable (l : I.Laws) {Z : Later B (I.cols l)} (Z' : Later B (I.cols l))
 
 
 set_option maxHeartbeats 8000000 in
-theorem stdC_colsRe (T : ColsTiedSym (I.rec7 l Z)) (h : I.StdC l Z T) : I.StdC l Z' (colsRe Z' T) := fun u =>
+theorem stdC_colsRe (T : ColsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (h : I.StdC l Z T) : I.StdC l Z' (colsRe Z' T) := fun u =>
   { h u with gl := { (h u).gl with } }
 
 
 set_option maxHeartbeats 8000000 in
-theorem stdLvC_colsRe (T : ColsTiedSym (I.rec7 l Z)) (u : B.Word) (h : I.StdLvC l Z u (T.forms u)) :
+theorem stdLvC_colsRe (T : ColsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (u : B.Word) (h : I.StdLvC l Z u (T.forms u)) :
     I.StdLvC l Z' u ((colsRe Z' T).forms u) := h
 
 end Std
@@ -70,7 +70,7 @@ variable (Z : Later B (I.cols l))
 
 theorem dGam_cols (u : B.Word) (a : I.ι) : ((I.cols l).chTw u a).DGam = DGam B.fields.E B.R := rfl
 
-theorem colLay_of_tie (T : ColsTiedSym (I.rec7 l Z)) : ColLay (I.rec7 l Z) T.herm.base.lev0 (errOf T.herm) :=
+theorem colLay_of_tie (T : ColsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) : ColLay (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) T.herm.base.lev0 (errOf T.herm) :=
   colLay_of_tied ⟨B, I.cols l, Z.W, Z.V, Z.S, Z.N, Z.G⟩ ⟨X⟩ (dGam_cols I l) T
 
 

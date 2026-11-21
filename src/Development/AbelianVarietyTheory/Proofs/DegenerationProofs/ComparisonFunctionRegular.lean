@@ -48,9 +48,10 @@ theorem val_pow (h : ∀ w, y w ⤳ z) {a : Ω} (ha : a ∈ M.O z) (n : ℕ) : M
 
 theorem val_prod (h : ∀ w, y w ⤳ z) {I : Type} (s : Finset I) {a : I → Ω} (ha : ∀ i, a i ∈ M.O z) :
     M.val y (∏ i ∈ s, a i) = ∏ i ∈ s, M.val y (a i) := by
-  have := map_prod (RatModel.valHomOf y z h) (fun i => ⟨a i, ha i⟩) s
-  rw [RatModel.valHomOf_apply, SubmonoidClass.coe_finset_prod] at this
-  exact this
+  induction s using Finset.induction_on with
+  | empty => simp [RatModel.val_one]
+  | @insert i s hi ih =>
+    rw [Finset.prod_insert hi, Finset.prod_insert hi, RatModel.val_mul h (ha i) (prod_mem fun j _ => ha j), ih]
 
 theorem val_ne_zero (h : ∀ w, y w ⤳ z) {a : Ω} (h0 : a ≠ 0) (ha : a ∈ M.O z) (ha' : a⁻¹ ∈ M.O z) :
     M.val y a ≠ 0 := by

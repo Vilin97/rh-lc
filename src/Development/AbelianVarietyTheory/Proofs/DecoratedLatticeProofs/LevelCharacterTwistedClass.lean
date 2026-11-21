@@ -135,16 +135,16 @@ variable {B : Base} {X : PreX B.toPre} (I : TC B X)
 
 set_option maxHeartbeats 1000000 in
 theorem chi_near_one (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (a : I.ι)
-    {bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))}
-    (S : StepLevel (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) (gramP (I.rec7 l Z)) 1 (I.rec7 l Z).R.f bad)
-    (hbad : ∀ v ∈ bad, v ∈ badG (I.rec7 l Z) ∨ I.UnderQ a v) (hfin : ∃ n : ℕ, 0 < n ∧ ∀ κ, S.chi κ ^ n = 1) :
-    letI := Formalism.BasicNotions.tensTopL (F := (I.rec7 l Z).host.F) (E := (I.rec7 l Z).host.E)
-      (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F)
-    ∀ᶠ (u : GL (Fin ((I.rec7 l Z).R.N (I.rec7 l Z).R.m - 1)) (TensorProduct (I.rec7 l Z).host.F (I.rec7 l Z).host.E
-      (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F))) in nhds 1, ∀ κ : S.U, κ.1 = u → S.chi κ = 1 := by
+    {bad : Set (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))}
+    (S : StepLevel (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) 1 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.f bad)
+    (hbad : ∀ v ∈ bad, v ∈ badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ∨ I.UnderQ a v) (hfin : ∃ n : ℕ, 0 < n ∧ ∀ κ, S.chi κ ^ n = 1) :
+    letI := Formalism.BasicNotions.tensTopL (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)
+      (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)
+    ∀ᶠ (u : GL (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m - 1)) (TensorProduct (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E
+      (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) in nhds 1, ∀ κ : S.U, κ.1 = u → S.chi κ = 1 := by
   obtain ⟨n, hn, hfin⟩ := hfin
   obtain ⟨-, gP, -, -⟩ := GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hP l Z
-  let Vs : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F)) := {v | ∃ P : SBof I a, IsOver v (GlobalTheory.TwU.seamP (sm I l Z) P.1)}
+  let Vs : Set (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) := {v | ∃ P : SBof I a, IsOver v (GlobalTheory.TwU.seamP (sm I l Z) P.1)}
   have hVs : Vs.Finite := by
     have e : Vs = ⋃ P : SBof I a, {v | IsOver v (GlobalTheory.TwU.seamP (sm I l Z) P.1)} := by
       ext v; simp [Vs]
@@ -155,17 +155,17 @@ theorem chi_near_one (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B
   have hb : ∀ v ∈ bad, v ∈ Vs := fun v hv => by
     obtain ⟨P, h1, h2⟩ := exists_SBof_over I hI l Z a v (hbad v hv)
     exact ⟨⟨P, h1⟩, h2⟩
-  refine GlobalTheory.ChiCont.main (F := (I.rec7 l Z).host.F) (E := (I.rec7 l Z).host.E) (sigD (I.rec7 l Z)) (gramP (I.rec7 l Z)) 1
-    (I.rec7 l Z).R.f bad S Vs hVs hb ?_
+  refine GlobalTheory.ChiCont.main (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) 1
+    (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.f bad S Vs hVs hb ?_
   rintro v ⟨P, hv⟩
   obtain ⟨hs, hq, -⟩ := AdelicValuationDictionary.main I hI l Z a 0 0 P 1
   rw [hs] at hv
   have hne : conjPrime₂ P.1 ≠ P.1 := fun e =>
     GlobalTheory.Proof.NarrowJetMoments.conjP_notMem_rowSG (base_fields_primes_ok B X).1 (base_fields_primes_ok B X).2.1 hI.sel_ok hI.g_mem P.2
       (by rw [e]; exact P.2)
-  obtain ⟨N, hN⟩ := chi_deep (I.rec7 l Z).sp.cm gP S n hn hfin P.1 hne ((under_eq_iff B.host P.1 _).2 (Or.inr rfl)) hq v hv
-  have h2 := GlobalTheory.TwU.NearOne.congAt_eventually_nhds_one (F := (I.rec7 l Z).host.F) (E := (I.rec7 l Z).host.E)
-    ((I.rec7 l Z).R.N (I.rec7 l Z).R.m - 1) N (GlobalTheory.TwU.seamP (sm I l Z) P.1)
+  obtain ⟨N, hN⟩ := chi_deep (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm gP S n hn hfin P.1 hne ((under_eq_iff B.host P.1 _).2 (Or.inr rfl)) hq v hv
+  have h2 := GlobalTheory.TwU.NearOne.congAt_eventually_nhds_one (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)
+    ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m - 1) N (GlobalTheory.TwU.seamP (sm I l Z) P.1)
   rw [hs] at h2
   exact h2.mono fun w hw x hx hxw => hN x hx w hw hxw
 
@@ -189,22 +189,22 @@ theorem exists_rep {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (
     exact x.ne_zero (by rw [← hb, this, map_zero])
   exact ⟨b, Units.mk0 _ h0, rfl, hb.symm⟩
 
-def LevRead (l : I.Laws) (Z : TC.Later B (I.cols l)) {T : Type} (L : LevCh (I.rec7 l Z) T) (P : LevelP L.Pg (I.rec7 l Z).R.r ℂ)
+def LevRead (l : I.Laws) (Z : TC.Later B (I.cols l)) {T : Type} (L : LevCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) T) (P : LevelP L.Pg (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.r ℂ)
     (tup : T → I.ι) : Prop :=
-  ∀ t, tup t ≠ I.mu0 → ∀ (bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F)))
-    (S : StepLevel (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) (gramP (I.rec7 l Z)) 1 (I.rec7 l Z).R.f bad) y lat st,
-    (∀ v ∈ bad, v ∈ badG (I.rec7 l Z) ∨ I.UnderQ (tup t) v) → (∃ n : ℕ, 0 < n ∧ ∀ κ, S.chi κ ^ n = 1) →
+  ∀ t, tup t ≠ I.mu0 → ∀ (bad : Set (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)))
+    (S : StepLevel (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) 1 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.f bad) y lat st,
+    (∀ v ∈ bad, v ∈ badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ∨ I.UnderQ (tup t) v) → (∃ n : ℕ, 0 < n ∧ ∀ κ, S.chi κ ^ n = 1) →
     I.ReadsP (tup t) S.Lb S.U S.chi y lat st →
-    LevIs S (levS _ L.βX (Lev.datY _ (I.rec7 l Z).R.r (I.rec7 l Z).R.t (I.rec7 l Z).R.m r_le_X L.Pg (L.Q t) P L.chi (L.xiR t) Lev.Frm.B))
-      (Lev.levChi _ L.βX (Lev.datY _ (I.rec7 l Z).R.r (I.rec7 l Z).R.t (I.rec7 l Z).R.m r_le_X L.Pg (L.Q t) P L.chi (L.xiR t) Lev.Frm.B))
+    LevIs S (levS _ L.βX (Lev.datY _ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.r (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m r_le_X L.Pg (L.Q t) P L.chi (L.xiR t) Lev.Frm.B))
+      (Lev.levChi _ L.βX (Lev.datY _ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.r (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m r_le_X L.Pg (L.Q t) P L.chi (L.xiR t) Lev.Frm.B))
 
 
 set_option maxHeartbeats 2000000 in
-theorem levRead_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) {T : Type} (L : LevCh (I.rec7 l Z) T)
+theorem levRead_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) {T : Type} (L : LevCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) T)
     (μ0 : T) (hL : L.Is μ0) (hC : ∀ j, L.C.mu0 j = I.C.mu0 j) (tup : T → I.ι) (hxi : ∀ t, L.xiH t = I.xi (tup t))
     (hPg : L.Pg = (B.primes X).vGs) (hQ : ∀ t, L.Q t = I.Q (tup t)) (hβ : L.βX = 1)
-    (eG : R3.Gc B X ≃* Formalism.L2.DIV.G0 L.Pg (I.rec7 l Z).R.r)
-    (hG : ∀ (g : R3.Gc B X) (P : Pl (I.rec7 l Z).host.E) (h : P ∈ (B.primes X).vGs) (h' : P ∈ L.Pg), eG g ⟨P, h'⟩ = g ⟨P, h⟩) :
+    (eG : R3.Gc B X ≃* Formalism.L2.DIV.G0 L.Pg (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.r)
+    (hG : ∀ (g : R3.Gc B X) (P : Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (h : P ∈ (B.primes X).vGs) (h' : P ∈ L.Pg), eG g ⟨P, h'⟩ = g ⟨P, h⟩) :
     LevRead I l Z L (levPOf eG B.embLL (R3.lev1 I) (R3.chr1 I)) tup := by
   classical
   intro t ht bad S y lat st hbad hfin hK
@@ -218,9 +218,9 @@ theorem levRead_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (
   dsimp only at hPg hchi hxiR eG hG ⊢
   subst hPg
   obtain rfl : eG = MulEquiv.refl _ := MulEquiv.ext fun g => funext fun w => hG g w.1 w.2 w.2
-  let cg : ℕ → ∀ PP : Pl (I.rec7 l Z).host.E, (kP PP)ˣ →* ℂˣ := fun c PP => if c ≤ B.R.m then chi c PP else 1
+  let cg : ℕ → ∀ PP : Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E, (kP PP)ˣ →* ℂˣ := fun c PP => if c ≤ B.R.m then chi c PP else 1
   have key := GlobalTheory.SeeSaw.TwLev.levIs_reads_tw I hI hP l Z (tup t) ht S (chi_near_one I hI hP l Z (tup t) S hbad hfin) hK
-    (levPOf (D := I.rec7 l Z) (MulEquiv.refl (R3.Gc B X)) B.embLL (R3.lev1 I) (R3.chr1 I))
+    (levPOf (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (MulEquiv.refl (R3.Gc B X)) B.embLL (R3.lev1 I) (R3.chr1 I))
     (fun g => ⟨fun h w => h w (Set.mem_univ w), fun h w _ => h w⟩)
     (fun g hg => by
       refine (congrArg (fun x : B.LLˣ => B.embLL (x : B.LL)) (LevFam.chr_apply (X := B.fields) I.Ps ⟨g.1, g.2⟩)).trans ?_
@@ -248,7 +248,7 @@ theorem levRead_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (
       have e2 := GlobalTheory.NormOneUnit.resChar_eq (hI.xi_reads (tup t))
         (GlobalTheory.Mem.ReadTwist.tameAt (hI.xi_reads (tup t)) fun v => Subgroup.mem_iInf.1 (I.tup (tup t)).2.1.2 v) PP x b k h1 h2.symm
       exact (congrArg (fun z : ℂˣ => (z : ℂ)) e1).trans e2.symm)
-    (r_le_X (D := I.rec7 l Z))
+    (r_le_X (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))
   refine ⟨key.1, fun h κ hκ => Eq.trans ?_ (key.2 h κ hκ)⟩
   refine congrArg (fun z : ℂˣ => (z : ℂ)) (congrArg₂ (· * ·) (congrArg₂ (· * ·) rfl ?_) rfl)
   refine Finset.prod_congr rfl fun PP _ => Finset.prod_congr rfl fun c hc => ?_

@@ -32,7 +32,7 @@ def hondaSum (τ : K →+* K) (q : ℕ) (c : ℕ → K) (f : K⟦X⟧) : K⟦X�
   PowerSeries.mk fun n => ∑ j ∈ Finset.range n, c j * coeff n (frobOp τ q (j + 1) f)
 
 def IntLog [IsUltrametricDist K] (f e : K⟦X⟧) : Prop :=
-  Formalism.L2.Th1.C.IsLogPair f e ∧ CoefLe 1 (derivative K f) ∧ Formalism.L2.Th1.C.FGInt (Formalism.G.unitBall K) f e
+  Formalism.L2.Th1.C.IsLogPair f e ∧ CoefLe 1 (derivative f) ∧ Formalism.L2.Th1.C.FGInt (Formalism.G.unitBall K) f e
 
 
 open Formalism.L2.Th1.CM in

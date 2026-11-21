@@ -72,15 +72,15 @@ open GlobalTheory.Mem GlobalTheory.Mem.Col2
 structure World {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) where
   ok : I.Ok
   pins : TC.Pins B X
-  C : Formalism.L2.Forms.ColsTiedSym (I.rec7 l Z)
+  C : Formalism.L2.Forms.ColsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)
   std : I.StdC l Z C
-  S : STrue (I.rec7 l Z) fun u => (C.forms u).to0
+  S : STrue (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) fun u => (C.forms u).to0
 
 def TrueD (D : D7) : Prop :=
-  ∃ (B : Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)), D = I.rec7 l Z ∧ Nonempty (World I l Z)
+  ∃ (B : Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)), D = _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G ∧ Nonempty (World I l Z)
 
 theorem TrueD.elim {Q : D7 → Prop}
-    (h : ∀ (B : Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)), World I l Z → Q (I.rec7 l Z))
+    (h : ∀ (B : Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)), World I l Z → Q (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))
     {D : D7} (hD : TrueD D) : Q D := by
   obtain ⟨B, X, I, l, Z, rfl, ⟨w⟩⟩ := hD
   exact h B X I l Z w

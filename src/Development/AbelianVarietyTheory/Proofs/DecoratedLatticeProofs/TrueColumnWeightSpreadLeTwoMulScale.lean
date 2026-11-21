@@ -63,7 +63,7 @@ end GlobalTheory.CoreHt.SpreadBound
 namespace GlobalTheory.CoreHt.SpreadBound
 
 theorem spread_lamTrue_le : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (h : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
-    (L : SizeData₂ (I.rec7 l Z)) (CY : ℝ), HtRowsS L CY → 8 ≤ L.sc.X' → 2 ≤ L.sc.x → ∀ (u : B.Word) (j : ℕ), j ≤ B.R.m → ∀ τ,
+    (L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (CY : ℝ), HtRowsS L CY → 8 ≤ L.sc.X' → 2 ≤ L.sc.x → ∀ (u : B.Word) (j : ℕ), j ≤ B.R.m → ∀ τ,
     ((B.wts.lamTrue u j τ).spread : ℝ) ≤ 2 * L.sc.a := by
   intro B X I _ l Z L CY hS hX hx u j hj τ
   obtain ⟨⟨P⟩, -, -, ⟨hN3, -, hmt, hkS, hbT⟩, -, hT⟩ := hS
@@ -90,10 +90,10 @@ theorem spread_lamTrue_le : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (
   have hb'0 : 0 < L.sc.b' := by
     have : 0 < L.sc.a := by linarith
     exact div_pos this hX0
-  have hn1 : (1 : ℝ) ≤ (I.rec7 l Z).R.n := by
-    have : 1 ≤ (I.rec7 l Z).R.n := by unfold Ranks.n; exact Nat.succ_le_of_lt (by positivity)
+  have hn1 : (1 : ℝ) ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.n := by
+    have : 1 ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.n := by unfold Ranks.n; exact Nat.succ_le_of_lt (by positivity)
     exact_mod_cast this
-  have hw : L.sc.w'' (I.rec7 l Z).R.n ≤ L.sc.b' :=
+  have hw : L.sc.w'' (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.n ≤ L.sc.b' :=
     div_le_self hb'0.le (one_le_mul_of_one_le_of_one_le hx1.le hn1)
   have he := L.etaSz_pos
   have hS0 := L.Sc_pos
@@ -103,10 +103,10 @@ theorem spread_lamTrue_le : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (
   have heta : 2 * L.etaSz ≤ L.sc.b' := by
     have h1 : (2 : ℝ) ≤ B.R.m * ((B.R.t : ℝ) + 1) := by nlinarith
     have h2 := mul_le_mul_of_nonneg_right h1 he.le
-    have h3 : (B.R.m : ℝ) * ((B.R.t : ℝ) + 1) * L.etaSz ≤ L.sc.w'' (I.rec7 l Z).R.n := hmt
+    have h3 : (B.R.m : ℝ) * ((B.R.t : ℝ) + 1) * L.etaSz ≤ L.sc.w'' (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.n := hmt
     linarith
   have hSc : 5 * L.Sc ≤ L.sc.b' := by
-    have h3 : (B.R.k : ℝ) * L.Sc ≤ L.sc.w'' (I.rec7 l Z).R.n := hkS
+    have h3 : (B.R.k : ℝ) * L.Sc ≤ L.sc.w'' (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.n := hkS
     nlinarith
   have hN1 : (1 : ℝ) ≤ B.R.N B.R.m := by
     have : 1 ≤ B.R.N B.R.m := by unfold Ranks.N; omega
@@ -119,22 +119,22 @@ theorem spread_lamTrue_le : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (
   have hkN : (B.R.k : ℝ) ≤ B.R.N B.R.m := by
     have : B.R.k ≤ B.R.N B.R.m := by unfold Ranks.N; omega
     exact_mod_cast this
-  have hu0 : (B.hcW u τ).u ⟨0, hk0⟩ = ((I.rec7 l Z).hc τ).u ⟨0, hk0⟩ := (I.rec7 l Z).hcW_first u τ hk0
-  have he0 : (B.hcW u τ).e = ((I.rec7 l Z).hc τ).e := (I.rec7 l Z).hcW_e u τ
-  have hwm : wj (I.rec7 l Z) B.R.m τ = (((B.hcW u τ).e ⟨B.R.m - 1, hm1⟩ : ℚ) : ℝ) := by
+  have hu0 : (B.hcW u τ).u ⟨0, hk0⟩ = ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).hc τ).u ⟨0, hk0⟩ := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).hcW_first u τ hk0
+  have he0 : (B.hcW u τ).e = ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).hc τ).e := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).hcW_e u τ
+  have hwm : wj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m τ = (((B.hcW u τ).e ⟨B.R.m - 1, hm1⟩ : ℚ) : ℝ) := by
     unfold wj
-    rw [dite_eq_left (show B.R.m - 1 < (I.rec7 l Z).R.m from hm1)]
+    rw [dite_eq_left (show B.R.m - 1 < (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m from hm1)]
     exact (congrArg (fun f => ((f ⟨B.R.m - 1, hm1⟩ : ℚ) : ℝ)) he0).symm
   rw [← hwm, hu0]
-  by_cases htop : ((I.rec7 l Z).eTau τ : (I.rec7 l Z).R.GG) ∈ (I.rec7 l Z).host.topPlaces
-  · obtain ⟨t, htt⟩ : ∃ t : (I.rec7 l Z).host.TT,
-        ((I.rec7 l Z).eTau τ : (I.rec7 l Z).R.GG) = (I.rec7 l Z).R.tau1 t := by
+  by_cases htop : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eTau τ : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.GG) ∈ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.topPlaces
+  · obtain ⟨t, htt⟩ : ∃ t : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.TT,
+        ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eTau τ : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.GG) = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.tau1 t := by
       unfold Host.topPlaces at htop
       obtain ⟨t, ht, hte⟩ := Finset.mem_image.1 htop
       exact ⟨⟨t, ht⟩, hte.symm⟩
     rw [(L.top_u τ t hk0 htt).1]
-    show (L.aT t : ℝ) + ((B.R.k : ℝ) - 1) / 2 + wj (I.rec7 l Z) B.R.m τ + (B.R.N B.R.m : ℝ) ≤ 2 * L.sc.a
-    have a1 : wj (I.rec7 l Z) B.R.m τ ≤ (L.bT t : ℝ) + L.sc.b' / L.sc.x + L.etaSz :=
+    show (L.aT t : ℝ) + ((B.R.k : ℝ) - 1) / 2 + wj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m τ + (B.R.N B.R.m : ℝ) ≤ 2 * L.sc.a
+    have a1 : wj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m τ ≤ (L.bT t : ℝ) + L.sc.b' / L.sc.x + L.etaSz :=
       (L.win_top B.R.m (by omega) le_rfl τ t htt).2
     have a2 : (L.aT t : ℝ) ≤ L.sc.a + L.sc.a / ((B.R.k : ℝ) * L.sc.x ^ (Scale.A / 2)) := (L.aT_win t).2
     have a3 : (5 : ℝ) ≤ (B.R.k : ℝ) * L.sc.x ^ (Scale.A / 2) :=
@@ -147,10 +147,10 @@ theorem spread_lamTrue_le : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (
   · have h1 := P.cloud_place_bound τ (by show 0 < B.R.k - 1; omega) htop
     have h2 := (L.cloud_v τ ⟨0, by show 0 < B.R.k - 1; omega⟩).2
     push_cast at h1
-    by_cases hc : ((I.rec7 l Z).eTau τ : (I.rec7 l Z).R.GG) ∈ (I.rec7 l Z).host.thickPlaces
+    by_cases hc : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eTau τ : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.GG) ∈ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.thickPlaces
     · have a1 := hT B.R.m (by omega) le_rfl τ hc
       linarith
-    · have a1 := (L.win_thin B.R.m (by omega) le_rfl τ ⟨((I.rec7 l Z).eTau τ).2, htop, hc⟩).2
+    · have a1 := (L.win_thin B.R.m (by omega) le_rfl τ ⟨((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eTau τ).2, htop, hc⟩).2
       linarith
 
 end GlobalTheory.CoreHt.SpreadBound

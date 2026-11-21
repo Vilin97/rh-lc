@@ -217,8 +217,8 @@ theorem exists_pos_isGreatest_norm_mulVec_on_ker : GlobalTheory.UT.LL → ∀ (o
   have gψ : IsGrpPullback GK ρ.P.A (spMap u.yK) ψ :=
     ((isGrpPullback_of_iso u.U.gen).comp u.cart).congr (Category.id_comp _) rfl
   have iso : LBIso (ρ.P.L.pull ψ) (u.U.LG.L.pull j) :=
-    (GlobalTheory.GenSpread.lbIso_pull_of_lbIso u.lb u.U.gen.hom.left rfl).symm.trans (pull_isLB ρ.P.isLB _)
-      (pull_isLB u.A.isLB _) (pull_isLB u.U.LG.isLB _) u.U.ext
+    (GlobalTheory.GenSpread.lbIso_pull_of_lbIso u.lb u.U.gen.hom.left rfl).symm.trans (LB.isLB_pull ρ.P.isLB _)
+      (LB.isLB_pull u.A.isLB _) (LB.isLB_pull u.U.LG.isLB _) u.U.ext
   obtain ⟨ω, hω⟩ := exists_isoVal GK.hom τ ρ.P.isLB u.U.LG.isLB iso
   let ψ' : GK.left ⟶ (baseOver (Sp S.R) ⊗ ρ.P.A).left :=
     (lift (Over.homMk (GK.hom ≫ spMap u.yK) (Category.comp_id _) : Over.mk (GK.hom ≫ spMap u.yK) ⟶ baseOver _)

@@ -90,8 +90,8 @@ theorem unitAA_of_prime {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace 
 
 open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 theorem unitAA_level {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word)
-    {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : SplitPt (I.rec7 l Z) k)
-    (hv : ((B.T u : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∈ p.v.asIdeal) : p.UnitAA := by
+    {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : SplitPt (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) k)
+    (hv : ((B.T u : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∈ p.v.asIdeal) : p.UnitAA := by
   have hT : (B.T u).Prime := l.pr.T_prime u
   have h1 : Nat.Coprime (B.T u) (B.host.QS * B.host.q * B.host.d) := by
     rw [Nat.Coprime, Nat.gcd_comm, Nat.gcd_rec, B.T_cond u, Nat.gcd_one_left]

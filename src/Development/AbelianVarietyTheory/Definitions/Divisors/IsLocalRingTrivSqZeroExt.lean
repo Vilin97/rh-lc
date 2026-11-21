@@ -143,7 +143,6 @@ theorem secK_induction {e : Ix Dw → ℤ} {P : RulK Xo c K₀ → Prop} (h0 : P
     (hs : s ∈ secK Xo c K₀ e) : P s := by
   obtain ⟨z, rfl⟩ : ∃ z, (secZ Xo c e).subtype.baseChange K₀ z = s := hs
   induction z with
-  | zero => simpa using h0
   | add s s' h h' => rw [map_add (f := _)]; exact h2 _ _ h h'
   | tmul a f => exact h1 a f.1 f.2
 

@@ -117,6 +117,8 @@ theorem subst_jetN {n n' g m : ℕ} (B : (Fin n' → Fin g → ℂ) →ₗ[ℂ] 
     σ (jetN m f) = jetN m (fun w => f (B w)) := by
   rw [jetN, subst_renN B σ hσ, ← jetOf_comp_anLin m hf (flatL B), jetN]
   congr 2
+  funext v
+  rw [Function.comp_apply, colsOf_flatL]
 
 theorem isHolFam_clm {Y : Scheme.{0}} {N N' : ℕ} (e : (Fin N → ℂ) → (Sp ℂ ⟶ Y)) (hol : IsHolFam e)
     (T : (Fin N' → ℂ) →L[ℂ] (Fin N → ℂ)) : IsHolFam (fun v => e (T v)) := by

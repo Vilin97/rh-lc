@@ -48,19 +48,19 @@ theorem exists_finM_GfC {D : D7} (V : HSp D) {n : ℕ} (hn : V.rank = n)
   rw [← e2]
   rfl
 
-theorem levData : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (i : ℕ) (hi : i ≤ B.R.m) {T : ℕ} {bad : Set (HeightOneSpectrum (𝓞 B.host.F))} {cl : Type} {stab : cl → Type} [∀ c, Group (stab c)] {lat : cl → Submodule (𝓞 B.host.E) (Fin (B.R.N i) → B.host.E)} (K : LevelChart (I.rec7 l Z) T bad i hi stab lat), ∃ (U : Subgroup (GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i))) (chi : U →* ℂˣ) (h : cl → GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i)), (∀ g, g ∈ U ↔ g ∈ GfC _ ∧ ∃ κ : K.lev.U, κ.1.1 = finM _ (rankN (I.rec7 l Z) i hi) g) ∧ (∀ (g : U) (κ : K.lev.U), κ.1.1 = finM _ (rankN (I.rec7 l Z) i hi) g.1 → chi g = K.lev.chi κ) ∧ (∀ c, h c ∈ GfC _ ∧ finM _ (rankN (I.rec7 l Z) i hi) (h c) = (K.y c).1.1) := by
+theorem levData : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (i : ℕ) (hi : i ≤ B.R.m) {T : ℕ} {bad : Set (HeightOneSpectrum (𝓞 B.host.F))} {cl : Type} {stab : cl → Type} [∀ c, Group (stab c)] {lat : cl → Submodule (𝓞 B.host.E) (Fin (B.R.N i) → B.host.E)} (K : LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) T bad i hi stab lat), ∃ (U : Subgroup (GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i))) (chi : U →* ℂˣ) (h : cl → GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i)), (∀ g, g ∈ U ↔ g ∈ GfC _ ∧ ∃ κ : K.lev.U, κ.1.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) g) ∧ (∀ (g : U) (κ : K.lev.U), κ.1.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) g.1 → chi g = K.lev.chi κ) ∧ (∀ c, h c ∈ GfC _ ∧ finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (h c) = (K.y c).1.1) := by
   intro B X I l Z i hi T bad cl stab _ lat K
-  refine ⟨GfC _ ⊓ GlobalTheory.ClassSumLevel.levG _ (rankN (I.rec7 l Z) i hi) K.lev, ?_⟩
+  refine ⟨GfC _ ⊓ GlobalTheory.ClassSumLevel.levG _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) K.lev, ?_⟩
   have huniq : ∀ κ κ' : K.lev.U, κ.1.1 = κ'.1.1 → κ = κ' := fun κ κ' h => Subtype.ext (Units.ext h)
-  let φ : (GfC _ ⊓ GlobalTheory.ClassSumLevel.levG _ (rankN (I.rec7 l Z) i hi) K.lev : Subgroup _) → K.lev.U :=
+  let φ : (GfC _ ⊓ GlobalTheory.ClassSumLevel.levG _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) K.lev : Subgroup _) → K.lev.U :=
     fun g => (Subgroup.mem_inf.1 g.2).2.choose
-  have hφ : ∀ g, (φ g).1.1 = finM _ (rankN (I.rec7 l Z) i hi) g.1 := fun g => (Subgroup.mem_inf.1 g.2).2.choose_spec
-  let Φ : (GfC _ ⊓ GlobalTheory.ClassSumLevel.levG _ (rankN (I.rec7 l Z) i hi) K.lev : Subgroup _) →* K.lev.U :=
+  have hφ : ∀ g, (φ g).1.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) g.1 := fun g => (Subgroup.mem_inf.1 g.2).2.choose_spec
+  let Φ : (GfC _ ⊓ GlobalTheory.ClassSumLevel.levG _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) K.lev : Subgroup _) →* K.lev.U :=
     MonoidHom.mk' φ (fun a b => huniq _ _ (by
       show (φ (a * b)).1.1 = (φ a).1.1 * (φ b).1.1
       rw [hφ, hφ, hφ]
       exact StabMove.finM_mul _ _ a.1 b.1))
-  choose h hG hh using fun c => exists_finM_GfC _ (rankN (I.rec7 l Z) i hi) (K.y c)
+  choose h hG hh using fun c => exists_finM_GfC _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (K.y c)
   refine ⟨K.lev.chi.comp Φ, h, fun g => ?_, fun g κ hκ => ?_, fun c => ⟨hG c, hh c⟩⟩
   · rw [Subgroup.mem_inf]; rfl
   · show K.lev.chi (φ g) = K.lev.chi κ

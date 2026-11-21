@@ -18,7 +18,7 @@ def ModelsAt (D : D7) (O : Obj D) : Prop :=
   G.LatTied O.gatT O.Gx O.Gy → 2 * G.rG O.L.sc ≤ D.R.k → GlobalTheory.TwU.ModelsOK D O.Gy O.ex.cmp O.X O.ex.tw
 
 structure StdAt {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (l0 : I.Law0 l) (Z : TC.Later B (I.cols l))
-    (O : Obj (I.rec7 l Z)) (t : KerEntTied O.ex) : Prop where
+    (O : Obj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (t : KerEntTied O.ex) : Prop where
   ok : I.Ok
   pins : TC.Pins B X
   isTw : I.IsTw
@@ -31,16 +31,16 @@ structure StdAt {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (l :
 
 def StdTie (D : D7) (O : Obj D) (t : KerEntTied O.ex) : Prop :=
   ∃ (B : GlobalTheory.Mem.Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws) (l0 : I.Law0 l) (Z : TC.Later B (I.cols l))
-    (O' : Obj (I.rec7 l Z)) (t' : KerEntTied O'.ex), StdAt I l l0 Z O' t' ∧
-    (⟨D, O, t⟩ : Σ (D : D7) (O : Obj D), KerEntTied O.ex) = ⟨I.rec7 l Z, O', t'⟩
+    (O' : Obj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (t' : KerEntTied O'.ex), StdAt I l l0 Z O' t' ∧
+    (⟨D, O, t⟩ : Σ (D : D7) (O : Obj D), KerEntTied O.ex) = ⟨_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G, O', t'⟩
 
 theorem StdTie.intro {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {l0 : I.Law0 l} {Z : TC.Later B (I.cols l)}
-    {O : Obj (I.rec7 l Z)} {t : KerEntTied O.ex} (h : StdAt I l l0 Z O t) : StdTie (I.rec7 l Z) O t :=
+    {O : Obj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {t : KerEntTied O.ex} (h : StdAt I l l0 Z O t) : StdTie (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) O t :=
   ⟨B, X, I, l, l0, Z, O, t, h, rfl⟩
 
 theorem StdTie.ind {R : ∀ (D : D7) (O : Obj D), KerEntTied O.ex → Prop}
     (h : ∀ (B : GlobalTheory.Mem.Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws) (l0 : I.Law0 l) (Z : TC.Later B (I.cols l))
-      (O : Obj (I.rec7 l Z)) (t : KerEntTied O.ex), StdAt I l l0 Z O t → R (I.rec7 l Z) O t)
+      (O : Obj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (t : KerEntTied O.ex), StdAt I l l0 Z O t → R (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) O t)
     {D : D7} {O : Obj D} {t : KerEntTied O.ex} (hD : StdTie D O t) : R D O t := by
   obtain ⟨B, X, I, l, l0, Z, O', t', hs, e⟩ := hD
   cases e

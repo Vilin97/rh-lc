@@ -116,7 +116,7 @@ theorem exists_mv {I : TC B X} (hI : I.Ok) (hP : TC.Pins B X) {l : I.Laws} {Z : 
   have hPr := l.pr
   have hX := GlobalTheory.Mem.FieldsLaws.fields_ok B
   haveI : NeZero (B.R.N i) := ⟨(B.R.N_pos i).ne'⟩
-  have hgr : gramN (I.rec7 l Z) i hi = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hP l Z).2.2.2 i hi).1
+  have hgr : gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hP l Z).2.2.2 i hi).1
   have hB := basePi_of_ok hX hPr u
   have hLb : (A.K i hi β).lev.Lb = baseLb B.fields.E (B.R.N i) ((B.primes X).vT u) := by
     ext x
@@ -383,14 +383,14 @@ theorem mvEl_spec (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : 
     exact ⟨fun v => Or.inr (map_one _), fun v _ => map_one _, fun h' => absurd h' h, fun _ => rfl⟩
 
 def mvLift (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A.Is) (i : ℕ) (hi : i ≤ B.R.m) (β : Ch i) :
-    GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i) :=
-  (exists_gfC ((I.rec7 l Z).sp.X i) (rankN (I.rec7 l Z) i hi)
+    GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) :=
+  (exists_gfC ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi)
     ⟨(mvEl hI hP A hA i hi β).1, ((mem_basePts_iff _ _).1 (mvEl hI hP A hA i hi β).2).1⟩).choose
 
 theorem mvLift_spec (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A.Is) (i : ℕ) (hi : i ≤ B.R.m) (β : Ch i) :
     mvLift hI hP A hA i hi β ∈ GfC _ ∧
-      finM _ (rankN (I.rec7 l Z) i hi) (mvLift hI hP A hA i hi β) = (mvEl hI hP A hA i hi β).1.1 :=
-  (exists_gfC ((I.rec7 l Z).sp.X i) (rankN (I.rec7 l Z) i hi)
+      finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (mvLift hI hP A hA i hi β) = (mvEl hI hP A hA i hi β).1.1 :=
+  (exists_gfC ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi)
     ⟨(mvEl hI hP A hA i hi β).1, ((mem_basePts_iff _ _).1 (mvEl hI hP A hA i hi β).2).1⟩).choose_spec
 
 end Move
@@ -416,7 +416,7 @@ def mvG (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A.Is) (i :
   if hi : i ≤ B.R.m then mvB hI hP A hA i hi β else 1
 
 def mvW (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A.Is) (i : ℕ) (β : Ch i) :
-    GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i) :=
+    GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) :=
   if hi : i ≤ B.R.m then mvLift hI hP A hA i hi β else 1
 
 theorem mvG_eq (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A.Is) (i : ℕ) (hi : i ≤ B.R.m) (β : Ch i) :
@@ -424,7 +424,7 @@ theorem mvG_eq (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A.I
 
 theorem mvW_spec (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A.Is) (i : ℕ) (hi : i ≤ B.R.m) (β : Ch i) :
     mvW hI hP A hA i β ∈ GfC _ ∧
-      finM _ (rankN (I.rec7 l Z) i hi) (mvW hI hP A hA i β) = (mvEl hI hP A hA i hi β).1.1 := by
+      finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (mvW hI hP A hA i β) = (mvEl hI hP A hA i hi β).1.1 := by
   have e : mvW hI hP A hA i β = mvLift hI hP A hA i hi β := dif_pos hi
   rw [e]
   exact mvLift_spec hI hP A hA i hi β
@@ -496,9 +496,9 @@ theorem moved_is (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A
   have hPr := l.pr
   have wU : ∀ i (hi : i ≤ B.R.m) β, mvB hI hP A hA i hi β ∈ Formalism.L2.Herm.UstdAf B.sp.cm (B.R.N i) := by
     intro i hi β
-    have hgr : gramN (I.rec7 l Z) i hi = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hP l Z).2.2.2 i hi).1
-    have h : mvB hI hP A hA i hi β ∈ UPts (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) i hi)
-        (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) := ((mem_basePts_iff _ _).1 (mvEl hI hP A hA i hi β).2).1
+    have hgr : gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hP l Z).2.2.2 i hi).1
+    have h : mvB hI hP A hA i hi β ∈ UPts (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi)
+        (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) := ((mem_basePts_iff _ _).1 (mvEl hI hP A hA i hi β).2).1
     have h2 := GlobalTheory.TwU.AtTrue.mem_UPts_one hgr h
     exact h2
   have hkb : ∀ i (hi : i ≤ B.R.m), (moved hI hP A hA).kb i =
@@ -538,7 +538,7 @@ theorem moved_is (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A
     obtain ⟨h1, h2, -⟩ := hA.kA i hi β
     have hW := mvW_spec hI hP A hA i hi β
     refine ⟨mul_mem (inv_mem hW.1) h1, ?_, (GlobalTheory.Mem.WeilTwist.exists_isDetRoot _ _).choose_spec⟩
-    show finM _ (rankN (I.rec7 l Z) i hi) ((mvW hI hP A hA i β)⁻¹ * A.kA i β) = ((mvG hI hP A hA i β)⁻¹ * A.kb i β).1
+    show finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) ((mvW hI hP A hA i β)⁻¹ * A.kA i β) = ((mvG hI hP A hA i β)⁻¹ * A.kb i β).1
     rw [GlobalTheory.AdForm.StabMove.finM_mul, h2, finM_inv_of hW.2, mvG_eq hI hP A hA i hi β]
     rfl
   ·

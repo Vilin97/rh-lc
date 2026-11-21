@@ -159,8 +159,8 @@ theorem exists_affine_theta (hG : GlobalFnsSt) (hB : SecBaseChangeAnySt) (P : Po
     inferInstanceAs (IsOpenImmersion hW'.fromSpec), by rw [hx₀]; exact hpW, ?_⟩
   obtain ⟨-, hsp⟩ := hb _ t (fun i => VVRank.pullS P.A _ (homAt t) (b i)) fun i => VVRank.isPullSec_pullS _ _ _ _
   haveI : Subsingleton (Fin (1 ^ P.g)) := by rw [one_pow]; infer_instance
-  obtain ⟨th, hth⟩ := exists_generator _ hsp
-  refine exists_isThetaPt P k hk α₀ hα₀ (T := baseAt t) ?_ _ th hth fun i => ?_
+  obtain ⟨th, hth⟩ := GlobalTheory.ThetaLocal.exists_generator _ hsp
+  refine GlobalTheory.ThetaLocal.exists_isThetaPt P k hk α₀ hα₀ (T := baseAt t) ?_ _ th hth fun i => ?_
   · simpa using hu.map x₀.appTop.hom
   · obtain ⟨u, hu'⟩ := hl (V i) (inf_le_right.trans fun q hq => Set.mem_iInter.1 hq i)
     let r : baseAt t ⟶ overRes (T := T) (V i) := Over.homMk u

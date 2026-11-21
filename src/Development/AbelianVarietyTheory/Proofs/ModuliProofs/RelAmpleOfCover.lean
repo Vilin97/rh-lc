@@ -38,7 +38,26 @@ theorem relAmple_of_cover : ∀ (S : Scheme.{0}) (I : Type) (U : I → S.Opens) 
   obtain ⟨w, hw⟩ : LBIso (L.pull (A.hom ⁻¹ᵁ V).ι) ((M i).pull φ) :=
     LBIso.chartPull (chartPullSame L (fun _ : PUnit => (A.hom ⁻¹ᵁ V).ι) (fun _ => ψ i) (fun _ => 1) φ fun _ => hφ.symm)
       (chartPullPull (M i) φ φ rfl) (hiso i).symm
-  refine relAmple_pull (A' := Over.mk (A.hom ∣_ V)) H (hM i) (pull_isLB hL _) ((isGen_iff w).1 hw) ((U i).ι ⁻¹ᵁ V)
-    (hV.preimage_of_isOpenImmersion _ (by simpa using hle')) (fun y => ?_) (hamp i)
+  have hpull : (L.pull (A.hom ⁻¹ᵁ V).ι).IsLB := by
+    let F := (A.hom ⁻¹ᵁ V).ι
+    refine { cover := top_le_iff.1 ?_, g_self := ?_, cocycle := ?_ }
+    · intro y _
+      obtain ⟨i, hi⟩ := exists_chart hL (F y)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
+    · intro J
+      refine unit_ext fun y hy => ?_
+      rw [gm_res (𝟙 _) y _ hy, map_one, gm_pull_g L F (𝟙 _) y J J hy hy]
+      exact gm_self hL _ y (mem_pull.1 hy)
+    · intro I J K
+      refine unit_ext fun y hy => ?_
+      rw [map_mul, gm_res (𝟙 _) y _ hy, gm_res (𝟙 _) y _ hy, gm_res (𝟙 _) y _ hy,
+        gm_pull_g L F (𝟙 _) y I J hy.1.1 hy.1.2,
+        gm_pull_g L F (𝟙 _) y J K hy.1.2 hy.2, gm_pull_g L F (𝟙 _) y I K hy.1.1 hy.2]
+      exact gm_cocycle hL _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
+  refine relAmple_pull (A' := Over.mk (A.hom ∣_ V)) H (hM i) hpull ((isGen_iff w).1 hw) ((U i).ι ⁻¹ᵁ V)
+    (hV.preimage_of_isOpenImmersion _ (by simpa using hle')) (fun y => by
+      change (U i).ι ((S.homOfLE hle') y) ∈ V
+      rw [← Scheme.Hom.comp_apply, hf]
+      exact y.property) (hamp i)
 
 end GlobalTheory.CoverGlue

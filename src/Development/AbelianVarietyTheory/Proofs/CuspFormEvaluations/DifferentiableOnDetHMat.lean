@@ -306,9 +306,9 @@ theorem gram_mul_im (G A τ : Matrix (Fin g) (Fin g) ℂ)
     Finset.sum_neg_distrib, neg_inj] at h
   apply Complex.ext
   · simp only [Matrix.mul_apply, re_sum, map_apply, re_mul_ofReal, h]
-    by_cases hjk : j = k <;> simp [one_apply, hjk]
+    by_cases hjk : j = k <;> simp [Matrix.one_apply, hjk]
   · simp only [Matrix.mul_apply, im_sum, map_apply, im_mul_ofReal, hM]
-    by_cases hjk : j = k <;> simp [one_apply, hjk]
+    by_cases hjk : j = k <;> simp [Matrix.one_apply, hjk]
 
 variable {bas}
 
@@ -491,7 +491,7 @@ theorem differentiableOn_det_hMat (hs : IsSympl X bas) :
 
 theorem differentiableOn_tauMat (hs : IsSympl X bas) (i j : Fin g) :
     DifferentiableOn ℂ (fun x => tauMat X bas idx x i j) X.dom := by
-  simp only [tauMat, mul_apply]
+  simp only [tauMat, Matrix.mul_apply, perMat_apply]
   exact DifferentiableOn.fun_sum fun l _ =>
     (differentiableOn_hMat idx hs i l).mul (differentiableOn_per X _ _)
 

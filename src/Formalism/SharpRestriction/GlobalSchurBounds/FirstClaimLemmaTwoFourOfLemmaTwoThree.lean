@@ -337,8 +337,6 @@ namespace Formalism.MainNotions.ShortIntervalPrimes
 open Finset Filter Topology ArithmeticFunction MeasureTheory Formalism.MainNotions.GlobalTheoryTheory
 open Br
 
-open private Emain_lower_bound from Formalism.GL3MeanSquares.HookFormulaTorsion.PrimesInProgressionCountLowerBound
-
 section ShortIntervalLowerBound
 
 variable (K0 : Type) [Field K0] [NumberField K0]

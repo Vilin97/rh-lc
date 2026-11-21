@@ -33,10 +33,6 @@ theorem exists_fullI_of_tateIsoQ : GlobalTheory.UT.LL → AllD fun {E} _ _ _ {H}
   obtain ⟨hadm, hcz⟩ := M.admissible_base_of_complete_dvr
   have : CharZero M.W := hcz
   have hall := GlobalTheory.TestFibre.laws_all hLL.1 hLL.2.1
-  have hT : TwistBCSpanStatement := twistBCSpan_of twistBaseChange
-    exact ⟨⟨hLL.1, hLL.2.1, laws3, uniformisationLaws_of_baseChange_laws polBaseChange_holds globalFns_holds hS twistBaseChange,
-      laws5 globalFns_holds hS⟩, hT, RatioVal.main, TWM.tw_of globalFns_holds hT RatioVal.main,
-      UnitBallFree.main globalFns_holds twistBaseChange⟩
   have hT : M.P.TorsionIso := GlobalTheory.T.torsionIso_of_linear_uniformisation_triple hLL hall.2.1 hall.2.2.1 hall.2.2.2.1 hall.2.2.2.2 E H M.W
     (IsLocalRing.maximalIdeal M.W) hadm M.t M.P
   have hTw := GlobalTheory.T.uniformisation_torsion_maps_compatible_in_level hLL M.W (IsLocalRing.maximalIdeal M.W) hadm M.P.D M.P.A M.t.G M.t.semi M.P.U C

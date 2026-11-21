@@ -27,7 +27,7 @@ theorem frob_abs {Ω : Type} [Field Ω] [Algebra E Ω] {l : ℕ} [Fact l.Prime] 
     ((r σ : (Qbar l)ˣ) : Qbar l) = (normV v : Qbar l) ^ m := by
   rw [h.frob_unr ha (Or.inl hv) ((absPow_isAbsPow E m).1 v) hA hσ, (absPow_isAbsPow E m).2.1 v,
     Complex.cpow_neg, Complex.ofReal_natCast, Complex.cpow_natCast, map_inv₀, inv_inv, map_pow, map_natCast]
-  rfl
+  simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
 
 end GlobalTheory.HeckeGal.Model
 

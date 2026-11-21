@@ -96,12 +96,9 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 private lemma ord_det_eq_zero_of_mem_KO {x : GL (Fin n) k}
     (hx : x ∈ _root_.GlobalTheory.SplitWeil.KO k (Fin n)) :
     _root_.GlobalTheory.SmGL.ord k (Matrix.GeneralLinearGroup.det x) = 0 := by
-  have h := _root_.GlobalTheory.GLDoubling.nabs_det_of_mem_KO hx
-  rw [_root_.GlobalTheory.LGrp.nabs_eq_zpow] at h
-  have hq : (1 : ℝ) < _root_.GlobalTheory.SplitWeil.resCard k := by
-    exact_mod_cast _root_.GlobalTheory.SplitWeil.one_lt_resCard k
-  have := zpow_right_injective₀ (by positivity) hq.ne' (h.trans (zpow_zero _).symm)
-  simpa using this
+  exact _root_.GlobalTheory.SmGL.ord_eq_zero
+    ((_root_.GlobalTheory.SplitWeil.nabs_eq_one_iff _).mp
+      (_root_.GlobalTheory.GLDoubling.nabs_det_of_mem_KO hx))
 
 
 open MeasureTheory ValuativeRel in

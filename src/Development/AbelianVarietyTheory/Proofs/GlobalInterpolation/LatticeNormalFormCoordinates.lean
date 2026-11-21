@@ -92,8 +92,8 @@ theorem R1cond_of {r : (Fin (n + c) → F) ≃ₗ[F] (Fin (n + c) → F)}
     (h3 : ∀ i : Fin c, r (Loc.eN F (n + c) (n + i.1)) - Loc.eN F (n + c) (n + i.1) ∈ Loc.Ufl F n c i.1) :
     Loc.R1cond F n c r := by
   refine ⟨fun i v hv => ?_, ?_, fun i => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [decomp v, map_add (f := _), map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [decomp v, map_add (f := _), map_sum]
     refine add_mem (Ufl_mono (Nat.zero_le i) (h1 _)) (Submodule.sum_mem _ fun j _ => ?_)
     by_cases hj : j.1 < i
     · rw [map_smul]
@@ -153,7 +153,18 @@ theorem isLattice_map {O : Type} [CommRing O] [Algebra O F] {V W : Type} [AddCom
     Submodule.IsLattice F (L.map (φ.toLinearMap.restrictScalars O)) := by
   refine ⟨hL.fg.map _, ?_⟩
   have h : ((L.map (φ.toLinearMap.restrictScalars O) : Submodule O W) : Set W) = φ.toLinearMap '' (L : Set V) := rfl
-  rw [h, Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearEquiv.range]
+  intro s hs hi
+  have hs' : φ.symm '' s ⊆ (L : Set V) := by
+    rintro _ ⟨w, hw, rfl⟩
+    obtain ⟨v, hv, rfl⟩ := (h ▸ hs) hw
+    simpa using hv
+  have hi' : LinearIndepOn O id (φ.symm '' s) :=
+    (linearIndepOn_id_imageₛ_iff (f := φ.symm.toLinearMap.restrictScalars O)
+      φ.symm.injective.injOn).2 hi
+  have hf := hL.linearIndepOn _ hs' hi'
+  have := (linearIndepOn_id_imageₛ_iff (f := φ.toLinearMap)
+    φ.injective.injOn).2 hf
+  simpa [Set.image_image] using this
 
 theorem latticeNormalFormCoord_of : GlobalTheory.IndefiniteRowSideFullHecke.FlagUnipotentSemidirect.LatticeNormalForm → GlobalTheory.IndefiniteRowSideFullHecke.FlagUnipotentSemidirect.LatticeNormalFormCoord := by
   intro H O F _ _ _ _ _ _ q hq n c L hL Λ hΛ

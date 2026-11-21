@@ -42,7 +42,7 @@ theorem exists_tr {A B : Type} [CommRing A] [CommRing B] (a : Sp A ⟶ X) (b : S
   obtain ⟨j, hj, -⟩ := GlobalTheory.T.lie_model_existsUnique_semilinear X G A B c a E E' M M'
   refine ⟨j, fun e => ?_⟩
   have := hj e
-  simpa [LieModel.Lifts] using this
+  simpa only [Category.comp_id] using this
 
 theorem spMap_dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (c : A →+* B) (d : B →+* C) :
     spMap (GlobalTheory.CompanionTheory.Ar.dualMap d) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (d.comp c)) := by

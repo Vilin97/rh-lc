@@ -733,11 +733,34 @@ def DefiniteVolumeEqMass (D : D7) : Prop :=
   letI := D.host.cmStar
   ∀ W : HSpace D.host.E, W.SigOK → (∀ τ, W.sig τ = (W.rank, 0)) → D.vol W = massI D W.rank
 
+open Formalism.BasicNotions.Examples₂ in
 theorem massRatio_of_definiteVolume (D : D7) (h2 : Conclusion2 D) (hv : DefiniteVolumeEqMass D) : MassRatio₂ D := by
   let _ := D.host.cmStar
   intro M hM
-  let W : HSpace D.host.E := Formalism.BasicNotions.Examples₂.posSpace (E := D.host.E) Formalism.BasicNotions.Examples₂.star_isIntegral M
-  have hW : W.SigOK := Formalism.BasicNotions.Examples₂.posSpace_sigOK _ M
+  let W : HSpace D.host.E :=
+    { V := Fin M → D.host.E
+      hT := diagForm M (fun _ => false)
+      herm := diagForm_isSymm M _
+      nondeg := diagForm_nondeg M _
+      rank := M
+      rank_eq := Module.finrank_fin_fun D.host.E
+      frame := Pi.basisFun D.host.E (Fin M)
+      sig := fun _ => (M, 0)
+      L0 := Examples₂.stdLat M
+      standardTuple_isLattice := Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
+      baseLattice_isUnimodular := stdLat_unimod star_isIntegral M _ }
+  have hW : W.SigOK := by
+    intro τ
+    change Formalism.UG.HasSignature (W.gram.map τ) M 0
+    have hg : W.gram.map τ = 1 := by
+      ext i j
+      rw [Matrix.map_apply]
+      change τ (diagForm M (fun _ => false) (Pi.basisFun D.host.E (Fin M) i)
+        (Pi.basisFun D.host.E (Fin M) j)) = _
+      rw [Pi.basisFun_apply, Pi.basisFun_apply, diagForm_single]
+      by_cases hij : i = j <;> simp [hij, sgn, Matrix.one_apply]
+    rw [hg]
+    simpa using (Formalism.UG.P.stdform_sig_one (n := Fin M))
   obtain ⟨x, -, W', ι, -, -, hW', hs', hr⟩ := h2 W M 0 hW (fun _ => rfl) hM true (by simp; omega)
   have hrk : W'.rank = M - 1 := by
     have := Formalism.BasicNotions.sig_sum W' hW' D.host.φ₀
@@ -871,13 +894,8 @@ theorem tMap_loc (e : V ≃ₗ[K] V') (p : Ideal (𝓞 K)) (M : Submodule (𝓞 
   simp only [hs]
 
 theorem tMap_lattice (e : V ≃ₗ[K] V') (M : Submodule (𝓞 K) V) (hM : Submodule.IsLattice K M) :
-    Submodule.IsLattice K (tMap e M) where
-  fg := hM.fg.map _
-  span_eq_top := by
-    have h1 : ((tMap e M : Submodule (𝓞 K) V') : Set V') = (e : V →ₗ[K] V') '' (M : Set V) := by
-      unfold tMap; rw [Submodule.map_coe]; rfl
-    rw [h1, Submodule.span_image, hM.span_eq_top, Submodule.map_top]
-    exact LinearEquiv.range e
+    Submodule.IsLattice K (tMap e M) :=
+  Submodule.IsLattice.of_fg K (hM.fg.map _)
 
 theorem tMap_genus (e : V ≃ₗ[K] V') (he : ∀ x y, h' (e x) (e y) = h x y) (L M : Submodule (𝓞 K) V)
     (hM : M ∈ genus h L) : tMap e M ∈ genus h' (tMap e L) := by
@@ -986,9 +1004,11 @@ theorem mass_ortho (K : Type) [Field K] [NumberField K] [StarRing K] (hK : Forma
     · rintro ⟨i, rfl⟩
       refine ⟨b i, ⟨i, rfl⟩, ?_⟩
       exact heB i
+  have hLat : Submodule.IsLattice K (stdLat K n) :=
+    Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range _))
   have hMB := Formalism.HermitianLatticesTheory.final_massBasic K (Fin n → K) (stdForm K n) (stdForm_symm K n)
-    (by rw [standard_form_eq_telescope_form]; exact Formalism.HermitianLatticesTheory.massTelescope_def K hK n) (stdLat K n)
-    (by rw [standard_lattice_eq_telescope_lattice]; exact Formalism.HermitianLatticesTheory.massTelescope_isLattice K n)
+    (by rw [standard_form_eq_telescope_form]; exact Formalism.HermitianLatticesTheory.massTelescope_def K hK n)
+    (stdLat K n) hLat
   rw [← hT] at hMB ⊢
   exact mass_transport e he L hMB.1 hMB.2.1
 

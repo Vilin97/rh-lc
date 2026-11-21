@@ -111,6 +111,48 @@ theorem genRelR_of_val {w : LB.Iso M (M₀.pull φ)} (hw : w.IsGen) (hM : M.IsLB
     {t₀ : LB.Gen (LB.LinComb M₀ pt₀ ε)} (ht : t.IsGen) (ht₀ : t₀.IsGen) (hp : ∀ k, pt k ≫ φ = pt₀ k)
     (H : ∀ J J', Good M₀ (cpt A) J → Good M (cpt A) J' → val t₀ (𝟙 _) (cpt A) J =
       (∏ k, ConstFam.wVal w (cpt A) J J' (𝟙 _ ≫ pt k) ^ ε k) * val t (𝟙 _) (cpt A) J') : GenRelR w t t₀ := by
+  have toStkA_valR {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (z : Sp A) (ht : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
+      toStkA z (valR x U a.val) = (gm x z U a).val := by
+    have hz : x z ∈ U := ht (show z ∈ (⊤ : (Sp A).Opens) from trivial)
+    have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c) = c :=
+      fun c => congrArg (fun f => CommRingCat.Hom.hom f c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of A)))
+    rw [valR, dif_pos ht, gm, dif_pos hz]
+    show ((Sp A).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom
+        ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((x.appLE U ⊤ ht).hom a.val))) =
+      ((Sp A).presheaf.germ (x ⁻¹ᵁ U) z hz).hom ((x.app U).hom a.val)
+    rw [e1]
+    exact TopCat.Presheaf.germ_res_apply (Sp A).presheaf (homOfLE ht) z trivial ((x.app U).hom a.val)
+  have genRelR_iff {φ : B ⟶ B₀} (w : LB.Iso M (M₀.pull φ)) {pt : K → (Sp A ⟶ B)} {pt₀ : K → (Sp A ⟶ B₀)}
+      (t : LB.Gen (LB.LinComb M pt ε)) (t₀ : LB.Gen (LB.LinComb M₀ pt₀ ε)) :
+      GenRelR w t t₀ ↔ (∀ k, pt k ≫ φ = pt₀ k) ∧ ∀ (j : K → M.ι) (j₀ : K → M₀.ι),
+        (∀ k, φ (pt k (cpt A)) ∈ M₀.U (j₀ k)) → (∀ k, pt k (cpt A) ∈ M.U (j k)) →
+        ((∏ k, gw w (pt k) (cpt A) (j₀ k) (j k) ^ ε k) * gm (𝟙 _) (cpt A) (LB.wchart M pt j) (t.s j)).val =
+          (gm (𝟙 _) (cpt A) (LB.wchart M₀ pt₀ j₀) (t₀.s j₀)).val := by
+    unfold GenRelR
+    refine and_congr_right fun hpt => forall_congr' fun j => forall_congr' fun j₀ => ?_
+    have hP_iff : (∀ k, ⊤ ≤ pt k ⁻¹ᵁ (LB.div (M₀.pull φ) M).U (fun _ => j₀ k, j k)) ↔
+        (∀ k, φ (pt k (cpt A)) ∈ M₀.U (j₀ k)) ∧ (∀ k, pt k (cpt A) ∈ M.U (j k)) := by
+      simp only [top_le_iff_cpt]
+      exact ⟨fun h => ⟨fun k => Set.mem_iInter.1 (h k).1 PUnit.unit, fun k => (h k).2⟩,
+        fun h k => ⟨Set.mem_iInter.2 fun _ => h.1 k, h.2 k⟩⟩
+    rw [hP_iff, and_imp]
+    refine forall_congr' fun h1 => forall_congr' fun h2 => ?_
+    have hP : ∀ k, ⊤ ≤ pt k ⁻¹ᵁ (LB.div (M₀.pull φ) M).U (fun _ => j₀ k, j k) := hP_iff.2 ⟨h1, h2⟩
+    have hT : ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ (LB.LinComb M pt ε).U j :=
+      (top_le_iff_cpt _ _).2 (Set.mem_iInter.2 fun k => h2 k)
+    have hT₀ : ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ (LB.LinComb M₀ pt₀ ε).U j₀ := by
+      refine (top_le_iff_cpt _ _).2 (Set.mem_iInter.2 fun k => ?_)
+      show pt₀ k ((𝟙 (Sp A)) (cpt A)) ∈ M₀.U (j₀ k)
+      rw [← hpt k]
+      exact h1 k
+    have hW : ∀ k (u : Γ(B, (LB.div (M₀.pull φ) M).U (fun _ => j₀ k, j k))ˣ),
+        toStkA (cpt A) (valR (pt k) _ u.val) = (gm (pt k) (cpt A) _ u).val :=
+      fun k u => toStkA_valR _ _ _ (hP k) u
+    rw [← (toStkA_injective (A := A)).eq_iff, map_mul, map_prod, toStkA_valR _ _ _ hT, toStkA_valR _ _ _ hT₀]
+    simp only [hW, map_zpow]
+    rw [← Units.coe_prod, ← Units.val_mul, Units.val_inj, Units.val_inj]
+    simp only [zpow_neg, Finset.prod_inv_distrib]
+    exact eq_inv_mul_iff_mul_eq
   obtain rfl : (fun k => pt k ≫ φ) = pt₀ := funext hp
   refine (genRelR_iff w t t₀).2 ⟨hp, fun j j₀ h₀ h₁ => ?_⟩
   set z := cpt A
@@ -138,10 +180,21 @@ theorem valR_iso_trans {w : LB.Iso M (M₀.pull φ)} (hw : w.IsGen) (x : Sp A �
     (h' : ⊤ ≤ x ⁻¹ᵁ (LB.div (M₀.pull φ) M).U (fun _ => j', k')) :
     valR x _ (w.s (fun _ => j, k)).val * valR x _ (M.g k k').val =
       valR (x ≫ φ) _ (M₀.g j j').val * valR x _ (w.s (fun _ => j', k')).val := by
+  have toStkA_valR {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (z : Sp A) (ht : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
+      toStkA z (valR x U a.val) = (gm x z U a).val := by
+    have hz : x z ∈ U := ht (show z ∈ (⊤ : (Sp A).Opens) from trivial)
+    have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c) = c :=
+      fun c => congrArg (fun f => CommRingCat.Hom.hom f c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of A)))
+    rw [valR, dif_pos ht, gm, dif_pos hz]
+    show ((Sp A).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom
+        ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((x.appLE U ⊤ ht).hom a.val))) =
+      ((Sp A).presheaf.germ (x ⁻¹ᵁ U) z hz).hom ((x.app U).hom a.val)
+    rw [e1]
+    exact TopCat.Presheaf.germ_res_apply (Sp A).presheaf (homOfLE ht) z trivial ((x.app U).hom a.val)
   have m := (top_le_iff_cpt _ _).1 h
   have m' := (top_le_iff_cpt _ _).1 h'
   have e := (isGen_iff w).1 hw _ x (cpt A) j j' k k' (mem_pull.1 m.1) (mem_pull.1 m'.1) m.2 m'.2
-  apply toStkA_injective
+  apply (toStkA_injective (A := A))
   rw [map_mul, map_mul, toStkA_valR x _ _ h, toStkA_valR x _ _ h',
     toStkA_valR x (M.U k ⊓ M.U k') _ ((top_le_iff_cpt _ _).2 ⟨m.2, m'.2⟩),
     toStkA_valR (x ≫ φ) (M₀.U j ⊓ M₀.U j') _ ((top_le_iff_cpt _ _).2 ⟨mem_pull.1 m.1, mem_pull.1 m'.1⟩),
@@ -152,8 +205,19 @@ theorem valR_iso_trans {w : LB.Iso M (M₀.pull φ)} (hw : w.IsGen) (x : Sp A �
 
 theorem valR_g_self (hM : M.IsLB) (x : Sp A ⟶ B) {k : M.ι} (h : ⊤ ≤ x ⁻¹ᵁ M.U k) :
     valR x _ (M.g k k).val = 1 := by
+  have toStkA_valR {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (z : Sp A) (ht : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
+      toStkA z (valR x U a.val) = (gm x z U a).val := by
+    have hz : x z ∈ U := ht (show z ∈ (⊤ : (Sp A).Opens) from trivial)
+    have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c) = c :=
+      fun c => congrArg (fun f => CommRingCat.Hom.hom f c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of A)))
+    rw [valR, dif_pos ht, gm, dif_pos hz]
+    show ((Sp A).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom
+        ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((x.appLE U ⊤ ht).hom a.val))) =
+      ((Sp A).presheaf.germ (x ⁻¹ᵁ U) z hz).hom ((x.app U).hom a.val)
+    rw [e1]
+    exact TopCat.Presheaf.germ_res_apply (Sp A).presheaf (homOfLE ht) z trivial ((x.app U).hom a.val)
   have m := (top_le_iff_cpt _ _).1 h
-  apply toStkA_injective
+  apply (toStkA_injective (A := A))
   rw [toStkA_valR x (M.U k ⊓ M.U k) _ ((top_le_iff_cpt _ _).2 ⟨m, m⟩), gm_self hM x _ m, map_one, Units.val_one]
 
 end Local

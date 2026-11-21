@@ -87,7 +87,7 @@ open GlobalTheory.Mem.Col2.TopCh GlobalTheory.Mem.Col2.XStepOrb
 
 set_option maxHeartbeats 4000000 in
 theorem memberLevel_read {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word)
-    (KP : ClsPTied (D := I.rec7 l Z) u) [NeZero (B.R.N B.R.m - 1)]
+    (KP : ClsPTied (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u) [NeZero (B.R.N B.R.m - 1)]
     (hR : I.ReadsP I.mu0 KP.lev.Lb KP.lev.U KP.lev.chi (fun c => (KP.y c).1) KP.lat (fun c s => (KP.stabI c s).1)) :
     (∀ x ∈ UAd B.sp.cm (B.R.N B.R.m - 1), x ∈ KP.lev.U ↔ x ∈ levU B.sp.cm (B.R.N B.R.m - 1) ∅ (B.primes X).vGs (rowTyG I.Ch I.Ps).grp) ∧
     ∀ (x : KP.lev.U) (z : J0 B.sp.cm (B.R.N B.R.m - 1) ∅) (h : (rowTyG I.Ch I.Ps).grp), z.1 = x.1 →
@@ -133,10 +133,10 @@ local instance neZero_rankXp (R : Ranks) : NeZero (R.N R.m - 1) := ⟨by have :=
 
 
 set_option maxHeartbeats 20000000 in
-theorem tuplePrimedSpace_classes : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (KP : ClsPTied (D := I.rec7 l Z) u), (∀ v, v ∈ Q ↔ I.UnderQ a v) → (∀ v ∈ Q, ((((I.rec7 l Z).mem u).A.T : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal ∧ ∀ j, ((I.rec7 l Z).host.g j : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal) → I.ReadsP I.mu0 KP.lev.Lb KP.lev.U KP.lev.chi (fun c => (KP.y c).1) KP.lat (fun c s => (KP.stabI c s).1) → ∃ K : ClassesAtPrimes (I.fm l u a) (badQ (I.rec7 l Z) Q), K.lev.Lb = KP.lev.Lb ∧ (∃ n : ℕ, 0 < n ∧ ∀ κ, K.lev.chi κ ^ n = 1) ∧ I.ReadsP a K.lev.Lb K.lev.U K.lev.chi (fun c => (K.y c).1) K.lat (fun c s => (K.stabI c s).1) ∧ (∀ v ∈ badG (I.rec7 l Z), K.lev.Uloc v = KP.lev.Uloc v) ∧ ∀ (κ : K.lev.U) (κ' : KP.lev.U), κ.1 = κ'.1 → (∀ v ∈ Q, bc (prV (E := (I.rec7 l Z).host.E) v) κ.1 = 1) → K.lev.chi κ = KP.lev.chi κ' := by
+theorem tuplePrimedSpace_classes : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (KP : ClsPTied (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u), (∀ v, v ∈ Q ↔ I.UnderQ a v) → (∀ v ∈ Q, ((((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.T : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal ∧ ∀ j, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g j : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal) → I.ReadsP I.mu0 KP.lev.Lb KP.lev.U KP.lev.chi (fun c => (KP.y c).1) KP.lat (fun c s => (KP.stabI c s).1) → ∃ K : ClassesAtPrimes (I.fm l u a) (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q), K.lev.Lb = KP.lev.Lb ∧ (∃ n : ℕ, 0 < n ∧ ∀ κ, K.lev.chi κ ^ n = 1) ∧ I.ReadsP a K.lev.Lb K.lev.U K.lev.chi (fun c => (K.y c).1) K.lat (fun c s => (K.stabI c s).1) ∧ (∀ v ∈ badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G), K.lev.Uloc v = KP.lev.Uloc v) ∧ ∀ (κ : K.lev.U) (κ' : KP.lev.U), κ.1 = κ'.1 → (∀ v ∈ Q, bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v) κ.1 = 1) → K.lev.chi κ = KP.lev.chi κ' := by
   intro B X I hI hP l Z u a Q KP hQ hQ2 hR
   classical
-  have hJ : gramP (I.rec7 l Z) = 1 := (spaces_in_coordinates I hI hP l Z).2.1
+  have hJ : gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) = 1 := (spaces_in_coordinates I hI hP l Z).2.1
   have hQp : ∀ P ∈ I.Q a, P ∉ (∅ : Finset (HeightOneSpectrum (𝓞 B.host.E))) ∧ P ∉ (B.primes X).vGs ∧ conjPrime₂ P ∉ (∅ : Finset (HeightOneSpectrum (𝓞 B.host.E))) ∧ conjPrime₂ P ∉ (B.primes X).vGs ∧ conjPrime₂ P ∉ I.Q a := fun P hP => by
     obtain ⟨⟨-, h2, -, h4, h5⟩, -⟩ := (GlobalTheory.Mem.Col2.TwistPrimes.twist_primes_away I hI).2 u a P hP
     exact ⟨Finset.notMem_empty _, h2, Finset.notMem_empty _, h4, h5⟩
@@ -179,7 +179,7 @@ theorem tuplePrimedSpace_classes : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X
   have hψ : ∀ x : topU KP.lev.U 1 (levQX B.R I.sel (I.tup a)) d, (∀ P : I.Q a, rhoP B.host.F P.1 x.1 = 1) → ψ x = 1 :=
     (topChi_finite_order_and_trivial _ _ B.fields.K _ _ B.embLL KP.lev.U 1 (levQX B.R I.sel (I.tup a)) d hd N hdN hΘ).2
   have hQv : ∀ v, v ∈ Q ↔ ∃ P ∈ I.Q a, P.under (𝓞 B.host.F) = v := hQ
-  have hTQ : ∀ v ∈ Q, ((1 : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal := fun v _ h => v.isPrime.ne_top ((Ideal.eq_top_iff_one _).2 (by rw [Nat.cast_one] at h; exact h))
+  have hTQ : ∀ v ∈ Q, ((1 : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal := fun v _ h => v.isPrime.ne_top ((Ideal.eq_top_iff_one _).2 (by rw [Nat.cast_one] at h; exact h))
   have hLbE : KP.lev.Lb = baseLb B.fields.E (B.R.N B.R.m - 1) ∅ := by
     rw [show baseLb B.fields.E (B.R.N B.R.m - 1) ∅ = stdLat B.fields.E (B.R.N B.R.m - 1) from RowTie.L_empty _]
     ext x
@@ -188,12 +188,12 @@ theorem tuplePrimedSpace_classes : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X
       exact (mem_stdLat x).2 fun j => let ⟨r, hr, _⟩ := (hR.lb x).1 h j; ⟨r, hr.symm⟩
     · intro h
       exact (hR.lb x).2 fun j => let ⟨r, hr⟩ := (mem_stdLat x).1 h j; ⟨r, hr.symm, fun _ => one_dvd r⟩
-  have hlatS : ∀ x : Fin (B.R.N B.R.m - 1) → (I.rec7 l Z).host.E ⊗[(I.rec7 l Z).host.F] FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F, x ∈ latS (F := (I.rec7 l Z).host.F) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) (tensInt (F := (I.rec7 l Z).host.F) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) (intOE (I.rec7 l Z).host.E) (intAd (I.rec7 l Z).host.F)) KP.lev.Lb ↔ ((1 : GL (Fin (B.R.N B.R.m - 1)) (AfE (I.rec7 l Z).host.F (I.rec7 l Z).host.E))⁻¹ : GL (Fin (B.R.N B.R.m - 1)) (AfE (I.rec7 l Z).host.F (I.rec7 l Z).host.E)).1 *ᵥ x ∈ latS (F := (I.rec7 l Z).host.F) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) (tensInt (F := (I.rec7 l Z).host.F) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) (intOE (I.rec7 l Z).host.E) (intAd (I.rec7 l Z).host.F)) (baseLb (I.rec7 l Z).host.E (B.R.N B.R.m - 1) ∅) := fun x => by
+  have hlatS : ∀ x : Fin (B.R.N B.R.m - 1) → (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E ⊗[(_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F] FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F, x ∈ latS (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (tensInt (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (intOE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (intAd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) KP.lev.Lb ↔ ((1 : GL (Fin (B.R.N B.R.m - 1)) (AfE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E))⁻¹ : GL (Fin (B.R.N B.R.m - 1)) (AfE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)).1 *ᵥ x ∈ latS (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (tensInt (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (intOE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (intAd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) (baseLb (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (B.R.N B.R.m - 1) ∅) := fun x => by
     rw [hLbE, inv_one, Units.val_one, Matrix.one_mulVec]
     exact Iff.rfl
   have hinj := fun c c' γ h θ e => orbit_inj I.Ch I.sel (I.tup a) I.Ps c c' γ h θ e
   obtain ⟨C', hLb, hCU, hloc, hchi, hy', hst⟩ := exists_clsG_top B.host.F B.host.E B.fields.K B.sp.cm (B.R.N B.R.m - 1) ∅ (B.primes X).vGs (I.Q a)
-    (gramP (I.rec7 l Z)) 1 (I.rec7 l Z).R.f (badG (I.rec7 l Z)) KP.lev Q (rowTyG I.Ch I.Ps) (levQX B.R I.sel (I.tup a)) 1 d hd N hdN hΘ 1 1
+    (gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) 1 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.f (badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) KP.lev Q (rowTyG I.Ch I.Ps) (levQX B.R I.sel (I.tup a)) 1 d hd N hdN hΘ 1 1
     (I.stX a).Cl (fun c => ((I.stX a).rep c).1.1) y (I.stX a).Stab (fun c => ((I.stX a).rep c).1.1.deco.1.N) gm ψ hJ
     hQv hTQ hQp (fun _ => rfl) (one_mem _) (fun _ => map_one _) (one_mem _) hU1 hlatS hy1 hinj
     (fun p => orbit_surj I.Ch I.sel (I.tup a) I.Ps p) (fun c => (RowTie.L_empty _).symm)
@@ -207,12 +207,12 @@ theorem tuplePrimedSpace_classes : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X
       have h3 := (l.per u a).step.stab_inj c.1 _ _ h1 h2
       exact inv_mul_eq_one.1 (Subtype.ext h3))
     (fun c γ => (exists_congr fun s => Iff.rfl).trans (stab_iff I.Ch I.sel (I.tup a) I.Ps c γ)) hψ
-  let K : ClassesAtPrimes (I.fm l u a) (badQ (I.rec7 l Z) Q) :=
+  let K : ClassesAtPrimes (I.fm l u a) (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q) :=
     { lev := C'.lev, y := C'.y, y_bij := C'.y_bij, lat := fun c => ((I.stX a).rep c).1.1.deco.1.N, y_lat := C'.y_lat,
-      lat_fin := fun c => (Module.Finite.iff_fg (R := 𝓞 (I.rec7 l Z).host.E)
-        (M := Fin ((I.rec7 l Z).R.N (I.rec7 l Z).R.m - 1) → (I.rec7 l Z).host.E)).2 ((I.stX a).rep c).1.1.deco.2.lat.fg, stabI := C'.stabI, stabI_inj := C'.stabI_inj, stabI_range := C'.stabI_range }
+      lat_fin := fun c => (Module.Finite.iff_fg (R := 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)
+        (M := Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m - 1) → (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)).2 ((I.stX a).rep c).1.1.deco.2.lat.fg, stabI := C'.stabI, stabI_inj := C'.stabI_inj, stabI_range := C'.stabI_range }
   have hxU : ∀ x : KP.lev.U, (x.1 : GL (Fin (B.R.N B.R.m - 1)) (AfE B.host.F B.host.E)) ∈ UAd B.sp.cm (B.R.N B.R.m - 1) := fun x => by
-    have eU : UPts (sigD (I.rec7 l Z)) (gramP (I.rec7 l Z)) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) =
+    have eU : UPts (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) =
         UAd B.sp.cm (B.R.N B.R.m - 1) := by rw [hJ]; rfl
     exact eU ▸ ((KP.lev.U_eq x.1).1 x.2).1
   have hfinP : ∃ m, 0 < m ∧ ∀ x : KP.lev.U, KP.lev.chi x ^ m = 1 := by
@@ -255,7 +255,7 @@ theorem tuplePrimedSpace_classes : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X
       show ((C'.lev.chi x : ℂˣ) : ℂ) = _
       rw [hchi x ⟨x.1, topU_le _ _ _ _ hx⟩ ⟨x.1, hx⟩ rfl rfl]
       exact congrArg Units.val h1
-  · obtain ⟨j, hj⟩ : ∃ j, ((I.rec7 l Z).host.g j : 𝓞 (I.rec7 l Z).host.F) ∈ v.asIdeal := by
+  · obtain ⟨j, hj⟩ : ∃ j, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g j : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∈ v.asIdeal := by
       rcases hv with h | h
       · exact ⟨0, h⟩
       · exact ⟨1, h⟩

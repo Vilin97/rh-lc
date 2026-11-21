@@ -70,8 +70,7 @@ theorem cub_of_grpPullback (hG : GlobalFnsSt) (gp : IsGrpPullback D'.P.A D.P.A (
         fin_cases i <;> simp [e, x3, pushPt, cubeMapOf]
       refine (val_pull hI _ _ _).trans ?_
       rw [q, o]
-      refine ((isCub_cubV D.cub (T := Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap φ)) hI).face 1 1).trans ?_
-      simp) _ (lift x (lift x' y)).left z J hJ
+      exact (isCub_cubV D.cub (T := Over.mk ((𝟙_ (Over (Sp R'))).hom ≫ spMap φ)) hI).face 1 1) _ (lift x (lift x' y)).left z J hJ
   exact (val_pull hJ _ _ _).symm.trans (key.trans (hv' _ _ z J J' hJ hJ'))
 
 set_option maxHeartbeats 1000000 in

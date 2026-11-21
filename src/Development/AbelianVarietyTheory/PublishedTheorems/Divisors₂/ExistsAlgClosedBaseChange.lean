@@ -104,7 +104,7 @@ theorem NefRiemannRoch.isBigO (h : NefRiemannRoch) (hp : IsProjOver (strHom k (X
   have hL' := LB.isLB_pull hL.isLB π
   refine (h _ X' D hp' (hd.trans hD) _ (hn _ hL)).congr_left fun m => ?_
   rw [lineBundleGlobalSectionsDim_congr_picardClass (isLB_lbPow hL' m) (LB.isLB_pull (isLB_lbPow hL.1 m) π)
-    (by rw [cls_lbPow hL', cls_pull hL.1, cls_pull (isLB_lbPow hL.1 m), cls_lbPow hL.1, map_nsmul]),
+    (by exact (cls_eq_iff _ _).2 (lbIso_lbPow_pull hL.1 π m)),
     h0 _ (isLB_lbPow hL.1 m), topSelf_def, hi D (fun _ => L) fun _ => hL.1, topSelf_def]
 
 theorem NefRiemannRoch.tendsto (h : NefRiemannRoch) (hp : IsProjOver (strHom k (X := X)))

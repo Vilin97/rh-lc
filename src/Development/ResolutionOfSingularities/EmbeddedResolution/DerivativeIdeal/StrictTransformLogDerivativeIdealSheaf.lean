@@ -67,7 +67,7 @@ theorem exists_affineOpen_derivIdealSheafIterate_le_biSup_logDerivIdealSheafIter
     (hL : ∀ l ≤ m,
       Blowup.exceptionalIdeal π Z ^ (m - l) * L l = (derivIdealSheafIterate k p l A).comap π)
     (n : ℕ) (hn : n ≤ m) (x₁ : ↥X₁) (hx₁ : π.base x₁ ∈ Z.support) :
-    haveI : AlgebraicGeometry.Smooth (π ≫ p) := smooth_comp_of_isBlowupAlongIdealSheaf hsnc hπ
+    letI : AlgebraicGeometry.Smooth (π ≫ p) := smooth_comp_of_isBlowupAlongIdealSheaf hsnc hπ
     ∃ V : X₁.affineOpens, x₁ ∈ V.1 ∧
       (derivIdealSheafIterate k (π ≫ p) n (L 0)).ideal V ≤
         (⨆ l, ⨆ _ : l ≤ n,
@@ -233,7 +233,7 @@ theorem derivIdealSheafIterate_le_biSup_logDerivIdealSheafIterate_strictTransfor
     (hL : ∀ l ≤ m,
       Blowup.exceptionalIdeal π Z ^ (m - l) * L l = (derivIdealSheafIterate k p l A).comap π)
     (n : ℕ) (hn : n ≤ m) :
-    haveI : AlgebraicGeometry.Smooth (π ≫ p) := smooth_comp_of_isBlowupAlongIdealSheaf hsnc hπ
+    letI : AlgebraicGeometry.Smooth (π ≫ p) := smooth_comp_of_isBlowupAlongIdealSheaf hsnc hπ
     derivIdealSheafIterate k (π ≫ p) n (L 0) ≤
       ⨆ l, ⨆ _ : l ≤ n,
         logDerivIdealSheafIterate k (π ≫ p) (Blowup.strictTransform π Z H) (n - l) (L l) := by

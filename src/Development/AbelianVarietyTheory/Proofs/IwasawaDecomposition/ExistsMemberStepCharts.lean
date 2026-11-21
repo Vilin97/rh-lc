@@ -459,8 +459,8 @@ set_option maxHeartbeats 1000000 in
 theorem chart_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (i : ℕ) (hi : i ≤ B.R.m)
     (c₀ : (I.stp u I.mu0 i).Cl) (p : (I.stp u I.mu0 i).Cl → Prop)
     (hp : ∀ c, p c ↔ c.1 = c₀.1 ∧ bar (rpI I u i c) = bar (rpI I u i c₀)) :
-    ∃ K : LevelChart (I.rec7 l Z) (B.T u) (badG (I.rec7 l Z)) i hi (fun c : {c // p c} => (I.chain l u I.mu0).stab i c.1)
-      (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u I.mu0 i c.1)),
+    ∃ K : LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) (badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) i hi (fun c : {c // p c} => (I.chain l u I.mu0).stab i c.1)
+      (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u I.mu0 i c.1)),
       K.lev.Lb = baseLb B.fields.E (B.R.N i) ((B.primes X).vT u) ∧
       (id K.lev.U : Subgroup (GA B (B.R.N i))) = levU (F := B.host.F) B.sp.cm (B.R.N i) ((B.primes X).vT u) (B.primes X).vGs (chG (lvG I i c₀.1) (bar (rpI I u i c₀))) ∧
       (∀ (x : K.lev.U) (h : (id x.1 : GA B (B.R.N i)) ∈ levU (F := B.host.F) B.sp.cm (B.R.N i) ((B.primes X).vT u) (B.primes X).vGs (chG (lvG I i c₀.1) (bar (rpI I u i c₀)))),
@@ -477,8 +477,8 @@ theorem chart_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.
     (basePi_of_ok hX hPr u) (hPr.piT_norm u) (rls_vT_iff hX hPr u)
     (fun P hP => (hPr.vT_norm u P hP : Ideal.absNorm P.asIdeal = B.T u)) (rls_T_notUnder hPr u)
     (hf ▸ colBase_index (X := B.fields) B.sp.cm (B.R.N i) hPr u) (chLam (X := B.fields) B.embLL (lvG I i c₀.1) (bar (rpI I u i c₀)))
-    (gramN (I.rec7 l Z) i hi) hg (badG (I.rec7 l Z)) (Set.ext fun v => (plUnder_vGs (X := B.fields) B.sp.cm hPr v).symm)
-    (fun c : {c // p c} => (I.stp u I.mu0 i).Stab c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u I.mu0 i c.1))
+    (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) hg (badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (Set.ext fun v => (plUnder_vGs (X := B.fields) B.sp.cm hPr v).symm)
+    (fun c : {c // p c} => (I.stp u I.mu0 i).Stab c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u I.mu0 i c.1))
     (diaT (Pr := B.primes X) u) (fun c => (rpI I u i c.1).1.1.deco) (fun c => I.yStd u i c.1)
     (fun c => (dia_of_pt hPr u (yStd_spec I hI u i c.1)).1) (fun c => (dia_of_pt hPr u (yStd_spec I hI u i c.1)).2)
     (cls_bij (lvG I i) (lvQ I i) _ _ hinj hsur (bar_norm I hPr u i) c₀ p hp) (fun c => (hl u I.mu0).1 c.1)
@@ -519,7 +519,7 @@ theorem mem_baseLb (hPr : (B.primes X).Ok) (u : B.Word) (n : ℕ) [NeZero n] (x 
 
 
 set_option maxHeartbeats 1000000 in
-theorem exists_charts : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (i : ℕ) (hi : i ≤ B.R.m), ∃ (Ch : Type) (_ : Finite Ch) (chOf : (I.stp u I.mu0 i).Cl → Ch) (K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) (badG (I.rec7 l Z)) i hi (fun c : {c // chOf c = β} => (I.chain l u I.mu0).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u I.mu0 i c.1))), I.ReadsK l Z u I.mu0 i hi chOf K ∧ (∀ c, ((K (chOf c)).y ⟨c, rfl⟩).1 = I.yStd u i c) ∧ ((i = 0 ∨ i = B.R.m) → Nonempty (Unique Ch)) := by
+theorem exists_charts : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (i : ℕ) (hi : i ≤ B.R.m), ∃ (Ch : Type) (_ : Finite Ch) (chOf : (I.stp u I.mu0 i).Cl → Ch) (K : ∀ β : Ch, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) (badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) i hi (fun c : {c // chOf c = β} => (I.chain l u I.mu0).stab i c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u I.mu0 i c.1))), I.ReadsK l Z u I.mu0 i hi chOf K ∧ (∀ c, ((K (chOf c)).y ⟨c, rfl⟩).1 = I.yStd u i c) ∧ ((i = 0 ∨ i = B.R.m) → Nonempty (Unique Ch)) := by
   intro B X I hI hP l Z u i hi
   have hPr := l.pr
   let φ : (I.stp u I.mu0 i).Cl → (I.stp u I.mu0 i).β × (rowSG (B.primes X) I.sel (I.tup I.mu0) → Set (Sp B.fields.E (B.R.N i))) :=

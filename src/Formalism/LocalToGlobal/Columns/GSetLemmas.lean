@@ -186,23 +186,23 @@ theorem iso_integral_structure_equivariant (N : S.D → Submodule (𝓞 K) S.V) 
 
 
 include e in
-theorem ok (h : S.Ok) : S'.Ok where
-  fin_orb := by
-    have := h.fin_orb
-    exact Finite.of_equiv _ e.onCl
-  fin_stab := by
-    intro d'
-    obtain ⟨d, rfl⟩ := e.eD.surjective d'
-    have := h.fin_stab d
-    exact Finite.of_equiv _ (e.stabEquiv d)
-  nab_smul := e.iso_integral_structure_equivariant S.Nab S'.Nab h.nab_smul e.nab
-  del_smul := e.iso_integral_structure_equivariant S.Del S'.Del h.del_smul e.del
-  inv := by
-    intro g' x' y'
-    obtain ⟨g, rfl⟩ := e.eG.surjective g'
-    obtain ⟨x, rfl⟩ := e.eV.surjective x'
-    obtain ⟨y, rfl⟩ := e.eV.surjective y'
-    rw [← e.rho, ← e.rho, e.pair, e.pair, h.inv]
+theorem ok (h : S.Ok) : S'.Ok :=
+  { fin_orb := by
+      have := h.fin_orb
+      exact Finite.of_equiv _ e.onCl
+    fin_stab := by
+      intro d'
+      obtain ⟨d, rfl⟩ := e.eD.surjective d'
+      have := h.fin_stab d
+      exact Finite.of_equiv _ (e.stabEquiv d)
+    nab_smul := e.iso_integral_structure_equivariant S.Nab S'.Nab h.nab_smul e.nab
+    del_smul := e.iso_integral_structure_equivariant S.Del S'.Del h.del_smul e.del
+    inv := by
+      intro g' x' y'
+      obtain ⟨g, rfl⟩ := e.eG.surjective g'
+      obtain ⟨x, rfl⟩ := e.eV.surjective x'
+      obtain ⟨y, rfl⟩ := e.eV.surjective y'
+      rw [← e.rho, ← e.rho, e.pair, e.pair, h.inv] }
 
 theorem iso_onForms_mem_integral_iff (N : S.D → Submodule (𝓞 K) S.V) (N' : S'.D → Submodule (𝓞 K) S'.V)
     (hc : ∀ d : S.D, N' (e.eD d) = (N d).map ((e.eV : S.V →ₗ[K] S'.V).restrictScalars (𝓞 K))) (φ : S.EqFun) :
@@ -503,22 +503,30 @@ theorem coordOf_mem_delLat (h : F.Ok) (s : ∀ b, (F.mem b).Sec) (φ : F.Forms) 
 def Good (n : ℕ) : Prop := ∀ b, (F.mem b).Good n
 
 theorem toCSDOf_good {n : ℕ} [Nonempty F.β] (G : F.Good n) (s : ∀ b, (F.mem b).Sec) :
-    (F.toCSDOf (fun b => (G b).ok) s).Good n where
-  symm := (G (Classical.arbitrary F.β)).symm
-  nondeg := (G (Classical.arbitrary F.β)).nondeg
-  inv := fun c γ x y => ((F.mem c.1).toCSDOf_good (G c.1) (s c.1)).inv c.2 γ x y
-  nab_lat := fun c => (G c.1).nab_lat _
-  del_le := fun c => (G c.1).del_le _
-  del_stable := fun c γ y hy => ((F.mem c.1).toCSDOf_good (G c.1) (s c.1)).del_stable c.2 γ y hy
-  s_pos := (G (Classical.arbitrary F.β)).s_pos
-  dual_le := fun c => (G c.1).dual_le _
-  del_dual := fun c => (G c.1).del_dual _
+    (F.toCSDOf (fun b => (G b).ok) s).Good n :=
+  { symm := (G (Classical.arbitrary F.β)).symm
+    nondeg := (G (Classical.arbitrary F.β)).nondeg
+    inv := fun c γ x y => (G c.1).ok.inv (γ : F.G c.1) x y
+    nab_lat := fun c => (G c.1).nab_lat _
+    del_le := fun c => (G c.1).del_le _
+    del_stable := by
+      intro c γ y hy
+      let d := (s c.1).rep c.2
+      have hγ : (γ : F.G c.1) • d = d := γ.2
+      have hDel := (G c.1).ok.del_smul (γ : F.G c.1) d
+      rw [hγ] at hDel
+      show (F.mem c.1).ρ (γ : F.G c.1) y ∈ (F.mem c.1).Del d
+      rw [hDel]
+      exact Submodule.mem_map_of_mem hy
+    s_pos := (G (Classical.arbitrary F.β)).s_pos
+    dual_le := fun c => (G c.1).dual_le _
+    del_dual := fun c => (G c.1).del_dual _ }
 
 theorem toCSDOf_rat [Nonempty F.β] (h : F.Ok) (R : ∀ b, (F.mem b).Rat) (s : ∀ b, (F.mem b).Sec) :
-    (F.toCSDOf h s).Rat where
-  pair_rat := (R (Classical.arbitrary F.β)).pair_rat
-  act_rat := fun c γ i j => (R c.1).act_rat (γ : F.G c.1) i j
-  pos := (R (Classical.arbitrary F.β)).pos
+    (F.toCSDOf h s).Rat :=
+  { pair_rat := (R (Classical.arbitrary F.β)).pair_rat
+    act_rat := fun c γ i j => (R c.1).act_rat (γ : F.G c.1) i j
+    pos := (R (Classical.arbitrary F.β)).pos }
 
 end GFam
 

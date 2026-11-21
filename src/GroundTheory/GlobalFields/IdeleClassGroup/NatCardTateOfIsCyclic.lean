@@ -17,6 +17,8 @@ namespace IdeleClassLimit
 
 open FiniteSubfield
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem natCard_tate_of_isCyclic (K L : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)) [(L.subgroupOf K).Normal]
     [(L.subgroupOf K).FiniteIndex] {F E : FiniteSubfield} (hFE : F ≤ E)
     (hK : K = F.1.fixingSubgroup) (hL : L = E.1.fixingSubgroup)

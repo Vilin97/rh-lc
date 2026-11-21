@@ -39,7 +39,7 @@ theorem exists_torus_point_eStd : LL → UTorsSt → ∀ (o Ω : Type) [CommRing
     have : NeZero ((S.r * S.N : ℕ) : PadicAlgCl p) := ⟨Nat.cast_ne_zero.2 hn.ne⟩
     rw [← IsPrimitiveRoot.coe_units_iff, ← Polynomial.isRoot_cyclotomic_iff,
       ← Polynomial.map_cyclotomic _ (y₀.comp (algebraMap o S.R))]
-    exact (hζ.isRoot_cyclotomic hn.pos).map
+    exact (hζ.isRoot_cyclotomic hn.pos).map (y₀.comp (algebraMap o S.R))
 
   have hy : (TFK (R := u.V) (PadicAlgCl p)).hom ≫ spMap u.yK = spMap y₀ :=
     (Spec.map_comp _ _).symm.trans (congrArg spMap u.fac)

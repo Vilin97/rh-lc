@@ -214,7 +214,7 @@ private theorem log_ordFrac_norm_algebraMap {x : S} (hx : x ≠ 0) :
   have := faithfulSMul_of_tower R K S L
   let e := HeightOneSpectrum.equivMaximalSpectrum (not_isField_of_finite R K S L)
   letI : Fintype (MaximalSpectrum S) := Fintype.ofEquiv _ e
-  have := isDiscreteValuationRing_localization_of_isDedekindDomain R (S := S)
+  have := fun n : MaximalSpectrum S => isDiscreteValuationRing_localization_of_isDedekindDomain (R := R) n
   have h := addVal_norm_eq_sum R (fun n : MaximalSpectrum S => Localization.AtPrime n.asIdeal) x
   rw [← e.sum_comp] at h
   have key : ∀ P : HeightOneSpectrum S, ∃ m : ℕ,

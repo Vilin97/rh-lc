@@ -46,6 +46,23 @@ theorem mem_tor_of_offDiag {N : ℕ} (x : GL (Fin N) k)
   refine ⟨fun a => Units.map (algebraMap k (Matrix (Fin (ones N a)) (Fin (ones N a)) k)).toMonoidHom
     (Units.mk0 _ (hd a)), ?_⟩
 
+  apply Units.ext
+  ext i j
+  by_cases hij : i = j
+  · subst hij
+    have h1 := leviEmb_apply_same k (stdBlocks (ones N) (sum_ones N))
+      (fun a => Units.map (algebraMap k (Matrix (Fin (ones N a)) (Fin (ones N a)) k)).toMonoidHom
+        (Units.mk0 _ (hd a))) i (⟨0, by simp [ones]⟩ : Fin (ones N i)) (⟨0, by simp [ones]⟩ : Fin (ones N i))
+    rw [stdBlocks_ones] at h1
+    rw [h1]
+    simp [Matrix.algebraMap_matrix_apply]
+  · have h1 := leviEmb_apply_ne k (stdBlocks (ones N) (sum_ones N))
+      (fun a => Units.map (algebraMap k (Matrix (Fin (ones N a)) (Fin (ones N a)) k)).toMonoidHom
+        (Units.mk0 _ (hd a))) hij (⟨0, by simp [ones]⟩ : Fin (ones N i)) (⟨0, by simp [ones]⟩ : Fin (ones N j))
+    rw [stdBlocks_ones, stdBlocks_ones] at h1
+    rw [h i j hij]
+    exact h1
+
 end GlobalTheory.CompanionTheory.LbElem.ConjMonomial
 
 end

@@ -86,7 +86,7 @@ namespace GlobalTheory.Mem.Col2.LowerTie
 section Rec
 variable {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word)
 
-theorem embT_eq : Formalism.L2.Forms.embT (I.rec7 l Z) = embAt B.embLL B.fields.emb := by
+theorem embT_eq : Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) = embAt B.embLL B.fields.emb := by
   funext τ
   ext y
   show B.host.φ₀ _ = _
@@ -104,7 +104,7 @@ theorem star_pi_ne : star ((X.piT u : 𝓞 B.host.E) : B.host.E) ≠ 0 := (l.per
 
 theorem bZ_std (hO : I.Ok) (hP : TC.Pins B X) (z0 : Fin (B.R.N B.R.m) → B.host.E)
     (hz : ∀ j, z0 j = if j.1 + 1 = B.R.N B.R.m then ((X.piT u : 𝓞 B.host.E) : B.host.E) else 0) :
-    bZ (D := I.rec7 l Z) u z0 =
+    bZ (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u z0 =
       Matrix.diagonal fun i : Fin (B.R.N B.R.m) => if i.1 + 1 = B.R.N B.R.m then (star ((X.piT u : 𝓞 B.host.E) : B.host.E))⁻¹ else 1 := by
   have hc := (spaces_in_coordinates I hO hP l Z).2.2.1
   have hπ := pi_mul_star I l u
@@ -115,7 +115,7 @@ theorem bZ_std (hO : I.Ok) (hP : TC.Pins B X) (z0 : Fin (B.R.N B.R.m) → B.host
   have hb := b.2
   rw [Matrix.diagonal_apply]
   by_cases h : b.1 < B.R.N B.R.m - 1
-  · have e : bZ (D := I.rec7 l Z) u z0 a b = iXc (I.rec7 l Z) (Pi.single ⟨b.1, h⟩ 1) a := by
+  · have e : bZ (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u z0 a b = iXc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (Pi.single ⟨b.1, h⟩ 1) a := by
       exact (dif_pos h).trans (LinearMap.toMatrix'_apply _ _ _)
     refine (e.trans (hc _ a)).trans ?_
     by_cases hab : a = b
@@ -126,7 +126,7 @@ theorem bZ_std (hO : I.Ok) (hP : TC.Pins B X) (z0 : Fin (B.R.N B.R.m) → B.host
       split_ifs with h2
       · exact Pi.single_eq_of_ne (M := fun _ : Fin (B.R.N B.R.m - 1) => B.host.E) (fun h3 => hab (Fin.ext (Fin.mk.inj_iff.1 h3))) _
       · rfl
-  · have e : bZ (D := I.rec7 l Z) u z0 a b = z0 a / (B.T u : B.host.E) := by
+  · have e : bZ (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u z0 a b = z0 a / (B.T u : B.host.E) := by
       exact dif_neg h
     rw [e, hz, ← hπ]
     by_cases hab : a = b
@@ -140,10 +140,10 @@ def aT (τ : Tau B.R) : ℂˣ :=
 
 theorem mZ_std (hO : I.Ok) (hP : TC.Pins B X) (z0 : Fin (B.R.N B.R.m) → B.host.E)
     (hz : ∀ j, z0 j = if j.1 + 1 = B.R.N B.R.m then ((X.piT u : 𝓞 B.host.E) : B.host.E) else 0) :
-    mZ (D := I.rec7 l Z) u z0 =
+    mZ (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u z0 =
       fun τ => ((lastAll (B.R.N B.R.m) (aT I l u) τ : GL (Fin (B.R.N B.R.m)) ℂ) : Matrix (Fin (B.R.N B.R.m)) (Fin (B.R.N B.R.m)) ℂ) := by
   have h0 := star_pi_ne I l u
-  have e : (bZ (D := I.rec7 l Z) u z0)⁻¹ =
+  have e : (bZ (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u z0)⁻¹ =
       Matrix.diagonal fun i : Fin (B.R.N B.R.m) => if i.1 + 1 = B.R.N B.R.m then star ((X.piT u : 𝓞 B.host.E) : B.host.E) else 1 := by
     rw [bZ_std I l Z u hO hP z0 hz]
     refine Matrix.inv_eq_left_inv (A := Matrix.diagonal fun i : Fin (B.R.N B.R.m) =>
@@ -156,7 +156,7 @@ theorem mZ_std (hO : I.Ok) (hP : TC.Pins B X) (z0 : Fin (B.R.N B.R.m) → B.host
     · exact mul_one 1
   funext τ
   refine Matrix.ext fun (a b : Fin (B.R.N B.R.m)) => ?_
-  have e2 : mZ (D := I.rec7 l Z) u z0 τ a b = embAt B.embLL B.fields.emb τ ((Matrix.diagonal fun i : Fin (B.R.N B.R.m) =>
+  have e2 : mZ (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u z0 τ a b = embAt B.embLL B.fields.emb τ ((Matrix.diagonal fun i : Fin (B.R.N B.R.m) =>
       if i.1 + 1 = B.R.N B.R.m then star ((X.piT u : 𝓞 B.host.E) : B.host.E) else 1) a b) := by
     unfold mZ
     rw [e, embT_eq]
@@ -171,21 +171,21 @@ end GlobalTheory.Mem.Col2.LowerTie
 namespace GlobalTheory.Mem.Col2.LowerTie
 
 theorem lowerMap_std : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)),
-    ∀ (u : B.Word) (Ch : ℕ → Type) (chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i) (F : FormsTiedSym (I.rec7 l Z) u Ch chOf),
-    I.StdF l Z u F → ∀ (ψ : ((I.rec7 l Z).mem u).P.Wz) (c : ((I.rec7 l Z).fm u).clsP)
-      (P : MvPolynomial ((I.rec7 l Z).what₂.Tau × Fin ((I.rec7 l Z).R.N (I.rec7 l Z).R.m) × Fin ((I.rec7 l Z).R.N (I.rec7 l Z).R.m)) ℂ),
-      (∀ s, F.eWz ψ c s = fnOf _ (shiftOf (Formalism.L2.Forms.lamT u (I.rec7 l Z).R.m)) (mZ u F.til.z0) P
-        ((F.val (I.rec7 l Z).R.m le_rfl (Or.inr rfl)).eY s)) →
-      F.valP.eW (((I.rec7 l Z).mem u).P.lowerMap ψ) c =
-        fnOf _ (shiftOf (Formalism.L2.Forms.sgT u)) 1 (Formalism.L2.Ker.brTen (I.rec7 l Z) u P) := by
+    ∀ (u : B.Word) (Ch : ℕ → Type) (chOf : ∀ i, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).C.cls i → Ch i) (F : FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u Ch chOf),
+    I.StdF l Z u F → ∀ (ψ : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).P.Wz) (c : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).clsP)
+      (P : MvPolynomial ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tau × Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m) × Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m)) ℂ),
+      (∀ s, F.eWz ψ c s = fnOf _ (shiftOf (Formalism.L2.Forms.lamT u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m)) (mZ u F.til.z0) P
+        ((F.val (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m le_rfl (Or.inr rfl)).eY s)) →
+      F.valP.eW (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).P.lowerMap ψ) c =
+        fnOf _ (shiftOf (Formalism.L2.Forms.sgT u)) 1 (Formalism.L2.Ker.brTen (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u P) := by
   intro B X I hO hP l Z u Ch chOf F hS ψ c P hψ
-  have hl : Formalism.MainNotions.product_first_zeroth_parts.lamTr (I.rec7 l Z) u = B.wts.lamTrue u B.R.m := funext (trueWeight_lastStep_trueColumns I l Z u)
-  have hs : Formalism.MainNotions.product_first_zeroth_parts.sgTr (I.rec7 l Z) u = B.wts.sgTrue := funext (trueRowWeight_trueColumns I l Z u)
-  have hl' : Formalism.L2.Forms.lamT (D := I.rec7 l Z) u (I.rec7 l Z).R.m = B.wts.lamTrue u B.R.m := hl
-  have hs' : Formalism.L2.Forms.sgT (D := I.rec7 l Z) u = B.wts.sgTrue := hs
+  have hl : Formalism.MainNotions.product_first_zeroth_parts.lamTr (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u = B.wts.lamTrue u B.R.m := funext (trueWeight_lastStep_trueColumns I l Z u)
+  have hs : Formalism.MainNotions.product_first_zeroth_parts.sgTr (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u = B.wts.sgTrue := funext (trueRowWeight_trueColumns I l Z u)
+  have hl' : Formalism.L2.Forms.lamT (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m = B.wts.lamTrue u B.R.m := hl
+  have hs' : Formalism.L2.Forms.sgT (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u = B.wts.sgTrue := hs
   have hI : ∀ τ i, 0 ≤ Br.bBr (N_m_succ B.R) (B.wts.lamTrue u B.R.m τ) (B.wts.sgTrue τ) i := by
     intro τ i
-    have h := (Formalism.MainNotions.product_first_zeroth_parts.interlaceTr (I.rec7 l Z) u (sg_interlace F.valP) τ i).1
+    have h := (Formalism.MainNotions.product_first_zeroth_parts.interlaceTr (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (sg_interlace F.valP) τ i).1
     rw [hl, hs] at h
     exact sub_nonneg.2 h
   have h1 : ψ c = fnOf (Col2.Gr B.fields.emb B.embLL (B.R.N B.R.m)) (shiftOf (B.wts.lamTrue u B.R.m)) 1
@@ -205,7 +205,7 @@ theorem lowerMap_std : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → 
     rw [e] at h
     rw [h1]
     exact h
-  have h4 : Formalism.L2.Ker.brTen (I.rec7 l Z) u P = (Br.brStdP (N_m_succ B.R) (B.wts.lamTrue u B.R.m) B.wts.sgTrue P : Pol ℂ (Tau B.R) (B.R.N B.R.m - 1)) := by
+  have h4 : Formalism.L2.Ker.brTen (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u P = (Br.brStdP (N_m_succ B.R) (B.wts.lamTrue u B.R.m) B.wts.sgTrue P : Pol ℂ (Tau B.R) (B.R.N B.R.m - 1)) := by
     have h := blk_brOne (ι := Tau B.R) (N_m_succ B.R) (B.wts.lamTrue u B.R.m) B.wts.sgTrue P
     refine Eq.trans ?_ h
     unfold Formalism.L2.Ker.brTen

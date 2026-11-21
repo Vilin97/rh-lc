@@ -100,8 +100,7 @@ theorem GlobalTheory.QLog.dIn_subst_up :
       [Algebra B Q] (θ : B →+* O), IsFrame p Q θ →
       ∀ (σ τ : Type) [Fintype σ] (N : Ideal B) (f : MvPowerSeries σ Q)
         (u : σ → MvPowerSeries τ B), DIn N f → (∀ i, constantCoeff (u i) = 0) →
-        DIn N (MvPowerSeries.subst (QLog.up Q u) f) ∧
-          (In N f → In N (MvPowerSeries.subst (QLog.up Q u) f)) := by
+        DIn N (subst (up (Q := Q) u) f) ∧ (In N f → In N (subst (up (Q := Q) u) f)) := by
   intro p _ B O Q _ _ _ _ θ _ σ τ _ N f u hD hu
   set NQ : Submodule B Q := Submodule.map (Algebra.linearMap B Q) N with hNQ
   have memNQ : ∀ q : Q, q ∈ NQ ↔ ∃ b ∈ N, q = algebraMap B Q b := by
@@ -110,18 +109,18 @@ theorem GlobalTheory.QLog.dIn_subst_up :
     constructor
     · rintro ⟨b, hb, rfl⟩; exact ⟨b, hb, rfl⟩
     · rintro ⟨b, hb, rfl⟩; exact ⟨b, hb, rfl⟩
-  have ha : HasSubst (QLog.up Q u) :=
+  have ha : HasSubst (up (Q := Q) u) :=
     hasSubst_of_constantCoeff_zero fun i => by
-      simp only [QLog.up]
+      simp only [up]
       rw [← coeff_zero_eq_constantCoeff_apply, coeff_map, coeff_zero_eq_constantCoeff_apply, hu i,
         map_zero]
 
-  have hprod : ∀ d : σ →₀ ℕ, (d.prod fun s e => (QLog.up Q u s) ^ e) =
+  have hprod : ∀ d : σ →₀ ℕ, (d.prod fun s e => (up (Q := Q) u s) ^ e) =
       map (algebraMap B Q) (∏ i, u i ^ d i) := by
     intro d
     rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _), map_prod]
-    simp only [QLog.up, map_pow]
-  have hcoeff : ∀ e, coeff e (MvPowerSeries.subst (QLog.up Q u) f) =
+    simp only [up, map_pow]
+  have hcoeff : ∀ e, coeff e (subst (up (Q := Q) u) f) =
       ∑ d ∈ (coeff_subst_finite ha f e).toFinset,
         algebraMap B Q (coeff e (∏ i, u i ^ d i)) * coeff d f := by
     intro e

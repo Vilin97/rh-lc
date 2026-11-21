@@ -18,6 +18,8 @@ namespace GlobalTheory.SplitConjPlace
 
 variable {D : D7}
 
+local notation "cO" => IsCMField.ringOfIntegersComplexConj D.host.E
+
 theorem cO_cO (x : 𝓞 D.host.E) : cO (cO x) = x := by
   apply RingOfIntegers.ext
   rw [IsCMField.coe_ringOfIntegersComplexConj, IsCMField.coe_ringOfIntegersComplexConj]
@@ -109,7 +111,7 @@ theorem splitEx_of (hstar : ∀ x : D.host.E, D.host.conj x = IsCMField.complexC
       isPrime := Ideal.comap_isPrime _ _
       ne_bot := by
         obtain ⟨y, hy, hy0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot v.ne_bot
-        exact Ideal.comap_ne_bot_of_integral_mem hy0 hy (Algebra.IsIntegral.isIntegral y) }
+        exact Ideal.under_ne_bot_of_integral_mem hy0 hy (Algebra.IsIntegral.isIntegral y) }
   have hover' : (conjPlE v).asIdeal.comap (algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E)) =
       v₀.asIdeal := by
     ext a
@@ -141,12 +143,15 @@ namespace GlobalTheory.SplitConjPlace
 
 variable {D : D7}
 
+local notation "cO" => IsCMField.ringOfIntegersComplexConj D.host.E
+local notation "Fp" => maximalRealSubfield D.host.E
+
 def belowE (v : PlE D.host) : HeightOneSpectrum (𝓞 Fp) where
   asIdeal := v.asIdeal.comap (algebraMap (𝓞 Fp) (𝓞 D.host.E))
   isPrime := Ideal.comap_isPrime _ _
   ne_bot := by
     obtain ⟨y, hy, hy0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot v.ne_bot
-    exact Ideal.comap_ne_bot_of_integral_mem hy0 hy (Algebra.IsIntegral.isIntegral y)
+    exact Ideal.under_ne_bot_of_integral_mem hy0 hy (Algebra.IsIntegral.isIntegral y)
 
 theorem fixed_of_cO {x : 𝓞 D.host.E} (hx : cO x = x) : ∃ y : 𝓞 Fp, algebraMap (𝓞 Fp) (𝓞 D.host.E) y = x :=
   (IsCMField.ringOfIntegersComplexConj_eq_self_iff D.host.E _).1 hx
@@ -169,8 +174,74 @@ theorem exists_splitPlace (v : PlE D.host) (x0 : 𝓞 D.host.E) (hx0 : x0 ∈ v.
     rw [ha] at h'
     exact hc0 (by simpa using v.asIdeal.sub_mem h' hx0)
 
-  haveI := Formalism.BasicNotions.Examples₂.adicInt_henselian (K := Fp) v₀
   set Rv := v₀.adicCompletionIntegers Fp
+  have : IsAdicComplete (IsLocalRing.maximalIdeal Rv) Rv := by
+    open Formalism.BasicNotions.Examples₂ WithZero Filter Topology in
+    let Kv := v₀.adicCompletion Fp
+    obtain ⟨π, hπ⟩ := adicInt_exists_unif (K := Fp) v₀
+    have hintegers := adicInt_integers (K := Fp) v₀
+    have hspan : IsLocalRing.maximalIdeal Rv = Ideal.span {π} := by
+      ext z
+      rw [adicInt_mem_max_iff, Ideal.mem_span_singleton, hintegers.dvd_iff_le]
+      change Valued.v (z : Kv) < 1 ↔ Valued.v (z : Kv) ≤ Valued.v (π : Kv)
+      rw [hπ, wz_lt_one_iff]
+    have hpow (n : ℕ) : Valued.v ((π ^ n : Rv) : Kv) = exp (-(n : ℤ)) := by
+      change Valued.v ((π : Kv) ^ n) = _
+      rw [map_pow, hπ, ← exp_nsmul]
+      congr 1
+      simp
+    have smodEq_iff (n : ℕ) (x y : Rv) :
+        x ≡ y [SMOD ((IsLocalRing.maximalIdeal Rv) ^ n • ⊤ : Submodule Rv Rv)] ↔
+          Valued.v ((x : Kv) - y) ≤ exp (-(n : ℤ)) := by
+      rw [smul_eq_mul, Ideal.mul_top, SModEq.sub_mem, hspan, Ideal.span_singleton_pow,
+        Ideal.mem_span_singleton, hintegers.dvd_iff_le]
+      change Valued.v ((x : Kv) - y) ≤ Valued.v ((π ^ n : Rv) : Kv) ↔ _
+      rw [hpow]
+    refine { toIsHausdorff := ?_, toIsPrecomplete := ?_ }
+    · refine ⟨fun x hx => Subtype.ext ?_⟩
+      by_contra h
+      have hx0 : (x : Kv) ≠ 0 := by simpa using h
+      have hval : Valued.v (x : Kv) ≠ 0 := (Valuation.ne_zero_iff Valued.v).2 hx0
+      obtain ⟨n, hn⟩ := wz_exists_nat_lt _ hval
+      exact (not_le.mpr hn) (by simpa using (smodEq_iff n x 0).mp (hx n))
+    · refine ⟨fun f hf => ?_⟩
+      let g : ℕ → Kv := fun n => (f n : Kv)
+      have hg (m n : ℕ) (hmn : m ≤ n) : Valued.v (g n - g m) ≤ exp (-(m : ℤ)) := by
+        have h := (smodEq_iff m (f m) (f n)).mp (hf hmn)
+        rwa [← Valuation.map_neg, neg_sub] at h
+      have hc : CauchySeq g := by
+        rw [(Valued.hasBasis_uniformity Kv ℤᵐ⁰).cauchySeq_iff]
+        intro γ _
+        have hγ : MonoidWithZeroHom.ValueGroup₀.embedding γ.1 ≠ 0 :=
+          fun h => γ.ne_zero (MonoidWithZeroHom.ValueGroup₀.embedding_injective
+            (h.trans (map_zero _).symm))
+        obtain ⟨N, hN⟩ := wz_exists_nat_lt _ hγ
+        refine ⟨N, fun m hm n hn => ?_⟩
+        simp only [Set.mem_ofPred_eq, Valuation.restrict_lt_iff_lt_embedding]
+        have hlt (a b : ℕ) (ha : N ≤ a) (hab : a ≤ b) :
+            Valued.v (g b - g a) < MonoidWithZeroHom.ValueGroup₀.embedding γ.1 :=
+          lt_of_le_of_lt ((hg a b hab).trans (exp_le_exp.2 (by omega))) hN
+        rcases le_total m n with h | h
+        · exact hlt m n hm h
+        · rw [← Valuation.map_neg, neg_sub]
+          exact hlt n m hn h
+      obtain ⟨l, hl⟩ := cauchySeq_tendsto_of_complete hc
+      have hlmem : l ∈ Rv := (Valued.isClosed_valuationSubring Kv).mem_of_tendsto hl
+        (Eventually.of_forall fun n => (f n).2)
+      refine ⟨⟨l, hlmem⟩, fun n => (smodEq_iff n _ _).mpr ?_⟩
+      have hclosed : IsClosed {z : Kv | Valued.v z ≤ exp (-(n : ℤ))} := by
+        rw [← hpow]
+        simpa only [Valuation.restrict_le_iff] using
+          Valued.isClosed_closedBall Kv (Valued.v.restrict ((π ^ n : Rv) : Kv))
+      have hlim := (hclosed.preimage (continuous_const.sub continuous_id :
+        Continuous (fun z : Kv => g n - z))).mem_of_tendsto hl
+      refine hlim ?_
+      filter_upwards [eventually_ge_atTop n] with k hk
+      change Valued.v (g n - g k) ≤ _
+      rw [← Valuation.map_neg, neg_sub]
+      exact hg n k hk
+  have : HenselianLocalRing Rv :=
+    ⟨fun f hf a h₁ h₂ => HenselianRing.is_henselian f hf a h₁ (h₂.map _)⟩
   let g : Polynomial Rv := Polynomial.X ^ 2 - Polynomial.C (algebraMap (𝓞 Fp) Rv a) * Polynomial.X +
     Polynomial.C (algebraMap (𝓞 Fp) Rv b)
   have hcoe : ∀ z : 𝓞 Fp, ((algebraMap (𝓞 Fp) Rv z : Rv) : v₀.adicCompletion Fp) =

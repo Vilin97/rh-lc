@@ -22,6 +22,7 @@ section Exact
 instance overPullback_additive : (J.overPullback AddCommGrpCat.{v} U).Additive where
   map_add := rfl
 
+attribute [local instance] Classical.decEq in
 instance overPullback_isRightAdjoint : (J.overPullback AddCommGrpCat.{v} U).IsRightAdjoint :=
   ⟨_, ⟨((Adjunction.mkOfHomEquiv
     { homEquiv := fun P Q =>
@@ -197,7 +198,7 @@ theorem overCohomologyMap_bijective [EnoughInjectives (Sheaf J AddCommGrpCat.{v}
         (Ext.eq_zero_of_injective (x₁.comp (Ext.mk₀ S.f) (add_zero (n + 1)))) rfl)
       (fun y₁ ↦ Ext.covariant_sequence_exact₁ _ hS' y₁
         (Ext.eq_zero_of_injective (y₁.comp (Ext.mk₀ ((J.overPullback AddCommGrpCat.{v} U).map S.f))
-          (add_zero (n + 1))) rfl)
+          (add_zero (n + 1)))) rfl)
 
 noncomputable def cohomologyPresheafOverAddEquiv [EnoughInjectives (Sheaf J AddCommGrpCat.{v})]
     (F : Sheaf J AddCommGrpCat.{v}) (n : ℕ) :

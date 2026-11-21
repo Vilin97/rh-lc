@@ -114,7 +114,7 @@ theorem vAdd_natCast {ℓ n : ℕ} (hℓ : ℓ.Prime) (hn : n ≠ 0) {la : Heigh
     exact la.isPrime.ne_top ((Ideal.eq_top_iff_one _).2
       (hab ▸ add_mem (Ideal.mul_mem_left _ _ hm) (Ideal.mul_mem_left _ _ hmm)))
   have h1' : la.valuation K (m : K) = 1 := by simpa using h1
-  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hℓ.ne_zero) hm0, padicValNat.prime_pow, padicValNat.eq_zero_of_not_dvd hnd]
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hℓ.ne_zero) hm0, (show padicValNat ℓ (ℓ ^ k) = k from by simpa only [← Nat.padicValNat_def] using Nat.multiplicity_prime_pow k), (show padicValNat ℓ m = 0 from by simpa only [← Nat.padicValNat_def] using multiplicity_eq_zero_of_not_dvd hnd)]
   simp [vAdd, h1']
 
 variable {E : Type} [Field E] [NumberField E]
@@ -287,9 +287,9 @@ theorem pnorm_horizGen (X : Data E r) (τ : X.Ψ) {y : Frame X.Ψ r} (hy : y ∈
     rw [Finset.prod_div_distrib, h1, mul_div_cancel_left₀ _ (Finset.prod_ne_zero_iff.2 fun i _ => hd _)]
   have hx : ‖(mat y τ).det‖ ≠ 0 := norm_ne_zero_iff.2 (hy τ).1
   rw [Data.pnorm, Finset.prod_eq_single τ (fun τ' _ h => by simp [modelFlat, h]) (by simp)]
-  simp only [modelFlat, if_true]
-  rw [Real.finset_prod_rpow _ _ (fun _ _ => norm_nonneg _), ← norm_prod, ht, det_gram, horizGen, norm_inv]
-  rw [show (-((-1 : ℤ) : ℝ) / 2) = 1 / 2 by norm_num, ← Real.sqrt_eq_rpow, Real.sqrt_mul (norm_nonneg _),
+  simp only [modelFlat, if_true, Int.cast_neg, Int.cast_one, neg_neg]
+  rw [Real.finsetProd_rpow _ _ (fun _ _ => norm_nonneg _) _, ← norm_prod, ht, det_gram, horizGen, norm_inv]
+  rw [← Real.sqrt_eq_rpow, Real.sqrt_mul (norm_nonneg _),
     Real.sqrt_sq (norm_nonneg _)]
   field_simp
 
@@ -445,7 +445,8 @@ theorem hasPts : HasPts U Z :=
 theorem sig_ne_zero : s.sig ≠ 0 := fun h => by
   obtain ⟨z, hz⟩ := (s.hasPts.1 c.F.val.toRingHom).1
   have h1 := s.homN_eq hz
-  rw [h, ← zero_smul c.F (0 : Rul Xo c), homN_smul, map_zero, norm_zero, zero_mul] at h1
+  set_option synthInstance.maxHeartbeats 200000 in
+    rw [h, ← zero_smul c.F (0 : Rul Xo c), homN_smul, map_zero, norm_zero, zero_mul] at h1
   exact (s.cInf_pos _).ne h1
 
 theorem homN_mul_sig {G : WTZ E} (hG : Even G.2) (f : Rul Xo c) {σ : c.F →+* ℂ} {z}

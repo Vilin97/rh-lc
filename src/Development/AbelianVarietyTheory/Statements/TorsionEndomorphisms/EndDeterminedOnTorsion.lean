@@ -117,8 +117,14 @@ variable (S : Scheme.{0})
 
 theorem isThetaPt_zero (k : ℕ) (hk : Odd k) {T : Over S} (hu : IsUnit (k : Γ(T.left, ⊤))) {I : Type}
     (x : I → (T ⟶ (zeroPolAV S).A)) : IsThetaPt (zeroPolAV S) k x (fun _ => 1) := by
-  refine ⟨hk, hu, fun p => ⟨⊤, trivial, oneSec S 1 _, oneSec S _ _, ⟨fun _ => 1⟩, ⟨fun _ => 1⟩,
-    fun _ => theta1 S _ _, fun _ => oneSec S _ _, fun _ => 1, 1, ?_, ?_, ?_, ?_, fun i => ⟨?_, ?_, ?_⟩,
+  let oneSec (a : ℤ) (U : Over S) : LB.Sec (LPow (zeroPolAV S).A (zeroPolAV S).L a U) :=
+    ⟨fun _ => 1, by
+      intro i j
+      erw [linComb_triv_g]
+      simp only [Units.val_one, map_one]
+      exact (_root_.one_mul _).symm⟩
+  refine ⟨hk, hu, fun p => ⟨⊤, trivial, oneSec 1 _, oneSec _ _, ⟨fun _ => 1⟩, ⟨fun _ => 1⟩,
+    fun _ => theta1 S _ _, fun _ => oneSec _ _, fun _ => 1, 1, ?_, ?_, ?_, ?_, fun i => ⟨?_, ?_, ?_⟩,
     ?_, ?_, ?_⟩⟩
   · intro s
     haveI : IsIso (fst (overRes (T := T) ⊤) (zeroPolAV S).A) := by

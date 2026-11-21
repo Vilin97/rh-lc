@@ -72,9 +72,9 @@ theorem gamDvd_DGam :
 
 theorem gamDvd (l : I.Laws) (Z : Later B (I.cols l)) :
     (∀ (t : TupU I U) (c : ((famC I hX U Xg tr).A.fam.R t).S.Cl),
-      Fintype.card (((famC I hX U Xg tr).A.fam.R t).S.Gam c) ∣ ((I.rec7 l Z).mem (I.rec7 l Z).u₀).C.DGam) ∧
+      Fintype.card (((famC I hX U Xg tr).A.fam.R t).S.Gam c) ∣ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).u₀).C.DGam) ∧
     ∀ (j : Fin B.R.m) (t : TupU I U) (c : ((famC I hX U Xg tr).A.fam.L j t).S.Cl),
-      Fintype.card (((famC I hX U Xg tr).A.fam.L j t).S.Gam c) ∣ ((I.rec7 l Z).mem (I.rec7 l Z).u₀).C.DGam :=
+      Fintype.card (((famC I hX U Xg tr).A.fam.L j t).S.Gam c) ∣ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).u₀).C.DGam :=
   gamDvd_DGam I hX U Xg tr
 
 end Fam

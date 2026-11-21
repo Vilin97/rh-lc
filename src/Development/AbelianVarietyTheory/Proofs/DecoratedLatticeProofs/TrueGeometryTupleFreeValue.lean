@@ -365,18 +365,18 @@ set_option maxHeartbeats 2000000 in
 theorem uloc_iff {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {u : B.Word} {a : I.ι}
     {Ch₀ : ℕ → Type} (hOk : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch₀) (hA : A.Is) (P : BadPr I a)
     {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-    (q : GlobalTheory.FinPl.SplitPt (I.rec7 l Z) k) (PP : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.E)) (hPP : P.1 = PP)
+    (q : GlobalTheory.FinPl.SplitPt (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) k) (PP : HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)) (hPP : P.1 = PP)
     (hq : Formalism.L2.NTheta.IsIdemAt q.e PP) (s : ℕ) (W : GlobalTheory.TwBridge.TwData k) (ι : B.fields.E →+* k)
-    (hι : ∀ x, q.pr (incA (I.rec7 l Z) x) = ι x)
+    (hι : ∀ x, q.pr (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) x) = ι x)
     (hW : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := k) I.sel (I.tup a) (I.cst a) B.embLL P ι s W)
     (hm : s + 1 ≤ B.R.m) (β : Ch₀ (s + 1)) (e : XIx (Fin B.R.k) (Fin B.R.t) (s + 1) ≃ Fin (B.R.N (s + 1)))
     (he : GlobalTheory.SymBridge.IsOrd GlobalTheory.SymBridge.xPos e)
     (hK : GlobalTheory.TwBridge.Lev.phi ι ((Equiv.sumEmpty _ (Fin 0)).trans e)
       (Formalism.L2.Col.frsF I.sel (I.tup a) (A.p0 (s + 1) β).1.1 P) ∈ ((W.T s B.R).lev (s + 1) 0 rfl).J)
-    (M : ℕ) (hM : M = (I.cst a).M) (v : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F)) (hv : Formalism.L2.Col.IsOver v PP)
-    (κ : GL (Fin (B.R.N (s + 1))) (EF (I.rec7 l Z)))
-    (hκ : κ ∈ Formalism.UG.UPts (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) (s + 1) hm) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F)) :
-    Formalism.UG.bc (Formalism.UG.prV (E := (I.rec7 l Z).host.E) v) κ ∈ (A.K (s + 1) hm β).lev.Uloc v ↔
+    (M : ℕ) (hM : M = (I.cst a).M) (v : HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) (hv : Formalism.L2.Col.IsOver v PP)
+    (κ : GL (Fin (B.R.N (s + 1))) (EF (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)))
+    (hκ : κ ∈ Formalism.UG.UPts (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (s + 1) hm) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) :
+    Formalism.UG.bc (Formalism.UG.prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v) κ ∈ (A.K (s + 1) hm β).lev.Uloc v ↔
       locG (q.prF hq) ((Equiv.sumEmpty _ (Fin 0)).trans e) κ ∈ GlobalTheory.PenVol.cosStab ((W.T s B.R).lev (s + 1) 0 rfl).J (box _ (W.ϖ ^ M))
         (Submodule.Quotient.mk fun r => ι (Formalism.L2.Col.repY (A.p0 (s + 1) β).1.2 (e r))) := by
   subst hM
@@ -402,7 +402,7 @@ theorem uloc_iff {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l 
     exact GlobalTheory.TwU.mem_seamP (AdT.sm I l Z) P.1 x
   have hq0 : ((Formalism.L2.Col.qOf P.1 : ℕ) : B.fields.E) ≠ 0 := Nat.cast_ne_zero.2 (GlobalTheory.GO.ChRoot.qOf_pos P.1).ne'
   have hbox := mem_box_inv hW.compl e (I.cst a).M _ (pow_smul_rep_mem (A.p0 (s + 1) (A.chOf _ c)) h1 P hW.nmem hq0)
-  have hϖ : q.prF hq (Formalism.L2.Col.iA (I.rec7 l Z).host.F (I.rec7 l Z).host.E ((Formalism.L2.Col.qOf P.1 : ℕ) : (I.rec7 l Z).host.E)) = W.ϖ :=
+  have hϖ : q.prF hq (Formalism.L2.Col.iA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E ((Formalism.L2.Col.qOf P.1 : ℕ) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)) = W.ϖ :=
     (prF_inclE q hq _).trans ((hι _).trans hW.compl.unif.symm)
   have hf := (hfb P).1
   rw [hseam] at hf
@@ -422,7 +422,7 @@ theorem uloc_iff {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l 
       ⟨(hJ3 g).2 ((GlobalTheory.TwU.exists_midLev_iff _ _ _ _ _ _ _ _).1 ⟨z, hg.1⟩), (hsc _ _).1 (hg.2 h1)⟩)
   · intro h
     obtain ⟨fb', hfb'⟩ := GlobalTheory.T.exists_rational_frames_near_adelic_at_bad_primes I hOk l Z a (B.R.N (s + 1))
-      ((GlobalTheory.TwU.ratA (I.rec7 l Z).host.F (fb P))⁻¹ * κ * GlobalTheory.TwU.ratA (I.rec7 l Z).host.F (fb P))
+      ((GlobalTheory.TwU.ratA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (fb P))⁻¹ * κ * GlobalTheory.TwU.ratA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (fb P))
     obtain ⟨g, hg⟩ := seamGL_surj (AdT.sm I l Z) (fb' P)
     have hin : GlobalTheory.TwU.InFrame (i := s + 1) (AdT.sm I l Z) fb (I.cst a).D P κ g := by
       have h2 := (hfb' P).1
@@ -432,9 +432,9 @@ theorem uloc_iff {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l 
     obtain ⟨z, hz⟩ := (GlobalTheory.TwU.exists_midLev_iff I.Ch _ _ _ _ _ _ _).2 ((hJ3 g).1 a1)
     exact hge P v (by rw [hseam]; exact hv) κ hκ ⟨g, z, ⟨hz, fun _ => (hsc _ _).2 a2⟩, hin⟩
 
-variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)}
-  {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} {W : RealPack ex} {u : B.Word}
+variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
+  {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
+  {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} {W : RealPack ex} {u : B.Word}
   {a : GeoAll W u} {t : W.P.T}
 
 

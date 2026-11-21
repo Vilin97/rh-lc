@@ -128,17 +128,17 @@ section StepExact
 variable {A : Rep.{u} k G} (T : Module.End k A) (hT : ∀ g : G, Commute T (A.ρ g))
   (D : Submodule k A) (hD : ∀ g : G, D ≤ D.comap (A.ρ g))
 
-theorem rangeStepComplex_shortExact : (rangeStepComplex T hT D hD).ShortExact where
-  exact := by
-    rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
+theorem rangeStepComplex_shortExact : (rangeStepComplex T hT D hD).ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+  · rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
       ShortComplex.moduleCat_exact_iff]
     intro y hy
     have hTy : T y.1 = 0 := congrArg Subtype.val hy
     exact ⟨⟨y.1, y.2, hTy⟩, rfl⟩
-  mono_f := (Rep.mono_iff_injective _).2 (Submodule.inclusion_injective inf_le_left)
-  epi_g := (Rep.epi_iff_surjective _).2 (by
+  · exact (Rep.mono_iff_injective _).2 (Submodule.inclusion_injective inf_le_left)
+  · apply (Rep.epi_iff_surjective _).2
     rintro ⟨_, x, hx, rfl⟩
-    exact ⟨⟨x, hx⟩, rfl⟩)
+    exact ⟨⟨x, hx⟩, rfl⟩
 
 theorem card_rangeStep :
     Nat.card D = Nat.card ↥(D ⊓ LinearMap.ker T) * Nat.card ↥(D.map T) := by

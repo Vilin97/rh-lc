@@ -306,8 +306,8 @@ theorem kernelsOver_of_family (h : I.Ok) (hJ : I.JetsIn) (hT : FamilyLaws I l Z)
 
 theorem kernels_rational (h : I.Ok) (hJ : I.JetsIn) (hT : (∀ u a, ThHypAt I l Z u a) ∨ FamilyLaws I l Z) :
     (∀ u a, KernelsOver I l h u a) ∧
-      (∀ u, (∀ i, i < (I.rec7 l Z).R.m → ((I.rec7 l Z).fm u).KRat i) ∧ ((I.rec7 l Z).fm u).PRat) ∧
-      ∀ (l0 : I.Law0 l) u μ, (∀ i, i < (I.rec7 l Z).R.m → ((I.tw l l0 Z).fm u μ).KRat i) ∧ ((I.tw l l0 Z).fm u μ).PRat := by
+      (∀ u, (∀ i, i < (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m → ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).KRat i) ∧ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).PRat) ∧
+      ∀ (l0 : I.Law0 l) u μ, (∀ i, i < (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m → ((I.tw l l0 Z).fm u μ).KRat i) ∧ ((I.tw l l0 Z).fm u μ).PRat := by
   have key : ∀ u a, KernelsOver I l h u a := fun u a =>
     hT.elim (fun hT => kernelsOver_of_thHyp I l Z h hJ u a (hT u a)) fun hT => kernelsOver_of_family I l Z h hJ hT u a
   exact ⟨key, fun u => ⟨(key u I.mu0).krat, (key u I.mu0).prat⟩, fun _ u μ => ⟨(key u μ).krat, (key u μ).prat⟩⟩

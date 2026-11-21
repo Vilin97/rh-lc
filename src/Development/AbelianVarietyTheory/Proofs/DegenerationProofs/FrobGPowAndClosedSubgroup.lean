@@ -28,8 +28,8 @@ theorem Raises.comp {X : Scheme.{0}} {φ ψ : X ⟶ X} {a b : ℕ} {U : X.Opens}
     map_pow, p₁, ← pow_mul]
 
 theorem Raises.mul {S : Scheme.{0}} {G : Over S} (F : End G) (q m : ℕ) {U : G.left.Opens} {f : Γ(G.left, U)}
-    (h : Raises (show G ⟶ G from F ^ m).left (q ^ m) U f) (n : ℕ) (hn : 1 ≤ n) :
-    Raises (show G ⟶ G from F ^ (m * n)).left (q ^ (m * n)) U f := by
+    (h : Raises (F ^ m).asHom.left (q ^ m) U f) (n : ℕ) (hn : 1 ≤ n) :
+    Raises (F ^ (m * n)).asHom.left (q ^ (m * n)) U f := by
   induction n, hn using Nat.le_induction with
   | base => rwa [Nat.mul_one]
   | succ n hn ih =>
@@ -72,27 +72,27 @@ theorem Raises.of_cover {X : Scheme.{0}} {φ : X ⟶ X} {a : ℕ} {U : X.Opens} 
   exact this.trans (p.trans (map_pow _ _ _).symm)
 
 theorem pow_comm_hom {C : Type*} [Category C] {N G : C} (ν : N ⟶ G) (F : End G) (F' : End N)
-    (h : (show N ⟶ N from F') ≫ ν = ν ≫ (show G ⟶ G from F)) (m : ℕ) :
-    (show N ⟶ N from F' ^ m) ≫ ν = ν ≫ (show G ⟶ G from F ^ m) := by
+    (h : F'.asHom ≫ ν = ν ≫ F.asHom) (m : ℕ) :
+    (F' ^ m).asHom ≫ ν = ν ≫ (F ^ m).asHom := by
   induction m with
   | zero => simp
   | succ m ih =>
-    simp only [pow_succ, End.mul_def, Category.assoc] at *
+    simp only [pow_succ, End.mul_asHom, Category.assoc] at *
     rw [ih, reassoc_of% h]
 
 theorem isMonHom_pow {k : Type} [Field k] (G : Over (Sp k)) [GrpObj G] (F : End G)
-    (h : IsMonHom (show G ⟶ G from F)) (m : ℕ) : IsMonHom (show G ⟶ G from F ^ m) := by
+    (h : IsMonHom F.asHom) (m : ℕ) : IsMonHom (F ^ m).asHom := by
   induction m with
   | zero => exact inferInstanceAs (IsMonHom (𝟙 G))
   | succ m ih =>
-    rw [pow_succ]
-    exact inferInstanceAs (IsMonHom ((show G ⟶ G from F) ≫ (show G ⟶ G from F ^ m)))
+    rw [pow_succ, End.mul_asHom]
+    infer_instance
 
 end GlobalTheory.SS.FrobSub
 
 
 open GlobalTheory.SS.FrobSub in
-theorem GlobalTheory.SS.frobG_pow_and_closed_subgroup : ∀ (k : Type) [Field k] (G : Over (Sp k)) [GrpObj G], SmConn G → ∀ (F : End G) (q : ℕ), FrobG G F q → (∀ m, 1 ≤ m → FrobG G (F ^ m) (q ^ m)) ∧ ∀ (N : Over (Sp k)) [GrpObj N] (ν : N ⟶ G) (F' : End N), IsMonHom ν → IsClosedImmersion ν.left → IsMonHom (show N ⟶ N from F') → (show N ⟶ N from F') ≫ ν = ν ≫ (show G ⟶ G from F) → FrobG N F' q := by
+theorem GlobalTheory.SS.frobG_pow_and_closed_subgroup : ∀ (k : Type) [Field k] (G : Over (Sp k)) [GrpObj G], SmConn G → ∀ (F : End G) (q : ℕ), FrobG G F q → (∀ m, 1 ≤ m → FrobG G (F ^ m) (q ^ m)) ∧ ∀ (N : Over (Sp k)) [GrpObj N] (ν : N ⟶ G) (F' : End N), IsMonHom ν → IsClosedImmersion ν.left → IsMonHom F'.asHom → F'.asHom ≫ ν = ν ≫ F.asHom → FrobG N F' q := by
   intro k _ G _ _ F q hF
   refine ⟨fun m hm => ⟨isMonHom_pow G F hF.1 m, fun U hU f => ?_⟩, fun N _ ν F' _ hν hF' hc => ⟨hF', fun U hU f => ?_⟩⟩
   · obtain ⟨n, hn, h⟩ := hF.2 U hU f
@@ -101,7 +101,7 @@ theorem GlobalTheory.SS.frobG_pow_and_closed_subgroup : ∀ (k : Type) [Field k]
     rw [mul_comm, pow_mul, pow_mul] at this
     exact this
   · have key : ∀ x : U, ∃ (W : N.left.Opens) (hW : W ≤ U) (m : ℕ), x.1 ∈ W ∧ 1 ≤ m ∧
-        Raises (show N ⟶ N from F' ^ m).left (q ^ m) W ((N.left.presheaf.map (homOfLE hW).op).hom f) := by
+        Raises (F' ^ m).asHom.left (q ^ m) W ((N.left.presheaf.map (homOfLE hW).op).hom f) := by
       intro x
       obtain ⟨W, hW, hWU⟩ := ν.left.isClosedEmbedding.isInducing.isOpen_iff.1 U.isOpen
       have hx : ν.left x.1 ∈ (⟨W, hW⟩ : G.left.Opens) := by

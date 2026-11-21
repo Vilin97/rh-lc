@@ -82,8 +82,12 @@ private theorem pull_inv_hom (R : Type) [CommRing R] (F : Shv R) {A B : Spc} (e 
     pull R e.hom F n (pull R e.inv F n x) = x := by
   rw [← pull_comp, e.hom_inv_id, pull_id]
 
+local instance (priority := high) (F : WalkingCospan ⥤ Spc) : HasLimit F :=
+  (inferInstance : HasPullbacks Spc).has_limit F
+
 private theorem res_fst (q : ℕ) (i n : ℤ) {X : Scheme.{0}} {U V W P : X.Opens} (c : Sq U V W P) (a : Ht q (sch.obj U) n i) :
-    pull _ c.pb.isoPullback.inv (tw q i) n (res q i n c.pu a) = pull _ (pullback.fst _ _) (tw q i) n a := by
+    pull _ c.pb.isoPullback.inv (tw q i) n (res q i n c.pu a) =
+      pull _ (pullback.fst (sch.map (X.homOfLE c.uw)) (sch.map (X.homOfLE c.vw))) (tw q i) n a := by
   have h : sch.map (X.homOfLE c.pu) = c.pb.isoPullback.hom ≫ pullback.fst _ _ := c.pb.isoPullback_hom_fst.symm
   have h2 : pull _ (sch.map (X.homOfLE c.pu)) (tw q i) n a =
       pull _ c.pb.isoPullback.hom (tw q i) n (pull _ (pullback.fst _ _) (tw q i) n a) := by
@@ -92,7 +96,8 @@ private theorem res_fst (q : ℕ) (i n : ℤ) {X : Scheme.{0}} {U V W P : X.Open
   rw [h2, pull_hom_inv]
 
 private theorem res_snd (q : ℕ) (i n : ℤ) {X : Scheme.{0}} {U V W P : X.Opens} (c : Sq U V W P) (a : Ht q (sch.obj V) n i) :
-    pull _ c.pb.isoPullback.inv (tw q i) n (res q i n c.pv a) = pull _ (pullback.snd _ _) (tw q i) n a := by
+    pull _ c.pb.isoPullback.inv (tw q i) n (res q i n c.pv a) =
+      pull _ (pullback.snd (sch.map (X.homOfLE c.uw)) (sch.map (X.homOfLE c.vw))) (tw q i) n a := by
   have h : sch.map (X.homOfLE c.pv) = c.pb.isoPullback.hom ≫ pullback.snd _ _ := c.pb.isoPullback_hom_snd.symm
   have h2 : pull _ (sch.map (X.homOfLE c.pv)) (tw q i) n a =
       pull _ c.pb.isoPullback.hom (tw q i) n (pull _ (pullback.snd _ _) (tw q i) n a) := by
@@ -109,7 +114,9 @@ variable {q : ℕ} {i n : ℤ} {X : Scheme.{0}} {U V W P : X.Opens} (c : Sq U V 
 
 private theorem ex1 {G : Type 1} [AddCommGroup G]
     (Dd : H (ZMod q) (pullback (sch.map (X.homOfLE c.uw)) (sch.map (X.homOfLE c.vw))) (tw q i) n →+ G)
-    (E2 : ∀ z, Dd z = 0 ↔ ∃ a b, z = pull _ (pullback.fst _ _) (tw q i) n a - pull _ (pullback.snd _ _) (tw q i) n b) :
+    (E2 : ∀ z, Dd z = 0 ↔ ∃ a b, z =
+      pull _ (pullback.fst (sch.map (X.homOfLE c.uw)) (sch.map (X.homOfLE c.vw))) (tw q i) n a -
+        pull _ (pullback.snd (sch.map (X.homOfLE c.uw)) (sch.map (X.homOfLE c.vw))) (tw q i) n b) :
     Function.Exact (rDiff q i n c) (Dd.comp (pull _ c.pb.isoPullback.inv (tw q i) n)) := by
   intro y
   refine (E2 (pull _ c.pb.isoPullback.inv (tw q i) n y)).trans ⟨?_, ?_⟩

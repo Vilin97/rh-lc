@@ -111,7 +111,10 @@ theorem indForms_one (h : ∑ _ : Fin 1, a = a) (π : CuspSub E a) : indForms h 
     rw [stdBlocks_val, Subsingleton.elim b 0]; simp)
   have hl : ∀ m, leviEmb (Ad E) (stdBlocks (fun _ : Fin 1 => a) h) m = m 0 := fun m => by
     ext i j
-    have := leviEmb_apply_same (Ad E) (stdBlocks (fun _ : Fin 1 => a) h) m 0 i j
+    have : ((leviEmb (Ad E) (stdBlocks (fun _ : Fin 1 => a) h) m : GL (Fin a) (Ad E)) :
+        Matrix (Fin a) (Fin a) (Ad E)) (stdBlocks (fun _ : Fin 1 => a) h ⟨0, i⟩)
+        (stdBlocks (fun _ : Fin 1 => a) h ⟨0, j⟩) = (m 0 : Matrix (Fin a) (Fin a) (Ad E)) i j := by
+      simp [leviEmb, Matrix.blockDiagonal'_apply_eq]
     rwa [he, he] at this
   refine le_antisymm (fun φ hφ => ?_) fun φ hφ => ⟨fun u hu g => ?_, (π.cusp φ hφ).1.level, (π.cusp φ hφ).1.kfin,
     fun k g => Submodule.subset_span ⟨fun _ => ⟨_, π.stable (.cpt k) _ (π.stable (.fin g) φ hφ)⟩, funext fun m => ?_⟩⟩

@@ -20,19 +20,19 @@ namespace GlobalTheory.Mem.Col2.TC
 
 set_option maxHeartbeats 4000000 in
 theorem exists_lvTied_of_std {B : Base} {X : PreX B.toPre} (I : TC B X) (hOk : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l))
-    (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (Ch : Type)
+    (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (Ch : Type)
     (chOf : (I.stp u a i).Cl → Ch)
     (lat' : (I.stp u a i).Cl → Submodule (𝓞 B.host.E) (B.sp.X i).V) (hlat : lat' = I.latAt u a i)
     (res' : ∀ v : (I.atT l u a).vT, 𝓞 B.host.E →+* (I.atT l u a).Fv v) (hres : res' = I.resT l u a)
-    (K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
-      (fun c => latCrd (I.rec7 l Z) i hi (lat' c.1)))
-    (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (I.rec7 l Z) i hi)
-    (eV : (I.atT l u a).vT ≃ {v : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) // (B.T u : 𝓞 (I.rec7 l Z).host.F) ∈ v.asIdeal})
+    (K : ∀ β : Ch, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
+      (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (lat' c.1)))
+    (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi)
+    (eV : (I.atT l u a).vT ≃ {v : HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) // (B.T u : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∈ v.asIdeal})
     (hK : ∃ k, I.Reads u a i chOf (fun β => (K β).lev.Lb) (fun β => (K β).lev.U) (fun β => (K β).lev.chi)
       (fun c => ((K (chOf c)).y ⟨c, rfl⟩).1) (fun c s => ((K (chOf c)).stabI ⟨c, rfl⟩ s).1) k)
     (hY : ∀ y, (eY y).1 = y.1) (hV : ∀ v, (eV v).1 = v.1.under (𝓞 B.host.F))
     (hkill : ∀ β, FunKilled (K β).lev (X.piT u)) :
-    ∃ L : LevelCompatibleLattices (D := I.rec7 l Z) (I.fm l u a) (B.T u) res' i hi (fun c => latCrd (I.rec7 l Z) i hi (lat' c)),
+    ∃ L : LevelCompatibleLattices (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.fm l u a) (B.T u) res' i hi (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (lat' c)),
       ((∀ v c z (h : z.1 ∈ ((I.stp u a i).rep c).1.1.deco.1.N), L.pr v c z = Submodule.Quotient.mk ⟨z.1, h⟩) ∧
         ∀ v c z (h : z.1 ∈ ((I.stp u a i).rep c).1.1.deco.1.dnN v), L.prk v c z = Submodule.Quotient.mk ⟨z.1, h⟩) ∧
       (∃ fMe, FvTieG L eV K fMe) ∧ UpNatTieG L eY eV K ∧ DnNatTieG L eY eV K := by
@@ -47,10 +47,10 @@ theorem exists_lvTied_of_std {B : Base} {X : PreX B.toPre} (I : TC B X) (hOk : I
 
 set_option maxHeartbeats 4000000 in
 noncomputable def lvSameMu0 {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (l0 : I.Law0 l)
-    (u : B.Word) (i : ℕ) (hi : i ≤ (I.rec7 l Z).R.m)
-    (a : TwAtT (I.tw l l0 Z) u (I.rec7 l Z).what₂.mu0) (hV : a.eVT = Equiv.refl _)
+    (u : B.Word) (i : ℕ) (hi : i ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m)
+    (a : TwAtT (I.tw l l0 Z) u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0) (hV : a.eVT = Equiv.refl _)
     (hR : ∀ v r, (a.eFv v).symm (I.resT l u I.mu0 (a.eVT v) r) = I.resT l u I.mu0 v r) :
-    LvSame a i (Formalism.L2.Herm.clsCast (I.rec7 l Z) u i) (Formalism.L2.Herm.yCast (I.rec7 l Z) u i) ((I.tw l l0 Z).eMu0 u i hi) := by
+    LvSame a i (Formalism.L2.Herm.clsCast (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i) (Formalism.L2.Herm.yCast (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i) ((I.tw l l0 Z).eMu0 u i hi) := by
   obtain ⟨eVT, eFv, psiT, rhoT, Mu0, duStar, Dstar, GamP, tauOf, seenP⟩ := a
   dsimp only at hV hR
   subst hV
@@ -74,19 +74,19 @@ noncomputable def lvSameMu0 {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.La
         obtain rfl : g = g' := LinearMap.ext fun x => (hE v (g x)).symm.trans (hg x)
         rfl
       dil := fun v r c => by
-        have key : ∀ q : (((I.tw l l0 Z).A u (I.rec7 l Z).what₂.mu0).Fv v)ˣ, (q : ((I.tw l l0 Z).A u (I.rec7 l Z).what₂.mu0).Fv v) = (r : ((I.tw l l0 Z).A u (I.rec7 l Z).what₂.mu0).Fv v) →
-            ((I.tw l l0 Z).fm u (I.rec7 l Z).what₂.mu0).dil i v r (Formalism.L2.Herm.clsCast (I.rec7 l Z) u i c) =
-              Formalism.L2.Herm.clsCast (I.rec7 l Z) u i (((I.rec7 l Z).fm u).dil i v q c) := by
+        have key : ∀ q : (((I.tw l l0 Z).A u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0).Fv v)ˣ, (q : ((I.tw l l0 Z).A u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0).Fv v) = (r : ((I.tw l l0 Z).A u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0).Fv v) →
+            ((I.tw l l0 Z).fm u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0).dil i v r (Formalism.L2.Herm.clsCast (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i c) =
+              Formalism.L2.Herm.clsCast (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).dil i v q c) := by
           intro q hq
           obtain rfl : q = r := Units.ext hq
           rfl
         refine key _ ?_
         exact hE v _
       dilT := fun v r c h y => by
-        have key : ∀ q : (((I.tw l l0 Z).A u (I.rec7 l Z).what₂.mu0).Fv v)ˣ, (q : ((I.tw l l0 Z).A u (I.rec7 l Z).what₂.mu0).Fv v) = (r : ((I.tw l l0 Z).A u (I.rec7 l Z).what₂.mu0).Fv v) →
-            ((I.tw l l0 Z).fm u (I.rec7 l Z).what₂.mu0).dilT i v r (Formalism.L2.Herm.clsCast (I.rec7 l Z) u i c)
-              (fun z => h ((Formalism.L2.Herm.yCast (I.rec7 l Z) u i).symm z)) (Formalism.L2.Herm.yCast (I.rec7 l Z) u i y) =
-              ((I.rec7 l Z).fm u).dilT i v q c h y := by
+        have key : ∀ q : (((I.tw l l0 Z).A u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0).Fv v)ˣ, (q : ((I.tw l l0 Z).A u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0).Fv v) = (r : ((I.tw l l0 Z).A u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0).Fv v) →
+            ((I.tw l l0 Z).fm u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0).dilT i v r (Formalism.L2.Herm.clsCast (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i c)
+              (fun z => h ((Formalism.L2.Herm.yCast (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i).symm z)) (Formalism.L2.Herm.yCast (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i y) =
+              ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).dilT i v q c h y := by
           intro q hq
           obtain rfl : q = r := Units.ext hq
           rfl
@@ -96,7 +96,7 @@ noncomputable def lvSameMu0 {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.La
 
 
 set_option maxHeartbeats 4000000 in
-theorem tw_lv_tied_and_same : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (l0 : I.Law0 l) (inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop) (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)) (T : Formalism.L2.Herm.TwChTied (I.rec7 l Z) inQ) (J : Formalism.L2.Herm.TwChJointS T H) (W : TwFormsTiedS (I.rec7 l Z) (I.tw l l0 Z) T J F), (∀ u, I.StdF l Z u (F u) ∧ I.StdLvC l Z u (F u)) → I.StdW l Z l0 W → (∃ Lv : SymmetricTwistedLevelData W, I.StdLv l Z l0 Lv) ∧ Nonempty (TwLvSameS W) := by
+theorem tw_lv_tied_and_same : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (l0 : I.Law0 l) (inQ : I.ι → HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) → Prop) (H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)) (T : Formalism.L2.Herm.TwChTied (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) inQ) (J : Formalism.L2.Herm.TwChJointS T H) (W : TwFormsTiedS (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.tw l l0 Z) T J F), (∀ u, I.StdF l Z u (F u) ∧ I.StdLvC l Z u (F u)) → I.StdW l Z l0 W → (∃ Lv : SymmetricTwistedLevelData W, I.StdLv l Z l0 Lv) ∧ Nonempty (TwLvSameS W) := by
   intro B X I hOk hP l Z l0 inQ H F T J W hF hW
   have hY : ∀ u μ i hm y, (twYS T F u μ i hm y).1 = y.1 := by
     intro u μ i hm y
@@ -106,7 +106,7 @@ theorem tw_lv_tied_and_same : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.
     unfold eYS
     split_ifs with h
     · exact (hF u).1.eY i hm h y
-    · have e : (I.rec7 l Z).R.m = B.R.m := rfl
+    · have e : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m = B.R.m := rfl
       exact (hF u).1.eYC i (by omega) (by omega) y
   have hV : ∀ u μ v, ((W.atT u μ).eV (F u).atT v).1 = v.1.under (𝓞 B.host.F) := by
     intro u μ v
@@ -115,7 +115,7 @@ theorem tw_lv_tied_and_same : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.
     exact (hF u).1.eV v
   have hres : ∀ u μ, (W.atT u μ).res (F u).atT = I.resT l u μ := fun u μ =>
     funext fun v => RingHom.ext fun r => hW.eFv u μ v r
-  have key := fun u μ (hμ : μ ≠ (I.rec7 l Z).what₂.mu0) i (h1 : 1 ≤ i) (hm : i ≤ (I.rec7 l Z).R.m) =>
+  have key := fun u μ (hμ : μ ≠ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0) i (h1 : 1 ≤ i) (hm : i ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m) =>
     exists_lvTied_of_std I hOk hP l Z u μ i hm _ _ (T.chOf u μ i) (T.lat u μ i) (hW.lat u μ i) ((W.atT u μ).res (F u).atT) (hres u μ)
       (W.ch u μ hμ i h1 hm) (twYS T F u μ i hm) ((W.atT u μ).eV (F u).atT) (hW.reads u μ hμ i h1 hm) (hY u μ i hm) (hV u μ)
       (hW.killed u μ hμ i h1 hm)
@@ -134,7 +134,7 @@ theorem tw_lv_tied_and_same : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.
     exact h
   · intro u i hi
     refine lvSameMu0 I l Z l0 u i hi (W.atT u _) (hW.eVT u _) fun v r => ?_
-    have h := hW.eFv u (I.rec7 l Z).what₂.mu0 v r
+    have h := hW.eFv u (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0 v r
     simp only [TwAtT.res, RingHom.comp_apply, (hF u).1.res] at h
     exact h
 

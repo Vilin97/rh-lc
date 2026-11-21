@@ -36,7 +36,21 @@ theorem exists_move {X₁ X₂ B Y : Scheme.{0}} {L₁ : LB X₁} {L₂ : LB X�
     refine Eq.trans ?_ (gm_pull_g L₁ f₁ (𝟙 Y ≫ φ' k) y (j k) (j' k) (Set.mem_iInter.1 hj k)
       (Set.mem_iInter.1 hj' k)).symm
     rw [Category.assoc]
-  obtain ⟨t, ht', hv⟩ := exists_up ((isGen_iff w).1 hw) h₂ (pull_isLB h₁ f₁) a ha
+  have hpull : (L₁.pull f₁).IsLB := by
+    refine { cover := top_le_iff.1 ?_, g_self := ?_, cocycle := ?_ }
+    · intro y _
+      obtain ⟨i, hi⟩ := exists_chart h₁ (f₁ y)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
+    · intro J
+      refine unit_ext fun y hy => ?_
+      rw [gm_res (𝟙 B) y _ hy, map_one, gm_pull_g L₁ f₁ (𝟙 B) y J J hy hy]
+      exact gm_self h₁ _ y (mem_pull.1 hy)
+    · intro I J K
+      refine unit_ext fun y hy => ?_
+      rw [map_mul, gm_res (𝟙 B) y _ hy, gm_res (𝟙 B) y _ hy, gm_res (𝟙 B) y _ hy, gm_pull_g L₁ f₁ (𝟙 B) y I J hy.1.1 hy.1.2,
+        gm_pull_g L₁ f₁ (𝟙 B) y J K hy.1.2 hy.2, gm_pull_g L₁ f₁ (𝟙 B) y I K hy.1.1 hy.2]
+      exact gm_cocycle h₁ _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
+  obtain ⟨t, ht', hv⟩ := exists_up ((isGen_iff w).1 hw) h₂ hpull a ha
   refine ⟨t, ht', fun Z r z J₁ J₂ hJ₁ hJ₂ => ?_⟩
   have m : r z ∈ LB.wchart (L₁.pull f₁) φ' (fun k _ => J₁ (r ≫ φ' k ≫ f₁)) :=
     Set.mem_iInter.2 fun k => mem_pull.2 (hJ₁ (r ≫ φ' k ≫ f₁))
@@ -106,11 +120,21 @@ theorem cubV_move (hG : GlobalFnsSt) (hA : IsAbelianScheme A) {L : RigLB A} {L' 
     simp only [hg, g1]
   · rw [← Over.comp_left, ← Over.comp_left, ← Over.comp_left, lift_snd_assoc, lift_snd_assoc, lift_snd]; rfl
   · choose I hI using fun χ : T.left ⟶ A.left => exists_chart L.isLB (χ y)
-    have E := ev (𝟙 T) y hI hI' _ (fun _ => rfl) 1 1 1
+    have E := ev (𝟙 T) y hI hI'
+      (fun q => gw w (lift (𝟙 T) q).left y (I' (lift (𝟙 T) q ≫ g).left) (fun _ => I q.left))
+      (fun _ => rfl) 1 1 1
     have E₂ := E.2
-    rw [g1, (isCub_cubV c' hI').face] at E₂
+    have face {G : Over S} [GrpObj G] [IsCommMonObj G] {M : RigLB G}
+        (d : CubicalStr G M) {J : (T.left ⟶ G.left) → M.L.ι} (hJ : Good M.L y J)
+        (a b : T ⟶ G) : cubV d y J 1 a b = 1 := by
+      have H := val_corr hJ (d.face 0) (lift a b).left
+      rw [val_one] at H
+      refine Eq.trans ?_ H
+      refine Eq.trans ?_ (val_cub d (lift a b) hJ (pzero G _) (x2 G 0) (x2 G 1)).symm
+      congr 1 <;> simp [x2, pzero, Hom.one_def]
+    rw [g1, face c' hI'] at E₂
     refine E₂.trans (Eq.trans ?_ E.1.symm)
-    rw [(isCub_cubV c hI).face]
+    rw [face c hI]
     have fin : ∀ {G U : Type} [Group G] [CommGroup U] (h : G → U), 1 = h (1 * 1 * 1) * (h (1 * 1))⁻¹ * (h (1 * 1))⁻¹ *
         (h (1 * 1))⁻¹ * h 1 * h 1 * h 1 * (h 1)⁻¹ * 1 := fun h => by simp
     exact fin fun q : T ⟶ A => gw w (lift (𝟙 T) q).left y (I' (lift (𝟙 T) q ≫ g).left) (fun _ => I q.left)

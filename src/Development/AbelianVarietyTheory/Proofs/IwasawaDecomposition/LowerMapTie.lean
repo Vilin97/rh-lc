@@ -15,7 +15,7 @@ set_option maxHeartbeats 2000000
 
 namespace GlobalTheory.Mem.Col2.LowerTie
 
-theorem lowerMap_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (Ch : ℕ → Type) (chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i) (F : FormsTiedSym (I.rec7 l Z) u Ch chOf), I.StdF l Z u F → Formalism.L2.Rows.LowerMapTieS F :=
+theorem lowerMap_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (Ch : ℕ → Type) (chOf : ∀ i, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).C.cls i → Ch i) (F : FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u Ch chOf), I.StdF l Z u F → Formalism.L2.Rows.LowerMapTieS F :=
   fun I hO hP l Z u Ch chOf F hS =>
     fun _ ψ c P _ h => lowerMap_std I hO hP l Z u Ch chOf F hS ψ c P h
 

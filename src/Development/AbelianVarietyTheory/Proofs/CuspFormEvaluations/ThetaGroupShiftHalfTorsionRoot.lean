@@ -27,7 +27,7 @@ variable {S : Scheme.{0}} {A : Over S} [GrpObj A] {L : LB A.left} {k : ℤ} {T :
 theorem exists_lin_iff (hL : L.IsLB) (θ : ThetaGrp A L k T) :
     ∃ f : SecM A L k T →ₗ[Γ(T.left, ⊤)] SecM A L k T, ∀ s s', IsActOf A L k θ s s' ↔
       f (SecM.ofSec A s) = SecM.ofSec A s' := by
-  obtain ⟨f, hf⟩ := exists_lin hL θ
+  obtain ⟨f, hf⟩ := ThetaAct.exists_lin hL θ
   refine ⟨f, fun s s' => ?_⟩
   rw [isActOf_iff hL]
   exact ⟨fun H => sv_ext hL fun y J hJ => (hf _ _ _ _ _ hJ).trans (H y J hJ).symm,

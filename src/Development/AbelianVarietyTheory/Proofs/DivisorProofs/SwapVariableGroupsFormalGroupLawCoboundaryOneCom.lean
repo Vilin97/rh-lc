@@ -55,12 +55,12 @@ theorem swap_sub {R : Type} [CommRing R] {d : ℕ} (a b : MvPowerSeries (Fin d �
 theorem swap_cob1_eq_of_swap_eq : ∀ (B Q : Type) [CommRing B] [CommRing Q] [Algebra B Q] (d : ℕ)
     (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) B), (∀ i, constantCoeff (μ i) = 0) →
     (∀ i, swap (μ i) = μ i) → ∀ g : MvPowerSeries (Fin d) Q,
-    swap (cob1 (up Q μ) g) = cob1 (up Q μ) g := by
+    swap (cob1 (up (Q := Q) μ) g) = cob1 (up (Q := Q) μ) g := by
   intro B Q _ _ _ d μ h0 hs g
-  have h0' : ∀ i, constantCoeff (up Q μ i) = 0 := fun i => by
-    simp [up, ← coeff_zero_eq_constantCoeff_apply, coeff_map, h0 i]
-  have hs' : ∀ i, swap (up Q μ i) = up Q μ i := fun i => by
-    simp only [up]; rw [swap_map, hs i]
+  have h0' : ∀ i, constantCoeff (up (Q := Q) μ i) = 0 := fun i => by
+    simp [up, constantCoeff_map, h0 i]
+  have hs' : ∀ i, swap (up (Q := Q) μ i) = up (Q := Q) μ i := fun i => by
+    simp only [up, swap_map, hs i]
   unfold cob1
   rw [swap_sub, swap_sub, swap_subst _ h0', swap_inL, swap_inR]
   simp only [hs']

@@ -40,63 +40,14 @@ variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberFi
 variable {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V]
   [IsScalarTower (𝓞 K) K V]
 
-private theorem local_gram_det_and_valuation (hF : IsFixF K F)
-    {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h)
-    {L : Submodule (𝓞 K) V} {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal)
-    (b : Basis (Fin (finrank K V)) K V) (hb : locF 𝔭 (spanO b) = locF 𝔭 L)
-    (H : Matrix (Fin (finrank K V)) (Fin (finrank K V)) (𝓞 K))
-    (hH : ∀ i j, algebraMap (𝓞 K) K (H i j) = h (b i) (b j))
-    (hdet : algebraMap (𝓞 K) K H.det = (Matrix.of fun i j => h (b i) (b j)).det) :
-    Hᴴ = H ∧ ∃ D : 𝓞 F, H.det = ι D ∧ D ≠ 0 ∧ vd h L 𝔭 = vF 𝔭 D := by
-  have hHH : Hᴴ = H := by
-    ext i j
-    show algebraMap (𝓞 K) K (star (H j i)) = algebraMap (𝓞 K) K (H i j)
-    rw [hH, star_def]
-    show star (algebraMap (𝓞 K) K (H j i)) = _
-    rw [hH]
-    exact hs.eq _ _
-  obtain ⟨D, hD⟩ := (conjO_eq_iff_mem_range hF H.det).1 (by
-    rw [← star_def, ← det_conjTranspose, hHH])
-  have hD0 : D ≠ 0 := by
-    rintro rfl
-    apply LocF.gram_det_ne_zero h (LocF.aniso_of_totPosDef hd) b b.linearIndependent
-    rw [← hdet, ← hD, map_zero, map_zero]
-  refine ⟨hHH, D, hD.symm, hD0, ?_⟩
-  rw [← vd_locF hF h L h𝔭, ← hb, vd_locF hF h _ h𝔭]
-  unfold vd vF
-  congr 1
-  ext e
-  simp only [Set.mem_ofPred_eq]
-  rw [← mem_pow_iff (K := K), hD]
-  constructor
-  · intro hle
-    exact hle (Ideal.subset_span ⟨b, fun i => Submodule.subset_span ⟨i, rfl⟩, hdet⟩)
-  · intro hmem
-    refine BallB.discrIdeal_le b fun x hx z hz => ?_
-    have hx' : b.det x = algebraMap (𝓞 K) K (Matrix.of fun i j => crd b ⟨x j, hx j⟩ i).det := by
-      rw [Basis.det_apply, RingHom.map_det]
-      congr 1
-      ext i j
-      exact repr_coe b ⟨x j, hx j⟩ i
-    have : z = star (Matrix.of fun i j => crd b ⟨x j, hx j⟩ i).det * H.det *
-        (Matrix.of fun i j => crd b ⟨x j, hx j⟩ i).det := by
-      apply RingOfIntegers.coe_injective
-      rw [hz, hx', BallB.gdet, ← hdet]
-      rfl
-    rw [this]
-    exact Ideal.mul_mem_right _ _ (Ideal.mul_mem_left _ _ hmem)
-
 theorem nkCount_succ_fine (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} {v : ℕ} (hn : n ∉ 𝔭 ^ (v + 1)) {k : ℕ}
     (hk : vd h L 𝔭 + v + 1 ≤ k) :
     nkCount h L 𝔭 (k + 1) n = Ideal.absNorm 𝔭 ^ (2 * finrank K V - 1) * nkCount h L 𝔭 k n := by
-  have : Fact (IsFixF K F) := ⟨hF⟩
-  obtain ⟨b, hbL, hb⟩ := exists_basis_locF hL h𝔭
-  obtain ⟨H, hH, hdet⟩ := LocF.exists_gram hLi b hbL
-  have hLocal := local_gram_det_and_valuation hF hs hd h𝔭 b hb H hH hdet
-  obtain ⟨hHh, D, hD, hD0, hv⟩ := hLocal
+  haveI : Fact (IsFixF K F) := ⟨hF⟩
+  obtain ⟨b, H, D, hb, hH, hHh, hD, hD0, hv⟩ := exists_local_data hF hs hd hL hLi h𝔭
   rw [nkCount_eq h h𝔭 b hb hH, nkCount_eq h h𝔭 b hb hH]
   change nkM 𝔭 (k + 1) H n = _ * nkM 𝔭 k H n
   rw [hv] at hk
@@ -141,9 +92,8 @@ theorem nkCount_congr (hF : IsFixF K F)
     (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n n' : 𝓞 F} {k : ℕ} (hc : n - n' ∈ 𝔭 ^ k) :
     nkCount h L 𝔭 k n = nkCount h L 𝔭 k n' := by
-  have : Fact (IsFixF K F) := ⟨hF⟩
-  obtain ⟨b, hbL, hb⟩ := exists_basis_locF hL h𝔭
-  obtain ⟨H, hH, -⟩ := LocF.exists_gram hLi b hbL
+  haveI : Fact (IsFixF K F) := ⟨hF⟩
+  obtain ⟨b, H, D, hb, hH, hHh, hD, hD0, hv⟩ := exists_local_data hF hs hd hL hLi h𝔭
   rw [nkCount_eq h h𝔭 b hb hH, nkCount_eq h h𝔭 b hb hH]
   have e : Ideal.Quotient.mk (extP K 𝔭 ^ k) (ι n) = Ideal.Quotient.mk (extP K 𝔭 ^ k) (ι n') := by
     rw [Ideal.Quotient.eq, ← map_sub]
@@ -155,11 +105,8 @@ theorem akCount_succ_fine (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {k : ℕ} (hk : 2 * vd h L 𝔭 + 1 ≤ k) :
     akCount h L 𝔭 (k + 1) = Ideal.absNorm 𝔭 ^ (finrank K V ^ 2) * akCount h L 𝔭 k := by
-  have : Fact (IsFixF K F) := ⟨hF⟩
-  obtain ⟨b, hbL, hb⟩ := exists_basis_locF hL h𝔭
-  obtain ⟨H, hH, hdet⟩ := LocF.exists_gram hLi b hbL
-  have hLocal := local_gram_det_and_valuation hF hs hd h𝔭 b hb H hH hdet
-  obtain ⟨hHh, D, hD, hD0, hv⟩ := hLocal
+  haveI : Fact (IsFixF K F) := ⟨hF⟩
+  obtain ⟨b, H, D, hb, hH, hHh, hD, hD0, hv⟩ := exists_local_data hF hs hd hL hLi h𝔭
   rw [akCount_eq h h𝔭 b hb hH, akCount_eq h h𝔭 b hb hH]
   rw [hv] at hk
   have key := akM_succ hK h𝔭 hHh hD (notMem_pow_vF h𝔭 hD0) hk
@@ -179,9 +126,8 @@ theorem akCount_pos (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) (k : ℕ) : 0 < akCount h L 𝔭 k := by
-  have : Fact (IsFixF K F) := ⟨hF⟩
-  obtain ⟨b, hbL, hb⟩ := exists_basis_locF hL h𝔭
-  obtain ⟨H, hH, -⟩ := LocF.exists_gram hLi b hbL
+  haveI : Fact (IsFixF K F) := ⟨hF⟩
+  obtain ⟨b, H, D, hb, hH, hHh, hD, hD0, hv⟩ := exists_local_data hF hs hd hL hLi h𝔭
   rw [akCount_eq h h𝔭 b hb hH]
   haveI := finite_quot (K := K) h𝔭 k
   haveI : Nonempty {X : Matrix (Fin (finrank K V)) (Fin (finrank K V)) (𝓞 K ⧸ extP K 𝔭 ^ k) //
@@ -195,11 +141,8 @@ theorem nkCount_le_nat (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF 
     {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) (n : 𝓞 F) :
     nkCount h L 𝔭 k n ≤ 2 * Ideal.absNorm 𝔭 ^ (2 * vd h L 𝔭 + 1) *
       Ideal.absNorm 𝔭 ^ (k * (2 * finrank K V - 1)) := by
-  have : Fact (IsFixF K F) := ⟨hF⟩
-  obtain ⟨b, hbL, hb⟩ := exists_basis_locF hL h𝔭
-  obtain ⟨H, hH, hdet⟩ := LocF.exists_gram hLi b hbL
-  have hLocal := local_gram_det_and_valuation hF hs hd h𝔭 b hb H hH hdet
-  obtain ⟨hHh, D, hD, hD0, hv⟩ := hLocal
+  haveI : Fact (IsFixF K F) := ⟨hF⟩
+  obtain ⟨b, H, D, hb, hH, hHh, hD, hD0, hv⟩ := exists_local_data hF hs hd hL hLi h𝔭
   rw [nkCount_eq h h𝔭 b hb hH, hv]
   have key := nkM_le hK h𝔭 hHh hD (notMem_pow_vF h𝔭 hD0) (by rw [Fintype.card_fin]; exact hm) k n
   rw [Fintype.card_fin] at key

@@ -31,7 +31,7 @@ theorem exists_section (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing
     ∃ g : Y ⟶ P, ∀ e, pullback.fst Y.hom (thick R I e) ≫ g.left = j e := by
   obtain ⟨H, hH, n, s, hs⟩ := hP
   have hL : ∀ e, (H.pull (j e)).IsLB := fun e => LB.isLB_pull hH _
-  choose t ht using fun e => exists_isPull (j e) hH s
+  choose t ht using fun (e : ℕ) => exists_isPull (j e) hH s
   have hv : ∀ e, IsPull (thickMap R I e Y) (t (e + 1)) (t e) := fun e =>
     IsPull.cancel hH (hL _) (hL _) (ht (e + 1)) (by rw [hj]; exact ht e)
   choose v hv cv using hv

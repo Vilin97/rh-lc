@@ -39,7 +39,7 @@ end GlobalTheory.KJRealLive
 
 
 open GlobalTheory.KJRealLive in
-theorem GlobalTheory.KJRealLive.clsKL_real : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {F : FamIn (I.rec7 l Z).what₂.LL G Pl0 T (I.rec7 l Z).R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks (I.rec7 l Z).what₂.LL] (R : RealDat (I.rec7 l Z) F Ks) (g : GlobalTheory.Fam.Geo (I.rec7 l Z)) (c₀ s : ℕ → ℂ) J, PinX I l Z R.ψ R.θ g.x g.vac c₀ → JetS I l Z R.ψ R.θ s → (∀ j, j ≤ B.R.m → (g.x j).Is) → ∀ (P : LevelP R.Pg (I.rec7 l Z).R.r ℂ) (t : T) (r : RowCh R P u g t) (a : I.ι) (k : ColCh (D := (I.rec7 l Z)) u ((I.rec7 l Z).chTw u a)) (tl : ColT I l u a B.R.m → CXP R P t → ℂ) (Ch₀ : ℕ → Type) (A : TwDat I l Z u a Ch₀) (ι : ∀ j, k.Ch j → Ch₀ j) w, PinChL R g k c₀ A ι w → (clsKL R g P r k tl s J A ι).Real := by
+theorem GlobalTheory.KJRealLive.clsKL_real : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {F : FamIn (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL G Pl0 T (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL] (R : RealDat (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) F Ks) (g : GlobalTheory.Fam.Geo (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (c₀ s : ℕ → ℂ) J, PinX I l Z R.ψ R.θ g.x g.vac c₀ → JetS I l Z R.ψ R.θ s → (∀ j, j ≤ B.R.m → (g.x j).Is) → ∀ (P : LevelP R.Pg (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.r ℂ) (t : T) (r : RowCh R P u g t) (a : I.ι) (k : ColCh (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u a)) (tl : ColT I l u a B.R.m → CXP R P t → ℂ) (Ch₀ : ℕ → Type) (A : TwDat I l Z u a Ch₀) (ι : ∀ j, k.Ch j → Ch₀ j) w, PinChL R g k c₀ A ι w → (clsKL R g P r k tl s J A ι).Real := by
   intro B X I hOk hPins l Z u G _ _ Pl0 T F Ks _ _ _ R g c₀ s J hX hS hx P t r a k tl Ch₀ A ι w hP
   intro j hj α γ k₁ hk₁ k₂ hk₂ P₁ P₂ hP₁₂
   have hjle : j ≤ B.R.m := Nat.le_of_succ_le hj
@@ -52,19 +52,19 @@ theorem GlobalTheory.KJRealLive.clsKL_real : ∀ {B : GlobalTheory.Mem.Base} {X 
   have hfin := (hP.dat j hj α γ).1
   have hstd := hX.std
   have hth0 : IsThetaFunO R.ψ _ _ (g.vac j) := hvac.2.theta
-  have eS : Even ((I.rec7 l Z).sp.X j).rank := by rw [rankN (I.rec7 l Z) j hjle]; exact even_rankN _ j
-  have eT : Even ((I.rec7 l Z).sp.X (j + 1)).rank := by rw [rankN (I.rec7 l Z) (j + 1) hj]; exact even_rankN _ (j + 1)
-  have key := GlobalTheory.KJReal.om_pureTensorO_onb (I.rec7 l Z) R.ψ R.θ _ _ (g.x j) (g.x (j + 1)) (A.chr (j + 1)) (k.kom j) hX.inf
+  have eS : Even ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank := by rw [rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hjle]; exact even_rankN _ j
+  have eT : Even ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (j + 1)).rank := by rw [rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (j + 1) hj]; exact even_rankN _ (j + 1)
+  have key := GlobalTheory.KJReal.om_pureTensorO_onb (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) R.ψ R.θ _ _ (g.x j) (g.x (j + 1)) (A.chr (j + 1)) (k.kom j) hX.inf
     (hx j hjle) (hx (j + 1) hj) hxj.1 hxj1.1 eS eT hW e he (g.vac j) hth0 hvac.2.fock k₁ hk₁ k₂ hk₂
   have hPP : P₂ = mvZ (fun τ => (inB R.θ _ (g.x j).B k₁ τ)⁻¹) (inB R.θ _ (g.x (j + 1)).B k₂) P₁ := by
-    apply (Sized.castP_bijective (D := I.rec7 l Z) (rankN (I.rec7 l Z) j hjle) (rankN (I.rec7 l Z) (j + 1) hj)).1
+    apply (Sized.castP_bijective (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hjle) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (j + 1) hj)).1
     refine hP₁₂.trans ?_
     rw [castP_mvZ]
     congr 2
     funext τ
     exact Matrix.inv_reindex _ _ _
-  have hs1 : ∀ τ, (realOf u R g s J).sS j τ = -e τ - (((I.rec7 l Z).sp.X (j + 1)).rank : ℤ) / 2 := fun τ => (hee τ).1
-  have hs2 : ∀ τ, -(realOf u R g s J).sD j τ = e τ + (((I.rec7 l Z).sp.X j).rank : ℤ) / 2 := fun τ => (hee τ).2.1
+  have hs1 : ∀ τ, (realOf u R g s J).sS j τ = -e τ - (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (j + 1)).rank : ℤ) / 2 := fun τ => (hee τ).1
+  have hs2 : ∀ τ, -(realOf u R g s J).sD j τ = e τ + (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank : ℤ) / 2 := fun τ => (hee τ).2.1
   have hpt0 : IsThetaFunO R.ψ _ _ (pureTensorO R.ψ R.θ _ _ (g.x j).s (g.x (j + 1)).s (g.x j).B (g.x (j + 1)).B (g.vac j) P₁) :=
     GlobalTheory.FockTheta.ptStable _ R.ψ R.θ hstd hX.inf _ _ _ _ _ _ _ P₁ hth0
   show k.kom j (k₁, k₂) (pureTensorO R.ψ R.θ _ _ (g.x j).s (g.x (j + 1)).s (g.x j).B (g.x (j + 1)).B

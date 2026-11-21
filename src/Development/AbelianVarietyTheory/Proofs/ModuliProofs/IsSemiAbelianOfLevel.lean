@@ -57,7 +57,12 @@ theorem exists_even_of_desc {Q : TQ G X} (D : Q.Desc P) : ∃ σ : CubTriv P.c Q
   refine TowerEx.exists_even_pull D.map (e ▸ TorusCompat.of_comp Q.i Q.q : TorusCompat _ _ Q.i 1)
     ⟨s, hs, fun T x y u z J hJ => ?_⟩ fun T x z J hJ => ?_
   · simp only [v' _ _ z J hJ, MonObj.comp_one, _root_.mul_one]
-    exact ((isCub_cubV D.M.c (T := T) hJ).face 1 1).symm
+    symm
+    have h := val_corr hJ (D.M.c.face 0) (lift (1 : T ⟶ Q.B) 1).left
+    rw [val_one] at h
+    refine Eq.trans ?_ h
+    refine Eq.trans ?_ (val_cub D.M.c (lift (1 : T ⟶ Q.B) 1) hJ (pzero Q.B _) (x2 Q.B 0) (x2 Q.B 1)).symm
+    congr 1 <;> simp [x2, pzero, Hom.one_def]
   · show val s _ z J = _ * val s _ z J
     rw [v' _ _ z J hJ, v' _ _ z J hJ, MonObj.comp_one, D.M.val_sym_one hJ, _root_.mul_one]
 
@@ -69,8 +74,26 @@ theorem exists_tq_lift {A A' : Type} [CommRing A] [IsLocalRing A] [CommRing A'] 
     [IsCommMonObj G] [Smooth G.hom] [GeometricallyConnected G.hom] (G' : Over (Spec (CommRingCat.of A'))) [GrpObj G']
     [IsCommMonObj G'] {F : G'.left ⟶ G.left} (hF : IsGrpPullback G' G (Spec.map (CommRingCat.ofHom φ)) F)
     (Q' : TQ G' X) : ∃ Q : TQ G X, TorusCompat (Spec.map (CommRingCat.ofHom φ)) F Q'.i Q.i := by
-  obtain ⟨Q, hQ, -⟩ := TowerEx.exists_lift hA φ hφ G G' hF (P := CP.triv G) (P' := CP.triv G')
-    (IsCPMap.triv (hw := hF.1.w) (TowerEx.toBase_mul hF _)) Q' ⟨CubTriv.triv _, CubTriv.triv_even _⟩
+  obtain ⟨Q, hQ, -⟩ := TowerEx.exists_lift hA φ hφ G G' hF (P := CP.triv G) (P' := CP.triv G') (hw := hF.1.w) (w := ⟨fun _ => 1⟩)
+    (by
+      refine ⟨TowerEx.toBase_mul hF _, ?_, ?_⟩
+      · rw [isGen_iff]
+        intro Y f' y j j' k k' _ _ _ _
+        have e1 : gw (⟨fun _ => 1⟩ : LB.Iso (CP.triv G').L.L ((CP.triv G).L.L.pull F)) f' y j k = 1 := map_one _
+        have e2 : gw (⟨fun _ => 1⟩ : LB.Iso (CP.triv G').L.L ((CP.triv G).L.L.pull F)) f' y j' k' = 1 := map_one _
+        have e3 : gm (f' ≫ F) y _ ((CP.triv G).L.L.g j j') = 1 := map_one _
+        have e4 : gm f' y _ ((CP.triv G').L.L.g k k') = 1 := map_one _
+        rw [e1, e2, e3, e4, inv_one, _root_.mul_one, _root_.mul_one]
+      · intro T z J' J _ _ W hW
+        have hW1 : ∀ x, W x = 1 := fun x => (hW x).trans (map_one _)
+        refine ⟨?_, fun x => ?_, fun x y u => ?_⟩
+        · rw [hW1, _root_.one_mul]
+          exact (val_unitGen _ _ _ _ _).trans (val_unitGen _ _ _ _ _).symm
+        · rw [hW1, hW1, _root_.mul_one, _root_.one_mul]
+          exact (val_unitGen _ _ _ _ _).trans (val_unitGen _ _ _ _ _).symm
+        · have ha : cubV (CP.triv G).c z J (toBase hF.1.w x) (toBase hF.1.w y) (toBase hF.1.w u) = 1 := cubV_trivCub _ _ _ _ _ _
+          have hb : cubV (CP.triv G').c z J' x y u = 1 := cubV_trivCub _ _ _ _ _ _
+          rw [id_eq, ha, hb, hW1 (x * y), hW1 (x * u), hW1 (y * u), hW1 1, hW1 (x * y * u), hW1 x, hW1 y, hW1 u]) Q' ⟨CubTriv.triv _, CubTriv.triv_even _⟩
   exact ⟨Q, hQ⟩
 
 section Levels

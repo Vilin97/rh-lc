@@ -123,7 +123,7 @@ structure MonomialCaseHypotheses : Prop where
       ∀ D ∈ T.boundary, ∀ x ∈ D.support, orderAt D x = 1
 
 theorem monomialGeometryHypotheses_of_monomialCaseHypotheses (hR : MonomialCaseHypotheses.{u}) :
-    MonomialGeometryHypotheses.{u} where
+    MonomialGeometryHypotheses.{u} := {
   card_lt_dim := hR.card_lt_dim
   flat_comap_center := by
     intro T hT Y k' hk q g hg hT' J 𝒞 h𝒞 hop
@@ -197,6 +197,7 @@ theorem monomialGeometryHypotheses_of_monomialCaseHypotheses (hR : MonomialCaseH
   withBoundary_valid := by
     intro T hT E' hE
     apply MarkedIdealWithBoundary.validOfSameNontrivialBoundary <;> assumption
+}
 
 structure OrderReductionHypotheses : Prop where
   controlledTransform_orderAt_le :
@@ -227,7 +228,8 @@ structure OrderReductionHypotheses : Prop where
                               C = closure ({π ξ'} : Set ↥T.scheme)
   monomial : MonomialCaseHypotheses.{u}
 
-theorem geometricHypotheses_of_orderReductionHypotheses (hR : OrderReductionHypotheses.{u}) : PrincipalizationGeometryHypotheses.{u} where
+theorem geometricHypotheses_of_orderReductionHypotheses (hR : OrderReductionHypotheses.{u}) :
+    PrincipalizationGeometryHypotheses.{u} := {
   maxContactTransport := FunctorialResolution.EmbeddedResolution.isoInvariantOrderCertificateDescend
   exceptional_components_not_subset := by
     intro T hT Z hZsm hZsnc X' π hπ J c hord J' htr C' hC'
@@ -272,6 +274,7 @@ theorem geometricHypotheses_of_orderReductionHypotheses (hR : OrderReductionHypo
       hT.nonzeroOnComponents hs hs'
   strictTransform_components := hR.strictTransform_components
   monomialInputs := monomialGeometryHypotheses_of_monomialCaseHypotheses hR.monomial
+}
 
 end FunctorialResolution.EmbeddedResolution
 

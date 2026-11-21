@@ -61,11 +61,11 @@ theorem xi_zero_embedding_value (D : D7) (hc : D.host.ccK = ⊤) (τ : D.what₂
   simp
 
 theorem stdPair_world {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
-    (ψ : AddChar (AF (I.rec7 l Z).host.F) ℂ) (θ : InfFam (I.rec7 l Z)) (hψ : IsStdChar (I.rec7 l Z) ψ (-1)) (hθ : IsInfFam θ)
-    (i : ℕ) : StdPair θ ((I.rec7 l Z).sp.X i) ((I.rec7 l Z).sp.X (i + 1)) I.A.δ I.A.sc ψ := by
+    (ψ : AddChar (AF (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ℂ) (θ : InfFam (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (hψ : IsStdChar (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ψ (-1)) (hθ : IsInfFam θ)
+    (i : ℕ) : StdPair θ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (i + 1)) I.A.δ I.A.sc ψ := by
   obtain ⟨hs, hX, -⟩ := hI.spaces
-  have hg : ∀ j, ((I.rec7 l Z).sp.X j).gram = 1 := fun j => by
-    have e : (I.rec7 l Z).sp.X j = Formalism.BasicNotions.Examples₂.posSpace hs (B.R.N j) := hX j
+  have hg : ∀ j, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).gram = 1 := fun j => by
+    have e : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j = Formalism.BasicNotions.Examples₂.posSpace hs (B.R.N j) := hX j
     rw [e]
     refine Matrix.ext fun a b => ?_
     refine (Formalism.BasicNotions.Examples₂.stdSpace_gram_apply hs (B.R.N j) (fun _ => false) (B.R.N j) 0 a b).trans ?_
@@ -75,21 +75,21 @@ theorem stdPair_world {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X
       exact (if_pos rfl).trans (by simp [Formalism.BasicNotions.Examples₂.sgn]; rfl)
     · rw [Matrix.one_apply_ne h]
       exact if_neg h
-  have hr : ∀ j, ((I.rec7 l Z).sp.X j).rank = B.R.N j := fun j => by
-    have e : (I.rec7 l Z).sp.X j = Formalism.BasicNotions.Examples₂.posSpace hs (B.R.N j) := hX j
+  have hr : ∀ j, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank = B.R.N j := fun j => by
+    have e : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j = Formalism.BasicNotions.Examples₂.posSpace hs (B.R.N j) := hX j
     rw [e]; rfl
   have hev : ∀ j, Even (B.R.N j) := fun j =>
     B.R.k_even.add (Even.mul_left (B.R.t_odd.add_one) j)
   have hδ : I.J.δ ≠ 0 := I.J.δ_ne_zero
   have hd : 0 < Real.sqrt B.host.d := Real.sqrt_pos.2 (Nat.cast_pos.2 B.host.hyp.2.1.pos)
-  refine ⟨hψ, hθ, hg _, hg _, (I.rec7 l Z).sp.X_sig _, (I.rec7 l Z).sp.X_sig _, ?_, B.ccK_top, hδ,
+  refine ⟨hψ, hθ, hg _, hg _, (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X_sig _, (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X_sig _, ?_, B.ccK_top, hδ,
     xi_zero_embedding_value _ B.ccK_top, ?_⟩
   · rw [hr, hr]
     refine ⟨?_, ?_, hev _, hev _⟩
     · have := B.R.m_add_three_le_k; unfold Ranks.N; omega
     · unfold Ranks.N; nlinarith
-  · have hA := Formalism.MainNotions.Ext.area_lamOf (I.rec7 l Z) ⊤ top_ne_bot I.J.δ hδ
-    rw [Formalism.MainNotions.Ext.discr_K (I.rec7 l Z).host, Ideal.absNorm_top] at hA
+  · have hA := Formalism.MainNotions.Ext.area_lamOf (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ⊤ top_ne_bot I.J.δ hδ
+    rw [Formalism.MainNotions.Ext.discr_K (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host, Ideal.absNorm_top] at hA
     have hA' : Formalism.MainNotions.TaylorLogMetric.area (Th.lamOf B.host ⊤ I.J.δ) = ‖I.J.δ‖ ^ 2 * Real.sqrt B.host.d / 2 := by
       refine hA.trans ?_
       simp
