@@ -19,7 +19,7 @@ theorem cotMap_injective_of_sq : ∀ (R C A : Type) [CommRing R] [CommRing C] [C
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro w hw
   obtain ⟨c, rfl⟩ := AugCot.d_surjective _ w
-  have hw' : dUnit R (f c) = 0 := (cotMap_d f c).symm.trans hw
+  have hw' : dUnit (R := R) (f c) = 0 := (cotMap_d f c).symm.trans hw
   rw [dUnit, AugCot.d_eq_zero_iff] at hw'
   change AugCot.d _ c = 0
   rw [AugCot.d_eq_zero_iff]

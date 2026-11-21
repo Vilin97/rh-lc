@@ -21,7 +21,7 @@ variable (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero
 include hv hp in
 theorem smul_dUnit_mem (A : Type) [CommRing A] [Bialgebra O A] [IsCocomm O A] [Module.Finite O A]
     [Module.Projective O A] (hfin : {u : A | IsGroupLikeElem O u}.Finite) (q : O) (hq : q ≠ 0)
-    (M : Submodule O (Cot O A)) (hM : ∀ u, IsGroupLikeElem O u → dUnit O u ∈ M)
+    (M : Submodule O (Cot O A)) (hM : ∀ u, IsGroupLikeElem O u → dUnit (R := O) u ∈ M)
     (hqM : ∀ y, q • y ∈ M) (κ : O) (hκ : v (algebraMap O C κ) ^ (p - 1) ≤ v (p : C))
     (y : Cot O A) : κ • y ∈ M := by
   have : IsDomain O := hv.hom_inj.isDomain (algebraMap O C)

@@ -187,8 +187,8 @@ variable {p : ℕ} {O B Q : Type} [CommRing O] [CommRing B] [CommRing Q] {G : PD
   (c : Chart G d)
 
 def form (i : Fin d) : G.omega :=
-  ⟨fun n => PDiv.dUnit O (c.x n i), fun n =>
-    (PDiv.cotMap_d (G.res n) _).trans (congrArg (PDiv.dUnit O) (c.res n i))⟩
+  ⟨fun n => PDiv.dUnit (R := O) (c.x n i), fun n =>
+    (PDiv.cotMap_d (G.res n) _).trans (congrArg (PDiv.dUnit (R := O)) (c.res n i))⟩
 
 def HasPeriod [Algebra B Q] (θ : B →+* O) (t : G.Tate) (f : MvPowerSeries (Fin d) Q) (y : B) : Prop :=
   (∀ (n : ℕ) (z : Fin d → B), (∀ i, θ (z i) = t.pt n (c.x n i)) → ∃ q : Q, HasVal p z f q) ∧
@@ -198,7 +198,7 @@ def HasPeriod [Algebra B Q] (θ : B →+* O) (t : G.Tate) (f : MvPowerSeries (Fi
 def IsLie [Algebra O Q] (f : MvPowerSeries (Fin d) Q) (l : G.dual.Lie) : Prop :=
   (∀ n : ℕ, In (⊤ : Ideal O) (defect c.μ (p ^ n) f)) ∧
   ∀ (n : ℕ) (w : G.dual.omega) (φ : CartierDual O (G.A n)) (s : MvPowerSeries (Fin d) O),
-    PDiv.dUnit O φ = w.1 n → map (algebraMap O Q) s = defect c.μ (p ^ n) f →
+    PDiv.dUnit (R := O) φ = w.1 n → map (algebraMap O Q) s = defect c.μ (p ^ n) f →
       (p : O) ^ n ∣ l w - φ (c.ev n s)
 
 theorem hasPeriod_iff [Algebra B Q] {θ : B →+* O} (h : IsFrame p Q θ) (t : G.Tate)
@@ -228,7 +228,7 @@ theorem isLie_iff [Algebra O Q] (h : Function.Injective (algebraMap O Q))
     (f : MvPowerSeries (Fin d) Q) (l : G.dual.Lie) :
     c.IsLie f l ↔ ∀ n : ℕ, ∃ s : MvPowerSeries (Fin d) O,
       map (algebraMap O Q) s = defect c.μ (p ^ n) f ∧
-        ∀ (w : G.dual.omega) (φ : CartierDual O (G.A n)), PDiv.dUnit O φ = w.1 n →
+        ∀ (w : G.dual.omega) (φ : CartierDual O (G.A n)), PDiv.dUnit (R := O) φ = w.1 n →
           (p : O) ^ n ∣ l w - φ (c.ev n s) := by
   refine ⟨fun H n => ?_, fun H => ⟨fun n => In.top_iff.2 ((H n).imp fun _ hs => hs.1),
     fun n w φ s hφ hs => ?_⟩⟩

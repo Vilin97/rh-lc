@@ -42,7 +42,7 @@ theorem counit_ev_monomial (n : ℕ) {β : Fin d →₀ ℕ} (hβ : β ≠ 0) (a
   rw [(c.isEval n).1 i, Bialgebra.counitAlgHom_apply O (G.A n) (c.x n i), c.aug, mul_zero]
 
 theorem dUnit_ev_monomial (n : ℕ) {α : Fin d →₀ ℕ} (hα : 2 ≤ α.degree) (a : O) :
-    dUnit O (c.ev n (monomial α a)) = 0 := by
+    dUnit (R := O) (c.ev n (monomial α a)) = 0 := by
   have h0 : α ≠ 0 := by
     rintro rfl
     simp at hα
@@ -58,7 +58,7 @@ theorem dUnit_ev_monomial (n : ℕ) {α : Fin d →₀ ℕ} (hα : 2 ≤ α.degr
 theorem dUnit_ev_of_high (n N : ℕ) (hN : ∀ f : MvPowerSeries (Fin d) O,
     (∀ α : Fin d →₀ ℕ, α.degree < N → coeff α f = 0) → (p : G.A n) ^ n ∣ c.ev n f)
     (f : MvPowerSeries (Fin d) O) (hf : ∀ α : Fin d →₀ ℕ, α.degree < N → coeff α f = 0) :
-    dUnit O (c.ev n f) = 0 := by
+    dUnit (R := O) (c.ev n f) = 0 := by
   obtain ⟨b, hb⟩ := hN f hf
   rw [hb, dUnit, AugCot.d_mul]
   have h1 : ((p : G.A n) ^ n) = algebraMap O (G.A n) ((p : O) ^ n) := by simp
@@ -67,7 +67,7 @@ theorem dUnit_ev_of_high (n N : ℕ) (hN : ∀ f : MvPowerSeries (Fin d) O,
   exact G.pow_smul_cot n _
 
 theorem dUnit_ev_of_two (n : ℕ) (f : MvPowerSeries (Fin d) O)
-    (hf : ∀ α : Fin d →₀ ℕ, α.degree ≤ 1 → coeff α f = 0) : dUnit O (c.ev n f) = 0 := by
+    (hf : ∀ α : Fin d →₀ ℕ, α.degree ≤ 1 → coeff α f = 0) : dUnit (R := O) (c.ev n f) = 0 := by
   obtain ⟨N, hN⟩ := (c.isEval n).2 n
   classical
   set P := trunc' O (Finsupp.equivFunOnFinite.symm fun _ => N) f with hP
@@ -112,8 +112,8 @@ theorem dlog_eq_sum_lin [Fact p.Prime] (χ : G.dual.Tate) (u : MvPowerSeries (Fi
       rw [hg, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, (c.isEval n).1 i]
-  have e1 : dUnit O (c.ev n u) = dUnit O (c.ev n 1) + dUnit O (c.ev n g) +
-      dUnit O (c.ev n (u - 1 - g)) := by
+  have e1 : dUnit (R := O) (c.ev n u) = dUnit (R := O) (c.ev n 1) + dUnit (R := O) (c.ev n g) +
+      dUnit (R := O) (c.ev n (u - 1 - g)) := by
     conv_lhs => rw [hsplit]
     simp only [PDiv.dUnit, map_add (f := _)]
   rw [e1, c.dUnit_ev_of_two n (u - 1 - g) ?_, add_zero, map_one, hev]

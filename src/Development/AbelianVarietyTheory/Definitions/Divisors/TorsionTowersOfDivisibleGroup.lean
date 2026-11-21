@@ -479,7 +479,7 @@ variable (t : G.TorsionTower A) (t₁ : H.TorsionTower A₁)
 def LieCorr (x : G.Lie) (v : epsR O ⟶ A) : Prop :=
   IsTangent v ∧ ∀ n, ∃ ψ : G.A n →ₐ[O] DualNumber (ModPow p O n),
     spOver ψ ≫ t.y n = epsRedPow p n v ∧
-      ∀ (w : G.omega) (a : G.A n), dUnit O a = w.1 n → Ideal.Quotient.mk _ (x w) = (ψ a).snd
+      ∀ (w : G.omega) (a : G.A n), dUnit (R := O) a = w.1 n → Ideal.Quotient.mk _ (x w) = (ψ a).snd
 
 variable {v v' : epsR O ⟶ A}
 
@@ -503,7 +503,7 @@ def tanDer (hv : IsTangent v) (n : ℕ) : Cot O (G.A n) →ₗ[O] ModPow p O n :
     fun a b => by simp [t.fst_tanPt hv, Algebra.smul_def, mul_comm]
 
 @[simp] theorem tanDer_d (hv : IsTangent v) (n : ℕ) (a : G.A n) :
-    t.tanDer hv n (dUnit O a) = (t.tanPt hv n a).snd := AugCot.lift_d ..
+    t.tanDer hv n (dUnit (R := O) a) = (t.tanPt hv n a).snd := AugCot.lift_d ..
 
 theorem lieCorr_iff (hv : IsTangent v) (x : G.Lie) : t.LieCorr x v ↔
     ∀ (n : ℕ) (w : G.omega), Ideal.Quotient.mk _ (x w) = t.tanDer hv n (w.1 n) := by

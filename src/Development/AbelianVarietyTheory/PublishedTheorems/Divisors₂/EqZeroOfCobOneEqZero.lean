@@ -135,7 +135,7 @@ def cob : G.funs →ₗ[O] G.cocycles where
   map_smul' _ _ := Subtype.ext (funext fun _ => map_smul (cobOne O _) _ _)
 
 def dFun : G.funs →ₗ[O] G.omega where
-  toFun b := ⟨fun n => dUnit O (b.1 n), fun n => (cotMap_d _ _).trans (congrArg _ (b.2 n))⟩
+  toFun b := ⟨fun n => dUnit (R := O) (b.1 n), fun n => (cotMap_d _ _).trans (congrArg _ (b.2 n))⟩
   map_add' _ _ := Subtype.ext (funext fun _ => map_add (AugCot.d _) _ _)
   map_smul' _ _ := Subtype.ext (funext fun _ => map_smul (AugCot.d _) _ _)
 

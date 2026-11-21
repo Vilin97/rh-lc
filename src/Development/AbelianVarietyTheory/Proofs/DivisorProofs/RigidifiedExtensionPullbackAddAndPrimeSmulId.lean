@@ -72,15 +72,15 @@ namespace GlobalTheory.PDiv
 variable {R A B : Type} [CommRing R] [CommRing A] [CommRing B] [Bialgebra R A] [Bialgebra R B]
 
 theorem dUnit_mul'_map (f g : A →ₐc[R] B) (t : A ⊗[R] A) :
-    dUnit R (LinearMap.mul' R B (TensorProduct.map (f : A →ₗ[R] B) (g : A →ₗ[R] B) t)) =
-      cotMap g (dUnit R (restrZeroLeft R A t)) +
-        cotMap f (dUnit R (restrZeroLeft R A (TensorProduct.comm R A A t))) := by
+    dUnit (R := R) (LinearMap.mul' R B (TensorProduct.map (f : A →ₗ[R] B) (g : A →ₗ[R] B) t)) =
+      cotMap g (dUnit (R := R) (restrZeroLeft R A t)) +
+        cotMap f (dUnit (R := R) (restrZeroLeft R A (TensorProduct.comm R A A t))) := by
   induction t with
   | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel
   | tmul a b =>
-    have e1 : dUnit R (counit (R := R) a • b) = counit (R := R) a • dUnit R b :=
+    have e1 : dUnit (R := R) (counit (R := R) a • b) = counit (R := R) a • dUnit (R := R) b :=
       map_smul (AugCot.d _) _ _
-    have e2 : dUnit R (counit (R := R) b • a) = counit (R := R) b • dUnit R a :=
+    have e2 : dUnit (R := R) (counit (R := R) b • a) = counit (R := R) b • dUnit (R := R) a :=
       map_smul (AugCot.d _) _ _
     rw [TensorProduct.map_tmul, LinearMap.mul'_apply, TensorProduct.comm_tmul, restrZeroLeft_tmul,
       restrZeroLeft_tmul, e1, e2, map_smul, map_smul, cotMap_d, cotMap_d, dUnit, AugCot.d_mul]
@@ -89,7 +89,7 @@ theorem dUnit_mul'_map (f g : A →ₐc[R] B) (t : A ⊗[R] A) :
     exact congrArg₂ (· + ·) (congrArg₂ (· • ·) c1 rfl) (congrArg₂ (· • ·) c2 rfl)
 
 theorem dUnit_mul'_map_of_mem (f g : A →ₐc[R] B) {c : A ⊗[R] A} (hc : c ∈ symCocycles R A) :
-    dUnit R (LinearMap.mul' R B (TensorProduct.map (f : A →ₗ[R] B) (g : A →ₗ[R] B) c)) = 0 := by
+    dUnit (R := R) (LinearMap.mul' R B (TensorProduct.map (f : A →ₗ[R] B) (g : A →ₗ[R] B) c)) = 0 := by
   obtain ⟨h1, h2⟩ := mem_symCocycles.1 hc
   rw [dUnit_mul'_map, h2, restrZeroLeft_of_cobTwo_eq_zero h1, dUnit, AugCot.d_algebraMap,
     map_zero, map_zero, zero_add]

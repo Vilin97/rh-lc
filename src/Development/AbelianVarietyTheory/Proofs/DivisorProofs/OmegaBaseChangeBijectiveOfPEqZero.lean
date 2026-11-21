@@ -29,7 +29,7 @@ theorem liftSemi_toBaseChange_cot_bijective (R R' A : Type) [CommRing R] [CommRi
       obtain ⟨a, rfl⟩ := AugCot.d_surjective (counitAlgHom R A) m
       have h1 := SemiBialgHom.cot_d (toBaseChange R R' A) a
       simp only [liftSemi_tmul, E, LinearEquiv.trans_apply]
-      rw [show AugCot.d (counitAlgHom R A) a = dUnit R a from rfl, h1, AugCot.baseChangeEquiv_tmul_d,
+      rw [show AugCot.d (counitAlgHom R A) a = dUnit (R := R) a from rfl, h1, AugCot.baseChangeEquiv_tmul_d,
         map_smul, AugCot.congr_d]
       rfl
   have hfun : ⇑(liftSemi (toBaseChange R R' A).cot) = ⇑E := funext key

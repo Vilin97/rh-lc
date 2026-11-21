@@ -28,9 +28,9 @@ theorem exists_dualSystem (R M : Type) [CommRing R] [AddCommGroup M] [Module R M
 
 variable [Bialgebra R A]
 
-theorem dUnit_pow_prime (h : (p : R) = 0) (a : A) : dUnit R (a ^ p) = 0 := by
-  have key : ∀ k : ℕ, dUnit R (a ^ (k + 1)) =
-      ((k + 1 : ℕ) * counitAlgHom R A a ^ k : R) • dUnit R a := fun k => by
+theorem dUnit_pow_prime (h : (p : R) = 0) (a : A) : dUnit (R := R) (a ^ p) = 0 := by
+  have key : ∀ k : ℕ, dUnit (R := R) (a ^ (k + 1)) =
+      ((k + 1 : ℕ) * counitAlgHom R A a ^ k : R) • dUnit (R := R) a := fun k => by
     induction k with
     | zero => simp
     | succ k ih =>
@@ -185,7 +185,7 @@ theorem omegaMap_relFrob : omegaMap _ _ (relFrob h G) = 0 :=
   LinearMap.ext fun w => Subtype.ext (funext fun n => by
     obtain ⟨x, hx⟩ := AugCot.d_surjective _ (w.1 n)
     rw [omegaMap_val, ← hx, cotMap_d]
-    change dUnit R _ = 0
+    change dUnit (R := R) _ = 0
     clear hx
     induction x using frobTwist_induction h n with
     | h0 => simp only [map_zero]

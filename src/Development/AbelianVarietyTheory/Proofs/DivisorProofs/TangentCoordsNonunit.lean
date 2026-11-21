@@ -164,7 +164,7 @@ theorem tangent_coords_nonunit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field 
     intro w
     obtain ⟨φ₀, hφ₀⟩ := AugCot.d_surjective _ (w.1 1)
     set φ : CartierDual O (G.A 1) := φ₀ - algebraMap O _ (Coalgebra.counit (R := O) φ₀) with hφdef
-    have hφd : PDiv.dUnit O φ = w.1 1 := by
+    have hφd : PDiv.dUnit (R := O) φ = w.1 1 := by
       rw [hφdef, PDiv.dUnit, map_sub, AugCot.d_algebraMap, sub_zero]; exact hφ₀
     have hφ1 : φ 1 = 0 := by
       rw [hφdef]

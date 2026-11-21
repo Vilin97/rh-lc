@@ -69,8 +69,8 @@ theorem counit_ev [IsAdicComplete (Ideal.span {(p : O)}) O] (n : ℕ)
   exact dvd_mul_right _ _
 
 theorem d_aeval (n : ℕ) (P : MvPolynomial (Fin d) O) :
-    PDiv.dUnit O (MvPolynomial.aeval (c.x n) P) =
-      ∑ i, AddMonoidAlgebra.coeff P (Finsupp.single i 1) • PDiv.dUnit O (c.x n i) := by
+    PDiv.dUnit (R := O) (MvPolynomial.aeval (c.x n) P) =
+      ∑ i, AddMonoidAlgebra.coeff P (Finsupp.single i 1) • PDiv.dUnit (R := O) (c.x n i) := by
   classical
   induction P using MvPolynomial.induction_on with
   | C a =>
@@ -96,7 +96,7 @@ theorem d_aeval (n : ℕ) (P : MvPolynomial (Fin d) O) :
       add_zero]
 
 theorem d_ev (n : ℕ) (f : MvPowerSeries (Fin d) O) :
-    PDiv.dUnit O (c.ev n f) = ∑ i, lin f i • PDiv.dUnit O (c.x n i) := by
+    PDiv.dUnit (R := O) (c.ev n f) = ∑ i, lin f i • PDiv.dUnit (R := O) (c.x n i) := by
   obtain ⟨P, a, h1, -, h3⟩ := (exists_split c) n n f
   have h4 : AugCot.d (Bialgebra.counitAlgHom O (G.A n)) ((p : G.A n) ^ n * a) = 0 := by
     rw [show (p : G.A n) ^ n * a = ((p : O) ^ n) • a by
@@ -123,10 +123,10 @@ theorem coeff_single_of_mem_sq {h : MvPowerSeries (Fin d) O}
   · rw [map_add (f := _), hf, hg, add_zero]
 
 def lvl (n : ℕ) : (Fin d → O) →ₗ[O] PDiv.Cot O (G.A n) :=
-  Fintype.linearCombination O fun i => PDiv.dUnit O (c.x n i)
+  Fintype.linearCombination O fun i => PDiv.dUnit (R := O) (c.x n i)
 
 theorem lvl_apply (n : ℕ) (a : Fin d → O) :
-    lvl c n a = ∑ i, a i • PDiv.dUnit O (c.x n i) := Fintype.linearCombination_apply ..
+    lvl c n a = ∑ i, a i • PDiv.dUnit (R := O) (c.x n i) := Fintype.linearCombination_apply ..
 
 theorem val_comb (a : Fin d → O) (n : ℕ) :
     (Fintype.linearCombination O c.form a).1 n = lvl c n a := by
@@ -155,7 +155,7 @@ theorem exists_level_dvd [IsAdicComplete (Ideal.span {(p : O)}) O] (m : ℕ) :
   have hεy : Bialgebra.counitAlgHom O (G.A n) y = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp [hy0, map_sum, map_smul, hx]
-  have hy : PDiv.dUnit O y = 0 := by
+  have hy : PDiv.dUnit (R := O) y = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hy0, PDiv.dUnit, map_sum]
     simpa [map_smul, lvl_apply] using ha
@@ -236,6 +236,6 @@ theorem comb_bijective [IsAdicComplete (Ideal.span {(p : O)}) O] :
 
 end GlobalTheory.ChartForm
 
-theorem GlobalTheory.chart_form_basis : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O], v.Integers O → ∀ (G : PDivGroup p O) (d : ℕ) (c : QLog.Chart G d), Function.Bijective (Fintype.linearCombination O c.form) ∧ ∀ (n : ℕ) (f : MvPowerSeries (Fin d) O), constantCoeff f = 0 → PDiv.dUnit O (c.ev n f) = ∑ i, lin f i • PDiv.dUnit O (c.x n i) := by
+theorem GlobalTheory.chart_form_basis : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O], v.Integers O → ∀ (G : PDivGroup p O) (d : ℕ) (c : QLog.Chart G d), Function.Bijective (Fintype.linearCombination O c.form) ∧ ∀ (n : ℕ) (f : MvPowerSeries (Fin d) O), constantCoeff f = 0 → PDiv.dUnit (R := O) (c.ev n f) = ∑ i, lin f i • PDiv.dUnit (R := O) (c.x n i) := by
   intro p _ C _ _ _ v O _ _ _ _ _ _ G d c
   exact ⟨ChartForm.comb_bijective c, fun n f _ => ChartForm.d_ev c n f⟩

@@ -17,7 +17,7 @@ namespace GlobalTheory
 theorem PDivGroup.dual_lie_exists_eval_mod_pow : ∀ (p : ℕ) (O : Type) [CommRing O]
     (G : PDivGroup p O) (l : G.dual.Lie) (n : ℕ), ∃ (b : G.A n) (z : G.A n ⊗[O] G.A n),
     cobOne O (G.A n) b = (p : O) ^ n • z ∧ ∀ (w : G.dual.omega) (φ : CartierDual O (G.A n)),
-    dUnit O φ = w.1 n → (p : O) ^ n ∣ l w - φ b := by
+    dUnit (R := O) φ = w.1 n → (p : O) ^ n ∣ l w - φ b := by
   intro p O _ G l n
   let I : Ideal O := Ideal.span {(p : O) ^ n}
   let N : Submodule O G.dual.omega := Ideal.span {(p : O)} ^ n • ⊤

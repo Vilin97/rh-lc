@@ -385,9 +385,9 @@ theorem dvd_mul_of_dvd_dlog (hv : v.Integers O) (hp : v (p : C) < 1) (G : PDivGr
     rfl
   obtain ⟨D, hD⟩ := Module.projective_lifting_property I.mkQ
     (ψ ∘ₗ AugCot.d (counitAlgHom O (G.A n))) (Submodule.mkQ_surjective I)
-  have hDa : ∀ a, I.mkQ (D a) = ψ (dUnit O a) := fun a => LinearMap.congr_fun hD a
-  have hdm : ∀ a b, ψ (dUnit O (a * b)) =
-      counit (R := O) a • ψ (dUnit O b) + counit (R := O) b • ψ (dUnit O a) := fun a b => by
+  have hDa : ∀ a, I.mkQ (D a) = ψ (dUnit (R := O) a) := fun a => LinearMap.congr_fun hD a
+  have hdm : ∀ a b, ψ (dUnit (R := O) (a * b)) =
+      counit (R := O) a • ψ (dUnit (R := O) b) + counit (R := O) b • ψ (dUnit (R := O) a) := fun a b => by
     rw [dUnit, AugCot.d_mul, map_add (f := _), map_smul, map_smul]
     rfl
   have key := dvd_mul_of_groupLike_val v p O hv hp (G.A n) q hq D

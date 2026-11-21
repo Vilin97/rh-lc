@@ -117,7 +117,7 @@ theorem level_span (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
     (Pi.evalAlgHom O (fun _ => O) k).comp (e : G.A n →ₐ[O] _)
   have hγ : ∀ k, β.coord k = (γ k).toLinearMap := fun k => LinearMap.ext fun x => by
     simp [β, γ]
-  have hmem : ∀ k, dUnit O (toConv (γ k).toLinearMap : CartierDual O (G.A n)) ∈
+  have hmem : ∀ k, dUnit (R := O) (toConv (γ k).toLinearMap : CartierDual O (G.A n)) ∈
       LinearMap.range Lev := fun k => by
     obtain ⟨t, ht⟩ := G.pt_surjective C n (γ k)
     have := hodgeTate_val t n

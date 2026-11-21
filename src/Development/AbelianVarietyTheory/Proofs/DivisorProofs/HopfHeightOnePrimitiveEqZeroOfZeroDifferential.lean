@@ -34,7 +34,7 @@ theorem apply_eq_zero_of_mem_sq {K H : Type} [Field K] [CommRing H] [HopfAlgebra
 
 theorem eq_zero_of_cobOne_eq_zero_of_dUnit_eq_zero : ∀ (p : ℕ) [Fact p.Prime] (K H : Type) [Field K] [CharP K p] [CommRing H]
     [HopfAlgebra K H] [IsCocomm K H] [Module.Finite K H], (∀ a ∈ augIdeal K H, a ^ p = 0) →
-    ∀ b : H, cobOne K H b = 0 → dUnit K b = 0 → b = 0 := by
+    ∀ b : H, cobOne K H b = 0 → dUnit (R := K) b = 0 → b = 0 := by
   intro p _ K H _ _ _ _ _ _ hpow b hb hd
   have hcb : counit (R := K) b = 0 := (mulBy_of_cobOne_eq_zero hb 0).2
   have hsq : b ∈ augIdeal K H ^ 2 := by

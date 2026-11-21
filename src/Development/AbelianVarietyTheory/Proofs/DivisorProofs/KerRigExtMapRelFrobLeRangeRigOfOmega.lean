@@ -86,7 +86,7 @@ theorem funsMap_oneFun {p : ℕ} {G H : PDivGroup p O} (f : G ⟶ H) :
     funsMap f (oneFun H) = oneFun G :=
   Subtype.ext (funext fun n => map_one (f.app n))
 
-theorem dUnit_one : dUnit O (1 : A) = 0 := by
+theorem dUnit_one : dUnit (R := O) (1 : A) = 0 := by
   simp [dUnit]
 
 end GlobalTheory.PDiv.FrobRigKer
@@ -115,7 +115,7 @@ theorem ker_rigExtMap_relFrob_le_range_rigOfOmega (p : ℕ) [Fact p.Prime] (K : 
   have hb0 : counit (R := K) (B₁.1 1) = 0 := by
     show counit (R := K) (B.1 1 - t • (1 : G.A 1)) = 0
     rw [map_sub, map_smul, Bialgebra.counit_one, smul_eq_mul, mul_one, ht, sub_self]
-  have hbd : dUnit K (B₁.1 1) = 0 := by
+  have hbd : dUnit (R := K) (B₁.1 1) = 0 := by
     have e1 : G.dFun B = 0 := by rw [hB2, omegaMap_relFrob, LinearMap.zero_apply]
     have e2 : G.dFun (oneFun G) = 0 := Subtype.ext (funext fun n => dUnit_one)
     have e : G.dFun B₁ = 0 := by rw [hB₁, map_sub, map_smul, e1, e2, smul_zero, sub_zero]

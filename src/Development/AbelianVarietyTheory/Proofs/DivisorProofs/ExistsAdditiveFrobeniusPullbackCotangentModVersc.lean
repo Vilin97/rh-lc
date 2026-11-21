@@ -110,7 +110,7 @@ theorem exists_cobOne_relFrob_eq_zero_dUnit_eq (p : ℕ) [Fact p.Prime] (K : Typ
     (h : (p : K) = 0) (G : PDivGroup p K) (w : Cot K ((frobTwist h G).A 1)) :
     ∃ (β : (frobTwist h G).A 1) (w' : Cot K (G.A 1)),
       cobOne K (G.A 1) ((relFrob h G).app 1 β) = 0 ∧
-        dUnit K β = w + cotMap ((verschiebung h G).app 1) w' := by
+        dUnit (R := K) β = w + cotMap ((verschiebung h G).app 1) w' := by
     haveI : CharP K p := (CharP.charP_iff_prime_eq_zero (Fact.out : p.Prime)).mpr h
     set V := (verschiebung h G).app 1 with hV
     set F := (relFrob h G).app 1 with hF
@@ -174,7 +174,7 @@ theorem exists_cobOne_relFrob_eq_zero_dUnit_eq (p : ℕ) [Fact p.Prime] (K : Typ
       let Rg := LinearMap.range (cotMap V)
       let D₀ : (frobTwist h G).A 1 →ₗ[K] Cot K ((frobTwist h G).A 1) ⧸ Rg :=
         Rg.mkQ ∘ₗ AugCot.d (counitAlgHom K ((frobTwist h G).A 1))
-      have hD₀ : ∀ a, D₀ a = Rg.mkQ (dUnit K a) := fun a => rfl
+      have hD₀ : ∀ a, D₀ a = Rg.mkQ (dUnit (R := K) a) := fun a => rfl
       have hD₀mul : ∀ a b, D₀ (a * b) =
           counit (R := K) a • D₀ b + counit (R := K) b • D₀ a := by
         intro a b
@@ -188,7 +188,7 @@ theorem exists_cobOne_relFrob_eq_zero_dUnit_eq (p : ℕ) [Fact p.Prime] (K : Typ
         refine Submodule.span_induction (p := fun x _ => D₀ x = 0) ?_ ?_ ?_ ?_ hx
         · rintro _ ⟨c, hc, rfl⟩
           rw [hD₀, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
-          exact ⟨dUnit K c, cotMap_d V c⟩
+          exact ⟨dUnit (R := K) c, cotMap_d V c⟩
         · exact map_zero D₀
         · intro u v _ _ hu hv
           rw [map_add (f := _), hu, hv, add_zero]
@@ -210,7 +210,7 @@ theorem exists_cobOne_relFrob_eq_zero_dUnit_eq (p : ℕ) [Fact p.Prime] (K : Typ
         apply AugCot.hom_ext
         intro a
         rw [LinearMap.comp_apply]
-        change L (cotMap π (dUnit K a)) = Rg.mkQ (dUnit K a)
+        change L (cotMap π (dUnit (R := K) a)) = Rg.mkQ (dUnit (R := K) a)
         rw [cotMap_d]
         change L (AugCot.d _ (π a)) = _
         rw [AugCot.lift_d, hπa, hD, hD₀]
@@ -218,7 +218,7 @@ theorem exists_cobOne_relFrob_eq_zero_dUnit_eq (p : ℕ) [Fact p.Prime] (K : Typ
       have := congrArg (fun g => g x) hL
       simp only [LinearMap.comp_apply, hx, map_zero] at this
       exact (Submodule.Quotient.mk_eq_zero Rg).mp this.symm
-    obtain ⟨w', hw'⟩ := hrange (dUnit K β - w) (by rw [map_sub, cotMap_d, hbw, sub_self])
+    obtain ⟨w', hw'⟩ := hrange (dUnit (R := K) β - w) (by rw [map_sub, cotMap_d, hbw, sub_self])
     refine ⟨β, w', ?_, ?_⟩
     · rw [hFβ, ← pullTwo_cobOne, hb0, map_zero]
     · rw [hw']

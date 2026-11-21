@@ -259,7 +259,7 @@ theorem defect_level_one_nonunit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
     intro w0
     obtain ⟨φ₀, hφ₀⟩ := AugCot.d_surjective _ (w0.1 1)
     set φ : CartierDual O (G.A 1) := φ₀ - algebraMap O _ (Coalgebra.counit (R := O) φ₀) with hφdef
-    have hφd : PDiv.dUnit O φ = w0.1 1 := by
+    have hφd : PDiv.dUnit (R := O) φ = w0.1 1 := by
       rw [hφdef, PDiv.dUnit, map_sub, AugCot.d_algebraMap, sub_zero]; exact hφ₀
     obtain ⟨q, hq⟩ := hfl.2 1 w0 φ (map F.θ a) hφd hs
     have hx := span_le_smul (G.A 1) (IsLocalRing.maximalIdeal O) {o | ¬IsUnit o}

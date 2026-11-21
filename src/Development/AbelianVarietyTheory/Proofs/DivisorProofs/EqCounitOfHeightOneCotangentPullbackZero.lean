@@ -38,11 +38,11 @@ theorem eq_algebraMap_counit_of_cotMap_eq_zero : ∀ (p : ℕ) [Fact p.Prime] (k
   have hzero : ∀ φ : CartierDual k C, cobOne k (CartierDual k C) φ = 0 → ∀ x, φ (f x) = 0 := by
     intro φ hφ x
     have h1 := AugCot.lift_d (counitAlgHom k C) φ.ofConv (primitive_apply_mul hφ) (f x)
-    have h2 : dUnit k (f x) = 0 := by
+    have h2 : dUnit (R := k) (f x) = 0 := by
       rw [← cotMap_d f x, hcot, LinearMap.zero_apply]
     change φ.ofConv (f x) = 0
     rw [← h1]
-    change AugCot.lift (counitAlgHom k C) φ.ofConv (primitive_apply_mul hφ) (dUnit k (f x)) = 0
+    change AugCot.lift (counitAlgHom k C) φ.ofConv (primitive_apply_mul hφ) (dUnit (R := k) (f x)) = 0
     rw [h2, map_zero]
   have hone : ∀ φ : CartierDual k C, cobOne k (CartierDual k C) φ = 0 → φ 1 = 0 := by
     intro φ hφ

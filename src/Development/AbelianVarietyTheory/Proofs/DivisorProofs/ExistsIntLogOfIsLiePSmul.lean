@@ -15,7 +15,7 @@ theorem GlobalTheory.QLog.exists_int_log_of_isLie_p_smul : ∀ (p : ℕ) [Fact p
   intro p _ O E _ _ _ hF G d c f l hf hl
   obtain ⟨s₁, hs₁, hl₁⟩ := (c.isLie_iff hF.inj f _).1 hl 1
   rw [pow_one] at hs₁
-  have hdiv : ∀ (w : G.dual.omega) (φ : CartierDual O (G.A 1)), dUnit O φ = w.1 1 →
+  have hdiv : ∀ (w : G.dual.omega) (φ : CartierDual O (G.A 1)), dUnit (R := O) φ = w.1 1 →
       (p : O) ∣ φ (c.ev 1 s₁) := by
     intro w φ hφ
     have h1 := hl₁ w φ hφ

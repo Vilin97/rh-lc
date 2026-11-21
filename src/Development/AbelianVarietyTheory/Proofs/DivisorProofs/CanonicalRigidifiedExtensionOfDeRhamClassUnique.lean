@@ -101,18 +101,18 @@ theorem isCan_unique (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (p : �
       Algebra.TensorProduct.includeRight_apply] at hc hL hR
     simp only [Dat.coc, b, map_neg, map_add (f := _), map_sub]
     linear_combination hk1 - hk2 - h0 + hc - hL - hR
-  · change dUnit R (-b n) = w.1 n - w'.1 n
+  · change dUnit (R := R) (-b n) = w.1 n - w'.1 n
     rw [hw, hw']
     have h0 := GlobalTheory.T.cotVal_sub_eq_dUnit_of_d0_eq_sub R A (G.A n) (t.y n) d.f d'.f k hk
-    have h1 : dUnit R (algebraMap R (G.A n) r) = 0 := AugCot.d_algebraMap _ r
+    have h1 : dUnit (R := R) (algebraMap R (G.A n) r) = 0 := AugCot.d_algebraMap _ r
     simp only [Dat.om, b]
     change AugCot.d _ _ = _
     simp only [map_neg, map_add (f := _), map_sub]
-    change -(dUnit R _ - dUnit R _ - dUnit R _ + dUnit R _) = _
+    change -(dUnit (R := R) _ - dUnit (R := R) _ - dUnit (R := R) _ + dUnit (R := R) _) = _
     rw [h1]
-    change _ = cotVal d.f (t.y n) - dUnit R _ - (cotVal d'.f (t.y n) - dUnit R _)
-    rw [show cotVal d.f (t.y n) - dUnit R (d.h n) - (cotVal d'.f (t.y n) - dUnit R (d'.h n)) =
-      (cotVal d.f (t.y n) - cotVal d'.f (t.y n)) - dUnit R (d.h n) + dUnit R (d'.h n) by abel, h0]
+    change _ = cotVal d.f (t.y n) - dUnit (R := R) _ - (cotVal d'.f (t.y n) - dUnit (R := R) _)
+    rw [show cotVal d.f (t.y n) - dUnit (R := R) (d.h n) - (cotVal d'.f (t.y n) - dUnit (R := R) (d'.h n)) =
+      (cotVal d.f (t.y n) - cotVal d'.f (t.y n)) - dUnit (R := R) (d.h n) + dUnit (R := R) (d'.h n) by abel, h0]
     abel
 
 end GlobalTheory.PtExt

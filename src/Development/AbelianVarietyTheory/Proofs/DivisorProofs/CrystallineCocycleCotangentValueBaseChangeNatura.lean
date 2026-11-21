@@ -82,14 +82,14 @@ def cotRingHom {R R' : Type} [CommRing R] [CommRing R'] {σ : R →+* R'} {D D' 
   map_add' a b := by ext <;> simp
   map_mul' a b := by ext <;> simp [map_smulₛₗ]
 
-theorem cotVal_pull : ∀ (R R' : Type) [CommRing R] [CommRing R'] (σ : R →+* R') (X : Over (Sp R)) (X' : Over (Sp R')) (φ : X'.left ⟶ X.left) (m : IsMor (dp0 R) (X.hom ≫ 𝟙 _) (dp0 R') (X'.hom ≫ 𝟙 _) σ φ) (D D' : Type) [CommRing D] [Bialgebra R D] [CommRing D'] [Bialgebra R' D'] (s : SemiBialgHom σ D D') (y : Pt X D) (y' : Pt X' D') (a : trivAt y ⟶ m.obj (trivAt y')) (f : Z1 (O (dp0 R) (X.hom ≫ 𝟙 _))), (∀ r, a.φ r = s r) → cotVal (m.coef.pullbackOneCocycle f) y' = s.cot (cotVal f y) + dUnit R' (show D' from ev f a) := by
+theorem cotVal_pull : ∀ (R R' : Type) [CommRing R] [CommRing R'] (σ : R →+* R') (X : Over (Sp R)) (X' : Over (Sp R')) (φ : X'.left ⟶ X.left) (m : IsMor (dp0 R) (X.hom ≫ 𝟙 _) (dp0 R') (X'.hom ≫ 𝟙 _) σ φ) (D D' : Type) [CommRing D] [Bialgebra R D] [CommRing D'] [Bialgebra R' D'] (s : SemiBialgHom σ D D') (y : Pt X D) (y' : Pt X' D') (a : trivAt y ⟶ m.obj (trivAt y')) (f : Z1 (O (dp0 R) (X.hom ≫ 𝟙 _))), (∀ r, a.φ r = s r) → cotVal (m.coef.pullbackOneCocycle f) y' = s.cot (cotVal f y) + dUnit (R := R') (show D' from ev f a) := by
   intro R R' _ _ σ X X' φ m D D' _ _ _ _ s y y' a f ha
   have hf : ∀ c, (cotRingHom s c).fst = σ c.fst := fun c ↦ add_zero _
   have hs : ∀ c, (cotRingHom s c).snd = s.cot c.snd := fun c ↦ zero_add _
   have pf : ∀ c : D, TrivSqZeroExt.fst (cotPt R D c) = Coalgebra.counit c := fun c ↦ add_zero _
-  have ps : ∀ c : D, TrivSqZeroExt.snd (cotPt R D c) = dUnit R c := fun c ↦ zero_add _
+  have ps : ∀ c : D, TrivSqZeroExt.snd (cotPt R D c) = dUnit (R := R) c := fun c ↦ zero_add _
   have pf' : ∀ c : D', TrivSqZeroExt.fst (cotPt R' D' c) = Coalgebra.counit c := fun c ↦ add_zero _
-  have ps' : ∀ c : D', TrivSqZeroExt.snd (cotPt R' D' c) = dUnit R' c := fun c ↦ zero_add _
+  have ps' : ∀ c : D', TrivSqZeroExt.snd (cotPt R' D' c) = dUnit (R := R') c := fun c ↦ zero_add _
   obtain ⟨b, hb⟩ := val_sub_pull m (cotExt R D) (cotExt R' D') (cotRingHom s) σ
     (fun r ↦ TrivSqZeroExt.ext (hf _) ((hs _).trans (map_zero _))) (fun _ ↦ rfl) (fun c ↦ (hf c).symm)
     (fun r ↦ TrivSqZeroExt.ext (hf _) ((hs _).trans (map_zero _))) a

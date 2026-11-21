@@ -37,9 +37,9 @@ theorem dvd_of_mem_sq (O A : Type) [CommRing O] [CommRing A] [HopfAlgebra O A] [
 theorem dvd_sub_of_dUnit_eq : ∀ (O A : Type) [CommRing O] [CommRing A] [HopfAlgebra O A] [Coalgebra.IsCocomm O A]
     [Module.Finite O A] [Module.Projective O A] (a : A) (q : O) (t : A ⊗[O] A),
     Coalgebra.comul (R := O) a = a ⊗ₜ[O] (1 : A) + (1 : A) ⊗ₜ[O] a + q • t →
-    ∀ φ ψ : CartierDual O A, PDiv.dUnit O φ = PDiv.dUnit O ψ → q ∣ φ a - ψ a := by
+    ∀ φ ψ : CartierDual O A, PDiv.dUnit (R := O) φ = PDiv.dUnit (R := O) ψ → q ∣ φ a - ψ a := by
   intro O A _ _ _ _ _ _ a q t h φ ψ hd
-  have h0 : PDiv.dUnit O (φ - ψ) = 0 := by rw [PDiv.dUnit, map_sub]; exact sub_eq_zero.2 hd
+  have h0 : PDiv.dUnit (R := O) (φ - ψ) = 0 := by rw [PDiv.dUnit, map_sub]; exact sub_eq_zero.2 hd
   rw [PDiv.dUnit, AugCot.d_eq_zero_iff] at h0
   have h2 := dvd_of_mem_sq O A a q t h _ h0
   set c := Bialgebra.counitAlgHom O (CartierDual O A) (φ - ψ)

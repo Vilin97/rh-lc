@@ -174,7 +174,7 @@ def Dat.coc (n : ℕ) : G.A n ⊗[R] G.A n :=
     cobOne R (G.A n) (d.h n)
 
 def Dat.om (n : ℕ) : Cot R (G.A n) :=
-  cotVal d.f (t.y n) - dUnit R (d.h n)
+  cotVal d.f (t.y n) - dUnit (R := R) (d.h n)
 
 
 variable (t c) in

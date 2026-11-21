@@ -69,7 +69,7 @@ def primTangent [Module.Finite R A] [Module.Projective R A] [IsCocomm R A] :
 
 @[simp] theorem primTangent_d [Module.Finite R A] [Module.Projective R A] [IsCocomm R A]
     (b : LinearMap.ker (cobOne R A)) (φ : CartierDual R A) :
-    primTangent R A b (dUnit R φ) = φ b.1 := AugCot.lift_d _ _ (evalAt_mul b) φ
+    primTangent R A b (dUnit (R := R) φ) = φ b.1 := AugCot.lift_d _ _ (evalAt_mul b) φ
 
 variable [IsCocomm R A] [IsCocomm R' A']
 
@@ -169,7 +169,7 @@ def primLie : LinearMap.ker (cobOne R (G.A 1)) →ₗ[R] G.dual.Lie :=
   (G.dual.omegaLevel 1).dualMap ∘ₗ primTangent R (G.A 1)
 
 theorem primLie_apply (b : LinearMap.ker (cobOne R (G.A 1))) (w : G.dual.omega)
-    (φ : CartierDual R (G.A 1)) (h : w.1 1 = dUnit R φ) : G.primLie b w = φ b.1 :=
+    (φ : CartierDual R (G.A 1)) (h : w.1 1 = dUnit (R := R) φ) : G.primLie b w = φ b.1 :=
   (congrArg (primTangent R (G.A 1) b) h).trans (primTangent_d b φ)
 
 end PDivGroup

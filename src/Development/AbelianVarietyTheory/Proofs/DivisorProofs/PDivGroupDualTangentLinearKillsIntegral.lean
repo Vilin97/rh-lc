@@ -27,7 +27,7 @@ theorem eq_zero_of_forall_dvd [IsHausdorff (Ideal.span {(p : O)}) O] (x : O)
 variable {G : PDivGroup p O}
 
 theorem exists_form (n : ℕ) (w : G.dual.omega) :
-    ∃ φ : CartierDual O (G.A n), PDiv.dUnit O φ = w.1 n ∧ φ 1 = 0 := by
+    ∃ φ : CartierDual O (G.A n), PDiv.dUnit (R := O) φ = w.1 n ∧ φ 1 = 0 := by
   obtain ⟨φ, hφ⟩ := AugCot.d_surjective _ (w.1 n)
   refine ⟨φ - algebraMap O _ (φ 1), ?_, ?_⟩
   · change AugCot.d _ (φ - algebraMap O _ (φ 1)) = _
@@ -41,7 +41,7 @@ theorem exists_form (n : ℕ) (w : G.dual.omega) :
     rw [h1, sub_self]
 
 theorem lie_eq_zero [IsHausdorff (Ideal.span {(p : O)}) O] (l : G.dual.Lie)
-    (h : ∀ (n : ℕ) (w : G.dual.omega) (φ : CartierDual O (G.A n)), PDiv.dUnit O φ = w.1 n →
+    (h : ∀ (n : ℕ) (w : G.dual.omega) (φ : CartierDual O (G.A n)), PDiv.dUnit (R := O) φ = w.1 n →
       φ 1 = 0 → (p : O) ^ n ∣ l w) : l = 0 :=
   LinearMap.ext fun w => eq_zero_of_forall_dvd _ fun n => by
     obtain ⟨φ, hφ, h1⟩ := exists_form n w

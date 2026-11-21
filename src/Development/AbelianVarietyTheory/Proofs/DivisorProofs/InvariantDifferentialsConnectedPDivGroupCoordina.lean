@@ -42,7 +42,7 @@ variable {A : Type} [CommRing A] [Bialgebra k A] (x : Fin d → A) (hx : ∀ i, 
 
 include haug in
 theorem exists_eq_sum (hsurj : Function.Surjective (evA k x hx)) (u : Cot k A) :
-    ∃ w : Fin d → k, u = ∑ i, w i • dUnit k (x i) := by
+    ∃ w : Fin d → k, u = ∑ i, w i • dUnit (R := k) (x i) := by
   obtain ⟨a, rfl⟩ := AugCot.d_surjective _ u
   obtain ⟨f, rfl⟩ := hsurj a
   exact ⟨lin f, (GlobalTheory.T.counit_cotangentClass_powerSeriesEvalAtNilpotent k d A x hx haug f).2⟩
@@ -51,14 +51,14 @@ theorem exists_eq_sum (hsurj : Function.Surjective (evA k x hx)) (u : Cot k A) :
 include haug in
 theorem eq_zero_of_sum (hsurj : Function.Surjective (evA k x hx))
     (hker : ∀ f, evA k x hx f = 0 → ∀ α : Fin d →₀ ℕ, α.degree < 2 → coeff α f = 0)
-    (w : Fin d → k) (hw : ∑ i, w i • dUnit k (x i) = 0) : w = 0 := by
+    (w : Fin d → k) (hw : ∑ i, w i • dUnit (R := k) (x i) = 0) : w = 0 := by
   set f : MvPowerSeries (Fin d) k := ∑ i, w i • X i with hf
   have hlin : lin f = w := by
     funext i
     simp [f, lin, coeff_X, Finsupp.single_eq_single_iff]
   have hcc : constantCoeff f = 0 := by simp [f]
   obtain ⟨h1, h2⟩ := GlobalTheory.T.counit_cotangentClass_powerSeriesEvalAtNilpotent k d A x hx haug f
-  have hd : dUnit k (evA k x hx f) = 0 := by rw [h2, hlin, hw]
+  have hd : dUnit (R := k) (evA k x hx f) = 0 := by rw [h2, hlin, hw]
   have hε : ∀ g, Bialgebra.counitAlgHom k A (evA k x hx g) = constantCoeff g := fun g =>
     (GlobalTheory.T.counit_cotangentClass_powerSeriesEvalAtNilpotent k d A x hx haug g).1
   rw [dUnit, AugCot.d_eq_zero_iff, hε, hcc, map_zero, sub_zero] at hd
@@ -89,11 +89,11 @@ end GlobalTheory.OmegaCoord
 namespace GlobalTheory.OmegaCoord
 
 theorem omega_coord : ∀ (p : ℕ) (k : Type) [CommRing k] (d : ℕ) (G : PDivGroup p k)
-    (c : Chart G d), (∀ w : Fin d → k, (fun n => ∑ i, w i • dUnit k (c.x n i)) ∈ G.omegaSub) ∧
-      ∀ u : G.omega, ∃! w : Fin d → k, ∀ n, u.1 n = ∑ i, w i • dUnit k (c.x n i) := by
+    (c : Chart G d), (∀ w : Fin d → k, (fun n => ∑ i, w i • dUnit (R := k) (c.x n i)) ∈ G.omegaSub) ∧
+      ∀ u : G.omega, ∃! w : Fin d → k, ∀ n, u.1 n = ∑ i, w i • dUnit (R := k) (c.x n i) := by
   intro p k _ d G c
-  have hres : ∀ n (w : Fin d → k), cotMap (G.res n) (∑ i, w i • dUnit k (c.x (n + 1) i)) =
-      ∑ i, w i • dUnit k (c.x n i) := by
+  have hres : ∀ n (w : Fin d → k), cotMap (G.res n) (∑ i, w i • dUnit (R := k) (c.x (n + 1) i)) =
+      ∑ i, w i • dUnit (R := k) (c.x n i) := by
     intro n w
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, cotMap_d, c.res]
@@ -110,27 +110,27 @@ theorem omega_coord : ∀ (p : ℕ) (k : Type) [CommRing k] (d : ℕ) (G : PDivG
       refine ih f ?_
       rw [← hone (n0 + j) f]
       exact (congrArg (G.res (n0 + j)) hf).trans (map_zero _)
-  have hind : ∀ j (v w : Fin d → k), ∑ i, v i • dUnit k (c.x (n0 + j) i) =
-      ∑ i, w i • dUnit k (c.x (n0 + j) i) → v = w := by
+  have hind : ∀ j (v w : Fin d → k), ∑ i, v i • dUnit (R := k) (c.x (n0 + j) i) =
+      ∑ i, w i • dUnit (R := k) (c.x (n0 + j) i) → v = w := by
     intro j v w h
     have := eq_zero_of_sum (c.x (n0 + j)) (c.nil _) (c.aug _) (c.presents.1 _) (hker j) (v - w)
       (by simp only [Pi.sub_apply, sub_smul, Finset.sum_sub_distrib, h, sub_self])
     exact sub_eq_zero.1 this
-  have hspan : ∀ n, ∃ w : Fin d → k, u.1 n = ∑ i, w i • dUnit k (c.x n i) := fun n =>
+  have hspan : ∀ n, ∃ w : Fin d → k, u.1 n = ∑ i, w i • dUnit (R := k) (c.x n i) := fun n =>
     exists_eq_sum (c.x n) (c.nil n) (c.aug n) (c.presents.1 n) (u.1 n)
   obtain ⟨w, hw⟩ := hspan n0
-  have hup : ∀ j, u.1 (n0 + j) = ∑ i, w i • dUnit k (c.x (n0 + j) i) := by
+  have hup : ∀ j, u.1 (n0 + j) = ∑ i, w i • dUnit (R := k) (c.x (n0 + j) i) := by
     intro j
     induction j with
     | zero => exact hw
     | succ j ih =>
       obtain ⟨v, hv⟩ := hspan (n0 + j + 1)
-      have h1 : ∑ i, v i • dUnit k (c.x (n0 + j) i) = ∑ i, w i • dUnit k (c.x (n0 + j) i) := by
+      have h1 : ∑ i, v i • dUnit (R := k) (c.x (n0 + j) i) = ∑ i, w i • dUnit (R := k) (c.x (n0 + j) i) := by
         rw [← hres, ← hv, hu, ih]
       rw [← hind j v w h1]
       exact hv
-  have hdown : ∀ n j, u.1 (n + j) = ∑ i, w i • dUnit k (c.x (n + j) i) →
-      u.1 n = ∑ i, w i • dUnit k (c.x n i) := by
+  have hdown : ∀ n j, u.1 (n + j) = ∑ i, w i • dUnit (R := k) (c.x (n + j) i) →
+      u.1 n = ∑ i, w i • dUnit (R := k) (c.x n i) := by
     intro n j
     induction j with
     | zero => exact id

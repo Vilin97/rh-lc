@@ -188,9 +188,9 @@ theorem chartPull_red {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Fie
     (ρ : MvPowerSeries (Fin d ⊕ Fin d) k × (Fin d → k) →ₗ[k] G.RigExt)
     (ρ' : MvPowerSeries (Fin e ⊕ Fin e) k' × (Fin e → k') →ₗ[k'] G'.RigExt)
     (hρ : ∀ t w (z : G.cocycles) (u : G.omega), (∀ n, z.1 n = c.ev₂ n t) →
-      (∀ n, u.1 n = ∑ i, w i • dUnit k (c.x n i)) → ρ (t, w) = G.rigMk (z, u))
+      (∀ n, u.1 n = ∑ i, w i • dUnit (R := k) (c.x n i)) → ρ (t, w) = G.rigMk (z, u))
     (hρ' : ∀ t w (z : G'.cocycles) (u : G'.omega), (∀ n, z.1 n = c'.ev₂ n t) →
-      (∀ n, u.1 n = ∑ i, w i • dUnit k' (c'.x n i)) → ρ' (t, w) = G'.rigMk (z, u))
+      (∀ n, u.1 n = ∑ i, w i • dUnit (R := k') (c'.x n i)) → ρ' (t, w) = G'.rigMk (z, u))
     (r : Mod p hμ →ₛₗ[(WittVector.constantCoeff : WittVector p k →+* k)] G.RigExt)
     (r' : Mod p hν →ₛₗ[(WittVector.constantCoeff : WittVector p k' →+* k')] G'.RigExt)
     (hr : ∀ (f : quasiLog p hμ) t w, Red p (cob1 (fun i => Katz.lift p (μ i)) f.1) t → RedV p (lin f.1) w →

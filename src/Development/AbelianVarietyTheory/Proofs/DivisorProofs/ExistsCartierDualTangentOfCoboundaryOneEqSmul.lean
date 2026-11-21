@@ -20,7 +20,7 @@ theorem exists_tangent_of_cobOne_eq_smul (O A : Type) [CommRing O] [CommRing A] 
     [Module.Finite O A] [Module.Projective O A] [Coalgebra.IsCocomm O A] (a : O) (b : A)
     (z : A ⊗[O] A) (h : cobOne O A b = a • z) :
     ∃ u : Cot O (CartierDual O A) →ₗ[O] O ⧸ Ideal.span {a},
-      ∀ φ : CartierDual O A, u (dUnit O φ) = Ideal.Quotient.mk _ (φ b) := by
+      ∀ φ : CartierDual O A, u (dUnit (R := O) φ) = Ideal.Quotient.mk _ (φ b) := by
   let D : CartierDual O A →ₗ[O] O ⧸ Ideal.span {a} :=
     (Ideal.Quotient.mkₐ O (Ideal.span {a})).toLinearMap ∘ₗ CartierDual.evalAt O A b
   have hcomul : comul b = b ⊗ₜ 1 + 1 ⊗ₜ b + a • z := by

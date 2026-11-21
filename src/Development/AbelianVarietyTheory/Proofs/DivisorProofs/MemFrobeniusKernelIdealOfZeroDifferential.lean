@@ -18,7 +18,7 @@ namespace GlobalTheory.PDiv.FrobKerPrim
 
 theorem mem_frobKerIdeal_of_cobOne (p : ℕ) [Fact p.Prime] (K H : Type) [Field K] [CharP K p]
     [CommRing H] [HopfAlgebra K H] [IsCocomm K H] [Module.Finite K H] (b : H)
-    (_hb : counit (R := K) b = 0) (hd : dUnit K b = 0)
+    (_hb : counit (R := K) b = 0) (hd : dUnit (R := K) b = 0)
     (hc : Algebra.TensorProduct.map (Ideal.Quotient.mkₐ K (frobKerIdeal p K H))
       (Ideal.Quotient.mkₐ K (frobKerIdeal p K H)) (cobOne K H b) = 0) :
     b ∈ frobKerIdeal p K H := by
@@ -46,7 +46,7 @@ theorem mem_frobKerIdeal_of_cobOne (p : ℕ) [Fact p.Prime] (K H : Type) [Field 
   have hc' : cobOne K (H ⧸ J) (π b) = 0 := by
     rw [← pullTwo_cobOne]
     exact hc
-  have hd' : dUnit K (π b) = 0 := by
+  have hd' : dUnit (R := K) (π b) = 0 := by
     rw [← cotMap_d, hd, map_zero]
   have h0 := GlobalTheory.T.hopf_height_one_primitive_eq_zero_of_zero_differential p K (H ⧸ J) hpow (π b) hc' hd'
   exact Ideal.Quotient.eq_zero_iff_mem.1 h0

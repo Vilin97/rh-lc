@@ -42,7 +42,7 @@ theorem range_rigOfOmega_le_range_rigExtMap_verschiebung :
     ((frobTwist h G).omegaLevel_one_bijective h).1 (by
       rw [map_sub, omegaLevel_apply, omegaLevel_apply, omegaLevel_apply, omegaMap_val,
         ← omegaLevel_apply, ← omegaLevel_apply _ _ u, hu, map_add, hw'']
-      change dUnit K (B.1 1) = _
+      change dUnit (R := K) (B.1 1) = _
       rw [dUnit, dUnit, map_sub, ← dUnit, ← dUnit, hd]
       abel)
   refine ⟨G.rigMk (c, u), ?_⟩
