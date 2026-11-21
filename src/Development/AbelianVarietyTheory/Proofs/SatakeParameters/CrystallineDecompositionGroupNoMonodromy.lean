@@ -28,7 +28,7 @@ open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 open GlobalTheory.GalCut GlobalTheory.Published
 open GlobalTheory.GalCut7
-open GlobalTheory GlobalTheory.IwaPkg GlobalTheory.TheRec GlobalTheory.Cong GlobalTheory.UnitaryBC
+open GlobalTheory GlobalTheory.IwaPkg GlobalTheory.Cong GlobalTheory.UnitaryBC
 
 namespace GlobalTheory.CrysNoMono
 
