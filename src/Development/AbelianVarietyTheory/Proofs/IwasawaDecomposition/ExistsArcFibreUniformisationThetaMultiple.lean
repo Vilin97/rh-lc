@@ -57,7 +57,7 @@ theorem exists_unif_of_arc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   obtain ⟨φ', hφ₁, hφ₂, hgp', hiso⟩ := GlobalTheory.T.genericFibre_group_factors_universal_cartesian E H Dw l Xo c _ _ Y yF x φ hgp ⟨wx, hwx⟩
   rw [hy₁] at hgp'
   have hL := Xo.univ.t.PP.isLB
-  have hM' := pull_isLB hL (φ' ≫ Y.m0.toSABMap.φ)
+  have hM' := LB.isLB_pull hL (φ' ≫ Y.m0.toSABMap.φ)
   let u₁ := fibreUnif hgp' (Fu.ex Ha.i (Ha.Pw w)) (Ha.Pw w).range fr (Fu.ex_add _ _ hPer) (Fu.ex_onto _ _ hPer)
     (Fu.ex_ker _ _ hPer) hPer.2.2.1 hPer.2.2.2.1 (isHolTo_exp Fu Ha.i hPer) hf₁ hf₂ hf₃
   obtain ⟨wI, hwI⟩ := LBIso.symm hiso

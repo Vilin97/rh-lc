@@ -31,7 +31,37 @@ theorem exists_lift {n : ℕ} (s : SplitPlace L)
   set M := Matrix.GeneralLinearGroup.map i.symm.toRingHom
     (Matrix.GeneralLinearGroup.map (algebraMap _ (s.w.adicCompletion L)) u) with hM
   obtain ⟨κ, hκ, hloc⟩ := GlobalTheory.SplitLift.exists_trivOutside_loc_eq n s M
-  refine ⟨κ, GlobalTheory.HeckeStdFacts.mem_Umax_of_loc s κ hκ ?_ ?_, hκ, ?_⟩
+  have mem_Umax_of_loc (s : SplitPlace L) (x : GAf L n) (hx : TrivOutside {s.v} x)
+      (h1 : ∀ i j, Valued.v (((s.loc n x : GL (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) : Matrix (Fin n) (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) i j) ≤ 1)
+      (h2 : ∀ i j, Valued.v (((s.loc n x⁻¹ : GL (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) : Matrix (Fin n) (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) i j) ≤ 1) :
+      x ∈ Umax L n := by
+    obtain ⟨e, he, he'⟩ := GlobalTheory.SplitSep.exists_sep L s
+    intro i j
+    have hconj : conjAL L ((x.1 : Matrix (Fin n) (Fin n) (AL L)) i j) =
+        (((x⁻¹ : GAf L n).1 : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) j i := by
+      rw [GlobalTheory.FinTypCount.inv_val]
+      rfl
+    have hz : (x.1 : Matrix (Fin n) (Fin n) (AL L)) i j - (1 : Matrix (Fin n) (Fin n) (AL L)) i j ∈ ALint L := by
+      apply GlobalTheory.mem_ALint_of_supported_at_split L s e he he'
+      · intro w hw
+        have := congrFun (congrFun (hx w (by simpa using hw)) i) j
+        simp only [Matrix.map_apply] at this
+        rw [map_sub, this]
+        by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+      · have e1 : s.proj ((x.1 : Matrix (Fin n) (Fin n) (AL L)) i j) =
+            ((s.loc n x : GL (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) : Matrix (Fin n) (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) i j := rfl
+        rw [map_sub, e1]
+        refine (Valuation.map_sub _ _ _).trans (max_le (h1 i j) ?_)
+        by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+      · have e1 : s.proj ((((x⁻¹ : GAf L n).1 : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) j i) =
+            ((s.loc n x⁻¹ : GL (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) : Matrix (Fin n) (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) j i := rfl
+        rw [map_sub, map_sub, hconj, e1]
+        refine (Valuation.map_sub _ _ _).trans (max_le (h2 j i) ?_)
+        by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+    have := add_mem hz (show (1 : Matrix (Fin n) (Fin n) (AL L)) i j ∈ ALint L by
+      by_cases hij : i = j <;> simp [Matrix.one_apply, hij, Subring.one_mem, Subring.zero_mem])
+    simpa using this
+  refine ⟨κ, mem_Umax_of_loc s κ hκ ?_ ?_, hκ, ?_⟩
   · intro a b
     rw [hloc]
     exact hle _ (u.val a b).2

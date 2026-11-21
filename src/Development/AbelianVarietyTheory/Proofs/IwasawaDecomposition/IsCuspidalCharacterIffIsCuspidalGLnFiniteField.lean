@@ -214,7 +214,15 @@ theorem isCusp_character_iff_isCuspidal : ∀ (g : ℕ) [Fact g.Prime] (d : ℕ)
     let P := GlobalTheory.SerOSys.TranspLabel.permGL (K := ZMod g) σ
     have key : V.ρ P⁻¹ v = 0 := hw _ fun u hu => by
       have h1 := hv _ (glEquiv_mem_unip b z hz σ hσ hu)
-      rw [GlobalTheory.SerOSys.TranspLabel.glEquiv_perm] at h1
+      have hperm : glEquiv (ZMod g) σ u = P * u * P⁻¹ := by
+        apply Units.ext
+        rw [Units.val_mul, Units.val_mul]
+        show Matrix.reindex σ σ (u : Matrix (Fin d) (Fin d) (ZMod g)) =
+          σ.symm.toPEquiv.toMatrix * (u : Matrix (Fin d) (Fin d) (ZMod g)) *
+            σ.toPEquiv.toMatrix
+        rw [PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]
+        rfl
+      rw [hperm] at h1
       calc V.ρ u (V.ρ P⁻¹ v) = V.ρ (P⁻¹ * (P * u * P⁻¹)) v := by
             rw [show P⁻¹ * (P * u * P⁻¹) = u * P⁻¹ by group, map_mul, Module.End.mul_apply]
         _ = V.ρ P⁻¹ v := by rw [map_mul, Module.End.mul_apply, h1]

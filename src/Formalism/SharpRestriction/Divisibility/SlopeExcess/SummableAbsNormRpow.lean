@@ -139,7 +139,7 @@ end Euler
 end Formalism.MainNotions.DIV.Proofs.QuadraticNormBounds
 
 namespace Formalism.MainNotions.DIV.Proofs.QuadraticNormBounds
-open Formalism.MainNotions.SchurIrreducible Formalism.MainNotions.PDVS MeasureTheory
+open Formalism.MainNotions.SchurIrreducible MeasureTheory
 
 section Tail
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
@@ -156,7 +156,7 @@ end Main
 end Formalism.MainNotions.DIV.Proofs.QuadraticNormBounds
 
 namespace Formalism.MainNotions.DIV.Proofs
-open Formalism.BasicNotions Formalism.MainNotions.PDVS Formalism.MainNotions.DIV.Proofs.QuadraticNormBounds
+open Formalism.BasicNotions Formalism.MainNotions.DIV.Proofs.QuadraticNormBounds
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 end Formalism.MainNotions.DIV.Proofs

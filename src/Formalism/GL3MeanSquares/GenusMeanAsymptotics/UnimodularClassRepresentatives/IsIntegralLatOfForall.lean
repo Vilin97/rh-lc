@@ -66,7 +66,7 @@ theorem sameGenus_iff (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
     exact H P hP
   · intro H P hP
     have hm : (P.comap (algebraMap (𝓞 F) (𝓞 K))).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := 𝓞 F) P
     have := H ⟨_, hm⟩
     rwa [locF_eq_loc hK hF hP, locF_eq_loc hK hF hP] at this
 

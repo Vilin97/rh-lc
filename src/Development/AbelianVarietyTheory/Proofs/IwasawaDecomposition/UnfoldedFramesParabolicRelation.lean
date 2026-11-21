@@ -74,11 +74,13 @@ theorem perFr_comb (X : Data E r) {x x' : Frame X.Ψ r} (hx : x ∈ X.dom)
       rw [dif_neg h, dif_pos h', dif_pos hb']
       conv_lhs => rw [← mul_nonsing_inv_cancel_left (mat x ⟨_, h'⟩) (mat x' ⟨_, h'⟩) hd]
       generalize (mat x ⟨_, h'⟩)⁻¹ * mat x' ⟨_, h'⟩ = n
+      change Matrix (Fin r) (Fin r) ℂ at n
       simp only [hermC, ReciprocityTheory.ChartRestriction.G.FD.col, mul_apply, Finset.sum_mul, Finset.mul_sum]
       symm
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [Finset.sum_comm]
+      simp only [Matrix.mul_apply, Finset.sum_mul]
       exact Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun d _ => by ring
     rw [e1]
     refine Eq.trans (sum_rev hp _ fun c hc => ?_) ?_

@@ -37,12 +37,9 @@ theorem maximal_of_valuation_ge_one {a : C} (h : V.Ge 1 a) : V.MM a := by
   rw [WithTop.coe_zero] at h0
   exact lt_of_lt_of_le h0 h
 
-theorem le_pow_succ {l : ℕ} (hl : 2 ≤ l) : ∀ n : ℕ, n + 1 ≤ l ^ (n + 1)
-  | 0 => by simpa using (by omega : 1 ≤ l)
-  | n + 1 => by
-    have ih := le_pow_succ hl n
-    rw [pow_succ]
-    nlinarith
+theorem le_pow_succ {l : ℕ} (hl : 2 ≤ l) : ∀ n : ℕ, n + 1 ≤ l ^ (n + 1) := by
+  intro n
+  exact Nat.le_of_lt (Nat.lt_pow_self hl)
 
 theorem dvd_of_ge (em : ZMod d → (O →+* C)) (ε : O) (hεI : ∀ a, V.Ge 0 (em a ε))
     (hεx : ∀ x : O, (∀ a, V.MM (em a x)) → ∃ y, ε * x = (V.l : O) * y) :

@@ -75,7 +75,10 @@ theorem matrices_of_lines {A N : Type} [CommRing A] [AddCommGroup N] [Module A N
       rw [← he, map_sum]
     simp only [hL, he, serAct_lines]
     rw [← lines_sum]
-    congr 1
+    apply congrArg (lines U d)
+    funext j
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec_apply_eq_sum,
+      E, Matrix.of_apply, mul_comm]
   have hEu : IsUnit E := by
     refine Matrix.mulVec_surjective_iff_isUnit.1 fun c => ?_
     obtain ⟨s, x, f, h⟩ := (hS (lines U d c)).mpr ⟨c, rfl⟩
@@ -159,16 +162,8 @@ theorem exists_perm_of_map_eq {ι α : Type} [Fintype ι] {a b : ι → α}
   simpa [Fintype.card_subtype, eq_comm, Finset.card, Finset.filter] using this
 
 theorem eq_exp {L : Type} [Field L] [CharZero L] [Algebra ℚ L] (E : L⟦X⟧) (h0 : constantCoeff E = 1)
-    (h1 : derivative L E = E) : E = exp L := by
-  have h2 : derivative L (exp L) = exp L := derivative_exp L
-  ext m
-  induction m with
-  | zero => simp [h0]
-  | succ m ih =>
-    have a := congrArg (coeff m) h1
-    have b := congrArg (coeff m) h2
-    rw [coeff_derivative] at a b
-    exact mul_right_cancel₀ (Nat.cast_add_one_ne_zero m) (by rw [a, b, ih])
+    (h1 : PowerSeries.derivative E = E) : E = exp L :=
+  exp_unique_of_derivative_eq_self h1 h0
 
 open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc TensorProduct
 

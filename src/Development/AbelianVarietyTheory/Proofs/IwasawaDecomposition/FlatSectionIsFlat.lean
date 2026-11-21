@@ -54,7 +54,7 @@ theorem differentiableAt_det {A : V → Matrix m m ℂ} {b : V} (h : ∀ i j, Di
     DifferentiableAt ℂ (fun b => (A b).det) b := by
   simp only [Matrix.det_apply']
   refine DifferentiableAt.fun_sum fun s _ => (differentiableAt_const _).mul ?_
-  exact (HasFDerivAt.finset_prod fun i _ => (h _ _).hasFDerivAt).differentiableAt
+  exact (HasFDerivAt.finsetProd fun i _ => (h _ _).hasFDerivAt).differentiableAt
 
 theorem differentiableAt_horVal {K : V → Matrix (m ⊕ n) m ℂ} {C : V → Matrix n (m ⊕ n) ℂ} {b₀ : V}
     (hK : ∀ i j, DifferentiableAt ℂ (fun b => K b i j) b₀) (hC : ∀ i j, DifferentiableAt ℂ (fun b => C b i j) b₀)
@@ -91,6 +91,18 @@ theorem exists_generates {F : Type} [Field F] (Y : GlobalTheory.ProjVar.Var F) (
     add_zero (0 : Y.Dv) ▸ Y.mul_mem_riemannRochSpace_add _ _ _ _ hst hg
   have hinj : Function.Injective L := fun a b e =>
     Subtype.ext (mul_left_cancel₀ (mul_ne_zero hs0 ht0) (congrArg Subtype.val e))
+  letI : FiniteDimensional F (Y.H0 0) := by
+    have := finite_coh_of_isProjOver Y.algebraMap_Γ (structureModule Y.X) Y.isProjOver 0
+    haveI : Module.Finite F Γ(Y.X, ⊤) := .equiv ((coh.zeroUnitEquiv Y.X).restrictScalars F)
+    let f : Γ(Y.X, ⊤) →ₗ[F] Y.Fn := (IsScalarTower.toAlgHom F Γ(Y.X, ⊤) Y.Fn).toLinearMap
+    have hf : ∀ a, f a ∈ Y.H0 0 := fun a =>
+      GlobalTheory.ProjVar.Var.mem_riemannRochSpace_iff_regularAt_everywhere.2 fun x =>
+        CartierDiv.regularAt_zero_iff.2 (regAt_fnOf trivial trivial a)
+    apply Module.Finite.of_surjective (f.codRestrict _ hf)
+    intro a
+    obtain ⟨b, hb⟩ := exists_fnOf_eq (X := Y.X) (U := ⊤) trivial fun x _ =>
+      CartierDiv.regularAt_zero_iff.1 (GlobalTheory.ProjVar.Var.mem_riemannRochSpace_iff_regularAt_everywhere.1 a.2 x)
+    exact ⟨b, Subtype.ext hb⟩
   obtain ⟨u, hu⟩ := LinearMap.injective_iff_surjective.1 hinj ⟨1, GlobalTheory.ProjVar.Var.eff_iff_one_mem.1 Y.eff_zero⟩
   have hu' : s * t * u = 1 := congrArg Subtype.val hu
   refine ⟨s, fun y => ?_⟩

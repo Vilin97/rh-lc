@@ -172,7 +172,7 @@ theorem exists_trait (Z : Model Xo c β) (hβ : IsDedFrac β) (x : Z.X) :
     ∃ (T : CDVR) (χ : Sp T.V ⟶ Z.X) (t : SAB H (Sp T.V)) (_ : SABMap t Z.t χ) (_ : PELUnif (maximalIdeal T.V) t),
       χ (closedPoint T.V : Sp T.V) = x ∧ Set.range (jK T.V ≫ χ) ⊆ Set.range Z.j := by
   obtain ⟨T, χ, y, hx, hy⟩ := exists_base_trait Z hβ x
-  obtain ⟨_, _, _, _, _, m, -⟩ := sabPull CubePf.cubePull χ Z.t
+  obtain ⟨_, ⟨m⟩⟩ := exists_sab χ Z.t
   have hp := GlobalTheory.GoodTrait.polAt_of_point Z m (jK T.V) y hy
   obtain ⟨T', φ, t', hi, hl, ⟨m'⟩, ⟨P⟩⟩ := exists_unif_ext T _ hp
   obtain ⟨n, -⟩ := sabComp pullCubComp E H _ _ _ _ _ _ _ _ m m'

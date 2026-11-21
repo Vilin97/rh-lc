@@ -92,7 +92,7 @@ variable {D : D7} {u : D.what₂.Word} {i : ℕ} {hi : i ≤ D.R.m}
 theorem ld_lattice (c : (D.mem u).C.cls i) : Submodule.IsLattice D.host.E (Ld D u i hi c) := by
   have hL := bwB_clsCrd_lat D u i hi c
   obtain ⟨d, hd, hle⟩ := LocB.dual_le_bnd (sigD D : D.host.E →+* D.host.E) (gramN D i hi) (bwB_gramN_det D i hi) _ hL
-  exact ⟨LocB.fg_of_le_bnd hd hle, LocB.dual_span (sigD D : D.host.E →+* D.host.E) (gramN D i hi) _ hL⟩
+  exact Submodule.IsLattice.of_fg D.host.E (LocB.fg_of_le_bnd hd hle)
 
 
 set_option synthInstance.maxHeartbeats 400000 in
@@ -103,7 +103,7 @@ theorem ld_loc (K : ClsTied u i hi) (v : HeightOneSpectrum (𝓞 D.host.F)) (c :
       ((bc (prV (E := D.host.E) v) (K.y c).1)⁻¹).1 *ᵥ x ∈ dualV K v := by
   refine GlobalTheory.T.unitary_completion_maps_dualLattices D.host.F D.host.E (sigD D) _ (gramN D i hi) v (clsCrd D u i hi c) K.lev.Lb
     (bc (prV (E := D.host.E) v) (K.y c).1) (bwB_gramN_det D i hi) (bwB_clsCrd_lat D u i hi c)
-    ⟨Module.Finite.iff_fg.1 K.lev.Lb_fin, K.lev.Lb_span⟩
+    (Submodule.IsLattice.of_fg D.host.E (Module.Finite.iff_fg.1 K.lev.Lb_fin))
     (Formalism.UG.P.afsplit_bc_mem _ _ _ _ (K.y c).2) (fun x => ?_) x
   rw [← map_inv]
   exact rlv_yloc v (K.y c).1 (K.y_lat c) x

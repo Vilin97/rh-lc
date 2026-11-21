@@ -56,7 +56,21 @@ theorem tildeD_eq_chiId : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (�
   have hK : KD H ≤ (χ.1.comp (finPartI H.E)).ker :=
     (KerDet.kernel_open_and_factor R H).2.2.2 χ hχ.triv (fun v y hy _ => hχ.unr v y hy) fun v _ => hχ.unr v
   have hU := (ChiLaws.chi_laws R H χ hχ).1
-  have hfin := (ordSub_detSub_lattice H.E N M hM.fg hM.span_eq_top).1
+  have hfin : {w : HeightOneSpectrum (𝓞 H.E) | ordSub w (detSub M) ≠ 0}.Finite := by
+    by_cases h : ∃ k : H.Eˣ, (k : H.E) ∈ detSub M
+    · obtain ⟨k, hk⟩ := h
+      exact DetOrd.ordSub_finite (DetOrd.isFractional_detSub M hM.fg) k hk
+    · have hz : ∀ w, ordSub w (detSub M) = 0 := by
+        intro w
+        unfold ordSub
+        have he : {n : ℤ | ∃ k : H.Eˣ, (k : H.E) ∈ detSub M ∧ ordF w k = n} = ∅ := by
+          ext n
+          simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+          rintro ⟨k, hk, _⟩
+          exact h ⟨k, hk⟩
+        rw [he]
+        simp
+      simp [hz]
   unfold relDetT at hx
   have h1 := hU _ (QuotientGroup.eq.1 hx)
   rw [map_mul, map_inv, inv_mul_eq_one] at h1

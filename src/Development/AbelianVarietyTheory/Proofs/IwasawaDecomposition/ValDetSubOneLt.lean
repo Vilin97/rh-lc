@@ -184,8 +184,26 @@ theorem val_compAt_detIdl {SB : Finset (HeightOneSpectrum (𝓞 E))} (hSB : ∀ 
   · rw [if_pos h1, if_neg (hSB P h1), if_pos h1, map_one, mul_one, valued_algebraMap]
   by_cases h2 : conjPrime₂ P ∈ SB
   · rw [if_neg h1, if_pos h2, if_pos h2, map_one, valued_algebraMap, k3]
+  have hfull : Submodule.IsFullLattice E N := by
+    letI : Submodule.IsLattice E N := hN.1
+    refine ⟨?_⟩
+    · apply top_unique
+      rw [← ((Pi.basisFun E (Fin n)).map (fr P)).span_eq]
+      refine Submodule.span_le.2 ?_
+      rintro _ ⟨i, rfl⟩
+      obtain ⟨s, hs, hx⟩ := (mem_locP _ _ _).1 ((hf P _).2 (CharValCompare.single_mem_stdAt P i))
+      have hs0 : (algebraMap (𝓞 E) E s) ≠ 0 := by
+        intro h
+        have : s = 0 := (FaithfulSMul.algebraMap_injective (𝓞 E) E) (by simpa using h)
+        exact hs (this ▸ P.asIdeal.zero_mem)
+      have hx' : (algebraMap (𝓞 E) E s) • fr P (Pi.single i 1) ∈ N := by
+        rwa [IsScalarTower.algebraMap_smul]
+      have hm := Submodule.smul_mem (Submodule.span E (N : Set (Sp E n)))
+        (algebraMap (𝓞 E) E s)⁻¹ (Submodule.subset_span hx')
+      rw [← mul_smul, inv_mul_cancel₀ hs0, one_smul] at hm
+      simpa only [Module.Basis.map_apply, Pi.basisFun_apply, SetLike.mem_coe] using hm
   rw [if_neg h1, if_neg h2, if_neg h2, if_neg h1, map_pow, map_pow, valued_algebraMap, valued_algebraMap,
-    ordSub_detSub_eq hN.1 (hf P), ordSub_detSub_eq hN.1 (hf (conjPrime₂ P))]
+    ordSub_detSub_eq hfull (hf P), ordSub_detSub_eq hfull (hf (conjPrime₂ P))]
   have ex : ∀ (w : HeightOneSpectrum (𝓞 E)) (u : Eˣ), w.valuation E (u : E) = WithZero.exp (-ordF w u) := fun w u => by
     unfold ordF
     rw [neg_neg, WithZero.exp_log (by simp)]

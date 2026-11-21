@@ -33,11 +33,16 @@ structure ClosedClass (Ad : ∀ (M : Type) [AddCommGroup M] [Module O M], Repres
 variable {Ad : ∀ (M : Type) [AddCommGroup M] [Module O M], Representation O G M → Prop}
 
 theorem ClosedClass.twist (h : ClosedClass Ad) (χ : G →* Oˣ) :
-    ClosedClass (fun M _ _ π => Ad M (twistRep π χ)) where
-  sub f hf hi ha := h.sub f (fun σ x => by rw [twistRep_apply, twistRep_apply, map_smul, hf]) hi ha
-  quot f hf hs ha := h.quot f (fun σ x => by rw [twistRep_apply, twistRep_apply, map_smul, hf]) hs ha
-  prod ha hb := h.sub LinearMap.id
-    (fun σ x => Prod.ext (by simp [twistRep_apply]) (by simp [twistRep_apply])) Function.injective_id (h.prod ha hb)
+    ClosedClass (fun M _ _ π => Ad M (twistRep π χ)) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro M M' _ _ _ _ π π' f hf hi ha
+    exact h.sub f (fun σ x => by rw [twistRep_apply, twistRep_apply, map_smul, hf]) hi ha
+  · intro M M' _ _ _ _ π π' f hf hs ha
+    exact h.quot f (fun σ x => by rw [twistRep_apply, twistRep_apply, map_smul, hf]) hs ha
+  · intro M M' _ _ _ _ π π' ha hb
+    exact h.sub LinearMap.id
+      (fun σ x => Prod.ext (by simp [twistRep_apply]) (by simp [twistRep_apply]))
+      Function.injective_id (h.prod ha hb)
 
 variable [TopologicalSpace G]
 variable {M M' : Type} [AddCommGroup M] [Module O M] [AddCommGroup M'] [Module O M']

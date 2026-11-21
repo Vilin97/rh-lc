@@ -172,7 +172,7 @@ theorem tailUnip_le (k : ℕ) : tailUnip F r k ≤ blockTri (blk2 (k + 1)) := by
 
 theorem one_castLE {n : ℕ} (h : n ≤ r) (i j : Fin n) :
     (1 : Matrix (Fin r) (Fin r) F) (Fin.castLE h i) (Fin.castLE h j) = (1 : Matrix (Fin n) (Fin n) F) i j := by
-  simp [one_apply]
+  simp [Matrix.one_apply]
 
 def corner {k : ℕ} (h : k + 1 ≤ r) : tailUnip F r k →* tailUnip F (k + 1) k :=
   ((blkR h).comp (Subgroup.inclusion (tailUnip_le k))).codRestrict _ fun g =>
@@ -199,7 +199,7 @@ theorem corner_surj {k : ℕ} (h : k + 1 ≤ r) : Function.Surjective (corner (F
     fun a b => by simp [g, f]
   have h1 : ∀ a b, (1 : Matrix _ _ F) (e a) (e b) =
       fromBlocks (1 : Matrix (Fin (k + 1)) (Fin (k + 1)) F) 0 0 (1 : Matrix (Fin c) (Fin c) F) a b :=
-    fun a b => by rw [fromBlocks_one]; simp [one_apply]
+    fun a b => by rw [fromBlocks_one]; simp [Matrix.one_apply]
   refine ⟨⟨g, mem_tailUnip.2 fun i j hi hj => ?_⟩, ?_⟩
   · obtain ⟨a, rfl⟩ := e.surjective i
     obtain ⟨b, rfl⟩ := e.surjective j
