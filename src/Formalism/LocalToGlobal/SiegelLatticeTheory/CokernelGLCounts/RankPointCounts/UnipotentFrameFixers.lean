@@ -130,7 +130,9 @@ theorem fStarC_of_route2 (h1 : StarExists2 Zd u u' F0 what₂) (h2 : FwdC Zd u u
   intro γ w hγ w' hG' hk Z hZ
   have hC : Ctx γ Z := ⟨w, hγ, w', hG', hk, hZ⟩
   obtain ⟨F'₂, φ, φ', hS, hCoh⟩ := h1 γ Z hC
-  refine ⟨F'₂, φ, φ', hS.1, hS.2.2, hS.2.1, hCoh, ?_⟩
+  obtain ⟨Λ₀, hΛ₀, hfin⟩ := hCoh
+  letI := hΛ₀
+  refine ⟨F'₂, φ, φ', hS.1, hS.2.2, hS.2.1, ⟨Λ₀, inferInstance, hfin⟩, ?_⟩
   rw [frPart_eq]
   exact equiv_of_corr (IsPartner γ Z) (cls γ Z) (GlobSet Zd γ F'₂ φ φ') (RelN γ F'₂)
     (h2 γ Z hC F'₂ φ φ' hS) (h3 γ Z hC F'₂ φ φ' hS) (h4 γ Z hC F'₂ φ φ' hS)

@@ -78,7 +78,7 @@ theorem qat_of_kill_detect : Known → ∀ (D : D7) (T : Core D) (h : LawsCore T
   have hP₀ : 0 ≤ C₀ * zBase large₂ ^ A₀ := mul_nonneg hC₀ (Real.rpow_pos_of_pos hzpos _).le
   have hsum' := hsum.trans ((mul_le_mul_of_nonneg_right hroom.2.2 (Nat.cast_nonneg _)).trans
     (mul_le_mul_of_nonneg_left hA hP₀))
-  have hlog := log₂ (recB h) j ka CR Tt cc hlat
+  have hlog := log₂ (recB h) j ka CR Tt cc hlat.toIsLattice
   obtain ⟨hr1, hr2⟩ := room_of_bounds (Ah := Ah) hz hk hCh hC₀ hCd hroom.1 hroom.2.1 (hlog.trans hdim) hsum'
   refine qat_of_bridge' large₂ (recB h) j ka CR Ck Ch Ah _ _ Tt cc hlat
     (qbridge_of_numGood D large₂ (recB h) j ka CR Ch Ah _ _ Tt cc

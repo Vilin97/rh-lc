@@ -36,8 +36,8 @@ theorem tsum_pi_prod_le {ι : Type} [Fintype ι] {α : ι → Type} (f : ∀ i, 
     _ ≤ _ := Finset.prod_le_prod' fun i _ => ENNReal.sum_le_tsum _
 
 abbrev latRel (E : Type) [Field E] [NumberField E] (j : ℕ) :
-    {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsLattice E Λ} →
-      {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsLattice E Λ} → Prop :=
+    {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsFullLattice E Λ} →
+      {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsFullLattice E Λ} → Prop :=
   fun Λ Λ' => ∃ γ : GL (Fin j) E, ∀ y, (γ : Matrix (Fin j) (Fin j) E) *ᵥ y ∈ Λ'.1 ↔ y ∈ Λ.1
 
 theorem latRel_equiv (E : Type) [Field E] [NumberField E] (j : ℕ) : Equivalence (latRel E j) := by
@@ -50,10 +50,11 @@ theorem latRel_equiv (E : Type) [Field E] [NumberField E] (j : ℕ) : Equivalenc
     rw [Units.val_mul, ← Matrix.mulVec_mulVec, h', h]
 
 theorem countable_lattices (E : Type) [Field E] [NumberField E] (j : ℕ) :
-    Countable {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsLattice E Λ} := by
+    Countable {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsFullLattice E Λ} := by
   have : Countable E := Countable.of_equiv _ (Module.finBasis ℚ E).equivFun.toEquiv.symm
-  have h : ∀ Λ : {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsLattice E Λ},
-      ∃ s : Finset (Fin j → E), Submodule.span (𝓞 E) (s : Set (Fin j → E)) = Λ.1 := fun Λ => Λ.2.fg
+  have h : ∀ Λ : {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsFullLattice E Λ},
+      ∃ s : Finset (Fin j → E), Submodule.span (𝓞 E) (s : Set (Fin j → E)) = Λ.1 := fun Λ =>
+    Λ.2.toIsLattice.fg
   choose s hs using h
   refine Function.Injective.countable (f := s) fun a b hab => Subtype.ext ?_
   rw [← hs a, ← hs b, hab]

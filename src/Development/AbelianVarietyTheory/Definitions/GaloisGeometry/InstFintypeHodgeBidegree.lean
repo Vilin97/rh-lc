@@ -103,6 +103,13 @@ theorem wedgeF_ev_congr {m n k q q' Q : ℕ} (hq : q + q' = Q) (s : ComposableAr
       wedgeF F hq _ (ev s p' hp' j h1' f) (ev s r' hr' j h2' g) := by
   rw [ev_congr s p p' hp hp' e1, ev_congr s r r' hr hr' e2]
 
+local macro "fin_index_simp" : tactic => `(tactic|
+  (simp only [Function.comp_apply, fr, bk, Fin.succAboveOrderEmb_apply, Fin.succAbove,
+    Fin.lt_def, Fin.val_castSucc, Fin.val_succ, Fin.val_castLE, Fin.val_castAdd,
+    Fin.val_natAdd, finCongr_apply_coe, Fin.val_last, Fin.val_zero]
+   split_ifs <;> simp_all only [Fin.val_castSucc, Fin.val_succ, Fin.val_castLE,
+    Fin.val_castAdd, Fin.val_natAdd, finCongr_apply_coe, Fin.val_last, Fin.val_zero] <;> omega))
+
 theorem dH_cupTerm {m n k q q' Q : ℕ} (h : m + n = k) (hq : q + q' = Q) (f : Term F m q)
     (g : Term F n q') :
     dH F k Q (cupTerm F h hq f g) = cupTerm F (show m + 1 + n = k + 1 by omega) hq (dH F m q f) g +
@@ -174,7 +181,7 @@ theorem coe_ev_oneTerm {k : ℕ} (s : ComposableArrows C k) (p : Fin 1 → Fin (
 theorem oneTerm_cupTerm {a q : ℕ} (ha : 0 + a = a) (hq : 0 + q = q) (f : Term F a q) :
     cupTerm F ha hq (oneTerm F) f = f := by
   funext s
-  rw [cupTerm_apply, ev_self s (bk 0 a a ha.le) _ (fun _ ↦ by simp)]
+  rw [cupTerm_apply, ev_self s (bk 0 a a ha.le) _ (fun _ ↦ by simp [bk])]
   exact Subtype.ext ((congrArg (· * (f s).1) (coe_ev_oneTerm s _ _ _ _)).trans (one_mul _))
 
 end Terms
@@ -393,7 +400,7 @@ variable {C : Type u} [Category.{v} C] {F : C ⥤ CommAlgCat.{0} R}
 theorem cupTerm_coneTerm {m n N : ℕ} (h : m + n = N) (ω : Om R B m) (η : Om R B n) :
     cupTerm F rfl h (coneTerm e m ω) (coneTerm e n η) = coneTerm e N (wedgeOm R B h ω η) := by
   funext s
-  rw [cupTerm_apply, ev_self s (fr 0 0 le_rfl) _ (fun _ ↦ rfl), ev_self s (bk 0 0 0 le_rfl) _ (fun _ ↦ by simp)]
+  rw [cupTerm_apply, ev_self s (fr 0 0 le_rfl) _ (fun _ ↦ rfl), ev_self s (bk 0 0 0 le_rfl) _ (fun _ ↦ by simp [bk])]
   exact (mOm_wedgeOm _ h ω η).symm
 
 theorem coneCl_cup {m n N : ℕ} (h : m + n = N) (ω : LinearMap.ker (dOm R B m))

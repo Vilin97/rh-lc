@@ -129,10 +129,10 @@ theorem val_div_ord (x : kˣ) : valuation k ((x / unif k ^ ord k x : kˣ) : k) =
   let o : kˣ →* Multiplicative ℤ := MonoidHom.mk' (fun x => .ofAdd (ord k x)) fun x y => by
     rw [ord_mul, ofAdd_add]
   have h1 : o (x / unif k ^ ord k x) = 1 := by
-    rw [map_div, map_zpow, show o (unif k) = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one k unif_spec),
+    rw [map_div, map_zpow, show o (unif k) = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one unif_spec),
       ← ofAdd_zsmul, smul_eq_mul, mul_one]
     exact div_self' _
-  exact (ord_eq_zero_iff k).1 (ofAdd_eq_one.1 h1)
+  exact ord_eq_zero_iff.1 (ofAdd_eq_one.1 h1)
 
 theorem val_zpow (a : ℤ) : valuation k ((unif k ^ a : kˣ) : k) = uniformizer k ^ a := by
   rw [Units.val_zpow_eq_zpow_val, map_zpow₀, unif_spec]

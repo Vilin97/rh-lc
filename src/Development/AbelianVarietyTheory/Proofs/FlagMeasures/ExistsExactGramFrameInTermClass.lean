@@ -113,7 +113,9 @@ theorem exists_partner (hlat : Submodule.IsLattice E Λ) (hΛ : Formalism.Hermit
         simp only [hψ, RingHom.id_apply, smul_eq_mul, map_mul, Submodule.coe_smul]
         rw [← algebraMap_smul E c (x : S.V), map_smul]
         simp [hψ] }
-  obtain ⟨w, hw⟩ := FunIdx.exists_dual_vec S M0 Λ hlat hprim ψ'
+  have hfull : Submodule.IsFullLattice E Λ :=
+    { toIsLattice := hlat, span_eq_top := FunIdx.span_eq_top_of_unimodular Λ hlat hΛ }
+  obtain ⟨w, hw⟩ := FunIdx.exists_dual_vec S M0 Λ hfull hprim ψ'
   refine ⟨w, ?_, fun j => ?_⟩
   · have := w.2.1
     rwa [hΛ] at this

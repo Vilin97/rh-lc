@@ -36,7 +36,8 @@ theorem thPVec_ne_zero : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), T.rank ≤ S.
     have h1 := hn1 p hp
     rw [h0] at h1
     simp [nrm2] at h1
-  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red hS.1 hΛT.1 hinf (frMapAdj S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_add S T βS βT)
+  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red (GlobalTheory.PlaceVec.selfDual_isFullLattice S _ hS)
+    (GlobalTheory.PlaceVec.selfDual_isFullLattice T _ hΛT) hinf (frMapAdj S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_add S T βS βT)
     (GlobalTheory.PlaceVec.frMapAdj_up S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_down S T βS βT) (Pg ∪ Q)
     (fun y => omegaK Pg y * omegaQ Q T.rank ξ (-1) y) fun y y' h => by
       rw [GlobalTheory.PlaceVec.omegaK_congr Pg fun PP hPP => h PP (Finset.mem_union_left _ hPP),

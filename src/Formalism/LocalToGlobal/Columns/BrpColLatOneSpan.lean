@@ -68,7 +68,22 @@ def brpMatEquiv (B : GL (Fin n) K) : (Fin n → K) ≃ₗ[K] (Fin n → K) :=
 theorem brp_lidx_colLat (M : Submodule (𝓞 K) (Fin n → K)) (w : HeightOneSpectrum (𝓞 K)) (B : GL (Fin n) K)
     (hB : IsBasisAt w M B) :
     lidx w.asIdeal (colLat (1 : GL (Fin n) K)) M = vAdd w (B : Matrix (Fin n) (Fin n) K).det := by
-  rw [bridge_lidx_det_holds K (Fin n → K) w (colLat 1) M (brpMatEquiv K B) (brz_colLat_one_lattice K) ?_]
+  have hfull : Submodule.IsFullLattice K (colLat (1 : GL (Fin n) K)) := by
+    refine { toIsLattice := brz_colLat_one_lattice K, span_eq_top := ?_ }
+    apply eq_top_iff.mpr
+    intro v _
+    have hv : v = ∑ i, v i • (Pi.single i 1 : Fin n → K) := by
+      funext j
+      simp [Finset.sum_apply, Pi.single_apply]
+    rw [hv]
+    apply Submodule.sum_mem
+    intro i _
+    apply Submodule.smul_mem
+    apply Submodule.subset_span
+    change (Pi.single i 1 : Fin n → K) ∈ colLat (1 : GL (Fin n) K)
+    rw [lc_mem_colLat_one]
+    simpa [stdLat, Submodule.mem_pi] using (single_mem_stdLat (E := K) (n := n) i 1)
+  rw [bridge_lidx_det_holds K (Fin n → K) w (colLat 1) M (brpMatEquiv K B) hfull ?_]
   · show vAdd w (LinearMap.det (Matrix.toLin' (B : Matrix (Fin n) (Fin n) K))) = _
     rw [LinearMap.det_toLin']
   · rw [hB, lc_colLat_eq_gLat B]

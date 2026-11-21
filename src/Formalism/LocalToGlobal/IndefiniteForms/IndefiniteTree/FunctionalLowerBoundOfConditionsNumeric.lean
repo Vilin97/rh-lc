@@ -927,7 +927,7 @@ theorem vw_one' (w : Pl K) : vw w (1 : K) = 0 := by
 theorem functional_lower_bound_of_conditions [_root_.NumberField.IsTotallyComplex K] (wf : Df.WF) (S : IndefData Df) (N : IndefNum Bs) (O : FunData K Df)
     (C x CH b : ℝ)
     (hD : 0 < S.D) (hH0 : S.H0) (hl1a : S.BaseTypeSubspacesMapOntoBothSides) (hl1c : S.RowLatticeBoundForBasis) (hXE : ∀ v, IsUnit (S.XE v).det)
-    (hRR : Submodule.IsLattice K S.RR)
+    (hRR : Submodule.IsFullLattice K S.RR)
     (hRRw : ∀ w : Pl K, Formalism.HermitianLatticesTheory.localization₂ w.asIdeal S.RR =
       Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (matLat (S.ι (S.μ w)) (Df.abelian₂ (S.μ w))))
     (hC : 1 ≤ C) (hx : 1 ≤ x) (hL1 : 1 ≤ Real.log b) (hLx : Real.log b + Real.log x ≤ 3 * Real.log b)
@@ -1022,7 +1022,7 @@ theorem functional_lower_bound_of_conditions [_root_.NumberField.IsTotallyComple
 theorem functional_lower_bound_of_conditions_numeric [_root_.NumberField.IsTotallyComplex K] (wf : Df.WF) (S : IndefData Df) (Z : IndefScale Bs) (C₀ CH : ℝ)
     (O : FunData K Df) (C : ℝ)
     (hD : 0 < S.D) (hH0 : S.H0) (hl1a : S.BaseTypeSubspacesMapOntoBothSides) (hl1c : S.RowLatticeBoundForBasis) (hXE : ∀ v, IsUnit (S.XE v).det)
-    (hRR : Submodule.IsLattice K S.RR)
+    (hRR : Submodule.IsFullLattice K S.RR)
     (hRRw : ∀ w : Pl K, Formalism.HermitianLatticesTheory.localization₂ w.asIdeal S.RR =
       Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (matLat (S.ι (S.μ w)) (Df.abelian₂ (S.μ w))))
     (hC : 1 ≤ C) (hx : 1 ≤ Z.x) (hL1 : 1 ≤ Real.log Z.b) (hLx : Real.log Z.b + Real.log Z.x ≤ 3 * Real.log Z.b)

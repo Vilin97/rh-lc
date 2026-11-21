@@ -468,6 +468,28 @@ theorem isLattice_grid_zero {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) :
     rintro _ rfl; exact isLattice_X hL
   exact key (columnBlock L D.R.m) (colY_m L)
 
+theorem isFullLattice_top (G : GridData L sc) {j : ℕ} (hj : j ≤ D.R.m) :
+    Submodule.IsFullLattice D.host.E (G.Λ (.top j)) :=
+  GlobalTheory.ProjXCols.selfDual_isFullLattice _ _
+    (G.isV (X := .top j) hj fun _ e => by cases e).sd
+
+theorem isFullLattice_grid_succ (G : GridData L sc) {i : ℕ} (hi : i + 1 ≤ D.R.m) :
+    Submodule.IsFullLattice D.host.E (G.Λ (.grid (i + 1) D.R.m)) :=
+  GlobalTheory.ProjXCols.selfDual_isFullLattice _ _
+    (G.isV (X := .grid (i + 1) D.R.m) ⟨hi, le_rfl⟩ fun j e => by injection e with h1; omega).sd
+
+theorem isFullLattice_X {μ₀ : T} (hL : L.Is μ₀) : Submodule.IsFullLattice D.host.E L.ΛX := by
+  obtain ⟨c, hc⟩ := hL.βX
+  obtain ⟨hfg, hspan⟩ := GlobalTheory.ParahoricLift.base_lattice hc
+  letI : Submodule.IsLattice D.host.E L.ΛX := Submodule.IsLattice.of_fg D.host.E hfg
+  exact ⟨hspan⟩
+
+theorem isFullLattice_grid_zero {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) :
+    Submodule.IsFullLattice D.host.E (G.Λ (.grid 0 D.R.m)) := by
+  have key : ∀ X : LSp D, X = ⟨D.sp.X', L.ΛX⟩ → Submodule.IsFullLattice D.host.E X.lat := by
+    rintro _ rfl; exact isFullLattice_X hL
+  exact key (columnBlock L D.R.m) (colY_m L)
+
 end Lat
 
 section SBs
@@ -479,19 +501,21 @@ theorem isSBHalf_cosLoc_top (S : GridChoice W U) (t : T) {e : AE D} (he : IsIdem
     IsSBHalf e (latO (G.pS (.top t j)) (G.pT (.top t j)) (G.latS (.top t j) : Set _) (G.latT (.top t j) : Set _) fun _ => True)
       (cosLoc (locPl G t) e (S.βp (j + 1)) (S.βp j) N r) :=
   GlobalTheory.T.indicator_smallCoset_half_isSchwartzBruhat (G.V (.top j)) (G.V (.top (j + 1))) (G.Λ (.top j)) (G.Λ (.top (j + 1))) (S.βp j) (S.βp (j + 1)) (locPl G t) e N r
-    (isLattice_top G j.2.le) (isLattice_top G j.2) (S.βp_is j j.2.le) (S.βp_is (j + 1) j.2) he hr
+    (by first | exact isFullLattice_top G j.2.le | exact (isFullLattice_top G j.2.le).toIsLattice)
+    (by first | exact isFullLattice_top G j.2 | exact (isFullLattice_top G j.2).toIsLattice) (S.βp_is j j.2.le) (S.βp_is (j + 1) j.2) he hr
 
 theorem isSBHalf_cosLoc_chi {μ₀ : T} (hL : L.Is μ₀) (S : GridChoice W U) (t : T) {e : AE D} (he : IsIdemSum e (locPl G t))
     (N : ℕ) (i : Fin D.R.m) {r : WO (G.pS (.chi i D.R.m)) (G.pT (.chi i D.R.m))} (hr : IsHalf e r) :
     IsSBHalf e (latO (G.pS (.chi i D.R.m)) (G.pT (.chi i D.R.m)) (G.latS (.chi i D.R.m : Pair T) : Set _)
       (G.latT (.chi i D.R.m : Pair T) : Set _) fun _ => True)
       (cosLoc (locPl G t) e (S.B.β i D.R.m) (S.B.β (i + 1) D.R.m) N r) := by
-  have hT : Submodule.IsLattice D.host.E (G.Λ (.grid i D.R.m)) := by
+  have hT : Submodule.IsFullLattice D.host.E (G.Λ (.grid i D.R.m)) := by
     rcases i with ⟨_ | i, hi⟩
-    · exact isLattice_grid_zero hL G
-    · exact isLattice_grid_succ G hi.le
+    · exact isFullLattice_grid_zero hL G
+    · exact isFullLattice_grid_succ G hi.le
   exact GlobalTheory.T.indicator_smallCoset_half_isSchwartzBruhat (G.pS (.chi i D.R.m)) (G.pT (.chi i D.R.m)) (G.Λ (.grid (i + 1) D.R.m)) (G.Λ (.grid i D.R.m))
-    (S.B.β (i + 1) D.R.m) (S.B.β i D.R.m) (locPl G t) e N r (isLattice_grid_succ G i.2) hT
+    (S.B.β (i + 1) D.R.m) (S.B.β i D.R.m) (locPl G t) e N r (by first | exact isFullLattice_grid_succ G i.2 | exact (isFullLattice_grid_succ G i.2).toIsLattice)
+    (by first | exact hT | exact hT.toIsLattice)
     (S.B.isFrame_β hL i.2 le_rfl) (S.B.isFrame_β hL i.2.le le_rfl) he hr
 
 end SBs

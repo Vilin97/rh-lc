@@ -35,13 +35,13 @@ theorem ae_detNorm_pos (hj : 1 ≤ j) : ∀ᵐ g ∂(haarGL E j), 0 < detNorm E 
   simp [← h, show j ≠ 0 by omega]
 
 theorem latMean_congr (hj : 1 ≤ j) {F G : Submodule ℤ (VecInf E j) → ENNReal}
-    (h : ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsLattice E Λ → ∀ g, 0 < detNorm E j g →
+    (h : ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsFullLattice E Λ → ∀ g, 0 < detNorm E j g →
       F (latAt E j Λ g) = G (latAt E j Λ g)) : latMean E j F = latMean E j G := by
   unfold latMean
   refine tsum_congr fun c => ?_
   congr 1
   refine withDensity_congr_ae ?_
-  filter_upwards [ae_detNorm_pos E j hj] with g hg using h _ (Quot.out c).2.toIsLattice g hg
+  filter_upwards [ae_detNorm_pos E j hj] with g hg using h _ (Quot.out c).2 g hg
 
 theorem latMean_add (hE : IsTotallyComplex E) (hj : 1 ≤ j) {F G : Submodule ℤ (VecInf E j) → ENNReal}
     (hF : ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsLattice E Λ →

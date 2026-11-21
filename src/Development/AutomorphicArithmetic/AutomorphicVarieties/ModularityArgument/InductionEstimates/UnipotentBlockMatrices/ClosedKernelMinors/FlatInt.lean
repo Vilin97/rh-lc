@@ -87,6 +87,8 @@ private theorem specW [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 
   set_option synthInstance.maxHeartbeats 100000 in
     rw [huU, map_sum]
   convert hR using 1
+  funext x
+  simp only [Finset.sum_apply, th]
   rw [← finsum_sum_comm]
   · refine finsum_congr fun q => ?_
     set_option synthInstance.maxHeartbeats 100000 in

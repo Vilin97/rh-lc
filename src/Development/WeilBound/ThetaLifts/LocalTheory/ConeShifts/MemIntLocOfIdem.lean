@@ -90,8 +90,9 @@ theorem fr_smul (a : GL (Fin n) (Fv F v ⊗[F] E)) (z : AE F E) (M) : fr v a (z 
   congr 2
   ext i j; simp
 
-theorem exists_fr (X : Spc F E n) (hL : X.L.IsLattice E) : ∃ a : GL (Fin n) (Fv F v ⊗[F] E),
+theorem exists_fr (X : Spc F E n) (hL : Submodule.IsFullLattice E X.L) : ∃ a : GL (Fin n) (Fv F v ⊗[F] E),
     ∀ M, M ∈ Pres v X ↔ ∃ N : Matrix (Fin n) (Fin n) (intLoc F E v), (intLoc F E v).subtype.mapMatrix N = fr v a M := by
+  letI := hL
   obtain ⟨P, h1, h2⟩ := Frames.exists_rational_frame X.L v
   have ha := Frames.frame_of_rational P h1 h2
   set a : GL (Fin n) (Fv F v ⊗[F] E) := bc (inclR (F := F) (Fv F v)) P
@@ -123,7 +124,7 @@ theorem exists_fr (X : Spc F E n) (hL : X.L.IsLattice E) : ∃ a : GL (Fin n) (F
     rwa [fr_apply, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, ← Matrix.mul_assoc, ← Matrix.mul_assoc, Units.mul_inv,
       Matrix.one_mul, Matrix.mul_assoc, Units.mul_inv, Matrix.mul_one, ← mv] at this
 
-theorem smul_mem_Pres {X : Spc F E n} (hL : X.L.IsLattice E) {z : AE F E} (hz : compFin F E v z ∈ intLoc F E v) {M}
+theorem smul_mem_Pres {X : Spc F E n} (hL : Submodule.IsFullLattice E X.L) {z : AE F E} (hz : compFin F E v z ∈ intLoc F E v) {M}
     (hM : M ∈ Pres v X) : z • M ∈ Pres v X := by
   obtain ⟨a, ha⟩ := exists_fr (v := v) X hL
   obtain ⟨N, hN⟩ := (ha M).1 hM
@@ -152,7 +153,7 @@ theorem eq_ext {z : AE F E} (hz : At (evFin F v) (z - 1)) : z = 1 - sgE E v 1 + 
     exact at_sub (at_add hz (at_sgE _)) (at_sgE _)
   · simp [comp_sgE]
 
-theorem chi_det {X : Spc F E n} (hL : X.L.IsLattice E) (χ : Chr F E)
+theorem chi_det {X : Spc F E n} (hL : Submodule.IsFullLattice E X.L) (χ : Chr F E)
     (hχ : ∀ w : HeightOneSpectrum (𝓞 E), w.under (𝓞 F) = v → UnrAt χ w) (t : GL (Fin n) (AE F E))
     (h1 : t.1 ∈ Pres v X) (h2 : (t⁻¹).1 ∈ Pres v X) (h3 : At (evFin F v) (t.1 - 1)) :
     χ (Matrix.GeneralLinearGroup.det t) = 1 := by
@@ -299,7 +300,7 @@ theorem exists_eta (hσ : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) :
     norm_num
     rfl
 
-theorem exists_beta {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} (hL : X.L.IsLattice E) (k : UA σ X.J)
+theorem exists_beta {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} (hL : Submodule.IsFullLattice E X.L) (k : UA σ X.J)
     (h0 : At (evFin F v) (mat k - 1)) (h1 : mat k ∈ Pres v X) (h2 : mat k⁻¹ ∈ Pres v X) :
     ∃ b b' f', Adj (cA σ) (incM F X.J) b b' ∧ Adj (cA σ) (incM F X.J) b' b ∧ b + b' = -1 ∧ b ∈ Pres v X ∧ f' ∈ Pres v X ∧
       (1 + (1 - mat k) * b) * f' = 1 := by

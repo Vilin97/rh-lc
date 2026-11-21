@@ -85,7 +85,7 @@ theorem admissible (hF : GlobalTheory.Published.FlathFactorisation) (hπ : IsIrr
   classical
   refine ⟨isSmooth_smoothRep _, fun K hKo hKc => ?_⟩
   obtain ⟨R, ξ, B, hR, hKξ⟩ := hF.exists_factorisation hπ
-  haveI : Submodule.IsLattice D.host.E (frameLat V) := SelfDual.isLattice_frameLat V
+  haveI : Submodule.IsFullLattice D.host.E (frameLat V) := SelfDual.isLattice_frameLat V
   obtain ⟨S0, hS0⟩ := GlobalTheory.PlaceGen.exists_levelOff_le D.sp.cm.sig V.gram (frameLat V) (K.comap (toFin V))
     (hKo.preimage (continuous_toFin V))
   let Kp : ∀ v, Subgroup (Gv V v) := fun v => K.comap (locFin V v) ⊓ Kv V v

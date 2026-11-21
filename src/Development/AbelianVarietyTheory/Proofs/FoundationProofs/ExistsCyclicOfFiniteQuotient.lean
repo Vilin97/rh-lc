@@ -193,7 +193,7 @@ theorem eventually_exists_map_eq (p : E[X]) : ∀ᶠ v : HeightOneSpectrum (𝓞
   · exact ⟨0, by rw [notMem_support_iff.1 hi, map_zero, map_zero]⟩
 
 theorem eventually_conj_of_charpoly_eq (h : IsCMExt F E σ) (hJ : IsHermND σ J) (L : Submodule (𝓞 E) (Fin n → E))
-    [Submodule.IsLattice E L] {P : E[X]} (hP : P.Separable) :
+    [Submodule.IsFullLattice E L] {P : E[X]} (hP : P.Separable) :
     ∀ᶠ v in cofinite, ∀ g ∈ stabLoc σ J L v, ∀ g' ∈ stabLoc σ J L v,
       (matHom _ σ J g).1.charpoly = P.map (inclR (Fv F v)) → (matHom _ σ J g').1.charpoly = P.map (inclR (Fv F v)) →
       ∃ k ∈ stabLoc σ J L v, k⁻¹ * g * k = g' := by
@@ -258,7 +258,7 @@ theorem eventually_conj_of_charpoly_eq (h : IsCMExt F E σ) (hJ : IsHermND σ J)
   exact this
 
 theorem eventually_conj_mem_stabLoc (h : IsCMExt F E σ) (hJ : IsHermND σ J) (L : Submodule (𝓞 E) (Fin n → E))
-    [Submodule.IsLattice E L] {γ : GRat σ J} (hγ : IsRegSS γ.1.1) :
+    [Submodule.IsFullLattice E L] {γ : GRat σ J} (hγ : IsRegSS γ.1.1) :
     ∀ᶠ v in cofinite, {x | x⁻¹ * proj σ J v (ratEmb σ J γ) * x ∈ stabLoc σ J L v} =
       (cent (proj σ J v (ratEmb σ J γ)) : Set (GLoc σ J v)) * (stabLoc σ J L v : Set (GLoc σ J v)) := by
   filter_upwards [eventually_conj_of_charpoly_eq h hJ L hγ, eventually_proj_mem_stabLoc σ J L (ratEmb σ J γ)]
@@ -277,16 +277,21 @@ theorem eventually_conj_mem_stabLoc (h : IsCMExt F E σ) (hJ : IsHermND σ J) (L
     rw [this, ← mem_cent.1 ht, inv_mul_cancel_left]
     exact mul_mem (mul_mem (inv_mem hk) hg) hk
 
-theorem eventually_forall_proj_mem (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] {K : Set (GAd σ J)}
+theorem eventually_forall_proj_mem (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L] {K : Set (GAd σ J)}
     (hK : IsCompact K) : ∀ᶠ v in cofinite, ∀ x ∈ K, proj σ J v x ∈ stabLoc σ J L v := by
-  refine hK.induction_on (p := fun K => ∀ᶠ v in cofinite, ∀ x ∈ K, proj σ J v x ∈ stabLoc σ J L v) (by simp)
-    (fun _ _ hs ht => ht.mono fun v hv x hx => hv x (hs hx))
-    (fun _ _ hs ht => (hs.and ht).mono fun v hv x hx => hx.elim (hv.1 x) (hv.2 x)) fun x _ => ?_
-  refine ⟨_, mem_nhdsWithin_of_mem_nhds (((restrGroup_GAd σ J L).isOpen_level.preimage
-    (continuous_const_mul x⁻¹)).mem_nhds (by simp)), (eventually_proj_mem_stabLoc σ J L x).mono fun v hv y hy => ?_⟩
-  simpa using mul_mem hv (hy v)
+  apply hK.induction_on (p := fun K => ∀ᶠ v in cofinite, ∀ x ∈ K, proj σ J v x ∈ stabLoc σ J L v)
+  · simp
+  · intro s t hs ht
+    exact ht.mono fun v hv x hx => hv x (hs hx)
+  · intro s t hs ht
+    exact (hs.and ht).mono fun v hv x hx => hx.elim (hv.1 x) (hv.2 x)
+  · intro x hx
+    refine ⟨_, mem_nhdsWithin_of_mem_nhds (((restrGroup_GAd σ J L).isOpen_level.preimage
+      (continuous_const_mul x⁻¹)).mem_nhds (by simp)), ?_⟩
+    exact (eventually_proj_mem_stabLoc σ J L x).mono fun v hv y hy => by
+      simpa using mul_mem hv (hy v)
 
-theorem isProperOrbit_GAd_of_local (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] {γ : GAd σ J}
+theorem isProperOrbit_GAd_of_local (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L] {γ : GAd σ J}
     (hK : ∀ᶠ v in cofinite, {x | x⁻¹ * proj σ J v γ * x ∈ stabLoc σ J L v} =
       (cent (proj σ J v γ) : Set (GLoc σ J v)) * (stabLoc σ J L v : Set (GLoc σ J v)))
     (ha : ∀ w, IsProperOrbit (cent (projArch σ J w γ)) (projArch σ J w γ))
@@ -327,9 +332,10 @@ theorem isProperOrbit_GAd_of_local (L : Submodule (𝓞 E) (Fin n → E)) [Submo
     · obtain ⟨t, h1, k, hk, e⟩ := (Set.ext_iff.1 (hS v hv).1 (proj σ J v x)).1 (by simpa using (hS v hv).2 _ hx)
       exact ⟨t⁻¹, inv_mem h1, fun h => absurd h hv, fun _ => by rw [← e, inv_mul_cancel_left]; exact hk⟩
   choose b hb1 hb2 hb3 using this
-  obtain ⟨t, h1, h2⟩ := (restrGroup_GAd σ J L).exists_eq a b (by
+  have hb : ∀ᶠ v in cofinite, b v ∈ stabLoc σ J L v := by
     filter_upwards [S.eventually_cofinite_notMem, eventually_proj_mem_stabLoc σ J L x] with v hv hxv
-    exact (Subgroup.mul_mem_cancel_right _ hxv).1 (hb3 v hv))
+    exact (Subgroup.mul_mem_cancel_right _ hxv).1 (hb3 v hv)
+  obtain ⟨t, h1, h2⟩ := (restrGroup_GAd σ J L).exists_eq a b hb
   refine ⟨t, mem_cent.2 (GAd_ext σ J (fun w => ?_) fun v => ?_), fun w => ?_, fun v hv => ?_, fun v hv => ?_⟩
   · simpa only [map_mul, h1] using mem_cent.1 (ha1 w)
   · simpa only [map_mul, h2] using mem_cent.1 (hb1 v)
@@ -357,7 +363,7 @@ theorem isProperOrbit_ratEmb (h : IsCMExt F E σ) (hJ : IsHermND σ J) {γ : GRa
     fun v => isProperOrbit_GLoc h hJ (isRegSS_proj_ratEmb hγ v)
 
 theorem regular_semisimple_adelic (h : IsCMExt F E σ) (hJ : IsHermND σ J) (L : Submodule (𝓞 E) (Fin n → E))
-    [Submodule.IsLattice E L] (γ : GRat σ J) (hγ : IsRegSS γ.1.1) :
+    [Submodule.IsFullLattice E L] (γ : GRat σ J) (hγ : IsRegSS γ.1.1) :
     (∀ᶠ v in cofinite, {x | x⁻¹ * proj σ J v (ratEmb σ J γ) * x ∈ stabLoc σ J L v} =
       (cent (proj σ J v (ratEmb σ J γ)) : Set (GLoc σ J v)) * (stabLoc σ J L v : Set (GLoc σ J v))) ∧
     IsProperOrbit (cent (ratEmb σ J γ)) (ratEmb σ J γ) :=

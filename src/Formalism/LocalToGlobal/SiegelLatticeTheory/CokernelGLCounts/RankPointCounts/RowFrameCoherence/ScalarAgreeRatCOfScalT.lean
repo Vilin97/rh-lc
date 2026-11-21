@@ -74,7 +74,7 @@ theorem agree_pair (s₁ s₂ : Formalism.L2.SG.TermOp.GTerm X u u' (X.Fu u) (X.
         ∃ y₁, orthogonalComplementRational X u u' (Mof X Y u u' s₁) y₁ ∧ y₁ - y₂ ∈ WperpE X u ∧
           Miof X Y u u' s₁ *ᵥ y₁ - Miof X Y u u' s₂ *ᵥ y₂ ∈ WperpE X u' := by
   have hRL : IsRowLat D (X.Fu u) s₁.lam := (Y.rowsOK u).1 s₁.lam s₁.mem
-  obtain ⟨_, ⟨hlat, _, hlift, _⟩, _⟩ := hRL
+  obtain ⟨hgen, ⟨hlat, _, hlift, _⟩, _⟩ := hRL
   have hL₁ : IsLift s₁.lam s₁.frame := s₁.rep.2.2.2.2.1
   have hL₂ : IsLift s₁.lam s₂.frame := by rw [hl]; exact s₂.rep.2.2.2.2.1
   have gv₁ := gval_ne X Y u u' s₁ hG₁
@@ -158,7 +158,7 @@ theorem agree_pair (s₁ s₂ : Formalism.L2.SG.TermOp.GTerm X u u' (X.Fu u) (X.
     intro y₂ hy₂
     have hV := orthogonal_toV (Λ := s₁.lam) X Y u u' s₂ hy₂
     obtain ⟨y₁, hy₁, hd1, hd2⟩ := orthogonal_transport hTh'' hV
-    refine ⟨X.crd y₁, orthogonal_ofV X Y u u' s₁ hlat hlift hL₁ hy₁, ?_, ?_⟩
+    refine ⟨X.crd y₁, orthogonal_ofV X Y u u' s₁ (by first | exact hgen.1 | exact hgen.1.toIsLattice) hlift hL₁ hy₁, ?_, ?_⟩
     · apply wperp_of X u
       rw [Formalism.L2.SG.Pf.Level.toV_sub, Formalism.L2.SG.Pf.Level.toV_crd]
       exact fixedX X u _ hd1

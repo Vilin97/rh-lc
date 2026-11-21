@@ -67,7 +67,7 @@ theorem exists_extended_identification : ∀ (E : Type) [Field E] [NumberField E
         change _ ≫ ((Over.pullback zV).obj tX.G).hom = _ ≫ ((Over.pullback zV).obj tX.G).hom
         rw [Category.assoc, Category.assoc, h₂, h₁, ← Category.assoc, h₃]
     have key : G.act.act a ≫ e.hom = e.hom ≫ (Over.pullback zV).map (tX.act.act a) := by
-      refine GlobalTheory.ExtUnique.over_hom_ext_of_isPullback _ m2.cart.1 ?_
+      refine GlobalTheory.ExtUnique.over_hom_ext_of_isPullback m2.cart.1 ?_
       rw [Over.comp_left, Over.comp_left, ← Category.assoc, ← m2.act a, Category.assoc, heq, hψa,
         ← Category.assoc, heq]
     have key' := congrArg (fun f => f.left ≫ Limits.pullback.fst tX.G.hom zV) key

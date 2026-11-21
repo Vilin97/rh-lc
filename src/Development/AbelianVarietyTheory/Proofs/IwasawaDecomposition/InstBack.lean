@@ -16,24 +16,26 @@ noncomputable section
 
 namespace GlobalTheory.Mem.Db.DivTr
 
-section GyGen
-
-variable {D : D7} (N : ∀ u, Submodule (𝓞 D.what₂.LL) (D.div.Nu u).V) (h : D.what₂.Word → ℝ)
-
-end GyGen
-
 variable {B : Base} {f : Fr B.toPre} {T : TwDat B}
 variable (w : ColW B f T) (Z : w.Lt) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ)
 
+-- Construct the records directly at the index used by the transported columns.
+abbrev latTrZ (Gy : G.LatInst (w.D Z)) : G.LatInst (w.D (setDivZ Z N h)) := { Gy with }
+
+open DivX (md) in
+abbrev divTrZ (X : DivX (w.D Z)) : DivX (w.D (setDivZ Z N h)) :=
+  { X with md := fun S κ p _ la z => { md X S κ p la z with } }
+
 def kerTr {t : ColT w Z} {Gy : G.LatInst (w.D Z)} (ker : KerFam (w.D Z) t.Gt t.cmp (w.tw Z) Gy) :
-    KerFam (w.D (setDivZ Z N h)) (colTTr w Z N h t).Gt (colTTr w Z N h t).cmp (w.tw (setDivZ Z N h)) (latTr (D := w.D Z) N h Gy) :=
+    KerFam (w.D (setDivZ Z N h)) (colTTr w Z N h t).Gt (colTTr w Z N h t).cmp
+      (w.tw (setDivZ Z N h)) (latTrZ w Z N h Gy) :=
   fun u v g => { ker u v g with }
 
 
 set_option maxHeartbeats 4000000 in
 def ktTr {t : ColT w Z} {X : DivX (w.D Z)} {Gy : G.LatInst (w.D Z)} {ker : KerFam (w.D Z) t.Gt t.cmp (w.tw Z) Gy}
     (kt : KerT t X Gy ker) :
-    KerT (colTTr w Z N h t) (divTr (D := w.D Z) N h X) (latTr (D := w.D Z) N h Gy) (kerTr w Z N h ker) :=
+    KerT (colTTr w Z N h t) (divTrZ w Z N h X) (latTrZ w Z N h Gy) (kerTr w Z N h ker) :=
   { kt with
     O := fun u a => { kt.O u a with }
     E := { kt.E with }
@@ -47,11 +49,13 @@ theorem entC_tr {t : ColT w Z} {X : DivX (w.D Z)} {Gy : G.LatInst (w.D Z)} {ker 
     (H : ∃ (Pl : Examples₂.EntPl (w.D Z)) (Bs : Formalism.L2.Ker.PlaceMatrixFamily (w.D Z)) (hh : Formalism.L2.Ker.KerEntHyp Pl kt.O Bs X (w.tw Z)),
       kt.E = Formalism.L2.Ker.kerEntC Pl kt.O Bs hh) :
     ∃ (Pl : Examples₂.EntPl (w.D (setDivZ Z N h))) (Bs : Formalism.L2.Ker.PlaceMatrixFamily (w.D (setDivZ Z N h)))
-      (hh : Formalism.L2.Ker.KerEntHyp Pl (ktTr w Z N h kt).O Bs (divTr (D := w.D Z) N h X) (w.tw (setDivZ Z N h))),
+      (hh : Formalism.L2.Ker.KerEntHyp Pl (ktTr w Z N h kt).O Bs (divTrZ w Z N h X) (w.tw (setDivZ Z N h))),
       (ktTr w Z N h kt).E = Formalism.L2.Ker.kerEntC Pl (ktTr w Z N h kt).O Bs hh := by
   obtain ⟨Pl, Bs, hh, e⟩ := H
   exact ⟨{ Pl with }, Bs, { hh with },
-    congrArg (fun E => ({ E with } : Formalism.BasicNotions.KerEnt (w.D (setDivZ Z N h)) (divTr (D := w.D Z) N h X) (w.tw (setDivZ Z N h)))) e⟩
+    congrArg (fun E : Formalism.BasicNotions.KerEnt (w.D Z) X (w.tw Z) =>
+      ({ E with } : Formalism.BasicNotions.KerEnt (w.D (setDivZ Z N h))
+        (divTrZ w Z N h X) (w.tw (setDivZ Z N h)))) e⟩
 
 end GlobalTheory.Mem.Db.DivTr
 

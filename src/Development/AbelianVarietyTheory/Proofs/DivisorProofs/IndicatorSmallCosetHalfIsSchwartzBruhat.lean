@@ -126,12 +126,12 @@ set_option maxHeartbeats 1000000 in
 theorem isSBHalf_cosLoc : ∀ {D : D7} (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E))
     (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)) (βS : GL (Fin S.rank) (Lev.EAf D))
     (βT : GL (Fin T.rank) (Lev.EAf D)) (P : Finset (Pl D.host.E)) (e : AE D) (n : ℕ) (r : WO S T),
-    Submodule.IsLattice D.host.E ΛS → Submodule.IsLattice D.host.E ΛT → IsFrame βS ΛS → IsFrame βT ΛT →
+    Submodule.IsFullLattice D.host.E ΛS → Submodule.IsFullLattice D.host.E ΛT → IsFrame βS ΛS → IsFrame βT ΛT →
     IsIdemSum e P → IsHalf e r → IsSBHalf e (latO S T ΛS ΛT fun _ => True) (cosLoc P e βT βS n r) := by
   intro D S T ΛS ΛT βS βT P e n r hS hT hFS hFT he _
   classical
   obtain ⟨a, ha, h1⟩ := WeilOver.exists_hom_le hS hT
-  obtain ⟨b, hb, h2⟩ := WeilOver.exists_le_hom hS hT
+  obtain ⟨b, hb, h2⟩ := WeilOver.exists_le_hom hS.toIsLattice hT.toIsLattice
   obtain ⟨e0, e1, e2⟩ := Comparison₂.cpt_idemSum he
   have hM : 0 < Ideal.absNorm (∏ w ∈ P, w.asIdeal ^ n) :=
     Nat.pos_of_ne_zero fun h => prod_pow_ne_bot P n (Ideal.absNorm_eq_zero_iff.1 h)

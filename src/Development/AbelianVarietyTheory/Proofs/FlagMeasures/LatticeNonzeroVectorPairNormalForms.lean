@@ -246,10 +246,8 @@ theorem isLattice_sum {k : ℕ} (𝔞 : Ideal (𝓞 E)) (L : Submodule (𝓞 E) 
     have hhead : Pi.single 0 (y 0) ∈ P := by
       rw [← hs]
       exact P.smul_mem _ (Submodule.subset_span h1)
-    calc
-      y = Pi.single 0 (y 0) + consZero k (Fin.tail y) := by
-        rw [← cons_eq, Fin.cons_self_tail]
-      _ ∈ P := P.add_mem hhead hy
+    have hy' := P.add_mem hhead hy
+    rwa [← cons_eq, Fin.cons_self_tail] at hy'
 theorem exists_normal {k : ℕ} (Λ : Submodule (𝓞 E) (Fin (k + 1) → E)) (hΛ : Submodule.IsFullLattice E Λ)
     (h1 : Pi.single 0 1 ∈ Λ) :
     ∃ (e : (Fin (k + 1) → E) ≃ₗ[E] (Fin (k + 1) → E)) (𝔞 : Ideal (𝓞 E)) (L : Submodule (𝓞 E) (Fin k → E)),

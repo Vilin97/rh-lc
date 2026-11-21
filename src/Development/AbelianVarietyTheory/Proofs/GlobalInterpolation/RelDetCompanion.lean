@@ -183,8 +183,8 @@ theorem relDet_companion {SG : Finset (HeightOneSpectrum (𝓞 E))} {ϖ : 𝓞 E
     (h3 : ∀ (P : ↥(divs ϖ)) (y : Sp E n), y ∈ localization₂ P.1.asIdeal N'' ↔ y ∈ d.1.at P.1 ∧ d.1.f P y = 0) :
     relDet d.1.N N'' = Submodule.span (𝓞 E) {(ϖ : E) / star (ϖ : E)} := by
   have hN : IsSdLat d.1.N := ⟨d.2.lat, d.2.uni⟩
-  choose f hf using fun P => exists_isFr P hN.1
-  choose f'' hf'' using fun P => exists_isFr P hN''.1
+  choose f hf using fun P => exists_isFr P hN
+  choose f'' hf'' using fun P => exists_isFr P hN''
   have hϖ : (ϖ : E) ≠ 0 := by simpa using h0
   have hϖ' : star (ϖ : E) ≠ 0 := star_ne_zero.2 hϖ
   have hnot : ∀ P : HeightOneSpectrum (𝓞 E), ϖ ∈ P.asIdeal → cO E ϖ ∉ P.asIdeal := fun P a b => by

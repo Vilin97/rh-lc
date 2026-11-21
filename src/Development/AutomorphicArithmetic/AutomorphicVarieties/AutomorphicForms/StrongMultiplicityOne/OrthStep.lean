@@ -20,6 +20,12 @@ theorem UpperTheory.V.Af.StrongMultiplicityOne.orthStep :
     UpperTheory.V.Af.StrongMultiplicityOne.ChartCont → UpperTheory.V.Af.StrongMultiplicityOne.OrthStep := by
   classical
   intro hcc E _ _ _ n μ _ f hf ⟨C, hC⟩ hl a ha ⟨D, hD⟩ h0 β h
+  have : OpensMeasurableSpace (RightCosetSpace (Reduction.rationalGLOne (K := E) (n := n))) := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      infer_instance
+  have : OpensMeasurableSpace (RightCosetSpace (Reduction.rationalGLOne (K := E) (n := n)) × Lie E n) := by
+    set_option synthInstance.maxHeartbeats 400000 in
+      infer_instance
   have := Reduction.isFiniteMeasure_quotientMeasure (K := E) (n := n) μ
   generalize RightCosetSpace.quotientMeasure (Reduction.rationalGLOne (K := E) (n := n)) μ = ν at *
   have : SFinite ν := sfinite_of_finite ν

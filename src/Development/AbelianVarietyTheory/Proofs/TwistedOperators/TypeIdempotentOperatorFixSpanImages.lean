@@ -22,7 +22,8 @@ namespace GlobalTheory
 
 theorem idemOp_fix_span : ∀ (D : D7) (V : HSp D) (T : TypeDataG V) (μf : ∀ v, Measure (GLoc D.sp.cm.sig V.gram v)), (∀ v, (μf v).IsHaarMeasure) → ∀ (W : Type) [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (GfC V) W), GlobalTheory.PRep.IsSmooth σ → ∀ (v : T.S) (x : W), x ∈ Submodule.span ℂ {y | ∃ φ : T.W v →ₗ[ℂ] W, (∀ (k : Kv V v) z, φ (T.τ v ((T.frame v).red k) z) = σ (locFin V v k) (φ z)) ∧ y ∈ LinearMap.range φ} → smoothOp (σ.comp (locFin V v)) (μf v) (T.idem μf v) x = x := by
   intro D V T μf hμ W _ _ σ hσ v x hx
-  haveI := hμ v
+  have := hμ v
+  have := SelfDual.isLattice_frameLat V
   have hc : Continuous (locFin V v) := (continuous_emb _ _ _).subtype_mk _
   have hs : IsSmooth (σ.comp (locFin V v)) := fun y => (hσ y).preimage hc
   have hk : IsOpen (((T.frame v).red.ker : Subgroup (Kv V v)) : Set (Kv V v)) := by

@@ -80,7 +80,7 @@ theorem fr_of_frame {R : Type} [CommRing R] {E : Type} [CommRing E] [Algebra R E
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {B : Base F E}
 
 theorem fr_plane (hB : B.IsGood σ) {m m₁ i₀ i₁ : ℕ} {Y : Spc F E m} {Y₁ : Spc F E m₁} {H : Plane E m m₁}
-    (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsLattice E) (η : ℤˣ) (hJ : ∀ i j, σ (Y.J j i) = ((η : ℤ) : E) * Y.J i j) :
+    (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsFullLattice E) (η : ℤˣ) (hJ : ∀ i j, σ (Y.J j i) = ((η : ℤ) : E) * Y.J i j) :
     ∃ π ρ, Fr (cA σ) (incM F Y.J) (incM F Y₁.J) (hyp Unit η) (incM F H.ι)
       (fromCols (replicateCol Unit (incV F H.x)) (replicateCol Unit (incV F H.y))) π ρ := by
   obtain ⟨Q, hPQ, hQP, -⟩ := PositivityTheory.Mix.Adapt.exists_frame_inv hH hL

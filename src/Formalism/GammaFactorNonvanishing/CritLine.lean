@@ -1,7 +1,7 @@
 module
 
-public import Development.AutomorphicArithmetic.CharacterBoxes.EveryCharacter
 public import Formalism.GammaFactorNonvanishing.RhOfRight
+public import Statements
 
 @[expose] public section
 
@@ -12,7 +12,8 @@ theorem Formalism.VW.gammaFactor_ne_zero {N : ℕ} (χ : DirichletCharacter ℂ 
   · rw [h.gammaFactor_def]; exact Gammaℝ_ne_zero_of_re_pos hs
   · rw [h.gammaFactor_def]; exact Gammaℝ_ne_zero_of_re_pos (by rw [add_re, one_re]; linarith)
 
-theorem Formalism.VW.critLine (h : UpperTheory.EveryCharacter) (N : ℕ) [NeZero N] (χ : DirichletCharacter ℂ N) (hχ : χ.IsPrimitive) (s : ℂ)
+theorem Formalism.VW.critLine (h : DirichletLNonvanishingRightOfHalf) (N : ℕ) [NeZero N]
+    (χ : DirichletCharacter ℂ N) (hχ : χ.IsPrimitive) (s : ℂ)
     (h0 : 0 < s.re) (h1 : s.re < 1) (hz : LFunction χ s = 0) : s.re = 1 / 2 := by
   have hs0 : s ≠ 0 := fun e => by simp [e] at h0
   have hs1 : s ≠ 1 := fun e => by simp [e] at h1
@@ -26,11 +27,11 @@ theorem Formalism.VW.critLine (h : UpperTheory.EveryCharacter) (N : ℕ) [NeZero
     have hfe := hinv.completedLFunction_one_sub s
     rw [inv_inv, hc, mul_zero] at hfe
     have h2 : (1 - s) ≠ 0 := sub_ne_zero.2 hs1.symm
-    refine h N χ⁻¹ (1 - s) (by rw [sub_re, one_re]; linarith) (Or.inr fun e => hs0 (by linear_combination -e)) ?_
+    refine h N χ⁻¹ (1 - s) (by rw [sub_re, one_re]; linarith)
+      (Or.inr fun e => hs0 (sub_eq_self.mp e)) ?_
     rw [LFunction_eq_completed_div_gammaFactor χ⁻¹ (1 - s) (Or.inl h2), hfe, zero_div]
   · exact h N χ s hgt (Or.inr hs1) hz
 
-theorem Formalism.VW.rh_of_every (h : UpperTheory.EveryCharacter) : RiemannHypothesis :=
+theorem Formalism.VW.rh_of_every (h : DirichletLNonvanishingRightOfHalf) : RiemannHypothesis :=
   Formalism.VW.rh_of_right fun s hs hs1 => by
-    have := h 1 (1 : DirichletCharacter ℂ 1) s hs (Or.inr hs1)
-    rwa [LFunction_modOne_eq] at this
+    simpa only [LFunction_modOne_eq] using h 1 (1 : DirichletCharacter ℂ 1) s hs (Or.inr hs1)

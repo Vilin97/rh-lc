@@ -53,7 +53,7 @@ theorem loc_of_formula {n : ℕ} (t₀ : Fin n → ℂ) {ρ r : ℝ} (hρ : 0 < 
   refine ⟨V, hV, ⟨by exact Set.mem_preimage.mpr (mem_ball_self hρ), by simpa [affInv_self] using hr⟩,
     GroundTheory.Heights₂.Heights.NineStatements.isPsh_congr' heq
       (GroundTheory.Heights₂.Heights.NineStatements.isPsh_add_re_add_const hV P1 hG' 0), ContinuousOn.congr ?_ heq.symm⟩
-  exact (((hc.comp hd.continuous.continuousOn fun t ht => norm_affInv t₀ hρ π ht.1).div_const 2).add
+  exact (((hc.comp (s := V) hd.continuous.continuousOn (fun t ht => norm_affInv t₀ hρ π ht.1)).div_const 2).add
     (Complex.continuous_re.comp_continuousOn hG'.continuousOn)).add continuousOn_const
 
 theorem logDet_cont {E : Type} [Field E] [NumberField E] [IsCMField E] {g : ℕ} {Λ : Type} [AddCommGroup Λ]
@@ -67,8 +67,13 @@ theorem logDet_cont {E : Type} [Field E] [NumberField E] [IsCMField E] {g : ℕ}
   have hH : Continuous fun x : U => (R x).Hm :=
     GlobalTheory.T.continuous_hermitian_matrix_family E g Λ U (fun x => R x) (R t₁).form (fun x => hR.1 x x.2 t₁ ht₁)
       fun v => continuousOn_iff_continuous_restrict.1 (hR.2 v).continuousOn
-  refine continuous_finset_sum _ fun τ _ => Continuous.log ?_ fun x => (gram_det_pos _ _ (hl x x.2 τ)).ne'
-  refine Complex.continuous_re.comp (Continuous.matrix_det (continuous_matrix fun p q => ?_))
+  apply continuous_finsetSum _
+  intro τ _
+  apply Continuous.log _ (fun (x : U) => (gram_det_pos _ _ (hl x x.2 τ)).ne')
+  apply Complex.continuous_re.comp
+  apply Continuous.matrix_det
+  apply continuous_matrix
+  intro p q
   have hb' : ∀ i, Continuous fun x : U => b τ i x := fun i => continuousOn_iff_continuous_restrict.1 (hb τ i)
   exact (hb' q).dotProduct (hH.matrix_mulVec (hb' p).star)
 

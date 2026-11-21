@@ -93,7 +93,7 @@ def LargestSlopeLatticeFrames : Prop :=
     (∀ v, IsUnit (XE v).det) → (∀ v, 0 < kap v) → (∀ v, IsUnit (X' v).det) →
     ∀ (R : Submodule (𝓞 K) (Fin D → K)) (M : Submodule (𝓞 K) W) (Ψ : (Fin D → K) →ₗ[K] W)
       (T : Finset (Pl K)) (a : Pl K → ℤ) (r : Pl K → K) (dF : Pl K → ℝ) (EM hInf Gr BF : ℝ),
-    Submodule.IsLattice K R → M.FG → M ≠ ⊥ → Function.Injective Ψ →
+    Submodule.IsFullLattice K R → M.FG → M ≠ ⊥ → Function.Injective Ψ →
     R.map (Ψ.restrictScalars (𝓞 K)) ≤ Formalism.HermitianLatticesTheory.idealSmul (denIdeal T a : Submodule (𝓞 K) K) M →
     (∀ w ∈ T, (a w : ℝ) ≤ (vw w (r w) : ℝ) + dF w) →
     muMaxDef b' X' M ≤ EM →

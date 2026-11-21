@@ -135,7 +135,7 @@ theorem relIndex_endL (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
         (endL (locF 𝔭 A₀) (extP K 𝔭 ^ k • locF 𝔭 A₀)) =
       Ideal.absNorm 𝔭 ^ (2 * finrank K V ^ 2 * c) := by
   classical
-  obtain ⟨a, b, e, c0, hc0, he, hA, hB, hbe⟩ := exists_smith hA₀.toIsLattice hB₀.toIsLattice h𝔭
+  obtain ⟨a, b, e, c0, hc0, he, hA, hB, hbe⟩ := exists_smith hA₀ hB₀ h𝔭
   have hinj := IsFractionRing.injective (𝓞 K) K
   set eK : Fin (finrank K V) → K := fun i => algebraMap (𝓞 K) K (e i) with heKdef
   set c0K : K := algebraMap (𝓞 K) K c0 with hc0Kdef

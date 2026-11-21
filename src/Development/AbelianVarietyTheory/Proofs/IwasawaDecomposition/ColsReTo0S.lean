@@ -66,13 +66,31 @@ end Gen
 variable {B : Base} {f : Fr B.toPre} {T : TwDat B}
 variable (w : ColW B f T) (Z : w.Lt) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ)
 
+-- Build the transported records at the same index used by the column data.
+set_option maxHeartbeats 4000000 in
+def fullSZ (X : Formalism.L2.Herm.FullTiedS (w.D Z)) :
+    Formalism.L2.Herm.FullTiedS (w.D (setDivZ Z N h)) :=
+  { X with
+    base := { X.base with }
+    atT := fun u => { X.atT u with }
+    ad := { X.ad with } }
+
+set_option maxHeartbeats 4000000 in
+def forms0SZ {u : B.Word} (F : Forms0 (w.D Z) u) :
+    Forms0 (w.D (setDivZ Z N h)) u :=
+  { F with
+    atT := atTTRe (setDivZ Z N h) F.atT
+    cls0 := clsRe (setDivZ Z N h) F.cls0
+    val0 := valRe (setDivZ Z N h) F.val0
+    lv0 := lvRe (setDivZ Z N h) F.lv0 }
+
 set_option maxHeartbeats 4000000 in
 theorem fullS_cols (X : Formalism.L2.Herm.FullTiedS (w.D Z)) :
-    (fullS (D := w.D Z) N h X).cols = hermRe (setDivZ Z N h) X.cols := rfl
+    (fullSZ w Z N h X).cols = hermRe (setDivZ Z N h) X.cols := rfl
 
 set_option maxHeartbeats 4000000 in
 theorem colsRe_to0S (C : ColsTiedSym (w.D Z)) (u : B.Word) :
-    ((colsRe (setDivZ Z N h) C).forms u).to0 = forms0S (D := w.D Z) N h (C.forms u).to0 := rfl
+    ((colsRe (setDivZ Z N h) C).forms u).to0 = forms0SZ w Z N h (C.forms u).to0 := rfl
 
 
 set_option maxHeartbeats 8000000 in
@@ -86,14 +104,22 @@ def colTTr (t : ColT w Z) : ColT w (setDivZ Z N h) where
   C := colsRe (setDivZ Z N h) t.C
   std := stdC_tr w Z N h t.C t.std
   stdLv := fun u => t.stdLv u
-  full := ⟨fullS (D := w.D Z) N h t.full.1, (fullS_cols w Z N h t.full.1).trans (congrArg (hermRe (setDivZ Z N h)) t.full.2)⟩
+  full := ⟨fullSZ w Z N h t.full.1,
+    (fullS_cols w Z N h t.full.1).trans (congrArg (hermRe (setDivZ Z N h)) t.full.2)⟩
   stdDt := t.stdDt
-  Gt := gatTr (D := w.D Z) N h t.Gt
-  cmp := cmpTr (D := w.D Z) N h t.cmp
-  g := gS (D := w.D Z) N h t.g
-  herm_eq := (congrArg (herm0S (D := w.D Z) N h) t.herm_eq).trans (fullS_to0 (D := w.D Z) N h t.full.1).symm
-  forms_eq := (congrArg (fun F u => forms0S (D := w.D Z) N h (F u)) t.forms_eq).trans
-    (funext fun u => (colsRe_to0S w Z N h t.C u).symm)
+  Gt := { t.Gt with }
+  cmp := { t.cmp with }
+  g :=
+    { herm := { t.g.herm with }
+      forms := fun u => forms0SZ w Z N h (t.g.forms u)
+      cmp := { t.g.cmp with }
+      ring := t.g.ring
+      gat := t.g.gat }
+  herm_eq := congrArg
+    (fun H : Formalism.L2.Herm.Herm0 (w.D Z) =>
+      ({ H with } : Formalism.L2.Herm.Herm0 (w.D (setDivZ Z N h)))) t.herm_eq
+  forms_eq := funext fun u =>
+    (congrArg (forms0SZ w Z N h) (congrFun t.forms_eq u)).trans (colsRe_to0S w Z N h t.C u).symm
   gpl := t.gpl
 
 end GlobalTheory.Mem.Db.DivTr

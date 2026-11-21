@@ -336,6 +336,7 @@ theorem mul_mem_chartLatNm {K : Type} [Fintype K] [DecidableEq K] {ι : K → Ty
   refine mul_mem h1 (mul_mem (hr ⟨k₀, i⟩) ?_)
   exact pow_mem (hr ⟨k₀, i₀⟩) _
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem exists_rule_of_frame (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (S : Finset ℕ) (RM : Top.RootModel (CMType H) (Dw.p + Dw.q)) (Sys : PB.AnSys (Top.dimFl (CMType H) (Dw.p + Dw.q)) (Option (RootIx Dw))) (Fx : FixedData Y Sys) (Or : RootOrigin Y S RM Fx) (Fr : Small.GenFrame Or) (h : GenFrEx Xo c) (Z : Comp Xo c) : letI := Small.cstAlg Or
     ∀ (φ : Om Z →ₐ[c.F] RM.Ω) (P : FrPt Xo c RM.Ω) (t : Ix Dw → (RM.Ω)ˣ), FrMap φ (genFr h Z) P → FrBor t P Fr.y₀ →
     Function.Surjective φ → ∀ (u : GlobalTheory.AllWt.Weight Dw), ∀ s ∈ chartLatNm RM.y (degOf RM u) 1,

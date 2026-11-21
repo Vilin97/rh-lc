@@ -184,7 +184,25 @@ theorem grid_lemma_A : SlopeInequalityDenominators := by
   rw [e2] at h3
   linarith
 
-theorem grid_function_of_lemma_A (hA : SlopeInequalityDenominators) : LargestSlopeLatticeFrames := by
+def LargestSlopeFullLatticeFrames : Prop :=
+  ∀ (K W κ : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
+    [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
+    [Fintype κ] [DecidableEq κ] (D : ℕ), 0 < D →
+    ∀ (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ) (kap : InfinitePlace K → ℝ)
+      (b' : Basis κ K W) (X' : InfinitePlace K → Matrix κ κ ℂ),
+    (∀ v, IsUnit (XE v).det) → (∀ v, 0 < kap v) → (∀ v, IsUnit (X' v).det) →
+    ∀ (R : Submodule (𝓞 K) (Fin D → K)) (M : Submodule (𝓞 K) W) (Ψ : (Fin D → K) →ₗ[K] W)
+      (T : Finset (Pl K)) (a : Pl K → ℤ) (r : Pl K → K) (dF : Pl K → ℝ) (EM hInf Gr BF : ℝ),
+    Submodule.IsFullLattice K R → M.FG → M ≠ ⊥ → Function.Injective Ψ →
+    R.map (Ψ.restrictScalars (𝓞 K)) ≤ Formalism.HermitianLatticesTheory.idealSmul (denIdeal T a : Submodule (𝓞 K) K) M →
+    (∀ w ∈ T, (a w : ℝ) ≤ (vw w (r w) : ℝ) + dF w) →
+    muMaxDef b' X' M ≤ EM →
+    htMap (Pi.basisFun K (Fin D)) (Formalism.DivisionValues.scaleFrame (fun v => (kap v)⁻¹) XE) b' X' Ψ ≤ hInf →
+    ∑ w ∈ T, lw w * (vw w (r w) : ℝ) ≤ Gr → ∑ w ∈ T, lw w * dF w ≤ BF →
+    muMaxDef (Pi.basisFun K (Fin D)) XE R ≤ -meanLog kap + (EM + hInf + 2 * (Gr + BF))
+
+
+theorem grid_function_of_lemma_A (hA : SlopeInequalityDenominators) : LargestSlopeFullLatticeFrames := by
   intro K W κ _ _ _ _ _ _ _ _ _ _ D hD XE kap b' X' hXE hkap hX' R M Ψ T a r dF EM hInf Gr BF
     hR hM hM0 hΨ hincl ha hEM hh hGr hBF
   obtain ⟨hfg, hne⟩ := Formalism.DivisionValues.lattice_fg_ne_bot hD R hR
@@ -204,7 +222,7 @@ theorem grid_function_of_lemma_A (hA : SlopeInequalityDenominators) : LargestSlo
   rw [e2]
   linarith
 
-theorem grid_function_bound : LargestSlopeLatticeFrames := grid_function_of_lemma_A grid_lemma_A
+theorem grid_function_bound : LargestSlopeFullLatticeFrames := grid_function_of_lemma_A grid_lemma_A
 
 
 end Formalism.AtG

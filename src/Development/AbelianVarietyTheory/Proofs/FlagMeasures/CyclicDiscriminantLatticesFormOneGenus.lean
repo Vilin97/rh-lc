@@ -370,7 +370,7 @@ theorem forward (T : 𝓞 K) (S : Finset (Ideal (𝓞 K))) (hS : ∀ P ∈ S, P.
     obtain ⟨g, hg, hgL⟩ := hN.2 P hP
     refine transfer g ?_ hgL r
     obtain ⟨a1, a2, -, -, a5⟩ := isomAct (𝓞 K) K V h g hg L
-    have b1 := (ld (gmap g L) (a5.2 hL.1).fg).1 P hP.isPrime
+    have b1 := (ld (gmap g L) (a5.2 hL.1.toIsLattice).fg).1 P hP.isPrime
     have b2 := (ld N hN.1.fg).1 P hP.isPrime
     rw [b2.1, ← b2.2, ← hgL, ← a2 P, b1.2, ← b1.1, a1, (isomAct (𝓞 K) K V h g hg (dual h L)).2.1 P]
   obtain ⟨x, hx, hxa⟩ := exists_ann (A := dual h N) (B := N) S hS
@@ -394,7 +394,7 @@ theorem forward (T : 𝓞 K) (S : Finset (Ideal (𝓞 K))) (hS : ∀ P ∈ S, P.
 
 theorem backward (s : Finset (Ideal (𝓞 K))) (hm : ∀ P ∈ s, P.IsMaximal)
     (hco : IsCoprime (∏ P ∈ s, P) (conjIdeal (K := K) (∏ P ∈ s, P)))
-    (L N M M' : Submodule (𝓞 K) V) (hM : Submodule.IsLattice K M) (hM' : Submodule.IsLattice K M')
+    (L N M M' : Submodule (𝓞 K) V) (hM : Submodule.IsFullLattice K M) (hM' : Submodule.IsFullLattice K M')
     (uM : IsUnimodular h M) (uM' : IsUnimodular h M') (hLM : L ≤ M) (hNM : N ≤ M')
     (cL : Cyc M L (∏ P ∈ s, P)) (cN : Cyc M' N (∏ P ∈ s, P)) : SameGenus h L N := by
   have ld := locDual (𝓞 K) K V h hs star_algebraMap_ringOfIntegers_mem_range
@@ -427,7 +427,7 @@ theorem backward (s : Finset (Ideal (𝓞 K))) (hm : ∀ P ∈ s, P.IsMaximal)
     have a2 := (isomAct (𝓞 K) K V h g hg L).2.1 P
     have d1 := (cL.gmap g).localise hP (hcompl (K := K) P) (genusBasic_hS P hP) hIP hPI (a1.trans hgM)
     have d2 := cN.localise hP (hcompl (K := K) P) (genusBasic_hS P hP) hIP hPI rfl
-    obtain ⟨g', hg', -, hg2⟩ := GlobalTheory.Mass.Hyperplane.main K V h hK hs hn M' hM' P hP hne u' _ _ inf_le_left inf_le_left
+    obtain ⟨g', hg', -, hg2⟩ := GlobalTheory.Mass.Hyperplane.main K V h hK hs hn M' hM'.toIsLattice P hP hne u' _ _ inf_le_left inf_le_left
       (equiv_of_cyc d1) (equiv_of_cyc d2)
     refine ⟨g' * g, (isom h).mul_mem hg' hg, ?_⟩
     have l1 : loc (K := K) P (gmap g L) ≤ loc (K := K) P M' := by
@@ -482,7 +482,11 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     rw [hp] at one
     obtain ⟨M, ⟨hM, uM, hLM, ⟨cL⟩⟩, -⟩ := one L hL ⟨eL⟩
     obtain ⟨M', ⟨hM', uM', hNM, ⟨cN⟩⟩, -⟩ := one N hN eN
-    exact backward h hK hs hn s (fun P hP => (hm P hP).1) hco L N M M' hM hM' uM uM' hLM hNM
+    letI := hL.1
+    letI := hN.1
+    have hMf : Submodule.IsFullLattice K M := Submodule.IsFullLattice.of_le_of_fg K hLM hM.fg
+    have hM'f : Submodule.IsFullLattice K M' := Submodule.IsFullLattice.of_le_of_fg K hNM hM'.fg
+    exact backward h hK hs hn s (fun P hP => (hm P hP).1) hco L N M M' hMf hM'f uM uM' hLM hNM
       (cyc_of_equiv cL) (cyc_of_equiv cN)
 
 end GlobalTheory.Mass.CyclicGenus

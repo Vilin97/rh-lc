@@ -35,20 +35,18 @@ lemma isClosed_Kset (ε : Fin n → Bool) : IsClosed (Kset ε) := by
     isClosed_eq (continuous_id.mul continuous_const) (continuous_const.mul continuous_id)
   convert h1.inter h2 using 1
   ext g
-  simp only [Kset, Set.mem_setOf_eq, Set.mem_inter_iff, Matrix.unitaryGroup]
+  simp only [Kset, Set.mem_ofPred_eq, Set.mem_inter_iff, Matrix.unitaryGroup]
   exact Iff.rfl
 
 lemma isClosed_KG (ε : Fin n → Bool) : IsClosed ((KG ε : Set (UJ ε))) := by
   show IsClosed {g : UJ ε | toM g ∈ Kset ε}
-  exact (isClosed_Kset ε).preimage (by first
-    | fun_prop
-    | continuity
-    | exact continuous_subtype_val
-    | exact Units.continuous_val.comp continuous_subtype_val)
+  exact (isClosed_Kset ε).preimage (continuous_toM ε)
 
 instance (ε : Fin n → Bool) : LocallyCompactSpace (KG ε) := (isClosed_KG ε).locallyCompactSpace
 
-instance (ε : Fin n → Bool) : MeasurableSpace (KG ε) := borel _
+-- Keep the instance name stable across builds of the downstream Haar modules.
+instance instMeasurableSpaceSubtypeUnitsMatrixFinComplexMemSubgroupUJKG
+    (ε : Fin n → Bool) : MeasurableSpace (KG ε) := borel _
 
 instance (ε : Fin n → Bool) : BorelSpace (KG ε) := ⟨rfl⟩
 

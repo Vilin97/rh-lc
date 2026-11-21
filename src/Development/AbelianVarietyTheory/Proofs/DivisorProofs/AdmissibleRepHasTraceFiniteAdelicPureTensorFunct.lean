@@ -21,6 +21,9 @@ namespace GlobalTheory.FinTrace
 
 variable {D : D7}
 
+local instance (V : HSp D) : Submodule.IsLattice D.host.E (frameLat V) :=
+  Submodule.IsLattice.of_fg D.host.E (frameLat_fg V)
+
 theorem finFn_mem_SB (V : HSp D) {ff : ∀ v, GLoc D.sp.cm.sig V.gram v → ℂ}
     (hff : IsFinFamily D.sp.cm.sig V.gram (frameLat V) ff) : finFn V ff ∈ GlobalTheory.SplitWeil.SB (GfC V) := by
   have hm := hff.tensorFin_mem
@@ -45,7 +48,7 @@ theorem hasTrace_finFn : ∀ (D : D7) (V : HSp D) (ν : Measure (GfC V)) [ν.IsH
   refine ⟨⟨_, _, hA, hfd, rfl⟩, fun K _ _ hK hne => ?_⟩
   obtain ⟨v, hv⟩ : ∃ v, smoothOp σ ν (finFn V ff) v ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     exact hne (by convert hA using 1; exact (LinearMap.ext h).symm)
   exact ⟨_, hv, GlobalTheory.OpTrace.mem_fixed.1 (hσ.1.smoothOp_mem_fixed hlc hcs hK v)⟩
 

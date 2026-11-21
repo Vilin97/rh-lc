@@ -131,7 +131,8 @@ theorem exists_isSplitChart (hc : IsCMExt F E σ) (hJ : IsHermND σ J) (hL : L.F
     (hd : IsSelfDualAt σ J L v) : ∃ e, IsSplitChart σ J L h e ∧ Continuous e ∧ Continuous e.symm := by
   obtain ⟨τ, rfl⟩ := exists_splitPrime_eq hc hv h
   obtain ⟨ψ, h1, h2, h3, h4, h5⟩ := exists_equiv_complMap τ h
-  have : Submodule.IsLattice E L := Submodule.IsLattice.of_fg E hL
+  letI : Submodule.IsFullLattice E L :=
+    { toIsLattice := Submodule.IsLattice.of_fg E hL, span_eq_top := hL' }
   obtain ⟨β, hβ⟩ := exists_isSplitBasis τ L hc
   refine ⟨(splitEquivIn hc hJ τ β).toMulEquiv.trans (Units.mapEquiv ψ.mapMatrix.toMulEquiv),
     ⟨⟨_, isFrameAt_bc h2 h3 hβ, fun g => ?_⟩, fun g => ?_⟩,

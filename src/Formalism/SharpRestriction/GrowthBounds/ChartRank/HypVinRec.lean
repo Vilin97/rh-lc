@@ -23,7 +23,7 @@ structure LatTies (w : D.what₂.places.Pl) (Fo : FormsIn M (j + 1) hj) (β : Fo
     (Lb : Submodule (𝓞 D.host.E) (Fin (D.sp.X (j + 1)).rank → D.host.E)) : Prop where
   siteGood_prime_torsion : ¬ D.what₂.places.resChar w ∣ Fo.T
   Lb_eq : (Fo.K β).lev.Lb = reL (rankN D (j + 1) hj) Lb
-  lat : ∀ cl : {c // Fo.chOf c = β}, Submodule.IsLattice D.host.E (Fo.lat cl.1)
+  lat : ∀ cl : {c // Fo.chOf c = β}, Submodule.IsFullLattice D.host.E (Fo.lat cl.1)
   chi : ∀ κ : (Fo.K β).lev.U, ∃ r ∈ intW D.what₂.places w, r⁻¹ ∈ intW D.what₂.places w ∧
     D.what₂.embLL r = ((Fo.K β).lev.chi κ : ℂ)
 

@@ -57,8 +57,7 @@ def oL (x : St P) (L : LocAll (lay0 (Dof x))) : P.q.Over :=
 abbrev DL (x : St P) (L : LocAll (lay0 (Dof x))) : D7 := (w.st (oL x L).Z).toD7
 
 theorem DL_eq (x : St P) (L : LocAll (lay0 (Dof x))) : DL x L = withLoc L := by
-  simp only [DL, Dof, oL, Stages.toD7, assemble, nL, etaL, withLoc, setN, setRaw,
-    RowPk.W, Pk.what₂, RowsRest.what₂, rowsEta]
+  with_unfolding_all rfl
 
 def sameL (x : St P) (L : LocAll (lay0 (Dof x))) : SameGrp (B := B) (C := w.C) x.o.Z (oL x L).Z where
   e k := (Equiv.refl ((Dof x).nd.PlG k))

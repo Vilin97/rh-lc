@@ -113,11 +113,34 @@ theorem cov_le : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCom
   have hzL : N.F.z ∈ latL N.F N.F' Λ := by
     have := (hz1 1).2 (Submodule.mem_one.2 ⟨1, map_one _⟩)
     simpa using this
-  have hΛ : Submodule.IsLattice K Λ := Submodule.IsLattice.of_fg K ((GlobalTheory.HermLat.isUnimod_iff H Λ).1 hT.1.1).1.1
+  have hΛdata := ((GlobalTheory.HermLat.isUnimod_iff H Λ).1 hT.1.1).1
+  have hΛ : Submodule.IsFullLattice K Λ :=
+    { toIsLattice := Submodule.IsLattice.of_fg K hΛdata.1, span_eq_top := hΛdata.2 }
+  have hRefFull : Submodule.IsFullLattice K (N.Ref (latL N.F N.F' Λ)) := by
+    refine { toIsLattice := hRefLat, span_eq_top := ?_ }
+    obtain ⟨-, -, hC, -, hWn, hUp, -, -, -, -, -, hPi⟩ :=
+      GlobalTheory.T.hermFramePairNormalForm_geometry_summary K V H hK r N
+    have hP : N.Pi ≤ Submodule.span K (N.Ref (latL N.F N.F' Λ) : Set V) := by
+      rw [hPi, ← GlobalTheory.DegCnt.InnerLat.span_hermFramePair_lattice_eq_sup N]
+      exact Submodule.span_mono (show (N.P0 : Set V) ⊆ N.Ref (latL N.F N.F' Λ) from
+        fun _ hx => Submodule.mem_sup_left hx)
+    have hW : N.Wt ≤ Submodule.span K (N.Ref (latL N.F N.F' Λ) : Set V) := by
+      intro x hx
+      have hxW : x ∈ N.Wn := by rw [hWn]; exact Submodule.mem_sup_left hx
+      obtain ⟨c, hc, hcx⟩ := GlobalTheory.DegCnt.InnerLat.exists_mult hΛdata.2 x
+      rw [← Submodule.smul_mem_iff _ hc]
+      apply Submodule.subset_span
+      apply Submodule.mem_sup_right
+      refine ⟨⟨?_, Submodule.mem_sup_left hcx⟩, N.Wn.smul_mem c hxW⟩
+      rw [hUp]
+      exact Submodule.mem_sup_left (N.Wn.smul_mem c hxW)
+    apply eq_top_iff.mpr
+    rw [← hC.sup_eq_top]
+    exact sup_le hW hP
   obtain ⟨Ω, hΩ, -, hΩle⟩ := GlobalTheory.T.covolume_referenceLattice_stabiliser_bounds K V H hK r N k ι σ β Φ z z' g hP hd hF hN hv (latL N.F N.F' Λ) hLU hzL
   have hnil := (GlobalTheory.UnipStab.common_unipotent_stabiliser K V H hK r N).2.2.2.2
-  have hc1 := (GlobalTheory.DegCnt.Unimod.invVol_smul K V N.R (2 * r + 1) hnil _ _ hRefLat hΛ).1
-  have hc2 := (GlobalTheory.DegCnt.Unimod.invVol_smul K V N.R (2 * r + 1) hnil _ _ hΛ hRefLat).1
+  have hc1 := (GlobalTheory.DegCnt.Unimod.invVol_smul K V N.R (2 * r + 1) hnil _ _ hRefFull hΛ).1
+  have hc2 := (GlobalTheory.DegCnt.Unimod.invVol_smul K V N.R (2 * r + 1) hnil _ _ hΛ hRefFull).1
   haveI := countable_aut K V
   have key := covol_of_act (fun s x => mulP (m s) x) h1 h2 (Measure.pi fun _ : ι => lebR0 k r N.j β) (RP k r g)
     (N.Gam (N.Ref (latL N.F N.F' Λ))) (N.Gam Λ) Ω Kf hmeas inferInstance inferInstance hnull

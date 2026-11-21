@@ -44,7 +44,10 @@ theorem valued_natCast (m : ℕ) (hm : m ≠ 0) (v : HeightOneSpectrum (𝓞 K))
   have hm' : (m : 𝓞 K) ≠ 0 := by exact_mod_cast hm
   rw [valuedAdicCompletion_eq_valuation', show (m : K) = algebraMap (𝓞 K) K (m : 𝓞 K) by simp,
     valuation_of_algebraMap, intValuation_eq_exp_neg_multiplicity _ hm']
-  rfl
+  have hfin : FiniteMultiplicity v.asIdeal (ofNat (K := K) m hm).ideal :=
+    FiniteMultiplicity.of_not_isUnit (irreducible v).not_isUnit (ofNat m hm).ideal_ne_bot
+  unfold exponent
+  rw [if_pos hfin, ofNat_ideal]
 
 end Modulus
 

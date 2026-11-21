@@ -59,24 +59,17 @@ theorem chAt_prod_eq_gtChar {n : ℕ} (lam : DomWeight n) (t : Fin n → ℂ) (h
   rw [← htr, hfD, hgD, e, LinearMap.trace_mul_comm, mul_assoc, e2, mul_one]
 
 theorem exists_eq_prod_X_sub_C : ∀ (a : ℕ) (Q : ℂ[X]), Q.Monic → Q.natDegree = a →
-    ∃ α : Fin a → ℂ, Q = ∏ i, (X - C (α i))
-  | 0, Q, hm, hd => ⟨Fin.elim0, by rw [Fin.prod_univ_zero]; exact Polynomial.eq_one_of_monic_natDegree_zero hm hd⟩
-  | a + 1, Q, hm, hd => by
-    have hdegree : 0 < Q.degree := by
-      rw [← natDegree_pos_iff_degree_pos, hd]
-      exact Nat.succ_pos a
-    have hroot : ∃ r : ℂ, Q.IsRoot r :=
-      (IsAlgClosed.splits Q).exists_eval_eq_zero hdegree.ne'
-    obtain ⟨r, hr⟩ := hroot
-    have hdiv : (X - C r) * (Q /ₘ (X - C r)) = Q := mul_divByMonic_eq_iff_isRoot.mpr hr
-    have hm' : (Q /ₘ (X - C r)).Monic := (monic_X_sub_C r).of_mul_monic_left (by rw [hdiv]; exact hm)
-    have hd' : (Q /ₘ (X - C r)).natDegree = a := by
-      rw [natDegree_divByMonic _ (monic_X_sub_C r), hd, natDegree_X_sub_C]; rfl
-    obtain ⟨α, hα⟩ := exists_eq_prod_X_sub_C a _ hm' hd'
-    refine ⟨Fin.cons r α, ?_⟩
-    rw [Fin.prod_univ_succ, Fin.cons_zero]
-    simp only [Fin.cons_succ]
-    rw [← hα, hdiv]
+    ∃ α : Fin a → ℂ, Q = ∏ i, (X - C (α i)) := by
+  intro a Q hm hd
+  have hs : Q.Splits := IsAlgClosed.splits Q
+  obtain ⟨roots, hroots⟩ : ∃ roots : List ℂ, (roots : Multiset ℂ) = Q.roots :=
+    Quotient.exists_rep Q.roots
+  have hlength : roots.length = a := by
+    rw [← Multiset.coe_card, hroots, ← hs.natDegree_eq_card_roots, hd]
+  rw [← hlength]
+  refine ⟨fun i => roots[(i : ℕ)], ?_⟩
+  rw [← Fin.prod_ofFn, List.ofFn_getElem_eq_map roots (fun z => X - C z)]
+  simpa only [← hroots, Multiset.map_coe, Multiset.prod_coe] using hs.eq_prod_roots_of_monic hm
 
 theorem wden_addCases (a b : ℕ) (α : Fin a → ℂ) (β : Fin b → ℂ) :
     wden (a + b) (Fin.addCases α β) = wden a α * wden b β * ∏ i, ∏ j, (α i - β j) := by

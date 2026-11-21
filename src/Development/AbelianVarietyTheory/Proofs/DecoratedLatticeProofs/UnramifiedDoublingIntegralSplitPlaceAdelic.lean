@@ -13,6 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.Ramificat
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsOpenIsCompactLevelOffFinEmpty
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDualFamilyOfIsLattice
 public import Formalism.SatakeDualWeyl.KpqSubgroupCompact
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ZetaSumGLComplex
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SphericalSectionGraphSplitPlaceStatement
 
@@ -44,8 +45,11 @@ theorem localZetaOn_split : GlobalTheory.Published.UnramifiedDoublingGL →
   have hcm := isCMExt_host D
   have h2 : Module.finrank D.host.F D.host.E = 2 := hcm.2.2.1
   have hJ : IsHermND D.sp.cm.sig A.gram := GlobalTheory.Doubling.isHermND_gram A
+  haveI : Submodule.IsFullLattice D.host.E L :=
+    Formalism.IndefR.Fin.PDA.selfDual_isFullLattice A L hL
   have hd : IsSelfDualAt D.sp.cm.sig A.gram L v :=
-    (SelfDual.forall_isSelfDualAt_iff (σ := D.sp.cm.sig) (GlobalTheory.Doubling.isHermND_gram A).2 hL.1).2
+    (SelfDual.forall_isSelfDualAt_iff (σ := D.sp.cm.sig) (GlobalTheory.Doubling.isHermND_gram A).2
+      inferInstance).2
       (fun y => hL.2 y) v
   obtain ⟨w, h⟩ : ∃ w : HeightOneSpectrum (𝓞 D.host.E), w.under (𝓞 D.host.F) = v := by
     have := v.isMaximal
@@ -99,7 +103,6 @@ theorem localZetaOn_split : GlobalTheory.Published.UnramifiedDoublingGL →
       refine hsum.congr_fun ?_
       intro a
       simp [hcx])
-  haveI : Submodule.IsLattice D.host.E L := hL.1
   obtain ⟨hI, hE⟩ := GlobalTheory.T.integral_right_invariant_eq_sum_open_subgroup_cosets (Gv A v) μ (stabLoc D.sp.cm.sig A.gram L v)
     (GlobalTheory.AdelicU.isOpen_stabLoc _ _ _ v) hK (fun y => φ (ioAt A v y) * c y) _ hinv hsum'
   refine ⟨hI, ?_⟩

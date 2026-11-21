@@ -97,17 +97,25 @@ def normalizedRowDatum : _root_.GlobalTheory.Mem.Top.Bl.NormRealisationData (D :
   hecke := _root_.GlobalTheory.HeightCounting.Fin3.localHeckeHeightData L l
   grp := _root_.GlobalTheory.HeightCounting.Fin3.grpTie_famR l L
   rowLoc := by
-    with_unfolding_all exact al.loc (frameY Y) (eq_of_heq hY.rep)
+    let F : Formalism.L2.RowFrame (withLoc L) :=
+      ⟨(frameY Y).rep, (frameY Y).inj⟩
+    have hF : F.rep = repOf x.r.Y := by
+      with_unfolding_all exact eq_of_heq hY.rep
+    exact ⟨by with_unfolding_all exact (al.loc F hF).sat⟩
   S_eq := (by with_unfolding_all exact ((SL_heq L l.rat) :))
   hL_eq := (by with_unfolding_all exact ((HEq.refl l.rat.In.hL) :))
   rep_eq := (by with_unfolding_all exact (hY.rep.symm :))
 theorem nonempty_nMore_of_xdAll {xd : ThData (Dof x)} (hxd : XdAll xd) : Nonempty (_root_.GlobalTheory.HeightCounting.RealExpansionExtraData (_root_.GlobalTheory.HeightCounting.Fin3.normalizedRowDatum l Sp Au ss al hLg Y hY) (datL x L).geo (xdD L xd)) := by
-  obtain ⟨ad, had⟩ := _root_.GlobalTheory.T.exists_mtAd_psiVectorLocal_of_yRel L l Y hY
-  obtain ⟨ser⟩ := _root_.GlobalTheory.T.series_at_local_of_exp_relation L l al.a.exp al.exp
   have e : (_root_.GlobalTheory.HeightCounting.Fin3.localAtData l Sp Au ss al hLg).all.gal.mt = _root_.GlobalTheory.HeightCounting.Fin3.localMultiplicityFamily L l := (by with_unfolding_all exact (al.mt :))
   have H : ∃ ad' : MtAd Y (_root_.GlobalTheory.HeightCounting.Fin3.localAtData l Sp Au ss al hLg).all.gal.mt, ad'.PV = _root_.GlobalTheory.HeightCounting.Fin3.psiVectorLocal L l := by
-    rw [e]; exact ⟨ad, had⟩
+    rw [e]
+    exact _root_.GlobalTheory.T.exists_mtAd_psiVectorLocal_of_yRel (x := x) L l Y hY
   obtain ⟨ad', had'⟩ := H
+  have hSer : Nonempty (SerAt (_root_.GlobalTheory.HeightCounting.Fin3.yStructureLocal L l)
+      (datL x L).geo.v₀ (expD L al.a.exp) (_root_.GlobalTheory.HeightCounting.Fin3.psiVectorLocal L l)
+      (cfD x L) (_root_.GlobalTheory.HeightCounting.Fin3.placeMapLocal L l)) :=
+    _root_.GlobalTheory.T.series_at_local_of_exp_relation (x := x) L l al.a.exp al.exp
+  obtain ⟨ser⟩ := hSer
   have ser' : SerAt (_root_.GlobalTheory.HeightCounting.Fin3.yStructureLocal L l) (datL x L).geo.v₀ (expD L al.a.exp) ad'.PV (cfD x L) (_root_.GlobalTheory.HeightCounting.Fin3.placeMapLocal L l) := had'.symm ▸ ser
   exact ⟨{ ad := ad'
            fi := _root_.GlobalTheory.HeightCounting.Fin3.yStructureLocal_fi_e_heq L l

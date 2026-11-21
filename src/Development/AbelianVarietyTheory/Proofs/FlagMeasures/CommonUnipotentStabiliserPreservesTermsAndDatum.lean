@@ -172,7 +172,7 @@ theorem isUnimod_smul {s : V ≃ₗ[K] V} (h : ∀ x y, H.B (s x) (s y) = H.B x 
     | zero => simp
     | add a b _ _ ha hb => rw [map_add]; exact add_mem (ha trivial) (hb trivial)
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c (ha trivial)
-  refine ⟨⟨⟨s • Λ, Submodule.FG.map _ hL.fg, by simp [rs]⟩, hspan⟩, ?_⟩
+  refine ⟨⟨⟨s • Λ, Submodule.FG.map _ hL.1, by simp [rs]⟩, hspan⟩, ?_⟩
   ext x
   obtain ⟨y, rfl⟩ := s.surjective x
   rw [apply_mem_smul_iff, mem_dual_iff, hspan]

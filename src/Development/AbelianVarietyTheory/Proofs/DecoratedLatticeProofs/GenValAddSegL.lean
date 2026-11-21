@@ -25,7 +25,7 @@ theorem map_coe_segL (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] 
   refine Multiset.map_congr rfl fun i _ => ?_
   simp only [Function.comp_apply, Units.val_mul]
   congr 1
-  rw [GlobalTheory.MellinPoly.absPow_eq_zpow, ord_eq_one k hϖ, zpow_one, ← natCast_cpow_half]
+  rw [GlobalTheory.MellinPoly.absPow_eq_zpow, ord_eq_one hϖ, zpow_one, ← natCast_cpow_half]
   congr 1
   push_cast
   ring

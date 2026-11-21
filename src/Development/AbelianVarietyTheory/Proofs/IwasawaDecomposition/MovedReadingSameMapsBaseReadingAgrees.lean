@@ -102,7 +102,40 @@ def sameG : SameGrp (B := B) (C := w.C) Z (Db.setDivZ Z N h) :=
 def datMv {hX : B.fields.Ok} (z : Dat (w.st Z) w.I hX T Wt) : Dat (w.st (Db.setDivZ Z N h)) w.I hX T Wt :=
   (by with_unfolding_all exact ((Mv.cpDat (a := Z) (Db.setDivZ Z N h) (sameG N h) z) :))
 
-def p0Mv (p0 : BaseLevelRowSide (w.D Z)) : BaseLevelRowSide (w.D (Db.setDivZ Z N h)) := (by with_unfolding_all exact ((⟨GlobalTheory.EX.OB.sideTr N h p0.s⟩ : BaseLevelRowSide (GlobalTheory.EX.OB.setDiv (w.D Z) N h)) :))
+def p0Mv (p0 : BaseLevelRowSide (w.D Z)) : BaseLevelRowSide (w.D (Db.setDivZ Z N h)) :=
+  ⟨{ p0.s with }⟩
+
+open DivX (md) in
+def divMv (X : DivX (w.D Z)) : DivX (w.D (Db.setDivZ Z N h)) :=
+  { X with md := fun S κ p _ la z => { md X S κ p la z with } }
+
+open DivX (md) in
+def divUnmv (X : DivX (w.D (Db.setDivZ Z N h))) : DivX (w.D Z) :=
+  { X with md := fun S κ p _ la z => { md X S κ p la z with } }
+
+def objMv (O : Obj2 (w.D Z)) : Obj2 (w.D (Db.setDivZ Z N h)) where
+  gatT := { O.gatT with }
+  th := { O.th with }
+  cmp := { O.cmp with }
+  tw := { O.tw with }
+  Gy := { O.Gy with }
+  errX := { O.errX with }
+  nch := { O.nch with }
+  xd := { O.xd with }
+  lev := O.lev
+  X := divMv N h O.X
+  p0 := p0Mv N h O.p0
+  ker := fun u v hv => { O.ker u v hv with }
+  amb := { O.amb with }
+  amb0 := { O.amb0 with }
+  gauge := O.gauge
+
+theorem objMv_eq_cast_tr (O : Obj2 (w.D Z)) :
+    objMv N h O = cast (congrArg Obj2 (Db.D_setDivZ w Z N h).symm) (O.tr N h) := by
+  have hObj : HEq (objMv N h O) (O.tr N h) := by
+    cases Z
+    with_unfolding_all exact HEq.rfl
+  exact eq_of_heq (hObj.trans (cast_heq (congrArg Obj2 (Db.D_setDivZ w Z N h).symm) (O.tr N h)).symm)
 
 theorem datMv_cG {hX : B.fields.Ok} (z : Dat (w.st Z) w.I hX T Wt) : HEq (datMv N h z).cG z.cG := (by with_unfolding_all exact ((HEq.refl z.cG) :))
 
@@ -118,7 +151,7 @@ theorem cxMv_eq : z.R.toCx3 z.F = cxMv N h z := (by with_unfolding_all exact ((t
 
 set_option maxHeartbeats 2000000 in
 theorem mjW_fwd {X : DivX (w.D Z)} {jW : JwT z.F (cxMv N h z)} (H : MjW z.F X (cxMv N h z) jW) :
-    MjW (datMv N h z).F ((@EX.OB.divTr (@ColW.D B f T w Z) N h X)) ((datMv N h z).R.toCx3 (datMv N h z).F) ((jW)) := by
+    MjW (datMv N h z).F (divMv N h X) ((datMv N h z).R.toCx3 (datMv N h z).F) jW := by
   obtain ⟨J, HJ⟩ := H
   exact ⟨⟨(by with_unfolding_all exact (J.eW :))⟩, ⟨(by with_unfolding_all exact (HJ.j_eq :)), (by with_unfolding_all exact (HJ.hlat :))⟩⟩
 
@@ -126,7 +159,7 @@ theorem mjW_fwd {X : DivX (w.D Z)} {jW : JwT z.F (cxMv N h z)} (H : MjW z.F X (c
 set_option maxHeartbeats 2000000 in
 theorem mjW_back {X : DivX (w.D (Db.setDivZ Z N h))} {jW : JwT (datMv N h z).F ((datMv N h z).R.toCx3 (datMv N h z).F)}
     (H : MjW (datMv N h z).F X ((datMv N h z).R.toCx3 (datMv N h z).F) jW) :
-    MjW z.F ((@divBack (@ColW.D B f T w Z) N h X)) (cxMv N h z) ((jW)) := by
+    MjW z.F (divUnmv N h X) (cxMv N h z) jW := by
   obtain ⟨J, HJ⟩ := H
   exact ⟨⟨(by with_unfolding_all exact (J.eW :))⟩, ⟨(by with_unfolding_all exact (HJ.j_eq :)), (by with_unfolding_all exact (HJ.hlat :))⟩⟩
 
@@ -161,18 +194,20 @@ theorem ReadSame.tup_eq (s : ReadSame N h t Y L) : ((by exact Y.tup) : type_of% 
 
 
 set_option maxHeartbeats 2000000 in
-theorem ReadSame.mj_back (s : ReadSame N h t Y L) {X : DivX (w.D (Db.setDivZ Z N h))} (H : MjAre L ((X))) :
-    MjAre t.r.Z ((@divBack (@ColW.D B f T w Z) N h X)) :=
-  (by with_unfolding_all exact (((MjW.congr (F := t.r.z.F) (Xd := ((divBack (D := w.D Z) N h ((by with_unfolding_all exact (X :)))))) (cxMv_eq N h t.r.z) (jW := (t.r.Z.jW))
-    (jW' := (L.jW)) ((s.jW))).2
-    (((mjW_back N h t.r.z (X := X) (jW := (by with_unfolding_all exact (L.jW :))) ((by with_unfolding_all exact (H :))))))) : _))
+theorem ReadSame.mj_back (s : ReadSame N h t Y L) {X : DivX (w.D (Db.setDivZ Z N h))} (H : MjAre L X) :
+    MjAre t.r.Z (divUnmv N h X) := by
+  with_unfolding_all
+    exact (MjW.congr (F := t.r.z.F) (Xd := divUnmv N h X) (cxMv_eq N h t.r.z)
+      (jW := t.r.Z.jW) (jW' := L.jW) s.jW).2
+      (mjW_back N h t.r.z (X := X) (jW := L.jW) H)
 
 
 set_option maxHeartbeats 2000000 in
-theorem ReadSame.mj_fwd (s : ReadSame N h t Y L) {X : DivX (w.D Z)} (H : MjAre t.r.Z ((X))) :
-    MjAre L ((@EX.OB.divTr (@ColW.D B f T w Z) N h X)) :=
-  (by with_unfolding_all exact ((mjW_fwd N h t.r.z (X := X) (jW := (L.jW))
-    ((MjW.congr (cxMv_eq N h t.r.z) (jW := (t.r.Z.jW)) (jW' := (L.jW)) ((s.jW))).1 ((H)))) : _))
+theorem ReadSame.mj_fwd (s : ReadSame N h t Y L) {X : DivX (w.D Z)} (H : MjAre t.r.Z X) :
+    MjAre L (divMv N h X) := by
+  with_unfolding_all
+    exact mjW_fwd N h t.r.z (X := X) (jW := L.jW)
+      ((MjW.congr (cxMv_eq N h t.r.z) (jW := t.r.Z.jW) (jW' := L.jW) s.jW).1 H)
 
 
 set_option maxHeartbeats 2000000 in
@@ -200,7 +235,9 @@ def ReadSame.what₂ (s : ReadSame N h t Y L) : RowsT K w (Db.setDivZ Z N h) Wt 
   emt := (by with_unfolding_all exact (t.emt :))
   etaF := (by with_unfolding_all exact (t.etaF :))
   rowInt := ⟨(by with_unfolding_all exact (t.rowInt.ref :)), (by with_unfolding_all exact (t.rowInt.tw :))⟩
-  idx X H := (by with_unfolding_all exact ((idxDefs_fwd (D := w.D Z) N h (X := (X)) (((t.idx _ (s.mj_back (X := (by with_unfolding_all exact (X :))) ((by with_unfolding_all exact (H :)))))))) : _))
+  idx X H := by
+    have hIdx := t.idx (divUnmv N h X) (s.mj_back H)
+    with_unfolding_all exact ⟨hIdx.Ij_def, hIdx.jw_def⟩
 
 
 set_option maxHeartbeats 2000000 in
@@ -346,17 +383,23 @@ def ReadSame.rxs (s : ReadSame N h t Y L) (x : RXs t) : RXs s.what₂ where
 
 end Rows
 
+private theorem kapSharp_mv : kapSharp (w.D (Db.setDivZ Z N h)) = kapSharp (w.D Z) :=
+  (congrArg kapSharp (Db.D_setDivZ w Z N h)).trans (EX.OB.kapSharp_tr (D := w.D Z) N h)
 
 set_option maxHeartbeats 4000000 in
 theorem ReadSame.objT {N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V} {h : B.Word → ℝ} {O : Obj2 (w.D Z)} {t : RowsT K w Z Wt O.p0}
     {Y : Read (datMv N h t.r.z).R.toRealDat (datMv N h t.r.z).F.lv2 ((p0Mv N h O.p0))}
     {L : ReadL (datMv N h t.r.z).R (datMv N h t.r.z).F ((p0Mv N h O.p0)) Y} (s : ReadSame N h t Y L) (H : ObjT O t) :
-    ObjT (Z := Db.setDivZ Z N h) (Wt := Wt) (K := K) (O.tr N h) ((by with_unfolding_all exact (s.what₂ :))) := by
+    ObjT (objMv N h O) s.what₂ := by
   exact {
-    amb := (by with_unfolding_all exact ((And.intro (s.amb1 (a := O.amb) (((O.tr N h).amb)) (((Eq.refl O.amb.MtH))) (((HEq.refl O.amb.jAmb))) ((H.amb.1)))
-      (s.amb0 (a := O.amb0) (((O.tr N h).amb0)) (((Eq.refl O.amb0.MtH))) (((HEq.refl O.amb0.jAmb))) ((H.amb.2)))) : _))
-    mjH := (by with_unfolding_all exact ((s.mj_fwd (X := O.X) ((H.mjH))) : _))
-    kapR σ := (by with_unfolding_all exact (((H.kapR σ).trans (GlobalTheory.EX.OB.kapSharp_tr (D := w.D Z) N h).symm) :))
+    amb := by
+      with_unfolding_all
+        exact ⟨s.amb1 (a := O.amb) (objMv N h O).amb rfl (HEq.refl O.amb.jAmb) H.amb.1,
+          s.amb0 (a := O.amb0) (objMv N h O).amb0 rfl (HEq.refl O.amb0.jAmb) H.amb.2⟩
+    mjH := s.mj_fwd (X := O.X) H.mjH
+    kapR σ := by
+      change O.X.kapR σ = kapSharp (w.D (Db.setDivZ Z N h))
+      exact (H.kapR σ).trans (kapSharp_mv (w := w) (Z := Z) N h).symm
   }
 
 

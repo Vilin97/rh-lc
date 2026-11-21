@@ -76,7 +76,7 @@ theorem xp_hform_one (hc : CMData F E) {N : ℕ} (x y : Fin N → E) :
   · rw [Matrix.one_apply_eq, mul_one]
     rfl
   · intro j _ hj
-    rw [Matrix.one_apply_ne (Ne.symm hj), mul_zero, zero_mul]
+    simp only [Matrix.one_apply_ne' hj, mul_zero, zero_mul]
   · intro h; exact absurd (Finset.mem_univ i) h
 
 theorem xp_til_f_coreJ (hc : CMData F E) {N n : ℕ} (hN : N = n + 1) [NeZero N] {ST SG SG' : Finset (Pl E)} (hSG : SG ⊆ SG')

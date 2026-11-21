@@ -14,14 +14,18 @@ open CompanionTheory.WaveGrid.MomL (mnr momL)
 open CompanionTheory.LimBd.Main (ZuckT ZuckDualT Wsp Box gap_of_box)
 open scoped ENNReal
 
-private theorem sum_natAbs_le_ball_local {n : ℕ} : ∀ e, ∀ ν ∈ ball n e, ∑ i, (ν i).natAbs ≤ e
-  | 0, ν, h => by
+private theorem sum_natAbs_le_ball_local {n : ℕ} : ∀ e, ∀ ν ∈ ball n e, ∑ i, (ν i).natAbs ≤ e := by
+  intro e
+  induction e with
+  | zero =>
+    intro ν h
     rw [ball, Finset.mem_singleton] at h
     simp [h]
-  | e + 1, ν, h => by
+  | succ e ih =>
+    intro ν h
     rw [ball, Finset.mem_image₂] at h
     obtain ⟨x, hx, s, hs, rfl⟩ := h
-    have h1 := sum_natAbs_le_ball_local e x hx
+    have h1 := ih x hx
     have h2 := sum_natAbs_le_one_of_mem_unitShifts hs
     have h3 : ∑ i, ((x + s) i).natAbs ≤ ∑ i, (x i).natAbs + ∑ i, (s i).natAbs := by
       rw [← Finset.sum_add_distrib]

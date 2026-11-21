@@ -172,8 +172,10 @@ theorem lat_span {n : ℕ} (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)) :
   rw [h1]
   exact Submodule.smul_mem _ _ (Submodule.subset_span (hmem j))
 
-theorem lat_isLattice {n : ℕ} (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)) : Submodule.IsLattice F (lat F s) :=
-  Submodule.IsLattice.of_fg F (lat_fg s)
+theorem lat_isLattice {n : ℕ} (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)) :
+    Submodule.IsFullLattice F (lat F s) where
+  toIsLattice := Submodule.IsLattice.of_fg F (lat_fg s)
+  span_eq_top := lat_span s
 
 theorem matInt_conj {n : ℕ} (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)) (γ : GL (Fin n) F)
     (h : ∀ y ∈ lat F s, (γ : Matrix (Fin n) (Fin n) F) *ᵥ y ∈ lat F s) :
@@ -226,7 +228,7 @@ end GlobalTheory.StabLat
 open GlobalTheory.StabLat in
 theorem GlobalTheory.StabLat.exists_lattice_stab_conj :
     ∀ (F : Type) [Field F] [NumberField F] (n : ℕ) (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)),
-      ∃ Λ : Submodule (𝓞 F) (Fin n → F), Submodule.IsLattice F Λ ∧ ∀ γ : GL (Fin n) F,
+      ∃ Λ : Submodule (𝓞 F) (Fin n → F), Submodule.IsFullLattice F Λ ∧ ∀ γ : GL (Fin n) F,
         (∀ y, (γ : Matrix (Fin n) (Fin n) F) *ᵥ y ∈ Λ ↔ y ∈ Λ) →
           s⁻¹ * PIW.ClassFinD.glIncl F n γ * s ∈ PIW.ClassFinD.KGL F n := by
   intro F _ _ n s

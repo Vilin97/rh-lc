@@ -79,7 +79,7 @@ open PositivityTheory.ThK PositivityTheory.ThK.Vac PositivityTheory.ThKH.Iwas Po
 theorem vacFixX_of (hSt : GlobalTheory.ThK.StabEx) : VacFixX := by
   intro F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' P K hK v hv k hk
   have hB := P.base
-  have hL := P.herm.lat
+  have hL := P.herm.lat.toIsLattice
   have hs := IsUWeilPair.isUSplitting P.weil
   have hKc : IsCompact (K : Set (UA σ X.J)) := by
     obtain ⟨K', -, -, h1, h2, -⟩ := hSt F E σ B n X r s hB P.herm

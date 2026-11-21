@@ -85,7 +85,7 @@ def PassageSizeIndexed : Prop :=
     ∀ (R : Submodule (𝓞 K) (Fin D → K)) (M : Submodule (𝓞 K) W) (Ψ : (Fin D → K) →ₗ[K] W)
       (T : Finset (Pl K)) (a : Pl K → ℤ) (dF : Pl K → ℝ) (EM hInf BF p2 bb : ℝ),
 
-    Submodule.IsLattice K R → M.FG → M ≠ ⊥ → Function.Injective Ψ →
+    Submodule.IsFullLattice K R → M.FG → M ≠ ⊥ → Function.Injective Ψ →
     R.map (Ψ.restrictScalars (𝓞 K)) ≤ Formalism.HermitianLatticesTheory.idealSmul (denIdeal T a : Submodule (𝓞 K) K) M →
     muMaxDef b' X' M ≤ EM →
     htMap (Pi.basisFun K (Fin D)) (Formalism.DivisionValues.scaleFrame (fun v => (kap v)⁻¹) XE) b' X' Ψ ≤ hInf →

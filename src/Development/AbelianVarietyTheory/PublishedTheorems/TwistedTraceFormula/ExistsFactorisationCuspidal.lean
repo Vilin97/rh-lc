@@ -30,7 +30,7 @@ def IsUnramFactorisation {H : Type} [NormedAddCommGroup H] [InnerProductSpace �
     (ξ : ∀ v, (R v).H) (π : GAd σ J →* (H →L[ℂ] H)) (B : (∀ v, (R v).H) → H) : Prop :=
   IsFactorisation σ J (fun v => (R v).π) ξ π B ∧
   (∀ v, (smRep (finFactor R v)).IsIrreducible ∧ IsAdmissible (smRep (finFactor R v))) ∧
-  ∀ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E L →
+  ∀ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L →
     ∀ᶠ v in cofinite, fixed (toRep (finFactor R v)) (stabLoc σ J L v) = ℂ ∙ ξ (.inr v)
 
 end Flath

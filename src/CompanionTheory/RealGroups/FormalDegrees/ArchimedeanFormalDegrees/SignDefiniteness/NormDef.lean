@@ -14,17 +14,6 @@ noncomputable section
 open Finset MeasureTheory Matrix
 open scoped InnerProductSpace
 
-namespace ReciprocityTheory.ChartRestriction.DS.S7
-
--- Older stub builds refer to the original generated instance name.
-run_cmd do
-  unless (← Lean.getEnv).contains `ReciprocityTheory.ChartRestriction.DS.S7.instMeasurableSpaceSubtypeUnitsMatrixFinComplexMemSubgroupUJKG do
-    let name := Lean.mkIdent `instMeasurableSpaceSubtypeUnitsMatrixFinComplexMemSubgroupUJKG
-    Lean.Elab.Command.elabCommand (← `(abbrev $name:ident {n : ℕ}
-      (ε : Fin n → Bool) : MeasurableSpace (KG ε) := borel _))
-
-end ReciprocityTheory.ChartRestriction.DS.S7
-
 namespace CompanionTheory.RgFd
 
 open ReciprocityTheory.ChartRestriction.DS ReciprocityTheory.ChartRestriction.DS.S7
@@ -70,8 +59,8 @@ theorem nd_hsOp_op {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) 
     have hU := (T.τ k).2
     have h1 : star (T.op k) * T.op k = 1 := hU.1
     have h2 : ⟪T.op k v, T.op k v⟫_ℂ = ⟪v, v⟫_ℂ := by
-      rw [← ContinuousLinearMap.adjoint_inner_right, ← ContinuousLinearMap.mul_apply,
-        ← ContinuousLinearMap.star_eq_adjoint, h1, ContinuousLinearMap.one_apply]
+      rw [← ContinuousLinearMap.adjoint_inner_right, ← mul_apply_eq_comp,
+        ← ContinuousLinearMap.star_eq_adjoint, h1, one_apply_eq_self]
     rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K] at h2
     have h3 : ‖T.op k v‖ ^ 2 = ‖v‖ ^ 2 := by exact_mod_cast h2
     exact (pow_left_inj₀ (norm_nonneg _) (norm_nonneg _) two_ne_zero).1 h3

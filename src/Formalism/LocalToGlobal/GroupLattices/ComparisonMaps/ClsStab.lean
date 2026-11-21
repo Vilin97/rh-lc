@@ -77,7 +77,7 @@ theorem fix_iff (i : compL L p) (g : Fin nV → GL (Fin (m + 1)) Qq) (γ : UJ (s
     (repP L p i * jQ I hdet hk g)⁻¹ * ratA sp γ * (repP L p i * jQ I hdet hk g) ∈ KA L ↔
       γ ∈ gamC sp.cm.sig sp.gram0 (Formalism.L2.Herm.awayFrom₂ L p) (repP L p i).1 ∧
         (fun v => gMap W (prP I hk (ratA sp γ) v) (tupOf W g v)) = tupOf W g := by
-  refine ((fibP I hdet hk hH).stab_iff (HA sp) (repP L p) i g (ratA sp γ) (prP_repP I hk)).trans
+  refine ((fibP I hdet hk hH).stab_iff (HA sp) (repP L p) (prP_repP I hk) i g (ratA sp γ) (prP_repP I hk)).trans
     (and_congr (mem_gamC_iff (repP L p i) γ).symm ?_)
   show g⁻¹ * (prP I hk (ratA sp γ) * g) ∈ _ ↔ _
   rw [← tupOf_eq_iff]

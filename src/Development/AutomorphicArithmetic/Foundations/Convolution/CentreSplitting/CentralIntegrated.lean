@@ -34,7 +34,7 @@ theorem kernel_uAction (u : UniversalEnvelopingAlgebra ℝ h.lieSubalgebra) (f :
       rw [AlgHom.commutes, AlgHom.commutes, Module.algebraMap_end_apply]
       rfl
     rw [e]
-    refine ⟨IsExpLieAlgebra.IsTestFunction.const_mul h hf (r : ℂ), fun w => ?_⟩
+    refine ⟨IsExpLieAlgebra.IsTestFunction.const_mul hf (r : ℂ), fun w => ?_⟩
     rw [AlgHom.commutes, AlgHom.commutes, Module.algebraMap_end_apply, IsExpLieAlgebra.integrated_const_mul_kernel]
     exact (Complex.coe_smul r _).symm
   | ι x =>
@@ -45,7 +45,7 @@ theorem kernel_uAction (u : UniversalEnvelopingAlgebra ℝ h.lieSubalgebra) (f :
       funext g
       simp only [IsExpLieAlgebra.convDeriv, inv_inv]
     rw [e]
-    refine ⟨IsExpLieAlgebra.IsTestFunction.convDeriv h hf (h.ofLie x), fun w => ?_⟩
+    refine ⟨IsExpLieAlgebra.IsTestFunction.convDeriv hf (h.ofLie x), fun w => ?_⟩
     show (h.uAction π (UniversalEnvelopingAlgebra.ι ℝ x) ⟨_, h.isSmoothVector_integrated π μ hf w⟩ : E) = _
     rw [IsExpLieAlgebra.uAction_ι, IsExpLieAlgebra.coe_derivEnd, h.derivOp_integrated_convDeriv μ π hf]
   | mul a b ha hb =>
@@ -60,7 +60,7 @@ theorem kernel_uAction (u : UniversalEnvelopingAlgebra ℝ h.lieSubalgebra) (f :
     obtain ⟨h1, h2⟩ := hb f hf
     obtain ⟨h3, h4⟩ := ha f hf
     rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply]
-    refine ⟨IsExpLieAlgebra.IsTestFunction.add h h3 h1, fun w => ?_⟩
+    refine ⟨IsExpLieAlgebra.IsTestFunction.add h3 h1, fun w => ?_⟩
     rw [LinearMap.add_apply, Submodule.coe_add, h2, h4]
     exact (h.integrated_add_kernel μ π h3 h1 w).symm
 

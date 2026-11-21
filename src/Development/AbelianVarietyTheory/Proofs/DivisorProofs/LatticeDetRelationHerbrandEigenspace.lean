@@ -317,43 +317,43 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
   refine ⟨X, U, M, c, ⟨Matrix.linearIndependent_rows_of_det_ne_zero hXne, ?_⟩,
     ⟨linearIndependent_mkQ (filSpace Fil τ) hq U M hMF hAne, ?_⟩, ⟨hMli, ?_⟩, hMF,
     ⟨hc0, ?_⟩, hdet'⟩
-  ·
-    refine span_eq_of_basis hv (GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ (Fin (p + q) → RS (liftA hv a))) h
-      LinearMap.id (fun z i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C))
-      (fun z z' => by funext i; simp only [map_add (f := _), Pi.add_apply]; rfl)
-      (fun c z => by funext i; simp only [map_smul, Pi.smul_apply, smul_eq_mul]; rfl)
-      (fun z z' hz => by rw [show z = z' from hz])
-      (fun k => (h k : Fin (p + q) → RS (liftA hv a))) (fun k => rfl) _ (fun y => ?_)
-    rw [eigenSub_iff C w _ hv S a (p + q) τ ha hinj hrange y]
-    simp only [LinearMap.id_apply]
-  ·
-    refine span_eq_of_basis hv (GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ ((Fin (p + q) → RS (liftA hv a)) ⧸
-        (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}))) l (proj (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})))
-      (fun z => quotMap (w := w) (filSpace Fil τ)
-        (fun i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C)))
-      (fun z z' => by
-        rw [← map_add (f := _)]; congr 1; funext i; simp only [map_add (f := _), Pi.add_apply]; rfl)
-      (fun c z => by
-        show (filSpace Fil τ).mkQ _ = (c : C) • (filSpace Fil τ).mkQ _
-        rw [← map_smul]; congr 1; funext i; simp only [map_smul, Pi.smul_apply, smul_eq_mul]; rfl)
-      (fun z z' hz => ?_) x hx _ (fun y => ?_)
-    · show (filSpace Fil τ).mkQ _ = (filSpace Fil τ).mkQ _
-      rw [Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq]
-      have h2 : z - z' ∈ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}) :=
-        (Submodule.Quotient.eq ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}))).1 hz
-      rw [hmem, evalVec_sub] at h2
-      refine Submodule.subset_span ⟨_, h2, ?_⟩
-      funext i
-      rfl
-    · exact lie_iff C w _ hv S a (p + q) Fil τ ha hF hinj hrange hmem hcomp y
-  ·
-    refine span_eq_of_basis hv (eigQuot (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})) τ) fb
-      LinearMap.id (fun z i => ((z i : Int0 (toAddVal w ℓ h0 h1)) : C))
-      (fun z z' => by funext i; rfl) (fun c z => by funext i; rfl)
-      (fun z z' hz => by rw [show z = z' from hz])
-      (fun k => (fb k : Fin (p + q) → Int0 (toAddVal w ℓ h0 h1))) (fun k => rfl) _ (fun y => ?_)
-    rw [eigenQuot_iff hv a (p + q) Fil hF.le hrange hmem τ y]
-    simp only [LinearMap.id_apply]
+  · abstract
+      refine span_eq_of_basis hv (GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ (Fin (p + q) → RS (liftA hv a))) h
+        LinearMap.id (fun z i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C))
+        (fun z z' => by funext i; simp only [map_add (f := _), Pi.add_apply]; rfl)
+        (fun c z => by funext i; simp only [map_smul, Pi.smul_apply, smul_eq_mul]; rfl)
+        (fun z z' hz => by rw [show z = z' from hz])
+        (fun k => (h k : Fin (p + q) → RS (liftA hv a))) (fun k => rfl) _ (fun y => ?_)
+      rw [eigenSub_iff C w _ hv S a (p + q) τ ha hinj hrange y]
+      simp only [LinearMap.id_apply]
+  · abstract
+      refine span_eq_of_basis hv (GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ ((Fin (p + q) → RS (liftA hv a)) ⧸
+          (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}))) l (proj (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})))
+        (fun z => quotMap (w := w) (filSpace Fil τ)
+          (fun i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C)))
+        (fun z z' => by
+          rw [← map_add (f := _)]; congr 1; funext i; simp only [map_add (f := _), Pi.add_apply]; rfl)
+        (fun c z => by
+          show (filSpace Fil τ).mkQ _ = (c : C) • (filSpace Fil τ).mkQ _
+          rw [← map_smul]; congr 1; funext i; simp only [map_smul, Pi.smul_apply, smul_eq_mul]; rfl)
+        (fun z z' hz => ?_) x hx _ (fun y => ?_)
+      · show (filSpace Fil τ).mkQ _ = (filSpace Fil τ).mkQ _
+        rw [Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq]
+        have h2 : z - z' ∈ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}) :=
+          (Submodule.Quotient.eq ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}))).1 hz
+        rw [hmem, evalVec_sub] at h2
+        refine Submodule.subset_span ⟨_, h2, ?_⟩
+        funext i
+        rfl
+      · exact lie_iff C w _ hv S a (p + q) Fil τ ha hF hinj hrange hmem hcomp y
+  · abstract
+      refine span_eq_of_basis hv (eigQuot (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})) τ) fb
+        LinearMap.id (fun z i => ((z i : Int0 (toAddVal w ℓ h0 h1)) : C))
+        (fun z z' => by funext i; rfl) (fun c z => by funext i; rfl)
+        (fun z z' hz => by rw [show z = z' from hz])
+        (fun k => (fb k : Fin (p + q) → Int0 (toAddVal w ℓ h0 h1))) (fun k => rfl) _ (fun y => ?_)
+      rw [eigenQuot_iff hv a (p + q) Fil hF.le hrange hmem τ y]
+      simp only [LinearMap.id_apply]
   · rw [hy, toAddVal_of_ne _ _ _ _ hc0] at hc
     exact WithTop.coe_injective hc
 

@@ -445,8 +445,8 @@ theorem corankPos_tO (u u' : D.what₂.Word) : (Y.tO u u').CorankPos := by
   have hGv : Gval (lf D (X.Fu u)) t.frame ≠ 0 := by
     rw [← gterm_G Y t]
     intro h; apply hG; show TermOp.Gt t = 0; unfold TermOp.Gt; rw [if_pos h]
-  exact Formalism.L2.SG.Closed.CorankPosG_holds D.host.E (VS D) D.R.rS D.R.k (Formalism.L2.SG.Corank.finrank_VS D) t.lam
-    hΛ.2.1.1 _ _ (lf D (X.Fu u)) t.frame t'.frame (t'.lin * t.lin⁻¹) hΛ.2.1.2.2.1 t.rep.2.2.2.2.1 hGv
+  exact pair_corank_pos D.host.E (VS D) D.R.rS D.R.k (Formalism.L2.SG.Corank.finrank_VS D) t.lam
+    hΛ.1.1 _ _ (lf D (X.Fu u)) t.frame t'.frame (t'.lin * t.lin⁻¹) hΛ.2.1.2.2.1 t.rep.2.2.2.2.1 hGv
 
 theorem idDegenerate_tO (u u' : D.what₂.Word) : (Y.tO u u').IdDegenerate := by
   intro t ht

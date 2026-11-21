@@ -368,8 +368,8 @@ theorem main : ∀ (D : D7) (u : D.what₂.Word), letI := D.host.cmStar; ∀ F0 
   change Lat.XLam Λ (lf D F0) = _ at h5
   have loc := fun (L : Submodule (𝓞 D.host.E) (D.sp.Y 0).V) (hL : L.FG) =>
     (locDual (𝓞 D.host.E) D.host.E (D.sp.Y 0).V (D.sp.Y 0).hT hs star_algebraMap_ringOfIntegers_mem_range L hL).2.1
-  refine ⟨Λ, ⟨h1.toIsLattice, fun P hP => UnimodLoc.exists_isom_of_isUnimodularAt D.host.E _ _ hcm hs (D.sp.Y 0).nondeg _ _
-    (D.sp.Y 0).standardTuple_isLattice h1.toIsLattice P hP (loc _ (D.sp.Y 0).standardTuple_isLattice.fg (D.sp.Y 0).baseLattice_isUnimodular P hP) (loc _ h1.fg h2 P hP)⟩,
+  refine ⟨Λ, ⟨h1, fun P hP => UnimodLoc.exists_isom_of_isUnimodularAt D.host.E _ _ hcm hs (D.sp.Y 0).nondeg _ _
+    (full_of_unimodular hs (D.sp.Y 0).nondeg (D.sp.Y 0).standardTuple_isLattice (D.sp.Y 0).baseLattice_isUnimodular) h1 P hP (loc _ (D.sp.Y 0).standardTuple_isLattice.fg (D.sp.Y 0).baseLattice_isUnimodular P hP) (loc _ h1.fg h2 P hP)⟩,
     ⟨h1.toIsLattice, h2, ⟨h3, rfl⟩, fun P => ?_, fun c hc => ?_⟩, ?_⟩
   · have := P.isPrime
     choose c k1 k2 k3 k4 using fun a : Fin D.R.rS =>

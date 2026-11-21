@@ -68,46 +68,46 @@ theorem cA_bijective (σ : E →ₐ[F] E) : Function.Bijective (cA σ) := by
 private theorem fullLattice_of_dual {n : ℕ} (σ : E →ₐ[F] E) (Y : Spc F E n)
     (hJ : Y.J.det ≠ 0) (hL : Y.L.FG)
     (hdual : ∀ y, (∀ x ∈ Y.L, form σ Y.J y x = 0) → y ∈ Y.L) :
-    Y.L.IsFullLattice E where
-  toIsLattice := Submodule.IsLattice.of_fg E hL
-  span_eq_top := by
-    apply Submodule.dualAnnihilator_eq_bot_iff.mp
-    refine le_antisymm ?_ bot_le
-    intro f hf
-    let a := (dotProductEquiv E (Fin n)).symm f
-    have ha (x : Fin n → E) : a ⬝ᵥ x = f x :=
-      DFunLike.congr_fun ((dotProductEquiv E (Fin n)).apply_symm_apply f) x
-    have hunit : IsUnit Y.J := (Matrix.isUnit_iff_isUnit_det Y.J).2 (isUnit_iff_ne_zero.2 hJ)
-    obtain ⟨y, hy⟩ := Matrix.vecMul_surjective_iff_isUnit.2 hunit (fun i => σ (a i))
-    change y ᵥ* Y.J = (fun i => σ (a i)) at hy
-    have hform (x : Fin n → E) : form σ Y.J y x = σ (f x) := by
-      rw [form, Matrix.dotProduct_mulVec, hy, ← ha x]
-      simp only [dotProduct, map_sum, map_mul]
-    have hline (r : E) : r • y ∈ Y.L := by
-      apply hdual
-      intro x hx
-      have hz : form σ Y.J y x = 0 := by
-        rw [hform, (Submodule.mem_dualAnnihilator f).mp hf x (Submodule.subset_span hx), map_zero]
-      simp only [form, smul_dotProduct] at hz ⊢
-      rw [hz, smul_zero]
-    have hy₀ : y = 0 := by
-      funext i
-      change y i = 0
-      by_contra hi
-      -- A nonzero coordinate would make E finite over its ring of integers.
-      let coord := (LinearMap.proj i : (Fin n → E) →ₗ[E] E).restrictScalars (𝓞 E)
-      have htop : Y.L.map coord = ⊤ := by
-        rw [eq_top_iff]
-        intro x _
-        exact ⟨(x / y i) • y, hline _, div_mul_cancel₀ _ hi⟩
-      have : Module.Finite (𝓞 E) E := Module.finite_def.mpr (htop ▸ hL.map coord)
-      exact RingOfIntegers.not_isField E
-        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
-    rw [Submodule.mem_bot]
-    apply LinearMap.ext
-    intro x
-    apply σ.toRingHom.injective
-    simpa [hy₀, form] using (hform x).symm
+    Y.L.IsFullLattice E :=
+  { toIsLattice := Submodule.IsLattice.of_fg E hL
+    span_eq_top := by
+      apply Submodule.dualAnnihilator_eq_bot_iff.mp
+      refine le_antisymm ?_ bot_le
+      intro f hf
+      let a := (dotProductEquiv E (Fin n)).symm f
+      have ha (x : Fin n → E) : a ⬝ᵥ x = f x :=
+        DFunLike.congr_fun ((dotProductEquiv E (Fin n)).apply_symm_apply f) x
+      have hunit : IsUnit Y.J := (Matrix.isUnit_iff_isUnit_det Y.J).2 (isUnit_iff_ne_zero.2 hJ)
+      obtain ⟨y, hy⟩ := Matrix.vecMul_surjective_iff_isUnit.2 hunit (fun i => σ (a i))
+      change y ᵥ* Y.J = (fun i => σ (a i)) at hy
+      have hform (x : Fin n → E) : form σ Y.J y x = σ (f x) := by
+        rw [form, Matrix.dotProduct_mulVec, hy, ← ha x]
+        simp only [dotProduct, map_sum, map_mul]
+      have hline (r : E) : r • y ∈ Y.L := by
+        apply hdual
+        intro x hx
+        have hz : form σ Y.J y x = 0 := by
+          rw [hform, (Submodule.mem_dualAnnihilator f).mp hf x (Submodule.subset_span hx), map_zero]
+        simp only [form, smul_dotProduct] at hz ⊢
+        rw [hz, smul_zero]
+      have hy₀ : y = 0 := by
+        funext i
+        change y i = 0
+        by_contra hi
+        -- A nonzero coordinate would make E finite over its ring of integers.
+        let coord := (LinearMap.proj i : (Fin n → E) →ₗ[E] E).restrictScalars (𝓞 E)
+        have htop : Y.L.map coord = ⊤ := by
+          rw [eq_top_iff]
+          intro x _
+          exact ⟨(x / y i) • y, hline _, div_mul_cancel₀ _ hi⟩
+        have : Module.Finite (𝓞 E) E := Module.finite_def.mpr (htop ▸ hL.map coord)
+        exact RingOfIntegers.not_isField E
+          (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+      rw [Submodule.mem_bot]
+      apply LinearMap.ext
+      intro x
+      apply σ.toRingHom.injective
+      simpa [hy₀, form] using (hform x).symm }
 
 theorem planeCoef_inv : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     {n n₁ i₀ i₁ : ℕ} (Y : Spc F E n) (Y₁ : Spc F E n₁) (H : Plane E n n₁), H.IsAdapted σ B Y Y₁ i₀ i₁ → Y.L.IsFullLattice E →

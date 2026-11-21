@@ -130,13 +130,13 @@ theorem key (H : HermSpace K V) {M : Submodule (𝓞 K) V} {S I : Submodule K V}
   have hB : ∀ x y : C, HC.B x y = H.B x y := fun _ _ => rfl
   obtain ⟨a, b⟩ := DelScale.le_of_latMod hM.1
   have hpM : ∀ x ∈ M, p x ∈ M := fun x hx => M.sub_mem hx (a (r x).2)
-  have L := DelScale.latIn_isLattice p hCS hpC hpI hI hC hM.1
+  have L := DelScale.latIn_isFullLattice p hCS hpC hpI hI hC hM.1
   have hMd : ∀ y, y ∈ M ↔ y ∈ S ∧ ∀ x ∈ M, H.B y x ∈ (1 : Submodule (𝓞 K) K) := fun y => by
     rw [← hM.1.2, ← mem_dual_iff, hM.2]
   have hU : IsUnimod HC (GlobalTheory.Mass.latIn C M) := by
-    refine ⟨(isLatMod_top_bot_iff _).2 L, ?_⟩
+    refine ⟨(isLatMod_top_bot_iff _).2 ⟨L.toIsLattice.fg, L.span_eq_top⟩, ?_⟩
     ext y
-    rw [mem_dual_iff, ((isLatMod_top_bot_iff _).2 L).2]
+    rw [mem_dual_iff, L.span_eq_top]
     change _ ↔ (y : V) ∈ M
     rw [hMd]
     refine ⟨fun hy => ⟨hCS y.2, fun x hx => ?_⟩, fun hy => ⟨trivial, fun x hx => hy.2 x hx⟩⟩

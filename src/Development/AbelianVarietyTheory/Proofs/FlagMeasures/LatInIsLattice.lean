@@ -29,6 +29,20 @@ theorem latIn_isLattice (L : Submodule (𝓞 K) V) (hL : Submodule.IsLattice K L
     exact Submodule.FG.of_le hL.fg (Submodule.map_comap_le _ _)
   · intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
+theorem latIn_isFullLattice (L : Submodule (𝓞 K) V) (hL : Submodule.IsFullLattice K L)
+    (U : Submodule K V) : Submodule.IsFullLattice K (latIn U L) := by
+  let _ := latIn_isLattice L hL.toIsLattice U
+  refine ⟨?_⟩
+  apply eq_top_iff.mpr
+  intro x _
+  obtain ⟨r, hr, hx⟩ := exists_smul_mem L hL (x : V)
+  have hrK : algebraMap (𝓞 K) K r ≠ 0 := by simpa using hr
+  have hx' : r • x ∈ latIn U L := hx
+  have hmem : r • x ∈ Submodule.span K (latIn U L : Set U) := Submodule.subset_span hx'
+  have hmem' := (Submodule.span K (latIn U L : Set U)).smul_mem
+    (algebraMap (𝓞 K) K r)⁻¹ hmem
+  rw [← algebraMap_smul K r x, smul_smul, inv_mul_cancel₀ hrK, one_smul] at hmem'
+  exact hmem'
 end
 
 theorem one_le_rd (K : Type) [Field K] [NumberField K] : 1 ≤ 2 * vInv K := by
@@ -70,7 +84,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
       rintro U ⟨hU, hd⟩
       obtain ⟨x, hx, hx0, hxB⟩ := GlobalTheory.T.exists_short_vector_integralHermitianLattice_rank_one K U (hRes h U) hK ⟨fun x y => hs.eq x y⟩
         (fun τ x hx => hp τ x (by simpa using hx)) hU (latIn U L)
-        ⟨latIn_isLattice L hL.1 U, fun x hx y hy => hL.2 x hx y hy⟩
+        ⟨latIn_isFullLattice L hL.1 U, fun x hx y hy => hL.2 x hx y hy⟩
       rw [hd] at hxB
       refine ⟨x, ⟨hx, hxB⟩, ?_⟩
       refine Submodule.eq_of_le_of_finrank_eq ((Submodule.span_singleton_le_iff_mem _ _).2 x.2) ?_

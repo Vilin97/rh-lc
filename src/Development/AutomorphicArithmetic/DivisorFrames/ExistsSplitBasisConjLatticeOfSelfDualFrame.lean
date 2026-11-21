@@ -30,7 +30,9 @@ theorem UpperTheory.exists_splitBasis_conj_lattice_of_selfDual_frame :
     ext y
     rw [hL, GlobalTheory.TripleSpaceW.mem_conjSub]
   haveI := GlobalTheory.TripleSpaceW.conjSub_isLattice hΛ.1
-  obtain ⟨b₀, hb₀⟩ := GlobalTheory.AdelicU.exists_isSplitBasis t (GlobalTheory.TripleSpaceW.conjSub Λ) (GlobalTheory.AdelicU.isCMExt_host D)
+  obtain ⟨b₀, hb₀⟩ : ∃ b : GL (Fin S.rank) (Fv D.host.F v),
+      IsSplitBasis t (GlobalTheory.TripleSpaceW.conjSub Λ) b :=
+    GlobalTheory.AdelicU.exists_isSplitBasis t (GlobalTheory.TripleSpaceW.conjSub Λ) (GlobalTheory.AdelicU.isCMExt_host D)
   obtain ⟨g, hg, hgv⟩ := UpperTheory.exists_maxCompact_eq_frame_gram_splitBasis D S Λ β hΛ hβ v t b₀ hb₀
   rw [← (GlobalTheory.AdelicU.GLint_eq_KO_and_princ_eq_KOne v S.rank).1] at hg
   have h1 : IsSplitBasis t (GlobalTheory.TripleSpaceW.conjSub Λ) (b₀ * g⁻¹) := by

@@ -315,7 +315,7 @@ theorem selfDual_isFullLattice {V : HSp D} {Λ : Lat V} (hΛ : IsSelfDualC V Λ)
 
 theorem exists_eq_lat (h : Submodule.IsFullLattice D.host.E Λ) : ∃ β : GL (Fin n) (EAf D), Λ = lat β := by
   obtain ⟨β, hβ⟩ := GlobalTheory.AdelicFrame.exists_isFrame D.host.F _ h.fg (Submodule.IsFullLattice.span_eq_top (self := h))
-  exact ⟨β, eq_lat hβ h.toIsLattice⟩
+  exact ⟨β, eq_lat hβ h⟩
 
 theorem inc_mem_hat_iff (h : Submodule.IsFullLattice D.host.E Λ) (x : Fin n → D.host.E) :
     (fun i => inc D (x i)) ∈ hat Λ ↔ x ∈ Λ := by

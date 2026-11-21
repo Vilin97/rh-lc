@@ -10,6 +10,7 @@ noncomputable section
 
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.TopStep Matrix
 open GlobalTheory.Mem.Col2.PtExist (mat mat_mulVec mat_symm_mul)
+open Formalism.HermitianLatticesTheory
 open scoped TensorProduct
 
 namespace GlobalTheory.Mem.ColAd
@@ -159,9 +160,20 @@ theorem exists_frame (x : GL (Fin n) (AfE F E)) (P : HeightOneSpectrum (𝓞 E))
     rw [hv]
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
       (Submodule.subset_span (by simpa using single_mem_stdLat (E := E) i 1))
-  have hN : Submodule.IsLattice E (Formalism.UG.CS.globLat x (stdLat E n)) := Formalism.UG.P.global_lattice_isLattice_holds F E (Fin n) (stdLat E n)
+  have hN := Formalism.UG.P.csGlob_lattice (F := F) (stdLat E n)
     (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) hspan x
-  obtain ⟨f, hf⟩ := CharValCompare.exists_isFr P hN
+  obtain ⟨f, hf⟩ : ∃ f, CharValCompare.IsFr P (Formalism.UG.CS.globLat x (stdLat E n)) f := by
+    obtain ⟨b, hb⟩ := Formalism.BasicNotions.SkeletonIndexLemmas.exists_basis_locP P hN.fg hN.span_eq_top (n := n) (by simp)
+    let f : Sp E n ≃ₗ[E] Sp E n := b.equivFun
+    have h1 : gmap f (Submodule.span (𝓞 E) (Set.range b)) = stdLat E n := by
+      rw [stdLat_eq_span]
+      unfold gmap
+      rw [Submodule.map_span, ← Set.range_comp]
+      congr 2
+      funext i j
+      simp [f, Pi.single_apply, eq_comm]
+    refine ⟨f.symm, fun w => ?_⟩
+    rw [← hb, stdAt, ← h1, mem_localization_gmap]
   have hA : Sm Valued.v 1 (locM P x⁻¹ * ratM P f) := fun i j => by
     have := PtExist.valued_pullV_le x ((hf (Pi.single j 1)).2 (single_mem_stdAt j)) i
     set_option synthInstance.maxHeartbeats 100000 in

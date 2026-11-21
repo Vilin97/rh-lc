@@ -130,6 +130,15 @@ theorem isIntegral_of_keeps {K V : Type} [Field K] [NumberField K] [AddCommGroup
   rw [← hy]
   exact NumberField.RingOfIntegers.isIntegral_coe y
 
+theorem isFullLattice_hLat {D : D7} (V : HSp D) (g : Bridge.Gf V) :
+    Submodule.IsFullLattice D.host.E (Bridge.hLat V g) := by
+  obtain ⟨-, -, hfg, hsp, -⟩ := GlobalTheory.Member.latHat_eq_hat_and_gram D V
+  obtain ⟨Λ, hΛ, h1, h2, -⟩ := GlobalTheory.AdLat.exists_lattice_latOf
+    D.host.F D.host.E V.rank (GlobalTheory.Member.latC V) g.1 hfg hsp
+  rw [SetLike.coe_injective ((GlobalTheory.RepsCompare.coe_hLat V g).trans hΛ.symm)]
+  letI : Submodule.IsLattice D.host.E Λ := Submodule.IsLattice.of_fg D.host.E h1
+  exact ⟨h2⟩
+
 theorem exists_root_of_unity : ∀ (D : D7) (X : RealSide D) (c c₂ : ∀ j : Fin D.R.m, VV D.what₂.LL (FWT.lamV D j) →ₛₗ[D.what₂.embLL] (X.R.cV j).W), IsCoef X c → IsCoef X c₂ → ∀ j, ∃ (ζ : ℂ) (n : ℕ), n ≠ 0 ∧ ζ ^ n = 1 ∧ ∀ F, c₂ j F = ζ • c j F := by
   intro D X c c₂ hc hc₂ j
   obtain ⟨g, c0R, h⟩ := hc
@@ -163,12 +172,12 @@ theorem exists_root_of_unity : ∀ (D : D7) (X : RealSide D) (c c₂ : ∀ j : F
   have hi : IsIntegral ℤ a := by
     obtain ⟨cl, -⟩ := ((X.R.B.L j X.A3.A.μ0).pres.reps 1).exists
     have hL := nabAtr_isLattice (labLL D) (FWT.lamV D j) _
-      (GlobalTheory.RepsCompare.isLattice_hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl))
+      (isFullLattice_hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl))
     refine isIntegral_of_keeps _ (fun h0 => ?_) hL.fg a (fun n hn => ?_)
     · let M := fun τ => dualFr (tauLat (labLL D) τ (Bridge.hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl)))
-      have hM : ∀ τ, Submodule.IsLattice D.what₂.LL (M τ) := fun τ =>
+      have hM : ∀ τ, Submodule.IsFullLattice D.what₂.LL (M τ) := fun τ =>
         dualFr_tauLat_isLattice (labLL D) τ _
-          (GlobalTheory.RepsCompare.isLattice_hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl))
+          (isFullLattice_hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl))
       obtain ⟨d, hd, -, hd2⟩ := nb_global (nb_comm_nab (FWT.lamV D j)) M hM
       have hd' : algebraMap (𝓞 D.what₂.LL) D.what₂.LL d ≠ 0 := by
         rwa [Ne, FaithfulSMul.algebraMap_eq_zero_iff]

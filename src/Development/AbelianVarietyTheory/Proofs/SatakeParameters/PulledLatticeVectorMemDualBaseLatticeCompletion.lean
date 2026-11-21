@@ -88,11 +88,13 @@ theorem mem_latS_dual_of_latCo : ∀ {R : Ranks} {F E : Type} [Field F] [NumberF
   set σ : E →ₐ[F] E := sp.cm.sig with hσ
   set Λ := latAd x Lb with hΛ
   set xv := bc (prV (E := E) v) x with hxv
-  have hLb : Submodule.IsLattice E Lb := Submodule.IsLattice.of_fg E (Module.Finite.iff_fg.mp hfin)
-  have hLam : Submodule.IsLattice E Λ := by
+  have hLb : Submodule.IsFullLattice E Lb := {
+    toIsLattice := Submodule.IsLattice.of_fg E (Module.Finite.iff_fg.mp hfin)
+    span_eq_top := hspan }
+  have hLam : Submodule.IsFullLattice E Λ := by
     have hlat : Formalism.L2.PairingIndexBounds.F.latAd x Lb = Formalism.UG.CS.globLat x Lb := Submodule.span_eq (Formalism.UG.CS.globLat x Lb)
     rw [hΛ, hlat]
-    exact (Formalism.UG.P.csGlob_lattice Lb hfin hspan x).toIsLattice
+    exact Formalism.UG.P.csGlob_lattice Lb hfin hspan x
   have hxU : xv ∈ UPts σ J (v.adicCompletion F) := bc_prV_mem_UPts σ J v hx
   have hcarry := GlobalTheory.LocCarry.mem_latS_latAd_iff x Lb hfin hspan v
 

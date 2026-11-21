@@ -76,8 +76,7 @@ theorem hStd_mem_one_symm {x y : Sp E n} (h : hStd E n x y ∈ (1 : Submodule (�
 private theorem full_lattice_of_unimodular {L : Submodule (𝓞 E) (Sp E n)}
     (hL : Submodule.IsLattice E L) (hu : IsUnimodular (hStd E n) L) :
     Submodule.IsFullLattice E L := by
-  let := hL
-  refine { span_eq_top := ?_ }
+  refine { toIsLattice := hL, span_eq_top := ?_ }
   let W := Submodule.span E (L : Set (Sp E n))
   change W = ⊤
   by_contra h
@@ -433,8 +432,7 @@ theorem lattice_between {B M D : Submodule (𝓞 E) (Sp E n)} (hB : Submodule.Is
 private theorem full_lattice_of_smul {N B : Submodule (𝓞 E) (Sp E n)}
     (hN : Submodule.IsFullLattice E N) (hB : Submodule.IsLattice E B) {p : 𝓞 E} (hp : p ≠ 0)
     (h : ∀ x ∈ N, p • x ∈ B) : Submodule.IsFullLattice E B := by
-  let := hB
-  refine { span_eq_top := top_unique ?_ }
+  refine { toIsLattice := hB, span_eq_top := top_unique ?_ }
   rw [← hN.span_eq_top]
   refine Submodule.span_le.mpr fun x hx => ?_
   have hp' : algebraMap (𝓞 E) E p ≠ 0 :=

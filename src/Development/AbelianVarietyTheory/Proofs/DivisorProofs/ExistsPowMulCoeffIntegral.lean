@@ -256,11 +256,25 @@ theorem harm_mem_coefLat : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0
     have := GlobalTheory.RepsCompare.isLattice_hLat (Vc D i) 1
     rw [hlift.std.2] at this
     exact this
+  have hstdFull : Submodule.IsFullLattice D.host.E (Formalism.L2.Pj.stdLat D.host.E (Vc D i).rank) := by
+    refine { toIsLattice := hstd, span_eq_top := ?_ }
+    apply eq_top_iff.mpr
+    intro v _
+    have hv : v = ∑ j, v j • (Pi.single j 1 : Fin (Vc D i).rank → D.host.E) := by
+      funext j
+      simp [Finset.sum_apply, Pi.single_apply]
+    rw [hv]
+    refine Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span ?_)
+    refine Submodule.mem_pi.2 fun k _ => ?_
+    by_cases h : j = k
+    · simpa [Pi.single_apply, h] using (Submodule.mem_one.2 ⟨(1 : 𝓞 D.host.E), map_one _⟩ :
+        (1 : D.host.E) ∈ (1 : Submodule (𝓞 D.host.E) D.host.E))
+    · simpa [Pi.single_apply, h] using (Submodule.zero_mem (1 : Submodule (𝓞 D.host.E) D.host.E))
   have hemb : (fun τ => (O i).jL.comp (labLL D τ)) = fun τ => embF (O i).c' (tauE D τ) :=
     funext fun τ => embV_eq_embF (O i).c' (O i).jL hfld τ
   have hx0nab : x0 ∈ nabAtr (labLL D) (lamV D i) (Formalism.L2.Pj.stdLat D.host.E (Vc D i).rank) := by
     refine ((Formalism.L2.DIV.nablaDeltaDescentAt_holds D.host.E D.what₂.LL (O i).c'.F (O i).jL D.what₂.Tau (Vc D i).rank
-      (labLL D) (lamV D i) _ hstd x0 y0 hF0.symm).2.2.1).2 ?_
+      (labLL D) (lamV D i) _ hstdFull x0 y0 hF0.symm).2.2.1).2 ?_
     rw [hemb]
     exact hy0
 

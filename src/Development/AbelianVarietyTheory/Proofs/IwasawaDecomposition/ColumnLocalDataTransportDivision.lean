@@ -26,21 +26,20 @@ variable (w : ColW B f T) (Z : w.Lt) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.
 
 set_option maxHeartbeats 8000000 in
 def nchTTr {Wt : Set B.places.Pl} {nch : NChoice (w.D Z)} (n : NchT w Z Wt nch) :
-    NchT w (setDivZ Z N h) Wt (nchTr (D := w.D Z) N h nch) :=
+    NchT w (setDivZ Z N h) Wt { nch with } :=
   { n with tp := { n.tp with }, tie := { n.tie with }, chrPsi := n.chrPsi }
 
 
 set_option maxHeartbeats 8000000 in
 def kerTr {Gt : GatTies (w.D Z)} {cmp : LatCmp (w.D Z)} {Gy : G.LatInst (w.D Z)} (k : KerFam (w.D Z) Gt cmp (w.tw Z) Gy) :
-    KerFam (w.D (setDivZ Z N h)) (gatTr (D := w.D Z) N h Gt) (cmpTr (D := w.D Z) N h cmp) (w.tw (setDivZ Z N h))
-      (latTr (D := w.D Z) N h Gy) :=
+    KerFam (w.D (setDivZ Z N h)) { Gt with } { cmp with } (w.tw (setDivZ Z N h)) { Gy with } :=
   fun u v g => { k u v g with }
 
 
 set_option maxHeartbeats 8000000 in
 def columnLocalDataTransportDivision (c : ColumnDataSplitPrimes K w Z)
-    (hR : IsRecG K.s (w.D (setDivZ Z N h)) (gatTr (D := w.D Z) N h c.Gt) (cmpTr (D := w.D Z) N h c.cmp)
-      (DivTr.herm0S (D := w.D Z) N h c.g.herm) (fun u => DivTr.forms0S (D := w.D Z) N h (c.g.forms u))) :
+    (hR : let t := DivTr.colTTr w Z N h c.toColT
+          IsRecG K.s (w.D (setDivZ Z N h)) t.Gt t.cmp t.g.herm t.g.forms) :
     ColumnDataSplitPrimes K w (setDivZ Z N h) :=
   { DivTr.colTTr w Z N h c.toColT with isRec := hR, om := c.om }
 

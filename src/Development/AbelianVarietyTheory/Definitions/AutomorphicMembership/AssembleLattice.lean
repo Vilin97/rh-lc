@@ -67,7 +67,8 @@ def assemble (B : Base) (C : Cols B) (W : RowsRest B C) (V : DivStage B C W) (S 
   T_ne_pde := fun u => by rw [C.A_T]; exact B.T_ne_pde u
   Dstar_eq := C.A_Dstar
   clsLat := C.clsLat
-  clsLat_lat := C.clsLat_lat
+  clsLat_lat u i c :=
+    show Submodule.IsFullLattice B.host.E (C.clsLat u i c) from C.clsLat_lat u i c
   eMu := W.eMu
   eMt := W.eMt0
   perCol_base_eq_PtilCol := W.perCol_base_eq_PtilCol

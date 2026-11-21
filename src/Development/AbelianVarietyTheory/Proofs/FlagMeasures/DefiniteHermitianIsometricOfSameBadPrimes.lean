@@ -233,9 +233,11 @@ theorem exists_intLat [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower
   let b' := b.unitsSMul fun _ => Units.mk0 _ N0
   have hb' : ∀ i, b' i = algebraMap (𝓞 K) K N • b i := fun i => by
     simp [b', Module.Basis.unitsSMul_apply, Units.smul_def]
-  refine ⟨Submodule.span (𝓞 K) (Set.range b'), ⟨Submodule.fg_span (Set.finite_range _), ?_⟩, ?_⟩
-  · intro s _ hs
-    exact (LinearIndependent.iff_fractionRing (𝓞 K) K).mp hs
+  letI : Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range b')) :=
+    ⟨Submodule.fg_span (Set.finite_range _), fun _ _ hs =>
+      (LinearIndependent.iff_fractionRing (𝓞 K) K).mp hs⟩
+  refine ⟨Submodule.span (𝓞 K) (Set.range b'), ⟨?_⟩, ?_⟩
+  · rw [Submodule.span_span_of_tower, b'.span_eq]
   · intro x hx y hy
     induction hx using Submodule.span_induction with
     | zero => simp
@@ -292,7 +294,7 @@ theorem exists_unimodular [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarT
   obtain ⟨M, hM⟩ := exists_intLat (ext h β)
   obtain ⟨L, hL, -⟩ := (GlobalTheory.T.exists_maximal_integralHermitianLattice_orthonormal_maximal K (V × K) (ext h β) hK hs nd).1 M hM
   obtain ⟨j, c, hc⟩ := exists_basis_ext h β b
-  refine ⟨L, hL.1.1, (locDual (𝓞 K) K (V × K) (ext h β) hs
+  refine ⟨L, hL.1.1.toIsLattice, (locDual (𝓞 K) K (V × K) (ext h β) hs
     (fun r => LocWitt.star_int r) L hL.1.1.fg).2.2 fun P hm => ?_⟩
   by_contra hu
   have := (GlobalTheory.T.maximalHermitianLattice_badPrimes_iff_gramDet K (V × K) (ext h β) hK hs nd L hL j c P hm).1 ⟨hm, hu⟩

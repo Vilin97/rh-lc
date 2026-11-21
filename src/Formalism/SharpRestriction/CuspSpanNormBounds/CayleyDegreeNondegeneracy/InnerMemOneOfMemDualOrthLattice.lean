@@ -80,7 +80,7 @@ theorem exists_lattice_vector_inner_z_one : ∃ m ∈ Λ ⊓ toO (hS D) (orth (h
     intro c hc
     rw [FractionalIdeal.mem_inv_iff hFI0] at hc
     have hy : star c • F0.z ∈ Λ ⊔ toO (hS D) (Xsp (lf D F0)) := by
-      refine mem_sup_isotropic_of_dual_pairing F0 Λ hfull hu _ fun m hm => ?_
+      refine mem_sup_isotropic_of_dual_pairing F0 he Λ hfull hu _ fun m hm => ?_
       obtain ⟨i, hi⟩ := Submodule.mem_one.1 (i_int Λ hu hzΛ hm.1)
       have hiI : i ∈ I := (memI i).2 ⟨m, hm, hi.symm⟩
       obtain ⟨o, ho⟩ := (FractionalIdeal.mem_one_iff _).1
@@ -225,7 +225,7 @@ theorem dual_orthLattice_quotient_cyclic : ∃ w₁ ∈ Formalism.HermitianLatti
     obtain ⟨α₀, hα₀⟩ := Submodule.mem_one.1 hα
     refine ⟨-α₀, (mem_orthLattice_iff_image_mem_sup F0 he hz Λ).2 ?_⟩
     have hy : D.sp.iXY 0 w + (algebraMap (𝓞 D.host.E) D.host.E (-α₀) * t⁻¹) • F0.z ∈ B := by
-      refine mem_sup_isotropic_of_dual_pairing F0 Λ hfull hu _ fun m hm => ?_
+      refine mem_sup_isotropic_of_dual_pairing F0 he Λ hfull hu _ fun m hm => ?_
       obtain ⟨γ, hγ⟩ := Submodule.mem_one.1 (i_int Λ hu hzΛ hm.1)
       have h1 : m - γ • m₁ ∈ Λ := Λ.sub_mem hm.1 (Λ.smul_mem _ hm₁.1)
       have h2 : m - γ • m₁ ∈ orth (hS D) (Xsp (lf D F0)) :=

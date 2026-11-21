@@ -55,7 +55,7 @@ theorem exists_hom_le (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodul
     ∃ k : ℕ, 0 < k ∧ ∀ x ∈ homLat ΛS ΛT, k • x ∈ latRat S T ΛS ΛT := by
   let B : Submodule (𝓞 D.host.E) (Matrix (Fin T.rank) (Fin S.rank) D.host.E) :=
     { (latRat S T ΛS ΛT).toAddSubmonoid with smul_mem' := fun c _ hx => smul_mem_latRat c hx }
-  exact exists_uniform (Module.Finite.iff_fg.1 (homLat_fg hS.toIsLattice hT.fg)) B fun x _ =>
+  exact exists_uniform (Module.Finite.iff_fg.1 (homLat_fg hS hT.fg)) B fun x _ =>
     GlobalTheory.LatVacFull.latRat_full D S T ΛS ΛT hS hT x
 
 theorem exists_le_hom (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) :

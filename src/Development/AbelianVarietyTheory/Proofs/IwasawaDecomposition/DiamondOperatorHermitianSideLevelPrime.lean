@@ -9,6 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Exist
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ClassPairMovedOfMultipliesLocalFunctional
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UnitaryCompletionMapsDualLattices
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MemStabGLAdeleIff
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.FiniteAdeleRingNontrivial
 
 @[expose] public section
 
@@ -206,8 +207,18 @@ theorem dual_mem_loc (hJ : IsUnit J.det) (S : StepLevel F E σ J T f bad) (L : S
     (hz : z ∈ Formalism.L2.Forms.dualL (σ : E →+* E) J L) :
     ((bc (prV (E := E) v) y.1)⁻¹).1 *ᵥ (fun a => inclE (F := F) (v.adicCompletion F) (z a)) ∈
       latS (F := F) (v.adicCompletion F) (intV E v) (Submodule.span (𝓞 E) (dualSet (σ : E →+* E) J S.Lb)) := by
-  refine (GlobalTheory.DualCompletion.dual_move F E σ n J v L S.Lb (bc (prV (E := E) v) y.1) hJ hL
-    ((Submodule.IsLattice.iff_fg E).mpr (Module.Finite.iff_fg.1 S.Lb_fin)) (Formalism.UG.P.afsplit_bc_mem _ _ _ _ y.2) (fun x => ?_) _).1
+  have hG := Formalism.UG.P.csGlob_lattice (F := F) S.Lb S.Lb_fin S.Lb_span y.1
+  have hLfull : Submodule.IsFullLattice E L :=
+    { toIsLattice := hL
+      span_eq_top := by
+        rw [eq_top_iff, ← hG.span_eq_top, Submodule.span_le]
+        intro x hx
+        exact Formalism.L2.GlobalTheoryTheory.Br.latS_mem_span (F := F) L x ((hy _).2 hx) }
+  have hLbfull : Submodule.IsFullLattice E S.Lb :=
+    { toIsLattice := (Submodule.IsLattice.iff_fg E).mpr (Module.Finite.iff_fg.1 S.Lb_fin)
+      span_eq_top := S.Lb_span }
+  refine (GlobalTheory.DualCompletion.dual_move F E σ n J v L S.Lb (bc (prV (E := E) v) y.1) hJ hLfull
+    hLbfull (Formalism.UG.P.afsplit_bc_mem _ _ _ _ y.2) (fun x => ?_) _).1
     (Submodule.subset_span ⟨z, hz, rfl⟩)
   rw [← map_inv]
   exact Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.rlv_yloc v y.1 hy x

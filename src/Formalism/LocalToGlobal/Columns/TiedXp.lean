@@ -70,14 +70,14 @@ end GenP
 
 section Rec
 
-variable {d : ColDat} (a : ColArgs d)
+variable {d : ColDat}
 
 abbrev PCl (d : ColDat) : Type := (ptGSD (Pr := d.Pr) d.W d.levP).Cl
 
 def ColDat.reprP (d : ColDat) (c : PCl d) : DecoSet (E := d.X.E) (n := d.R.N d.R.m - 1) (ST := ∅) (SG := d.Pr.vGs) :=
   (ptGSD (Pr := d.Pr) d.W d.levP).outSec.rep c
 
-def crdPr (hS : SpStd d.toColBase) (hH : HostHyp d) :
+def crdPr (a : ColArgs d) (hS : SpStd d.toColBase) (hH : HostHyp d) :
     StepCrd d.Pr d.σ₀ (d.R.N d.R.m - 1) fun c : PCl d => (d.reprP c).1.N where
   J := CF.gramP (d.colRec a)
   f := d.R.f
@@ -94,10 +94,11 @@ def crdPr (hS : SpStd d.toColBase) (hH : HostHyp d) :
 
 def PtSurjP (d : ColDat) : Prop := DecoPtSurj d.sp.cm (d.R.N d.R.m - 1) (∅ : Finset (Pl d.X.E)) d.Pr.vGs
 
-def pClsG (hS : SpStd d.toColBase) (hH : HostHyp d) (hP : PtSurjP d) :=
+def pClsG (a : ColArgs d) (hS : SpStd d.toColBase) (hH : HostHyp d) (hP : PtSurjP d) :=
   clsPG d.sp.cm d.σ₀ d.levP.inv d.reprP hP (fun c => (ptGSD (Pr := d.Pr) d.W d.levP).outSec.spec c) (crdPr a hS hH)
 
-def parabolicClassAgreement (hS : SpStd d.toColBase) (hH : HostHyp d) (hP : PtSurjP d) (u : d.what₂.Word) :
+def parabolicClassAgreement (a : ColArgs d) (hS : SpStd d.toColBase) (hH : HostHyp d)
+    (hP : PtSurjP d) (u : d.what₂.Word) :
     CF.ClsPTied (D := d.colRec a) u where
   lev := (pClsG a hS hH hP).lev
   y := (pClsG a hS hH hP).y

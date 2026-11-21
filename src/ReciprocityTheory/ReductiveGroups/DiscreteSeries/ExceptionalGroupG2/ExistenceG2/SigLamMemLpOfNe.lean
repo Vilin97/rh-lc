@@ -56,7 +56,9 @@ theorem sigLam_memLp_of_ne (hgap : StdGap ε lam) (hP : IsPsiFor ε lam T Ψ) (h
     (h0 : MemLp (fun g : Formalism.REAL.UJ ε => ⟪w₀, sigLam ε Ψ v₀ (Formalism.MainNotions.S.umat g) x₀⟫_ℂ) 2 (Formalism.REAL.muG ε))
     (x : Hlam ε Ψ v₀) :
     MemLp (fun g : Formalism.REAL.UJ ε => ⟪w₀, sigLam ε Ψ v₀ (Formalism.MainNotions.S.umat g) x⟫_ℂ) 2 (Formalism.REAL.muG ε) := by
-  refine GraphTrick.memLp_of_ne (ρ := fun g => sigLam ε Ψ v₀ (Formalism.MainNotions.S.umat g))
+  refine GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε)
+    (ρ := fun g => sigLam ε Ψ v₀ (Formalism.MainNotions.S.umat g))
+    (measurePreserving_mul_right ε)
     (sigLam_umat_one hgap hP hv₀) (sigLam_umat_mul hgap hP hv₀)
     (sigLam_umat_iso hgap hP hv₀) ?_ w₀ x₀ hx₀ h0 x
   intro S hS hinv

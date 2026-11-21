@@ -1,5 +1,6 @@
 module
 
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.IsClosedKset
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.IntMuCD
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.KSchur
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.AdKMeasurePreserving
@@ -43,10 +44,10 @@ private theorem pmat_conjTranspose_eq_self {ε : Fin n → Bool} (z : PCoord ε 
   simp only [Matrix.conjTranspose_apply, pmat]
   by_cases h1 : b < a ∧ ε a ≠ ε b
   · have h2 : ¬ (a < b ∧ ε b ≠ ε a) := fun h => lt_asymm h1.1 h.1
-    simp only [dif_neg h2, dif_pos h1, star_star]
+    simp only [dite_eq_right h2, dite_eq_left h1, star_star]
   · by_cases h3 : a < b ∧ ε b ≠ ε a
-    · simp only [dif_neg h1, dif_pos h3]
-    · simp only [dif_neg h1, dif_neg h3, star_zero]
+    · simp only [dite_eq_right h1, dite_eq_left h3]
+    · simp only [dite_eq_right h1, dite_eq_right h3, star_zero]
 
 private theorem Jm_mul_Jm_eq_oneFormalDegree (ε : Fin n → Bool) : Jm ε * Jm ε = 1 := by
   rw [Jm, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
@@ -104,13 +105,15 @@ theorem polarInv_apply (ε : Fin n → Bool) (S : Set (UJ ε)) (hS : MeasurableS
   have hT : MeasurableSet (intMuCD_eM ε '' S) := he.measurableSet_image.2 hS
   have hF : Measurable ((intMuCD_eM ε '' S).indicator (1 : (Fin n → Fin n → ℂ) → ENNReal)) :=
     measurable_one.indicator hT
-  have h := lintegral_muPolar ε _ hF
   rw [← lintegral_indicator_one hS]
-  refine Eq.trans ?_ h
-  refine lintegral_congr (fun g => ?_)
-  change S.indicator 1 g = (intMuCD_eM ε '' S).indicator 1 (intMuCD_eM ε g)
-  classical
-  simp only [Set.indicator_apply, he.injective.mem_set_image, Pi.one_apply]
+  have hInd : ∀ g : UJ ε, S.indicator (1 : UJ ε → ENNReal) g =
+      (intMuCD_eM ε '' S).indicator 1 (toM g) := by
+    intro g
+    change S.indicator 1 g = (intMuCD_eM ε '' S).indicator 1 (intMuCD_eM ε g)
+    classical
+    simp only [Set.indicator_apply, he.injective.mem_set_image, Pi.one_apply]
+  simp_rw [hInd]
+  exact lintegral_muPolar ε _ hF
 
 theorem muPolar_inv (ε : Fin n → Bool) : Measure.map (fun x : UJ ε => x⁻¹) (muPolar ε) = muPolar ε := by
   have hinv : Measurable (fun x : UJ ε => x⁻¹) := continuous_inv.measurable
@@ -138,7 +141,7 @@ theorem muPolar_inv (ε : Fin n → Bool) : Measure.map (fun x : UJ ε => x⁻¹
   let G : KG ε × (PCoord ε → ℂ) → ENNReal := fun kz =>
     (intMuCD_eM ε '' S).indicator 1 (intMuCD_pM ε kz) * ENNReal.ofReal (Jac kz.2)
   have hG : Measurable G :=
-    ((measurable_one.indicator hT).comp (intMuCD_measurable_pM ε)).mul
+    ((measurable_one.indicator hT).comp (polarM_continuous ε).measurable).mul
       (ENNReal.measurable_ofReal.comp ((jac_continuous ε).measurable.comp measurable_snd))
   have hH : Measurable fun k => ∫⁻ w, G (k, w) := hG.lintegral_prod_right'
   have step : ∀ k : KG ε, ∫⁻ z, (intMuCD_eM ε '' ((fun x : UJ ε => x⁻¹) ⁻¹' S)).indicator 1

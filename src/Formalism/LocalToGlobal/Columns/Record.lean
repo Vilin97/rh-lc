@@ -455,6 +455,10 @@ namespace DecoSet
 
 abbrev lv (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Type := modP P.1 d.1.N
 
+theorem lv_finrank (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) :
+    Module.finrank (𝓞 E ⧸ P.1.asIdeal) (d.lv P) = n :=
+  finrank_modP P.1 (rec_deco_full_lattice d)
+
 def fv (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Module.Dual (𝓞 E ⧸ P.1.asIdeal) (d.lv P) :=
   modP.lift P.1 d.1.N (d.2.fLin P d.1.N (le_locP _ _))
 
@@ -487,6 +491,10 @@ theorem kerAt_full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG))
   refine { span_eq_top := top_unique ?_ }
   rw [← (rec_deco_full_lattice d).span_eq_top, Submodule.span_le]
   exact fun x hx => rec_mem_span_of_smul_mem (d.1.kerAt P) hp0 (d.2.smul_mem_kerAt P hp hx)
+
+theorem lk_finrank (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) :
+    Module.finrank (𝓞 E ⧸ P.1.asIdeal) (d.lk P) = n :=
+  finrank_modP P.1 (d.kerAt_full_lattice P)
 
 def e1 (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Sp E n := d.2.exists_dualBasis.choose P
 
@@ -1192,10 +1200,7 @@ def recForms (hX : X.Ok) (hPr : Pr.Ok) (hf : X.f = R.f) (σ₀ : X.K →+* ℂ) 
   lv := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lv v
   lvAcg := fun _ _ _ => inferInstance
   lvMod := fun i v c => (inferInstance : Module (𝓞 X.E ⧸ v.1.asIdeal) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lv v))
-  -- Elaborate the proof separately so it can use the private lattice lemma.
-  lv_rank i v c := by
-    exact finrank_modP v.1
-      (rec_deco_full_lattice (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c))
+  lv_rank := fun i v c => DecoSet.lv_finrank (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c) v
   fv := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).fv v
   fv_ne := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).fv_ne v
   up := fun i v c x => clsD _ (Λ i) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).upL v (Pr.T u : 𝓞 X.E) x)
@@ -1203,7 +1208,7 @@ def recForms (hX : X.Ok) (hPr : Pr.Ok) (hf : X.f = R.f) (σ₀ : X.K →+* ℂ) 
   lk := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lk v
   lkAcg := fun _ _ _ => inferInstance
   lkMod := fun i v c => (inferInstance : Module (𝓞 X.E ⧸ v.1.asIdeal) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lk v))
-  lk_rank := fun i v c => finrank_modP v.1 ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).kerAt_full_lattice v)
+  lk_rank := fun i v c => DecoSet.lk_finrank (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c) v
   te := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).te v (Pr.T u : 𝓞 X.E)
   te_ne := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).te_ne v (T_unif hX hPr u v).1 (T_unif hX hPr u v).2
   dn := fun i v c g => clsD _ (Λ i) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).dnL v g)

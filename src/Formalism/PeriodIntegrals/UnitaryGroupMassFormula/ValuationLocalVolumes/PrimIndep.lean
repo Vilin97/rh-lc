@@ -3,6 +3,8 @@ module
 public import Mathlib
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ValuationLocalVolumes.OmVBadTOf
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalUnitaryOrbits.CrossMSmulRight
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalUnitaryOrbits.BasIntSmulMem
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalMassOrder.LatCpt
 
 @[expose] public section
 
@@ -60,7 +62,21 @@ theorem fibP_of (a : ℕ) (Y : TupV (E := E) v n a) (hC : PrimCos σ J ψ v Λ a
   have hσ : ∀ x, σ (σ x) = x := PI.VolStabSW.sigma_invol σ hS.1.2.2.2
   have hJ : ∀ i j, σ (J j i) = J i j := hS.2.1.1
   obtain ⟨h0, hπ, hint⟩ := unif_spec v ϖ hϖ
-  obtain ⟨hLo, hLc⟩ := lamOC_holds v Λ a hL
+  have hFG : (latLoc (E := E) v Λ).FG := by
+    obtain ⟨L, hLat, rfl⟩ := hL
+    exact basLat_fg v L hLat
+  have hLo' := LocMassOrdLat.isOpen_latLoc σ J v Λ hSD hFG
+  have hLc' := isCompact_latLoc v Λ hL
+  have hLam : LamT v Λ a = Set.pi Set.univ fun _ =>
+      (latLoc (E := E) v Λ : Set (Fin n → Fv F v ⊗[F] E)) := by
+    ext X
+    exact ⟨fun h i _ => h i, fun h i => h i trivial⟩
+  have hLo : IsOpen (LamT v Λ a) := by
+    rw [hLam]
+    exact isOpen_set_pi Set.finite_univ fun _ _ => hLo'
+  have hLc : IsCompact (LamT v Λ a) := by
+    rw [hLam]
+    exact isCompact_univ_pi fun _ => hLc'
   obtain ⟨hHo', hHc'⟩ := hermOC_holds v σ a
   have := PI.VolStabSW.secondCountable_Fv F v
   have := PI.VolStabSW.locallyCompact_Fv F v

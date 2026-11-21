@@ -229,7 +229,7 @@ theorem skew_to_herm (hY : Y.IsSkew D.sp.cm.sig B r s) :
     have h1 := congrArg Matrix.det hMN
     rw [Matrix.det_mul, Matrix.det_one, h0, mul_zero] at h1
     exact zero_ne_one h1
-  refine ⟨latQ D G (lattice₂ D Y.L), latQ_isLattice D hMN hNM _ (localLattice_isLattice D hP Y.L hY.lat), ?_, ?_, ?_⟩
+  refine ⟨latQ D G (lattice₂ D Y.L), latQ_isLattice D hMN hNM _ (localLattice_isLattice D hP Y.L hY.lat.toIsLattice), ?_, ?_, ?_⟩
   ·
     refine ⟨fun x y => ?_⟩
     simp only [GlobalTheory.WeilSchrodingerHerm.sesq_apply, starRingEnd_apply, dotProduct, Matrix.mulVec, star_sum, star_mul',

@@ -18,6 +18,7 @@ namespace ReciprocityTheory.ChartRestriction.DS.G2
 
 variable {n : ℕ}
 
+set_option maxHeartbeats 12000000 in
 theorem tf_sqInt_of_hW {lam : Fin n → ℝ} {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     {ε : Fin n → Bool} {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {D : Submodule ℂ H}
     {E : Fin n → Fin n → Module.End ℂ D} (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E)
@@ -75,8 +76,13 @@ theorem tf_sqInt_of_hW {lam : Fin n → ℝ} {H : Type*} [NormedAddCommGroup H] 
         Real.one_le_sqrt.mpr (sigZeroDecay_one_le_hs (umat_mem_UJset ε g) ⟨0, hn⟩)
       rw [norm_mul, Complex.norm_real, Real.norm_of_nonneg (Real.sqrt_nonneg _)]
       exact le_mul_of_one_le_left (norm_nonneg _) h1
+  have : (Formalism.REAL.muG ε).IsMulRightInvariant :=
+    ⟨fun g => Formalism.REAL.indefinite_unitary_unimodular n ε g⟩
+  have hR : ∀ h : Formalism.REAL.UJ ε,
+      MeasurePreserving (fun g => g * h) (Formalism.REAL.muG ε) (Formalism.REAL.muG ε) :=
+    measurePreserving_mul_right (Formalism.REAL.muG ε)
   have hall : ∀ x, MemLp (fun g => inner ℂ y0 (ρ g x)) 2 (Formalism.REAL.muG ε) := fun x =>
-    GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε) (ρ := ρ) hone hmul hiso hirr
+    GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε) (ρ := ρ) hR hone hmul hiso hirr
       y0 y0 hy0 h0 x
   intro v w
   show MemLp (fun g : Formalism.REAL.UJ ε => inner ℂ w (ρ g v)) 2 (Formalism.REAL.muG ε)
@@ -95,7 +101,7 @@ theorem tf_sqInt_of_hW {lam : Fin n → ℝ} {H : Type*} [NormedAddCommGroup H] 
     simp only [Pi.star_apply, Function.comp_apply, RCLike.star_def, inner_conj_symm]
     rw [← ContinuousLinearMap.adjoint_inner_right, ← ContinuousLinearMap.star_eq_adjoint, hs, inv_inv]
   rw [e2] at hinv
-  exact GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε) (ρ := ρ) hone hmul hiso hirr
+  exact GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε) (ρ := ρ) hR hone hmul hiso hirr
     w y0 hy0 hinv v
 
 end ReciprocityTheory.ChartRestriction.DS.G2

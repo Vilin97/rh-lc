@@ -32,18 +32,18 @@ theorem exists_split (Λ : Submodule R V) (hfg : Λ.FG) (hsp : Submodule.span K 
       ∀ l ∈ Λ, l ∈ S → ∃ w ∈ Λ, w ∈ W ∧ l - w ∈ I := by
   set M : Submodule R V := Λ ⊓ S.restrictScalars R with hM
   have hMfg : M.FG := by
-    haveI : Module.Finite R Λ := Module.Finite.iff_fg.2 hfg
+    have : Module.Finite R Λ := Module.Finite.iff_fg.2 hfg
     exact (Module.Finite.iff_fg (N := M)).1
       (Module.Finite.of_injective (Submodule.inclusion (inf_le_left : M ≤ Λ))
         (Submodule.inclusion_injective _))
-  haveI : Module.Finite R M := Module.Finite.iff_fg.2 hMfg
+  have : Module.Finite R M := Module.Finite.iff_fg.2 hMfg
   let π : M →ₗ[R] (V ⧸ I) := (I.mkQ.restrictScalars R) ∘ₗ M.subtype
-  haveI : Module.IsTorsionFree R (V ⧸ I) := Module.IsTorsionFree.trans K
-  haveI : Module.Finite R (LinearMap.range π) := inferInstance
-  haveI : Module.Flat R (LinearMap.range π) := inferInstance
-  haveI : Module.FinitePresentation R (LinearMap.range π) :=
+  have : Module.IsTorsionFree R (V ⧸ I) := Module.IsTorsionFree.trans K
+  have : Module.Finite R (LinearMap.range π) := inferInstance
+  have : Module.Flat R (LinearMap.range π) := inferInstance
+  have : Module.FinitePresentation R (LinearMap.range π) :=
     Module.finitePresentation_of_finite R _
-  haveI : Module.Projective R (LinearMap.range π) := Module.Flat.projective_of_finitePresentation
+  have : Module.Projective R (LinearMap.range π) := Module.Flat.projective_of_finitePresentation
   obtain ⟨σ, hσ⟩ := Module.projective_lifting_property π.rangeRestrict LinearMap.id
     π.surjective_rangeRestrict
   have hσ' : ∀ y, π (σ y) = (y : V ⧸ I) := fun y => by
@@ -155,7 +155,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   obtain ⟨hfull, hlift, -, -, -, -, hw, -⟩ := GlobalTheory.T.hermFramePairNormalForm_geometry_summary K V H hK r N
   have hL := (isLatMod_top_bot_iff Λ).1 hΛ.1.1.1
   obtain ⟨W, hWS, hWI, hSW, hWΛ⟩ :=
-    exists_split Λ hL.fg hΛ.1.1.1.2 (wSp N.F N.F') (II N.F N.F')
+    exists_split Λ hL.1 hΛ.1.1.1.2 (wSp N.F N.F') (II N.F N.F')
   have hW : IsLift N.F N.F' W :=
     ⟨fun w h => (mem_wSp_iff _ _ w).1 (hWS h), hWI, fun w h => hSW ((mem_wSp_iff _ _ w).2 h)⟩
   obtain ⟨σ⟩ : Nonempty (K →+* ℂ) := inferInstance

@@ -1,54 +1,13 @@
 module
 
-public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.DiagonalRowOfSiegelWeilUnitary
-public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RowsPtAt
-public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.CollSBound
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.LoopEvaluationThresholdZero
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.DegenerateConstant
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.LoopTerm
-public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.FamilyStatementOfItemsFourSeven
-public import Formalism.SharpRestriction.CuspSpanNormBounds.AbsoluteAmplitudeSecondOfSource
-public import Formalism.SharpRestriction.CuspSpanNormBounds.BranchingAndRankConstants
-public import Formalism.SharpRestriction.CuspSpanNormBounds.SBridge
-public import Development.AbelianVarietyTheory.Statements.DiscreteSeriesShifts.ThmBpDS
-public import Development.AbelianVarietyTheory.Definitions.Jets.SideFam
-public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.FormalDegreeCompactDualIff
-public import Formalism.SharpRestriction.CuspSpanNormBounds.OnePlaceEstimates
-public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeLitG
-public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.FamilyStatementOfAbsAndVandermonde
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.SettingBlocks
-public import Formalism.HermitianCurvature.BesselNonvanishingReduction
-public import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.DiscreteSpectrumKFiniteDecomposition
-public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.GammaRangeOfSizeHypotheses
-public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.KerInclOn
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SumNormSqOrthonormalLeHilbertSchmidt
-public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.DiagAtScale
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DiagCLC
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.FinXClosed
-public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsScaleWithBoundedGamma
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ToGlob0
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.ExpQuarterMulExpQuarterLeTwo
-public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.DiscreteSeriesClassificationIff
-public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.BesselFormsTrivialNeBot
-public import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.AutomorphicFormsFiniteUnitaryIff
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.InVolumesAtOfSWS
-public import Formalism.PeriodIntegrals.BesselMapUniq
-public import Formalism.UnipotentAdelicQuotients.SiegelWeilUnitaryConvergent
-public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.CorankOneIsEquivalenceOnRow
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.StepLocGenPinnedGP
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.MainEqNml
-public import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.StepAnalyticConstantsP
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.MassDataChoiceLeaves
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.BDataOf
-public import Formalism.LocalRingCardinality.DataTies
-public import Formalism.SharpRestriction.CuspSpanNormBounds.WeightedUniformRotatedOfExpansion
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.ThmBChain
 
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S GlobalTheory.Core.Deg
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
-set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.diagonalRow_of_siegelWeil_unitary : HeckeCharacterZeroLocus.SiegelWeilU.SiegelWeilUnitaryConvergent → GlobalTheory.Core.Rk.RowDiag (fun D L C' => GlobalTheory.Core.Rk.IsScaleWithBoundedGamma D L C' ∧ ∀ u, GlobalTheory.Core.Rk.RankMu D u) := by
-  first | exact @GlobalTheory.Core.Rk.rowDiag_of_siegelWeilUnitary | exact GlobalTheory.Core.Rk.rowDiag_of_siegelWeilUnitary | (intros; apply GlobalTheory.Core.Rk.rowDiag_of_siegelWeilUnitary <;> assumption)
+theorem _root_.GlobalTheory.T.diagonalRow_of_siegelWeil_unitary :
+    HeckeCharacterZeroLocus.SiegelWeilU.SiegelWeilUnitaryConvergent →
+      GlobalTheory.Core.Rk.RowDiag (fun D L C' =>
+        GlobalTheory.Core.Rk.IsScaleWithBoundedGamma D L C' ∧ ∀ u, GlobalTheory.Core.Rk.RankMu D u) :=
+  GlobalTheory.Core.Rk.rowDiag_of_siegelWeilUnitary

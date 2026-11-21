@@ -27,7 +27,7 @@ theorem flathFactorisation_of_tensorProduct (h1 : GlobalTheory.Published.FlathTe
     exact GlobalTheory.T.unitary_irreducible_smooth_admissible (GLoc σ J v) (R (.inr v)).H (Flath.finFactor R v) (R (.inr v)).isIrr
       (fun K hK hK' => h2 F E σ hc n J hJ v (R (.inr v)).H (Flath.finFactor R v) (R (.inr v)).isIrr K hK hK')
   refine ⟨R, ξ, B, hf, hirr, fun L hL => ?_⟩
-  haveI := hL
+  letI : Submodule.IsFullLattice E L := hL
   have hu : ∀ᶠ v in cofinite, ‖ξ (.inr v)‖ = 1 := Sum.inr_injective.tendsto_cofinite.eventually hf.unit
   filter_upwards [hu, hf.eventually_fixed L, GlobalTheory.T.eventually_exists_doubleCoset_antiInvolution_unitary F E σ hc n J hJ L hL] with v hv hfix hθ
   obtain ⟨θ, hθ1, hθ2, hθ3⟩ := hθ
@@ -40,12 +40,12 @@ theorem flathFactorisation_of_tensorProduct (h1 : GlobalTheory.Published.FlathTe
       { carrier := {g | toRep (Flath.finFactor R v) g y = y}
         mul_mem' := by
           intro a b ha hb
-          simp only [Set.mem_setOf_eq, map_mul, Module.End.mul_apply] at *
+          simp only [Set.mem_ofPred_eq, map_mul, Module.End.mul_apply] at *
           rw [hb, ha]
         one_mem' := by simp
         inv_mem' := by
           intro a ha
-          simp only [Set.mem_setOf_eq] at *
+          simp only [Set.mem_ofPred_eq] at *
           conv_lhs => rw [← ha]
           rw [← Module.End.mul_apply, ← map_mul]
           simp }

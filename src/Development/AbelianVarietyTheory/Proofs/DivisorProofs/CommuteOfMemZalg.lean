@@ -77,9 +77,8 @@ theorem prod_adj : ∀ {n : ℕ} (k : Fin n) (f₁ f₂ f₃ f₄ : Fin (n + 1) 
       have prod_succ (f : Fin (n + 2) → A) :
           (List.ofFn f).prod = f 0 * (List.ofFn fun i : Fin (n + 1) => f i.succ).prod := by
         rw [List.ofFn_succ (f := f), List.prod_cons]
-      rw [prod_succ f₁, prod_succ f₂, prod_succ f₃, prod_succ f₄, e2, e3, e4,
-        ← mul_add, ← mul_add, sub_eq_zero]
-      exact congrArg (fun x => f₁ 0 * x) (sub_eq_zero.mp ih)
+      simpa only [prod_succ f₁, prod_succ f₂, prod_succ f₃, prod_succ f₄, e2, e3, e4,
+        mul_sub, mul_add, mul_zero] using congrArg (fun x => f₁ 0 * x) ih
 
 variable [Algebra ℂ A] {n : ℕ}
 

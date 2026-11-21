@@ -151,7 +151,7 @@ theorem local_data_of_term : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u'
         (tri_map (gp p).toLinearMap (hτ p).2)
   choose y hy using hex
   refine ⟨y, ⟨?_, fun p => ⟨_, hy p, ?_⟩⟩, fun p d => ?_⟩
-  · rw [hΛ]; exact isLattice_gmap g _ hrow.1.1
+  · rw [hΛ]; exact isLattice_gmap g _ hrow.1.1.toIsLattice
   · show LocNG.img (gp p) (lattice₂ D Z.M p t.lam) = _
     rw [hΛ, hlat g p (gp p) t.lam (hgp p)]
   · have hDC : Formalism.L2.SG.TermDef.DCRel t.lam (lf D (X.Fu u)) t.frame (Quot.out t.toTerm.cls).1 :=

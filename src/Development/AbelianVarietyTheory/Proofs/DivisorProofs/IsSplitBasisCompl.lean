@@ -321,7 +321,35 @@ theorem isSplitBasis_compl (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hH : H.I
 theorem isHerm_compl (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hH : H.IsAdapted σ B X X₁ i₀ i₁) :
     X₁.IsHerm σ B (r - 1) (s - 1) := by
   obtain ⟨P, hP⟩ := leftInverse hX hH
-  exact ⟨herm_compl hB hX hH, hasSig_compl hB hX hH P hP, isLattice_compl hX hH P hP, dual_compl hX hH,
+  have hlat := isLattice_compl hX hH P hP
+  have hfull : X₁.L.IsFullLattice E := by
+    classical
+    refine { toIsLattice := hlat, span_eq_top := ?_ }
+    obtain ⟨t, ht⟩ := hlat.fg
+    rw [eq_top_iff]
+    intro z _
+    obtain ⟨d, hd, hdint⟩ := exists_integral_multiples ℤ ℚ (L := E) (t.image (form σ X₁.J z))
+    have hz : (d : E) • z ∈ X₁.L := by
+      apply (dual_compl hX hH _).2
+      intro x hx
+      rw [← ht] at hx
+      induction hx using Submodule.span_induction with
+      | mem x hx =>
+        have hi := hdint (form σ X₁.J z x) (Finset.mem_image.mpr ⟨x, hx, rfl⟩)
+        simpa [form, dotProduct, Finset.mul_sum, mul_assoc, Algebra.smul_def] using hi
+      | zero => simpa [form, dotProduct, Matrix.mulVec] using (isIntegral_zero : IsIntegral ℤ (0 : E))
+      | add x y hx hy ihx ihy =>
+        rw [GlobalTheory.AdaptedPlaneDual.form_add_right]
+        exact ihx.add ihy
+      | smul c x hx ih =>
+        change IsIntegral ℤ (form σ X₁.J ((d : E) • z) ((c : E) • x))
+        rw [GlobalTheory.AdaptedPlaneDual.form_smul_right]
+        exact (c.2.map (RingHom.toIntAlgHom σ.toRingHom)).mul ih
+    have hdE : (d : E) ≠ 0 := by exact_mod_cast hd
+    have hmem : (d : E) • z ∈ Submodule.span E (X₁.L : Set (Fin n₁ → E)) := Submodule.subset_span hz
+    have := Submodule.smul_mem (Submodule.span E (X₁.L : Set (Fin n₁ → E))) (d : E)⁻¹ hmem
+    simpa [smul_smul, hdE] using this
+  exact ⟨herm_compl hB hX hH, hasSig_compl hB hX hH P hP, hfull, dual_compl hX hH,
     cartan_compl hB hX hH P hP, isSplitBasis_compl hB hX hH⟩
 
 end GlobalTheory.HermPlaneCompl

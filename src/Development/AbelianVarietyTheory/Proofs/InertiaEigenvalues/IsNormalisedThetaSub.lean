@@ -547,7 +547,7 @@ theorem thetaGL_leviEmb (h : ∑ _ : Fin d, a = N) (c : R →+* R) (m : Fin d �
   have entry_ne (g : Fin d → GL (Fin a) R) {b b' : Fin d} (hne : b ≠ b') (i j : Fin a) :
       (leviEmb R (stdBlocks (fun _ : Fin d => a) h) g).val
         (stdBlocks (fun _ : Fin d => a) h ⟨b, i⟩) (stdBlocks (fun _ : Fin d => a) h ⟨b', j⟩) = 0 := by
-    simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hne]
+    simp [leviEmb, Matrix.blockDiagonal'_apply', hne]
   ext i j
   obtain ⟨⟨b, i⟩, rfl⟩ := (stdBlocks (fun _ : Fin d => a) h).surjective i
   obtain ⟨⟨b', j⟩, rfl⟩ := (stdBlocks (fun _ : Fin d => a) h).surjective j

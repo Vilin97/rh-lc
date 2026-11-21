@@ -40,7 +40,7 @@ def ysTh_alt (x : St P) (l : _root_.GlobalTheory.HeightCounting.Up.SecondInterme
   act := by with_unfolding_all exact (l.b.YS.act :)
 def exponentOfTheta (x : St P) (l : _root_.GlobalTheory.HeightCounting.Up.SecondIntermediateLevel hL x) (th : NTh (Dof x).R (Dof x).host (Dof x).what₂ (Dof x).LL0 (Dof x).nd (Dof x).ntw (Dof x).nexp) :
     NExpTied (w.st (oTw x (thTw (Dof x) th)).Z).toD7 :=
-  (by with_unfolding_all exact ((bsTw l.b.Bs th).exp :))
+  (dof_oTw x (thTw (Dof x) th)) ▸ (bsTw l.b.Bs th).exp
 def rowPsiOfTheta (x : St P) (l : _root_.GlobalTheory.HeightCounting.Up.IntermediateLevel hL x) (th : NTh (Dof x).R (Dof x).host (Dof x).what₂ (Dof x).LL0 (Dof x).nd (Dof x).ntw (Dof x).nexp) :
     ∀ i : Fin (w.st (oTw x (thTw (Dof x) th)).Z).toD7.R.m,
       Formalism.IndefR.principalLevelFrame.RowPsi (Formalism.IndefR.Links.Vc (w.st (oTw x (thTw (Dof x) th)).Z).toD7 i)

@@ -43,9 +43,7 @@ theorem bwdN_holds : BwdN Zd u u' F0 what₂ := by
   obtain ⟨hΛ₂, hloc₂⟩ := hmem₂
   obtain ⟨-, hT2, hφ⟩ := hS
   have hrow := hC.2.1.1 γ.lam γ.mem
-  have hΛfull : Submodule.IsFullLattice D.host.E γ.lam := hrow.1.1
-  letI := hΛfull
-  letI := hΛ₂
+  have : Submodule.IsFullLattice D.host.E γ.lam := hrow.1.1
   have ht1 := fun p => (hT2 p).1
   have hu : ∀ p a, IsUnit (TermLoc.sgnP D p a * frFac Zd.δ p a) := fun p a =>
     BwdNP.unit_of_frame Zd p γ (ht1 p).1.2.1 a

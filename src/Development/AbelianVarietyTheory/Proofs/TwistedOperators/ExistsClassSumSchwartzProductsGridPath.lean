@@ -84,7 +84,9 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
   | _, .snoc a p, hg, hnd, U, K, hK1, hK2 => by
     have hnd' : (edges p ++ [edgeOf a]).Nodup :=
       edges_snoc a p ▸ (hnd : (edges (.snoc a p)).Nodup)
-    obtain ⟨hnd1, -, hne⟩ := (List.nodup_append (l₁ := edges p) (l₂ := [edgeOf a])).mp hnd'
+    have hnd1 : (edges p).Nodup := hnd'.of_append_left
+    have hne : edgeOf a ∉ edges p :=
+      List.disjoint_right.mp hnd'.disjoint (List.mem_singleton_self _)
     have ha : IsGridArrow D.R.m t a := hg.last
     obtain ⟨ι₁, s₁, φa, r₁, hφa, hexp⟩ := arrow_sb B ρ hL (t := t) he n (a := a) ha (Y := ArgT G p × U)
       (fun x (z : ArgT G p × U) => K (fun w => Function.update (pathArgs B t w p z.1) (edgeOf a) (locArg B t w a x)) z.2)
@@ -128,7 +130,8 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
           exact hz w hw b)
       (fun x y h0 w hw b hb => by
         have h := hK2 _ y.2 h0 w hw b (by rw [edges_snoc]; exact List.mem_append_left _ hb)
-        rwa [Function.update_of_ne (hne b hb (edgeOf a) (List.mem_singleton_self _))] at h)
+        have hba : b ≠ edgeOf a := fun hEq => hne (hEq ▸ hb)
+        rwa [Function.update_of_ne hba] at h)
     obtain ⟨Tm, hTm, -, -⟩ := exists_arrowModel ρ hL he ha
     refine ⟨ι₂ × ι₁, s₂ ×ˢ s₁, fun κ => (φ₂ κ.1, φa κ.2), fun κ => (d₂ κ.1, Tm (φa κ.2)), fun κ => (r₂ κ.1, r₁ κ.2),
       fun κ hκ => ?_, fun x y hx => ?_⟩

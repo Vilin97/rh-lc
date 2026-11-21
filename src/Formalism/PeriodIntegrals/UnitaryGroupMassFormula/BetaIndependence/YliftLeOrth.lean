@@ -103,7 +103,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem betaIndep_of (D : D7) (u u' : D.what₂.Word) (h : PI.ScalPairs.BetaL D u u') :
     PI.ScalPairs.BetaFree D u u' := by
   intro hg F0 Λ hR x y hx hy β₁ β₂ h1 h2
-  have hΛ : Submodule.IsLattice D.host.E Λ := hR.1.1
+  have hΛ : Submodule.IsLattice D.host.E Λ := hR.1.1.toIsLattice
   have H := h hg F0 Λ hR x y hx hy β₁ β₂ h1 h2
   exact ⟨s0_eq Λ _ _ _ β₁ β₂ hΛ H _, isScalar_iff Λ _ _ _ β₁ β₂ H⟩
 

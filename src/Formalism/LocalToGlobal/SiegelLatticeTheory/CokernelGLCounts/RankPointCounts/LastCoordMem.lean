@@ -32,7 +32,7 @@ theorem locF'_eq {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') (b : Fin (D.R
     locF' Zd p F' b = uF Zd p b • baseChange₂ D p (frame F' b) := rfl
 
 theorem sgnP'_mem (b : Fin (D.R.rS + 1)) : sgnP' D p b ∈ (D.s.atP p).O := by
-  haveI := (D.s.atP p).lf
+  have := (D.s.atP p).lf
   rw [(D.s.atP p).O_def]
   refine ⟨Polynomial.X ^ 2 - 1, Polynomial.monic_X_pow_sub_C 1 (by norm_num), ?_⟩
   have h := sgnP'_sq p b
@@ -225,15 +225,15 @@ theorem int_of_loc (c : D.host.E) (h : ∀ p : PlF D, (D.s.atP p).ιE c ∈ (D.s
   let I : Ideal (𝓞 D.host.F) :=
     { carrier := {s | IsIntegral ℤ (algebraMap D.host.F D.host.E (s : D.host.F) * c)}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq] at ha hb ⊢
+        simp only [Set.mem_ofPred_eq] at ha hb ⊢
         rw [show ((a + b : 𝓞 D.host.F) : D.host.F) = (a : D.host.F) + b from rfl, map_add (f := _), add_mul]
         exact ha.add hb
       zero_mem' := by
-        simp only [Set.mem_setOf_eq]
+        simp only [Set.mem_ofPred_eq]
         rw [show ((0 : 𝓞 D.host.F) : D.host.F) = 0 from rfl, map_zero, zero_mul]
         exact isIntegral_zero
       smul_mem' := fun r {s} hs => by
-        simp only [Set.mem_setOf_eq, smul_eq_mul] at hs ⊢
+        simp only [Set.mem_ofPred_eq, smul_eq_mul] at hs ⊢
         rw [show ((r * s : 𝓞 D.host.F) : D.host.F) = (r : D.host.F) * s from rfl, map_mul, mul_assoc]
         exact (r.2.map (algebraMap D.host.F D.host.E).toIntAlgHom).mul hs }
   have hI : I = ⊤ := by
@@ -259,7 +259,7 @@ theorem xlam_eq {T' : D.host.E} (F' : LFlag (D.sp.Y 0) D.R.rS T') (Λ₂ : Submo
     exact inter_span_eq _ _ (hprim p).1 (hprim p).2.1 (hprim p).2.2
   apply Formalism.L2.SG.Pf.eq_of_locP
   intro P
-  haveI := P.isPrime
+  have := P.isPrime
   have hfg1 : (XLam Λ₂ F').FG := Submodule.FG.of_le hlat.fg inf_le_left
   have hfg2 : (XS D F'.fl).FG := Formalism.L2.SG.Pf.Cnt.R3.XS_fg D F'.fl
   exact ((Formalism.L2.SG.Pf.locEqC_holds D Zd (Formalism.L2.SG.Pf.LocalDenominators.plOf (D := D) P.asIdeal P.isMaximal) _ _ hfg1 hfg2).1
@@ -295,7 +295,7 @@ theorem btOK_holds : BtOK Zd u u' F0 what₂ := by
   obtain ⟨_, _, ⟨hlat, hloc⟩, _⟩ := hs
   have hprim : ∀ p, (locH Zd p).Prim (lattice₂ D Zd.M p Λ₂) (locF' Zd p (liftF F'₂)) := fun p =>
     (hloc p).1.1.2.2.1.1
-  have hX : XLam Λ₂ (liftF F'₂) = XS D (liftF F'₂).fl := xlam_eq Zd (liftF F'₂) Λ₂ hlat.toIsLattice hprim
+  have hX : XLam Λ₂ (liftF F'₂) = XS D (liftF F'₂).fl := xlam_eq Zd (liftF F'₂) Λ₂ hlat hprim
   refine ⟨⟨fun P => ?_, z_prim Zd (liftF F'₂) Λ₂ hprim⟩, hX⟩
   obtain ⟨c, h1, h2, h3⟩ := PI.UnitaryGroupMassFormula.CntFormula.RowsMassW.local_genus_exists D u' (liftF F'₂).fl P
   exact ⟨c, h1, h2, (congrArg (HermitianLatticesTheory.localization₂ P.asIdeal) hX).trans h3⟩

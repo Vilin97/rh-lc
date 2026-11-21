@@ -43,10 +43,10 @@ theorem le_dual_chart {T : ℕ} {bad : Set (HeightOneSpectrum (𝓞 D.host.F))} 
 
 open Formalism.L2.GlobalTheoryTheory.LocalLatticeBases Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB in
 theorem exB_of_lat {i : ℕ} (hi : i ≤ D.R.m) (q : ℕ) [Fact q.Prime] (L : Submodule (𝓞 D.host.E) (Fin (D.R.N i) → D.host.E))
-    (hL : Submodule.IsLattice D.host.E L) :
+    (hL : Submodule.IsFullLattice D.host.E L) :
     ∃ B' : GL (Fin (D.R.N i)) D.host.E, IsLocBasis q (dualSet (sigD D : D.host.E →+* D.host.E) (gramN D i hi) L) B' := by
   obtain ⟨d, hd, hle⟩ := dual_le_bnd (sigD D : D.host.E →+* D.host.E) (gramN D i hi) (bwB_gramN_det D i hi) _ hL
-  have hsp := dual_span (sigD D : D.host.E →+* D.host.E) (gramN D i hi) _ hL
+  have hsp := dual_span (sigD D : D.host.E →+* D.host.E) (gramN D i hi) _ hL.toIsLattice
   obtain ⟨B, hB⟩ := exists_isLocBasis q _ _ (fg_of_le_bnd hd hle) hsp
   refine ⟨B, ?_⟩
   have e : ((Submodule.span (𝓞 D.host.E) (dualSet (sigD D : D.host.E →+* D.host.E) (gramN D i hi) L) :
@@ -68,7 +68,7 @@ structure LatIn (S : StepIn M i hi G) (w : D.what₂.places.Pl) (β : S.Ch) : Pr
     (∃ x ∈ Formalism.L2.Herm.locL ((S.loc β).pl v).1 (S.K β).lev.Lb, ∀ a, ((S.loc β).spl v (x a)).1 = t a) ↔
       ∀ a, (((bc ((S.loc β).phE v) (S.loc β).B)⁻¹ : GL (Fin (D.R.N i)) (((S.loc β).pl v).1.adicCompletion D.host.F)) :
         Matrix (Fin (D.R.N i)) (Fin (D.R.N i)) _).mulVec t a ∈ ((S.loc β).pl v).1.adicCompletionIntegers D.host.F
-  lat : ∀ cl : {c // S.chOf c = β}, Submodule.IsLattice D.host.E (S.lat cl.1)
+  lat : ∀ cl : {c // S.chOf c = β}, Submodule.IsFullLattice D.host.E (S.lat cl.1)
   chi : ∀ κ : (S.K β).lev.U, ∃ r ∈ intW D.what₂.places w, r⁻¹ ∈ intW D.what₂.places w ∧
     D.what₂.embLL r = ((S.K β).lev.chi κ : ℂ)
 

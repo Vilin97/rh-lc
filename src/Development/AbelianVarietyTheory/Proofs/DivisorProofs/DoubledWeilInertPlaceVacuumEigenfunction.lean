@@ -315,7 +315,7 @@ theorem dblFun_eigen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     ∀ g ∈ GlobalTheory.InertDbl.KAtD σ G.W v, ∃ c : ℂ, omd g (GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R)) =
       c • GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R) := by
   intro F E _ _ _ _ _ σ B a a' G X om om' hT v w hin _ dd omd hdd hS R _ hR g hg
-  exact dbl_line hT.base.std v (hT.base.inert v w hin).2.2 hT.geo.hV'.lat hT.geo.hW.lat
+  exact dbl_line hT.base.std v (hT.base.inert v w hin).2.2 hT.geo.hV'.lat.toIsLattice hT.geo.hW.lat.toIsLattice
     (GlobalTheory.LatSelfDualAll.latAtV_selfDual F E σ B _ _ G.V' G.W _ _ _ _ hT.base hT.geo.hV' hT.geo.hW v)
     G.M' _ (hT.geo.hM'.vac v) dd omd hdd hS.2.1 R hR g hg
 

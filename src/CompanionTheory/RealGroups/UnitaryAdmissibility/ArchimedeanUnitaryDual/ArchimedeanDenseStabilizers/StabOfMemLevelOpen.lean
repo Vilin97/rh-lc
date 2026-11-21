@@ -70,7 +70,7 @@ theorem finite_coset {A : Subgroup (GAd σ J)} (hA : {γ : GRat σ J | ratEmb σ
     exact h1
   · refine Set.Finite.subset Set.finite_empty fun γ hγ => (h ⟨γ, hγ⟩).elim
 
-theorem finite_local {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L]
+theorem finite_local {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsFullLattice E L]
     (hB : {γ : GRat σ J | ratEmb σ J γ ∈ levelOpen σ J L}.Finite)
     {v : HeightOneSpectrum (𝓞 F)} {K : Subgroup (GLoc σ J v)} (hK : IsCompact (K : Set (GLoc σ J v)))
     {C : Set (GLoc σ J v)} (hC : IsCompact C) :
@@ -286,7 +286,7 @@ theorem exists_class_cover (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : Compa
     rw [this]
     exact e
 
-theorem exists_cover_level {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L] {W : Subgroup (GAd σ J)}
+theorem exists_cover_level {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsFullLattice E L] {W : Subgroup (GAd σ J)}
     (hW : IsOpen (W : Set (GAd σ J))) (hinf : ∀ y, ofInf σ J y ∈ W) :
     ∃ T : Finset (GAd σ J), ∀ k ∈ levelOpen σ J L, ∃ t ∈ T, ∃ w ∈ W, k = t * w := by
   obtain ⟨t, -, ht⟩ := (isCompact_levelFin σ J L).elim_nhds_subcover
@@ -345,16 +345,7 @@ theorem isSep_of_posDef (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : Companio
     (hKc : IsCompact (K : Set (GLoc σ J v))) : CompanionTheory.Rg.Fl.IsSep K := by
   classical
   intro S
-  haveI : Submodule.IsFullLattice E (stdLattice E n) := by
-    refine { toIsLattice := isLattice_stdLattice, span_eq_top := eq_top_iff.2 fun y _ => ?_ }
-    rw [← Finset.univ_sum_single y]
-    refine sum_mem fun i _ => ?_
-    have h1 : (Pi.single i 1 : Fin n → E) ∈ stdLattice E n := fun j _ => ⟨Pi.single (M := fun _ => 𝓞 E) i 1 j, by
-      by_cases e : j = i
-      · subst e; simp
-      · simp [e]⟩
-    convert Submodule.smul_mem _ (y i) (Submodule.subset_span h1) using 1
-    rw [← Pi.single_smul, smul_eq_mul, mul_one]
+  haveI : Submodule.IsFullLattice E (stdLattice E n) := isLattice_stdLattice
   set L := stdLattice E n with hL
   have hB := finite_level_rat h hJ hp L
   obtain ⟨T₁, hT₁⟩ := exists_class_cover h hJ hp L

@@ -44,14 +44,14 @@ theorem finsum_group {G Q I : Type} (c : G → Q) (ι : I → Q) (hι : Function
   have hg' : u g ≠ 0 := by simpa using hg
   by_cases h : p g
   · obtain ⟨i, hi⟩ := (hp g).1 h
-    rw [if_pos h, Finset.sum_eq_single_of_mem i (hS g i hg' hi) fun j _ hj =>
-      if_neg fun e => hj (hι (e.symm.trans hi)), if_pos hi]
-  · rw [if_neg h]
-    exact (Finset.sum_eq_zero fun i _ => if_neg fun e => h ((hp g).2 ⟨i, e⟩)).symm
+    rw [ite_eq_left h, Finset.sum_eq_single_of_mem i (hS g i hg' hi) fun j _ hj =>
+      ite_eq_right fun e => hj (hι (e.symm.trans hi)), ite_eq_left hi]
+  · rw [ite_eq_right h]
+    exact (Finset.sum_eq_zero fun i _ => ite_eq_right fun e => h ((hp g).2 ⟨i, e⟩)).symm
 
 theorem elliptic_expansion {E : Type} [Field E] [NumberField E] {F : Subfield E} [NumberField F] {σ : E →ₐ[F] E}
     (hcm : IsCMExt F E σ) (hun : Algebra.Unramified (𝓞 F) (𝓞 E)) {r : ℕ} {J : Matrix (Fin r) (Fin r) E}
-    (hJ : IsHermND σ J) (L : Submodule (𝓞 E) (Fin r → E)) [Submodule.IsLattice E L]
+    (hJ : IsHermND σ J) (L : Submodule (𝓞 E) (Fin r → E)) [Submodule.IsFullLattice E L]
     {μa : ∀ w, Measure (GArch σ J w)} {μf : ∀ v, Measure (GLoc σ J v)} {μ : Measure (GAd σ J)}
     (hμ : IsRestrictedProd σ J L μa μf μ) {fa : ∀ w, GArch σ J w → ℂ} {ff : ∀ v, GLoc σ J v → ℂ}
     (ha : ∀ w, fa w ∈ CcArch σ J w) (hf : IsFinFamily σ J L ff)

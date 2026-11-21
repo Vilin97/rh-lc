@@ -587,36 +587,39 @@ theorem glVol_one : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E
   obtain ⟨e⟩ := exists_classGroupEquiv (E := E)
   have hw : (Units.torsionOrder E : ENNReal) ≠ 0 := by exact_mod_cast (Units.torsionOrder_pos E).ne'
   have hw' : (0 : ℝ) < Units.torsionOrder E := by exact_mod_cast (Units.torsionOrder_pos E)
-  rw [← ENNReal.mul_right_inj hw (ENNReal.natCast_ne_top _), glVol, ← ENNReal.tsum_mul_left, ← e.symm.tsum_eq]
-  let F (c : ClassGroup (𝓞 E)) :=
+  let F (c : Quot (carries (E := E))) :=
     (Units.torsionOrder E : ENNReal) *
-      covol (autGL E 1 (Quot.out (e.symm c)).1) (haarGL E 1)
+      covol (autGL E 1 (Quot.out c).1) (haarGL E 1)
         {x | 1 ≤ detNorm E 1 x ∧ detNorm E 1 x < Real.exp 1}
-  change (∑' c, F c) = _
-  have hF (c : ClassGroup (𝓞 E)) :
-      F c = volume (mixedEmbedding.fundamentalCone.normLeOne E) :=
-    torsion_mul_covol hE _ (Quot.out (e.symm c)).2.toIsLattice (rankOne_ne_bot (Quot.out (e.symm c)))
-  rw [tsum_fintype]
-  simp_rw [hF]
-  rw [Finset.sum_const, Finset.card_univ, mixedEmbedding.fundamentalCone.volume_normLeOne]
-  have hr : InfinitePlace.nrRealPlaces E = 0 := IsTotallyComplex.nrRealPlaces_eq_zero E
-  have hf : Formalism.HermitianLatticesTheory.fDeg E = InfinitePlace.nrComplexPlaces E := by
-    rw [Formalism.HermitianLatticesTheory.fDeg, InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces, hr, zero_add]
-  have hf0 : (Formalism.HermitianLatticesTheory.fDeg E : ℝ) ≠ 0 := by
-    rw [Formalism.HermitianLatticesTheory.fDeg]; exact_mod_cast Fintype.card_ne_zero
-  have hd : 0 < |(discr E : ℝ)| := abs_pos.mpr (Int.cast_ne_zero.mpr (discr_ne_zero E))
-  have hv : Formalism.HermitianLatticesTheory.vInv E ^ Formalism.HermitianLatticesTheory.fDeg E = Real.sqrt |(discr E : ℝ)| / 2 ^ Formalism.HermitianLatticesTheory.fDeg E := by
-    rw [Formalism.HermitianLatticesTheory.vInv, div_pow, ← Real.rpow_natCast, ← Real.rpow_mul hd.le, Real.sqrt_eq_rpow]
-    congr 2
-    field_simp
-  have hs := Real.sqrt_pos.2 hd
-  have key : (Units.torsionOrder E : ℝ) * (dedekindZeta_residue E * Formalism.HermitianLatticesTheory.vInv E ^ Formalism.HermitianLatticesTheory.fDeg E) =
-      classNumber E * (Real.pi ^ InfinitePlace.nrComplexPlaces E * Units.regulator E) := by
-    rw [hv, dedekindZeta_residue_def, hr, hf, mul_pow]
-    field_simp
-  rw [← ENNReal.ofReal_natCast (Units.torsionOrder E), ← ENNReal.ofReal_mul hw'.le, key,
-    ENNReal.ofReal_mul (Nat.cast_nonneg _), ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_natCast,
-    ENNReal.ofReal_pow Real.pi_pos.le, hr, pow_zero, one_mul, nsmul_eq_mul, classNumber,
-    ← NNReal.coe_real_pi, ENNReal.ofReal_coe_nnreal]
+  have hsum : (∑' c, F c) = (Units.torsionOrder E : ENNReal) *
+      ENNReal.ofReal (dedekindZeta_residue E *
+        Formalism.HermitianLatticesTheory.vInv E ^ Formalism.HermitianLatticesTheory.fDeg E) := by
+    have hF (c : ClassGroup (𝓞 E)) :
+        F (e.symm c) = volume (mixedEmbedding.fundamentalCone.normLeOne E) :=
+      torsion_mul_covol hE _ (Quot.out (e.symm c)).2.toIsLattice (rankOne_ne_bot (Quot.out (e.symm c)))
+    rw [← e.symm.tsum_eq, tsum_fintype]
+    simp_rw [hF]
+    rw [Finset.sum_const, Finset.card_univ, mixedEmbedding.fundamentalCone.volume_normLeOne]
+    have hr : InfinitePlace.nrRealPlaces E = 0 := IsTotallyComplex.nrRealPlaces_eq_zero E
+    have hf : Formalism.HermitianLatticesTheory.fDeg E = InfinitePlace.nrComplexPlaces E := by
+      rw [Formalism.HermitianLatticesTheory.fDeg, InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces, hr, zero_add]
+    have hf0 : (Formalism.HermitianLatticesTheory.fDeg E : ℝ) ≠ 0 := by
+      rw [Formalism.HermitianLatticesTheory.fDeg]; exact_mod_cast Fintype.card_ne_zero
+    have hd : 0 < |(discr E : ℝ)| := abs_pos.mpr (Int.cast_ne_zero.mpr (discr_ne_zero E))
+    have hv : Formalism.HermitianLatticesTheory.vInv E ^ Formalism.HermitianLatticesTheory.fDeg E = Real.sqrt |(discr E : ℝ)| / 2 ^ Formalism.HermitianLatticesTheory.fDeg E := by
+      rw [Formalism.HermitianLatticesTheory.vInv, div_pow, ← Real.rpow_natCast, ← Real.rpow_mul hd.le, Real.sqrt_eq_rpow]
+      congr 2
+      field_simp
+    have hs := Real.sqrt_pos.2 hd
+    have key : (Units.torsionOrder E : ℝ) * (dedekindZeta_residue E * Formalism.HermitianLatticesTheory.vInv E ^ Formalism.HermitianLatticesTheory.fDeg E) =
+        classNumber E * (Real.pi ^ InfinitePlace.nrComplexPlaces E * Units.regulator E) := by
+      rw [hv, dedekindZeta_residue_def, hr, hf, mul_pow]
+      field_simp
+    rw [← ENNReal.ofReal_natCast (Units.torsionOrder E), ← ENNReal.ofReal_mul hw'.le, key,
+      ENNReal.ofReal_mul (Nat.cast_nonneg _), ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_natCast,
+      ENNReal.ofReal_pow Real.pi_pos.le, hr, pow_zero, one_mul, nsmul_eq_mul, classNumber,
+      ← NNReal.coe_real_pi, ENNReal.ofReal_coe_nnreal]
+  rw [← ENNReal.mul_right_inj hw (ENNReal.natCast_ne_top _), glVol, ← ENNReal.tsum_mul_left]
+  exact hsum
 
 end GlobalTheory.NormOneVol

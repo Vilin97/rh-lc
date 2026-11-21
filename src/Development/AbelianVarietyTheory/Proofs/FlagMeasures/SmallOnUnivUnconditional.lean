@@ -166,9 +166,11 @@ theorem ratio_ranks (D : D7) (hM : UnitaryVolumeMass.stMassRatio D) (hR : LocalB
     replace h := (div_eq_iff (hst (M - 1)).2.2.1.ne').1 h
     rw [hf]
     refine h.trans ?_
+    have hdF : 0 ≤ S.dF := by
+      rw [hOk.hdF]
+      exact pow_nonneg (mul_nonneg two_pos.le hOk.hv.le) _
     unfold StandardLattice.ratioH
-    rw [Real.rpow_neg (by rw [hOk.hdF]; exact pow_nonneg (mul_nonneg (by norm_num) hOk.hv.le) _),
-      ← Real.sqrt_eq_rpow, div_eq_mul_inv]
+    rw [Real.rpow_neg hdF, ← Real.sqrt_eq_rpow, div_eq_mul_inv]
     rfl
   have hLB : S.LBound := by
     intro M h1 _

@@ -14,15 +14,17 @@ private def cpZeroPol {Λ A : Type} [CommRing Λ] [CommRing A] [Algebra Λ A] (�
   neg_mem' := fun {p} hp n => by rw [coeff_neg]; exact neg_mem (hp n)
 
 private theorem cpZeroPol_graded {Λ A : Type} [CommRing Λ] [CommRing A] [Algebra Λ A] (𝒜 : ℤ × ℤ → Submodule Λ A)
-    [SetLike.GradedMonoid 𝒜] : SetLike.GradedMonoid (cpZeroPol 𝒜) where
-  one_mem := by
-    change ∀ n, (1 : A[X]).coeff n ∈ 𝒜 0
+    [SetLike.GradedMonoid 𝒜] : SetLike.GradedMonoid (cpZeroPol 𝒜) := by
+  refine { one_mem := ?_, mul_mem := ?_ }
+  · change ∀ n, (1 : A[X]).coeff n ∈ 𝒜 0
     intro n
     rw [coeff_one]
     split_ifs
     · exact SetLike.one_mem_graded 𝒜
     · exact zero_mem _
-  mul_mem i j p q hp hq := by
+  · intro i j p q hp hq
+    change ∀ n, p.coeff n ∈ 𝒜 i at hp
+    change ∀ n, q.coeff n ∈ 𝒜 j at hq
     change ∀ n, (p * q).coeff n ∈ 𝒜 (i + j)
     intro n
     rw [coeff_mul]

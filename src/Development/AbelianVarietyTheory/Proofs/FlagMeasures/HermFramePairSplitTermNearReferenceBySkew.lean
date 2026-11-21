@@ -328,7 +328,9 @@ theorem exists_lift [FiniteDimensional K V] (H : HermSpace K V) {Λ : Submodule 
     (hLf : ∀ y ∈ L, y ∈ Submodule.span K (Set.range f))
     (hint : ∀ y ∈ L, ∀ x ∈ Λ ⊓ rs (𝓞 K) (Submodule.span K (Set.range e)), H.B x y ∈ (1 : Submodule (𝓞 K) K)) :
     ∃ Ψ : V →ₗ[K] V, ∀ y ∈ L, Ψ y ∈ Λ ∧ ∀ b, H.B (Ψ y - y) (e b) = 0 := by
-  have hΛ := (isLatMod_top_bot_iff Λ).1 hU.1
+  have hΛ' := (isLatMod_top_bot_iff Λ).1 hU.1
+  letI : Submodule.IsLattice K Λ := Submodule.IsLattice.of_fg K hΛ'.1
+  have hΛ : Submodule.IsFullLattice K Λ := ⟨hΛ'.2⟩
   let p : V →ₗ[𝓞 K] V := (pr H e f).restrictScalars (𝓞 K)
   let N : Submodule (𝓞 K) V := Λ ⊓ L.comap p
   let ρ : N →ₗ[𝓞 K] L := p.restrict fun x hx => hx.2
@@ -407,7 +409,9 @@ theorem lift_bd {H : HermSpace K V} {r : ℕ} (N : NF H r) {Λ : Submodule (𝓞
     (hL : IsLift N.F N.F' N.Wt) (hsp : N.Split Λ) {c : Ideal (𝓞 K)}
     (hk : c • dual H (latTh N.F N.F' Λ) ≤ latTh N.F N.F' Λ) {l v : V} (hl : l ∈ Λ) (hv : v ∈ N.Pi)
     (hw : l - v ∈ N.Wt) : v ∈ Bd c Λ := by
-  have hΛ := (isLatMod_top_bot_iff Λ).1 hU.1
+  have hΛ' := (isLatMod_top_bot_iff Λ).1 hU.1
+  letI : Submodule.IsLattice K Λ := Submodule.IsLattice.of_fg K hΛ'.1
+  have hΛ : Submodule.IsFullLattice K Λ := ⟨hΛ'.2⟩
   have hII : II N.F N.F' ≤ V0 N.F N.F' := inf_le_left.trans (le_sup_left.trans le_sup_left)
   unfold NF.Split at hsp
   rw [hsp] at hk

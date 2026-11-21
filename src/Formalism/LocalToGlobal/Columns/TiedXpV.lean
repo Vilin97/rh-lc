@@ -33,39 +33,4 @@ theorem xp_sgTrue_eq {R : Ranks} (S : RowPar R) : S.sgTrue = shW S.sg ((R.m * (R
   push_cast
   ring
 
-section Gen
-
-variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (σ₀ : X.K →+* ℂ)
-  (hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x)) (lam : X.Tau → DomWeight n)
-  (Lf : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : LevFam X.E X.K n SG)
-
-end Gen
-
-section GenP
-
-variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (ΛM : LevFam X.E X.K (R.N R.m - 1) Pr.vGs)
-
-variable (hc : CMData X.F X.E) (hX : X.Ok) (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x))
-  (hS : DecoPtSurj hc (R.N R.m - 1) (∅ : Finset (Pl X.E)) Pr.vGs)
-
-namespace XpV
-
-end XpV
-
-
-
-
-end GenP
-
-section Rec
-
-variable {d : ColDat} (a : ColArgs d)
-
-theorem sgT_eq (u : d.what₂.Word) : CF.sgT (D := d.colRec a) u = d.W.sgTrue :=
-  funext fun τ => (xp_sgTrue_eq (d.W.row τ)).symm
-
-variable (hS : SpStd d.toColBase) (hH : HostHyp d) (hP : PtSurjP d) (u : d.what₂.Word)
-
-end Rec
-
 end Formalism.L2.Col

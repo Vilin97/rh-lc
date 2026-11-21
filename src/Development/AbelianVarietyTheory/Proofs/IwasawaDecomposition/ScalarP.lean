@@ -50,7 +50,12 @@ variable {N₁ : TwNew (Dof x)} {kKs : (datTw x N₁).core.Q.c.F →+* ↥(DN x 
   {YS : NExpRealS (datTw x N₁).R (datTw x N₁).cG (ratDatR (datTw x N₁).R (datTw x N₁).cG kKs hk)} {X : NExpTied (DN x N₁)} {hF Pq}
   (p : PreTie YS (datTw x N₁).geo.v₀ X hF Pq)
 
-def nP : TwNew (Dof x) := ⟨N₁.tw, PreTie.ex (D := DN x N₁) (Ks := (datTw x N₁).core.Q.c.F) p, N₁.h0, PreTie.nth (D := DN x N₁) (Ks := (datTw x N₁).core.Q.c.F) p, N₁.br, N₁.hbr⟩
+def keptP : TwNew (DN x N₁) :=
+  keepTw (DN x N₁) p.Dat p.th p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3
+    (PreTie.nth (D := DN x N₁) (Ks := (datTw x N₁).core.Q.c.F) p)
+
+def nP : TwNew (Dof x) :=
+  ⟨(keptP p).tw, (keptP p).ex, (keptP p).h0, (keptP p).th, (keptP p).br, (keptP p).hbr⟩
 
 def kP : (datTw x (nP p)).core.Q.c.F →+* ↥(DN x (nP p)).LL0 := (kKs)
 
@@ -112,23 +117,26 @@ def exP (hu : GlobalTheory.UnivChar.IsUnivChar (DN x N₁).nexp) : ExportTie (ys
       (((p.hecke ((by with_unfolding_all exact (i :))) ((by with_unfolding_all exact (j :))) b)))) : _))
   univ := (hu)
 
+set_option backward.isDefEq.lazyProjDelta false in
+set_option backward.isDefEq.lazyWhnfCore false in
 def expP : NExpTied (DN x (nP p)) :=
-  let E := keepExp (DN x N₁) p.Dat p.th p.lev p.thPsi p.h1 p.thU p.thP p.MtLat
-    p.h2 p.h3 (PreTie.nth (D := DN x N₁) p) (PreTie.hU (D := DN x N₁) p) X
-  -- Rebuild the dependent records at the stage produced by `nP`.
-  { E with
-    acgWt := E.acgWt
-    modWt := E.modWt
-    fdWt := E.fdWt
+  -- Use the fieldwise construction of `keepExp` at the stage produced by `nP`.
+  { X with
+    acgWt := X.acgWt
+    modWt := X.modWt
+    fdWt := X.fdWt
+    thU_empty := fun i j b M d hj hj' => p.hU i j b M d hj hj'
     mtV := fun i j b k Q ψ hj hj' hA => by
-      letI : AddCommGroup (E.Wt i j b) := E.acgWt i j b
-      letI : Module (FractionRing ((DN x (nP p)).ntw.O i)) (E.Wt i j b) := E.modWt i j b
-      exact { E.mtV i j b k Q ψ hj hj' hA with } }
+      letI : AddCommGroup (X.Wt i j b) := X.acgWt i j b
+      letI : Module (FractionRing ((DN x (nP p)).ntw.O i)) (X.Wt i j b) := X.modWt i j b
+      exact { X.mtV i j b k Q ψ hj hj' hA with } }
 
 def pvP (PV : ∀ j : Fin (DN x (nP p)).R.m, principalLevelFrame.RowPsi (Vc (DN x (nP p)) j) (DN x (nP p)).R.nV) (j : Fin (DN x N₁).R.m) :
     principalLevelFrame.RowPsi (Vc (DN x N₁) j) (DN x N₁).R.nV :=
   ⟨((PV j).ψ), ((PV j).inj), ((PV j).into), ((PV j).onto)⟩
 
+set_option backward.isDefEq.lazyProjDelta false in
+set_option backward.isDefEq.lazyWhnfCore false in
 def serP (hu : GlobalTheory.UnivChar.IsUnivChar (DN x N₁).nexp) (ho : NoOff (DN x N₁))
     (hs : ∀ i j b h1 h2 (y : (DN x N₁).nexp.Fm i j b), y ∈ (DN x N₁).nexp.Bsup i j b ↔
       YS.eF i j b h1 h2 y ∈ Bsup (ratDatR (datTw x N₁).R (datTw x N₁).cG kKs hk) i j b)
@@ -142,9 +150,13 @@ def serP (hu : GlobalTheory.UnivChar.IsUnivChar (DN x N₁).nexp) (ho : NoOff (D
   join := by
     intro i j b k Q ψ hA hOK
     obtain ⟨ω, hω, hval⟩ := p.join (pvP p PV) (fun j => hPV j) i j b k Q ψ hA hOK
-    refine ⟨?_, ?_, ?_⟩
-    · with_unfolding_all exact ω
-    · with_unfolding_all exact hω
+    refine ⟨{ toFun := fun v => ω v, map_add' := ?_, map_smul' := ?_ }, ?_, ?_⟩
+    · intro v v'
+      with_unfolding_all exact ω.map_add' v v'
+    · intro a v
+      with_unfolding_all exact ω.map_smul' a v
+    · intro v v' e
+      exact hω e
     · intro f' g
       with_unfolding_all exact hval f' g
   sup := (hs)

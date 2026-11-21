@@ -61,7 +61,7 @@ theorem continuous_detGL : Continuous (Matrix.GeneralLinearGroup.det : GL (Fin n
   rw [← map_inv]; rfl
 
 theorem isCompact_K : IsCompact (K D n : Set (G D n)) :=
-  haveI : Submodule.IsLattice D.host.E (stdLattice D.host.E (n + n)) := isLattice_stdLattice
+  haveI := isLattice_stdLattice (E := D.host.E) (n := n + n)
   isCompact_levelAll (isCMExt_host D) _ _ _
 
 theorem isClosed_P : IsClosed (P D n : Set (G D n)) := by

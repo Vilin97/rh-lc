@@ -31,29 +31,33 @@ theorem res_res (ψ : S →+* T) (hx : spMap ψ ≫ x = x') (χ : T →+* U) (hx
     res χ hx' (res ψ hx v) = res ω hx'' v := by
   subst e
   refine tan_ext ?_
-  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ _ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ψ)) ≫ _
+  show spMap (Formalism.L2.Pj.dualMap χ) ≫ spMap (Formalism.L2.Pj.dualMap ψ) ≫ _ = spMap (Formalism.L2.Pj.dualMap (χ.comp ψ)) ≫ _
   rw [← Category.assoc, spMap_comp_spMap]
   congr 2
-  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  exact RingHom.ext fun a => by ext <;> simp [Formalism.L2.Pj.dualMap]
 
 theorem res_sum (ψ : S →+* T) (hx : spMap ψ ≫ x = x') {κ : Type} [Fintype κ] (a : κ → S) (n : κ → TanM x t.G) :
     res ψ hx (∑ k, a k • n k) = ∑ k, ψ (a k) • res ψ hx (n k) := by
   subst hx
-  have dual_alg : (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (algebraMap S (DualNumber S)) =
+  have dual_alg : (Formalism.L2.Pj.dualMap ψ).comp (algebraMap S (DualNumber S)) =
       (algebraMap T (DualNumber T)).comp ψ := by
     refine RingHom.ext fun z => ?_
-    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  have eps_dual (b : S) : spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (epsMul b) =
-      spMap (epsMul (ψ b)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) := by
+    ext <;> simp [Formalism.L2.Pj.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have eps_dual (b : S) : spMap (Formalism.L2.Pj.dualMap ψ) ≫ spMap (epsMul b) =
+      spMap (epsMul (ψ b)) ≫ spMap (Formalism.L2.Pj.dualMap ψ) := by
     rw [spMap_comp_spMap, spMap_comp_spMap]
     congr 1
     refine RingHom.ext fun z => ?_
-    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, mul_comm]
-  let ρ : overAt (spMap ψ ≫ x) (DualNumber T) ⟶ overAt x (DualNumber S) := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ)) (by
+    ext <;> simp [Formalism.L2.Pj.dualMap, epsMul, mul_comm]
+  let ρ : overAt (spMap ψ ≫ x) (DualNumber T) ⟶ overAt x (DualNumber S) := Over.homMk (spMap (Formalism.L2.Pj.dualMap ψ)) (by
     show spMap _ ≫ spMap _ ≫ x = spMap _ ≫ spMap _ ≫ x
     rw [← Category.assoc, ← Category.assoc, spMap_comp_spMap, spMap_comp_spMap, dual_alg])
   let f : TanM x t.G →+ TanM (spMap ψ ≫ x) t.G :=
-    AddMonoidHom.mk' (res ψ rfl) fun a b => tanM_ext (MonObj.comp_mul ρ (tv a) (tv b))
+    AddMonoidHom.mk' (res ψ rfl) fun a b => by
+      apply tan_ext
+      have h := congrArg (fun f => f.left) (MonObj.comp_mul ρ (tv a) (tv b))
+      rw [tv_add]
+      exact h
   refine (map_sum f _ _).trans (Finset.sum_congr rfl fun k _ => tan_ext ?_)
   exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ (tv (n k)).left) (eps_dual (a k))).trans
     (Category.assoc _ _ _))

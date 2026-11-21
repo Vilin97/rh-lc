@@ -36,7 +36,7 @@ theorem inDual_smul {L : Submodule 𝒪[k] (n → k)} {η : n → k} (h : InDual
   rw [smul_dotProduct, Algebra.smul_def]
   exact mul_mem s.2 (h y hy)
 
-theorem isLocallyConstant_of_periodic (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] {g : (n → k) → ℂ}
+theorem isLocallyConstant_of_periodic (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k] {g : (n → k) → ℂ}
     (hg : ∀ η ξ, InDual L ξ → g (η + ξ) = g η) : IsLocallyConstant g := by
   have hD := (dual_compact_open L).2
   refine (IsLocallyConstant.iff_exists_open g).2 fun x => ?_
@@ -61,7 +61,7 @@ private theorem secondCountableTopology_localField' (K : Type) [Field K] [Valuat
 variable [MeasurableSpace k] [BorelSpace k]
 
 theorem integrable_of_periodic (μ : Measure (n → k)) [μ.IsAddHaarMeasure] (q : Unif k)
-    (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] {g : (n → k) → ℂ}
+    (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k] {g : (n → k) → ℂ}
     (hg : ∀ η ξ, InDual L ξ → g (η + ξ) = g η) (hs : ∀ η, g η ≠ 0 → InDual L (q.1 • η)) : Integrable g μ := by
   haveI := secondCountableTopology_localField' k
   have hlc := isLocallyConstant_of_periodic L hg

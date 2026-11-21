@@ -426,7 +426,13 @@ theorem rowLat_gmap (g : G0 F0) {Λ : Submodule (𝓞 D.host.E) (VS D).V} (h : I
     intro L hL
     refine ⟨hL.fg.map _, ?_⟩
     exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
-  refine ⟨⟨hmap hL, fun p hp => ?_⟩,
+  have hfull : Submodule.IsFullLattice D.host.E
+      (Formalism.HermitianLatticesTheory.gmap (g : (VS D).V ≃ₗ[D.host.E] (VS D).V) Λ) := by
+    refine { toIsLattice := hmap hL.toIsLattice, span_eq_top := ?_ }
+    change Submodule.span D.host.E (((g : (VS D).V ≃ₗ[D.host.E] (VS D).V) : (VS D).V →ₗ[D.host.E] (VS D).V) '' (Λ : Set (VS D).V)) = ⊤
+    rw [Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+    exact (g : (VS D).V ≃ₗ[D.host.E] (VS D).V).surjective
+  refine ⟨⟨hfull, fun p hp => ?_⟩,
     ⟨hmap hL', ?_, ?_, ?_⟩, ?_⟩
   · obtain ⟨k, hk, hkL⟩ := hG p hp
     refine ⟨(g : (VS D).V ≃ₗ[D.host.E] (VS D).V) * k, (Formalism.HermitianLatticesTheory.isom _).mul_mem hβ hk, ?_⟩

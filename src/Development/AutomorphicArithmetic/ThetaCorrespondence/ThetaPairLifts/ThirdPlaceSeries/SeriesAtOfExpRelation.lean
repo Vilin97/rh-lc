@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+meta import Lean
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ClassSumEq
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistDataAgreeAcrossCoefficientsLocalized
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SetupLGood
@@ -29,6 +30,21 @@ set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 4000000
 variable {hL : _root_.UpperTheory.Zero.LLC.RecTExists} {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {P : Pre2 K w}
 variable {x : St P} (L : LocAll (lay0 (Dof x)))
+
+-- Use the kernel to compare fully elaborated types across the two stages.
+open Lean Elab Tactic in
+local elab "exact_by_kernel " term:term : tactic =>
+  closeMainGoalUsing `exact_by_kernel fun target _ => do
+    let value ← elabTerm term none
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let value ← instantiateMVars value
+    let actual ← instantiateMVars (← Meta.inferType value)
+    let target ← instantiateMVars target
+    let lctx ← instantiateLCtxMVars (← getLCtx)
+    match Kernel.isDefEq (← getEnv) lctx actual target with
+    | .ok true => pure value
+    | .ok false => throwError "expected{indentExpr target}\nbut the term has type{indentExpr actual}"
+    | .error error => throwError (error.toMessageData (← getOptions))
 
 section
 open GlobalTheory.ExportSeries
@@ -66,9 +82,10 @@ private theorem sum_eq_pz (ρ : Setup (Dof x).ntw) :
     (setupL L ρ).sum = fun i j b k Q ψ => (by exact ρ.sum i j b k Q ψ) := by
   funext i j b k Q ψ
   let t := ρ.tw (kc% i) b k (kc% Q) (kc% ψ)
+  let _ := ρ.finCl (kc% i) (kc% j) b t
   have h := SerCopy.classSum_eq (a := x.o.Z) (oL x L).Z (ρ.B (kc% i) (kc% j) b)
     (ρ.om (kc% i) (kc% j) b t.chi) t (ρ.rep (kc% i) (kc% j) b t)
-  with_unfolding_all exact (h :)
+  exact_by_kernel h
 open GlobalTheory.SeriesTie in
 private theorem xi_eq_pz (ρ : Setup (Dof x).ntw) (i : (DL x L).ntw.Tw) (j : Fin (DL x L).R.m) (b : Bool) :
     (setupL L ρ).xi i j b (DL x L).nexp =
@@ -76,11 +93,11 @@ private theorem xi_eq_pz (ρ : Setup (Dof x).ntw) (i : (DL x L).ntw.Tw) (j : Fin
   funext Q M
   let places := admissibleConjugatePairPlaces (Dof x).ntw (kc% i) (kc% Q) M
   let u := univOf (Dof x).nexp (kc% i) places M ρ.rc
+  let _ : NeZero ((Dof x).ntw.l (kc% i) ^ M) := ⟨pow_ne_zero _ ((Dof x).ntw.lPrime (kc% i)).out.ne_zero⟩
   have h := SerCopy.xiCoef_eq (a := x.o.Z) (oL x L).Z (ρ.B (kc% i) (kc% j) b)
     (ρ.om (kc% i) (kc% j) b 1) u
   have hQ := congrFun h (kc% (half (ρ.ch (kc% i)) places))
-  with_unfolding_all exact
-    (congrFun hQ (kc% (GlobalTheory.ExportSeries.Base.univFam u (ρ.β (kc% j)))) :)
+  exact_by_kernel congrFun hQ (kc% (GlobalTheory.ExportSeries.Base.univFam u (ρ.β (kc% j))))
 open GlobalTheory.SeriesTie in
 private theorem isHeckeDatum_eq_pz (ρ : Setup (Dof x).ntw) :
     (setupL L ρ).IsHeckeDatum =
@@ -92,17 +109,19 @@ private theorem isHeckeDatum_eq_pz (ρ : Setup (Dof x).ntw) :
 section Cell
 open GlobalTheory.SeriesTie
 variable {ρ : Setup (Dof x).ntw} {i : (DL x L).ntw.Tw} {j : Fin (DL x L).R.m} {c : Bool}
-private def rdL_pz (rd : Rd ρ (Dof x).nexp ((i)) ((j)) c) : Rd (setupL L ρ) (DL x L).nexp i j c := (rd)
+private def rdL_pz (rd : Rd ρ (Dof x).nexp ((i)) ((j)) c) : Rd (setupL L ρ) (DL x L).nexp i j c := by
+  exact_by_kernel rd
 private theorem rat_iff_pz (hρ : ρ.Good) (rd : Rd ρ (Dof x).nexp ((i)) ((j)) c) :
     SeriesTie.Rat (setupL_good L hρ) (@rdL_pz K B f T w P x L ρ i j c rd) ↔ SeriesTie.Rat hρ rd := by
   conv_lhs => delta SeriesTie.Rat RatBase RatTwist RatUniv
   rewrite [isDatum_eq L ρ, theta_eq L ρ, gens_eq_pz L ρ, xi_eq_pz L ρ i j c]
-  with_unfolding_all exact (Iff.rfl : SeriesTie.Rat hρ rd ↔ SeriesTie.Rat hρ rd)
+  exact_by_kernel Iff.refl (SeriesTie.Rat hρ rd)
 private theorem heckeTie_imp_pz {rd : Rd ρ (Dof x).nexp ((i)) ((j)) c} (h : HeckeTie rd) :
     HeckeTie (@rdL_pz K B f T w P x L ρ i j c rd) := by
   delta HeckeTie HeckeAt
   rewrite [isHeckeDatum_eq_pz L ρ]
   exact (by with_unfolding_all exact (h :))
+set_option maxHeartbeats 8000000 in
 private def cellL_pz {hρ : ρ.Good} {rd : Rd ρ (Dof x).nexp ((i)) ((j)) c} (t : CellTie hρ (Dof x).nexp rd) :
     CellTie (setupL_good L hρ) (DL x L).nexp (i := i) (j := j) (b := c) (@rdL_pz K B f T w P x L ρ i j c rd) where
   supp := (by with_unfolding_all exact (t.supp :))
@@ -119,21 +138,26 @@ private def cellL_pz {hρ : ρ.Good} {rd : Rd ρ (Dof x).nexp ((i)) ((j)) c} (t 
   thU_eq := by
     intro Q M d hQ coeffs hcoeffs
     rewrite [xi_eq_pz L ρ i j c] at hcoeffs
-    with_unfolding_all exact t.thU_eq Q M d hQ coeffs hcoeffs
+    exact_by_kernel t.thU_eq (kc% Q) M (kc% d) (kc% hQ) (kc% coeffs) (kc% hcoeffs)
   thU_off := by
     intro Q M d hOff
     rewrite [xi_eq_pz L ρ i j c] at hOff
-    with_unfolding_all exact t.thU_off Q M d hOff
+    exact_by_kernel t.thU_off (kc% Q) M (kc% d) (kc% hOff)
   rdV_inj := (by with_unfolding_all exact (t.rdV_inj :))
-  mtLat_iff := kc% t.mtLat_iff
+  mtLat_iff := by exact_by_kernel t.mtLat_iff
   thP_eq := by rewrite [sum_eq_pz L ρ]; exact (by with_unfolding_all exact (t.thP_eq :))
 private theorem isNormL_pz (ρ : Setup (Dof x).ntw) (i : (DL x L).ntw.Tw) (j : Fin (DL x L).R.m) (c : Bool) (ν : ℂ) :
     IsNorm (datL x L).R (datL x L).geo.v₀ ((setupL L ρ).B i j c) ν ↔
       IsNorm x.m.z.R x.m.z.geo.v₀ (ρ.B ((i)) ((j)) c) ν := by
-  conv_lhs => delta IsNorm IsScale
-  with_unfolding_all
+  constructor
+  · rintro ⟨hν, a, ⟨g, cR, cL, hF, u, hu, ha⟩, hn⟩
+    rewrite [famTie_eq x.o.Z (oL x L).Z] at hF
+    exact ⟨hν, a, ⟨kc% g, kc% cR, kc% cL, by exact_by_kernel hF,
+      kc% u, kc% hu, kc% ha⟩, kc% hn⟩
+  · rintro ⟨hν, a, ⟨g, cR, cL, hF, u, hu, ha⟩, hn⟩
+    refine ⟨hν, a, ⟨kc% g, kc% cR, kc% cL, ?_, kc% u, kc% hu, kc% ha⟩, kc% hn⟩
     rewrite [famTie_eq x.o.Z (oL x L).Z]
-    rfl
+    exact_by_kernel hF
 end Cell
 section Comparison₂
 open GlobalTheory.SeriesTie
@@ -177,7 +201,9 @@ private theorem lamL_C_pz {Z : GlobalTheory.LamTie.LamDat (Dof x)} (h : Z.C = cf
     (fun f g => (l.b.ser.ex.tie (kc% i) (kc% j) b).rdV k (kc% Q) (kc% ψ) (kc% f)
       ((Formalism.L2.Theta.finHom _).rangeRestrict ((l.mt.ad.PV (kc% j)).ψ (kc% g))))
     (kc% (l.b.ser.join (kc% i) (kc% j) b k (kc% Q) (kc% ψ) (kc% hA) (kc% ht)))) :))
-  sup := kc% l.b.ser.sup
+  sup := by
+    intro i j b h1 h2 z
+    exact_by_kernel l.b.ser.sup (kc% i) j b h1 (kc% h2) (kc% z)
   off := (by with_unfolding_all exact (l.b.ser.off :))
   lam := lamL_pz L l.b.ser.lam
   lam_ok := lamL_ok_pz L l.b.ser.lam_ok

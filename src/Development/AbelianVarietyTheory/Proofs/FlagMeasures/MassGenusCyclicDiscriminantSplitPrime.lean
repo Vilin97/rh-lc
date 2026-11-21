@@ -135,6 +135,10 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
   have hex : ∀ N ∈ genus h L, ∃! M, Over h (∏ P ∈ s, P) N M := fun N hN =>
     o1 N ((hgen L N hL hLq).1 hN).1 ((hgen L N hL hLq).1 hN).2
   obtain ⟨M0, hM0, -⟩ := o1 L hL hLq
+  have hM0full : Submodule.IsFullLattice K M0 := by
+    letI := hL.1
+    letI := hM0.1
+    exact Submodule.IsFullLattice.of_le K hM0.2.2.1
   obtain ⟨-, m2, -⟩ := GlobalTheory.T.exists_maximal_integralHermitianLattice_orthonormal_maximal K V h hK hs hnd
   obtain ⟨-, m2', m3'⟩ := GlobalTheory.T.exists_maximal_integralHermitianLattice_orthonormal_maximal K V' h' hK hs' hnd'
   obtain ⟨c, hc⟩ := hMM K hK _ hn
@@ -143,7 +147,7 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
     rw [hc V h hs hp rfl M0 (m2 M0 hM0.1 hM0.2.1).1, (m2 M0 hM0.1 hM0.2.1).2.2,
       hc V' h' hs' hp' iR I (m2' I iL iU).1, (m2' I iL iU).2.2]
   obtain ⟨b1, b2, b3, b4, -⟩ := GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp L hL.1
-  obtain ⟨a1, a2, a3, -, -⟩ := GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M0 hM0.1
+  obtain ⟨a1, a2, a3, -, -⟩ := GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M0 hM0full
   have hmaps : Set.MapsTo (up h (∏ P ∈ s, P)) (genus h L) (genus h M0) := by
     intro N hN
     obtain ⟨M, hM, -⟩ := hex N hN
@@ -167,8 +171,8 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
         subst this
         exact hM1.2.2
       · rintro ⟨h1, h2⟩
-        have hN : N ∈ genus h L := (hgen L N hL hLq).2 (o2 M N hM.1 hU h1 h2)
-        exact ⟨hN, up_eq h _ N M (hex N hN) ⟨hM.1, hU, h1, h2⟩⟩
+        have hN : N ∈ genus h L := (hgen L N hL hLq).2 (o2 M N hM.1.toIsLattice hU h1 h2)
+        exact ⟨hN, up_eq h _ N M (hex N hN) ⟨hM.1.toIsLattice, hU, h1, h2⟩⟩
     rw [hset, GlobalTheory.T.card_sublattices_quotient_prod_degree_one_primes K V M hM.1 T s hT hsP]
     exact ENat.toENNReal_coe _
   obtain ⟨p1, p2, -⟩ := GlobalTheory.T.orbitWeightedStabilizerSum_mono_subadditive (isom h) (Submodule (𝓞 K) V)

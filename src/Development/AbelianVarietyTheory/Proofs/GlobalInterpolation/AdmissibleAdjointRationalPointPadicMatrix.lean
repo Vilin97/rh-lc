@@ -322,10 +322,15 @@ theorem jetOp_of_closure {ι : X.K →+* ℂ_[p]} {w : HeightOneSpectrum (𝓞 X
         (κ * detFac s s' (fun τ => Formalism.UG.bc (X.emb τ) (B τ)) fun τ => Formalism.UG.bc (X.emb τ) (B' τ)) • G := by
   classical
   let _ : StarRing X.K := starRingOfComm
+  have tauLat_fg {n : ℕ} (M : Submodule (𝓞 X.E) (Sp X.E n)) (hM : M.FG) (τ : X.Tau) :
+      (tauLat X.emb τ M).FG := by
+    obtain ⟨S, hS⟩ := hM
+    rw [du_tauLat_eq, ← hS, du_tl_span]
+    exact ⟨S.image (du_f (X.emb τ)), by rw [Finset.coe_image]⟩
   refine GlobalTheory.JetPoint.closureIntegral X.K w ℂ_[p] _ NormedField.valuation ι (val_le_one_iff h) X.Tau a b hab lam lam' s s' n hw
     (fun τ => tauLat X.emb τ L) (fun τ => tauLat X.emb τ L') _ _
-    (fun τ => ⟨(GlobalTheory.TauLat.tauLatLattice X.E X.K X.Tau _ X.emb τ L hL).fg, bc_isBasisAt (X.emb τ) w (hB τ)⟩)
-    (fun τ => ⟨(GlobalTheory.TauLat.tauLatLattice X.E X.K X.Tau _ X.emb τ L' hL').fg, bc_isBasisAt (X.emb τ) w (hB' τ)⟩) κ J
+    (fun τ => ⟨tauLat_fg L hL.fg τ, bc_isBasisAt (X.emb τ) w (hB τ)⟩)
+    (fun τ => ⟨tauLat_fg L' hL'.fg τ, bc_isBasisAt (X.emb τ) w (hB' τ)⟩) κ J
     fun ε hε => ?_
   obtain ⟨c, hc1, hc2, hc3⟩ := hJ (finite_inDeg lam s').toFinset (fun m hm => hM m (by simpa using hm)) ‖ι ε‖
     (norm_pos_iff.2 ((map_ne_zero ι).2 hε))

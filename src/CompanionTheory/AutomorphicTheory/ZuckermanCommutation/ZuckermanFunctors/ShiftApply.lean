@@ -241,8 +241,11 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
     U.R.IsDS ε μ → GapAtLeast ε μ h → t _ ε + (((2 * r + k + 1) ^ 2 + 2 : ℕ) : ℝ) + 1 + l < h →
     (∀ a c, a < c → (l : ℝ) + 1 ≤ μ a - μ c) →
     ∀ T : Sub (2 * r + k + 1) l → URep k r, (∀ I, (T I).R.IsDS ε (addSet μ I.1)) →
-    ∃ io pr, IsDec (N := M) IsHom (wedge k r l, U) (fun I => one (T I)) io pr
-  | 0, μ, U, h, hU, hg, ht, _, T, hT => by
+    ∃ io pr, IsDec (N := M) IsHom (wedge k r l, U) (fun I => one (T I)) io pr := by
+  intro l
+  induction l with
+  | zero =>
+    intro μ U h hU hg ht _ T hT
     have C := S.homCat k r
     have h1 : (1 : ℝ) ≤ (((2 * r + k + 1) ^ 2 + 2 : ℕ) : ℝ) := by exact_mod_cast (by omega)
     have hI : ∀ I : Sub (2 * r + k + 1) 0, I = ⟨∅, rfl⟩ := fun I => Subtype.ext (Finset.card_eq_zero.1 I.2)
@@ -259,7 +262,8 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
       simp [mAct_apply]
     · have e : addSet μ I.1 = μ := by rw [hI I]; funext a; simp [addSet]
       simpa only [e] using hT I
-  | m + 1, μ, U, h, hU, hg, ht, hD, T, hT => by
+  | succ m ih =>
+    intro μ U h hU hg ht hD T hT
     classical
     have C := S.homCat k r
     have h1 : (1 : ℝ) ≤ (((2 * r + k + 1) ^ 2 + 2 : ℕ) : ℝ) := by exact_mod_cast (by omega)
@@ -301,7 +305,7 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
         ∀ p, cas1 (wedge k r m) (vr k r false) U ∘ₗ io p = (casG (pJ p.1).1 : ℂ) • io p := by
       refine hd1 (Sub (2 * r + k + 1) m) (Fin (2 * r + k + 1))
         (fun J => V (pJ J)) (fun p => V (par p)) (fun J => (casG (pJ J).1 : ℂ)) ?_ ?_ (fun J => cs (pJ J))
-      · exact decW S Lb hk m (μ := μ) (U := U) (h := h) hU hg (by linarith)
+      · exact ih (μ := μ) (U := U) (h := h) hU hg (by linarith)
           (fun a c hac => by linarith [hD a c hac]) _ (fun J => hV (pJ J))
       · intro J
         have hGap := (near hU.1 hg hD m (by linarith) (hJ J)).2.1
@@ -314,7 +318,7 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
         (fun s => V (ps s)) (fun p => V (par p)) (fun s => (casG (ps s).1 : ℂ)) ?_ ?_ (fun s => cs (ps s))
       · exact decV S Lb hk false (μ := μ) (U := U) (h := h) hU hg (by linarith) _ (fun s => hV (ps s))
       · intro s
-        refine decW S Lb hk m (μ := (ps s).1) (U := V (ps s)) (h := h - 1)
+        refine ih (μ := (ps s).1) (U := V (ps s)) (h := h - 1)
           (hV (ps s)) (gap_shift hg false s) (by linarith) ?_ _ ?_
         · intro a c hac
           have := (near hU.1 hg hD 1 (by push_cast; linarith) (hs s)).2.2 a c hac
