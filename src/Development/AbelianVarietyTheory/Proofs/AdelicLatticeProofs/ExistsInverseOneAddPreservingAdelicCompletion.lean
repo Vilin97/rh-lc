@@ -38,7 +38,8 @@ theorem _root_.GlobalTheory.UnRep.Nakayama.mem_jacobson (a : _root_.GlobalTheory
       calc Valued.v (a.1 v) * Valued.v (y.1 v) ≤ Valued.v (a.1 v) * 1 := by gcongr
         _ < 1 := by rw [mul_one]; exact ha v
     have : (a * y + 1).1 v = 1 + a.1 v * y.1 v := by
-      simp [add_comm]
+      change a.1 v * y.1 v + 1 = 1 + a.1 v * y.1 v
+      exact add_comm _ _
     rw [this, Valuation.map_one_add_of_lt _ hlt]
   let w : FiniteAdeleRing (𝓞 F) F := ⟨fun v ↦ ((a * y + 1).1 v)⁻¹, Filter.Eventually.of_forall fun v ↦ by
     show _ ∈ v.adicCompletionIntegers F

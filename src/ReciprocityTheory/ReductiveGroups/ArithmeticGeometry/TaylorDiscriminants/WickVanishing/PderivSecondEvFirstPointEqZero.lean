@@ -17,8 +17,8 @@ namespace ReciprocityTheory.ChartRestriction.G.TB.LogPf
 variable {k : Type} [CommRing k] {d : ℕ} (G : FGLaw k d)
 
 theorem om_closed (i a c : Fin d) :
-    pderiv k ((0 : Fin 1), c) (Om G i a) = pderiv k ((0 : Fin 1), a) (Om G i c) := by
-  set M : Fin d → PS k 1 d := fun e => pderiv k ((0 : Fin 1), e) (Om G i a) - pderiv k ((0 : Fin 1), a) (Om G i e)
+    pderiv (R := k) ((0 : Fin 1), c) (Om G i a) = pderiv (R := k) ((0 : Fin 1), a) (Om G i c) := by
+  set M : Fin d → PS k 1 d := fun e => pderiv (R := k) ((0 : Fin 1), e) (Om G i a) - pderiv (R := k) ((0 : Fin 1), a) (Om G i e)
     with hMdef
   have hM : ∀ b, ∑ e, M e * Jac G e b = 0 := by
     intro b
@@ -40,8 +40,8 @@ theorem om_closed (i a c : Fin d) :
   exact sub_eq_zero.1 h3
 
 theorem d_evY (h : PS k 1 d) (b : Fin d) :
-    pderiv k ((1 : Fin 2), b) (ev (n := 2) ![pt k d 1] h) = ev (n := 2) ![pt k d 1] (pderiv k ((0 : Fin 1), b) h) := by
-  have hXd : ∀ v w : Fin 2 × Fin d, pderiv k v (X w : PS k 2 d) = if v = w then 1 else 0 := by
+    pderiv (R := k) ((1 : Fin 2), b) (ev (n := 2) ![pt k d 1] h) = ev (n := 2) ![pt k d 1] (pderiv (R := k) ((0 : Fin 1), b) h) := by
+  have hXd : ∀ v w : Fin 2 × Fin d, pderiv (R := k) v (X w : PS k 2 d) = if v = w then 1 else 0 := by
     intro v w
     first
     | (simp [MvPowerSeries.pderiv_X, Pi.single_apply]; done)
@@ -60,20 +60,20 @@ theorem d_evY (h : PS k 1 d) (b : Fin d) :
     | exact MvPowerSeries.constantCoeff_X _
     | simp
   rw [pderiv_ev hcz, Fintype.sum_eq_single ((0 : Fin 1), b)]
-  · show ev _ (pderiv k ((0 : Fin 1), b) h) * pderiv k ((1 : Fin 2), b) (X ((1 : Fin 2), b)) = _
+  · show ev _ (pderiv (R := k) ((0 : Fin 1), b) h) * pderiv (R := k) ((1 : Fin 2), b) (X ((1 : Fin 2), b)) = _
     rw [hXd, if_pos rfl, mul_one]
   · rintro ⟨j, i⟩ hne
     have hj : j = 0 := Subsingleton.elim _ _
     subst hj
-    show ev _ _ * pderiv k ((1 : Fin 2), b) (X ((1 : Fin 2), i)) = 0
+    show ev _ _ * pderiv (R := k) ((1 : Fin 2), b) (X ((1 : Fin 2), i)) = 0
     rw [hXd, if_neg, mul_zero]
     intro heq
     apply hne
     rw [(Prod.mk.inj heq).2]
 
 theorem d_evX (h : PS k 1 d) (a : Fin d) :
-    pderiv k ((0 : Fin 2), a) (ev (n := 2) ![pt k d 0] h) = ev (n := 2) ![pt k d 0] (pderiv k ((0 : Fin 1), a) h) := by
-  have hXd : ∀ v w : Fin 2 × Fin d, pderiv k v (X w : PS k 2 d) = if v = w then 1 else 0 := by
+    pderiv (R := k) ((0 : Fin 2), a) (ev (n := 2) ![pt k d 0] h) = ev (n := 2) ![pt k d 0] (pderiv (R := k) ((0 : Fin 1), a) h) := by
+  have hXd : ∀ v w : Fin 2 × Fin d, pderiv (R := k) v (X w : PS k 2 d) = if v = w then 1 else 0 := by
     intro v w
     first
     | (simp [MvPowerSeries.pderiv_X, Pi.single_apply]; done)
@@ -92,19 +92,19 @@ theorem d_evX (h : PS k 1 d) (a : Fin d) :
     | exact MvPowerSeries.constantCoeff_X _
     | simp
   rw [pderiv_ev hcz, Fintype.sum_eq_single ((0 : Fin 1), a)]
-  · show ev _ (pderiv k ((0 : Fin 1), a) h) * pderiv k ((0 : Fin 2), a) (X ((0 : Fin 2), a)) = _
+  · show ev _ (pderiv (R := k) ((0 : Fin 1), a) h) * pderiv (R := k) ((0 : Fin 2), a) (X ((0 : Fin 2), a)) = _
     rw [hXd, if_pos rfl, mul_one]
   · rintro ⟨j, i⟩ hne
     have hj : j = 0 := Subsingleton.elim _ _
     subst hj
-    show ev _ _ * pderiv k ((0 : Fin 2), a) (X ((0 : Fin 2), i)) = 0
+    show ev _ _ * pderiv (R := k) ((0 : Fin 2), a) (X ((0 : Fin 2), i)) = 0
     rw [hXd, if_neg, mul_zero]
     intro heq
     apply hne
     rw [(Prod.mk.inj heq).2]
 
-theorem pderiv_first_ev_second_point_eq_zero (h : PS k 1 d) (a : Fin d) : pderiv k ((0 : Fin 2), a) (ev (n := 2) ![pt k d 1] h) = 0 := by
-  have hXd : ∀ v w : Fin 2 × Fin d, pderiv k v (X w : PS k 2 d) = if v = w then 1 else 0 := by
+theorem pderiv_first_ev_second_point_eq_zero (h : PS k 1 d) (a : Fin d) : pderiv (R := k) ((0 : Fin 2), a) (ev (n := 2) ![pt k d 1] h) = 0 := by
+  have hXd : ∀ v w : Fin 2 × Fin d, pderiv (R := k) v (X w : PS k 2 d) = if v = w then 1 else 0 := by
     intro v w
     first
     | (simp [MvPowerSeries.pderiv_X, Pi.single_apply]; done)
@@ -127,13 +127,13 @@ theorem pderiv_first_ev_second_point_eq_zero (h : PS k 1 d) (a : Fin d) : pderiv
   obtain ⟨j, i⟩ := p
   have hj : j = 0 := Subsingleton.elim _ _
   subst hj
-  show ev _ _ * pderiv k ((0 : Fin 2), a) (X ((1 : Fin 2), i)) = 0
+  show ev _ _ * pderiv (R := k) ((0 : Fin 2), a) (X ((1 : Fin 2), i)) = 0
   rw [hXd, if_neg, mul_zero]
   intro heq
   exact absurd (Prod.mk.inj heq).1 (by decide)
 
-theorem pderiv_second_ev_first_point_eq_zero (h : PS k 1 d) (b : Fin d) : pderiv k ((1 : Fin 2), b) (ev (n := 2) ![pt k d 0] h) = 0 := by
-  have hXd : ∀ v w : Fin 2 × Fin d, pderiv k v (X w : PS k 2 d) = if v = w then 1 else 0 := by
+theorem pderiv_second_ev_first_point_eq_zero (h : PS k 1 d) (b : Fin d) : pderiv (R := k) ((1 : Fin 2), b) (ev (n := 2) ![pt k d 0] h) = 0 := by
+  have hXd : ∀ v w : Fin 2 × Fin d, pderiv (R := k) v (X w : PS k 2 d) = if v = w then 1 else 0 := by
     intro v w
     first
     | (simp [MvPowerSeries.pderiv_X, Pi.single_apply]; done)
@@ -156,7 +156,7 @@ theorem pderiv_second_ev_first_point_eq_zero (h : PS k 1 d) (b : Fin d) : pderiv
   obtain ⟨j, i⟩ := p
   have hj : j = 0 := Subsingleton.elim _ _
   subst hj
-  show ev _ _ * pderiv k ((1 : Fin 2), b) (X ((0 : Fin 2), i)) = 0
+  show ev _ _ * pderiv (R := k) ((1 : Fin 2), b) (X ((0 : Fin 2), i)) = 0
   rw [hXd, if_neg, mul_zero]
   intro heq
   exact absurd (Prod.mk.inj heq).1 (by decide)
@@ -165,7 +165,7 @@ variable [Algebra ℚ k]
 
 def logOf (i : Fin d) : PS k 1 d := prim (fun v : Fin 1 × Fin d => Om G i v.2)
 
-theorem pderiv_logOf (i a : Fin d) : pderiv k ((0 : Fin 1), a) (logOf G i) = Om G i a := by
+theorem pderiv_logOf (i a : Fin d) : pderiv (R := k) ((0 : Fin 1), a) (logOf G i) = Om G i a := by
   unfold logOf
   refine pderiv_prim _ ?_ _
   rintro ⟨a0, a'⟩ ⟨c0, c'⟩
@@ -178,7 +178,7 @@ theorem logOf_add (i : Fin d) :
     ev (n := 2) ![G.F] (logOf G i) = ev (n := 2) ![pt k d 0] (logOf G i) + ev (n := 2) ![pt k d 1] (logOf G i) := by
   rw [← sub_eq_zero]
   set g := ev (n := 2) ![G.F] (logOf G i) - (ev (n := 2) ![pt k d 0] (logOf G i) + ev (n := 2) ![pt k d 1] (logOf G i))
-  have hd : ∀ v, pderiv k v g = 0 := by
+  have hd : ∀ v, pderiv (R := k) v g = 0 := by
     rintro ⟨j, c⟩
     fin_cases j
     · simp only [Fin.zero_eta]

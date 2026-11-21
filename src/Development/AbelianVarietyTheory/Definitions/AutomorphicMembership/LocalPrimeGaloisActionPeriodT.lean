@@ -266,8 +266,8 @@ theorem exists_monSt_pow_eq_zero (p : Bst P) : ∃ n : ℕ, (monSt P ^ n) p = 0 
 theorem monSt_eq_zero_iff (p : Bst P) : monSt P p = 0 ↔ ∃ b, p = C b := by
   constructor
   · intro h
-    have : IsAddTorsionFree P.R.B := ⟨fun n hn a b hab => by
-      have h1 : (n : ℚ_[l]) • a = (n : ℚ_[l]) • b := by simpa only [Nat.cast_smul_eq_nsmul] using hab
+    have : HasUniqueDiv P.R.B := ⟨fun n hn a b h => by
+      have h1 : (n : ℚ_[l]) • a = (n : ℚ_[l]) • b := by simpa only [Nat.cast_smul_eq_nsmul] using h
       exact smul_right_injective _ (Nat.cast_ne_zero.mpr hn) h1⟩
     rw [monSt_apply, neg_eq_zero] at h
     exact ⟨_, eq_C_of_derivative_eq_zero h⟩

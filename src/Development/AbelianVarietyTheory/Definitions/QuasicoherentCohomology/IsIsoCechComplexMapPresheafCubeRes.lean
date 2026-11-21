@@ -159,7 +159,7 @@ variable {V U} {V' V'' : Opens T} {U' U'' : ι → Opens T}
 
 def presheafCubeRes (h : ∀ s, cechOpen V' U' s ≤ cechOpen V U s) :
     presheafCube P V U ⟶ presheafCube P V' U' :=
-  Cube.homMk (fun s => presheafRes P (h s)) fun hst x =>
+  Cube.homMk ι R (fun s => presheafRes P (h s)) fun hst x =>
     (presheafRes_presheafRes P _ _ x).trans
       (presheafRes_presheafRes P _ (cechOpen_anti V' U' hst) x).symm
 

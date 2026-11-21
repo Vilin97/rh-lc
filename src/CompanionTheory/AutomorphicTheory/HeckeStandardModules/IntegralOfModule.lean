@@ -15,6 +15,8 @@ namespace CompanionTheory.L3H
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
 
+local notation3 "L⁺" => maximalRealSubfield L
+
 section Loc
 
 variable (s : SplitPlace L) (n)
@@ -38,7 +40,7 @@ theorem tSet_iff {ϖ : s.v.adicCompletion L⁺} (h0 : ϖ ≠ 0) (k : ℕ) (x : F
     exact ⟨emb_triv s _, a, ha, b, hb, by rw [loc_emb]; rfl⟩
 
 theorem triv_compl {B : Set (HeightOneSpectrum (𝓞 L⁺))} (hs : s.v ∉ B) {x : Formalism.AUTREP.GAf L n}
-    (hx : TrivOutside {s.v} x) : TrivOutside Bᶜ x := fun w hw => hx w fun h => hw (by rw [Set.mem_singleton_iff.1 h]; exact hs)
+    (hx : TrivOutside L {s.v} x) : TrivOutside L Bᶜ x := fun w hw => hx w fun h => hw (by rw [Set.mem_singleton_iff.1 h]; exact hs)
 
 variable {s}
 

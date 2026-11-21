@@ -199,4 +199,6 @@ theorem PositivityTheory.Xgn.t_fam_constr : ∀ (O : Type) [CommRing O] [IsDomai
         (fun c => (D c).hh (chartRing O (mseg x) c) p (fun a => algebraMap O Ω (χ τ a))) := by
       refine fam_dual haf fun c hc => fg_comap (fg_of_locFree (hG c hc).l1) _
         (linMap_inj n _ ?_ ?_) ((hG c hc).lin τ)
+      · simp [(hD.char.2.2.2.2 τ).1]
+      · simp [(hD.char.2.2.2.2 τ).2]
     exact ⟨hh, fam_map (fam_inf hDel (fam_prod hh fam_top)) _ fun a v => rfl⟩

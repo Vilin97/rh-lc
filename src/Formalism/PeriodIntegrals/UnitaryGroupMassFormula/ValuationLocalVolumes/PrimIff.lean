@@ -40,7 +40,7 @@ theorem prim_iff (hL : ∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsLat
       have := congrFun hκ p
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at this
       simpa [hd] using this
-    obtain ⟨w', hw', hww⟩ := ker_vec σ J v Λ hSD he he1 hπ hw hz
+    obtain ⟨w', hw', hww⟩ := ker_vec σ J v Λ hSD he hπ hw hz
     have hc := hP.2 (fun j => sc (E := E) v ϖ⁻¹ * d j) (by
       have e2 : (∑ j, (sc (E := E) v ϖ⁻¹ * d j) • (x : TupV (E := E) v n a) j) =
           sc (E := E) v ϖ⁻¹ • ∑ j, (d j : Fv F v ⊗[F] E) • (x : TupV (E := E) v n a) j := by

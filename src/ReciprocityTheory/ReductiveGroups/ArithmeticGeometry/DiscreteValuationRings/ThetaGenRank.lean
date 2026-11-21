@@ -226,7 +226,7 @@ theorem secB_rank_one (hLaws : Laws) (t s' : D.toPre.SecB 1 0) :
       (f : Z ⟶ Y) (φ' : K → (Z ⟶ X)) (hφ : ∀ k, φ' k = f ≫ φ k) :
       LB.Sec (LB.LinComb L φ' ε) := by
     obtain rfl : φ' = fun k => f ≫ φ k := funext hφ
-    exact pullSec φ ε s f
+    exact pullSec L φ ε s f
   have pullSection_f {X Y Z : Scheme.{0}} (L : LB X) {K : Type} [Fintype K]
       (φ : K → (Y ⟶ X)) (ε : K → ℤ) (s : LB.Sec (LB.LinComb L φ ε))
       (f : Z ⟶ Y) (φ' : K → (Z ⟶ X)) (hφ : ∀ k, φ' k = f ≫ φ k) (j : K → L.ι) :

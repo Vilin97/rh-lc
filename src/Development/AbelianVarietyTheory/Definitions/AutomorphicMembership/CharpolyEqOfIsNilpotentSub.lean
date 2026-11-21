@@ -60,8 +60,10 @@ theorem eq_of_exp_smul_eq {N N' : Matrix n n K} (hN : IsNilpotent N) (hN' : IsNi
       (f := fun k : ℕ => (k : K) * c) (fun a b hab => by simpa [hc] using hab) fun k => ?_)
     show _ = _
     rw [hP N (pow_eq_zero_of_le (by omega) hm), hP N' (pow_eq_zero_of_le (by omega) hm'), H]
-  have := congrArg (fun p => coeff p 1) hPP
-  simpa [P, finsetSum_coeff, coeff_monomial] using this
+  have := congrArg (fun p : K[X] => p.coeff 1) hPP
+  simpa only [P, finsetSum_coeff, coeff_monomial_apply, Finset.sum_ite_eq',
+    Finset.mem_range, show 1 < m + m' + 2 by omega, if_true, Nat.factorial_one,
+    Nat.cast_one, inv_one, one_mul, pow_one] using this
 
 end Exp
 

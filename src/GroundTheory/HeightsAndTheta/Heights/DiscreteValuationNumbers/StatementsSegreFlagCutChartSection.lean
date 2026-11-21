@@ -27,24 +27,24 @@ def SegreFlagCutChartSection.Statement : Prop :=
     ∀ (Φ : Type) [Field Φ] [Algebra Ω Φ] [Algebra O Φ] [IsScalarTower O Ω Φ]
       (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ), AlgebraicIndependent Ω t →
     ∀ (k : ℕ) (hk : k < N) (c : ∀ k, ι k), segreVec y c ≠ 0 →
-      (∃ (dl dm : Option (Option K) → ℕ) (l μ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) (m : K → ℕ),
-        μ = ∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ^ m j ∧
+      (∃ (dl dm : Option (Option K) → ℕ) (l μ : MRing (bundleIdx (bundleIdx ι M) M') O) (m : K → ℕ),
+        μ = ∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O) ^ m j ∧
         IsMultiHomog l dl ∧ IsMultiHomog μ dm ∧
         (fun o => (dl o : ℤ) - dm o) = zetaFirst a₀ + liftPairDeg (x ⟨k, hk⟩) ∧
         aeval (flagClosurePt y w e φ φ' t (k + 1)) l =
           flagLineCoord w w e t (k + 1) ⟨k, hk⟩ * aeval (flagClosurePt y w e φ φ' t (k + 1)) μ ∧
         ∀ q ∈ pointIdeal O (flagProjPt Function.Embedding.some y w e φ φ' t k), ∃ n : ℕ,
-          (∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) ^ n *
+          (∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O)) ^ n *
               rename (FieldNumbers.blockIncl Function.Embedding.some (bundleIdx (bundleIdx ι M) M')) q ∈
             pointIdeal O (flagClosurePt y w e φ φ' t (k + 1)) ⊔ Ideal.span {l}) ∧
-      (∃ (dl dm : Option (Option K) → ℕ) (l μ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) (m : K → ℕ),
-        μ = ∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ^ m j ∧
+      (∃ (dl dm : Option (Option K) → ℕ) (l μ : MRing (bundleIdx (bundleIdx ι M) M') O) (m : K → ℕ),
+        μ = ∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O) ^ m j ∧
         IsMultiHomog l dl ∧ IsMultiHomog μ dm ∧
         (fun o => (dl o : ℤ) - dm o) = zetaSecond a₀' + liftPairDeg (x' ⟨k, hk⟩) ∧
         aeval (flagClosurePt y w e φ φ' t (k + 1)) l =
           flagLineCoord w' w e t (k + 1) ⟨k, hk⟩ * aeval (flagClosurePt y w e φ φ' t (k + 1)) μ ∧
         ∀ q ∈ pointIdeal O (flagProjPt secondFactorBlocks y w e φ φ' t k), ∃ n : ℕ,
-          (∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) ^ n *
+          (∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O)) ^ n *
               rename (FieldNumbers.blockIncl secondFactorBlocks (bundleIdx (bundleIdx ι M) M')) q ∈
             pointIdeal O (flagClosurePt y w e φ φ' t (k + 1)) ⊔ Ideal.span {l})
 

@@ -461,8 +461,18 @@ variable [TopologicalSpace A] [IsTopologicalRing A] [T2Space A] [TopologicalSpac
 
 omit [IsTopologicalGroup G] in
 theorem iwasawaOf_of_isCompact (hm : Continuous mat) (hν : Continuous ν) (hK : IsCompact (K : Set G))
-    (h : ∀ g : G, ∃ p : siegelOf e mat, ∃ k ∈ K, g = p * k) : IwasawaOf e mat ν K :=
-  isIwasawa_of_isCompact (isClosed_siegelOf hm) (hν.comp (continuous_aOf hm)) hK h
+    (h : ∀ g : G, ∃ p : siegelOf e mat, ∃ k ∈ K, g = p * k) : IwasawaOf e mat ν K := by
+  refine ⟨h, ?_⟩
+  obtain ⟨C, hC⟩ := (((isClosed_siegelOf (e := e) hm).isClosedEmbedding_subtypeVal.isCompact_preimage hK).image
+    (hν.comp (continuous_aOf (e := e) hm))).bddAbove
+  have key : ∀ q : siegelOf e mat, (q : G) ∈ K → absAOf e mat ν q ≤ 1 := fun q hq => by
+    by_contra hc
+    obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt C (not_le.1 hc)
+    exact absurd (hC ⟨q ^ n, pow_mem hq n, map_pow (absAOf e mat ν) q n⟩) (not_le.2 hn)
+  intro p hp
+  refine le_antisymm (key p hp) ?_
+  have hp' := key p⁻¹ (inv_mem hp)
+  rwa [map_inv, inv_le_one₀ (hom_pos (absAOf e mat ν) p)] at hp' 
 
 theorem IwasawaOf.continuous_hgtOf (h : IwasawaOf e mat ν K) (hm : Continuous mat) (hν : Continuous ν)
     (hK : IsCompact (K : Set G)) : Continuous (hgtOf e mat ν K) :=

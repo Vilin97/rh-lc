@@ -17,7 +17,7 @@ namespace GlobalTheory.CompanionTheory.ModelS.FMem
 variable {n : ℕ}
 
 theorem contDiff_entry (a b : Fin n) : ContDiff ℝ ∞ (fun g : Mat n => g a b) :=
-  contDiff_apply_apply ℝ ℂ a b
+  contDiff_apply_apply ℝ a b
 
 theorem contDiff_det_of_entries {ι : Type} [Fintype ι] [DecidableEq ι] {M : Mat n → Matrix ι ι ℂ}
     (h : ∀ a b, ContDiff ℝ ∞ fun g => M g a b) : ContDiff ℝ ∞ fun g => (M g).det := by

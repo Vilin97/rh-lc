@@ -518,7 +518,7 @@ theorem v_prod_factorial {C : Type} [Field C] (v : AddValuation C (WithTop ℝ))
       ((padicValNat l (∏ j, (B j).factorial) : ℝ) : WithTop ℝ) := by
   rw [Finsupp.prod_fintype _ _ (by simp), ← Nat.cast_prod,
     natCast_eq_factorization v hl hv (Finset.prod_ne_zero_iff.mpr fun j _ => Nat.factorial_ne_zero _),
-    Nat.factorization_def _ hl]
+    Nat.factorization_def _ hl, ← Nat.padicValNat_def]
 
 theorem real_bound {l : ℕ} (hl : 5 ≤ l) {L E n s K : ℕ} (hL : 1 ≤ L)
     (hE : (E : ℝ) = 1 + ((L : ℝ) - l) / ((l : ℝ) ^ 2 - 1)) (hs : 1 ≤ s) (hn : 1 ≤ n)
@@ -660,10 +660,10 @@ theorem main :
     refine Eq.trans (b := pair (cayDet n C ^ (l ^ i * y)) (act g P)) ?_ ?_
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [act_eq, map_sum]
-      refine Finset.sum_congr rfl fun m _ => ?_
-      rw [actMon, LinearMap.map_smul, LinearMap.map_smul, smul_eq_mul, smul_eq_mul, ← mul_assoc,
-        pair_apply]
-      rfl
+        refine Finset.sum_congr rfl fun m _ => ?_
+        rw [actMon, LinearMap.map_smul, LinearMap.map_smul, smul_eq_mul, smul_eq_mul, ← mul_assoc,
+          pair_apply]
+        rfl
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← hP, mul_pow, ← map_pow, ← pow_mul, MvPolynomial.C_mul', map_smul, map_smul, smul_eq_mul,
       add_pow, map_sum, map_sum]
@@ -944,7 +944,7 @@ theorem main : ThmP := by
   have hcap : v (capNat n0 (l ^ i * y) : C) =
       ((padicValNat l (capNat n0 (l ^ i * y)) : ℝ) : WithTop ℝ) := by
     rw [ReciprocityTheory.ChartRestriction.G.Sh.PowerSeriesCoeffGaps.natCast_eq_factorization v hl hv (capNat_ne_zero _ _),
-      Nat.factorization_def _ hl]
+      Nat.factorization_def _ hl, ← Nat.padicValNat_def]
   rw [hLam y, v.map_mul, v.map_mul,
     val_pow_real v (val_neg_inv_real v (val_pow_real v hv' (expE l i))) (n0 * y), hcap,
     ← WithTop.coe_add]
@@ -1019,8 +1019,8 @@ theorem val_le_padicValNat {l N : ℕ} (hl : l.Prime) (hv : v (l : C) = 1) (hN :
   obtain ⟨e, m, hm, rfl⟩ := Nat.exists_eq_pow_mul_and_not_dvd hN l hl.ne_one
   haveI := Fact.mk hl
   have hm0 : m ≠ 0 := by rintro rfl; exact hm (dvd_zero _)
-  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hl.ne_zero) hm0, padicValNat.prime_pow,
-    padicValNat.eq_zero_of_not_dvd hm, add_zero, Nat.cast_mul, Nat.cast_pow, v.map_mul, v.map_pow, hv]
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hl.ne_zero) hm0, Nat.padicValNat_def, Nat.multiplicity_prime_pow, Nat.padicValNat_def,
+    multiplicity_eq_zero_of_not_dvd hm, add_zero, Nat.cast_mul, Nat.cast_pow, v.map_mul, v.map_pow, hv]
   have := val_coprime_le v hv ((Nat.Prime.coprime_iff_not_dvd hl).2 hm)
   calc e • (1 : WithTop ℝ) + v (m : C) ≤ e • (1 : WithTop ℝ) + 0 := by gcongr
     _ = _ := by simp
@@ -1029,8 +1029,10 @@ theorem val_factorial_le {l : ℕ} (hl : l.Prime) (hv : v (l : C) = 1) (N : ℕ)
     v ((N.factorial : ℕ) : C) ≤ (((N : ℝ) / ((l : ℝ) - 1) : ℝ) : WithTop ℝ) := by
   refine (val_le_padicValNat v hl hv N.factorial_ne_zero).trans ?_
   haveI := Fact.mk hl
-  have h := sub_one_mul_padicValNat_factorial (p := l) N
-  have h2 : (l - 1) * padicValNat l N.factorial ≤ N := h ▸ Nat.sub_le _ _
+  have h := hl.sub_one_mul_multiplicity_factorial (n := N)
+  have h2 : (l - 1) * padicValNat l N.factorial ≤ N := by
+    rw [Nat.padicValNat_def, h]
+    exact Nat.sub_le _ _
   have hl2 : (2 : ℝ) ≤ l := by exact_mod_cast hl.two_le
   have h3 : ((l : ℝ) - 1) * (padicValNat l N.factorial : ℝ) ≤ N := by
     have : (((l - 1) * padicValNat l N.factorial : ℕ) : ℝ) ≤ N := by exact_mod_cast h2

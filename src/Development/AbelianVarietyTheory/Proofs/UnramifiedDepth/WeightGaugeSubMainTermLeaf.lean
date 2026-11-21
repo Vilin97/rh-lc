@@ -98,9 +98,9 @@ theorem pderiv_mainM (V : VF C) (i : ℕ) {ι ι' : Type} [Fintype ι] [Fintype 
     rw [Derivation.map_smul, map_sum, Finset.sum_eq_single b]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    congr 1
-    refine Finset.sum_congr rfl fun c _ => ?_
-    simp [Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X]
+      congr 1
+      refine Finset.sum_congr rfl fun c _ => ?_
+      simp [Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X]
   · intro b' _ hb
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]

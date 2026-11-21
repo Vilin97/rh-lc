@@ -163,6 +163,8 @@ private theorem full_of_stable [IsDomain O] {n s : ℕ} (a : Fin n → O) (ha : 
       intro f hf
       have h1 := M.sub_mem (hst _ (ih f hf)) (M.smul_mem (a σ) (ih f hf))
       convert h1 using 1
+      funext y
+      simp only [Finset.prod_insert hσ, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
       ring
   set p : Fin n → O := fun τ => ∏ σ ∈ Finset.univ.erase τ, (a τ - a σ) with hp
   refine ⟨∏ τ, p τ, ?_, fun z => ?_⟩

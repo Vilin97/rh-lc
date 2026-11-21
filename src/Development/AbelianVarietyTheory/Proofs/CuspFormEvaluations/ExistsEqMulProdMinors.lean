@@ -288,7 +288,7 @@ end HighestUnique
 open HighestUnique in
 theorem exists_eq_smul_basePoly {K T : Type*} [Field K] [CharZero K] [Fintype T] {p q n : ℕ}
     (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) {P : Poly K T p q (Fin n)}
-    (hP : P ∈ rowHighest c c') (κ : T → Fin n → ℤ) (hκ : ∀ t, Antitone (κ t))
+    (hP : P ∈ rowHighest K c c') (κ : T → Fin n → ℤ) (hκ : ∀ t, Antitone (κ t))
     (hup : ∀ t (k l : Fin n), k < l →
       ∑ a, X (xVar t a k) * pderiv (xVar t a l) P - ∑ b, X (yVar t b l) * pderiv (yVar t b k) P = 0)
     (hwt : ∀ t (k : Fin n),

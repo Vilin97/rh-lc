@@ -505,7 +505,17 @@ theorem isLB_detLie [IsNoetherianRing O] (hP : PushInvertible Y.t.G Y.t.PP.L) : 
     fun i j k _ _ z => ev_detChg_mul i j k z
 
 theorem isLB_detOm [IsNoetherianRing O] (hP : PushInvertible Y.t.G Y.t.PP.L) : (detOm Y).IsLB :=
-  GlobalTheory.CechPic.isLB_dual (isLB_detLie hP)
+by
+  have hA := isLB_detLie hP
+  refine ⟨hA.cover, ?_, ?_⟩
+  · intro i
+    have h := congrArg (·⁻¹) (hA.g_self i)
+    simp only [inv_one, ← map_inv] at h
+    exact h
+  · intro i j k
+    have h := congrArg (·⁻¹) (hA.cocycle i j k)
+    simp only [mul_inv, ← map_inv] at h
+    exact h
 
 theorem isLB_pushPP [IsNoetherianRing O] (hP : PushInvertible Y.t.G Y.t.PP.L) : (pushPP Y).IsLB :=
   isLB_of_ev _ (eq_top_iff.2 fun x _ => (exists_gChart hP x).elim fun M hM =>

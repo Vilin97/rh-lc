@@ -69,7 +69,7 @@ theorem exists_nonzero_closed (hS : SecBaseChangeSt) {R : Type} [CommRing R] [Is
     · refine Over.OverMorphism.ext ((cancel_mono W.hom).1 ?_)
       rw [Over.w, Over.w]
     · rw [Category.assoc, lift_snd, Category.comp_id]; exact (whiskerRight_snd (homAt t) D.P.A).symm
-  obtain ⟨th, hth⟩ := exists_pull_val D.P.isLB (b hq.default) (lift u (𝟙 D.P.A)).left (φ' := D.famφB 0)
+  obtain ⟨th, hth⟩ := exists_pull_val D.P.isLB (K' := Fin 4) (b hq.default) (lift u (𝟙 D.P.A)).left (φ' := D.famφB 0)
     (ε' := DegPre.famε 1) (fun U _ h => by
       rw [prod_fam_zero]
       have e : (lift u (𝟙 D.P.A)).left ≫ (snd W D.P.A).left = 𝟙 _ := congrArg CommaMorphism.left (lift_snd u (𝟙 D.P.A))
@@ -100,7 +100,7 @@ variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {I : Ideal R} {D :
 theorem nonzero_and_spans (hG : GlobalFnsSt) (hS : SecBaseChangeSt) [IsNoetherianRing R] (hI : I ≤ maximalIdeal R)
     (U : Unif I D A G) {ϑ : H0 U.LG.L 1} (hϑ : IsTheta U ϑ) :
     (∃ g, G.hom g = closedPoint R ∧ g ∈ nonzeroLocus ϑ) ∧ ∀ σ : H0 U.LG.L 1, ∃ b : R, SecIsMul G.hom b σ ϑ := by
-  obtain ⟨sK, hsK⟩ := exists_pull_val U.LG.isLB ϑ (pullback.fst G.hom (jK R))
+  obtain ⟨sK, hsK⟩ := exists_pull_val U.LG.isLB (K' := Fin 1) ϑ (pullback.fst G.hom (jK R))
     (φ' := fun _ : Fin 1 => pullback.fst G.hom (jK R)) (ε' := fun _ => ((1 : ℕ) : ℤ))
     (fun U _ h => by simp only [Category.comp_id])
   obtain ⟨E, hE, -⟩ := (U.expand 1 le_rfl).1 sK
@@ -138,6 +138,7 @@ theorem nonzero_and_spans (hG : GlobalFnsSt) (hS : SecBaseChangeSt) [IsNoetheria
 theorem unit_mul_iff_nonzero (hG : GlobalFnsSt) (hS : SecBaseChangeSt) [IsNoetherianRing R] (hI : I ≤ maximalIdeal R)
     (U : Unif I D A G) {ϑ : H0 U.LG.L 1} (hϑ : IsTheta U ϑ) (σ : H0 U.LG.L 1) :
     (∃ u : Rˣ, SecIsMul G.hom (u : R) σ ϑ) ↔ NonzeroOnSpecial U σ := by
+  open ReciprocityTheory.ChartRestriction.G.H1 in
   obtain ⟨⟨g, hg, hn⟩, hsp⟩ := nonzero_and_spans hG hS hI U hϑ
   constructor
   · rintro ⟨u, hu⟩
@@ -179,7 +180,7 @@ theorem exists_isTheta_of_dvr (hLaws : Laws) (V : Type) [CommRing V] [IsDomain V
     ∃ ϑ : H0 U.LG.L 1, IsTheta U ϑ ∧ ∀ s : H0 U.LG.L 1, ∃ b : V, SecIsMul G.hom b s ϑ := by
   have hG := hLaws.globalFns
   obtain ⟨th, hth⟩ := exists_nonzero_closed hLaws.secBaseChange D.toPre
-  obtain ⟨Φ, hΦ, -⟩ := FamFree.exists_fam_single (F := FractionRing V) hG D.tau_bimult le_rfl 0
+  obtain ⟨Φ, hΦ, -⟩ : ∃ Φ : Fam D.toPre (FractionRing V) 1, Φ.s 0 = resF D.toPre (FractionRing V) 1 0 th ∧ _ := FamFree.exists_fam_single (F := FractionRing V) hG D.tau_bimult le_rfl 0
     (resF D.toPre (FractionRing V) 1 0 th)
   have h₀ := (secScal_one_iff D.toPre Φ 0 th).2 hΦ.symm
   have ex : ∀ α, ∃ g : D.toPre.SecB 1 α, GeneratorPullback.SecScal D.toPre.P.L (DegPre.famφ D.toPre (FractionRing V) α)

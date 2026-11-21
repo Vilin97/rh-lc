@@ -563,7 +563,7 @@ variable {ℳ}
 
 def grCubeMap {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f) (n : ℤ) :
     grCube ι ℳ n ⟶ grCube ι 𝒩 n :=
-  Cube.homMk (fun s => homLocMap hf s n) fun h => homLocMap_homLocRes hf h n
+  Cube.homMk ι R (fun s => homLocMap hf s n) fun h => homLocMap_homLocRes hf h n
 
 theorem grCubeMap_comp {g : N →ₗ[MvPolynomial ι R] P} {f : M →ₗ[MvPolynomial ι R] N}
     (hg : IsGradedMap 𝒩 𝒬 g) (hf : IsGradedMap ℳ 𝒩 f) (n : ℤ) :

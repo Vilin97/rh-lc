@@ -304,9 +304,10 @@ theorem exists_tateMatrices_link :
       hE i j n⟩
   have hinv₀ : ∀ a, (ρ₀ a)ᵀ * E = E * ρ₀ (cj a) := by
     intro a
-    ext i j
+    apply Matrix.ext
+    intro i j
     simp only [Matrix.mul_apply, Matrix.transpose_apply]
-    refine eq_of_zeta_pow Tw.ζ hprim _ _ _ _ fun n => ?_
+    refine eq_of_zeta_pow (κ := Ix g) Tw.ζ hprim _ _ _ _ fun n => ?_
     have h1 := pairing_sum_left B Finset.univ (p ^ (n + 1)) (fun k => τ k n) (τ j n) (Tw.ζ n)
       (fun k => (PadicInt.toZModPow (n + 1) (ρ₀ a k i)).val) _ (hτ j n) (fun k => hE k j n)
     have h2 := pairing_sum_right B Finset.univ (p ^ (n + 1)) (fun k => τ k n) (τ i n) (Tw.ζ n)

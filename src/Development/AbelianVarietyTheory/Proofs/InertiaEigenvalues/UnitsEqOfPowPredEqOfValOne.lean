@@ -37,11 +37,12 @@ def posValIdeal {l : ℕ} [Fact l.Prime] (P : LocPrime l) (LL : FinExt l) : Idea
   zero_mem' := by simp
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
+    simp only [Set.mem_ofPred_eq, (algebraMap ↥(OL LL) ↥LL.1).map_add] at ha hb ⊢
     exact (P.v LL).map_lt_add ha hb
   smul_mem' := by
     intro c x hx
-    simp only [Set.mem_ofPred_eq, smul_eq_mul, map_mul, AddValuation.map_mul] at *
+    simp only [Set.mem_ofPred_eq, smul_eq_mul, (algebraMap ↥(OL LL) ↥LL.1).map_mul,
+      AddValuation.map_mul] at hx ⊢
     have hc : 0 ≤ P.v LL (algebraMap ↥(OL LL) ↥LL.1 c) := (P.v_O LL _).2 c.2
     exact lt_of_lt_of_le hx (le_add_of_nonneg_left hc)
 

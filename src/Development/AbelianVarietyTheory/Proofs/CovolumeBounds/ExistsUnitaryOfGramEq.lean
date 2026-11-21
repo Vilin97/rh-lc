@@ -5,7 +5,7 @@ public import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
 
 @[expose] public section
 
-open Matrix MeasureTheory Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.B2 GlobalTheory.HCXi
+open Matrix MeasureTheory Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.B2
 open scoped ENNReal ComplexOrder
 
 namespace GlobalTheory.UnitaryExtension

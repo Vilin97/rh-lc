@@ -53,21 +53,11 @@ theorem index_integral_image : ∀ (k : Type) [Field k] [ValuativeRel k] [Topolo
         rw [Matrix.smul_apply, Algebra.smul_def]
         exact mul_mem c.2 (hx r q) }
   haveI : Submodule.IsLattice k M := by
-    constructor
-    · let φ : Matrix Y Y' 𝒪[k] →ₗ[𝒪[k]] Matrix Y Y' k := (Algebra.linearMap 𝒪[k] k).mapMatrix
-      refine Submodule.FG.of_le (Submodule.fg_range φ) fun m hm => ⟨Matrix.of fun i j => ⟨m i j, hm i j⟩, ?_⟩
-      ext i j
-      rfl
-    · rw [eq_top_iff]
-      intro w _
-      rw [Matrix.matrix_eq_sum_single w]
-      refine Submodule.sum_mem _ fun i _ => Submodule.sum_mem _ fun j _ => ?_
-      have h1 : Matrix.single i j (1 : k) ∈ M := fun r q => by
-        rw [Matrix.single_apply]
-        split_ifs
-        exacts [one_mem _, zero_mem _]
-      have := Submodule.smul_mem _ (w i j) (Submodule.subset_span (R := k) h1)
-      rwa [Matrix.smul_single, smul_eq_mul, mul_one] at this
+    apply Submodule.IsLattice.of_fg k
+    let φ : Matrix Y Y' 𝒪[k] →ₗ[𝒪[k]] Matrix Y Y' k := (Algebra.linearMap 𝒪[k] k).mapMatrix
+    refine Submodule.FG.of_le (Submodule.fg_range φ) fun m hm => ⟨Matrix.of fun i j => ⟨m i j, hm i j⟩, ?_⟩
+    ext i j
+    rfl
   obtain ⟨Bl, hBl, hd⟩ := exists_mul_map (↑(hk⁻¹) : Matrix Y Y k) (↑gk : Matrix Y' Y' k)
   have hbij : Function.Bijective Bl := by
     refine Function.bijective_iff_has_inverse.2

@@ -59,29 +59,26 @@ theorem LawD.comm_of_log (h : LawD lam Φ) {e f : PowerSeries K} {c d : K}
     smul_smul, smul_smul, mul_comm]
 
 theorem mulL_homCls (h : HD σ lam Φ A a) {e : PowerSeries K} (he0 : constantCoeff e = 0)
-    (he : IntegralPS e) (hlog : lam.subst e = C (l : K) * lam) : HomCls l Φ A Φ A e where
-  g0 := he0
-  gInt := he
-  add := by
-    rw [h.toLawD.subst_of_log he0 hlog, sub_self]
+    (he : IntegralPS e) (hlog : lam.subst e = C (l : K) * lam) : HomCls l Φ A Φ A e := by
+  refine ⟨he0, he, ?_, ?_⟩
+  · rw [h.toLawD.subst_of_log he0 hlog, sub_self]
     exact divByMv_zero _
-  eig := by
-    rw [h.toLawD.comm_of_log he0 h.A0 hlog h.Alog, sub_self]
+  · rw [h.toLawD.comm_of_log he0 h.A0 hlog h.Alog, sub_self]
     intro n
     simp
 
 theorem mulL_deriv (h : LawD lam Φ) {e : PowerSeries K} (he0 : constantCoeff e = 0)
     (he : IntegralPS e) (hlog : lam.subst e = C (l : K) * lam) :
-    DivBy (l : K) (derivative K e) := by
+    DivBy (l : K) (derivative e) := by
   have hes : PowerSeries.HasSubst e := PowerSeries.HasSubst.of_constantCoeff_zero' he0
-  have h1 : (derivative K lam).subst e * derivative K e = C (l : K) * derivative K lam := by
+  have h1 : (derivative lam).subst e * derivative e = C (l : K) * derivative lam := by
     rw [← PowerSeries.derivative_subst hes, hlog]
     simp
-  have hi : IntegralPS ((derivative K lam).subst e) :=
+  have hi : IntegralPS ((derivative lam).subst e) :=
     (integralPS_iff_mv _).2 (integralMv_subst h.deriv_integral he0 ((integralPS_iff_mv _).1 he))
-  have hc : constantCoeff ((derivative K lam).subst e) = 1 := by
+  have hc : constantCoeff ((derivative lam).subst e) = 1 := by
     rw [← h.deriv_const]
-    exact Formalism.G.LogP.constantCoeff_subst_of_zero (σ := Unit) (τ := Unit) (derivative K lam)
+    exact Formalism.G.LogP.constantCoeff_subst_of_zero (σ := Unit) (τ := Unit) (derivative lam)
       (b := fun _ => e) (fun _ => he0)
   refine divBy_of_mul_unit hi (by rw [hc, norm_one]) ?_
   rw [h1]
@@ -103,7 +100,7 @@ theorem hon_shape (hF : FrobField K l σ) (h : HD σ lam Φ A a) {e : PowerSerie
     refine hom_eigen hσ.A0 h.A0 hH1 ?_
     rw [hσ.coeff_one_A, h.coeff_one_A]
     exact h.a_ne
-  have hd1 : DivBy (l : K) (derivative K (desc l e)) :=
+  have hd1 : DivBy (l : K) (derivative (desc l e)) :=
     hom_deriv hF.norm_l.le hσ.toLawD h.toLawD hH1 hsmall
   obtain ⟨hc2, hH2⟩ := hom_desc hF hσ.Φ0 hσ.Φint h.Φ0 h.Φint hσ.A0 hσ.Aint h.A0 h.Aint hH1 hd1
   refine ⟨desc l (desc l e), ?_, ?_, ?_⟩

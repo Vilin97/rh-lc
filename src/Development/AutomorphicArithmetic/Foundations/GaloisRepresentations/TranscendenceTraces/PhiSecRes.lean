@@ -59,12 +59,12 @@ def phiP (G : Shv R) : Scheme.{0}ᵒᵖ ⥤ ModuleCat.{1} (ULift.{1} R) where
   map_id U := ModuleCat.hom_ext (DS.hom_ext p fun u a => by
     change DS.res p G (𝟙 _) (inc p G u a) = inc p G u a
     rw [DS.res_inc p G _ u _ rfl]
-    exact inc_congr p G (Category.id_comp u) _ (by simp) (by simp) a)
+    exact inc_congr p G (Category.id_comp u) _ (pbm_fst p _ _ _ _) (by simp) a)
   map_comp f g := ModuleCat.hom_ext (DS.hom_ext p fun u a => by
     change DS.res p G (g.unop ≫ f.unop) (inc p G u a) = DS.res p G g.unop (DS.res p G f.unop (inc p G u a))
     rw [DS.res_inc p G _ u _ (Category.assoc _ _ _), DS.res_inc p G f.unop u _ rfl, DS.res_inc p G g.unop _ _ rfl, res_res]
     congr 2
-    exact pullback.hom_ext (by simp) (by simp))
+    exact pullback.hom_ext (by simp only [Category.assoc, pbm_fst]) (by simp))
 
 def phiPF (R : Type) [CommRing R] : Shv R ⥤ (Scheme.{0}ᵒᵖ ⥤ ModuleCat.{1} (ULift.{1} R)) where
   obj G := phiP p G
@@ -117,7 +117,8 @@ def phiE (G : Shv R) : Fam0 p G ((phi p R).obj G) where
       phiSec p G A.U (inc p G A.u (Sec.res A.cmp (Sec.res t.k a)))
     rw [phiSec_res, DS.res_inc p G t.g B.u A.u t.hu, res_res, res_res]
     congr 3
-    exact B.pb.hom_ext (by simp [t.hv]) (by simp [t.hr])
+    exact B.pb.hom_ext (by simp only [Category.assoc, Sq.cmp_v, pbm_fst, t.hv])
+      (by simp [t.hr])
 
 theorem phiE_app (G : Shv R) (A : Sq p) (a : Sec G A.V) :
     (phiE p G).app A a = phiSec p G A.U (inc p G A.u (Sec.res A.cmp a)) := rfl

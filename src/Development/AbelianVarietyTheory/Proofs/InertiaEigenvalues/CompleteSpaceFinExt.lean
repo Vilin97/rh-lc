@@ -183,7 +183,7 @@ theorem sc_lg (hn : ∀ m : ℕ, ‖(m : K)⁻¹‖ ≤ m) : SC (lg K) := sc_of_
 variable [CharZero K]
 
 omit [IsUltrametricDist K] [CompleteSpace K] in
-theorem derivative_lg : derivative K (lg K) = geo K := by
+theorem derivative_lg : PowerSeries.derivative (lg K) = geo K := by
   ext n
   have : ((n : K) + 1) ≠ 0 := by exact_mod_cast n.succ_ne_zero
   simp only [coeff_derivative, lg, geo, coeff_mk]
@@ -192,7 +192,7 @@ theorem derivative_lg : derivative K (lg K) = geo K := by
   ring
 
 theorem Ev.derivative_log {y e : K⟦X⟧} (hy : ‖constantCoeff y‖ < 1) (he : Ev y (lg K) e) :
-    derivative K e * (1 + y) = derivative K y := by
+    PowerSeries.derivative e * (1 + y) = PowerSeries.derivative y := by
   obtain ⟨g, hg⟩ := exists_ev hy (sc_geo (K := K))
   have h1 : g * (1 + y) = 1 := by
     have h := Ev.mul hy sc_geo (sc_coe (1 + Polynomial.X)) hg (ev_coe y (1 + Polynomial.X))
@@ -200,10 +200,11 @@ theorem Ev.derivative_log {y e : K⟦X⟧} (hy : ‖constantCoeff y‖ < 1) (he 
     simp only [Polynomial.coe_add, Polynomial.coe_one, Polynomial.coe_X, geo_mul, map_add (f := _), map_one,
       Polynomial.aeval_X] at h h'
     exact h.unique h'
-  have h2 : derivative K e = g * derivative K y := by
+  have h2 : PowerSeries.derivative e = g * PowerSeries.derivative y := by
     ext k
     have h3 := (hasSum_nat_add_iff' 1).2 ((he (k + 1)).mul_right ((k : K) + 1))
-    have h4 := hasSum_sum fun p (_ : p ∈ antidiagonal k) => (hg p.1).mul_right (coeff p.2 (derivative K y))
+    have h4 := hasSum_sum fun p (_ : p ∈ antidiagonal k) =>
+      (hg p.1).mul_right (coeff p.2 (PowerSeries.derivative y))
     rw [← coeff_mul] at h4
     rw [← coeff_derivative] at h3
     simp only [range_one, sum_singleton, lg, coeff_mk, Nat.cast_zero, div_zero, zero_mul, sub_zero] at h3
@@ -328,7 +329,7 @@ theorem norm_natCast_inv_le (LL : FinExt l) (m : ℕ) : ‖(m : ↥LL.1)⁻¹‖
     rw [← norm_algebraMap' ↥LL.1 (m : ℚ_[l]), map_natCast]
   rw [norm_inv, h1, Padic.norm_eq_zpow_neg_valuation (by exact_mod_cast hm.ne'), Padic.valuation_natCast,
     zpow_neg, inv_inv, zpow_natCast]
-  exact_mod_cast Nat.le_of_dvd hm (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
+  exact_mod_cast Nat.le_of_dvd hm (pow_multiplicity_dvd l m)
 
 theorem norm_integer_le_one (x : ↥(OL LL)) : ‖algebraMap ↥(OL LL) ↥LL.1 x‖ ≤ 1 := by
   have h : IsIntegral ℤ_[l] ((x : ↥LL.1) : Om l) :=

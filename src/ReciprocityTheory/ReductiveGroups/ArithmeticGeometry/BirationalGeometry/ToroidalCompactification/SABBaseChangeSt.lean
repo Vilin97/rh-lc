@@ -58,13 +58,29 @@ instance : IsMonHom (pullCompIso p f G).hom := by
   show IsMonHom (pullCompMon p f G).hom.hom
   infer_instance
 
-theorem IsSemiAbelian.pullback (h : IsSemiAbelian G) : IsSemiAbelian ((Over.pullback f).obj G) where
-  comm := by have := h.comm; infer_instance
-  smooth := by have := h.smooth; show Smooth (pullback.snd G.hom f); infer_instance
-  separated := by have := h.separated; show IsSeparated (pullback.snd G.hom f); infer_instance
-  quasiCompact := by have := h.quasiCompact; show QuasiCompact (pullback.snd G.hom f); infer_instance
-  geomConnected := by have := h.geomConnected; show GeometricallyConnected (pullback.snd G.hom f); infer_instance
-  fibres := fun Ω _ _ q => by
+theorem IsSemiAbelian.pullback (h : IsSemiAbelian G) : IsSemiAbelian ((Over.pullback f).obj G) := by
+  refine
+    { comm := ?_
+      smooth := ?_
+      separated := ?_
+      quasiCompact := ?_
+      geomConnected := ?_
+      fibres := ?_ }
+  · have := h.comm
+    infer_instance
+  · have := h.smooth
+    change Smooth (pullback.snd G.hom f)
+    infer_instance
+  · have := h.separated
+    change IsSeparated (pullback.snd G.hom f)
+    infer_instance
+  · have := h.quasiCompact
+    change QuasiCompact (pullback.snd G.hom f)
+    infer_instance
+  · have := h.geomConnected
+    change GeometricallyConnected (pullback.snd G.hom f)
+    infer_instance
+  · intro Ω _ _ q
     obtain ⟨E⟩ := h.fibres Ω (q ≫ f)
     exact ⟨torusExtOfIso (pullCompIso q f G) E⟩
 

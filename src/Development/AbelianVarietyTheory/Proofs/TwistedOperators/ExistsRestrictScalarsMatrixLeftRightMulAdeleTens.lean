@@ -37,7 +37,7 @@ theorem addEquivAddHaarChar_transport {A B : Type} [AddCommGroup A] [Topological
     congr 1
     funext x
     simp [ψ]
-  have h3 : addEquivAddHaarChar φ • μ.map ψ = μ := by rw [hm, ← Measure.map_smul, h1]
+  have h3 : addEquivAddHaarChar φ • μ.map ψ = μ := by rw [hm, ← Measure.map_smul _ he.aemeasurable, h1]
   haveI : (μ.map ψ).IsAddHaarMeasure := ψ.isAddHaarMeasure_map μ
   obtain ⟨K, hK, hKn⟩ := exists_compact_mem_nhds (0 : B)
   have hpos : (μ.map ψ) K ≠ 0 := (Measure.measure_pos_of_mem_nhds (μ := μ.map ψ) hKn).ne'

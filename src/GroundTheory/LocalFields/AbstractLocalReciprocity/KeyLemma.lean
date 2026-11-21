@@ -120,9 +120,9 @@ theorem smul_mem_field [IsDiscreteModule G A] (hLK : L ≤ K) [((L : Subgroup G)
     (hgJ : ∀ y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker),
       g • y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker))
     (hcomm : ∀ y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker), s.elt • g • y = g • s.elt • y)
-    {y : A} (hy : y ∈ fixedModule A ((s.field hLK : OpenSubgroup G) : Subgroup G)) :
-    g • y ∈ fixedModule A ((s.field hLK : OpenSubgroup G) : Subgroup G) := by
-  have hfield : (s.field hLK : Subgroup G) = frobeniusClosure D.deg L s.elt := rfl
+    {y : A} (hy : y ∈ fixedModule A ((s.field L hLK : OpenSubgroup G) : Subgroup G)) :
+    g • y ∈ fixedModule A ((s.field L hLK : OpenSubgroup G) : Subgroup G) := by
+  have hfield : (s.field L hLK : Subgroup G) = frobeniusClosure D.deg L s.elt := rfl
   rw [hfield, mem_fixedModule_frobeniusClosure] at hy ⊢
   exact ⟨hgJ y hy.1, by rw [hcomm y hy.1, hy.2]⟩
 
@@ -152,17 +152,17 @@ theorem prod_range_prod_range_eq {M : Type*} [CommMonoid M] (f : ℕ → M) (g D
 variable (hLK : L ≤ K) [((L : Subgroup G).subgroupOf K).Normal]
 
 theorem field_le_field_of_pow (s1 s2 : D.FrobeniusLift K) (k : ℕ) (h2 : s2.elt = s1.elt ^ k) :
-    s2.field hLK ≤ s1.field hLK := by
+    s2.field L hLK ≤ s1.field L hLK := by
   intro x hx
-  refine frobeniusClosure_le (s1.field hLK).isClosed ?_ le_frobeniusClosure hx
+  refine frobeniusClosure_le (s1.field L hLK).isClosed ?_ le_frobeniusClosure hx
   rw [h2]
   exact Subgroup.pow_mem _ mem_frobeniusClosure_self k
 
 theorem coe_norm_field_field (s1 s2 : D.FrobeniusLift K) (k : ℕ) (hk : 0 < k)
     (h2 : s2.elt = s1.elt ^ k) (hdeg : s2.deg = k * s1.deg)
-    (z : fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G)) :
-    (norm A ((s1.field hLK : OpenSubgroup G) : Subgroup G)
-      ((s2.field hLK : OpenSubgroup G) : Subgroup G) z : A) =
+    (z : fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G)) :
+    (norm A ((s1.field L hLK : OpenSubgroup G) : Subgroup G)
+      ((s2.field L hLK : OpenSubgroup G) : Subgroup G) z : A) =
       ∏ i : Fin k, s1.elt ^ (i : ℕ) • (z : A) := by
   have hnormalizer := FrobeniusLift.mem_normalizer (D := D) hLK s1.mem
   have hmap1 := map_frobeniusClosure D.continuous_deg hnormalizer
@@ -173,10 +173,10 @@ theorem coe_norm_field_field (s1 s2 : D.FrobeniusLift K) (k : ℕ) (hk : 0 < k)
   have hf : 0 < s1.deg * inertiaDegree D.deg K :=
     Nat.mul_pos s1.deg_pos (Nat.pos_of_ne_zero (D.inertiaDegree_ne_zero K))
   have hfield_inf_ker :
-      (s1.field hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
+      (s1.field L hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
     frobeniusClosure_inf_ker D.continuous_deg L.isOpen hnormalizer hf.ne' s1.deg_eq
-  have key := coe_norm_eq_prod_smul_norm D.deg (K := ((s1.field hLK : OpenSubgroup G) : Subgroup G))
-    (S := ((s2.field hLK : OpenSubgroup G) : Subgroup G)) (J := (L : Subgroup G) ⊓ D.deg.ker)
+  have key := coe_norm_eq_prod_smul_norm D.deg (K := ((s1.field L hLK : OpenSubgroup G) : Subgroup G))
+    (S := ((s2.field L hLK : OpenSubgroup G) : Subgroup G)) (J := (L : Subgroup G) ⊓ D.deg.ker)
     (f := s1.deg * inertiaDegree D.deg K) (n := k) hk hf
     (fun x hx => field_le_field_of_pow hLK s1 s2 k h2 hx) ?_ ?_ ?_ ?_
     mem_frobeniusClosure_self s1.deg_eq z (fixedModule_anti le_frobeniusClosure z.2)
@@ -241,10 +241,10 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
     (s1 s2 : D.FrobeniusLift K) (h1 : s1.elt = φ ^ s1.deg) (hψL : s1.elt ∈ (L : Subgroup G))
     (h2 : s2.elt = s1.elt ^ ((L : Subgroup G).relIndex K))
     (hdeg : s2.deg = (L : Subgroup G).relIndex K * s1.deg)
-    {x a : A} (hx : x ∈ fixedModule A ((s1.field hLK : OpenSubgroup G) : Subgroup G))
-    (ha : a ∈ fixedModule A ((s1.field hLK : OpenSubgroup G) : Subgroup G))
-    (hxu : D.valuation (s1.field hLK) ⟨x, hx⟩ = 1)
-    (hau : D.valuation (s1.field hLK) ⟨a, ha⟩ = 1)
+    {x a : A} (hx : x ∈ fixedModule A ((s1.field L hLK : OpenSubgroup G) : Subgroup G))
+    (ha : a ∈ fixedModule A ((s1.field L hLK : OpenSubgroup G) : Subgroup G))
+    (hxu : D.valuation (s1.field L hLK) ⟨x, hx⟩ = 1)
+    (hau : D.valuation (s1.field L hLK) ⟨a, ha⟩ = 1)
     {δ : G} (hδ : δ ∈ (K : Subgroup G) ⊓ D.deg.ker) (hrel : φ • x / x = δ • a / a) :
     ∃ b : fixedModule A (L : Subgroup G),
       (norm A (K : Subgroup G) (L : Subgroup G) b : A) =
@@ -254,23 +254,23 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
   set g := (L : Subgroup G).relIndex K with hgdef
   have hg : 0 < g := Nat.pos_of_ne_zero (Subgroup.FiniteIndex.index_ne_zero
     (H := (L : Subgroup G).subgroupOf K))
-  have hP'P : s2.field hLK ≤ s1.field hLK := field_le_field_of_pow hLK s1 s2 g h2
-  have hP'L : s2.field hLK ≤ L := fun y hy =>
+  have hP'P : s2.field L hLK ≤ s1.field L hLK := field_le_field_of_pow hLK s1 s2 g h2
+  have hP'L : s2.field L hLK ≤ L := fun y hy =>
     frobeniusClosure_le L.isClosed (by rw [h2]; exact L.pow_mem hψL g) inf_le_left hy
   have hnormalizer := FrobeniusLift.mem_normalizer (D := D) hLK s1.mem
   have hdegree_ne_zero := mul_ne_zero s1.deg_pos.ne' (D.inertiaDegree_ne_zero K)
   have hfield_inf_ker :
-      (s1.field hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
+      (s1.field L hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
     frobeniusClosure_inf_ker D.continuous_deg L.isOpen hnormalizer hdegree_ne_zero s1.deg_eq
-  have hu : ((s1.field hLK : OpenSubgroup G) : Subgroup G) ⊓ D.deg.ker ≤ s2.field hLK :=
+  have hu : ((s1.field L hLK : OpenSubgroup G) : Subgroup G) ⊓ D.deg.ker ≤ s2.field L hLK :=
     hfield_inf_ker.le.trans le_frobeniusClosure
   have hT := coe_norm_field_field hLK s1 s2 g hg h2 hdeg
   have hinertiaDegree :
-      inertiaDegree D.deg (s1.field hLK : Subgroup G) = s1.deg * inertiaDegree D.deg K :=
+      inertiaDegree D.deg (s1.field L hLK : Subgroup G) = s1.deg * inertiaDegree D.deg K :=
     inertiaDegree_frobeniusClosure D.continuous_deg hnormalizer hdegree_ne_zero s1.deg_eq
-  have hrelψ : D.relDeg (s1.field hLK) ⟨s1.elt, mem_frobeniusClosure_self⟩ =
+  have hrelψ : D.relDeg (s1.field L hLK) ⟨s1.elt, mem_frobeniusClosure_self⟩ =
       Multiplicative.ofAdd 1 := by
-    refine (ProfiniteInteger.pow_left_inj (D.inertiaDegree_ne_zero (s1.field hLK))).1 ?_
+    refine (ProfiniteInteger.pow_left_inj (D.inertiaDegree_ne_zero (s1.field L hLK))).1 ?_
     rw [D.relDeg_pow, hinertiaDegree, ← ofAdd_nsmul, nsmul_one]
     exact s1.deg_eq
 
@@ -292,28 +292,28 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
   have hcommδ : ∀ (i : ℕ), ∀ y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker),
       s1.elt ^ i • δ • y = δ • s1.elt ^ i • y :=
     fun i y hy => (smul_smul_comm hLK hδ (L.pow_mem hψL i) hy).symm
-  have hφP' : ∀ (j : ℕ), ∀ y ∈ fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G),
-      φ ^ j • y ∈ fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G) := by
+  have hφP' : ∀ (j : ℕ), ∀ y ∈ fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G),
+      φ ^ j • y ∈ fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G) := by
     intro j y hy
     refine smul_mem_field hLK s2 (hφjJ j) (fun z _ => ?_) hy
     rw [h2]
     exact hcommφ g j z
-  have hδP' : ∀ y ∈ fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G),
-      δ • y ∈ fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G) := by
+  have hδP' : ∀ y ∈ fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G),
+      δ • y ∈ fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G) := by
     intro y hy
     refine smul_mem_field hLK s2 hδJ (fun z hz => ?_) hy
     rw [h2]
     exact hcommδ g z hz
-  have hP'J : ∀ y ∈ fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G),
+  have hP'J : ∀ y ∈ fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G),
       y ∈ fixedModule A ((L : Subgroup G) ⊓ D.deg.ker) :=
     fun y hy => fixedModule_anti le_frobeniusClosure hy
 
-  have hxU : (⟨x, hx⟩ : fixedModule A ((s1.field hLK : OpenSubgroup G) : Subgroup G)) ∈
-      D.units (s1.field hLK) := hxu
+  have hxU : (⟨x, hx⟩ : fixedModule A ((s1.field L hLK : OpenSubgroup G) : Subgroup G)) ∈
+      D.units (s1.field L hLK) := hxu
   rw [D.units_eq_map_norm hax hP'P hu] at hxU
   obtain ⟨x'', -, hx''⟩ := hxU
-  have haU : (⟨a, ha⟩ : fixedModule A ((s1.field hLK : OpenSubgroup G) : Subgroup G)) ∈
-      D.units (s1.field hLK) := hau
+  have haU : (⟨a, ha⟩ : fixedModule A ((s1.field L hLK : OpenSubgroup G) : Subgroup G)) ∈
+      D.units (s1.field L hLK) := hau
   rw [D.units_eq_map_norm hax hP'P hu] at haU
   obtain ⟨c, -, hc⟩ := haU
   have hxN : x = ∏ i : Fin g, s1.elt ^ (i : ℕ) • (x'' : A) := by
@@ -321,14 +321,14 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
   have haN : a = ∏ i : Fin g, s1.elt ^ (i : ℕ) • (c : A) := by
     rw [← hT, hc]
 
-  have hφx'' : φ • (x'' : A) ∈ fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G) := by
+  have hφx'' : φ • (x'' : A) ∈ fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G) := by
     simpa using hφP' 1 _ x''.2
-  have hδc : δ • (c : A) ∈ fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G) :=
+  have hδc : δ • (c : A) ∈ fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G) :=
     hδP' _ c.2
-  set y' : fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G) :=
+  set y' : fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G) :=
     ⟨φ • (x'' : A), hφx''⟩ / x'' / (⟨δ • (c : A), hδc⟩ / c) with hy'def
-  have hNy' : norm A ((s1.field hLK : OpenSubgroup G) : Subgroup G)
-      ((s2.field hLK : OpenSubgroup G) : Subgroup G) y' = 1 := by
+  have hNy' : norm A ((s1.field L hLK : OpenSubgroup G) : Subgroup G)
+      ((s2.field L hLK : OpenSubgroup G) : Subgroup G) y' = 1 := by
     apply Subtype.ext
     rw [hT]
     simp only [hy'def, Subgroup.coe_div, OneMemClass.coe_one, smul_div', Finset.prod_div_distrib]
@@ -343,7 +343,7 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
   obtain ⟨b, -, hb⟩ := D.exists_units_eq_smul_div hax hP'P hu hrelψ hNy'
 
   set Tb : A := ∏ j : Fin s1.deg, φ ^ (j : ℕ) • (b : A) with hTbdef
-  have hTbP' : Tb ∈ fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G) :=
+  have hTbP' : Tb ∈ fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G) :=
     Subgroup.prod_mem _ fun j _ => hφP' j _ b.2
   have htele : φ • Tb / Tb = s1.elt • (b : A) / b := by
     rw [hTbdef, Finset.smul_prod', h1]
@@ -358,7 +358,7 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
       rw [smul_smul, ← pow_succ']
     rw [this, div_eq_div_iff_mul_eq_mul, ← hs', hs, mul_comm]
   set x' : A := (x'' : A) / Tb with hx'def
-  have hx'P' : x' ∈ fixedModule A ((s2.field hLK : OpenSubgroup G) : Subgroup G) :=
+  have hx'P' : x' ∈ fixedModule A ((s2.field L hLK : OpenSubgroup G) : Subgroup G) :=
     Subgroup.div_mem _ x''.2 hTbP'
   have hx'J := hP'J _ hx'P'
   have hrel' : φ • x' = x' * (δ • (c : A) / c) := by
@@ -390,13 +390,13 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
     mem_fixedModule_of_smul_eq K hφK hdφ (norm _ _ _ _).2 hwφ
 
   have hbJ := hP'J _ b.2
-  have hNb : (norm A (K : Subgroup G) (s2.field hLK : Subgroup G) b : A) =
+  have hNb : (norm A (K : Subgroup G) (s2.field L hLK : Subgroup G) b : A) =
       ∏ i : Fin s2.deg, φ ^ (i : ℕ) •
         (norm A ((K : Subgroup G) ⊓ D.deg.ker) ((L : Subgroup G) ⊓ D.deg.ker) ⟨b, hbJ⟩ : A) := by
     have hnormalizer₂ := FrobeniusLift.mem_normalizer (D := D) hLK s2.mem
     have hmap := map_frobeniusClosure D.continuous_deg hnormalizer₂ s2.deg_eq
     have hfield₂_inf_ker :
-        (s2.field hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
+        (s2.field L hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
       frobeniusClosure_inf_ker D.continuous_deg L.isOpen hnormalizer₂
         (mul_ne_zero s2.deg_pos.ne' (D.inertiaDegree_ne_zero K)) s2.deg_eq
     refine coe_norm_eq_prod_smul_norm D.deg s2.deg_pos (Nat.pos_of_ne_zero (D.inertiaDegree_ne_zero K))
@@ -408,7 +408,7 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
     · intro q hq
       exact ⟨fun hqS => hfield₂_inf_ker.le ⟨hqS, hq.2⟩, fun hqJ => le_frobeniusClosure hqJ⟩
   refine ⟨⟨w, fixedModule_anti hLK hwK⟩ * norm A (L : Subgroup G)
-    ((s2.field hLK : OpenSubgroup G) : Subgroup G) b, ?_⟩
+    ((s2.field L hLK : OpenSubgroup G) : Subgroup G) b, ?_⟩
   have hψK : ∀ i : ℕ, s1.elt ^ i ∈ (K : Subgroup G) := fun i => K.pow_mem s1.mem i
   have hx''eq : (x'' : A) = x' * Tb := by rw [hx'def, div_mul_cancel]
   have hTbJ := hP'J _ hTbP'

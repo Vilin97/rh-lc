@@ -293,8 +293,9 @@ theorem exists_isLevWith_cover {k : ℕ} (hk : k ∣ l.M) {S : Type} [CommRing S
   haveI := UnivPol.isLocallyNoetherian Xo
   choose r hr using Submodule.Quotient.mk_surjective (Ideal.span {(k : 𝓞 E)} • ⊤ : Submodule (𝓞 E) Dw.La)
   have hra : ∀ a, Dw.ModN k (r (Submodule.Quotient.mk a) - a) := fun a => (FullLevel.mk_eq_iff k _ _).1 (hr _)
+  haveI : IsAddFG (𝓞 E) := Module.Finite.iff_addGroup_fg.1 inferInstance
   obtain ⟨s, hs⟩ : ∃ s : Finset (𝓞 E), AddSubgroup.closure (s : Set (𝓞 E)) = ⊤ :=
-    (Module.Finite.iff_addGroup_fg.1 (inferInstance : Module.Finite ℤ (𝓞 E))).out
+    AddGroup.exists_of_isAddFG (𝓞 E)
   obtain ⟨B, _, φ, w, hφ, hw, hU⟩ := exists_flat_universal_torsion_tuple hL E H Dw l Xo S x0 k hk0 (LatMod Dw k)
   let P : LatMod Dw k → Prop := fun q => ∃ a ∈ (Mfr l • ⊤ : Submodule (𝓞 E) Dw.La), Submodule.Quotient.mk a = q
   obtain ⟨e, he, he'⟩ := LevelFlat.exists_element hL Xo B (spMap φ ≫ x0) k hk0

@@ -53,7 +53,7 @@ theorem cosetIntegral_holds : CosetIntegral := by
     exact h1.congr_fun (fun g hg => (hconst i.1 g hg).symm) (hAm i.1)
   have hsumm : Summable fun i : S => ∫ g in B i, ‖F g‖ ∂μ := by
     simp only [hBnorm]
-    exact (summable_norm_iff.mpr hZ.summable).subtype S
+    exact (summable_norm_iff.mpr hZ.summable).subtype (fun x => x ∈ S)
   have hU : IntegrableOn F (Set.iUnion B) μ :=
     integrableOn_iUnion_of_summable_integral_norm hBon hsumm
   have hzero : ∀ g ∉ Set.iUnion B, F g = 0 := by

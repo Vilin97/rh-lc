@@ -187,8 +187,8 @@ theorem rank_one_sum : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgC
           have e3 : ((p : C) * G)⁻¹ * G = (p : C)⁻¹ := by field_simp
           rw [← map_mul, e3, map_inv₀] at h3
           have h4 := h3.trans (hv.map_le_one cD)
-          have hvp : v (p : C) ≠ 0 := (Valuation.ne_zero_iff v).mpr hp0
-          rw [inv_le_one₀ (pos_iff_ne_zero.mpr hvp)] at h4
+          have hvp0 : v (p : C) ≠ 0 := (Valuation.ne_zero_iff v).mpr hp0
+          rw [inv_le_one₀ (pos_iff_ne_zero.mpr hvp0)] at h4
           exact absurd hvp (not_lt.mpr h4)
         rw [hG0, hc0]
         simp
@@ -206,12 +206,88 @@ theorem rank_one_sum : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgC
     · have hpf : p ^ f = 2 := hcard.symm.trans h2
       obtain ⟨rfl, rfl⟩ := (Nat.Prime.pow_eq_iff Nat.prime_two).1 hpf
       have ht : τ = 1 := orderOf_eq_one_iff.1 (by rw [hord]; norm_num)
-      have hN := (GlobalTheory.T.fundamental_character_ideal_powers 2 C v R hv hvp F 1 hcard AA hFS τ hτ (fun _ => c)
-        (fun m => by rw [ht, one_pow, ← ht]; exact hc)).2.2
-      have hD := (GlobalTheory.T.fundamental_character_ideal_powers 2 C v R hv hvp F 1 hcard AD hFD τ hτ (fun _ => cD)
-        (fun m => by rw [ht, one_pow, ← ht]; exact hcD)).2.2
-      have hI : Finset.Icc 1 (2 ^ 1 - 1) = ({1} : Finset ℕ) := by decide
-      rw [hI, Finset.prod_singleton] at hN hD
+      subst τ
+      let points : Fin 2 → F := ![0, 1]
+      have points_injective : Function.Injective points := by
+        intro i j
+        fin_cases i <;> fin_cases j <;> simp [points]
+      let indices : Fin 2 ≃ F := Equiv.ofBijective points
+        (points_injective.bijective_of_nat_card_le (by simp [Nat.card_eq_fintype_card, h2]))
+      have indices_zero : indices 0 = 0 := rfl
+      have indices_one : indices 1 = 1 := rfl
+      have point_cases (x : F) : x = 0 ∨ x = 1 := by
+        obtain ⟨i, rfl⟩ := indices.surjective x
+        fin_cases i
+        · exact Or.inl indices_zero
+        · exact Or.inr indices_one
+      have hasColen_of_span (A : HopfOrder (C := C) R F) (d : R)
+          (hd : xIdeal A.carrier (1 : MulChar F R) = Ideal.span {d}) :
+          HasColen R v A.carrier (v (algebraMap R C d)) := by
+        let charVec (s : R) (x : F) := algebraMap R C s * algebraMap R C ((1 : MulChar F R) x)
+        have charVec_zero (s : R) : charVec s 0 = 0 := by
+          simp [charVec, MulChar.map_nonunit (1 : MulChar F R) not_isUnit_zero]
+        have charVec_one (s : R) : charVec s 1 = algebraMap R C s := by
+          simp [charVec]
+        let M : Matrix (Fin 2) (Fin 2) C := !![1, 0; 1, algebraMap R C d]
+        let B := M.submatrix indices.symm indices.symm
+        have col_zero : (fun x => B x (indices 0)) = (1 : F → C) := by
+          funext x
+          obtain ⟨i, rfl⟩ := indices.surjective x
+          fin_cases i <;> simp [B, M]
+        have col_one : (fun x => B x (indices 1)) = charVec d := by
+          funext x
+          obtain ⟨i, rfl⟩ := indices.surjective x
+          fin_cases i
+          · change B (indices 0) (indices 1) = charVec d (indices 0)
+            simp only [B, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+            simp [M, indices_zero, charVec_zero]
+          · change B (indices 1) (indices 1) = charVec d (indices 1)
+            simp only [B, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+            simp [M, indices_one, charVec_one]
+        have one_mem := A.one_mem
+        have vec_mem : charVec d ∈ A.carrier := (mem_xIdeal _ _ _).mp
+          (hd.symm ▸ Ideal.mem_span_singleton_self d)
+        refine ⟨B, le_antisymm ?_ ?_, ?_⟩
+        · intro g hg
+          obtain ⟨r, hr⟩ := A.le_int hg 0
+          obtain ⟨s, hs⟩ := A.le_int hg 1
+          have g_sub : g - r • (1 : F → C) = charVec (s - r) := by
+            funext x
+            rcases point_cases x with rfl | rfl
+            · simp [charVec_zero, Algebra.smul_def, hr]
+            · simp [charVec_one, Algebra.smul_def, hs, map_sub]
+          have hs_mem : s - r ∈ xIdeal A.carrier (1 : MulChar F R) := by
+            apply (mem_xIdeal _ _ _).mpr
+            change charVec (s - r) ∈ A.carrier
+            rw [← g_sub]
+            exact A.carrier.sub_mem hg (A.carrier.smul_mem r one_mem)
+          rw [hd] at hs_mem
+          obtain ⟨k, hk⟩ := Ideal.mem_span_singleton'.mp hs_mem
+          have g_eq : g = r • (1 : F → C) + k • charVec d := by
+            have hvec : charVec (s - r) = k • charVec d := by
+              rw [← hk]
+              funext x
+              simp [charVec, map_mul, Algebra.smul_def, mul_assoc]
+            rw [hvec] at g_sub
+            rw [add_comm, ← g_sub, sub_add_cancel]
+          rw [g_eq]
+          exact Submodule.add_mem _
+            (Submodule.smul_mem _ _ (Submodule.subset_span ⟨indices 0, col_zero⟩))
+            (Submodule.smul_mem _ _ (Submodule.subset_span ⟨indices 1, col_one⟩))
+        · rw [Submodule.span_le]
+          rintro _ ⟨j, rfl⟩
+          obtain ⟨i, rfl⟩ := indices.surjective j
+          fin_cases i
+          · change (fun x => B x (indices 0)) ∈ A.carrier
+            rw [col_zero]
+            exact one_mem
+          · change (fun x => B x (indices 1)) ∈ A.carrier
+            rw [col_one]
+            exact vec_mem
+        · rw [show B = _ from rfl, Matrix.det_submatrix_equiv_self]
+          simp [M, Matrix.det_fin_two]
+      have hN := hasColen_of_span AA c hc
+      have hD := hasColen_of_span AD cD hcD
       have key := hcol _ _ hN hD
       rw [h2] at key
       have := (pow_left_inj₀ zero_le zero_le two_ne_zero).1 key

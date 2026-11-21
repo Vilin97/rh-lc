@@ -108,12 +108,16 @@ structure Big (g N N' : ℕ) : Prop where
 theorem valR_of_field {F : Type} [Field F] {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Opens) (f : Γ(X, U)) :
     valR x U f = valF x U f := rfl
 
-theorem npw_isLB {X : Scheme.{0}} {H : LB X} (hH : H.IsLB) (d : ℕ) : (npw H d).IsLB where
-  cover := hH.cover
-  g_self i := (map_pow _ _ _).trans ((congrArg (· ^ d) (hH.g_self i)).trans (one_pow d))
-  cocycle i j l := by
-    refine (congrArg₂ (· * ·) (map_pow _ _ _) (map_pow _ _ _)).trans ((mul_pow _ _ _).symm.trans
-      ((congrArg (· ^ d) (hH.cocycle i j l)).trans (map_pow _ _ _).symm))
+theorem npw_isLB {X : Scheme.{0}} {H : LB X} (hH : H.IsLB) (d : ℕ) : (npw H d).IsLB := by
+  refine ⟨hH.cover, ?_, ?_⟩
+  · intro (i : H.ι)
+    change res (le_inf le_rfl le_rfl : H.U i ≤ H.U i ⊓ H.U i) (H.g i i ^ d) = 1
+    rw [map_pow, hH.g_self i, one_pow]
+  · intro (i : H.ι) (j : H.ι) (l : H.ι)
+    suffices h : res (inf_le_left : H.U i ⊓ H.U j ⊓ H.U l ≤ H.U i ⊓ H.U j) (H.g i j ^ d) *
+      res (le_inf (inf_le_left.trans inf_le_right) inf_le_right) (H.g j l ^ d) =
+      res (le_inf (inf_le_left.trans inf_le_left) inf_le_right) (H.g i l ^ d) from h
+    rw [map_pow, map_pow, map_pow, ← mul_pow, hH.cocycle i j l]
 
 theorem pullU_res_eq {X Y : Scheme.{0}} (f : Y ⟶ X) {U V : X.Opens} (h : V ≤ U) (u : Γ(X, U)ˣ) :
     pullU f V (res h u) = res (Scheme.Hom.preimage_mono f h) (pullU f U u) := by

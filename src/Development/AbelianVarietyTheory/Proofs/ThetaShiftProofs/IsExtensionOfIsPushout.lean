@@ -207,8 +207,8 @@ theorem graph_bijective (X : Submodule R (V₀ × ∀ j, P₀ j))
     rw [hE]
     refine ⟨t, nonZeroDivisors.ne_zero t.2, ∑ i, s i • x i,
       Submodule.sum_mem _ (fun i _ => Submodule.smul_mem _ _ (hx i)), ?_, fun j => ?_⟩
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [Prod.fst_sum, map_sum, map_sum, Finset.smul_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [Prod.fst_sum, map_sum, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl (fun i _ => ?_)
       rw [Prod.smul_fst, LinearMap.map_smulₛₗ, hΛa (c i) _, hcoef i, smul_smul]
     · have hnat := IsCoord.natural hd.span hΛd (hΛb j) (π j) (π' j) (comm j) w
@@ -230,8 +230,8 @@ theorem graph_bijective (X : Submodule R (V₀ × ∀ j, P₀ j))
       refine ⟨n, fun i => c i * (algebraMap K F (algebraMap R K (r i)))⁻¹, y, hy, ?_, fun j => ?_⟩
       · refine Finset.sum_congr rfl (fun i _ => ?_)
         rw [hy₁, LinearMap.map_smulₛₗ, smul_smul, hcancel _ _ (hr i)]
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sum]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl (fun i _ => ?_)
         rw [map_smul, comm, hy₂, LinearMap.map_smulₛₗ, smul_smul, hcancel _ _ (hr i)]
     refine ⟨_, h₀, fun w' hw' => hd.eq_of_coord (fun ℓ Λd hΛd => ?_)⟩
@@ -245,8 +245,8 @@ theorem graph_bijective (X : Submodule R (V₀ × ∀ j, P₀ j))
       refine ⟨n, fun i => c i * (algebraMap K F (algebraMap R K (r i)))⁻¹, y, hy, ?_, fun j => ?_⟩
       · refine Finset.sum_congr rfl (fun i _ => ?_)
         rw [hy₁, LinearMap.map_smulₛₗ, smul_smul, hcancel _ _ (hr i)]
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sum]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl (fun i _ => ?_)
         rw [map_smul, comm, hy₂, LinearMap.map_smulₛₗ, smul_smul, hcancel _ _ (hr i)]
     refine ⟨_, h₀, fun v' hv' => ha.eq_of_coord (fun ℓ Λa hΛa => ?_)⟩

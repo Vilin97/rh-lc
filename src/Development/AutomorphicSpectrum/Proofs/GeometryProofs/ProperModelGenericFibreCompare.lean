@@ -397,7 +397,7 @@ theorem chart (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of
     | tmul b c =>
       refine AddSubmonoid.subset_closure ⟨val ξ W hne b, c, fun p hp => ?_, hι b c⟩
       exact ⟨_, genMap_germ ξ W p hp b⟩
-    | add u v hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+    | add u v hu hv => rw [map_add]; exact add_mem hu hv
   refine ⟨fun q' hq => hspec q' ((hmemW' q').2 hq), ?_, fun a' ha' => ?_⟩
   · have key : ∀ x : Ω ⊗[K] C, ∃ b : Γ(X, W), val ξ W hne b ≠ 0 ∧ ∃ z, ι z = val ξ W hne b • x := by
       intro x

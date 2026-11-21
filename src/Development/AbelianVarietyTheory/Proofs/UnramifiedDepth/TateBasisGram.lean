@@ -119,7 +119,8 @@ theorem tateBasis_gram :
     rw [map_neg, hE, hE]
     exact eq_neg_of_add_eq_zero_left h1
   refine ⟨Matrix.of E, ⟨?_, fun i => ?_⟩, ?_, fun i j n => ?_⟩
-  · ext i j
+  · apply Matrix.ext
+    intro i j
     exact hanti i j
   · exact self_eq_neg.1 (hanti i i)
   · by_contra hu

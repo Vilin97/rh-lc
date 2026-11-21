@@ -100,18 +100,18 @@ theorem spInvariant_partialInv (hH : IsSpInvariant g H) (e : Fin g)
     have e1 : jAut (spPJ e) τ = 1 - single e e (1 : ℂ) * (τ + 1) := by
       ext i k
       by_cases hi : e = i <;> simp [jAut_eq, cMat, spPJ, toBlocks₂₁, toBlocks₂₂, Matrix.mul_apply,
-        one_apply, single_apply, ite_and, hi]
+        Matrix.one_apply, single_apply, ite_and, hi]
     have e2 : nAut (spPJ e) τ = τ + single e e (1 : ℂ) * (1 - τ) := by
       ext i k
       by_cases hi : e = i <;> simp [nAut_eq, cMat, spPJ, toBlocks₁₁, toBlocks₁₂, Matrix.mul_apply,
-        one_apply, single_apply, ite_and, hi]
+        Matrix.one_apply, single_apply, ite_and, hi]
     ext i k
     rw [e1, e2, Matrix.mul_sub, Matrix.mul_one, ← Matrix.mul_assoc]
     have := h i k
     by_cases hi : i = e
     · subst hi
-      simpa [Matrix.mul_apply, single_apply, ite_and, one_apply] using this
-    · simpa [Matrix.mul_apply, single_apply, ite_and, one_apply, hi, Ne.symm hi] using this
+      simpa [Matrix.mul_apply, single_apply, ite_and, Matrix.one_apply] using this
+    · simpa [Matrix.mul_apply, single_apply, ite_and, Matrix.one_apply, hi, Ne.symm hi] using this
   have e2 : σ = spAct (spPJ e) τ := by
     rw [spAct_eq, ← this, Matrix.mul_nonsing_inv_cancel_right _ _ hj]
   rw [e2]
@@ -222,7 +222,7 @@ theorem eq_on_rankOneCurve_of_integral (hol : IsHoloSiegel g H) (hH : IsSpInvari
       have hZe' : ∀ i, Z e i = 0 := fun i => (hZs.apply i e).trans (hZe i)
       simp only [rkU_val, Matrix.mul_apply, map_apply, Matrix.add_apply, transpose_apply, rankOneCurve,
         of_apply, h3]
-      simp [one_apply, vecMulVec_apply, Pi.single_apply, add_mul, mul_add, Finset.sum_add_distrib,
+      simp [Matrix.one_apply, vecMulVec_apply, Pi.single_apply, add_mul, mul_add, Finset.sum_add_distrib,
         hZe, hZe', hu, hRe, R₁, hR.apply j e]
       ring
   · rintro _ ⟨R, u, hu, hR, -, -, -, -, rfl⟩
@@ -231,7 +231,7 @@ theorem eq_on_rankOneCurve_of_integral (hol : IsHoloSiegel g H) (hH : IsSpInvari
       refine differentiable_pi.2 fun i => differentiable_pi.2 fun j => ?_
       simp only [rankOneCurve, of_symm_apply, of_apply]
       fun_prop
-    refine (hol.comp hd.differentiableOn fun s (hs : 0 < s.im) =>
+    refine (hol.comp (s := {s : ℂ | 0 < s.im}) hd.differentiableOn fun s (hs : 0 < s.im) =>
       of_symm_mem_phDom (rankOneCurve_mem hZs hZ hR hu hs)).congr fun s hs => ?_
     simp only [Function.comp_apply, UpperHalfPlane.ofComplex_apply_of_im_pos hs,
       Equiv.apply_symm_apply, phSym_eq_self_of_isSymm (rankOneCurve_mem hZs hZ hR hu hs).1]
@@ -520,7 +520,7 @@ theorem siegel_eq_of_bounded (hol : IsHoloSiegel g H) (hH : IsSpInvariant g H)
       rw [← hM 1 i]
       congr 1
       ext a b
-      simp [vecMulVec_apply, single_apply, one_apply, ite_and]
+      simp [vecMulVec_apply, single_apply, Matrix.one_apply, ite_and]
       split_ifs <;> rfl
     have h2 : ∀ i j, M (single i j 1) + M (single j i 1) = 0 := fun i j => by
       by_cases hij : i = j
@@ -531,7 +531,7 @@ theorem siegel_eq_of_bounded (hol : IsHoloSiegel g H) (hH : IsSpInvariant g H)
           (by simp [hij])).val i l : ℂ)) =
           single i i 1 + single j j 1 + (single i j 1 + single j i 1) := by
         ext a b
-        simp only [rkU_val, vecMulVec_apply, single_apply, one_apply, ite_and, Matrix.add_apply,
+        simp only [rkU_val, vecMulVec_apply, single_apply, Matrix.one_apply, ite_and, Matrix.add_apply,
           Pi.single_apply, eq_comm (b := j)]
         split_ifs <;> norm_num
       rwa [e, map_add, map_add, map_add, h1, h1, zero_add, zero_add] at h

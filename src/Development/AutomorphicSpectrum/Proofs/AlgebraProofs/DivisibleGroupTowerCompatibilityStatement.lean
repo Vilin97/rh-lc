@@ -39,8 +39,10 @@ theorem _root_.GlobalTheory.T.divisible_group_tower_compatibility :
         exact ⟨φ b, (map_nsmul φ _ b).symm⟩)).toAddMonoidHom
     have levMap_lev (n : ℕ) (a : La) : levMap n (lev p n a) = lev p n (φ a) := rfl
     have liftable (n : ℕ) (g : G.A n) : ∃ u : G.A n, ∀ t, ev n t u = ev n (levMap n t) g := by
-      let u : X.A n := ⟨fun t => (e n g).1 (levMap n t),
-        (h n (e n g).1 _ (levMap_lev n)).1 (e n g).2⟩
+      let pulled (t : LevGrp La p n) : O := (e n g).1 (levMap n t)
+      have hpulled : pulled ∈ X.A n :=
+        (h n (e n g).1 pulled fun a => congrArg (e n g).1 (levMap_lev n a)).1 (e n g).2
+      let u : X.A n := ⟨pulled, hpulled⟩
       refine ⟨(e n).symm u, fun t => ?_⟩
       rw [ev_apply, AlgEquiv.apply_symm_apply, ev_apply]
     let pull (n : ℕ) : G.A n →ₐ[O] G.A n :=
@@ -49,6 +51,9 @@ theorem _root_.GlobalTheory.T.divisible_group_tower_compatibility :
       Ord.ev_liftTo _ _ _ _ t
     have pull_apply (n : ℕ) (t : LevGrp La p n) (g : G.A n) :
         ev n t (pull n g) = ev n (levMap n t) g := DFunLike.congr_fun (ev_pull n t) g
+    have pull_lev (n : ℕ) (a : La) (g : G.A n) :
+        ev n (lev p n a) (pull n g) = ev n (lev p n (φ a)) g := by
+      rw [pull_apply, levMap_lev]
     have ev_one (n : ℕ) (g : G.A n) : ev n 1 g = counit (R := O) g := by
       rw [← lev_zero p n, ev_lev, map_zero]
       rfl
@@ -67,17 +72,20 @@ theorem _root_.GlobalTheory.T.divisible_group_tower_compatibility :
           change pair (ev n z.1) (ev n z.2) (Algebra.TensorProduct.map _ _ (comul (R := O) g)) =
             pair (ev n z.1) (ev n z.2) (comul (R := O) (pull n g))
           rw [pair_map, ev_pull, ev_pull, ev_mul, ev_mul, pull_apply, map_mul])
-    let f : G ⟶ G := {
-      app := app
-      comm n := BialgHom.ext fun g => ev_sep n _ _ fun t => by
-        obtain ⟨a, rfl⟩ := lev_surjective p n t
-        change (e n (G.res n (pull (n + 1) g))).1 (lev p n a) = ev n (lev p n a) (pull n (G.res n g))
-        rw [hre.res, ← ev_apply, pull_apply, levMap_lev, pull_apply, levMap_lev, ev_apply,
-          hre.res, map_nsmul, ev_apply] }
-    refine ⟨f, fun a => TateOver.ext (funext fun n => AlgHom.ext fun g => ?_), fun n g a => ?_⟩
-    · rw [tate_pt, ← ev_lev, ← ev_lev]
-      exact (pull_apply n (lev p n a) g).trans (congrArg (fun t => ev n t g) (levMap_lev n a))
-    · exact (pull_apply n (lev p n a) g).trans (congrArg (fun t => ev n t g) (levMap_lev n a))
+    let f : G ⟶ G :=
+      { app := app
+        comm n := BialgHom.ext fun g => ev_sep n _ _ fun t => by
+          obtain ⟨a, rfl⟩ := lev_surjective p n t
+          calc
+            ev n (lev p n a) (G.res n (pull (n + 1) g)) =
+                ev (n + 1) (lev p (n + 1) (p • a)) (pull (n + 1) g) := hre.res n _ a
+            _ = ev (n + 1) (lev p (n + 1) (φ (p • a))) g := pull_lev (n + 1) (p • a) g
+            _ = ev (n + 1) (lev p (n + 1) (p • φ a)) g := by rw [map_nsmul]
+            _ = ev n (lev p n (φ a)) (G.res n g) := (hre.res n g (φ a)).symm
+            _ = ev n (lev p n a) (pull n (G.res n g)) := (pull_lev n a (G.res n g)).symm }
+    refine ⟨f, fun a => TateOver.ext (funext fun n => AlgHom.ext fun g => ?_), fun n g a => pull_lev n a g⟩
+    rw [tate_pt, ← ev_lev, ← ev_lev]
+    exact pull_lev n a g
   · intro H f f' hf
     refine GlobalTheory.PDivGroup.Hom.ext (funext fun n => BialgHom.ext fun g => ev_sep n _ _ fun t => ?_)
     obtain ⟨a, rfl⟩ := lev_surjective p n t

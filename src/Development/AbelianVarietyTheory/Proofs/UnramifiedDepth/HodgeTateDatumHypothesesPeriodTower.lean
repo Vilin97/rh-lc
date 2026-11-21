@@ -30,7 +30,7 @@ theorem hodgeTateSetting_ainfTower_of_isPrimitiveRoot : ∀ (p : ℕ) [Fact p.Pr
   · rw [map_natCast]
     exact fun h => Nat.cast_ne_zero.2 hp.out.ne_zero ((Valuation.zero_iff v).1 h)
   · rw [map_natCast]
-    exact Ainf.c_val p O hv ε hε
+    exact Ainf.c_val p O ε
   · intro a
     induction a using TensorProduct.induction_on with
     | zero => simp

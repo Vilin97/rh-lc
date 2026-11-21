@@ -31,10 +31,7 @@ theorem cross_eq {V : Type} [CommRing V] [IsDomain V] (G : Over (Spec (CommRingC
     (h' : GeneratorPullback.SecScal L (fun _ : Fin 1 => pullback.fst G.hom (jK V)) (fun _ => (k : ℤ)) s (fun _ : Fin 1 => 𝟙 G.left)
       (fun _ => (k : ℤ)) σ' (pullback.fst G.hom (jK V)) (scal (pullback.snd G.hom (jK V) ≫ jK V) r'))
     (hρ : SecIsMul G.hom r' ρ σ) (hρ' : SecIsMul G.hom r ρ' σ') : ρ = ρ' := by
-  refine SecOps.sec_ext fun j => generic_app_injective G _ ?_
-  apply TopCat.Presheaf.section_ext
-  intro y hy
-  rw [← gs_eq (𝟙 _) y _ hy, ← gs_eq (𝟙 _) y _ hy]
+  refine SecOps.sec_ext fun j => generic_app_injective G _ (fn_ext fun y hy => ?_)
   obtain ⟨J, hJ, e⟩ := exists_good L hL y (fun _ : Unit => (𝟙 _ ≫ pullback.fst G.hom (jK V)) ≫ 𝟙 G.left)
     (fun _ => j 0) (fun _ _ _ => rfl) (fun _ => Set.mem_iInter.1 hy 0)
   have ej : ∀ a : Fin 1, J ((𝟙 _ ≫ pullback.fst G.hom (jK V)) ≫ 𝟙 G.left) = j a := fun a => by
@@ -61,14 +58,7 @@ theorem main : lemmaBSt.{0} → ∀ (V : Type) [CommRing V] [IsDomain V] [IsDisc
   obtain rfl : g = g' := GlobalTheory.ExpUniq.main hB V D A G U k ρ g g'
     (fun e => expandsAt_secIsMul V _ D A G U e k _ σ ρ f g hρ hg (hx e))
     (fun e => expandsAt_secIsMul V _ D A G U e k _ σ' ρ f' g' hρ' hg' (hx' e))
-  refine fam_ext fun α j => ?_
-  apply TopCat.Presheaf.section_ext
-  intro y hy
-  rw [← gs_eq (𝟙 _) y _ hy, ← gs_eq (𝟙 _) y _ hy]
-  obtain ⟨J, hJ, -⟩ := exists_good D.toPre.P.L D.toPre.P.isLB y
-    (PEmpty.elim : PEmpty → (_ ⟶ _)) PEmpty.elim (fun a => a.elim) (fun a => a.elim)
-  refine (sec_trans _ (𝟙 _) y hy (hJ.mem _ (𝟙 _))).trans ?_
-  refine (congrArg (_ * ·) ?_).trans (sec_trans _ (𝟙 _) y hy (hJ.mem _ (𝟙 _))).symm
+  refine fam_ext fun α j => sec_ext_val D.toPre.P.isLB (fun y J hJ => ?_) j
   have e₁ := secScal_sval (hf α) (𝟙 _) y hJ
   have e₁' := secScal_sval (hf' α) (𝟙 _) y hJ
   have e₂ : sval (g α) (𝟙 _ ≫ (DegPre.prB D.toPre (FractionRing V)).left) y J = _ *

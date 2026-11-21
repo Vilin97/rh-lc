@@ -42,7 +42,7 @@ def linForm (ℓ : Ψ × Fin N → ℤ) : RootPoly Ψ N := ∑ p, (ℓ p : ℚ) 
 
 def linDeg (ℓ : Ψ × Fin N → ℤ) : FlBlock Ψ N → ℤ := fun q => ∑ p, ℓ p * xDeg Ψ N p q
 
-def linLine (ℓ : Ψ × Fin N → ℤ) : HermLine (FlIdx Ψ N) := fsHerm (FlIdx Ψ N) (linDeg Ψ N ℓ)
+def linLine (ℓ : Ψ × Fin N → ℤ) : HermLine (FlIdx Ψ N) := fsHerm (ι := FlIdx Ψ N) (linDeg Ψ N ℓ)
 
 variable (j : ℕ)
 
@@ -82,6 +82,6 @@ def HFlProdLinear.Statement : Prop :=
 def FsInvPow.Statement : Prop :=
   ∀ (II : IntersectionSystem) (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι))
     (d : ℕ), IsIntersectionSystem II → IsArithVar P d →
-    II K ι P d (fun _ => fsHerm ι (fun _ => -1)) = (-1) ^ d * II K ι P d (fun _ => GroundTheory.Heights₂.Heights.fsMulti ι)
+    II K ι P d (fun _ => fsHerm (ι := ι) (fun _ => -1)) = (-1) ^ d * II K ι P d (fun _ => GroundTheory.Heights₂.Heights.fsMulti ι)
 
 end GroundTheory.Heights₂.Heights.LowerBoundFree

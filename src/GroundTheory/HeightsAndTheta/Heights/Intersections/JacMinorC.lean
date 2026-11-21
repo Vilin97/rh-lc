@@ -30,7 +30,7 @@ theorem pderiv_facts_charZero {F : Type*} [Field F] [CharZero F] {σ : Type*} (p
     have hle : Finsupp.single j 1 ≤ m := Finsupp.single_le_iff.mpr hmj
     intro h0
     have hc := congr_arg (AddMonoidAlgebra.coeff · (m - Finsupp.single j 1)) h0
-    rw [coeff_pderiv, tsub_add_cancel_of_le hle, coeff_zero] at hc
+    rw [coeff_pderiv, tsub_add_cancel_of_le hle, AddMonoidAlgebra.coeff_zero] at hc
     rw [mem_support_iff] at hm
     exact mul_ne_zero hm (Nat.cast_add_one_ne_zero _) hc
   · rw [degreeOf_lt_iff hj]
@@ -239,7 +239,7 @@ theorem exists_jacobian_minor_not_mem_charZero {F : Type} [Field F] [CharZero F]
 
 section Minors
 
-open ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.MultiHomogZ
+open ReciprocityTheory.ChartRestriction.G.Geo
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {R : Type} [CommRing R]
 

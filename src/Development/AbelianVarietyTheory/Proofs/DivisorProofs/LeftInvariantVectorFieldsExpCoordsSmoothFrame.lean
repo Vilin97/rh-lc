@@ -18,6 +18,8 @@ open NormedSpace Filter Topology
 variable {𝔸 : Type} [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [CompleteSpace 𝔸] [FiniteDimensional ℝ 𝔸]
   {G : Subgroup 𝔸ˣ} {𝔤 : Submodule ℝ 𝔸} {d : ℕ}
 
+local notation "𝔢" => expPartialHomeomorph ℝ 𝔸
+
 noncomputable def psi (b : Module.Basis (Fin d) ℝ 𝔤) (x : E d) (Y : 𝔤) : E d :=
   (coordEquiv b).symm (subspaceProj 𝔤 ((𝔢).symm (exp ((coordEquiv b x : 𝔤) : 𝔸) * exp (Y : 𝔸))))
 
@@ -109,7 +111,9 @@ theorem leftInvariant_frame (𝔸 : Type) [NormedRing 𝔸] [NormedAlgebra ℝ �
     rw [this]; exact isUnit_one
   have hBc : ContinuousAt B 0 :=
     ((hAx 0 (Metric.mem_ball_self hr₁)).clm_comp contDiffAt_const).continuousAt
-  have hU : {x | IsUnit (B x)} ∈ 𝓝 (0 : E d) := hBc.preimage_mem_nhds (Units.isOpen.mem_nhds hB0)
+  have hU : {x | IsUnit (B x)} ∈ 𝓝 (0 : E d) := by
+    set_option synthInstance.maxHeartbeats 100000 in
+      exact hBc.preimage_mem_nhds (Units.isOpen.mem_nhds hB0)
   obtain ⟨r₂, hr₂, hball₂⟩ := Metric.mem_nhds_iff.1 hU
   refine ⟨min r₁ r₂, lt_min hr₁ hr₂, fun X j x => A x X j, ?_, ?_, ?_⟩
   · intro X j x hx

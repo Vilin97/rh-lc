@@ -27,7 +27,8 @@ end Single
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem adeleMap_snd_apply (a : AF F) (w : HeightOneSpectrum (𝓞 E)) :
-    (adeleMap F E a).2 w = completionMap (below F w) w (a.2 (below F w)) :=
+    (AdeleBaseChange.adeleMap (K := F) (L := E) a).2 w =
+      completionMap (AdeleBaseChange.below F w) w (a.2 (AdeleBaseChange.below F w)) :=
   rfl
 
 

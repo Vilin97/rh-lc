@@ -50,7 +50,8 @@ theorem val_fact (p : ℕ) [hp : Fact p.Prime] (j : ℕ) :
   induction j with
   | zero => simp
   | succ j ih =>
-    rw [pow_succ', mul_assoc, padicValNat_factorial_mul]
+    simp only [Nat.padicValNat_def] at ih ⊢
+    rw [pow_succ', mul_assoc, _root_.multiplicity_factorial_mul]
     obtain ⟨q, hq⟩ : ∃ q, p = q + 1 := ⟨p - 1, by have := hp.out.pos; omega⟩
     have h1 : p - 1 = q := by omega
     rw [h1] at ih ⊢
@@ -200,7 +201,8 @@ theorem of_log [IsDomain R] (e : tateModule p R) {z : Acris p R}
       (by rw [map_sub, Acris.eval_algebraMap, sub_eq_zero]; exact h2)
     refine ⟨algebraMap _ _ l, d, ?_, by linear_combination hd⟩
     have := congrArg (algebraMap (AcrisZero p R) (Acris p R)) h1
-    rw [map_mul, map_pow, map_natCast, map_sub, map_pow, map_one] at this
+    set_option synthInstance.maxHeartbeats 200000 in
+      rw [map_mul, map_pow, map_natCast, map_sub, map_pow, map_one] at this
     exact this
   apply step e.1 he
   have h2 := @step p _ R _ _ _ _ (e.1 ^ p) (by rw [map_pow, he, one_pow]) z
@@ -413,7 +415,8 @@ theorem exists_assoc_log (u : Ainf p R) (hu : Ainf.theta p R u = 1) :
     obtain ⟨l, h1, h2⟩ := Acris.exists_quot u hu n
     refine ⟨algebraMap _ _ l, ?_, ?_⟩
     · have := congrArg (algebraMap (AcrisZero p R) (Acris p R)) h1
-      rwa [map_mul, map_pow, map_natCast, map_sub, map_pow, map_one,
+      set_option synthInstance.maxHeartbeats 200000 in
+       rwa [map_mul, map_pow, map_natCast, map_sub, map_pow, map_one,
         ← IsScalarTower.algebraMap_apply] at this
     · rw [← Acris.eval_eq_zero_iff, RingHom.map_sub, h2, Acris.eval_algebraMap, sub_self]
   choose l hl ht using h
@@ -583,7 +586,7 @@ theorem geom_sum_frob (p : ℕ) [Fact p.Prime] (v : A) : ∃ g,
     intro i
     have : (expand ℤ p F - F ^ p).map (Int.castRingHom (ZMod p)) = 0 := by
       rw [Polynomial.map_sub, map_expand, ZMod.expand_card, Polynomial.map_pow, sub_self]
-    have h2 := congrArg (fun f => coeff f i) this
+    have h2 := congrArg (fun f => Polynomial.coeff f i) this
     simp only [coeff_map, coeff_zero, eq_intCast] at h2
     exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).1 h2
   obtain ⟨D, hD⟩ := h1
@@ -630,10 +633,13 @@ theorem exists_pow_eq_mul (x : Ainf p R) (hx : Ainf.theta p R x = 0) :
   obtain ⟨c, hc⟩ := p_dvd_pow x hx
   refine ⟨c, mem_jac_of_pow (n := p) ?_, hc⟩
   have h1 : p ^ (p + 1) ∣ (p * p)! := by
-    rw [(by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _), padicValNat_factorial_mul]
-    have : 1 ≤ padicValNat p p ! := by
+    rw [(by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _)]
+    simp only [Nat.padicValNat_def]
+    rw [_root_.multiplicity_factorial_mul]
+    have hval : 1 ≤ padicValNat p p ! := by
       rw [← (by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _), pow_one]
       exact Nat.dvd_factorial hp.pos le_rfl
+    have : 1 ≤ multiplicity p p ! := by simpa only [Nat.padicValNat_def] using hval
     omega
   obtain ⟨d, hd⟩ := (Nat.cast_dvd_cast (α := Acris p R) h1).trans (factorial_dvd (p * p) x hx)
   rw [pow_mul, hc, mul_pow, Nat.cast_pow, pow_succ, mul_assoc] at hd
@@ -683,7 +689,8 @@ theorem exists_log_eq (u : Ainf p R) (hu : Ainf.theta p R u = 1) :
     obtain ⟨l, hl, hl'⟩ := Acris.exists_quot u hu n
     refine ⟨algebraMap _ _ l, ?_, ?_⟩
     · have := congrArg (algebraMap (AcrisZero p R) (Acris p R)) hl
-      rwa [map_mul, map_pow, map_natCast, map_sub, map_one, map_pow,
+      set_option synthInstance.maxHeartbeats 200000 in
+       rwa [map_mul, map_pow, map_natCast, map_sub, map_one, map_pow,
         ← IsScalarTower.algebraMap_apply] at this
     · rw [← Acris.eval_eq_zero_iff, RingHom.map_sub, hl', Acris.eval_algebraMap, sub_self]
   choose l hl hl' using h0
@@ -871,7 +878,8 @@ theorem partial_eq (u : Ainf p R) (hu : Ainf.theta p R u = 1) (N : ℕ) :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Acris.logPartial, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [term, mul_assoc, map_mul, map_pow, map_neg, map_one]
+  set_option synthInstance.maxHeartbeats 200000 in
+    rw [term, mul_assoc, map_mul, map_pow, map_neg, map_one]
 
 theorem p_dvd_pow (u : Ainf p R) (hu : Ainf.theta p R u = 1) :
     (p : Acris p R) ∣ algebraMap (Ainf p R) (Acris p R) (u - 1) ^ p := by
@@ -959,10 +967,14 @@ section
 theorem Bridge.RingBasics.exists_pow_div_factorial : ∀ (l : ℕ) [Fact l.Prime] (n : ℕ), ∃ c : ℤ_[l], ((n.factorial : ℕ) : ℤ_[l]) * c = ((l : ℕ) : ℤ_[l]) ^ n := by
   intro l hl n
   obtain ⟨m, hm⟩ : l ^ padicValNat l n.factorial ∣ n.factorial := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
-  have hle : padicValNat l n.factorial ≤ n := padicValNat_factorial_le l n
+  have hle : padicValNat l n.factorial ≤ n := by
+    simpa only [Nat.padicValNat_def] using (multiplicity_factorial_le l n)
   have hnd : ¬ l ∣ m := by
     rintro ⟨k, hk⟩
-    apply pow_succ_padicValNat_not_dvd (p := l) (Nat.factorial_ne_zero n)
+    have hnot : ¬ l ^ (padicValNat l n.factorial + 1) ∣ n.factorial := by
+      simpa only [Nat.padicValNat_def] using
+        (pow_succ_multiplicity_not_dvd (p := l) (Nat.factorial_ne_zero n))
+    apply hnot
     refine ⟨k, ?_⟩
     rw [pow_succ, mul_assoc, ← hk]
     exact hm
