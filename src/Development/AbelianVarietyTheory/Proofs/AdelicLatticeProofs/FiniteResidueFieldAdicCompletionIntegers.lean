@@ -148,7 +148,7 @@ theorem locConj_mem {z : LocAlg v} (hz : z ∈ locOrder v) : locConj v z ∈ loc
     obtain ⟨a, rfl⟩ := hx
     exact locEmb_mem_locOrder v (IsCMField.ringOfIntegersComplexConj E a)
   | algebraMap a => rw [locConj_algebraMap']; exact Subalgebra.algebraMap_mem _ a
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 theorem isIntegral_of_mem_locOrder {z : LocAlg v} (hz : z ∈ locOrder v) :
@@ -280,7 +280,7 @@ theorem locEmb_mem_locOrder_iff (z : E) : locEmb v z ∈ locOrder v ↔ z ∈ se
         (algebraMap (maximalRealSubfield E) E) (RingHom.ext_int _ _)⟩
     have hc : locEmb v (cc z) ∈ locOrder v := locConj_mem v hz
     have h1 := (mem_semiLoc_iff v _).2 (real (z + cc z) (by simp [cc, add_comm])
-      (by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hz hc))
+      (by rw [map_add]; exact add_mem hz hc))
     have h2 := (mem_semiLoc_iff v _).2 (real (z * cc z) (by simp [cc, mul_comm])
       (by rw [map_mul]; exact mul_mem hz hc))
     have hi : IsIntegral (semiLoc v) z := by
@@ -303,11 +303,11 @@ theorem locEmb_mem_locOrder_iff (z : E) : locEmb v z ∈ locOrder v ↔ z ∈ se
 theorem exists_frame {L : Submodule (𝓞 E) (Fin r → E)} (hL : ReciprocityTheory.MultiplicativeHeights.IsLattice L) :
     ∃ g : GL (Fin r) E, ∀ x, (∃ s ∉ v.asIdeal, algebraMap (𝓞 (maximalRealSubfield E)) (𝓞 E) s • x ∈ L) ↔
       ∀ i, (((g⁻¹ : GL (Fin r) E) : Matrix (Fin r) (Fin r) E) *ᵥ x) i ∈ semiLoc v := by
-  haveI : Submodule.IsLattice E (Submodule.span (semiLoc v) (L : Set (Fin r → E))) := by
-    constructor
-    · obtain ⟨s, rfl⟩ := hL.1
-      exact ⟨s, (Submodule.span_span_of_tower (𝓞 E) _ _).symm⟩
-    · rw [Submodule.span_span_of_tower, hL.2]
+  haveI : Submodule.IsFullLattice E (Submodule.span (semiLoc v) (L : Set (Fin r → E))) := {
+    toIsLattice := Submodule.IsLattice.of_fg E (by
+      obtain ⟨s, rfl⟩ := hL.1
+      exact ⟨s, (Submodule.span_span_of_tower (𝓞 E) _ _).symm⟩)
+    span_eq_top := by rw [Submodule.span_span_of_tower, hL.2] }
   obtain ⟨g, hg⟩ := exists_eq_frameLattice (Submodule.span (semiLoc v) (L : Set (Fin r → E)))
   refine ⟨g, fun x => ?_⟩
   rw [← mem_span_semiLoc_iff, hg, mem_frameLattice_iff_inv]
@@ -890,6 +890,8 @@ theorem gram_signMatrix (τ : E →+* ℂ) (p : ℕ) :
     Matrix.map_one _ (map_zero _) (map_one _), Matrix.mul_one, signMatrix,
     Matrix.diagonal_map (map_zero _)]
   congr 1
+  funext a
+  simp only [sgn]
   split_ifs <;> simp
 
 omit [IsCMField E] in

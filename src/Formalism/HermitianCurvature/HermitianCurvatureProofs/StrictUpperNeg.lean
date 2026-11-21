@@ -117,11 +117,10 @@ theorem utInv_mp : ∀ m : ℕ, MeasurePreserving (utInv m) volume volume
     have e : utInv (j + 1) = eQ j ∘ (fun p : (G.UT j → ℂ) × (Fin j → ℂ) =>
         (utInv j p.1, -((G.upper p.1)⁻¹ *ᵥ p.2))) ∘ (eQ j).symm := by
       funext u
-      obtain ⟨p, rfl⟩ := (eQ j).surjective u
-      simp only [Function.comp_apply, MeasurableEquiv.symm_apply_apply]
-      exact utInv_eQ p
+      simpa only [Function.comp_apply, MeasurableEquiv.apply_symm_apply] using
+        utInv_eQ ((eQ j).symm u)
     rw [e]
-    exact (eQ_mp j).comp (hg.comp (eQ_mp j).symm)
+    exact (eQ_mp j).comp (hg.comp (MeasurePreserving.symm (eQ j) (eQ_mp j)))
 
 end utinv
 
@@ -213,7 +212,9 @@ theorem muN_fwd (j : ℕ) : D.muN k (j + 0) = ((U.muRC k j 0).prod (volume : Mea
   rw [Measure.map_prod_map _ _ measurable_id hm,
     Measure.map_map (Dx2.SplitF.psi_meas j 0) (measurable_id.prodMap hm)]
   congr 1
-  rw [show Matrix.of (Matrix.of.symm (1 : B.Mat k 0)) = (1 : B.Mat k 0) from rfl, embG_one, Matrix.mul_one]
+  funext p
+  simp only [Function.comp_apply, Prod.map_fst, Prod.map_snd, id_eq, Dx2.SplitF.Psi, psiF,
+    Equiv.apply_symm_apply, embG_one, Matrix.mul_one]
 
 theorem muN_rev (j : ℕ) : D.muN k (j + 0) = ((U.muRC k j 0).prod (volume : Measure (G.UT j → ℂ))).map (psiR k j) := by
   have : SigmaFinite (U.muRC k j 0) := Dx2.SplitF.sf_RC j 0

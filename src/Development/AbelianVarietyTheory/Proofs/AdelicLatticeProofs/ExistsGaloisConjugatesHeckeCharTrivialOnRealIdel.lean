@@ -200,7 +200,11 @@ theorem exists_conjugates : ∀ (D : D7) (Q : Par D) (χ₀ : (AE D)ˣ →* Circ
       (fun x hx => hN1 _ (hbu x) (by rw [(hb _).2]; exact hx.2.2))
     let A : (AE D)ˣ →* Circle := ∏ τ, angle D (θ (relab Q.c σ (tauE D τ))) ^ k τ
     have hA : ∀ x, A x = ∏ τ, angle D (θ (relab Q.c σ (tauE D τ))) x ^ k τ := fun x => by
-      simp only [A, prod_apply, MonoidHom.zpow_apply]
+      classical
+      simp only [A]
+      induction (Finset.univ : Finset D.what₂.Tau) using Finset.induction_on with
+      | empty => simp
+      | insert i s hi ih => simp [hi, ih, MonoidHom.zpow_apply]
     have Ac : Continuous A := by
       rw [show (A : _ → _) = _ from funext hA]
       exact continuous_finsetProd _ fun τ _ => (continuous_angle D (θc _)).zpow _

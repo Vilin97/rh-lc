@@ -230,7 +230,7 @@ theorem exists_K (c u : Fin r → EuclideanSpace ℂ (Fin (2 * r + k + 1))) (hc 
     ∃ κ ∈ GG k r, κᴴ * κ = 1 ∧ ∀ a, κ *ᵥ (c a).ofLp = (u a).ofLp := by
   obtain ⟨K, hκH, hκi, hκc⟩ := exists_comm (Matrix.toEuclideanLin (Hpk k r))
     (fun x => by simp [Matrix.toLpLin_apply, Hpk_sq])
-    (Matrix.isHermitian_iff_isSymmetric.1 Hpk_herm) c u hc hu hci hui
+    (Matrix.isSymmetric_toEuclideanLin_iff.mpr Hpk_herm) c u hc hu hci hui
   set κ : Mat k r := Matrix.toEuclideanLin.symm K with hκdef
   have hκ : ∀ v, WithLp.toLp 2 (κ *ᵥ v) = K (WithLp.toLp 2 v) := by
     intro v

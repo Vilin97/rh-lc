@@ -18,9 +18,9 @@ theorem _root_.GlobalTheory.T.pDivGroupFormalChart_ev_natMultiple_eq_convPower :
         (n k : ℕ) (i : Fin d),
         c.ev n (nmul c.μ k i) = PDiv.mulBy (R := O) (A := G.A n) k (c.x n i) := by
   intro p _ C _ _ _ v O _ _ _ _ _ _ G d c n k
-  haveI : IsAdicComplete (Ideal.span {(p : O)}) (G.A n) :=
+  have : IsAdicComplete (Ideal.span {(p : O)}) (G.A n) :=
     GlobalTheory.isAdicComplete_of_finite_projective _ _
-  haveI : IsAdicComplete (Ideal.span {(p : G.A n)}) (G.A n) :=
+  have : IsAdicComplete (Ideal.span {(p : G.A n)}) (G.A n) :=
     GlobalTheory.NMul.isAdicComplete_ring_of_module (O := O) p
   have heval := ((GlobalTheory.T.padicContinuousEvaluation_existsUnique_subst_natural
     p O (G.A n) (Fin d) (c.x n) (c.nil n)).2 (c.ev n) (c.isEval n)).1
@@ -47,7 +47,9 @@ theorem _root_.GlobalTheory.T.pDivGroupFormalChart_ev_natMultiple_eq_convPower :
   | zero =>
     intro i
     have hzero : nmul c.μ 0 i = 0 := rfl
-    rw [hzero, map_zero, ← AlgHom.coe_coe, hmul]
+    change c.ev n (nmul c.μ 0 i) =
+      (PDiv.mulBy (R := O) (A := G.A n) 0 : G.A n →ₐ[O] G.A n) (c.x n i)
+    rw [hzero, map_zero, hmul]
     simp [c.aug n i]
   | succ k ih =>
     intro i
@@ -62,8 +64,9 @@ theorem _root_.GlobalTheory.T.pDivGroupFormalChart_ev_natMultiple_eq_convPower :
     have hlift : IsEval p (fun j => c.ev n (u j)) (lift.comp (c.ev₂ n)) := by
       constructor
       · rintro (j | j)
-        · simpa only [lift, u, AlgHom.comp_apply, (c.isEval₂ n).1 (Sum.inl j), Sum.elim_inl,
-            Algebra.TensorProduct.lift_tmul, map_one, mul_one] using (ih j).symm
+        · simp only [lift, u, AlgHom.comp_apply, (c.isEval₂ n).1 (Sum.inl j), Sum.elim_inl,
+            Algebra.TensorProduct.lift_tmul, map_one, mul_one]
+          exact (ih j).symm
         · simp only [lift, u, AlgHom.comp_apply, (c.isEval₂ n).1 (Sum.inr j), Sum.elim_inr,
             Algebra.TensorProduct.lift_tmul, map_one, one_mul, (c.isEval n).1 j]
           rfl

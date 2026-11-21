@@ -79,8 +79,8 @@ theorem realAd_smul_eq {θ : InfFam D} (hθ : IsInfFam θ) {S T : HSp D} {w : WO
     rw [Finset.sum_congr rfl fun τ _ => e1 τ, Finset.sum_ite_eq Finset.univ ρ, if_pos (Finset.mem_univ _)]
     show θ ρ (infPart D (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd D.host.F t • w i j)) = _
     rw [infPart_smul, (θ ρ).map_mul, theta_realAd hθ]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [(finPart D).map_sub, sub_eq_zero, Matrix.sum_apply, map_sum (finPart D)]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [(finPart D).map_sub, sub_eq_zero, Matrix.sum_apply, map_sum (finPart D)]
     show finPart D (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd D.host.F t • w i j) = _
     rw [finPart_smul, show sndA D.host.F (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd D.host.F t) = 0 from rfl, TensorProduct.zero_tmul,
       zero_mul]
@@ -107,10 +107,10 @@ theorem hasDerivAt_realAd_smul : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (
   let Λ : (D.what₂.Tau → ℝ) →+ WO S T :=
     ∑ τ, (lineAt θ τ (compAt θ τ w)).comp (Pi.evalAddMonoidHom (fun _ : D.what₂.Tau => ℝ) τ)
   have hΛ : ∀ s, Λ s = ∑ τ, lineAt θ τ (compAt θ τ w) (s τ) := fun s => by
-    simp [Λ, AddMonoidHom.finset_sum_apply]
+    simp [Λ]
   have hΛc : Continuous Λ := by
     rw [show (Λ : (D.what₂.Tau → ℝ) → WO S T) = fun s => ∑ τ, lineAt θ τ (compAt θ τ w) (s τ) from funext hΛ]
-    exact continuous_finset_sum _ fun τ _ => (hL τ).1.comp (continuous_apply τ)
+    exact continuous_finsetSum _ fun τ _ => (hL τ).1.comp (continuous_apply τ)
   have hΛf : ∀ s, (Λ s).map (finPart D) = 0 := fun s => by
     ext i j
     rw [hΛ]

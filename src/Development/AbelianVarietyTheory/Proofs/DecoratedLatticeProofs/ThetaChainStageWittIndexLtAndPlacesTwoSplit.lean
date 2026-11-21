@@ -21,8 +21,11 @@ theorem wittIndex_lt_and_two_split : ∀ (D : D7) (c : Com D) (j : ℕ) (s : PiL
   intro D c j s hj hs
   refine ⟨?_, fun v h2 => GlobalTheory.Core.Rk.IP.Model.isSplit_two v h2⟩
   haveI : IsCMField D.host.E := D.host.isCMField_hostE
-  have hpar : GlobalTheory.IndefiniteRowSideFullHecke.WittIndexParallel.ParallelSig s.V (sigYD D.R j).1 (sigYD D.R j).2 :=
-    GlobalTheory.IndefiniteRowSideFullHecke.WittIndexParallel.parallelSig_of_sigOK hs.sigOK (fun τ => hs.sig τ)
+  have hpar : ∀ τ : D.host.E →+* ℂ, Formalism.UG.HasSignature (s.V.gram.map τ) (sigYD D.R j).1 (sigYD D.R j).2 := by
+    intro τ
+    have h := hs.sigOK τ
+    rw [hs.sig τ] at h
+    exact h
   obtain ⟨W, hW, e⟩ := (GlobalTheory.Cusp.isGreatest_wittIndex (s.V : HSpace D.host.E)).1
   obtain ⟨τ⟩ : Nonempty (D.host.E →+* ℂ) := inferInstance
   have h1 := GlobalTheory.ParallelWitt.finrank_le (E := D.host.E) s.V τ (hpar τ) W (fun x hx y hy => by

@@ -52,7 +52,7 @@ theorem trm_tendsto (j : ℕ) (hj : 1 ≤ j) (z : ℂ) :
 
 theorem sum_range_eq_univ (L : ℕ) (hL : 0 < L) (φ : ZMod L → ℂ) (f : ℕ → ZMod L)
     (hf : Set.InjOn f (Finset.range L)) :
-    haveI : NeZero L := ⟨hL.ne'⟩
+    haveI : NeZero L := ⟨hL.ne'⟩;
     ∑ r ∈ Finset.range L, φ (f r) = ∑ y, φ y := by
   haveI : NeZero L := ⟨hL.ne'⟩
   rw [← Finset.sum_image (fun x hx y hy h => hf hx hy h)]

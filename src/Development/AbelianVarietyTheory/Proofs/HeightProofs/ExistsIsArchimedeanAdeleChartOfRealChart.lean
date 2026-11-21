@@ -139,7 +139,7 @@ theorem exists_chart : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ ρ : (D
     { toFun := fun z => emb D 1 (ρ (reP _ z)) + emb D D.host.sqrtMinusD (ρ (imaginary _ (Real.sqrt D.host.d) z))
       map_zero' := by rw [(reP _).map_zero, (imaginary _ _).map_zero, ρ.map_zero, (emb D _).map_zero, (emb D _).map_zero, add_zero]
       map_add' := fun x y => by
-        rw [(reP _).map_add (f := _), (imaginary _ _).map_add (f := _), ρ.map_add (f := _), ρ.map_add (f := _), (emb D _).map_add (f := _), (emb D _).map_add (f := _),
+        rw [(reP _).map_add, (imaginary _ _).map_add, ρ.map_add, ρ.map_add, (emb D _).map_add, (emb D _).map_add,
           add_add_add_comm] }
   have hσ : ∀ z, σ z = emb D 1 (ρ (reP _ z)) + emb D D.host.sqrtMinusD (ρ (imaginary _ (Real.sqrt D.host.d) z)) :=
     fun _ => rfl

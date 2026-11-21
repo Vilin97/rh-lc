@@ -193,29 +193,40 @@ theorem compFin_cA (v : HeightOneSpectrum (𝓞 D.host.F)) (z : AE D) :
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
-theorem intA_cA {z : AE D} (h : IntA z) : IntA (cA D z) := fun v => by
+theorem intA_cA {z : AE D} (h : IntA z) : IntA (cA D z) := by
+  intro v
+  change compFin D.host.F D.host.E v (cA D z) ∈ intLoc D.host.F D.host.E v
   rw [compFin_cA]; exact sigR_mem_intLoc _ (h v)
 
-theorem intA_mul {x y : AE D} (hx : IntA x) (hy : IntA y) : IntA (x * y) := fun v => by
+theorem intA_mul {x y : AE D} (hx : IntA x) (hy : IntA y) : IntA (x * y) := by
+  intro v
+  change compFin D.host.F D.host.E v (x * y) ∈ intLoc D.host.F D.host.E v
   rw [map_mul]; exact Subring.mul_mem _ (hx v) (hy v)
 
-theorem intA_neg {x : AE D} (hx : IntA x) : IntA (-x) := fun v => by
+theorem intA_neg {x : AE D} (hx : IntA x) : IntA (-x) := by
+  intro v
+  change compFin D.host.F D.host.E v (-x) ∈ intLoc D.host.F D.host.E v
   rw [map_neg]; exact Subring.neg_mem _ (hx v)
 
-theorem intA_zero : IntA (0 : AE D) := fun v => by
+theorem intA_zero : IntA (0 : AE D) := by
+  intro v
+  change compFin D.host.F D.host.E v 0 ∈ intLoc D.host.F D.host.E v
   rw [map_zero]; exact Subring.zero_mem _
 
-theorem intA_one : IntA (1 : AE D) := fun v => by
+theorem intA_one : IntA (1 : AE D) := by
+  intro v
+  change compFin D.host.F D.host.E v 1 ∈ intLoc D.host.F D.host.E v
   rw [map_one]; exact Subring.one_mem _
 
 theorem cA_incA_skew {μ : D.host.E} (h : IsSkew μ) : cA D (incA D μ) = -incA D μ := by
+  change μ ≠ 0 ∧ star μ = -μ at h
   rw [show cA D (incA D μ) = incA D (star μ) from rfl, h.2, map_neg]
 
 theorem rat_Jst (n : ℕ) : (rat (Jst D n) : Mx D (n + n) (n + n)) = blk4 0 1 (-1) 0 := blockMatrixTwoByTwoFin_standardSkew_map (incA D)
 
 theorem exists_frame : ∀ (D : D7) (n : ℕ) (Hm : GL (Fin n) (AE D)), adj Hm.1 = Hm.1 → IntGL Hm → (∀ w, (Hm.1 * Hm.1).map (compInf D.host.F D.host.E w) = 1) → ∀ (μ : D.host.E) (u ε : (AE D)ˣ) (t : AE D), IsSkew μ → ScalData μ u ε → HalfData t → ∃ M M' : GL (Fin (n + n)) (AE D), adj M.1 * dblGram finSumFinEquiv Hm.1 * M.1 = incA D μ • rat (Jst D n) ∧ (∀ i j : Fin n, M.1 (finSumFinEquiv (Sum.inr i : Fin n ⊕ Fin n)) (finSumFinEquiv (Sum.inl j : Fin n ⊕ Fin n)) = M.1 (finSumFinEquiv (Sum.inl i : Fin n ⊕ Fin n)) (finSumFinEquiv (Sum.inl j : Fin n ⊕ Fin n))) ∧ IntGL M' ∧ M.1 = (u : AE D) • M'.1 ∧ ∀ w, (adj M.1 * M.1).map (compInf D.host.F D.host.E w) = compInf D.host.F D.host.E w (2 * u * cA D u) • 1 := by
   intro D n Hm hH hI hR μ u ε t hμ hs ht
-  obtain ⟨M, M', h1, h2, h3, h4, h5⟩ := exists_frame_ring (cA D) Formalism.L2.Theta.cA_cA IntA intA_zero intA_one
+  obtain ⟨M, M', h1, h2, h3, h4, h5⟩ := exists_frame_ring (cA D) Formalism.L2.Theta.cA_cA (fun z : AE D => IntA z) intA_zero intA_one
     intA_mul intA_neg intA_cA Hm hH hI.1 hI.2 (incA D μ) (cA_incA_skew hμ) u ε t hs.1 hs.2.1 hs.2.2.1 ht.1 ht.2.1
   refine ⟨M, M', ?_, h2, h3, h4, fun w => h5 _ _ (hR w) (hs.2.2.2 w) (ht.2.2 w)⟩
   rw [rat_Jst]

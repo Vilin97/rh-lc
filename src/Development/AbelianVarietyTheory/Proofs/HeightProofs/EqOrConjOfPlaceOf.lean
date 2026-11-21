@@ -145,12 +145,14 @@ def infEmb (τ : E →+* ℂ) : Ainf F ⊗[F] E →+* ℂ :=
 theorem isInfEmb_infEmb (τ : E →+* ℂ) : Formalism.MainNotions.StandardLattice.IsInfEmb τ (infEmb hc τ) := by
   refine ⟨fun x => ?_, ?_⟩
   · show locMap hc τ ((1 : (placeOf F τ).Completion) ⊗ₜ[F] x) = _
-    simp
+    change InfinitePlace.Completion.extensionEmbedding (placeOf F τ) 1 * τ x = τ x
+    rw [map_one, one_mul]
   · have : (fun a : Ainf F => infEmb hc τ (a ⊗ₜ[F] (1 : E))) =
         fun a => InfinitePlace.Completion.extensionEmbedding (placeOf F τ) (a (placeOf F τ)) := by
       funext a
       show locMap hc τ (a (placeOf F τ) ⊗ₜ[F] (1 : E)) = _
-      simp
+      change InfinitePlace.Completion.extensionEmbedding (placeOf F τ) (a (placeOf F τ)) * τ 1 = _
+      rw [map_one, mul_one]
     rw [this]
     exact (InfinitePlace.Completion.isometry_extensionEmbedding _).continuous.comp (continuous_apply _)
 

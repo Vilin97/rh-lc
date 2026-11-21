@@ -274,20 +274,50 @@ theorem exists_form {M L : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) 
       rw [algebraMap_smul]; exact congrArg Subtype.val ha
     have h3 : algebraMap (𝓞 K) K a ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors a.2
     exact Subtype.ext ((smul_eq_zero.1 h2).resolve_left h3)
+  letI : Submodule.IsLattice K M := hM
+  have : Module.Finite (𝓞 K) M := Submodule.IsLattice.finite K M
   have : Module.FinitePresentation (𝓞 K) M := Module.finitePresentation_of_finite _ _
   have : Module.Projective (𝓞 K) M := Module.Flat.projective_of_finitePresentation
   obtain ⟨ψ, hψ⟩ := Module.projective_lifting_property (Submodule.mkQ P)
     (φ.toLinearMap ∘ₗ (L.comap M.subtype).mkQ) (Submodule.mkQ_surjective P)
-  have := GlobalTheory.UnimodQuot.isLocalizedModule_subtype hM
+  let S := Submodule.span K (M : Set V)
+  let m : M →ₗ[𝓞 K] S := M.subtype.codRestrict (S.restrictScalars (𝓞 K))
+    (fun x => Submodule.subset_span x.2)
+  haveI : IsLocalizedModule (nonZeroDivisors (𝓞 K)) m := by
+    refine ⟨?_, ?_, ?_⟩
+    · intro a
+      rw [Module.End.isUnit_iff]
+      have ha0 : ((a : 𝓞 K) : K) ≠ 0 := by
+        have := nonZeroDivisors.ne_zero a.2
+        exact_mod_cast this
+      have e : ⇑(algebraMap (𝓞 K) (Module.End (𝓞 K) S) a) =
+          fun v => ((a : 𝓞 K) : K) • v := by
+        funext v
+        exact (algebraMap_smul K (a : 𝓞 K) v).symm
+      rw [e]
+      exact MulAction.bijective (Units.mk0 _ ha0)
+    · intro y
+      obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span
+        (nonZeroDivisors (𝓞 K)) K (M : Set V) y y.2
+      rw [Submodule.span_eq] at ht
+      exact ⟨(⟨_, ht⟩, t), Subtype.ext rfl⟩
+    · intro x y hxy
+      have hv : (x : V) = (y : V) := congrArg (fun z : S => (z : V)) hxy
+      have h : x = y := Subtype.ext hv
+      exact ⟨1, by simpa using h⟩
   have hu : ∀ x : nonZeroDivisors (𝓞 K), IsUnit (algebraMap (𝓞 K) (Module.End (𝓞 K) K) x) :=
     fun x => IsLocalizedModule.map_units (S := nonZeroDivisors (𝓞 K)) (Algebra.linearMap (𝓞 K) K) x
-  refine ⟨LinearMap.extendScalarsOfIsLocalization (nonZeroDivisors (𝓞 K)) K
-      (IsLocalizedModule.lift (nonZeroDivisors (𝓞 K)) M.subtype (Algebra.linearMap (𝓞 K) K ∘ₗ ψ) hu), ψ,
-    fun y => IsLocalizedModule.lift_apply (nonZeroDivisors (𝓞 K)) M.subtype _ hu y, fun y => ?_⟩
-  have e : Submodule.mkQ P (ψ y) = φ ((L.comap M.subtype).mkQ y) := LinearMap.congr_fun hψ y
-  rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, e, LinearEquiv.map_eq_zero_iff, Submodule.mkQ_apply,
-    Submodule.Quotient.mk_eq_zero]
-  rfl
+  let g : S →ₗ[K] K := LinearMap.extendScalarsOfIsLocalization (nonZeroDivisors (𝓞 K)) K
+      (IsLocalizedModule.lift (nonZeroDivisors (𝓞 K)) m (Algebra.linearMap (𝓞 K) K ∘ₗ ψ) hu)
+  obtain ⟨f, hf⟩ := g.exists_extend
+  refine ⟨f, ψ, fun y => ?_, fun y => ?_⟩
+  · exact (LinearMap.congr_fun hf (m y)).trans
+      (IsLocalizedModule.lift_apply (nonZeroDivisors (𝓞 K)) m _ hu y)
+  ·
+    have e : Submodule.mkQ P (ψ y) = φ ((L.comap M.subtype).mkQ y) := LinearMap.congr_fun hψ y
+    rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, e, LinearEquiv.map_eq_zero_iff, Submodule.mkQ_apply,
+      Submodule.Quotient.mk_eq_zero]
+    rfl
 
 theorem exists_vec [FiniteDimensional K V] (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : ∀ x y, star (h x y) = h y x)
     (hn : h.Nondegenerate) {M L : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) {P : Ideal (𝓞 K)}

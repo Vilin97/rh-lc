@@ -54,12 +54,16 @@ theorem isDer_sum {ι : Type*} (s : Finset ι) {O : ι → Module.End ℂ (Fock 
 
 theorem cpV_cmV_ιMulti (u w : Fin n × Fin n → ℂ) : ∀ (p : ℕ) (v : Fin p → (Fin n × Fin n → ℂ)),
     cpV u (cmV w (ExteriorAlgebra.ιMulti ℂ p v)) =
-      ∑ i, dualV w (v i) • ExteriorAlgebra.ιMulti ℂ p (Function.update v i u)
-  | 0, v => by
+      ∑ i, dualV w (v i) • ExteriorAlgebra.ιMulti ℂ p (Function.update v i u) := by
+  intro p
+  induction p with
+  | zero =>
+    intro v
     simp only [cmV, ExteriorAlgebra.ιMulti_zero_apply, CliffordAlgebra.contractLeft_one, map_zero]
     rw [Fin.sum_univ_zero]
-  | p + 1, v => by
-    have ih := cpV_cmV_ιMulti u w p (Matrix.vecTail v)
+  | succ p ih =>
+    intro v
+    specialize ih (Matrix.vecTail v)
     simp only [cmV, cpV, LinearMap.mulLeft_apply] at ih ⊢
     have hanti : ExteriorAlgebra.ι ℂ u * ExteriorAlgebra.ι ℂ (v 0) =
         -(ExteriorAlgebra.ι ℂ (v 0) * ExteriorAlgebra.ι ℂ u) :=
@@ -203,7 +207,7 @@ theorem adPhys_one' (w : Fin n × Fin n → ℂ) : adPhys ε 1 w = w := by
   simp [adPhys, adMat_one]
 
 def wedgeCoord (p : ℕ) :
-    MultilinearMap ℂ (fun _ : Fin p => Fin n × Fin n → ℂ) (Finset (Fin (n * n)) → ℂ) :=
+    (Fin p → (Fin n × Fin n → ℂ)) →ₘₗ[ℂ] (Finset (Fin (n * n)) → ℂ) :=
   (fockBasis n).equivFun.toLinearMap.compMultilinearMap (ExteriorAlgebra.ιMulti ℂ p).toMultilinearMap
 
 theorem wedgeCoord_eq_sum (p : ℕ) (v : Fin p → (Fin n × Fin n → ℂ)) :

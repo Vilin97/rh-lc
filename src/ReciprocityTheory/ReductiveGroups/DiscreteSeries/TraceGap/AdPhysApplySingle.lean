@@ -50,8 +50,7 @@ theorem sum_minus_kk {k : Matrix (Fin n) (Fin n) ℂ} (hk : k ∈ Kset ε) (c b 
 
 theorem conj_single_apply (k : Matrix (Fin n) (Fin n) ℂ) (a i c d : Fin n) :
     (k * Matrix.single a i (1 : ℂ) * kᴴ : Matrix (Fin n) (Fin n) ℂ) c d = k c a * star (k d i) := by
-  simp [Matrix.mul_apply, Matrix.single_apply, conjTranspose_apply, ite_and, ite_mul, Finset.sum_ite_eq,
-]
+  simp [Matrix.mul_apply, Matrix.single_apply, conjTranspose_apply, ite_and, ite_mul, Finset.sum_ite_eq]
 
 theorem coef_d {k : Matrix (Fin n) (Fin n) ℂ} (hk : k ∈ Kset ε) (c d : Fin n) (x : Fin n × Fin n) :
     ∑ i ∈ plusIdx ε, ∑ a ∈ minusIdx ε, (k * Matrix.single a i (1 : ℂ) * kᴴ : Matrix (Fin n) (Fin n) ℂ) c d * adMat ε k x (i, a) =

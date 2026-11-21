@@ -148,9 +148,8 @@ theorem comp_latG (D : D7) (V : HSp D) :
   let L : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E) := V.L0.map e
   have hfg : L.FG := V.standardTuple_isLattice.fg.map e
   have hsp : Submodule.span D.host.E (L : Set (Fin V.rank → D.host.E)) = ⊤ := by
-    letI : Submodule.IsFullLattice D.host.E V.L0 := V.standardTuple_isLattice
     have h := congrArg (Submodule.map (V.frame.equivFun : V.V →ₗ[D.host.E] (Fin V.rank → D.host.E)))
-      (Submodule.IsFullLattice.span_eq_top : Submodule.span D.host.E (V.L0 : Set V.V) = ⊤)
+      V.standardTuple_isLattice.span_eq_top
     rw [Submodule.map_span, Submodule.map_top, LinearEquiv.range] at h
     exact h
   have hhat : latHat V = AdLat.hat D.host.F (L : Set (Fin V.rank → D.host.E)) := by

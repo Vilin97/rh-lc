@@ -167,7 +167,7 @@ theorem continuous_comp (hθ : IsInfFam θ) (τ : D.what₂.Tau) : Continuous fu
       Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
     rfl
   rw [he]
-  refine continuous_finset_sum _ fun i _ => Continuous.mul ?_ continuous_const
+  refine continuous_finsetSum _ fun i _ => Continuous.mul ?_ continuous_const
   have h1 : Continuous (B.coord i) := IsModuleTopology.continuous_of_linearMap _
   have h2 : Continuous (fstA D.host.F) := continuous_fst
   exact (hθ τ).2.comp (h2.comp h1)

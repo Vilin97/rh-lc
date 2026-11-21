@@ -21,7 +21,7 @@ variable {G A : Type} [AddCommGroup G] [TopologicalSpace G] [IsTopologicalAddGro
 theorem polish : PolishSpace G := by
   letI : UniformSpace G := IsTopologicalAddGroup.rightUniformSpace G
   haveI : IsUniformAddGroup G := isUniformAddGroup_of_addCommGroup
-  haveI : CompleteSpace G := IsRightUniformAddGroup.completeSpace_of_weaklyLocallyCompactSpace
+  haveI : CompleteSpace G := IsRightUniformAddGroup.completeSpace_of_weaklyLocallyCompactSpace G
   haveI : (uniformity G).IsCountablyGenerated := IsUniformAddGroup.uniformity_countably_generated
   haveI : TopologicalSpace.IsCompletelyMetrizableSpace G := inferInstance
   infer_instance

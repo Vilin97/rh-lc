@@ -367,7 +367,8 @@ theorem hasDeriv_yf (z : ℂ) (hz : z + t ∉ L.lattice) :
 variable {L V}
 
 theorem flowC (h2 : A.g₂ V = L.g₂) (h3 : A.g₃ V = L.g₃) (ht : t ∉ L.lattice) :
-    A.IsFlow (A.curveS V) (derivative ℂ) (F.taylor0 (xf L V t)) (F.taylor0 (yf L V t)) := by
+    A.IsFlow (A.curveS V) (PowerSeries.derivative (R := ℂ))
+      (F.taylor0 (xf L V t)) (F.taylor0 (yf L V t)) := by
   have hr := F.taylorRing
   have hx := T_xf L V t ht
   have hy := T_yf L V t ht

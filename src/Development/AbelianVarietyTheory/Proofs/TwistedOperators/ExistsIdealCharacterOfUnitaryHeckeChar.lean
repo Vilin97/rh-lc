@@ -33,8 +33,9 @@ theorem exists_ideal_character_of_unitary_hchar : ∀ (K : Type) [Field K] [Numb
         intro T
         induction T using Finset.induction_on with
         | empty =>
-          simp only [Finset.prod_empty, Finset.not_mem_empty, false_and, exists_false]
-          exact P.prime.not_dvd_one
+          simp only [Finset.prod_empty]
+          intro hd
+          exact (P.prime.not_dvd_one hd).elim
         | @insert Q T hQT ih =>
           simp only [Finset.prod_insert hQT]
           intro hd

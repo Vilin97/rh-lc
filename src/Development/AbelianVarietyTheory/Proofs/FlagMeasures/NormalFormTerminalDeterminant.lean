@@ -330,7 +330,11 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   have hD := (GlobalTheory.T.hermFlagPairLatticeSumDiscriminant_eq_norm_minor K V H hK r N g Λ hg hT N.j le_rfl G.2.2.2.2.2.2.2.2.2.2.1).1
   obtain ⟨hS, -, -, hrad, -⟩ := G.1
   obtain ⟨⟨hU, hF, hF'⟩, -⟩ := hT
-  have hΛ := ((isUnimod_iff H Λ).1 hU).1
+  have hΛ : Submodule.IsLattice K Λ := by
+    obtain ⟨N, hN, hNΛ⟩ := hU.1.1
+    have heq : Λ = N := by simpa [rs] using hNΛ
+    have hfg : Λ.FG := heq.symm ▸ hN
+    exact Submodule.IsLattice.of_fg K hfg
   have hb := bOne_symm H N hS hΛ hF hF'
   obtain ⟨hc0, -, -, -, z1, z2, x1, x2, hz⟩ := hS
   have hII : II N.F' N.F = II N.F N.F' := inf_comm _ _

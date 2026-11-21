@@ -54,8 +54,6 @@ theorem mem_cmComplex_iff {K : Type} [Field K] [NumberField K] [StarRing K] (σ 
     let _ : Algebra K (algebraicClosure ℚ ℂ) := s.toAlgebra
     have : Algebra.IsAlgebraic ℚ (algebraicClosure ℚ ℂ) := by
       convert algebraicClosure.isAlgebraic ℚ ℂ
-      · rfl
-      · exact Subsingleton.elim _ _
     have : Algebra.IsAlgebraic K (algebraicClosure ℚ ℂ) :=
       Algebra.IsAlgebraic.tower_top (K := ℚ) K
     have h1 := h (ComplexEmbedding.lift (algebraicClosure ℚ ℂ) φ)

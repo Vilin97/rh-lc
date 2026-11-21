@@ -175,13 +175,15 @@ theorem exists_isStdChar (F : Type) [Field F] [NumberField F] [IsTotallyReal F] 
       refine congrArg _ (Finset.sum_congr rfl fun w _ => ?_)
       rw [← Complex.add_re, ← map_add (f := _)]
       rfl
-  have hL : Continuous L := Complex.continuous_ofReal.comp (continuous_finset_sum _ fun w _ =>
+  have hL : Continuous L := Complex.continuous_ofReal.comp (continuous_finsetSum _ fun w _ =>
     Complex.continuous_re.comp
       ((InfinitePlace.Completion.isometry_extensionEmbedding w).continuous.comp (continuous_apply w)))
   have hT : ∀ x : F, L (algebraMap F _ x) = ((Algebra.trace ℚ F x : ℚ) : ℂ) := fun x => by
     rw [← sum_places_eq_trace]
     refine congrArg Complex.ofReal (Finset.sum_congr rfl fun w _ => congrArg Complex.re ?_)
-    exact InfinitePlace.Completion.extensionEmbedding_coe w _
+    change InfinitePlace.Completion.extensionEmbedding w (algebraMap F w.Completion x) = _
+    rw [AbsoluteValue.Completion.algebraMap_def, InfinitePlace.Completion.extensionEmbedding_coe]
+    simp [WithAbs.algebraMap_right_apply]
   obtain ⟨ψ, h1, h2⟩ := GlobalTheory.StdAdelicChar.exists_char_of_trace F L hL hT
   have h3 : ∀ x, psiInf F ψ⁻¹ x = Complex.exp (2 * Real.pi * Complex.I * L x) := fun x => by
     have e : psiInf F ψ⁻¹ x = psiInf F ψ (-x) := by

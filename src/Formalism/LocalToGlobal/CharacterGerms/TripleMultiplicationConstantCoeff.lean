@@ -25,34 +25,43 @@ theorem z0p3 (k : Fin 3) : ∀ j, constantCoeff ((p3 k : Pt C 3 dd) j) = 0 := by
   simp [p3, pt]
 
 theorem pderiv_eval_triple {n : ℕ} {a : Fin 3 → Pt C n dd} (ha : Z0 a) (f : PS C 3 dd) (q : Fin n × Fin dd) :
-    pderiv C q (ev a f) = ∑ j, ev a (pderiv C ((0 : Fin 3), j) f) * pderiv C q (a 0 j) +
-      ∑ j, ev a (pderiv C ((1 : Fin 3), j) f) * pderiv C q (a 1 j) +
-      ∑ j, ev a (pderiv C ((2 : Fin 3), j) f) * pderiv C q (a 2 j) := by
+    pderiv (R := C) q (ev a f) = ∑ j, ev a (pderiv (R := C) ((0 : Fin 3), j) f) * pderiv (R := C) q (a 0 j) +
+      ∑ j, ev a (pderiv (R := C) ((1 : Fin 3), j) f) * pderiv (R := C) q (a 1 j) +
+      ∑ j, ev a (pderiv (R := C) ((2 : Fin 3), j) f) * pderiv (R := C) q (a 2 j) := by
   unfold ev
   rw [Formalism.G.LogCR.pderiv_subst (a := fun p : Fin 3 × Fin dd => a p.1 p.2) (fun p => ha p.1 p.2) f q,
     Fintype.sum_prod_type, Fin.sum_univ_three]
 
 theorem d_ev_keep {f : PS C 2 dd} {B : Pt C 3 dd} (hB : ∀ j, constantCoeff (B j) = 0) (i : Fin dd)
-    (hd : ∀ j, pderiv C ((0 : Fin 3), i) (B j) = 0) :
-    pderiv C ((0 : Fin 3), i) (ev (n := 3) ![p3 0, B] f) = ev (n := 3) ![p3 0, B] (pderiv C ((0 : Fin 2), i) f) := by
+    (hd : ∀ j, pderiv (R := C) ((0 : Fin 3), i) (B j) = 0) :
+    pderiv (R := C) ((0 : Fin 3), i) (ev (n := 3) ![p3 0, B] f) =
+      ev (n := 3) ![p3 0, B] (pderiv (R := C) ((0 : Fin 2), i) f) := by
   have hz : Z0 (![p3 0, B] : Fin 2 → Pt C 3 dd) := fun k j => by
     fin_cases k
     · exact z0p3 0 j
     · exact hB j
-  rw [pderiv_eval_pair hz]
+  have hchain := Formalism.G.LogCR.pderiv_subst
+    (a := fun p : Fin 2 × Fin dd => (![p3 0, B] : Fin 2 → Pt C 3 dd) p.1 p.2)
+    (fun p => hz p.1 p.2) f ((0 : Fin 3), i)
+  rw [Fintype.sum_prod_type, Fin.sum_univ_two] at hchain
+  refine hchain.trans ?_
   refine (congrArg₂ (· + ·) ?_ (Finset.sum_eq_zero fun j _ => ?_)).trans (add_zero _)
   · rw [Finset.sum_eq_single i (fun j _ hj => by
-        show _ * pderiv C _ (pt C (n := 3) dd 0 j) = 0
-        rw [LiftedCoordinateEvaluation.pderiv_pt_same, if_neg hj, mul_zero]) (fun h => absurd (Finset.mem_univ i) h)]
-    show _ * pderiv C _ (pt C (n := 3) dd 0 i) = _
-    rw [LiftedCoordinateEvaluation.pderiv_pt_same, if_pos rfl, mul_one]
-  · show _ * pderiv C _ (B j) = 0
+        show _ * pderiv (R := C) _ (pt C (n := 3) dd 0 j) = 0
+        have hzero : pderiv (R := C) ((0 : Fin 3), i) (p3 0 j) = 0 :=
+          pderiv_X_of_ne (fun h => hj (congrArg Prod.snd h))
+        rw [hzero, mul_zero]) (fun h => absurd (Finset.mem_univ i) h)]
+    show _ * pderiv (R := C) _ (pt C (n := 3) dd 0 i) = _
+    have hone : pderiv (R := C) ((0 : Fin 3), i) (p3 0 i) = 1 := pderiv_X_self
+    rw [hone, mul_one]
+    rfl
+  · show _ * pderiv (R := C) _ (B j) = 0
     rw [hd j, mul_zero]
 
 theorem d_ev_keep_iter {f : PS C 2 dd} {B : Pt C 3 dd} (hB : ∀ j, constantCoeff (B j) = 0) (i : Fin dd)
-    (hd : ∀ j, pderiv C ((0 : Fin 3), i) (B j) = 0) (L : ℕ) :
-    (pderiv C ((0 : Fin 3), i))^[L] (ev (n := 3) ![p3 0, B] f) =
-      ev (n := 3) ![p3 0, B] ((pderiv C ((0 : Fin 2), i))^[L] f) := by
+    (hd : ∀ j, pderiv (R := C) ((0 : Fin 3), i) (B j) = 0) (L : ℕ) :
+    (pderiv (R := C) ((0 : Fin 3), i))^[L] (ev (n := 3) ![p3 0, B] f) =
+      ev (n := 3) ![p3 0, B] ((pderiv (R := C) ((0 : Fin 2), i))^[L] f) := by
   induction L with
   | zero => rfl
   | succ L ih =>
@@ -66,18 +75,27 @@ theorem triple_sum_constantCoeff (G : FGLaw C dd) (j : Fin dd) : constantCoeff (
 theorem SS_int (G : FGLaw C dd) (hF : ∀ i, IntS V (G.F i)) (j : Fin dd) : IntS V (SS G j) :=
   intS_ev (z0_pp 1 2) (fun k m => by fin_cases k <;> exact intS_X _) (hF j)
 
-theorem SS_d (G : FGLaw C dd) (i j : Fin dd) : pderiv C ((0 : Fin 3), i) (SS G j) = 0 := by
-  show pderiv C ((0 : Fin 3), i) (ev (n := 3) ![p3 1, p3 2] (G.F j)) = 0
-  rw [pderiv_eval_pair (z0_pp 1 2)]
+theorem SS_d (G : FGLaw C dd) (i j : Fin dd) : pderiv (R := C) ((0 : Fin 3), i) (SS G j) = 0 := by
+  show pderiv (R := C) ((0 : Fin 3), i) (ev (n := 3) ![p3 1, p3 2] (G.F j)) = 0
+  have hz : Z0 (![p3 1, p3 2] : Fin 2 → Pt C 3 dd) := z0_pp 1 2
+  have hchain := Formalism.G.LogCR.pderiv_subst
+    (a := fun p : Fin 2 × Fin dd => (![p3 1, p3 2] : Fin 2 → Pt C 3 dd) p.1 p.2)
+    (fun p => hz p.1 p.2) (G.F j) ((0 : Fin 3), i)
+  rw [Fintype.sum_prod_type, Fin.sum_univ_two] at hchain
+  refine hchain.trans ?_
+  have hzero (k : Fin 3) (m : Fin dd) (hk : k ≠ 0) :
+      pderiv (R := C) ((0 : Fin 3), i) (p3 k m) = 0 :=
+    pderiv_X_of_ne (fun h => hk (congrArg Prod.fst h))
   refine (congrArg₂ (· + ·) (Finset.sum_eq_zero fun m _ => ?_) (Finset.sum_eq_zero fun m _ => ?_)).trans
     (add_zero 0)
-  · show _ * pderiv C _ (pt C (n := 3) dd 1 m) = 0
-    rw [LiftedCoordinateEvaluation.pderiv_pt_ne _ _ _ (by decide : (1 : Fin 3) ≠ 0), mul_zero]
-  · show _ * pderiv C _ (pt C (n := 3) dd 2 m) = 0
-    rw [LiftedCoordinateEvaluation.pderiv_pt_ne _ _ _ (by decide : (2 : Fin 3) ≠ 0), mul_zero]
+  · show _ * pderiv (R := C) _ (pt C (n := 3) dd 1 m) = 0
+    rw [hzero 1 m (by decide), mul_zero]
+  · show _ * pderiv (R := C) _ (pt C (n := 3) dd 2 m) = 0
+    rw [hzero 2 m (by decide), mul_zero]
 
-theorem triple_point_pderiv_first_zero (k : Fin 3) (hk : k ≠ 0) (i j : Fin dd) : pderiv C ((0 : Fin 3), i) ((p3 k : Pt C 3 dd) j) = 0 := by
-  simp [p3, pt, MvPowerSeries.pderiv_X, Pi.single_apply, Prod.ext_iff, Ne.symm hk]
+theorem triple_point_pderiv_first_zero (k : Fin 3) (hk : k ≠ 0) (i j : Fin dd) :
+    pderiv (R := C) ((0 : Fin 3), i) ((p3 k : Pt C 3 dd) j) = 0 :=
+  pderiv_X_of_ne (fun h => hk (congrArg Prod.fst h))
 
 def m3 (G : FGLaw C dd) (n : ℕ) : Pt C 3 dd := fun k => ev ![(p3 0 : Pt C 3 dd)] (mulL G.F n k)
 

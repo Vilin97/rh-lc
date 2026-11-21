@@ -30,7 +30,7 @@ variable {O R Γ : Type} [CommRing O] [IsLocalRing O] [CommRing R] [Algebra O R]
 variable (O) in
 def wpart (j : ℤ) : Submodule O R where
   carrier := {x | ∀ (R' : Type) [CommRing R'] [Algebra O R'] [IsCO O R'] (f f' : R →ₐ[O] R') (t : R'ˣ),
-    push f' u = conjBy (tor t) (push f u) → f' x = ((t ^ j : R'ˣ) : R') * f x}
+    push f' u = conjBy (tor R' t) (push f u) → f' x = ((t ^ j : R'ˣ) : R') * f x}
   add_mem' := fun hx hy R' _ _ _ f f' t h => by rw [map_add (f := _), map_add (f := _), hx R' f f' t h, hy R' f f' t h, mul_add]
   zero_mem' := fun R' _ _ _ f f' t _ => by simp
   smul_mem' := fun a x hx R' _ _ _ f f' t h => by rw [map_smul, map_smul, hx R' f f' t h, mul_smul_comm]
@@ -100,11 +100,11 @@ def ShaO (a : O) : Submodule O (H1 (oqRep F.Ψ⁻¹ a)) :=
     (∀ v ∉ F.Tb, ∀ s ∈ F.Nv v, z.1 (F.loc v s) = 0) ∧
     ∀ v ∈ F.Tb, ∃ m, ∀ g : F.D v, z.1 (F.loc v g) = oqRep F.Ψ⁻¹ a (F.loc v g) m - m}
 
-def VanE : Prop := ∀ j : ℤ, j ≤ 0 → ∀ γ : Γ → Matrix (Fin 3) (Fin 3) O, (∀ g, γ g ∈ gw j) → IsCoc (r0 F.η F.Ψ) γ →
+def VanE : Prop := ∀ j : ℤ, j ≤ 0 → ∀ γ : Γ → Matrix (Fin 3) (Fin 3) O, (∀ g, γ g ∈ gw O j) → IsCoc (r0 F.η F.Ψ) γ →
   (∀ a b, Alg.AdicCont (maximalIdeal O) fun g => γ g a b) →
   (∀ v ∉ F.Tb, ∀ s ∈ F.Nv v, γ (F.loc v s) = 0) →
   (j = 0 → ∀ v ∈ F.Tb, ∀ s ∈ F.Iv v, γ (F.loc v s) = 0) →
-  (j < 0 → ∃ Y ∈ gw j, ∀ g : F.D F.vl, F.ηv F.vl g = 1 → γ (F.loc _ g) = cob (r0 F.η F.Ψ) Y (F.loc _ g)) →
+  (j < 0 → ∃ Y ∈ gw O j, ∀ g : F.D F.vl, F.ηv F.vl g = 1 → γ (F.loc _ g) = cob (r0 F.η F.Ψ) Y (F.loc _ g)) →
   ∃ a : O, a ≠ 0 ∧ ∃ X, ∀ g, a • γ g = cob (r0 F.η F.Ψ) X g
 
 def Cl1 : Prop := ∀ (A : Type) [CommGroup A] (χ : F.η.ker →* A), IsLocallyConstant χ →
@@ -116,7 +116,7 @@ variable {K : Type} [Field K] [Algebra O K]
 
 def IsCharZeroPt (g₁ : Γ) (r : Γ →* GG (m := 3) (R := K)) : Prop :=
   ∃ (A : Subalgebra O K) (_ : IsDiscreteValuationRing A) (_ : Module.Finite O A) (t : Kˣ) (r' : Γ →* GG (m := 3) (R := A)),
-    F.IsPt g₁ r' ∧ push A.val r' = conjBy (tor t) r
+    F.IsPt g₁ r' ∧ push A.val r' = conjBy (tor K t) r
 
 def Rigid [TopologicalSpace K] (r : Γ →* GG (m := 3) (R := K)) : Prop :=
   ∀ (y : Γ → Matrix (Fin 3) (Fin 3) K) (r' : Γ →* GG (m := 3) (R := DualNumber K)), Continuous y → IsCoc r y →

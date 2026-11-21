@@ -75,7 +75,7 @@ theorem biTheta_combL {A S A' : HSp D} (hψ : IsStdChar D ψ (-1)) {K : WO A S �
     funext u v; exact GlobalTheory.FrComb.comb_apply c _ u
   refine ⟨?_, ?_, fun γ u v => ?_, fun γ u v => ?_, ?_, ?_⟩
   · simp only [GlobalTheory.FrComb.comb_apply]
-    exact continuous_finset_sum _ fun x _ => continuous_const.mul
+    exact continuous_finsetSum _ fun x _ => continuous_const.mul
       ((hψ.1.1.comp ((GlobalTheory.FinTranslate.continuous_symplOH A S x).comp continuous_fst)).mul
         (hK.cont.comp ((continuous_fst.add continuous_const).prodMk continuous_snd)))
   · intro n L L' hL hL' hLf hL'f u v
@@ -122,7 +122,7 @@ theorem biTheta_combR {A S A' : HSp D} (hψ : IsStdChar D ψ (-1)) {K : WO A S �
     funext u v; exact GlobalTheory.FrComb.comb_apply c _ v
   refine ⟨?_, ?_, fun γ u v => ?_, fun γ u v => ?_, ?_, ?_⟩
   · simp only [GlobalTheory.FrComb.comb_apply]
-    exact continuous_finset_sum _ fun y _ => continuous_const.mul
+    exact continuous_finsetSum _ fun y _ => continuous_const.mul
       ((hψ.1.1.comp ((GlobalTheory.FinTranslate.continuous_symplOH S A' y).comp continuous_snd)).mul
         (hK.cont.comp (continuous_fst.prodMk (continuous_snd.add continuous_const))))
   · intro n L L' hL hL' hLf hL'f u v

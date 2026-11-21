@@ -77,7 +77,7 @@ theorem _root_.GlobalTheory.SmGL.LeviInt.levi_integral_facts : ∀ (k : Type) [F
       simp [_root_.GlobalTheory.SmGL.leviProj_apply, L, _root_.GlobalTheory.SmGL.leviEmb, Matrix.blockDiagonal'_apply_eq]
     refine ⟨((L⁻¹ * p : _root_.GlobalTheory.SmGL.parab k e) : GL n k), ?_, ?_⟩
     · unfold _root_.GlobalTheory.SmGL.unipRad
-      apply (Subgroup.mem_map_iff_mem (Subgroup.subtype_injective _)).2
+      refine Subgroup.mem_map.mpr ⟨L⁻¹ * p, ?_, rfl⟩
       change _root_.GlobalTheory.SmGL.leviProj k e (L⁻¹ * p) = 1
       rw [map_mul, map_inv, hL, inv_mul_cancel]
     · rw [Subgroup.coe_mul, Subgroup.coe_inv]

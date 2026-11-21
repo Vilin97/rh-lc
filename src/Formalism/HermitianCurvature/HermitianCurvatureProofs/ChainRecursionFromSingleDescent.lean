@@ -373,30 +373,33 @@ theorem hat_toV {T : X → X} (h : H.Good T) {x : X} (hx : x ∈ H.G) :
   rw [hat_apply h]
   exact h.congr _ (H.N_mem x hx) _ hx (H.N_idem x)
 
-theorem Good.comp {T S : X → X} (hT : H.Good T) (hS : H.Good S) : H.Good (fun x => T (S x)) where
-  mem := fun x hx => hT.mem _ (hS.mem x hx)
-  congr := fun x hx y hy h => hT.congr _ (hS.mem x hx) _ (hS.mem y hy) (hS.congr x hx y hy h)
-  lin := fun x hx y hy s => by
-    have h1 : H.N (S (x + s • y)) = H.N (S x + s • S y) := by
-      rw [hS.lin x hx y hy s, _root_.map_add (f := _), _root_.map_smul]
-    rw [hT.congr _ (hS.mem _ (H.G.add_mem hx (H.G.smul_mem s hy))) _
-      (H.G.add_mem (hS.mem x hx) (H.G.smul_mem s (hS.mem y hy))) h1]
-    exact hT.lin _ (hS.mem x hx) _ (hS.mem y hy) s
+theorem Good.comp {T S : X → X} (hT : H.Good T) (hS : H.Good S) : H.Good (fun x => T (S x)) := by
+  exact
+    { mem := fun x hx => hT.mem _ (hS.mem x hx)
+      congr := fun x hx y hy h => hT.congr _ (hS.mem x hx) _ (hS.mem y hy) (hS.congr x hx y hy h)
+      lin := fun x hx y hy s => by
+        have h1 : H.N (S (x + s • y)) = H.N (S x + s • S y) := by
+          rw [hS.lin x hx y hy s, _root_.map_add (f := _), _root_.map_smul]
+        rw [hT.congr _ (hS.mem _ (H.G.add_mem hx (H.G.smul_mem s hy))) _
+          (H.G.add_mem (hS.mem x hx) (H.G.smul_mem s (hS.mem y hy))) h1]
+        exact hT.lin _ (hS.mem x hx) _ (hS.mem y hy) s }
 
-theorem Good.add {T S : X → X} (hT : H.Good T) (hS : H.Good S) : H.Good (fun x => T x + S x) where
-  mem := fun x hx => H.G.add_mem (hT.mem x hx) (hS.mem x hx)
-  congr := fun x hx y hy h => by
-    rw [_root_.map_add (f := _), _root_.map_add (f := _), hT.congr x hx y hy h, hS.congr x hx y hy h]
-  lin := fun x hx y hy s => by
-    rw [_root_.map_add (f := _), _root_.map_add (f := _), _root_.map_add (f := _), hT.lin x hx y hy s, hS.lin x hx y hy s, smul_add]
-    abel
+theorem Good.add {T S : X → X} (hT : H.Good T) (hS : H.Good S) : H.Good (fun x => T x + S x) := by
+  exact
+    { mem := fun x hx => H.G.add_mem (hT.mem x hx) (hS.mem x hx)
+      congr := fun x hx y hy h => by
+        rw [_root_.map_add (f := _), _root_.map_add (f := _), hT.congr x hx y hy h, hS.congr x hx y hy h]
+      lin := fun x hx y hy s => by
+        rw [_root_.map_add (f := _), _root_.map_add (f := _), _root_.map_add (f := _), hT.lin x hx y hy s, hS.lin x hx y hy s, smul_add]
+        abel }
 
-theorem Good.smul {T : X → X} (hT : H.Good T) (a : ℂ) : H.Good (fun x => a • T x) where
-  mem := fun x hx => H.G.smul_mem a (hT.mem x hx)
-  congr := fun x hx y hy h => by
-    rw [_root_.map_smul, _root_.map_smul, hT.congr x hx y hy h]
-  lin := fun x hx y hy s => by
-    rw [_root_.map_smul, _root_.map_smul, _root_.map_smul, hT.lin x hx y hy s, smul_add, smul_comm]
+theorem Good.smul {T : X → X} (hT : H.Good T) (a : ℂ) : H.Good (fun x => a • T x) := by
+  exact
+    { mem := fun x hx => H.G.smul_mem a (hT.mem x hx)
+      congr := fun x hx y hy h => by
+        rw [_root_.map_smul, _root_.map_smul, hT.congr x hx y hy h]
+      lin := fun x hx y hy s => by
+        rw [_root_.map_smul, _root_.map_smul, _root_.map_smul, hT.lin x hx y hy s, smul_add, smul_comm] }
 
 theorem Good.neg {T : X → X} (hT : H.Good T) : H.Good (fun x => -T x) := by
   have e : (fun x => -T x) = fun x => (-1 : ℂ) • T x := by
@@ -412,15 +415,17 @@ theorem Good.sub {T S : X → X} (hT : H.Good T) (hS : H.Good S) : H.Good (fun x
   rw [e]
   exact hT.add hS.neg
 
-theorem good_id : H.Good (fun x => x) where
-  mem := fun _ hx => hx
-  congr := fun _ _ _ _ h => h
-  lin := fun x _ y _ s => by rw [_root_.map_add (f := _), _root_.map_smul]
+theorem good_id : H.Good (fun x => x) := by
+  exact
+    { mem := fun _ hx => hx
+      congr := fun _ _ _ _ h => h
+      lin := fun x _ y _ s => by rw [_root_.map_add (f := _), _root_.map_smul] }
 
-theorem good_zero : H.Good (fun _ => (0 : X)) where
-  mem := fun _ _ => H.G.zero_mem
-  congr := fun _ _ _ _ _ => rfl
-  lin := fun _ _ _ _ _ => by simp
+theorem good_zero : H.Good (fun _ => (0 : X)) := by
+  exact
+    { mem := fun _ _ => H.G.zero_mem
+      congr := fun _ _ _ _ _ => rfl
+      lin := fun _ _ _ _ _ => by simp }
 
 theorem hat_comp {T S : X → X} (hT : H.Good T) (hS : H.Good S) :
     H.hat (fun x => T (S x)) = H.hat T * H.hat S := by
@@ -1047,12 +1052,13 @@ structure SData (L : Fin (r + 1)) (Dc Dc₀ : (Fin r → ℂ) → Set (Mx k r)) 
 
 variable {S : Set (Fin r → ℂ)}
 
-theorem RS_lin : LinRel (RS z z' π π' L Dc Dc₀ S) where
-  zero := ⟨fam_zero, fam_zero, fun _ _ _ _ _ => rfl⟩
-  add := fun h h' => ⟨fam_add h.1 h'.1, fam_add h.2.1 h'.2.1, fun c hc g hg hgD => by
-    simp only [Pi.add_apply, h.2.2 c hc g hg hgD, h'.2.2 c hc g hg hgD]⟩
-  smul := fun s _ _ h => ⟨fam_smul s h.1, fam_smul s h.2.1, fun c hc g hg hgD => by
-    simp only [Pi.smul_apply, h.2.2 c hc g hg hgD]⟩
+theorem RS_lin : LinRel (RS z z' π π' L Dc Dc₀ S) := by
+  exact
+    { zero := ⟨fam_zero, fam_zero, fun _ _ _ _ _ => rfl⟩
+      add := fun h h' => ⟨fam_add h.1 h'.1, fam_add h.2.1 h'.2.1, fun c hc g hg hgD => by
+        simp only [Pi.add_apply, h.2.2 c hc g hg hgD, h'.2.2 c hc g hg hgD]⟩
+      smul := fun s _ _ h => ⟨fam_smul s h.1, fam_smul s h.2.1, fun c hc g hg hgD => by
+        simp only [Pi.smul_apply, h.2.2 c hc g hg hgD]⟩ }
 
 theorem near_update {Dc : (Fin r → ℂ) → Set (Mx k r)} (ho : IsOpen (UU Dc)) {c : Fin r → ℂ} (hc : c ∈ OmX r)
     {g : Mx k r} (hgD : g ∈ Dc c) (l : Fin r) :
@@ -1251,16 +1257,17 @@ def RK (D : Set (Mx k r)) (l : Fin r) (Φ Ψ : Fn k r (Wq →L[ℂ] Wp)) : Prop 
     FamFF k r z z' π π' l.succ (Dcell D l.succ) Ψ ∧
     ∀ c ∈ OmX r, ∀ g ∈ Glev k r l.succ, g ∈ Dcell D l.succ c → Ψ c g = Res k r l Φ c g
 
-theorem RK_lin (D : Set (Mx k r)) (l : Fin r) : LinRel (RK z z' π π' D l) where
-  zero := ⟨fam_zero, fun _ _ _ _ _ => rfl, fam_zero, fun _ _ _ _ _ => by simp [Res]⟩
-  add := fun h h' => ⟨fam_add h.1 h'.1, fun c hc c' hc' hcc => by
-      simp only [Pi.add_apply, h.2.1 c hc c' hc' hcc, h'.2.1 c hc c' hc' hcc],
-    fam_add h.2.2.1 h'.2.2.1, fun c hc g hg hgD => by
-      simp only [Pi.add_apply, h.2.2.2 c hc g hg hgD, h'.2.2.2 c hc g hg hgD, Res, smul_add]⟩
-  smul := fun s _ _ h => ⟨fam_smul s h.1, fun c hc c' hc' hcc => by
-      simp only [Pi.smul_apply, h.2.1 c hc c' hc' hcc],
-    fam_smul s h.2.2.1, fun c hc g hg hgD => by
-      simp only [Pi.smul_apply, h.2.2.2 c hc g hg hgD, Res, smul_comm s]⟩
+theorem RK_lin (D : Set (Mx k r)) (l : Fin r) : LinRel (RK z z' π π' D l) := by
+  exact
+    { zero := ⟨fam_zero, fun _ _ _ _ _ => rfl, fam_zero, fun _ _ _ _ _ => by simp [Res]⟩
+      add := fun h h' => ⟨fam_add h.1 h'.1, fun c hc c' hc' hcc => by
+          simp only [Pi.add_apply, h.2.1 c hc c' hc' hcc, h'.2.1 c hc c' hc' hcc],
+        fam_add h.2.2.1 h'.2.2.1, fun c hc g hg hgD => by
+          simp only [Pi.add_apply, h.2.2.2 c hc g hg hgD, h'.2.2.2 c hc g hg hgD, Res, smul_add]⟩
+      smul := fun s _ _ h => ⟨fam_smul s h.1, fun c hc c' hc' hcc => by
+          simp only [Pi.smul_apply, h.2.1 c hc c' hc' hcc],
+        fam_smul s h.2.2.1, fun c hc g hg hgD => by
+          simp only [Pi.smul_apply, h.2.2.2 c hc g hg hgD, Res, smul_comm s]⟩ }
 
 theorem RK_op (hR : ResMem) (hFO : FamOps) (hW : WeylLevelElementFacts) (hz : inWb k r z) (hz' : inWb k r z')
     {D : Set (Mx k r)} (hD : IsDom k r z z' 0 D) (l j : Fin r) (hj : j.val < l.val) (q : Fin 6) :
@@ -1458,13 +1465,14 @@ theorem good_of (hS : SData z z' L Dc Dc (OmX r)) {T : Fn k r (Wq →L[ℂ] Wp) 
     (hP : Pres2 (RS z z' π π' L Dc Dc (OmX r)) T T)
     (hl : ∀ Φ Ψ, FamFF k r z z' π π' L Dc Φ → FamFF k r z z' π π' L Dc Ψ → ∀ s : ℂ, ∀ c ∈ OmX r,
       ∀ g ∈ Glev k r L, g ∈ Dc c → T (Φ + s • Ψ) c g = T Φ c g + s • T Ψ c g) :
-    (famData π π' hS).Good T where
-  mem := fun Φ h => (hP Φ Φ ⟨h, h, fun _ _ _ _ _ => rfl⟩).1
-  congr := fun Φ h Ψ h' he => (cutP_eq_iff _ _).2 (hP Φ Ψ ⟨h, h', (cutP_eq_iff _ _).1 he⟩).2.2
-  lin := fun Φ h Ψ h' s => by
-    show cutP L Dc _ = cutP L Dc _ + s • cutP L Dc _
-    rw [← map_smul, ← map_add (f := _)]
-    exact (cutP_eq_iff _ _).2 (hl Φ Ψ h h' s)
+    (famData π π' hS).Good T := by
+  exact
+    { mem := fun Φ h => (hP Φ Φ ⟨h, h, fun _ _ _ _ _ => rfl⟩).1
+      congr := fun Φ h Ψ h' he => (cutP_eq_iff _ _).2 (hP Φ Ψ ⟨h, h', (cutP_eq_iff _ _).1 he⟩).2.2
+      lin := fun Φ h Ψ h' s => by
+        show cutP L Dc _ = cutP L Dc _ + s • cutP L Dc _
+        rw [← map_smul, ← map_add (f := _)]
+        exact (cutP_eq_iff _ _).2 (hl Φ Ψ h h' s) }
 
 theorem good_op (hFO : FamOps) (hz : inWb k r z) (hz' : inWb k r z') (hS : SData z z' L Dc Dc (OmX r))
     (l : Fin r) (q : Fin 6) : (famData π π' hS).Good (crd (opL l q)) := by
@@ -1547,16 +1555,21 @@ variable {H}
 
 theorem sandw_hat (hop : ∀ l q, H.Good (crd (opL l q))) (Y : ℂ) : ∀ (j : ℕ) (M : OM (Fn k r E)),
     (∀ a b, H.Good (M a b)) →
-    (∀ a b, H.Good (sandw k r Y j M a b)) ∧ hatM H (sandw k r Y j M) = Lp H Y j * hatM H M * Rp H Y j
-  | 0, M, hM => ⟨hM, by simp [sandw, Lp, Rp]⟩
-  | j + 1, M, hM => by
+    (∀ a b, H.Good (sandw k r Y j M a b)) ∧ hatM H (sandw k r Y j M) = Lp H Y j * hatM H M * Rp H Y j := by
+  intro j
+  induction j with
+  | zero =>
+    intro M hM
+    exact ⟨hM, by simp [sandw, Lp, Rp]⟩
+  | succ j ih =>
+    intro M hM
     by_cases hj : j < r
     · have e : sandw k r Y (j + 1) M = sandw k r Y j (oMul (TLs k ⟨j, hj⟩ Y) (oMul M (TL k ⟨j, hj⟩ Y))) := by
         show sandw k r Y j _ = _
         rw [dif_pos hj]
       have g1 := good_oMul hM (good_TL hop ⟨j, hj⟩ Y)
       have g2 := good_oMul (good_TLs hop ⟨j, hj⟩ Y) g1
-      obtain ⟨h1, h2⟩ := sandw_hat hop Y j _ g2
+      obtain ⟨h1, h2⟩ := ih _ g2
       rw [e]
       refine ⟨h1, ?_⟩
       rw [h2, hatM_oMul (good_TLs hop ⟨j, hj⟩ Y) g1, hatM_oMul hM (good_TL hop ⟨j, hj⟩ Y)]
@@ -1564,21 +1577,25 @@ theorem sandw_hat (hop : ∀ l q, H.Good (crd (opL l q))) (Y : ℂ) : ∀ (j : �
     · have e : sandw k r Y (j + 1) M = sandw k r Y j M := by
         show sandw k r Y j _ = _
         rw [dif_neg hj]
-      obtain ⟨h1, h2⟩ := sandw_hat hop Y j M hM
+      obtain ⟨h1, h2⟩ := ih M hM
       rw [e]
       refine ⟨h1, ?_⟩
       rw [h2]
       simp only [Lp, Rp, dif_neg hj, Matrix.mul_one, Matrix.one_mul]
 
 theorem vAB_hat (hop : ∀ l q, H.Good (crd (opL l q))) (Y : ℂ) : ∀ (j : ℕ) (b : Fin 2),
-    H.Good (crd (cmp (vAB (E := E) r Y j) b)) ∧ H.hat (crd (cmp (vAB (E := E) r Y j) b)) = Rp H Y j b 0
-  | 0, b => by
+    H.Good (crd (cmp (vAB (E := E) r Y j) b)) ∧ H.hat (crd (cmp (vAB (E := E) r Y j) b)) = Rp H Y j b 0 := by
+  intro j
+  induction j with
+  | zero =>
+    intro b
     fin_cases b
     · exact ⟨HatData.good_id, HatData.hat_id⟩
     · exact ⟨HatData.good_zero, HatData.hat_zero⟩
-  | j + 1, b => by
-    obtain ⟨gA, hA⟩ := vAB_hat hop Y j 0
-    obtain ⟨gB, hB⟩ := vAB_hat hop Y j 1
+  | succ j ih =>
+    intro b
+    obtain ⟨gA, hA⟩ := ih 0
+    obtain ⟨gB, hB⟩ := ih 1
     by_cases hj : j < r
     · have ev : vAB (E := E) r Y (j + 1) =
           (fun f => Y • (vAB r Y j).1 f + pOp ⟨j, hj⟩ ((vAB r Y j).1 f) - cOp ⟨j, hj⟩ ((vAB r Y j).2 f),
@@ -1635,17 +1652,21 @@ theorem vAB_hat (hop : ∀ l q, H.Good (crd (opL l q))) (Y : ℂ) : ∀ (j : ℕ
       have hR : Rp H Y (j + 1) = Rp H Y j := by
         simp only [Rp, dif_neg hj, Matrix.one_mul]
       rw [ev, hR]
-      exact vAB_hat hop Y j b
+      exact ih b
 
 theorem vABs_hat (hop : ∀ l q, H.Good (crd (opL l q))) (Y : ℂ) : ∀ (j : ℕ) (a : Fin 2),
-    H.Good (crd (cmp (vABs (E := E) r Y j) a)) ∧ H.hat (crd (cmp (vABs (E := E) r Y j) a)) = Lp H Y j 0 a
-  | 0, a => by
+    H.Good (crd (cmp (vABs (E := E) r Y j) a)) ∧ H.hat (crd (cmp (vABs (E := E) r Y j) a)) = Lp H Y j 0 a := by
+  intro j
+  induction j with
+  | zero =>
+    intro a
     fin_cases a
     · exact ⟨HatData.good_id, HatData.hat_id⟩
     · exact ⟨HatData.good_zero, HatData.hat_zero⟩
-  | j + 1, a => by
-    obtain ⟨gA, hA⟩ := vABs_hat hop Y j 0
-    obtain ⟨gB, hB⟩ := vABs_hat hop Y j 1
+  | succ j ih =>
+    intro a
+    obtain ⟨gA, hA⟩ := ih 0
+    obtain ⟨gB, hB⟩ := ih 1
     by_cases hj : j < r
     · have ev : vABs (E := E) r Y (j + 1) =
           (fun f => (vABs r Y j).1 (Y • f - pbOp ⟨j, hj⟩ f) - (vABs r Y j).2 (cbOp ⟨j, hj⟩ f),
@@ -1699,7 +1720,7 @@ theorem vABs_hat (hop : ∀ l q, H.Good (crd (opL l q))) (Y : ℂ) : ∀ (j : �
       have hL : Lp H Y (j + 1) = Lp H Y j := by
         simp only [Lp, dif_neg hj, Matrix.mul_one]
       rw [ev, hL]
-      exact vABs_hat hop Y j a
+      exact ih a
 
 theorem rc_eq (hop : ∀ l q, H.Good (crd (opL l q))) (Y : ℂ) (j : ℕ) (M : OM (Fn k r E))
     (hM : ∀ a b, H.Good (M a b)) {Φ : Fn k r E} (hΦ : Φ ∈ H.G) :

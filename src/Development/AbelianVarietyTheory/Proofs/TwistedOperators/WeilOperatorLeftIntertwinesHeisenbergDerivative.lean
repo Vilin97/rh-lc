@@ -74,6 +74,8 @@ theorem weil_heisDeriv_intertw_left {F E : Type} [Field F] [NumberField F] [Fiel
     rw [LinearMap.comp_apply, hS.impl (g, 1) _ _ (Submodule.subset_span ⟨f, g₀, hg₀, rfl⟩), h2 f g₀ hg₀]
     congr 3
     simp [actAB, hu'def, mat, Matrix.mul_smul]
+  change HasDerivAt (fun t : ℝ => (LinearMap.proj x₀ ∘ₗ om (g, 1))
+    (M.co.rho ψ (realAd F t • u) (pureA F f g₀))) _ 0 at dA
   rw [hfun] at dA
   have e := dA.unique dB
   simp only [LinearMap.comp_apply, LinearMap.proj_apply, h2 _ g₀ hg₀, hx₀, GlobalTheory.RealLift.pureA_ptAt, hg₀0,
