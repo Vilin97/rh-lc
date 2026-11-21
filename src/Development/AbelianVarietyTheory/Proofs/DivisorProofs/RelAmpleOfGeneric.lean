@@ -30,7 +30,18 @@ theorem pw_pw' {X : Scheme.{0}} (H : LB X) (a b : ℤ) :
 
 theorem relAmple_of_generic : ∀ (W L : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [Field L] [Algebra W L] [IsFractionRing W L] (G : Over (Sp W)) [GrpObj G] (A : Over (Sp L)) [GrpObj A] (φ : A.left ⟶ G.left), IsAbelianScheme G → IsGrpPullback A G (spMap (algebraMap W L)) φ → ∀ M : LB G.left, M.IsLB → Out.RelAmple A (M.pull φ) → Out.RelAmple G M := by
   intro W L _ _ _ _ _ _ G _ A _ φ hG hφ M hM hA
-  have hAab : IsAbelianScheme A := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hG hφ
+  have hAab : IsAbelianScheme A := by
+    haveI := hG.comm
+    have hcomm : IsCommMonObj A := by
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (hφ.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← hφ.2 T x y (pushPt hφ.1.w x) (pushPt hφ.1.w y) rfl rfl,
+        ← hφ.2 T y x (pushPt hφ.1.w y) (pushPt hφ.1.w x) rfl rfl, _root_.mul_comm]
+    exact ⟨hcomm,
+      MorphismProperty.of_isPullback (P := @Smooth) hφ.1 hG.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) hφ.1 hG.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) hφ.1 hG.geomConnected⟩
   obtain ⟨d, hd, hex⟩ := (GlobalTheory.Unif.relAmple_iff_veryAmpleBy L A (M.pull φ) (pull_isLB hM φ)).1 hA
 
   rw [← GlobalTheory.TrivLocus.pull_pw M φ (d : ℤ)] at hex

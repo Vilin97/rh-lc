@@ -39,7 +39,9 @@ theorem pure_ne_zero {κ : Type} [Fintype κ] (g : SInf F κ) (hg : g ≠ 0) (φ
   let x : κ → AF F := fun i => ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (a i), xf i)
   intro hz
   have hx := congrFun hz x
-  have e1 : (fun i => evI F (x i)) = a := funext fun i => by simp [x, evI]
+  have e1 : (fun i => evI F (x i)) = a := funext fun i => by
+    change InfiniteAdeleRing.ringEquiv_mixedSpace F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (a i)) = a i
+    exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply (a i)
   have e2 : ∀ v, (fun i => evFin F v (x i)) = fun i => if v ∈ T then y v i else 0 := fun v => funext fun i => rfl
   simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, Pi.zero_apply, e1, e2] at hx
   rw [finprod_eq_prod_of_mulSupport_subset _ (s := T) ?_] at hx

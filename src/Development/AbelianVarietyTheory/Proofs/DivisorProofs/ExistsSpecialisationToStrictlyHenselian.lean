@@ -23,7 +23,6 @@ theorem sepEtale (R A : Type) [CommRing R] [CommRing A] [Algebra R A] [Algebra.E
     simp
   haveI : P.LiesOver Q := ⟨hPQ⟩
   letI := Localization.AtPrime.algebraOfLiesOver Q P
-  haveI : Localization.AtPrime.IsLiesOverAlgebra Q P := ⟨rfl⟩
   have hsep : Algebra.IsSeparable Q.ResidueField P.ResidueField := inferInstance
   let g : P.ResidueField →ₐ[R] L := Ideal.ResidueField.liftₐ P f le_rfl (fun x hx => by
     simp only [Submonoid.mem_comap, IsUnit.mem_submonoid_iff]

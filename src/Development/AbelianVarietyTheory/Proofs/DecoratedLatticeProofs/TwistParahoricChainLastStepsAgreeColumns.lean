@@ -22,7 +22,7 @@ theorem toLoc_of_mat {E k A B : Type} [Field E] [NumberField E] [StarRing E] [Fi
     [IsNonarchimedeanLocalField k] (ι : E →+* k) {a b : ℕ} (e : A ≃ Fin a) (e' : B ≃ Fin b) (x : Matrix A B E) :
     x.map ι = toLoc ι e e' (Matrix.toLin' (Matrix.of fun i j => x (e.symm i) (e'.symm j))) := by
   ext i j
-  simp [toLoc, Matrix.toLin'_apply, Matrix.mulVec_single]
+  simp [toLoc, Matrix.toLin'_apply, Matrix.mulVec_single, Function.swap]
 
 theorem psi_isLocallyConstant {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (s : ℕ) (R : Ranks) (W : TwData k) (g : GL (XIx (Fin R.k) (Fin R.t) s ⊕ Fin (0 + 1)) k) :

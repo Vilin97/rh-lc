@@ -133,7 +133,7 @@ namespace GlobalTheory.KernelIntegral
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
-def cube (p q : ℕ) : Set (Fin p × Fin q → ℂ) := Set.univ.pi fun _ => Metric.closedBall (0 : ℂ) 1
+noncomputable def cube (p q : ℕ) : Set (Fin p × Fin q → ℂ) := Set.univ.pi fun _ => Metric.closedBall (0 : ℂ) 1
 
 theorem fibre_bound (X : Data E r) {j : ℕ} (hj : j ≤ r) (hp : X.p0 = r - j) {bb : ℝ} (hbb : (r : ℝ) ≤ bb)
     (v : Fin j × Fin (r - j) → ℂ) :

@@ -18,10 +18,10 @@ theorem _root_.GlobalTheory.T.divisible_group_tower_compatibility :
       (G : PDivGroup p O) (e : ∀ n, G.A n ≃ₐ[O] X.A n) (τ : La →+ G.Tate)
       (hre : X.Realises G e τ),
       (∀ (φ : La →+ La) (dφ : L →ₗ[O] L), X.Acts φ dφ → ∃ f : G ⟶ G,
-        (∀ a, tateMap f (τ a) = τ (φ a)) ∧ ∀ n (g : G.A n) (a : La),
+        (∀ a, tateMap G G O f (τ a) = τ (φ a)) ∧ ∀ n (g : G.A n) (a : La),
           (e n (f.app n g)).1 (lev p n a) = (e n g).1 (lev p n (φ a))) ∧
       ∀ (H : PDivGroup p O) (f f' : G ⟶ H),
-        (∀ a, tateMap f (τ a) = tateMap f' (τ a)) → f = f' := by
+        (∀ a, tateMap G H O f (τ a) = tateMap G H O f' (τ a)) → f = f' := by
   intro p _ C _ _ _ v O _ _ _ hv hp hO La _ _ _ L _ _ X G e τ hre
   let ev (n : ℕ) (t : LevGrp La p n) : G.A n →ₐ[O] O := (evalAt (X.A n) t).comp (e n).toAlgHom
   have ev_apply (n : ℕ) (t : LevGrp La p n) (g : G.A n) : ev n t g = (e n g).1 t := rfl
@@ -30,7 +30,7 @@ theorem _root_.GlobalTheory.T.divisible_group_tower_compatibility :
   have ev_lev (n : ℕ) (a : La) : ev n (lev p n a) = (τ a).pt n :=
     AlgHom.ext fun g => (hre.pt a n g).symm
   have tate_pt {H : PDivGroup p O} (f : G ⟶ H) (a : La) (n : ℕ) (g : H.A n) :
-      (tateMap f (τ a)).pt n g = (τ a).pt n (f.app n g) := rfl
+      (tateMap G H O f (τ a)).pt n g = (τ a).pt n (f.app n g) := rfl
   constructor
   · intro φ dφ h
     let levMap (n : ℕ) : LevGrp La p n →* LevGrp La p n :=

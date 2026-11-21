@@ -188,7 +188,7 @@ theorem prodStart_int (c : Fin (X.m + 1)) :
   have hX : ∀ v : VarH X, (MvPolynomial.X v : RHH O X) ∈ intSub O (VarH X) := by
     intro v m
     refine ⟨if Finsupp.single v 1 = m then 1 else 0, ?_⟩
-    rw [coeff_X']
+    rw [MvPolynomial.coeff_X]
     split_ifs <;> simp
   exact Subalgebra.prod_mem _ fun j _ => Subalgebra.pow_mem _ (hX _) _
 

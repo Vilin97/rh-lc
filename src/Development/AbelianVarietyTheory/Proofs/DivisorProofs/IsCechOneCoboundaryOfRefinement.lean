@@ -28,7 +28,9 @@ theorem isCob_of_refine : ∀ {Y : Scheme.{0}} {I J : Type} (Uc : I → Y.Opens)
     have h1 := congrArg (fun s => rsT s ((Uc i ⊓ V p) ⊓ (Uc i ⊓ V p'))) (hB p p')
     have h2 := congrArg (fun s => rsT s ((Uc i ⊓ V p) ⊓ (Uc i ⊓ V p'))) (hc (σ p) (σ p') i)
     simp only [rsT_add, rsT_sub] at h1 h2 ⊢
-    simp (disch := (first | assumption | (intro x hx; try simp only [TopologicalSpace.Opens.mem_inf] at hx ⊢; aesop))) only [rsT_rsT] at h1 h2 ⊢
+    repeat
+      first | rw [rsT_rsT] at h1 | rw [rsT_rsT] at h2 | rw [rsT_rsT]
+      all_goals try (intro x hx; try simp only [TopologicalSpace.Opens.mem_inf] at hx ⊢; aesop)
     linear_combination h1 - h2
   choose t ht using glue
   refine ⟨t, fun i j => ?_⟩
@@ -37,7 +39,9 @@ theorem isCob_of_refine : ∀ {Y : Scheme.{0}} {I J : Type} (Uc : I → Y.Opens)
   have h2 := congrArg (fun s => rsT s (Uc i ⊓ Uc j ⊓ V p)) (ht j p)
   have h3 := congrArg (fun s => rsT s (Uc i ⊓ Uc j ⊓ V p)) (hc (σ p) i j)
   simp only [rsT_add, rsT_sub] at h1 h2 h3 ⊢
-  simp (disch := (first | assumption | (intro x hx; try simp only [TopologicalSpace.Opens.mem_inf] at hx ⊢; aesop))) only [rsT_rsT] at h1 h2 h3 ⊢
+  repeat
+    first | rw [rsT_rsT] at h1 | rw [rsT_rsT] at h2 | rw [rsT_rsT] at h3 | rw [rsT_rsT]
+    all_goals try (intro x hx; try simp only [TopologicalSpace.Opens.mem_inf] at hx ⊢; aesop)
   linear_combination h1 - h2 + h3
 
 end GlobalTheory.KS.Refine

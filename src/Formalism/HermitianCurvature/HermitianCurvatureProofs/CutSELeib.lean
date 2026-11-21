@@ -38,7 +38,8 @@ def SlDom (μ : Measure (Mt k r)) (l : Fin r) (c : Fin r → ℂ) (Φ : RadSp k 
 
 def SliceGood (X : ActualOps k r z z' π π') (μ : Measure (Mt k r)) (l : Fin r) (c : Fin r → ℂ)
     (Φ : RadSp k r z z' π π') : Prop :=
-  Φ ∈ lcSub k r z z' π π' ∧ ∀ js : List (Fin 6), SlDom μ l c (wOp X l js Φ)
+  Φ ∈ lcSub (k := k) (r := r) (z := z) (z' := z') (π := π) (π' := π') ∧
+    ∀ js : List (Fin 6), SlDom μ l c (wOp X l js Φ)
 
 end Slice
 
@@ -46,7 +47,9 @@ def PairAtDeriv : Prop :=
   ∀ (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ) (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
     [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
     (π : Mx k r → (Wp →L[ℂ] Wp)) (π' : Mx k r → (Wq →L[ℂ] Wq)) (X : ActualOps k r z z' π π') (μ : Measure (Mt k r)),
-    B.IsHaarOn (Glev k r (Fin.last r)) μ → ∀ (l : Fin r), ∀ (Φ Ψ : RadSp k r z z' π π'), Φ ∈ lcSub k r z z' π π' → Ψ ∈ lcSub k r z z' π π' →
+    B.IsHaarOn (Glev k r (Fin.last r)) μ → ∀ (l : Fin r), ∀ (Φ Ψ : RadSp k r z z' π π'),
+    Φ ∈ lcSub (k := k) (r := r) (z := z) (z' := z') (π := π) (π' := π') →
+    Ψ ∈ lcSub (k := k) (r := r) (z := z) (z' := z') (π := π) (π' := π') →
     ∀ c ∈ OmX r, ∀ (c' : Cf r l.succ) (t : ℂ), t ≠ 0 →
       HasFDerivAt (fun s => pairAt μ Φ Ψ (glue l.succ (Function.update c l s) c'))
         (wl (pairAt μ (dT X l Φ) Ψ (glue l.succ (Function.update c l t) c') +

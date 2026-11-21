@@ -25,15 +25,15 @@ theorem coords_eq_zero {O : Type} [CommRing O] [StarRing O] [IsDedekindDomain O]
   have := Forms.projective_of_int O X
   have := Forms.finite_balTensor (O := O) (X := X)
   have := Forms.free_balTensor (X := X) hw
-  let e := Module.Free.chooseBasis ℤ ((TensorProduct ℤ X X) ⧸ Forms.balTensorRel O X)
+  let e := Module.Free.chooseBasis ℤ ((TensorProduct ℤ X X) ⧸ Forms.balTensorRel (O := O) (X := X))
   have hm := Forms.balTensorMk_mem_balForms O X
   let β : _ → PolFan.balForms (star : O → O) X := fun j =>
     ⟨(Forms.balTensorMk O).compr₂ (e.coord j),
       fun y x => congrArg (e.coord j) (hm.1 y x), fun a y x => congrArg (e.coord j) (hm.2 a y x)⟩
-  let L : J → ((TensorProduct ℤ X X) ⧸ Forms.balTensorRel O X) →+ ℤ := fun i =>
+  let L : J → ((TensorProduct ℤ X X) ⧸ Forms.balTensorRel (O := O) (X := X)) →+ ℤ := fun i =>
     Forms.balTensorLift (O := O) ⟨(ε i : LinearMap.BilinForm ℤ X), (ε i).2.1, (ε i).2.2⟩
   have hL (i a b) : L i (Forms.balTensorMk O a b) = (ε i : LinearMap.BilinForm ℤ X) a b := rfl
-  let Φ : ((TensorProduct ℤ X X) ⧸ Forms.balTensorRel O X) →+ B :=
+  let Φ : ((TensorProduct ℤ X X) ⧸ Forms.balTensorRel (O := O) (X := X)) →+ B :=
     ∑ i, (zmultiplesHom B (c i)).comp (L i)
   have hΦa (t) : Φ t = ∑ i, L i t • c i := by
     simp [Φ, AddMonoidHom.finsetSum_apply]

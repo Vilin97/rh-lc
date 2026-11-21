@@ -23,7 +23,7 @@ namespace GlobalTheory.Mum
 theorem exists_point_hasArcData_uniformiser : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dm : Datum H) (l : Level H) (Xo : Moduli Dm l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β), Y.N4 → ∀ (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V], GlobalTheory.LN.CDvr V → ∀ (b : O →+* V) (ϖ : V) (a : ArcIn Dm l β V b), Irreducible ϖ → ∃ y : Sp V ⟶ Y.X, Y.HasArcData a (maximalIdeal V) (RingHom.id V) ϖ y := by
   intro E _ _ _ H Dm l Xo c O _ β Y hN V _ _ _ hV b ϖ a hϖ
   obtain ⟨hdvr, hc, hcz⟩ := (GlobalTheory.LN.cDvr_iff V).1 hV
-  obtain ⟨⟨h1, h2, -, h4, h5⟩, -⟩ := GlobalTheory.lawsAndExpansions
+  obtain ⟨h1, h2, -, h4, h5⟩ := GlobalTheory.lawsAndExpansions.1
   have hT := GlobalTheory.twistBaseChange
   have hm : maximalIdeal V = Ideal.span {ϖ} := hϖ.maximalIdeal_eq
   obtain ⟨χ, hχ, -⟩ := hN V b ϖ a (Or.inr ⟨hdvr, hϖ, hm ▸ hc⟩)

@@ -35,9 +35,12 @@ private theorem map_rowDifferential_of_commute_faces_lemma {E E' : _root_.Global
     (p : ℕ) (y : _root_.GlobalTheory.EtC.H R (_root_.GlobalTheory.EtC.disc.obj (E.obj (op ⦋p⦌))) F s) :
     φ (p + 1) (_root_.GlobalTheory.EtC.GmStep.rowD R E F s p y) =
       _root_.GlobalTheory.EtC.GmStep.rowD R E' F' s' p (φ p y) := by
-  set_option synthInstance.maxHeartbeats 100000 in
-    simp only [_root_.GlobalTheory.EtC.GmStep.rowD, AddMonoidHom.finset_sum_apply,
-    AddMonoidHom.smul_apply, map_sum, map_zsmul, hc]
+  change φ (p + 1) ((AddMonoidHom.eval y) (∑ j : Fin (p + 2),
+      ((-1 : ℤ) ^ (j : ℕ)) • pull R (disc.map (E.δ j)) F s)) =
+    (AddMonoidHom.eval (φ p y)) (∑ j : Fin (p + 2),
+      ((-1 : ℤ) ^ (j : ℕ)) • pull R (disc.map (E'.δ j)) F' s')
+  simp only [map_sum, map_zsmul]
+  exact Finset.sum_congr rfl fun j _ => congrArg (fun x => ((-1 : ℤ) ^ (j : ℕ)) • x) (hc p j y)
 
 
 open CategoryTheory Limits AlgebraicGeometry Opposite Simplicial in

@@ -30,7 +30,7 @@ theorem exists_oAct_of_isPullDeg : GlobalFnsSt → ∀ (R R' : Type) [CommRing R
   have he : ∀ a, o'.act a ≫ hD.e.hom = hD.e.hom ≫ (Over.pullback (specOf φ)).map (ιD.onB.act a) := fun a => by
     refine Over.OverMorphism.ext (pullback.hom_ext ?_ ?_)
     · have := ho' a
-      simp only [Over.comp_left, Category.assoc, Over.pullback_map_left] at this ⊢
+      simp only [Over.comp_left, Category.assoc, Over.pullback_map_left, pullback.lift_fst] at this ⊢
       exact this
     · exact (Over.w (o'.act a ≫ hD.e.hom)).trans
         (Over.w (hD.e.hom ≫ (Over.pullback (specOf φ)).map (ιD.onB.act a))).symm

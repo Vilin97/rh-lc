@@ -24,7 +24,9 @@ theorem eigen_eq_one : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
     ∀ k ∈ GlobalTheory.InertSph.KAt σ G.W v, ∀ c : ℂ, Acts (evFin F v) (om (1, k)) (G.M.vac v) (c • G.M.vac v) → c = 1 := by
   intro F E _ _ _ _ _ σ B a a' G X om om' hT v w hw hv k hk c hc
-  obtain ⟨dd, omd, hdc, hsp, hbox⟩ := hT.weil.1.2
+  have hweil := hT.weil
+  dsimp only [Model.IsWeil, IsUWeilPair, IsUWeilB] at hweil
+  obtain ⟨⟨_, dd, omd, hdc, hsp, hbox⟩, _⟩ := hweil
   have hvac := hT.geo.hM.vac v
   obtain ⟨r, hr, hr0⟩ := GlobalTheory.T.exists_complementaryAdelicSchwartz_tensor_ne_zero _ v (G.M.vac v) hvac.1 hvac.2.1
   set V₀ := tens (evFin F v) (G.M.vac v) r with hV₀

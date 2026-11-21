@@ -161,6 +161,7 @@ theorem average_eq_zero_of_mem_closure [LocallyCompactSpace G] (Γ : Subgroup G)
       refine le_of_eq (congrArg _ (eLpNorm_congr_ae ?_))
       filter_upwards [ae_of_ae_map hπ.aemeasurable (Lp.coeFn_sub F H), ha, ae_restrict_of_ae hF] with x e1 e2 e3
       rw [Function.comp_apply, e1, Pi.sub_apply, Pi.sub_apply, e2, e3]
+      exact hd.aestronglyMeasurable
   have hz : ∫⁻ g in Ω, ‖∫ z, ψ (j z * g) ∂m‖ₑ ∂μ = 0 := by
     have hcont : Continuous fun H : Lp ℂ 2 ((μ.restrict 𝓕).map π) => c * ‖F - H‖ₑ :=
       (ENNReal.continuous_const_mul hc').comp (continuous_const.sub continuous_id).enorm

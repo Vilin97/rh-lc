@@ -155,10 +155,10 @@ theorem levDatum_actO (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)) (βT : GL (F
     have h2 : ∀ PP, redM PP (frMapAdj S T βS βT (actO S T 1⁻¹ h⁻¹ x)) =
         redM PP (frMapAdj S T βS βT x) * (redFn βT PP (finE T h)).val := fun PP => by
       rw [h1.2 PP, hG1 PP, hH PP, Units.val_one, Matrix.one_mul]
-    rw [if_pos hx, if_pos ⟨isHalf_actO' _ _ hx.1, h1.1⟩, funext h2,
+    rw [ite_eq_left hx, ite_eq_left ⟨isHalf_actO' _ _ hx.1, h1.1⟩, funext h2,
       omegaG_mul_right L hs m (fun PP => redFn βT PP (finE T h)) hγ hP, omegaQ_mul_right hr Q m]
     ring
-  · rw [if_neg hx, if_neg, mul_zero]
+  · rw [ite_eq_right hx, ite_eq_right, mul_zero]
     rintro ⟨h1, h2⟩
     have e' := GlobalTheory.AdelicLatMove.actO_actO_inv S T (1 : GA D S) h x
     have h3 := isHalf_actO' (1 : GA D S) h h1
@@ -184,10 +184,39 @@ theorem zeta_law : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} 
   have dW := GlobalTheory.SDFrameLattice.isSelfDualC_of_isSDFrame D _ _ _ _ (hL.βW i)
   have fV := (hL.βV i).choose_spec.1
   have fW := (hL.βW i).choose_spec.1
-  have hch' := GlobalTheory.T.conjugatedThetaCharacters_restriction_ramification R hL i t s cμ cη m hch
-  have hres : ∀ PP ∈ (R.datWp i P).Pg ∪ R.Q t, GlobalTheory.StepLaw.ResAt cμ PP (m PP) ∧ GlobalTheory.StepLaw.ResAt (cμ * cη⁻¹) PP (m PP) :=
-    fun PP hP => hch'.1 PP (Finset.mem_union.1 hP)
-  have hun := hch'.2.1 ((R.datWp i P).Pg ∪ R.Q t) (fun PP h => Finset.mem_union.2 h)
+  have hchars :
+      (∀ PP ∈ R.Pg ∪ R.Q t, GlobalTheory.StepLaw.ResAt cμ PP (m PP) ∧
+        GlobalTheory.StepLaw.ResAt (cμ * cη⁻¹) PP (m PP)) ∧
+      (GlobalTheory.StepLaw.UnrOff cμ (R.Pg ∪ R.Q t) ∧
+        GlobalTheory.StepLaw.UnrOff (cμ * cη⁻¹) (R.Pg ∪ R.Q t)) := by
+    obtain ⟨μ', η', hμ, hη, ecμ, ecη, hres⟩ := hch
+    obtain ⟨-, p1, p2, p3⟩ :=
+      GlobalTheory.T.levelCharacters_unramified_off_levelPlaces D T R.toLevCh A.μ0 hL t
+    have uη : ∀ PP, η'.UnrAt PP :=
+      fun PP => GlobalTheory.ConjSplitChars.unrAt_conj hη (R.C.isEta.unr PP)
+    have uoη : GlobalTheory.StepLaw.UnrOff cη (R.Pg ∪ R.Q t) := fun v ε hε _ =>
+      GlobalTheory.T.isUnramifiedAtPlaceIdempotent_of_heckeChar_unramified_above D cη η' ecη v ε hε
+        (fun PP _ => uη PP)
+    constructor
+    · intro PP hPP
+      have hP := Finset.mem_union.1 hPP
+      have tμ : μ'.TameAt PP := by
+        apply GlobalTheory.ConjSplitChars.tameAt_conj hμ
+        rcases hP with hP | hP
+        · exact ((R.C.isMu0 i).tame PP).mul ((p1 PP hP).levelLe 1)
+        · exact ((p2 PP hP i).levelLe 1).mul (hL.xi_tame t PP)
+      have rμ := (GlobalTheory.T.ideleChar_restrict_localUnits_residueChar D cμ μ' ecμ PP).1
+        (m PP) tμ (hres PP hP)
+      have rη := ((GlobalTheory.T.ideleChar_restrict_localUnits_residueChar D cη η' ecη PP).2 (uη PP)).inv
+      exact ⟨rμ, by simpa only [inv_one, mul_one] using rμ.mul rη⟩
+    · have uoμ : GlobalTheory.StepLaw.UnrOff cμ (R.Pg ∪ R.Q t) := by
+        intro v ε hε hv
+        apply GlobalTheory.T.isUnramifiedAtPlaceIdempotent_of_heckeChar_unramified_above D cμ μ' ecμ v ε hε
+        intro PP hPP
+        have haway := p3 PP (fun P' hP => hPP ▸ hv P' (Finset.mem_union.2 hP))
+        exact GlobalTheory.ConjSplitChars.unrAt_conj hμ ((haway.2 i).mul haway.1)
+      exact ⟨uoμ, uoμ.mul uoη.inv⟩
+  obtain ⟨hres, hun⟩ := hchars
   have hvac1 := GlobalTheory.StepVecLaw.om_vac hW (D.sp.V_sig _) (D.sp.W_sig _)
     (fun τ => isCartanInv_one_of_onb (hC.models.BV i τ)) (GlobalTheory.Chain.VacVec.cart_isCartanInv (R.MW i σ)) dV dW fV fW hvac he
     (fun PP hP => (hres PP hP).1) (fun PP hP => (hres PP hP).2) hun.1 hun.2 (one_mem _) hkG sV sW

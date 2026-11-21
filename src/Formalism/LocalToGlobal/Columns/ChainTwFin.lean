@@ -143,7 +143,7 @@ section Pi
 theorem tfPiChar {K : Type} [Field K] {ι : Type} [Fintype ι] {G : ι → Type} [∀ i, Group (G i)] (H : ∀ i, Subgroup (G i))
     (lam : ∀ i, ↥(H i) →* Kˣ) (x : ↥(Subgroup.pi Set.univ H)) :
     piChar H lam x = ∏ i, lam i ⟨x.1 i, x.2 i (Set.mem_univ i)⟩ := by
-  simp only [piChar, MonoidHom.finset_prod_apply, MonoidHom.comp_apply]
+  simp only [piChar, MonoidHom.finsetProd_apply, MonoidHom.comp_apply]
   rfl
 
 end Pi

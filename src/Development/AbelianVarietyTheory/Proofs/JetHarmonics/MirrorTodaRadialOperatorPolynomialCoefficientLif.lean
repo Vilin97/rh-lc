@@ -181,18 +181,22 @@ theorem gauge_bar (n : Fin r → ℕ) (H : (Fin r → ℂ) → E) (c : Fin r →
 
 theorem wCell_vec (c : Fin r → ℂ) : ∀ n : ℕ, ∀ i : Fin (r + 1), i.val = n →
     (∀ a : Fin r, i.val ≤ a.val → wCell k r i c *ᵥ bvec (eI k r a) = bvec (eI k r a)) ∧
-    (∀ a : Fin r, a.val < i.val → wCell k r i c *ᵥ bvec (esI k r a) = (star (c a))⁻¹ • bvec (eI k r a))
-  | 0, i, hi => by
+    (∀ a : Fin r, a.val < i.val → wCell k r i c *ᵥ bvec (esI k r a) = (star (c a))⁻¹ • bvec (eI k r a)) := by
+  intro n
+  induction n with
+  | zero =>
+    intro i hi
     have : i = 0 := Fin.ext (by simp [hi])
     subst this
     rw [Formalism.FourierDecayAlt.P.Qx6.wCell_zero]
     exact ⟨fun a _ => by simp, fun a ha => absurd ha (by simp)⟩
-  | n + 1, i, hi => by
+  | succ n ih =>
+    intro i hi
     have hl : n < r := by have := i.isLt; omega
     set l : Fin r := ⟨n, hl⟩ with hldef
     have hil : i = l.succ := Fin.ext (by simp [l, hi])
     subst hil
-    obtain ⟨ih1, ih2⟩ := wCell_vec c n l.castSucc (by simp [l])
+    obtain ⟨ih1, ih2⟩ := ih l.castSucc (by simp [l])
     rw [Formalism.FourierDecayAlt.P.Qx6.wCell_succ]
     refine ⟨fun a ha => ?_, fun a ha => ?_⟩
     · rw [← Matrix.mulVec_mulVec, weyl_cell_mulVec_basis]

@@ -147,6 +147,7 @@ theorem no_common_zero_spreads : ∀ (A : Type) [CommRing A] (τ J : Type) [Fini
       by_cases hn : n ∈ E.support
       · exact hψI _ (MvPolynomial.mem_coeffs_iff.2 ⟨n, hn, rfl⟩)
       · rw [MvPolynomial.notMem_support_iff.1 hn, map_zero]
+        rfl
     have h2 : MvPolynomial.eval₂ ψ z E = 0 := by
       rw [MvPolynomial.eval₂_eq_eval_map, h0, map_zero]
     have h3 : MvPolynomial.eval₂ ψ z E = ψ b := by

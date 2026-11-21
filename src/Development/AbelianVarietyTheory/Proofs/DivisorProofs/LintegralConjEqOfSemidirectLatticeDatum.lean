@@ -20,7 +20,7 @@ theorem map_eq_self_of_normalises_lattice {B : Type} [Group B] [TopologicalSpace
   set c := Measure.haarScalarFactor (ν.map φ) ν
   have hφm : Measurable φ := φ.continuous.measurable
   have hq : Measure.QuasiMeasurePreserving φ ν ν := by
-    refine ⟨hφm, ?_⟩
+    refine ⟨hφm.aemeasurable, ?_⟩
     rw [hc]
     exact Measure.smul_absolutelyContinuous
   have h' : IsFundamentalDomain Λ (φ ⁻¹' D) ν := by

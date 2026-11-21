@@ -48,7 +48,7 @@ theorem extFam_update {S T : Finset ι} (hST : S ⊆ T) (w : ∀ v, P v) [Decida
     · rfl
 
 def extML {S T : Finset ι} (hST : S ⊆ T) (w : ∀ v, P v) :
-    MultilinearMap ℂ (fun v : S => P v) (PiTensorProduct ℂ fun v : T => P v) where
+    MultilinearMap (RingHom.id ℂ) (fun v : S => P v) (PiTensorProduct ℂ fun v : T => P v) where
   toFun g := PiTensorProduct.tprod ℂ (extFam P w g)
   map_update_add' g i x y := by
     classical

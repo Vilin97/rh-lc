@@ -124,7 +124,7 @@ theorem Cm_unitary (h : R) (h2 : 2 * h = 1) (hch : c h = h) :
     ext i j; fin_cases i <;> fin_cases j <;> simp [Cm, hch]
   rw [hm]
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [Cm, gram0, Matrix.mul_apply, Fin.sum_univ_four] <;>
+  fin_cases i <;> fin_cases j <;> simp [Cm, gram0, Matrix.transpose_apply, Function.swap, vecHead, vecTail, Matrix.mul_apply, Fin.sum_univ_four] <;>
     first | ring1 | linear_combination h2 | linear_combination -h2 | linear_combination h * h2 |
       linear_combination -h * h2
 
@@ -261,7 +261,8 @@ theorem g_mul_cols {c : R →+* R} {J : Matrix (Fin n) (Fin n) R} {x y : Fin n �
   rw [mul_of']
   ext r k
   rw [of_apply, g_colF hc hJ hXX hYY hXY hιx hιy h]
-  rcases r with r | r <;> simp [diagCols, Matrix.mul_apply, fromRows_apply_inl, fromRows_apply_inr, one_apply]
+  rcases r with r | r <;> simp [diagCols, Matrix.mul_apply, fromRows_apply_inl, fromRows_apply_inr, one_apply] <;>
+    simpa [Matrix.mulVec, dotProduct] using (congrFun (Matrix.one_mulVec (colS x y ι (e.symm k))) r).symm
 
 end Assemble
 

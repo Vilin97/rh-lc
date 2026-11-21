@@ -116,7 +116,7 @@ theorem val_mul_pt (hG : GlobalFnsSt) (hB : IsAbelianScheme B) (u : LB.Gen (LB.L
     simp only [ofMul_mul, ofMul_inv]
     abel
   · refine (ev 1 hI).1.trans (Eq.trans ?_ (ev 1 hI).2.symm)
-    rw [_root_.mul_one, (isCub_cubV c hI).face₃, _root_.one_mul]
+    rw [_root_.mul_one, (isCub_cubV c (T := T) hI).face₃, _root_.one_mul]
 
 theorem val_pow_pt (hG : GlobalFnsSt) (hB : IsAbelianScheme B) (u : LB.Gen (LB.LinComb L.L (trφ x) ![1, -1]))
     (hu : u.IsGen) {N : ℕ} (hx : x ^ N = 1) (b : T ⟶ B) (z : T.left) (J) (hJ : Good L.L z J) :
@@ -155,7 +155,7 @@ theorem val_pow_pt (hG : GlobalFnsSt) (hB : IsAbelianScheme B) (u : LB.Gen (LB.L
     simp only [ofMul_mul, ofMul_zpow, ofMul_one]
     module
   · refine (ev 1 hI).1.trans (Eq.trans ?_ (ev 1 hI).2.symm)
-    rw [(isCub_cubV c hI).N_one, _root_.one_mul]
+    rw [(isCub_cubV c (T := T) hI).N_one, _root_.one_mul]
 
 theorem cubWeil_of_gen : (GlobalFnsSt → ∀ (S : Scheme.{0}) (B : Over S) [GrpObj B] [IsCommMonObj B], IsAbelianScheme B → ∀ (L : RigLB B) (c : CubicalStr B L) (N : ℕ) (T : Over S) (x y : T ⟶ B), x ^ N = 1 → y ^ N = 1 → (∃ u : LB.Gen (translDiff B L.L x), u.IsGen) → CubWeil c N x y 1) := by
   intro hG S B _ _ hB L c N T x y hx hy ⟨u, hu⟩
@@ -182,7 +182,7 @@ theorem cubWeil_of_gen : (GlobalFnsSt → ∀ (S : Scheme.{0}) (B : Over S) [Grp
       linear_combination (norm := abel) e' + ih'
   have b' := b N
   rw [hy] at b'
-  rw [map_one, _root_.one_mul]
+  rw [(gm (𝟙 T.left) z ⊤).map_one, _root_.one_mul]
   exact mul_right_cancel (k.trans (mul_left_cancel b'))
 
 end GlobalTheory.UU.KerPair

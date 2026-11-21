@@ -155,8 +155,10 @@ theorem ringAct_apply (g : TameGal K l e a) (f : ZMod a → K⟦X⟧) (τ : ZMod
 
 theorem ringAct_frobTot (g : TameGal K l e a) (f : ZMod a → K⟦X⟧) :
     ringAct g (frobTot K a l f) = frobTot K a l (ringAct g f) := by
+  have frob_apply (s : ZMod a → K⟦X⟧) (τ : ZMod a) :
+      frobTot K a l s τ = frob K l (s (τ - 1)) := rfl
   ext τ n
-  rw [ringAct_apply, frobTot_apply, frobTot_apply, ringAct_apply, coeff_rescale, coeff_frob,
+  rw [ringAct_apply, frob_apply, frob_apply, ringAct_apply, coeff_rescale, coeff_frob,
     coeff_frob, coeff_rescale, TameGal.root_sub_one, sub_right_comm]
   split_ifs with h
   · rw [← pow_mul, Nat.mul_div_cancel' h]
@@ -455,7 +457,15 @@ def plus [NeZero e] {y : Vec K a ι} (hy : y ∈ P.Mext (invE l e (A O K))) (hin
       rot_A.ringAct_mem g fun τ => mem_tot.1 hw τ (.inr ())⟩
   act_phi g w := by
     change Δ.plusAct g _ = (P.plus hy).phi (Δ.plusAct g _)
-    rw [← join_eta w, P.plus_phi_join, plusAct_join, plusAct_join, P.plus_phi_join, map_add (f := _), act_phi,
+    have phi_join (v : Vec K a ι) (f : ZMod a → K⟦X⟧) :
+        (P.plus hy).phi (join v f) = join (P.phi v + frobTot K a l f • y) (frobTot K a l f) := by
+      ext1 τ
+      rw [PhiMod.phi_apply, PhiMod.plus, PhiMod.mx_ofMatrix]
+      ext1 i
+      rcases i with i | i <;>
+        simp [join, Matrix.mulVec, dotProduct, PhiMod.phi_apply, frobTot, Fintype.sum_sum_type,
+          mul_comm]
+    rw [← join_eta w, phi_join, plusAct_join, plusAct_join, phi_join, map_add (f := _), act_phi,
       act_smul_tot, hinv g, ringAct_frobTot]
 
 theorem plus_act_join [NeZero e] {y : Vec K a ι} (hy : y ∈ P.Mext (invE l e (A O K)))

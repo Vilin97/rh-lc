@@ -29,7 +29,7 @@ theorem root_statement : RootStatement := by
       Finset.sum_const_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [(h6 w).2.2.1 n, map_sum]
-    simp only [map_smul]
-    exact hxk w hw
+      simp only [map_smul]
+      exact hxk w hw
 
 end GlobalTheory.RootTrick

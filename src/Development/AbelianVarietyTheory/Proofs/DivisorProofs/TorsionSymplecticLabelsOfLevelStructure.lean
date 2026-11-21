@@ -39,7 +39,7 @@ theorem qLevel_of_torsion_labels : AllVC fun {V} _ _ _ {D} {A} {G} _ _ U {C} _ _
     · rw [← h₃.1, ← h₁.1, ← h₂.1]
       exact map_add ν.eX _ _
     · exact (hAdd _ _ _ _ _ _ h₁.2 h₂.2 h₃.2).2 rfl
-    · exact (hQ3 p₃ p₃ _ _ h₃ h₃).2 ((N.qEq_equivalence k).refl _)
+    · exact (hQ3 p₃ p₃ _ _ h₃ h₃).2 (by exact ⟨0, by simp, by simp⟩)
 
   have hpt0 : pt 0 = 1 := by
     have h := hadd 0 0
@@ -54,7 +54,7 @@ theorem qLevel_of_torsion_labels : AllVC fun {V} _ _ _ {D} {A} {G} _ _ U {C} _ _
     intro a
     have : k • a = 0 := by
       funext i
-      simp [nsmul_eq_mul, ZMod.natCast_self]
+      simp [nsmul_eq_mul]
     rw [← hptn, this, hpt0]
   have hex : ∀ a, ∃ p, f p = pt a := fun a => hf2 (pt a) (hkt a)
   choose p hp using hex

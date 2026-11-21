@@ -58,9 +58,10 @@ theorem range_eq_of_isPullback {Y P Y' P' : Scheme.{0}} {q : Y ⟶ P} {q' : Y' �
 
 theorem isLocallyClosed_range {Y P : Scheme.{0}} {q : Y ⟶ P} (H : ∀ y, GoodAt q y) :
     IsLocallyClosed (Set.range q) := by
-  refine ((isLocallyClosed_tfae (Set.range q)).out 0 2).2 ?_
+  refine isLocallyClosed_iff_isLocallyClosedAt.2 ?_
   rintro _ ⟨y, rfl⟩
   obtain ⟨W, hW, _⟩ := H y
+  apply isLocallyClosedAt_iff_exists_isClosed_preimage_val.2
   refine ⟨W, W.2.mem_nhds hW, ?_⟩
   have := (q ∣_ W).isClosedMap.isClosed_range
   rw [range_eq_of_isPullback (isPullback_morphismRestrict q W).flip] at this

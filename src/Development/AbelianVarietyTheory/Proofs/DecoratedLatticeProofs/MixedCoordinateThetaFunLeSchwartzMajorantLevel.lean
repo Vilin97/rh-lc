@@ -57,7 +57,8 @@ theorem mixS_le_maj : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D
   obtain ⟨C, hC⟩ := GlobalTheory.T.mixedCoordinate_decay_realEntries D ψ hψ θ hθ S S₀ T ρ d v N
   refine ⟨C, fun f hf x w => ?_⟩
   by_cases h0 : (_root_.I195MixedCoordinates_817fca156a590a31b0ba19c7.source d) T ψ v.μ v.𝓕 f x w = 0
-  · rw [h0]; simp
+  · change ‖(_root_.I195MixedCoordinates_817fca156a590a31b0ba19c7.source d) T ψ v.μ v.𝓕 f x w‖ₑ ≤ _
+    rw [h0]; simp
   · have hbox := hsupp f hf x w h0
     have hmaj : maj θ K N x = ((1 + realSize θ x) ^ N)⁻¹ := by
       unfold maj; rw [if_pos hbox]

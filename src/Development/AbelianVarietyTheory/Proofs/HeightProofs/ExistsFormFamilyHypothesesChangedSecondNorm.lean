@@ -109,7 +109,7 @@ attribute [local irreducible]
   _root_.Submodule.Quotient.addCommGroup._aux_1 _root_.Submodule.Quotient.addCommGroup._aux_3 _root_.Quotient.map' _root_.Submodule.module'
   _root_.Subalgebra.algebra _root_.Subalgebra.instSMulSubtypeMem _root_.AddCommSemigroup.toAddCommMagma _root_.AddCommMonoid.toAddCommSemigroup
   _root_.LinearMap.comp _root_.LinearMap.restrictScalars _root_.Submodule.mkQ _root_.LinearMap.codRestrict
-  _root_.LinearMap.domRestrict _root_.Submodule.instPartialOrder _root_.Set.image _root_.Set.instUnion
+  _root_.LinearMap.domRestrict _root_.Submodule.instPartialOrder _root_.Set.image _root_.Set.instMax
   _root_.instSubNat _root_.EReal _root_.instPartialOrderEReal _root_.instZeroEReal
   _root_.instTopEReal _root_.instInfSetEReal _root_.Real.toEReal _root_.EReal.toReal
   _root_.instLENat _root_.FiniteDimensional _root_.Ideal.instHasQuotient_1 _root_.Subalgebra.toCommRing

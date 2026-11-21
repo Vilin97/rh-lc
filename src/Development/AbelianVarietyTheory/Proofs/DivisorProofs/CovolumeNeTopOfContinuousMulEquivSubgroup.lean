@@ -19,7 +19,7 @@ theorem covolume_ne_top_of_continuousMulEquiv : ∀ (G : Type) [Group G] [Topolo
   set μ : Measure G := π.map E.symm with hμdef
   have hμ : μ.IsHaarMeasure := ContinuousMulEquiv.isHaarMeasure_map π e.symm
   have hqmp : MeasureTheory.Measure.QuasiMeasurePreserving E μ π := by
-    refine ⟨E.measurable, ?_⟩
+    refine ⟨E.measurable.aemeasurable, ?_⟩
     rw [hμdef, Measure.map_map E.measurable E.symm.measurable]
     simp only [MeasurableEquiv.self_comp_symm, Measure.map_id]
     exact Measure.AbsolutelyContinuous.rfl

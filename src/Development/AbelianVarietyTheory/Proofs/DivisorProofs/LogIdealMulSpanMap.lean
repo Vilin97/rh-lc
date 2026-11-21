@@ -75,7 +75,9 @@ theorem linInd (G : HTGroup p) (w : Fin G.m) {ι : Type} (e : ι → G.C) (he : 
     rw [map_one, one_mul]
     rfl
   have hT : LinearIndependent (G.Fw w) (fun l => (1 : G.Fw w) ⊗ₜ[G.F] (e l)) :=
-    Module.Flat.linearIndependent_one_tmul he
+    by
+      set_option synthInstance.maxHeartbeats 200000 in
+        exact Module.Flat.linearIndependent_one_tmul he
   have := hT.map' L.toLinearMap (LinearMap.ker_eq_bot.2 hinj)
   have e' : (fun l => G.rho w (e l)) = L.toLinearMap ∘ (fun l => (1 : G.Fw w) ⊗ₜ[G.F] (e l)) := by
     funext l

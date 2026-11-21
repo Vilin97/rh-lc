@@ -231,7 +231,7 @@ theorem locOrder_isAzumaya : ∀ (F B : Type) [Field F] [NumberField F] [Ring B]
   classical
   obtain ⟨e, he⟩ := exists_basis_mem (F := F) Λ hspan
   have hδ : IsUnit (structMat e).det :=
-    (bijective_iff_isUnit_det e).1 GroundTheory.Brauer.mulLeftRight_bijective
+    (bijective_iff_isUnit_det e).1 (GroundTheory.Brauer.mulLeftRight_bijective F B)
   obtain ⟨m, hm, hmint⟩ := GlobalTheory.SepModel.exists_nat_integral ({((structMat e).det)⁻¹} : Finset F)
   obtain ⟨D, hD, hbasis⟩ := basisLoc F B Λ hΛ hfin _ e he
   refine ⟨D * m, by positivity, fun ℓ _ hℓ => ?_⟩

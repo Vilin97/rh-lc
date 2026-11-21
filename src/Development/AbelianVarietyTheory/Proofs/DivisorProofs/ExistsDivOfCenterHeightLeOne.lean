@@ -41,7 +41,7 @@ theorem valuationRing_atPrime_of_minimal {A : Type} [CommRing A] [IsDomain A] [I
     rw [Ideal.under, heq, Localization.AtPrime.map_eq_maximalIdeal]
   have h12 : IsIntegrallyClosed (Localization.AtPrime q) ∧ ∀ Q' : Ideal (Localization.AtPrime q),
       Q' ≠ ⊥ → Q'.IsPrime → Q' = maximalIdeal (Localization.AtPrime q) := ⟨h1, h2⟩
-  exact (hT.out 3 1).mp h12
+  exact (hT.out 4 2).mp h12
 
 theorem mul_eq_mul_of_atPrime {A : Type} [CommRing A] [IsDomain A] (q : Ideal A) [q.IsPrime]
     (x y a : A) (s : q.primeCompl)

@@ -100,7 +100,7 @@ theorem two_letter_lattice_gauss_inverse : TwoLetterLatticeGaussInverse := by
       · rintro y ⟨F, hF, rfl⟩
         have ht := hF true
         have hf' := hF false
-        simp only [if_true, Bool.false_eq_true, if_false] at ht hf'
+        simp only [ite_true, Bool.false_eq_true, ite_false] at ht hf'
         obtain ⟨a, ha, hIa, ea⟩ := ta_vec_of R m hm g hg P _ ht
         obtain ⟨b, hb, hIb, eb⟩ := ta_cov_of R m hm g hg Q _ hf'
         refine ⟨rename Sum.inl a * rename Sum.inr b, ta_Int_mul (ta_Int_rename _ hIa) (ta_Int_rename _ hIb), ?_⟩
@@ -141,9 +141,9 @@ theorem two_letter_lattice_gauss_inverse : TwoLetterLatticeGaussInverse := by
         MvPolynomial (Fin (m + 1) × Fin (m + 1)) R.Kf), ?_, ?_⟩
     · intro b
       cases b
-      · simp only [Bool.false_eq_true, if_false, cond_false]
+      · simp only [Bool.false_eq_true, ite_false, Bool.cond_false]
         exact ta_cov_mem R m hm g hg Q _ hQ (ta_Int_prodX _)
-      · simp only [if_true, cond_true]
+      · simp only [ite_true, Bool.cond_true]
         exact ta_vec_mem R m hm g hg P _ hP (ta_Int_prodX _)
     · rw [Fintype.prod_bool]
       rfl

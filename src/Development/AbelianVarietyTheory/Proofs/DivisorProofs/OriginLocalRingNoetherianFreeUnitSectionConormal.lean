@@ -30,7 +30,7 @@ theorem constO_eq_strMap : constO G = (GlobalTheory.IndefiniteRowSideFullHecke.H
       ((Spec (CommRingCat.of R)).presheaf.germ ⊤ (G.hom (origin G)) trivial).hom
         ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom r) := by
     rw [Scheme.ΓSpecIso_inv]
-    exact (congrArg (fun q => q.hom r) (StructureSheaf.toOpen_germ (R := R) ⊤ (G.hom (origin G)) trivial)).symm
+    rfl
   have h2 := congrArg (fun q => q.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom r))
     (Scheme.Hom.germ_stalkMap G.hom ⊤ (origin G) trivial)
   simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h2

@@ -198,7 +198,7 @@ theorem semiPos_iff_pull : ∀ (k : Type) [CommRing k] (X X' : Scheme.{0}) (p : 
   have hσ : Function.Injective σ := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_
-    rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
+    rw [Ideal.under_def, RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
     exact RingHom.injective_int _
   have : Nonempty U.toScheme := hU.to_subtype
   have : Nonempty (π ⁻¹ᵁ U).toScheme := (π ∣_ U).surjective.nonempty

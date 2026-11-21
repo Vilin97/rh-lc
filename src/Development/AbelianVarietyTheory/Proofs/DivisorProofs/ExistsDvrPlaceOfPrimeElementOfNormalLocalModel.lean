@@ -43,7 +43,7 @@ theorem main : ∀ {L K : Type} [Field L] [Field K] (cL : ℂ →+* L) (cK : ℂ
   have hf' : algebraMap T A f ≠ 0 := fun h => hf (hinjA (h.trans (map_zero _).symm))
   have hprinc : (IsLocalRing.maximalIdeal A).IsPrincipal := ⟨⟨_, hmax⟩⟩
   haveI : IsPrincipalIdealRing A :=
-    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain (R := A)).out 0 4).2 hprinc
+    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain (R := A)).out 1 5).2 hprinc
   haveI hdvrA : IsDiscreteValuationRing A := by
     refine ⟨?_⟩
     rw [hmax]

@@ -23,10 +23,15 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 instance aeBorel : BorelSpace (AE F E) := ⟨rfl⟩
 
-instance matSC : SecondCountableTopology (Matrix (Fin n) (Fin n) (AE F E)) :=
-  inferInstanceAs (SecondCountableTopology (Fin n → Fin n → AE F E))
-instance matBorel : BorelSpace (Matrix (Fin n) (Fin n) (AE F E)) := inferInstanceAs (BorelSpace (Fin n → Fin n → AE F E))
-instance nATop : IsTopologicalAddGroup (nA σ Y b) := inferInstance
+instance matSC : SecondCountableTopology (Matrix (Fin n) (Fin n) (AE F E)) := by
+  have : SecondCountableTopology (AE F E) := GlobalTheory.EisBL.AETop.secondCountableAE
+  exact inferInstanceAs (SecondCountableTopology (Fin n → Fin n → AE F E))
+instance matBorel : BorelSpace (Matrix (Fin n) (Fin n) (AE F E)) := by
+  have : SecondCountableTopology (AE F E) := GlobalTheory.EisBL.AETop.secondCountableAE
+  exact inferInstanceAs (BorelSpace (Fin n → Fin n → AE F E))
+instance nATop : IsTopologicalAddGroup (nA σ Y b) := by
+  have : IsTopologicalRing (AE F E) := GlobalTheory.EisBL.AETop.ringAE
+  infer_instance
 instance nASC : SecondCountableTopology (nA σ Y b) := TopologicalSpace.Subtype.secondCountableTopology _
 instance nABorel : BorelSpace (nA σ Y b) := Subtype.borelSpace _
 
@@ -62,6 +67,7 @@ theorem matrix_of_unipotent_frame (h : IsNMap b nb) (β : nA σ Y b) :
   rw [matrix_eq_inFrame_conj b, h]
 
 theorem continuous_nb (h : IsNMap b nb) : Continuous nb := by
+  have : IsTopologicalRing (AE F E) := GlobalTheory.EisBL.AETop.ringAE
   have hc : Continuous fun β : nA σ Y b => incM F b.1 * Matrix.fromBlocks 1 β.1 0 1 * incM F (b⁻¹).1 :=
     (continuous_const.matrix_mul (Continuous.matrix_fromBlocks continuous_const continuous_subtype_val
       continuous_const continuous_const)).matrix_mul continuous_const

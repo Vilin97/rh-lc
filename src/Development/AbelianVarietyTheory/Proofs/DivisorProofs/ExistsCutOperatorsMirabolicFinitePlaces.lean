@@ -71,7 +71,7 @@ theorem GlobalTheory.JSW.MirPatch.cut_operators : ∀ (E : Type) [Field E] [Numb
   choose T hTs hT using hcut
   obtain ⟨n, h, c, hh, he⟩ := exists_fin (∑ i, T i)
   refine ⟨n, h, c, fun j => ?_, fun W hW hWK p hp => ?_⟩
-  · obtain ⟨i, -, hi⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum (hh j))
+  · obtain ⟨i, -, hi⟩ := Finsupp.mem_support_finsetSum _ (hh j)
     exact (hTs i _ hi).1
   · rw [← he, act_finset_sum]
     simp_rw [fun i => hT i W hW hWK p hp]

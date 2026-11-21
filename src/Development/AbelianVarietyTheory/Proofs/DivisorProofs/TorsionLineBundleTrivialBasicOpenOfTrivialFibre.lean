@@ -26,7 +26,7 @@ theorem triv_lbPow_pull {X Y : Scheme.{0}} {M : LB X} (hM : M.IsLB) (k : ℕ) (�
   have e : ∀ {Z : Scheme.{0}} {N : LB Z} (hN : N.IsLB) (h' : (Hecke.lbPow N k).IsLB),
       CechPic.cls _ h' = k • CechPic.cls N hN := by
     intro Z N hN h'
-    refine (CechPic.cls_linComb hN (fun _ : Fin k => 𝟙 Z) (fun _ => 1) h').trans ?_
+    apply (CechPic.cls_linComb hN (fun _ : Fin k => 𝟙 Z) (fun _ => 1) h').trans
     simp [CechPic.pull_id]
   rw [← CechPic.cls_eq_zero_iff hP']
   rw [← CechPic.cls_eq_zero_iff hP] at h

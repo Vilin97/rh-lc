@@ -37,7 +37,7 @@ theorem exists_sub_sum {N : Type} (a : LB.Sec (LB.LinComb L φ ε)) (p : N → L
   refine ⟨⟨fun j => a.f j - ∑ i ∈ s, (p i).f j, fun i j => ?_⟩, fun Z r z J hJ => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sub, map_sub, map_sum, map_sum, mul_sub, Finset.mul_sum, a.compat]
-    exact congrArg _ (Finset.sum_congr rfl fun b _ => (p b).compat i j)
+      exact congrArg _ (Finset.sum_congr rfl fun b _ => (p b).compat i j)
   · have hm := hJ.mem φ r
     refine (gs_eq r z _ hm _).trans ?_
     refine (congrArg _ (map_sub _ _ _)).trans ((map_sub _ _ _).trans (congrArg₂ (· - ·) (gs_eq r z _ hm _).symm ?_))

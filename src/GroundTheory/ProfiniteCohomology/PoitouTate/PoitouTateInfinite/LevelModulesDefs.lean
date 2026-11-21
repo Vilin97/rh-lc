@@ -31,8 +31,6 @@ attribute [local instance 2000] Rep.hV2
 
 noncomputable section
 
-variable {K : FiniteSubfield} {S : Set (HeightOneSpectrum (𝓞 K.1))}
-
 theorem isOpen_ker_ρ {k G : Type*} [CommRing k] [Group G] [TopologicalSpace G] (A : Rep k G) [IsDiscreteRep A]
     [Finite A] : IsOpen ((A.ρ.ker : Subgroup G) : Set G) := by
   have e : ((A.ρ.ker : Subgroup G) : Set G) = ⋂ a : A, (stabilizer A.ρ a : Set G) := by
@@ -41,16 +39,11 @@ theorem isOpen_ker_ρ {k G : Type*} [CommRing k] [Group G] [TopologicalSpace G] 
     constructor
     · intro h a
       change A.ρ g a = a
-      rw [h, Module.End.one_apply]
+      rw [h, one_apply_eq_self]
     · intro h
       exact LinearMap.ext fun a => h a
   rw [e]
   exact isOpen_iInter_of_finite fun a => isOpen_stabilizer A a
-
-variable {T : Set (HeightOneSpectrum (𝓞 K.1))} (h : T ⊆ S)
-
-variable (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S))
-  (hM : ∀ g, gsResCont (Ω := ℚ̄) h g = 1 → M.ρ g = 1)
 
 end
 

@@ -48,5 +48,6 @@ theorem sumPl_heisOp_vacuum {ι : Type} [Fintype ι] [DecidableEq ι] {P Q R S :
   simp only [sumPl, LinearMap.sum_apply, Finset.smul_sum]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [atPl_tprod, atPl_tprod, heisOp_one, MultilinearMap.map_update_smul]
+  rfl
 
 end GlobalTheory.FockVac

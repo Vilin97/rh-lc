@@ -136,6 +136,7 @@ theorem finite_fixed (θ : G →* G) (hθ : ∀ g, θ (θ g) = g) (U : Subgroup 
     intro t ht
     rw [Subgroup.mem_centralizer_singleton_iff] at ht ⊢
     have := congrArg θ ht
+    change θ t * γ = γ * θ t
     simpa only [map_mul, hγ] using this)
   have key : ∀ c : TwCl (MonoidHom.id U), ∃ h : G, P c.rep.1 → h * (θ h)⁻¹ ∈ F ∧ c.rep.1 = h⁻¹ * γ * h := by
     intro c

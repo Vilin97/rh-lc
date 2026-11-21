@@ -35,12 +35,12 @@ theorem mul_colMat {n₁ : ℕ} {A : Type} [CommRing A] (T : Matrix (Fin (n₁ +
     T * colMat ι x y = colMat (T * ι) (T *ᵥ x) (T *ᵥ y) := by
   ext i k
   refine Fin.lastCases ?_ (fun k => Fin.lastCases ?_ (fun j => ?_) k) k <;>
-    simp [colMat, cols, Matrix.mul_apply, Matrix.mulVec, dotProduct]
+    simp [colMat, cols, Function.swap, Matrix.mul_apply, Matrix.mulVec, dotProduct]
 
 theorem colMat_map {n₁ : ℕ} {A A' : Type} (f : A → A') (ι : Matrix (Fin (n₁ + 2)) (Fin n₁) A) (x y : Fin (n₁ + 2) → A) :
     (colMat ι x y).map f = colMat (ι.map f) (fun i => f (x i)) (fun i => f (y i)) := by
   ext i k
-  refine Fin.lastCases ?_ (fun k => Fin.lastCases ?_ (fun j => ?_) k) k <;> simp [colMat, cols]
+  refine Fin.lastCases ?_ (fun k => Fin.lastCases ?_ (fun j => ?_) k) k <;> simp [colMat, cols, Function.swap]
 
 theorem continuous_colMat {n₁ : ℕ} {A : Type} [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
     (C : Matrix (Fin (n₁ + 2)) (Fin n₁) A) (x y : Fin (n₁ + 2) → A) :

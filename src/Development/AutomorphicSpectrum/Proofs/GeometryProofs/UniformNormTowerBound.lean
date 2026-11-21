@@ -255,9 +255,10 @@ theorem nA_coef (RM : Top.RootModel (CMType H) (Dw.p + Dw.q)) (a : WZ E) (j : Op
     split_ifs <;> simp
 
 theorem modelWt_eq_laZ {σ : c.F →+* ℂ} (V : Unf Xo c σ r) (u : GlobalTheory.AllWt.Weight Dw) (k : V.Comp) :
-    GlobalTheory.AllWt.modelWt V (GlobalTheory.AllWt.wtOf Dw u 0) k = laZ V (GlobalTheory.AllWt.wtOf Dw u 0).1 k := by
+    GlobalTheory.AllWt.modelWt V (GlobalTheory.AllWt.wtOf Dw u 0) k =
+      Rec.laZ (Xo := Xo) (c := c) V (GlobalTheory.AllWt.wtOf Dw u 0).1 k := by
   funext τ j
-  simp only [GlobalTheory.AllWt.modelWt, laZ, GlobalTheory.AllWt.wtOf_snd]
+  simp only [GlobalTheory.AllWt.modelWt, Rec.laZ, GlobalTheory.AllWt.wtOf_snd]
   split_ifs <;> simp
 
 variable {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} {h : GenFrEx Xo c} {e : Comp Xo c → Rul Xo c}

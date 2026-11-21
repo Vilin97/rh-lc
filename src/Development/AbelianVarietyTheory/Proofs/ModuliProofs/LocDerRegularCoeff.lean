@@ -163,14 +163,14 @@ theorem val_res {D : R → ℂ} (h : LocDer q p m D W₀ d) (y : Sp ℂ ⟶ Y) {
   exact valAt'_resG_of_le y (fun _ hx => hW hx) hy1 (d W f)
 
 theorem ptDer_ptOf {D : R → ℂ} (h : LocDer q p m D W₀ d) (y : Sp ℂ ⟶ Y) (hy : ⊤ ≤ (y ≫ m) ⁻¹ᵁ W₀) :
-    PtDer (y ≫ m) (ptOf W₀ d y) where
-  add W _ f f' := by
-    rename_i hW
+    PtDer (y ≫ m) (ptOf W₀ d y) := by
+  constructor
+  · intro W hW f f'
     obtain ⟨φ, hφ⟩ := exists_ringHom_eq_valAt'' y (m ⁻¹ᵁ (W ⊓ W₀)) (top_le_preimage_preimage_inf y m hW hy)
     unfold ptOf
     rw [map_add (f := _), h.add _ inf_le_right]
     simp only [hφ, map_add (f := _)]
-  mul W hW f f' := by
+  · intro W hW f f'
     have hh : ⊤ ≤ y ⁻¹ᵁ m ⁻¹ᵁ (W ⊓ W₀) := top_le_preimage_preimage_inf y m hW hy
     obtain ⟨φ, hφ⟩ := exists_ringHom_eq_valAt'' y (m ⁻¹ᵁ (W ⊓ W₀)) hh
     have e1 : ∀ g : Γ(X, W), valAt' (y ≫ m) W g = φ ((m.app (W ⊓ W₀)).hom (resG X inf_le_left g)) := fun g => by
@@ -178,7 +178,7 @@ theorem ptDer_ptOf {D : R → ℂ} (h : LocDer q p m D W₀ d) (y : Sp ℂ ⟶ Y
     unfold ptOf
     rw [e1 f, e1 f', map_mul, h.mul _ inf_le_right]
     simp only [hφ, map_add (f := _), map_mul]
-  res W W' hle hW' f := by
+  · intro W W' hle hW' f
     unfold ptOf
     rw [resG_resG, ← val_res h y (inf_le_inf_right W₀ hle) inf_le_right (top_le_preimage_preimage_inf y m hW' hy)
       (resG X inf_le_left f), resG_resG]

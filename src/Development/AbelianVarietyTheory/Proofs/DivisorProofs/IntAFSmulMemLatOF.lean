@@ -261,24 +261,34 @@ theorem heisOF_zero' (f : WOF F E nS nT → ℂ) : heisOF σ JS JT ξ₀ ψ 0 f 
 
 theorem isHeis_opFF (hσ : ∀ x, σ (σ x) = x) (hS : IsHermND σ JS) (hT : IsHermND σ JT) (hξ : σ ξ₀ = -ξ₀)
     (hc : HeisClosedF σ JS JT ξ₀ ψ) {w : 𝓞 E} (hw : w + sgOF σ w = 1) :
-    IsHeis (sgOF σ) w (gamFF σ JS JT ξ₀ ψ) (opFF hc w) where
-  sg_sg r := by
+    IsHeis (sgOF σ) w (gamFF σ JS JT ξ₀ ψ) (opFF hc w) := by
+  constructor
+  case sg_sg =>
+    intro r
     apply Subtype.ext
     show σ (σ (r : E)) = r
     exact hσ _
-  w_add := hw
-  add_left x y z := by
+  case w_add => exact hw
+  case add_left =>
+    intro x y z
     rw [gamFF, gamFF, gamFF, XFF.coe_add, GlobalTheory.HeisLineF.symplOF_add_left, AddChar.map_add_eq_mul]
-  add_right x y z := by
+  case add_right =>
+    intro x y z
     rw [gamFF, gamFF, gamFF, XFF.coe_add, GlobalTheory.HeisLineF.symplOF_add_right, AddChar.map_add_eq_mul]
-  alt x := by rw [gamFF, GlobalTheory.HeisLineF.symplOF_self σ JS JT hσ hS hT ξ₀ hξ, AddChar.map_zero_eq_one]
-  adj r x y := by rw [gamFF, gamFF, coe_smul, coe_smul, symplOF_smul σ JS JT hσ, cAF_intAF]
-  zero v := by
+  case alt =>
+    intro x
+    rw [gamFF, GlobalTheory.HeisLineF.symplOF_self σ JS JT hσ hS hT ξ₀ hξ, AddChar.map_zero_eq_one]
+  case adj =>
+    intro r x y
+    rw [gamFF, gamFF, coe_smul, coe_smul, symplOF_smul σ JS JT hσ, cAF_intAF]
+  case zero =>
+    intro v
     apply Subtype.ext
     have h : symplOHF σ JS JT ξ₀ (intAF F w • ((0 : XFF F E nS nT) : WOF F E nS nT)) ((0 : XFF F E nS nT) : WOF F E nS nT) = 0 := by
       rw [XFF.coe_zero, smul_zero]; unfold symplOHF; rw [GlobalTheory.HeisLineF.symplOF_zero_right, mul_zero]
     rw [coe_opFF, phaseF, h, neg_zero, AddChar.map_zero_eq_one, one_smul, XFF.coe_zero, heisOF_zero']
-  comp x y v := by
+  case comp =>
+    intro x y v
     apply Subtype.ext
     rw [Submodule.coe_smul, coe_opFF, coe_opFF, coe_opFF, GlobalTheory.WeilPartsF.heisOF_smul, heisOF_heisOF', smul_smul,
       smul_smul, smul_smul, XFF.coe_add, phaseF, phaseF, phaseF, gamFF, ← AddChar.map_add_eq_mul,

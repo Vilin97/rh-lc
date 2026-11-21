@@ -77,7 +77,7 @@ theorem GlobalTheory.UPoinc.GFib.labelled_lattices_equiv : ∀ (E : Type) [Field
         GlobalTheory.T.thetaGroupOfPoint_eq_along_modelHom X.o₁ X.Ω₁ X.S X.M Y q hpt X.hasDiv (y (cPt p))]
       simp only [hw, hx]
     have e₁ : (Fin r → ZMod (X.S.r * X.S.N)) ≃ (Fin r₀ → ZMod (X.S.r * X.S.N)) :=
-      (e.symm.toEquiv.trans (Equiv.setCongr (congrArg (fun H : AddSubgroup X.S.Gam => (H : Set X.S.Gam)) hT))).trans
+      (e.symm.toEquiv.trans (by rw [hT])).trans
         e₀.toEquiv
     haveI : NeZero (X.S.r * X.S.N) := ⟨hL.ne'⟩
     have hcard := Fintype.card_congr e₁

@@ -152,7 +152,7 @@ theorem periods_le_of_mem_lattice : ∀ (E : Type) [Field E] [NumberField E] [Is
     (continuous_apply j).comp (hcont.comp_continuous continuous_subtype_val fun b => (hT₁ b b.2).2)
   have hZc : ∀ z, Continuous fun b : B => zComb (lam b) z := fun z => by
     simp only [zComb_apply]
-    exact continuous_finset_sum _ fun j _ => (hlc j).const_smul (z j)
+    exact continuous_finsetSum _ fun j _ => (hlc j).const_smul (z j)
   let b₀ : B := ⟨(T₁ + 1 : ℝ) * Complex.I, by simp⟩
   have hconst : ∀ b, n b = n b₀ := fun b => by
     refine IsLocallyConstant.apply_eq_of_preconnectedSpace (f := n)

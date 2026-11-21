@@ -38,7 +38,7 @@ theorem continuous_comp_infPartF {F E : Type} [Field F] [NumberField F] [Field E
   have : (θ.comp (infPartF F E) : AF F ⊗[F] E → ℂ) = fun z => ∑ i, θ (fstA F (B.equivFun z i) ⊗ₜ[F] (1 : E)) * τ (b i) :=
     funext e
   rw [this]
-  exact continuous_finset_sum _ fun i _ => (hg.comp ((continuous_apply i).comp hrep)).mul continuous_const
+  exact continuous_finsetSum _ fun i _ => (hg.comp ((continuous_apply i).comp hrep)).mul continuous_const
 
 theorem continuous_mMF : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E), B.IsGood σ → ∀ (nS nT : ℕ) (JS : Matrix (Fin nS) (Fin nS) E) (JT : Matrix (Fin nT) (Fin nT) E)

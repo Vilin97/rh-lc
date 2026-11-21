@@ -69,8 +69,10 @@ theorem prod_adj : ∀ {n : ℕ} (k : Fin n) (f₁ f₂ f₃ f₄ : Fin (n + 1) 
       have ih := prod_adj k (fun i => f₁ i.succ) (fun i => f₂ i.succ) (fun i => f₃ i.succ) (fun i => f₄ i.succ)
         (fun i h1 h2 => h _ (by rw [← Fin.succ_castSucc]; exact fun e => h1 (Fin.succ_injective _ e))
           (fun e => h2 (Fin.succ_injective _ e))) (by simpa only [Fin.succ_castSucc] using hr)
-      obtain ⟨e2, e3, e4⟩ := h 0 (by rw [← Fin.succ_castSucc]; exact (Fin.succ_ne_zero _).symm)
-        (Fin.succ_ne_zero _).symm
+      have hcast : (0 : Fin (n + 2)) ≠ k.succ.castSucc := by
+        rw [← Fin.succ_castSucc]
+        exact (Fin.succ_ne_zero k.castSucc).symm
+      obtain ⟨e2, e3, e4⟩ := h 0 hcast (Fin.succ_ne_zero k.succ).symm
       rw [List.ofFn_succ (f := f₁), List.ofFn_succ (f := f₂), List.ofFn_succ (f := f₃), List.ofFn_succ (f := f₄)]
       simp only [List.prod_cons, e2, e3, e4]
       have := congrArg (f₁ 0 * ·) ih

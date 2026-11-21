@@ -43,7 +43,7 @@ theorem idealOf_mem (𝔟 : Frac F) (b : NZ (𝔟 : FractionalIdeal (𝓞 F)⁰ 
   have h1 := span_eq 𝔟 b
   rw [h] at h1
   simp at h1
-  exact b.2.2 (FractionalIdeal.spanSingleton_eq_zero_iff.1 h1)
+  exact b.2.2 h1
 
 theorem idealOf_class (𝔟 : Frac F) (b : NZ (𝔟 : FractionalIdeal (𝓞 F)⁰ F)) :
     ClassGroup.mk0 ⟨idealOf 𝔟 b, idealOf_mem 𝔟 b⟩ = (ClassGroup.mk F 𝔟)⁻¹ := by

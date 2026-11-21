@@ -12,7 +12,8 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.AbLaw GlobalTheory.CechPic GlobalTheory.ProjSpace
+open GlobalTheory.AbLaw GlobalTheory.CechPic
+open GlobalTheory.ProjSpace (O1 O1_isLB)
 open GroundTheory.Arith.SchemeCoh GroundTheory.Arith.SchemeCoh.ProjSpace
 
 namespace GlobalTheory.Amb

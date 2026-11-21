@@ -149,7 +149,9 @@ private theorem fourier_fourierSMulRight_sub_I_mul_eq_fourier_conj_mul (g : ℂ 
     ← integral_sub (hΦ.apply_continuousLinearMap 1) ((hΦ.apply_continuousLinearMap Complex.I).const_mul _),
     ← integral_const_mul]
   congr 1
-    Complex.inner, smul_eq_mul, Circle.smul_def]
+  funext v
+  simp only [Circle.smul_def, smul_apply, VectorFourier.fourierSMulRight_apply,
+    ContinuousLinearMap.smulRight_apply, smul_eq_mul]
   have hc : (starRingEnd ℂ) v = (v.re : ℂ) - (v.im : ℂ) * Complex.I := by
     apply Complex.ext <;> simp
   have h1 : ((innerSL ℝ) v : ℂ →L[ℝ] ℝ) 1 = v.re := by
@@ -211,10 +213,10 @@ private theorem fourier_pow_mul_gaussian (m : ℕ) (l : ℂ) :
         Complex.exp ((-2 * Real.pi * ‖v‖ ^ 2 : ℝ) : ℂ)) (-l)) := by
     rw [Real.fourier_eq, Real.fourier_eq, ← integral_conj]
     congr 1
-      Complex.conj_conj, ← Complex.exp_conj, Complex.conj_ofReal, inner_neg_right, Complex.conj_I]
-    congr 2
-    push_cast
-    ring
+    funext x
+    simp only [Circle.smul_def, inner_neg_right]
+    simp only [smul_eq_mul, neg_neg, map_mul, map_pow, Complex.conj_conj,
+      ← Complex.exp_conj, Complex.conj_ofReal, ← Circle.coe_inv_eq_conj, AddChar.map_neg_eq_inv]
   rw [hconj, fourier_conj_pow_mul_gaussian m (-l)]
   simp only [map_mul, map_pow, map_neg, Complex.conj_conj, Complex.conj_I, ← Complex.exp_conj,
     Complex.conj_ofReal, neg_div, norm_neg, map_div₀, map_one, map_ofNat]

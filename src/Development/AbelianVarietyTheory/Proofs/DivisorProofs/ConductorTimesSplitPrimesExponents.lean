@@ -16,7 +16,9 @@ theorem dvd_prod_primes_iff {R : Type} [CommRing R] [IsDedekindDomain R]
     v.asIdeal ∣ ∏ q ∈ Q, q.asIdeal ↔ v ∈ Q := by
   constructor
   · intro h
-    obtain ⟨q, hq, hd⟩ := (v.prime.Prime.dvd_finsetProd_iff _).1 h
+    have hex : ∃ q ∈ Q, v.asIdeal ∣ q.asIdeal :=
+      (v.prime.dvd_finsetProd_iff (fun q : HeightOneSpectrum R => q.asIdeal)).1 h
+    obtain ⟨q, hq, hd⟩ := hex
     have : q.asIdeal = v.asIdeal :=
       q.isMaximal.eq_of_le v.isPrime.ne_top (Ideal.le_of_dvd hd)
     rwa [← HeightOneSpectrum.ext this]
@@ -33,7 +35,8 @@ theorem multiplicity_prod_primes_of_mem {R : Type} [CommRing R] [IsDedekindDomai
   classical
   have h0 := prod_primes_ne_zero Q
   rw [← Finset.mul_prod_erase Q _ hv] at h0 ⊢
-  rw [multiplicity_mul v.prime (FiniteMultiplicity.of_prime_left v.prime h0), multiplicity_self,
+  rw [multiplicity_mul v.prime (FiniteMultiplicity.of_prime_left v.prime h0),
+    multiplicity_self (FiniteMultiplicity.of_prime_left v.prime v.ne_bot),
     multiplicity_eq_zero_of_not_dvd (by rw [dvd_prod_primes_iff]; simp)]
 
 theorem condQ_exponents : ∀ (E : Type) [Field E] [NumberField E] (𝔣 : Ideal (OF E)) (Q : Finset (HeightOneSpectrum (OF E))), IsBaseCond 𝔣 → IsFinSetSplitPlacesCoprimeConductor 𝔣 Q → condQ 𝔣 Q ≠ ⊥ ∧ (∀ v : HeightOneSpectrum (OF E), v.asIdeal ∣ condQ 𝔣 Q → Splits v) ∧ (∀ v : HeightOneSpectrum (OF E), expIn (condQ 𝔣 Q) v ≠ 0 → v.asIdeal ∣ condQ 𝔣 Q) ∧ (∀ v ∈ Q, expIn (condQ 𝔣 Q) v = 1) ∧ (∀ v ∉ Q, expIn (condQ 𝔣 Q) v = expIn 𝔣 v) ∧ {v : HeightOneSpectrum (OF E) | expIn (condQ 𝔣 Q) v ≠ 0}.Finite := by

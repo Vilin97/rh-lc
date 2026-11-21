@@ -359,7 +359,36 @@ theorem exists_tangent_param {d : ℕ} {x : JetSer.Fam P.G (Fin d)} (hx : Chart.
   have hp₀ : ¬ IsUnit (p : O) := Fact.out
   have hp : ¬ IsUnit (p : DualNumber O) := fun h => hp₀ (by
     simpa using h.map (TrivSqZeroExt.fstHom O O O))
-  have hc := isAdicComplete_dualNumber (O := O) p
+  have mem_pow (R : Type) [CommRing R] (a : R) (n : ℕ) (z : R) :
+      z ∈ (Ideal.span {a} ^ n • ⊤ : Submodule R R) ↔ a ^ n ∣ z := by
+    rw [Ideal.span_singleton_pow, smul_eq_mul, Ideal.mul_top, Ideal.mem_span_singleton]
+  have dual_dvd (n : ℕ) (z : DualNumber O) :
+      (p : DualNumber O) ^ n ∣ z ↔ (p : O) ^ n ∣ z.fst ∧ (p : O) ^ n ∣ z.snd := by
+    have e : (p : DualNumber O) ^ n = TrivSqZeroExt.inl ((p : O) ^ n) := by
+      rw [← TrivSqZeroExt.inl_pow, TrivSqZeroExt.inl_natCast]
+    rw [e]
+    constructor
+    · rintro ⟨y, rfl⟩
+      exact ⟨⟨y.fst, by simp⟩, ⟨y.snd, by simp⟩⟩
+    · rintro ⟨⟨a, ha⟩, b, hb⟩
+      exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, by ext <;> simp [ha, hb]⟩
+  have hc : IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) := by
+    have h : IsAdicComplete (Ideal.span {(p : O)}) O := inferInstance
+    refine { toIsHausdorff.haus' := ?_, toIsPrecomplete.prec' := ?_ }
+    · intro z hz
+      simp only [SModEq.zero, mem_pow, dual_dvd] at hz
+      refine TrivSqZeroExt.ext (h.toIsHausdorff.haus' z.fst fun n => ?_)
+        (h.toIsHausdorff.haus' z.snd fun n => ?_)
+      · rw [SModEq.zero, mem_pow]; exact (hz n).1
+      · rw [SModEq.zero, mem_pow]; exact (hz n).2
+    · intro f hf
+      simp only [SModEq.sub_mem, mem_pow, dual_dvd] at hf ⊢
+      obtain ⟨a, ha⟩ := h.toIsPrecomplete.prec' (fun n => (f n).fst) fun {m n} hmn => by
+        rw [SModEq.sub_mem, mem_pow]; exact (hf hmn).1
+      obtain ⟨b, hb⟩ := h.toIsPrecomplete.prec' (fun n => (f n).snd) fun {m n} hmn => by
+        rw [SModEq.sub_mem, mem_pow]; exact (hf hmn).2
+      simp only [SModEq.sub_mem, mem_pow] at ha hb
+      exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩
   have hl := existsUnique_left (P := P) hp hc
   have hr := existsUnique_right (P := P) hp hc
   let tv : (Fin d → O) → LieG P.Gt := fun b => ⟨(hl (Chart.tvec (x := x) b)).choose,
@@ -481,7 +510,27 @@ theorem smul_mem_htSpan {N : ℕ} {u : Fin N → PS O 1 d} (hu : ∀ k, IsCh (L.
         Chart.jetLift_zR (RingHom.ker (Chart.fstD O)) Chart.kerD_sq _
           (fun q : Fin 1 × Fin d => TrivSqZeroExt.fst_inr _ (co w q.2)) q
       exact (congrArg β h0).trans (dualBC_inr _)
-    have v1 := SeriesCharacter.hasVal_of_ringHom x (u k) _ _ e5 (β.comp θ) fun q => (hθ q).trans (e6 q.2).symm
+    have v1 : HasVal x (u k) (pushV hπ (P.cmp _ hn (z ≫ torsion.ι P.Gt (p ^ n)))).left
+        ((β.comp θ) (JetSer.toJet 1 (u k))) := by
+      let g := pushV hπ (P.cmp _ hn (z ≫ torsion.ι P.Gt (p ^ n)))
+      have hψ : ∀ q, (β.comp θ) (Chart.zR 1 q) = φ (Chart.zR 1 q.2) :=
+        fun q => (hθ q).trans (e6 q.2).symm
+      refine ⟨1, fun j => φ (Chart.zR 1 j), β.comp θ, hψ, ?_, rfl⟩
+      have w' := Over.w g
+      rw [e5, Category.assoc, Over.w (x 1)] at w'
+      change Spec.map _ ≫ Spec.map _ = Spec.map _ at w'
+      rw [← Spec.map_comp] at w'
+      have w'' := congrArg CommRingCat.Hom.hom (Spec.map_injective w')
+      have he : φ = (β.comp θ).toRingHom.comp (jetIn V d O 1).toRingHom := by
+        refine Ideal.Quotient.ringHom_ext (MvPolynomial.ringHom_ext (fun r => ?_) fun j => ?_)
+        · refine (RingHom.congr_fun w'' r).trans ?_
+          show _ = (β.comp θ) (jetIn V d O 1 (algebraMap V _ r))
+          rw [AlgHom.commutes, IsScalarTower.algebraMap_apply V O, AlgHom.commutes]
+          rfl
+        · show _ = (β.comp θ) (jetIn V d O 1 (Chart.zR 1 j))
+          rw [jetIn_zR, hψ]
+          rfl
+      rw [e5, he]
     rw [JetSer.dualNumber_value_toJet V _ (algebraMap V O) d L (co w) (u k) R _ hθ, (hu k).1, map_one,
       JetSer.constantCoeff_dof] at v1
     have e7 : l (dl (u k)) w = ∑ j, co w j * MvPowerSeries.coeff (Finsupp.single ((0 : Fin 1), j) 1) (u k) :=

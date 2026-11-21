@@ -64,8 +64,12 @@ theorem mem_support_comp {T T' : G →₀ ℂ} {k : G} (hk : k ∈ (comp T T').s
     ∃ a ∈ T.support, ∃ b ∈ T'.support, k = a * b := by
   classical
   unfold comp Finsupp.sum at hk
-  obtain ⟨a, ha, hk⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hk)
-  obtain ⟨b, hb, hk⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hk)
+  obtain ⟨a, ha, hk⟩ : ∃ a ∈ T.support,
+      k ∈ (∑ b ∈ T'.support, Finsupp.single (a * b) (T a * T' b)).support := by
+    exact Finset.mem_biUnion.1 (Finsupp.support_finsetSum hk)
+  obtain ⟨b, hb, hk⟩ : ∃ b ∈ T'.support,
+      k ∈ (Finsupp.single (a * b) (T a * T' b)).support := by
+    exact Finset.mem_biUnion.1 (Finsupp.support_finsetSum hk)
   exact ⟨a, ha, b, hb, Finset.mem_singleton.1 (Finsupp.support_single_subset hk)⟩
 
 theorem exists_fin (T : G →₀ ℂ) : ∃ (n : ℕ) (h : Fin n → G) (c : Fin n → ℂ),

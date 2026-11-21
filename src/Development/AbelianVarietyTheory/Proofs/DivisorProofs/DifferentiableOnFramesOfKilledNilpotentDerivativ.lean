@@ -232,7 +232,7 @@ theorem differentiableAt_bchar (la : Wt Ψ r) :
   unfold bchar
   have hp : ∀ {ι : Type} (u : Finset ι) (f : ι → Frame Ψ r → ℂ), (∀ i ∈ u, DifferentiableAt ℂ (f i) 0) →
       DifferentiableAt ℂ (fun W => ∏ i ∈ u, f i W) 0 := fun u f hf =>
-    (HasFDerivAt.finset_prod fun i hi => (hf i hi).hasFDerivAt).differentiableAt
+    (HasFDerivAt.finsetProd fun i hi => (hf i hi).hasFDerivAt).differentiableAt
   refine hp _ _ fun τ _ => hp _ _ fun i _ => ?_
   refine DifferentiableAt.zpow ?_ (Or.inl ?_)
   · simp only [Pi.add_apply]

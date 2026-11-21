@@ -10,7 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.Eventuall
 
 noncomputable section
 
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.WhitHered Matrix GlobalTheory.InertSupp
+open GlobalTheory.PRep GlobalTheory.SmGL Matrix GlobalTheory.InertSupp
 
 namespace GlobalTheory.UnipCptSub
 

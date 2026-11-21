@@ -135,6 +135,7 @@ theorem GlobalTheory.SiegelCov.integral_mulVec_inv : ∀ (F E : Type) [Field F] 
   haveI : BorelSpace (Fin n → AE F E) := ⟨rfl⟩
   haveI : IsModuleTopology (AF F) (AF F ⊗[F] E) := ⟨rfl⟩
   haveI : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) _
+  haveI : IsTopologicalAddGroup (AE F E) := IsModuleTopology.isTopologicalAddGroup (AF F) _
   haveI : Module.Free (AF F) (AF F ⊗[F] E) := Module.Free.of_basis (GlobalTheory.ModuLR.tensBasis F E)
   haveI : Module.Finite (AF F) (AF F ⊗[F] E) := Module.Finite.of_basis (GlobalTheory.ModuLR.tensBasis F E)
   let Φ := GlobalTheory.SiegelCov.vecCoordCE F E n
@@ -142,6 +143,9 @@ theorem GlobalTheory.SiegelCov.integral_mulVec_inv : ∀ (F E : Type) [Field F] 
   haveI : SecondCountableTopology (Fin n → AE F E) := Φ.toHomeomorph.isInducing.secondCountableTopology
   haveI : T2Space (Fin n → AE F E) := Φ.toHomeomorph.isEmbedding.t2Space
   haveI : μ.IsAddHaarMeasure := hμ
+  haveI : TopologicalSpace.PseudoMetrizableSpace (Fin n → AE F E) := inferInstance
+  haveI : SigmaCompactSpace (Fin n → AE F E) := inferInstance
+  haveI : μ.Regular := inferInstance
   set T : Matrix (Fin n) (Fin n) (AE F E) := ((t⁻¹ : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) with hTdef
   have hT : IsUnit T.det := (Matrix.isUnit_iff_isUnit_det T).1 (t⁻¹).isUnit
   set L := GlobalTheory.ModuLR.mulVecCE T hT with hL

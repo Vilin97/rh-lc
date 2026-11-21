@@ -32,7 +32,7 @@ theorem exists_polAV_generic : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocal
   have hs : oA.act w * oA.act (star w) = 𝟙 A.A := by
     rw [Hom.mul_def]
     change padd A.A (oA.act w) (oA.act (star w)) = 𝟙 A.A
-    rw [← oA.map_add (f := _), hw, oA.map_one]
+    rw [← oA.map_add, hw, oA.map_one]
   have ha := (GlobalTheory.RosLam.rosatiAdj_iff_lamEq laws.globalFns _ A _ _ hwA hwA').1 (oA.rosati w)
   obtain ⟨L', h1, h2, h3, h4, h5, h6, h7⟩ :=
     GlobalTheory.CM.exists_normalised_polarisation laws (FractionRing R) A _ _ hwA hwA' hs ha
@@ -70,7 +70,7 @@ theorem exists_polAV_generic : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocal
       refine Over.OverMorphism.ext ?_
       show wGK.left ≫ φ = (𝟙 GK.left ≫ φ) ≫ (oG.act w).left
       rw [Category.id_comp]
-      simp only [wGK, φ, Over.pullback_map_left]
+      simp only [wGK, φ, Over.pullback_map_left, pullback.lift_fst])
   have s5 := GlobalTheory.RigidBundleGlue.LBIso.pull hP φ
   have e3 : (pushPt hgp.1.w (𝟙 GK)).left = U.gen.hom.left := by simp [pushPt]
   have e4 : (pushPt hpb.1.w (𝟙 GK)).left = φ := Category.id_comp _

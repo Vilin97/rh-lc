@@ -50,7 +50,7 @@ theorem exists_sec_nonempty : ∀ (S : Scheme.{0}) (P : PolAV S) (K : Type) [Fie
       ![((1 : ℕ) : ℤ) - 1, 1] (![(snd T P.A).left] : Fin 1 → _) ![1] := by
     intro U _ h
     rw [e]; simp [Fin.prod_univ_succ]
-  obtain ⟨s, hs⟩ := exists_sec P.isLB hF (b i₀)
+  obtain ⟨s, hs⟩ := ReciprocityTheory.ChartRestriction.G.Geo.Tor.exists_sec P.isLB hF (b i₀)
   choose J hJ using fun χ : (T ⊗ P.A).left ⟶ P.A.left => exists_chart P.isLB (χ y)
   have hJ' : Good P.L y J := hJ
   refine ⟨s, y, ?_⟩

@@ -135,7 +135,7 @@ theorem exists_compact : ∀ {D : D7} (V : HSp D), (∀ τ, (gramAt D V τ).PosD
   haveI := hf.1
   refine ⟨⋃ c : Formalism.UG.ClassSet (GQ V) ((GlobalTheory.Mass.stdLevel D.sp.cm.sig V.gram).comap π),
     (fun k => c.out * k) '' K, isCompact_iUnion fun c => hK.image (continuous_const_mul _), fun h => ?_⟩
-  obtain ⟨γ, k, hγ, hk, e⟩ := DoubleCoset.mk_out_eq_mul (GQ V) ((GlobalTheory.Mass.stdLevel D.sp.cm.sig V.gram).comap π) h
+  obtain ⟨γ, hγ, k, hk, e⟩ := DoubleCoset.mk_out_eq_mul (GQ V) ((GlobalTheory.Mass.stdLevel D.sp.cm.sig V.gram).comap π) h
   refine ⟨γ⁻¹, inv_mem hγ, _, Set.mem_iUnion.2 ⟨DoubleCoset.mk _ _ h, k⁻¹, hsub _ (inv_mem hk), rfl⟩, ?_⟩
   simp only [e]
   group
@@ -168,7 +168,7 @@ theorem integrableOn_theta : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsSt
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
     rw [e]
-    refine continuous_finset_sum _ fun k _ => Continuous.mul ?_ ?_
+    refine continuous_finsetSum _ fun k _ => Continuous.mul ?_ ?_
     · exact (b.coord k).continuous_of_finiteDimensional.comp hF
     · exact (hom.om_cont _ (hL (b k)) 0).comp (continuous_id.prodMk continuous_const)
   · intro γ hγ g

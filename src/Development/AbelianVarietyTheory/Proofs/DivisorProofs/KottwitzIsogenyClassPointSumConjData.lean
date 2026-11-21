@@ -33,7 +33,7 @@ theorem finsum_dc_translate {G : Type} [Group G] (H H' K : Subgroup G) (a : G)
   have key : ∀ x, F' (Quotient.out (DoubleCoset.mk H' K (a * x))) = F x := by
     intro x
     obtain ⟨h', hh', k, hk, he⟩ := (@DoubleCoset.eq _ _ H' K _ _).1
-      (DoubleCoset.out_eq' H' K (DoubleCoset.mk H' K (a * x))).symm
+      (DoubleCoset.out_eq' (DoubleCoset.mk H' K (a * x))).symm
     rw [he]
     have : h' * (a * x) * k = a * ((a⁻¹ * h' * a) * x * k) := by group
     rw [this, hF', hF _ (hH' _ hh') _ hk]
@@ -41,17 +41,17 @@ theorem finsum_dc_translate {G : Type} [Group G] (H H' K : Subgroup G) (a : G)
     DoubleCoset.mk H' K (a * Quotient.out q)) ⟨?_, ?_⟩ (fun q => (key _).symm)).symm
   · intro q₁ q₂ h
     obtain ⟨h', hh', k, hk, he⟩ := (@DoubleCoset.eq _ _ H' K _ _).1 h
-    rw [← DoubleCoset.out_eq' H K q₁, ← DoubleCoset.out_eq' H K q₂]
+    rw [← DoubleCoset.out_eq' q₁, ← DoubleCoset.out_eq' q₂]
     refine (@DoubleCoset.eq _ _ H K _ _).2 ⟨a⁻¹ * h' * a, hH' _ hh', k, hk, ?_⟩
     have : Quotient.out q₂ = a⁻¹ * (a * Quotient.out q₂) := by group
     rw [this, he]; group
   · intro q'
     refine ⟨DoubleCoset.mk H K (a⁻¹ * Quotient.out q'), ?_⟩
     obtain ⟨h, hh, k, hk, he⟩ := (@DoubleCoset.eq _ _ H K _ _).1
-      (DoubleCoset.out_eq' H K (DoubleCoset.mk H K (a⁻¹ * Quotient.out q'))).symm
+      (DoubleCoset.out_eq' (DoubleCoset.mk H K (a⁻¹ * Quotient.out q'))).symm
     simp only
     rw [he]
-    conv_rhs => rw [← DoubleCoset.out_eq' H' K q']
+    conv_rhs => rw [← DoubleCoset.out_eq' q']
     exact (@DoubleCoset.eq _ _ H' K _ _).2 ⟨(a * h * a⁻¹)⁻¹, H'.inv_mem (hH _ hh), k⁻¹, K.inv_mem hk, by group⟩
 
 end GlobalTheory.PointSumConj

@@ -15,7 +15,7 @@ public import Formalism.SharpRestriction.Divisibility.LocalNonemptiness.THProvA
 
 noncomputable section
 
-open Matrix Formalism.REAL Formalism.MainNotions.S GlobalTheory.LinRed GlobalTheory.FlagMeas GlobalTheory.RealInd GlobalTheory.CompanionTheory.Hypotheses₂ GlobalTheory.CompanionTheory.Hypotheses₂.HCSS GlobalTheory.CompanionTheory.HCSide
+open Matrix Formalism.REAL Formalism.MainNotions.S GlobalTheory.LinRed GlobalTheory.FlagMeas GlobalTheory.RealInd GlobalTheory.CompanionTheory.Hypotheses₂ GlobalTheory.CompanionTheory.Hypotheses₂.HCSS
 open scoped InnerProductSpace
 
 namespace GlobalTheory.CompanionTheory.HCSide.CentreNone

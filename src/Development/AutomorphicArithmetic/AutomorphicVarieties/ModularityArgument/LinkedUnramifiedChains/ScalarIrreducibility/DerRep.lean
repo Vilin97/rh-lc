@@ -162,6 +162,7 @@ private theorem char_cont' {O X B A K : Type} [CommRing O] [TopologicalSpace X] 
     char_cont I (D.toAddMonoidHom.comp (algebraMap B A).toAddMonoidHom)
       (fun ε hε => (hs ε hε).imp fun _ h b hb => (h b hb).1) χ hc⟩
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem UpperTheory.V.J.derRep :
     ∀ (l : ℕ) [Fact l.Prime] (c : Coef l) [Fr.IsCoef l c.O] (F : Fr.Frame l (ResidueField c.O)) (C₀ n : ℕ), F.Ok C₀ → (n = 2 ∨ n = 3) →
         ∀ (S : Fr.Space c.O F n), ∀ ξ : S.A →ₐ[c.O] Qbar l, IntPt S ξ → ∀ D ∈ PtDer ξ (Qbar l),

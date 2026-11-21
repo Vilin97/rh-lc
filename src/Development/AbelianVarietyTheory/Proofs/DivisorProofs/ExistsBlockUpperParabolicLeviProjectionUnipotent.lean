@@ -192,8 +192,18 @@ theorem blk_ent (m : GLw a w × GLw b w) (X : Matrix (Fin a) (Fin b) (w.adicComp
 
 theorem sH_mem (k : GLw a w × GLw b w) (hk : k ∈ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b))) :
     sH h w k ∈ (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (parP a n w) := by
-  rw [Subgroup.mem_subgroupOf, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val]
-  rw [Subgroup.mem_prod, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val] at hk
+  have mem_KGL (m : ℕ) (g : GLw m w) :
+      g ∈ GlobalTheory.LFun.KGL w (n := m) ↔
+        (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1 := by
+    have hO : GroundTheory.Automorphic.GLnLocal.integralGL (w.adicCompletion E) m = GlobalTheory.LFun.KGL w (n := m) := by
+      have h : (ValuativeRel.valuation (w.adicCompletion E)).integer = Formalism.UG.Ov E w :=
+        Subring.ext fun x => GroundTheory.Global.mem_valuationInteger_iff w x
+      rw [GlobalTheory.LFun.KGL, ← h]; rfl
+    rw [← hO, GroundTheory.Automorphic.GLnLocal.mem_integralGL_iff]
+    simp only [GroundTheory.Global.mem_valuationInteger_iff]
+    rfl
+  rw [Subgroup.mem_subgroupOf, mem_KGL]
+  rw [Subgroup.mem_prod, mem_KGL, mem_KGL] at hk
   obtain ⟨⟨a1, a2⟩, b1, b2⟩ := hk
   refine ⟨blk_ent h w k 0 a1 b1 (by simp), ?_⟩
   have e : ((sH h w k : GLw n w))⁻¹ = (sH h w k⁻¹ : GLw n w) := by rw [map_inv]; rfl
@@ -202,10 +212,20 @@ theorem sH_mem (k : GLw a w × GLw b w) (hk : k ∈ (GlobalTheory.LFun.KGL w (n 
 
 theorem piH_mem (k : parP a n w) (hk : k ∈ (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (parP a n w)) :
     piH h w k ∈ (GlobalTheory.LFun.KGL w (n := a)).prod (GlobalTheory.LFun.KGL w (n := b)) := by
-  rw [Subgroup.mem_subgroupOf, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val] at hk
+  have mem_KGL (m : ℕ) (g : GLw m w) :
+      g ∈ GlobalTheory.LFun.KGL w (n := m) ↔
+        (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1 := by
+    have hO : GroundTheory.Automorphic.GLnLocal.integralGL (w.adicCompletion E) m = GlobalTheory.LFun.KGL w (n := m) := by
+      have h : (ValuativeRel.valuation (w.adicCompletion E)).integer = Formalism.UG.Ov E w :=
+        Subring.ext fun x => GroundTheory.Global.mem_valuationInteger_iff w x
+      rw [GlobalTheory.LFun.KGL, ← h]; rfl
+    rw [← hO, GroundTheory.Automorphic.GLnLocal.mem_integralGL_iff]
+    simp only [GroundTheory.Global.mem_valuationInteger_iff]
+    rfl
+  rw [Subgroup.mem_subgroupOf, mem_KGL] at hk
   obtain ⟨k1, k2⟩ := hk
   have e : (piH h w k)⁻¹ = piH h w k⁻¹ := (map_inv _ _).symm
-  rw [Subgroup.mem_prod, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val]
+  rw [Subgroup.mem_prod, mem_KGL, mem_KGL]
   refine ⟨⟨fun i j => ?_, fun i j => ?_⟩, fun i j => ?_, fun i j => ?_⟩
   · rw [piH_fst_val]; exact k1 (ix h (Sum.inl i)) (ix h (Sum.inl j))
   · rw [← Prod.fst_inv, e, piH_fst_val]; exact k2 (ix h (Sum.inl i)) (ix h (Sum.inl j))
@@ -214,7 +234,17 @@ theorem piH_mem (k : parP a n w) (hk : k ∈ (GlobalTheory.LFun.KGL w (n := n)).
 
 theorem uH_mem_iff (X : Multiplicative (Matrix (Fin a) (Fin b) (w.adicCompletion E))) :
     uH h w X ∈ (GlobalTheory.LFun.KGL w (n := n)).subgroupOf (parP a n w) ↔ X ∈ intMat a b w := by
-  rw [mem_intMat_iff, Subgroup.mem_subgroupOf, GlobalTheory.BCT.GlobLev.mem_KGL_iff_val]
+  have mem_KGL (m : ℕ) (g : GLw m w) :
+      g ∈ GlobalTheory.LFun.KGL w (n := m) ↔
+        (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1 := by
+    have hO : GroundTheory.Automorphic.GLnLocal.integralGL (w.adicCompletion E) m = GlobalTheory.LFun.KGL w (n := m) := by
+      have h : (ValuativeRel.valuation (w.adicCompletion E)).integer = Formalism.UG.Ov E w :=
+        Subring.ext fun x => GroundTheory.Global.mem_valuationInteger_iff w x
+      rw [GlobalTheory.LFun.KGL, ← h]; rfl
+    rw [← hO, GroundTheory.Automorphic.GLnLocal.mem_integralGL_iff]
+    simp only [GroundTheory.Global.mem_valuationInteger_iff]
+    rfl
+  rw [mem_intMat_iff, Subgroup.mem_subgroupOf, mem_KGL]
   constructor
   · rintro ⟨H, -⟩ i j
     have := H (ix h (Sum.inl i)) (ix h (Sum.inr j))

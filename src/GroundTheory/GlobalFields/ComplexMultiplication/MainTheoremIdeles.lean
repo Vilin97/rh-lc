@@ -20,6 +20,8 @@ noncomputable section
 
 variable {K : Type} [Field K] [NumberField K]
 
+local notation "𝓘" => (FractionalIdeal (𝓞 K)⁰ K)ˣ
+
 namespace Modulus
 
 def ofNat (m : ℕ) (hm : m ≠ 0) : Modulus K where

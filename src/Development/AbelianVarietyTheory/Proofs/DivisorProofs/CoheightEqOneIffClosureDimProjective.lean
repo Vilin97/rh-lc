@@ -44,7 +44,7 @@ theorem coheight_add_dim_closure_eq (F : Type) [Field F] (X : Scheme.{0}) [IsInt
   have hA : ringKrullDim Γ(X, U) = topologicalKrullDim X := by
     rw [← OpenImmDim.topologicalKrullDim_eq_of_isOpenImmersion F X _ p hU.fromSpec]
     exact (PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim _).symm
-  have h2 := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient F P.asIdeal
+  have h2 := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient (k := F) P.asIdeal
   let x : Spec Γ(X, U) := P
   have eS := (asIso (hU.fromSpec.stalkMap x) ≪≫ Spec.stalkIso Γ(X, U) x).commRingCatIsoToRingEquiv
   have hPh : (P.asIdeal.height : WithBot ℕ∞) = Order.coheight z := by

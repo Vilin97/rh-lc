@@ -25,7 +25,7 @@ attribute [local instance 2000] Rep.hV2
 
 variable (K : FiniteSubfield) (S : Finset (HeightOneSpectrum (𝓞 K.1)))
 
-abbrev Gs : Type := galUnramifiedOutside K.1 ℚ̄ (S : Set (HeightOneSpectrum (𝓞 K.1)))
+abbrev Gs : Type := galUnramifiedOutside K.1 (AlgebraicClosure ℚ) (S : Set (HeightOneSpectrum (𝓞 K.1)))
 
 end
 end GlobalTheory.CompanionTheory.GSCd

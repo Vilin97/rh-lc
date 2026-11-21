@@ -33,25 +33,32 @@ theorem at_of_mem {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
     {Bf : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → AF F} {κ : Type} [Fintype κ]
     (co : Darboux Bf κ) (v : Pl (F := F)) :
     ∀ γ ∈ latAtV X W v, ∀ k, At (evFin F v) ((co.e γ).1 k) ∧ At (evFin F v) ((co.e γ).2 k) := by
+  have at_mul_right {x : AF F} (hx : At (evFin F v) x) (y : AF F) : At (evFin F v) (x * y) := fun u hu => by
+    rw [smul_eq_mul, ← mul_assoc, show u * x = 0 from hx u hu, zero_mul]
+  have at_zero : At (evFin F v) (0 : AF F) := fun u _ => smul_zero u
+  have at_add {x y : AF F} (hx : At (evFin F v) x) (hy : At (evFin F v) y) : At (evFin F v) (x + y) := fun u hu => by
+    rw [smul_add, hx u hu, hy u hu, add_zero]
+  have at_neg {x : AF F} (hx : At (evFin F v) x) : At (evFin F v) (-x) := fun u hu => by
+    rw [smul_neg, hx u hu, neg_zero]
   intro γ hγ
   induction hγ using AddSubgroup.closure_induction with
   | mem z hz =>
     obtain ⟨a, ha, -, x, -, y, -, rfl⟩ := hz
     intro k
     rw [map_smul]
-    exact ⟨GlobalTheory.VacAny.at_mul_right ha _, GlobalTheory.VacAny.at_mul_right ha _⟩
+    exact ⟨at_mul_right ha _, at_mul_right ha _⟩
   | zero =>
     intro k
     simp only [map_zero, Prod.fst_zero, Prod.snd_zero, Pi.zero_apply]
-    exact ⟨GlobalTheory.VacAny.at_zero, GlobalTheory.VacAny.at_zero⟩
+    exact ⟨at_zero, at_zero⟩
   | add x y _ _ hx hy =>
     intro k
     rw [map_add (f := _)]
-    exact ⟨GlobalTheory.VacAny.at_add (hx k).1 (hy k).1, GlobalTheory.VacAny.at_add (hx k).2 (hy k).2⟩
+    exact ⟨at_add (hx k).1 (hy k).1, at_add (hx k).2 (hy k).2⟩
   | neg x _ hx =>
     intro k
     rw [map_neg]
-    exact ⟨GlobalTheory.VacAny.at_neg (hx k).1, GlobalTheory.VacAny.at_neg (hx k).2⟩
+    exact ⟨at_neg (hx k).1, at_neg (hx k).2⟩
 
 theorem psi_symp_eq_one {σ : E →ₐ[F] E} (B : Base F E) (hB : B.IsGood σ) {n d : ℕ} (X : Spc F E n) (W : Spc F E d)
     (r s r' s' : ℕ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s')
@@ -228,6 +235,19 @@ theorem local_vac {σ : E →ₐ[F] E} (B : Base F E) {n d n₁ d₁ : ℕ} (r s
     · simp only [map_add (f := _), hι, Prod.snd_add, Pi.add_apply, hq.1, Pi.zero_apply, add_zero, finite_evaluation_extend_by_zero, hβ, hb]
 
   have hαP : (fun i => α (eq.symm (Sum.inl i))) ∈ P := mem_latPos.2 ⟨q, hqΓ, fun i => rfl⟩
+  have at_mul_right {x : AF F} (hx : At (evFin F v) x) (y : AF F) : At (evFin F v) (x * y) := fun u hu => by
+    rw [smul_eq_mul, ← mul_assoc, show u * x = 0 from hx u hu, zero_mul]
+  have at_sum {κ : Type} (s : Finset κ) {f : κ → AF F} (h : ∀ i ∈ s, At (evFin F v) (f i)) : At (evFin F v) (∑ i ∈ s, f i) := by
+    classical
+    induction s using Finset.induction_on with
+    | empty => simp only [Finset.sum_empty]; exact fun u _ => smul_zero u
+    | insert a s ha ih =>
+      rw [Finset.sum_insert ha]
+      exact fun u hu => by rw [smul_add, h a (Finset.mem_insert_self a s) u hu, ih (fun i hi => h i (Finset.mem_insert_of_mem hi)) u hu, add_zero]
+  have ev_inv : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+    refine (invOf_eq_right_inv ?_).symm
+    have h : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+    rwa [map_mul, map_ofNat] at h
   have hβP : ∀ y ∈ P, GlobalTheory.VacAny.psiV B.ψ v (y ⬝ᵥ fun i => β (eq.symm (Sum.inl i))) = 1 := by
     intro y hy
     obtain ⟨γ', hγ', hy⟩ := mem_latPos.1 hy
@@ -237,7 +257,7 @@ theorem local_vac {σ : E →ₐ[F] E} (B : Base F E) {n d n₁ d₁ : ℕ} (r s
         simp only [dotProduct, map_sum, map_mul, hβ, ← hy]
       rw [sum_of_inr eq _ (fun j => by rw [hp.2 j, map_zero, mul_zero])]
     have hz : At (evFin F v) ((co.e γ').1 ⬝ᵥ (co.e p).2) :=
-      GlobalTheory.VacAny.at_sum _ fun k _ => GlobalTheory.VacAny.at_mul_right (hAt' k).1 _
+      at_sum _ fun k _ => at_mul_right (hAt' k).1 _
     rw [e1, ← psi_eq_psiV B.ψ v hz]
     have e2 : (co.e γ').1 ⬝ᵥ (co.e p).2 = symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) γ' p := by
       rw [co.form, hp.1, zero_dotProduct, sub_zero]
@@ -253,8 +273,8 @@ theorem local_vac {σ : E →ₐ[F] E} (B : Base F E) {n d n₁ d₁ : ℕ} (r s
   have hD : B.ψ (⅟(2 : AF F) * ((co.e q).1 ⬝ᵥ (co.e p).2)) =
       GlobalTheory.VacAny.psiV B.ψ v (⅟(2 : Fv F v) * ((fun i => α (eq.symm (Sum.inl i))) ⬝ᵥ fun i => β (eq.symm (Sum.inl i)))) := by
     have hz : At (evFin F v) (⅟(2 : AF F) * ((co.e q).1 ⬝ᵥ (co.e p).2)) :=
-      GlobalTheory.VacAny.at_mul_left _ (GlobalTheory.VacAny.at_sum _ fun k _ => GlobalTheory.VacAny.at_mul_right (hAtq k).1 _)
-    rw [psi_eq_psiV B.ψ v hz, map_mul, GlobalTheory.VacAny.evFin_invOf_two]
+      (by rw [mul_comm]; exact at_mul_right (at_sum _ fun k _ => at_mul_right (hAtq k).1 _) _)
+    rw [psi_eq_psiV B.ψ v hz, map_mul, ev_inv]
     congr 2
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [dotProduct, map_sum, map_mul, hα, hβ]

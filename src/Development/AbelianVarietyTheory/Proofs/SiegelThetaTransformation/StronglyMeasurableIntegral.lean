@@ -19,7 +19,6 @@ public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR.Datum Formalism.L2.Pj MeasureTheory IsDedekindDomain NumberField Matrix Complex
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD GlobalTheory GlobalTheory.ThFr GlobalTheory.Ker
 open GlobalTheory.SW hiding Level
-open GlobalTheory.IndefiniteRowSideFullHecke.StabilizerKernelSums
 open scoped TensorProduct ComplexConjugate Real Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 

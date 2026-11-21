@@ -26,7 +26,7 @@ theorem GlobalTheory.PtExt.exists_dat_chi_eq : ∀ (p : ℕ) [Fact p.Prime]  (R 
   intro p _ R _ N hN A _ hA hP hs G t b hb
   have : IsCommMonObj A := hA.comm
   have hn : ((p ^ N : ℕ) : R) = 0 := by push_cast; exact hN
-  have hR : HasRoots A (p ^ N) := fun D _ _ x ↦
+  have hR : GlobalTheory.PtExt.HasRoots A (p ^ N) := fun D _ _ x ↦
     GlobalTheory.PtCover.exists_faithfullyFlat_pow_eq R A hA (p ^ N) (pow_pos (Fact.out : p.Prime).pos N) D x
   obtain ⟨u, g, hu, hg, hchi⟩ := GlobalTheory.T.exists_pushout_torsor_nTorsion_character R A (p ^ N) hn hR b hb
   obtain ⟨f, hf⟩ := GlobalTheory.PtExt.cohom_fv_of_toH1O_surjective R A hs u hu

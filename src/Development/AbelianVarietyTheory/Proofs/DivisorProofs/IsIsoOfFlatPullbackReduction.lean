@@ -114,7 +114,9 @@ theorem injective_of_flat_of_ker_le_map {A B C : Type} [CommRing A] [CommRing B]
       simp only [mB, LinearMap.comp_apply, LinearMap.lTensor_tmul, LinearMap.rTensor_tmul,
         LinearEquiv.coe_coe, TensorProduct.lid_tmul, Submodule.subtype_apply]
       exact Submodule.smul_mem_smul a.2 x.2
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+    | add x y hx hy =>
+      simp only [map_add]
+      exact add_mem hx hy
   have hle : K ≤ I • K := by
     intro k hk
     have hk' : k ∈ I • (⊤ : Submodule A B) := by rw [Ideal.smul_top_eq_map]; exact h k hk

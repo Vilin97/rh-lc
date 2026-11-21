@@ -321,22 +321,30 @@ theorem exists_stdChart : ∀ N : ℕ, ∃ (c : AlgChart (PSpace.str ℂ N) (Rin
   have hy : c.e.symm v ∈ ptsIn (PSpace.str ℂ N) (RingHom.id ℂ) (ProjSpace.chart ℂ N 0) := by
     rw [← hs]
     exact c.e.map_target (by rw [ht]; exact Set.mem_univ v)
-  obtain ⟨w, hw⟩ := projPt_surjective (N := N) (RingHom.id ℂ) (c.e.symm v)
+  obtain ⟨w, hw, heq⟩ := ProjSpace.exists_eq_pt (RingHom.id ℂ) (c.e.symm v).1 (c.e.symm v).2
+  let w : ProjSpace.Unimodular ℂ N := ⟨w, hw⟩
+  have hw : (c.e.symm v).1 = ProjSpace.pt (RingHom.id ℂ) w.1 w.2 := heq
+  have he : c.e.symm v = ⟨ProjSpace.pt (RingHom.id ℂ) w.1 w.2, hw ▸ (c.e.symm v).2⟩ := Subtype.ext hw
   have hw0 : IsUnit (w.1 0) := by
     rw [← le_pt_preimage_chart_iff (RingHom.id ℂ) w.1 w.2 0]
     have h' := hy
-    rw [← hw] at h'
+    rw [he] at h'
     exact h'
   have hrat : ∀ a : Fin N, v.ofLp a = w.1 a.succ / w.1 0 := by
     intro a
     have h1 := hev v a
-    rw [← hw] at h1
+    rw [he] at h1
     rw [← h1]
     have h2 := valR_pt_ratio (N := N) (RingHom.id ℂ) w.1 w.2 hw0 ((0 : Fin (N + 1)).succAbove a)
     show valR (ProjSpace.pt (RingHom.id ℂ) w.1 w.2) _ _ = _
     rw [h2, Fin.succAbove_zero, Ring.inverse_eq_inv', div_eq_mul_inv]
-  have key := ProjAn.fubiniStudyWeight_projPoint ℂ (RingHom.id ℂ) N w 0 hw0.ne_zero
-  rw [hw] at key
+  have key : (ProjAn.fsO1 ℂ (RingHom.id ℂ) N).φ (0 : Fin (N + 1)) (c.e.symm v) =
+      Real.log (∑ a, ‖w.1 a / w.1 0‖ ^ 2) := by
+    refine (Weight.fsBasis_φ _ _ _ _ _ _ _).trans (congrArg _ (Finset.sum_congr rfl fun a _ => ?_))
+    simp only [Matrix.one_apply, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    rw [div_eq_mul_inv, ← Ring.inverse_eq_inv, ← valR_pt_ratio (RingHom.id ℂ) w.1 w.2 hw0 a]
+    rw [he]
+    rfl
   refine key.trans ?_
   congr 1
   rw [Fin.sum_univ_succ, div_self hw0.ne_zero, norm_one, one_pow, EuclideanSpace.norm_sq_eq]

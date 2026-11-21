@@ -79,11 +79,15 @@ theorem val_combGen {F : J → (X' ⟶ X)} {δ : J → ℤ} {φ : K → (Y ⟶ X
 end Generators
 
 theorem isCub_prod {B U J : Type} [CommGroup B] [CommGroup U] [Fintype J] (θ : J → B → B → B → U)
-    (h : ∀ i, IsCub (θ i)) (δ : J → ℤ) : IsCub fun x y z => ∏ i, θ i x y z ^ δ i where
-  face x y := Finset.prod_eq_one fun i _ => by rw [(h i).face, one_zpow]
-  s01 x y z := Finset.prod_congr rfl fun i _ => by rw [(h i).s01]
-  s12 x y z := Finset.prod_congr rfl fun i _ => by rw [(h i).s12]
-  coc x x' x'' y := by
+    (h : ∀ i, IsCub (θ i)) (δ : J → ℤ) : IsCub (fun x y z => ∏ i, θ i x y z ^ δ i) := by
+  constructor
+  · intro x y
+    exact Finset.prod_eq_one fun i _ => by rw [(h i).face, one_zpow]
+  · intro x y z
+    exact Finset.prod_congr rfl fun i _ => by rw [(h i).s01]
+  · intro x y z
+    exact Finset.prod_congr rfl fun i _ => by rw [(h i).s12]
+  · intro x x' x'' y
     simp only [← Finset.prod_mul_distrib, ← mul_zpow]
     exact Finset.prod_congr rfl fun i _ => by rw [(h i).coc]
 

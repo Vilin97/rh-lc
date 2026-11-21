@@ -39,7 +39,6 @@ theorem defect_mul_prim_pow (Q q : ℕ) [NeZero Q] (hqQ : q ∣ Q) (U : Scheme.{
   | zero =>
     intro w hw
     rw [pow_zero, one_mul] at hw
-    rw [Units.ext hw]
   | succ a ih =>
     intro w hw
     have e : ((hζ.unit ^ a * v : (Γ(U, ⊤))ˣ) : Γ(U, ⊤)) = ζ.1 ^ a * v := by simp

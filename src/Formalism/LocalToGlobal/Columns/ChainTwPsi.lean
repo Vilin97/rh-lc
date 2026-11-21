@@ -26,7 +26,8 @@ theorem twDvd_of_intAt (hq : (qOf P).Prime) : ∀ (D : ℕ) (b : ℤ), IntAt P (
           ring
         rw [e]
         exact (ciIntAt_q (P := P) (q := qOf P)).mul h
-      obtain ⟨b', rfl⟩ := twDvd_of_intAt hq D b h1
+      have hb : ((qOf P : ℤ) ^ D) ∣ b := twDvd_of_intAt hq D b h1
+      obtain ⟨b', rfl⟩ := hb
       have h2 : IntAt P ((b' : X.E) / (qOf P : X.E)) := by
         have e : (b' : X.E) / (qOf P : X.E) = (((qOf P : ℤ) ^ D * b' : ℤ) : X.E) / (qOf P : X.E) ^ (D + 1) := by
           push_cast
@@ -48,7 +49,9 @@ theorem twRes_exists (hq : (qOf P).Prime) (hu : ((qOf P : ℕ) : 𝓞 X.E) ∉ P
   | 0, y, hy => ⟨0, by simpa using hy⟩
   | D + 1, y, hy => by
       have hq0 : (qOf P : X.E) ≠ 0 := by exact_mod_cast hq.ne_zero
-      obtain ⟨b0, hb0⟩ := owedC_exists_int (A := 𝓞 X.E ⧸ P.asIdeal) hq (ciCard P) (redP P y)
+      have hex : ∃ b0 : ℤ, redP P y = (b0 : 𝓞 X.E ⧸ P.asIdeal) :=
+        owedC_exists_int hq (ciCard P) (redP P y)
+      obtain ⟨b0, hb0⟩ := hex
       have hz : IntAt P ((y - b0) / (qOf P : X.E)) :=
         ciIntAt_div (ciQ_mem P) hu (ciIntAt_sub hy (ciIntAt_intCast b0))
           (by rw [redP_sub hy (ciIntAt_intCast b0), redP_intCast, hb0, sub_self])

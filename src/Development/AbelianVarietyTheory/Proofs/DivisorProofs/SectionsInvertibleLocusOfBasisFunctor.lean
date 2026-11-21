@@ -22,7 +22,7 @@ theorem sec_of_basis_unit : ∀ {R : Type} [CommRing R] {C : Type} [Category.{0}
   have uniq : ∀ (S : C) (y : F.obj S), (∀ t (w : S ⟶ G.obj t), mp F w y = 0) → y = 0 := by
     intro S y hy
     obtain ⟨n, b, hb, hb'⟩ := hcov S
-    refine sep_std H hb y fun S'' u' ⟨i, hi⟩ ↦ ?_
+    refine sep_std (H := H) (hb := hb) y fun S'' u' ⟨i, hi⟩ ↦ ?_
     obtain ⟨t, v, w, rfl⟩ := hb' i S'' u' hi
     rw [mp_comp, hy t v, map_zero]
   have hex : ∀ S (u : T ⟶ S), ∃ y : F.obj S, IsUnit (mp F u e) →

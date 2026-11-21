@@ -52,7 +52,7 @@ theorem exists_fixed {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype �
     fun g => SchwartzMap.coeFn_toLp g 2 μ
   have hnorm : ∀ g : SInf F κ, ‖J g‖ = ((∫⁻ x, ‖g x‖ₑ ^ 2 ∂μ) ^ (1 / 2 : ℝ)).toReal := by
     intro g
-    rw [Lp.norm_def, eLpNorm_congr_ae (hJ g), eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by simp)]
+    rw [Lp.norm_def, eLpNorm_congr_ae (hJ g), eLpNorm_eq_lintegral_rpow_eNorm_toReal (by norm_num) (by simp) g.continuous.aestronglyMeasurable]
     congr 2
     · simp only [ENNReal.toReal_ofNat]
       congr 1

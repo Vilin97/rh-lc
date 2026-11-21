@@ -49,7 +49,7 @@ structure PtCh (n : ℕ) (X : Sys (D.what₂.places.resChar w)) where
 def chAt : ∀ j, (sysAt Ch std vp unif eO eO_spec dG dG_spec om).Lt j → PtCh (D := D) (w := w) (((sysAt Ch std vp unif eO eO_spec dG dG_spec om).Pj j).m + 1) (sysAt Ch std vp unif eO eO_spec dG dG_spec om)
   | 0, La =>
     { J := J0.reindex (finCongr A0.rk.symm) (finCongr A0.rk.symm)
-      Lb := Lb0.map (((reE (E := D.host.E) (n := ((sysAt Ch std vp unif eO eO_spec dG dG_spec om).Pj 0).m + 1) (by exact A0.rk.symm) : _ ≃ₗ[D.host.E] _) : _ →ₗ[D.host.E] _).restrictScalars (𝓞 D.host.E))
+      Lb := Lb0.map ((reE (E := D.host.E) A0.rk.symm).toLinearMap.restrictScalars (𝓞 D.host.E))
       Uloc := fun v => (Uloc0 v).map (reGL (finCongr A0.rk.symm))
       y := reGL (finCongr A0.rk.symm) (Classical.epsilon fun x => A0.IsPt La.1 (basesAt Ch std vp unif eO eO_spec dG dG_spec om 0 La.2) x ∧
         x ∈ Formalism.UG.UPts (sigD D) J0 (FiniteAdeleRing (𝓞 D.host.F) D.host.F))

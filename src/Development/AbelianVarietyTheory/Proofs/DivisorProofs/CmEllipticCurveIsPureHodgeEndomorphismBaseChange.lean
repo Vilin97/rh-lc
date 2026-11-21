@@ -94,7 +94,10 @@ theorem isPureBC_ell : GlobalTheory.Published.AbelianDeRham → ∀ (E : Type) [
   intro R _ f A _ φ hpb W' _ hW'
 
   haveI : IsCommMonObj A := GlobalTheory.PolPull.isCommMonObj_of_isGrpPullback hpb
-  have hA : IsAbelianScheme A := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback C.P.isAb hpb
+  have hA : IsAbelianScheme A := by
+    exact ⟨inferInstance, MorphismProperty.of_isPullback (P := @Smooth) hpb.1 C.P.isAb.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) hpb.1 C.P.isAb.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) hpb.1 C.P.isAb.geomConnected⟩
   have hgG : SmoothOfRelativeDimension 1 C.P.A.hom := by
     have h := C.P.smoothDim
     rw [C.dim] at h
@@ -106,12 +109,30 @@ theorem isPureBC_ell : GlobalTheory.Published.AbelianDeRham → ∀ (E : Type) [
   haveI := hgG
   obtain ⟨v', hv', hv'φ⟩ := GlobalTheory.exists_isLieBasis_baseChange S R f C.P.A A φ hpb
     (SmoothOfRelativeDimension.smooth 1 C.P.A.hom) 1 ![C.v] C.basis
-  have hu : ∀ i, (v' i).left ≫ φ = spMap (Formalism.L2.Pj.dualMap f) ≫ (![C.v] i).left := hv'φ
-  have hw : (v' 0 ≫ W').left ≫ φ = spMap (Formalism.L2.Pj.dualMap f) ≫ (C.v ≫ C.act.act (GlobalTheory.CM.wK H)).left := by
+  have hu : ∀ i, (v' i).left ≫ φ = spMap (Chart.dualMapR f) ≫ (![C.v] i).left := hv'φ
+  have hw : (v' 0 ≫ W').left ≫ φ = spMap (Chart.dualMapR f) ≫ (C.v ≫ C.act.act (GlobalTheory.CM.wK H)).left := by
     rw [Over.comp_left, Category.assoc, hW', ← Category.assoc, hu 0, Over.comp_left, Category.assoc]
     rfl
-  have e : IsLieComb (fun i => f (![ω] i)) v' (v' 0 ≫ W') :=
-    GlobalTheory.ArcQ.NormalForm.isLieComb_baseChange hpb hu hw C.eig
+  have e : IsLieComb (fun i => f (![ω] i)) v' (v' 0 ≫ W') := by
+    have he := eq_epsScale_of_isLieComb C.eig
+    have hs : spMap (epsScaleR (f ω)) ≫ spMap (Chart.dualMapR f) =
+        spMap (Chart.dualMapR f) ≫ spMap (epsScaleR ω) := by
+      rw [← Geo.Tor.spMap_comp, ← Geo.Tor.spMap_comp]
+      congr 1
+      ext r <;> simp [Chart.dualMapR, epsScaleR, TrivSqZeroExt.algebraMap_eq_inl]
+    have heq : v' 0 ≫ W' = epsScale (f ω) ≫ v' 0 := by
+      apply Over.OverMorphism.ext
+      apply hpb.1.hom_ext
+      · rw [hw, he, Over.comp_left, Over.comp_left, Category.assoc, hu 0]
+        change (spMap (Chart.dualMapR f) ≫ spMap (epsScaleR ω)) ≫ C.v.left =
+          spMap (epsScaleR (f ω)) ≫ (spMap (Chart.dualMapR f) ≫ C.v.left)
+        rw [← hs, Category.assoc]
+      · rw [Over.w, Over.w]
+    refine ⟨fun _ => epsScale (f ω) ≫ v' 0, ?_, ?_⟩
+    · intro i
+      fin_cases i
+      rfl
+    · simpa using heq
   have hquot : ∀ y : HdR A, push (dp0 R) (𝟙 _) W' y - f ω • y ∈ Fil A :=
     fun y => push_sub_smul_mem_Fil hLie hv' W' e y
 
@@ -147,7 +168,8 @@ theorem isPureBC_ell : GlobalTheory.Published.AbelianDeRham → ∀ (E : Type) [
   have hpushb : ∀ y : HdR A, push (dp0 R) (𝟙 _) (o'.act (1 - GlobalTheory.CM.wK H)) y = y - push (dp0 R) (𝟙 _) W' y := by
     intro y
     have h1 : GlobalTheory.DeRham.act (dp0 R) (𝟙 _) o' (1 - GlobalTheory.CM.wK H) = 1 - push (dp0 R) (𝟙 _) W' := by
-      rw [map_sub, map_one, GlobalTheory.DeRham.act_apply (dp0 R) (𝟙 _) o' (GlobalTheory.CM.wK H),
+      set_option synthInstance.maxHeartbeats 200000 in
+       rw [map_sub, map_one, GlobalTheory.DeRham.act_apply (dp0 R) (𝟙 _) o' (GlobalTheory.CM.wK H),
         push_congr (dp0 R) (𝟙 _) hWo]
     rw [← GlobalTheory.DeRham.act_apply (dp0 R) (𝟙 _) o' (1 - GlobalTheory.CM.wK H), h1]
     rfl

@@ -44,9 +44,13 @@ theorem torusHomOf_prod_zpow {S : Scheme.{0}} {X X' : Type} [AddCommGroup X] [Ad
   have e₁ : ∀ i, GlobalTheory.splitTorusPointsEquiv S X' _ (t i) (Multiplicative.ofAdd χ) = charUnit S X (h i χ) := fun i =>
     Units.ext ((GlobalTheory.splitTorusPointsEquiv_val S X' _ (t i) χ).trans (ht i χ))
   rw [← GlobalTheory.splitTorusPointsEquiv_val, map_prod]
-  simp only [map_zpow, MonoidHom.finset_prod_apply, MonoidHom.zpow_apply, e₁]
+  simp only [map_zpow]
   rw [charUnit_eq_pointsEquiv, ofAdd_sum, map_prod]
   simp only [ofAdd_zsmul, map_zpow, ← charUnit_eq_pointsEquiv]
+  congr 1
+  change (MonoidHom.eval (Multiplicative.ofAdd χ)) (∏ x, GlobalTheory.splitTorusPointsEquiv S X' _ (t x) ^ n x) = _
+  rw [map_prod]
+  simp only [map_zpow, MonoidHom.eval, MonoidHom.flip_apply, MonoidHom.id_apply, e₁]
 
 end GlobalTheory.Mum.PowData
 

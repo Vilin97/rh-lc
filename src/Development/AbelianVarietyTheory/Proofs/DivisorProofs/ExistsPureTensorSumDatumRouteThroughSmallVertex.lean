@@ -366,11 +366,11 @@ theorem exists_datum_pure_selfdual : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     unfold GlobalTheory.FunObj.tensT
     rw [Finsupp.sum]
-    erw [← Finsupp.sum_finset_sum_index (h := fun d c => c * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.boxB e d u) (fun _ => zero_mul _)
+    erw [← Finsupp.sum_finsetSum_index (h := fun d c => c * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.boxB e d u) (fun _ => zero_mul _)
       (fun _ _ _ => add_mul _ _ _)]
     refine Finset.sum_congr rfl fun P _ => ?_
     rw [Finsupp.sum]
-    erw [← Finsupp.sum_finset_sum_index (h := fun d c => c * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.boxB e d u) (fun _ => zero_mul _)
+    erw [← Finsupp.sum_finsetSum_index (h := fun d c => c * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.boxB e d u) (fun _ => zero_mul _)
       (fun _ _ _ => add_mul _ _ _)]
     refine Finset.sum_congr rfl fun d _ => ?_
     erw [Finsupp.sum_single_index (h := fun d c => c * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.boxB e d u) (zero_mul _)]

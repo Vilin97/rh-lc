@@ -21,6 +21,8 @@ open scoped Pointwise
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section CoboundaryUnits
 
 variable {Kv Ωv : Type} [Field Kv] [Field Ωv] [Algebra Kv Ωv] [IsGalois Kv Ωv]

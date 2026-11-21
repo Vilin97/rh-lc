@@ -27,7 +27,7 @@ namespace GlobalTheory.FinDecomp
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-
+variable (F) in
 def idem (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) : AF F := pairA F 0 (singleFin v 1)
 
 theorem af_ext' {a b : AF F} (h1 : fstA F a = fstA F b) (h2 : ∀ u : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), evFin F u a = evFin F u b) : a = b :=
@@ -43,7 +43,7 @@ theorem evFin_idem (v u : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorMode
 theorem idem_mul_self (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) : idem F v * idem F v = idem F v :=
   af_ext' (by simp [map_mul, fst_idem]) fun u => by rw [map_mul, evFin_idem]; split_ifs <;> simp
 
-
+variable (F) in
 def idemS (S : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F))) : AF F := ∑ v ∈ S, idem F v
 
 theorem fst_idemS (S : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F))) : fstA F (idemS F S) = 0 := by

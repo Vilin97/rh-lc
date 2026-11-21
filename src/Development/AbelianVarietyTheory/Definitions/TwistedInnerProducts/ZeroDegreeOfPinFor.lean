@@ -104,7 +104,15 @@ theorem exists_reads
       exact ⟨t, t2, fun _ _ => t1⟩
     · exact ⟨1, fun x hx => hx, fun h1 h2 => absurd ⟨h1, h2⟩ hc⟩
   choose t t1 t2 using h'
-  obtain ⟨f, hf⟩ := GlobalTheory.HeckeTieCompare.exists_family Rl.toRealDat (WL := S.WL) (fun i => (Y.fi i).e) t
+  let f : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j) := fun j =>
+    match j with
+    | 0 => fun _ _ => 0
+    | n + 1 => fun k P =>
+        if hn : n < D.R.m then ((Y.fi ⟨n, hn⟩).e).symm.conj (t ⟨n, hn⟩ k P) else 0
+  have hf (i : Fin D.R.m) (k : ℕ) (P : PlE D.host) :
+      (Y.fi i).e.conj (f ((i : ℕ) + 1) k P) = t i k P := by
+    simp only [f, dite_eq_left i.2]
+    exact (Y.fi i).e.conj.apply_symm_apply (t i k P)
   have e : ∀ (i : Fin D.R.m) k P x, (Y.fi i).e (f ((i : ℕ) + 1) k P x) = t i k P ((Y.fi i).e x) := fun i k P x => by
     rw [← hf i k P, LinearEquiv.conj_apply_apply, LinearEquiv.symm_apply_apply]
   refine ⟨f, fun j h1 h2 k P x hx => ?_, fun i k P _ ho hk α R ha hR x => ?_⟩
@@ -113,7 +121,13 @@ theorem exists_reads
     refine ((Y.fi i).wk _).2 ?_
     rw [e i]
     exact t1 i k P _ (((Y.fi i).wk _).1 hx)
-  · rw [e, GlobalTheory.HeckeTieCompare.scalar_eq Rl.toRealDat]
+  · have hscalar :
+        (((Rl.C.mu0 i).val P : ℂˣ) : ℂ)⁻¹ ^ k *
+            (((Nat.card (kP P) : ℕ) : ℂ) ^ (k * (D.R.nV / 2)))⁻¹ =
+          GlobalTheory.IndefiniteRowSideFullHecke.RationalHeckeScalars.heckeScalar Rl.toRealDat i P k := by
+      rw [GlobalTheory.IndefiniteRowSideFullHecke.RationalHeckeScalars.heckeScalar,
+        zpow_neg, zpow_neg, zpow_natCast, zpow_natCast, inv_pow]
+    rw [e, hscalar]
     exact t2 i k P ho hk R ⟨α, ha, hR⟩ _
 
 

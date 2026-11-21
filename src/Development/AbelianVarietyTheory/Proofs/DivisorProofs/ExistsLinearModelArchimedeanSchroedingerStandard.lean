@@ -33,14 +33,13 @@ theorem pt_ext {x y : AdeleRing (𝓞 F) F} (h1 : fstH x = fstH y) (h2 : sndH x 
 theorem dot_infE_infE {κ : Type} [Fintype κ] (z y : κ → mixedEmbedding.mixedSpace F) :
     infE F z ⬝ᵥ infE F y = pt (∑ i, z i * y i) := by
   refine pt_ext ?_ ?_
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [dotProduct, map_sum, map_mul]
-    show ∑ i, (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (z i) * (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (y i) = (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (∑ i, z i * y i)
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_mul]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [dotProduct, map_sum, map_mul]
-    show ∑ i, (0 : FiniteAdeleRing (𝓞 F) F) * 0 = 0
+  · simp only [dotProduct, map_sum, map_mul]
+    change ∑ i, (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (z i) *
+      (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (y i) =
+      (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (∑ i, z i * y i)
+    simp only [map_sum, map_mul]
+  · simp only [dotProduct, map_sum, map_mul]
+    change ∑ i, (0 : FiniteAdeleRing (𝓞 F) F) * 0 = 0
     simp
 
 theorem invOf_two_mul_pt (S : mixedEmbedding.mixedSpace F) :

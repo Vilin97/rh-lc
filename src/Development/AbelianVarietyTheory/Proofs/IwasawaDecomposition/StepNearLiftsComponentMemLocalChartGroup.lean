@@ -36,7 +36,10 @@ theorem mem_uloc : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
   obtain ⟨κ', hK, hLP, hLo⟩ := hL g' hg' hgg'
   have hxz : x * z ∈ UPts (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) := mul_mem hx hz
   have hxzoff : ∀ v', v' ≠ v → bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v') (x * z) = 1 := fun v' hv' => by
-    rw [map_mul, hxoff v' hv', hzoff v' hv', mul_one]
+    calc
+      _ = bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v') x * bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v') z := map_mul _ _ _
+      _ = 1 * 1 := congrArg₂ (· * ·) (hxoff v' hv') (hzoff v' hv')
+      _ = 1 := one_mul 1
   have hpt' : ∀ r s, adAt (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (GlobalTheory.TwU.seamP (sm I l Z) P.1) ((kk⁻¹ * (x * z) * kk).1 r s) = algebraMap (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E ((GlobalTheory.TwU.seamP (sm I l Z) P.1).adicCompletion (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) ((GlobalTheory.TwU.seamGL (sm I l Z) g').1 r s) := hpt
   have hq := GlobalTheory.T.representative_image_point_of_lift I hOk hPins l Z u a i hi bad Ch chOf K k hR c kk hkk P v hv (x * z) hxz hxzoff g' hg' hpt' κ' hK hLP hLo
   subst hkk

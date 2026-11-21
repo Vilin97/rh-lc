@@ -26,10 +26,14 @@ theorem exists_mul_mem_tens (E : Place (algebraMap ℂ K)) (w : K ⊗[ℂ] κ') 
   induction w using TensorProduct.induction_on with
   | zero => exact ⟨1, one_mem _, one_ne_zero, by simpa using zero_mem _⟩
   | tmul x y =>
-    obtain ⟨a, ha, b, hb, hb0, e⟩ := E.isLocModel.frac x
-    refine ⟨b, hb, hb0, ?_⟩
-    rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_comm, e]
-    exact tmul_mem ha y
+    obtain ⟨a, b, hb, e⟩ := IsFractionRing.div_surjective (A := E.ring) x
+    have hb0 : (b : K) ≠ 0 := fun h => nonZeroDivisors.ne_zero hb (Subtype.ext h)
+    have he : x * (b : K) = (a : K) := by
+      rw [← e]
+      exact div_mul_cancel₀ _ hb0
+    refine ⟨b, b.2, hb0, ?_⟩
+    rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_comm, he]
+    exact tmul_mem a.2 y
   | add u v hu hv =>
     obtain ⟨d₁, hd₁, hd₁0, h₁⟩ := hu
     obtain ⟨d₂, hd₂, hd₂0, h₂⟩ := hv

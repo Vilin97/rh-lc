@@ -56,7 +56,7 @@ theorem map_linearEquiv_haar : ∀ (F : Type) [Field F] [CharZero F] [ValuativeR
   have hXP : X = (Measure.addHaarScalarFactor X P : ℝ≥0∞) • P := Measure.isAddLeftInvariant_eq_smul X P
   have hmv : Measurable M.mulVec := (continuous_const.matrix_mulVec continuous_id).measurable
   have hXM : X.map M.mulVec = ((d⁻¹ : ℝ≥0) : ℝ≥0∞) • X := by
-    rw [hXP, Measure.map_smul, hPM, smul_comm]
+    rw [hXP, Measure.map_smul _ hmv.aemeasurable, hPM, smul_comm]
   have hμ : μ = X.map Em.symm := by rw [hX, Measure.map_map Em.symm.measurable Em.measurable]; simp
   have hcomp : (T : V → V) ∘ Em.symm = Em.symm ∘ M.mulVec := by
     funext x
@@ -70,6 +70,6 @@ theorem map_linearEquiv_haar : ∀ (F : Type) [Field F] [CharZero F] [ValuativeR
     _ = X.map ((T : V → V) ∘ Em.symm) := Measure.map_map hTm Em.symm.measurable
     _ = X.map (Em.symm ∘ M.mulVec) := by rw [hcomp]
     _ = (X.map M.mulVec).map Em.symm := (Measure.map_map Em.symm.measurable hmv).symm
-    _ = (d⁻¹ : ℝ≥0) • μ := by rw [hXM, Measure.map_smul, ← hμ]; rfl
+    _ = (d⁻¹ : ℝ≥0) • μ := by rw [hXM, Measure.map_smul _ Em.symm.measurable.aemeasurable, ← hμ]; rfl
 
 end GlobalTheory.KSp

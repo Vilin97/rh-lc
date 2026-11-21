@@ -34,6 +34,7 @@ theorem exists_isSplitAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       exact Ideal.zero_mem _)
   have hpQ : ((p : ℕ) : 𝓞 E) ∈ Q := by
     have h1 : ((p : ℤ)) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by
+      change (p : ℤ) ∈ Ideal.under ℤ Q
       rw [hQ]
       exact Ideal.subset_span rfl
     rw [Ideal.mem_comap] at h1

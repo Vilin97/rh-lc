@@ -21,11 +21,11 @@ theorem setup_tr {m N : ℕ} (h : m + 2 ≤ N) (h' : m + 1 ≤ N) {V : Type} [Ad
   · intro v
     simp [TrM.colEl_zero]
   · intro x y v
-    rw [TrM.colEl_add, map_mul, Module.End.mul_apply]
+    rw [TrM.colEl_add, map_mul, mul_apply_eq_comp]
   · intro g x v
     show π (blkAt k (m + 1) N h' g) (π (colEl k m N h x) v) =
       π (colEl k m N h ((g : Matrix (Fin (m + 1)) (Fin (m + 1)) k) *ᵥ x)) (π (blkAt k (m + 1) N h' g) v)
-    rw [← Module.End.mul_apply, ← map_mul, TrM.blkAt_mul_colEl m N h h', map_mul, Module.End.mul_apply]
+    rw [← mul_apply_eq_comp, ← map_mul, TrM.blkAt_mul_colEl m N h h', map_mul, mul_apply_eq_comp]
   · intro v
     exact (hπ v).preimage (TrM.continuous_colEl m N h)
   · intro v
@@ -70,7 +70,7 @@ theorem uLift_of_abs (H : @AbsLift k _ _ _ _) : PositivityTheory.RgUd.Form.U.ULi
     have e : ∀ u, π (blkAt k (m + 1 + 1) N h (unip k (m + 1) (Multiplicative.ofAdd x) * glEmb k (m + 1) g)) u =
         π (colEl k m N h x) (π (blkAt k (m + 1) N h' g) u) := by
       intro u
-      rw [map_mul, map_mul, Module.End.mul_apply, ← TrM.blkAt_glEmb (m + 1) N h' h]
+      rw [map_mul, map_mul, mul_apply_eq_comp, ← TrM.blkAt_glEmb (m + 1) N h' h]
       rfl
     rw [e, e, TrM.det_unip_mul_glEmb]
     exact (hIcol x _ _).trans (hIgl g v w)

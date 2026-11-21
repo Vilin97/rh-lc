@@ -22,8 +22,9 @@ def toQC {K : Type} [Field K] [NumberField K] (χ : HChar K) : GroundTheory.Glob
 theorem norm_val_eq_rpow : ∀ (K : Type) [Field K] [NumberField K] (χ : HChar K), ∃ s : ℝ,
     ∀ w : HeightOneSpectrum (𝓞 K), ‖((χ.val w : ℂˣ) : ℂ)‖ = (Ideal.absNorm w.asIdeal : ℝ) ^ s := by
   intro K _ _ χ
-  refine ⟨-(toQC χ).exponent, fun w => ?_⟩
-  have h1 := (toQC χ).norm_apply
+  obtain ⟨s, hs⟩ := GroundTheory.Global.QuasiCharacter.exists_norm_eq_rpow (toQC χ)
+  refine ⟨-s, fun w => ?_⟩
+  have h1 := hs
     (GroundTheory.Global.IdeleClassGroup.mk K (GroundTheory.Global.IdeleGroup.finiteEmbedding w (atFin w (unif w))))
   rw [GroundTheory.Global.IdeleClassGroup.ideleModule_mk,
     GroundTheory.Global.ideleModule_finiteEmbedding_of_uniformizer (unif_spec w)] at h1

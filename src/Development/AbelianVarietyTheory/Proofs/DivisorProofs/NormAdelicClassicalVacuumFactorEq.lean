@@ -76,7 +76,7 @@ theorem integral_prod_eq {V U : Type} [NormedAddCommGroup V] [MeasurableSpace V]
   rw [mul_comm] at hsw
   have e3 := (ENNReal.mul_left_inj (pow_ne_zero n hv0) (ENNReal.pow_ne_top hv1)).1 hsw
   have hcc : Continuous fun v => ∏ k, φ (e v k) :=
-    continuous_finset_prod _ fun k _ => hc.comp ((continuous_apply k).comp he)
+    continuous_finsetProd _ fun k _ => hc.comp ((continuous_apply k).comp he)
   rw [integral_eq_lintegral_of_nonneg_ae (Filter.Eventually.of_forall fun v => Finset.prod_nonneg fun k _ => h0 _)
     hcc.aestronglyMeasurable, e3]
   simp only [G, ENNReal.ofReal_prod_of_nonneg fun k _ => h0 _]
@@ -171,12 +171,16 @@ theorem exists_meanOne {n : ℕ} (hs : IsSympl X bas) (hn : Even n) {w : E} (hw 
     linear_combination (Real.sqrt t : ℂ) * this
   · rw [← mul_inv_cancel₀ hpos.ne', ← hm, ← mul_div_assoc, ← integral_const_mul]
     congr 2
+    funext z
+    unfold CanTh.canTh
     rw [norm_mul, norm_mul, mul_pow, mul_pow, Complex.norm_exp, ← Real.exp_nat_mul,
       Complex.norm_real, Real.norm_eq_abs, sq_abs, Real.sq_sqrt hpos.le, _root_.mul_assoc,
       mul_comm (Real.exp _), _root_.mul_assoc, ← Real.exp_add]
     congr 3
     have : ((Real.pi : ℂ) / 2) = ((Real.pi / 2 : ℝ) : ℂ) := by push_cast; ring
-    rw [hH, this, re_ofReal_mul, VacNorm.re_dot, VacNorm.re_dot_star]
+    rw [hH, this, re_ofReal_mul, VacNorm.re_dot_star]
+    unfold CanTh.imInv
+    rw [VacNorm.re_dot]
     push_cast; ring
 
 theorem norm_sq_periodic {w : E} {L : Lt E r} {x : Frame X.Ψ r} {c : Fin g → ℝ}

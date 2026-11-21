@@ -39,7 +39,7 @@ theorem isProjBy_baseChange {R R' : Type} [CommRing R] [CommRing R'] {X X' : Sch
   obtain ⟨H, hH, n, s, hs⟩ := hf
   have hH' : (H.pull φ).IsLB := DVR.linComb_isLB _ hH _ _
   obtain ⟨w, hw⟩ := GlobalTheory.PolBaseChange.lbIso_refl hH'
-  choose s' hs' using fun j => (GlobalTheory.SecPullIso.section_pull X X' φ H _ w hH hH' hw (s j)).1.exists
+  choose s' hs' using fun (j : Fin (n + 1)) => (GlobalTheory.SecPullIso.section_pull X X' φ H _ w hH hH' hw (s j)).1.exists
   refine ⟨_, hH', n, s', GlobalTheory.AbLaw.VeryAmplePull.veryAmpleBy_pull R X f H n s hH hs R' g.hom X' f' φ h.w ?_
     _ w s' hH' hw hs'⟩
   have e : pullback.lift φ f' h.w = h.isoPullback.hom := by

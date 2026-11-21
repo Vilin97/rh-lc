@@ -21,7 +21,10 @@ theorem exists_thList : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonO
   intro S G _ _ L ρ hL hρ g m N K _ _ x θ hm hmK hN hP
   subst hN
   obtain ⟨pt, hinj, hpt, hall⟩ := GlobalTheory.T.exists_injective_list_m_sq_torsion_polarisedFibre S G L g m K x hmK hP
-  choose c hc using fun a => GlobalTheory.T.exists_thetaConstant_m_sq_torsion_algClosed_fibre S G L ρ hL hρ g m K x θ (pt a) hm hmK hP (hpt a)
+  have hex : ∀ a, ∃ c : K, ThG G L ρ m θ (pt a) (GlobalTheory.ZH.fn c) := by
+    intro a
+    exact GlobalTheory.T.exists_thetaConstant_m_sq_torsion_algClosed_fibre S G L ρ hL hρ g m K x θ (pt a) hm hmK hP (hpt a)
+  choose c hc using hex
   exact ⟨pt, c, hinj, hc, hall⟩
 
 end GlobalTheory.UMin

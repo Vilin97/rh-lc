@@ -144,19 +144,18 @@ theorem mem_closedAt {v : V n} {F : V n → Ev n} : F ∈ closedAt v ↔
 theorem coeff_charpolyRev_map {R S r : Type} [CommRing R] [CommRing S] [Fintype r] [DecidableEq r] (f : R →+* S)
     (M : Matrix r r R) (j : ℕ) : (M.map f).charpolyRev.coeff j = f (M.charpolyRev.coeff j) := by
   rw [← Polynomial.coeff_map]
-  congr 1
   rw [Matrix.charpolyRev, Matrix.charpolyRev, ← Polynomial.coe_mapRingHom, RingHom.map_det]
-  congr 1
-  ext a b : 2
+  apply congrArg (fun A : Matrix r r (Polynomial S) => A.det.coeff j)
+  ext a b
   simp [Matrix.one_apply, apply_ite (Polynomial.map f)]
 
 theorem mem_closedAt_of_symm {v : V n} {u : Fin n × Fin n → V n → ℂ} (hu : ∀ p, DifferentiableAt ℝ (u p) v)
     (hs : ∀ a b c, del (u (a, b)) v (coordVec c) = del (u (c, b)) v (coordVec a)) :
     (fun x => ∑ p, u p x • sym p) ∈ closedAt v := by
   refine mem_closedAt.2 ⟨fun S => ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, map_sum, map_smul, Finsupp.finsetSum_apply,
-      Finsupp.smul_apply, smul_eq_mul]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul, map_sum, map_smul, Finsupp.finsetSum_apply,
+        Finsupp.smul_apply, smul_eq_mul]
     exact DifferentiableAt.fun_sum fun p _ => (hu p).mul_const _
   · simp only [AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul]
     rw [delAt_sum_smul hu]
@@ -186,6 +185,7 @@ theorem delAt_chernAt_of_conn_eq_zero {H : V n → Matrix r r ℂ} {v : V n} (h 
       (fun p => (h.curv hu (j := 1) (by norm_num) _ _).diff i k)
       fun a b c => congrFun (congrFun (mdel_curv_comm h hu (h0 a) (h0 c) (coordVec b)) i) k
   let M : Matrix r r (closedAt v) := Matrix.of fun i k => ⟨_, hm i k⟩
+  set_option synthInstance.maxHeartbeats 200000 in
   have e : (fun w => chernAt H w j) = (kappa ^ j • (-M).charpolyRev.coeff j : closedAt v) := by
     funext w
     let ev : closedAt v →+* Ev n := (Pi.evalRingHom (fun _ => Ev n) w).comp (closedAt v).val.toRingHom
@@ -200,6 +200,7 @@ theorem delAt_chernAt_of_conn_eq_zero {H : V n → Matrix r r ℂ} {v : V n} (h 
     show kappa ^ j • _ = kappa ^ j • ev _
     rw [← e1]
     rfl
+  set_option synthInstance.maxHeartbeats 200000 in
   have := (kappa ^ j • (-M).charpolyRev.coeff j : closedAt v).2
   rw [← e] at this
   exact (mem_closedAt.1 this).2

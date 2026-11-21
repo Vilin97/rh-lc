@@ -100,7 +100,7 @@ theorem exists_tangent_point : ∀ {o : Type} [CommRing o] (X : Scheme.{0}) (s :
     (Scheme.ΓSpecIso (CommRingCat.of o)).symm.commRingCatIsoToRingEquiv
     (h t t.2 Γ(Y, Y.basicOpen (t : Γ(Y, V))))
   have h₂ : (ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.algX p (Y.basicOpen (t : Γ(Y, V)))).IsStandardSmoothOfRelativeDimension D := by
-    rw [← GlobalTheory.TopForm.resG_comp_algX p (Y.basicOpen_le (t : Γ(Y, V)))]
+    rw [← GlobalTheory.TopForm.resG_comp_algX (p := p) (Y.basicOpen_le (t : Γ(Y, V)))]
     exact h₁
   obtain ⟨x, d, hl, hd, h0⟩ := exists_coords_derivs' h₂
   have hO : IsAffineOpen (Y.basicOpen (t : Γ(Y, V))) := IsAffineOpen.basicOpen hV _

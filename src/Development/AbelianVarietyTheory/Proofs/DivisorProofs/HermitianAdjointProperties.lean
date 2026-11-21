@@ -28,7 +28,7 @@ theorem cc_mulVec (A : Matrix (Fin r) (Fin r) E) (y : Fin r → E) :
   ext i; simp [mulVec, dotProduct, cc, map_sum, map_mul]
 
 theorem map_one_cc : (1 : Matrix (Fin r) (Fin r) E).map cc = 1 := by
-  ext i j; by_cases h : i = j <;> simp [one_apply, h, cc]
+  exact Matrix.map_one cc (by simp [cc]) (by simp [cc])
 
 theorem map_smul_cc (c : E) (A : Matrix (Fin r) (Fin r) E) : (c • A).map cc = cc c • A.map cc := by
   ext i j; simp [cc, map_mul]

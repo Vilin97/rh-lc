@@ -120,7 +120,7 @@ theorem fr_map {φ : S →ₐ[c.F] T} {y : FrPt Xo c S} {z : FrPt Xo c T} (h : F
     (i : Fin (Dw.mult τ)) : (fr Y z).v τ i = spMap (Chart.dualMapR φ.toRingHom) ≫ (fr Y y).v τ i := by
   refine sameVec_unique (sameVec_fr z τ i) ?_
   obtain ⟨w, t, e, e'⟩ := sameVec_fr (Y := Y) y τ i
-  refine ⟨spMap (dualMap φ.toRingHom) ≫ w, isTan_map _ (ptF_map h).symm t, ?_, ?_⟩
+  refine ⟨spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ.toRingHom) ≫ w, isTan_map _ (ptF_map h).symm t, ?_, ?_⟩
   · rw [Category.assoc, e, h.2.1]
   · rw [Category.assoc, e']; rfl
 

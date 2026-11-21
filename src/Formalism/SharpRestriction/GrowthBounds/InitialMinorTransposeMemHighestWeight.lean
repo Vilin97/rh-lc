@@ -143,24 +143,19 @@ theorem joint_top : ∀ {N : ℕ} (W : Fin N → I → Submodule K V) (e : Fin N
   | N + 1, W, e, h, hc => by
     have ih := joint_top (fun i => W i.succ) (fun i => e i.succ) (fun i => h i.succ)
       (fun i j hij => hc i.succ j.succ (by simpa using hij))
-    refine eq_top_iff.2 fun x hx0 => ?_
-    clear hx0
-    have hx : x ∈ (⨆ t : Fin N → I, ⨅ i, W i.succ (t i)) := by rw [ih]; trivial
-    refine Submodule.iSup_induction _ (motive := fun y => y ∈ ⨆ t : Fin (N + 1) → I, ⨅ i, W i (t i))
-      hx ?_ (Submodule.zero_mem _) ?_
-    · intro t y hy
-      obtain ⟨T, hT⟩ := (h 0).cover y
-      rw [hT]
-      refine Submodule.sum_mem _ fun mu _ => ?_
-      refine Submodule.mem_iSup_of_mem (Fin.cons mu t) ?_
-      rw [Submodule.mem_iInf]
-      intro i
-      refine Fin.cases ?_ (fun j => ?_) i
-      · simpa using (h 0).mem mu y
-      · simp only [Fin.cons_succ]
-        exact hc 0 j.succ (Fin.succ_ne_zero j).symm mu (t j) y ((Submodule.mem_iInf _).1 hy j)
-    · intro a b ha hb
-      exact Submodule.add_mem _ ha hb
+    refine eq_top_iff.2 ?_
+    rw [← ih]
+    refine iSup_le fun t y hy => ?_
+    obtain ⟨T, hT⟩ := (h 0).cover y
+    rw [hT]
+    refine Submodule.sum_mem _ fun mu _ => ?_
+    refine Submodule.mem_iSup_of_mem (Fin.cons mu t) ?_
+    rw [Submodule.mem_iInf]
+    intro i
+    refine Fin.cases ?_ (fun j => ?_) i
+    · simpa using (h 0).mem mu y
+    · simp only [Fin.cons_succ]
+      exact hc 0 j.succ (Fin.succ_ne_zero j).symm mu (t j) y ((Submodule.mem_iInf _).1 hy j)
 
 theorem list_fix (l : List (Module.End K V)) (x : V) (h : ∀ A ∈ l, A x = x) : l.prod x = x := by
   induction l with
@@ -196,8 +191,8 @@ theorem proj_eq_sum {N : ℕ} (W : Fin N → I → Submodule K V) (e : Fin N →
     E = ∑ t ∈ T, (List.ofFn fun i => e i (t i)).prod := by
   refine LinearMap.ext fun x => ?_
   have hx : x ∈ (⨆ t : Fin N → I, ⨅ i, W i (t i)) := by rw [joint_top W e h hc]; trivial
-  refine Submodule.iSup_induction _
-    (motive := fun y => E y = (∑ t ∈ T, (List.ofFn fun i => e i (t i)).prod) y) hx ?_ ?_ ?_
+  refine Submodule.iSup_induction (fun t : Fin N → I => ⨅ i, W i (t i))
+    (motive := fun y => E y = (∑ t ∈ T, (List.ofFn fun i => e i (t i)).prod) y) (x := x) hx ?_ ?_ ?_
   · intro t y hy
     have hy' : ∀ i, y ∈ W i (t i) := (Submodule.mem_iInf _).1 hy
     have hsame : (List.ofFn fun i => e i (t i)).prod y = y := by

@@ -43,8 +43,12 @@ theorem siegPre_descends_fg : ∀ (g n : ℕ), 3 ≤ n → Odd n → ∀ (R : Ty
     GlobalTheory.SympDescent.isSymplectic_of_subring g n (cycAway n) R u R₀ (spMap β₀) c.A c.P (lvOf c) A₀ P₀ lv₀ (by omega) hζ hunit hsym hpr hlev₀
       c.isLB hpb' (by rw [← GlobalTheory.SiegelTypings.spMap_comp, hβ]; exact hsympR)
   let c₀ : SiegPre g n (zetaAway n) (spMap β₀) := ofTriple (ζ := u) hn0 hζ A₀ P₀ lv₀ hsym hlev₀ hsymp₀
-  refine ⟨R₀, β₀, c₀, hft, hβ, (principal_iff c₀).2 hpr, (siegPB_iff c c₀ _).2 ?_⟩
-  rw [show lvOf c₀ = lv₀ from lvOf_ofTriple (ζ := u) hn0 hζ A₀ P₀ lv₀ hsym hlev₀ hsymp₀]
-  exact hpb'
+  refine ⟨R₀, β₀, c₀, hft, hβ, ?_, (siegPB_iff c c₀ _).2 ?_⟩
+  · apply (principal_iff c₀).2
+    change IsPrincipal A₀ P₀
+    exact hpr
+  · change IsPullbackTriple c.A c.P (lvOf c) A₀ P₀ (lvOf (ofTriple (ζ := u) hn0 hζ A₀ P₀ lv₀ hsym hlev₀ hsymp₀)) (spMap R₀.subtype)
+    rw [lvOf_ofTriple]
+    exact hpb'
 
 end GlobalTheory.SiegFG

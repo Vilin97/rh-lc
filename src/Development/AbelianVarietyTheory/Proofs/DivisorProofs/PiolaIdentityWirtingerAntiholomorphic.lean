@@ -40,7 +40,7 @@ theorem dbar_dbar_symm {f : E → ℂ} {z : E} (hf : ContDiffAt ℝ 2 f z) (v w 
 theorem dbar_finset_prod {ι : Type*} [DecidableEq ι] (s : Finset ι) {g : ι → E → ℂ} {z : E}
     (hg : ∀ i ∈ s, DifferentiableAt ℝ (g i) z) (u : E) :
     dbar (fun x => ∏ i ∈ s, g i x) z u = ∑ k ∈ s, dbar (g k) z u * ∏ i ∈ s.erase k, g i z := by
-  have h := HasFDerivAt.finset_prod (fun i hi => (hg i hi).hasFDerivAt)
+  have h := HasFDerivAt.finsetProd (fun i hi => (hg i hi).hasFDerivAt)
   rw [dbar_eq_of_hasFDerivAt h]
   simp only [antilinPart_apply, dbar_apply, ContinuousLinearMap.sum_apply,
     ContinuousLinearMap.smul_apply, smul_eq_mul, Finset.mul_sum, ← Finset.sum_add_distrib]

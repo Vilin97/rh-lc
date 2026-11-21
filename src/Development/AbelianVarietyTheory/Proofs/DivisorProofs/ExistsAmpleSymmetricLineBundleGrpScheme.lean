@@ -26,7 +26,7 @@ theorem exists_isAmpleLB_symm (S : Scheme.{0}) (G : Over S) [GrpObj G] (M₀ : L
   have h₁ : IsAmpleLB (M₀.pull i) := h₀.pull_of_isAffineHom i
   let M : LB G.left := LB.LinComb M₀ (K := Fin 2) ![𝟙 G.left, i] ![1, 1]
   have hM : M.IsLB := LB.isLB_linComb hL _ _
-  have hc : cls M hM = cls M₀ hL + pull i (cls M₀ hL) := by
+  have hc : cls M hM = cls M₀ hL + GlobalTheory.CechPic.pull i (cls M₀ hL) := by
     rw [cls_linComb hL]
     simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, one_zsmul, pull_id]
   refine ⟨M, h₀.tensor h₁ hM ?_, ?_⟩

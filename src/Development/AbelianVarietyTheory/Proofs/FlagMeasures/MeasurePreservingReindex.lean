@@ -25,8 +25,8 @@ theorem prod_ofFn_single {M : Type*} [Monoid M] : ∀ {m : ℕ} (g : Fin m → M
     cases a using Fin.cases
     · have hprod : (List.ofFn fun i : Fin m => g i.succ).prod = 1 := by
         apply List.prod_eq_one
-        intro x hx
-        obtain ⟨i, rfl⟩ := (List.mem_ofFn' _ _).1 hx
+        rw [List.forall_mem_ofFn_iff]
+        intro i
         exact h _ (Fin.succ_ne_zero i)
       rw [hprod, mul_one]
     · rename_i a

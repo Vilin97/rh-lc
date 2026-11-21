@@ -55,7 +55,7 @@ theorem cls_pow_eq_one [IsIntegrallyClosed R] {n : ℕ} (hn : n ≠ 0) (c : Cls 
   exact (QuotientGroup.eq_one_iff _).2 ⟨⟨a, b, hab, by rw [mul_comm, hab]⟩, Units.ext ha⟩
 
 instance [IsIntegrallyClosed R] : IsMulTorsionFree (Cls R) where
-  pow_left_injective n hn a b h := by
+  eq_of_pow_eq_pow_of_commute n hn a b _ h := by
     have : (a * b⁻¹) ^ n = 1 := by rw [mul_pow, inv_pow, show a ^ n = b ^ n from h, mul_inv_cancel]
     exact mul_inv_eq_one.1 (cls_pow_eq_one hn _ this)
 
@@ -75,6 +75,7 @@ theorem exists_lift [IsIntegrallyClosed R] {X : Type} [AddCommGroup X] [Module.F
   have hq : Function.Surjective q := fun c => QuotientGroup.mk_surjective (Additive.toMul c)
   have : Module.Finite ℤ (TensorProduct ℤ X X) := Module.Finite.tensorProduct ℤ X X
   have : Module.Finite ℤ (LinearMap.range B) := Module.Finite.range B
+  have : HasUniqueRoots (Cls R) := IsMulTorsionFree.hasUniqueRoots
   have : Module.Free ℤ (LinearMap.range B) := inferInstance
   obtain ⟨s, hs⟩ := Module.projective_lifting_property q (LinearMap.range B).subtype hq
   refine ⟨fun a c => Additive.toMul (s (B.rangeRestrict (a ⊗ₜ c))), fun a c => ?_, fun a a' c => ?_, fun a c a' c' h => ?_⟩
@@ -229,7 +230,7 @@ theorem tauCls_bal {O : Type} [Ring O] [StarRing O] [Module O Dg.toPre.X] (ρ : 
 
 theorem tauCls_half [IsIntegrallyClosed R] {O : Type} [Ring O] [StarRing O] [Module O Dg.toPre.X] (ρ : Dg.toPre.OAct O)
     {w : O} (hw : w + star w = 1) (a : Dg.toPre.X) : tauCls Dg a (w • a) = psiCls Dg a := by
-  refine pow_left_injective (n := 2) two_ne_zero ?_
+  refine (Commute.all _ _).eq_of_pow_eq_pow (n := 2) two_ne_zero ?_
   show _ ^ 2 = _ ^ 2
   rw [← tauCls_self, sq]
   nth_rewrite 2 [tauCls_symm]

@@ -26,7 +26,7 @@ theorem exists_restrict' {X Y Z : Scheme.{0}} (L : LB X) {K : Type} [Fintype K] 
     (h : Z ⟶ Y) (φ' : K → (Z ⟶ X)) (hφ : ∀ k, φ' k = h ≫ φ k) (s : LB.Sec (LB.LinComb L φ ε)) :
     ∃ t : LB.Sec (LB.LinComb L φ' ε), GeneratorPullback.SecScal L φ' ε t φ ε s h 1 := by
   obtain rfl : φ' = fun k => h ≫ φ k := funext hφ
-  refine ⟨DVR.pullSec L φ ε s h, fun j₁ j₂ hco => ?_⟩
+  refine ⟨ReciprocityTheory.ChartRestriction.G.DVR.pullSec L φ ε s h, fun j₁ j₂ hco => ?_⟩
   obtain rfl : j₁ = j₂ := funext fun k => hco (Sum.inl k) (Sum.inr k) rfl
   rw [resTop, map_one, _root_.one_mul]
   exact (DVR.rs_rs _ _ _).symm

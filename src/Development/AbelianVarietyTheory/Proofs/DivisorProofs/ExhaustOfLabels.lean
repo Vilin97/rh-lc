@@ -55,20 +55,32 @@ theorem exhaust_of_labels : LL → AllU fun {R} _ _ {I} {D} {A} {G} _ _ U => ∀
     RingHom.ext fun _ => rfl
   obtain ⟨fT, hT⟩ := GlobalTheory.TorsionIso.torsion_eq hLL R I hI D A G hSA U (AlgebraicClosure (FractionRing R)) N hN
   obtain ⟨hT1, -, hT3, -⟩ := hT
+  have hi : GtPtF.IsIota 0 (0 : GtPtF D.toPre (AlgebraicClosure (FractionRing R))) := by
+    have hz : (0 : GtPtF D.toPre (AlgebraicClosure (FractionRing R))).IsZero := (isZero_iff_eq _).2 rfl
+    obtain ⟨hb, hv⟩ := (isZero_iff_val _).1 hz
+    refine (isIota_iff_val _ _).2 ⟨hb.trans (cPoint_zero _).symm, fun χ y J hJ => ?_⟩
+    have C : IsCub (th D.toPre (T := TF (R := R) (AlgebraicClosure (FractionRing R))) y J) := isCub_cubV D.toPre.cub hJ
+    have t := tau_mul (𝟙 (TF (R := R) (AlgebraicClosure (FractionRing R)))) hJ hB 0 0 χ
+    rw [add_zero, cPoint_zero, C.face, _root_.mul_one] at t
+    exact (hv χ y J hJ).trans (mul_eq_left.1 t.symm).symm
   let P : {h : GtPtF D.toPre (AlgebraicClosure (FractionRing R)) // N • h = 0} → QkPt D.toPre (AlgebraicClosure (FractionRing R)) N :=
-    fun h => qkMk hB 0 h.1 (by rw [map_zero]; exact h.2)
-  have hPy : ∀ h, (P h).y = 0 := fun h => qkMk_y hB _ _ _
-  have hPg : ∀ h, (P h).g = h.1 := fun h => qkMk_g hB _ _ _
+    fun h => ⟨0, h.1, N • h.1, (isNsmul_iff_eq _ _ _).2 rfl,
+      h.2.symm ▸ hi⟩
+  have hPy : ∀ h, (P h).y = 0 := fun _ => rfl
+  have hPg : ∀ h, (P h).g = h.1 := fun _ => rfl
   have hEq : ∀ h h', QkPt.Equiv D.toPre (AlgebraicClosure (FractionRing R)) (P h) (P h') → h = h' := by
     intro h h' e
-    obtain ⟨z, hy, hg⟩ := (equiv_iff hB _ _).1 e
-    rw [hPy, hPy, zero_add] at hy
+    obtain ⟨z, hy, t, ht, hg⟩ := e
+    change 0 = 0 + N • z at hy
+    simp only [zero_add] at hy
     have hz : z = 0 := by
       have h2 : (N : ℤ) • z = 0 := by rw [natCast_zsmul]; exact hy.symm
       rcases smul_eq_zero.1 h2 with h3 | h3
       · exact absurd (by exact_mod_cast h3 : N = 0) hN0
       · exact h3
-    rw [hPg, hPg, hz, map_zero, add_zero] at hg
+    have ht0 : t = 0 := isIota_unique (hz ▸ ht) hi
+    have hg := (isAdd_iff_eq _ _ _).1 hg
+    rw [hPg, hPg, ht0, add_zero] at hg
     exact Subtype.ext hg.symm
   haveI : Finite {h : GtPtF D.toPre (AlgebraicClosure (FractionRing R)) // N • h = 0} := by
     have hc := GlobalTheory.UT.card_qk hLL R I hI D (AlgebraicClosure (FractionRing R)) N hN
@@ -95,7 +107,7 @@ theorem exhaust_of_labels : LL → AllU fun {R} _ _ {I} {D} {A} {G} _ _ U => ∀
     apply hEq
     apply (hT3 _ _).1
     apply Over.OverMorphism.ext
-    rw [hc, hc, e2]
+    rw [hc h, hc h', e2]
   obtain ⟨g', hg'b, hg'N⟩ :=
     exists_nsmul_eq_of_pow_eq (D := D.toPre) (F := (AlgebraicClosure (FractionRing R))) hN0 0 (hb.trans zero_b.symm)
   obtain ⟨h, hh⟩ := (Finite.injective_iff_surjective.1 hΦ) ⟨g', hg'N⟩

@@ -22,6 +22,9 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] [CommRing O] [Algebra O LL]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
 
+local notation "ιE" => algebraMap (LetA O n) W.EE
+local notation "aev" => Polynomial.aeval (AlgHom.toLinearMap (W.γE W.gam) : Module.End O W.EE)
+
 theorem uniformizer_isUnit_etale (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W) : IsUnit (ιE W.π₀) := by
   obtain ⟨w, hw⟩ := hR.2.2.1
   rw [hw, map_mul, map_pow]
@@ -128,8 +131,9 @@ theorem sat_l (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W) (T : LocL
       apply W.EE_inj
       have e1 := hfu; have e2 := hgv
       rw [mul_one] at e1 e2
+      have hι : ιE (lA W ^ K) = lE W K := by simp [lA, lE]
       calc ιE (lA W ^ K * (letE c * u)) = lE W K * (ιE Λ * f k) := by
-            rw [map_mul, ← e1, Formalism.MainNotions.UnusedSlot80.KL.ι_lE]
+            rw [map_mul, ← e1, hι]
         _ = ιE Λ * (lE W K * f k) := by ring
         _ = ιE Λ * (ιE W.π₀ * g k) := by rw [hfg k]
         _ = ιE W.π₀ * (ιE Λ * g k) := by ring
@@ -210,10 +214,26 @@ theorem lattice_membership_aeval_uniformizer (hS : PsStable W) (hP : ∃ u ∈ W
       show ιE (W.γA W.gam W.π₀) * _ = _
       rw [hγ, map_mul]
       ring
-    obtain ⟨g', hg', e'⟩ := ih (fun k' => ιE u * W.γE W.gam (g k'))
-      (Formalism.MainNotions.UnusedSlot80.UnivC.inNL_mulι W T A a e b hu (Formalism.MainNotions.UnusedSlot80.UnivC.inNL_γ W T A a e b hS hg))
+    have hmul {num den : LetA O n} {z : W.EE} (hz : InFr W a num den z) :
+        InFr W a num den (ιE u * z) := by
+      obtain ⟨w, hw, heq⟩ := hz
+      refine ⟨u * w, W.AΔ.mul_mem hu hw, ?_⟩
+      rw [mul_left_comm, heq, ← map_mul]
+      congr 1
+      ring
+    have hγNL := Formalism.MainNotions.UnusedSlot80.UnivC.inNL_γ W T A a e b hS hg
+    have huγ : InNL W T a e (abelian₂ W A a e) b (fun k' => ιE u * W.γE W.gam (g k')) := by
+      obtain ⟨hfr, κ, hsec⟩ := hγNL
+      refine ⟨fun k' => hmul (hfr k'), κ, ?_⟩
+      have hsec' := Formalism.MainNotions.UnusedSlot80.UnivC.secIn_map W
+        (AddMonoidHom.mulLeft (ιE u)) (fun x o => by simp [mul_assoc])
+        (fun α z hz => show InId W a e α (ιE u * z) from hmul hz) hsec
+      convert hsec' using 1
+      funext k'
+      exact mul_left_comm _ _ _
+    obtain ⟨g', hg', e'⟩ := ih _ huγ
     refine ⟨g', hg', fun k' => ?_⟩
-    rw [pow_succ, ← mul_assoc, Polynomial.aeval_mul, Module.End.mul_apply, Polynomial.aeval_X, hx, e']
+    rw [pow_succ, ← mul_assoc, Polynomial.aeval_mul, mul_apply_eq_comp, Polynomial.aeval_X, hx, e']
 
 theorem pp_inv (hS : PsStable W) (hP : ∃ u ∈ W.AΔ, W.γA W.gam W.π₀ = W.π₀ * u)
     (T : LocLat G Qp LL O) (A : ArcP n) (a : ZMod n) (e : ℕ) {d : ℕ} (b : Fin d → W.DD T)
@@ -228,8 +248,8 @@ theorem pp_inv (hS : PsStable W) (hP : ∃ u ∈ W.AΔ, W.γA W.gam W.π₀ = W.
   refine ⟨g', hg', fun k => ?_⟩
   have h1 : aev P (f k) - P.eval 1 • f k = aev p' (f k) := by
     rw [hp', map_sub, LinearMap.sub_apply, Polynomial.aeval_C, Module.algebraMap_end_apply]
-  rw [h1, ← hS', mul_comm, map_mul, Module.End.mul_apply, map_sub, LinearMap.sub_apply,
-    Polynomial.aeval_X, Polynomial.aeval_C, map_one, Module.End.one_apply, AlgHom.toLinearMap_apply,
+  rw [h1, ← hS', mul_comm, map_mul, mul_apply_eq_comp, map_sub, LinearMap.sub_apply,
+    Polynomial.aeval_X, Polynomial.aeval_C, map_one, one_apply_eq_self, AlgHom.toLinearMap_apply,
     hfg k, e' k]
 
 end Formalism.MainNotions.UnusedSlot80.UGen

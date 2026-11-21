@@ -108,7 +108,8 @@ theorem lDiag_box_tens_ne : ∀ (F : Type) [Field F] [NumberField F] (κ : Type)
       show pureA F f g _ * pureA F f g _ = _
       have e1 : (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F ((GlobalTheory.DiagForm.glue p) i).1) =
           GlobalTheory.DiagForm.eI F κ p.1 := by
-        funext i; simp [GlobalTheory.DiagForm.glue]
+        funext i
+        exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
       have e2 : (fun i => ((GlobalTheory.DiagForm.glue p) i).2) = p.2 := rfl
       simp only [pureA, Function.comp_def, Sum.elim_inl, Sum.elim_inr]
       rw [e1, e2, hf]

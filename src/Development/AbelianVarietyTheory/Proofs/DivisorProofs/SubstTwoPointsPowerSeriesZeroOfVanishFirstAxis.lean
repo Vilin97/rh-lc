@@ -417,8 +417,8 @@ theorem exists_germ_close (hR : ∀ r, IsIntV v (algebraMap R C r)) {h : PS C 2 
           fun b b' => comp1 (B.actK C (w0 * ∑ j : Fin n, star (x b j) * x b' j)) (pt C d b') := by
       rw [hU, ← GlobalTheory.JetSer.IntTrans.expS_nsmul]
       · rfl
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sub, map_sum, map_sum, sub_eq_zero]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, map_sum, sub_eq_zero]
         refine (Finset.sum_eq_zero fun j _ => constantCoeff_substOnePointPowerSeries_eq_zero (hΦ j) cL).trans (Finset.sum_eq_zero fun b _ => ?_).symm
         set_option synthInstance.maxHeartbeats 100000 in
           rw [map_sum]

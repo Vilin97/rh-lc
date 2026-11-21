@@ -147,7 +147,7 @@ theorem exists_section {W Q : Scheme.{0}} (r : W ⟶ Q) [IsProper r] [IsNoetheri
     obtain ⟨c, ⟨hc, hcr⟩, hu⟩ := hU K z
     have hker : I.subschemeι.ker ≤ c.ker := by
       rw [Scheme.IdealSheafData.ker_subschemeι]
-      refine ReducedSubgroup.vanishingIdeal_le_ker c _ ?_
+      apply ReducedSubgroup.vanishingIdeal_le_ker c ⟨T, hcl⟩
       rintro _ ⟨t, rfl⟩
       rw [eq_pt t]
       exact (hT K c).mp hc
