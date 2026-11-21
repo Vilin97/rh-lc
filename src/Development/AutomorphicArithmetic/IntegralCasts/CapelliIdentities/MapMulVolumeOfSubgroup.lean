@@ -44,7 +44,9 @@ private lemma exists_pair (n : ℕ) :
   have hU : IsOpen {v : Fin n → Fin n → ℂ | (Matrix.of v).det ≠ 0} :=
     isOpen_ne_fun continuous_detE continuous_const
   have h1 : (Matrix.of.symm (1 : Matrix (Fin n) (Fin n) ℂ)) ∈
-      {v : Fin n → Fin n → ℂ | (Matrix.of v).det ≠ 0} := by simp
+      {v : Fin n → Fin n → ℂ | (Matrix.of v).det ≠ 0} := by
+    simp only [Set.mem_ofPred_eq, Equiv.apply_symm_apply, Matrix.det_one]
+    exact one_ne_zero
   obtain ⟨V, hV, hi, hsub⟩ := exists_compact_subset hU h1
   refine ⟨V, (fun p : (Fin n → Fin n → ℂ) × (Fin n → Fin n → ℂ) =>
     ((Matrix.of p.2).det)⁻¹ • mulE p.1 (Matrix.of.symm (Matrix.of p.2).adjugate)) '' (V ×ˢ V),
@@ -111,8 +113,10 @@ private lemma key {n : ℕ} {G : Set (Fin n → Fin n → ℂ)} {μ : Measure (F
       rintro y ⟨⟨g, v⟩, ⟨-, hv⟩, he'⟩
       obtain ⟨rfl, h'⟩ := Prod.mk.inj he'
       exact hK y v hv w hw (mulE_cancel (hdet _ haG) h')
-    · have : μ ((fun g => (g, x)) ⁻¹' S) = 0 :=
-        measure_mono_null (fun g hg hgG => hne ⟨g, hg, hgG⟩) hG
+    · have : μ ((fun g => (g, x)) ⁻¹' S) = 0 := by
+        refine measure_mono_null ?_ hG
+        intro g hg hgG
+        exact hne ⟨g, hg, hgG⟩
       show μ _ ≤ _
       rw [this]
       exact zero_le

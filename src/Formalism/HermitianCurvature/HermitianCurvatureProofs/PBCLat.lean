@@ -42,14 +42,17 @@ theorem sizesSup : PBC.SizesSup := by
   have hgR : (0 : ℝ) < S.g := by linarith
   have hrd1 := rd_ge_one E
   have hrd : 0 < S6.rd E := by linarith
-  obtain ⟨-, -, -, -, -, -, hN, -⟩ := Formalism.FourierDecayAlt.P.block_lattices Formalism.FourierDecayAlt.P.lattice_facts_general
-    Formalism.FourierDecayAlt.P.dualIdealEqLiftIdeal Formalism.FourierDecayAlt.P.scaledIdealNorm E hU S.g S.G.r b n hgN
+  have hN' := Formalism.FourierDecayAlt.P.Jx2.sqrt_idl
+    Formalism.FourierDecayAlt.P.scaledIdealNorm E S.g (S6.nuBlock S.G.r b n + 1) hgN
+  have hN : √(FractionalIdeal.absNorm (S6.dualIdl E S.g (S6.nuBlock S.G.r b n)) : ℝ) =
+      (((S.g : ℝ) * S6.rd E ^ (S6.nuBlock S.G.r b n + 1)) ^ S6.deg E)⁻¹ := by
+    simpa only [S6.dualIdl] using hN'
   set ν : ℤ := S6.nuBlock S.G.r b n with hν
   set x : ℝ := S6.rd E ^ ν with hx
   have hxpos : 0 < x := zpow_pos hrd _
   have hexp : ((2 * S.G.r + 4 : ℤ) - 2 * b - n) = ν + 1 := by
     simp only [hν, S6.nuBlock]; ring
-  rw [hexp, zpow_add₀ hrd.ne', zpow_one] at hN
+  rw [zpow_add₀ hrd.ne', zpow_one] at hN
   set m : ℝ := Finset.univ.inf' Finset.univ_nonempty (thr S b n) with hm
   have hmpos : 0 < m := by
     rw [hm, Finset.lt_inf'_iff]; exact fun v _ => hthr v
@@ -410,7 +413,7 @@ theorem lstdSum : PBC.LstdSum := by
 
   rw [hmaj.2, hvb, vol_ball_V f δ hδ, show (Real.pi * δ ^ 2) ^ f = ∏ _v : Fin f, (Real.pi * δ ^ 2) by simp]
   rw [← Finset.prod_div_distrib]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro v _
     have hK2 : (0 : ℝ) < (K : ℝ) - 2 := by simp [hKdef, C.Kst]; norm_num
     have := hL'pos v

@@ -165,6 +165,6 @@ theorem UpperTheory.isCurve_pullback_of_isCurve_baseChange :
       Set.eq_univ_of_forall fun q => specializes_iff_mem_closure.mp (hall q)
     rw [Set.top_eq_univ, ← hcl]
     exact isIrreducible_singleton.closure
-  haveI := isSmoothOfRelativeDimension_isStableUnderBaseChange 1
+  haveI := smoothOfRelativeDimension_isStableUnderBaseChange 1
   refine ⟨isIntegral_of_irreducibleSpace_of_isReduced _, inferInstance, ?_⟩
   exact MorphismProperty.of_isPullback (P := @SmoothOfRelativeDimension 1) (IsPullback.of_hasPullback c g) h3

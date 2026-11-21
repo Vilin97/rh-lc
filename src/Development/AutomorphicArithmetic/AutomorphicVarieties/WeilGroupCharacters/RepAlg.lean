@@ -55,6 +55,8 @@ namespace GDet
 
 variable {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet n A G)
 
+@[ext] theorem ext {D D' : GDet n A G}
+    (h : ∀ (B : Type) [CommRing B] [Algebra A B] (x), D.D B x = D'.D B x) : D = D' := by
   cases D; cases D'; congr; funext B _ _; exact MonoidHom.ext (h B)
 
 def map {A' : Type} [CommRing A'] (f : A →+* A') : GDet n A' G where

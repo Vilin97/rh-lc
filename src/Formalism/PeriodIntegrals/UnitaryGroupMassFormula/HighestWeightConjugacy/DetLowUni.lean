@@ -11,8 +11,8 @@ open Matrix
 
 namespace PI.UnitaryGroupMassFormula.HwConjInf
 
-def LowUni {n : ℕ} (L : Matrix (Fin n) (Fin n) ℂ) : Prop := by
-  first | exact @Bl.FirstLemmaN.goal1 n L | exact @Bl.FirstLemmaN.goal1 n | exact @Bl.FirstLemmaN.goal1
+def LowUni {n : ℕ} (L : Matrix (Fin n) (Fin n) ℂ) : Prop :=
+  Bl.FirstLemmaN.goal1 L
 
 def UpTri {n : ℕ} (U : Matrix (Fin n) (Fin n) ℂ) : Prop := ∀ i j, j < i → U i j = 0
 
@@ -40,17 +40,13 @@ theorem exists_LU : ∀ (n : ℕ) (g : Matrix (Fin n) (Fin n) ℂ),
     ∃ L U : Matrix (Fin n) (Fin n) ℂ, LowUni L ∧ UpTri U ∧ g = L * U
   | 0, g, _ => ⟨1, g, ⟨fun i => i.elim0, fun i => i.elim0⟩, fun i => i.elim0, by simp⟩
   | n + 1, g, hg => by
-    set A : Matrix (Fin n) (Fin n) ℂ := g.submatrix Fin.castSucc Fin.castSucc with hA
+    let A : Matrix (Fin n) (Fin n) ℂ := g.submatrix Fin.castSucc Fin.castSucc
     have hAk : ∀ k (hk : k < n), (A.submatrix (Fin.castLE hk.le) (Fin.castLE hk.le)).det ≠ 0 := by
       intro k hk
-      have := hg k (by omega)
-      convert this using 2
-      ext i j; rfl
+      exact hg k (Nat.lt_succ_of_lt hk)
     obtain ⟨L', U', hL', hU', hLU⟩ := exists_LU n A hAk
     have hdetA : A.det ≠ 0 := by
-      have := hg n (by omega)
-      convert this using 2
-      ext i j; rfl
+      exact hg n (Nat.lt_succ_self n)
     have hdL : L'.det = 1 := det_lowUni hL'
     have hdU : U'.det ≠ 0 := by
       intro h0; apply hdetA; rw [hLU, Matrix.det_mul, h0, mul_zero]

@@ -379,9 +379,29 @@ theorem minus_F (hfree : fw.Free a) (ihc : Commute (io f : SlopeTestRemainingCho
     · exact ((Commute.zero_right _).mul_right (Commute.one_right _)).add_right ((hio _).mul_right ((hio _).mul_right (hfm i j)))
     · exact ((Commute.zero_right _).mul_right (Commute.zero_right _)).add_right ((hio _).mul_right (hio _))
   have hz := mem_zfns L
+  have hm : Tw f fi (star s) (fw.m L Ya) := by
+    obtain ⟨hcc, hcc'⟩ := hF.c_ci
+    have hci := commute_inv ihc hcc hcc'
+    have hdi : Commute (io f : SlopeTestRemainingChoices S A) (fw.di L) :=
+      hci.mul_right ((WaveHyp.wti (S := S) hW).pow_right _)
+    have hd : Commute (io f : SlopeTestRemainingChoices S A) (fw.d L) :=
+      ((WaveHyp.wt (S := S) hW).pow_right _).mul_right ihc
+    have hstar (x : A) : star (io x : SlopeTestRemainingChoices S A) = io (star x) := by
+      unfold io
+      rw [Matrix.scalar_apply, Matrix.scalar_apply, Matrix.star_eq_conjTranspose,
+        Matrix.diagonal_conjTranspose]
+      rfl
+    have hsf : star fi = f := by rw [← hW.star_f, star_star]
+    have hcj (z : SlopeTestRemainingChoices S A) : cj f fi (star z) = star (cj f fi z) := by
+      unfold cj
+      rw [star_mul, star_mul, hstar, hstar, hW.star_f, hsf, mul_assoc]
+    have hl : cj f fi (fw.l L (Ya - 1)) = fw.l L (Ya - 1) - s • 1 := ihl _ mm1
+    unfold Tw Formalism.FourierDecayAlt.Fr.FrameData.m
+    rw [cj_mul hW.f_fi, cj_mul hW.f_fi, cj_of_comm hW.fi_f hdi, cj_of_comm hW.fi_f hd,
+      hcj, hl, star_sub, star_smul, star_one, mul_sub, sub_mul, mul_smul_comm, mul_one,
+      smul_mul_assoc, di_d L fw hcc']
   have hE := block_twist hW.f_fi hW.fi_f (star s) (io L.ζbi) (io L.ζi) (io L.GG) (fw.m L Ya) (hW.io_fn hz.2.2.2.1)
-    (hW.io_fn hz.2.1) (hW.io_fn hz.2.2.2.2.1)
-    (minus_m (hW := hW) (fw := fw) (hF := hF) (Ya := Ya) (ihx := ihx) (ihl := ihl) (ihc := ihc) (mm1 := mm1))
+    (hW.io_fn hz.2.1) (hW.io_fn hz.2.2.2.2.1) hm
   exact frame_step hW.f_fi a (star s) _ fw.F UU hD hfree.2.2.1 ihF hE
 
 end Letters

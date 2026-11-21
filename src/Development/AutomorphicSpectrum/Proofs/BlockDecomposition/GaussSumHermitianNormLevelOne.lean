@@ -17,7 +17,7 @@ namespace GlobalTheory.CompanionTheory.SiegLoc.GaussOne
 
 variable {E : Type} [CommRing E] [Fintype E] {τ : E →+* E} {q : ℕ} {ε : ℤ}
 
-
+open scoped Classical in
 theorem sum_fixed_eq_zero (χ : AddChar E ℂ) (A b : E) (hb : τ b = b) (hχ : χ (A * b) ≠ 1) :
     ∑ t ∈ Finset.univ.filter (fun t : E => τ t = t), χ (A * t) = 0 := by
   set S := ∑ t ∈ Finset.univ.filter (fun t : E => τ t = t), χ (A * t) with hS
@@ -41,7 +41,7 @@ theorem sum_fixed_eq_zero (χ : AddChar E ℂ) (A b : E) (hb : τ b = b) (hχ : 
   · exact absurd (sub_eq_zero.mp h).symm hχ
   · exact h
 
-
+open scoped Classical in
 theorem card_filter_norm (t : E) :
     (((Finset.univ.filter (fun w : E => τ w * w = t)).card : ℕ) : ℤ) =
       (Nat.card {a : E // a * τ a = t} : ℤ) := by
@@ -52,7 +52,7 @@ theorem card_filter_norm (t : E) :
     rw [mul_comm]
   rw [hf, Nat.card_eq_fintype_card, Fintype.card_subtype]
 
-
+open scoped Classical in
 theorem gauss_core (h : ResAlg E τ q ε) (χ : AddChar E ℂ) (A b : E) (hb : τ b = b)
     (hχ : χ (A * b) ≠ 1) :
     ∑ w : E, χ (A * (τ w * w)) = (ε : ℂ) * q := by

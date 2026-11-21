@@ -159,7 +159,7 @@ theorem val_pow_sub_one_nat {p : ℕ} (hp : p.Prime) (hp2 : p ≠ 2) (hv : v (p 
   obtain ⟨n, hn⟩ := ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) : p ^ padicValNat p m ∣ m)
   have hpn : ¬ p ∣ n := by
     rintro ⟨c, rfl⟩
-    exact pow_succ_padicValNat_not_dvd hm ⟨c, hn.trans (by ring)⟩
+    exact pow_succ_padicValNat_not_dvd hm ⟨c, hn.trans (by rw [← Nat.padicValNat_def]; ring)⟩
   have key : x ^ m = (x ^ (p ^ padicValNat p m)) ^ n := by
     rw [← pow_mul, ← hn]
   have hz := val_pow_pk_sub_one v hp hp2 hv hy (padicValNat p m)
@@ -176,13 +176,13 @@ theorem val_zpow_sub_one {p : ℕ} (hp : p.Prime) (hp2 : p ≠ 2) (hv : v (p : K
   · have hn : n ≠ 0 := by
       rintro rfl
       exact hm rfl
-    have hpv : padicValInt p (n : ℤ) = padicValNat p n := by simp [padicValInt]
+    have hpv : padicValInt p (n : ℤ) = padicValNat p n := by simp [padicValInt, ← Nat.padicValNat_def]
     rw [zpow_natCast, hpv]
     exact val_pow_sub_one_nat v hp hp2 hv hy hn
   · have hn : n ≠ 0 := by
       rintro rfl
       exact hm (by simp)
-    have hpv : padicValInt p (-(n : ℤ)) = padicValNat p n := by simp [padicValInt]
+    have hpv : padicValInt p (-(n : ℤ)) = padicValNat p n := by simp [padicValInt, ← Nat.padicValNat_def]
     have hvx : v x = 0 := v_x_zero v (lt_of_lt_of_le withTop_zero_lt_one hy)
     have hx0 : x ≠ 0 := by
       rintro rfl

@@ -23,11 +23,11 @@ def aff (y : Fin (N + 1) → Ω) (j : Fin (N + 1)) : Fin (N + 1) → Ω := fun l
 
 theorem aff_def (y : Fin (N + 1) → Ω) (j : Fin (N + 1)) : aff y j = fun l => y l / y j := rfl
 
-
+variable (k) in
 def affRing (y : Fin (N + 1) → Ω) (j : Fin (N + 1)) : Subalgebra k Ω :=
   (aeval (aff y j) : Poly k N →ₐ[k] Ω).range
 
-
+variable (k) in
 def affPiece (y : Fin (N + 1) → Ω) (j : Fin (N + 1)) (n : ℕ) : Submodule k Ω :=
   Submodule.span k {z | ∃ f : Poly k N, f.IsHomogeneous n ∧ z = aeval (aff y j) f}
 
@@ -55,7 +55,7 @@ theorem le_zero_of_add_one_le_one {d : WithBot ℕ∞} (h : d + 1 ≤ 1) : d ≤
       subst hm
       simp
 
-theorem isField_affRing (hy : IsSubvar y (primeOf (S := k) y) 0) (hj : y j ≠ 0) :
+theorem isField_affRing (hy : IsSubvar (x := y) (primeOf (S := k) y) 0) (hj : y j ≠ 0) :
     IsField (affRing k y j) := by
   let φ : Poly k N →ₐ[k] affRing k y j := (aeval (aff y j)).rangeRestrict
   have hφ : Function.Surjective φ := AlgHom.rangeRestrict_surjective _
@@ -111,7 +111,7 @@ theorem funField_eq (hj : y j ≠ 0) (hF : IsField (affRing k y j)) :
     rintro _ ⟨l, rfl⟩
     exact IntermediateField.subset_adjoin _ _ ⟨j, l, hj, rfl⟩
 
-theorem finiteDimensional_affField (hy : IsSubvar y (primeOf (S := k) y) 0) (hj : y j ≠ 0) :
+theorem finiteDimensional_affField (hy : IsSubvar (x := y) (primeOf (S := k) y) 0) (hj : y j ≠ 0) :
     FiniteDimensional k ((affRing k y j).toIntermediateField' (isField_affRing hy hj)) := by
   set E := (affRing k y j).toIntermediateField' (isField_affRing hy hj)
   let g : Poly k N →ₐ[k] E :=
@@ -144,7 +144,7 @@ theorem aeval_mem_affPiece (hj : y j ≠ 0) (f : Poly k N) :
   have hd' : d ≤ f.totalDegree := Nat.lt_succ_iff.mp (Finset.mem_range.mp hd)
   exact affPiece_mono hj hd' (Submodule.subset_span ⟨_, homogeneousComponent_isHomogeneous d f, rfl⟩)
 
-theorem eventually_affPiece_eq (hy : IsSubvar y (primeOf (S := k) y) 0) (hj : y j ≠ 0) :
+theorem eventually_affPiece_eq (hy : IsSubvar (x := y) (primeOf (S := k) y) 0) (hj : y j ≠ 0) :
     ∀ᶠ n : ℕ in atTop, affPiece k y j n = Subalgebra.toSubmodule (affRing k y j) := by
   have := finiteDimensional_affField hy hj
   have hfin : (Subalgebra.toSubmodule (affRing k y j)).FG := by

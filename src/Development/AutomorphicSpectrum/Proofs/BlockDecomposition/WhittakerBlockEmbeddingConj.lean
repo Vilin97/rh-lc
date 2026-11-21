@@ -97,7 +97,7 @@ theorem conj_apply_lt {d j : ℕ} (hj : j ≤ d) (A B : Matrix (Fin j) (Fin j) K
     rw [hM _ _ (by simp), if_neg hk]
     simp
 
-theorem col_lt {d j : ℕ} {u : GL (Fin d) K} (hu : u ∈ patSet K (colGe d j)) (i l : Fin d)
+theorem col_lt {d j : ℕ} {u : GL (Fin d) K} (hu : u ∈ patSet (colGe d j)) (i l : Fin d)
     (hl : (l : ℕ) < j) : (u : Matrix (Fin d) (Fin d) K) i l = if i = l then 1 else 0 := by
   by_cases e : i = l
   · rw [if_pos e]
@@ -109,8 +109,8 @@ theorem conj_mem {d j : ℕ} (hj : j ≤ d) (g : GL (Fin j) K) (h : GL (Fin d) K
     (h1 : (h : Matrix (Fin d) (Fin d) K) = blkEmb K d j (g : Matrix (Fin j) (Fin j) K))
     (h2 : ((h⁻¹ : GL (Fin d) K) : Matrix (Fin d) (Fin d) K) =
       blkEmb K d j ((g⁻¹ : GL (Fin j) K) : Matrix (Fin j) (Fin j) K))
-    {u : GL (Fin d) K} (hu : u ∈ patSet K (colGe d j)) :
-    h * u * h⁻¹ ∈ patSet K (colGe d j) := by
+    {u : GL (Fin d) K} (hu : u ∈ patSet (colGe d j)) :
+    h * u * h⁻¹ ∈ patSet (colGe d j) := by
   have hgg : (g : Matrix (Fin j) (Fin j) K) * ((g⁻¹ : GL (Fin j) K) : Matrix (Fin j) (Fin j) K) = 1 := by
     rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
   have key : ((h * u * h⁻¹ : GL (Fin d) K) : Matrix (Fin d) (Fin d) K) =
@@ -202,7 +202,7 @@ theorem wh_colGeR_conj : ∀ (K : Type) [Field K] [Fintype K] [DecidableEq K] (d
     ((h⁻¹ : GL (Fin d) K) : Matrix (Fin d) (Fin d) K) = blkEmb K d j ((g⁻¹ : GL (Fin j) K) : Matrix (Fin j) (Fin j) K) →
     wh (colGe d j) (colGeR K d j r) ψ₀ χ = wh (colGe d j) (colGeR K d j (Matrix.vecMul r (g : Matrix (Fin j) (Fin j) K))) ψ₀ χ := by
   intro K _ _ _ d j ψ₀ χ g h r hj hχ h1 h2
-  have hN : ∀ u : GL (Fin d) K, h * u * h⁻¹ ∈ patSet K (colGe d j) ↔ u ∈ patSet K (colGe d j) := by
+  have hN : ∀ u : GL (Fin d) K, h * u * h⁻¹ ∈ patSet (colGe d j) ↔ u ∈ patSet (colGe d j) := by
     intro u
     refine ⟨fun hu => ?_, conj_mem hj.le g h h1 h2⟩
     have := conj_mem hj.le g⁻¹ h⁻¹ h2 (by rw [inv_inv, inv_inv]; exact h1) hu
@@ -214,7 +214,7 @@ theorem wh_colGeR_conj : ∀ (K : Type) [Field K] [Fintype K] [DecidableEq K] (d
   refine Finset.sum_congr rfl fun u _ => ?_
   have e : (MulAut.conj h).toEquiv u = h * u * h⁻¹ := rfl
   rw [e]
-  by_cases hu : u ∈ patSet K (colGe d j)
+  by_cases hu : u ∈ patSet (colGe d j)
   · rw [if_pos ((hN u).2 hu), if_pos hu, patChar_conj hj ψ₀ g h r h1 h2 u, hχ]
   · rw [if_neg (fun q => hu ((hN u).1 q)), if_neg hu]
 

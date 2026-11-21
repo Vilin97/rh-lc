@@ -81,6 +81,9 @@ theorem orbQuotEx_of_haarLieN (h : PI.AmpOrbQ.HaarLieN) : PI.AmpOrbQ.OrbQuotEx :
   refine exists_isOrbQuot_of_isHaarOn L g₀ μR hpt.1 hμ ?_ ?_
   · intro s hs
     rw [e, Measure.map_smul, hinv s hs]
+    exact (show Continuous (lmulM (k := k) (r := r) s) from by
+      unfold lmulM
+      exact continuous_const.matrix_mul continuous_id).measurable.aemeasurable
   · rw [e, Measure.smul_apply]
     have h0 : haarLie (Nset k r) 1 (NS k r)ᶜ = 0 := hnull
     rw [h0, smul_eq_mul, mul_zero]

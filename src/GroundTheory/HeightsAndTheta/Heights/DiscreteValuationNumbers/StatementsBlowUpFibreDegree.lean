@@ -22,6 +22,7 @@ variable {K : Type} [DecidableEq K] {ι : K → Type} {J : Type}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 
+open Classical in
 def specialRelDeg (W' : Ideal (MRing (extIdx ι J) O)) : ℕ :=
   if h : (specialIdeal W').IsPrime then
     haveI := h

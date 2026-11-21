@@ -18,11 +18,12 @@ theorem residue_valuationSubring_ne_zero_iff {U Γ : Type*} [Field U]
 private theorem residue_eval₂_comap {F U : Type} [Field F] [Field U] (f : F →+* U)
     (v : Valuation U (WithZero (Multiplicative ℤ))) (σ : Type) (t : σ → U)
     (ht : ∀ s, t s ∈ v.valuationSubring) (p : MvPolynomial σ (v.valuationSubring.comap f)) :
-    letI := ReciprocityTheory.MultiplicativeHeights.residueAlgebra v.valuationSubring f
     IsLocalRing.residue v.valuationSubring
         (MvPolynomial.eval₂ (ReciprocityTheory.MultiplicativeHeights.comapInclusion v.valuationSubring f)
           (fun s => ⟨t s, ht s⟩) p) =
-      MvPolynomial.aeval (fun s => IsLocalRing.residue v.valuationSubring ⟨t s, ht s⟩)
+      @MvPolynomial.aeval _ _ _ _ _
+        (ReciprocityTheory.MultiplicativeHeights.residueAlgebra v.valuationSubring f)
+        (fun s => IsLocalRing.residue v.valuationSubring ⟨t s, ht s⟩)
         (MvPolynomial.map (IsLocalRing.residue (v.valuationSubring.comap f)) p) := by
   let := ReciprocityTheory.MultiplicativeHeights.residueAlgebra v.valuationSubring f
   rw [MvPolynomial.aeval_def, MvPolynomial.eval₂_map, MvPolynomial.eval₂_comp_left]

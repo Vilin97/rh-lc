@@ -46,7 +46,7 @@ lemma hpk_shift (k i r' : ℕ) (s t : Fin (2 * r' + k + 1)) :
   have := t.isLt
   show Hpk k (i + r') ⟨s.val + i, by omega⟩ ⟨t.val + i, by omega⟩ = _
   simp only [Hpk, Fin.ext_iff]
-  ifarith
+  split_ifs <;> first | rfl | omega
 
 lemma hpk_partner (k i r' : ℕ) (X p : Fin (2 * (i + r') + k + 1)) (hXv : X.val = 2 * (i + r') + k - p.val)
     (hp : ¬(i ≤ p.val ∧ p.val < 2 * r' + k + 1 + i)) (y : Fin (2 * (i + r') + k + 1)) :
@@ -56,7 +56,7 @@ lemma hpk_partner (k i r' : ℕ) (X p : Fin (2 * (i + r') + k + 1)) (hXv : X.val
   have hp' := p.isLt
   unfold Hpk
   simp only [Fin.ext_iff]
-  ifarith
+  split_ifs <;> first | rfl | omega
 
 theorem glevImage_of (_hH : LevHom) (hU : LevUH) : GlevImage := by
   intro k i r'
@@ -143,12 +143,12 @@ theorem glevImage_of (_hH : LevHom) (hU : LevUH) : GlevImage := by
       have := p.isLt
       dsimp only [ιLev, bvec, eI]
       simp only [Pi.single_apply, Fin.ext_iff]
-      ifarith
+      split_ifs <;> first | rfl | omega
     · rw [mulVec_bvec]
       funext p
       have := p.isLt
       dsimp only [ιLev, bvec, esI]
       simp only [Pi.single_apply, Fin.ext_iff]
-      ifarith
+      split_ifs <;> first | rfl | omega
 
 end QnGlevImageW

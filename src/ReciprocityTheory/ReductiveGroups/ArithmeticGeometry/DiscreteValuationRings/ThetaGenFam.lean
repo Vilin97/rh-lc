@@ -29,7 +29,8 @@ theorem exists_fe_gen (hϖ : Irreducible ϖ) {Q : D.toPre.X → ℤ} (hQ : IsQ D
         (DegPre.famMult D.toPre F k mu α) := by
   classical
   have hL := D.toPre.P.isLB
-  obtain ⟨Ix, _, φV, εV, e', he', hC, c₀, hc₀, hval⟩ := famMult_data D hϖ hQ k mu α
+  obtain ⟨Ix, _, φV, εV, e', he', hC, c₀, hc₀, hval⟩ :=
+    ReciprocityTheory.ChartRestriction.G.DVR.SectionScalarValuation.famMult_data D hϖ hQ k mu α
   obtain ⟨eB, heB, veB⟩ := exists_eB D.toPre k α mu e' he' hC
   have hc0 : c₀ ≠ 0 := ne_zero_of_hasVal hϖ hc₀
   set c : F := algebraMap (FractionRing V) F c₀ with hc

@@ -125,7 +125,7 @@ private theorem rel_sum {E X Y B : Spc} (πX : X ⟶ E) (πY : Y ⟶ E) (p : B �
       pull _ β _ _ (∑ j : Fin N, ((cup q (pull _ πY _ _ (b j)) (cpow q ξY ((j : ℕ) + 1))).cast
         (by push_cast; ring) (by push_cast; ring) : Ht q Y n i)) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, map_sum, map_sum, AddMonoidHom.finset_sum_apply, c_sum]
+    simp only [map_sum, AddMonoidHom.finsetSum_apply, c_sum]
   exact Finset.sum_congr rfl fun j _ => rel_term πX πY p β hp ξX ξY iX iY iB hrel _ (by ring) (by ring) (b j)
 
 private theorem gysin_chase_identity {E X Y B W₁ B₁ : Spc} (πX : X ⟶ E) (πY : Y ⟶ E) (p : B ⟶ X) (β : B ⟶ Y)

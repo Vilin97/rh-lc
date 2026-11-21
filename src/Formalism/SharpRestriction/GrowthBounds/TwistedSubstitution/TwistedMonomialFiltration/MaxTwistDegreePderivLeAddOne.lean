@@ -34,7 +34,7 @@ theorem coeff_divDer (be μ : ι × Fin n →₀ ℕ) (F : MvPolynomial (ι × F
         intro h3
         apply h2
         rw [← h3, tsub_add_cancel_of_le h1]
-    · rw [if_neg h1, coeff_zero, if_neg]
+    · rw [if_neg h1, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, if_neg]
       rintro rfl
       exact h1 le_add_self
 

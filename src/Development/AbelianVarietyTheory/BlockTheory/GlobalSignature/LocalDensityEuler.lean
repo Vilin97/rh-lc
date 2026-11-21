@@ -89,6 +89,7 @@ def normDiffV (v : HeightOneSpectrum (𝓞 F)) : ℕ :=
 variable (E : Type) [Field E] [Algebra F E]
 
 
+open scoped Classical in
 def eta (v : HeightOneSpectrum (𝓞 F)) : ℝ :=
   if IsField (Fv F v ⊗[F] E) then -1 else 1
 

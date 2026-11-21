@@ -16,6 +16,8 @@ namespace GlobalTheory.KernelComm
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n n' : Type}
 
 section Indicator
+open scoped Classical
+
 variable [Fintype n'] (q : Unif k) {P₁ : Pair k n'} {e₁ : n' → k} (he : P₁.HasVal e₁ 1) (Q : Pair k n)
   (x : Matrix n n' k)
 include he

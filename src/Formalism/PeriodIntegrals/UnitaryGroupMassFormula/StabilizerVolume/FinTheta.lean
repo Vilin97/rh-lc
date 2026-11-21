@@ -164,7 +164,9 @@ theorem continuous_piW_inf (w : InfinitePlace F) :
 
 theorem norm_piW_algebraMap (w : InfinitePlace F) (x : F) : ‖piW F w (algebraMap F (AF F) x)‖ = w x := by
   rw [AlgHom.commutes]
-  exact InfinitePlace.Completion.norm_coe w _
+  rw [AbsoluteValue.Completion.algebraMap_def, AbsoluteValue.Completion.norm_coe]
+  simp [WithAbs.algebraMap_right_apply]
+  rfl
 
 theorem norm_piV_algebraMap (v : HeightOneSpectrum (𝓞 F)) (x : F) :
     ‖piV F v (algebraMap F (AF F) x)‖ = ‖FinitePlace.embedding v x‖ := by

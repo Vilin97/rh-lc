@@ -184,6 +184,7 @@ theorem noLin_self (hAdj : ALinAdjSt) (hPL : ProjLieSelfSt) {C : Type} [Field C]
     (hc0 : ∀ q : I0, V.MM (∑ col, Y.aLin (fun i => p.gm a0 col g * u0 i)
       (fun i => p.gm (p.ty0 q) col (1 - g) * p.e q i))) :
     ∀ v : Fin dd → C, (∀ i, V.Ge 0 (v i)) → V.MM (Y.aLin u0 v) := by
+  open SelfLinear Formalism.IncomingBounds ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ MaximalIdealCongruence RowTiePE0 RowTiePProj RowTiePLSmall in
   intro v hv
   have hq : ∀ q, V.MM (Y.aLin u0 (p.e q)) := fun q => by
     by_cases h : a0 + 1 = p.ty0 q + p.hd

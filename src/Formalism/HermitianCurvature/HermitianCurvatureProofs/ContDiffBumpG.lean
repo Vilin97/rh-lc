@@ -38,7 +38,7 @@ theorem sqN_eq (y : B.Mat k ρ) : sqN y = B.gN y ^ 2 := by
 theorem contDiff_sqN : ContDiff ℝ ∞ (sqN (k := k) (ρ := ρ)) := by
   unfold sqN
   refine ContDiff.sum fun i _ => ContDiff.sum fun j _ => ?_
-  have hl : ContDiff ℝ ∞ (fun y : B.Mat k ρ => y i j) := contDiff_apply_apply ℝ ℂ i j
+  have hl : ContDiff ℝ ∞ (fun y : B.Mat k ρ => y i j) := contDiff_apply_apply ℝ i j
   exact (contDiff_norm_sq ℝ).comp hl
 
 def bumpG (R : ℝ) (y : B.Mat k ρ) : ℝ := Real.smoothTransition (R ^ 2 + 1 - sqN y)

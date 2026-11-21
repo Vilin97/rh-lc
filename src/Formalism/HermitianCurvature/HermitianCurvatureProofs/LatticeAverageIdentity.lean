@@ -598,11 +598,11 @@ theorem latZ_mul_int (Z g : Matrix (Fin n) (Fin n) K) (hg : IsUpUni g) (hi : IsI
 
 theorem mat_add_vecMulVec (Z : Matrix (Fin n) (Fin n) K) (m β y : Fin n → K) :
     (Z + vecMulVec m β) *ᵥ y = Z *ᵥ y + (β ⬝ᵥ y) • m := by
-  rw [Matrix.add_mulVec]
+  rw [Matrix.add_mulVec, Matrix.vecMulVec_mulVec]
   congr 1
-    Finset.sum_mul]
-  refine Finset.sum_congr rfl fun b _ => ?_
-  ring
+  funext i
+  change m i * (β ⬝ᵥ y) = (β ⬝ᵥ y) * m i
+  exact mul_comm _ _
 
 theorem mem_latZ_rank1 (Z : Matrix (Fin n) (Fin n) K) (hd : IsUnit Z.det) (m : Fin n → R)
     (β : Fin n → K) (hβ : ∀ b, β b ∈ R) (h0 : β ⬝ᵥ (Z⁻¹ *ᵥ coeLin R m) = 0) (x : Fin n → R) :
@@ -1596,6 +1596,7 @@ def badN (k : ℕ) (w w' : Point K) (q : Cos R w × Cos R w') : ℕ :=
       ¬ InTT R k (orbZ w (rep R q.1)) (orbZ w' (rep R q.2)) φ}
 
 
+open scoped Classical in
 theorem fib_core (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R)
     (hun : ∀ x : K, conj (ψ x) = ψ (-x))
     (hfin : ∀ (m : ℕ) (Z : Matrix (Fin m) (Fin m) K), IsInt R Z → IsUnit Z.det →
@@ -1691,6 +1692,7 @@ theorem fib_core (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r)
   exact key
 
 
+open scoped Classical in
 theorem fibre_zero (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R)
     (hun : ∀ x : K, conj (ψ x) = ψ (-x))
     (hfin : ∀ (m : ℕ) (Z : Matrix (Fin m) (Fin m) K), IsInt R Z → IsUnit Z.det →

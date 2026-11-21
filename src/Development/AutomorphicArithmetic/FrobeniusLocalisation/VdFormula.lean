@@ -89,4 +89,5 @@ theorem UpperTheory.HF.vd_formula :
       rwa [← Nat.support_factorization, Finsupp.notMem_support_iff] at hlN
     have h7 : ¬ l ∣ (NumberField.discr H.E).natAbs := fun hd =>
       hlN (h3 (Nat.mem_primeFactors.2 ⟨hl, hd, Int.natAbs_ne_zero.2 (discr_ne_zero H.E)⟩))
-    rw [h6, Finset.sum_range_zero, HostRaw.vdH, padicValNat.eq_zero_of_not_dvd h7, Nat.cast_zero, zero_div]
+    rw [h6, Finset.sum_range_zero, HostRaw.vdH, Nat.padicValNat_def,
+      multiplicity_eq_zero_of_not_dvd h7, Nat.cast_zero, zero_div]

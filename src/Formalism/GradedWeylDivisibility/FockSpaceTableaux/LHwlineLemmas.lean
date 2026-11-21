@@ -70,7 +70,8 @@ theorem lhwline_rowDiv_zero (a b : Fin r) (g : MvPolynomial (Fin r × Fin n) K) 
 
 theorem lhwline_rowGen_eq (a b : Fin r) (g : MvPolynomial (Fin r × Fin n) K)
     (h : ∀ k : ℕ, 1 ≤ k → rowDiv K a b k g = 0) : rowGen K a b g = Polynomial.C g := by
-  ext1 k
+  apply Polynomial.ext
+  intro k
   rcases Nat.eq_zero_or_pos k with rfl | hk
   · have h0 := lhwline_rowDiv_zero a b g
     simp only [rowDiv] at h0

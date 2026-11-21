@@ -92,37 +92,39 @@ theorem volTUOEq_of {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
   have key : ∀ (q : UIdx r) (y : Fv F v ⊗[F] E),
       sc (E := E) v ((alp v r q.1.1)⁻¹ * alp v r q.1.2) * y ∈ OEv (E := E) v ↔ y ∈ OEv (E := E) v := by
     intro q y
-    apply unit_mul_mem_iff
-    rw [map_mul, map_inv₀, val_alp v hd, val_alp v hd, inv_one, one_mul]
+    apply VolTU.unit_mul_mem_iff
+    simp only [map_mul, map_inv₀, VolTU.val_alp v hd, inv_one, one_mul]
   have e : ∀ (a b : Fv F v) (y : Fv F v ⊗[F] E),
       sc (E := E) v (a * b * (g : Fv F v)⁻¹) * y = sc (E := E) v (a * b) * (sc (E := E) v (g : Fv F v)⁻¹ * y) := by
     intro a b y
-    rw [sc_mul, mul_assoc]
-  have hg0 := natCast_ne_zero v hg
-  have hgO := natCast_memO v g
+    rw [VolTU.sc_mul, mul_assoc]
+  have hg0 := VolTU.natCast_ne_zero v hg
+  have hgO := VolTU.natCast_memO v g
   have sw : ∀ y : Fv F v ⊗[F] E,
-      y * sc (E := E) v (g : Fv F v)⁻¹ ∈ OS (E := E) v ↔ sc (E := E) v (g : Fv F v)⁻¹ * (-y) ∈ OS (E := E) v := by
+      y * sc (E := E) v (g : Fv F v)⁻¹ ∈ VolTU.OS (E := E) v ↔
+        sc (E := E) v (g : Fv F v)⁻¹ * (-y) ∈ VolTU.OS (E := E) v := by
     intro y
     rw [mul_neg, Submodule.neg_mem_iff, mul_comm]
+  unfold VolTUOEq
   ext p
   simp only [deepCongruenceVolume, VolTUSet, UO, Set.mem_setOf_eq, e, key]
-  simp only [mem_OEv]
+  simp only [VolTU.mem_OEv]
   constructor
   · rintro ⟨h1, h2, h3⟩
     refine ⟨h1, fun q => ?_⟩
     rw [sw, neg_sub]
     exact h3 q
   · rintro ⟨h1, h3⟩
-    have h3' : ∀ q, sc (E := E) v (g : Fv F v)⁻¹ * (p.1 q - p.2 q) ∈ OS (E := E) v := fun q => by
+    have h3' : ∀ q, sc (E := E) v (g : Fv F v)⁻¹ * (p.1 q - p.2 q) ∈ VolTU.OS (E := E) v := fun q => by
       rw [← neg_sub, ← sw]
       exact h3 q
     refine ⟨h1, fun q => ?_, h3'⟩
-    have h4 := (OS (E := E) v).smul_mem (⟨(g : Fv F v), hgO⟩ : v.adicCompletionIntegers F) (h3' q)
-    have h5 : p.1 q - p.2 q ∈ OS (E := E) v := by
-      have h6 : (g : Fv F v) • (sc (E := E) v (g : Fv F v)⁻¹ * (p.1 q - p.2 q)) ∈ OS (E := E) v := h4
-      rwa [← sc_mul_eq_smul, ← mul_assoc, ← sc_mul, mul_inv_cancel₀ hg0, sc_one, one_mul] at h6
+    have h4 := (VolTU.OS (E := E) v).smul_mem (⟨(g : Fv F v), hgO⟩ : v.adicCompletionIntegers F) (h3' q)
+    have h5 : p.1 q - p.2 q ∈ VolTU.OS (E := E) v := by
+      have h6 : (g : Fv F v) • (sc (E := E) v (g : Fv F v)⁻¹ * (p.1 q - p.2 q)) ∈ VolTU.OS (E := E) v := h4
+      rwa [← VolTU.sc_mul_eq_smul, ← mul_assoc, ← VolTU.sc_mul, mul_inv_cancel₀ hg0, VolTU.sc_one, one_mul] at h6
     have h7 : p.2 q = p.1 q - (p.1 q - p.2 q) := by abel
     rw [h7]
-    exact (OS (E := E) v).sub_mem (h1 q) h5
+    exact (VolTU.OS (E := E) v).sub_mem (h1 q) h5
 
 end Formalism.L2.SG.Pf.NcVal

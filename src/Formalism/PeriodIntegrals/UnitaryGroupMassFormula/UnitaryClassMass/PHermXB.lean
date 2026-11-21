@@ -52,7 +52,7 @@ theorem local_switching_lattice : LocSw := by
         rw [map_mul, map_mul, hsb, ← hσ, hσσ, mul_comm]
       obtain ⟨c, hc⟩ := hfix _ hfixN
       have hcint : IsIntegral ℤ c := by
-        rw [← isIntegral_algebraMap_iff , hc]
+        rw [← isIntegral_algebraMap_iff (B := E), hc]
         exact NumberField.RingOfIntegers.isIntegral_coe (sb * s)
       let c' : 𝓞 F := ⟨c, hcint⟩
       have hc' : algebraMap (𝓞 F) (𝓞 E) c' = sb * s := by

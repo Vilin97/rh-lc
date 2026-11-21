@@ -7,7 +7,7 @@ public import Formalism.LocalToGlobal.CharacterGerms.CoeffIterateZero
 
 @[expose] public section
 
-open Formalism.L2.FormalSeriesBounds GlobalTheory.LeafTerm
+open Formalism.L2.FormalSeriesBounds
 
 namespace GlobalTheory.FrobRoot
 

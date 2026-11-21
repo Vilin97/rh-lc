@@ -54,6 +54,7 @@ def bridge_unit_rule : Prop :=
     ((l : 𝓞 K) ∈ w.asIdeal) → vAdd w ((l : ℕ) : K) = (eWL K w : ℤ)
 
 
+open scoped Classical in
 def FactUnitNormalisation : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (p : ℕ), p.Prime →
     (∑ᶠ w : HeightOneSpectrum (𝓞 K),

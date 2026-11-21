@@ -98,7 +98,7 @@ theorem haarSub_prop {S : Set G} {μ ν : Measure G} (hμ : LeftHaarSub S μ) (h
     rw [heq, hc, zero_smul]
   · calc μ = μ'.map Subtype.val := hμm.symm
       _ = ((μ' A / ν' A) • ν').map Subtype.val := by rw [← heq]
-      _ = (μ' A / ν' A) • ν'.map Subtype.val := Measure.map_smul _ _ _
+      _ = (μ' A / ν' A) • ν'.map Subtype.val := Measure.map_smul _ hemb.measurable.aemeasurable
       _ = (μ' A / ν' A) • ν := by rw [hνm]
 
 def cjB (b : G) (y : G) : G := b⁻¹ * y * b

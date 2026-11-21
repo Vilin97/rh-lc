@@ -29,7 +29,7 @@ theorem norm_natCast_eq_pow_padicValNat {l n : ℕ} (hl : l.Prime) (hlt : ‖(l 
   rw [Nat.factorization_def n hl] at hfac hnd
   conv_lhs => rw [← hfac]
   rw [Nat.cast_mul, norm_mul, Nat.cast_pow, norm_pow, norm_natCast_eq_one_of_not_dvd hl hlt hnd,
-    mul_one]
+    mul_one, Nat.padicValNat_def]
 
 end Norms
 

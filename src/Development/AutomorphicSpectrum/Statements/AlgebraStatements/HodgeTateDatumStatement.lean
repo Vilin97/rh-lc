@@ -30,6 +30,6 @@ def HodgeTateDatumStatement : Prop :=
     Nonempty (TorsRep P.A p) ∧
     ∃ (cp : R) (_ : HodgeTateSetting p v R ℤ_[p] AlgEquiv.refl cp)
       (H : HodgeTateDatum p P.g v R ℤ_[p] AlgEquiv.refl cp) (pt : Nb p P.g → (sp (R₀ := R) R ⟶ P.A)),
-      IsTorsPts P.A p pt ∧ ∀ T : TorsRep P.A p, H.AA.carrier = torsFun C T pt
+      IsTorsPts (p := p) pt ∧ ∀ T : TorsRep P.A p, H.AA.carrier = torsFun C T pt
 
 end GlobalTheory.CompanionTheory.Ar.GR

@@ -69,15 +69,15 @@ section Pull
 variable {F F' : X.Modules} {G G' : Y.Modules}
 
 def toAbSheafPush (φ : F ⟶ (Scheme.Modules.pushforward g).obj G) :
-    (toAbSheaf X).obj F ⟶ (SheafPull.push g.base).obj ((toAbSheaf Y).obj G) :=
-  (toAbSheaf X).map φ
+    toAbSheaf.obj F ⟶ (SheafPull.push g.base).obj (toAbSheaf.obj G) :=
+  toAbSheaf.map φ
 
 theorem toAbSheafPush_comp (s : F' ⟶ F) (φ : F ⟶ (Scheme.Modules.pushforward g).obj G) :
-    toAbSheafPush (s ≫ φ) = (toAbSheaf X).map s ≫ toAbSheafPush φ := rfl
+    toAbSheafPush (s ≫ φ) = toAbSheaf.map s ≫ toAbSheafPush φ := rfl
 
 theorem toAbSheafPush_comp_map (φ : F ⟶ (Scheme.Modules.pushforward g).obj G) (s : G ⟶ G') :
     toAbSheafPush (φ ≫ (Scheme.Modules.pushforward g).map s) =
-      toAbSheafPush φ ≫ (SheafPull.push g.base).map ((toAbSheaf Y).map s) := rfl
+      toAbSheafPush φ ≫ (SheafPull.push g.base).map (toAbSheaf.map s) := rfl
 
 variable {R : Type v} [CommRing R] [Algebra R Γ(X, ⊤)] {S : Type t} [CommRing S]
   [Algebra S Γ(Y, ⊤)] {σ : R →+* S}
@@ -93,9 +93,9 @@ def cohOn.pull (φ : F ⟶ (Scheme.Modules.pushforward g).obj G) {V : X.Opens} {
         (smulHom G (algebraMap S Γ(Y, ⊤) (σ r))) := by
       rw [smulHom_comp, smulHom_pushforward, hσ]
     have h₁ := SheafPull.pull_map g.base (toAbSheafPush φ) n
-      ((toAbSheaf X).map (smulHom F (algebraMap R Γ(X, ⊤) r))) (homOfLE h) (cohOn.toH' F V n x)
+      (toAbSheaf.map (smulHom F (algebraMap R Γ(X, ⊤) r))) (homOfLE h) (cohOn.toH' F V n x)
     have h₂ := SheafPull.map_pull g.base (toAbSheafPush φ) n
-      ((toAbSheaf Y).map (smulHom G (algebraMap S Γ(Y, ⊤) (σ r)))) (homOfLE h) (cohOn.toH' F V n x)
+      (toAbSheaf.map (smulHom G (algebraMap S Γ(Y, ⊤) (σ r)))) (homOfLE h) (cohOn.toH' F V n x)
     rw [← toAbSheafPush_comp, e] at h₁
     rw [← toAbSheafPush_comp_map] at h₂
     apply (cohOn.toH' G W n).injective
@@ -113,14 +113,14 @@ theorem cohOn.pull_map (s : F' ⟶ F) (h : W ≤ g ⁻¹ᵁ V) (x : cohOn F' V n
     cohOn.pull hσ φ h n (cohOn.map R s V n x) = cohOn.pull hσ (s ≫ φ) h n x := by
   apply (cohOn.toH' G W n).injective
   rw [cohOn.toH'_pull, cohOn.toH'_pull, cohOn.toH'_map, toAbSheafPush_comp]
-  exact SheafPull.pull_map g.base (toAbSheafPush φ) n ((toAbSheaf X).map s) (homOfLE h) _
+  exact SheafPull.pull_map g.base (toAbSheafPush φ) n (toAbSheaf.map s) (homOfLE h) _
 
 theorem cohOn.map_pull (s : G ⟶ G') (h : W ≤ g ⁻¹ᵁ V) (x : cohOn F V n) :
     cohOn.map S s W n (cohOn.pull hσ φ h n x) =
       cohOn.pull hσ (φ ≫ (Scheme.Modules.pushforward g).map s) h n x := by
   apply (cohOn.toH' G' W n).injective
   rw [cohOn.toH'_map, cohOn.toH'_pull, cohOn.toH'_pull, toAbSheafPush_comp_map]
-  exact SheafPull.map_pull g.base (toAbSheafPush φ) n ((toAbSheaf Y).map s) (homOfLE h) _
+  exact SheafPull.map_pull g.base (toAbSheafPush φ) n (toAbSheaf.map s) (homOfLE h) _
 
 theorem cohOn.pull_res (k : V' ≤ V) (h : W ≤ g ⁻¹ᵁ V') (x : cohOn F V n) :
     cohOn.pull hσ φ h n (cohOn.res R F k n x) =
@@ -144,7 +144,7 @@ theorem cohOn.pull_bijective_of_toAbSheaf (h : W ≤ g ⁻¹ᵁ V)
 
 theorem higherDirectImagesVanish_of_isAffineHom (g : Y ⟶ X) [IsAffineHom g] (G : Y.Modules)
     [G.IsQuasicoherent] :
-    SheafPull.HigherDirectImagesVanish.{u} g.base ((toAbSheaf Y).obj G) :=
+    SheafPull.HigherDirectImagesVanish.{u} g.base (toAbSheaf.obj G) :=
   SheafPull.higherDirectImagesVanish_of_basis _ _ fun V x hx => by
     obtain ⟨_, ⟨W, hW, rfl⟩, hxW, hWV⟩ := X.isBasis_affineOpens.exists_subset_of_mem_open hx V.2
     refine ⟨W, hWV, hxW, fun n hn => ?_⟩
@@ -163,7 +163,7 @@ theorem cohOn.pull_restrict_bijective [IsOpenImmersion g] (h : W ≤ g ⁻¹ᵁ 
     Function.Bijective
       (cohOn.pull hσ (G := F.restrict g) ((Scheme.Modules.restrictAdjunction g).unit.app F) h n) :=
   cohOn.pull_bijective_of_toAbSheaf hσ _ _
-    (SheafPull.pull_restrUnit_bijective.{u, u} g.isOpenEmbedding ((toAbSheaf X).obj F) n
+    (SheafPull.pull_restrUnit_bijective.{u, u} g.isOpenEmbedding (toAbSheaf.obj F) n
       (homOfLE h) h')
 
 end Pull
@@ -179,7 +179,7 @@ variable [IsAffineHom g] (G : Y.Modules) [G.IsQuasicoherent]
 
 def cohOn.pushforwardEquiv (V : X.Opens) (n : ℕ) :
     cohOn ((Scheme.Modules.pushforward g).obj G) V n ≃ₗ[R] cohOn G (g ⁻¹ᵁ V) n :=
-  LinearEquiv.ofBijective _ (cohOn.pull_id_bijective G (σ := RingHom.id R) hg V n)
+  LinearEquiv.ofBijective _ (cohOn.pull_id_bijective (G := G) (σ := RingHom.id R) (V := V) (n := n) hg)
 
 theorem cohOn.pushforwardEquiv_apply (V : X.Opens) (n : ℕ)
     (x : cohOn ((Scheme.Modules.pushforward g).obj G) V n) :
@@ -211,7 +211,7 @@ theorem coh.pushforwardEquiv_map {G' : Y.Modules} [G'.IsQuasicoherent] (s : G �
     (n : ℕ) (x : coh ((Scheme.Modules.pushforward g).obj G) n) :
     coh.pushforwardEquiv R hg G' n (cohOn.map R ((Scheme.Modules.pushforward g).map s) ⊤ n x) =
       cohOn.map R s ⊤ n (coh.pushforwardEquiv R hg G n x) :=
-  cohOn.pushforwardEquiv_map R hg s ⊤ n x
+  cohOn.pushforwardEquiv_map R hg G s ⊤ n x
 
 end Push
 
@@ -221,7 +221,7 @@ variable [IsOpenImmersion g] (F : X.Modules)
 
 def cohOn.restrictEquiv {V : X.Opens} {W : Y.Opens} (h : g ''ᵁ W = V) (n : ℕ) :
     cohOn F V n ≃ₗ[R] cohOn (F.restrict g) W n :=
-  LinearEquiv.ofBijective _ (cohOn.pull_restrict_bijective F (σ := RingHom.id R) hg n
+  LinearEquiv.ofBijective _ (cohOn.pull_restrict_bijective (F := F) (σ := RingHom.id R) (n := n) hg
     ((g.preimage_image_eq W).ge.trans (g.preimage_mono h.le)) h.ge)
 
 end Restrict

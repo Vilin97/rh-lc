@@ -34,8 +34,8 @@ private theorem UpperTheory.Reformulated.B.Qe19.fixed_lift {Γ : Type} [Group Γ
     refine Fintype.sum_equiv (Equiv.mulLeft (⟨h, hh⟩ : H)) _ _ ?_
     intro k
     simp [map_mul]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_smul, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum]
     have h1 : ∀ k : H, (Rep.Hom.hom f) (A.ρ k a) = b := by
       intro k
       rw [Rep.hom_comm_apply, ha, hb k k.2]

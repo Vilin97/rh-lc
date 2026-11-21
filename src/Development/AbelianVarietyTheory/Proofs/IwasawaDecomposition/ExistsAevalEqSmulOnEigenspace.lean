@@ -14,11 +14,11 @@ theorem exists_pow_frob_commute {E Ω : Type} [Field E] [NumberField E] [Field �
     [IsAlgClosure E Ω] {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)}
     {h : IsPlaceOver A w} {V : Type} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
     (ρ : Representation ℂ (Weil h) V) (hρ : IsSmooth ρ) :
-    ∃ m : ℕ, 0 < m ∧ ∀ σ, Commute (ρ (frob h) ^ m) (ρ σ) := by
-  have h1 : ∀ τ : Weil h, ∃ m : ℕ, 0 < m ∧ Commute (ρ (frob h) ^ m) (ρ τ) := by
+    ∃ m : ℕ, 0 < m ∧ ∀ σ, Commute (ρ (frob (h := h)) ^ m) (ρ σ) := by
+  have h1 : ∀ τ : Weil h, ∃ m : ℕ, 0 < m ∧ Commute (ρ (frob (h := h)) ^ m) (ρ τ) := by
     intro τ
-    obtain ⟨m, hm, he⟩ := exists_pow_eq_pow_of_deg_eq E Ω A w h V ρ hρ (frob h)
-      (τ * frob h * τ⁻¹) (by simp [deg_mul, deg_inv])
+    obtain ⟨m, hm, he⟩ := exists_pow_eq_pow_of_deg_eq E Ω A w h V ρ hρ (frob (h := h))
+      (τ * frob (h := h) * τ⁻¹) (by simp [deg_mul, deg_inv])
     refine ⟨m, hm, ?_⟩
     rw [← map_pow, ← map_pow, conj_pow] at he
     show _ * _ = _ * _
@@ -26,7 +26,7 @@ theorem exists_pow_frob_commute {E Ω : Type} [Field E] [NumberField E] [Field �
     conv_lhs => rw [he]
     rw [← map_mul, ← map_mul, inv_mul_cancel_right]
   have h2 : ∀ S : Set (End ℂ V), S.Finite → (∀ x ∈ S, ∃ τ, ρ τ = x) →
-      ∃ m : ℕ, 0 < m ∧ ∀ x ∈ S, Commute (ρ (frob h) ^ m) x := by
+      ∃ m : ℕ, 0 < m ∧ ∀ x ∈ S, Commute (ρ (frob (h := h)) ^ m) x := by
     intro S hS
     induction S, hS using Set.Finite.induction_on with
     | empty => exact fun _ => ⟨1, one_pos, by simp⟩
@@ -41,12 +41,12 @@ theorem exists_pow_frob_commute {E Ω : Type} [Field E] [NumberField E] [Field �
       · rw [pow_mul]; exact (hc y hy).pow_left n
   obtain ⟨m, hm, hc⟩ := h2 _ hρ.finite_range (by rintro _ ⟨σ, rfl⟩; exact ⟨_, rfl⟩)
   refine ⟨m, hm, fun σ => ?_⟩
-  have h0 : deg ((frob h ^ deg σ)⁻¹ * σ) = 0 := by
+  have h0 : deg ((frob (h := h) ^ deg σ)⁻¹ * σ) = 0 := by
     simp [deg_mul, deg_inv, deg_zpow, deg_frob]
-  have h3 : Commute (ρ (frob h) ^ m) (ρ ((frob h ^ deg σ)⁻¹ * σ)) :=
+  have h3 : Commute (ρ (frob (h := h)) ^ m) (ρ ((frob (h := h) ^ deg σ)⁻¹ * σ)) :=
     hc _ ⟨⟨_, deg_eq_zero_iff.mp h0⟩, rfl⟩
-  have h4 : Commute (ρ (frob h) ^ m) (ρ (frob h ^ deg σ)) :=
-    (((Commute.refl (frob h)).zpow_right _).map ρ).pow_left m
+  have h4 : Commute (ρ (frob (h := h)) ^ m) (ρ (frob (h := h) ^ deg σ)) :=
+    (((Commute.refl (frob (h := h))).zpow_right _).map ρ).pow_left m
   have := h4.mul_right h3
   rwa [← map_mul, mul_inv_cancel_left] at this
 
@@ -100,7 +100,7 @@ theorem _root_.GlobalTheory.WeilDeligne.WDRep.iso_of_N_eq_smul : ∀ (E Ω : Typ
     b.N = c • a.N → a.Iso b := by
   intro E Ω _ _ _ _ _ A w h V _ _ _ a b c hc hρ hN
   classical
-  set φ := _root_.GlobalTheory.WeilDeligne.frob h with hφ
+  set φ := _root_.GlobalTheory.WeilDeligne.frob (h := h) with hφ
   set Φ : Module.End ℂ V := a.ρ φ with hΦdef
   have hΦ : Φ.IsSemisimple := a.semisimple φ
   have hq : (1 : ℝ) < (_root_.Formalism.ConjugateSelfDual.normV w : ℝ) := by exact_mod_cast _root_.GlobalTheory.WeilDeligne.one_lt_normV w

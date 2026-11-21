@@ -14,7 +14,7 @@ set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
 
-open MvPolynomial LineChowForm SectionLine
+open MvPolynomial SectionLine
 
 noncomputable section
 

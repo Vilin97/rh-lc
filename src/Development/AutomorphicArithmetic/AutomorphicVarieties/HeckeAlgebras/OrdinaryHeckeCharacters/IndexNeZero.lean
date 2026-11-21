@@ -129,10 +129,10 @@ theorem val_div_ord (x : kˣ) : valuation k ((x / unif k ^ ord k x : kˣ) : k) =
   let o : kˣ →* Multiplicative ℤ := MonoidHom.mk' (fun x => .ofAdd (ord k x)) fun x y => by
     rw [ord_mul, ofAdd_add]
   have h1 : o (x / unif k ^ ord k x) = 1 := by
-    rw [map_div, map_zpow, show o (unif k) = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one unif_spec),
+    rw [map_div, map_zpow, show o (unif k) = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one k unif_spec),
       ← ofAdd_zsmul, smul_eq_mul, mul_one]
     exact div_self' _
-  exact ord_eq_zero_iff.1 (ofAdd_eq_one.1 h1)
+  exact (ord_eq_zero_iff k).1 (ofAdd_eq_one.1 h1)
 
 theorem val_zpow (a : ℤ) : valuation k ((unif k ^ a : kˣ) : k) = uniformizer k ^ a := by
   rw [Units.val_zpow_eq_zpow_val, map_zpow₀, unif_spec]
@@ -264,6 +264,8 @@ theorem upow_add (a b : Fin n → ℤ) : upow k n (a + b) = upow k n a * upow k 
 theorem upow_neg (a : Fin n → ℤ) : upow k n (-a) = (upow k n a)⁻¹ := by
   rw [upow, upow, ← map_inv]
   congr 1
+  funext i
+  simp [_root_.zpow_neg]
 
 theorem upow_pow (a : Fin n → ℤ) (m : ℕ) : upow k n a ^ m = upow k n fun i => m * a i := by
   rw [upow, upow, ← map_pow]
@@ -428,3 +430,5 @@ theorem UpperTheory.V.Hi.glAx :
     comm _ (pow_mem (⟨_, rfl⟩ : (glData k n).z ∈ (glData k n).Tf) m) _ ⟨_, rfl⟩
   rw [h, mul_assoc, mul_inv_cancel_right, upow, ← map_mul]
   congr 1
+  funext i
+  exact (div_mul_cancel (t i) (unif k ^ ord k (t i))).symm

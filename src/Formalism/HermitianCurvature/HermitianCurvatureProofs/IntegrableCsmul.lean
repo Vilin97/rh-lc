@@ -47,7 +47,7 @@ theorem rho_pR (Bs : RealPlaceData k r Wp Wq) (F : Mat k r → (Wq →L[ℂ] Wp)
   rfl
 
 theorem AdL_pR (ξ : Mt k r × Mt k r) (X : Mat k r) : AdL (pR ξ) X = X := by
-  simp [AdL, sL, pR]
+  simp only [AdL, sL, pR, Equiv.apply_symm_apply, Matrix.one_mul, inv_one, Matrix.mul_one]
 
 theorem kr_eq (Bs : RealPlaceData k r Wp Wq) (F : Mat k r → (Wq →L[ℂ] Wp)) (x : Mat k r) :
     Kr Bs F x = ∫ ξ, star (psi k r Bs.z' cStd (Matrix.of ξ.2)) • rho Bs (pR ξ) F x ∂(Bs.μW'.prod Bs.μN) := by
@@ -309,7 +309,7 @@ theorem kr_loc_cpt (Bs : RealPlaceData k r Wp Wq) {F : Mat k r → (Wq →L[ℂ]
 
 theorem sgs_pR (ξ : Mt k r × Mt k r) (x : Mat k r) :
     sgs (pR ξ) x = x * Matrix.of ξ.2 * Matrix.of ξ.1 := by
-  simp [sgs, pR]
+  simp only [sgs, pR, Equiv.apply_symm_apply, inv_one, Matrix.one_mul]
 
 theorem dmin_pR (Bs : RealPlaceData k r Wp Wq) {ξ : Mt k r × Mt k r} (hξ : InR Bs ξ) (x : Mat k r) (l : Fin (r + 2)) :
     Dmin k r Bs.z Bs.z' (x * Matrix.of ξ.2 * Matrix.of ξ.1) l = Dmin k r Bs.z Bs.z' x l := by
@@ -370,7 +370,8 @@ variable [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
 theorem rhoW_cont (D : RealPlaceData k r Wp Wq) {A c : ℝ} {m : ℕ} {F : Mat k r → (Wq →L[ℂ] Wp)} (hc : CCle A m F c)
     (hA : 0 ≤ A) (u v : List (Mat k r)) (hu : ∀ X ∈ u, unitLie k r X) (hv : ∀ X ∈ v, unitLie k r X)
     (hl : u.length + v.length ≤ m) {g : Mat k r} (hgG : g ∈ GV k r) :
-    ContinuousOn (fun p => rho D p (dLR (u.map (AdL p)) (v.map (AdR p)) F) g) {p : SS k r | D.inSS p} := by
+    ContinuousOn (fun p => rho D p (dLR (u.map (AdL p)) (v.map (AdR p)) F) g) {p : SS k r | D.inSS p} :=
+  open Formalism.FourierDecayAlt.P.JFxDs3 in by
   have hc0 : 0 ≤ c := cc_nonneg hc
   have hwu : ∀ x ∈ lr u v, unitLie k r x.2 := unit_lr' hu hv
   have hwt : LRt ((lr u v).map Prod.fst) := lrt_lr u v
@@ -611,8 +612,9 @@ theorem kr_meas (Bs : RealPlaceData k r Wp Wq) {F : Mat k r → (Wq →L[ℂ] Wp
     (v : List (Mat k r)) (hv : ∀ X ∈ v, unitLie k r X) (hl : v.length ≤ m) {q : Mat k r} (hq : q ∈ GV k r) :
     AEStronglyMeasurable (fun ξ => Rw v (rho Bs (pR ξ) F) q) (Bs.μW'.prod Bs.μN) := by
   have hpRc : Continuous (fun ξ : Mt k r × Mt k r => pR ξ) := continuous_const.prodMk continuous_id
-  have hcont := (rhoW_cont Bs hc le_rfl [] v (by simp) hv (by simpa using hl) hq).comp hpRc.continuousOn
-    (fun ξ hξ => inSS_pR Bs hξ)
+  have hpR : Set.MapsTo pR {ξ | InR Bs ξ} {p | Bs.inSS p} := fun _ hξ => inSS_pR Bs hξ
+  have hcont :=
+    (rhoW_cont Bs hc le_rfl [] v (by simp) hv (by simpa using hl) hq).comp' hpRc.continuousOn hpR
   have hm := hcont.aestronglyMeasurable (μ := Bs.μW'.prod Bs.μN) (isClosed_InR Bs).measurableSet
   rw [Measure.restrict_eq_self_of_ae_mem (ae_inR Bs)] at hm
   refine hm.congr ?_
@@ -733,12 +735,29 @@ open Formalism.FourierDecayAlt.P.CapelliWordSumExpansion in
 theorem foldT_clm (L : E →L[ℂ] E) (ts : List (ℂ × Fin (2 * r + k + 1) × Fin (2 * r + k + 1))) (f : Mat k r → E)
     {g : Mat k r} (hg : g ∈ GV k r) (hf : Loc (ts.length : ℕ∞) f g) (hLf : Loc (ts.length : ℕ∞) (fun x => L (f x)) g) :
     foldT ts (fun x => L (f x)) g = L (foldT ts f g) := by
+  have hRw (w : List (Mat k r)) (hw : ∀ X ∈ w, inLie k r X) (y : Mat k r)
+      (hy : y ∈ GV k r) (hfy : Loc (w.length : ℕ∞) f y) :
+      Rw w (fun x => L (f x)) y = L (Rw w f y) := by
+    induction w generalizing y with
+    | nil => rfl
+    | cons X w ih =>
+      obtain ⟨U, hU, hyU, hUloc⟩ := loc_spread hfy
+      have hw' : ∀ Y ∈ w, inLie k r Y := fun Y hY => hw Y (List.mem_cons_of_mem X hY)
+      have hX : inLie k r X := hw X List.mem_cons_self
+      have hagree : ∀ x ∈ U, x ∈ GV k r → Rw w (fun z => L (f z)) x = L (Rw w f x) :=
+        fun x hx hxG => ih hw' x hxG (loc_mono (by simp) (hUloc x hx))
+      show RdV X (Rw w (fun x => L (f x))) y = L (RdV X (Rw w f) y)
+      rw [rdV_congr hU hyU hy hX hagree]
+      have hloc : Loc 1 (Rw w f) y :=
+        loc_Rw hfy w hw' 1 (by simp [Nat.add_comm])
+      have hd := loc_hasDerivAt le_rfl hloc hy hX
+      exact ((L.restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) hd).deriv
   rw [expand_eq ts _ g hg hLf, expand_eq ts f g hg hf, map_list_sum, List.map_map]
   congr 1
   refine List.map_congr_left fun cw hcw => ?_
   have hw := expand_words ts cw hcw
   simp only [Function.comp_apply, map_smul]
-  rw [Formalism.FourierDecayAlt.P.PBN.JA.rw_clm L cw.2 (fun X hX => (hw.1 X hX).1) f g hg (loc_mono (by exact_mod_cast hw.2) hf)]
+  rw [hRw cw.2 (fun X hX => (hw.1 X hX).1) g hg (loc_mono (by exact_mod_cast hw.2) hf)]
 
 theorem qminor_foldT {t : ℕ} (a b : Fin t → Fin (2 * r + k + 1)) (u : ℂ) (f : Mat k r → E) (g : Mat k r) :
     qminorOp (EabH (Hpk k r)) a b u f g =
@@ -790,7 +809,8 @@ variable [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
 theorem rho_AA (Bs : RealPlaceData k r Wp Wq) {F : Mat k r → (Wq →L[ℂ] Wp)} (hF : CkOn ⊤ (GV k r) F) (m : ℕ)
     (hm : m ≤ r) (u ell : ℂ) {p : SS k r} (hp : Bs.inSS p) {g : Mat k r} (hg : g ∈ GV k r) :
     rho Bs p (C3.AAop k r m hm u F) g = C3.AAop k r m hm u (rho Bs p F) g ∧
-      rho Bs p (C3.AAvop k r m hm ell F) g = C3.AAvop k r m hm ell (rho Bs p F) g := by
+      rho Bs p (C3.AAvop k r m hm ell F) g = C3.AAvop k r m hm ell (rho Bs p F) g :=
+  open Formalism.FourierDecayAlt.P.PBN.JA in by
   set s : Mat k r := (Matrix.of p.1.1)⁻¹ * (Matrix.of p.1.2)⁻¹ with hsdef
   set s' : Mat k r := Matrix.of p.2.2 * Matrix.of p.2.1 with hs'def
   have hs : s ∈ Sset k r Bs.z :=
@@ -898,7 +918,7 @@ theorem qminor_under (Bs : RealPlaceData k r Wp Wq) {F : Mat k r → (Wq →L[�
       (Formalism.FourierDecayAlt.JF.xiP Bs (pR ξ) • Formalism.FourierDecayAlt.P.CapelliWordSumExpansion.foldT
         (List.ofFn fun j : Fin t => (u - ((j : ℕ) : ℂ), a (σ j), b j)) (rho Bs (pR ξ) F) y))
       (Bs.μW'.prod Bs.μN) :=
-    integrable_finset_sum _ fun σ _ => integrable_csmul _ (hT σ).1
+    integrable_finsetSum _ fun σ _ => integrable_csmul _ (hT σ).1
   refine ⟨by simp only [e]; exact hI, ?_⟩
   simp only [e]
   rw [integral_finsetSum _ fun σ _ => integrable_csmul _ (hT σ).1, qminor_foldT]

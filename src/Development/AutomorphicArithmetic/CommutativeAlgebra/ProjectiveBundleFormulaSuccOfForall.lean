@@ -42,7 +42,7 @@ theorem UpperTheory.projectiveBundleFormula_succ_of_forall :
     ∀ (q : ℕ) [NeZero q] (N : ℕ), 2 ≤ N → (∀ E : Spc, Inv q E → PBF q E N) → ∀ E : Spc, Inv q E → PBF q E (N + 1) := by
   intro q _ N hN H E hE
   have hN1 : 1 ≤ N := by omega
-  have invS : ∀ (a : Act), Inv q (Sp E a) := fun a U ⟨x⟩ => hE U ⟨x.1⟩
+  have invS : ∀ (a : UpperTheory.Blow.Act), UpperTheory.Pbf.Inv q (UpperTheory.Blow.Sp E a) := fun a U ⟨x⟩ => hE U ⟨x.1⟩
   refine (UpperTheory.projBundleFormula_iff_pglForm q E (N + 1) hE).2 ?_
   have hX : Pbf q E N := (UpperTheory.projBundleFormula_iff_pglForm q E N hE).1 (H E hE)
   have hc : Sp.map E (βC N) ≫ Sp.line E (chiX (N + 1)) = Sp.line E (chiB N) := rfl

@@ -193,10 +193,18 @@ theorem evalAtPoint_injective (P : Ω c →+* ℂ) (hP : P ∈ d.ST c sg (fun i 
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro F hF
   by_contra hF0
-  letI alg1 : Algebra (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := (d.KTtoS h c).toAlgebra
-  haveI := (d.omS_finite hd h c).1
-  letI alg2 : Algebra (KTp K d.D d.N) (OmS (Ω c) d.D d.N) := (d.sH c).toRingHom.toAlgebra
-  haveI : IsScalarTower (KTp K d.D d.N) (KTf K d.D d.N) (OmS (Ω c) d.D d.N) :=
+  let : Algebra (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := (d.KTtoS h c).toAlgebra
+  have : FiniteDimensional (d.KT c) (OmS (Ω c) d.D d.N) := d.KT_finiteDimensional hd c
+  let eKT : KTf K d.D d.N ≃+* d.KT c :=
+    (d.KTtoS h c).rangeRestrictFieldEquiv.trans (RingEquiv.subfieldCongr (d.KTtoS_fieldRange h c))
+  have he (z : KTf K d.D d.N) : (eKT z : OmS (Ω c) d.D d.N) = d.KTtoS h c z := rfl
+  have : FiniteDimensional (KTf K d.D d.N) (OmS (Ω c) d.D d.N) :=
+    Module.Finite.of_equiv_equiv eKT.symm (RingEquiv.refl _) (RingHom.ext fun y => by
+      change d.KTtoS h c (eKT.symm y) = (y : OmS (Ω c) d.D d.N)
+      rw [← he, eKT.apply_symm_apply])
+  let alg : Algebra (KTp K d.D d.N) (OmS (Ω c) d.D d.N) := (d.sH c).toRingHom.toAlgebra
+  let : SMul (KTp K d.D d.N) (OmS (Ω c) d.D d.N) := alg.toSMul
+  have : IsScalarTower (KTp K d.D d.N) (KTf K d.D d.N) (OmS (Ω c) d.D d.N) :=
     IsScalarTower.of_algebraMap_eq fun q => (d.KTtoS_alg h c q).symm
 
   have halg : IsAlgebraic (KTf K d.D d.N)
@@ -239,13 +247,13 @@ theorem exists_emb (P : Ω c →+* ℂ) (hP : P ∈ d.ST c sg (fun i j => pt (i.
 
 include hd in
 theorem fibre_core :
-    letI : Algebra (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := (d.KTtoS h c).toAlgebra
-    letI : Algebra (KTf K d.D d.N) ℂ := (tauPev sg pt hpt).toAlgebra
-    Function.Injective (fun σ : OmS (Ω c) d.D d.N →ₐ[KTf K d.D d.N] ℂ =>
-        (σ : OmS (Ω c) d.D d.N →+* ℂ).comp (algebraMap (Ω c) (OmS (Ω c) d.D d.N))) ∧
-      Set.range (fun σ : OmS (Ω c) d.D d.N →ₐ[KTf K d.D d.N] ℂ =>
-        (σ : OmS (Ω c) d.D d.N →+* ℂ).comp (algebraMap (Ω c) (OmS (Ω c) d.D d.N))) =
-        d.ST c sg (fun i j => pt (i.succ, j)) := by
+    (letI : Algebra (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := (d.KTtoS h c).toAlgebra
+     letI : Algebra (KTf K d.D d.N) ℂ := (tauPev sg pt hpt).toAlgebra
+     Function.Injective (fun σ : OmS (Ω c) d.D d.N →ₐ[KTf K d.D d.N] ℂ =>
+         (σ : OmS (Ω c) d.D d.N →+* ℂ).comp (algebraMap (Ω c) (OmS (Ω c) d.D d.N))) ∧
+       Set.range (fun σ : OmS (Ω c) d.D d.N →ₐ[KTf K d.D d.N] ℂ =>
+         (σ : OmS (Ω c) d.D d.N →+* ℂ).comp (algebraMap (Ω c) (OmS (Ω c) d.D d.N))) =
+         d.ST c sg (fun i j => pt (i.succ, j))) := by
   letI : Algebra (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := (d.KTtoS h c).toAlgebra
   letI : Algebra (KTf K d.D d.N) ℂ := (tauPev sg pt hpt).toAlgebra
   have hcomm : ∀ σ : OmS (Ω c) d.D d.N →ₐ[KTf K d.D d.N] ℂ,

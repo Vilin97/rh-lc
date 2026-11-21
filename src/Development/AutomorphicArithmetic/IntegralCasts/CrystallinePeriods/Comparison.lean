@@ -128,7 +128,7 @@ theorem exists_p_pow_mul_sub_mem (n : ℕ) {x : AinfInv p R} (hx : x ∈ acrisZe
       convert Ideal.mul_mem_left _ (algebraMap _ _ c) ha using 1
       rw [map_mul, Algebra.smul_def]; ring⟩
 
-
+variable (p R) in
 def toQuot (n : ℕ) : AcrisZero p R →+* AinfInv p R ⧸ AinfInv.kerTheta p R ^ n :=
   (Ideal.Quotient.mk _).comp (acrisZero p R).val.toRingHom
 
@@ -160,8 +160,12 @@ instance isAdicComplete_range (n : ℕ) :
       obtain ⟨e, he⟩ := hx k
       obtain ⟨a, ha⟩ := exists_p_pow_mul_eq n e
       obtain ⟨c, hc⟩ := (key (b - p ^ k * a)).1 (by
-        simp only [map_sub, map_mul, map_pow, map_natCast]
-        rw [← hb, ← ha, he]; ring)
+        let ψ := (toQuot (p := p) (R := R) n).rangeRestrict.comp (algebraMap (Ainf p R) _)
+        change ψ (b - p ^ k * a) = 0
+        change _ = ψ b at hb
+        change _ = ψ a at ha
+        rw [ψ.map_sub, ψ.map_mul, map_pow ψ, map_natCast ψ, ← hb, ← ha, he]
+        ring)
       exact ⟨a, c, by rw [← hc]; ring⟩
     rw [← key, ← hb, Subtype.ext_iff] at h0
     have hu : IsUnit ((p : AinfInv p R ⧸ AinfInv.kerTheta p R ^ n) ^ n) := by
@@ -172,7 +176,7 @@ end AcrisZero
 
 namespace Acris
 
-
+variable (p R) in
 def toRange (n : ℕ) : Acris p R →+* (AcrisZero.toQuot (p := p) (R := R) n).range :=
   (AdicCompletion.ofAlgEquiv (span {(p : (AcrisZero.toQuot (p := p) (R := R) n).range)})).symm.toRingHom.comp
     (adicMap _ _ (AcrisZero.toQuot (p := p) (R := R) n).rangeRestrict (span_natCast_le_comap p _))
@@ -201,7 +205,7 @@ theorem map_toRange {m n : ℕ} (g : AinfInv p R ⧸ AinfInv.kerTheta p R ^ n �
       rw [RingHom.comp_apply, RingHom.comp_apply, h', toRange_algebraMap, toRange_algebraMap]
       exact h a)) x)
 
-
+variable (p R) in
 def toBdRPlus : Acris p R →+* BdRPlus p R :=
   AdicCompletion.liftRingHom (AinfInv.kerTheta p R)
     (fun n => (Subring.subtype _).comp (toRange (p := p) (R := R) n))
@@ -250,8 +254,8 @@ theorem toBdRPlus_log (u : Ainf p R) (hu : Ainf.theta p R u = 1)
       AinfInv p R ⧸ AinfInv.kerTheta p R ^ n) =
       truncLog n (BdRPlus.eval p R n (algebraMap _ _ u - 1)) := fun N hN => by
     rw [← eval_toBdRPlus, toBdRPlus_algebraMap_zero, coe_logPartial, map_truncLog, map_truncLog,
-      ← truncLog_eq_of_pow_eq_zero hz hN, ← IsScalarTower.algebraMap_apply, RingHom.map_sub (algebraMap _ _),
-      map_one]
+      ← truncLog_eq_of_pow_eq_zero hz hN, ← IsScalarTower.algebraMap_apply,
+      RingHom.map_sub (algebraMap (Ainf p R) (BdRPlus p R)), map_one]
   rw [eval_toBdRPlus, BdRPlus.eval_log, ← h1 n le_rfl]
   congr 1
   rw [IsHausdorff.eq_iff_smodEq (I := span {(p : (AcrisZero.toQuot (p := p) (R := R) n).range)})]
@@ -276,7 +280,7 @@ theorem BdRPlus.ker_theta_eq_span_logTeich {ε : tateModule p R} (hε : IsPrimit
   set x := algebraMap (Ainf p R) (BdRPlus p R) (Ainf.teich p ε.1 - 1) with hx
   have h2 : BdRPlus.logTeich ε - x ∈ BdRPlus.fil p R 2 := by
     rw [← BdRPlus.ker_eval, RingHom.mem_ker, map_sub, BdRPlus.logTeich, BdRPlus.eval_two_log, hx,
-      RingHom.map_sub (algebraMap _ _), map_one, sub_self]
+      RingHom.map_sub (algebraMap (Ainf p R) (BdRPlus p R)), map_one, sub_self]
   rw [BdRPlus.fil, h, Ideal.span_singleton_pow, Ideal.mem_span_singleton] at h2
   obtain ⟨c, hc⟩ := h2
   have hx0 : BdRPlus.theta p R x = 0 := by
@@ -292,7 +296,7 @@ theorem BdRPlus.logTeich_ne_zero {ε : tateModule p R} (hε : IsPrimitive ε) :
 
 namespace BcrisPlus
 
-
+variable (p R) in
 def toBdRPlus : BcrisPlus p R →+* BdRPlus p R :=
   lift (Acris.toBdRPlus p R) (IsUnit.of_mul_eq_one _ BdRPlus.p_mul_inv)
 
@@ -313,7 +317,7 @@ end BcrisPlus
 
 namespace Bcris
 
-
+variable (p R) in
 def toBdR : Bcris p R →+* BdR p R :=
   lift ((algebraMap (BdRPlus p R) (BdR p R)).comp (BcrisPlus.toBdRPlus p R)) (fun ε hε => by
     simpa using (map_ne_zero_iff _ BdR.algebraMap_injective).2 (BdRPlus.logTeich_ne_zero hε))
@@ -336,7 +340,7 @@ def toBdR : Bcris p R →+* BdR p R :=
     toBdR p R (logTeich η) = algebraMap _ _ (BdRPlus.logTeich η) := by
   rw [logTeich, toBdR_algebraMap_acris, Acris.toBdRPlus_logTeich]
 
-
+variable (p R) in
 def fil (i : ℤ) : AddSubgroup (Bcris p R) :=
   (BdR.fil p R i).toAddSubgroup.comap (toBdR p R).toAddMonoidHom
 
@@ -344,7 +348,7 @@ end Bcris
 
 namespace Bst
 
-
+variable (p R) in
 def toBdR : Bst p R →+* BdR p R :=
   lift (Bcris.toBdR p R) (fun ϖ => algebraMap _ _ (BdRPlus.logFlat ϖ)) (fun η ϖ => by
     rw [BdRPlus.logFlat_twist, map_add (f := _), Bcris.toBdR_logTeich])
@@ -356,7 +360,7 @@ def toBdR : Bst p R →+* BdR p R :=
     toBdR p R (algebraMap _ _ a) = algebraMap _ _ a := by
   rw [IsScalarTower.algebraMap_apply _ (Bcris p R), toBdR_algebraMap, Bcris.toBdR_algebraMap_padic]
 
-
+variable (p R) in
 def fil (i : ℤ) : AddSubgroup (Bst p R) :=
   (BdR.fil p R i).toAddSubgroup.comap (toBdR p R).toAddMonoidHom
 

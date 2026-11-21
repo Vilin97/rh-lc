@@ -68,3 +68,6 @@ theorem UpperTheory.Reformulated.B.H71.map_tor :
     Matrix.diagonal (fun i : Fin 3 ↦ (↑((Units.map (f : A →* B) t) ^ UpperTheory.Reformulated.B.H71.wt1 i) : B))
   rw [Matrix.diagonal_map (map_zero f)]
   congr 1
+  funext i
+  rw [← map_zpow, Units.coe_map]
+  rfl

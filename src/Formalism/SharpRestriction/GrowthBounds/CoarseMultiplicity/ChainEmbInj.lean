@@ -131,7 +131,7 @@ theorem nv_Eplus (D : BlockData N) {v : BVar N r D.T.t}
 theorem nv_xi {t b : ℕ} {v : BVar N r t} (h : ∀ c, v ≠ xiVar N r t c) {g : MvPolynomial (BVar N r t) (KK O)}
     (hg : g ∈ XiPolZ O N r t b) : v ∉ g.vars := by
   intro hv
-  obtain ⟨m, hm, hvm⟩ := (MvPolynomial.mem_vars v).1 hv
+  obtain ⟨m, hm, hvm⟩ := (MvPolynomial.mem_vars_iff_mem_support v).1 hv
   have h1 := (MvPolynomial.mem_restrictSupport_iff (KK O)).1 (Submodule.mem_inf.1 hg).1 hm
   obtain ⟨c, hc⟩ := h1.1 v hvm
   exact h c hc
@@ -148,7 +148,7 @@ theorem tail_chain (D : BlockData N) (jp : ℕ) (a0 : Fin N) (ha0 : a0 ≠ D.uPo
       ∀ μ ∈ F.support, μ (chainEmb N r D.T.t (a0, c)) = 0 := by
     intro F h μ hμ
     by_contra hne
-    exact h ((MvPolynomial.mem_vars _).2 ⟨μ, hμ, Finsupp.mem_support_iff.2 hne⟩)
+    exact h ((MvPolynomial.mem_vars_iff_mem_support _).2 ⟨μ, hμ, Finsupp.mem_support_iff.2 hne⟩)
   have hE : chainEmb N r D.T.t (a0, c) ∉ (D.Eplus O (r := r)).vars := by
     refine nv_Eplus D ?_ ?_ ?_ ?_
     · simp [chainEmb, scalZ]

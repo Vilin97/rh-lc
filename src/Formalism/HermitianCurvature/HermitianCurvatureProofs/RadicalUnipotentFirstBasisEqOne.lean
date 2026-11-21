@@ -417,22 +417,34 @@ theorem M1 (x : U.RC k j (1 + ρ)) (y : U.RC k 1 ρ) :
     cases a using Fin.lastCases with
     | last =>
       cases a' using Fin.lastCases with
-      | last => simp only [qE]; blks; rw [radical_unipotent_first_basis_eq_one, qL, block_two_apply_last_last]; rfl
-      | cast a' => simp only [qE, qX]; blks; simp [qL, block_two_apply_last_castSucc]
+      | last =>
+        simp only [qE, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂]
+        rw [radical_unipotent_first_basis_eq_one, qL, block_two_apply_last_last]; rfl
+      | cast a' =>
+        simp only [qE, qX, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₁]
+        simp [qL, block_two_apply_last_castSucc]
     | cast a =>
       cases a' using Fin.lastCases with
       | last =>
-        simp only [qX, qE]; blks
+        simp only [qX, qE, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂]
         rw [reversed_adjoint_block_apply, cH_E, qL, block_two_apply_castSucc_last]
         simp [aC, Matrix.conjTranspose_apply]
-      | cast a' => simp only [qX]; blks; simp [qL, block_two_apply_castSucc_castSucc]
+      | cast a' =>
+        simp only [qX, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₁]
+        simp [qL, block_two_apply_castSucc_castSucc]
   ·
     cases a using Fin.lastCases with
     | last =>
-      simp only [qE, qV]; blks
+      simp only [qE, qV, Ux3.block3_apply,
+        Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂, Matrix.fromBlocks_apply₁₂]
       rw [radical_unipotent_first_middle, qmul_last, reversed_adjoint_block_apply, rev_last', cXH_zero]
     | cast a =>
-      simp only [qX, qV]; blks
+      simp only [qX, qV, Ux3.block3_apply,
+        Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂]
       rw [reversed_adjoint_block_apply, cH_V, qmul_cs, reversed_adjoint_block_apply, reversed_adjoint_block_apply, rev_castSucc', rev_last', cXH_succ, cXH_zero]
       simp [aC] <;> ring
   ·
@@ -440,66 +452,110 @@ theorem M1 (x : U.RC k j (1 + ρ)) (y : U.RC k 1 ρ) :
     | last =>
       cases b' using Fin.cases with
       | zero =>
-        simp only [qE, qE']; blks
+        simp only [qE, qE', Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂, Matrix.fromBlocks_apply₁₂, Matrix.fromRows_apply_inl]
         rw [radical_unipotent_first_last, qmul_last, W_apply, rev_last', Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, cXHcX_00]
         simp [SX]
       | succ b' =>
-        simp only [qE, qS]; blks
+        simp only [qE, qS, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₂, Matrix.fromRows_apply_inr, Matrix.fromRows_apply_inl]
         rw [rc_E, qmul_last, W_apply, rev_last', Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, cXHcX_0s]
         simp only [SX, Fin.cases_zero, Fin.cases_succ, first_coordinate_apply]
         ring
     | cast a =>
       cases b' using Fin.cases with
       | zero =>
-        simp only [qX, qE']; blks
+        simp only [qX, qE', Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, Matrix.fromRows_apply_inl]
         rw [reversed_adjoint_block_apply, cH_E', qmul_cs, W_apply, W_apply, rev_castSucc', rev_last']
         simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, cXHcX_00, hermitian_form_column_succ_zero, SX, Fin.cases_zero,
           Fin.cases_succ, star_first_coordinate_eq, aC, star_neg]
         ring
       | succ b' =>
-        simp only [qX, qS]; blks
+        simp only [qX, qS, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₂, Matrix.fromRows_apply_inl]
         rw [W_apply, qmul_cs, W_apply, W_apply, rev_castSucc', rev_last']
         simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, cHc, cXHcX_0s, cXHcX_ss, SX, Fin.cases_zero,
           Fin.cases_succ, first_coordinate_apply, dlt_apply, aC, star_neg, star_uu']
         ring
   ·
     cases a' using Fin.lastCases with
-    | last => simp only [qV, qE]; blks; simp [radical_unipotent_rank_one_apply]
-    | cast a' => simp only [qV, qX]; blks; simp
+    | last =>
+      simp only [qV, qE, Ux3.block3_apply,
+        Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂, Matrix.fromBlocks_apply₂₁]
+      simp [radical_unipotent_rank_one_apply]
+    | cast a' =>
+      simp only [qV, qX, Ux3.block3_apply,
+        Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₁]
+      simp
   ·
-    simp only [qV]; blks; simp [radical_unipotent_rank_one_apply]
+    simp only [qV, Ux3.block3_apply,
+      Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂]
+    simp [radical_unipotent_rank_one_apply]
   ·
     cases b' using Fin.cases with
-    | zero => simp only [qV, qE']; blks; rw [radical_unipotent_middle_last]; rfl
-    | succ b' => simp only [qV, qS]; blks; rw [rc_V]; rfl
+    | zero =>
+      simp only [qV, qE', Ux3.block3_apply,
+        Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂, Matrix.fromBlocks_apply₁₂, Matrix.fromRows_apply_inr]
+      rw [radical_unipotent_middle_last]; rfl
+    | succ b' =>
+      simp only [qV, qS, Ux3.block3_apply,
+        Matrix.fromBlocks_apply₁₂, Matrix.fromRows_apply_inr]
+      rw [rc_V]; rfl
   ·
     cases b using Fin.cases with
     | zero =>
       cases a' using Fin.lastCases with
-      | last => simp only [qE', qE]; blks; simp [radical_unipotent_rank_one_apply]
-      | cast a' => simp only [qE', qX]; blks; simp
+      | last =>
+        simp only [qE', qE, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂, Matrix.fromBlocks_apply₂₁, Matrix.fromCols_apply_inl]
+        simp [radical_unipotent_rank_one_apply]
+      | cast a' =>
+        simp only [qE', qX, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₁, Matrix.fromCols_apply_inl]
+        simp
     | succ b =>
       cases a' using Fin.lastCases with
-      | last => simp only [qS, qE]; blks; simp
-      | cast a' => simp only [qS, qX]; blks; simp
+      | last =>
+        simp only [qS, qE, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₂₁, Matrix.fromCols_apply_inr, Matrix.fromCols_apply_inl]
+        simp
+      | cast a' =>
+        simp only [qS, qX, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₂₁, Matrix.fromCols_apply_inl]
+        simp
   ·
     cases b using Fin.cases with
-    | zero => simp only [qE', qV]; blks; simp [radical_unipotent_rank_one_apply]
-    | succ b => simp only [qS, qV]; blks; simp
+    | zero =>
+      simp only [qE', qV, Ux3.block3_apply,
+        Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂, Matrix.fromBlocks_apply₂₁, Matrix.fromCols_apply_inr]
+      simp [radical_unipotent_rank_one_apply]
+    | succ b =>
+      simp only [qS, qV, Ux3.block3_apply,
+        Matrix.fromBlocks_apply₂₁, Matrix.fromCols_apply_inr]
+      simp
   ·
     cases b using Fin.cases with
     | zero =>
       cases b' using Fin.cases with
-      | zero => simp only [qE']; blks; rw [conj_inverse_block_apply, rev_zero', block_two_apply_last_last]; simp [radical_unipotent_rank_one_apply]
+      | zero =>
+        simp only [qE', Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₂₂]
+        rw [conj_inverse_block_apply, rev_zero', block_two_apply_last_last]; simp [radical_unipotent_rank_one_apply]
       | succ b' =>
-        simp only [qE', qS]; blks
+        simp only [qE', qS, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₁₂, Matrix.fromRows_apply_inr, Matrix.fromBlocks_apply₂₂]
         rw [rc_E', conj_inverse_block_apply, rev_zero', rev_succ', block_two_apply_last_castSucc]
         simp [aC]
     | succ b =>
       cases b' using Fin.cases with
-      | zero => simp only [qS, qE']; blks; rw [conj_inverse_block_apply, rev_zero', rev_succ', block_two_apply_castSucc_last]; simp
+      | zero =>
+        simp only [qS, qE', Ux3.block3_apply,
+          Matrix.fromBlocks_apply₂₁, Matrix.fromCols_apply_inr, Matrix.fromBlocks_apply₂₂]
+        rw [conj_inverse_block_apply, rev_zero', rev_succ', block_two_apply_castSucc_last]; simp
       | succ b' =>
-        simp only [qS]; blks
+        simp only [qS, Ux3.block3_apply,
+          Matrix.fromBlocks_apply₂₂]
         rw [conj_inverse_block_apply, rev_succ', rev_succ', block_two_apply_castSucc_castSucc]
         simp [Matrix.one_apply, Fin.rev_inj]
 
@@ -543,20 +599,24 @@ theorem M2 (H : Matrix (Fin j) (Fin j) ℂ) (hH : IsUnit H.det) (c : ℂ) (hc : 
   intro p q
   rw [castM_apply]
   simp only [U.mMap]
-  rcases p with ((a | v) | b) <;> rcases q with ((a' | v') | b')
-  · cases a using Fin.lastCases <;> cases a' using Fin.lastCases <;> simp only [qE, qX] <;> blks <;> simp
-  · cases a using Fin.lastCases <;> simp only [qE, qX, qV] <;> blks <;> simp
-  · cases a using Fin.lastCases <;> cases b' using Fin.cases
-    all_goals (simp only [qE, qE', qX, qS]; blks; simp only [mul_w_apply, rev_zero', rev_succ', block_two_apply_last_last,
-      block_two_apply_castSucc_last, block_two_apply_last_castSucc, block_two_apply_castSucc_castSucc, Fin.last_zero]; try simp)
-  · cases a' using Fin.lastCases <;> simp only [qV, qE, qX] <;> blks <;> simp
-  · simp only [qV]; blks
-  · cases b' using Fin.cases <;> simp only [qV, qE', qS] <;> blks <;> simp
-  · cases b using Fin.cases <;> cases a' using Fin.lastCases
-    all_goals (simp only [qE, qE', qX, qS]; blks; simp only [W_apply, rev_zero', rev_succ', block_two_apply_last_last,
-      block_two_apply_castSucc_last, block_two_apply_last_castSucc, block_two_apply_castSucc_castSucc, Fin.last_zero]; try simp [Z1])
-  · cases b using Fin.cases <;> simp only [qE', qS, qV] <;> blks <;> simp
-  · cases b using Fin.cases <;> cases b' using Fin.cases <;> simp only [qE', qS] <;> blks <;> simp
+  rcases p with ((a | v) | b) <;> first
+    | cases a using Fin.lastCases
+    | cases b using Fin.cases
+    | skip
+  all_goals
+    rcases q with ((a' | v') | b') <;> first
+      | cases a' using Fin.lastCases
+      | cases b' using Fin.cases
+      | skip
+  all_goals
+    simp only [qE, qE', qX, qS, qV, Ux3.block3_apply, Matrix.fromBlocks_apply₁₁,
+      Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂,
+      Matrix.fromRows_apply_inl, Matrix.fromRows_apply_inr, Matrix.fromCols_apply_inl,
+      Matrix.fromCols_apply_inr, Matrix.zero_apply] <;>
+      simp only [mul_w_apply, W_apply, rev_zero', rev_succ', block_two_apply_last_last,
+        block_two_apply_castSucc_last, block_two_apply_last_castSucc,
+        block_two_apply_castSucc_castSucc, Fin.last_zero] <;>
+      simp [Z1]
 
 end M2
 

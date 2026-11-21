@@ -60,7 +60,8 @@ theorem kap_nabs (f : Ty P → ℂ) : kap P f * nabsA P = nabsA P * kap P f := k
 theorem star_kap (f : Ty P → ℂ) : star (kap P f) = kap P (fun π => star (f π)) := by
   rw [kap_eq, kap_eq, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose]
   congr 1
-  rw [Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one, star_smul, star_one]
+  funext π
+  simp only [Pi.star_apply, Algebra.algebraMap_eq_smul_one, star_smul, star_one]
 
 theorem S_shift (l : ℕ) (f g : Ty P → ℂ) (h : ∀ π π', Up P l π π' → g π' = f π) :
     kap P g * SS P l = SS P l * kap P f := by
@@ -1054,6 +1055,8 @@ theorem comm_term (j : ℕ) (f f' : Ty P → ℂ) (hs : ∀ π π', Up P j π π
     rw [← sub_mul, ← map_sub, ← mul_assoc, kap_mul]
   rw [e1, e2, e3, ← sub_mul, ← map_sub, ← smul_mul_assoc, ← smul_mul_assoc, ← map_smul, ← map_smul]
   congr 2
+  funext π
+  simp only [Pi.smul_apply, Pi.sub_apply, Pi.mul_apply, smul_eq_mul]
   linear_combination hf π
 
 theorem comm_sum (f : Ty P → ℂ) (f' : ℕ → Ty P → ℂ) (c u v : ℂ)
@@ -1320,7 +1323,8 @@ theorem T_eq (hP : P.OK) (hN : SSNorm) (u : ℂ) {l : ℕ} (hl : l ∈ Icc 1 (P.
       rw [Pi.mul_apply, Pi.mul_apply, xEx_up P h {l} (by simp), rr_up_same P hl h]
   rw [E_Ss, mul_assoc, ← mul_assoc (kap P _) (kap P _), kap_mul, h1, ← mul_assoc, (hN P hP l hl).1, kap_mul]
   congr 1
-  rw [div_eq_mul_inv, mul_assoc]
+  funext π
+  simp only [Pi.mul_apply, rr1, div_eq_mul_inv, mul_assoc]
 
 theorem upper_sum_mul_lambda (hP : P.OK) {u : ℂ} (hu : Good P u) (hN : SSNorm) :
     S12 P u * abelian₂ P u = S4 P u + kap P fun π => ∑ l ∈ Icc 1 (P.k - 1),
@@ -1373,7 +1377,8 @@ theorem Lam4 (hP : P.OK) (u v : ℂ) (hN : SSNorm) (hM : SSMixed) :
       rw [mul_assoc, ← mul_assoc (SS P i), (hN P hP i hi).2, kap_mul, kap_mul, mul_assoc]
     rw [h1, h2, ← map_sub]
     congr 1
-    rw [div_eq_mul_inv, div_eq_mul_inv, mul_inv, mul_inv]
+    funext π
+    simp only [Pi.sub_apply, Pi.mul_apply, rr, rr1, div_eq_mul_inv, mul_inv]
     ring
   · intro j hj hne
     rw [sub_eq_zero, hlam j hj]
@@ -1655,9 +1660,13 @@ theorem mixed_relation_diagonal_four (hN : SSNorm) (hM : SSMixed) (hS : NabSS) (
   have e3 : dA P v * (ggA P * kap P fun π => xC P π u) = kap P fun π => qC P v * (xC P π (v + 1))⁻¹ * xC P π u := by
     rw [dA, smul_mul_assoc, mul_assoc, lc (kap_g P _), lc1 (Gg P), kap_mul, ← map_smul]
     congr 1
+    funext π
+    simp only [Pi.smul_apply, Pi.mul_apply, smul_eq_mul, mul_assoc]
   have e4 : (ggA P * kap P fun π => xC P π v) * dA P u = kap P fun π => xC P π v * (qC P u * (xC P π (u + 1))⁻¹) := by
     rw [dA, mul_smul_comm, mul_assoc, lc (kap_G P _), lc1 (gG P), kap_mul, ← map_smul]
     congr 1
+    funext π
+    simp only [Pi.smul_apply, Pi.mul_apply, smul_eq_mul, mul_left_comm]
   rw [e3, e4, kap_mul, kap_mul, ← map_sub]
   congr 1
   funext π

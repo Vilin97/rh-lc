@@ -66,8 +66,8 @@ private theorem dli_comm {A B F : Type} [CommRing A] [IsLocalRing A] [IsAdicComp
   have hrad : x - x ^ 2 ∈ K.radical := by
     rw [Ideal.radical_eq_sInf, Ideal.mem_sInf]
     rintro P ⟨hKP, hP⟩
-    refine hy P (Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := A) P ?_)
-    have : maximalIdeal A = P.comap (algebraMap A B) :=
+    refine hy P (Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := A) P ?_)
+    have : maximalIdeal A = P.under A :=
       (maximalIdeal.isMaximal A).eq_of_le (Ideal.comap_ne_top _ hP.ne_top) (Ideal.map_le_iff_le_comap.1 hKP)
     rw [← this]; exact maximalIdeal.isMaximal A
   obtain ⟨n, hn⟩ := hrad
@@ -90,7 +90,7 @@ private theorem dli_comm {A B F : Type} [CommRing A] [IsLocalRing A] [IsAdicComp
       ring)
   have he2 : e * e - e = 0 := by simpa [sq] using he
   refine ⟨e, sub_eq_zero.1 he2, ?_⟩
-  have hu : IsUnit ((e - a) * (-(e - a)) + 1) := Ideal.mem_jacobson_bot.1 (HenselianRing.jac he') _
+  have hu : IsUnit ((e - a) * (-(e - a)) + 1) := Ring.mem_jacobson_iff.1 (HenselianRing.jac he') _
   have hk : a ^ 2 - a ∈ RingHom.ker φ := by
     rw [RingHom.mem_ker, map_sub, map_pow, hφa, sq, hx.eq, sub_self]
   have hd : (e - a) * ((e - a) * (-(e - a)) + 1) ∈ RingHom.ker φ := by

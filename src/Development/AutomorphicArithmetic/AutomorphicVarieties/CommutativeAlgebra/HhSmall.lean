@@ -17,7 +17,7 @@ private theorem expand_small {O : Type} [CommRing O] [IsLocalRing O] {ι : Type}
       Ideal.mul_mem_mul ((res_eq_zero_iff O R x).1 hx) hy
     rwa [hs, Ideal.mem_bot] at this
   have z1 : ∀ a b, p (Z a b) = 0 := fun a b => congrFun (congrFun hZ a) b
-  have z2 : ∀ a b, res O R (Z a b) = 0 := fun a b => by rw [← res_map p, z1, map_zero]
+  have z2 : ∀ a b, res O R (Z a b) = 0 := fun a b => by rw [← res_map O R p, z1, map_zero]
   have h1 : ∀ a b, res O R ((h - 1) a b) = 0 := fun a b => by
     have := congrFun (congrFun hh a) b
     simp only [map_apply] at this
@@ -29,11 +29,11 @@ private theorem expand_small {O : Type} [CommRing O] [IsLocalRing O] {ι : Type}
       Aᵀ * J * B = 0 ∧ Bᵀ * J * A = 0 := fun A B hA hB => by
     constructor
     · ext a b
-      simp only [mul_apply, transpose_apply, Matrix.zero_apply, Finset.sum_mul]
+      simp only [Matrix.mul_apply, transpose_apply, Matrix.zero_apply, Finset.sum_mul]
       refine Finset.sum_eq_zero fun c _ => Finset.sum_eq_zero fun d _ => ?_
       rw [mul_right_comm, k _ _ (hA _ _) (hB _ _), zero_mul]
     · ext a b
-      simp only [mul_apply, transpose_apply, Matrix.zero_apply, Finset.sum_mul]
+      simp only [Matrix.mul_apply, transpose_apply, Matrix.zero_apply, Finset.sum_mul]
       refine Finset.sum_eq_zero fun c _ => Finset.sum_eq_zero fun d _ => ?_
       rw [mul_right_comm, mul_comm (B _ _), k _ _ (hA _ _) (hB _ _), zero_mul]
   constructor
@@ -100,7 +100,7 @@ theorem UpperTheory.V.Alg.hh_small :
     have E3 : ∀ a b, Φ.blk b ≠ Φ.σ (Φ.blk a) → E a b = 0 := fun a b e => by
       have : Φ.JR R a b = 0 := by_contra fun n => e (jb a b n)
       rw [hE, Matrix.sub_apply, this, sub_zero]
-      simp only [mul_apply, transpose_apply, Finset.sum_mul]
+      simp only [Matrix.mul_apply, transpose_apply, Finset.sum_mul]
       refine Finset.sum_eq_zero fun c _ => Finset.sum_eq_zero fun d _ => ?_
       by_cases e1 : Φ.blk d = Φ.blk a
       · by_cases e2 : Φ.blk c = Φ.blk b
@@ -112,7 +112,7 @@ theorem UpperTheory.V.Alg.hh_small :
     have Z1 : Φ.JR R * Z0 = (-u) • E := by rw [hZ0, ← mul_assoc, hK, one_mul]
     have Z2 : ∀ a b, p (Z0 a b) = 0 := fun a b => by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hZ0, mul_apply, map_sum]
+        rw [hZ0, Matrix.mul_apply, map_sum]
       refine Finset.sum_eq_zero fun c _ => ?_
       have : p (E c b) = 0 := congrFun (congrFun E1 c) b
       simp [this]
@@ -123,13 +123,13 @@ theorem UpperTheory.V.Alg.hh_small :
     have Z4 : Φ.JR R * Z = (-u) • E := by
       ext a b
       by_cases e : Φ.blk b = Φ.σ (Φ.blk a)
-      · rw [← Z1, mul_apply, mul_apply]
+      · rw [← Z1, Matrix.mul_apply, Matrix.mul_apply]
         refine Finset.sum_congr rfl fun c _ => ?_
         by_cases n : Φ.JR R a c = 0
         · simp [n]
         · have : Φ.blk c = Φ.blk b := by rw [e]; exact jb a c n
           simp [Z, this]
-      · rw [Matrix.smul_apply, E3 a b e, smul_zero, mul_apply]
+      · rw [Matrix.smul_apply, E3 a b e, smul_zero, Matrix.mul_apply]
         refine Finset.sum_eq_zero fun c _ => ?_
         by_cases n : Φ.JR R a c = 0
         · simp [n]

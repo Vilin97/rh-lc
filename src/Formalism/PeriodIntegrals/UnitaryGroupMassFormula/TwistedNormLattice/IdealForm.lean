@@ -61,6 +61,7 @@ theorem comb_mem (b : Fin n → Fin n → E) (hbM : ∀ l, Mm (b l)) (w : Fin n 
   exact Finset.sum_induction _ Mm (fun a b ha hb => Madd a b ha hb) h0
     (fun l _ => Msmul _ _ (hw l) (hbM l))
 
+include Madd Msmul Mlam in
 
 theorem herm (hp : (Ideal.absNorm P.asIdeal).Prime)
     (hq : ((Ideal.absNorm P.asIdeal : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) (j : ℕ)

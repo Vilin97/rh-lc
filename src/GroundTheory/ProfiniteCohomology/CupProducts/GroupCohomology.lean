@@ -37,10 +37,11 @@ theorem inflation_π (A : Rep.{u} k G) [IsDiscreteRep A]
 
 theorem cochainOf_cocycleι_cyclesMap_inflationCochains (A : Rep.{u} k G) [IsDiscreteRep A]
     (z : groupCohomology.cocycles (A.quotientToInvariants (U : Subgroup G)) p) :
-    cochainOf A (cocycleι A p (HomologicalComplex.cyclesMap (inflationCochains A U) p z)) =
+    cochainOf (A := A) (cocycleι (A := A) (p := p)
+      (HomologicalComplex.cyclesMap (inflationCochains A U) p z)) =
       fun g => (groupCohomology.iCocycles (A.quotientToInvariants (U : Subgroup G)) p z
         (fun i => (g i : G ⧸ (U : Subgroup G))) : A) :=
-  congrArg (fun ψ => cochainOf A (ψ.hom z))
+  congrArg (fun ψ => cochainOf (A := A) (ψ.hom z))
     (HomologicalComplex.cyclesMap_i (inflationCochains A U) p)
 
 theorem inflationCochains_comp_cochainsMap {A A' : Rep.{u} k G} [IsDiscreteRep A]
@@ -73,7 +74,7 @@ variable (A B : Rep.{u} k G) [IsDiscreteRep A] [IsDiscreteRep B]
 theorem cup_inflation (h : p + q = n)
     (x : groupCohomology (A.quotientToInvariants (U : Subgroup G)) p)
     (y : groupCohomology (B.quotientToInvariants (U : Subgroup G)) q) :
-    cup h (inflation A U p x) (inflation B U q y) =
+    GroundTheory.ProfCoh.cup h (inflation A U p x) (inflation B U q y) =
       inflation (A ⊗ B) U n (groupCohomology.map (MonoidHom.id _)
         (invariantsTensorHom A B (U : Subgroup G)) n (GroundTheory.GroupCoh.cupH h x y)) := by
   refine groupCohomology_induction_on x fun x => ?_

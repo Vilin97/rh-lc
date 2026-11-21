@@ -26,13 +26,12 @@ instance geomConn_id (S : Scheme.{0}) : GeometricallyConnected (𝟙 S) := by
 
 def trivLB (X : Scheme.{0}) : LB X := ⟨PUnit, fun _ => ⊤, fun _ _ => 1⟩
 
-theorem trivLB_isLB (X : Scheme.{0}) : (trivLB X).IsLB where
-  cover := by simp [trivLB]
-  g_self := by
-    intro i
+theorem trivLB_isLB (X : Scheme.{0}) : (trivLB X).IsLB := by
+  refine ⟨?_, ?_, ?_⟩
+  · simp [trivLB]
+  · intro i
     exact (res _).map_one
-  cocycle := by
-    intro i j k
+  · intro i j k
     refine (congrArg₂ (· * ·) (res _).map_one (res _).map_one).trans ?_
     exact (_root_.one_mul _).trans (res _).map_one.symm
 

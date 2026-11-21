@@ -227,15 +227,13 @@ theorem isUnit_qO : IsUnit (qO p) := by
   refine IsUnit.map _ (IsUnit.of_mul_eq_one (HahnSeries.single (-1 : ℤ) (1 : ℤ_[p])) ?_)
   rw [HahnSeries.single_mul_single]; simp [HahnSeries.single_zero_one]
 
-theorem isClo_algebraicClosure : IsClo p (AlgebraicClosure (FractionRing (O0 p))) where
-  inj := by
-    rw [IsScalarTower.algebraMap_eq (O0 p) (FractionRing (O0 p))]
+theorem isClo_algebraicClosure : IsClo p (AlgebraicClosure (FractionRing (O0 p))) := by
+  refine ⟨?_, ?_, inferInstance⟩
+  · rw [IsScalarTower.algebraMap_eq (O0 p) (FractionRing (O0 p))]
     exact (algebraMap (FractionRing (O0 p)) _).injective.comp (IsFractionRing.injective _ _)
-  alg := by
-    exact IsFractionRing.comap_isAlgebraic_iff.mpr
+  · exact IsFractionRing.comap_isAlgebraic_iff.mpr
       (inferInstance : Algebra.IsAlgebraic (FractionRing (O0 p))
         (AlgebraicClosure (FractionRing (O0 p))))
-  clo := inferInstance
 
 end Ring
 

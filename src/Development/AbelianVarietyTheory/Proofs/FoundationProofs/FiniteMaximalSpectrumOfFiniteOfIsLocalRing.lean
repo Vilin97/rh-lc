@@ -225,9 +225,10 @@ theorem existsUnique_idempotent_lift_of_henselian (R : Type*) {S C : Type*} [Com
 
 theorem henselianRing_of_finite (R : Type*) {S : Type*} [CommRing R]
     [HenselianLocalRing R] [CommRing S] [Algebra R S] [Module.Finite R S] (J : Ideal S)
-    (hJ : J ≤ (⊥ : Ideal S).jacobson) : HenselianRing S J where
-  jac := Ideal.jacobson_bot (R := S) ▸ hJ
-  is_henselian f hf a₀ h₁ h₂ := by
+    (hJ : J ≤ (⊥ : Ideal S).jacobson) : HenselianRing S J := by
+  have hJac : J ≤ Ring.jacobson S := Ideal.jacobson_bot (R := S) ▸ hJ
+  refine ⟨hJac, ?_⟩
+  · intro f hf a₀ h₁ h₂
     nontriviality S using Subsingleton.elim _ (0 : S)
     obtain ⟨u, hu⟩ := (isUnit_of_isUnit_mk_of_le_jacobson hJ h₂).exists_left_inv
     set g := f /ₘ (X - C a₀) with hg
@@ -278,7 +279,7 @@ theorem henselianRing_of_finite (R : Type*) {S : Type*} [CommRing R]
       rwa [← mul_add, add_sub_cancel] at this
     let μ : T →ₗ[S] T := LinearMap.mulRight S e
     have hle : (⊤ : Submodule S T).map μ ≤ Submodule.span S {e} := by
-      refine Submodule.le_of_le_smul_of_le_jacobson_bot (Module.Finite.fg_top.map _) hJ ?_
+      refine Submodule.le_of_le_smul_of_le_jacobson (Module.Finite.fg_top.map _) hJac ?_
       rintro _ ⟨y, -, rfl⟩
       obtain ⟨p, rfl⟩ := AdjoinRoot.mk_surjective y
       rw [← AdjoinRoot.aeval_eq]

@@ -23,3 +23,5 @@ theorem _root_.GlobalTheory.T.sections_finite_flat_rank_of_isFinite_flat : ∀ (
   rw [hr] at e
   rw [← Scheme.Hom.finrank_SpecMap_algebraMap]
   exact e
+
+end

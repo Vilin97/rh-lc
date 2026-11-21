@@ -230,7 +230,7 @@ theorem decGen (hA : ATL) (hS : ValSlice) [IsPrincipalIdealRing O] [Fintype G] [
   · intro j x hx
     rw [MvPolynomial.mem_supported]
     intro v hv
-    obtain ⟨d, hd, hvd⟩ := (MvPolynomial.mem_vars v).mp hv
+    obtain ⟨d, hd, hvd⟩ := (MvPolynomial.mem_vars_iff_mem_support v).mp hv
     obtain ⟨mo, -, rfl⟩ := Finset.mem_image.mp (hx.1 d hd)
     unfold partOf at hvd
     rw [Finsupp.mem_support_iff, Finsupp.filter_apply] at hvd
@@ -253,7 +253,7 @@ theorem decGen (hA : ATL) (hS : ValSlice) [IsPrincipalIdealRing O] [Fintype G] [
           fun q hq => (hv j q hq).trans (hvals M hM q.1 (hCv j q hq)).1,
           fun q hq => (hvals M hM q.1 (hCl j q hq)).2.trans (hl j q hq)⟩
         · intro v hv
-          have hvars : v ∈ (cM M).vars := (MvPolynomial.mem_vars v).mpr ⟨mo, hmo, hv⟩
+          have hvars : v ∈ (cM M).vars := (MvPolynomial.mem_vars_iff_mem_support v).mpr ⟨mo, hmo, hv⟩
           exact (MvPolynomial.mem_supported.mp (hcM M hM)) hvars
         · intro v hv
           exact hMs M hM v hv

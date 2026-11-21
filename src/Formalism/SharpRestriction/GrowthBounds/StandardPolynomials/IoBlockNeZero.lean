@@ -199,7 +199,8 @@ theorem ioBlock_ne_zero (hp : 0 < X.p) (j : Fin (numSeg X.TT)) (b : SegBlock (se
   intro h
   apply hu
   ext μ
-  rw [← ioBlock_coeff hp j b u μ, h, coeff_zero, coeff_zero]
+  rw [← ioBlock_coeff hp j b u μ, h]
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
 
 theorem ioD_ne_zero (hp : 0 < X.p) {mu : ℝ} (β : GlobalTheory X) (j : Fin (numSeg X.TT))
     {u : MvPolynomial (BVar (2 * segS X.TT j + 1) X.m (BDk C0 CE1 CE2 mu X β j).T.t) (KK O)} (hu : u ≠ 0) :

@@ -71,13 +71,12 @@ structure IsUnif (ϖ : O) : Prop where
   denom : ∀ x : A, ∃ n : ℕ, ϖ ^ n • x ∈ As O A
 
 theorem isUnif_of_field (K : Type*) [Field K] [Algebra O K] [IsFractionRing O K] [Algebra K A]
-    [IsScalarTower O K A] [Algebra.IsIntegral K A] {ϖ : O} (hϖ : Irreducible ϖ) : IsUnif (A := A) ϖ where
-  irreducible := hϖ
-  isUnit := by
-    rw [IsScalarTower.algebraMap_apply O K A]
+    [IsScalarTower O K A] [Algebra.IsIntegral K A] {ϖ : O} (hϖ : Irreducible ϖ) : IsUnif (A := A) ϖ := by
+  refine ⟨hϖ, ?_, ?_⟩
+  · rw [IsScalarTower.algebraMap_apply O K A]
     refine IsUnit.map _ (IsUnit.mk0 _ ?_)
     exact (map_ne_zero_iff _ (IsFractionRing.injective O K)).2 hϖ.ne_zero
-  denom := fun x => by
+  · intro x
     obtain ⟨⟨d, hd⟩, hint⟩ := IsIntegral.exists_multiple_integral_of_isLocalization
       (nonZeroDivisors O) x (Algebra.IsIntegral.isIntegral (R := K) x)
     obtain ⟨n, u, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible

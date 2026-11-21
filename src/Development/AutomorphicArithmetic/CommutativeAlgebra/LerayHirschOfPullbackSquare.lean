@@ -123,8 +123,15 @@ private theorem core {q : ℕ} [NeZero q] (N : ℕ) (hN : 1 ≤ N) {E X Y B : Sp
       rw [pull_cast, cup_cast_left, ht_cast_cast]
       rfl
     · simp only [y1]
+      have sum_apply {A B : Type 1} [AddCommMonoid A] [AddCommMonoid B]
+          {ι : Type} (s : Finset ι) (f : ι → A →+ B) (x : A) :
+          (s.sum f) x = s.sum (fun j => f j x) := by
+        classical
+        induction s using Finset.induction_on with
+        | empty => simp
+        | insert a s ha ih => simp [ha, ih]
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_sum, map_sum, AddMonoidHom.finset_sum_apply, ht_cast_sum]
+        rw [map_sum, map_sum, sum_apply, ht_cast_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [pull_cast, cup_cast_left, ht_cast_cast]
       exact (step_term p ξX (pull _ β _ _ ξY) hX hrel _ k _ _ _ _).symm)

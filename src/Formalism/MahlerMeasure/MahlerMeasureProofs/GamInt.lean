@@ -210,7 +210,7 @@ variable {p : ℕ} [hp : Fact p.Prime]
 
 theorem vchoose_le {t k T B : ℕ} (ht : t ≤ T) (hB : Nat.log p T ≤ B) :
     padicValNat p (t.choose k) ≤ B := by
-  rw [← Nat.factorization_def _ hp.out]
+  rw [Nat.padicValNat_def, ← Nat.factorization_def _ hp.out]
   exact Nat.factorization_choose_le_log.trans ((Nat.log_mono_right ht).trans hB)
 
 theorem vfact_split {a b T B : ℕ} (h : a + b ≤ T) (hB : Nat.log p T ≤ B) :
@@ -228,7 +228,7 @@ theorem vfact_sum {ι : Type} (s : Finset ι) (α : ι → ℕ) {T B : ℕ} (h :
     padicValNat p (∑ i ∈ s, α i).factorial ≤ ∑ i ∈ s, padicValNat p (α i).factorial + s.card * B := by
   classical
   induction s using Finset.induction_on with
-  | empty => simp
+  | empty => simp [Nat.padicValNat_def]
   | insert a s ha ih =>
     rw [sum_insert ha] at h ⊢
     rw [sum_insert ha, card_insert_of_notMem ha]
@@ -243,7 +243,7 @@ theorem vdesc_ge (x a : ℕ) (ha : a ≤ x) :
   omega
 
 theorem norm_nat_eq (t : ℕ) (ht : t ≠ 0) : ‖(t : ℚ_[p])‖ = (p : ℝ) ^ (-(padicValNat p t : ℤ)) := by
-  rw [Padic.norm_eq_zpow_neg_valuation (by exact_mod_cast ht), Padic.valuation_natCast]
+  rw [Padic.norm_eq_zpow_neg_valuation (by exact_mod_cast ht), Padic.valuation_natCast, Nat.padicValNat_def]
 
 theorem p_real_one_le : (1 : ℝ) ≤ p := by exact_mod_cast hp.out.one_lt.le
 
@@ -472,14 +472,16 @@ theorem Dop_pow_monomial_add (u v : σ) (huv : u ≠ v) (a : ℕ) (δ : σ →�
 
 theorem Dop_pow_monomial_lt (u v : σ) (huv : u ≠ v) (a : ℕ) (γ : σ →₀ ℕ) (h : ℚ_[p]) (hlt : γ u < a) :
     (Dop u v ^ a) (monomial γ h) = 0 := by
-  ext β
-  rw [coeff_Dop_pow u v huv, coeff_monomial, coeff_zero]
+  apply MvPolynomial.ext
+  intro β
+  rw [coeff_Dop_pow u v huv, coeff_monomial]
   have : γ ≠ β + a • (Finsupp.single u 1 + Finsupp.single v 1) := by
     intro h'
     have := congrArg (fun f : σ →₀ ℕ => f u) h'
     simp [Finsupp.single_apply, huv] at this
     omega
-  rw [if_neg this]; ring
+  rw [if_neg this]
+  simp [AddMonoidAlgebra.coeff_zero]
 
 theorem pderiv_X_pow_mul (i y : σ) (hiy : i ≠ y) (m : ℕ) (G : MvPolynomial σ ℚ_[p]) :
     pderiv i (X y ^ m * G) = X y ^ m * pderiv i G := by
@@ -558,11 +560,11 @@ theorem FT_pow_coeff_norm (hwe : ∀ c, w c ≠ e c) (Tb B : ℕ) (hB : Nat.log 
   | empty =>
     intro b _ β
     rcases Nat.eq_zero_or_pos b with rfl | hb
-    · simpa using hG β
+    · simpa [Nat.padicValNat_def] using hG β
     · have : FT (p := p) w e (∅ : Finset (Fin r)) = 0 := by simp [FT]
       rw [this, zero_pow hb.ne']
-      simp only [LinearMap.zero_apply, coeff_zero, norm_zero]
-      exact mul_nonneg hK (zpow_pos' _).le
+      simp only [LinearMap.zero_apply, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, norm_zero]
+      exact mul_nonneg hK (zpow_pos' (p := p) _).le
   | insert c T hc ih =>
     intro b hb β
     rw [FT_insert w e c T hc, (FT_commute w e (w c) (e c) T).add_pow b, LinearMap.sum_apply, coeff_sum]
@@ -1010,7 +1012,7 @@ theorem v_prod {ι : Type} (s : Finset ι) (f : ι → ℕ) (hf : ∀ i ∈ s, f
     padicValNat p (∏ i ∈ s, f i) = ∑ i ∈ s, padicValNat p (f i) := by
   classical
   induction s using Finset.induction_on with
-  | empty => simp
+  | empty => simp [Nat.padicValNat_def]
   | insert a s ha ih =>
     rw [prod_insert ha, sum_insert ha, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (hf a (mem_insert_self _ _))
       (Finset.prod_ne_zero_iff.mpr (fun i hi => hf i (mem_insert_of_mem hi))),

@@ -11,7 +11,7 @@ open Polynomial
 private theorem qr_fix {F k : Type} [Field F] [Field k] [Fintype F] (ι : F →+* k) (q : ℕ)
     (hF : Fintype.card F = q) (hq : 1 < q) (x : k) (hx : x ^ q = x) : ∃ y, ι y = x := by
   classical
-  have hP : (X ^ q - X : k[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero k hq
+  have hP : (X ^ q - X : k[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hq
   have hroot : ∀ z : k, z ^ q = z → z ∈ (X ^ q - X : k[X]).roots.toFinset := by
     intro z hz
     rw [Multiset.mem_toFinset, mem_roots hP, IsRoot, eval_sub, eval_pow, eval_X, hz, sub_self]
@@ -88,7 +88,7 @@ private theorem qr_root {F k : Type} [Field F] [Field k] [Fintype k] (ι : F →
   have h1q : 1 < Fintype.card k := by
     have : 1 < p ^ n := Nat.one_lt_pow hn.ne' hp.one_lt
     rw [hk]; nlinarith
-  have hQ0 : (X ^ ((p ^ n) ^ 2) - X : k[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero k (hk ▸ h1q)
+  have hQ0 : (X ^ ((p ^ n) ^ 2) - X : k[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero (hk ▸ h1q)
   have hdvd' : (X ^ 2 + C (ι b) * X + C (ι c) : k[X]) ∣ X ^ ((p ^ n) ^ 2) - X := by
     have h := Polynomial.map_dvd ι hdvd
     simpa using h

@@ -142,7 +142,7 @@ theorem UpperTheory.weilDeligne_unipotent_monodromy :
     exact h.symm
   have hdelta : deltaHalf k (fun a => Fin (d a)) (Pi.mulSingle j u') = 1 := by
     unfold deltaHalf
-    rw [MonoidHom.finset_prod_apply]
+    rw [MonoidHom.finsetProd_apply]
     apply Finset.prod_eq_one
     intro a _
     rw [MonoidHom.comp_apply, Pi.evalMonoidHom_apply]
@@ -156,7 +156,7 @@ theorem UpperTheory.weilDeligne_unipotent_monodromy :
       · rw [Pi.mulSingle_eq_of_ne ha, map_one]
     rw [hdet, map_one]
   have hsplit : π n w - w = (π (n * L⁻¹) (π L w) - π L w) + (π L w - w) := by
-    rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel_right]
+    rw [← mul_apply_eq_comp, ← map_mul, inv_mul_cancel_right]
     abel
   rw [hsplit, map_add (f := _)]
   refine add_mem ?_ ?_

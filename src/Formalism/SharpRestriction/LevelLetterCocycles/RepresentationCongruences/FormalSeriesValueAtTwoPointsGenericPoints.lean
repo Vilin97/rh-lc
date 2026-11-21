@@ -35,7 +35,7 @@ theorem natCast_unit_mul {l : ℕ} [hp : Fact l.Prime] (hl : (l : O) ∈ IsLocal
   have hnd : ¬ l ∣ m := by
     rintro ⟨c, rfl⟩
     apply pow_succ_padicValNat_not_dvd (p := l) hn
-    exact ⟨c, by rw [pow_succ, mul_assoc]; exact hm⟩
+    exact ⟨c, by rw [pow_succ, mul_assoc]; simpa only [Nat.padicValNat_def] using hm⟩
   have hu := isUnit_natCast_sp_complex_sections hl ((Nat.Prime.coprime_iff_not_dvd hp.out).mpr hnd)
   refine ⟨hu.unit, ?_⟩
   have hc : (n : O) = (l : O) ^ padicValNat l n * (m : O) := by

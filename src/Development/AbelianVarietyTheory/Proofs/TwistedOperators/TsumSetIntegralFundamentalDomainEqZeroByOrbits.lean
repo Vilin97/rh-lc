@@ -58,16 +58,16 @@ theorem _root_.GlobalTheory.OrbitUnfold.isFundamentalDomain_iUnion_pull (hF : Is
     (y₀ : Y) {O : Set Y}
     [Countable O] (hO : ∀ γ : Γ, γ • y₀ ∈ O) (σ : O → Γ) (hσ : ∀ a : O, σ a • y₀ = a) :
     IsFundamentalDomain ((MulAction.stabilizer Γ y₀).map Γ.subtype)
-      (⋃ a : O, _root_.GlobalTheory.OrbitUnfold.pull 𝓕 (σ a : H)) ν where
-  nullMeasurableSet := .iUnion fun a => _root_.GlobalTheory.OrbitUnfold.nullMeasurableSet_pull hF _
-  ae_covers := by
+      (⋃ a : O, _root_.GlobalTheory.OrbitUnfold.pull 𝓕 (σ a : H)) ν := by
+  refine ⟨.iUnion (fun a => _root_.GlobalTheory.OrbitUnfold.nullMeasurableSet_pull hF _), ?_, ?_⟩
+  ·
     filter_upwards [hF.ae_covers] with x ⟨γ, hγ⟩
     let a : O := ⟨γ • y₀, hO γ⟩
     have hs : (σ a)⁻¹ * γ ∈ MulAction.stabilizer Γ y₀ := by
       rw [MulAction.mem_stabilizer_iff, mul_smul, inv_smul_eq_iff, hσ a]
     refine ⟨⟨Γ.subtype ((σ a)⁻¹ * γ), Subgroup.mem_map_of_mem _ hs⟩, Set.mem_iUnion.2 ⟨a, ?_⟩⟩
     simpa [_root_.GlobalTheory.OrbitUnfold.pull, Subgroup.smul_def, mul_assoc] using hγ
-  aedisjoint := by
+  ·
     rintro ⟨_, s, hs, rfl⟩ ⟨_, t, ht, rfl⟩ hst
     have hset : ∀ (u : Γ) (hu : u ∈ MulAction.stabilizer Γ y₀) (a : O),
         (⟨Γ.subtype u, Subgroup.mem_map_of_mem _ hu⟩ :

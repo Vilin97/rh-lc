@@ -86,10 +86,10 @@ theorem UpperTheory.V.AlgebraTools.mvPowerSeries_span_monomials :
   intro Λ _ _ _ _ σ _ d w hw
   classical
   set m := IsLocalRing.maximalIdeal Λ with hm
-  have hjac : m.map (algebraMap Λ (MvPowerSeries σ Λ)) ≤ Ideal.jacobson ⊥ := by
+  have hjac : m.map (algebraMap Λ (MvPowerSeries σ Λ)) ≤ Ring.jacobson (MvPowerSeries σ Λ) := by
     rw [Ideal.map_le_iff_le_comap]
     intro r hr
-    rw [Ideal.mem_comap, Ideal.mem_jacobson_bot]
+    rw [Ideal.mem_comap, Ring.mem_jacobson_iff]
     intro y
     have key : ∀ c : Λ, IsUnit (r * c + 1) := by
       intro c
@@ -140,8 +140,8 @@ theorem UpperTheory.V.AlgebraTools.mvPowerSeries_span_monomials :
     rw [Submodule.restrictScalars_top] at h2
     rw [← h2, Submodule.restrictScalars_mem]
     exact h1
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun α _ => ?_
     have e := map_smul (Ideal.Quotient.mkₐ Λ (Ideal.span (Set.range w)))
       (MvPowerSeries.coeff (Finsupp.equivFunOnFinite.symm fun s => (α s : ℕ)) f)

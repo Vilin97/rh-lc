@@ -41,6 +41,8 @@ theorem hsEq : HSEq := by
   have hDh : Dᴴ = D := by
     rw [hD, Matrix.diagonal_conjTranspose]
     congr 1
+    funext i
+    simp [Pi.star_apply, Complex.star_def]
   have hAh : Aᴴ = W * D * Wᴴ := by
     rw [hA, Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, hDh,
       Matrix.mul_assoc]

@@ -29,8 +29,7 @@ private theorem isSubquotient_smInd_congr {G V W : Type} [Group G] [TopologicalS
 open MeasureTheory ValuativeRel in
 open scoped NNReal in
 private theorem blk_points (n : Type) (j : n) :
-    _root_.GlobalTheory.SmGL.blk (_root_.GlobalTheory.SmGL.points n) j = j :=
-  _root_.GlobalTheory.SmGL.blk_apply (_root_.GlobalTheory.SmGL.points n) j ()
+    _root_.GlobalTheory.SmGL.blk (_root_.GlobalTheory.SmGL.points n) j = j := rfl
 
 open MeasureTheory ValuativeRel in
 open scoped NNReal in
@@ -132,12 +131,13 @@ private theorem borelGL_s_eq_leviEmb_points_leviTorus (k : Type) [Field k] [Topo
     [IsTopologicalRing k] [T2Space k] (n : Type) [Fintype n] [DecidableEq n] [LinearOrder n]
     (t : n → kˣ) :
     (_root_.GlobalTheory.LGrp.borelGL k n).s t =
-      _root_.GlobalTheory.SmGL.leviEmb k (_root_.GlobalTheory.SmGL.points n) (_root_.GlobalTheory.SmGL.leviTorus k n t) := by
+      @_root_.GlobalTheory.SmGL.leviEmb k _ n _ _ n LinearOrder.toDecidableEq (fun _ => Unit)
+        _ _ _ (_root_.GlobalTheory.SmGL.points n) (_root_.GlobalTheory.SmGL.leviTorus k n t) := by
   ext i j
   change ((_root_.GlobalTheory.LGrp.diagHom k n t : GL n k) : Matrix n n k) i j = _
   rw [_root_.GlobalTheory.LGrp.diagHom_val]
   simp [_root_.GlobalTheory.SmGL.leviEmb, _root_.GlobalTheory.SmGL.leviTorus, _root_.GlobalTheory.SmGL.points]
-  by_cases h : i = j <;> simp [Matrix.diagonal_apply, h]
+  by_cases h : i = j <;> simp [h]
 
 open MeasureTheory ValuativeRel in
 open scoped NNReal in

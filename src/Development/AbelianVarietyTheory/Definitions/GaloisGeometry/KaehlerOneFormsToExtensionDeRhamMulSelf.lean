@@ -33,6 +33,7 @@ def IsTrDR (T : DR k L →ₗ[k] DR k K) : Prop :=
   ∀ (b : L) (ω : DR k K), T (b • mapDR k K L ω) = Algebra.trace K L b • ω
 
 
+open scoped Classical in
 def trDR : DR k L →ₗ[k] DR k K := if h : ∃ T, IsTrDR k K L T then h.choose else 0
 
 variable {k K L} {ι : Type}

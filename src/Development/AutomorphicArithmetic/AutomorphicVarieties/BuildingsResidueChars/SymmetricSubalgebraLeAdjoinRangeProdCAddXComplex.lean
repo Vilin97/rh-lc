@@ -41,7 +41,7 @@ theorem UpperTheory.symmetricSubalgebra_le_adjoin_range_prod_C_add_X_complex :
     · exact hφ (by simpa using h3)
     · intro b hb hbj
       rw [Finset.mem_range] at hb
-      rw [if_neg (by omega)]
+      exact Finsupp.single_eq_of_ne (by omega)
     · intro h
       exact absurd (Finset.mem_range.2 hj) h
   intro p hp

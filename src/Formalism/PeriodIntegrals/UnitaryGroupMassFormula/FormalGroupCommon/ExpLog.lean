@@ -47,7 +47,7 @@ theorem derivative_log_eq : PowerSeries.derivative (R := K) (PowerSeries.log K) 
       PowerSeries.coeff_one, if_pos rfl]
     simp
   · rw [mul_add, mul_one, map_add (f := _), PowerSeries.coeff_succ_mul_X, PowerSeries.coeff_mk,
-      PowerSeries.coeff_mk, PowerSeries.coeff_one, if_neg (Nat.succ_ne_zero n), ← map_add]
+      PowerSeries.coeff_mk, PowerSeries.coeff_one, if_neg (Nat.succ_ne_zero n)]
     simp [pow_succ]
 
 theorem exp_subst_log :

@@ -166,7 +166,7 @@ noncomputable def invariantSectionsRes {U V : X.Opens} (hU : ∀ g, U ≤ (ρ g)
     (hV : ∀ g, V ≤ (ρ g).asIso.hom ⁻¹ᵁ V) (e : U ≤ V) :
     invariantSections ρ V hV →+* invariantSections ρ U hU :=
   (X.presheaf.map (homOfLE e).op).hom.restrict _ _ fun _ hs ↦
-    mem_invariantSections.mpr ((mem_invariantSections.mp hs).res hU e)
+    (mem_invariantSections ρ).mpr (((mem_invariantSections ρ).mp hs).res hU e)
 
 @[simp]
 theorem coe_invariantSectionsRes {U V : X.Opens} (hU : ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U)
@@ -234,7 +234,7 @@ theorem StableAffineOpens.toOpens_le {U V : StableAffineOpens ρ} (f : U ⟶ V) 
 noncomputable def quotientDiagram : StableAffineOpens ρ ⥤ Scheme.{u} where
   obj U := Spec (.of (invariantSections ρ U.toOpens U.stable))
   map {U V} f := Spec.map (CommRingCat.ofHom
-    (invariantSectionsRes ρ U.stable V.stable (StableAffineOpens.toOpens_le f)))
+    (invariantSectionsRes ρ U.stable V.stable (StableAffineOpens.toOpens_le ρ f)))
   map_id U := by
     rw [← Spec.map_id]
     congr 1
@@ -253,7 +253,7 @@ variable {ρ}
 def basicOpen (U : StableAffineOpens ρ) (r : invariantSections ρ U.toOpens U.stable) :
     StableAffineOpens ρ :=
   ⟨X.basicOpen (r : Γ(X, U.toOpens)), U.isAffineOpen.basicOpen _,
-    (mem_invariantSections.mp r.2).basicOpen_le⟩
+    ((mem_invariantSections ρ).mp r.2).basicOpen_le⟩
 
 noncomputable def toChart (U : StableAffineOpens ρ) :
     Spec Γ(X, U.toOpens) ⟶ (quotientDiagram ρ).obj U :=
@@ -262,7 +262,7 @@ noncomputable def toChart (U : StableAffineOpens ρ) :
 @[reassoc]
 theorem toChart_map {U V : StableAffineOpens ρ} (f : U ⟶ V) :
     U.toChart ≫ (quotientDiagram ρ).map f =
-      Spec.map (X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le f)).op) ≫
+      Spec.map (X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le ρ f)).op) ≫
         V.toChart := by
   dsimp only [toChart, quotientDiagram]
   rw [← Spec.map_comp, ← Spec.map_comp]
@@ -289,12 +289,12 @@ theorem exists_basicOpen_eq {U V : StableAffineOpens ρ} (h : U ≤ V) :
   obtain ⟨f, hf⟩ := h
   obtain ⟨t, ht, hte⟩ :=
     exists_isInvariantSection_basicOpen_eq V.stable f (by rw [hf]; exact U.stable)
-  exact ⟨⟨t, mem_invariantSections.mpr ht⟩, hte.trans hf⟩
+  exact ⟨⟨t, (mem_invariantSections ρ).mpr ht⟩, hte.trans hf⟩
 
 instance isOpenImmersion_map {U V : StableAffineOpens ρ} (f : U ⟶ V) :
     IsOpenImmersion ((quotientDiagram ρ).map f) := by
   obtain ⟨r, hr⟩ := exists_basicOpen_eq f.le
-  have e := StableAffineOpens.toOpens_le f
+  have e := StableAffineOpens.toOpens_le ρ f
   let := (invariantSectionsRes ρ U.stable V.stable e).toAlgebra
   have := isLocalization_invariantSections ρ U.stable V.stable e V.isAffineOpen r hr
   exact IsOpenImmersion.of_isLocalization r
@@ -303,8 +303,8 @@ theorem range_map {U V : StableAffineOpens ρ} (f : U ⟶ V) (r : invariantSecti
     (hr : X.basicOpen (r : Γ(X, V.toOpens)) = U.toOpens) :
     Set.range ((quotientDiagram ρ).map f) =
       (PrimeSpectrum.basicOpen r : Set (PrimeSpectrum (invariantSections ρ V.toOpens V.stable))) := by
-  letI := (invariantSectionsRes ρ U.stable V.stable (toOpens_le f)).toAlgebra
-  have := isLocalization_invariantSections ρ U.stable V.stable (toOpens_le f) V.isAffineOpen r hr
+  letI := (invariantSectionsRes ρ U.stable V.stable (toOpens_le ρ f)).toAlgebra
+  have := isLocalization_invariantSections ρ U.stable V.stable (toOpens_le ρ f) V.isAffineOpen r hr
   exact PrimeSpectrum.localization_away_comap_range (invariantSections ρ U.toOpens U.stable) r
 
 instance isLocallyDirected : (quotientDiagram ρ ⋙ Scheme.forget).IsLocallyDirected where
@@ -316,10 +316,10 @@ instance isLocallyDirected : (quotientDiagram ρ ⋙ Scheme.forget).IsLocallyDir
         U.toOpens ⊓ V.toOpens := by
       rw [Subring.coe_mul, Scheme.basicOpen_mul, hr, hs]
     have hU : W.basicOpen (r * s) ≤ U :=
-      ⟨X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le fU)).op s.1,
+      ⟨X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le ρ fU)).op s.1,
         (X.basicOpen_res _ _).trans ((congrArg _ hs).trans hrs.symm)⟩
     have hV : W.basicOpen (r * s) ≤ V :=
-      ⟨X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le fV)).op r.1,
+      ⟨X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le ρ fV)).op r.1,
         (X.basicOpen_res _ _).trans ((congrArg _ hr).trans ((inf_comm _ _).trans hrs.symm))⟩
     obtain ⟨x, hx⟩ : (quotientDiagram ρ).map fU xU ∈
         Set.range ((quotientDiagram ρ).map (homOfLE hU ≫ fU)) := by
@@ -347,7 +347,7 @@ theorem exists_le_le (U V : StableAffineOpens ρ) {x : X} (hU : x ∈ U.toOpens)
 theorem exists_le_le_pullback (U V : StableAffineOpens ρ)
     (x : ↑(pullback U.isAffineOpen.fromSpec V.isAffineOpen.fromSpec)) :
     ∃ (W : StableAffineOpens ρ) (hU : W ≤ U) (_ : W ≤ V) (y : Spec Γ(X, W.toOpens)),
-      Spec.map (X.presheaf.map (homOfLE (toOpens_le (homOfLE hU))).op) y =
+      Spec.map (X.presheaf.map (homOfLE (toOpens_le ρ (homOfLE hU))).op) y =
         pullback.fst U.isAffineOpen.fromSpec V.isAffineOpen.fromSpec x := by
   have hU : U.isAffineOpen.fromSpec (pullback.fst U.isAffineOpen.fromSpec V.isAffineOpen.fromSpec x)
       ∈ U.toOpens := U.isAffineOpen.range_fromSpec.le ⟨_, rfl⟩
@@ -371,18 +371,18 @@ noncomputable abbrev stableAffineCover : X.OpenCover where
   mem₀ := by
     rw [Scheme.presieve₀_mem_precoverage_iff]
     refine ⟨fun x ↦ ?_, inferInstance⟩
-    obtain ⟨V, hV, hst, hx⟩ := exists_stable_isAffineOpen ρ x
+    obtain ⟨V, hV, hst, hx⟩ := exists_stable_isAffineOpen (ρ := ρ) x
     exact ⟨⟨V, hV, hst⟩, hV.range_fromSpec.ge hx⟩
 
 
 noncomputable instance locallyDirected_stableAffineCover : (stableAffineCover ρ).LocallyDirected where
-  trans f := Spec.map (X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le f)).op)
+  trans f := Spec.map (X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le ρ f)).op)
   trans_id U := by rw [← Spec.map_id]; congr 1; exact X.presheaf.map_id _
   trans_comp f g := by rw [← Spec.map_comp, ← Functor.map_comp]; rfl
   w {U V} f := IsAffineOpen.map_fromSpec V.isAffineOpen U.isAffineOpen _
   property_trans {U V} f :=
     have : IsOpenImmersion (Spec.map (X.presheaf.map
-        (homOfLE (StableAffineOpens.toOpens_le f)).op) ≫ V.isAffineOpen.fromSpec) := by
+        (homOfLE (StableAffineOpens.toOpens_le ρ f)).op) ≫ V.isAffineOpen.fromSpec) := by
       rw [IsAffineOpen.map_fromSpec V.isAffineOpen U.isAffineOpen]; infer_instance
     .of_comp _ V.isAffineOpen.fromSpec
   directed {U V} x := by
@@ -433,7 +433,7 @@ theorem π_preimage_opensRange_chart (U : StableAffineOpens ρ) :
   constructor
   · intro hx
     obtain ⟨y, hy⟩ := hx
-    obtain ⟨V, hV, hst, hxV⟩ := exists_stable_isAffineOpen ρ x
+    obtain ⟨V, hV, hst, hxV⟩ := exists_stable_isAffineOpen (ρ := ρ) x
     let V' : StableAffineOpens ρ := ⟨V, hV, hst⟩
     obtain ⟨x', hx'⟩ := hV.range_fromSpec.ge hxV
     have e : π ρ x = chart ρ V' (V'.toChart x') := by
@@ -451,7 +451,7 @@ theorem π_preimage_opensRange_chart (U : StableAffineOpens ρ) :
       rw [← hx', ← Scheme.Hom.mem_preimage, hV.fromSpec_preimage_basicOpen]
       exact h2
     rw [hr] at h3
-    exact StableAffineOpens.toOpens_le fU h3
+    exact StableAffineOpens.toOpens_le ρ fU h3
   · intro hx
     obtain ⟨x', rfl⟩ := U.isAffineOpen.range_fromSpec.ge hx
     refine ⟨U.toChart x', ?_⟩
@@ -601,7 +601,7 @@ theorem IsAffineQuotient.isAffineOpen_of_preimage [Finite G] {ρ : G →* Aut X}
     rwa [Scheme.basicOpen_res, inf_eq_right.mpr hbW0] at this
   have hbP : b ∈ P := hsP (Ideal.subset_span hbs)
   have hbQ : algebraMap Γ(Y, W) Γ(X, π ⁻¹ᵁ W) b ∈ Q := by
-    rw [← Ideal.mem_comap, hQP]
+    rw [← Ideal.mem_under, hQP]
     exact hbP
   have hx2 : hW.fromSpec ⟨Q, hQ⟩ ∈ X.basicOpen (π.app W b) := hxt
   have hx3 : (⟨Q, hQ⟩ : PrimeSpectrum Γ(X, π ⁻¹ᵁ W)) ∈

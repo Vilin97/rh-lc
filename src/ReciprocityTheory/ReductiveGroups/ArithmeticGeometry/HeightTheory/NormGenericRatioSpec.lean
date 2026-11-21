@@ -64,7 +64,8 @@ theorem norm_generic_ratio_spec (hd : d.AxH 𝒜) (h : d.S1) (c : ι) :
               Algebra.norm (KTf K d.D d.N) (algebraMap (Ω c) (OmS (Ω c) d.D d.N)
                 (ratio (Ω := Ω c) (d.wx x c) (d.w (d.jc c) c)))) := by
   let _ : Algebra (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := (d.KTtoS h c).toAlgebra
-  obtain ⟨n, b, Q0, M, hQ0, hQ0s, hMs, hM⟩ := d.basis_block0 hd h c
+  obtain ⟨n, b, Q0, M, hQ0, hQ0s, hMs, hM⟩ :=
+    ReciprocityTheory.ChartRestriction.G.T0.Data.basis_block0 d hd h c
   let r : Fin (d.N + 1) → OmS (Ω c) d.D d.N := fun j =>
     algebraMap (Ω c) (OmS (Ω c) d.D d.N) (ratio (Ω := Ω c) (d.w j c) (d.w (d.jc c) c))
   let ι0 : KTp K d.D d.N →+* KTf K d.D d.N := algebraMap (KTp K d.D d.N) (KTf K d.D d.N)

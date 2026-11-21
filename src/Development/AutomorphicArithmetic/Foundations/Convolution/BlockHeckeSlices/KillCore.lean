@@ -168,8 +168,8 @@ private theorem core_abs {M : Type} [AddCommGroup M] [Module ℂ M] (S : Set (Up
         simpa only [sub_self, ContinuousLinearMap.zero_apply, norm_zero] using t1
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [ContinuousLinearMap.sub_apply, map_sub, ContinuousLinearMap.sum_apply, map_sum]
-        congr 1
-        exact Finset.sum_congr rfl fun k _ => app_abs S ev L z h hz h4 B hB _ hW' _ (hoff k) _
+          congr 1
+          exact Finset.sum_congr rfl fun k _ => app_abs S ev L z h hz h4 B hB _ hW' _ (hoff k) _
     show A (Y (Q u)) = 0
     rw [← hp, ← ContinuousLinearMap.mul_apply A, ← ContinuousLinearMap.mul_apply, (c1.1.mul_right c1.2).eq,
       ContinuousLinearMap.mul_apply, hq1, map_zero]

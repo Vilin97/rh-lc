@@ -201,13 +201,17 @@ theorem restFunct : RestFunct := by
   let T : Vsp R.Kf lam0 ≃ₗ[R.Kf] Vsp R.Kf lam0 :=
     LinearEquiv.ofLinearMap ((fuTT lam0 γ).restrict (hV γ)) ((fuTT lam0 fun s => (γ s)⁻¹).restrict (hV _))
       (by
-        ext x
+        apply LinearMap.ext
+        intro x
+        apply Subtype.ext
         have := fuTT_inv lam0 (fun s => (γ s)⁻¹) (x : MvPolynomial (Fin n' × (Fin (m + 1) × Fin (m + 1))) R.Kf)
         simp only [inv_inv] at this
-        exact congrArg _ this)
+        exact this)
       (by
-        ext x
-        exact congrArg _ (fuTT_inv lam0 γ (x : MvPolynomial (Fin n' × (Fin (m + 1) × Fin (m + 1))) R.Kf)))
+        apply LinearMap.ext
+        intro x
+        apply Subtype.ext
+        exact fuTT_inv lam0 γ (x : MvPolynomial (Fin n' × (Fin (m + 1) × Fin (m + 1))) R.Kf))
   refine ⟨T, fun L _ x => ?_, fun e _ x => ?_⟩
   · exact fu_Hten lam0 hDom γ _ _ (fun s => fu_extO R.ι R.σ s.val g L) _
   · exact fu_Hten lam0 hDom γ _ _ (fun s => fu_LeAt p R.ι R.σ R.w s.val g e) _

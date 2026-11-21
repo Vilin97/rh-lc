@@ -326,9 +326,9 @@ theorem isBaseChange_resLinear [F.IsQuasicoherent] (hU : IsAffineOpen U) (hV : I
     letI := resModule F h
     haveI := res_isScalarTower F h
     IsBaseChange Γ(X, V) (resLinear F h) := by
-  letI := resAlgebra h
-  letI := resModule F h
-  haveI := res_isScalarTower F h
+  let := resAlgebra h
+  let := resModule F h
+  have := res_isScalarTower F h
   let s : Set Γ(X, V) := {b | ∃ f : Γ(X, U), X.basicOpen b = X.basicOpen f}
   have hs : Ideal.span s = ⊤ := by
     rw [← hV.self_le_iSup_basicOpen_iff]
@@ -341,18 +341,18 @@ theorem isBaseChange_resLinear [F.IsQuasicoherent] (hU : IsAffineOpen U) (hV : I
       (resBasicOpen F b.1 ∘ₗ (resLinear F h).liftBaseChange Γ(X, V)) := by
     obtain ⟨b, f, e⟩ := b
     have hb : X.basicOpen b ≤ U := (X.basicOpen_le b).trans h
-    letI := resAlgebra hb
-    letI := resModule F hb
-    haveI := res_isScalarTower F hb
-    haveI : IsScalarTower Γ(X, U) Γ(X, V) Γ(X, X.basicOpen b) :=
+    let := resAlgebra hb
+    let := resModule F hb
+    have := res_isScalarTower F hb
+    have : IsScalarTower Γ(X, U) Γ(X, V) Γ(X, X.basicOpen b) :=
       .of_algebraMap_eq fun r ↦ (res_res_ring h (X.basicOpen_le b) r).symm
-    haveI : IsScalarTower Γ(X, U) Γ(X, V) Γ(F, X.basicOpen b) :=
+    have : IsScalarTower Γ(X, U) Γ(X, V) Γ(F, X.basicOpen b) :=
       .of_algebraMap_smul fun r t ↦ by
         change X.presheaf.map (homOfLE (X.basicOpen_le b)).op
           (X.presheaf.map (homOfLE h).op r) • t = X.presheaf.map (homOfLE hb).op r • t
         rw [res_res_ring]
-    haveI := hV.isLocalization_basicOpen b
-    haveI : IsLocalization.Away f Γ(X, X.basicOpen b) :=
+    have := hV.isLocalization_basicOpen b
+    have : IsLocalization.Away f Γ(X, X.basicOpen b) :=
       hU.isLocalization_of_eq_basicOpen f (homOfLE hb) e
     refine isLocalizedModule_comp_liftBaseChange Γ(X, X.basicOpen b) _ _ _ ?_
     rw [← isLocalizedModule_iff_isBaseChange (.powers f)]

@@ -91,7 +91,7 @@ private theorem isSheaf_etaleTopology_units :
 theorem _root_.GlobalTheory.EtC.GmSec.gm_sec_bijective :
     ∀ U : Scheme.{0},
       Function.Bijective
-        (_root_.GlobalTheory.EtC.ofRings.sec _root_.GlobalTheory.EtC.unitsF U) := by
+        (_root_.GlobalTheory.EtC.ofRings.sec ℤ _root_.GlobalTheory.EtC.unitsF U) := by
   intro U
   have hP : Presheaf.IsSheaf Scheme.etaleTopology (Scheme.Γ ⋙ _root_.GlobalTheory.EtC.unitsF) :=
     (Presheaf.isSheaf_iff_isSheaf_forget _ _ (forget _)).mpr

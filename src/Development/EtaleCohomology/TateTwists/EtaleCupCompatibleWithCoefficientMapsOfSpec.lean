@@ -16,7 +16,7 @@ def EtaleCupCompatAlexanderWhitneyCocycleSpec : Prop :=
 theorem etale_cochain_comp_hom_evaluation_eq_map {R : Type} [CommRing R] {E : Spc} {I J : Cx R} {n : ℤ} (m : I ⟶ J)
     (α : Cochain ((chains R).obj E) I n) (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0})
     (x : Sx E p U) :
-    ev (α.comp (Cochain.ofHom m) (add_zero n)) p s h U x = Sec.map (m.f s) (ev α p s h U x) := by
+    ev R (α.comp (Cochain.ofHom m) (add_zero n)) p s h U x = Sec.map (m.f s) (ev R α p s h U x) := by
   unfold ev
   rw [Cochain.comp_v _ _ (add_zero n) (-(p : ℤ)) s s h (add_zero s), Cochain.ofHom_v]
   rfl
@@ -24,7 +24,8 @@ theorem etale_cochain_comp_hom_evaluation_eq_map {R : Type} [CommRing R] {E : Sp
 theorem etale_cocycle_comp_hom_evaluation_eq_map {R : Type} [CommRing R] {E : Spc} {I J : Cx R} {n : ℤ} (m : I ⟶ J)
     (α : Cocycle ((chains R).obj E) I n) (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0})
     (x : Sx E p U) :
-    ev (zcomp α (Cocycle.ofHom m) (add_zero n)).1 p s h U x = Sec.map (m.f s) (ev α.1 p s h U x) :=
+    ev R (zcomp α (Cocycle.ofHom m) (add_zero n)).1 p s h U x =
+      Sec.map (m.f s) (ev R α.1 p s h U x) :=
   etale_cochain_comp_hom_evaluation_eq_map m α.1 p s h U x
 
 theorem etale_cup_compatible_with_coefficient_maps_of_spec (hspec : EtaleCupCompatAlexanderWhitneyCocycleSpec) : EtaleCupProductNaturalInCoefficients := by

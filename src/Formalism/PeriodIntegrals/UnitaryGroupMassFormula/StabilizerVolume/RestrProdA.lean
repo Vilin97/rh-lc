@@ -101,8 +101,7 @@ theorem repr_change {F E : Type} [Field F] [Field E] [Algebra F E] {d d' : ℕ}
   have hE : ∀ e : E, b'.repr e k' = ∑ k, b.repr e k * b'.repr (b k) k' := fun e => by
     conv_lhs => rw [← b.sum_repr e]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
-      smul_eq_mul]
+      simp only [map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply, smul_eq_mul]
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul r e =>

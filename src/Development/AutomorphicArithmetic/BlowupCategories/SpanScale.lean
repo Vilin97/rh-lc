@@ -87,7 +87,6 @@ def Act.cat (a : Act) : CommRingCat.{0} ⥤ Cat.{0,0} where
       simp [Ob.map]
     refine CategoryTheory.Functor.hext ho (fun x y g => Ob.hom_heq (ho x) (ho y) _ _ ?_)
     simp [Ob.map]
-    rfl
   map_comp {A B C} f g := by
     apply Cat.Hom.ext
     have ho : ∀ x : Ob a A, (Ob.map a (f ≫ g)).obj x = (Ob.map a g).obj ((Ob.map a f).obj x) := fun x => by
@@ -95,7 +94,6 @@ def Act.cat (a : Act) : CommRingCat.{0} ⥤ Cat.{0,0} where
       simp [Ob.map]
     refine CategoryTheory.Functor.hext ho (fun x y h => Ob.hom_heq (ho x) (ho y) _ _ ?_)
     simp [Ob.map]
-    rfl
 
 structure Act.Hom (a b : Act) where
   d : a.D ⟶ b.D

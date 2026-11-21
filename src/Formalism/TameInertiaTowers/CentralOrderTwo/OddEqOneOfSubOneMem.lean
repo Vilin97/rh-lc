@@ -419,6 +419,6 @@ theorem invLength : InvLength := by
   have hker : Nat.card f.ker = Nat.gcd (2 ^ N) k :=
     Nat.eq_of_mul_eq_mul_right hdpos (hmul.trans hd.symm)
   rw [hcard, hker, gcd_two_pow N k hk]
-  rfl
+  simp [hkdef, padicValInt, padicValNat]
 
 end Formalism.TwoAdicCyclotomicDecomposition

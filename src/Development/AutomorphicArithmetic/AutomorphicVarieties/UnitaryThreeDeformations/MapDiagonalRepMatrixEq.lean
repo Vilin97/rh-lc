@@ -10,17 +10,17 @@ private theorem map_diagonal_rep_matrix_eq {O R D : Type} [CommRing O] [CommRing
     (η : D →* ℤˣ) (Ψ : D →* Oˣ) (g : D) :
     (GG.map (algebraMap O R) (r0 η Ψ g)).mat = Matrix.diagonal fun a => algebraMap O R (psi Ψ a g) := by
   rw [GG.map_mat]
-  show ((tor O (Ψ g)).val).map (algebraMap O R) = _
+  show ((tor (Ψ g)).val).map (algebraMap O R) = _
   rw [tor_val, Matrix.diagonal_map (map_zero _)]
   rfl
 
-private theorem conjBy_inv_one {R D : Type} [CommRing R] [Group D] (r : D →* GG 3 R) :
+private theorem conjBy_inv_one {R D : Type} [CommRing R] [Group D] (r : D →* @UpperTheory.V.U3.GG 3 R _) :
     conjBy (1 : GL (Fin 3) R)⁻¹ r = r := by
   ext1 g
   simp [conjBy]
 
 private theorem diagIn_one {O R D : Type} [CommRing O] [CommRing R] [Algebra O R] [Group D]
-    (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG 3 R)
+    (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* @UpperTheory.V.U3.GG 3 R _)
     (hr : ∀ g, (r g).mat = Matrix.diagonal fun a => algebraMap O R (psi Ψ a g)) : DiagIn η Ψ I r 1 := by
   have hne : ∀ a b : Fin 3, wt a b ≠ 0 → a ≠ b := by
     intro a b h hab

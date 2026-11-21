@@ -66,7 +66,7 @@ def qd (x : Matrix (Fin n) (Fin n) ℂ) : ℝ := ∑ i, ∑ j, ‖x i j - (1 : M
 lemma qd_contDiff : ContDiff ℝ ∞ (qd (n := n)) := by
   unfold qd
   refine ContDiff.sum fun i _ => ContDiff.sum fun j _ => ?_
-  exact (contDiff_norm_sq ℝ).comp ((contDiff_apply_apply ℝ ℂ i j).sub contDiff_const)
+  exact (contDiff_norm_sq ℝ).comp ((contDiff_apply_apply ℝ i j).sub contDiff_const)
 
 lemma qd_one : qd (1 : Matrix (Fin n) (Fin n) ℂ) = 0 := by
   simp [qd]

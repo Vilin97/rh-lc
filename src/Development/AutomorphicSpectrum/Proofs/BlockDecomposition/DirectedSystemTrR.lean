@@ -17,14 +17,15 @@ variable {A : Type} [CommRing A] {G : ℕ → Type} [∀ n, CommRing (G n)] [∀
   (f : ∀ n, G n →ₐ[A] G (n + 1))
 
 def trA (i j : ℕ) (h : i ≤ j) : G i →ₐ[A] G j :=
-  Nat.leRecOn (C := fun k => G i →ₐ[A] G k) h (fun {k} g => (f k).comp g) (AlgHom.id A (G i))
+  Nat.leRecOn (motive := fun k => G i →ₐ[A] G k) h (fun {k} g => (f k).comp g)
+    (AlgHom.id A (G i))
 
 theorem trA_self (i : ℕ) (h : i ≤ i) : trA f i i h = AlgHom.id A (G i) :=
-  Nat.leRecOn_self (C := fun k => G i →ₐ[A] G k) _
+  Nat.leRecOn_self (motive := fun k => G i →ₐ[A] G k) _
 
 theorem trA_succ (i k : ℕ) (h : i ≤ k) (h2 : i ≤ k + 1) :
     trA f i (k + 1) h2 = (f k).comp (trA f i k h) :=
-  Nat.leRecOn_succ (C := fun k => G i →ₐ[A] G k) h _
+  Nat.leRecOn_succ (motive := fun k => G i →ₐ[A] G k) h _
 
 theorem trA_trans (i j k : ℕ) (hij : i ≤ j) (hjk : j ≤ k) (x : G i) :
     trA f j k hjk (trA f i j hij x) = trA f i k (hij.trans hjk) x := by

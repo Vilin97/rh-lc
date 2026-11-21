@@ -35,6 +35,7 @@ theorem h1Le : CompanionTheory.ObstructionTrivialLocus.H1StructureDimLe := by
   have hVan := GlobalTheory.CompanionTheory.Hodge.vanSt hCx (GlobalTheory.CompanionTheory.Hodge.Nerve.cmpSt_of_cxSt hCx)
   have hHopf := GlobalTheory.CompanionTheory.HopfSys.hopfSt hHtpy hQ hFub hAff hDesc hLow hAx
   have hHopfLe := GlobalTheory.CompanionTheory.HopfLe.hopfLeSt hCx hDict hLow
-  exact GlobalTheory.CompanionTheory.Hodge.FirstCohomologyUpperBounds.h1Le hDesc hLow hStein hVan hHopf hHopfLe
+  exact GlobalTheory.CompanionTheory.Hodge.FirstCohomologyUpperBounds.h1Le
+    hDesc hLow hStein hVan hHopf hHopfLe
 
 end MainStatements.Hodge.Free

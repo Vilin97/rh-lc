@@ -11,7 +11,7 @@ public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatDesc
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
-open GlobalTheory.CompanionTheory.Ar.BT GroundTheory.PAdicHodge
+open GlobalTheory.CompanionTheory.Ar.BT
 
 noncomputable section
 
@@ -294,7 +294,6 @@ lemma pushout_induction {A B C D : CommRingCat.{0}} {a : A ⟶ B} {c : A ⟶ C} 
   haveI : IsScalarTower A C D := .of_algebraMap_eq fun r => congr($(h.w).hom r)
   have hpo : Algebra.IsPushout A C B D := CommRingCat.isPushout_iff_isPushout.mp h.flip
   induction x using hpo.out.inductionOn with
-  | zero => exact h0
   | tmul y => exact h1 y
   | smul s n hn => exact h2 s n hn
   | add x y hx hy => exact h3 x y hx hy
@@ -326,8 +325,9 @@ theorem val_mem_span [Finite T] [Module.Flat R R'] (Γ : QFGroup R T) (Γ' : QFG
   · intro s
     refine Submodule.subset_span ⟨fun t => valAt (Γ.pt t).left ⊤ (top_le_pre _) s, ⟨s, fun _ _ => rfl⟩, ?_⟩
     funext t
+    have hpt := genericPoint_baseChange R T Γ R' Γ' F hbc κ hκ t
     rw [← valAt_comp (Γ'.pt t).left F ⊤ ⊤ _ (top_le_pre _) (top_le_pre _),
-      valAt_congr (GlobalTheory.T.base_change_points_compat R T Γ R' Γ' F hbc κ hκ t) _ _ (top_le_pre _),
+      valAt_congr hpt _ _ (top_le_pre _),
       valAt_map κ _ _ (top_le_pre _)]
   · intro c n hn
     have : (fun t => valAt (Γ'.pt t).left ⊤ (top_le_pre _) (((Γ'.G.hom.appLE ⊤ ⊤ (top_le_pre _)).hom c) * n)) =
@@ -394,8 +394,9 @@ lemma ext_le_btOrder [Finite T] (Γ : QFGroup R T) (Γ' : QFGroup R' T) (F : Γ'
   refine (mem_btOrder_iff Γ' _).2 fun t => ?_
   obtain ⟨s, hs⟩ := (mem_btOrder_iff Γ f).1 hf t
   refine ⟨(F.appLE ⊤ ⊤ (top_le_pre _)).hom s, fun h hh => ?_⟩
+  have hpt := genericPoint_baseChange R T Γ R' Γ' F hbc κ hκ h
   rw [← valAt_comp (Γ'.pt h).left F ⊤ ⊤ _ _ (top_le_pre _),
-    valAt_congr (GlobalTheory.T.base_change_points_compat R T Γ R' Γ' F hbc κ hκ h) _ _ (top_le_pre _),
+    valAt_congr hpt _ _ (top_le_pre _),
     valAt_map κ _ _ (top_le_pre _), hs h, hκ']
 
 end Sch

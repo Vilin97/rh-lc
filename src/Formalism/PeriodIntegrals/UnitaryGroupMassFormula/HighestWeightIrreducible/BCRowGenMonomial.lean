@@ -213,7 +213,7 @@ private theorem isWeightedHomogeneous_coeff_rowGen_X_fst_weight {r n : ℕ} (a b
           ring
         rw [e]
         simpa using hX (a, v.2)
-      · rw [if_neg hk0, if_neg (Ne.symm hk1), add_zero]
+      · rw [if_neg hk0, Finsupp.single_eq_of_ne hk1, add_zero]
         exact h0 _
   · rw [if_neg hb, add_zero, Polynomial.coeff_C]
     by_cases hk0 : k = 0
@@ -371,7 +371,7 @@ theorem bC_exists_killed {r n : ℕ}
   have hg0ne : weightedHomogeneousComponent (rowW r n) (Finsupp.weight (rowW r n) m0) f ≠ 0 := by
     intro h
     apply hm0
-    rw [← hg0c, h, MvPolynomial.coeff_zero]
+    rw [← hg0c, h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   have hg0h : IsWeightedHomogeneous (fun v : Fin r × Fin n => ((v.1 : ℕ) : ℤ))
       (weightedHomogeneousComponent (rowW r n) (Finsupp.weight (rowW r n) m0) f)
       (Finsupp.weight (fun v : Fin r × Fin n => ((v.1 : ℕ) : ℤ)) m0) := by

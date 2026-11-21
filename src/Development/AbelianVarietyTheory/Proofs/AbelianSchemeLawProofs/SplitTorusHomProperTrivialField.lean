@@ -69,6 +69,7 @@ lemma point_extend {V F : Type} [CommRing V] [IsDomain V] [ValuationRing V] [Alg
   exact ⟨Over.homMk l h2, by ext1; exact h1⟩
 
 
+open PowerSeries in
 lemma units_family_trivial {B : Over (Spec (CommRingCat.of K))} [GrpObj B] [IsProper B.hom]
     (Φ : ∀ (R : Type) [CommRing R] [Algebra K R], Rˣ →* (sp K R ⟶ B))
     (hΦ : ∀ (R R' : Type) [CommRing R] [Algebra K R] [CommRing R'] [Algebra K R'] (g : R →ₐ[K] R')
@@ -233,7 +234,7 @@ def coch (l : X →+ ℤ) (G : Type) [CommGroup G] : G →* (Multiplicative X �
 
 lemma char_eq_prod {I : Type} [Fintype I] (e : Module.Basis I ℤ X) (G : Type) [CommGroup G]
     (φ : Multiplicative X →* G) :
-    φ = ∏ i, coch (e.coord i).toAddMonoidHom G (φ (Multiplicative.ofAdd (e i))) := by
+    φ = ∏ i, coch X (e.coord i).toAddMonoidHom G (φ (Multiplicative.ofAdd (e i))) := by
   refine MonoidHom.ext fun a => ?_
   rw [MonoidHom.finsetProd_apply]
   conv_lhs => rw [← ofAdd_toAdd a, ← e.sum_repr a.toAdd, ofAdd_sum, map_prod]
@@ -244,6 +245,7 @@ lemma char_eq_prod {I : Type} [Fintype I] (e : Module.Basis I ℤ X) (G : Type) 
 end TorusToProper
 
 
+open TorusToProper in
 theorem splitTorus_hom_proper_trivial_field (K : Type) [Field K] (X : Type) [AddCommGroup X]
     [Module.Free ℤ X] [Module.Finite ℤ X] (B : Over (Spec (CommRingCat.of K))) [GrpObj B]
     [IsProper B.hom] (f : splitTorus (Spec (CommRingCat.of K)) X ⟶ B) (hf : IsMonHom f) :
@@ -251,9 +253,9 @@ theorem splitTorus_hom_proper_trivial_field (K : Type) [Field K] (X : Type) [Add
   let Ψ : ∀ (R : Type) [CommRing R] [Algebra K R], (Multiplicative X →* Rˣ) →* (sp K R ⟶ B) :=
     fun R _ _ => (MonoidHom.mk' (fun t => t ≫ f) (fun s t => MonObj.mul_comp s t f)).comp (pt K X R)
   have hΨ : ∀ (R : Type) [CommRing R] [Algebra K R] φ, Ψ R φ = pt K X R φ ≫ f := fun _ _ _ _ => rfl
-  have h1 : ∀ (l : X →+ ℤ) (L : Type) [Field L] [Algebra K L] (x : Lˣ), Ψ L (coch l Lˣ x) = 1 := by
+  have h1 : ∀ (l : X →+ ℤ) (L : Type) [Field L] [Algebra K L] (x : Lˣ), Ψ L (coch X l Lˣ x) = 1 := by
     intro l L _ _ x
-    refine units_family_trivial (fun R _ _ => (Ψ R).comp (coch l Rˣ)) ?_ L x
+    refine units_family_trivial (fun R _ _ => (Ψ R).comp (coch X l Rˣ)) ?_ L x
     intro R R' _ _ _ _ g y
     simp only [MonoidHom.comp_apply, hΨ]
     rw [← Category.assoc, ← pt_nat]

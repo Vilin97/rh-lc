@@ -47,7 +47,7 @@ theorem isFinite_sigmaDesc_fin (V : Scheme.{0}) : ∀ k : ℕ, IsFinite (Sigma.d
       refine ⟨fun x => ?_⟩
       obtain ⟨i, _, _⟩ := (sigmaOpenCover fun _ : Fin 0 => V).exists_eq x
       exact i.elim0
-    infer_instance
+    exact ((IsClosedImmersion.iff_isFinite_and_mono _).mp (by infer_instance)).1
   | k + 1 => by
     have := isFinite_sigmaDesc_fin V k
     rw [← sigmaFinSuccIso_hom_desc]

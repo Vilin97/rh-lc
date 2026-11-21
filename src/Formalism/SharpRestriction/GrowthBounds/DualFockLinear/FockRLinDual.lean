@@ -135,7 +135,9 @@ theorem multDiv_kapFl (O : Type) [CommRing O] [IsLocalRing O] (p : ℕ) [hp : Fa
     exact this
 
   have hdv : p ^ padicValNat p Mn ∣ Mn := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
-  have hnd : ¬ p ^ (padicValNat p Mn + 1) ∣ Mn := pow_succ_padicValNat_not_dvd hMn0
+  have hnd : ¬ p ^ (padicValNat p Mn + 1) ∣ Mn := by
+    rw [Nat.padicValNat_def]
+    exact pow_succ_multiplicity_not_dvd hMn0
   generalize padicValNat p Mn = v at h4 hdv hnd
   obtain ⟨u, hu⟩ := hdv
   have hpu : ¬ p ∣ u := by

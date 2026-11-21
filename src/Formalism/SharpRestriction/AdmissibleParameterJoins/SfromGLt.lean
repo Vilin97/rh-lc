@@ -141,7 +141,7 @@ theorem splits_sub (hp : p.Prime)
   have hefK := ef_one_sub K p L hp (ef_one_of_card L p hp hL)
   refine ⟨?_, ?_⟩
   · rw [← card_of_ef_one K p hp hefK, ← ncard_places K p hp]
-    exact Nat.card_coe_set_eq _
+    exact Nat.card_coe_set_eq {v : HeightOneSpectrum (𝓞 K) | ((p : ℕ) : 𝓞 K) ∈ v.asIdeal}
   · intro v hv
     have hmem : v.asIdeal ∈ IsDedekindDomain.primesOverFinset (span {(p : ℤ)}) (𝓞 K) := by
       rw [← Finset.mem_coe, IsDedekindDomain.coe_primesOverFinset (pI_ne_bot p hp), ← img_places K p hp]

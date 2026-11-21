@@ -77,7 +77,10 @@ def pge (n : WithTop ℤ) (G : MvPolynomial σ (LaurentPolynomial R)) : Prop :=
   ∀ β, n ≤ lord (G.coeff β)
 
 theorem pge_zero (n : WithTop ℤ) : pge n (0 : MvPolynomial σ (LaurentPolynomial R)) := by
-  intro β; rw [coeff_zero, lord_zero]; exact le_top
+  intro β
+  change n ≤ lord (0 : LaurentPolynomial R)
+  rw [lord_zero]
+  exact le_top
 
 theorem pge_add {n : WithTop ℤ} {F G : MvPolynomial σ (LaurentPolynomial R)} (hF : pge n F)
     (hG : pge n G) : pge n (F + G) := by
@@ -396,7 +399,7 @@ theorem coeff_coefOut (μ β : L × Fin r →₀ ℕ) (F : MvPolynomial (L × Fi
           rw [h4, eIn_add, ← hμ, eIn_eOut, zero_add, eIn_eq_self_of_eOut_eq_zero out h3.1]
         · rfl
         · rfl
-    · rw [if_neg h1, coeff_zero, coeff_monomial]
+    · rw [if_neg h1, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, coeff_monomial]
       split_ifs with h3 h4
       · exfalso; apply h1
         rw [h4, eOut_add, h3.1, h3.2, add_zero]
@@ -449,7 +452,7 @@ theorem valS_coefOut_le (hout : ∀ i ∈ S, ¬ out i) (μ : L × Fin r →₀ �
       refine Finset.sum_congr rfl fun α _ => ?_
       split_ifs
       · rw [substS_monomial', coeff_C_mul]
-      · rw [map_zero, coeff_zero]
+      · rw [map_zero, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     by_cases hβ : eOut out β = 0
     · have hβ2 : eIn out β = β := eIn_eq_self_of_eOut_eq_zero out hβ
       have : (subV sg S (coefOut out μ F)).coeff β = (subV sg S F).coeff (μ + β) := by
@@ -471,7 +474,7 @@ theorem valS_coefOut_le (hout : ∀ i ∈ S, ¬ out i) (μ : L × Fin r →₀ �
       unfold coefOut
       refine Finset.sum_eq_zero fun α hα => ?_
       rw [if_neg fun h => hμ ⟨α, hα, h⟩]
-    rw [this, map_zero, coeff_zero, lord_zero]; exact le_top
+    rw [this, map_zero, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, lord_zero]; exact le_top
 
 theorem valS_outside_linear (Φ : MvPolynomial (L × Fin r) K →ₗ[K] MvPolynomial (L × Fin r) K)
     (hout : ∀ i ∈ S, ¬ out i)
@@ -737,18 +740,18 @@ theorem coeff_hcomp (d : L → ℕ) (F : MvPolynomial (L × Fin r) K) (β : L ×
   · rw [Finset.sum_eq_single β]
     · split_ifs
       · rw [coeff_monomial, if_pos rfl]
-      · rw [coeff_zero]
+      · rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     · intro α _ hne
       split_ifs
       · rw [coeff_monomial, if_neg hne]
-      · rw [coeff_zero]
+      · rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     · intro h; exact absurd hβ h
   · rw [notMem_support_iff.mp hβ, ite_self]
     refine Finset.sum_eq_zero fun α hα => ?_
     split_ifs
     · rw [coeff_monomial, if_neg]
       intro h; exact hβ (h ▸ hα)
-    · rw [coeff_zero]
+    · rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
 
 theorem hcomp_mem_PolK (d : L → ℕ) (F : MvPolynomial (L × Fin r) K) : hcomp d F ∈ PolK K r d := by
   rw [mem_PolK_iff]
@@ -784,7 +787,7 @@ theorem coeff_subV_hcomp (d : L → ℕ) (F : MvPolynomial (L × Fin r) K) (β :
     refine Finset.sum_congr rfl fun α _ => ?_
     split_ifs
     · rw [substS_monomial', coeff_C_mul]
-    · rw [map_zero, coeff_zero]
+    · rw [map_zero, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   rw [hexp]
   split_ifs with hβ
   · rw [coeff_substS]

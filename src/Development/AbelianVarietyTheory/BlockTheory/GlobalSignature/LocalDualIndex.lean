@@ -92,6 +92,7 @@ variable (F E : Type) [Field F] [NumberField F] [Field E] [Algebra F E]
 
 
 def etaV (v : HeightOneSpectrum (𝓞 F)) : ℝ :=
+  open Classical in
   if IsField (Fv F v ⊗[F] E) then -1 else 1
 
 def eulerInv (M : ℕ) (v : HeightOneSpectrum (𝓞 F)) : ℝ :=

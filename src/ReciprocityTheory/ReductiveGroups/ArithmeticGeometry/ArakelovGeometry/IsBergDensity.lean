@@ -18,13 +18,14 @@ variable {J : Type} [Fintype J]
 def secFun (b : MvPolynomial J ℚ) (z : J → ℂ) : ℂ :=
   eval z (map (algebraMap ℚ ℂ) b)
 
-def wgt (m : ConeMetric ℂ J) (n : ℕ) (z : J → ℂ) : ℝ :=
+def wgt (m : ConeMetric (C := ℂ) (ι := J)) (n : ℕ) (z : J → ℂ) : ℝ :=
   (m.ρ z ^ (2 * n))⁻¹
 
-def logRatio (m₀ m₁ : ConeMetric ℂ J) (z : J → ℂ) : ℝ :=
+def logRatio (m₀ m₁ : ConeMetric (C := ℂ) (ι := J)) (z : J → ℂ) : ℝ :=
   Real.log (m₁.ρ z / m₀.ρ z)
 
-theorem _root_.ReciprocityTheory.ChartRestriction.G.Geo.ConeMetric.nonneg (m : ConeMetric ℂ J) (z : J → ℂ) :
+theorem _root_.ReciprocityTheory.ChartRestriction.G.Geo.ConeMetric.nonneg
+    (m : ConeMetric (C := ℂ) (ι := J)) (z : J → ℂ) :
     0 ≤ m.ρ z := by
   by_cases hz : z = 0
   · subst hz
@@ -33,7 +34,8 @@ theorem _root_.ReciprocityTheory.ChartRestriction.G.Geo.ConeMetric.nonneg (m : C
     exact le_of_eq h.symm
   · exact (m.pos z hz).le
 
-def interp (m₀ m₁ : ConeMetric ℂ J) (t : ℝ) : ConeMetric ℂ J where
+def interp (m₀ m₁ : ConeMetric (C := ℂ) (ι := J)) (t : ℝ) :
+    ConeMetric (C := ℂ) (ι := J) where
   ρ z := m₀.ρ z ^ (1 - t) * m₁.ρ z ^ t
   pos z hz := mul_pos (Real.rpow_pos_of_pos (m₀.pos z hz) _) (Real.rpow_pos_of_pos (m₁.pos z hz) _)
   smul c z := by
@@ -51,10 +53,10 @@ def interp (m₀ m₁ : ConeMetric ℂ J) (t : ℝ) : ConeMetric ℂ J where
         = (‖c‖ ^ (1 - t) * ‖c‖ ^ t) * (m₀.ρ z ^ (1 - t) * m₁.ρ z ^ t) := by ring
       _ = ‖c‖ * (m₀.ρ z ^ (1 - t) * m₁.ρ z ^ t) := by rw [key]
 
-def mixPot (m₀ m₁ : ConeMetric ℂ J) (D i : ℕ) : Fin D → (J → ℂ) → ℝ :=
+def mixPot (m₀ m₁ : ConeMetric (C := ℂ) (ι := J)) (D i : ℕ) : Fin D → (J → ℂ) → ℝ :=
   fun j z => if j.val < i then Real.log (m₁.ρ z) else Real.log (m₀.ρ z)
 
-def purePot (m : ConeMetric ℂ J) (D : ℕ) : Fin D → (J → ℂ) → ℝ :=
+def purePot (m : ConeMetric (C := ℂ) (ι := J)) (D : ℕ) : Fin D → (J → ℂ) → ℝ :=
   fun _ z => Real.log (m.ρ z)
 
 end ReciprocityTheory.ChartRestriction.G.ArakelovGeometry

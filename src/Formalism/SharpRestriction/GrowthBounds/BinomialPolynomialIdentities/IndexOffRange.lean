@@ -81,8 +81,6 @@ theorem cnt_succ {n : ℕ} (A : Finset (Fin n)) (t : Fin n) :
     Formalism.InvariantFactorPaths.GelfandTsetlinBases.Branch.cnt A (t.val + 1) = (A.filter (· ≤ t)).card := by
   unfold Formalism.InvariantFactorPaths.GelfandTsetlinBases.Branch.cnt
   congr 1
-  ext a
-  simp only [mem_filter, Fin.le_def, Nat.lt_succ_iff]
 
 theorem dom_iff_le {n : ℕ} (A B : Finset (Fin n)) :
     Formalism.InvariantFactorPaths.GelfandTsetlinBases.Branch.Dom A B ↔ ∀ t : Fin n, (B.filter (· ≤ t)).card ≤ (A.filter (· ≤ t)).card := by

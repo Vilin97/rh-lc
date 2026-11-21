@@ -17,6 +17,7 @@ variable {V W X : Type*} [NormedAddCommGroup V] [InnerProductSpace 𝕜 V]
 variable {ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
 
 
+variable (𝕜) in
 def gramVol (v : ι → V) : ℝ := √(RCLike.re (gram 𝕜 v).det)
 
 theorem gramVol_nonneg (v : ι → V) : 0 ≤ gramVol 𝕜 v := Real.sqrt_nonneg _
@@ -94,7 +95,7 @@ theorem gramVol_mul_gramVol_of_biorthogonal [FiniteDimensional 𝕜 V]
     (h : ∀ i j, ⟪w i, v j⟫_𝕜 = if i = j then 1 else 0) : gramVol 𝕜 w * gramVol 𝕜 v = 1 := by
   rw [← norm_det_inner hι]
   have : (Matrix.of fun i j => ⟪w i, v j⟫_𝕜) = 1 := by
-    ext i j; simp [h, one_apply]
+    ext i j; simp [h, Matrix.one_apply]
   simp [this]
 
 section NormDet

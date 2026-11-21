@@ -92,8 +92,7 @@ private lemma quo_star (z : (Etau K τ)ˣ) : quo z * star (quo z) = 1 := by
         (star (z : Etau K τ) * star ((z⁻¹ : (Etau K τ)ˣ) : Etau K τ)) := by ring
     _ = 1 := by rw [e, e', one_mul]
 
-
-private def torL (z : (Etau K τ)ˣ) : Sp Δ τ →ₗ[Lsq K Δ] Sp Δ τ where
+private def torL (Δ : K) (z : (Etau K τ)ˣ) : Sp Δ τ →ₗ[Lsq K Δ] Sp Δ τ where
   toFun := tor Δ z
   map_add' x y := by simp [tor, mul_add]
   map_smul' a x := by simp [tor, mul_smul_comm]
@@ -218,23 +217,18 @@ private lemma sp_ind {p : Sp (f Δ) (f τ) → Prop} (hadd : ∀ x y, p x → p 
   rw [e]
   exact hadd _ _ (hsmul _ _ (h _)) (hadd _ _ (hsmul _ _ (h _)) (hsmul _ _ (h _)))
 
-private lemma isDat_map {c : K} {d m : EL Δ τ} (h : IsDat c d m) : IsDat (f c) (elmap f d) (elmap f m) where
-  reg := by
-    rw [show f τ ^ 2 - 4 = f (τ ^ 2 - 4) by rw [map_sub, map_pow, map_ofNat]]
+private lemma isDat_map {c : K} {d m : EL Δ τ} (h : IsDat c d m) : IsDat (f c) (elmap f d) (elmap f m) := by
+  refine ⟨?_, (map_ne_zero f).2 h.c_ne, ?_, ?_, ?_, ?_⟩
+  · rw [show f τ ^ 2 - 4 = f (τ ^ 2 - 4) by rw [map_sub, map_pow, map_ofNat]]
     exact (map_ne_zero f).2 h.reg
-  c_ne := (map_ne_zero f).2 h.c_ne
-  d_norm := by
-    rw [← elmap_sigL, ← elmap_mul, h.d_norm, elmap_ofE, emap_omega]
-  m_unit := by
-    obtain ⟨u, hu⟩ := h.m_unit
+  · rw [← elmap_sigL, ← elmap_mul, h.d_norm, elmap_ofE, emap_omega]
+  · obtain ⟨u, hu⟩ := h.m_unit
     have e1 : (u : EL Δ τ) * ((u⁻¹ : (EL Δ τ)ˣ) : EL Δ τ) = 1 := by simp
     have e2 := congrArg (elmap f) e1
     rw [elmap_mul, elmap_one, hu] at e2
     exact IsUnit.of_mul_eq_one _ e2
-  m_star := by
-    rw [← elmap_sigL, ← elmap_star, h.m_star]
-  m_sig := by
-    rw [← elmap_sigL, h.m_sig, ← elmap_sigL, ← elmap_star, elmap_mul, elmap_mul]
+  · rw [← elmap_sigL, ← elmap_star, h.m_star]
+  · rw [← elmap_sigL, h.m_sig, ← elmap_sigL, ← elmap_star, elmap_mul, elmap_mul]
 
 end Nat
 
@@ -242,8 +236,7 @@ section Main
 
 variable {K K' : Type} [Field K] [Field K'] (f : K →+* K') {Δ τ : K}
 
-
-private def cdE : Sp Δ τ ≃ₗ[Lsq K Δ] (Fin 3 → Lsq K Δ) where
+private def cdE (Δ τ : K) : Sp Δ τ ≃ₗ[Lsq K Δ] (Fin 3 → Lsq K Δ) where
   toFun x := ![x.1, x.2.re, x.2.im]
   invFun u := (u 0, ⟨u 1, u 2⟩)
   map_add' x y := by

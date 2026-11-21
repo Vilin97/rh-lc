@@ -31,11 +31,11 @@ noncomputable def coindδ (n : ℕ) : cohomology (coindCokernel A) n ⟶ cohomol
 
 instance epi_coindδ (n : ℕ) : Epi (coindδ A n) :=
   (cohomology_exact₁ (coindShortComplex_shortExact A) n (n + 1) rfl).epi_f
-    ((isZero_cohomology_discreteCoind k G A n).eq_of_tgt _ _)
+    ((isZero_cohomology_discreteCoind (k := k) (G := G) (X := A) n).eq_of_tgt _ _)
 
 instance mono_coindδ_succ (n : ℕ) : Mono (coindδ A (n + 1)) :=
   (cohomology_exact₃ (coindShortComplex_shortExact A) (n + 1) (n + 2) rfl).mono_g
-    ((isZero_cohomology_discreteCoind k G A n).eq_of_src _ _)
+    ((isZero_cohomology_discreteCoind (k := k) (G := G) (X := A) n).eq_of_src _ _)
 
 instance isIso_coindδ_succ (n : ℕ) : IsIso (coindδ A (n + 1)) :=
   isIso_of_mono_of_epi _

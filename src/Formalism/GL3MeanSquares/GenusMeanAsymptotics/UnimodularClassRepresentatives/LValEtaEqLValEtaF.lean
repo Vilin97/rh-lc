@@ -22,7 +22,8 @@ variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberFi
 
 theorem comap_isMaximal {P : Ideal (𝓞 K)} (hP : P.IsMaximal) :
     (P.comap (algebraMap (𝓞 F) (𝓞 K))).IsMaximal :=
-  Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+  haveI : P.IsMaximal := hP
+  Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := 𝓞 F) P
 
 theorem hasProd_fibre (hK : Formalism.HermitianLatticesTheory.IsCMUnram K)
     (hF : ∀ a : K, star a = a ↔ a ∈ Set.range (algebraMap F K)) (M : ℕ) (hM : 1 ≤ M)

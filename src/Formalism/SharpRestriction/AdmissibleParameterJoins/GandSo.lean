@@ -54,23 +54,18 @@ theorem cc_dg {a : PowerSeries R} (ha : PowerSeries.constantCoeff a = 0) (i : ι
   exact coeff_diagS_eq_zero_of_apply_eq_zero ha i 0 (by simp)
 
 theorem hs_dg {a : PowerSeries R} (ha : PowerSeries.constantCoeff a = 0) :
-    HasSubst (diagS a : ι → MvPowerSeries ι R) where
-  const_coeff s := by
+    HasSubst (diagS a : ι → MvPowerSeries ι R) := by
+  constructor
+  · intro s
     rw [cc_dg ha]
     exact IsNilpotent.zero
-  coeff_zero d := by
+  · intro d
     classical
     refine (d.support.finite_toSet).subset ?_
     intro s hs
-    simp only [Set.mem_setOf_eq] at hs
-    unfold diagS at hs
-    rw [PowerSeries.coeff_subst_single] at hs
+    change coeff d (diagS a s) ≠ 0 at hs
     by_contra hns
-    have h0 : d s = 0 := by simpa using hns
-    split_ifs at hs with h1
-    · rw [h0] at hs
-      exact hs (by rw [PowerSeries.coeff_zero_eq_constantCoeff_apply, ha])
-    · exact hs rfl
+    exact hs (coeff_diagS_eq_zero_of_apply_eq_zero ha s d (by simpa using hns))
 
 private theorem hasSubst_of_finite_constantCoeff_eq_zero {σ τ : Type} [Finite σ] {c : σ → MvPowerSeries τ R}
     (hc : ∀ s, constantCoeff (c s) = 0) : HasSubst c := by

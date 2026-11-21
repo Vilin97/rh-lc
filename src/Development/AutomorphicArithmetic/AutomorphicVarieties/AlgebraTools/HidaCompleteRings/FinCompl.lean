@@ -77,5 +77,5 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.finCompl :
     ∀ (Λ M : Type) [CommRing Λ] [IsNoetherianRing Λ] (I : Ideal Λ) [IsAdicComplete I Λ] [AddCommGroup M] [Module Λ M] [Module.Finite Λ M], IsAdicComplete I M := by
   intro Λ M _ _ I _ _ _ _
   exact
-    { toIsHausdorff := IsHausdorff.of_le_jacobson I M (IsAdicComplete.le_jacobson_bot I)
+    { toIsHausdorff := IsHausdorff.of_le_jacobson I M (IsAdicComplete.le_jacobson I)
       toIsPrecomplete := isPrecomplete_finite I }

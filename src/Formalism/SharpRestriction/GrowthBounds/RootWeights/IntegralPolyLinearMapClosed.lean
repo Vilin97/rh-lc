@@ -32,8 +32,7 @@ theorem mem_fock_lattice_iff_coeff {p : ℕ} (hV : ValuationProperties p O) {σ 
 theorem fock_lattice_zero_mem {p : ℕ} (hV : ValuationProperties p O) {σ : Type} : InBB (O := O) p (0 : MvPolynomial σ (KK O)) := by
   obtain ⟨hV0, -, -, -, -, -⟩ := id hV
   refine (mem_fock_lattice_iff_coeff hV 0).2 fun m => ?_
-  rw [coeff_zero, hV0, top_add]
-  exact le_top
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, hV0, top_add, le_top]
 
 theorem fock_lattice_add_mem {p : ℕ} (hV : ValuationProperties p O) {σ : Type} {F G : MvPolynomial σ (KK O)}
     (hF : InBB (O := O) p F) (hG : InBB (O := O) p G) : InBB (O := O) p (F + G) := by
@@ -95,7 +94,8 @@ theorem valuation_intCast_padicVal {p : ℕ} (hV : ValuationProperties p O) (z :
     vK p (z : KK O) = ((padicValInt p z : ℚ) : WithTop ℚ) := by
   obtain ⟨-, -, -, hVnat, hVneg, -⟩ := id hV
   have hn : z.natAbs ≠ 0 := Int.natAbs_ne_zero.2 hz
-  have e : padicValInt p z = padicValNat p z.natAbs := rfl
+  have e : padicValInt p z = padicValNat p z.natAbs := by
+    simp [padicValInt, padicValNat]
   rw [e]
   rcases Int.natAbs_eq z with h | h
   · conv_lhs => rw [h]

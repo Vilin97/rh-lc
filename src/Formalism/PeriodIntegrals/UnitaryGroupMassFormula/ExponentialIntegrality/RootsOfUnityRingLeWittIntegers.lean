@@ -141,14 +141,15 @@ namespace PI.ExpIntWProof
 
 theorem keyW : KeyW := by
   intro p _ x hx h
-  rw [← SetLike.mem_coe, ← (isClosed_Wp p).closure_eq, Metric.mem_closure_iff]
+  change x / (p : ℂ_[p]) ∈ (Wp p : Set ℂ_[p])
+  rw [← (Key.isClosed_Wp p).closure_eq, Metric.mem_closure_iff]
   intro ε hε
-  have hpn : (0 : ℝ) < ‖(p : ℂ_[p])‖ := norm_pos_iff.2 natp_ne_zero
-  have hxS : x ∈ closure (S0 p : Set ℂ_[p]) := hx
+  have hpn : (0 : ℝ) < ‖(p : ℂ_[p])‖ := norm_pos_iff.2 Key.natp_ne_zero
+  have hxS : x ∈ closure (Key.S0 p : Set ℂ_[p]) := hx
   obtain ⟨y, hyS, hxy⟩ := Metric.mem_closure_iff.1 hxS (min (ε * ‖(p : ℂ_[p])‖) (1 - ‖x‖))
     (lt_min (mul_pos hε hpn) (by linarith))
   rw [dist_eq_norm] at hxy
-  refine ⟨y / p, div_p_mem_of_S hyS ?_, ?_⟩
+  refine ⟨y / p, Key.div_p_mem_of_S hyS ?_, ?_⟩
   · calc ‖y‖ = ‖x - (x - y)‖ := by rw [sub_sub_cancel]
       _ ≤ ‖x‖ + ‖x - y‖ := norm_sub_le _ _
       _ < ‖x‖ + (1 - ‖x‖) := by linarith [min_le_right (ε * ‖(p : ℂ_[p])‖) (1 - ‖x‖)]

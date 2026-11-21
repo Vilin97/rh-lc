@@ -15,17 +15,17 @@ private theorem de_eq_det (R : Type) [CommRing R] (n : ℕ) :
   ext j
   simp
 
-private theorem nn_ne (R : Type) [CommRing R] [IsDomain R] (n : ℕ) (q : R) : NN n q ≠ 0 := by
+private theorem nn_ne (R : Type) [CommRing R] [IsDomain R] (n : ℕ) (q : R) : NN R n q ≠ 0 := by
   rw [NN, Finset.prod_ne_zero_iff]
   intro p hp
   have hlt : p.1 < p.2 := by simpa [pairs] using hp
   intro h
   have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single p.2 1)) h
-  rw [coeff_sub, coeff_C_mul, coeff_X, coeff_X'] at hc
+  rw [coeff_sub, coeff_C_mul, coeff_X, coeff_X] at hc
   simp [Finsupp.single_left_inj one_ne_zero, hlt.ne] at hc
 
 theorem UpperTheory.V.AlgebraTools.hkDe :
-    ∀ (R : Type) [CommRing R] [IsDomain R] (n : ℕ), De R n ≠ 0 ∧ (∀ w : Perm (Fin n), rename w (De R n) = Perm.sign w • De R n) ∧ ∀ q : R, NN n q ≠ 0 := by
+    ∀ (R : Type) [CommRing R] [IsDomain R] (n : ℕ), De R n ≠ 0 ∧ (∀ w : Perm (Fin n), rename w (De R n) = Perm.sign w • De R n) ∧ ∀ q : R, NN R n q ≠ 0 := by
   intro R _ _ n
   refine ⟨?_, ?_, nn_ne R n⟩
   · rw [de_eq_det, Matrix.det_vandermonde_ne_zero_iff]

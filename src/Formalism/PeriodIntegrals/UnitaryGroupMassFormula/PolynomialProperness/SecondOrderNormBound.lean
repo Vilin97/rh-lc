@@ -126,7 +126,7 @@ theorem isUnit_det_monomialMatrix' {m : ℕ} (w : Equiv.Perm (Fin m)) (d : Fin m
     IsUnit (monoP w d).det := by
   have hQ : monoP w d * monoP w.symm (fun j => (d (w.symm j))⁻¹) = 1 := by
     ext i j
-    simp only [monoP, mul_apply, of_apply, one_apply]
+    simp only [Matrix.mul_apply, monoP, of_apply, Matrix.one_apply]
     rw [Finset.sum_eq_single (w.symm j)]
     · simp only [if_true, Equiv.apply_symm_apply]
       split_ifs with h
@@ -219,7 +219,7 @@ end PI.PolynomialProperness.CB
 namespace PI.PolynomialProperness
 
 
-theorem second_order_norm_bound : MonomialFactorizationBound := by
+theorem second_order_norm_bound : MonomialFactorizationBound := open CB in by
   intro m P hP
   obtain ⟨w, d, hd, hPeq⟩ := hP
   have hPu : IsUnit P.det := by rw [hPeq]; exact isUnit_det_monomialMatrix' w d hd

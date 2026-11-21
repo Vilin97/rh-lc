@@ -336,17 +336,16 @@ theorem bQ_mk (h : UnitaryData H Λ α δ Ae) (x y : Λ) :
   rw [bC_add_left, ud_radical_of_mem h hk hyk, mul_one, ud_b_symm h x.2 hyk, bC_add_left,
     ud_radical_of_mem h hk' x.2, mul_one, ud_b_symm h y.2 x.2]
 
-theorem ud_isQuadFn (h : UnitaryData H Λ α δ Ae) : IsQuadFn (phiQ H Λ α δ Ae) (bQ H Λ δ Ae) where
-  add := by
-    intro c d
+theorem ud_isQuadFn (h : UnitaryData H Λ α δ Ae) : IsQuadFn (phiQ H Λ α δ Ae) (bQ H Λ δ Ae) := by
+  constructor
+  · intro c d
     induction c using QuotientAddGroup.induction_on with
     | H x =>
       induction d using QuotientAddGroup.induction_on with
       | H y =>
         rw [← QuotientAddGroup.mk_add, phiQ_mk h, phiQ_mk h, phiQ_mk h, bQ_mk h]
         exact ud_phi_add h x.2 y.2
-  left := by
-    intro c d e
+  · intro c d e
     induction c using QuotientAddGroup.induction_on with
     | H x =>
       induction d using QuotientAddGroup.induction_on with
@@ -355,14 +354,12 @@ theorem ud_isQuadFn (h : UnitaryData H Λ α δ Ae) : IsQuadFn (phiQ H Λ α δ 
         | H z =>
           rw [← QuotientAddGroup.mk_add, bQ_mk h, bQ_mk h, bQ_mk h]
           exact bC_add_left _ _ _
-  sq := by
-    intro k c
+  · intro k c
     induction c using QuotientAddGroup.induction_on with
     | H x =>
       rw [← QuotientAddGroup.mk_nsmul, phiQ_mk h, phiQ_mk h]
       exact ud_phi_nsmul h x.2 k
-  ne := by
-    intro c
+  · intro c
     induction c using QuotientAddGroup.induction_on with
     | H x =>
       rw [phiQ_mk h]
@@ -370,8 +367,7 @@ theorem ud_isQuadFn (h : UnitaryData H Λ α δ Ae) : IsQuadFn (phiQ H Λ α δ 
       have := ud_norm h x.2
       rw [h0, norm_zero] at this
       exact zero_ne_one this
-  nondeg := by
-    intro c hc
+  · intro c hc
     induction c using QuotientAddGroup.induction_on with
     | H x =>
       rw [QuotientAddGroup.eq_zero_iff, AddSubgroup.mem_addSubgroupOf]

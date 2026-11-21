@@ -72,7 +72,9 @@ theorem mem_pow_of_coeff {O σ : Type} [CommRing O] [Fintype σ] (a : Ideal O) (
 
 def Tr {O : Type} (σ : Type) [CommRing O] (a : Ideal O) (N : ℕ) : Ideal (MvPowerSeries σ O) where
   carrier := {f | ∀ n, coeff n f ∈ a ^ (N - Finsupp.degree n)}
-  add_mem' ha hb n := by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha n) (hb n)
+  add_mem' ha hb n := by
+    rw [map_add (coeff n)]
+    exact add_mem (ha n) (hb n)
   zero_mem' n := by simp
   smul_mem' g f hf n := by
     classical
@@ -124,8 +126,8 @@ theorem exists_sub_sum_mem_Tr {O σ : Type} [CommRing O] [Finite σ] (a : Ideal 
   classical
   refine ⟨(Finsupp.finite_of_degree_lt (σ := σ) N).toFinset.image (Finsupp.weight wt), fun n => ?_⟩
   by_cases hn : Finsupp.degree n < N
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sub, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     simp only [coeff_wcomp]
     rw [Finset.sum_eq_single (Finsupp.weight wt n), if_pos rfl, sub_self]
     · exact zero_mem _
@@ -250,7 +252,9 @@ theorem decompose_mem_of_mem_Kj [Finite A] {J : Ideal A} (hJ : J.IsHomogeneous �
     exact add_mem hx hy
   | smul c x hx h =>
     obtain ⟨d, hd⟩ := IsCO.res_surj (O := O) c
-    have hxJ : x ∈ J := (Ideal.span_le.2 fun _ hx => hx.1) hx
+    have hspan : Ideal.span {z | z ∈ J ∧ ∃ i, i ≠ j ∧ z ∈ 𝒜 i} ≤ J :=
+      Ideal.span_le.2 fun _ hz => hz.1
+    have hxJ : x ∈ J := hspan hx
     have e : c • x = d • x + (c - algebraMap O A d) * x := by rw [smul_eq_mul, Algebra.smul_def]; ring
     rw [e, DirectSum.decompose_add, DirectSum.add_apply, Submodule.coe_add, DirectSum.decompose_smul,
       DirectSum.smul_apply, Submodule.coe_smul]

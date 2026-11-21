@@ -173,7 +173,7 @@ theorem exists_bound_primeIdealZetaSum_not_prime :
     ∃ C : ℝ, ∀ s : ℝ, 1 < s →
       NumberField.Set.primeIdealZetaSum {𝔭 : HeightOneSpectrum (𝓞 K) | ¬ (Ideal.absNorm 𝔭.asIdeal).Prime} s ≤ C := by
   refine ⟨(Module.finrank ℚ K : ℝ) * ∑' m : ℕ, 1 / (m : ℝ) ^ 2, fun s hs => ?_⟩
-  unfold NumberField.Set.primeIdealZetaSum
+  rw [NumberField.Set.primeIdealZetaSum_def]
   refine tsum_le_of_sum_le' (mul_nonneg (Nat.cast_nonneg _) (tsum_nonneg fun m => by positivity))
     fun U => ?_
   exact sum_absNorm_rpow_neg_le_of_not_prime Subtype.val Subtype.val_injective U (fun x _ => x.2) hs
@@ -189,7 +189,7 @@ theorem exists_prime_absNorm_of_hasDirichletDensity {S : Set (HeightOneSpectrum 
     refine ⟨(hT.toFinset.card : ℝ) + (Module.finrank ℚ K : ℝ) * ∑' m : ℕ, 1 / (m : ℝ) ^ 2,
       add_nonneg (Nat.cast_nonneg _) (mul_nonneg (Nat.cast_nonneg _)
         (tsum_nonneg fun m => by positivity)), fun s hs => ?_⟩
-    unfold NumberField.Set.primeIdealZetaSum
+    rw [NumberField.Set.primeIdealZetaSum_def]
     refine tsum_le_of_sum_le' (add_nonneg (Nat.cast_nonneg _) (mul_nonneg (Nat.cast_nonneg _)
         (tsum_nonneg fun m => by positivity))) fun U => ?_
     rw [← Finset.sum_filter_add_sum_filter_not U

@@ -111,8 +111,8 @@ lemma gN_mul (P Q : MvPolynomial σ F) : gN (P * Q) = gN P * gN Q := by
   have key : ‖AddMonoidAlgebra.coeff (P * Q) (i + j)‖ = ‖AddMonoidAlgebra.coeff P i * AddMonoidAlgebra.coeff Q j‖ := by
     rw [coeff_mul]
     refine IsNonarchimedean.apply_sum_eq_of_lt (f := fun x : F => ‖x‖)
-      (l := fun p : (σ →₀ ℕ) × (σ →₀ ℕ) => AddMonoidAlgebra.coeff P p.1 * AddMonoidAlgebra.coeff Q p.2) (k := (i, j))
-      IsUltrametricDist.isNonarchimedean_norm (fun a => (norm_neg a).symm)
+      (g := fun p : (σ →₀ ℕ) × (σ →₀ ℕ) => AddMonoidAlgebra.coeff P p.1 * AddMonoidAlgebra.coeff Q p.2) (k := (i, j))
+      IsUltrametricDist.isNonarchimedean_norm (fun a => norm_neg a)
       (by simp) ?_
     rintro ⟨a, b⟩ hab hne
     replace hab : a + b = i + j := by simpa using hab

@@ -566,13 +566,17 @@ theorem cd_rd {X : Mx k r} (hX : inLieLev k r i X) : CD (E := E) k r i (fun f =>
       (continuous_id.prodMk continuous_const).continuousAt.preimage_mem_nhds (hU.mem_nhds hxU)
     filter_upwards [hmem] with c' hc'
     exact rd_rep hU hF hΦ hX (y := (c', x.2)) hc' hg
-  have hA := (ContinuousLinearMap.apply ℝ E (((0 : Fin r → ℂ), x.2 * X) : (Fin r → ℂ) × Mx k r)).hasFDerivAt.comp
-    x hF1d.hasFDerivAt
+  have hA := hF1d.hasFDerivAt.clm_apply
+    (hasFDerivAt_const (((0 : Fin r → ℂ), x.2 * X) : (Fin r → ℂ) × Mx k r) x)
   have hL2 := HasFDerivAt.comp x.1 (f := fun c' : Fin r → ℂ => ((c', x.2) : (Fin r → ℂ) × Mx k r)) hA
     (hasFDerivAt_prodMk_left x.1 x.2)
   have e1 : fderiv ℝ (fun c' => RdV X (Φ c') x.2) x.1 v =
-      fderiv ℝ (fderiv ℝ F) x ((v, 0) : (Fin r → ℂ) × Mx k r) ((0 : Fin r → ℂ), x.2 * X) :=
-    (congrArg (fun L => L v) (hL.fderiv_eq.trans hL2.fderiv) :)
+      fderiv ℝ (fderiv ℝ F) x ((v, 0) : (Fin r → ℂ) × Mx k r) ((0 : Fin r → ℂ), x.2 * X) := by
+    rw [hL.fderiv_eq]
+    erw [hL2.fderiv]
+    change fderiv ℝ F x 0 +
+      fderiv ℝ (fderiv ℝ F) x (v, 0) (0, x.2 * X) = _
+    rw [map_zero, zero_add]
   have hH := hF1.clm_apply (contDiffOn_const (c := ((v, 0) : (Fin r → ℂ) × Mx k r)))
   have hrep : ∀ y ∈ U, y.2 ∈ Glev k r i →
       (fun c g => fderiv ℝ (fun c' => Φ c' g) c v) y.1 y.2 = fderiv ℝ F y ((v, 0) : (Fin r → ℂ) × Mx k r) := by
@@ -581,11 +585,15 @@ theorem cd_rd {X : Mx k r} (hX : inLieLev k r i X) : CD (E := E) k r i (fun f =>
     rw [(Qx3.fam_hasFDerivAt hU hF hΦ hy hyG).fderiv]
     rfl
   have hR := rd_rep (Φ := fun c g => fderiv ℝ (fun c' => Φ c' g) c v) hU hH hrep hX hxU hg
-  have hH1 := (ContinuousLinearMap.apply ℝ E ((v, 0) : (Fin r → ℂ) × Mx k r)).hasFDerivAt.comp
-    x hF1d.hasFDerivAt
+  have hH1 := hF1d.hasFDerivAt.clm_apply
+    (hasFDerivAt_const ((v, 0) : (Fin r → ℂ) × Mx k r) x)
   have e2 : RdV X (fun g => fderiv ℝ (fun c' => Φ c' g) x.1 v) x.2 =
-      fderiv ℝ (fderiv ℝ F) x ((0 : Fin r → ℂ), x.2 * X) ((v, 0) : (Fin r → ℂ) × Mx k r) :=
-    hR.trans (congrArg (fun L => L ((0 : Fin r → ℂ), x.2 * X)) hH1.fderiv :)
+      fderiv ℝ (fderiv ℝ F) x ((0 : Fin r → ℂ), x.2 * X) ((v, 0) : (Fin r → ℂ) × Mx k r) := by
+    rw [hR]
+    erw [hH1.fderiv]
+    change fderiv ℝ F x 0 +
+      fderiv ℝ (fderiv ℝ F) x (0, x.2 * X) (v, 0) = _
+    rw [map_zero, zero_add]
   have hsym : IsSymmSndFDerivAt ℝ F x := hFx.isSymmSndFDerivAt (by
     simp only [minSmoothness_of_isRCLikeNormedField]; exact WithTop.coe_le_coe.2 (le_top : (2 : ℕ∞) ≤ ⊤))
   exact e1.trans ((hsym _ _).trans e2.symm)
@@ -756,12 +764,11 @@ theorem tl_smul {f : Mx k r → (Wq →L[ℂ] Wp)} (h : SmoothLev k r (Fin.last 
 theorem dir_smooth {Φ : Fn k r (Wq →L[ℂ] Wp)} (hΦ : Φ ∈ RadSp k r z z' π π') {c : Fin r → ℂ} (hc : c ∈ OmX r)
     (v : Fin r → ℂ) :
     SmoothLev k r (Fin.last r) (Qx5.Dp k r z z') (fun g' => fderiv ℝ (fun c' => Φ c' g') c v) := by
-  have h := Qx5.slice_smooth (Qx5.dirD_mem v hΦ) hc
-  have e : Qx5.dirD v Φ c = fun g' => fderiv ℝ (fun c' => Φ c' g') c v := by
-    funext g'
-    simp [Qx5.dirD, hc]
-  rw [e] at h
-  exact h
+  rintro g₀ ⟨hg, hD⟩
+  obtain ⟨U, F, hU, hx, hF, he⟩ := Qx3.sf_fderiv v (radSp_fam hΦ) (c, g₀) ⟨hc, hD⟩ hg
+  refine ⟨(fun g => (c, g)) ⁻¹' U, fun g => F (c, g), hU.preimage (by fun_prop), hx, ?_,
+    fun g hgU hgL => he (c, g) hgU hgL⟩
+  exact hF.comp (contDiff_const.prodMk contDiff_id).contDiffOn (fun _ hgU => hgU)
 
 variable (X : ActualOps k r z z' π π')
 

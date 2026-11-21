@@ -41,8 +41,7 @@ variable [Fintype ι] [DecidableEq ι]
 
 theorem ArithVariety.mem_mcPts_iff (P : ArithVariety n) (w : Coord n → ℂ) :
     w ∈ Geo.mcPts P.ideal ↔ unflatCone w ∈ P.points ℂ := by
-  rw [ArithVariety.points, Set.mem_setOf_eq, blockNonzero_unflatCone_iff, Geo.mcPts,
-    Set.mem_setOf_eq]
+  simp only [ArithVariety.points, Geo.mcPts, Set.mem_ofPred_eq, blockNonzero_unflatCone_iff]
   refine and_congr Iff.rfl (forall₂_congr fun f _ ↦ ?_)
   rw [← eval_map_flatCone, flatCone_unflatCone]
 
@@ -80,6 +79,7 @@ theorem ArithVariety.isMultiProjPrime (P : ArithVariety n) :
 namespace HermLine
 
 
+open scoped Classical in
 def toGeo (A : HermLine n) : Geo.HermLine (blockIdx n) where
   a := A.deg
   h w := if BlockNonzero (unflatCone w) then A.metric (unflatCone w) else 0

@@ -106,20 +106,19 @@ theorem measurePreserving_piProdEquiv {V : Type} [Fintype V] (A B : V → Type) 
     [∀ v, MeasurableSpace (B v)] (μ : ∀ v, Measure (A v)) (ν : ∀ v, Measure (B v)) [∀ v, SigmaFinite (μ v)]
     [∀ v, SigmaFinite (ν v)] :
     MeasurePreserving (piProdEquiv A B) (Measure.pi fun v => (μ v).prod (ν v))
-      ((Measure.pi fun v => μ v).prod (Measure.pi fun v => ν v)) where
-  measurable := (piProdEquiv A B).measurable
-  map_eq := by
-    refine (Measure.FiniteSpanningSetsIn.ext ?_ (isPiSystem_pi.prod isPiSystem_pi)
-      ((Measure.FiniteSpanningSetsIn.pi fun i ↦ (μ i).toFiniteSpanningSetsIn).prod
-      (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (ν i).toFiniteSpanningSetsIn))) ?_).symm
-    · refine (generateFrom_eq_prod generateFrom_pi generateFrom_pi ?_ ?_).symm
-      · exact (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (μ i).toFiniteSpanningSetsIn)).isCountablySpanning
-      · exact (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (ν i).toFiniteSpanningSetsIn)).isCountablySpanning
-    · rintro _ ⟨s, ⟨s, _, rfl⟩, ⟨_, ⟨t, _, rfl⟩, rfl⟩⟩
-      rw [MeasurableEquiv.map_apply]
-      rw [show (piProdEquiv A B) ⁻¹' (Set.univ.pi s ×ˢ Set.univ.pi t) =
-          (Set.univ.pi fun i ↦ s i ×ˢ t i) by
-          ext; simp [Set.mem_pi, forall_and, piProdEquiv]]
-      simp_rw [Measure.pi_pi, Measure.prod_prod, Measure.pi_pi, Finset.prod_mul_distrib]
+      ((Measure.pi fun v => μ v).prod (Measure.pi fun v => ν v)) := by
+  refine ⟨(piProdEquiv A B).measurable, ?_⟩
+  refine (Measure.FiniteSpanningSetsIn.ext ?_ (isPiSystem_pi.prod isPiSystem_pi)
+    ((Measure.FiniteSpanningSetsIn.pi fun i ↦ (μ i).toFiniteSpanningSetsIn).prod
+    (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (ν i).toFiniteSpanningSetsIn))) ?_).symm
+  · refine (generateFrom_eq_prod generateFrom_pi generateFrom_pi ?_ ?_).symm
+    · exact (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (μ i).toFiniteSpanningSetsIn)).isCountablySpanning
+    · exact (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (ν i).toFiniteSpanningSetsIn)).isCountablySpanning
+  · rintro _ ⟨s, ⟨s, _, rfl⟩, ⟨_, ⟨t, _, rfl⟩, rfl⟩⟩
+    rw [MeasurableEquiv.map_apply]
+    rw [show (piProdEquiv A B) ⁻¹' (Set.univ.pi s ×ˢ Set.univ.pi t) =
+        (Set.univ.pi fun i ↦ s i ×ˢ t i) by
+        ext; simp [Set.mem_pi, forall_and, piProdEquiv]]
+    simp_rw [Measure.pi_pi, Measure.prod_prod, Measure.pi_pi, Finset.prod_mul_distrib]
 
 end PI.AprimeInfG

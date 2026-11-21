@@ -102,7 +102,7 @@ def Ugood : Submodule ℂ S where
     simpa [map_smul, inner_smul_right] using (IsPD.const c).mul (hu w)
 
 theorem Ugood_eq_top (hrep : IsURepOn (Kset (allPos N)) σ) (hfin : FiniteDimensional ℂ S)
-    (hst : IsKStableOn (allPos N) σ S) : Ugood σ S = ⊤ := by
+    (hst : IsKStableOn (allPos N) σ S) : Ugood (σ := σ) (S := S) = ⊤ := by
   haveI := hfin
   by_contra hne
   obtain ⟨φ, hφ0, hle⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hne)
@@ -113,7 +113,8 @@ theorem Ugood_eq_top (hrep : IsURepOn (Kset (allPos N)) σ) (hfin : FiniteDimens
   have hg : Continuous g := φC.continuous.comp (orb_cont hrep hst u)
   have hA : ∀ f ∈ algA N, ∫ x, f x * g x ∂(muU N) = 0 := by
     intro f hf
-    have hmem : T hst f u ∈ Ugood σ S := fun w => isPositiveDefinite_matrix_coefficient_of_mem_algA hrep hst hf u w
+    have hmem : T hst f u ∈ Ugood (σ := σ) (S := S) :=
+      fun w => isPositiveDefinite_matrix_coefficient_of_mem_algA hrep hst hf u w
     have h0 : φ (T hst f u) = 0 := LinearMap.mem_ker.mp (hle hmem)
     have hint : Integrable (fun x => f x • orb hst u x) (muU N) :=
       integrable_cont (f.continuous.smul (orb_cont hrep hst u))
@@ -182,7 +183,7 @@ end
 
 theorem polyCoef : PI.PolyCoef := by
   intro N H _ _ σ S hrep hfin hst v hv w
-  have hgood : (⟨v, hv⟩ : S) ∈ Ugood σ S := by
+  have hgood : (⟨v, hv⟩ : S) ∈ Ugood (σ := σ) (S := S) := by
     rw [Ugood_eq_top hrep hfin hst]
     trivial
   obtain ⟨k, P, hP⟩ := hgood w

@@ -54,7 +54,7 @@ theorem UpperTheory.V.AlgebraTools.Conn.drop :
     intro q
     simp only [T, Set.mem_iUnion, Set.mem_image, exists_prop]
   have hmA : Ideal.comap (algebraMap A R) (maximalIdeal R) = maximalIdeal A :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _)
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (maximalIdeal R))
   have hTprime : ∀ q ∈ T, q.IsPrime := by
     intro q hq
     obtain ⟨I, _, p, hp, rfl⟩ := (memT q).mp hq
@@ -68,7 +68,7 @@ theorem UpperTheory.V.AlgebraTools.Conn.drop :
       (IsLocalRing.maximalIdeal.isMaximal A).eq_of_le Ideal.IsPrime.ne_top' hle
     haveI : (Ideal.comap (algebraMap A R) p).IsMaximal := heq ▸ IsLocalRing.maximalIdeal.isMaximal A
     have hpm : p = maximalIdeal R :=
-      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_of_isIntegral_of_isMaximal_comap p this)
+      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_of_isIntegral_of_isMaximal_under p this)
     exact UpperTheory.V.AlgebraTools.Conn.max_notMem_minimalPrimes I (hS I hI) (hpm ▸ hp)
   have hsub := (Ideal.subset_union_prime (s := hT.toFinset) (f := id) ⊥ ⊥
     (fun q hq _ _ => hTprime q (hT.mem_toFinset.mp hq)) (I := maximalIdeal A)).not.mpr hnot

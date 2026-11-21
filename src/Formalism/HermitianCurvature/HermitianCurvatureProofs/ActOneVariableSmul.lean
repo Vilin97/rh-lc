@@ -73,7 +73,7 @@ theorem headPic_of (hJ : HeadJ) : HeadPic := by
   have hJe := hJ Wp Wq P p F j hj w h hh γ hF hw hγ hΩ φ hφ t ht e
 
   have hraw := raw_eq hn y hdom (P5.act (P5.bTl L ⟨0, by change 0 < P.r - j; omega⟩ (D.positionted w)) Φ e) ht0
-  have hact := rd_act hn y hc hdom X hL (D.positionted w) Φ e
+  have hact := rd_act hn y hdom X hL (D.positionted w) Φ e
   refine hraw.trans ?_
   change ((‖t‖ ^ (2 * (P.r - j) + P.k) : ℝ) : ℂ) • (Rd (P5.act _ Φ e)).1 t = _
   rw [hact, hRφ]

@@ -6,7 +6,7 @@ public import Mathlib
 
 theorem UpperTheory.multilinear_vanish_lattice :
     ∀ {ι : Type} [Finite ι] [DecidableEq ι] {M : ι → Type} {N : Type} [∀ i, AddCommGroup (M i)] [∀ i, Module ℂ (M i)]
-        [AddCommGroup N] [Module ℂ N] (T : MultilinearMap ℂ M N) (L G : ∀ i, Set (M i)),
+        [AddCommGroup N] [Module ℂ N] (T : MultilinearMap (RingHom.id ℂ) M N) (L G : ∀ i, Set (M i)),
         (∀ v : ∀ i, M i, (∀ i, v i ∈ L i) → T v = 0) →
         (∀ i, ∀ w ∈ G i, ∃ w0 ∈ L i, ∀ v : ∀ i, M i, T (Function.update v i w0) = 0 → T (Function.update v i w) = 0) →
         ∀ v : ∀ i, M i, (∀ i, v i ∈ Submodule.span ℂ (G i)) → T v = 0 := by

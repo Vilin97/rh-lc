@@ -21,7 +21,7 @@ theorem UpperTheory.V.CA.u_poly :
       funext g
       by_cases hg : g = 1
       · subst hg; simp [MonoidAlgebra.one_def]
-      · simp [MonoidAlgebra.one_def, hg, Ne.symm hg]
+      · simp [MonoidAlgebra.one_def, hg]
     rw [h, ← MvPolynomial.comp_aeval_apply, MvPolynomial.aeval_eq_eval, h1, map_one]
   · intro x y
     have h := congrArg (MvPolynomial.aeval (R := A) (Sum.elim (fun g => x.coeff g) (fun g => y.coeff g))) hm
@@ -29,8 +29,8 @@ theorem UpperTheory.V.CA.u_poly :
     refine Eq.trans ?_ h
     change MvPolynomial.aeval _ P = _
     congr 2
-    rw [MonoidAlgebra.coeff_mul_apply_left, Finsupp.sum_fintype]
-    simp
+    funext g
+    rw [MonoidAlgebra.coeff_mul_apply_left, Finsupp.sum_fintype] <;> simp
   · intro S T _ _ _ _ f x
     change MvPolynomial.aeval _ P = f (MvPolynomial.aeval _ P)
     rw [MvPolynomial.comp_aeval_apply]

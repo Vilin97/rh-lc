@@ -56,8 +56,9 @@ lemma piece (hι : Function.Injective ι) (hg : Continuous g) (hf : ∀ v, f v =
     simpa using e
 
 
-noncomputable def restr (B : Set X) (fam : X → Measure V) : X → Measure V :=
-  fun b => if b ∈ B then fam b else 0
+noncomputable def restr (B : Set X) (fam : X → Measure V) : X → Measure V := by
+  classical
+  exact fun b => if b ∈ B then fam b else 0
 
 lemma restr_family (hι : Function.Injective ι) (hg : Continuous g) (hf : ∀ v, f v = ι (g v))
     {B B₂ : Set X} (hB₂ : IsOpen B₂) (hsub : B₂ ⊆ B) {fam : X → Measure V}

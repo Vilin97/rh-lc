@@ -42,15 +42,20 @@ theorem qminor_sum {A : Type} [Ring A] [Algebra ℂ A] {n q p : ℕ} (E : Fin n 
     simp [sub_sub]
 
 theorem prod_mem {V : Type} [AddCommGroup V] [Module ℂ V] (P : Submodule ℂ V) :
-    ∀ l : List (Module.End ℂ V), (∀ T ∈ l, ∀ v ∈ P, T v ∈ P) → (∃ T ∈ l, ∀ v, T v ∈ P) → ∀ v, l.prod v ∈ P
-  | [], _, h, _ => by simp at h
-  | T :: l, h1, h2, v => by
+    ∀ l : List (Module.End ℂ V), (∀ T ∈ l, ∀ v ∈ P, T v ∈ P) → (∃ T ∈ l, ∀ v, T v ∈ P) → ∀ v, l.prod v ∈ P := by
+  intro l
+  induction l with
+  | nil =>
+    intro _ h _
+    simp at h
+  | cons T l ih =>
+    intro h1 h2 v
     rw [List.prod_cons, Module.End.mul_apply]
     obtain ⟨S, hS, hS'⟩ := h2
     rcases List.mem_cons.mp hS with rfl | hS
     · exact hS' _
     · exact h1 T List.mem_cons_self _
-        (prod_mem P l (fun T hT => h1 T (List.mem_cons_of_mem _ hT)) ⟨S, hS, hS'⟩ v)
+        (ih (fun T hT => h1 T (List.mem_cons_of_mem _ hT)) ⟨S, hS, hS'⟩ v)
 
 variable {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
 

@@ -15,7 +15,7 @@ theorem twNormLat_main : PI.TwNormLat.TwNormLat := by
   intro E _ _ _ P N c kj j hp hq h hB
   have Madd : ∀ u v : Fin (N + c) → E, h⁻¹ u ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0 →
       h⁻¹ v ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0 → h⁻¹ (u + v) ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0 :=
-    fun u v hu hv => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+    fun u v hu hv => by rw [map_add]; exact add_mem hu hv
   have Msmul : ∀ (t : E) (v : Fin (N + c) → E), IntAt P t → h⁻¹ v ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0 →
       h⁻¹ (t • v) ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0 := fun t v ht hv => by
     rw [map_smul, mem_lam]; rw [mem_lam] at hv
@@ -28,7 +28,7 @@ theorem twNormLat_main : PI.TwNormLat.TwNormLat := by
     rw [LinearEquiv.coe_inv, LinearEquiv.apply_symm_apply, mem_lam] at this
     simpa [smul_eq_mul] using this l
   obtain ⟨K, b, hKj, hbM, hbl, hUT, hrep⟩ :=
-    herm P (fun v => h⁻¹ v ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0) Madd Msmul Mlam hp hq j Mbd
+    herm P (fun v => h⁻¹ v ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0) hp hq j Mbd
   have hq0 := qE_ne_zero P hp
   have hbd : ∀ l, b l l ≠ 0 := fun l => by rw [hbl]; exact inv_ne_zero (pow_ne_zero _ hq0)
   let d : Fin (N + c) → E := fun l => if l.1 < N then 1 else qE P ^ K l
@@ -155,7 +155,7 @@ theorem twNormLat_main : PI.TwNormLat.TwNormLat := by
       rw [Pi.sub_apply, sub_eq_zero] at this
       rw [this]; exact hw l
     · intro H
-      exact comb_mem P _ Madd Msmul Mlam b hbM _ H
+      exact comb_mem P _ (Madd := Madd) (Msmul := Msmul) (Mlam := Mlam) b hbM _ H
   have hn : ∀ i, -(j : ℤ) ≤ n i ∧ n i ≤ 0 := by
     intro i
     simp only [n]

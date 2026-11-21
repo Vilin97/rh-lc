@@ -18,17 +18,16 @@ variable {B : Type*} [CommRing B]
 
 theorem algebraMap_quot_maximalIdeal_surjective (𝔪 : Ideal B) [𝔪.IsMaximal] (C : Type*)
     [CommRing C] [Algebra B C] [IsLocalization.AtPrime C 𝔪] :
-    letI : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪;
+    have : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
     Function.Surjective (algebraMap B (C ⧸ IsLocalRing.maximalIdeal C)) := by
-  have : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
-  intro y
+  intro _ y
   obtain ⟨x, hx⟩ := (IsLocalization.AtPrime.equivQuotMaximalIdeal 𝔪 C).surjective y
   obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective x
   exact ⟨b, by rw [← hx]; rfl⟩
 
 theorem isSimpleModule_quot_maximalIdeal (𝔪 : Ideal B) [𝔪.IsMaximal] (C : Type*) [CommRing C]
     [Algebra B C] [IsLocalization.AtPrime C 𝔪] :
-    letI : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪;
+    have : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
     IsSimpleModule B (C ⧸ IsLocalRing.maximalIdeal C) := by
   have : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
   let : Field (C ⧸ IsLocalRing.maximalIdeal C) := Ideal.Quotient.field _
@@ -59,6 +58,7 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι] (𝔪 : ι → Ideal B) [h�
   (C : ι → Type*) [∀ i, CommRing (C i)] [∀ i, Algebra B (C i)]
   [∀ i, IsLocalization.AtPrime (C i) (𝔪 i)]
 
+omit [Fintype ι] in
 
 theorem length_tensor_quot (hinj : Function.Injective 𝔪) (i j : ι) :
     Module.length (C i) (C i ⊗[B] (B ⧸ 𝔪 j)) = if i = j then 1 else 0 := by
@@ -79,6 +79,7 @@ theorem length_tensor_quot (hinj : Function.Injective 𝔪) (i j : ι) :
     rw [htop, Module.length_eq_zero_iff]
     exact Ideal.Quotient.subsingleton_iff.mpr rfl
 
+omit [Fintype ι] [DecidableEq ι] in
 
 theorem pi_mk_injective (hall : ∀ M : Ideal B, M.IsMaximal → ∃ i, M = 𝔪 i) (N : Type*)
     [AddCommGroup N] [Module B N] :
@@ -130,7 +131,7 @@ theorem length_eq_sum_of_isFiniteLength (hinj : Function.Injective 𝔪)
         length_tensor_quot 𝔪 C hinj i j]
     rw [Module.length_eq_add_of_exact (f.restrictScalars A) (g.restrictScalars A) hf hg hfg, ih]
     simp only [key, add_mul, Finset.sum_add_distrib, ite_mul, one_mul, zero_mul,
-      Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      Finset.sum_ite_eq', Finset.mem_univ, ite_true]
 
 theorem length_eq_sum (hinj : Function.Injective 𝔪)
     (hall : ∀ M : Ideal B, M.IsMaximal → ∃ i, M = 𝔪 i) (A : Type*) [CommRing A] [Algebra A B]

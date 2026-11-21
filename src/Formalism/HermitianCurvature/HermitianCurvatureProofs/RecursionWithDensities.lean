@@ -75,7 +75,7 @@ namespace Formalism.FourierDecayAlt.P.RecursionWithDensities.A2
 
 open Formalism.FourierDecayAlt.TA Finset Filter Topology
 open scoped ComplexConjugate InnerProductSpace
-open Formalism.FourierDecayAlt.P.BudgetLiftBounds Formalism.FourierDecayAlt.TC
+open Formalism.FourierDecayAlt.TC
 
 end Formalism.FourierDecayAlt.P.RecursionWithDensities.A2
 

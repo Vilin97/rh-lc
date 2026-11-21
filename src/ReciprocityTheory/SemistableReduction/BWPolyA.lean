@@ -46,8 +46,7 @@ theorem bwp_sepPoly_fin (k : ℕ) : ∀ (n : ℕ) (G : (Fin n → ℂ) → ℂ),
   | 0, G, _ => ⟨MvPolynomial.C (G 0), fun y => by
       rw [MvPolynomial.eval_C, Subsingleton.elim y 0]⟩
   | n + 1, G, hG => by
-    obtain ⟨S, _, hS⟩ :=
-      (Set.infinite_univ (α := ℂ)).exists_subset_card_eq (k + 1)
+    obtain ⟨S, hS⟩ := Infinite.exists_subset_card_eq ℂ (k + 1)
     have hsub : ∀ c : ℂ, ∃ F : MvPolynomial (Fin n) ℂ,
         ∀ y', G (Fin.cons c y') = MvPolynomial.eval y' F := by
       intro c

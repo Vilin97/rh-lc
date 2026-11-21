@@ -61,9 +61,11 @@ theorem decomp_direction {f : G → ℂ}
     simp_rw [e1]
     rw [integral_tsum_of_summable_integral_norm hTi hsum]
     congr 1
+    funext t
     rw [← tsum_mul_left]
     congr 1
     funext p
+    simp only [T, hD]
     ring
   · congr 1; funext t; rw [mul_comm]
 
@@ -81,8 +83,8 @@ theorem decomp_iter {ε : ℝ} (hε : 0 < ε) : ∀ {d : ℕ} (X : Fin d → �
       rw [Subsingleton.elim t 0]; exact Metric.mem_closedBall_self hε.le
     · have hv : (volume : Measure (Fin 0 → ℝ)).real univ = 1 := by
         simp [Measure.real, MeasureTheory.volume_pi]
-      simp [h.revProdExp_zero, hv]
-  | d + 1, X, f, hf, hfc => by
+      simp only [Fin.sum_univ_one, h.revProdExp_zero, one_mul, integral_const, hv, one_smul]
+  | Nat.succ d, X, f, hf, hfc => by
     let := h.chartedSpace
     obtain ⟨f₁, hf₁, hf₁c, g, k, hg, hk, hgs, hks, hdec⟩ :=
       decomp_direction h hf hfc (X 0) hε

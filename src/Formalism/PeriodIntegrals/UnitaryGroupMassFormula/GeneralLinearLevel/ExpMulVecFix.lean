@@ -18,9 +18,11 @@ open Formalism.REAL Formalism.QuantumDeterminants
 
 theorem exp_mulVec_fix {n : ℕ} (Y : Matrix (Fin n) (Fin n) ℂ) (v : Fin n → ℂ) (h : Y *ᵥ v = 0) :
     NormedSpace.exp Y *ᵥ v = v := by
-  have hs := NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) Y
+  have hs : HasSum (fun m : ℕ => ((m.factorial : ℂ)⁻¹) • Y ^ m) (NormedSpace.exp Y) :=
+    open scoped Matrix.Norms.Operator in
+    NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) Y
   have h2 := hs.map (Matrix.mulVec.addMonoidHomLeft v)
-    (Continuous.matrix_mulVec continuous_id continuous_const)
+    (Continuous.matrix_mulVec continuous_id (continuous_const (y := v)))
   have e : ((Matrix.mulVec.addMonoidHomLeft v) ∘ fun m : ℕ => ((m.factorial : ℂ)⁻¹) • Y ^ m) =
       fun m => if m = 0 then v else 0 := by
     funext m

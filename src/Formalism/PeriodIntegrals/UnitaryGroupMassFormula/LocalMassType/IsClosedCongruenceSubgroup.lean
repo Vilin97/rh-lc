@@ -217,7 +217,7 @@ theorem isOpen_congruence_tuples (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n
   have hC : IsClosed {p : Sg (E := E) v g a × (Fin a → Fin n → Fv F v ⊗[F] E) |
       (∑ i, (p.1 : Fin a → Fv F v ⊗[F] E) i • p.2 i) ∈ latLoc (E := E) v Λ} := by
     refine (LocMassOrdKv.isClosed_latLoc (σ := σ) (J := J) (v := v) Λ hSD).preimage ?_
-    exact continuous_finset_sum _ fun i _ =>
+    exact continuous_finsetSum _ fun i _ =>
       ((continuous_apply i).comp (continuous_subtype_val.comp continuous_fst)).smul
         ((continuous_apply i).comp continuous_snd)
   have himg : (P2 v Λ a)ᶜ = Prod.snd '' {p : Sg (E := E) v g a × (Fin a → Fin n → Fv F v ⊗[F] E) |

@@ -87,7 +87,7 @@ namespace IdeleGroup
 
 instance secondCountableTopology_standardOpenSubgroup :
     SecondCountableTopology (standardOpenSubgroup K) :=
-  (standardOpenSubgroupEquiv K).toHomeomorph.isEmbedding.secondCountableTopology
+  (standardOpenSubgroupEquiv (K := K)).toHomeomorph.isEmbedding.secondCountableTopology
 
 instance secondCountableTopology : SecondCountableTopology (IdeleGroup K) := by
   let U : IdeleGroup K ⧸ standardOpenSubgroup K → Set (IdeleGroup K) :=
@@ -343,7 +343,7 @@ theorem map_mul_left_infinitePlaceMeasure (w : InfinitePlace K) {a : w.Completio
     rw [Measure.map_map (measurable_const_mul a) e.symm.continuous.measurable]
     have : (a * ·) ∘ e.symm = e.symm ∘ (e a * ·) := funext he
     rw [this, ← Measure.map_map e.symm.continuous.measurable (measurable_const_mul _),
-      Real.map_volume_mul_left hea, Measure.map_smul]
+      Real.map_volume_mul_left hea, Measure.map_smul _ e.symm.continuous.measurable.aemeasurable]
     congr 2
     have h0 : e 0 = 0 := map_zero (ringEquivRealOfIsReal hw)
     rw [abs_inv, ← Real.norm_eq_abs, e.isometry.norm_map_of_map_zero h0, mult, if_pos hw,
@@ -363,7 +363,9 @@ theorem map_mul_left_infinitePlaceMeasure (w : InfinitePlace K) {a : w.Completio
     rw [Measure.map_map (measurable_const_mul a) e.symm.continuous.measurable]
     have : (a * ·) ∘ e.symm = e.symm ∘ (e a * ·) := funext he
     rw [this, ← Measure.map_map e.symm.continuous.measurable (measurable_const_mul _),
-      Measure.map_smul, map_mul_left_volume_complex hea, smul_comm, Measure.map_smul]
+      Measure.map_smul _ (measurable_const_mul (e a)).aemeasurable,
+      map_mul_left_volume_complex hea, smul_comm,
+      Measure.map_smul _ e.symm.continuous.measurable.aemeasurable]
     congr 2
     have h0 : e 0 = 0 := map_zero (ringEquivComplexOfIsComplex hc)
     rw [e.isometry.norm_map_of_map_zero h0, mult, if_neg hw]

@@ -38,5 +38,5 @@ theorem UpperTheory.V.CA.co_coprod :
   intro O _ _ _ _ T _ B _ _ _
   haveI := Fintype.ofFinite T
   choose WB hWB using fun t => co_coprod_pres O (B t)
-  obtain ⟨R, i1, i2, i3, i, _, _, h, -⟩ := coprod O Unit T B WB hWB
+  obtain ⟨R, i1, i2, i3, i, _, _, h, -⟩ := UpperTheory.V.Alg.coprod O Unit T B WB hWB
   exact ⟨R, i1, i2, i3, i, h⟩

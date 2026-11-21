@@ -50,7 +50,7 @@ private theorem hom_two {A : Type} [CommRing A] {n : ℕ} (P : MvPolynomial (Fin
 theorem UpperTheory.V.AlgebraTools.Det.expand :
     ∀ {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet n A G) (y : MonoidAlgebra A G) (B : Type) [CommRing B] [Algebra A B] (s t : B),
     D.D B (MonoidAlgebra.single 1 s + t • MonoidAlgebra.mapRingHom G (algebraMap A B) y) =
-      ∑ i ∈ Finset.range (n + 1), algebraMap A B (D.lam i y) * s ^ (n - i) * t ^ i := by
+    ∑ i ∈ Finset.range (n + 1), algebraMap A B (D.lam i y) * s ^ (n - i) * t ^ i := by
   intro n A G _ _ D y B _ _ s t
   let y2 : Fin 2 → MonoidAlgebra A G := ![1, y]
   have hP := UpperTheory.V.AlgebraTools.Det.genHomog D 2 y2

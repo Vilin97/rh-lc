@@ -18,6 +18,10 @@ section CsSpan
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+local notation "𝒮" => tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)
+local notation "ι" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
+
 theorem csSpan_approx (hA : Formalism.UG.CS.IntAdApprox) (D : 𝓞 F) (hD : D ≠ 0) {s : 𝒜} (hs : s ∈ 𝒮) :
     ∃ x : E, IsIntegral ℤ x ∧ ∃ w ∈ 𝒮, s = ι x + levelafC E D * w := by
   refine Subring.closure_induction
@@ -134,7 +138,7 @@ theorem csSpan_back (hA : Formalism.UG.CS.IntAdApprox) (Λ : Submodule (𝓞 E) 
     refine hM _ fun i => ?_
     by_cases h : i = k
     · subst h; simp only [Pi.single_eq_same]; exact one_mem _
-    · rw [Pi.single_apply, if_neg h]; exact zero_mem _
+    · rw [Pi.single_apply, ite_eq_right h]; exact zero_mem _
   have hdec : u = (fun i => ι (x i)) +
       ∑ k, (⟨w k, hw k⟩ : 𝒮) • (fun i => ι ((Pi.single k β : n → E) i)) := by
     ext i
@@ -143,7 +147,7 @@ theorem csSpan_back (hA : Formalism.UG.CS.IntAdApprox) (Λ : Submodule (𝓞 E) 
       rw [Pi.single_eq_same, Subring.smul_def, smul_eq_mul, hβ, adelstab_incl_C, mul_comm]
     · intro k _ hki
       show (_ : 𝒮) • ι ((Pi.single k β : n → E) i) = 0
-      rw [Pi.single_apply, if_neg (Ne.symm hki), map_zero, smul_zero]
+      rw [Pi.single_apply, ite_eq_right (Ne.symm hki), map_zero, smul_zero]
     · exact fun h => absurd (Finset.mem_univ i) h
   rw [hdec]
   exact add_mem (Submodule.subset_span ⟨x, hxmem, rfl⟩)

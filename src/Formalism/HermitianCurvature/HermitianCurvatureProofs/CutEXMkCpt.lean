@@ -132,7 +132,7 @@ theorem mkCpt : MkCpt := by
     rw [if_pos hD] at hmk
     obtain ⟨-, hΦne⟩ := smul_ne_zero_iff.1 hmk
     have hμ' : Matrix.of (PBI.chart (Matrix.of.symm (D.castM e g))).2.2 ∈ B.GV P.k (P.r - P.r) := by
-      simpa [PBI.chart] using hμ
+      simpa only [PBI.chart, Equiv.apply_symm_apply] using hμ
     have hK' : (PBI.chart (Matrix.of.symm (D.castM e g))).2 ∈ K := by
       by_contra hn
       exact hΦne (hsupp _ ((glev_last_iff hρ _).2 hμ') hn)

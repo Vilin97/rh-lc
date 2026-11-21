@@ -73,7 +73,7 @@ theorem UpperTheory.V.CA.cpl_quot :
   haveI : IsAdicComplete J (R ⧸ K) := by
     haveI := precomplete_quot (maximalIdeal R) K
     haveI : IsHausdorff (maximalIdeal R) (R ⧸ K) :=
-      IsHausdorff.of_le_jacobson _ _ (by rw [jacobson_eq_maximalIdeal _ bot_ne_top])
+      IsHausdorff.of_le_jacobson _ _ (ringJacobson_eq_maximalIdeal R).ge
     exact (IsAdicComplete.map_algebraMap_iff (S := R ⧸ K) (maximalIdeal R) (R ⧸ K)).2 ⟨⟩
   let g : C' →+* R ⧸ K := π.liftOfSurjective hπ ⟨(Ideal.Quotient.mk K).comp (algebraMap C R), fun c hc => by
     rw [RingHom.mem_ker, RingHom.comp_apply, Ideal.Quotient.eq_zero_iff_mem]

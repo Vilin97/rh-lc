@@ -27,7 +27,7 @@ variable {I J K : Cx R} (μ : Pair I J K) {E : Spc}
 def awF {n m k : ℤ} (hk : n + m = k) (a : Cochain ((chains R).obj E) I n) (b : Cochain ((chains R).obj E) J m)
     (N : ℕ) (w : ℤ) (h : -(N : ℤ) + k = w) (U : Scheme.{0}) (x : Sx E N U) : Sec (K.X w) U :=
   ∑ p : Fin (N + 1), (m * (p : ℕ)).negOnePow • μ.mul U (-((p : ℕ) : ℤ) + n) (-((N - p : ℕ) : ℤ) + m) w (by omega)
-      (ev a p _ rfl U (x.sub 0 p (by omega))) (ev b (N - p) _ rfl U (x.sub p (N - p) (by omega)))
+      (ev R a p _ rfl U (x.sub 0 p (by omega))) (ev R b (N - p) _ rfl U (x.sub p (N - p) (by omega)))
 
 theorem awF_res {n m k : ℤ} (hk : n + m = k) (a : Cochain ((chains R).obj E) I n) (b : Cochain ((chains R).obj E) J m)
     (N : ℕ) (w : ℤ) (h : -(N : ℤ) + k = w) {V U : Scheme.{0}} (g : V ⟶ U) (x : Sx E N U) :
@@ -136,7 +136,7 @@ section Op
 variable {S : Type} [CommRing S] {I : Cx S} {J : Cx R} (ρ : SemiMap I J) {E : Spc} {n : ℤ}
 
 theorem image_cochain_exists (a : Cochain ((chains S).obj E) I n) : ∃ b, ρ.IsImage a b :=
-  ev_exists (fun p s h U x => ρ.app U s (ev a p s h U x)) (fun p s h V U g x => by rw [ρ.nat, ev_res])
+  ev_exists (fun p s h U x => ρ.app U s (ev S a p s h U x)) (fun p s h V U g x => by rw [ρ.nat, ev_res])
 
 theorem image_unique {a : Cochain ((chains S).obj E) I n} {b b' : Cochain ((chains R).obj E) J n}
     (h : ρ.IsImage a b) (h' : ρ.IsImage a b') : b = b' :=
@@ -217,17 +217,17 @@ theorem Pair.aw_exists {R : Type} [CommRing R] {I J K : Cx R} (μ : Pair I J K) 
 
 theorem SemiMap.op_spec {S R : Type} [CommRing S] [CommRing R] {I : Cx S} {J : Cx R} (ρ : SemiMap I J) (E : Spc) (n : ℤ)
     (α : Cocycle ((chains S).obj E) I n) (β : Cocycle ((chains R).obj E) J n) :
-    (∀ (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U), ev β.1 p s h U x = ρ.app U s (ev α.1 p s h U x)) →
+    (∀ (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U), ev R β.1 p s h U x = ρ.app U s (ev S α.1 p s h U x)) →
     ρ.op.app E n (CohomologyClass.mk α) = CohomologyClass.mk β :=
   pick_spec (P := fun c : NatOp I J => ∀ (E : Spc) (n : ℤ) (α : Cocycle ((chains S).obj E) I n)
     (β : Cocycle ((chains R).obj E) J n),
     (∀ (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U),
-      ev β.1 p s h U x = ρ.app U s (ev α.1 p s h U x)) → c.app E n (CohomologyClass.mk α) = CohomologyClass.mk β)
+      ev R β.1 p s h U x = ρ.app U s (ev S α.1 p s h U x)) → c.app E n (CohomologyClass.mk α) = CohomologyClass.mk β)
     ⟨opMap ρ, fun _ _ α β h => congrArg CohomologyClass.mk (imgc_eq ρ α β h)⟩ E n α β
 
 theorem SemiMap.image_exists {S R : Type} [CommRing S] [CommRing R] {I : Cx S} {J : Cx R} (ρ : SemiMap I J) (E : Spc) (n : ℤ)
     (α : Cocycle ((chains S).obj E) I n) : ∃ β : Cocycle ((chains R).obj E) J n,
-    ∀ (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U), ev β.1 p s h U x = ρ.app U s (ev α.1 p s h U x) :=
+    ∀ (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U), ev R β.1 p s h U x = ρ.app U s (ev S α.1 p s h U x) :=
   ⟨imgc ρ α, imgc_spec ρ α⟩
 
 theorem cup_op_spec :

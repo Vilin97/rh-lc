@@ -35,3 +35,5 @@ theorem _root_.GlobalTheory.T.residue_normal_of_profinite_invariants : ∀ {A B 
   rw [← hfb, minpoly.algHom_eq f hf]
   have hs := (hn.splits (Ideal.Quotient.mk Q' b')).map f.toRingHom
   rwa [Polynomial.map_map, AlgHom.toRingHom_eq_coe, f.comp_algebraMap] at hs
+
+end

@@ -88,7 +88,7 @@ theorem isDomain_of_isAdicComplete {π : B} [IsAdicComplete (span {π}) B]
 
 theorem isDiscreteValuationRing_of_isAdicComplete {π : B} [IsAdicComplete (span {π}) B]
     (hmax : (span {π}).IsMaximal) (hpow : ∀ n : ℕ, π ^ n ≠ 0) :
-    haveI := isDomain_of_isAdicComplete hmax hpow
+    haveI := isDomain_of_isAdicComplete hmax hpow;
     IsDiscreteValuationRing B ∧ Irreducible π := by
   have := isDomain_of_isAdicComplete hmax hpow
   have := hmax
@@ -321,7 +321,7 @@ theorem isDomain_bDeRhamPlus {ξ : 𝕎R♭} (hξ : RingHom.ker (fontaineTheta R
 theorem isDiscreteValuationRing_bDeRhamPlus {ξ : 𝕎R♭}
     (hξ : RingHom.ker (fontaineTheta R p) = span {ξ}) (hξ0 : ξ ∈ nonZeroDivisors 𝕎R♭)
     (hF : Function.Surjective (frobenius (ModP R p) p)) (hK : IsField (Localization.Away (p : R))) :
-    haveI := isDomain_bDeRhamPlus hξ hξ0 hF hK
+    haveI := isDomain_bDeRhamPlus hξ hξ0 hF hK;
     IsDiscreteValuationRing (BDeRhamPlus R p) := by
   have := isAdicComplete_bDeRhamPlus hξ
   have := hK.nontrivial
@@ -341,7 +341,7 @@ theorem irreducible_wittToBDeRhamPlus {ξ : 𝕎R♭}
 
 theorem maximalIdeal_bDeRhamPlus {ξ : 𝕎R♭} (hξ : RingHom.ker (fontaineTheta R p) = span {ξ})
     (hF : Function.Surjective (frobenius (ModP R p) p)) (hK : IsField (Localization.Away (p : R))) :
-    haveI := isLocalRing_bDeRhamPlus hξ hF hK
+    haveI := isLocalRing_bDeRhamPlus hξ hF hK;
     maximalIdeal (BDeRhamPlus R p) = RingHom.ker (thetaBDeRhamPlus R p) :=
   haveI := isLocalRing_bDeRhamPlus hξ hF hK
   (IsLocalRing.eq_maximalIdeal (isMaximal_ker_thetaBDeRhamPlus hF hK)).symm
@@ -349,7 +349,7 @@ theorem maximalIdeal_bDeRhamPlus {ξ : 𝕎R♭} (hξ : RingHom.ker (fontaineThe
 theorem maximalIdeal_bDeRhamPlus_eq_span {ξ : 𝕎R♭}
     (hξ : RingHom.ker (fontaineTheta R p) = span {ξ})
     (hF : Function.Surjective (frobenius (ModP R p) p)) (hK : IsField (Localization.Away (p : R))) :
-    haveI := isLocalRing_bDeRhamPlus hξ hF hK
+    haveI := isLocalRing_bDeRhamPlus hξ hF hK;
     maximalIdeal (BDeRhamPlus R p) = span {wittToBDeRhamPlus R p ξ} :=
   (maximalIdeal_bDeRhamPlus hξ hF hK).trans (ker_thetaBDeRhamPlus hξ)
 

@@ -99,6 +99,7 @@ theorem defect_smul_right (t : E) (x y : Fin n → E) :
   ring
 
 
+include hφ in
 theorem defect_eq_zero (t : E) (ht : (φ t).im ≠ 0) (h0 : ∀ x, defect φ Y G x x = 0) (x y : Fin n → E) :
     defect φ Y G x y = 0 := by
   have h1 : ∀ x y, defect φ Y G x y + defect φ Y G y x = 0 := fun x y => by
@@ -118,6 +119,7 @@ theorem defect_eq_zero (t : E) (ht : (φ t).im ≠ 0) (h0 : ∀ x, defect φ Y G
   exact (mul_eq_zero.1 h4).resolve_left h5
 
 
+include hφ in
 theorem gram_of_norm (hG : Gᴴ = G) (t : E) (ht : (φ t).im ≠ 0)
     (h : ∀ x : Fin n → E, (star (Y *ᵥ fun i => φ (x i)) ⬝ᵥ (Y *ᵥ fun i => φ (x i))).re = (φ (star x ⬝ᵥ (G *ᵥ x))).re) :
     Yᴴ * Y = G.map φ := by
@@ -147,7 +149,8 @@ theorem gram_of_norm (hG : Gᴴ = G) (t : E) (ht : (φ t).im ≠ 0)
         rw [Complex.conj_im] at this
         linarith
       rw [i1, i2, sub_zero]
-  ext i j
+  apply Matrix.ext
+  intro i j
   have := defect_eq_zero φ hφ Y G t ht h0 (Pi.single i 1) (Pi.single j 1)
   unfold defect at this
   have e : ∀ k : Fin n, (fun a => φ ((Pi.single k (1 : E) : Fin n → E) a)) = Pi.single k 1 := fun k => by

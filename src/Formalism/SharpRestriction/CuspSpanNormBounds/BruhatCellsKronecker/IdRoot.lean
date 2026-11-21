@@ -56,6 +56,7 @@ theorem id_over : ExistsPrimeAbove := by
     exact bot_le)
   have hpQ : (p : 𝓞 E) ∈ Q := by
     have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by
+      change (p : ℤ) ∈ Ideal.under ℤ Q
       rw [hc]; exact Ideal.mem_span_singleton_self _
     simpa using this
   refine ⟨⟨Q, hQ.isPrime, ?_⟩, hpQ⟩

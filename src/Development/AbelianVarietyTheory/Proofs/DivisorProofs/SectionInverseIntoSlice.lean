@@ -19,7 +19,7 @@ theorem eq_of_isFirstMax_of_isFirstMax {k : Type} [Field k] [ValuativeRel k] [To
   · exact absurd ((h.2 J').2 hl) (not_lt.2 (h'.2 J).1)
 
 theorem sec_inv_mul_mem_slice : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (a d : ℕ) (Y : Matrix (Fin a) (Fin d) k) (J : Fin a ↪ Fin d), IsFirstMax Y J →
-    ((sec Y)⁻¹).val * Y ∈ slice k a d := by
+    ((GlobalTheory.RankFibreKer.sec Y)⁻¹).val * Y ∈ slice (k := k) a d := by
   intro k _ _ _ _ a d Y J hJ
   have hex : ∃ J, IsFirstMax Y J := ⟨J, hJ⟩
   have hc : hex.choose = J := eq_of_isFirstMax_of_isFirstMax hex.choose_spec hJ

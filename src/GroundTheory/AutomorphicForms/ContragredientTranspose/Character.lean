@@ -102,6 +102,7 @@ theorem heckeLin_smul (hρ : IsSmooth ρ) (c : ℂ) (f : locallyConstantCompactS
   LinearMap.ext fun v => heckeAct_smul_left c f.2 (hρ v)
 
 
+variable (ρ) in
 def distChar (hρ : IsAdmissible ρ) : Module.Dual ℂ (locallyConstantCompactSupport G ℂ ℂ) where
   toFun f := finTrace (heckeLin μ hρ.1 f)
   map_add' f g := by
@@ -126,6 +127,7 @@ theorem distChar_eq_trace (hρ : IsAdmissible ρ) (f : locallyConstantCompactSup
   rw [distChar_apply, finTrace_eq_trace _ _ (range_heckeLin_le μ hρ.1 f hK)]
 
 
+variable (ρ) in
 def repEquiv (g : G) : V ≃ₗ[ℂ] V where
   toLinearMap := ρ g
   invFun := ρ g⁻¹
@@ -174,13 +176,13 @@ theorem heckeAct_contragredient_apply [μ.IsInvInvariant] (hρ : IsSmooth ρ)
       Module.Dual ℂ V) v =
       (ξ : Module.Dual ℂ V) (heckeAct μ ρ
         ((compHomeoL (Homeomorph.inv G) f : locallyConstantCompactSupport G ℂ ℂ) : G → ℂ) v) := by
-  have h1 := dual_heckeAct μ f.2 (isSmooth_contragredient ρ ξ) (evalSmooth ρ v)
+  have h1 := dual_heckeAct (μ := μ) f.2 (isSmooth_contragredient ρ ξ) (evalSmooth ρ v)
   have key := integral_inv_eq_self (fun g =>
     ((compHomeoL (Homeomorph.inv G) f : locallyConstantCompactSupport G ℂ ℂ) : G → ℂ) g *
       (ξ : Module.Dual ℂ V) (ρ g v)) μ
   beta_reduce at key
   rw [evalSmooth_apply] at h1
-  rw [h1, dual_heckeAct μ (compHomeoL (Homeomorph.inv G) f).2 (hρ v), ← key]
+  rw [h1, dual_heckeAct (μ := μ) (compHomeoL (Homeomorph.inv G) f).2 (hρ v), ← key]
   congr 1
   funext g
   simp [evalSmooth_apply, contragredient_apply_apply]
@@ -253,7 +255,7 @@ theorem heckeAct_comp (α : G ≃* G) (hα : Continuous α) (hα' : Continuous �
       heckeAct μ ρ ((compHomeoL (mulEquivHomeo α hα hα').symm f :
         locallyConstantCompactSupport G ℂ ℂ) : G → ℂ) v := by
   refine eq_of_forall_dual fun φ => ?_
-  rw [dual_heckeAct μ f.2 hv', dual_heckeAct μ (compHomeoL _ f).2 hv]
+  rw [dual_heckeAct (μ := μ) f.2 hv' φ, dual_heckeAct (μ := μ) (compHomeoL _ f).2 hv φ]
   have hmp : MeasurePreserving (mulEquivHomeo α hα hα').toMeasurableEquiv μ μ :=
     ⟨hα.measurable, hμ⟩
   have key := hmp.integral_comp' (fun g =>
@@ -262,6 +264,10 @@ theorem heckeAct_comp (α : G ≃* G) (hα : Continuous α) (hα' : Continuous �
   beta_reduce at key
   rw [← key]
   congr 1
+  funext g
+  change (f : G → ℂ) g * φ (ρ (α g) v) =
+    (f : G → ℂ) ((mulEquivHomeo α hα hα').symm (mulEquivHomeo α hα hα' g)) * φ (ρ (α g) v)
+  rw [Homeomorph.symm_apply_apply]
 
 theorem distChar_comp (α : G ≃* G) (hα : Continuous α) (hα' : Continuous α.symm)
     (hμ : μ.map α = μ) (hρ : IsAdmissible ρ) (f : locallyConstantCompactSupport G ℂ ℂ) :
@@ -296,6 +302,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   {K : Subgroup G} (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G))
 
 
+variable (ρ : Representation ℂ G V) in
 def levelLin (h : HeckeAlgebraLevel μ K hKc hKo) : fixedVectors ρ K →ₗ[ℂ] fixedVectors ρ K where
   toFun v := h • v
   map_add' v w := smul_add h v w

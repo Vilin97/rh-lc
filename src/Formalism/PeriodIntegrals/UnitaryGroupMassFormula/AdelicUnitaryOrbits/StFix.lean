@@ -33,8 +33,6 @@ theorem stFix : StFix := by
     rw [← mul_assoc, show (2 : R) = algebraMap F R 2 from (map_ofNat _ 2).symm, ← map_mul]
     norm_num
   rw [quad_trace (R := R) (hd := hd), hb, add_zero, h12]
-  · simp [Algebra.TensorProduct.algebraMap_apply]
-  · exact h2
-  · exact hli
+  simp [Algebra.TensorProduct.algebraMap_apply]
 
 end PIW.AdelicOrbitU

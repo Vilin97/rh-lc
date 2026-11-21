@@ -184,7 +184,7 @@ theorem gb_perp {m : ℕ} (hm : m + 2 < k + 1) (cs : Fin m → Fin (2 * r + k + 
     ⟨Fin.cons a (Fin.cons b cs), by simp, by simp, fun j => by simp⟩
   obtain ⟨emb, hemb⟩ : ∃ emb : (Fin (k + 1) → ℂ) →ₗ[ℂ] (Fin (2 * r + k + 1) → ℂ),
       ∀ x, emb x = Function.extend (wI k r) x 0 :=
-    ⟨Function.ExtendByZero.linearMap ℂ (wI k r), fun x => rfl⟩
+    ⟨Function.ExtendByZero.linearMap ℂ ℂ (wI k r), fun x => rfl⟩
   obtain ⟨L, hL⟩ : ∃ L : (Fin (k + 1) → ℂ) →ₗ[ℂ] (Fin (m + 2) → ℂ),
       ∀ x j, L x j = herm (Hpk k r) (emb x) (c j) :=
     ⟨(LinearMap.pi fun j => gbL (c j)) ∘ₗ emb, fun x j => rfl⟩

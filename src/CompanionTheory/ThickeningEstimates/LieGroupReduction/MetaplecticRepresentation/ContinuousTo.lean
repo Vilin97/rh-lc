@@ -111,12 +111,12 @@ theorem eps_ne : (eps : G l) ≠ 1 := by
     have := congrArg (fun u : Sch l => u 0) h1
     simpa using this
   have h3 : (-1 : ℂ) = 1 := by simpa [φ, gs_zero] using h2
-  norm_num at h3
+  exact (by norm_num : (-1 : ℂ) ≠ 1) h3
 
 theorem om_of_omS {g : G l} {c : ℂ} (hc : ∀ f, omS g f = c • f) (F : L2 l) : om g F = c • F := by
   refine dense_sch.induction_on (p := fun F => om g F = c • F) F
     (isClosed_eq (om g).continuous (continuous_const_smul c)) fun f => ?_
-  rw [om_sch, hc, LinearIsometryEquiv.map_smul]
+  rw [om_sch, hc, map_smul]
 
 end MpA
 

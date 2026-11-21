@@ -177,10 +177,19 @@ theorem local_bound (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F))
     (M : Matrix (Fin I.n) (Fin I.n) (Av I v)) :
     ∃ N : ℕ, 0 < N ∧ ∀ z ∈ Formalism.L2.SG.Sub.latLoc v (I.L : Set (Fin I.n → I.E)),
       N • (M *ᵥ z) ∈ Formalism.L2.SG.Sub.latLoc v (I.L : Set (Fin I.n → I.E)) := by
-  obtain ⟨N, hN, h⟩ := adelic_bound I (liftMat I v M)
+  classical
+  have hlift (j : Fin I.n) :
+      ∃ w : Fin I.n → I.E ⊗[I.F] Af I.F, PI.FinKW.vecV I v w = fun i => M i j := by
+    obtain ⟨w, hw, _⟩ := PI.FinKW.local_vector_lift I v (fun i => M i j)
+    exact ⟨w, hw⟩
+  choose w hw using hlift
+  let Mx : Matrix (Fin I.n) (Fin I.n) (I.E ⊗[I.F] Af I.F) := fun i j => w j i
+  have hmap : Mx.map (PI.FinKW.psiV I v).toRingHom = M := by
+    ext i j
+    exact congrFun (hw j) i
+  obtain ⟨N, hN, h⟩ := adelic_bound I Mx
   refine ⟨N, hN, fun z hz => ?_⟩
-  have := loc_bound I v _ h z hz
-  rwa [liftMat_map_same] at this
+  simpa only [hmap] using loc_bound I v Mx h z hz
 
 theorem incL_smul_mem (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) {a : v.adicCompletion I.F}
     (ha : a ∈ v.adicCompletionIntegers I.F) {y : Fin I.n → Av I v}

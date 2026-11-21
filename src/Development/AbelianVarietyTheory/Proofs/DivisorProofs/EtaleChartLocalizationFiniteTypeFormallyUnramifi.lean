@@ -13,12 +13,12 @@ namespace GlobalTheory.DenseSec
 theorem locQuot_finiteType_formallyUnramified (R : Type) [CommRing R] (A : Type) [CommRing A] [Algebra R A]
     (g : ℕ) (t : Fin g → A) (h : A) (hE : GlobalTheory.DenseSec.EtChart R A t h) (Ω : Type) [Field Ω] [Algebra R Ω]
     (I : Ideal (TensorProduct R Ω A)) :
-    letI : Algebra (MvPolynomial (Fin g) Ω) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h))) :=
+    (letI : Algebra (MvPolynomial (Fin g) Ω) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h))) :=
       (MvPolynomial.aeval (fun i => algebraMap (TensorProduct R Ω A ⧸ I)
         (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h))) (Ideal.Quotient.mk I (1 ⊗ₜ[R] t i)))).toRingHom.toAlgebra
     Algebra.FiniteType (MvPolynomial (Fin g) Ω) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h))) ∧
       Algebra.FormallyUnramified (MvPolynomial (Fin g) Ω)
-        (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h))) := by
+        (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) := by
   letI algPD : Algebra (MvPolynomial (Fin g) Ω) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h))) :=
     (MvPolynomial.aeval (fun i => algebraMap (TensorProduct R Ω A ⧸ I)
       (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h))) (Ideal.Quotient.mk I (1 ⊗ₜ[R] t i)))).toRingHom.toAlgebra

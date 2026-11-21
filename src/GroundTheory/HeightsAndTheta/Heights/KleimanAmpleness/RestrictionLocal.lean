@@ -25,6 +25,7 @@ def locAt : Set Ω :=
     a = aeval x f / aeval x s}
 
 
+open Classical in
 def redAt (a : Ω) : K' :=
   if h : ∃ (p : Poly k N × Poly k N) (e : ℕ), p.1.IsHomogeneous e ∧ p.2.IsHomogeneous e ∧
       aeval y p.2 ≠ 0 ∧ a = aeval x p.1 / aeval x p.2
@@ -149,14 +150,15 @@ theorem locAt_div {a b : Ω} (ha : a ∈ locAt k x y) (hb : b ∈ locAt k x y) (
   exact ⟨h3, by rw [h4, h2]⟩
 
 theorem chartRing_sub_locAt (hxy : ∀ i, y i ≠ 0 → x i ≠ 0) (I : Chart y) {a : Ω}
-    (ha : a ∈ chartRing k x (liftChart hxy I)) :
-    a ∈ locAt k x y ∧ redAt k x y a ∈ chartRing k y I := by
+    (ha : a ∈ chartRing (S := k) (liftChart hxy I)) :
+    a ∈ locAt k x y ∧ redAt k x y a ∈ chartRing (S := k) I := by
   obtain ⟨f, s, e, hs, hf, hse, rfl⟩ := ha
   have hsy : aeval y s ≠ 0 := eval_ne_zero_of_mem_monos I hs
   exact ⟨mem_locAt hf hse hsy, by rw [redAt_eq hsp hf hse hsy]; exact ⟨f, s, e, hs, hf, hse, rfl⟩⟩
 
 theorem exists_redAt_eq (hxy : ∀ i, y i ≠ 0 → x i ≠ 0) (I : Chart y) {c : K'}
-    (hc : c ∈ chartRing k y I) : ∃ a ∈ chartRing k x (liftChart hxy I), redAt k x y a = c := by
+    (hc : c ∈ chartRing (S := k) I) :
+    ∃ a ∈ chartRing (S := k) (liftChart hxy I), redAt k x y a = c := by
   obtain ⟨f, s, e, hs, hf, hse, rfl⟩ := hc
   exact ⟨aeval x f / aeval x s, ⟨f, s, e, hs, hf, hse, rfl⟩,
     redAt_eq hsp hf hse (eval_ne_zero_of_mem_monos I hs)⟩
@@ -169,9 +171,10 @@ variable {k : Type u} [Field k] {Ω : Type w} [Field Ω] [Algebra k Ω] {K' : Ty
   [Algebra k K'] {N : ℕ}
 
 theorem primeOf_le_primeOf_of_algHom {x : Fin (N + 1) → Ω} {j : Fin (N + 1)} (hj : x j ≠ 0)
-    (ψ : chartRing k x (singleChart hj) →ₐ[k] K') :
+    (ψ : chartRing (S := k) (singleChart hj) →ₐ[k] K') :
     primeOf (S := k) x ≤ primeOf (S := k) (fun i => ψ (ratio hj i)) := by
-  have key : ∀ {B : Type w} [CommRing B] [Algebra k B] (φ : chartRing k x (singleChart hj) →ₐ[k] B)
+  have key : ∀ {B : Type w} [CommRing B] [Algebra k B]
+      (φ : chartRing (S := k) (singleChart hj) →ₐ[k] B)
       (g : Poly k N), φ (aeval (ratio (S := k) hj) g) = aeval (fun i => φ (ratio hj i)) g := by
     intro B _ _ φ g
     rw [← AlgHom.comp_apply, MvPolynomial.comp_aeval]
@@ -184,7 +187,7 @@ theorem primeOf_le_primeOf_of_algHom {x : Fin (N + 1) → Ω} {j : Fin (N + 1)} 
     rw [mem_primeOf_of_isHomogeneous _ hg, ← key]
     have hval : aeval (ratio (S := k) hj) (homogeneousComponent d f) = 0 := by
       apply Subtype.ext
-      have := key (chartRing k x (singleChart hj)).val (homogeneousComponent d f)
+      have := key (chartRing (S := k) (singleChart hj)).val (homogeneousComponent d f)
       simp only [Subalgebra.coe_val] at this
       rw [this, ZeroMemClass.coe_zero]
       change aeval (fun l => x l / x j) (homogeneousComponent d f) = 0
@@ -194,7 +197,7 @@ theorem primeOf_le_primeOf_of_algHom {x : Fin (N + 1) → Ω} {j : Fin (N + 1)} 
   exact Ideal.sum_mem _ fun d _ => hcomp d
 
 theorem algHom_ratio_self {x : Fin (N + 1) → Ω} {j : Fin (N + 1)} (hj : x j ≠ 0)
-    (ψ : chartRing k x (singleChart hj) →ₐ[k] K') : ψ (ratio hj j) = 1 := by
+    (ψ : chartRing (S := k) (singleChart hj) →ₐ[k] K') : ψ (ratio hj j) = 1 := by
   have : ratio (S := k) hj j = 1 := Subtype.ext (div_self hj)
   rw [this, map_one]
 

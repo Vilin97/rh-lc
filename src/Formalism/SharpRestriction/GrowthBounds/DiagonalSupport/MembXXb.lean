@@ -117,7 +117,7 @@ theorem restXXG_b : RestXXG := by
       ∑ c : Fin (r + K), mm (x, c) = δ (j, x) + dNoOf p O Fr Dt dNo (j, x) ∧
       ordDeg mm x ≤ δ (j, x) + dNoOf p O Fr Dt dNo (j, x) := by
     intro mm hmm x
-    obtain ⟨ua, hua, ub, hub, h⟩ := deg_mul A B mm hmm
+    obtain ⟨ua, hua, ub, hub, h⟩ := XXb.deg_mul A B mm hmm
     have e1 : ∑ c : Fin r, mm (x, Fin.castAdd K c) = δ (j, x) := by
       rw [← hPl.2.1 ua hua x]
       exact Finset.sum_congr rfl fun c _ => (h x).1 c
@@ -131,10 +131,10 @@ theorem restXXG_b : RestXXG := by
     · rw [e1]; omega
   refine ⟨?_, ?_⟩
   · unfold XX'
-    refine Submodule.mem_inf.2 ⟨Submodule.subset_span ⟨A, B, Mx p O Fr cP Dt ka j, hPl.1, hNo.1, ?_, rfl⟩, ?_⟩
+    refine Submodule.mem_inf.2 ⟨Submodule.subset_span ⟨A, B, XXb.Mx p O Fr cP Dt ka j, hPl.1, hNo.1, ?_, rfl⟩, ?_⟩
     · intro x hx hW
-      obtain ⟨u, hu, rfl⟩ := exists_posU hV hr1 (segZ j) (Dt.nL j) (hnL j) x hx hW
-      exact cond_at p O Fr deg Y N₁ G' cP Dt dNo ka hM hnL δ j A B hPl hNo u hu hx hW
+      obtain ⟨u, hu, rfl⟩ := XXb.exists_posU hV hr1 (segZ j) (Dt.nL j) (hnL j) x hx hW
+      exact XXb.cond_at p O Fr deg Y N₁ G' cP Dt dNo ka hM hnL δ j A B hPl hNo u hu hx hW
     · rw [mem_restrictSupport_iff]
       intro mm hmm x _ _
       show (ordDeg mm x : ℝ) ≤ ((δ (j, x) + dNoOf p O Fr Dt dNo (j, x) : ℕ) : ℝ)

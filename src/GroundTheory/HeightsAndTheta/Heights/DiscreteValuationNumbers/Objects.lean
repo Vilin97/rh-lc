@@ -140,6 +140,7 @@ theorem isMultiProjPrime_bot {R : Type*} [CommRing R] [IsDomain R] [∀ k, Nonem
     exact X_ne_zero _
 
 
+omit [DecidableEq K] in
 theorem divCycle_one {R : Type*} [CommRing R] (P : Ideal (MRing ι R)) (W : Ideal (MRing ι R)) :
     divCycle P 1 W = 0 := by
   unfold divCycle

@@ -16,12 +16,33 @@ open MvPolynomial Equiv UpperTheory.V.AlgebraTools.Hk
 
 private theorem simple_one {R : Type} [CommRing R] {n : ℕ} {q : R} {H : Type} [Ring H] [Algebra R H]
     (b : Bern n q H) {a c : Fin n} (h : a.val + 1 = c.val) : b.T (swap a c) * b.one = q • b.one := by
-  obtain ⟨hA, -, h1, -⟩ := UpperTheory.V.AlgebraTools.hkInv n
-  have hac : (1 : Perm (Fin n))⁻¹ a < (1 : Perm (Fin n))⁻¹ c := by
-    rw [inv_one, Perm.one_apply, Perm.one_apply, Fin.lt_def]; omega
-  have := (hA a c h 1 hac).2.2
-  rw [mul_one, invN.eq_def 1, h1, Finset.card_empty, zero_add] at this
-  rw [(UpperTheory.V.AlgebraTools.hkOne R n q H b).1, this, pow_one]
+  have hac : a ≠ c := fun e => by rw [e] at h; omega
+  let s := swap a c
+  let d (w : Perm (Fin n)) := b.T s * b.T w - q • b.T w
+  have hpair (w : Perm (Fin n)) (hw : w⁻¹ a < w⁻¹ c) : d w + d (s * w) = 0 := by
+    dsimp [d, s]
+    rw [b.T_mul a c h w hw, ← mul_assoc, b.T_sq a c h, add_mul, smul_mul_assoc,
+      smul_mul_assoc, one_mul]
+    module
+  have hcancel (w : Perm (Fin n)) : d w + d (s * w) = 0 := by
+    rcases lt_or_gt_of_ne (show w⁻¹ a ≠ w⁻¹ c from fun e => hac (w⁻¹.injective e)) with hw | hw
+    · exact hpair w hw
+    · have hw' : (s * w)⁻¹ a < (s * w)⁻¹ c := by
+        simpa [s, Perm.mul_apply, mul_inv_rev, swap_inv, swap_apply_left, swap_apply_right] using hw
+      have e := hpair (s * w) hw'
+      rw [show s * (s * w) = w by simp [s, swap_mul_self_mul], add_comm] at e
+      exact e
+  have hsum : ∑ w, d w = 0 := by
+    refine Finset.sum_ninvolution (fun w => s * w) hcancel ?_ (fun _ => Finset.mem_univ _) ?_
+    · intro w _ e
+      apply hac
+      have he := congrArg (fun x : Perm (Fin n) => (x * w⁻¹) a) e
+      simpa [s, mul_assoc] using he.symm
+    · intro w
+      simp [s, swap_mul_self_mul]
+  unfold Bern.one
+  rw [Finset.mul_sum, Finset.smul_sum, ← sub_eq_zero, ← Finset.sum_sub_distrib]
+  exact hsum
 
 private theorem symm_of_eigen {R : Type} [CommRing R] [IsDomain R] {n : ℕ} {q : R} {H : Type} [Ring H]
     [Algebra R H] (b : Bern n q H) (hb : b.Faithful) (y : MvPolynomial (Fin n) R)
@@ -51,7 +72,7 @@ private theorem symm_of_eigen {R : Type} [CommRing R] [IsDomain R] {n : ℕ} {q 
     rw [Perm.coe_mul, ← rename_rename, ih, hs a c h]
 
 private theorem rename_rev_NN {R : Type} [CommRing R] (n : ℕ) (q : R) :
-    rename (Fin.revPerm : Perm (Fin n)) (NN n q) = ∏ p ∈ pairs n, (X p.1 - C q * X p.2) := by
+    rename (Fin.revPerm : Perm (Fin n)) (NN R n q) = ∏ p ∈ pairs n, (X p.1 - C q * X p.2) := by
   rw [NN, map_prod]
   refine Finset.prod_nbij' (fun p => (p.2.rev, p.1.rev)) (fun p => (p.2.rev, p.1.rev)) ?_ ?_ ?_ ?_ ?_
   · intro p hp
@@ -95,12 +116,30 @@ private theorem coeff_eq {R : Type} [CommRing R] [IsDomain R] {n : ℕ} {K : Typ
   rw [h1, hr, map_div₀, hφ, hφ, rename_rename, rename_rename, Perm.coe_mul]
 
 theorem UpperTheory.V.AlgebraTools.hkSandwich :
-    ∀ (R : Type) [CommRing R] [IsDomain R] (n : ℕ) (q : R) (H : Type) [Ring H] [Algebra R H] (b : Bern n q H), b.Faithful → ∀ x : MvPolynomial (Fin n) R, b.one * b.th x * b.one = b.th (dd (NN n q * x)) * b.one := by
+    ∀ (R : Type) [CommRing R] [IsDomain R] (n : ℕ) (q : R) (H : Type) [Ring H] [Algebra R H] (b : Bern n q H), b.Faithful → ∀ x : MvPolynomial (Fin n) R, b.one * b.th x * b.one = b.th (dd (NN R n q * x)) * b.one := by
   intro R _ _ n q H _ _ b hb x
   let K := FractionRing (MvPolynomial (Fin n) R)
   choose f hf hfw hf0 using UpperTheory.V.AlgebraTools.hkAct R n q H b K
   obtain ⟨-, -, -, hrev, hlt⟩ := UpperTheory.V.AlgebraTools.hkInv n
-  obtain ⟨hD, hsg, -⟩ := UpperTheory.V.AlgebraTools.hkDe R n
+  let V := Matrix.vandermonde fun i : Fin n => (X i : MvPolynomial (Fin n) R)
+  have hdet : De R n = V.det := by
+    dsimp only [V]
+    rw [Matrix.det_vandermonde, De, pairs, Finset.prod_filter, Fintype.prod_prod_type]
+    refine Finset.prod_congr rfl fun i _ => ?_
+    rw [← Finset.prod_filter]
+    refine Finset.prod_congr ?_ fun _ _ => rfl
+    ext j
+    simp
+  have hD : De R n ≠ 0 := by
+    rw [hdet]
+    exact Matrix.det_vandermonde_ne_zero_iff.mpr X_injective
+  have hsg (w : Perm (Fin n)) : rename w (De R n) = Perm.sign w • De R n := by
+    rw [hdet, AlgHom.map_det]
+    have hV : (rename w : MvPolynomial (Fin n) R →ₐ[R] MvPolynomial (Fin n) R).mapMatrix V =
+        V.submatrix w id := by
+      ext i j
+      simp [V, Matrix.vandermonde_apply]
+    rw [hV, Matrix.det_permute, Units.smul_def, zsmul_eq_mul]
   have hsum : ∀ x : MvPolynomial (Fin n) R, ∃ y : MvPolynomial (Fin n) R,
       b.one * b.th x * b.one = b.th y * b.one ∧
       algebraMap _ K y = ∑ u, (∑ w, f w u) * algebraMap _ K (rename u x) := by
@@ -109,22 +148,22 @@ theorem UpperTheory.V.AlgebraTools.hkSandwich :
     refine ⟨∑ w, y w, ?_, ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum, Finset.sum_mul, ← Finset.sum_congr rfl fun w _ => hy w, ← Finset.sum_mul, ← Finset.sum_mul]
-      rfl
+        rfl
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [map_sum, hy', Finset.sum_mul]
-      exact Finset.sum_comm
+        exact Finset.sum_comm
   have hF := coeff_eq (K := K) (fun u => ∑ w, f w u) (by
     intro x
     obtain ⟨y, hy, e⟩ := hsum x
     refine ⟨y, symm_of_eigen b hb y fun a c h => ?_, e⟩
     rw [← hy, ← mul_assoc, ← mul_assoc, simple_one b h, smul_mul_assoc, smul_mul_assoc])
-    (NN n q) (De R n) Fin.revPerm (by
+    (NN R n q) (De R n) Fin.revPerm (by
     rw [Finset.sum_eq_single Fin.revPerm (fun w _ hw => hf0 w _ hw.symm (hlt w hw).le) (by simp), hfw, hrev,
       rename_rev_NN, rename_rev_De, map_prod, map_prod, Finset.prod_div_distrib])
   obtain ⟨y, hy, e⟩ := hsum x
   have hinj := IsFractionRing.injective (MvPolynomial (Fin n) R) K
   have hD' : algebraMap _ K (De R n) ≠ 0 := fun h => hD (hinj (by rw [h, map_zero]))
-  have : y = dd (NN n q * x) := by
+  have : y = dd (NN R n q * x) := by
     apply mul_left_cancel₀ hD
     apply hinj
     set_option synthInstance.maxHeartbeats 100000 in

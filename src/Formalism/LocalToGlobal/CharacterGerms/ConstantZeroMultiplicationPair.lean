@@ -177,6 +177,13 @@ theorem eval_pderiv_first_unit_series (Y : FBChart C V O dd) (j : Fin dd) :
       MvPowerSeries.smul_eq_C_mul, ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, ev_C, hEh, mul_zero, sub_zero]
   have hD : MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) (ev (n := 2) ![M2 Y, pt C dd 1] Y.h) =
       ev (n := 2) ![M2 Y, pt C dd 1] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) Y.h) := by
+    have pderiv_eval_pair {n : ℕ} {a : Fin 2 → Pt C n dd} (ha : Z0 a) (f : PS C 2 dd) (q : Fin n × Fin dd) :
+        MvPowerSeries.pderiv (R := C) q (ev a f) =
+          ∑ j, ev a (MvPowerSeries.pderiv (R := C) ((0 : Fin 2), j) f) * MvPowerSeries.pderiv (R := C) q (a 0 j) +
+          ∑ j, ev a (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) f) * MvPowerSeries.pderiv (R := C) q (a 1 j) := by
+      unfold ev
+      rw [Formalism.G.LogCR.pderiv_subst (a := fun p : Fin 2 × Fin dd => a p.1 p.2) (fun p => ha p.1 p.2) f q,
+        Fintype.sum_prod_type, Fin.sum_univ_two]
     rw [pderiv_eval_pair hZ2]
     have e0 : ∀ k, MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) ((![M2 Y, pt C dd 1] : Fin 2 → Pt C 2 dd) 0 k) = 0 :=
       fun k => pderiv_second_multiplication_pair Y k j
@@ -189,14 +196,32 @@ theorem eval_pderiv_first_unit_series (Y : FBChart C V O dd) (j : Fin dd) :
       · exact MvPowerSeries.pderiv_X_of_ne (fun h' => hk (Prod.ext_iff.1 h').2)
     simp only [e0, e1, mul_zero, Finset.sum_const_zero, zero_add, mul_ite, mul_one, Finset.sum_ite_eq',
       Finset.mem_univ, if_true]
+  have pderiv_expS {g : PS C 2 dd} (hg : MvPowerSeries.constantCoeff g = 0) (q : Fin 2 × Fin dd) :
+      MvPowerSeries.pderiv (R := C) q (FB.expS C g) = FB.expS C g * MvPowerSeries.pderiv (R := C) q g := by
+    unfold FB.expS
+    rw [Formalism.G.LogCR.pderiv_psubst hg, PowerSeries.derivative_exp]
   rw [hu, pderiv_expS hH0, ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, FirstUnitSeriesIntegrality.expS_eq, FirstUnitSeriesIntegrality.ev_ex ZeroPointGroupLaw.constant_zero_first_then_zero _ hH0, hEH, FirstUnitSeriesIntegrality.ex_zero,
     one_mul, map_sub, hD, Derivation.map_smul, ev_sub ZeroPointGroupLaw.constant_zero_first_then_zero, eval_multiplication_pair_zero, MvPowerSeries.smul_eq_C_mul, ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, ev_C,
     ← MvPowerSeries.smul_eq_C_mul]
 
 theorem Sv_eq (Y : FBChart C V O dd) (v : Fin dd → C) :
     Sv Y v = (V.l : C) • Y.sgP v - ev (n := 1) ![mulL Y.B.G.F V.l] (Y.sgP v) := by
-  have h1 := ev_sgP Y v (mulL Y.B.G.F V.l) (FirstUnitSeriesIntegrality.multiplication_constantCoeff_zero Y.B.G V.l)
-  have h2 := ev_sgP Y v (n := 1) (pt C dd 0) (z0_pt 0)
+  have ev_sgP {n : ℕ} (P : Pt C n dd) (hP : ∀ j, MvPowerSeries.constantCoeff (P j) = 0) :
+      ev (n := n) ![P] (Y.sgP v) = -∑ i, MvPowerSeries.C (v i) * ev (n := n) ![P, 0] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) Y.h) := by
+    have hZ := z0_1 P hP
+    have hZ' := ZeroPointGroupLaw.constant_zero_first_then_zero (C := C) (dd := dd)
+    unfold FBChart.sgP
+    rw [ev_neg hZ, ev_sum hZ]
+    congr 1
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [ev_mul hZ, ev_C, ev_ev hZ' hZ]
+    congr 2
+    funext k j
+    fin_cases k
+    · exact ev_X hZ 0 j
+    · exact ev_zero hZ
+  have h1 := ev_sgP (mulL Y.B.G.F V.l) (FirstUnitSeriesIntegrality.multiplication_constantCoeff_zero Y.B.G V.l)
+  have h2 := ev_sgP (n := 1) (pt C dd 0) (z0_pt 0)
   rw [ZeroPointGroupLaw.eval_identity_point] at h2
   rw [Sv_eq_sum, h1, h2]
   simp only [eval_pderiv_first_unit_series, mul_sub, Finset.sum_sub_distrib, MvPowerSeries.smul_eq_C_mul]

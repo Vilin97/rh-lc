@@ -34,7 +34,7 @@ theorem powadd : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] (v : Valuatio
   rw [e]
   refine v.map_add_le ?_ ?_
   · rw [map_mul]
-    exact (mul_le_of_le_one_right' s.2).trans h
+    exact (mul_le_of_le_one_right' (α := NNReal) s.2).trans h
   · rw [map_mul]
     refine mul_le_of_le_one_right' ?_
     rw [map_mul, map_mul]

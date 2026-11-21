@@ -238,8 +238,8 @@ theorem applyAt0_prod {Ω : Type*} (s : Finset Ω) (A : Ω → Set Lt) (hA : (s 
     rw [applyAt0_mul l hdis (hT a (by simp)) hTs
       (hP a (by simp))
       (Subalgebra.prod_mem _ fun ω hω => MvPolynomial.supported_mono
-        (fun v (hv : xzLetter v ∈ A ω) => show xzLetter v ∈ ⋃ ω ∈ s, A ω from
-          Set.mem_iUnion₂.2 ⟨ω, hω, hv⟩) (hP ω (by simp [hω])))]
+        (Set.preimage_mono (Set.subset_iUnion₂ (s := fun i (_ : i ∈ s) => A i) ω hω))
+        (hP ω (by simp [hω])))]
     rw [ih hA' (fun ω hω => hT ω (by simp [hω])) (fun ω hω => hP ω (by simp [hω]))]
 
 end Apply

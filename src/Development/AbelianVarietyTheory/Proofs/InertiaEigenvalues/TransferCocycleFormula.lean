@@ -8,8 +8,20 @@ namespace GlobalTheory
 
 open QuotientGroup
 
-theorem transfer_cocycle_formula : ∀ (R G X : Type) [CommRing R] [Group G] [AddCommGroup X] [Module R X] (ρ : Representation R G X) (H : Subgroup G) [Fintype (G ⧸ H)], let tr : (G → X) → G → X := fun f g => ∑ q : G ⧸ H, ρ (g • q).out (f ((g • q).out⁻¹ * g * q.out)); (∀ (g : G) (q : G ⧸ H), (g • q).out⁻¹ * g * q.out ∈ H) ∧ (∀ f : G → X, (∀ a ∈ H, ∀ b ∈ H, f (a * b) = f a + ρ a (f b)) → ∀ a b, tr f (a * b) = tr f a + ρ a (tr f b)) ∧ (∀ (f : G → X) (x : X), (∀ h ∈ H, f h = ρ h x - x) → ∀ g, tr f g = ρ g (∑ q : G ⧸ H, ρ q.out x) - ∑ q : G ⧸ H, ρ q.out x) ∧ (∀ f : G → X, (∀ a b, f (a * b) = f a + ρ a (f b)) → ∀ g, tr f g = H.index • f g + (ρ g (∑ q : G ⧸ H, f q.out) - ∑ q : G ⧸ H, f q.out)) := by
-  intro R G X _ _ _ _ ρ H _ tr
+theorem transfer_cocycle_formula :
+    ∀ (R G X : Type) [CommRing R] [Group G] [AddCommGroup X] [Module R X]
+      (ρ : Representation R G X) (H : Subgroup G) [Fintype (G ⧸ H)],
+      (fun tr : (G → X) → G → X =>
+        (∀ (g : G) (q : G ⧸ H), (g • q).out⁻¹ * g * q.out ∈ H) ∧
+        (∀ f : G → X, (∀ a ∈ H, ∀ b ∈ H, f (a * b) = f a + ρ a (f b)) →
+          ∀ a b, tr f (a * b) = tr f a + ρ a (tr f b)) ∧
+        (∀ (f : G → X) (x : X), (∀ h ∈ H, f h = ρ h x - x) →
+          ∀ g, tr f g = ρ g (∑ q : G ⧸ H, ρ q.out x) - ∑ q : G ⧸ H, ρ q.out x) ∧
+        (∀ f : G → X, (∀ a b, f (a * b) = f a + ρ a (f b)) →
+          ∀ g, tr f g = H.index • f g +
+            (ρ g (∑ q : G ⧸ H, f q.out) - ∑ q : G ⧸ H, f q.out)))
+        (fun f g => ∑ q : G ⧸ H, ρ (g • q).out (f ((g • q).out⁻¹ * g * q.out))) := by
+  intro R G X _ _ _ _ ρ H _
   have mem : ∀ (g : G) (q : G ⧸ H), (g • q).out⁻¹ * g * q.out ∈ H := by
     intro g q
     have h1 : (((g • q).out : G) : G ⧸ H) = ((g * q.out : G) : G ⧸ H) := by
@@ -20,7 +32,7 @@ theorem transfer_cocycle_formula : ∀ (R G X : Type) [CommRing R] [Group G] [Ad
     Equiv.sum_comp (MulAction.toPerm g) F
   have rmul : ∀ (s t : G) (y : X), ρ s (ρ t y) = ρ (s * t) y := by
     intro s t y
-    rw [map_mul, Module.End.mul_apply]
+    rw [map_mul, mul_apply_eq_comp]
   refine ⟨mem, ?_, ?_, ?_⟩
   · intro f hf a b
     have key : ∀ q : G ⧸ H, ρ ((a * b) • q).out (f (((a * b) • q).out⁻¹ * (a * b) * q.out))
@@ -53,7 +65,7 @@ theorem transfer_cocycle_formula : ∀ (R G X : Type) [CommRing R] [Group G] [Ad
   · intro f hf g
     have f1 : f 1 = 0 := by
       have := hf 1 1
-      simp only [mul_one, map_one, Module.End.one_apply] at this
+      simp only [mul_one, map_one, one_apply_eq_self] at this
       exact left_eq_add.mp this
     have finv : ∀ s : G, ρ s (f s⁻¹) = - f s := by
       intro s
@@ -63,7 +75,7 @@ theorem transfer_cocycle_formula : ∀ (R G X : Type) [CommRing R] [Group G] [Ad
     have key : ∀ q : G ⧸ H, ρ (g • q).out (f ((g • q).out⁻¹ * g * q.out))
         = (f g + ρ g (f q.out)) - f (g • q).out := by
       intro q
-      rw [mul_assoc, hf, map_add (f := _), finv, rmul, mul_inv_cancel, map_one, Module.End.one_apply, hf]
+      rw [mul_assoc, hf, map_add (f := _), finv, rmul, mul_inv_cancel, map_one, one_apply_eq_self, hf]
       abel
     show ∑ q : G ⧸ H, ρ (g • q).out (f ((g • q).out⁻¹ * g * q.out)) = _
     set_option synthInstance.maxHeartbeats 100000 in

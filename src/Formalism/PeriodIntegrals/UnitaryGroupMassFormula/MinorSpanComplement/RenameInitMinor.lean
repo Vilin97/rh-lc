@@ -54,9 +54,11 @@ theorem nablaSpan_eq (R : Type) [CommRing R] (N : ℕ) (ν : YoungDiagram) :
   rw [Submodule.map_span, ← Set.range_comp]
   unfold PI.nablaSpan
   congr 1
-  congr 1
+  apply congrArg Set.range
+  funext I
+  simp only [Function.comp_apply, AlgHom.toLinearMap_apply, gen, bideterminant, map_prod]
   refine Finset.prod_congr rfl fun c _ => ?_
-  exact (rename_initMinor R N _ _ _ (I c)).symm
+  exact (rename_initMinor R N (ν.colLen 0) (sz0 ν c) (hsz0 ν c) (I c)).symm
 
 theorem span_map_le {σ : Type*} (R : Type) [CommRing R] {A B : Set (MvPolynomial σ ℤ)}
     (h : A ⊆ Submodule.span ℤ B) :
@@ -107,7 +109,8 @@ theorem minorSpanCompl : PI.MinorSpanCompl := by
     have e1 : Set.range (gen R N ν) = MvPolynomial.map (Int.castRingHom R) '' Set.range (gen ℤ N ν) := by
       rw [← Set.range_comp]
       congr 1
-      exact (map_bidet R _ _ _).symm
+      funext I
+      exact (map_bidet R (sz0 ν) (hsz0 ν) (fun c => I c)).symm
     have e2 : Set.range c = MvPolynomial.map (Int.castRingHom R) '' Set.range b := by
       rw [← Set.range_comp]
       rfl

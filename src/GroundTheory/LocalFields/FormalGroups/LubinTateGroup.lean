@@ -9,6 +9,8 @@ namespace GroundTheory.LocalField.FormalGroup
 
 open MvPowerSeries
 
+#print prefix GroundTheory.LocalField.FormalGroup.Hom
+
 section Composition
 
 variable {A : Type*} [CommRing A] {σ τ : Type*}
@@ -84,9 +86,9 @@ variable {A : Type*} [CommRing A]
 
 structure FormalModule (F : FormalGroup A) [F.IsComm] where
 
-  smul : A →+* Hom F F
+  smul : A →+* GroundTheory.LocalField.FormalGroup.Hom (R := A) (F := F) (G := F)
 
-  linearCoeff_smul : ∀ a, linearCoeff F (smul a) = a
+  linearCoeff_smul : ∀ a, PowerSeries.coeff 1 (smul a).toPowerSeries = a
 
 end FormalModule
 
@@ -254,7 +256,8 @@ theorem lubinTateHom_map_add (hf : IsLubinTateSeries π f) (hg : IsLubinTateSeri
   · rw [subst_linearForm_one_one (by simp) (by simp), linearForm_fin_two]
 
 noncomputable def lubinTateHom (hf : IsLubinTateSeries π f) (hg : IsLubinTateSeries π g) (a : A) :
-    Hom (lubinTateFormalGroup hπ hg) (lubinTateFormalGroup hπ hf) where
+    GroundTheory.LocalField.FormalGroup.Hom (R := A) (F := lubinTateFormalGroup hπ hg)
+      (G := lubinTateFormalGroup hπ hf) where
   toPowerSeries := lubinTateLift hπ hf hg fun _ : Unit => a
   constantCoeff_eq_zero := constantCoeff_lubinTateLift hπ hf hg _
   map_add := lubinTateHom_map_add hπ hf hg a

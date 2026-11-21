@@ -25,6 +25,7 @@ private theorem exists_subring_hom_algebraicClosure_of_injective (B K k : Type) 
       intro b hb
       rw [Ideal.mem_comap, Ideal.mem_bot, ← (algebraMap B C).map_zero] at hb
       rw [hinj hb, RingHom.mem_ker, φ.map_zero])
+  rw [Ideal.under_def] at hQc
   haveI := hQ
   haveI hQ' : (Q.comap (algebraMap B C)).IsPrime := by
     rw [hQc]

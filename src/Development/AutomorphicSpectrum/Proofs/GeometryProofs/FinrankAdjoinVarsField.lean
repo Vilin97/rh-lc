@@ -129,10 +129,10 @@ theorem finrank_fraction_over_adjoin_X_eq (Ω₀ Ω : Type) [Field Ω₀] [Field
 theorem finrank_adjoin_vars :
     ∀ (Ω₀ Ω : Type) [Field Ω₀] [Field Ω] (fn : Ω₀ →+* Ω) (I : Type) (d : ℕ),
       0 < d →
-      (letI : Algebra Ω₀ Ω := fn.toAlgebra
+      (letI : Algebra Ω₀ Ω := fn.toAlgebra;
        Module.finrank Ω₀ Ω = d) →
       letI : Algebra Ω₀ (FractionRing (MvPolynomial I Ω)) :=
-        ((algebraMap Ω (FractionRing (MvPolynomial I Ω))).comp fn).toAlgebra
+        ((algebraMap Ω (FractionRing (MvPolynomial I Ω))).comp fn).toAlgebra;
       Module.finrank (IntermediateField.adjoin Ω₀ (Set.range fun q : I =>
         algebraMap (MvPolynomial I Ω) (FractionRing (MvPolynomial I Ω)) (MvPolynomial.X q)))
         (FractionRing (MvPolynomial I Ω)) = d := by

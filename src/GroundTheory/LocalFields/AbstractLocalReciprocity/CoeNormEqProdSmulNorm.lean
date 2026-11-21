@@ -152,15 +152,21 @@ variable (hLK : L ≤ K) [((L : Subgroup G).subgroupOf K).Normal] (s : D.Frobeni
 
 theorem coe_norm_field_eq {φ : G} (hφK : φ ∈ (K : Subgroup G))
     (hdφ : D.deg φ = Multiplicative.ofAdd (inertiaDegree D.deg K : ℤ̂))
-    (a : fixedModule A ((s.field L hLK : OpenSubgroup G) : Subgroup G)) :
-    (norm A (K : Subgroup G) (s.field L hLK : Subgroup G) a : A) =
+    (a : fixedModule A ((s.field hLK : OpenSubgroup G) : Subgroup G)) :
+    (norm A (K : Subgroup G) (s.field hLK : Subgroup G) a : A) =
       ∏ ν : Fin s.deg, φ ^ (ν : ℕ) •
         (norm A ((K : Subgroup G) ⊓ D.deg.ker) ((L : Subgroup G) ⊓ D.deg.ker)
           ⟨a, fixedModule_anti le_frobeniusClosure a.2⟩ : A) := by
-  have hmap := map_frobeniusClosure D.continuous_deg (FrobeniusLift.mem_normalizer hLK s.mem)
-    s.deg_eq (L := (L : Subgroup G))
+  have hnormalizer := FrobeniusLift.mem_normalizer (D := D) hLK s.mem
+  have hmap := map_frobeniusClosure D.continuous_deg hnormalizer s.deg_eq (L := (L : Subgroup G))
+  have hfield_le : (s.field hLK : Subgroup G) ≤ (K : Subgroup G) :=
+    frobeniusClosure_le K.isClosed s.mem (inf_le_left.trans hLK)
+  have hfield_inf_ker :
+      (s.field hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
+    frobeniusClosure_inf_ker D.continuous_deg L.isOpen hnormalizer
+      (mul_ne_zero s.deg_pos.ne' (D.inertiaDegree_ne_zero K)) s.deg_eq
   refine coe_norm_eq_prod_smul_norm D.deg s.deg_pos (Nat.pos_of_ne_zero (D.inertiaDegree_ne_zero K))
-    (fun x hx => s.field_le hLK hx) ?_ ?_ (fun k hk => toAdd_deg_mem_multiples K hk) ?_ hφK hdφ a _
+    hfield_le ?_ ?_ (fun k hk => toAdd_deg_mem_multiples K hk) ?_ hφK hdφ a _
   · intro x hx
     have : D.deg x ∈ (frobeniusClosure D.deg L s.elt).map D.deg := ⟨x, hx, rfl⟩
     rw [hmap] at this
@@ -173,9 +179,7 @@ theorem coe_norm_field_eq {φ : G} (hφK : φ ∈ (K : Subgroup G))
   · intro q hq
     constructor
     · intro hqS
-      have : q ∈ ((s.field L hLK : OpenSubgroup G) : Subgroup G) ⊓ D.deg.ker := ⟨hqS, hq.2⟩
-      rw [s.field_inf_ker hLK] at this
-      exact this
+      exact hfield_inf_ker.le ⟨hqS, hq.2⟩
     · intro hqJ
       exact le_frobeniusClosure hqJ
 

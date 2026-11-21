@@ -95,13 +95,15 @@ theorem reach_of_approx (π : K) (hπ : Tendsto (fun k : ℕ => π ^ k) atTop (�
     rintro _ ⟨p, hp, rfl⟩
     exact hk p hp
   intro p hp
+  letI : MeasurableSpace X := borel X
+  letI : BorelSpace X := ⟨rfl⟩
   have hmem : p ∈ ⋂ k, thick S (smulSub (π ^ k) P) := by
     refine mem_iInter.2 fun k => ?_
     obtain ⟨l, hl, hpl⟩ := hstep k p hp
     exact ⟨D l, ⟨l, hl, rfl⟩, hpl⟩
-  rw [iInter_thick S hSc (fun k => smulSub (π ^ k) P) hb] at hmem
-  obtain ⟨l, hl, e⟩ := hmem
-  exact ⟨l, hl, e⟩
+  have hpS : p ∈ S :=
+    (Set.ext_iff.mp (iInter_thick S hSc (fun k => smulSub (π ^ k) P) hb) p).mp hmem
+  exact hpS
 
 theorem filt_abstract [ContinuousMul K] (π : K) (hπ0 : π ≠ 0) (hπ : Tendsto (fun k : ℕ => π ^ k) atTop (𝓝 0))
     (L : AddSubgroup V) (hLo : IsOpen (L : Set V)) (hLc : IsCompact (L : Set V))

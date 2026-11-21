@@ -74,6 +74,8 @@ private theorem exists_valuation_sub_lt_of_injective [Finite ι] (D : LocFam F �
     have h1 := ((D.cont i).tendsto 0).comp h0
     rw [map_zero] at h1
     convert h1 using 1
+    funext N
+    simp
   have hev : ∀ᶠ N in atTop, ∀ i, valuation (D.K i) (D.ιF i ((ℓ : F) ^ N)) < γ i := by
     rw [Filter.eventually_all]
     intro i

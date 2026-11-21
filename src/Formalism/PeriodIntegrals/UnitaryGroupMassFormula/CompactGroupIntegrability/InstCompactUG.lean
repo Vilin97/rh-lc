@@ -73,7 +73,13 @@ lemma IsPD.mul {N : ℕ} {f f' : UG N → ℂ} (hf : IsPD f) (hf' : IsPD f') : I
 
 lemma IsPD.sum {N : ℕ} {ι : Type*} (s : Finset ι) {F : ι → UG N → ℂ} (hF : ∀ i ∈ s, IsPD (F i)) :
     IsPD (fun g => ∑ i ∈ s, F i g) := by
-  first | exact UpperTheory.Reformulated.B.Qi25.sum .. | (apply UpperTheory.Reformulated.B.Qi25.sum <;> assumption) | (intros; apply UpperTheory.Reformulated.B.Qi25.sum <;> assumption) | (apply @UpperTheory.Reformulated.B.Qi25.sum <;> assumption) | (intros; apply @UpperTheory.Reformulated.B.Qi25.sum <;> assumption) | (apply @UpperTheory.Reformulated.B.Qi25.sum <;> first | assumption | infer_instance) | exact @UpperTheory.Reformulated.B.Qi25.sum N ι s F hF | exact @UpperTheory.Reformulated.B.Qi25.sum N ι s F | exact @UpperTheory.Reformulated.B.Qi25.sum N ι s | exact @UpperTheory.Reformulated.B.Qi25.sum N ι | exact @UpperTheory.Reformulated.B.Qi25.sum N
+  classical
+  induction s using Finset.induction_on with
+  | empty => simpa only [Finset.sum_empty] using (IsPD.const (N := N) 0)
+  | @insert i s hi ih =>
+    simp only [Finset.sum_insert hi]
+    exact (hF i (Finset.mem_insert_self i s)).add
+      (ih fun j hj => hF j (Finset.mem_insert_of_mem hj))
 
 lemma IsPD.entry {N : ℕ} (i j : Fin N) : IsPD (fun g : UG N => (g : Matrix (Fin N) (Fin N) ℂ) i j) :=
   ⟨0, MvPolynomial.X (i, j), fun g => by simp [ent]⟩
@@ -165,6 +171,7 @@ lemma Sep.conjCoord {N : ℕ} (i j : Fin N) :
   simp [Matrix.star_apply]
 
 lemma sep_of_mem {N : ℕ} {f : C(UG N, ℂ)} (hf : f ∈ algA N) : Sep (⇑f) := by
+  letI : Star (Set C(UG N, ℂ)) := Set.star
   have hf' : f ∈ Algebra.adjoin ℂ ((Set.range fun ij : Fin N × Fin N => coordC ij.1 ij.2) ∪
       star (Set.range fun ij : Fin N × Fin N => coordC ij.1 ij.2)) := by
     rw [← StarAlgebra.adjoin_toSubalgebra]; exact hf

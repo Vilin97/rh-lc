@@ -24,7 +24,8 @@ theorem locE_isUnit_or_exists_algEquiv_prod_swap {F E : Type} [Field F] [Valuati
   · exact Or.inl hfield
   right
   obtain ⟨x, hx⟩ := not_forall.1 hfield
-  obtain ⟨hx0, hxu⟩ := _root_.not_imp.1 hx
+  have hx0 : x ≠ 0 := fun heq => hx (fun hne => (hne heq).elim)
+  have hxu : ¬ IsUnit x := fun hu => hx (fun _ => hu)
   have hfix : ∀ y : E, L.cj y = y → ∃ a : F, algebraMap F E a = y := fun y hy => (L.cj_fix y).1 hy
   obtain ⟨a, ha⟩ := hfix (x * L.cj x) (by rw [map_mul, L.cj_cj, mul_comm])
   have hN : x * L.cj x = 0 := by

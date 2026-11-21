@@ -119,7 +119,7 @@ theorem UpperTheory.HF.ram_eq :
     show max 1 (H.condE.factorization l) = H.condE.factorization l
     exact max_eq_right h1
   have hprod : H.condE = ∏ l ∈ H.ram, l ^ H.condE.factorization l := by
-    nth_rewrite 1 [← Nat.factorization_prod_pow_eq_self hEpos.ne']
+    nth_rewrite 1 [← Nat.prod_factorization_pow_eq_self hEpos.ne']
     rw [Finsupp.prod, Nat.support_factorization, hC]
   have hQSc : H.QSc = ∏ l ∈ H.smallR, l ^ H.condE.factorization l := by
     show ∏ l ∈ H.smallR, l ^ H.sl l = _

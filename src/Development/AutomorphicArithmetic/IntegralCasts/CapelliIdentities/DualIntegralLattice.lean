@@ -64,7 +64,7 @@ private theorem key1 {S : Type} [CommRing S] [IsDomain S] [CharZero S] {ι : Typ
         rw [← Pi.single_smul, smul_eq_mul]
       rw [h1, ← hadj, h2, star, mul_assoc]
     set_option synthInstance.maxHeartbeats 100000 in
-      conv_lhs => rw [hxs, map_sum, AddMonoidHom.finset_sum_apply, hys]
+      conv_lhs => rw [hxs, map_sum, AddMonoidHom.finsetSum_apply, hys]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, Finset.mul_sum, Int.cast_sum]
     rw [Finset.sum_comm]

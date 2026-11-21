@@ -34,7 +34,7 @@ theorem algBB_sub (g N : ℕ) (hg : 2 ≤ g) :
       omega
     have hdvd : l ∣ g ^ d - 1 := by
       by_contra hnd
-      exact hv (padicValNat.eq_zero_of_not_dvd hnd)
+      exact hv (by rw [Nat.padicValNat_def]; exact multiplicity_eq_zero_of_not_dvd hnd)
     have h1 := Nat.le_of_dvd (by omega) hdvd
     have h2 : g ^ d ≤ g ^ N := Nat.pow_le_pow_right (by omega) hdN
     omega

@@ -52,7 +52,7 @@ theorem coeff_zero_of_dd {σ : Type*} (v : MvPolynomial σ ℂ) (i j : σ) (hij 
     split_ifs with h1 h2 h2 <;> (try subst_vars) <;> first | omega | exact (hij rfl).elim
   obtain ⟨m, hm⟩ : ∃ m, α = m + Finsupp.single i 1 + Finsupp.single j 1 := ⟨_, hsplit⟩
   have hc := congrArg (AddMonoidAlgebra.coeff · m) h
-  rw [coeff_pderiv, coeff_pderiv, coeff_zero, ← hm] at hc
+  rw [coeff_pderiv, coeff_pderiv, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, ← hm] at hc
   rcases mul_eq_zero.1 hc with h' | h'
   · rcases mul_eq_zero.1 h' with h'' | h''
     · exact hα h''

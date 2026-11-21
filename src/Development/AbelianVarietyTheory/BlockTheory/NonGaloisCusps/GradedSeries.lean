@@ -30,7 +30,7 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedSeries.serMul_finit
   rw [Function.mem_support] at hj
   rw [Set.mem_Iic]
   by_contra h
-  push_neg at h
+  push Not at h
   exact hj (by rw [hm _ (by omega), smul_zero])
 
 
@@ -41,7 +41,7 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedSeries.serMul_one (
   rw [finsum_eq_single _ 0 (fun j hj => by simp [PowerSeries.coeff_one, hj])]
   simp
 
-
+variable (L) in
 def serSpan (S : Set (ℤ → M)) : Submodule L (ℤ → M) :=
   Submodule.span L {w | ∃ (f : PowerSeries L) (u : ℤ → M), u ∈ S ∧ IsLaurent u ∧ w = serMul f u}
 
@@ -81,16 +81,16 @@ def toDR (F : Submodule LL (T.V ⊗[Qp] B)) : Submodule LL (T.V ⊗[Qp] BdR) :=
   F.map (ιV PD (LL := LL) (V := T.V))
 
 def Nlev (i : ZMod n) (ζ : LL) : Submodule LL (ℤ → T.V ⊗[Qp] BdR) :=
-  serSpan (Set.range (W.levN T i ζ))
+  serSpan LL (Set.range (W.levN T i ζ))
 
 def IsExpansion (i : ZMod n) (ζ : LL) (y : W.DD T) (u : ℤ → T.V ⊗[Qp] BdR) : Prop :=
   IsLaurent u ∧ ∃ (m : ℕ) (hy : W.Q ^ m • y ∈ W.N T),
     serMul (W.lev i ζ (W.Q ^ m)) u = W.levN T i ζ ⟨W.Q ^ m • y, hy⟩
 
 def phiNlev (i : ZMod n) (ζ : LL) : Submodule LL (ℤ → T.V ⊗[Qp] BdR) :=
-  serSpan {u | ∃ y ∈ W.N T, IsExpansion W T i ζ (W.φD T y) u}
+  serSpan LL {u | ∃ y ∈ W.N T, IsExpansion W T i ζ (W.φD T y) u}
 
-
+variable (PD) in
 def phiSer (j : ℕ) (u : ℤ → T.V ⊗[Qp] B) : ℤ → T.V ⊗[Qp] BdR :=
   fun k => ιV PD (LL := LL) (V := T.V)
     ((((PD.p : LL) ^ j) ^ k) • ((φVB PD (LL := LL) (V := T.V)) ^ j) (u k))
@@ -129,8 +129,8 @@ def LatticeAtLevels (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
               toDR (PD := P.PD K) T (FilLet (H.W K s LL h) T i (resEmb h τ) a)) ∧
       (∀ j : ℕ, 1 ≤ j → IsPrimitiveRoot ζ (l ^ (s + j)) →
         Nlev (H.W K s LL h) T i ζ =
-            serSpan (phiSer T j ''
-              (serSpan (Set.range
+            serSpan ↥LL.1 (phiSer (P.PD K) T j ''
+              (serSpan ↥LL.1 (Set.range
                 ((C.C K s LL h).tie.levB T (i - (j : ZMod _)) (ζ ^ (l ^ j)))) :
                   Set (ℤ → T.V ⊗[ℚ_[l]] P.R.B))) ∧
           ∀ τ : ↥(Ks K s) →ₐ[ℚ_[l]] ↥LL.1, H.IsPt h (i - (j : ZMod _)) (ζ ^ (l ^ j)) τ →

@@ -26,10 +26,10 @@ theorem algebraMap_C_eq (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin 
   rfl
 
 theorem adjoin_eq_top (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin d) (Fin n) ℂ) :
-    letI : Algebra (MvPolynomial (Fin d) ℂ) (MvPolynomial (Fin n) ℂ ⧸ J) :=
-      (projHom J A).toRingHom.toAlgebra;
+    (letI : Algebra (MvPolynomial (Fin d) ℂ) (MvPolynomial (Fin n) ℂ ⧸ J) :=
+      (projHom J A).toRingHom.toAlgebra
     Algebra.adjoin (MvPolynomial (Fin d) ℂ)
-      (Set.range fun j : Fin n => Ideal.Quotient.mk J (X j)) = ⊤ := by
+      (Set.range fun j : Fin n => Ideal.Quotient.mk J (X j)) = ⊤) := by
   let _ : Algebra (MvPolynomial (Fin d) ℂ) (MvPolynomial (Fin n) ℂ ⧸ J) :=
     (projHom J A).toRingHom.toAlgebra
   rw [eq_top_iff]

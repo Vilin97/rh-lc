@@ -19,7 +19,7 @@ theorem UpperTheory.admissible_prime_not_dvd_orderOf_and_not_dvd_level :
   · set n := ∏ q ∈ d.primeFactors, orderOf (r : ZMod q) with hn
     have hln : ¬ l ∣ n := by
       intro h
-      obtain ⟨q, hqm, hlq⟩ := (Prime.dvd_finset_prod_iff hl.prime _).1 h
+      obtain ⟨q, hqm, hlq⟩ := (Prime.dvd_finsetProd_iff hl.prime _).1 h
       exact (hq q (Nat.prime_of_mem_primeFactors hqm) (Nat.dvd_of_mem_primeFactors hqm)).2.2.2 hlq
     have hcop : Nat.Coprime F d := by
       apply Nat.coprime_of_dvd

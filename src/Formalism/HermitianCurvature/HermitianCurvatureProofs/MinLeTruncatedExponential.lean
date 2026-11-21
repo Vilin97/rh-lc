@@ -245,7 +245,9 @@ theorem stepUp : StepUp := by
       _ ≤ ENNReal.ofReal Mb *
             ∑' σ : Set.range (fun a : GaussianInt => (Λ : ℂ) * GaussianInt.toComplex a), g σ.1 := by
           gcongr
-          exact ENNReal.tsum_mono_subtype g (fun σ hσ => hdual σ hσ)
+          exact tsum_mono_subtype (s := {σ : ℂ | InDual ω₁ ω₂ σ}) g (by
+            intro σ hσ
+            exact hdual σ hσ)
       _ = ENNReal.ofReal Mb * ∑' a : GaussianInt, g ((Λ : ℂ) * GaussianInt.toComplex a) := by
           rw [tsum_range g hinj]
       _ ≤ ENNReal.ofReal Mb * ENNReal.ofReal 40.5 := by gcongr

@@ -59,6 +59,7 @@ theorem memLp_lift {u : S → ℝ} (h : Good j B μ DB u) : MemLp (lift j B u) 2
   rw [this]; exact hmem
 
 
+variable (j B μ DB) in
 def cls (u : S → ℝ) : HL j B μ DB := by
   classical exact if h : Good j B μ DB u then (memLp_lift h).toLp (lift j B u) else 0
 

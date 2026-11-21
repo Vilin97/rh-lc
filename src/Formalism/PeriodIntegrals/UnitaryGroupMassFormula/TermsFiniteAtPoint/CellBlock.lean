@@ -40,7 +40,7 @@ theorem mul_revJ_apply (M : Matrix (Fin s) (Fin s) K) (i j : Fin s) : (M * revJ 
 theorem revJ_revJ : revJ K s * revJ K s = 1 := by
   ext i j
   rw [revJ_mul_apply]
-  simp only [revJ, Fin.rev_rev, one_apply]
+  simp only [revJ, Fin.rev_rev, Matrix.one_apply]
   by_cases h : i = j
   · simp [h]
   · simp [h, Ne.symm h]

@@ -94,7 +94,7 @@ private theorem continuous_psi_of_matrix {k r : ℕ} (z : Fin (2 * r + k + 1) �
   unfold psi ell
   refine Complex.continuous_exp.comp (continuous_const.mul (Complex.continuous_ofReal.comp
     (Complex.continuous_re.comp (continuous_const.mul ?_))))
-  refine continuous_finset_sum _ fun a _ => ?_
+  refine continuous_finsetSum _ fun a _ => ?_
   split_ifs
   · fun_prop
   · simp only [Matrix.mulVec, dotProduct, Matrix.of_apply]

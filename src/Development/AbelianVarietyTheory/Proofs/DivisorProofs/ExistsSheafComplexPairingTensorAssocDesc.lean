@@ -136,6 +136,7 @@ theorem key {V : Scheme.{0}} (c : Sec (K.X u) V) (x x' : Tens I J V st) (hx : τ
   rw [this]
 
 
+variable (τ) in
 def Ch (U : Scheme.{0}) (y : Sec (T.X st) U) (c : Sec (K.X u) U) (a : Sec (L.X w) U) : Prop :=
   ∀ (V : Scheme.{0}) (g : V ⟶ U) (x : Tens I J V st), τ.lift V st x = Sec.res g y →
     Sec.res g a = B μ' ν' st u w h V (Sec.res g c) x

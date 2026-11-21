@@ -128,8 +128,8 @@ private theorem addVal_natCast_eq_of_l_mem_maximalIdeal (hl : (l : O) ∈ IsLoca
   push_cast
   rw [IsDiscreteValuationRing.addVal_mul, IsDiscreteValuationRing.addVal_pow,
     IsDiscreteValuationRing.addVal_eq_zero_iff.2 hunit, addVal_l_eq_eO hϖ hl0,
-    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
-    padicValNat.eq_zero_of_not_dvd hm]
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, Nat.padicValNat_def, Nat.multiplicity_prime_pow,
+    Nat.padicValNat_def, multiplicity_eq_zero_of_not_dvd hm]
   simp [nsmul_eq_mul, mul_comm]
 
 private theorem natCast_ne_zero_of_l_mem_maximalIdeal (hl : (l : O) ∈ IsLocalRing.maximalIdeal O) (hl0 : (l : O) ≠ 0)
@@ -266,13 +266,13 @@ theorem PhiData.constant_le_rpow_of_three_le (B y : ℕ) (hB : 1 ≤ B) (hy : 1 
       exact min_choice _ _
     rcases hcase with h | h
     · have hv0 : v = 0 := by
-        rw [hv, h, Nat.choose_self, padicValNat.one]
+        simp [hv, h, Nat.padicValNat_def]
       rw [hv0, h, Nat.sub_self]
       simp
     · refine le_trans ?_ (le_max_right _ _)
       have hlog : (v : ℝ) ≤ Real.logb l y := by
         have h1 : v ≤ Nat.log l y := by
-          rw [hv, ← Nat.factorization_def _ hp]
+          rw [hv, Nat.padicValNat_def, ← Nat.factorization_def _ hp]
           exact Nat.factorization_choose_le_log
         exact le_trans (by exact_mod_cast h1) (Real.natLog_le_logb y l)
       have hBl : (B : ℝ) / l ≤ j0 + 1 := by

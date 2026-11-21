@@ -37,8 +37,7 @@ lemma norm_nat (p : ℕ) [hp : Fact p.Prime] (n : ℕ) (hn : n ≠ 0) :
   have h1 : ((n : ℚ) : ℚ_[p]) = (n : ℚ_[p]) := by push_cast; rfl
   rw [← h1, Padic.eq_padicNorm, padicNorm.eq_zpow_of_nonzero (by exact_mod_cast hn),
     padicValRat.of_nat]
-  push_cast
-  try rfl
+  simp [padicValNat]
 
 lemma neglog_zpow (p : ℕ) [hp : Fact p.Prime] (z : ℤ) : -Real.logb p ((p : ℝ) ^ (-z)) = z := by
   have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.out.one_lt
@@ -122,9 +121,9 @@ lemma init_basis {ι : Type} (f : ι → MvPolynomial σ ℚ_[p]) (ord : ι → 
     ext b
     by_cases hb : ord b = e
     · rw [← heq, Finsupp.coe_zero, Pi.zero_apply]
-      exact (Finsupp.mem_supported' _ _).mp hl' b (by simp [hb])
+      exact congrArg (fun x : ℤ_[p] => (x : ℚ_[p])) ((Finsupp.mem_supported' _ _).mp hl' b (by simp [hb]))
     · rw [Finsupp.coe_zero, Pi.zero_apply]
-      exact (Finsupp.mem_supported' _ _).mp hl b hb
+      exact congrArg (fun x : ℤ_[p] => (x : ℚ_[p])) ((Finsupp.mem_supported' _ _).mp hl b hb)
   · apply le_antisymm
     · rw [Submodule.span_le]
       rintro _ ⟨b, hb, rfl⟩
@@ -186,8 +185,9 @@ open Finset
 
 lemma legendre' (p : ℕ) [hp : Fact p.Prime] (n : ℕ) :
     (n : ℝ) / ((p : ℝ) - 1) - (padicValNat p n.factorial : ℝ) ≤ (Nat.log p n : ℝ) + 1 := by
+  simp only [padicValNat, Nat.fst_maxPowDvdDiv]
   have hp1 := hp.out.one_lt
-  have h := sub_one_mul_padicValNat_factorial (p := p) n
+  have h := Nat.Prime.sub_one_mul_multiplicity_factorial (n := n) hp.out
   have hds := Nat.digit_sum_le p n
   have hsum : (p.digits n).sum ≤ (p.digits n).length * (p - 1) := by
     have := List.sum_le_card_nsmul (p.digits n) (p - 1)
@@ -198,7 +198,7 @@ lemma legendre' (p : ℕ) [hp : Fact p.Prime] (n : ℕ) :
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · simp
   · have hlen := Nat.length_digits p n hp1 hn.ne'
-    have key : ((p : ℝ) - 1) * (padicValNat p n.factorial) = n - (p.digits n).sum := by
+    have key : ((p : ℝ) - 1) * (multiplicity p n.factorial) = n - (p.digits n).sum := by
       have := congrArg (fun x : ℕ => (x : ℝ)) h
       rw [Nat.cast_mul, Nat.cast_sub hp1.le, Nat.cast_sub hds, Nat.cast_one] at this
       exact this
@@ -207,7 +207,7 @@ lemma legendre' (p : ℕ) [hp : Fact p.Prime] (n : ℕ) :
       have := (Nat.cast_le (α := ℝ)).mpr hsum
       rw [Nat.cast_mul, Nat.cast_sub hp1.le, Nat.cast_add, Nat.cast_one] at this
       exact this
-    have hv : (padicValNat p n.factorial : ℝ) = (n - (p.digits n).sum) / ((p : ℝ) - 1) := by
+    have hv : (multiplicity p n.factorial : ℝ) = (n - (p.digits n).sum) / ((p : ℝ) - 1) := by
       rw [eq_div_iff hpm.ne', ← key]
       ring
     rw [hv, ← sub_div, sub_sub_cancel, div_le_iff₀ hpm]

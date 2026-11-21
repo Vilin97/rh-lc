@@ -222,8 +222,8 @@ theorem inv_step [CharZero K] {v : AddValuation K (WithTop ℚ)} {p : ℕ} (hSeg
     exact add_nonneg (hInt ζ) (tI ζ (hpre ζ hζ) α)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [lin_eq_sum Th Z, map_sum, ← hph, D.ph_lin_sum p Z]
-    refine Finset.sum_congr rfl fun ζ hζ => ?_
-    rw [map_smul, tph ζ (hpre ζ hζ)]
+      refine Finset.sum_congr rfl fun ζ hζ => ?_
+      rw [map_smul, tph ζ (hpre ζ hζ)]
   · intro ζ' hζ'
     obtain ⟨ζ, hζ, hζ'1⟩ := exists_of_mem_support_lin Th Z hζ'
     obtain ⟨hpost, hag⟩ := tsupp ζ (hpre ζ hζ) ζ' hζ'1

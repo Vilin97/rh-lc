@@ -21,7 +21,6 @@ private lemma sq {T T' G : Over S} (y : T' ⟶ T) :
     all_goals first
       | rfl
       | exact Over.w y
-      | (rw [Over.whiskerRight_left] |>.trans (Category.comp_id _))
       | simp [Over.whiskerRight_left]
   · rw [Over.whiskerRight_left]
     exact pullback.lift_fst _ _ _

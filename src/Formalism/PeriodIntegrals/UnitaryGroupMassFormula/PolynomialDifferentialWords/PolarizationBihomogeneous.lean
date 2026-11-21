@@ -165,7 +165,7 @@ theorem pairingWeightCancel : TTWt := by
     exact mul_ne_zero (tt_ne_zero K k hk) hcomp
   apply hprod
   ext m'
-  rw [coeff_weightedHomogeneousComponent, coeff_zero]
+  rw [coeff_weightedHomogeneousComponent, AddMonoidAlgebra.coeff_zero]
   split_ifs with hw
   · by_contra hne
     have h4 := h m' (MvPolynomial.mem_support_iff.2 hne) a

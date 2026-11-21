@@ -43,13 +43,13 @@ theorem bg_eLpNorm_two_eq (n : ℕ) (z : M → V n) (ps : M → ℝ) (hps : Meas
 theorem bg_memLp_of_wint (n : ℕ) (z : M → V n) (ps : M → ℝ) (hps : Measurable ps) (f : M → ℂ)
     (hf : AEStronglyMeasurable f (bgMeas n z ps)) (h : wint n z f ps < ⊤) :
     MemLp f 2 (bgMeas n z ps) := by
-  refine ⟨hf, ?_⟩
+  change eLpNorm f 2 (bgMeas n z ps) < ⊤
   rw [bg_eLpNorm_two_eq n z ps hps f]
   exact ENNReal.rpow_lt_top_of_nonneg (by norm_num) h.ne
 
 theorem bg_wint_lt_top_of_memLp (n : ℕ) (z : M → V n) (ps : M → ℝ) (hps : Measurable ps) (f : M → ℂ)
     (hf : MemLp f 2 (bgMeas n z ps)) : wint n z f ps < ⊤ := by
-  have h := hf.2
+  have h : eLpNorm f 2 (bgMeas n z ps) < ⊤ := hf
   rw [bg_eLpNorm_two_eq n z ps hps f] at h
   exact (ENNReal.rpow_lt_top_iff_of_pos (by norm_num)).1 h
 

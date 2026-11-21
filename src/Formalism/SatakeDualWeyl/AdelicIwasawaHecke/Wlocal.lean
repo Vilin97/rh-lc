@@ -475,12 +475,13 @@ lemma wlocal_kill (P : Ideal R) [P.IsPrime] {σ : Type} (w : MvPolynomial σ R)
     intro m
     have h1 : algebraMap R (Localization.AtPrime P) (w.coeff m) = 0 := by
       have := congrArg (AddMonoidAlgebra.coeff · m) hw
-      rwa [coeff_map, coeff_zero] at this
+      simpa only [coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] using this
     exact (IsLocalization.map_eq_zero_iff P.primeCompl (Localization.AtPrime P) _).mp h1
   choose t ht using hc
   refine ⟨∏ m ∈ w.support, (t m : R), Submonoid.prod_mem _ (fun m _ => (t m).2), ?_⟩
   ext m
-  rw [coeff_C_mul, coeff_zero]
+  rw [coeff_C_mul, AddMonoidAlgebra.coeff_zero]
+  change (∏ m ∈ w.support, (t m : R)) * w.coeff m = 0
   by_cases hm : m ∈ w.support
   · rw [← Finset.mul_prod_erase _ _ hm, mul_comm ((t m : P.primeCompl) : R), mul_assoc, ht m, mul_zero]
   · have h0 : w.coeff m = 0 := by

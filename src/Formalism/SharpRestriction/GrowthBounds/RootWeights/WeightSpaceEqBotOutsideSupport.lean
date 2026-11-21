@@ -106,7 +106,7 @@ theorem finitely_many_weights_span [FiniteDimensional K V] (E : GLOps n K V) (hE
     ∃ s : Finset (Fin n → ℤ), (⨆ mu ∈ s, weightSp E mu) = ⊤ := by
   have hc : IsCompactElement (⊤ : Submodule K V) :=
     (Submodule.fg_iff_compact _).1 (Module.finite_def.1 inferInstance)
-  obtain ⟨s, hs⟩ := CompleteLattice.IsCompactElement.exists_finset_of_le_iSup _ hc (weightSp E) (by rw [hE.2.2])
+  obtain ⟨s, hs⟩ := IsCompactElement.exists_finset_of_le_iSup hc (weightSp E) (by rw [hE.2.2])
   exact ⟨s, top_le_iff.1 hs⟩
 
 theorem weightSpace_eq_bot_outside_support [CharZero K] (E : GLOps n K V) (s : Finset (Fin n → ℤ))

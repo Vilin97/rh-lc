@@ -73,33 +73,14 @@ theorem finF (D : ℤ) (hD : D ≠ 0) :
 theorem interLocStd [FiniteDimensional E V] (N : Submodule (𝓞 E) V) (hN : Submodule.IsLattice E N) (x : V)
     (hx : ∀ p : Ideal (𝓞 E), p.IsMaximal → ∃ t : 𝓞 E, t ∉ p ∧ t • x ∈ N) : x ∈ N := by
   classical
-  have hfull : PI.LatLocGlob.IsFullLat E N := ⟨hN.fg, hN.span_eq_top⟩
-  let N' : Submodule (𝓞 E) V := N ⊔ Submodule.span (𝓞 E) {x}
-  have hfull' : PI.LatLocGlob.IsFullLat E N' := by
-    refine ⟨hN.fg.sup (Submodule.fg_span_singleton x), ?_⟩
-    apply eq_top_iff.2
-    rw [← hN.span_eq_top]
-    exact Submodule.span_mono (fun y hy => Submodule.mem_sup_left hy)
-  have hloc : ∀ p : Ideal (𝓞 E), p.IsMaximal → PI.LatLocGlob.loc p N' = PI.LatLocGlob.loc p N := by
-    intro p hp
-    haveI := hp.isPrime
-    ext y
-    constructor
-    · rintro ⟨s, hs, hsy⟩
-      obtain ⟨a, ha, z, hz, haz⟩ := Submodule.mem_sup.1 hsy
-      obtain ⟨r, rfl⟩ := Submodule.mem_span_singleton.1 hz
-      obtain ⟨t, ht, htx⟩ := hx p hp
-      refine ⟨t * s, fun h => (Ideal.IsPrime.mem_or_mem ‹_› h).elim ht hs, ?_⟩
-      rw [mul_smul, ← haz, smul_add, smul_comm t r x]
-      exact N.add_mem (N.smul_mem t ha) (N.smul_mem r htx)
-    · rintro ⟨s, hs, hsy⟩
-      exact ⟨s, hs, Submodule.mem_sup_left hsy⟩
-  obtain ⟨L, _, huniq⟩ := latLocGlob (𝓞 E) E V N hfull (fun p => PI.LatLocGlob.loc p N)
-    (fun p _ => ⟨N, hfull, rfl⟩) (Set.finite_empty.subset (fun p hp => hp.2 rfl))
-  have e1 : N = L := huniq N ⟨hfull, fun p _ => rfl⟩
-  have e2 : N' = L := huniq N' ⟨hfull', hloc⟩
-  have : x ∈ N' := Submodule.mem_sup_right (Submodule.mem_span_singleton_self x)
-  rwa [e2, ← e1] at this
+  by_contra hxN
+  have hproper : N.colon {x} ≠ ⊤ := by
+    intro htop
+    have hone : (1 : 𝓞 E) ∈ N.colon {x} := (Ideal.eq_top_iff_one _).1 htop
+    exact hxN (by simpa only [one_smul] using Submodule.mem_colon_singleton.1 hone)
+  obtain ⟨p, hp, hle⟩ := Ideal.exists_le_maximal _ hproper
+  obtain ⟨t, ht, htx⟩ := hx p hp
+  exact ht (hle (Submodule.mem_colon_singleton.2 htx))
 
 theorem interLocF [FiniteDimensional E V] (N : Submodule (𝓞 E) V) (hN : Submodule.IsLattice E N) (x : V)
     (hx : ∀ v : HeightOneSpectrum (𝓞 F), x ∈ Floc v N) : x ∈ N := by

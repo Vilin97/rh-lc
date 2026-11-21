@@ -159,7 +159,7 @@ private theorem ord_pos' : 0 < φ.ord := by
   exact Nat.card_pos
 
 theorem two_pow_dvd_ord : 2 ^ φ.e ∣ φ.ord := by
-  have := Subgroup.card_dvd_of_surjective φ.hH φ.hH_surj
+  have := Subgroup.card_dvd_of_surjective (f := φ.hH) φ.hH_surj
   rwa [Formalism.FrobeniusOrbits.Group.card_H, φ.natCard_MA] at this
 
 theorem two_pow_le_ord : 2 ^ φ.e ≤ φ.ord := Nat.le_of_dvd (ord_pos' φ) φ.two_pow_dvd_ord
@@ -354,6 +354,7 @@ theorem chC_ne_one : φ.chC ≠ 1 := by
   norm_num [iod] at h1
 
 
+open scoped Classical in
 theorem hostCharSum :
     (∀ χ : φ.GG →* ℂˣ,
       (∑ g ∈ Finset.univ.filter (fun g : φ.GG => g ∉ φ.Psi), starRingEnd ℂ ((χ g : ℂˣ) : ℂ)) =
@@ -547,6 +548,7 @@ theorem thick_key {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s < φ.n
   linear_combination hz
 
 
+open scoped Classical in
 theorem thick_part_one {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s < φ.n0) (hR : NoRel T L)
     (u₀ t x : φ.A) (hord : 4 * L < addOrderOf x) (i₀ : ℤ) :
     ((Finset.Ico i₀ (i₀ + L)).filter (fun i : ℤ => φ.InTranslate T u₀ (t + i • x))).card ≤ 2 := by
@@ -600,6 +602,7 @@ theorem thick_part_two {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s <
   rw [h1, h2, hs]
 
 
+open scoped Classical in
 theorem hostThickOrbit {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s < φ.n0) (hR : NoRel T L)
     (u₀ t x : φ.A) :
     (4 * L < addOrderOf x → ∀ i₀ : ℤ,

@@ -57,7 +57,7 @@ theorem canonLiftFix_of_laws (hL : Out.Laws) : CanonLiftFixStatement := by
   obtain ⟨r, hr, hr0⟩ := Geo.Tor.exists_ros (A := P.D.toPre.P.A) (L := P.D.toPre.P.L)
     hL.globalFns P.D.toPre.P.isAb P.D.toPre.P.isLB (P.oD.onB.act (star α)) (P.oD.onB.act α)
     (by have hR := P.oD.onB.rosati (star α); rwa [star_star] at hR)
-  obtain ⟨hb, hrel⟩ := CanonicalLiftOrigin.gt_rel P.oD α p.g q.g h g0 z hgt hι hadd hz r hr hr0
+  obtain ⟨hb, hrel⟩ := ReciprocityTheory.ChartRestriction.G.H1.CanonicalLiftOrigin.gt_rel P.oD α p.g q.g h g0 z hgt hι hadd hz r hr hr0
   obtain ⟨u0, hu0, hc0, -⟩ := hpull.1 0
   obtain ⟨w, hw, hwv⟩ := CanonicalLiftTraces.exists_w P.oD α N hN p.g.b z hb u0 hu0
   have hfix : PhiRel P.D.toPre F (1 * N) p w θα θα :=

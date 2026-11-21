@@ -15,7 +15,7 @@ open QuadraticAlgebra
 variable {O K : Type} [CommRing O] [Field K] [Algebra O K] {Δ τ : K}
 
 
-def Bf (c t : K) : K × Etau K τ →ₗ[K] K × Etau K τ →ₗ[K] K :=
+def Bf (τ c t : K) : K × Etau K τ →ₗ[K] K × Etau K τ →ₗ[K] K :=
   LinearMap.mk₂ K (fun v w => c * v.1 * w.1 + t * QuadraticAlgebra.trace (v.2 * star w.2))
     (fun a b w => by simp [QuadraticAlgebra.trace_def]; ring) (fun a b w => by simp [QuadraticAlgebra.trace_def]; ring)
     (fun a b w => by simp [QuadraticAlgebra.trace_def]; ring) (fun a b w => by simp [QuadraticAlgebra.trace_def]; ring)

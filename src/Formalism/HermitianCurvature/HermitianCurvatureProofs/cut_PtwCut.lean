@@ -33,7 +33,8 @@ theorem ckOn_inter {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {f : B.
     (hf : B.CkOn ⊤ (B.GV k r) f) (U : Set (B.Mat k r)) : B.CkOn (n : ℕ∞) (U ∩ B.GV k r) f := by
   intro g₀ hg₀
   obtain ⟨V, f', hV, hgV, hf', hff⟩ := hf g₀ hg₀.2
-  exact ⟨V, f', hV, hgV, hf'.of_le (by exact_mod_cast le_top), hff⟩
+  open scoped Matrix.Norms.Elementwise in
+    exact ⟨V, f', hV, hgV, hf'.of_le (by exact_mod_cast le_top), hff⟩
 
 variable [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
 

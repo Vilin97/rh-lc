@@ -95,7 +95,8 @@ end Flat
 variable {E : Type} [Field E] [NumberField E] {dim : (E →+* ℂ) → ℕ} {n : ℕ}
 
 
-theorem flat_dir (l : Letter n dim) : flat (dir l) = EuclideanSpace.single l 1 := by
+open Classical in
+theorem flat_dir (l : Letter n dim) : flat (dir l) = EuclideanSpace.single l (1 : ℂ) := by
   have := flat_single (n := n) l.1 l.2 (1 : ℂ)
   unfold dir
   convert this

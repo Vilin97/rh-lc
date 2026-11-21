@@ -18,7 +18,7 @@ theorem UpperTheory.abelianField_window_triple_snoc :
     rintro _ ⟨i, rfl⟩
     exact (hex _).2 ⟨_, rfl⟩
   have hli : LinearIndependent k (Fin.snoc (fun i => f (b' i)) s : Fin (n + 1) → W) := by
-    rw [linearIndependent_fin_snoc]
+    rw [linearIndependent_finSnoc]
     refine ⟨b'.linearIndependent.map' f (LinearMap.ker_eq_bot.2 hf), ?_⟩
     intro hmem
     have h0 : p s = 0 := LinearMap.mem_ker.1 (hrange hmem)
@@ -55,7 +55,7 @@ theorem UpperTheory.abelianField_window_triple_snoc :
     intro x
     rw [hfx]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_sum, Finsupp.single_apply]
+      simp [map_sum]
   refine ⟨b, fun a => ⟨?_, ?_⟩⟩
   · intro i j hji
     rw [LinearMap.toMatrix_apply]

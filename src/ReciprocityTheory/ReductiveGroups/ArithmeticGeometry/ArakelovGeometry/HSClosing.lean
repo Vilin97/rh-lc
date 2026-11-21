@@ -21,7 +21,7 @@ structure GDatum (D : ℕ) : Type 1 where
 
   x : Ix κ → Ω
 
-  m : ConeMetric ℂ (Ix κ)
+  m : ConeMetric (C := ℂ) (ι := Ix κ)
 
   μ : Measure (Ix κ → ℂ)
   good : IsGood D x m μ
@@ -32,11 +32,12 @@ def IsInvMat {J : Type} [Fintype J] (A : Matrix J J ℚ) : Prop :=
   ∃ B : Matrix J J ℚ, ∀ v : J → ℚ, A.mulVec (B.mulVec v) = v ∧ B.mulVec (A.mulVec v) = v
 
 def IsPullFS {Ω : Type} [Field Ω] [CharZero Ω] {κ : Type} [Fintype κ] {D : ℕ} (x : Ix κ → Ω)
-    (e : Fin (D + 1) → Ix κ) (m : ConeMetric ℂ (Ix κ)) : Prop :=
+    (e : Fin (D + 1) → Ix κ) (m : ConeMetric (C := ℂ) (ι := Ix κ)) : Prop :=
   ∀ z ∈ pts (coordIdeal ℤ x), m.ρ z = Real.sqrt (∑ k, ‖z (e k)‖ ^ 2)
 
 def hhOf (I : AllFam) (D : ℕ) : ℝ :=
-  I Unit (GlobalTheory (Fin (D + 1))) ⊥ (D + 1) fun _ => HermLine.ofCone (fsMetric (Ix (Fin (D + 1))))
+  I Unit (GlobalTheory (Fin (D + 1))) ⊥ (D + 1) fun _ =>
+    HermLine.ofCone (fsMetric (ι := Ix (Fin (D + 1))))
 
 abbrev pw (D : ℕ) : ℕ → ℝ := fun n => (n : ℝ) ^ (D + 1)
 

@@ -51,7 +51,7 @@ theorem gShift_one {R : Type*} [CommRing R] {n : ℕ} (δ : ℤ) :
       simp
     · exact absurd rfl hd
   · intro d hd
-    exact absurd (MvPolynomial.coeff_zero d) hd
+    simp at hd
 
 theorem gShift_pow {R : Type*} [CommRing R] {n : ℕ}
     {P : Polynomial (MvPolynomial (Fin r × Fin n) R)} {μ δ : ℤ}
@@ -90,7 +90,7 @@ theorem gShift_algebraMap {R : Type*} [CommRing R] {n : ℕ} (c : R) (δ : ℤ) 
       simp
     · exact absurd rfl hd
   · intro d hd
-    exact absurd (MvPolynomial.coeff_zero d) hd
+    simp at hd
 
 theorem gShift_gen {R : Type*} [CommRing R] {n : ℕ} (a b : Fin r) (v : Fin r × Fin n) :
     GShift ht (Polynomial.C (X v) +
@@ -100,7 +100,7 @@ theorem gShift_gen {R : Type*} [CommRing R] {n : ℕ} (a b : Fin r) (v : Fin r �
   have hX : ∀ u : Fin r × Fin n, IsWeightedHomogeneous (htW ht n) (X u : MvPolynomial (Fin r × Fin n) R) (ht u.1) :=
     fun u => isWeightedHomogeneous_X R (htW ht n) u
   have h0 : ∀ m : ℤ, IsWeightedHomogeneous (htW ht n) (0 : MvPolynomial (Fin r × Fin n) R) m :=
-    fun m d hd => absurd (MvPolynomial.coeff_zero d) hd
+    fun m d hd => by simp at hd
   split_ifs with hb
   · rw [Polynomial.coeff_add, Polynomial.coeff_C, Polynomial.X_mul_C, Polynomial.coeff_C_mul_X]
     by_cases hk0 : k = 0
@@ -136,7 +136,7 @@ theorem g_rowDiv_shift (R : Type*) [CommRing R] {n : ℕ} (H : ℤ) (a b : Fin r
     (f : MvPolynomial (Fin r × Fin n) R) (hf : IsWeightedHomogeneous (htW ht n) f H) :
     IsWeightedHomogeneous (htW ht n) (rowDiv R a b k f) (H + k * (ht a - ht b)) := by
   unfold rowDiv
-  conv => enter [2, 1, 2]; rw [f.as_sum]
+  rw [f.as_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_

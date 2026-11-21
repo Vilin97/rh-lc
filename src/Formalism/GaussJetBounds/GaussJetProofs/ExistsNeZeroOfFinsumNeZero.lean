@@ -343,7 +343,7 @@ end Diff
 end ExponentialDerivativeInverse
 
 
-theorem exponential_derivative_inverse : ExpDeInv.{u} := by
+theorem exponential_derivative_inverse : ExpDeInv.{u} := open ExponentialDerivativeInverse in by
   intro K _ _ l d _ hl hd _ K0 ζ hζ be hK0 htor hcc D hD
   have hN : l ^ d - 1 ≠ 0 := by
     have h2 : 2 ≤ l ^ d := le_trans hl.two_le (Nat.le_self_pow (by omega) l)

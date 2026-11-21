@@ -132,8 +132,7 @@ theorem gauss_clear (p : KTp K D N) :
   rw [MvPolynomial.map_monomial, MvPolynomial.C_mul_monomial, hg v hv, Algebra.smul_def]
 
 theorem gauss_frac :
-    letI := (OpToKT D N la).toAlgebra
-    IsFractionRing (Op D N la) (KTf K D N) := by
+    @IsFractionRing (Op D N la) _ (KTf K D N) _ (OpToKT D N la).toAlgebra := by
   letI := (ReciprocityTheory.ChartRestriction.G.T0.OpToKT D N la).toAlgebra
   have : IsDomain (ReciprocityTheory.ChartRestriction.G.T0.Op D N la) :=
     IsLocalization.isDomain_localization (Ideal.primeCompl_le_nonZeroDivisors _)

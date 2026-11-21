@@ -285,6 +285,8 @@ theorem signature_form_conjTranspose_eq (k : ℕ) : (Hb k)ᴴ = Hb k := by
   unfold Hb
   rw [Matrix.diagonal_conjTranspose]
   congr 1
+  funext j
+  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 theorem hermitian_form_unitary_invariant {n : ℕ} (H A : Matrix (Fin n) (Fin n) ℂ) (hA : Aᴴ * H * A = H) (x y : Fin n → ℂ) :

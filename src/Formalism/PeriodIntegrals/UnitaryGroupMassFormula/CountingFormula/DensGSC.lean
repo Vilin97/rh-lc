@@ -16,11 +16,14 @@ theorem latBasis_exists (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace 
     (hfg : S.FG) (hsp : Submodule.span F (S : Set (Fin n → F)) = ⊤) :
     ∃ b : Module.Basis (Fin n) F (Fin n → F), (∀ k, b k ∈ S) ∧
       ∀ v, v ∈ S ↔ ∀ k, b.repr v k ∈ 𝒪[F] := by
-  have : S.IsLattice F := ⟨hfg, hsp⟩
+  have : Module.Finite 𝒪[F] S := Module.Finite.of_fg hfg
+  have : S.IsLattice F := Submodule.IsLattice.of_fg F hfg
+  have : S.IsFullLattice F := ⟨hsp⟩
   have hr : Module.finrank 𝒪[F] S = n := by
     simpa using ((Submodule.IsFullLattice.finrank_eq F S).trans (Module.finrank_fintype_fun_eq_card F))
+  have : Module.Free 𝒪[F] S := Submodule.IsLattice.free F S
   let b0 : Module.Basis (Fin n) 𝒪[F] S := Module.finBasisOfFinrankEq 𝒪[F] S hr
-  let b := b0.extendOfIsLattice F
+  let b := b0.extendOfIsFullLattice F
   have hb : ∀ k, b k = (b0 k : Fin n → F) := fun k => by simp [b]
   refine ⟨b, fun k => by rw [hb]; exact (b0 k).2, fun v => ⟨fun hv k => ?_, fun h => ?_⟩⟩
   · have key : v = b.equivFun.symm (fun k => ((b0.repr ⟨v, hv⟩ k : 𝒪[F]) : F)) := by

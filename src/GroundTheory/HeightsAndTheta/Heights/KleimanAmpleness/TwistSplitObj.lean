@@ -33,10 +33,12 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
   (x : Fin (N + 1) → Ω) {r : ℕ} (η : Fin (r + 1) → Ω)
 
 
+variable (S) in
 def yHom : MvPolynomial (Fin (r + 1)) S →ₐ[S] LaurUT Ω :=
   aeval fun j => single ((1, 0) : ℤ × ℤ) (η j)
 
 
+variable (S) in
 def xyHom : Poly (MvPolynomial (Fin (r + 1)) S) N →+* LaurUT Ω :=
   eval₂Hom (yHom S η).toRingHom fun i => single ((0, 1) : ℤ × ℤ) (x i)
 

@@ -76,13 +76,14 @@ theorem lattice_split (K : Type) [Field K] [NumberField K] : ∀ (k : ℕ)
       intro i
       exact i.elim0
   | k + 1, X, hfg, hstd => by
-    let p0 : (Fin (k + 1) → K) →ₗ[K] K := LinearMap.proj 0
+    let p0 : (Fin (k + 1) → K) →ₗ[K] K := LinearMap.proj (φ := fun _ : Fin (k + 1) => K) 0
     set C0 := X.map (p0.restrictScalars (𝓞 K)) with hC0
     have hC0fg : C0.FG := hfg.map _
     have hC01 : 1 ≤ C0 := by
       intro a ha
       exact Submodule.mem_map.2 ⟨Pi.single 0 a, hstd (single_mem_intVec K 0 ha), by simp [p0]⟩
-    obtain ⟨v, hv1, hv⟩ := exists_section_of_image X p0 hC0fg hC01
+    obtain ⟨v, hv1, hv⟩ :=
+      exists_section_of_image (K := K) (V := Fin (k + 1) → K) X p0 hC0fg hC01
     let cz := (consZero K k).restrictScalars (𝓞 K)
     let X' : Submodule (𝓞 K) (Fin k → K) := X.comap cz
     have hX'fg : X'.FG := by

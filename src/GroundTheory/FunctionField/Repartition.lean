@@ -74,6 +74,7 @@ theorem Place.finite_not_mem_ring (x : K) : {v : Place k K | x ∉ v.ring}.Finit
     exact hv ((v.ord_nonneg_iff hx0).1 (by rw [h]))
 
 
+variable (k K) in
 def repartitions : Submodule k (Place k K → K) where
   carrier := {a | {v : Place k K | a v ∉ v.ring}.Finite}
   add_mem' {a b} ha hb := (ha.union hb).subset fun v (hv : a v + b v ∉ v.ring) => by
@@ -88,6 +89,7 @@ def repartitions : Submodule k (Place k K → K) where
     exact hv (mul_mem (v.algebraMap_mem c) h)
 
 
+variable (k K) in
 def Repartition : Type _ := repartitions k K
 
 namespace Repartition
@@ -109,6 +111,7 @@ theorem finite_not_mem (a : Repartition k K) : {v : Place k K | a v ∉ v.ring}.
   (show repartitions k K from a).2
 
 omit [IsFunctionField k K] in
+@[ext]
 theorem ext {a b : Repartition k K} (h : ∀ v, a v = b v) : a = b :=
   DFunLike.ext _ _ h
 
@@ -138,9 +141,10 @@ theorem smul_apply (c : k) (a : Repartition k K) (v : Place k K) :
 noncomputable def diag : K →ₗ[k] Repartition k K where
   toFun x := mk (fun _ => x) (Place.finite_not_mem_ring x)
   map_add' _ _ := rfl
-  map_smul' c x := by ext v; simp [Algebra.smul_def]
+  map_smul' c x := by ext v; rfl
 
 
+variable (k K) in
 noncomputable def principal : Submodule k (Repartition k K) :=
   LinearMap.range (diag (k := k) (K := K))
 
@@ -172,6 +176,7 @@ theorem diag_mem_A_iff {D : Divisor k K} {x : K} : diag x ∈ A D ↔ x ∈ L D 
   Iff.rfl
 
 
+omit [IsFunctionField k K] in
 theorem add_single_apply_self (D : Divisor k K) (P : Place k K) :
     (D + Finsupp.single P 1 : Divisor k K) P = D P + 1 := by
   simp
@@ -252,7 +257,7 @@ theorem residueMap_surjective (D : Divisor k K) (P : Place k K) {t : K}
     by_contra hvP
     apply hv
     rw [Set.mem_singleton_iff] at hvP
-    simp only [f, Pi.single_apply, hvP, if_false]
+    simp only [f, Pi.single_apply, hvP, ite_false]
     exact v.ring.zero_mem
   let a : Repartition k K := Repartition.mk f hf
   have haA : a ∈ A (D + Finsupp.single P 1) := by
@@ -264,7 +269,7 @@ theorem residueMap_surjective (D : Divisor k K) (P : Place k K) {t : K}
       rw [map_mul, map_inv₀, ht, add_single_apply_self, ← WithZero.exp_neg, neg_neg]
       exact mul_le_of_le_one_right' ((w.valuation_le_one_iff _).2 y.2)
     · change w.valuation (f w) ≤ _
-      simp only [f, Pi.single_apply, hw, if_false, map_zero]
+      simp only [f, Pi.single_apply, hw, ite_false, map_zero]
       exact zero_le
   refine ⟨⟨a, haA⟩, ?_⟩
   rw [residueMap_apply]

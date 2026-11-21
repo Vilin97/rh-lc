@@ -255,7 +255,7 @@ theorem fdigPh : FdigPh := by
   intro p O _ _ _ r J _ Dt hP rho β c F hF
   have hsupp : ∀ mo ∈ F.support, ∀ v ∈ mo.support, IsLW v.1 := by
     intro mo hmo v hv
-    exact (mem_supported.1 hF) (Finset.mem_coe.2 ((mem_vars v).2 ⟨mo, hmo, hv⟩))
+    exact (mem_supported.1 hF) (Finset.mem_coe.2 ((mem_vars_iff_mem_support v).2 ⟨mo, hmo, hv⟩))
   have hs := fdigSum p O r J Dt rho _ F.support
     (fun mo => monomial β c * Dt.ph (monomial mo (AddMonoidAlgebra.coeff F mo)))
   conv_lhs => rw [F.as_sum]

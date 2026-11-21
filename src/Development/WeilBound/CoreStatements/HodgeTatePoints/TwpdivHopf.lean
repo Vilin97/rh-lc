@@ -21,21 +21,21 @@ def pair (x : M →ₐ[R] R) (y : N →ₐ[R] R) : M ⊗[R] N →ₐ[R] R :=
 
 theorem pair_map (x : M →ₐ[R] R) (y : N →ₐ[R] R) (f : M' →ₐ[R] M) (g : N' →ₐ[R] N) (z : M' ⊗[R] N') :
     pair x y (Algebra.TensorProduct.map f g z) = pair (x.comp f) (y.comp g) z := by
-  induction z <;> simp_all
+  induction z <;> simp_all [pair]
 
 theorem pair_assoc (x : M →ₐ[R] R) (y : N →ₐ[R] R) (w : P →ₐ[R] R) (z : (M ⊗[R] N) ⊗[R] P) :
     pair x (pair y w) (Algebra.TensorProduct.assoc R R R M N P z) = pair (pair x y) w z := by
   have : (pair x (pair y w)).comp (Algebra.TensorProduct.assoc R R R M N P).toAlgHom = pair (pair x y) w := by
-    ext <;> simp [Algebra.TensorProduct.one_def]
+    ext <;> simp [Algebra.TensorProduct.one_def, pair]
   exact DFunLike.congr_fun this z
 
 theorem pair_comm (x : M →ₐ[R] R) (y : N →ₐ[R] R) (z : N ⊗[R] M) :
     pair x y (TensorProduct.comm R N M z) = pair y x z := by
-  induction z <;> simp_all [mul_comm]
+  induction z <;> simp_all [pair, mul_comm]
 
 theorem comp_lift (x : M →ₐ[R] R) (f : N →ₐ[R] M) (g : P →ₐ[R] M) (h) (z : N ⊗[R] P) :
     x (Algebra.TensorProduct.lift f g h z) = pair (x.comp f) (x.comp g) z := by
-  induction z <;> simp_all
+  induction z <;> simp_all [pair]
 
 def Sep {S : Type} (ev : S → (M →ₐ[R] R)) : Prop := ∀ a b : M, (∀ s, ev s a = ev s b) → a = b
 
@@ -54,7 +54,7 @@ theorem Sep.pair {S S' : Type} [Finite S'] [Module.Flat R M] {ev : S → (M →�
       Twpdiv.pair (ev s) (ev' t) z := by
     intro z
     induction z with
-    | tmul u v => simp [i, mul_comm]
+    | tmul u v => simp [i, mul_comm, Twpdiv.pair]
     | add u v hu hv => simp only [map_add (f := _), Pi.add_apply, hu, hv]
   rw [key, key]
   exact hab (s, t)
@@ -137,9 +137,11 @@ instance : Bialgebra R (Ord h) :=
       refine (pair_assoc _ _ _ (Algebra.TensorProduct.map (delta h) (AlgHom.id R _) (delta h f))).trans ?_
       simp only [AlgHom.comp_apply, pair_map, pair_comp_delta, AlgHom.comp_id, pair_delta, mul_assoc])
     (AlgHom.ext fun f => sep_id.pair (sep h) _ _ fun z => by
-      simp [pair_map, pair_delta])
+      simp [pair_map, pair_delta]
+      simp [pair])
     (AlgHom.ext fun f => (sep h).pair sep_id _ _ fun z => by
-      simp [pair_map, pair_delta])
+      simp [pair_map, pair_delta]
+      simp [pair])
 
 theorem comul_eq (f : Ord h) : comul (R := R) f = delta h f := rfl
 
@@ -149,10 +151,10 @@ instance : HopfAlgebra R (Ord h) :=
   HopfAlgebra.ofAlgHom (anti h)
     (AlgHom.ext fun f => sep h _ _ fun t => by
       refine (comp_lift (ev h t) (anti h) (AlgHom.id R _) (fun _ _ => Commute.all _ _) (delta h f)).trans ?_
-      simp [ev_anti, comul_eq, counit_eq, pair_delta, Algebra.ofId_apply])
+      simp [ev_anti, counit_eq, pair_delta, Algebra.ofId_apply])
     (AlgHom.ext fun f => sep h _ _ fun t => by
       refine (comp_lift (ev h t) (AlgHom.id R _) (anti h) (fun _ _ => Commute.all _ _) (delta h f)).trans ?_
-      simp [ev_anti, comul_eq, counit_eq, pair_delta, Algebra.ofId_apply])
+      simp [ev_anti, counit_eq, pair_delta, Algebra.ofId_apply])
 
 instance : IsCocomm R (Ord h) :=
   ⟨LinearMap.ext fun f => sep₂ h _ _ fun z => by
@@ -168,7 +170,8 @@ def evHom : T →* WithConv (Ord h →ₐ[R] R) where
 
 theorem evHom_apply (t : T) : evHom h t = toConv (ev h t) := rfl
 
-theorem ev_mulBy (t : T) (k : ℕ) (f : Ord h) : ev h t (mulBy R (Ord h) k f) = ev h (t ^ k) f := by
+theorem ev_mulBy (t : T) (k : ℕ) (f : Ord h) :
+    ev h t (mulBy (R := R) (A := Ord h) k f) = ev h (t ^ k) f := by
   have h1 := comp_mulBy_pts (ev h t) k
   rw [← evHom_apply, ← map_pow] at h1
   exact DFunLike.congr_fun h1 f
@@ -184,9 +187,9 @@ theorem evHom_bijective [IsDomain R] : Function.Bijective (evHom h) := by
   constructor
   · intro s t hst
     have h1 : ev h s (e t) = ev h t (e t) := DFunLike.congr_fun (congrArg ofConv hst) (e t)
-    rw [he, he, if_pos rfl] at h1
+    rw [he, he, ite_eq_left rfl] at h1
     by_contra hne
-    rw [if_neg hne] at h1
+    rw [ite_eq_right hne] at h1
     exact hd h1.symm
   · intro x
     have h1 : ∑ t, e t = algebraMap R _ d := sep h _ _ fun s => by simp [he]

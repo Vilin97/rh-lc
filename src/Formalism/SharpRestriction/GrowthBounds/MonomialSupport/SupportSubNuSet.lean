@@ -36,6 +36,7 @@ theorem coeff_planeCoeff (nu : τ →₀ ℕ) (F : MvPolynomial σ (MvPolynomial
   split_ifs with h
   · rfl
   · rw [MvPolynomial.notMem_support_iff.1 h, MvPolynomial.coeff_zero]
+    rfl
 
 def nuSet (F : MvPolynomial σ (MvPolynomial τ Kf)) : Finset (τ →₀ ℕ) :=
   F.support.biUnion fun mo => (F.coeff mo).support
@@ -80,6 +81,7 @@ theorem oneT_eq_zero (A : Module.End Kf (MvPolynomial τ Kf)) (F : MvPolynomial 
     (h : ∀ mo, A (F.coeff mo) = 0) : oneT A F = 0 := by
   ext mo : 1
   rw [coeff_oneT, h, MvPolynomial.coeff_zero]
+  rfl
 
 theorem planeCoeff_zero' (nu : τ →₀ ℕ) : planeCoeff nu (0 : MvPolynomial σ (MvPolynomial τ Kf)) = 0 := by
   unfold planeCoeff

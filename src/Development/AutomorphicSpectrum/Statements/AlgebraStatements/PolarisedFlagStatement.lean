@@ -37,7 +37,7 @@ def FlagStatement : Prop :=
     (v : Valuation C NNReal) (R : Type) [CommRing R] [Algebra R C], v.Integers R → v (p : C) < 1 →
   ∀ (F : Type) [Field F] [Fintype F] [DecidableEq F] [CharP F p]
     (N : Type) [AddCommGroup N] [Module F N] [Fintype N] [DecidableEq N]
-    (AA : HopfOrder (C := C) R N), FStable F AA.carrier → IsTight v p AA.carrier →
+    (AA : HopfOrder (C := C) R N), FStable (F := F) AA.carrier → IsTight v p AA.carrier →
   ∀ (n : ℕ) (b : Module.Basis (Fin n) F N),
     (∀ i : Fin n, GenAF p AA.carrier (flagSub b i).toAddSubgroup) →
   ∀ σ : MulChar F R, IsFund p σ → FlagConcl v p AA.carrier b σ

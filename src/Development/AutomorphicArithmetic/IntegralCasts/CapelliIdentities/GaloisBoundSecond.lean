@@ -126,7 +126,7 @@ private lemma key {F : Type} [Field F] [NumberField F] [NumberField.IsTotallyRea
     have h1 := sep N hN I x x' (hmem x hx).2.1 (hmem x' hx').2.1 hne
     have hz : (N : F) * (x - x') ≠ 0 := mul_ne_zero hN'F (sub_ne_zero.2 hne)
     have h2 : ∏ w : InfinitePlace F, w ((N : F) * (x - x')) < ∏ _w : InfinitePlace F, s := by
-      refine Finset.prod_lt_prod_of_nonempty (fun w _ => w.pos_iff.2 hz) (fun w _ => ?_)
+      refine Finset.prod_lt_prod_of_nonempty₀ (fun w _ => w.pos_iff.2 hz) (fun w _ => ?_)
         Finset.univ_nonempty
       have hw := congrFun hff w
       have h3 := Int.abs_sub_lt_one_of_floor_eq_floor hw

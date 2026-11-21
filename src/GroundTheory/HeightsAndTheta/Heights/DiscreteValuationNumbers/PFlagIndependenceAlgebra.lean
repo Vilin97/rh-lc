@@ -64,7 +64,7 @@ theorem classNum_zero_poly {σ : Type*} (cls : σ → K → ℤ) (Q : List (K �
   simp [classNum]
 
 theorem classNum_add_poly {σ : Type*} [DecidableEq σ] (cls : σ → K → ℤ) (H₁ H₂ : MvPolynomial σ ℤ)
-    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (H₁ + H₂) Q W = classNum cls H₁ Q W + classNum cls H₂ Q W := by
   rw [classNum_eq_sum cls (H₁ + H₂) Q W support_add,
     classNum_eq_sum cls H₁ Q W (S := H₁.support ∪ H₂.support) Finset.subset_union_left,
@@ -92,7 +92,7 @@ theorem classList_mapDomain {σ τ : Type*} (cls : τ → K → ℤ) (φ : σ �
   rw [← Finsupp.toMultiset_map μ φ, Multiset.map_map]
 
 theorem classNum_rename_vars {σ τ : Type*} [DecidableEq σ] [DecidableEq τ] (cls : τ → K → ℤ) (φ : σ → τ) (H : MvPolynomial σ ℤ)
-    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (rename φ H) Q W = classNum (cls ∘ φ) H Q W := by
   induction H using MvPolynomial.induction_on' with
   | monomial μ c => rw [rename_monomial, classNum_monomial_eq, classNum_monomial_eq, classList_mapDomain]

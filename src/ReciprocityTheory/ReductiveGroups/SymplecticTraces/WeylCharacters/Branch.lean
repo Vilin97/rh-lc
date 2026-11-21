@@ -20,7 +20,7 @@ theorem gtChar_zero {K : Type*} [Field K] : ∀ (n : ℕ) (t : Fin n → K), gtC
       constructor
       · intro h; funext i; have := h i; simp only [Pi.zero_apply]; omega
       · rintro rfl i; simp
-    simp only [h, Finset.sum_singleton, gtChar_zero n, wsum, Pi.zero_apply,
-      Finset.sum_const_zero, sub_zero, zpow_zero, mul_one]
+    rw [h, Finset.sum_singleton, gtChar_zero n]
+    simp [wsum]
 
 end ReciprocityTheory.ChartRestriction.TR.Weyl

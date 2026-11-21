@@ -17,14 +17,23 @@ theorem rad_nonneg {ρ : ℝ} (hρ : 0 ≤ ρ) (n : ℕ) : 0 ≤ ρ * (1 / 2 : �
 theorem filt_ball {A C ρ : ℝ} (hC : 0 ≤ C) (hρ : 0 ≤ ρ) (hA1 : ∀ x : L, ‖x‖ ≤ A * ‖Phi K L x‖) (hA : 0 ≤ A)
     (hC1 : ∀ x y : L, ‖Phi K L (x * y)‖ ≤ C * ‖Phi K L x‖ * ‖Phi K L y‖)
     (hAρ : A * ρ < 1) (hCρ : C * ρ ≤ 1 / 2) :
-    Filt (L ≃ₐ[K] L) (fun n => ball (K := K) (L := L) (ρ * (1 / 2 : ℝ) ^ n) (rad_nonneg hρ n)) (proj1 (K := K) (L := L)) where
-  anti n x hx := by
+    Filt (L ≃ₐ[K] L) (fun n => ball (K := K) (L := L) (ρ * (1 / 2 : ℝ) ^ n) (rad_nonneg hρ n)) (proj1 (K := K) (L := L)) := by
+  refine {
+    anti := ?_
+    mul := ?_
+    smul := ?_
+    comp := ?_
+    sep := ?_
+    inv := ?_
+    e_mem := ?_
+    e_sum := ?_ }
+  · intro n x hx
     change ‖Phi K L x‖ ≤ ρ * (1 / 2 : ℝ) ^ (n + 1) at hx
     change ‖Phi K L x‖ ≤ ρ * (1 / 2 : ℝ) ^ n
     refine hx.trans ?_
     rw [pow_succ]
     nlinarith [rad_nonneg hρ n]
-  mul n x y hx hy := by
+  · intro n x y hx hy
     change ‖Phi K L x‖ ≤ ρ * (1 / 2 : ℝ) ^ n at hx
     change ‖Phi K L y‖ ≤ ρ * (1 / 2 : ℝ) ^ 0 at hy
     change ‖Phi K L (x * y)‖ ≤ ρ * (1 / 2 : ℝ) ^ (n + 1)
@@ -35,8 +44,9 @@ theorem filt_ball {A C ρ : ℝ} (hC : 0 ≤ C) (hρ : 0 ≤ ρ) (hA1 : ∀ x : 
       _ ≤ (1 / 2) * (ρ * (1 / 2 : ℝ) ^ n) := by
         exact mul_le_mul_of_nonneg_right hCρ (rad_nonneg hρ n)
       _ = ρ * (1 / 2 : ℝ) ^ (n + 1) := by rw [pow_succ]; ring
-  smul n g x hx := (norm_Phi_map g x).trans hx
-  comp x hx := by
+  · intro n g x hx
+    exact (norm_Phi_map g x).trans hx
+  · intro x hx
     have hx' : ∀ k, ‖Phi K L (x k)‖ ≤ ρ * (1 / 2 : ℝ) ^ k := fun k => by
       exact hx k
     have hsum : Summable fun k => Phi K L (x k) :=
@@ -50,7 +60,7 @@ theorem filt_ball {A C ρ : ℝ} (hC : 0 ≤ C) (hρ : 0 ≤ ρ) (hA1 : ∀ x : 
     refine (hx' (k + n)).trans ?_
     gcongr ρ * ?_
     exact pow_le_pow_of_le_one (by norm_num) (by norm_num) (Nat.le_add_left n k)
-  sep x hx := by
+  · intro x hx
     have hx' : ∀ n, ‖Phi K L x‖ ≤ ρ * (1 / 2 : ℝ) ^ n := hx
     have hlim : Filter.Tendsto (fun n : ℕ => ρ * (1 / 2 : ℝ) ^ n) Filter.atTop (nhds (ρ * 0)) :=
       (tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num)).const_mul ρ
@@ -58,7 +68,7 @@ theorem filt_ball {A C ρ : ℝ} (hC : 0 ≤ C) (hρ : 0 ≤ ρ) (hA1 : ∀ x : 
     rw [mul_zero] at h0
     have := norm_le_zero_iff.1 h0
     simpa using this
-  inv n x hx := by
+  · intro n x hx
     change ‖Phi K L x‖ ≤ ρ * (1 / 2 : ℝ) ^ n at hx
     change ‖Phi K L ((1 + x)⁻¹ - 1)‖ ≤ ρ * (1 / 2 : ℝ) ^ n
     have hr : ρ * (1 / 2 : ℝ) ^ n ≤ ρ := by
@@ -90,7 +100,7 @@ theorem filt_ball {A C ρ : ℝ} (hC : 0 ≤ C) (hρ : 0 ≤ ρ) (hA1 : ∀ x : 
     · exact h3.trans hx
     · have : ‖Phi K L y‖ ≤ 0 := by linarith
       exact this.trans (rad_nonneg hρ n)
-  e_mem n x hx := by
+  · intro n x hx
     classical
     have hbound : ‖Phi K L (Phi K L x 1 • IsGalois.normalBasis K L 1)‖ ≤ ‖Phi K L x‖ := by
       rw [pi_norm_le_iff_of_nonneg (norm_nonneg _)]
@@ -106,7 +116,7 @@ theorem filt_ball {A C ρ : ℝ} (hC : 0 ≤ C) (hρ : 0 ≤ ρ) (hA1 : ∀ x : 
       · rw [mul_zero, norm_zero]
         exact norm_nonneg _
     exact hbound.trans (by change ‖Phi K L x‖ ≤ _; exact hx)
-  e_sum x := by
+  · intro x
     calc ∑ σ : L ≃ₐ[K] L, σ • proj1 (K := K) (L := L) (σ⁻¹ • x)
         = ∑ σ : L ≃ₐ[K] L, Phi K L x σ • σ (IsGalois.normalBasis K L 1) := by
           refine Finset.sum_congr rfl fun σ _ => ?_

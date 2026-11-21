@@ -46,6 +46,7 @@ theorem diag_mem (d : Fin (k + 1) → ℂ) (h : ∀ j, star (d j) * d j = 1) : M
   unfold Hb
   rw [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
   congr 1
+  funext j
   linear_combination (if j = Fin.last k then (-1 : ℂ) else 1) * h j
 
 theorem first_diagonal_phase_mem_unitary (θ : ℝ) : D1 k θ ∈ UH (Hb k) := by

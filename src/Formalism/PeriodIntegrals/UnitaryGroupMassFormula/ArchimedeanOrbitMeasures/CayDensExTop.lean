@@ -8,13 +8,14 @@ noncomputable section
 
 namespace HcInf
 
-open NumberField IsDedekindDomain HcS.BasicNotions HcS.MainNotions HcS.MainNotions.StandardLattice HcS.MainNotions.GlobalTheoryTheory.GenusMassVolumes HcS.L2.Fam.SG.Tau
-  HcS.L2.Fam.SG.Tau.InfCmpCut Matrix MeasureTheory Filter Topology
+open NumberField IsDedekindDomain HcS.BasicNotions Matrix MeasureTheory Filter Topology
 open scoped TensorProduct ENNReal NNReal
 
 section Upq
 
 variable (P Q : ℕ)
+
+local notation "Mat" => Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ
 
 theorem cT_eq (X : Mat) : HcS.UG.cT (starRingEnd ℂ) X = Xᴴ := by
   ext i j

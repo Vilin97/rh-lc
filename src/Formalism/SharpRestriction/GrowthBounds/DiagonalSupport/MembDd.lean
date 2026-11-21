@@ -254,7 +254,7 @@ theorem restDdG_holds : RestDdG := by
     exact coeff_rename_eq_zero _ _ _ fun u hu => by
       by_contra hc
       exact hne u (mem_support_iff.2 hc) hu
-  have hEd : ∀ i, multideg (∑ v ∈ mo.support, mo v • eV Dt v) i = dPl i := by
+  have hEd : ∀ i, multideg (∑ v ∈ mo.support, mo v • DdG.eV Dt v) i = dPl i := by
     intro i
     have hE := hPol mo hmo
     rw [DdG.ph_monomial_one] at hE

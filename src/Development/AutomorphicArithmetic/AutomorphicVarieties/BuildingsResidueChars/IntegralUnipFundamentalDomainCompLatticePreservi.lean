@@ -22,7 +22,7 @@ theorem UpperTheory.integral_unipFundamentalDomain_comp_lattice_preserving :
     conv_rhs => rw [← hsm]
     rw [smul_smul, inv_mul_cancel₀ hpos.ne', one_smul]
   have hqmp : Measure.QuasiMeasurePreserving α.symm (unipMeasure K n r) (unipMeasure K n r) :=
-    ⟨α.symm.continuous.measurable, by rw [hmap]; exact Measure.smul_absolutelyContinuous⟩
+    ⟨α.symm.continuous.measurable.aemeasurable, by rw [hmap]; exact Measure.smul_absolutelyContinuous⟩
   let e : unipLattice K n r → unipLattice K n r := fun g => ⟨α g, (hα g).2 g.2⟩
   have he : Function.Bijective e := by
     refine ⟨fun g h hgh => ?_, fun g => ⟨⟨α.symm g, (hα (α.symm g)).1 (by simpa using g.2)⟩, ?_⟩⟩

@@ -14,7 +14,7 @@ def glEquiv {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [Decidable
     GL ι K ≃* GL κ K :=
   Units.mapEquiv (Matrix.reindexAlgEquiv K K e).toMulEquiv
 
-
+variable {K} in
 def transp {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] (e : ι ≃ κ)
     (τ : FDRep ℂ (GL ι K)) : FDRep ℂ (GL κ K) :=
   FDRep.of (τ.ρ.comp (glEquiv K e).symm.toMonoidHom)

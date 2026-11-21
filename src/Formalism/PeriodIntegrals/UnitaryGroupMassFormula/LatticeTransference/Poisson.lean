@@ -200,7 +200,14 @@ private theorem mFourierCoeff_periodization_eq_integral {ι : Type} [Fintype ι]
       ∑' k : ι → ℤ, ψ (s + fun i => (k i : ℝ)) * h (s + fun i => (k i : ℝ)) := by
     intro s
     rw [hF, smul_eq_mul, ← tsum_mul_left]
-    congr 1
+    apply tsum_congr
+    intro k
+    change ψ s * h (s + fun i => (k i : ℝ)) =
+      ψ (s + fun i => (k i : ℝ)) * h (s + fun i => (k i : ℝ))
+    have hψk : ψ (s + fun i => (k i : ℝ)) = ψ s := by
+      rw [hψ]
+      exact congrArg (UnitAddTorus.mFourier (-m)) (hqper s k)
+    rw [hψk]
   rw [MeasureTheory.integral_congr_ae (Filter.Eventually.of_forall hint)]
   rw [MeasureTheory.integral_tsum]
   · have hEach : ∀ k : ι → ℤ, ∫ s in S 0, ψ (s + fun i => (k i : ℝ)) * h (s + fun i => (k i : ℝ)) =
@@ -418,6 +425,7 @@ theorem poissonGauss : PoissonGauss := by
     ring_nf
   have sum2 : ∀ t : ℝ, 0 < t →
       Summable fun y : dualLat Λ => Real.exp (-π * ‖(y : E)‖ ^ 2 / t) := by
+    letI : DiscreteTopology (dualLat Λ) := instDiscreteDualLat Λ
     intro t ht
     refine (summable_exp_neg_mul_norm_add_sq (dualLat Λ) (a := π / t) (by positivity) 0).congr fun z => ?_
     rw [add_zero]
@@ -435,9 +443,13 @@ theorem poissonGauss : PoissonGauss := by
     have e0 := (Equiv.addRight z).tsum_eq (fun x : Λ => Real.exp (-π * t * ‖(x : E) + w‖ ^ 2))
     simp only [hP]
     rw [← e0]
-    congr 1
-    congr 3
-    abel_nf
+    apply tsum_congr
+    intro c
+    apply congrArg Real.exp
+    congr 2
+    change ‖(c : E) + (w + (z : E))‖ = ‖((c + z : Λ) : E) + w‖
+    rw [Submodule.coe_add]
+    abel
   set G : (ι → ℝ) → ℂ := fun s => ((P (φ.symm s) : ℝ) : ℂ) with hGdef
   have hGcont : Continuous G := Complex.continuous_ofReal.comp (hPcont.comp φ.symm.continuous)
   have hGper : ∀ (s : ι → ℝ) (k : ι → ℤ), G (s + fun i => (k i : ℝ)) = G s := by
@@ -455,7 +467,15 @@ theorem poissonGauss : PoissonGauss := by
     rw [hF]
     simp only [hGdef, hP]
     rw [Complex.ofReal_tsum, ← B.tsum_eq]
-    congr 1
+    apply tsum_congr
+    intro c
+    change (Real.exp (-π * t * ‖(B c : E) + φ.symm s‖ ^ 2) : ℂ) =
+      h (s + fun i => (c i : ℝ))
+    change (Real.exp (-π * t * ‖(B c : E) + φ.symm s‖ ^ 2) : ℂ) =
+      (Real.exp (-π * t * ‖φ.symm (s + fun i => (c i : ℝ))‖ ^ 2) : ℂ)
+    rw [map_add, ← hB c]
+    congr 2
+    abel
   have hcoef : ∀ m : ι → ℤ, UnitAddTorus.mFourierCoeff F m =
       ((κ * t ^ (-(finrank ℝ E : ℝ) / 2) *
         Real.exp (-π * ‖((D m : dualLat Λ) : E)‖ ^ 2 / t) : ℝ) : ℂ) := by

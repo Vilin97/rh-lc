@@ -174,6 +174,10 @@ theorem LocIdxLift_Kg (p : HeightOneSpectrum (𝓞 I.F)) (g : ℕ) (hg : g ≠ 0
     let w' := (I.fmat x - 1) *ᵥ w
     let c : I.E ⊗[I.F] Af I.F := algebraMap I.F _ ((g : I.F)⁻¹)
     have hgF : (g : I.F) ≠ 0 := by exact_mod_cast hg
+    have hcg : c * (g : I.E ⊗[I.F] Af I.F) = 1 := by
+      dsimp only [c]
+      rw [← map_natCast (algebraMap I.F (I.E ⊗[I.F] Af I.F)) g, ← map_mul,
+        inv_mul_cancel₀ hgF, map_one]
     refine ⟨c • w', ?_, ?_⟩
     · apply PI.FinKW.memLocFrom_of PI.FinKW.local_vector_injective I
       intro v
@@ -189,20 +193,15 @@ theorem LocIdxLift_Kg (p : HeightOneSpectrum (𝓞 I.F)) (g : ℕ) (hg : g ≠ 0
       · subst h
         have hwv := PI.FinKW.LocTo.mem_local_lattice_iff I w hw v
         obtain ⟨z, hz, he⟩ := hy.2 _ hwv
-        rw [hsame, he]
-        convert hz using 1
-          Pi.natCast_apply]
-        rw [← mul_assoc, ← map_natCast (algebraMap I.F (Fv I.F v ⊗[I.F] I.E)) g, ← map_mul,
-          inv_mul_cancel₀ hgF, map_one, one_mul]
+        rw [hsame, he, Nat.cast_smul_eq_nsmul (v.adicCompletionIntegers I.F),
+          ← Nat.cast_smul_eq_nsmul (Fv I.F v ⊗[I.F] I.E) g z,
+          smul_smul, ← map_natCast (PI.FinKW.psiV I v) g, ← map_mul, hcg, map_one, one_smul]
+        exact hz
       · rw [hcomp v h]
         have : ((HA.mat (Fv I.F v) I.cm.sig I.J (1 : HA (Fv I.F v) I.cm.sig I.J) :
             GL (Fin I.n) (Fv I.F v ⊗[I.F] I.E)) : Matrix (Fin I.n) (Fin I.n) (Fv I.F v ⊗[I.F] I.E)) = 1 := rfl
         rw [this, sub_self, Matrix.zero_mulVec, smul_zero]
         exact zero_mem _
-    · rw [smul_smul]
-      have : (g : I.E ⊗[I.F] Af I.F) * c = 1 := by
-        simp only [c]
-        rw [← map_natCast (algebraMap I.F (I.E ⊗[I.F] Af I.F)) g, ← map_mul, mul_inv_cancel₀ hgF, map_one]
-      rw [this, one_smul]
+    · rw [smul_smul, mul_comm (g : I.E ⊗[I.F] Af I.F) c, hcg, one_smul]
 
 end PI.MassDataKppVolLemmas

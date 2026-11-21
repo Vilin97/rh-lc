@@ -127,7 +127,8 @@ theorem fZ_factor_positive_places (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (F : KTp
         0 < w (d.rationalBaseRow c) := by
   classical
   have hy : d.rationalBaseRow c ≠ 0 := d.lineRatio_ne_zero hd c
-  obtain ⟨hOfin, hrest⟩ := d.norm_by_places hd h c
+  have hplaces := d.norm_by_places hd h c
+  obtain ⟨hOfin, hrest⟩ := hplaces
   obtain ⟨hP0fin, κ, hκ, hnorm⟩ := hrest (d.rationalBaseRow c) hy
   obtain ⟨E, hE⟩ : ∃ E : Ideal (KTp K d.D d.N) → ℤ, ∀ p, E p =
       ∑ᶠ (w : AddValuation (OmS (Ω c) d.D d.N) (WithTop ℤ)) (_ : w ∈ d.OverP c p),

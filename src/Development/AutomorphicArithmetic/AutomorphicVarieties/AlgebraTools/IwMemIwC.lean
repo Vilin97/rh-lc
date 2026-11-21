@@ -88,7 +88,12 @@ private theorem factor [IsLocalRing R] (C : Subgroup (IsLocalRing.ResidueField R
   have hd : diagT R n d = leviEmb R (points n) (leviProj R (points n) ⟨h * L, hL3⟩) := by
     change leviEmb R (points n) ((leviTorus R n) ((leviTorus R n).symm _)) = _
     rw [MulEquiv.apply_symm_apply]
-  have hp' : h * L = diagT R n d * u := by rw [hd]; exact hp
+  have hp' : h * L = diagT R n d * u := by
+    have hDecEq : (inferInstance : DecidableEq n) = (fun a b => LinearOrder.toDecidableEq a b) :=
+      Subsingleton.elim _ _
+    have hEmb := congrArg (fun decEq => @leviEmb R _ n _ _ n decEq _ _ _ _ (points n)) hDecEq
+    rw [hd, hEmb]
+    exact hp
   have heq : h = diagT R n d * u * L⁻¹ := by rw [← hp', mul_inv_cancel_right]
   have hLb : GeneralLinearGroup.map (n := n) (IsLocalRing.residue R) L ∈
       borel (IsLocalRing.ResidueField R) n := by

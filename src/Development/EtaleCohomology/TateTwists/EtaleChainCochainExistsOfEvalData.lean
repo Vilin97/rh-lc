@@ -21,7 +21,6 @@ noncomputable def psiOf (P : PSh) (F : Shv R) (a : ∀ U : Scheme.{0}, P.obj (op
     refine ModuleCat.free_hom_ext (fun x => ?_)
     have := ha V.unop U.unop g.unop x.down
     simp [freeP] at this ⊢
-    erw [ModuleCat.free_map_apply, ModuleCat.freeDesc_apply]
     exact this.symm
 
 theorem free_hom_exists (P : PSh) (F : Shv R) (a : ∀ U : Scheme.{0}, P.obj (op U) → Sec F U)

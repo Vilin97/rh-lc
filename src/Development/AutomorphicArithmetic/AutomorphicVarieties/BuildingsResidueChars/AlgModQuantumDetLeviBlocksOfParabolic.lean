@@ -20,6 +20,8 @@ private theorem map_qdet {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 3
+  funext k
+  simp only [Function.comp_apply, Formalism.REAL.Tm]
   split_ifs <;> simp
 
 private def pw (ι V : Type) [AddCommGroup V] [Module ℂ V] :

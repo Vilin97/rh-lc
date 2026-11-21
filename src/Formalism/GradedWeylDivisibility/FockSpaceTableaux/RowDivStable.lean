@@ -99,7 +99,7 @@ theorem rowDiv_homog (R : Type*) [CommRing R] {r n : ℕ} (ν : Fin n → ℕ) (
     (f : MvPolynomial (Fin r × Fin n) R) (hf : IsWeightedHomogeneous (colW r n) f ν) :
     IsWeightedHomogeneous (colW r n) (rowDiv R a b k f) ν := by
   unfold rowDiv
-  conv => enter [2, 1, 2]; rw [f.as_sum]
+  conv => pattern f; rw [f.as_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_

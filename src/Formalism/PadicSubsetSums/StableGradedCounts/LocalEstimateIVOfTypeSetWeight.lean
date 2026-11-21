@@ -58,7 +58,7 @@ namespace Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 theorem type_weight_upper_unit : TypeWeightU := by
   intro g D Nd n hg hD hN
   rw [one_div, ← Finset.prod_inv_distrib]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro d hd
     have hgd : (1 : ℝ) ≤ (g : ℝ) ^ d := one_le_pow₀ (by exact_mod_cast (by omega : 1 ≤ g))
     exact div_nonneg (Nat.cast_nonneg _) (pow_nonneg (by linarith) _)

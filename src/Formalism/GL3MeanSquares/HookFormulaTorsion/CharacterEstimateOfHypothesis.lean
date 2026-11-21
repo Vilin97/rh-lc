@@ -227,7 +227,7 @@ theorem gl2b2_thinIntegral : Formalism.HermitianLattices.ZeroFreeRegionGL2.ThinI
             have : 0 < v := hv
             show (0:ℝ) ≤ _
             positivity
-          · exact (Set.Ioi_subset_Ioi hV0.le).eventuallyLE
+          · exact Filter.Eventually.of_forall (Set.Ioi_subset_Ioi hV0.le)
   have hw2 : 32 * I / c ≤ x ^ (ε / 8) := hX2' x hx2
   have h4I : 4 * I ≤ Real.exp (c / 8 * x ^ (ε / 8)) := by
     have h1 := Real.add_one_le_exp (c / 8 * x ^ (ε / 8))

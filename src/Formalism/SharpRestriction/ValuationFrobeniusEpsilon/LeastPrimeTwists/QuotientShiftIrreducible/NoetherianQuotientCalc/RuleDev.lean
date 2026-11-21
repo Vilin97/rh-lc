@@ -317,7 +317,12 @@ def Good (X : HidaSetting k) (F : X.Mod) (N₀ : Submodule X.R F.M) : Prop :=
 theorem good_bot (X : HidaSetting k) (F : X.Mod) : Good X F ⊥ := by
   refine ⟨0, fun _ => ⊥, fun _ => ⊥, fun _ => 0, rfl, rfl, ?_, fun _ => le_rfl, ?_⟩
   · intro _
-    exact (Submodule.span_eq_bot.2 (fun x hx => (Submodule.mem_bot _).1 hx.1)).symm
+    change (⊥ : Submodule X.R F.M) = Submodule.span X.R
+      {x | x ∈ (⊥ : Submodule X.R F.M) ∧ ∃ m, x ∈ F.gr m}
+    symm
+    apply Submodule.span_eq_bot.2
+    intro x hx
+    exact (Submodule.mem_bot _).1 hx.1
   · intro i hi
     exact absurd hi (Nat.not_lt_zero i)
 

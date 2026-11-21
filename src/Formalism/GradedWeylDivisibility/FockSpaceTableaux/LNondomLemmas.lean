@@ -38,7 +38,7 @@ lemma ndEul_coeff (s : Fin n) (g : MvPolynomial (Fin r × Fin n) R) (m : Fin r �
   classical
   induction g using MvPolynomial.induction_on generalizing m with
   | C a =>
-    rw [derivation_C, coeff_zero, coeff_C]
+    rw [derivation_C, AddMonoidAlgebra.coeff_zero, coeff_C]
     split_ifs with h
     · subst h; simp
     · simp

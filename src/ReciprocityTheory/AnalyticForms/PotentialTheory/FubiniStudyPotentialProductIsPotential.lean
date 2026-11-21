@@ -34,11 +34,12 @@ end Pull
 
 
 
-def diagSec (x y : OnePoint ℂ × OnePoint ℂ) : ℂ :=
-  if x.1 = ∞ then
-    (if x.2 = ∞ then crd1 y.1 - crd1 y.2 else crd1 y.1 * crd0 y.2 - 1)
-  else
-    (if x.2 = ∞ then 1 - crd0 y.1 * crd1 y.2 else crd0 y.2 - crd0 y.1)
+def diagSec (x y : OnePoint ℂ × OnePoint ℂ) : ℂ := by
+  classical
+  exact if x.1 = ∞ then
+      (if x.2 = ∞ then crd1 y.1 - crd1 y.2 else crd1 y.1 * crd0 y.2 - 1)
+    else
+      (if x.2 = ∞ then 1 - crd0 y.1 * crd1 y.2 else crd0 y.2 - crd0 y.1)
 
 end
 

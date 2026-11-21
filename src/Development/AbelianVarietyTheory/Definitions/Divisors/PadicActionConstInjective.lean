@@ -76,7 +76,8 @@ end Prod
   res_surjective n := TensorProduct.map_surjective (g := (G.res n).toLinearMap) (g' := (H.res n).toLinearMap) (G.res_surjective n) (H.res_surjective n)
   ker_res n := by
     refine le_antisymm (fun a ha => ?_) ?_
-    · let π := Ideal.Quotient.mkₐ O (torsionIdeal O (G.A (n + 1) ⊗[O] H.A (n + 1)) (p ^ n))
+    · let π := Ideal.Quotient.mkₐ O
+        (torsionIdeal (R := O) (A := G.A (n + 1) ⊗[O] H.A (n + 1)) (p ^ n))
       have h1 := (torsionIdeal_le_ker_iff (p ^ n) π).1
         fun a ha => Ideal.Quotient.eq_zero_iff_mem.2 ha
       obtain ⟨y, hy⟩ := (G.exists_comp_res_iff n (pointsMap _ (inl _ _) (toConv π)).ofConv).2

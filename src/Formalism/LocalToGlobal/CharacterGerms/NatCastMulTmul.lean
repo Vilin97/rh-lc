@@ -93,7 +93,8 @@ theorem completeA [Module.Free ℤ OE] [Module.Finite ℤ OE] :
       Submodule (ℤ_[l] ⊗[ℤ] OE) (ℤ_[l] ⊗[ℤ] OE))]) → x = 0 := by
     intro x hx
     apply bR.repr.injective
-    ext i
+    apply Finsupp.ext
+    intro i
     rw [map_zero, Finsupp.zero_apply]
     apply hZ.toIsHausdorff.haus
     intro n
@@ -158,11 +159,12 @@ theorem res_frob (hfrob : ∀ a x, em (a + 1) x - em a x ^ l ∈ maximalIdeal R)
   exact h
 
 theorem res_frob_pow (hfrob : ∀ a x, em (a + 1) x - em a x ^ l ∈ maximalIdeal R) (a : ZMod d) (x : OE) :
-    ∀ k : ℕ, residue R (em (a + (k : ZMod d)) x) = residue R (em a x) ^ (l ^ k)
-  | 0 => by simp
-  | k + 1 => by
-    have e : a + ((k + 1 : ℕ) : ZMod d) = (a + (k : ZMod d)) + 1 := by push_cast; ring
-    rw [e, res_frob em hfrob, res_frob_pow hfrob a x k, ← pow_mul, pow_succ]
+    ∀ k : ℕ, residue R (em (a + (k : ZMod d)) x) = residue R (em a x) ^ (l ^ k) := by
+  intro k
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    rw [Nat.cast_succ, ← add_assoc, res_frob em hfrob, ih, ← pow_mul, Nat.pow_succ l k]
 
 theorem mem_all (hfrob : ∀ a x, em (a + 1) x - em a x ^ l ∈ maximalIdeal R) {x : OE}
     (h : em 0 x ∈ maximalIdeal R) (a : ZMod d) : em a x ∈ maximalIdeal R := by

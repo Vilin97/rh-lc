@@ -55,7 +55,9 @@ theorem UpperTheory.Reformulated.B.NormOnValuationRing.mem_max_iff :
     ext a
     rw [Ideal.mem_comap, hP, φ.commutes, UpperTheory.Reformulated.B.NormOnValuationRing.norm_algebraMap,
       IsLocalRing.mem_maximalIdeal, PadicInt.mem_nonunits]
-  have hmax : P.IsMaximal :=
-    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ_[l]) P
-      (hcomap ▸ IsLocalRing.maximalIdeal.isMaximal ℤ_[l])
+  have hmax : P.IsMaximal := by
+    apply Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := ℤ_[l]) P
+    change (P.comap (algebraMap ℤ_[l] T)).IsMaximal
+    rw [hcomap]
+    exact IsLocalRing.maximalIdeal.isMaximal ℤ_[l]
   rw [← IsLocalRing.eq_maximalIdeal hmax, hP]

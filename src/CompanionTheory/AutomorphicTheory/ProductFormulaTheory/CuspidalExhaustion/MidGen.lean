@@ -35,6 +35,7 @@ variable {m N : ℕ}
     (f : τ₁.IntertwiningMap τ₂) (g : τ₂.IntertwiningMap τ₃), Function.Injective f → Function.Exact f g →
       Function.Injective (Tm f) ∧ Function.Exact (Tm f) (Tm g))
 
+include hT in
 
 theorem Tm_equiv_injective {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     {τ : Representation ℂ (GL (Fin m) k) V} {τ' : Representation ℂ (GL (Fin m) k) W} (e : τ.Equiv τ') :
@@ -60,6 +61,7 @@ theorem codSub_injective {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V
     (h : ∀ v, f v ∈ S.toSubmodule) (hf : Function.Injective f) : Function.Injective (codSub f S h) :=
   fun a b hab => hf (congrArg Subtype.val hab)
 
+include hT in
 
 theorem mid_sub {V : Type} [AddCommGroup V] [Module ℂ V] {P : Representation ℂ (GL (Fin m) k) V}
     (hP : HasFiniteLength P) (hs : IsSmooth P) (x : IrrCl (GL (Fin N) k)) (S : Subrepresentation P)
@@ -131,12 +133,14 @@ theorem mid_sub {V : Type} [AddCommGroup V] [Module ℂ V] {P : Representation �
       exact sub_eq_zero.1 ((Submodule.mem_bot ℂ).1 hm)
     have hsq := GlobalTheory.CosocleOfContra.isSmooth_quot hSs C
     have hirr := GlobalTheory.CosocleOfContra.isIrreducible_quot hC
-    let e := IrrGL.equivOf (quot C) hsq hirr
-    refine ⟨(IrrGL.of (quot C) hsq hirr).2, ?_, (Tm e.toIntertwiningMap).comp F,
+    let π : IrrRep (GL (Fin m) k) := ⟨_, quot C, hsq, hirr⟩
+    let e : (quot C).Equiv π.cl.rep.ρ := equivRep π
+    refine ⟨π.cl, ?_, (Tm e.toIntertwiningMap).comp F,
       (Tm_equiv_injective T Tm hT e).comp hFinj⟩
     exact (IsSubquotient.of_surjective e.toIntertwiningMap e.toLinearEquiv.surjective).trans
       ((IsSubquotient.of_surjective (quotMk C) C.toSubmodule.mkQ_surjective).trans hSsub)
 
+include hT in
 
 theorem mid_gen {V : Type} [AddCommGroup V] [Module ℂ V] {P : Representation ℂ (GL (Fin m) k) V}
     (hP : HasFiniteLength P) (hs : IsSmooth P) (x : IrrCl (GL (Fin N) k))

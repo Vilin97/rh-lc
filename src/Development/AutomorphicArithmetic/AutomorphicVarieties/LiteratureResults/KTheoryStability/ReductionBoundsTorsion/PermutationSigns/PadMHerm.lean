@@ -21,7 +21,7 @@ def ent (w : InfinitePlace L) (a b : Fin N) : HS L N →ₗ[ℝ] ℂ where
   map_add' h k := by simp
   map_smul' c h := by simp
 
-
+open Classical in
 def tmC {q : ℕ} (σ : Equiv.Perm (Fin q)) (w : Fin q → InfinitePlace L) :
     ContinuousMultilinearMap ℝ (fun _ : Fin q => HS L N) ℂ :=
   if ∀ i, w (σ i) = w i then

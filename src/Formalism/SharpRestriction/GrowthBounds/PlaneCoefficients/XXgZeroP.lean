@@ -142,7 +142,7 @@ theorem plEul : PlEul := by
   rcases Nat.eq_zero_or_pos (d x0) with hz | hpos
   · have hvars : (x0, a) ∉ H.vars := by
       intro hv
-      obtain ⟨m, hm, hma⟩ := (MvPolynomial.mem_vars _).1 hv
+      obtain ⟨m, hm, hma⟩ := (MvPolynomial.mem_vars_iff_mem_support _).1 hv
       have hdeg := (mem_Pol'.1 hH.1) m hm x0
       rw [hz] at hdeg
       have hle : m (x0, a) ≤ multideg m x0 :=

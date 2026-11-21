@@ -68,8 +68,10 @@ theorem factV (hl2 : l ≠ 2) (u : ℤ_[l]) (hu : (u - 1).valuation = 1) (m : �
     rintro rfl
     exact hm' (dvd_zero l)
   have hval : padicValNat l (l ^ e * m') = e := by
-    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hl.ne_zero) hm'0, padicValNat.prime_pow,
-      padicValNat.eq_zero_of_not_dvd hm', add_zero]
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hl.ne_zero) hm'0, (show padicValNat l (l ^ e) = e from by
+        simpa only [← Nat.padicValNat_def] using (Nat.multiplicity_prime_pow e)),
+      (show padicValNat l m' = 0 from by
+        simpa only [← Nat.padicValNat_def] using (multiplicity_eq_zero_of_not_dvd hm')), add_zero]
   rw [hval]
   have hE1 : emultiplicity (l : ℤ_[l]) (u ^ (l ^ e) - 1) =
       emultiplicity (l : ℤ_[l]) (u - 1) + e := by
@@ -115,7 +117,8 @@ theorem orderOf_u (hl2 : l ≠ 2) (u : ℤ_[l]) (hu : (u - 1).valuation = 1) (s 
   have key : ∀ j : ℕ, (PadicInt.toZModPow (s + 1) u) ^ (l ^ j) = 1 ↔ s ≤ j := by
     intro j
     have hv := factV hl2 u hu (l ^ j) (pow_ne_zero _ hl.ne_zero)
-    rw [padicValNat.prime_pow] at hv
+    rw [(show padicValNat l (l ^ j) = j from by
+      simpa only [← Nat.padicValNat_def] using (Nat.multiplicity_prime_pow j))] at hv
     have hne : u ^ (l ^ j) - 1 ≠ 0 := by
       intro h
       rw [h, PadicInt.valuation_zero] at hv

@@ -215,7 +215,7 @@ theorem minorDomain_mul_unipotent {r : ℕ} (Bs : B.RealPlaceData k r Wp Wq) (j 
   have hp : Bs.inSS ((Matrix.of.symm 1, Matrix.of.symm 1), (Matrix.of.symm 1, Matrix.of.symm m)) :=
     ⟨Formalism.FourierDecayAlt.P.BigCellZetaMinors.one_uw _, Formalism.QuantumDeterminants.WeylGroupFacts.mem_n_one, Formalism.FourierDecayAlt.P.BigCellZetaMinors.one_uw _, hm⟩
   have hs : B.sgs ((Matrix.of.symm 1, Matrix.of.symm 1), (Matrix.of.symm 1, Matrix.of.symm m)) g = g * m := by
-    simp [B.sgs]
+    simp only [B.sgs, Equiv.apply_symm_apply, inv_one, one_mul, mul_one]
   rw [← hs]
   exact domP_sgs Bs j hp hg
 
@@ -226,7 +226,8 @@ theorem domP_N_mul {r : ℕ} (Bs : B.RealPlaceData k r Wp Wq) (j : ℕ) {g : Q.M
     ⟨Formalism.FourierDecayAlt.P.BigCellZetaMinors.one_uw _, hmi, Formalism.FourierDecayAlt.P.BigCellZetaMinors.one_uw _, Formalism.QuantumDeterminants.WeylGroupFacts.mem_n_one⟩
   have hu : IsUnit m.det := Formalism.QuantumDeterminants.WeylGroupFacts.isUnit_of_uh hm.1
   have hs : B.sgs ((Matrix.of.symm 1, Matrix.of.symm m⁻¹), (Matrix.of.symm 1, Matrix.of.symm 1)) g = m * g := by
-    simp [B.sgs, Matrix.nonsing_inv_nonsing_inv _ hu]
+    simp only [B.sgs, Equiv.apply_symm_apply, inv_one, one_mul, mul_one,
+      Matrix.nonsing_inv_nonsing_inv _ hu]
   rw [← hs]
   exact domP_sgs Bs j hp hg
 

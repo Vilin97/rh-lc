@@ -104,21 +104,21 @@ theorem isHausdorff_span_singleton {w : O} (hw : ‖algebraMap O C w‖ < 1) :
     exact absurd this (not_le.2 ((norm_pos_iff hO).2 h))
 
 theorem isAdicComplete_span_singleton [CompleteSpace C] {w : O} (hw : ‖algebraMap O C w‖ < 1) :
-    IsAdicComplete (Ideal.span {w}) O where
-  toIsHausdorff := isHausdorff_span_singleton hO hw
-  prec' f hf := by
-      simp only [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top, mem_span_singleton_pow_iff hO,
-        map_sub] at hf ⊢
-      have hc : CauchySeq fun n => algebraMap O C (f n) := by
-        refine cauchySeq_of_le_geometric ‖algebraMap O C w‖ 1 hw fun n => ?_
-        rw [dist_eq_norm, one_mul]
-        exact hf (Nat.le_succ n)
-      obtain ⟨L, hL⟩ := cauchySeq_tendsto_of_complete hc
-      have hL1 : ‖L‖ ≤ 1 := le_of_tendsto' hL.norm fun n => norm_le_one hO _
-      obtain ⟨l, rfl⟩ := exists_of_norm_le_one hO hL1
-      refine ⟨l, fun n => ?_⟩
-      refine le_of_tendsto ((tendsto_const_nhds.sub hL).norm) ?_
-      filter_upwards [Filter.eventually_ge_atTop n] with m hm using hf hm
+    IsAdicComplete (Ideal.span {w}) O := by
+  refine { toIsHausdorff := isHausdorff_span_singleton hO hw, prec' := ?_ }
+  intro f hf
+  simp only [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top, mem_span_singleton_pow_iff hO,
+    map_sub] at hf ⊢
+  have hc : CauchySeq fun n => algebraMap O C (f n) := by
+    refine cauchySeq_of_le_geometric ‖algebraMap O C w‖ 1 hw fun n => ?_
+    rw [dist_eq_norm, one_mul]
+    exact hf (Nat.le_succ n)
+  obtain ⟨L, hL⟩ := cauchySeq_tendsto_of_complete hc
+  have hL1 : ‖L‖ ≤ 1 := le_of_tendsto' hL.norm fun n => norm_le_one hO _
+  obtain ⟨l, rfl⟩ := exists_of_norm_le_one hO hL1
+  refine ⟨l, fun n => ?_⟩
+  refine le_of_tendsto ((tendsto_const_nhds.sub hL).norm) ?_
+  filter_upwards [Filter.eventually_ge_atTop n] with m hm using hf hm
 
 theorem isAdicComplete_of_fg [CompleteSpace C] {J : Ideal O} (hJ : J.FG) (hJ' : J ≠ ⊤) :
     IsAdicComplete J O := by

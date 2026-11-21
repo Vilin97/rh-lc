@@ -1185,7 +1185,7 @@ theorem IsHaarOn.smul_nnreal {S : Set (Mat k r)} {μ : Measure (Mt k r)} (h : Is
     · exact h.2.1 (Measure.measure_univ_eq_zero.1 h1)
   · rw [Measure.smul_apply, h.2.2.1, smul_zero]
   · intro s hs
-    rw [Measure.map_smul, h.2.2.2 s hs]
+    rw [Measure.map_smul a (continuous_lmulM s).measurable.aemeasurable, h.2.2.2 s hs]
 
 theorem haarLie_N_eq : ∃ c : ℝ≥0, c ≠ 0 ∧ ∀ κ : ℝ≥0∞, haarLie (Nset k r) κ = κ • (c • nuN k r) := by
   let E := (LinearEquiv.ofBijective (eL (k := k) (r := r)) eL_bijective).toContinuousLinearEquiv
@@ -1204,7 +1204,7 @@ theorem haarLie_N_eq : ∃ c : ℝ≥0, c ≠ 0 ∧ ∀ κ : ℝ≥0∞, haarLie
   have h2 : (volume : Measure (lieE (Nset k r))).map F = c⁻¹ • nuN k r := by
     have h3 : ((volume : Measure (Ix k r → ℝ)).map E).map F = nuN k r := by
       rw [Measure.map_map hFm E.continuous.measurable, hFE]; rfl
-    rw [hμ, Measure.map_smul] at h3
+    rw [hμ, Measure.map_smul c hFm.aemeasurable] at h3
     rw [← h3, smul_smul, inv_mul_cancel₀ hcpos.ne', one_smul]
   rw [← h2]
   rfl

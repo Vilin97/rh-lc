@@ -265,7 +265,7 @@ theorem t_BoxSumLattice : BoxSumLattice := by
           apply Finset.sum_le_sum
           intro l _
           unfold prof
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro w _
             exact le_min zero_le_one (pow_nonneg (div_nonneg (hx w) (wnn w l)) _)
           · intro w _

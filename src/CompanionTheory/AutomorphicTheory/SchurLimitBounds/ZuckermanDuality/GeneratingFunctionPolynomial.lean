@@ -94,5 +94,7 @@ theorem generating_function_polynomial : GfPoly := by
     simp [Formalism.QuantumDeterminants.Gf]
   rw [pow_mul]
   convert Submodule.pow_mem_pow _ h p using 1
+  funext g
+  simp
 
 end CompanionTheory.LimBd.Main

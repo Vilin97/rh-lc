@@ -102,7 +102,7 @@ theorem latCountAll_of (hB : BoxBound) (hLM : LatMap) (hLS : LatSub) (hS : Sep) 
               | exact (hC I) ▸ Fintype.card_pos
               | unfold Formalism.MainNotions.S.AutInst.f; exact Module.finrank_pos
           omega
-        exact Finset.prod_lt_prod_of_nonempty
+        exact Finset.prod_lt_prod_of_nonempty₀
           (fun v _ => lt_of_le_of_ne (hsN_nonneg _) (h0 v).symm) (fun v _ => hcon v) hne'
     simp only [hgsub] at hprod
     linarith

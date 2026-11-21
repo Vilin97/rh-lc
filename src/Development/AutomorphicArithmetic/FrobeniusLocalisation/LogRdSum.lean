@@ -23,6 +23,7 @@ theorem UpperTheory.HF.log_rd_sum :
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun l hl => ?_
     rw [Nat.factorization_def _ (Nat.prime_of_mem_primeFactors hl)]
+    rw [Nat.padicValNat_def]
     ring
   have h3 : H.ram ⊆ H.condN.primeFactors := by
     intro l hl
@@ -34,5 +35,5 @@ theorem UpperTheory.HF.log_rd_sum :
   have hp := Nat.prime_of_mem_primeFactors hl
   have : ¬ l ∣ (discr H.E).natAbs := fun h => hn (Nat.mem_primeFactors.2 ⟨hp, h, hd'⟩)
   unfold HostRaw.vdH
-  rw [padicValNat.eq_zero_of_not_dvd this]
+  rw [Nat.padicValNat_def, multiplicity_eq_zero_of_not_dvd this]
   simp
