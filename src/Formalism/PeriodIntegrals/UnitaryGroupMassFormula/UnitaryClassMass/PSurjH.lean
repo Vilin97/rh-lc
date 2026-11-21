@@ -85,8 +85,10 @@ theorem cofin1 {E : Type} [Field E] [NumberField E] {V : Type} [AddCommGroup V] 
 
 theorem cofinStep : CofinStep := by
   intro E _ _ V _ _ _ _ _ L N hL hN
-  obtain ⟨y1, hy1, h1⟩ := cofin1 L N hL.fg hN.span_eq_top
-  obtain ⟨y2, hy2, h2⟩ := cofin1 N L hN.fg hL.span_eq_top
+  letI : Submodule.IsFullLattice E L := hL
+  letI : Submodule.IsFullLattice E N := hN
+  obtain ⟨y1, hy1, h1⟩ := cofin1 L N hL.fg (Submodule.IsFullLattice.span_eq_top (A := E) (M := N))
+  obtain ⟨y2, hy2, h2⟩ := cofin1 N L hN.fg (Submodule.IsFullLattice.span_eq_top (A := E) (M := L))
   refine ⟨y1 * y2, mul_ne_zero hy1 hy2, fun v hv => ?_, fun v hv => ?_⟩
   · have h3 := N.smul_mem (y2 : 𝓞 E) (h1 v hv)
     rw [← mul_smul] at h3

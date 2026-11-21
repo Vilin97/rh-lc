@@ -209,7 +209,12 @@ theorem local_of_mem_delAtr {E K : Type} [Field E] [NumberField E] [Field K] [Nu
       fnOf (gramC J eT) (shiftOf lam) 1 (MvPolynomial.map s F.1) =
         fnOf (gramC J eT) (shiftOf lam) (atInf eT (B⁻¹ : GL (Fin n) E).1) P := by
   subst he
-  exact (vl_mem_delAtr_iff Pl pw hval emb s hpw J lam lam' hn M hM F).1 hF w B hB
+  have hbas : ∀ τ, IsBasisAt (pw w) (dualFr (tauLat emb τ M)) (vlBd emb B τ) := fun τ =>
+    pb_isBasisAt_dualFr (pw w) _ (tauLatticeLattice_holds E K ι n emb τ M hM).fg _
+      (vl_isBasisAt_tauLat Pl pw hval emb τ w M B hB)
+  change F.1 ∈ transLat lam (delStd K lam) (fun τ => dualFr (tauLat emb τ M)) at hF
+  rw [nb_mem_transLat] at hF
+  exact ⟨_, vl_map_mem_intSpan Pl pw hval s w lam lam' hn (hF (pw w) _ hbas), vl_coord emb s J lam B F⟩
 
 
 set_option maxHeartbeats 1000000 in

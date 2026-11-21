@@ -46,6 +46,7 @@ theorem tl_tdiag_mul {w : Pl E} {n : ℕ} (ϖ : (w.adicCompletion E)ˣ) (a b : F
   unfold GlobalTheory.BCT.tdiag
   rw [← map_mul]
   congr 1
+  funext i
   exact (_root_.zpow_add ϖ (a i) (b i)).symm
 
 private theorem valued_v_lt_one_of_ordL_eq_one (w : Pl E) (ϖ : (w.adicCompletion E)ˣ) (hϖ : ordL (ϖ : w.adicCompletion E) = 1) :

@@ -17,9 +17,7 @@ namespace Formalism.MainNotions.BlockEstimateTheorem
 
 open Formalism.BasicNotions Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.TopsChoicePartA Formalism.MainNotions.S.LevR
 
-export Formalism.MainNotions.S.UnitaryLevelOperators (Jop scalMat mulAfter Op4 op4Mul tens1 tens2 RhOp thLog fsFun Umat modL JL TmatVStar ncGap
-  IsPosDefZ zpt fhat lenI mid3 wnormSq Msq mm minv mdet psiC psiLow psiUp lowOf upOf sdScale muLow muUp stabU
-  muStab IsOrbMeas IsOrbMeasLU OmG gTC gZW fNorm IsKFinCoefT)
+export Formalism.MainNotions.S.UnitaryLevelOperators (lenI mid3 wnormSq Msq IsKFinCoefT)
 
 export Formalism.MainNotions.S.LocalFrameAxioms (LocMatch FrameAx PsiAx k_le_nS Nlet)
 

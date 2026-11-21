@@ -28,10 +28,10 @@ theorem gram_vanish {σ ι K : Type*} [Fintype ι] [Field K] [CharZero K]
       ext s
       have hs := congrArg (fun p => l (AddMonoidAlgebra.coeff p s)) h
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [coeff_sum, coeff_smul, smul_eq_mul, coeff_zero, map_sum, map_zero] at hs
+        simp only [coeff_sum, coeff_smul, smul_eq_mul, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, map_sum, map_zero] at hs
       have e : ∀ j, AddMonoidAlgebra.coeff (g j) s = ((AddMonoidAlgebra.coeff (f j) s : ℤ) : K) := fun j => by
         rw [hg, coeff_map, eq_intCast]
-      rw [coeff_sum, coeff_zero]
+      rw [coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
       simp only [coeff_smul, smul_eq_mul]
       calc ∑ j, algebraMap ℚ K (l (ph (g j))) * AddMonoidAlgebra.coeff (g j) s
           = ∑ j, algebraMap ℚ K (l (ph (g j) * AddMonoidAlgebra.coeff (g j) s)) := by

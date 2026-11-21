@@ -48,7 +48,10 @@ theorem smul_dUnit_mem (A : Type) [CommRing A] [Bialgebra O A] [IsCocomm O A] [M
         have h0 : ∀ a, ε (π a) = 0 := fun a => by rw [hπ]; simp
         rw [Submodule.mem_comap, hμ, AugCot.d_mul, h0, h0, zero_smul, zero_smul, add_zero]
         exact zero_mem _
-      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y hx hy =>
+        change AugCot.d ε (μ (x + y)) ∈ M
+        rw [map_add, map_add]
+        exact add_mem hx hy
     · rintro _ ⟨a, rfl⟩
       rw [Submodule.mem_comap, LinearMap.smul_apply, map_smul]
       exact hqM _
@@ -112,6 +115,9 @@ theorem hodgeTateCokerSharp : GlobalTheory.CompanionTheory.Ar.HT.HodgeTateCokerS
   | tmul c χ =>
     obtain ⟨t, rfl⟩ := (tateCongr O G.bidual).surjective χ
     exact ⟨c ⊗ₜ t, rfl⟩
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y hx hy =>
+    obtain ⟨a, ha⟩ := hx
+    obtain ⟨b, hb⟩ := hy
+    exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
 
 end PositivityTheory.HtPt.Farsharp

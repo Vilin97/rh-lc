@@ -271,7 +271,7 @@ theorem birational_pen (hb : Birational y) (h0 : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 
   have hP : ∀ p : Polynomial Φ, algebraMap _ (RatFunc Φ) p ∈ regO w w := fun p => by
     induction p using Polynomial.induction_on with
     | C a => simpa using hC a
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | monomial n a h => rw [pow_succ, ← mul_assoc, map_mul]; exact mul_mem h (by simpa using hX)
   refine birational_of_regO fun s => ?_
   induction s using RatFunc.induction_on with

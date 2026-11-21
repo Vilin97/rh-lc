@@ -140,6 +140,63 @@ theorem rlv_mulLat_inv {n : ℕ} (g : GL (Fin n) E) (L : Submodule (𝓞 E) (Fin
     exact ⟨(g : Matrix (Fin n) (Fin n) E) *ᵥ x, ⟨x, hx, rfl⟩, by
       rw [mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mulVec]⟩
 
+section LocalProjection
+
+open Formalism.UG.CS Formalism.UG.P Formalism.L2.GlobalTheoryTheory.Comp
+
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+
+variable {n : Type} [Fintype n] [DecidableEq n]
+variable (v : HeightOneSpectrum (𝓞 F))
+
+private abbrev rlv_lv (Λ : Submodule (𝓞 E) (n → E)) : Submodule (intV E v) (n → E ⊗[F] v.adicCompletion F) :=
+  latS (F := F) (v.adicCompletion F) (intV E v) Λ
+
+private theorem rlv_prV_hat {Λ : Submodule (𝓞 E) (n → E)} (u : n → 𝒜) (hu : u ∈ hat F Λ) :
+    (fun i => prV (E := E) v (u i)) ∈ rlv_lv v Λ := by
+  induction hu using Submodule.span_induction with
+  | mem u hu =>
+    obtain ⟨x, hx, rfl⟩ := hu
+    exact Submodule.subset_span ⟨x, hx, rfl⟩
+  | zero =>
+    have : (fun i => prV (E := E) v ((0 : n → 𝒜) i)) = 0 := by funext i; simp
+    rw [this]; exact zero_mem _
+  | add u w _ _ hu hw =>
+    have : (fun i => prV (E := E) v ((u + w) i)) =
+        (fun i => prV (E := E) v (u i)) + (fun i => prV (E := E) v (w i)) := by funext i; simp
+    rw [this]; exact add_mem hu hw
+  | smul s u _ hu =>
+    have hs := afsplit_prV_int (E := E) v (s : 𝒜) s.2
+    have : (fun i => prV (E := E) v ((s • u) i)) =
+        (⟨_, hs⟩ : intV E v) • (fun i => prV (E := E) v (u i)) := by
+      funext i
+      simp [Subring.smul_def, map_mul]
+    rw [this]; exact Submodule.smul_mem _ _ hu
+
+private theorem rlv_bc_mulVec_vi (k : GL n 𝒜) (x : n → E) :
+    ((bc (prV (E := E) v) k : GL n (E ⊗[F] v.adicCompletion F)) : Matrix n n _) *ᵥ
+      (fun i => inclE (F := F) (v.adicCompletion F) (x i)) =
+      fun i => prV (E := E) v (((k : Matrix n n 𝒜) *ᵥ Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.vi F x) i) := by
+  funext i
+  rw [RingHom.map_mulVec]
+  rfl
+
+private theorem rlv_loc_fwd {Λ Λ' : Submodule (𝓞 E) (n → E)} (k : GL n 𝒜) (hk : ∀ u ∈ hat F Λ, (k : Matrix n n 𝒜) *ᵥ u ∈ hat F Λ')
+    (y : n → E ⊗[F] v.adicCompletion F) (hy : y ∈ rlv_lv v Λ) :
+    ((bc (prV (E := E) v) k : GL n (E ⊗[F] v.adicCompletion F)) : Matrix n n _) *ᵥ y ∈ rlv_lv v Λ' := by
+  induction hy using Submodule.span_induction with
+  | mem y hy =>
+    obtain ⟨x, hx, rfl⟩ := hy
+    rw [rlv_bc_mulVec_vi]
+    exact rlv_prV_hat v _ (hk _ (Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.vi_mem_hat hx))
+  | zero => rw [mulVec_zero]; exact zero_mem _
+  | add y w _ _ hy hw => rw [mulVec_add]; exact add_mem hy hw
+  | smul t y _ hy =>
+    rw [Subring.smul_def, mulVec_smul]
+    exact Submodule.smul_mem _ t hy
+
+end LocalProjection
+
 theorem rlv_yloc (v : HeightOneSpectrum (𝓞 F)) {n : Type} [Fintype n] [DecidableEq n] {L Lb : Submodule (𝓞 E) (n → E)}
     (y : GL n (E ⊗[F] FiniteAdeleRing (𝓞 F) F))
     (hy : ∀ x, x ∈ Formalism.L2.GlobalTheoryTheory.Comp.hat F L ↔ ((y⁻¹ : GL n _) : Matrix n n _) *ᵥ x ∈ Formalism.L2.GlobalTheoryTheory.Comp.hat F Lb)
@@ -148,14 +205,14 @@ theorem rlv_yloc (v : HeightOneSpectrum (𝓞 F)) {n : Type} [Fintype n] [Decida
       ((bc (prV (E := E) v) y⁻¹ : GL n _) : Matrix n n _) *ᵥ x ∈ latS (F := F) (v.adicCompletion F) (intV E v) Lb := by
   constructor
   · intro hx
-    exact Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.loc_fwd v y⁻¹ (fun u hu => (hy u).1 hu) x hx
+    exact rlv_loc_fwd v y⁻¹ (fun u hu => (hy u).1 hu) x hx
   · intro hx
     have h1 : ∀ u ∈ Formalism.L2.GlobalTheoryTheory.Comp.hat F Lb, (y : Matrix n n _) *ᵥ u ∈ Formalism.L2.GlobalTheoryTheory.Comp.hat F L := by
       intro u hu
       apply (hy _).2
       rw [mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mulVec]
       exact hu
-    have h2 := Formalism.L2.GlobalTheoryTheory.TraceIntegrality.Fr.loc_fwd v y h1 _ hx
+    have h2 := rlv_loc_fwd v y h1 _ hx
     rwa [mulVec_mulVec, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one, one_mulVec] at h2
 
 theorem rlv_stab {n : ℕ} (v : HeightOneSpectrum (𝓞 F)) {Lb L1 L2 : Submodule (𝓞 E) (Fin n → E)}

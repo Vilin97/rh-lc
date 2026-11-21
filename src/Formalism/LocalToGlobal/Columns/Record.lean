@@ -398,7 +398,7 @@ def modP.ext (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (Sp E n)) 
     Ring.inverse (Ideal.Quotient.mk P.asIdeal h.choose) * g (modP.mk P M ⟨h.choose • y, h.choose_spec.2⟩)
   else 0
 
-theorem finrank_modP (P : HeightOneSpectrum (𝓞 E)) {M : Submodule (𝓞 E) (Sp E n)} (hM : Submodule.IsLattice E M) :
+theorem finrank_modP (P : HeightOneSpectrum (𝓞 E)) {M : Submodule (𝓞 E) (Sp E n)} (hM : Submodule.IsFullLattice E M) :
     Module.finrank (𝓞 E ⧸ P.asIdeal) (modP P M) = n := by
   obtain ⟨co, hco⟩ := exists_coordAt P hM
   let f : ↥M →ₗ[𝓞 E] (Fin n → 𝓞 E ⧸ P.asIdeal) :=
@@ -458,6 +458,36 @@ def upL (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (q : 𝓞
 
 abbrev lk (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Type := modP P.1 (d.1.kerAt P)
 
+theorem full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
+    Submodule.IsFullLattice E d.1.N := by
+  let := d.2.lat
+  refine { span_eq_top := ?_ }
+  let W := Submodule.span E (d.1.N : Set (Sp E n))
+  change W = ⊤
+  by_contra h
+  let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+  let g : Sp E n →ₗ[E] Module.Dual E W :=
+    (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+  have hdim : finrank E (Module.Dual E W) < finrank E (Sp E n) := by
+    rw [Subspace.dual_finrank_eq]
+    exact Submodule.finrank_lt h
+  obtain ⟨x, hx, hx₀⟩ :=
+    Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+  have hsmul (a : E) : a • e x ∈ d.1.N := by
+    rw [← d.2.uni, dualBasic_mem_dual]
+    intro y hy
+    apply hStd_mem_one_symm
+    have hxy : hStd E n (e x) y = 0 :=
+      congrArg (fun k : Module.Dual E W => k ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+    simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+  let i : E →ₗ[𝓞 E] d.1.N :=
+    ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict d.1.N hsmul
+  let : Module.Finite (𝓞 E) d.1.N := Module.Finite.iff_fg.mpr d.2.lat.fg
+  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+    smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+  exact RingOfIntegers.not_isField E
+    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+
 theorem kerAt_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Submodule.IsLattice E (d.1.kerAt P) := by
   obtain ⟨p, hp, hp0⟩ : ∃ p ∈ P.1.asIdeal, p ≠ 0 := by
     by_contra H
@@ -465,6 +495,28 @@ theorem kerAt_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P :
     exact P.1.ne_bot ((Submodule.eq_bot_iff _).2 H)
   exact lattice_of_smul d.2.lat d.2.lat (fun x hx => ((d.2.mem_kerAt P x).1 hx).1) hp0
     fun x hx => d.2.smul_mem_kerAt P hp hx
+
+theorem kerAt_full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) :
+    Submodule.IsFullLattice E (d.1.kerAt P) := by
+  letI := d.kerAt_lattice P
+  obtain ⟨p, hp, hp0⟩ : ∃ p ∈ P.1.asIdeal, p ≠ 0 := by
+    by_contra H
+    push Not at H
+    exact P.1.ne_bot ((Submodule.eq_bot_iff _).2 H)
+  refine { span_eq_top := ?_ }
+  have hle : Submodule.span E (d.1.N : Set (Sp E n)) ≤
+      Submodule.span E (d.1.kerAt P : Set (Sp E n)) := by
+    apply Submodule.span_le.mpr
+    intro x hx
+    have hm : p • x ∈ Submodule.span E (d.1.kerAt P : Set (Sp E n)) :=
+      Submodule.subset_span (d.2.smul_mem_kerAt P hp hx)
+    rw [← algebraMap_smul E p x] at hm
+    have hpE : algebraMap (𝓞 E) E p ≠ 0 := (IsFractionRing.injective (𝓞 E) E).ne hp0
+    have := Submodule.smul_mem (Submodule.span E (d.1.kerAt P : Set (Sp E n)))
+      (algebraMap (𝓞 E) E p)⁻¹ hm
+    simpa [smul_smul, hpE] using this
+  letI := d.full_lattice
+  exact top_unique (Submodule.IsFullLattice.span_eq_top (A := E) (M := d.1.N) ▸ hle)
 
 def e1 (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Sp E n := d.2.exists_dualBasis.choose P
 
@@ -1130,7 +1182,7 @@ def recForms (hX : X.Ok) (hPr : Pr.Ok) (hf : X.f = R.f) (σ₀ : X.K →+* ℂ) 
   lv := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lv v
   lvAcg := fun _ _ _ => inferInstance
   lvMod := fun i v c => (inferInstance : Module (𝓞 X.E ⧸ v.1.asIdeal) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lv v))
-  lv_rank := fun i v c => finrank_modP v.1 (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).2.lat
+  lv_rank := fun i v c => finrank_modP v.1 (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).full_lattice
   fv := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).fv v
   fv_ne := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).fv_ne v
   up := fun i v c x => clsD _ (Λ i) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).upL v (Pr.T u : 𝓞 X.E) x)
@@ -1138,7 +1190,7 @@ def recForms (hX : X.Ok) (hPr : Pr.Ok) (hf : X.f = R.f) (σ₀ : X.K →+* ℂ) 
   lk := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lk v
   lkAcg := fun _ _ _ => inferInstance
   lkMod := fun i v c => (inferInstance : Module (𝓞 X.E ⧸ v.1.asIdeal) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).lk v))
-  lk_rank := fun i v c => finrank_modP v.1 ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).kerAt_lattice v)
+  lk_rank := fun i v c => finrank_modP v.1 ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).kerAt_full_lattice v)
   te := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).te v (Pr.T u : 𝓞 X.E)
   te_ne := fun i v c => (repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).te_ne v (T_unif hX hPr u v).1 (T_unif hX hPr u v).2
   dn := fun i v c g => clsD _ (Λ i) ((repD (colVal W u i (Pr.vT u) Pr.vGs) (Λ i) c).dnL v g)

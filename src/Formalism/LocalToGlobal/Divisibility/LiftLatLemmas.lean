@@ -237,7 +237,6 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] (S : CSD K)
 
 theorem lf_del_isLattice {s : ℕ} (hS : S.Good s) (c : S.Cl) : Submodule.IsLattice K (S.Del c) := by
   refine ⟨(hS.nab_lat c).fg.of_le (hS.del_le c), ?_⟩
-  have hD := (Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K S.V S.pair hS.symm hS.nondeg exponent_index_lattice.hstar (S.Nab c) (hS.nab_lat c)).1
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem lf_nabLat_isLattice {s : ℕ} (hS : S.Good s) : Submodule.IsLattice K S.nabLat :=
@@ -268,8 +267,10 @@ theorem lf_lPr_surj (h : BlockHyp B ℓ v0 s) : Function.Surjective (Matrix.mulV
   refine ⟨(B.lE ℓ Z).mulVec y, ?_⟩
   rw [Matrix.mulVecLin_apply, Matrix.mulVec_mulVec, lf_lPr_lE (Z := Z) h, Matrix.one_mulVec]
 
-theorem lf_Tl_isLattice (h : BlockHyp B ℓ v0 s) : Submodule.IsLattice K (B.Tl ℓ Z) :=
-  exponent_index_lattice.map_isLattice _ (lf_lPr_surj (Z := Z) h) _ (lf_lvlNab_isLattice h)
+theorem lf_Tl_isLattice (h : BlockHyp B ℓ v0 s) : Submodule.IsLattice K (B.Tl ℓ Z) := by
+  refine ⟨(lf_lvlNab_isLattice h).fg.map _, ?_⟩
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
 theorem lf_cutZ_isLattice (h : BlockHyp B ℓ v0 s) : Submodule.IsLattice K (B.cutZ ℓ Z) :=
   exponent_index_lattice.cut_isLattice _ lf_fE_inj _ (B.S.lf_nabLat_isLattice h.ok.good)
@@ -685,7 +686,7 @@ theorem lf_coeff_zero_of_mem_resSet (h0 : ∀ P, B.op (P, 0) = 1) {X : Finset (G
     (h : Sg ∈ B.resSet X) (P0 : Pl0) : (Sg P0).coeff 0 = 1 := by
   by_cases hP : P0 ∈ Set.range B.pl
   swap
-  · rw [h.1 P0 hP, coeff_one_zero]
+  · rw [h.1 P0 hP, Polynomial.coeff_one_zero]
   obtain ⟨P, rfl⟩ := hP
   obtain ⟨x, hres, hocc⟩ := B.lf_exists_occurs_of_mem_resSet h
   have h1 : x (P, 0) = 1 := hocc.eq_one (h0 P)

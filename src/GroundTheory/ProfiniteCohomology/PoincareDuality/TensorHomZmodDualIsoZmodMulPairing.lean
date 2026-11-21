@@ -13,7 +13,6 @@ noncomputable section
 namespace GroundTheory.ProfCoh
 
 open CategoryTheory MonoidalCategory
-open GlobalTheory.CompanionTheory.Ar (dualMap)
 
 universe u
 

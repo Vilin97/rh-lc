@@ -26,7 +26,7 @@ def DetCS : Prop :=
 def LcvBasis : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ)
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ), (∀ v, IsUnit (X v).det) →
-    ∀ L : Submodule (𝓞 K) (Fin d → K), Submodule.IsFullLattice K L →
+    ∀ L : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K L →
     ∀ e : Fin d → Fin d → K, LinearIndependent K e →
       (Function.support fun w : HeightOneSpectrum (𝓞 K) =>
         lw w * (idx w (Submodule.span (𝓞 K) (Set.range e)) L : ℝ)).Finite ∧
@@ -74,7 +74,7 @@ def RatHermLcv : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (K0 : Subfield K),
     IsCMSub K0 → ∀ (d : ℕ) (H : Matrix (Fin d) (Fin d) K) (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ),
     IsRatHerm K0 H X →
-    ∀ T : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K T →
+    ∀ T : Submodule (𝓞 K) (Fin d → K), Submodule.IsFullLattice K T →
       (Function.support fun w : HeightOneSpectrum (𝓞 K) => lw w * (jw H w T : ℝ)).Finite ∧
       lcv X T = - ∑ᶠ w : HeightOneSpectrum (𝓞 K), lw w * (jw H w T : ℝ)
 
@@ -92,6 +92,6 @@ def FinsumConj : Prop :=
 
 def LocBasisEx : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (d : ℕ) (L : Submodule (𝓞 K) (Fin d → K)),
-    Submodule.IsLattice K L → ∀ w : HeightOneSpectrum (𝓞 K), ∃ f : Fin d → Fin d → K, IsLocBasis L w f
+    Submodule.IsFullLattice K L → ∀ w : HeightOneSpectrum (𝓞 K), ∃ f : Fin d → Fin d → K, IsLocBasis L w f
 
 end Formalism.DivisionValues

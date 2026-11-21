@@ -69,7 +69,7 @@ theorem eigen_lattice_decomposition : ∀ (E : Type) [Field E] [NumberField E] (
   have h2 : ∀ x ∈ eigSp ρ (emb i), Ψ p x = x := by
     refine Finset.prod_induction _ (fun q => ∀ x ∈ eigSp ρ (emb i), Ψ q x = x) (fun q r hq hr x hx => ?_)
       (fun x hx => ?_) fun j hj x hx => ?_
-    · rw [map_mul, Module.End.mul_apply, hr x hx, hq x hx]
+    · rw [map_mul, mul_apply_eq_comp, hr x hx, hq x hx]
     · rw [map_one]; rfl
     · rw [ht, (hmem x).1 hx, ← sub_smul, smul_smul,
         inv_mul_cancel₀ (sub_ne_zero.2 (ha j (Finset.ne_of_mem_erase hj))), one_smul]
@@ -89,7 +89,7 @@ theorem eigen_lattice_decomposition : ∀ (E : Type) [Field E] [NumberField E] (
         simp only [t, map_smul, map_sub, AlgHom.commutes, Pi.smul_apply, Pi.sub_apply, hΦ]
         simp
     have h4 := congrArg (fun q => Ψ q x) hz
-    simp only [map_mul, map_sub, hΨ, AlgHom.commutes, map_zero, Module.End.mul_apply, LinearMap.sub_apply,
+    simp only [map_mul, map_sub, hΨ, AlgHom.commutes, map_zero, mul_apply_eq_comp, LinearMap.sub_apply,
       Module.algebraMap_end_apply, LinearMap.zero_apply] at h4
     exact sub_eq_zero.1 h4
   rw [← h2 e hei]
@@ -97,7 +97,7 @@ theorem eigen_lattice_decomposition : ∀ (E : Type) [Field E] [NumberField E] (
   induction he using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨h1 x hx, h3 x⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul r x _ hx => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ _ hx
 
 end ModelDimension

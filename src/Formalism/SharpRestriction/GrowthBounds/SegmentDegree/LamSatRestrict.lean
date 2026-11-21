@@ -30,7 +30,8 @@ theorem lam_dvd_of_res {O σ : Type} [CommRing O] [IsDomain O] [IsDiscreteValuat
     rw [MvPolynomial.C_dvd_iff_dvd_coeff]
     intro m
     have h1 : IsLocalRing.residue O (AddMonoidAlgebra.coeff P m) = 0 := by
-      rw [← MvPolynomial.coeff_map, h, coeff_zero]
+      rw [← MvPolynomial.coeff_map, h]
+      simp
     rw [IsLocalRing.residue_eq_zero_iff, (IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).mp hϖ,
       Ideal.mem_span_singleton] at h1
     exact h1

@@ -10,7 +10,7 @@ noncomputable section
 
 namespace Formalism.BasicNotions.Examples₂.NZ
 
-open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.BasicNotions.Examples₂ Formalism.BasicNotions.Examples₂.ND
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.BasicNotions.Examples₂
 
 section Std
 

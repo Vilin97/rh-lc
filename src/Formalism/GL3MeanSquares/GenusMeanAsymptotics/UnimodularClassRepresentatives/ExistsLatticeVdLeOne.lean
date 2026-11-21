@@ -33,7 +33,7 @@ theorem exists_exact_near (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
       ∃ y ∈ (locF 𝔭 A₀), h y y = algebraMap F K (n : F) ∧
         y - x ∈ ((extP K 𝔭) ^ (k - c₀) • (locF 𝔭 A₀) : Submodule (𝓞 K) V) := by
   have hp : 𝔭.IsPrime := h𝔭.isPrime
-  obtain ⟨v, hv⟩ := Cell.exists_near (𝔭 := 𝔭) h𝔭 hF hs hA₀ hA₀i hn
+  obtain ⟨v, hv⟩ := Cell.exists_near (𝔭 := 𝔭) h𝔭 hF hs hA₀ hA₀i (n := n) hn
     (by obtain ⟨b, hb⟩ := hrep; exact ⟨b, by rw [algebraMap_int_F_to_K_eq_algebraMap_F_K]; exact hb⟩)
   refine ⟨v + 1, fun k hk x hx hc => ?_⟩
   rw [Cell.congrP_iff_inI] at hc

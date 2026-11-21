@@ -1714,6 +1714,8 @@ open MvPolynomial Finset Formalism.GM
 section
 variable (K : Type) [Field K] [CharZero K]
 
+local notation "ι" => algebraMap ℚ K
+
 theorem map_fSub {N r : ℕ} (LL : M.Letters N) (ρ : Fin r) (x : Fin N × Fin r) :
     map ι (fSub ℚ LL ρ x) = fSub K LL ρ x := by
   obtain ⟨i, c⟩ := x

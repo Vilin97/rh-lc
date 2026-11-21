@@ -149,7 +149,7 @@ theorem Pp_γ (T : LocLat G Qp LL O) (c : ZMod n) {y : W.DD T} (hy : y ∈ Pp W 
     · show W.γD T W.gam (a • (W.φD T ^ 1) x) = W.γA W.gam a • (W.φD T ^ 1) (W.γD T W.gam x)
       rw [pow_one, hsl, W.φγ_comm]
   | zero => rw [map_zero]; exact zero_mem _
-  | add u w _ _ hu hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hw
+  | add u w _ _ hu hw => rw [map_add (f := _)]; exact add_mem hu hw
   | neg u _ hu => rw [map_neg]; exact neg_mem hu
 
 theorem Pp_qpow (T : LocLat G Qp LL O) (c : ZMod n) (k : ℕ)

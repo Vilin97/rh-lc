@@ -11,7 +11,6 @@ public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfMul
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
 open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.BT
-open GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar (dualMap)
 
 noncomputable section
 

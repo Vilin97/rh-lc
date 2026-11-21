@@ -104,7 +104,7 @@ def U2obj (n : SimplexCategoryᵒᵖ) : PSh where
     apply ConcreteCategory.ext_apply (C := Type)
     intro x
     apply Subtype.ext
-    exact Functor.map_id_apply ((PB (bsumOf V W)).obj n) x.1
+    exact Functor.map_id_apply ((PB (bsumOf V W)).obj n) X x.1
   map_comp f g := by
     apply ConcreteCategory.ext_apply (C := Type)
     intro x
@@ -122,7 +122,7 @@ def U2 : Spc where
         exact NatTrans.naturality_apply (D := Type) ((PB (bsumOf V W)).map θ) k x.1 }
   map_id n := by
     apply NatTrans.ext
-    intro X
+    funext X
     apply ConcreteCategory.ext_apply (C := Type)
     intro x
     apply Subtype.ext
@@ -130,7 +130,7 @@ def U2 : Spc where
       (NatTrans.congr_app ((PB (bsumOf V W)).map_id n) X) x.1
   map_comp f g := by
     apply NatTrans.ext
-    intro X
+    funext X
     apply ConcreteCategory.ext_apply (C := Type)
     intro x
     apply Subtype.ext

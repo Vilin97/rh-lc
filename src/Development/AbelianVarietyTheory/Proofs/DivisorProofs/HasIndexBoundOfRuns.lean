@@ -27,19 +27,21 @@ namespace GlobalTheory.BigOn
 theorem isLattice_of_spanK {F K : Type} [Field F] [NumberField F] [Field K] [NumberField K] [Algebra F K] {C : Type}
     [AddCommGroup C] [Module F C] [Module (𝓞 F) C] [IsScalarTower (𝓞 F) F C] {n : ℕ}
     (z : (Fin n → K) ≃ₗ[K] K ⊗[F] C) (M : Submodule (𝓞 F) C) (h : IsLatIn ⊤ (spanK z (M : Set C))) :
-    Submodule.IsLattice F M := by
+    Submodule.IsFullLattice F M := by
   have hinj : Function.Injective (coordMap z) := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have h1 : z.symm ((1 : K) ⊗ₜ[F] x) = 0 := hx
     rw [LinearEquiv.map_eq_zero_iff] at h1
     exact (Module.FaithfullyFlat.one_tmul_eq_zero_iff F C x).1 h1
-  refine ⟨?_, ?_⟩
-  · have h1 : ((spanK z (M : Set C)).restrictScalars (𝓞 F)).FG := h.1.restrictScalars
+  have hfg : M.FG := by
+    have h1 : ((spanK z (M : Set C)).restrictScalars (𝓞 F)).FG := h.1.restrictScalars
     have h2 : M.map ((coordMap z).restrictScalars (𝓞 F)) ≤ (spanK z (M : Set C)).restrictScalars (𝓞 F) := by
       rintro _ ⟨x, hx, rfl⟩
       exact mem_spanK z hx
     exact Submodule.fg_of_fg_map_injective ((coordMap z).restrictScalars (𝓞 F)) hinj (h1.of_le h2)
+  letI := Submodule.IsLattice.of_fg F hfg
+  refine ⟨?_⟩
   · refine Submodule.baseChange_injective (A := K) ?_
     rw [Submodule.baseChange_top, Submodule.baseChange_span, eq_top_iff]
     intro y _
@@ -64,15 +66,16 @@ theorem exists_rem_of_concl {D : D7} {B : WeightFamilies.Prov D} {P6 : ModuliInt
           (lix v (cut W (spanK z (B.Mlat j ka : Set _))) (cut W (spanK z {F | X.inc ka F ∈ X.Theta S ka wL wF T})) : ℝ) ≤
             ((ramOver (K := B.KO) v * e : ℕ) : ℝ) * (Module.finrank K W : ℝ) + r v := by
   have hM' := isLattice_of_spanK z _ hM
+  letI := hM'
   have hn : X.rk ka (B.Mlat j ka) = n := by
     unfold WeightAlgebra.PJ.rk
-    rw [hM'.span_eq_top, finrank_top]
+    rw [Submodule.IsFullLattice.span_eq_top, finrank_top]
     have := z.finrank_eq
     rw [Module.finrank_baseChange, Module.finrank_fin_fun] at this
     exact this.symm
   let Q : Formalism.MainNotions.Gaps.LocalGlobalPassage.Run D B P6 := ⟨j, X, S, ka, wL, wF, T, nus, X.rk ka (B.Mlat j ka) * a * b * c * d⟩
   obtain ⟨r, h0, h1, h2, h3⟩ := Formalism.MainNotions.Gaps.LocalGlobalPassage.l2 Q (fun la => Formalism.MainNotions.Gaps.LocalGlobalPassage.l1 la)
-    (fun la => Formalism.MainNotions.Gaps.LocalGlobalPassage.l1b la) (fun la => Formalism.MainNotions.Gaps.LocalGlobalPassage.l1c la) hM' hC
+    (fun la => Formalism.MainNotions.Gaps.LocalGlobalPassage.l1b la) (fun la => Formalism.MainNotions.Gaps.LocalGlobalPassage.l1c la) (by first | exact hM' | exact hM'.toIsLattice) hC
   have hβ : Q.β = (n : ℝ) * (a * b * c * d) := by
     change (X.rk ka (B.Mlat j ka) : ℝ) * a * b * c * d = _
     rw [hn]
@@ -86,8 +89,8 @@ theorem exists_rem_of_concl {D : D7} {B : WeightFamilies.Prov D} {P6 : ModuliInt
   obtain ⟨h4, h5⟩ := h3 (v.under (𝓞 B.KO))
   have hTh : Formalism.MainNotions.Gaps.LocalGlobalPassage.up (coordMap z) (Q.M0 ⊓ Q.Th0) ≤ spanK z {F | X.inc ka F ∈ X.Theta S ka wL wF T} :=
     Submodule.span_mono (Set.image_mono fun f hf => hf.2)
-  exact Formalism.MainNotions.Gaps.LocalGlobalPassage.l5 (coordMap z) (coordMap_linearIndependent z) (coordMap_span z) Q.M0 (Q.M0 ⊓ Q.Th0) hM'.fg
-    hM'.span_eq_top h4 inf_le_left v e (r (v.under (𝓞 B.KO))) (ramOver (K := B.KO) v * e)
+  exact Formalism.MainNotions.Gaps.LocalGlobalPassage.l5 (coordMap z) (coordMap_linearIndependent z) (coordMap_span z) Q.M0 (Q.M0 ⊓ Q.Th0) (Submodule.IsLattice.fg B.KO (B.Mlat j ka))
+    Submodule.IsFullLattice.span_eq_top h4 inf_le_left v e (r (v.under (𝓞 B.KO))) (ramOver (K := B.KO) v * e)
     (by rw [hram]; push_cast; rfl) (h5 e (by rw [Int.cast_natCast, ← hpl]; exact he)) _ hTh W
 
 theorem starRing_eq {R : Type} [CommRing R] (s t : StarRing R) (h : ∀ a : R, s.star a = t.star a) : s = t := by

@@ -17,9 +17,9 @@ theorem goal1 :
         (Polynomial.natDegree.{u_1} (Finset.prod.{u_2, u_1} s fun (i : ι) ↦ HPow.hPow.{u_1, 0, u_1} (v i) (d i)))
         (Finset.sum.{u_2, 0} s fun (i : ι) ↦ d i))
       (Eq.{u_1 + 1}
-        (Polynomial.coeff.{u_1} (Finset.prod.{u_2, u_1} s fun (i : ι) ↦ HPow.hPow.{u_1, 0, u_1} (v i) (d i))
+        ((Finset.prod.{u_2, u_1} s fun (i : ι) ↦ HPow.hPow.{u_1, 0, u_1} (v i) (d i)).coeff
           (Finset.sum.{u_2, 0} s fun (i : ι) ↦ d i))
-        (Finset.prod.{u_2, u_1} s fun (i : ι) ↦ HPow.hPow.{u_1, 0, u_1} (Polynomial.coeff.{u_1} (v i) 1) (d i))) := by
+        (Finset.prod.{u_2, u_1} s fun (i : ι) ↦ HPow.hPow.{u_1, 0, u_1} ((v i).coeff 1) (d i))) := by
   intro B _ ι s v d hv
   classical
   induction s using Finset.induction_on with

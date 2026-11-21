@@ -161,9 +161,7 @@ open Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions
 open Filter Topology
 open scoped ContDiff
 
-export Formalism.MainNotions.S.UnitaryLevelOperators (Jop scalMat mulAfter Op4 op4Mul tens1 tens2 RhOp modL JL fsFun Umat levOf haarOf cutF
-  energy Msq mm minv mdet psiC psiLow psiUp lowOf upOf sdScale muLow muUp stabU muStab IsOrbMeas OmG gTC gZW
-  fNorm)
+export Formalism.MainNotions.S.UnitaryLevelOperators (levOf cutF Msq)
 
 section Family
 

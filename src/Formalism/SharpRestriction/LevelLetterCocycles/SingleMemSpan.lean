@@ -21,6 +21,34 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] [CommRing O] [Algebra O LL]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
 
+local notation "ιE" => algebraMap (LetA O n) W.EE
+
+private def portPsub (T : LocLat G Qp LL O) (A : ArcP n) (c : ZMod n) (e : ℕ)
+    {d : ℕ} (b : Fin d → W.DD T) (Rst : Finset (Fin d)) : Submodule O (Fin d → W.EE) where
+  carrier := {f | f ∈ Msub W A c e Rst ∧
+    ∃ g, InNL W T c e (abelian₂ W A c e) b g ∧ ∀ k, f k = ιE W.π₀ * g k}
+  add_mem' := by
+    rintro f f' ⟨hf, g, hg, hfg⟩ ⟨hf', g', hg', hfg'⟩
+    exact ⟨(Msub W A c e Rst).add_mem hf hf', g + g',
+      Formalism.MainNotions.UnusedSlot80.UnivC.inNL_add W T A c e b hg hg', fun k => by simp [hfg k, hfg' k, mul_add]⟩
+  zero_mem' := ⟨(Msub W A c e Rst).zero_mem, 0, Formalism.MainNotions.UnusedSlot80.UnivC.inNL_zero W T A c e b,
+    fun k => by simp⟩
+  smul_mem' := by
+    rintro o f ⟨hf, g, hg, hfg⟩
+    exact ⟨(Msub W A c e Rst).smul_mem o hf, fun k => o • g k,
+      Formalism.MainNotions.UnusedSlot80.UnivC.inNL_smul W T A c e b o hg, fun k => by
+        rw [Pi.smul_apply, hfg k, mul_smul_comm]⟩
+
+private theorem port_psub_of_pi0Lam (T : LocLat G Qp LL O) (A : ArcP n) (c : ZMod n)
+    {d : ℕ} (b : Fin d → W.DD T) (Rst : Finset (Fin d)) [IsDomain O]
+    (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W)
+    (hbij : Function.Bijective (algebraMap K₀ K)) (hA : A.OK) (hc : c ∈ A.cuts) (hT : Win W A T)
+    (hb : Formalism.MainNotions.LiftingTheory.IsFrameΔ W T (c - ((A.len c : ℕ) : ZMod n)) b) (f : Fin d → W.EE)
+    (hf : ∀ k, InFr W c (W.π₀ * abelian₂ W A c (A.len c)) 1 (f k)) (hs : ∀ k ∉ Rst, f k = 0) :
+    f ∈ portPsub W T A c (A.len c) b Rst := by
+  obtain ⟨g, hg, hfg⟩ := nl_of_pi0Lam W hR hbij A hA c hc T hT b hb f hf
+  exact ⟨⟨fun k => inFr1_of_pi0Lam W A c _ (hf k), hs⟩, g, hg, hfg⟩
+
 theorem single_mem_span {d : ℕ} {ι : Type} [Fintype ι] (V : ι → Fin d → W.EE) (k : Fin d) (x : W.EE)
     (i : ι) (hV : V i = Pi.single k x) : Pi.single k x ∈ Submodule.span O (Set.range fun j : Fin (Fintype.card ι) =>
       V ((Fintype.equivFin ι).symm j)) := by
@@ -71,7 +99,7 @@ theorem univGenCore_of' [IsDomain O] [IsPrincipalIdealRing O] [NeZero n]
   have hP := exists_gammaA_pi0_eq_pi0_mul_of_RingP W hR
 
   set Ms := Msub W A c e Rst with hMs
-  set Ps := Psub W T₂ A c e b Rst with hPs
+  set Ps := portPsub W T₂ A c e b Rst with hPs
   set Is := Isub W T₂ A c e b Rst with hIs
   have hIM : Is ≤ Ms := fun f hf => hf.1
 
@@ -104,7 +132,7 @@ theorem univGenCore_of' [IsDomain O] [IsPrincipalIdealRing O] [NeZero n]
       · exact ⟨0, 0, ⟨0, W.AΔ.zero_mem, by simp⟩, fun _ => rfl, by simp [hf.2 k hk]⟩
     choose cc R hR1 hR2 hR3 using hdec
     have hRv : (fun k => R k) ∈ Ps :=
-      psub_of_pi0Lam W T₂ A c b Rst hR hbij hAOK hc hWin hb _ hR1 fun k hk => hR2 k hk
+      port_psub_of_pi0Lam W T₂ A c b Rst hR hbij hAOK hc hWin hb _ hR1 fun k hk => hR2 k hk
     have hfeq : f = ∑ p : Fin d × Fin D, cc p.1 p.2 • F p + fun k => R k := by
       funext k
       rw [hR3 k, Pi.add_apply, Finset.sum_apply, Fintype.sum_prod_type]
@@ -145,7 +173,7 @@ theorem univGenCore_of' [IsDomain O] [IsPrincipalIdealRing O] [NeZero n]
       · exact Submodule.smul_mem _ _ (hvmem k hk s (by have := Finset.mem_range.1 hs; omega))
       · exact Submodule.smul_mem _ _ (hvmem k hk e (by omega))
     have hRrm : Rr ∈ Ps := by
-      refine psub_of_pi0Lam W T₂ A c b Rst hR hbij hAOK hc hWin hb _ (fun k => ?_) (fun k hk => by simp [hRr, hk])
+      refine port_psub_of_pi0Lam W T₂ A c b Rst hR hbij hAOK hc hWin hb _ (fun k => ?_) (fun k hk => by simp [hRr, hk])
       by_cases hk : k ∈ Rst
       · simp only [hRr, hk, if_true]
         obtain ⟨w, hw, hwe⟩ := hRk k

@@ -9,6 +9,9 @@ public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.Linear
 
 @[expose] public section
 
+-- Use the fraction-ring instances directly so repeated maps can be matched by `simp` and `rw`.
+set_option backward.inferInstanceAs.wrap false
+
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.MainNotions.Gaps.EtaleWeightGaps GlobalTheory.Shares
 
 namespace GlobalTheory.ReadingTransfer

@@ -27,7 +27,8 @@ theorem summand_localization : SummandLoc := by
   have hfull : Submodule.IsFullLattice K L' := by
     have hfg : L'.FG := Submodule.fg_of_fg_map_injective i Subtype.val_injective
       (hmap.symm ▸ hL.fg)
-    refine ⟨Submodule.IsLattice.of_fg K hfg, ?_⟩
+    letI : Submodule.IsLattice K L' := Submodule.IsLattice.of_fg K hfg
+    refine ⟨?_⟩
     apply Submodule.map_injective_of_injective (f := W.subtype) Subtype.val_injective
     have himage : W.subtype '' (L' : Set W) = (L : Set V) := by
       rw [← hmap, Submodule.map_coe]
@@ -53,7 +54,10 @@ theorem summand_localization : SummandLoc := by
       rw [map_sub, hpId _ (hpX w), sub_self], rfl⟩
     have he := Submodule.projection_apply_of_mem_right hYX.symm hdiff
     change π ((w : V) - (p w : V)) = 0 at he
-    rwa [map_sub, Submodule.projection_apply_of_mem_left hYX.symm (hpX w), sub_eq_zero] at he
+    have hp : (p w : V) ∈ X := hpX w
+    have hproj : π (p w : V) = (p w : V) :=
+      Submodule.projection_apply_of_mem_left hYX.symm hp
+    rwa [map_sub, hproj, sub_eq_zero] at he
   refine ⟨π, Submodule.projection_apply_mem hYX.symm,
     fun _ hx => Submodule.projection_apply_of_mem_left hYX.symm hx, ?_⟩
   letI := h𝔭.isPrime
@@ -61,7 +65,12 @@ theorem summand_localization : SummandLoc := by
   obtain ⟨t, ht, hty⟩ := (LocalSpans.mem_locF 𝔭 L y).1 hy
   have ht0 : t ≠ 0 := fun ht0 => ht (ht0 ▸ 𝔭.zero_mem)
   let a := algebraMap (𝓞 F) (𝓞 K) t
-  have ha : algebraMap (𝓞 K) K a ≠ 0 := (map_ne_zero _).2 ((map_ne_zero _).2 ht0)
+  have ha : algebraMap (𝓞 K) K a ≠ 0 := by
+    intro h
+    apply ht0
+    apply RingOfIntegers.algebraMap.injective F K
+    apply (RingOfIntegers.coe_injective)
+    simpa [a] using h
   have hyW : y ∈ W := by
     have hs : algebraMap (𝓞 K) K a • y ∈ W := by
       rw [algebraMap_smul]

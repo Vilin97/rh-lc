@@ -87,9 +87,12 @@ theorem pr_mk {X Y : Spc} (n : SimplexCategoryᵒᵖ) (U : Scheme.{0}ᵒᵖ) (a 
     | ⟨WalkingPair.left⟩ => a
     | ⟨WalkingPair.right⟩ => b
   let l := Types.Limit.mk (pair X Y ⋙ ev n U) x (by
-    rintro ⟨j⟩ ⟨j'⟩ ⟨⟨h⟩⟩
-    obtain rfl : j = j' := h
-    exact ConcreteCategory.congr_hom ((pair X Y ⋙ ev n U).map_id ⟨j⟩) (x ⟨j⟩))
+    intro j j' f
+    have e : j = j' := IsDiscrete.eq_of_hom f
+    subst j'
+    have ef : f = 𝟙 j := Subsingleton.elim _ _
+    subst f
+    exact ConcreteCategory.congr_hom ((pair X Y ⋙ ev n U).map_id j) (x j))
   obtain ⟨w, hw⟩ : ∃ w, (preservesLimitIso (ev n U) (pair X Y)).hom w = l :=
     ⟨(preservesLimitIso (ev n U) (pair X Y)).inv l, ConcreteCategory.congr_hom (preservesLimitIso (ev n U) (pair X Y)).inv_hom_id l⟩
   refine ⟨w, ?_, ?_⟩

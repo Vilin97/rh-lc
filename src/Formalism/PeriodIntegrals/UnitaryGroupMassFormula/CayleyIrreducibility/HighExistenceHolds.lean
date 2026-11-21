@@ -28,7 +28,7 @@ theorem tgood_CC (w : σ → ℕ) (c : ℕ) (r : ℂ) : TGood w c 0 (Polynomial.
     by_cases hm : 0 = m
     · subst hm; simp
     · rw [if_neg hm] at h; exact absurd rfl h
-  · rw [if_neg hj, coeff_zero] at h; exact absurd rfl h
+  · rw [if_neg hj, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h; exact absurd rfl h
 
 theorem tgood_mul (w : σ → ℕ) (c : ℕ) {d₁ d₂ : ℕ} {F G : Polynomial (MvPolynomial σ ℂ)}
     (hF : TGood w c d₁ F) (hG : TGood w c d₂ G) : TGood w c (d₁ + d₂) (F * G) := by
@@ -94,7 +94,7 @@ theorem tgood_gen {ι : Type} [DecidableEq ι] {n : ℕ} (τ : ι) (a b : Fin n)
         else 0)) := by
   classical
   intro j m h
-  rw [Polynomial.coeff_add, MvPolynomial.coeff_add] at h
+  rw [Polynomial.coeff_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply] at h
   by_cases hj : j = 0
   · subst hj
     have h0 : AddMonoidAlgebra.coeff ((if v.1 = τ ∧ v.2.1 = b then Polynomial.X * Polynomial.C (X (τ, a, v.2.2))
@@ -104,7 +104,7 @@ theorem tgood_gen {ι : Type} [DecidableEq ι] {n : ℕ} (τ : ι) (a b : Fin n)
     by_cases hm : Finsupp.single v 1 = m
     · subst hm; simp [Finsupp.weight_single]
     · rw [if_neg hm] at h; exact absurd rfl h
-  · rw [Polynomial.coeff_C, if_neg hj, coeff_zero, zero_add] at h
+  · rw [Polynomial.coeff_C, if_neg hj, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, zero_add] at h
     by_cases hc : v.1 = τ ∧ v.2.1 = b
     · rw [if_pos hc, Polynomial.X_mul_C, Polynomial.coeff_C_mul_X] at h
       by_cases hj1 : j = 1
@@ -118,8 +118,8 @@ theorem tgood_gen {ι : Type} [DecidableEq ι] {n : ℕ} (τ : ι) (a b : Fin n)
           dsimp only
           omega
         · rw [if_neg hm] at h; exact absurd rfl h
-      · rw [if_neg hj1, coeff_zero] at h; exact absurd rfl h
-    · rw [if_neg hc, Polynomial.coeff_zero, coeff_zero] at h; exact absurd rfl h
+      · rw [if_neg hj1, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h; exact absurd rfl h
+    · rw [if_neg hc, Polynomial.coeff_zero, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h; exact absurd rfl h
 
 theorem bigDiv_support {ι : Type} [DecidableEq ι] {n : ℕ} (τ : ι) (a b : Fin n) (hab : a < b) (k : ℕ)
     (P : MvPolynomial (ι × Fin n × Fin n) ℂ) (m' : ι × Fin n × Fin n →₀ ℕ)

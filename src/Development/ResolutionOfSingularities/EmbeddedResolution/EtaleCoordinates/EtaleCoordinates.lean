@@ -79,27 +79,6 @@ private theorem sum_smul_derivation_apply (c : ι → S) (f : ι → Derivation 
     rw [Finset.sum_cons, Finset.sum_cons, ← ih]
     rfl
 
-theorem span_range_partialDeriv [Finite ι] :
-    Submodule.span S (Set.range (partialDeriv k ι S)) = (⊤ : Submodule S (Derivation k S S)) := by
-  obtain ⟨hι⟩ := nonempty_fintype ι
-  refine Submodule.eq_top_iff'.mpr fun D => ?_
-  have key : D = ∑ i : ι, D (coord k ι S i) • partialDeriv k ι S i := by
-    ext s
-    have h1 : ∑ i : ι, partialDeriv k ι S i s • KaehlerDifferential.D k S (coord k ι S i)
-        = KaehlerDifferential.D k S s := by
-      rw [← Module.Basis.sum_repr (basisKaehler k ι S) (KaehlerDifferential.D k S s)]
-      exact Finset.sum_congr rfl fun i _ => by rw [basisKaehler_apply, partialDeriv_apply]
-    have h2 : D.liftKaehlerDifferential
-        (∑ i : ι, partialDeriv k ι S i s • KaehlerDifferential.D k S (coord k ι S i))
-        = D.liftKaehlerDifferential (KaehlerDifferential.D k S s) := by rw [h1]
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Derivation.liftKaehlerDifferential_comp_D] at h2
-    rw [sum_smul_derivation_apply, ← h2]
-    exact Finset.sum_congr rfl fun i _ => by rw [smul_eq_mul, mul_comm]
-  rw [key]
-  exact sum_mem fun i _ =>
-    Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self i))
-
 theorem eq_sum_smul_partialDeriv [Fintype ι] (D : Derivation k S S) :
     D = ∑ i : ι, D (coord k ι S i) • partialDeriv k ι S i := by
   ext s
@@ -120,6 +99,14 @@ theorem eq_sum_smul_partialDeriv [Fintype ι] (D : Derivation k S S) :
   rw [map_smul, basisKaehler_apply, Derivation.liftKaehlerDifferential_comp_D, smul_eq_mul,
     ← partialDeriv_apply]
   exact mul_comm _ _
+
+theorem span_range_partialDeriv [Finite ι] :
+    Submodule.span S (Set.range (partialDeriv k ι S)) = (⊤ : Submodule S (Derivation k S S)) := by
+  let _ : Fintype ι := Fintype.ofFinite ι
+  refine Submodule.eq_top_iff'.mpr fun D => ?_
+  rw [eq_sum_smul_partialDeriv k ι S D]
+  exact sum_mem fun i _ =>
+    Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self i))
 
 end
 

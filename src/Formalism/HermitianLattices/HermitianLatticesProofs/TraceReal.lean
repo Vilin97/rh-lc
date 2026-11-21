@@ -38,24 +38,40 @@ lemma traceReal_den (a : K) :
 variable [Module (NumberField.RingOfIntegers K) V]
   [IsScalarTower (NumberField.RingOfIntegers K) K V]
 
-lemma traceReal_mult (M : Submodule (NumberField.RingOfIntegers K) V) (hM : Submodule.IsLattice K M)
+lemma traceReal_mult (M : Submodule (NumberField.RingOfIntegers K) V) (hM : Submodule.IsFullLattice K M)
     (x : V) : ∃ n : ℤ, n ≠ 0 ∧ n • x ∈ M := by
-  first | exact Bl.general_b_fact_second'''''.goal1 .. | (apply Bl.general_b_fact_second'''''.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_second'''''.goal1 <;> assumption)
+  exact Bl.general_b_fact_second'''''.goal1 M hM x
 
 lemma traceReal_lower (h : V →ₗ⋆[K] V →ₗ[K] K)
     (hpos : ∀ x : V, x ≠ 0 → 0 < Algebra.trace ℚ K (h x x))
     (L : Submodule (NumberField.RingOfIntegers K) V) [Submodule.IsLattice K L] :
     ∃ l : ℝ, 0 < l ∧ ∀ x ∈ L, x ≠ 0 → l ≤ ((Algebra.trace ℚ K (h x x) : ℚ) : ℝ) := by
   classical
-  have := isAddTorsionFree_ringOfIntegers_submodule L
-  have : Module.Finite ℤ L := Module.Finite.trans (NumberField.RingOfIntegers K) L
+  haveI : Module.Finite (NumberField.RingOfIntegers K) L := Submodule.IsLattice.finite K L
+  haveI : IsAddTorsionFree L := isAddTorsionFree_ringOfIntegers_submodule L
+  haveI : Module.Finite ℤ L := Module.Finite.trans (NumberField.RingOfIntegers K) L
+  haveI : Module.IsTorsionFree ℤ L := by
+    constructor
+    intro r hr a b hab
+    have hr0 : r ≠ 0 := hr.ne_zero
+    apply Subtype.ext
+    have hab' : r • (a : V) = r • (b : V) := by
+      have := congrArg (fun y : L => (y : V)) hab
+      simpa using this
+    have h1 : (r : K) • ((a : V) - (b : V)) = 0 := by
+      rw [smul_sub, Int.cast_smul_eq_zsmul K, Int.cast_smul_eq_zsmul K, hab', sub_self]
+    have hrK : (r : K) ≠ 0 := Int.cast_ne_zero.mpr hr0
+    exact sub_eq_zero.mp ((smul_eq_zero.mp h1).resolve_left hrK)
+  haveI : Module.Free ℤ L := Module.free_of_finite_type_torsion_free'
   let b := Module.Free.chooseBasis ℤ L
   let e : Module.Free.ChooseBasisIndex ℤ L → V := fun i => ((b i : L) : V)
   let G : Matrix (Module.Free.ChooseBasisIndex ℤ L) (Module.Free.ChooseBasisIndex ℤ L) ℚ :=
     fun i j => Algebra.trace ℚ K (h (e i) (e j))
   have hcoe : ∀ c : Module.Free.ChooseBasisIndex ℤ L → ℤ,
       (((∑ i, c i • b i : L)) : V) = ∑ i, c i • e i := by
-    intro c; simp [e]
+    intro c
+    change L.subtype (∑ i, c i • b i) = _
+    simp [e]
   have hqc : ∀ c : Module.Free.ChooseBasisIndex ℤ L → ℤ,
       Algebra.trace ℚ K (h (∑ i, c i • e i) (∑ i, c i • e i)) =
         (fun i => (c i : ℚ)) ⬝ᵥ (G *ᵥ fun i => (c i : ℚ)) := by
@@ -106,7 +122,7 @@ theorem traceReal_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hS : h.IsSymm)
     ∃ (N : ℕ) (ι : V →+ EuclideanSpace ℝ (Fin N)),
       (∀ x y : V, inner ℝ (ι x) (ι y) = ((Algebra.trace ℚ K (h x y) : ℚ) : ℝ)) ∧
       (∀ a : K, ∃ C : ℝ, ∀ x : V, ‖ι (a • x)‖ ≤ C * ‖ι x‖) ∧
-      (∀ M : Submodule (NumberField.RingOfIntegers K) V, Submodule.IsLattice K M →
+      (∀ M : Submodule (NumberField.RingOfIntegers K) V, Submodule.IsFullLattice K M →
         ∃ _ : DiscreteTopology (zmap ι M), IsZLattice ℝ (zmap ι M)) := by
   classical
   let iQ : Module ℚ V := Module.compHom V (algebraMap ℚ K)
@@ -237,8 +253,19 @@ theorem traceReal_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hS : h.IsSymm)
       have h2 := Submodule.smul_mem _ ((n : ℝ)⁻¹) h1
       rwa [← Int.cast_smul_eq_zsmul ℝ, smul_smul, inv_mul_cancel₀ (by exact_mod_cast hn),
         one_smul] at h2
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply eq_top_iff.mpr
+    intro y _
+    have hy : y = ∑ i, (y i / Real.sqrt (d i)) • ι (v i) := by
+      ext j
+      simp only [WithLp.ofLp_sum, Finset.sum_apply, PiLp.smul_apply, smul_eq_mul, hιapp]
+      rw [Finset.sum_eq_single j]
+      · simp only [Basis.repr_self, Finsupp.single_eq_same, Rat.cast_one, mul_one]
+        exact (div_mul_cancel₀ (y j) (hsq j).ne').symm
+      · intro i _ hij
+        simp [Basis.repr_self, Finsupp.single_eq_of_ne (Ne.symm hij)]
+      · simp
+    rw [hy]
+    exact Submodule.sum_mem _ (fun i _ => Submodule.smul_mem _ _ (hin (v i)))
   exact ⟨hdisc, ⟨hspan⟩⟩
 
 end TR

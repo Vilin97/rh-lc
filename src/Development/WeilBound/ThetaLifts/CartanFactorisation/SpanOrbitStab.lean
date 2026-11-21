@@ -16,7 +16,7 @@ theorem orth_stab {K : Type} [Group K] (κ : K →* Module.End ℂ U) (hi : ∀ 
     (Y : Submodule ℂ U) (hY : ∀ k, ∀ y ∈ Y, κ k y ∈ Y) (k : K) (z : U) (hz : z ∈ Yᗮ) : κ k z ∈ Yᗮ := by
   rw [Submodule.mem_orthogonal] at hz ⊢
   intro y hy
-  have e : y = κ k (κ k⁻¹ y) := by rw [← Module.End.mul_apply, ← map_mul]; simp
+  have e : y = κ k (κ k⁻¹ y) := by rw [← mul_apply_eq_comp, ← map_mul]; simp
   rw [e, hi]
   exact hz _ (hY _ _ hy)
 
@@ -26,7 +26,7 @@ theorem span_orbit_stab {K : Type} [Group K] (κ : K →* Module.End ℂ U) (x :
   induction hy using Submodule.span_induction with
   | mem y h => obtain ⟨k', rfl⟩ := h; exact Submodule.subset_span ⟨k * k', by simp⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 def orb {K : Type} [Group K] (κ : K →* Module.End ℂ U) (x : U) : Submodule ℂ U := Submodule.span ℂ (Set.range fun k => κ k x)

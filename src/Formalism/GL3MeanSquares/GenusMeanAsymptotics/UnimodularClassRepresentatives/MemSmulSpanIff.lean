@@ -15,8 +15,8 @@ variable {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Modul
   [IsScalarTower (𝓞 K) K V]
 
 open LocalSpans in
-theorem exists_smith {A₀ B₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsLattice K A₀)
-    (hB₀ : Submodule.IsLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
+theorem exists_smith {A₀ B₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsFullLattice K A₀)
+    (hB₀ : Submodule.IsFullLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
     ∃ (a b : Basis (Fin (finrank K V)) K V) (e : Fin (finrank K V) → 𝓞 K) (c : 𝓞 K),
       c ≠ 0 ∧ (∀ i, e i ≠ 0) ∧
       locF 𝔭 (Submodule.span (𝓞 K) (Set.range a)) = locF 𝔭 A₀ ∧
@@ -65,11 +65,11 @@ theorem exists_smith {A₀ B₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsLat
     rw [hfA, ← hfB, (Submodule.comapSubtypeEquivOfLe hN').finrank_eq,
       (Submodule.equivMapOfInjective μ hμi MB).finrank_eq]
   obtain ⟨b', α, ab', hab⟩ := Submodule.exists_smith_normal_form_of_rank_eq (Basis.span hliA) hfN
-  have hlatA : Submodule.IsLattice K MA :=
-    { fg := Submodule.fg_span (Set.finite_range _)
+  have hlatA : Submodule.IsFullLattice K MA :=
+    { toIsLattice := Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range _))
       span_eq_top := by
-        intro s hs hli
-        exact (LinearIndependent.iff_fractionRing _ _).mp hli }
+        change Submodule.span K (Submodule.span (RP K 𝔭) (Set.range a0) : Set V) = ⊤
+        rw [Submodule.span_span_of_tower, a0.span_eq] }
   let a := b'.extendOfIsLattice K
   have ha : ∀ i, a i = (b' i : V) := fun i => Basis.extendOfIsLattice_apply K b' i
   have hα0 : ∀ i, α i ≠ 0 := fun i h0 => by

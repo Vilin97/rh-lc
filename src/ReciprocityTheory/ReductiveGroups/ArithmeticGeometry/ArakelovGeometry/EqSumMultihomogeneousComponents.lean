@@ -51,7 +51,10 @@ def i2compHom (a : K → ℕ) : MRing ι →+ MRing ι where
   map_add' x y := by
     classical
     ext m
-    simp only [AddMonoidAlgebra.coeff_add, Pi.add_apply, coeff_i2comp]
+    change AddMonoidAlgebra.coeff (i2comp a (x + y)) m =
+      AddMonoidAlgebra.coeff (i2comp a x) m + AddMonoidAlgebra.coeff (i2comp a y) m
+    rw [coeff_i2comp, coeff_i2comp, coeff_i2comp, AddMonoidAlgebra.coeff_add]
+    change (if i2bdeg m = a then AddMonoidAlgebra.coeff x m + AddMonoidAlgebra.coeff y m else 0) = _
     split_ifs <;> simp
 
 theorem i2comp_add (a : K → ℕ) (x y : MRing ι) : i2comp a (x + y) = i2comp a x + i2comp a y :=
@@ -103,7 +106,8 @@ theorem mem_mHom_iff (s : MRing ι) (a : K → ℕ) : s ∈ mHom ι a ↔ IsMult
     | add x y _ _ hx hy =>
       rw [isMultiHomog_iff_coeff] at hx hy ⊢
       intro m hm
-      simp only [AddMonoidAlgebra.coeff_add, Pi.add_apply] at hm
+      rw [AddMonoidAlgebra.coeff_add] at hm
+      change AddMonoidAlgebra.coeff x m + AddMonoidAlgebra.coeff y m ≠ 0 at hm
       by_cases h0 : AddMonoidAlgebra.coeff x m = 0
       · rw [h0, zero_add] at hm
         exact hy m hm
@@ -153,7 +157,7 @@ theorem i2comp_mul_right {f : MRing ι} {c : K → ℕ} (hf : IsMultiHomog f c) 
         simp only [Pi.sub_apply]
         rw [← h2, h1, h3, Nat.add_sub_cancel]
       rw [ite_eq_left e]
-  · simp only [AddMonoidAlgebra.coeff_zero, Pi.zero_apply, coeff_mul]
+  · simp only [AddMonoidAlgebra.coeff_zero, coeff_mul]
     refine Finset.sum_eq_zero fun x hx => ?_
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
     by_cases h0 : AddMonoidAlgebra.coeff f x.2 = 0

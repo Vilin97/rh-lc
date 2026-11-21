@@ -64,7 +64,7 @@ theorem isGenericFlag_transport {Ωa Ωb Ω' E₁ E₂ E' : Type} [Field Ωa] [F
         rw [θ.apply_symm_apply]
         exact Submodule.subset_span ⟨k, rfl⟩
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
       | smul a x _ hx => rw [hθ']; exact Submodule.smul_mem _ _ hx
     · intro he
       have : ∀ x ∈ Submodule.span Ωb (Set.range (c (p s))),
@@ -75,7 +75,7 @@ theorem isGenericFlag_transport {Ωa Ωb Ω' E₁ E₂ E' : Type} [Field Ωa] [F
           obtain ⟨k, rfl⟩ := hx
           exact Submodule.subset_span ⟨k, rfl⟩
         | zero => rw [map_zero]; exact zero_mem _
-        | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+        | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
         | smul a x _ hx => rw [hθi]; exact Submodule.smul_mem _ _ hx
       simpa using this _ he
   refine ⟨fun s k => θ.symm (c (p s) k), fun s => u (p s), fun s => ⟨?_, hsp s⟩, ?_, ?_, fun s => hb (p s), fun s => hu1 (p s),
@@ -143,7 +143,7 @@ theorem exists_coeff {Ωa Ω' E₁ E' : Type} [Field Ωa] [Field Ω'] [Algebra �
         obtain ⟨q, rfl⟩ := hx
         exact Submodule.subset_span ⟨q, rfl⟩
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
       | smul a x _ hx => rw [hj]; exact Submodule.smul_mem _ _ hx
     exact key _ hm
   have h2 : ∀ k, b s k ∈ Submodule.span Ω' (Set.range fun l => j (c l)) := by

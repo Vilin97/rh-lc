@@ -93,11 +93,11 @@ theorem isCompact_latW (W : Spc F E d) (hW : W.L.FG) (v : Pl F) : IsCompact (lat
   rw [e, AddMonoidHom.coe_range]
   exact isCompact_range hf
 
-theorem kc_bound (W : Spc F E d) (hW : W.L.IsLattice E) (v : Pl F) (x : Fin d → E) :
+theorem kc_bound (W : Spc F E d) (hW : W.L.IsFullLattice E) (v : Pl F) (x : Fin d → E) :
     ∃ C : Set (Fin d → AE F E), IsCompact C ∧ ∀ M : Matrix (Fin d) (Fin d) (AE F E),
       (∀ y ∈ latW W v, M *ᵥ y ∈ latW W v) → M *ᵥ (fun i => atPlace v 1 • inclR (F := F) (AF F) (x i)) ∈ C := by
   have hx : x ∈ Submodule.span E (W.L : Set (Fin d → E)) := by
-    rw [Submodule.IsLattice.span_eq_top (A := E)]; trivial
+    rw [Submodule.IsFullLattice.span_eq_top (A := E)]; trivial
   induction hx using Submodule.span_induction with
   | mem y hy => exact ⟨_, isCompact_latW W hW.fg v, fun M hM => hM _ (kc_mem W v (one_mem _) hy)⟩
   | zero =>
@@ -122,7 +122,7 @@ theorem kc_bound (W : Spc F E d) (hW : W.L.IsLattice E) (v : Pl F) (x : Fin d �
       funext fun i => by rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, map_mul, mul_smul_comm]
     rw [this, Matrix.mulVec_smul]
 
-theorem kc_mat (W : Spc F E d) (hW : W.L.IsLattice E) (v : Pl F) :
+theorem kc_mat (W : Spc F E d) (hW : W.L.IsFullLattice E) (v : Pl F) :
     ∃ S : Set (Matrix (Fin d) (Fin d) (AE F E)), IsCompact S ∧ ∀ M : Matrix (Fin d) (Fin d) (AE F E),
       At (evFin F v) (M - 1) → (∀ y ∈ latW W v, M *ᵥ y ∈ latW W v) → M ∈ S := by
   choose C hC h using fun j : Fin d => kc_bound W hW v (Pi.single j 1)
@@ -155,7 +155,7 @@ theorem kc_closedU (J : Matrix (Fin d) (Fin d) E) :
 theorem kc_cont_mat (J : Matrix (Fin d) (Fin d) E) : Continuous (mat : UA σ J → _) :=
   Units.continuous_val.comp continuous_subtype_val
 
-theorem isCompact_KAt (W : Spc F E d) (hW : W.L.IsLattice E) (v : Pl F) : IsCompact (KAt σ W v) := by
+theorem isCompact_KAt (W : Spc F E d) (hW : W.L.IsFullLattice E) (v : Pl F) : IsCompact (KAt σ W v) := by
   obtain ⟨S, hS, h⟩ := kc_mat W hW v
   have hL := (isCompact_latW W hW.fg v).isClosed
   have hm := kc_cont_mat (σ := σ) W.J

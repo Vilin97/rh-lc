@@ -24,7 +24,7 @@ variable {E : Type} [Field E] [NumberField E] [Algebra F E]
 section Loc
 
 variable (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (Λ : Submodule (𝓞 E) (Fin n → E))
-  (r : ℕ) (T T' : 𝓞 F) {v : Pl F} (δ : Fv F v) (g : ℕ)
+  (r : ℕ) (T T' : 𝓞 F) {v : HeightOneSpectrum (𝓞 F)} (δ : Fv F v) (g : ℕ)
 
 end Loc
 

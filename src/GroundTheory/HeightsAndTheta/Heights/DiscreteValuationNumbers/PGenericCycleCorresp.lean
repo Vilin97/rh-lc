@@ -85,7 +85,8 @@ theorem length_eq (J W : Ideal S) [W.IsPrime] (hW : Disjoint (M : Set S) W)
         (⟨algebraMap S T s, hnot s s.2⟩ : W'.primeCompl)
       rw [Module.End.isUnit_iff] at hu
       convert hu using 1
-      exact (algebraMap_smul T (s : S) n).symm
+      funext n
+      simpa only [Module.algebraMap_end_apply] using (algebraMap_smul T (s : S) n).symm
     · intro n
       induction n using LocalizedModule.induction_on with
       | h y t =>
@@ -212,13 +213,13 @@ theorem GenericCycleCorresp.proof : GenericCycleCorresp.Statement.{u} := by
   have hsupp : ∀ (Q : Ideal (MRing ι (FractionRing O))) (x) (W : Ideal (MRing ι (FractionRing O))),
       divCycle Q x W ≠ 0 → W ∈ (Q ⊔ Ideal.span {x}).minimalPrimes := by
     intro Q x W h
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
+    unfold divCycle at h
     split_ifs at h with hh
     · exact hh.1
     · exact absurd rfl h
   have hsupp0 : ∀ W : Ideal (MRing ι O), divCycle P s W ≠ 0 → W ∈ J.minimalPrimes := by
     intro W h
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
+    unfold divCycle at h
     split_ifs at h with hh
     · exact hh.1
     · exact absurd rfl h

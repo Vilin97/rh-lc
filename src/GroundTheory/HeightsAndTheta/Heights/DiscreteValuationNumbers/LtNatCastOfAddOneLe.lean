@@ -33,9 +33,7 @@ theorem TautologicalCase.proof (h3 : IntNumAddFirst.Statement.{u}) (h5 : Minimal
   have hfin : ∀ x : MRing ι O, (Function.support (divCycle P x)).Finite := fun x =>
     (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (P ⊔ Ideal.span {x})).subset fun W hW => by
       by_contra hmin
-      apply hW
-      unfold divCycle
-      rw [dite_eq_right (fun h => hmin h.1)]
+      exact hW (by unfold divCycle; rw [dite_eq_right]; exact fun h => hmin h.1)
   have hZfin : (Function.support (ratDiv P f g)).Finite :=
     ((hfin f).union (hfin g)).subset fun W hW => by
       by_contra h

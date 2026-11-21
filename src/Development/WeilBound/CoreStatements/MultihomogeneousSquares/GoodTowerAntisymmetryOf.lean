@@ -1,6 +1,7 @@
 module
 
 public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.ChooseTwoAdd
+public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.AntisymmetryFibreSquares
 public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.SqOf
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.AntisymmetryStatement
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.AgreementPositiveStatement

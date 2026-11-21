@@ -30,7 +30,7 @@ theorem exampleRanks_baseRank : R0.n0 = 4 := by
 theorem exampleRanks_o : R0.o = 1 := by
   show R0.toFrame.ord / R0.toFrame.n0 = 1
   have h1 : R0.toFrame.n0 = 4 := exampleRanks_baseRank
-  have h2 : R0.toFrame.ord = 4 := exampleRanks_order
+  have h2 : R0.toFrame.ord = 4 := rfl
   rw [h1, h2]
 theorem exampleRanks_h_injective : Function.Injective R0.h :=
   Formalism.HC.frameCyc_h_injective 2 1

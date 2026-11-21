@@ -7,7 +7,7 @@ public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.Integr
 
 noncomputable section
 
-open MeasureTheory GlobalTheory.SmGL GlobalTheory.PRep PositivityTheory.Rg.Tf.Loc PositivityTheory.Rg.Bc.ArchbcB.B
+open MeasureTheory GlobalTheory.SmGL GlobalTheory.PRep PositivityTheory.Rg.Tf.Loc
 
 namespace PositivityTheory.Rg.BcN.F2
 

@@ -44,7 +44,7 @@ theorem coeff_mon_divDer (m a : σ →₀ ℕ) (F : MvPolynomial σ Kf) :
         apply hb
         have h1 : b - m + m = a - m + m := by rw [h]
         rwa [tsub_add_cancel_of_le hmb, tsub_add_cancel_of_le hma] at h1
-      · rw [coeff_zero]
+      · simp
     by_cases ha : a ∈ F.support
     · rw [Finset.sum_eq_single a hsingle (fun h => absurd ha h), if_pos hma, coeff_monomial, if_pos rfl]
       unfold Finsupp.prod

@@ -94,7 +94,7 @@ theorem trV_mem {x : Fv F v ⊗[F] E} (hx : x ∈ OEv (E := E) v) : trV v x ∈ 
       show algebraMap F (Fv F v) (r : F) = ((r : F) : Fv F v) from rfl, this, HeightOneSpectrum.valuation_of_algebraMap]
     exact v.intValuation_le_one r
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
   | smul c x _ h =>
     change trV v ((c : Fv F v) • x) ∈ _
     rw [map_smul, smul_eq_mul]; exact mul_mem c.2 h

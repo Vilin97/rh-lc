@@ -123,7 +123,7 @@ theorem NZ_smul {y : (Σ k, ι k) → Ω} {a : K → ℤ} {ks : K} {d : ι ks ×
       ring
     · simp [hk]
       ring
-  simp only [e4, Finset.sum_sub_distrib, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [e4, Finset.sum_sub_distrib, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
 
 theorem exists_flat (y : (Σ k, ι k) → Ω) (hP : IsMultiHomogIdeal (mCoordIdeal y)) (a : K → ℤ) (ks : K)
     (hcov : ∀ z ∈ mcPts (mCoordIdeal y), ∃ d, Rep y a ks d ∧ NZ d z) :
@@ -138,7 +138,7 @@ theorem exists_flat (y : (Σ k, ι k) → Ω) (hP : IsMultiHomogIdeal (mCoordIde
   have hψ : ∀ z ∈ mcPts (mCoordIdeal y), ∀ d, Rep y a ks d → NZ d z → ψ z = Real.log ‖rho d z‖ := by
     intro z hz d h1 h2
     have h : ∃ d, Rep y a ks d ∧ NZ d z := ⟨d, h1, h2⟩
-    simp only [ψ, dif_pos h]
+    simp only [ψ, dite_pos h]
     rw [rho_eq h.choose_spec.1 h1 hz h.choose_spec.2 h2]
   obtain ⟨B, hBa, hBs, hB⟩ := GlobalTheory.CompanionTheory.Ar.PB.exists_hermLine_of_local_smooth K ι (mCoordIdeal y)
     (fun z => ψ z - Real.log (F.h z)) hP (by
@@ -312,7 +312,7 @@ theorem exists_line {K₀ K : Type} [Fintype K₀] [Fintype K] [DecidableEq K] {
         subst hq
         exact (hW1 _ _ b' (hC _)).1
       | algebraMap r => simp
-      | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+      | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
       | mul _ _ _ _ h1 h2 => rw [map_mul]; exact mul_mem h1 h2
     have heq : y ⟨ks, e j⟩ / y ⟨ks, C ks⟩ *
         i' (s (e.symm (C ks)) * ∏ k, y₀ ⟨k, C₀ k⟩ ^ (-(((1 : ℕ) : ℤ) * a₀ k))) =

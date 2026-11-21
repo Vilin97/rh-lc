@@ -121,9 +121,13 @@ theorem putA_zero (x : κ → AF F) : putA v x 0 = (1 - atPlace v (1 : Fv F v)) 
 theorem arg_eq (a : κ → Fv F v) (w : (κ → AF F) × (κ → AF F)) :
     inA κ v a ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2 - putA v w.1 0 ⬝ᵥ putA v w.2 0) =
       atPlace v (a ⬝ᵥ (locW v w).2 + ⅟(2 : Fv F v) * ((locW v w).1 ⬝ᵥ (locW v w).2)) := by
+  have evFin_invOf_two : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+    refine (invOf_eq_right_inv ?_).symm
+    have h : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+    rwa [map_mul, map_ofNat] at h
   refine extF v ?_ ?_
   · rw [evFin_atPlace, map_add (f := _), map_mul, map_sub, ev_dot, ev_dot, ev_dot, evA_inA, ev_put (evA_inA v),
-      GlobalTheory.VacAny.evFin_invOf_two, zero_dotProduct, sub_zero]
+      evFin_invOf_two, zero_dotProduct, sub_zero]
     rfl
   · have e : ∀ i, awF v (inA κ v a i) = 0 := fun i => awF_at v _
     simp [awF_at, putA_zero, dotProduct, e]

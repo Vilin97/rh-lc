@@ -44,7 +44,7 @@ theorem coeff_diagHom {N : ℕ} (f : MvPolynomial (Fin N × Fin N) ℚ) (m : Fin
   · rw [diagHom_monomial]
     split_ifs with h
     · rfl
-    · rw [coeff_zero, coeff_monomial, if_neg]
+    · rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, coeff_monomial, if_neg]
       rintro rfl
       exact h hm
   · rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]

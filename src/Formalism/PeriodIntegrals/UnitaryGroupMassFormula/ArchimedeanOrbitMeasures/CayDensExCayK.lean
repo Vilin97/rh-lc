@@ -15,8 +15,8 @@ section Chart
 
 variable (P Q : ℕ)
 
-def cayCand (g : UpqT P Q) : Mat := (1 + 1) * (UpqT.mat g + 1)⁻¹ * (UpqT.mat g - 1)
-
+def cayCand (g : UpqT P Q) : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ :=
+  (1 + 1) * (UpqT.mat g + 1)⁻¹ * (UpqT.mat g - 1)
 
 open Classical in
 def cayInv (g : UpqT P Q) : lieU P Q :=

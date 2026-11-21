@@ -134,9 +134,13 @@ theorem good_tower_volume_theorem_bis :
     GroundTheory.Heights₂.Heights.LineOfLargeDegree.Statement → GR.QuotientByFiniteFlatStatement → GR.ZarhinStatement →
     Top.GoodTowerExistsX ∧ Top.VolumeTheoremX := by
   intro hAI hU hBig hResK hSA hFHT hGaga hLine hQ hZ
-  obtain ⟨hM, hKey, hSA', hSeg, hResK', _hSAst, hFHT', hGaga', _hSlope, hPB, hPHS, hPAn, hNine, _hAnti⟩ :=
-    given_of_use hAI hU hBig hResK hSA hFHT hGaga hLine
-  exact GlobalTheory.T.final_theorem_of_inputs_right hM hKey hSA' hSeg hResK' hFHT' hGaga' hLine hPB hPHS hPAn hNine
-    (GlobalTheory.T.points_integrable_of_resolution_statement hResK) GlobalTheory.CompanionTheory.Ar.Giv.topAvoid hQ hZ GlobalTheory.thetaUnifAV_closed
+  exact GlobalTheory.T.final_theorem_of_inputs_right
+    GlobalTheory.CompanionTheory.Ar.Top.modelClause_holds GlobalTheory.KeyFam.keyFormula_holds hSA
+    GlobalTheory.CompanionTheory.Segre.numericalSegre_closed hResK hFHT hGaga hLine
+    (GlobalTheory.CompanionTheory.Ar.Giv.inputs_of_use hAI hU hBig hResK)
+    (provHS_of_use hAI hU hBig hResK) GlobalTheory.T.analytic_provision_holds
+    (nineFree_of_use hAI hU hBig hResK)
+    (GlobalTheory.T.points_integrable_of_resolution_statement hResK)
+    GlobalTheory.CompanionTheory.Ar.Giv.topAvoid hQ hZ GlobalTheory.thetaUnifAV_closed
 
 end GlobalTheory.CompanionTheory.Ar.Link

@@ -210,7 +210,7 @@ theorem mem_intLoc_of_idem {y : Fv F v ⊗[F] E} (hy : y * y = y) : y ∈ intLoc
       obtain ⟨a, ha, x, rfl⟩ := hZ
       exact AddSubgroup.subset_closure ⟨_, ha v, x, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   have := this Y hY
   rwa [ev, comp_sgE] at this

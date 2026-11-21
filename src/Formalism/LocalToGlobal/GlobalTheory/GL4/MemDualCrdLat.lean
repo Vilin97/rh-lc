@@ -76,7 +76,7 @@ theorem relIndex_crdLat (hc : CMData F E) (S : HSpace E) (L : Submodule (𝓞 E)
 variable [_root_.NumberField.IsTotallyComplex E]
 
 theorem eLat_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosDef) (hn : 0 < S.rank)
-    (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E L) (q : ℕ) (hq : q ≠ 0) (hLT : LatT S q L) :
+    (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice E L) (q : ℕ) (hq : q ≠ 0) (hLT : LatT S q L) :
     muDef (Pi.basisFun E (Fin S.rank)) (fun v => frameOf (S.gram.map v.embedding)) (crdLat S L) =
       -Real.log q / ((finrank ℚ E : ℝ) * S.rank) := by
   have hM := crdLat_lattice S L hL
@@ -125,7 +125,11 @@ theorem eLat_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPo
   rw [h4, neg_neg] at h2
   have hrk : rkK M = S.rank := by
     show finrank E (Submodule.span E (M : Set (Fin S.rank → E))) = _
-    rw [hM.span_eq_top]
+    have hspan : Submodule.span E (M : Set (Fin S.rank → E)) = ⊤ := by
+      change Submodule.span E ((crd S).toLinearMap '' (L : Set S.V)) = ⊤
+      rw [← Submodule.map_span (crd S).toLinearMap, hL.span_eq_top, Submodule.map_top,
+        LinearMap.range_eq_top.mpr (crd S).surjective]
+    rw [hspan]
     simp
   have h5 := lcv_eq_mu hn _ (fun v => (hY v).1) M hM.fg hrk
   rw [h2] at h5

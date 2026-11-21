@@ -43,7 +43,7 @@ theorem projAt2_of (hX : HighestVectorProjectionPos) (p : ℕ) [Fact p.Prime] (K
     refine ⟨Submodule.zero_mem _, by rw [smul_zero]; exact Submodule.zero_mem _, ?_⟩
     intro g hg
     obtain ⟨y, hy, rfl⟩ := (hSp g).mp hg
-    rw [fock_eq_zero_of _ 0 (fun _ => Or.inr (coeff_zero _)), fock_eq_zero_of]
+    rw [fock_eq_zero_of _ 0 (fun _ => Or.inr (by simp)), fock_eq_zero_of]
     intro n
     by_cases hn : n = m
     · left

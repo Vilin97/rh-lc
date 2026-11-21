@@ -110,9 +110,13 @@ theorem lc_exists_basis (w : HeightOneSpectrum (𝓞 K)) {A : Submodule (𝓞 K)
 
 end Gen
 
-theorem latticeBasisExists_holds : BasisAtEx := by
+theorem latticeBasisExists_holds :
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ)
+      (M : Submodule (𝓞 K) (Fin n → K)), Submodule.IsFullLattice K M →
+      ∀ w : HeightOneSpectrum (𝓞 K), ∃ B : GL (Fin n) K, IsBasisAt w M B := by
   intro K _ _ n M hM w
-  obtain ⟨κ, hκ, bK, hb⟩ := lc_exists_basis w hM.fg hM.span_eq_top
+  letI : Submodule.IsFullLattice K M := hM
+  obtain ⟨κ, hκ, bK, hb⟩ := lc_exists_basis w hM.fg Submodule.IsFullLattice.span_eq_top
   have hcard : Fintype.card κ = n := by
     rw [← Module.finrank_eq_card_basis bK, Module.finrank_fin_fun]
   let e : κ ≃ Fin n := Fintype.equivFinOfCardEq hcard

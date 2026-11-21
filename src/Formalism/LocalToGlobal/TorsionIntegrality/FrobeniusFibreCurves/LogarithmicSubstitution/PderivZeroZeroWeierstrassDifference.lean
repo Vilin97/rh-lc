@@ -18,6 +18,8 @@ section
 
 variable {K : Type} [Field K] [CharZero K]
 
+local notation "A2" => MvPowerSeries (Fin 2) K
+
 theorem triple_lintegral_eq (x : Fin 2) (f : PowerSeries K) :
     (at1 x f : A2) = PowerSeries.substAlgHom (PowerSeries.HasSubst.X x) f := by
   rw [PowerSeries.coe_substAlgHom]
@@ -25,25 +27,7 @@ theorem triple_lintegral_eq (x : Fin 2) (f : PowerSeries K) :
 
 private theorem coeff_at1_fin_two_eq_ite (x : Fin 2) (f : PowerSeries K) (d : Fin 2 →₀ ℕ) :
     MvPowerSeries.coeff d (at1 x f : A2) = if d = Finsupp.single x (d x) then PowerSeries.coeff (d x) f else 0 := by
-  classical
-  unfold at1
-  rw [PowerSeries.coeff_subst (PowerSeries.HasSubst.X x)]
-  simp only [MvPowerSeries.coeff_X_pow, smul_eq_mul, mul_ite, mul_one, mul_zero]
-  split_ifs with h
-  · rw [finsum_eq_single _ (d x) (fun n hn => by
-      rw [if_neg]
-      intro h'
-      apply hn
-      have := congrArg (fun e => e x) h'
-      simp at this
-      exact this.symm), if_pos h]
-  · rw [finsum_eq_zero_of_forall_eq_zero]
-    intro n
-    rw [if_neg]
-    intro h'
-    apply h
-    rw [h']
-    simp
+  exact PowerSeries.coeff_subst_single x f d
 
 theorem pderiv_series_at_variable (i x : Fin 2) (f : PowerSeries K) :
     pd i (at1 x f : A2) = at1 x (dz f) * pd i (MvPowerSeries.X x : A2) := by

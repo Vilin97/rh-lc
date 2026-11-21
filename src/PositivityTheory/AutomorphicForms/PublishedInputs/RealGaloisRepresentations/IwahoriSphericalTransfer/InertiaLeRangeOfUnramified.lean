@@ -51,7 +51,9 @@ theorem orderDvd_two {F K : Type} [Field F] [NumberField F] [Field K] [NumberFie
   filter_upwards [good hq] with v hv
   obtain ⟨w, -, hu, hval⟩ := hv
   refine ⟨fun x hx => ?_, fun x _ => rfl, ?_⟩
-  · rw [pow_two, HChar.loc_mul, hu x hx, one_mul]
+  · rw [pow_two]
+    change η.loc v x * η.loc v x = 1
+    rw [hu x hx, one_mul]
   · have e1 : (1 : HChar F).val v = 1 := rfl
     rw [pow_two, HChar.val_mul, e1]
     apply Units.ext

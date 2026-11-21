@@ -120,7 +120,7 @@ theorem bump : Bump := by
   obtain ⟨⟨ι, hι⟩, -, -, k⟩ := dictX F E σ n d B X W M om χX χW hp.base ⟨_, _, hp.herm⟩ ⟨_, _, hp.skew⟩ hp.weil v t
   obtain ⟨⟨sec, h⟩, hsm⟩ := section_statement F E σ hp.base.cm v t
   have hG := grams h hp.herm hp.skew
-  have n1 := near_UA h hG.uA ((Euler.isOpen_int (σ := σ) hp.herm.lat v).mem_nhds (one_mem _))
+  have n1 := near_UA h hG.uA ((Euler.isOpen_int (σ := σ) (Euler.herm_full hp.herm) v).mem_nhds (one_mem _))
   have hv1 : ∀ᶠ y in 𝓝 (1 : Fv F v), ValuativeRel.valuation (Fv F v) y = 1 := by
     simpa [Filter.Eventually] using (ValuativeRel.valuation (Fv F v)).locally_const (x := 1) (by simp)
   have n2 := near_units (A := Matrix (Fin n) (Fin n) (Fv F v))

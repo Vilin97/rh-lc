@@ -1031,13 +1031,14 @@ theorem qlen_gen {j : ℕ} (X : WeightAlgebra.PJ D B P j) (la : HeightOneSpectru
 theorem l2 (Q : Run D B P) (H1 : ∀ la : HeightOneSpectrum (𝓞 B.KO), LengthLocalizationLeCompletion (K := B.KO) (F := Q.X.Forms) la)
     (H1b : ∀ la : HeightOneSpectrum (𝓞 B.KO), CompletionPreservesFinrank (K := B.KO) (F := Q.X.Forms) la)
     (H1c : ∀ la : HeightOneSpectrum (𝓞 B.KO), CompletionSpanContainment (K := B.KO) (F := Q.X.Forms) la)
-    (hM : Submodule.IsLattice B.KO Q.M0) (h : Q.Concl) :
+    (hM : Submodule.IsFullLattice B.KO Q.M0) (h : Q.Concl) :
     ∃ r : HeightOneSpectrum (𝓞 B.KO) → ℝ, (∀ la, 0 ≤ r la) ∧ Summable (fun la => r la * Formalism.BasicNotions.lw B.KO la) ∧
       (∑' la, r la * Formalism.BasicNotions.lw B.KO la) ≤ Q.β ∧ ∀ la,
         Submodule.span B.KO ((Q.M0 ⊓ Q.Th0 : Submodule (𝓞 B.KO) _) : Set (B.Cusp Q.jn Q.ka)) = ⊤ ∧
         ∀ e0 : ℤ, (Q.T : ℝ) * Q.nus la ≤ (e0 : ℝ) → ∀ W0 : Submodule B.KO (B.Cusp Q.jn Q.ka),
           (lidx la.asIdeal (Q.M0 ⊓ W0.restrictScalars (𝓞 B.KO)) (Q.M0 ⊓ Q.Th0 ⊓ W0.restrictScalars (𝓞 B.KO)) : ℝ) ≤
             (e0 : ℝ) * (finrank B.KO W0 : ℝ) + r la := by
+  letI := hM
   obtain ⟨r, h0, h1, h2, h3⟩ := h
   refine ⟨r, h0, h1, h2, fun la => ?_⟩
   set φ : B.Cusp Q.jn Q.ka →ₗ[B.KO] Q.X.Forms := Q.X.inc Q.ka with hφ
@@ -1054,7 +1055,7 @@ theorem l2 (Q : Run D B P) (H1 : ∀ la : HeightOneSpectrum (𝓞 B.KO), LengthL
     have hW : W0.map φ ≤ Submodule.span B.KO ((Q.X.Msup Q.ka : Submodule (𝓞 B.KO) Q.X.Forms) : Set Q.X.Forms) := by
       have e1 : Submodule.span B.KO ((Q.X.Msup Q.ka : Submodule (𝓞 B.KO) Q.X.Forms) : Set Q.X.Forms) =
           (Submodule.span B.KO (Q.M0 : Set _)).map φ := idxRules_span_map φ Q.M0
-      rw [e1, hM.span_eq_top]
+      rw [e1, Submodule.IsFullLattice.span_eq_top]
       exact Submodule.map_mono le_top
     have hV : locKC la (W0.map φ) ≤ Q.X.locK la (Q.X.Msup Q.ka) := H1c la (Q.X.Msup Q.ka) (W0.map φ) hW
     obtain ⟨hfin, hle⟩ := h3 la e0 he0 (locKC la (W0.map φ)) hV
@@ -1083,8 +1084,9 @@ theorem l2 (Q : Run D B P) (H1 : ∀ la : HeightOneSpectrum (𝓞 B.KO), LengthL
   constructor
   · have h4 := span_of_fin (K := B.KO) la _ _ (key _ (Q.eLa_ge la) ⊤).1
     rw [Submodule.restrictScalars_top, inf_top_eq] at h4
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply top_unique
+    rw [← Submodule.IsFullLattice.span_eq_top (A := B.KO) (M := Q.M0)]
+    exact Submodule.span_le.mpr h4
   · intro e0 he0 W0
     rw [inf_right_comm, idxRules_lidx_of_le la.asIdeal inf_le_left]
     exact (key e0 he0 W0).2

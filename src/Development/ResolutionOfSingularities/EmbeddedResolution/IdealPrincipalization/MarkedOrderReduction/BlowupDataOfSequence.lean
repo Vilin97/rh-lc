@@ -103,8 +103,9 @@ variable {X X' : Scheme.{u}} {φ : X' ⟶ X} {s' : SequenceOfBlowups X'} {s : Se
 def ofSequenceOfBlowupsMap (c : SequenceOfBlowupsPullback φ s' s) (j : ℕ)
     (hj : j ≤ (BlowupSequenceData.ofSequenceOfBlowups s').toSequenceOfBlowups.length) :
     (BlowupSequenceData.ofSequenceOfBlowups s').toSequenceOfBlowups.schemeAt j ⟶ (BlowupSequenceData.ofSequenceOfBlowups s).toSequenceOfBlowups.schemeAt (c.idx j) :=
-  eqToHom (ofSequenceOfBlowups_toSequenceOfBlowups_schemeAt s' j) ≫ c.map j (le_length_of_le_ofSequenceOfBlowups_length s' hj) ≫
-    eqToHom (ofSequenceOfBlowups_toSequenceOfBlowups_schemeAt s (c.idx j)).symm
+  eqToHom (by exact ofSequenceOfBlowups_toSequenceOfBlowups_schemeAt s' j) ≫
+    c.map j (by exact le_length_of_le_ofSequenceOfBlowups_length s' hj) ≫
+    eqToHom (by exact (ofSequenceOfBlowups_toSequenceOfBlowups_schemeAt s (c.idx j)).symm)
 
 theorem index_ofSequenceOfBlowups_length (c : SequenceOfBlowupsPullback φ s' s) :
     c.idx (BlowupSequenceData.ofSequenceOfBlowups s').toSequenceOfBlowups.length = (BlowupSequenceData.ofSequenceOfBlowups s).toSequenceOfBlowups.length := by
@@ -259,8 +260,9 @@ def toBlowupDataOfSeq (c : SequenceOfBlowupsPullback φ s' s) :
 def transportedMap
     (c : SequenceOfBlowupsPullback φ (BlowupSequenceData.ofSequenceOfBlowups s').toSequenceOfBlowups (BlowupSequenceData.ofSequenceOfBlowups s).toSequenceOfBlowups)
     (j : ℕ) (hj : j ≤ s'.length) : s'.schemeAt j ⟶ s.schemeAt (c.idx j) :=
-  eqToHom (ofSequenceOfBlowups_toSequenceOfBlowups_schemeAt s' j).symm ≫ c.map j (le_ofSequenceOfBlowups_length_of_le_length s' hj) ≫
-    eqToHom (ofSequenceOfBlowups_toSequenceOfBlowups_schemeAt s (c.idx j))
+  eqToHom (by exact (ofSequenceOfBlowups_toSequenceOfBlowups_schemeAt s' j).symm) ≫
+    c.map j (by exact le_ofSequenceOfBlowups_length_of_le_length s' hj) ≫
+    eqToHom (by exact ofSequenceOfBlowups_toSequenceOfBlowups_schemeAt s (c.idx j))
 
 theorem ofSequenceOfBlowups_index_length
     (c : SequenceOfBlowupsPullback φ (BlowupSequenceData.ofSequenceOfBlowups s').toSequenceOfBlowups (BlowupSequenceData.ofSequenceOfBlowups s).toSequenceOfBlowups) :

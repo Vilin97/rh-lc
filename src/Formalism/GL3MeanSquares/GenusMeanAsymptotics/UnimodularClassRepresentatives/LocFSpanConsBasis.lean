@@ -107,7 +107,7 @@ theorem locF_span_consBasis (S : VecSplit h h') {κ : Type} (b' : Basis κ K V')
 
 theorem akCount_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') (h1 : h S.x₀ S.x₀ = 1) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (hx : S.x₀ ∈ L)
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (hx : S.x₀ ∈ L)
     {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (hv : vd h L 𝔭 ≤ 1) {k : ℕ} (hk : 1 ≤ k) :
     akCount h L 𝔭 k = nkCount h L 𝔭 k 1 * akCount h' (S.cut L) 𝔭 k := by
   classical
@@ -145,9 +145,9 @@ theorem akCount_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
         exact (hdec v).symm
       rw [e, ← hc, algebraMap_smul]
       exact L.sub_mem hv (L.smul_mem c hx)
-  have hcutL : Submodule.IsLattice K (S.cut L) := by
+  have hcutL : Submodule.IsFullLattice K (S.cut L) := by
     rw [hcutEq]
-    refine ⟨hL.fg.map _, ?_⟩
+    refine { toIsLattice := Submodule.IsLattice.of_fg K (hL.fg.map _), span_eq_top := ?_ }
     rw [Submodule.map_coe]
     change Submodule.span K (π '' (L : Set V)) = ⊤
     rw [Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
@@ -230,7 +230,7 @@ theorem akCount_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
       have e := (Formalism.HermitianLattices.Ext.L3.integralBasisSpans.congrP_int h𝔭 k z 1).2 (by rw [map_one]; exact hform.symm)
       rwa [map_one, hz] at e
     obtain ⟨z', hz'L, hz'1, hz'd⟩ :=
-      Formalism.HermitianLattices.Ext.L3.PinF.exists_exact_lift hK hF hs hd hL hLi h𝔭 h1 hk hwL hcong
+      Formalism.HermitianLattices.Ext.L3.PinF.exists_exact_lift hK hF hs hd hL.toIsLattice hLi h𝔭 h1 hk hwL hcong
     obtain ⟨g, hg, hgx⟩ :=
       Formalism.HermitianLattices.Ext.L3.PinC.exists_aut_map hK hF hs hd S h1 hL hLi hx h𝔭 hv hz'L hz'1
     rw [← hbb] at hg

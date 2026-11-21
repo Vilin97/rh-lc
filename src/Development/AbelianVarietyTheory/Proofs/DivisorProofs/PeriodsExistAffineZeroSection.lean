@@ -150,7 +150,7 @@ def toMaxTrans (hr : r.IsFor u) : r.coef.G ⟶ ((rmax u).coef.comp (toMaxCoef hr
       pt := ((congrArg (· ≫ _) (Cris.spMap_id (T.C ⧸ T.J))).trans (Category.id_comp _)).trans
         (congrArg (spMap ((Ideal.Quotient.mk T.J).comp T.ρ) ≫ ·)
           (pt_unique u K T.k _ _ (hr T.k) ((toMax hr).obj T).k.2.2.choose_spec)) }
-  naturality _ _ _ := Thick.hom_ext fun _ ↦ rfl
+  naturality _ _ _ := Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl)
 
 end GlobalTheory.AnPer.PerExist
 

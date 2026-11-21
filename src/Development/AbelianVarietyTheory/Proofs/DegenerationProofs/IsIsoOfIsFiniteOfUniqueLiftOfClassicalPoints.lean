@@ -108,7 +108,7 @@ theorem bijective_algebraMap_of_subsingleton_algHom {R A : Type*} [CommRing R] [
     obtain ⟨k, hk⟩ := (InfiniteGalois.mem_range_algebraMap_iff_fixed (k := K) (σ a)).2 fun g =>
       DFunLike.congr_fun (huniq ((g.toAlgHom.restrictScalars R).comp σ) σ) a
     have hint : IsIntegral R k := by
-      rw [← isIntegral_algebraMap_iff , hk]
+      rw [← isIntegral_algebraMap_iff (B := L), hk]
       exact (Algebra.IsIntegral.isIntegral (R := R) a).map σ
     obtain ⟨r, hr⟩ := IsIntegrallyClosed.isIntegral_iff.mp hint
     refine ⟨r, hσ ?_⟩
@@ -149,8 +149,8 @@ theorem exists_ne_zero_forall_exists_two_lifts {R A : Type*} [CommRing R] [IsDom
     exact (congrArg χ ((c ρ).commutes s)).trans (hχ' s)
   refine ⟨_, _, hcomp σ, hcomp τ, fun h => hφ (Subtype.ext ?_)⟩
   have h₂ : χ (c σ a) = χ (c τ a) := congr((($h) a).1)
-  rw [← hχ', hd, map_mul, map_sub, h₂, sub_self, zero_mul]
-  rfl
+  change (φ r : Ω) = 0
+  rw [← hχ', hd, χ.map_mul, χ.map_sub, h₂, sub_self, zero_mul]
 
 theorem exists_mem_genericPoints_specializes {T : Type*} [TopologicalSpace T] [QuasiSober T]
     (w : T) : ∃ w₀ ∈ genericPoints T, w₀ ⤳ w :=

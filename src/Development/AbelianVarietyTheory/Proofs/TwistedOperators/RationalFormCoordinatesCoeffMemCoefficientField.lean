@@ -44,7 +44,7 @@ set_option maxHeartbeats 1600000 in
 theorem coeff_formC_mem : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m} {Ks : Type}
     [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} (ch : Choice R) (large₂ : SizeData₂ D) (F : Face D A),
     HidaSetting large₂ R F → ch.Is → ch.FieldOK → ∀ (t : T) (x : A.fam.amb.FR t) (y : FinPt ch.G (.grid 0 D.R.m)) m,
-      MvPolynomial.coeff m (ch.S.formC t (R.jX t x) y).1 ∈ Set.range D.what₂.embLL := by
+      AddMonoidAlgebra.coeff (ch.S.formC t (R.jX t x) y).1 m ∈ Set.range D.what₂.embLL := by
   intro D Γ _ _ Pl0 T A Ks _ _ _ R ch large₂ F hS _ _ t x y m
   obtain ⟨gram, c₀, c₁, hT, hco⟩ := ch.S.co_is
   have hc := hS.core

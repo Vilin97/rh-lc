@@ -38,8 +38,12 @@ abbrev padWith {s : FinalTheorems S κ} (x : ToroidalCompactificationData s) (Φ
 
 structure IsKitWith (k : KitT s L jC) (d : s.Comp → D.what₂.Tau → ℝ) (x : ToroidalCompactificationData s) (P : PolOf x k.Φ) (cts : Ats S κ)
     (hj : jC.Pinned) (hA : AdmEx S κ) : Prop where
-
-
+  ats : cts.Over jC
+  bd : IsBdOf x L k.B
+  fl : k.fl = flBetti s k.Φ L
+  mb : k.Mb = mbarOf P
+  pad : k.pad = padWith F x k.Φ cts hj hA
+  deg : d = degFlat s k.Φ (metsOf x k.Φ)
 
 namespace IsKitWith
 

@@ -14,7 +14,6 @@ namespace GlobalTheory.CompanionTheory.Ar.Small
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi
 open Formalism.L2.Pj (FrPt FrMap Rul evR sOf embK Ix FromTest EvalWD IsNatural TRing)
-open Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar (dualMap)
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
 
@@ -183,7 +182,9 @@ theorem ptY_map {φ : S →ₐ[c.F] T} {y : FrPt Xo c S} {z : FrPt Xo c T} (h : 
 theorem tanY_map {φ : S →ₐ[c.F] T} {y : FrPt Xo c S} {z : FrPt Xo c T} (h : FrMap φ y z) (τ : E →+* ℂ)
     (i : Fin (D.mult τ)) : tanY Y z τ i = spMap (dualMap φ.toRingHom) ≫ tanY Y y τ i := by
   rw [tanY, tanY, ← Category.assoc, eq_tanF Y z τ i (spMap (dualMap φ.toRingHom) ≫ tanF Y y τ i)]
-  · rw [Category.assoc, tanF_φ, h.2.1]
+  · have hdual : Formalism.L2.Pj.dualMap φ.toRingHom = dualMap φ.toRingHom :=
+      RingHom.ext fun _ => rfl
+    rw [Category.assoc, tanF_φ, h.2.1, hdual]
   · rw [Category.assoc, tanF_hom, ptF_map h, ← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp,
       ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
     congr 3

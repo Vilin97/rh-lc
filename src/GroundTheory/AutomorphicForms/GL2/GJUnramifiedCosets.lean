@@ -21,6 +21,7 @@ namespace Spherical
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ}
 
+local notation "ϖ" => (GLnLocal.uniformizer F : F)
 
 variable (F) in
 def digitSum (m : ℕ) (a : Fin m → 𝓀[F]) : F :=

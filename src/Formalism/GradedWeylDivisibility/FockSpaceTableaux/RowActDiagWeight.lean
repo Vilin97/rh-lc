@@ -16,6 +16,7 @@ theorem row_action_diagonal_weight : RowActDiagWeight := by
   have hX : (rowAct R (n := n) (Matrix.diagonal t)) = aeval fun v : Fin k × Fin n => C (t v.1) * X v := by
     unfold rowAct
     congr 1
+    funext v
     rw [Finset.sum_eq_single v.1]
     · simp
     · intro b _ hb
@@ -29,7 +30,7 @@ theorem row_action_diagonal_weight : RowActDiagWeight := by
     rw [Finset.sum_eq_single a]
     · simp
     · intro b _ hb
-      simp [hb, Ne.symm hb]
+      simp [Ne.symm hb]
     · simp
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]

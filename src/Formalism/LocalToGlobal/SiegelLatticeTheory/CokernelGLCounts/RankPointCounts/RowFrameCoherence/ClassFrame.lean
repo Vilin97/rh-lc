@@ -18,6 +18,7 @@ section HS
 variable {Wq Wp : Type} [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wq]
   [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [FiniteDimensional ℂ Wp]
 
+omit [FiniteDimensional ℂ Wp] in
 theorem norm_hsEmb_sq_sum (A : Wq →L[ℂ] Wp) :
     ‖hsEmb A‖ ^ 2 = ∑ i, ‖A (stdOrthonormalBasis ℂ Wq i)‖ ^ 2 := by
   rw [PiLp.norm_sq_eq_of_L2]
@@ -26,8 +27,8 @@ theorem norm_hsEmb_sq_sum (A : Wq →L[ℂ] Wp) :
 theorem sum_norm_sq_indep {ι ι' : Type} [Fintype ι] [Fintype ι'] (A : Wq →L[ℂ] Wp)
     (e : OrthonormalBasis ι ℂ Wq) (e' : OrthonormalBasis ι' ℂ Wq) :
     ∑ i, ‖A (e i)‖ ^ 2 = ∑ i, ‖A (e' i)‖ ^ 2 := by
-  haveI : CompleteSpace Wq := FiniteDimensional.complete ℂ Wq
-  haveI : CompleteSpace Wp := FiniteDimensional.complete ℂ Wp
+  have : CompleteSpace Wq := FiniteDimensional.completeSpace ℂ Wq
+  have : CompleteSpace Wp := FiniteDimensional.completeSpace ℂ Wp
 
   have key : ∀ {κ : Type} [Fintype κ] (b : OrthonormalBasis κ ℂ Wq),
       ∑ i, ‖A (b i)‖ ^ 2 = ∑ k, ‖(ContinuousLinearMap.adjoint A) (stdOrthonormalBasis ℂ Wp k)‖ ^ 2 := by
@@ -60,14 +61,17 @@ theorem norm_hsEmb_conj (U : Wp ≃ₗᵢ[ℂ] Wp) (U' : Wq ≃ₗᵢ[ℂ] Wq) (
 def opOf (x : HS Wq Wp) : Wq →L[ℂ] Wp :=
   ∑ i, (innerSL ℂ (stdOrthonormalBasis ℂ Wq i)).smulRight (x i)
 
+omit [FiniteDimensional ℂ Wp] in
 theorem opOf_apply (x : HS Wq Wp) (e : Wq) :
     opOf x e = ∑ i, inner ℂ (stdOrthonormalBasis ℂ Wq i) e • x i := by
   simp [opOf]
 
+omit [FiniteDimensional ℂ Wp] in
 theorem hsEmb_opOf (x : HS Wq Wp) : hsEmb (opOf x) = x := by
   ext j
   simp [hsEmb, opOf_apply, orthonormal_iff_ite.mp (stdOrthonormalBasis ℂ Wq).orthonormal]
 
+omit [FiniteDimensional ℂ Wp] in
 theorem opOf_hsEmb (A : Wq →L[ℂ] Wp) : opOf (hsEmb A) = A := by
   ext e
   rw [opOf_apply]
@@ -162,6 +166,8 @@ theorem classFrameC_of
           Formalism.L2.SG.PackageTie.hsEmb
             (Formalism.L2.SG.RealObj.unscaledOperatorAtPointRepresentative X u u' 1 i0 i0' νq (Formalism.L2.SG.PairVal.ptOf s.1.toTerm))) := by
     congr 1
+    funext s
+    unfold liftVec
     rw [hs s]
     simp only [map_smul, ClassFrameOperators.conjL_hsEmb, smul_smul]
     congr 1

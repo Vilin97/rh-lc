@@ -74,7 +74,9 @@ theorem PA_pureA (φ : (κ → Fv F v) → ℂ) (y : κ → Fv F v) (f : (κ →
   exact mul_left_comm _ _ _
 
 theorem at_inA (y : κ → Fv F v) : At (evFin F v) (inA κ v y) :=
-  GlobalTheory.VacAny.at_pi fun i => GlobalTheory.VacAny.at_atPlace (y i)
+  fun u hu => funext fun i => by
+    change u * atPlace v (y i) = 0
+    rw [mul_comm, atPlace_mul_right, hu, mul_zero, map_zero]
 
 theorem inA_evA {z : κ → AF F} (hz : At (evFin F v) z) : inA κ v (evA κ v z) = z :=
   funext fun i => (GlobalTheory.SchrLoc.eq_atPlace_of_at (fun u hu => congrFun (hz u hu) i)).symm

@@ -186,7 +186,7 @@ variable (σ) in
 structure Spc.IsHerm (B : Base F E) {n : ℕ} (X : Spc F E n) (r s : ℕ) : Prop where
   herm : ∀ i j, σ (X.J j i) = X.J i j
   sig : ∀ w, HasSig (X.J.map (B.emb w).1) r s
-  lat : X.L.IsLattice E
+  lat : X.L.IsFullLattice E
   dual : ∀ y, y ∈ X.L ↔ ∀ x ∈ X.L, IsIntegral ℤ (form σ X.J y x)
   cartan : ∀ w, IsCartan (X.J.map (B.emb w).1) (X.θ w)
   bas : ∀ v : B.P, IsSplitBasis (B.τ v) X.L (X.bas v)
@@ -196,7 +196,7 @@ variable (σ) in
 structure Spc.IsSkew (B : Base F E) {n : ℕ} (X : Spc F E n) (r s : ℕ) : Prop where
   skew : ∀ i j, σ (X.J j i) = -X.J i j
   sig : ∀ w, HasSig (Complex.I • X.J.map (B.emb w).1) r s
-  lat : X.L.IsLattice E
+  lat : X.L.IsFullLattice E
   dual : ∀ y, y ∈ X.L ↔ ∀ x ∈ X.L, ∀ o : 𝓞 E, IsIntegral ℤ (Algebra.trace ℚ E (o * form σ X.J y x))
   cartan : ∀ w, IsCartan (Complex.I • X.J.map (B.emb w).1) (X.θ w)
   bas : ∀ v : B.P, IsSplitBasis (B.τ v) X.L (X.bas v)

@@ -122,7 +122,7 @@ theorem exists_point {X : Scheme.{0}} {Ω Ω₃ : Type} [Field Ω] [Field Ω₃]
     induction this using Algebra.adjoin_induction with
     | mem a h => obtain ⟨j, rfl⟩ := h; exact hO j
     | algebraMap n => simp
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   let ψ : Γ(X, U) →+* O := (i.comp φ).codRestrict O.toSubring h1
   refine ⟨spMap ψ ≫ hU.fromSpec, ?_⟩

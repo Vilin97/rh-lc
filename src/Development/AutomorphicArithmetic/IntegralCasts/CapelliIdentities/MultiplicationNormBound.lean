@@ -11,7 +11,7 @@ private theorem UpperTheory.Reformulated.B.MultiplicationNormBound.norm_mul_le {
   rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
   exact mul_le_of_le_one_left (norm_nonneg _) (hb x)
 
-private theorem UpperTheory.Reformulated.B.MultiplicationNormBound.memLp_mul {X : Type*} [MeasurableSpace X] {ν : Measure X}
+theorem UpperTheory.Reformulated.B.MultiplicationNormBound.memLp_mul {X : Type*} [MeasurableSpace X] {ν : Measure X}
     (c : X → ℝ) (hc : Measurable c) (hb : ∀ x, |c x| ≤ 1) (f : Lp ℂ 2 ν) :
     MemLp (fun x => (c x : ℂ) * f x) 2 ν :=
   (Lp.memLp f).of_le

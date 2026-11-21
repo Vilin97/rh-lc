@@ -223,6 +223,8 @@ theorem exists_hermHomeo (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) (ψ : AddCh
     show eT.symm (w (fwd S) a b) = (S : Matrix (Fin n) (Fin n) (Ainf F ⊗[F] E)) a b
     rw [← ContinuousAddEquiv.symm_apply_apply eT ((S : Matrix (Fin n) (Fin n) (Ainf F ⊗[F] E)) a b)]
     congr 1
+    funext i
+    dsimp only [w, fwd]
     rw [herm_hinv _ (Matrix.isHermitian_mul_mul_conjTranspose _ (isHerm_map σ (θ i) (hP.conj i) S)),
       gl_sandwich3, heT]
     rfl

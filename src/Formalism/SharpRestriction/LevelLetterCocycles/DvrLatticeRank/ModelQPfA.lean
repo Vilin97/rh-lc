@@ -94,7 +94,7 @@ theorem finite_of (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (π' Eπ :
     intro τ
     induction τ using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact add_mem hx hy
     | tmul a l =>
       obtain ⟨co, s, hs⟩ := hdiv a
       rw [toLA_tmul, hs]

@@ -29,7 +29,7 @@ def PrimesInClasses : Prop :=
 
 def SatBasis : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [StarRing E] (S : HSpace E) (Λ : Submodule (𝓞 E) S.V),
-    Submodule.IsLattice E Λ → ∀ (n : ℕ) (w : Fin (n + 1) → S.V), LinearIndependent E w →
+    Submodule.IsFullLattice E Λ → ∀ (n : ℕ) (w : Fin (n + 1) → S.V), LinearIndependent E w →
     ∀ a : Fin n → FractionalIdeal (nonZeroDivisors (𝓞 E)) E, (∀ i, a i ≠ 0) →
     ∃ (e : Fin (n + 1) → S.V) (c : FractionalIdeal (nonZeroDivisors (𝓞 E)) E),
       LinearIndependent E e ∧ Submodule.span E (Set.range e) = Submodule.span E (Set.range w) ∧ c ≠ 0 ∧
@@ -750,9 +750,9 @@ open NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNo
 
 namespace Formalism.L2.SG.Pf.LatEx
 
-theorem satBasis_of (h : LatEx.SatBasisV) : SatBasis := by
+theorem satBasis_holds : SatBasis := by
   intro E _ _ _ S Λ hΛ n w hw a ha
-  obtain ⟨e, c, h1, h2, h3, h4⟩ := h E S.V Λ hΛ n w hw a ha
+  obtain ⟨e, c, h1, h2, h3, h4⟩ := satBasisV_holds E S.V Λ hΛ n w hw a ha
   exact ⟨e, c, h1, h2, h3, h4⟩
 
 section D7sec
@@ -881,6 +881,67 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable (D : D7)
 
+theorem lat_riesz (φ : (VS D).V →ₗ[D.host.E] D.host.E) : ∃ μ : (VS D).V, ∀ v, (VS D).hT μ v = φ v := by
+  classical
+  obtain ⟨bs, hbs⟩ := Formalism.HermitianLatticesTheory.dualLattice_dualBasis (VS D).hT (VS D).nondeg (VS D).frame
+  refine ⟨∑ j, star (φ ((VS D).frame j)) • bs j, fun v => ?_⟩
+  have key : (VS D).hT (∑ j, star (φ ((VS D).frame j)) • bs j) = φ := by
+    apply (VS D).frame.ext
+    intro i
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
+    have hs : ∀ j, (VS D).hT (star (φ ((VS D).frame j)) • bs j) ((VS D).frame i) =
+        φ ((VS D).frame j) * (if i = j then 1 else 0) := by
+      intro j
+      rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star]
+      congr 1
+      rw [← (VS D).herm.eq ((VS D).frame i) (bs j), hbs]
+      split_ifs <;> simp
+    simp only [hs, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  rw [key]
+
+private theorem lat_span_eq_top_of_unimodular {Λ : Submodule (𝓞 D.host.E) (VS D).V}
+    (hL : Λ.FG) (hU : Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ) :
+    Submodule.span D.host.E (Λ : Set (VS D).V) = ⊤ := by
+  by_contra hspan
+  obtain ⟨φ, hφ₀, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
+  obtain ⟨μ, hμ⟩ := lat_riesz D φ
+  have hμ₀ : μ ≠ 0 := by
+    intro h
+    apply hφ₀
+    ext y
+    simpa [h] using (hμ y).symm
+  have hline (a : D.host.E) : a • μ ∈ Λ := by
+    rw [← hU]
+    change a • μ ∈ Formalism.E.hdual (VS D).hT Λ
+    simp only [Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap, LinearMap.restrictScalars_apply]
+    intro y hy
+    have hy₀ := LinearMap.mem_ker.mp (hφ (Submodule.subset_span hy))
+    simp [← (VS D).herm.eq (a • μ) y, LinearMap.map_smulₛₗ, hμ, hy₀]
+  obtain ⟨ψ, hψ, -⟩ := Submodule.exists_le_ker_of_notMem
+    (show μ ∉ (⊥ : Submodule D.host.E (VS D).V) by simpa using hμ₀)
+  let f := ψ.restrictScalars (𝓞 D.host.E)
+  have hmap (x : D.host.E) : x ∈ Λ.map f := by
+    refine ⟨(x / ψ μ) • μ, hline _, ?_⟩
+    change ψ ((x / ψ μ) • μ) = x
+    rw [map_smul, smul_eq_mul, div_mul_cancel₀ _ hψ]
+  obtain ⟨d, hd₀, hd⟩ := FractionalIdeal.isFractional_of_fg
+    (S := nonZeroDivisors (𝓞 D.host.E)) (hL.map f)
+  have hinj := IsFractionRing.injective (𝓞 D.host.E) D.host.E
+  have hne {a : 𝓞 D.host.E} (ha : a ≠ 0) : algebraMap (𝓞 D.host.E) D.host.E a ≠ 0 :=
+    fun h => ha (hinj (h.trans (map_zero _).symm))
+  have hinteger (x : D.host.E) : IsLocalization.IsInteger (𝓞 D.host.E) x := by
+    have hx := hd _ (hmap ((algebraMap (𝓞 D.host.E) D.host.E d)⁻¹ * x))
+    rwa [Algebra.smul_def, ← mul_assoc, mul_inv_cancel₀ (hne (nonZeroDivisors.ne_zero hd₀)),
+      one_mul] at hx
+  apply RingOfIntegers.not_isField D.host.E
+  refine ⟨⟨0, 1, zero_ne_one⟩, mul_comm, ?_⟩
+  intro a ha
+  obtain ⟨b, hb⟩ := hinteger ((algebraMap (𝓞 D.host.E) D.host.E a)⁻¹)
+  refine ⟨b, hinj ?_⟩
+  rw [map_mul, hb, map_one, mul_inv_cancel₀ (hne ha)]
+
+
 variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 theorem latExists_of_steps (hSB : SatBasis) (hPC : PrimesInClasses) (hDd : DdG D) :
     Formalism.L2.SG.SplitPrimeNormLemmas.LatExists D := by
@@ -915,8 +976,11 @@ theorem latExists_of_steps (hSB : SatBasis) (hPC : PrimesInClasses) (hDd : DdG D
     · exact (hwo i).1
     · exact D.sp.hyp_ee i j
   have haa := PI.SRW.adjoint_action_reduction D
+  have hfull : Submodule.IsFullLattice D.host.E (VS D).L0 := by
+    letI := (VS D).standardTuple_isLattice
+    exact ⟨lat_span_eq_top_of_unimodular D (VS D).standardTuple_isLattice.fg (VS D).baseLattice_isUnimodular⟩
   obtain ⟨e', c, hind', hspan, hc0, hX⟩ :=
-    hSB D.host.E (VS D) (VS D).L0 (VS D).standardTuple_isLattice D.R.rS wf hind (aaS D) (fun a => (haa a).1)
+    hSB D.host.E (VS D) (VS D).L0 hfull D.R.rS wf hind (aaS D) (fun a => (haa a).1)
   have hmem : ∀ a, e' a ∈ Submodule.span D.host.E (Set.range wf) := fun a =>
     hspan ▸ Submodule.subset_span ⟨a, rfl⟩
   have he'iso : ∀ a b, (VS D).hT (e' a) (e' b) = 0 := fun a b => iso_span hsnoc_iso (hmem a) (hmem b)
@@ -1074,6 +1138,6 @@ namespace Formalism.L2.SG.Pf
 
 variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 theorem latExists_of (hPC : LatEx.PrimesInClasses) (D : Formalism.BasicNotions.D7) : Formalism.L2.SG.SplitPrimeNormLemmas.LatExists D :=
-  LatEx.latExists_of_steps D (LatEx.satBasis_of LatEx.satBasisV_holds) hPC (LatEx.ddG_of D LatEx.splitDiff_holds)
+  LatEx.latExists_of_steps D LatEx.satBasis_holds hPC (LatEx.ddG_of D LatEx.splitDiff_holds)
 
 end Formalism.L2.SG.Pf

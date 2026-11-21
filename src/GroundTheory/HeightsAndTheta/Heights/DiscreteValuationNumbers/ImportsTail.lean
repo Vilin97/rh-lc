@@ -23,8 +23,7 @@ def ResidualDisjoint.Statement : Prop :=
       (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P (d + 1) →
     ∀ (b : K → ℤ) (f g : MRing ι O), IsEffectiveVertical P ϖ b f g →
     ∀ (c : K → ℕ) (s : MRing ι O), IsMultiHomog s c → s ∉ P →
-    (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H →
-      IsVerticalDivisor H ϖ b f g) →
+    (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → IsVerticalDivisor H ϖ b f g) →
     ∀ e : K → ℕ, (∀ k, (c k : ℤ) = b k + e k) →
     ∀ m : MRing ι O, IsMultiHomog m e → m ∉ P →
     (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → m ∉ H) →
@@ -40,8 +39,7 @@ def ResidualContraction.Statement : Prop :=
       (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P (d + 1) →
     ∀ (b : K → ℤ) (f g : MRing ι O), IsEffectiveVertical P ϖ b f g →
     ∀ (c : K → ℕ) (s : MRing ι O), IsMultiHomog s c → s ∉ P →
-    (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H →
-      IsVerticalDivisor H ϖ b f g) →
+    (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → IsVerticalDivisor H ϖ b f g) →
     ∀ e : K → ℕ, (∀ k, (c k : ℤ) = b k + e k) →
     ∀ m : MRing ι O, IsMultiHomog m e → m ∉ P →
     (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → m ∉ H) →

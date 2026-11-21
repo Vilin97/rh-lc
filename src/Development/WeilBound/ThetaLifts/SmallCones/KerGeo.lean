@@ -153,9 +153,12 @@ theorem nd_of_det {J : Matrix (Fin n) (Fin n) E} (hd : J.det ≠ 0) (v : Fin n �
 
 theorem pg_of (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : Spc F E n₁} {H : Plane E n n₁} {i₀ i₁ : ℕ}
     (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (ε : ℤˣ) (hJ : ∀ i j, σ (Y.J j i) = ((ε : ℤ) : E) * Y.J i j) (hd : Y.J.det ≠ 0)
-    (hL : Y.L.IsLattice E) : PG σ Y Y₁ H ε := by
+    (hL : Y.L.IsFullLattice E) : PG σ Y Y₁ H ε := by
   have sp : ∀ v : Fin n → E, ∃ (s t : E) (u : Fin n₁ → E), v = s • H.x + H.ι *ᵥ u + t • H.y := fun v => by
-    have hv : v ∈ Submodule.span E (Y.L : Set (Fin n → E)) := hL.span_eq_top ▸ Submodule.mem_top
+    have hv : v ∈ Submodule.span E (Y.L : Set (Fin n → E)) := by
+      letI := hL
+      rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := Y.L)]
+      exact Submodule.mem_top
     induction hv using Submodule.span_induction with
     | mem z hz =>
       obtain ⟨s, t, u, -, -, -, e⟩ := hH.split z hz
@@ -169,7 +172,7 @@ theorem pg_of (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : Spc F E n₁} {H : Plan
       obtain ⟨s, t, u, rfl⟩ := hb
       exact ⟨a * s, a * t, a • u, by rw [Matrix.mulVec_smul]; module⟩
   refine ⟨⟨conj_conj hB, by rw [← Int.cast_mul, ← Units.val_mul, Int.units_mul_self]; simp, map_intCast _ _, hJ, hH.xx, hH.yy, hH.xy,
-    fun z => (hH.orth z).1, fun z => (hH.orth z).2, sp, fun v hv => ?_⟩, planeOK hB hH ε hJ hd hL, fun u hu => ?_, hH.gram⟩
+    fun z => (hH.orth z).1, fun z => (hH.orth z).2, sp, fun v hv => ?_⟩, planeOK hB hH ε hJ hd hL.toIsLattice, fun u hu => ?_, hH.gram⟩
   · refine Matrix.eq_zero_of_vecMul_eq_zero hd (funext fun j => ?_)
     have := hv (Pi.single j 1)
     have e : (fun l => σ.toRingHom ((Pi.single j 1 : Fin n → E) l)) = Pi.single j 1 := funext fun l => by
@@ -200,11 +203,67 @@ theorem skew_det {r s : ℕ} (hY : X.IsSkew σ B r s) : X.J.det ≠ 0 := fun h0 
   rw [Matrix.det_smul]
   exact mul_eq_zero_of_right _ this.symm
 
+theorem full_of_herm_or_skew (hB : B.IsGood σ) {Y : Spc F E n} {r s : ℕ}
+    (hY : Y.IsHerm σ B r s ∨ Y.IsSkew σ B r s) : Y.L.IsFullLattice E := by
+  obtain ⟨ε, hε, hL⟩ : ∃ ε : ℤˣ, (∀ i j, σ (Y.J j i) = ((ε : ℤ) : E) * Y.J i j) ∧ Y.L.IsLattice E := by
+    rcases hY with h | h
+    · exact ⟨1, fun i j => by simp [h.herm], h.lat⟩
+    · exact ⟨-1, fun i j => by simp [h.skew], h.lat⟩
+  have hsk : ∀ x y, form σ Y.J x y = ((ε : ℤ) : E) * σ (form σ Y.J y x) := fun x y => by
+    have hs : σ (form σ Y.J y x) = ((ε : ℤ) : E) * form σ Y.J x y := by
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, conj_conj hB]
+      rw [Finset.sum_comm]
+      exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by rw [hε]; ring
+    rw [hs, ← mul_assoc, ← Int.cast_mul, ← Units.val_mul, Int.units_mul_self]
+    simp
+  have hFull : Y.L.IsFullLattice E := by
+    let := hL
+    refine { span_eq_top := ?_ }
+    let W := Submodule.span E (Y.L : Set (Fin n → E))
+    change W = ⊤
+    by_contra hW
+    let g : (Fin n → E) →ₗ[E] Module.Dual E W :=
+      ((dotProductBilin E E).compl₂ (Matrix.mulVecLin Y.Jᵀ)).domRestrict₂ W
+    have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Fin n → E) := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt hW
+    obtain ⟨z, hz, hz₀⟩ :=
+      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    let y : Fin n → E := fun i => σ (z i)
+    have hy₀ : y ≠ 0 := by
+      intro hy
+      apply hz₀
+      exact funext fun i => σ.injective ((congrFun hy i).trans (map_zero σ).symm)
+    have horth (x : Fin n → E) (hx : x ∈ Y.L) : form σ Y.J y x = 0 := by
+      have hz' : z ⬝ᵥ Y.Jᵀ *ᵥ x = 0 :=
+        congrArg (fun f : Module.Dual E W => f ⟨x, Submodule.subset_span hx⟩)
+          (LinearMap.mem_ker.mp hz)
+      have hzero : form σ Y.J x y = 0 := by
+        rw [Matrix.dotProduct_transpose_mulVec] at hz'
+        simpa only [form, y, conj_conj hB] using hz'
+      rw [hsk, hzero, map_zero, mul_zero]
+    have hline (a : E) : a • y ∈ Y.L := by
+      have hzform (x : Fin n → E) (hx : x ∈ Y.L) : form σ Y.J (a • y) x = 0 := by
+        simpa only [form, smul_dotProduct, smul_eq_mul] using
+          (show a * form σ Y.J y x = 0 by rw [horth x hx, mul_zero])
+      rcases hY with h | h
+      · exact (h.dual _).2 fun x hx => by rw [hzform x hx]; exact isIntegral_zero
+      · exact (h.dual _).2 fun x hx o => by rw [hzform x hx, mul_zero, map_zero]; exact isIntegral_zero
+    let i : E →ₗ[𝓞 E] Y.L :=
+      ((LinearMap.toSpanSingleton E _ y).restrictScalars (𝓞 E)).codRestrict Y.L hline
+    let : Module.Finite (𝓞 E) Y.L := Module.Finite.iff_fg.mpr hL.fg
+    let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective E hy₀ (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+  exact hFull
+
 theorem pg_herm (hB : B.IsGood σ) {H : Plane E n n₁} {i₀ i₁ r s : ℕ} (hH : H.IsAdapted σ B X X₁ i₀ i₁) (hY : X.IsHerm σ B r s) :
-    PG σ X X₁ H 1 := pg_of hB hH 1 (fun i j => by simp [hY.herm]) (herm_det hY) hY.lat
+    PG σ X X₁ H 1 := pg_of hB hH 1 (fun i j => by simp [hY.herm]) (herm_det hY) (full_of_herm_or_skew hB (Or.inl hY))
 
 theorem pg_skew (hB : B.IsGood σ) {H : Plane E n n₁} {i₀ i₁ r s : ℕ} (hH : H.IsAdapted σ B X X₁ i₀ i₁) (hY : X.IsSkew σ B r s) :
-    PG σ X X₁ H (-1) := pg_of hB hH (-1) (fun i j => by simp [hY.skew]) (skew_det hY) hY.lat
+    PG σ X X₁ H (-1) := pg_of hB hH (-1) (fun i j => by simp [hY.skew]) (skew_det hY) (full_of_herm_or_skew hB (Or.inr hY))
 
 theorem polar_of {T : Type} [AddCommGroup T] [Module E T] [Module F T] [IsScalarTower F E T] [FiniteDimensional F T]
     {ι : Matrix (Fin n) (Fin n₁) E} {ι' : Matrix (Fin d) (Fin d₁) E} {I : Set (Ten F E n d)}

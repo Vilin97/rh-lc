@@ -53,7 +53,7 @@ theorem bf_sum_l {R : Type} [CommRing R] {c : R →+* R} {J : Matrix (Fin n) (Fi
 
 theorem planeOK {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : Spc F E k} {H : Plane E n k} {i₀ i₁ : ℕ}
     (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (ε : ℤˣ) (hJ : ∀ i j, σ (Y.J j i) = ((ε : ℤ) : E) * Y.J i j) (hd : Y.J.det ≠ 0)
-    (hL : Y.L.IsLattice E) :
+    (hL : Y.L.IsFullLattice E) :
     PlaneOK (cA σ).toRingHom (incM F Y.J) ((ε : ℤ) : AE F E) (incV F H.x) (incV F H.y) (incM F H.ι) := by
   have cc : ∀ a : AE F E, cA σ (cA σ a) = a := fun a => by
     induction a using TensorProduct.induction_on with
@@ -67,7 +67,7 @@ theorem planeOK {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : Spc F 
     rw [vec_eq z, Matrix.mulVec_sum, bf_sum_l]
     exact Finset.sum_eq_zero fun j _ => by rw [Matrix.mulVec_smul, bf_smul_l, inc_mulVec, bf_inc, hw, map_zero, mul_zero]
   have sp : ∀ v : Fin n → E, ∃ (s t : E) (u : Fin k → E), v = s • H.x + H.ι *ᵥ u + t • H.y := fun v => by
-    have hv : v ∈ Submodule.span E (Y.L : Set (Fin n → E)) := hL.span_eq_top ▸ Submodule.mem_top
+    have hv : v ∈ Submodule.span E (Y.L : Set (Fin n → E)) := Submodule.IsFullLattice.span_eq_top (A := E) (M := Y.L) ▸ Submodule.mem_top
     induction hv using Submodule.span_induction with
     | mem z hz =>
       obtain ⟨s, t, u, -, -, -, e⟩ := hH.split z hz
@@ -106,11 +106,58 @@ theorem planeOK {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : Spc F 
     have := congrArg (· ᵥ* (incM F Y.J)⁻¹) h0
     simpa [Matrix.vecMul_vecMul, Matrix.mul_nonsing_inv _ hu] using this
 
+theorem full_of_dual_zero {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n}
+    (ε : ℤˣ) (hJ : ∀ i j, σ (Y.J j i) = ((ε : ℤ) : E) * Y.J i j)
+    (hL : Y.L.IsLattice E)
+    (hdual : ∀ y, (∀ x ∈ Y.L, form σ Y.J y x = 0) → y ∈ Y.L) :
+    Y.L.IsFullLattice E := by
+  let := hL
+  refine { span_eq_top := ?_ }
+  let W := Submodule.span E (Y.L : Set (Fin n → E))
+  change W = ⊤
+  by_contra hW
+  let g : (Fin n → E) →ₗ[E] Module.Dual E W :=
+    ((dotProductBilin E E).compl₂ (Matrix.mulVecLin Y.Jᵀ)).domRestrict₂ W
+  have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Fin n → E) := by
+    rw [Subspace.dual_finrank_eq]
+    exact Submodule.finrank_lt hW
+  obtain ⟨z, hz, hz₀⟩ :=
+    Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+  let y : Fin n → E := fun i => σ (z i)
+  have hy₀ : y ≠ 0 := by
+    intro hy
+    apply hz₀
+    exact funext fun i => σ.injective ((congrFun hy i).trans (map_zero σ).symm)
+  have horth (x : Fin n → E) (hx : x ∈ Y.L) : form σ Y.J y x = 0 := by
+    have hz' : z ⬝ᵥ Y.Jᵀ *ᵥ x = 0 :=
+      congrArg (fun f : Module.Dual E W => f ⟨x, Submodule.subset_span hx⟩)
+        (LinearMap.mem_ker.mp hz)
+    have hzero : form σ Y.J x y = 0 := by
+      rw [Matrix.dotProduct_transpose_mulVec] at hz'
+      simpa only [form, y, conj_conj hB] using hz'
+    have hs : σ (form σ Y.J y x) = ((ε : ℤ) : E) * form σ Y.J x y := by
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, conj_conj hB, hJ, Finset.mul_sum]
+      rw [Finset.sum_comm]
+      exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
+    rw [hzero, mul_zero] at hs
+    exact (map_eq_zero σ).1 hs
+  have hline (a : E) : a • y ∈ Y.L := hdual _ fun x hx => by
+    simpa only [form, smul_dotProduct, smul_eq_mul] using
+      (show a * form σ Y.J y x = 0 by rw [horth x hx, mul_zero])
+  let i : E →ₗ[𝓞 E] Y.L :=
+    ((LinearMap.toSpanSingleton E _ y).restrictScalars (𝓞 E)).codRestrict Y.L hline
+  let : Module.Finite (𝓞 E) Y.L := Module.Finite.iff_fg.mpr hL.fg
+  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+    smul_left_injective E hy₀ (congrArg Subtype.val hab)
+  exact RingOfIntegers.not_isField E
+    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+
 theorem planeOK_herm {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : Spc F E k} {H : Plane E n k} {i₀ i₁ r s : ℕ}
     (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hY : Y.IsHerm σ B r s) :
     ∃ ε, PlaneOK (cA σ).toRingHom (incM F Y.J) ε (incV F H.x) (incV F H.y) (incM F H.ι) := by
   obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
-  refine ⟨_, planeOK hB hH 1 (fun i j => by simp [hY.herm]) (fun h0 => det_ne_of_sig (hY.sig w) ?_) hY.lat⟩
+  refine ⟨_, planeOK hB hH 1 (fun i j => by simp [hY.herm]) (fun h0 => det_ne_of_sig (hY.sig w) ?_) (full_of_dual_zero hB 1 (fun i j => by simp [hY.herm]) hY.lat
+      (fun y hy => (hY.dual y).2 fun x hx => by rw [hy x hx]; exact isIntegral_zero))⟩
   have := RingHom.map_det (B.emb w).1 Y.J
   rw [h0, map_zero] at this
   exact this.symm
@@ -119,7 +166,8 @@ theorem planeOK_skew {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : S
     (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hY : Y.IsSkew σ B r s) :
     ∃ ε, PlaneOK (cA σ).toRingHom (incM F Y.J) ε (incV F H.x) (incV F H.y) (incM F H.ι) := by
   obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
-  refine ⟨_, planeOK hB hH (-1) (fun i j => by simp [hY.skew]) (fun h0 => det_ne_of_sig (hY.sig w) ?_) hY.lat⟩
+  refine ⟨_, planeOK hB hH (-1) (fun i j => by simp [hY.skew]) (fun h0 => det_ne_of_sig (hY.sig w) ?_) (full_of_dual_zero hB (-1) (fun i j => by simp [hY.skew]) hY.lat
+      (fun y hy => (hY.dual y).2 fun x hx o => by rw [hy x hx, mul_zero, map_zero]; exact isIntegral_zero))⟩
   have := RingHom.map_det (B.emb w).1 Y.J
   rw [h0, map_zero] at this
   rw [Matrix.det_smul]

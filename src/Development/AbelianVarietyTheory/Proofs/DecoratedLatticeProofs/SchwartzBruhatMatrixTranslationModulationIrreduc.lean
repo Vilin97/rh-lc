@@ -191,11 +191,12 @@ def intMat : AddSubgroup (Matrix Y Y' k) where
 
 
 variable (k Y Y') in
-def lat (n : ℕ) : AddSubgroup (Matrix Y Y' k) := intMat.map (nsmulAddMonoidHom n)
+def lat (n : ℕ) : AddSubgroup (Matrix Y Y' k) :=
+  AddSubgroup.map (nsmulAddMonoidHom n) (intMat k Y Y')
 
 theorem sep [CharZero k] (ψk : AddChar k Circle) (hψ : Continuous ψk) (h1 : ψk ≠ 1) {n : ℕ} (hn : 0 < n)
-    (p : Matrix Y Y' k) (hp : p ∉ lat n) :
-    ∃ b, (∀ u ∈ lat n, (ψk (pair b u) : ℂ) = 1) ∧ (ψk (pair b p) : ℂ) ≠ 1 := by
+    (p : Matrix Y Y' k) (hp : p ∉ lat k Y Y' n) :
+    ∃ b, (∀ u ∈ lat k Y Y' n, (ψk (pair b u) : ℂ) = 1) ∧ (ψk (pair b p) : ℂ) ≠ 1 := by
   classical
   have hn' : (n : k) ≠ 0 := by exact_mod_cast hn.ne'
   have : ¬ ∀ r q, (n : k)⁻¹ * p r q ∈ 𝒪[k] := by
@@ -224,7 +225,7 @@ theorem sep [CharZero k] (ψk : AddChar k Circle) (hψ : Continuous ψk) (h1 : �
 
 theorem cover [CharZero k] {a N : ℕ} (ha : 0 < a) (hN : 0 < N) :
     ∃ P : Finset (Matrix Y Y' k), ∀ t : Matrix Y Y' k, (∀ r q, (a • t) r q ∈ 𝒪[k]) →
-      ∃ p ∈ P, ∃ u ∈ lat N, t = p + u := by
+      ∃ p ∈ P, ∃ u ∈ lat k Y Y' N, t = p + u := by
   classical
   obtain ⟨R, hR, hRc⟩ := GlobalTheory.matrix_integers_mod_nat_finite k Y Y' (a * N) (Nat.mul_pos ha hN)
   refine ⟨(hR.image fun s => ((a : k)⁻¹) • s).toFinset, fun t ht => ?_⟩
@@ -271,7 +272,7 @@ theorem sb_irreducible : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalS
   obtain ⟨n, hn, hinv, hsupp⟩ := GlobalTheory.SBUnif.sb_lattice_bounds k Y Y' f (hW hf)
   obtain ⟨m, hm, hinv', hsupp'⟩ := GlobalTheory.SBUnif.sb_lattice_bounds k Y Y' Φ hΦ
   have hnm : 0 < n * m := Nat.mul_pos hn hm
-  have hn1 : ind (lat n) ∈ W := by
+  have hn1 : ind (lat k Y Y' n) ∈ W := by
     obtain ⟨P, hP⟩ := cover (k := k) (Y := Y) (Y' := Y') hn hn
     refine ind_mem (fun b t => (ψk (pair b t) : ℂ)) he W hM _ (sep ψk hψ hψ1 hn) hf ?_ P
       fun t ht => hP t (hsupp t ht)
@@ -281,30 +282,30 @@ theorem sb_irreducible : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalS
     have := hinv u hu 0
     rw [zero_add, hf0] at this
     exact this
-  have hn2 : ind (lat (n * m)) ∈ W := by
+  have hn2 : ind (lat k Y Y' (n * m)) ∈ W := by
     obtain ⟨P, hP⟩ := cover (k := k) (Y := Y) (Y' := Y') one_pos hnm
     refine ind_mem (fun b t => (ψk (pair b t) : ℂ)) he W hM _ (sep ψk hψ hψ1 hnm) hn1 ?_ P
       fun t ht => hP t ?_
     · intro v hv
       rw [lat, AddSubgroup.mem_map] at hv
       obtain ⟨u, hu, rfl⟩ := hv
-      have : nsmulAddMonoidHom (n * m) u ∈ lat n := by
+      have : nsmulAddMonoidHom (n * m) u ∈ lat k Y Y' n := by
         rw [lat, AddSubgroup.mem_map]
         exact ⟨m • u, nsmul_mem hu m, (mul_smul n m u).symm⟩
       rw [ind, if_pos this]
-    · have : t ∈ lat n := by
+    · have : t ∈ lat k Y Y' n := by
         by_contra h
         exact ht (by rw [ind, if_neg h])
       rw [lat, AddSubgroup.mem_map] at this
       obtain ⟨u, hu, rfl⟩ := this
       rw [one_smul]
-      exact (nsmul_mem hu n : n • u ∈ intMat)
+      exact (nsmul_mem hu n : n • u ∈ intMat k Y Y')
   obtain ⟨P, hP⟩ := cover (k := k) (Y := Y) (Y' := Y') hm hnm
   refine mem_of_cosets W hT hn2 P Φ ?_ fun t ht => hP t (hsupp' t ht)
   intro v hv t
   rw [lat, AddSubgroup.mem_map] at hv
   obtain ⟨u, hu, rfl⟩ := hv
-  have := hinv' (n • u) (nsmul_mem hu n : n • u ∈ intMat) t
+  have := hinv' (n • u) (nsmul_mem hu n : n • u ∈ intMat k Y Y') t
   rw [← mul_smul, mul_comm] at this
   exact this
 

@@ -114,7 +114,7 @@ theorem commensurable_holds : Commens := by
     simpa only [Submodule.mem_comap, LinearMap.smul_apply, LinearMap.id_apply] using this
   have hB : ∀ i : Fin n, Pi.single i (1 : E) ∈ Submodule.span E (N : Set (Sp E n)) := by
     intro i
-    rw [Submodule.IsFullLattice.span_eq_top (self := hN)]
+    rw [hN.span_eq_top]
     trivial
   choose f t ht _ hsum using fun i => Submodule.mem_span_iff_exists_finset_subset.1 (hB i)
   obtain ⟨d2, hd2, h2⟩ := commens_denoms (Finset.univ.biUnion fun i => (t i).image (f i))

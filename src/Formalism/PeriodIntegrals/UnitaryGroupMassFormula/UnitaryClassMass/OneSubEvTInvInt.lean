@@ -142,18 +142,15 @@ theorem Phi_tmul (e : E) (x : Fv F v) : Phi v (e ⊗ₜ[F] x) = sgl v x ⊗ₜ[F
   simp [Phi]; rfl
 
 theorem Phi_Psi (r : Af F ⊗[F] E) : Phi v (Psi v r) = (sgl v 1 ⊗ₜ[F] (1 : E)) * r := by
-  induction r using TensorProduct.induction_on with
-  | zero => simp
+  induction r using TensorProduct.inductionOn with
   | tmul a e =>
     rw [Psi_tmul, Phi_tmul, Algebra.TensorProduct.tmul_mul_tmul, sgl_one_mul, one_mul]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 theorem Phi_mul (x y : E ⊗[F] Fv F v) : Phi v (x * y) = Phi v x * Phi v y := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | tmul e a =>
-    induction y using TensorProduct.induction_on with
-    | zero => simp
+    induction y using TensorProduct.inductionOn with
     | tmul e' a' =>
       rw [Algebra.TensorProduct.tmul_mul_tmul, Phi_tmul, Phi_tmul, Phi_tmul,
         Algebra.TensorProduct.tmul_mul_tmul, sgl_mul]
@@ -179,7 +176,7 @@ theorem Phi_int {s : E ⊗[F] Fv F v}
   | one =>
     rw [show (1 : E ⊗[F] Fv F v) = (1 : E) ⊗ₜ[F] (1 : Fv F v) from rfl, Phi_tmul]
     exact tmul_mem_Oh (sgl_int v (one_mem _)) isIntegral_one
-  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
   | neg x _ h1 => rw [map_neg]; exact neg_mem h1
   | mul x y _ _ h1 h2 => rw [Phi_mul]; exact Oh_mul h1 h2
 

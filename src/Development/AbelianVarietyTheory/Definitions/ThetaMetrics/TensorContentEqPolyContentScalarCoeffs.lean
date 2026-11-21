@@ -148,7 +148,7 @@ def gaussVal : Valuation (MvPolynomial σ R) Γ₀ := gaussValAlg v
 theorem gaussVal_le_iff {f : MvPolynomial σ R} {γ : Γ₀} :
     gaussVal v f ≤ γ ↔ ∀ m, v (AddMonoidAlgebra.coeff f m) ≤ γ := gaussValAlg_le_iff v
 
-theorem le_gaussVal (f : MvPolynomial σ R) (m : σ →₀ ℕ) : v (coeff m f) ≤ gaussVal v f :=
+theorem le_gaussVal (f : MvPolynomial σ R) (m : σ →₀ ℕ) : v (f.coeff m) ≤ gaussVal v f :=
   (gaussVal_le_iff v).mp le_rfl m
 
 theorem gaussVal_eq_zero_iff_forall {f : MvPolynomial σ R} :

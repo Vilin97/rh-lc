@@ -48,7 +48,7 @@ theorem D_kfS {u : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)} (hu : At (ev
       obtain ⟨v, hv, x, hx, rfl⟩ := hz
       exact Submodule.subset_span ⟨_, Box.at_actB k hv, _, h2 k hk x hx, om_D k hv (h0 hx)⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add _ _ _ _ i j => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem i j
+    | add _ _ _ _ i j => rw [map_add]; exact add_mem i j
     | smul c _ _ i => rw [map_smul]; exact Submodule.smul_mem _ _ i
 
 theorem vac_kfS (θ : InfinitePlace F → Matrix (Fin d.m) (Fin d.m) ℂ)

@@ -24,11 +24,11 @@ theorem lamStar_anti {m : ℕ} (lam : Fin (m + 1) → ℤ) (hd : Antitone lam) :
 
 theorem lamAt_odd {n' m : ℕ} (lam0 : Fin n' → Fin (m + 1) → ℤ) (s : Fin n') (hs : ¬ Even s.val) :
     lamAt lam0 s = lamStar (lam0 s) := by
-  unfold lamAt; rw [if_neg hs]; rfl
+  unfold lamAt; rw [ite_eq_right hs]; rfl
 
 theorem lamAt_even {n' m : ℕ} (lam0 : Fin n' → Fin (m + 1) → ℤ) (s : Fin n') (hs : Even s.val) :
     lamAt lam0 s = lam0 s := by
-  unfold lamAt; rw [if_pos hs]
+  unfold lamAt; rw [ite_eq_left hs]
 
 theorem lamAt_anti {n' m : ℕ} (lam0 : Fin n' → Fin (m + 1) → ℤ) (hd : IsDominant lam0) (s : Fin n') :
     Antitone (lamAt lam0 s) := by
@@ -221,7 +221,7 @@ theorem mem_htupW_iff (hD : DescVal) (hfr : IsFractionRing O Kf) (e : LL →+* K
     induction hQ using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul r x _ hx =>
       obtain ⟨o, ho⟩ := (hR0 r.1).1 r.2
       have e1 : map e (r • x) = o • map e x := by

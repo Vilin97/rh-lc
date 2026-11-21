@@ -72,14 +72,13 @@ theorem flat_baseChange_of_flat_extOrder {R : Type} [CommRing R] {T : Type} [Com
   have hrange : LinearMap.range L = Subalgebra.toSubmodule (extOrder (algebraMap R R') A) := by
     apply le_antisymm
     · rintro _ ⟨x, rfl⟩
-      induction x using TensorProduct.induction_on with
-      | zero => simp
+      induction x using TensorProduct.inductionOn with
       | tmul r a =>
         rw [hL]
         have : (fun t => algebraMap R R' ((a : T → R) t)) ∈ extOrder (algebraMap R R') A :=
           Algebra.subset_adjoin ⟨a, a.2, rfl⟩
         exact (extOrder (algebraMap R R') A).smul_mem this r
-      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y hx hy => rw [map_add]; exact add_mem hx hy
     · intro g hg
       have h := (PositivityTheory.HtPt.Htat.ext_span R T R' (algebraMap R R') A g).1 hg
       refine Submodule.span_le.2 ?_ h

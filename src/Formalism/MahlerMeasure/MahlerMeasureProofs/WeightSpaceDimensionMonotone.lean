@@ -1136,8 +1136,7 @@ noncomputable def GA (p : ℕ) [Fact p.Prime] (LL : Letters N) (j : ℕ) :
     split_ifs with h
     · rfl
     · have := congrArg (AddMonoidAlgebra.coeff · d) (hS _ h)
-      rw [coeff_weightedHomogeneousComponent, if_pos rfl, AddMonoidAlgebra.coeff_zero,
-        Finsupp.zero_apply] at this
+      rw [coeff_weightedHomogeneousComponent, if_pos rfl, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
       exact this.symm
   idem := by
     classical
@@ -1145,8 +1144,7 @@ noncomputable def GA (p : ℕ) [Fact p.Prime] (LL : Letters N) (j : ℕ) :
     ext d
     by_cases h : μ = ν
     · subst h; simp only [if_true, coeff_weightedHomogeneousComponent]; split_ifs <;> rfl
-    · simp only [if_neg h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
-        coeff_weightedHomogeneousComponent]
+    · simp only [if_neg h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, coeff_weightedHomogeneousComponent]
       split_ifs with h1 h2 <;> first | rfl | (exfalso; exact h (h1.symm.trans h2))
   diag := by
     classical
@@ -2189,14 +2187,11 @@ theorem Ffull_pol (ρ : Fin r) (n : Fin T.t → ℕ) (f : MvPolynomial (Fin (T.p
   rw [hw] at h2
   have h3 := isWH_rename (K := ℚ_[p]) (wL N r) _ (inclusion_prodMap_injective (r := r) hK) h2
   rw [Ffull_eq]
-  suffices hweight : E (fun a => ((LLK.snoc (n i)).deg a : ℤ)) =
-      fun b => ((Lz (LL.setTies T n) (T.pos i + 1 + 1)).deg b : ℤ) by
-    rw [hweight] at h3
-    exact h3
+  convert h3 using 1
   funext b
   simp only [E, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Lz]
   by_cases hb : (b : ℕ) < T.pos i + 1 + 1
-  · rw [dite_eq_left hb, ite_eq_left hb]
+  · rw [dif_pos hb, if_pos hb]
     by_cases hb2 : (b : ℕ) < T.pos i + 1
     · have : (⟨b, hb⟩ : Fin (T.pos i + 1 + 1)) = Fin.castSucc ⟨b, hb2⟩ := rfl
       rw [this, Formalism.GM.M.FB.snoc_deg_castSucc]
@@ -2205,7 +2200,7 @@ theorem Ffull_pol (ρ : Fin r) (n : Fin T.t → ℕ) (f : MvPolynomial (Fin (T.p
       rw [this, Formalism.GM.M.FB.snoc_deg_last]
       have hb3 : b = ⟨T.pos i + 1, by omega⟩ := by apply Fin.ext; simp; omega
       rw [hb3, setTies_deg_eta LL T hadm i n]
-  · rw [dite_eq_right hb, ite_eq_right hb]
+  · rw [dite_eq_right hb, if_neg hb]; simp
 
 theorem Ffull_ycond [NeZero r] (ρ : Fin r) (n : Fin T.t → ℕ) (w : Fin r → ℤ)
     (f : MvPolynomial (Fin (T.pos i + 1) × Fin r) ℚ_[p])
@@ -2605,19 +2600,15 @@ theorem pol_eta (LL : Letters N) (T : TieData) (hadm : T.Admissible LL) (i : Fin
     (hz : z ∈ Pol p r L0) :
     X (⟨T.pos i + 1, by have := hK_of_adm LL T hadm i; omega⟩, ρ) ^ (n' - n i) * z ∈ Pol p r L1 := by
   rw [pol_iff] at hz ⊢
-  let iK : Fin N := ⟨T.pos i + 1, hK_of_adm LL T hadm i⟩
-  have hmul := (eta_wL (p := p) iK ρ (n' - n i)).mul hz
-  suffices hweight : Pi.single iK ((n' - n i : ℕ) : ℤ) + (fun b => (L0.deg b : ℤ)) =
-      fun b => (L1.deg b : ℤ) by
-    rw [hweight] at hmul
-    exact hmul
+  have := (eta_wL (p := p) (r := r) ⟨T.pos i + 1, by have := hK_of_adm LL T hadm i; omega⟩ ρ (n' - n i)).mul hz
+  convert this using 1
   funext b
-  simp only [Pi.add_apply]
+  simp only [Pi.add_apply, Pi.single_apply]
   by_cases hb : (b : ℕ) = T.pos i + 1
-  · have hb' : b = iK := Fin.ext hb
-    rw [← hb', Pi.single_eq_same, (h1 b hb).1, (h1 b hb).2, Nat.cast_sub hn, sub_add_cancel]
-  · have hb' : b ≠ iK := fun h => hb (congrArg Fin.val h)
-    rw [Pi.single_eq_of_ne hb', h0 b hb, zero_add]
+  · have hb' : b = ⟨T.pos i + 1, by have := hK_of_adm LL T hadm i; omega⟩ := Fin.ext hb
+    rw [if_pos hb', (h1 b hb).1, (h1 b hb).2]; push_cast [Nat.cast_sub hn]; ring
+  · have hb' : b ≠ ⟨T.pos i + 1, by have := hK_of_adm LL T hadm i; omega⟩ := fun h => hb (by rw [h])
+    rw [if_neg hb', h0 b hb, zero_add]
 
 end Formalism.GM.DimensionMonotonicity
 
@@ -2710,19 +2701,15 @@ theorem highest_weight_dim_monotone : WeightSpaceDimMonotone := by
     have hgp := hVF hg
     rw [SetLike.mem_coe, pol_iff]
     rw [pol_iff] at hgp
-    have hmul := ((Submodule.mem_inf.mp hs).2).mul hgp
-    suffices hweight : Pi.single iK (u : ℤ) + (fun b => (L0.deg b : ℤ)) =
-        fun b => (L1.deg b : ℤ) by
-      rw [hweight] at hmul
-      exact hmul
+    have := ((Submodule.mem_inf.mp hs).2).mul hgp
+    convert this using 1
     funext b
-    simp only [Pi.add_apply]
+    simp only [Pi.add_apply, Pi.single_apply]
     by_cases hb : (b : ℕ) = T.pos i + 1
     · have hb' : b = iK := Fin.ext hb
-      rw [← hb', Pi.single_eq_same, (hL01b b hb).1, (hL01b b hb).2, hu, Nat.cast_sub hn,
-        sub_add_cancel]
-    · have hb' : b ≠ iK := fun h => hb (congrArg Fin.val h)
-      rw [Pi.single_eq_of_ne hb', hL01a b hb, zero_add]
+      rw [if_pos hb', (hL01b b hb).1, (hL01b b hb).2, hu]; push_cast [Nat.cast_sub hn]; ring
+    · have hb' : b ≠ iK := fun h => hb (by rw [h])
+      rw [if_neg hb', hL01a b hb, zero_add]
   haveI : FiniteDimensional ℚ_[p] (Pol p r L1) := pol_fd L1
   haveI hW0fd : FiniteDimensional ℚ_[p] W0 := Submodule.finiteDimensional_of_le hW0pol
   have hW0f : G.FinW W0 := by

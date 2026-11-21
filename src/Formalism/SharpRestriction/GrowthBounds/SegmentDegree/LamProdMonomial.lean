@@ -21,7 +21,7 @@ theorem lam_prod_monomial {ι : Type} (s : Finset ι) (f : ι → τ →₀ ℕ)
   classical
   induction s using Finset.induction_on with
   | empty => simp
-  | insert i s hi ih => rw [Finset.prod_insert hi, Finset.sum_insert hi, Finset.prod_insert hi, ih, monomial_mul]
+  | insert i s hi ih => rw [Finset.prod_insert hi, Finset.sum_insert hi, Finset.prod_insert hi, ih, monomial_mul_monomial]
 
 abbrev lam_ph (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (j : Fin J) : MvPolynomial σ R →ₐ[R] MvPolynomial τ R :=
   aeval fun v => (X (g j v) : MvPolynomial τ R) ^ e j v
@@ -48,16 +48,16 @@ theorem lam_coeff (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (l : τ �
       ∏ j, AddMonoidAlgebra.coeff (y j) (s j) := by
   classical
   rw [coeff_monomial_mul, one_mul, lam_expand, coeff_sum, Finset.sum_eq_single s]
-  · rw [coeff_monomial, if_pos rfl]
+  · rw [coeff_monomial, ite_eq_left rfl]
   · intro m hm hne
-    rw [coeff_monomial, if_neg]
+    rw [coeff_monomial, ite_eq_right]
     intro h
     apply hne
     refine hinj m s (fun j => ?_) hs h
     have := Fintype.mem_piFinset.mp hm j
     exact ((MvPolynomial.mem_restrictSupport_iff (R := F)).mp (hy j)) (Finset.mem_coe.mpr this)
   · intro hnot
-    rw [coeff_monomial, if_pos rfl]
+    rw [coeff_monomial, ite_eq_left rfl]
     rw [Fintype.mem_piFinset] at hnot
     push Not at hnot
     obtain ⟨j, hj⟩ := hnot
@@ -74,7 +74,7 @@ theorem lam_dual {I : Type} {M : Type} [AddCommGroup M] [Module F M] (u : I → 
     have h2 : Finsupp.linearCombination F u (Finsupp.single a 1) = u a := by simp
     rw [← h2]
     exact congrArg (fun f => f (Finsupp.single a 1)) hψ
-  refine ⟨ψ, fun a => by rw [h1]; simp, fun a b hb => by rw [h1, Finsupp.single_apply, if_neg hb.symm]⟩
+  refine ⟨ψ, fun a => by rw [h1]; simp, fun a b hb => by rw [h1, Finsupp.single_apply, ite_eq_right hb.symm]⟩
 
 theorem lam_li_fixed (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (l : τ →₀ ℕ) (S : Fin J → Set (σ →₀ ℕ))
     (hinj : ∀ m m' : Fin J → σ →₀ ℕ, (∀ j, m j ∈ S j) → (∀ j, m' j ∈ S j) →
@@ -89,7 +89,7 @@ theorem lam_li_fixed (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (l : �
     intro s
     by_cases hs : ∀ j, s j ∈ S j
     · have h1 := congrArg (AddMonoidAlgebra.coeff · (l + ∑ j, imgMon (g j) (e j) (s j))) hc
-      rw [coeff_sum, coeff_zero] at h1
+      rw [coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h1
       rw [← h1]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [coeff_smul, lam_coeff g e l S hinj (fun j => u j (a j)) (fun j => hS j (a j)) s hs, smul_eq_mul]

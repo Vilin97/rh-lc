@@ -6,7 +6,7 @@ public import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
 
 @[expose] public section
 
-open NumberField IsDedekindDomain GlobalTheory.Formalism.L2.Col
+open NumberField IsDedekindDomain
 open _root_.Formalism.BasicNotions _root_.Formalism.L2.Host _root_.Formalism.FrobeniusOrbits
 open _root_.Formalism.L2.DIV
 

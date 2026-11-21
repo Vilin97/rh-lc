@@ -70,7 +70,7 @@ theorem sE_eq (Λ : Submodule (𝓞 D.host.E) (VS D).V) (ρ : lpS D F0 Λ →ₗ
   simp only [smul_sub, Finset.sum_sub_distrib]
   rw [h1, hyb]
 
-theorem exists_sE (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hL : Submodule.IsLattice D.host.E Λ) :
+theorem exists_sE (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hL : Submodule.IsFullLattice D.host.E Λ) :
     ∃ sE : WbQ D F0 →ₗ[D.host.E] perpS (VS D) F0.X,
       (∀ a, (Submodule.Quotient.mk (sE a) : WbQ D F0) = a) ∧
       ∀ m ∈ Mof D F0 Λ, ((sE m : perpS (VS D) F0.X) : (VS D).V) ∈ Λ := by
@@ -83,9 +83,10 @@ theorem exists_sE (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hL : Submodule.IsLa
     fun y => Submodule.sub_mem _ (hlpP y) (hlpP (ρ y))
   have hPΛ : ∀ y : lpS D F0 Λ, (y : (VS D).V) - (ρ y : (VS D).V) ∈ Λ :=
     fun y => Submodule.sub_mem _ (hlpΛ y) (hlpΛ (ρ y))
-  have hMlat := Mof_isLattice D F0 Λ hL
+  have hMlat := Mof_isLattice D F0 Λ hL.toIsLattice
   obtain ⟨s, _, c, hcv, hsM⟩ :=
-    Formalism.HermitianLatticesTheory.dualLattice_basis (R := 𝓞 D.host.E) (Mof D F0 Λ) hMlat.span_eq_top
+    Formalism.HermitianLatticesTheory.dualLattice_basis (R := 𝓞 D.host.E) (Mof D F0 Λ)
+      (Mof_span D F0 Λ hL.span_eq_top)
   have hci : ∀ i, c i ∈ Mof D F0 Λ := fun i => by rw [hcv]; exact hsM i.2
   choose a haΛ hac using fun i => (mem_Mof D F0 Λ (c i)).1 (hci i)
   let y : s → lpS D F0 Λ := fun i => ⟨(a i : (VS D).V), Submodule.mem_inf.2 ⟨haΛ i, (a i).2⟩⟩

@@ -484,7 +484,7 @@ theorem frame_mulVec (H : Plane E m m₁) (w : Fin m₁ ⊕ Fin 2 → E) :
   simp [frame, Matrix.mulVec, dotProduct, Fintype.sum_sum_type, Fin.sum_univ_two]
   ring
 
-theorem exists_frame_inv (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsLattice E) :
+theorem exists_frame_inv (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsFullLattice E) :
     ∃ Q : Matrix (Fin m₁ ⊕ Fin 2) (Fin m) E, frame H * Q = 1 ∧ Q * frame H = 1 ∧ ∀ u ∈ Y.L,
       (fun i => (Q *ᵥ u) (.inl i)) ∈ Y₁.L ∧ (Q *ᵥ u) (.inr 0) • H.x ∈ Y.L ∧ (Q *ᵥ u) (.inr 1) • H.y ∈ Y.L := by
   have h1 : ∀ z ∈ Y.L, ∃ w, frame H *ᵥ w = z ∧ (fun i => w (.inl i)) ∈ Y₁.L ∧ w (.inr 0) • H.x ∈ Y.L ∧
@@ -492,8 +492,11 @@ theorem exists_frame_inv (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsLa
     obtain ⟨s, t, u, hs, ht, hu, rfl⟩ := hH.split z hz
     exact ⟨Sum.elim u ![s, t], frame_mulVec H _, hu, hs, ht⟩
   have h2 : LinearMap.range (frame H).mulVecLin = ⊤ := by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply top_unique
+    rw [← hL.span_eq_top, Submodule.span_le]
+    intro z hz
+    obtain ⟨w, hw, -⟩ := h1 z hz
+    exact ⟨w, hw⟩
   choose f hf using fun j : Fin m => LinearMap.range_eq_top.1 h2 (Pi.single j 1)
   have h3 : frame H * (Matrix.of f)ᵀ = 1 := by
     ext i j

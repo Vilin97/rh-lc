@@ -100,7 +100,9 @@ theorem lat_of_inAt {𝔞 : FI E} (h0 : 𝔞 ≠ 0) {v : Pl F} {x : AE F E} (hx 
         | mem z hz =>
           obtain ⟨a, ha, o, rfl⟩ := hz
           refine AddSubgroup.subset_closure ⟨idem F v * pairA F 0 a,
-            GlobalTheory.VacAny.at_mul_right (at_idem v) _, ?_, s * o, ?_, ?_⟩
+            (fun u hu => by
+              have hz : u * idem F v = 0 := by simpa only [smul_eq_mul] using at_idem v u hu
+              rw [smul_eq_mul, ← mul_assoc, hz, zero_mul]), ?_, s * o, ?_, ?_⟩
           · rw [map_mul, ev_idem, one_mul]; exact ha v
           · rw [mul_comm]; exact 𝔞.val.smul_mem o hs
           · change idem F v • (((1 : AF F) ⊗ₜ[F] s) * (pairA F 0 a ⊗ₜ[F] (o : E))) = _
@@ -174,7 +176,7 @@ theorem lat_cj {𝔞 : FI E} {v : Pl F} {z : AE F E} (hz : z ∈ Lat 𝔞 v) : c
     obtain ⟨a, h1, h2, s, hs, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨a, h1, h2, σ s, (mem_cj hσ).2 (by rwa [hσ]), rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (cA σ)]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem inAt_cj {𝔞 : FI E} (h0 : 𝔞 ≠ 0) {v : Pl F} {x : AE F E} (h : InAt 𝔞 v x) : InAt (cj hσ 𝔞) v (cA σ x) := by

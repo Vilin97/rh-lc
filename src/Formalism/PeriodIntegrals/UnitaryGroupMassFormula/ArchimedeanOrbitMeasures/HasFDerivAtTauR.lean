@@ -17,6 +17,8 @@ section Deriv
 
 variable {P Q : ℕ}
 
+local notation "Mat" => Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ
+
 def tauR (H X : Mat) : Mat :=
   (1 + 1) - (4 : ℂ) • (((1 + 1) - X) * Ring.inverse (H * ((1 + 1) + X) + ((1 + 1) - X)))
 
@@ -85,6 +87,8 @@ section Sub
 
 variable {P Q : ℕ}
 
+local notation "Mat" => Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ
+
 theorem tauDeriv_at (h : UpqT P Q) (x : lieU P Q) (hx : x ∈ D0 P Q)
     (hn : IsUnit (nH h (x : Mat)).det) :
     ∃ f' : lieU P Q →L[ℝ] lieU P Q,
@@ -117,7 +121,7 @@ theorem tauDeriv_at (h : UpqT P Q) (x : lieU P Q) (hx : x ∈ D0 P Q)
     rfl
   have hF : HasFDerivAt (fun y : lieU P Q => ((tauL h y : lieU P Q) : Mat)) (L.comp ι) x :=
     (HasFDerivAt.comp x hM ι.hasFDerivAt).congr_of_eventuallyEq heq
-  have hclosed : IsClosed ((lieU P Q : Set Mat)) := (lieU P Q).closed_of_finiteDimensional
+  have hclosed : IsClosed ((lieU P Q : Set Mat)) := (lieU P Q).isClosed_of_finiteDimensional
   have hmem : ∀ Y, (L.comp ι) Y ∈ lieU P Q := by
     intro Y
     exact hclosed.mem_of_tendsto (hF.lim_real Y) (Eventually.of_forall fun c =>

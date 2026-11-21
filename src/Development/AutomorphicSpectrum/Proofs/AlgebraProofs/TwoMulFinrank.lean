@@ -62,13 +62,12 @@ theorem ht_eigProj (σ : E →+* C) (x : V) :
     simp only [eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, P.ht_lin]
 
 theorem om'_lattice : P.om'.IsLattice C := by
-  have hT := T_lattice P
-  refine ⟨?_, ?_⟩
+  letI : P.om.IsLattice C := P.om_lat
+  apply Submodule.IsLattice.mono_of_fg C (show P.om' ≤ P.om from ?_) ?_
+  · rintro _ ⟨x, hx, rfl⟩
+    exact P.ht_mem x hx
   · rw [HTPoint.om']
-    exact hT.fg.map _
-  · rw [HTPoint.om', Submodule.map_coe, LinearMap.coe_restrictScalars, ← Submodule.map_span,
-      hT.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-    exact ht_surjective P
+    exact (T_lattice P).fg.map _
 
 theorem omHT_eq (σ : E →+* C) :
     P.omHT σ = (eigQuot P.ρ σ P.T).map (P.ht.restrictScalars O) := by
@@ -92,17 +91,19 @@ theorem dualLat_flip : dualLat P.e.flip P.T = P.T := by
   rw [e_skew P y x, neg_mem_iff]
 include P in
 theorem finite_V : Module.Finite C V := by
-  obtain ⟨s, hs⟩ := (T_lattice P).fg
+  have hfg : P.T.FG := by
+    rw [P.free.2.2]
+    exact Submodule.fg_span (Set.finite_range _)
+  obtain ⟨s, hs⟩ := hfg
   refine ⟨⟨s, ?_⟩⟩
-  rw [← Submodule.span_span_of_tower O, hs, (T_lattice P).span_eq_top]
+  rw [← Submodule.span_span_of_tower O, hs, P.free.2.1]
 include P in
 theorem two_mul_finrank : 2 * finrank C Ω = finrank C V := by
   haveI := finite_V P
   have hrefl : LinearMap.BilinForm.IsRefl P.e := fun x y h => by rw [e_skew P y x, h, neg_zero]
   have horth : LinearMap.BilinForm.orthogonal P.e (LinearMap.ker P.ht) = LinearMap.ker P.ht := by
     ext x
-    simp only [LinearMap.BilinForm.mem_orthogonal_iff, LinearMap.BilinForm.isOrtho_def,
-      LinearMap.mem_ker]
+    simp only [LinearMap.BilinForm.mem_orthogonal_iff, LinearMap.mem_ker]
     rw [P.lagr x]
     refine forall₂_congr fun y _ => ?_
     rw [e_skew P y x, neg_eq_zero]

@@ -123,8 +123,8 @@ variable {C : Type u} [Category.{v} C] {F : C ⥤ CommAlgCat.{0} R}
 def ptFunctor : C ⥤ (IsTriv s).FullSubcategory where
   obj T := ⟨Thick.triv (F.obj T) (x T) (hx T), rfl⟩
   map {T T'} a := ⟨Thick.trivHom (T := Thick.triv (F.obj T') (x T') (hx T')) (mp F a) (hc a)⟩
-  map_id T := ObjectProperty.hom_ext _ (Thick.hom_ext (mp_id F T))
-  map_comp a b := ObjectProperty.hom_ext _ (Thick.hom_ext (mp_comp F a b))
+  map_id T := ObjectProperty.hom_ext _ (Thick.Hom.ext' (AlgHom.ext (mp_id F T)))
+  map_comp a b := ObjectProperty.hom_ext _ (Thick.Hom.ext' (AlgHom.ext (mp_comp F a b)))
 
 def ptCoef : CoefMap (RingHom.id R) ((IsTriv s).ι ⋙ O (dp0 R) s) F where
   G := ptFunctor x hx hc

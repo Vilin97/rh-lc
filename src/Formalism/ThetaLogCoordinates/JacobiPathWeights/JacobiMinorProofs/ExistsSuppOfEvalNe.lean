@@ -253,8 +253,9 @@ theorem part_ne_zero {σ L : Type*} [CommRing L] (H : MvPolynomial σ L) (p : (�
   · rintro ⟨e, he, hp⟩ h
     have := congrArg (AddMonoidAlgebra.coeff · e) h
     rw [coeff_sum] at this
-    simp only [coeff_monomial, Finset.sum_ite_eq', Finset.mem_filter, coeff_zero] at this
-    rw [if_pos ⟨he, hp⟩] at this
+    simp only [coeff_monomial, Finset.sum_ite_eq', Finset.mem_filter,
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
+    simp only [he, hp, and_self, ite_true] at this
     exact (mem_support_iff.mp he) this
 
 theorem conj_mem_supp {L : Type*} [CommRing L] (isVec : ι → Bool) (S : Set ι)

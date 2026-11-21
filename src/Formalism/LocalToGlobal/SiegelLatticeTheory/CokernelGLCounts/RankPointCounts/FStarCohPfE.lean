@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.InstExists
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FStarCohPfD
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.EmbeddingIntegerAlgebraMap
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.LocModel
@@ -25,13 +26,13 @@ namespace CohIntPf
 
 variable {D : Formalism.BasicNotions.D7}
 
-theorem exists_den {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Submodule.IsLattice D.host.E Λ) (x : (VS D).V) :
+theorem exists_den {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Submodule.IsFullLattice D.host.E Λ) (x : (VS D).V) :
     ∃ d : 𝓞 D.host.F, d ≠ 0 ∧ algebraMap (𝓞 D.host.F) (𝓞 D.host.E) d • x ∈ Λ :=
   _root_.UpperTheory.Reformulated.B.ExistsBaseFieldIntegerDenominator.exists_den hΛ x
 
 variable (Zd : LocDat D)
 
-theorem bcP_mem_cof {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Submodule.IsLattice D.host.E Λ) (x : (VS D).V) :
+theorem bcP_mem_cof {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Submodule.IsFullLattice D.host.E Λ) (x : (VS D).V) :
     {p : PlF D | baseChange₂ D p x ∉ lattice₂ D Zd.M p Λ}.Finite := by
   obtain ⟨d, hd, hdx⟩ := exists_den hΛ x
   have hI : Ideal.span {d} ≠ (0 : Ideal (𝓞 D.host.F)) := by
@@ -42,7 +43,7 @@ theorem bcP_mem_cof {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Submodule.I
   by_contra hnd
   apply hp
   have := p.isPrime
-  rw [Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p hΛ]
+  rw [Formalism.L2.SG.Pf.LocalDenominators.baseChangeAt_mem_localLattice_iff Zd p hΛ.toIsLattice]
   exact (Formalism.HermitianLattices.Ext.L3.LocalSpans.mem_locF p.asIdeal Λ x).2 ⟨d, hnd, hdx⟩
 
 theorem scal_mem {p : PlF D} (hs : (Zd.M p).split = none)
@@ -90,7 +91,55 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word}
 
 theorem cohInt_holds : CohInt Zd u u' F0 what₂ := by
   intro hP γ Z F'₂ φ' _
-  have hΛ : Submodule.IsLattice D.host.E γ.lam := (hP.2.1.1 γ.lam γ.mem).1.1
+  have hgen := (hP.2.1.1 γ.lam γ.mem).1
+  have hΛ : Submodule.IsFullLattice D.host.E γ.lam := by
+    letI : Submodule.IsLattice D.host.E γ.lam := hgen.1
+    have h0 : Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) = ⊤ := by
+      apply top_unique
+      intro x _
+      have hx : (Formalism.L2.SG.InstExistsPf.crdE D).symm x ∈
+          Submodule.span D.host.E (Formalism.L2.SG.InstExistsPf.Lv D : Set _) := by
+        rw [Formalism.L2.SG.InstExistsPf.L_span]; trivial
+      have hh : ∀ y ∈ Submodule.span D.host.E (Formalism.L2.SG.InstExistsPf.Lv D : Set _),
+          Formalism.L2.SG.InstExistsPf.crdE D y ∈ Submodule.span D.host.E ((VS D).L0 : Set _) := by
+        intro y hy
+        induction hy using Submodule.span_induction with
+        | mem y hy => exact Submodule.subset_span hy
+        | zero => simp
+        | add x y _ _ hx hy => exact add_mem hx hy
+        | smul a x _ hx => simpa using Submodule.smul_mem _ a hx
+      simpa using hh _ hx
+    obtain ⟨p, hp⟩ := Ideal.exists_maximal (α := 𝓞 D.host.E)
+    letI : p.IsPrime := hp.isPrime
+    obtain ⟨g, hg, he⟩ := hgen.2 p hp
+    have hmap : ∀ x ∈ (VS D).L0, g x ∈ Submodule.span D.host.E (γ.lam : Set _) := by
+      intro x hx
+      have hx' : g x ∈ Formalism.HermitianLatticesTheory.loc (K := D.host.E) p γ.lam := by
+        rw [← he, Formalism.HermitianLatticesTheory.isomAct_mem_gmap, LinearEquiv.symm_apply_apply]
+        exact Formalism.HermitianLatticesTheory.locBasic_le_locS _ _ hx
+      obtain ⟨s, hs, hsx⟩ := Formalism.HermitianLatticesTheory.locBasic_mem_locS.mp hx'
+      have hs0 : algebraMap (𝓞 D.host.E) D.host.E s ≠ 0 := by
+        intro hz
+        have : s = 0 := (IsFractionRing.injective (𝓞 D.host.E) D.host.E) (by simpa using hz)
+        subst s
+        exact (Formalism.HermitianLatticesTheory.locBasic_hcompl_not_mem p 0 hs) (Ideal.zero_mem p)
+      have hmem := Submodule.subset_span hsx
+      have := Submodule.smul_mem (Submodule.span D.host.E (γ.lam : Set _))
+        (algebraMap (𝓞 D.host.E) D.host.E s)⁻¹ hmem
+      simpa [Algebra.smul_def, ← smul_assoc, hs0] using this
+    refine ⟨?_⟩
+    apply top_unique
+    intro x _
+    have hx : g.symm x ∈ Submodule.span D.host.E ((VS D).L0 : Set _) := by rw [h0]; trivial
+    have hh : ∀ y ∈ Submodule.span D.host.E ((VS D).L0 : Set _),
+        g y ∈ Submodule.span D.host.E (γ.lam : Set _) := by
+      intro y hy
+      induction hy using Submodule.span_induction with
+      | mem y hy => exact hmap y hy
+      | zero => simp
+      | add x y _ _ hx hy => simpa using add_mem hx hy
+      | smul a x _ hx => simpa using Submodule.smul_mem _ a hx
+    simpa using hh _ hx
   have hgood := Formalism.L2.SG.Pf.LocModel.good_cofinite Zd.δ Zd.M Zd.agree ∅
   rw [Filter.eventually_cofinite] at hgood
   refine (hgood.union (Set.finite_iUnion fun b => bcP_mem_cof Zd hΛ (frame F'₂ b))).subset ?_

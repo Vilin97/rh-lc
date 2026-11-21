@@ -51,12 +51,12 @@ abbrev prj (p : Out.IsPullDeg f D₀ D₁) : D₁.P.A.left ⟶ D₀.P.A.left :=
   p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f)
 
 def LetBC (p : Out.IsPullDeg f D₀ D₁) (ν : Out.GtPt D₀ (epsR A)) (ν₁ : Out.GtPt D₁ (epsR A')) : Prop :=
-  ν₁.b.left ≫ p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ ν.b.left ∧
+  ν₁.b.left ≫ p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f) = spMap (Formalism.L2.Pj.dualMap f) ≫ ν.b.left ∧
     ∀ χ : D₁.X, ∃ hψ : ∀ i : Fin 4,
         Out.DegPre.gtφT D₁ (epsR A') ν₁.b χ i ≫ p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f) =
-          spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ Out.DegPre.gtφT D₀ (epsR A) ν.b (p.xe χ) i,
+          spMap (Formalism.L2.Pj.dualMap f) ≫ Out.DegPre.gtφT D₀ (epsR A) ν.b (p.xe χ) i,
       LB.Gen.Maps (LB.linCombIso p.w _ Out.DegPre.gtε) (ν₁.s χ)
-        (Out.GeneratorPullback.pullAlong D₀.P.L (p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f)) _
+        (Out.GeneratorPullback.pullAlong D₀.P.L (p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f)) (spMap (Formalism.L2.Pj.dualMap f)) _
           Out.DegPre.gtε _ hψ (ν.s (p.xe χ)))
 
 def ThBC (p : Out.IsPullDeg f D₀ D₁) (th : D₀.P.L.Sec) (th₁ : D₁.P.L.Sec) : Prop :=
@@ -118,7 +118,7 @@ def IsArcFr (W : Wit Y a χ) (e : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Out
     z ≫ Y.j = spMap ι ≫ χ ∧ z ≫ pullback.fst _ _ = y.x ∧ φ ≫ Y.oF.t.G.hom = t'.G.hom ≫ z ∧
     φ ≫ Y.m0.toSABMap.φ = m1.φ ∧ φ ≫ Y.m.φ = m2.φ ≫ W.m.φ ∧
     (∀ τ k, ∃ (v : epsR (PowerSeries A) ⟶ W.t.G) (u' : Sp (DualNumber S) ⟶ t'.G.left),
-      LieImg W (e τ k) v ∧ u' ≫ m1.φ = y.u τ k ∧ u' ≫ m2.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι) ≫ v.left ∧
+      LieImg W (e τ k) v ∧ u' ≫ m1.φ = y.u τ k ∧ u' ≫ m2.φ = spMap (Formalism.L2.Pj.dualMap ι) ≫ v.left ∧
       u' ≫ t'.G.hom = spMap (algebraMap S (DualNumber S))) ∧
     ∃ (θ : LB.Sec W.t.PP.L) (w1 : LB.Iso t'.PP.L (Xo.univ.t.PP.L.pull m1.φ)) (w2 : LB.Iso t'.PP.L (W.t.PP.L.pull m2.φ))
       (σ' : LB.Sec t'.PP.L) (s1 : LB.Sec (Xo.univ.t.PP.L.pull m1.φ)) (θ2 : LB.Sec (W.t.PP.L.pull m2.φ)),

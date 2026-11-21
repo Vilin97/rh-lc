@@ -87,8 +87,9 @@ private theorem px_mul {Γ : Type} [TopologicalSpace Γ] {I : Ideal A} {a b : Γ
 
 private theorem px_coef {O : Type} [CommRing O] [Algebra O A] (B : Subalgebra O A) (M : Matrix (Fin n) (Fin n) A)
     (c : A) (hc : c ∈ B)
-    (h : ∀ α, MvPolynomial.coeff α (∑ a : Fin 2, (MvPolynomial.X a : MvPolynomial (Fin 2) A) •
-      (![1, M] a).map (MvPolynomial.C : A →+* MvPolynomial (Fin 2) A)).det ∈ B) (i : ℕ) : (c • M).charpoly.coeff i ∈ B := by
+    (h : ∀ α, (∑ a : Fin 2, (MvPolynomial.X a : MvPolynomial (Fin 2) A) •
+      (![1, M] a).map (MvPolynomial.C : A →+* MvPolynomial (Fin 2) A)).det.coeff α ∈ B)
+    (i : ℕ) : (c • M).charpoly.coeff i ∈ B := by
   let φ : MvPolynomial (Fin 2) A →ₐ[A] Polynomial A := MvPolynomial.aeval ![Polynomial.X, -Polynomial.C c]
   have h1 : φ (∑ a : Fin 2, (MvPolynomial.X a : MvPolynomial (Fin 2) A) • (![1, M] a).map (MvPolynomial.C : A →+* MvPolynomial (Fin 2) A)).det =
       (c • M).charpoly := by
