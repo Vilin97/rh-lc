@@ -118,9 +118,6 @@ theorem factor_wVal (e : ℕ) :
   rw [e₂]
   refine (toStkA_valR _ _ _ (top_le_wchart u c b₀ ce hce hbe hL hM (e + 1) _) _).trans
     (Eq.trans ?_ (toStkA_valR _ _ _ ht _).symm)
-  have h := wv_comp_thickMap (U := u.U.toUnifPre) e (ce e) (cpt _) jM jL (mem_pull.1 (ht trivial).1) (mem_pull.1 (ht trivial).2)
-  rw [← e₁] at h
-  exact congrArg Units.val h
 
 theorem exists_omega [ArithBase o Ω] (hc : c ≫ u.G.hom = spMap u.j) : ∃ (ω : PadicAlgCl p) (ωe : ℕ → OO p), ω ≠ 0 ∧
     Tendsto (fun e => (ωe e : PadicAlgCl p)) atTop (𝓝 ω) ∧
@@ -205,9 +202,6 @@ theorem hasSum_integral (c : Sp (OO p) ⟶ u.G.left) (b₀ : Sp (OO p) ⟶ u.D.t
     refine (congrArg₂ (· * ·) (toStkA_map_valR _ b₀ _ _ ((top_le_iff_cpt _ _).2
       (Set.mem_iInter.2 fun i => hd ((b₀ ≫ u.D.toPre.famφB α i) (cpt _)))) _) (toStkA_valR _ _ _ ((top_le_iff_cpt _ _).2
       (Set.mem_iInter.2 fun i => ?_)) _)).symm
-    have := hJ (ce e ≫ Oφl u.U.toUnifPre e α i)
-    rw [show J (ce e ≫ Oφl u.U.toUnifPre e α i) = _ by rw [level_Oφ u b₀ _ (hbe e), eJ]] at this
-    exact this
 
 end GlobalTheory.ZH.IntegralSum
 end

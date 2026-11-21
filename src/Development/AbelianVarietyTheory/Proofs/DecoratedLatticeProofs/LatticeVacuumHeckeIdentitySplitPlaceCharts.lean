@@ -27,7 +27,7 @@ lemma opOf_dualC_splitC {D : D7} {V : HSp D} {M : Type} [AddCommGroup M] [Module
     GlobalTheory.Hk3.opOf π P (GlobalTheory.Hk3.dualC (GlobalTheory.Hk3.splitC n z)) =
       ∑ j ∈ Finset.range (n + 1), z j • GlobalTheory.Hk3.opOf π P (Finsupp.single (dualLab (splitLab n j)) 1) := by
   unfold GlobalTheory.Hk3.opOf GlobalTheory.Hk3.dualC GlobalTheory.Hk3.splitC
-  rw [Finsupp.mapDomain_finset_sum, ← Finsupp.sum_finset_sum_index]
+  rw [Finsupp.mapDomain_finsetSum, ← Finsupp.sum_finsetSum_index]
   · refine Finset.sum_congr rfl fun j _ => ?_
     rw [Finsupp.mapDomain_single, Finsupp.sum_single_index, Finsupp.sum_single_index, one_smul]
     · simp

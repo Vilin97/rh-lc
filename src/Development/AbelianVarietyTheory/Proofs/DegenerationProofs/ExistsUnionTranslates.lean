@@ -115,21 +115,33 @@ theorem ext_apply {M : Model R A} {N : Model R A'} {f : A ⟶ A'} {U : M.Y.left.
   have b := hp.lift_snd t w e
   rw [← a, Category.assoc, h.2, ← Category.assoc, b]
 
+set_option backward.isDefEq.respectTransparency false in
 theorem prod_j_fst (M : Model R A) (N : Model R A') :
     (M.prod N).j ≫ (fst M.Y N.Y).left = (fst A A').left ≫ M.j := by
   have h : (M.prod N).e.inv ≫ (Over.pullback (spMap (algebraMap R K))).map (fst M.Y N.Y) = fst A A' ≫ M.e.inv := by
     simp [Model.prod]
   have h2 := congrArg (fun x => x.left ≫ pullback.fst M.Y.hom (spMap (algebraMap R K))) h
-  simp only [Over.comp_left, Category.assoc, Over.pullback_map_left] at h2
-  exact (Category.assoc _ _ _).trans h2
+  have hn : ((Over.pullback (spMap (algebraMap R K))).map (fst M.Y N.Y)).left ≫
+      pullback.fst M.Y.hom (spMap (algebraMap R K)) =
+      pullback.fst (M.Y ⊗ N.Y).hom (spMap (algebraMap R K)) ≫ (fst M.Y N.Y).left := by
+    simp
+  simp only [Over.comp_left, Category.assoc] at h2
+  rw [hn] at h2
+  simpa [Model.j, Model.prod, Category.assoc] using h2
 
+set_option backward.isDefEq.respectTransparency false in
 theorem prod_j_snd (M : Model R A) (N : Model R A') :
     (M.prod N).j ≫ (snd M.Y N.Y).left = (snd A A').left ≫ N.j := by
   have h : (M.prod N).e.inv ≫ (Over.pullback (spMap (algebraMap R K))).map (snd M.Y N.Y) = snd A A' ≫ N.e.inv := by
     simp [Model.prod]
   have h2 := congrArg (fun x => x.left ≫ pullback.fst N.Y.hom (spMap (algebraMap R K))) h
-  simp only [Over.comp_left, Category.assoc, Over.pullback_map_left] at h2
-  exact (Category.assoc _ _ _).trans h2
+  have hn : ((Over.pullback (spMap (algebraMap R K))).map (snd M.Y N.Y)).left ≫
+      pullback.fst N.Y.hom (spMap (algebraMap R K)) =
+      pullback.fst (M.Y ⊗ N.Y).hom (spMap (algebraMap R K)) ≫ (snd M.Y N.Y).left := by
+    simp
+  simp only [Over.comp_left, Category.assoc] at h2
+  rw [hn] at h2
+  simpa [Model.j, Model.prod, Category.assoc] using h2
 
 theorem twist_j (M : Model R A) (f : A ≅ A') : f.hom.left ≫ (M.twist f).j = M.j := by
   simp only [Model.j, Model.twist, Iso.trans_inv, Over.comp_left, Category.assoc]
@@ -173,7 +185,7 @@ theorem exists_move {X Y S : Scheme.{0}} (f : X ⟶ S) (g : Y ⟶ S) (O : (pullb
 theorem irr_union {X I : Type} [TopologicalSpace X] (S : Set X) (U : I → Set X) (i₀ : I) (hU : ∀ i, IsOpen (U i))
     (hI : ∀ i, IsPreirreducible (S ∩ U i)) (hc : ∀ x ∈ S, ∃ i, x ∈ U i) (hm : ∀ i, (S ∩ U i ∩ U i₀).Nonempty) :
     IsIrreducible S := by
-  refine ⟨(hm i₀).mono fun x hx => hx.1.1, ?_⟩
+  refine ⟨(hm i₀).mono (show S ∩ U i₀ ∩ U i₀ ⊆ S from fun x hx => hx.1.1), ?_⟩
   have hs : S ⊆ closure (S ∩ U i₀) := fun x hx => by
     obtain ⟨i, hi⟩ := hc x hx
     exact closure_mono (show S ∩ U i ∩ U i₀ ⊆ S ∩ U i₀ from fun y hy => ⟨hy.1.1, hy.2⟩)

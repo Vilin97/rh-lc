@@ -59,8 +59,29 @@ theorem exists_polAV_fibre {S : Scheme.{0}} (G : Over S) [GrpObj G] [IsCommMonOb
   have h := isGrpPullback_pullback G x
   have hφ : IsGrpPullback ((Over.pullback x).obj G) ((Over.pullback W.ι).obj G) x' φ :=
     (isGrpPullback_pullback G W.ι).cancel (h.congr ex.symm eφ.symm) (pullback.lift_snd _ _ _)
-  have hW := IsSemiAbelian.pullback W.ι G hG
-  have hab : IsAbelianScheme ((Over.pullback W.ι).obj G) := ⟨hW.comm, hW.smooth, hp, hW.geomConnected⟩
+  have hab : IsAbelianScheme ((Over.pullback W.ι).obj G) := by
+    have := hG.comm
+    have := hG.smooth
+    have := hG.geomConnected
+    refine ⟨inferInstance, ?_, hp, ?_⟩
+    · change Smooth (pullback.snd G.hom W.ι)
+      infer_instance
+    · change GeometricallyConnected (pullback.snd G.hom W.ι)
+      infer_instance
+  have pull_isLB {X Y : Scheme.{0}} {M : LB X} (hM : M.IsLB) (F : Y ⟶ X) : (M.pull F).IsLB := by
+    refine { cover := top_le_iff.1 ?_, g_self := ?_, cocycle := ?_ }
+    · intro y _
+      obtain ⟨i, hi⟩ := exists_chart hM (F y)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
+    · intro J
+      refine unit_ext fun y hy => ?_
+      rw [gm_res (𝟙 Y) y _ hy, map_one, gm_pull_g M F (𝟙 Y) y J J hy hy]
+      exact gm_self hM _ y (mem_pull.1 hy)
+    · intro I J K
+      refine unit_ext fun y hy => ?_
+      rw [map_mul, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_pull_g M F (𝟙 Y) y I J hy.1.1 hy.1.2,
+        gm_pull_g M F (𝟙 Y) y J K hy.1.2 hy.2, gm_pull_g M F (𝟙 Y) y I K hy.1.1 hy.2]
+      exact gm_cocycle hM _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
   have hL := pull_isLB L.isLB (pullback.fst G.hom x)
   have hiso : LBIso (L.L.pull (pullback.fst G.hom x)) ((L.L.pull (pullback.fst G.hom W.ι)).pull φ) :=
     LBIso.chartPull (chartPullSame L.L _ _ _ φ fun _ => eφ.symm) (Geo.Tor.chartPullPull _ φ φ rfl)

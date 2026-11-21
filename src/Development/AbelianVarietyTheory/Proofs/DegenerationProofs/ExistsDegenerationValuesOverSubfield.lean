@@ -33,7 +33,8 @@ theorem exists_values_subfield : GlobalFnsSt → ∀ (R : Type) [CommRing R] [Is
   obtain ⟨N, ν, h₁, h₂⟩ := exists_numOf_th ν₀ ν'.th ν'.th_gen
   have hJ : ∀ ψ, ν'.J (spMap f ≫ ψ) = ν.J ψ := fun ψ => by rw [h₁, h₀]
   refine ⟨N, ν, numHom f hf ν ν' hJ h₂.symm, eX_numHom f hf ν ν' hJ h₂.symm, fun k p p' c c' h hc hc' => ?_⟩
-  obtain rfl := (qkExt_iff hb f hf p p').1 h
+  have hg : p'.g = gtExt D f hf p.g := (eq_gtExt_iff f hf _ _).2 h.2
+  rw [hg] at hc'
   exact numHom_rel f hf ν ν' hJ h₂.symm hc hc'
 
 end GlobalTheory.ValuesSubfield

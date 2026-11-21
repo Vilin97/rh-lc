@@ -122,8 +122,16 @@ theorem data_of_model : HV → Laws6 → GlobalTheory.LN.UDvrSt → GlobalTheory
   have G' := hGt M.W M.P.D.toPre M.P.D.psi_even M.P.D.tau_bimult C N' ν'
   choose lab' hlab' using fun (k : ℕ) (x : D.La) => ((G'.2.2.2.2 k).1 (I'.ev k x)).exists
   obtain ⟨lM, linM⟩ := GlobalTheory.T.torsionIsometry_values_isTorsionLabelSystem hGt hWp E H D M.W M.P.D.toPre M.P.oD M.P.D.psi_even M.P.D.tau_bimult C I' N' ν' lab' hlab'
+  have qEqEquiv (k : ℕ) : Equivalence (N'.QEq (k := k)) := by
+    refine ⟨?_, ?_, ?_⟩
+    · intro p
+      exact ⟨0, by simp, by simp⟩
+    · rintro p p' ⟨z, h, h'⟩
+      exact ⟨-z, by rw [h, smul_neg, add_neg_cancel_right], by rw [h', N'.io_neg, mul_inv_cancel_right]⟩
+    · rintro p p' p'' ⟨z, h, h'⟩ ⟨w, e, e'⟩
+      exact ⟨z + w, by rw [e, h, smul_add, add_assoc], by rw [e', h', N'.io_add, _root_.mul_assoc]⟩
   have refl' : ∀ k x, QkPt.Equiv _ C (I'.ev k x) (I'.ev k x) := fun k x =>
-    ((G'.2.2.2.2 k).2.2 _ _ _ _ (hlab' k x) (hlab' k x)).2 ((N'.qEq_equivalence k).refl _)
+    ((G'.2.2.2.2 k).2.2 _ _ _ _ (hlab' k x) (hlab' k x)).2 ((qEqEquiv k).refl _)
   have th := fun j => GlobalTheory.T.modelSeries_eq_unit_mul_thetaPoint hL (GlobalTheory.T.theta_constants_eq_degeneration_series hV hGt hFam) E H D C o M N' ν' (n ^ j) ho.pow (I'.ev _) (lab' _) _
     (fun x z hz => hTo _ (pow_pos (hp j) 2) x _ z (refl' _ x) hz) (hlab' _)
     ((hθ j).2 (lab _) fun x => hlab _ x (pow_pos (hp j) 2))
@@ -159,7 +167,7 @@ theorem data_of_model : HV → Laws6 → GlobalTheory.LN.UDvrSt → GlobalTheory
       (existsUnique_twRel A.be u (r (n ^ j)) (hr.pow (hp j)) (A.q _ x)).unique h₁ (hlab _ x (hp j))
     obtain ⟨x₁, a₁, a₂⟩ := hJ' j _ q' h₂ h₃
     have a₃ := (lM.2.1 _ (hp j) x₁ x).2 ((lT.2.1 _ (hp j) x₁ x).1 a₁)
-    have E' := N'.qEq_equivalence (n ^ j)
+    have E' := qEqEquiv (n ^ j)
     exact hTo _ (hp j) x p' z (((G'.2.2.2.2 _).2.2 _ _ _ _ (hlab' _ x) h₄).2 (E'.trans (E'.symm a₃) a₂)) h₅
 
 end GlobalTheory.ModelData

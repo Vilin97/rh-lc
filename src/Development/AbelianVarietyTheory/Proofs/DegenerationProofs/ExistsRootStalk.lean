@@ -227,17 +227,25 @@ theorem val_theta : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TW
   have up := GlobalTheory.T.uniformisation_torsion_maps_compatible_in_level hL V _ hA D A G hG U F m m (m ^ 2) hm.pos hm.pos (sq m)
   obtain ⟨g, hg⟩ := (gt_onto_divisible_kernel hL V _ hA D F).2.1 m hm.pos p.g
   have hg' := (isNsmul_iff_eq _ _ _).1 hg
-  let q : QkPt D.toPre F (m ^ 2) := qkMk hB p.y g (by rw [sq, mul_smul, ← hg', qk_nsmul hB])
+  let q : QkPt D.toPre F (m ^ 2) := ⟨p.y, g, by
+    obtain ⟨a, ha, hb⟩ := p.eq
+    exact ⟨a, (isNsmul_iff_eq _ _ _).2 (by rw [(isNsmul_iff_eq _ _ _).1 ha, sq, mul_smul, ← hg']), hb⟩⟩
   obtain ⟨f, f₁, -⟩ := GlobalTheory.TorsionIso.torsion_eq hL V _ hA D A G hG U F (m ^ 2) (pow_pos hm.pos 2)
   obtain ⟨f', f₁', -⟩ := GlobalTheory.TorsionIso.torsion_eq hL V _ hA D A G hG U F m hm.pos
   have hq : QkToAkU U.toUnifPre F (m ^ 2) q (f q) := (f₁ _ _).2 rfl
-  obtain rfl : x = f q ^ m := ((f₁' _ _).1 hx).trans ((f₁' _ _).1 ((up p q _).2 rfl hg hq)).symm
+  have hqy : p.y = q.y := rfl
+  have hqg : GtPtF.IsNsmul m q.g p.g := by
+    change GtPtF.IsNsmul m g p.g
+    exact hg
+  obtain rfl : x = f q ^ m := ((f₁' _ _).1 hx).trans ((f₁' _ _).1 ((up p q _).2 hqy hqg hq)).symm
   refine ⟨fun e c he hval => ?_, fun n hn hnm hy => ?_⟩
   · obtain ⟨⟨t, c₀⟩, hT, -⟩ := GlobalTheory.existsUnique_thetaConst hL V A F rig hN.2.1 m hm th (f q) (hq w₀ hN.1).1
     rw [← val_eq_of_pow_eq v m2 (pow_eq_of_thC hL.1.globalFns hm hT he hval)]
     exact ua₁ q _ t c₀ hq hT
   · obtain ⟨q', x', t, c₀, hy', hq', hpow, hT, h0⟩ := ua₂ n hn hnm q _ hy hq
-    let p' : QkPt D.toPre F m := qkMk hB q'.y (m • q'.g) (by rw [← mul_smul, ← sq, qk_nsmul hB])
+    let p' : QkPt D.toPre F m := ⟨q'.y, m • q'.g, by
+      obtain ⟨a, ha, hb⟩ := q'.eq
+      exact ⟨a, (isNsmul_iff_eq _ _ _).2 (by rw [(isNsmul_iff_eq _ _ _).1 ha, ← mul_smul, ← sq]), hb⟩⟩
     refine ⟨p', x' ^ m, hy', (up p' q' x').2 rfl ((isNsmul_iff_eq _ _ _).2 rfl) hq', hpow, fun e c he hval => ?_⟩
     rw [← val_eq_of_pow_eq v m2 (pow_eq_of_thC hL.1.globalFns hm hT he hval), h0]
 

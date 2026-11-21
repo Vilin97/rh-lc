@@ -97,7 +97,7 @@ theorem level_of_generic_of_indep : Laws → ∀ (R K : Type) [CommRing R] [IsDo
     obtain ⟨c, hc, -⟩ := (hL.weil _ P M (baseOver (Sp R))).1 (y i) (y j) (tor i) (tor j)
     obtain ⟨r, hr, ⟨cu⟩⟩ := PolAV_exists_cubical hL.cube P₀
     have := P₀.isAb.comm
-    have h₁ := WeilCube.weilIs_pull cu hL.globalFns P₀.isAb P.isLB hp w hw (T := baseOver (Sp K))
+    have h₁ := WeilCube.weilIs_pull (c := cu) hL.globalFns P₀.isAb P.isLB hp w hw (T := baseOver (Sp K))
       (T₀ := baseOver (Sp R)) (spMap (algebraMap R K)) (by simp) (lev₀.torsion (cs i)) (lev₀.torsion (cs j))
       (hy' i) (hy' j) hc
     have h₂ := ((hL.weil _ P₀ M (baseOver (Sp K))).1 _ _ (lev₀.torsion (cs i)) (lev₀.torsion (cs j))).unique h₁

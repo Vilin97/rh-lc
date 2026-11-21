@@ -37,7 +37,8 @@ theorem _root_.GlobalTheory.exists_arithFrobenius_absGalois (V K : Type) [CommRi
     simp [IsScalarTower.algebraMap_apply V K Ω, hv, hk]
   haveI : (maximalIdeal (integralClosure V Ω)).LiesOver (maximalIdeal V) := by
     refine ⟨(IsLocalRing.eq_maximalIdeal ?_).symm⟩
-    exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _
+    exact Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := V)
+      (maximalIdeal (integralClosure V Ω))
   letI : Fintype (V ⧸ maximalIdeal V) := @Fintype.ofFinite _ hfin
   letI : Field (V ⧸ maximalIdeal V) := Ideal.Quotient.field _
   letI : Field (integralClosure V Ω ⧸ maximalIdeal (integralClosure V Ω)) :=

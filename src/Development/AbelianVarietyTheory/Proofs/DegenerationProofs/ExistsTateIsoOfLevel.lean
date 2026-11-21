@@ -44,7 +44,7 @@ theorem exists_retract {F R K κ : Type} [CommRing F] [CommRing R] [Field K] [Is
     induction hr using Algebra.adjoin_induction with
     | mem x hx => exact Algebra.subset_adjoin (by simp only [Finset.coe_insert, Finset.coe_image]; exact Or.inr (Or.inr ⟨x, hx, rfl⟩))
     | algebraMap x => exact (RingHom.congr_fun hφ x).symm ▸ A.algebraMap_mem (b x)
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   obtain ⟨s⟩ := nonempty_algHom K A
   have h₁ : (u : κ) ∈ A := Algebra.subset_adjoin (by simp)

@@ -40,6 +40,7 @@ theorem exists_embedding {A₀ A F : Type} [CommRing A₀] [IsDomain A₀] [Comm
   refine ⟨ψ.toRingHom, ?_, fun r => ψ.commutes r⟩
   rw [RingHom.injective_iff_ker_eq_bot]
   refine Ideal.eq_bot_of_comap_eq_bot (R := A₀) ?_
+  change Ideal.comap (algebraMap A₀ A) (RingHom.ker ψ.toRingHom) = ⊥
   rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
   intro x y h
   exact hω ((ψ.commutes x).symm.trans (h.trans (ψ.commutes y)))
@@ -128,7 +129,7 @@ theorem hasArcData_pull (h1 : Laws) (h3 : Laws3) (h4 : Laws4) (h5 : Laws5) {O : 
     (h : Y.HasArcData a (IsLocalRing.maximalIdeal V) f u χ) :
     Y.HasArcData a (IsLocalRing.maximalIdeal W) (e.comp f) (e u) (spMap e ≫ χ) := by
   obtain ⟨w⟩ := (Y.hasArcData_iff a _ f u χ).1 h
-  obtain ⟨w', -⟩ := ArcWit.baseChange h3.cubePull h1.polBaseChange h4.unifBaseChange h5 (qkPullExists h1.globalFns)
+  obtain ⟨w', -⟩ := ArcWit.baseChange (I' := IsLocalRing.maximalIdeal W) h3.cubePull h1.polBaseChange h4.unifBaseChange h5 (qkPullExists h1.globalFns)
     polOActPull (admissibleBase_maximalIdeal_completeDVR hV) (admissibleBase_maximalIdeal_completeDVR hW) w e he
     (Ideal.map_le_iff_le_comap.2 fun x hx => map_nonunit e x hx)
   exact (Y.hasArcData_iff a _ _ _ _).2 ⟨w'⟩

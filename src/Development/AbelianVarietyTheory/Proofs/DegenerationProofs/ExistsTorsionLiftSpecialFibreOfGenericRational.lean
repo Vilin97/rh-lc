@@ -47,6 +47,7 @@ theorem exists_torsion_lift_of_generic_rational : (∀ (V : Type) [CommRing V] [
   have hβ : Function.Injective β.toRingHom := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := V) ?_
+    change Ideal.comap (algebraMap V W) (RingHom.ker β.toRingHom) = ⊥
     rw [RingHom.comap_ker]
     refine (RingHom.injective_iff_ker_eq_bot _).1 ?_
     rw [show β.toRingHom.comp (algebraMap V W) = algebraMap V C from β.comp_algebraMap]

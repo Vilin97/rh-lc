@@ -76,15 +76,35 @@ theorem qEq_twist {j k m : ℕ} (β : N.Form j) {u r r' : Oˣ} (h₁ : r' ^ m = 
 theorem exists_image (J : NumD.Iso N N') {k : ℕ} (p : N.QT k) :
     ∃ q : N'.QT k, q.1.1.toAdd = J.e p.1.1.toAdd ∧ J.Rel p.1.2 q.1.2 := by
   let I := NumD.Hom.ofIso J
-  have hp : p.1.2 ^ k = N.io p.1.1.toAdd := N.mem_QT.1 p.2
-  have h1 : I.Rel (p.1.2 ^ k) (I.img p.1.2 ^ k) := (I.rel_img p.1.2).pow k
-  have h2 : I.Rel (p.1.2 ^ k) (N'.io (I.e p.1.1.toAdd)) := by
-    rw [hp]
-    exact I.rel_io _
-  have h3 : I.img p.1.2 ^ k = N'.io (J.e p.1.1.toAdd) :=
-    ((I.rel_iff _ _).1 h1).trans ((I.rel_iff _ _).1 h2).symm
-  exact ⟨⟨(Multiplicative.ofAdd (J.e p.1.1.toAdd), I.img p.1.2), N'.mem_QT.2 h3⟩, rfl,
-    (NumD.Hom.ofIso_rel J _ _).1 (I.rel_img _)⟩
+  have hid (u : Oˣ) : (Units.map (RingHom.id O).toMonoidHom) u = u := by
+    ext
+    rfl
+  let g : N'.Gt :=
+    ⟨I.φ p.1.2.b, fun χ => p.1.2.s (I.e.symm χ) * I.h (N.c (I.e.symm χ)) * I.h p.1.2.b / I.h (N.c (I.e.symm χ) * p.1.2.b),
+      fun χ χ' => by
+        obtain ⟨χ, rfl⟩ := I.e.surjective χ
+        obtain ⟨χ', rfl⟩ := I.e.surjective χ'
+        rw [← map_add (f := _)]
+        simp only [AddEquiv.symm_apply_apply]
+        rw [I.c_eq, I.c_eq, N.c_add]
+        have a := I.θ_eq (N.c χ) (N.c χ') p.1.2.b
+        simp only [hid] at a
+        have b := p.1.2.mult χ χ'
+        apply Additive.ofMul.injective
+        replace a := congrArg Additive.ofMul a
+        replace b := congrArg Additive.ofMul b
+        simp only [ofMul_mul, ofMul_div] at a b ⊢
+        linear_combination (norm := abel) a + b⟩
+  have hg : I.Rel p.1.2 g := ⟨rfl, fun χ => by simp only [g, AddEquiv.symm_apply_apply, div_mul_cancel, hid]⟩
+  have h1 : I.Rel (p.1.2 ^ k) (g ^ k) := hg.pow k
+  rw [N.mem_QT.1 p.2] at h1
+  have h2 := I.rel_io p.1.1.toAdd
+  have h3 : g ^ k = N'.io (J.e p.1.1.toAdd) :=
+    NumD.Gt.ext (h1.1.trans h2.1.symm) (funext fun χ => by
+      obtain ⟨χ, rfl⟩ := I.e.surjective χ
+      exact mul_right_cancel ((h1.2 χ).trans (h2.2 χ).symm))
+  exact ⟨⟨(Multiplicative.ofAdd (J.e p.1.1.toAdd), g), N'.mem_QT.2 h3⟩, rfl,
+    (NumD.Hom.ofIso_rel J _ _).1 hg⟩
 
 theorem qEq_image (J : NumD.Iso N N') {k m : ℕ} {p' : N.QT (k * m)} {p : N.QT k} {q' : N'.QT (k * m)} {q : N'.QT k}
     (a' : q'.1.1.toAdd = J.e p'.1.1.toAdd) (b' : J.Rel p'.1.2 q'.1.2) (a : q.1.1.toAdd = J.e p.1.1.toAdd)
@@ -100,8 +120,12 @@ theorem qEq_image (J : NumD.Iso N N') {k m : ℕ} {p' : N.QT (k * m)} {p : N.QT 
     have r1 : I.Rel p.1.2 q.1.2 := (NumD.Hom.ofIso_rel J _ _).2 b
     have r2 : I.Rel p.1.2 (q'.1.2 ^ m * N'.io (J.e z)) := by
       rw [hg']
-      exact (((NumD.Hom.ofIso_rel J _ _).2 b').pow m).mul (I.rel_io z)
-    exact ((I.rel_iff _ _).1 r1).trans ((I.rel_iff _ _).1 r2).symm
+      have rb : I.Rel p'.1.2 q'.1.2 := (NumD.Hom.ofIso_rel J _ _).2 b'
+      exact (rb.pow m).mul (I.rel_io z)
+    apply NumD.Gt.ext (r1.1.trans r2.1.symm)
+    refine funext fun χ => ?_
+    obtain ⟨χ, rfl⟩ := I.e.surjective χ
+    exact mul_right_cancel ((r1.2 χ).trans (r2.2 χ).symm)
 
 private theorem pow_left_of_isGrpPullback' {S S' : Scheme.{0}} {G : Over S} {G' : Over S'} [GrpObj G] [GrpObj G']
     {f : S' ⟶ S} {φ : G'.left ⟶ G.left} (h : IsGrpPullback G' G f φ) {T : Over S'} (x : T ⟶ G')

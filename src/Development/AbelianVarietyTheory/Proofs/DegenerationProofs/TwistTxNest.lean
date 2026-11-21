@@ -56,12 +56,26 @@ theorem tx_of_qEq {O : Type} [CommRing O] [TopologicalSpace O] (N : NumD O) {m :
 
 theorem qEq_pow {O : Type} [CommRing O] (N : NumD O) {La : Type} [AddCommGroup La] {j : ℕ} (q : La → N.QT j)
     (hq : ∀ a b, N.QEq (q a * q b) (q (a + b))) (x : La) (n : ℕ) : N.QEq (q x ^ (n + 1)) (q ((n + 1) • x)) := by
-  have E := N.qEq_equivalence j
+  have E : Equivalence (N.QEq (k := j)) := by
+    constructor
+    · intro p
+      exact ⟨0, by simp, by simp⟩
+    · rintro p p' ⟨z, h, h'⟩
+      exact ⟨-z, by rw [h, smul_neg, add_neg_cancel_right], by rw [h', N.io_neg, mul_inv_cancel_right]⟩
+    · rintro p p' p'' ⟨z, h, h'⟩ ⟨w, e, e'⟩
+      exact ⟨z + w, by rw [e, h, smul_add, add_assoc], by rw [e', h', N.io_add, _root_.mul_assoc]⟩
+  have qmul : ∀ {p p' q q' : N.QT j}, N.QEq p p' → N.QEq q q' → N.QEq (p * q) (p' * q') := by
+    intro p p' q q' ⟨z, h1, h2⟩ ⟨w, h3, h4⟩
+    refine ⟨z + w, ?_, ?_⟩
+    · change p'.1.1.toAdd + q'.1.1.toAdd = p.1.1.toAdd + q.1.1.toAdd + _
+      rw [h1, h3, smul_add]; abel
+    · change p'.1.2 * q'.1.2 = p.1.2 * q.1.2 * _
+      rw [h2, h4, N.io_add]; exact mul_mul_mul_comm _ _ _ _
   induction n with
   | zero => rw [zero_add, pow_one, one_smul]; exact E.refl _
   | succ n ih =>
     rw [pow_succ, succ_nsmul x (n + 1)]
-    exact E.trans (TateInh.qEq_mul N ih (E.refl _)) (hq _ _)
+    exact E.trans (qmul ih (E.refl _)) (hq _ _)
 end GlobalTheory.Ex.TwNest
 
 namespace GlobalTheory.Ex

@@ -54,7 +54,7 @@ theorem exists_ringHom_lift {S : Scheme.{0}} {A : Over S} [GrpObj A] [IsCommMonO
     ∃ F : O →+* Module.End ℂ V, ∀ a z, ex (F a z) = ex z ≫ act.act a := by
   choose F hF hU using fun a => hlift (act.act a) (act.hom a)
   have add : ∀ a b, F (a + b) = F a + F b := fun a b => (hU _ _ fun z => by
-    rw [LinearMap.add_apply, hadd, hF, hF, act.map_add (f := _)]
+    rw [LinearMap.add_apply, hadd, hF, hF, act.map_add]
     exact (MonObj.comp_mul _ _ _).symm).symm
   refine ⟨RingHom.mk' ⟨⟨F, (hU _ _ fun z => ?_).symm⟩, fun a b => (hU _ _ fun z => ?_).symm⟩ add, hF⟩
   · rw [act.map_one, Category.comp_id]; rfl

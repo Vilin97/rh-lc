@@ -255,6 +255,7 @@ theorem similitude_algebraic : ∀ (Λ : Type) [AddCommGroup Λ] (Q : Λ → ℤ
   have hconj : Pc = (X - C ((starRingEnd ℂ) β)) * f' := by
     have : Pc.map (starRingEnd ℂ) = Pc := by
       rw [hPc, Polynomial.map_map]; congr 1
+      ext n; simp
     rw [← this, hf]; simp [hf']
   have e1 : X * f = β • f + Pc := by rw [hf, smul_eq_C_mul]; ring
   have e2 : X * f' = (starRingEnd ℂ) β • f' + Pc := by rw [hconj, smul_eq_C_mul]; ring

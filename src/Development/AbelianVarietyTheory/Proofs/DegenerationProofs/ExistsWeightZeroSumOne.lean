@@ -40,12 +40,12 @@ theorem exists_weight_zero_sum_one {A X J : Type} [CommRing A] [AddCommGroup X] 
       split_ifs with h
       · exact h ▸ one
       · exact zero_mem _
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [← hT, map_sub, map_sum]
-      simp only [map_smul]
-      simp only [hT, Finsupp.sum_equivMapDomain, ← hsum, smul_eq_mul]
-      rw [Finsupp.sum_single_index rfl, sub_eq_zero, ← hc]
-      exact Finset.sum_congr rfl fun f _ => mul_comm _ _
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hT, map_sub, map_sum]
+        simp only [map_smul]
+        simp only [hT, Finsupp.sum_equivMapDomain, ← hsum, smul_eq_mul]
+        rw [Finsupp.sum_single_index rfl, sub_eq_zero, ← hc]
+        exact Finset.sum_congr rfl fun f _ => mul_comm _ _
   refine ⟨fun f => g f * a f (-δ + 0), fun f => hm f 0, fun f => Dvd.intro _ rfl, ?_⟩
   have := hB 0
   rw [h0, Finsupp.single_eq_same] at this

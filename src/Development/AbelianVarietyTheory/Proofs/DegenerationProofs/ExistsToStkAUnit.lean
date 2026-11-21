@@ -115,6 +115,15 @@ theorem exists_coef_secLin {R : Type} [CommRing R] [IsDomain R] (D : DegPre R) (
       (congrArg J ((Category.id_comp _).trans ((gtφ_eq D F g.b χ i).trans
         (congrArg (· ≫ D.Oφ (𝟙 _) χ i) hb.symm)))).trans (hjt i)
     refine (congrArg Units.val (val_of (g.s χ) (𝟙 _) z J jt c)).trans ?_
+    have toStkA_valR {X : Scheme.{0}} (x : Sp F ⟶ X) (U : X.Opens) (z : Sp F)
+        (ht : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
+        toStkA z (valF x U a.val) = (gm x z U a).val := by
+      have hz : x z ∈ U := ht trivial
+      rw [valF, dif_pos ht, gm, dif_pos hz]
+      show ((Sp F).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom
+          ((Scheme.ΓSpecIso (CommRingCat.of F)).hom.hom _)) = _
+      rw [Iso.hom_inv_id_apply]
+      exact TopCat.Presheaf.germ_res_apply (Sp F).presheaf (homOfLE ht) z trivial _
     refine (toStkA_valR (𝟙 (Sp F)) _ z (top_le_of_mem _ _ z ?_) _).symm
     have := hJ.mem (DegPre.gtφ D F g.b χ) (𝟙 (Sp F))
     rwa [funext c] at this

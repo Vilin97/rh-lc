@@ -136,7 +136,7 @@ theorem coord_regular_and_unit : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Alge
         have hc0 : M.Cen U₀ z y := ⟨hc.1, fun a ha => (hc.2 ha).1⟩
         obtain ⟨y₀, hat, -, ⟨τ⟩⟩ := hT z p y hc0
         obtain ⟨h1, h2⟩ := hsup z p y y₀ τ hc0 hat
-        rw [ThetaSys.val_pair_div hO (fun a ha => ha.1) hc hat hvV h hx, norm_div, (h1 x₀).1 hx₀,
+        rw [ThetaSys.val_pair_div hO (fun (a : M.Z) (ha : a ∈ (U₀ ⊓ V : M.Z.Opens)) => ha.1) hc hat hvV h hx, norm_div, (h1 x₀).1 hx₀,
           div_le_one τ.δ_pos]
         refine τ.norm_pair_le (h2 ▸ hh) (u := fun j => M.val (gPt p ≫ y) (v j)) ?_
         rw [← hEE.2 z p y y₀ τ hc0 hat]

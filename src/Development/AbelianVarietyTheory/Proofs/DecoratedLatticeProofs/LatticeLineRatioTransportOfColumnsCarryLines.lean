@@ -104,7 +104,11 @@ theorem idAt_eq_zero_of_AA (hAA : D.host.AA = 0) {V V₀ W W₀ : HSp D} {ρ : �
     rw [mul_smul_comm, mul_comm (dV.e k i)]
   have hW := latA_eq_zero hAA ((hC i c hc).1 hyc)
   have hc0 : c = 0 := by
-    have h1 := congrFun (congrFun dW.pX_jX i) i
+    have hpX : dW.pX * dW.jX = 1 := by
+      change (dW.e'ᴴ * W.gram).map (incA D) * dW.e.map (incA D) = 1
+      rw [← Matrix.map_mul, dW.e'e]
+      exact Matrix.map_one _ (map_zero (incA D)) (map_one (incA D))
+    have h1 := congrFun (congrFun hpX i) i
     rw [Matrix.one_apply_eq, Matrix.mul_apply] at h1
     rw [← mul_one c, ← h1, Finset.mul_sum]
     refine Finset.sum_eq_zero fun k _ => ?_

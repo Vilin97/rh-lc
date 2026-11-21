@@ -91,10 +91,26 @@ theorem exists_unit_value : LL → TwistBCSpanStatement → TWM.VRatioGtStatemen
   have hgi : n ^ i • g = 0 := ((isNsmul_iff_eq _ _ _).1 hgo).symm.trans ((isZero_iff_eq _).1 ho)
   obtain ⟨w, hw, hw0⟩ := exists_frm_zero (hϖ := hϖ) (hv := hv) k g
   have hB := D.tau_bimult
+  have hiota0 : ∀ (h : GtPtF D.toPre F), h.IsZero → h.IsIota 0 := by
+    intro h hh
+    obtain ⟨hb, hv⟩ := (isZero_iff h).1 hh
+    refine (isIota_iff 0 h).2 ⟨hb.trans (cPoint_zero _).symm, fun χ y J hJ => ?_⟩
+    have face : ∀ x z, th D.toPre (T := TF (R := V) F) y J 1 x z = 1 := by
+      intro x z
+      have e := val_corr hJ (D.toPre.cub.face 0) (lift x z).left
+      rw [val_one] at e
+      refine Eq.trans ?_ e
+      refine Eq.trans ?_ (val_cub D.toPre.cub (lift x z) hJ (pzero _ _) (x2 _ 0) (x2 _ 1)).symm
+      congr 1 <;> simp [x2, pzero, Hom.one_def]
+    have tt := tau_mul (𝟙 (TF (R := V) F)) hJ hB 0 0 χ
+    rw [add_zero, cPoint_zero, face, _root_.mul_one] at tt
+    exact (hv χ y J hJ).trans (mul_eq_left.1 tt.symm).symm
+  let qkMk (g : GtPtF D.toPre F) {k : ℕ} (h : k • g = 0) : QkPt D.toPre F k :=
+    ⟨0, g, k • g, (isNsmul_iff_eq _ _ _).2 rfl, hiota0 _ ((isZero_iff_eq _).2 h)⟩
   have hgV : ∀ χ, GenV hϖ hv (g.s χ) 0 := fun χ => by
     have e := CoefVal.gtV_qk (hϖ := hϖ) (hv := hv) hVR hQ (Nat.one_le_pow i n hn.pos)
-      (qkMk hB 0 g (hgi.trans (map_zero _).symm)) χ
-    simpa only [qkMk_y, qkMk_g, bOf_zero_left hϖ hQ, Int.cast_zero, zero_div] using e
+      (qkMk g hgi) χ
+    simpa only [qkMk, bOf_zero_left hϖ hQ, Int.cast_zero, zero_div] using e
   have hvn : v (n : F) = 0 := by
     have e := GC.v_alg_unit hv hnV.unit
     rwa [IsUnit.unit_spec, map_natCast, map_natCast] at e
@@ -103,11 +119,11 @@ theorem exists_unit_value : LL → TwistBCSpanStatement → TWM.VRatioGtStatemen
     (fun χ => by simpa using CoefVal.le_v_coef hw (hint χ) (hgV χ) hw0) (hg w hw hw0) ?_
   rintro τ ⟨m, hm⟩
   have hj : 1 ≤ n ^ (i + m + 2) := Nat.one_le_pow _ n hn.pos
-  let p : QkPt D.toPre F (n ^ (i + m + 2)) := qkMk hB 0 (g + torusPt D.toPre F (Additive.ofMul τ)) (by
+  let p : QkPt D.toPre F (n ^ (i + m + 2)) := qkMk (g + torusPt D.toPre F (Additive.ofMul τ)) (by
     have e₁ : n ^ (i + m + 2) • g = 0 := by rw [add_assoc, pow_add, mul_comm, mul_smul, hgi, smul_zero]
     have e₂ : τ ^ n ^ (i + m + 2) = 1 := by
       rw [show i + m + 2 = m + (i + 2) by ring, pow_add, pow_mul, hm, one_pow]
-    rw [smul_add, e₁, ← map_nsmul, ← ofMul_pow, e₂, ofMul_one, map_zero, map_zero, add_zero])
+    rw [smul_add, e₁, ← map_nsmul, ← ofMul_pow, e₂, ofMul_one, map_zero, add_zero])
   obtain ⟨f, hf, -⟩ := GlobalTheory.T.uniformisation_torsion_identification_with_pairing hL V (maximalIdeal V) hA D A G hG U F _ hj
   have hx : QkToAkU U.toUnifPre F _ p (f p) := (hf p _).2 rfl
   have hex : ∃ e c, IsTorsFrame A ρ (n ^ (i + m + 2)) (f p) e ∧ ValAt t (f p) e c ∧ v c ≠ 0 := by
@@ -119,14 +135,13 @@ theorem exists_unit_value : LL → TwistBCSpanStatement → TWM.VRatioGtStatemen
   obtain ⟨w₁, hw₁, hv₁, hsum⟩ := GlobalTheory.T.section_value_at_torsionPoint_eq_sum_terms hL hT hVR hTW hUU V hcpl ϖ hϖ D Q hQ F v hv A G hG U w₀ ρ hN _ hj p _ hx e he
   have hv₁ : GenV hϖ hv w₁ 0 := by
     have e0 : ((Q p.y : ℚ) / ((n ^ (i + m + 2) : ℕ) : ℚ) ^ 2) = 0 := by
-      rw [show p.y = 0 from rfl, QForm.Q_zero hϖ D hQ]; simp
+      rw [show p.y = 0 from by simp only [p, qkMk], QForm.Q_zero hϖ D hQ]; simp
     rwa [e0] at hv₁
   obtain ⟨w₂, hw₂, hwv⟩ := exists_pow k (line_exp k) w₁ hw₁
   have hw₂0 : GenV hϖ hv w₂ 0 := genV_pow k (line_exp k) hv₁ fun z J _ => hwv _ _ z J
   have hS : SumV v (coef s p.g w₂) c := hsum k hk1 w₂ ⟨hw₂, fun z J _ => hwv _ _ z J⟩ t s c hts hc
   have hb : p.g.b = g.b := by
-    show (g + torusPt D.toPre F (Additive.ofMul τ)).b = g.b
-    rw [add_b, torusPt_b, _root_.mul_one]
+    simp only [p, qkMk, add_b, torusPt_b, _root_.mul_one]
   obtain ⟨w', hw', hw'0, hww⟩ := exists_frm_cast hb w hw hw0
   obtain ⟨u, hu, huv, huc⟩ := ((coef_basic V D.toPre F k p.g).2.2 w₂ hw₂).2.2.1 w' hw'
   obtain ⟨r, hr⟩ := WithTop.ne_top_iff_exists.1 (v.ne_top_iff.2 hu)
@@ -135,7 +150,7 @@ theorem exists_unit_value : LL → TwistBCSpanStatement → TWM.VRatioGtStatemen
     exact CoefVal.genV_unique D.toPre.P.isLB (genV_smul hw₂0 hr.symm huv) hw'0
   have hu0 : v u = 0 := by rw [← hr, r0]; rfl
   have htr := ((coef_basic V D.toPre F k g).2.2 w hw).2.2.2 τ _ p.g w'
-    ((isTor_iff _ _).2 (isTorusPtF_torusPt τ)) ((isAdd_iff_eq _ _ _).2 rfl) hww s
+    ((isTor_iff _ _).2 (isTorusPtF_torusPt τ)) ((isAdd_iff_eq _ _ _).2 (by simp only [p, qkMk])) hww s
   refine ⟨u * c, ?_, by rwa [v.map_mul, hu0, zero_add]⟩
   have := sumV_mul hS hu0
   simpa only [← huc, htr] using this
