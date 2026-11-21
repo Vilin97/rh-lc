@@ -180,6 +180,7 @@ theorem mem_finitePart_of_eq_closedPoint (f : X ⟶ Spec R) [LocallyOfFiniteType
     (PrimeSpectrum.localization_away_comap_range (Localization.Away e) e).ge hey
   exact ⟨z, by simp [hz]⟩
 
+omit [IsSeparated f] [QuasiCompact f] in
 theorem preimage_finitePart_eq_top (f : X ⟶ Spec R) [LocallyOfFiniteType f] [LocallyQuasiFinite f]
     (h : Y ⟶ X) [IsFinite (h ≫ f)] : h ⁻¹ᵁ finitePart f = ⊤ :=
   preimage_eq_top_of_closedFibre_subset f _ (mem_finitePart_of_eq_closedPoint f) h

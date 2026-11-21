@@ -175,6 +175,7 @@ def cohOn.directSumMap : (⨁ k, cohOn (F k) V n) →ₗ[R] cohOn c.pt V n :=
   DirectSum.toModule R κ _ fun k => cohOn.map R (c.inj k) V n
 
 
+variable (c) in
 @[simp]
 theorem cohOn.directSumMap_lof (k : κ) (x : cohOn (F k) V n) :
     cohOn.directSumMap c R V n (DirectSum.lof R κ (fun k => cohOn (F k) V n) k x) =

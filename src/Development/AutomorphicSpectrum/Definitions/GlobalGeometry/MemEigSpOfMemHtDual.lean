@@ -96,6 +96,7 @@ theorem eigLat_le_htDual (q : Cpt ξ) : M.eigLat ρ σ q ≤ M.htDual L n ρ σ 
 end LieModel
 
 
+open Classical in
 def Lat.patch (S : Finset ℕ) (L₀ : Lat ξ E) (Lp : ℕ → Lat ξ E) : Lat ξ E := by
   classical
   exact fun q =>

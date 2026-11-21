@@ -198,6 +198,7 @@ def LeviS : Prop := ForAd fun {_} {R} _ _ _ _ A => ∀ (ι : Type) [Fintype ι] 
     ∀ s : Set ι, PullHt (A.uK ε ι) (A.uQ ε Set.univ) π (A.uH ε s) (A.htGL s)
 
 
+open Classical in
 def LeviQ : Prop := by classical
   exact ForAd fun {_} {_} _ _ _ _ A => ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (ε : ℤˣ) (s : Set ι),
   Iwa (A.uQ ε s ⊓ A.uQ ε Set.univ) (A.uK ε ι) →

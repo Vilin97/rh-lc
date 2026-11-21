@@ -11,6 +11,7 @@ open PositivityTheory.RgJS
 namespace UpperTheory.V.Z.Tf.GOne
 
 
+open Classical in
 def ExtId : Prop := by
   classical
   exact ForSys fun q X _ A => ∀ x y : X, ∃ F : ℂ → ℂ, (∀ σ : ℝ, 0 < σ → AnalyticAt ℂ F σ) ∧

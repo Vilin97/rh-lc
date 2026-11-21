@@ -391,6 +391,7 @@ theorem exists_line {η : kˣ →* ℂˣ} (hη : IsSmoothChar η) :
     exact one_ne_zero (key 0 1 (by rw [zero_smul, one_smul, zero_add]; exact h2.1)).2
 
 
+omit [DecidableEq k] in
 theorem exists_equiv_prodIrr {θ : Fin 2 → kˣ →* ℂˣ} (hθ : ∀ a, IsSmoothChar (θ a)) {x : Fin 2 → IrrGL (k := k)}
     (hx : ∀ a, x a = IrrGL.ofChar (θ a) (hθ a)) {Θ : Levi k (fun _ : Fin 2 => Fin 1) →* ℂˣ}
     (hΘ : ∀ g, Θ g = ∏ a, θ a (GeneralLinearGroup.det (g a))) :

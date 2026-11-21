@@ -37,6 +37,7 @@ theorem pres_prod (μ : Measure X) [SigmaFinite μ] (hμ : Pres G μ) :
   (count_pres g).prod (hμ g)
 
 
+open Classical in
 def cut (R : Set Ω) (β : Ω → X → ℝ) (p : Ω × X) : ℝ := by
   classical
   exact if p.1 ∈ R then β p.1 p.2 else 0

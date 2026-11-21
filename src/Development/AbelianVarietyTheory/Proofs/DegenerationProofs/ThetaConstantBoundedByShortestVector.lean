@@ -42,6 +42,7 @@ theorem mk_add_smul {X : Type} [AddCommGroup X] (m : ℕ) (χ y : X) :
   QuotientAddGroup.eq.2 ⟨χ, by simp⟩
 
 
+attribute [local instance] gtGroup in
 theorem exists_scale (hL : Laws) (hL₂ : Laws2) {ρ : S.Real} {p : ℕ} [Fact p.Prime] {y₀ : S.R →+* PadicAlgCl p}
     (u : ρ.UTest p y₀) (l : u.Lab) (h : ∀ a : o, ‖y₀ (algebraMap o S.R a)‖ ≤ 1) :
     ∃ sc : ℝ, 0 ≤ sc ∧

@@ -38,11 +38,14 @@ def trc (ρ : Representation A G M) (K I : Subgroup G) : fixd ρ I →ₗ[A] fix
 
 variable (A)
 
+variable (A) in
 abbrev permRep (I : Subgroup G) : Representation A G (MonoidAlgebra A (G ⧸ I)) := Representation.ofMulAction A G (G ⧸ I)
 
+variable (A) in
 def HkAlg (I : Subgroup G) : Subalgebra A (Module.End A (fixd (permRep A I) I)) :=
   Algebra.adjoin A (Set.range (hk (permRep A I) I))
 
+variable (A) in
 def hT (I : Subgroup G) (x : G) : HkAlg A I := ⟨hk (permRep A I) I x, Algebra.subset_adjoin ⟨x, rfl⟩⟩
 
 structure LeviFact (I : Subgroup G) where

@@ -47,6 +47,7 @@ abbrev mt (g : DX Δ) : Matrix (Fin 2) (Fin 2) (Lsq K Δ) := (g : GL (Fin 2) (Ls
 def IsScal (z : Kˣ) (g : DX Δ) : Prop := mt g = scalar (Fin 2) (algebraMap K (Lsq K Δ) z)
 
 
+variable (Δ) in
 def ZD (Δ : K) : Subgroup (DX Δ) :=
   ((GeneralLinearGroup.scalar (Fin 2)).comp (Units.map (algebraMap K (Lsq K Δ) : K →* Lsq K Δ))).range.subgroupOf (DX Δ)
 
@@ -64,6 +65,7 @@ def Ind (H : Subgroup Kˣ) (τ : K) (t : Kˣ) : Prop := ∃ h ∈ H, τ = (t * h
 open Classical in
 def one (p : Prop) : ℂ := if p then 1 else 0
 
+variable (Δ) in
 def KD (Δ : K) (O : Type) [CommRing O] [Algebra O K] : Subgroup (DX Δ) :=
   (GeneralLinearGroup.map ((integralClosure O (Lsq K Δ)).val : integralClosure O (Lsq K Δ) →+* Lsq K Δ)).range.subgroupOf (DX Δ)
 
@@ -78,6 +80,7 @@ def IsChi (Δ : K) [IsLocalRing O] (χ : Kˣ →* ℂˣ) : Prop :=
     (χ x : ℂ) = hs Δ (x : K) / (Nat.card (IsLocalRing.ResidueField O) : ℂ)
 
 
+variable (Δ) in
 structure SigData (Δ : K) where
   P : Set Kˣ
   H : Subgroup Kˣ

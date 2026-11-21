@@ -111,25 +111,14 @@ theorem exists_smul_mem (Λ : Submodule (𝓞 E) V) [hΛ : Submodule.IsLattice E
 
 theorem qLat_isLattice (Λ : Submodule (𝓞 E) V) [hΛ : Submodule.IsLattice E Λ] (W X : Submodule E V) :
     Submodule.IsLattice E (qLat Λ W X) := by
-  refine ⟨?_, ?_⟩
-  · refine Submodule.FG.map _ ?_
-    refine Submodule.fg_of_fg_map_injective ((W.subtype).restrictScalars (𝓞 E)) ?_ ?_
-    · exact Subtype.val_injective
-    · refine Submodule.FG.of_le hΛ.fg ?_
-      intro v hv
-      obtain ⟨w, hw, rfl⟩ := hv
-      exact hw
-  · rw [eq_top_iff]
-    intro q _
-    induction q using Submodule.Quotient.induction_on with | H w => ?_
-    obtain ⟨s, hs, hsw⟩ := exists_smul_mem Λ (w : V)
-    have hmem : Submodule.Quotient.mk (s • w) ∈ qLat Λ W X := mem_qLat.2 ⟨s • w, by simpa using hsw, rfl⟩
-    have hsE : algebraMap (𝓞 E) E s ≠ 0 := by simpa using hs
-    have : (Submodule.Quotient.mk w : QW W X) =
-        (algebraMap (𝓞 E) E s)⁻¹ • (Submodule.Quotient.mk (s • w) : QW W X) := by
-      rw [Submodule.Quotient.mk_smul, ← algebraMap_smul E s, smul_smul, inv_mul_cancel₀ hsE, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
+  apply Submodule.IsLattice.of_fg E
+  refine Submodule.FG.map _ ?_
+  refine Submodule.fg_of_fg_map_injective ((W.subtype).restrictScalars (𝓞 E)) ?_ ?_
+  · exact Subtype.val_injective
+  · refine Submodule.FG.of_le hΛ.fg ?_
+    intro v hv
+    obtain ⟨w, hw, rfl⟩ := hv
+    exact hw
 
 end Quot
 
@@ -341,6 +330,8 @@ theorem sig_bound {N p q : ℕ} (G : Matrix (Fin N) (Fin N) ℂ) (hG : Formalism
       rw [show (x ∘ e.symm) ∘ e.symm.symm = x by funext i; simp]
       rw [show star (x ∘ e.symm) = star x ∘ e.symm from rfl, dotProduct_comp_equiv_symm]
       congr 1
+      funext i
+      simp
     rw [h1, hback, ← hP, Matrix.star_mulVec, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
       Matrix.mulVec_mulVec]
   have hJ : ∀ y : Fin p ⊕ Fin q → ℂ, star y ⬝ᵥ (Formalism.UG.Jpq p q *ᵥ y) =

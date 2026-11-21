@@ -52,12 +52,14 @@ structure ConeMetric where
   smul : ∀ (c : C) (z : ι → C), ρ (c • z) = ‖c‖ * ρ z
 
 
+variable (C ι) in
 def maxMetric [Fintype ι] : ConeMetric (C := C) (ι := ι) where
   ρ z := ‖z‖
   pos _ hz := norm_pos_iff.mpr hz
   smul c z := norm_smul c z
 
 
+variable (ι) in
 def fsMetric [Fintype ι] : ConeMetric (C := ℂ) (ι := ι) where
   ρ z := ‖WithLp.toLp 2 z‖
   pos _ hz := norm_pos_iff.mpr (by simpa using hz)

@@ -25,6 +25,7 @@ def baseFn {O : Type} [CommRing O] (s : X ⟶ Sp O) (o : O) : Γ(X, ⊤) :=
   s.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of O)).inv.hom o)
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem baseFn_value {O R : Type} [CommRing O] [CommRing R] [IsLocalRing R] (s : X ⟶ Sp O) (f : Sp R ⟶ X)
     (φ : O →+* R) (hf : f ≫ s = spMap φ) (o : O) :
     (Scheme.stalkClosedPointTo f).hom (X.presheaf.germ ⊤ (centre f) trivial (baseFn s o)) = φ o := by
@@ -41,6 +42,7 @@ theorem baseFn_value {O R : Type} [CommRing O] [CommRing R] [IsLocalRing R] (s :
   exact congrArg (fun q => q.hom o) e2
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem genMap_germ (ξ : Sp Ω ⟶ X) (p : Cpt ξ) (g : Γ(X, ⊤)) :
     genMap ξ p (X.presheaf.germ ⊤ p.1 trivial g) =
       (Scheme.stalkClosedPointTo ξ).hom (X.presheaf.germ ⊤ (genPt ξ) trivial g) := by
@@ -49,6 +51,7 @@ theorem genMap_germ (ξ : Sp Ω ⟶ X) (p : Cpt ξ) (g : Γ(X, ⊤)) :
   exact e2
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem genMap_specializes (ξ : Sp Ω ⟶ X) (p q : Cpt ξ) (h : p.1 ⤳ q.1) (s : X.presheaf.stalk q.1) :
     genMap ξ p ((X.presheaf.stalkSpecializes h).hom s) = genMap ξ q s := by
   have e := TopCat.Presheaf.stalkSpecializes_comp X.presheaf p.2 h

@@ -84,6 +84,7 @@ def polyInr (V : X.Opens) : CommRingCat.of (Polynomial A) ⟶
   (Scheme.ΓSpecIso (.of (Polynomial A))).inv ≫ (reesPolySnd I X).appLE ⊤ _ le_top
 
 
+include hV in
 theorem isPushout_rees {V : X.Opens} (hV : IsAffineOpen V) :
     IsPushout (CommRingCat.ofHom (algV X V)) (CommRingCat.ofHom (algebraMap A (reesAlgebra I)))
       ((reesPr I X).app V) (reesInr I V) := by
@@ -96,6 +97,7 @@ theorem isPushout_rees {V : X.Opens} (hV : IsAffineOpen V) :
   · simp [reesInr]
 
 
+include hV in
 theorem isPushout_reesPoly {V : X.Opens} (hV : IsAffineOpen V) :
     IsPushout (CommRingCat.ofHom (algV X V)) (CommRingCat.ofHom (Polynomial.C))
       ((reesPr I X).app V ≫ (reesPolyMap I X).app _) (polyInr I V) := by

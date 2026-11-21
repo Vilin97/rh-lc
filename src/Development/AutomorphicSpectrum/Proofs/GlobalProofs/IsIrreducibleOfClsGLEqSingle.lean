@@ -309,6 +309,7 @@ theorem eq_pair (hx : x.IsCusp) (hy : y.IsCusp) (hl : ∀ j : ℤ, |j| ≤ 1 →
 end Monomials
 
 
+set_option maxHeartbeats 2000000 in
 theorem prod₂_cls {A : Type 1} [CommRing A] {Ψ : GrothGL k ≃+ A} (hΨ : IsProductIso k Ψ) (x y : IrrGL (k := k)) :
     ∃ h : HasFiniteLength (prod₂ x.rep y.rep), Ψ (clsGL (prod₂ x.rep y.rep) h) = bas Ψ x * bas Ψ y := by
   have hx := hasFiniteLength_of_isIrreducible x.snd.rep.irr

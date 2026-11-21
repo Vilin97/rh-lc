@@ -41,6 +41,7 @@ attribute [local instance] isScalarTower_mdl_om
 
 
 
+open Classical in
 def unitOf (X : Tower Ω ε) (a : X.K) : X.Kˣ :=
   letI := Classical.propDecidable (a = 0)
   if h : a = 0 then 1 else Units.mk0 a h

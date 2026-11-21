@@ -37,6 +37,7 @@ theorem mem_latt {ψ0 : AddChar k ℂ} {n d : ℕ} {s : k} {Y : Matrix (Fin n) (
     Y ∈ latt ψ0 n d s ↔ ∀ i j, ∀ o : k, ValuativeRel.valuation k o ≤ 1 → ψ0 (o * (s * Y i j)) = 1 := Iff.rfl
 
 
+open Classical in
 def cind {X : Type} [AddGroup X] (L : AddSubgroup X) (y : X) : X → ℂ := by
   classical
   exact fun Y => if Y - y ∈ L then 1 else 0

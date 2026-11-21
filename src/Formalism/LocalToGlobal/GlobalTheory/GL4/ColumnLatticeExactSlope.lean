@@ -109,7 +109,8 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
     (bc_norm : ∀ (v : InfinitePlace K) y, (majAt Q.b Q.X v (bc y) (bc y)).re = (v.embedding (algebraMap E K (S.hT y y))).re) :
     Q.mu = muDef (Pi.basisFun E (Fin S.rank)) (fun v => Formalism.L2.Geo.Def.frameOf (S.gram.map v.embedding)) (crdLat S L) := by
   classical
-  have hM := crdLat_lattice S L hL
+  have hM : Submodule.IsLattice E (crdLat S L) :=
+    Submodule.IsLattice.of_fg E (hL.fg.map _)
   have hY : ∀ v : InfinitePlace E, IsUnit (Formalism.L2.Geo.Def.frameOf (S.gram.map v.embedding)).det ∧
       ((Formalism.L2.Geo.Def.frameOf (S.gram.map v.embedding))⁻¹).conjTranspose * (Formalism.L2.Geo.Def.frameOf (S.gram.map v.embedding))⁻¹ =
         S.gram.map v.embedding := by
@@ -166,9 +167,18 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
       rw [re_comap] at h2
       exact h1.trans h2.symm) (crdLat S L) hM.fg
   have hE : Nontrivial (Fin S.rank → E) := Pi.nontrivial_at ⟨0, hn⟩
-  have hrM : rkK (crdLat S L) = S.rank := by
-    show finrank E (Submodule.span E ((crdLat S L : Submodule (𝓞 E) (Fin S.rank → E)) : Set (Fin S.rank → E))) = _
-    rw [hM.span_eq_top]; simp
+  have hspanT : Submodule.span K ((Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E))) : Submodule (𝓞 K) (Fin S.rank → K)) : Set (Fin S.rank → K)) = ⊤ := by
+    apply (LinearMap.map_injective (LinearMap.ker_eq_bot.mpr hinj) : Function.Injective (Submodule.map f))
+    rw [Submodule.map_top, LinearMap.range_eq_top.mpr hsurj, Submodule.map_span]
+    have himage : f '' ((Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E))) : Submodule (𝓞 K) (Fin S.rank → K)) : Set (Fin S.rank → K)) = (Q.L : Set Q.V) := by
+      rw [hQL]
+      rfl
+    rw [himage, hQ.2.2]
+  have hrT' : rkK (Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E)))) = S.rank := by
+    change finrank K (Submodule.span K ((Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E))) : Submodule (𝓞 K) (Fin S.rank → K)) : Set (Fin S.rank → K))) = _
+    rw [hspanT]
+    simp
+  have hrM : rkK (crdLat S L) = S.rank := hbc.1.symm.trans hrT' 
   have hneM : crdLat S L ≠ ⊥ := Formalism.L2.Col.isLattice_ne_bot hM
   have hfgT := hfg0
   have hrT : rkK (Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E)))) = S.rank := hbc.1.trans hrM

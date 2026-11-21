@@ -78,6 +78,7 @@ variable [IsAlgClosed (FractionRing R)]
 
 
 
+variable (p R) in
 def u : Bst p R := logFlat (pflat (p := p) (R := R))
 
 end Bst

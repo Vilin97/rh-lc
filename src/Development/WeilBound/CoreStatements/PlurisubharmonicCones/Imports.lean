@@ -48,15 +48,15 @@ theorem exists_pull (A : HodgeCpt Y S y) (B : HodgeCpt Y S y') (h : B.X ⟶ A.X)
   have hgen := A.tie.gen
   have hgen' := B.tie.gen
   obtain ⟨mh, -⟩ := GlobalTheory.CompanionTheory.Ar.CoverLie.cancel hf A.m B.m
-  obtain ⟨j, hj⟩ := GlobalTheory.CompanionTheory.Ar.CoverLie.Move.exists_hom hdom mh.cart A.M B.M
+  obtain ⟨j, hj⟩ := GlobalTheory.CompanionTheory.Ar.CoverLie.exists_hom hdom mh.cart A.M B.M
   have hsm : Smooth A.t.G.hom := A.t.semi.smooth
   obtain ⟨hext, hspan, hlat⟩ := GlobalTheory.T.lie_lattice_dominant_compat A.X B.X Ω Ω' A.ξ B.ξ h i A.t.G B.t.G mh.φ A.Li B.Li A.M B.M j hgen hgen' hdom
     mh.cart hsm hj
   have hρj : ∀ a e, j (A.ρ a e) = B.ρ a (j e) := fun a e =>
-    GlobalTheory.CompanionTheory.Ar.CoverLie.Move.map_diff mh.cart (mh.act a) hj (A.act a) (B.act a) e
+    GlobalTheory.CompanionTheory.Ar.CoverLie.map_diff mh.cart (mh.act a) hj (A.act a) (B.act a) e
   obtain ⟨jd, hjd⟩ := GlobalTheory.T.dual_map_of_field_extension Ω Ω' i A.Li B.Li j hext hspan
   have hW : ∀ s, eigSp B.ρ ((i.comp A.cst).comp (labelEmb c s)) = Submodule.span Ω' (j '' (A.Vgen s : Set A.Li)) := fun s =>
-    GlobalTheory.T.eigenspace_field_extension E Ω Ω' i A.Li B.Li j A.ρ B.ρ (A.emb s) hext hspan hρj
+    GlobalTheory.T.eigenspace_field_extension E Ω Ω' i A.Li B.Li j A.ρ B.ρ (A.emb s) hext hspan (fun a e => (hρj a e).symm)
   have hdm := GlobalTheory.CompanionTheory.Ar.RegAtDom.regAt_dominates A.X Ω A.ξ B.X Ω' B.ξ h i hdom
   have hsp : ∀ p' : Cpt B.ξ, genPt A.ξ ⤳ h p'.1 := fun p' => (hdm p').choose
   have hreg : ∀ (p' : Cpt B.ξ), ∀ a ∈ regAt A.ξ ⟨h p'.1, hsp p'⟩, i a ∈ regAt B.ξ p' := fun p' => (hdm p').choose_spec.1
@@ -157,7 +157,7 @@ theorem exists_pull (A : HodgeCpt Y S y) (B : HodgeCpt Y S y') (h : B.X ⟶ A.X)
           simpa using (regAt A.ξ ⟨h p'.1, hsp p'⟩).neg_mem hu
       show B.M.lat p' ⊓ _ = _
       rw [hlat, pull_eq B.ξ h _ j p' (hsp p')]
-      exact GlobalTheory.T.lattice_eigen_field_extension E Ω Ω' i A.Li B.Li j A.ρ B.ρ (A.emb s) _ _ (A.M.lat ⟨h p'.1, hsp p'⟩) hext hρj (hreg p')
+      exact GlobalTheory.T.lattice_eigen_field_extension E Ω Ω' i A.Li B.Li j A.ρ B.ρ (A.emb s) _ _ (A.M.lat ⟨h p'.1, hsp p'⟩) hext (fun a e => (hρj a e).symm) (hreg p')
         (fun a e he => GlobalTheory.T.lie_lattice_stable_under_action A.X Ω A.ξ A.t.G A.Li A.M (𝓞 E) A.t.act A.ρ A.act _ a e he) (hint s _) hdisc
   refine ⟨j, hext, fun s => Eq.trans ?_ (hV s)⟩
   have he := emb_eq A B h i hdom hf

@@ -164,6 +164,7 @@ theorem finite_aboveF (v : HeightOneSpectrum (𝓞 F)) :
 def aboveF (v : HeightOneSpectrum (𝓞 F)) : Finset (HeightOneSpectrum (𝓞 L)) := (finite_aboveF F v).toFinset
 
 
+open Classical in
 def aboveInf (w : InfinitePlace F) : Finset (InfinitePlace L) := by
   classical
   exact Finset.univ.filter fun w' => w'.comap (algebraMap F L) = w

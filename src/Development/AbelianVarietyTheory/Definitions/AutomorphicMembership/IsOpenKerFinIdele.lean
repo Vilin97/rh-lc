@@ -128,6 +128,7 @@ theorem exists_lin (ψ : (ι → ℂ)ˣ →* ℂˣ) (hψ : Continuous ψ) :
   exact ⟨(AddMonoidHom.mk' F hadd).toRealLinearMap F.continuous, fun z => (hF' z).symm⟩
 
 
+open Classical in
 def extZero (ψ : (ι → ℂ)ˣ →* ℂˣ) (x : ι → ℂ) : ℂ := by
   classical
   exact if h : IsUnit x then (ψ h.unit : ℂˣ) else 0

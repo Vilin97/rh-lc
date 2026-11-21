@@ -109,6 +109,7 @@ theorem equiv_prodIrr_untwist {N h : ℕ} {V : Type} [AddCommGroup V] [Module �
   exact (twistEquiv φ _).trans (prodIrrTwistEquiv x hd χ⁻¹ hχ.inv)
 
 
+open scoped Classical in
 noncomputable def valAt (ϖ : kˣ) (y : IrrGL (k := k)) : ℂˣ := by
   classical
   exact if h : ∃ (μ : kˣ →* ℂˣ) (hμ : IsSmoothChar μ), y = IrrGL.ofChar μ hμ then h.choose ϖ else 1

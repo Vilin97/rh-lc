@@ -62,6 +62,7 @@ theorem Kept.not_free {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1))} (h : Kept rs)
   rcases rs with ⟨r | r, s | s⟩ <;> simp only [Kept, Free] at h ⊢ <;> omega
 
 
+variable (n n' c) in
 abbrev StepVar (n : Type*) (c : ℕ) (n' : Type*) : Type _ :=
   {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free (c / 2 + 1) rs ∨ Kept rs}
 
@@ -263,6 +264,7 @@ theorem moved_false (g : G.VertexGroup) (T : G.Args → ℂ) (z : G.Args) : move
 variable (hs) [MeasurableSpace k] [BorelSpace k] (ψ : AddChar k Circle) (ν : Measure k)
 
 
+variable (hs) in
 def flatIntegrand (S : G.Args → ℂ) (x : ColArgs G) (y : RowArgs G) (e : Vars G) : ℂ :=
   S (fill hs x y e) * (ψ (-phase x e) : ℂ)
 
@@ -271,10 +273,12 @@ variable (G) in
 def varsVol : Measure (Vars G) := Measure.pi fun _ => Measure.pi fun _ => ν
 
 
+variable (hs) in
 def flatTensor (S : G.Args → ℂ) (x : ColArgs G) (y : RowArgs G) : ℂ :=
   ∫ e, flatIntegrand hs ψ S x y e ∂(varsVol G ν)
 
 
+variable (hs) in
 def FlatIntegrable (T : G.Args → ℂ) : Prop :=
   ∀ g x y, Integrable (flatIntegrand hs ψ (moved G true g T) x y) (varsVol G ν)
 

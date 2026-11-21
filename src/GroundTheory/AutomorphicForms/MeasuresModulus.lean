@@ -83,6 +83,7 @@ instance continuousConstSMul_linearEquiv :
   ⟨fun L => (L.toLinearMap).continuous_on_pi⟩
 
 
+variable (F ι) in
 noncomputable def box : Set (ι → F) := Set.univ.pi fun _ => (𝒪[F] : Set F)
 
 theorem mem_box {x : ι → F} : x ∈ box (F := F) (ι := ι) ↔ ∀ i, x i ∈ 𝒪[F] := by

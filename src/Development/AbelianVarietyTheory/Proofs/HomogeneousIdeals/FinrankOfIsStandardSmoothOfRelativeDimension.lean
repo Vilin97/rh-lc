@@ -117,6 +117,7 @@ def lift (D : A →ₗ[R] N) (hD : ∀ a b, D (a * b) = ε a • D b + ε b • 
   rw [d_apply, lift_toCotangent, coe_projKer, map_sub, pointDer_algebraMap hD, sub_zero]
 
 
+variable (N) in
 def pointDerEquiv : pointDer (N := N) ε ≃ₗ[R] (AugCot ε →ₗ[R] N) where
   toFun D := lift ε D.1 (mem_pointDer.1 D.2)
   map_add' D E := hom_ext (ε := ε) fun a => by simp
@@ -320,6 +321,7 @@ lemma d_tmul (a : A) (b : B) : d (tensorAug (εA := εA) (εB := εB)) (a ⊗ₜ
   simp
 
 
+variable (εA εB) in
 def tensorEquiv : AugCot (tensorAug (εA := εA) (εB := εB)) ≃ₗ[R] AugCot εA × AugCot εB :=
   LinearEquiv.ofLinear
     (LinearMap.prod

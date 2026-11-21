@@ -30,12 +30,14 @@ theorem eq_one_of_sum_eq {s : ℕ} (c : Fin s → ℕ) (h1 : ∀ a, 1 ≤ c a) (
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem sum_concat_fst {s : ℕ} (c : Fin s → ℕ) (x : ∀ a, Fin (c a) → IrrGL (k := k)) :
     ∑ i, (concat c x i).1 = ∑ a, ∑ b, (x a b).1 := by
   rw [← Fintype.sum_sigma' (fun a b => (x a b).1)]
   exact Equiv.sum_comp finSigmaFinEquiv.symm (fun p : Σ a, Fin (c a) => (x p.1 p.2).1)
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem concat_finSigmaFinEquiv {s : ℕ} (c : Fin s → ℕ) (x : ∀ a, Fin (c a) → IrrGL (k := k)) (p : Σ a, Fin (c a)) :
     concat c x (finSigmaFinEquiv p) = x p.1 p.2 := by
   have key : ∀ q : Σ a, Fin (c a), q = p → x q.1 q.2 = x p.1 p.2 := by

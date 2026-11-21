@@ -107,6 +107,7 @@ theorem invT_mem_doset (E : Type) [Field E] [NumberField E] (w : HeightOneSpectr
 end GlobalTheory.ChainOnto.CosetSymGL
 
 
+open GlobalTheory.ChainOnto.CosetSymGL GlobalTheory.LFun.ConjPlace in
 theorem GlobalTheory.ChainOnto.kGL_commensurated_cosetSym : ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ), IsCommensurated (KGL w (n := n)) ∧ CosetSym (KGL w (n := n)) := fun E _ _ w n =>
   ⟨Formalism.UG.Final.GLintComm E w n, cosetSym_of_aut _ (invT (RingEquiv.refl _) n) (fun x => invT_mem_iff _ x)
     (invT_mem_doset E w n)⟩

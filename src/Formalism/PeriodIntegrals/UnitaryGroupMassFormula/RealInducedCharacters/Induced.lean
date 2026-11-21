@@ -16,6 +16,7 @@ section Induced
 variable {G : Type*} [Group G] {K : Type*} [Field K] (H : Subgroup G) (ψ : H →* Kˣ)
 
 
+open scoped Classical in
 noncomputable def dot (x : G) : K := by
   classical
   exact if hx : x ∈ H then ((ψ ⟨x, hx⟩ : Kˣ) : K) else 0

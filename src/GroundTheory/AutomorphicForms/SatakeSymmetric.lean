@@ -52,6 +52,7 @@ theorem evalAt_permAct (w : Fin n → ℂˣ) (σ : Equiv.Perm (Fin n)) (p : Laur
   exact AlgHom.congr_fun this p
 
 
+variable (n) in
 def symmetricLaurent : Subalgebra ℂ (LaurentRing (n := n)) where
   carrier := {p | ∀ σ, permAct σ p = p}
   mul_mem' {a b} ha hb σ := by
@@ -85,6 +86,7 @@ theorem natToInt_injective : Function.Injective (natToInt (n := n)) := fun s t h
   exact Int.ofNat_inj.1 (congrFun h i)
 
 
+variable (n) in
 def polyEmb : MvPolynomial (Fin n) ℂ →ₐ[ℂ] LaurentRing (n := n) :=
   mapDomainAlgHom ℂ ℂ natToInt
 

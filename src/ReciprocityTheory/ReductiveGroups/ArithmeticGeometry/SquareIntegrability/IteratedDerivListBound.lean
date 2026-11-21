@@ -57,6 +57,7 @@ end Col
 section Main
 variable {dim : (E →+* ℂ) → ℕ} (bs : Fin nb → Block E n dim)
 
+open Classical in
 def eU (j : Fin nb) (a : Fin (bs j).i) : Vsp dim := by
   classical
   exact EuclideanSpace.single (⟨(bs j).τ, Fin.castLE (bs j).hi a⟩ : Idx dim) (1 : ℂ)

@@ -187,6 +187,7 @@ theorem latInd_mul {g : GL n' k} (hg : g ∈ latStab L) (L₁ : Submodule 𝒪[k
   simpa using this.symm
 
 
+omit [Fintype n] in
 theorem sum_latInd {φ : Form k n' M} (hφ : φ ∈ Mram k n' M) (L : Submodule 𝒪[k] (n' → k)) [L.IsFullLattice k]
     (L₁ : Submodule 𝒪[k] (n → k)) (x₀ : Matrix n n' k) : ∑ P₁ ∈ withKer L, latInd P₁.ker L₁ x₀ • φ P₁ = 0 := by
   have hsum : ∑ P₁ ∈ withKer L, φ P₁ = 0 := Model.sum_stable_eq_zero hφ _ fun c P₁ => by simp
@@ -433,6 +434,7 @@ theorem datum_eq (q : Unif k) (P : Pair k n') (LY : Submodule 𝒪[k] (n → k))
     · simpa [add_comm] using h (Sum.elim P.vec fun _ => q.inv) ⟨1, by simp, by simp⟩
 
 
+omit [Fintype n'] in
 theorem lastPair_hasVal [Fintype n''] (q : Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsFullLattice k] (v : n'' ⊕ Fin 1 → k)
     (a : 𝓀[k]) : (lastPair q L).HasVal v a ↔
       v ∘ Sum.inl ∈ L ∧ ∃ s : 𝒪[k], (s : k) = q.1 • v (Sum.inr 0) ∧ residue 𝒪[k] s = a := by
@@ -460,6 +462,8 @@ theorem lastPair_hasVal [Fintype n''] (q : Unif k) (L : Submodule 𝒪[k] (n'' �
     exact zero_mem _
 
 
+omit [Fintype n'] in
+open Classical in
 theorem phiOne_last [Fintype n] [Fintype n''] (q : Unif k) (LY : Submodule 𝒪[k] (n → k)) [LY.IsFullLattice k]
     (L : Submodule 𝒪[k] (n'' → k)) [L.IsFullLattice k] (fW : {f : Module.Dual 𝓀[k] (Red LY) // f ≠ 0})
     (x' : Matrix n'' n k) (η : n → k) :

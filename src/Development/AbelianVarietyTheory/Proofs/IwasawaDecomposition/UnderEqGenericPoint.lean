@@ -31,7 +31,7 @@ structure Const (T : HermLB p) (s : (k →+* ℂ) → ℝ) : Prop where
 variable {N L T T' : HermLB p} {π : N.B.ι → L.B.ι} {s s' : (k →+* ℂ) → ℝ}
 
 theorem Refines.pull (h : Refines N L π s) {q : Y ⟶ Sp k} (f : Y ⟶ X) (hf : f ≫ p = q) :
-    Refines (N.pull f hf) (L.pull f hf) (fun c a => π (c a)) s where
+    Refines (N.pull f hf) (L.pull f hf) (fun c a => π (c a)) s := {
   le _ _ hy := mem_iInter.2 fun a => h.le _ (mem_iInter.1 hy a)
   g Z r z c c' hc hc' := (gm_pull_g _ f r z c c' hc hc').trans
     ((h.g Z (r ≫ f) z _ _ (mem_iInter.1 hc PUnit.unit) (mem_iInter.1 hc' PUnit.unit)).trans
@@ -41,6 +41,7 @@ theorem Refines.pull (h : Refines N L π s) {q : Y ⟶ Sp k} (f : Y ⟶ X) (hf :
   φ σ c y hy := ((N.φ σ).pull_φ f hf c y).trans ((h.φ σ _ _
     (mem_of_mem_linComb (m := fun _ => Points.PtsOver.map f hf _ y) (fun _ => rfl) hy PUnit.unit)).trans
       (congrArg (· + _) ((L.φ σ).pull_φ f hf (fun a => π (c a)) y).symm))
+  }
 
 theorem gm_pow (L : HermLB p) (m : ℕ) {Z : Scheme.{0}} (r : Z ⟶ X) (z : Z) (c c' : (L.pow m).B.ι)
     (hc : r z ∈ (L.pow m).B.U c) (hc' : r z ∈ (L.pow m).B.U c') :
@@ -50,7 +51,7 @@ theorem gm_pow (L : HermLB p) (m : ℕ) {Z : Scheme.{0}} (r : Z ⟶ X) (z : Z) (
     rw [Fintype.prod_unique, zpow_natCast, Category.comp_id])
 
 theorem Refines.pow (h : Refines N L π 0) (m : ℕ) :
-    Refines (N.pow m) (L.pow m) (fun c a => π (c a)) 0 where
+    Refines (N.pow m) (L.pow m) (fun c a => π (c a)) 0 := {
   le _ _ hy := mem_iInter.2 fun a => h.le _ (mem_iInter.1 hy a)
   g Z r z c c' hc hc' := (gm_pow N m r z c c' hc hc').trans
     ((congrArg (· ^ m) (h.g Z r z _ _ (mem_iInter.1 hc PUnit.unit) (mem_iInter.1 hc' PUnit.unit))).trans
@@ -59,6 +60,7 @@ theorem Refines.pow (h : Refines N L π 0) (m : ℕ) :
         (mem_iInter.2 fun a => h.le _ (mem_iInter.1 hc' a))).symm)
   φ σ c y hy := ((N.φ σ).zpow_φ m c y).trans ((congrArg _ ((h.φ σ _ _ (mem_pow_iff.1 hy)).trans (add_zero _))).trans
       (((L.φ σ).zpow_φ m (fun a => π (c a)) y).symm.trans (add_zero _).symm))
+  }
 
 theorem Refines.shift (h : Refines N L π fun σ => 2 * s σ) (hs : ∀ σ, s ((starRingEnd ℂ).comp σ) = s σ) :
     Refines N (L.shift s hs) π 0 :=
@@ -129,7 +131,7 @@ theorem under_eq_genericPoint (hX : IsArithVar p 0) {σ : k →+* ℂ} (y : CxPt
 end Rat
 
 theorem Refines.isArithHeight {D : ℕ} (hX : IsArithVar p D) (h : Refines N L π 0) {f : X → ℝ}
-    (H : N.IsArithHeight f) : L.IsArithHeight f where
+    (H : N.IsArithHeight f) : L.IsArithHeight f := {
   vertical Z i _ _ κ _ _ _ d hd := (H.vertical Z i κ d hd).trans (congrArg (fun n : ℤ => (n : ℝ) * _)
     (topSelf_congr κ (N.restr i).isLB (L.restr i).isLB (h.pull i rfl).lbIso d))
   point Z i _ _ _ hc hd r hr := by
@@ -150,6 +152,7 @@ theorem Refines.isArithHeight {D : ℕ} (hX : IsArithVar p D) (h : Refines N L �
       fun y hy => h''.logNorm hr hy, h₂.trans (congrArg _ (finsum_congr fun σ => ?_))⟩
     rw [h'.chernInt]
     exact Weight.chernInt_congr (isOpen_offSupp _).measurableSet fun y hy => h''.logNorm hr hy
+  }
 
 theorem Refines.congr (h : Refines N L π s) (e : ∀ σ, s σ = s' σ) : Refines N L π s' := funext e ▸ h
 
@@ -158,44 +161,51 @@ theorem Const.congr (h : Const T s) (e : ∀ σ, s σ = s' σ) : Const T s' := f
 theorem const_triv : Const (HermLB.triv p) 0 :=
   ⟨fun _ _ _ _ _ _ _ => map_one _, fun _ _ _ _ => rfl⟩
 
-theorem Const.pow (h : Const T s) (m : ℕ) : Const (T.pow m) fun σ => m * s σ where
+theorem Const.pow (h : Const T s) (m : ℕ) : Const (T.pow m) fun σ => m * s σ := {
   g Z r z c c' hc hc' := (gm_pow T m r z c c' hc hc').trans (by
     rw [h.g Z r z _ _ (mem_iInter.1 hc PUnit.unit) (mem_iInter.1 hc' PUnit.unit), one_pow])
   φ σ c y hy := ((T.φ σ).zpow_φ m c y).trans (by rw [h.φ σ _ _ (mem_pow_iff.1 hy), Int.cast_natCast])
+  }
 
-theorem const_pow_zero (L : HermLB p) : Const (L.pow 0) 0 where
+theorem const_pow_zero (L : HermLB p) : Const (L.pow 0) 0 := {
   g Z r z c c' hc hc' := (gm_pow L 0 r z c c' hc hc').trans (pow_zero _)
   φ σ c y _ := ((L.φ σ).zpow_φ (0 : ℕ) c y).trans (by simp)
+  }
 
-theorem refines_pow_one (L : HermLB p) : Refines (L.pow 1) L (fun c => c PUnit.unit) 0 where
+theorem refines_pow_one (L : HermLB p) : Refines (L.pow 1) L (fun c => c PUnit.unit) 0 := {
   le _ _ hy := mem_iInter.1 hy PUnit.unit
   g Z r z c c' hc hc' := (gm_pow L 1 r z c c' hc hc').trans (pow_one _)
   φ σ c y _ := ((L.φ σ).zpow_φ (1 : ℕ) c y).trans (by simp)
+  }
 
-theorem Const.dual (h : Const T s) : Const T.dual (-s) where
+theorem Const.dual (h : Const T s) : Const T.dual (-s) := {
   g Z r z c c' hc hc' := (map_inv _ _).trans (inv_eq_one.2 (h.g Z r z c c' hc hc'))
   φ σ c y hy := congrArg (- ·) (h.φ σ c y hy)
+  }
 
-theorem Const.tens (h : Const T s) (h' : Const T' s') : Const (T.tens T') (s + s') where
+theorem Const.tens (h : Const T s) (h' : Const T' s') : Const (T.tens T') (s + s') := {
   g Z r z c c' hc hc' := (gm_tens _ _ r z c c' hc hc').trans (by
     rw [h.g Z r z _ _ hc.1 hc'.1, h'.g Z r z _ _ hc.2 hc'.2, one_mul])
   φ σ c y hy := congrArg₂ (· + ·) (h.φ σ _ y (mem_ptsIn_inf.1 hy).1) (h'.φ σ _ y (mem_ptsIn_inf.1 hy).2)
+  }
 
 theorem Refines.tens_const (h : Refines N L π s) (h' : Const T s') :
-    Refines (N.tens T) L (fun c => π c.1) (s + s') where
+    Refines (N.tens T) L (fun c => π c.1) (s + s') := {
   le _ := inf_le_left.trans (h.le _)
   g Z r z c c' hc hc' := (gm_tens _ _ r z c c' hc hc').trans (by
     rw [h.g Z r z _ _ hc.1 hc'.1, h'.g Z r z _ _ hc.2 hc'.2, mul_one])
   φ σ c y hy := (congrArg₂ (· + ·) (h.φ σ _ y (mem_ptsIn_inf.1 hy).1)
     (h'.φ σ _ y (mem_ptsIn_inf.1 hy).2)).trans (add_assoc _ _ _)
+  }
 
 theorem Const.tens_refines (h' : Const T s') (h : Refines N L π s) :
-    Refines (T.tens N) L (fun c => π c.2) (s' + s) where
+    Refines (T.tens N) L (fun c => π c.2) (s' + s) := {
   le _ := inf_le_right.trans (h.le _)
   g Z r z c c' hc hc' := (gm_tens _ _ r z c c' hc hc').trans (by
     rw [h.g Z r z _ _ hc.2 hc'.2, h'.g Z r z _ _ hc.1 hc'.1, one_mul])
   φ σ c y hy := (congrArg₂ (· + ·) (h'.φ σ _ y (mem_ptsIn_inf.1 hy).1)
     (h.φ σ _ y (mem_ptsIn_inf.1 hy).2)).trans (add_left_comm _ _ _)
+  }
 
 theorem Const.zp (h : Const T s) (n : ℤ) : Const (zp T n) fun σ => n * s σ := by
   refine ((h.pow n.toNat).tens (h.pow (-n).toNat).dual).congr fun σ => ?_

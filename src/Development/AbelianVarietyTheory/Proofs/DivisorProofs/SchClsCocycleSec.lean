@@ -75,6 +75,7 @@ end GlobalTheory.EtC.SchCls
 namespace GlobalTheory.EtC
 
 
+open GlobalTheory.EtC.SchCls in
 theorem sch_cls_cocycle_sec : ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (I : Cx R) (m n k : ℤ),
     m + 1 = n → n + 1 = k →
       (∀ z : Sec (I.X n) X, Sec.map (I.d n k) z = 0 →

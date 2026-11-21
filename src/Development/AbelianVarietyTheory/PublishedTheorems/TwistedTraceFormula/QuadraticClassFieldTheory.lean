@@ -21,6 +21,7 @@ def normGroup (A : Type) [CommRing A] [Algebra K A] : Subgroup Aˣ :=
   (Units.map (Algebra.norm A : A ⊗[K] L →* A)).range
 
 
+open Classical in
 def eta (A : Type) [CommRing A] [Algebra K A] (x : Aˣ) : ℤˣ := by
   classical
   exact if x ∈ normGroup K L A then 1 else -1

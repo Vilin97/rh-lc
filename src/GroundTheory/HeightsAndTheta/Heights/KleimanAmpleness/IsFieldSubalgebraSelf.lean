@@ -60,22 +60,28 @@ def locIn (A : Subalgebra S Ω) (p : Ideal A) : Subring Ω :=
 
 variable (S)
 
+variable (S) in
 def modelPts (y : (Σ k, ι k) → Ω) : Set (Subring Ω) :=
   {z | ∃ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) ∧
     ∃ p : Ideal (chartRingOver S y c), p.IsPrime ∧ z = locIn (chartRingOver S y c) p}
 
+variable (S) in
 def SameModel {K' : Type} {ι' : K' → Type} (y : (Σ k, ι k) → Ω) (y' : (Σ k, ι' k) → Ω) : Prop :=
   modelPts S y = modelPts S y'
 
+variable (S) in
 def IsModelWithBase (y : (Σ k, ι k) → Ω) (k₀ : K) : Prop :=
   (∀ k, ∃ i, y ⟨k, i⟩ ≠ 0) ∧ SameModel S y (oneBlock (blockVec y k₀))
 
+variable (S) in
 def Dominates {K₁ : Type} {ι₁ : K₁ → Type} (y₁ : (Σ k, ι₁ k) → Ω) (y₀ : (Σ k, ι k) → Ω) : Prop :=
   ∀ z₁ ∈ modelPts S y₁, ∃ z₀ ∈ modelPts S y₀, z₀ ≤ z₁ ∧ ∀ a ∈ z₀, a⁻¹ ∈ z₁ → a⁻¹ ∈ z₀
 
+variable (S) in
 def IsBirational (y : (Σ k, ι k) → Ω) : Prop :=
   ∀ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) → Subfield.closure (chartRingOver S y c : Set Ω) = ⊤
 
+variable (S) in
 def IsNormalModel (y : (Σ k, ι k) → Ω) : Prop :=
   ∀ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) → IsIntegrallyClosed (chartRingOver S y c)
 

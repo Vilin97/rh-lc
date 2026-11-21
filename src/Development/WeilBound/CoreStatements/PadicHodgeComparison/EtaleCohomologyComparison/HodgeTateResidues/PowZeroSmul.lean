@@ -103,12 +103,12 @@ end Rat
 end Mul
 
 variable (l K) in
-theorem mulRho : MulRho l K where
-  sh := fun {_ _} L M {_ _ _} k h x w hr => rho_sh L M k h x w hr
-  sh_μ := fun {_ _} L M {_ _ _} k h a ha y => mu_sh L.γB M.q (L.QB M) L.tB_mem k h a ha y
-  cup := fun {_ _} L M {_ _ _ _ _} h x y w w' hr hr' => rho_cup L M h x y w w' hr hr'
-  cup_μ := fun {_ _} L M {_ _ _ _ _ _ _ _} h ha h1 h2 y y' =>
-    mu_cup L.γB M.q (L.QB M) L.tB_mem h ha h1 h2 y y'
-  one := fun {_ _} L M => rho_one L M
+theorem mulRho : MulRho l K :=
+  ⟨fun {_ _} L M {_ _ _} k h x w hr => rho_sh L M k h x w hr,
+   fun {_ _} L M {_ _ _} k h a ha y => mu_sh L.γB M.q (L.QB M) L.tB_mem k h a ha y,
+   fun {_ _} L M {_ _ _ _ _} h x y w w' hr hr' => rho_cup L M h x y w w' hr hr',
+   fun {_ _} L M {_ _ _ _ _ _ _ _} h ha h1 h2 y y' =>
+     mu_cup L.γB M.q (L.QB M) L.tB_mem h ha h1 h2 y y',
+   fun {_ _} L M => rho_one L M⟩
 
 end CrystallineSemistableComparison.HT

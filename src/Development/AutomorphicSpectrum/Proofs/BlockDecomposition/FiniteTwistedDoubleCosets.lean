@@ -32,6 +32,7 @@ theorem finite_of_subset_mul {G : Type} [Group G] [TopologicalSpace G] [IsTopolo
   exact ⟨t, ht, g * d, hgd, by simp [hx, mul_assoc]⟩
 
 
+open scoped Pointwise in
 theorem finite_doubleCosets_split : ∀ {H : Type} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] (σ : H →* H) (K : Subgroup H) (d d' : H) (f : H × H → ℂ)
   (C₁ C₂ : Set H), Continuous σ → (∀ g, σ (σ g) = g) → IsOpen (K : Set H) → IsCompact (K : Set H) → (∀ k ∈ K, σ k ∈ K) →
   IsCompact C₁ → IsCompact C₂ → (∀ y, f y ≠ 0 → y.1 ∈ C₁ ∧ y.2 ∈ C₂) →

@@ -68,6 +68,7 @@ variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 local notation "𝔸" => Localization.Away (p : AInf K p)
 local notation "θ" => fontaineTheta (normInteger K) p
 
+variable (p) in
 def logCoeff (p n j : ℕ) : ℤ :=
   (-1) ^ n * powCoeff p (n + 1) (j + 1) * (((j + 1).factorial / (n + 1) : ℕ) : ℤ)
 

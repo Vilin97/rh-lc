@@ -90,6 +90,7 @@ def proj (T : Finset ι) : (Πʳ i, [G i, (C i : Set (G i))]) →* ((i : T) → 
 theorem proj_apply (T : Finset ι) (x : Πʳ i, [G i, (C i : Set (G i))]) (i : T) : proj C T x i = x i := rfl
 
 
+open Classical in
 def secFun (T : Finset ι) (a : (i : T) → G i) (i : ι) : G i := by
   classical
   exact if h : i ∈ T then a ⟨i, h⟩ else 1

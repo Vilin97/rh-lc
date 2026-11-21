@@ -55,12 +55,14 @@ theorem AlgWt.Iso.trans {a b c : AlgWt L n} (h : a.Iso b) (h' : b.Iso c) : a.Iso
   obtain ⟨T', e'⟩ := h'
   exact ⟨T.trans T', fun γ x => by simp [e, e']⟩
 
-theorem AutRep.iso_equivalence : Equivalence (AutRep.Iso (L := L) (n := n)) where
-  refl π := ⟨AlgWt.Iso.refl π.toAlgWt, IsoRep.refl π.S⟩
-  symm := by
-    intro π π' h
-    exact ⟨h.1.symm, h.2.symm π.irrS.1.stable⟩
-  trans h h' := ⟨h.1.trans h'.1, h.2.trans h'.2⟩
+theorem AutRep.iso_equivalence : Equivalence (AutRep.Iso (L := L) (n := n)) := by
+  constructor
+  · intro π
+    exact ⟨AlgWt.Iso.refl π.toAlgWt, IsoRep.refl π.S⟩
+  · intro π π' h
+    exact ⟨AlgWt.Iso.symm h.1, IsoRep.symm π.irrS.1.stable h.2⟩
+  · intro π π' π'' h h'
+    exact ⟨AlgWt.Iso.trans h.1 h'.1, IsoRep.trans h.2 h'.2⟩
 
 end NG
 

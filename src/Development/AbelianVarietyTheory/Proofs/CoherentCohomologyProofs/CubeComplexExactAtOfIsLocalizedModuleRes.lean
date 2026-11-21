@@ -18,6 +18,7 @@ variable {ι : Type} [LinearOrder ι] {R : Type u} [CommRing R]
 namespace Cube
 
 
+omit [LinearOrder ι] in
 theorem exists_smul_eq_zero_of_forall [Finite ι] (A : Cube.{max u v} ι R) (S : Submonoid R) {p : ℕ}
     (x : Term A p) (h : ∀ s, ∃ c ∈ S, c • x s = 0) : ∃ c ∈ S, c • x = 0 := by
   classical

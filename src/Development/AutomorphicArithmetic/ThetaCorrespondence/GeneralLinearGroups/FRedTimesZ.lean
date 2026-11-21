@@ -23,6 +23,7 @@ open GlobalTheory.ProdFlatten
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+unseal one GlobalTheory.ProdFlatten.two mp pr Iso Sm in
 private theorem two_unit_left {r t : ℕ} (e : t + r = r) (A : BR k r) (hA : Sm A) (y : Fin 0 → IrrGL (k := k))
     (hy : ∑ i, (y i).1 = t) : Iso (two e (pr y hy) A) A := by
   with_unfolding_all

@@ -7,6 +7,7 @@ public import Mathlib
 namespace PI
 
 
+open Classical in
 def DiagRank : Prop := by
   classical
   exact ∀ (p : ℕ) [Fact p.Prime] (n m : ℕ) (X Y : Fin n → Fin m → ℤ_[p]) (c : Fin m → ℚ_[p]) (D : ℤ),

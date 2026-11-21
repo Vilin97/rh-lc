@@ -340,6 +340,8 @@ theorem exists_maxPow_le_normalSub [IsGalois E F] {θ : F}
     _ < γ := hj
 
 
+omit [TopologicalSpace E] [IsNonarchimedeanLocalField E] [ValuativeExtension E F]
+  [FiniteDimensional E F] in
 theorem finite_quotient_maxPow {θ : F} {k : ℕ} (hle : maxPow F k ≤ normalSub (E := E) θ) :
     Finite (normalSub (E := E) θ ⧸ (AddSubgroup.inclusion hle).range) := by
   have hr : (AddSubgroup.inclusion hle).range = (maxPow F k).addSubgroupOf (normalSub (E := E) θ) := by

@@ -60,6 +60,7 @@ def ccStar (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) �
     (g : normOneGL (K := K) (n := n)) : ccStar f g = conj (f g⁻¹) := rfl
 
 
+variable (μ) in
 theorem ccToL1_ccStar [μ.IsInvInvariant] (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) :
     UnitaryRep.ccToL1 μ (ccStar f) = UnitaryRep.involution μ (UnitaryRep.ccToL1 μ f) := by
   have h1 : (UnitaryRep.ccToL1 μ f : normOneGL (K := K) (n := n) → ℂ) =ᵐ[μ] f :=

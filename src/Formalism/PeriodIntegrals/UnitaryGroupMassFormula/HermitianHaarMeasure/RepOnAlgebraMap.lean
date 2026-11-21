@@ -207,6 +207,7 @@ instance instStarModule : StarModule ℂ (A hI) where
     rw [ip_smul_left, ip_smul_right, star_star, star_spec]
 
 
+open scoped Classical in
 def mk' (f : β → ℂ) : X hI := by
   classical
   exact if hf : f ∈ 𝓕 then Submodule.Quotient.mk ⟨f, hf⟩ else 0

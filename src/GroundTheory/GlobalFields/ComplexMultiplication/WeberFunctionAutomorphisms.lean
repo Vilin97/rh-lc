@@ -14,6 +14,7 @@ open WeierstrassCurve OnePoint ShortWeierstrass
 variable {F : Type*} [Field F]
 
 
+open scoped Classical in
 noncomputable def automorphismOrder (W : WeierstrassCurve F) : ℕ := by
   classical
   exact if W.a₆ = 0 then 4 else if W.a₄ = 0 then 6 else 2

@@ -26,6 +26,7 @@ theorem _root_.GlobalTheory.latticeCurve_nonsingular {z : ℂ} (hz : z ∉ L.lat
   linear_combination h / 4
 
 
+open Classical in
 def latticePoint (z : ℂ) : (latticeCurve L).toAffine.Point := by
   classical
   exact if hz : z ∈ L.lattice then 0 else .some _ _ (latticeCurve_nonsingular L hz)

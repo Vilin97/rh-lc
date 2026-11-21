@@ -159,6 +159,7 @@ def ringPiece (m : K → ℤ) : Submodule F (MRing ι F) :=
   weightedHomogeneousSubmodule F (intWeight (ι := ι)) m
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem isMultigrading_ring : IsMultigrading ι (MRing ι F) (ringPiece (F := F) (ι := ι)) := by
   refine ⟨(weightedDecomposition F (intWeight (ι := ι))).isInternal, ?_⟩
   intro v m x hx

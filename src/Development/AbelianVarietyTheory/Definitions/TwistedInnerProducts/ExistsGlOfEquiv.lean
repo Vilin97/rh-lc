@@ -283,6 +283,7 @@ theorem dia_hasVal_one {c : 𝓀[k]ˣ} {P : Pair k n} {e : n → k} (he : P.HasV
   exact he.smul s
 
 
+open Classical in
 def ev (P : Pair k n) (x : n → k) : 𝓀[k] := by
   classical
   exact if h : x ∈ P.lat then P.fn ⟨x, h⟩ else 0

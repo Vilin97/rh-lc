@@ -50,8 +50,8 @@ theorem sign_list_injective {K : Type} [Ring K] (r : ℕ) :
   | b, (s, t) :: xs, (s', t') :: ys, h => by
     change (s, (-1 : K) ^ (r + 1 - (b + s - 1)) * t) :: DataInst.signAux r (b + s) xs =
       (s', (-1 : K) ^ (r + 1 - (b + s' - 1)) * t') :: DataInst.signAux r (b + s') ys at h
-    simp only [List.cons.injEq, Prod.mk.injEq] at h
-    obtain ⟨⟨hs, ht⟩, hr⟩ := h
+    injection h with hst hr
+    injection hst with hs ht
     subst s'
     have hu : IsUnit ((-1 : K) ^ (r + 1 - (b + s - 1))) := isUnit_one.neg.pow _
     rw [hu.mul_left_cancel ht, sign_list_injective r (b + s) xs ys hr]

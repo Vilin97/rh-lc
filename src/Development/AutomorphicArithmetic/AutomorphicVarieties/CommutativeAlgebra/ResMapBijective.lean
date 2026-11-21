@@ -305,6 +305,7 @@ def Lift.comap {H : Type} [Group H] [TopologicalSpace H] (φ : H →* Γ) (hφ :
   red g a b := r.red (φ g) a b
 
 
+variable (O rbar) in
 def Cond (O : Type) [CommRing O] [IsLocalRing O] {Γ ι : Type} [Group Γ] [TopologicalSpace Γ]
     [Fintype ι] [DecidableEq ι] (rbar : Γ →* Matrix ι ι (ResidueField O)) : Type 1 :=
   ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R], Lift O rbar R → Prop

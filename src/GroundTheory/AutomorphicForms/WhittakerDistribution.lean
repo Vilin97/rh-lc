@@ -22,6 +22,7 @@ variable {F : Type*} [Field F] {n : ℕ}
 section Action
 
 
+variable (F n) in
 abbrev NN (F : Type*) [Field F] (n : ℕ) :=
   (Iwasawa.unipotent F n) × (Iwasawa.unipotent F n)
 

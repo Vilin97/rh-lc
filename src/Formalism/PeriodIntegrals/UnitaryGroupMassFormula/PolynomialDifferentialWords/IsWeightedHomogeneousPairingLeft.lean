@@ -108,14 +108,17 @@ theorem dvd_of_dvd_X_pow {i : Fin k ⊕ Fin k} {s f : Pol K k} (hs : ¬ (X i : P
     · exact absurd h' hs
 
 
+variable (K) in
 def chiF (K : Type) [Field K] (i0 : Fin k) : Fin k ⊕ Fin k → Pol K k :=
   Sum.elim (fun j => X (Sum.inl j)) (fun j => X (Sum.inl i0) * X (Sum.inr j))
 
 
+variable (K) in
 def tp (K : Type) [Field K] (i0 : Fin k) : Pol K k :=
   ∑ j ∈ Finset.univ.erase i0, X (Sum.inl j) * X (Sum.inr j)
 
 
+variable (K) in
 def psiF (K : Type) [Field K] (i0 : Fin k) : Fin k ⊕ Fin k → Pol K k :=
   Sum.elim (fun j => X (Sum.inl j))
     (fun j => if j = i0 then - tp K i0 else X (Sum.inl i0) * X (Sum.inr j))

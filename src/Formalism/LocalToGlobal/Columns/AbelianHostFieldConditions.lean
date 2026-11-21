@@ -174,6 +174,7 @@ def vT (u : Pr.Word) : Finset (HeightOneSpectrum (𝓞 X.E)) := divs (Pr.piT u)
 def vG (i : Fin 2) : Finset (HeightOneSpectrum (𝓞 X.E)) := divs (X.conjO (Pr.piG i))
 
 
+open Classical in
 def vGs : Finset (HeightOneSpectrum (𝓞 X.E)) := open Classical in Pr.vG 0 ∪ Pr.vG 1
 
 structure Ok : Prop where

@@ -23,6 +23,7 @@ variable {p : ℕ} [hp : Fact p.Prime]
 local notation "𝒪♭" => PreTilt (normInteger ℂ_[p]) p
 local notation "C♭" => FractionRing 𝒪♭
 
+variable (p) in
 abbrev Fpbar (p : ℕ) [Fact p.Prime] : Type := AlgebraicClosure (ZMod p)
 
 theorem exists_pow_eq_self_fpbar (a : Fpbar p) : ∃ n : ℕ, 0 < n ∧ a ^ p ^ n = a := by

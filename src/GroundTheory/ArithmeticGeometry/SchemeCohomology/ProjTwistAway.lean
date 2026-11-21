@@ -56,6 +56,7 @@ lemma locMap_comp {f f' : A} (φ : Localization.Away f →+* Localization.Away f
   exact congrArg (fun F => F z) this
 
 
+variable (𝒜) in
 def awayDeg (𝒜 : ℕ → σ) [GradedRing 𝒜] {f : A} {d : ℕ}
     (hf : f ∈ 𝒜 d) (hd : 0 < d) (k : ℤ) :
     AddSubgroup (Localization.Away f) where

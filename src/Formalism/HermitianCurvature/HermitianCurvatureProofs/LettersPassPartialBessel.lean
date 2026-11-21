@@ -76,9 +76,9 @@ theorem pbWords_core (Bj : B.RealPlaceData k ρ Wp Wq) (B0 : B.RealPlaceData k n
         B0.z B0.z' i hi hCsClosed hL hS w (fun a => ew a.succ)
     set c0 := Dmin k n B0.z B0.z' y ⟨i, by omega⟩ with hc0
     have hc0ne : c0 ≠ 0 := hD y hyU
-    obtain ⟨Ht, hHt, hHtS, hHtE⟩ :=
-      cutoff_exists (k := k) (n := n) (H := H') (Cs := Cs) (c0 := c0)
-        B0.z B0.z' i hi hLocSupp.1 hLocSupp.2 hc0ne
+    have hCutoff := cutoff_exists (Wp := Wp) (Wq := Wq) (H := H') (Cs := Cs) (c0 := c0)
+      B0.z B0.z' i hi hLocSupp.1 hLocSupp.2 hc0ne
+    obtain ⟨Ht, hHt, hHtS, hHtE⟩ := hCutoff
     have hDc : Continuous (fun g : B.Mat k n => Dmin k n B0.z B0.z' g ⟨i, by omega⟩) :=
       (Formalism.FourierDecayAlt.P.JCx1.contDiff_Dmin B0.z B0.z' ⟨i, by omega⟩).continuous
     set W0 := {g : B.Mat k n | dist (Dmin k n B0.z B0.z' g ⟨i, by omega⟩) c0 < ‖c0‖ / 4} with hW0

@@ -18,7 +18,7 @@ noncomputable def lift {n : ℕ} (y : Fin n → PowerSeries F) : Fin n → Laure
 lemma exists_primitive {n : ℕ} (u : Fin n → LaurentSeries F) (hu : u ≠ 0) :
     ∃ (i : Fin n) (y : Fin n → PowerSeries F), lift y = (u i)⁻¹ • u ∧ y i = 1 := by
   obtain ⟨l, hl⟩ : ∃ l, u l ≠ 0 := by
-    by_contra h; push_neg at h; exact hu (funext h)
+    by_contra h; push Not at h; exact hu (funext h)
   obtain ⟨i, -, hi⟩ := Finset.exists_max_image Finset.univ (fun a => Valued.v (u a))
     ⟨l, Finset.mem_univ _⟩
   have hvl : Valued.v (u l) ≠ 0 := (Valuation.ne_zero_iff _).mpr hl
@@ -104,7 +104,7 @@ lemma greedy {n : ℕ} (V : ℕ → Submodule (LaurentSeries F) (Fin n → Laure
       greedy V hV m hm'
     obtain ⟨y, hyV, hyi⟩ := exists_indep (Module.finrank (LaurentSeries F) (V m)) (V m) le_rfl
     have : ∃ b, red (y b) ∉ Submodule.span F (Set.range fun j => red (c j)) := by
-      by_contra h; push_neg at h
+      by_contra h; push Not at h
       have h1 : Submodule.span F (Set.range fun b => red (y b)) ≤
           Submodule.span F (Set.range fun j => red (c j)) :=
         Submodule.span_le.mpr (by rintro _ ⟨b, rfl⟩; exact h b)
@@ -118,7 +118,7 @@ lemma greedy {n : ℕ} (V : ℕ → Submodule (LaurentSeries F) (Fin n → Laure
     · intro j
       refine Fin.lastCases ?_ (fun j => ?_) j
       · simp only [Fin.snoc_last, Fin.val_last]; exact hyV b
-      · simp only [Fin.snoc_castSucc, Fin.coe_castSucc]; exact hcV j
+      · simp only [Fin.snoc_castSucc, Fin.val_castSucc]; exact hcV j
     · have e : (fun j => red ((Fin.snoc (α := fun _ => Fin n → PowerSeries F) c (y b)) j)) =
           Fin.snoc (α := fun _ => Fin n → F) (fun j => red (c j)) (red (y b)) := by
         ext j; refine Fin.lastCases ?_ (fun j => ?_) j <;> simp
@@ -149,7 +149,7 @@ theorem GlobalTheory.LaurentFlagBasis.adapted_integral_basis : ∀ (F : Type) [F
       have := Submodule.finrank_mono hle
       simp at hk0
       omega
-    · push_neg at h
+    · push Not at h
       have hle : ⊤ ≤ V j := le_iInf₂ fun k hk => absurd hk (not_lt.mpr (h k))
       have := Submodule.finrank_mono hle
       rw [finrank_top, Module.finrank_fin_fun] at this
@@ -158,7 +158,7 @@ theorem GlobalTheory.LaurentFlagBasis.adapted_integral_basis : ∀ (F : Type) [F
   let g : Matrix (Fin n) (Fin n) (PowerSeries F) := Matrix.of fun a j => c j a
   have hunit : IsUnit g := by
     rw [Matrix.isUnit_iff_isUnit_det, PowerSeries.isUnit_iff_constantCoeff, RingHom.map_det,
-      ← Matrix.isUnit_iff_isUnit_det, ← Matrix.linearIndependent_cols_iff_isUnit]
+      ← Matrix.isUnit_iff_isUnit_det, ← Matrix.linearIndependent_col_iff_isUnit]
     convert hci using 1
     funext j a
     simp [g, red, Matrix.col]

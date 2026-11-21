@@ -90,6 +90,7 @@ def VolAdditive {M : Type*} [MeasurableSpace M] (n : ℕ) (z : M → V n) : Prop
     volFun n z (⋃ i, f i) = ∑' i, volFun n z (f i)
 
 
+open scoped Classical in
 def vol {M : Type*} [MeasurableSpace M] (n : ℕ) (z : M → V n) : Measure M := by
   classical
   exact if h : VolAdditive n z then

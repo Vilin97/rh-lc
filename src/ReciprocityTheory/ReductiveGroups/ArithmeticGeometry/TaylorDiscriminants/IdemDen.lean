@@ -23,6 +23,7 @@ def evAt {E : Type} [Field E] {C : Type} [Field C] [Algebra ℚ E] [Algebra ℚ 
   Algebra.TensorProduct.productMap (σ.toRatAlgHom) (AlgHom.id ℚ C)
 
 
+open Classical in
 def IdemEvalSt : Prop := by
   classical
   exact ∀ (E : Type) [Field E] [NumberField E] (C : Type) [Field C] [CharZero C] [IsAlgClosed C] (ι : Type)

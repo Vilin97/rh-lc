@@ -22,9 +22,11 @@ namespace ProjSpace
 variable {A : Type u} [CommRing A] {n : ℕ}
 
 
+variable (A n) in
 abbrev Laurent (A : Type u) [CommRing A] (n : ℕ) : Type u := AddMonoidAlgebra A (Fin (n + 1) → ℤ)
 
 
+variable (n) in
 def expHom (n : ℕ) : (Fin (n + 1) →₀ ℕ) →+ (Fin (n + 1) → ℤ) where
   toFun e j := e j
   map_zero' := by ext; simp

@@ -150,6 +150,7 @@ def colMat (n' : Type) (y : Fin c → (n ⊕ Fin c → k)) : Matrix (n ⊕ Fin c
   Matrix.of fun r s => Sum.elim (fun _ => 0) (fun j : Fin (c + 1) => Fin.cases 0 (fun i => y i r) j) s
 
 
+open Classical in
 def col (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free 1 rs} → k) (i : Fin c) : n ⊕ Fin c → k := by
   classical
   exact fun r => if h : Free (n' := n') 1 (r, Sum.inr i.succ) then e ⟨_, h⟩ else 0

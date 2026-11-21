@@ -17,6 +17,7 @@ namespace Formalism.MainNotions.BridgeCS3dClosed
 open Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.ThB Formalism.BasicNotions Formalism.MainNotions.OnePlaceEstimates Formalism.MainNotions.BridgeLemma₄
 
 
+variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 theorem inputs_of (hDI : Formalism.FourierDecayAlt.ThreeDimData.DecInf) (hJ : PI.BesselMapUniq.BesselMapUniq) : Formalism.FourierDecayAlt.ThreeDimData.Inputs := by
   have hK := Formalism.L2.SG.LitS.kFinSmooth_pi Formalism.L2.SG.Pf.k_finite_smooth
   refine ⟨?_, hDI, hK, hJ⟩

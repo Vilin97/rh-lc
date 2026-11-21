@@ -36,6 +36,7 @@ def Fr (q : ℕ) : ℕ → ℕ → ℕ → ℤ
   | d, 0, c + 1 => (valZ q d - 1) * (q : ℤ) ^ (2 * c) * Fr q (d - 2) 0 c
 
 
+open Classical in
 def ValCount : Prop := by
   classical
   exact

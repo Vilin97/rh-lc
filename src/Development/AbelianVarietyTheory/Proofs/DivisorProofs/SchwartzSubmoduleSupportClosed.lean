@@ -16,6 +16,7 @@ namespace GlobalTheory.SBRestrict
 variable {k : Type} [Field k] {Y Y' : Type}
 
 
+open Classical in
 def ext (I : Set (Y × Y')) (s : Matrix {p : Y × Y' // p ∉ I} Unit k) : Matrix Y Y' k := by
   classical
   exact fun r q => if h : (r, q) ∈ I then 0 else s ⟨(r, q), h⟩ ()

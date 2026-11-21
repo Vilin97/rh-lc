@@ -74,6 +74,7 @@ theorem prodIrr_congr {h N : ℕ} {x y : Fin h → IrrGL (k := k)} (e : x = y) (
   exact ⟨Representation.Equiv.refl _⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_surjective_rev {h N : ℕ} (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N)
     (σ : GlobalTheory.CuspRep.SmIrr (GL (Fin N) k)) (f : σ.ρ.IntertwiningMap (prodIrr x hd)) (hf : f ≠ 0) :
     ∃ hd' : ∑ a, (x (Fin.rev a)).1 = N,

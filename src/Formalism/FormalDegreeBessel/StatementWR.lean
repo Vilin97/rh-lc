@@ -27,11 +27,13 @@ def wirtBar (l : Fin m) (f : (Fin m → ℂ) → E) (x : Fin m → ℂ) : E :=
   (1 / 2 : ℂ) • (fderiv ℝ f x (Pi.single l 1) + Complex.I • fderiv ℝ f x (Pi.single l Complex.I))
 
 
+open Classical in
 def pOp (l : Fin m) (f : (Fin m → ℂ) → E) : (Fin m → ℂ) → E := by
   classical
   exact fun x => if x ∈ OmX m then x l • wirt l f x else 0
 
 
+open Classical in
 def pbOp (l : Fin m) (f : (Fin m → ℂ) → E) : (Fin m → ℂ) → E := by
   classical
   exact fun x => if x ∈ OmX m then star (x l) • wirtBar l f x else 0

@@ -21,6 +21,7 @@ namespace Elliptic
 variable {L : PeriodPair}
 
 
+variable (L) in
 def torusOrder (L : PeriodPair) (f : ℂ → ℂ) (x : Torus L) : ℤ :=
   (meromorphicOrderAt f x.out).untopD 0
 
@@ -87,6 +88,7 @@ theorem finsum_torusOrder_eq_zero {f : ℂ → ℂ} (hf : IsEllipticFunction L f
   exact_mod_cast h
 
 
+variable (L) in
 def degree (L : PeriodPair) (f : ℂ → ℂ) : ℕ :=
   ∑ᶠ x : Torus L, (-torusOrder L f x).toNat
 

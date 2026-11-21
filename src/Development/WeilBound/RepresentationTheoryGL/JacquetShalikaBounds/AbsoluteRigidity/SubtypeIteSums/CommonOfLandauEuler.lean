@@ -114,6 +114,7 @@ theorem dsum_subtype {ι : Type} [Fintype ι] (P : ι → Prop) [DecidablePred P
   · simp [hi]
 
 
+open Classical in
 def gf {ι κ : Type} (F : ι × κ → ℂ → ℂ) (x : ι → X × ℝ) (y : κ → X × ℝ) (p : ι × κ) (s : ℂ) : ℂ := by
   classical
   exact if (x p.1).1 = (y p.2).1 then F p (s + (((x p.1).2 + (y p.2).2 : ℝ) : ℂ)) / (s + (((x p.1).2 + (y p.2).2 : ℝ) : ℂ) - 1)

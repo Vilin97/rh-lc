@@ -80,9 +80,11 @@ theorem cupList_diff (hF : IsFil Φ Fil) : ∀ {m : ℕ} (ℓ : Fin m → CH.Cn 
       rw [map_add (f := _), hd, CH.d_d, add_zero]
     have h₁ := bd_cup (m := m) (Fil := Fil) hF ih hl' hdl'
     rcases h₁ with ⟨H₁, hH₁, e₁⟩
-    obtain ⟨H₂, hH₂, e₂⟩ := cup_d (m := m) (B := cupListC Φ.A fun i : Fin m => ℓ i.castSucc)
-      (a := α (Fin.last m)) hF (cupList_mem hF _ fun i => hℓ i.castSucc)
-      (d_cupList Φ.A _ fun i => hd i.castSucc) (hα (Fin.last m))
+    let ℓ' : Fin m → CH.Cn (CH.modF Φ.A) 1 := fun i => ℓ i.castSucc
+    have h₂ := cup_d (Φ := Φ) (Fil := Fil) (m := m) (B := cupListC Φ.A ℓ')
+      (a := α (Fin.last m)) hF (cupList_mem hF ℓ' fun i => hℓ i.castSucc)
+      (d_cupList Φ.A ℓ' fun i => hd i.castSucc) (hα (Fin.last m))
+    rcases h₂ with ⟨H₂, hH₂, e₂⟩
     refine ⟨H₁ + H₂, add_mem hH₁ hH₂, ?_⟩
     rw [map_add (f := _), ← e₁, ← e₂]
     change (CH.mulP Φ.A).cupC rfl _ (ℓ (Fin.last m) + CH.d _ 0 (α (Fin.last m))) - (CH.mulP Φ.A).cupC rfl _ (ℓ (Fin.last m)) = _

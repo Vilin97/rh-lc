@@ -114,6 +114,7 @@ abbrev nusR (w : WeightFamilies.Wt D j) : HeightOneSpectrum (𝓞 (recB h.toLaws
 
 end Record
 
+attribute [local instance 2000] Submodule.module in
 def SharesDefSt : Prop :=
   ∀ (D : D7) (T : Top D) (h : LawsP T) (EX : ErrX D) (p : ℕ) (hj : InR D D.R.m) (large₂ : SizeData₂ D) (H : KHyp) (C2 A2 CT : ℝ)
     (ka wL wF : WeightFamilies.Wt D D.R.m) (Tn nP nW : ℕ) (h0 : ℝ) (S : Scal (recB h.toLawsCore))

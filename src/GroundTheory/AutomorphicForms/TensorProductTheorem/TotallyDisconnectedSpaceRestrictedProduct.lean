@@ -26,6 +26,7 @@ instance totallyDisconnectedSpace_restrictedProduct [∀ v, TotallyDisconnectedS
       (hs.image _ RestrictedProduct.continuous_coe.continuousOn))⟩
 
 
+variable (K) in
 def boxSubgroup (K K' : ∀ v, Subgroup (G v)) : Subgroup (Πʳ v, [G v, K v]) where
   carrier := {g | ∀ v, g v ∈ K' v}
   mul_mem' {a b} ha hb v := by

@@ -84,6 +84,7 @@ theorem tor_one : tor σ J e f 1 1 = 1 := by
 end
 
 
+variable (σ J) in
 def Good (σ : K →+* K) (J : Matrix ι ι K) (e f : ι → K) : Set (Matrix ι ι K) :=
   {g | ∃ n ∈ Submonoid.closure (eichSet σ J e f), ∃ l m : K, m * σ l = 1 ∧ g = n * tor σ J e f l m}
 

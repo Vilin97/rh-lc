@@ -81,6 +81,7 @@ def towerLimitMap : towerLimit τP →ₗ[A] towerLimit τE where
     exact map_smul (ι n) _ _
 
 
+include hι hπ hinj hex in
 theorem bijective_towerLimitMap (hinj : ∀ n, Function.Injective (ι n))
     (hex : ∀ n, LinearMap.range (ι n) = LinearMap.ker (π n))
     (hπ : ∀ n, (τQ n).comp (π (n + 1)) = (π n).comp (τE n))

@@ -27,7 +27,28 @@ theorem locBases {D : D7} {u : D.what₂.Word} (A : AtTTied u) (i : ℕ) (hi : i
     refine (Submodule.smul_le_right.trans hLd).trans ?_
     rw [mul_comm]
     exact bnd_mono d d0
-  · exact eq_top_iff.2 (hL.span_eq_top ▸ Submodule.span_mono (SetLike.coe_subset_coe.2 le_sup_left))
+  · apply eq_top_iff.2
+    rw [← hLd_sp]
+    apply Submodule.span_le.2
+    intro z hz
+    have ht : (((D.mem u).A.T : ℕ) : D.host.E) ≠ 0 := by
+      exact_mod_cast (D.mem u).A.T_prime.ne_zero
+    have hm : (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) ∈ A.Pv v := by
+      show A.res v _ = 0
+      rw [map_natCast, ← (D.mem u).A.card_Fv v]
+      exact FiniteField.cast_card_eq_zero _
+    have hz' : (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) • z ∈ Lk A i hi v c :=
+      Submodule.mem_sup_right (Submodule.smul_mem_smul hm hz)
+    have h : (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) • z ∈
+        Submodule.span D.host.E (Lk A i hi v c : Set _) := Submodule.subset_span hz'
+    have hfield : (((D.mem u).A.T : ℕ) : D.host.E) • z ∈
+        Submodule.span D.host.E (Lk A i hi v c : Set _) := by
+      change (algebraMap (𝓞 D.host.E) D.host.E (((D.mem u).A.T : ℕ) : 𝓞 D.host.E)) • z ∈ _
+      rw [IsScalarTower.algebraMap_smul]
+      exact h
+    have h' := (Submodule.span D.host.E (Lk A i hi v c : Set (Fin (D.R.N i) → D.host.E))).smul_mem
+      ((((D.mem u).A.T : ℕ) : D.host.E)⁻¹) hfield
+    simpa [smul_smul, ht] using h'
 
 def OntoAll (D : D7) (u : D.what₂.Word) : Prop :=
   ∀ T : Forms0 D u, admS D u → ∀ w, OverT D u w → (D.fm u).seenP w = true → ∀ v,

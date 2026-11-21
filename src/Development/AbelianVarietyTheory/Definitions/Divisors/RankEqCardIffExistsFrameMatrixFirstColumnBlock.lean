@@ -687,6 +687,7 @@ def fFun (μ : Measure (GL A' k)) (σ : A ⊕ A' ≃ D) (ν : kˣ →* ℂˣ) (�
       smallF μ ν Ψ (Y0 (k := k) σ * hX.choose.val) else 0
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] in
 theorem exists_secondBlock_of_frameFirstBlock_eq (σ : A ⊕ A' ≃ D) {h h' : GL D k} (H : X0 (k := k) σ * (invT h').val = X0 (k := k) σ * (invT h).val) :
     ∃ C : GL A' k, Y0 (k := k) σ * h'.val = C.val * (Y0 (k := k) σ * h.val) ∧ gdet h' = gdet C * gdet h := by
   obtain ⟨u, rfl⟩ : ∃ u, h' = u * h := ⟨h' * h⁻¹, by simp⟩

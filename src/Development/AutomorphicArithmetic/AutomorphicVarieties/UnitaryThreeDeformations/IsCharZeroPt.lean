@@ -41,6 +41,7 @@ instance : SetLike.GradedMonoid (wpart (O := O) u) where
     rw [map_mul, map_mul, hx R' f f' t h, hy R' f f' t h, _root_.zpow_add, Units.val_mul]; ring
 
 
+variable (O) in
 def Sring : Subalgebra O R := gradedSub (wpart (O := O) u)
 
 theorem mem_Sring {j : ℤ} {x : R} (hx : x ∈ wpart (O := O) u j) : x ∈ Sring (O := O) u := le_iSup (wpart (O := O) u) j hx

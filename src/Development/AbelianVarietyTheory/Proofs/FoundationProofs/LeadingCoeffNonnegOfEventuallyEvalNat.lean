@@ -158,6 +158,7 @@ theorem exists_isHilbertPoly_quotPiece [Fintype ι] {I : Ideal (MvPolynomial ι 
     ring
 
 
+open Classical in
 noncomputable def idealHilbertPoly (I : Ideal (MvPolynomial ι k)) : ℚ[X] := by
   classical
   exact if h : ∃ P, IsHilbertPoly (quotPiece I) P then h.choose else 0

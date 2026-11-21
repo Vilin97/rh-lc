@@ -156,6 +156,7 @@ variable (V : Type*) {F : Type*} [CommRing V] [IsDomain V] [IsDiscreteValuationR
   [Algebra V F] [IsFractionRing V F]
 
 
+open Classical in
 noncomputable def ordTop_vw (f : F) : WithTop ℤ := by
   classical
   exact if f = 0 then ⊤ else (WithZero.log (Ring.ordFrac V f) : ℤ)

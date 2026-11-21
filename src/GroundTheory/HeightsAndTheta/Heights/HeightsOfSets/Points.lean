@@ -29,6 +29,7 @@ def evalCone {F : Type*} [CommRing F] (z : Cone n F) (f : MvPolynomial (Coord n)
 def BlockNonzero {F : Type*} [Zero F] (z : Cone n F) : Prop := ∀ k, z k ≠ 0
 
 
+variable (n) in
 structure ArithVariety (n : ι → ℕ) where
 
   ideal : Ideal (MvPolynomial (Coord n) ℤ)
@@ -66,6 +67,7 @@ def whole : ArithVariety n where
 end ArithVariety
 
 
+variable (n) in
 structure HermLine (n : ι → ℕ) where
 
   deg : ι → ℤ

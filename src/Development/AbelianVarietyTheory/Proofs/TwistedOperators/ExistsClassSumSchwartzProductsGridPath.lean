@@ -82,9 +82,8 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
       rw [Finset.sum_singleton]
       exact (one_mul _).symm⟩
   | _, .snoc a p, hg, hnd, U, K, hK1, hK2 => by
-    rw [edges_snoc] at hnd
-    obtain ⟨hnd1, -, hne⟩ := (List.nodup_append (l₁ := edges p) (l₂ := [edgeOf a])).mp hnd
-    have hnot : edgeOf a ∉ edges p := fun h => hne _ h _ (List.mem_singleton_self _) rfl
+    rw [edges_snoc, ← List.concat_eq_append, List.nodup_concat] at hnd
+    obtain ⟨hnot, hnd1⟩ := hnd
     have ha : IsGridArrow D.R.m t a := hg.last
     obtain ⟨ι₁, s₁, φa, r₁, hφa, hexp⟩ := arrow_sb B ρ hL (t := t) he n (a := a) ha (Y := ArgT G p × U)
       (fun x (z : ArgT G p × U) => K (fun w => Function.update (pathArgs B t w p z.1) (edgeOf a) (locArg B t w a x)) z.2)

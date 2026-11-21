@@ -16,6 +16,7 @@ def ex (δ : ℝ) (S : Finset ℕ) (f : Finset ℕ → ℝ) : ℝ :=
   ∑ T ∈ S.powerset, δ ^ T.card * (1 - δ) ^ (S.card - T.card) * f T
 
 
+open Classical in
 def ind (p : Prop) : ℝ := by
   classical
   exact if p then 1 else 0

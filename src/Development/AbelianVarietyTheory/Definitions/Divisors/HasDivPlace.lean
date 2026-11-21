@@ -26,7 +26,7 @@ variable {p : ℕ} [Fact p.Prime]
 abbrev VQ (D : Datum p) : Type := ℚ ⊗[ℤ] D.La
 
 def actQ (D : Datum p) (b : D.O) : Module.End ℚ (VQ D) :=
-  (DistribMulAction.toLinearMap ℤ D.La b).baseChange ℚ
+  (DistribSMul.toLinearMap ℤ D.La b).baseChange ℚ
 
 def actOn {C V : Type} [Ring C] [Algebra ℚ C] [AddCommGroup V] [Module ℚ V] (rep : C →ₐ[ℚ] Module.End ℚ V)
     (R : Type) [CommRing R] [Algebra ℚ R] : R ⊗[ℚ] C →ₐ[R] Module.End R (R ⊗[ℚ] V) :=

@@ -14,6 +14,7 @@ namespace IsogenySigmaQuotient
 variable (L : PeriodPair)
 
 
+open Classical in
 def ind (x : ℂ) : WithTop ℤ := by
   classical
   exact if x ∈ L.lattice then 1 else 0

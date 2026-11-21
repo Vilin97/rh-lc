@@ -114,6 +114,11 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKe
     exact ⟨by simpa using h1, (h2 0).1 (by norm_num)⟩
 
 
+open MeasureTheory ValuativeRel Matrix IsLocalRing in
+open scoped Pointwise in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n n' n'' : Type} [Fintype n] [Fintype n'] [Fintype n''] in
+omit [Fintype n''] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.isGlue_last (q : _root_.GlobalTheory.LatPair.Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsFullLattice k] :
     _root_.GlobalTheory.LatPair.IsGlue (_root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer L) (q.inv • _root_.GlobalTheory.LatPair.avec k n'' 1 1) := by
   rw [_root_.GlobalTheory.LatPair.isGlue_iff q]

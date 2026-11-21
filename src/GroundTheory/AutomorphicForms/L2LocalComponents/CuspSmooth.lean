@@ -40,6 +40,7 @@ theorem isContRep_cuspToL2 (φ : cuspForms K n) :
     exact hy.trans (cuspQuot_mk _ y)
 
 
+variable {μ} in
 theorem eq_of_isContRep {v w : CuspL2 μ} {F : normOneGL (K := K) (n := n) → ℂ} (hv : IsContRep μ (toLp μ v) F)
     (hw : IsContRep μ (toLp μ w) F) : v = w :=
   toLp_injective μ (Lp.ext (hv.ae_eq_quotFun.trans hw.ae_eq_quotFun.symm))

@@ -74,8 +74,9 @@ theorem prod_adj : ∀ {n : ℕ} (k : Fin n) (f₁ f₂ f₃ f₄ : Fin (n + 1) 
         exact (Fin.succ_ne_zero k.castSucc).symm
       obtain ⟨e2, e3, e4⟩ : f₂ 0 = f₁ 0 ∧ f₃ 0 = f₁ 0 ∧ f₄ 0 = f₁ 0 :=
         h 0 hcast (Fin.succ_ne_zero k.succ).symm
-      simpa only [List.ofFn_succ, List.prod_cons, e2, e3, e4, mul_sub, mul_add, mul_zero]
-        using congrArg (f₁ 0 * ·) ih
+      rw [List.ofFn_succ (f := f₁), List.ofFn_succ (f := f₂),
+        List.ofFn_succ (f := f₃), List.ofFn_succ (f := f₄)]
+      simp only [List.prod_cons, e2, e3, e4, ← mul_add, ← mul_sub, ih, mul_zero]
 
 variable [Algebra ℂ A] {n : ℕ}
 

@@ -219,6 +219,7 @@ end PI.PolynomialProperness.CB
 namespace PI.PolynomialProperness
 
 
+open CB in
 theorem second_order_norm_bound : MonomialFactorizationBound := open CB in by
   intro m P hP
   obtain ⟨w, d, hd, hPeq⟩ := hP

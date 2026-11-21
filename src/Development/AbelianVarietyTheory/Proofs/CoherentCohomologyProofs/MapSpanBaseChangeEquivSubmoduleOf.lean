@@ -131,6 +131,7 @@ theorem spanBaseChange_eq_map (M : Submodule R V) :
 variable [IsFractionRing R K] [FaithfulSMul S L]
 
 
+variable (R V) in
 theorem baseChangeToField_injective : Function.Injective (baseChangeToField (R := R) (K := K) (S := S) (L := L) (V := V)) := by
   have hflat : Module.Flat R V :=
     (Module.flat_iff_of_isLocalization K (nonZeroDivisors R) V).1 inferInstance

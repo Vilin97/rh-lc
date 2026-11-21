@@ -369,6 +369,7 @@ def NormalOrder (n : ℕ) (ord : List (Fin n × Fin n)) : Prop :=
       (ord.idxOf (b, c) < ord.idxOf (a, c) ∧ ord.idxOf (a, c) < ord.idxOf (a, b))
 
 
+open Classical in
 def degIn {ι : Type*} [Fintype ι] (d : ι → ℕ) (S : Set ι) : ℕ :=
   open Classical in
   ∑ l, if l ∈ S then d l else 0

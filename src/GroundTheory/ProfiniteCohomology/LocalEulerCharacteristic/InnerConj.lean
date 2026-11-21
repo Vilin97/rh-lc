@@ -43,6 +43,7 @@ noncomputable def innerConjMor (A : Rep.{u} k Γ) (g : Γ) : Rep.res (innerConjH
 
 
 
+omit [TopologicalSpace Γ] [IsTopologicalGroup Γ] in
 theorem innerConjMor_naturality {A B : Rep.{u} k Γ} (f : A ⟶ B) (g : Γ) :
     (Rep.resFunctor (innerConjHom g)).map f ≫ innerConjMor B g = innerConjMor A g ≫ f := by
   ext a

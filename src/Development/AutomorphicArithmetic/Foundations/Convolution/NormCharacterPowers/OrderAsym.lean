@@ -25,6 +25,7 @@ def OrderAsym : Prop := ∀ (F : ℂ → ℂ) (S : ℝ → ℂ) (δ : ℕ), Anal
 
 
 
+open Classical in
 def LogAsym : Prop := ForSys fun q X _ A =>
   letI : DecidableEq X := Classical.decEq X
   ∀ x y : X, ∃ M : ℝ, ∀ σ : ℝ, 1 < σ → σ ≤ 2 →

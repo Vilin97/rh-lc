@@ -423,11 +423,13 @@ theorem dvd_hermMat_sub {R : Type} [CommRing R] {n : ℕ} (p : R) (a : Fin n →
   · rw [hermMat_gt _ h, hermMat_gt _ h, sub_self]; exact dvd_zero _
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem finite_hermIdx {p : 𝒪[k]} (hp : Irreducible p) {n : ℕ} (a : Fin n → ℕ) : Finite (HermIdx p a) := by
   have hq := GlobalTheory.IndefiniteRowSideFullHecke.SatakeTrivialRangeBound.one_lt_resCard k
   exact Nat.finite_of_card_ne_zero (by rw [card_hermIdx hp]; positivity)
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem exists_hermGL {p : 𝒪[k]} (hp : Irreducible p) {n : ℕ} {g : GL (Fin n) k} (hg : ∀ i j, g.val i j ∈ 𝒪[k]) :
     ∃ (a : Fin n → ℕ) (c : HermIdx p a), (hermGL hp a c)⁻¹ * g ∈ KO k (Fin n) := by
   obtain ⟨b, hb, w, hw, e⟩ := iwasawa_blockTriangular k (Fin n) Fin.val g
@@ -449,6 +451,7 @@ theorem exists_hermGL {p : 𝒪[k]} (hp : Irreducible p) {n : ℕ} {g : GL (Fin 
   exact mul_mem (inv_mem (MonoidHom.mem_range.2 ⟨U, rfl⟩)) hw
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem ord_gdet_of_mem_coset {ϖ : kˣ} (hϖ : IsUnif ϖ) {n : ℕ} {a : Fin n → ℕ} {c : HermIdx _ a} {g : GL (Fin n) k}
     (hg : (hermGL hϖ.irreducible a c)⁻¹ * g ∈ KO k (Fin n)) : ord k (gdet g) = (∑ i, a i : ℕ) := by
   have h1 : ∀ m : ℕ, ord k (ϖ ^ m) = m := fun m => by
@@ -464,6 +467,7 @@ theorem ord_gdet_of_mem_coset {ϖ : kˣ} (hϖ : IsUnif ϖ) {n : ℕ} {a : Fin n 
     ord_eq_zero (valuation_gdet_of_mem_KO hg), add_zero]
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem int_of_mem_coset {p : 𝒪[k]} (hp : Irreducible p) {n : ℕ} {a : Fin n → ℕ} {c : HermIdx p a} {g : GL (Fin n) k}
     (hg : (hermGL hp a c)⁻¹ * g ∈ KO k (Fin n)) (i j : Fin n) : g.val i j ∈ 𝒪[k] := by
   rw [← mul_inv_cancel_left (hermGL hp a c) g, Units.val_mul, Matrix.mul_apply]
@@ -641,15 +645,18 @@ theorem conv_finite_of_polys {P : Polynomial ℂ} {n : ℕ} (hP : P.natDegree �
     exact hc ⟨h0, by exact_mod_cast not_lt.1 hl⟩
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem resCard_cast_ne_zero : (resCard k : ℂ) ≠ 0 :=
   Nat.cast_ne_zero.2 (Nat.card_pos (α := 𝓀[k])).ne'
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem cst_ne_zero (d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) : cst d ϖ ν ≠ 0 := by
   refine mul_ne_zero (ν ϖ).ne_zero fun h => ?_
   exact resCard_cast_ne_zero (k := k) ((Complex.cpow_eq_zero_iff _ _).1 h).1
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem invL_eq_prod (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) :
     invL n d ϖ ν = ∏ i : Fin n,
       (1 - Polynomial.C (cst d ϖ ν * (resCard k : ℂ) ^ (n - 1 - (i : ℕ))) * Polynomial.X) := by
@@ -662,6 +669,7 @@ theorem invL_eq_prod (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) :
   ring
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem natDegree_invL_le (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) : (invL n d ϖ ν).natDegree ≤ n := by
   rw [invL]
   refine (Polynomial.natDegree_prod_le _ _).trans ?_
@@ -669,6 +677,7 @@ theorem natDegree_invL_le (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) : (invL n
   compute_degree
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem coe_invL (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) :
     (invL n d ϖ ν : PowerSeries ℂ) = ∏ i : Fin n,
       (1 - PowerSeries.C (cst d ϖ ν * (resCard k : ℂ) ^ (n - 1 - (i : ℕ))) * PowerSeries.X) := by
@@ -678,16 +687,19 @@ theorem coe_invL (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) :
     Polynomial.coe_C, Polynomial.coe_X]
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem sb_mul_left {n : ℕ} {φ : Matrix (Fin n) (Fin n) k → ℂ} (hφ : φ ∈ SB _) (g : GL (Fin n) k) :
     (fun x => φ (g.val * x)) ∈ SB (Matrix (Fin n) (Fin n) k) := by
   simpa using comp_mul_mem_SB g 1 hφ
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem sb_mul_right {n : ℕ} {φ : Matrix (Fin n) (Fin n) k → ℂ} (hφ : φ ∈ SB _) (g : GL (Fin n) k) :
     (fun x => φ (x * g.val)) ∈ SB (Matrix (Fin n) (Fin n) k) := by
   simpa using comp_mul_mem_SB 1 g hφ
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem sb_indicator_sq (n : ℕ) :
     Set.indicator {X : Matrix (Fin n) (Fin n) k | ∀ i j, X i j ∈ 𝒪[k]} (1 : Matrix (Fin n) (Fin n) k → ℂ) ∈ SB _ := by
   obtain ⟨_, _⟩ := Model.secondCountable_and_t2_local_field (k := k)
@@ -1038,6 +1050,7 @@ theorem Y0_mul_transpose (σ : A ⊕ A' ≃ D) : Y0 (k := k) σ * (Y0 (k := k) �
   simp [Y0, Matrix.mul_apply, Matrix.one_apply, σ.injective.eq_iff]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem invT_mul_transpose (h : GL D k) : (invT h).val * h.valᵀ = 1 := by
   rw [invT_val, ← Matrix.transpose_mul, Units.mul_inv, Matrix.transpose_one]
 
@@ -1067,6 +1080,7 @@ section Main2
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem transpose_mul_invT {D : Type} [Fintype D] [DecidableEq D] (h : GL D k) : h.valᵀ * (invT h).val = 1 := by
   rw [invT_val, ← Matrix.transpose_mul, Units.inv_mul, Matrix.transpose_one]
 
@@ -1094,6 +1108,7 @@ theorem gdet_blkDGL {a a' : ℕ} (b : GL (Fin (a + a')) k) (dD : kˣ) (h : (dD :
   Units.ext (by rw [Matrix.GeneralLinearGroup.val_det_apply, h]; rfl)
 
 
+omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem gdet_of_isBlockUpper {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : IsBlockUpper b) {dA dD : kˣ}
     (h1 : (dA : k) = (blkA b).det) (h2 : (dD : k) = (blkD b).det) : gdet b = dA * dD := by
   refine Units.ext ?_
@@ -1106,6 +1121,7 @@ theorem gdet_of_isBlockUpper {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : IsBloc
   ext (i | i) (j | j) <;> simp [blkA, blkD] <;> exact hb _ _
 
 
+omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem upperProjection_inverse_transpose_block {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : IsBlockUpper b) {dA : kˣ}
     (h1 : (dA : k) = (blkA b).det) :
     (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT b).val : Matrix (Fin a) (Fin (a + a')) k) =
@@ -1124,6 +1140,7 @@ theorem upperProjection_inverse_transpose_block {a a' : ℕ} {b : GL (Fin (a + a
         rw [key, Matrix.mul_assoc, Matrix.mul_assoc, transpose_mul_invT, Matrix.mul_one]
 
 
+omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem lowerProjection_blockUpper {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : IsBlockUpper b) {dD : kˣ}
     (h2 : (dD : k) = (blkD b).det) :
     (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * b.val : Matrix (Fin a') (Fin (a + a')) k) =
@@ -1135,12 +1152,14 @@ theorem lowerProjection_blockUpper {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : 
   · simp [Y0, Matrix.mul_apply, blkDGL, blkD, -finSumFinEquiv_apply_left, -finSumFinEquiv_apply_right]
 
 
+omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem upperProjection_inverse_transpose_right_inverse {a a' : ℕ} (h : GL (Fin (a + a')) k) :
     (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val : Matrix (Fin a) (Fin (a + a')) k) *
       (h.valᵀ * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))ᵀ) = 1 := by
   rw [Matrix.mul_assoc, ← Matrix.mul_assoc (invT h).val, invT_mul_transpose, Matrix.one_mul, upperProjection_mul_transpose]
 
 
+omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem lowerProjection_mul_right_inverse {a a' : ℕ} (h : GL (Fin (a + a')) k) :
     (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val : Matrix (Fin a') (Fin (a + a')) k) *
       ((h⁻¹).val * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))ᵀ) = 1 := by

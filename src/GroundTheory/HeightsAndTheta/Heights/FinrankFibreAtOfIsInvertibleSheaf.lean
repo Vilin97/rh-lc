@@ -32,6 +32,7 @@ end Via
 variable {X : Scheme.{u}} (L : X.Modules)
 
 
+variable (X) in
 abbrev locRing (X : Scheme.{u}) (p : X) : CommRingCat.{u} :=
   TopCat.Presheaf.stalk (X := X.toTopCat) X.sheaf.obj p
 

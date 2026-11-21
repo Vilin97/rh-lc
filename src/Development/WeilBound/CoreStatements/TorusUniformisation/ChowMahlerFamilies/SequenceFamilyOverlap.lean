@@ -25,7 +25,9 @@ namespace PositivityTheory.Xgn.SequenceFamilyOverlap
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (c : A →+* B) (d : B →+* C) :
     (dualMap d).comp (dualMap c) = dualMap (d.comp c) := by
-  ext r <;> simp [dualMap]
+  apply RingHom.ext
+  intro r
+  ext <;> simp [dualMap]
 
 theorem lieBC {S : Scheme.{0}} {G : Over S} [GrpObj G] {A B : Type} [CommRing A] [CommRing B] (c : A →+* B)
     (x : Sp A ⟶ S) (y : Sp B ⟶ S) (hy : y = Spec.map (CommRingCat.ofHom c) ≫ x) (hsm : Smooth G.hom)
@@ -45,11 +47,15 @@ theorem lieBC {S : Scheme.{0}} {G : Over S} [GrpObj G] {A B : Type} [CommRing A]
   let β : E →ₗ[A] E' := { toFun := j, map_add' := map_add j, map_smul' := fun a e => h2 a e }
   have hbc : IsBaseChange B β := (GlobalTheory.T.lie_model_finite_base_change S G A x E M).2.2 B E' M' β h1
   refine ⟨j, h1, h2, ?_, ?_⟩
-  · refine eq_top_iff.2 fun e _ => ?_
-    refine hbc.inductionOn e (fun z => z ∈ Submodule.span B (Set.range j)) (Submodule.zero_mem _) ?_ ?_ ?_
-    · exact fun m => Submodule.subset_span ⟨m, rfl⟩
-    · exact fun s n h => Submodule.smul_mem _ s h
-    · exact fun a b ha hb => Submodule.add_mem _ ha hb
+  · refine eq_top_iff.2 ?_
+    intro e _
+    have key : ∀ e : E', e ∈ Submodule.span B (Set.range j) := by
+      intro e
+      induction e using hbc.inductionOn with
+      | tmul m => exact Submodule.subset_span ⟨m, rfl⟩
+      | smul s n h => exact Submodule.smul_mem _ s h
+      | add a b ha hb => exact Submodule.add_mem _ ha hb
+    exact key e
   · intro l
     refine ⟨hbc.lift ((Algebra.linearMap A B).comp l), fun e => ?_⟩
     exact hbc.lift_eq _ e

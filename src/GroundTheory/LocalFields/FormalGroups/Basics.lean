@@ -178,6 +178,7 @@ theorem toPowerSeries_comp (g : Hom G H) (f : Hom F G) :
     (g.comp f).toPowerSeries = PowerSeries.subst f.toPowerSeries g.toPowerSeries := rfl
 
 
+variable (F) in
 noncomputable def id (F : FormalGroup R) : Hom F F :=
   ofPoints PowerSeries.X PowerSeries.constantCoeff_X fun x y => by
     rw [substPoint_X, substPoint_X, substPoint_X]
@@ -381,6 +382,7 @@ theorem coeff_one_id : PowerSeries.coeff 1 (id F).toPowerSeries = 1 := by
 end Hom
 
 
+variable (F) in
 noncomputable def linearCoeff (F : FormalGroup R) [F.IsComm] : Hom F F →+* R where
   toFun f := PowerSeries.coeff 1 f.toPowerSeries
   map_one' := Hom.coeff_one_id
@@ -389,6 +391,7 @@ noncomputable def linearCoeff (F : FormalGroup R) [F.IsComm] : Hom F F →+* R w
   map_add' f g := Hom.coeff_one_add f g
 
 
+variable (F G) in
 structure Iso (F G : FormalGroup R) where
 
   hom : Hom F G

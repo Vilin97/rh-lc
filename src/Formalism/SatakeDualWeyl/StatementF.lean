@@ -50,6 +50,7 @@ def chiDeltaU {σ : L →+* L} {n m : ℕ} (q : ℕ) (α : Fin m → ℂ) (b : G
     else 1
 
 
+open Classical in
 def SatU {σ : L →+* L} {n m : ℕ} (ϖ : L) (q : ℕ) (h : GU σ n → ℂ) (α : Fin m → ℂ) : ℂ := by
   classical
   exact ∑ᶠ a : Fin m → ℤ, (∏ i : Fin m, α i ^ (a i) * (q : ℂ) ^ (-(a i) * ((n : ℤ) - 1 - 2 * (i.val : ℤ)))) *

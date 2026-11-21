@@ -13,6 +13,7 @@ namespace ReciprocityTheory.EigenFramesTheory
 universe u v
 
 
+open Classical in
 def EigenFrameDual : Prop := by
   classical
   exact

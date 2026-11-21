@@ -151,6 +151,7 @@ noncomputable def invariantSections (U : X.Opens) (hU : ∀ g, U ≤ (ρ g).asIs
   FixedPoints.subring Γ(X, U) G
 
 
+variable {ρ} in
 theorem mem_invariantSections {U : X.Opens} {hU : ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U} {s : Γ(X, U)} :
     s ∈ invariantSections ρ U hU ↔ IsInvariantSection ρ U s := by
   constructor

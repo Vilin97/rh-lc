@@ -40,6 +40,7 @@ structure IsFixP (t : K) (S : Set (Etau K τ)) : Prop where
     simp [e, mul_assoc]
 
 
+open Classical in
 def pcount (t : K) : ℂ := by
   classical
   letI := quoAct τ
@@ -58,6 +59,7 @@ def cls (S : Set (Etau K τ)) : Set (Set (Etau K τ)) := {S' | ∃ s : Kˣ, S' =
     simp [← Set.image_comp, Function.comp_def, mul_assoc]
 
 
+open Classical in
 def vcount (x : Etau K τ) : ℂ := by
   classical
   letI := mulAct τ

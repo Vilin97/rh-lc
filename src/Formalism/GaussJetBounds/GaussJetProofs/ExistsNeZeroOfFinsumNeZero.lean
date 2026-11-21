@@ -343,6 +343,7 @@ end Diff
 end ExponentialDerivativeInverse
 
 
+open ExponentialDerivativeInverse in
 theorem exponential_derivative_inverse : ExpDeInv.{u} := open ExponentialDerivativeInverse in by
   intro K _ _ l d _ hl hd _ K0 ζ hζ be hK0 htor hcc D hD
   have hN : l ^ d - 1 ≠ 0 := by

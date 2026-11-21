@@ -27,6 +27,7 @@ section Glue
 variable {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ}
 
 
+open Classical in
 abbrev uSG (SG Q : Finset (HeightOneSpectrum (𝓞 E))) : Finset (HeightOneSpectrum (𝓞 E)) := open Classical in SG ∪ Q
 
 variable {SG Q : Finset (HeightOneSpectrum (𝓞 E))}

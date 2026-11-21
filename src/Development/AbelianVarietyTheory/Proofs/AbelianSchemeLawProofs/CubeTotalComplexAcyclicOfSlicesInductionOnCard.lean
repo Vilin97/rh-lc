@@ -423,6 +423,7 @@ theorem ordConnected_nonempty : Set.OrdConnected {s : Finset ι | s.Nonempty} :=
   isUpperSet_nonempty.ordConnected
 
 
+variable (e f) in
 noncomputable def partsIn (e : ι ↪o μ) (f : κ ↪o μ) (Q : Set (Finset ι))
     (T : Set (Finset κ)) : Set (Finset μ) :=
   part e ⁻¹' Q ∩ part f ⁻¹' T
@@ -432,6 +433,7 @@ theorem mem_partsIn {Q : Set (Finset ι)} {T : Set (Finset κ)} {u : Finset μ} 
     u ∈ partsIn e f Q T ↔ part e u ∈ Q ∧ part f u ∈ T := Iff.rfl
 
 
+variable (e f) in
 theorem ordConnected_partsIn (e : ι ↪o μ) (f : κ ↪o μ) {Q : Set (Finset ι)}
     {T : Set (Finset κ)} (hQ : Q.OrdConnected) (hT : T.OrdConnected) :
     (partsIn e f Q T).OrdConnected :=
@@ -449,12 +451,14 @@ noncomputable def trunc₁ (A : Cube.{v} ι R) : Cube.{v} ι R :=
   supp A {s | s.Nonempty} ordConnected_nonempty
 
 
+variable (e f) in
 noncomputable def truncOver (e : ι ↪o μ) (f : κ ↪o μ) (Q : Set (Finset ι))
     (hQ : Q.OrdConnected) (A : Cube.{v} μ R) :
     Cube.{v} μ R :=
   supp A (partsIn e f Q {t | t.Nonempty}) (ordConnected_partsIn e f hQ ordConnected_nonempty)
 
 
+variable (e f) in
 noncomputable def truncBoth (e : ι ↪o μ) (f : κ ↪o μ) (A : Cube.{v} μ R) : Cube.{v} μ R :=
   truncOver e f {s | s.Nonempty} ordConnected_nonempty A
 
@@ -659,10 +663,12 @@ section Sum
 variable {ι κ : Type} [LinearOrder ι] [LinearOrder κ] {R : Type u} [Ring R]
 
 
+variable (ι κ) in
 def inlEmb (ι κ : Type) [LinearOrder ι] [LinearOrder κ] : ι ↪o ι ⊕ₗ κ :=
   OrderEmbedding.ofStrictMono _ Sum.Lex.inl_strictMono
 
 
+variable (ι κ) in
 def inrEmb (ι κ : Type) [LinearOrder ι] [LinearOrder κ] : κ ↪o ι ⊕ₗ κ :=
   OrderEmbedding.ofStrictMono _ Sum.Lex.inr_strictMono
 
@@ -673,6 +679,7 @@ theorem inlEmb_apply (i : ι) : inlEmb ι κ i = toLex (Sum.inl i) := rfl
 theorem inrEmb_apply (k : κ) : inrEmb ι κ k = toLex (Sum.inr k) := rfl
 
 
+variable (ι κ) in
 theorem isCompl_range_inlEmb_inrEmb (ι κ : Type) [LinearOrder ι] [LinearOrder κ] :
     IsCompl (Set.range (inlEmb ι κ)) (Set.range (inrEmb ι κ)) :=
   Set.isCompl_range_inl_range_inr
@@ -843,11 +850,13 @@ noncomputable def Cube.trunc₃ (A : Cube.{v} ((ι ⊕ₗ κ) ⊕ₗ ν) R) : Cu
     (ordConnected_partsIn _ _ ordConnected_nonempty ordConnected_nonempty) A
 
 
+variable (ι κ ν) in
 def Cube.lastTwoEmb (ι κ ν : Type) [LinearOrder ι] [LinearOrder κ] [LinearOrder ν] :
     κ ⊕ₗ ν ↪o (ι ⊕ₗ κ) ⊕ₗ ν :=
   (inrEmb ι (κ ⊕ₗ ν)).trans (OrderIso.sumLexAssoc ι κ ν).symm.toOrderEmbedding
 
 
+variable (ι κ ν) in
 def Cube.firstEmb (ι κ ν : Type) [LinearOrder ι] [LinearOrder κ] [LinearOrder ν] :
     ι ↪o (ι ⊕ₗ κ) ⊕ₗ ν := (inlEmb ι κ).trans (inlEmb (ι ⊕ₗ κ) ν)
 
@@ -864,6 +873,7 @@ theorem Cube.firstEmb_apply (i : ι) :
     firstEmb ι κ ν i = toLex (Sum.inl (toLex (Sum.inl i))) := rfl
 
 
+variable (ι κ ν) in
 theorem Cube.isCompl_range_lastTwoEmb_firstEmb (ι κ ν : Type)
     [LinearOrder ι] [LinearOrder κ] [LinearOrder ν] :
     IsCompl (Set.range (lastTwoEmb ι κ ν)) (Set.range (firstEmb ι κ ν)) := by

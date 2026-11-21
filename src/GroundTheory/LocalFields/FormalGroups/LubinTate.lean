@@ -147,6 +147,7 @@ noncomputable def defect (f g : PowerSeries A) (φ : MvPowerSeries σ A) : MvPow
   subst (substEach g) (dropConst φ) - PowerSeries.subst (dropConst φ) f
 
 
+open Classical in
 noncomputable def divBy (c a : A) : A := by
   classical
   exact if h : c ∣ a then h.choose else 0

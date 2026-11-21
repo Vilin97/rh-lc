@@ -49,6 +49,7 @@ section Apply
 variable {X Z : Type} [TopologicalSpace X] [TopologicalSpace Z] {V : Type} [AddCommGroup V] [Module ℂ V]
 
 
+open Classical in
 def app (l : SB X →ₗ[ℂ] V) (f : X → ℂ) : V := by
   classical
   exact if h : f ∈ SB X then l ⟨f, h⟩ else 0

@@ -66,6 +66,7 @@ variable (p) in
 def IsInt (x : Ω) : Prop := IsIntegral (O0 p) x
 
 
+variable (p) in
 def Cong (k : ℕ) (x y : Ω) : Prop := ∃ z : Ω, IsInt (p := p) z ∧ x - y = (p : Ω) ^ k * z
 
 def IsKum (T : Tower p Ω) (n : ℕ) (H : Subgroup (Gal p Ω)) (r : Ω) (a : Gal p Ω → ZMod (p ^ n)) : Prop :=

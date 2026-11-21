@@ -20,14 +20,11 @@ private theorem cpZeroPol_graded {Λ A : Type} [CommRing Λ] [CommRing A] [Algeb
     split_ifs
     · exact SetLike.one_mem_graded 𝒜
     · exact zero_mem _
-  toGradedMul := {
-    mul_mem := by
-      intro i j p q hp hq
-      change ∀ n, (p * q).coeff n ∈ 𝒜 (i + j)
-      intro n
-      rw [coeff_mul]
-      exact Submodule.sum_mem _ fun x _ => SetLike.mul_mem_graded (hp x.1) (hq x.2)
-  }
+  mul_mem i j p q hp hq := by
+    change ∀ n, (p * q).coeff n ∈ 𝒜 (i + j)
+    intro n
+    rw [coeff_mul]
+    exact Submodule.sum_mem _ fun x _ => SetLike.mul_mem_graded (hp x.1) (hq x.2)
 
 theorem UpperTheory.V.Ws.sxCpZero :
     ∀ {Λ A : Type} [CommRing Λ] [CommRing A] [Algebra Λ A] (𝒜 : ℤ × ℤ → Submodule Λ A) [SetLike.GradedMonoid 𝒜] (M : M4 A), (∀ i j, M i j ∈ 𝒜 (wt i j)) → ∀ n, M.charpoly.coeff n ∈ 𝒜 0 := by

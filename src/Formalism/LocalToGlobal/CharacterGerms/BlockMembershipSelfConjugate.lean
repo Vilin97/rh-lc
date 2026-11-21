@@ -133,10 +133,12 @@ def GlobalTheory.AttainsOK {I J : Fin 2 → Type} [∀ g, Fintype (I g)] [∀ g,
 
 abbrev blkAt (L : Orb → List (GlobalTheory d × ℝ)) (o : Orb) (i : Fin (L o).length) : GlobalTheory d := ((L o).get i).1
 
+variable (X) in
 abbrev rowsAt (X : ∀ o, RowData C V d (I o) (J o))
     (L : Orb → List (GlobalTheory d × ℝ)) (o : Orb) (i : Fin (L o).length) : ℕ :=
   (blkAt L o i).what₂ (X o).n
 
+variable (X n) in
 def ProdMem (X : ∀ o, RowData C V d (I o) (J o)) (n : ℕ)
     (F : ∀ o, Flag (X o)) (FFimg : Set (∀ o, MvPolynomial (Fin n × WV (I o)) C))
     (L : Orb → List (GlobalTheory d × ℝ)) : Prop :=

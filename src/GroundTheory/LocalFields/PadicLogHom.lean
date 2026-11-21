@@ -50,6 +50,7 @@ theorem intCast_mem_valBall_zero (z : ℤ) : (z : K) ∈ valBall (K := K) 0 := b
   exact intCast_mem _ z
 
 
+omit [CharP 𝓀[K] p] [CharZero K] in
 theorem logTerm_order_ge {N : ℤ} {k : ℕ} (hk : 4 * N.toNat + 32 * absRamificationIndex (K := K) ^ 2 ≤ k) :
     N ≤ (k + 1 : ℤ) - absRamificationIndex (K := K) * padicValNat p (k + 1) := by
   set e := absRamificationIndex (K := K)

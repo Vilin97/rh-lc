@@ -16,6 +16,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 def decWord (Γ : Segment k) : List (IrrGL (k := k)) := (List.ofFn Γ.term).reverse
 
 
+open Classical in
 def jmL (W : List (IrrGL (k := k))) {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) : ℕ∞ :=
   if h : ∑ a, (W.get a).1 = N then jm W.get h π else 0

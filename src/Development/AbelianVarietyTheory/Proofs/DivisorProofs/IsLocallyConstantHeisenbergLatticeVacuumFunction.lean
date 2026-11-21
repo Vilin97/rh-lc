@@ -132,6 +132,7 @@ theorem isLocallyConstant_vacFn {K κ : Type} [CommRing K] [Invertible (2 : K)] 
 end GlobalTheory.HeisLatVac
 
 
+open GlobalTheory.HeisLatVac in
 theorem GlobalTheory.HeisLatVac.isLocallyConstant_vacFn_place : ∀ {F : Type} [Field F] [NumberField F] (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) {κ : Type} [Fintype κ]
     (ψ₀ : AddChar (Fv F v) ℂ), Continuous ψ₀ → ∀ (Λ : AddSubgroup ((κ → Fv F v) × (κ → Fv F v))),
     IsOpen (Λ : Set ((κ → Fv F v) × (κ → Fv F v))) →

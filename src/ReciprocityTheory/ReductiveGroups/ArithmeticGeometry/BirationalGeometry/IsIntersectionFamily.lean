@@ -90,6 +90,7 @@ def mcPts (P : Ideal (MRing ι)) : Set ((Σ k, ι k) → ℂ) :=
   {z | (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) ∧ ∀ f ∈ P, eval z (map (Int.castRingHom ℂ) f) = 0}
 
 
+variable (ι) in
 structure HermLine (ι : K → Type*) where
 
   a : K → ℤ

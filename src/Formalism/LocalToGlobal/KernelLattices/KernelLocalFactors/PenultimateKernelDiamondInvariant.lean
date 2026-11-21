@@ -352,8 +352,28 @@ variable [StarRing E]
 
 theorem frame_det_unit_almost_all_primes (n : ℕ) : OrdDetFin E n := by
   intro N hN
-  obtain ⟨a, ha0, ha⟩ := exists_smul_le N (stdLat E n) hN.1.fg (stdLat_lattice (E := E) (n := n)).span_eq_top
-  obtain ⟨a', ha0', ha'⟩ := exists_smul_le (stdLat E n) N (stdLat_lattice (E := E) (n := n)).fg hN.1.span_eq_top
+  have hstd : Submodule.span E (stdLat E n : Set (Sp E n)) = ⊤ := by
+    apply top_unique
+    rw [← Module.Basis.span_eq (Pi.basisFun E (Fin n))]
+    apply Submodule.span_mono
+    rintro _ ⟨i, rfl⟩
+    rw [Pi.basisFun_apply]
+    simpa using single_mem_stdLat (E := E) i (1 : 𝓞 E)
+  obtain ⟨a, ha0, ha⟩ := exists_smul_le N (stdLat E n) hN.1.fg hstd
+  let a' := cO E a
+  have ha0' : a' ≠ 0 := by
+    intro h
+    apply ha0
+    simpa only [a', cO_cO, map_zero] using congrArg (cO E) h
+  have ha' : ∀ x ∈ stdLat E n, a' • x ∈ N := by
+    intro x hx
+    have hdual : dual (hStd E n) N = N := hN.2
+    have hxdual : x ∈ dual (hStd E n) (stdLat E n) := by
+      rwa [show dual (hStd E n) (stdLat E n) = stdLat E n from stdLat_unimodular]
+    rw [← hdual, mem_dual]
+    intro y hy
+    rw [← hStd_osmul_left]
+    exact (mem_dual (stdLat E n) x).1 hxdual _ (ha y hy)
   have hI : Ideal.span {a * a'} ≠ (0 : Ideal (𝓞 E)) := by
     intro h0
     rw [Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot] at h0

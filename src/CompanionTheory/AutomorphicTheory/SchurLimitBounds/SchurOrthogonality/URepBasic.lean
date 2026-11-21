@@ -126,6 +126,7 @@ lemma isInvariant_range {T : H →L[ℂ] K} (hT : T ∈ π.intertwiners σ) :
   exact ⟨π g v, hT g v⟩
 
 
+variable (π σ) in
 structure Equiv (π : UnitaryRep G H) (σ : UnitaryRep G K) where
 
   toLinearIsometryEquiv : H ≃ₗᵢ[ℂ] K
@@ -133,6 +134,7 @@ structure Equiv (π : UnitaryRep G H) (σ : UnitaryRep G K) where
   map_apply' : ∀ (g : G) (v : H), toLinearIsometryEquiv (π g v) = σ g (toLinearIsometryEquiv v)
 
 
+variable (π σ) in
 def IsEquivalent (π : UnitaryRep G H) (σ : UnitaryRep G K) : Prop := Nonempty (Equiv π σ)
 
 namespace Equiv

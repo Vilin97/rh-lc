@@ -31,6 +31,7 @@ namespace Hol
 
 variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''}
 
+open Classical in
 def fn (f : Hol W) (p : E) : ℂ := by
   classical
   exact if h : p ∈ W then f.1 ⟨p, h⟩ else 0

@@ -13,6 +13,7 @@ open MvPolynomial
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 
+variable (ι) in
 def blkW : (Σ k, ι k) → (K → ℕ) := fun p => Pi.single p.1 1
 
 theorem weight_blkW (β : (Σ k, ι k) →₀ ℕ) (k : K) :

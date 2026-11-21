@@ -214,6 +214,7 @@ namespace GlobalTheory.LocalUnitaryL2
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
 
+open scoped Classical in
 theorem exists_r (v : Pl (F := F)) : ∃ r : (κ → AF F) → ℂ, (∀ x z, At (evFin F v) z → r (x + z) = r x) ∧
     (∀ ψ ∈ SB (κ → Fv F v), tens (evFin F v) ψ r ∈ schA F κ) ∧ r 0 ≠ 0 := by
   classical

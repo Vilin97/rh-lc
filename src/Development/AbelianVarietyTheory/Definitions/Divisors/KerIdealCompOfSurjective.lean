@@ -116,6 +116,7 @@ abbrev augIdeal : Ideal A := RingHom.ker (counitAlgHom R A)
 abbrev kerIdeal (f : C →ₐc[R] A) : Ideal A := Ideal.map (f : C →ₐ[R] A) (augIdeal (R := R) (A := C))
 
 
+variable (R A) in
 abbrev torsionIdeal [IsCocomm R A] (n : ℕ) : Ideal A := kerIdeal (mulBy (R := R) (A := A) n)
 
 theorem kerIdeal_le_ker_iff (f : C →ₐc[R] A) {E : Type*} [CommRing E] [Algebra R E]
@@ -208,6 +209,7 @@ variable (R A) in
 abbrev Cot : Type _ := AugCot (counitAlgHom R A)
 
 
+variable (R) in
 abbrev dUnit (a : A) : Cot (R := R) (A := A) := AugCot.d (counitAlgHom R A) a
 
 def cotMap (f : C →ₐc[R] A) : Cot (R := R) (A := C) →ₗ[R] Cot (R := R) (A := A) :=

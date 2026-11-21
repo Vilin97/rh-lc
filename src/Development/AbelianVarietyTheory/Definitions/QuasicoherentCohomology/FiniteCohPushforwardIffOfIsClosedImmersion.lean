@@ -71,10 +71,11 @@ variable {k}
 namespace FiniteCoh
 
 theorem of_linearEquiv [Algebra k Γ(Y, ⊤)] {H : Y.Modules} (h : FiniteCoh k F)
-    (e : ∀ n, coh F n ≃ₗ[k] coh H n) : FiniteCoh k H where
-  finite n := have := h.finite n; Module.Finite.equiv (e n)
-  eventually_zero := by
-    obtain ⟨N, hN⟩ := h.eventually_zero
+    (e : ∀ n, coh F n ≃ₗ[k] coh H n) : FiniteCoh k H := by
+  refine ⟨fun n ↦ ?_, ?_⟩
+  · have := h.finite n
+    exact Module.Finite.equiv (e n)
+  · obtain ⟨N, hN⟩ := h.eventually_zero
     refine ⟨N, fun n hn ↦ ?_⟩
     have := hN n hn
     exact (e n).symm.injective.subsingleton
@@ -92,13 +93,12 @@ theorem of_acyclic (h₀ : Module.Finite k (coh F 0)) (h : ∀ n, 0 < n → Subs
 variable {S : ShortComplex X.Modules}
 
 theorem of_shortExact₃ (hS : S.ShortExact) (h₁ : FiniteCoh k S.X₁) (h₂ : FiniteCoh k S.X₂) :
-    FiniteCoh k S.X₃ where
-  finite := cohOn.forall_finite₃ k hS ⊤ h₁.finite h₂.finite
-  eventually_zero := by
-    obtain ⟨N₁, hN₁⟩ := h₁.eventually_zero
-    obtain ⟨N₂, hN₂⟩ := h₂.eventually_zero
-    exact ⟨max N₁ N₂, fun n hn ↦
-      cohOn.subsingleton₃ hS ⊤ n (hN₂ n (by omega)) (hN₁ (n + 1) (by omega))⟩
+    FiniteCoh k S.X₃ := by
+  refine ⟨cohOn.forall_finite₃ k hS ⊤ h₁.finite h₂.finite, ?_⟩
+  obtain ⟨N₁, hN₁⟩ := h₁.eventually_zero
+  obtain ⟨N₂, hN₂⟩ := h₂.eventually_zero
+  exact ⟨max N₁ N₂, fun n hn ↦
+    cohOn.subsingleton₃ hS ⊤ n (hN₂ n (by omega)) (hN₁ (n + 1) (by omega))⟩
 
 end FiniteCoh
 

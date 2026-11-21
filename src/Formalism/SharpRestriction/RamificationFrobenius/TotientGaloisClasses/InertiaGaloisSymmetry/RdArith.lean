@@ -196,6 +196,7 @@ theorem card_KK {f : ℕ} (hf : f ∣ N) : (KK N f).card * f.totient = N.totient
     Nat.card_eq_fintype_card, ZMod.card_units_eq_totient]
 
 
+open Classical in
 def rho (U : Subgroup (ZMod N)ˣ) (f : ℕ) : ℝ := by
   classical
   exact (((KK N f).filter fun u => u ∉ U).card : ℝ) * f.totient / N.totient

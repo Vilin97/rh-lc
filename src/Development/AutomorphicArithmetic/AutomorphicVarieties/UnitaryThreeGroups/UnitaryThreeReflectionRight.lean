@@ -68,6 +68,7 @@ theorem Jmat_map (f : R →+* S) (m : ℕ) : (Jmat (R := R) m).map f = Jmat (R :
   split_ifs <;> simp
 
 
+variable (R) in
 def Jgl (m : ℕ) : GL (Fin m) R := ⟨Jmat (R := R) m, Jmat (R := R) m, Jmat_mul_Jmat (R := R) m, Jmat_mul_Jmat (R := R) m⟩
 
 theorem Jgl_mul_Jgl : Jgl (R := R) m * Jgl (R := R) m = 1 := Units.ext (Jmat_mul_Jmat (R := R) m)
@@ -127,6 +128,7 @@ def sgnAct : ℤˣ →* MulAut (GL (Fin m) R) where
   rfl
 
 
+variable (m R) in
 abbrev GG : Type _ := GL (Fin m) R ⋊[sgnAct (m := m) (R := R)] ℤˣ
 
 def GG.mat (x : GG (m := m) (R := R)) : Matrix (Fin m) (Fin m) R := (x.left : Matrix (Fin m) (Fin m) R)
@@ -193,6 +195,7 @@ theorem GG.adFun_mul (x y : GG (m := m) (R := R)) (X : Matrix (Fin m) (Fin m) R)
     simp only [Matrix.mul_assoc]
 
 
+variable (m R) in
 def GG.ad : Representation R (GG (m := m) (R := R)) (Matrix (Fin m) (Fin m) R) where
   toFun x :=
     { toFun := x.adFun

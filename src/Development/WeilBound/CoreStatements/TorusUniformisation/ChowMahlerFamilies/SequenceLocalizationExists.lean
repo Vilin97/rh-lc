@@ -106,16 +106,16 @@ theorem PositivityTheory.Xgn.sequence_localization_exists : ∀ (E : Type) [Fiel
     intro z w'
     obtain ⟨χ, w₀, hχ, hh, hHT⟩ := P.isHT.2.2 z
     refine GlobalTheory.CompanionTheory.HtLink.isHTAt_iff GlobalTheory.T.lie_model_finite_base_change GlobalTheory.T.section_eq_zero_of_values hξ 𝔐.t.PP.L hn (𝔐.tors p hpS) 𝔐.M P.x κ hx' P.Γ₂
-      P.i₂ P.tors₂ P.M P.toLi (by rw [hκ']; exact P.toLi_pt) _ χ w₀ _ (fun s k _ _ a xk gk u h1 h2 => ?_) hHT
+      P.i₂ P.tors₂ P.M P.toLi (by rw [hκ']; exact P.toLi_pt) _ χ w₀ _ (fun s k _ _ a xk gk u h1 h2 => by
+        obtain ⟨z', rfl⟩ := hsurj s
+        have e1 : χ (qmk (p ^ 𝔐.R p) z') = P.ζ ^ (P.Dh.e z z').val := hχ z'
+        have e2 := G.weil z z' k a xk gk u h1 (by rw [h2, P.pts₂, hκf])
+        have e3 : κ (algebraMap (CR O y c') _ (χ (qmk (p ^ 𝔐.R p) z') : CR O y c')) = G.ζ ^ (G.e z z').val := by
+          rw [e1, hκ, P.Dh_e, Units.val_pow_eq_pow_val, ← P.ζ_eq, map_pow (algebraMap (CR O y c') Ω)]
+          rfl
+        rw [e3, Nat.cast_pow]
+        exact e2) hHT
       (fun b => by rw [hh, P.j_apply, hκ]) q hr (fun a => by rw [hκ]; exact hsub a) w'
-    obtain ⟨z', rfl⟩ := hsurj s
-    have e1 : χ (qmk (p ^ 𝔐.R p) z') = P.ζ ^ (P.Dh.e z z').val := hχ z'
-    have e2 := G.weil z z' k a xk gk u h1 (by rw [h2, P.pts₂, hκf])
-    have e3 : κ (algebraMap (CR O y c') _ (χ (qmk (p ^ 𝔐.R p) z') : CR O y c')) = G.ζ ^ (G.e z z').val := by
-      rw [e1, hκ, P.Dh_e, Units.val_pow_eq_pow_val, ← P.ζ_eq, map_pow (algebraMap (CR O y c') Ω)]
-      rfl
-    rw [e3, Nat.cast_pow]
-    exact e2
   have hpow : ∀ w : Module.Dual Ω 𝔐.Li, ((p : CR O y c') ^ 𝔐.R p) • w = (p ^ 𝔐.R p) • w := fun w => by
     rw [← Nat.cast_pow, Nat.cast_smul_eq_nsmul]
   have hmem : ∀ z, ∀ v ∈ 𝔐.M.omLat q, P.Dh.h z + (p ^ 𝔐.R p) • v ∈ HT.omP 𝔐 p q := fun z v hv =>

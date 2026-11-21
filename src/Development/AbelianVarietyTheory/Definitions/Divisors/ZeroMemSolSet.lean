@@ -23,6 +23,7 @@ def symb (m : ℕ) (a : (n : ℕ) → (Fin n → Fin d) → E d → ℂ) (x ξ :
 def oneSys (m : ℕ) (a : (n : ℕ) → (Fin n → Fin d) → E d → ℂ) : Sys d Unit := ⟨fun _ => m, fun _ => a⟩
 
 
+open Classical in
 def ext0 (U : Set (E d)) (u : U → ℂ) (x : E d) : ℂ := by
   classical
   exact if hx : x ∈ U then u ⟨x, hx⟩ else 0

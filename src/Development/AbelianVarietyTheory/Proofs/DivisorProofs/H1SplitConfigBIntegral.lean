@@ -26,6 +26,7 @@ namespace GlobalTheory.IndLine.SplitB
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+omit [NumberField E] in
 theorem one_mem_UAt' {n : ℕ} (Y : Spc F E n) (v : Pl (F := F)) : (1 : UA σ Y.J) ∈ UAt σ Y (evFin F v) := fun u _ => by
   rw [show mat (1 : UA σ Y.J) = 1 from rfl, sub_self, smul_zero]
 

@@ -37,7 +37,7 @@ theorem prod_mul_prod_eq_one : ∀ (n : ℕ) (f g : Fin n → A), (∀ i, f i * 
       calc
         _ = f 0 * g 0 * ((List.ofFn fun i => f i.succ).prod * (List.ofFn fun i => g i.succ).prod) :=
           hP.mul_mul_mul_comm _ _
-        _ = 1 := by simp only [ih, h1 0, mul_one]
+        _ = 1 := by rw [h1 0, ih, mul_one]
 
 variable {r : ℕ} (L : LevelData A r)
 

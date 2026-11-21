@@ -67,26 +67,29 @@ theorem isSqInt_of_bounded {f : GA E a → ℂ} (h : ∀ t g, f (splitCentre E a
     exact ENNReal.mul_lt_top (ENNReal.pow_lt_top ENNReal.ofReal_lt_top) (measure_lt_top _ _)
 
 theorem IsDiscreteWith.twist (h : IsDiscreteWith ω V) {ν : HChar E} (hν : ν.IsUnitary) :
-    IsDiscreteWith (ω * ν ^ a) (V.map (mulChi a ν).toLinearMap) where
-  aut := by
+    IsDiscreteWith (ω * ν ^ a) (V.map (mulChi a ν).toLinearMap) := by
+  constructor
+  case aut =>
     rintro _ ⟨φ, hφ, rfl⟩
     exact (h.aut φ hφ).mulChi ν
-  central := by
+  case central =>
     rintro z _ ⟨φ, hφ, rfl⟩
     refine Subtype.ext (funext fun g => ?_)
     change φ.1 (g * _) * (chiDet a ν (g * _) : ℂ) = ((ω.1 z * (ν ^ a).1 z : ℂˣ) : ℂ) * (φ.1 g * (chiDet a ν g : ℂ))
     rw [← CuspRep.scalar_comm, h.apply hφ, map_mul, chiDet_scalar, Units.val_mul, Units.val_mul]
     ring
-  sqInt := by
+  case sqInt =>
     rintro _ ⟨φ, hφ, rfl⟩
     convert h.sqInt φ hφ using 3 with g
     change ‖φ.1 g * (ν.1 _ : ℂ)‖ = _
     rw [norm_mul, hν, mul_one]
-  stable := by
+  case stable =>
     rintro o _ ⟨φ, hφ, rfl⟩
     exact ⟨_, add_mem (V.smul_mem _ (h.stable o φ hφ)) (V.smul_mem _ hφ), (act_mulChi ν o φ).symm⟩
-  ne_bot e := h.ne_bot ((Submodule.map_eq_bot_iff (e := mulChi a ν)).1 e)
-  irred W hW hs := by
+  case ne_bot =>
+    exact fun e => h.ne_bot ((Submodule.map_eq_bot_iff (e := mulChi a ν)).1 e)
+  case irred =>
+    intro W hW hs
     have h := h.irred (W.comap (mulChi a ν).toLinearMap) (fun φ hφ => by
       obtain ⟨ψ, h1, h2⟩ := hW hφ
       rwa [← (mulChi a ν).injective h2]) fun o φ hφ => by

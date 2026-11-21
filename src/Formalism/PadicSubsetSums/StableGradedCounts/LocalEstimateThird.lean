@@ -216,6 +216,7 @@ theorem key (P : K[X]) (hP : Irreducible P) (hm : P.Monic) (x : L) (hx : aeval x
     exact hyl'
 
 
+open Classical in
 noncomputable def Bset (K : Type) [Field K] [Fintype K] (δ : ℕ) (c₀ : Kˣ) : Finset (Fin δ → K) := by
   classical
   exact Finset.univ.filter (fun c => Irreducible (monicOf c) ∧

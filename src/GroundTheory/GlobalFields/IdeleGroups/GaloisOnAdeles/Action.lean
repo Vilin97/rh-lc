@@ -30,6 +30,7 @@ instance : MulSemiringAction (L ≃ₐ[K] L) 𝔸[L] :=
   MulSemiringAction.compHom _ (adeleRingAut K L)
 
 
+omit [NumberField K] in
 @[simp]
 theorem smul_algebraMap (σ : L ≃ₐ[K] L) (l : L) :
     σ • algebraMap L 𝔸[L] l = algebraMap L 𝔸[L] (σ l) :=
@@ -163,6 +164,7 @@ instance : ContinuousConstSMul (L ≃ₐ[K] L) (IdeleGroup L) where
     exact (ideleEquiv (σ : L ≃+* L)).continuous
 
 
+omit [NumberField K] in
 @[simp]
 theorem smul_diagonal (σ : L ≃ₐ[K] L) (l : Lˣ) :
     σ • IdeleGroup.diagonal L l = IdeleGroup.diagonal L (σ • l) :=
@@ -215,6 +217,7 @@ instance : MulDistribMulAction (L ≃ₐ[K] L) (IdeleClassGroup L) :=
   MulDistribMulAction.compHom _ (ideleClassAut K L)
 
 
+omit [NumberField K] in
 @[simp]
 theorem smul_mk (σ : L ≃ₐ[K] L) (x : IdeleGroup L) :
     σ • IdeleClassGroup.mk L x = IdeleClassGroup.mk L (σ • x) := by

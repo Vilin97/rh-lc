@@ -179,6 +179,7 @@ def term (p : ℕ) : Cube.Term A p →ₛₗ[f] Cube.Term B p where
   map_smul' r x := funext fun s => map_smulₛₗ (ψ.app s.1) r (x s)
 
 
+omit [LinearOrder ι] in
 @[simp]
 theorem term_apply (p : ℕ) (x : Cube.Term A p) (s : {s : Finset ι // s.card = p}) :
     ψ.term p x s = ψ.app s.1 (x s) := rfl
@@ -246,6 +247,10 @@ def homology (p : ℕ) : (cechComplex A).homology p →ₛₗ[f] (cechComplex B)
     ((cechClass A p).quotKerEquivOfSurjective (cechClass_surjective A p)).symm.toLinearMap
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
+variable {f : R →+* S} {A A' : _root_.GlobalTheory.Cube.{v} ι R} {B B' : _root_.GlobalTheory.Cube.{v'} ι S}
+  (ψ : _root_.GlobalTheory.Cube.SemiHom f A B) in
 @[simp]
 theorem _root_.GlobalTheory.Cube.SemiHom.homology_cechClass (p : ℕ)
     (x : LinearMap.ker (_root_.GlobalTheory.Cube.d A (p + 1))) :

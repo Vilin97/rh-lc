@@ -13,6 +13,7 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι] {K : Type*} [CommRing K] {σ
   {J : Matrix ι ι K}
 
 
+variable (σ J) in
 def hm (σ : K →+* K) (J : Matrix ι ι K) (e f : ι → K)
     (M : Matrix (Fin 2) (Fin 2) K) : Matrix ι ι K :=
   1 + (M 0 0 - 1) • vecMulVec e (J *ᵥ (σ ∘ f)) + M 0 1 • vecMulVec e (J *ᵥ (σ ∘ e))

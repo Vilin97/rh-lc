@@ -103,6 +103,7 @@ def leviProj (e : (Σ a, m a) ≃ n) : parab R e →* Levi R m :=
       ((p : GL n R) : Matrix n n R) (e ⟨a, i⟩) (e ⟨a, j⟩) := rfl
 
 
+open Classical in
 def leviEmb {α : Type} {m : α → Type} [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)]
     (e : (Σ a, m a) ≃ n) : Levi R m →* GL n R :=
   letI : DecidableEq α := Classical.typeDecidableEq α

@@ -63,6 +63,7 @@ theorem local_away_of_val {S : Type} [CommRing S] (π : S) (hV : Val π) (f : Lo
   exact Ideal.mem_span_singleton.2 d1
 
 
+open Polynomial in
 theorem aic_away {S : Type} [CommRing S] (π : S) (hA : Aic (S := S)) :
     Aic (S := Localization.Away π) := by
   have hA' : ∀ P : Polynomial S, P.Monic → 0 < P.natDegree → ∃ x, P.IsRoot x := hA

@@ -55,8 +55,8 @@ theorem diagM_ss : ∀ {t : ℕ} (χ : Fin t → Γ →* kˣ), IsSSRep (diagM χ
       ext i <;> simp [diagM, Matrix.mulVec_diagonal, LinearMap.funLeft]
     · funext c
       obtain rfl : c = 0 := Subsingleton.elim _ _
-      simp [diagM, Matrix.mulVec_diagonal]
-      exact Or.inl rfl
+      change (Matrix.diagonal fun c : Fin 1 => ((χ (Fin.natAdd t c) g : kˣ) : k)).mulVec v 0 = _
+      exact Matrix.mulVec_diagonal _ _ _
 
 end Rep
 

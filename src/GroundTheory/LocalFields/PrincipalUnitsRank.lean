@@ -46,9 +46,11 @@ noncomputable def padicIntHomInteger : ℤ_[p] →+* 𝒪[K] :=
   (padicIntHom (K := K) p).codRestrict 𝒪[K] (padicIntHom_mem p)
 
 
+variable (K) in
 noncomputable abbrev algebraK : Algebra ℤ_[p] K := (padicIntHom (K := K) p).toAlgebra
 
 
+variable (K) in
 noncomputable abbrev algebraInteger : Algebra ℤ_[p] 𝒪[K] := (padicIntHomInteger (K := K) p).toAlgebra
 
 attribute [local instance] algebraK algebraInteger
@@ -98,6 +100,7 @@ theorem mem_valBallSubmodule {m : ℤ} {x : K} :
   Iff.rfl
 
 
+variable (K) in
 noncomputable def valBallSubmoduleZeroEquiv : valBallSubmodule (K := K) p 0 ≃ₗ[ℤ_[p]] 𝒪[K] where
   toFun x := ⟨x, mem_integer_of_mem_valBall le_rfl x.2⟩
   invFun y := ⟨y, by

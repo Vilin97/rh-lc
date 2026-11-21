@@ -43,6 +43,7 @@ theorem Kap_nonneg {I : Type} [Fintype I] (hk0 : ∀ z w : P, 0 ≤ kap z w) (k 
   Finset.prod_nonneg fun v _ => Real.rpow_nonneg (hk0 _ _) _
 
 
+open Classical in
 def uX {I : Type} [Fintype I] (z : X I) : ℝ := by
   classical
   exact ∑ e : I → Bool, Kap (fun _ => 4) (bs e) z

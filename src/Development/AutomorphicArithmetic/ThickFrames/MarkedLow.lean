@@ -18,6 +18,7 @@ def exP (p : ℕ → ℝ) (S : Finset ℕ) (f : Finset ℕ → ℝ) : ℝ :=
   ∑ T ∈ S.powerset, (∏ a ∈ T, p a) * (∏ a ∈ S \ T, (1 - p a)) * f T
 
 
+open Classical in
 def ind (q : Prop) : ℝ := by
   classical
   exact if q then 1 else 0

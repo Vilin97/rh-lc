@@ -192,6 +192,7 @@ theorem exists_norm_pow_totient_eq_zpow {n : ℕ} {y : PadicAlgCl p} (hy : y ∈
   rw [hm, pow_mul, norm_pow_natDegree_minpoly, hz, zpow_mul, zpow_natCast]
 
 
+variable (p) in
 def cyclRadius (p : ℕ) [Fact p.Prime] (j : ℕ) : ℝ :=
   ‖(exists_isPrimitiveRoot (p := p) j).choose - 1‖
 

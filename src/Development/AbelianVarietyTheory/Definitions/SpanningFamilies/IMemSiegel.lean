@@ -30,6 +30,7 @@ def haarAt (R : ℕ) (φ : Matrix κ ι K → ℂ) : ℂ :=
     ∑ᶠ q : Matrix κ ι K ⧸ perSub K κ ι R, φ q.out
 
 
+open Classical in
 def haar (φ : Matrix κ ι K → ℂ) : ℂ := by
   classical
   exact if h : IsSB φ then haarAt h.choose φ else 0

@@ -189,26 +189,26 @@ theorem edges_bound {m : ℕ} {t : T} {i j : ℕ} : ∀ {Y : Node} (p : Path T (
       rcases h1 with ⟨hk, hl⟩
       subst i' j'
       refine ⟨k + 1, l, rfl, by omega, h3, List.nodup_append.2 ⟨h4, List.nodup_singleton _, fun b hb c hc e => ?_⟩, fun b hb => ?_⟩
-      · obtain rfl := List.mem_singleton.1 hc
-        subst e
-        have := (h5 _ hb).2.1
-        simp [edgeOf] at this
+      · have he : b = edgeOf (.right k l : Arrow T) := e.trans (List.mem_singleton.1 hc)
+        rw [he] at hb
+        have ht := (h5 _ hb).2.1
+        simp [edgeOf] at ht
       · rcases List.mem_append.1 hb with hb | hb
         · have := h5 b hb; omega
-        · obtain rfl := List.mem_singleton.1 hb
+        · rw [List.mem_singleton.1 hb]
           simp only [edgeOf]; omega
     · change Node.grid k (l + 1) = Node.grid i' j' at h1
       simp only [Node.grid.injEq] at h1
       rcases h1 with ⟨hk, hl⟩
       subst i' j'
       refine ⟨k, l, rfl, h2, by omega, List.nodup_append.2 ⟨h4, List.nodup_singleton _, fun b hb c hc e => ?_⟩, fun b hb => ?_⟩
-      · obtain rfl := List.mem_singleton.1 hc
-        subst e
-        have := (h5 _ hb).2.2.1
-        simp [edgeOf] at this
+      · have he : b = edgeOf (.down t k l) := e.trans (List.mem_singleton.1 hc)
+        rw [he] at hb
+        have ht := (h5 _ hb).2.2.1
+        simp [edgeOf] at ht
       · rcases List.mem_append.1 hb with hb | hb
         · have := h5 b hb; omega
-        · obtain rfl := List.mem_singleton.1 hb
+        · rw [List.mem_singleton.1 hb]
           simp only [edgeOf]; omega
 
 theorem pathArgs_of_notMem (B : Frames G) (t : T) (w : Pl D.host.E) {X : Node} :

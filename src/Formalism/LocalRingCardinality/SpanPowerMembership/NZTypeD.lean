@@ -70,6 +70,7 @@ variable {L : I → Type} [∀ i, Fintype (L i)] [DecidableEq I] (E : ∀ i, L i
   (S : (∀ i, L i) → Prop)
 
 
+open Classical in
 def eSum : MonoidAlgebra k (∀ i, G i) :=
   open Classical in ∑ a : (∀ i, L i), if S a then tens (fun i => E i (a i)) else 0
 

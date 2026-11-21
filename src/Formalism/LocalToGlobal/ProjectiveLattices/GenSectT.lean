@@ -24,6 +24,7 @@ def tsec (t : Fin (D + 1) × Fin m → K') (v : Fin m → Ω) (i : Fin (D + 1)) 
   ∑ k, t (i, k) ⊗ₜ[Kl] ((1 : Kl) ⊗ₜ[K] v k)
 
 
+variable (K Kl) in
 def tJ (t : Fin (D + 1) × Fin m → K') (v : Fin m → Ω) : Ideal (Localization.Away (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0)) :=
   Ideal.span (Set.range fun i : Fin D =>
     algebraMap (TZ K Ω Kl K') (Localization.Away (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v 0)) (tsec (K := K) (Ω := Ω) (Kl := Kl) (K' := K') t v i.succ) *

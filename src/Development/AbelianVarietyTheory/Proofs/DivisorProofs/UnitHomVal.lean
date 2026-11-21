@@ -46,6 +46,7 @@ def basMat {E : Type} [Field E] {n m : ℕ} (H : Plane E n m) (e : Ix m ≃ Fin 
   fun r k => colS H.x H.y H.ι (e.symm k) r
 
 
+open Classical in
 def basGL {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) {n m : ℕ}
     (H : Plane E n m) (e : Ix m ≃ Fin n) : GL (Fin n) (Fv F v) := by
   classical

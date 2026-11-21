@@ -124,6 +124,7 @@ def stdEquiv {n : ℕ} (μ : Fin n → ℤ) :
 def restr {n : ℕ} (A : Finset (Fin (n + 1))) : Finset (Fin n) := univ.filter fun m => m.castSucc ∈ A
 
 
+open Classical in
 def extd {n : ℕ} (A : Finset (Fin n)) (b : Prop) : Finset (Fin (n + 1)) := by
   classical
   exact A.map Fin.castSuccEmb ∪ if b then {Fin.last n} else ∅

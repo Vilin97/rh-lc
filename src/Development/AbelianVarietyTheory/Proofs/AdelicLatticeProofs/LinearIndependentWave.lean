@@ -11,6 +11,7 @@ namespace GlobalTheory.PlaceModel
 variable {G : Type} [AddCommGroup G]
 
 
+open Classical in
 def ind (L : AddSubgroup G) (t : G) : ℂ := by
   classical
   exact if t ∈ L then 1 else 0

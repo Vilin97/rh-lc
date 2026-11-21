@@ -223,6 +223,7 @@ theorem acrisZero_le_thetaIntegral : ACrisZero (K := K) (p := p) ≤ thetaIntegr
   · rw [thetaAway_dpow hx n.succ_ne_zero]; exact zero_mem _
 
 
+variable (K p) in
 def thetaZero : ACrisZero (K := K) (p := p) →+* 𝒪 :=
   ((thetaAway (K := K) (p := p)).comp (ACrisZero (K := K) (p := p)).val.toRingHom).codRestrict (normInteger K)
     fun y => acrisZero_le_thetaIntegral y.2
@@ -244,6 +245,7 @@ theorem span_p_le_comap_thetaZero :
   exact Ideal.mem_span_singleton_self _
 
 
+variable (K p) in
 def theta : ACris (K := K) (p := p) →+* 𝒪 :=
   AdicCompletion.extendRingHom _ _ (thetaZero (K := K) (p := p)) span_p_le_comap_thetaZero
 
@@ -364,6 +366,7 @@ theorem phiAway_mem {y : 𝔸} (hy : y ∈ ACrisZero (K := K) (p := p)) : phiAwa
   | mul y z _ _ hy hz => rw [map_mul]; exact mul_mem hy hz
 
 
+variable (K p) in
 def phiZero : ACrisZero (K := K) (p := p) →+* ACrisZero (K := K) (p := p) :=
   ((phiAway (K := K) (p := p)).comp (ACrisZero (K := K) (p := p)).val.toRingHom).codRestrict (ACrisZero (K := K) (p := p))
     fun y => phiAway_mem y.2
@@ -377,6 +380,7 @@ theorem phiZero_algebraMap (x : AInf K p) :
   Subtype.ext (phiAway_algebraMap x)
 
 
+variable (K p) in
 instance isAdicComplete : IsAdicComplete (Ideal.span {(p : ACris (K := K) (p := p))}) (ACris (K := K) (p := p)) := by
   have h := AdicCompletion.isAdicComplete_self (Ideal.span {(p : ACrisZero (K := K) (p := p))})
     (Submodule.fg_span_singleton _)
@@ -393,6 +397,7 @@ theorem span_p_le_comap_phiZero :
   exact Ideal.mem_span_singleton_self _
 
 
+variable (K p) in
 def phi : ACris (K := K) (p := p) →+* ACris (K := K) (p := p) :=
   AdicCompletion.extendRingHom _ _ ((algebraMap (ACrisZero (K := K) (p := p)) (ACris (K := K) (p := p))).comp (phiZero (K := K) (p := p)))
     span_p_le_comap_phiZero

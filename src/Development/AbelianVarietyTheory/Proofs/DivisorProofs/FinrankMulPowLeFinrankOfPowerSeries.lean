@@ -119,6 +119,7 @@ theorem evalAt_pow (k : ℕ) (u : A) {m : ℕ} (hm : m ≠ 0) : evalAt φ k (u ^
   unfold evalAt; split_ifs <;> simp [zero_pow hm]
 
 
+open Classical in
 noncomputable def firstIdx (u : A) : ℕ := by
   classical
   exact if h : ∃ k, evalAt φ k u ≠ 0 then Nat.find h else 0

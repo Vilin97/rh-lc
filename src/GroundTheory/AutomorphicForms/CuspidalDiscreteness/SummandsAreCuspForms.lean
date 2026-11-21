@@ -118,6 +118,7 @@ theorem eq_integral_of_integrated_eq {v : CuspL2 μ} {Φ : normOneGL (K := K) (n
     (congrArg (toLp μ) hκv))) y
 
 
+omit [μ.IsHaarMeasure] in
 theorem slice_eq_integral {Φ : normOneGL (K := K) (n := n) → ℂ} {κ : archGroup K n → ℂ}
     (hΦκ : ∀ y, Φ y = ∫ a, κ a * Φ (y * archP K n a) ∂ν) (y : normOneGL (K := K) (n := n)) :
     (fun x : archGroup K n => Φ (y * archP K n x)) =
@@ -128,6 +129,7 @@ theorem slice_eq_integral {Φ : normOneGL (K := K) (n := n) → ℂ} {κ : archG
   rw [map_mul, mul_assoc y, mul_comm]
 
 
+omit [μ.IsHaarMeasure] in
 theorem isSmoothFun_slice {Φ : normOneGL (K := K) (n := n) → ℂ} (hΦc : Continuous Φ) {κ : archGroup K n → ℂ}
     (hκt : (isExpLieAlgebra K n).IsTestFunction κ)
     (hΦκ : ∀ y, Φ y = ∫ a, κ a * Φ (y * archP K n a) ∂ν) (y : normOneGL (K := K) (n := n)) :

@@ -148,6 +148,7 @@ theorem prodIrr_congr {h N : ℕ} {x x' : Fin h → IrrGL (k := k)} (e : x = x')
   exact ⟨.refl _⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem prodIrr_append_middle {p m m' s r q u : ℕ} (P : Fin p → IrrGL (k := k)) (Q : Fin m → IrrGL (k := k))
     (Q' : Fin m' → IrrGL (k := k)) (S : Fin s → IrrGL (k := k)) (hr : ∑ i, (P i).1 = r) (hq : ∑ i, (Q i).1 = q)
     (hq' : ∑ i, (Q' i).1 = q) (hu : ∑ i, (S i).1 = u)
@@ -168,6 +169,7 @@ theorem prodIrr_append_middle {p m m' s r q u : ℕ} (P : Fin p → IrrGL (k := 
   exact ⟨E₁.symm.trans ((prod₂Equiv (.refl _) (F₁.symm.trans ((prod₂Equiv G (.refl _)).trans F₂))).trans E₂)⟩
 
 
+set_option maxHeartbeats 400000 in
 theorem prodIrr_swap_adj {h N : ℕ} (y : Fin h → IrrGL (k := k)) (i j : Fin h) (hij : (j : ℕ) = i + 1)
     (C : ∀ (q : ℕ) (hq : ∑ t, (![y i, y j] t).1 = q) (hq' : ∑ t, (![y j, y i] t).1 = q),
       Nonempty ((prodIrr ![y i, y j] hq).Equiv (prodIrr ![y j, y i] hq')))

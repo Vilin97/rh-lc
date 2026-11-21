@@ -22,6 +22,7 @@ theorem hom_pos {H : Type} [Group H] (δ : H →* ℝ≥0) (p : H) : 0 < δ p :=
 def IsIwasawa : Prop := (∀ g : G, ∃ p : P, ∃ k ∈ K, g = p * k) ∧ ∀ p : P, (p : G) ∈ K → δ p = 1
 
 
+open Classical in
 def iwAbs (g : G) : ℝ≥0 := by
   classical
   exact if h : ∃ p : P, ∃ k ∈ K, g = p * k then δ h.choose else 1

@@ -42,6 +42,7 @@ theorem isMultiHomog_pow {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) 
 end SectionProduct
 
 
+open SectionBoundedMul SectionProduct in
 theorem SectionProduct.proof : SectionProduct.Statement := open SectionBoundedMul in by
   intro K _ ι _ Ω _ y A B C n j τ s t hdeg hmet hs ht
   have hdk : ∀ k, (τ : ℤ) * C.a k = (n : ℤ) * A.a k + (j : ℤ) * B.a k := fun k => by

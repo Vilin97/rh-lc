@@ -48,6 +48,7 @@ theorem exists_weierstrassP_eq (c : ℂ) : ∃ z, z ∉ L.lattice ∧ ℘[L] z =
   simp [h0] at h2
 
 
+variable (L) in
 def toPoint (L : PeriodPair) (z : ℂ) : (weierstrassCurve L).toAffine.Point :=
   haveI := Classical.propDecidable (z ∈ L.lattice)
   if h : z ∈ L.lattice then 0 else
@@ -175,12 +176,14 @@ theorem toPoint_surjective : Function.Surjective (toPoint L) := by
       (by rw [L.derivWeierstrassP_neg]; linear_combination -h1)
 
 
+variable (L) in
 def toPointHom (L : PeriodPair) : ℂ →+ (weierstrassCurve L).toAffine.Point where
   toFun := toPoint L
   map_zero' := toPoint_zero
   map_add' := toPoint_add
 
 
+variable (L) in
 def torusToPoint (L : PeriodPair) : Torus L →+ (weierstrassCurve L).toAffine.Point :=
   QuotientAddGroup.lift L.lattice.toAddSubgroup (toPointHom L) fun _ hl ↦ toPoint_of_mem hl
 

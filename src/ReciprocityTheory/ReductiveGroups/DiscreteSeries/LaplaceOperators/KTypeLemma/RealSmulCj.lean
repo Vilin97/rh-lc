@@ -67,12 +67,13 @@ def toCjR : H →L[ℝ] Cj H where
   cont := continuous_id
 
 theorem derived_sdd {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {E : Fin n → Fin n → Module.End ℂ D}
-    (hD : IsDerivedOn ε σ D E) : IsDerivedOn (ε ∘ Fin.rev) (sdd σ) (cjSub D) (Edd ε E) where
-  glRep := glRep_Edd ε hD.glRep
-  kStable := fun k hk v hv => hD.kStable (sub k) (K_sub hk) (ofCj v) hv
-  deriv := fun X hX v => by
+    (hD : IsDerivedOn ε σ D E) : IsDerivedOn (ε ∘ Fin.rev) (sdd σ) (cjSub D) (Edd ε E) := by
+  refine ⟨glRep_Edd ε hD.glRep, ?_, ?_⟩
+  · intro k hk v hv
+    exact hD.kStable (sub k) (K_sub hk) (ofCj v) hv
+  · intro X hX v
     have h3 := hD.deriv (sub X) (inG_sub hX) (toD v)
-    have h4 := (toCjR (H := H)).hasFDerivAt.comp_hasDerivAt (0 : ℝ) h3
+    have h4 := (toCjR (H := H)).hasFDerivAt.comp_hasDerivAt (x := (0 : ℝ)) h3
     have hv : v = ofD (toD v) := rfl
     rw [hv, actM_Edd hX]
     convert (preTransparency := .reducible) h4 using 1

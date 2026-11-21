@@ -21,6 +21,7 @@ section Perp
 variable {R S : Type} [CommRing R] [CommRing S] {p n : ℕ}
 
 
+variable (R n) in
 def dotPairing (R : Type) [CommRing R] (n : ℕ) : (Fin n → R) →ₗ[R] ((Fin n → R) → R) where
   toFun x y := x ⬝ᵥ y
   map_add' x x' := funext fun y => add_dotProduct x x' y

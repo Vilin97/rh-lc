@@ -117,6 +117,7 @@ theorem orthLattice_isLattice (hΛ : Submodule.IsLattice D.host.E Λ) (hu : Form
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
 
+include he in
 theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.E Λ) (hu : Formalism.HermitianLatticesTheory.IsUnimodular (hS D).hT Λ)
     (y : (hS D).V)
     (hy : ∀ m ∈ Λ ⊓ toO (hS D) (orth (hS D) (Xsp (lf D F0))), (hS D).hT m y ∈ (1 : Submodule (𝓞 D.host.E) D.host.E)) :

@@ -32,6 +32,7 @@ def opU (L : PeriodPair) (x : ℂ) (F : ℂ → ℂ) (z : ℂ) : ℂ :=
   F (z + x) * Complex.exp (-(Real.pi : ℂ) * herm L z x - (Real.pi : ℂ) * herm L x x / 2)
 
 
+open Classical in
 def semiChar (L : PeriodPair) (ω : ℂ) : ℂ := by
   classical
   exact if ω / 2 ∈ L.lattice then 1 else -1

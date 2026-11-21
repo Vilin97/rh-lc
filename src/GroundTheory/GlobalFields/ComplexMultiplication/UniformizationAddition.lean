@@ -100,12 +100,14 @@ lemma eq_of_eventuallyEq_nhdsNE {f g : ℂ → ℂ} {x : ℂ} (hf : ContinuousAt
     ((hg.tendsto.mono_left nhdsWithin_le_nhds).congr' h.symm)
 
 
+variable (L) in
 def chordSlope (L : PeriodPair) (z w : ℂ) : ℂ := (℘'[L] z - ℘'[L] w) / (℘[L] z - ℘[L] w)
 
 lemma chordSlope_comm (z w : ℂ) : chordSlope L z w = chordSlope L w z := by
   rw [chordSlope, chordSlope, ← neg_div_neg_eq, neg_sub, neg_sub]
 
 
+variable (L) in
 def addDefect (L : PeriodPair) (w z : ℂ) : ℂ :=
   ℘[L] (z + w) + ℘[L] z + ℘[L] w - chordSlope L z w ^ 2 / 4
 
@@ -418,6 +420,7 @@ theorem derivWeierstrassP_add {z w : ℂ} (hz : z ∉ L.lattice) (hw : w ∉ L.l
   exact derivAdd_algebra _ _ _ _ _ _ hne (L.derivWeierstrassP_sq z hz) (L.derivWeierstrassP_sq w hw)
 
 
+variable (L) in
 def tangentSlope (L : PeriodPair) (w : ℂ) : ℂ := (6 * ℘[L] w ^ 2 - L.g₂ / 2) / ℘'[L] w
 
 lemma exists_continuousAt_chordSlope {w : ℂ} (hw : w ∉ L.lattice) (h2w : 2 * w ∉ L.lattice) :

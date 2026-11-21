@@ -94,6 +94,7 @@ def Model.len {S : SRing (N := N) (hι := hι) (U := U) (I := I) (c := c) (g₁ 
   cotLen M.x M.𝒜 (-1) M.Q.F
 
 
+variable (η) in
 def TwoPt {R K : Type} [CommRing R] [Algebra O R] [IsLocalRing R] [NormedField K] [Algebra O K] (r : Γ →* GG (m := 3) (R := R))
     (f : R →ₐ[O] K) : Prop := IsLocPt f ∧ ¬ Upper η (push f r) ∧ ¬ Lower η (push f r)
 

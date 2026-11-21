@@ -110,6 +110,7 @@ def IsQuotNormaliser (H : Subgroup G) (μH : Measure H) (ρ : G → ℝ≥0∞) 
   Measurable ρ ∧ ∀ g : G, ∫⁻ h, ρ ((h : G) * g) ∂μH = 1
 
 
+open Classical in
 def quotLIntegral (μG : Measure G) (H : Subgroup G) (μH : Measure H) (F : G → ℝ≥0∞) : ℝ≥0∞ := by
   classical
   exact if hρ : ∃ ρ, IsQuotNormaliser H μH ρ then ∫⁻ g, F g * hρ.choose g ∂μG else 0
@@ -317,6 +318,7 @@ section ComplexValued
 variable {G : Type*} [Group G] [MeasurableSpace G]
 
 
+open Classical in
 def quotIntegral (μG : Measure G) (H : Subgroup G) (μH : Measure H) (F : G → ℂ) : ℂ := by
   classical
   exact if hρ : ∃ ρ, IsQuotNormaliser H μH ρ then ∫ g, F g * ((hρ.choose g).toReal : ℂ) ∂μG else 0

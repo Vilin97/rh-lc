@@ -43,6 +43,7 @@ theorem compAt_eq_zero (F : FinIso L n) (v : HeightOneSpectrum (𝓞 L⁺)) (z :
   (GlobalTheory.AdeleBaseChange.prV_eq_zero_iff (ι := F.κ.toRingHom) (kappa_tmul F) v z).2 hz
 
 
+omit [IsCMField L] in
 theorem entry_mem {w : HeightOneSpectrum (𝓞 L)} {g : GL (Fin n) (w.adicCompletion L)} (hg : g ∈ GlobalTheory.LFun.KGL w (n := n))
     (i j : Fin n) : g.val i j ∈ w.adicCompletionIntegers L := by
   obtain ⟨Q, rfl⟩ := hg

@@ -25,6 +25,7 @@ variable (H) in
 def stdIndex : Set H := (exists_hilbertBasis ℂ H).choose
 
 
+variable (H) in
 def stdBasis : HilbertBasis (stdIndex (H := H)) ℂ H := (exists_hilbertBasis ℂ H).choose_spec.choose
 
 def IsHilbertSchmidt (T : H →L[ℂ] K) : Prop :=
@@ -368,6 +369,7 @@ def IsRepOp (π : G →* (H →L[ℂ] H)) (μ : Measure G) (f : G → ℂ) (T : 
   ∀ v, Integrable (fun g => f g • π g v) μ ∧ T v = ∫ g, f g • π g v ∂μ
 
 
+open Classical in
 def repOp (π : G →* (H →L[ℂ] H)) (μ : Measure G) (f : G → ℂ) : H →L[ℂ] H := by
   classical
   exact if h : ∃ T, IsRepOp π μ f T then h.choose else 0
@@ -682,6 +684,7 @@ theorem isOpen_leftStabilizer [IsTopologicalGroup G] {f : G → ℂ} (hf : IsLoc
 variable [MeasurableSpace G]
 
 
+open Classical in
 def smoothOp (ρ : Representation ℂ G V) (μ : Measure G) (f : G → ℂ) : V →ₗ[ℂ] V := by
   classical
   exact if h : ∃ T : V →ₗ[ℂ] V, ∀ v, T v = lcIntegral μ fun g => f g • ρ g v then h.choose else 0

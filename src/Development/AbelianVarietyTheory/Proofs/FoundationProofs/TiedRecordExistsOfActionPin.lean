@@ -25,6 +25,7 @@ open GlobalTheory.FormTies
 open scoped TensorProduct Matrix
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
+attribute [local instance 2000] Submodule.module
 
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
 
@@ -71,9 +72,9 @@ theorem exists_cuspRep_of_injective (f : B.Cusp j w →ₗ[B.KO] (Fin n → K)) 
             map_mul' := fun g g' => LinearMap.ext fun F => hf ?_ }, fun _ _ => rfl⟩
   · rw [RingHom.id_apply, map_smul, ha, ha, map_smul, LinearMap.map_smul_of_tower]
   · change f (a 1 F) = f F
-    rw [ha, map_one, Module.End.one_apply]
+    rw [ha, map_one, one_apply_eq_self]
   · change f (a (g * g') F) = f (a g (a g' F))
-    rw [ha, ha, ha, map_mul, Module.End.mul_apply]
+    rw [ha, ha, ha, map_mul, mul_apply_eq_comp]
 
 end Cusp
 

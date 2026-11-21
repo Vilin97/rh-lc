@@ -15,6 +15,7 @@ open AddMonoidAlgebra
 variable {n : ℕ}
 
 
+variable (n) in
 abbrev LaurentRing (n : ℕ) : Type := AddMonoidAlgebra ℂ (Fin n → ℤ)
 
 abbrev monomial (l : Fin n → ℤ) : LaurentRing n := single l 1

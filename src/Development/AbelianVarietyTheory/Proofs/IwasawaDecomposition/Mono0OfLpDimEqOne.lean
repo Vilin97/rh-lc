@@ -16,6 +16,7 @@ variable {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} [IsAlgClosur
 variable {h : IsPlaceOver A w}
 
 
+variable (h) in
 theorem lpDim_zero (h : IsPlaceOver A w) : lpDim (lpZero (h := h)) = 0 := by
   simp [lpZero]
 

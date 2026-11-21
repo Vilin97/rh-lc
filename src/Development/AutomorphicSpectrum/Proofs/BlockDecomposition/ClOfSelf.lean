@@ -17,6 +17,7 @@ namespace GlobalTheory.CompanionTheory.WordProd
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+open Classical in
 def clOf (a : IrrGL (k := k)) (d : ℕ) : IrrCl (GL (Fin d) k) :=
   if h : a.1 = d then h ▸ a.2 else (IrrRep.det (Fin d) 1 isSmoothChar_one).cl
 

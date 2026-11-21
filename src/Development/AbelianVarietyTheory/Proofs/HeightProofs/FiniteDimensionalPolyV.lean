@@ -43,6 +43,7 @@ def IsKer (ε : Fin n → Bool) (i : ℕ) (e : KG ε → ℂ) : Prop :=
     ∀ p ∈ polyV ε i, (∀ q ∈ lowV ε i, ∫ k, star (q k) * p k ∂(muK ε) = 0) → ∫ k, e k * p k ∂(muK ε) = p 1
 
 
+open Classical in
 def kerE (ε : Fin n → Bool) (i : ℕ) : KG ε → ℂ := by
   classical
   exact if h : ∃ e, IsKer ε i e then h.choose else 0

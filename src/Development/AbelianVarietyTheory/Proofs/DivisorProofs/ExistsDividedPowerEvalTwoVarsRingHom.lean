@@ -76,6 +76,7 @@ variable {B : Type} [CommRing B] (u v : ℕ → B)
 def ψ : D →ₗ[ℤ] B := β.constr ℤ fun p ↦ u p.1 * v p.2
 
 
+open Classical in
 def φ (q : MvPolynomial (Fin 2) ℚ) : B := by
   classical
   exact if h : q ∈ D then ψ u v ⟨q, h⟩ else 0

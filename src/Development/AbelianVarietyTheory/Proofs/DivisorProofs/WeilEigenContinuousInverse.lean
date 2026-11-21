@@ -99,6 +99,7 @@ theorem schr_pure [Invertible (2 : AF F)] [Invertible (2 : mixedEmbedding.mixedS
   ring
 
 
+open Classical in
 theorem exists_finprod_ne {κ : Type} [Fintype κ] (φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ) (h0 : ∀ v, φ v ≠ 0)
     (hstd : ∀ᶠ v in Filter.cofinite, φ v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1)
     (y : κ → mixedEmbedding.mixedSpace F) :

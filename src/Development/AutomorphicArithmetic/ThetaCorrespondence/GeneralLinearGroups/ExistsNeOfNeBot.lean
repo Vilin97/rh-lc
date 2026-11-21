@@ -236,6 +236,7 @@ private theorem exists_irr_quot {G V W : Type} [Group G] [TopologicalSpace G] [I
   exact isSimpleOrder_iff_isAtom_top.2 hX
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_emb (hG : GlobalTheory.Published.GeometricLemma) (hBZ : GlobalTheory.Published.BernsteinZelevinskyFiniteness) (x : IrrGL (k := k))
     {h : ℕ} (q : Fin h → IrrGL (k := k)) (hq : ∑ a, (q a).1 = x.1) (c : Fin h) (hc : (q c).IsCusp)
     (hj : jm q hq x.rep ≠ 0) :

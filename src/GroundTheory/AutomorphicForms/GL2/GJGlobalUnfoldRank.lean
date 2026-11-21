@@ -66,6 +66,7 @@ theorem isBlockUpper_iff {M : Matrix (Fin n) (Fin n) K} :
     simpa [Matrix.mulVec_single_one] using this
 
 
+variable (k) in
 def parabolic (k : ℕ) : Subgroup (GL (Fin n) K) where
   carrier := {γ | IsBlockUpper k (γ : Matrix (Fin n) (Fin n) K) ∧
     IsBlockUpper k ((γ⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K)}
@@ -125,6 +126,7 @@ theorem U0_le_kerM_iff {Z : Matrix (Fin n) (Fin n) K} :
     · rw [hv j (not_lt.1 hj), mul_zero]
 
 
+variable (k) in
 def R (k : ℕ) : Set (Matrix (Fin n) (Fin n) K) :=
   {Z | (∀ i j : Fin n, (j : ℕ) < k → Z i j = 0) ∧ Z.rank = n - k}
 
@@ -204,6 +206,7 @@ theorem rank_mul_GL (Z : Matrix (Fin n) (Fin n) K) (γ : GL (Fin n) K) :
   Matrix.rank_mul_eq_left_of_isUnit_det _ _ (Matrix.isUnits_det_units γ)
 
 
+variable (k) in
 def mulMap (k : ℕ) (S : Set (GL (Fin n) K)) (x : S × R (K := K) (n := n) k) :
     {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k} :=
   ⟨x.2.1 * ((x.1 : GL (Fin n) K) : Matrix (Fin n) (Fin n) K), by rw [rank_mul_GL]; exact x.2.2.2⟩

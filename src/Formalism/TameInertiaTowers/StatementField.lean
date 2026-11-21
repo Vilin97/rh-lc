@@ -17,6 +17,7 @@ def IsLayer (n q d : ℕ) {L : Type*} [Field L] [Algebra ℚ L] (ζ a b : L) : P
     IntermediateField.adjoin ℚ {ζ, a, b} = ⊤
 
 
+open Classical in
 def sgn {L : Type*} [Field L] [Algebra ℚ L] (σ : Gal(L/ℚ)) (x : L) : ℤˣ := by
   classical
   exact if σ x = x then 1 else -1

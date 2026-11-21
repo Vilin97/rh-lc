@@ -57,12 +57,47 @@ theorem exists_approx {K : Type} [Field K] [NumberField K] (la : HeightOneSpectr
   obtain ⟨a, ha⟩ := (HeightOneSpectrum.denseRange_algebraMap K la).exists_mem_open ho ⟨c, by simp⟩
   exact ⟨a, ⟨_, ha⟩, by rw [mul_inv_cancel_left₀ ht]⟩
 
-theorem gauss_dense_gen : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIntegralCharts.Prov D) (j : ℕ) (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ) (U : Type) [Field U] (v : Valuation U (WithZero (Multiplicative ℤ))) (ψ : Kp X la N →+* U), (∀ a : Op X la N, v (ψ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) a)) ≤ 1) → v (ψ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (unifO X la N))) < 1 → (∀ (f : B.KO →+* U), (∀ a, f a = ψ (algebraMap (X.Kl la) (Kp X la N) (algebraMap B.KO (X.Kl la) a))) → ∀ p : MvPolynomial (Idx D j N) B.KO, (∀ α, v (f (p.coeff α)) ≤ 1) → (∃ α, v (f (p.coeff α)) = 1) → v (MvPolynomial.eval₂ f (fun q => ψ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N q))) p) = 1) ∧ (∀ (c : X.Ol la) (γ : WithZero (Multiplicative ℤ)), γ ≠ 0 → ∃ a : B.KO, v (ψ (algebraMap (X.Ol la) (Kp X la N) c) - ψ (algebraMap (X.Kl la) (Kp X la N) (algebraMap B.KO (X.Kl la) a))) < γ) ∧ ∀ S : Subfield U, (∀ c : X.Ol la, ψ (algebraMap (X.Ol la) (Kp X la N) c) ∈ S) → (∀ q, ψ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (Tv X la N q)) ∈ S) → ∀ c : Kp X la N, ψ c ∈ S := by
+noncomputable section
+
+variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} {j : ℕ}
+  (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ)
+
+local instance : IsDomain (Op X la N) :=
+  IsLocalization.isDomain_of_le_nonZeroDivisors (Op X la N) (gI X la N).primeCompl_le_nonZeroDivisors
+
+local instance : Field (Kp X la N) :=
+  inferInstanceAs (Field (FractionRing (Op X la N)))
+
+local instance : Algebra (Op X la N) (Kp X la N) :=
+  (inferInstance : Algebra (Op X la N) (FractionRing (Op X la N)))
+
+local instance : IsFractionRing (Op X la N) (Kp X la N) :=
+  (inferInstance : IsFractionRing (Op X la N) (FractionRing (Op X la N)))
+
+local instance : Algebra (X.Ol la) (Kp X la N) :=
+  ((algebraMap (Op X la N) (Kp X la N)).comp (algebraMap (X.Ol la) (Op X la N))).toAlgebra
+
+private theorem gaussIntegerMap_injective :
+    Function.Injective (algebraMap (X.Ol la) (Kp X la N)) :=
+  (IsFractionRing.injective (Op X la N) (Kp X la N)).comp (Op.algebraMap_injective X la N)
+
+local instance : Algebra (X.Kl la) (Kp X la N) :=
+  (IsFractionRing.lift (K := X.Kl la) (g := algebraMap (X.Ol la) (Kp X la N))
+    (by exact gaussIntegerMap_injective X la N)).toAlgebra
+
+local instance : IsScalarTower (X.Ol la) (X.Kl la) (Kp X la N) :=
+  IsScalarTower.of_algebraMap_eq fun c =>
+    (IsFractionRing.lift_algebraMap (K := X.Kl la) (gaussIntegerMap_injective X la N) c).symm
+
+local instance : IsScalarTower (X.Ol la) (Op X la N) (Kp X la N) :=
+  IsScalarTower.of_algebraMap_eq fun _ => rfl
+
+theorem gauss_dense_gen : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIntegralCharts.Prov D) (j : ℕ) (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ) (U : Type) [Field U] (v : Valuation U (WithZero (Multiplicative ℤ))) (ψ : Kp X la N →+* U), (∀ a : Op X la N, v (ψ (algebraMap (Op X la N) (Kp X la N) a)) ≤ 1) → v (ψ (algebraMap (Op X la N) (Kp X la N) (unifO X la N))) < 1 → (∀ (f : B.KO →+* U), (∀ a, f a = ψ (algebraMap (X.Kl la) (Kp X la N) (algebraMap B.KO (X.Kl la) a))) → ∀ p : MvPolynomial (Idx D j N) B.KO, (∀ α, v (f (p.coeff α)) ≤ 1) → (∃ α, v (f (p.coeff α)) = 1) → v (MvPolynomial.eval₂ f (fun q => ψ (algebraMap (Op X la N) (Kp X la N) (Tv X la N q))) p) = 1) ∧ (∀ (c : X.Ol la) (γ : WithZero (Multiplicative ℤ)), γ ≠ 0 → ∃ a : B.KO, v (ψ (algebraMap (X.Ol la) (Kp X la N) c) - ψ (algebraMap (X.Kl la) (Kp X la N) (algebraMap B.KO (X.Kl la) a))) < γ) ∧ ∀ S : Subfield U, (∀ c : X.Ol la, ψ (algebraMap (X.Ol la) (Kp X la N) c) ∈ S) → (∀ q, ψ (algebraMap (Op X la N) (Kp X la N) (Tv X la N q)) ∈ S) → ∀ c : Kp X la N, ψ c ∈ S := by
   intro D B P j X la N U _ v ψ h1 h2
   have hϖ : Irreducible (unif X la) :=
     Classical.choose_spec (IsDiscreteValuationRing.exists_irreducible (X.Ol la))
   have e1 : ∀ c : X.Ol la, algebraMap (X.Kl la) (Kp X la N) (algebraMap (X.Ol la) (X.Kl la) c) =
-      @algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (X.Ol la) (Op X la N) c) := fun c => by
+      algebraMap (Op X la N) (Kp X la N) (algebraMap (X.Ol la) (Op X la N) c) := fun c => by
     rw [← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
   have eC : ∀ c : X.Ol la, algebraMap (Pol X la N) (Op X la N) (MvPolynomial.C c) =
       algebraMap (X.Ol la) (Op X la N) c := fun c => by
@@ -88,7 +123,7 @@ theorem gauss_dense_gen : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIn
       classical
       rw [hp₀, MvPolynomial.coeff_sum]
       simp only [MvPolynomial.coeff_monomial]
-      rw [Finset.sum_ite_eq' , if_pos hs]
+      rw [Finset.sum_ite_eq', ite_eq_left hs]
     have hn : p₀ ∉ gI X la N := by
       unfold gI Formalism.DV.gaussIdeal
       rw [MvPolynomial.mem_map_C_iff]
@@ -98,7 +133,7 @@ theorem gauss_dense_gen : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIn
       exact lt_irrefl _ this
     have hu : IsUnit (algebraMap (Pol X la N) (Op X la N) p₀) :=
       (IsLocalization.AtPrime.isUnit_to_map_iff (Op X la N) (gI X la N) p₀).2 hn
-    have := val_unit v (ψ.comp (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))))) h1 hu
+    have := val_unit v (ψ.comp (algebraMap (Op X la N) (Kp X la N))) h1 hu
     rw [← this]
     congr 1
     set_option synthInstance.maxHeartbeats 100000 in
@@ -122,18 +157,18 @@ theorem gauss_dense_gen : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIn
     exact lt_of_le_of_lt (mul_le_of_le_one_right' (g1 y)) hn
   · intro S hO hT
     have hP : ∀ q : Pol X la N,
-        ψ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) q)) ∈ S := by
+        ψ (algebraMap (Op X la N) (Kp X la N) (algebraMap (Pol X la N) (Op X la N) q)) ∈ S := by
       intro q
       induction q using MvPolynomial.induction_on with
       | C a => rw [eC]; exact hO a
       | add p q hp hq => simp only [map_add (f := _)]; exact S.add_mem hp hq
       | mul_X p i hp => simp only [map_mul]; exact S.mul_mem hp (hT i)
-    have hA : ∀ x : Op X la N, ψ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) x) ∈ S := by
+    have hA : ∀ x : Op X la N, ψ (algebraMap (Op X la N) (Kp X la N) x) ∈ S := by
       intro x
       obtain ⟨⟨a, s⟩, h⟩ := IsLocalization.surj (gI X la N).primeCompl x
-      have hs : ψ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) (algebraMap (Pol X la N) (Op X la N) s)) ≠ 0 :=
+      have hs : ψ (algebraMap (Op X la N) (Kp X la N) (algebraMap (Pol X la N) (Op X la N) s)) ≠ 0 :=
         (((IsLocalization.map_units (Op X la N) s).map _).map _).ne_zero
-      have h' := congrArg (fun z => ψ (@algebraMap (Op X la N) (Kp X la N) _ (inferInstanceAs (Semiring (_root_.FractionRing _))) (inferInstanceAs (Algebra _ (_root_.FractionRing _))) z)) h
+      have h' := congrArg (fun z => ψ (algebraMap (Op X la N) (Kp X la N) z)) h
       simp only [map_mul] at h'
       rw [eq_div_of_mul_eq hs h']
       exact S.div_mem (hP _) (hP _)
@@ -141,5 +176,7 @@ theorem gauss_dense_gen : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIn
     obtain ⟨a, b, -, rfl⟩ := IsFractionRing.div_surjective (A := Op X la N) c
     rw [map_div₀]
     exact S.div_mem (hA _) (hA _)
+
+end
 
 end GlobalTheory.GaussVal

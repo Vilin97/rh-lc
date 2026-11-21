@@ -22,6 +22,7 @@ def Cu (O : Type) [CommRing O] [Algebra O K] (τ : K) : Subgroup (Etau K τ)ˣ :
 def scalE (τ : K) : Subgroup (Etau K τ)ˣ := (Units.map (algebraMap K (Etau K τ) : K →* Etau K τ)).range
 
 
+open Classical in
 def toUnit {R : Type} [Monoid R] (x : R) : Rˣ := by
   classical
   exact if h : IsUnit x then h.unit else 1
@@ -33,6 +34,7 @@ abbrev TA (τ : F) : Type := RP (fun v : Pl F => (Etau (Kv v) (cv v τ))ˣ) fun 
 def IsDiagT (τ : F) (φ : (Etau F τ)ˣ →* TA τ) : Prop := ∀ z v, ((φ z).1 v : Etau (Kv v) (cv v τ)) = emap (cv v) τ z
 
 
+open Classical in
 def ms (τ : F) : ℂ := by
   classical
   exact if h : ∃ φ, IsDiagT τ φ then

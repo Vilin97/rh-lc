@@ -56,6 +56,7 @@ lemma piece (hι : Function.Injective ι) (hg : Continuous g) (hf : ∀ v, f v =
     simpa using e
 
 
+open Classical in
 noncomputable def restr (B : Set X) (fam : X → Measure V) : X → Measure V := by
   classical
   exact fun b => if b ∈ B then fam b else 0

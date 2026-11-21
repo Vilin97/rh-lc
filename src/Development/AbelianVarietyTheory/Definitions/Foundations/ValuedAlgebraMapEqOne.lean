@@ -17,6 +17,7 @@ abbrev Ideles : Type := (AdeleRing (𝓞 L) L)ˣ
 def diagUnits : Lˣ →* Ideles L := Units.map (algebraMap L (AdeleRing (𝓞 L) L)).toMonoidHom
 
 
+open Classical in
 def finSingle (v : HeightOneSpectrum (𝓞 L)) : v.adicCompletion L →* FiniteAdeleRing (𝓞 L) L := by
   classical
   exact {
@@ -39,6 +40,7 @@ def localIdele (v : HeightOneSpectrum (𝓞 L)) : (v.adicCompletion L)ˣ →* Id
   Units.map ((MonoidHom.inr (InfiniteAdeleRing L) (FiniteAdeleRing (𝓞 L) L)).comp (finSingle L v))
 
 
+open Classical in
 def infIdele (w : InfinitePlace L) : (w.Completion)ˣ →* Ideles L := by
   classical
   exact Units.map ((MonoidHom.inl (InfiniteAdeleRing L) (FiniteAdeleRing (𝓞 L) L)).comp

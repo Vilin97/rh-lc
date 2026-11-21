@@ -65,7 +65,9 @@ theorem spMap_spMap' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : 
 
 theorem dualMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
     dualMap (g.comp f) = (dualMap g).comp (dualMap f) := by
-  ext a <;> simp [dualMap]
+  apply RingHom.ext
+  intro a
+  apply TrivSqZeroExt.ext <;> simp [dualMap]
 
 theorem exists_fibreLift {L : Type} [Field L] {E : Type} [AddCommGroup E] [Module (𝓞 L) E] (σ : L →+* ℂ)
     {Q : Type} [AddCommGroup Q] [Module ℂ Q] (j : E →ₛₗ[σ.comp (algebraMap (𝓞 L) L)] Q) :
@@ -113,7 +115,6 @@ variable {X : Scheme.{0}} {G : Over X} [GrpObj G]
 theorem lifts_unique {R R' : Type} [CommRing R] [CommRing R'] {x : Sp R ⟶ X} {E : Type} [AddCommGroup E] [Module R E]
     (MB : LieModel G x E) (c : R →+* R') {x' : Sp R' ⟶ X} {e : E} {v v' : epsAt x' ⟶ G}
     (h : (v.left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (MB.pt e).left)) (h' : (v'.left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (MB.pt e).left)) : v = v' := by
-  unfold LieModel.Lifts at h h'
   rw [Category.comp_id] at h h'
   exact Over.OverMorphism.ext (h.trans h'.symm)
 
@@ -205,7 +206,6 @@ theorem ip_conj (h : LieMetric M y) (MB : LieModel G z E) (σ : L →+* ℂ) (e 
   have hc : (NumberField.ComplexEmbedding.conjugate σ).comp (algebraMap (𝓞 L) L) =
       (starRingEnd ℂ).comp (σ.comp (algebraMap (𝓞 L) L)) := by
     ext a; rfl
-  unfold LieModel.Lifts at hv hw hv' hw'
   rw [Category.comp_id] at hv hw hv' hw'
   refine key _ _ ?_ v w v' w' ?_ ?_
   · rw [← Category.assoc, spMap_spMap', hc]

@@ -80,6 +80,7 @@ theorem IsContRep.translate {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F : norm
   exact hy2
 
 
+variable (μ) in
 theorem isContRep_rconv (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) :
     IsContRep μ ((rightRegularRep Γ₁ μ).integrated μ (UnitaryRep.ccToL1 μ f) φ)

@@ -31,6 +31,7 @@ def IsFirstMax {a d : ℕ} (Y : Matrix (Fin a) (Fin d) k) (J : Fin a ↪ Fin d) 
     (idx J' < idx J → valuation k (minor Y J') < valuation k (minor Y J))
 
 
+open Classical in
 def sec {a d : ℕ} (Y : Matrix (Fin a) (Fin d) k) : GL (Fin a) k := by
   classical
   exact if h : ∃ J, IsFirstMax Y J then

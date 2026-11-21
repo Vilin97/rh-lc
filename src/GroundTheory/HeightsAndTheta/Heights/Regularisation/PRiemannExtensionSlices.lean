@@ -106,8 +106,11 @@ theorem cauchy_torus_off_axes : ∀ (n : ℕ) (G : (Fin n → ℂ) → ℂ),
     rw [circleIntegral.integral_congr hr0.le key, circleIntegral.integral_const_mul]
     obtain ⟨c, hc⟩ : ∃ c : ℂ, Tendsto (fun x : ℂ => G (Function.update z 0 x)) (𝓝[≠] 0) (𝓝 c) :=
       hlim z hz1 0 (fun j _ => hzW j)
-    have hupd : ∀ x : ℂ, Function.update z 0 x = Fin.cons x (Fin.tail z) := fun x => by
-      rw [← Fin.update_cons_zero (x := z 0) (p := Fin.tail z) (z := x), Fin.cons_self_tail]
+    have hupd (x : ℂ) : Function.update z 0 x = Fin.cons x (Fin.tail z) := by
+      calc
+        Function.update z 0 x = Function.update (Fin.cons (z 0) (Fin.tail z)) 0 x :=
+          congrArg (fun w : Fin (n + 1) → ℂ => Function.update w 0 x) (Fin.cons_self_tail z).symm
+        _ = Fin.cons x (Fin.tail z) := Fin.update_cons_zero (z 0) (Fin.tail z) x
     have hg : Tendsto (fun x => G (Fin.cons x (Fin.tail z))) (𝓝[≠] 0) (𝓝 c) := by
       simpa only [hupd] using hc
     have hgd : ∀ x : ℂ, x ≠ 0 → ‖x‖ < 1 → DifferentiableAt ℂ (fun x => G (Fin.cons x (Fin.tail z))) x :=

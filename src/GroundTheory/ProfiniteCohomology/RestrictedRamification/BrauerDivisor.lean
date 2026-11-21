@@ -225,6 +225,7 @@ namespace PicInf
 variable {K S ιs}
 
 
+open Classical in
 noncomputable def zuInd (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})
     (U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)) : galUnramifiedOutside K.1 ℚ̄ S → ℤ :=
   fun g => @ite ℤ (∃ z ∈ (gsDecomp K S ιs v).range, ∃ u ∈ U, g = z * u)

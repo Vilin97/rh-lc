@@ -67,7 +67,7 @@ def exponent (v : HeightOneSpectrum (𝓞 K)) : ℕ :=
 omit [NumberField K] in
 theorem exponent_eq_zero_iff (v : HeightOneSpectrum (𝓞 K)) :
     𝔪.exponent v = 0 ↔ ¬ v.asIdeal ∣ 𝔪.ideal :=
-  multiplicity_eq_zero
+  multiplicity_eq_zero (FiniteMultiplicity.of_prime_left v.prime 𝔪.ideal_ne_bot)
 
 omit [NumberField K] in
 theorem one_le_exponent_iff (v : HeightOneSpectrum (𝓞 K)) :

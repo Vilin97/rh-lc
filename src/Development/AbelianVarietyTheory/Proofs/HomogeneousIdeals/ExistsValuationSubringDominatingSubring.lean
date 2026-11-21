@@ -161,6 +161,7 @@ section Centre
 variable {X X' S : Scheme.{u}} [IsIntegral X] [IsIntegral X']
 
 
+variable (X) in
 def genericFieldPoint (X : Scheme.{u}) [IsIntegral X] : Spec (.of X.functionField) ⟶ X :=
   X.fromSpecStalk (genericPoint X)
 

@@ -353,6 +353,7 @@ end P2
 section P3
 open Formalism.IncomingBounds Formalism.L2.Pj MvPolynomial
 
+variable (hd) in
 private def trueT (hd : ZMod d) (g : Fin 2) (s : ZMod d) : ZMod d :=
   if g = 0 then s else s + hd
 

@@ -335,16 +335,15 @@ lemma proj_supp : ∀ (q : ℕ) (i : Fin (q + 1) → ι),
       rw [lin_bd_single_apply]
       refine Supp.sum _ _ fun a _ => ((proj_supp q _).mono fun s hs =>
         ⟨hs.1, inRange_face a hs.2⟩).smul _
-    obtain ⟨hts, htr⟩ : StrictMono t ∧ InRange i t := hw t ht
-    by_cases hc : minR i < t 0
-    · rw [ite_eq_left hc]
+    have ht' : StrictMono t ∧ InRange i t := hw t ht
+    split
+    next hc =>
       refine Supp.single _ ⟨Fin.strictMono_cons.mpr ⟨fun j => hc.trans_le
-        (hts.monotone (Fin.zero_le j)), hts⟩, fun a => ?_⟩
+        (ht'.1.monotone (Fin.zero_le j)), ht'.1⟩, fun a => ?_⟩
       cases a using Fin.cases with
       | zero => exact minR_mem i
-      | succ a => simpa using htr a
-    · rw [ite_eq_right hc]
-      exact Supp.zero
+      | succ a => simpa using ht'.2 a
+    next _ => exact Supp.zero
 
 lemma bd_lin_proj (q : ℕ)
     (hq : ∀ i : Fin (q + 2) → ι, bd q (proj (q + 1) i) = lin (proj q) (bd q (Finsupp.single i 1)))

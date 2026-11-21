@@ -416,6 +416,7 @@ theorem homogeneousComponent_mem_primeOf {f : Poly S N} (hf : f ∈ primeOf x) (
   coneGen_homogeneousComponent x hf d
 
 
+open NumbersDVR in
 def oneBlock : NumbersDVR.MRing (fun _ : Unit => Fin (N + 1)) S →ₐ[S] Poly S N :=
   rename fun v => v.2
 

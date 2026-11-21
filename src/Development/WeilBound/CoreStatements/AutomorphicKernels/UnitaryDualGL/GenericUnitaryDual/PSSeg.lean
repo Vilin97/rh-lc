@@ -43,6 +43,7 @@ theorem segDual_segDual (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (�
   · rw [GlobalTheory.CompanionTheory.SegDualPrec.len_segDual hc, GlobalTheory.CompanionTheory.SegDualPrec.len_segDual hc]
 
 
+set_option maxHeartbeats 800000 in
 theorem isLSeg_dualCl (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) {Δ : Segment k} {δ : IrrGL (k := k)} (hL : IsLSeg Δ δ.rep) :
     IsLSeg (Zc.segDual Δ) (Zc.dualCl δ).rep := by
   have gk : Zc.Cos.GKLocal k := by

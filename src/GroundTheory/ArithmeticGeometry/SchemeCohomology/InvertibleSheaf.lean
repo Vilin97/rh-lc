@@ -14,6 +14,7 @@ universe u
 namespace GroundTheory.Arith.SchemeCoh
 variable {X : Scheme.{u}}
 
+variable (X) in
 abbrev PMod (X : Scheme.{u}) := PresheafOfModulesOfCommRing.{u} X.sheaf.obj
 
 private theorem schemeModules_W_whiskerRight {M N : PMod X} {φ : M ⟶ N}
@@ -47,14 +48,17 @@ instance isIso_ringSheafId_scheme : IsIso (ringSheafId (Opens.grothendieckTopolo
   inferInstanceAs (IsIso (𝟙 (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat)))
 
 
+variable (X) in
 noncomputable abbrev sheafifyMod (X : Scheme.{u}) : PMod X ⥤ X.Modules :=
   modulesSheafification (Opens.grothendieckTopology X) X.sheaf
 
 
+variable (X) in
 noncomputable abbrev preMod (X : Scheme.{u}) : X.Modules ⥤ PMod X :=
   SheafOfModules.forget _ ⋙ PresheafOfModules.restrictScalars (ringSheafId _ X.sheaf)
 
 
+variable (X) in
 noncomputable abbrev sheafifyModAdj (X : Scheme.{u}) : sheafifyMod X ⊣ preMod X :=
   PresheafOfModules.sheafificationAdjunction (J := Opens.grothendieckTopology X)
     (R₀ := X.sheaf.obj ⋙ forget₂ CommRingCat RingCat) (R := X.ringCatSheaf) (ringSheafId _ X.sheaf)

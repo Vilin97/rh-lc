@@ -34,6 +34,7 @@ end Pull
 
 
 
+open scoped Classical in
 def diagSec (x y : OnePoint ℂ × OnePoint ℂ) : ℂ := by
   classical
   exact if x.1 = ∞ then

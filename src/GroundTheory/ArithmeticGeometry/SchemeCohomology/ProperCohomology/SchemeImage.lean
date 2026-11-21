@@ -65,6 +65,7 @@ instance : IsClosedImmersion (eqLocusι p g h hgh) := by
   infer_instance
 
 
+omit [IsSeparated p] in
 lemma eqLocusι_comp_eq : eqLocusι p g h hgh ≫ g = eqLocusι p g h hgh ≫ h := by
   have h₁ := congrArg (· ≫ pullback.fst p p) (pullback.condition (f := pullback.diagonal p)
     (g := pullback.lift g h hgh))

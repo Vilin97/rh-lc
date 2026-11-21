@@ -862,6 +862,7 @@ variable (f : X ⟶ Y) (f' : X' ⟶ Y) [QuasiCompact f] [QuasiSeparated f] [Quas
   (hπ : ∀ g, (ρ g).asIso.hom ≫ π = π) (hρ : ∀ g, (ρ g).asIso.hom ≫ f = f)
 
 
+include hπ in
 theorem normalizationActionOver_normalizationMap (hπ : ∀ g, (ρ g).asIso.hom ≫ π = π) (g : G) :
     (normalizationActionOver f ρ hρ g).asIso.hom ≫ normalizationMap f f' π (𝟙 Y) hf =
       normalizationMap f f' π (𝟙 Y) hf :=

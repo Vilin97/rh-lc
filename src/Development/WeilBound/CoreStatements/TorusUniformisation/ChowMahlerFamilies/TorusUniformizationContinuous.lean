@@ -88,7 +88,7 @@ theorem torus_tr {S : Scheme.{0}} {Xc : Type} [AddCommGroup Xc] {A B : Type} [Co
     (M : LieModel (splitTorus S Xc) a (Xc →+ A)) (hM : IsCocharLie M)
     (M' : LieModel (splitTorus S Xc) b (Xc →+ B)) (hM' : IsCocharLie M') (δ : Xc →+ ℤ) :
     (M'.pt ((Int.castAddHom B).comp δ)).left = spMap (dualMap g) ≫ (M.pt ((Int.castAddHom A).comp δ)).left := by
-  obtain ⟨j, hj⟩ := exists_tr a b g h M M'
+  obtain ⟨j, hj⟩ := LieVB.exists_tr a b g h M M'
   have hb : (epsAt b).hom = spMap (dualMap g) ≫ (epsAt a).hom := by
     have h1 := Over.w (M'.pt (j 0))
     have h2 := Over.w (M.pt 0)
@@ -112,7 +112,7 @@ theorem lie_valAt {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Sp Ω ⟶ X} (ha
     exact ⟨spMap g (IsLocalRing.closedPoint ℂ), rfl⟩
   obtain ⟨κ, hκ⟩ := exists_lift (A := X.presheaf.stalk (centre z)) x (X.fromSpecStalk (centre z)) hq
   obtain ⟨Fq, _, _, ⟨Mq⟩⟩ := lieModel_exists X G (X.presheaf.stalk (centre z)) (X.fromSpecStalk (centre z))
-  obtain ⟨β, hβ⟩ := exists_tr (B := X.presheaf.stalk (centre z)) x (X.fromSpecStalk (centre z)) κ hκ MR Mq
+  obtain ⟨β, hβ⟩ := LieVB.exists_tr (B := X.presheaf.stalk (centre z)) x (X.fromSpecStalk (centre z)) κ hκ MR Mq
   have h1 : (genMap ξ ⟨centre z, hall _⟩).comp κ = ψ := by
     refine ringHom_eq x ?_
     rw [← spMap_cmp, Category.assoc, hκ, hψ]
@@ -141,7 +141,7 @@ theorem local_formula {X : Scheme.{0}} {Ω : Type} [Field Ω] {K : Type} {J : K 
       ∃ sv : Fin n → (epsAt (z ≫ ρ) ⟶ G), (∀ i, (sv i).left = spMap (dualMap (g.comp φ)) ≫ (MR.pt (s i)).left) ∧
         ∀ a b, H z a b = ∑ i, ∑ j, starRingEnd ℂ (g (c a i)) * g (c b j) * h.ip (z ≫ ρ) (sv i) (sv j) := by
   obtain ⟨E', _, _, ⟨M'⟩⟩ := lieModel_exists X G B (xV ≫ ρ)
-  obtain ⟨j, hj⟩ := exists_tr x (xV ≫ ρ) φ hφ MR M'
+  obtain ⟨j, hj⟩ := LieVB.exists_tr x (xV ≫ ρ) φ hφ MR M'
   obtain ⟨MT, hMT⟩ := TorusLie.exists_lieModel_splitTorus Z' Xc B xV
   have hD : ∀ a, ∃ D : E', M'.pt D = LiePull.tanPts hΦ xV (MT.pt ((Int.castAddHom B).comp (β a)) ≫ u) :=
     fun a => M'.onto _ ((LiePull.isTan_iff hΦ xV _).2 (isTan_comp u _ (MT.tan _)))
@@ -150,7 +150,7 @@ theorem local_formula {X : Scheme.{0}} {Ω : Type} [Field Ω] {K : Type} {J : K 
   refine ⟨c, fun g z hz => ?_⟩
   obtain ⟨Mz, hMz⟩ := TorusLie.exists_lieModel_splitTorus Z' Xc ℂ z
   obtain ⟨Ec, _, _, ⟨Mc⟩⟩ := lieModel_exists X G ℂ (z ≫ ρ)
-  obtain ⟨j', hj'⟩ := exists_tr (xV ≫ ρ) (z ≫ ρ) g (by rw [← Category.assoc, hz]) M' Mc
+  obtain ⟨j', hj'⟩ := LieVB.exists_tr (xV ≫ ρ) (z ≫ ρ) g (by rw [← Category.assoc, hz]) M' Mc
   refine ⟨fun i => Mc.pt (j' (j (s i))), fun i => ?_, fun a b => ?_⟩
   · rw [hj', hj, ← Category.assoc, spMap_dual_comp]
   have hv := hH z Mz hMz (fun a => Mc.pt (j' (D a))) (fun a => by
@@ -294,7 +294,7 @@ theorem PositivityTheory.Xgn.torus_uniformization_continuous : ∀ (X : Scheme.{
     have : x.opensRange = W := hW.opensRange_fromSpec
     rw [this]
     exact (hall _).mem_open W.2 hpW)
-  obtain ⟨jξ, hjξ⟩ := exists_tr x ξ ψ hψ MR M
+  obtain ⟨jξ, hjξ⟩ := LieVB.exists_tr x ξ ψ hψ MR M
   choose F hF hFip using fun i j => h.cont (jξ (s i)) (jξ (s j))
   let w : (Sp ℂ ⟶ Z') → (Σ k, J k) → ℂ := fun z q => ev V (φ (t q)) z
   have key : ∀ z : Sp ℂ ⟶ Z', centre z ∈ V →

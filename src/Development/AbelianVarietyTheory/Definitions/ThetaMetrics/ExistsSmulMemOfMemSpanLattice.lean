@@ -542,6 +542,7 @@ theorem frameDeg_eq_frameDeg (hA : A.FG) {e : ι → V} {f : κ → V} (he : IsL
 end FrameDeg
 
 
+open Classical in
 noncomputable def arDeg (A : Submodule (𝓞 K) V) : ℝ := by
   classical
   exact if hA : A.FG then h.frameDeg A (exists_isLatticeFrame hA).choose else 0

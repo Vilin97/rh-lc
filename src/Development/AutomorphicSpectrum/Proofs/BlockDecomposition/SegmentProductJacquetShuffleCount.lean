@@ -53,6 +53,7 @@ theorem sum_colourMat {h : ℕ} (W : List (IrrGL (k := k))) (c : Fin W.length �
 end GlobalTheory.CompanionTheory.FineProd
 
 
+open GlobalTheory.CompanionTheory.FineProd in
 theorem GlobalTheory.CompanionTheory.FineProd.jmL_prodIrr : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.Published.IrreducibleAdmissibleGL → LSegJacquet k → ∀ {h N : ℕ} (Γ : Fin h → Segment k) (x : Fin h → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), (∀ i, IsLSeg (Γ i) (x i).rep) → ∀ W : List (IrrGL (k := k)), (∀ w ∈ W, w.IsCusp) → jmL W (prodIrr x hd) = (shuffleCount W (fun i => decWord (Γ i)) : ℕ∞) := by
   intro k _ _ _ _ hA hJ h N Γ x hd hΓ W hW
   classical

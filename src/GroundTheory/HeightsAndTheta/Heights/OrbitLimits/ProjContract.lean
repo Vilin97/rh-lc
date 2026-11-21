@@ -37,6 +37,7 @@ variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K �
   [∀ k, Fintype (ι k)]
 
 
+omit [DecidableEq K] in
 theorem ratDiv_eq (P : Ideal (NumbersDVR.MRing ι F)) (f g : NumbersDVR.MRing ι F)
     (W : Ideal (NumbersDVR.MRing ι F)) :
     NumbersDVR.ratDiv P f g W = AI.I1.ratDiv P f g W := by
@@ -120,6 +121,7 @@ end Image
 end ProjContract
 
 
+open ProjContract in
 theorem ProjContract.full :
     ∀ (F : Type u) [Field F] (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)]
       (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)],

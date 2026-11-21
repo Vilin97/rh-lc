@@ -198,6 +198,7 @@ theorem of_eq_of {N : ℕ} {π : Representation ℂ (GL (Fin N) k) V} {hs : IsSm
   exact IrrRep.cl_eq_iff
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 @[simp] theorem of_rep (x : IrrGL (k := k)) : of x.rep x.2.rep.smooth x.2.rep.irr = x := Sigma.ext rfl (heq_of_eq (IrrCl.cl_rep _))
 
 def equivOf {N : ℕ} (π : Representation ℂ (GL (Fin N) k) V) (hs : IsSmooth π) (hi : π.IsIrreducible) :

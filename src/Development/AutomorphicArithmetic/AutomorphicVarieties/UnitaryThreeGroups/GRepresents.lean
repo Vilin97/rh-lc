@@ -75,10 +75,12 @@ def GLift.comap {H : Type} [Group H] [TopologicalSpace H] (φ : H →* Γ) (hφ 
   red g := r.red (φ g)
 
 
+variable (O η Ψ) in
 def GCond (O : Type) [CommRing O] [IsLocalRing O] {Γ : Type} [Group Γ] [TopologicalSpace Γ]
     (η : Γ →* ℤˣ) (Ψ : Γ →* Oˣ) : Type 1 := ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R], GLift O η Ψ R → Prop
 
 
+variable (O η Ψ) in
 def GCond.noCondition (O : Type) [CommRing O] [IsLocalRing O] {Γ : Type} [Group Γ] [TopologicalSpace Γ]
     (η : Γ →* ℤˣ) (Ψ : Γ →* Oˣ) : GCond O η Ψ := fun _ _ _ _ _ => True
 

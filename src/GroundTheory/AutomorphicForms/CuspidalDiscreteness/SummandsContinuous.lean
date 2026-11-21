@@ -43,10 +43,12 @@ theorem archimedeanProjection_maximalCompact (k : archCompact K n) :
   archProj_of_mem (Reduction.maxCompact_le_normOneGL k.2)
 
 
+variable {μ} in
 theorem IsContRep.of_eq {φ ψ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F : normOneGL (K := K) (n := n) → ℂ}
     (h : IsContRep μ φ F) (e : φ = ψ) : IsContRep μ ψ F := e ▸ h
 
 
+variable {μ} in
 theorem IsContRep.of_eq_fun {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} {F G : normOneGL (K := K) (n := n) → ℂ}
     (h : IsContRep μ φ F) (e : F = G) : IsContRep μ φ G := e ▸ h
 

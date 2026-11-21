@@ -111,6 +111,7 @@ structure Poly.Ladder (Q : Poly Φ) (a b : ℤ → IdF Φ.A) (r : ℤ) : Prop wh
   cb : ∀ r' ≤ r, Q.Crit b r'
 
 
+variable (Φ) in
 structure Frame (Φ : PDF R C) (d : ℕ) where
   D : C
   ne : ∀ T : C, Nonempty (D ⟶ T)

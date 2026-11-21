@@ -298,6 +298,7 @@ def cupC {p q n : ℕ} (h : p + q = n) : Cn F₁ p →ₗ[R] Cn F₂ q →ₗ[R]
     (fun r f g => funext fun s => by simp [term_smul])
 
 
+open Classical in
 def cup {p q n : ℕ} (h : p + q = n) (x : H F₁ p) (y : H F₂ q) : H F₃ n := by
   classical
   exact if hz : d F₃ n (P.cupC h (Quotient.out x).1 (Quotient.out y).1) = 0 then (cx F₃).cls _ hz else 0
