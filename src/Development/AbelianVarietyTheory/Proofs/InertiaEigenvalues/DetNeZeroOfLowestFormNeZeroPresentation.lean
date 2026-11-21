@@ -50,7 +50,7 @@ theorem det_relations [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n] (P
   rw [Matrix.det_transpose, Matrix.det_transpose, h0, Ideal.mem_span_singleton, zero_dvd_iff] at h
   exact h
 
-theorem multilinear_add_smul [Fintype m] [DecidableEq m] (f : MultilinearMap R (fun _ : m => n → R) R)
+theorem multilinear_add_smul [Fintype m] [DecidableEq m] (f : (m → n → R) →ₘₗ[R] R)
     (M V : m → n → R) (x : R) (hx : x * x = 0) :
     f (M + x • V) = f M + x * ∑ i, f (Function.update M i (V i)) := by
   classical
@@ -68,12 +68,12 @@ theorem multilinear_add_smul [Fintype m] [DecidableEq m] (f : MultilinearMap R (
         · subst hi; simp [ha]
         · simp [Finset.piecewise_insert, hi]
       have h1 : f (Function.update N a (N a + x • V a)) = f N + x * f (Function.update N a (V a)) := by
-        rw [f.map_update_add, f.map_update_smul, Function.update_eq_self, smul_eq_mul]
+        rw [f.map_update_add, f.map_update_smul, Function.update_eq_self, RingHom.id_apply, smul_eq_mul]
       have h2 : ∀ i ∈ S, x * f (Function.update (Function.update N a (N a + x • V a)) i (V i)) =
           x * f (Function.update N i (V i)) := by
         intro i hi
         have hia : a ≠ i := fun h => ha (h ▸ hi)
-        rw [Function.update_comm hia, f.map_update_add, f.map_update_smul, smul_eq_mul, mul_add,
+        rw [Function.update_comm hia, f.map_update_add, f.map_update_smul, RingHom.id_apply, smul_eq_mul, mul_add,
           ← mul_assoc, hx, zero_mul, add_zero]
         congr 2
         conv_rhs => rw [← Function.update_eq_self a (Function.update N i (V i))]

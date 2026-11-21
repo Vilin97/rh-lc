@@ -50,7 +50,24 @@ theorem span_tr {X : Scheme.{0}} {G : Over X} [GrpObj G] [Smooth G.hom] {R R' : 
     (hj : ∀ e, (M'.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (M.pt e).left) {n : ℕ} (s : Fin n → E)
     (hs : Submodule.span R (Set.range s) = ⊤) (e' : E') : ∃ a : Fin n → R', ∑ i, a i • j (s i) = e' := by
   rw [← Submodule.mem_span_range_iff_exists_fun]
-  refine RootHt.lie_transport_induction c h M M' j hj
+  have transport_induction {P : E' → Prop} (zero : P 0) (base : ∀ e, P (j e))
+      (smul : ∀ (s : R') n, P n → P (s • n))
+      (add : ∀ n n', P n → P n' → P (n + n')) (n : E') : P n := by
+    subst h
+    letI : Algebra R R' := c.toAlgebra
+    letI : Module R E' := Module.compHom E' c
+    haveI : IsScalarTower R R' E' := ⟨fun a b v => by
+      change (c a * b) • v = c a • (b • v)
+      rw [mul_smul]⟩
+    let jl : E →ₗ[R] E' :=
+      { toFun := j
+        map_add' := j.map_add
+        map_smul' := fun r e => j.map_smulₛₗ r e }
+    have hb : IsBaseChange R' jl := GlobalTheory.T.lie_model_isBaseChange X G R R' x E E' M M' jl (fun e => by
+      rw [Category.comp_id]
+      exact hj e)
+    exact hb.inductionOn n base smul add
+  refine transport_induction
     (P := fun e => e ∈ Submodule.span R' (Set.range fun i => j (s i))) (zero_mem _) (fun e => ?_)
     (fun r n hn => Submodule.smul_mem _ r hn) (fun n n' hn hn' => add_mem hn hn') e'
   have he : e ∈ Submodule.span R (Set.range s) := hs ▸ Submodule.mem_top

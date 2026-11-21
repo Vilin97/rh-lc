@@ -28,6 +28,8 @@ theorem exists_mul_std : ∀ (D : D7) (S : HSp D) (k₀ : GA D S) (Λ' : Lt D.ho
   have hs : Submodule.span D.host.E (stdL D.host.E S.rank : Set (Fin S.rank → D.host.E)) = ⊤ := by
     rw [stdL, Submodule.span_span_of_tower, ← (Pi.basisFun D.host.E (Fin S.rank)).span_eq]
     congr 2
+    funext i
+    exact (Pi.basisFun_apply D.host.E (Fin S.rank) i).symm
   have ht : ∀ u, MovLev.lf (MovLev.idem w.asIdeal) • (fmtC S k₀⁻¹ *ᵥ u) = MovLev.lf (MovLev.idem w.asIdeal) • u :=
     fun u => MovLev.smul_mulVec_eq _ _ (fun v' => by
       by_cases hv' : w.asIdeal ≤ v'.asIdeal

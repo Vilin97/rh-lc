@@ -176,7 +176,10 @@ theorem prA_Lf (y : VA X.B.I) (hy : y ∈ X.B.I.Lf) : prA X y ∈ X.B.I.Lf := by
     rw [prA_incl]
     exact incl_mem_Lf X _ (prE_L X _ x.2)
   | zero => simp
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz =>
+    have hAdd : prA X (y + z) = prA X y + prA X z := map_add (prA X) y z
+    rw [hAdd]
+    exact add_mem hy hz
   | smul c y _ hy =>
     rw [Subring.smul_def, map_smul]
     exact X.B.I.Lf.smul_mem c hy
@@ -1704,6 +1707,8 @@ def rvHom (v : InfinitePlace X.B.I.F) : (Fin X.B.I.n → X.B.I.E) →+ (Fin X.B.
     unfold rv
     rw [← mulVec_add]
     congr 1
+    funext i
+    exact map_add (X.B.I.φ v) (x i) (y i)
 
 theorem rvHom_apply (v : InfinitePlace X.B.I.F) (x : Fin X.B.I.n → X.B.I.E) : rvHom X v x = rv X.B.I v x := rfl
 

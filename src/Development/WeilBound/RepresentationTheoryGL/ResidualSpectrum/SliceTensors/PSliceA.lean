@@ -74,11 +74,15 @@ theorem A_aT_comm {N r : ℕ} (t : ℝ) (g : GA E N)
 theorem aT_add (N r : ℕ) (s t : ℝ) : aT E N r (s + t) = aT E N r s * aT E N r t := by
   rw [A_aT_tor, A_aT_tor, A_aT_tor, A_tor_mul]
   congr 1
+  funext i
+  simp only [Pi.add_apply]
   split_ifs <;> simp
 
 theorem aT_zero (N r : ℕ) : aT E N r 0 = 1 := by
   rw [A_aT_tor, ← A_tor_zero (E := E) (n := N)]
   congr 1
+  funext i
+  simp
 
 theorem aT_comm (N r r' : ℕ) (s t : ℝ) : aT E N r s * aT E N r' t = aT E N r' t * aT E N r s := by
   rw [A_aT_tor, A_aT_tor, A_tor_mul, A_tor_mul, add_comm]
@@ -157,6 +161,8 @@ theorem lev_aT_right (r s r₂ : ℕ) (h : r₂ ≤ s) (t : ℝ) :
     lev (Ad E) r s (1, aT E s r₂ t) = aT E (r + s) (r + r₂) t * aT E (r + s) r (-t) := by
   rw [A_aT_tor, A_aT_tor, A_aT_tor, ← A_tor_zero (E := E) (n := r), A_lev_tor, A_tor_mul]
   congr 1
+  funext i
+  simp only [Pi.add_apply, Pi.zero_apply]
   split_ifs <;> simp_all <;> omega
 
 theorem A_unipGL_mul_diag {n r : ℕ} {R : Type*} [CommRing R] (d : Fin n → Rˣ) (X : UPos n r → R) :

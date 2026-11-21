@@ -84,7 +84,7 @@ theorem pieceTop : PieceTop k := by
     (isClosed_Bz Z).inter (isClosed_eq (Polynomial.continuous_aeval χ) continuous_const)
   have hft : ∀ t : Fin D.m, Continuous fun x : Matrix (Fin N) (Fin N) k =>
       ∑ j : Fin D.r, D.κ t j • pe (D.a j) x :=
-    fun t => continuous_finset_sum _
+    fun t => continuous_finsetSum _
       (fun j _ => (continuous_const_smul (D.κ t j)).comp (continuous_pe (D.a j)))
   have hidem : ∀ t : Fin D.m, ∀ x ∈ {x : Matrix (Fin N) (Fin N) k | x ∈ Bz Z ∧ aeval x χ = 0},
       IsIdempotentElem (∑ j : Fin D.r, D.κ t j • pe (D.a j) x) :=

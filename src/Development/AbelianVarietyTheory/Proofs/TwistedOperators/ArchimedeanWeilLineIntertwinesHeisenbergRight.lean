@@ -64,8 +64,8 @@ theorem GlobalTheory.ArchLineAct.intertwine_pair : ∀ (F E : Type) [Field F] [N
   · show GlobalTheory.ArchLineAct.archMap M.co (L 0) = LinearMap.id
     have hL : L 0 = LinearMap.id := by
       refine LinearMap.ext fun x => ?_
-      show x * (mat (γ (Multiplicative.ofAdd 0)))ᵀ = x
-      rw [ofAdd_zero, map_one, hmat1, Matrix.transpose_one, Matrix.mul_one]
+      change x * (mat (γ (Multiplicative.ofAdd 0)))ᵀ = LinearMap.id x
+      rw [LinearMap.id_apply, ofAdd_zero, map_one, hmat1, Matrix.transpose_one, Matrix.mul_one]
     rw [hL, GlobalTheory.ArchLineAct.archMap_id]
   · set u := M.co.e.symm (GlobalTheory.ArchLineAct.archLift p, GlobalTheory.ArchLineAct.archLift q) with hu
     have hue : M.co.e u = (GlobalTheory.ArchLineAct.archLift p, GlobalTheory.ArchLineAct.archLift q) :=

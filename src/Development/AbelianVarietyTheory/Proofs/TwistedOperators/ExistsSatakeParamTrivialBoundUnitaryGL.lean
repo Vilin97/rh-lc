@@ -49,7 +49,7 @@ theorem exists_isSatVecGL_bound : ∀ (E : Type) [Field E] [NumberField E] (w : 
   obtain ⟨B, hB⟩ := GlobalTheory.LFun.ExSatGL.exists_hasSatGL E w n U π
     ((Submodule.ne_bot_iff _).2 ⟨x', hx'f, hx'0⟩) heig
   have hx' : IsSatVecGL w π x' B := hB.2 x' hx'f hx'0
-  have hup := GlobalTheory.T.norm_satake_le_of_unitary_spherical_GL GlobalTheory.SatakeBound.satakeTrivialBound E w n _ π B hirr hunU hB
+  have hup := GlobalTheory.LFun.SatBoundGL.norm_le_of_hasSatGL GlobalTheory.SatakeBound.satakeTrivialBound E w n _ π B hirr hunU hB
   refine ⟨B, hx'.map U.subtype hsub hx0, fun β hβ => ⟨hup β hβ, ?_⟩⟩
   have hst := GlobalTheory.LFun.UnitaryParam.map_star_eq_map_inv E w n _ π x' B hunU hx'
   have h1 : β⁻¹ ∈ B.map star := hst ▸ Multiset.mem_map_of_mem _ hβ

@@ -12,8 +12,6 @@ noncomputable section
 
 namespace GlobalTheory.AdaptedLocalData
 
-open GlobalTheory.IndefiniteRowSideFullHecke.HeckeFlatSpecialisation
-
 section Field
 
 variable {k : Type} [Field k]

@@ -19,8 +19,8 @@ def twS (χ : HChar E) (p : Σ a, CG E a) : Σ a, CG E a := ⟨p.1, p.2.twist χ
 
 omit [IsTotallyComplex E] in
 theorem unrAt_inv {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (h : χ.UnrAt w) : (χ⁻¹).UnrAt w := fun x hx => by
-  show (χ⁻¹).loc w x = 1
-  rw [HChar.loc_inv, h x hx, inv_one]
+  change (χ.1 (GlobalTheory.Mem.Chr.localIdele E w x))⁻¹ = 1
+  rw [show χ.1 (GlobalTheory.Mem.Chr.localIdele E w x) = 1 from h x hx, inv_one]
 
 theorem exists_fin {d : ℕ} (B : Multiset ℂˣ) (hB : Multiset.card B = d) :
     ∃ f : Fin d → ℂˣ, Finset.univ.val.map f = B := by

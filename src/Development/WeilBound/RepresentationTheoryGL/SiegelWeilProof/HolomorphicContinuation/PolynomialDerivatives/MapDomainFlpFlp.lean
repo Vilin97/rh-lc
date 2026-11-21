@@ -66,7 +66,10 @@ theorem crAlg_comm (c : ℝ) : ∀ a ∈ Set.range (cr (m := m) (n := n) c), ∀
 
 abbrev CrAlg (m n : ℕ) (c : ℝ) : Subalgebra ℂ (Module.End ℂ (PX m n)) := Algebra.adjoin ℂ (Set.range (cr c))
 
-instance instCommRingCrAlg (c : ℝ) : CommRing (CrAlg m n c) := Algebra.isMulCommutative_adjoin ℂ (crAlg_comm c)
+instance instCommRingCrAlg (c : ℝ) : CommRing (CrAlg m n c) :=
+  letI : IsMulCommutative (CrAlg m n c) :=
+    Algebra.isMulCommutative_adjoin ℂ fun a ha b hb _ => crAlg_comm c a ha b hb
+  { (CrAlg m n c).toRing with mul_comm := mul_comm' }
 
 def gen (c : ℝ) (k : Ix m n) : CrAlg m n c := ⟨cr c k, Algebra.subset_adjoin ⟨k, rfl⟩⟩
 

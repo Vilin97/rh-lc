@@ -480,7 +480,7 @@ theorem clause_bdd (hI : GlobalTheory.Grid.IsIntw θ M' M ω' pt It) (hA : AdjRe
   have hcl : IsClosed {x : ∀ τ, M.H τ | ‖ellT M x (inclT M (Tp φ (PiTensorProduct.tprod ℂ v)))‖ ≤
       (C * ∏ τ, ‖(v τ : M'.H τ)‖) * ∏ τ, ‖x τ‖} :=
     isClosed_le (ellT_continuous M _).norm
-      (continuous_const.mul (continuous_finset_prod _ fun τ _ => (continuous_apply τ).norm))
+      (by fun_prop)
   have h1 : ‖ellT M w (inclT M (Tp φ (PiTensorProduct.tprod ℂ v)))‖ ≤ (C * ∏ τ, ‖(v τ : M'.H τ)‖) * ∏ τ, ‖w τ‖ :=
     forall_of_vec M hcl (fun u => hb2 u v) w
   calc _ ≤ _ := h1

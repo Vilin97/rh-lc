@@ -42,7 +42,7 @@ theorem blkAt_val_left {n N : ℕ} (h : n ≤ N) (g : GL (Fin n) k) (i j : Fin N
       one_apply_ne (fun e => by rw [e] at hi; omega)]
     rfl
   · rw [cast_eq_natAdd h j (by omega), finSumFinEquiv_symm_apply_natAdd, fromBlocks_apply₂₂]
-    simp only [one_apply, Fin.ext_iff]
+    simp only [Matrix.one_apply, Fin.ext_iff]
     congr 1
     apply propext; omega
 
@@ -77,7 +77,7 @@ theorem colEl_val {m N : ℕ} (h : m + 2 ≤ N) (x : Fin (m + 1) → k) (i j : F
   · by_cases hj : (j : ℕ) < m + 2
     · rw [blkAt_val_lt h _ i j hi hj, unip_val]
       congr 1
-      · simp [one_apply, Fin.ext_iff]
+      · simp [Matrix.one_apply, Fin.ext_iff]
       · by_cases c : (j : ℕ) = m + 1 ∧ (i : ℕ) ≤ m
         · rw [dif_pos ⟨c.1, by simp only [Fin.val_mk]; omega⟩, dif_pos c]
         · rw [dif_neg (by simp only [Fin.val_mk]; omega), dif_neg c]
@@ -122,7 +122,7 @@ theorem mem_colFix_iff {N n : ℕ} (g : GL (Fin N) k) :
       fun r => (g : Matrix (Fin N) (Fin N) k) r i := by
     intro i; funext r; simp [mulVec, dotProduct, Pi.single_apply]
   have e1 : ∀ i : Fin N, (Pi.single i (1 : k) : Fin N → k) = fun r => (1 : Matrix (Fin N) (Fin N) k) r i := by
-    intro i; funext r; simp [Pi.single_apply, one_apply]
+    intro i; funext r; simp [Pi.single_apply, Matrix.one_apply]
   constructor
   · intro hg r i hi
     have hg' : ∀ i : Fin N, (i : ℕ) < n →

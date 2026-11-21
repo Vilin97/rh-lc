@@ -65,7 +65,8 @@ theorem tor_add (x y : Fin n → ℝ) : An.tor E (x + y) = An.tor E x * An.tor E
   unfold An.tor
   rw [← map_mul]
   congr 1
-  rw [← GlobalTheory.CuspBoundSiegel.posIdele_mul]
+  funext i
+  rw [Pi.mul_apply, ← GlobalTheory.CuspBoundSiegel.posIdele_mul]
   exact GlobalTheory.CuspBoundSiegel.posIdele_congr _ _ (by rw [Pi.add_apply, Real.exp_add])
 
 theorem tor_const_comm (c : ℝ) (g : AdelicGLn.AdelicGL E n) :

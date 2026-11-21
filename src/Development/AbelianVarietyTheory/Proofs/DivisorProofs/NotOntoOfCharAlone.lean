@@ -21,7 +21,7 @@ open NumberField IsDedekindDomain Module
 namespace GlobalTheory.RealIndexBound
 
 open Formalism.BasicNotions Formalism.DivisionValues Formalism.EigenvalueLevelCeiling Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Indef.Tree Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Cx
-open GlobalTheory.OntoChain GlobalTheory.RealIndexBoundProbe
+open GlobalTheory.OntoChain
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 

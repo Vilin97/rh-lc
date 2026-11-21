@@ -59,38 +59,25 @@ theorem kTriv_fibre {S : Scheme.{0}} (P : Out.PolAV S) {n : ℕ} (B : Over S) [G
       Over.w ((Over.pullback t).map ψ)
     rw [e, Over.w ψ]
     exact IsPullback.of_hasPullback _ _
-  have hL' := LB.isLB_pull P.isLB (pullback.fst P.A.hom t)
-  have hM' := LB.isLB_pull hM (pullback.fst B.hom t)
+  have hL' := pull_isLB P.isLB (pullback.fst P.A.hom t)
+  have hM' := pull_isLB hM (pullback.fst B.hom t)
   have h₁ : (lbPow (P.L.pull (pullback.fst P.A.hom t)) n).IsLB := LB.isLB_linComb hL' _ _
-  have h₂ := LB.isLB_pull hM' ((Over.pullback t).map ψ).left
-  have cp : ∀ {X Y Z : Scheme.{0}} (L : LB X) (f : Y ⟶ X) (g : Z ⟶ Y),
-      ChartPull ((L.pull f).pull g) (L.pull f) g := fun L f g => chartPullPull _ _ _ rfl
-  have e : LBIso (lbPow (P.L.pull (pullback.fst P.A.hom t)) n)
-      ((M.pull ψ.left).pull (pullback.fst P.A.hom t)) := by
-    apply LBIso.chartPull (chartPullLinComb P.L (pullback.fst P.A.hom t) _ _ _ _ (by simp))
-      (cp _ _ _) hiso
-  have cpcomp : ∀ {X Y Z : Scheme.{0}} (L : LB X) (f : Y ⟶ X) (g : Z ⟶ Y),
-      ChartPull ((L.pull f).pull g) L (g ≫ f) := by
-    intro X Y Z L f g
-    refine ⟨fun J => J PUnit.unit PUnit.unit, ?_, ?_⟩
-    · intro J x hx
-      exact mem_pull.1 (mem_pull.1 hx)
-    · intro y J J' hj hj'
-      rw [gm_pull_g, Category.id_comp, gm_pull_g]
-  have e' : LBIso ((M.pull ψ.left).pull (pullback.fst P.A.hom t))
-      ((M.pull (pullback.fst B.hom t)).pull ((Over.pullback t).map ψ).left) := by
-    apply LBIso.chartPull (cpcomp M ψ.left _) ?_ (GlobalTheory.lbIso_refl hM)
-    rw [← hw]
-    exact cpcomp M _ _
-  have he := LBIso.trans h₁ (LB.isLB_pull (LB.isLB_pull hM _) _) h₂ e e'
+  have h₂ := pull_isLB hM' ((Over.pullback t).map ψ).left
+  have h₀ := (cls_eq_iff (LB.isLB_linComb P.isLB _ _) (pull_isLB hM _)).2 hiso
+  rw [cls_lbPow P.isLB, cls_pull hM] at h₀
+  have he : cls _ h₁ = cls _ h₂ := by
+    rw [cls_lbPow hL', cls_pull hM', cls_pull P.isLB, cls_pull hM, ← pull_comp, hw, pull_comp, ← h₀, map_nsmul]
   have hmon : IsMonHom ((Over.pullback t).map ψ) := inferInstance
   refine kTriv_of_descent firstFiveLaws.1 k (StrictPull.polPull P t) n _ ((Over.pullback t).map ψ) _ hn
-    (AbLaw.CubeGen.isAb_baseChange hB t) hM' hmon
+    (PolPull.isAbelianScheme_of_isGrpPullback hB (isGrpPullback_pullback B t)) hM' hmon
     (MorphismProperty.of_isPullback (P := @IsFinite) hp inferInstance)
     (MorphismProperty.of_isPullback (P := @Etale) hp inferInstance)
     (MorphismProperty.of_isPullback (P := @Surjective) hp inferInstance)
     ((card_ker_pullback t ψ).trans hc) ?_
-  sorry
+  refine (cls_eq_iff (LB.isLB_linComb h₁ _ _) (LB.isLB_linComb h₂ _ _)).1 ?_
+  refine (cls_cube_two (G := (Over.pullback t).obj P.A) h₁ _ _ _).trans
+    (Eq.trans ?_ (cls_cube_two (G := (Over.pullback t).obj P.A) h₂ _ _ _).symm)
+  exact congrArg (fun c => lam (G := (Over.pullback t).obj P.A) c _ _) he
 
 end GlobalTheory.DescentFamily
 
@@ -106,7 +93,7 @@ theorem relAmple_kTriv_of_descent_family : ∀ (R : Type) [CommRing R] [IsNoethe
   have a₁ : Out.RelAmple P.A (lbPow P.L n) :=
     (relAmple_finite_pow_iso _ P.A P.A (𝟙 _) P.L n hn hA hA P.isLB hid).2.1.2 P.ample
   have a₂ : Out.RelAmple P.A (M.pull ψ.left) :=
-    (relAmple_finite_pow_iso _ P.A P.A (𝟙 _) _ 1 one_pos hA hA hn' hid).2.2.2 _ (LB.isLB_pull hM _) hiso a₁
+    (relAmple_finite_pow_iso _ P.A P.A (𝟙 _) _ 1 one_pos hA hA hn' hid).2.2.2 _ (pull_isLB hM _) hiso a₁
   have a₃ : Out.RelAmple B M :=
     (relAmple_finite_pow_iso _ P.A B ψ M 1 one_pos hA hB hM hf).2.2.1 inferInstance hs a₂
   refine ⟨a₃, ?_⟩
@@ -132,19 +119,19 @@ theorem relAmple_kTriv_of_descent_family : ∀ (R : Type) [CommRing R] [IsNoethe
   let G := fun q => (Over.pullback (j q).isoOpensRange.inv).obj ((Over.pullback (j q)).obj B)
   have gp : ∀ q, IsGrpPullback (G q) ((Over.pullback (j q)).obj B) (j q).isoOpensRange.inv (pullback.fst _ _) :=
     fun q => isGrpPullback_pullback _ _
-  have hM₁ := fun q => LB.isLB_pull hM (pullback.fst B.hom (j q))
-  have hB₁ := fun q => AbLaw.CubeGen.isAb_baseChange hB (j q)
-  have key := fun q => pol_pull _ _ _ (G q) _ _ _ _ (hM₁ q) (LB.isLB_pull (hM₁ q) _) (hB₁ q) (gp q)
-    ((cls_eq_iff (LB.isLB_pull (hM₁ q) _) (LB.isLB_pull (hM₁ q) _)).1 rfl)
+  have hM₁ := fun q => pull_isLB hM (pullback.fst B.hom (j q))
+  have hB₁ := fun q => PolPull.isAbelianScheme_of_isGrpPullback hB (isGrpPullback_pullback B (j q))
+  have key := fun q => pol_pull _ _ _ (G q) _ _ _ _ (hM₁ q) (pull_isLB (hM₁ q) _) (hB₁ q) (gp q)
+    ((cls_eq_iff (pull_isLB (hM₁ q) _) (pull_isLB (hM₁ q) _)).1 rfl)
   refine CoverGlue.kTriv_of_cover (Sp R) (PrimeSpectrum R) (fun q => (j q).opensRange) B G
     (fun q => pullback.fst _ (j q).isoOpensRange.inv ≫ pullback.fst B.hom (j q)) ?_
     (fun q => ((gp q).comp (isGrpPullback_pullback B (j q))).congr (Scheme.Hom.isoOpensRange_inv_comp _) rfl)
-    M _ hM (fun q => LB.isLB_pull (hM₁ q) _) (fun q => ?_) hB (fun q => (key q).1) (fun q => (key q).2.2 (H q))
+    M _ hM (fun q => pull_isLB (hM₁ q) _) (fun q => ?_) hB (fun q => (key q).1) (fun q => (key q).2.2 (H q))
   · refine top_le_iff.1 fun q _ => TopologicalSpace.Opens.mem_iSup.2 ⟨q, ?_⟩
     have : q ∈ Set.range (PrimeSpectrum.comap (algebraMap R (Localization.Away (f q)))) := by
       rw [PrimeSpectrum.localization_away_comap_range (Localization.Away (f q)) (f q)]
       exact hf q
     exact this
-  · sorry
+  · rw [← cls_eq_iff (pull_isLB (hM₁ q) _) (pull_isLB hM _), cls_pull (hM₁ q), cls_pull hM, cls_pull hM, pull_comp]
 
 end GlobalTheory

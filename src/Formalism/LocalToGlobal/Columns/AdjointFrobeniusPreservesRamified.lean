@@ -36,10 +36,10 @@ theorem FunAt.of_smul_mem {f : Sp E n → 𝓞 E ⧸ P.asIdeal} (h : FunAt P N f
 
 variable {co : Sp E n → (Fin n → 𝓞 E ⧸ P.asIdeal)}
 
-theorem CoordAt.comp (h : CoordAt P N co) (i : Fin n) : FunAt P N fun y => co y i where
-  add x hx y hy := by rw [h.add x hx y hy]; rfl
-  smul a x hx := by rw [h.smul a x hx]; rfl
-  off x hx := by rw [h.off x hx]; rfl
+theorem CoordAt.comp (h : CoordAt P N co) (i : Fin n) : FunAt P N fun y => co y i := by
+  exact ⟨fun x hx y hy => congrFun (h.add x hx y hy) i,
+    fun a x hx => congrFun (h.smul a x hx) i,
+    fun x hx => congrFun (h.off x hx) i⟩
 
 theorem CoordAt.of_smul_mem (h : CoordAt P N co) {z : Sp E n} (hz : z ∈ P.asIdeal • N) : co z = 0 :=
   funext fun i => (h.comp i).of_smul_mem hz
@@ -74,11 +74,11 @@ theorem intAt_algebraMap_ow (P : HeightOneSpectrum (𝓞 E)) (r : Ow P) : IntAt 
     ← IsScalarTower.algebraMap_apply]
 
 theorem exists_locBasis (P : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E) (Sp E n)}
-    (hN : Submodule.IsLattice E N) :
+    (hN : Submodule.IsFullLattice E N) :
     ∃ β : Module.Basis (Fin n) E (Sp E n), (∀ i, β i ∈ localization₂ P.asIdeal N) ∧
       ∀ y ∈ localization₂ P.asIdeal N, ∀ i, IntAt P (β.repr y i) := by
   classical
-  obtain ⟨ι, _, b, bK, hb⟩ := exists_basis_atW P hN.fg hN.span_eq_top
+  obtain ⟨ι, _, b, bK, hb⟩ := exists_basis_atW P hN.toIsLattice.fg hN.span_eq_top
   have hcard : Fintype.card ι = n := by
     rw [← Module.finrank_eq_card_basis bK, Module.finrank_fin_fun]
   let e : ι ≃ Fin n := Fintype.equivFinOfCardEq hcard
@@ -100,7 +100,7 @@ theorem exists_locBasis (P : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E)
     exact intAt_algebraMap_ow P _
 
 theorem exists_coordAt (P : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E) (Sp E n)}
-    (hN : Submodule.IsLattice E N) : ∃ co, CoordAt P N co := by
+    (hN : Submodule.IsFullLattice E N) : ∃ co, CoordAt P N co := by
   classical
   obtain ⟨β, hβ, hint⟩ := exists_locBasis P hN
   let co : Sp E n → (Fin n → 𝓞 E ⧸ P.asIdeal) := fun y =>

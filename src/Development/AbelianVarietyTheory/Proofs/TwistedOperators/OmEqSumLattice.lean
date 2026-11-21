@@ -61,7 +61,16 @@ theorem isSBHalf_modul {e : AE D} {Λ : AddSubgroup (WO S T)}
     (hden : ∀ y ∈ half S T (cA D e), ∃ k : ℕ, 0 < k ∧ k • y ∈ Λ) {Φ : WO S T → ℂ} (s0 : IsSBHalf e Λ Φ) {y : WO S T}
     (hy' : IsHalf (cA D e) y) : IsSBHalf e Λ fun t => ψ (symplO S T t y) * Φ t := by
   have hy := (isHalf_iff S T).1 hy'
-  have hb := isBichar_symplO S T ψ
+  have hb : IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro a b y; rw [symplO_add_left, AddChar.map_add_eq_mul]
+    · intro a b y; rw [symplO_add_right, AddChar.map_add_eq_mul]
+    · intro y
+      have hz : symplO S T 0 y = 0 := by simpa using symplO_add_left S T 0 0 y
+      rw [hz, AddChar.map_zero_eq_one]
+    · intro y
+      have hz : symplO S T y 0 = 0 := by simpa using symplO_add_right S T y 0 0
+      rw [hz, AddChar.map_zero_eq_one]
   obtain ⟨k, hk, hk'⟩ := hden y hy
   obtain ⟨a1, k', hk1, a2, a3⟩ := s0
   refine ⟨fun t ht => a1 t (right_ne_zero_of_mul ht), k * k', Nat.mul_pos hk hk1, fun u hu hh t => ?_,
@@ -116,7 +125,16 @@ theorem om_model_of_base : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : 
   have tf : ∀ k : ℕ, 0 < k → Function.Injective fun t : WO S T => k • t := fun k hk a b hab => by
     rw [← inv_smul_nsmul S T hk a, ← inv_smul_nsmul S T hk b]
     exact congrArg _ hab
-  have hb := isBichar_symplO S T ψ
+  have hb : IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro a b y; rw [symplO_add_left, AddChar.map_add_eq_mul]
+    · intro a b y; rw [symplO_add_right, AddChar.map_add_eq_mul]
+    · intro y
+      have hz : symplO S T 0 y = 0 := by simpa using symplO_add_left S T 0 0 y
+      rw [hz, AddChar.map_zero_eq_one]
+    · intro y
+      have hz : symplO S T y 0 = 0 := by simpa using symplO_add_right S T y 0 0
+      rw [hz, AddChar.map_zero_eq_one]
   have hm : Φ ∈ waveSpan (fun x y : WO S T => ψ (symplO S T x y)) (half S T e) (half S T (cA D e)) (Λ ⊓ half S T e) := by
     obtain ⟨h1, k, hk, h2, h3⟩ := hΦ
     exact mem_waveSpan hb inf_le_right inf_le_right hLL' hX (half_div S T e) (half_div S T _) tf hfin Φ
@@ -128,7 +146,7 @@ theorem om_model_of_base : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : 
     obtain ⟨x, hx, y, hy, rfl⟩ := hh
     have hx' := (isHalf_iff S T).2 hx
     have hy' := (isHalf_iff S T).2 hy
-    have hth := GlobalTheory.FinTranslate.isTheta_heisO_fin hW.std.1 (infPart_of_half (infPart_cA hinf) hy') hf
+    have hth := GlobalTheory.FinTranslate.isThetaFunO_heisO hW.std.1.1 hW.std.1.2.1 hf (infPart_of_half (infPart_cA hinf) hy')
     rw [wave_act, GlobalTheory.SchrodSubst.placeModel_wave hLL' hden hTm hx' hy',
       hTm.trans _ (isSBHalf_modul hLL' hden s0 (isHalf_actO g h hy')) _ (isHalf_actO g h hx'),
       hTm.modul _ s0 _ (isHalf_actO g h hy'), hW.om_heis _ _ _ _ hth, hW.om_heis _ _ _ _ hf, hc, heisO_smul', heisO_smul']
@@ -181,7 +199,18 @@ theorem om_eq_sum_lattice {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D 
       rintro _ ⟨γ, rfl⟩ w
       exact (congrArg norm (hf.quasi γ w)).trans (by rw [norm_mul, hψ.2.1, one_mul]))
   have hn : nrm2 μ 𝓕 (c • f) = 1 := hc μ 𝓕 hμ.1 hμ.2.1 hμ.2.2
-  have hcf := GlobalTheory.WeilVacMove.isTheta_smul c hf
+  have hcf : IsThetaFunO ψ S T (c • f) := {
+    quasi γ w := by
+      rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
+    level := by
+      obtain ⟨U, hU, h1⟩ := hf.level
+      refine ⟨U, hU, fun u hu h0 => ?_⟩
+      funext w
+      have e1 := congrFun (h1 u hu h0) w
+      unfold heisO at e1 ⊢
+      rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
+    cont := hf.cont.const_smul c
+    smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w) }
   have hfix' : ∀ u ∈ Λ, IsHalf e u ∨ IsHalf (cA D e) u → heisO ψ S T u (c • f) = c • f := fun u hu hh => by
     rw [heisO_smul', hfix u hu hh]
   have h1 := hom _ hcf (fun u hu hh => hfix' u hu (Or.inl hh)) fun u hu hh => hfix' u hu (Or.inr hh)

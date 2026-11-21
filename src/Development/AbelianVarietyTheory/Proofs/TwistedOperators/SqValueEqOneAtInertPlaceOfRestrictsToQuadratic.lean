@@ -42,7 +42,8 @@ theorem exists_isUnifAt (hw : IsInertAt F E v w) (h : w.under (𝓞 F) = v) :
   rw [complMap_algebraMap]
   have hvw : Valued.v (algebraMap E (w.adicCompletion E) (algebraMap F E π)) = w.valuation E (algebraMap F E π) := by
     exact HeightOneSpectrum.valuedAdicCompletion_eq_valuation' (v := w) (algebraMap F E π)
-  rw [hvw, ← HeightOneSpectrum.valuation_liesOver E v w, he, pow_one, hπ]
+  rw [hvw, ← HeightOneSpectrum.valuation_liesOver E v w,
+    ← Ideal.ramificationIdx'_eq_ramificationIdx v.asIdeal w.asIdeal v.ne_bot, he, pow_one, hπ]
 
 theorem locIdele_complMap (hw : IsInertAt F E v w) (h : w.under (𝓞 F) = v) (a : (Fv F v)ˣ) :
     locIdele F w (Units.map (complMap h).toMonoidHom a) =

@@ -32,7 +32,7 @@ theorem b_eq_of_equiv {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} {F : T
     exact (smul_eq_zero.1 h').resolve_left (by exact_mod_cast hj.ne')
   have htzero : t = 0 := by
     have he := (isAdd_iff_eq _ _ _).1 ht₁
-    have hz0 : t₀ = 0 := add_left_cancel (he.trans (add_zero _).symm)
+    have hz0 : t₀ = 0 := add_left_cancel (he.symm.trans (add_zero _).symm)
     exact (isIota_unique (hz ▸ ht) (hz₀' ▸ ht₀)).trans hz0
   have he := (isAdd_iff_eq _ _ _).1 h₂
   rw [he, htzero, add_zero]
@@ -49,6 +49,34 @@ theorem act_compat_on_torsion : Laws → BrGtSt → AllD fun {E} _ _ _ {H} D => 
   obtain ⟨-, e2', e3'⟩ := br' j
   obtain ⟨τ, hτ, hQ, -⟩ := (twJ_mulEquiv C A.N N' k β u J).1 r j hr
   obtain ⟨f, f1, -, f3, -, f5, -⟩ := hT C j hj
+
+  have actzero : ∀ {V : Type} [CommRing V] [IsDomain V] {D₁ : DegPre V}
+      {O : Type} [CommRing O] [StarRing O] [Module O D₁.X]
+      [Algebra (FractionRing V) C] (hB₁ : D₁.TauBimult) (oa : D₁.OAct O)
+      (a : O) (p : QkPt D₁ C j), p.y = 0 →
+      ∃ q : QkPt D₁ C j, q.y = 0 ∧ q.g.b = p.g.b ≫ oa.onB.act a ∧ QkAct oa a p q := by
+    intro V _ _ D₁ O _ _ _ _ hB₁ oa a p hy
+    letI := gtGroup D₁ C
+    obtain ⟨z, hz, t, ht, ha⟩ := qk_equiv_refl hB₁ p
+    have hz' : z = 0 := by
+      have h : j • z = 0 := add_left_cancel (hz.symm.trans (add_zero _).symm)
+      have h' : (j : ℤ) • z = 0 := by rw [natCast_zsmul]; exact h
+      exact (smul_eq_zero.1 h').resolve_left (by exact_mod_cast hj.ne')
+    have ht' : t = 0 := by
+      have he := (isAdd_iff_eq _ _ _).1 ha
+      exact add_left_cancel (he.symm.trans (add_zero _).symm)
+    have iz : GtPtF.IsIota (D := D₁) (F := C) 0 0 := by simpa [hz', ht'] using ht
+    obtain ⟨g, hg, hi⟩ := p.eq
+    have hp : j • p.g = 0 := by
+      have hg' := (isNsmul_iff_eq _ _ _).1 hg
+      have hi' : g = 0 := isIota_unique (hy ▸ hi) iz
+      exact hg'.symm.trans hi'
+    have hq : j • gtSmul hG oa a p.g = 0 := by
+      change j • (gtSmulHom hG oa C a) p.g = 0
+      rw [← map_nsmul (gtSmulHom hG oa C a), hp, map_zero]
+    let q : QkPt D₁ C j := ⟨0, gtSmul hG oa a p.g, 0,
+      (isNsmul_iff_eq _ _ _).2 hq.symm, iz⟩
+    exact ⟨q, rfl, gtSmul_b hG oa a p.g, ⟨q, by simp [q, hy], gtAct_gtSmul hG oa a p.g, qk_equiv_refl hB₁ q⟩⟩
 
   have key : ∀ (v : D.La) (p : QkPt A.D₀ C j), QkPt.Equiv A.D₀ C (A.I.ev j v) p → p.y = 0 →
       ∃ p' : QkPt M.P.D.toPre C j, p'.y = 0 ∧ p'.g.b = ν'.eA (J.φ (A.ν.eA.symm p.g.b)) ∧
@@ -73,21 +101,17 @@ theorem act_compat_on_torsion : Laws → BrGtSt → AllD fun {E} _ _ _ {H} D => 
       rfl
   obtain ⟨p₀, y₀, b₀⟩ := exists_qkPt_of_torsion (F := C) hB hj.ne' (b := A.ν.eA b) (by rw [← map_pow, hb, map_one])
   obtain ⟨v, hv⟩ := A.I.onto j hj p₀
-  have hv₁ : QkPt.Equiv A.D₀ C (A.I.ev j (x • v)) (qkSmul hB hG A.oa x p₀) :=
-    (qkAct_iff_of_equiv hB hG A.oa hv (A.I.lin j hj x v)).1 (qkAct_qkSmul hB hG A.oa x p₀)
+  obtain ⟨p₁, y₁, a₀, hact₀⟩ := actzero hB A.oa x p₀ y₀
+  have hv₁ : QkPt.Equiv A.D₀ C (A.I.ev j (x • v)) p₁ :=
+    (qkAct_iff_of_equiv hB hG A.oa hv (A.I.lin j hj x v)).1 hact₀
   obtain ⟨p₀', c₀, d₀, g₀⟩ := key v p₀ hv y₀
-  obtain ⟨p₁', c₁, d₁, g₁⟩ := key (x • v) _ hv₁ (by
-    change x • p₀.y = 0
-    rw [y₀, smul_zero])
-  have hf : f (qkSmul hB' hG M.P.oD x p₀') = f p₁' := by
-    rw [f5 x _ _ (qkAct_qkSmul hB' hG M.P.oD x p₀')]
+  obtain ⟨p₁', c₁, d₁, g₁⟩ := key (x • v) p₁ hv₁ y₁
+  obtain ⟨p₂', c₂, a₁, hact₁⟩ := actzero hB' M.P.oD x p₀' c₀
+  have hf : f p₂' = f p₁' := by
+    rw [f5 x _ _ hact₁]
     refine Over.OverMorphism.ext ?_
     rw [g₁, Over.comp_left, g₀, o.I.lin, Over.comp_left, Category.assoc, Category.assoc, M.act]
-  have hb' := b_eq_of_equiv hB' hj ((f3 _ _).1 hf) (by
-    change x • p₀'.y = 0
-    rw [c₀, smul_zero]) c₁
-  have a₁ : (qkSmul hB' hG M.P.oD x p₀').g.b = p₀'.g.b ≫ M.P.oD.onB.act x := gtSmul_b hG M.P.oD x _
-  have a₀ : (qkSmul hB hG A.oa x p₀).g.b = p₀.g.b ≫ A.oa.onB.act x := gtSmul_b hG A.oa x _
+  have hb' := b_eq_of_equiv hB' hj ((f3 _ _).1 hf) c₂ c₁
   rw [d₁, a₁, a₀, d₀, b₀, MulEquiv.symm_apply_apply] at hb'
   unfold actV
   rw [← hb', MulEquiv.symm_apply_apply]

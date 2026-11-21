@@ -55,7 +55,7 @@ theorem ascEmb_one {π π' : CuspSub E a} (h : π.Iso π') : AscEmb π.V π' 1 :
     fun o φ hφ => ?_⟩
   · have e : -spehExp 1 i + a * spehExp 1 i = 0 := by simp [spehExp]
     rw [e]
-    exact ⟨fun _ _ _ => rfl, fun _ => by simp [HChar.val, HChar.locK], fun _ => by simp [HChar.inf]⟩
+    exact ⟨fun _ _ _ => rfl, fun _ => by simp [HChar.val, HChar.locK, HChar.loc], fun _ => by simp [HChar.inf]⟩
   · rw [show (fun _ : Fin 1 => π'.twist 1) = fun _ => π' from funext fun _ => π'.twist_one, indForms_one]
     exact (T (P φ)).2
   · simp only [LinearMap.coe_comp, Function.comp_apply, Submodule.subtype_apply, LinearEquiv.coe_coe, hP φ hφ] at h0

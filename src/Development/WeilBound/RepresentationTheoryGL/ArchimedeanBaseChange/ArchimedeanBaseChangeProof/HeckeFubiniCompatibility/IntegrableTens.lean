@@ -130,6 +130,7 @@ theorem tens_cs [MeasurableSpace (G a)] [MeasurableSpace (G b)] {μa : Measure (
   have hcont : Continuous (tens ka kb ψ i j) :=
     (((continuous_entA ha _ _).comp continuous_fst).mul ((continuous_entA hb _ _).comp continuous_snd)).mul
       ((hψ i.2 j.2).1.comp hh)
+  set_option synthInstance.maxHeartbeats 200000 in
   have hQ := cs_prod3 (cs_pi fun v => (mult_ent (ha v) (i.1.1 v) (j.1.1 v)).2)
     (cs_pi fun v => (mult_ent (hb v) (i.1.2 v) (j.1.2 v)).2) (hψ i.2 j.2).2
   have hpt : ∀ z, tens ka kb ψ i j (splitH a b z) =

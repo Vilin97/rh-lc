@@ -90,6 +90,8 @@ theorem phiIndep : PhiIndep k := by
   have hf : (fun x => F (cj (sec w)⁻¹ x, w)) ∈ SB (Mx k n) := slice_cj_mem hF (sec w)⁻¹ w
   rw [← hΛ _ hp _ hf]
   congr 1
+  funext x
+  dsimp only [Function.comp_apply]
   rw [← cj_mul, inv_mul_cancel_left]
 
 theorem phiLin : PhiLin k := by

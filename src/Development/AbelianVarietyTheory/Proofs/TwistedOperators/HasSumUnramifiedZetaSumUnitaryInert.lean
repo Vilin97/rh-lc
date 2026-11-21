@@ -34,7 +34,14 @@ theorem cartan_complete : ∀ (L : Type) [Field L] [Valued L (WithZero (Multipli
       t.1.1 = Matrix.diagonal (fun i => ϖ ^ d i) ∧ ∃ k₁ ∈ KU σ n, ∃ k₂ ∈ KU σ n, g = k₁ * t * k₂ := by
   intro L _ _ _ ϖ σ q n hU g
   obtain ⟨d, hd, a, ha, b, hb, e⟩ := GlobalTheory.LFun.UnitaryDiv.exists_good_div L ϖ σ q n hU g
-  obtain ⟨t, ht⟩ := GlobalTheory.InertThetaCompare.exists_diag hU hd
+  have hϖ : ϖ ≠ 0 := by
+    intro h
+    have hv := hU.2.2.2.1
+    rw [h, Valuation.map_zero] at hv
+    exact absurd hv WithZero.zero_ne_coe
+  obtain ⟨t, ht, -⟩ := Formalism.UG.P.fSatake_diag_exists (σ := σ)
+    (fun i : Fin n => ϖ ^ d.getD i.1 0) fun i => by
+      rw [map_zpow₀, hU.2.2.1, hd.rev, ← zpow_add₀ hϖ, add_neg_cancel, zpow_zero]
   obtain ⟨k₁, h₁, k₂, h₂, e'⟩ := GlobalTheory.T.unitaryDoubleCoset_of_GLintDoubleCoset L ϖ σ q n hU t g a b ha hb (Units.ext (by rw [e, ← ht]; rfl))
   exact ⟨fun i => d.getD i.1 0, t, ht, k₁, h₁, k₂, h₂, e'⟩
 

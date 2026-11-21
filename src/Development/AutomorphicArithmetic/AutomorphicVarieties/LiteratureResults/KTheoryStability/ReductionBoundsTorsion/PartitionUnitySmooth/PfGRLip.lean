@@ -12,8 +12,6 @@ open scoped ComplexOrder
 
 namespace PositivityTheory.KB.SmoothPartitionUnityBasic
 
-open TraceLipschitz GeometricWindowBounds
-
 section GRLipPf
 
 variable {L : Type} [Field L] [NumberField L] {N : ℕ}

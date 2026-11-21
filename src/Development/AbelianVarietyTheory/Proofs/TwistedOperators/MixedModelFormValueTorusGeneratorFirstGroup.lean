@@ -37,9 +37,11 @@ theorem tMat_single (ϖ : L) (n : ℕ) (k : Fin (n / 2)) :
     tMat ϖ n (n / 2) (Pi.single k 1) = diagonal (dTor ϖ n k) := by
   unfold tMat
   congr 1
+  funext i
   have hk := k.isLt
   have hi := i.isLt
-  split_ifs <;> first | rfl | (exfalso; omega) | simp_all | skip
+  simp only [dTor, Pi.single_apply, lo, Fin.ext_iff, Fin.val_rev]
+  split_ifs <;> simp_all <;> omega
 
 theorem dTor_mul {σ : L →+* L} {ϖ : L} (hσϖ : σ ϖ = ϖ) (hϖ : ϖ ≠ 0) {n : ℕ} (k : Fin (n / 2)) (j : Fin n) :
     dTor ϖ n k j * σ (dTor ϖ n k j.rev) = 1 := by

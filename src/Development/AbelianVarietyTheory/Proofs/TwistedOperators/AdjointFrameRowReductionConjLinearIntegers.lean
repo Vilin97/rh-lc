@@ -90,6 +90,6 @@ theorem rowRed_smul_add : ∀ (D : D7) (T : HSp D) (βT : GL (Fin T.rank) (EAf D
       Formalism.L2.DIV.oToS D.host.F D.host.E (GlobalTheory.SW.Lev.bar c) * ⟨_, hu 0 j⟩ + ⟨_, hv 0 j⟩ := by
     apply Subtype.ext
     simp only [Subring.coe_add, Subring.coe_mul, ← hz, hent]
-  rw [hsub, map_add (f := _), map_mul, Formalism.L2.DIV.resS_oToS]
+  rw [hsub, RingHom.map_add, RingHom.map_mul, Formalism.L2.DIV.resS_oToS]
 
 end GlobalTheory.RowLin

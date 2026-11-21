@@ -121,7 +121,8 @@ theorem measure_boxPlace_le (w : InfinitePlace K)
       dsimp only
       rw [coe_diagUnits, diagonal_map (map_zero _)]
       congr 1
-        dif_pos hw, RingEquiv.apply_symm_apply, hm, pow_one]
+      funext i
+      simp [posRealToUnits, posRealElem, hw, hm]
     obtain ⟨C, hC, hCb⟩ := measure_box_ringEquiv_le (𝕜 := ℝ)
       (InfinitePlace.Completion.ringEquivRealOfIsReal hw) hφ
       (fun ν _ μK _ μA _ μN _ => lintegral_GLReal_ANK ν μK μA μN) μ D hD hω hωB B
@@ -140,8 +141,8 @@ theorem measure_boxPlace_le (w : InfinitePlace K)
       dsimp only
       rw [coe_diagUnits, diagonal_map (map_zero _)]
       congr 1
-        dif_neg hw, RingEquiv.apply_symm_apply, hm]
-      rw [Real.sqrt_sq (r.2 i).le]
+      funext i
+      simp [posRealToUnits, posRealElem, hw, hm, Real.sqrt_sq (r.2 i).le]
     obtain ⟨C, hC, hCb⟩ := measure_box_ringEquiv_le (𝕜 := ℂ)
       (InfinitePlace.Completion.ringEquivComplexOfIsComplex hc) hφ
       (fun ν _ μK _ μA _ μN _ => lintegral_GLComplex_ANK ν μK μA μN) μ D hD hω hωB B

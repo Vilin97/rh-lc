@@ -136,10 +136,9 @@ theorem admissible_tail_of_cons_mem [IsLocalRing B] {d : Deg k} {s : R} {ts : Li
 
 variable [GradedAlgebra 𝒜]
 
-theorem self_isGr : (GMod.self 𝒜).IsGr 𝒜 where
-  smul_mem := fun ha hx => SetLike.mul_mem_graded (A := 𝒜) ha hx
-  internal := DirectSum.Decomposition.isInternal 𝒜
-  fin := Module.Finite.self R
+theorem self_isGr : (GMod.self 𝒜).IsGr 𝒜 := by
+  refine ⟨?_, DirectSum.Decomposition.isInternal 𝒜, Module.Finite.self R⟩
+  exact fun ha hx => SetLike.mul_mem_graded (A := 𝒜) ha hx
 
 theorem isHomSub_of_hom {𝔮 : Ideal R} (h : 𝔮.IsHomogeneous 𝒜) : (GMod.self 𝒜).IsHomSub 𝔮 := by
   classical

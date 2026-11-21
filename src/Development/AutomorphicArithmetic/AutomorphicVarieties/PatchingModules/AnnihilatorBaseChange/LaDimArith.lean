@@ -14,14 +14,11 @@ open IsLocalRing Matrix Filter UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.A
 open scoped TensorProduct
 
 private theorem laDim_co (O : Type) [CommRing O] [IsLocalRing O] (K : Type) [Field K] [Algebra O K]
-    (h : Function.Surjective (algebraMap O K)) : IsCO O K where
-  toIsLocalRing := inferInstance
-  toIsNoetherian := inferInstance
-  complete := by
-    rw [IsLocalRing.maximalIdeal_eq_bot]
+    (h : Function.Surjective (algebraMap O K)) : IsCO O K := by
+  refine { complete := ?_, isLocalHom := IsLocalHom.of_surjective _ h, res_surj := ?_ }
+  · rw [IsLocalRing.maximalIdeal_eq_bot]
     infer_instance
-  isLocalHom := IsLocalHom.of_surjective _ h
-  res_surj x := by
+  · intro x
     obtain ⟨a, rfl⟩ := h x
     exact ⟨a, by simp⟩
 

@@ -106,7 +106,7 @@ theorem exists_ctr (M : DSModel V S) (τ : D.what₂.Tau) (w : ∀ ρ, M.H ρ) :
         congr 1
         exact Finset.prod_congr rfl fun ρ hρ => by rw [Function.update_of_ne (Finset.ne_of_mem_erase hρ)]
       simp only [e, Function.update_of_ne (Ne.symm h), inner_smul_right, mul_assoc, mul_smul]
-  let m : MultilinearMap ℂ (fun ρ => M.H ρ) (M.H τ) :=
+  let m : MultilinearMap (RingHom.id ℂ) (fun ρ => M.H ρ) (M.H τ) :=
     { toFun := fun z => (∏ ρ ∈ Finset.univ.erase τ, ⟪w ρ, z ρ⟫_ℂ) • z τ
       map_update_add' := fun z i x y => by convert hadd z i x y
       map_update_smul' := fun z i a x => by convert hsmul z i a x }

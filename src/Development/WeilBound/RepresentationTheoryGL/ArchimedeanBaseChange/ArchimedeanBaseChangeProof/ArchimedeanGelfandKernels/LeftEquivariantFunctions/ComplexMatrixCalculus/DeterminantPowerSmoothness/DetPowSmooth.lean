@@ -62,7 +62,7 @@ theorem rowAct_smooth (f : MvPolynomial (Fin n × Fin n) ℂ) :
     simp only [e]
     refine ContDiff.sum fun b _ => ContDiff.mul ?_ (hp _)
     have : (fun x : Mat n => x b v.1) = fun x : Mat n => (x : Fin n → Fin n → ℂ) b v.1 := rfl
-    exact (contDiff_apply_apply ℝ ℂ b v.1).restrict_scalars ℝ
+    exact (contDiff_apply_apply (𝕜 := ℂ) (E := ℂ) b v.1).restrict_scalars ℝ
 
 def extL (lam : Fin n → ℤ) (i : Jd n lam) : MvPolynomial (Fin n × Fin n) ℂ →ₗ[ℂ] ℂ :=
   Classical.choose (LinearMap.exists_extend ((wb lam).coord i))
@@ -88,7 +88,7 @@ theorem det_smooth : ContDiff ℝ ∞ (fun x : Mat n => x.det) := by
     rw [Units.smul_def, zsmul_eq_mul]
   rw [e]
   refine ContDiff.sum fun σ _ => contDiff_const.mul (contDiff_prod fun i _ => ?_)
-  exact (contDiff_apply_apply ℝ ℂ (σ i) i).restrict_scalars ℝ
+  exact (contDiff_apply_apply (𝕜 := ℂ) (E := ℂ) (σ i) i).restrict_scalars ℝ
 
 theorem detPow_smooth (c : ℤ) : ContDiffOn ℝ ∞ (fun x : Mat n => x.det ^ c) (GLs n) := by
   intro x hx

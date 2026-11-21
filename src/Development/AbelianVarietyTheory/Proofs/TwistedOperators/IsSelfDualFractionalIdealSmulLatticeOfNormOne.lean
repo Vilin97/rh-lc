@@ -102,9 +102,7 @@ theorem GlobalTheory.idLat_isSelfDualC : ∀ {D : D7} (S : HSp D) (Λ : Submodul
       · rw [add_smul]; exact Submodule.add_mem _ ha hb
     simpa using key 1 one_mem
   have hfg : (idLat I Λ).FG := idLat_fg Λ hlat.fg I
-  refine ⟨⟨hfg, ?_⟩, fun y => ⟨fun hy => ?_, fun hy => ?_⟩⟩
-  · rw [eq_top_iff, ← hlat.span_eq_top, Submodule.span_le]
-    exact hspan
+  refine ⟨Submodule.IsLattice.of_fg D.host.E hfg, fun y => ⟨fun hy => ?_, fun hy => ?_⟩⟩
   ·
     have stepA : ∀ s ∈ I, ∀ x₀ ∈ Λ, ∀ y ∈ idLat I Λ, IsO (hp S (s • x₀) y) := by
       intro s hs x₀ hx₀ y hy

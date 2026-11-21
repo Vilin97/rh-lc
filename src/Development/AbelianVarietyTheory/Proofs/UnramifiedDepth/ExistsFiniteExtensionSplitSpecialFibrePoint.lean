@@ -21,7 +21,7 @@ theorem exists_extend {V W Ω : Type} [CommRing V] [IsLocalRing V] [CommRing W] 
     [Algebra.IsIntegral V W] [Field Ω] [IsAlgClosed Ω] (β : V →+* Ω) (hβ : ∀ a ∈ maximalIdeal V, β a = 0) :
     ∃ β' : W →+* Ω, β'.comp (algebraMap V W) = β ∧ ∀ a ∈ maximalIdeal W, β' a = 0 := by
   have hm : (maximalIdeal W).comap (algebraMap V W) = maximalIdeal V :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := V) _)
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := V) (maximalIdeal W))
   have : IsLocalHom (algebraMap V W) := ((IsLocalRing.local_hom_tfae (algebraMap V W)).out 5 1).1 hm
   have : IsLocalHom β := ⟨fun a ha => by
     by_contra h

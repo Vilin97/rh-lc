@@ -184,8 +184,12 @@ theorem thO_pure_deriv {D : D7} (S X : HSp D) {d : ℕ} (e : Fin d ≃ Fin X.ran
         from funext (rho_add_twisted_operators M.co Bs.ψ _ _ _)]
       simp only [GlobalTheory.WeilM.thetaSum]
       rw [tsum_mul_left, ← mul_assoc, ← AddChar.map_add_eq_mul, hphase, add_neg_cancel, AddChar.map_zero_eq_one, one_mul]
-    rw [hfun, (GlobalTheory.ThetaLineDeriv.hasDerivAt_thetaSum_rho M.co Bs.ψ hTR hCh u₀ _ hΦ _ hΦ' hd (T.symm x)).deriv]
-    simp only [GlobalTheory.TripleRead.thO, hpt]
+    have hder := GlobalTheory.ThetaLineDeriv.hasDerivAt_thetaSum_schr Bs.ψ hTR hCh (M.co.e u₀) hΦ hΦ' (by
+      simpa only [GlobalTheory.WeilM.Darboux.rho, map_smul] using hd) (M.co.e (T.symm x))
+    rw [hfun]
+    simp only [GlobalTheory.WeilM.Darboux.rho, map_smul]
+    rw [hder.deriv]
+    simp only [GlobalTheory.TripleRead.thO, hpt, GlobalTheory.WeilM.Darboux.rho]
 
 end GlobalTheory.ThetaDer
 

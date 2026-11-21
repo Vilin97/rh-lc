@@ -67,7 +67,8 @@ theorem twistBy_apply (V : HSp D) (χ : (AE D)ˣ →* Circle) (φ : GA D V → �
     twistBy V χ φ g = ((detChar V χ g : Circle) : ℂ) * φ g := rfl
 
 @[simp] theorem twistBy_one (V : HSp D) (φ : GA D V → ℂ) : twistBy V 1 φ = φ := by
-  funext g; simp [twistBy_apply]
+  funext g
+  simp [twistBy_apply, detChar]
 
 end Det
 
@@ -152,13 +153,15 @@ structure Twist.Good (t : Twist D A) : Prop where
 
 def Twist.triv (A : Type) [CommGroup A] (Q : Finset (Pl D.host.E)) : Twist D A := ⟨Q, 1, fun _ => 1⟩
 
-theorem Twist.triv_good {Q : Finset (Pl D.host.E)} (h : SplitSet Q) : (Twist.triv A Q).Good where
-  isOpen := by simp [Twist.triv]
-  rat _ := rfl
-  real _ := rfl
-  split := h
-  unram _ _ _ _ _ := rfl
-  res _ _ _ _ _ _ _ := rfl
+theorem Twist.triv_good {Q : Finset (Pl D.host.E)} (h : SplitSet Q) : (Twist.triv A Q).Good := by
+  refine ⟨?_, fun _ => rfl, fun _ => rfl, h, ?_, ?_⟩
+  · simp [Twist.triv]
+  · unfold UnramOutside
+    intros
+    rfl
+  · unfold IsResAt
+    intros
+    rfl
 
 theorem Twist.Good.isHeckeChar {t : Twist D Circle} (h : t.Good) : IsHeckeChar D t.chi := by
   haveI := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.isTopRing (F := D.host.F) (E := D.host.E)

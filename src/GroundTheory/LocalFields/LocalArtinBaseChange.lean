@@ -267,9 +267,9 @@ omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [Valua
   [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] [IsSepClosure K Ω]
   [FiniteDimensional K E] in
 theorem abelianization_of_injective_of_comm {G : Type*} [Group G] [IsMulCommutative G] :
-    Function.Injective (Abelianization.of : G →* Abelianization G) := by
+    Function.Injective (Group.Abelianization.of : G →* Group.Abelianization G) := by
   refine (injective_iff_map_eq_one _).2 fun σ hσ => ?_
-  rw [← MonoidHom.mem_ker, Abelianization.ker_of, commutator,
+  rw [← MonoidHom.mem_ker, Group.Abelianization.ker_of, commutator,
     Subgroup.commutator_eq_bot_iff_le_centralizer.2 (fun x _ y _ => mul_comm' y x)] at hσ
   exact hσ
 
@@ -292,7 +292,6 @@ theorem restrictAb_baseChangeArtinMap_uniformizer {ϖ : Eˣ} (hϖ : ord (ϖ : E)
     (FiniteDimensional.trans K E (IntermediateField.extendScalars h) :)
   have hUV := isAbelianExtension_fixingOpenSubgroup_of_le h
   have := hUV.normal
-  have hmc := hUV.isMulCommutative
 
   set σ₀ : ((fixingOpenSubgroup E : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)) :=
     (fixingSubgroupHomeomorph E).symm ((maximalUnramifiedExtensionFrobenius E Ω).liftNormal Ω) with hσ₀
@@ -318,18 +317,14 @@ theorem restrictAb_baseChangeArtinMap_uniformizer {ϖ : Eˣ} (hϖ : ord (ϖ : E)
   have hval : (localClassFieldData K Ω).valuation (fixingOpenSubgroup E) a =
       Multiplicative.ofAdd ((1 : ℤ) : ℤ̂) := by
     rw [valuation_fixingOpenSubgroup, ha, MulEquiv.apply_symm_apply, hϖ]
-  have key := (localClassFieldData K Ω).reciprocityAbEquiv_symm_of_unramified_of_valuation hUV.le
-    (classFieldAxiom_units K Ω) hu hφ a 1 hval
-  have hq : Abelianization.of (abelianizationRestrict hUV
-      ((localClassFieldData K Ω).reciprocityLimit (classFieldAxiom_units K Ω) (fixingOpenSubgroup E) a)) =
-      ((localClassFieldData K Ω).reciprocityAbEquiv hUV.le (classFieldAxiom_units K Ω)).symm
-        (a : tateZero Ωˣ _ _) := by
-    rw [MulEquiv.eq_symm_apply, ClassFieldData.reciprocityAbEquiv_of,
-      (localClassFieldData K Ω).abelianizationRestrict_reciprocityLimit (classFieldAxiom_units K Ω) hUV,
-      ← (localClassFieldData K Ω).reciprocityAbelianEquiv_apply (classFieldAxiom_units K Ω) hUV,
-      MulEquiv.apply_symm_apply]
-  rw [key, zpow_one] at hq
-  have hq' := abelianization_of_injective_of_comm hq
+  have hq' : abelianizationRestrict hUV
+      ((localClassFieldData K Ω).reciprocityLimit (classFieldAxiom_units K Ω) (fixingOpenSubgroup E) a) =
+      QuotientGroup.mk σ₀ := by
+    apply ((localClassFieldData K Ω).reciprocityAbelianEquiv (classFieldAxiom_units K Ω) hUV).injective
+    rw [ClassFieldData.abelianizationRestrict_reciprocityLimit, MulEquiv.apply_symm_apply,
+      ClassFieldData.reciprocityAbelianEquiv_apply]
+    exact (ClassFieldData.reciprocity_frobenius_of_unramified hUV.le
+      (classFieldAxiom_units K Ω) hu hφ (by simpa only [Int.cast_one] using hval)).symm
   obtain ⟨g, hg⟩ := QuotientGroup.mk_surjective
     ((localClassFieldData K Ω).reciprocityLimit (classFieldAxiom_units K Ω) (fixingOpenSubgroup E) a)
   rw [← hg, abelianizationRestrict_mk, QuotientGroup.eq, Subgroup.mem_subgroupOf,

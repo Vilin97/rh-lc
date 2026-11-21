@@ -153,6 +153,8 @@ theorem mem_UH_tor (C : Ctx S T) {B : C.Bas} (hB : C.IsB B) (ρ : D.what₂.Tau)
   have hdd : dᴴ * sgnM C.X * d = sgnM C.X := by
     simp only [d, sgnM, diagonal_conjTranspose, diagonal_mul_diagonal]
     congr 1
+    funext i
+    change conj (cexp ((t i : ℂ) * I)) * _ * cexp ((t i : ℂ) * I) = _
     rw [mul_comm, ← mul_assoc, mul_comm _ (conj _), conj_exp_mul_exp, one_mul]
   show (P * d * P⁻¹)ᴴ * G * (P * d * P⁻¹) = G
   calc (P * d * P⁻¹)ᴴ * G * (P * d * P⁻¹) = (P⁻¹)ᴴ * (dᴴ * (Pᴴ * G * P) * d) * P⁻¹ := by

@@ -118,7 +118,8 @@ theorem eq_zero_of_iteratedDeriv_eq_zero : ∀ f : ℝ → ℂ, AnalyticOnNhd �
     simp only [smul_eq_mul, mul_one] at e3
     rw [e3, e2, smul_zero]
   have hev : f =ᶠ[nhds 0] 0 := by
-    filter_upwards [EMetric.ball_mem_nhds (0 : ℝ) hp.r_pos] with y hy
+    have hb : Metric.eball (0 : ℝ) r ∈ nhds 0 := Metric.eball_mem_nhds 0 hp.r_pos
+    filter_upwards [hb] with y hy
     have := hp.hasSum (y := y) (by simpa using hy)
     simp only [hc, zero_add] at this
     exact (this.unique hasSum_zero).symm ▸ rfl

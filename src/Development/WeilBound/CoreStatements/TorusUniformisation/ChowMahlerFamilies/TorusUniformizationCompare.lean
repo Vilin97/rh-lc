@@ -163,7 +163,17 @@ theorem exists_pullback_ext {k Ω : Type} [Field k] [Field Ω] (f : Sp Ω ⟶ Sp
             finite := T.finite
             B := (Over.pullback f).obj T.B
             grpB := inferInstance
-            isAbelian := GlobalTheory.isAbelianScheme_pullback_obj f T.B T.isAbelian
+            isAbelian := by
+              have := T.isAbelian.comm
+              have := T.isAbelian.smooth
+              have := T.isAbelian.proper
+              have := T.isAbelian.geomConnected
+              exact { comm := Functor.isCommMonObj_obj
+                      smooth := by change Smooth (pullback.snd T.B.hom f); infer_instance
+                      proper := by change IsProper (pullback.snd T.B.hom f); infer_instance
+                      geomConnected := by
+                        change GeometricallyConnected (pullback.snd T.B.hom f)
+                        infer_instance }
             q := (Over.pullback f).map T.q
             q_hom := inferInstance
             q_flat := MorphismProperty.of_isPullback (P := @Flat) hq T.q_flat

@@ -26,7 +26,16 @@ private lemma isSBHalf_psi_mul_halfInd {ψ : AddChar (AF D.host.F) ℂ} {e : AE 
   have h0 : IsSBHalf e Λ (halfInd e Λ) := GlobalTheory.isSBHalf_halfInd e Λ
   unfold IsSBHalf at h0 ⊢
   obtain ⟨hsupp, k, hk, hinv, hlat⟩ := h0
-  have hχ := GlobalTheory.PlaceModel.isBichar_symplO S T ψ
+  have hχ : IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro a b y
+      rw [GlobalTheory.PlaceModel.symplO_add_left, AddChar.map_add_eq_mul]
+    · intro a b y
+      rw [GlobalTheory.PlaceModel.symplO_add_right, AddChar.map_add_eq_mul]
+    · intro y
+      rw [GlobalTheory.PlaceModel.symplO_zero_left, AddChar.map_zero_eq_one]
+    · intro y
+      rw [GlobalTheory.PlaceModel.symplO_zero_right, AddChar.map_zero_eq_one]
   refine ⟨fun t ht => hsupp t (right_ne_zero_of_mul ht), m * k, Nat.mul_pos hm hk, ?_, ?_⟩
   · intro u hu hue t
     have huh : u ∈ half S T e := (GlobalTheory.PlaceModel.isHalf_iff S T).1 hue
@@ -149,7 +158,17 @@ theorem om_placeModel : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp
       (half S T (cA D a)) (Λ ⊓ half S T a) := by
     unfold IsSBHalf at hΦ
     obtain ⟨hsupp, k, hk, hinv, hlat⟩ := hΦ
-    refine GlobalTheory.PlaceDatum.mem_waveSpan (L' := Λ ⊓ half S T (cA D a)) (GlobalTheory.PlaceModel.isBichar_symplO S T ψ)
+    have hχ : IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
+      refine ⟨?_, ?_, ?_, ?_⟩
+      · intro x x' y
+        rw [GlobalTheory.PlaceModel.symplO_add_left, AddChar.map_add_eq_mul]
+      · intro x y y'
+        rw [GlobalTheory.PlaceModel.symplO_add_right, AddChar.map_add_eq_mul]
+      · intro y
+        rw [GlobalTheory.PlaceModel.symplO_zero_left, AddChar.map_zero_eq_one]
+      · intro y
+        rw [GlobalTheory.PlaceModel.symplO_zero_right, AddChar.map_zero_eq_one]
+    refine GlobalTheory.PlaceDatum.mem_waveSpan (L' := Λ ⊓ half S T (cA D a)) hχ
       inf_le_right inf_le_right hLL hXd (fun k hk x hx => GlobalTheory.PlaceModel.half_div S T a k hk x hx)
       (fun k hk y hy => GlobalTheory.PlaceModel.half_div S T (cA D a) k hk y hy) htf hfin Φ
       (fun t ht => (GlobalTheory.PlaceModel.isHalf_iff S T).1 (hsupp t ht)) k hk ?_ ?_
@@ -167,7 +186,10 @@ theorem om_placeModel : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp
     have hxH : IsHalf a x := (GlobalTheory.PlaceModel.isHalf_iff S T).2 hx
     have hyH : IsHalf (cA D a) y := (GlobalTheory.PlaceModel.isHalf_iff S T).2 hy
     have hthy : IsThetaFunO ψ S T (heisO ψ S T y f₀) :=
-      GlobalTheory.FinTranslate.isTheta_heisO_fin hψ (GlobalTheory.PlaceDatum.infPart_of_half hinf' hyH) hth
+      by
+        simpa using GlobalTheory.FinTranslate.isTheta_sum_heisO_fin D ψ S T hψ f₀ hth
+          Unit {()} (fun _ => y) (fun _ => 1)
+          (fun _ _ => GlobalTheory.PlaceDatum.infPart_of_half hinf' hyH)
     rw [placeModel_wave hLL hden hTm hxH hyH, hW.om_heis g h x _ hthy, hW.om_heis g h y f₀ hth, hc,
       GlobalTheory.SplitScalar.heisO_smul, GlobalTheory.SplitScalar.heisO_smul, wave_actO ψ a hΛ x y,
       placeModel_wave hLL hden hTm (GlobalTheory.SplitHecke.isHalf_actO g h hxH) (GlobalTheory.SplitHecke.isHalf_actO g h hyH)]

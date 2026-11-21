@@ -45,9 +45,33 @@ theorem exists_pelUnif_pull (hC : CubePullSt) (hP : PolBaseChangeSt) (hU : UnifB
         hD.e.hom ≫ (Over.pullback (specOf g)).map (P.oD.onB.act x)) := by
   letI := H.starRing
   have hO := polOActPull
+  have hsemi : IsSemiAbelian ((Over.pullback (spMap g)).obj t.G) := by
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · have := t.semi.comm; infer_instance
+    · have := t.semi.smooth; change Smooth (pullback.snd t.G.hom (spMap g)); infer_instance
+    · have := t.semi.separated; change IsSeparated (pullback.snd t.G.hom (spMap g)); infer_instance
+    · have := t.semi.quasiCompact; change QuasiCompact (pullback.snd t.G.hom (spMap g)); infer_instance
+    · have := t.semi.geomConnected; change GeometricallyConnected (pullback.snd t.G.hom (spMap g)); infer_instance
+    · intro Ω _ _ q
+      obtain ⟨ext⟩ := t.semi.fibres Ω (q ≫ spMap g)
+      exact ⟨torusExtOfIso (pullCompIso q (spMap g) t.G) ext⟩
+  have pull_isLB {X Y : Scheme.{0}} {L : LB X} (hL : L.IsLB) (F : Y ⟶ X) : (L.pull F).IsLB := by
+    refine { cover := top_le_iff.1 ?_, g_self := ?_, cocycle := ?_ }
+    · intro y _
+      obtain ⟨i, hi⟩ := exists_chart hL (F y)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
+    · intro J
+      refine unit_ext fun y hy => ?_
+      rw [gm_res (𝟙 Y) y _ hy, map_one, gm_pull_g L F (𝟙 Y) y J J hy hy]
+      exact gm_self hL _ y (mem_pull.1 hy)
+    · intro I J K
+      refine unit_ext fun y hy => ?_
+      rw [map_mul, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_pull_g L F (𝟙 Y) y I J hy.1.1 hy.1.2,
+        gm_pull_g L F (𝟙 Y) y J K hy.1.2 hy.2, gm_pull_g L F (𝟙 Y) y I K hy.1.1 hy.2]
+      exact gm_cocycle hL _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
   have hpull : ∃ (PP' : RigLB ((Over.pullback (spMap g)).obj t.G)) (cub : CubicalStr _ PP')
       (sym : PP'.IsSymmetric) (adj : _) (prim : _)
-      (m : SABMap ⟨(Over.pullback (spMap g)).obj t.G, IsSemiAbelian.pullback _ t.G t.semi,
+      (m : SABMap ⟨(Over.pullback (spMap g)).obj t.G, hsemi,
         OAct.pullback _ t.G t.act, PP', cub, sym, adj, prim⟩ t (spMap g)),
       m.φ = pullback.fst t.G.hom (spMap g) := by
     have h := isGrpPullback_pullback t.G (spMap g)
@@ -71,13 +95,13 @@ theorem exists_pelUnif_pull (hC : CubePullSt) (hP : PolBaseChangeSt) (hU : UnifB
         · simp [U]
         · exact (pa _ _).trans (by simp [U])
     · let U := pushPt h.1.w (𝟙 ((Over.pullback (spMap g)).obj t.G))
-      refine LBIso.chartPull (chartPullPull t.PP.L _ U.left (Category.id_comp _))
+      refine LBIso.chartPull (chartPullPull t.PP.L U.left)
         (chartPullLinComb t.PP.L _ _ _ _ U.left fun I => psum_push h _ _ U (fun i => ?_) I.down) t.prim
       fin_cases i
       · simp [U]
       · exact (congrArg (pushPt h.1.w) (Category.id_comp _).symm).trans (pa _ _)
   obtain ⟨PP', cub, sym, adj, prim, m₁, hm₁⟩ := hpull
-  let t' : SAB H (Sp R') := ⟨(Over.pullback (spMap g)).obj t.G, IsSemiAbelian.pullback _ t.G t.semi,
+  let t' : SAB H (Sp R') := ⟨(Over.pullback (spMap g)).obj t.G, hsemi,
     OAct.pullback _ t.G t.act, PP', cub, sym, adj, prim⟩
   let m₀ : SABMap t' t (spMap g) := m₁
   have hm₀ : m₀.φ = pullback.fst t.G.hom (spMap g) := hm₁

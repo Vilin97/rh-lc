@@ -103,7 +103,8 @@ theorem pure_apply {κ : Type} [Fintype κ] (f : GlobalTheory.IndefiniteRowSideF
 
   have h1 : (fun i => GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F (adPt T x y i)) = x := by
     funext i
-    simp [adPt, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI]
+    change (InfiniteAdeleRing.ringEquiv_mixedSpace F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (x i)) = x i
+    exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply (x i)
 
   have h2 : ∀ v, (fun i => GlobalTheory.AdelicU.evFin F v (adPt T x y i)) =
       fun i => if v ∈ T then y v i else (0 : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v) := fun v => by

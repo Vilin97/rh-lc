@@ -76,15 +76,16 @@ abbrev Sb : Subalgebra O K⟦X⟧ := S O K e ⊓ invL l (A O K)
 
 omit [NeZero e] in
 theorem sameJets_Sb : SameJets (Subalgebra.inclusion (inf_le_left : Sb O K l e ≤ S O K e)).toRingHom
-    (l : Sb O K l e) where
-  div m x := by
+    (l : Sb O K l e) := by
+  constructor
+  · intro m x
     obtain ⟨N, hN⟩ := exists_sum_monomial_add l e x.2 m
     obtain ⟨h, hh, hx⟩ := hN N le_rfl
     refine ⟨⟨_, Subalgebra.sum_mem _ fun n (_ : n ∈ Finset.range N) =>
       ⟨monomial_mem_S (x.2.1 n), monomial_mem_invL l n _⟩⟩, ⟨h, hh⟩, Subtype.ext ?_⟩
     rw [map_natCast]
     simpa using hx
-  dvd m g h hg := by
+  · intro m g h hg
     rw [map_natCast] at hg
     have h1 : (g : K⟦X⟧) = (l : K⟦X⟧) ^ m * h := by simpa using congrArg Subtype.val hg
     obtain ⟨k, hk⟩ := g.2.2
