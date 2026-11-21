@@ -19,7 +19,7 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
   {μ : Measure (normOneGL (K := E) (n := n))} [μ.IsHaarMeasure] {v : LL μ} {φ : Sm E n}
 
 private theorem out_eq (h : Umg φ) :
-    (fun y : RightCosetSpace (rationalGLOne E n) => φ.1 ((Quotient.out y : normOneGL (K := E) (n := n)) : GA E n)) = cuspQuot h.left := by
+    (fun y : RightCosetSpace (rationalGLOne (K := E) (n := n)) => φ.1 ((Quotient.out y : normOneGL (K := E) (n := n)) : GA E n)) = cuspQuot h.left := by
   funext y
   conv_rhs => rw [← Quotient.out_eq y]
   rfl

@@ -44,9 +44,9 @@ theorem continuous_globalMatrixCoeff (hn : 0 < n) (μ : Measure (Reduction.normO
   obtain ⟨C₂, hC₂⟩ := CuspidalSpectrum.exists_norm_le_of_mem_cuspForms h₂
   have h1c : Continuous φ₁ := h₁.1.continuous
   have h2c : Continuous φ₂ := h₂.1.continuous
-  have hfin : μ (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n)) < ⊤ :=
+  have hfin : μ (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne (K := K) (n := n))) < ⊤ :=
     GJGlobal.measure_fundamentalDomain_rationalGLOne_lt_top μ
-  have : IsFiniteMeasure (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n))) :=
+  have : IsFiniteMeasure (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne (K := K) (n := n)))) :=
     isFiniteMeasure_restrict.2 hfin.ne
   refine continuous_of_dominated (bound := fun _ ↦ C₁ * C₂) (fun g ↦ ?_) (fun g ↦ ?_)
     (integrable_const _) (Eventually.of_forall fun x ↦ ?_)

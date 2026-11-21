@@ -89,10 +89,10 @@ private theorem F_bd (r s N : ℕ) : ∃ C : ℝ, 0 ≤ C ∧ ∀ (φ : AdelicGL
 variable [IsTotallyComplex E] {S : Set (Pl E)}
 
 private theorem sl_int (b : Blo S r) (φ : Sm E (r + s)) (hφ : Umg φ) (t : ℝ) (m : AdelicGLn.AdelicGL E s) :
-    Integrable (fun y : RightCosetSpace (rationalGLOne E r) =>
+    Integrable (fun y : RightCosetSpace (rationalGLOne (K := E) (n := r)) =>
       constantTerm r φ.1 (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : AdelicGLn.AdelicGL E r), m)) *
         starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : AdelicGLn.AdelicGL E r)))
-      (quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
+      (quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)) := by
   have hcφ : Continuous φ.1 := ((umgOps E (r + s)).2 φ hφ).1
   obtain ⟨hfU, hfC⟩ := cuspUmg E r b.f b.cusp
   have hcf : Continuous b.f.1 := ((umgOps E r).2 b.f hfU).1
@@ -119,7 +119,7 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceBound :
     obtain ⟨C, hC0, hC⟩ := F_bd (E := E) r s N
     obtain ⟨D, hD⟩ := rapidDecay E r b.f hfU hfC N
     have hfin := isFiniteMeasure_quotientMeasure (K := E) (n := r) (mu1 E r)
-    refine ⟨C * 2 ^ N * D * (quotientMeasure (rationalGLOne E r) (mu1 E r)).real Set.univ,
+    refine ⟨C * 2 ^ N * D * (quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)).real Set.univ,
       ((2 * Fintype.card (InfinitePlace E) * N : ℕ) : ℝ), fun φ B hφ hB t m => ?_⟩
     have hB0 : 0 ≤ B := nonneg_of_mul_nonneg_left ((norm_nonneg _).trans (hB 1)) (pow_pos (height_pos _) N)
     have hm := (height_pos (K := E) m).le

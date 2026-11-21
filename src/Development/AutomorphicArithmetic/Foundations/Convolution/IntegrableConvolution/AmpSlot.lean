@@ -138,10 +138,10 @@ theorem _root_.UpperTheory.ConvolutionTheory.L1.ampPosition :
   obtain ⟨-, -, hmul, -, -, ⟨s, hs, hsc⟩, -, -⟩ := UpperTheory.ConvolutionTheory.L1.archBasic F E σ m D n
   refine ⟨fun μE _ => ?_, fun μF _ => ?_⟩
   · have hok := tens_ok h.meas h.sq hc h.norm h.tens hs hsc hmul (LL μE)
-      ((rightRegularRep (rationalGLOne E n) μE).compHom (archP E n) continuous_archP)
+      ((rightRegularRep (rationalGLOne (K := E) (n := n)) μE).compHom (archP E n) continuous_archP)
     exact ⟨hE.1 fun _ => hsa, hE.2 fun _ => hla, hok.1, hok.2⟩
   · have hok := pow_op h.sq hc h.norm (LL μF)
-      ((rightRegularRep (rationalGLOne F n) μF).compHom (archP F n) continuous_archP)
+      ((rightRegularRep (rationalGLOne (K := F) (n := n)) μF).compHom (archP F n) continuous_archP)
     exact ⟨hcs, hcl, hok.1, hok.2⟩
 
 end UpperTheory.ConvolutionTheory.L1

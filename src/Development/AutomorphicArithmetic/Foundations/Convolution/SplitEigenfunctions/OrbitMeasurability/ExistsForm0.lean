@@ -85,7 +85,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.Cp.pairL : UpperTheory.Conv
   have hv : hm.toLp _ ∈ cuspidalL2 μ := GJGlobal.toLp_cuspQuot_mem_cuspidalL2 μ hψc hψl (cusp_conj hct) hbd
   have hv0 : hm.toLp _ ≠ 0 := fun h => by
     obtain ⟨x, hx⟩ := exists_one hF hne
-    have h1 : cuspQuot hψl =ᵐ[quotientMeasure (rationalGLOne ℚ 2) μ] 0 := by
+    have h1 : cuspQuot hψl =ᵐ[quotientMeasure (rationalGLOne (K := ℚ) (n := 2)) μ] 0 := by
       refine (MemLp.coeFn_toLp hm).symm.trans ?_
       rw [h]
       exact Lp.coeFn_zero _ _ _

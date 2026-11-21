@@ -90,7 +90,7 @@ theorem globalZeta_entire_functionalEquation (hn : 2 ≤ n) (μ : Measure (normO
   have hΦhc : Continuous (adelicMatrixFourier K Φ) := continuous_of_mem_matrixSchwartzBruhat hΦh
   have h₁c : Continuous φ₁ := h₁.1.continuous
   have h₂c : Continuous φ₂ := h₂.1.continuous
-  set V : ℝ := (μ (fundamentalDomain (rationalGLOne K n))).toReal ^ 2 with hV
+  set V : ℝ := (μ (fundamentalDomain (rationalGLOne (K := K) (n := n)))).toReal ^ 2 with hV
 
   set Ξ₁ : AdelicGLn.AdelicGL K n → ℂ := fun g => Φ (g : Matrix (Fin n) (Fin n) 𝔸[K]) with hΞ₁
   set Ξ₂ : AdelicGLn.AdelicGL K n → ℂ := fun g => adelicMatrixFourier K Φ

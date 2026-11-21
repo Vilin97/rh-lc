@@ -100,7 +100,7 @@ theorem UpperTheory.ConvolutionTheory.T.coreLift :
   obtain ⟨⟨p⟩, hD⟩ := (infSplit F E σ hσ m hm).imp (fun h => h inferInstance) id
   obtain ⟨D, -⟩ := hD p
   let νF : Measure (archGroup F n) := Measure.haar
-  let π := (rightRegularRep (rationalGLOne F n) μF).compHom (archP F n) continuous_archP
+  let π := (rightRegularRep (rationalGLOne (K := F) (n := n)) μF).compHom (archP F n) continuous_archP
   obtain ⟨b, hb1, hb2, hb3, hb4⟩ := bumpEx F n νF _ π v₀ hv0
   obtain ⟨νE, iE, a, aE, aF, hA⟩ := archPositionEx F E σ m D n νF b hb1 hb2 hb3
   obtain ⟨hAE, hAF⟩ := ampPosition F E σ m D n νE νF b a aE aF hA

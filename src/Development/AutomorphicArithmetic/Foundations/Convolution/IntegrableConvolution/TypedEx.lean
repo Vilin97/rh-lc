@@ -234,18 +234,18 @@ private theorem mem_eigL' {w : Pl K} {J : Subgroup (Gw n w)} {χ : Gw n w → �
     x ∈ eigL μ w J χ ↔ ∀ g ∈ J, rhoL μ w g x = χ g • x := by
   simp [eigL, Submodule.mem_iInf, LinearMap.mem_eqLocus]
 
-private lemma rhoL_eq (w : Pl K) (g : Gw n w) : rhoL μ w g = rightRegularRep (rationalGLOne K n) μ (phi w g) := rfl
+private lemma rhoL_eq (w : Pl K) (g : Gw n w) : rhoL μ w g = rightRegularRep (rationalGLOne (K := K) (n := n)) μ (phi w g) := rfl
 
 private theorem exists_off {V : Submodule ℂ (LL μ)} (hV : IsSummand μ V) :
     ∃ (I : Finset (Pl K)) (e : LL μ), e ∈ V ∧ e ≠ 0 ∧
       ∀ w ∉ I, ∀ x ∈ GLnLocal.integralGL (w.adicCompletion K) n, rhoL μ w x e = e := by
   obtain ⟨U, hU, e, heV, he0, hfix⟩ := exists_fixed_abs
-    ((rightRegularRep (rationalGLOne K n) μ).comapHom (finOne K n) continuous_finOne) hV.closed
+    ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).comapHom (finOne K n) continuous_finOne) hV.closed
     (fun g v hv => hV.inv _ v hv) hV.ne_bot
   obtain ⟨I, hI⟩ := exists_off_open U hU
   refine ⟨I, e, heV, he0, fun w hw x hx => ?_⟩
   obtain ⟨u, huU, hu⟩ := hI w hw x hx
-  have h1 : rightRegularRep (rationalGLOne K n) μ (finOne K n u) e = e := hfix u huU
+  have h1 : rightRegularRep (rationalGLOne (K := K) (n := n)) μ (finOne K n u) e = e := hfix u huU
   have h2 : phi w x = finOne K n u := by
     rw [← MultiplicityOne.finProj_eq_finOne, hu]
     rfl
@@ -262,8 +262,8 @@ private theorem step {V : Submodule ℂ (LL μ)} (hV : IsSummand μ V) (J : ∀ 
     simp [hNdef, Submodule.mem_inf, Submodule.mem_iInf]
   have hcb := (eigBasic K n μ b (J b) (χ b) (hJχ b).1 (hJχ b).2).2.2.2
   have hc : ∀ y : normOneGL (K := K) (n := n), (∀ g, phi b g * y = y * phi b g) → ∀ v,
-      rightRegularRep (rationalGLOne K n) μ y (prj (eigL μ b (J b) (χ b)) v) =
-        prj (eigL μ b (J b) (χ b)) (rightRegularRep (rationalGLOne K n) μ y v) := fun y hy v =>
+      rightRegularRep (rationalGLOne (K := K) (n := n)) μ y (prj (eigL μ b (J b) (χ b)) v) =
+        prj (eigL μ b (J b) (χ b)) (rightRegularRep (rationalGLOne (K := K) (n := n)) μ y v) := fun y hy v =>
     comm_apply (hcb _ fun x _ => comm_rep _ (hy x).symm) v
   have hphi : ∀ w, w ≠ b → ∀ (g : Gw n w) (g' : Gw n b), phi b g' * phi w g = phi w g * phi b g' := by
     intro w hw g g'
@@ -272,18 +272,18 @@ private theorem step {V : Submodule ℂ (LL μ)} (hV : IsSummand μ V) (J : ∀ 
     rw [← map_mul, ← map_mul, this]
   have hdec := dec_phi (K := K) (n := n) b
   obtain ⟨z, hz, hz0⟩ := (Submodule.ne_bot_iff _).1 (hne b)
-  have hst : ∀ g, ∀ u ∈ N, rightRegularRep (rationalGLOne K n) μ (phi b g) u ∈ N := by
+  have hst : ∀ g, ∀ u ∈ N, rightRegularRep (rationalGLOne (K := K) (n := n)) μ (phi b g) u ∈ N := by
     intro g u hu
     obtain ⟨h1, h2⟩ := (hmemN u).1 hu
     refine (hmemN _).2 ⟨hV.inv _ _ h1, fun w hw => (mem_eigL' μ).2 fun x hx => ?_⟩
     have hwb : w ≠ b := fun e => hb (e ▸ hw)
     have h3 : rhoL μ w x u = χ w x • u := (mem_eigL' μ).1 (h2 w hw) x hx
-    have h4 : rhoL μ w x (rightRegularRep (rationalGLOne K n) μ (phi b g) u) =
-        rightRegularRep (rationalGLOne K n) μ (phi b g) (rhoL μ w x u) := by
+    have h4 : rhoL μ w x (rightRegularRep (rationalGLOne (K := K) (n := n)) μ (phi b g) u) =
+        rightRegularRep (rationalGLOne (K := K) (n := n)) μ (phi b g) (rhoL μ w x u) := by
       rw [rhoL_eq μ w x]
       exact comm_apply (comm_rep _ (hphi w hwb x g).symm) u
     exact comm_eig_abs h4 h3
-  obtain ⟨u, hu, hu0⟩ := key_abs (rightRegularRep (rationalGLOne K n) μ) hV.closed hV.inv hV.irred (phi b)
+  obtain ⟨u, hu, hu0⟩ := key_abs (rightRegularRep (rationalGLOne (K := K) (n := n)) μ) hV.closed hV.inv hV.irred (phi b)
     (prj (eigL μ b (J b) (χ b))) hc hdec hz.1 hz0 (prj_self hz.2) N inf_le_left
     ((Submodule.ne_bot_iff _).2 ⟨u₀, (hmemN _).2 ⟨hu₀V, hu₀A⟩, hu₀⟩) hst
   obtain ⟨h1, h2⟩ := (hmemN u).1 hu

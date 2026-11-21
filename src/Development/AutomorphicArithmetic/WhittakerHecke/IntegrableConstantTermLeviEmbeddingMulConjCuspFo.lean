@@ -91,7 +91,7 @@ end
 
 theorem UpperTheory.integrable_constantTerm_leviEmbedding_mul_conj_cuspForm :
     ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (S : Set (Pl E)) (r s : ℕ) (b : Blo S r) (φ : Sm E (r + s)), Umg φ → ∀ (g : GA E r) (m : GA E s),
-      Integrable (fun y : RightCosetSpace (rationalGLOne E r) => AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g, m)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) (quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
+      Integrable (fun y : RightCosetSpace (rationalGLOne (K := E) (n := r)) => AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g, m)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) (quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)) := by
   intro E _ _ _ S r s b φ hφ g m
   obtain ⟨F, hF, -, hFl, -⟩ := UpperTheory.ConvolutionTheory.BW.ctOps E r s φ hφ
   have hcφ : Continuous φ.1 := ((UpperTheory.ConvolutionTheory.BW.umgOps E (r + s)).2 φ hφ).1
@@ -161,14 +161,14 @@ theorem UpperTheory.integrable_constantTerm_leviEmbedding_mul_conj_cuspForm :
       _ = |C| * (2 * AutomorphicForm.heightConst E (r + s) * L) ^ N * (‖b.f.1 (y : GA E r)‖ * PositivityTheory.Rg.Tf.Core.qht y ^ N) := by ring
       _ ≤ _ := mul_le_mul_of_nonneg_left (hD y) hK
   have := isFiniteMeasure_quotientMeasure (K := E) (n := r) (mu1 E r)
-  have he : (fun y : RightCosetSpace (rationalGLOne E r) => AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g, m)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) =
+  have he : (fun y : RightCosetSpace (rationalGLOne (K := E) (n := r)) => AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g, m)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) =
       CuspidalSpectrum.cuspQuot hHl := funext fun y => by
     have h := CuspidalSpectrum.cuspQuot_mk hHl (Quotient.out y)
-    rw [show RightCosetSpace.mk (rationalGLOne E r) (Quotient.out y) = y from Quotient.out_eq y] at h
+    rw [show RightCosetSpace.mk (rationalGLOne (K := E) (n := r)) (Quotient.out y) = y from Quotient.out_eq y] at h
     exact h.symm
   rw [he]
   refine Integrable.of_bound (CuspidalSpectrum.continuous_cuspQuot hHl hHc).aestronglyMeasurable
     (|C| * (2 * AutomorphicForm.heightConst E (r + s) * L) ^ N * D) (Filter.Eventually.of_forall fun q => ?_)
-  obtain ⟨y, rfl⟩ := mk_surjective (rationalGLOne E r) q
+  obtain ⟨y, rfl⟩ := mk_surjective (rationalGLOne (K := E) (n := r)) q
   rw [CuspidalSpectrum.cuspQuot_mk]
   exact hbound y

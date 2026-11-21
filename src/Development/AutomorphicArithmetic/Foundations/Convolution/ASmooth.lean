@@ -19,7 +19,7 @@ section One
 variable {K : Type} [Field K] [NumberField K] {n : ℕ} {μ : Measure (normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
 
 def Inner (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (T : LL μ →L[ℂ] LL μ) : Prop :=
-  ∀ V : Submodule ℂ (LL μ), IsClosed (V : Set (LL μ)) → (rightRegularRep (rationalGLOne K n) μ).IsInvariant V →
+  ∀ V : Submodule ℂ (LL μ), IsClosed (V : Set (LL μ)) → (rightRegularRep (rationalGLOne (K := K) (n := n)) μ).IsInvariant V →
     T ∘L prj V = prj V ∘L T
 
 structure Side (θ : Twist μ) (l : ℕ) extends Amp μ where

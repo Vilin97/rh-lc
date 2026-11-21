@@ -20,7 +20,7 @@ variable (E : Type) [Field E] [NumberField E] (a : ℕ)
 
 abbrev G1 : Type := Reduction.normOneGL (K := E) (n := a)
 
-abbrev Γ1 : Subgroup (G1 E a) := Reduction.rationalGLOne E a
+abbrev Γ1 : Subgroup (G1 E a) := Reduction.rationalGLOne (K := E) (n := a)
 
 variable [IsTotallyComplex E]
 

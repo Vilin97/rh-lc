@@ -19,15 +19,15 @@ namespace UpperTheory.ConvolutionTheory.BW.Pair
 variable {E : Type} [Field E] [NumberField E] {r s : ℕ}
 
 theorem out_eq {h : AdelicGLn.AdelicGL E r → ℂ}
-    (hh : AutomorphicForm.IsLeftInvariant h) (y : RightCosetSpace (rationalGLOne E r)) :
+    (hh : AutomorphicForm.IsLeftInvariant h) (y : RightCosetSpace (rationalGLOne (K := E) (n := r))) :
     h ((Quotient.out y : normOneGL (K := E) (n := r)) : AdelicGLn.AdelicGL E r) = CuspidalSpectrum.cuspQuot hh y := by
   conv_rhs => rw [← Quotient.out_eq y]
   rfl
 
 theorem int_of {h : AdelicGLn.AdelicGL E r → ℂ}
     (hh : AutomorphicForm.IsLeftInvariant h) (hc : Continuous h) {C : ℝ} (hC : ∀ y : normOneGL (K := E) (n := r), ‖h y‖ ≤ C) :
-    Integrable (fun y : RightCosetSpace (rationalGLOne E r) =>
-      h ((Quotient.out y : normOneGL (K := E) (n := r)) : AdelicGLn.AdelicGL E r)) (quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
+    Integrable (fun y : RightCosetSpace (rationalGLOne (K := E) (n := r)) =>
+      h ((Quotient.out y : normOneGL (K := E) (n := r)) : AdelicGLn.AdelicGL E r)) (quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)) := by
   have hfin := Reduction.isFiniteMeasure_quotientMeasure (K := E) (n := r) (mu1 E r)
   refine Integrable.of_bound ?_ C (Filter.Eventually.of_forall fun y => hC _)
   rw [funext (out_eq hh)]
@@ -61,10 +61,10 @@ theorem pair_int {F ψ : AdelicGLn.AdelicGL E r → ℂ} (hF : AutomorphicForm.I
     (hψl : AutomorphicForm.IsLeftInvariant ψ) (hFc : Continuous F) (hψc : Continuous ψ) {B C : ℝ} {N : ℕ}
     (h : ∀ x : normOneGL (K := E) (n := r), ‖F x‖ ≤ B * AutomorphicForm.height (x : AdelicGLn.AdelicGL E r) ^ N)
     (hψ : ∀ x : normOneGL (K := E) (n := r), ‖ψ x‖ * qht x ^ N ≤ C) :
-    Integrable (fun y : RightCosetSpace (rationalGLOne E r) =>
+    Integrable (fun y : RightCosetSpace (rationalGLOne (K := E) (n := r)) =>
       F ((Quotient.out y : normOneGL (K := E) (n := r)) : AdelicGLn.AdelicGL E r) *
         starRingEnd ℂ (ψ ((Quotient.out y : normOneGL (K := E) (n := r)) : AdelicGLn.AdelicGL E r)))
-      (quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
+      (quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)) := by
   have hB : 0 ≤ |B| := abs_nonneg B
   refine int_of (h := fun x => F x * starRingEnd ℂ (ψ x)) (fun γ x => ?_) (hFc.mul (Complex.continuous_conj.comp hψc))
     (pair_le hF hB (fun x => (h x).trans ?_) hψ)

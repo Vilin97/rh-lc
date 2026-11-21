@@ -189,7 +189,7 @@ private theorem glN_ratS (s₀ : Matrix.SpecialLinearGroup (Fin 2) E) (γ₀ : G
   rfl
 
 private theorem null_of_disj {W : Set (A E)ˣ} (N : MeasE E) (c : NNReal) (hc : pm W = c • N.μ)
-    (η : GroundTheory.Automorphic.Reduction.rationalGLOne E 2) (hη : η ≠ 1)
+    (η : GroundTheory.Automorphic.Reduction.rationalGLOne (K := E) (n := 2)) (hη : η ≠ 1)
     (hsep : ∀ x ∈ W, ∀ y ∈ W, ∀ e : Eˣ, IdeleGroup.diagonal E e = x * y⁻¹ → e = 1) :
     (Measure.haar : Measure (NG E)) (η • (prN ⁻¹' N.D ∩ dN ⁻¹' W) ∩ (prN ⁻¹' N.D ∩ dN ⁻¹' W)) = 0 := by
   obtain ⟨γ₀, hγ₀⟩ := η.2
@@ -246,8 +246,8 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.volE :
     rw [hc, h, zero_smul]
   set μG : Measure (NG E) := Measure.haar with hμG
   have hF := GroundTheory.Automorphic.RightCosetSpace.isFundamentalDomain_fundamentalDomain
-    (GroundTheory.Automorphic.Reduction.rationalGLOne E 2) μG
-  have hFin : μG (GroundTheory.Automorphic.RightCosetSpace.fundamentalDomain (GroundTheory.Automorphic.Reduction.rationalGLOne E 2)) < ⊤ := by
+    (GroundTheory.Automorphic.Reduction.rationalGLOne (K := E) (n := 2)) μG
+  have hFin : μG (GroundTheory.Automorphic.RightCosetSpace.fundamentalDomain (GroundTheory.Automorphic.Reduction.rationalGLOne (K := E) (n := 2))) < ⊤ := by
     haveI := GroundTheory.Automorphic.Reduction.isFiniteMeasure_quotientMeasure μG
     rw [← GroundTheory.Automorphic.RightCosetSpace.quotientMeasure_univ μG hF]
     exact measure_lt_top _ _
@@ -257,10 +257,10 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.volE :
     rw [← pm_apply N.meas, hc]
     rfl
   haveI h₀ : SMulInvariantMeasure (NG E) (NG E) μG := ⟨fun a s _ => measure_preimage_mul μG a s⟩
-  haveI h₁ : SMulInvariantMeasure (GroundTheory.Automorphic.Reduction.rationalGLOne E 2) (NG E) μG :=
+  haveI h₁ : SMulInvariantMeasure (GroundTheory.Automorphic.Reduction.rationalGLOne (K := E) (n := 2)) (NG E) μG :=
     Subgroup.smulInvariantMeasure _
-  have hpair : Pairwise (Function.onFun (AEDisjoint μG) fun g : GroundTheory.Automorphic.Reduction.rationalGLOne E 2 =>
-      g • (prN ⁻¹' N.D ∩ dN ⁻¹' W) ∩ GroundTheory.Automorphic.RightCosetSpace.fundamentalDomain (GroundTheory.Automorphic.Reduction.rationalGLOne E 2)) := by
+  have hpair : Pairwise (Function.onFun (AEDisjoint μG) fun g : GroundTheory.Automorphic.Reduction.rationalGLOne (K := E) (n := 2) =>
+      g • (prN ⁻¹' N.D ∩ dN ⁻¹' W) ∩ GroundTheory.Automorphic.RightCosetSpace.fundamentalDomain (GroundTheory.Automorphic.Reduction.rationalGLOne (K := E) (n := 2))) := by
     intro γ γ' hne
     refine AEDisjoint.mono ?_ Set.inter_subset_left Set.inter_subset_left
     show μG (γ • (prN ⁻¹' N.D ∩ dN ⁻¹' W) ∩ γ' • (prN ⁻¹' N.D ∩ dN ⁻¹' W)) = 0

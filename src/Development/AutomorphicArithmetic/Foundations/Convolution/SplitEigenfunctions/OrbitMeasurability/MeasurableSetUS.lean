@@ -35,7 +35,7 @@ def US : Subgroup (A ℚ)ˣ where
 
 abbrev GG : Type := ↥(GroundTheory.Automorphic.Reduction.normOneGL (K := ℚ) (n := 2))
 
-abbrev Ga : Subgroup GG := GroundTheory.Automorphic.Reduction.rationalGLOne ℚ 2
+abbrev Ga : Subgroup GG := GroundTheory.Automorphic.Reduction.rationalGLOne (K := ℚ) (n := 2)
 
 theorem det_el (g : G1 ℚ) (t : (A ℚ)ˣ) : GroundTheory.Automorphic.AdelicGLn.det ℚ 2 (gl g * dM t) = t := by
   refine Units.ext ?_

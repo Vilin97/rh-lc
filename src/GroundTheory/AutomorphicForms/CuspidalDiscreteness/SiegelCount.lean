@@ -157,7 +157,7 @@ theorem exists_encard_le_siegel {ω : Set (AdelicGLn.AdelicGL K n)} (hω : IsCom
       (x : AdelicGLn.AdelicGL K n) = b * diagUnits n (fun i => posIdele (K := K) (ρ i) (hρ i)) * k →
       ∀ R : ℝ, 1 ≤ R → (∀ i j : Fin n, i < j → ρ i / ρ j ≤ R) →
       ∃ m : ℕ, (m : ℝ) ≤ C * R ^ N ∧ ∀ z : normOneGL (K := K) (n := n),
-        {γ : rationalGLOne K n | γ • z ∈ (fun y => x * y) '' Q}.encard ≤ m := by
+        {γ : rationalGLOne (K := K) (n := n) | γ • z ∈ (fun y => x * y) '' Q}.encard ≤ m := by
   classical
   set Q' : Set (AdelicGLn.AdelicGL K n) :=
     (fun p : AdelicGLn.AdelicGL K n × normOneGL (K := K) (n := n) × normOneGL (K := K) (n := n) =>
@@ -233,23 +233,23 @@ theorem exists_encard_le_siegel {ω : Set (AdelicGLn.AdelicGL K n)} (hω : IsCom
           · exact le_max_left _ _
           · nlinarith
       _ = max C₀ 0 * (1 + A) ^ N * R ^ N := by rw [mul_pow]; ring
-  · set S := {γ : rationalGLOne K n | γ • z ∈ (fun y => x * y) '' Q}
+  · set S := {γ : rationalGLOne (K := K) (n := n) | γ • z ∈ (fun y => x * y) '' Q}
     rcases eq_empty_or_nonempty S with h | ⟨γ₀, hγ₀⟩
     · rw [h, encard_empty]
       simp
-    have hrat : ∀ δ : rationalGLOne K n, ∃ γ : GL (Fin n) K,
+    have hrat : ∀ δ : rationalGLOne (K := K) (n := n), ∃ γ : GL (Fin n) K,
         AdelicGLn.diagonal K n γ = ((δ : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) := fun δ =>
       Subgroup.mem_subgroupOf.1 δ.2
-    set f : rationalGLOne K n → GL (Fin n) K := fun δ => Function.invFun (AdelicGLn.diagonal K n)
-      (((δ * γ₀⁻¹ : rationalGLOne K n) : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n)
+    set f : rationalGLOne (K := K) (n := n) → GL (Fin n) K := fun δ => Function.invFun (AdelicGLn.diagonal K n)
+      (((δ * γ₀⁻¹ : rationalGLOne (K := K) (n := n)) : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n)
     have hf : ∀ δ, AdelicGLn.diagonal K n (f δ) =
-        (((δ * γ₀⁻¹ : rationalGLOne K n) : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) := fun δ =>
+        (((δ * γ₀⁻¹ : rationalGLOne (K := K) (n := n)) : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) := fun δ =>
       Function.invFun_eq (hrat _)
     have hmaps : MapsTo f S Y := by
       intro δ hδ
       obtain ⟨q₁, hq₁, h₁⟩ := hδ
       obtain ⟨q₂, hq₂, h₂⟩ := hγ₀
-      have e : ((δ * γ₀⁻¹ : rationalGLOne K n) : normOneGL (K := K) (n := n)) = x * q₁ * q₂⁻¹ * x⁻¹ := by
+      have e : ((δ * γ₀⁻¹ : rationalGLOne (K := K) (n := n)) : normOneGL (K := K) (n := n)) = x * q₁ * q₂⁻¹ * x⁻¹ := by
         have h₁'' : x * q₁ = (δ : normOneGL (K := K) (n := n)) * z := h₁
         have h₂'' : x * q₂ = (γ₀ : normOneGL (K := K) (n := n)) * z := h₂
         have h₁' : (δ : normOneGL (K := K) (n := n)) = x * q₁ * z⁻¹ := by rw [h₁'', mul_inv_cancel_right]

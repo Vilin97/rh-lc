@@ -25,17 +25,17 @@ theorem UpperTheory.ConvolutionTheory.C.twistFactor :
     intro i j hij g h v
     have hc := (UpperTheory.ConvolutionTheory.Tf.locEmb K n (w i)).2.2.2.1 (w j) (fun e => hij (hw e.symm)) g h
     have e : ∀ (a : Gw n (w i)) (b : Gw n (w j)), (locU μ (w i) a) ((locU μ (w j) b) v) =
-        rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding (w i) a *
+        rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding (w i) a *
           AdelicGLn.localEmbedding (w j) b)) v := by
       intro a b
       rw [map_mul, UnitaryRep.map_mul_apply]
       rfl
     have e' : (locU μ (w j) h) ((locU μ (w i) g) v) =
-        rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding (w j) h *
+        rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding (w j) h *
           AdelicGLn.localEmbedding (w i) g)) v := by
       rw [map_mul, UnitaryRep.map_mul_apply]
       rfl
-    exact (e g h).trans ((congrArg (fun u => rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n u) v) hc).trans e'.symm)
+    exact (e g h).trans ((congrArg (fun u => rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n u) v) hc).trans e'.symm)
   obtain ⟨c, hc⟩ := UpperTheory.isotypic_multiplicity_tensor_product r (fun i => Gw n (w i)) (LL μ) (fun i => (τ i).V) (fun i => locU μ (w i))
     (fun i => (τ i).ρ) V Z (fun i => (τ i).smooth) (fun i => (τ i).irred) hcomm hZ0 hZV hinv
     (fun i => UpperTheory.summand_le_closure_span_local_type_images K n μ V (w i) (τ i) hV (hτ i)) (fun U hU => by rw [hfix]; exact hadm U hU)

@@ -30,5 +30,5 @@ theorem UpperTheory.rhoF_comp_Ofin_of_left_invariant :
     ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure]
       (e : TF K n) (u : AdelicGLn.FiniteAdelicGL K n), (∀ x, e (u * x) = e x) → rhoF μ u ∘L Ofin μ m e = Ofin μ m e := by
   intro K _ _ n μ _ m _ e u hu
-  exact comp_integrated_of_left_inv m ((rightRegularRep (rationalGLOne K n) μ).compHom (MultiplicityOne.finProj K n)
+  exact comp_integrated_of_left_inv m ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (MultiplicityOne.finProj K n)
     MultiplicityOne.continuous_finProj) u e hu

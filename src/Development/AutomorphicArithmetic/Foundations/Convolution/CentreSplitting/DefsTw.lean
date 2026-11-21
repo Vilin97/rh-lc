@@ -18,7 +18,7 @@ namespace UpperTheory.ConvolutionTheory.Dp
 def TwUnitary : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (θ : PositivityTheory.Rg.Tf.Core.Twist μ), (∀ v, ‖θ.U v‖ = ‖v‖) ∧ Function.Surjective θ.U ∧
-      ∀ g v, θ.U (rightRegularRep (rationalGLOne K n) μ g v) = rightRegularRep (rationalGLOne K n) μ (θ.e g) (θ.U v)
+      ∀ g v, θ.U (rightRegularRep (rationalGLOne (K := K) (n := n)) μ g v) = rightRegularRep (rationalGLOne (K := K) (n := n)) μ (θ.e g) (θ.U v)
 
 def TwCls : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]

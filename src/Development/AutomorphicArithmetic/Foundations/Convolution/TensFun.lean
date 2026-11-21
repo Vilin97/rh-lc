@@ -94,10 +94,10 @@ section Ops
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 def Oinf (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (β : TI K n) : LL μ →L[ℂ] LL μ :=
-  ((rightRegularRep (rationalGLOne K n) μ).compHom (archP K n) continuous_archP).integrated ν (UnitaryRep.ccToL1 ν β)
+  ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (archP K n) continuous_archP).integrated ν (UnitaryRep.ccToL1 ν β)
 
 def Ofin (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] (e : TF K n) : LL μ →L[ℂ] LL μ :=
-  ((rightRegularRep (rationalGLOne K n) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj).integrated m
+  ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj).integrated m
     (UnitaryRep.ccToL1 m e)
 
 def Compat (ν : Measure (archGroup K n)) (m : Measure (AdelicGLn.FiniteAdelicGL K n)) : Prop :=
@@ -105,7 +105,7 @@ def Compat (ν : Measure (archGroup K n)) (m : Measure (AdelicGLn.FiniteAdelicGL
     ∫ x, tens β e x * Θ x ∂μ = ∫ a, ∫ h, β a * e h * Θ (archP K n a * MultiplicityOne.finProj K n h) ∂m ∂ν
 
 def rhoF (h : AdelicGLn.FiniteAdelicGL K n) : LL μ →L[ℂ] LL μ :=
-  rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n h)
+  rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n h)
 
 def rhoL (w : Pl K) (g : GL (Fin n) (w.adicCompletion K)) : LL μ →L[ℂ] LL μ := rhoF μ (AdelicGLn.localEmbedding w g)
 

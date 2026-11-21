@@ -79,14 +79,14 @@ theorem ct_left {φ : GA E (r + s) → ℂ} (hφ : AutomorphicForm.IsLeftInvaria
   rw [hF, ← mul_assoc, ← map_mul, Prod.mk_mul_mk, map_one, one_mul, ← mul_assoc, ← zt_comm, mul_assoc] at this
   exact this
 
-abbrev pt (r s : ℕ) (t : ℝ) (y : RightCosetSpace (rationalGLOne E r)) : GA E (r + s) :=
+abbrev pt (r s : ℕ) (t : ℝ) (y : RightCosetSpace (rationalGLOne (K := E) (n := r))) : GA E (r + s) :=
   lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r), 1)
 
-abbrev wt (f : GA E r → ℂ) (y : RightCosetSpace (rationalGLOne E r)) : ℂ :=
+abbrev wt (f : GA E r → ℂ) (y : RightCosetSpace (rationalGLOne (K := E) (n := r))) : ℂ :=
   starRingEnd ℂ (f ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))
 
-abbrev nu (E : Type) [Field E] [NumberField E] (r : ℕ) : Measure (RightCosetSpace (rationalGLOne E r)) :=
-  quotientMeasure (rationalGLOne E r) (mu1 E r)
+abbrev nu (E : Type) [Field E] [NumberField E] (r : ℕ) : Measure (RightCosetSpace (rationalGLOne (K := E) (n := r))) :=
+  quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)
 
 instance : IsFiniteMeasure (nu E r) := Reduction.isFiniteMeasure_quotientMeasure (K := E) (n := r) (mu1 E r)
 

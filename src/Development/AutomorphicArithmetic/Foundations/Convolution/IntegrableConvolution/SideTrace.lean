@@ -175,9 +175,9 @@ private theorem rhoL_comm {w w' : Pl K} (h : w ≠ w') (g : Gw n w) (g' : Gw n w
   simp only [rhoL, ← h1, h2]
 
 private theorem arch_comm (a : archGroup K n) (w : Pl K) (g : Gw n w) :
-    Commute (rightRegularRep (rationalGLOne K n) μ (archP K n a)) (rhoL μ w g) := by
-  show rightRegularRep (rationalGLOne K n) μ (archP K n a) * rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) =
-    rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) * rightRegularRep (rationalGLOne K n) μ (archP K n a)
+    Commute (rightRegularRep (rationalGLOne (K := K) (n := n)) μ (archP K n a)) (rhoL μ w g) := by
+  show rightRegularRep (rationalGLOne (K := K) (n := n)) μ (archP K n a) * rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) =
+    rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) * rightRegularRep (rationalGLOne (K := K) (n := n)) μ (archP K n a)
   rw [← UnitaryRep.map_mul, ← UnitaryRep.map_mul, archimedeanProjection_apply, MultiplicityOne.finProj_mul_archProj_comm]
 
 private theorem oloc_comm {w : Pl K} [MeasurableSpace (Gw n w)] {m : Measure (Gw n w)} {ψ : Gw n w → ℂ}
@@ -302,7 +302,7 @@ theorem UpperTheory.ConvolutionTheory.L1.sideTrace :
     rwa [h1] at h0
 
   let Good : (LL μ →L[ℂ] LL μ) → Prop := fun O => (∀ v ∈ T.typed μ, O v ∈ T.typed μ) ∧
-    (∀ g, Commute O (rightRegularRep (rationalGLOne E n) μ (archP E n g))) ∧ (∀ w ∉ T.marked, ∀ g, Commute O (rhoL μ w g))
+    (∀ g, Commute O (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n g))) ∧ (∀ w ∉ T.marked, ∀ g, Commute O (rhoL μ w g))
   have hGone : Good 1 := ⟨fun v hv => hv, fun g => Commute.one_left _, fun w _ g => Commute.one_left _⟩
   have hGmul : ∀ O₁ O₂, Good O₁ → Good O₂ → Good (O₁ * O₂) := fun O₁ O₂ h₁ h₂ =>
     ⟨fun v hv => h₁.1 _ (h₂.1 v hv), fun g => (h₁.2.1 g).mul_left (h₂.2.1 g),

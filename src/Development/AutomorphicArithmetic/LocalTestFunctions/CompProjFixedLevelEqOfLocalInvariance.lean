@@ -109,7 +109,7 @@ theorem UpperTheory.comp_proj_fixed_level_eq_of_local_invariance :
       rw [UnitaryRep.integrated_ccToL1_apply]
       rfl
     have hint : Integrable (fun h => e h • rhoF μ h x) m :=
-      (e.continuous.smul (((rightRegularRep (rationalGLOne K n) μ).continuous_orbit x).comp
+      (e.continuous.smul (((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).continuous_orbit x).comp
         MultiplicityOne.continuous_finProj)).integrable_of_hasCompactSupport e.hasCompactSupport.smul_right
     rw [← hOe, hO, ← ContinuousLinearMap.integral_comp_comm _ hint]
     have h2 : (fun h => A (e h • rhoF μ h x)) = fun h => e h • A x := by

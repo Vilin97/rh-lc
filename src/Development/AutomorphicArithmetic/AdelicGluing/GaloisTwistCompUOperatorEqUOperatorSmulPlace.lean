@@ -125,8 +125,8 @@ theorem UpperTheory.galoisTwist_comp_uOperator_eq_uOperator_smul_place :
   have hC' := GLnLocal.isCompact_iwahori ((σ • w).adicCompletion E) n
   have hrho : ∀ g v, U (rhoL μ w g v) = rhoL μ (σ • w) (s g) (U v) := fun g v => by
     have e := UpperTheory.galTwist_finProj_eq_of_galAd_finEmb_eq F E σ n hn μ θ hθ _ _ (hs1 g)
-    show U (rightRegularRep (rationalGLOne E n) μ (MultiplicityOne.finProj E n (AdelicGLn.localEmbedding w g)) v) =
-      rightRegularRep (rationalGLOne E n) μ (MultiplicityOne.finProj E n (AdelicGLn.localEmbedding (σ • w) (s g))) (U v)
+    show U (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (MultiplicityOne.finProj E n (AdelicGLn.localEmbedding w g)) v) =
+      rightRegularRep (rationalGLOne (K := E) (n := n)) μ (MultiplicityOne.finProj E n (AdelicGLn.localEmbedding (σ • w) (s g))) (U v)
     rw [hint, e]
   have hfx : ∀ v, U v ∈ fixL μ (σ • w) (GLnLocal.iwahori ((σ • w).adicCompletion E) n) ↔
       v ∈ fixL μ w (GLnLocal.iwahori (w.adicCompletion E) n) := fun v => by

@@ -32,7 +32,7 @@ theorem UpperTheory.ConvolutionTheory.Tf.prjFix :
     rw [UnitaryRep.integrated_ccToL1_apply]
     rfl
   have hint : Integrable (fun h => e h • rhoF μ h v) m :=
-    (e.continuous.smul (((rightRegularRep (rationalGLOne K n) μ).continuous_orbit v).comp
+    (e.continuous.smul (((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).continuous_orbit v).comp
       MultiplicityOne.continuous_finProj)).integrable_of_hasCompactSupport e.hasCompactSupport.smul_right
   have h1 : Ofin μ m e v ∈ fixF μ U := by
     rw [hmem]

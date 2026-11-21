@@ -147,7 +147,7 @@ def KilledOps : Prop := ∀ (n : ℕ) (ρ : Typ E n) (φ : Sm E n), Killed ρ.ρ
 def EigComp : Prop := ∀ (S : Set (Pl E)) (r : ℕ) (ρ : Typ E r) (ψ : Sm E r), 0 < r → Umg ψ → Cusp ψ.1 → Killed ρ.ρ ψ.1 → Sph S ψ →
   (∃ x : normOneGL (K := E) (n := r), ψ.1 (x : GA E r) ≠ 0) → ∃ b : Blo S r, Killed ρ.ρ b.f.1 ∧
     ∫ y, ψ.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))
-      ∂quotientMeasure (rationalGLOne E r) (mu1 E r) ≠ 0
+      ∂quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r) ≠ 0
 
 def LangStep : Prop := ∀ (S : Set (Pl E)) (r s : ℕ) (ρ : Typ E (r + s)) (φ : Sm E (r + s)), 0 < r → Umg φ → Killed ρ.ρ φ.1 → Sph S φ →
   (∀ r', 0 < r' → r' < r → ∀ g, AutomorphicForm.constantTerm r' φ.1 g = 0) →

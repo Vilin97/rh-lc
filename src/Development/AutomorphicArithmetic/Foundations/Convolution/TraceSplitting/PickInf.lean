@@ -40,10 +40,10 @@ theorem UpperTheory.ConvolutionTheory.T.Port.pickInf_of (hInf : UpperTheory.Conv
   obtain ⟨-, -, -, -, -, ⟨s, hsl, hs⟩, -, -⟩ := hAB F E σ m D n
   obtain ⟨νF, hνF⟩ : ∃ νF : Measure (archGroup F n), νF.IsHaarMeasure := ⟨Measure.haar, inferInstance⟩
   obtain ⟨b, hbs, hbf, hbn, hbu⟩ := hBump F n νF (LL μE)
-    (((rightRegularRep (rationalGLOne E n) μE).compHom (archP E n) continuous_archP).compHom (s 0) (hs 0)) u hu
+    (((rightRegularRep (rationalGLOne (K := E) (n := n)) μE).compHom (archP E n) continuous_archP).compHom (s 0) (hs 0)) u hu
   obtain ⟨νE, hνE, a, aE, aF, hA⟩ := hPosition F E σ m D n νF b hbs hbf hbn
   obtain ⟨hsq, -, -, -⟩ := hSq F n νF b a aF m hA.sq hA.pow hA.norm (LL μE)
-    (((rightRegularRep (rationalGLOne E n) μE).compHom (archP E n) continuous_archP).compHom (s 0) (hs 0))
+    (((rightRegularRep (rationalGLOne (K := E) (n := n)) μE).compHom (archP E n) continuous_archP).compHom (s 0) (hs 0))
   obtain ⟨hAE, hAF⟩ := hAmp F E σ m D n νE νF b a aE aF hA
   refine ⟨m, hm, D, s, hs, νE, hνE, νF, hνF, b, a, aE, aF, hsl, hA, hAE μE, hAF μF,
     hPair F E σ m hm D n νE νF b a aE aF hA, ?_⟩

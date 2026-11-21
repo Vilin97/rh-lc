@@ -235,7 +235,7 @@ def fop (c : GL (Fin n) (Af E) →₀ ℂ) (f : GA E n → ℂ) (g : GA E n) : �
 
 def Orth (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (φ φ' : cuspForms E n) : Prop :=
   ∀ g g', ∫ q, starRingEnd ℂ (quotTr φ g q) * quotTr φ' g' q
-    ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne E n) μ) = 0
+    ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne (K := E) (n := n)) μ) = 0
 
 variable [IsTotallyReal E]
 
@@ -387,11 +387,11 @@ def OrthTr : Prop :=
 def OrthStep : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (f : GA E n → ℂ), Continuous f → (∃ C : ℝ, ∀ g, ‖f g‖ ≤ C) → IsLeftInvariant f →
-    ∀ a : RightCosetSpace (Reduction.rationalGLOne E n) → ℂ, Continuous a → (∃ C : ℝ, ∀ q, ‖a q‖ ≤ C) →
+    ∀ a : RightCosetSpace (Reduction.rationalGLOne (K := E) (n := n)) → ℂ, Continuous a → (∃ C : ℝ, ∀ q, ‖a q‖ ≤ C) →
     (∀ g (h : IsLeftInvariant fun x => f (x * g)), ∫ q, a q * CuspidalSpectrum.cuspQuot h q
-      ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne E n) μ) = 0) →
+      ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne (K := E) (n := n)) μ) = 0) →
     ∀ (β : 𝓢(Lie E n, ℂ)) (h : IsLeftInvariant (conv f β)), ∫ q, a q * CuspidalSpectrum.cuspQuot h q
-      ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne E n) μ) = 0
+      ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne (K := E) (n := n)) μ) = 0
 
 def OrthConv : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]

@@ -42,17 +42,17 @@ section Global
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-abbrev LL (μ : Measure (normOneGL (K := K) (n := n))) : Type _ := Lp ℂ 2 (quotientMeasure (rationalGLOne K n) μ)
+abbrev LL (μ : Measure (normOneGL (K := K) (n := n))) : Type _ := Lp ℂ 2 (quotientMeasure (rationalGLOne (K := K) (n := n)) μ)
 
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 def IsSummand (V : Submodule ℂ (LL μ)) : Prop :=
-  IsSummandOf (rightRegularRep (rationalGLOne K n) μ) (cuspidalL2 μ) V
+  IsSummandOf (rightRegularRep (rationalGLOne (K := K) (n := n)) μ) (cuspidalL2 μ) V
 
 def MultOneAt : Prop := ∀ V V' : Submodule ℂ (LL μ), IsSummand μ V → IsSummand μ V' → V ≠ V' → V ⟂ V'
 
 abbrev RR (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) : LL μ →L[ℂ] LL μ :=
-  (rightRegularRep (rationalGLOne K n) μ).integrated μ (UnitaryRep.ccToL1 μ f)
+  (rightRegularRep (rationalGLOne (K := K) (n := n)) μ).integrated μ (UnitaryRep.ccToL1 μ f)
 
 def IsLeftSmooth (a : normOneGL (K := K) (n := n) → ℂ) : Prop :=
   (∀ x, (isExpLieAlgebra K n).IsSmoothFun fun A : archGroup K n => a (archP K n A * x)) ∧

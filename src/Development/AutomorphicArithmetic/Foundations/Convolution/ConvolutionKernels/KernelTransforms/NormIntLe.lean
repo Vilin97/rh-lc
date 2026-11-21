@@ -84,6 +84,6 @@ theorem UpperTheory.ConvolutionTheory.Tf.opAlg :
   · exact (Tf.adjInt _ _ _ m e e' h).1
   · exact norm_int_le _ ν β
   · exact norm_int_le _ m e
-  · exact (Tf.commInt _ _ _ _ (rightRegularRep (rationalGLOne K n) μ) (archP K n) continuous_archP
+  · exact (Tf.commInt _ _ _ _ (rightRegularRep (rationalGLOne (K := K) (n := n)) μ) (archP K n) continuous_archP
       (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj ν m β e).2 hpq
   · exact int_commute _ (archP K n) continuous_archP ν _ (MultiplicityOne.finProj K n h) fun a => (hpq a h).symm

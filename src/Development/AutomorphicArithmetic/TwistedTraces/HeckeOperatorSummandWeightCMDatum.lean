@@ -29,9 +29,9 @@ private theorem rhoL_comm {w w' : Pl K} (h : w ≠ w') (g : Gw n w) (g' : Gw n w
   simp only [rhoL, ← h1, h2]
 
 private theorem arch_comm (a : archGroup K n) (w : Pl K) (g : Gw n w) :
-    Commute (rightRegularRep (rationalGLOne K n) μ (archP K n a)) (rhoL μ w g) := by
-  show rightRegularRep (rationalGLOne K n) μ (archP K n a) * rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) =
-    rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) * rightRegularRep (rationalGLOne K n) μ (archP K n a)
+    Commute (rightRegularRep (rationalGLOne (K := K) (n := n)) μ (archP K n a)) (rhoL μ w g) := by
+  show rightRegularRep (rationalGLOne (K := K) (n := n)) μ (archP K n a) * rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) =
+    rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) * rightRegularRep (rationalGLOne (K := K) (n := n)) μ (archP K n a)
   rw [← UnitaryRep.map_mul, ← UnitaryRep.map_mul, archimedeanProjection_apply, MultiplicityOne.finProj_mul_archProj_comm]
 
 private theorem oloc_comm {w : Pl K} [MeasurableSpace (Gw n w)] {m : Measure (Gw n w)} {ψ : Gw n w → ℂ}
@@ -112,7 +112,7 @@ theorem UpperTheory.heckeOperator_summand_weight_CMDatum :
           (mm : ∀ u : Pl E, Measure (Gw n u)), (∀ u, (mm u).IsHaarMeasure ∧ mm u (T.J u) = 1) →
         ∀ (ψ : ∀ v : Pl F, Gw n (T.mk' v).1 → ℂ), (∀ i, Test (ψ (p i)) ∧ ∀ u ∈ T.J (T.mk' (p i)).1, ∀ g, ψ (p i) (u * g) = ψ (p i) g) →
         ∀ B : Fin r → LL μ →L[ℂ] LL μ, (∀ i, IsOloc μ (T.mk' (p i)).1 (mm _) (ψ (p i)) (B i)) →
-          (∀ g, Commute ((Uiw μ w₀.1 e ^ j) ∘L (List.ofFn B).prod) (rightRegularRep (rationalGLOne E n) μ (archP E n g))) ∧
+          (∀ g, Commute ((Uiw μ w₀.1 e ^ j) ∘L (List.ofFn B).prod) (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n g))) ∧
           (∀ w ∉ T.marked, ∀ g, Commute ((Uiw μ w₀.1 e ^ j) ∘L (List.ofFn B).prod) (rhoL μ w g)) ∧
           (∀ f ∈ offN μ T, ((Uiw μ w₀.1 e ^ j) ∘L (List.ofFn B).prod) f ∈ offN μ T) ∧
           (∀ f ∈ V, ((Uiw μ w₀.1 e ^ j) ∘L (List.ofFn B).prod) f ∈ V) := by
@@ -121,7 +121,7 @@ theorem UpperTheory.heckeOperator_summand_weight_CMDatum :
   have hVrho : ∀ (w : Pl E) (g : Gw n w), Commute (prj V) (rhoL μ w g) := fun w g =>
     ((UpperTheory.ConvolutionTheory.Tf.innerOps E n μ).2.2.2.1 _ V hVc (IsSummandOf.inv hV)).symm
   let Good : (LL μ →L[ℂ] LL μ) → Prop := fun O => (∀ v ∈ offN μ T, O v ∈ offN μ T) ∧
-    (∀ g, Commute O (rightRegularRep (rationalGLOne E n) μ (archP E n g))) ∧
+    (∀ g, Commute O (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n g))) ∧
     (∀ w ∉ T.marked, ∀ g, Commute O (rhoL μ w g)) ∧ (∀ v ∈ V, O v ∈ V)
   have hGone : Good 1 := ⟨fun v hv => hv, fun g => Commute.one_left _, fun w _ g => Commute.one_left _, fun v hv => hv⟩
   have hGmul : ∀ O₁ O₂, Good O₁ → Good O₂ → Good (O₁ * O₂) := fun O₁ O₂ h₁ h₂ =>

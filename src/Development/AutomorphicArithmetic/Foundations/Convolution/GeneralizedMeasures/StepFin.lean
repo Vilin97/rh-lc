@@ -81,14 +81,14 @@ private theorem integrated_sum {H : Type*} [NormedAddCommGroup H] [InnerProductS
 private theorem Ofin_sum {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] {ι : Type*} (s : Finset ι) (a : ι → ℂ) (f : ι → TF K n) :
     Ofin μ m (∑ i ∈ s, a i • f i) = ∑ i ∈ s, a i • Ofin μ m (f i) :=
-  integrated_sum m ((rightRegularRep (rationalGLOne K n) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj) s a f
+  integrated_sum m ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj) s a f
 
 private theorem rhoF_comp_Ofin {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] (y : AdelicGLn.FiniteAdelicGL K n) (e : TF K n) :
     rhoF μ y ∘L Ofin μ m e = Ofin μ m (trCc y e) := by
   refine ContinuousLinearMap.ext fun v => ?_
   exact map_integrated_trCc m
-    ((rightRegularRep (rationalGLOne K n) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj) y e v
+    ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj) y e v
 
 private theorem cf_local {K : Type} [Field K] [NumberField K] {n : ℕ} (w : Pl K) (y : GL (Fin n) (w.adicCompletion K))
     (x : AdelicGLn.FiniteAdelicGL K n) : cf w (AdelicGLn.localEmbedding w y * x) = y * cf w x := by

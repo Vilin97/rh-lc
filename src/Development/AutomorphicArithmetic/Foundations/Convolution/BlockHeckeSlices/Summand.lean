@@ -88,7 +88,7 @@ def zt (E : Type) [Field E] [NumberField E] (n : ℕ) (t : ℝ) : AdelicGLn.Adel
 
 def slice (f : GA E r → ℂ) (t : ℝ) (φ : GA E (r + s) → ℂ) (m : GA E s) : ℂ :=
   ∫ y, AutomorphicForm.constantTerm r φ (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r), m)) *
-    starRingEnd ℂ (f ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) ∂quotientMeasure (rationalGLOne E r) (mu1 E r)
+    starRingEnd ℂ (f ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) ∂quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)
 
 structure Blo (S : Set (HeightOneSpectrum (𝓞 E))) (r : ℕ) where
   pos : 0 < r

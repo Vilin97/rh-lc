@@ -87,7 +87,7 @@ private theorem invariant_of_translate {L G H S : Type} [Group L] [TopologicalSp
 
 private theorem locU_eq {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (w : Pl K) (g : Gw n w) (v : LL μ) :
-    locU μ w g v = rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) v := by
+    locU μ w g v = rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) v := by
   rw [locU_apply]
   rfl
 
@@ -96,8 +96,8 @@ theorem UpperTheory.summand_le_closure_span_local_type_images :
   intro K _ _ n μ _ V w σ hV hO
   obtain ⟨f, hf0, hfm, hfe⟩ := hO
   have hf : Eqv σ.ρ (locU μ w) V f := ⟨hfm, fun g x => by rw [hfe, locU_apply]⟩
-  refine dense_of_invariant (rightRegularRep (rationalGLOne K n) μ) (cuspidalL2 μ) V hV σ.ρ (locU μ w) f hf0 hf ?_
+  refine dense_of_invariant (rightRegularRep (rationalGLOne (K := K) (n := n)) μ) (cuspidalL2 μ) V hV σ.ρ (locU μ w) f hf0 hf ?_
   refine invariant_of_translate σ.ρ (locU μ w) _ V fun x f' hf' y => ?_
   obtain ⟨c, a, rfl, hc⟩ := exists_factor w x
-  exact eqv_translate σ.ρ (locU μ w) (rightRegularRep (rationalGLOne K n) μ) V (IsSummandOf.inv hV)
+  exact eqv_translate σ.ρ (locU μ w) (rightRegularRep (rationalGLOne (K := K) (n := n)) μ) V (IsSummandOf.inv hV)
     (fun g => MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) (locU_eq μ w) c hc f' hf' a y

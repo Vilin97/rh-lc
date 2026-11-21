@@ -52,7 +52,7 @@ theorem lintegral_resQ (ha : 0 < a) (μ : Measure (GA E a)) [μ.IsHaarMeasure] (
     (hmap : Measure.map (fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) (ν.prod volume) = c • μ)
     (φ : GA E a → ℂ) (hc : Continuous φ) (hl : ∀ γ g, φ (ratGL E a γ * g) = φ g)
     (hz : ∀ t g, φ (splitCentre E a t * g) = φ g) :
-    ∫⁻ q, ‖resQ φ q‖ₑ ^ 2 ∂(RightCosetSpace.quotientMeasure (rationalGLOne E a) ν) =
+    ∫⁻ q, ‖resQ φ q‖ₑ ^ 2 ∂(RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν) =
       c * ∫⁻ q, ‖descend (latticeGL E a) φ q‖ₑ ^ 2 ∂(GlobalTheory.AutomorphicL2Unitary.quotMeasure (latticeGL E a) μ) := by
   have hd := GlobalTheory.T.fundamental_domain_split_centre_product E a ha μ
   have hL : LeftInv (latticeGL E a) φ := leftInv_latticeGL hl hz
@@ -92,16 +92,16 @@ theorem denseRange_toL2cusp : DenseRange (toL2cusp μ) := by
 
 
 variable {μ ν} in
-def toCusp (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν)) :
+def toCusp (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν)) :
     cuspidalL2Functions μ →ₗ[ℂ] cuspidalL2 ν where
   toFun φ := ⟨(hm φ).toLp _, GlobalTheory.T.cuspidal_restrict_mem_cuspidal_l2 E a ν φ.1 φ.2.1 (hm φ)⟩
   map_add' φ ψ := Subtype.ext (MemLp.toLp_add (hm φ) (hm ψ))
   map_smul' z φ := Subtype.ext (MemLp.toLp_const_smul z (hm φ))
 
 variable {μ ν} in
-theorem coe_toCusp (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν))
+theorem coe_toCusp (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν))
     (φ : cuspidalL2Functions μ) :
-    (toCusp hm φ : Lp ℂ 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν)) = (hm φ).toLp _ := rfl
+    (toCusp hm φ : Lp ℂ 2 (RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν)) = (hm φ).toLp _ := rfl
 
 end Maps
 
@@ -120,11 +120,11 @@ def trFn (x : GA E a) (φ : cuspidalL2Functions μ) : cuspidalL2Functions μ :=
 theorem Rcusp_toL2cusp (x : GA E a) (φ : cuspidalL2Functions μ) : Rcusp μ x (toL2cusp μ φ) = toL2cusp μ (trFn x φ) :=
   Subtype.ext (right_translate_toL2 φ.2.2 x)
 
-theorem cuspRep_toCusp (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν))
+theorem cuspRep_toCusp (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν))
     (x : normOneGL (K := E) (n := a)) (φ : cuspidalL2Functions μ) : cuspRep ν x (toCusp hm φ) = toCusp hm (trFn (x : GA E a) φ) := by
   refine Subtype.ext (Lp.ext ?_)
-  have e0 : ((cuspRep ν x (toCusp hm φ) : cuspidalL2 ν) : Lp ℂ 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν)) =
-      RightCosetSpace.rightRegularRep (rationalGLOne E a) ν x (toCusp hm φ) := rfl
+  have e0 : ((cuspRep ν x (toCusp hm φ) : cuspidalL2 ν) : Lp ℂ 2 (RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν)) =
+      RightCosetSpace.rightRegularRep (rationalGLOne (K := E) (n := a)) ν x (toCusp hm φ) := rfl
   rw [e0, coe_toCusp, coe_toCusp]
   refine (RightCosetSpace.coeFn_rightRegularRep _ ν x _).trans ?_
   refine (((RightCosetSpace.measurePreserving_rightMul ν x).quasiMeasurePreserving.ae_eq_comp
@@ -138,7 +138,7 @@ theorem cuspRep_toCusp (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 
 
 theorem memLp_resQ (ha : 0 < a) (c : ENNReal) (hct : c ≠ ⊤)
     (hmap : Measure.map (fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) (ν.prod volume) = c • μ)
-    (φ : cuspidalL2Functions μ) : MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν) := by
+    (φ : cuspidalL2Functions μ) : MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν) := by
   refine ⟨(continuous_resQ φ.2.1.1 φ.2.1.2.1).aestronglyMeasurable, ?_⟩
   rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
   simp only [ENNReal.toReal_ofNat, ENNReal.rpow_ofNat]
@@ -147,7 +147,7 @@ theorem memLp_resQ (ha : 0 < a) (c : ENNReal) (hct : c ≠ ⊤)
 
 theorem norm_toCusp (ha : 0 < a) (c : ENNReal)
     (hmap : Measure.map (fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) (ν.prod volume) = c • μ)
-    (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν))
+    (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν))
     (φ : cuspidalL2Functions μ) : ‖toCusp hm φ‖ = Real.sqrt c.toReal * ‖toL2cusp μ φ‖ := by
   have h3 : ‖toCusp hm φ‖ ^ 2 = c.toReal * ‖toL2cusp μ φ‖ ^ 2 := by
     have h4 := lintegral_resQ ha μ ν c hmap φ.1 φ.2.1.1 φ.2.1.2.1 φ.2.1.2.2.1

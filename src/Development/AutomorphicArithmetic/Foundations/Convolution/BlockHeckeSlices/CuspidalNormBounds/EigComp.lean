@@ -67,7 +67,7 @@ private def trK (k : KA E n) (φ : cuspForms E n) : cuspForms E n :=
 variable (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
 
 private theorem cls_trK (k : KA E n) (φ : cuspForms E n) :
-    clsL μ (trK k φ) = rightRegularRep (rationalGLOne E n) μ (k1 k) (clsL μ φ) :=
+    clsL μ (trK k φ) = rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) (clsL μ φ) :=
   congrArg Subtype.val (cuspToL2_rightTranslate μ (k1 k) φ (trK k φ) rfl)
 
 private theorem trK_mem {V : Submodule ℂ (LL μ)} (hV : IsSummand μ V) (k : KA E n) {φ : cuspForms E n}
@@ -94,10 +94,10 @@ private theorem exists_form0 {v : LL μ} (hv : v ∈ cuspidalL2 μ) (h0 : v ≠ 
   exact h0 (inner_self_eq_zero.1 (Submodule.mem_orthogonal_singleton_iff_inner_right.1 (h2 hv)))
 
 private theorem fin_span (f₀ : cuspForms E n) : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : KA E n =>
-    rightRegularRep (rationalGLOne E n) μ (k1 k) (clsL μ f₀))) := by
+    rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) (clsL μ f₀))) := by
   have := finiteDimensional_span_cuspRep_maxCompact μ f₀
   have e : Submodule.span ℂ (Set.range fun k : KA E n =>
-      rightRegularRep (rationalGLOne E n) μ (k1 k) (clsL μ f₀)) = (Submodule.span ℂ (Set.range fun k : KA E n =>
+      rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) (clsL μ f₀)) = (Submodule.span ℂ (Set.range fun k : KA E n =>
       cuspRep μ ⟨k, maxCompact_le_normOneGL k.2⟩ (cuspToL2 μ f₀))).map (cuspidalL2 μ).subtype := by
     rw [Submodule.map_span, ← Set.range_comp]
     rfl
@@ -105,10 +105,10 @@ private theorem fin_span (f₀ : cuspForms E n) : FiniteDimensional ℂ (Submodu
   infer_instance
 
 private theorem comb_zero {f : cuspForms E n} (hf : ∀ k : KA E n, trK k f ∈ centralCuspForms E n) (x : KA E n →₀ ℂ)
-    (hx : Finsupp.linearCombination ℂ (fun k => rightRegularRep (rationalGLOne E n) μ (k1 k) (clsL μ f)) x = 0)
+    (hx : Finsupp.linearCombination ℂ (fun k => rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) (clsL μ f)) x = 0)
     (g : AdelicGLn.AdelicGL E n) : (x.sum fun k c => c * f.1 (g * k)) = 0 := by
   have h1 : clsL μ (Finsupp.linearCombination ℂ (fun k => trK k f) x) = 0 := by
-    have e : (clsL μ ∘ fun k => trK k f) = fun k => rightRegularRep (rationalGLOne E n) μ (k1 k) (clsL μ f) :=
+    have e : (clsL μ ∘ fun k => trK k f) = fun k => rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) (clsL μ f) :=
       funext fun k => cls_trK μ k f
     rw [Finsupp.apply_linearCombination, e, hx]
   have h3 : Finsupp.linearCombination ℂ (fun k => trK k f) x ∈ centralCuspForms E n :=
@@ -120,21 +120,21 @@ private theorem comb_zero {f : cuspForms E n} (hf : ∀ k : KA E n, trK k f ∈ 
 
 private theorem exists_form {v : LL μ} (hv : v ∈ cuspidalL2 μ) (h0 : v ≠ 0) :
     ∃ V, IsSummand μ V ∧ ∃ f ∈ formsIn μ V, inner ℂ (clsL μ f) v ≠ 0 ∧ ∀ x : KA E n →₀ ℂ,
-      Finsupp.linearCombination ℂ (fun k => rightRegularRep (rationalGLOne E n) μ (k1 k) v) x = 0 →
+      Finsupp.linearCombination ℂ (fun k => rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) v) x = 0 →
       ∀ g, (x.sum fun k c => c * f.1 (g * k)) = 0 := by
   obtain ⟨V, hV, f₀, hf₀, hi⟩ := exists_form0 μ hv h0
   obtain ⟨p, hp, h1, h2⟩ := exists_proj _ k1 (fin_span μ f₀) hi
   have hle : Submodule.span ℂ (Set.range fun k : KA E n =>
-      rightRegularRep (rationalGLOne E n) μ (k1 k) (clsL μ f₀)) ≤ (formsIn μ V).map (clsL μ) := Submodule.span_le.2 (by
+      rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) (clsL μ f₀)) ≤ (formsIn μ V).map (clsL μ) := Submodule.span_le.2 (by
     rintro _ ⟨k, rfl⟩
     exact ⟨_, trK_mem μ hV k hf₀, cls_trK μ k f₀⟩)
   obtain ⟨f, hf, rfl⟩ := hle hp
   exact ⟨V, hV, f, hf, h1, fun x hx => comb_zero μ (fun k => (trK_mem μ hV k hf).1) x (h2 x hx)⟩
 
 private theorem ae_comb {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeftInvariant ψ) {v : LL μ}
-    (hv : v =ᵐ[quotientMeasure (rationalGLOne E n) μ] cuspQuot hψ) (x : KA E n →₀ ℂ) :
-    Finsupp.linearCombination ℂ (fun k => rightRegularRep (rationalGLOne E n) μ (k1 k) v) x
-      =ᵐ[quotientMeasure (rationalGLOne E n) μ]
+    (hv : v =ᵐ[quotientMeasure (rationalGLOne (K := E) (n := n)) μ] cuspQuot hψ) (x : KA E n →₀ ℂ) :
+    Finsupp.linearCombination ℂ (fun k => rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) v) x
+      =ᵐ[quotientMeasure (rationalGLOne (K := E) (n := n)) μ]
         fun q => Finsupp.linearCombination ℂ (fun k => cuspQuot hψ (rightMul _ (k1 k) q)) x := by
   induction x using Finsupp.induction_linear with
   | zero =>
@@ -146,8 +146,8 @@ private theorem ae_comb {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeftInvar
   | single k c =>
     simp only [Finsupp.linearCombination_single]
     have h1 := (measurePreserving_rightMul μ (k1 k)).quasiMeasurePreserving.ae_eq hv
-    filter_upwards [Lp.coeFn_smul c (rightRegularRep (rationalGLOne E n) μ (k1 k) v),
-      coeFn_rightRegularRep (rationalGLOne E n) μ (k1 k) v, h1] with q e1 e2 e3
+    filter_upwards [Lp.coeFn_smul c (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) v),
+      coeFn_rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) v, h1] with q e1 e2 e3
     rw [e1, Pi.smul_apply, e2]
     exact congrArg _ e3
 
@@ -155,11 +155,11 @@ private theorem exists_form' {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeft
     (hb : ∃ C : ℝ, ∀ x : normOneGL (K := E) (n := n), ‖ψ x‖ ≤ C) (hcu : Cusp ψ) (h0 : ∃ x : normOneGL (K := E) (n := n), ψ x ≠ 0) :
     ∃ V, IsSummand μ V ∧ ∃ f ∈ formsIn μ V,
       ∫ y, ψ (Quotient.out y : normOneGL (K := E) (n := n)) * starRingEnd ℂ (f.1 (Quotient.out y : normOneGL (K := E) (n := n)))
-        ∂quotientMeasure (rationalGLOne E n) μ ≠ 0 ∧ ∀ x : KA E n →₀ ℂ,
+        ∂quotientMeasure (rationalGLOne (K := E) (n := n)) μ ≠ 0 ∧ ∀ x : KA E n →₀ ℂ,
       (∀ g, (x.sum fun k c => c * ψ (g * k)) = 0) → ∀ g, (x.sum fun k c => c * f.1 (g * k)) = 0 := by
   have := Reduction.isFiniteMeasure_quotientMeasure (K := E) (n := n) μ
   obtain ⟨C, hC⟩ := hb
-  have hm : MemLp (cuspQuot hψ) 2 (quotientMeasure (rationalGLOne E n) μ) := by
+  have hm : MemLp (cuspQuot hψ) 2 (quotientMeasure (rationalGLOne (K := E) (n := n)) μ) := by
     refine MemLp.of_bound (continuous_cuspQuot _ hc).aestronglyMeasurable C (Filter.Eventually.of_forall fun q => ?_)
     obtain ⟨y, rfl⟩ := mk_surjective _ q
     exact hC y
@@ -170,7 +170,7 @@ private theorem exists_form' {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeft
     exact hcu r hr hrn y
   have hv0 : hm.toLp _ ≠ 0 := fun h => by
     obtain ⟨x, hx⟩ := h0
-    have h1 : cuspQuot hψ =ᵐ[quotientMeasure (rationalGLOne E n) μ] 0 := by
+    have h1 : cuspQuot hψ =ᵐ[quotientMeasure (rationalGLOne (K := E) (n := n)) μ] 0 := by
       refine (MemLp.coeFn_toLp hm).symm.trans ?_
       rw [h]
       exact Lp.coeFn_zero _ _ _

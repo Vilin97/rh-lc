@@ -94,12 +94,12 @@ def PairL : Prop := ∀ (μ : Measure (GroundTheory.Automorphic.Reduction.normOn
   ∃ π : TR.CuspSub ℚ 2, PosInv π ∧ ∃ f ∈ π.V,
     ∫ y, f.1 ((Quotient.out y : GroundTheory.Automorphic.Reduction.normOneGL (K := ℚ) (n := 2)) : GL (Fin 2) (A ℚ)) *
       F ((Quotient.out y : GroundTheory.Automorphic.Reduction.normOneGL (K := ℚ) (n := 2)) : GL (Fin 2) (A ℚ))
-      ∂GroundTheory.Automorphic.RightCosetSpace.quotientMeasure (GroundTheory.Automorphic.Reduction.rationalGLOne ℚ 2) μ ≠ 0
+      ∂GroundTheory.Automorphic.RightCosetSpace.quotientMeasure (GroundTheory.Automorphic.Reduction.rationalGLOne (K := ℚ) (n := 2)) μ ≠ 0
 
 def Fibre : Prop := ∀ (M : Meas ℚ) (μ : Measure (GroundTheory.Automorphic.Reduction.normOneGL (K := ℚ) (n := 2))) [μ.IsHaarMeasure] (Φ : GL (Fin 2) (A ℚ) → ℂ),
   Bd Φ → (∀ t ∈ UU, ∫ g in M.D, Φ (gl g * dM t) ∂M.μ = 0) →
     ∫ y, Φ ((Quotient.out y : GroundTheory.Automorphic.Reduction.normOneGL (K := ℚ) (n := 2)) : GL (Fin 2) (A ℚ))
-      ∂GroundTheory.Automorphic.RightCosetSpace.quotientMeasure (GroundTheory.Automorphic.Reduction.rationalGLOne ℚ 2) μ = 0
+      ∂GroundTheory.Automorphic.RightCosetSpace.quotientMeasure (GroundTheory.Automorphic.Reduction.rationalGLOne (K := ℚ) (n := 2)) μ = 0
 
 def FormBd : Prop := ∀ π : TR.CuspSub ℚ 2, PosInv π → ∀ f ∈ π.V, Bd f.1 ∧ ∀ t ∈ UU, ∃ f' ∈ π.V, ∀ x, f'.1 x = f.1 (x * dM t)
 

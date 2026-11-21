@@ -73,6 +73,6 @@ theorem UpperTheory.ConvolutionTheory.Dp.diracSep :
   by_contra hne
   have hpos : 0 < ‖v‖ := norm_pos_iff.2 hne
   obtain ⟨ρ, hρ0, hρt, hρ1, -, -, hρN, -⟩ := exists_archBump ν
-    (near_one_nhds ((rightRegularRep (rationalGLOne K n) μ).compHom (archP K n) continuous_archP) hpos)
+    (near_one_nhds ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (archP K n) continuous_archP) hpos)
   let β : TI K n := ⟨⟨fun a => (ρ a : ℂ), hρt.continuous _⟩, hρt.2⟩
   exact exists_bump_nonzero ν _ hpos ρ β (fun _ => rfl) hρ0 hρ1 hρN (hv β hρt.1)

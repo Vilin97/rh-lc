@@ -54,7 +54,7 @@ private def stab (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem isClosed_stab (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (x : LL μ) :
     IsClosed (stab μ x : Set (AdelicGLn.FiniteAdelicGL K n)) :=
-  isClosed_eq (((rightRegularRep (rationalGLOne K n) μ).continuous_orbit x).comp MultiplicityOne.continuous_finProj)
+  isClosed_eq (((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).continuous_orbit x).comp MultiplicityOne.continuous_finProj)
     continuous_const
 
 private theorem mem_fixF (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (W : Subgroup (AdelicGLn.FiniteAdelicGL K n)) (x : LL μ) :

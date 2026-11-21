@@ -26,7 +26,7 @@ theorem measurable_tsum_of_summable {α ι : Type*} [MeasurableSpace α] [Counta
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-def ratEquiv : GL (Fin n) K ≃ rationalGLOne K n :=
+def ratEquiv : GL (Fin n) K ≃ rationalGLOne (K := K) (n := n) :=
   Equiv.ofBijective (fun γ => ⟨ratOne K n γ, mem_rationalGLOne_iff.2 ⟨γ, rfl⟩⟩)
     ⟨fun _ _ h => ratOne_injective (congrArg Subtype.val h), fun x => by
       obtain ⟨γ, hγ⟩ := mem_rationalGLOne_iff.1 x.2
@@ -38,7 +38,7 @@ instance countable_matrix : Countable (Matrix (Fin n) (Fin n) K) := by
 
 instance countable_R (k : ℕ) : Countable (R (K := K) (n := n) k) := Subtype.countable
 
-@[simp] theorem coe_ratEquiv (γ : GL (Fin n) K) : ((ratEquiv γ : rationalGLOne K n) : normOneGL (K := K) (n := n)) = ratOne K n γ :=
+@[simp] theorem coe_ratEquiv (γ : GL (Fin n) K) : ((ratEquiv γ : rationalGLOne (K := K) (n := n)) : normOneGL (K := K) (n := n)) = ratOne K n γ :=
   rfl
 
 def thetaR (k : ℕ) (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ) (y : AdelicGLn.AdelicGL K n)
@@ -205,14 +205,14 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n :
     (hbd : ∃ C, ∀ g ∈ normOneGL (K := K) (n := n), ‖ψ g‖ * ∑' ξ : Matrix (Fin n) (Fin n) K,
       ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat ξ * (g : Matrix (Fin n) (Fin n) 𝔸[K]))‖ ≤ C)
     {k : ℕ} (hk : 0 < k) (hkn : k < n) :
-    ∫ g in fundamentalDomain (rationalGLOne K n), ψ (g : AdelicGLn.AdelicGL K n) *
+    ∫ g in fundamentalDomain (rationalGLOne (K := K) (n := n)), ψ (g : AdelicGLn.AdelicGL K n) *
       ∑' ξ : {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k},
         Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (ξ : Matrix (Fin n) (Fin n) K) *
           ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])) ∂μ = 0 := by
   obtain ⟨C, hC⟩ := hbd
   have hkn' : k ≤ n := hkn.le
   set E := fundamentalDomain (parabolicOne K n k) with hE
-  set FΓ := fundamentalDomain (rationalGLOne K n) with hFΓ
+  set FΓ := fundamentalDomain (rationalGLOne (K := K) (n := n)) with hFΓ
   set F : normOneGL (K := K) (n := n) → ℂ := thetaR k Φ y with hF
   set ψ' : normOneGL (K := K) (n := n) → ℂ := fun h => ψ (h : AdelicGLn.AdelicGL K n) with hψ'
   set H : normOneGL (K := K) (n := n) → ℂ := E.indicator (fun h => ψ' h * F h) with hH
@@ -232,7 +232,7 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n :
   have hpt : ∀ g : normOneGL (K := K) (n := n), ψ' g * ∑' ξ : {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k},
       Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (ξ : Matrix (Fin n) (Fin n) K) *
         ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])) =
-      ∑' γ : rationalGLOne K n, H (γ • g) := by
+      ∑' γ : rationalGLOne (K := K) (n := n), H (γ • g) := by
     intro g
     rw [tsum_rank_eq hkn' Φ y g (hsum (g : AdelicGLn.AdelicGL K n)), ← tsum_mul_left,
       ← ratEquiv.tsum_eq]
@@ -242,7 +242,7 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n :
     · rw [indicator_of_mem hγ, indicator_of_mem hγ, hψΓ]
     · rw [indicator_of_notMem hγ, indicator_of_notMem hγ, mul_zero]
 
-  have hbound : ∀ g : normOneGL (K := K) (n := n), ∑' γ : rationalGLOne K n, ‖H (γ • g)‖ₑ ≤ ENNReal.ofReal C := by
+  have hbound : ∀ g : normOneGL (K := K) (n := n), ∑' γ : rationalGLOne (K := K) (n := n), ‖H (γ • g)‖ₑ ≤ ENNReal.ofReal C := by
     intro g
     have h1 : ∀ γ : GL (Fin n) K, ‖H (ratOne K n γ * g)‖ₑ ≤ ‖ψ' g‖ₑ *
         E.indicator (fun h : normOneGL (K := K) (n := n) => ∑' Z : R (K := K) (n := n) k,
@@ -255,7 +255,7 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n :
         exact enorm_tsum_le_tsum_enorm
       · rw [hH, indicator_of_notMem hγ, indicator_of_notMem hγ]
         simp
-    calc ∑' γ : rationalGLOne K n, ‖H (γ • g)‖ₑ
+    calc ∑' γ : rationalGLOne (K := K) (n := n), ‖H (γ • g)‖ₑ
         = ∑' γ : GL (Fin n) K, ‖H (ratOne K n γ * g)‖ₑ := by
           rw [← ratEquiv.tsum_eq]
           rfl
@@ -280,14 +280,14 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n :
           simp only [ofReal_norm]
       _ ≤ ENNReal.ofReal C := ENNReal.ofReal_le_ofReal (hC (g : AdelicGLn.AdelicGL K n) g.2)
 
-  have hFΓfd : IsFundamentalDomain (rationalGLOne K n) FΓ μ := isFundamentalDomain_fundamentalDomain _ μ
+  have hFΓfd : IsFundamentalDomain (rationalGLOne (K := K) (n := n)) FΓ μ := isFundamentalDomain_fundamentalDomain _ μ
   have hFΓfin : μ FΓ < ∞ := by
     have := Reduction.isFiniteMeasure_quotientMeasure (K := K) (n := n) μ
     rw [← quotientMeasure_univ μ hFΓfd]
     exact measure_lt_top _ _
   have hlint : ∫⁻ g, ‖H g‖ₑ ∂μ < ∞ := by
     rw [hFΓfd.lintegral_eq_tsum'', ← lintegral_tsum]
-    · calc ∫⁻ g in FΓ, ∑' γ : rationalGLOne K n, ‖H (γ • g)‖ₑ ∂μ ≤ ∫⁻ _ in FΓ, ENNReal.ofReal C ∂μ :=
+    · calc ∫⁻ g in FΓ, ∑' γ : rationalGLOne (K := K) (n := n), ‖H (γ • g)‖ₑ ∂μ ≤ ∫⁻ _ in FΓ, ENNReal.ofReal C ∂μ :=
             lintegral_mono fun g => hbound g
         _ = ENNReal.ofReal C * μ FΓ := by rw [setLIntegral_const]
         _ < ∞ := ENNReal.mul_lt_top ENNReal.ofReal_lt_top hFΓfin
@@ -295,7 +295,7 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n :
       exact (hHm.enorm.comp (measurable_const_mul (γ : normOneGL (K := K) (n := n)))).aemeasurable.restrict
   have hHint : Integrable H μ := ⟨hHm.aestronglyMeasurable, hlint⟩
 
-  have hunf : ∫ g in FΓ, ∑' γ : rationalGLOne K n, H (γ • g) ∂μ = ∫ g, H g ∂μ := by
+  have hunf : ∫ g in FΓ, ∑' γ : rationalGLOne (K := K) (n := n), H (γ • g) ∂μ = ∫ g, H g ∂μ := by
     rw [hFΓfd.integral_eq_tsum'' H hHint, integral_tsum]
     · intro γ
       exact (hHm.comp (measurable_const_mul (γ : normOneGL (K := K) (n := n)))).aestronglyMeasurable.restrict
@@ -325,7 +325,7 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n :
         ∑' ξ : {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k},
           Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (ξ : Matrix (Fin n) (Fin n) K) *
             ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])) ∂μ
-      = ∫ g in FΓ, ∑' γ : rationalGLOne K n, H (γ • g) ∂μ :=
+      = ∫ g in FΓ, ∑' γ : rationalGLOne (K := K) (n := n), H (γ • g) ∂μ :=
         setIntegral_congr_fun (measurableSet_fundamentalDomain _) fun g _ => hpt g
     _ = ∫ g, H g ∂μ := hunf
     _ = ∫ g in E, ψ' g * F g ∂μ := integral_indicator (measurableSet_fundamentalDomain _)

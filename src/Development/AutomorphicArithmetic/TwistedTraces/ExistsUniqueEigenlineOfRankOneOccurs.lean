@@ -199,11 +199,11 @@ private theorem exists_split (w : Pl K) (x : normOneGL (K := K) (n := n)) :
 private theorem rho_comm {w : Pl K} {c : normOneGL (K := K) (n := n)}
     (hc : ∀ g : Gw n w, c * MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g) =
       MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g) * c) (g : Gw n w) (v : LL μ) :
-    rightRegularRep (rationalGLOne K n) μ c (rhoL μ w g v) =
-      rhoL μ w g (rightRegularRep (rationalGLOne K n) μ c v) := by
-  have h := UnitaryRep.map_mul_apply (rightRegularRep (rationalGLOne K n) μ) c
+    rightRegularRep (rationalGLOne (K := K) (n := n)) μ c (rhoL μ w g v) =
+      rhoL μ w g (rightRegularRep (rationalGLOne (K := K) (n := n)) μ c v) := by
+  have h := UnitaryRep.map_mul_apply (rightRegularRep (rationalGLOne (K := K) (n := n)) μ) c
     (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) v
-  have h' := UnitaryRep.map_mul_apply (rightRegularRep (rationalGLOne K n) μ)
+  have h' := UnitaryRep.map_mul_apply (rightRegularRep (rationalGLOne (K := K) (n := n)) μ)
     (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) c v
   rw [hc g] at h
   exact h.symm.trans h'
@@ -215,9 +215,9 @@ private theorem ker_of_all {V : Submodule ℂ (LL μ)} (hV : IsSummand μ V) {w 
   obtain ⟨f₀, hf0, hf0V, hf0i⟩ := hocc
   refine ker_gen _ hV hf0 hf0V Q fun x y => ?_
   obtain ⟨c, a, rfl, hc⟩ := exists_split (n := n) w x
-  have h2 := hQ _ (inter_gen π.ρ (rhoL μ w) (rightRegularRep (rationalGLOne K n) μ c) (rho_comm μ hc) f₀ hf0i) (π.ρ a y)
-  have e2 : rightRegularRep (rationalGLOne K n) μ (c * MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w a)) (f₀ y) =
-      rightRegularRep (rationalGLOne K n) μ c (f₀ (π.ρ a y)) :=
+  have h2 := hQ _ (inter_gen π.ρ (rhoL μ w) (rightRegularRep (rationalGLOne (K := K) (n := n)) μ c) (rho_comm μ hc) f₀ hf0i) (π.ρ a y)
+  have e2 : rightRegularRep (rationalGLOne (K := K) (n := n)) μ (c * MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w a)) (f₀ y) =
+      rightRegularRep (rationalGLOne (K := K) (n := n)) μ c (f₀ (π.ρ a y)) :=
     (UnitaryRep.map_mul_apply _ c _ (f₀ y)).trans (congrArg _ (hf0i a y).symm)
   rw [e2]
   exact h2

@@ -97,7 +97,7 @@ theorem UpperTheory.ConvolutionTheory.Dp.locIff :
       | smul c u _ h1 => rw [inner_smul_left, h1, mul_zero]
     rcases h.summand.irred (V ⊓ Sᗮ) inf_le_left (h.summand.closed.inter S.isClosed_orthogonal) (fun g v hv =>
       ⟨h.summand.inv g v hv.1, (hS _).2 fun a y ha => by
-        have e : rightRegularRep (rationalGLOne E n) μ g v = RG μ (g⁻¹.1)⁻¹ v := by
+        have e : rightRegularRep (rationalGLOne (K := E) (n := n)) μ g v = RG μ (g⁻¹.1)⁻¹ v := by
           simp only [RG, Subgroup.coe_inv, inv_inv, retractOne_coe]
         rw [e, ← hin, ← hm, ← awayPart_mul_iota_wPart (w := w) (g⁻¹.1 * a), hm, ← hi']
         exact (hS v).1 hv.2 _ _ (wPart_awayPart _)⟩) with hb | hb

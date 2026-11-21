@@ -60,7 +60,7 @@ theorem continuous_unipOne (r : ℕ) : Continuous (unipOne K n r) :=
   continuous_induced_rng.2 continuous_unipGL
 
 theorem unipOne_mem_rationalGLOne (r : ℕ) (ξ : unipLattice K n r) :
-    unipOne K n r ξ ∈ rationalGLOne K n := by
+    unipOne K n r ξ ∈ rationalGLOne (K := K) (n := n) := by
   obtain ⟨_, ξ, rfl⟩ := ξ
   change unipGL (fun p => algebraMap K 𝔸[K] (ξ p)) ∈ AdelicGLn.rationalGL K n
   rw [← diagonal_unipGL]

@@ -34,7 +34,7 @@ private theorem leftT_apply {K : Type} [Field K] [NumberField K] {n : ℕ} (h g 
 private theorem ofin_leftT {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] (h : AdelicGLn.FiniteAdelicGL K n) (e : TF K n) :
     Ofin μ m (leftT h e) = rhoF μ h ∘L Ofin μ m e :=
-  integrated_left m ((rightRegularRep (rationalGLOne K n) μ).compHom (MultiplicityOne.finProj K n)
+  integrated_left m ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (MultiplicityOne.finProj K n)
       MultiplicityOne.continuous_finProj) h e (leftT h e) (fun g => leftT_apply h g e)
 
 private theorem coset_sum {G L ι : Type*} [Group G] [Group L] [Fintype ι] (loc : L →* G) (p : G → L)

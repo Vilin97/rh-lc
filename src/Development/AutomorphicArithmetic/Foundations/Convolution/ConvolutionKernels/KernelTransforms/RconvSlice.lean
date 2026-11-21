@@ -77,8 +77,8 @@ private theorem tens_conv (hn : 0 < n) (ν : Measure (archGroup K n)) [ν.IsHaar
 
 private theorem rconv_conv (hn : 0 < n) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (β₁ β₂ : TI K n) (e : TF K n) (φ : LL μ) (x : normOneGL (K := K) (n := n)) :
-    rconv (rationalGLOne K n) μ (tens (conv ν β₁ β₂) e) φ x =
-      ∫ a, β₁ a * rconv (rationalGLOne K n) μ (tens β₂ e) φ (x * archP K n a) ∂ν := by
+    rconv (rationalGLOne (K := K) (n := n)) μ (tens (conv ν β₁ β₂) e) φ x =
+      ∫ a, β₁ a * rconv (rationalGLOne (K := K) (n := n)) μ (tens β₂ e) φ (x * archP K n a) ∂ν := by
   haveI hσ : SigmaFinite μ := Measure.IsHaarMeasure.sigmaFinite μ
   haveI : SFinite μ := @instSFiniteOfSigmaFinite _ _ μ hσ
   obtain ⟨T, hT⟩ : ∃ T, T = tens β₂ e := ⟨_, rfl⟩
@@ -90,15 +90,15 @@ private theorem rconv_conv (hn : 0 < n) (μ : Measure (normOneGL (K := K) (n := 
     rw [hD]
     exact (hAc.prod T.hasCompactSupport.isCompact).image
       ((continuous_const.mul (continuous_archP.comp continuous_fst)).mul continuous_snd)
-  obtain ⟨ψ, hψ⟩ : ∃ ψ, ψ = D.indicator fun y => φ (mk (rationalGLOne K n) y) := ⟨_, rfl⟩
+  obtain ⟨ψ, hψ⟩ : ∃ ψ, ψ = D.indicator fun y => φ (mk (rationalGLOne (K := K) (n := n)) y) := ⟨_, rfl⟩
   have hψi : Integrable ψ μ := by
     rw [hψ]
-    exact (integrableOn_lift (rationalGLOne K n) μ φ hDc).integrable_indicator hDc.measurableSet
+    exact (integrableOn_lift (rationalGLOne (K := K) (n := n)) μ φ hDc).integrable_indicator hDc.measurableSet
   have hβi : Integrable (β₁ : archGroup K n → ℂ) ν :=
     β₁.continuous.integrable_of_hasCompactSupport β₁.hasCompactSupport
   obtain ⟨M, hM⟩ := T.continuous.bounded_above_of_compact_support T.hasCompactSupport
   have hint : Integrable (Function.uncurry fun (a : archGroup K n) (y : normOneGL (K := K) (n := n)) =>
-      β₁ a * (T ((archP K n a)⁻¹ * (x⁻¹ * y)) * φ (mk (rationalGLOne K n) y))) (ν.prod μ) := by
+      β₁ a * (T ((archP K n a)⁻¹ * (x⁻¹ * y)) * φ (mk (rationalGLOne (K := K) (n := n)) y))) (ν.prod μ) := by
     have h1 : Integrable (fun z : archGroup K n × normOneGL (K := K) (n := n) => β₁ z.1 * ψ z.2) (ν.prod μ) := hβi.mul_prod hψi
     have hcT : Continuous fun z : archGroup K n × normOneGL (K := K) (n := n) => T ((archP K n z.1)⁻¹ * (x⁻¹ * z.2)) :=
       T.continuous.comp ((continuous_archP.comp continuous_fst).inv.mul (continuous_const.mul continuous_snd))
@@ -121,8 +121,8 @@ private theorem rconv_conv (hn : 0 < n) (μ : Measure (normOneGL (K := K) (n := 
       · have h0 : β₁ a = 0 := image_eq_zero_of_notMem_tsupport (by rwa [← hA])
         rw [h0, zero_mul]
   have hsw := integral_integral_swap hint
-  have hr : ∀ a : archGroup K n, β₁ a * rconv (rationalGLOne K n) μ (tens β₂ e) φ (x * archP K n a) =
-      ∫ y, β₁ a * (T ((archP K n a)⁻¹ * (x⁻¹ * y)) * φ (mk (rationalGLOne K n) y)) ∂μ := by
+  have hr : ∀ a : archGroup K n, β₁ a * rconv (rationalGLOne (K := K) (n := n)) μ (tens β₂ e) φ (x * archP K n a) =
+      ∫ y, β₁ a * (T ((archP K n a)⁻¹ * (x⁻¹ * y)) * φ (mk (rationalGLOne (K := K) (n := n)) y)) ∂μ := by
     intro a
     rw [rconv, integral_const_mul, hT]
     simp only [mul_inv_rev, mul_assoc]
@@ -146,24 +146,24 @@ end SlopeTestRemainingChoices
 theorem UpperTheory.ConvolutionTheory.Tf.rconvSlice :
     ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure], Compat μ ν m →
       ∀ (β₁ β₂ : TI K n) (e : TF K n) (φ : LL μ), SmoothT β₁ →
-      (∀ x, rconv (rationalGLOne K n) μ (tens (conv ν β₁ β₂) e) φ x =
-        ∫ a, β₁ a * rconv (rationalGLOne K n) μ (tens β₂ e) φ (x * archP K n a) ∂ν) ∧
-      ∃ h : liftOne (rconv (rationalGLOne K n) μ (tens (conv ν β₁ β₂) e) φ) ∈ archSmooth K n, ∀ u : UC K n,
+      (∀ x, rconv (rationalGLOne (K := K) (n := n)) μ (tens (conv ν β₁ β₂) e) φ x =
+        ∫ a, β₁ a * rconv (rationalGLOne (K := K) (n := n)) μ (tens β₂ e) φ (x * archP K n a) ∂ν) ∧
+      ∃ h : liftOne (rconv (rationalGLOne (K := K) (n := n)) μ (tens (conv ν β₁ β₂) e) φ) ∈ archSmooth K n, ∀ u : UC K n,
         (uAct u ⟨_, h⟩ : AdelicGLn.AdelicGL K n → ℂ) =
-          liftOne (rconv (rationalGLOne K n) μ (tens (conv ν (lact u β₁) β₂) e) φ) := by
+          liftOne (rconv (rationalGLOne (K := K) (n := n)) μ (tens (conv ν (lact u β₁) β₂) e) φ) := by
   intro K _ _ n hn μ _ ν _ m _ _ β₁ β₂ e φ hβ₁
   refine ⟨rconv_conv hn μ ν β₁ β₂ e φ, ?_⟩
   obtain ⟨h, -, h2, -, h4, h5, -, h7⟩ := UpperTheory.ConvolutionTheory.Tf.lactSpec K n β₁ hβ₁
-  obtain ⟨Φ, hΦe⟩ : ∃ Φ, Φ = rconv (rationalGLOne K n) μ (tens β₂ e) φ := ⟨_, rfl⟩
-  have hΦ : Continuous Φ := hΦe ▸ continuous_rconv (rationalGLOne K n) μ (tens β₂ e) φ
-  have key : ∀ (γ : TI K n) x, rconv (rationalGLOne K n) μ (tens (conv ν γ β₂) e) φ x =
+  obtain ⟨Φ, hΦe⟩ : ∃ Φ, Φ = rconv (rationalGLOne (K := K) (n := n)) μ (tens β₂ e) φ := ⟨_, rfl⟩
+  have hΦ : Continuous Φ := hΦe ▸ continuous_rconv (rationalGLOne (K := K) (n := n)) μ (tens β₂ e) φ
+  have key : ∀ (γ : TI K n) x, rconv (rationalGLOne (K := K) (n := n)) μ (tens (conv ν γ β₂) e) φ x =
       ∫ a, γ a * Φ (x * archP K n a) ∂ν := fun γ x => by
     rw [hΦe]
     exact rconv_conv hn μ ν γ β₂ e φ x
   obtain ⟨hF, hU⟩ := UpperTheory.ConvolutionTheory.Tf.sliceAct K n ν β₁ h Φ hΦ
-  have e0 : rconv (rationalGLOne K n) μ (tens (conv ν β₁ β₂) e) φ =
+  have e0 : rconv (rationalGLOne (K := K) (n := n)) μ (tens (conv ν β₁ β₂) e) φ =
       fun x => ∫ a, β₁ a * Φ (x * archP K n a) ∂ν := funext (key β₁)
-  have hF' : liftOne (rconv (rationalGLOne K n) μ (tens (conv ν β₁ β₂) e) φ) ∈ archSmooth K n := by
+  have hF' : liftOne (rconv (rationalGLOne (K := K) (n := n)) μ (tens (conv ν β₁ β₂) e) φ) ∈ archSmooth K n := by
     rw [e0]
     exact hF
   have hi : ∀ (γ : TI K n) (g : AdelicGLn.AdelicGL K n),

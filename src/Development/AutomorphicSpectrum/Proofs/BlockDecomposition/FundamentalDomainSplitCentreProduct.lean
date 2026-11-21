@@ -19,9 +19,9 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 variable (E a) in
 abbrev splitFd : Set (GA E a) :=
   (fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) ''
-    (RightCosetSpace.fundamentalDomain (rationalGLOne E a) ×ˢ Set.Ico (0 : ℝ) 1)
+    (RightCosetSpace.fundamentalDomain (rationalGLOne (K := E) (n := a)) ×ˢ Set.Ico (0 : ℝ) 1)
 
-theorem coe_rationalGLOne_mem_latticeGL (δ : rationalGLOne E a) :
+theorem coe_rationalGLOne_mem_latticeGL (δ : rationalGLOne (K := E) (n := a)) :
     ((δ : normOneGL (K := E) (n := a)) : GA E a) ∈ latticeGL E a := by
   obtain ⟨γ, hγ⟩ : ((δ : normOneGL (K := E) (n := a)) : GA E a) ∈ AdelicGLn.rationalGL E a := δ.2
   rw [← hγ]
@@ -38,7 +38,7 @@ theorem exists_lattice_smul_mem_splitFd (ha : 0 < a) (g : GA E a) :
   obtain ⟨e, he⟩ := GlobalTheory.T.adelic_GL_norm_one_split E a ha
   obtain ⟨⟨x, t⟩, rfl⟩ := e.surjective g
   rw [he]
-  obtain ⟨δ, hδ, -⟩ := RightCosetSpace.existsUnique_smul_mem_fundamentalDomain (rationalGLOne E a) x
+  obtain ⟨δ, hδ, -⟩ := RightCosetSpace.existsUnique_smul_mem_fundamentalDomain (rationalGLOne (K := E) (n := a)) x
   have hn : splitCentre E a ((-⌊t⌋ : ℤ) : ℝ) ∈ latticeGL E a := by
     rw [splitCentre_intCast]
     exact zpow_mem_latticeGL _
@@ -72,13 +72,13 @@ theorem eq_one_of_mul_mem_splitFd (ha : 0 < a) {l g : GA E a} (hl : l ∈ lattic
     have h6 : -1 < m := by exact_mod_cast h4
     omega
   subst hm
-  let δ : rationalGLOne E a := ⟨⟨ratGL E a γ, hγ⟩, ⟨γ, rfl⟩⟩
-  have h7 : δ = 1 := (RightCosetSpace.existsUnique_smul_mem_fundamentalDomain (rationalGLOne E a) x).unique
+  let δ : rationalGLOne (K := E) (n := a) := ⟨⟨ratGL E a γ, hγ⟩, ⟨γ, rfl⟩⟩
+  have h7 : δ = 1 := (RightCosetSpace.existsUnique_smul_mem_fundamentalDomain (rationalGLOne (K := E) (n := a)) x).unique
     (show δ • x ∈ _ from by
       change ((⟨ratGL E a γ, hγ⟩ : normOneGL (K := E) (n := a)) * x) ∈ _
       rw [← h1]
       exact hy) (by simpa using hx)
-  have h8 : ratGL E a γ = 1 := congrArg (fun d : rationalGLOne E a => ((d : normOneGL (K := E) (n := a)) : GA E a)) h7
+  have h8 : ratGL E a γ = 1 := congrArg (fun d : rationalGLOne (K := E) (n := a) => ((d : normOneGL (K := E) (n := a)) : GA E a)) h7
   rw [h8, zpow_zero, mul_one]
 
 theorem measurableSet_splitFd (ha : 0 < a) : MeasurableSet (splitFd E a) := by
@@ -92,7 +92,7 @@ theorem measurableSet_splitFd (ha : 0 < a) : MeasurableSet (splitFd E a) := by
 theorem isFundamentalDomain_splitFd : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 0 < a →
     ∀ (μ : Measure (GA E a)) [μ.IsHaarMeasure], IsFundamentalDomain (latticeGL E a)
       ((fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) ''
-        (RightCosetSpace.fundamentalDomain (rationalGLOne E a) ×ˢ Set.Ico (0 : ℝ) 1)) μ := by
+        (RightCosetSpace.fundamentalDomain (rationalGLOne (K := E) (n := a)) ×ˢ Set.Ico (0 : ℝ) 1)) μ := by
   intro E _ _ _ a ha μ _
   refine IsFundamentalDomain.mk' (measurableSet_splitFd ha).nullMeasurableSet fun g => ?_
   obtain ⟨l, hl⟩ := exists_lattice_smul_mem_splitFd ha g

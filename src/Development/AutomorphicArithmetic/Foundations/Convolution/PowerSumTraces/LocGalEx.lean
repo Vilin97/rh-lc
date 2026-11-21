@@ -250,8 +250,8 @@ theorem UpperTheory.ConvolutionTheory.C.locGalEx :
   have hloc := sOf_isLocGal σ w hw n
   refine ⟨hw, sOf σ w hw n, hloc, fun μ _ θ hθ => ?_⟩
   have hint : ∀ g x, θ.U (rhoL μ w.1 g x) = rhoL μ w.1 (sOf σ w hw n g) (θ.U x) := fun g x => by
-    change θ.U (rightRegularRep (rationalGLOne E n) μ (MultiplicityOne.finProj E n _) x) =
-      rightRegularRep (rationalGLOne E n) μ (MultiplicityOne.finProj E n _) (θ.U x)
+    change θ.U (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (MultiplicityOne.finProj E n _) x) =
+      rightRegularRep (rationalGLOne (K := E) (n := n)) μ (MultiplicityOne.finProj E n _) (θ.U x)
     rw [(UpperTheory.ConvolutionTheory.Dp.twUnitary E n μ θ).2.2, e_finProj hσ hθ (gal_local hw hloc g)]
     rfl
   refine ⟨hint, fun V τ hV hVU hocc => ?_⟩

@@ -189,22 +189,22 @@ theorem infAt_isUpperTriangular {w : InfinitePlace K} {b : AdelicGLn.AdelicGL K 
     rfl
 
 theorem isFiniteMeasure_quotientMeasure (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] :
-    IsFiniteMeasure (RightCosetSpace.quotientMeasure (rationalGLOne K n) μ) := by
+    IsFiniteMeasure (RightCosetSpace.quotientMeasure (rationalGLOne (K := K) (n := n)) μ) := by
   classical
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · have : Subsingleton (normOneGL (K := K) (n := 0)) :=
       ⟨fun x y => Subtype.ext (Units.ext (Subsingleton.elim _ _))⟩
-    have : Subsingleton (RightCosetSpace (rationalGLOne K 0)) :=
+    have : Subsingleton (RightCosetSpace (rationalGLOne (K := K) (n := 0))) :=
       ⟨fun p q => by
         obtain ⟨x, rfl⟩ := RightCosetSpace.mk_surjective _ p
         obtain ⟨y, rfl⟩ := RightCosetSpace.mk_surjective _ q
         rw [Subsingleton.elim x y]⟩
-    have : CompactSpace (RightCosetSpace (rationalGLOne K 0)) := Finite.compactSpace
+    have : CompactSpace (RightCosetSpace (rationalGLOne (K := K) (n := 0))) := Finite.compactSpace
     infer_instance
   obtain ⟨ω, hω, hωB, t, ht, hsieg⟩ := exists_siegelSet (K := K) n
   set D : Set (normOneGL (K := K) (n := n)) := Subtype.val ⁻¹' siegelSet n ω t with hDdef
   have hDm : MeasurableSet D := measurable_subtype_coe (measurableSet_siegelSet hω t)
-  have hcover : RightCosetSpace.mk (rationalGLOne K n) '' D = univ := by
+  have hcover : RightCosetSpace.mk (rationalGLOne (K := K) (n := n)) '' D = univ := by
     refine eq_univ_of_forall fun q => ?_
     obtain ⟨x, rfl⟩ := RightCosetSpace.mk_surjective _ q
     obtain ⟨γ, hγ⟩ := hsieg x
@@ -252,8 +252,8 @@ theorem isFiniteMeasure_quotientMeasure (μ : Measure (normOneGL (K := K) (n := 
     exact hs
   refine ⟨?_⟩
   rw [← hcover]
-  calc RightCosetSpace.quotientMeasure (rationalGLOne K n) μ
-        (RightCosetSpace.mk (rationalGLOne K n) '' D)
+  calc RightCosetSpace.quotientMeasure (rationalGLOne (K := K) (n := n)) μ
+        (RightCosetSpace.mk (rationalGLOne (K := K) (n := n)) '' D)
       ≤ μ D := RightCosetSpace.quotientMeasure_mk_image_le μ (by rw [hcover]; exact MeasurableSet.univ)
     _ = c * (Measure.haar : Measure (AdelicGLn.AdelicGL K n)) _ := hμ D hDm
     _ ≤ c * (Measure.haar : Measure (AdelicGLn.AdelicGL K n)) E := by

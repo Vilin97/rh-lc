@@ -37,7 +37,7 @@ theorem ctFun_resQ_eq_zero {φ : GA E a → ℂ} (hφ : φ ∈ cuspCont E a) {r 
 
 theorem toLp_restrict_mem_cuspidalL2 (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
     (ν : Measure (normOneGL (K := E) (n := a))) [ν.IsHaarMeasure] (φ : GA E a → ℂ) (hφ : φ ∈ cuspCont E a)
-    (h : MemLp (resQ φ) 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν)) :
+    (h : MemLp (resQ φ) 2 (RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν)) :
     h.toLp (resQ φ) ∈ cuspidalL2 ν := by
   intro r h0 h1
   filter_upwards [ae_ctFun_congr ν r h.coeFn_toLp] with y hy

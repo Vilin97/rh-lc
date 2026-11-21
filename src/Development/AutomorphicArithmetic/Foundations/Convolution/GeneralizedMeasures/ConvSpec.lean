@@ -26,4 +26,4 @@ theorem UpperTheory.ConvolutionTheory.GM.convSpec :
     ext x
     exact (h1 x).trans (hg x).symm
   rw [h2]
-  exact hop (LL μ) ((rightRegularRep (rationalGLOne K n) μ).compHom (archP K n) continuous_archP)
+  exact hop (LL μ) ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (archP K n) continuous_archP)

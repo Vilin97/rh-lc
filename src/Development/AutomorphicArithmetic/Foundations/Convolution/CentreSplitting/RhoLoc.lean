@@ -32,6 +32,6 @@ private theorem finProj_eq {K : Type} [Field K] [NumberField K] {n : ℕ} (u : A
 theorem UpperTheory.ConvolutionTheory.Dp.rhoLoc :
     UpperTheory.ConvolutionTheory.Dp.RhoLoc := by
   intro K _ _ n μ _ w g v
-  change rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) v =
-    rightRegularRep (rationalGLOne K n) μ (retractOne (finGL K n (locGL K n w g))) v
+  change rightRegularRep (rationalGLOne (K := K) (n := n)) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) v =
+    rightRegularRep (rationalGLOne (K := K) (n := n)) μ (retractOne (finGL K n (locGL K n w g))) v
   rw [finProj_eq, localEmbedding_eq]

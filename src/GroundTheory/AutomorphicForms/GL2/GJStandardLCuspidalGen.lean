@@ -204,10 +204,10 @@ theorem matrixCoeff_eq_inner {φ : cuspForms K n} (hφ : φ ∈ centralCuspForms
     (g : AdelicGLn.AdelicGL K n) :
     GJGlobal.matrixCoeff μ (φ : AdelicGLn.AdelicGL K n → ℂ) φ g =
       inner ℂ (cuspToL2 μ φ) (cuspRep μ (toOne g) (cuspToL2 μ φ)) := by
-  have hmp := measurePreserving_rightMul (Γ := Reduction.rationalGLOne K n) μ (toOne g)
+  have hmp := measurePreserving_rightMul (Γ := Reduction.rationalGLOne (K := K) (n := n)) μ (toOne g)
   have hq : ((cuspRep μ (toOne g) (cuspToL2 μ φ) : cuspidalL2 μ) :
-        Lp ℂ 2 (quotientMeasure (Reduction.rationalGLOne K n) μ)) =ᵐ[quotientMeasure (Reduction.rationalGLOne K n) μ]
-      fun q => cuspQuot φ.2.1.isLeftInvariant (rightMul (Reduction.rationalGLOne K n) (toOne g) q) := by
+        Lp ℂ 2 (quotientMeasure (Reduction.rationalGLOne (K := K) (n := n)) μ)) =ᵐ[quotientMeasure (Reduction.rationalGLOne (K := K) (n := n)) μ]
+      fun q => cuspQuot φ.2.1.isLeftInvariant (rightMul (Reduction.rationalGLOne (K := K) (n := n)) (toOne g) q) := by
     rw [coe_cuspRep_apply]
     exact (coeFn_rightTranslate _ _ _ _).trans
       (hmp.quasiMeasurePreserving.ae_eq (coeFn_cuspToL2 μ φ))
@@ -215,7 +215,7 @@ theorem matrixCoeff_eq_inner {φ : cuspForms K n} (hφ : φ ∈ centralCuspForms
   refine Eq.trans ?_ (inner_ae _ _ _ _ (coeFn_cuspToL2 μ φ) hq).symm
   have hc : Continuous (cuspQuot φ.2.1.isLeftInvariant) := continuous_cuspQuot _ φ.2.1.continuous
   have h1 : AEStronglyMeasurable (cuspQuot φ.2.1.isLeftInvariant)
-      (quotientMeasure (Reduction.rationalGLOne K n) μ) := hc.aestronglyMeasurable
+      (quotientMeasure (Reduction.rationalGLOne (K := K) (n := n)) μ) := hc.aestronglyMeasurable
   rw [quotientMeasure, integral_map (measurable_mk _).aemeasurable]
   · unfold GJGlobal.matrixCoeff
     refine integral_congr_ae (Filter.Eventually.of_forall fun x => ?_)

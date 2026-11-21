@@ -88,7 +88,7 @@ def ratOne : GL (Fin n) K →* normOneGL (K := K) (n := n) :=
 theorem ratOne_injective : Injective (ratOne K n) := fun _ _ h =>
   AdelicGLn.diagonal_injective K n (congrArg Subtype.val h)
 
-theorem mem_rationalGLOne_iff {x : normOneGL (K := K) (n := n)} : x ∈ rationalGLOne K n ↔ ∃ γ, ratOne K n γ = x := by
+theorem mem_rationalGLOne_iff {x : normOneGL (K := K) (n := n)} : x ∈ rationalGLOne (K := K) (n := n) ↔ ∃ γ, ratOne K n γ = x := by
   constructor
   · rintro ⟨γ, hγ⟩
     exact ⟨γ, Subtype.ext hγ⟩
@@ -110,7 +110,7 @@ instance countable_GL : Countable (GL (Fin n) K) := by
 def parabolicOne (k : ℕ) : Subgroup (normOneGL (K := K) (n := n)) :=
   (parabolic (K := K) (n := n) k).map (ratOne K n)
 
-theorem parabolicOne_le (k : ℕ) : parabolicOne K n k ≤ rationalGLOne K n := by
+theorem parabolicOne_le (k : ℕ) : parabolicOne K n k ≤ rationalGLOne (K := K) (n := n) := by
   rintro _ ⟨γ, -, rfl⟩
   exact mem_rationalGLOne_iff.2 ⟨γ, rfl⟩
 
@@ -121,7 +121,7 @@ instance countable_parabolicOne (k : ℕ) : Countable (parabolicOne K n k) := by
   exact this.to_subtype
 
 instance discreteTopology_parabolicOne (k : ℕ) : DiscreteTopology (parabolicOne K n k) :=
-  DiscreteTopology.of_subset (s := (rationalGLOne K n : Set (normOneGL (K := K) (n := n))))
+  DiscreteTopology.of_subset (s := (rationalGLOne (K := K) (n := n) : Set (normOneGL (K := K) (n := n))))
     discreteTopology_rationalGLOne (parabolicOne_le k)
 
 theorem mem_parabolicOne_iff {k : ℕ} {q : normOneGL (K := K) (n := n)} :

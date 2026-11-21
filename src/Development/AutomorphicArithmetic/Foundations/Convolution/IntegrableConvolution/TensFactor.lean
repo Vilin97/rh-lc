@@ -69,7 +69,7 @@ variable (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
 
 def OComponent (s : archGroup F n →* archGroup E n) (hs : Continuous s) (ν : Measure (archGroup F n)) [ν.IsHaarMeasure] (a : TI F n) :
     LL μ →L[ℂ] LL μ :=
-  (((rightRegularRep (rationalGLOne E n) μ).compHom (archP E n) continuous_archP).compHom s hs).integrated ν
+  (((rightRegularRep (rationalGLOne (K := E) (n := n)) μ).compHom (archP E n) continuous_archP).compHom s hs).integrated ν
     (UnitaryRep.ccToL1 ν a)
 
 def Ty.typed (T : Ty σ n q w₀) : Submodule ℂ (LL μ) := ⨅ w, eigL μ w (T.J w) (T.χ w)
@@ -130,8 +130,8 @@ def TwistPerm : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] (σ : E ≃ₐ[F] E),
     (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ (m n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
     (∀ (D : InfD σ m) (s : Fin (m + 1) → archGroup F n →* archGroup E n), IsBlockElement D n s → ∀ i g v,
-      θ.U (rightRegularRep (rationalGLOne E n) μ (archP E n (s (i + 1) g)) v) =
-        rightRegularRep (rationalGLOne E n) μ (archP E n (s i g)) (θ.U v)) ∧
+      θ.U (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s (i + 1) g)) v) =
+        rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s i g)) (θ.U v)) ∧
     (∀ (p : Pl F) (D : Split (incFin E p) (galFin σ p) m) (w : Fin (m + 1) ≃ PlacesOver E p),
       (∀ (b : CompletionsOver E p) i, completionMap p (w i).1 (D.e b i) = b (w i)) → ∀ i g v,
       θ.U (rhoL μ (w (i + 1)).1 (mapGL n (completionMap p (w (i + 1)).1) g) v) =
@@ -166,7 +166,7 @@ def TwistY : Prop :=
       ((∃ v ∈ V ⊓ T.typed μ, OComponent μ (s 0) (hs 0) νF a v ≠ 0) →
         ∃ y : ℝ, 0 < y ∧ T.Y μ V (fun i => OComponent μ (s i) (hs i) νF a) y ≠ ⊥) ∧
       ∀ y : ℝ, 0 < y → ∃ c : ℂ, c ≠ 0 ∧ ∀ B : LL μ →L[ℂ] LL μ,
-        (∀ g, Commute B (rightRegularRep (rationalGLOne E n) μ (archP E n g))) →
+        (∀ g, Commute B (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n g))) →
         (∀ w ∉ T.marked, ∀ g, Commute B (rhoL μ w g)) →
         trOn (eigIn (V ⊓ T.typed μ) (Oinf μ νE aE) (y ^ (m + 1))) (B ∘L θ.U) =
           c * trOn (T.Y μ V (fun i => OComponent μ (s i) (hs i) νF a) y) B

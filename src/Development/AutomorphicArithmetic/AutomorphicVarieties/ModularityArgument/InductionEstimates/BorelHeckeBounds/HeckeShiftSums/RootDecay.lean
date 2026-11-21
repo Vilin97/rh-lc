@@ -113,7 +113,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.rootDecay :
   obtain ⟨m₀, hmC₀, hm₀⟩ := hCc b hb ρ hρ hsieg kk hkk x hx R hR1 hR
   obtain ⟨m, hmdef⟩ : ∃ m : ℕ, m = s.card * m₀ := ⟨_, rfl⟩
   have hm : ∀ z : normOneGL (K := K) (n := n),
-      {γ : rationalGLOne K n | γ • z ∈ (fun y => x * y) '' Q}.encard ≤ m := by
+      {γ : rationalGLOne (K := K) (n := n) | γ • z ∈ (fun y => x * y) '' Q}.encard ≤ m := by
     intro z
     have := encard_le_of_subset_mul s hs hm₀ z
     rw [hmdef]
@@ -172,7 +172,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.rootDecay :
         rfl
       choose Cε hCε1 hCε2 using hex
       have hsum : altSum (k + 1) (fun s => rc μ f φ (unipOne K n r (truncInf s) * x)) y 0 =
-          ∑ ε, (altSign ε : ℂ) * rconv (rationalGLOne K n) μ f φ (x * archProj K n (Cε ε)) := by
+          ∑ ε, (altSign ε : ℂ) * rconv (rationalGLOne (K := K) (n := n)) μ f φ (x * archProj K n (Cε ε)) := by
         rw [altSum_eq_sum]
         refine Finset.sum_congr rfl fun ε _ => ?_
         rw [zero_add, hCε1 ε, zsmul_eq_mul]

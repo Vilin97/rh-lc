@@ -129,11 +129,11 @@ def Vanish : Prop :=
 def OrthStep : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (f : GA E n → ℂ), Continuous f → (∃ C : ℝ, ∀ g, ‖f g‖ ≤ C) → IsLeftInvariant f →
-    ∀ a : RightCosetSpace (Reduction.rationalGLOne E n) → ℂ, Continuous a → (∃ C : ℝ, ∀ q, ‖a q‖ ≤ C) →
+    ∀ a : RightCosetSpace (Reduction.rationalGLOne (K := E) (n := n)) → ℂ, Continuous a → (∃ C : ℝ, ∀ q, ‖a q‖ ≤ C) →
     (∀ g (h : IsLeftInvariant fun x => f (x * g)), ∫ q, a q * CuspidalSpectrum.cuspQuot h q
-      ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne E n) μ) = 0) →
+      ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne (K := E) (n := n)) μ) = 0) →
     ∀ (β : 𝓢(Lie E n, ℂ)) (h : IsLeftInvariant (conv f β)), ∫ q, a q * CuspidalSpectrum.cuspQuot h q
-      ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne E n) μ) = 0
+      ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne (K := E) (n := n)) μ) = 0
 
 def OrthConv : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]

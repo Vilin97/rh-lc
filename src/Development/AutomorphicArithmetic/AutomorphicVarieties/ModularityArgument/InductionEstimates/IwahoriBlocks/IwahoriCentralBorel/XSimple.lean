@@ -161,7 +161,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.xSimple 
       rw [hrS, ← this]
       simp only [fin1, map_mul, mul_assoc]
   let π : UnitaryRep (FA K 2) (L2 μ) :=
-    (rightRegularRep (rationalGLOne K 2) μ).compHom (MultiplicityOne.finProj K 2) MultiplicityOne.continuous_finProj
+    (rightRegularRep (rationalGLOne (K := K) (n := 2)) μ).compHom (MultiplicityOne.finProj K 2) MultiplicityOne.continuous_finProj
   have hπ : ∀ h, π h = rhoF μ h := fun _ => rfl
   have hfixJ : ∀ (L : Subgroup (FA K 2)) (φ : Xs μ τ κ p (im w)), FixF L φ.1 → ∀ u ∈ L, rhoF μ u (J φ) = J φ :=
     fun L φ hφ u hu => (hJr u φ φ fun x => (hφ u hu x).symm).symm

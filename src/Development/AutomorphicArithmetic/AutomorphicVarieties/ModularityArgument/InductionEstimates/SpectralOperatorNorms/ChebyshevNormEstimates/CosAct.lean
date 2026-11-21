@@ -136,7 +136,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.cosAct :
     rw [UnitaryRep.integrated_ccToL1_apply]
     rfl
   have hcont : ∀ v, Continuous fun h => rhoF μ h v := fun v =>
-    ((rightRegularRep (rationalGLOne K (2 + 2)) μ).continuous_orbit v).comp MultiplicityOne.continuous_finProj
+    ((rightRegularRep (rationalGLOne (K := K) (n := (2 + 2))) μ).continuous_orbit v).comp MultiplicityOne.continuous_finProj
   have hYe : Y = Ofin μ m e := by
     rw [hY, finsum_mem_eq_finite_toFinset_sum _ hfin]
     refine ContinuousLinearMap.ext fun v => ?_

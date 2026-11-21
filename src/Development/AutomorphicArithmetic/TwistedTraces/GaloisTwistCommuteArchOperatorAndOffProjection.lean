@@ -32,15 +32,15 @@ theorem UpperTheory.galoisTwist_commute_archOperator_and_offProjection :
     show _ * _ = _ * _
     rw [← ag3, ← ag3]
     exact congrArg _ (Pi.mulSingle_commute (f := fun _ : Fin (k + 1) => archGroup F n) hij g h).eq
-  have hOc : ∀ (B : LL μ →L[ℂ] LL μ) i, (∀ g, Commute B (rightRegularRep (rationalGLOne E n) μ (archP E n (s i g)))) →
+  have hOc : ∀ (B : LL μ →L[ℂ] LL μ) i, (∀ g, Commute B (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s i g)))) →
       Commute B (O i) := fun B i h => ContinuousLinearMap.ext fun v =>
     UpperTheory.ConvolutionTheory.L1.TY.operatorAt_int μ (hs i) (hs i) νF a B (fun x u => DFunLike.congr_fun (h x).eq u) v
   have hrep : ∀ x y : normOneGL (K := E) (n := n), Commute x y →
-      Commute (rightRegularRep (rationalGLOne E n) μ x) (rightRegularRep (rationalGLOne E n) μ y) := fun x y h =>
+      Commute (rightRegularRep (rationalGLOne (K := E) (n := n)) μ x) (rightRegularRep (rationalGLOne (K := E) (n := n)) μ y) := fun x y h =>
     ContinuousLinearMap.ext fun v => by
       simp only [ContinuousLinearMap.mul_apply]
       rw [← UnitaryRep.map_mul_apply, ← UnitaryRep.map_mul_apply, h.eq]
-  have hOa : ∀ i j, i ≠ j → ∀ g, Commute (O i) (rightRegularRep (rationalGLOne E n) μ (archP E n (s j g))) :=
+  have hOa : ∀ i j, i ≠ j → ∀ g, Commute (O i) (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s j g))) :=
     fun i j hij g => (hOc _ i fun x => hrep _ _ ((hss j i hij.symm g x).map _)).symm
   have hOO : ∀ i j, Commute (O i) (O j) := fun i j => by
     by_cases e : i = j

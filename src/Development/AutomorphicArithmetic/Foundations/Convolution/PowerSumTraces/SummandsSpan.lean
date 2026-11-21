@@ -85,5 +85,5 @@ theorem UpperTheory.ConvolutionTheory.C.summandsSpan :
   intro K _ _ n μ _
   obtain ⟨s, hc, hinv, hH, hirr⟩ := exists_isHilbertSum_isIrreducible_cuspidal μ
   haveI := hc
-  exact closure_iSup_summands (rightRegularRep (rationalGLOne K n) μ) (cuspidalL2 μ)
+  exact closure_iSup_summands (rightRegularRep (rationalGLOne (K := K) (n := n)) μ) (cuspidalL2 μ)
     (isInvariant_cuspidalL2 μ) (isClosed_cuspidalL2 μ) s hinv hH hirr

@@ -168,7 +168,7 @@ private theorem fixL_comm {w : Pl K} {J : Subgroup (Gw n w)} (O : LL μ →L[ℂ
   rw [← this, hv x hx]
 
 private theorem oinf_comm (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (a : TI K n) (C : LL μ →L[ℂ] LL μ)
-    (h : ∀ g, Commute C (rightRegularRep (rationalGLOne K n) μ (archP K n g))) : Commute C (Oinf μ ν a) := by
+    (h : ∀ g, Commute C (rightRegularRep (rationalGLOne (K := K) (n := n)) μ (archP K n g))) : Commute C (Oinf μ ν a) := by
   have key : C ∘L Oinf μ ν a = Oinf μ ν a ∘L C := by
     refine UnitaryRep.comp_integrated_of_mem_intertwiners _ _ ?_ _
     intro x u

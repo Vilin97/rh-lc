@@ -264,7 +264,7 @@ theorem GA_mem {V : Submodule ℂ (LL μ)} (hV : IsSummand μ V) (A : Set (Pl K)
   exact prj_mem hV.closed _
 
 theorem GA_arch (A : Set (Pl K)) (a : archGroup K n) :
-    Commute (rightRegularRep (rationalGLOne K n) μ (archP K n a)) (prj (GA μ J χ A)) :=
+    Commute (rightRegularRep (rationalGLOne (K := K) (n := n)) μ (archP K n a)) (prj (GA μ J χ A)) :=
   GA_commute μ _ fun u _ x => ContinuousLinearMap.ext fun y => by
     simp only [ContinuousLinearMap.mul_apply, rhoL, rhoF]
     rw [← UnitaryRep.map_mul_apply, ← UnitaryRep.map_mul_apply, (arch_fin _ _).eq]
@@ -325,8 +325,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem operatorAt_int {s s' : archGroup F n →* archGroup E n} (hs : Continuous s) (hs' : Continuous s')
     (ν : Measure (archGroup F n)) [ν.IsHaarMeasure] (a : TI F n) (T : LL μ →L[ℂ] LL μ)
-    (h : ∀ x u, T (rightRegularRep (rationalGLOne E n) μ (archP E n (s x)) u) =
-      rightRegularRep (rationalGLOne E n) μ (archP E n (s' x)) (T u)) (v : LL μ) :
+    (h : ∀ x u, T (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s x)) u) =
+      rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s' x)) (T u)) (v : LL μ) :
     T (OComponent μ s hs ν a v) = OComponent μ s' hs' ν a (T v) := by
   have key : T ∘L OComponent μ s hs ν a = OComponent μ s' hs' ν a ∘L T := by
     refine UnitaryRep.comp_integrated_of_mem_intertwiners _ _ ?_ _

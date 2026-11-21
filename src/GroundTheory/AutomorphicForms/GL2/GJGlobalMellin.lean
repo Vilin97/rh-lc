@@ -27,46 +27,46 @@ def ratElt (γ : GL (Fin n) K) : normOneGL (K := K) (n := n) :=
     ((ratElt γ : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) = AdelicGLn.diagonal K n γ :=
   rfl
 
-theorem ratElt_mem (γ : GL (Fin n) K) : ratElt γ ∈ rationalGLOne K n :=
+theorem ratElt_mem (γ : GL (Fin n) K) : ratElt γ ∈ rationalGLOne (K := K) (n := n) :=
   Subgroup.mem_subgroupOf.2 ⟨γ, rfl⟩
 
-def ratEquiv : GL (Fin n) K ≃ rationalGLOne K n :=
+def ratEquiv : GL (Fin n) K ≃ rationalGLOne (K := K) (n := n) :=
   Equiv.ofBijective (fun γ => ⟨ratElt γ, ratElt_mem γ⟩)
     ⟨fun γ γ' h => AdelicGLn.diagonal_injective K n
-      (congrArg (fun x : rationalGLOne K n => ((x : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n)) h),
+      (congrArg (fun x : rationalGLOne (K := K) (n := n) => ((x : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n)) h),
      fun x => by
        obtain ⟨γ, hγ⟩ := Subgroup.mem_subgroupOf.1 x.2
        exact ⟨γ, Subtype.ext (Subtype.ext hγ)⟩⟩
 
 @[simp] theorem coe_ratEquiv (γ : GL (Fin n) K) :
-    ((ratEquiv γ : rationalGLOne K n) : normOneGL (K := K) (n := n)) = ratElt γ :=
+    ((ratEquiv γ : rationalGLOne (K := K) (n := n)) : normOneGL (K := K) (n := n)) = ratElt γ :=
   rfl
 
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem lintegral_eq_setLIntegral_tsum {h : normOneGL (K := K) (n := n) → ℝ≥0∞} (hh : Measurable h) :
-    ∫⁻ y, h y ∂μ = ∫⁻ y in fundamentalDomain (rationalGLOne K n),
+    ∫⁻ y, h y ∂μ = ∫⁻ y in fundamentalDomain (rationalGLOne (K := K) (n := n)),
       ∑' γ : GL (Fin n) K, h (ratElt γ * y) ∂μ := by
-  rw [lintegral_eq_lintegral_automorphize (Γ := rationalGLOne K n) μ hh.aemeasurable,
+  rw [lintegral_eq_lintegral_automorphize (Γ := rationalGLOne (K := K) (n := n)) μ hh.aemeasurable,
     lintegral_quotientMeasure]
   refine lintegral_congr fun y => ?_
-  change ∑' γ : rationalGLOne K n, h (γ • y) = _
+  change ∑' γ : rationalGLOne (K := K) (n := n), h (γ • y) = _
   rw [← (ratEquiv (K := K) (n := n)).tsum_eq]
   rfl
 
 theorem integral_eq_setIntegral_tsum {h : normOneGL (K := K) (n := n) → ℂ} (hh : Integrable h μ) :
-    ∫ y, h y ∂μ = ∫ y in fundamentalDomain (rationalGLOne K n),
+    ∫ y, h y ∂μ = ∫ y in fundamentalDomain (rationalGLOne (K := K) (n := n)),
       ∑' γ : GL (Fin n) K, h (ratElt γ * y) ∂μ := by
-  rw [integral_eq_integral_automorphize (Γ := rationalGLOne K n) μ hh, integral_quotientMeasure]
+  rw [integral_eq_integral_automorphize (Γ := rationalGLOne (K := K) (n := n)) μ hh, integral_quotientMeasure]
   refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
-  change ∑' γ : rationalGLOne K n, h (γ • y) = _
+  change ∑' γ : rationalGLOne (K := K) (n := n), h (γ • y) = _
   rw [← (ratEquiv (K := K) (n := n)).tsum_eq]
   rfl
 
 theorem measure_fundamentalDomain_rationalGLOne_lt_top :
-    μ (fundamentalDomain (rationalGLOne K n)) < ⊤ := by
+    μ (fundamentalDomain (rationalGLOne (K := K) (n := n))) < ⊤ := by
   have := isFiniteMeasure_quotientMeasure (K := K) (n := n) μ
-  exact (measure_fundamentalDomain_pos_lt_top (rationalGLOne K n) μ).2
+  exact (measure_fundamentalDomain_pos_lt_top (rationalGLOne (K := K) (n := n)) μ).2
 
 theorem lintegral_posRealMeasure (f : ℝ → ℝ≥0∞) :
     ∫⁻ t, f t ∂posRealMeasure = ∫⁻ t in Ioi (0 : ℝ), ENNReal.ofReal t⁻¹ * f t := by
@@ -87,7 +87,7 @@ theorem lintegral_enorm_translate_eq (hφ₁ : Continuous φ₁) (hφ₁l : Auto
     (hΞ : Continuous Ξ) (s : {r : ℝ // 0 < r}) (x : AdelicGLn.AdelicGL K n) :
     ∫⁻ y, ‖Ξ (centralSection K n s * x * (y : AdelicGLn.AdelicGL K n))‖ₑ *
         ‖φ₁ (y : AdelicGLn.AdelicGL K n)‖ₑ ∂μ =
-      ∫⁻ y in fundamentalDomain (rationalGLOne K n), ‖φ₁ (y : AdelicGLn.AdelicGL K n)‖ₑ *
+      ∫⁻ y in fundamentalDomain (rationalGLOne (K := K) (n := n)), ‖φ₁ (y : AdelicGLn.AdelicGL K n)‖ₑ *
         ∑' γ : GL (Fin n) K, ‖Ξ (centralSection K n s * x * AdelicGLn.diagonal K n γ *
           (y : AdelicGLn.AdelicGL K n))‖ₑ ∂μ := by
   have hm : Measurable fun y : normOneGL (K := K) (n := n) =>
@@ -115,7 +115,7 @@ theorem enorm_mul_lintegral_le (hφ₁ : Continuous φ₁) (hφ₁l : Automorphi
     ‖φ₂ (x : AdelicGLn.AdelicGL K n)‖ₑ *
         ∫⁻ y, ‖Ξ (centralSection K n s * (x : AdelicGLn.AdelicGL K n)⁻¹ *
           (y : AdelicGLn.AdelicGL K n))‖ₑ * ‖φ₁ (y : AdelicGLn.AdelicGL K n)‖ₑ ∂μ ≤
-      ENNReal.ofReal (B s) * μ (fundamentalDomain (rationalGLOne K n)) := by
+      ENNReal.ofReal (B s) * μ (fundamentalDomain (rationalGLOne (K := K) (n := n))) := by
   rw [lintegral_enorm_translate_eq μ hφ₁ hφ₁l hΞ, ← lintegral_const_mul' _ _ enorm_ne_top,
     ← setLIntegral_const]
   refine lintegral_mono fun y => ?_
@@ -141,12 +141,12 @@ theorem lintegral_lintegral_enorm_le (hφ₁ : Continuous φ₁) (hφ₁l : Auto
       ‖φ₂ x‖ * ‖φ₁ y‖ * ∑' γ : GL (Fin n) K,
         ‖Ξ (centralSection K n t * x⁻¹ * AdelicGLn.diagonal K n γ * y)‖ ≤ B t)
     (s : {r : ℝ // 0 < r}) :
-    ∫⁻ x in fundamentalDomain (rationalGLOne K n), ∫⁻ y,
+    ∫⁻ x in fundamentalDomain (rationalGLOne (K := K) (n := n)), ∫⁻ y,
         ‖Ξ (centralSection K n s * (y : AdelicGLn.AdelicGL K n))‖ₑ *
           ‖φ₁ ((x : AdelicGLn.AdelicGL K n) * (y : AdelicGLn.AdelicGL K n))‖ₑ *
           ‖φ₂ (x : AdelicGLn.AdelicGL K n)‖ₑ ∂μ ∂μ ≤
-      ENNReal.ofReal (B s) * μ (fundamentalDomain (rationalGLOne K n)) *
-        μ (fundamentalDomain (rationalGLOne K n)) := by
+      ENNReal.ofReal (B s) * μ (fundamentalDomain (rationalGLOne (K := K) (n := n))) *
+        μ (fundamentalDomain (rationalGLOne (K := K) (n := n))) := by
   rw [← setLIntegral_const]
   refine lintegral_mono fun x => ?_
   have h1 : ∫⁻ y, ‖Ξ (centralSection K n s * (y : AdelicGLn.AdelicGL K n))‖ₑ *
@@ -192,7 +192,7 @@ theorem integral_mul_matrixCoeff_eq_thetaPairing (hφ₁ : Continuous φ₁) (h�
     (s : {r : ℝ // 0 < r}) :
     ∫ y, Ξ (centralSection K n s * (y : AdelicGLn.AdelicGL K n)) *
         matrixCoeff μ φ₁ φ₂ (y : AdelicGLn.AdelicGL K n) ∂μ = thetaPairing μ φ₁ φ₂ Ξ s := by
-  set F := fundamentalDomain (rationalGLOne K n) with hF
+  set F := fundamentalDomain (rationalGLOne (K := K) (n := n)) with hF
   have hFfin := measure_fundamentalDomain_rationalGLOne_lt_top μ
   set f : normOneGL (K := K) (n := n) → normOneGL (K := K) (n := n) → ℂ := fun y x =>
     Ξ (centralSection K n s * (y : AdelicGLn.AdelicGL K n)) *
@@ -324,7 +324,7 @@ theorem exists_integral_eq_mellin_thetaPairing (hn : 0 < n) (ν : Measure (Adeli
         (c : ℂ) * mellin (fun t : ℝ => if h : 0 < t then thetaPairing μ φ₁ φ₂ Ξ ⟨t, h⟩ else 0) w := by
   refine ⟨centralHaarConst hn μ ν, by exact_mod_cast centralHaarConst_pos hn μ ν, ?_⟩
   intro φ₁ φ₂ Ξ w B hφ₁ hφ₂ hΞ hφ₁l hφ₁z hB hBint
-  set F := fundamentalDomain (rationalGLOne K n) with hF
+  set F := fundamentalDomain (rationalGLOne (K := K) (n := n)) with hF
   have hFfin := measure_fundamentalDomain_rationalGLOne_lt_top μ
   set H : AdelicGLn.AdelicGL K n → ℂ := fun g => Ξ g * matrixCoeff μ φ₁ φ₂ g * detPow g w with hH
   have hHz : ∀ (s : {r : ℝ // 0 < r}) (y : normOneGL (K := K) (n := n)),

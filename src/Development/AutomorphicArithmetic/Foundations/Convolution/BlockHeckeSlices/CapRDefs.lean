@@ -13,10 +13,10 @@ namespace UpperTheory.ConvolutionTheory.BW
 
 variable {E : Type} [Field E] [NumberField E] {r : ℕ}
 
-abbrev onQ (h : GA E r → ℂ) (y : RightCosetSpace (rationalGLOne E r)) : ℂ := h ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)
+abbrev onQ (h : GA E r → ℂ) (y : RightCosetSpace (rationalGLOne (K := E) (n := r))) : ℂ := h ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)
 
-abbrev muQ (E : Type) [Field E] [NumberField E] (r : ℕ) : Measure (RightCosetSpace (rationalGLOne E r)) :=
-  quotientMeasure (rationalGLOne E r) (mu1 E r)
+abbrev muQ (E : Type) [Field E] [NumberField E] (r : ℕ) : Measure (RightCosetSpace (rationalGLOne (K := E) (n := r))) :=
+  quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)
 
 def pr (Φ f : GA E r → ℂ) : ℂ := ∫ y, onQ Φ y * starRingEnd ℂ (onQ f y) ∂muQ E r
 

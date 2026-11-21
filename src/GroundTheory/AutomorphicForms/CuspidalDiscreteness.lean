@@ -71,7 +71,7 @@ include μ in
 theorem exists_approx_bound (ν : Measure (ArchUnits K n)) [ν.IsHaarMeasure]
     (g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) {ε : ℝ} (hε : 0 < ε) :
     ∃ f' : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ,
-      (∃ B : ℝ, ∀ φ ∈ cuspidalL2 μ, ∀ x, ‖rconv (rationalGLOne K n) μ f' φ x‖ ≤ B * ‖φ‖) ∧
+      (∃ B : ℝ, ∀ φ ∈ cuspidalL2 μ, ∀ x, ‖rconv (rationalGLOne (K := K) (n := n)) μ f' φ x‖ ≤ B * ‖φ‖) ∧
         ∫ x, ‖g x - f' x‖ ∂μ ≤ ε := by
   obtain ⟨U, hU, β, hβ, hβc, hβu, -, hclose⟩ := exists_smooth_approx μ ν g hε
   obtain ⟨B, hB⟩ := exists_norm_rconv_le_uniform μ ν hβ hβc hβu U hU g

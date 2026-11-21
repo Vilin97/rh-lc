@@ -132,19 +132,19 @@ private theorem coef_deriv (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL (K 
     (hy : y ∈ invSet K n) :
     HasFDerivAt (chart (GJGlobal.matrixCoeff μ φ.1.1 φ₂.1) g) (∑ b, (cf K n b y).smulRight
       (chart (GJGlobal.matrixCoeff μ (σ.op (.lie (Module.finBasis ℝ (Lie K n) b)) φ).1.1 φ₂.1) g y)) y := by
-  have : IsFiniteMeasure (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n))) :=
+  have : IsFiniteMeasure (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne (K := K) (n := n)))) :=
     isFiniteMeasure_restrict.2 (GJGlobal.measure_fundamentalDomain_rationalGLOne_lt_top μ).ne
   obtain ⟨C₂, hC₂⟩ := CuspidalSpectrum.exists_norm_le_of_mem_cuspForms φ₂.2
   have h2c : Continuous φ₂.1 := φ₂.2.1.continuous
   let f : σ.V → Lie K n → Reduction.normOneGL (K := K) (n := n) → ℂ := fun v z x =>
     chart v.1.1 ((x : AdelicGLn.AdelicGL K n) * g) z * (starRingEnd ℂ) (φ₂.1 x)
   have hf : ∀ (v : σ.V), ∀ z ∈ invSet K n, chart (GJGlobal.matrixCoeff μ v.1.1 φ₂.1) g z =
-      ∫ x in RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n), f v z x ∂μ := by
+      ∫ x in RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne (K := K) (n := n)), f v z x ∂μ := by
     intro v z hz
     obtain ⟨u, hu⟩ := hz
     obtain rfl : z = toL u.val := hu.symm
     simp only [f, chart_val, GJGlobal.matrixCoeff, mul_assoc]
-  have key := abs_deriv (ν := μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n)))
+  have key := abs_deriv (ν := μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne (K := K) (n := n))))
     (f := f) (D := fun b v => σ.op (.lie (Module.finBasis ℝ (Lie K n) b)) v) (A := cf K n) isOpen_invSet
     (fun b => (cf_smooth b).continuousOn) ?_ ?_ ?_ φ hy
   · simp only [hf _ y hy]
@@ -176,8 +176,8 @@ private theorem coef_deriv (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL (K 
 private theorem coef_int (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] {σ : CuspSub K n}
     (h : Cm.carrier σ ≤ centralCuspForms K n) (φ₂ : cuspForms K n) (g : GA K n) (φ : σ.V) :
     Integrable (fun x : Reduction.normOneGL (K := K) (n := n) => φ.1.1 ((x : AdelicGLn.AdelicGL K n) * g) * (starRingEnd ℂ) (φ₂.1 x))
-      (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n))) := by
-  have : IsFiniteMeasure (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n))) :=
+      (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne (K := K) (n := n)))) := by
+  have : IsFiniteMeasure (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne (K := K) (n := n)))) :=
     isFiniteMeasure_restrict.2 (GJGlobal.measure_fundamentalDomain_rationalGLOne_lt_top μ).ne
   obtain ⟨C₂, hC₂⟩ := CuspidalSpectrum.exists_norm_le_of_mem_cuspForms φ₂.2
   have h2c : Continuous φ₂.1 := φ₂.2.1.continuous

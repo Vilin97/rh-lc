@@ -184,7 +184,7 @@ theorem ofin_adj {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (m : Measu
     (e.hasCompactSupport.comp_homeomorph (Homeomorph.inv _)).comp_left (g := starRingEnd ℂ) (map_zero _)⟩
   refine ⟨e', fun _ => rfl, ?_⟩
   suffices hs : UnitaryRep.involution m (UnitaryRep.ccToL1 m e) = UnitaryRep.ccToL1 m e' from
-    (UnitaryRep.adjoint_integrated ((rightRegularRep (rationalGLOne K n) μ).compHom (MultiplicityOne.finProj K n)
+    (UnitaryRep.adjoint_integrated ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (MultiplicityOne.finProj K n)
       MultiplicityOne.continuous_finProj) m (UnitaryRep.ccToL1 m e)).trans (congrArg _ hs)
   have h1 : (UnitaryRep.ccToL1 m e : _ → ℂ) =ᵐ[m] e := MemLp.coeFn_toLp _
   have h2 : (UnitaryRep.ccToL1 m e' : _ → ℂ) =ᵐ[m] e' := MemLp.coeFn_toLp _

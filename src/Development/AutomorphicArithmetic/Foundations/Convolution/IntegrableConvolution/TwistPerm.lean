@@ -124,8 +124,8 @@ private theorem gal_position {σ : E ≃ₐ[F] E} {m n : ℕ} (D : InfD σ m) {s
 private theorem clause1 [IsGalois F E] {σ : E ≃ₐ[F] E} (hσ : ∀ τ, τ ∈ Subgroup.zpowers σ) {m n : ℕ}
     {μ : Measure (normOneGL (K := E) (n := n))} [μ.IsHaarMeasure] {θ : Twist μ} (hθ : IsGalTwist σ θ) (D : InfD σ m)
     {s : Fin (m + 1) → archGroup F n →* archGroup E n} (hs : IsBlockElement D n s) (i : Fin (m + 1)) (g : archGroup F n)
-    (v : LL μ) : θ.U (rightRegularRep (rationalGLOne E n) μ (archP E n (s (i + 1) g)) v) =
-      rightRegularRep (rationalGLOne E n) μ (archP E n (s i g)) (θ.U v) := by
+    (v : LL μ) : θ.U (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s (i + 1) g)) v) =
+      rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s i g)) (θ.U v) := by
   rw [(UpperTheory.ConvolutionTheory.Dp.twUnitary E n μ θ).2.2, e_archP hσ hθ (gal_position D hs i g)]
 
 private theorem cmp_pE {n : ℕ} (p : Pl F) (u : PlacesOver E p) (g : AdelicGLn.AdelicGL E n) :
@@ -200,8 +200,8 @@ private theorem clause2 [IsGalois F E] {σ : E ≃ₐ[F] E} (hσ : ∀ τ, τ �
     (g : GL (Fin n) (p.adicCompletion F)) (v : LL μ) :
     θ.U (rhoL μ (w (i + 1)).1 (mapGL n (completionMap p (w (i + 1)).1) g) v) =
       rhoL μ (w i).1 (mapGL n (completionMap p (w i).1) g) (θ.U v) := by
-  change θ.U (rightRegularRep (rationalGLOne E n) μ (MultiplicityOne.finProj E n _) v) =
-    rightRegularRep (rationalGLOne E n) μ (MultiplicityOne.finProj E n _) (θ.U v)
+  change θ.U (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (MultiplicityOne.finProj E n _) v) =
+    rightRegularRep (rationalGLOne (K := E) (n := n)) μ (MultiplicityOne.finProj E n _) (θ.U v)
   rw [(UpperTheory.ConvolutionTheory.Dp.twUnitary E n μ θ).2.2, e_finProj hσ hθ (gal_place p D w hw i g)]
 
 open scoped TensorProduct in
@@ -437,8 +437,8 @@ private theorem clause3 [IsGalois F E] (μ : Measure (normOneGL (K := E) (n := n
       (UpperTheory.ConvolutionTheory.L1.eigBasic E n μ w (T.J w) (T.χ w) (T.co w) (T.chr w)).1
   have hint : ∀ x x' : AdelicGLn.FiniteAdelicGL E n, mapGL n (galAd σ) (finEmb E n x) = finEmb E n x' →
       ∀ f, θ.U (rhoF μ x f) = rhoF μ x' (θ.U f) := fun x x' h f => by
-    change θ.U (rightRegularRep (rationalGLOne E n) μ (MultiplicityOne.finProj E n x) f) =
-      rightRegularRep (rationalGLOne E n) μ (MultiplicityOne.finProj E n x') (θ.U f)
+    change θ.U (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (MultiplicityOne.finProj E n x) f) =
+      rightRegularRep (rationalGLOne (K := E) (n := n)) μ (MultiplicityOne.finProj E n x') (θ.U f)
     rw [(UpperTheory.ConvolutionTheory.Dp.twUnitary E n μ θ).2.2, e_finProj hσ hθ h]
   have hfw : ∀ f ∈ (⨅ (w : Pl E) (_ : w.under (𝓞 F) ∉ P), eigL μ w (T.J w) (T.χ w)), U f ∈
       (⨅ (w : Pl E) (_ : w.under (𝓞 F) ∉ P), eigL μ w (T.J w) (T.χ w)) := by

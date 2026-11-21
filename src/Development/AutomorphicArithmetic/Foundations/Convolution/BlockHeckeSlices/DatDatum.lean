@@ -19,7 +19,7 @@ structure Rep {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ
     (v : LL μ) (φ : Sm E n) : Prop where
   umg : Umg φ
   cen : ∀ t g, φ.1 (zt E n t * g) = φ.1 g
-  ae : (v : RightCosetSpace (rationalGLOne E n) → ℂ) =ᵐ[quotientMeasure (rationalGLOne E n) μ]
+  ae : (v : RightCosetSpace (rationalGLOne (K := E) (n := n)) → ℂ) =ᵐ[quotientMeasure (rationalGLOne (K := E) (n := n)) μ]
     fun y => φ.1 ((Quotient.out y : normOneGL (K := E) (n := n)) : GA E n)
 
 variable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E]

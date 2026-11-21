@@ -17,7 +17,7 @@ namespace UpperTheory.ConvolutionTheory.C.Sf
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
 def locU (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K) : UnitaryRep (Gw n w) (LL μ) :=
-  (rightRegularRep (rationalGLOne K n) μ).compHom ((MultiplicityOne.finProj K n).comp (AdelicGLn.localEmbedding w))
+  (rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom ((MultiplicityOne.finProj K n).comp (AdelicGLn.localEmbedding w))
     (MultiplicityOne.continuous_finProj.comp (UpperTheory.ConvolutionTheory.Tf.locEmb K n w).1)
 
 theorem locU_apply (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K) (g : Gw n w) : locU μ w g = rhoL μ w g := rfl

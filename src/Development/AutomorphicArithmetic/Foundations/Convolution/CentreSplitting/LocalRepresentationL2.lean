@@ -27,7 +27,7 @@ def clsL : cuspForms K n →ₗ[ℂ] LL μ := (toLp μ).toLinearMap ∘ₗ cuspV
 
 def formsIn (V : Submodule ℂ (LL μ)) : Submodule ℂ (cuspForms K n) := centralCuspForms K n ⊓ V.comap (clsL μ)
 
-def RG (g : AdelicGLn.AdelicGL K n) : LL μ →L[ℂ] LL μ := rightRegularRep (rationalGLOne K n) μ (retractOne g)
+def RG (g : AdelicGLn.AdelicGL K n) : LL μ →L[ℂ] LL μ := rightRegularRep (rationalGLOne (K := K) (n := n)) μ (retractOne g)
 
 def localRepresentationL2 (w : HeightOneSpectrum (𝓞 K)) : Representation ℂ (GL (Fin n) (w.adicCompletion K)) (LL μ) where
   toFun g := (RG μ (finGL K n (locGL K n w g))).toLinearMap
@@ -73,7 +73,7 @@ def ClsBasic : Prop :=
     (∀ φ ∈ centralCuspForms K n, clsL μ φ = 0 → φ = 0) ∧ (∀ φ, clsL μ φ ∈ cuspidalL2 μ) ∧
     (∀ φ ∈ centralCuspForms K n, ∀ (ψ : cuspForms K n) (g : AdelicGLn.AdelicGL K n), (∀ x, ψ.1 x = φ.1 (x * g)) →
       clsL μ ψ = RG μ g (clsL μ φ)) ∧
-    ∀ φ ∈ centralCuspForms K n, (clsL μ φ : RightCosetSpace (rationalGLOne K n) → ℂ) =ᵐ[quotientMeasure (rationalGLOne K n) μ]
+    ∀ φ ∈ centralCuspForms K n, (clsL μ φ : RightCosetSpace (rationalGLOne (K := K) (n := n)) → ℂ) =ᵐ[quotientMeasure (rationalGLOne (K := K) (n := n)) μ]
       fun y => φ.1 ((Quotient.out y : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n)
 
 def FormsClosure : Prop :=

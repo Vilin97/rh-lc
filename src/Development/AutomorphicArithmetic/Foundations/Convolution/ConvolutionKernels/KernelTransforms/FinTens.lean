@@ -176,11 +176,11 @@ theorem UpperTheory.ConvolutionTheory.Tf.finTens :
     have hc : (∏ i, (((mw i).real (J i : Set (Gw n (w i))) : ℝ) : ℂ)) ≠ 0 := Finset.prod_ne_zero_iff.2 fun i _ => hvne i
 
     obtain ⟨g, hg, -, hgop⟩ := UpperTheory.exists_testFunction_integral_prod_local_factors K n m r w hw mw J hJco ψ hψ R hfree e₀ he₀
-    have hT' : (fun i => (((rightRegularRep (rationalGLOne K n) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj).compHom
+    have hT' : (fun i => (((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj).compHom
         (AdelicGLn.localEmbedding (w i)) (UpperTheory.ConvolutionTheory.Tf.locEmb K n (w i)).1).integrated (mw i) (UnitaryRep.ccToL1 (mw i) (ψ i))) = T :=
       funext fun i => UpperTheory.integrated_rightRegular_eq_localOperator K n μ (w i) (mw i) (ψ i) (T i) (hT i)
     have h1 : Ofin μ m g = (List.ofFn T).prod ∘L Ofin μ m e₀ := by
-      have := hgop (LL μ) ((rightRegularRep (rationalGLOne K n) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj)
+      have := hgop (LL μ) ((rightRegularRep (rationalGLOne (K := K) (n := n)) μ).compHom (MultiplicityOne.finProj K n) MultiplicityOne.continuous_finProj)
       rw [hT'] at this
       exact this
     let ν : Measure (archGroup K n) := Measure.haar

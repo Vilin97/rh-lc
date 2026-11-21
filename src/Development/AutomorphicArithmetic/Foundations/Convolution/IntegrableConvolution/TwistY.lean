@@ -115,10 +115,10 @@ private def gen {P : Finset (Pl F)} (s : Fin (m + 1) → archGroup F n →* arch
 
 private theorem gen_int (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] {P : Finset (Pl F)}
     (s : Fin (m + 1) → archGroup F n →* archGroup E n) (w : ∀ p : P, Fin (m + 1) ≃ PlacesOver E p.1) (i : Fin (m + 1))
-    (B : LL μ →L[ℂ] LL μ) (h1 : ∀ g, Commute B (rightRegularRep (rationalGLOne E n) μ (archP E n (s i g))))
+    (B : LL μ →L[ℂ] LL μ) (h1 : ∀ g, Commute B (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s i g))))
     (h2 : ∀ p g, Commute B (rhoL μ (w p i).1 g)) (g : FreeGroup _) (v : LL μ) :
-    B (rightRegularRep (rationalGLOne E n) μ (FreeGroup.lift (gen s w i) g) v) =
-      rightRegularRep (rationalGLOne E n) μ (FreeGroup.lift (gen s w i) g) (B v) :=
+    B (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (FreeGroup.lift (gen s w i) g) v) =
+      rightRegularRep (rationalGLOne (K := E) (n := n)) μ (FreeGroup.lift (gen s w i) g) (B v) :=
   lift_int _ B _ _ (fun x v => by
     rcases x with g | ⟨p, g⟩
     · exact DFunLike.congr_fun (h1 g).eq v
@@ -187,16 +187,16 @@ theorem UpperTheory.ConvolutionTheory.L1.twistY :
     show _ * _ = _ * _
     rw [← ag3, ← ag3]
     exact congrArg _ (Pi.mulSingle_commute (f := fun _ : Fin (m + 1) => archGroup F n) hij g h).eq
-  have hOc : ∀ (B : LL μ →L[ℂ] LL μ) i, (∀ g, Commute B (rightRegularRep (rationalGLOne E n) μ (archP E n (s i g)))) →
+  have hOc : ∀ (B : LL μ →L[ℂ] LL μ) i, (∀ g, Commute B (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s i g)))) →
       Commute B (O i) := fun B i h => ContinuousLinearMap.ext fun v =>
     operatorAt_int μ (hs i) (hs i) νF a B (fun x u => DFunLike.congr_fun (h x).eq u) v
   have hrep : ∀ x y : normOneGL (K := E) (n := n), Commute x y →
-      Commute (rightRegularRep (rationalGLOne E n) μ x) (rightRegularRep (rationalGLOne E n) μ y) := fun x y h =>
+      Commute (rightRegularRep (rationalGLOne (K := E) (n := n)) μ x) (rightRegularRep (rationalGLOne (K := E) (n := n)) μ y) := fun x y h =>
     ContinuousLinearMap.ext fun v => by
       simp only [ContinuousLinearMap.mul_apply]
       rw [← UnitaryRep.map_mul_apply, ← UnitaryRep.map_mul_apply, h.eq]
   have hQO : ∀ A i, Commute (Q A) (O i) := fun A i => hOc _ i fun g => (GA_arch μ A _).symm
-  have hOa : ∀ i j, i ≠ j → ∀ g, Commute (O i) (rightRegularRep (rationalGLOne E n) μ (archP E n (s j g))) :=
+  have hOa : ∀ i j, i ≠ j → ∀ g, Commute (O i) (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (archP E n (s j g))) :=
     fun i j hij g => (hOc _ i fun x => hrep _ _ ((hss j i hij.symm g x).map _)).symm
   have hOO : ∀ i j, Commute (O i) (O j) := fun i j => by
     by_cases e : i = j
@@ -242,7 +242,7 @@ theorem UpperTheory.ConvolutionTheory.L1.twistY :
     refine forall₂_congr fun g _ => ?_
     rw [hU', ← tp2 p.1 (Df p) (w p) (hw p) i g v, ← hU', ← hU']
     exact U.injective.eq_iff
-  have S : Slots (rightRegularRep (rationalGLOne E n) μ) V m (fun i => FreeGroup.lift (gen s w i)) (Q Onᶜ)
+  have S : Slots (rightRegularRep (rationalGLOne (K := E) (n := n)) μ) V m (fun i => FreeGroup.lift (gen s w i)) (Q Onᶜ)
       (fun i => O i * Q (R i)) U :=
     { summand := ⟨le_top, hV.closed, hV.inv, hV.ne_bot, hV.irred⟩
       ι_comm := hcomm
