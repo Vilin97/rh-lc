@@ -312,10 +312,15 @@ theorem polyOp_mono {o κ o' κ' : ℕ} (ho : o ≤ o') (hκ : κ ≤ κ') {Θ :
 theorem exists_polyOp {o κ : ℕ} : ∀ Θ : DiffOp k r Wp Wq,
     (∀ T ∈ Θ, T.word.length ≤ o ∧ ∃ P : Mat k r → ℂ, U.IsPolyDeg κ P ∧
       ∀ g, T.coef g = P g • ContinuousLinearMap.id ℂ (Wq →L[ℂ] Wp)) →
-    ∃ Θ' : DiffOp k r Wp Wq, CutMP.PolyOp o κ Θ' ∧ ∀ F, opApply Θ' F = opApply Θ F
-  | [], _ => ⟨[], fun _ h => absurd h List.not_mem_nil, fun _ => rfl⟩
-  | T :: Θ, h => by
-    obtain ⟨Θ', h1, h2⟩ := exists_polyOp Θ fun T' hT' => h T' (by simp [hT'])
+    ∃ Θ' : DiffOp k r Wp Wq, CutMP.PolyOp o κ Θ' ∧ ∀ F, opApply Θ' F = opApply Θ F := by
+  intro Θ
+  induction Θ with
+  | nil =>
+    intro _
+    exact ⟨[], fun _ h => absurd h List.not_mem_nil, fun _ => rfl⟩
+  | cons T Θ ih =>
+    intro h
+    obtain ⟨Θ', h1, h2⟩ := ih fun T' hT' => h T' (List.mem_cons_of_mem T hT')
     obtain ⟨hl, P, hP, hc⟩ := h T (by simp)
     refine ⟨scalTerm P T.word T.word_lie :: Θ', fun T' hT' => ?_, fun F => ?_⟩
     · rcases List.mem_cons.1 hT' with rfl | h'

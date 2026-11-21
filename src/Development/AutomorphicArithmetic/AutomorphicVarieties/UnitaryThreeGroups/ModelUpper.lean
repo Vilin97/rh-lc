@@ -97,7 +97,7 @@ private theorem isNVal (l : ℕ) [Fact l.Prime] (c : Coef l) :
     show _ * -Real.logb l ‖(a : PadicAlgCl l)‖ = _
     linarith
 
-private theorem conj_conj {G R : Type} [Group G] [CommRing R] (r : G →* GG 3 R) (s t : Rˣ) :
+private theorem conj_conj {G R : Type} [Group G] [CommRing R] (r : G →* GG (m := 3) (R := R)) (s t : Rˣ) :
     conjBy (tor R s) (conjBy (tor R t) r) = conjBy (tor R (s * t)) r := by
   apply MonoidHom.ext
   intro g
@@ -169,7 +169,7 @@ theorem UpperTheory.V.U3.model_upper :
     rfl
   have hpr : ∀ (f : S.R →ₐ[c.O] PadicAlgCl l) g, ((push f S.r.hom) g).right = (S.r.hom g).right :=
     fun f g => GG.map_right _ _
-  have hext : ∀ r₁ r₂ : Γ →* GG 3 (PadicAlgCl l), (∀ g i j, (r₁ g).mat i j = (r₂ g).mat i j) →
+  have hext : ∀ r₁ r₂ : Γ →* GG (m := 3) (R := PadicAlgCl l), (∀ g i j, (r₁ g).mat i j = (r₂ g).mat i j) →
       (∀ g, (r₁ g).right = (r₂ g).right) → r₁ = r₂ := by
     intro r₁ r₂ hm hr
     apply MonoidHom.ext

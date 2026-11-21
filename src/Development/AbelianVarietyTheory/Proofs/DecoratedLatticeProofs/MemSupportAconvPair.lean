@@ -135,7 +135,7 @@ theorem contAut_trc (e : GA D V →₀ ℂ) {f : GA D V → ℂ} (hf : IsContAut
   · simp only [trc_apply, mul_assoc, hf.1 γ hγ]
   · have : trc e f = fun x => ∑ g ∈ e.support, e g * f (x * g) := funext (trc_apply e f)
     rw [this]
-    exact continuous_finset_sum _ fun g _ => (GlobalTheory.Core.Mi.BotPin.isContAut_rTrans g hf).2.const_smul (e g)
+    exact continuous_finsetSum _ fun g _ => (GlobalTheory.Core.Mi.BotPin.isContAut_rTrans g hf).2.const_smul (e g)
 
 end Trc
 

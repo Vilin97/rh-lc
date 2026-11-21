@@ -13,8 +13,6 @@ namespace GroundTheory.BlockD
 
 namespace SatakeBound
 
-open HeckeCharacterZeroLocus.ThmBIn
-
 section Group
 
 variable {G : Type} [Group G] {K : Subgroup G} {α : G} {R : Finset G}

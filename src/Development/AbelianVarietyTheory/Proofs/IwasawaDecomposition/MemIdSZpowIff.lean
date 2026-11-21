@@ -104,10 +104,19 @@ theorem exists_approx (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (J : Id
     (u : Fin n → E ⊗[F] Formalism.L2.Herm.Af F) (hu : ∀ i, u i ∈ Formalism.L2.Herm.intAf F E) :
     ∃ v ∈ Formalism.UG.CS.globLat x (stdLat E n), ∀ i, ∃ t ∈ idS F J, u i = pullV x v i + (t : E ⊗[F] Formalism.L2.Herm.Af F) := by
   have hxu : (x⁻¹).1 *ᵥ (x.1 *ᵥ u) = u := by rw [mulVec_mulVec, Units.inv_mul, one_mulVec]
+  have hspan : Submodule.span E (stdLat E n : Set (Fin n → E)) = ⊤ := by
+    apply top_unique
+    intro v _
+    have hv : v = ∑ i, v i • (Pi.single i (1 : E) : Fin n → E) := by
+      funext j
+      simp [Finset.sum_apply, Pi.single_apply]
+    rw [hv]
+    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+      (Submodule.subset_span (by simpa using single_mem_stdLat (E := E) i 1))
   have h1 : x.1 *ᵥ u ∈ Submodule.span (Formalism.L2.Herm.intAf F E)
       ((fun v : Fin n → E => fun i => iA F E (v i)) '' (Formalism.UG.CS.globLat x (stdLat E n) : Set (Fin n → E))) := by
     rw [Formalism.UG.P.span_recovery_of_integral_adelic_approx Formalism.UG.P.integral_adele_approximation_holds F E (Fin n) (stdLat E n)
-      (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) (stdLat_lattice (E := E) (n := n)).span_eq_top x _]
+      (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) hspan x _]
     rw [mem_latS_std, hxu]
     exact hu
   rw [← hxu]

@@ -14,7 +14,7 @@ noncomputable section
 namespace GlobalTheory.CochainInv
 
 theorem continuous_multilinear {ι : Type} [Fintype ι] {V G : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
-    [FiniteDimensional ℝ V] [NormedAddCommGroup G] [NormedSpace ℝ G] (f : MultilinearMap ℝ (fun _ : ι => V) G) :
+    [FiniteDimensional ℝ V] [NormedAddCommGroup G] [NormedSpace ℝ G] (f : (ι → V) →ₘₗ[ℝ] G) :
     Continuous f := by
   classical
   let b := Module.finBasis ℝ V
@@ -74,7 +74,7 @@ theorem lie_apply_eq_sum : ∀ (E : Type) [Field E] [NumberField E] (a : ℕ) (M
     exact key
   refine sub_eq_zero.1 (hS _ fun l hl => ?_)
   rw [map_sub, sub_eq_zero]
-  let f : MultilinearMap ℝ (fun _ : Fin q => Lie E a) ℂ :=
+  let f : (Fin q → Lie E a) →ₘₗ[ℝ] ℂ :=
     (l.restrictScalars ℝ).compMultilinearMap (ω.toMultilinearMap.compLinearMap fun _ => hermPart)
   let F : ContinuousMultilinearMap ℝ (fun _ : Fin q => Lie E a) ℂ := ⟨f, continuous_multilinear f⟩
   have hF : ∀ x, F x = l (ω (fun i => hermPart (x i))) := fun x => rfl

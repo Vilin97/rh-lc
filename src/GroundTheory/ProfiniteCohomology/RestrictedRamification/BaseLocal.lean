@@ -135,6 +135,8 @@ theorem brauerInvZOfIsSepClosure_cohomologyMap_uliftInt_base (A : Rep.{0} (ULift
 
 end AbstractLocal
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1)) (n : ℕ)
 

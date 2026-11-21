@@ -64,7 +64,7 @@ theorem continuous_family {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D
     rw [map_smul, map_smul]
     rfl
   rw [e]
-  exact continuous_finset_sum _ fun i _ =>
+  exact continuous_finsetSum _ fun i _ =>
     ((b.coord i).continuous_of_finiteDimensional.comp continuous_snd).mul
       ((H.om_cont _ (hL _) 0).comp continuous_fst)
 

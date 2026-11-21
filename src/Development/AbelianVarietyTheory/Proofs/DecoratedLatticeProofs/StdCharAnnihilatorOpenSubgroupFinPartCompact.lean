@@ -37,7 +37,9 @@ open Filter Topology
 
 variable (D : D7)
 
-abbrev line : HSp D := Examples₂.posSpace (E := D.host.E) Examples₂.star_isIntegral 1
+abbrev line : HSp D :=
+  Formalism.BasicNotions.Examples₂.posSpace (E := D.host.E)
+    Formalism.BasicNotions.Examples₂.star_isIntegral 1
 
 def o : Fin (line D).rank := ⟨0, Nat.one_pos⟩
 

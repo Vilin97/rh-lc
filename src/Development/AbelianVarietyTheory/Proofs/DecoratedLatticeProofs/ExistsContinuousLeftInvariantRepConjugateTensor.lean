@@ -81,6 +81,8 @@ theorem smooth_of_contDiff {D : D7} (θ : InfFam D) {V : HSp D} {S : D.what₂.T
     congr 1
     funext τ
     congr 4
+    funext i
+    dsimp only [Function.comp_apply, Prod.fst, Prod.snd]
     split_ifs <;> simp
   rw [e]
   refine hF.comp (contDiff_pi.2 fun τ => ?_)

@@ -39,8 +39,9 @@ def resMap (j : V →ₗ[A] T) (W : Submodule K T) : (W.restrictScalars A).comap
 
 theorem isLocalized_resMap [Module.IsTorsionFree A V] (j : V →ₗ[A] T)
     [IsLocalizedModule (nonZeroDivisors A) j] (W : Submodule K T) :
-    IsLocalizedModule (nonZeroDivisors A) (resMap j W) where
-  map_units a := by
+    IsLocalizedModule (nonZeroDivisors A) (resMap j W) := by
+  constructor
+  · intro a
     have hk : algebraMap A K a ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors a.2
     have key : ∀ w : W, algebraMap A (Module.End A W) a w = algebraMap A K a • w := fun w => by
       rw [Module.algebraMap_end_apply, algebraMap_smul]
@@ -48,14 +49,14 @@ theorem isLocalized_resMap [Module.IsTorsionFree A V] (j : V →ₗ[A] T)
     · rw [key, key] at h
       exact smul_right_injective W hk h
     · rw [key, smul_smul, mul_inv_cancel₀ hk, one_smul]
-  surj w := by
+  · intro w
     obtain ⟨⟨y, a⟩, h⟩ := IsLocalizedModule.surj (nonZeroDivisors A) j (w : T)
     have h' : (a : A) • (w : T) = j y := h
     have hy : j y ∈ W := by
       rw [← h', ← algebraMap_smul K (a : A) (w : T)]
       exact W.smul_mem _ w.2
     exact ⟨(⟨y, hy⟩, a), Subtype.ext h⟩
-  exists_of_eq {x y} h := by
+  · intro x y h
     refine ⟨1, ?_⟩
     rw [one_smul, one_smul]
     exact Subtype.ext (injective_of_isLocalized j (congrArg Subtype.val h))
@@ -155,7 +156,9 @@ theorem finrank_subFib : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] (Ω : Type
       have hv' := eq_pt_of_lifts hl hlift
       exact Submodule.subset_span ⟨e, he, hv' ▸ hv⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb =>
+      rw [map_add]
+      exact add_mem ha hb
     | smul c a _ ha =>
       rw [map_smul, ← algebraMap_smul L c (j a)]
       exact Submodule.smul_mem _ _ ha

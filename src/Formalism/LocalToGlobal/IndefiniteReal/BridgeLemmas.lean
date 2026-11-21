@@ -492,10 +492,10 @@ theorem adInner_pos (hy : IsReps ι J y) (hst : ∀ i, Nat.card (stab ι J (y i)
 theorem adInner_ipOn (hy : IsReps ι J y) (hst : ∀ i, Nat.card (stab ι J (y i)) ≠ 0)
     [FiniteDimensional ℂ W] : IPOnG (AdForms ι ρ J χ) (adInner ι J y) where
   fd := adForms_fd hy
-  add _ _ _ := adInner_add_left _ _ _
-  smul _ _ _ := adInner_smul_left _ _ _
-  herm _ _ := adInner_conj _ _
-  pos x hx := adInner_pos hy hst x.2 (fun h => hx (Subtype.ext h))
+  add := fun x x' z => adInner_add_left (ι := ι) (J := J) (y := y) x.val x'.val z.val
+  smul := fun s x z => adInner_smul_left (ι := ι) (J := J) (y := y) s x.val z.val
+  herm := fun x z => adInner_conj (ι := ι) (J := J) (y := y) x.val z.val
+  pos := fun x hx => adInner_pos hy hst x.2 (fun h => hx (Subtype.ext h))
 
 end IPV
 

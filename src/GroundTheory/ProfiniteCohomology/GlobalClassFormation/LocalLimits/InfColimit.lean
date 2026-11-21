@@ -19,7 +19,7 @@ open scoped Pointwise NumberField.LiesOver
 noncomputable section
 
 variable {K : FiniteSubfield} {v : NumberField.InfinitePlace K.1}
-  (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure v.Completion)
+  (ι : AlgebraicClosure ℚ →ₐ[K.1] AlgebraicClosure v.Completion)
 
 section Level
 

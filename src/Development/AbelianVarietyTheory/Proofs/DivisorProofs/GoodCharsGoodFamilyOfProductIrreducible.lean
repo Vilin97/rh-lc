@@ -85,7 +85,7 @@ end Characters
 
 section Local
 
-open GlobalTheory.IndefiniteRowSideFullHecke.BlockEmbeddingFactors GlobalTheory.IndefiniteRowSideFullHecke.CuspValueComparison GlobalTheory.IndefiniteRowSideFullHecke.TameCharacterTorusValues
+open GlobalTheory.IndefiniteRowSideFullHecke.BlockEmbeddingFactors GlobalTheory.IndefiniteRowSideFullHecke.CuspValueComparison
 
 variable {g : ℕ} [Fact g.Prime] {r : ℕ}
 
@@ -93,7 +93,7 @@ end Local
 
 section Global
 
-open GlobalTheory.IndefiniteRowSideFullHecke.BlockEmbeddingFactors GlobalTheory.IndefiniteRowSideFullHecke.TameCharacterTorusValues
+open GlobalTheory.IndefiniteRowSideFullHecke.BlockEmbeddingFactors
 
 end Global
 

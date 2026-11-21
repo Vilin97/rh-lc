@@ -42,17 +42,21 @@ theorem pm_cons (t : E) (s : ℕ) (bs : List (E × ℕ)) :
     simp only [ptEntry]
     rw [if_neg (by omega), if_pos ⟨by omega, by omega⟩, Nat.add_sub_cancel_left, Nat.add_sub_cancel_left]
 
-theorem bd_all : ∀ L : List (E × ℕ), (∀ b ∈ L, b.1 ≠ 0 ∧ 1 ≤ b.2) → BDm (pm L)
-  | [], _ => by
-    intro d _
+theorem bd_all : ∀ L : List (E × ℕ), (∀ b ∈ L, b.1 ≠ 0 ∧ 1 ≤ b.2) → BDm (pm L) := by
+  intro L
+  induction L with
+  | nil =>
+    intro _ d _
     refine ⟨1, one_ne_zero, ?_⟩
     rintro Z _ ⟨L0, U0, hL0, hU0, hZ⟩
     exact ⟨L0, U0, hL0, hU0, hZ, ⟨0, by ext i; exact absurd i.isLt (by simp)⟩,
       ⟨0, by ext i; exact absurd i.isLt (by simp)⟩⟩
-  | (t, s) :: bs, h => by
+  | cons b bs ih =>
+    rcases b with ⟨t, s⟩
+    intro h
     have ht : t ≠ 0 := (h (t, s) List.mem_cons_self).1
-    have ih := bd_all bs (fun b hb => h b (List.mem_cons_of_mem _ hb))
-    exact bd_step t ht (pm bs) (pm ((t, s) :: bs)) (pm_cons t s bs) ih
+    exact bd_step t ht (pm bs) (pm ((t, s) :: bs)) (pm_cons t s bs)
+      (ih fun b hb => h b (List.mem_cons_of_mem _ hb))
 
 theorem map_smul' {m n : Type*} (c : 𝓞 E) (X : Matrix m n (𝓞 E)) :
     (c • X).map (algebraMap (𝓞 E) E) = algebraMap (𝓞 E) E c • X.map (algebraMap (𝓞 E) E) := by

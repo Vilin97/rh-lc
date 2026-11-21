@@ -20,11 +20,7 @@ namespace GlobalTheory.ModelExtend
 
 theorem isLattice_span {D : D7} {L : HSp D} {ζ : Fin L.rank → D.host.E} (h : IsLineVec L ζ) :
     Submodule.IsLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
-  refine ⟨Submodule.fg_span_singleton ζ, ?_⟩
-  have h0 : ζ ≠ 0 := fun h0 => h.2 (by simp [h0])
-  rw [Submodule.span_span_of_tower]
-  have hr : Module.finrank D.host.E (Fin L.rank → D.host.E) = 1 := by simp [h.1]
-  exact (finrank_eq_one_iff_of_nonzero ζ h0).1 hr
+  exact Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span_singleton ζ)
 
 
 open GlobalTheory.LocMod in
@@ -68,7 +64,7 @@ theorem exists_placeModel_ext : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel 
   refine ⟨TL Φ₀, T₃, hTL.theta Φ₀, ⟨fun Φ hΦ x hx => ?_, fun Φ hΦ y hy => ?_, ?_⟩, hT₃⟩
   · obtain ⟨Φ', rfl⟩ := hsb Φ hΦ
     let Φ'' : SB (Matrix Unit n k) := ⟨fun s => Φ'.1 (s + P.down FS FL'' x),
-      Φ'.2.1.comp_continuous (continuous_add_right _), Φ'.2.2.comp_homeomorph (Homeomorph.addRight _)⟩
+      Φ'.2.1.comp_continuous (continuous_add_const _), Φ'.2.2.comp_homeomorph (Homeomorph.addRight _)⟩
     have e2 : (fun t => Witness.ext P FS FL'' Φ' (t + x)) = Witness.ext P FS FL'' Φ'' := by
       funext t
       rw [Witness.ext_apply, Witness.ext_apply, Witness.down_add]

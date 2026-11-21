@@ -20,7 +20,7 @@ theorem constantCoeff_eval_single {n : ℕ} (a : Pt K n d) (ha : ∀ i, constant
   cc_ev_eq _ (by intro j i; fin_cases j; simp [ha]) f
 
 theorem map_pderiv {σ : Type} (x : σ) (f : MvPowerSeries σ K) :
-    MvPowerSeries.map φ (pderiv K x f) = pderiv C x (MvPowerSeries.map φ f) := by
+    MvPowerSeries.map φ (pderiv x f) = pderiv x (MvPowerSeries.map φ f) := by
   ext n
   simp [coeff_pderiv, coeff_map]
 

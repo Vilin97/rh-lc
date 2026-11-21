@@ -50,7 +50,7 @@ theorem ord_det_mul (a b : GL (Fin n) k) : ord k (Matrix.GeneralLinearGroup.det 
 theorem ord_det_inv (a : GL (Fin n) k) : ord k (Matrix.GeneralLinearGroup.det a⁻¹) =
     -ord k (Matrix.GeneralLinearGroup.det a) := by
   have := ord_det_mul a a⁻¹
-  rw [mul_inv_cancel, map_one, ord_eq_zero k (x := 1) (by simp)] at this
+  rw [mul_inv_cancel, map_one, ord_eq_zero (x := 1) (by simp)] at this
   omega
 
 theorem valuation_det_le_one {A : GL (Fin n) k} (hA : IsInt A) :
@@ -79,7 +79,7 @@ theorem ord_det_torusElt {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformizer k)
   let o : kˣ →* Multiplicative ℤ := MonoidHom.mk' (fun x => .ofAdd (ord k x)) fun x y => by
     rw [ord_mul, ofAdd_add]
   have := map_zpow o ϖ (∑ i, e i)
-  rw [show o ϖ = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one k hϖ), ← ofAdd_zsmul,
+  rw [show o ϖ = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one hϖ), ← ofAdd_zsmul,
     smul_eq_mul, mul_one, ← h1] at this
   exact this
 

@@ -100,10 +100,15 @@ theorem vNormSq_lowK_sub_root_lt {ε : Fin n → Bool} {lam : Fin n → ℝ} (hm
   linarith
 
 theorem CDom_lowWt {ε : Fin n → Bool} (μ : Fin n → ℝ) :
-    ∀ l : List (Fin n × Fin n), (∀ p ∈ l, IsKLow ε p) → Formalism.MainNotions.S.CDom ε (lowWt μ l) μ
-  | [], _ => ⟨fun _ _ => 0, fun a b h => absurd rfl h, by simp [lowWt]⟩
-  | p :: l, hl => by
-    obtain ⟨c, hc, hsum⟩ := CDom_lowWt μ l fun q hq => hl q (List.mem_cons_of_mem _ hq)
+    ∀ l : List (Fin n × Fin n), (∀ p ∈ l, IsKLow ε p) → Formalism.MainNotions.S.CDom ε (lowWt μ l) μ := by
+  intro l
+  induction l with
+  | nil =>
+    intro _
+    exact ⟨fun _ _ => 0, fun a b h => absurd rfl h, by simp [lowWt]⟩
+  | cons p l ih =>
+    intro hl
+    obtain ⟨c, hc, hsum⟩ := ih fun q hq => hl q (List.mem_cons_of_mem _ hq)
     have hp := hl p (List.mem_cons_self ..)
     refine ⟨fun a b => c a b + if a = p.2 ∧ b = p.1 then 1 else 0, fun a b h => ?_, ?_⟩
     · by_cases h' : a = p.2 ∧ b = p.1

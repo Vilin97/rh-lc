@@ -95,12 +95,12 @@ private theorem isBorelSph_apply_satakeGL_eq {N : ℕ} {ϖ : kˣ}
     (hψ : _root_.GlobalTheory.SatakeBound.IsBorelSph k γ ψ) (S : Finset (Fin N)) (c : _root_.Formalism.UG.P.satakePairs S → 𝒪[k]) :
     ψ (_root_.Formalism.UG.P.satakeGL 𝒪[k] (π := (ϖ : k)) ϖ.ne_zero S c) = ∏ a ∈ S, γ a := by
   have hone : _root_.GlobalTheory.SmGL.ord k 1 = 0 :=
-    _root_.GlobalTheory.SmGL.ord_eq_zero k (by simp)
+    _root_.GlobalTheory.SmGL.ord_eq_zero (by simp)
   rw [hψ.2 _ ((_root_.GlobalTheory.SmGL.mem_borel k).mpr fun a l h => _root_.Formalism.UG.P.satakeGL_lower _ _ _ _ _ _ h)
     (fun a => if a ∈ S then ϖ else 1) (fun a => by rw [_root_.Formalism.UG.P.satakeGL_diag]; split_ifs <;> simp)]
   calc ∏ i, γ i ^ _root_.GlobalTheory.SmGL.ord k (if i ∈ S then ϖ else 1)
       = ∏ i, if i ∈ S then γ i else 1 := Finset.prod_congr rfl fun i _ => by
-        split_ifs <;> simp [_root_.GlobalTheory.SmGL.ord_eq_one k hϖ, hone]
+        split_ifs <;> simp [_root_.GlobalTheory.SmGL.ord_eq_one hϖ, hone]
     _ = ∏ a ∈ S, γ a := by rw [Finset.prod_ite_mem, Finset.univ_inter]
 
 open MeasureTheory ValuativeRel Matrix in

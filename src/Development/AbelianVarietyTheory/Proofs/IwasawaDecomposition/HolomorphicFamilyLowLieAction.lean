@@ -51,7 +51,7 @@ theorem exists_multi (U : ∀ i, L i →ₗ[ℂ] R) (hU : ∀ i j, i ≠ j → �
     simp only [prod_update U hU, map_add (f := _), mul_add]
   · intro inst v i c x
     obtain rfl : inst = (fun a b => Classical.propDecidable (a = b)) := Subsingleton.elim _ _
-    simp only [prod_update U hU, map_smul, mul_smul_comm]
+    simp only [prod_update U hU, map_smul, mul_smul_comm, RingHom.id_apply]
   · rw [PiTensorProduct.lift.tprod]
     rfl
 

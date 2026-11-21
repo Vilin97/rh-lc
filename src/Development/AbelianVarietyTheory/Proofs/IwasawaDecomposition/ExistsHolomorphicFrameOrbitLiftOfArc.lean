@@ -118,7 +118,9 @@ theorem exists_adp_local {R : Type} [CommRing R] (xR : Sp R ⟶ Xo.X)
       (fun b hb => ?_) hb fun t => (hφ t).differentiableAt (hB.mem_nhds (hsub hb))
     have := hw b hb j
     rw [(hy b (hsub hb)).2] at this
-    rw [← HolFrameMatrix.dualMap_eq]
+    have hmap : GlobalTheory.CompanionTheory.Ar.dualMap (ev b) =
+        ReciprocityTheory.ChartRestriction.G.Chart.dualMapR (ev b) := RingHom.ext fun _ => rfl
+    rw [← hmap]
     exact this
   have hVd : ∀ i j, DifferentiableAt ℂ (fun b => V b i j) b :=
     HolFrameMatrix.differentiableAt_of_mul_eq_one V (fun b => Matrix.of fun i j => w b j i) b

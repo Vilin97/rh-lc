@@ -61,18 +61,22 @@ theorem exists_tw : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
     ⟨fun h => (hQ P h).1 hP, fun h => (hQ _ h).2.2.1 (by rw [CharValCompare.conjP_conjP]; exact hP)⟩
   have hSG : ∀ P ∈ SG, P ∉ Q ∧ conjPrime₂ P ∉ Q := fun P hP =>
     ⟨fun h => (hQ P h).2.1 hP, fun h => (hQ _ h).2.2.2.1 (by rw [CharValCompare.conjP_conjP]; exact hP)⟩
-  have hb := isPtOf_base (F := F) hc (n := n) (ST := ST) (SG := SG) (Q := (∅ : Finset (HeightOneSpectrum (𝓞 E))))
-  have hpt : IsPtOf hc g (DecoF.base E n ST SG (∅ : Finset (HeightOneSpectrum (𝓞 E)))) := by
+  let p : DecoF E n ST SG ∅ :=
+    ⟨(⟨decoRaw ST SG (1 : GL (Fin n) (AfE F E)),
+      decorated_lattice_exists hc n ST SG 1 (one_mem _)⟩, fun P => Finset.notMem_empty _ P.2 |>.elim),
+      fun P => Finset.notMem_empty _ P.2 |>.elim⟩
+  have hb : IsPtOf hc 1 p := by
+    apply (PtDeco.isPtOf_iff_decoRaw F E hc n ST SG ∅ 1 p rfl).2
+    exact ⟨one_mem _, rfl⟩
+  have hpt : IsPtOf hc g p := by
     refine ⟨hg, ?_, fun P x hx i hi => ?_, fun w x hx i => ?_, fun P => absurd P.2 (Finset.notMem_empty _)⟩
-    · have h := c1
-      rw [globLat_one_std] at h
-      exact h
+    · exact c1
     · rw [c3 P.1 (hST P.1 P.2).1 (hST P.1 P.2).2 x i]
       exact hb.f P x hx i hi
     · rw [c3 w.1 (hSG w.1 w.2).1 (hSG w.1 w.2).2 x i]
       exact hb.be w x hx i
-  have hd := (PtDeco.isPtOf_iff_decoRaw F E hc n ST SG ∅ g (DecoF.base E n ST SG ∅) rfl).1 hpt
-  have hK := mem_principal_of_same_decoration hc n ST SG (one_mem _) hg (by rw [decoRaw_one, ← hd.2]; rfl)
+  have hd := (PtDeco.isPtOf_iff_decoRaw F E hc n ST SG ∅ g p rfl).1 hpt
+  have hK := mem_principal_of_same_decoration hc n ST SG (one_mem _) hg hd.2
   rw [inv_one, one_mul] at hK
   refine ⟨g, hK, fun P i j => ?_, fun w hw hw' i j => ?_⟩
   · rw [c2 P.1 P.2 i j]

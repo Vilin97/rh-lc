@@ -77,7 +77,7 @@ theorem archProjFun_mul (A B : ArchUnits K n) :
     centralSection_inv_mul_comm (detModule K n (archIncl K n A)) (archIncl K n B),
     mul_assoc (archIncl K n B), centralSection_inv_mul_inv_comm (detModule K n (archIncl K n A))]
 
-
+variable (K n) in
 def archProj : ArchUnits K n →* normOneGL (K := K) (n := n) where
   toFun A := ⟨archProjFun K n A, archIncl_mul_centralSection_inv_mem A⟩
   map_one' := Subtype.ext archProjFun_one
@@ -105,7 +105,7 @@ theorem archProj_mul_finEmb_comm (A : ArchUnits K n) (u : AdelicGLn.FiniteAdelic
   rw [coe_archProj, mul_assoc, centralSection_inv_mul_comm, ← mul_assoc,
     archIncl_mul_finEmb_comm, mul_assoc]
 
-
+variable (K n) in
 def finOne : AdelicGLn.integralFiniteGL K n →* normOneGL (K := K) (n := n) where
   toFun u := ⟨finEmb K n u, maxCompact_le_normOneGL (finEmb_mem_maxCompact u.2)⟩
   map_one' := Subtype.ext (map_one _)
@@ -151,9 +151,10 @@ theorem continuous_archConvFun (hβ : Continuous β) (hβc : HasCompactSupport �
       tsupport β, (β A : ℂ) * g ((archProj K n A)⁻¹ * x) ∂ν :=
     funext (archConvFun_eq_setIntegral ν g)
   rw [this]
-  refine continuous_parametric_integral_of_continuous ?_ (isCompact_unitsSupport hβc hβu)
-  exact ((Complex.continuous_ofReal.comp (hβ.comp Units.continuous_val)).comp continuous_snd).mul
-    (g.continuous.comp (((continuous_archProj.comp continuous_snd).inv).mul continuous_fst))
+  set_option synthInstance.maxHeartbeats 100000 in
+    refine continuous_parametric_integral_of_continuous ?_ (isCompact_unitsSupport hβc hβu)
+    exact ((Complex.continuous_ofReal.comp (hβ.comp Units.continuous_val)).comp continuous_snd).mul
+      (g.continuous.comp (((continuous_archProj.comp continuous_snd).inv).mul continuous_fst))
 
 theorem archConvFun_eq_zero_of_notMem (g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     {x : normOneGL (K := K) (n := n)} (hx : x ∉ archProj K n '' ((Units.val : ArchUnits K n → ArchMatrix K n) ⁻¹'
@@ -165,6 +166,7 @@ theorem archConvFun_eq_zero_of_notMem (g : CompactlySupportedContinuousMap (norm
     simp [image_eq_zero_of_notMem_tsupport this]
   · simp [image_eq_zero_of_notMem_tsupport hA]
 
+set_option synthInstance.maxHeartbeats 100000 in
 def archConv (hβ : Continuous β) (hβc : HasCompactSupport β)
     (hβu : tsupport β ⊆ range (Units.val : ArchUnits K n → ArchMatrix K n))
     (g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) :

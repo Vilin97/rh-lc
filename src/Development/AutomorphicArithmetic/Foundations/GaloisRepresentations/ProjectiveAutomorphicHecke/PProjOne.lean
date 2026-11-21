@@ -15,6 +15,7 @@ private theorem monoidAlgebra_lift_freeMonoid_eq_wop {F A J : Type*} [Field F] [
     MonoidAlgebra.lift F A (FreeMonoid J) (FreeMonoid.lift T) t =
       wop T (t.coeff.equivMapDomain FreeMonoid.toListEquiv) := by
   simp only [MonoidAlgebra.lift_apply, wop, Finsupp.sum_equivMapDomain, FreeMonoid.lift_apply]
+  rfl
 
 private theorem algHom_wop_eq_wop_comp {F A B J : Type*} [Field F] [Ring A] [Algebra F A] [Ring B]
     [Algebra F B] (φ : A →ₐ[F] B) (T : J → A) (t : List J →₀ F) :
@@ -58,8 +59,10 @@ theorem pProjOne_holds : ProjOne.{u} := by
   have hcomm : ∀ a ∈ Set.range gen, ∀ b ∈ Set.range gen, a * b = b * a := by
     rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩
     exact Prod.ext (mul_comm _ _) (hT i j)
-  letI : CommRing D := Algebra.adjoinCommRingOfComm F hcomm
-  haveI : Module.Finite F D := inferInstanceAs (Module.Finite F (Subalgebra.toSubmodule D))
+  have hDcomm : IsMulCommutative D :=
+    Algebra.isMulCommutative_adjoin F fun a ha b hb _ => hcomm a ha b hb
+  let : CommRing D := { D.toRing with mul_comm := hDcomm.is_comm.comm }
+  have : Module.Finite F D := inferInstanceAs (Module.Finite F (Subalgebra.toSubmodule D))
   let χ : D →ₐ[F] F := (AlgHom.fst F F A).comp D.val
   let b := Module.finBasis F D
   choose q hq1 hq2 N hN using fun i => exists_idempotent_aeval_nilpotent_sub_of_isIntegral (b i) (IsIntegral.of_finite F (b i)) (χ (b i))
@@ -101,7 +104,7 @@ theorem pProjOne_holds : ProjOne.{u} := by
   have hD : D ≤ Ψ.range := by
     apply Algebra.adjoin_le
     rintro _ ⟨j, rfl⟩
-    exact ⟨MonoidAlgebra.of F _ (FreeMonoid.of j), by simp [Ψ, MonoidAlgebra.lift_of]⟩
+    exact ⟨MonoidAlgebra.of F _ (FreeMonoid.of j), by simp [Ψ]⟩
   obtain ⟨t, ht⟩ := hD z.2
   have ht' : MonoidAlgebra.lift F (F × A) (FreeMonoid J) (FreeMonoid.lift gen) t = z := ht
   let coeff := t.coeff.equivMapDomain FreeMonoid.toListEquiv

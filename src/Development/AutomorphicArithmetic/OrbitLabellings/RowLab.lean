@@ -130,7 +130,10 @@ theorem resIdeal_prime (em : O →+* C) (hi : ∀ x, V.Ge 0 (em x)) : (resIdeal 
     intro h
     have h' : V.MM (em 1) := h
     exact not_mm_one (V := V) (by simpa using h')
-  mem_or_mem' := fun {x y} h => mm_or (hi x) (hi y) (by have h' : V.MM (em (x * y)) := h; simpa using h')
+  mem_or_mem' {x y} h := by
+    change V.MM (em (x * y)) at h
+    rw [map_mul] at h
+    exact mm_or (hi x) (hi y) h
 
 theorem depthIdeal_pow (em : A → O →+* C) (hi : ∀ a x, V.Ge 0 (em a x)) (n : ℕ) :
     depthIdeal V em hi 1 ^ n ≤ depthIdeal V em hi n := by

@@ -45,7 +45,7 @@ theorem ofAdj_starAdj (L S : HSp D) (x : WO L S) : ofAdj L S (starAdj L S x) = x
   simp only [Matrix.mul_assoc, giA_gA_cancel, giA_mul_gA, Matrix.mul_one]
 
 theorem link_gram : ∀ (D : D7) (ρ : ℕ) (B : BesLev D ρ) (L' : HSp D) (ζ' : Fin L'.rank → D.host.E), IsLineVec L' ζ' →
-    ∀ l : Link B L' ζ', l.τᴴ ⬝ (B.L.gram ⬝ l.τ) = (((1 : ℤ) : D.host.E) * (D.host.xi0 * star D.host.xi0)) • L'.gram ∧
+    ∀ l : Link B L' ζ', l.τᴴ * (B.L.gram * l.τ) = (((1 : ℤ) : D.host.E) * (D.host.xi0 * star D.host.xi0)) • L'.gram ∧
       ∀ S : HSp D, Function.Bijective (l.κ S) ∧
         ∀ w, l.κ S w ∈ ratMx D S.rank B.L.rank → w ∈ ratMx D L'.rank S.rank := by
   intro D ρ B L' ζ' h l
@@ -58,10 +58,10 @@ theorem link_gram : ∀ (D : D7) (ρ : ℕ) (B : BesLev D ρ) (L' : HSp D) (ζ' 
     apply B.line.2
     rw [hz]; simp
   obtain ⟨σ, hστ, hτσ⟩ := exists_inv_of_rank_one B.line.1 h.1 l.τ hτ
-  have key : ∀ w, (rat σ : Mx D L'.rank B.L.rank) ⬝ starAdj B.L S (l.κ S w) = w := by
+  have key : ∀ w, (rat σ : Mx D L'.rank B.L.rank) * starAdj B.L S (l.κ S w) = w := by
     intro w
     rw [Link.κ, starAdj_ofAdj, ← Matrix.mul_assoc, ← rat_mul, hστ, rat_one, Matrix.one_mul]
-  refine ⟨⟨fun w w' e => by rw [← key w, ← key w', e], fun x => ⟨(rat σ : Mx D L'.rank B.L.rank) ⬝ starAdj B.L S x, ?_⟩⟩,
+  refine ⟨⟨fun w w' e => by rw [← key w, ← key w', e], fun x => ⟨(rat σ : Mx D L'.rank B.L.rank) * starAdj B.L S x, ?_⟩⟩,
     fun w hw => ?_⟩
   · rw [Link.κ, ← Matrix.mul_assoc, ← rat_mul, hτσ, rat_one, Matrix.one_mul, ofAdj_starAdj]
   · rw [← key w]

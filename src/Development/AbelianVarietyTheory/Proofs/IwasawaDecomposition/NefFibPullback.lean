@@ -161,3 +161,4 @@ theorem nefFib_pull : ∀ (k : Type) [CommRing k] [Module.Finite ℤ k] (X Y : S
     ((cls_eq_iff _ _).1 e)]
 
 end GlobalTheory.ArInt
+

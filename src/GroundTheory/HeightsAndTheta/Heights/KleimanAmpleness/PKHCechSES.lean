@@ -167,7 +167,9 @@ theorem locPart_exact (h𝓜' : KH.IsMGraded S ι 𝓜') (h𝓜 : KH.IsMGraded S
   refine ⟨LocalizedModule.mk m' (v * t), ?_, ?_⟩
   · refine GenSESStep.mk_mem_locPart m' (v * t) (e + a) (GenSESStep.isMultiHomog_mul he ht) ?_
     convert hm'deg using 2
-    ring
+    funext k
+    simp only [Pi.add_apply, Nat.cast_add]
+    ac_rfl
   · rw [KHTheoremS.lmap_mk, hm', ← Submonoid.smul_def, LocalizedModule.mk_cancel_common_left]
 
 theorem cechMap_exact (h𝓜' : KH.IsMGraded S ι 𝓜') (h𝓜 : KH.IsMGraded S ι 𝓜)
@@ -187,8 +189,10 @@ theorem cechBc_lift (h𝓜 : KH.IsMGraded S ι 𝓜) (h𝓜'' : KH.IsMGraded S �
   | 0, x, hx => by
     have hx0 : x = 0 := (Submodule.mem_bot S).mp hx
     exact ⟨0, zero_mem _, by rw [hx0, map_zero]⟩
-  | n + 1, _, ⟨y, hy, rfl⟩ => by
-    obtain ⟨z, hz, rfl⟩ := cechMap_lift h𝓜 h𝓜'' hh hsurj hy
+  | n + 1, x, hx => by
+    change x ∈ (KH.cechCc ι 𝓜'' c n).map ((KH.cechD S ι M'' n).restrictScalars S) at hx
+    obtain ⟨y, hy, rfl⟩ := Submodule.mem_map.mp hx
+    obtain ⟨z, hz, rfl⟩ := cechMap_lift h𝓜 h𝓜'' hh hsurj (c := c) (n := n) hy
     exact ⟨KH.cechD S ι M n z, ⟨z, hz, rfl⟩, (KHTheoremS.cechD_cechMap h n z).symm⟩
 
 theorem exists_sub_mem_cechBc (hSq : KH.CechDSqStatement) (hDeg : KH.CechDDegStatement)

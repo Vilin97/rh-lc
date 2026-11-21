@@ -117,14 +117,14 @@ theorem continuous_sn (b : Fin d → lie (Jm ε)) (k : ℕ) : Continuous (sn ρ 
   | zero => exact (continuous_eval []).norm
   | succ k ih =>
     rw [show ⇑(sn ρ b (k + 1)) = _ from funext (sn_succ b k)]
-    exact continuous_finset_sum _ fun j _ => ih.comp (der ρ (b j)).continuous
+    exact continuous_finsetSum _ fun j _ => ih.comp (der ρ (b j)).continuous
 
 def sz (φ : Fin d → (Mx n →ₗ[ℝ] ℝ)) (X : Mx n) : ℝ := ∑ j, |φ j X|
 
 theorem sz_nonneg (φ : Fin d → (Mx n →ₗ[ℝ] ℝ)) (X : Mx n) : 0 ≤ sz φ X := Finset.sum_nonneg fun _ _ => abs_nonneg _
 
 theorem continuous_sz (φ : Fin d → (Mx n →ₗ[ℝ] ℝ)) : Continuous (sz φ) :=
-  continuous_finset_sum _ fun j _ => (φ j).continuous_of_finiteDimensional.abs
+  continuous_finsetSum _ fun j _ => (φ j).continuous_of_finiteDimensional.abs
 
 theorem exists_sz_le (φ : Fin d → (Mx n →ₗ[ℝ] ℝ)) : ∃ C, 0 ≤ C ∧ ∀ X, sz φ X ≤ C * (1 + hs X) := by
   letI : NormedAddCommGroup (Mx n) := Matrix.normedAddCommGroup

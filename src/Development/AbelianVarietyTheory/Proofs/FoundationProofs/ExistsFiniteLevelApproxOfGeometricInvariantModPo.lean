@@ -96,9 +96,9 @@ end GlobalTheory.K5.GeoLevel
 theorem GlobalTheory.K5.geo_invariants_from_finite_level :
     ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∀ (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
   ∀ (T : Tower p Ω) (k j : ℕ), 1 ≤ j → ∀ x : Ω, IsInt (p := p) x →
-  (∀ g ∈ Ggeo p Ω ⊓ ⨅ n, Gn T n, Cong p k (g x) x) →
+  (∀ g ∈ Ggeo p Ω ⊓ ⨅ n, Gn T n, Cong (p := p) k (g x) x) →
   ∃ y : Ω, IsInt (p := p) y ∧ (∃ N, ∀ g ∈ Ggeo p Ω ⊓ MulAction.stabilizer (Gal p Ω) (T.qq N), g y = y) ∧
-    Cong p k ((T.ζ j - 1) * x) y := by
+    Cong (p := p) k ((T.ζ j - 1) * x) y := by
   intro p _ hp2 Ω _ _ hClo T k j hj x hx hfix
   obtain ⟨y₀, E, hy₀, hEH, huniq, hsum⟩ :=
     GlobalTheory.T.smallTraces_subgroup_galois_towerTop p Ω hp2 hClo T (Ggeo p Ω ⊓ ⨅ n, Gn T n) inf_le_right {x} j hj

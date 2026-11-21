@@ -159,12 +159,7 @@ theorem act_algebraMap' {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)} 
   rw [AlgEquiv.commutes] at this
   exact this
 
-theorem invariants_killed : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc)
-    (F : FonOf D.loc D.locA HW), adm7 D →
-    ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL),
-    let S := Formalism.MainNotions.LocalSituation.sit D.loc HW l (D.locA l) K s LL h
-    let E : S.Comparison₂ := ((F l).E K s LL h).tie
-    H0at S E := by
+theorem invariants_killed : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), adm7 D → ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let S := sit D.loc HW l (D.locA l) K s LL h; let E : S.Comparison₂ := ((F l).E K s LL h).tie; H0at S E := by
   intro D HW F h7 l _ K s LL h S E M0 h0 T τ hW hj x hx
   have hell : ell S = l := (D.loc l).PD_p K
   have hs : S.W.s = s := (HW l).W_s K s LL h

@@ -293,6 +293,13 @@ variable {r t : ℕ}
 
 def twoEquiv (hN : r + t = N) : Fin r ⊕ Fin t ≃ Fin N := finSumFinEquiv.trans (finCongr hN)
 
+@[local simp] private theorem twoEquiv_inl_lt (hN : r + t = N) (i : Fin r) :
+    (twoEquiv hN (Sum.inl i) : ℕ) < r := i.isLt
+
+@[local simp] private theorem twoEquiv_inr_not_lt (hN : r + t = N) (i : Fin t) :
+    ¬ (twoEquiv hN (Sum.inr i) : ℕ) < r :=
+  Nat.not_lt.mpr (Nat.le_add_right r i.val)
+
 def twoDiagHom (hN : r + t = N) {b : Fin N → ℕ} (hb : IsTwoBlock r b) : GL (Fin r) k × GL (Fin t) k →* levi k b :=
   MonoidHom.codRestrict (MonoidHom.toHomUnits
     { toFun := fun x => (Matrix.fromBlocks (x.1 : Matrix (Fin r) (Fin r) k) 0 0 (x.2 : Matrix (Fin t) (Fin t) k)).submatrix

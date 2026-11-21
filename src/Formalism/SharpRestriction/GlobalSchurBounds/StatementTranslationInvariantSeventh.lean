@@ -38,7 +38,7 @@ end A
 
 section C
 
-open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.FormalGroupJets Formalism.MainNotions.StandardLatticesGL3 Classical
+open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3 Classical
 
 end C
 

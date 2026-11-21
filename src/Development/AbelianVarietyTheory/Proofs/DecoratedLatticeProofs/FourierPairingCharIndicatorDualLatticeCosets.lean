@@ -188,8 +188,10 @@ theorem fpair_charInd_dualInd_add_cosets : ∀ (k : Type) [Field k] [ValuativeRe
       fpair χ e μ (charInd (resChar χ hχ q) Q) (dualInd Q.lat) +
         ∑ Q'' ∈ withLat Q.lat, fpair χ e μ (charInd (resChar χ hχ q) Q) (cosetInd q Q''.lat Q''.red) := by
     simp only [fpair]
-    rw [← integral_finsetSum _ hint2, ← integral_add hint1 (integrable_finset_sum _ hint2)]
+    rw [← integral_finsetSum _ hint2, ← integral_add hint1 (integrable_finsetSum _ hint2)]
     congr 1
+    funext η
+    simp [mul_add, Finset.mul_sum]
   obtain ⟨ε, hε⟩ : ∃ ε : 𝓀[k]ˣ, (e = 1 ∧ ε = 1) ∨ (e = -1 ∧ ε = -1) := by
     rcases he with h | h
     · exact ⟨1, Or.inl ⟨h, rfl⟩⟩

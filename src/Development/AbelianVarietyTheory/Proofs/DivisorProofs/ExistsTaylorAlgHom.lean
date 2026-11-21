@@ -96,7 +96,7 @@ theorem exists_taylor_algHom : ∀ {I I₀ : Type} [Fintype I] [DecidableEq I] [
     ∃ Ta : Hol W →ₐ[ℂ] D ⊗[ℂ] Hol W₀, (∀ (h : Hol W) (p : Tot I₀ g) (hp : p ∈ W₀),
       Algebra.TensorProduct.lift (AlgHom.id ℂ D) ((Algebra.ofId ℂ D).comp (Hol.ev p hp)) (fun _ _ ↦ Commute.all _ _)
         (Ta h) = GlobalTheory.PeriodFamily.taylor N t fun z ↦ h.fn (z, p.2)) ∧
-      ∀ a h, Ta (dw a h) = LinearMap.lTensor D (dw a).toLinearMap (Ta h) := by
+      ∀ a h, Ta (dw (W := W) a h) = LinearMap.lTensor D (dw (W := W₀) a).toLinearMap (Ta h) := by
   intro I I₀ _ _ _ g D _ _ N t ht W W₀ hW
 
   have slice_eq : ∀ {p : Tot I₀ g} (_ : p ∈ W₀) {F : (I → ℂ) → ℂ} (x : Hol W),
@@ -134,7 +134,7 @@ theorem exists_taylor_algHom : ∀ {I I₀ : Type} [Fintype I] [DecidableEq I] [
             map_zero' := by simpa only [map_zero] using hconst 0
             map_add' := hadd
             commutes' := hconst }, fun h p hp ↦ ev_poly hW N t h p hp, fun a h ↦ ?_⟩
-  show poly hW N t (dw a h) = LinearMap.lTensor D (dw a).toLinearMap (poly hW N t h)
+  show poly hW N t (dw a h) = LinearMap.lTensor D (dw (W := W₀) a).toLinearMap (poly hW N t h)
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [poly, map_sum, LinearMap.lTensor_tmul]
   refine Finset.sum_congr rfl fun k _ ↦ Finset.sum_congr rfl fun s _ ↦ ?_

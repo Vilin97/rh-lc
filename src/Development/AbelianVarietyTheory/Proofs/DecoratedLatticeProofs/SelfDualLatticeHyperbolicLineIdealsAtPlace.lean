@@ -43,13 +43,13 @@ theorem exists_nat_intRing {ι : Type} [Fintype ι] (z : ι → D.host.E) :
   exact mul_mem (natCast_mem _ c) (incA_mem_intRing o)
 
 theorem mulVec_colMul {k m n : ℕ} (P : Mx D k m) (x : Mx D m n) (i : Fin n) (b : AE D) :
-    P *ᵥ colMul x i b = fun l => b * (P ⬝ x) l i := by
+    P *ᵥ colMul x i b = fun l => b * (P * x) l i := by
   funext l
   simp only [Matrix.mulVec, dotProduct, colMul, Matrix.mul_apply, Finset.mul_sum]
   exact Finset.sum_congr rfl fun k _ => by ring
 
 theorem hermAt_colMul (S : HSp D) {n : ℕ} (x : Mx D S.rank n) (i : Fin n) (a : AE D) (y : Fin S.rank → AE D) :
-    hermAt S (colMul x i a) y = cA D (((adj x ⬝ gA S) *ᵥ y) i) * a := by
+    hermAt S (colMul x i a) y = cA D (((adj x * gA S) *ᵥ y) i) * a := by
   have hG : ∀ k l, cA D (gA S k l) = gA S l k := fun k l => congrFun (congrFun (adj_gA S) l) k
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [hermAt, colMul, Matrix.mulVec, dotProduct, Matrix.mul_apply, adj, Matrix.transpose_apply,
