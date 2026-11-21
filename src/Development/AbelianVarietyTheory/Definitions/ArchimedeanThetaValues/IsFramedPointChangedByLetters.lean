@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Formalism.LocalToGlobal.ProjectiveLattices.SectionOfLineBundleOne
+public import Formalism.LocalToGlobal.ProjectiveLattices.IsCombAt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniversalCharts.ChartLawPf
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.LawsChart
 public import Formalism.LocalToGlobal.ProjectiveLattices.ArchimedeanQuadraticData.ArcLineFunctions.FunDef
@@ -51,12 +52,12 @@ abbrev prj (p : Out.IsPullDeg f D₀ D₁) : D₁.P.A.left ⟶ D₀.P.A.left :=
   p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f)
 
 def LetBC (p : Out.IsPullDeg f D₀ D₁) (ν : Out.GtPt D₀ (epsR A)) (ν₁ : Out.GtPt D₁ (epsR A')) : Prop :=
-  ν₁.b.left ≫ p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f) = spMap (Formalism.L2.Pj.dualMap f) ≫ ν.b.left ∧
+  ν₁.b.left ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ ν.b.left ∧
     ∀ χ : D₁.X, ∃ hψ : ∀ i : Fin 4,
-        Out.DegPre.gtφT D₁ (epsR A') ν₁.b χ i ≫ p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f) =
+        Out.DegPre.gtφT D₁ (epsR A') ν₁.b χ i ≫ prj p =
           spMap (Formalism.L2.Pj.dualMap f) ≫ Out.DegPre.gtφT D₀ (epsR A) ν.b (p.xe χ) i,
       LB.Gen.Maps (LB.linCombIso p.w _ Out.DegPre.gtε) (ν₁.s χ)
-        (Out.GeneratorPullback.pullAlong D₀.P.L (p.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf f)) (spMap (Formalism.L2.Pj.dualMap f)) _
+        (Out.GeneratorPullback.pullAlong D₀.P.L (prj p) (spMap (Formalism.L2.Pj.dualMap f)) _
           Out.DegPre.gtε _ hψ (ν.s (p.xe χ)))
 
 def ThBC (p : Out.IsPullDeg f D₀ D₁) (th : D₀.P.L.Sec) (th₁ : D₁.P.L.Sec) : Prop :=

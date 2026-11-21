@@ -36,8 +36,6 @@ end Steps
 
 section Help
 
-open Formalism.IndefR.Fock.Alg
-
 variable {ι X : Type} [DecidableEq ι] {Sm : Set (X → ℂ)} {aP aM : ι → (X → ℂ) → (X → ℂ)} {v : X → ℂ}
 
 end Help
@@ -51,7 +49,7 @@ end PolHelp
 
 section Assembly
 
-open Formalism.IndefR.Fock.Alg Formalism.IndefR.Fock.CCR
+open Formalism.IndefR.Fock.CCR
 
 variable {m n : ℕ}
 
@@ -91,7 +89,7 @@ end QuadPf
 
 section DRhoPf
 
-open Formalism.IndefR.Fock.Alg Formalism.IndefR.Fock.CCR
+open Formalism.IndefR.Fock.CCR
 
 
 end DRhoPf

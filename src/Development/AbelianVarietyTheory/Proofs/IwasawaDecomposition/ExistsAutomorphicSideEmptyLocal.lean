@@ -24,10 +24,10 @@ namespace GlobalTheory.AutQuot
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
-theorem autIso_symm {π π' : NG.AutRep L n} (h : π.Iso π') : π'.Iso π := NG.AutRep.iso_equivalence.symm h
+theorem autIso_symm {π π' : NG.AutRep L n} (h : π.Iso π') : π'.Iso π := (NG.AutRep.iso_equivalence (L := L) (n := n)).symm h
 
 theorem autIso_trans {π π' π'' : NG.AutRep L n} (h : π.Iso π') (h' : π'.Iso π'') : π.Iso π'' :=
-  NG.AutRep.iso_equivalence.trans h h'
+  (NG.AutRep.iso_equivalence (L := L) (n := n)).trans h h'
 
 theorem clsA_eq_iff (π π' : NG.AutRep L n) : clsA π = clsA π' ↔ π.Iso π' := by
   constructor
@@ -85,7 +85,7 @@ theorem locAt_unique {π π' : NG.AutRep L n} (hi : π.Iso π') {w : HeightOneSp
   obtain ⟨s, σ, hs, hσ, e⟩ := hx
   obtain ⟨s', σ', hs', hσ', e'⟩ := hx'
   obtain ⟨σ₀, -, hu⟩ := GlobalTheory.T.splitPlaceLocalComponent_exists_unique_class L n π s
-  have h1 := hu π s rfl σ (NG.AutRep.iso_equivalence.refl π) hσ
+  have h1 := hu π s rfl σ ((NG.AutRep.iso_equivalence (L := L) (n := n)).refl π) hσ
   have h2 := hu π' s' (hs'.trans hs.symm) σ' hi hσ'
   have key : ∀ (u u' : HeightOneSpectrum (𝓞 L)) (_ : u = u') (a : GlobalTheory.SmGL.IrrCl (GL (Fin n) (u.adicCompletion L)))
       (b : GlobalTheory.SmGL.IrrCl (GL (Fin n) (u'.adicCompletion L))), HEq a b →

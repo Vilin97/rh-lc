@@ -41,7 +41,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRingOver segre scaleBlock)
 open ReciprocityTheory.AnForm.R (conePts)
 
 open GoodChartModel Matrix
-open ReciprocityTheory.ChartRestriction.G.Geo (blkW weight_blkW segMono eval_segMono segMono_homog psiPoly eval_psiPoly psiPoly_homog
+open ReciprocityTheory.ChartRestriction.G.Geo (blkW weight_blkW segMono eval_segMono psiPoly eval_psiPoly
   comp_mul_homog diag_of_homog)
 
 section Rel
@@ -51,14 +51,14 @@ attribute [local instance] MvPolynomial.weightedGradedAlgebra
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem isWeightedHomogeneous_of_isMultiHomog [DecidableEq K] {s : MRingOver ℂ ι} {a : K → ℕ}
-    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) : IsWeightedHomogeneous blkW s a := by
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) : IsWeightedHomogeneous (blkW ι) s a := by
   intro d hd
   funext k
   rw [weight_blkW]
   exact hs d (mem_support_iff.2 hd) k
 
 theorem cone_homog [DecidableEq K] {Q : Ideal (MRingOver ℂ ι)} (hQ : ReciprocityTheory.AnForm.R.IsMultiHomogIdeal Q) :
-    Q.IsHomogeneous (weightedHomogeneousSubmodule ℂ (blkW (ι := ι))) := by
+    Q.IsHomogeneous (weightedHomogeneousSubmodule ℂ (blkW ι)) := by
   obtain ⟨S, hS, rfl⟩ := hQ
   refine Ideal.homogeneous_span _ _ ?_
   intro f hf
@@ -72,6 +72,17 @@ theorem cone_segre_rel {e : ℕ} {Q : Ideal (MRingOver ℂ ι)} (hP : Reciprocit
       (∀ j, (G j).totalDegree ≤ r - 1) ∧
       ∀ z ∈ conePts Q, segre z i ^ r = ∑ j, Ψ (segre z) j * eval (segre z) (G j) := by
   classical
+  have hsegMono (a : (k : K) → ι k) : IsWeightedHomogeneous (blkW ι) (segMono ι a) (fun _ => 1) := by
+    have hprod := IsWeightedHomogeneous.prod (w := blkW ι) Finset.univ
+      (fun k => (X ⟨k, a k⟩ : MvPolynomial (Σ k, ι k) ℂ))
+      (fun k => blkW ι ⟨k, a k⟩) (fun k _ => isWeightedHomogeneous_X ℂ _ _)
+    unfold segMono
+    convert hprod using 1
+    funext k
+    simp [blkW, Finset.sum_apply, Pi.single_apply]
+  have hpsiPoly (j : Fin (e + 1)) : IsWeightedHomogeneous (blkW ι) (psiPoly Ψ j) (fun _ => 1) := by
+    unfold psiPoly
+    exact IsWeightedHomogeneous.sum _ _ _ fun a _ => (hsegMono a).C_mul _
   set I := Q ⊔ Ideal.span (Set.range (psiPoly Ψ)) with hI
   have hrad : segMono ι i ∈ I.radical := by
     rw [← vanishingIdeal_zeroLocus_eq_radical (K := ℂ), mem_vanishingIdeal_iff]
@@ -93,17 +104,17 @@ theorem cone_segre_rel {e : ℕ} {Q : Ideal (MRingOver ℂ ι)} (hP : Reciprocit
   obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.mp hmem
   obtain ⟨c, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.mp hb
   let D : K → ℕ := fun _ => r0
-  let comp := weightedHomogeneousComponent (R := ℂ) (blkW (ι := ι)) (D + fun _ => 1)
-  have hpow : IsWeightedHomogeneous blkW (segMono ι i ^ (r0 + 1)) (D + fun _ => 1) := by
-    have := (segMono_homog (ι := ι) i).pow (r0 + 1)
+  let comp := weightedHomogeneousComponent (R := ℂ) (blkW ι) (D + fun _ => 1)
+  have hpow : IsWeightedHomogeneous (blkW ι) (segMono ι i ^ (r0 + 1)) (D + fun _ => 1) := by
+    have := (hsegMono i).pow (r0 + 1)
     convert this using 1
     funext k; simp [D]
   have hcomp := congrArg comp hab
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_add (f := _), map_sum, weightedHomogeneousComponent_eq_self hpow] at hcomp
-  simp only [comp, comp_mul_homog (psiPoly_homog Ψ _)] at hcomp
+  simp only [comp, comp_mul_homog (hpsiPoly _)] at hcomp
   have hcd : ∀ j, ∃ G : MvPolynomial ((k : K) → ι k) ℂ, G.totalDegree ≤ r0 ∧
-      ∀ z : (Σ k, ι k) → ℂ, eval z (weightedHomogeneousComponent blkW D (c j)) =
+      ∀ z : (Σ k, ι k) → ℂ, eval z (weightedHomogeneousComponent (blkW ι) D (c j)) =
         eval (segre z) G :=
     fun j => diag_of_homog r0 (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
   choose G hG hGz using hcd

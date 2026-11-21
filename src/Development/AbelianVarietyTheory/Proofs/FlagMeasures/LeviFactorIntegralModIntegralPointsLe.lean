@@ -232,7 +232,7 @@ theorem sigmaFinite_haarGL : SigmaFinite (haarGL E j) := by
     fun x => ENNReal.ofReal ((∏ w, ‖(Matrix.of (x w)).det‖ ^ 2)⁻¹ ^ j))
   exact SigmaFinite.withDensity_ofReal _
 
-theorem detNorm_aut_mul (hE : IsTotallyComplex E) {Λ : Submodule (𝓞 E) (Fin j → E)} (hΛ : Submodule.IsLattice E Λ)
+theorem detNorm_aut_mul (hE : IsTotallyComplex E) {Λ : Submodule (𝓞 E) (Fin j → E)} (hΛ : Submodule.IsFullLattice E Λ)
     {γ : MatInf E j} (hγ : γ ∈ autGL E j Λ) (g : MatInf E j) : detNorm E j (γ * g) = detNorm E j g := by
   obtain ⟨γ', hγΛ, hγw⟩ := hγ
 
@@ -386,12 +386,12 @@ theorem haarGL_restrict (hj : 1 ≤ j) : (haarGL E j).restrict {g | 0 < detNorm 
   exact key
 
 theorem exists_dom (hE : IsTotallyComplex E) (hj : 1 ≤ j) {Λ : Submodule (𝓞 E) (Fin j → E)}
-    (hΛ : Submodule.IsLattice E Λ) {N κ : ℝ} (hN : 0 < N) (hκ : 0 < κ) :
+    (hΛ : Submodule.IsFullLattice E Λ) {N κ : ℝ} (hN : 0 < N) (hκ : 0 < κ) :
     ∃ D : Set (MatInf E j), MeasurableSet D ∧ D ⊆ {g | 0 < detNorm E j g} ∧
       (∀ g, 0 < detNorm E j g → ∃ γ ∈ autGL E j Λ, γ * g ∈ D) ∧
       ∀ G : ℝ → ENNReal, Measurable G → ∫⁻ x in D, G ((detNorm E j x / κ) ^ (-(1 / N))) ∂haarGL E j =
         slabVol E j Λ * ∫⁻ t in Set.Ioi (0 : ℝ), G t * ENNReal.ofReal (N / t) := by
-  obtain ⟨D, hDm, hDpos, hDcov, -, hDint⟩ := GlobalTheory.T.exists_scalarStable_latticeAutomorphismFundamentalDomain E hE j Λ hΛ
+  obtain ⟨D, hDm, hDpos, hDcov, -, hDint⟩ := GlobalTheory.T.exists_scalarStable_latticeAutomorphismFundamentalDomain E hE j Λ hΛ.toIsLattice
   refine ⟨D, hDm, hDpos, hDcov, fun G hG => ?_⟩
   have hAm : MeasurableSet {g : MatInf E j | 0 < detNorm E j g} :=
     measurableSet_lt measurable_const measurable_detNorm
@@ -410,7 +410,7 @@ theorem exists_dom (hE : IsTotallyComplex E) (hj : 1 ≤ j) {Λ : Submodule (�
   rw [haarGL_restrict hj, Set.inter_eq_right.2 hDpos] at h1
   beta_reduce at h1
   rw [← h1]
-  have h2 := GlobalTheory.T.leftQuotientCovolume_withDensity_detNormSq E hE j hj Λ hΛ (fun t => G ((t / κ) ^ (-(1 / N)))) hF
+  have h2 := GlobalTheory.T.leftQuotientCovolume_withDensity_detNormSq E hE j hj Λ hΛ.toIsLattice (fun t => G ((t / κ) ^ (-(1 / N)))) hF
   beta_reduce at h2
   rw [h2, GlobalTheory.FlagMeas.lintegral_rpow_neg_change_of_variable N κ hN hκ G hG]
   rfl

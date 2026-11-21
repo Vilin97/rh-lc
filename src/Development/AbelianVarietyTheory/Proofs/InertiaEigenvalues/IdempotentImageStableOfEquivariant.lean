@@ -20,7 +20,7 @@ theorem mem_smul_of_sum_eigenvectors {O V ι α : Type*} [CommRing O] [AddCommGr
     intro i m hm
     refine Submodule.smul_induction_on hm (fun r hr n hn => ?_) (fun a b ha hb => ?_)
     · rw [map_smul]; exact Submodule.smul_mem_smul hr (hT i n hn)
-    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    · rw [map_add]; exact add_mem ha hb
   induction s using Finset.induction_on with
   | empty => intro y x _ hx _ _; simp [hx]
   | insert a s ha ih =>
@@ -58,7 +58,7 @@ variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂}
   {X : NTw D.R D.host D.what₂ D.LL0 N} (Y : NExp D.R D.host D.what₂ D.LL0 N X)
 
 theorem eG_idem (i : X.Tw) (j : ℕ) (b : Bool) (x : Y.Fm i j b) : eG Y i j b (eG Y i j b x) = eG Y i j b x := by
-  rw [← Module.End.mul_apply]
+  rw [← mul_apply_eq_comp]
   unfold eG
   rw [← map_mul, Y.eAlg_idem]
 

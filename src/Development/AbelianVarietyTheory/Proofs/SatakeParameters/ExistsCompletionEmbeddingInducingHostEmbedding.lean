@@ -31,8 +31,7 @@ theorem scalarLift_tmul (φ : E →+* Om l) (a : ℚ_[l]) (y : E) :
 
 theorem exists_near (φ ψ : E →+* Om l) (t : ℚ_[l] ⊗[ℚ] E) :
     ∀ ε : ℝ, 0 < ε → ∃ x : E, ‖scalarLift φ t - φ x‖ < ε ∧ ‖scalarLift ψ t - ψ x‖ < ε := by
-  induction t using TensorProduct.induction_on with
-  | zero => intro ε hε; exact ⟨0, by simpa using hε, by simpa using hε⟩
+  induction t using TensorProduct.inductionOn with
   | tmul a y =>
     intro ε hε
     have hM : 0 < ‖φ y‖ + ‖ψ y‖ + 1 := by positivity
@@ -108,18 +107,17 @@ theorem main : ∀ (D : D7) (l : ℕ) [Fact l.Prime] (w : PlE D.host) (O : Type)
       (by rw [RingHom.mem_ker.1 ht, norm_zero])) (norm_nonneg _))
   have hrange : (scalarLift jE).range ≤ Bw.Kw.1.toSubalgebra := by
     rintro _ ⟨t, rfl⟩
-    induction t using TensorProduct.induction_on with
-    | zero => simp
+    induction t using TensorProduct.inductionOn with
     | tmul a y =>
       change scalarLift jE (a ⊗ₜ y) ∈ _
       rw [scalarLift_tmul]
       exact mul_mem (Bw.Kw.1.algebraMap_mem a) (Bw.j_E y)
-    | add t₁ t₂ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
+    | add t₁ t₂ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
   have hfin : FiniteDimensional ℚ_[l] (Subalgebra.toSubmodule (scalarLift jE).range) := by
-    haveI : FiniteDimensional ℚ_[l] (Subalgebra.toSubmodule Bw.Kw.1.toSubalgebra) := Bw.Kw.2
+    have : FiniteDimensional ℚ_[l] (Subalgebra.toSubmodule Bw.Kw.1.toSubalgebra) := Bw.Kw.2
     exact Submodule.finiteDimensional_of_le (Subalgebra.toSubmodule.monotone hrange)
   have hclosed : IsClosed ((scalarLift jE).range : Set (Om l)) :=
-    Submodule.closed_of_finiteDimensional (Subalgebra.toSubmodule (scalarLift jE).range)
+    Submodule.isClosed_of_finiteDimensional (Subalgebra.toSubmodule (scalarLift jE).range)
   have hle : Bw.Kw.1.toSubalgebra ≤ (scalarLift jE).range := by
     intro y hy
     refine closure_minimal ?_ hclosed (Bw.j_dense hy)

@@ -74,10 +74,10 @@ theorem rk_mem_lat (S T : HSp D) (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Se
         simp only [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
         rw [← TensorProduct.tmul_sum, Algebra.TensorProduct.tmul_mul_tmul]
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | neg y _ hy => rw [map_neg]; exact neg_mem hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 theorem conj_rk {e : AE D} {v : HeightOneSpectrum (𝓞 D.host.F)} {π : AE D →+* Fv D.host.F v}
@@ -202,7 +202,7 @@ theorem conj_half_onto : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (𝓞 D.hos
       rw [Matrix.transpose_apply, Matrix.map_apply, hentry, Matrix.smul_apply, smul_eq_mul]
       congr 1
       generalize Y * Z = W
-      simp only [Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]
+      simp only [Matrix.mul_apply, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => ?_
       ring

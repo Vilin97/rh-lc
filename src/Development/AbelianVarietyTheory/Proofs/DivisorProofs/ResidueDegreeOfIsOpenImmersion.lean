@@ -12,7 +12,7 @@ noncomputable section
 open CategoryTheory AlgebraicGeometry TopologicalSpace Limits
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open GlobalTheory.QCoh (IsFiniteQC)
-open GlobalTheory.VB GlobalTheory.IndefiniteRowSideFullHecke
+open GlobalTheory.VB
 
 namespace GlobalTheory.CurveDegreesCompare
 

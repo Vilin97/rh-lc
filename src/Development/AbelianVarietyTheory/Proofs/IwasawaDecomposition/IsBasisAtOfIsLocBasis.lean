@@ -265,8 +265,57 @@ theorem bw_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pin
   · intro h
     have l1 := ((I.stp u a i).rep c).1.1.deco.2.Lsh_lattice
     have l2 := lattice_sup_smul ((I.stp u a i).rep c).1.1.deco.2 v.1.asIdeal
-    obtain ⟨Bm, hB⟩ := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis (B.T u) B.host.E _ l1.fg l1.span_eq_top
-    obtain ⟨Bm', hB'⟩ := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis (B.T u) B.host.E _ l2.fg l2.span_eq_top
+    have hfull : ∀ {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
+        {L : Submodule (𝓞 E) (Sp E n)}, Submodule.IsLattice E L →
+        IsUnimodular (hStd E n) L → Submodule.span E (L : Set (Sp E n)) = ⊤ := by
+      intro E _ _ _ n L hL hu
+      let W := Submodule.span E (L : Set (Sp E n))
+      change W = ⊤
+      by_contra h
+      let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+      let g : Sp E n →ₗ[E] Module.Dual E W :=
+        (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+      have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Sp E n) := by
+        rw [Subspace.dual_finrank_eq]
+        exact Submodule.finrank_lt h
+      obtain ⟨x, hx, hx₀⟩ :=
+        Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+      have hsmul (a : E) : a • e x ∈ L := by
+        rw [← hu, dualBasic_mem_dual]
+        intro y hy
+        apply hStd_mem_one_symm
+        have hxy : hStd E n (e x) y = 0 :=
+          congrArg (fun f : Module.Dual E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+        simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+      let j : E →ₗ[𝓞 E] L :=
+        ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict L hsmul
+      let : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.mpr hL.fg
+      let : Module.Finite (𝓞 E) E := Module.Finite.of_injective j fun a b hab =>
+        smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+      exact RingOfIntegers.not_isField E
+        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+    have hN := hfull ((I.stp u a i).rep c).1.1.deco.2.lat ((I.stp u a i).rep c).1.1.deco.2.uni
+    have hL : Submodule.span B.host.E (((I.stp u a i).rep c).1.1.deco.1.L : Set (Sp B.host.E (B.R.N i))) = ⊤ := by
+      apply top_unique
+      rw [← hN]
+      apply Submodule.span_le.mpr
+      intro x hx
+      have hx' := ((I.stp u a i).rep c).1.1.deco.2.smul_N_mem_L (T_mem_vT l.pr u) hx
+      have ht : ((B.T u : 𝓞 B.host.E) : B.host.E) ≠ 0 := by
+        exact_mod_cast hT.ne_zero
+      rw [← algebraMap_smul B.host.E] at hx'
+      have hx'' := Submodule.smul_mem (Submodule.span B.host.E (((I.stp u a i).rep c).1.1.deco.1.L : Set (Sp B.host.E (B.R.N i)))) (((B.T u : 𝓞 B.host.E) : B.host.E)⁻¹) (Submodule.subset_span hx')
+      simpa [smul_smul, ht] using hx''
+    have hspan1 : Submodule.span B.host.E (((I.stp u a i).rep c).1.1.deco.1.Lsh : Set (Sp B.host.E (B.R.N i))) = ⊤ := by
+      apply top_unique
+      rw [← hL]
+      exact Submodule.span_mono ((I.stp u a i).rep c).1.1.deco.2.L_le_Lsh
+    have hspan2 : Submodule.span B.host.E (((((I.stp u a i).rep c).1.1.deco.1.L ⊔ v.1.asIdeal • ((I.stp u a i).rep c).1.1.deco.1.Lsh : Submodule (𝓞 B.host.E) (Sp B.host.E (B.R.N i)))) : Set (Sp B.host.E (B.R.N i))) = ⊤ := by
+      apply top_unique
+      rw [← hL]
+      exact Submodule.span_mono (fun _ hx => Submodule.mem_sup_left hx)
+    obtain ⟨Bm, hB⟩ := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis (B.T u) B.host.E _ l1.fg hspan1
+    obtain ⟨Bm', hB'⟩ := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis (B.T u) B.host.E _ l2.fg hspan2
     exact (key Bm Bm' hB hB').2 (h Bm Bm' (by rw [hd c]; exact hB) (by rw [hk c]; exact hB'))
 
 end GlobalTheory.Mem.Col2.TC

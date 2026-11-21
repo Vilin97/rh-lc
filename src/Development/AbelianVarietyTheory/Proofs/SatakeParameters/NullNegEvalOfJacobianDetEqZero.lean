@@ -42,13 +42,13 @@ theorem null_negEv_of_det_eq_zero : ∀ (X : Scheme.{0}) (p : X ⟶ Sp ℂ) (d :
   obtain ⟨v, hv0, hv⟩ := Matrix.exists_mulVec_eq_zero_iff.2 hdet
   have hTv : T v = ∑ b, v b • EuclideanSpace.single b (1 : ℂ) := by
     ext i
-    simp [hTw, EuclideanSpace.single_apply, Pi.single_apply]
+    simp [hTw, Pi.single_apply]
   have hMv : M v = 0 := by
     funext j
     have hj := congrFun hv j
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply] at hj
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hM, ContinuousLinearMap.pi_apply, ContinuousLinearMap.neg_apply,
+      simp only [hM, ContinuousLinearMap.pi_apply, neg_apply,
       ContinuousLinearMap.comp_apply, hTv, map_sum, map_smul, smul_eq_mul, Pi.zero_apply, neg_eq_zero]
     rw [← hj]
     refine Finset.sum_congr rfl fun b _ => ?_

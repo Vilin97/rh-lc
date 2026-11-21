@@ -238,8 +238,8 @@ structure TDat {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ} (S : G
 
 structure TDat.Ok {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ} {S : GStep E K n}
     {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST) (T : ℕ) : Prop where
-  N_lat : ∀ b d, Submodule.IsLattice E (A.N b d)
-  dnN_lat : ∀ b d P, Submodule.IsLattice E (A.dnN b d P)
+  N_lat : ∀ b d, Submodule.IsFullLattice E (A.N b d)
+  dnN_lat : ∀ b d P, Submodule.IsFullLattice E (A.dnN b d P)
   ker_lat : ∀ b d P, Submodule.IsLattice E (A.ker b d P)
   f_add : ∀ b d P, ∀ x ∈ A.N b d, ∀ y ∈ A.N b d, A.f b d P (x + y) = A.f b d P x + A.f b d P y
   f_smul : ∀ b d (P : ST) (a : 𝓞 E), ∀ x ∈ A.N b d, A.f b d P (a • x) = Ideal.Quotient.mk P.1.asIdeal a * A.f b d P x

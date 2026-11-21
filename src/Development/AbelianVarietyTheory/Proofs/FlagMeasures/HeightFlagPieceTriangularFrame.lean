@@ -286,7 +286,7 @@ theorem gram_step {n m j : ℕ} (φ : E →+* ℂ) (P : Matrix (Fin n) (Fin n) �
 
 end Field
 
-theorem main : ∀ (E : Type) [Field E] [NumberField E] [StarRing E], IsTotallyComplex E → ∀ (ι : Type) [Fintype ι] (n m : ℕ) (φ : ι → E →+* ℂ) (P : ι → Matrix (Fin n) (Fin n) ℂ) (X : InfinitePlace E → Matrix (Fin n) (Fin n) ℂ), PlaceMatch φ P X → (∀ v, IsUnit (P v)) → ∀ (F : ℕ → Submodule (𝓞 E) (Fin n → E)) (r : ℕ → ℕ) (T : ∀ b, Matrix (Fin n) (Fin (r b)) E) (T' : ∀ b, Matrix (Fin (r b)) (Fin n) E) (Λ : ∀ b, Submodule (𝓞 E) (Fin (r b) → E)), Biorth r m T T' → (∀ b, Submodule.IsLattice E (Λ b)) → (∀ k y, y ∈ F k ↔ ∀ b, T' b *ᵥ y ∈ Λ b ∧ (k ≤ b → T' b *ᵥ y = 0)) → ∀ U : ι → ∀ b, Matrix (Fin n) (Fin (r b)) ℂ, (∀ v, Biorth r m (U v) (fun b => (U v b)ᴴ)) → (∀ v k y, y ∈ locFlag (φ v) (P v) F k ↔ ∀ b, k ≤ b → (U v b)ᴴ *ᵥ y = 0) → ∀ b, covStd (r b) (Λ b) * ∏ v, ‖((U v b)ᴴ * ((P v)⁻¹ * (T b).map (φ v))).det‖ ^ 2 = Formalism.HermitianLatticesTheory.vInv E ^ (Formalism.HermitianLatticesTheory.fDeg E * r b) * pieceHt X F b := by
+theorem main : ∀ (E : Type) [Field E] [NumberField E] [StarRing E], IsTotallyComplex E → ∀ (ι : Type) [Fintype ι] (n m : ℕ) (φ : ι → E →+* ℂ) (P : ι → Matrix (Fin n) (Fin n) ℂ) (X : InfinitePlace E → Matrix (Fin n) (Fin n) ℂ), PlaceMatch φ P X → (∀ v, IsUnit (P v)) → ∀ (F : ℕ → Submodule (𝓞 E) (Fin n → E)) (r : ℕ → ℕ) (T : ∀ b, Matrix (Fin n) (Fin (r b)) E) (T' : ∀ b, Matrix (Fin (r b)) (Fin n) E) (Λ : ∀ b, Submodule (𝓞 E) (Fin (r b) → E)), Biorth r m T T' → (∀ b, Submodule.IsFullLattice E (Λ b)) → (∀ k y, y ∈ F k ↔ ∀ b, T' b *ᵥ y ∈ Λ b ∧ (k ≤ b → T' b *ᵥ y = 0)) → ∀ U : ι → ∀ b, Matrix (Fin n) (Fin (r b)) ℂ, (∀ v, Biorth r m (U v) (fun b => (U v b)ᴴ)) → (∀ v k y, y ∈ locFlag (φ v) (P v) F k ↔ ∀ b, k ≤ b → (U v b)ᴴ *ᵥ y = 0) → ∀ b, covStd (r b) (Λ b) * ∏ v, ‖((U v b)ᴴ * ((P v)⁻¹ * (T b).map (φ v))).det‖ ^ 2 = Formalism.HermitianLatticesTheory.vInv E ^ (Formalism.HermitianLatticesTheory.fDeg E * r b) * pieceHt X F b := by
   intro E _ _ _ hE ι _ n m φ P X hm hP F r T T' Λ hT hΛ hF U hU hloc b
   have hfg : ∀ k, (F k).FG := by
     intro k
@@ -329,7 +329,9 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [StarRing E], IsTotallyC
   obtain ⟨g, hg, hgsp, hgli⟩ : ∃ g : Fin (r b) → Fin (r b) → E, (∀ a, g a ∈ Λ b) ∧
       Submodule.span E (Set.range g) = ⊤ ∧ LinearIndependent E g := by
     have h := Submodule.exists_fun_fin_finrank_span_eq E (Λ b : Set (Fin (r b) → E))
-    rw [(hΛ b).span_eq_top, finrank_top, Module.finrank_fin_fun] at h
+    letI := hΛ b
+    rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := Λ b), finrank_top,
+      Module.finrank_fin_fun] at h
     exact h
   set t : Fin (r b) → Fin n → E := fun a => T b *ᵥ g a with ht
   have htm : ∀ a, t a ∈ F (b + 1) := fun a => hs _ (hg a)
@@ -368,7 +370,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [StarRing E], IsTotallyC
   obtain ⟨a1, a2⟩ := ht_index hm hP e heli (F b) (hfg b) he hesp.symm
   obtain ⟨b1, b2⟩ := ht_index hm hP (Sum.elim e t) hli (F (b + 1)) (hfg _)
     (by rintro (a | a); exacts [h01 (he a), htm a]) hsp
-  have c1 := covStd_index hm (Λ b) (hΛ b) g hgli hgsp hg
+  have c1 := covStd_index hm (Λ b) (hΛ b).toIsLattice g hgli hgsp hg
   rw [hsp', hidx] at b1 b2
   have hcm : ∀ v, ‖((U v b)ᴴ * cm (φ v) (P v) t).det‖ ^ 2 =
       ‖((U v b)ᴴ * ((P v)⁻¹ * (T b).map (φ v))).det‖ ^ 2 * ‖((Matrix.of g)ᵀ.map (φ v)).det‖ ^ 2 := by

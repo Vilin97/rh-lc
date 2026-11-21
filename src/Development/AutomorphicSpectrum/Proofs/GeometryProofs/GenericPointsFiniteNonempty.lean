@@ -89,7 +89,11 @@ theorem model_nonempty {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {
     (Subsingleton.elim _ _)
   exact ⟨Y.j z⟩
 
-theorem finite_nonempty_maximal : Top.Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)), {x : Y.X | ∀ x' : Y.X, x' ⤳ x → x' = x}.Finite ∧ {x : Y.X | ∀ x' : Y.X, x' ⤳ x → x' = x}.Nonempty := by
+theorem finite_nonempty_maximal : _root_.GlobalTheory.CompanionTheory.Ar.Top.Given →
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H)
+      (l : Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)),
+      {x : Y.X | ∀ x' : Y.X, x' ⤳ x → x' = x}.Finite ∧
+      {x : Y.X | ∀ x' : Y.X, x' ⤳ x → x' = x}.Nonempty := by
   intro hG E _ _ _ H D l Xo c Y
   have : NumberField c.F := { to_charZero := inferInstance, to_finiteDimensional := c.fin }
   have : TopologicalSpace.NoetherianSpace Y.X := GlobalTheory.ModelSum.noetherianSpace_of_isProjOver Y.proj

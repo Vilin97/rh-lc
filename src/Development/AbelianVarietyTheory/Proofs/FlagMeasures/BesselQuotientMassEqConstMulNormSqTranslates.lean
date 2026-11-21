@@ -170,6 +170,7 @@ theorem closable (hσ : IsURepOn (UJset ε) σ) (D : Submodule ℂ H) (a : H →
         · rw [integral_congr_ae e, ← integral_integral_swap (f := fun g x => K (g, x)) hK]
           congr 1
           funext g
+          dsimp only [K]
           rw [integral_smul, ← integral_congr_ae (hae g), ← L2.inner_def, ← h1 g _ (hD g⁻¹ v hv) w hw, hmul]
       have hsub : ∀ w w' x, p (w - w') x = p w x - p w' x := fun w w' x => by
         simp only [p, gard_eq hσ hφ, map_sub, Pi.sub_apply, inner_sub_right]
@@ -182,7 +183,8 @@ theorem closable (hσ : IsURepOn (UJset ε) σ) (D : Submodule ℂ H) (a : H →
           (fun j => (hP _ (D.sub_mem (hu i) (hu j))).1.aestronglyMeasurable) (p (u i))
           (hP _ (hu i)).1.aestronglyMeasurable
           (hlim.mono fun x hx => by simpa only [hsub, sub_zero] using hx.const_sub (p (u i) x))
-        simp only [eLpNorm_one_eq_lintegral_enorm] at h2
+        simp_rw [eLpNorm_one_eq_lintegral_enorm (hP _ (hu i)).1.aestronglyMeasurable,
+          eLpNorm_one_eq_lintegral_enorm (hP _ (D.sub_mem (hu i) (hu _))).1.aestronglyMeasurable] at h2
         have h3 : Tendsto (fun j => ENNReal.ofReal (c * ‖A (u i - u j)‖)) atTop
             (𝓝 (ENNReal.ofReal (c * ‖A (u i) - f‖))) := by
           simp only [map_sub]
@@ -322,10 +324,11 @@ theorem continuousOn_orbit {ε : Fin (2 * r + k + 1) → Bool} {mu : Fin (2 * r 
 end Quot
 
 theorem quotientMass_eq_eLpNorm_sq {k r : ℕ} {Wp : Type} [NormedAddCommGroup Wp] (ν : MeasureTheory.Measure (Formalism.QuantumDeterminants.Mt k r))
-    (Φ : Formalism.FourierDecayAlt.ThreeDimData.Mx k r → Wp) :
+    (Φ : Formalism.FourierDecayAlt.ThreeDimData.Mx k r → Wp)
+    (hΦ : MeasureTheory.AEStronglyMeasurable (fun x : Formalism.QuantumDeterminants.Mt k r => Φ (Matrix.of x)) ν) :
     PI.BesselPeriodGGP.l2SG ν Φ = MeasureTheory.eLpNorm (fun x : Formalism.QuantumDeterminants.Mt k r => Φ (Matrix.of x)) 2 ν ^ 2 := by
   have h := MeasureTheory.eLpNorm_nnreal_pow_eq_lintegral (μ := ν) (p := 2)
-    (f := fun x : Formalism.QuantumDeterminants.Mt k r => Φ (Matrix.of x)) two_ne_zero
+    (f := fun x : Formalism.QuantumDeterminants.Mt k r => Φ (Matrix.of x)) two_ne_zero hΦ
   simp only [NNReal.coe_ofNat, ENNReal.rpow_ofNat, ENNReal.coe_ofNat] at h
   exact h.symm
 
@@ -375,8 +378,16 @@ theorem besselQuotientMass_eq_const_mul_norm_sq_translates : ∀ (k r : ℕ) (ε
     fun v hv x hx => hBl' _ (hsm v hv _ hx)
   have hcont : ∀ v ∈ R.sm, ContinuousOn (fun g => B (R.σ g v)) (BranchingSupport.GG k r) := fun v hv =>
     continuousOn_orbit hR hB.1 hB.2.1 hB.2.2.2 hv
+  have hAm : MeasurableSet {x : Mt k r | Matrix.of x ∈ BranchingSupport.GG k r} := IsClosed.measurableSet (α := Mt k r) hGG.1
+  have hBmeas : ∀ v ∈ R.sm, AEStronglyMeasurable (fun x : Mt k r => B (R.σ (Matrix.of x) v)) νq := fun v hv => by
+    have hc : ContinuousOn (fun x : Mt k r => B (R.σ (Matrix.of x) v)) {x : Mt k r | Matrix.of x ∈ BranchingSupport.GG k r} :=
+      hcont v hv
+    have h2 := hc.aestronglyMeasurable (μ := νq) hAm
+    rwa [Measure.restrict_eq_self_of_ae_mem (s := {x : Mt k r | Matrix.of x ∈ BranchingSupport.GG k r}) hae] at h2
+  have hmeas : ∀ v ∈ R.sm, AEStronglyMeasurable (a v) νq := fun v hv =>
+    (hBmeas v hv).congr (hae.mono fun x hx => (ha v hv x hx).symm)
   have hl2 : ∀ v ∈ R.sm, PI.BesselPeriodGGP.l2SG νq (fun g => B (R.σ g v)) = eLpNorm (a v) 2 νq ^ 2 := fun v hv => by
-    rw [quotientMass_eq_eLpNorm_sq, eLpNorm_congr_ae (hae.mono fun x hx => ha v hv x hx)]
+    rw [quotientMass_eq_eLpNorm_sq νq _ (hBmeas v hv), eLpNorm_congr_ae (hae.mono fun x hx => ha v hv x hx)]
   have hinv : ∀ v ∈ R.sm, ∀ g ∈ BranchingSupport.GG k r, eLpNorm (a (R.σ g v)) 2 νq = eLpNorm (a v) 2 νq := fun v hv g hg => by
     have h2 := quotientMass_right_translation_invariant hS (hcont v hv) (by
       rintro _ ⟨h, hh, m, hm, rfl⟩ x hx
@@ -387,13 +398,6 @@ theorem besselQuotientMass_eq_const_mul_norm_sq_translates : ∀ (k r : ℕ) (ε
       lintegral_congr_ae (hae.mono fun x hx => by simp only [hmul _ hx _ hg])
     rw [← h3, hl2 _ (hsm v hv g hg), hl2 v hv] at h2
     exact (ENNReal.pow_right_strictMono two_ne_zero).injective h2
-  have hAm : MeasurableSet {x : Mt k r | Matrix.of x ∈ BranchingSupport.GG k r} := IsClosed.measurableSet (α := Mt k r) hGG.1
-  have hmeas : ∀ v ∈ R.sm, AEStronglyMeasurable (a v) νq := fun v hv => by
-    have hc : ContinuousOn (fun x : Mt k r => B (R.σ (Matrix.of x) v)) {x : Mt k r | Matrix.of x ∈ BranchingSupport.GG k r} :=
-      hcont v hv
-    have h2 := hc.aestronglyMeasurable (μ := νq) hAm
-    rw [Measure.restrict_eq_self_of_ae_mem (s := {x : Mt k r | Matrix.of x ∈ BranchingSupport.GG k r}) hae] at h2
-    exact h2.congr (hae.mono fun x hx => (ha v hv x hx).symm)
   set D := Formalism.FourierDecayAlt.ThreeDimData.DDsp (k := k) (r := r) R.σ w with hDdef
   have hDs : ∀ v ∈ D, v ∈ R.sm := fun v hv =>
     (Submodule.span_le (p := R.smSub)).2 (by rintro _ ⟨g, hg, rfl⟩; exact hsm w hw g hg) hv
@@ -405,7 +409,7 @@ theorem besselQuotientMass_eq_const_mul_norm_sq_translates : ∀ (k r : ℕ) (ε
     induction hv using Submodule.span_induction with
     | mem y hy =>
       obtain ⟨g, hg, rfl⟩ := hy
-      refine ⟨hmeas _ (hsm w hw g hg), ?_⟩
+      change eLpNorm (a (R.σ g w)) 2 νq < ∞
       rw [hinv w hw g hg]
       rw [hl2 w hw] at hfin
       exact lt_top_iff_ne_top.2 fun h => hfin (by rw [h]; simp)

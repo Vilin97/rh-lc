@@ -104,7 +104,7 @@ theorem exists_nsmul_latBig_mem_latRow : OnStd fun {D} _ _ {sc} {G} _ _ => ∀ i
   rw [mul_smul]
   refine ⟨nsmul_mem k2 N₂, fun e he => ?_⟩
   have hprops := GlobalTheory.IdemSumIdeal.isIdemSum_props e G.pl.W0 (fun _ => 0) he
-  exact GlobalTheory.CosScalar.smul_mem_hatMx hsd.1.1 hsd.2.1 G.modul hprops.1 hprops.2.1
+  exact GlobalTheory.CosScalar.smul_mem_hatMx (GlobalTheory.CosScalar.selfDual_full _ _ hsd.1) (GlobalTheory.CosScalar.selfDual_full _ _ hsd.2) G.modul hprops.1 hprops.2.1
     (nsmul_mem_hatMx hsd.1 h₂ _ k2)
 
 end GlobalTheory.BigRow

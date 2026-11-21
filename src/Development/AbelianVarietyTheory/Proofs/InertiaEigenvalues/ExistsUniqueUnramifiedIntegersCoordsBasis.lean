@@ -48,7 +48,7 @@ theorem existsUnique_of_separated {R W O ι : Type} [CommRing R] [Nontrivial R] 
       map_smul' := fun r c => by
         funext k; simp [Finset.smul_sum] }
   let Φ : O ⊗[R] W →ₐ[O] (ι → O) :=
-    Algebra.TensorProduct.lift (Algebra.ofId O (ι → O)) (Pi.algHom R _ φ)
+    Algebra.TensorProduct.lift (Algebra.ofId O (ι → O)) (AlgHom.pi φ)
       (fun _ _ => Commute.all _ _)
   have hΦ : ∀ (a : O) (w : W) (k : ι), Φ (a ⊗ₜ w) k = a * φ k w := by
     intro a w k
@@ -56,7 +56,7 @@ theorem existsUnique_of_separated {R W O ι : Type} [CommRing R] [Nontrivial R] 
   have h1 : ∀ t, Φ t ∈ LinearMap.range F := by
     intro t
     induction t with
-    | add s t hs ht => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hs ht
+    | add s t hs ht => rw [map_add]; exact add_mem hs ht
     | tmul a w =>
       refine ⟨fun i => o.repr a i • w, ?_⟩
       funext k

@@ -32,7 +32,8 @@ def CptEx : Prop :=
     ∃ (U : Set (Xo.XF c)) (Z : CptOver Y U), IsClopen U ∧ IsIrreducible U ∧ genPt 𝔐.ξ₀ = genPt (Z.ξ₀ ≫ Y.j)
 
 def PeriodOf : Prop :=
-  Top.Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l)
+  GlobalTheory.CompanionTheory.Ar.Top.Given →
+  ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l)
     (c : Coeff l) [NumberField c.F] (Y : Model Xo c (algebraMap (𝓞 c.F) c.F))
     (U : Set (Xo.XF c)) (Z : CptOver Y U), 1 ≤ D.p → 1 ≤ D.q → IsClopen U → IsIrreducible U → Z.IsGeom →
     ∃ (g : ℕ) (ty : Fin g → (E →+* ℂ)) (FU : FamilyUnif Xo (algebraMap (KA l) ℂ) ty) (i : Fin FU.n),

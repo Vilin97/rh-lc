@@ -89,7 +89,7 @@ theorem frL_good {S U : Formalism.BasicNotions.TH.HSp (Dof x)} {F : GlobalTheory
     sdT := (by with_unfolding_all exact (h.sdT :))
     frS := (by with_unfolding_all exact (h.frS :))
     frT := (by with_unfolding_all exact (h.frT :))
-    vac := by tr_clause x.o.Z (oL x L).Z h.vac }
+    vac := by with_unfolding_all exact h.vac }
 
 theorem baseL_good {S U : Formalism.BasicNotions.TH.HSp (Dof x)} {Z : GlobalTheory.ExportSeries.Base S U} (h : Z.Good) : (baseL L Z).Good :=
   { even := (by with_unfolding_all exact (h.even :))
@@ -124,7 +124,6 @@ theorem setupL_good {ρ : GlobalTheory.SeriesTie.Setup (Dof x).ntw} (h : ρ.Good
     delta := fun i j b => kc% (congrArg (twL L) (h.delta (kc% i) (kc% j) b))
     weil := fun i j b t ht => by
       delta GlobalTheory.ExportSeries.Base.IsWeil
-      tr_leaves x.o.Z (oL x L).Z
       exact (by with_unfolding_all exact ((h.weil ((i)) ((j)) b (twB L t) (twB_good L ht)) : _))
     classes := fun i j b t ht hA =>
       have h' := h.classes ((by with_unfolding_all exact (i :))) ((by with_unfolding_all exact (j :))) b (twB L t) (twB_good L ht) ⟨(by with_unfolding_all exact ((placesOK_B L hA.1) :)), (by with_unfolding_all exact (hA.2 :))⟩
@@ -137,8 +136,7 @@ theorem theta_eq (ρ : Setup (Dof x).ntw) :
   funext i j b h P
   delta GlobalTheory.SeriesTie.Setup.theta GlobalTheory.ExportSeries.Base.theta GlobalTheory.ExportSeries.Base.vecBase GlobalTheory.ExportSeries.Base.vecAt
     GlobalTheory.ExportSeries.Frame.vec GlobalTheory.ExportSeries.Frame.placeMap
-  tr_leaves x.o.Z (oL x L).Z
-  kexactB (Eq.refl (ρ.theta (kc% i) (kc% j) b (kc% h) (kc% P)))
+  with_unfolding_all rfl
 
 
 open GlobalTheory.SeriesTie in

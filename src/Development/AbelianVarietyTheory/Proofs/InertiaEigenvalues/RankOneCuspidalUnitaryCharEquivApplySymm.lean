@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CharpolySmulOfProd
 public import Formalism.LocalToGlobal.UnitaryNorms.CharUniq
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AttOfFrobMatch

@@ -49,8 +49,7 @@ theorem span_one_tmul (hE : Function.Injective (algebraMap R E)) {I : Type} (v :
         mul_div_cancel₀ _ hqK, algebraMap_smul, TensorProduct.tmul_smul, ← algebraMap_smul E p]
       exact Submodule.smul_mem _ _ hx
   refine Submodule.eq_top_iff'.2 fun y => ?_
-  induction y using TensorProduct.induction_on with
-  | zero => exact zero_mem _
+  induction y using TensorProduct.inductionOn with
   | add x y hx hy => exact add_mem hx hy
   | tmul a f =>
     have : (a ⊗ₜ[R] f : E ⊗[R] V) = a • ((1 : E) ⊗ₜ[R] f) := by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
@@ -138,7 +137,7 @@ theorem rdE_injective_lattice : ∀ (D : D7) (c : NChoice D) (w : D.what₂.plac
         rw [TensorProduct.mk_apply, rdE_tmul, map_one, one_smul]
         exact Submodule.subset_span ((T.rdV_mem hok).1 hf)
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
       | smul a x _ hx =>
         rw [hsm]
         exact Submodule.smul_mem _ (⟨ε (algebraMap _ _ a), a, rfl⟩ : ringOf ε) hx

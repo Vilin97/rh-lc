@@ -2,8 +2,6 @@ module
 
 public import Mathlib
 public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-public import Formalism.SharpRestriction.LevelLetterCocycles.UniformizerMemDeltaInvariants
-public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.RkDcrisLSumZero
 public import Formalism.WeaklyAdmissibleFiltrations.Statement
 
 @[expose] public section

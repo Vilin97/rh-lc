@@ -97,7 +97,7 @@ theorem curvPoly_model_zero : ∀ (ι : Type) [Fintype ι] (p q n : ℕ) (h : Fi
     intro a c i j
     change curv (fun u => ((Formalism.DegreeFormula.hP (flatCoordinateMatrixBlock h τ u))⁻¹)ᵀ) 0 _ _ i j = _
     rw [curv_model h τ, Matrix.neg_apply, Matrix.mul_apply]
-    simp [block_reshape_apply, EuclideanSpace.single_apply]
+    simp [block_reshape_apply, PiLp.single_apply]
   refine Matrix.ext fun i j => ?_
   simp only [GlobalTheory.GoodMetric.curvPoly, of_apply, e2, Matrix.neg_apply, blockSym_apply]
   set_option synthInstance.maxHeartbeats 100000 in

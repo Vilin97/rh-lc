@@ -25,13 +25,13 @@ theorem detNorm_mul (x y : MatInf E j) : detNorm E j (x * y) = detNorm E j x * d
 theorem detNorm_nonneg (x : MatInf E j) : 0 ≤ detNorm E j x :=
   Finset.prod_nonneg fun _ _ => sq_nonneg _
 
-theorem detNorm_aut (hE : IsTotallyComplex E) (Λ : Submodule (𝓞 E) (Fin j → E)) (hΛ : Submodule.IsLattice E Λ)
+theorem detNorm_aut (hE : IsTotallyComplex E) (Λ : Submodule (𝓞 E) (Fin j → E)) (hΛ : Submodule.IsFullLattice E Λ)
     {x : MatInf E j} (hx : x ∈ autGL E j Λ) : detNorm E j x = 1 := by
   obtain ⟨γ, hγ, hx⟩ := hx
   have h1 : IsIntegral ℤ (γ : Matrix (Fin j) (Fin j) E).det :=
-    GlobalTheory.Mem.StabDet.isIntegral_det Λ hΛ.fg hΛ.span_eq_top _ fun v hv => (hγ v).2 hv
+    GlobalTheory.Mem.StabDet.isIntegral_det Λ hΛ.fg (Submodule.IsFullLattice.span_eq_top (self := hΛ)) _ fun v hv => (hγ v).2 hv
   have h2 : IsIntegral ℤ ((γ⁻¹ : GL (Fin j) E) : Matrix (Fin j) (Fin j) E).det :=
-    GlobalTheory.Mem.StabDet.isIntegral_det Λ hΛ.fg hΛ.span_eq_top _ fun v hv => (hγ _).1 (by
+    GlobalTheory.Mem.StabDet.isIntegral_det Λ hΛ.fg (Submodule.IsFullLattice.span_eq_top (self := hΛ)) _ fun v hv => (hγ _).1 (by
       rw [Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]; exact hv)
   have h3 : (γ : Matrix (Fin j) (Fin j) E).det * ((γ⁻¹ : GL (Fin j) E) : Matrix (Fin j) (Fin j) E).det = 1 := by
     rw [← Matrix.det_mul, Units.mul_inv, Matrix.det_one]
@@ -52,9 +52,8 @@ theorem detNorm_aut (hE : IsTotallyComplex E) (Λ : Submodule (𝓞 E) (Fin j �
 theorem continuous_detNorm :
     Continuous (fun x : InfinitePlace E → Fin j → Fin j → ℂ => detNorm E j x) := by
   unfold detNorm
-  refine continuous_finset_prod _ fun w _ => ?_
-  refine (Continuous.norm ?_).pow 2
-  exact Continuous.matrix_det (continuous_apply w)
+  refine continuous_finsetProd _ fun w _ => ?_
+  exact (Continuous.matrix_det (continuous_apply w)).norm.pow 2
 
 theorem measurable_detNorm : Measurable (detNorm E j) := (continuous_detNorm E j).measurable
 
@@ -201,9 +200,9 @@ theorem lintegral_cone (hj : 1 ≤ j) (D : Set (MatInf E j)) (hD : MeasurableSet
     simp only [Real.exp_log (hpos hx)]
   rw [← h2, h1, lintegral_exp]
 
-theorem covol_withDensity_detNorm : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ (j : ℕ), 1 ≤ j → ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsLattice E Λ → ∀ F : ℝ → ENNReal, Measurable F → covol (autGL E j Λ) ((haarGL E j).withDensity fun x => F (detNorm E j x)) {x | 0 < detNorm E j x} = covol (autGL E j Λ) (haarGL E j) {x | 1 ≤ detNorm E j x ∧ detNorm E j x < Real.exp 1} * ∫⁻ t in Set.Ioi (0 : ℝ), F t / ENNReal.ofReal t := by
+theorem covol_withDensity_detNorm : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ (j : ℕ), 1 ≤ j → ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsFullLattice E Λ → ∀ F : ℝ → ENNReal, Measurable F → covol (autGL E j Λ) ((haarGL E j).withDensity fun x => F (detNorm E j x)) {x | 0 < detNorm E j x} = covol (autGL E j Λ) (haarGL E j) {x | 1 ≤ detNorm E j x ∧ detNorm E j x < Real.exp 1} * ∫⁻ t in Set.Ioi (0 : ℝ), F t / ENNReal.ofReal t := by
   intro E _ _ hE j hj Λ hΛ F hF
-  obtain ⟨D, hD, hpos, -, hsc, hcov⟩ := GlobalTheory.T.exists_scalarStable_latticeAutomorphismFundamentalDomain E hE j Λ hΛ
+  obtain ⟨D, hD, hpos, -, hsc, hcov⟩ := GlobalTheory.T.exists_scalarStable_latticeAutomorphismFundamentalDomain E hE j Λ hΛ.toIsLattice
   have hm := measurable_detNorm E j
   have hP : MeasurableSet {g : MatInf E j | 0 < detNorm E j g} := measurableSet_lt measurable_const hm
   have hS : MeasurableSet {x : MatInf E j | 1 ≤ detNorm E j x ∧ detNorm E j x < Real.exp 1} :=

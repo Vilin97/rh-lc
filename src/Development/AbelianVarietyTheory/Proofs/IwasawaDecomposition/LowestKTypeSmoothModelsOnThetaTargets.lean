@@ -58,7 +58,7 @@ theorem low_of_conj {S : D.what₂.Tau → SPar} (M : DSModel V S) (τ : D.what�
     induction hy using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span (smoothVec_map c (conj_rep M τ) hy)
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx => rw [LinearIsometryEquiv.map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   have h3 := h2 _ h1
   simpa using h3

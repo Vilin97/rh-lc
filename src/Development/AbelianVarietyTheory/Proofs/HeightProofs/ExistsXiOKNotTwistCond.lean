@@ -17,7 +17,7 @@ noncomputable section
 namespace GlobalTheory.TwistFieldCompare
 
 open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Pj Formalism.L2.Theta
-open GlobalTheory.FinalJoin GlobalTheory.IndefiniteRowSideFullHecke
+open GlobalTheory.FinalJoin
 open scoped TensorProduct
 
 variable {D : D7}

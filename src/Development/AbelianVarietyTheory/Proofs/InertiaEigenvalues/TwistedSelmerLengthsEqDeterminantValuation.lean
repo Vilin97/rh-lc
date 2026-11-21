@@ -91,11 +91,11 @@ theorem mem_selAll_iff {F Ω Λ O M : Type} [Field F] [NumberField F] [Field Ω]
   rw [← trH_res]
   unfold Formalism.GaloisCohomology.bkCond
   by_cases h1 : ((l : ℕ) : 𝓞 F) ∈ v.asIdeal
-  · simp only [if_pos h1]
+  · simp only [ite_eq_left h1]
     exact hL v h1 _
   · by_cases h2 : v ∈ Sig
-    · simp only [if_neg h1, if_pos h2, Submodule.mem_top]
-    · simp only [if_neg h1, if_neg h2]
+    · simp only [ite_eq_right h1, ite_eq_left h2, Submodule.mem_top]
+    · simp only [ite_eq_right h1, ite_eq_right h2]
       exact mem_H1ur_iff _ _ _ _ _
 
 theorem mem_span_iff {Λ O W W' : Type} [CommRing Λ] [CommRing O] [AddCommGroup W] [Module Λ W] [AddCommGroup W']
@@ -107,7 +107,7 @@ theorem mem_span_iff {Λ O W W' : Type} [CommRing Λ] [CommRing O] [AddCommGroup
     induction hx using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span (h1 x hx)
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := T)]; exact add_mem hx hy
     | smul a x _ hx => rw [hT]; exact Submodule.smul_mem _ _ hx
   · intro hx
     have : ∀ y ∈ Submodule.span O S', ∀ t : O, T.symm (t • y) ∈ Submodule.span Λ S := by

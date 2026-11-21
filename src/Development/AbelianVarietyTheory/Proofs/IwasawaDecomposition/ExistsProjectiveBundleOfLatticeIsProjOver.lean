@@ -34,7 +34,7 @@ theorem eq_top_of_genPt_mem (j₀ : J) (K : Subfield (FractionRing (MvPolynomial
   have h : ∀ p : MvPolynomial {j // j ≠ j₀} Ω, algebraMap _ _ p ∈ K := fun p => by
     induction p using MvPolynomial.induction_on with
     | C a => exact h1 a
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul]
       refine mul_mem hp ?_
@@ -103,7 +103,7 @@ end Generic
 theorem exists_projBundle : ∀ (F Ω : Type) [Field F] [Field Ω] [Algebra F Ω] (M : RatModel F Ω) (J : Type) [Fintype J] [DecidableEq J] [Nonempty J] (EE : M.Lat J), IsProjOver M.s → ∃ (Ω' : Type) (_ : Field Ω') (_ : Algebra F Ω') (M' : RatModel F Ω') (φ : Ω →ₐ[F] Ω') (f : M'.Z ⟶ M.Z) (s : J → Ω'), ProjBundle M EE M' φ f s ∧ IsProjOver M'.s := by
   intro F Ω _ _ _ M J _ inst ⟨j₀⟩ EE hM
   obtain rfl : inst = fun a b => Classical.propDecidable (a = b) := Subsingleton.elim _ _
-  letI : DecidableEq J := fun a b => Classical.propDecidable (a = b)
+  let : DecidableEq J := fun a b => Classical.propDecidable (a = b)
   let Ω' := FractionRing (MvPolynomial {j // j ≠ j₀} Ω)
   let φ : Ω →ₐ[F] Ω' := IsScalarTower.toAlgHom F Ω Ω'
   obtain ⟨M', f, hf, hp, hc⟩ := RatModel.exists_projBundle_closure F Ω M Ω' φ J EE (genPt Ω j₀) hM

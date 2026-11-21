@@ -41,7 +41,7 @@ theorem pt_smulK (c : D.host.K) (A : Matrix (Fin N') (Fin N) D.host.E) :
 
 theorem pt_injective (hδ : δ ≠ 0) :
     Function.Injective (pt D (tor0 D cc δ) δ : Matrix (Fin N') (Fin N) D.host.E → VC D N N') := by
-  obtain ⟨τ⟩ : Nonempty D.what₂.Tau := ⟨D.eTau.symm ⟨1, by simp [Formalism.FrobeniusOrbits.Psi]⟩⟩
+  obtain ⟨τ⟩ : Nonempty D.what₂.Tau := ⟨D.eTau.symm ⟨1, by simp⟩⟩
   intro z w h
   refine Matrix.ext fun i j => ?_
   have h1 := congrFun (congrFun (congrFun h τ) i) j
@@ -137,7 +137,7 @@ theorem map_span_mem {M M' : Type} [AddCommGroup M] [Module D.host.E M] [Module 
   induction hx using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span (h x hx)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul o x _ hx => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ o hx
 
 theorem mem_RL_cols (L' : Lat D N') (z : Matrix (Fin N') (Fin N) D.host.E) :

@@ -35,7 +35,9 @@ theorem ResidualDisjoint.proof : ResidualDisjoint.Statement.{u} := by
     by_contra h; exact hx (form_mem_of_divCycle_ne_zero h)
   have hG'supp : G' ∈ (P' ⊔ Ideal.span {liftForm s}).minimalPrimes ∧ IsRelevant G' := by
     by_contra h
-    simp [divCycle, h] at hsG'
+    unfold divCycle at hsG'
+    rw [dite_eq_right h] at hsG'
+    exact lt_irrefl _ hsG'
   have hP'G' : P' ≤ G' := le_sup_left.trans hG'supp.1.1.2
 
   have hY₁G' : (newVar (some none) : MRing (extIdx ι (BlowUpIdx ι)) O) ∈ G' := by

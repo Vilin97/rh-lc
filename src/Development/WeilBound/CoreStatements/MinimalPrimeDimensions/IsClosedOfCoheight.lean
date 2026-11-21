@@ -94,8 +94,9 @@ theorem secVal_comb (hB : B.IsLB) {u : Fin m → R} {su : B.Sec} (hu : IsComb p 
 
 theorem ptsIn_comb (hB : B.IsLB) {u : Fin m → R} {su : B.Sec} (hu : IsComb p s u su) :
     ptsIn p σ (nonzeroLocus su) = {y | ∑ k, σ (u k) * coords p σ hB s y k ≠ 0} := by
-  ext y
-  rw [Set.mem_setOf_eq, ← secVal_comb hB hu y]
+  refine Set.ext fun y => ?_
+  change y ∈ ptsIn p σ (nonzeroLocus su) ↔ (∑ k, σ (u k) * coords p σ hB s y k) ≠ 0
+  rw [← secVal_comb hB hu y]
   exact (secVal_ne_zero_iff su (mem_pick hB y)).symm
 
 theorem log_nsq (φ : Weight p σ B) {h : HermNorm m} (hφ : IsFS φ s h) {u : Fin m → R} {su : B.Sec}

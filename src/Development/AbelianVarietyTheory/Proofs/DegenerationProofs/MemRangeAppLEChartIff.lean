@@ -58,7 +58,7 @@ theorem mem_range_appLE_chart_iff {R : Type} [CommRing R] {N : ℕ} {Y : Scheme.
     | C r =>
       rw [MvPolynomial.eval₂Hom_C]
       exact Subring.subset_closure (Or.inl ⟨_, rfl⟩)
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul, MvPolynomial.eval₂Hom_X']
       exact mul_mem hp (Subring.subset_closure (Or.inr ⟨j, rfl⟩))

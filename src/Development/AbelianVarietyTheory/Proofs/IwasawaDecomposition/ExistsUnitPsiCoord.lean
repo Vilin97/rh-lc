@@ -71,7 +71,7 @@ public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValue
 @[expose] public section
 
 open AlgebraicGeometry CategoryTheory Limits NumberField
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.LocM GlobalTheory.LocM.FJ
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.LocM
 open GlobalTheory.Toroidal
 open GlobalTheory.ArcQ (Wit LieImg)
 open Formalism.MainNotions.DIV.Cons (intO)

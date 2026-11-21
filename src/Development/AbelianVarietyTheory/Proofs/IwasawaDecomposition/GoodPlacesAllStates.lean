@@ -21,10 +21,10 @@ namespace GlobalTheory.TypePlacesCover
 
 variable {D : D7}
 
-theorem isConjPl_conjPlE (P : PlE D.host) : Formalism.BasicNotions.IsConjPl D.host P (GlobalTheory.SplitConjPlace.conjPlE P) := by
+theorem isConjPl_conjPlE (P : PlE D.host) : Formalism.BasicNotions.IsConjPl D.host P (GlobalTheory.SplitConjPlace.conjPlE (D := D) P) := by
   intro x y hxy
-  rw [GlobalTheory.SplitConjPlace.mem_conjPlE]
-  have : cO y = x := by
+  rw [GlobalTheory.SplitConjPlace.mem_conjPlE (D := D)]
+  have : IsCMField.ringOfIntegersComplexConj D.host.E y = x := by
     apply RingOfIntegers.ext
     rw [IsCMField.coe_ringOfIntegersComplexConj, hxy]
     show IsCMField.complexConj D.host.E (D.host.conj (x : D.host.E)) = _
@@ -34,15 +34,15 @@ theorem isConjPl_conjPlE (P : PlE D.host) : Formalism.BasicNotions.IsConjPl D.ho
     rw [h]; exact IsCMField.complexConj_apply_apply D.host.E _
   rw [this]
 
-theorem conjPlE_conjPlE (P : PlE D.host) : GlobalTheory.SplitConjPlace.conjPlE (GlobalTheory.SplitConjPlace.conjPlE P) = P := by
+theorem conjPlE_conjPlE (P : PlE D.host) : GlobalTheory.SplitConjPlace.conjPlE (D := D) (GlobalTheory.SplitConjPlace.conjPlE (D := D) P) = P := by
   refine HeightOneSpectrum.ext (Ideal.ext fun x => ?_)
-  rw [GlobalTheory.SplitConjPlace.mem_conjPlE, GlobalTheory.SplitConjPlace.mem_conjPlE, GlobalTheory.SplitConjPlace.cO_cO]
+  rw [GlobalTheory.SplitConjPlace.mem_conjPlE (D := D), GlobalTheory.SplitConjPlace.mem_conjPlE (D := D), GlobalTheory.SplitConjPlace.cO_cO (D := D)]
 
 theorem comap_conjPlE (P : PlE D.host) :
-    (GlobalTheory.SplitConjPlace.conjPlE P).asIdeal.comap (algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E)) =
+    (GlobalTheory.SplitConjPlace.conjPlE (D := D) P).asIdeal.comap (algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E)) =
       P.asIdeal.comap (algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E)) := by
   ext a
-  rw [Ideal.mem_comap, Ideal.mem_comap, GlobalTheory.SplitConjPlace.mem_conjPlE, GlobalTheory.SplitConjPlace.cO_algebraMap]
+  rw [Ideal.mem_comap, Ideal.mem_comap, GlobalTheory.SplitConjPlace.mem_conjPlE (D := D), GlobalTheory.SplitConjPlace.cO_algebraMap (D := D)]
 
 theorem finrank_E (D : D7) : Module.finrank ℚ D.host.E = 2 * D.R.f := by
   have h1 : Module.finrank ℚ D.host.E = 4 * D.R.ord := D.host.finrank_cmField
@@ -50,21 +50,21 @@ theorem finrank_E (D : D7) : Module.finrank ℚ D.host.E = 2 * D.R.f := by
   rw [h1, h5]; ring
 
 theorem cover (k : Fin 2) (w : PlE D.host) (hw : ((D.host.g k : ℕ) : 𝓞 D.host.E) ∈ w.asIdeal) :
-    ∃ v, w = D.naut.plGw k v ∨ w = GlobalTheory.SplitConjPlace.conjPlE (D.naut.plGw k v) := by
+    ∃ v, w = D.naut.plGw k v ∨ w = GlobalTheory.SplitConjPlace.conjPlE (D := D) (D.naut.plGw k v) := by
   let T : Set (PlE D.host) := {u | ((D.host.g k : ℕ) : 𝓞 D.host.E) ∈ u.asIdeal}
   have hg : ∀ v, ((D.host.g k : ℕ) : 𝓞 D.host.E) ∈ (D.naut.plGw k v).asIdeal := fun v => D.naut.plGw_over k v
   let f : D.nd.PlG k ⊕ D.nd.PlG k → T :=
-    Sum.elim (fun v => ⟨D.naut.plGw k v, hg v⟩) fun v => ⟨GlobalTheory.SplitConjPlace.conjPlE (D.naut.plGw k v), by
-      show _ ∈ (GlobalTheory.SplitConjPlace.conjPlE _).asIdeal
-      rw [GlobalTheory.SplitConjPlace.mem_conjPlE, map_natCast]; exact hg v⟩
-  have hne : ∀ a b, D.naut.plGw k a ≠ GlobalTheory.SplitConjPlace.conjPlE (D.naut.plGw k b) := fun a b e =>
+    Sum.elim (fun v => ⟨D.naut.plGw k v, hg v⟩) fun v => ⟨GlobalTheory.SplitConjPlace.conjPlE (D := D) (D.naut.plGw k v), by
+      show _ ∈ (GlobalTheory.SplitConjPlace.conjPlE (D := D) _).asIdeal
+      rw [GlobalTheory.SplitConjPlace.mem_conjPlE (D := D), map_natCast]; exact hg v⟩
+  have hne : ∀ a b, D.naut.plGw k a ≠ GlobalTheory.SplitConjPlace.conjPlE (D := D) (D.naut.plGw k b) := fun a b e =>
     D.naut.plGw_nconj k b a (e ▸ isConjPl_conjPlE _)
   have hinj : Function.Injective f := by
     rintro (a | a) (b | b) e <;> have e' := congrArg Subtype.val e
     · exact congrArg Sum.inl (D.naut.plGw_inj k e')
     · exact absurd e' (hne a b)
     · exact absurd e'.symm (hne b a)
-    · have := congrArg GlobalTheory.SplitConjPlace.conjPlE e'
+    · have := congrArg (GlobalTheory.SplitConjPlace.conjPlE (D := D)) e'
       simp only [f, Sum.elim_inr, conjPlE_conjPlE] at this
       exact congrArg Sum.inr (D.naut.plGw_inj k this)
   have hT : T.ncard = 2 * D.R.f := by

@@ -182,7 +182,9 @@ theorem exists_expCoord_of_base : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   have hRV : ∀ b ∈ R, ⊤ ≤ (p (L b) ≫ Z.jQ) ⁻¹ᵁ V.1 := fun b hb => by
     have hx : (ch.e.symm b).1 ≫ genι Z = spMap (evHom hb.2.1) ≫ LogKS.chart V ≫ genι Z := by
       rw [← Category.assoc, spMap_evHom hb.2.1]
-    obtain ⟨f, -⟩ := F.exists_isMap (evHom hb.2.1) (hσφ hb.2.1) hx
+    obtain ⟨f, -⟩ : ∃ f : EigFrame Z σ ((ch.e.symm b).1 ≫ genι Z),
+        EigFrame.IsMap F (evHom hb.2.1) f :=
+      EigFrame.exists_isMap F (evHom hb.2.1) (hσφ hb.2.1) hx
     obtain ⟨q, hq, -⟩ := GlobalTheory.T.exists_framedComplexPoint_of_eigenFrame_off_boundary _ _ _ _ _ _ _ _ Z σ _ hb.2.2 f
     rw [hpq b hb.1 q hq]
     show ⊤ ≤ (cxPt Z q).1 ⁻¹ᵁ V.1
@@ -194,7 +196,7 @@ theorem exists_expCoord_of_base : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   · exact (hW ⟨τ, k⟩).comp L.differentiableOn fun b hb =>
       ⟨by simpa [hB₁] using hb.1, hRV b hb⟩
   · have hd := hWd ⟨τ, k⟩ (L b) (by simpa [hB₁] using hb) (ch.e.symm b) hy (by rw [hpq b hb q hq, ← hq]; rfl)
-    have hfv : spMap (dualMap (evHom hy)) ≫ F.v τ k = w ≫ Z.m.φ := by rw [hw2, hf τ k]
+    have hfv : spMap (dualMap (evHom hy)) ≫ F.v τ k = w ≫ Z.m.φ := (hf τ k).symm.trans hw2.symm
     rw [hfv] at hd
     have hbase : w ≫ Z.oF.t.G.hom = spMap (algebraMap ℂ (DualNumber ℂ)) ≫ p (L b) := by
       rw [hpq b hb q hq]
@@ -315,7 +317,7 @@ theorem exists_diag_riem {U : Formalism.L2.PjFree.Unf Xo c σ r} (hσ : Formalis
   generalize (((2 * ((ρ k τ) (-(U.X k).ξ0)).im : ℝ) : ℂ)) = dd
   clear hsupp key hcol hAv hiso hh hex hper him hD hf hT hder hH hPu
   have hi : ∀ j j' : Fin (Dw.mult τ), W.e.symm ⟨τ, j⟩ = W.e.symm ⟨τ, j'⟩ ↔ j = j' := fun j j' => by simp
-  simp [hermForm, smul_mulVec, sum_dotProduct, dotProduct_sum, star_sum, Pi.single_apply, hi, mul_apply, mul_comm]
+  simp [hermForm, smul_mulVec, dotProduct_sum, star_sum, Pi.single_apply, hi, Matrix.mul_apply, Matrix.conjTranspose_apply, mul_comm]
 
 end GlobalTheory.HodgeSmooth
 
@@ -390,7 +392,7 @@ theorem gram_smooth_near {U : Formalism.L2.PjFree.Unf Xo c σ (Dw.p + Dw.q)} (h�
       simp only [G, hermForm, dotProduct, Matrix.mulVec, Pi.star_apply]
     rw [e]
     exact contDiffOn_const.mul (ContDiffOn.sum fun p _ => (hz' τ b p).mul
-      (ContDiffOn.sum fun q _ => ((hHs p q).mono fun c hc => hc.1).mul (hc q)))
+      (ContDiffOn.sum fun q _ => ((hHs p q).mono (show B' ⊆ B from fun c hc => hc.1)).mul (hc q)))
   refine ⟨ch.e.source ∩ ch.e ⁻¹' B', fun y => G (ch.e y), ch.e.isOpen_inter_preimage hB'o,
     ⟨hch, hb₀, by rw [ch.e.left_inv hch]; exact hV, by rw [ch.e.left_inv hch]; exact hbd⟩, ?_, ?_, ?_⟩
   · intro c'
@@ -434,7 +436,70 @@ end AuxLocal
 
 open AlgebraicGeometry CategoryTheory NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.Toroidal GlobalTheory.ShFam GlobalTheory.ProjVar GlobalTheory.FlagBundle GlobalTheory.LieBase GlobalTheory.CxPts GlobalTheory.Cartier
 
+open AlgebraicGeometry CategoryTheory Limits NumberField Matrix
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.L2.Pj GlobalTheory GlobalTheory.CxPts GlobalTheory.Toroidal GlobalTheory.LieMet GlobalTheory.GradedNorm GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.ShFam GlobalTheory.ShFam.Pad
+
+namespace GlobalTheory.ShFam.EigMetLocal
+
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
+  {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F} {Z : Model Xo c β}
+
+theorem gram_eq_of_isMap {σ : c.F →+* ℂ} (G : EigMet Z σ) {y : CxPts (genStr Z) σ} {R : Type} [CommRing R]
+    {φ : c.F →+* R} {x : Sp R ⟶ Z.X} {F : EigFrame Z φ x} {ψ : R →+* ℂ} {f f' : EigFrame Z σ (y.1 ≫ genι Z)}
+    (hf : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v F embτ basisIdx) ψ f) (hf' : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v F embτ basisIdx) ψ f') (τ : E →+* ℂ) : G.gram y f' τ = G.gram y f τ := by
+  have hc : f.co f' τ = 1 := by
+    rw [← f.co_self τ]
+    exact EigFrame.co_eq fun i => by rw [hf' τ i, ← hf τ i]; exact f.co_spec f τ i
+  rw [G.change y f f' τ, hc, conjTranspose_one, Matrix.one_mul, Matrix.mul_one]
+
+theorem eq_comp_evHom {σ : c.F →+* ℂ} {V : (gen Z).affineOpens} {φ : c.F →+* Γ(gen Z, V.1)}
+    (hV : LogKS.chart V ≫ genStr Z = spMap φ) {y : CxPts (genStr Z) σ} (h : y ∈ ptsIn (genStr Z) σ V.1) :
+    σ = (evHom h).comp φ := by
+  have e : spMap σ = spMap ((evHom h).comp φ) := by
+    rw [← y.2, ← spMap_evHom h, Category.assoc, hV, ← Spec.map_comp]
+    rfl
+  exact congrArg CommRingCat.Hom.hom (Spec.map_injective e)
+
+variable [SmoothOfRelativeDimension Dw.dim (genStr Z)]
+
+theorem smoothOn_of_locally {σ : c.F →+* ℂ} (G : EigMet Z σ) (S : Set (CxPts (genStr Z) σ))
+    (hloc : ∀ (V : (gen Z).affineOpens) (φ : c.F →+* Γ(gen Z, V.1)) (F : EigFrame Z φ (LogKS.chart V ≫ genι Z))
+      (τ : E →+* ℂ) (a b : Fin (Dw.mult τ)), LogKS.chart V ≫ genStr Z = spMap φ → ∀ y₀ ∈ S,
+      y₀ ∈ ptsIn (genStr Z) σ V.1 → ∃ (T : Set (CxPts (genStr Z) σ)) (g : CxPts (genStr Z) σ → ℂ),
+        IsOpen T ∧ y₀ ∈ T ∧ (manifold Z σ).SmoothOn T (fun y => (g y).re) ∧
+        (manifold Z σ).SmoothOn T (fun y => (g y).im) ∧
+        ∀ y ∈ T, ∀ (hy : y ∈ ptsIn (genStr Z) σ V.1) (f : EigFrame Z σ (y.1 ≫ genι Z)),
+          (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v F embτ basisIdx) (evHom hy) f → G.gram y f τ a b = g y) :
+    G.SmoothOn (manifold Z σ) S := by
+  classical
+  intro V φ F τ a b hV
+  have hx : ∀ {y : CxPts (genStr Z) σ} (h : y ∈ ptsIn (genStr Z) σ V.1),
+      y.1 ≫ genι Z = spMap (evHom h) ≫ LogKS.chart V ≫ genι Z := fun h => by
+    rw [← Category.assoc, spMap_evHom h]
+  have hex : ∀ {y : CxPts (genStr Z) σ} (h : y ∈ ptsIn (genStr Z) σ V.1),
+      ∃ f : EigFrame Z σ (y.1 ≫ genι Z), (_root_.GlobalTheory.ShFam.EigFrame.IsMap F) (evHom h) f := fun h =>
+    F.exists_isMap (evHom h) (eq_comp_evHom hV h) (hx h)
+  let g : CxPts (genStr Z) σ → ℂ := fun y =>
+    if h : y ∈ ptsIn (genStr Z) σ V.1 then G.gram y (hex h).choose τ a b else 0
+  have hg : ∀ y (hy : y ∈ ptsIn (genStr Z) σ V.1) (f : EigFrame Z σ (y.1 ≫ genι Z)),
+      (_root_.GlobalTheory.ShFam.EigFrame.IsMap F) (evHom hy) f → G.gram y f τ a b = g y := fun y hy f hf => by
+    simp only [g, dif_pos hy]
+    rw [gram_eq_of_isMap G (hex hy).choose_spec hf τ]
+  let ι := {y₀ // y₀ ∈ S ∧ y₀ ∈ ptsIn (genStr Z) σ V.1}
+  choose T gl hT hmem hre him hagree using fun j : ι => hloc V φ F τ a b hV j.1 j.2.1 j.2.2
+  have hc : ∀ y ∈ S ∩ ptsIn (genStr Z) σ V.1, ∃ j, y ∈ T j := fun y hy => ⟨⟨y, hy⟩, hmem _⟩
+  have heq : ∀ j, ∀ y ∈ (S ∩ ptsIn (genStr Z) σ V.1) ∩ T j, g y = gl j y := fun j y hy =>
+    (hg y hy.1.2 _ (hex hy.1.2).choose_spec).symm.trans (hagree j y hy.2 hy.1.2 _ (hex hy.1.2).choose_spec)
+  refine ⟨g, AnRead.smoothOn_of_cover hT hc fun j => ((hre j).mono Set.inter_subset_right).congr fun y hy => ?_,
+    AnRead.smoothOn_of_cover hT hc fun j => ((him j).mono Set.inter_subset_right).congr fun y hy => ?_,
+    fun y _ hy f hf => hg y hy f hf⟩
+  · exact congrArg Complex.re (heq j y hy)
+  · exact congrArg Complex.im (heq j y hy)
+
+end GlobalTheory.ShFam.EigMetLocal
+
+
 theorem GlobalTheory.LieBase.hodgeMet_smoothOn : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : Model Xo c β) [SmoothOfRelativeDimension Dw.dim (genStr Z)] (σ : c.F →+* ℂ) (U : Formalism.L2.PjFree.Unf Xo c σ (Dw.p + Dw.q)), Formalism.L2.PjFree.GoodEmb c σ → Formalism.L2.PjFree.IsUnf U → (hodgeMet Z U).SmoothOn (manifold Z σ) {y | ¬ LiesIn y (genBd Z)} := by
   intro E _ _ _ H Dw l Xo c O _ β Z _ σ U hσ hU
-  exact GlobalTheory.ShFam.EigMet.smoothOn_of_locally (hodgeMet Z U) _ fun V φ F τ a b hV y₀ hy₀ hV₀ =>
+  exact GlobalTheory.ShFam.EigMetLocal.smoothOn_of_locally (hodgeMet Z U) _ fun V φ F τ a b hV y₀ hy₀ hV₀ =>
     GlobalTheory.HodgeSmooth.gram_smooth_near hσ hU V φ F τ a b hV y₀ hy₀ hV₀

@@ -17,6 +17,7 @@ open scoped Pointwise
 
 variable {ι : Type} [Fintype ι]
 
+omit [Fintype ι] in
 theorem colSub_comp {d a : ℕ} (u v : ι → Matrix (Fin a) (Fin a) ℂ) (P : Pol ι d a) :
     colSub u (colSub v P) = colSub (fun τ => u τ * v τ) P := by
   have h : (colSub (d := d) u).comp (colSub v) = colSub (fun τ => u τ * v τ) := by
@@ -24,12 +25,13 @@ theorem colSub_comp {d a : ℕ} (u v : ι → Matrix (Fin a) (Fin a) ℂ) (P : P
     intro y
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [AlgHom.comp_apply, colSub, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq, Matrix.mul_apply,
-      Finset.sum_mul, Finset.mul_sum, C_mul]
+      Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
     ring
   exact congrArg (fun φ : Pol ι d a →ₐ[ℂ] Pol ι d a => φ P) h
 
+omit [Fintype ι] in
 theorem colSub_one {d a : ℕ} (P : Pol ι d a) :
     colSub (fun _ : ι => (1 : Matrix (Fin a) (Fin a) ℂ)) P = P := by
   have h : (colSub (d := d) (fun _ : ι => (1 : Matrix (Fin a) (Fin a) ℂ))) = AlgHom.id ℂ _ := by
@@ -38,6 +40,7 @@ theorem colSub_one {d a : ℕ} (P : Pol ι d a) :
     simp [colSub, Matrix.one_apply]
   rw [h]; rfl
 
+omit [Fintype ι] in
 theorem support_colSub_bdd {d a : ℕ} (P : Pol ι d a) :
     ∃ S : Finset (Var ι d a →₀ ℕ), ∀ u : ι → Matrix (Fin a) (Fin a) ℂ, (colSub u P).support ⊆ S := by
   induction P using MvPolynomial.induction_on with
@@ -65,6 +68,7 @@ section Meas
 
 variable {K : Type} [Group K] [MeasurableSpace K] {a d : ℕ}
 
+omit [Fintype ι] in
 theorem coeff_colSub_good (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ))
     (hρ : ∀ τ i j, Measurable fun g => (ρ g τ : Matrix (Fin a) (Fin a) ℂ) i j) (P : Pol ι d a) :
     ∀ m, Measurable (fun g => AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) P) m) ∧
@@ -95,7 +99,7 @@ theorem coeff_colSub_good (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ))
     simp only [algHom_C, algebraMap_eq]
     exact ⟨measurable_const, _, fun _ => le_rfl⟩
   | add p q hp hq =>
-    simp only [map_add (f := _), MvPolynomial.coeff_add]
+    simp only [map_add (f := _), AddMonoidAlgebra.coeff_add]
     obtain ⟨hpm, Cp, hCp⟩ := hp m
     obtain ⟨hqm, Cq, hCq⟩ := hq m
     exact ⟨hpm.add hqm, Cp + Cq, fun g => (norm_add_le _ _).trans (add_le_add (hCp g) (hCq g))⟩
@@ -133,16 +137,19 @@ theorem det_unitary_ne_zero (U : Matrix.unitaryGroup (Fin a) ℂ) : (U : Matrix 
   rw [h, norm_zero] at this
   exact zero_ne_one this
 
+omit [MeasurableSpace K] in
 theorem norm_cc (n : ι → ℕ) (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ)) (g : K) : ‖cc n ρ g‖ = 1 := by
   rw [cc, norm_prod]
   exact Finset.prod_eq_one fun τ _ => by rw [norm_zpow, det_unitary_norm, one_zpow]
 
+omit [Fintype ι] [MeasurableSpace K] in
 theorem Mg_mul (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ)) (g0 g : K) :
     Mg ρ (g0 * g) = fun τ => Mg ρ g0 τ * Mg ρ g τ := by
   funext τ
   simp only [Mg, map_mul]
   rfl
 
+omit [MeasurableSpace K] in
 theorem cc_mul (n : ι → ℕ) (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ)) (g0 g : K) :
     cc n ρ g = detChar n (Mg ρ g0) * cc n ρ (g0 * g) := by
   have h := Mg_mul ρ g0 g
@@ -155,6 +162,7 @@ theorem cc_mul (n : ι → ℕ) (ρ : K →* (ι → Matrix.unitaryGroup (Fin a)
     mul_inv_cancel₀ (pow_ne_zero _ h0), one_mul]
   rfl
 
+omit [Fintype ι] in
 theorem measurable_det (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ))
     (hρ : ∀ τ i j, Measurable fun g => (ρ g τ : Matrix (Fin a) (Fin a) ℂ) i j) (τ : ι) :
     Measurable fun g => (ρ g τ : Matrix (Fin a) (Fin a) ℂ).det := by

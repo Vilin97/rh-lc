@@ -120,7 +120,8 @@ theorem lat_iff (hS : S.Ok) {G : ι → Matrix (Fin n) (Fin n) ℂ} {sh : ι →
     (he : e = embAt σ emb) {P : Type} (pl : P ≃ HeightOneSpectrum (𝓞 K)) (rc : P → ℕ) (hrc : ∀ w, (rc w).Prime)
     (hm : ∀ w, ((rc w : ℕ) : 𝓞 K) ∈ (pl w).asIdeal) (Sp : P → AddSubgroup (MvPolynomial (ι × Fin n × Fin n) ℂ))
     (hSp : ∀ w Q, Q ∈ Sp w ↔ ∃ z₀ ∈ Formalism.HermitianLatticesTheory.localization₂ (pl w).asIdeal (delStd K lam), Q = MvPolynomial.map σ z₀)
-    (lat : S.Cl → Submodule (𝓞 E) (Fin n → E)) (hlat : ∀ c, S.Lsh c.1 (S.rep c) = lat c) (x : (S.hlat emb lam h).V) :
+    (lat : S.Cl → Submodule (𝓞 E) (Fin n → E)) (hlat : ∀ c, S.Lsh c.1 (S.rep c) = lat c)
+    (hfull : ∀ c, Submodule.IsFullLattice E (lat c)) (x : (S.hlat emb lam h).V) :
     x ∈ (S.hlat emb lam h).L ↔ ∀ (w : P) (c : S.Cl) (B : GL (Fin n) E), IsLocBasis (rc w) (lat c : Set _) B →
       ∃ Q ∈ Sp w, (show Frames G → ℂ from S.embF emb σ lam h x c) =
         fnOf G sh (Formalism.L2.Forms.atInf e (B⁻¹ : GL (Fin n) E).1) Q := by
@@ -143,7 +144,7 @@ theorem lat_iff (hS : S.Ok) {G : ι → Matrix (Fin n) (Fin n) ℂ} {sh : ι →
   refine ⟨fun H w c B hB => (key w c B hB).1 (H c _), fun H c w => ?_⟩
   obtain ⟨w, rfl⟩ := pl.surjective w
   haveI : Fact (rc w).Prime := ⟨hrc w⟩
-  obtain ⟨B, hB⟩ := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis (rc w) E _ (hL c).fg (hL c).span_eq_top
+  obtain ⟨B, hB⟩ := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis (rc w) E _ (hL c).fg (by letI := hfull c; exact Submodule.IsFullLattice.span_eq_top)
   exact (key w c B hB).2 (H w c B hB)
 
 end Gen2
@@ -287,7 +288,7 @@ theorem clsP_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
             ((I.rec7 l Z).val_nonneg_iff w) B.wts.sgW Q
           rw [← delStd_shW B.wts.sgW (-((B.R.m : ℤ) * (((B.R.t + 1) / 2 : ℕ) : ℤ)))] at h
           exact h)
-        _ (fun c => RowTie.Lsh_empty _) x }
+        _ (fun c => RowTie.Lsh_empty _) (fun c => ((I.stX I.mu0).rep c).1.1.deco.2.lat) x }
   refine ⟨KP, W, ⟨fun x => (hLb x).trans (mem_baseL_one B _ x).symm, fun _ => rfl, hpt, hlev, hchr, hst⟩, ?_, ?_⟩
   · intro s x Pc hPc o ho
     refine (MetricTie.norm_step B.fields.emb B.embLL (I.perIn u I.mu0).sgT (I.stX I.mu0) hF hS (l.fmL u I.mu0).famP hnf hsh (hG _)

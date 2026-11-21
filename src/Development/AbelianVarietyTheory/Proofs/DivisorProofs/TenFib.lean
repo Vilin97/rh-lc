@@ -60,7 +60,7 @@ theorem ten_fib : ∀ {I₀ : Type} [Fintype I₀] {g : ℕ} {Λ : Type} [AddCom
             change spMap (RingHom.id (T.C ⧸ T.J)) ≫ (r₀.obj T).x = (r₀.obj T).x ≫ 𝟙 X₀
             rw [Cris.spMap_id]
             exact (Category.id_comp _).trans (Category.comp_id _).symm }
-      naturality := fun _ _ _ ↦ Thick.hom_ext fun _ ↦ rfl }
+      naturality := fun _ _ _ ↦ Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl) }
   have e := (inc D r₀ hσ).pullCohomologyOne_eq_of_natTrans _ θ (fun _ _ ↦ rfl) c
   rw [CoefMap.pullCohomologyOne_comp] at e
   refine e.symm.trans ?_

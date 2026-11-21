@@ -60,6 +60,9 @@ variable {A : FamIn a.D.what₂.LL G Pl0 T0 a.D.R.m}
 
 section Theta
 
+set_option backward.isDefEq.lazyProjDelta false
+set_option backward.isDefEq.lazyWhnfCore false
+
 variable {T : Core a.D} [iK : Algebra T.Q.c.F a.D.what₂.LL] {R : RealDat a.D A T.Q.c.F} {i : Fin a.D.R.m} {Tp : Type} {tup : Tp → T0}
 
 def omDat (O : OMDat T R i Tp tup) :

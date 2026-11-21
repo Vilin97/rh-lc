@@ -72,7 +72,7 @@ theorem trunc_add {R : Type} [CommRing R] (hR : ∀ m : ℕ, m ≠ 0 → IsUnit 
     cases k with
     | zero => simp only [coeff_C_zero]
     | succ k =>
-      have h := congrArg (fun p => coeff p k) hD
+      have h := congrArg (fun (p : R[X]) => p.coeff k) hD
       simp only [coeff_derivative, coeff_zero] at h
       rw [coeff_C_succ]
       have hu : IsUnit ((k : R) + 1) := by exact_mod_cast hR (k + 1) (Nat.succ_ne_zero k)

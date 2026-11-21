@@ -118,7 +118,7 @@ theorem exists_adp_local {R : Type} [CommRing R] (xR : Sp R ⟶ Xo.X)
       (fun b hb => ?_) hb fun t => (hφ t).differentiableAt (hB.mem_nhds (hsub hb))
     have := hw b hb j
     rw [(hy b (hsub hb)).2] at this
-    have hmap : GlobalTheory.CompanionTheory.Ar.dualMap (ev b) =
+    have hmap : dualMap (ev b) =
         ReciprocityTheory.ChartRestriction.G.Chart.dualMapR (ev b) := RingHom.ext fun _ => rfl
     rw [← hmap]
     exact this
@@ -273,8 +273,11 @@ theorem exists_orbit_lift : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   obtain ⟨k, x₀, t, hx₀⟩ := hcov (y (eTwoPi (((T + 1 : ℝ) : ℂ) * Complex.I)))
   obtain ⟨P₀, hP₀e, hP₀, hu₀, -⟩ := hpt k x₀
   obtain ⟨P, δ, hPd, hP⟩ := exists_adp_global F (fun w => y (eTwoPi w)) T (fun w => by rw [he1]) (fun w hw => by
-    obtain ⟨R, _, xR, vR, ev, V, hV, hwV, hev, hy⟩ := GlobalTheory.T.arc_off_boundary_descends_to_moduli_localization E H Dw l Xo c O β Z σ A φ x fr ψ r y harc hm
+    have hdesc := GlobalTheory.T.arc_off_boundary_descends_to_moduli_localization E H Dw l Xo c O β Z σ A φ x fr ψ r y harc hm
       (eTwoPi w) (hT w hw) (Complex.exp_ne_zero _)
+    rcases hdesc with ⟨R, instR, hdesc⟩
+    letI : CommRing R := instR
+    rcases hdesc with ⟨xR, vR, ev, V, hV, hwV, hev, hy⟩
     obtain ⟨B', k, P, hB', hb, hPd, hP⟩ := exists_adp_local F xR vR (m := 1) (fun b => ev (b 0))
       (B := (fun b => b 0) ⁻¹' V) (fun b => y (b 0)) (hV.preimage (continuous_apply 0))
       (fun t => (hev t).comp (differentiable_apply 0).differentiableOn fun _ h => h) (fun b hb => hy _ hb)

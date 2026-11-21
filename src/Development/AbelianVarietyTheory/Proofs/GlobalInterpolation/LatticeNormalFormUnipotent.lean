@@ -245,6 +245,7 @@ end Main
 
 theorem latticeNormalFormUnip : LatticeNormalFormUnip := by
   intro O F Y _ _ _ _ _ _ _ _ _ _ q hq c X a hfr Λ hΛ
+  letI : Submodule.IsFullLattice F Λ := hΛ
   haveI := finiteDimensional_of_isLattice (F := F) Λ
   obtain ⟨p, φ, hp, hpa, hX, ha, hy⟩ := exists_coord hfr
   obtain ⟨e, u, hu1, hu0, hΛu⟩ := exists_adapted hq p φ ha hy Λ
@@ -289,6 +290,8 @@ theorem latticeNormalFormUnip : LatticeNormalFormUnip := by
 
 theorem latticeNormalForm : LatticeNormalForm := by
   intro O F Y _ _ _ _ _ _ _ _ _ _ q hq c X a hfr L hL Λ hΛ
+  letI : Submodule.IsFullLattice F L := hL
+  letI : Submodule.IsFullLattice F Λ := hΛ
   obtain ⟨n, e, z, hn, hz, hnΛ⟩ := latticeNormalFormUnip O F Y q hq c X a hfr Λ hΛ
   let M : Submodule O X := Λ.comap (X.subtype.restrictScalars O)
   have hM : inY X M = Λ ⊓ X.restrictScalars O := by

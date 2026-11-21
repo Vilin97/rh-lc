@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TowerWeilInputsCombined
 public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.RefLinked
+public import GroundTheory.HeightsAndTheta.Heights.Antisymmetric.Statements
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
 
 @[expose] public section

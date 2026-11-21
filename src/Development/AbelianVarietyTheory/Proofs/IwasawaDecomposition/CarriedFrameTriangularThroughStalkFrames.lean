@@ -100,13 +100,13 @@ theorem tri_of_carries : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   obtain ⟨fk, hfk⟩ := f.exists_isMap ψ hφk hxψ
   obtain ⟨f₁k, hf₁k⟩ := f₁.exists_isMap ψ₁ hg₁.2.1 hg₁.1
   have iF : (_root_.GlobalTheory.ShFam.EigFrame.IsMap f) (algebraMap (C.Y.X.presheaf.stalk y) C.Y.X.functionField) fF := fun τ i => by
-    rw [hfF τ i, hf' τ i, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap alg)), ← spMap_dualMap_comp, ← halg]
+    rw [hfF τ i, hf' τ i, ← Category.assoc (spMap (Formalism.L2.Pj.dualMap alg)), ← spMap_dualMap_comp, ← halg]
   have i₁F : f₁.IsMap (algebraMap (C.Y.X.presheaf.stalk y₁) C.Y.X.functionField) f₁F := fun τ i => by
-    rw [hf₁F τ i, hf₁' τ i, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap alg)), ← spMap_dualMap_comp, ← halg₁]
+    rw [hf₁F τ i, hf₁' τ i, ← Category.assoc (spMap (Formalism.L2.Pj.dualMap alg)), ← spMap_dualMap_comp, ← halg₁]
   have ik : f'.IsMap ψp fk := fun τ i => by
-    rw [hfk τ i, hf' τ i, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψp)), ← spMap_dualMap_comp, ← hψ]
+    rw [hfk τ i, hf' τ i, ← Category.assoc (spMap (Formalism.L2.Pj.dualMap ψp)), ← spMap_dualMap_comp, ← hψ]
   have i₁k : f₁'.IsMap ψp f₁k := fun τ i => by
-    rw [hf₁k τ i, hf₁' τ i, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψp)), ← spMap_dualMap_comp, ← hψ₁]
+    rw [hf₁k τ i, hf₁' τ i, ← Category.assoc (spMap (Formalism.L2.Pj.dualMap ψp)), ← spMap_dualMap_comp, ← hψ₁]
 
   have key : ∀ τ, (fk.co g τ).BlockTriangular id ∧ ∀ i, IsUnit (fk.co g τ i i) := by
     intro τ

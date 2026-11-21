@@ -130,13 +130,13 @@ theorem exists_term_of_family (hA : admitted l P p) (hT : TotalAt Xo c P p i)
   generalize hex.choose = z at hz ⊢
   obtain ⟨rfl, h₁, h₂⟩ := hkPt_along hA C.2 (hC ▸ hI) hz
   have : CharZero Ω := charZero_of_injective_algebraMap (algebraMap c.F Ω).injective
-  refine (GlobalTheory.T.section_value_at_multiple_of_baseChanged_generator E H Dw l Xo c a n f hf T Ω χ z₀ z a₀ ?_ (fun τ j => ?_)
-    (ha₀ Ω χ y₁ z.x Ψ₁ z.s hy hF z.gen h₂)).symm
-  · obtain ⟨_, _, _, h, _⟩ := hF
-    exact h.1
-  · refine GlobalTheory.T.lie_divided_hom_tangent_image_baseChange E H Dw l Xo T Ω _ _ _ _ _ Ψ Ψ₁ p _ _ _ (Nat.cast_ne_zero.2 hp).isUnit hF (hu τ j) ?_
+  exact (GlobalTheory.T.section_value_at_multiple_of_baseChanged_generator E H Dw l Xo c a n f hf T Ω χ z₀ z a₀ (by
+    obtain ⟨_, _, _, h, _⟩ := hF
+    exact h.1) (fun τ j => by
+    refine GlobalTheory.T.lie_divided_hom_tangent_image_baseChange E H Dw l Xo T Ω _ _ _ _ _ Ψ Ψ₁ p _ _ _ (Nat.cast_ne_zero.2 hp).isUnit hF (hu τ j) ?_
     rw [← hy.2.1]
-    exact h₁ τ j
+    exact h₁ τ j)
+    (ha₀ Ω χ y₁ z.x Ψ₁ z.s hy hF z.gen h₂)).symm
 
 theorem exists_term (hA : admitted l P p) (hT : TotalAt Xo c P p i) (Z : Corr Xo P p i)
     {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ} {f : Rul Xo c} (hf : f ∈ sec Xo c a n) {B : Type} [CommRing B] [IsReduced B]

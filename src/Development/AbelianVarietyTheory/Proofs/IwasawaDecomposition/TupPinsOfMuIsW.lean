@@ -152,7 +152,7 @@ theorem tupPins_of_muIsW (X : Stages) (f : Fr X.B.toPre) (T : TwDat X.B) (Wt : S
     · rw [h.on w hw, h.tw w]
       exact GlobalTheory.Mem.HD.TupPin.xiTw_unr X.B f T w v hv
     · rw [h.off w hw, h.mu0]
-      exact fun x _ => HChar.loc_one _ _
+      exact fun _ _ => rfl
 
 
 open Formalism.L2.Rows Formalism.L2.Geo GlobalTheory.GeoGraft GlobalTheory.GeoModel in

@@ -166,12 +166,12 @@ theorem mem_span_of_map_eq_zero (R A B D : Type) [CommRing R] [CommRing A] [Comm
   · intro v hv
     obtain ⟨v, rfl⟩ := c.surjective v
     have hv' : (mapBaseChange R A B).lTensor D v = 0 := by
-      simpa [LinearMap.baseChange_eq_ltensor] using hv
+      simpa [LinearMap.baseChange_eq_lTensor] using hv
     obtain ⟨w, rfl⟩ := (lTensor_exact D (mapBaseChange R A B).exact_subtype_ker_map
       (mapBaseChange_surjective R A B hs) v).mp hv'
     clear hv hv'
     induction w with
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+    | add x y hx hy => simp only [map_add]; exact add_mem hx hy
     | tmul d w =>
       obtain ⟨y, hy⟩ := (exact_kerCotangentToTensor_mapBaseChange R A B hs w.1).mp w.2
       obtain ⟨y, rfl⟩ := Ideal.toCotangent_surjective _ y
@@ -228,8 +228,8 @@ theorem mem_span_of_residue {A D k M I I' : Type} [CommRing A] [CommRing D] [IsL
     change (1 : D) ⊗ₜ[A] g i ∈ _
     rw [this]
     exact Submodule.add_mem_sup hn (Submodule.smul_mem_smul hπ hwN)
-  exact Submodule.le_of_le_smul_of_le_jacobson_bot (IsNoetherian.noetherian N)
-    (IsLocalRing.maximalIdeal_le_jacobson ⊥) hle (Submodule.subset_span ⟨i, rfl⟩)
+  exact Submodule.le_of_le_smul_of_le_jacobson (IsNoetherian.noetherian N)
+    (le_of_eq (IsLocalRing.ringJacobson_eq_maximalIdeal (R := D)).symm) hle (Submodule.subset_span ⟨i, rfl⟩)
 
 theorem mem_span_of_tower {A D K M I : Type} [CommRing A] [CommRing D] [CommRing K] [Algebra A D]
     [Algebra D K] [Algebra A K] [IsScalarTower A D K] [AddCommGroup M] [Module A M] (g : I → M)

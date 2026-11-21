@@ -40,7 +40,7 @@ def SourceExact (D : D7) : Prop :=
     CoCpt A → ∀ (vA : Vol A) (χS χT : (AE D)ˣ →* Circle) (om : Om S T), IsWeilDatumO ψ S T χS χT om →
     CharUnramAt D χS p.v → CharUnramAt D χT p.v →
     ∀ (α : Frame p A n') (α₀ : Frame p S (n' ⊕ Fin 1)) (β : Frame p T n), IsSumFrame o ζ α α₀ →
-    ∀ (P : Pair k n') (Λ : Submodule 𝒪[k] (n → k)) [Λ.IsLattice k] (LS : Lat S) (LT : Lat T) (f₀ Ξ : WO S T → ℂ)
+    ∀ (P : Pair k n') (Λ : Submodule 𝒪[k] (n → k)) [Λ.IsFullLattice k] (LS : Lat S) (LT : Lat T) (f₀ Ξ : WO S T → ℂ)
       (Ξ' : Pair k n → WO S T → ℂ), Over ψ α₀ β LS LT f₀ (latInd (gluedS q 1 P.ker P.vec) Λ) Ξ →
       (∀ Q ∈ withLat Λ, Over ψ α₀ β LS LT f₀ (tensCol (phiOne P Q) (charInd (resChar χ hχ q) Q)) (Ξ' Q)) →
       ∀ φ, IsRam α φ → liftA o om vA (φ P) Ξ =

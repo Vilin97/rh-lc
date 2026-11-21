@@ -39,7 +39,7 @@ theorem endo_root {k : Type} [CommRing k] [IsDomain k] (p : ℕ) [hp : Fact p.Pr
     simp [this]
   haveI : Finite F := hfin
   letI : Field F := (Finite.isField_of_domain F).toField
-  haveI : CharP F p := CharP.subring k p F
+  haveI : CharP F p := F.subtype.charP F.subtype_injective p
   letI : Algebra (ZMod p) F := ZMod.algebra F p
   let ψ : F →+* F := (φ.comp F.subtype).codRestrict F fun y => by
     rw [hF]

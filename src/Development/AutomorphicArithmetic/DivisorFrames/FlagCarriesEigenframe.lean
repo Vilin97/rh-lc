@@ -52,10 +52,10 @@ private theorem isMap_comp {f : EigFrame Z φ x} {ψ : R →+* R'} {χ : R' →+
   rw [h' τ i, h τ i, ← Category.assoc, Descent.dual_comp]
 
 private theorem isMap_id (f : EigFrame Z φ x) : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) (RingHom.id R) f := fun τ i => by
-  have h1 : spMap (CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+  have h1 : spMap (Formalism.L2.Pj.dualMap (RingHom.id R)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [CompanionTheory.Ar.dualMap]
+    ext r <;> simp [Formalism.L2.Pj.dualMap]
   rw [h1, Category.id_comp]
 
 private theorem sp_comp' (f : R →+* R') (g : R' →+* R'') : spMap g ≫ spMap f = spMap (g.comp f) := by

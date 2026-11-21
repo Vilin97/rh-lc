@@ -378,7 +378,8 @@ theorem nb_scale (w : HeightOneSpectrum (𝓞 K)) (lam : ι → DomWeight n) (d 
   exact nb_scaleW w lam _ g (fun τ a b => (mem_localized_one_iff w _).1 (h1 τ a b))
     (fun τ a b => (mem_localized_one_iff w _).1 (h2 τ a b)) x hx
 
-theorem nb_sandwich_fam (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) :
+theorem nb_sandwich_fam (M : ι → Submodule (𝓞 K) (Fin n → K))
+    (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) :
     ∃ d : 𝓞 K, d ≠ 0 ∧ ∀ τ, (∀ x ∈ M τ, d • x ∈ colLat (1 : GL (Fin n) K)) ∧
       (∀ x ∈ colLat (1 : GL (Fin n) K), d • x ∈ M τ) := by
   classical
@@ -500,14 +501,20 @@ theorem nb_at_closed (lam : ι → DomWeight n) (T : Submodule (𝓞 K) (Pol K �
   rwa [actP_smul₂, smul_mem_locP_iff_of_notMem w _ hs] at this
 
 theorem nb_at_comm {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι n)} (hc : NbComm lam T)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) :
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) :
     ∃ e : 𝓞 K, e ≠ 0 ∧
       (∀ w, ∀ x ∈ nbAt lam T M w, e • x ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (nabStd K lam)) ∧
       (∀ w, ∀ x ∈ nabStd K lam, e • x ∈ nbAt lam T M w) := by
   obtain ⟨c, hc0, hc1, hc2⟩ := hc
   obtain ⟨d, hd0, hd⟩ := nb_sandwich_fam M hM
   refine ⟨c * d ^ nbN lam, mul_ne_zero hc0 (pow_ne_zero _ hd0), fun w x hx => ?_, fun w x hx => ?_⟩
-  · choose B hB using fun τ => latticeBasisExists_holds K n (M τ) (hM τ) w
+  · have hBasis : ∀ τ, ∃ B : GL (Fin n) K, IsBasisAt w (M τ) B := by
+      intro τ
+      -- The dependency stubs can still expose the earlier IsLattice signature.
+      first
+      | exact latticeBasisExists_holds K n (M τ) (hM τ) w
+      | exact latticeBasisExists_holds K n (M τ) (hM τ).toIsLattice w
+    choose B hB using hBasis
     have h1 := localization_mono w.asIdeal hc2 ((nb_mem_at lam T M w x).1 hx B hB)
     have h2 := nb_scale w lam d B (fun τ => (nb_entries w (M τ) (B τ) (hB τ) d (hd τ).1 (hd τ).2).1)
       (fun τ => (nb_entries w (M τ) (B τ) (hB τ) d (hd τ).1 (hd τ).2).2) _ h1
@@ -527,7 +534,7 @@ theorem nb_at_comm {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι 
     exact hc1 _ h3
 
 theorem nb_loc {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι n)} (hT : NbStab lam T) (hc : NbComm lam T)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ))
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ))
     (w : HeightOneSpectrum (𝓞 K)) (B : ι → GL (Fin n) K) (hB : ∀ τ, IsBasisAt w (M τ) (B τ)) :
     Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (transLat lam T M) =
       (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T).map ((actP lam B).restrictScalars (𝓞 K)) := by
@@ -544,12 +551,21 @@ theorem nb_loc {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι n)} 
     rw [LinearMap.coe_restrictScalars, ← polyAction_mul, inv_mul_cancel, polyAction_one₂]
     exact hF0
 
-theorem nablaDeltaLocal_holds : NabDelLoc := by
-  intro K _ _ ι _ n lam M hM w B hB
-  exact ⟨nb_loc (nb_stab_nab lam) (nb_comm_nab lam) M hM w B hB, nb_loc (nb_stab_del lam) (nb_comm_del lam) M hM w B hB⟩
+theorem nablaDeltaLocal_holds (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι]
+    (n : ℕ) (lam : ι → DomWeight n) (M : ι → Submodule (𝓞 K) (Fin n → K))
+    (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) (w : HeightOneSpectrum (𝓞 K))
+    (B : ι → GL (Fin n) K) (hB : ∀ τ, IsBasisAt w (M τ) (B τ)) :
+    Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (nabP lam M) =
+      (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (nabStd K lam)).map
+        ((actP lam B).restrictScalars (𝓞 K)) ∧
+    Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (delP lam M) =
+      (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (delStd K lam)).map
+        ((actP lam B).restrictScalars (𝓞 K)) :=
+  ⟨nb_loc (nb_stab_nab lam) (nb_comm_nab lam) M hM w B hB,
+    nb_loc (nb_stab_del lam) (nb_comm_del lam) M hM w B hB⟩
 
 theorem nb_global {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι n)} (hc : NbComm lam T)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) :
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) :
     ∃ e : 𝓞 K, e ≠ 0 ∧ (∀ x ∈ transLat lam T M, e • x ∈ nabStd K lam) ∧
       (∀ x ∈ nabStd K lam, e • x ∈ transLat lam T M) := by
   obtain ⟨e, he, h1, h2⟩ := nb_at_comm hc M hM
@@ -563,7 +579,7 @@ theorem nb_global {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι n
     exact fun w => h2 w x hx
 
 theorem nb_le_VV {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι n)} (hc : NbComm lam T)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) (F : Pol K ι n)
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) (F : Pol K ι n)
     (hF : F ∈ transLat lam T M) : F ∈ VV K lam := by
   obtain ⟨e, he, h1, -⟩ := nb_global hc M hM
   have h := nb_nabStd_le_VV lam _ (h1 F hF)
@@ -573,17 +589,19 @@ theorem nb_le_VV {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι n)
   have := (VV K lam).smul_mem (algebraMap (𝓞 K) K e)⁻¹ h
   rwa [smul_smul, inv_mul_cancel₀ he', one_smul] at this
 
-theorem nablaLeVV_holds : NabLeVV := by
-  intro K _ _ ι _ n lam M hM F hF
-  exact nb_le_VV (nb_comm_nab lam) M hM F hF
+theorem nablaLeVV_holds (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι]
+    (n : ℕ) (lam : ι → DomWeight n) (M : ι → Submodule (𝓞 K) (Fin n → K))
+    (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) (F : Pol K ι n) (hF : F ∈ nabP lam M) :
+    F ∈ VV K lam :=
+  nb_le_VV (nb_comm_nab lam) M hM F hF
 
 theorem nb_lattice {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι n)} (hc : NbComm lam T)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) :
-    Submodule.IsLattice K ((transLat lam T M).comap ((VV K lam).subtype.restrictScalars (𝓞 K))) := by
+    (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) :
+    Submodule.IsFullLattice K ((transLat lam T M).comap ((VV K lam).subtype.restrictScalars (𝓞 K))) := by
   obtain ⟨e, he, h1, h2⟩ := nb_global hc M hM
   have he' : algebraMap (𝓞 K) K e ≠ 0 := by
     rwa [Ne, FaithfulSMul.algebraMap_eq_zero_iff]
-  constructor
+  refine { toIsLattice := Submodule.IsLattice.of_fg K ?_, span_eq_top := ?_ }
   · let φ : VV K lam →ₗ[𝓞 K] Pol K ι n := e • ((VV K lam).subtype.restrictScalars (𝓞 K))
     have hφ : Function.Injective φ := by
       intro x y hxy
@@ -614,9 +632,11 @@ theorem nb_lattice {lam : ι → DomWeight n} {T : Submodule (𝓞 K) (Pol K ι 
       have := Submodule.smul_mem _ (algebraMap (𝓞 K) K e)⁻¹ hP4
       rwa [nb_osmul, smul_smul, inv_mul_cancel₀ he', one_smul] at this
 
-theorem nablaDeltaLattice_holds : NabDelLattice := by
-  intro K _ _ ι _ n lam M hM
-  exact ⟨nb_lattice (nb_comm_nab lam) M hM, nb_lattice (nb_comm_del lam) M hM⟩
+theorem nablaDeltaLattice_holds (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι]
+    (n : ℕ) (lam : ι → DomWeight n) (M : ι → Submodule (𝓞 K) (Fin n → K))
+    (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) :
+    Submodule.IsFullLattice K (nabK lam M) ∧ Submodule.IsFullLattice K (delK lam M) :=
+  ⟨nb_lattice (nb_comm_nab lam) M hM, nb_lattice (nb_comm_del lam) M hM⟩
 
 end Lattice
 

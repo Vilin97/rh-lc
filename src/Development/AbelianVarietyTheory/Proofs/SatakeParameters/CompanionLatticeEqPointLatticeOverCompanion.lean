@@ -29,7 +29,7 @@ theorem latCo_eq_latAd_compan : ∀ (D : D7) (i : ℕ) (hi : i ≤ D.R.m) (co : 
     have e1 : hform (D.sp.cm.sig : D.host.E →+* D.host.E) 1 (co.1 *ᵥ u) (co.1 *ᵥ v) =
         ∑ b, (D.sp.cm.sig : D.host.E →+* D.host.E) ((co.1 *ᵥ u) b) * (co.1 *ᵥ v) b := by
       simp only [hform, Matrix.one_apply, mul_ite, mul_one, mul_zero, ite_mul, zero_mul, Finset.sum_ite_eq,
-        Finset.mem_univ, if_true]
+        Finset.mem_univ, ite_true]
     rw [e1] at h
     exact h
   have hJ : ∀ M : Submodule (𝓞 D.host.E) (Fin (D.R.N i) → D.host.E), IsLat M → IsLat (dl D.sp.cm.sig (gramN D i hi) M) :=
@@ -45,7 +45,9 @@ theorem latCo_eq_latAd_compan : ∀ (D : D7) (i : ℕ) (hi : i ≤ D.R.m) (co : 
     by_cases ha : a = 0
     · subst ha; rw [GlobalTheory.SDCompan.compan_zero, GlobalTheory.SDCompan.compan_zero]
     · rw [GlobalTheory.SDCompan.compan_eq, GlobalTheory.SDCompan.compan_eq, GlobalTheory.SDCompan.latAd_eq, GlobalTheory.SDCompan.latAd_eq]
-      exact (glob_companion D.sp.cm.sig (gramN D i hi) hJ hLb ha x.1 hx).symm
+      symm
+      rw [glob_sup hLb (isLat_smul (hJ _ hLb) ha), glob_smul (hJ _ hLb) ha,
+        glob_dl D.sp.cm.sig (gramN D i hi) hJ hLb x.1 hx]
   unfold latCo
   rw [hG, latAd_rat]
 

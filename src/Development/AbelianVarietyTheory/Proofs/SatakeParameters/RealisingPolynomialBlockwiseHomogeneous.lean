@@ -64,11 +64,11 @@ theorem prod_scale {ι : Type} [Fintype ι] (τ₀ : ι) (A B : ι → ℂ) (k :
     (hAB : ∀ τ, A τ = if τ = τ₀ then k * B τ else B τ) (e : ι → ℤ) :
     ∏ τ, A τ ^ e τ = k ^ e τ₀ * ∏ τ, B τ ^ e τ := by
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ τ₀), ← Finset.mul_prod_erase (s := Finset.univ) (fun τ => B τ ^ e τ) (Finset.mem_univ τ₀)]
-  rw [hAB τ₀, if_pos rfl, mul_zpow, mul_assoc]
+  rw [hAB τ₀, ite_eq_left rfl, mul_zpow, mul_assoc]
   congr 2
   apply Finset.prod_congr rfl
   intro τ hτ
-  rw [hAB τ, if_neg (Finset.ne_of_mem_erase hτ)]
+  rw [hAB τ, ite_eq_right (Finset.ne_of_mem_erase hτ)]
 
 open Classical in
 theorem zT_scale {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos : (Σ v : X.Pl, Fin (X.G.P.n' v)) ≃ D.what₂.Tau) {n : ℕ}
@@ -79,9 +79,9 @@ theorem zT_scale {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos : (Σ v : X.
   rw [hf' τ]
   by_cases hτ : τ = τ₀
   · subst hτ
-    simp only [if_true]
+    simp only [ite_true]
     by_cases ho : IsOddPos (pos.symm τ).2
-    · simp only [ho, if_true]
+    · simp only [ho, ite_true]
       rw [show c⁻¹ • f τ = (Units.mk0 c⁻¹ (inv_ne_zero hc)) • f τ from rfl, Matrix.inv_smul' (k := Units.mk0 c⁻¹ (inv_ne_zero hc)) (h := hf τ)]
       ext a b
       simp [Matrix.submatrix_apply, Matrix.transpose_apply, Units.smul_def]
@@ -103,8 +103,7 @@ theorem valZ_scale {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos : (Σ v : 
     intro x
     rw [zT_scale X D pos f f' hf τ₀ 2 two_ne_zero hf']
     by_cases hb : (⟨x.1, x.2.1⟩ : Σ v : Fin (X.Pj i).nV, Fin ((X.Pj i).n' v)) = (posJ X D pos i).symm τ₀
-    · have e : posJ X D pos i ⟨x.1, x.2.1⟩ = τ₀ := by rw [hb]; simp
-      simp [e, hb]
+    · simp [hb]
     · have e : posJ X D pos i ⟨x.1, x.2.1⟩ ≠ τ₀ := fun e => hb (by rw [← e]; simp)
       simp [e, hb]
   unfold valZ
@@ -144,9 +143,9 @@ theorem realises_blockHom : ∀ {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (p
     let f' : Fr1 D n := ⟨fun τ => if τ = τ₀ then t • f.1 τ else f.1 τ, by
       intro τ
       by_cases hτ : τ = τ₀
-      · simp only [hτ, if_true, Matrix.det_smul]
+      · simp only [hτ, ite_true, Matrix.det_smul]
         exact (IsUnit.mk0 _ (pow_ne_zero _ ht0)).mul (hfu τ₀)
-      · simp only [hτ, if_false]; exact hfu τ⟩
+      · simp only [hτ, ite_false]; exact hfu τ⟩
     have hf' : ∀ τ, f'.1 τ = if τ = τ₀ then (if IsOddPos (pos.symm τ₀).2 then (2:ℂ)⁻¹ else 2) • f.1 τ else f.1 τ := by
       intro τ; rw [← ht]
     have e1 := GlobalTheory.T.evalStdFrames_eq_detPower_mul_blockValue X D pos i h R2 f
@@ -160,12 +159,12 @@ theorem realises_blockHom : ∀ {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (p
       apply prod_scale
       intro τ
       rw [zT_scale X D pos f.1 f'.1 hfu τ₀ 2 two_ne_zero hf' τ]
-      split_ifs <;> simp [Matrix.det_smul]
+      split_ifs <;> simp
     have hdf : ∏ τ, (f'.1 τ).det ^ (-(a τ)) = (t ^ n) ^ (-(a τ₀)) * ∏ τ, (f.1 τ).det ^ (-(a τ)) := by
       apply prod_scale
       intro τ
       show (if τ = τ₀ then t • f.1 τ else f.1 τ).det = _
-      split_ifs <;> simp [Matrix.det_smul]
+      split_ifs <;> simp
     have hq : GL3Theta.evFr D Q f'.1 = t ^ (∑ r, ν τ₀ r) * GL3Theta.evFr D Q f.1 := evFr_scale D ν Q hQ τ₀ t ht0 f.1
     have hK : ((2:ℂ) ^ n) ^ eT X D pos i τ₀ ≠ 0 := zpow_ne_zero _ (pow_ne_zero _ two_ne_zero)
     have hE := e2.symm.trans e3
@@ -186,12 +185,12 @@ theorem realises_blockHom : ∀ {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (p
     rw [Finset.sum_eq_single m]
     · simp
     · intro b _ hb
-      rw [coeff_monomial, if_neg hb]
+      rw [coeff_monomial, ite_eq_right hb]
     · intro hm'; exact absurd hm hm'
   have hm0 : AddMonoidAlgebra.coeff R m ≠ 0 := (mem_support_iff.mp hm)
   have h2 : (2:ℂ) ^ (dg X D pos i τ₀ m) = c := by
     have := congrArg (AddMonoidAlgebra.coeff · m) hz
-    rw [coeff_sub, coeff_smul, hcoef, coeff_zero, sub_eq_zero, smul_eq_mul] at this
+    rw [coeff_sub, coeff_smul, hcoef, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, sub_eq_zero, smul_eq_mul] at this
     exact mul_left_cancel₀ hm0 (by rw [this]; ring)
   have hcz : c = (2:ℂ) ^ (-((n : ℤ) * eT X D pos i τ₀) + (ε * ((n : ℤ) * (-(a τ₀))) + ε * ((∑ r, ν τ₀ r : ℕ) : ℤ))) := by
     have a1 : ((2:ℂ) ^ n) ^ (eT X D pos i τ₀) = (2:ℂ) ^ ((n : ℤ) * eT X D pos i τ₀) := by rw [zpow_mul, zpow_natCast]

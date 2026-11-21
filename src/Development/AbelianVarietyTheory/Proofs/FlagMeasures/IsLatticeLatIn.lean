@@ -50,7 +50,7 @@ theorem genIdxH_eq_idxN {A B : Submodule (𝓞 K) V} (hBA : B ≤ A) (h0 : idxN 
 
 variable [Module K V] [IsScalarTower (𝓞 K) K V]
 
-theorem span_inf_eq (L : Submodule (𝓞 K) V) (hL : Submodule.IsLattice K L) (U : Submodule K V) :
+theorem span_inf_eq (L : Submodule (𝓞 K) V) (hL : Submodule.IsFullLattice K L) (U : Submodule K V) :
     Submodule.span K ((L ⊓ U.restrictScalars (𝓞 K) : Submodule (𝓞 K) V) : Set V) = U := by
   refine le_antisymm (Submodule.span_le.2 fun x hx => hx.2) fun u hu => ?_
   obtain ⟨r, hr, hru⟩ := Formalism.LFunctionChainParameters.LLcv.span_le_locS (K := K) L (x := u) (by rw [hL.span_eq_top]; trivial)
@@ -60,13 +60,23 @@ theorem span_inf_eq (L : Submodule (𝓞 K) V) (hL : Submodule.IsLattice K L) (U
   rw [← algebraMap_smul K r] at h2
   exact (Submodule.smul_mem_iff _ h1).1 h2
 
-theorem isLattice_latIn (L : Submodule (𝓞 K) V) (hL : Submodule.IsLattice K L) (U : Submodule K V) :
-    Submodule.IsLattice K (latIn U L) := by
-  refine ⟨?_, ?_⟩
-  · refine Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype ?_
-    exact Submodule.FG.of_le hL.fg (Submodule.map_comap_le _ _)
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+theorem isLattice_latIn (L : Submodule (𝓞 K) V) (hL : Submodule.IsFullLattice K L) (U : Submodule K V) :
+    Submodule.IsFullLattice K (latIn U L) := by
+  haveI : Submodule.IsLattice K (latIn U L) := by
+    refine ⟨?_, ?_⟩
+    · refine Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype ?_
+      exact Submodule.FG.of_le hL.fg (Submodule.map_comap_le _ _)
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  refine ⟨?_⟩
+  · apply top_unique
+    intro x _
+    obtain ⟨r, hr, hru⟩ := Formalism.LFunctionChainParameters.LLcv.span_le_locS (K := K) L (x := (x : V)) (by rw [hL.span_eq_top]; trivial)
+    have h1 : algebraMap (𝓞 K) K r ≠ 0 := by simpa using nonZeroDivisors.ne_zero hr
+    have h2 : r • x ∈ Submodule.span K ((latIn U L : Submodule (𝓞 K) U) : Set U) :=
+      Submodule.subset_span hru
+    rw [← algebraMap_smul K r] at h2
+    exact (Submodule.smul_mem_iff _ h1).1 h2
 variable [StarRing K]
 
 theorem nondeg_of_pd {h : V →ₗ⋆[K] V →ₗ[K] K} (hp : PD h) : h.Nondegenerate := by
@@ -78,7 +88,7 @@ theorem nondeg_of_pd {h : V →ₗ⋆[K] V →ₗ[K] K} (hp : PD h) : h.Nondegen
     simp at this
   exact ⟨fun x hx => key x (hx x), fun x hx => key x (hx x)⟩
 
-theorem idxN_dualInH (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (𝓞 K) V) (hL : Submodule.IsLattice K L)
+theorem idxN_dualInH (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (𝓞 K) V) (hL : Submodule.IsFullLattice K L)
     (U : Submodule K V) :
     idxN (Lat.dualInH h (L ⊓ U.restrictScalars (𝓞 K))) (L ⊓ U.restrictScalars (𝓞 K)) =
       discN (hRes h U) (latIn U L) := by

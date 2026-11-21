@@ -18,7 +18,6 @@ noncomputable section
 namespace GlobalTheory.BaseChangeExistsCompare
 
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Matrix
-open GlobalTheory.IndefiniteRowSideFullHecke
 
 section Definite
 

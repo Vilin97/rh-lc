@@ -139,12 +139,6 @@ theorem uLast_le (L : SizeData₂ D) (τ : D.what₂.Tau) (hτ : τ ∈ tops D) 
     linarith
   exact_mod_cast h5
 
-section Chosen
-
-open GlobalTheory.Mem.Num
-
-end Chosen
-
 open GlobalTheory.Mem
 
 def BaseSigns (B : Base) : Prop := SignLaw B.hc (· ∈ B.wts.tops)

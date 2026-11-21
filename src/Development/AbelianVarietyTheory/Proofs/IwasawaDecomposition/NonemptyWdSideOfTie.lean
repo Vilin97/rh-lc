@@ -129,7 +129,7 @@ theorem nonempty_wdSide_of_tie (hB : GlobalTheory.Published.DeRhamPotSemistable)
     wdOf_unrL := fun l hl ι a r w hw hc hd => by rw [T.unr, h1 l ι r w hw]; exact ((hL l ι r w hw).2 hc hd).1
     wdOf_mono0L := fun l hl ι a r w hw hc hd => by rw [T.mono0, h1 l ι r w hw]; exact ((hL l ι r w hw).2 hc hd).2
     away := fun l hl ι a r w hw => h2 l ι r w hw
-    above := fun l hl ι a r w hw => ⟨_, br l hl w hw, hbr l hl w hw, h1 l ι r w hw⟩
+    above := fun l hl ι a r w hw => ⟨LL l hl, br l hl w hw, hbr l hl w hw, h1 l ι r w hw⟩
     loc := fun l hl ι w hw O _ _ _ Bw hj φ hφ => ⟨fun m ρ _ => ?_, fun LL' hL' m ρ _ => ?_⟩ }⟩
   · rw [← T.dim]
     by_cases hw : w ∈ placesOver D.host.E l

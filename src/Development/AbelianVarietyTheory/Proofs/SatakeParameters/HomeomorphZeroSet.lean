@@ -47,7 +47,7 @@ theorem GlobalTheory.AffCxPts.homeomorph_zeroSet : ∀ (X : Scheme.{0}) (p : X �
       Nonempty (↥(GlobalTheory.CxPts.ptsIn p (RingHom.id ℂ) U) ≃ₜ
         ↥{z : Fin k → ℂ | ∀ P ∈ G, MvPolynomial.eval z P = 0}) := by
   intro X p U hU hft
-  letI := (algX p U).toAlgebra
+  let := (algX p U).toAlgebra
   obtain ⟨k, φa, hφ⟩ := Algebra.FiniteType.iff_quotient_mvPolynomial''.1 hft
   let φ : MvPolynomial (Fin k) ℂ →+* Γ(X, U) := φa.toRingHom
   have hφ' : Function.Surjective φ := hφ
@@ -76,7 +76,7 @@ theorem GlobalTheory.AffCxPts.homeomorph_zeroSet : ∀ (X : Scheme.{0}) (p : X �
     obtain ⟨P, rfl⟩ := hφ' f
     induction P using MvPolynomial.induction_on with
     | C a => exact Subring.subset_closure (Or.inl ⟨a, (hC a).symm⟩)
-    | add P Q hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
+    | add P Q hP hQ => rw [map_add]; exact add_mem hP hQ
     | mul_X P i hP =>
       rw [map_mul]; exact mul_mem hP (Subring.subset_closure (Or.inr ⟨i, rfl⟩))
   have hsc : Continuous s := by
@@ -99,5 +99,5 @@ theorem GlobalTheory.AffCxPts.homeomorph_zeroSet : ∀ (X : Scheme.{0}) (p : X �
       right_inv := fun z => Subtype.ext (funext fun i => hcoords z i)
       continuous_toFun := by
         refine Continuous.subtype_mk (continuous_pi fun i => ?_) _
-        exact (continuousOn_iff_continuous_restrict.1 (continuousOn_ev (φ (MvPolynomial.X i))))
+        exact (continuousOn_iff_continuous_domRestrict.1 (continuousOn_ev (φ (MvPolynomial.X i))))
       continuous_invFun := hsc.subtype_mk _ }

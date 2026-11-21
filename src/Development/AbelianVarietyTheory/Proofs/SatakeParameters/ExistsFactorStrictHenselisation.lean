@@ -10,7 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsRin
 
 @[expose] public section
 
-open CategoryTheory Limits AlgebraicGeometry IsLocalRing GlobalTheory.FormalInv.Fib GlobalTheory.NCyc
+open IsLocalRing
 
 namespace GlobalTheory.StrictHensFactor
 

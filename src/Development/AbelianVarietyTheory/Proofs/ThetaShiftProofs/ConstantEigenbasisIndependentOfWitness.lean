@@ -137,17 +137,19 @@ theorem over_id : 𝟙 (epsR A).left ≫ (epsR A).hom = (epsR A).hom ≫ spMap (
 variable {p}
 
 theorem cor_of_letBC {ν' : GtPt D₁ (epsR A)} {ν : GtPt D₀ (epsR A)} (h : LetBC p ν ν') : Cor p ν' ν := by
-  have e : spMap (dualMap (RingHom.id A)) = 𝟙 (epsR A).left := by
-    refine Eq.trans (congrArg spMap (RingHom.ext fun x => ?_)) (Spec.map_id _)
-    ext <;> simp [dualMap]
+  have hd : Formalism.L2.Pj.dualMap (RingHom.id A) = RingHom.id (DualNumber A) :=
+    RingHom.ext TrivSqZeroExt.inl_fst_add_inr_snd_eq
+  have e : spMap (Formalism.L2.Pj.dualMap (RingHom.id A)) = 𝟙 (epsR A).left :=
+    (congrArg spMap hd).trans (Spec.map_id _)
   unfold Cor
   rw [← e]
   intro x
   obtain ⟨χ, rfl⟩ := p.xe.surjective x
   rw [p.xe.symm_apply_apply]
-  obtain ⟨hψ, H⟩ := h.2 χ
-  exact ⟨hψ, fun Z r z J J' hJ hJ' =>
-    CubTransport.val_pmaps hψ ((maps_iff _ _ _ _ _ _ _ _ _ (fun _ => rfl)).1 H) r hJ hJ'⟩
+  obtain ⟨hψ, hm⟩ := h.2 χ
+  have hMaps := (maps_iff p.w _ _ _ (ν'.s χ) (ν.s (p.xe χ)) _ _
+    (GeneratorPullback.pullAlong_le _ _ _ _ _ hψ) (fun _ => rfl)).1 hm
+  exact ⟨hψ, fun _ r _ _ _ hJ hJ' => CubTransport.val_pmaps hψ hMaps r hJ hJ'⟩
 
 variable (p) in
 theorem exists_cor_left (hG : GlobalFnsSt) (ν : GtPt D₀ (epsR A)) : ∃ ν', Cor p ν' ν :=

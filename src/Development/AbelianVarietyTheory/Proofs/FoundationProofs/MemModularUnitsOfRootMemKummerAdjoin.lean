@@ -136,7 +136,7 @@ theorem core {k K L : Type} [Field k] [IsAlgClosed k] [CharZero k] [Field K] [Al
   haveI : CharZero L := charZero_of_injective_ringHom (algebraMap K L).injective
   haveI : NeZero (l : L) := ⟨Nat.cast_ne_zero.2 hl.ne'⟩
   haveI : NeZero l := ⟨hl.ne'⟩
-  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot L l
+  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot L l
   have hθ0 : θ ≠ 0 := by
     rintro rfl
     rw [zero_pow hl.ne'] at hθ
@@ -170,8 +170,8 @@ namespace GlobalTheory.KZ.UnRoot
 theorem mem_Un_of_root_mem_adjoin : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε), ∀ (m l : ℕ), 0 < m → 0 < l → ∀ (θ : AlgebraicClosure X.K) (f : X.Kˣ), θ ∈ IntermediateField.adjoin X.K {y : AlgebraicClosure X.K | ∃ U ∈ X.Un m, y ^ m = algebraMap X.K (AlgebraicClosure X.K) (U : X.K)} → θ ^ l = algebraMap X.K (AlgebraicClosure X.K) (f : X.K) → f ∈ X.Un l := by
   intro Ω _ _ _ ε X m l hm hl θ f hθ hf W hW
   classical
-  haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ
-  haveI : CharZero Ω := charZero_of_injective_ringHom (algebraMap ℚ Ω).injective
+  have : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ
+  have : CharZero Ω := charZero_of_injective_ringHom (algebraMap ℚ Ω).injective
   obtain ⟨B, rfl⟩ := exists_comap_eq (algebraMap X.K (AlgebraicClosure X.K)) W
   let e := RatFunc.algEquivOfTranscendental X.jK (GlobalTheory.K4.jK_transcendental X)
   let ψ : RatFunc Ω →ₐ[Ω] X.K := (IntermediateField.val _).comp e.toAlgHom
@@ -190,7 +190,7 @@ theorem mem_Un_of_root_mem_adjoin : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] 
       have : algebraMap (Polynomial Ω) X.K (C a) = algebraMap Ω X.K a := by
         rw [← ψ.commutes a]; rfl
       rw [this]; exact hW.1 a
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | monomial n a h =>
       have : algebraMap (Polynomial Ω) X.K Polynomial.X = X.jK := by
         show ((e (algebraMap (Polynomial Ω) (RatFunc Ω) Polynomial.X) : _) : X.K) = _

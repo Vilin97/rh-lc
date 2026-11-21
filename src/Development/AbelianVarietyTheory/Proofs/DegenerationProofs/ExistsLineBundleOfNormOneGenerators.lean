@@ -122,7 +122,9 @@ theorem exists_ext (X : Scheme.{0}) [IsIntegral X] (π : X ⟶ Sp ℤ) [Flat π]
     ∃ ψ : Γ(X, W)ˣ, ∀ (Z : Scheme.{0}) (r : Z ⟶ Y) (z : Z), r z ∈ V → gm (r ≫ f) z W ψ = gm r z V u := by
   by_cases hW : (W : Set X).Nonempty
   · obtain ⟨y, hy⟩ := hne hW
-    obtain ⟨ψ, hψ, e⟩ := (GlobalTheory.regular_of_bounded_at_padicAlgCl_points.2 X π hX (f ''ᵁ V) W (image_le _ h)
+    have hex : ∃ ψ : Γ(X, W), IsUnit ψ ∧
+        resG X (image_le f h) ψ = (f.appIso V).inv.hom u.val :=
+      (GlobalTheory.regular_of_bounded_at_padicAlgCl_points.2 X π hX (f ''ᵁ V) W (image_le _ h)
       ((f.appIso V).inv.hom u.val) ⟨f y, y, hy, rfl⟩).2 (u.isUnit.map _) (by
         intro p _ b hb hr
         have hr' : Set.range (gPt p ≫ b) ⊆ Set.range f := by
@@ -140,6 +142,7 @@ theorem exists_ext (X : Scheme.{0}) [IsIntegral X] (π : X ⟶ Sp ℤ) [Flat π]
         have := hu p x ⟨b, fac.symm, hb⟩ hx
         rw [← valF_comp_appIso f V u.val x, fac] at this
         exact this)
+    obtain ⟨ψ, hψ, e⟩ := hex
     have e' : Semi.res h (pullU f W hψ.unit) = u := by
       apply Units.ext
       rw [val_res_pullU, appLE_eq_appIso f W V h (image_le f h), IsUnit.unit_spec, e]

@@ -6,8 +6,6 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.IsSquareInte
 
 @[expose] public section
 
-open Matrix GlobalTheory.TorFin
-
 namespace GlobalTheory
 
 theorem coeff_mem_of_poly_values_mem : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (S : Submodule ℂ V) (N : ℕ) (c : ℕ → V), (∀ u : ℂ, ∑ k ∈ Finset.range N, u ^ k • c k ∈ S) → ∀ k < N, c k ∈ S := by

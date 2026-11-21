@@ -43,7 +43,7 @@ theorem free_hom_glue_of_covering (R : Type) [CommRing R] {S : Scheme.{0}} (F : 
     intro V W v g hv
     exact (hcomp v hv g).trans (hres v hv g).symm
   have hF : Presieve.IsSheaf Scheme.etaleTopology (F.obj ⋙ forget _) :=
-    (isSheaf_iff_isSheaf_of_type _ _).1 ((Presheaf.isSheaf_iff_isSheaf_forget _ _ (forget _)).1 F.cond)
+    (isSheaf_iff_isSheaf_of_type _ _).1 ((Presheaf.isSheaf_iff_isSheaf_forget _ _ (forget _)).1 F.property)
   obtain ⟨s, hs, -⟩ := hF T hT x ((Presieve.compatible_iff_sieveCompatible x).2 hx)
   obtain ⟨t, ht⟩ := free_exists (R := R) (yoneda.obj S) F (fun U g => Sec.res g (show Sec F S from s))
     (fun V U g h => by

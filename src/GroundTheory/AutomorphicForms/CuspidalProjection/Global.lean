@@ -21,32 +21,11 @@ set_option linter.unusedSectionVars false
 
 namespace CuspidalProjection
 
-open Reduction AutomorphicForm CuspidalSpectrum RightCosetSpace
+open Reduction
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-local notation "Γ₁" => rationalGLOne (K := K) (n := n)
-
-variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
-
-theorem constantTermL2_unipotent_mul (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (r : ℕ)
-    (Y : UPos n r → 𝔸[K]) (z : normOneGL (K := K) (n := n)) :
-    constantTermL2 μ r φ (unipOne (K := _) (n := _) r Y * z) = constantTermL2 μ r φ z := by
-  simp only [constantTermL2, ctFun]
-  have h : ∀ X, unipOne (K := _) (n := _) r X * (unipOne (K := _) (n := _) r Y * z) = unipOne (K := _) (n := _) r (X + Y) * z := by
-    intro X
-    rw [unipOne_add, mul_assoc]
-  simp_rw [h]
-  refine setIntegral_add_right_of_periodic isAddFundamentalDomain_unipFundamentalDomain
-    (h := fun X => (φ : RightCosetSpace Γ₁ → ℂ) (mk Γ₁ (unipOne (K := _) (n := _) r X * z))) (fun ξ hξ s => ?_) Y
-  show (φ : RightCosetSpace Γ₁ → ℂ) (mk Γ₁ (unipOne (K := _) (n := _) r (ξ + s) * z)) = φ (mk Γ₁ (unipOne (K := _) (n := _) r s * z))
-  rw [unipOne_add, mul_assoc, mk_mul_of_mem (unipOne_mem_rationalGLOne r ⟨ξ, hξ⟩)]
-
-variable (v : HeightOneSpectrum (𝓞 K)) [MeasurableSpace (v.adicCompletion K)]
-  [BorelSpace (v.adicCompletion K)]
-
-variable {μ v}
-
+variable {μ : Measure (normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
 
 def ccStar (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) :
     CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ where

@@ -2,7 +2,7 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CoordAtConstMulIff
-public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsBaseChange
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsBaseChangeStatement
 
 @[expose] public section
 
@@ -24,7 +24,7 @@ theorem exists_bc {A B : Type} [CommRing A] [CommRing B] {φ : c.F →+* A} {x :
     (ρ : A →+* B) {x' : Sp B ⟶ Z.X} (hx : spMap ρ ≫ x = x') :
     ∃ g : EigFrame Z (ρ.comp φ) x', ∀ τ i, g.v τ i = spMap (dualMap ρ) ≫ fr.v τ i := by
   subst hx
-  exact EigFrame.exists_baseChange E H Dw l Xo c O β Z A B φ x fr ρ
+  exact GlobalTheory.T.exists_eigFrame_baseChange' E H Dw l Xo c O β Z A B φ x fr ρ
 
 theorem spMap_dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (ρ : A →+* B) (χ : B →+* C) :
     spMap (dualMap χ) ≫ spMap (dualMap ρ) = spMap (dualMap (χ.comp ρ)) := by

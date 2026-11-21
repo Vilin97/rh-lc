@@ -100,11 +100,11 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
-local notation "hm" φ:max => Formalism.L2.Pj.homAt (𝟙 (Sp _)) φ
-
 namespace PositivityTheory.Xgn.JetKernelRank
 
 noncomputable section
+
+local notation "hm" φ:max => Formalism.L2.Pj.homAt (𝟙 (Sp _)) φ
 
 section Pair
 open ReciprocityTheory.ChartRestriction.G.DVR

@@ -23,6 +23,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Quadr
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsUniqueStdHermitianFibreProductOfRankGeThreStatement
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNontrivialAdeleCharTrivialOnTotallyRealStatement
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UnitaryStabilizerAnisotropicVectorEquivComplemenStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UnitaryGroupPointsEquivOfChangeOfBasisStatement
 
 @[expose] public section
 
@@ -46,14 +47,15 @@ theorem isCompatible_smul {M : ℕ} {J : Matrix (Fin M) (Fin M) E} {x : Fin 1 �
   push_cast
   ring
 
-theorem StepRel.smul {d : ℕ} {b : Module.Basis (Fin d) F E} {s : StdMeas b} {M : ℕ}
+theorem StepRel.smul [NumberField E] (hσ : IsCMExt F E σ) {d : ℕ} {b : Module.Basis (Fin d) F E} {s : StdMeas b} {M : ℕ}
     {J : Matrix (Fin (M + 1)) (Fin (M + 1)) E} {x : Fin 1 → Fin (M + 1) → E} {β : F}
     {B : Matrix (Fin (M + 1)) (Fin M) E} {J' : Matrix (Fin M) (Fin M) E}
     {μ : Measure (HA (AF F) σ J)} {μ' : Measure (HA (AF F) σ J')}
-    (h : StepRel s σ J x β B J' μ μ') (c : ℝ≥0) : StepRel s σ J x β B J' (c • μ) (c • μ') := by
+    (hS : StepData σ J x β B J') (h : StepRel s σ J x β B J' μ μ') (c : ℝ≥0) : StepRel s σ J x β B J' (c • μ) (c • μ') := by
   intro ν hν e he
   have hc := isCompatible_smul (h ν hν e he) c 1
-  simpa only [one_mul, one_smul, Measure.map_smul] using hc
+  have hm := ((GlobalTheory.T.unitary_stabilizer_anisotropic_vector_equiv_complement F E σ hσ (AF F) M J x β B J' hS).2.2 e he).2.measurable
+  simpa only [one_mul, one_smul, Measure.map_smul c hm.aemeasurable] using hc
 
 end Scale
 
@@ -128,7 +130,7 @@ theorem exists_std_family (hσ : IsCMExt F E σ) {d : ℕ} {b : Module.Basis (Fi
     obtain ⟨hαinv, hαstep⟩ := hα
     refine ⟨G, α, hH, hB, hαinv, ?_⟩
     intro M J x a B J' hM hS
-    have r := (hc M J x a B J' hM hS).smul (α M J' : ℝ≥0)
+    have r := (hc M J x a B J' hM hS).smul hσ hS (α M J' : ℝ≥0)
     rw [smul_smul] at r
     rw [hαstep M J x a B J' hM hS, Units.val_mul, mul_comm]
     exact r
@@ -143,7 +145,8 @@ theorem exists_std_family (hσ : IsCMExt F E σ) {d : ℕ} {b : Module.Basis (Fi
     obtain ⟨⟨eQ, heQ⟩, hmapQ⟩ := hB M J' J₂' Q hS.2.2.2.2.2 hJ₂'
     obtain ⟨hS₂, hR₂⟩ := GlobalTheory.T.unitaryOneVectorStep_compatible_changeOfBasis F E σ hσ _ b s M J J₂ x a B J' x₂ B₂ J₂' P Q eP eQ _ _ hS hJ₂
       hJ₂' hx hPB heP heQ (hc M J x a B J' hM hS)
-    rw [Measure.map_smul, hmapP eP heP, hmapQ eQ heQ] at hR₂
+    have hmP := ((GlobalTheory.T.unitary_group_points_equiv_of_change_of_basis F E σ (AF F) (M + 1) J J₂ P hJ₂).2 eP heP).1.measurable
+    rw [Measure.map_smul _ hmP.aemeasurable, hmapP eP heP, hmapQ eQ heQ] at hR₂
     have hR₃ := hc M J₂ x₂ a B₂ J₂' hM hS₂
     have hHaar₂ : (G.μ M J₂').IsHaarMeasure := hH M J₂' hS₂.2.2.2.2.2
     have huniq := (GlobalTheory.T.exists_unique_oneVectorStep_haarMeasure F E σ hσ _ b s M J₂ x₂ a B₂ J₂' (G.μ M J₂') hM hS₂ hHaar₂).2 _ _
@@ -154,8 +157,8 @@ theorem exists_std_family (hσ : IsCMExt F E σ) {d : ℕ} {b : Module.Basis (Fi
     intro M J x₁ x₂ a₁ a₂ B₁ B₂ J₁ J₂ y₁ y₂ b₁ b₂ C₁ C₂ J₀ hM h1 h1' h2 h2' hBC
     haveI : (G.μ M J₀).IsHaarMeasure := hH M J₀ h1'.2.2.2.2.2
     haveI : (G.μ (M + 1 + 1) J).IsHaarMeasure := hH _ J h1.1
-    have r1 := (hc (M + 1) J x₁ a₁ B₁ J₁ (by omega) h1).smul (c M J₁ y₁ C₁ : ℝ≥0)
-    have r2 := (hc (M + 1) J x₂ a₂ B₂ J₂ (by omega) h2).smul (c M J₂ y₂ C₂ : ℝ≥0)
+    have r1 := (hc (M + 1) J x₁ a₁ B₁ J₁ (by omega) h1).smul hσ h1 (c M J₁ y₁ C₁ : ℝ≥0)
+    have r2 := (hc (M + 1) J x₂ a₂ B₂ J₂ (by omega) h2).smul hσ h2 (c M J₂ y₂ C₂ : ℝ≥0)
     have heq := GlobalTheory.T.unitaryStabilizer_measure_independent_of_path F E σ hσ _ b s M J x₁ x₂ a₁ a₂ B₁ B₂ J₁ J₂ y₁ y₂ b₁ b₂ C₁ C₂ J₀
       (G.μ M J₀) _ _ _ _ hM h1 h1' h2 h2' hBC inferInstance (hc M J₁ y₁ b₁ C₁ J₀ hM h1') r1
       (hc M J₂ y₂ b₂ C₂ J₀ hM h2') r2
@@ -185,7 +188,8 @@ theorem exists_isGauge_of_isCMExt (hσ : IsCMExt F E σ) : ∃ G : GaugeFam F E 
     obtain ⟨⟨e, he⟩, hmap⟩ := hB M J J' P hJ hJ'
     refine ⟨⟨e, he⟩, fun e' he' => ?_⟩
     show ((K M * α M J : ℝ≥0) • G.μ M J).map e' = (K M * α M J' : ℝ≥0) • G.μ M J'
-    rw [Measure.map_smul, hmap e' he', hJ', hαinv M J P hJ]
+    have hm := ((GlobalTheory.T.unitary_group_points_equiv_of_change_of_basis F E σ (AF F) M J J' P hJ').2 e' he').1.measurable
+    rw [Measure.map_smul _ hm.aemeasurable, hmap e' he', hJ', hαinv M J P hJ]
   · intro M J J' x β B hM hJ hβ hx hB' hJ'' hJ'
     have hS : StepData σ J x β B J' := ⟨hJ, hβ, hx, hB', hJ'', hJ'⟩
     obtain ⟨ν, hν, -⟩ := GlobalTheory.T.existsUnique_stdHermitianFibreProduct_of_rank_ge_three F E σ hσ _ _ s (M + 1) J β hM hJ hβ
@@ -200,7 +204,8 @@ theorem exists_isGauge_of_isCMExt (hσ : IsCMExt F E σ) : ∃ G : GaugeFam F E 
     · show ((K (M + 1) * α (M + 1) J : ℝ≥0) • G.μ (M + 1) J) = _
       rw [smul_smul, hKs, mul_assoc]
     · show ((K M * α M J' : ℝ≥0) • G.μ M J').map e'.symm = _
-      simp only [Measure.map_smul, smul_smul]
+      have hm := ((GlobalTheory.T.unitary_stabilizer_anisotropic_vector_equiv_complement F E σ hσ (AF F) M J x β B J' hS).2.2 e' he').2.measurable
+      simp only [Measure.map_smul _ hm.aemeasurable, smul_smul]
 
 end GlobalTheory.GaugeEx
 

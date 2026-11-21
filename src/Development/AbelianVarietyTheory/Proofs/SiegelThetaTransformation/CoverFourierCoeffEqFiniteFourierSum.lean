@@ -383,7 +383,7 @@ theorem map_mem_smul {L : Lt E r} {f : Dw.La →ₗ[𝓞 E] (Fin r → E)} (hf :
     {a : Dw.La} (ha : a ∈ 𝔞 • (⊤ : Submodule (𝓞 E) Dw.La)) : f a ∈ 𝔞 • L := by
   refine Submodule.smul_induction_on ha (fun t ht v _ => ?_) (fun u v hu hv => ?_)
   · rw [map_smul]; exact Submodule.smul_mem_smul ht (hf v)
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+  · rw [map_add]; exact add_mem hu hv
 
 variable {l : Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l}
 

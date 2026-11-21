@@ -164,6 +164,8 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
     (ρ : Representation LL G V)
 
+local notation "μ" => mulVdR (Qp := Qp) (K := K) (BdR := BdR) (V := V) (LL := LL)
+
 theorem FilV_anti' (a : ℤ) : FilV PD (LL := LL) (V := V) (a + 1) ≤ FilV PD (LL := LL) (V := V) a := by
   rintro _ ⟨x, rfl⟩
   have hle : (PD.Fil (a + 1)).restrictScalars Qp ≤ (PD.Fil a).restrictScalars Qp := PD.Fil_anti a
@@ -396,7 +398,7 @@ theorem cTB_le (l h t N e : ℕ) (hl : l.Prime) (U : Finset ℤ) (U' : Set ℤ) 
     have h1 := hb u (hU hu'.1)
     have h2 : LocalSituation.vZ l (u - i) ≤ lam := by
       unfold LocalSituation.vZ padicValInt
-      refine (padicValNat_le_nat_log _).trans (Nat.log_mono_right ?_)
+      refine (multiplicity_le_nat_log _).trans (Nat.log_mono_right ?_)
       omega
     omega
   have hs : ∑ i ∈ Finset.Ico (0 : ℤ) ((e : ℤ) + 1), (2 + max 1 (LocalSituation.rI l m U' i)) ≤ t * (3 + N * (4 + 2 * lam)) := by
@@ -405,8 +407,12 @@ theorem cTB_le (l h t N e : ℕ) (hl : l.Prime) (U : Finset ℤ) (U' : Set ℤ) 
       omega
     · rw [Int.card_Ico, smul_eq_mul]
       exact Nat.mul_le_mul_right _ (by omega)
-  have v1 : padicValNat l e ≤ e := (padicValNat_le_nat_log _).trans (Nat.log_le_self _ _)
-  have v2 : padicValNat l (e + 1) ≤ e + 1 := (padicValNat_le_nat_log _).trans (Nat.log_le_self _ _)
+  have v1 : padicValNat l e ≤ e := by
+    rw [Nat.padicValNat_def]
+    exact (multiplicity_le_nat_log e).trans (Nat.log_le_self _ _)
+  have v2 : padicValNat l (e + 1) ≤ e + 1 := by
+    rw [Nat.padicValNat_def]
+    exact (multiplicity_le_nat_log (e + 1)).trans (Nat.log_le_self _ _)
   have v3 : e / (l - 1) ≤ e := Nat.div_le_self _ _
   unfold LocalSituation.cTB LocalSituation.cLL cBnum
   rw [← hlam]
@@ -414,7 +420,7 @@ theorem cTB_le (l h t N e : ℕ) (hl : l.Prime) (U : Finset ℤ) (U' : Set ℤ) 
 
 theorem vZ_le_log (l : ℕ) [Fact l.Prime] (h : ℕ) (u : ℤ) (hu : -(h : ℤ) ≤ u ∧ u ≤ h) : LocalSituation.vZ l u ≤ Nat.log l h := by
   unfold LocalSituation.vZ padicValInt
-  refine (padicValNat_le_nat_log _).trans (Nat.log_mono_right ?_)
+  refine (multiplicity_le_nat_log _).trans (Nat.log_mono_right ?_)
   omega
 
 end D

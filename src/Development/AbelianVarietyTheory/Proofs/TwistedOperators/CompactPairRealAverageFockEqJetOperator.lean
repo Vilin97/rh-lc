@@ -267,7 +267,8 @@ theorem grid_vals {i : ℕ} (hi : i + 1 ≤ D.R.m) (τ : D.what₂.Tau)
     intro j hj
     unfold parV
     rw [entries_shift, Finset.card_image_of_injective _ (add_left_injective _)]
-    exact (card_entries_parD D sc.cGap τ hj).trans (rank_grid G hj).symm
+    exact (GlobalTheory.FunObj.card_entries_parD D sc.cGap τ hj).trans
+      (GlobalTheory.FunObj.rank_grid G hj).symm
   have cardN : ∀ j, j ≤ D.R.m →
       ((entries (parV D sc.cGap j D.R.m τ)).image Neg.neg).card = (G.V (.grid j D.R.m)).rank := by
     intro j hj
@@ -359,10 +360,10 @@ theorem exps_match {μ0 : T} (hL : L.Is μ0) {i : ℕ} (hi : i < D.R.m) (τ : D.
     omega
   have d1 : ((wt G (.grid (i + 1) D.R.m) τ).detShift : ℚ) =
       ((wt G (.grid (i + 1) D.R.m) τ).w ⟨(G.V (.grid (i + 1) D.R.m)).rank - 1, by omega⟩ : ℚ) := by
-    simp only [DomWeight.detShift, dif_pos hpos]
+    simp only [DomWeight.detShift, dite_eq_left hpos]
   have d0 : ((wt G (.grid i D.R.m) τ).detShift : ℚ) =
       ((wt G (.grid i D.R.m) τ).w ⟨(G.V (.grid i D.R.m)).rank - 1, by omega⟩ : ℚ) := by
-    simp only [DomWeight.detShift, dif_pos hra]
+    simp only [DomWeight.detShift, dite_eq_left hra]
   have g2 := gv2 ⟨(G.V (.grid (i + 1) D.R.m)).rank - 1, by omega⟩ hlast
   have g1 := gv1 ⟨(G.V (.grid i D.R.m)).rank - 1, by omega⟩
   have hcast : ((G.V (.grid (i + 1) D.R.m)).rank : ℚ) = (G.V (.grid i D.R.m)).rank + sLen D := by
@@ -373,20 +374,20 @@ theorem exps_match {μ0 : T} (hL : L.Is μ0) {i : ℕ} (hi : i < D.R.m) (τ : D.
   · have key : (e₂ : ℚ) = ((wt G (.grid (i + 1) D.R.m) τ).detShift : ℚ) := by
       rw [d1, g2, he₂, eb]
       by_cases h : Odd (i + 1 + D.R.m)
-      · simp only [h, pa.mpr h, if_true]
+      · simp only [h, pa.mpr h, ite_true]
         ring
-      · simp only [h, mt pa.mp h, if_false]
+      · simp only [h, mt pa.mp h, ite_false]
         ring
     exact_mod_cast key
   · have hnn : 0 ≤ (wt G (.grid (i + 1) D.R.m) τ).w ⟨(G.V (.grid i D.R.m)).rank - 1, by omega⟩ -
         (wt G (.grid (i + 1) D.R.m) τ).detShift := by
       have hd : (wt G (.grid (i + 1) D.R.m) τ).detShift =
           (wt G (.grid (i + 1) D.R.m) τ).w ⟨(G.V (.grid (i + 1) D.R.m)).rank - 1, by omega⟩ := by
-        simp only [DomWeight.detShift, dif_pos hpos]
+        simp only [DomWeight.detShift, dite_eq_left hpos]
       rw [hd, sub_nonneg]
       exact (wt G (.grid (i + 1) D.R.m) τ).anti (Fin.mk_le_mk.mpr (by omega))
     unfold nuEnd
-    rw [dif_pos (show (G.V (.grid i D.R.m)).rank - 1 < (G.V (.grid (i + 1) D.R.m)).rank by omega)]
+    rw [dite_eq_left (show (G.V (.grid i D.R.m)).rank - 1 < (G.V (.grid (i + 1) D.R.m)).rank by omega)]
     unfold DomWeight.natW
     rw [Int.toNat_of_nonneg hnn]
     have key : (e₁ : ℚ) + ((wt G (.grid i D.R.m) τ).detShift : ℚ) =
@@ -398,9 +399,9 @@ theorem exps_match {μ0 : T} (hL : L.Is μ0) {i : ℕ} (hi : i < D.R.m) (τ : D.
               (sLen D : ℚ) / 2 := g1
       rw [g1', d0, d1, g2, he₁, ea, hcast]
       by_cases h : Odd (i + D.R.m)
-      · simp only [h, pb.mpr h, if_true]
+      · simp only [h, pb.mpr h, ite_true]
         ring
-      · simp only [h, mt pb.mp h, if_false]
+      · simp only [h, mt pb.mp h, ite_false]
         ring
     exact_mod_cast key
 

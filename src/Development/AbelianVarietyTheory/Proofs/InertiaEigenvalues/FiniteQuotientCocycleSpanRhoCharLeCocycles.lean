@@ -48,6 +48,8 @@ theorem lin_cont {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [← map_smul, ← map_sum]
     congr 1
+    funext x
+    simp only [Finset.sum_apply]
     rw [Finset.sum_eq_single x]
     · simp only [Pi.single_eq_same, Matrix.smul_single, smul_eq_mul, mul_one]
       exact Matrix.matrix_eq_sum_single (y x)

@@ -14,7 +14,6 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField Matrix
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.PullbackSections Formalism.L2.Pj GlobalTheory.CxPts
-open GlobalTheory.CompanionTheory.Ar (dualMap)
 open scoped ComplexOrder
 
 namespace GlobalTheory.LieMet

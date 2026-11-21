@@ -254,11 +254,70 @@ theorem mem_hat_of_idem (h : Λ.FG) {y : Fin n → EAf D} (hy : ∀ w : Pl D.hos
 theorem mem_hat_lat (β : GL (Fin n) (EAf D)) (y : Fin n → EAf D) :
     y ∈ hat (lat β) ↔ ∀ i, ((β⁻¹).val *ᵥ y) i ∈ OA D := isFrame_lat β y
 
-theorem exists_eq_lat (h : Submodule.IsLattice D.host.E Λ) : ∃ β : GL (Fin n) (EAf D), Λ = lat β := by
-  obtain ⟨β, hβ⟩ := GlobalTheory.AdelicFrame.exists_isFrame D.host.F _ h.fg h.span_eq_top
-  exact ⟨β, eq_lat hβ h⟩
+theorem selfDual_isFullLattice {V : HSp D} {Λ : Lat V} (hΛ : IsSelfDualC V Λ) :
+    Submodule.IsFullLattice D.host.E Λ := by
+  haveI : Submodule.IsLattice D.host.E Λ := hΛ.1
+  refine ⟨?_⟩
+  obtain ⟨s, hs⟩ := hΛ.1.fg
+  apply eq_top_iff.mpr
+  intro y _
+  let f : (Fin V.rank → D.host.E) → D.host.E := fun x =>
+    ∑ i, ∑ j, star (x i) * V.gram i j * y j
+  obtain ⟨a, ha⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 D.host.E)) s f
+  have ha0 : (algebraMap (𝓞 D.host.E) D.host.E a) ≠ 0 := by
+    exact (FaithfulSMul.algebraMap_injective _ _).ne (mem_nonZeroDivisors_iff_ne_zero.mp a.2)
+  let P : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E) := {
+    carrier := {x | ∃ b : 𝓞 D.host.E, (b : D.host.E) = (algebraMap (𝓞 D.host.E) D.host.E a) * f x}
+    zero_mem' := by refine ⟨0, ?_⟩; simp [f]
+    add_mem' := by
+      rintro x z ⟨b, hb⟩ ⟨c, hc⟩
+      refine ⟨b + c, ?_⟩
+      change (b : D.host.E) + c = _
+      rw [hb, hc]
+      simp [f, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+    smul_mem' := by
+      rintro c x ⟨b, hb⟩
+      refine ⟨RingOfIntegers.mapRingHom (starRingEnd D.host.E) c * b, ?_⟩
+      simp only [map_mul, hb, f, Pi.smul_apply, Algebra.smul_def, map_mul, RingOfIntegers.mapRingHom_apply, star_mul]
+      simp only [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      change star (c : D.host.E) * _ = _
+      ring }
+  have hsP : (s : Set (Fin V.rank → D.host.E)) ⊆ P := by
+    intro x hx
+    obtain ⟨b, hb⟩ := ha x hx
+    exact ⟨b, by simpa [Algebra.smul_def] using hb⟩
+  have hy : (algebraMap (𝓞 D.host.E) D.host.E a) • y ∈ Λ := by
+    apply (hΛ.2 _).2
+    intro x hx
+    have hxP : x ∈ P := (hs ▸ Submodule.span_le.mpr hsP) hx
+    obtain ⟨b, hb⟩ := hxP
+    refine ⟨b, ?_⟩
+    rw [hb]
+    dsimp only [f, Pi.smul_apply]
+    simp only [smul_eq_mul, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have hy' : (algebraMap (𝓞 D.host.E) D.host.E a) • y ∈ Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E)) :=
+    Submodule.subset_span hy
+  have := (Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E))).smul_mem
+    (algebraMap (𝓞 D.host.E) D.host.E a)⁻¹ hy' 
+  change (algebraMap (𝓞 D.host.E) D.host.E a)⁻¹ •
+    ((algebraMap (𝓞 D.host.E) D.host.E a) • y) ∈ _ at this
+  rw [← smul_assoc, smul_eq_mul, inv_mul_cancel₀ ha0, one_smul] at this
+  exact this
 
-theorem inc_mem_hat_iff (h : Submodule.IsLattice D.host.E Λ) (x : Fin n → D.host.E) :
+theorem exists_eq_lat (h : Submodule.IsFullLattice D.host.E Λ) : ∃ β : GL (Fin n) (EAf D), Λ = lat β := by
+  obtain ⟨β, hβ⟩ := GlobalTheory.AdelicFrame.exists_isFrame D.host.F _ h.fg (Submodule.IsFullLattice.span_eq_top (self := h))
+  exact ⟨β, eq_lat hβ h.toIsLattice⟩
+
+theorem inc_mem_hat_iff (h : Submodule.IsFullLattice D.host.E Λ) (x : Fin n → D.host.E) :
     (fun i => inc D (x i)) ∈ hat Λ ↔ x ∈ Λ := by
   obtain ⟨β, rfl⟩ := exists_eq_lat h
   exact (mem_hat_lat β _).trans (GlobalTheory.NormSum.AdLattice.mem_lat β x).symm
@@ -330,10 +389,10 @@ theorem dualL_eq {V : HSp D} {Λ : Lat V} (h : IsSelfDualC V Λ) : Formalism.L2.
 theorem exists_orth {V : HSp D} {Λ : Lat V} (h : IsSelfDualC V Λ) :
     ∃ β : GL (Fin V.rank) (EAf D), Λ = lat β ∧ gramOf V β = 1 := by
   haveI : IsCMField D.host.E := D.host.isCMField_hostE
-  obtain ⟨β, hβ⟩ := exists_eq_lat h.1
+  obtain ⟨β, hβ⟩ := exists_eq_lat (selfDual_isFullLattice h)
   obtain ⟨u, hu⟩ := GlobalTheory.AdelicOrthFrame.exists_orth (E := D.host.E) D.sp.cm (G := V.gram)
     (fun a b => V.herm.eq (V.frame a) (V.frame b)) (GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.gram_det_isUnit V).ne_zero
-    ⟨h.1.fg, h.1.span_eq_top⟩ (GlobalTheory.AdelicOrthFrame.selfDual_iff D.sp.cm V (dualL_eq h)) (β := β) (hβ ▸ isFrame_lat β)
+    ⟨h.1.fg, Submodule.IsFullLattice.span_eq_top (self := selfDual_isFullLattice h)⟩ (GlobalTheory.AdelicOrthFrame.selfDual_iff D.sp.cm V (dualL_eq h)) (β := β) (hβ ▸ isFrame_lat β)
   refine ⟨β * intGL D.host.F D.host.E V.rank u, hβ.trans (le_antisymm
     (GlobalTheory.NormSum.AdLattice.lat_le_of_int fun i j => ?_) (GlobalTheory.NormSum.AdLattice.lat_le_of_int fun i j => ?_)), hu⟩
   · rw [_root_.mul_inv_rev, inv_mul_cancel_right, ← map_inv]
@@ -456,16 +515,16 @@ theorem dualL_lat_eq {β β' : GL (Fin V.rank) (EAf D)}
     intro x
     rw [← cjA_mem_iff, cjA_hA, ← inc_mem_iff, ← Formalism.UG.P.csDual_hform_incl D.sp.cm.sig V.gram]
     rfl
-  rw [SetLike.mem_coe, ← inc_mem_hat_iff (GlobalTheory.NormSum.AdLattice.lat_isLattice β').toIsLattice, ← dual_hat_lat h]
+  rw [SetLike.mem_coe, ← inc_mem_hat_iff (GlobalTheory.NormSum.AdLattice.lat_isLattice β'), ← dual_hat_lat h]
   exact ⟨fun H => hA_mem_of_forall fun x hx => (e x).2 (H x hx), fun H x hx => (e x).1 (H _ (inc_mem_hat hx))⟩
 
-theorem mem_hat_dualL_iff {Λ : Lat V} (h : Submodule.IsLattice D.host.E Λ) (y : Fin V.rank → EAf D) :
+theorem mem_hat_dualL_iff {Λ : Lat V} (h : Submodule.IsFullLattice D.host.E Λ) (y : Fin V.rank → EAf D) :
     y ∈ hat (Formalism.L2.Herm.dualL D.sp.cm V Λ) ↔ ∀ x ∈ hat Λ, hA V x y ∈ OA D := by
   obtain ⟨β, rfl⟩ := exists_eq_lat h
   obtain ⟨β', h1, -⟩ := exists_dual_frame V β
   rw [dualL_lat_eq h1, dual_hat_lat h1]
 
-theorem mem_hat_of_bidual {Λ : Lat V} (h : Submodule.IsLattice D.host.E Λ) {x : Fin V.rank → EAf D}
+theorem mem_hat_of_bidual {Λ : Lat V} (h : Submodule.IsFullLattice D.host.E Λ) {x : Fin V.rank → EAf D}
     (hx : ∀ y, (∀ x' ∈ hat Λ, hA V x' y ∈ OA D) → hA V y x ∈ OA D) : x ∈ hat Λ := by
   obtain ⟨β, rfl⟩ := exists_eq_lat h
   obtain ⟨β', h1, h2⟩ := exists_dual_frame V β
@@ -473,7 +532,7 @@ theorem mem_hat_of_bidual {Λ : Lat V} (h : Submodule.IsLattice D.host.E Λ) {x 
 
 theorem mem_hat_iff_of_selfDual {Λ : Lat V} (h : IsSelfDualC V Λ) (y : Fin V.rank → EAf D) :
     y ∈ hat Λ ↔ ∀ x ∈ hat Λ, hA V x y ∈ OA D := by
-  rw [← mem_hat_dualL_iff h.1, dualL_eq h]
+  rw [← mem_hat_dualL_iff (selfDual_isFullLattice h), dualL_eq h]
 
 end Form
 

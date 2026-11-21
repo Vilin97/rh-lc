@@ -21,6 +21,8 @@ namespace GlobalTheory.HalfUnit
 
 variable {D : D7}
 
+local notation "SI" => Formalism.L2.Herm.intAf D.host.F D.host.E
+
 def liftI {b a : ℕ} (N : Matrix (Fin b) (Fin a) (EAf D)) (h : IsIntM N) : Matrix (Fin b) (Fin a) SI :=
   Matrix.of fun i j => ⟨N i j, h i j⟩
 
@@ -33,7 +35,6 @@ theorem liftI_map {b a : ℕ} (N : Matrix (Fin b) (Fin a) (EAf D)) (h : IsIntM N
 theorem isIntM_map {b a : ℕ} (X : Matrix (Fin b) (Fin a) SI) : IsIntM (X.map (SI).subtype) := fun i j => by
   rw [Matrix.map_apply]
   exact (X i j).2
-
 
 open Classical in
 def redE (PP : Formalism.L2.DIV.Pl D.host.E) (x : EAf D) : Formalism.L2.DIV.kP PP :=

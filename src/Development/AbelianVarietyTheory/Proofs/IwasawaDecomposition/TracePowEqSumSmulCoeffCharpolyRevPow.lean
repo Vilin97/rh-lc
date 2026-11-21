@@ -81,7 +81,7 @@ theorem coeff_logTrunc_charpolyRev {S : Type} [CommRing S] [Algebra ℝ S] {N : 
       (-1) ^ m * (L ^ (m + 1)).trace := by
   set f := Matrix.charpolyRev (-L) with hf
   have hX : (X : S[X]) ∣ f - 1 := by
-    rw [X_dvd_iff, coeff_sub, coeff_one_zero, hf, coeff_zero_charpolyRev, sub_self]
+    simp [X_dvd_iff, hf, coeff_zero_charpolyRev]
   have h1 := X_pow_dvd_derivative_sub (-L) m
   rw [← hf] at h1
   have h2 : (X : S[X]) ^ (m + 1) ∣ derivative f * (-(f - 1)) ^ (m + 1) :=

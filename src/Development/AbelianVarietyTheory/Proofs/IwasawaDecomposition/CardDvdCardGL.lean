@@ -102,9 +102,9 @@ def resHom (N : Submodule (𝓞 E) V) : autLat (E := E) N →* Module.End (𝓞 
   map_one' := by ext x; rfl
   map_mul' a b := by ext x; rfl
 
-theorem finrank_red (N : Submodule (𝓞 E) V) (hN : Submodule.IsLattice E N) (w : Ideal (𝓞 E)) [w.IsMaximal] :
+theorem finrank_red (N : Submodule (𝓞 E) V) (hN : Submodule.IsFullLattice E N) (w : Ideal (𝓞 E)) [w.IsMaximal] :
     Module.finrank (𝓞 E ⧸ w) ((𝓞 E ⧸ w) ⊗[𝓞 E] N) = Module.finrank E V := by
-  have : Module.Finite (𝓞 E) N := Module.Finite.iff_fg.2 (Submodule.IsLattice.fg (self := hN))
+  have : Module.Finite (𝓞 E) N := Module.Finite.iff_fg.2 (Submodule.IsLattice.fg (self := hN.toIsLattice))
   have : Module.IsTorsionFree (𝓞 E) V := Module.IsTorsionFree.trans_faithfulSMul (𝓞 E) E V
   have : Module.Flat (𝓞 E) N := inferInstance
   have hr : Module.finrank (𝓞 E) N = Module.finrank E V := by
@@ -112,7 +112,7 @@ theorem finrank_red (N : Submodule (𝓞 E) V) (hN : Submodule.IsLattice E N) (w
       refine ⟨fun s => ?_, fun y => ?_, fun {a b} hab => ⟨1, by simpa using hab⟩⟩
       · have := isLocalizedModule_id (nonZeroDivisors (𝓞 E)) V E
         exact IsLocalizedModule.map_units (S := nonZeroDivisors (𝓞 E)) (LinearMap.id : V →ₗ[𝓞 E] V) s
-      · have hy : y ∈ Submodule.span E (N : Set V) := (Submodule.IsLattice.span_eq_top (self := hN)) ▸ Submodule.mem_top
+      · have hy : y ∈ Submodule.span E (N : Set V) := (Submodule.IsFullLattice.span_eq_top (self := hN)) ▸ Submodule.mem_top
         obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 E)) E _ y hy
         rw [Submodule.span_eq] at ht
         exact ⟨(⟨_, ht⟩, t), rfl⟩
@@ -123,11 +123,11 @@ theorem finrank_red (N : Submodule (𝓞 E) V) (hN : Submodule.IsLattice E N) (w
   rw [Module.rankAtStalk_eq_finrank_of_free, Module.rankAtStalk_eq, Ideal.finrank_fiber_eq_finrank, hr] at h1
   exact h1
 
-theorem card_dvd_card_GL (N : Submodule (𝓞 E) V) (hN : Submodule.IsLattice E N) (w : Ideal (𝓞 E)) [hw : w.IsMaximal]
+theorem card_dvd_card_GL (N : Submodule (𝓞 E) V) (hN : Submodule.IsFullLattice E N) (w : Ideal (𝓞 E)) [hw : w.IsMaximal]
     {g : ℕ} (hg : g.Prime) (hgw : (g : 𝓞 E) ∈ w) (hn : Ideal.absNorm w = g)
     (hbig : Module.finrank ℚ E * Module.finrank E V + 1 < g) (Γ : Subgroup (V ≃ₗ[E] V)) [Finite Γ] (hΓ : Γ ≤ autLat N) :
     Nat.card Γ ∣ Nat.card (GL (Fin (Module.finrank E V)) (ZMod g)) := by
-  have : Module.Finite (𝓞 E) N := Module.Finite.iff_fg.2 (Submodule.IsLattice.fg (self := hN))
+  have : Module.Finite (𝓞 E) N := Module.Finite.iff_fg.2 (Submodule.IsLattice.fg (self := hN.toIsLattice))
   have : Module.IsTorsionFree (𝓞 E) V := Module.IsTorsionFree.trans_faithfulSMul (𝓞 E) E V
   letI : Field (𝓞 E ⧸ w) := Ideal.Quotient.field _
   have hc : Nat.card (𝓞 E ⧸ w) = g := by rw [← hn, Ideal.absNorm_apply, Submodule.cardQuot_apply]
@@ -145,7 +145,7 @@ theorem card_dvd_card_GL (N : Submodule (𝓞 E) V) (hN : Submodule.IsLattice E 
   rw [injective_iff_map_eq_one]
   intro γ hγ
   have h1 : ρ γ = 1 := φ.injective (by rw [map_one]; exact congrArg Units.val hγ)
-  refine Subtype.ext (stab0 hw.ne_top hN.fg (Submodule.IsLattice.span_eq_top (self := hN)) hg hgw hbig ⟨hΓ γ.2, 1, fun x hx => ?_⟩
+  refine Subtype.ext (stab0 hw.ne_top hN.fg (Submodule.IsFullLattice.span_eq_top (self := hN)) hg hgw hbig ⟨hΓ γ.2, 1, fun x hx => ?_⟩
     (Submonoid.isOfFinOrder_coe.mpr (isOfFinOrder_of_finite γ)))
   have h2 : (1 : 𝓞 E ⧸ w) ⊗ₜ[𝓞 E] (resHom N ⟨γ.1, hΓ γ.2⟩ ⟨x, hx⟩) = (1 : 𝓞 E ⧸ w) ⊗ₜ[𝓞 E] (⟨x, hx⟩ : N) :=
     LinearMap.congr_fun h1 ((1 : 𝓞 E ⧸ w) ⊗ₜ[𝓞 E] (⟨x, hx⟩ : N))
@@ -167,8 +167,8 @@ theorem mass_mul_idx [StarRing E] (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h.IsS
   obtain ⟨m, hm0, hm1, hm2⟩ := idx_eq g (Module.finrank E V) hg
   have key : ∀ M ∈ s, ((m / Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ) = ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ)⁻¹ * m := by
     intro M hM
-    have hMl := (hs₀.1 M hM).1
-    have hfin := Formalism.HermitianLatticesTheory.autFinite E V h hs hpos M hMl
+    have hMl : Submodule.IsFullLattice E M := (hs₀.1 M hM).1
+    have hfin := Formalism.HermitianLatticesTheory.autFinite E V h hs hpos M hMl.toIsLattice
     have : Finite (Formalism.HermitianLatticesTheory.isom h ⊓ autLat M : Subgroup (V ≃ₗ[E] V)) := hfin.to_subtype
     have e : Nat.card (Formalism.ThetaLiftIndependence.autL h M) = Nat.card (Formalism.HermitianLatticesTheory.isom h ⊓ autLat M : Subgroup (V ≃ₗ[E] V)) := rfl
     have h1 := card_dvd_card_GL M hMl w hg hgw hn hbig (Formalism.HermitianLatticesTheory.isom h ⊓ autLat M) inf_le_right

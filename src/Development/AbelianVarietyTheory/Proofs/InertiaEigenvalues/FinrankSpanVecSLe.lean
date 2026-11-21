@@ -35,7 +35,7 @@ theorem span_vecS_span (S : Set (Fin a → Fin n → K)) :
     induction hv using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   · exact Submodule.span_mono (Set.image_mono Submodule.subset_span)
 
@@ -69,7 +69,7 @@ theorem span_vecS_top : Submodule.span L (Set.range (vecS φ a n)) = ⊤ := by
     funext b' j'
     simp only [Finset.sum_apply, Pi.smul_apply, vecS_apply, smul_eq_mul, apply_ite φ, map_one, map_zero, mul_ite,
       mul_one, mul_zero, ite_and]
-    simp [Finset.sum_ite_eq, Finset.sum_ite_eq']
+    simp [Finset.sum_ite_eq]
   rw [e]
   exact Submodule.sum_mem _ fun b _ => Submodule.sum_mem _ fun j _ =>
     Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
@@ -93,9 +93,9 @@ theorem isCompl_span_vecS {W W' : Submodule K (Fin a → Fin n → K)} (h : IsCo
   have h4 := Submodule.finrank_sup_add_finrank_inf_eq A B
   rw [hsup, finrank_top] at h4
   have hK : finrank K (Fin a → Fin n → K) = a * n := by
-    rw [Module.finrank_pi_fintype]; simp [Module.finrank_fin_fun]
+    rw [Module.finrank_pi_fintype]; simp
   have hL : finrank L (Fin a → Fin n → L) = a * n := by
-    rw [Module.finrank_pi_fintype]; simp [Module.finrank_fin_fun]
+    rw [Module.finrank_pi_fintype]; simp
   have hinf : A ⊓ B = ⊥ := by
     rw [← Submodule.finrank_eq_zero]; omega
   exact ⟨disjoint_iff.2 hinf, codisjoint_iff.2 hsup⟩

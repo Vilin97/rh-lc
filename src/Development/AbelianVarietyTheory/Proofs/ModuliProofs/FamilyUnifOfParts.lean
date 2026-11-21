@@ -106,7 +106,7 @@ theorem triv_iff {D D' : Datum H} (l : Level H) (t : D.La →ₗ[𝓞 E] D'.La)
   · intro h a ha
     refine h _ (Submodule.smul_induction_on ha (fun c hc a' _ => ?_) fun x y hx hy => ?_)
     · rw [t.map_smul]; exact Submodule.smul_mem_smul hc trivial
-    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    · rw [map_add (f := t)]; exact add_mem hx hy
 
 theorem triv_iff_top {D D' : Datum H} (l : Level H) (t : D.La →ₗ[𝓞 E] D'.La)
     (ht : ∀ b, ∃ a e, b = t a + l.M' • e) (gam : D'.La ≃ₗ[𝓞 E] D'.La) (n : ℕ) (hn : n ∣ l.M') :

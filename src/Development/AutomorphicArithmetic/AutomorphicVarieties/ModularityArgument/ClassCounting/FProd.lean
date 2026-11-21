@@ -53,9 +53,12 @@ private theorem F_coc (u : K → K → A) (v : K → A) (hu : ∀ a b c, u b c -
 
 private theorem F_ins (u : K → K → A) (v : K → A) (hs : ∀ a b, u a b = u b a) (x : K) : ∀ (E : ℕ) (g : Fin (2 * E) → K),
     ∑ i : Fin (2 * E + 1), (-1 : A) ^ (i : ℕ) * F u v (2 * E + 1) (Fin.insertNth (α := fun _ => K) i x g) =
-      F u v (2 * E) g * v x
-  | 0, g => by simp [F]
-  | E + 1, g => by
+      F u v (2 * E) g * v x := by
+  intro E
+  induction E with
+  | zero => intro g; simp [F]
+  | succ E ih =>
+    intro g
     obtain ⟨a, b, rest, rfl⟩ : ∃ (a b : K) (rest : Fin (2 * E) → K),
         g = (Fin.cons a (Fin.cons b rest) : Fin (2 * E + 1 + 1) → K) := by
       let tail := Fin.tail (n := 2 * E + 1) (α := fun _ => K) g
@@ -67,12 +70,12 @@ private theorem F_ins (u : K → K → A) (v : K → A) (hs : ∀ a b, u a b = u
         _ = Fin.cons (g 0) (Fin.cons (tail 0) rest) :=
           congrArg (Fin.cons (α := fun _ => K) (g 0))
             (Fin.cons_self_tail (α := fun _ => K) tail).symm
-    change ∑ i : Fin (2 * E + 1 + 1 + 1), (-1 : A) ^ (i : ℕ) * F u v (2 * E + 1 + 2)
-      (Fin.insertNth (α := fun _ => K) i x (Fin.cons a (Fin.cons b rest : Fin (2 * E + 1) → K) : Fin (2 * E + 1 + 1) → K)) =
-      (u a b * F u v (2 * E) rest) * v x
-    rw [Fin.sum_univ_succ, Fin.sum_univ_succ, mul_assoc (u a b), ← F_ins u v hs x E rest, Finset.mul_sum]
-    simp only [Fin.insertNth_succ_cons, Fin.insertNth_zero', F, Fin.cons_zero, Fin.cons_one, Fin.cons_succ, Fin.val_zero,
-      Fin.val_succ, hs x a]
+    have hpair (n : ℕ) (c d : K) (f : Fin n → K) :
+        F u v (n + 2) (Fin.cons c (Fin.cons d f) : Fin (n + 2) → K) = u c d * F u v n f := by
+      rw [F]
+      simp only [Fin.cons_zero, Fin.cons_one, Fin.cons_succ]
+    rw [hpair, Fin.sum_univ_succ, Fin.sum_univ_succ, mul_assoc (u a b), ← ih rest, Finset.mul_sum]
+    simp only [Fin.insertNth_succ_cons, Fin.insertNth_zero', hpair, Fin.val_zero, Fin.val_succ, hs x a]
     rw [← add_assoc]
     refine (congrArg₂ (· + ·) (by ring : _ = (0 : A)) (Finset.sum_congr rfl fun j _ => by ring)).trans (zero_add _)
 

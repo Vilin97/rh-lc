@@ -50,7 +50,7 @@ theorem derivOp_mem {V : Submodule ℂ (CuspL2 μ)} (hVc : IsClosed (V : Set (Cu
   have ht := hasDerivAt_iff_tendsto_slope.1 hd
   refine hVc.mem_of_tendsto ht (Eventually.of_forall fun t => ?_)
   rw [slope_def_module]
-  refine V.smul_mem _ (V.sub_mem ?_ ?_)
+  refine Submodule.smul_of_tower_mem V _ (V.sub_mem ?_ ?_)
   · rw [archRepT_apply]
     exact hV _ _ hv
   · rw [archRepT_apply]

@@ -22,6 +22,8 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
 
 variable (W : LocWach PD LL O v n)
 
+local notation "ιE" => algebraMap (LetA O n) W.EE
+
 abbrev γL : Module.End O W.EE := (W.γE W.gam).toLinearMap
 
 def fac (e : ℕ) (i : ℤ) : Polynomial O :=
@@ -337,12 +339,12 @@ theorem inIdπ_aeval [IsDomain O] [NeZero n] (hR : RingP W) (hS : PsStable W) {a
     rw [map_add (f := _), LinearMap.add_apply]
     exact inIdπ_add W (hp f hf) (hq f hf)
   | monomial k c =>
-    rw [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]
+    rw [Polynomial.aeval_monomial, mul_apply_eq_comp, Module.algebraMap_end_apply]
     refine inIdπ_smul W ?_ c
     induction k with
     | zero => simpa using hf
     | succ k ih =>
-      rw [pow_succ', Module.End.mul_apply]
+      rw [pow_succ', mul_apply_eq_comp]
       exact inIdπ_γ W hR hS ih
 
 end Pi0
@@ -901,7 +903,7 @@ theorem part_c [IsDomain O] (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.Ring
         rw [show (Polynomial.X ^ (PD.p ^ e) - 1 : Polynomial O) - fac W e k =
           Polynomial.C ((((W.χΓ W.gam) ^ ((k : ℤ) * (PD.p : ℤ) ^ e) : Oˣ) : O) - 1) by
             simp only [fac, map_sub, map_one]; ring]
-        rw [Polynomial.aeval_C, Algebra.algebraMap_eq_smul_one, LinearMap.smul_apply, Module.End.one_apply,
+        rw [Polynomial.aeval_C, Algebra.algebraMap_eq_smul_one, LinearMap.smul_apply, one_apply_eq_self,
           mul_smul_comm]
       have hz := inFr_sub W hf2 hf1
       rw [hdiff] at hz

@@ -37,8 +37,7 @@ theorem zero_mem_range {k : ℕ} : (0 : GA D (Wc D j) → ℂ) ∈ Set.range (rd
 theorem e_smul_mem_range {k : ℕ} (c : FractionRing (D.ntw.O i)) {y : GA D (Wc D j) → ℂ} (hy : y ∈ Set.range (rdK rd hρ k)) :
     ρ.e i b c • y ∈ Set.range (rdK rd hρ k) := by
   obtain ⟨x, rfl⟩ := hy
-  induction x using TensorProduct.induction_on with
-  | zero => rw [map_zero, smul_zero]; exact zero_mem_range hρ rd
+  induction x using TensorProduct.inductionOn with
   | add x y hx hy => rw [map_add (f := _), smul_add]; exact add_mem_range hρ rd hx hy
   | tmul a f => exact ⟨a ⊗ₜ (c • f), by rw [rdK_tmul, rdK_tmul, LinearMap.map_smulₛₗ, smul_comm]⟩
 
@@ -95,7 +94,7 @@ theorem term_mem (hR : RatTwist hρ rd) {k Q ψ} (hψ : TwOK i k Q ψ) (hQ : Cls
   have hlaw := ((ρ.B i j b).mem_formsC.1 hF1).2 γ (finPt _ h') κ
   have hinv : ((ρ.B i j b).act ((γ⁻¹ : GQ (Vc D j)) : GA D (Vc D j))) ((ρ.B i j b).act (γ : GA D (Vc D j)) (F (finPt _ h'))) =
       F (finPt _ h') := by
-    rw [← Module.End.mul_apply, ← map_mul, Subgroup.coe_inv, inv_mul_cancel, map_one, Module.End.one_apply]
+    rw [← mul_apply_eq_comp, ← map_mul, Subgroup.coe_inv, inv_mul_cancel, map_one, Module.End.one_apply]
   rw [e, hlaw, LinearMap.map_smul, GlobalTheory.BaseClassSum.series_move hB (D.sp.V_sig _) ht hadm (hρ.weil i j b _ ht) hh hh' γ κ e, hinv,
     smul_smul, mul_inv_cancel₀ (Units.ne_zero _), one_smul]
   have hspan : F (finPt _ h') ∈ Submodule.span (ρ.eOk i b k).range
@@ -106,7 +105,7 @@ theorem term_mem (hR : RatTwist hρ rd) {k Q ψ} (hψ : TwOK i k Q ψ) (hQ : Cls
   induction hspan using Submodule.span_induction with
   | mem P hP => exact series_datum hρ rd hR hψ hQ ⟨hs, hoff, hh', hsupp, hP⟩
   | zero => rw [map_zero]; exact zero_mem_range hρ rd
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem_range hρ rd hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem_range hρ rd hx hy
   | smul a x _ hx =>
     obtain ⟨_, u, rfl⟩ := a
     have h2 := ek_smul_mem_range hρ rd (algebraMap (D.ntw.Ok i k) _ u) hx

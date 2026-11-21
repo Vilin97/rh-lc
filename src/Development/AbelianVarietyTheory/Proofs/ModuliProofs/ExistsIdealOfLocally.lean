@@ -258,7 +258,7 @@ theorem exists_ideal_hasTh_iff : Out.Laws → Out.Laws2 → ∀ (o : Type) [Comm
       ring)
     exact this hr
   · have hM : M ≤ RingHom.ker z := by
-      rw [← IsLocalization.map_comap (Submonoid.powers f) L M, Ideal.map_le_iff_le_comap]
+      rw [← IsLocalization.map_under (Submonoid.powers f) L M, Ideal.map_le_iff_le_comap]
       exact fun r hr => Hy r hr
     obtain ⟨u, hu⟩ := exists_unit_of_minors (span_map_eq_top (z.comp (algebraMap R L)) hv) (span_map_eq_top z hw)
       fun a c => by

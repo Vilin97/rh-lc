@@ -142,7 +142,8 @@ theorem cuspToL2_rightTranslate (g : Reduction.normOneGL (K := K) (n := n)) (φ 
     cuspToL2 μ ψ = cuspRep μ g (cuspToL2 μ φ) := by
   refine Subtype.ext ?_
   rw [coe_cuspRep_apply]
-  have h1 := (measurePreserving_rightMul μ g).quasiMeasurePreserving.ae_eq (coeFn_cuspToL2 μ φ)
+  have h1 := QuasiMeasurePreserving.ae_eq_comp (measurePreserving_rightMul μ g).quasiMeasurePreserving
+    (coeFn_cuspToL2 μ φ)
   have h2 : cuspQuot ψ.2.1.isLeftInvariant =
       fun q => cuspQuot φ.2.1.isLeftInvariant (rightMul Γ₁ g q) := by
     funext q

@@ -21,8 +21,13 @@ theorem nUnimodLoc : Formalism.L2.SG.Pf.WFL.NUnimodLoc := by
     ⟨hF.ee, hF.ff, hF.ef, hF.ez, hF.fz, hF.zz, hF.ww, hF.ew, hF.fw, hF.zw⟩ hc hz
 
 theorem realPlaceFunctionBlockExists_of_bessel_coef : BesselNVGap → CoefWeightedLoc → ∀ D : D7, GlobalTheory.St.WBlkExists D :=
-  fun hB hCW D =>
-    Formalism.L2.SG.Pf.WFL.weighted_block_exists_of_local_data quotient_product_compact Formalism.L2.SG.Pf.WFL.locHNProps_holds nUnimodLoc D hB hCW
+  by
+    intro hB hCW D hG A L Ps Rf Bu Pi Mu
+    obtain ⟨I, ιE, ιE_conj, ιE_F, bas, J_eq, L_eq, pl, φ_eq, n_eq, eps_eq⟩ := A
+    exact Formalism.L2.SG.Pf.WFL.wblk_core quotient_product_compact
+      Formalism.L2.SG.Pf.WFL.locHNProps_holds nUnimodLoc
+      Formalism.L2.SG.Pf.WuDec.integrable_and_integral_pi_apply hB hCW
       GlobalTheory.wlocExists_real (GlobalTheory.GapAtRealPlaces.gapBigOfGapHyp D)
+      hG I ιE ιE_conj ιE_F bas J_eq L_eq pl φ_eq n_eq eps_eq L Ps Rf Bu Pi Mu
 
 end GlobalTheory.WBlockExists

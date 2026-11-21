@@ -12,7 +12,6 @@ noncomputable section
 namespace GlobalTheory.ConstCompare
 
 open Formalism.BasicNotions Formalism.MainNotions NumberField
-open GlobalTheory.IndefiniteRowSideFullHecke
 
 variable {D : D7}
 

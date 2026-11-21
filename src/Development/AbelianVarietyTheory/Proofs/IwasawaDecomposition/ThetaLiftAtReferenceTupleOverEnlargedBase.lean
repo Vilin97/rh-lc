@@ -150,7 +150,7 @@ theorem mult_heq (hP : B'.toPre = B.toPre) (hW : HEq W' W) (h : DSTie M' M) {θ 
   subst ε'
   have : fr' = fr := by with_unfolding_all exact eq_of_heq h7
   subst fr'
-  have hp : @Eq (MMap M → Prop) ((by with_unfolding_all exact (p' :))) p := funext fun T => (by with_unfolding_all exact ((propext (k T ((T)) (((HEq.refl T))))) : _))
+  have hp : @Eq _ ((by with_unfolding_all exact (p' :))) p := funext fun T => (by with_unfolding_all exact ((propext (k T ((T)) (((HEq.refl T))))) : _))
   have hp' : HEq p' p := (by with_unfolding_all exact ((heq_of_eq hp) :))
   clear k hp
   have : p' = p := by with_unfolding_all exact eq_of_heq hp'
@@ -403,7 +403,7 @@ theorem liftAt_of_rSide : ∀ {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} 
   (z : Dat (w.st Z) w.I hX T Wt) (Wt' : Set B'.places.Pl)
   (R' : RealDat3 (w'.st Z').toD7 (famR (w'.st Z') w'.I hX' (usedOf w'.I T' Wt') Xg tr) Ks), Enl0 B B' → HEq w'.px w.px → z.R.toRealDat.ExAt → RSide z Wt' R' → IdemSame z Xg → LiftAt R'.toRealDat (mu0F (X := B'.fields) (tuOf w'.I (usedOf w'.I T' Wt'))) := by
   intro B B' f f' T T' w w' Z Z' hX hX' Wt Ks _ _ _ Xg tr z Wt' R' hE hpx hEx hS hI i'
-  letI := z.alg
+  let := z.alg
   have hP : B'.toPre = B.toPre := hE.1
   have hm := m_eq (a := Z) (a' := Z') hP
   let i : Fin (w.st Z).toD7.R.m := Fin.cast hm i'

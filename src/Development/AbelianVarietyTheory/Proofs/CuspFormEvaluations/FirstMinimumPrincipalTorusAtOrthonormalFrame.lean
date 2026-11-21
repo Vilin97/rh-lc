@@ -80,11 +80,11 @@ theorem bchar_wtOf_mul {u : Frame X.Ψ r} (hu : u ∈ Bor X.Ψ r) (c : X.Ψ → 
   rintro ⟨τ, i | i⟩ -
   · have h : u τ (rowIdx hr (.inl i)) (rowIdx hr (.inl i)) ≠ 0 := PerMove.bor_diag_ne hu τ _
     simp only [rowOf_apply, wtOf_inl, Sum.elim_inl]
-    rw [rowFac, if_neg (by simp), zpow_add₀ h, zpow_natCast, zpow_natCast, inv_inv, inv_pow]
+    rw [rowFac, ite_eq_right (by simp), zpow_add₀ h, zpow_natCast, zpow_natCast, inv_inv, inv_pow]
     field_simp
   · have h : u τ (rowIdx hr (.inr i)) (rowIdx hr (.inr i)) ≠ 0 := PerMove.bor_diag_ne hu τ _
     simp only [rowOf_apply, wtOf_inr, Sum.elim_inr]
-    rw [rowFac, if_pos (by have := i.isLt; simp only [rowIdx_inr]; omega), zpow_sub₀ h,
+    rw [rowFac, ite_eq_left (by have := i.isLt; simp only [rowIdx_inr]; omega), zpow_sub₀ h,
       _root_.zpow_neg, zpow_natCast, zpow_natCast, inv_pow]
     field_simp
 
@@ -270,7 +270,7 @@ theorem firstMinimum_principalTorusAtOrthonormalFrame : (frameTorus idx hs ho a 
   set S := {t | ∃ v ∈ X.Λ, v ≠ 0 ∧ t = ∑ τ, X.c τ * X.maj x τ (Data.emb τ.1 v)} with hS
   have h1 : {t : ℝ | ∃ y ∈ lat (frameTorus idx hs ho a b).b, y ≠ 0 ∧ t = ‖y‖} = Real.sqrt '' S := by
     ext t
-    simp only [mem_lat_frameTorus, hS, Set.mem_setOf_eq, Set.mem_image]
+    simp only [mem_lat_frameTorus, hS, Set.mem_ofPred_eq, Set.mem_image]
     constructor
     · rintro ⟨_, ⟨v, hv, rfl⟩, h0, rfl⟩
       refine ⟨_, ⟨v, hv, ?_, rfl⟩, (norm_scaleUp_per idx ho v).symm⟩
@@ -397,7 +397,7 @@ theorem norm_orthoJet_le (hs : IsSympl X bas) {d : ℕ} (hP : P.IsHomogeneous d)
     funext l k
     ext i
     have he : e l = (l.2.2, idx.symm (rowOf X hr (l.1, l.2.1))) := rfl
-    rw [Function.comp_apply, hφ, EuclideanSpace.single_apply]
+    rw [Function.comp_apply, hφ, PiLp.single_apply]
     simp only [Equiv.symm_apply_eq, he, Prod.mk.injEq]
     by_cases hk : k = l.2.2
     · simp [orthoDir, hk, -rowOf_apply]

@@ -45,7 +45,7 @@ theorem mem_idV_of_mem {D : D7} {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : Glo
     have := q.2; have := p.2
     rw [hr, Fin.val_rev, Fin.ext_iff]; omega
   have hκ : κ ≠ 0 := by
-    rw [hκdef, antiDiagonalSignGramMatrix, if_pos ((hcond q).2 rfl)]
+    rw [hκdef, antiDiagonalSignGramMatrix, ite_eq_left ((hcond q).2 rfl)]
     split_ifs
     · exact hε
     · exact one_ne_zero
@@ -63,7 +63,7 @@ theorem mem_idV_of_mem {D : D7} {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : Glo
     rw [e2]
     split_ifs with hp
     · subst hp; rw [← hκdef]; exact inv_mul_cancel₀ hκ
-    · rw [antiDiagonalSignGramMatrix, if_neg (fun h' => hp ((hcond p).1 h')), mul_zero]
+    · rw [antiDiagonalSignGramMatrix, ite_eq_right (fun h' => hp ((hcond p).1 h')), mul_zero]
   have hπM : ∀ i, ∑ j, π j * frameMat B A d.ι j i = 0 := by
     intro i
     have e := congrFun (congrFun d.perp i) r
@@ -110,11 +110,11 @@ theorem mem_idV_of_mem {D : D7} {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : Glo
           · rw [Finset.sum_comm]; exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
         rw [h1]
         simp only [hπM, hπa, zero_mul, Finset.sum_const_zero, zero_add, ite_mul, one_mul,
-          Finset.sum_ite_eq', Finset.mem_univ, if_true]
+          Finset.sum_ite_eq', Finset.mem_univ, ite_true]
       rw [e]
       exact AddSubgroup.subset_closure ⟨α, hα, hαv, u q, hu q, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add Y Z _ _ hY hZ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hY hZ
+    | add Y Z _ _ hY hZ => rw [map_add]; exact add_mem hY hZ
     | neg Y _ hY => rw [map_neg]; exact neg_mem hY
   have key := hΦ _ h
   have e : Φ (fun k => b * incA D (d.a k q)) = b := by
@@ -122,7 +122,7 @@ theorem mem_idV_of_mem {D : D7} {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : Glo
     have : ∀ k, incA D (π k) * (b * incA D (d.a k q)) = b * incA D (π k * d.a k q) := fun k => by
       rw [map_mul (incA D) (π k) (d.a k q)]; ring
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [Finset.sum_congr rfl (fun k _ => this k), ← Finset.mul_sum, ← map_sum, hπa q, if_pos rfl, map_one, mul_one]
+      rw [Finset.sum_congr rfl (fun k _ => this k), ← Finset.mul_sum, ← map_sum, hπa q, ite_eq_left rfl, map_one, mul_one]
   rwa [e] at key
 
 

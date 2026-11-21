@@ -527,7 +527,7 @@ theorem coeff_colSc (t : Fin n) (d : K) (F : MvPolynomial (Fin r × Fin n) K) (m
     split_ifs with h
     · rw [h]
     · simp
-  | add f g hf hg => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, mul_add]
+  | add f g hf hg => rw [map_add (f := _), AddMonoidAlgebra.coeff_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, Finsupp.add_apply, hf, hg, mul_add]
 
 theorem pow_inj_of_infinite [Infinite K] {a b : ℕ} (h : ∀ x : K, x ≠ 0 → x ^ a = x ^ b) : a = b := by
   have h0 : (Polynomial.X ^ a - Polynomial.X ^ b : Polynomial K) = 0 := by
@@ -567,9 +567,9 @@ theorem colSub1_trans (l j : Fin n) (hlj : l ≠ j) (c : K) :
       · have h2' : s ≠ l := fun h => h2 (h1.trans h)
         simp [h1, h2']
     · by_cases h2 : w = l
-      · by_cases h3 : s = j <;> simp [h1, h2, h3, hlj]
+      · by_cases h3 : s = j <;> simp [h2, h3, hlj]
       · simp [h1, h2]
-  simp only [e, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [e, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   split_ifs <;> simp
 
 theorem mem_dualWeyl_of_bor [Infinite K] {ν : Fin n → ℕ} {F : MvPolynomial (Fin r × Fin n) K}
@@ -588,7 +588,7 @@ theorem mem_dualWeyl_of_bor [Infinite K] {ν : Fin n → ℕ} {F : MvPolynomial 
       rw [coeff_colSc, coeff_smul, smul_eq_mul] at h3
       have h4 : (∏ y, (Matrix.diagonal (fun s => if s = t then x else 1) : Matrix (Fin n) (Fin n) K) y y ^ ν y) = x ^ ν t := by
         rw [Finset.prod_eq_single t]
-        · rw [Matrix.diagonal_apply_eq, if_pos rfl]
+        · rw [Matrix.diagonal_apply_eq, ite_eq_left rfl]
         · intro y _ hy
           rw [Matrix.diagonal_apply_eq, if_neg hy, one_pow]
         · intro h; exact absurd (Finset.mem_univ _) h
@@ -748,7 +748,7 @@ theorem coeff_psi_atPos (τ : ι) (π : MvPolynomial (Fin n × Fin n) K →ₗ[K
     split_ifs
     · rw [map_smul]
     · rw [smul_zero, map_zero]
-  | add f g hf hg => simp only [map_add (f := _), MvPolynomial.coeff_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hf, hg]
 
 theorem atPos_fixed (τ : ι) (π : MvPolynomial (Fin n × Fin n) K →ₗ[K] MvPolynomial (Fin n × Fin n) K) (Q : Pol K ι n)
     (h : ∀ r, π (AddMonoidAlgebra.coeff (psi τ Q) r) = AddMonoidAlgebra.coeff (psi τ Q) r) : atPos τ π Q = Q := by
@@ -980,7 +980,7 @@ theorem map_mem_VV {K L : Type} [Field K] [Field L] {ι : Type} [Fintype ι] {n 
     refine Finset.prod_congr rfl fun τ _ => ?_
     rw [Formalism.GradedWeylDivisibility.blockEmb, Formalism.GradedWeylDivisibility.blockEmb, MvPolynomial.map_rename]
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := MvPolynomial.map σ)]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hx

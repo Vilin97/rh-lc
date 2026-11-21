@@ -15,7 +15,7 @@ open scoped TensorProduct
 
 namespace GlobalTheory.SupLaw.Model
 
-open GlobalTheory.TwAll GlobalTheory.TwAll.Model
+open GlobalTheory.TwAll
 
 variable (D : D7)
 

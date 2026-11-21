@@ -32,7 +32,7 @@ private theorem conj_mem {N : ℕ} {k u : G.GAf} (hk : k ∈ L.KN 1) (hu : u ∈
       simp only [map_mul, Module.End.mul_apply]
     have h2 : L.actG k (L.actG k⁻¹ v) = v := by
       rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
-    rw [h1, e, map_add (f := _), map_nsmul, h2]
+    rw [h1, e, map_add (L.actG k), map_nsmul, h2]
   refine ⟨key _ hu.1, ?_⟩
   have : (k * u * k⁻¹)⁻¹ = k * u⁻¹ * k⁻¹ := by group
   rw [this]
@@ -45,17 +45,16 @@ private theorem mulF_nat (n : ℕ) (y : 𝓞 D.F) {v : AfP p ⊗[ℚ] VQ D} (hv 
     obtain ⟨a, x, ha, rfl⟩ := hz
     have e : ∀ c : 𝓞 D.F, mulF D c (a ⊗ₜ ((1 : ℚ) ⊗ₜ x)) = a ⊗ₜ ((1 : ℚ) ⊗ₜ (algebraMap (𝓞 D.F) D.O c • x)) := by
       intro c
-      simp [mulF, actQ, LinearMap.baseChange_tmul]
-      rfl
+      simp only [mulF, actQ, LinearMap.baseChange_tmul, DistribSMul.toLinearMap_apply]
     refine ⟨?_, ?_⟩
     · rw [e, e, map_mul, map_natCast, mul_smul, Nat.cast_smul_eq_nsmul, TensorProduct.tmul_smul, TensorProduct.tmul_smul]
     · rw [e]
       exact AddSubgroup.subset_closure ⟨a, _, ha, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy =>
+  | add v w _ _ hv hw =>
     refine ⟨?_, ?_⟩
-    · rw [map_add (f := _), map_add (f := _), hx.1, hy.1, smul_add]
-    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx.2 hy.2
+    · simp only [map_add, hv.1, hw.1, smul_add]
+    · simpa only [map_add] using add_mem hv.2 hw.2
   | neg x _ hx =>
     refine ⟨?_, ?_⟩
     · rw [map_neg, map_neg, hx.1, smul_neg]
@@ -98,9 +97,12 @@ private structure Dat (X : UpperTheory.Gal.G3.Tower B Γ) (i : X.ι) (K₀ : Sub
 
 variable {X : UpperTheory.Gal.G3.Tower B Γ} {i : X.ι} {K₀ : Subgroup Γ} (d : Dat X i K₀)
 
-private def trK (x : K₀) : X.Z i ⟶ X.Z i := X.tr i i x (d.mem _ x.2) (d.nrm _ x.2)
+private def trK (d : Dat X i K₀) (x : K₀) : X.Z i ⟶ X.Z i :=
+  X.tr i i x (d.mem _ x.2) (d.nrm _ x.2)
 
-private theorem trK_mul (x y : K₀) : trK d x ≫ trK d y = trK d (y * x) := X.tr_mul ..
+private theorem trK_mul (x y : K₀) : trK d x ≫ trK d y = trK d (y * x) :=
+  X.tr_mul i i i x y (d.mem _ x.2) (d.nrm _ x.2) (d.mem _ y.2) (d.nrm _ y.2)
+    (d.mem _ (y * x).2) (d.nrm _ (y * x).2)
 
 private theorem trK_self (x : K₀) (hx : (x : Γ) ∈ X.K i) : trK d x = 𝟙 _ := X.tr_self _ _ _ _ hx
 
@@ -111,7 +113,8 @@ private theorem trK_mk {x y : K₀} (h : (x : K₀ ⧸ (X.K i).subgroupOf K₀) 
 
 variable [((X.K i).subgroupOf K₀).Normal]
 
-private def act (δ : K₀ ⧸ (X.K i).subgroupOf K₀) : X.Z i ⟶ X.Z i := trK d (δ⁻¹).out
+private def act (d : Dat X i K₀) (δ : K₀ ⧸ (X.K i).subgroupOf K₀) : X.Z i ⟶ X.Z i :=
+  trK d (δ⁻¹).out
 
 private theorem act_mk (u : K₀) : act d (((u⁻¹ : K₀) : K₀ ⧸ (X.K i).subgroupOf K₀)) = trK d u :=
   trK_mk d (by rw [QuotientGroup.out_eq', ← QuotientGroup.mk_inv, inv_inv])
@@ -127,7 +130,9 @@ private theorem act_mul (g h : K₀ ⧸ (X.K i).subgroupOf K₀) : act d (g * h)
   refine trK_mk d ?_
   rw [QuotientGroup.out_eq', QuotientGroup.mk_mul, QuotientGroup.out_eq', QuotientGroup.out_eq', mul_inv_rev]
 
-private theorem act_q (δ : K₀ ⧸ (X.K i).subgroupOf K₀) : act d δ ≫ X.q i = X.q i := X.tr_q ..
+private theorem act_q (δ : K₀ ⧸ (X.K i).subgroupOf K₀) : act d δ ≫ X.q i = X.q i :=
+  let x := (δ⁻¹).out
+  X.tr_q i i x (d.mem _ x.2) (d.nrm _ x.2)
 
 private theorem act_inj {j : X.ι} (hj : K₀ ≤ X.K j) (Ω : Type) [Field Ω] [IsAlgClosed Ω]
     (z : UpperTheory.Gal.G3.sp Ω ⟶ X.Z i) (δ δ' : K₀ ⧸ (X.K i).subgroupOf K₀) (h : z ≫ act d δ = z ≫ act d δ') : δ = δ' := by

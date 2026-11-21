@@ -93,27 +93,6 @@ theorem val_split (h : IsEtaT H χ) {w w' : PlE H} (hw : IsSplitPl H w) (hc : Is
 
 end Eta
 
-section Family
-
-variable (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) {D : D7}
-  (T : GlobalTheory.RowTie.WDTie D.nd D.naut)
-
-
-end Family
-
-section Rec
-
-open GlobalTheory.RowTie.Model
-
-
-end Rec
-
-section Cons
-
-variable {hL : GlobalTheory.Published.LocalLanglandsGL} {D : D7} {T : GlobalTheory.RowTie.WDTie D.nd D.naut}
-
-end Cons
-
 end GlobalTheory.HeightCounting.CGTrueModel
 
 end

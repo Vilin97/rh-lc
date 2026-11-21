@@ -119,8 +119,8 @@ def NabLeVV : Prop :=
 
 def NabDelLattice : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι] (n : ℕ) (lam : ι → DomWeight n)
-    (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsLattice K (M τ)) →
-    Submodule.IsLattice K (nabK lam M) ∧ Submodule.IsLattice K (delK lam M)
+    (M : ι → Submodule (𝓞 K) (Fin n → K)), (∀ τ, Submodule.IsFullLattice K (M τ)) →
+    Submodule.IsFullLattice K (nabK lam M) ∧ Submodule.IsFullLattice K (delK lam M)
 
 def DelLeNab : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι] (n : ℕ) (lam : ι → DomWeight n)

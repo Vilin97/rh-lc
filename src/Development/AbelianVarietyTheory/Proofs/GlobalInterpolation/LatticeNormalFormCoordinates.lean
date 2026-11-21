@@ -172,7 +172,7 @@ theorem isFullLattice_map {O : Type} [CommRing O] [Algebra O F] {V W : Type}
     Submodule.IsFullLattice F (L.map (φ.toLinearMap.restrictScalars O)) := by
   haveI := isLattice_map φ L hL.toIsLattice
   refine { span_eq_top := ?_ }
-  change Submodule.span F (φ '' (L : Set V)) = ⊤
+  change Submodule.span F (φ.toLinearMap '' (L : Set V)) = ⊤
   rw [← Submodule.map_span, hL.span_eq_top, Submodule.map_top, LinearEquiv.range]
 
 theorem latticeNormalFormCoord_of : GlobalTheory.IndefiniteRowSideFullHecke.FlagUnipotentSemidirect.LatticeNormalForm → GlobalTheory.IndefiniteRowSideFullHecke.FlagUnipotentSemidirect.LatticeNormalFormCoord := by

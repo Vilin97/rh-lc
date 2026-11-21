@@ -51,7 +51,7 @@ def typeSub (π : CuspSub E a) {W : Type} [AddCommGroup W] [Module ℂ W] (ρ₀
   apply_mem_toSubmodule k' ψ hψ g := by
     have e : (fun k : Kinf E a => (cptRep E a k (cptOn π k' ψ).1).1 g) =
         fun k => (fun k : Kinf E a => (cptRep E a k ψ.1).1 g) (k * k') := by
-      funext k; simp [map_mul, act]
+      funext k; simp [map_mul]
     rw [e]; exact coeffSpan_mul_right ρ₀ k' (hψ g)
 
 theorem adj_of_isCompl {V V' : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup V'] [Module ℂ V']
@@ -195,7 +195,7 @@ theorem exists_idem_adj : AutomorphicFormsFiniteGL → ∀ (L : Type) [Field L] 
       obtain ⟨n, w, rfl⟩ := hz
       exact Submodule.subset_span ⟨n, cptOn π k w, by rw [map_sub, map_smul, hcomm]⟩
     | zero => simp
-    | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+    | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
     | smul c u _ hu => rw [map_smul]; exact Submodule.smul_mem _ c hu
   have hee : ∀ v, e (e v) = e v := fun v => LocGL.idem_of_mem _ _ (LocGL.idem_mem _ _ v)
   have heq : ∀ k v, e (cptOn π k v) = cptOn π k (e v) := by

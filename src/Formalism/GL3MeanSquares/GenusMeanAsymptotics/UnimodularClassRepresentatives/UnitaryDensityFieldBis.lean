@@ -83,7 +83,7 @@ private lemma extP_comap_eq_inf_conjIdeal_of_isMaximal (hK : Formalism.Hermitian
     rw [Ideal.mem_inf, mem_conjIdeal_iff'] at hx
     obtain ⟨hxP, hxc⟩ := hx
     have h𝔭 : (P.comap (algebraMap (𝓞 F) (𝓞 K))).IsMaximal :=
-      Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := 𝓞 F) P
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal P
     obtain ⟨θ, t, ht, hθ⟩ := hK.2.2 P hP
     have htc : t = conjO K θ := RingOfIntegers.ext (by rw [coe_conjO_eq_star]; exact ht)
     subst htc

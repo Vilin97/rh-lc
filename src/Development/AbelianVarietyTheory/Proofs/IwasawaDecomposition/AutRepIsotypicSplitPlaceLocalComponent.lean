@@ -19,9 +19,9 @@ theorem rt_mul_apply {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ
 theorem exists_ne_zero_of_irrRep {G : Type} [Group G] [TopologicalSpace G] (σ : GlobalTheory.SmGL.IrrRep G) :
     ∃ a : σ.V, a ≠ 0 := by
   by_contra hne
-  push_neg at hne
+  push Not at hne
   have h := σ.irr
-  haveI : Subsingleton σ.V := ⟨fun a b => by rw [hne a, hne b]⟩
+  have : Subsingleton σ.V := ⟨fun a b => by rw [hne a, hne b]⟩
   exact (bot_ne_top : (⊥ : Subrepresentation σ.ρ) ≠ ⊤)
     (Subrepresentation.toSubmodule_injective (Subsingleton.elim _ _))
 
@@ -58,7 +58,7 @@ theorem mem_iSup_range_locMap : ∀ (L : Type) [Field L] [NumberField L] [IsCMFi
       exact Submodule.mem_iSup_of_mem ⟨T'', hT''⟩ ⟨_, rfl⟩
     · rw [map_zero]; exact zero_mem _
     · intro f₁ f₂ h₁ h₂
-      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
+      rw [map_add]; exact add_mem h₁ h₂
   rcases π.irrS.2.2 I hsub hIS with hbot | htop
   · exfalso
     obtain ⟨a, ha⟩ := exists_ne_zero_of_irrRep σ

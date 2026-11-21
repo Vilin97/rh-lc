@@ -16,10 +16,9 @@ noncomputable section
 namespace GlobalTheory.TripleLocal
 
 open Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain Polynomial
-open GlobalTheory.RowTie (WDTie)
 open GlobalTheory.Pst GlobalTheory.GalOfCusp
 
-variable (D : D7) (T : WDTie D.nd D.naut) {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {a : ℕ} (π : D.naut.CG a) (s : ℝ)
+variable (D : D7) {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {a : ℕ} (π : D.naut.CG a) (s : ℝ)
   (r : G D.host.E D.nd.Om →* GL (Fin a) (Qbar l))
 
 variable {O : Type} [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] {w : PlE D.host}
@@ -38,7 +37,7 @@ def FrobMatch {K : Type} [CommRing K] (φ : K →+* ℂ) (M : G D.host.E D.nd.Om
     (M σ : Matrix (Fin a) (Fin a) K).charpoly.map φ =
       ((D.naut.frobEig (D.naut.lpTw (D.naut.locG π w) u)).map fun α => X - C α).prod
 
-variable {D T ι π s r}
+variable {D ι π s r}
 
 end GlobalTheory.TripleLocal
 

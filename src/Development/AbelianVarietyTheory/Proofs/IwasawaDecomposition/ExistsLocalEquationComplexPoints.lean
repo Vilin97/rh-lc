@@ -75,7 +75,7 @@ theorem holTan_dualMap {A : Type} [CommRing A] (hB : IsOpen B) (v : Sp (DualNumb
     exact (hne ⟨b, hb.1⟩).elim
   obtain ⟨b₀, hb₀⟩ := hne
   let ψ' : V → (A →+* ℂ) := fun b => if hb : b ∈ B then ψ b hb else ψ b₀ hb₀
-  have e : ∀ b hb, ψ' b = ψ b hb := fun b hb => dif_pos hb
+  have e : ∀ b hb, ψ' b = ψ b hb := fun b hb => dite_eq_left hb
   have hd : ∀ a, DifferentiableOn ℂ (fun b => ψ' b a) B := fun a =>
     have ⟨g, hg, hg'⟩ := hψ a
     hg.congr fun b hb => by rw [e b hb, hg']
@@ -120,7 +120,8 @@ theorem exists_bc {A B : Type} [CommRing A] [CommRing B] {φ : c.F →+* A} {x :
     (ψ : A →+* B) {φ' : c.F →+* B} {x' : Sp B ⟶ Z.X} (hφ : φ' = ψ.comp φ) (hx : x' = spMap ψ ≫ x) :
     ∃ g : EigFrame Z φ' x', ∀ τ i, g.v τ i = spMap (dualMap ψ) ≫ fr.v τ i := by
   subst hφ hx
-  exact GlobalTheory.ShFam.EigFrame.exists_baseChange E H Dw l Xo c O β Z A B φ x fr ψ
+  obtain ⟨g, hg⟩ := GlobalTheory.ShFam.Spread.exists_bc fr ψ rfl rfl
+  exact ⟨g, fun τ i => congrArg (fun v => (ReciprocityTheory.ChartRestriction.G.PullbackSections.tv v).left) (hg τ i)⟩
 
 theorem spMap_comp₂ {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
     spMap (g.comp f) = spMap g ≫ spMap f := by

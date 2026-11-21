@@ -27,7 +27,7 @@ theorem _root_.GlobalTheory.exists_basis_in_finite_domain_trace_mem (T C F K : T
     induction hc using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span (by simp only [Finset.coe_image]; exact ⟨x, hx, rfl⟩)
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul t x _ hx =>
       have : algebraMap C K (t • x) = algebraMap T F t • algebraMap C K x := by
         rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply T C K, Algebra.smul_def,

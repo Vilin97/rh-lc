@@ -96,13 +96,12 @@ variable {x : St P} {N₁ : TwNew (Dof x)} {kKs : (datTw x N₁).core.Q.c.F →+
   {cf : CharFrame (DN x N₁)} {Rw : RowSide (DN x N₁)}
   {Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield (DN x N₁).host.E)) → PlE (DN x N₁).host} {hf eig θ}
   {Bs : SideB (DN x N₁) cf Rw (lowAll (DN x N₁)) Pq (ratDatR (datTw x N₁).R (datTw x N₁).cG kKs hk) hf eig θ} {hF}
-  (p : PreTie (ysOf Bs) (datTw x N₁).geo.v₀ Bs.exp hF Pq)
 
-abbrev kwP : TwNew (DN x N₁) := keepTw (DN x N₁) p.Dat p.th p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth
+abbrev kwP (p : PreTie (ysOf Bs) (datTw x N₁).geo.v₀ Bs.exp hF Pq) : TwNew (DN x N₁) := keepTw (DN x N₁) p.Dat (PreTie.th (D := DN x N₁) p) p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth
 
-def bsP : SideB (DN x (nP p)) (((kwP p).cf cf)) (((kwP p).row Rw)) (lowAll (DN x (nP p))) ((Pq)) (sP p) ((hf)) ((eig))
+def bsP (p : PreTie (ysOf Bs) (datTw x N₁).geo.v₀ Bs.exp hF Pq) : SideB (DN x (nP p)) (((kwP p).cf cf)) (((kwP p).row Rw)) (lowAll (DN x (nP p))) ((Pq)) (sP p) ((hf)) ((eig))
     ((θ)) :=
-  (by with_unfolding_all exact ((keepSideB (DN x N₁) p.Dat p.th p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth p.hU cf Rw _ Pq _ hf eig θ Bs) :))
+  (by with_unfolding_all exact ((keepSideB (DN x N₁) p.Dat (PreTie.th (D := DN x N₁) p) p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth p.hU cf Rw _ Pq _ hf eig θ Bs) :))
 
 end Install
 

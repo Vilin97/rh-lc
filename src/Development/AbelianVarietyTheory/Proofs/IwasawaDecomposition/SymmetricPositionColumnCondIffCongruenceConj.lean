@@ -214,7 +214,7 @@ theorem sig_mem (w : HeightOneSpectrum (𝓞 D.host.E)) {c : X.B.I.E ⊗[X.B.I.F
     rw [X.ιE_conj, hab, ← star_conj, ← GlobalTheory.SumWCompare.cj_coe]
     exact (X.ιE.apply_symm_apply _).symm
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul r a _ ha =>
     show sigA X.B.I ((r : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) * a) ∈ _
     rw [map_mul]
@@ -239,7 +239,7 @@ theorem coords (w : HeightOneSpectrum (𝓞 D.host.E)) {n : ℕ} (u v : Fin n �
     | mem s hs =>
       obtain ⟨i, hi, rfl⟩ := hs
       have := hd j i
-      rwa [if_neg (fun (e : i = j) => hj (e ▸ hi)), sub_zero] at this
+      rwa [ite_eq_right (fun (e : i = j) => hj (e ▸ hi)), sub_zero] at this
     | zero => rw [hA_zero_right']; exact zero_mem _
     | add a b _ _ ha hb => rw [hA_add_right]; exact add_mem ha hb
     | smul r a _ ha =>
@@ -423,10 +423,10 @@ theorem colCond_iff_condAt : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Forma
     · rw [fl_b _ _ _ _ j ⟨j.1 - D.R.rS, by omega⟩ (by simp only; omega)]
       unfold epsD
       by_cases h : EwAt X w
-      · rw [if_pos h]
+      · rw [ite_eq_left h]
         have := Resid.hA_bwd_symVec D X w kv.1 hg h (one_sub_ew X w kv.1 hg h) ⟨j.1 - D.R.rS, by omega⟩ i
         rwa [show Resid.posB D ⟨j.1 - D.R.rS, by omega⟩ = j from Fin.ext (by simp only [Resid.posB]; omega)] at this
-      · rw [if_neg h]
+      · rw [ite_eq_right h]
         have := hA_bw h (hsig h) (Fin.rev ⟨j.1 - D.R.rS, by omega⟩) i
         rwa [show D.R.rS + D.R.k - 1 - (Fin.rev (⟨j.1 - D.R.rS, by omega⟩ : Fin D.R.k)).1 = j.1 by
           rw [Fin.val_rev]; simp only; omega, if_congr Fin.val_inj rfl rfl] at this
@@ -454,13 +454,13 @@ theorem colCond_iff_condAt : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Forma
     · exact modW_range X ⟨D.R.rS + D.R.k, by omega⟩ (symmetricFlagBasisVectors_apply_centre _ _ _ _ _ rfl)
     · have := a.2
       by_cases h : EwAt X w
-      · exact modW_range X ⟨D.R.rS + a.1, by omega⟩ ((fl_b _ _ _ _ _ a rfl).trans (by rw [epsW, if_pos h]))
+      · exact modW_range X ⟨D.R.rS + a.1, by omega⟩ ((fl_b _ _ _ _ _ a rfl).trans (by rw [epsW, ite_eq_left h]))
       · exact Submodule.mem_sup_right (q3 h a)
     · have := a.rev.2
       by_cases h : EwAt X w
       · exact Submodule.mem_sup_right (q1 h a)
       · exact modW_range X ⟨D.R.rS + a.rev.1, by omega⟩ ((fl_b _ _ _ _ _ a.rev rfl).trans
-          (by rw [epsW, if_neg h]; exact congrArg X.bwd (Fin.rev_rev a)))
+          (by rw [epsW, ite_eq_right h]; exact congrArg X.bwd (Fin.rev_rev a)))
   have sv : ∀ y ∈ X.B.I.Lf, GroupLoc.ModW X (cPl w) (Set.range (dualVec X w)) y := fun y hy => by
     refine span_frame X _ kv.1 hg' _ (fun a => ?_) (fun a => ?_) ?_ (fun a => ?_) (fun a => ?_) hy
     · have := a.2
@@ -472,10 +472,10 @@ theorem colCond_iff_condAt : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Forma
       by_cases h : EwAt X w
       · exact Submodule.mem_sup_right (q2 h a)
       · exact modW_range X ⟨D.R.rS + a.rev.1, by omega⟩ ((fl_b _ _ _ _ _ a.rev rfl).trans
-          (by rw [epsD, if_neg h]; exact congrArg X.bw (Fin.rev_rev a)))
+          (by rw [epsD, ite_eq_right h]; exact congrArg X.bw (Fin.rev_rev a)))
     · have := a.2
       by_cases h : EwAt X w
-      · exact modW_range X ⟨D.R.rS + a.1, by omega⟩ ((fl_b _ _ _ _ _ a rfl).trans (by rw [epsD, if_pos h]))
+      · exact modW_range X ⟨D.R.rS + a.1, by omega⟩ ((fl_b _ _ _ _ _ a rfl).trans (by rw [epsD, ite_eq_left h]))
       · exact Submodule.mem_sup_right (q4 h a)
   have sub_w : ∀ (w' : HeightOneSpectrum (𝓞 D.host.E)) (y : X.B.I.Gf), y ∈ X.B.I.Kset → ∀ s ∈ wLf X w',
       (X.B.I.fmat y - 1) *ᵥ s ∈ wLf X w' := fun w' y hy s hs => by
@@ -494,8 +494,8 @@ theorem colCond_iff_condAt : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Forma
         rwa [sigA_sigA, cPl_cPl] at this))
     (by
       by_cases h : EwAt X w
-      · exact Or.inl ⟨by rw [epsW, if_pos h], fun i => sub_w _ _ (K_inv _ hx) _ (q2 h i)⟩
-      · exact Or.inr ⟨by rw [epsD, if_neg h], fun i => sub_w _ _ hx _ (q3 h i)⟩)
+      · exact Or.inl ⟨by rw [epsW, ite_eq_left h], fun i => sub_w _ _ (K_inv _ hx) _ (q2 h i)⟩
+      · exact Or.inr ⟨by rw [epsD, ite_eq_right h], fun i => sub_w _ _ hx _ (q3 h i)⟩)
   refine Iff.trans main (and_congr Iff.rfl ⟨fun h => ?_, fun h => condAt_inv X _ hx h⟩)
   have := condAt_inv X (cPl w) (K_inv _ hx) h
   rwa [inv_inv] at this

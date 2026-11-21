@@ -74,7 +74,7 @@ section Nondeg
 omit [StarRing K] [FiniteDimensional K V] in
 theorem gidx_pos {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (hB : Submodule.IsLattice K B) :
     0 < gidx A B :=
-  div_pos (Nat.cast_pos.2 (Nat.pos_of_ne_zero (idxN_ne_zero hB.toIsLattice hA.fg)))
+  div_pos (Nat.cast_pos.2 (Nat.pos_of_ne_zero (idxN_ne_zero hB hA.fg)))
     (Nat.cast_pos.2 (Nat.pos_of_ne_zero (idxN_ne_zero hA hB.fg)))
 
 omit [StarRing K] [FiniteDimensional K V] in
@@ -159,7 +159,7 @@ theorem le_of_latMod {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
 
 omit [StarRing K] [FiniteDimensional K V] in
 include hCS hpC hpI hI hC in
-theorem latIn_isLattice {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
+theorem latIn_isFullLattice {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
     Submodule.IsFullLattice K (latIn C M) := by
   obtain ⟨h1, h2⟩ := le_of_latMod hM
   obtain ⟨⟨N, hfg, hN⟩, hs⟩ := hM
@@ -197,6 +197,11 @@ theorem latIn_isLattice {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
     obtain ⟨y, hy, he⟩ := key x hx
     have : y = x := Subtype.ext (he.trans (hC x x.2))
     simpa [this] using hy
+omit [StarRing K] [FiniteDimensional K V] in
+include hCS hpC hpI hI hC in
+theorem latIn_isLattice {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
+    Submodule.IsLattice K (latIn C M) :=
+  (latIn_isFullLattice p hCS hpC hpI hI hC hM).toIsLattice
 end Compl
 
 theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (H : HermSpace K V), Formalism.HermitianLatticesTheory.IsCMUnram K → ∀ (M M' : Submodule (𝓞 K) V) (S I : Submodule K V), I ≤ S → (∀ x ∈ S, (∀ y ∈ S, H.B x y = 0) ↔ x ∈ I) → IsLatMod M S I → IsLatMod M' S I → 0 < del H M ∧ 0 < gidx M M' ∧ del H M' = gidx M M' * del H M ∧ (IsIntegralLat H M → 1 ≤ del H M ∧ del H M ^ 2 = idx (dual H M) M) := by
@@ -251,8 +256,8 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   obtain ⟨a', b'⟩ := le_of_latMod hM'
   obtain ⟨d1, d2, d3⟩ := hd hM
   obtain ⟨d1', d2', d3'⟩ := hd hM'
-  have L := latIn_isLattice p hCS hpC hpI hI hC hM
-  have L' := latIn_isLattice p hCS hpC hpI hI hC hM'
+  have L := latIn_isFullLattice p hCS hpC hpI hI hC hM
+  have L' := latIn_isFullLattice p hCS hpC hpI hI hC hM'
   have g : ∀ {A B : Submodule (𝓞 K) V}, rs (𝓞 K) I ≤ A → A ≤ rs (𝓞 K) S → rs (𝓞 K) I ≤ B → B ≤ rs (𝓞 K) S →
       gidx A B = gidx (latIn C A) (latIn C B) := fun h1 h2 h3 h4 => by
     rw [gidx, gidx, idx_latIn p hpC hpI h1 h2 h3, idx_latIn p hpC hpI h3 h4 h1]

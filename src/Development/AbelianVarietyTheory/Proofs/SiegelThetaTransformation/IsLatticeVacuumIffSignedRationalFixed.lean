@@ -96,10 +96,16 @@ theorem char_sympl_hatA {ψ : AddChar (AF D.host.F) ℂ} (hψ : Continuous ψ)
       rw [← h1, ← smul_eq_mul, ← map_smul, Algebra.smul_def, mul_left_comm]
       rfl
     · rw [map_zero]; exact zero_mem _
-    · intro x y hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    · intro x y hx hy
+      change symplO S T (finTens α Mᵀ) (x + y) ∈ kerChar ψ
+      rw [symplO_add_right]
+      exact add_mem hx hy
     · intro x hx; rw [map_neg]; exact neg_mem hx
   · rw [map_zero]; exact zero_mem _
-  · intro x y hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · intro x y hx hy
+    change symplO S T (x + y) u' ∈ kerChar ψ
+    rw [symplO_add_left]
+    exact add_mem hx hy
   · intro x hx; rw [map_neg]; exact neg_mem hx
 
 section Sign

@@ -25,7 +25,7 @@ theorem exists_proj {K M : Type} [Field K] [AddCommGroup M] [Module K M] (U : Su
     simp [this]
   · simp
 
-theorem exists_lattice {O K : Type} [CommRing O] [Field K] [Algebra O K] {n : ℕ} (Λ : Submodule O (Fin n → K))
+theorem exists_lattice {O K : Type} [CommRing O] [Field K] [Algebra O K] [IsFractionRing O K] {n : ℕ} (Λ : Submodule O (Fin n → K))
     (h : Λ.FG) : ∃ (Q : (Fin n → K) →ₗ[K] (Fin n → K)) (Λ' : Submodule O (Fin n → K)),
       Submodule.IsLattice K Λ' ∧ Λ ≤ Λ' ∧ (∀ x ∈ Λ, Q x = 0) ∧ ∀ x ∈ Λ', Q x = 0 → x ∈ Λ := by
   obtain ⟨Q, h1, h2⟩ := exists_proj (Submodule.span K (Λ : Set (Fin n → K)))

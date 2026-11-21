@@ -81,7 +81,7 @@ theorem card_monicSet (N : ℕ) : (monicSet g N).card = g ^ N := by
   · intro c d h
     have h' := add_left_cancel h
     funext i
-    have := congrArg (fun p => coeff p i) h'
+    have := congrArg (fun p : (ZMod g)[X] => p.coeff i) h'
     simpa [Polynomial.finsetSum_coeff, coeff_X_pow, Fin.val_inj] using this
 
 theorem monic_divX {k : Type} [Field k] {a : k[X]} (ha : a.Monic) (hd : 1 ≤ a.natDegree) : a.divX.Monic := by
@@ -92,11 +92,11 @@ theorem card_zero_const (n : ℕ) : ((monicSet g (n + 1)).filter fun f => f.coef
   rw [← card_monicSet]
   refine Finset.card_le_card_of_injOn divX ?_ ?_
   · intro f hf
-    simp only [Finset.coe_filter, Set.mem_setOf_eq, mem_monicSet, Finset.mem_coe] at hf ⊢
+    simp only [Finset.coe_filter, Set.mem_ofPred_eq, mem_monicSet, Finset.mem_coe] at hf ⊢
     refine ⟨monic_divX hf.1.1 (by omega), ?_⟩
     rw [natDegree_divX_eq_natDegree_tsub_one]; omega
   · intro f hf f' hf' h
-    simp only [Finset.coe_filter, Set.mem_setOf_eq, mem_monicSet] at hf hf'
+    simp only [Finset.coe_filter, Set.mem_ofPred_eq, mem_monicSet] at hf hf'
     rw [← divX_mul_X_add f, ← divX_mul_X_add f', h, hf.2, hf'.2]
 
 theorem card_not_squarefree (n : ℕ) : ((monicSet g (n + 1)).filter fun f => ¬ Squarefree f).card ≤ g ^ n := by

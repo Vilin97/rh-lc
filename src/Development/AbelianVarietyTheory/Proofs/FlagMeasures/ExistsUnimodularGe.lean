@@ -24,6 +24,68 @@ section General
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
   [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
+private theorem full_of_unimodular {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm)
+    (hn : h.Nondegenerate) {N : Submodule (𝓞 K) V} (hN : Submodule.IsLattice K N)
+    (hU : IsUnimodular h N) : Submodule.IsFullLattice K N := by
+  refine { toIsLattice := hN, span_eq_top := ?_ }
+  classical
+  by_contra hspan
+  obtain ⟨φ, hφ₀, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
+  obtain ⟨bs, hbs⟩ := Formalism.HermitianLatticesTheory.dualLattice_dualBasis h hn (Module.finBasis K V)
+  let μ := ∑ j, star (φ ((Module.finBasis K V) j)) • bs j
+  have hμ : ∀ v, h μ v = φ v := by
+    have key : h μ = φ := by
+      apply (Module.finBasis K V).ext
+      intro i
+      dsimp only [μ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
+      have hs : ∀ j, h (star (φ ((Module.finBasis K V) j)) • bs j) ((Module.finBasis K V) i) =
+          φ ((Module.finBasis K V) j) * (if i = j then 1 else 0) := by
+        intro j
+        rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star]
+        congr 1
+        rw [← hs.eq ((Module.finBasis K V) i) (bs j), hbs]
+        split_ifs <;> simp
+      simp only [hs, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    intro v
+    rw [key]
+  have hμ₀ : μ ≠ 0 := by
+    intro h
+    apply hφ₀
+    ext y
+    simpa [h] using (hμ y).symm
+  have hline (a : K) : a • μ ∈ N := by
+    rw [← hU]
+    change a • μ ∈ Formalism.E.hdual h N
+    simp only [Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap, LinearMap.restrictScalars_apply]
+    intro y hy
+    have hy₀ := LinearMap.mem_ker.mp (hφ (Submodule.subset_span hy))
+    simp [← hs.eq (a • μ) y, LinearMap.map_smulₛₗ, hμ, hy₀]
+  obtain ⟨ψ, hψ, -⟩ := Submodule.exists_le_ker_of_notMem
+    (show μ ∉ (⊥ : Submodule K V) by simpa using hμ₀)
+  let f := ψ.restrictScalars (𝓞 K)
+  have hmap (x : K) : x ∈ N.map f := by
+    refine ⟨(x / ψ μ) • μ, hline _, ?_⟩
+    change ψ ((x / ψ μ) • μ) = x
+    rw [map_smul, smul_eq_mul, div_mul_cancel₀ _ hψ]
+  obtain ⟨d, hd₀, hd⟩ := FractionalIdeal.isFractional_of_fg
+    (S := nonZeroDivisors (𝓞 K)) (hN.fg.map f)
+  have hinj := IsFractionRing.injective (𝓞 K) K
+  have hne {a : 𝓞 K} (ha : a ≠ 0) : algebraMap (𝓞 K) K a ≠ 0 :=
+    fun h => ha (hinj (h.trans (map_zero _).symm))
+  have hinteger (x : K) : IsLocalization.IsInteger (𝓞 K) x := by
+    have hx := hd _ (hmap ((algebraMap (𝓞 K) K d)⁻¹ * x))
+    rwa [Algebra.smul_def, ← mul_assoc, mul_inv_cancel₀ (hne (nonZeroDivisors.ne_zero hd₀)),
+      one_mul] at hx
+  apply RingOfIntegers.not_isField K
+  refine ⟨⟨0, 1, zero_ne_one⟩, mul_comm, ?_⟩
+  intro a ha
+  obtain ⟨b, hb⟩ := hinteger ((algebraMap (𝓞 K) K a)⁻¹)
+  refine ⟨b, hinj ?_⟩
+  rw [map_mul, hb, map_one, mul_inv_cancel₀ (hne ha)]
+
+
 theorem exists_unimodular_ge {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.Nondegenerate)
     {M : Submodule (𝓞 K) V} (hM : Submodule.IsFullLattice K M) (hu : IsUnimodular h M)
     {G : Submodule (𝓞 K) V} (hG : G.FG) (hi : G ≤ dual h G) :
@@ -33,15 +95,14 @@ theorem exists_unimodular_ge {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) 
     fun A hA => by
       letI := hA
       exact { toIsLattice := Submodule.IsLattice.of_fg K (hA.fg.sup hG)
-              span_eq_top := top_le_iff.1 (Submodule.IsFullLattice.span_eq_top (A := K) (M := A)).ge.trans
-                (Submodule.span_mono (le_sup_left (a := A) (b := G))) }
+              span_eq_top := top_le_iff.1 ((Submodule.IsFullLattice.span_eq_top (A := K) (M := A)).ge.trans
+                (Submodule.span_mono (le_sup_left (a := A) (b := G)))) }
   obtain ⟨h1, h2, -⟩ := dualLattice (𝓞 K) K V h hs hn star_algebraMap_ringOfIntegers_mem_range _ (lat M hM)
   refine ⟨dual h (M ⊔ G) ⊔ G, lat _ h1, ?_, le_sup_right⟩
   unfold IsUnimodular at hu ⊢
   rw [hsup, h2, hsup, hu, sup_comm M G, sup_comm _ G, sup_inf_assoc_of_le _ hi]
 
 
-omit [FiniteDimensional K V] in
 theorem exists_pair {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.Nondegenerate) [Nontrivial V]
     {M : Submodule (𝓞 K) V} (hM : Submodule.IsFullLattice K M) (hu : IsUnimodular h M) (T : 𝓞 K) (hT : T ≠ 0) :
     ∃ x ∈ M, ∃ y ∈ M, ∃ o : 𝓞 K, h x y = 1 + o * T := by
@@ -126,7 +187,6 @@ theorem exists_idem (P : Ideal (𝓞 K)) (T : 𝓞 K) (hc : IsCoprime P (conjIde
   · rw [e3]; exact_mod_cast congrArg (fun x : 𝓞 K => (x : K)) e2
 
 
-omit [FiniteDimensional K V] in
 theorem exists_norm {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.Nondegenerate) [Nontrivial V]
     {M : Submodule (𝓞 K) V} (hM : Submodule.IsFullLattice K M) (hu : IsUnimodular h M) (T : ℕ) (hT : T ≠ 0)
     (P : Ideal (𝓞 K)) (hc : IsCoprime P (conjIdeal (K := K) P))
@@ -276,7 +336,7 @@ theorem main : ∀ (D : D7) (u : D.what₂.Word), letI := D.host.cmStar; ∀ F0 
     omega)
   obtain ⟨s, -, -, hc, hP⟩ := (CyclicGenus.main D.host.E (D.sp.X 0).V (D.sp.X 0).hT hcm (D.sp.X 0).herm
     (D.sp.X 0).nondeg _ hp hsp).1
-  obtain ⟨w, hw⟩ := exists_norm (D.sp.X 0).herm (D.sp.X 0).nondeg (D.sp.X 0).standardTuple_isLattice (D.sp.X 0).baseLattice_isUnimodular
+  obtain ⟨w, hw⟩ := exists_norm (D.sp.X 0).herm (D.sp.X 0).nondeg (full_of_unimodular (D.sp.X 0).herm (D.sp.X 0).nondeg (D.sp.X 0).standardTuple_isLattice (D.sp.X 0).baseLattice_isUnimodular) (D.sp.X 0).baseLattice_isUnimodular
     _ hp.ne_zero _ hc hP
   have hfz : ∀ a, (D.sp.Y 0).hT (D.sp.hypF a) F0.z = 0 := fun a => by
     rw [hz]; unfold D7.zmOf
@@ -292,7 +352,7 @@ theorem main : ∀ (D : D7) (u : D.what₂.Word), letI := D.host.cmStar; ∀ F0 
     ring
   have heg : ∀ a, (D.sp.Y 0).hT (F0.e a) g = 0 := fun a => by
     rw [map_sub, map_smul, F0.z_orth, he, swap_zero hs (D.sp.hyp_orthX a w).1, smul_zero, sub_zero]
-  obtain ⟨Λ, h1, h2, h3, h4, h5⟩ := exists_adapted hs (D.sp.Y 0).nondeg (D.sp.Y 0).standardTuple_isLattice (D.sp.Y 0).baseLattice_isUnimodular
+  obtain ⟨Λ, h1, h2, h3, h4, h5⟩ := exists_adapted hs (D.sp.Y 0).nondeg (full_of_unimodular hs (D.sp.Y 0).nondeg (D.sp.Y 0).standardTuple_isLattice (D.sp.Y 0).baseLattice_isUnimodular) (D.sp.Y 0).baseLattice_isUnimodular
     F0.e D.sp.hypF (fun a => GlobalTheory.SgGlob.dInv D.host.E (D.R.rS - a)) (fun a => GlobalTheory.SgGlob.Iota.one_mem_dInv _)
     F0.e_iso D.sp.hyp_ff (by rw [he]; exact D.sp.hyp_ef) F0.z g F0.z_orth hfz heg
     (fun a => by rw [map_sub, map_smul, hfz, swap_zero hs (D.sp.hyp_orthX a w).2, smul_zero, sub_zero])
@@ -308,9 +368,9 @@ theorem main : ∀ (D : D7) (u : D.what₂.Word), letI := D.host.cmStar; ∀ F0 
   change Lat.XLam Λ (lf D F0) = _ at h5
   have loc := fun (L : Submodule (𝓞 D.host.E) (D.sp.Y 0).V) (hL : L.FG) =>
     (locDual (𝓞 D.host.E) D.host.E (D.sp.Y 0).V (D.sp.Y 0).hT hs star_algebraMap_ringOfIntegers_mem_range L hL).2.1
-  refine ⟨Λ, ⟨h1, fun P hP => UnimodLoc.exists_isom_of_isUnimodularAt D.host.E _ _ hcm hs (D.sp.Y 0).nondeg _ _
-    (D.sp.Y 0).standardTuple_isLattice h1 P hP (loc _ (D.sp.Y 0).standardTuple_isLattice.fg (D.sp.Y 0).baseLattice_isUnimodular P hP) (loc _ h1.fg h2 P hP)⟩,
-    ⟨h1, h2, ⟨h3, rfl⟩, fun P => ?_, fun c hc => ?_⟩, ?_⟩
+  refine ⟨Λ, ⟨h1.toIsLattice, fun P hP => UnimodLoc.exists_isom_of_isUnimodularAt D.host.E _ _ hcm hs (D.sp.Y 0).nondeg _ _
+    (D.sp.Y 0).standardTuple_isLattice h1.toIsLattice P hP (loc _ (D.sp.Y 0).standardTuple_isLattice.fg (D.sp.Y 0).baseLattice_isUnimodular P hP) (loc _ h1.fg h2 P hP)⟩,
+    ⟨h1.toIsLattice, h2, ⟨h3, rfl⟩, fun P => ?_, fun c hc => ?_⟩, ?_⟩
   · have := P.isPrime
     choose c k1 k2 k3 k4 using fun a : Fin D.R.rS =>
       GlobalTheory.IntTerm.Conv.exists_gen_dInv (E := D.host.E) (D.R.rS - a) P.asIdeal

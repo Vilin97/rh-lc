@@ -27,7 +27,7 @@ theorem finite_quotient_of_integral {k R S : Type} [Field k] [CommRing R] [CommR
   induction hs using Submodule.span_induction with
   | mem y hy => exact Submodule.subset_span (by simp only [Finset.coe_image]; exact ⟨y, hy, rfl⟩)
   | zero => simp
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul r a _ ha =>
     obtain ⟨c, hc⟩ := hc r
     have e : Ideal.Quotient.mk I (r • a) = c • Ideal.Quotient.mk I a := by

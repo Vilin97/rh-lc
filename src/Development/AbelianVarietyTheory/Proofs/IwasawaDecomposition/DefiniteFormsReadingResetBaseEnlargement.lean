@@ -267,7 +267,14 @@ theorem frames_enl {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat 
       fun θ hθ => ?_, fun βV hβ => ?_⟩
   · have e : Pg = (z.R.Pg) := hPg.trans ((by with_unfolding_all exact (z.lev.Pg.symm :)))
     subst e
-    refine ⟨by kexactB z.pins.keep.frames, (HEq.refl z.R.Pg), (by with_unfolding_all exact ((heq_of_eq hall.symm) :)), fun eG hG => ?_⟩
+    refine ⟨by
+      intro h
+      have h' : Seed.Frm.FramesExistDiagonal (w.st Z).toD7 z.R.Pg := by
+        unfold Seed.Frm.FramesExistDiagonal Seed.Frm.SDFrames Seed.Frm.NormalFrameConditionsDiagonal Seed.Frm.NormalClausesG Seed.Frm.XBasesG Mi.NormalFrames Mi.NormalFrame0 Mi.VertexAt at h ⊢
+        with_unfolding_all exact h
+      have hf := z.pins.keep.frames h'
+      unfold Seed.Frm.NormalFrameConditionsDiagonal Seed.Frm.NormalClausesG Seed.Frm.XBasesG Mi.NormalFrames Mi.NormalFrame0 Mi.VertexAt at hf ⊢
+      with_unfolding_all exact hf, (HEq.refl z.R.Pg), (by with_unfolding_all exact ((heq_of_eq hall.symm) :)), fun eG hG => ?_⟩
     exact (by with_unfolding_all exact ((heq_of_eq (isIdG_unique (w.st Z) (px := w.px) z.lev.Pg (eG := (by with_unfolding_all exact (eG :))) ((by with_unfolding_all exact (hG :))) z.idG)) :))
   · exact (by with_unfolding_all exact ((heq_of_eq (isStdChar_unique (D := (w.st Z).toD7) (ψ := (by with_unfolding_all exact (ψ :))) ((by with_unfolding_all exact (hψ :))) z.pins.keep.std)) :))
   · exact (by with_unfolding_all exact ((heq_of_eq (isInfFam_unique (D := (w.st Z).toD7) (θ := (by with_unfolding_all exact (θ :))) ((by with_unfolding_all exact (hθ :))) z.pins.char.base.models.inf)) :))

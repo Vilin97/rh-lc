@@ -124,7 +124,10 @@ def tpD : TupTied (DL x L) (cfD x L) (chD L l) := (tpL L l.c.tp)
 def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) := (X)
 
 theorem fitsL : (oL x L).Fits :=
-  ⟨⟨(x.fits.div.left), fun _ _ G => by with_unfolding_all exact (x.fits.div.2 x.o.S x.o.N G :)⟩,
+  ⟨⟨x.fits.div.left, fun _ _ G => by
+      rw [AbsolutelyIrreducibleSpan.sharp_RRDef]
+      have h := (AbsolutelyIrreducibleSpan.sharp_RRDef _).mp (x.fits.div.2 x.o.S x.o.N G)
+      with_unfolding_all exact (h :)⟩,
     ⟨(x.fits.grp.pl), (x.fits.grp.teich), (x.fits.grp.chi), (x.fits.grp.ser)⟩,
     ⟨(x.fits.grpAt.pl), (x.fits.grpAt.idem), (x.fits.grpAt.cen)⟩,
     fun eR h => ⟨((x.fits.cen eR h).amb), ((x.fits.cen eR h).mt)⟩⟩

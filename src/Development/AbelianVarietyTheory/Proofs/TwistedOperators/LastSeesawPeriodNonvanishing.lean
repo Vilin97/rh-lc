@@ -119,7 +119,7 @@ theorem tame_double {S X T L : HSp D} (o : OrthDec X T L) {χS χX : (AE D)ˣ �
   obtain ⟨C, a, hC⟩ := GlobalTheory.T.unitaryQuotientHeight_orthogonalSum_comparable D X T L o
   have hC0 : 0 ≤ C := by
     by_contra hneg
-    push_neg at hneg
+    push Not at hneg
     have h1 := (hC 1).2
     have h2 := GlobalTheory.Grow.quotHeight_pos _ (o.emb ((1 : GA D T), 1))
     have h3 : 0 < quotHeight T (1 : GA D T) ^ a := pow_pos (GlobalTheory.Grow.quotHeight_pos _ _) a
@@ -257,12 +257,14 @@ theorem upLast : ∀ D : D7, UpLast D := by
       simp only [hfx, map_zero]
     rw [per_zero, MeasureTheory.integral_prod _ (hIntg _ (hTT.box_theta _ _ hA hB))]
     congr 1
-    rw [mul_comm (φ g) _, mul_assoc, ← integral_mul_const]
+    funext g
+    simp_rw [hpt]
+    rw [liftS_apply, mul_comm (φ g) _, mul_assoc, ← integral_mul_const]
     congr 1
     funext h
     ring
   by_contra hcon
-  push_neg at hcon
+  push Not at hcon
   apply hne
   rw [← hval Ξ hΞ.1]
   refine GlobalTheory.T.tame_functional_vacuum_irreducibility D ψ hψ J.W₀ X ΓX _ hTame _ hbox hf₀ (fun w hw => ?_) Ξ hΞ

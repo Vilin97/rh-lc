@@ -70,7 +70,7 @@ theorem nonempty_algEquiv_adjoin (φ : Ω →ₐ[F] Ω') (A : Subalgebra F Ω) {
       show ψ P ∈ _
       induction P using MvPolynomial.induction_on with
       | C a => exact Algebra.subset_adjoin (Or.inl ⟨a, a.2, by simp [ψ]⟩)
-      | add P Q hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
+      | add P Q hP hQ => rw [map_add]; exact add_mem hP hQ
       | mul_X P i hP =>
         rw [map_mul]
         exact mul_mem hP (Algebra.subset_adjoin (Or.inr ⟨i, by simp [ψ]⟩))

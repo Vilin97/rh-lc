@@ -29,6 +29,9 @@ open Module Formalism.L2.SG.Pf.G2
 variable {K F V : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
+local notation "jK" => algebraMap (𝓞 K) K
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+
 private theorem coe_iota_eq_algebraMap_coe (a : 𝓞 F) : jK (ι a) = algebraMap F K (a : F) := by
   rw [← IsScalarTower.algebraMap_apply (𝓞 F) (𝓞 K) K, IsScalarTower.algebraMap_apply (𝓞 F) F K]
 
@@ -48,20 +51,6 @@ private theorem jK_ne_zero_of_mem_closure_prime_compl {𝔭 : Ideal (𝓞 F)} {s
     exact ht 𝔭.zero_mem
   | one => simp
   | mul y z _ _ hy hz => rw [map_mul]; exact mul_ne_zero hy hz
-
-private theorem star_jK_eq_of_mem_closure_prime_compl (hF : IsFixF K F) {𝔭 : Ideal (𝓞 F)} {s : 𝓞 K}
-    (hs : s ∈ Submonoid.closure {s : 𝓞 K | ∃ t : 𝓞 F, t ∉ 𝔭 ∧ algebraMap (𝓞 F) (𝓞 K) t = s}) :
-    star (jK s) = jK s := by
-  induction hs using Submonoid.closure_induction with
-  | mem y hy =>
-    obtain ⟨t, _, rfl⟩ := hy
-    exact star_jK_ι hF t
-  | one => simp
-  | mul y z _ _ hy hz => rw [map_mul, star_mul', hy, hz]
-
-private theorem star_mem_HU_SP (hF : IsFixF K F) {𝔭 : Ideal (𝓞 F)} [𝔭.IsPrime] {a : K}
-    (ha : a ∈ HU.SP K 𝔭) : star a ∈ HU.SP K 𝔭 :=
-  HU.InP.conj hF ha
 
 theorem smul_eq_jK (c : 𝓞 K) (v : V) : c • v = jK c • v := (algebraMap_smul K c v).symm
 

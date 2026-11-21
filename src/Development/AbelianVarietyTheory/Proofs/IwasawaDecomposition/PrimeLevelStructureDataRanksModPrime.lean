@@ -53,15 +53,15 @@ theorem finrank_of_card {F V : Type} [Field F] [Finite F] [AddCommGroup V] [Modu
 
 set_option maxHeartbeats 800000 in
 theorem finrank_red {E : Type} [Field E] [NumberField E] {n : ℕ} (N : Submodule (𝓞 E) (Fin n → E))
-    (hN : Submodule.IsLattice E N) (P : HeightOneSpectrum (𝓞 E)) :
+    (hN : Submodule.IsFullLattice E N) (P : HeightOneSpectrum (𝓞 E)) :
     Module.finrank (Res P) (TDat.Red N P) = n := by
-  have : Module.Finite (𝓞 E) N := Module.Finite.iff_fg.2 (Submodule.IsLattice.fg (self := hN))
+  have : Module.Finite (𝓞 E) N := Module.Finite.iff_fg.2 (Submodule.IsLattice.fg (self := hN.toIsLattice))
   have : Module.FinitePresentation (𝓞 E) N := Module.finitePresentation_of_finite _ _
   have : Module.Flat (𝓞 E) N := inferInstance
   have : Module.Projective (𝓞 E) N := Module.Flat.projective_of_finitePresentation
   have : Finite (𝓞 E ⧸ P.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ P.ne_bot
   have hr : Module.finrank (𝓞 E) N = n := by
-    simpa using finrank_of_span_top N hN.span_eq_top
+    simpa using finrank_of_span_top N (Submodule.IsFullLattice.span_eq_top (self := hN))
   have h := natCard_quot (R := 𝓞 E) (N := N) P.asIdeal
   rw [hr] at h
   exact finrank_of_card (F := Res P) h

@@ -12,7 +12,8 @@ noncomputable section
 open MeasureTheory NumberField IsDedekindDomain MvPolynomial Filter Topology
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace
 open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.Ci PositivityTheory.Rg.Fx
-open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Adel PositivityTheory.Rg.Tf.IntegralApplyAeEq UpperTheory.V.Z.IntegralApplyAeEq
+open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Adel UpperTheory.V.Z.IntegralApplyAeEq
+open PositivityTheory.Rg.Tf.IntegralApplyAeEq (L Ker symb IsTrunc)
 
 namespace UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial
 
@@ -50,8 +51,10 @@ structure Fam (𝔢 : Side θ 2) where
   B₂ : Pl E → Multiset ℂ
   at₁ : At (BW.mu1 E 2) 𝔢.S τ₁ m₁ B₁
   at₂ : At (BW.mu1 E 2) 𝔢.S τ₂ m₂ B₂
-  smo₁ : ∀ V, IsSummand (BW.mu1 E 2) V → At (BW.mu1 E 2) 𝔢.S V m₁ B₁ → V = τ₁
-  smo₂ : ∀ V, IsSummand (BW.mu1 E 2) V → At (BW.mu1 E 2) 𝔢.S V m₂ B₂ → V = τ₂
+  smo₁ : ∀ V, UpperTheory.ConvolutionTheory.C.IsSummand (BW.mu1 E 2) V →
+    At (BW.mu1 E 2) 𝔢.S V m₁ B₁ → V = τ₁
+  smo₂ : ∀ V, UpperTheory.ConvolutionTheory.C.IsSummand (BW.mu1 E 2) V →
+    At (BW.mu1 E 2) 𝔢.S V m₂ B₂ → V = τ₂
   rigid : ∀ b : Datum E (2 + 2), b.Pt 𝔢.S (fun τ => m₁ τ + m₂ τ) (fun w => B₁ w + B₂ w) →
     b.r = 2 ∧ (∀ i, b.d i = 2) ∧ ∃ i j, i ≠ j ∧ At (b.μ i) 𝔢.S (b.V i) m₁ B₁ ∧ At (b.μ j) 𝔢.S (b.V j) m₂ B₂
   D : TypeDat E (2 + 2)
@@ -162,7 +165,8 @@ def OneSideX : Prop :=
     ∃ (c cU M₁ : ℝ) (N : ℕ), 0 < c ∧ 1 ≤ cU ∧ 4 ≤ M₁ ∧ ∀ η : ℝ, 0 < η → η ≤ 1 →
       ∀ χ : ℝ → ℝ, Continuous χ → (∀ x, 0 ≤ χ x ∧ χ x ≤ 1) → (∀ x ≥ η, χ x = 1) →
       ∃ s : Finset (ℝ × Submodule ℂ (LL μ)),
-        (∀ p, p ∈ s ↔ η < p.1 ∧ IsSummand μ p.2 ∧ p.2.map (θ.U : LL μ →ₗ[ℂ] LL μ) = p.2 ∧ eigIn p.2 𝔰.toAmp.A p.1 ≠ ⊥) ∧
+        (∀ p, p ∈ s ↔ η < p.1 ∧ UpperTheory.ConvolutionTheory.C.IsSummand μ p.2 ∧
+          p.2.map (θ.U : LL μ →ₗ[ℂ] LL μ) = p.2 ∧ eigIn p.2 𝔰.toAmp.A p.1 ≠ ⊥) ∧
         (∀ p ∈ s, FiniteDimensional ℂ (eigIn p.2 𝔰.toAmp.A p.1)) ∧
         ∀ N' : ℕ, ∃ C₁ T₁ : ℝ, ∀ (Q : PR K (2 + 2)) (a : ℝ × Submodule ℂ (LL μ) → ℂ) (KQ : ℝ),
           (∀ y ∈ Q.vars, y.1 ∉ 𝔰.S) → SB (fun z => evz z Q) KQ →

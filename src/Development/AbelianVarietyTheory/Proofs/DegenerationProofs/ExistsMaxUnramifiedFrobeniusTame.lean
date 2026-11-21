@@ -459,7 +459,7 @@ theorem main_of (hT : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsLocalRing R]
     induction hx using Algebra.adjoin_induction with
     | mem x hx => rw [hφT x hx]; exact Algebra.subset_adjoin (hTq x hx q)
     | algebraMap v => rw [hφV]; exact Subalgebra.algebraMap_mem _ v
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   have hφn : ∀ t ∈ Teich q Ω, ∀ n, (φ ^ n) t = t ^ q ^ n := by
     intro t ht n

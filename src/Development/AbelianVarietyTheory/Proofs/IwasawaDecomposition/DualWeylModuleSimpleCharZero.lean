@@ -70,7 +70,7 @@ theorem map_mem_span_map {S A : Type} [CommRing S] [CommRing A] (ψ : S →+* A)
   induction hP using Submodule.span_induction with
   | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [(MvPolynomial.map ψ).map_add]; exact add_mem hy hz
   | smul c y _ hy =>
     rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hy

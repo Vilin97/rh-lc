@@ -33,7 +33,7 @@ theorem exists_finset_factor {R Ω : Type} [CommRing R] [Field Ω] (g : ℚ →+
     induction hx using Algebra.adjoin_induction with
     | mem x hx => exact hs (by simpa using ⟨x, hx, rfl⟩)
     | algebraMap q => exact hq q
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   refine ⟨(β.rangeRestrictFieldEquiv.symm.toRingHom).comp (φ.codRestrict β.fieldRange hall), ?_⟩
   ext x

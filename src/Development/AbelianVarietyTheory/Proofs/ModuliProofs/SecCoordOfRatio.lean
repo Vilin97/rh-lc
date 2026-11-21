@@ -75,6 +75,8 @@ theorem MapBy.lab {u : TObj g (N' ^ 2) J b s'} {t : TObj g (N' ^ 2) J b s} {f : 
   refine (ThetaPtMove.over_iff h.1 (T := baseOver S') (T₀ := baseOver S) f hτ _ _).2 ?_
   simp only [TObj.lab, linComb, map_list_prod, List.map_ofFn]
   congr 2
+  funext i
+  simp only [Function.comp_apply, map_pow]
   congr 1
   exact (ThetaPtMove.over_iff h.1 (T := baseOver S') (T₀ := baseOver S) f hτ _ _).1 (h.2.2.1 i).symm
 

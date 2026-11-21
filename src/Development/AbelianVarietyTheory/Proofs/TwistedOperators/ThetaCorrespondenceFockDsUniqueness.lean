@@ -67,7 +67,8 @@ def quotMod (M : GKMod p q) (N : Submodule ℂ M.V) (hN : ∀ Z, ∀ y ∈ N, M.
       show N.mkQ (M.act (Eab a a) x) = _
       rw [hx a, map_smul]
     · intro x y hx hy
-      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      rw [N.mkQ.map_add]
+      exact add_mem hx hy
 
 variable {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
@@ -225,7 +226,9 @@ theorem range_eq (M₁ : GKMod p q) (hI : IrrGK M₁) (M₂ B : GKMod r s) (hB :
     rintro _ ⟨z, rfl⟩
     induction z with
     | tmul x y => obtain ⟨_, y, rfl⟩ := y; exact s2 x y
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y hx hy =>
+      rw [(TensorProduct.map (LinearMap.id : M₁.V →ₗ[ℂ] M₁.V) (LinearMap.range e).subtype).map_add]
+      exact add_mem hx hy
 
 end Core
 

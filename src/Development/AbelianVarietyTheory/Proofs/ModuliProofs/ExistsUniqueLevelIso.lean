@@ -20,6 +20,7 @@ section Formal
 variable {V : Type} [CommRing V] [IsDomain V] [IsLocalRing V] {G : Over (Spec (CommRingCat.of V))} [GrpObj G]
   [IsCommMonObj G] {X : Type} [AddCommGroup X] [Module.Free ℤ X] [Module.Finite ℤ X]
 
+local notation "𝔪" => IsLocalRing.maximalIdeal V
 
 omit [IsDomain V] in
 instance connectedSpace_level (e : ℕ) : ConnectedSpace (Spec (CommRingCat.of (V ⧸ 𝔪 ^ (e + 1)))) :=
@@ -36,9 +37,12 @@ theorem nonempty_formalTorus (hG : IsSemiAbelian G) (Q₀ : TQ (thickObj V 𝔪 
     Nonempty (FormalTorus 𝔪 Q₀.i) := by
   have := hG.smooth
   have := hG.geomConnected
-  have hs : ∀ e, Smooth (thickObj V 𝔪 e G).hom := fun e => inferInstanceAs (Smooth (pullback.snd _ _))
-  have hc : ∀ e, GeometricallyConnected (thickObj V 𝔪 e G).hom := fun e =>
-    inferInstanceAs (GeometricallyConnected (pullback.snd _ _))
+  have hs : ∀ e, Smooth (thickObj V 𝔪 e G).hom := fun e => by
+    show Smooth (pullback.snd _ _)
+    infer_instance
+  have hc : ∀ e, GeometricallyConnected (thickObj V 𝔪 e G).hom := fun e => by
+    show GeometricallyConnected (pullback.snd _ _)
+    infer_instance
   have step : ∀ (e : ℕ) (Q : TQ (thickObj V 𝔪 e G) X), ∃ Q' : TQ (thickObj V 𝔪 (e + 1) G) X,
       TorusCompat (thickTrans V _ e) (thickMap V _ e G) Q.i Q'.i := fun e Q => by
     exact exists_tq_lift (TowerEx.isNilpotent_max (e + 1)) _ (Ideal.Quotient.factor_surjective _) _ _

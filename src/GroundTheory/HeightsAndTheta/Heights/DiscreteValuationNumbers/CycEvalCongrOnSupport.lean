@@ -126,8 +126,8 @@ theorem BlowUpInvariance.proof (hvert : BlowUpVerticalPush.Statement.{u})
   rw [← htrans (fun W => cycEval (fun G => vNum G L) (ratDiv W f g))]
   refine cycEval_congr_on_support _ fun W hW => ?_
   by_cases hϖ' : (C ϖ : MRing (extIdx ι (BlowUpIdx ι)) O) ∈ W
-  · simp only [if_pos hϖ']
-  rw [if_neg hϖ', if_neg hϖ']
+  · simp only [ite_eq_left hϖ']
+  rw [ite_eq_right hϖ', ite_eq_right hϖ']
   obtain ⟨hWs, hWeq⟩ := hpt W hW hϖ'
   have hϖW : (C ϖ : MRing ι O) ∉ W.comap (liftForm (ι := ι) (J := BlowUpIdx ι) (R := O)) := by
     rwa [Ideal.mem_comap, liftForm_C_eq]

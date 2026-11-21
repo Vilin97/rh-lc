@@ -84,7 +84,7 @@ theorem isSatFlag_of_isAdapted (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf : I
             rw [Fin.castSucc_lt_succ_iff] at h
             exact Fin.castSucc_lt_castSucc_iff.2 (lt_of_le_of_ne h hki)
       · refine sup_le (Submodule.span_mono (hmono (Fin.castSucc_lt_succ).le)) ?_
-        letI := hΛ i
+        letI : Submodule.IsFullLattice I.E (Λ i) := hΛ i
         rw [LinearMap.range_eq_map, ← Submodule.IsFullLattice.span_eq_top (A := I.E) (M := Λ i), Submodule.map_span]
         refine Submodule.span_mono ?_
         rintro _ ⟨x, hx, rfl⟩
@@ -109,7 +109,7 @@ theorem isSatFlag_of_isAdapted (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf : I
     rw [hinf, ← hsup, LinearMap.finrank_range_of_inj hinj] at this
     simpa [Formalism.HN.rkK] using this
   · obtain ⟨u, hu, -, rfl⟩ := (hS k y).1 hy
-    refine (hL _).2 ⟨u, 0, 0, hu, fun i t _ => by simpa using zero_mem _, zero_mem _, ?_⟩
+    refine (hL _).2 ⟨u, 0, 0, hu, fun i t _ => by simp, zero_mem _, ?_⟩
     have : (fun l => e ((0 : Fin I₀.n → I₀.E) l)) = 0 := by ext; simp
     rw [this]
     simp

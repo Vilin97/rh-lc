@@ -268,14 +268,19 @@ theorem exists_short_vector : ∀ (E : Type) [Field E] [NumberField E] [StarRing
       (fun i => star (φ (Pi.single i 1)))
     have hpair (y : Fin 2 → E) : star y ⬝ᵥ (J *ᵥ u) = star (φ y) := by
       change J *ᵥ u = _ at hu
-      rw [hu, dotProduct, map_sum]
-      conv_rhs => rw [φ.pi_apply_eq_sum_univ y, map_sum]
-      simp only [map_smul, smul_eq_mul, map_mul, Pi.star_apply, Pi.smul_apply]
-      exact Finset.sum_congr rfl fun i _ => by rw [mul_comm]
+      rw [hu, dotProduct]
+      conv_rhs => rw [φ.pi_apply_eq_sum_univ y, star_sum]
+      simp only [smul_eq_mul, Pi.star_apply]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      have he : (Pi.single i 1 : Fin 2 → E) = (fun j => if i = j then 1 else 0) := by
+        funext j
+        simp [Pi.single_apply, eq_comm]
+      simp [star_mul, he, mul_comm]
     have hu0 : u ≠ 0 := by
       intro hzero
       apply hφ0
-      ext y
+      apply LinearMap.ext
+      intro y
       have := hpair y
       simp [hzero] at this
       exact star_eq_zero.mp this.symm

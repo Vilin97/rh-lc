@@ -77,27 +77,16 @@ theorem finsum_cosets {W : Type} [AddCommGroup W] [Module ℂ W] (Φ : GL (Fin n
 
 theorem unipC_mem_integralGL (S : Finset (Fin n)) (c : Pairs S → 𝓀[F]) :
     unipC S c ∈ integralGL F n := by
-  apply GroundTheory.Automorphic.Spherical.mem_integralGL_of_forall_mem
-  · intro i j
-    rw [GroundTheory.Automorphic.Spherical.coe_unipC, Matrix.add_apply]
-    refine add_mem ?_ (GroundTheory.Automorphic.Spherical.cMat_mem c i j)
-    by_cases h : i = j
-    · subst h; rw [Matrix.one_apply_eq]; exact one_mem _
-    · rw [Matrix.one_apply_ne h]; exact zero_mem _
-  · have hdet : (↑(unipC (F := F) S c) : Matrix (Fin n) (Fin n) F).det = 1 := by
-      rw [GroundTheory.Automorphic.Spherical.coe_unipC, Matrix.det_of_upperTriangular]
-      · apply Finset.prod_eq_one
-        intro i _
-        rw [Matrix.add_apply, Matrix.one_apply_eq,
-          GroundTheory.Automorphic.Spherical.cMat_apply_of_not c (by simp), add_zero]
-      · intro i j hij
-        have hij' : j < i := hij
-        have hne : i ≠ j := fun h => by subst h; exact lt_irrefl _ hij'
-        show (1 : Matrix (Fin n) (Fin n) F) i j + cMat S c i j = 0
-        rw [Matrix.one_apply_ne hne,
-          GroundTheory.Automorphic.Spherical.cMat_apply_of_not (i := i) (j := j) c (by
-            rintro ⟨-, -, h⟩; exact absurd h (not_lt.mpr hij'.le)), add_zero]
-    rw [hdet, map_one]
+  refine ((mem_unipotent_inf_integralGL_iff F n).2 ⟨unipC_mem_unipotent S c, ?_⟩).2
+  intro i j
+  rw [coe_unipC, Matrix.add_apply]
+  refine add_mem ?_ (cMat_mem c i j)
+  by_cases h : i = j
+  · subst h
+    rw [Matrix.one_apply_eq]
+    exact one_mem _
+  · rw [Matrix.one_apply_ne h]
+    exact zero_mem _
 
 def revCompl (S : Finset (Fin n)) : Finset (Fin n) :=
   Finset.univ.filter fun i => Fin.rev i ∉ S

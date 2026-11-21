@@ -24,6 +24,7 @@ theorem resFin_mul (χ χ' : HChar L) (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ)
   simp only [HChar.resFin, MonoidHom.finsetProd_apply, ← Finset.prod_mul_distrib]
   rfl
 
+omit [NumberField F] in
 theorem resInf_mul (χ χ' : HChar L) (v : InfinitePlace F) (k : Fˣ) :
     (χ * χ').resInf v k = χ.resInf v k * χ'.resInf v k := by
   simp only [HChar.resInf, MonoidHom.finsetProd_apply, ← Finset.prod_mul_distrib]
@@ -44,7 +45,8 @@ theorem Good.mul {χ χ' : HChar L} (h : Good F χ) (h' : Good F χ') : Good F (
     rw [mul_pow, pow_mul, h1, one_pow, pow_mul', h1', one_pow, one_mul]
   · rw [resFin_mul, h2.1, h2'.1, one_mul]
   · rw [resInf_mul, h2.2, h2'.2, one_mul]
-  · rw [HChar.loc_mul, h3 v x hx hx', h3' v x hx hx', one_mul]
+  · change χ.loc v x * χ'.loc v x = 1
+    rw [h3 v x hx hx', h3' v x hx hx', one_mul]
 
 end
 

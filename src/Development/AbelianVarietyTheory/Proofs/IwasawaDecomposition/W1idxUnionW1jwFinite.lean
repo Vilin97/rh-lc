@@ -26,10 +26,10 @@ theorem conjPl_injective {K : Type} [Field K] [StarRing K] :
   exact HeightOneSpectrum.ext h2
 
 theorem dual_fg {K : Type} [Field K] [NumberField K] [StarRing K] {d : ℕ} (H : Matrix (Fin d) (Fin d) K)
-    (hH : IsUnit H.det) (A : Submodule (𝓞 K) (Fin d → K)) (hA : Submodule.IsLattice K A) :
+    (hH : IsUnit H.det) (A : Submodule (𝓞 K) (Fin d → K)) (hA : Submodule.IsFullLattice K A) :
     (Formalism.HermitianLatticesTheory.dual (Formalism.DivisionValues.hform H) A).FG := by
   classical
-  obtain ⟨S, hS⟩ := hA.fg
+  obtain ⟨S, hS⟩ := hA.toIsLattice.fg
   have hSm : ∀ a ∈ S, a ∈ A := fun a ha => hS ▸ Submodule.subset_span ha
   have mem : ∀ x, x ∈ Formalism.HermitianLatticesTheory.dual (Formalism.DivisionValues.hform H) A ↔
       ∀ y ∈ A, ∃ c : 𝓞 K, algebraMap (𝓞 K) K c = Formalism.DivisionValues.hform H y x := by
@@ -61,7 +61,7 @@ theorem dual_fg {K : Type} [Field K] [NumberField K] [StarRing K] {d : ℕ} (H :
       | smul s a _ ha => rw [← algebraMap_smul K s a, LinearMap.map_smulₛₗ, LinearMap.smul_apply, ha, smul_zero]
     have hV : ∀ a, Formalism.DivisionValues.hform H a x = 0 := by
       intro a
-      have ha : a ∈ Submodule.span K (A : Set (Fin d → K)) := by rw [hA.span_eq_top]; trivial
+      have ha : a ∈ Submodule.span K (A : Set (Fin d → K)) := by rw [Submodule.IsFullLattice.span_eq_top (self := hA)]; trivial
       induction ha using Submodule.span_induction with
       | mem a ha => exact hL a ha
       | zero => simp
@@ -83,9 +83,9 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem jw_finite_of_lat {K : Type} [Field K] [NumberField K] [StarRing K] {d : ℕ} (H : Matrix (Fin d) (Fin d) K)
-    (hH : IsUnit H.det) (A : Submodule (𝓞 K) (Fin d → K)) (hA : Submodule.IsLattice K A) :
+    (hH : IsUnit H.det) (A : Submodule (𝓞 K) (Fin d → K)) (hA : Submodule.IsFullLattice K A) :
     {w : HeightOneSpectrum (𝓞 K) | Formalism.DivisionValues.jw H w A ≠ 0}.Finite :=
-  GlobalTheory.Mem.IdxFin.lidx_finite A _ hA.fg (dual_fg H hH A hA)
+  GlobalTheory.Mem.IdxFin.lidx_finite A _ hA.toIsLattice.fg (dual_fg H hH A hA)
 
 theorem idx_finite_of_fg {K : Type} [Field K] [NumberField K] {d d' : ℕ} (M : Submodule (𝓞 K) (Fin d' → K))
     (θ : Matrix (Fin d') (Fin d) K) (L : Submodule (𝓞 K) (Fin d → K)) (hM : M.FG) (hL : L.FG) :

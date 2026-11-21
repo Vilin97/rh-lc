@@ -156,6 +156,9 @@ private theorem wexp {k : Type} [Field k] [CharP k l] [PerfectRing k l] (τ : Wi
 
 end
 
+local notation "hE" => (untilt_epsilon (p := l))
+local notation "hZ" => (untilt_frobeniusEquiv_symm_epsilon_ne_one (p := l))
+
 variable (l) in
 private def fB : Acris l →+* ACris.BCris (untilt_epsilon (p := l)) :=
   (algebraMap (ACris.BCrisPlus ℂ_[l] l) (ACris.BCris (untilt_epsilon (p := l)))).comp
