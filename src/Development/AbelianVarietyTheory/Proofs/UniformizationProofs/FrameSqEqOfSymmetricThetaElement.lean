@@ -56,7 +56,6 @@ theorem exists_normW {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : Deg
   let eA : Spec (CommRingCat.of (FractionRing R)) ⟶ A.A.left := eSec A.A
   have e₁ : e ≫ pullback.fst G.hom (jK R) = jK R ≫ eSec G := by
     simp [e, eSec]
-    erw [pullback.lift_fst]
     rw [← Category.assoc, ← pullback.condition, Category.comp_id]
   have e₂ : e ≫ U.gen.hom.left = eA :=
     congrArg (fun q => q.left) (IsMonHom.one_hom U.gen.hom)

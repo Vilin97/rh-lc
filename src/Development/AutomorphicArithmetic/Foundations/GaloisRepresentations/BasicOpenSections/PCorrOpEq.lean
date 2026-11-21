@@ -84,7 +84,6 @@ private theorem push_one {W S : Scheme.{0}} (c : W ⟶ S) [IsFinite c] [Surjecti
       refine ⟨e j, ?_⟩
       have h1 := congrArg (· ≫ pullback.fst c c) hj
       simp only [Category.assoc] at h1
-      rw [pullback.lift_fst, pullback.lift_fst] at h1
       exact h1
     · rintro ⟨g, rfl⟩
       show (z0 ≫ a g) ≫ c = x

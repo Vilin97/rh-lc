@@ -129,7 +129,6 @@ theorem eSec_fstG (e : ℕ) (H : Over (Spec (CommRingCat.of R))) [GrpObj H] :
     eSec (thickObj R I e H) ≫ (fstG I e H).left = thick R I e ≫ eSec H := by
   show eSec (thickObj R I e H) ≫ pullback.fst H.hom (thick R I e) = _
   simp [eSec]
-  rw [pullback.lift_fst, ← Category.assoc, ← pullback.condition, Category.comp_id]
 
 def aV (e : ℕ) {Z : Scheme.{0}} (z : Z) (J : (Z ⟶ D.toPre.P.A.left) → D.toPre.P.L.ι)
     (N : (Z ⟶ G.left) → U.LG.L.ι) (x : Z ⟶ (thickObj R I e G).left) : (Z.presheaf.stalk z)ˣ :=

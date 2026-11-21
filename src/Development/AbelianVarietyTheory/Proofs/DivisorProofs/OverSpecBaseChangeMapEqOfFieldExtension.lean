@@ -26,7 +26,6 @@ theorem baseChange_map_eq_of_fieldExtension : ∀ (R k Ω : Type) [CommRing R] [
       pullback.fst V.hom (Spec.map (CommRingCat.ofHom (algebraMap R Ω))) ≫ g.left := by
     have := congrArg (fun φ => φ.left ≫ pullback.fst W.hom (Spec.map (CommRingCat.ofHom (algebraMap R Ω)))) h
     simp only [Over.pullback_map_left] at this
-    erw [pullback.lift_fst, pullback.lift_fst] at this
     exact this
   set s := Spec.map (CommRingCat.ofHom (algebraMap R k)) with hs
   set t := Spec.map (CommRingCat.ofHom (algebraMap k Ω)) with ht

@@ -100,7 +100,6 @@ theorem exists_lift_torsion_of_pull : ∀ {W V : Type} [CommRing W] [IsDomain W]
     exact (one_comp _).symm
   · rw [← Over.comp_left_assoc, Category.assoc, Iso.inv_hom_id, Category.comp_id]
     simp only [b'', Over.homMk_left]
-    exact pullback.lift_fst _ _ _
 
 end GlobalTheory.UCanon.LevLift
 

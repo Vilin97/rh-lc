@@ -21,7 +21,7 @@ theorem eta_pullback_fst {S S' : Scheme.{0}} (G : Over S) [GrpObj G] [IsCommMonO
     [IsCommMonObj ((Over.pullback j).obj G)] :
     η[(Over.pullback j).obj G].left ≫ pullback.fst G.hom j = j ≫ η[G].left := by
   simp
-  first
+  all_goals first
   | (simp only [pullback.lift_fst]; rw [← Category.assoc, ← pullback.condition, Category.comp_id])
   | (erw [pullback.lift_fst]; rw [← Category.assoc, ← pullback.condition, Category.comp_id])
 
@@ -49,7 +49,6 @@ private theorem pullback_mu_fst_eq {S S' : Scheme.{0}} (G : Over S) [GrpObj G] (
           exact (Over.w (fst ((Over.pullback j).obj G) ((Over.pullback j).obj G))).trans
             (Over.w (snd ((Over.pullback j).obj G) ((Over.pullback j).obj G))).symm) ≫ μ[G].left := by
   simp
-  erw [pullback.lift_fst]
   rw [← Category.assoc]
   congr 1
   apply pullback.hom_ext

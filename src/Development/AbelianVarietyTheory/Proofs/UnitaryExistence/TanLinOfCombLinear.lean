@@ -185,7 +185,6 @@ theorem exists_pullHom (T : Over X) (T₀ : Over S) (e : T₀.left ⟶ T.left) (
             map_one' := by rw [Functor.map_one, MonObj.comp_one]
             map_mul' := fun u w => by rw [Functor.map_mul, MonObj.comp_mul] }, fun u => ?_⟩
   simp only [MonoidHom.coe_mk, OneHom.coe_mk, Over.comp_left, ψ, Over.homMk_left, Over.pullback_map_left]
-  erw [Category.assoc, pullback.lift_fst, pullback.lift_fst_assoc]
 
 end Pull
 

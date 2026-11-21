@@ -40,7 +40,6 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I}
 lemma thickMap_fst (e : ℕ) : thickMap R I e G ≫ (fstG I (e + 1) G).left = (fstG I e G).left := by
   unfold thickMap fstG pullback.map
   simp only [Over.homMk_left]
-  erw [pullback.lift_fst]
   try simp
 
 lemma pG_struct {e : ℕ} (g : GtCoord I D.toPre e G) :

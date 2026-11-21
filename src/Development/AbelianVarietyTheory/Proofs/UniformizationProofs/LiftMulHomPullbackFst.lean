@@ -34,7 +34,6 @@ theorem lift_mul_pullback_fst {S S' : Scheme.{0}} (φ : S' ⟶ S) (G : Over S) [
       erw [Over.μ_pullback_left_fst_snd]
   rw [Over.comp_left, key]
   simp only [Functor.obj.μ_def, Over.comp_left, Category.assoc, Over.pullback_map_left]
-  erw [pullback.lift_fst]
 
 theorem lift_mul_hom_pullback_fst {S S' : Scheme.{0}} (φ : S' ⟶ S) (G : Over S) [GrpObj G]
     {E : Over S'} [MonObj E] (q : E ⟶ (Over.pullback φ).obj G) [IsMonHom q]

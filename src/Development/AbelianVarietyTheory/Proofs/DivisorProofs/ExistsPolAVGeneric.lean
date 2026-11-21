@@ -66,7 +66,6 @@ theorem exists_polAV_generic : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocal
       show wGK.left ≫ φ = (𝟙 GK.left ≫ φ) ≫ (oG.act w).left
       rw [Category.id_comp]
       simp only [wGK, φ, Over.pullback_map_left]
-      exact pullback.lift_fst _ _ _)
   have s5 := GlobalTheory.RigidBundleGlue.LBIso.pull hP φ
   have e3 : (pushPt hgp.1.w (𝟙 GK)).left = U.gen.hom.left := by simp [pushPt]
   have e4 : (pushPt hpb.1.w (𝟙 GK)).left = φ := Category.id_comp _

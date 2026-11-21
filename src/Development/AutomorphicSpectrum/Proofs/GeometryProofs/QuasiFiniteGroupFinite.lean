@@ -34,7 +34,6 @@ theorem QFGroup.finite_of_qfGroup : ∀ (R : Type) [CommRing R] [IsDomain R] (T 
   intro s t hst
   have h := congrArg (pullback.fst Γ.G.hom (genPt R).hom) hst
   simp only [f] at h
-  rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, pullback.lift_fst, pullback.lift_fst] at h
   exact Γ.pt_inj s t b b h
 
 end GlobalTheory.CompanionTheory.Ar.BT

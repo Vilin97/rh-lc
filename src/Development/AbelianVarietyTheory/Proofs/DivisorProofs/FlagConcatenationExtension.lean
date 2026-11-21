@@ -110,7 +110,6 @@ theorem step_ι (i : Fin (r₁ + r₃)) :
   · rw [incl_of_gt a b fl₁ fl₃ (k := i.succ) (j := (⟨i - r₁, by omega⟩ : Fin r₃).succ)
       (by simp only [Fin.val_succ]; omega) (by simp)]
     simp only [Category.assoc, eqToHom_trans_assoc, eqToHom_refl, Category.id_comp]
-    exact pullback.lift_fst _ _ _
 
 end GlobalTheory.Vert.Flag.Concat
 

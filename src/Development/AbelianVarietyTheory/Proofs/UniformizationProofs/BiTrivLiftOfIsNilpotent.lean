@@ -368,7 +368,7 @@ theorem exists_glued [IsMonHom i] (hJ : IsNilpotent J) :
     have e2 : (lift t (y ≫ opnι G U.1) ≫ snd 𝕋 G) = y ≫ opnι G U.1 := lift_snd _ _
     have e3 := congrArg (fun g => g.left p) e2
     simp only [Over.comp_left] at e3
-    first
+    all_goals first
     | (erw [← e3] at *; exact comp_opnI_mem U.1 y p)
     | (rw [← Scheme.Hom.comp_apply, e3]; exact comp_opnI_mem U.1 y p)
     | exact e3 ▸ comp_opnI_mem U.1 y p

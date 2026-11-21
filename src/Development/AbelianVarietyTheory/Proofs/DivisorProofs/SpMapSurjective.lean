@@ -22,7 +22,6 @@ theorem bcMap_left_fst {K : Type} [Field K] (L : Type) [Field L] [Algebra K L] {
       pullback.fst A.X.hom (spMap (algebraMap K L)) ≫ f.hom.left := by
   rw [bcMap_hom]
   simp only [Over.pullback_map_left]
-  exact pullback.lift_fst _ _ _
 
 theorem bcMap_injective {K : Type} [Field K] (L : Type) [Field L] [Algebra K L] (A B : AbVar K) :
     Function.Injective (bcMap L : (A ⟶ B) → _) := by

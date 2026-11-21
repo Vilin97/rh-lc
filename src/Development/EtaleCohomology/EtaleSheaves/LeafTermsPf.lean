@@ -35,7 +35,7 @@ theorem d_const_zero (P : PSh) : ((chains R).obj (disc.obj P)).d (-1) 0 = 0 := b
   rw [h]
   have : ((chainsN R).obj (disc.obj P)).d 1 0 = 0 := by
     simp [chainsN, Fin.sum_univ_two, SimplicialObject.δ, disc]
-    first
+    all_goals first
       | (erw [neg_one_smul, one_smul, add_neg_cancel])
       | (simp only [one_smul, neg_smul]; exact add_neg_cancel _)
       | abel
@@ -87,7 +87,6 @@ theorem ofPb_toPb (n : ℕ) : ofPb f n ≫ toPb f n = 𝟙 _ := by
   · apply WidePullback.hom_ext
     · intro j
       simp only [Category.assoc, Category.id_comp]
-      rw [toPb, pullback.lift_fst_assoc, WidePullback.lift_π, ofPb, WidePullback.lift_π]
       simp only [Fin.cases_succ]
     · simp only [Category.assoc, Category.id_comp]
       rw [toPb, pullback.lift_fst_assoc, WidePullback.lift_base, ofPb, WidePullback.lift_base, pullback.condition]

@@ -36,7 +36,6 @@ theorem eq_comp_of_genMap {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {
   have hf : ((Over.pullback (jK R)).map p).left ≫ pullback.fst G.hom (jK R) =
       pullback.fst G'.hom (jK R) ≫ p.left := by
     simp only [Over.pullback_map_left]
-    exact pullback.lift_fst _ _ _
   apply Over.OverMorphism.ext
   refine hU.1.hom_ext ?_ ?_
   · rw [e, Over.comp_left, genMap, genMap]

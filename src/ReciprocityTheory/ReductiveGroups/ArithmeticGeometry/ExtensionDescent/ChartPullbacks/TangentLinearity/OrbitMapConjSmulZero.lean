@@ -72,7 +72,7 @@ lemma hOv_pG (hO : ∀ a : O, (Over.pullback (thick R I e)).map (ιG.act a) ≫ 
   congr 1
   ext
   simp only [DegPre.prBe, Over.comp_left, Over.homMk_left, Over.map_map_left]
-  first
+  all_goals first
   | exact pullback.lift_fst _ _ _
   | simp
 

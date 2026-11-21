@@ -74,7 +74,6 @@ theorem lift {T : Scheme.{0}} (A : Over T) [GrpObj A] {V : T.Opens} (hV : IsAffi
         pullback.fst A.hom hV.fromSpec =
         pullback.fst (𝟙_ (Over T)).hom hV.fromSpec ≫ (MonObj.one : 𝟙_ (Over T) ⟶ A).left := by
       simp only [Over.pullback_map_left]
-      exact pullback.lift_fst _ _ _
     have h5 : (Functor.LaxMonoidal.ε (Over.pullback hV.fromSpec)).left ≫
         pullback.fst (𝟙_ (Over T)).hom hV.fromSpec = hV.fromSpec := by
       have c := pullback.condition (f := (𝟙_ (Over T)).hom) (g := hV.fromSpec)

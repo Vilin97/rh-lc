@@ -50,7 +50,6 @@ theorem genFibre_endo_torsion : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algeb
     have he₀w : e₀ = w' := hom_ext_of_pullback gψ' (he₀.trans hw'l.symm)
     rw [he₀w, ← hFw]
     simp only [Over.pullback_map_left]
-    exact pullback.lift_fst _ _ _
   · intro b
     have hb : (spMap S.R.val.toRingHom ≫ (ρ.pt b).left) ≫ ρ.P.A.hom = 𝟙 _ ≫ spMap S.R.val.toRingHom := by
       rw [Category.assoc, Over.w (ρ.pt b)]; simp

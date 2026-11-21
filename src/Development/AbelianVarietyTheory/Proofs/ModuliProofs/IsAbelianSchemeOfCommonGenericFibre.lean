@@ -37,7 +37,6 @@ theorem isAbelianScheme_of_common_generic_fibre
   have hsq : ((Over.pullback (spMap (algebraMap V K))).map F).left ≫ pullback.fst G.hom (spMap (algebraMap V K)) =
       pullback.fst B.hom (spMap (algebraMap V K)) ≫ F.left := by
     simp
-    exact pullback.lift_fst _ _ _
   rw [hF] at hsq
   have hid : (e ≪≫ e').inv.left ≫ (e.hom ≫ e'.hom).left = 𝟙 _ := by
     rw [← Over.comp_left, ← Iso.trans_hom, Iso.inv_hom_id, Over.id_left]

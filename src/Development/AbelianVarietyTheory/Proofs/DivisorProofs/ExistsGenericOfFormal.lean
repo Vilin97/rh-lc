@@ -28,7 +28,6 @@ theorem eq_of_generic (U : UnifPre I D A G) {g g' : G ⟶ G}
   refine ext_of_schDom G.hom (by rw [Over.w g, Over.w g']) (pullback.fst G.hom (jK R)) ?_
   have e := congrArg (fun k => k.left ≫ pullback.fst G.hom (jK R)) h
   simp only [Over.pullback_map_left] at e
-  erw [pullback.lift_fst, pullback.lift_fst] at e
   exact e
 
 theorem exists_generic_of_formal (U : UnifPre I D A G) (a : D.toPre.P.A ⟶ D.toPre.P.A) (h' : D.toPre.X →+ D.toPre.X)

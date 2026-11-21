@@ -120,7 +120,6 @@ theorem pullIdIso_fst (φ : R →+* R') (G : Over (Spec (CommRingCat.of R))) :
     (pullIdIso φ G).hom.left ≫ pullback.fst G.hom (specOf φ) =
       pullback.fst _ (specOf (RingHom.id R')) ≫ pullback.fst G.hom (specOf φ) := by
   simp only [pullIdIso, Over.isoMk_hom_left, Iso.trans_hom, Category.assoc, pullback.congrHom_hom, pullback.map]
-  erw [pullback.lift_fst]
   simp
 
 end GlobalTheory.PullUnifId
@@ -156,7 +155,6 @@ theorem isPullUnif_comp_id : ∀ (R R' : Type) [CommRing R] [IsDomain R] [CommRi
     simp only [bc'', Iso.trans_hom, Over.comp_left, Category.assoc, this, Functor.mapIso_hom]
     congr 1
     simp only [Over.pullback, pullback.map]
-    erw [pullback.lift_fst_assoc]
     rfl
   refine ⟨r, bc'', GalMul.isPullUnif_comp (i := φ) (j := RingHom.id R') r₁ r₂ r₃ T
       (hb.trans (Category.assoc _ _ _).symm) H₁ H₂, fun x => congrArg (fun e => e x) r₂,

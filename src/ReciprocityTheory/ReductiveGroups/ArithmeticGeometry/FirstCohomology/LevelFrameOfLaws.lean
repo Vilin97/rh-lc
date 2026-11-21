@@ -103,7 +103,7 @@ theorem cst_stalkMap {V : Type} [CommRing V] {X Z : Scheme.{0}} (r : Z ⟶ X) (p
   have hp : p (r z) ∈ (⊤ : (Sp V).Opens) := trivial
   have hrp : (r ≫ p) z ∈ (⊤ : (Sp V).Opens) := trivial
   simp only [cst, gs, dif_pos hp, dif_pos hrp]
-  first
+  all_goals first
     | (rw [Scheme.Hom.germ_stalkMap_apply]; rfl)
     | (erw [Scheme.Hom.germ_stalkMap_apply]; rfl)
     | (rw [Scheme.stalkMap_germ_apply]; rfl)

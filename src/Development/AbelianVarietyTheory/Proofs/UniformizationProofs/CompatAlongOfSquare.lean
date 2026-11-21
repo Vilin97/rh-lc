@@ -160,7 +160,6 @@ theorem eSec_fstG (e : ℕ) (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsC
     eSec (thickObj R I e G) ≫ (fstG I e G).left = thick R I e ≫ eSec G := by
   show eSec (thickObj R I e G) ≫ pullback.fst G.hom (thick R I e) = _
   simp [eSec]
-  rw [pullback.lift_fst, ← Category.assoc, ← pullback.condition, Category.comp_id]
 
 omit [IsDomain R] in
 theorem mono_fstG (e : ℕ) (G : Over (Spec (CommRingCat.of R))) : Mono (fstG I e G).left := by

@@ -45,7 +45,6 @@ theorem comp_hom_eq_one_of_torsion_pts (K : Type) [Field K] (A C : AbVar K) (f :
   have hfst : ∀ g : torsion A.X n ⟶ C.X, ((Over.pullback t).map g).left ≫ pullback.fst C.X.hom t =
       pullback.fst (torsion A.X n).hom t ≫ g.left := fun g => by
     simp
-    exact pullback.lift_fst _ _ _
   have hEq : (Over.pullback t).map (torsion.ι A.X n ≫ f.hom) =
       (Over.pullback t).map (1 : torsion A.X n ⟶ C.X) := by
     refine TorsionDivisible.hom_ext_of_rationalPoints _ _ fun y => ?_

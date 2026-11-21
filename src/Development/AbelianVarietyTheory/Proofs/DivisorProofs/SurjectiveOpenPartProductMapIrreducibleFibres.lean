@@ -33,7 +33,7 @@ theorem surjective_mul_of_open_of_irreducible_fibres : ∀ (T : Scheme.{0}) (H V
     refine ⟨Over.homMk (pullback.lift h.left (pullback.snd V.hom t) (Over.w h)) ?_, ?_, ?_⟩
     · exact pullback.lift_snd_assoc _ _ _ _
     · ext; exact pullback.lift_fst _ _ _
-    · ext; exact pullback.lift_snd _ _ _
+    · ext
   have hY : Nonempty Y.left := by
     have : Surjective (pullback.snd V.hom t) := inferInstance
     obtain ⟨y, -⟩ := (pullback.snd V.hom t).surjective (closedPoint _)

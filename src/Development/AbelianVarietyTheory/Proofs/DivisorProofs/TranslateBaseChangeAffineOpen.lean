@@ -19,7 +19,7 @@ theorem translate_baseChange_affineOpen : ∀ (R R₁ : Type) [CommRing R] [Comm
   let a₁ : Over.mk (𝟙 (Sp R₁)) ⟶ G₁ :=
     Over.homMk (pullback.lift (f := G.hom) (g := f) a.left (𝟙 (Sp R₁))
       ((Over.w a).trans (Category.id_comp _).symm))
-      (by show pullback.lift _ _ _ ≫ pullback.snd G.hom f = 𝟙 _; exact pullback.lift_snd _ _ _)
+      (by show pullback.lift _ _ _ ≫ pullback.snd G.hom f = 𝟙 _)
   let e : G₁ ⟶ Over.mk (𝟙 (Sp R₁)) := Over.homMk G₁.hom (by simp)
   let c : G₁ ⟶ G₁ := e ≫ a₁
   have hc : ∀ g : G₁ ⟶ G₁, g ≫ c = c := fun g =>

@@ -108,7 +108,6 @@ lemma pullback_map_fst {A B : Over (Spec ZU.{0})} (f : A ⟶ B) :
     ((Over.pullback (toZ S)).map f).left ≫ pullback.fst B.hom (toZ S) =
       pullback.fst A.hom (toZ S) ≫ f.left := by
   simp only [Over.pullback_map_left]
-  exact pullback.lift_fst _ _ _
 
 set_option backward.isDefEq.respectTransparency false in
 lemma torusPoint_mul {R : CommRingCat.{0}} (φ φ' ψ : torusRing ZU X ⟶ R) (s : Spec R ⟶ S)

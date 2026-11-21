@@ -23,7 +23,6 @@ variable {S S' S'' : Scheme.{0}}
 theorem map_left_fst (p : S' ⟶ S) {V W : Over S} (f : V ⟶ W) :
     ((Over.pullback p).map f).left ≫ pullback.fst W.hom p = pullback.fst V.hom p ≫ f.left := by
   simp only [Over.pullback_map_left]
-  exact pullback.lift_fst _ _ _
 
 theorem hom_ext_fst (p : S' ⟶ S) {Z : Over S'} {W : Over S} {a b : Z ⟶ (Over.pullback p).obj W}
     (h : a.left ≫ pullback.fst W.hom p = b.left ≫ pullback.fst W.hom p) : a = b := by

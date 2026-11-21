@@ -190,7 +190,6 @@ theorem Chase_of : DiagramChase₂ := by
     rw [hw6, pp32 (f' := (psi _ _ _ (hinf (c.π.app j0))).hom) (g' := rL D c j0 _ f5) (by
       rw [← cancel_mono (Scheme.Opens.ι _)]
       simp only [Category.assoc, rT, rL, Scheme.Hom.resLE_comp_ι, psi_hom_fst_assoc]
-      erw [pullback.lift_fst_assoc]
       simp [Scheme.Hom.resLE_comp_ι_assoc, Cone.w]), hw5,
       pp_comp (Iso.hom_inv_id _), pp_id rfl]
   refine ⟨k6, δ _ _ m w6 + pull _ (sch.map (D.map h4)) _ _ xk, ?_⟩

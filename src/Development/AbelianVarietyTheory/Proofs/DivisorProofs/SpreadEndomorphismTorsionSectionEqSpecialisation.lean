@@ -75,4 +75,3 @@ theorem GlobalTheory.TorsCmp.torsion_section_eq : ∀ (k₀ K : Type) [Field k�
   have hab := GlobalTheory.HkFam.ListedSubgroup.section_eq _ hNR ha hb (spMap g.toRingHom) hpt
   have := congrArg (fun z => z.left ≫ pullback.fst B.hom (spMap (algebraMap k₀ R))) hab
   simp only [cc, bb, Over.comp_left, Over.homMk_left, Category.assoc] at this
-  rw [this, pullback.lift_fst]

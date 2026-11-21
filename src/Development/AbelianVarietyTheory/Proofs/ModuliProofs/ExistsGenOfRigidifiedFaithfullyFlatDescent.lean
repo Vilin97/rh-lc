@@ -88,7 +88,6 @@ private theorem val_mul_val_comm_of_fst_eq (hG : Out.GlobalFnsSt) {S S' : Scheme
     rfl
   have hap : a ≫ pullback.fst A.hom π = a' ≫ pullback.fst A.hom π := by
     simp only [a, a']
-    rw [pullback.lift_fst, pullback.lift_fst]
   have hU : (toUnit FinalForm).left = g₁ ≫ pullback.snd A.hom π ≫ π :=
     (Category.comp_id _).symm.trans (Over.w (toUnit FinalForm))
   have hea : e ≫ a = g₁ ≫ pullback.snd A.hom π ≫ e' := by

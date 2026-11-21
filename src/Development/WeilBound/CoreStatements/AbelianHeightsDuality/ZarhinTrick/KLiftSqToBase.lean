@@ -49,7 +49,6 @@ theorem kToBase_one (G : Over S) [GrpObj G] {Y : Over (Sp Ω)} :
   apply Over.OverMorphism.ext
   simp only [toBase, Hom.one_def]
   simp
-  erw [pullback.lift_fst]
   have hc : pullback.fst (𝟙 S) s = pullback.snd (𝟙 S) s ≫ s := by
     simpa using (pullback.condition (f := 𝟙 S) (g := s))
   erw [reassoc_of% hc]

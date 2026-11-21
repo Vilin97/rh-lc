@@ -157,7 +157,6 @@ theorem compare {S S' : Scheme.{0}} {G : Over S} {G' : Over S'} [GrpObj G] [IsCo
         · rw [Category.assoc, IsPullback.isoPullback_hom_fst, ← Category.assoc, pullback.lift_fst, pullback.lift_fst]
         · rw [Category.assoc, IsPullback.isoPullback_hom_snd, pullback.lift_snd, pullback.lift_snd]
       simp only [ψ, Category.assoc, IsPullback.isoPullback_hom_fst]
-      rw [← Category.assoc, this, ← Category.assoc, pullback.lift_fst]
     simp only [e1, e2] at d2
     exact (GlobalTheory.ExpChain.isDerivAt0_comp_linear (fun z => (e₂ z).left) hol₂ h.toLinearMap z _).1 d2
 

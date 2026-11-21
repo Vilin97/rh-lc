@@ -118,7 +118,7 @@ theorem main : Out.Laws → Out.Laws2 → ∀ (o : Type) [CommRing o] (g k : ℕ
   have ee : e' ≫ e = 𝟙 _ := by
     apply hφ.1.hom_ext
     · rw [Category.assoc, e₁, Category.id_comp]; exact pullback.lift_fst _ _ _
-    · rw [Category.assoc, e₂, Category.id_comp]; exact pullback.lift_snd _ _ _
+    · rw [Category.assoc, e₂, Category.id_comp]
   have wpt : ∀ i, (t.pt i).left ≫ t.A.hom = 𝟙 (Sp K) := fun i => Over.w (t.pt i)
   let v : Fin (2 * g) ⊕ J → (t.A.left ⟶ t.A.left) :=
     Sum.elim (fun i => t.A.hom ≫ (t.pt i).left) (fun j => (t.act j).left)

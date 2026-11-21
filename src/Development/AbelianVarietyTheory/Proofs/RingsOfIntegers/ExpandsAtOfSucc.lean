@@ -22,7 +22,6 @@ theorem thickMap_comp_fGl (I : Ideal R) (e : ℕ) (G : Over (Spec (CommRingCat.o
     thickMap R I e G ≫ fGl I G (e + 1) = fGl I G e := by
   unfold thickMap fGl fstG
   simp only [Over.homMk_left, pullback.map]
-  exact pullback.lift_fst _ _ _
 
 private lemma mem_pull_U_of_mem_U {X Y : Scheme.{0}} {M : LB X} (f : Y ⟶ X) (j : PUnit → M.ι) (y : Y)
     (h : f y ∈ M.U (j ⟨⟩)) : y ∈ (M.pull f).U j := by

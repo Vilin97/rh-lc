@@ -28,7 +28,7 @@ theorem splitClosed_of_isGrpPullback_id {R : Type} [CommRing R] [IsDomain R] [Is
       rw [Category.assoc, hφ.1.w, Category.comp_id, pullback.condition])
   have hc : IsGrpPullback (thickObj R (maximalIdeal R) 0 G₁) (thickObj R (maximalIdeal R) 0 G') (𝟙 _) ψ :=
     IsGrpPullback.cancel h3 (h2.congr (by rw [Category.comp_id, Category.id_comp]) (pullback.lift_fst _ _ _).symm)
-      (by rw [Category.comp_id]; exact pullback.lift_snd _ _ _)
+      (by rw [Category.comp_id])
   obtain ⟨Q', -⟩ := GlobalTheory.UU.exists_tq_baseChange _ _ (𝟙 _) X _ _ ψ hc Q
   exact ⟨X, inferInstance, inferInstance, inferInstance, ⟨Q'⟩⟩
 

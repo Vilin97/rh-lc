@@ -97,7 +97,6 @@ theorem exists_gen_pow : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) 
       pullback.fst G'.hom (jK R) ≫ (pG.pr k).left := fun k => by
     rw [hp' k]
     simp
-    exact pullback.lift_fst _ _ _
   have H34 : LBIso (LB.LinComb (A.L.pull U.gen.hom.left) (fun k => (p'.pr k).left) (fun _ => 1))
       (LB.LinComb (U.LG.L.pull (pullback.fst G.hom (jK R))) (fun k => (p'.pr k).left) (fun _ => 1)) :=
     ⟨LB.linCombIso w0 _ _, linCombIso_isGen w0 hw0 _ _⟩

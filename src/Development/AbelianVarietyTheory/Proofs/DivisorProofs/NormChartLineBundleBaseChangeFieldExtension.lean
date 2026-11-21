@@ -24,7 +24,6 @@ abbrev bcProj (X : Over S) : ((Over.pullback f).obj X).left ⟶ X.left := pullba
 theorem map_left_bcProj {X Y : Over S} (g : X ⟶ Y) :
     ((Over.pullback f).map g).left ≫ bcProj f Y = bcProj f X ≫ g.left := by
   simp only [Over.pullback_map_left]
-  exact pullback.lift_fst _ _ _
 
 theorem isPullback_bcProj {X Y : Over S} (g : X ⟶ Y) :
     IsPullback (bcProj f X) ((Over.pullback f).map g).left g.left (bcProj f Y) := by

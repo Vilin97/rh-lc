@@ -17,7 +17,6 @@ theorem bcLift_isPullback {k Ω : Type} [Field k] [Field Ω] [Algebra k Ω] {R R
   refine IsPullback.of_right (h₁₂ := pullback.fst q (incl h)) (v₁₃ := q) (h₂₂ := incl h) ?_
     (pullback.lift_snd _ _ _) (IsPullback.of_hasPullback q (incl h))
   simp only [bcLift]
-  rw [pullback.lift_fst, toR_eq]
   exact hp
 
 def LeafInclPiece : Prop := ∀ (k : Type) [Field k] (Ω : Type) [Field Ω] [Algebra k Ω] {X : Scheme.{0}}

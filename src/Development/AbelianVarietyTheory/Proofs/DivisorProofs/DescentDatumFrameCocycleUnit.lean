@@ -94,7 +94,7 @@ theorem frame_cocycle {X Y : Scheme.{0}} (f : X ⟶ Y) (L : LB X) (hL : L.IsLB)
     set q₂ := pullback.snd (pullback.snd f f) (pullback.fst f f)
     have hmid : q₁ ≫ pullback.snd f f = q₂ ≫ pullback.fst f f := pullback.condition
     have h13a : pr13 f ≫ pullback.fst f f = q₁ ≫ pullback.fst f f := by unfold pr13; exact pullback.lift_fst _ _ _
-    have h13b : pr13 f ≫ pullback.snd f f = q₂ ≫ pullback.snd f f := by unfold pr13; exact pullback.lift_snd _ _ _
+    have h13b : pr13 f ≫ pullback.snd f f = q₂ ≫ pullback.snd f f := by unfold pr13
     have pmid : pullback.snd f f (q₁ w) = pullback.fst f f (q₂ w) := by
       change (q₁ ≫ pullback.snd f f) w = (q₂ ≫ pullback.fst f f) w
       rw [hmid]

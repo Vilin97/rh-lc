@@ -43,7 +43,6 @@ theorem polarisation_extends : Laws → (∀ (V : Type) [CommRing V] [IsDomain V
   have e₂ : eSec ((Over.pullback (jK V)).obj G) ≫ jA V (FractionRing V) G = eK V (FractionRing V) G := by
     unfold eSec eK eSec
     simp
-    rw [pullback.lift_fst, ← Category.assoc, ← pullback.condition, Category.comp_id]
   obtain ⟨ρ, hρ⟩ := exists_gen_of_chartPull
     (chartPullLinComb A.L gen.hom.left (K := PUnit) (fun _ => eSec ((Over.pullback (jK V)).obj G))
       (fun _ => eSec A.A) (fun _ => 1) (𝟙 _) (fun _ => e₁.trans (Category.id_comp _).symm)) t ht

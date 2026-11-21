@@ -84,7 +84,6 @@ theorem pow_eq_one_of_points : ∀ (K : Type) [Field K] (A C : AbVar K) (f : A �
     congr 1
     apply Over.OverMorphism.ext
     simp [x₂, j]
-    exact pullback.lift_fst _ _ _
   rw [← hx₂, ← MonObj.comp_pow, key, MonObj.comp_one]
 
 end GlobalTheory.AV.TorsKer

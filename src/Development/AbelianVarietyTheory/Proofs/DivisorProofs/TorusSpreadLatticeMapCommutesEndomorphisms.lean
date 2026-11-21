@@ -30,7 +30,6 @@ theorem endU_gtTorus_comp {V : Type} [CommRing V] [IsDomain V] [IsLocalRing V] {
     apply pullback.hom_ext
     · rw [Category.assoc, GlobalTheory.TorusPart.thickLift_fst, hf, Category.assoc]
       simp only [GlobalTheory.TorusPart.thickLift, Over.pullback_map_left]
-      rw [pullback.lift_fst, pullback.lift_fst_assoc]
     · simp only [GlobalTheory.TorusPart.thickLift, Over.pullback_map_left]
       rw [Category.assoc, pullback.lift_snd, Category.assoc, pullback.lift_snd, pullback.lift_snd, ← Category.assoc,
         Over.w]

@@ -73,7 +73,6 @@ theorem curve_baseChange_two_points : ∀ (R F : Type) [CommRing R] [Field F] (�
     apply hne
     have h2 := congrArg (· ≫ pullback.fst X.hom (spMap ψ)) h
     simp only [Category.assoc] at h2
-    erw [pullback.lift_fst] at h2
     rw [← Category.assoc, ← Category.assoc, ← Geo.Tor.spMap_comp, ← Geo.Tor.spMap_comp, ← evalAt_comp,
       ← evalAt_comp, Geo.Tor.spMap_comp, Geo.Tor.spMap_comp, Category.assoc, Category.assoc]
     exact h2

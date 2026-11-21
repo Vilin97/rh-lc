@@ -42,7 +42,6 @@ theorem L1 {B Y0 Y1 Y2 : Scheme.{0}} (p : Y0 ⟶ B) (g1 : Y1 ⟶ Y0) (g2 : Y2 �
     pullback.fst (g2 ≫ g1 ≫ p) (top B).hom ≫ g2 ≫ g1 =
       mY (g1 ≫ p) g2 (top B) ≫ mY p g1 (top B) ≫ pullback.fst p (top B).hom := by
   simp only [mY, pullback.map]
-  erw [pullback.lift_fst, pullback.lift_fst_assoc]
   simp only [Category.assoc]
 
 set_option maxHeartbeats 800000 in

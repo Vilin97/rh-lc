@@ -95,7 +95,6 @@ theorem isGalois_id (X : Scheme.{0}) : IsGalois (𝟙 X) Unit (fun _ => 𝟙 X) 
   convert hd using 1
   ext j
   simp
-  exact pullback.lift_fst _ _ _
 
 theorem splits_fold (X : Scheme.{0}) (J : Type) :
     Splits (Sigma.desc fun _ : J => 𝟙 X) (𝟙 X) (Sigma.ι (fun _ : J => X)) := by
@@ -104,7 +103,6 @@ theorem splits_fold (X : Scheme.{0}) (J : Type) :
   convert (inferInstance : IsIso (𝟙 (∐ fun _ : J => X))) using 1
   ext j
   simp
-  exact pullback.lift_fst _ _ _
 
 theorem isCorrOp_fold {X Z' : Scheme.{0}} {J : Type} [Fintype J] (f : J → (X ⟶ Z')) :
     IsCorrOp l (Sigma.desc fun _ : J => 𝟙 X) (Sigma.desc f) (∑ j, pullTot l (sch.map (f j))) := by

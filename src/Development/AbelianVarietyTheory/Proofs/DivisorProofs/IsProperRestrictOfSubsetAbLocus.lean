@@ -50,7 +50,7 @@ theorem isProper_of_abLocus_eq_univ (R : Type) [CommRing R] [IsDomain R] [IsNoet
     rw [UniversallyClosed.eq_valuativeCriterion] at h
     exact h.1
   let S : ValuativeCommSq (pullback.snd G.hom y) :=
-    { R := V, K := K, i₁ := xV, i₂ := 𝟙 _, commSq := ⟨by rw [Category.comp_id]; exact pullback.lift_snd _ _ _⟩ }
+    { R := V, K := K, i₁ := xV, i₂ := 𝟙 _, commSq := ⟨by rw [Category.comp_id]⟩ }
   obtain ⟨l⟩ := (hE S).exists_lift
   refine ⟨l.l ≫ pullback.fst G.hom y, ?_⟩
   rw [← Category.assoc]

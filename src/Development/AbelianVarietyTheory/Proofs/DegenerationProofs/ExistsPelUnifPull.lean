@@ -210,7 +210,7 @@ theorem toA_down (hL : Laws) (hR : AdmBase R I) (hV : AdmBase V I') (m : SABMap 
     rw [Category.assoc, Category.assoc, pullback.condition, reassoc_of% w₁, reassoc_of% w₂, Category.assoc]
     exact hj.symm
   obtain ⟨x', hx'⟩ := exists_genericPt W.P (F := F) (pullback.lift _ _ w₀ ≫ bc.inv.left) (by
-    rw [Category.assoc, Over.w bc.inv]; exact pullback.lift_snd _ _ _)
+    rw [Category.assoc, Over.w bc.inv])
   have hb : bc.inv.left ≫ bc.hom.left = 𝟙 _ := by rw [← Over.comp_left, Iso.inv_hom_id, Over.id_left]
   have hx : x'.left ≫ W.P.U.gen.inv.left ≫ pullback.fst W.t.G.hom (jK V) ≫ bc.hom.left ≫ pullback.fst t.G.hom (specOf g) =
       x.left ≫ P.U.gen.inv.left ≫ pullback.fst t.G.hom (jK R) := by

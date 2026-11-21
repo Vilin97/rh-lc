@@ -47,13 +47,11 @@ theorem eps_pullback_fst {S S' : Scheme.{0}} (f : S' ⟶ S) :
 theorem eSec_pullback {S S' : Scheme.{0}} (f : S' ⟶ S) (A : Over S) [GrpObj A] :
     eSec ((Over.pullback f).obj A) ≫ pullback.fst A.hom f = f ≫ eSec A := by
   simp only [eSec, Functor.obj.η_def, Over.comp_left, Category.assoc]
-  erw [pullback.lift_fst]
   rw [← Category.assoc, eps_pullback_fst f]
 
 theorem inv_pullback {S S' : Scheme.{0}} (f : S' ⟶ S) (A : Over S) [GrpObj A] :
     (ι[(Over.pullback f).obj A]).left ≫ pullback.fst A.hom f = pullback.fst A.hom f ≫ (ι[A]).left := by
   simp [Functor.obj.ι_def]
-  exact pullback.lift_fst _ _ _
 
 end Adj
 

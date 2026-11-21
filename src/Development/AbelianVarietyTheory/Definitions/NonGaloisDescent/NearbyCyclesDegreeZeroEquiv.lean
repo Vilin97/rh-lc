@@ -209,7 +209,6 @@ theorem smapG_comp (i : ℕ) {K'' Ω'' : Type} [Field K''] [Field Ω''] [Algebra
     apply pullback.hom_ext
     · rw [Category.assoc]
       simp only [sgeomMap, pullback.map]
-      rw [pullback.lift_fst, pullback.lift_fst, pullback.lift_fst_assoc, Category.assoc, CommRingCat.ofHom_comp,
         Spec.map_comp]
     · rw [Category.assoc]
       simp only [sgeomMap, pullback.map]

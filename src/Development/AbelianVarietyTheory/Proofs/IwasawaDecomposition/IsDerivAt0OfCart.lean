@@ -50,7 +50,6 @@ theorem isHolTo_lift {G' G X' X : Scheme.{0}} {φ : G' ⟶ G} {h' : G' ⟶ X'} {
       hc.lift _ _ (w (L c).1 (L c).2) := fun c => hc.hom_ext
     (by
       simp only [Category.assoc, IsPullback.isoPullback_inv_fst, IsPullback.lift_fst]
-      exact pullback.lift_fst _ _ _)
     (by
       simp only [Category.assoc, IsPullback.isoPullback_inv_snd, IsPullback.lift_snd]
       exact pullback.lift_snd _ _ _)

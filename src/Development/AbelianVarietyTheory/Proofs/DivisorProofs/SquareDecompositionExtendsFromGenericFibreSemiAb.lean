@@ -67,7 +67,6 @@ theorem sqDec_of_generic : ∀ (R' : Type) [CommRing R'] [IsDomain R'] [IsNoethe
       simp only [Option.elim_some]
       rw [← hBe i]
       simp only [hf, Over.pullback_map_left]
-      exact pullback.lift_fst _ _ _
   have i1 := (lbIso_lbPow_pull hL f N).symm
   have i5 := GlobalTheory.SymExtend.lbIso_linComb_pull hM f (fun o : Option (Fin r) => o.elim (𝟙 _) fun i => (β i).left)
     (fun o : Option (Fin r) => o.elim (𝟙 G.left) fun i => (B i).left) (fun o => o.elim (a₀ : ℤ) fun i => (a i : ℤ)) f hc

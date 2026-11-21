@@ -87,7 +87,6 @@ theorem act_pGl (e : ℕ) :
   rw [← Category.assoc, h1, Category.assoc, Category.assoc]
   congr 1
   simp only [Over.pullback_map_left]
-  exact pullback.lift_fst _ _ _
 
 theorem exists_secG (k' k : ℕ) (β : LB.Gen (LB.LinComb U.LG.L (K := Fin 3) ![𝟙 _, E.aG.left, (1 : G ⟶ G).left]
     ![(k' : ℤ), -(k : ℤ), (k : ℤ) - k'])) (hβ : β.IsGen) (σ : H0 U.LG.L k) :

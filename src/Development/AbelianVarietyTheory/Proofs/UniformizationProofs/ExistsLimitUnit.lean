@@ -121,7 +121,6 @@ theorem one_pG (U : PreU I D A G) {T : Over (Spec (CommRingCat.of R))} (e : ℕ)
       eSec (thickObj R I e H) ≫ (fstG I e H).left = thick R I e ≫ eSec H := fun H _ => by
     show eSec (thickObj R I e H) ≫ pullback.fst H.hom (thick R I e) = _
     simp [eSec]
-    rw [pullback.lift_fst, ← Category.assoc, ← pullback.condition, Category.comp_id]
   have hp : eSec (thickObj R I e G) ≫ (U.gt e).pG.left = thick R I e ≫ eSec D.P.A := by
     have := (U.gt e).q_hom
     have h : eSec (thickObj R I e G) ≫ (U.gt e).q.left = eSec (thickObj R I e D.P.A) :=

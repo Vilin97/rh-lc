@@ -56,7 +56,6 @@ theorem exists_power {X : Scheme.{0}} (Q : Over X) [IsAffineHom Q.hom] [Flat Q.h
           exact pullback.lift_snd _ _ _
         · apply Over.OverMorphism.ext
           simp only [b, Fin.cons_succ, Over.comp_left, Over.homMk_left, ← hv i]
-          rw [pullback.lift_fst_assoc]
   obtain ⟨n, ⟨e⟩⟩ := Finite.exists_equiv_fin J
   obtain ⟨R, p, ha, hf, hu⟩ := key n
   refine ⟨R, fun j => p (e j), ha, hf, fun T u => ?_⟩

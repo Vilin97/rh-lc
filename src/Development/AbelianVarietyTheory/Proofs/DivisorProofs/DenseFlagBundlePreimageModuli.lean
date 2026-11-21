@@ -34,7 +34,6 @@ theorem dense_genMap_preimage : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
       inv (pullback.fst Y.s (spMap (RingHom.id c.F))) := by
     rw [← cancel_mono (pullback.fst Y.s (spMap (RingHom.id c.F)))]
     simp only [genMap, Category.assoc, IsIso.inv_hom_id, Category.comp_id]
-    exact pullback.lift_fst _ _ _
   have hgen : IsOpenMap (genMap π) := by
     rw [he]
     exact isOpenMap_scheme_comp (pullback.fst (π ≫ Y.s) (spMap (RingHom.id c.F))).isOpenEmbedding.isOpenMap

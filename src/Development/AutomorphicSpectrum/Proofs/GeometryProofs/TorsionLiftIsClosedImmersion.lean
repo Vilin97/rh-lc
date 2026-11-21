@@ -13,7 +13,7 @@ theorem isClosedImmersion_torsion_lift {X : Scheme.{0}} (G : Over X) [GrpObj G] 
     ⟨_, rfl⟩
   rw [← hi']
   have i'fst : i' ≫ pullback.fst G.hom x = i := by rw [hi']; exact pullback.lift_fst _ _ _
-  have i'snd : i' ≫ pullback.snd G.hom x = Γ.G.hom := by rw [hi']; exact pullback.lift_snd _ _ _
+  have i'snd : i' ≫ pullback.snd G.hom x = Γ.G.hom := by rw [hi']
   let PO : Over X := Over.mk (pullback.snd G.hom x ≫ x)
   let u : PO ⟶ G := Over.homMk (pullback.fst G.hom x) pullback.condition
   obtain ⟨f, hfdef⟩ : ∃ f : pullback G.hom x ⟶ G.left, f = (u ^ N).left := ⟨_, rfl⟩

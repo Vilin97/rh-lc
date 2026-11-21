@@ -115,7 +115,6 @@ theorem UpperTheory.Gal.Int.Geo.Cut.coverCut :
     have hw : m w ∈ ⇑(pullback.fst C.p (gen O k)) ⁻¹' (V : Set C.Y) := by
       rw [Set.mem_preimage, ← Scheme.Hom.comp_apply]
       simp only [m]
-      rw [pullback.lift_fst, Scheme.Hom.comp_apply, ← Scheme.Opens.range_ι V]
       exact ⟨_, rfl⟩
     rw [hpre] at hw
     obtain ⟨z, hz⟩ := hw

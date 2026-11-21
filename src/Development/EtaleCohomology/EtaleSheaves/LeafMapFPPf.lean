@@ -91,7 +91,6 @@ theorem morphismDescent_of_isLimit (hL : LeafLimFP) (hI : LeafStagesFP) : LeafMa
     (t := dgT q1) (f := q) (c := dgCone (γ1 ≫ c0) q1 v1 hs1) hc (γ1 ≫ v0) (by
       ext S
       simp only [dgCone, dgT, NatTrans.comp_app, Functor.const_map_app]
-      erw [pullback.lift_fst_assoc]
       rw [hs1.w]; simp only [Category.assoc, hs0.w])
   let P := pullback q1 (incl S.unop.2.2)
   let g' : P ⟶ D0 := g

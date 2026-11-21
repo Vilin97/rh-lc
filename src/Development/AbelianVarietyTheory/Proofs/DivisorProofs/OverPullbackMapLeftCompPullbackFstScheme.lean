@@ -14,6 +14,5 @@ namespace GlobalTheory.Mum
 theorem over_pullback_map_left_comp_pullbackFst_scheme {S S' : Scheme.{0}} (f : S' ⟶ S) {X Y : Over S} (g : X ⟶ Y) :
     ((Over.pullback f).map g).left ≫ pullback.fst Y.hom f = pullback.fst X.hom f ≫ g.left := by
   simp only [Over.pullback_map_left]
-  exact pullback.lift_fst _ _ _
 
 end GlobalTheory.Mum

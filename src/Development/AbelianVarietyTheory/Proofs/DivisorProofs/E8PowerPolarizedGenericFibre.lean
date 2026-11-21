@@ -28,7 +28,7 @@ theorem sum_lamPts {S : Scheme.{0}} {G T : Over S} [GrpObj G] (x y : T ⟶ G) (c
   simp only [Fin.sum_univ_four, GlobalTheory.PolDeg.lamPts, GlobalTheory.PolDeg.negε, lam, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons]
   simp only [smul_add, smul_sub, mul_neg, mul_one, neg_neg, neg_smul]
-  first
+  all_goals first
   | (norm_num; done)
   | (norm_num; abel)
   | (push_cast; abel)

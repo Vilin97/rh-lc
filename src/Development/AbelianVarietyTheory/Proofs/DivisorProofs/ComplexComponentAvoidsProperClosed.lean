@@ -77,7 +77,7 @@ theorem ptOf_up_eq_toGenCx_pt (j : Y ⟶ Z.X) (hj : j ≫ Z.s = q) (σ : c.F →
       · rw [d2, Category.assoc, b2, ← Category.assoc, c2, Category.id_comp]
     apply pullback.hom_ext
     · rw [Category.assoc, a1, ← e1]; exact pullback.lift_fst _ _ _
-    · rw [Category.assoc, a2, c2]; exact pullback.lift_snd _ _ _
+    · rw [Category.assoc, a2, c2]
   exact congrArg (fun g : Sp ℂ ⟶ genCx Z σ => g (IsLocalRing.closedPoint ℂ)) e
 
 end

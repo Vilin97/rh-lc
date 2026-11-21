@@ -84,7 +84,6 @@ abbrev qB : (Over.pullback f).obj G ⟶ (Over.pullback f).obj B := (Over.pullbac
 
 lemma qB_h : (qB f q).left ≫ pullback.fst B.hom f = pullback.fst G.hom f ≫ q.left := by
   simp [qB]
-  exact pullback.lift_fst _ _ _
 
 lemma qB_sq : IsPullback (pullback.fst G.hom f) (qB f q).left q.left (pullback.fst B.hom f) := by
   refine IsPullback.of_bot ?_ (qB_h f q).symm (IsPullback.of_hasPullback B.hom f)

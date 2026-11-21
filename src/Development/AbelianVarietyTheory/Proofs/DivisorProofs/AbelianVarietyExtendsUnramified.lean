@@ -175,7 +175,6 @@ theorem GlobalTheory.UnramifiedClosure.closure_baseChange : ∀ (R K W K' : Type
     apply pullback.hom_ext
     · rw [Category.assoc, pullback.lift_fst, ← hcomp]
       simp only [v, mW, n, Category.assoc]
-      rw [pullback.lift_fst]
       try simp only [Category.assoc]
       rw [pullback.lift_fst_assoc]
       try simp only [Category.assoc]
@@ -209,4 +208,3 @@ theorem GlobalTheory.UnramifiedClosure.closure_baseChange : ∀ (R K W K' : Type
   have h3 : pullback.fst X.hom (spMap (algebraMap R W)) ≫ iA.imageι =
       mW ≫ pullback.fst P.hom (spMap (algebraMap R W)) := (pullback.lift_fst _ _ _).symm
   simp only [Category.assoc]
-  rw [Scheme.Hom.toImage_imageι, h3, reassoc_of% hψ, pullback.lift_fst, hcomp]

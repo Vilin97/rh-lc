@@ -66,7 +66,6 @@ theorem endo_torsion_ext : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     have hF' : w'.left ≫ pullback.fst FinalForm.G.hom Y.pt = pullback.fst FinalForm.G.hom Y.pt ≫ F.left := by
       rw [← hFw]
       simp only [Over.pullback_map_left]
-      exact pullback.lift_fst _ _ _
     refine ⟨F, hF, fun e₁ he₁ => ?_⟩
     have h10 : e₁ = e₀ := GlobalTheory.TorusPart.hom_ext_of_pullback wi.hβ (he₁.trans he₀l.symm)
     subst h10

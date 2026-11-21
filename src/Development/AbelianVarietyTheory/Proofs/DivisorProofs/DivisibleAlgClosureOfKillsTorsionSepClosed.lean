@@ -60,7 +60,6 @@ theorem divisible_algClosure : ∀ (K Ω : Type) [Field K] [Field Ω] [Algebra K
   apply Over.OverMorphism.ext
   rw [he, Over.comp_left, Over.comp_left, he]
   simp
-  rw [pullback.lift_fst]
 
 end GlobalTheory.SepClosedDivisible
 

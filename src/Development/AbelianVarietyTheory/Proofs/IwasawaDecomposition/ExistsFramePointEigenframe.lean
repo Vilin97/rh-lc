@@ -28,7 +28,7 @@ theorem exists_matches : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have hp : GlobalTheory.AllWt.ptF y = xF := by
     apply pullback.hom_ext
     · rw [← hy]; exact pullback.lift_fst _ _ _
-    · rw [hs]; exact pullback.lift_snd _ _ _
+    · rw [hs]
   refine ⟨y, by rw [hp]; exact hxF, fun τ i => ⟨w τ i, by rw [hp]; exact (hw τ i).1, (hw τ i).2.1, ?_⟩⟩
   exact (hw τ i).2.2.trans (hg τ i)
 

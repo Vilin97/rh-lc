@@ -60,7 +60,7 @@ lemma fstG_act {R : Type} [CommRing R] [IsDomain R] (I : Ideal R) (e : ℕ) {G :
     ((Over.pullback (thick R I e)).map f).left ≫ (fstG I e G).left = (fstG I e G).left ≫ f.left := by
   simp only [fstG]
   simp
-  first
+  all_goals first
     | exact pullback.lift_fst _ _ _
     | erw [pullback.lift_fst]
 

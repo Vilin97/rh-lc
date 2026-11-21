@@ -115,7 +115,6 @@ theorem prod_j_fst (M : Model R A) (N : Model R A') :
     simp [Model.prod]
   have h2 := congrArg (fun x => x.left ≫ pullback.fst M.Y.hom (spMap (algebraMap R K))) h
   simp only [Over.comp_left, Category.assoc, Over.pullback_map_left] at h2
-  erw [pullback.lift_fst] at h2
   exact (Category.assoc _ _ _).trans h2
 
 theorem prod_j_snd (M : Model R A) (N : Model R A') :
@@ -124,7 +123,6 @@ theorem prod_j_snd (M : Model R A) (N : Model R A') :
     simp [Model.prod]
   have h2 := congrArg (fun x => x.left ≫ pullback.fst N.Y.hom (spMap (algebraMap R K))) h
   simp only [Over.comp_left, Category.assoc, Over.pullback_map_left] at h2
-  erw [pullback.lift_fst] at h2
   exact (Category.assoc _ _ _).trans h2
 
 theorem twist_j (M : Model R A) (f : A ≅ A') : f.hom.left ≫ (M.twist f).j = M.j := by

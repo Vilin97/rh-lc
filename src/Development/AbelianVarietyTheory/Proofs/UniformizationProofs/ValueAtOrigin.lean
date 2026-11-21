@@ -93,7 +93,6 @@ theorem eK_gen : eSec ((Over.pullback (jK R)).obj G) ≫ U.gen.hom.left = eSec A
 omit [IsDomain R] [IsCommMonObj G] in
 theorem eK_fst : eSec ((Over.pullback (jK R)).obj G) ≫ pullback.fst G.hom (jK R) = jK R ≫ eSec G := by
   simp [eSec]
-  rw [pullback.lift_fst, ← Category.assoc, ← pullback.condition, Category.comp_id]
 
 theorem exists_normW (ρ : LB.Gen (A.L.pull (eSec A.A))) (hρ : ρ.IsGen) : ∃ w₀, NormW U w₀ ρ := by
   obtain ⟨w, hw⟩ := U.ext

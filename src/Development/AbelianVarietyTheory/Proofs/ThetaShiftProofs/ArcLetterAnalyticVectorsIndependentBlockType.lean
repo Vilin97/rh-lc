@@ -100,7 +100,7 @@ theorem exists_lift (w : ℂ) (hw : Ha.T < w.im) : ∃ xF : (Fin g → ℂ) → 
   have hw' : ∀ z, (Fu.ex Ha.i (Ha.Pw w) z).left ≫ Xo.univ.t.G.hom = yF ≫ pullback.fst _ _ := fun z =>
     (Over.w _).trans (pullback.lift_fst _ _ _).symm
   refine ⟨fun z => C.lift _ yF (hw' z), fun z => ⟨C.lift_fst _ _ _, ?_⟩, fun x z => ?_⟩
-  · rw [← Category.assoc, C.lift_snd]; exact pullback.lift_snd _ _ _
+  · rw [← Category.assoc, C.lift_snd]
   · rw [Category.assoc, ← Y.m.act x, ← Category.assoc]
     congr 1
     refine C.hom_ext ?_ ?_

@@ -146,7 +146,7 @@ private theorem gm_pullU_eq_gm_comp {S T W : Scheme.{0}} (h : T ⟶ S) (r : W �
   by_cases hz : r z ∈ h ⁻¹ᵁ V
   · have hz' : (r ≫ h) z ∈ V := hz
     simp only [gm, dif_pos hz, dif_pos hz']
-    first
+    all_goals first
     | rfl
     | (ext; simp [pullU, Scheme.comp_app])
   · have hz' : (r ≫ h) z ∉ V := hz
@@ -241,7 +241,7 @@ theorem thick_map_eq {R : Type} [CommRing R] {I : Ideal R} {n : ℕ} {G G' : Ove
       pullback.snd G.hom (Out.thick R I n) := by
     first
     | (simp [Over.pullback]; done)
-    | (simp [Over.pullback]; exact pullback.lift_snd _ _ _)
+    | (simp [Over.pullback])
     | exact pullback.lift_snd _ _ _
   apply pullback.hom_ext
   · rw [hh', m1]

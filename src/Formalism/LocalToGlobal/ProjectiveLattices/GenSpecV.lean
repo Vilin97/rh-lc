@@ -138,7 +138,7 @@ theorem gsv_eig_iff [Algebra c.F L] (hx : IsUnivChart _ n xc) (τ : E →+* ℂ)
       pullback.fst Xo.univ.t.G.hom x ≫ (Xo.univ.t.act.act a).left := by
     intro a
     simp
-    first
+    all_goals first
     | exact pullback.lift_fst _ _ _
     | erw [pullback.lift_fst]
     | (rw [limit.lift_π]; rfl)

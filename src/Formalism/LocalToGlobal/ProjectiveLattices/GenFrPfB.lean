@@ -55,7 +55,7 @@ theorem gfpVec_tmap (hx : IsUnivChart _ n xc) (a : 𝓞 E) (cc : Fin n → L) :
   have e1 : ((Over.pullback x).map (Xo.univ.t.act.act a)).left ≫ pullback.fst Xo.univ.t.G.hom x =
       pullback.fst Xo.univ.t.G.hom x ≫ (Xo.univ.t.act.act a).left := by
     simp
-    first
+    all_goals first
     | exact pullback.lift_fst _ _ _
     | erw [pullback.lift_fst]
     | (rw [limit.lift_π]; rfl)

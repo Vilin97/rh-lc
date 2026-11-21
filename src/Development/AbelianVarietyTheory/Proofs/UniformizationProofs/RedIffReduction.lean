@@ -157,7 +157,6 @@ theorem existsUnique_red [IsAdicComplete (I.map φ) S] (g : GtPt D (Over.mk (spM
     intro n
     unfold thickMap fstG
     simp only [pullback.map, Category.comp_id]
-    exact pullback.lift_fst _ _ _
 
   have hcomp : ∀ n, GlobalTheory.adicLevelMap (I.map φ) (Nat.le_succ (n + 1)) ≫ y (n + 1) = y n ≫ thickMap R I n G := by
     intro n

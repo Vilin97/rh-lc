@@ -79,7 +79,6 @@ lemma hMap_thick (Y : Over (Spec (CommRingCat.of R))) (Y' : Over (Spec (CommRing
   apply pullback.hom_ext
   · rw [Category.assoc, Category.assoc, hMap_fst]
     simp only [thickMap, pullback.map]
-    erw [pullback.lift_fst_assoc, pullback.lift_fst]
     simp only [Category.comp_id, Category.id_comp]
     rw [hMap_fst]
   · rw [Category.assoc, Category.assoc, hMap_snd]
@@ -329,7 +328,7 @@ variable (hφ) {D : DegPre R} {D' : DegPre R'} (eB : D'.P.A ≅ (Over.pullback (
 
 def iL : (splitTorus (Spec (CommRingCat.of (R' ⧸ I' ^ (e + 1)))) D'.X).left ⟶ (thickObj R' I' e G').left :=
   (grpG hφ e bc).1.lift (hT hφ e xe ≫ g.i.left) (splitTorus _ D'.X).hom (by
-    rw [Category.assoc, Over.w g.i]; exact pullback.lift_snd _ _ _)
+    rw [Category.assoc, Over.w g.i])
 
 def iP : splitTorus (Spec (CommRingCat.of (R' ⧸ I' ^ (e + 1)))) D'.X ⟶ thickObj R' I' e G' :=
   Over.homMk (iL hφ xe bc g) ((grpG hφ e bc).1.lift_snd _ _ _)

@@ -62,7 +62,6 @@ theorem lift_of_finite : ∀ (R K : CommRingCat) (φ : R ⟶ K),
   refine ⟨Spec.map s ≫ (pullback p ξ₀).isoSpec.inv ≫ pullback.fst p ξ₀, ?_, ?_⟩
   · rw [← Category.assoc, ← Spec.map_comp, hs2, hfS]
     simp only [l, Category.assoc, Iso.hom_inv_id_assoc]
-    exact pullback.lift_fst _ _ _
   · rw [Category.assoc, Category.assoc, pullback.condition, ← Category.assoc _ (pullback.snd p ξ₀),
       ← hgS, ← Category.assoc, ← Spec.map_comp, hs1, Spec.map_id, Category.id_comp]
 

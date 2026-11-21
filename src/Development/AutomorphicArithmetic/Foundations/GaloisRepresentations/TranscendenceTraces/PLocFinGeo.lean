@@ -26,4 +26,3 @@ theorem UpperTheory.Gal.TranscendenceTraces.locFinGeo_of :
   refine ⟨φ ≫ s ≫ pullback.fst π (pullback.fst r ι), ?_⟩
   rw [Category.assoc, Category.assoc, pullback.condition, ← Category.assoc s, hs]
   simp only [φ]
-  rw [pullback.lift_fst_assoc, pullback.lift_fst]
