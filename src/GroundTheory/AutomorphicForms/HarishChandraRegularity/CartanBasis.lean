@@ -104,10 +104,10 @@ open NormedSpace
 open scoped Matrix.Norms.L2Operator
 
 theorem isExpLieAlgebra_top {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [CompleteSpace 𝔸]
-    [FiniteDimensional ℝ 𝔸] : IsExpLieAlgebra (⊤ : Subgroup 𝔸ˣ) (⊤ : Submodule ℝ 𝔸) where
-  expUnit_mem _ _ := Subgroup.mem_top _
-  exists_nhds := ⟨(expPartialHomeomorph ℝ 𝔸).source, (expPartialHomeomorph ℝ 𝔸).open_source,
-    zero_mem_expPartialHomeomorph_source ℝ 𝔸, subset_rfl, fun _ _ _ => Submodule.mem_top⟩
+    [FiniteDimensional ℝ 𝔸] : IsExpLieAlgebra (⊤ : Subgroup 𝔸ˣ) (⊤ : Submodule ℝ 𝔸) := by
+  refine ⟨fun _ _ => Subgroup.mem_top _, ?_⟩
+  exact ⟨(expPartialHomeomorph ℝ 𝔸).source, (expPartialHomeomorph ℝ 𝔸).open_source,
+    zero_mem_expPartialHomeomorph_source ℝ 𝔸, Set.Subset.rfl, fun _ _ _ => Submodule.mem_top⟩
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 

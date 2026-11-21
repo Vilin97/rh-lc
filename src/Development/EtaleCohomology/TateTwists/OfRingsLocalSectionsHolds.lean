@@ -35,7 +35,7 @@ theorem cov_pt {U : Scheme.{0}} (S : Sieve U) (hS : S ∈ Scheme.etaleTopology U
   · exact (ι_comp_apply (𝒰.f i) W y hyW).trans hy
   · exact S.downward_closed (hle _ _ (Presieve.ofArrows.mk i)) (Scheme.Opens.ι W)
 
-theorem loc_inj {U : Scheme.{0}} (m : M.obj Γ(U, ⊤)) (hm : ofRings.sec M U m = 0) (u : U) :
+theorem loc_inj {U : Scheme.{0}} (m : M.obj Γ(U, ⊤)) (hm : ofRings.sec R M U m = 0) (u : U) :
     ∃ (V : Scheme.{0}) (j : V ⟶ U) (v : V),
       IsAffine V ∧ Etale j ∧ j v = u ∧ (M.map j.appTop).hom m = 0 := by
   have h0 : ConcreteCategory.hom ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)).app (op U)) m =

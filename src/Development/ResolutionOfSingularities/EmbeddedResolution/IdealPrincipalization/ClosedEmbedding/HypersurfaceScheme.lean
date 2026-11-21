@@ -122,12 +122,23 @@ theorem nonzeroOnComponents_of_locally_eq_coordIdeal {Y : Scheme.{u}} {k : Type 
   have hVU : V ≤ U := fun z hz => (hVsub hz).1
   have hVdisj : ∀ z : ↥Y, z ∈ V → z ∉ (⋃₀ (irreducibleComponents ↥Y \ {T})) :=
     fun z hz => (hVsub hz).2
-  have hKV : restrictIdeal K V = (ch.restrict hVU).coordIdeal S :=
-    restrictIdeal_eq_restrict_coordIdeal_of_le hVU ch K S hKU
+  let cV : EtaleChart q V m := {
+    map := Y.homOfLE hVU ≫ ch.map
+    comp_struct := by rw [Category.assoc, ch.comp_struct, ← Category.assoc, Scheme.homOfLE_ι]
+    isEtale := by
+      have := ch.isEtale
+      infer_instance }
+  have hKV : restrictIdeal K V = cV.coordIdeal S := by
+    have h' : K.comap U.ι = (coordSubspaceIdeal k m S).comap ch.map := by
+      rw [← restrictIdeal_eq_comap_ι, hKU, EtaleChart.coordIdeal_eq_comap_coordSubspaceIdeal]
+    rw [restrictIdeal_eq_comap_ι, EtaleChart.coordIdeal_eq_comap_coordSubspaceIdeal]
+    change K.comap V.ι = (coordSubspaceIdeal k m S).comap (Y.homOfLE hVU ≫ ch.map)
+    rw [Scheme.IdealSheafData.comap_comp, ← h', ← Scheme.IdealSheafData.comap_comp,
+      Scheme.homOfLE_ι]
   have : IsAffine V.toScheme := hVaff
   have haffineTop : IsAffineOpen (⊤ : V.toScheme.Opens) := isAffineOpen_top V.toScheme
-  have hEt : AlgebraicGeometry.Etale ((⊤ : V.toScheme.Opens).ι ≫ (ch.restrict hVU).map) := by
-    have : AlgebraicGeometry.Etale (ch.restrict hVU).map := (ch.restrict hVU).isEtale
+  have hEt : AlgebraicGeometry.Etale ((⊤ : V.toScheme.Opens).ι ≫ cV.map) := by
+    have : AlgebraicGeometry.Etale cV.map := cV.isEtale
     infer_instance
   have hmemV : ∀ y : ↥V.toScheme, (V.ι).base y ∈ V := by
     intro y
@@ -136,7 +147,7 @@ theorem nonzeroOnComponents_of_locally_eq_coordIdeal {Y : Scheme.{u}} {k : Type 
       exact ⟨y, rfl⟩
     exact h
   have hsupp : ∀ y : ↥V.toScheme,
-      y ∈ ((ch.restrict hVU).coordIdeal ({j} : Finset (Fin m))).support := by
+      y ∈ (cV.coordIdeal ({j} : Finset (Fin m))).support := by
     intro y
     have hyV : (V.ι).base y ∈ V := hmemV y
     have hyT : (V.ι).base y ∈ T := hOsub _ (hVdisj _ hyV)
@@ -144,16 +155,16 @@ theorem nonzeroOnComponents_of_locally_eq_coordIdeal {Y : Scheme.{u}} {k : Type 
     have h2 : y ∈ ((K.comap V.ι).support : Set ↥V.toScheme) := by
       rw [support_comap_eq V.ι K]
       exact hmem
-    have h3 : y ∈ ((ch.restrict hVU).coordIdeal S).support := by
+    have h3 : y ∈ (cV.coordIdeal S).support := by
       rw [← hKV, restrictIdeal_eq_comap_ι]
       exact h2
     rw [← one_le_orderAt_iff_mem_support] at h3 ⊢
     exact le_trans h3 (orderAt_le_of_le
-      ((ch.restrict hVU).coordIdeal_mono (Finset.singleton_subset_iff.mpr hjS)) y)
+      (cV.coordIdeal_mono (Finset.singleton_subset_iff.mpr hjS)) y)
   have y₀ : ↥V.toScheme := (⟨x, hxV⟩ : ↥V)
-  exact false_of_forall_mem_support_of_coordIdeal_singleton (V.ι ≫ q) haffineTop (chartOnOpenSubscheme (ch.restrict hVU) hEt) j
-    ((ch.restrict hVU).coordIdeal ({j} : Finset (Fin m)))
-    (restrictIdeal_top_coordIdeal (ch.restrict hVU) hEt ({j} : Finset (Fin m))) hsupp y₀
+  exact false_of_forall_mem_support_of_coordIdeal_singleton (V.ι ≫ q) haffineTop (chartOnOpenSubscheme cV hEt) j
+    (cV.coordIdeal ({j} : Finset (Fin m)))
+    (restrictIdeal_top_coordIdeal cV hEt ({j} : Finset (Fin m))) hsupp y₀
 
 namespace MaximalContactCover
 
@@ -185,10 +196,21 @@ theorem nonzeroOnComponents_iInfImageIdeal (C : MaximalContactCover p τ I c)
       rw [MaxContactReduction.FiniteOpenCoverWithIdeals.restrictIdeal_iInfImageIdeal_summandOpen, htop]
       simp
     exact notMem_support_of_mem_opens_of_restrictIdeal_eq_top _ _ h1 y hi hy
-  · refine ⟨C.toCoverData.summandOpen i, hi, n, C.toCoverData.summandEtaleChart i ch, {j},
-      ⟨j, Finset.mem_singleton_self j⟩, ?_⟩
+  · let D := C.toCoverData
+    let c : EtaleChart (C.projection ≫ p) (D.summandOpen i) n := {
+      map := (D.summandIso i).inv ≫ ch.map
+      comp_struct := by
+        rw [Category.assoc, ch.comp_struct, ← Category.assoc,
+          ← MaxContactReduction.FiniteOpenCoverWithIdeals.summandOpen_ι_comp_disjointUnionMap,
+          Category.assoc]
+      isEtale := by
+        have := ch.isEtale
+        infer_instance }
+    refine ⟨D.summandOpen i, hi, n, c, {j}, ⟨j, Finset.mem_singleton_self j⟩, ?_⟩
     rw [MaxContactReduction.FiniteOpenCoverWithIdeals.restrictIdeal_iInfImageIdeal_summandOpen, hch,
-      MaxContactReduction.FiniteOpenCoverWithIdeals.summandEtaleChart_coordIdeal]
+      EtaleChart.coordIdeal_eq_comap_coordSubspaceIdeal, EtaleChart.coordIdeal_eq_comap_coordSubspaceIdeal]
+    change _ = (coordSubspaceIdeal k n {j}).comap ((D.summandIso i).inv ≫ ch.map)
+    rw [Scheme.IdealSheafData.comap_comp]
 
 theorem ker_pullbackFiberToHypersurface_le_idealOnHypersurface (C : MaximalContactCover p τ I c) [IsClosedImmersion τ] :
     Scheme.Hom.ker C.pullbackFiberToHypersurface ≤ C.idealOnHypersurface := by

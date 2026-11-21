@@ -112,6 +112,8 @@ theorem kernel_near_one : ∀ {n : ℕ} (ε : Fin n → Bool), ∃ C : ℝ, 0 �
   · rw [integral_div, ← hZ, div_self Zpos.ne']
   · have := Submodule.smul_mem _ ((Z⁻¹ : ℝ) : ℂ) (phipow_mem ε A m)
     convert this using 1
+    funext k
+    simp only [hφ, hh, Pi.smul_apply, smul_eq_mul]
     push_cast
     ring
 

@@ -37,7 +37,7 @@ lemma epsScalePt_mul (a b : k) : epsScalePt x a ≫ epsScalePt x b = epsScalePt 
   rw [sqZeroMapPt_comp]
   congr 1
   refine LinearMap.ext_ring ?_
-  simp [mul_comm]
+  simp
 
 variable (G : Over S) [GrpObj G] [IsCommMonObj G]
 
@@ -66,6 +66,7 @@ def Tan.mk (w : epsPtR x ⟶ G) (hw : w ∈ tanSub x G) : Tan x G := Additive.of
 
 lemma Tan.hom_mem (v : Tan x G) : v.hom ∈ tanSub x G := (Additive.toMul v : tanSub x G).2
 
+@[ext] lemma Tan.ext {v w : Tan x G} (h : v.hom = w.hom) : v = w :=
   Additive.toMul.injective (Subtype.ext h)
 
 def Tan.homAdd : Tan x G →+ Additive (epsPtR x ⟶ G) := (tanSub x G).subtype.toAdditive
@@ -101,11 +102,13 @@ def Tan.map (f : G ⟶ G) [IsMonHom f] : Tan x G →ₗ[k] Tan x G where
 def actEnd {O : Type} [Ring O] (a : OActN O G) : O →+* Module.End k (Tan x G) where
   toFun b := haveI := a.hom b; Tan.map (a.act b)
   map_one' := by
-    ext v
-    simp [a.one]
+    refine LinearMap.ext fun v => Tan.ext ?_
+    change v.hom ≫ a.act 1 = v.hom
+    rw [a.one, Category.comp_id]
   map_mul' b c := by
-    ext v
-    simp [a.mul, Module.End.mul_apply]
+    refine LinearMap.ext fun v => Tan.ext ?_
+    change v.hom ≫ a.act (b * c) = (v.hom ≫ a.act c) ≫ a.act b
+    rw [a.mul, Category.assoc]
   map_zero' := by
     have h : a.act 0 = 1 := by
       have := a.add 0 0
@@ -115,7 +118,8 @@ def actEnd {O : Type} [Ring O] (a : OActN O G) : O →+* Module.End k (Tan x G) 
     change v.hom ≫ a.act 0 = 1
     rw [h, comp_one]
   map_add' b c := by
-    ext v
-    simp [a.add, comp_mul]
+    refine LinearMap.ext fun v => Tan.ext ?_
+    change v.hom ≫ a.act (b + c) = (v.hom ≫ a.act b) * (v.hom ≫ a.act c)
+    rw [a.add, comp_mul]
 
 end GlobalTheory.TanPtMod

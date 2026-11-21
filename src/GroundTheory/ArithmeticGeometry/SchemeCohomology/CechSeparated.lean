@@ -73,19 +73,17 @@ lemma inter_basicOpen {V : X.Opens} {κ : Type u} (h : κ → Γ(X, V)) :
     rfl
 
 lemma isCoverSystem_isBasicCover :
-    IsCoverSystem (X := X.toTopCat) IsAffineOpen (fun {κ} V U => IsBasicCover (κ := κ) V U) where
-  iSup_eq := by
-    intro V κ U hU
+    IsCoverSystem (X := X.toTopCat) IsAffineOpen (fun {κ} V U => IsBasicCover (κ := κ) V U) := by
+  constructor
+  · intro V κ U hU
     exact hU.2.choose_spec.2
-  inter_mem := by
-    intro V κ U hU n i
+  · intro V κ U hU n i
     obtain ⟨hV, h, hUh, -⟩ := hU
     have : U = fun a => X.basicOpen (h a) := funext hUh
     subst this
     rw [inter_basicOpen h i]
     exact hV.basicOpen _
-  exists_refinement := by
-    intro V hV O hO
+  · intro V hV O hO
     choose f hfO hxf using fun x : V => hV.exists_basicOpen_le (V := O x) ⟨x.1, hO x⟩ x.2
     obtain ⟨fs, hfs⟩ := hV.isCompact.elim_finite_subcover
       (fun x : V => (X.basicOpen (f x) : Set X)) (fun x => (X.basicOpen (f x)).isOpen)

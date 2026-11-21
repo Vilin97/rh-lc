@@ -45,7 +45,7 @@ theorem unip_inv_mem (b : ι → Fin s) {g : GL ι K}
   rw [← h]
   exact Matrix.submatrix_one _ Subtype.val_injective
 
-
+open Classical in
 theorem sum_rho_unip (τ : FDRep ℂ (GL ι K)) (hc : Formalism.IrreducibleCountingLemmas.TYPES.IsCuspidal K τ)
     (b : ι → Fin s) (hb : Function.Surjective b) (hs : 2 ≤ s) :
     (∑ v : GL ι K, if v ∈ Formalism.IrreducibleCountingLemmas.TYPES.unip K b then τ.ρ v else 0) = 0 := by

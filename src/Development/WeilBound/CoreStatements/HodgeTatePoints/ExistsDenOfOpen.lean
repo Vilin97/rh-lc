@@ -23,7 +23,8 @@ theorem emb : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T] 
       val (Γ.pt t).left s = algebraMap R (FractionRing R) (a.1 t) := by
     have ha := (Twhopf.mem_order R T Γ ⊤ a.1).1 a.2
     obtain ⟨s, hs⟩ := (Twhopf.reg_iff R T Γ ⊤ _).1 (ha 1)
-    exact ⟨s, fun t => by simpa only [htop, _root_.one_mul] using hs t le_top⟩
+    refine ⟨s, fun t => (htop t le_top s).symm.trans ?_⟩
+    simpa only [_root_.one_mul] using hs t le_top
   have hsec_ext {s s' : Γ(Γ.G.left, ⊤)}
       (h : ∀ t, val (Γ.pt t).left s = val (Γ.pt t).left s') : s = s' := by
     rw [← sub_eq_zero]
@@ -143,7 +144,8 @@ theorem char : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T]
     rw [Twhopf.mem_order]
     change (∀ t, ∀ g ∈ (⊤ : Γ.G.left.Opens), Γ.RegularAt
       (fun h => algebraMap R (FractionRing R) (f (t * h))) g) ↔ _
-    simp [Twhopf.reg_iff, htop]
+    simp only [Twhopf.reg_iff, htop]
+    simp
   have hval (t : T) (a : A) :
       val (Γ.pt t).left (pb j a) = algebraMap R (FractionRing R) (a.1 t) :=
     val_pb (hj.pt t) a

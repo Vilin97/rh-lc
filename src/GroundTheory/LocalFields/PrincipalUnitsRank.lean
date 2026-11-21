@@ -36,18 +36,18 @@ variable [CharP 𝓀[K] p] [CharZero K]
 noncomputable def padicIntHom : ℤ_[p] →+* K :=
   (CharZero.padicHom K p).comp PadicInt.Coe.ringHom
 
-theorem padicIntHom_mem (a : ℤ_[p]) : padicIntHom K p a ∈ 𝒪[K] :=
+theorem padicIntHom_mem (a : ℤ_[p]) : padicIntHom (K := K) p a ∈ 𝒪[K] :=
   CharZero.valuation_padicHom_padicInt_le_one K p a
 
 
 noncomputable def padicIntHomInteger : ℤ_[p] →+* 𝒪[K] :=
-  (padicIntHom K p).codRestrict 𝒪[K] (padicIntHom_mem p)
+  (padicIntHom (K := K) p).codRestrict 𝒪[K] (padicIntHom_mem p)
 
 
-noncomputable abbrev algebraK : Algebra ℤ_[p] K := (padicIntHom K p).toAlgebra
+noncomputable abbrev algebraK : Algebra ℤ_[p] K := (padicIntHom (K := K) p).toAlgebra
 
 
-noncomputable abbrev algebraInteger : Algebra ℤ_[p] 𝒪[K] := (padicIntHomInteger K p).toAlgebra
+noncomputable abbrev algebraInteger : Algebra ℤ_[p] 𝒪[K] := (padicIntHomInteger (K := K) p).toAlgebra
 
 attribute [local instance] algebraK algebraInteger
 
@@ -55,7 +55,7 @@ theorem finite_and_finrank_integer :
     Module.Finite ℤ_[p] 𝒪[K] ∧ Module.finrank ℤ_[p] 𝒪[K] =
       (letI := (CharZero.padicHom K p).toAlgebra; Module.finrank ℚ_[p] K) := by
   let := (CharZero.padicHom K p).toAlgebra
-  have : ValuativeExtension ℚ_[p] K := ⟨CharZero.padicHom_vle_iff K p⟩
+  have : ValuativeExtension ℚ_[p] K := ⟨fun {a b} ↦ CharZero.padicHom_vle_iff K p a b⟩
   have : FiniteDimensional ℚ_[p] K := CharZero.finiteDimensional_padicHom K p
   have hfin : Module.Finite 𝒪[ℚ_[p]] 𝒪[K] := finite_integer ℚ_[p] K
   have hrank := finrank_integer ℚ_[p] K
@@ -70,12 +70,14 @@ theorem finite_and_finrank_integer :
     (fun r m ↦ rfl)
   exact congrArg Cardinal.toNat this
 
-theorem padicIntHom_mem_valBall_zero (a : ℤ_[p]) : padicIntHom K p a ∈ valBall K 0 :=
-  padicHom_padicInt_mem_valBall_zero p a
+theorem padicIntHom_mem_valBall_zero (a : ℤ_[p]) :
+    padicIntHom (K := K) p a ∈ valBall (K := K) 0 := by
+  rw [mem_valBall, neg_zero, WithZero.exp_zero, normalizedValuation_le_one_iff]
+  exact padicIntHom_mem p a
 
 
 noncomputable def valBallSubmodule (m : ℤ) : Submodule ℤ_[p] K where
-  carrier := valBall K m
+  carrier := valBall (K := K) m
   add_mem' := add_mem
   zero_mem' := zero_mem _
   smul_mem' a x hx := by
@@ -84,11 +86,12 @@ noncomputable def valBallSubmodule (m : ℤ) : Submodule ℤ_[p] K where
     rw [zero_add] at h
     exact h
 
-theorem mem_valBallSubmodule {m : ℤ} {x : K} : x ∈ valBallSubmodule K p m ↔ x ∈ valBall K m :=
+theorem mem_valBallSubmodule {m : ℤ} {x : K} :
+    x ∈ valBallSubmodule (K := K) p m ↔ x ∈ valBall (K := K) m :=
   Iff.rfl
 
 
-noncomputable def valBallSubmoduleZeroEquiv : valBallSubmodule K p 0 ≃ₗ[ℤ_[p]] 𝒪[K] where
+noncomputable def valBallSubmoduleZeroEquiv : valBallSubmodule (K := K) p 0 ≃ₗ[ℤ_[p]] 𝒪[K] where
   toFun x := ⟨x, mem_integer_of_mem_valBall le_rfl x.2⟩
   invFun y := ⟨y, by
     rw [mem_valBallSubmodule, mem_valBall, neg_zero, WithZero.exp_zero,
@@ -100,8 +103,8 @@ noncomputable def valBallSubmoduleZeroEquiv : valBallSubmodule K p 0 ≃ₗ[ℤ_
 
 
 noncomputable def valBallSubmoduleEquiv (m : ℤ) :
-    valBallSubmodule K p 0 ≃ₗ[ℤ_[p]] valBallSubmodule K p m :=
-  have hy := exists_normalizedValuation_eq K (-m)
+    valBallSubmodule (K := K) p 0 ≃ₗ[ℤ_[p]] valBallSubmodule (K := K) p m :=
+  have hy := exists_normalizedValuation_eq (K := K) (-m)
   let y := hy.choose
   have hy0 : y ≠ 0 := by
     intro h
@@ -109,11 +112,11 @@ noncomputable def valBallSubmoduleEquiv (m : ℤ) :
     rw [show hy.choose = y from rfl, h, map_zero] at this
     exact WithZero.exp_ne_zero this.symm
   { toFun x := ⟨y * x, (mem_valBallSubmodule p).mpr (by
-      have := mul_mem_valBall (show y ∈ valBall K m by
+      have := mul_mem_valBall (show y ∈ valBall (K := K) m by
         rw [mem_valBall, show y = hy.choose from rfl, hy.choose_spec]) x.2
       simpa using this)⟩
     invFun x := ⟨y⁻¹ * x, (mem_valBallSubmodule p).mpr (by
-      have := mul_mem_valBall (show y⁻¹ ∈ valBall K (-m) by
+      have := mul_mem_valBall (show y⁻¹ ∈ valBall (K := K) (-m) by
         rw [mem_valBall, map_inv₀, show y = hy.choose from rfl, hy.choose_spec,
           ← WithZero.exp_neg]) x.2
       simpa using this)⟩
@@ -126,14 +129,15 @@ noncomputable def valBallSubmoduleEquiv (m : ℤ) :
       ring }
 
 theorem finite_and_finrank_valBallSubmodule (m : ℤ) :
-    Module.Finite ℤ_[p] (valBallSubmodule K p m) ∧ Module.finrank ℤ_[p] (valBallSubmodule K p m) =
-      (letI := (CharZero.padicHom K p).toAlgebra; Module.finrank ℚ_[p] K) := by
+    Module.Finite ℤ_[p] (valBallSubmodule (K := K) p m) ∧
+      Module.finrank ℤ_[p] (valBallSubmodule (K := K) p m) =
+        (letI := (CharZero.padicHom K p).toAlgebra; Module.finrank ℚ_[p] K) := by
   obtain ⟨h1, h2⟩ := finite_and_finrank_integer (K := K) p
-  have e := (valBallSubmoduleEquiv K p m).symm.trans (valBallSubmoduleZeroEquiv K p)
+  have e := (valBallSubmoduleEquiv (K := K) p m).symm.trans (valBallSubmoduleZeroEquiv (K := K) p)
   exact ⟨Module.Finite.equiv e.symm, e.finrank_eq.trans h2⟩
 
 theorem rank_valBallSubmodule (m : ℤ) :
-    Module.rank ℤ_[p] (valBallSubmodule K p m) =
+    Module.rank ℤ_[p] (valBallSubmodule (K := K) p m) =
       (letI := (CharZero.padicHom K p).toAlgebra; Module.finrank ℚ_[p] K) := by
   obtain ⟨h1, h2⟩ := finite_and_finrank_valBallSubmodule (K := K) p m
   rw [← h2]
@@ -149,25 +153,27 @@ noncomputable def padicLogLinear : Additive (unitFiltrationUnits K 1) →ₗ[ℤ
 
 omit [CharZero K] in
 theorem mem_principalFiltration_zero (u : Additive (unitFiltrationUnits K 1)) :
-    u ∈ principalFiltration K 0 := by
+    u ∈ principalFiltration (K := K) 0 := by
   rw [principalFiltration_zero]; trivial
 
 theorem padicLog_nsmul_mem (u : Additive (unitFiltrationUnits K 1)) :
-    padicLog K (p ^ absRamificationIndex K • u) ∈ valBall K (absRamificationIndex K + 1) := by
+    padicLog K (p ^ absRamificationIndex (K := K) • u) ∈
+      valBall (K := K) (absRamificationIndex (K := K) + 1) := by
   have := nsmul_prime_pow_mem_principalFiltration p (mem_principalFiltration_zero u)
-    (absRamificationIndex K)
+    (absRamificationIndex (K := K))
   rw [zero_add] at this
   exact_mod_cast padicLog_mem_valBall_of_mem p le_rfl this
 
 
+include p in
 theorem padicLog_mem_valBall_bound (u : Additive (unitFiltrationUnits K 1)) :
-    padicLog K u ∈ valBall K (absRamificationIndex K + 1 -
-      absRamificationIndex K * absRamificationIndex K) := by
-  set e := absRamificationIndex K
+    padicLog K u ∈ valBall (K := K) (absRamificationIndex (K := K) + 1 -
+      absRamificationIndex (K := K) * absRamificationIndex (K := K)) := by
+  set e := absRamificationIndex (K := K)
   have h := padicLog_nsmul_mem p u
   rw [map_nsmul, nsmul_eq_mul] at h
   have hp0 : ((p ^ e : ℕ) : K) ≠ 0 := Nat.cast_ne_zero.mpr (pow_ne_zero _ hp.out.ne_zero)
-  have hinv : (((p ^ e : ℕ) : K))⁻¹ ∈ valBall K (-(e * e : ℤ)) := by
+  have hinv : (((p ^ e : ℕ) : K))⁻¹ ∈ valBall (K := K) (-(e * e : ℤ)) := by
     rw [mem_valBall, map_inv₀, Nat.cast_pow, map_pow, normalizedValuation_natCast_prime p,
       ← WithZero.exp_nsmul, ← WithZero.exp_neg]
     simp
@@ -178,23 +184,24 @@ theorem padicLog_mem_valBall_bound (u : Additive (unitFiltrationUnits K 1)) :
   convert this using 2
   ring
 
-theorem range_padicLogLinear_le : LinearMap.range (padicLogLinear K p) ≤
-    valBallSubmodule K p (absRamificationIndex K + 1 -
-      absRamificationIndex K * absRamificationIndex K) := by
+theorem range_padicLogLinear_le : LinearMap.range (padicLogLinear (K := K) p) ≤
+    valBallSubmodule (K := K) p (absRamificationIndex (K := K) + 1 -
+      absRamificationIndex (K := K) * absRamificationIndex (K := K)) := by
   rintro _ ⟨u, rfl⟩
   exact padicLog_mem_valBall_bound p u
 
 omit [CharP 𝓀[K] p] [CharZero K] in
-theorem lt_sub_one_mul_succ : (absRamificationIndex K : ℤ) <
-    (p - 1 : ℤ) * ((absRamificationIndex K + 1 : ℕ) : ℤ) := by
+theorem lt_sub_one_mul_succ : (absRamificationIndex (K := K) : ℤ) <
+    (p - 1 : ℤ) * ((absRamificationIndex (K := K) + 1 : ℕ) : ℤ) := by
   have hp2 : (2 : ℤ) ≤ p := by exact_mod_cast hp.out.two_le
   push_cast
   nlinarith
 
-theorem valBallSubmodule_le_range : valBallSubmodule K p ((absRamificationIndex K + 1 : ℕ) : ℤ) ≤
-    LinearMap.range (padicLogLinear K p) := by
+theorem valBallSubmodule_le_range :
+    valBallSubmodule (K := K) p ((absRamificationIndex (K := K) + 1 : ℕ) : ℤ) ≤
+      LinearMap.range (padicLogLinear (K := K) p) := by
   intro y hy
-  set n := absRamificationIndex K + 1
+  set n := absRamificationIndex (K := K) + 1
   have hn := lt_sub_one_mul_succ (K := K) p
   set w := (logValBallEquiv p n hn).symm ⟨y, hy⟩
   have h1 : 1 ≤ n := by omega
@@ -204,8 +211,8 @@ theorem valBallSubmodule_le_range : valBallSubmodule K p ((absRamificationIndex 
   exact this
 
 theorem nsmul_eq_zero_of_padicLog_eq_zero {u : Additive (unitFiltrationUnits K 1)}
-    (hu : padicLog K u = 0) : p ^ absRamificationIndex K • u = 0 := by
-  set e := absRamificationIndex K
+    (hu : padicLog K u = 0) : p ^ absRamificationIndex (K := K) • u = 0 := by
+  set e := absRamificationIndex (K := K)
   have hw := nsmul_prime_pow_mem_principalFiltration p (mem_principalFiltration_zero u) e
   rw [zero_add, mem_principalFiltration] at hw
   have hlog : logSeries ((((Additive.toMul (p ^ e • u) : unitFiltrationUnits K 1) : Kˣ) : K) - 1)
@@ -216,9 +223,9 @@ theorem nsmul_eq_zero_of_padicLog_eq_zero {u : Additive (unitFiltrationUnits K 1
   ext
   simpa [sub_eq_zero] using this
 
-theorem finite_ker_padicLog : Finite (LinearMap.ker (padicLogLinear K p)) := by
-  set e := absRamificationIndex K
-  let f : LinearMap.ker (padicLogLinear K p) → rootsOfUnity (p ^ e) K := fun u ↦
+theorem finite_ker_padicLog : Finite (LinearMap.ker (padicLogLinear (K := K) p)) := by
+  set e := absRamificationIndex (K := K)
+  let f : LinearMap.ker (padicLogLinear (K := K) p) → rootsOfUnity (p ^ e) K := fun u ↦
     ⟨((Additive.toMul (u : Additive (unitFiltrationUnits K 1)) : unitFiltrationUnits K 1) : Kˣ), by
       have h := nsmul_eq_zero_of_padicLog_eq_zero p (LinearMap.mem_ker.mp u.2)
       have := congrArg (fun v : Additive (unitFiltrationUnits K 1) ↦
@@ -228,19 +235,20 @@ theorem finite_ker_padicLog : Finite (LinearMap.ker (padicLogLinear K p)) := by
   have := congrArg (fun z : rootsOfUnity (p ^ e) K ↦ (z : Kˣ)) huv
   exact Subtype.ext (Additive.toMul.injective (Subtype.ext this))
 
-theorem fg_ker_padicLogLinear : (LinearMap.ker (padicLogLinear K p)).FG := by
-  have := finite_ker_padicLog (K := K) p
-  have hfin : (LinearMap.ker (padicLogLinear K p) : Set (Additive (unitFiltrationUnits K 1))).Finite :=
+theorem fg_ker_padicLogLinear : (LinearMap.ker (padicLogLinear (K := K) p)).FG := by
+  have := finite_ker_padicLog K p
+  have hfin : (LinearMap.ker (padicLogLinear (K := K) p) : Set (Additive (unitFiltrationUnits K 1))).Finite :=
     Set.toFinite _
   refine ⟨hfin.toFinset, ?_⟩
   rw [Set.Finite.coe_toFinset, Submodule.span_eq]
 
-theorem fg_range_padicLogLinear : (LinearMap.range (padicLogLinear K p)).FG := by
-  set c : ℤ := absRamificationIndex K + 1 - absRamificationIndex K * absRamificationIndex K
-  have : Module.Finite ℤ_[p] (valBallSubmodule K p c) :=
+theorem fg_range_padicLogLinear : (LinearMap.range (padicLogLinear (K := K) p)).FG := by
+  set e := absRamificationIndex (K := K)
+  set c : ℤ := e + 1 - e * e
+  have : Module.Finite ℤ_[p] (valBallSubmodule (K := K) p c) :=
     (finite_and_finrank_valBallSubmodule (K := K) p c).1
-  have : IsNoetherian ℤ_[p] (valBallSubmodule K p c) := inferInstance
-  have : IsNoetherian ℤ_[p] (LinearMap.range (padicLogLinear K p)) :=
+  have : IsNoetherian ℤ_[p] (valBallSubmodule (K := K) p c) := inferInstance
+  have : IsNoetherian ℤ_[p] (LinearMap.range (padicLogLinear (K := K) p)) :=
     isNoetherian_of_le (range_padicLogLinear_le p)
   exact (Submodule.fg_top _).mp (IsNoetherian.noetherian ⊤)
 
@@ -255,7 +263,7 @@ attribute [local instance] algebraK algebraInteger
 theorem finite_principalUnits (p : ℕ) [Fact p.Prime] [CharP 𝓀[K] p] [CharZero K] :
     Module.Finite ℤ_[p] (Additive (unitFiltrationUnits K 1)) := by
   refine ⟨?_⟩
-  have h := Submodule.fg_of_fg_map_of_fg_inf_ker (padicLogLinear K p)
+  have h := Submodule.fg_of_fg_map_of_fg_inf_ker (padicLogLinear (K := K) p)
     (s := ⊤) (by rw [Submodule.map_top]; exact fg_range_padicLogLinear p)
     (by rw [top_inf_eq]; exact fg_ker_padicLogLinear p)
   exact h
@@ -264,22 +272,22 @@ theorem finrank_principalUnits (p : ℕ) [Fact p.Prime] [CharP 𝓀[K] p] [CharZ
     Module.finrank ℤ_[p] (Additive (unitFiltrationUnits K 1)) =
       (letI := (CharZero.padicHom K p).toAlgebra; Module.finrank ℚ_[p] K) := by
   set d := (letI := (CharZero.padicHom K p).toAlgebra; Module.finrank ℚ_[p] K)
-  have hker : Module.rank ℤ_[p] (LinearMap.ker (padicLogLinear K p)) = 0 := by
-    refine (rank_eq_zero_iff (R := ℤ_[p]) (M := LinearMap.ker (padicLogLinear K p))).mpr
+  have hker : Module.rank ℤ_[p] (LinearMap.ker (padicLogLinear (K := K) p)) = 0 := by
+    refine (rank_eq_zero_iff (R := ℤ_[p]) (M := LinearMap.ker (padicLogLinear (K := K) p))).mpr
       fun x ↦ ?_
-    refine ⟨((p ^ absRamificationIndex K : ℕ) : ℤ_[p]), ?_, ?_⟩
+    refine ⟨((p ^ absRamificationIndex (K := K) : ℕ) : ℤ_[p]), ?_, ?_⟩
     · exact_mod_cast pow_ne_zero _ (Fact.out : p.Prime).ne_zero
     · apply Subtype.ext
       rw [Submodule.coe_smul, natCast_smul, Submodule.coe_zero]
       exact nsmul_eq_zero_of_padicLog_eq_zero p (LinearMap.mem_ker.mp x.2)
-  have hrange : Module.rank ℤ_[p] (LinearMap.range (padicLogLinear K p)) = d := by
+  have hrange : Module.rank ℤ_[p] (LinearMap.range (padicLogLinear (K := K) p)) = d := by
     refine le_antisymm ?_ ?_
-    · rw [← rank_valBallSubmodule (K := K) p (absRamificationIndex K + 1 -
-        absRamificationIndex K * absRamificationIndex K)]
+    · rw [← rank_valBallSubmodule (K := K) p (absRamificationIndex (K := K) + 1 -
+        absRamificationIndex (K := K) * absRamificationIndex (K := K))]
       exact Submodule.rank_mono (range_padicLogLinear_le p)
-    · rw [← rank_valBallSubmodule (K := K) p ((absRamificationIndex K + 1 : ℕ) : ℤ)]
+    · rw [← rank_valBallSubmodule (K := K) p ((absRamificationIndex (K := K) + 1 : ℕ) : ℤ)]
       exact Submodule.rank_mono (valBallSubmodule_le_range p)
-  have h := (padicLogLinear K p).rank_range_add_rank_ker
+  have h := (padicLogLinear (K := K) p).rank_range_add_rank_ker
   rw [hker, hrange, add_zero] at h
   rw [Module.finrank, ← h]
   simp

@@ -72,6 +72,17 @@ theorem exists_ne_zero {X : Scheme.{0}} [Nonempty X] {N : LB X} {I : Type} (s : 
 
 theorem relAmple_of_fibres : Out.Laws → ∀ (O K : Type) [CommRing O] [IsDomain O] [ValuationRing O] [Ring.DimensionLEOne O] [Field K] [IsAlgClosed K] [Algebra O K] [IsFractionRing O K] (A : Over (Sp O)) [GrpObj A], IsAbelianScheme A → ∀ M : LB A.left, M.IsLB → Out.RelAmple (Over.mk (pullback.snd A.hom (spMap (algebraMap O K)))) (M.pull (pullback.fst A.hom (spMap (algebraMap O K)))) → Out.RelAmple (Over.mk (pullback.snd A.hom (spMap (IsLocalRing.residue O)))) (M.pull (pullback.fst A.hom (spMap (IsLocalRing.residue O)))) → Out.RelAmple A M := by
   intro hL O K _ _ _ _ _ _ _ _ A _ hA M hM hK hk
+  have isLB_pw {Y : Scheme.{0}} {H : LB Y} (hH : H.IsLB) (t : ℤ) :
+      (pw H t).IsLB := by
+    refine ⟨hH.cover, ?_, ?_⟩
+    · intro i
+      have h := congrArg (· ^ t) (hH.g_self i)
+      simp only [one_zpow, ← map_zpow] at h
+      exact h
+    · intro i j k
+      have h := congrArg (· ^ t) (hH.cocycle i j k)
+      simp only [mul_zpow, ← map_zpow] at h
+      exact h
   have := hA.comm
   have := hA.smooth
   have := hA.proper

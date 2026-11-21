@@ -35,7 +35,7 @@ variable {S S' : Scheme.{0}} {G : Over S} [GrpObj G] {G' : Over S'} [GrpObj G'] 
 theorem lieMult_of_finrank {N : ℕ} (hN : Module.finrank k (eigLat hx act' (fun a => τ a)) = N) :
     Geo.Tor.LieMult act tk τ N := by
   let B := Module.finBasisOfFinrankEq k _ hN
-  have hT : ∀ (w : viaT tk (sp (R₀ := k) (DualNumber k)) ⟶ G') v, Chart.Rel (F := F) tk g w v →
+  have hT : ∀ (w : viaT tk (sp (R₀ := k) (DualNumber k)) ⟶ G') v, Rel (F := F) tk g w v →
       (Geo.Tor.IsLieEigen act tk τ w ↔ IsTan v ∧ ∀ a, v ≫ act' a = spMap (scaleD (τ a)) ≫ v) := by
     intro w v h
     refine and_congr (tan_iff hc hg h) (forall_congr' fun a => ?_)
@@ -51,7 +51,7 @@ theorem lieMult_of_finrank {N : ℕ} (hN : Module.finrank k (eigLat hx act' (fun
     fun d => (List.ofFn fun i => spMap (scaleD (d i)) ≫ tvec (x := x) (B i : Fin n → k)).prod
   let Wd : (Fin N → k) → (viaT tk (sp (R₀ := k) (DualNumber k)) ⟶ G') :=
     fun d => (List.ofFn fun i => liftT tk (spMap (scaleD (d i))) ≫ vB i).prod
-  have hPW : ∀ d, Chart.Rel (F := F) tk g (Wd d) (P d) := fun d => rel_prod hc hg _ _ fun i => rel_pre _ (hv i)
+  have hPW : ∀ d, Rel (F := F) tk g (Wd d) (P d) := fun d => rel_prod hc hg _ _ fun i => rel_pre _ (hv i)
   have hPeq : ∀ d, P d = tvec (x := x) (∑ i, d i • (B i : Fin n → k)) := by
     intro d
     obtain ⟨h, e⟩ := list_prod_tan' hx (fun i => spMap (scaleD (d i)) ≫ tvec (x := x) (B i : Fin n → k))
@@ -96,7 +96,7 @@ theorem lieMult_iff_finrank {k K : Type} [Field k] [Field K] [Algebra k K] (G : 
       Module.finrank k (eigLat hx act.act χ) = N := by
   obtain ⟨x', hx', hcomp⟩ := tanBC_alg (R := k) (R' := K) G n xc hx
   have hpt : ∀ c : Fin n → k, pushR G (tvec (x := x') (algebraMap k K ∘ c)) =
-      spMap (Chart.dualMapA k K) ≫ tvec (x := xc) c := fun c =>
+      spMap (dualMapA k K) ≫ tvec (x := xc) c := fun c =>
     Over.OverMorphism.ext (by rw [pushR_left, hcomp c]; rfl)
   have hLk : ∀ a (c : Fin n → k), tmap hx' ((Over.pullback (fB k K)).map (act.act a)) (algebraMap k K ∘ c) =
       algebraMap k K ∘ tmap hx (act.act a) c := by

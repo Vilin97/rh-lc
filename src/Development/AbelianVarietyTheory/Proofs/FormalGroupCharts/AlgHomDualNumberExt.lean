@@ -105,8 +105,12 @@ theorem algHom_dualNumber_ext : ∀ (C : Type) [Field C] [IsAlgClosed C] [CharZe
       (hM.trans (sup_le hIK (Ideal.map_le_iff_le_comap.2 hJK)))
         (Ideal.pow_mem_pow (Ideal.subset_span (Set.mem_range_self j)) M)
     rw [hK, map_pow, map_pow] at h1
-    refine lt_of_le_of_ne (hle _) fun h => ?_
-    simp [h] at h1
+    have hM0 : M ≠ 0 := by
+      intro h
+      subst M
+      simp at h1
+    rw [hK]
+    exact (pow_lt_one_iff_of_nonneg zero_le hM0).1 h1
   let J' : Ideal O := J ⊔ Ideal.span (Set.range a)
   have hJ' : J'.FG := Submodule.FG.sup hJ (Submodule.fg_span (Set.finite_range a))
   have hJ'K : J' ≤ K.comap (MvPowerSeries.C : O →+* MvPowerSeries σ O) := by

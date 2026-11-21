@@ -50,7 +50,7 @@ theorem toFun_pull_eq {n m : ℕ} {r : (Fin n → O) →ₗ[O] X} {s : (Fin m �
     rw [← LinearMap.comp_apply r h, hh, ← LinearMap.comp_apply s k, hk]
   simp only [e]
 
-
+variable (X) in
 def eval [Module.Finite O X] (B : X → X → ℝ) : ℝ :=
   φ.toFun (Module.Finite.exists_fin' O X).choose fun a b =>
     B ((Module.Finite.exists_fin' O X).choose_spec.choose a) ((Module.Finite.exists_fin' O X).choose_spec.choose b)
@@ -74,7 +74,7 @@ theorem eval_equiv [Module.Finite O X] [Module.Finite O X₁] (e : X ≃ₗ[O] X
 theorem eval_of_subsingleton [Module.Finite O X] [Subsingleton X] (B : X → X → ℝ) : φ.eval X B = 0 := by
   rw [φ.eval_eq (n := 0) (r := 0) (fun x => ⟨0, Subsingleton.elim _ _⟩), φ.zero]
 
-
+variable (O) in
 def minVal : InvFun O where
   toFun _ B := sInf {x | (∃ y, B y y = x) ∧ x ≠ B 0 0}
   inv n m r hr B := by
@@ -83,7 +83,8 @@ def minVal : InvFun O where
     simp only [Set.mem_setOf_eq, map_zero]
     exact and_congr_left' ⟨fun ⟨y, h⟩ => ⟨r y, h⟩, fun ⟨y, h⟩ => (hr y).elim fun z e => ⟨z, e ▸ h⟩⟩
   zero B := by
-    convert Real.sInf_empty
+    rw [← Real.sInf_empty]
+    congr 1
     exact Set.eq_empty_of_forall_notMem fun x ⟨⟨y, h⟩, h'⟩ => h' (by rw [← h, Subsingleton.elim y 0])
 
 def evalZ [Module.Finite O X] (β : LinearMap.BilinForm ℤ X) : ℝ := φ.eval X fun a b => (β a b : ℝ)
@@ -91,7 +92,7 @@ def evalZ [Module.Finite O X] (β : LinearMap.BilinForm ℤ X) : ℝ := φ.eval 
 def LinearOn [Module.Finite O X] {m : ℕ} (γ : Fin m → LinearMap.BilinForm ℤ X) : Prop :=
   ∀ c : Fin m → ℝ, (∀ i, 0 ≤ c i) → φ.eval X (fun a b => ∑ i, c i * (γ i a b : ℝ)) = ∑ i, c i * φ.evalZ (γ i)
 
-
+variable {φ} in
 theorem LinearOn.eval_eq_sum [Module.Finite O X] [Module.Finite O X₁] {m : ℕ} {γ : Fin m → LinearMap.BilinForm ℤ X}
     (h : φ.LinearOn γ) {r : X →ₗ[O] X₁} (hr : Function.Surjective r) {B : X₁ → X₁ → ℝ} {c : Fin m → ℝ}
     (hc : ∀ i, 0 ≤ c i) (hB : ∀ a b, B (r a) (r b) = ∑ i, c i * (γ i a b : ℝ)) :

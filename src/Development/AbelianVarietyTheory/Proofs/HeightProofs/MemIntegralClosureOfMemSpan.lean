@@ -296,14 +296,14 @@ theorem exists_unique_place_baseChange : ∀ (R R' F F' : Type) [CommRing R] [Is
   haveI := integralClosure.isFractionRing_of_finite_extension (A := R) F L
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible R
   have hϖ' : Irreducible (algebraMap R R' ϖ) :=
-    (IsDiscreteValuationRing.irreducible_iff_uniformizer _).2 (maximalIdeal_eq_span hmax hϖ)
+    (IsDiscreteValuationRing.irreducible_iff_uniformizer _).2 (PlaceExt.maximalIdeal_eq_span hmax hϖ)
   let ι : L →+* F' ⊗[F] L :=
     (Algebra.TensorProduct.includeRight : L →ₐ[F] F' ⊗[F] L).toRingHom
   have hι : ∀ l, ι l = (1 : F') ⊗ₜ[F] l := fun _ => rfl
   let S : Subring (F' ⊗[F] L) := (integralClosure R' (F' ⊗[F] L)).toSubring
   let π : L := algebraMap R L ϖ
   have halg : ∀ r : R, algebraMap R' (F' ⊗[F] L) (algebraMap R R' r) = ι (algebraMap R L r) :=
-    fun r => algebraMap_eq_one_tmul r
+    fun r => PlaceExt.algebraMap_eq_one_tmul r
   have hR'S : ∀ r : R', algebraMap R' (F' ⊗[F] L) r ∈ S := fun r => isIntegral_algebraMap
   have hπ0 : π ≠ 0 := fun h =>
     hϖ.ne_zero (ValPl.algebraMap_OL_injective (F := F) (L := L) (by rw [map_zero]; exact h))
@@ -319,7 +319,7 @@ theorem exists_unique_place_baseChange : ∀ (R R' F F' : Type) [CommRing R] [Is
       exact_mod_cast (show (1 : ℤ) ≤ a by omega)
   have hS : ∀ (w : ValPl.PlacesOver R L) l, ι l ∈ S → 0 ≤ w.1 l := fun w l hl =>
     (HDiscVal.mem_integralClosure_iff R F l).1
-      (mem_integralClosure_of_mem_span (R' := R') (F' := F') l ((hB _).1 hl)) w.1 w.2
+      (PlaceExt.mem_integralClosure_of_mem_span (R' := R') (F' := F') l ((hB _).1 hl)) w.1 w.2
   have hden : ∀ x, ∃ n : ℕ, ι π ^ n * x ∈ S := by
     intro x
     obtain ⟨⟨d, hd⟩, hx⟩ := IsIntegral.exists_multiple_integral_of_isLocalization
@@ -347,7 +347,7 @@ theorem exists_unique_place_baseChange : ∀ (R R' F F' : Type) [CommRing R] [Is
       rw [map_add (f := _)]; linear_combination h + h'
     | smul a x hxs hx =>
       obtain ⟨l, b, hb, h⟩ := hx
-      obtain ⟨r₀, r₁, hr⟩ := exists_approx_base hmax hres hϖ m a
+      obtain ⟨r₀, r₁, hr⟩ := PlaceExt.exists_approx_base hmax hres hϖ m a
       refine ⟨algebraMap R L r₀ * l, ι (algebraMap R L r₀) * b + algebraMap R' _ r₁ * x,
         S.add_mem (S.mul_mem (halg r₀ ▸ hR'S _) hb) (S.mul_mem (hR'S _) ((hB x).2 hxs)), ?_⟩
       rw [Algebra.smul_def, hr, map_add (f := _), map_mul, map_pow, halg, halg, map_mul]
@@ -362,11 +362,11 @@ theorem exists_unique_place_baseChange : ∀ (R R' F F' : Type) [CommRing R] [Is
     rw [map_mul]
     linear_combination ι ((π ^ n)⁻¹) * h + (ι π ^ m * b - x) * h1
   choose w' hw' hw0 using fun w : ValPl.PlacesOver R L =>
-    exists_ext ι S π w.1 hπ0 hπS (hw1 w) (hS w) happ hden
+    PlaceExt.exists_ext ι S π w.1 hπ0 hπS (hw1 w) (hS w) happ hden
   have hnear : ∀ w x l (m : ℕ) b, b ∈ S → x - ι l = ι π ^ m * b → 0 ≤ w' w x → 0 ≤ w.1 l := by
     intro w x l m b hb h hx
     have h1 : 0 ≤ w' w (x - ι l) := h ▸ hw0 w _ (S.mul_mem (S.pow_mem hπS m) hb)
-    have h2 := min_eq_of_le_sub (w' w) h1
+    have h2 := PlaceExt.min_eq_of_le_sub (w' w) h1
     rw [min_eq_right hx, hw', eq_comm, min_eq_right_iff] at h2
     exact h2
   refine ⟨w', hw', fun x => ⟨fun hx w => hw0 w x hx, fun hx => ?_⟩, fun w x hx => ?_,
@@ -380,10 +380,10 @@ theorem exists_unique_place_baseChange : ∀ (R R' F F' : Type) [CommRing R] [Is
     exact S.add_mem hlS hb
   · obtain ⟨l, b, hb, h⟩ := happ x 1
     refine ⟨l, hnear w x l 1 b hb h hx, ?_⟩
-    have := le_val_pow_mul (w' w) (t := ι π) (by rw [hw']; exact hw1 w) (hw0 w b hb) 1
+    have := PlaceExt.le_val_pow_mul (w' w) (t := ι π) (by rw [hw']; exact hw1 w) (hw0 w b hb) 1
     rw [← h] at this
     exact lt_of_lt_of_le (by norm_num) this
-  · refine ext_unique ι S π w.1 (hw1 w) happ u (w' w) hu (hw' w) ?_ (hw0 w)
+  · refine PlaceExt.ext_unique ι S π w.1 (hw1 w) happ u (w' w) hu (hw' w) ?_ (hw0 w)
     intro x hx
     have hx' := (hB x).1 hx
     clear hx

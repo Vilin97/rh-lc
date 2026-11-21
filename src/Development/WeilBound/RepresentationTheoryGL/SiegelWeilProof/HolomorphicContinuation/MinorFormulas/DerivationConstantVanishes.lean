@@ -138,11 +138,11 @@ theorem comm : Comm := by
   intro n s m b b' k l k' l'
   apply LinearMap.ext
   intro p
-  simp only [LinearMap.comp_apply, opH_apply, Derivation.leibniz, map_add (f := _), smul_eq_mul]
-  have h2 : dl s b k l (dl s b' k' l' p) = dl s b' k' l' (dl s b k l p) := by
-    have := congrArg (fun D : Derivation (Polynomial ℂ) (Fm n) (Fm n) => D p) (key2 s b b' k l k' l')
+  simp only [LinearMap.comp_apply, CommPf.opH_apply, Derivation.leibniz, map_add (f := _), smul_eq_mul]
+  have h2 : CommPf.dl s b k l (CommPf.dl s b' k' l' p) = CommPf.dl s b' k' l' (CommPf.dl s b k l p) := by
+    have := congrArg (fun D : Derivation (Polynomial ℂ) (Fm n) (Fm n) => D p) (CommPf.key2 s b b' k l k' l')
     simpa [Derivation.commutator_apply, sub_eq_zero] using this
-  rw [h2, key1 s m b b' k l k' l']
+  rw [h2, CommPf.key1 s m b b' k l k' l']
   ring
 
 end PositivityTheory.Rg.Sw.SP

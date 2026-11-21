@@ -424,10 +424,10 @@ def primeOfOne : Ideal (NumbersDVR.MRing (fun _ : Unit => Fin (N + 1)) S) :=
 
 
 open NumbersDVR in
-theorem isMultiProjPrime_primeOfOne (hx : x ≠ 0) : IsMultiProjPrime (primeOfOne (S := S) x) where
-  isPrime := Ideal.comap_isPrime _ _
-  multiHomog := by
-    classical
+theorem isMultiProjPrime_primeOfOne (hx : x ≠ 0) :
+    IsMultiProjPrime (primeOfOne (S := S) x) := by
+  refine ⟨Ideal.comap_isPrime _ _, ?_, ?_⟩
+  · classical
     intro f hf b
     have hw : ∀ d : (Σ _ : Unit, Fin (N + 1)) →₀ ℕ,
         Finsupp.weight (blockWeight (fun _ : Unit => Fin (N + 1))) d = fun _ => d.degree := by
@@ -451,8 +451,7 @@ theorem isMultiProjPrime_primeOfOne (hx : x ≠ 0) : IsMultiProjPrime (primeOfOn
     rw [primeOf_eq, RingHom.mem_ker] at hf ⊢
     rw [oneBlock, cone_eq, coneGen, aeval_rename] at hf ⊢
     exact coneGen_homogeneousComponent (fun v : Σ _ : Unit, Fin (N + 1) => x v.2) hf _
-  relevant := by
-    intro k
+  · intro k
     obtain ⟨i, hi⟩ := Function.ne_iff.mp hx
     refine ⟨i, ?_⟩
     change oneBlock (X _) ∉ primeOf x

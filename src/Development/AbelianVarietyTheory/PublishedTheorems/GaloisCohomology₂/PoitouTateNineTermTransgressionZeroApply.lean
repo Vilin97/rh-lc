@@ -200,7 +200,7 @@ theorem NineTermExact.mem_range_localization_H2_iff {hρ : ContAction ρ} (h : N
 def idInv (μ : GS Ω (S : Set (HeightOneSpectrum (𝓞 F))) →* (ZMod (l ^ r))ˣ) :
     H0 (twDual μ (charRep μ)) :=
   ⟨TDual.mk LinearMap.id, fun g => by
-    ext m
+    refine DFunLike.ext _ _ fun m => ?_
     simp only [twDual_apply, TDual.mk_apply, LinearMap.id_apply, charRep_apply, map_inv]
     rw [← mul_assoc, Units.mul_inv, one_mul]⟩
 
@@ -287,7 +287,7 @@ end Global
 
 end PoitouTate
 
-
+open PoitouTate in
 def PoitouTateTotallyComplex : Prop :=
   ∀ (F Ω : Type) [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω]
     [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (r : ℕ), 0 < r →
@@ -303,7 +303,7 @@ def PoitouTateTotallyComplex : Prop :=
       (hρ : ContAction ρ),
       NineTermExact S Av μ (invAt S Av μ hμ inv) ρ hρ ∧ ShaDual S Av μ ρ
 
-
+open PoitouTate in
 theorem PoitouTateTotallyComplex.annihilators (h : PoitouTateTotallyComplex)
     (F Ω : Type) [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω] [Algebra F Ω]
     [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (r : ℕ) (hr : 0 < r) (ζ : Ω)

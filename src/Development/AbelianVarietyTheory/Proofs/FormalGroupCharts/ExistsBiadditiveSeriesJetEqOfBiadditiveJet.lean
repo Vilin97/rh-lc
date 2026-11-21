@@ -195,14 +195,24 @@ theorem exists_biadd_jEq : ∀ (R : Type) [CommRing R] (d : ℕ) (O : Type) [Com
     (by rw [hlin, Matrix.det_one]; exact isUnit_one)
   replace hℓ : NoConst ℓ := hℓ
   replace he : NoConst e := he
-  have hF : NoConst (B.FK k) := G.const
-  have hα : ∀ a, NoConst (B.actK k a) := A.const
+  have hFK : G.F = B.FK k := by
+    funext i
+    rfl
+  have hAK (a : O) : A.act a = B.actK k a := by
+    funext i
+    rfl
+  have hF : NoConst (B.FK k) := by
+    simpa only [NoConst, hG, mapLaw, mapPt, FB.FK, FGLaw.mapF] using G.const
+  have hα : ∀ a, NoConst (B.actK k a) := by
+    simpa [hA, mapAct, mapPt, FB.actK, NoConst] using A.const
   have hp : ∀ {n : ℕ} (j : Fin n), NoConst (pt k d j) := nc_pt
   have hlog : ∀ {n : ℕ} {u v : Pt k n d}, NoConst u → NoConst v →
       comp1 ℓ (addOf (B.FK k) u v) = comp1 ℓ u + comp1 ℓ v := by
     intro n u v hu hv
     have h0 : comp1 ℓ (addOf (B.FK k) (pt k (n := 2) d 0) (pt k (n := 2) d 1)) =
-      comp1 ℓ (pt k (n := 2) d 0) + comp1 ℓ (pt k (n := 2) d 1) := hadd
+      comp1 ℓ (pt k (n := 2) d 0) + comp1 ℓ (pt k (n := 2) d 1) := by
+      rw [← hFK]
+      exact hadd
     have hb := nc2 hu hv
     have h1 := congrArg (evP ![u, v]) h0
     rw [evalPoints_add hb, evalPoints_comp hb ℓ (nc_addOf hF (hp 0) (hp 1)), evalPoints_formalGroupAdd hb _ (hp 0) (hp 1),
@@ -218,7 +228,7 @@ theorem exists_biadd_jEq : ∀ (R : Type) [CommRing R] (d : ℕ) (O : Type) [Com
       comp1 ℓ (comp1 (B.actK k a) u) = lin (dLin (B.actK k a)) (comp1 ℓ u) := by
     intro a n u hu
     have h0 : comp1 ℓ (B.actK k a) = lin (dLin (B.actK k a)) ℓ :=
-      funext (GlobalTheory.LogLinear.formalGroup_log_endomorphism_linear k d G ℓ (B.actK k a) hℓ hlin hadd (hα a) (A.hom a))
+      funext (GlobalTheory.LogLinear.formalGroup_log_endomorphism_linear k d G ℓ (B.actK k a) hℓ hlin hadd (hα a) (by rw [← hAK a]; exact A.hom a))
     rw [germComp1_germComp1_eq_substitute ℓ (hα a) hu, h0, evalPoints_linear (nc1 hu)]
     rfl
   obtain ⟨g₀, hg₀⟩ : ∃ g₀ : PS k 2 d, ∀ {n : ℕ} {u v : Pt k n d}, NoConst u → NoConst v →

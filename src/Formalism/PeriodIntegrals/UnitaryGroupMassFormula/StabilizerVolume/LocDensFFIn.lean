@@ -26,22 +26,23 @@ private theorem ffH_single_right {M : ℕ} (J : Matrix (Fin M) (Fin M) K) (x : F
     simp [Pi.single_apply, hb]
 
 theorem ffH_isHS (hσ : ∀ x, σ (σ x) = x) {M : ℕ} (J : Matrix (Fin M) (Fin M) K)
-    (hJ : ∀ i j, σ (J j i) = J i j) (hdet : IsUnit J.det) : IsHS σ (ffH σ J) where
-  add_right x y z := by
+    (hJ : ∀ i j, σ (J j i) = J i j) (hdet : IsUnit J.det) : IsHS σ (ffH σ J) := by
+  refine ⟨⟨?_, ?_, ?_⟩, ?_⟩
+  · intro x y z
     simp only [ffH, Pi.add_apply, mul_add, Finset.sum_add_distrib]
-  smul_right c x y := by
+  · intro c x y
     simp only [ffH, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => by ring))
-  herm x y := by
+  · intro x y
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [ffH, map_sum, map_mul, hσ, hJ]
     conv_rhs => rw [Finset.sum_comm]
     exact Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => by ring))
-  nondeg x hx := by
+  · intro x hx
     have hv : Matrix.vecMul (fun i => σ (x i)) J = 0 := by
       funext j0
-      have := hx (Pi.single j0 1)
-      simpa [ffH, Pi.single_apply, Matrix.vecMul, dotProduct] using this
+      simpa only [ffH_single_right, Matrix.vecMul, dotProduct, Pi.zero_apply] using
+        hx (Pi.single j0 1)
     have hinv : (fun i => σ (x i)) = 0 := by
       have := congrArg (fun v => Matrix.vecMul v J⁻¹) hv
       simpa only [Matrix.vecMul_vecMul, Matrix.mul_nonsing_inv J hdet, Matrix.vecMul_one,

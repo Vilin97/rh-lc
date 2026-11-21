@@ -91,32 +91,35 @@ def rightIsColimit (hP : IsPushout g' (ι0.app j) h g) (hL : IsColimit ((Cocone.
       rw [this]
       simp)
   fac s k := by
-    dsimp
+    change pdesc D0 j g' ι0 g h hnat k ≫ _ = s.ι.app k
     apply pushout.hom_ext
     · have hw := s.w (Under.homMk k.hom (by simp) : Under.mk (𝟙 j) ⟶ k)
       simp only [Functor.comp_map, Comma.snd_map, arrF_map_right] at hw
-      rw [snd_coc, inl_pdesc_assoc, IsPushout.inl_desc, ← hw]
+      rw [inl_pdesc_assoc, IsPushout.inl_desc, ← hw]
       exact inl_pmap_assoc D0 j g' _ _
     · have := hL.fac (leftOf D0 j g' s) k
       simp only [Cocone.whisker_ι, Functor.whiskerLeft_app, Under.forget_obj, leftOf_ι_app] at this
-      rw [snd_coc, inr_pdesc_assoc, IsPushout.inr_desc, this]
+      rw [inr_pdesc_assoc, IsPushout.inr_desc, this]
   uniq s m hm := by
     apply hP.hom_ext
     · rw [IsPushout.inl_desc]
       have h1 := hm (Under.mk (𝟙 j))
-      dsimp at h1
-      rw [← h1, snd_coc, inl_pdesc_assoc]
+      change pdesc D0 j g' ι0 g h hnat (Under.mk (𝟙 j)) ≫ m = s.ι.app (Under.mk (𝟙 j)) at h1
+      rw [← h1, inl_pdesc_assoc]
     · rw [IsPushout.inr_desc]
       apply hL.hom_ext
       intro k
       have h1 := hL.fac (leftOf D0 j g' s) k
       have h2 := hm k
-      dsimp at h1 h2 ⊢
-      rw [h1, ← h2, snd_coc, inr_pdesc_assoc]
+      change ι0.app k.right ≫ _ = pushout.inr g' (D0.map k.hom) ≫ s.ι.app k at h1
+      change pdesc D0 j g' ι0 g h hnat k ≫ m = s.ι.app k at h2
+      change ι0.app k.right ≫ _ = ι0.app k.right ≫ _
+      rw [h1, ← h2, inr_pdesc_assoc]
 
 end GlobalTheory.EtFFApprox
 
 
+open GlobalTheory.EtFFApprox in
 theorem GlobalTheory.EtC.etFF_filtered_colimit_finiteType : ∀ (A B : CommRingCat.{0}) (g : A ⟶ B), EtFF g → ∃ (J : Type) (_ : SmallCategory J) (_ : IsFiltered J) (D : J ⥤ Arrow CommRingCat.{0}) (ι : D ⟶ (Functor.const J).obj (Arrow.mk g)), Nonempty (IsColimit (Cocone.mk (Arrow.mk g) ι)) ∧ ∀ j, EtFF (D.obj j).hom ∧ Algebra.FiniteType ℤ (D.obj j).left ∧ Algebra.FiniteType ℤ (D.obj j).right := by
   intro A B g hg
   obtain ⟨J, _, _, D0, ι0, ⟨hc⟩, hft⟩ := GlobalTheory.FiniteTypeColimit.exists_filtered_colimit_finiteType A

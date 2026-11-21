@@ -60,26 +60,9 @@ theorem satPerm : SatPerm k := by
   have hinj := injective_of_ne_zero hi f hf
   have hq' := isSubquotient_of_injective f hinj
   borelize (GL (Fin n) k)
-  have param (α : Fin n → ℂˣ) (h : IsSubquotient π (iP α)) :
-      GroundTheory.Automorphic.Spherical.IsSatakeParameter π Measure.haar α := by
-    let ι : (iP α).IntertwiningMap (GroundTheory.Automorphic.Spherical.principalSeries k n (GroundTheory.Automorphic.Spherical.paramChar k α)) where
-      toFun f := ⟨fun g => f.1.1 g, GlobalTheory.T.induced_in_principal_series k n α f⟩
-      map_add' _ _ := rfl
-      map_smul' _ _ := rfl
-      isIntertwining' g := LinearMap.ext fun f => Subtype.ext (funext fun x => by
-        simp only [LinearMap.coe_mk, AddHom.coe_mk, LinearMap.comp_apply]
-        rfl)
-    have hι : Function.Injective ι := by
-      intro f f' e
-      have he := congrArg Subtype.val e
-      apply Subtype.ext
-      apply Subtype.ext
-      exact he
-    exact GlobalTheory.T.subquotient_principal_series_bound k n α _ V _ (isSmooth_parInd _ _) ι hι π h Measure.haar
-  have h1 := param ξ hq
-  have h2 := param η hq'
-  have hK : GroundTheory.Automorphic.fixedVectors π (GroundTheory.Automorphic.GLnLocal.integralGL k n) ≠ ⊥ := by
-    simpa [IsSpherical, fixed, eig, GroundTheory.Automorphic.fixedVectors] using hsph
+  have h1 := GlobalTheory.CompanionTheory.SphSupp.isSatakeParameter_of_isSubquotient (k := k) ξ hq (μ := Measure.haar)
+  have h2 := GlobalTheory.CompanionTheory.SphSupp.isSatakeParameter_of_isSubquotient (k := k) η hq' (μ := Measure.haar)
+  have hK := (GlobalTheory.CompanionTheory.SphSupp.isSpherical_iff_fixedVectors π).1 hsph
   exact GroundTheory.Automorphic.Spherical.satakeParameter_unique hK h1 h2
 
 end PositivityTheory.Rg.BcB.N3.PseSat

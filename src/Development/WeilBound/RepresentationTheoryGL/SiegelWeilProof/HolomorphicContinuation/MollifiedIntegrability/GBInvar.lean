@@ -76,14 +76,18 @@ theorem two_le_top' : (2 : WithTop ℕ∞) ≤ ((⊤ : ℕ∞) : WithTop ℕ∞)
 
 theorem dd_swap {g : Mc n → ℂ} {U : Set (Mc n)} (hU : IsOpen U) (hg : ContDiffOn ℂ (⊤ : ℕ∞) g U)
     (a b : Mc n) {x : Mc n} (hx : x ∈ U) : dd b (dd a g) x = dd a (dd b g) x := by
+  letI : IsNormableSpace ℂ (Mc n) := ⟨⟨normSeminorm ℂ (Mc n), norm_withSeminorms ℂ (Mc n)⟩⟩
   have hc : ContDiffAt ℂ (⊤ : ℕ∞) g x := hg.contDiffAt (hU.mem_nhds hx)
   have hsymm : IsSymmSndFDerivAt ℂ g x :=
     hc.isSymmSndFDerivAt (by rw [minSmoothness_of_isRCLikeNormedField]; exact two_le_top')
   have hd : DifferentiableAt ℂ (fderiv ℂ g) x := (hc.fderiv_right top_succ_le).differentiableAt (by simp)
   have key : ∀ v w : Mc n, fderiv ℂ (fun y => fderiv ℂ g y v) x w = fderiv ℂ (fderiv ℂ g) x w v := by
     intro v w
-    have h := (ContinuousLinearMap.apply ℂ ℂ v).hasFDerivAt.comp x hd.hasFDerivAt
-    exact congrArg (fun L => L w) h.fderiv
+    have h := hd.hasFDerivAt.clm_apply (hasFDerivAt_const v x)
+    have hh := congrArg (fun L => L w) h.fderiv
+    change fderiv ℂ (fun y => fderiv ℂ g y v) x w =
+      fderiv ℂ g x 0 + fderiv ℂ (fderiv ℂ g) x w v at hh
+    simpa using hh
   unfold dd
   rw [key, key]
   exact hsymm b a

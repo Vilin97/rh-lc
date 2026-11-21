@@ -39,7 +39,29 @@ theorem GlobalTheory.AbLaw.isProjBy_baseChange : ∀ (R R' : Type) [CommRing R] 
   obtain ⟨H, hH, m, s, hs, hs'⟩ := hf
   have hloc : ∀ a, nonzeroLocus (boxSec p q (s a) (oneSec _)) = p ⁻¹ᵁ nonzeroLocus (s a) ⊓ q ⁻¹ᵁ ⊤ := fun a => by
     rw [nonzeroLocus_boxSec, nonzeroLocus_oneSec]
-  refine ⟨box p q H (Inh.trivLB _), isLB_box p q hH (Inh.trivLB_isLB _), m,
+  have hbox : (box p q H (Inh.trivLB _)).IsLB := by
+    have hK : (Inh.trivLB (Spec (CommRingCat.of R'))).IsLB := by
+      refine ⟨?_, ?_, ?_⟩
+      · simp [Inh.trivLB]
+      · intro i
+        exact (res _).map_one
+      · intro i j k
+        exact (congrArg₂ (· * ·) (res _).map_one (res _).map_one).trans
+          ((_root_.one_mul _).trans (res _).map_one.symm)
+    refine ⟨?_, ?_, ?_⟩
+    · refine top_le_iff.1 fun y _ => ?_
+      obtain ⟨i, hi⟩ := TopologicalSpace.Opens.mem_iSup.1 (show p y ∈ ⨆ i, H.U i by rw [hH.cover]; trivial)
+      obtain ⟨j, hj⟩ := TopologicalSpace.Opens.mem_iSup.1 (show q y ∈ ⨆ i, (Inh.trivLB _).U i by rw [hK.cover]; trivial)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨(i, j), hi, hj⟩
+    · intro a
+      refine Units.ext ((rs_mul p q _ _ _ _ _).trans ?_)
+      rw [ap_g_self p hH, ap_g_self q hK, _root_.mul_one, Units.val_one]
+    · intro a b c
+      refine Units.ext ((congrArg₂ (· * ·) (rs_mul p q _ _ _ _ _) (rs_mul p q _ _ _ _ _)).trans
+        (Eq.trans ?_ (rs_mul p q _ _ _ _ _).symm))
+      exact (mul_mul_mul_comm _ _ _ _).trans
+        (congrArg₂ (· * ·) (ap_cocycle p hH _ _ _ _ _ _).symm (ap_cocycle q hK _ _ _ _ _ _).symm)
+  refine ⟨box p q H (Inh.trivLB _), hbox, m,
     fun a => boxSec p q (s a) (oneSec _), ?_, fun a => ?_⟩
   · refine top_le_iff.1 fun y _ => ?_
     obtain ⟨i, hi⟩ := TopologicalSpace.Opens.mem_iSup.1
@@ -69,12 +91,12 @@ theorem GlobalTheory.AbLaw.isProjBy_baseChange : ∀ (R R' : Type) [CommRing R] 
       change ap p l₁ _ ∈ _
       induction F using MvPolynomial.induction_on with
       | C c => exact ⟨MvPolynomial.C (g c), by
-          rw [MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_C, ap_cst, sq.w, cst_comp_specMap]⟩
+          rw [MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_C, ap_cst, sq.w, GlobalTheory.AbLaw.BaseChange.cst_comp_specMap]⟩
       | add F G hF hG => rw [map_add (f := _), map_add (f := _)]; exact Subring.add_mem _ hF hG
       | mul_X F i hF =>
         rw [map_mul, map_mul]
         refine Subring.mul_mem _ hF ⟨MvPolynomial.X i, ?_⟩
         simp only [MvPolynomial.eval₂Hom_X']
     · change ap q l₂ _ ∈ _
-      obtain ⟨r, hr⟩ := ap_top_eq_cst q l₂ d
+      obtain ⟨r, hr⟩ := GlobalTheory.AbLaw.BaseChange.ap_top_eq_cst q l₂ d
       exact ⟨MvPolynomial.C r, by rw [MvPolynomial.eval₂Hom_C, hr]⟩

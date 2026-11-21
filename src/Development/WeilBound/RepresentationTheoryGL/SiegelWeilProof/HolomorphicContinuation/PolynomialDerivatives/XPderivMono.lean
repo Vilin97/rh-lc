@@ -88,7 +88,11 @@ theorem centre (ε : Fin m → Bool) (c : ℝ) (Λ : PX m n →ₗ[ℂ] ℂ) (h�
   have h0 := hΛ a a (monomial (s + u) 1)
   rw [hD, map_smul, smul_eq_mul] at h0
   refine (mul_eq_zero.mp h0).resolve_left ?_
-  simp only [rdeg, Finsupp.mapDomain_equiv_apply, pE_symm, pE_apply, Bool.not_not] at ha
+  have hm (k : Fin m × Fin n × Bool) : (u.mapDomain pE) k = u (pE.symm k) :=
+    Finsupp.mapDomain_equiv_apply u k
+  simp only [rdeg] at ha
+  simp only [hm] at ha
+  simp only [pE_symm, pE_apply, Bool.not_not] at ha
   rw [← ne_eq, sub_ne_zero]
   simp only [Finsupp.add_apply, Nat.cast_add, Finset.sum_add_distrib]
   cases hεa : ε a

@@ -50,13 +50,13 @@ theorem factorIrr (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [Is
   have hV : Nontrivial V := by
     by_contra hV
     rw [not_nontrivial_iff_subsingleton] at hV
-    exact h0 fun z => z.induction_on rfl
+    exact h0 fun z => TensorProduct.induction_on (motive := fun z => z = 0) z rfl
       (fun x w => by rw [Subsingleton.elim x 0, TensorProduct.zero_tmul])
       (fun a b ha hb => by rw [ha, hb, add_zero])
   have hW : Nontrivial W := by
     by_contra hW
     rw [not_nontrivial_iff_subsingleton] at hW
-    exact h0 fun z => z.induction_on rfl
+    exact h0 fun z => TensorProduct.induction_on (motive := fun z => z = 0) z rfl
       (fun x w => by rw [Subsingleton.elim w 0, TensorProduct.tmul_zero])
       (fun a b ha hb => by rw [ha, hb, add_zero])
   refine ⟨(GlobalTheory.CuspRep.isIrreducible_iff A).2 ⟨hV, fun S hS => ?_⟩,

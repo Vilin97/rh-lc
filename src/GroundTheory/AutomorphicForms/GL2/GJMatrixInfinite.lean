@@ -49,7 +49,7 @@ instance : (mixedMeasurePi K : Measure (ι → mixedSpace K)).IsAddHaarMeasure :
   unfold mixedMeasurePi
   infer_instance
 
-
+variable (ι) in
 abbrev EuclidPi : Type _ := EuclideanSpace ℝ (ι × Fin (finrank ℝ (euclidean.mixedSpace K)))
 
 def euclidPiEquiv : (ι → euclidean.mixedSpace K) ≃L[ℝ] EuclidPi K ι :=
@@ -371,10 +371,10 @@ theorem idealLatticePi_poisson_summation (I : ι → (FractionalIdeal (𝓞 K)�
   rw [hlhs, hrhs, covolume_euclidLatticePi] at h
   exact h
 
-
+variable (K) in
 def embPi (ξ : ι → K) : ι → mixedSpace K := fun i ↦ mixedEmbedding K (ξ i)
 
-
+variable (K) in
 def cosetPi (I : ι → (FractionalIdeal (𝓞 K)⁰ K)ˣ) (c : ι → K) : Set (ι → K) :=
   {ξ | ∀ i, ξ i - c i ∈ (I i : FractionalIdeal (𝓞 K)⁰ K)}
 
@@ -383,7 +383,7 @@ theorem embPi_zero : embPi K (0 : ι → K) = 0 := by
   funext i
   simp [embPi]
 
-
+omit [Fintype ι] in
 theorem summable_norm_iff_and_tsum_eq_cosetPi (I : ι → (FractionalIdeal (𝓞 K)⁰ K)ˣ)
     (c : ι → K) (g : (ι → mixedSpace K) → ℂ) :
     (Summable (fun ξ ↦ ‖(cosetPi K I c).indicator (fun ξ ↦ g (embPi K ξ)) ξ‖) ↔

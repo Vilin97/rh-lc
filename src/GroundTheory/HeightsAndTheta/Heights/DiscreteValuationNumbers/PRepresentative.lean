@@ -139,11 +139,8 @@ theorem isVerticalDivisorOfUnitOffSpecial [IsDomain R] [IsDiscreteValuationRing 
     (hf : f ∉ P) (hg : g ∉ P)
     (hunit : ∀ W : Ideal (MRing ι R), W.IsPrime → P ≤ W → IsRelevant W →
       (C ϖ : MRing ι R) ∉ W → ∃ u v : MRing ι R, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) :
-    IsVerticalDivisor P ϖ b f g where
-  degrees := degrees
-  num_not_mem := hf
-  den_not_mem := hg
-  vertical := by
+    IsVerticalDivisor P ϖ b f g := by
+  have hvertical : ∀ W, ratDiv P f g W ≠ 0 → (C ϖ : MRing ι R) ∈ W := by
     intro W hW
     by_contra hϖ
     have hsupp : W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
@@ -159,7 +156,7 @@ theorem isVerticalDivisorOfUnitOffSpecial [IsDomain R] [IsDiscreteValuationRing 
     apply hW
     unfold ratDiv
     rw [divCycle_eq_of_mul_sub_mem hu hv h, sub_self]
-  unit_off_special := hunit
+  exact ⟨degrees, hf, hg, hvertical, hunit⟩
 
 end Helpers
 

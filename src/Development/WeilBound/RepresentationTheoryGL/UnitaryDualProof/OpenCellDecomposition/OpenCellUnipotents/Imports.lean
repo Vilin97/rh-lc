@@ -19,12 +19,11 @@ private theorem perm_matrix_conj_apply {k : Type} [Field k] {N : ℕ} (w : Equiv
     (i j : Fin N) :
     (((pm k w)⁻¹ * z * pm k w : GL (Fin N) k) : Matrix (Fin N) (Fin N) k) i j =
       (z : Matrix (Fin N) (Fin N) k) (w i) (w j) := by
-  have h := GlobalTheory.Parabolic.conj_permGL_apply (k := k) w ((pm k w)⁻¹ * z * pm k w) i j
-  have e : GlobalTheory.Parabolic.permGL k w * ((pm k w)⁻¹ * z * pm k w) * (GlobalTheory.Parabolic.permGL k w)⁻¹ = z := by
-    change pm k w * ((pm k w)⁻¹ * z * pm k w) * (pm k w)⁻¹ = z
-    group
-  rw [e] at h
-  exact h.symm
+  change (((GroundTheory.Automorphic.permGL k w)⁻¹ * z *
+    GroundTheory.Automorphic.permGL k w : GL (Fin N) k) : Matrix (Fin N) (Fin N) k) i j = _
+  rw [← map_inv, Units.val_mul, Units.val_mul,
+    GroundTheory.Automorphic.mul_permGL_apply, GroundTheory.Automorphic.permGL_mul_apply]
+  simp
 
 private theorem pm_wOpen_conj_mem_unipB_of_mem_unipRadLower {k : Type} [Field k] {h N : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N)
     {z : GL (Fin N) k} (hz : z ∈ unipRadLower k (stdBlocks d hd)) :

@@ -25,13 +25,13 @@ theorem isClosed_unipOf (c : n → ℤ) : IsClosed (GlobalTheory.InertSupp.unipO
   have e : (GlobalTheory.InertSupp.unipOf k c : Set (GL n k)) =
       ⋂ i, ⋂ j, ⋂ (_ : ¬ c i < c j), {g : GL n k | (g : Matrix n n k) i j = (1 : Matrix n n k) i j} := by
     ext g
-    simp only [SetLike.mem_coe, mem_unipOf, Set.mem_iInter, Set.mem_setOf_eq]
+    simp only [SetLike.mem_coe, mem_unipOf, Set.mem_iInter, Set.mem_ofPred_eq]
   rw [e]
   refine isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun _ => ?_
   exact isClosed_eq (Units.continuous_val.matrix_elem i j) continuous_const
 
 theorem eventually_mem_grp {c : n → ℤ} {u : GL n k} (hu : u ∈ GlobalTheory.InertSupp.unipOf k c) :
-    ∀ᶠ m : ℕ in Filter.atTop, u ∈ GlobalTheory.IwahoriInj.grp (conc_mul_sub c m) := by
+    ∀ᶠ m : ℕ in Filter.atTop, u ∈ GlobalTheory.IwahoriInj.grp k (conc_mul_sub c m) := by
   have key : ∀ u ∈ GlobalTheory.InertSupp.unipOf k c, ∀ᶠ m : ℕ in Filter.atTop,
       ∀ i j, Deep ((m : ℤ) * (c i - c j)) (u.val i j) := by
     intro u hu
@@ -54,7 +54,7 @@ theorem exists_compact_subgroup (k : Type) [Field k] [ValuativeRel k] [Topologic
     (hS : ∀ u ∈ S, u ∈ GlobalTheory.InertSupp.unipOf k c) :
     ∃ H : Subgroup (GL n k), H ≤ GlobalTheory.InertSupp.unipOf k c ∧ IsCompact (H : Set (GL n k)) ∧ ∀ u ∈ S, u ∈ H := by
   obtain ⟨m, hm⟩ := ((Filter.eventually_all_finset S).2 fun u hu => eventually_mem_grp (hS u hu)).exists
-  refine ⟨GlobalTheory.IwahoriInj.grp (conc_mul_sub c m) ⊓ GlobalTheory.InertSupp.unipOf k c, inf_le_right, ?_,
+  refine ⟨GlobalTheory.IwahoriInj.grp k (conc_mul_sub c m) ⊓ GlobalTheory.InertSupp.unipOf k c, inf_le_right, ?_,
     fun u hu => ⟨hm u hu, hS u hu⟩⟩
   rw [Subgroup.coe_inf]
   let f : n → n → ℤ := fun i j => (m : ℤ) * (c i - c j)
@@ -71,10 +71,10 @@ theorem exists_compact_subgroup (k : Type) [Field k] [ValuativeRel k] [Topologic
     exact h
   have h := (Units.isClosedEmbedding_embedProduct (α := Matrix n n k)).isCompact_preimage
     (hK.prod (hK.image MulOpposite.continuous_op))
-  have hgrp : IsCompact (GlobalTheory.IwahoriInj.grp (k := k) (conc_mul_sub c m) : Set (GL n k)) := by
+  have hgrp : IsCompact (GlobalTheory.IwahoriInj.grp k (conc_mul_sub c m) : Set (GL n k)) := by
     convert h using 1
     ext g
-    simp only [SetLike.mem_coe, Set.mem_setOf_eq, Set.mem_preimage, Units.embedProduct_apply,
+    simp only [SetLike.mem_coe, Set.mem_ofPred_eq, Set.mem_preimage, Units.embedProduct_apply,
       Set.mem_prod, (MulOpposite.op_injective).mem_set_image]
     rfl
   exact hgrp.inter_right (isClosed_unipOf c)

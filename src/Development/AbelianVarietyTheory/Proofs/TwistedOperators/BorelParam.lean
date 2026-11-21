@@ -19,7 +19,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 def mtor {A D : Type} [Fintype A] [DecidableEq A] [Fintype D] [DecidableEq D] (ϖ : kˣ) (e : D → ℤ) :
     GL (A ⊕ D) k :=
-  torusElt ϖ (Sum.elim 0 e)
+  torusElt k (A ⊕ D) ϖ (Sum.elim 0 e)
 
 def dcell {A D : Type} [Fintype A] [DecidableEq A] [Fintype D] [DecidableEq D] (ϖ : kˣ) (e : D → ℤ) :
     Set (GL (A ⊕ D) k) :=

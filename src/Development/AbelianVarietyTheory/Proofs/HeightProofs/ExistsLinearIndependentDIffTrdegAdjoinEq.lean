@@ -54,7 +54,7 @@ theorem _root_.GlobalTheory.exists_linearIndependent_D_iff_trdeg_adjoin_eq {K Ω
     haveI : Finite t := Finite.of_equiv _ e.symm
     have hvb : IsTranscendenceBasis K v := by
       refine hv.isTranscendenceBasis_of_lift_trdeg_le ?_ ?_
-      · rw [hD]; exact Cardinal.natCast_lt_aleph0 D
+      · rw [hD]; exact Cardinal.natCast_lt_aleph0
       · rw [hD, hcard]
     haveI := hvb.isAlgebraic_field
     haveI : Algebra.IsSeparable (IntermediateField.adjoin K (Set.range v)) Ω :=

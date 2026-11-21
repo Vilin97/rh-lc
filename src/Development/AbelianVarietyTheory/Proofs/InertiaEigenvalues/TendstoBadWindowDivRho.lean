@@ -14,6 +14,7 @@ open GlobalTheory.UnitLemma GlobalTheory.UnitLemma.Desc Polynomial Filter Topolo
 namespace GlobalTheory.UnitLemma.Desc
 
 
+open Classical in
 noncomputable def badWinBox {ι : Type} (S I : Finset ι) (L k : ℕ) (i₀ i : ι) : Finset ℤ :=
   if i ∈ S then (if i ∈ I then Finset.Icc (2 * (k : ℤ) - L) (2 * k + L) else Finset.Icc (-(L : ℤ)) L)
   else if i = i₀ then Finset.Ico (-(L : ℤ)) L ∪ Finset.Ioc (2 * (k : ℤ) - L) (2 * k + L)

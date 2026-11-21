@@ -108,6 +108,7 @@ theorem isOpen_UU : IsOpen (UU : Set (Sp k n)) := by
 
 theorem relIndex_ne_zero {H : Type*} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] {J A : Subgroup H}
     (hJ : IsCompact (J : Set H)) (hA : IsOpen (A : Set H)) : A.relIndex J ≠ 0 := by
+  letI : SMul J (Set J) := ⟨fun g s => (fun x => g * x) '' s⟩
   have : CompactSpace J := isCompact_iff_compactSpace.mp hJ
   have hA' : IsOpen ((A.subgroupOf J : Subgroup J) : Set J) := by
     rw [Subgroup.coe_subgroupOf]

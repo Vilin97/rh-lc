@@ -138,10 +138,10 @@ theorem exists_orderAt_le (T : MarkedIdealWithBoundary.{u}) (hT : T.IsAdmissible
       exact h1 (n + 1)
     have h4 : n + 1 ≤ n := by exact_mod_cast h3
     omega
-  obtain ⟨u, hu⟩ := hcpt.elim_finite_subfamily_closed (fun m : ℕ => orderAtLeastLocus J m) hclosed hempty
+  obtain ⟨u, hu⟩ := hcpt.elim_finite_subfamily_closed (fun m : ℕ => orderAtLeastLocus J m) hclosed (Set.disjoint_iff_inter_eq_empty.mpr hempty)
   have hMempty : ¬ ((Set.univ : Set ↥T.scheme) ∩ ⋂ i ∈ u, orderAtLeastLocus J i).Nonempty := by
     rw [Set.not_nonempty_iff_eq_empty]
-    exact hu
+    exact Set.disjoint_iff_inter_eq_empty.mp hu
   refine ⟨u.sup id, fun x => ?_⟩
   have hxnot : x ∉ orderAtLeastLocus J (u.sup id) := by
     intro hx

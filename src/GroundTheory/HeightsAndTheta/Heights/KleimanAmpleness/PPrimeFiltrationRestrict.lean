@@ -27,7 +27,7 @@ abbrev reducedPt : Fin (N + 1) → K' := fun i => ψ (ratio hj i)
 def RegularAt (a : Ω) : Prop :=
   ∃ b c : chartRing S x (singleChart hj), ψ c ≠ 0 ∧ a * (c : Ω) = b
 
-
+open scoped Classical in
 def residueAt (a : Ω) : K' :=
   if h : RegularAt hj ψ a then ψ h.choose / ψ h.choose_spec.choose else 0
 
@@ -105,7 +105,7 @@ theorem ratio_self : ψ (ratio (S := S) hj j) = 1 := by
 
 variable (hxy : ∀ i, ψ (ratio hj i) ≠ 0 → x i ≠ 0)
 
-
+include hxy in
 theorem regularAt_chart (K : Chart (reducedPt hj ψ)) {f s : Poly S N} {e : ℕ} (hs : s ∈ monos K.1)
     (hf : f.IsHomogeneous e) (hse : s.IsHomogeneous e) :
     RegularAt hj ψ (aeval x f / aeval x s) ∧

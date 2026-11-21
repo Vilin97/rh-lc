@@ -26,14 +26,14 @@ def InFace (β x : LinearMap.BilinForm ℤ X) : Prop :=
 def IsIndec (β x : LinearMap.BilinForm ℤ X) : Prop :=
   InFace bar ψ lab β x ∧ x ≠ 0 ∧ ∀ y z, InFace bar ψ lab β y → InFace bar ψ lab β z → y ≠ 0 → z ≠ 0 → y + z ≠ x
 
-
+variable (X) in
 def IsMarked (β : LinearMap.BilinForm ℤ X) : Prop :=
   β ∈ balForms bar X ∧ (∀ y, 0 ≤ β y y) ∧ (∀ (k : ℕ) (β' : LinearMap.BilinForm ℤ X), (k : ℤ) • β' = β → k = 1) ∧
     lab.evalZ β = ((i + 1 : ℕ) : ℝ) ∧
     ∃ S : Finset (LinearMap.BilinForm ℤ X), (∀ x, x ∈ S ↔ IsIndec bar ψ lab β x) ∧
       ∃ k : ℕ, 0 < k ∧ (k : ℤ) • β = ∑ x ∈ S, x
 
-
+open Classical in
 def markVal (n : ℕ) (B : (Fin n → O) → (Fin n → O) → ℝ) : ℝ :=
   if h : ∃ β : LinearMap.BilinForm ℤ (Fin n → O), ∀ a b, B a b = β a b then
     (if IsMarked bar ψ lab i (Fin n → O) h.choose then 1 else 0) else 0
@@ -45,7 +45,7 @@ section Basic
 variable {O : Type} [CommRing O] {bar : O → O} {ψ lab : InvFun O} {i : ℕ}
   {X : Type} [AddCommGroup X] [Module O X] [Module.Finite O X]
 
-
+open Classical in
 theorem markVal_int (n : ℕ) (β : LinearMap.BilinForm ℤ (Fin n → O)) :
     markVal bar ψ lab i n (fun a b => (β a b : ℝ)) = if IsMarked bar ψ lab i (Fin n → O) β then 1 else 0 := by
   classical

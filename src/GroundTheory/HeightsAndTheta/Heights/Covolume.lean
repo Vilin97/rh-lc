@@ -28,14 +28,9 @@ end RealSpace
 
 end Real
 
-
+open scoped Classical in
 theorem det_basisMatrix_sq : (basisMatrix K).det ^ 2 = ((discr K : ℤ) : ℂ) := by
-  rw [basisMatrix_eq_embeddingsMatrixReindex,
-    ← Algebra.discr_eq_det_embeddingsMatrixReindex_pow_two ℚ ℂ
-      (integralBasis K ∘ (equivReindex K)) (RingHom.equivRatAlgHom K ℂ),
-    ← (equivReindex K).symm_symm, Algebra.discr_reindex ℚ (integralBasis K) (equivReindex K).symm,
-    ← coe_discr]
-  simp
+  exact (discr_eq_basisMatrix_det_sq K).symm
 
 theorem basisMatrix_apply' (τ σ : K →+* ℂ) :
     basisMatrix K τ σ = σ ((RingOfIntegers.basis K (equivReindex K τ) : 𝓞 K) : K) := by

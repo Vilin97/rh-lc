@@ -334,7 +334,7 @@ lemma proj_supp : ∀ (q : ℕ) (i : Fin (q + 1) → ι),
       rw [lin_bd_single_apply]
       refine Supp.sum _ _ fun a _ => ((proj_supp q _).mono fun s hs =>
         ⟨hs.1, inRange_face a hs.2⟩).smul _
-    obtain ⟨hts, htr⟩ := hw t ht
+    obtain ⟨hts, htr⟩ : StrictMono t ∧ InRange i t := hw t ht
     split_ifs with hc
     · refine Supp.single _ ⟨Fin.strictMono_cons.mpr ⟨fun j => hc.trans_le
         (hts.monotone (Fin.zero_le j)), hts⟩, fun a => ?_⟩

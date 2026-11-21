@@ -66,8 +66,8 @@ theorem geomAt_iff {N : ℕ} {S S' : Scheme.{0}} {t : SAB H S} {t' : SAB H S'} {
     · obtain ⟨p, rfl⟩ := e.surjective p
       obtain ⟨q, rfl⟩ := e.surjective q
       rw [e.symm_apply_apply, e.symm_apply_apply]
-      obtain ⟨w, hw, -⟩ := (isPullCubical_iff m.cm t.cub t'.cub).1 m.lin
-      exact (weilIs_grpPullback_of_comm _ _ _ _ f m.φ _ _ t.PP.isLB t'.PP.isLB m.cart ⟨w, (isGen_iff w).2 hw⟩
+      obtain ⟨w, hw, -⟩ := m.lin
+      exact (weilIs_grpPullback_of_comm _ _ _ _ f m.φ _ _ t.PP.isLB t'.PP.isLB m.cart ⟨w, hw⟩
         (Over.mk x) n p q (e p) (e q) _ (he p) (he q)).2 h
     · exact e.injective ((hl a).trans ((hI a).trans (e.apply_symm_apply _).symm))
 
@@ -183,6 +183,7 @@ end GlobalTheory.FamAut
 
 
 theorem GlobalTheory.famCore_exists_aut : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (n N : ℕ) (MM : Scheme.{0}) (sM : MM ⟶ Sp (RZ H n N)) (tM : SAB H MM) (lev : D.La → (𝟙_ (Over MM) ⟶ tM.G)) (l : Level H) (Xo : Moduli D l) (β : RZ H n N →+* KA l) (a : Xo.X ⟶ MM) (ν₀ : SABMap Xo.univ.t tM a) (h : a ≫ sM = Xo.s ≫ spMap β) (r : Xo.X ≅ Xo.X) (ν : SABMap Xo.univ.t Xo.univ.t r.hom) (g : D.La →ₗ[𝓞 E] D.La) (σ : KA l ≃+* KA l), 1 ≤ D.p + D.q → l.A = N → n.Prime → Odd n → (∃ j, 1 ≤ j ∧ N = n ^ j) → IsInc (RZ H n N).subtype (KA l).val.toRingHom β → FamCore D sM tM lev → Surjective (pullback.lift a _ h) → (∀ x, (Xo.univ.etaA x).left ≫ ν₀.φ = a ≫ (lev x).left) → σ (baseKA l).ρ = (baseKA l).ρ → r.hom ≫ Xo.s = Xo.s ≫ spMap σ.toRingHom → (∀ x, (Xo.univ.etaA (g x)).left ≫ ν.φ = r.hom ≫ (Xo.univ.etaA x).left) → ∃ (ρ : MM ≅ MM) (_ : SABMap tM tM ρ.hom) (σ₀ : RZ H n N ≃+* RZ H n N), a ≫ ρ.hom = r.hom ≫ a ∧ ρ.hom ≫ sM = sM ≫ spMap σ₀.toRingHom ∧ σ₀ (RZ.rt H n N) = RZ.rt H n N := by
+  open GlobalTheory.FamAut GlobalTheory.LevelFibre in
   rintro - - E _ _ _ H D n N MM sM tM lev l Xo β a ν₀ h r ν g σ - rfl hn - ⟨j, -, hj⟩ hβ F hsurj h₀ hσ hr hν
   rcases isEmpty_or_nonempty Xo.X with hX | ⟨⟨p⟩⟩
   · exact ⟨Iso.refl _, ObjComp.sabMapId tM, RingEquiv.refl _, (isInitialOfIsEmpty (X := Xo.X)).hom_ext _ _,

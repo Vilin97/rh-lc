@@ -512,3 +512,4 @@ theorem abLocus_eq_univ (hq : D.q = 0) (V : ValuationSubring c.F) (Y : Model Xo 
 end Spread
 
 end GlobalTheory.DefiniteAbelian
+

@@ -63,10 +63,8 @@ theorem stdSumBasis_elim (K : Type*) [Field K] (m k : ℕ) :
   funext x; cases x <;> rfl
 
 theorem stdLattice_isLattice_example :
-    Submodule.IsLattice ℚ ((stdLattice ℚ 1).restrictScalars ℤ) where
-  fg := (Submodule.fg_span (Set.finite_range _)).restrictScalars
-  linearIndepOn s hs hli :=
-    (LinearIndependent.iff_fractionRing ℤ ℚ).mp hli.linearIndependent
+    Submodule.IsLattice ℚ ((stdLattice ℚ 1).restrictScalars ℤ) :=
+  Submodule.IsLattice.of_fg ℚ ((Submodule.fg_span (Set.finite_range _)).restrictScalars)
 
 end
 

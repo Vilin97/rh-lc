@@ -312,12 +312,12 @@ def inducedBlowupsWithoutIso (h : T.TransitionsAreBlowups) : SequenceOfBlowups Y
 
 end EmbeddedBlowupSequence
 
-private theorem locallyOfFiniteType_affineSpaceIndexedByToSpec_ulift (k : Type u) [Field k] (n : ℕ) :
+theorem locallyOfFiniteType_affineSpaceIndexedByToSpec_ulift (k : Type u) [Field k] (n : ℕ) :
     AlgebraicGeometry.LocallyOfFiniteType (affineSpaceIndexedByToSpec k (ULift.{u} (Fin n))) := by
   unfold affineSpaceIndexedByToSpec
   infer_instance
 
-private theorem quasiCompact_affineSpaceIndexedByToSpec_ulift (k : Type u) [Field k] (n : ℕ) :
+theorem quasiCompact_affineSpaceIndexedByToSpec_ulift (k : Type u) [Field k] (n : ℕ) :
     AlgebraicGeometry.QuasiCompact (affineSpaceIndexedByToSpec k (ULift.{u} (Fin n))) := by
   unfold affineSpaceIndexedByToSpec
   infer_instance

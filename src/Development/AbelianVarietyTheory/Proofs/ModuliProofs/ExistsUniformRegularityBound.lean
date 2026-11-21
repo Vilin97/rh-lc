@@ -140,7 +140,7 @@ theorem hom_genIn (I : Ideal (MvPolynomial σ K)) (d : ℕ) :
   intro F hF e
   letI := MvPolynomial.gradedAlgebra (σ := σ) (R := K)
   exact homogeneousComponent_mem_of_mem
-    (Ideal.homogeneous_span (homogeneousSubmodule σ K) _ fun G hG => ⟨d, hG.2⟩) hF e
+    (Ideal.homogeneous_span (homogeneousSubmodule σ K) {G | G ∈ I ∧ G.IsHomogeneous d} fun G hG => ⟨d, hG.2⟩) hF e
 
 theorem gen_of_section {I : Ideal (MvPolynomial σ K)}
     (hI : ∀ F ∈ I, ∀ e, homogeneousComponent e F ∈ I) {h : MvPolynomial σ K}
@@ -490,10 +490,12 @@ theorem finrank_extSub (W : Submodule K (MvPolynomial σ K)) [Module.Finite K W]
     ext m
     have := congrArg (fun F => φ (AddMonoidAlgebra.coeff F m)) hc
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [coeff_sum, map_sum, coeff_zero, map_zero] at this ⊢
-    rw [← this]
-    refine Finset.sum_congr rfl fun j _ => ?_
-    rw [← coeff_contr, contr_smul_map]
+      simp only [coeff_sum, map_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, map_zero] at this ⊢
+    calc
+      _ = ∑ j, φ (AddMonoidAlgebra.coeff (c j • v j) m) := by
+        refine Finset.sum_congr rfl fun j _ => ?_
+        rw [← coeff_contr, contr_smul_map]
+      _ = _ := this
   have hsp : extSub L W = Submodule.span L (Set.range v) := by
     apply le_antisymm
     · intro F hF
@@ -558,14 +560,14 @@ namespace GlobalTheory
 theorem exists_uniform_regularity_bound :
     ∀ (σ : Type) [Finite σ] (Q : Polynomial ℚ), ∃ d₀ : ℕ, ∀ (K : Type) [Field K] (I : Ideal (MvPolynomial σ K)), (∀ F ∈ I, ∀ e, MvPolynomial.homogeneousComponent e F ∈ I) → (∀ F, (∀ i, MvPolynomial.X i * F ∈ I) → F ∈ I) → (∀ᶠ e in Filter.atTop, (Module.finrank K ↥(MvPolynomial.homogeneousSubmodule σ K e ⊓ I.restrictScalars K) : ℚ) = Q.eval (e : ℚ)) → ∀ e ≥ d₀, (Module.finrank K ↥(MvPolynomial.homogeneousSubmodule σ K e ⊓ I.restrictScalars K) : ℚ) = Q.eval (e : ℚ) ∧ ∀ F ∈ I, F.IsHomogeneous e → F ∈ Ideal.span {G | G ∈ I ∧ G.IsHomogeneous d₀} := by
   intro σ _ Q
-  obtain ⟨d, hd⟩ := bound_infinite σ (nmon σ 1) fun e => Q.eval (e : ℚ)
+  obtain ⟨d, hd⟩ := RegBound.bound_infinite σ (RegBound.nmon σ 1) fun e => Q.eval (e : ℚ)
   refine ⟨d, fun K _ I hI hsat hq => ?_⟩
   haveI : Infinite (AlgebraicClosure K) := IsAlgClosed.instInfinite
-  have hdim : ∀ e, finrank (AlgebraicClosure K) (piece (extIdeal (AlgebraicClosure K) I) e) =
-      finrank K (piece I e) := fun e => by rw [piece_extIdeal, finrank_extSub]
-  have h := hd (AlgebraicClosure K) (extIdeal (AlgebraicClosure K) I)
-    (fun F hF e φ => by rw [contr_comp]; exact hI _ (hF φ) e)
-    (fun F hF φ => hsat _ fun i => by rw [← contr_X_mul]; exact hF i φ)
+  have hdim : ∀ e, finrank (AlgebraicClosure K) (RegBound.piece (RegBound.extIdeal (AlgebraicClosure K) I) e) =
+      finrank K (RegBound.piece I e) := fun e => by rw [RegBound.piece_extIdeal, RegBound.finrank_extSub]
+  have h := hd (AlgebraicClosure K) (RegBound.extIdeal (AlgebraicClosure K) I)
+    (fun F hF e φ => by rw [RegBound.contr_comp]; exact hI _ (hF φ) e)
+    (fun F hF φ => hsat _ fun i => by rw [← RegBound.contr_X_mul]; exact hF i φ)
     (Nat.le_add_left _ _) (by simpa only [hdim] using hq)
   simp only [hdim] at h
   intro e he
@@ -574,9 +576,9 @@ theorem exists_uniform_regularity_bound :
   | base => exact fun F hF hFe => Ideal.subset_span ⟨hF, hFe⟩
   | succ n hn ih =>
     intro F hF hFe
-    refine (Ideal.span_le.2 fun G hG => ih G hG.1 hG.2 : genIn I n ≤ genIn I d) ?_
-    refine mem_genIn_of_map (L := AlgebraicClosure K) ((h n hn).2 _ (fun φ => ?_) (hFe.map _))
-    rw [contr_map, smul_eq_C_mul]
+    refine (Ideal.span_le.2 fun G hG => ih G hG.1 hG.2 : RegBound.genIn I n ≤ RegBound.genIn I d) ?_
+    refine RegBound.mem_genIn_of_map (L := AlgebraicClosure K) ((h n hn).2 _ (fun φ => ?_) (hFe.map _))
+    rw [RegBound.contr_map, smul_eq_C_mul]
     exact I.mul_mem_left _ hF
 
 end GlobalTheory

@@ -34,7 +34,7 @@ theorem univ_descend {S S₁ : Scheme.{0}} (i : S ⟶ S₁) [Surjective i] [Flat
   let Q₁ : Over S₁ := ∏ᶜ (fun _ : I => C₁)
   let π : I → (Q₁ ⟶ C₁) := fun u => Pi.π (fun _ : I => C₁) u
   let m₁ : A₁ ⟶ Q₁ := Pi.lift pr₁
-  have hm₁ : ∀ u, m₁ ≫ π u = pr₁ u := fun u => Pi.lift_π _ _
+  have hm₁ : ∀ u, m₁ ≫ π u = pr₁ u := fun u => Pi.lift_comp_π _ _
   have ext₁ : ∀ {Z : Scheme.{0}} (a b : Z ⟶ Q₁.left), a ≫ Q₁.hom = b ≫ Q₁.hom →
       (∀ u, a ≫ (π u).left = b ≫ (π u).left) → a = b := by
     intro Z a b h1 h2
@@ -72,11 +72,11 @@ theorem univ_descend {S S₁ : Scheme.{0}} (i : S ⟶ S₁) [Surjective i] [Flat
   have : IsIso ((Over.forget S₁).map m₁) := hI₁
   have : IsIso m₁ := isIso_of_reflects_iso m₁ (Over.forget S₁)
   refine ⟨Pi.lift y ≫ inv m₁, fun u => ?_, fun x hx => ?_⟩
-  · rw [← hm₁, Category.assoc, IsIso.inv_hom_id_assoc]; exact Pi.lift_π _ _
+  · rw [← hm₁, Category.assoc, IsIso.inv_hom_id_assoc]; exact Pi.lift_comp_π _ _
   · rw [IsIso.eq_comp_inv]
     refine Pi.hom_ext _ _ fun u => ?_
-    rw [Category.assoc, Pi.lift_π]
-    exact (hx u).trans (Pi.lift_π _ _).symm
+    rw [Category.assoc, hm₁]
+    exact (hx u).trans (Pi.lift_comp_π _ _).symm
 
 theorem prod_descend {S S₁ : Scheme.{0}} {i : S ⟶ S₁} {A C : Over S} {A₁ C₁ : Over S₁} [GrpObj C] [GrpObj C₁]
     {ψ : A.left ⟶ A₁.left} {χ : C.left ⟶ C₁.left} [Epi ψ] (hψ : ψ ≫ A₁.hom = A.hom ≫ i)
@@ -90,6 +90,8 @@ theorem prod_descend {S S₁ : Scheme.{0}} {i : S ⟶ S₁} {A C : Over S} {A₁
   have E : preHom U z₁ = preHom U (List.ofFn fun v => pr₁ v ^ e v).prod := by
     rw [key z z₁ hz, h, map_list_prod, map_list_prod, List.map_ofFn, List.map_ofFn]
     congr 2
+    funext v
+    simp only [Function.comp_apply, map_zpow, key _ _ (hc v)]
   exact Over.OverMorphism.ext ((cancel_epi ψ).1 (congrArg (fun w => w.left) E))
 
 theorem iso_pull_cancel {X X₁ X₀ : Scheme.{0}} {L : LB X} {L₁ : LB X₁} {L₀ : LB X₀} (hL : L.IsLB) (hL₁ : L₁.IsLB)

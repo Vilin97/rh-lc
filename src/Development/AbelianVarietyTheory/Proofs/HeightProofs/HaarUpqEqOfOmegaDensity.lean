@@ -33,7 +33,18 @@ theorem isOmegaLeb_unique {P Q : ℕ} {lam lam' : Measure (lieU P Q)}
   obtain ⟨t, ht⟩ : ∃ t : ℝ≥0, lam = t • lam' := ⟨_, Measure.isAddLeftInvariant_eq_smul lam lam'⟩
   have hp : lam.prod lam = (t * t) • lam'.prod lam' := by
     rw [ht, Measure.prod_smul_left, Measure.prod_smul_right, smul_smul]
-  rw [hp, Measure.map_smul, h2'] at h2
+  have hf : AEMeasurable (fun ab : lieU P Q × lieU P Q =>
+      entries ((ab.1 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ) +
+        Complex.I • (ab.2 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ)))
+      (lam'.prod lam') := by
+    apply Continuous.aemeasurable
+    apply continuous_pi fun ij => ?_
+    simp only [entries, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
+    have hc : Continuous (fun x : lieU P Q =>
+        (x : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ) ij.1 ij.2) :=
+      (continuous_apply ij.2).comp ((continuous_apply ij.1).comp continuous_subtype_val)
+    exact (hc.comp continuous_fst).add (continuous_const.mul (hc.comp continuous_snd))
+  rw [hp, Measure.map_smul _ hf, h2'] at h2
   have h3 := congrArg (fun m : Measure ((Fin P ⊕ Fin Q) × (Fin P ⊕ Fin Q) → ℂ) =>
     m (Metric.ball 0 1)) h2
   simp only [Measure.smul_apply] at h3

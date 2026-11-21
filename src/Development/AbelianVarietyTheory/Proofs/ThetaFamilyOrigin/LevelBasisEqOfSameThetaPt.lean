@@ -97,6 +97,8 @@ theorem value_eq_mul {S : Scheme.{0}} {A : Over S} [GrpObj A] {L : LB A.left} (h
     {s s' : LB.Sec (LPow A L k T)} {r x y : Γ(T.left, ⊤)} (h : SecM.ofSec A s = r • SecM.ofSec A s') {w : T ⟶ A}
     {τ : LB.Gen (LB.LinComb L (Y := T.left) (K := Fin 1) (fun _ => w.left) (fun _ => k))}
     (H : IsValueAt A L k s w τ x) (H' : IsValueAt A L k s' w τ y) : x = r * y := by
+  #check ReciprocityTheory.ChartRestriction.G.Geo.Tor.fn_ext
+  #check GlobalTheory.ThetaCoord.levelBasis_pow
   refine fn_ext fun z _ => ?_
   choose J hJ using fun χ : T.left ⟶ A.left => exists_chart hL (χ z)
   have a := sv_of_isValueAt H (𝟙 T) hJ
@@ -108,7 +110,6 @@ theorem value_eq_mul {S : Scheme.{0}} {A : Over S} [GrpObj A] {L : LB A.left} (h
     exact this
   rw [a, b, ← _root_.mul_assoc] at c
   rw [gs_mul _ _ ⊤ trivial]
-  exact (Units.mul_left_inj _).1 c
 
 theorem levelPoint_injective {K : Type} [Field K] [IsAlgClosed K] {P : PolAV (Spec (CommRingCat.of K))} {M : ℕ}
     [NeZero M] {ze : Γ(Spec (CommRingCat.of K), ⊤)ˣ} (lev : Level P M ze) {g : ℕ} (hg : P.g = g) :

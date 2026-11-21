@@ -13,20 +13,26 @@ namespace Formalism.L2.G.Triv
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
+local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
+local notation "𝒜" => E ⊗[F] 𝔸
+local notation "𝒮" => tensInt (F := F) 𝔸 (intOE E) (intAd F)
+
 abbrev SV (E : Type) [Field E] [NumberField E] [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) :
     Subring (E ⊗[F] v.adicCompletion F) :=
   tensInt (F := F) (v.adicCompletion F) (intOE E) (v.adicCompletionIntegers F).toSubring
 
 section Trace
 
-theorem T_mul (c : 𝔸) (z : 𝒜) : adelstabT F E (((1 : E) ⊗ₜ[F] c) * z) = c * adelstabT F E z := by
+theorem T_mul (c : 𝔸) (z : 𝒜) : adelstabT (F := F) (E := E) (((1 : E) ⊗ₜ[F] c) * z) =
+    c * adelstabT (F := F) (E := E) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul e a =>
     simp [adelstabT, Algebra.TensorProduct.tmul_mul_tmul, mul_smul_comm]
   | add x y hx hy => rw [mul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
-theorem T_int (z : 𝒜) (hz : ∀ v, prV (E := E) v z ∈ SV E v) : adelstabT F E z ∈ intAd F := by
+theorem T_int (z : 𝒜) (hz : ∀ v, prV (E := E) v z ∈ SV E v) :
+    adelstabT (F := F) (E := E) z ∈ intAd F := by
   intro v
   have h1 := adelstabT_mem (afsplit_IE_int v _ (hz v))
   rw [afsplit_decomp, afsplitEps, Algebra.TensorProduct.one_def, afsplitIE_tmul, T_mul] at h1
@@ -36,7 +42,7 @@ theorem T_int (z : 𝒜) (hz : ∀ v, prV (E := E) v z ∈ SV E v) : adelstabT F
 
 theorem expand {ι : Type} [Fintype ι] [DecidableEq ι] (β : Module.Basis ι F E) (z : 𝒜) :
     z = ∑ i, ((Algebra.traceForm F E).dualBasis (traceForm_nondegenerate F E) β i) ⊗ₜ[F]
-      adelstabT F E ((β i ⊗ₜ[F] (1 : 𝔸)) * z) := by
+      adelstabT (F := F) (E := E) ((β i ⊗ₜ[F] (1 : 𝔸)) * z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul e a =>
@@ -69,14 +75,14 @@ theorem exists_den : ∃ d : ℤ, d ≠ 0 ∧ ∀ z : 𝒜, (∀ v, prV (E := E)
   refine ⟨m₂, hm₂, fun z hz => ?_⟩
   rw [expand β z, Finset.mul_sum]
   refine sum_mem fun i _ => ?_
-  have ht : adelstabT F E ((β i ⊗ₜ[F] (1 : 𝔸)) * z) ∈ intAd F := by
+  have ht : adelstabT (F := F) (E := E) ((β i ⊗ₜ[F] (1 : 𝔸)) * z) ∈ intAd F := by
     refine T_int _ fun v => ?_
     rw [map_mul]
     refine mul_mem ?_ (hz v)
     exact Subring.subset_closure (Or.inl ⟨⟨β i, ⟨⟨β i, hβ i⟩, rfl⟩⟩, rfl⟩)
   have h1 : inclE (F := F) 𝔸 (m₂ : E) * ((Algebra.traceForm F E).dualBasis (traceForm_nondegenerate F E) β i ⊗ₜ[F]
-      adelstabT F E ((β i ⊗ₜ[F] (1 : 𝔸)) * z)) =
-      algebraMap (𝓞 E) E ⟨_, hi₂ i⟩ ⊗ₜ[F] adelstabT F E ((β i ⊗ₜ[F] (1 : 𝔸)) * z) := by
+      adelstabT (F := F) (E := E) ((β i ⊗ₜ[F] (1 : 𝔸)) * z)) =
+      algebraMap (𝓞 E) E ⟨_, hi₂ i⟩ ⊗ₜ[F] adelstabT (F := F) (E := E) ((β i ⊗ₜ[F] (1 : 𝔸)) * z) := by
     show ((m₂ : E) ⊗ₜ[F] (1 : 𝔸)) * _ = _
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul]
     rfl

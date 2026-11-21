@@ -149,6 +149,7 @@ theorem _root_.GlobalTheory.FieldSize.sz_sup_adjoin_root : ∀ (F : Intermediate
   haveI : NumberField E := { to_charZero := inferInstance, to_finiteDimensional := hEfd }
   have hle : F ≤ E := le_sup_left
   letI : Algebra F E := (IntermediateField.inclusion hle).toAlgebra
+  letI : Module.Free F E := Module.Free.of_divisionRing F E
   let z' : E := ⟨z, (le_sup_right : ℚ⟮z⟯ ≤ E) (IntermediateField.mem_adjoin_simple_self ℚ z)⟩
   have hz' : z' ^ k = algebraMap F E y :=
     Subtype.ext (by rw [IntermediateField.coe_pow]; exact hz)

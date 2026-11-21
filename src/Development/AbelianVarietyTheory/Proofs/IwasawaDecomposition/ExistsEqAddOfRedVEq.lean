@@ -203,7 +203,7 @@ section Poly
 variable {O : Type} [CommRing O] (bar : O → O) (φ : InvFun O) (X : Type) [AddCommGroup X] [Module O X] [Module.Finite O X]
   {m : ℕ}
 
-
+variable {X} in
 structure IsCell (γ : Fin m → LinearMap.BilinForm ℤ X) : Prop where
 
   mem : ∀ i, γ i ∈ balForms bar X

@@ -72,7 +72,7 @@ theorem norm_eq_one_of_valuation_eq_one (χ : kˣ →* ℂˣ) (hχ : IsSmoothCha
 theorem norm_eq_nabs_rpow (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
     ∃ s : ℝ, ∀ z : kˣ, ‖(χ z : ℂ)‖ = nabs k z ^ s := by
-  obtain ⟨ϖ, hϖ⟩ := exists_unit_uniformizer k
+  obtain ⟨ϖ, hϖ⟩ := exists_unit_uniformizer (k := k)
   set a := ‖(χ ϖ : ℂ)‖
   set b := nabs k ϖ
   have ha : 0 < a := norm_pos_iff.2 (χ ϖ).ne_zero
@@ -84,14 +84,14 @@ theorem norm_eq_nabs_rpow (k : Type) [Field k] [ValuativeRel k] [TopologicalSpac
     rw [Real.rpow_def_of_pos hb, mul_div_cancel₀ _ hlb, Real.exp_log ha]
   set m : ℤ := ord k z
   set u : kˣ := z * ϖ ^ (-m)
-  have hord1 : ord k ϖ = 1 := ord_eq_one hϖ
+  have hord1 : ord k ϖ = 1 := ord_eq_one k hϖ
   have hordu : ord k u = 0 := by
     have e1 : ordHom k u = ordHom k z * ordHom k ϖ ^ (-m) := by rw [map_mul, map_zpow]
     have e2 := congrArg Multiplicative.toAdd e1
     simp only [ordHom, MonoidHom.coe_mk, OneHom.coe_mk, toAdd_mul, toAdd_zpow, toAdd_ofAdd, hord1] at e2
     rw [e2]
     simp [m]
-  have hu : valuation k (u : k) = 1 := ord_eq_zero_iff.1 hordu
+  have hu : valuation k (u : k) = 1 := (ord_eq_zero_iff k).1 hordu
   have hz : z = u * ϖ ^ m := by
     simp only [u, mul_assoc, ← zpow_add, neg_add_cancel, zpow_zero, mul_one]
   have hnorm : ‖(χ z : ℂ)‖ = a ^ m := by

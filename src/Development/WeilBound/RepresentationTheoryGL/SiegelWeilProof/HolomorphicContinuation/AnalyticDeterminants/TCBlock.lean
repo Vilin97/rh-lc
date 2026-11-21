@@ -159,6 +159,8 @@ private theorem iteratedFDeriv_comp_equiv_eq_of_contDiffOn (hS : IterSymm) {V : 
   obtain rfl : k = m := Fin.equiv_iff_eq.mp ⟨e1.trans e2.symm⟩
   rw [← hS V ψ Ω hΩ hψ c hc k (v ∘ e2) (e1.trans e2.symm)]
   congr 1
+  funext i
+  simp
 
 private theorem iteratedFDeriv_sum_mul_eq_sum_smul {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {ι : Type} (u : Finset ι)
     (f : ι → E → ℂ) (a : ι → ℂ) (x : E) (k : ℕ) (h : ∀ i ∈ u, ContDiffAt ℂ k (f i) x) :

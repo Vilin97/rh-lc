@@ -157,17 +157,14 @@ def ringPiece (m : K → ℤ) : Submodule F (MRing ι F) :=
   weightedHomogeneousSubmodule F (intWeight (ι := ι)) m
 
 
-theorem isMultigrading_ring : IsMultigrading ι (MRing ι F) (ringPiece (F := F) (ι := ι)) where
-  internal := (weightedDecomposition F (intWeight (ι := ι))).isInternal
-  smul_mem := by
-    intro v m x hx
-    rw [smul_eq_mul]
-    have hX : IsWeightedHomogeneous (intWeight (ι := ι)) (X v : MRing ι F) (unitDeg v.1) :=
-      isWeightedHomogeneous_X F _ v
-    have := hX.mul hx
-    change X v * x ∈ weightedHomogeneousSubmodule F intWeight (m + unitDeg v.1)
-    rw [mem_weightedHomogeneousSubmodule, add_comm]
-    exact this
+theorem isMultigrading_ring : IsMultigrading ι (MRing ι F) (ringPiece (F := F) (ι := ι)) := by
+  refine ⟨(weightedDecomposition F (intWeight (ι := ι))).isInternal, ?_⟩
+  intro v m x hx
+  change IsWeightedHomogeneous (intWeight (ι := ι)) x m at hx
+  rw [smul_eq_mul]
+  change IsWeightedHomogeneous (intWeight (ι := ι)) (X v * x) (m + unitDeg v.1)
+  rw [add_comm m (unitDeg v.1)]
+  exact (isWeightedHomogeneous_X F (intWeight (ι := ι)) v).mul hx
 
 end Examples
 

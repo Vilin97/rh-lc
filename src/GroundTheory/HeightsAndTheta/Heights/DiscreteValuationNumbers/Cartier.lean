@@ -125,24 +125,20 @@ theorem IsVerticalDivisor.of_unit_off_special {P : Ideal (MRing ι O)} {ϖ : O} 
     (hf : f ∉ P) (hg : g ∉ P)
     (hunit : ∀ W : Ideal (MRing ι O), W.IsPrime → P ≤ W → IsRelevant W →
       (C ϖ : MRing ι O) ∉ W → ∃ u v : MRing ι O, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) :
-    IsVerticalDivisor P ϖ b f g where
-  degrees := degrees
-  num_not_mem := hf
-  den_not_mem := hg
-  vertical := by
-    intro W hW
-    by_contra hϖ
-    have hsupp : W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
-      by_cases h1 : divCycle P f W = 0
-      · have h2 : divCycle P g W ≠ 0 := by
-          intro h2; apply hW; unfold ratDiv; rw [h1, h2, sub_zero]
-        exact le_and_isRelevant_of_divCycle_ne_zero h2
-      · exact le_and_isRelevant_of_divCycle_ne_zero h1
-    obtain ⟨u, v, hu, hv, h⟩ := hunit W hsupp.1 hsupp.2.1 hsupp.2.2 hϖ
-    apply hW
-    unfold ratDiv
-    rw [divCycle_eq_of_mul_sub_mem hu hv h, sub_self]
-  unit_off_special := hunit
+    IsVerticalDivisor P ϖ b f g := by
+  refine ⟨degrees, hf, hg, ?_, hunit⟩
+  intro W hW
+  by_contra hϖ
+  have hsupp : W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
+    by_cases h1 : divCycle P f W = 0
+    · have h2 : divCycle P g W ≠ 0 := by
+        intro h2; apply hW; unfold ratDiv; rw [h1, h2, sub_zero]
+      exact le_and_isRelevant_of_divCycle_ne_zero h2
+    · exact le_and_isRelevant_of_divCycle_ne_zero h1
+  obtain ⟨u, v, hu, hv, h⟩ := hunit W hsupp.1 hsupp.2.1 hsupp.2.2 hϖ
+  apply hW
+  unfold ratDiv
+  rw [divCycle_eq_of_mul_sub_mem hu hv h, sub_self]
 
 end Vertical
 

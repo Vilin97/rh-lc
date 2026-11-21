@@ -101,21 +101,34 @@ theorem card_lt_krullDimSucc_of_mem_intersectionComponents : ∀ (T : MarkedIdea
   have hcard : (J.attach.image
       (fun p : {j : Fin T.boundary.length // j ∈ J} => F p.1 p.2)).card = J.card := by
     rw [Finset.card_image_of_injective _ hGinj, Finset.card_attach]
+  let d : EtaleChart T.structMap V m := {
+    map := T.scheme.homOfLE hVU ≫ c.map
+    comp_struct := by rw [Category.assoc, c.comp_struct, ← Category.assoc, Scheme.homOfLE_ι]
+    isEtale := by
+      have := c.isEtale
+      infer_instance }
   have hmem : ∀ t ∈ J.attach.image
       (fun p : {j : Fin T.boundary.length // j ∈ J} => F p.1 p.2),
-      (c.restrict hVU).coord t ∈ (hV.primeIdealOf ⟨x, hxV⟩).asIdeal := by
+      d.coord t ∈ (hV.primeIdealOf ⟨x, hxV⟩).asIdeal := by
     intro t ht
     obtain ⟨p, -, hpt⟩ := Finset.mem_image.mp ht
     have hat : a (p.1 : ℕ) = some t := by
       rw [hFspec p.1 p.2]
       exact congrArg Option.some hpt
     have hU' := hsome (p.1 : ℕ) p.1.isLt t hat
-    have hV' := restrictIdeal_eq_restrict_coordIdeal_of_le hVU c _ {t} hU'
+    have hV' : restrictIdeal T.boundary[p.1.val] V = d.coordIdeal {t} := by
+      have h' : T.boundary[p.1.val].comap U.ι =
+          (coordSubspaceIdeal _ m {t}).comap c.map := by
+        rw [← restrictIdeal_eq_comap_ι, hU', EtaleChart.coordIdeal_eq_comap_coordSubspaceIdeal]
+      rw [restrictIdeal_eq_comap_ι, EtaleChart.coordIdeal_eq_comap_coordSubspaceIdeal]
+      change _ = (coordSubspaceIdeal _ m {t}).comap (T.scheme.homOfLE hVU ≫ c.map)
+      rw [Scheme.IdealSheafData.comap_comp, ← h', ← Scheme.IdealSheafData.comap_comp,
+        Scheme.homOfLE_ι]
     have hx' := hxj p.1 p.2
     rw [List.get_eq_getElem] at hx'
     exact coord_mem_primeIdealOf_of_restrictIdeal_eq_coordIdeal_singleton hV
-      (c.restrict hVU) t _ hV' x hxV hx'
-  have hle2 := card_le_ringKrullDim_stalk hV (c.restrict hVU) x hxV
+      d t _ hV' x hxV hx'
+  have hle2 := card_le_ringKrullDim_stalk hV d x hxV
     (J.attach.image (fun p : {j : Fin T.boundary.length // j ∈ J} => F p.1 p.2)) hmem
   have hfin : topologicalKrullDim ↥T.scheme ≠ ⊤ := ne_of_lt hT.topologicalKrullDim_lt_top
   have hlt := lt_krullDimSucc_of_le_ringKrullDim_stalk T.scheme x _ hle2 hfin

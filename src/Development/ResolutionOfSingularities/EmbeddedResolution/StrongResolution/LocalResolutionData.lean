@@ -196,7 +196,7 @@ private theorem exists_chartToLastObj_apply_eq (d : LocalResolutionData k f s) :
 
 def lastObjCover (d : LocalResolutionData k f s) : Scheme.OpenCover.{u, u} s.lastObj :=
   Scheme.Cover.mkOfCovers d.cover.I₀ (fun i => (d.seq i).lastObj)
-    (fun i => d.chartToLastObj i) d.exists_chartToLastObj_apply_eq
+    (fun i => d.chartToLastObj i) (fun x => d.exists_chartToLastObj_eq x)
     (fun i => d.isOpenImmersion_chartToLastObj i)
 
 theorem preimage_smoothLocus_cover_map (d : LocalResolutionData k f s) (i : d.cover.I₀)

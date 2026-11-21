@@ -26,7 +26,7 @@ def vecCoordsHomeomorph : (ι → R ⊗[K] E) ≃ₜ (ι → κ → R) :=
   Homeomorph.piCongrRight fun _ => tensorCoordsHomeomorph R b
 
 theorem stdLattice_eq_preimage (O : Subring R) :
-    stdLattice ι R b O = vecCoordsHomeomorph R b ⁻¹'
+    stdLattice (ι := ι) b O = vecCoordsHomeomorph R b ⁻¹'
       Set.pi Set.univ fun _ => Set.pi Set.univ fun _ => (O : Set R) := by
   ext x
   simp only [stdLattice, Set.mem_ofPred_eq, Set.mem_preimage, Set.mem_pi, Set.mem_univ,
@@ -34,13 +34,13 @@ theorem stdLattice_eq_preimage (O : Subring R) :
   rfl
 
 theorem isOpen_stdLattice {O : Subring R} (hO : IsOpen (O : Set R)) :
-    IsOpen (stdLattice ι R b O) := by
+    IsOpen (stdLattice (ι := ι) b O) := by
   rw [stdLattice_eq_preimage]
   exact (vecCoordsHomeomorph R b).continuous.isOpen_preimage _
     (isOpen_set_pi Set.finite_univ fun _ _ => isOpen_set_pi Set.finite_univ fun _ _ => hO)
 
 theorem isCompact_stdLattice {O : Subring R} (hO : IsCompact (O : Set R)) :
-    IsCompact (stdLattice ι R b O) := by
+    IsCompact (stdLattice (ι := ι) b O) := by
   rw [stdLattice_eq_preimage]
   exact (vecCoordsHomeomorph R b).isCompact_preimage.2
     (isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => hO)

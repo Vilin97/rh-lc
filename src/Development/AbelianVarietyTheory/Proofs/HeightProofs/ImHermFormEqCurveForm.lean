@@ -60,7 +60,7 @@ theorem hom_ext_of_complexPoints {R : Type} [CommRing R] (σ : R →+* ℂ) (hσ
     {B G : Over (Sp R)} [Smooth B.hom] [IsSeparated G.hom] {a b : B ⟶ G}
     (h : ∀ p : Over.mk (spMap σ) ⟶ B, p ≫ a = p ≫ b) : a = b := by
   have := ExtUnique.isSchemeTheoreticallyDominant_spec_of_injective (CommRingCat.ofHom σ) hσ
-  refine ExtUnique.over_hom_ext_of_isPullback (IsPullback.of_hasPullback B.hom (spMap σ)) ?_
+  refine ExtUnique.over_hom_ext_of_isPullback (spMap σ) (IsPullback.of_hasPullback B.hom (spMap σ)) ?_
   have : IsReduced (pullback B.hom (spMap σ)) :=
     isReduced_of_smooth_complex _ (pullback.snd B.hom (spMap σ)) inferInstance
   refine ComplexPoints.hom_ext_of_points (pullback.snd B.hom (spMap σ)) G.hom (by simp) fun x hx => ?_

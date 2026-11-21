@@ -42,10 +42,21 @@ theorem isTorsionFree_of_vectorSpace : Module.IsTorsionFree (𝓞 K) V :=
       exact (smul_eq_zero.mp this).resolve_left ha'
 
 def HermitianNorms.restrict (N : HermitianNorms K V) (L : Submodule (𝓞 K) V)
-    [Module.Finite (𝓞 K) L] [Module.Projective (𝓞 K) L] : HermitianMetric K L where
-  form σ := coreComap (N.form σ) (fibreMap σ L.subtype) (fibreMap_injective σ L.injective_subtype)
-  form_conj σ x y := by
-    rw [coreComap_inner, coreComap_inner, ← conjMap_fibreMap, ← conjMap_fibreMap, N.form_conj]
+    [Module.Finite (𝓞 K) L] [Module.Projective (𝓞 K) L] : HermitianMetric K L :=
+  let inclusion (σ : K →+* ℂ) : Fibre σ L →ₗ[ℂ] Fibre σ V :=
+    { toFun := L.subtype.lTensor (ComplexAt σ)
+      map_add' := map_add _
+      map_smul' := lTensor_complex_smul σ L.subtype }
+  have inclusion_injective (σ : K →+* ℂ) : Function.Injective (inclusion σ) :=
+    Module.Flat.lTensor_preserves_injective_linearMap L.subtype L.injective_subtype
+  have conj_inclusion (σ : K →+* ℂ) (x : Fibre σ L) :
+      conjMap σ V (inclusion σ x) = inclusion (conjugate σ) (conjMap σ L x) := by
+    induction x using TensorProduct.inductionOn with
+    | tmul z x => rfl
+    | add x y hx hy => simp only [map_add, hx, hy]
+  { form := fun σ ↦ coreComap (N.form σ) (inclusion σ) (inclusion_injective σ)
+    form_conj := fun σ x y ↦ by
+      rw [coreComap_inner, coreComap_inner, ← conj_inclusion, ← conj_inclusion, N.form_conj] }
 
 namespace FullLattice
 

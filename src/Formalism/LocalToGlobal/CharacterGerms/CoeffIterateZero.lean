@@ -156,8 +156,9 @@ theorem two_le_pow (s : ℕ) : 2 ≤ V.l ^ (s + 1) := by
       _ = V.l ^ 1 := (pow_one _).symm
       _ ≤ V.l ^ (s + 1) := Nat.pow_le_pow_right V.3.pos (by omega)
 
-theorem contr : Contr S.Ps where
-  noConst t c A hA := by
+theorem contr : Contr S.Ps := by
+  refine ⟨?_, ?_⟩
+  · intro t c A hA
     have hA0 : A.degree = 0 := by omega
     rw [coeff_Ps]
     have : (fun x => dl x A - S.Rr t x A) = (0 : I → C) := by
@@ -175,7 +176,7 @@ theorem contr : Contr S.Ps where
       simp [h1, h2]
     rw [this, Matrix.zero_vecMul]
     rfl
-  contr t t' n ht ht' h b A hA := by
+  · intro t t' n ht ht' h b A hA
     rw [map_sub, coeff_Ps, coeff_Ps, sub_eq_zero]
     have : (fun x => dl x A - S.Rr t x A) = (fun x => dl x A - S.Rr t' x A) := by
       funext x
