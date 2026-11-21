@@ -100,10 +100,10 @@ theorem continuous_lift (A B : Over S) :
   refine ((isEmbedding_leftPt t A).continuous.prodMap (isEmbedding_leftPt t B).continuous).congr fun q => ?_
   exact Prod.ext (congrArg (·.left) (lift_fst q.1 q.2)).symm (congrArg (·.left) (lift_snd q.1 q.2)).symm
 
-theorem isTopologicalGroup (G : Over S) [GrpObj G] : IsTopologicalGroup (Over.mk t ⟶ G) where
+theorem isTopologicalGroup (G : Over S) [GrpObj G] : IsTopologicalGroup (Over.mk t ⟶ G) := {
   continuous_mul := (continuous_comp_over t (μ[G])).comp (continuous_lift t G G)
   toContinuousInv :=
-    ⟨by simpa only [Hom.inv_def] using continuous_comp_over t (GrpObj.inv (X := G))⟩
+    ⟨by simpa only [Hom.inv_def] using continuous_comp_over t (GrpObj.inv (X := G))⟩ }
 
 end Group
 

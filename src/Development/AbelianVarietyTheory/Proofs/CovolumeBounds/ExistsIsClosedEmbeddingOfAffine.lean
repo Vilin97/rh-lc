@@ -101,9 +101,9 @@ theorem continuousMul_over (A : Over (Sp C)) [MonObj A] : ContinuousMul (𝟙_ (
 
 
 open scoped MonObj in
-theorem isTopologicalGroup_over (A : Over (Sp C)) [GrpObj A] : IsTopologicalGroup (𝟙_ (Over (Sp C)) ⟶ A) where
+theorem isTopologicalGroup_over (A : Over (Sp C)) [GrpObj A] : IsTopologicalGroup (𝟙_ (Over (Sp C)) ⟶ A) := {
   toContinuousMul := continuousMul_over A
-  continuous_inv := continuous_over_comp (GrpObj.inv (X := A))
+  continuous_inv := continuous_over_comp (GrpObj.inv (X := A)) }
 
 variable {R : Type} [CommRing R] {N : ℕ}
 
