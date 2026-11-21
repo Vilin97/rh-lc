@@ -154,7 +154,7 @@ theorem exists_isItW : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPar
     simpa using this.symm
   · intro φ w
     haveI := fun τ => (hM' τ).1
-    let m : MultilinearMap ℂ (fun τ => M'.H τ) ℂ :=
+    let m : (Π τ, M'.H τ) →ₘₗ[ℂ] ℂ :=
       (ellT M w ∘ₗ I φ).compMultilinearMap (PiTensorProduct.tprod ℂ)
     obtain ⟨c, -, hc⟩ := m.exists_bound_of_continuous (continuous_tprod M' this (ellT M w ∘ₗ I φ))
     refine ⟨c, fun v => ?_⟩

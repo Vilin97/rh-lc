@@ -43,12 +43,13 @@ theorem continuous_infAd : Continuous (infAd F) :=
 theorem continuous_evI_arch : Continuous (evI F) := (continuous_mixed F).comp continuous_fst
 
 @[simp] theorem evI_infAd (a : mixedEmbedding.mixedSpace F) : evI F (infAd F a) = a := by
-  simp [evI, infAd]
+  change (InfiniteAdeleRing.ringEquiv_mixedSpace F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm a) = a
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply a
 
 theorem infAd_add (a b : mixedEmbedding.mixedSpace F) : infAd F (a + b) = infAd F a + infAd F b := by
-  unfold infAd; rw [map_add (f := _), map_add (f := _)]; rfl
+  unfold infAd; rw [map_add (f := _), map_add (f := _)]
 
-theorem infAd_zero : infAd F 0 = 0 := by unfold infAd; rw [map_zero, map_zero]; rfl
+theorem infAd_zero : infAd F 0 = 0 := by unfold infAd; rw [map_zero, map_zero]
 
 theorem evI_add' (a b : AF F) : evI F (a + b) = evI F a + evI F b := by
   exact map_add ((InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp

@@ -30,7 +30,9 @@ theorem kappa_ne_zero {γ₀ : IsoK D} (k : KapChoice γ₀) : k.kappa ≠ 0 := 
     have h2 := k.pi_gen p p.2.1 p.2.2
     rw [h, Ideal.span_singleton_zero] at h2
     exact pow_ne_zero _ (k.pp p).ne_bot h2
-  have hE : (((k.pi p : 𝓞 D.host.K) : D.host.K) : D.host.E) ≠ 0 := by simpa using hpi
+  have hE : (((k.pi p : 𝓞 D.host.K) : D.host.K) : D.host.E) ≠ 0 := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      simpa using hpi
   rw [h0, zero_pow (mul_ne_zero two_ne_zero (classNumber_ne_zero _))] at h1
   exact div_ne_zero ((map_ne_zero _).2 hE) ((map_ne_zero _).2 ((map_ne_zero _).2 hE)) h1.symm
 

@@ -31,7 +31,9 @@ instance mu_openPos : (mu F κ).IsOpenPosMeasure := by unfold mu; infer_instance
 theorem pureA_glue (f : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ) (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ)
     (p : Vi F κ × Vf F κ) : pureA F f g (glue p) = f (eI F κ p.1) * g p.2 := by
   change f (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (glue p i).1) * g (fun i => (glue p i).2) = _
-  congr 2 <;> funext i <;> simp [glue]
+  congr 2
+  · funext i
+    exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 theorem continuous_glue {φ : (κ → AdeleRing (𝓞 F) F) → ℂ} (hφ : φ ∈ schA F κ) :
     Continuous fun p : Vi F κ × Vf F κ => φ (glue p) := by
@@ -52,7 +54,8 @@ theorem glue_shiftOf (x : κ → AF F) : glue (shiftOf x) = x := by
     funext i
     refine Prod.ext ?_ ?_
     · show (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ 0 i) = 0
-      simp
+      rw [map_zero]
+      exact map_zero (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm
     · rfl
   rw [h0, zero_add]
 

@@ -30,7 +30,7 @@ theorem prod_update_self (a : ι) (φ : ∀ b, Module.Dual ℂ (Y b)) (x : ∀ b
     ∏ b ∈ Finset.univ.erase a, φ b (Function.update x a w b) = ∏ b ∈ Finset.univ.erase a, φ b (x b) :=
   Finset.prod_congr rfl fun b hb => by rw [Function.update_of_ne (Finset.ne_of_mem_erase hb)]
 
-def contrML (a : ι) (φ : ∀ b, Module.Dual ℂ (Y b)) : MultilinearMap ℂ Y (Y a) where
+def contrML (a : ι) (φ : ∀ b, Module.Dual ℂ (Y b)) : (∀ b, Y b) →ₘₗ[ℂ] Y a where
   toFun x := (∏ b ∈ Finset.univ.erase a, φ b (x b)) • x a
   map_update_add' := by
     intro inst x i u v
@@ -42,6 +42,7 @@ def contrML (a : ι) (φ : ∀ b, Module.Dual ℂ (Y b)) : MultilinearMap ℂ Y 
   map_update_smul' := by
     intro inst x i c u
     obtain rfl : inst = hd := Subsingleton.elim _ _
+    simp only [RingHom.id_apply]
     by_cases h : i = a
     · subst h
       simp only [prod_update_self, Function.update_self]

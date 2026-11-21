@@ -41,11 +41,14 @@ def splitEquiv (κ : Type) :
     ((κ → mixedEmbedding.mixedSpace F) × (κ → FiniteAdeleRing (𝓞 F) F)) ≃+ (κ → AF F) where
   toFun p := fun i => (((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (p.1 i), p.2 i) : AF F)
   invFun x := (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (x i).1, fun i => (x i).2)
-  left_inv p := by ext i <;> simp
+  left_inv p :=
+    Prod.ext (funext fun i => (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply (p.1 i)) rfl
   right_inv x := by
     funext i
     exact Prod.ext ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm_apply_apply _) rfl
-  map_add' p q := by funext i; simp; rfl
+  map_add' p q := by
+    funext i
+    exact Prod.ext (map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (p.1 i) (q.1 i)) rfl
 
 theorem continuous_splitEquiv (κ : Type) : Continuous (splitEquiv F κ) := by
   refine continuous_pi fun i => ?_

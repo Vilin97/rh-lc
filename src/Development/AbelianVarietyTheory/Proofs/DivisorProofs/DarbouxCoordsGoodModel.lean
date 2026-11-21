@@ -77,6 +77,7 @@ theorem hasOpB_levi : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF
     (∀ v : Pl (F := F), ∃ x, psiLoc ψ v x ≠ 1) → ∀ (κ : Type) [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F), IsUnit A.det →
     HasOpB ψ (GlobalTheory.SympChange.leviM A) := by
   intro F _ _ ψ _ _ _ κ _ _ A hA
+  classical
   let gI : F →+* mixedEmbedding.mixedSpace F := (evIr (F := F)).comp (algebraMap F (AF F))
   let gF : F →+* FiniteAdeleRing (𝓞 F) F := (RingHom.snd _ _).comp (algebraMap F (AF F))
   let L := linEquiv (κ := κ) gI A hA
@@ -168,6 +169,11 @@ theorem hasOpB_unipM : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (A
     ∀ (κ : Type) [Fintype κ] [DecidableEq κ] (S : Matrix κ κ F), S.transpose = S →
     HasOpB ψ (GlobalTheory.SympChange.unipM S) := by
   intro F _ _ ψ hψ hunr _ κ _ _ S hS
+  classical
+  have evFin_invOf_two (v : Pl F) : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+    refine (invOf_eq_right_inv ?_).symm
+    have h : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+    rwa [map_mul, map_ofNat] at h
   let A : Matrix κ κ (AF F) := -S.map (algebraMap F (AF F))
   let Av : ∀ v : Pl (F := F), Matrix κ κ (Fv F v) := fun v => -S.map (algebraMap F (Fv F v))
   have hAv : ∀ v, A.map (evFin F v : AF F →+* Fv F v) = Av v := fun v => by
@@ -203,7 +209,7 @@ theorem hasOpB_unipM : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (A
     funext x
     rw [mulR_apply]
     by_cases hx : x ∈ {x : κ → Fv F v | ∀ i, x i ∈ v.adicCompletionIntegers F}
-    · rw [GlobalTheory.VacAny.evFin_invOf_two] at h2
+    · rw [evFin_invOf_two v] at h2
       have h4 := (hv 1).2 (one_mem _) _ (quad_mem (A := Av v) h2 (fun i j => by rw [← hAv v]; exact h3 i j) hx)
       rw [one_mul] at h4
       rw [GlobalTheory.LatVac.psiAt_apply, h4, one_mul]
@@ -220,7 +226,7 @@ theorem hasOpB_unipM : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (A
     have hq : ∀ v : Pl (F := F), evalV F v (p2 (quad (⅟2) A x)) = quad (⅟2) (Av v) fun i => evFin F v (x i) := fun v => by
       have := map_quad (evFin F v : AF F →+* Fv F v) (⅟2) A x
       rw [hAv] at this
-      exact this.trans (congrArg (fun t => quad t (Av v) fun i => evFin F v (x i)) GlobalTheory.VacAny.evFin_invOf_two)
+      exact this.trans (congrArg (fun t => quad t (Av v) fun i => evFin F v (x i)) (evFin_invOf_two v))
     obtain ⟨hs, hp⟩ := finChar_eq_finprod ψ hψ.1 (p2 (quad (⅟2) A x))
     simp only [hq] at hs hp
     have h3 : ψ (mk (p1 (quad (⅟2) A x)) 0) = archMul hi Ai fun i => evI F (x i) := by
@@ -279,8 +285,13 @@ theorem GlobalTheory.SympChangeBij.change_of_coordinates_bij : ∀ (F E : Type) 
     have h1 := GlobalTheory.VacBridge.rho_acts_locCo M.co B.ψ v γ hat (M.vac v)
     have heq := acts_unique' v hR0 (hR _ hvSB) h1 (hγ γ hγm)
     have h3 := GlobalTheory.VacBridge.rho_acts_locCo co B.ψ v γ hat (ev v (M.vac v))
-    rw [locCo_eq M.co co G hGe v γ, ← hloc v _ _ hvSB, heq, map_smul] at h3
-    exact h3
+    have hout : schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo co v γ) (ev v (M.vac v)) =
+        B.ψ (⅟2 * symp (cA σ) ((inclR (AF F)) θ) (incM F X.J) (incM F W.J) γ γ) • ev v (M.vac v) := by
+      calc
+        _ = schr (GlobalTheory.LatVac.psiAt B.ψ v) (spAct G (GlobalTheory.LatVac.locCo M.co v γ)) (ev v (M.vac v)) := congrArg (fun w => schr _ w _) (locCo_eq M.co co G hGe v γ)
+        _ = ev v (schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M.co v γ) (M.vac v)) := (hloc v _ _ hvSB).symm
+        _ = _ := by rw [heq, map_smul]
+    exact hout ▸ h3
   · filter_upwards [hM.std, hind] with v h1 h2
     rw [h1]; exact h2
   · intro f φ hφ hφv

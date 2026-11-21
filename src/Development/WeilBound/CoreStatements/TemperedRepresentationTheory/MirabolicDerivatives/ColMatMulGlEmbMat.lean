@@ -37,7 +37,7 @@ def mirabolicProjection (n : ℕ) : Mir k n →* GL (Fin n) k :=
     { toFun := fun g => blockMat k n (g : GL (Fin (n + 1)) k)
       map_one' := by
         ext i j
-        simp [blockMat, one_apply]
+        simp [blockMat, Matrix.one_apply]
       map_mul' := fun g h => blockMat_mul k g h }
 
 def levi (n : ℕ) : GL (Fin n) k →* Mir k n := (glEmb k n).codRestrict _ (glEmb_mem_Mir k n)

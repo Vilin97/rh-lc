@@ -159,16 +159,16 @@ theorem continuous_symplOHF_left (u : WOF F E nS nT) : Continuous fun w : WOF F 
   have ht : Continuous (Algebra.trace (AF F) (AEF F E)) := IsModuleTopology.continuous_of_linearMap _
   unfold symplOHF symplOF hOF
   refine continuous_const.mul (ht.comp (continuous_const.mul ?_))
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => continuous_finset_sum _ fun c _ =>
-    continuous_finset_sum _ fun d _ => continuous_const.mul ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => continuous_finsetSum _ fun c _ =>
+    continuous_finsetSum _ fun d _ => continuous_const.mul ?_
   exact (continuous_apply a).comp (continuous_apply d)
 
 theorem continuous_symplOHF_right (u : WOF F E nS nT) : Continuous fun w : WOF F E nS nT => symplOHF σ JS JT xi0 u w := by
   have ht : Continuous (Algebra.trace (AF F) (AEF F E)) := IsModuleTopology.continuous_of_linearMap _
   unfold symplOHF symplOF hOF
   refine continuous_const.mul (ht.comp (continuous_const.mul ?_))
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => continuous_finset_sum _ fun c _ =>
-    continuous_finset_sum _ fun d _ => ((continuous_const.mul ?_).mul continuous_const).mul continuous_const
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => continuous_finsetSum _ fun c _ =>
+    continuous_finsetSum _ fun d _ => ((continuous_const.mul ?_).mul continuous_const).mul continuous_const
   exact (continuous_cAF σ).comp ((continuous_apply b).comp (continuous_apply c))
 
 variable {σ JS JT xi0}

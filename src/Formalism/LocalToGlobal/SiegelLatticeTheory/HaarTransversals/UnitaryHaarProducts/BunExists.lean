@@ -114,8 +114,8 @@ abbrev Cw (l : List V) : Type := UniformSpace.Completion (tw H l).C
 def ctens (l : List V) (x : ∀ v, H v) : Cw H l := ((pt H l x : (tw H l).C) : Cw H l)
 
 def cop (l : List V) (A : ∀ v, H v →L[ℂ] H v) : Cw H l →L[ℂ] Cw H l :=
-  ((UniformSpace.Completion.toComplL (𝕜 := ℂ) (E := (tw H l).C)).comp (op H l A)).extend
-    (UniformSpace.Completion.toComplL (𝕜 := ℂ) (E := (tw H l).C))
+  (UniformSpace.Completion.toComplL.comp (op H l A)).extend
+    (UniformSpace.Completion.toComplL : (tw H l).C →L[ℂ] Cw H l)
 
 theorem ctens_inner (l : List V) (x y : ∀ v, H v) :
     ⟪ctens H l x, ctens H l y⟫_ℂ = (l.map fun v => ⟪x v, y v⟫_ℂ).prod := by
@@ -125,7 +125,7 @@ theorem ctens_inner (l : List V) (x y : ∀ v, H v) :
 
 theorem cop_ctens (l : List V) (A : ∀ v, H v →L[ℂ] H v) (x : ∀ v, H v) :
     cop H l A (ctens H l x) = ctens H l (fun v => A v (x v)) := by
-  have e1 : ctens H l x = UniformSpace.Completion.toComplL (𝕜 := ℂ) (E := (tw H l).C) (pt H l x) := rfl
+  have e1 : ctens H l x = UniformSpace.Completion.toComplL (S := ℂ) (pt H l x) := rfl
   rw [e1, cop, ContinuousLinearMap.extend_eq]
   · rw [ContinuousLinearMap.comp_apply, op_pt]; rfl
   all_goals first
@@ -139,7 +139,7 @@ theorem ctens_dense [DecidableEq V] (l : List V) (hl : l.Nodup) :
     rintro _ ⟨y, rfl⟩
     have hy : y ∈ Submodule.span ℂ (Set.range (pt H l)) := by rw [pt_span H l hl]; trivial
     have h2 := Submodule.mem_map_of_mem
-      (f := (UniformSpace.Completion.toComplL (𝕜 := ℂ) (E := (tw H l).C)).toLinearMap) hy
+      (f := (UniformSpace.Completion.toComplL : (tw H l).C →L[ℂ] Cw H l).toLinearMap) hy
     rw [Submodule.map_span, ← Set.range_comp] at h2
     exact h2
   exact Dense.mono h1 UniformSpace.Completion.denseRange_coe
@@ -608,6 +608,8 @@ def eF (I : AutInst) (g : ℕ) {r k : ℕ} (e0 f0 : Fin r → VA I) (z0 : VA I) 
     (μf : Measure I.Gf) (ψ : I.E ⊗[I.F] Af I.F → ℂ) : I.Gf → ℂ := fun x =>
   if x ∈ K2set I g e0 z0 bw then star (chi2f I ψ g e0 f0 z0 bw bwd x) / ((μf (K2set I g e0 z0 bw)).toReal : ℂ)
   else 0
+
+local notation "𝔢" => eF I g e0 f0 z0 bw bwd μf ψ
 
 variable (h : FrameOK I g e0 f0 z0 bw bwd ψ)
 include h
@@ -1291,25 +1293,27 @@ theorem level_set_unipotent_mod_g (A : UnitaryGroupInstance D) {L : UnitaryLatti
     Rf.ew_orth Rf.ew_int Rf.bw_w Rf.bwd_w Rf.bw_dual Rf.latticeSpan x hx
 
 theorem frameOK (A : UnitaryGroupInstance D) {L : UnitaryLatticeData D} (P : AdditiveCharacterData A) (Rf : ReferenceFrame A L) :
-    BunA.FrameOK A.I (gD D) Rf.e0 Rf.f0 Rf.z0 Rf.bw Rf.bwd P.psiEf where
-  hg := gD_ne D
-  hadd := P.psiEf_add
-  hint := P.psiEf_int
-  he0 := fun a => (Rf.vectorsInLattice.1 a).1
-  hf0 := fun a => (Rf.vectorsInLattice.1 a).2
-  hz0 := Rf.vectorsInLattice.2.1
-  hbw := fun i => (Rf.vectorsInLattice.2.2 i).1
-  hbwd := fun i => (Rf.vectorsInLattice.2.2 i).2
-  hfe := fun a b hab => by
-    have h := (Rf.gramIntegral b a).2.2
-    rw [if_neg (Ne.symm hab), sub_zero] at h
-    rw [unitaryCongruence.hA_symm A.I (Rf.e0 b)]; exact unitaryCongruence.Z_sig _ _ h
-  hfz := fun a => (Rf.formsAtZero.2 a).2
-  hbe := fun i a => by
-    rw [unitaryCongruence.hA_symm A.I (Rf.e0 a)]; exact unitaryCongruence.Z_sig _ _ ((Rf.weightVectorsIntegral i).2.2 a).2.2.1
-  hbb := fun i j hij => by
-    have h := Rf.bw_dual i j
-    rwa [if_neg hij, sub_zero] at h
+    BunA.FrameOK A.I (gD D) Rf.e0 Rf.f0 Rf.z0 Rf.bw Rf.bwd P.psiEf :=
+  { hg := gD_ne D
+    hadd := P.psiEf_add
+    hint := P.psiEf_int
+    he0 := fun a => (Rf.vectorsInLattice.1 a).1
+    hf0 := fun a => (Rf.vectorsInLattice.1 a).2
+    hz0 := Rf.vectorsInLattice.2.1
+    hbw := fun i => (Rf.vectorsInLattice.2.2 i).1
+    hbwd := fun i => (Rf.vectorsInLattice.2.2 i).2
+    hfe := fun a b hab => by
+      have h := (Rf.gramIntegral b a).2.2
+      rw [if_neg (Ne.symm hab), sub_zero] at h
+      rw [unitaryCongruence.hA_symm A.I (Rf.e0 b)]
+      exact unitaryCongruence.Z_sig _ _ h
+    hfz := fun a => (Rf.formsAtZero.2 a).2
+    hbe := fun i a => by
+      rw [unitaryCongruence.hA_symm A.I (Rf.e0 a)]
+      exact unitaryCongruence.Z_sig _ _ ((Rf.weightVectorsIntegral i).2.2 a).2.2.1
+    hbb := fun i j hij => by
+      have h := Rf.bw_dual i j
+      rwa [if_neg hij, sub_zero] at h }
 
 theorem level_subgroup_measure_pos (A : UnitaryGroupInstance D) {L : UnitaryLatticeData D} (P : AdditiveCharacterData A) (Rf : ReferenceFrame A L) (μf : Measure A.I.Gf)
     [μf.IsHaarMeasure] : 0 < μf (K2set A.I (gD D) Rf.e0 Rf.z0 Rf.bw) := by

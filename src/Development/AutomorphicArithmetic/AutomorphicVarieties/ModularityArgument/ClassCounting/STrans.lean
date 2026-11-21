@@ -209,10 +209,13 @@ private theorem quot_mk {l : V → kˣ} (hl : Homog l) {l' : W → kˣ} (hl' : H
 private theorem lc_mk (ρ : G →* (V ≃ₗ[k] V)) {l : V → kˣ} (hl : Homog l) (g : G) {v : V} (hv : v ≠ 0) :
     lc ρ l g (Projectivization.mk k v hv) = l v / l ((ρ g)⁻¹ v) := quot_mk hl hl _ hv
 
-private theorem isCoc (ρ : G →* (V ≃ₗ[k] V)) {l : V → kˣ} (hl : Homog l) : IsCoc (la ρ) (lc ρ l) where
-  a_one x := by simp [la]
-  a_mul g h x := by simp only [la, map_mul, mul_inv_rev, mul_smul]
-  c_mul g h x := by
+private theorem isCoc (ρ : G →* (V ≃ₗ[k] V)) {l : V → kˣ} (hl : Homog l) : IsCoc (la ρ) (lc ρ l) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro x
+    simp [la]
+  · intro g h x
+    simp only [la, map_mul, mul_inv_rev, mul_smul]
+  · intro g h x
     induction x using Projectivization.ind with
     | h v hv =>
       rw [la_mk, lc_mk ρ hl, lc_mk ρ hl, lc_mk ρ hl, map_mul, mul_inv_rev, LinearEquiv.mul_apply, div_mul_div_cancel]

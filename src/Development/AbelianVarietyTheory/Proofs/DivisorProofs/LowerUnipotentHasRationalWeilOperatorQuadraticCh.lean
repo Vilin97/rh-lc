@@ -129,8 +129,14 @@ theorem invOf_two_eq' (R : Type) [CommRing R] [Algebra F R] [Invertible (2 : R)]
 theorem evFin_quad (b : Matrix κ κ F) (v : Pl (F := F)) (x : κ → AF F) :
     evFin F v (quad (⅟2) (-(b.map (algebraMap F (AF F)))) x) =
       quad (⅟2) (-(b.map (algebraMap F (Fv F v)))) (fun i => evFin F v (x i)) := by
+  have h : evFin F v (⅟(2 : AF F)) = (2 : Fv F v)⁻¹ := by
+    have hmap : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+      refine (invOf_eq_right_inv ?_).symm
+      have hmul : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+      rwa [map_mul, map_ofNat] at hmul
+    rw [hmap, invOf_eq_inv]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [quad, dotProduct, Matrix.mulVec, map_sum, GlobalTheory.VacAny.evFin_invOf_two]
+    simp [quad, dotProduct, Matrix.mulVec, map_sum, h]
 
 theorem psi_quad_rat (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (b : Matrix κ κ F) (ξ : κ → F) :
     ψ (quad (⅟2) (-(b.map (algebraMap F (AF F)))) (fun i => algebraMap F (AF F) (ξ i))) = 1 := by

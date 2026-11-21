@@ -97,9 +97,9 @@ theorem coeff_mvExp_lin {σ : Type} [Fintype σ] (c : σ → C) (α : σ →₀ 
   have hg : ∀ β, coeff β g = ∏ s, c s ^ β s / ((β s).factorial : C) := fun β => by
     show (β.prod fun s n => c s ^ n / (n.factorial : C)) = _
     exact Finsupp.prod_fintype _ _ (fun s => by simp)
-  have hpL : ∀ i, pderiv C i L = c i • (1 : MvPowerSeries σ C) := fun i => by
+  have hpL : ∀ i, pderiv i L = c i • (1 : MvPowerSeries σ C) := fun i => by
     simp [hLdef, pderiv_X, Pi.single_apply]
-  have hpg : ∀ i, pderiv C i g = c i • g := fun i => by
+  have hpg : ∀ i, pderiv i g = c i • g := fun i => by
     ext β
     rw [coeff_pderiv, hg, coeff_smul, hg, Fintype.prod_eq_mul_prod_compl i,
       Fintype.prod_eq_mul_prod_compl i (fun s => c s ^ β s / ((β s).factorial : C))]

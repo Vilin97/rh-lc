@@ -44,7 +44,7 @@ structure Loc : Prop where
 theorem extremal_projector_tools_of_loc (h : Loc) : ExtremalProjectorTools where
   extremalProjectorAlt := ExtremalProjector.extremal_projector_statement
 
-theorem local_model_results (h : Loc) : Loc6 where
+theorem local_model_results (h : Loc) : Loc6 := {
   p14R := h.p14R
   p39B := SelectionLemmas.Pf.secondPartClosed
   rationalPlanesClauseThree := Joints.Lit.weyl_dimension_formula_index_sets
@@ -61,9 +61,9 @@ theorem local_model_results (h : Loc) : Loc6 where
   criterionClauseElevenB := Joints.joint_types_corollary_sentences
   criterionClauseTwentyTwo := Joints.coarse_units_lemma
   criterionClauseThirtyFive := Model.fewBadOrbits
-  criterionClauseThirtySix := Model.products_sections_integral
+  criterionClauseThirtySix := Model.products_sections_integral }
 
-theorem local_flatness_results (h : Loc) : Loc8 where
+theorem local_flatness_results (h : Loc) : Loc8 := {
   p13B := flipOneThree.Pf.theorem_I_closed_form_holds
   p13A := GramWindowAlt.theorem_A_closed_form_holds
   p15 := ColumnSystems.Pf.extendedClosedForm
@@ -75,7 +75,7 @@ theorem local_flatness_results (h : Loc) : Loc8 where
   tCartanOnto := Model.cartanOnto_proved
   tKP2 := Joints.saturated_restriction_holds
   tKP3 := Joints.restriction_dimension_holds
-  tRES := CountingStatementReduction.residue_division_transfer
+  tRES := CountingStatementReduction.residue_division_transfer }
 
 def LocalDataSystem {D : D7} {L : SizeData₂ D} (X : Inst D L) (Y : LatInst D) (low : D.what₂.Word → D.what₂.places.Pl → ℝ) : Prop :=
   ∀ hT : GatTies D, LatTied hT X Y → ∀ (u : D.what₂.Word) (w : D.what₂.places.Pl)

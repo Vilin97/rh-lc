@@ -22,7 +22,10 @@ theorem isKSValue_act : ∀ {R : Type} [CommRing R] {A : Over (Sp R)} [GrpObj A]
   have hm := push_mem_liftFil (epsDP R) h h (a.act z) (a'.act z) (e := (hi z).symm) hd
   have hl := l.push (a.act z)
   refine ⟨push (dp0 R) (𝟙 _) (a.act z) k, ⟨_, hm, fun c ↦ ?_⟩, hl⟩
-  have kk := (homMor (dp0 R) (𝟙 _) (a.act z)).comp (constMor A)
+  have kk : GrpMor (dp0 R) (𝟙 _) A (epsDP R) (DeRham.epsRed R) A
+      (algebraMap R (DualNumber R)) (𝟙 _) (a.act z).left :=
+    ⟨(constMor A).dp, (constMor A).base, by simpa using (Over.w (a.act z)),
+      (homMor (dp0 R) (𝟙 _) (a.act z)).mul⟩
   have hM := homMor (epsDP R) (DeRham.epsRed R) (a.act z)
   have e1 := GrpMor.pull_pull (constMor A) hM kk (fun _ ↦ rfl) (by simp) c
   have e2 := GrpMor.pull_pull (homMor (dp0 R) (𝟙 _) (a.act z)) (constMor A) kk (fun _ ↦ rfl) rfl c

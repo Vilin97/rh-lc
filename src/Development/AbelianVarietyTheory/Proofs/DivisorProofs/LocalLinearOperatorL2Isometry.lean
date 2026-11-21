@@ -73,6 +73,7 @@ theorem GlobalTheory.PolarSB.pairing_eq : ∀ {F : Type} [Field F] [NumberField 
     (∀ φ ∈ SB (κ → Fv F v), ∫⁻ y, ‖T φ y‖ₑ ^ 2 ∂μ = ∫⁻ y, ‖φ y‖ₑ ^ 2 ∂μ) →
     ∀ φ₁ ∈ SB (κ → Fv F v), ∀ φ₂ ∈ SB (κ → Fv F v),
       ∫ x, T φ₁ x * starRingEnd ℂ (T (fun y => starRingEnd ℂ (φ₂ y)) x) ∂μ = ∫ x, φ₁ x * φ₂ x ∂μ := by
+  open MeasureTheory ComplexConjugate in
   intro F _ _ κ _ v T hSB hlin μ hμ hnorm φ₁ h₁ φ₂ h₂
   letI : MeasurableSpace (κ → Fv F v) := borel _
   haveI : BorelSpace (κ → Fv F v) := ⟨rfl⟩

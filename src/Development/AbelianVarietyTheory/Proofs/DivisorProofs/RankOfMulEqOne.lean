@@ -198,7 +198,7 @@ def latOf (r : ↥(GK K) →* GL (Fin n) ↥(OL LL)) (hr : Cont r) : LocLat ↥(
   cont := fun x => by
     refine continuous_pi fun j => ?_
     change Continuous fun g => ∑ b, (((r g : Mx ↥(OL LL) n n) j b : ↥(OL LL)) : ↥LL.1) * x b
-    exact continuous_finset_sum _ fun b _ => (hr j b).mul continuous_const
+    exact continuous_finsetSum _ fun b _ => (hr j b).mul continuous_const
   L :=
     { T := LinearMap.range (stdMap LL n)
       stable := by

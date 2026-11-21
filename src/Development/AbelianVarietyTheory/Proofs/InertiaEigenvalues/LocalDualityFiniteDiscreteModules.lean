@@ -101,7 +101,7 @@ theorem exists_dual_equiv {n : ℕ} [NeZero n] {k : Type} [Field k] [Finite k]
     ∃ e : M' ≃+ TDual (ZMod n) M, ∀ y x, e y x = t (P x y) := by
   let f : M' →+ TDual (ZMod n) M := AddMonoidHom.mk'
     (fun y => TDual.mk ((t.comp (P.flip y).toAddMonoidHom).toZModLinearMap n))
-    (fun y y' => by ext x; simp)
+    (fun y y' => by refine DFunLike.ext _ _ fun x => ?_; simp)
   have hf : ∀ y x, f y x = t (P x y) := fun _ _ => rfl
   have inj : Function.Injective f := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -246,7 +246,7 @@ theorem greenbergWiles_dualPair : PoitouTateTotallyComplex → LocalFiniteness �
     rfl
   obtain ⟨e, he⟩ := exists_dual_equiv P h1 h2 t ht
   have hee : ∀ g y, e (ρ' g y) = twDual μ ρS (toGS Ω _ g) (e y) := fun g y => by
-    ext x
+    refine DFunLike.ext _ _ fun x => ?_
     rw [twDual_apply, he, he, ← map_inv, ← hd, ← form_val_mul, ← hχ', ← hP,
       ← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
   have hex := fun v : S => exists_transport_cond (ρ.comp (Dec (F := F) (A.1 v.1)).subtype)

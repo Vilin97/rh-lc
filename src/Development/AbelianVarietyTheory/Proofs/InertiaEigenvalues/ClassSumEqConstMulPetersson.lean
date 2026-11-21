@@ -50,7 +50,7 @@ open Classical in
 def reps (N : ℕ) : Finset (GAf L n) :=
   if h : ∃ T, IsClassReps (congSub L n N) T then h.choose else ∅
 
-theorem reps_spec {N : ℕ} (hN : 0 < N) : IsClassReps (congSub L n N) (reps L n N) := by
+theorem reps_spec {N : ℕ} (hN : 0 < N) : IsClassReps (congSub L n N) (reps (L := L) (n := n) N) := by
   rw [reps, dite_eq_left (exists_reps_cong hN)]
   exact (exists_reps_cong hN).choose_spec
 
@@ -71,7 +71,7 @@ theorem InvAt.smul {W : Type} [AddCommGroup W] [Module ℂ W] {N : ℕ} {f : GAf
 variable (a : NG.AlgWt L n) (β : a.W →ₗ⋆[ℂ] a.W →ₗ[ℂ] ℂ)
 
 def petN (N : ℕ) (f f' : GAf L n → a.W) : ℂ :=
-  ((congSub L n N).relIndex (Umax L n) : ℂ)⁻¹ * classSum a β (congSub L n N) (reps L n N) f f'
+  ((congSub L n N).relIndex (Umax L n) : ℂ)⁻¹ * classSum a β (congSub L n N) (reps (L := L) (n := n) N) f f'
 
 theorem refine_eq (hβ : IsInvForm a β) {J J' : Subgroup (GAf L n)} {T T' : Finset (GAf L n)} (hJ : IsBounded J)
     (hle : J' ≤ J) (hne : J'.relIndex J ≠ 0) (hT : IsClassReps J T) (hT' : IsClassReps J' T')

@@ -65,7 +65,7 @@ theorem dvd_of_low {ι : Type} [Fintype ι] (g : ι → ℤ → M) (b : ℤ) (hg
 
 theorem const_on {α : Type} (F : ℤ → α) (a b : ℤ) (hab : a ≤ b)
     (h : ∀ c, a ≤ c → c < b → F (c + 1) = F c) : F b = F a := by
-  induction b, hab using Int.le_induction with
+  induction b, hab using Int.leInduction with
   | base => rfl
   | succ b hb ih => rw [h b hb (by omega), ih fun c h1 h2 => h c h1 (by omega)]
 

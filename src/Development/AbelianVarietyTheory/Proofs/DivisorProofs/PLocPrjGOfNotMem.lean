@@ -84,6 +84,8 @@ theorem summand_map (e : G ≃ₜ* H) (θ : G →* G) (θ' : H →* H) (K : Subg
   · let ψ : K ≃* (K.map (e : G →* H)) := e.toMulEquiv.subgroupMap K
     rw [← GlobalTheory.BCT.OrbProd.avg_comp_equiv ψ]
     congr 1
+    funext k
+    simp only [Function.comp_apply]
     rw [← hf]
     congr 1
     show (e y * e k.1)⁻¹ * e δ * θ' (e y * e k.1) = _
@@ -106,17 +108,17 @@ theorem dcMap_bij (e : G ≃ₜ* H) (T K : Subgroup G) (T' K' : Subgroup H) (hT 
   constructor
   · intro q1 q2 h
     obtain ⟨a, ha, b, hb, hab⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
-    rw [← DoubleCoset.out_eq' T K q1, ← DoubleCoset.out_eq' T K q2, DoubleCoset.eq]
+    rw [← DoubleCoset.out_eq' q1, ← DoubleCoset.out_eq' q2, DoubleCoset.eq]
     refine ⟨e.symm a, (hT _).2 (by simpa using ha), e.symm b, (hK _).2 (by simpa using hb), ?_⟩
     apply e.injective
     simp only [map_mul, ContinuousMulEquiv.apply_symm_apply]
     exact hab
   · intro q'
     refine ⟨DoubleCoset.mk T K (e.symm (Quotient.out q')), ?_⟩
-    obtain ⟨a, b, ha, hb, hab⟩ := DoubleCoset.mk_out_eq_mul T K (e.symm (Quotient.out q'))
+    obtain ⟨a, ha, b, hb, hab⟩ := DoubleCoset.mk_out_eq_mul T K (e.symm (Quotient.out q'))
     unfold dcMap
     rw [hab]
-    conv_rhs => rw [← DoubleCoset.out_eq' T' K' q']
+    conv_rhs => rw [← DoubleCoset.out_eq' q']
     rw [DoubleCoset.eq]
     refine ⟨(e a)⁻¹, T'.inv_mem ((hT a).1 ha), (e b)⁻¹, K'.inv_mem ((hK b).1 hb), ?_⟩
     simp only [map_mul, ContinuousMulEquiv.apply_symm_apply]
@@ -134,7 +136,7 @@ theorem twOrb_transport : ∀ (G H : Type) [Group G] [TopologicalSpace G] [IsTop
   rw [twOrb_eq, twOrb_eq,
     ← finsum_comp_equiv (Equiv.ofBijective _ (dcMap_bij e (twCent θ δ) K (twCent θ' (e δ)) K' hT hK))]
   refine finsum_congr fun q => ?_
-  obtain ⟨a, b, ha, hb, hab⟩ := DoubleCoset.mk_out_eq_mul (twCent θ' (e δ)) K' (e (Quotient.out q))
+  obtain ⟨a, ha, b, hb, hab⟩ := DoubleCoset.mk_out_eq_mul (twCent θ' (e δ)) K' (e (Quotient.out q))
   have e2 : Quotient.out (Equiv.ofBijective _ (dcMap_bij e (twCent θ δ) K (twCent θ' (e δ)) K' hT hK) q) =
       a * e (Quotient.out q) * b := hab
   rw [e2, summand_rep θ' K' (e δ) f' _ ha hb, summand_map e θ θ' K K' δ f f' he hK hf]

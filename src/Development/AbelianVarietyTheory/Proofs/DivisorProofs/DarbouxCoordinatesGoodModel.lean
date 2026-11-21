@@ -140,7 +140,9 @@ theorem GlobalTheory.SympChange.change_of_coordinates : ∀ (F E : Type) [Field 
     have h1 := GlobalTheory.VacBridge.rho_acts_locCo M.co B.ψ v γ hat (M.vac v)
     have heq := acts_unique' v hR0 (hR _ hvSB) h1 (hγ γ hγm)
     have h3 := GlobalTheory.VacBridge.rho_acts_locCo co B.ψ v γ hat (ev v (M.vac v))
-    rw [locCo_eq M.co co G hGe v γ, ← hloc v _ _ hvSB, heq, map_smul] at h3
+    have hcoord : GlobalTheory.LatVac.locCo co v γ = spAct G (GlobalTheory.LatVac.locCo M.co v γ) :=
+      locCo_eq M.co co G hGe v γ
+    rw [hcoord, ← hloc v _ _ hvSB, heq, map_smul] at h3
     exact h3
   · filter_upwards [hM.std, hind] with v h1 h2
     rw [h1]; exact h2

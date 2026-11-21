@@ -190,6 +190,8 @@ theorem exists_isAt_ord_formOrd : ∀ (M W : Scheme.{0}) [IsIntegral M] [IsInteg
       E'.ord (Units.map (functionFieldMap f).toMonoidHom (Units.mk0 c hc0)) :=
     DivOver.IsFormOrd.formOrd_eq hη' ⟨_, isFreeGen_formMap hψFE hconst hω, _,
       by rw [map_smulₛₗ, e1]; rfl, rfl⟩
+  change E'.formOrd (GlobalTheory.EtaleKlt.ratPull p f n (c • E.toRat n ω)) =
+    E.formOrd (c • E.toRat n ω)
   rw [h1, h2, hord]
 
 end GlobalTheory.EtaleDiv

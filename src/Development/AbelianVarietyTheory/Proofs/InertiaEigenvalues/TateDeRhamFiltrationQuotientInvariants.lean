@@ -107,7 +107,7 @@ theorem invariant_mod
     ∃ w ∈ FM a, (∀ g, ρ g w = w) ∧ z - w ∈ FM b := by
   have key : ∀ c, a ≤ c → c ≤ max a b → ∃ w ∈ FM a, (∀ g, ρ g w = w) ∧ z - w ∈ FM c := by
     intro c hc
-    induction c, hc using Int.le_induction with
+    induction c, hc using Int.leInduction with
     | base => exact fun _ => ⟨0, (FM _).zero_mem, fun g => map_zero _, by rwa [sub_zero]⟩
     | succ c hc ih =>
       intro hcb

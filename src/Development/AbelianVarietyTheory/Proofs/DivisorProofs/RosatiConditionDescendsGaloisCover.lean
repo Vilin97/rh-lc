@@ -37,14 +37,21 @@ theorem eSec_comp_of_isMonHom {S : Scheme.{0}} {A : Over S} [GrpObj A] (u : A �
   show (η[A] ≫ u).left = η[A].left
   rw [IsMonHom.one_hom]
 
+#check GlobalTheory.CechPic.cls_eq_iff
+#check GlobalTheory.CechPic.cls_div
+#check GlobalTheory.CechPic.cls_pull
+#check GlobalTheory.CechPic.pull_comp
+#check GlobalTheory.CechPic.cls_eq_zero_iff
+#check GlobalTheory.CechPic.cls_dual
+#check GlobalTheory.CechPic.cls_tens
 theorem lbIso_act_descent : ∀ (O : Type) [Ring O] (star : O → O) (X Y : Scheme.{0}) (π : X ⟶ Y) (Ga : Type) [Group Ga] (ρ : Ga → (X ⟶ X)) (A : Over X) [GrpObj A] [IsCommMonObj A] (A₀ : Over Y) [GrpObj A₀] [IsCommMonObj A₀] (φ : A.left ⟶ A₀.left) (φ₂ : (G2 A).left ⟶ (G2 A₀).left) (P : LB (G2 A).left) (P₀ : LB (G2 A₀).left) (act : OActN O A) (act₀ : OActN O A₀), GlobalTheory.ZM.IsGaloisCover Ga ρ π → IsAbelianScheme A → IsAbelianScheme A₀ → IsGrpPullback A A₀ π φ → IsSquare φ φ₂ → P.IsLB → P₀.IsLB → LBIso P (P₀.pull φ₂) → (∃ t : (P₀.pull (eSec (G2 A₀))).Gen, t.IsGen) → (∀ c, (act.act c).left ≫ φ = φ ≫ (act₀.act c).left) → (∀ c, LBIso (P.pull (lift (fst A A ≫ act.act c) (snd A A)).left) (P.pull (lift (fst A A) (snd A A ≫ act.act (star c))).left)) → ∀ c, LBIso (P₀.pull (lift (fst A₀ A₀ ≫ act₀.act c) (snd A₀ A₀)).left) (P₀.pull (lift (fst A₀ A₀) (snd A₀ A₀ ≫ act₀.act (star c))).left) := by
   intro O _ star X Y π Ga _ ρ A _ _ A₀ _ _ φ φ₂ P P₀ act act₀ hG hA hA₀ gp hsq hP hP₀ iP _ hact hros c
   have := hG.fin
   have := hG.etale
   have := hG.onto
   have hB : IsAbelianScheme (G2 A₀) := AbelianSchemeGerms.isAbelianScheme_tensor _ _ hA₀ hA₀
-  have h₁ := pull_isLB hP₀ (lift (fst A₀ A₀ ≫ act₀.act c) (snd A₀ A₀)).left
-  have h₂ := pull_isLB hP₀ (lift (fst A₀ A₀) (snd A₀ A₀ ≫ act₀.act (star c))).left
+  have h₁ := LB.isLB_pull hP₀ (lift (fst A₀ A₀ ≫ act₀.act c) (snd A₀ A₀)).left
+  have h₂ := LB.isLB_pull hP₀ (lift (fst A₀ A₀) (snd A₀ A₀ ≫ act₀.act (star c))).left
   have hN := LB.isLB_div h₂ h₁
   have cN := cls_div h₂ h₁ hN
   rw [cls_pull hP₀, cls_pull hP₀] at cN
@@ -84,10 +91,10 @@ theorem lbIso_act_descent : ∀ (O : Type) [Ring O] (star : O → O) (X Y : Sche
       rw [Category.assoc, lift_left_snd, GlobalTheory.SquareDescent.eSec_snd]
       show eSec (G2 A₀) ≫ (snd A₀ A₀).left ≫ (act₀.act (star c)).left = _
       rw [reassoc_of% GlobalTheory.SquareDescent.eSec_snd, eSec_comp_of_isMonHom]
-  have hPφ : pull φ₂ (cls _ hP₀) = cls _ hP := ((cls_eq_iff hP (pull_isLB hP₀ φ₂)).2 iP).symm
+  have hPφ : pull φ₂ (cls _ hP₀) = cls _ hP := ((cls_eq_iff hP (LB.isLB_pull hP₀ φ₂)).2 iP).symm
   have hR : pull (lift (fst A A ≫ act.act c) (snd A A)).left (cls _ hP) =
       pull (lift (fst A A) (snd A A ≫ act.act (star c))).left (cls _ hP) :=
-    (cls_eq_iff (pull_isLB hP _) (pull_isLB hP _)).2 (hros c)
+    (cls_eq_iff (LB.isLB_pull hP _) (LB.isLB_pull hP _)).2 (hros c)
   have hpb := GlobalTheory.SiegelDescent.isPullback_square gp.1 φ₂ hsq
   have z₁ : pull (eSec (G2 A₀)) (cls _ hN) = 0 := by
     rw [cN, map_sub, ← pull_comp, ← pull_comp, e₁, e₂, sub_self]
@@ -96,8 +103,8 @@ theorem lbIso_act_descent : ∀ (O : Type) [Ring O] (star : O → O) (X Y : Sche
       pull_comp, pull_comp, hPφ, hR, sub_self, map_zero]
   obtain ⟨t, ht⟩ := GlobalTheory.exists_gen_of_rigidified_of_flat_baseChange GlobalTheory.SemiRigid.globalFns Y X π (G2 A₀) _ hB hN
     inferInstance inferInstance inferInstance
-    ((cls_eq_zero_iff (pull_isLB hN _)).1 ((cls_pull hN _ _).trans z₁))
-    ((cls_eq_zero_iff (pull_isLB hN _)).1 ((cls_pull hN _ _).trans z₂))
+    ((cls_eq_zero_iff (LB.isLB_pull hN _)).1 ((cls_pull hN _ _).trans z₁))
+    ((cls_eq_zero_iff (LB.isLB_pull hN _)).1 ((cls_pull hN _ _).trans z₂))
   have h0 : cls _ hN = 0 := (cls_eq_zero_iff hN).2 ⟨t, ht⟩
   rw [cN, sub_eq_zero, ← cls_pull hP₀ _ h₁, ← cls_pull hP₀ _ h₂] at h0
   exact (cls_eq_iff h₁ h₂).1 h0.symm

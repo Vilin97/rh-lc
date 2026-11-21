@@ -366,7 +366,7 @@ theorem crd_filV (hι : ∀ c, ι c ∈ PD.Fil 0) (lam : T.V →ₗ[LL] LL) (a :
   | tmul x b =>
     simp only [AlgebraTensorModule.map_tmul, crd_tmul]
     simpa using PD.Fil_mul _ _ _ _ (hι _) b.2
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hy
 
 theorem crd_sup (hι : ∀ c, ι c ∈ PD.Fil 0) (lam : T.V →ₗ[LL] LL) (a : ℤ) {z : T.V ⊗[Qp] BdR}
     (hz : z ∈ compKer T ι ⊔ FilV PD (LL := LL) (V := T.V) a) : crd T ι lam z ∈ PD.Fil a := by
@@ -435,7 +435,9 @@ theorem lat_eq_fil : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : 
   have hgen := ((GlobalTheory.T.wachExpansion_basis_divisibility D HW F Cm l K s LL h T hT i ζ ⟨s, hprim⟩ hfull).2 _ nb).2.1
   obtain ⟨ev, hev, hdiv, htu, ht, sep⟩ := @GlobalTheory.NL.EvdR.exists_ev_dR D l _ K LL s ι
   obtain ⟨Ψ, hΨ0, hΨs, hΨr⟩ := GlobalTheory.T.wach_image_deRham_plus_component_level D HW F Cm l K s LL h T hT i ζ τ ι hcomp
-  have hfil := (GlobalTheory.T.deRhamComponent_wachLetter_basis_filtration D HW l K s LL h T hT i ζ τ ι hcomp hτ).2.1
+  have hfil := by
+    obtain ⟨-, -, -, hc, hc0⟩ := Points.points D HW l K s LL h
+    exact (GlobalTheory.NL.CompD.component_tied (D.locT l) K LL T hc hc0 hT τ ι hcomp.2.2 _ hτ).2.1
   have anti : Antitone ((D.loc l).PD K).Fil := antitone_int_of_succ_le ((D.loc l).PD K).Fil_anti
   have hι : ∀ c, ι c ∈ ((D.loc l).PD K).Fil 0 := fun c => by
     have h1 := anti (show (0 : ℤ) ≤ ((1 : ℕ) : ℤ) by simp) (hev (PowerSeries.C c) 1)
@@ -464,7 +466,8 @@ theorem lat_eq_fil : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : 
       (fun x α => crd_filV _ T ι hι _ _ (hΨ0 x)) (fun z hz => ?_) (fun x a ha α => ?_) nb
       (fun x => ((Cm l).C K s LL h).tie.levB_supp T i ζ x) _ hΛ
       (fun x => Submodule.subset_span ⟨1, x, (conv_one _).symm⟩) d m₀ (fun k hk => hm₀ _ (fun r => ?_) fun r hr => ?_) k
-    · simp only [AddMonoidHom.comp_apply, LinearMap.toAddMonoidHom_coe, map_smul, crd_smul]
+    · simp only [AddMonoidHom.comp_apply, LinearMap.toAddMonoidHom_coe]
+      rw [map_smul (ιV ((D.loc l).PD K) (LL := ↥LL.1) (V := T.V)), crd_smul]
     · obtain ⟨m, b, x, hb, hx⟩ := hΨs _ (sum_tmul_mem_filV _ T bV 0 z hz)
       refine ⟨m, b, x, hb, fun α => ?_⟩
       have := crd_compKer T ι (bV.coord α) hx

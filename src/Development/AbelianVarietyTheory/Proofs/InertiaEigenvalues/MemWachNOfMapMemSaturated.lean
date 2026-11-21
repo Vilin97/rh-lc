@@ -28,8 +28,10 @@ theorem mem_N_of_map_mem : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc)
     haveI := GlobalTheory.EtaleExact.finite_OL LL
     haveI : IsNoetherianRing ↥(OL LL) := IsNoetherianRing.of_finite ℤ_[l] ↥(OL LL)
     refine GlobalTheory.EtaleExact.exact_of_tie E (GlobalTheory.EtaleExact.map_ne_top_of_tie E ?_ ?_) T₀ T₁ T₂ ι π hses
-    · exact GlobalTheory.EtaleExact.isUnit_or_dvd_pow (D.loc l) LL
-    · exact GlobalTheory.EtaleExact.sep_RW LL
+    · rw [(D.loc l).PD_p K]
+      exact GlobalTheory.EtaleExact.isUnit_or_dvd_pow (D.loc l) LL
+    · rw [(D.loc l).PD_p K]
+      exact GlobalTheory.EtaleExact.sep_RW LL
   have key := GlobalTheory.T.wachModule_uniqueness_characterisation D HW F l K s LL h T₀ h0
   obtain ⟨hinj, hexact, hsurj⟩ : Function.Injective (W.map ι) ∧ Function.Exact (W.map ι) (W.map π) ∧
       Function.Surjective (W.map π) := hex

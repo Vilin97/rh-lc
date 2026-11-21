@@ -98,7 +98,8 @@ theorem isFundamentalDomain_shell : ∀ (E : Type) [Field E] [NumberField E] [Is
         Subtype.ext (by rw [← h1, ← h2, show ratGL E a γ1 = ratGL E a γ2 from congrArg Subtype.val h])
       have hd : AEDisjoint μ (splitCentre E a 1 ^ n1 • ((⟨ratGL E a γ1, γ1, rfl⟩ : (ratGL E a).range) • 𝓕))
           (splitCentre E a 1 ^ n1 • ((⟨ratGL E a γ2, γ2, rfl⟩ : (ratGL E a).range) • 𝓕)) := by
-        rw [AEDisjoint, ← Set.smul_set_inter, measure_smul]
+        set_option synthInstance.maxHeartbeats 200000 in
+          rw [AEDisjoint, ← Set.smul_set_inter, measure_smul]
         exact h𝓕.aedisjoint hγ
       exact hd.mono (fun y hy => (key g1 γ1 n1 h1 y hy).2.2) (fun y hy => (key g2 γ2 n1 h2 y hy).2.2)
     · refine Disjoint.aedisjoint (Set.disjoint_left.2 fun y hy1 hy2 => ?_)

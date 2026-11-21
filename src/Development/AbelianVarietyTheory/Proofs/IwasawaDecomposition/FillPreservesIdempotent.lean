@@ -240,7 +240,7 @@ theorem isobaricRigid_of_jacquetShalika (hJ : GlobalTheory.Published.JacquetShal
     refine Multiset.map_congr rfl fun b _ => ?_
     simp only [Function.comp_apply, Φ, mul_inv, Units.val_mul, Units.val_inv_eq_inv_val, ν, (hν _).2.1 w,
       Complex.cpow_neg, inv_inv]
-    rfl
+    simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
   obtain ⟨s, hs⟩ := hJ.unitary (fun j : Fin L.length => e _ (L.get j).1.2) (fun j : Fin L'.length => e _ (L'.get j).1.2)
     (fun j => hL _ (List.get_mem _ _)) (fun j => hL' _ (List.get_mem _ _))
     (fun j => he.2.1 _ _ (hL _ (List.get_mem _ _))) (fun j => he.2.1 _ _ (hL' _ (List.get_mem _ _))) ν hν

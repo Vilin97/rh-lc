@@ -178,6 +178,8 @@ theorem span_det_eq {M M' : Submodule (𝓞 L) (Fin N → L)} (h : M.FG)
           Matrix.det_smul_inv_mulVec_eq_cramer _ _ hd']
         ext j
         simp [Matrix.mulVec, dotProduct, Matrix.cramer_transpose_apply, Finset.mul_sum, mul_comm, mul_left_comm]
+        change ∑ i, s * (y i j * (Matrix.of x).transpose.cramer v i) = _
+        simp_rw [Matrix.cramer_transpose_apply]
       rw [e1]
       refine Submodule.sum_mem _ fun i _ => ?_
       have hm : ((Matrix.of x).updateRow i v).det ∈ detFI M h :=

@@ -146,7 +146,6 @@ theorem ext (h : IsKF g c κ) (h' : IsKF g c κ') (f : NgC g → ℂˣ)
 
 end IsKF
 
-
 open Classical in
 def cutRule (g : ℕ) (s : ℤˣ) (κ : Rule) : Rule := fun K _ _ x =>
   if x.P.g = g then Units.map (Int.castRingHom K).toMonoidHom s * κ K x else 1
@@ -156,16 +155,17 @@ theorem isKF_cutRule {g c : ℕ} (s : ℤˣ) {κ : Rule}
       (M : Matrix (Fin P.g) (Fin P.g) K), P.g = g → (∀ i, LB.Sec.f th' i = constFn P.A.hom _ a * LB.Sec.f th i) →
       (∀ i, IsLieComb (M i) v (v' i)) →
       a ^ (2 * c) * (κ K ⟨P, hg, rig, hr, th', hth', v', hv'⟩ : K) = M.det ^ c * κ K ⟨P, hg, rig, hr, th, hth, v, hv⟩)
-    (hF : Funct κ) (hU : UnitSp κ) : IsKF g c (cutRule g s κ) where
-  homog K _ _ P hg rig hr th hth v hv th' hth' v' hv' a M hP h₁ h₂ := by
-    simp only [cutRule, if_pos hP, Units.val_mul]
+    (hF : Funct κ) (hU : UnitSp κ) : IsKF g c (cutRule g s κ) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro K _ _ P hg rig hr th hth v hv th' hth' v' hv' a M hP h₁ h₂
+    simp only [cutRule, ite_eq_left hP, Units.val_mul]
     rw [mul_left_comm, hH K P hg rig hr th hth v hv th' hth' v' hv' a M hP h₁ h₂, mul_left_comm]
-  funct K K' _ _ _ _ f x x' h := by
+  · intro K K' _ _ _ _ f x x' h
     simp only [cutRule, KeyGalDesc.g_eq h]
     split_ifs
     · simp [hF K K' f x x' h]
     · simp
-  unitSp R K _ _ _ _ _ _ _ x xK h := by
+  · intro R K _ _ _ _ _ _ _ x xK h
     by_cases hx : x.P.g = g
     · obtain ⟨u, hu, hk⟩ := hU R K x xK h
       refine ⟨Units.map (Int.castRingHom R).toMonoidHom s * u, ?_, fun k _ _ r xk hr hxk => ?_⟩
@@ -173,7 +173,8 @@ theorem isKF_cutRule {g c : ℕ} (s : ℤˣ) {κ : Rule}
       · simp [cutRule, KeyGalDesc.g_eq hxk, hx, hk k r xk hr hxk]
     · exact ⟨1, by simp [cutRule, KeyGalDesc.g_eq h, hx],
         fun k _ _ r xk hr hxk => by simp [cutRule, KeyGalDesc.g_eq hxk, hx]⟩
-  off K _ _ x hx := if_neg hx
+  · intro K _ _ x hx
+    exact ite_eq_right hx
 
 structure KF (g c : ℕ) : Type where
 
@@ -185,9 +186,7 @@ namespace KF
 
 variable {g c : ℕ} (kf : KF g c)
 
-def rule : Rule := kf.ex.choose
-
-  cases kf; cases kf'; cases h; rfl
+def rule (kf : KF g c) : Rule := kf.ex.choose
 
 def coef (K : Type) [Field K] [CharZero K] (x : KeyIn K) : Kˣ := (kf.rule K x)⁻¹
 
@@ -202,7 +201,7 @@ def ofRule (N : ℕ → ℕ) (κ : Rule) (hH : Homog N κ) (hF : Funct κ) (hU :
       exact hH K P hg rig hr th hth v hv th' hth' v' hv' a M h₁ h₂) hF hU, fun z x h => by
     obtain ⟨e, h⟩ := h
     obtain ⟨u, h₁, h₂, h₃, h₄, h₅, h₆⟩ := (normalAt_one_iff x _ _ _).1 h
-    rw [cutRule, if_pos e, hT x u _ _ _ h₁ h₂ (fun i => z.half.1 _) (fun i => z.half.2 _) h₃ h₄ h₅ h₆]
+    rw [cutRule, ite_eq_left e, hT x u _ _ _ h₁ h₂ (fun i => z.half.1 _) (fun i => z.half.2 _) h₃ h₄ h₅ h₆]
     simp⟩
   zero _ _ := Or.inl rfl
 

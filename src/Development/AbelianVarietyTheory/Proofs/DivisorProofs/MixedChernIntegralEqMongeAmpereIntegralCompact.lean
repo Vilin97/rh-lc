@@ -154,8 +154,11 @@ theorem int_eq_mInt (k : Type) [CommRing k] (X : Scheme.{0}) (p : X ⟶ Sp k) (�
     simp only [Pi.sub_apply, ← mul_sub, hsub, hd]
   refine ⟨⟨fwd, fun hm => ⟨(pieces hm 1).1, (pieces hm (-1)).1⟩⟩, fun hi => ?_⟩
   have hm := fwd hi
+  have hmi : mInt A (fun i => (L i).φ.locPot) g = integralWith A hne.some (fun i => (L i).φ.locPot) g := by
+    unfold mInt
+    rw [dite_eq_left hne]
   rw [Mix.int, (pieces hm 1).2, (pieces hm (-1)).2,
-    mInt_eq_integralWith A _ hne, integralWith, ← Finset.sum_sub_distrib]
+    hmi, integralWith, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← integral_sub (back hm 1 j) (back hm (-1) j)]
   simp only [← mul_sub, hsub, hd, P]

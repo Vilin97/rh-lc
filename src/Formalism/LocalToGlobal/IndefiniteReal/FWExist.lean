@@ -77,10 +77,12 @@ theorem hasB_iff : HasB K C n ↔ FiniteDimensional K C ∧ n = finrank K C :=
 
 
 open Classical in
+variable (K L C) in
 def crdOr (n : ℕ) : C →ₗ[K] (Fin n → L) := if h : HasB K C n then crd L h.some else 0
 
 
 open Classical in
+variable (K C) in
 def bOr (n : ℕ) : Fin n → C := if h : HasB K C n then h.some else 0
 
 theorem crdOr_eq (h : HasB K C n) : crdOr K L C n = crd L h.some := dif_pos h
@@ -91,6 +93,7 @@ theorem crdOr_injective (h : HasB K C n) : Function.Injective (crdOr K L C n) :=
 
 
 open Classical in
+variable (K L C) in
 def secOr (n : ℕ) : LinearMap.range (crdOr K L C n) →ₗ[K] C :=
   if h : Function.Injective (crdOr K L C n) then (LinearEquiv.ofInjective _ h).symm.toLinearMap else 0
 

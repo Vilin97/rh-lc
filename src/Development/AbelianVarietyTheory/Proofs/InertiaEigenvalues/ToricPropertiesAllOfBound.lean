@@ -27,7 +27,7 @@ theorem not_isNormPow {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I
   have hv : v.asIdeal ∣ 𝔣 := Ideal.dvd_iff_le.2 hle
   obtain ⟨P, -, -, hP, -⟩ := (hb.2.2 v hv).1
   exact GlobalTheory.HeckeOne.not_isNormPow_of_not_unrAt
-    (((hχ.2.2.2 v P hP).2 (Finset.notMem_empty v)).not_unrAt (multiplicity_ne_zero.2 hv))
+    (((hχ.2.2.2 v P hP).2 (Finset.notMem_empty v)).not_unrAt ((multiplicity_ne_zero (Ideal.finiteMultiplicity hM.ne_top hb.1)).2 hv))
 
 section Record
 
