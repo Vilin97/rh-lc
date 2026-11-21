@@ -357,7 +357,7 @@ theorem inert_double_cosets : ∀ {D : D7} (V : HSp D) (P : HeightOneSpectrum (�
       have h6 : ∀ z : Formalism.L2.Theta.AE D, cA D (cA D z) = z := fun z => by
         induction z using TensorProduct.induction_on with
         | zero => rw [(cA D).map_zero, (cA D).map_zero]
-        | add x y hx hy => rw [(cA D).map_add (f := _), (cA D).map_add (f := _), hx, hy]
+        | add x y hx hy => rw [map_add (cA D), map_add (cA D), hx, hy]
         | tmul a x => exact congrArg (fun t => a ⊗ₜ[D.host.F] t) (star_star x)
       rw [← h6 e, h4, (cA D).map_zero]
     subst h5

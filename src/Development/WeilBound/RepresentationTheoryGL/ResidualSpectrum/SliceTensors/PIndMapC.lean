@@ -42,11 +42,13 @@ theorem decomp (p : parab (Cinf E) (eC r s)) :
 
 theorem contDiff_cc : ContDiff ℝ ∞ fun M : Lie E (r + s) => (fun i j => M (Fin.castAdd s i) (Fin.castAdd s j) : Lie E r) :=
   contDiff_pi.2 fun i => contDiff_pi.2 fun j =>
-    (contDiff_apply ℝ (Cinf E) (Fin.castAdd s j)).comp (contDiff_apply ℝ (Fin (r + s) → Cinf E) (Fin.castAdd s i))
+    (contDiff_apply ℝ (fun _ : Fin (r + s) => Cinf E) (Fin.castAdd s j)).comp
+      (contDiff_apply ℝ (fun _ : Fin (r + s) => Fin (r + s) → Cinf E) (Fin.castAdd s i))
 
 theorem contDiff_nn : ContDiff ℝ ∞ fun M : Lie E (r + s) => (fun i j => M (Fin.natAdd r i) (Fin.natAdd r j) : Lie E s) :=
   contDiff_pi.2 fun i => contDiff_pi.2 fun j =>
-    (contDiff_apply ℝ (Cinf E) (Fin.natAdd r j)).comp (contDiff_apply ℝ (Fin (r + s) → Cinf E) (Fin.natAdd r i))
+    (contDiff_apply ℝ (fun _ : Fin (r + s) => Cinf E) (Fin.natAdd r j)).comp
+      (contDiff_apply ℝ (fun _ : Fin (r + s) => Fin (r + s) → Cinf E) (Fin.natAdd r i))
 
 end C
 

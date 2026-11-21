@@ -68,6 +68,8 @@ theorem exists_family {N g : ℕ} (hN : Odd N) {T R : Type} [CommGroup T] [CommR
     rw [hrel s t (dotProduct s (E.mulVec t) • s₀) t₀ (by rw [smul_dotProduct, h₀, smul_eq_mul, _root_.mul_one]), hh,
       ← MonoidHom.zpow_apply, ← map_zpow]
     congr 2
+    funext u
+    change p ^ (dotProduct s (E.mulVec t) * s₀ u) = (p ^ s₀ u) ^ dotProduct s (E.mulVec t)
     rw [← zpow_mul, _root_.mul_comm]
   have eskew : ∀ x y, e x y * e y x = 1 := fun x y => by
     have := halt (x * y)
@@ -96,7 +98,11 @@ theorem exists_family {N g : ℕ} (hN : Odd N) {T R : Type} [CommGroup T] [CommR
       (fun u => ∏ c, v (σ.symm c) ^ x u c) = ∏ c, fun u => v (σ.symm c) ^ x u c := fun x =>
     funext fun u => by rw [Finset.prod_apply]
   rw [hp, hp]
-  simp only [map_prod, MonoidHom.finset_prod_apply, key, hv, ← zpow_mul]
+  have heval (f : (Fin g ⊕ Fin g) → ((Fin 8 → T) →* Rˣ)) (a : Fin 8 → T) :
+      (∏ c, f c) a = ∏ c, f c a := by
+    exact map_prod (MonoidHom.eval a) f Finset.univ
+  simp only [map_prod, heval, key, hv, ← zpow_mul]
+  rw [Finset.prod_comm]
   have zs : ∀ {α : Type} [Fintype α] (f : α → ℤ), ∏ a, z ^ f a = z ^ ∑ a, f a := fun f =>
     (map_prod (zpowersHom Rˣ z) (fun a => Multiplicative.ofAdd (f a)) Finset.univ).symm
   simp only [zs]

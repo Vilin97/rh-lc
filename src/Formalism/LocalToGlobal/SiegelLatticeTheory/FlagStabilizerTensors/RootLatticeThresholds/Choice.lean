@@ -30,7 +30,7 @@ theorem measurable_mulF :
   apply Continuous.measurable
   refine continuous_pi fun i => continuous_pi fun j => ?_
   simp only [Matrix.mul_apply, Matrix.of_apply]
-  exact continuous_finset_sum _ fun l _ => by fun_prop
+  exact continuous_finsetSum _ fun l _ => by fun_prop
 
 theorem haarLie_eq_smul (S : Set (Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ)) (κ : ℝ≥0∞) :
     Formalism.MainNotions.S.haarLie S κ = κ • Formalism.MainNotions.S.haarLie S 1 := by
@@ -43,7 +43,7 @@ theorem measurable_aff (A B : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1))
   apply Continuous.measurable
   refine continuous_pi fun i => continuous_pi fun j => ?_
   simp only [aff, Matrix.mul_apply, Matrix.of_apply]
-  exact continuous_finset_sum _ fun l _ => (continuous_finset_sum _ fun m _ =>
+  exact continuous_finsetSum _ fun l _ => (continuous_finsetSum _ fun m _ =>
     continuous_const.mul ((continuous_apply l).comp (continuous_apply m))).mul continuous_const
 
 theorem uw_inv_eq {z : Fin (2 * r + k + 1) → ℂ} {h : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ}
@@ -100,6 +100,7 @@ theorem conj_haarLie {z : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hT : 0
   rw [haarLie_eq_smul, Measure.map_smul,
     Formalism.FourierDecayAlt.P.b2_conjInvRaw_proof k r z (Formalism.MainNotions.S.haarLie (Nset k r) 1) hz hT
       (Formalism.MainNotions.BridgeLemma₃.lbHaarUp_proved.2 k r _ (Formalism.MainNotions.BridgeCSB.haarLieN k r 1 one_ne_zero ENNReal.one_ne_top)) h hh]
+  exact (measurable_aff h h⁻¹).aemeasurable
 
 theorem isHaarOn_muS_gen {z : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hT : 0 < Tz k r z)
     {μW : Measure (Mt k r)} (hW : Formalism.MainNotions.S.IsHaarOn (UWset k r z) μW) (hW1 : μW Set.univ = 1)

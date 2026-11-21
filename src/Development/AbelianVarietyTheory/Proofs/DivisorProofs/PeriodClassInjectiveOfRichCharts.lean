@@ -39,7 +39,7 @@ theorem perCl_injective (K : Charts F) (hK : K.Rich) (per per' : Λ →+ Hol F.V
     intro T T' φ
     have := hd T T' φ
     rw [hp T, hp T', AlgHom.commutes, sub_self] at this
-    rw [map_sub, ← this]
+    exact ((algebraMap (Hol F.V) T'.C).map_sub (per φ.deg) (per' φ.deg)).trans this.symm
   ext l : 1
   rw [← sub_eq_zero]
   refine GlobalTheory.T.parameter_function_eq_zero_of_composable K hK l 0 (per l - per' l) fun k k' k'' e e' ↦ ?_

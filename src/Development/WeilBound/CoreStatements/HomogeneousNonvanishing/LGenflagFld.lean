@@ -169,6 +169,10 @@ theorem fl_coord {Ω' : Type} [Field Ω'] [Algebra Ω Ω'] {E E' : Type} [AddCom
   refine fl_of_indep hc' ?_
   rw [← hf]
   congr 1
+  funext k
+  rw [hb]
+  simp only [Matrix.mul_apply, Matrix.map_apply, Finset.sum_smul, hh, map_sum, hj,
+    Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   simp only [mul_comm]
 

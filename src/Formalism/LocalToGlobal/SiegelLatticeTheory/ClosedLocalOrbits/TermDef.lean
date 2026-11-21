@@ -231,7 +231,9 @@ theorem pd_self {u : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) :
         simp [Matrix.one_apply_ne hab]
       · intro h
         exact absurd (Finset.mem_univ b) h
-    rw [h0, sub_self]
+    rw [h0]
+    change ModG (hS D) Λ (gS D) (frame (lf D F0) b - frame (lf D F0) b)
+    rw [sub_self]
     unfold ModG
     intro P _
     exact zero_mem _

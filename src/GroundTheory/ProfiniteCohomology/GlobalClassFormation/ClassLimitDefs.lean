@@ -15,6 +15,8 @@ universe u
 
 open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubfield
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 abbrev unitsRep : Rep ℤ (ℚ̄ ≃ₐ[ℚ] ℚ̄) := galUnitsZ ℚ ℚ̄
@@ -44,13 +46,12 @@ def idelesShortComplex : ShortComplex (Rep ℤ (ℚ̄ ≃ₐ[ℚ] ℚ̄)) :=
 theorem shortExact_of_injective_of_surjective {k G : Type u} [CommRing k] [Group G]
     (S : ShortComplex (Rep.{u} k G)) (hf : Function.Injective S.f.hom)
     (hex : ∀ b, S.g.hom b = 0 → ∃ a, S.f.hom a = b) (hg : Function.Surjective S.g.hom) :
-    S.ShortExact where
-  exact := by
-    rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
-      ShortComplex.moduleCat_exact_iff]
-    exact hex
-  mono_f := (Rep.mono_iff_injective _).2 hf
-  epi_g := (Rep.epi_iff_surjective _).2 hg
+    S.ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ((Rep.mono_iff_injective S.f).2 hf)
+    ((Rep.epi_iff_surjective S.g).2 hg)
+  rw [← ShortComplex.exact_map_iff_of_faithful S (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
+    ShortComplex.moduleCat_exact_iff]
+  exact hex
 
 theorem idelesShortComplex_shortExact : idelesShortComplex.ShortExact := by
   refine shortExact_of_injective_of_surjective _ (fun x y h =>

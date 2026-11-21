@@ -138,8 +138,7 @@ theorem UpperTheory.exists_numberField_extension_place_frobenius_degree :
   · show Nat.card (𝓞 L ⧸ u.asIdeal) = q ^ n
     haveI : u.asIdeal.IsMaximal := u.isMaximal
     refine GlobalTheory.T.card_quotient_eq_of_pow_sub_self_mem' u.asIdeal (q ^ n) ζ' (by omega) ?_ ?_ ?_
-    · apply FaithfulSMul.algebraMap_injective (𝓞 L) L
-      rw [map_pow, map_one]
+    · apply Subtype.ext
       exact hζL.pow_eq_one
     · intro j hj0 hjq hm
       have hm1 : A.valuation (algebraMap L Ω (algebraMap (𝓞 L) L (ζ' ^ j - 1))) < 1 := hm

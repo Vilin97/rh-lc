@@ -56,7 +56,7 @@ theorem adicAbv_eq_zpow (w : HeightOneSpectrum (𝓞 E)) {α : E} (hα : α ≠ 
   refine ⟨(WithZero.unzero h0).toAdd, ?_⟩
   rw [HeightOneSpectrum.adicAbv_def, WithZeroMulInt.toNNReal_neg_apply _ h0]
   push_cast
-  rfl
+  rw [WithZero.toAdd_unzero_eq_log h0]
 
 theorem adicAbv_le_one_iff (w : HeightOneSpectrum (𝓞 E)) (α : E) :
     NumberField.HeightOneSpectrum.adicAbv E w α ≤ 1 ↔ HeightOneSpectrum.valuation E w α ≤ 1 := by
@@ -189,7 +189,7 @@ theorem entry_mem {n : ℕ} {R : ℝ} (hR : 0 ≤ R) (γ : GL (Fin n) E) (h : lo
   refine ⟨fun v => ?_, ?_⟩
   · have h1 : ‖cV v (A i j)‖ ^ 2 ≤ ⨆ p : Fin n × Fin n, ‖cV v (A p.1 p.2)‖ ^ 2 :=
       le_ciSup (f := fun p : Fin n × Fin n => ‖cV v (A p.1 p.2)‖ ^ 2) (Set.finite_range _).bddAbove (i, j)
-    have h2 := (Real.posLog_le_posLog (sq_nonneg _) h1).trans (hinf0 v)
+    have h2 := (Real.posLog_le_posLog (le_trans (by norm_num) (sq_nonneg _)) h1).trans (hinf0 v)
     rw [hA, norm_cV_alg] at h2
     exact le_exp_of_posLog_sq_le (AbsoluteValue.nonneg _ _) hR h2
   · have hFfin := supp_fin A
@@ -199,7 +199,7 @@ theorem entry_mem {n : ℕ} {R : ℝ} (hR : 0 ≤ R) (γ : GL (Fin n) E) (h : lo
       have h1 : ‖cW w (A i j)‖ ≤ ⨆ p : Fin n × Fin n, ‖cW w (A p.1 p.2)‖ :=
         le_ciSup (f := fun p : Fin n × Fin n => ‖cW w (A p.1 p.2)‖) (Set.finite_range _).bddAbove (i, j)
       rw [hA, norm_cW_alg] at h1
-      exact Real.posLog_le_posLog (AbsoluteValue.nonneg _ _) h1
+      exact Real.posLog_le_posLog (le_trans (by norm_num) (AbsoluteValue.nonneg _ _)) h1
     have hS : ∀ w ∉ S, NumberField.HeightOneSpectrum.adicAbv E w α ≤ 1 := by
       intro w hw
       rw [Set.Finite.mem_toFinset, Function.mem_support, not_not] at hw

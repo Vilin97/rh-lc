@@ -84,7 +84,8 @@ private theorem loc (hU : UnramifiedOrthogonality) (hr : 0 < r) {A : ValuationSu
   let T : ZMod (l ^ r) → TDual (ZMod (l ^ r)) (ZMod (l ^ r)) := fun t => TDual.mk (LinearMap.mul _ _ t)
   have hT : ∀ t m, T t m = t * m := fun _ _ => rfl
   let y : Z1 (twDual χ ρ) := ⟨fun g => T (f g), (continuous_of_discreteTopology (f := T)).comp hf, fun g h => by
-    ext m
+    apply LinearMap.ext
+    intro m
     change f (g * h) * m = f g * m + twDual χ ρ g (T (f h)) m
     rw [twDual_apply, hz, add_mul, mul_assoc]
     rfl⟩

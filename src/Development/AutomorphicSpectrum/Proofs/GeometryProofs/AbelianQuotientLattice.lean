@@ -411,9 +411,6 @@ theorem tenMap_end {k : Type} [Field k] {Ch : Type} [AddCommGroup Ch] {O : Type}
     (h : O →+* AddMonoid.End Ch) (a : O) (z : TensorProduct ℤ k (abelian₂ Ch)) :
     tenMap k (LinearMap.baseChange k (lamEnd h a) z) = (tenMap k z).comp (h a : Ch →+ Ch) := by
   induction z with
-  | zero =>
-    simp only [map_zero]
-    rfl
   | add x y hx hy =>
     rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
     rfl

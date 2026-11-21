@@ -39,17 +39,26 @@ private theorem coneAt_of_graded (hA : IsFilt dA gA FA rA) (hB : IsFilt dB gB FB
   intro n₀ n₁ n₃ h01 h12 h23
   obtain ⟨N1, hN1⟩ := hA.bot n₂
   obtain ⟨N2, hN2⟩ := hB.bot n₁
+  have leInd (a : ℤ) (P : ℤ → Prop) (base : P a)
+      (step : ∀ n, a ≤ n → P n → P (n + 1)) : ∀ n, a ≤ n → P n := by
+    intro n
+    induction n using Int.inductionOn' (b := a) with
+    | zero => exact fun _ => base
+    | succ n hn ih => exact fun _ => step n hn (ih hn)
+    | pred n hn ih => intro h; omega
   have key : ∀ p, min (min N1 N2) 0 ≤ p → p ≤ 0 → ∀ (x : A n₂) (y : B n₁), x ∈ FA p n₂ →
       y ∈ FB p n₁ → dA n₂ n₃ x = 0 → Φ n₂ x = dB n₁ n₂ y →
       ∃ (v : A n₁) (w : B n₀), x = dA n₁ n₂ v ∧ y = Φ n₁ v + dB n₀ n₁ w := by
     intro p hNp
-    induction p, hNp using Int.le_induction with
-    | base =>
+    refine leInd (min (min N1 N2) 0) (fun p => p ≤ 0 → ∀ (x : A n₂) (y : B n₁),
+      x ∈ FA p n₂ → y ∈ FB p n₁ → dA n₂ n₃ x = 0 → Φ n₂ x = dB n₁ n₂ y →
+      ∃ (v : A n₁) (w : B n₀), x = dA n₁ n₂ v ∧ y = Φ n₁ v + dB n₀ n₁ w) ?_ ?_ p hNp
+    ·
       intro _ x y hxF hyF _ _
       have hx0 : x = 0 := hN1 x (hA.mono _ N1 n₂ (by omega) hxF)
       have hy0 : y = 0 := hN2 y (hB.mono _ N2 n₁ (by omega) hyF)
       exact ⟨0, 0, by simp [hx0], by simp [hy0]⟩
-    | succ q hNq ih =>
+    · intro q hNq ih
       intro hq x y hxF hyF hx hxy
       have ih' := ih (by omega)
       have hpq : q + 1 - 1 = q := by ring

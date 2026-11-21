@@ -212,6 +212,8 @@ theorem isSchwartzBruhat_iff {d : ℕ} (b : Module.Basis (Fin d) F E)
       | smul c G _ hG => exact sb_smul c hG
     have := main _ h
     convert this using 1
+    funext x
+    simp only [Function.comp_apply, ContinuousAddEquiv.symm_apply_apply]
 
 end Coords
 

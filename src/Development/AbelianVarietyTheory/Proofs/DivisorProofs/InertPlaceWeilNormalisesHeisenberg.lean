@@ -51,14 +51,18 @@ theorem weil_normalises_heis : ∀ (F E : Type) [Field F] [NumberField F] [Field
     rw [hρ x m R (hR _ m.2), hωA (ρ x m) R (hR _ (ρ x m).2)]
   have e2 : om' (ιS g, ιT h) (G.M'.co.rho B.ψ (κ x) (tens (evFin F v) (m : (Fin a' × Fin (a + a') → Fv F v) → ℂ) R)) =
       tens (evFin F v) (((ρ y (ω (g, h) m)) : SB (Fin a' × Fin (a + a') → Fv F v)) : (Fin a' × Fin (a + a') → Fv F v) → ℂ) R := by
-    rw [hS.impl (ιS g, ιT h) (κ x) _ (hR _ m.2).2, hEq g h x, ← hy, hωA m R (hR _ m.2),
+    have he : actAB (cA σ) (ιS g, ιT h) (κ x) = κ y := by
+      unfold cA
+      exact (hEq g h x).trans (congrArg κ hy.symm)
+    rw [hS.impl (ιS g, ιT h) (κ x) _ (hR _ m.2).2]
+    rw [he, hωA m R (hR _ m.2),
       hρ y (ω (g, h) m) R (hR _ (ω (g, h) m).2)]
   have e := e1.symm.trans e2
   show (((ω (g, h) (ρ x m)) : SB (Fin a' × Fin (a + a') → Fv F v)) : (Fin a' × Fin (a + a') → Fv F v) → ℂ) =
     (((ρ y (ω (g, h) m)) : SB (Fin a' × Fin (a + a') → Fv F v)) : (Fin a' × Fin (a + a') → Fv F v) → ℂ)
   funext yv
   set z : (Fin a' × Fin (a + a')) → AF F := fun i => GlobalTheory.LatVac.liftV v (yv i) with hz
-  have hza : At (evFin F v) z := GlobalTheory.VacAny.at_pi fun i => GlobalTheory.LatVac.at_liftV v _
+  have hza : At (evFin F v) z := fun u hu => funext fun i => GlobalTheory.LatVac.at_liftV v _ u hu
   have hrx : R (0 + z) = R 0 := (hR _ m.2).1 0 z hza
   have hyv : (fun i => evFin F v (((0 : (Fin a' × Fin (a + a')) → AF F) + z) i)) = yv := by
     funext i

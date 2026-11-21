@@ -24,7 +24,7 @@ theorem mono_spMap_toRat {o Ω F : Type} [CommRing o] [Field Ω] [Algebra o Ω] 
   haveI := isLocalization_ratHull R
   haveI : IsPreimmersion (spMap (toRat R)) :=
     IsPreimmersion.of_isLocalization (Algebra.algebraMapSubmonoid R (nonZeroDivisors ℤ))
-  infer_instance
+  exact SurjectiveOnStalks.mono_of_injective (IsPreimmersion.isEmbedding _).injective
 
 theorem exists_pull_univ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Geo.Tor.Level H}
     {Xo : Moduli Dw l} {c : Coeff l} (T : UTrait Xo c) :

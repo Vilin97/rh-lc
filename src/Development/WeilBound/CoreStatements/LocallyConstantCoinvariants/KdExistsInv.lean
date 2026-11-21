@@ -125,7 +125,7 @@ theorem symp_eq (h : IsSec σ t sec) (hG : Grams σ t JA JB) {u : Matrix α β (
       ((coord σ t JA JB u).1 ⬝ᵥ (coord σ t JA JB u').2 - (coord σ t JA JB u').1 ⬝ᵥ (coord σ t JA JB u).2) := by
   obtain ⟨ε, hε, hA, hB⟩ := hG.sym
   have e : hTens (cA σ) JA JB u u' = trace (JAᵀ * u * JB * (u'.map (cA σ))ᵀ) := by
-    simp only [hTens, trace, diag, mul_apply, transpose_apply, map_apply, Finset.sum_mul]
+    simp only [hTens, trace, diag, Matrix.mul_apply, dotProduct, transpose_apply, map_apply, Finset.sum_mul]
     calc _ = ∑ i, ∑ k, ∑ j, ∑ l, u i j * JA i k * JB j l * cA σ (u' k l) := Finset.sum_congr rfl fun i _ => Finset.sum_comm
       _ = ∑ k, ∑ i, ∑ j, ∑ l, u i j * JA i k * JB j l * cA σ (u' k l) := Finset.sum_comm
       _ = ∑ k, ∑ l, ∑ j, ∑ i, u i j * JA i k * JB j l * cA σ (u' k l) := Finset.sum_congr rfl fun k _ => by

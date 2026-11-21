@@ -20,11 +20,11 @@ theorem bd_map {E : Spc} {U : Scheme.{0}} {G G' : Type*} [AddCommGroup G] [AddCo
 
 theorem ev_delta_bd {E : Spc} {I : Cx R} {n m : ℤ} (hm : n + 1 = m) (α : Cochain ((chains R).obj E) I n) (p : ℕ)
     (s t : ℤ) (hs : -(p : ℤ) + n = s) (ht : -(p : ℤ) + m = t) (U : Scheme.{0}) (x : Sx E p U) :
-    ev R (δ n m α) p t ht U x = Sec.map (I.d s t) (ev R α p s hs U x) +
-      m.negOnePow • bd (fun q z => if hh : -(q : ℤ) + n = t then ev R α q t hh U z else 0) p x := by
+    ev (R := R) (δ n m α) p t ht U x = Sec.map (I.d s t) (ev (R := R) α p s hs U x) +
+      m.negOnePow • bd (fun q z => if hh : -(q : ℤ) + n = t then ev (R := R) α q t hh U z else 0) p x := by
   have ev_eq {k : ℤ} (a : Cochain ((chains R).obj E) I k) (q : ℕ) (j : ℤ)
       (h : -(q : ℤ) + k = j) (y : Sx E q U) :
-      ev R a q j h U y = Sec.map ((chainsXIso R E q).inv ≫ a.v _ _ h) (freeGen R _ U y) := rfl
+      ev (R := R) a q j h U y = Sec.map ((chainsXIso R E q).inv ≫ a.v _ _ h) (freeGen R _ U y) := rfl
   cases p with
   | zero =>
     rw [ev_eq, δ_v n m hm α _ _ ht s 1 (by omega) (by simp),
@@ -50,8 +50,8 @@ theorem mul_congr {I J K : Cx R} (μ : Pair I J K) (U : Scheme.{0}) {E : Spc} {n
     (α : Cochain ((chains R).obj E) I n) (β : Cochain ((chains R).obj E) J m) (p q : ℕ) (y : Sx E p U) (z : Sx E q U)
     (s t w s' t' : ℤ) (h : s + t = w) (h' : s' + t' = w) (hs : -(p : ℤ) + n = s) (ht : -(q : ℤ) + m = t)
     (hs' : -(p : ℤ) + n = s') (ht' : -(q : ℤ) + m = t') :
-    μ.mul U s t w h (ev R α p s hs U y) (ev R β q t ht U z) =
-      μ.mul U s' t' w h' (ev R α p s' hs' U y) (ev R β q t' ht' U z) := by
+    μ.mul U s t w h (ev (R := R) α p s hs U y) (ev (R := R) β q t ht U z) =
+      μ.mul U s' t' w h' (ev (R := R) α p s' hs' U y) (ev (R := R) β q t' ht' U z) := by
   subst hs ht hs' ht'; rfl
 
 theorem leib' {I J K : Cx R} (μ : Pair I J K) (U : Scheme.{0}) (s t w s' t' w' : ℤ) (h : s + t = w) (hs : s + 1 = s')
@@ -79,7 +79,7 @@ theorem secmap_zsmul {F G : Shv R} (φ : F ⟶ G) {U : Scheme.{0}} (c : ℤ) (a 
 def Fm {I J K : Cx R} (μ : Pair I J K) {E : Spc} {n m : ℤ} (α : Cochain ((chains R).obj E) I n)
     (β : Cochain ((chains R).obj E) J m) (U : Scheme.{0}) (w : ℤ) (p q : ℕ) (y : Sx E p U) (z : Sx E q U) :
     Sec (K.X w) U :=
-  if hh : (-(p : ℤ) + n) + (-(q : ℤ) + m) = w then μ.mul U _ _ w hh (ev R α p _ rfl U y) (ev R β q _ rfl U z) else 0
+  if hh : (-(p : ℤ) + n) + (-(q : ℤ) + m) = w then μ.mul U _ _ w hh (ev (R := R) α p _ rfl U y) (ev (R := R) β q _ rfl U z) else 0
 
 theorem recombine {G : Type*} [AddCommGroup G] (X Y BF BF' BB BB' : G) (c s K c' P e1 e2 c2 e3 : ℤ) (hF : BF' = BF)
     (hB : BB' = BB) (h2 : c * s = e2 * c2) (h3 : K * c' = c * e1) (h4 : K * (c * P) = e2 * (c2 * e3)) :
@@ -99,7 +99,7 @@ open LateralTheory.EtaleFoundations.AWLeib in
 theorem LateralTheory.EtaleFoundations.etaleAlexanderWhitneyCup_leibniz_of_pairing : LateralTheory.EtaleFoundations.EtaleAlexanderWhitneyCupLeibniz := by
   intro R _ I J K μ E n m k hk α β γ γ₁ γ₂ hγ h1 h2
   have ev_ext (a b : Cochain ((chains R).obj E) K (k + 1))
-      (h : ∀ p s hs U x, ev R a p s hs U x = ev R b p s hs U x) : a = b := by
+      (h : ∀ p s hs U x, ev (R := R) a p s hs U x = ev (R := R) b p s hs U x) : a = b := by
     ext i j hij : 1
     by_cases hi : 0 < i
     · exact (isZero_pos E i hi).eq_of_src _ _
@@ -108,12 +108,12 @@ theorem LateralTheory.EtaleFoundations.etaleAlexanderWhitneyCup_leibniz_of_pairi
     exact free_ext _ _ (fun U x => h p j hij U x)
   apply ev_ext
   intro N w hw U x
-  have ev_add : ev R (γ₁ + n.negOnePow • γ₂) N w hw U x =
-      ev R γ₁ N w hw U x + ev R (n.negOnePow • γ₂) N w hw U x := by
+  have ev_add : ev (R := R) (γ₁ + n.negOnePow • γ₂) N w hw U x =
+      ev (R := R) γ₁ N w hw U x + ev (R := R) (n.negOnePow • γ₂) N w hw U x := by
     unfold ev
     rw [Cochain.add_v, Preadditive.comp_add]
     rfl
-  have ev_units_smul : ev R (n.negOnePow • γ₂) N w hw U x = n.negOnePow • ev R γ₂ N w hw U x := by
+  have ev_units_smul : ev (R := R) (n.negOnePow • γ₂) N w hw U x = n.negOnePow • ev (R := R) γ₂ N w hw U x := by
     change Sec.map ((chainsXIso R E N).inv ≫ (n.negOnePow • γ₂).v _ _ hw) (freeGen R _ U x) = _
     rw [Cochain.units_smul_v, Linear.comp_units_smul, Units.smul_def, sec_map_zsmul]
     rfl

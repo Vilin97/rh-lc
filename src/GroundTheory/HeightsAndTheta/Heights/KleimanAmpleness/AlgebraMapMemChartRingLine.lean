@@ -283,19 +283,21 @@ section Inhabitants2
 variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : ℕ}
   {x : Fin (N + 1) → Ω}
 
-theorem isVeryAmpleBy_twistSys_one : IsVeryAmpleBy (twistSys S x 1) x where
-  mem_secs := mem_secs_twistBundle_one
-  generates := span_range_eq_twistMod_one
-  closed j hj a ha := by
-    obtain ⟨n, hn⟩ := Set.mem_iInter.mp ha (singleChart hj)
-    rw [one_mul] at hn
-    obtain ⟨b, hb⟩ := Submodule.mem_span_singleton.mp
-      (pow_twistSys_one_le n (singleChart hj) (Finset.mem_singleton_self j) hn)
-    rw [chartRing_smul_def] at hb
-    have hab : a = b := (mul_right_cancel₀ (pow_ne_zero n hj) hb).symm
-    rw [hab]
-    exact mem_ampleBase_of_mem_chartRing hj b.2
-  affine j hj := (twistAmple S x).affine j hj
+theorem isVeryAmpleBy_twistSys_one : IsVeryAmpleBy (twistSys S x 1) x := by
+  refine
+    { mem_secs := mem_secs_twistBundle_one
+      generates := span_range_eq_twistMod_one
+      closed := ?_
+      affine := fun j hj => (twistAmple S x).affine j hj }
+  intro j hj a ha
+  obtain ⟨n, hn⟩ := Set.mem_iInter.mp ha (singleChart hj)
+  rw [one_mul] at hn
+  obtain ⟨b, hb⟩ := Submodule.mem_span_singleton.mp
+    (pow_twistSys_one_le n (singleChart hj) (Finset.mem_singleton_self j) hn)
+  rw [chartRing_smul_def] at hb
+  have hab : a = b := (mul_right_cancel₀ (pow_ne_zero n hj) hb).symm
+  rw [hab]
+  exact mem_ampleBase_of_mem_chartRing hj b.2
 
 theorem isVeryAmple_twistSys_one : IsVeryAmple (twistSys S x 1) := ⟨N, x, isVeryAmpleBy_twistSys_one⟩
 

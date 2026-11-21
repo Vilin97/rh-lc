@@ -98,16 +98,48 @@ theorem exists_fibre_model {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R
   have hsm : ∀ (a : R) (t : T), a • t = algebraMap R R' a • t := fun _ _ => rfl
   have tower : IsScalarTower R R' T :=
     ⟨fun a b t => by rw [Algebra.smul_def, hsm, mul_smul]⟩
-  have hφ : Spec.map (CommRingCat.ofHom (algebraMap R R')) ≫ 𝟙 (Sp R) = spMap (algebraMap R R') ≫ 𝟙 _ := rfl
-  have ex : ∀ e, ∃ t, M'.pt t = LieTangent.epsBase (algebraMap R R') hφ ≫ M.pt e :=
-    fun e => M'.onto _ (LieTangent.isTanAt_base _ hφ (M.tan e))
+  let c := algebraMap R R'
+  have halg : (dualMap c).comp (algebraMap R (DualNumber R)) =
+      (algebraMap R' (DualNumber R')).comp c := by
+    refine RingHom.ext fun r => TrivSqZeroExt.ext ?_ ?_
+    all_goals simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have hfst : (TrivSqZeroExt.fstHom R' R' R').toRingHom.comp (dualMap c) =
+      c.comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
+    refine RingHom.ext fun a => ?_
+    simp [dualMap]
+  have hscale (r : R) : (dualMap c).comp (epsMul r) = (epsMul (c r)).comp (dualMap c) := by
+    refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_
+    all_goals simp [dualMap, epsMul, mul_comm]
+  let base : epsAt (spMap c ≫ 𝟙 (Sp R)) ⟶ epsAt (𝟙 (Sp R)) :=
+    Over.homMk (spMap (dualMap c)) (by
+      change spMap (dualMap c) ≫ Spec.map _ ≫ 𝟙 (Sp R) = Spec.map _ ≫ spMap c ≫ 𝟙 (Sp R)
+      simp only [spMap]
+      rw [← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp,
+        ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, halg])
+  have htan (v : epsAt (𝟙 (Sp R)) ⟶ G) (hv : IsTanAt G (𝟙 _) v) :
+      IsTanAt G (spMap c ≫ 𝟙 _) (base ≫ v) := by
+    have h1 : (Over.homMk (spMap c) rfl : Over.mk (spMap c ≫ 𝟙 (Sp R)) ⟶ Over.mk (𝟙 (Sp R))) ≫ (1 : Over.mk (𝟙 (Sp R)) ⟶ G) = 1 := MonObj.comp_one _
+    have h2 : spMap c ≫ (1 : Over.mk (𝟙 (Sp R)) ⟶ G).left = (1 : Over.mk (spMap c ≫ 𝟙 (Sp R)) ⟶ G).left := by
+      rw [← h1]; rfl
+    unfold IsTanAt at hv ⊢
+    rw [← h2, ← hv]
+    change Spec.map _ ≫ spMap (dualMap c) ≫ v.left = spMap c ≫ Spec.map _ ≫ v.left
+    simp only [spMap]
+    rw [← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp,
+      ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, hfst]
+  have ex : ∀ e, ∃ t, M'.pt t = base ≫ M.pt e :=
+    fun e => M'.onto _ (htan _ (M.tan e))
   choose f hf using ex
+  have hleft : ∀ e, (M'.pt (f e)).left = spMap (dualMap c) ≫ (M.pt e).left := fun e => by
+    rw [hf e]; rfl
   let j : V →ₗ[R] T :=
     { toFun := f
       map_add' := fun a b => M'.inj (by rw [M'.add, hf, hf, hf, M.add, comp_mul])
-      map_smul' := fun c e => M'.inj (by
-        rw [RingHom.id_apply, hsm, LieModel.pt_smul, hf, hf, LieModel.pt_smul, ← Category.assoc,
-          LieTangent.base_scale, Category.assoc]) }
+      map_smul' := fun r a => M'.inj (Over.OverMorphism.ext (by
+        rw [RingHom.id_apply, hsm, M'.smul, hleft, hleft, M.smul]
+        simp only [spMap]
+        rw [← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp,
+          ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, hscale])) }
   have hl : ∀ e, ((M'.pt (j e)).left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ (M.pt e).left) := fun e => by
     change (M'.pt (f e)).left ≫ 𝟙 G.left = _
     rw [hf]
@@ -117,7 +149,6 @@ theorem exists_fibre_model {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R
   obtain ⟨M₁, h₁⟩ := (LiePull.lieModel_pullback _ _ G G₁ _ φ h R' (𝟙 _) T).1 M''
   refine ⟨T, iT, mT, mR, tower, M₁, j, fun e => ?_, GlobalTheory.T.lie_model_isBaseChange _ G R R' _ V T M M' j hl⟩
   have := hl e
-  unfold LieModel.Lifts at this ⊢
   rw [h₁, h'', ← this]
   exact (Category.comp_id _).symm
 

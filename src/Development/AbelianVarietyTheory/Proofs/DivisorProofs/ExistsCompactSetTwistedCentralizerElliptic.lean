@@ -182,7 +182,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
     intro s hs' hcs
     have hcont : Continuous fun g : UL n w =>
         ∑ a, ∑ b, ‖(g.1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) a b‖ :=
-      continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ =>
+      continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ =>
         ((Units.continuous_val.comp continuous_subtype_val).matrix_elem a b).norm
     obtain ⟨B, hB⟩ := (hcs.image hcont).bddAbove
     refine hM _ ?_ ⟨B, fun k a b => ?_⟩

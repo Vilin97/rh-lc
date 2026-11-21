@@ -80,7 +80,9 @@ private theorem gdet_map_chi_mapRingHom {n : ℕ} {A Q G : Type} [CommRing A] [C
     · rw [← RingHom.comp_apply, ← RingHom.comp_apply, ← MonoidAlgebra.mapRingHom_comp,
         ← MonoidAlgebra.mapRingHom_comp]
       congr 2
-      exact RingHom.ext fun a => by simp [φ]
+      exact RingHom.ext fun a => by
+        change Polynomial.map f (C a) = C (f a)
+        simp
   rw [e] at hn
   unfold GDet.chi GDet.map
   exact hn

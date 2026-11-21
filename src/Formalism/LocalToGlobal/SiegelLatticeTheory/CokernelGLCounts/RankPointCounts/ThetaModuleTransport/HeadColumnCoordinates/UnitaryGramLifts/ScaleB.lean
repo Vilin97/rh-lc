@@ -40,7 +40,8 @@ def isoMbeTransport {Z₁ Z₂ Z₁' Z₂' : Matrix (Fin (r + 1)) (Fin (r + 1)) 
     (he₁ : e₁ (v • eCl Z₁) = eCl Z₁') (he₂ : e₂ (v • eCl Z₂) = eCl Z₂') : IsoMbe Z₁ Z₂ ≃ IsoMbe Z₁' Z₂' where
   toFun γ := ⟨(e₁.symm.trans γ.1).trans e₂, by
       have h1 : e₁.symm (bCls Z₁') = s • bCls Z₁ + t • eCl Z₁ := by rw [← hb₁, LinearEquiv.symm_apply_apply]
-      simp only [LinearEquiv.trans_apply, h1, map_add (f := _), map_smul, γ.2.1, γ.2.2, hb₂],
+      simp only [LinearEquiv.trans_apply, h1, map_add (f := _), map_smul, γ.2.1, γ.2.2]
+      simpa only [map_add, map_smul] using hb₂,
     by
       have h1 : e₁.symm (eCl Z₁') = v • eCl Z₁ := by rw [← he₁, LinearEquiv.symm_apply_apply]
       simp only [LinearEquiv.trans_apply, h1, map_smul, γ.2.2, he₂]⟩

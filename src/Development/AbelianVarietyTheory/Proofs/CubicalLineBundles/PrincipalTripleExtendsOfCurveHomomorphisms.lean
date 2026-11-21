@@ -33,7 +33,16 @@ theorem exists_hom_pow {G B A : Over S} [GrpObj G] [GrpObj A] [IsCommMonObj A] [
     (p : Out.IsPowGrp G B n) (ψ : Fin n → (B ⟶ A)) (hψ : ∀ i, IsMonHom (ψ i)) {k : Type} [Field k] (t : Sp k ⟶ S)
     (h : OntoAt ψ t) : ∃ Ψ : G ⟶ A, IsMonHom Ψ ∧ ∀ y : Over.mk t ⟶ A, ∃ x : Over.mk t ⟶ G, y = x ≫ Ψ := by
   have := p.hom
-  refine ⟨∏ i, p.pr i ≫ ψ i, Serre.isMonHom_of_mul_comp _ fun T x y => ?_, fun y => ?_⟩
+  have isMonHom_of_mul_comp (f : G ⟶ A)
+      (hf : ∀ (T : Over S) (x y : T ⟶ G), (x * y) ≫ f = (x ≫ f) * (y ≫ f)) : IsMonHom f := by
+    refine ⟨?_, ?_⟩
+    ·
+      rw [MonObj.one_eq_one, MonObj.one_eq_one]
+      exact map_one (MonoidHom.mk' (fun x : 𝟙_ (Over S) ⟶ G => x ≫ f) (hf _))
+    ·
+      rw [MonObj.mul_eq_mul G, hf, MonObj.mul_eq_mul A, MonObj.comp_mul,
+        tensorHom_fst, tensorHom_snd]
+  refine ⟨∏ i, p.pr i ≫ ψ i, isMonHom_of_mul_comp _ (fun T x y => ?_), fun y => ?_⟩
   · simp only [comp_prod, ← Finset.prod_mul_distrib, ← Category.assoc, MonObj.mul_comp]
   · obtain ⟨m, i, x, rfl⟩ := h y
     let c : Fin n → (Over.mk t ⟶ B) := fun j => ∏ a ∈ Finset.univ.filter (fun a => i a = j), x a

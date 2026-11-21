@@ -24,6 +24,8 @@ theorem wedge_rows {K V : Type} [Field K] [AddCommGroup V] [Module K V] {n : ℕ
         ext i j; simp [Matrix.one_apply, Pi.single_apply, eq_comm], Matrix.det_one]
     rw [AlternatingMap.smulRight_apply, e1, one_smul, AlternatingMap.compLinearMap_apply]
     congr 1
+    funext i
+    rw [Pi.basisFun_apply, Fintype.linearCombination_apply_single, one_smul]
   exact AlternatingMap.congr_fun hA M
 
 theorem wedge_ne_zero {Ω V : Type} [Field Ω] [AddCommGroup V] [Module Ω V]

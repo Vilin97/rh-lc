@@ -91,7 +91,7 @@ theorem rank_le_of_simple {M ι : Type} [AddCommGroup M] [Module ℂ M] (S : Sub
       exact Submodule.span_mono (fun y hy => Set.mem_iUnion.2 ⟨n + 1, by
         rw [Ts]; exact Or.inr (Set.mem_biUnion hn hy)⟩) (c3 x (hTS n hn) i)
     | zero => simp
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | smul r a _ ha => rw [map_smul]; exact Submodule.smul_mem _ r ha
   have hx0U : x0 ∈ Submodule.span ℂ (⋃ n, T n) :=
     Submodule.subset_span (Set.mem_iUnion.2 ⟨0, rfl⟩)
@@ -169,8 +169,8 @@ theorem heckeVec_dosetInd_eq_idem (hs : IsSmooth π) (hc : IsCompact (K : Set G)
   · refine Nat.cast_ne_zero.2 (Finset.card_ne_zero.2 ⟨(g : G ⧸ K), (hS _).2 ?_⟩)
     obtain ⟨k, hk⟩ := QuotientGroup.mk_out_eq_mul K g
     exact DoubleCoset.mem_doubleCoset.2 ⟨1, K.one_mem, k, k.2, by rw [hk, one_mul]⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [← idem_of_mem hs hc (heckeVec_mem_fixed hK hm hz), heckeVec,
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [← idem_of_mem hs hc (heckeVec_mem_fixed hK hm hz), heckeVec,
       finsum_eq_sum_of_support_subset (s := hfin.toFinset), map_sum, Nat.cast_smul_eq_nsmul, ← Finset.sum_const]
     · refine Finset.sum_congr rfl fun c hcS => ?_
       have h1 := (hS c).1 hcS
@@ -202,7 +202,7 @@ theorem fixed_simple (hs : IsSmooth π) (hc : IsCompact (K : Set G)) (hK : IsCom
       obtain ⟨g', b, hb, rfl⟩ := hy
       exact Submodule.subset_span ⟨g * g', b, hb, by rw [map_mul, Module.End.mul_apply]⟩
     | zero => simp
-    | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+    | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
     | smul r u _ hu => rw [map_smul]; exact Submodule.smul_mem _ r hu
   have h2 : ∀ b : Module.End ℂ V, (∀ g, b * π g = π g * b) → ∀ y ∈ Submodule.span ℂ C, b y ∈ Submodule.span ℂ C :=
     fun b hb y hy => by
@@ -213,7 +213,7 @@ theorem fixed_simple (hs : IsSmooth π) (hc : IsCompact (K : Set G)) (hK : IsCom
       have := LinearMap.congr_fun (hb g') (b' w0)
       simpa [Module.End.mul_apply] using this
     | zero => simp
-    | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+    | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
     | smul r u _ hu => rw [map_smul]; exact Submodule.smul_mem _ r hu
   have hw0C : w0 ∈ Submodule.span ℂ C :=
     Submodule.subset_span ⟨1, 1, fun g => by rw [one_mul, mul_one], by simp⟩
@@ -231,7 +231,7 @@ theorem fixed_simple (hs : IsSmooth π) (hc : IsCompact (K : Set G)) (hK : IsCom
       rw [e2]
       exact W.smul_mem _ (hH _ (Final.DosetIndMem G K ℂ g) _ hbw)
     | zero => simp
-    | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+    | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
     | smul r u _ hu => rw [map_smul]; exact Submodule.smul_mem _ r hu
   have := key x (htop ▸ Submodule.mem_top)
   rwa [idem_of_mem hs hc hx] at this

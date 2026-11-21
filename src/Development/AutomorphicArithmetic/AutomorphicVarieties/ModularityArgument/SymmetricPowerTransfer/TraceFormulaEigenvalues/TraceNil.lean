@@ -42,11 +42,14 @@ private theorem exists_prod_range_iterate_eq_zero_of_commute_of_isNilpotent (n :
     (hn : ∀ a, IsNilpotent (n a)) (a : Λ) :
     ∃ m : ℕ, ((List.range m).map (fun i => n (σ^[i] a))).prod = 0 := by
   let A := Algebra.adjoin ℂ (Set.range n)
-  letI : CommRing A := Algebra.adjoinCommRingOfComm ℂ (by
-    rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩
+  letI : IsMulCommutative A := Algebra.isMulCommutative_adjoin ℂ (by
+    rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩ _
     exact hc x y)
+  letI : CommRing A := by
+    open scoped IsMulCommutative in
+    exact inferInstance
   haveI : IsArtinianRing A := IsArtinianRing.of_finite ℂ A
-  obtain ⟨m, hm⟩ := IsArtinianRing.isNilpotent_nilradical (R := A)
+  obtain ⟨m, hm⟩ := IsArtinianRing.isNilpotent_nilradical A
   let g : ℕ → A := fun i => ⟨n (σ^[i] a), Algebra.subset_adjoin ⟨σ^[i] a, rfl⟩⟩
   have hmem : ∀ i, g i ∈ nilradical A := by
     intro i

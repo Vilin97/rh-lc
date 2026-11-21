@@ -24,6 +24,7 @@ variable {E : Type} [Field E] [NumberField E]
 theorem trace_eq_sum {Ω : Type} [Field Ω] [CharZero Ω] [Fintype (E →+* Ω)]
     (h : Nat.card (E →+* Ω) = Module.finrank ℚ E) (x : E) :
     ((Algebra.trace ℚ E x : ℚ) : Ω) = ∑ τ : E →+* Ω, τ x := by
+  classical
   rw [← eq_ratCast (algebraMap ℚ Ω)]
   exact algebraMap_trace_eq_sum_algHom_of_card (Nat.card_eq_fintype_card.symm.trans h)
     (P := fun τ : E →+* Ω => τ.toRatAlgHom) (fun τ τ' e => RingHom.ext fun y => AlgHom.congr_fun e y) x

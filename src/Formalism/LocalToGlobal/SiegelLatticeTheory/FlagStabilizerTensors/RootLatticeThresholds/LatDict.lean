@@ -645,7 +645,7 @@ theorem coef_span1 (a : Fin D.R.rS) {y : (VS D).V} (hy : y ∈ latSpanS (fun a =
     rw [map_smul, hT_f_e, smul_eq_mul]
     exact aa_mem_of_eq hx
   | zero => rw [map_zero]; exact zero_mem _
-  | add w w' _ _ hw hw' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hw hw'
+  | add w w' _ _ hw hw' => rw [map_add]; exact add_mem hw hw'
   | smul o w _ hw =>
     rw [← IsScalarTower.algebraMap_smul D.host.E o w, map_smul, smul_eq_mul, ← Algebra.smul_def]
     exact Submodule.smul_mem _ o hw
@@ -987,7 +987,7 @@ theorem latSpan_map (φ : (VS D).V →ₗ[D.host.E] (VS D).V) {r : ℕ} (v w : F
     rw [map_smul, h]
     exact Submodule.subset_span ⟨b, x, hx, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul o z _ hz =>
     rw [← IsScalarTower.algebraMap_smul D.host.E o z, map_smul, IsScalarTower.algebraMap_smul]
     exact Submodule.smul_mem _ o hz
@@ -1209,10 +1209,14 @@ theorem lattice_surjective_of_orbit (hZ : LatDictZ.ZOrbit) : LatSurj X u := by
   have hΛlat := hrow.2.1.1
   have hlat : Submodule.IsLattice D.host.E Λ2 := by
     refine ⟨hΛlat.fg.map _, ?_⟩
-    rw [hΛ2, Formalism.HermitianLatticesTheory.gmap, Submodule.map_coe, LinearMap.coe_restrictScalars]
-    rw [show ((δ.symm : (VS D).V →ₗ[D.host.E] (VS D).V) : (VS D).V → (VS D).V) '' (Λ : Set (VS D).V) =
-      ((δ.symm : (VS D).V →ₗ[D.host.E] (VS D).V) : (VS D).V → (VS D).V) '' (Λ : Set (VS D).V) from rfl,
-      ← Submodule.map_span, hΛlat.span_eq_top, Submodule.map_top, LinearEquiv.range]
+    intro s hs hli
+    have hs' : δ '' s ⊆ (Λ : Set (VS D).V) := by
+      rintro _ ⟨x, hx, rfl⟩
+      exact (hmem2 x).1 (hs hx)
+    have hli' : LinearIndepOn (𝓞 D.host.E) id (δ '' s) := by
+      exact hli.id_imageₛ (f := (δ : (VS D).V →ₗ[D.host.E] (VS D).V).restrictScalars (𝓞 D.host.E)) δ.injective.injOn
+    have hE := hΛlat.linearIndepOn (δ '' s) hs' hli'
+    exact (linearIndepOn_id_imageₛ_iff (f := (δ : (VS D).V →ₗ[D.host.E] (VS D).V)) δ.injective.injOn).1 hE
   have hUΛ : ∀ y, y ∈ Λ ↔ ∀ w ∈ Λ, (VS D).hT w y ∈ (algebraMap (𝓞 D.host.E) D.host.E).range := by
     intro y
     conv_lhs => rw [← hrow.2.1.2.1]

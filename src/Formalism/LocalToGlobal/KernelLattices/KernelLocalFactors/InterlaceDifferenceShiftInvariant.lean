@@ -689,7 +689,7 @@ theorem lx_coeff_coefLast (b : ι → Fin n → ℕ) (f : Pol K ι N) (m' : ι �
       · rw [if_neg hm, if_neg]
         intro h
         exact hm ((lx_isTop_iff hN b m m').2 h).2
-    · rw [if_neg hT, coeff_zero, if_neg]
+    · rw [if_neg hT, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, if_neg]
       intro h
       exact hT ((lx_isTop_iff hN b m m').2 h).1
   exact LinearMap.congr_fun key f
@@ -1048,7 +1048,7 @@ theorem coefXi_of (hI : InterlaceAll hN lam sg) (hS : SameShiftAll lam sg) : Coe
       push Not at h
       exact ht (Finset.eq_univ_of_forall h)
     ext m'
-    rw [lx_coeff_coefLast, coeff_zero]
+    rw [lx_coeff_coefLast, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     refine lx_coeff_low hN (τ := τ0) ?_ _ (weight_monomial_shift_eq_omega hN (bExp hN lam sg) τ0 m')
     have hmem : τ0 ∈ Finset.univ \ t := by simp [hτ0]
     rw [← Finset.mul_prod_erase _ _ hmem, mul_left_comm]
@@ -1859,7 +1859,8 @@ theorem hwA_key {K : Type} [Field K] [CharZero K] {σ ι' : Type} (S : Finset ι
   have hw0 : Finsupp.weight w m0 + w (t s0) = d := by
     rw [← hmd, map_add (f := _), lx_w_single, one_smul]
   have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single (u s0) 1 + m0)) hD
-  rw [coeff_sum, coeff_zero, Finset.sum_eq_single s0] at hc
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at hc
+  rw [coeff_sum, Finset.sum_eq_single s0] at hc
   · rw [coeff_X_mul, coeff_pderiv] at hc
     rcases mul_eq_zero.1 hc with h | h
     · exact (mem_support_iff.1 hm) h
@@ -3158,7 +3159,7 @@ lemma inC_ker_rowDiv {n : ℕ} {σ : Type} (sg : Fin n → ℕ)
     (p : MvPolynomial (Fin n × Fin n) ℚ) (hp : p ∈ dualWeyl ℚ n n sg) (h0 : d p = 0) (a b : Fin n) (k : ℕ) :
     d (rowDiv ℚ a b k p) = 0 := by
   ext m
-  rw [coeff_zero]
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   set N := (rowGen ℚ a b p).natDegree + k + 1 with hN
   have h1 : (rowGen ℚ a b p).natDegree < N := by omega
   have hk : k ∈ Finset.range N := Finset.mem_range.mpr (by omega)
@@ -3170,7 +3171,7 @@ lemma inC_ker_rowDiv {n : ℕ} {σ : Type} (sg : Fin n → ℕ)
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← inC_eval_rowGen, inC_eval_C _ N h1, map_sum] at e'
     have e2 := congrArg (AddMonoidAlgebra.coeff · m) e'
-    rw [coeff_zero, coeff_sum] at e2
+    simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, coeff_sum] at e2
     rw [Polynomial.IsRoot, hP, Polynomial.eval_finsetSum]
     rw [← e2]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -3181,7 +3182,7 @@ lemma inC_ker_rowDiv {n : ℕ} {σ : Type} (sg : Fin n → ℕ)
     refine Set.Infinite.mono (s := ({-1} : Set ℚ)ᶜ) (fun c hc => hroot c hc) ?_
     exact (Set.finite_singleton _).infinite_compl
   have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) hP0
-  simp only [hP, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq',
+  simp only [hP, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finsupp.single_apply, Finset.sum_ite_eq',
     if_pos hk, Polynomial.coeff_zero] at this
   exact this
 

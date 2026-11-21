@@ -111,11 +111,44 @@ theorem exists_basis : ∀ {D : D7} (V : HSp D) (e : Formalism.L2.Theta.AE D) (v
         simp only [map_sum, map_zsmul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul, Pi.smul_apply]
     rw [this]
     exact sum_mem fun j _ => zsmul_mem (Submodule.subset_span (Set.mem_range_self j)) _
+  have hfull : Submodule.span D.host.E (V.L0 : Set V.V) = ⊤ := by
+    let W := Submodule.span D.host.E (V.L0 : Set V.V)
+    change W = ⊤
+    by_contra h
+    let e' : V.V ≃ₗ⋆[D.host.E] V.V :=
+      V.frame.equivFun.trans ((starLinearEquiv D.host.E).trans V.frame.equivFun.symm)
+    let g : V.V →ₗ[D.host.E] Module.Dual D.host.E W :=
+      (LinearMap.domRestrict' W).comp (V.hT.comp e'.toLinearMap)
+    have hdim : Module.finrank D.host.E (Module.Dual D.host.E W) < Module.finrank D.host.E V.V := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt h
+    obtain ⟨z, hz, hz0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot
+      (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    have hsmul (a : D.host.E) : a • e' z ∈ V.L0 := by
+      rw [← V.baseLattice_isUnimodular]
+      simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual,
+        Submodule.mem_iInf, Submodule.mem_comap, LinearMap.restrictScalars_apply]
+      intro y hy
+      have hzy : V.hT (e' z) y = 0 :=
+        congrArg (fun f : Module.Dual D.host.E W => f ⟨y, Submodule.subset_span hy⟩)
+          (LinearMap.mem_ker.mp hz)
+      have hyz : V.hT y (e' z) = 0 := by
+        have hh := V.herm.eq y (e' z)
+        simp only [starRingEnd_apply, hzy, star_eq_zero] at hh
+        exact hh
+      simp [hyz]
+    let i : D.host.E →ₗ[𝓞 D.host.E] V.L0 :=
+      ((LinearMap.toSpanSingleton D.host.E _ (e' z)).restrictScalars (𝓞 D.host.E)).codRestrict V.L0 hsmul
+    let : Module.Finite (𝓞 D.host.E) V.L0 := Module.Finite.iff_fg.mpr V.standardTuple_isLattice.fg
+    let : Module.Finite (𝓞 D.host.E) D.host.E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective D.host.E (fun hz' => hz0 (e'.map_eq_zero_iff.mp hz')) (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField D.host.E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 D.host.E) D.host.E) (Field.toIsField D.host.E))
   have hsp : ∀ w : V.V, (fun i => φ (V.frame.repr w i)) ∈
       Submodule.span (Fv D.host.F v) (M : Set (Fin V.rank → Fv D.host.F v)) := by
     intro w
     have hw : w ∈ Submodule.span D.host.E (V.L0 : Set V.V) := by
-      rw [V.standardTuple_isLattice.span_eq_top]; trivial
+      rw [hfull]; trivial
     induction hw using Submodule.span_induction with
     | mem w hw => exact Submodule.subset_span (hL w hw)
     | zero =>
@@ -127,8 +160,10 @@ theorem exists_basis : ∀ {D : D7} (V : HSp D) (e : Formalism.L2.Theta.AE D) (v
     | smul c a _ ha =>
       simp only [map_smul, Finsupp.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul]
       exact Submodule.smul_mem _ (φ c) ha
-  have : Submodule.IsLattice (Fv D.host.F v) M := by
-    refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
+  have : Submodule.IsFullLattice (Fv D.host.F v) M := by
+    haveI : Submodule.IsLattice (Fv D.host.F v) M :=
+      Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
+    refine ⟨?_⟩
     rw [eq_top_iff, ← (Pi.basisFun (Fv D.host.F v) (Fin V.rank)).span_eq, Submodule.span_le]
     rintro _ ⟨i, rfl⟩
     have : Pi.basisFun (Fv D.host.F v) (Fin V.rank) i = fun j => φ (V.frame.repr (V.frame i) j) := by

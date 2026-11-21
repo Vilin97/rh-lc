@@ -54,7 +54,7 @@ private theorem dker_of_kills {x : E} (hx : D.Kills x) : x ∈ D.ker := by
   rw [Det.mem_ker]
   intro S _ _ y u v
   rw [← dker_top, ← dker_top D S y]
-  congr 1
+  apply congrArg (fun p : S[X] => p.coeff n)
   apply dker_poly_eq
   intro T _ _ f hf
   simp only [map_add (f := _), map_mul, map_one, Algebra.TensorProduct.map_tmul, AlgHom.id_apply]

@@ -162,7 +162,7 @@ theorem exists_unique_base (h : p + q ≤ m) (a : Fin p → ℕ) (b : Fin q → 
   let c' : Unit → Fin q → ℕ := fun _ => diffOf b
   have hc : ∀ t, partOf (c t) = a := fun _ => partOf_diffOf ha
   have hc' : ∀ t, partOf (c' t) = b := fun _ => partOf_diffOf hb
-  let W : Submodule ℂ (Poly ℂ Unit p q (Fin m)) := rowHighest c c'
+  let W : Submodule ℂ (Poly ℂ Unit p q (Fin m)) := rowHighest ℂ c c'
   let E := mixedOp ℂ z y
   have hlap (i j : Fin m) (u : Fin p) (v : Fin q) (P : Poly ℂ Unit p q (Fin m)) :
       laplacian () u v (E i j P) = E i j (laplacian () u v P) := by
@@ -192,7 +192,7 @@ theorem exists_unique_base (h : p + q ≤ m) (a : Fin p → ℕ) (b : Fin q → 
       IsHarmonic P := by
     constructor
     · intro hP
-      obtain ⟨hh, hrx, hry, hix, hiy⟩ := mem_rowHighest_iff_of_charZero.1 hP
+      obtain ⟨hh, hrx, hry, hix, hiy⟩ := (mem_rowHighest_iff_of_charZero (c := c) (c' := c')).1 hP
       simp only [rowAddX_eq_bind₁, hc] at hix hrx
       simp only [rowAddY_eq_bind₁, hc'] at hiy hry
       exact ⟨fun i j hij => (row_invariant z hz P hij).2 (hix () i j hij),
@@ -200,7 +200,7 @@ theorem exists_unique_base (h : p + q ≤ m) (a : Fin p → ℕ) (b : Fin q → 
         fun i j hij => (row_invariant y hy P hij).2 (hiy () i j hij),
         fun i => by simpa using rowOp_self y (hry () i), hh⟩
     · rintro ⟨grx, gdx, gry, gdy, gh⟩
-      refine mem_rowHighest_iff_of_charZero.2 ⟨gh,
+      refine (mem_rowHighest_iff_of_charZero (c := c) (c' := c')).2 ⟨gh,
         fun ⟨⟩ i s hs => ?_, fun ⟨⟩ i s hs => ?_,
         fun ⟨⟩ i j hij t => ?_, fun ⟨⟩ i j hij t => ?_⟩
       · rw [hc ()]; exact Nat.cast_injective (R := ℂ) (row_degree z (gdx i) hs)
@@ -238,7 +238,7 @@ theorem exists_unique_base (h : p + q ≤ m) (a : Fin p → ℕ) (b : Fin q → 
     hdiag W hs (rowHighest_ne_bot (c := c) (c' := c') h)
   have hant := highest_weight_antitone E (mixedOp_lie z hz y hy hzy) W (hs ()) v hv hv0 _
     (hup ()) (hμ ())
-  obtain ⟨hh, hrx, hry, hix, hiy⟩ := mem_rowHighest_iff_of_charZero.1 hv
+  obtain ⟨hh, hrx, hry, hix, hiy⟩ := (mem_rowHighest_iff_of_charZero (c := c) (c' := c')).1 hv
   simp only [rowAddX_eq_bind₁, hc] at hix hrx
   simp only [rowAddY_eq_bind₁, hc'] at hiy hry
   have hh' := fun i j => (laplacian_apply () i j v).symm.trans (hh () i j)
@@ -249,7 +249,7 @@ theorem exists_unique_base (h : p + q ≤ m) (a : Fin p → ℕ) (b : Fin q → 
       (hup : ∀ i j, i < j → E i j P = 0)
       (hwt : ∀ i, E i i P = (mixedWeight m a b i : ℂ) • P) :
       ∃ r : ℂ, P = r • basePoly ℂ h c c' := by
-    obtain ⟨hh, hrx, hry, hix, hiy⟩ := mem_rowHighest_iff_of_charZero.1 hP
+    obtain ⟨hh, hrx, hry, hix, hiy⟩ := (mem_rowHighest_iff_of_charZero (c := c) (c' := c')).1 hP
     simp only [rowAddX_eq_bind₁] at hix
     simp only [rowAddY_eq_bind₁] at hiy
     have hvars := notMem_vars h z hz y hy hzy a b ha hb

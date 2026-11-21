@@ -267,7 +267,7 @@ variable (r b : Fin N → L) (c : L)
 
 theorem heis_00 : heisMat r b c 0 0 = 1 := by
   have h0 : (0 : Fin (N + 2)) ≠ Fin.last (N + 1) := fun h => last_ne_zero h.symm
-  simp [heisMat, h0]
+  simp [heisMat, h0, ext]
 
 theorem heis_0m (j : Fin N) : heisMat r b c 0 (mid j) = r j := by
   have h0 : (0 : Fin (N + 2)) ≠ mid j := (mid_ne_zero j).symm
@@ -275,7 +275,7 @@ theorem heis_0m (j : Fin N) : heisMat r b c 0 (mid j) = r j := by
 
 theorem heis_0l : heisMat r b c 0 (Fin.last (N + 1)) = c := by
   have h0 : (0 : Fin (N + 2)) ≠ Fin.last (N + 1) := fun h => last_ne_zero h.symm
-  simp [heisMat, h0]
+  simp [heisMat, h0, ext]
 
 theorem heisenberg_middle_first_zero (i : Fin N) : heisMat r b c (mid i) 0 = 0 := by
   have h0 : (0 : Fin (N + 2)) ≠ Fin.last (N + 1) := fun h => last_ne_zero h.symm

@@ -194,6 +194,8 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.fundamental_ideal_frobenius_pr
     · intro hr
       obtain ⟨s, rfl⟩ := Ideal.mem_span_singleton'.1 hr
       convert Submodule.smul_mem _ s (hsq n) using 1
+      funext a
+      simp [Algebra.smul_def, map_mul, mul_assoc]
   refine ⟨hiff, ?_, fun δ hδ => ?_⟩
   · obtain ⟨s, hs⟩ := Ideal.mem_span_singleton'.1 (hdvd n)
     exact ⟨s, hs.symm⟩

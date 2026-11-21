@@ -54,7 +54,8 @@ theorem div_eq_of_local {P Δ : Ideal (MRing ι)} (hPp : P.IsPrime) (hΔp : Δ.I
       exact Q.sub_mem (Q.mul_mem_left u hgQ) (hPQ hm)
     rcases hQ.1.mem_or_mem hvh with h1 | h1
     exacts [hvQ h1, hhQ h1]
-  ext W
+  apply Finsupp.ext
+  intro W
   have hcg := DiagonalDivisor.divCycle_eq_ite (s := g) hP W
   have hch := DiagonalDivisor.divCycle_eq_ite (s := h) hgP W
   rw [mul_comm h g] at hch
@@ -146,7 +147,7 @@ theorem congr_aeval {σ : Type} (O : Subring Φ) (a b : σ → Φ) (V : Φ) (ha 
   | add f g hf hg =>
     obtain ⟨h1, ρ, h2, h3⟩ := hf
     obtain ⟨h1', ρ', h2', h3'⟩ := hg
-    exact ⟨by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h1', ρ + ρ', add_mem h2 h2', by
+    exact ⟨by rw [map_add]; exact add_mem h1 h1', ρ + ρ', add_mem h2 h2', by
       rw [map_add (f := _), map_add (f := _)]; linear_combination h3 + h3'⟩
   | mul_X f q hf =>
     obtain ⟨h1, ρ, h2, h3⟩ := hf

@@ -188,7 +188,7 @@ theorem exists_gtCoord (e : ℕ) : ∃ g : GtCoord I D e D.P.A, g.q = 𝟙 _ ∧
   · refine (val_mul hJ _ _ _).trans (Eq.trans ?_ (val_mul hJ _ _ _).symm)
     refine (congrArg₂ (· * ·) (hv _ _ _ y J hJ) (val_cub D.cub (𝟙 _) hJ _ _ _)).trans
       (Eq.trans ?_ (congrArg₂ (· * ·) (hv _ _ _ y J hJ) (hv _ _ _ y J hJ)).symm)
-    rw [Category.id_comp, c_one, (isCub_cubV D.cub hJ).face]
+    rw [Category.id_comp, c_one, (isCub_cubV D.cub hJ).face _ _]
   · exact (val_pull hJ _ _ _).trans ((hv _ _ _ y J hJ).trans (val_one _).symm)
   · refine (val_pull hJ _ _ _).trans ((hv _ _ _ y J hJ).trans (Eq.trans ?_ (val_mul hJ _ _ _).symm))
     refine Eq.symm ((congrArg₂ (· * ·) ?_ ((val_pull hJ _ _ _).trans (hv _ _ _ y J hJ))).trans (_root_.mul_one 1))
@@ -308,7 +308,7 @@ theorem val_tau {Z : Scheme.{0}} (r : Z ⟶ (TK R).left) (z : Z) {J} (hJ : Good 
     rw [Subsingleton.elim a 0]
   have c := val_cub D.toPre.cub ρ (z := z) hJ (toUnit _ ≫ D.toPre.c 0) (toUnit _ ≫ D.toPre.c 0) (toUnit _ ≫ D.toPre.c 0)
   rw [show cubV D.toPre.cub (T := T) z J (ρ ≫ toUnit _ ≫ D.toPre.c 0) (ρ ≫ toUnit _ ≫ D.toPre.c 0)
-    (ρ ≫ toUnit _ ≫ D.toPre.c 0) = 1 by rw [c_one, comp_one, (isCub_cubV D.toPre.cub (T := T) hJ).face]] at c
+    (ρ ≫ toUnit _ ≫ D.toPre.c 0) = 1 by rw [c_one, comp_one, (isCub_cubV D.toPre.cub (T := T) hJ).face _ _]] at c
   have e := ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) (v _ _) c)).symm.trans
     ((val_corr hJ (D.tau_bimult 0 0 0) r).trans (val_mul hJ _ _ _))
   have h := (mul_left_cancel e).symm

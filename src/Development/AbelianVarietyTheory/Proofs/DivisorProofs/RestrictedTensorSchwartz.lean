@@ -263,16 +263,16 @@ theorem exists_const_tensor : ∀ (F : Type) [Field F] [NumberField F] (κ : Typ
     (hcross (f i) (f j) (φ i) (φ j) (hSB i) (hvacφ i) (hSB j) (hvacφ j)).2.1
   have hI1 : Integrable (fun x => (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)) x *
       conj ((∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)) x)) μ :=
-    (integrable_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hint1 i j).congr
+    (integrable_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => hint1 i j).congr
       (Filter.Eventually.of_forall fun x => (hexp _ x).symm)
   have hI2 : Integrable (fun x => (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (ei (f i)) (fun v => ev v (φ i v))) x *
       conj ((∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (ei (f i)) (fun v => ev v (φ i v))) x)) μ :=
-    (integrable_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hint2 i j).congr
+    (integrable_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => hint2 i j).congr
       (Filter.Eventually.of_forall fun x => (hexp _ x).symm)
   rw [lintegral_sq_eq hI1, lintegral_sq_eq hI2, integral_congr_ae (Filter.Eventually.of_forall (hexp _)),
     integral_congr_ae (Filter.Eventually.of_forall (hexp _)),
-    integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hint1 i j,
-    integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hint2 i j]
+    integral_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => hint1 i j,
+    integral_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => hint2 i j]
   have hsum : ∀ i, ∫ x, ∑ j, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (ei (f i)) (fun v => ev v (φ i v)) x *
       conj (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (ei (f j)) (fun v => ev v (φ j v)) x) ∂μ =
       (K : ℂ) * ∫ x, ∑ j, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i) x * conj (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f j) (φ j) x) ∂μ := by

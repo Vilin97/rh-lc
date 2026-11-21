@@ -98,7 +98,7 @@ theorem hadamard_of_le (g : ℕ) (abelian₂ : MLine K) (ℓ : Fin g → MLine K
     have hHd := hadamardInequality g _ hGpd
     rw [A2.gramC_det, Complex.re_ofReal_mul] at hHd
     have hbound : ∏ j, (ReciprocityTheory.MultiplicativeHeights.gramC (H σ) σ u j j).re ≤ ∏ j, (La * (ℓ j).n σ) ^ 2 := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro j _
         exact (hdiagpos j).le
       · intro j _

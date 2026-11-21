@@ -118,7 +118,7 @@ theorem fixed_nat (p : ℕ) [hp : Fact p.Prime] [CharP k p] (a : k) (ha : a ^ p 
   let φ : ZMod p →+* k := ZMod.castHom (dvd_refl p) k
   have hφ : Function.Injective φ := φ.injective
   have hp1 : 1 < p := hp.out.one_lt
-  have hP : (X ^ p - X : k[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero k hp1
+  have hP : (X ^ p - X : k[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hp1
   have hroot : ∀ b : k, b ^ p = b → b ∈ (X ^ p - X : k[X]).roots.toFinset := by
     intro b hb
     rw [Multiset.mem_toFinset, Polynomial.mem_roots hP]
@@ -223,7 +223,7 @@ theorem core (p : ℕ) [hp : Fact p.Prime] [CharP k p] {O : Type} [CommRing O] {
     exact ⟨c, hc⟩
 
   have hfin : Finite (Hs (e 0) (p ^ d) hq1 hq) := by
-    have hQ0 : (X ^ (p ^ d) - X : k[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero k hq1
+    have hQ0 : (X ^ (p ^ d) - X : k[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hq1
     have hF : Finite ↥(((X ^ (p ^ d) - X : k[X]).roots.toFinset : Set k)) := (Finset.finite_toSet _).to_subtype
     refine Finite.of_injective (β := ↥(((X ^ (p ^ d) - X : k[X]).roots.toFinset : Set k)))
       (fun u => ⟨((u : kˣ) : k), ?_⟩) ?_

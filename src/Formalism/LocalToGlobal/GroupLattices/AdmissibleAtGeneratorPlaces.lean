@@ -105,7 +105,7 @@ theorem admissible_at_twist_places {Dx : DivX D} {T : TwForms D} (h0 : MemberCha
   have h1 := period_geTU h0 hT hp0 hpT hD u w φ _ _ (Or.inr ⟨w, rfl⟩) (Dx.Qp_muAt w) hc F hF1 hF0
   have h00 : vDG D u w = 0 := by
     unfold vDG
-    rw [hw, padicValNat.eq_zero_of_not_dvd (hG u)]
+    rw [hw, Nat.padicValNat_def, padicValNat.eq_zero_of_not_dvd (hG u)]
     simp
   rw [h00, sub_zero, ← sg_atT hE u w hw] at h1
   exact h1

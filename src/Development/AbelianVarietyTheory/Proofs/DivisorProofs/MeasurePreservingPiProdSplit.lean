@@ -26,20 +26,19 @@ def piProdSplit (α β : ι → Type*) [∀ i, MeasurableSpace (α i)] [∀ i, M
 
 theorem measurePreserving_piProdSplit (μ : ∀ i, Measure (α i)) (ν : ∀ i, Measure (β i)) [∀ i, SigmaFinite (μ i)]
     [∀ i, SigmaFinite (ν i)] : MeasurePreserving (piProdSplit α β) (.pi fun i => (μ i).prod (ν i))
-      ((Measure.pi μ).prod (Measure.pi ν)) where
-  measurable := (piProdSplit α β).measurable
-  map_eq := by
-    refine (Measure.FiniteSpanningSetsIn.ext ?_ (isPiSystem_pi.prod isPiSystem_pi)
-      ((Measure.FiniteSpanningSetsIn.pi fun i ↦ (μ i).toFiniteSpanningSetsIn).prod
-      (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (ν i).toFiniteSpanningSetsIn))) ?_).symm
-    · refine (generateFrom_eq_prod generateFrom_pi generateFrom_pi ?_ ?_).symm
-      · exact (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (μ i).toFiniteSpanningSetsIn)).isCountablySpanning
-      · exact (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (ν i).toFiniteSpanningSetsIn)).isCountablySpanning
-    · rintro _ ⟨s, ⟨s, _, rfl⟩, ⟨_, ⟨t, _, rfl⟩, rfl⟩⟩
-      rw [MeasurableEquiv.map_apply, show piProdSplit α β ⁻¹' (Set.univ.pi s ×ˢ Set.univ.pi t) =
-          (Set.univ.pi fun i ↦ s i ×ˢ t i) by
-          ext; simp only [Set.mem_preimage, Set.mem_prod, Set.mem_univ_pi, forall_and]; rfl]
-      simp_rw [Measure.pi_pi, Measure.prod_prod, Measure.pi_pi, Finset.prod_mul_distrib]
+      ((Measure.pi μ).prod (Measure.pi ν)) := by
+  refine ⟨(piProdSplit α β).measurable, ?_⟩
+  refine (Measure.FiniteSpanningSetsIn.ext ?_ (isPiSystem_pi.prod isPiSystem_pi)
+    ((Measure.FiniteSpanningSetsIn.pi fun i ↦ (μ i).toFiniteSpanningSetsIn).prod
+    (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (ν i).toFiniteSpanningSetsIn))) ?_).symm
+  · refine (generateFrom_eq_prod generateFrom_pi generateFrom_pi ?_ ?_).symm
+    · exact (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (μ i).toFiniteSpanningSetsIn)).isCountablySpanning
+    · exact (Measure.FiniteSpanningSetsIn.pi (fun i ↦ (ν i).toFiniteSpanningSetsIn)).isCountablySpanning
+  · rintro _ ⟨s, ⟨s, _, rfl⟩, ⟨_, ⟨t, _, rfl⟩, rfl⟩⟩
+    rw [MeasurableEquiv.map_apply, show piProdSplit α β ⁻¹' (Set.univ.pi s ×ˢ Set.univ.pi t) =
+        (Set.univ.pi fun i ↦ s i ×ˢ t i) by
+        ext; simp only [Set.mem_preimage, Set.mem_prod, Set.mem_univ_pi, forall_and]; rfl]
+    simp_rw [Measure.pi_pi, Measure.prod_prod, Measure.pi_pi, Finset.prod_mul_distrib]
 
 theorem integral_prod_mul_of_split {μ : ∀ i, Measure (α i)} {ν : ∀ i, Measure (β i)} {ρ : ∀ i, Measure (γ i)}
     [∀ i, SigmaFinite (μ i)] [∀ i, SigmaFinite (ν i)] [∀ i, SigmaFinite (ρ i)]

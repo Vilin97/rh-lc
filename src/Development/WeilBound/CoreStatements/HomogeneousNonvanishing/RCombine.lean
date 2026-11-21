@@ -79,13 +79,13 @@ theorem exists_scale [CompactSpace X] {A : FinHolAtlas e X} {L : LocPot X} {s : 
 
 theorem exists_line {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] (b : K → ℤ) :
     ∃ L : HermLine ι, IsSmoothHerm L ∧ L.a = b := by
-  refine ⟨HermLine.ofMetrics (fun k => fsMetric (ι k)) b, ?_, rfl⟩
-  change ContDiffOn ℝ _ (fun z => ∏ k, (fsMetric (ι k)).ρ (GP.blk (ι := ι) k z) ^ b k) _
+  refine ⟨HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) b, ?_, rfl⟩
+  change ContDiffOn ℝ _ (fun z => ∏ k, (fsMetric (ι := ι k)).ρ (GP.blk (ι := ι) k z) ^ b k) _
   refine contDiffOn_prod fun k _ z hz => ContDiffAt.contDiffWithinAt ?_
-  have h1 : ContDiffAt ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z => (fsMetric (ι k)).ρ (GP.blk (ι := ι) k z)) z :=
-    ContDiffAt.comp (g := (fsMetric (ι k)).ρ) z (GP.contDiffAt_fs (GP.blk_ne hz k))
+  have h1 : ContDiffAt ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z => (fsMetric (ι := ι k)).ρ (GP.blk (ι := ι) k z)) z :=
+    ContDiffAt.comp (g := (fsMetric (ι := ι k)).ρ) z (GP.contDiffAt_fs (GP.blk_ne hz k))
       ((GP.blk (ι := ι) k).contDiff.restrict_scalars ℝ).contDiffAt
-  have h2 := ((fsMetric (ι k)).pos _ (GP.blk_ne hz k)).ne'
+  have h2 := ((fsMetric (ι := ι k)).pos _ (GP.blk_ne hz k)).ne'
   rcases b k with n | n
   · simpa using h1.pow n
   · simp only [zpow_negSucc]

@@ -401,18 +401,19 @@ theorem isMarked_iff_balanced_tunedSheaf : IsMarkedIffBalancedTunedSheaf.{u} := 
     exact h8
 
 theorem tunedSheafProperties_of_succ_le_of_mul_le (h1 : TunedSheafSuccLe.{u}) (h2 : TunedSheafMulLeAdd.{u}) :
-    TunedSheafProperties.{u} where
-  isMarked_tuned_iff := isMarked_iff_balanced_tunedSheaf.{u}
-  tunedSheaf_succ_le := h1
-  tunedSheaf_mul_le := h2
-  derivIdealSheaf_tunedSheaf_succ := derivIdealSheaf_tunedSheaf_succ.{u}
-  derivIdealSheafIter_pred_tunedSheaf := maxContactIdealTunedSheafEq.{u}
-  derivIdealSheafIter_mul_derivIdealSheaf_le_tunedSheaf :=
-    isMaxContactInvariantTunedSheaf.{u}
-  tunedSheaf_mul_eq := tunedSheaf_mul_eq_add.{u}
-  tunedSheaf_pow := tunedSheaf_pow_eq_mul.{u}
-  derivIdealSheafIter_tunedSheaf_pow_le := isDerivBalanced_tunedSheaf_mul_lcmUpTo.{u}
-  coSupport_tunedSheaf_eq_and_orderLE := orderAtLeastLocus_tunedSheaf_eq_and_order_le.{u}
-  isMarked_iff_of_pow_le_of_le_tunedSheaf := isMarked_iff_of_pow_le_of_le_tunedSheaf.{u}
+    TunedSheafProperties.{u} := by
+  exact {
+    isMarked_tuned_iff := isMarked_iff_balanced_tunedSheaf.{u}
+    tunedSheaf_succ_le := h1
+    tunedSheaf_mul_le := h2
+    derivIdealSheaf_tunedSheaf_succ := derivIdealSheaf_tunedSheaf_succ.{u}
+    derivIdealSheafIter_pred_tunedSheaf := maxContactIdealTunedSheafEq.{u}
+    derivIdealSheafIter_mul_derivIdealSheaf_le_tunedSheaf :=
+      isMaxContactInvariantTunedSheaf.{u}
+    tunedSheaf_mul_eq := tunedSheaf_mul_eq_add.{u}
+    tunedSheaf_pow := tunedSheaf_pow_eq_mul.{u}
+    derivIdealSheafIter_tunedSheaf_pow_le := isDerivBalanced_tunedSheaf_mul_lcmUpTo.{u}
+    coSupport_tunedSheaf_eq_and_orderLE := orderAtLeastLocus_tunedSheaf_eq_and_order_le.{u}
+    isMarked_iff_of_pow_le_of_le_tunedSheaf := isMarked_iff_of_pow_le_of_le_tunedSheaf.{u} }
 
 end FunctorialResolution.EmbeddedResolution

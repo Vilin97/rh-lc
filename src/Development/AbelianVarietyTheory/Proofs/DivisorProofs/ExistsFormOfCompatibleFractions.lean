@@ -82,7 +82,7 @@ theorem exists_form_of_compatible_fractions : ∀ (A : Type) [CommRing A] [IsNoe
     (d : ℤ)).2 ⟨hn₀ d hd' 0, hn₀ d hd' 1⟩
   have hmem : ∀ i, awayFrac (MvPolynomial (Fin (n + 1)) A ⧸ J) (xProd (R := A) {i}) N
       (Submodule.Quotient.mk (F i)) ∈ homLoc (grQuot (polyGrading (Fin (n + 1)) A) J) {i} d :=
-    fun i => awayFrac_mem_homLoc (grQuot (polyGrading (Fin (n + 1)) A) J) (d := ((d + N : ℕ) : ℤ))
+    fun i => awayFrac_mem_homLoc (ℳ := grQuot (polyGrading (Fin (n + 1)) A) J) (d := ((d + N : ℕ) : ℤ))
       ⟨F i, mem_polyGrading_natCast.2 (hF i), rfl⟩ (by simp)
   let y : ∀ i, (grCube (Fin (n + 1)) (grQuot (polyGrading (Fin (n + 1)) A) J) d).obj {i} :=
     fun i => ⟨_, hmem i⟩

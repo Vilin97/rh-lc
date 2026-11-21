@@ -463,7 +463,7 @@ theorem psiInfU_cont {D : D7} (X : HidaSetting D) (u : D.what₂.Word) : Continu
   have h : X.psiInfU u = fun s => psiInf X.B.I X.B.g X.eR X.fR (X.zR u) s := rfl
   rw [h]
   simp only [psiInf]
-  refine continuous_finset_prod _ fun v _ => ?_
+  refine continuous_finsetProd _ fun v _ => ?_
   exact (psiR_cont_lemma _ _ _ _ _).comp (Units.continuous_val.comp (continuous_subtype_val.comp (continuous_apply v)))
 
 variable {D : D7} {X : HidaSetting D} {u u' : D.what₂.Word} {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)}

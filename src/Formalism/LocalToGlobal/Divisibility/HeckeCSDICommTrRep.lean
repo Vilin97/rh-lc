@@ -164,18 +164,54 @@ structure ColHyp3 : Prop where
 
   splitIL : ∀ (j : Fin R.m) (τ : TupF TU), Col.HeckeFieldsInI (liftPts W Ch sel τ.1 (j.1 + 1)) S0
 
-theorem colFam3_ok (hH : ColHyp3 W Ch sel v0 TU Xg S0) : (colFam3 W Ch sel hX v0 TU Xg S0 xiVal trIv).Ok3 1 where
-  ok2 := colFam_ok W Ch sel hX v0 TU Xg S0 xiVal hH.base
-  what₂ τ :=
-    { comm := heckeCSDAll_comm _ _ _ _ _ (hH.commAllR τ)
-      split := heckeCSDI_split _ _ _ _ _ (hH.splitIR τ)
-      opG := fun k g => heckeCSDI_comm_trRep _ _ _ _ _ _ _ k g
-      plI_inj := Subtype.val_injective }
-  lifts j τ :=
-    { comm := heckeCSDAll_comm _ _ _ _ _ (hH.commAllL j τ)
-      split := heckeCSDI_split _ _ _ _ _ (hH.splitIL j τ)
-      opG := fun k g => heckeCSDI_comm_trRep _ _ _ _ _ _ _ k g
-      plI_inj := Subtype.val_injective }
+theorem colFam3_ok (hH : ColHyp3 W Ch sel v0 TU Xg S0) : (colFam3 W Ch sel hX v0 TU Xg S0 xiVal trIv).Ok3 1 := by
+  have hok : (colFam W Ch sel hX v0 TU Xg S0 xiVal).Ok 1 := by
+    have hbase := hH.base
+    refine ⟨hbase.conj, tupF_finite TU, hbase.irr, ?_, ?_⟩
+    · intro τ
+      exact {
+        good := Col.MtildeKCSD_good W Ch sel τ.1 hX _
+        hrat := Col.CSDRat.H_mem _ (Col.MtildeKCSD_rat W Ch sel τ.1 hX _)
+          (Col.csd_hasRatBasis _ (Col.MtildeKCSD_rat W Ch sel τ.1 hX _))
+        hpos := fun v => (Col.mtildeK_rat W Ch sel τ.1 hX).posH _ v
+        act := Col.unipotentActionForms_good W Ch sel τ.1 hX _
+        actRat := Col.unipotentActionForms_rational W Ch sel τ.1 hX _
+        comm := heckeCSD_comm _ _ _ _ _ (hbase.commR τ)
+        split := heckeCSD_split _ _ _ _ _ (hbase.splitR τ)
+        opG := fun i g => heckeCSD_comm_trRep _ _ _ _ _ _ _ i g
+        blocks := Col.blockOk_firstValB (fun j (P : ↥(offSub ∅ Pr.vGs (Col.rowSG Pr sel τ.1) S0)) =>
+            Ch.muVal j P.1.1 * xiVal τ.1 P.1.1) (q := fun P => Col.SplitOff.q P.1) R.r R.t_odd.pos
+          (by have := R.two_le_m; omega) (fun P => Col.SplitOff.q_ne_zero P.1)
+        q_pos := fun P => Nat.pos_of_ne_zero (Col.SplitOff.q_ne_zero P.1)
+        pl_inj := Subtype.val_injective }
+    · intro j τ
+      exact {
+        good := Col.MtKCSD_good W Ch sel τ.1 hX (j.1 + 1) _
+        hrat := Col.CSDRat.H_mem _ (Col.MtKCSD_rat W Ch sel τ.1 hX (j.1 + 1) _)
+          (Col.csd_hasRatBasis _ (Col.MtKCSD_rat W Ch sel τ.1 hX (j.1 + 1) _))
+        hpos := fun v => (Col.mtK_rat W Ch sel τ.1 hX (j.1 + 1)).posH _ v
+        act := Col.unipotentActionClassSum_good W Ch sel τ.1 hX (j.1 + 1) _
+        actRat := Col.unipotentActionClassSum_rational W Ch sel τ.1 hX (j.1 + 1) _
+        comm := heckeCSD_comm _ _ _ _ _ (hbase.commL j τ)
+        split := heckeCSD_split _ _ _ _ _ (hbase.splitL j τ)
+        opG := fun i g => heckeCSD_comm_trRep _ _ _ _ _ _ _ i g
+        blocks := Col.blockOk_firstValA (fun (P : ↥(offSub ∅ Pr.vGs (Col.rowSG Pr sel τ.1) S0)) =>
+            Ch.muVal j P.1.1 * xiVal τ.1 P.1.1) (fun P => Ch.etaVal P.1.1) (q := fun P => Col.SplitOff.q P.1)
+          R.r R.t_odd.pos (fun P => Col.SplitOff.q_ne_zero P.1)
+        q_pos := fun P => Nat.pos_of_ne_zero (Col.SplitOff.q_ne_zero P.1)
+        pl_inj := Subtype.val_injective }
+  exact {
+    ok2 := hok
+    what₂ := fun τ =>
+      { comm := heckeCSDAll_comm _ _ _ _ _ (hH.commAllR τ)
+        split := heckeCSDI_split _ _ _ _ _ (hH.splitIR τ)
+        opG := fun k g => heckeCSDI_comm_trRep _ _ _ _ _ _ _ k g
+        plI_inj := Subtype.val_injective }
+    lifts := fun j τ =>
+      { comm := heckeCSDAll_comm _ _ _ _ _ (hH.commAllL j τ)
+        split := heckeCSDI_split _ _ _ _ _ (hH.splitIL j τ)
+        opG := fun k g => heckeCSDI_comm_trRep _ _ _ _ _ _ _ k g
+        plI_inj := Subtype.val_injective } }
 
 end Inst
 

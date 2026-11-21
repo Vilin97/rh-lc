@@ -162,7 +162,10 @@ def WuBessel (C : Choice X θ) : Prop :=
 
 def bOf {C : Choice X θ} (hB : WuBessel C) (u : D.what₂.Word) (τ : D.what₂.Tau) :
     X.B.H (vOf X τ) → X.Vloc u (vOf X τ) :=
-  (hB u τ).choose
+  by
+    classical
+    unfold WuBessel at hB
+    exact (hB u τ).choose
 
 def v0Of (C : Choice X θ) (τ : D.what₂.Tau) : X.B.H (vOf X τ) :=
   sigB X (C.Q τ) (C.Qi τ) τ (C.y τ) (X.B.w (vOf X τ))

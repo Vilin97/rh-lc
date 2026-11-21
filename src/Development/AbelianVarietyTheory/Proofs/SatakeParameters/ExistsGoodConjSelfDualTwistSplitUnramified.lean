@@ -91,8 +91,8 @@ theorem exists_goodCsd_twist : AutomorphicFormsFiniteGL → ∀ (E : Type) [Fiel
   have hpos := isAlgPos_mul hinv (isAlgPos_zero_of_orderDvd two_pos ho)
   rw [add_zero] at hpos
   have hsign : ∀ v, (χ⁻¹ * quadChar E ^ (a + (n φ₀).natAbs)).locInf v (-1) = (-1) ^ (-n φ₀) := fun v => by
-    rw [HChar.locInf_mul, locInf_pow, quadChar_locInf]
-    change (χ.locInf v (-1))⁻¹ * _ = _
+    change (χ.locInf v (-1))⁻¹ * ((quadChar E ^ (a + (n φ₀).natAbs)).locInf v (-1)) = _
+    rw [locInf_pow, quadChar_locInf]
     rw [hpol.sign v, pow_add, inv_mul_cancel_left, neg_one_zpow_natAbs]
   have halg := UpperTheory.heckeChar_algebraic_of_sign _ _ (-n φ₀) hpos hsign
   have hunr : ∀ w : HeightOneSpectrum (𝓞 E), ¬ GlobalTheory.UnitaryBC.IsSplitAt w →

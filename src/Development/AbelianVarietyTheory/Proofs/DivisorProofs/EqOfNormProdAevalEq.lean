@@ -144,17 +144,17 @@ theorem norm_eq_rat (s t : Multiset (PadicAlgCl l)) (hst : Multiset.card s = Mul
     (R : ℚ[X]) :
     ‖(s.map fun a => aeval a (R.map (algebraMap ℚ ℚ_[l]))).prod‖ =
       ‖(t.map fun a => aeval a (R.map (algebraMap ℚ ℚ_[l]))).prod‖ := by
-  obtain ⟨b, hb⟩ := IsLocalization.integerNormalization_map_to_map (nonZeroDivisors ℤ) R
+  obtain ⟨b, hbmem, hb⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) R
   set G := IsLocalization.integerNormalization (nonZeroDivisors ℤ) R
   have key : ∀ a : PadicAlgCl l, aeval a G = ((b : ℤ) : PadicAlgCl l) * aeval a (R.map (algebraMap ℚ ℚ_[l])) := by
     intro a
     rw [aeval_map_algebraMap, ← aeval_map_algebraMap ℚ a G, hb, map_zsmul, zsmul_eq_mul]
-  have hb0 : ((b : ℤ) : PadicAlgCl l) ≠ 0 := Int.cast_ne_zero.2 (nonZeroDivisors.coe_ne_zero b)
+  have hb0 : ((b : ℤ) : PadicAlgCl l) ≠ 0 := Int.cast_ne_zero.2 (nonZeroDivisors.ne_zero hbmem)
   have hG := h G
   simp only [key] at hG
   rw [Multiset.prod_map_mul, Multiset.prod_map_mul, Multiset.map_const', Multiset.map_const',
     Multiset.prod_replicate, Multiset.prod_replicate, norm_mul, norm_mul, hst] at hG
-  exact mul_left_cancel₀ (by simpa using hb0) hG
+  exact mul_left_cancel₀ (norm_ne_zero_iff.2 (pow_ne_zero _ hb0)) hG
 
 theorem norm_eq_all (s t : Multiset (PadicAlgCl l))
     (h : ∀ R : ℚ[X], ‖(s.map fun a => aeval a (R.map (algebraMap ℚ ℚ_[l]))).prod‖ =

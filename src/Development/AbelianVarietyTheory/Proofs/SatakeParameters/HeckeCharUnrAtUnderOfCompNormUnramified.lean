@@ -46,7 +46,21 @@ theorem ideleNorm_eq_found (E : Type) [Field E] [NumberField E] [IsCMField E] (x
     | zero => rw [map_zero, map_zero]
     | tmul a l =>
       rw [toAdele_tmul, GroundTheory.Global.AdeleBaseChange.adeleTensorAlgEquivLeft_tmul]
-      exact mul_comm _ _
+      have hm : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.adeleMap
+          (maximalRealSubfield E) E = GroundTheory.Global.AdeleBaseChange.adeleMap
+          (maximalRealSubfield E) E := by
+        ext a : 1
+        apply Prod.ext
+        · funext w
+          open scoped NumberField.LiesOver in
+          change AbsoluteValue.Completion.map _ _ _ = algebraMap _ _ _
+          rw [AbsoluteValue.Completion.algebraMap_eq_of_liesOver]
+        · apply FiniteAdeleRing.ext
+          intro w
+          change GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.finiteCompletionMap _ _ w _ =
+            GroundTheory.Global.SemiLocal.completionMap _ w _
+          rfl
+      rw [hm, mul_comm]
     | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   change adeleNorm E (x : AdeleRing (𝓞 E) E) = _
   rw [GroundTheory.Global.coe_ideleNorm, ← hz, h]

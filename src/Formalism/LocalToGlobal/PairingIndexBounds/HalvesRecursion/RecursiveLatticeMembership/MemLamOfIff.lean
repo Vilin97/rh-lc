@@ -114,7 +114,9 @@ theorem exists_pp (cc : Ideal (𝓞 D.host.K)) (hcc : cc ≠ ⊥) :
     have h' : D.host.φ₀ (((c : D.host.K) : D.host.E)) = 0 := h
     rw [map_eq_zero_iff _ D.host.φ₀.injective] at h'
     have : ((c : D.host.K) : D.host.E) = 0 := h'
-    exact_mod_cast this
+    apply RingOfIntegers.ext
+    apply Subtype.ext
+    exact this
   have hψcβ : psi D (c * β) = psi D c * (Complex.I * (Real.sqrt D.host.d : ℂ)) := by
     show D.host.φ₀ _ = D.host.φ₀ _ * _
     rw [← hβ, ← map_mul]

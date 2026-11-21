@@ -26,6 +26,8 @@ open GlobalTheory.SphLabelOps
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
+local notation3 "L⁺" => maximalRealSubfield L
+
 theorem triv_mul {T : Set (HeightOneSpectrum (𝓞 L⁺))} {x y : GAf L n} (hx : TrivOutside T x)
     (hy : TrivOutside T y) : TrivOutside T (x * y) := by
   intro w hw
@@ -292,7 +294,7 @@ theorem rank_le {ρ : Representation ℂ (GQ L n) W} {S : Submodule ℂ (GAf L n
       obtain ⟨h', rfl⟩ := hx
       exact Submodule.subset_span ⟨h * h', funext fun x => congrArg f (mul_assoc x h h').symm⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
   have hfT : f ∈ T := Submodule.subset_span ⟨1, funext fun g => congrArg f (mul_one g)⟩
   have hT : T = S := by
@@ -343,7 +345,8 @@ theorem tN_scalar : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : 
   refine ⟨((s.q : ℂ) ^ (k * (n - 1)))⁻¹ * c, fun f hf hfix => ?_⟩
   have e := hc f ⟨hf, fun κ hκ => hfix κ hκ.1 hκ.2⟩
   rw [hT] at e
-  rw [NG.tN, heckeD_eq_sum (v := s.v) (R := R α) (fun x hx => hx.1) (fun γ hγ => (hset γ).2 ((hR α).1 γ hγ))
+  rw [NG.tN, heckeD_eq_sum (v := s.v) (D := tSet L n s ϖ k) (R := R α)
+    (fun x hx => hx.1) (fun γ hγ => (hset γ).2 ((hR α).1 γ hγ))
     (fun x hx => (hR α).2 x ((hset x).1 hx)) hfix, mul_smul, ← e]
   rfl
 

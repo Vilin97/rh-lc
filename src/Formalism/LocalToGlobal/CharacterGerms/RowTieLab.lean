@@ -114,8 +114,7 @@ theorem embedding_conjugate (hstar : ∀ a : 𝓞 E, star a = H.bar a) (ι : T.F
 
 theorem a3uvec_int (C3 : IntChart T io y) {ι : T.Fr →+* C} (hι : EmbOK T V ι) (ℓ : Lt1 Dw) (i : Fin (chD C3.ch)) :
     V.Ge 0 (ι (chartUnitVectors C3 ℓ i)) := by
-  obtain ⟨⟨-, -, -, -, -, -, hu⟩, -⟩ := C3.gen
-  rw [show chartUnitVectors C3 ℓ i = _ from hu ℓ i]
+  rw [show chartUnitVectors C3 ℓ i = _ from C3.gen.1.2.2.2.2.2.2 ℓ i]
   exact embIntSt_holds T C V ι hι _
 
 section Core

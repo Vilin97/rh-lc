@@ -65,6 +65,8 @@ theorem contract_of : TensorGl → QdetFacts → WallAlg → TensorGK → LieInv
     have h4 : ζ (I ∘ e.symm ∘ Sum.inr) I0 = ξ I := by
       simp only [hζdef, cur, reIx, I0, h3]
       congr 1
+      funext x
+      simp
     show N.mkQ (ζ (I ∘ e.symm ∘ Sum.inr) I0) ≠ 0
     rw [h4, Submodule.mkQ_apply, Ne, Submodule.Quotient.mk_eq_zero]
     exact hξN

@@ -99,7 +99,7 @@ theorem exists_stage_torsor : ∀ (T : Type) [CommRing T] [IsDomain T] (ι : Typ
           (GlobalTheory.LocAcyc.GenFib (𝒜' l) (Localization.AtPrime (Q.comap (e l))))
           (algebraMap (Ek l) (Localization.AtPrime (Q.comap (e l))) (h k l hkl y)) := fun k l hkl y =>
     GlobalTheory.GenFibMap.genFibMap_apply _ _ _ _ _ _ _ y
-  obtain ⟨k, Di, _, _, acti, htori, ⟨iso₂⟩⟩ := GlobalTheory.T.exists_torsor_model_filtered_colimit ι'
+  obtain ⟨k, hk⟩ := GlobalTheory.T.exists_torsor_model_filtered_colimit ι'
     (fun k => GlobalTheory.LocAcyc.GenFib (𝒜' k) (Localization.AtPrime (Q.comap (e k)))) f
     (fun k hkk => GlobalTheory.GenFibMap.genFibMap_id _ _ _ _ _ _ (hid k hkk))
     (fun k l m hkl hlm => GlobalTheory.GenFibMap.genFibMap_comp _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -110,6 +110,7 @@ theorem exists_stage_torsor : ∀ (T : Type) [CommRing T] [IsDomain T] (ι : Typ
     (GlobalTheory.T.genericFibreLocalization_directedUnion_surjective T ι' 𝒜' hA' hU' E Q Ek e h he' heh hsurj g hgc)
     (GlobalTheory.T.genericFibreLocalization_directedUnion_kernel T ι' 𝒜' hA' hU' E Q Ek e h he' hh heh hinj hsurj g hgc f hfc)
     q hq D₁ act₁ htor
+  obtain ⟨Di, _, _, acti, htori, ⟨iso₂⟩⟩ := hk
   refine ⟨k.1, Ek k, inferInstance, inferInstance, inferInstance, inferInstance, inferInstance, e k, he k,
     g k, GlobalTheory.GenFibMap.genFibMap_comp_algebraMap _ _ _ _ _ _ _, Di, inferInstance, inferInstance, acti, htori, ?_⟩
   intro C _ ψ σ hσ

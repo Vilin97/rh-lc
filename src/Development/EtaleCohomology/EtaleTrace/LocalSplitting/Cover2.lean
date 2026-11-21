@@ -47,7 +47,7 @@ theorem psi (R : Type) [CommRing R] {X : Scheme.{0}} (O1 O2 : X.Opens) (hcov : O
     simpa using h
   have hs : s = 0 := by
     have key : ModuleCat.ofHom (LinearMap.toSpanSingleton (ULift.{1} R) _ s) = 0 := by
-      refine Presheaf.IsSheaf.hom_ext_ofArrows G.cond _ (cov O1 O2 hcov) (fun b => ?_)
+      refine Presheaf.IsSheaf.hom_ext_ofArrows G.property _ (cov O1 O2 hcov) (fun b => ?_)
       refine ModuleCat.hom_ext (LinearMap.ext_ring ?_)
       cases b
       · simpa using hz O2.ι hj

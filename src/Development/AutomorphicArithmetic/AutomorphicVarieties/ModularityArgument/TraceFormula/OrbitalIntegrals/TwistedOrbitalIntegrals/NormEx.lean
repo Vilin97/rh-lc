@@ -13,7 +13,7 @@ theorem UpperTheory.V.Z.Tf.Orb.normEx :
   intro G _ _ _ _ _ _ _ _ ⟨K, hKo, hKc⟩ H hH μ hμ hr
   let r : G → G := fun g => (DoubleCoset.mk H K g).out
   have hr1 : ∀ g, ∃ h ∈ H, ∃ k ∈ K, r g = h * g * k := fun g => by
-    obtain ⟨h, k, hh, hk, e⟩ := DoubleCoset.mk_out_eq_mul H K g
+    obtain ⟨h, hh, k, hk, e⟩ := DoubleCoset.mk_out_eq_mul H K g
     exact ⟨h, hh, k, hk, e⟩
   have hr2 : ∀ h ∈ H, ∀ g, ∀ k ∈ K, r (h * g * k) = r g := fun h hh g k hk =>
     congrArg Quotient.out ((@DoubleCoset.eq _ _ H K _ _).2 ⟨h, hh, k, hk, rfl⟩).symm

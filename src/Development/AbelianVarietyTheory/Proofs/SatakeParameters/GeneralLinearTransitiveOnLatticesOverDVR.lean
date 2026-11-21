@@ -11,7 +11,7 @@ namespace GlobalTheory.LatHecke
 
 theorem gl_transitive_lattices : ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Finite (IsLocalRing.ResidueField O)] [Field K] [Algebra O K] [IsFractionRing O K] (r : ℕ), (∀ L : Lat O K r, ∃ g : GL (Fin r) K, glMap g (std O K r).1 = L.1) ∧ ∀ (g : GL (Fin r) K) (L : Lat O K r), (glMap g L.1).IsLattice K := by
   intro O K _ _ _ _ _ _ _ r
-  refine ⟨fun L => ?_, fun g L => glMap_isLattice g L⟩
+  refine ⟨fun L => ?_, fun g L => (glMap_isLattice g L).toIsLattice⟩
   haveI := L.2
   haveI : Module.Free O L.1 := Submodule.IsLattice.free K L.1
   haveI : Module.Finite O L.1 := Module.Finite.iff_fg.2 L.2.fg

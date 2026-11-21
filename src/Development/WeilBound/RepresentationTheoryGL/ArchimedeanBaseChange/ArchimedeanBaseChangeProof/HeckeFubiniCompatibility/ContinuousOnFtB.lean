@@ -90,7 +90,7 @@ theorem continuous_StB (v : InfinitePlace E) {ka : Kers Ma} {kb : Kers Mb} {ψ :
   haveI : FirstCountableTopology (G b × RB E a b v) := inferInstance
   haveI : LocallyCompactSpace (G b × RB E a b v) := inferInstance
   unfold StB
-  refine continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun j _ => ?_
   obtain ⟨hc, hcs⟩ := cB_props v hka hkb hψ i j
   have e : (fun z : G b => ∫ r, cB v ka kb ψ i j r • RvB v μa μb ν ka kb ψ f j (p * ιB v z * σB v r) ∂restB μa μb ν v) =
       fun z => ∫ r in tsupport (cB v ka kb ψ i j),

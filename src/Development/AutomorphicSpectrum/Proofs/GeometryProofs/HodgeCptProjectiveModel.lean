@@ -104,7 +104,7 @@ theorem frame_dualRestrict (L : Lat ξ E) (p : Cpt ξ) {I : Type} (V : I → Sub
     · subst h
       have : π e = ⟨e, he.2⟩ := Submodule.linearProjOfIsCompl_apply_left hc ⟨e, he.2⟩
       rw [this]; exact he.1
-    · have : π e = 0 := Submodule.linearProjOfIsCompl_apply_right' hc
+    · have : π e = 0 := Submodule.projectionOnto_apply_of_mem_right hc
         (Submodule.mem_iSup_of_mem t (Submodule.mem_iSup_of_mem h he.2))
       rw [this]; exact zero_mem _
   have hbm : ∀ i, b i ∈ V s := fun i => hb ▸ Submodule.subset_span ⟨i, rfl⟩
@@ -342,7 +342,7 @@ theorem exists_hodgeCpt_htFree : Out.WeilSt → ∀ (E : Type) [Field E] [Number
       (N₁.htOm t₁.PP.L (p ^ R p)).pull M'.ξ g (AddMonoidHom.id _) := fun p hp => by
     obtain ⟨h1, e, he⟩ := htw₁ p hp
     obtain ⟨-, e', he'⟩ := htw' p hp
-    exact (GlobalTheory.T.hodge_tate_weil_pullback _ Ω M₁.ξ M₁.tie.gen hN₁ t₁.G t₁.semi t₁.PP.L _ (hpos p hp) h1 e he Li N₁ M'.X Ω M'.ξ
+    exact (GlobalTheory.CompanionTheory.Ar.HtPull.main _ Ω M₁.ξ M₁.tie.gen hN₁ t₁.G t₁.semi t₁.PP.L _ (hpos p hp) h1 e he Li N₁ M'.X Ω M'.ξ
       M'.tie.gen hN' g (RingHom.id Ω) hdom t'.G m'.φ m'.cart t'.PP.L e' he' Li N' (AddMonoidHom.id _)
       (AddMonoidHom.id _) (fun v => by
         rw [dualMap_id]

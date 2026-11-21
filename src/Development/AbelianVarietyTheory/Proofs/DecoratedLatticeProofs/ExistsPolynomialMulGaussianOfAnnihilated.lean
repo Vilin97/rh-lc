@@ -12,7 +12,6 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doubling GlobalTheory.Cont GlobalTheory.MixModel GlobalTheory.Core.Rk.SWLaw GlobalTheory.Core.Rk.SW GlobalTheory.StdUnn
 open GlobalTheory.IndefiniteRowSideFullHecke.ModerateGrowthSchwartz (schwartzA)
 open GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift (RealMat IsFockVec)
-open GlobalTheory.IndefiniteRowSideFullHecke.SphericalZero (swSec sZero)
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 noncomputable section
@@ -188,10 +187,12 @@ theorem foldr_annC (hM : ∀ τ, (gramAt D V τ * s τ)ᴴ = gramAt D V τ * s �
       ContDiff ℝ ∞ (L.foldr (fun q g => dirD (Pi.single q.1 (fun i j => q.2 i j) : D.what₂.Tau → Fin V.rank → Fin n → ℂ) g) u) ∧
       L.foldr (fun q g => annC V l s q.1 q.2 g) (fun z => gam V l s z * u z) =
         fun z => gam V l s z *
-          L.foldr (fun q g => dirD (Pi.single q.1 (fun i j => q.2 i j) : D.what₂.Tau → Fin V.rank → Fin n → ℂ) g) u z
-  | [] => ⟨hu, rfl⟩
-  | q :: L => by
-    obtain ⟨h1, h2⟩ := foldr_annC hM hu L
+          L.foldr (fun q g => dirD (Pi.single q.1 (fun i j => q.2 i j) : D.what₂.Tau → Fin V.rank → Fin n → ℂ) g) u z := by
+  intro L
+  induction L with
+  | nil => exact ⟨hu, rfl⟩
+  | cons q L ih =>
+    obtain ⟨h1, h2⟩ := ih
     refine ⟨contDiff_dirD h1 _, ?_⟩
     simp only [List.foldr_cons]
     rw [h2]

@@ -59,7 +59,7 @@ private def fanTP (C : B.Etale ⥤ Cx (ZMod q)) (I : Cx (ZMod q)) (n : ℤ) :
         exact preL_v (C.map a.unop) n p α }
 
 private def fanLim (C : B.Etale ⥤ Cx (ZMod q)) (I : Cx (ZMod q)) (n : ℤ) : IsLimit (fanTP C I n) :=
-  mkFanLimit _
+  Fan.IsLimit.mk _
     (fun s =>
       { app := fun U => ModuleCat.ofHom (asm (K := C.obj U.unop) (I := I) (n := n) fun p => ((s.proj p).app U).hom)
         naturality := fun U V a => by
@@ -84,11 +84,11 @@ theorem UpperTheory.totalHomPresheaf_isSheaf_injective_of_homAcyclic :
   intro q B C I hC hI n
   have hS := fun p : ℤ => hC p (I.X (p + n)) (hI _)
   let S : ℤ → SShv B q := fun p => ⟨HP (C ⋙ HomologicalComplex.eval _ _ p) (I.X (p + n)), (hS p).choose⟩
-  haveI : ∀ p, Injective (S p) := fun p => (hS p).choose_spec
+  have : ∀ p, Injective (S p) := fun p => (hS p).choose_spec
   let G := sheafToPresheaf (EtTop B) (ModuleCat.{1} (ULift.{1} (ZMod q)))
   let e : G.obj (∏ᶜ S) ≅ TP C I n :=
     PreservesProduct.iso G S ≪≫ (limit.isLimit _).conePointUniqueUpToIso (fanLim C I n)
-  have h : Presheaf.IsSheaf (EtTop B) (TP C I n) := (Presheaf.isSheaf_of_iso_iff e).1 (∏ᶜ S).cond
+  have h : Presheaf.IsSheaf (EtTop B) (TP C I n) := (Presheaf.isSheaf_of_iso_iff e).1 (∏ᶜ S).property
   refine ⟨h, ?_⟩
   exact Injective.of_iso ((fullyFaithfulSheafToPresheaf _ _).preimageIso (Y := ⟨TP C I n, h⟩) e) inferInstance
 

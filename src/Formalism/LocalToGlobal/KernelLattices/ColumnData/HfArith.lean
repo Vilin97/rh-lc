@@ -318,7 +318,10 @@ theorem div_okc (cc : Ideal (𝓞 D.host.K)) (hcc : cc ≠ ⊥) (δ : ℂ) (hδ 
       rw [← ph_om]; simp [ph]
     have hc1 : ph D c ≠ 0 := by
       simp only [ph, map_ne_zero_iff _ D.host.φ₀.injective]
-      exact_mod_cast hc0
+      intro h
+      apply hc0
+      apply RingOfIntegers.coe_eq_zero_iff.mp
+      exact Subtype.ext h
     rw [Bf_lat, hph]
     have e : starRingEnd ℂ (ph D c) * (ph D c * ((1 + be D) / 2)) =
         (Complex.normSq (ph D c) : ℂ) * ((1 + be D) / 2) := by

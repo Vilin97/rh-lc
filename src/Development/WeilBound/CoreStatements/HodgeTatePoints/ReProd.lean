@@ -131,6 +131,8 @@ theorem tn_stab₁ (A₁ : HopfOrder (C := C) R N₁) (A₂ : HopfOrder (C := C)
     (f := LinearMap.funLeft R C (AddMonoidHom.inl N₁ N₂ : N₁ → N₁ × N₂)) hg
   rw [tn_inl] at h
   convert mem_tn h A₂.one_mem using 1
+  funext z
+  simp
 
 theorem tn_stab₂ (A₁ : HopfOrder (C := C) R N₁) (A₂ : HopfOrder (C := C) R N₂) :
     ∀ g ∈ tn A₁.carrier A₂.carrier,
@@ -140,6 +142,8 @@ theorem tn_stab₂ (A₁ : HopfOrder (C := C) R N₁) (A₂ : HopfOrder (C := C)
     (f := LinearMap.funLeft R C (AddMonoidHom.inr N₁ N₂ : N₂ → N₁ × N₂)) hg
   rw [tn_inr] at h
   convert mem_tn A₁.one_mem h using 1
+  funext z
+  simp
 
 theorem tn_char {N : Type} [AddCommGroup N] [Fintype N] [DecidableEq N]
     (AA : HopfOrder (C := C) R N) {N₁ N₂ : Type} [AddCommGroup N₁] [AddCommGroup N₂]

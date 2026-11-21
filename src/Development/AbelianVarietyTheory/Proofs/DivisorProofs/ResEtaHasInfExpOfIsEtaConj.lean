@@ -162,7 +162,9 @@ theorem isEtaT_of_conj {D : D7} {σ : D.what₂.LL →+* ℂ} (hσ : OverK σ) {
     obtain ⟨y, hy1, hy2⟩ := hη.2.2 P e he (locU he.1 (unif P)) rfl
     rw [hc.2 P e he _ (locU he.1 (unif P)) rfl] at hy1
     rw [hc'.2 P e he _ (locU he.1 (unif P)) rfl] at hy2
-    exact ⟨y, hy1, hy2⟩
+    refine ⟨y, ?_, ?_⟩
+    · simpa only [HChar.val, rt, Ideal.absNorm_eq_natCard] using hy1
+    · simpa only [HChar.val, rt, Ideal.absNorm_eq_natCard] using hy2
   choose y hy hy' using hy
   obtain ⟨c, -, hcm, -⟩ := GlobalTheory.Mem.HostCM.host_cm D.R D.host
   haveI := hcm.cplx

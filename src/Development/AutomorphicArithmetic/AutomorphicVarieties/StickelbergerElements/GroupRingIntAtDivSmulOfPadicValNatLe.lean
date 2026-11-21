@@ -25,7 +25,7 @@ theorem UpperTheory.V.Stk.groupRing_intAt_div_smul_of_padicValNat_le :
     apply pow_succ_padicValNat_not_dvd (p := l) hD.ne'
     conv_rhs => rw [hE]
     rw [pow_succ]
-    exact Nat.mul_dvd_mul_left _ hl
+    simpa only [Nat.padicValNat_def] using Nat.mul_dvd_mul_left (l ^ padicValNat l D) hl
   have hE0 : E ≠ 0 := by
     rintro rfl
     simp at hE

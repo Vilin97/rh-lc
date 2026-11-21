@@ -27,6 +27,8 @@ theorem zc_add (s t : ℝ) : zc E (s + t) = zc E s * zc E t := by
   unfold zc
   rw [← map_mul, ← expU_add]
   congr 2
+  funext x
+  simp
 
 theorem continuous_zc : Continuous (zc E) := by
   unfold zc

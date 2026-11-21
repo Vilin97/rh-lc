@@ -26,6 +26,7 @@ namespace GlobalTheory.UCanon.LevLift
 theorem tauBimult_of_rescale_cube : ∀ {R : Type} [CommRing R] [IsDomain R] (D : DegPre R) (g : D.X → (FractionRing R)ˣ), (∀ a a' b : D.X, g (a + a' + b) * g a * g a' * g b = g (a + a') * g (a + b) * g (a' + b)) → (GlobalTheory.PolDeg.rescale D g).TauBimult → D.TauBimult := by
   intro R _ _ D g hg h
   refine (GlobalTheory.PolDeg.QuadIff.bimult_iff D).2 fun a a' b z J hJ => ?_
+
   have H := (GlobalTheory.PolDeg.QuadIff.bimult_iff (GlobalTheory.PolDeg.rescale D g)).1 h a a' b z J hJ
   have e1 := GlobalTheory.PolDeg.QuadIff.val_tau_rescale D g hJ (a + a') b
   have e2 := GlobalTheory.PolDeg.QuadIff.val_tau_rescale D g hJ a b
@@ -105,6 +106,7 @@ theorem exists_lift_torsion_of_pull : ∀ {W V : Type} [CommRing W] [IsDomain W]
     exact (one_comp _).symm
   · rw [← Over.comp_left_assoc, Category.assoc, Iso.inv_hom_id, Category.comp_id]
     simp only [b'', Over.homMk_left]
+    exact pullback.lift_fst _ _ _
 
 end GlobalTheory.UCanon.LevLift
 

@@ -151,7 +151,7 @@ def cst (d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) : ℂ := (ν ϖ : ℂ) * (res
 
 def scal (n : ℕ) (u : kˣ) : GL (Fin n) k := diagGL fun _ => u
 
-theorem ord_one_eq : ord k 1 = 0 := ord_eq_zero k (by simp)
+theorem ord_one_eq : ord k 1 = 0 := ord_eq_zero (by simp)
 
 theorem ord_prod_eq {ι : Type} (s : Finset ι) (f : ι → kˣ) : ord k (∏ i ∈ s, f i) = ∑ i ∈ s, ord k (f i) := by
   classical
@@ -175,9 +175,9 @@ theorem shellSet_eq_cell {n : ℕ} (ϖ : kˣ) (e : Fin n → ℤ) : shellSet ϖ 
 theorem ord_of_mem_shellSet {ϖ : kˣ} (hϖ : IsUnif ϖ) {n : ℕ} {e : Fin n → ℤ} {g : GL (Fin n) k}
     (hg : g ∈ shellSet ϖ e) : ord k (gdet g) = ∑ i, e i := by
   obtain ⟨x, hx, y, hy, rfl⟩ := mem_shellSet.1 hg
-  rw [gdet_mul, gdet_mul, ord_mul, ord_mul, ord_eq_zero k (valuation_gdet_of_mem_KO hx),
-    ord_eq_zero k (valuation_gdet_of_mem_KO hy), zero_add, add_zero, gdet, det_diagGL, ord_prod_eq]
-  exact Finset.sum_congr rfl fun i _ => by rw [ord_zpow_eq, ord_eq_one k hϖ, mul_one]
+  rw [gdet_mul, gdet_mul, ord_mul, ord_mul, ord_eq_zero (valuation_gdet_of_mem_KO hx),
+    ord_eq_zero (valuation_gdet_of_mem_KO hy), zero_add, add_zero, gdet, det_diagGL, ord_prod_eq]
+  exact Finset.sum_congr rfl fun i _ => by rw [ord_zpow_eq, ord_eq_one hϖ, mul_one]
 
 theorem dShell_eq_iUnion {ϖ : kˣ} (hϖ : IsUnif ϖ) (n : ℕ) (m : ℤ) :
     dShell (k := k) n m = ⋃ e : {e : Fin n → ℤ // Antitone e ∧ ∑ i, e i = m}, shellSet ϖ e.1 := by
@@ -248,9 +248,9 @@ theorem wt_of_mem {ϖ : kˣ} (hϖ : IsUnif ϖ) {ν : kˣ →* ℂˣ} (hν : IsUn
     (hg : g ∈ dShell n m) : wt d ν g = cst d ϖ ν ^ m := by
   have hm : ord k (gdet g) = m := hg
   have hu : valuation k ((gdet g / ϖ ^ m : kˣ) : k) = 1 := by
-    refine (ord_eq_zero_iff k).1 ?_
+    refine (ord_eq_zero_iff).1 ?_
     have h := ord_mul k (gdet g / ϖ ^ m) (ϖ ^ m)
-    rw [div_mul_cancel, ord_zpow_eq, ord_eq_one k hϖ, hm] at h
+    rw [div_mul_cancel, ord_zpow_eq, ord_eq_one hϖ, hm] at h
     omega
   have hϖd : apow ϖ ((d : ℂ) / 2) = (resCard k : ℂ) ^ (-(d : ℂ) / 2) := by
     rw [apow, _root_.GlobalTheory.GLDoubling.nabs_unif hϖ, Complex.ofReal_inv, Complex.ofReal_natCast,
@@ -454,14 +454,14 @@ theorem ord_gdet_of_mem_coset {ϖ : kˣ} (hϖ : IsUnif ϖ) {n : ℕ} {a : Fin n 
   have h1 : ∀ m : ℕ, ord k (ϖ ^ m) = m := fun m => by
     induction m with
     | zero => simpa only [pow_zero, Nat.cast_zero] using (ord_one_eq (k := k))
-    | succ m ih => rw [pow_succ, ord_mul, ih, ord_eq_one k hϖ]; simp
+    | succ m ih => rw [pow_succ, ord_mul, ih, ord_eq_one hϖ]; simp
   have h2 : gdet (hermGL hϖ.irreducible a c) = ϖ ^ ∑ i, a i := by
     apply Units.ext
     rw [Matrix.GeneralLinearGroup.val_det_apply, val_hermGL, ← RingHom.map_det, det_hermMat, map_pow,
       Units.val_pow_eq_pow_val]
     rfl
   rw [← mul_inv_cancel_left (hermGL hϖ.irreducible a c) g, gdet_mul, ord_mul, h2, h1,
-    ord_eq_zero k (valuation_gdet_of_mem_KO hg), add_zero]
+    ord_eq_zero (valuation_gdet_of_mem_KO hg), add_zero]
 
 
 theorem int_of_mem_coset {p : 𝒪[k]} (hp : Irreducible p) {n : ℕ} {a : Fin n → ℕ} {c : HermIdx p a} {g : GL (Fin n) k}

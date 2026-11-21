@@ -28,7 +28,7 @@ theorem main : ∀ (H : Type) [Group H] (V : Type) [AddCommGroup V] [Module ℂ 
     ⟨LinearMap.codRestrict _ LinearMap.id (fun _ => trivial), fun _ => rfl⟩
   have hjinj : Function.Injective j := fun a b h => congrArg Subtype.val h
   have hTop : P _ (⊤ : Subrepresentation ρ).toRepresentation := hinj _ _ _ _ _ hjinj hP
-  obtain ⟨A, hA, hAmin⟩ := hLT.wf.has_min {A : Subrepresentation ρ | P _ A.toRepresentation} ⟨⊤, hTop⟩
+  obtain ⟨A, hA, hAmin⟩ := hLT.has_min {A : Subrepresentation ρ | P _ A.toRepresentation} ⟨⊤, hTop⟩
   have hAbot : A ≠ ⊥ := by
     rintro rfl
     have hnt' := hnt _ _ hA

@@ -154,7 +154,7 @@ theorem jac_fin : ∀ (m : ℕ) (Γ : Matrix (Fin m) (Fin m) K), S.IntM Γ → S
   | m + 1, Γ, hΓ, hH, hU => by
     by_cases h0 : Γ = 0
     · exact ⟨0, Fin.elim0, fun c => c.elim0, fun c => c.elim0, by simp [h0]⟩
-    obtain ⟨a, i, ha, hai, haa⟩ := S.exists_unit_vec hΓ hH hU h0
+    obtain ⟨a, i, ha, hai, haa⟩ := S.exists_unit_vec (Γ := Γ) hΓ hH hU h0
     have hG := S.IntM_Γp hΓ ha
     have hHG := S.Herm_Γp hΓ hH ha
     have hUG := S.UM_Γp hΓ hH hU ha haa
@@ -191,9 +191,9 @@ theorem jac_fin : ∀ (m : ℕ) (Γ : Matrix (Fin m) (Fin m) K), S.IntM Γ → S
       refine Fin.cases ?_ (fun c => ?_) c <;> refine Fin.cases ?_ (fun c' => ?_) c'
       · simpa using haa
       · simp only [Fin.cons_zero, Fin.cons_succ, S.hf_self_proj haa]
-        rw [if_neg (Fin.succ_ne_zero c').symm]
+        rw [ite_eq_right (Fin.succ_ne_zero c').symm]
       · simp only [Fin.cons_zero, Fin.cons_succ, S.hf_proj_self hΓ hH ha haa (hv'I c)]
-        rw [if_neg (Fin.succ_ne_zero c)]
+        rw [ite_eq_right (Fin.succ_ne_zero c)]
       · simp only [Fin.cons_succ, S.hf_proj_proj haa, Fin.succ_inj]
         exact hv'o c c'
     · rw [Fin.sum_univ_succ]

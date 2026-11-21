@@ -157,15 +157,8 @@ theorem exists_point {c : E ≃+* E} {κ : O} {N : ℕ} {La : Type} [AddCommGrou
   · refine ⟨?_, ?_⟩
     · rw [LinearMap.range_eq_map]
       exact (Module.Finite.fg_top).map _
-    · rw [eq_top_iff]
-      intro t _
-      induction t using TensorProduct.induction_on with
-      | zero => exact Submodule.zero_mem _
-      | tmul s w =>
-        have : s ⊗ₜ[O] w = s • ((1 : C) ⊗ₜ[O] w) := by simp [TensorProduct.smul_tmul']
-        rw [this]
-        exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨w, rfl⟩)
-      | add x y hx hy => exact Submodule.add_mem _ (hx trivial) (hy trivial)
+    · intro s _ h
+      exact (LinearIndependent.iff_fractionRing O C).mp h
   · rintro a _ ⟨w, rfl⟩
     exact ⟨w ∘ₗ ρL (RingOfIntegers.mapRingEquiv c a), rfl⟩
   · intro a x

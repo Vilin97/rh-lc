@@ -39,7 +39,7 @@ private theorem cong {O : Type} [CommRing O] [IsDomain O] {n : ℕ} (lam : DomWe
   obtain ⟨h, hh⟩ : C c ∣ sqAct O n lam g f - f.1 := by
     rw [C_dvd_iff_dvd_coeff]
     intro m
-    rw [← Ideal.Quotient.eq_zero_iff_dvd, ← coeff_map, h2, coeff_zero]
+    rw [← Ideal.Quotient.eq_zero_iff_dvd, ← coeff_map, h2, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   rw [← smul_eq_C_mul] at hh
   refine ⟨h, dualWeylSat O n n _ c h hc ?_, by rw [← hh]; abel⟩
   rw [← hh]

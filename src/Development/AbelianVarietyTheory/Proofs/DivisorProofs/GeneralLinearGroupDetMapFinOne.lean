@@ -117,12 +117,12 @@ theorem sec_map_add {R : Type} [CommRing R] {F G : Shv R} (φ : F ⟶ G) {U : Sc
     Sec.map φ (a + b) = Sec.map φ a + Sec.map φ b := map_add _ _ _
 
 theorem ev_zero_cochain {E : Spc} {I : Cx ℤ} {n : ℤ} (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0})
-    (x : Sx E p U) : ev ℤ (0 : Cochain ((chains ℤ).obj E) I n) p s h U x = 0 := by
+    (x : Sx E p U) : ev (0 : Cochain ((chains ℤ).obj E) I n) p s h U x = 0 := by
   have hZero := CupSpec.ev_zero (I := I) p s h U x
   exact hZero
 
 theorem fam_cocycle {E : Spc} (L : E ⟶ ofCat (glCat 1)) (α : Cochain ((chains ℤ).obj E) (res ℤ Gm) 1)
-    (hα : ∀ p s h U x, ev ℤ α p s h U x = fam L p s h U x) : δ 1 2 α = 0 := by
+    (hα : ∀ p s h U x, ev α p s h U x = fam L p s h U x) : δ 1 2 α = 0 := by
   have hExt := CupSpec.ev_ext (δ 1 2 α) 0
   apply hExt
   intro p t ht U x
@@ -135,16 +135,16 @@ theorem fam_cocycle {E : Spc} (L : E ⟶ ofCat (glCat 1)) (α : Cochain ((chains
     rw [hDeltaZero, hα, fam_zero, sec_map_zero]
   | 1 =>
     obtain rfl : t = 1 := by omega
-    have key : ev ℤ (δ 1 2 α) 1 1 ht U x = Sec.map ((res ℤ Gm).d 0 1) (ev ℤ α 1 0 (by simp) U x) +
-        (2 : ℤ).negOnePow • ∑ i : Fin 2, (-1 : ℤ) ^ (i : ℕ) • ev ℤ α 0 1 (by simp) U (x.face i) :=
+    have key : ev (δ 1 2 α) 1 1 ht U x = Sec.map ((res ℤ Gm).d 0 1) (ev α 1 0 (by simp) U x) +
+        (2 : ℤ).negOnePow • ∑ i : Fin 2, (-1 : ℤ) ^ (i : ℕ) • ev α 0 1 (by simp) U (x.face i) :=
       hDeltaSucc 0 0 1 (by simp) ht x
     rw [key]
     simp only [hα, fam_zero, fam_one, smul_zero, Finset.sum_const_zero, add_zero, sec_map_comp, resι_d]
     rfl
   | 2 =>
     obtain rfl : t = 0 := by omega
-    have key : ev ℤ (δ 1 2 α) 2 0 ht U x = Sec.map ((res ℤ Gm).d (-1) 0) (ev ℤ α 2 (-1) (by simp) U x) +
-        (2 : ℤ).negOnePow • ∑ i : Fin 3, (-1 : ℤ) ^ (i : ℕ) • ev ℤ α 1 0 (by simp) U (x.face i) :=
+    have key : ev (δ 1 2 α) 2 0 ht U x = Sec.map ((res ℤ Gm).d (-1) 0) (ev α 2 (-1) (by simp) U x) +
+        (2 : ℤ).negOnePow • ∑ i : Fin 3, (-1 : ℤ) ^ (i : ℕ) • ev α 1 0 (by simp) U (x.face i) :=
       hDeltaSucc 1 (-1) 0 (by simp) ht x
     rw [key]
     simp only [hα, fam_one]
@@ -158,8 +158,8 @@ theorem fam_cocycle {E : Spc} (L : E ⟶ ofCat (glCat 1)) (α : Cochain ((chains
     simp only [hα, fam_add_two, sec_map_zero, zero_add, smul_zero, Finset.sum_const_zero]
 
 theorem exists_cocycle {E : Spc} (L : E ⟶ ofCat (glCat 1)) :
-    ∃ γ : Cocycle ((chains ℤ).obj E) (res ℤ Gm) 1, (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev ℤ γ.1 0 1 (by simp) U x = 0) ∧
-      ∀ (U : Scheme.{0}) (x : Sx E 1 U), ev ℤ γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x)) := by
+    ∃ γ : Cocycle ((chains ℤ).obj E) (res ℤ Gm) 1, (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev γ.1 0 1 (by simp) U x = 0) ∧
+      ∀ (U : Scheme.{0}) (x : Sx E 1 U), ev γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x)) := by
   have hExists := GlobalTheory.EtC.exists_cochain_ev_eq_of_natural ℤ (fam L) (fam_nat L)
   obtain ⟨α, hα⟩ := hExists
   refine ⟨Cocycle.mk α 2 (by norm_num) (fam_cocycle L α hα), fun U x => ?_, fun U x => ?_⟩
@@ -168,17 +168,17 @@ theorem exists_cocycle {E : Spc} (L : E ⟶ ofCat (glCat 1)) :
 
 theorem spec {E : Spc} (L : E ⟶ ofCat (glCat 1)) :
     ∃ γ : Cocycle ((chains ℤ).obj E) (res ℤ Gm) 1, CohomologyClass.mk γ = picClass L ∧
-      (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev ℤ γ.1 0 1 (by simp) U x = 0) ∧
-      ∀ (U : Scheme.{0}) (x : Sx E 1 U), ev ℤ γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x)) := by
+      (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev γ.1 0 1 (by simp) U x = 0) ∧
+      ∀ (U : Scheme.{0}) (x : Sx E 1 U), ev γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x)) := by
   obtain ⟨γ, h0, h1⟩ := exists_cocycle L
   exact pick_spec (P := fun c => ∃ γ : Cocycle ((chains ℤ).obj E) (res ℤ Gm) 1, CohomologyClass.mk γ = c ∧
-    (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev ℤ γ.1 0 1 (by simp) U x = 0) ∧
-    ∀ (U : Scheme.{0}) (x : Sx E 1 U), ev ℤ γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x)))
+    (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev γ.1 0 1 (by simp) U x = 0) ∧
+    ∀ (U : Scheme.{0}) (x : Sx E 1 U), ev γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x)))
     ⟨_, γ, rfl, h0, h1⟩
 
 theorem cocycle_ext {E : Spc} (γ γ' : Cocycle ((chains ℤ).obj E) (res ℤ Gm) 1)
-    (h0 : ∀ (U : Scheme.{0}) (x : Sx E 0 U), ev ℤ γ.1 0 1 (by simp) U x = ev ℤ γ'.1 0 1 (by simp) U x)
-    (h1 : ∀ (U : Scheme.{0}) (x : Sx E 1 U), ev ℤ γ.1 1 0 (by simp) U x = ev ℤ γ'.1 1 0 (by simp) U x) : γ = γ' := by
+    (h0 : ∀ (U : Scheme.{0}) (x : Sx E 0 U), ev γ.1 0 1 (by simp) U x = ev γ'.1 0 1 (by simp) U x)
+    (h1 : ∀ (U : Scheme.{0}) (x : Sx E 1 U), ev γ.1 1 0 (by simp) U x = ev γ'.1 1 0 (by simp) U x) : γ = γ' := by
   have hExt := CupSpec.ev_ext γ.1 γ'.1
   refine Cocycle.ext (hExt fun p s h U x => ?_)
   match p with

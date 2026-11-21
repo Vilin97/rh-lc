@@ -51,13 +51,6 @@ theorem exists_integralClosure_finite : ∀ {o₁ Ω₁ : Type} [CommRing o₁] 
       algebraMap_mem' := hmem }
   let h : R₁ →+* R := (algebraMap R₁ Ω₂).codRestrict R fun a => (isIntegral_algebraMap : IsIntegral R₁ (algebraMap R₁ Ω₂ a))
   have hh : ∀ a, ((h a : R) : Ω₂) = algebraMap Ω₁ Ω₂ a := fun a => rfl
-  letI : Algebra R₁ R := h.toAlgebra
-  haveI : IsScalarTower R₁ R Ω₂ := .of_algebraMap_eq fun a => rfl
-  haveI : IsIntegralClosure R R₁ Ω₂ :=
-    { algebraMap_injective := Subtype.val_injective
-      isIntegral_iff := fun {x} => ⟨fun hx => ⟨⟨x, hx⟩, rfl⟩, by rintro ⟨y, rfl⟩; exact y.2⟩ }
-  have hfin : h.Finite := GlobalTheory.finite_of_isIntegralClosure_dedekind o₁ R₁ Ω₁ Ω₂ R
-  have hic : IsIntegrallyClosed R := integralClosure.isIntegrallyClosedOfFiniteExtension (R := R₁) Ω₁ (L := Ω₂)
   haveI : Module.Finite R₁ C := GlobalTheory.finite_integralClosure_dedekind o₁ R₁ Ω₁ Ω₂
   classical
   have hfg : R.FG := by
@@ -93,6 +86,13 @@ theorem exists_integralClosure_finite : ∀ {o₁ Ω₁ : Type} [CommRing o₁] 
       | smul r y _ hy =>
         convert A.mul_mem (hR₁A r.1 (hs ▸ r.2)) hy using 1
         first | rfl | exact Algebra.smul_def r (y : Ω₂) | simp [Algebra.smul_def]
+  letI : Algebra R₁ R := h.toAlgebra
+  haveI : IsScalarTower R₁ R Ω₂ := .of_algebraMap_eq fun a => rfl
+  haveI : IsIntegralClosure R R₁ Ω₂ :=
+    { algebraMap_injective := Subtype.val_injective
+      isIntegral_iff := fun {x} => ⟨fun hx => ⟨⟨x, hx⟩, rfl⟩, by rintro ⟨y, rfl⟩; exact y.2⟩ }
+  have hfin : h.Finite := GlobalTheory.finite_of_isIntegralClosure_dedekind o₁ R₁ Ω₁ Ω₂ R
+  have hic : IsIntegrallyClosed R := integralClosure.isIntegrallyClosedOfFiniteExtension (R := R₁) Ω₁ (L := Ω₂)
   refine ⟨R, h, hfg, ?_, hh, hfin, hic, ?_⟩
   · intro x
     have hxi : IsIntegral Ω₁ x := Algebra.IsIntegral.isIntegral x

@@ -34,7 +34,7 @@ private theorem sub_map {E' E : Spc} (π : E' ⟶ E) {N : ℕ} {U : Scheme.{0}} 
 
 private theorem ev_pb {E' E : Spc} (π : E' ⟶ E) {I : Cx R} {n : ℤ} (a : Cochain ((chains R).obj E) I n)
     (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E' p U) :
-    ev R (pb π a) p s h U x = ev R a p s h U (x.map π) := by
+    ev (pb π a) p s h U x = ev a p s h U (x.map π) := by
   have hp := CupSpec.ev_pull π a p s h U x
   exact hp
 

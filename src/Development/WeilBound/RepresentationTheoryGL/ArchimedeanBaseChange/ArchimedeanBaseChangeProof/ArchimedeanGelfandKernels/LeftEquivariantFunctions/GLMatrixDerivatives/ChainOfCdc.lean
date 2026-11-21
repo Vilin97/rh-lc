@@ -106,7 +106,7 @@ theorem dFr_conj (h : CxData lam E Fr ε ι S Γ T) (k : Matrix.unitaryGroup (Fi
     L.hasFDerivAt.comp (1 : Mat n) (fr_diff h (one_mem_GLs (n := n))).hasFDerivAt
   rw [h1.fderiv, h2.fderiv] at e
   have := congrArg (fun M : Mat n →L[ℝ] (E.V →L[ℂ] E.V) => M Y) e
-  simpa [hL, ContinuousLinearMap.mulLeftRight_apply] using this
+  simpa [hL, mulLRL, ContinuousLinearMap.mulLeftRight_apply] using this
 
 end Cx
 

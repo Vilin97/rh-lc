@@ -315,7 +315,7 @@ private theorem isGrpPullback_pullback_fst {S S' : Scheme.{0}} (f : S' ⟶ S) (G
   have e : ∀ {A B : Over S} (g : A ⟶ B),
       ((Over.pullback f).map g).left ≫ pullback.fst B.hom f = pullback.fst A.hom f ≫ g.left := by
     intro A B g
-    simp only [Over.pullback_map_left]
+    simp only [Over.pullback_map_left, pullback.lift_fst]
   have key : (lift x₀ y₀).left =
       (lift x y ≫ Functor.LaxMonoidal.μ (Over.pullback f) G G).left ≫ pullback.fst (G ⊗ G).hom f := by
     apply pullback.hom_ext
@@ -496,7 +496,7 @@ theorem generic_of_isGrpPullback (h : SemiAbelianHomExtension) (hS : Reciprocity
   have hVd : Dense (V : Set S) := V.isOpen.dense ⟨_, hηV⟩
   obtain ⟨F, ⟨hF, hFg⟩, -⟩ := h S hS V hVd G H hG hH g hg
   have hsq : ((Over.pullback V.ι).map F).left ≫ pullback.fst H.hom V.ι = pullback.fst G.hom V.ι ≫ F.left := by
-    simp only [Over.pullback_map_left]
+    simp only [Over.pullback_map_left, pullback.lift_fst]
   have hex : f.left ≫ ψ = φ ≫ F.left := by
     rw [← hw₂, ← hFg, hsq, ← Category.assoc, hw₁]
   refine ⟨F, ⟨hF, hex⟩, ?_⟩
@@ -512,7 +512,7 @@ private theorem pullback_map_eq_iff_fst_comp {S₀ U₀ : Scheme.{0}} {t : U₀ 
     (Over.pullback t).map F = f ↔ f.left ≫ pullback.fst H₀.hom t = pullback.fst G₀.hom t ≫ F.left := by
   constructor
   · rintro rfl
-    simp only [Over.pullback_map_left]
+    simp only [Over.pullback_map_left, pullback.lift_fst]
   · intro hF
     apply Over.OverMorphism.ext
     apply pullback.hom_ext

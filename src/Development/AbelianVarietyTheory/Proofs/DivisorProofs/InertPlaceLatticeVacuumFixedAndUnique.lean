@@ -74,8 +74,12 @@ theorem phase_one : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
   have h2 := two_inv_mem v (hT.base.inert v w hin).1
   have hγ' : GlobalTheory.LatVac.liftV v (⅟2) • γ ∈ latAtV G.V G.W v := hst.2 _ h2 γ hγ
   have e1 : (⅟(2 : AF F)) • γ = GlobalTheory.LatVac.liftV v (⅟2) • γ := by
+    have hev : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+      refine (invOf_eq_right_inv ?_).symm
+      have h : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+      rwa [map_mul, map_ofNat] at h
     have h0 : ((⅟(2 : AF F)) - GlobalTheory.LatVac.liftV v (⅟2)) • γ = 0 :=
-      hst.1 γ hγ _ (by rw [map_sub, GlobalTheory.LatVac.evFin_liftV, GlobalTheory.VacAny.evFin_invOf_two, sub_self])
+      hst.1 γ hγ _ (by rw [map_sub, GlobalTheory.LatVac.evFin_liftV, hev, sub_self])
     rwa [sub_smul, sub_eq_zero] at h0
   have hz : -((inclR (F := F) (AF F) (θ : E)) • GlobalTheory.LatVac.liftV v (⅟2) • γ) ∈ latAtV G.V G.W v :=
     neg_mem (latAtV_smul_int G.V G.W v θ _ hγ')
@@ -94,7 +98,7 @@ theorem acts_unique {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {κ :
   funext y
   have hx := congrFun e (fun i => GlobalTheory.LatVac.liftV v (y i))
   have hat : At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (y i)) :=
-    GlobalTheory.VacAny.at_pi (fun i => GlobalTheory.LatVac.at_liftV v (y i))
+    fun u hu => funext fun i => GlobalTheory.LatVac.at_liftV v (y i) u hu
   have hRx : R (fun i => GlobalTheory.LatVac.liftV v (y i)) = R 0 := by
     have := (hR φ hφ).1 0 _ hat
     simpa using this

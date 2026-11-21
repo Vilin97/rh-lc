@@ -22,7 +22,7 @@ theorem sameOff_of_isPt (F E : Type) [Field F] [NumberField F] [Field E] [Number
     rw [hg v' hv] at h1
     have hmem : bc (prV (E := E) (A.pl v').1) ((x.1)⁻¹ * x'.1) ∈ UPts σ J ((A.pl v').1.adicCompletion F) :=
       Formalism.UG.P.afsplit_bc_mem σ J (A.pl v').1 _ (Subgroup.mul_mem _ (Subgroup.inv_mem _ x.2) x'.2)
-    have h3 := H.eq_one_of_ph v' _ hmem (by rw [map_mul, map_mul, map_inv, map_inv, h1, h2]; exact inv_mul_cancel _)
+    have h3 := LocGood.eq_one_of_ph H v' _ hmem (by rw [map_mul, map_mul, map_inv, map_inv, h1, h2]; exact inv_mul_cancel _)
     rw [map_mul, map_inv] at h3
     exact (inv_mul_eq_one.1 h3)
   · rw [hx.1 w hp, hx'.1 w hp]

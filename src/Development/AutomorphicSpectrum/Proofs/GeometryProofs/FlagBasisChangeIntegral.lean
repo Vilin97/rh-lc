@@ -287,7 +287,7 @@ theorem exists_adapted : ∀ (K : Type) [Field K] (R : Subring K) [IsLocalRing R
   have hS : {a : Fin r | (a : ℕ) < r} = Set.univ := by
     ext a
     simp [a.2]
-  rw [hS, linearIndepOn_univ] at hind
+  rw [hS, linearIndepOn_univ_iff] at hind
   obtain ⟨u, hu⟩ := isUnit_det_of_red R p hind
   have hdet : (R.subtype.mapMatrix (Matrix.of fun i a => p a i)).det =
       (((Matrix.of fun i a => p a i).det : R) : K) :=

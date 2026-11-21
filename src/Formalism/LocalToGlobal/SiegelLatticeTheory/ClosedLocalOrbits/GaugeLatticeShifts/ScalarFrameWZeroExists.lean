@@ -94,7 +94,7 @@ theorem partner_exists (e : Fin r → Fin n → ℂ) (z : Fin n → ℂ) (he : L
   classical
   have hz : z ∉ Submodule.span ℂ (Set.range e) := not_mem_span_of_orth ε e z hez hzz
   have hV : LinearIndependent ℂ (Fin.snoc e z : Fin (r + 1) → Fin n → ℂ) :=
-    linearIndependent_fin_snoc.2 ⟨he, hz⟩
+    linearIndependent_finSnoc.2 ⟨he, hz⟩
   obtain ⟨q, hq⟩ := dual_exists ε (Fin.snoc e z : Fin (r + 1) → Fin n → ℂ) hV
   have hEq : ∀ a b, hJ ε (e a) (q (Fin.castSucc b)) = if a = b then 1 else 0 := by
     intro a b

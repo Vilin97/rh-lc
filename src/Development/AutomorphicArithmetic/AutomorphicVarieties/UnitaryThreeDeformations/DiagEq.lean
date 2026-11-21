@@ -290,5 +290,5 @@ theorem UpperTheory.V.UnitaryThreeInertia.diag_eq_of_tri :
   have hne : a ≠ b := by
     rintro rfl
     exact hab.ne (sub_self _)
-  show algebraMap O A (((tor (F.Ψ g) : GL (Fin 3) O) : Matrix (Fin 3) (Fin 3) O) a b) = 0
+  show algebraMap O A (((tor O (F.Ψ g) : GL (Fin 3) O) : Matrix (Fin 3) (Fin 3) O) a b) = 0
   rw [tor_val, Matrix.diagonal_apply_ne _ hne, map_zero]

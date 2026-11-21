@@ -106,7 +106,7 @@ def WTrans : Prop := ∀ (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] (Y : S
   (J : Type) [Fintype J] [DecidableEq J] (T : J → Corr l Y) (D : WDat l T),
   ∃ g : (∀ j, Equiv.Perm (Fin (T j).d)) → (PX (D.π ≫ q) κ ⟶ PX (D.π ≫ q) κ), TTrans (pxMap κ D.π rfl) g
 
-def itE {P : PAlg l ⥤ Type} (F : P ⟶ P) (k : ℕ) : P ⟶ P := (show End P from F) ^ k
+def itE {P : PAlg l ⥤ Type} (F : P ⟶ P) (k : ℕ) : P ⟶ P := (End.of F ^ k).asHom
 
 def WZero : Prop := ∀ (l : ℕ) [Fact l.Prime] (f n : ℕ) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O),
   Irreducible ϖ → (l : O) ≠ 0 → ¬ IsUnit (l : O) → ∀ (Y : Scheme.{0}) (q : Y ⟶ Spec (CommRingCat.of O)), Smooth q → QuasiCompact q →

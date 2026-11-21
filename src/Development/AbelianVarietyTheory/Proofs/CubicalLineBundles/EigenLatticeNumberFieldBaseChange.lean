@@ -83,7 +83,7 @@ theorem eigenLattice_baseChange : ∀ (K K' O : Type) [Field K] [NumberField K] 
       simp [Matrix.mulVec, dotProduct, map_sum]
   constructor
   · intro h
-    refine ⟨Submodule.span_mono (Set.image_mono fun c hc => hc.1) h, fun a => ?_⟩
+    refine ⟨Submodule.span_mono (Set.image_mono (show {c | c ∈ Λ ∧ ∀ a, (r a).mulVec c = τ a • c} ⊆ (Λ : Set (Fin n → K)) from fun c hc => hc.1)) h, fun a => ?_⟩
     induction h using Submodule.span_induction with
     | mem x hx =>
       obtain ⟨c, ⟨-, hc⟩, rfl⟩ := hx

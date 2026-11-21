@@ -200,7 +200,7 @@ theorem exists_localizing_weight : ∀ {F : Type} [Field F] [NumberField F] {κ 
     exact ENNReal.ofReal_le_one.2 (hβ01 u).2
   refine ⟨fun x => if (fun i => (x i).2) ∈ A then ‖((β (fun i => (x i).1) : ℝ) : ℂ)‖ₑ ^ 2 else 0,
     ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · exact Measurable.ite (p := {x : κ → AF F | (fun i => (x i).2) ∈ A})
+  · exact Measurable.ite (p := fun x : κ → AF F => (fun i => (x i).2) ∈ A)
       (hA.preimage hfinc).measurableSet hgc.measurable measurable_const
   · intro x
     dsimp only
@@ -254,16 +254,15 @@ theorem exists_localizing_weight : ∀ {F : Type} [Field F] [NumberField F] {κ 
       (hΨc.measurable.enorm.pow_const 2) (hΦc.measurable.enorm.pow_const 2) ?_ (sq_lintegral_lt_top Ψ hΨ μ hμ) (sq_lintegral_lt_top Φ hΦ μ hμ)
       ?_ ?_ ?_
     · intro n
-      refine Continuous.measurable (continuous_finset_sum _ fun b _ => continuous_const.mul (hψ.1.comp ?_))
-      exact continuous_finset_sum _ fun i _ => (continuous_apply i).mul continuous_const
+      refine Continuous.measurable (continuous_finsetSum _ fun b _ => continuous_const.mul (hψ.1.comp ?_))
+      exact continuous_finsetSum _ fun i _ => (continuous_apply i).mul continuous_const
     · intro n
       have hoff : ∀ b ∈ s n, GlobalTheory.LatVac.liftV v 1 • b = 0 := by
         intro b hb
         obtain ⟨b₁, hb₁, b₂, hb₂, rfl⟩ := hs n b hb
         rw [smul_add, hsf b₁ hb₁, hsa n b₂ hb₂ v, add_zero]
       have := hyp (s n) (c n) hoff
-      simp only [enorm_mul, mul_pow] at this
-      exact this
+      simpa only [enorm_mul, mul_pow] using this
     · intro n x hx
       rw [hsc n x, hfK x (hK x hx)]
       by_cases hxA : (fun i => (x i).2) ∈ A

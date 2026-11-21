@@ -39,7 +39,7 @@ theorem exists_centre (w : (Σ k, J k) → K) (hbir : Birational w) (hw : ∀ k,
     simp only [h, map_zero] at h1
     exact ((Valuation.ne_zero_iff _).2 h0) (le_zero_iff.1 h1)
   choose c' hc1 hc2 using hch
-  obtain ⟨W, hWp, hWh, hVW, hcW, hD, hiff⟩ := T_ex1 B J p K w v c' hc1 hc2
+  obtain ⟨W, hWp, hWh, hVW, hcW, hD, hiff⟩ := GlobalTheory.T.exists_multihomog_prime_of_place B J p K w v c' hc1 hc2
   have hx : (X ⟨k, c⟩ : MRing J) ∈ W := by
     rw [hiff (Pi.single k 1) _ (GroundTheory.Heights₂.Heights.Inter.regularityLocalFlat_holds.homog_X k c)]
     have hs : (Finset.univ.sup fun i => v.valuation (w ⟨k, i⟩)) = v.valuation (w ⟨k, c' k⟩) :=
@@ -47,7 +47,7 @@ theorem exists_centre (w : (Σ k, J k) → K) (hbir : Birational w) (hw : ∀ k,
         (Finset.le_sup (f := fun i => v.valuation (w ⟨k, i⟩)) (Finset.mem_univ _))
     rw [hs] at hlt
     simpa [Pi.single_apply, pow_ite, Finset.prod_ite_eq'] using hlt
-  exact ⟨W, ⟨T_ex2 B J p K w hbir W c' hWp hWh hVW hcW k c hc hx, fun k' => ⟨c' k', hcW k'⟩⟩, hD⟩
+  exact ⟨W, ⟨GlobalTheory.T.multihomog_prime_mem_divisor_support B J p K w hbir W c' hWp hWh hVW hcW k c hc hx, fun k' => ⟨c' k', hcW k'⟩⟩, hD⟩
 
 open GroundTheory.Heights₂.Heights.Inter.regularityLocalFlat_holds (homog_X fracHom fracHom_apply fracHom_eq_zero_iff isLocalRing mem_maximalIdeal_iff isUnit_iff)
 
@@ -76,7 +76,7 @@ theorem local_term (w : (Σ k, J k) → K) (hbir : Birational w) (k : B) (c : J 
       DFunLike.congr_fun (Subsingleton.elim (algebraMap (ZMod p) K)
         ((algebraMap (locRing (mCoordIdeal w) W) K).comp (algebraMap (ZMod p) (locRing (mCoordIdeal w) W)))) x
   haveI hE : Algebra.EssFiniteType (ZMod p) (locRing (mCoordIdeal w) W) :=
-    T_eft B J p K w W c' hV hWp hVW hc'
+    GlobalTheory.T.local_ring_ess_finite_type B J p K w W c' hV hWp hVW hc'
   haveI hN : IsNoetherianRing (locRing (mCoordIdeal w) W) := Algebra.EssFiniteType.isNoetherianRing (ZMod p) _
   have hs : IsMultiHomog (X ⟨k, c⟩ : MRing J) (Pi.single k 1) := homog_X k c
   have ht : IsMultiHomog (X ⟨k, c' k⟩ : MRing J) (Pi.single k 1) := homog_X k (c' k)
@@ -112,7 +112,7 @@ theorem local_term (w : (Σ k, J k) → K) (hbir : Birational w) (k : B) (c : J 
     ext v
     exact hρ.dom_iff hV hWp hVW v
   rw [hset] at key
-  rw [hlen, locIdeal_eq_span hym, T_geo B J p K w hbir k c hc W hWd b]
+  rw [hlen, locIdeal_eq_span hym, GlobalTheory.T.geometric_number_zero_finrank B J p K w hbir k c hc W hWd b]
   have : (algebraMap (locRing (mCoordIdeal w) W) K f) = w ⟨k, c⟩ / w ⟨k, c' k⟩ := hf2
   rw [this] at key
   rw [← key]

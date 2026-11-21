@@ -144,7 +144,7 @@ private theorem valuation_eq_of_isEquiv_of_uniformizers {K : Type} [Field K]
     (v w : Valuation K (WithZero (Multiplicative ℤ))) (h : v.IsEquiv w)
     (π : K) (hπ : v π = WithZero.exp (-1)) (ρ : K) (hρ : w ρ = WithZero.exp (-1)) :
     v = w := by
-  have key : ∀ x y : K, v x = v y → w x = w y := fun x y hxy => h.val_eq.mp hxy
+  have key : ∀ x y : K, v x = v y → w x = w y := fun x y hxy => (Valuation.IsEquiv.eq_iff h).mp hxy
   have hπ0 : π ≠ 0 := by
     rintro rfl
     rw [map_zero] at hπ

@@ -22,16 +22,16 @@ theorem exampleHost_type_primes_split : ∀ k, (placesOver H0.E (H0.g k)).ncard 
   · show 413718278401 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
   · show 603339156001 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
 
-theorem exampleHost_typeHypothesis : THyp H0 where
-  cond := fun k => by
-    fin_cases k
-    · show 413718278401 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
-    · show 603339156001 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
-  bb := BB_disj0
-  jac := fun k => by
-    fin_cases k
-    · exact ⟨by show (413718278401 : ℕ) ≠ 2; norm_num, by show jacobiSym (-599) 413718278401 = 1; norm_num⟩
-    · exact ⟨by show (603339156001 : ℕ) ≠ 2; norm_num, by show jacobiSym (-599) 603339156001 = 1; norm_num⟩
+theorem exampleHost_typeHypothesis : THyp H0 :=
+  { cond := fun k => by
+      fin_cases k
+      · show 413718278401 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
+      · show 603339156001 % (2 ^ (2 + 2) * 571 * 599) = 1; norm_num
+    bb := BB_disj0
+    jac := fun k => by
+      fin_cases k
+      · exact ⟨by show (413718278401 : ℕ) ≠ 2; norm_num, by show jacobiSym (-599) 413718278401 = 1; norm_num⟩
+      · exact ⟨by show (603339156001 : ℕ) ≠ 2; norm_num, by show jacobiSym (-599) 603339156001 = 1; norm_num⟩ }
 
 theorem examplePrime_ne_split_primes : T0 ≠ H0.pde ∧ T0 ≠ H0.pde' :=
   ⟨by show T0 ≠ 751; norm_num [T0], by show T0 ≠ 991; norm_num [T0]⟩

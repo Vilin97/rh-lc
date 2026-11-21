@@ -98,6 +98,7 @@ theorem isVac_box {B : Base F E} {r s r' s' : ℕ} (hX : X.IsHerm σ B r s) (hW 
       have := congrFun (hat (a k - p γ' k) (by rw [map_sub, sub_eq_zero]; exact (congrFun e k).symm)).2 k
       simp only [Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at this
       linear_combination this
+    simp only [cA, incM] at key ⊢
     rw [Set.indicator_of_mem ha, Set.indicator_of_mem ha', hs, hθ θ hθ1 γ hγ, mul_add, add_add_add_comm,
       AddChar.map_add_eq_mul, AddChar.map_add_eq_mul B.ψ (a ⬝ᵥ q γ), h1]
     simp only [Pi.one_apply, one_mul, smul_eq_mul] at key ⊢

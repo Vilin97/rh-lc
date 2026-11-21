@@ -224,9 +224,10 @@ theorem GlobalTheory.SwapSchur.sliceT_swap_eq_smul : ∀ (F E : Type) [Field F] 
     intro x₁ x₂ a1 a2 m1 m2 x hx Z
     have c1 : GlobalTheory.FlipMatch.coX t 1 1 x₁ᵀᵀ = 0 := by rw [Matrix.transpose_transpose]; exact coX0 _ m1
     have c2 : GlobalTheory.FlipMatch.coX t 1 1 x₂ᵀᵀ = 0 := by rw [Matrix.transpose_transpose]; exact coX0 _ m2
-    rw [hheis x₁ᵀ x₂ᵀ (atT _ a1) (atT _ a2) (by rw [c1, pairM_zero_left]) (by rw [c2, pairM_zero_left]) x hx, c1, c2,
-      Matrix.transpose_transpose, Matrix.transpose_transpose]
-    simp only [pairM_zero_right, neg_zero, add_zero, AddChar.map_zero_eq_one, one_mul]
+    have h := hheis x₁ᵀ x₂ᵀ (atT _ a1) (atT _ a2) (by rw [c1, pairM_zero_left]) (by rw [c2, pairM_zero_left]) x hx Z
+    rw [c1, c2] at h
+    set_option backward.isDefEq.respectTransparency false in
+    simpa only [Matrix.transpose_transpose, pairM_zero_right, neg_zero, add_zero, AddChar.map_zero_eq_one, one_mul] using h
   have tr2 : ∀ x₁ x₂ : Matrix (Fin a') (Fin (a + a')) (AE F E), At (evFin F v) x₁ → At (evFin F v) x₂ →
       x₁.map (piW t) = 0 → x₂.map (piW t) = 0 →
       ∀ x ∈ SB (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a') → Fv F v), ∀ Z,
@@ -235,10 +236,12 @@ theorem GlobalTheory.SwapSchur.sliceT_swap_eq_smul : ∀ (F E : Type) [Field F] 
     intro x₁ x₂ a1 a2 m1 m2 x hx Z
     have c1 : GlobalTheory.FlipMatch.coX t 1 1 (-x₁ᵀ)ᵀ = 0 := by rw [tNeg, coXneg, coX0 _ m1, neg_zero]
     have c2 : GlobalTheory.FlipMatch.coX t 1 1 (-x₂ᵀ)ᵀ = 0 := by rw [tNeg, coXneg, coX0 _ m2, neg_zero]
-    rw [hS _ (atCols _ _ (atT _ a1) (atT _ a2)) x hx, (hw2 _ _ (atT _ a1) (atT _ a2)).1 (tMap _ _ m1) (tMap _ _ m2),
-      hheis (-x₂ᵀ) (-x₁ᵀ) (atNeg _ (atT _ a2)) (atNeg _ (atT _ a1)) (by rw [c2, pairM_zero_left])
-        (by rw [c1, pairM_zero_left]) (S x) (hSB x hx), c1, c2, tNeg, tNeg, coYneg, coYneg]
-    simp only [pairM_zero_right, neg_zero, add_zero, AddChar.map_zero_eq_one, one_mul, sub_eq_add_neg]
+    rw [hS _ (atCols _ _ (atT _ a1) (atT _ a2)) x hx, (hw2 _ _ (atT _ a1) (atT _ a2)).1 (tMap _ _ m1) (tMap _ _ m2)]
+    have h := hheis (-x₂ᵀ) (-x₁ᵀ) (atNeg _ (atT _ a2)) (atNeg _ (atT _ a1)) (by rw [c2, pairM_zero_left])
+        (by rw [c1, pairM_zero_left]) (S x) (hSB x hx) Z
+    rw [c2, c1] at h
+    set_option backward.isDefEq.respectTransparency false in
+    simpa only [tNeg, coYneg, pairM_zero_right, neg_zero, add_zero, AddChar.map_zero_eq_one, one_mul, sub_eq_add_neg] using h
   have mu1 : ∀ x₁ x₂ : Matrix (Fin a') (Fin (a + a')) (AE F E), At (evFin F v) x₁ → At (evFin F v) x₂ →
       x₁.map (piW (t.comp σ)) = 0 → x₂.map (piW (t.comp σ)) = 0 →
       ∀ x ∈ SB (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a') → Fv F v), ∀ Z,
@@ -248,8 +251,10 @@ theorem GlobalTheory.SwapSchur.sliceT_swap_eq_smul : ∀ (F E : Type) [Field F] 
     intro x₁ x₂ a1 a2 m1 m2 x hx Z
     have c1 : GlobalTheory.FlipMatch.coY σ G.V' G.W t 1 1 x₁ᵀᵀ = 0 := by rw [Matrix.transpose_transpose]; exact coY0 _ m1
     have c2 : GlobalTheory.FlipMatch.coY σ G.V' G.W t 1 1 x₂ᵀᵀ = 0 := by rw [Matrix.transpose_transpose]; exact coY0 _ m2
-    rw [hheis x₁ᵀ x₂ᵀ (atT _ a1) (atT _ a2) (by rw [c1, pairM_zero_right]) (by rw [c2, pairM_zero_right]) x hx, c1, c2,
-      Matrix.transpose_transpose, Matrix.transpose_transpose, add_zero, add_zero]
+    have h := hheis x₁ᵀ x₂ᵀ (atT _ a1) (atT _ a2) (by rw [c1, pairM_zero_right]) (by rw [c2, pairM_zero_right]) x hx Z
+    rw [c1, c2] at h
+    set_option backward.isDefEq.respectTransparency false in
+    simpa only [Matrix.transpose_transpose, add_zero, Prod.mk.eta] using h
   have mu2 : ∀ x₁ x₂ : Matrix (Fin a') (Fin (a + a')) (AE F E), At (evFin F v) x₁ → At (evFin F v) x₂ →
       x₁.map (piW (t.comp σ)) = 0 → x₂.map (piW (t.comp σ)) = 0 →
       ∀ x ∈ SB (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a') → Fv F v), ∀ Z,

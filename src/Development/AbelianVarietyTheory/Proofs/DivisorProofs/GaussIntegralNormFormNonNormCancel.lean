@@ -88,14 +88,16 @@ theorem gauss_cancel : ∀ (F : Type) [Field F] [CharZero F] [ValuativeRel F] [T
       rw [Measure.map_map (hm a) (measurable_const_mul _)]
       simp only [m]
       congr 1
-      ring
+      funext z
+      simp [map_mul, mul_comm, mul_left_comm, mul_assoc]
     simp only [n]
-    rw [h2, h1, Measure.map_smul, smul_smul, map_mul, mul_right_comm,
+    rw [h2, h1, Measure.map_smul _ (hm a).aemeasurable, smul_smul, map_mul, mul_right_comm,
       mul_inv_cancel₀ (distribHaarChar_pos).ne', one_mul]
   have hn2 : ∀ a u : Fˣ, (n a).map (fun x => (u : F) * x) = (distribHaarChar F u)⁻¹ • n (u * a) := by
     intro a u
     simp only [n, m]
-    rw [Measure.map_smul, Measure.map_map (measurable_const_mul _) (hm a), smul_smul, map_mul,
+    rw [Measure.map_smul _ (measurable_const_mul _).aemeasurable,
+      Measure.map_map (measurable_const_mul _) (hm a), smul_smul, map_mul,
       inv_mul_cancel_left₀ (distribHaarChar_pos).ne']
     congr 2
     funext z

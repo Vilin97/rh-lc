@@ -24,7 +24,9 @@ theorem UpperTheory.V.Fr.framePoint_y_coord_eq :
     simpa [w] using h
   have hup : ∀ (g : F.G0) (i j : Fin 3), i < j → ρ.r g i j = 0 := by
     intro g i j hij
-    have h : ρ.r g i j ∈ ρ.triM := Ideal.subset_span ⟨g, i, j, hij, rfl⟩
+    have h : ρ.r g i j ∈ ρ.triM := by
+      apply Ideal.subset_span
+      exact ⟨g, i, j, hij, rfl⟩
     rw [htri, Ideal.mem_bot] at h
     exact h
   have h01 := fun g => hup g 0 1 (by decide)

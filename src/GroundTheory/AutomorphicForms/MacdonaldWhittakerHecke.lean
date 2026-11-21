@@ -123,7 +123,7 @@ def eigenSubalgebra (z : Fin n → ℂˣ) (f : GL (Fin n) F → ℂ)
     rw [integral_const_mul, integral_one_mul hf g]
 
 omit [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] in
-theorem polyEmb_esymm (k : ℕ) : polyEmb n (MvPolynomial.esymm (Fin n) ℂ k) = esymmL n k := by
+theorem polyEmb_esymm (k : ℕ) : polyEmb (n := n) (MvPolynomial.esymm (Fin n) ℂ k) = esymmL n k := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [MvPolynomial.esymm, map_sum, esymmL]
   refine Finset.sum_congr rfl fun t _ => ?_
@@ -177,7 +177,7 @@ theorem eigenSubalgebra_eq_top (z : Fin n → ℂˣ) {f : GL (Fin n) F → ℂ}
   have hK : (μ.real (integralGL F n : Set (GL (Fin n) F)) : ℂ) ≠ 0 :=
     Complex.ofReal_ne_zero.2
       (measureReal_compactOpen_pos μ (isCompact_integralGL F n) (isOpen_integralGL F n)).ne'
-  have h1 : ∀ k, polyEmb n (MvPolynomial.esymm (Fin n) ℂ k) ∈ A := by
+  have h1 : ∀ k, polyEmb (n := n) (MvPolynomial.esymm (Fin n) ℂ k) ∈ A := by
     intro k
     rw [polyEmb_esymm]
     by_cases hk : k ≤ n
@@ -199,7 +199,8 @@ theorem eigenSubalgebra_eq_top (z : Fin n → ℂˣ) {f : GL (Fin n) F → ℂ}
   rwa [← satakeTransform_injective hSe]
 
 theorem eq_smul_sphericalWhittaker {ψ₀ : AddChar F ℂ} (hψ₀ : ∀ x ∈ 𝒪[F], ψ₀ x = 1)
-    (hψ₁ : ∃ x : F, π * x ∈ 𝒪[F] ∧ ψ₀ x ≠ 1) (z : Fin n → ℂˣ) {W : GL (Fin n) F → ℂ}
+    (hψ₁ : ∃ x : F, (GLnLocal.uniformizer F : F) * x ∈ 𝒪[F] ∧ ψ₀ x ≠ 1)
+    (z : Fin n → ℂˣ) {W : GL (Fin n) F → ℂ}
     (hWN : ∀ u ∈ unipotent F n, ∀ g, W (u * g) = Whittaker.psiN ψ₀ u * W g)
     (hWK : ∀ g, ∀ k ∈ integralGL F n, W (g * k) = W g)
     (heig : ∀ (h : SphericalHecke μ (F := F) (n := n)) (g : GL (Fin n) F),

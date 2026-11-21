@@ -30,10 +30,13 @@ theorem skew_of_isFilLift : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.
   obtain ⟨l₁, l₂⟩ := m'.sq
   have C : GlobalTheory.AbDual.CupSquare (epsDP k) (GlobalTheory.DeRham.epsRed k) (o₀.A ⊗ o₀.A) :=
     GlobalTheory.Published.AbelianDualCrystal.cupSquare_crys_prod HR.1 HD.2 (isDPNilpotent_squareZero (SqExt.dual k).sq)
-    GlobalTheory.KSBijection.fst_surj rfl o'.ab hg' o'.ab hg' m'.cart m'.cart
+    (fun r ↦ ⟨TrivSqZeroExt.inl r, rfl⟩) rfl o'.ab hg' o'.ab hg' m'.cart m'.cart
   have iso : LBIso (o₀.P.pull (Over.Hom.left (𝟙 (o₀.A ⊗ o₀.A)))) o₀.P :=
     (GlobalTheory.CechPic.cls_eq_iff (pull_isLB o₀.isLB _) o₀.isLB).1
-      (by rw [GlobalTheory.CechPic.cls_pull o₀.isLB, Over.id_left, GlobalTheory.CechPic.pull_id])
+      (by
+        calc
+          _ = GlobalTheory.CechPic.pull (Over.Hom.left (𝟙 (o₀.A ⊗ o₀.A))) (GlobalTheory.CechPic.cls o₀.P o₀.isLB) := GlobalTheory.CechPic.cls_pull o₀.isLB _ _
+          _ = _ := by rw [Over.id_left, GlobalTheory.CechPic.pull_id])
   obtain ⟨φ', hφ', e'⟩ := hφ.pull o₀.isLB (constMor o₀.A) (constMor o₀.A)
     (h := Over.Hom.left (𝟙 (o₀.A ⊗ o₀.A))) (by simp) (by simp) o₀.isLB iso
   have van := GlobalTheory.BirigidLift.vanish_of_lift HR o'.ab hg' o'.ab hg' m'.cart m'.cart l₁ l₂ C o'.isLB o'.rig₁

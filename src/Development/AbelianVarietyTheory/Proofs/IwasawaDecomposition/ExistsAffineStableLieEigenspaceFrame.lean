@@ -103,7 +103,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {X : Sc
 def Compat (t : SAB H X) {S S' : Type} [CommRing S] [CommRing S'] (ψ : S →+* S') {x : Sp S ⟶ X} {x' : Sp S' ⟶ X} {n : ℕ}
     (xc : ∀ m : ℕ, sp (R₀ := S) (ReciprocityTheory.ChartRestriction.G.Chart.JetR S (Fin n) m) ⟶ (Over.pullback x).obj t.G)
     (xc' : ∀ m : ℕ, sp (R₀ := S') (ReciprocityTheory.ChartRestriction.G.Chart.JetR S' (Fin n) m) ⟶ (Over.pullback x').obj t.G) : Prop :=
-  ∀ cc : Fin n → S, vec t x' xc' (ψ ∘ cc) = spMap (dualMap ψ) ≫ vec t x xc cc
+  ∀ cc : Fin n → S, vec t x' xc' (ψ ∘ cc) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ vec t x xc cc
 
 theorem vec_bc_of_chart {S : Type} [CommRing S] {x : Sp S ⟶ X} {n : ℕ}
     {xc : ∀ m : ℕ, sp (R₀ := S) (ReciprocityTheory.ChartRestriction.G.Chart.JetR S (Fin n) m) ⟶ (Over.pullback x).obj t.G}
@@ -241,7 +241,7 @@ theorem GlobalTheory.ShFam.EigSpread.exists_stable_eigFrame : ∀ (E : Type) [Fi
       simpa only [comb_iff hxL] using this)
   have frame : ∀ (S : Type) [CommRing S] (ψ : Γ(gen Z, U₀) →+* S) (x' : Sp S ⟶ Z.X) (φ' : c.F →+* S),
       x' = spMap ψ ≫ x₀ → φ' = ψ.comp φ₀ → IsUnit (ψ (∏ τ, g τ)) →
-      ∃ f : EigFrame Z φ' x', ∀ τ i, f.v τ i = spMap (dualMap ψ) ≫ vec Z.t x₀ xc (B₀ τ i) := by
+      ∃ f : EigFrame Z φ' x', ∀ τ i, f.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ vec Z.t x₀ xc (B₀ τ i) := by
     intro S _ ψ x' φ' h1 h2 hu
     subst h2
     obtain ⟨xc', hx', hv⟩ := vec_bc_of_chart C hx ψ h1
@@ -270,4 +270,4 @@ theorem GlobalTheory.ShFam.EigSpread.exists_stable_eigFrame : ∀ (E : Type) [Fi
     refine ⟨f', fun τ i => ?_⟩
     rw [hf', hf, ← Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap]
     congr 2
-    exact RingHom.ext fun w => by ext <;> simp [dualMap]
+    exact RingHom.ext fun w => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]

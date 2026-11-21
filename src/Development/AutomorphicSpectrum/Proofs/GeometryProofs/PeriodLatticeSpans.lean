@@ -179,7 +179,7 @@ def famExpAtPoint {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] {g n : �
     have hφ : Continuous (fun p : (Fin 0 → ℂ) × (Fin N → ℂ) => (b, p.2)) := by fun_prop
     have hφ' : Continuous (fun p : (Fin 0 → ℂ) × (Fin g → ℂ) => (b, p.2)) := by fun_prop
     refine ⟨V, N, f, fun p => L (b, p.2), h1, ?_, ?_, ?_⟩
-    · exact AnalyticAt.comp' (f := fun p : (Fin 0 → ℂ) × (Fin N → ℂ) => (b, p.2)) h2
+    · exact AnalyticAt.comp (f := fun p : (Fin 0 → ℂ) × (Fin N → ℂ) => (b, p.2)) h2
         (analyticAt_const.prod analyticAt_snd)
     · exact (hφ'.tendsto (b₀, 0)).eventually h3
     · exact (hφ.tendsto (b₀, _)).eventually h4
@@ -370,7 +370,9 @@ theorem span_per_eq_top : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj 
   obtain ⟨d, t, tadd, thol, tsurj, tper⟩ := exists_torusExp T.X
   have := (compact_alt_alt T.B T.isAbelian).1
   have := (compact_alt_alt T.B T.isAbelian).2
-  have := isTopologicalGroup_over (C := ℂ) T.B
+  have : IsTopologicalGroup (𝟙_ (Over (Sp ℂ)) ⟶ T.B) :=
+    { toContinuousMul := ⟨(continuous_over_comp (μ[T.B])).comp (tensorHomeomorph T.B T.B).symm.continuous⟩
+      toContinuousInv := ⟨continuous_over_comp (GrpObj.inv (X := T.B))⟩ }
   let x := spMap (ψ b)
   let u : (Fin d → ℂ) → (Over.mk x ⟶ G) := fun w => ofFibre G x (t w ≫ T.i)
   have uadd : ∀ z w, u (z + w) = u z * u w := fun z w => by

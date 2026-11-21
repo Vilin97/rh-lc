@@ -88,7 +88,8 @@ theorem exists_indep_ratios {K κ : Type*} [Field K] [Field κ] [Algebra K κ] {
     exact add_le_add h4 le_rfl
   have h5 : (((D + 1) * N : ℕ) : ℕ∞) ≤ (Set.range t).encard := by
     have := ht.injective.encard_range
-    rwa [ENat.card_eq_coe_fintype_card, Fintype.card_prod, Fintype.card_fin, Fintype.card_fin] at this
+    rw [ENat.card_eq_coe_fintype_card, Fintype.card_prod, Fintype.card_fin, Fintype.card_fin] at this
+    exact this.ge
   have hfin : M.eRk (Set.range r) ≠ ⊤ :=
     ne_top_of_le_ne_top (Set.finite_range r).encard_lt_top.ne (M.eRk_le_encard _)
   obtain ⟨n, hn⟩ := ENat.ne_top_iff_exists.mp hfin

@@ -58,7 +58,7 @@ theorem mem_span_integer_kernel {g : ℕ} (Bs : Matrix (Fin g) (Fin g) ℤ)
   have hent : ∀ a c, ((Qᵀ * Bs * Q).submatrix e e) a c = q a ⬝ᵥ Bs *ᵥ q c := by
     intro a c
     rw [Matrix.mul_assoc]
-    simp only [submatrix_apply, mul_apply, transpose_apply, q, dotProduct, mulVec]
+    simp [submatrix_apply, Matrix.mul_apply, transpose_apply, q, dotProduct, mulVec]
   have hnsum : n = ∑ a, w (e a) • (fun i => (q a i : ℝ)) := by
     rw [← hw]
     funext i

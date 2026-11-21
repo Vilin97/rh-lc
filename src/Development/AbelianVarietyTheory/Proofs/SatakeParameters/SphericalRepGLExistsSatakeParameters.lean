@@ -80,7 +80,7 @@ theorem exists_eq_torusChar {n : ℕ} (μ : (Fin n → kˣ) →* ℂˣ) (hμ : �
     · simp [Pi.mulSingle_eq_of_ne h]
   refine ⟨fun i => c i ϖ, MonoidHom.ext fun t => ?_⟩
   rw [torusChar_apply]
-  simp only [← eq_unrChar (hc _) hϖ]
+  simp only [← GlobalTheory.SmGL.eq_unrChar (hc _) hϖ]
   conv_rhs => rw [← Finset.univ_prod_mulSingle t, map_prod]
   rfl
 
@@ -98,7 +98,7 @@ theorem isSubquotient_of_eigenform {n : ℕ} {V : Type} [AddCommGroup V] [Module
         show ofChar μ ((leviTorus k (Fin n)).symm (leviTorus k (Fin n) t)) _ = _
         rw [MulEquiv.symm_apply_apply, ofChar_apply]
       exact (hl t x).trans e.symm⟩
-  obtain ⟨f, hf⟩ := (Model.evalOne_bijective (points (Fin n)) hπ ρ).2 φ
+  obtain ⟨f, hf⟩ := (GlobalTheory.SmGL.Model.evalOne_bijective (points (Fin n)) hπ ρ).2 φ
   have hne : ∃ v, f v ≠ 0 := by
     by_contra h
     push_neg at h

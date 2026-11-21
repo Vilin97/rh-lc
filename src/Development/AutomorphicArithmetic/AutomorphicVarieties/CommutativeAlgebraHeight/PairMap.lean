@@ -28,9 +28,8 @@ private theorem star_single {l : ℕ} [Fact l.Prime] (F : GFrame l) (O : Type) [
 theorem UpperTheory.V.CA.pair_map :
     ∀ {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O] [Finite (ResidueField O)] [CharP (ResidueField O) l] [Algebra ℤ_[l] O] {n : ℕ} (r : Resid F O n) {R R' : Type} [CommRing R] [Algebra O R] [IsCO O R] [CommRing R'] [Algebra O R'] [IsCO O R'] (p : Pair r R) (f : R →ₐ[O] R'), ∃ p' : Pair r R', p.Maps (f : R →+* R') p'.D p'.ψ := by
   intro l _ F O _ _ _ _ _ _ _ n r R R' _ _ _ _ _ _ p f
-  obtain ⟨-, hcomp, hlam, -⟩ := d_gmap p.D
   have hl : ∀ i y, (p.D.map (f : R →+* R')).lam i (MonoidAlgebra.mapRingHom F.G₀ (f : R →+* R') y) = f (p.D.lam i y) :=
-    fun i y => (hlam (f : R →+* R') y).2 i
+    fun i y => ((d_gmap p.D).2.2.1 (f : R →+* R') y).2 i
   have h1 : ∀ g : F.G₀, MonoidAlgebra.mapRingHom F.G₀ (f : R →+* R') (MonoidAlgebra.single g 1) =
       MonoidAlgebra.single g 1 := fun g => by rw [MonoidAlgebra.mapRingHom_single, map_one]
   refine ⟨{ D := p.D.map (f : R →+* R'), ψ := fun v i => pushCh (f : R →+* R') (p.ψ v i),
@@ -38,7 +37,7 @@ theorem UpperTheory.V.CA.pair_map :
   · intro i
     have := adic_map f (p.cont i)
     simpa only [← hl, h1] using this
-  · rw [hcomp, ← p.red]
+  · rw [(d_gmap p.D).2.1, ← p.red]
     congr 1
     ext x
     exact res_map f x
@@ -61,6 +60,8 @@ theorem UpperTheory.V.CA.pair_map :
         MonoidAlgebra.mapRingHom F.G₀ (f : R →+* R') (MonoidAlgebra.single h 1 * F.oEl v (p.ψ v) g) := by
       rw [map_mul, h1, GFrame.oEl, GFrame.oEl, map_list_prod, List.map_ofFn]
       congr 3
+      funext i
+      simp only [Function.comp_apply, map_sub, MonoidAlgebra.mapRingHom_single, map_one]
       rfl
     have := p.Ord v g h
     rw [GDet.tr] at this ⊢

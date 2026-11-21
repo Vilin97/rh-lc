@@ -28,7 +28,7 @@ theorem LeafColHens_of (hS : LeafStage) (hI : LeafInv) (hR : LeafRoot) : LeafCol
     exact ⟨(Δ.leg c k).comp ρ, by rw [RingHom.comp_assoc, hρ, Δ.leg_comp_map]⟩
   refine ⟨?_, ?_⟩
   · intro z hz
-    rw [Ideal.mem_jacobson_bot]
+    rw [Ring.mem_jacobson_iff]
     intro y
     have hzy : z * y ∈ I.map η := Ideal.mul_mem_right y _ hz
     obtain ⟨j, hj⟩ := st.1 {z * y}

@@ -29,7 +29,7 @@ def ProdConvNew : Prop :=
 
 private theorem multipliable_and_tprod_pos_of_finite_mulSupport {ι : Type*} (f : ι → ℝ) (hpos : ∀ i, 0 < f i) (hfin : (Function.mulSupport f).Finite) :
     Multipliable f ∧ 0 < ∏' i, f i := by
-  refine ⟨multipliable_of_finite_mulSupport hfin, ?_⟩
+  refine ⟨multipliable_of_hasFiniteMulSupport hfin, ?_⟩
   rw [tprod_eq_prod' (s := hfin.toFinset) (by simp)]
   exact Finset.prod_pos fun i _ => hpos i
 

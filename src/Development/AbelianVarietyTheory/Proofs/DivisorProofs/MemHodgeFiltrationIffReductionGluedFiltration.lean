@@ -36,7 +36,6 @@ theorem corr_crysRedMor_iff (A₀ : Over (Sp k)) [GrpObj A₀] (hA : IsAbelianSc
     have hm := GlobalTheory.SqZeroCrys.isBC_trivSqZeroExt k V A₀ hA (GlobalTheory.FODef.sqZero k V) (GlobalTheory.FODef.constMorV k V A₀)
     obtain ⟨z, rfl⟩ := hm.2 c'
     induction z with
-    | zero => simp only [map_zero]
     | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
     | tmul r c =>
       rw [liftSemi_tmul]

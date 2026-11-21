@@ -238,6 +238,7 @@ theorem isHaarOn_smul {S : Set (Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1
   · rw [Measure.smul_apply, h3, smul_zero]
   · intro s hs
     rw [Measure.map_smul, h4 s hs]
+    exact (Formalism.L2.SG.Pf.WFL.measurable_lmulM s).aemeasurable
 
 theorem locUniq_gen (hBW : Formalism.L2.SG.LocWSOf.BesselOfW) (hM1 : Formalism.L2.SG.LitS.BesselMultOne)
     (hB : BesselNVGap) (hCW : CoefWeightedLoc) (hWl : WlocExists)

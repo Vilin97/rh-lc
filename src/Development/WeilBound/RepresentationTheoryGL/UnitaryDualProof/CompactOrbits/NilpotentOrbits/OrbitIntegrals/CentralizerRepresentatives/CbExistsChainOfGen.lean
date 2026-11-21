@@ -60,16 +60,16 @@ theorem cb_single (N : W →ₗ[E] W) (L : ℕ) (u : W) (hu : (N ^ L) u = 0) (c 
     refine ⟨s, hsL.le, y, ?_, ?_, ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [hydef, map_sum]
-      refine Finset.sum_eq_zero fun i _ => ?_
-      split_ifs
-      · rw [map_smul, cb_pow_pow, cb_pow_zero_of_le N hu (by omega), smul_zero]
-      · exact map_zero _
+        refine Finset.sum_eq_zero fun i _ => ?_
+        split_ifs
+        · rw [map_smul, cb_pow_pow, cb_pow_zero_of_le N hu (by omega), smul_zero]
+        · exact map_zero _
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [hydef, map_sum]
-      refine Finset.sum_congr rfl fun i _ => ?_
-      split_ifs with h1
-      · rw [map_smul, cb_pow_pow, show s + ((i : ℕ) - s) = i by omega]
-      · rw [map_zero, hmin i (by omega) i.2, zero_smul]
+        refine Finset.sum_congr rfl fun i _ => ?_
+        split_ifs with h1
+        · rw [map_smul, cb_pow_pow, show s + ((i : ℕ) - s) = i by omega]
+        · rw [map_zero, hmin i (by omega) i.2, zero_smul]
     · have hyz : y = c ⟨s, hsL⟩ • u + N z := by
         have hc : c ⟨s, hsL⟩ • u = ∑ i : Fin L, if i = ⟨s, hsL⟩ then c i • u else 0 := by
           rw [Finset.sum_ite_eq']; simp

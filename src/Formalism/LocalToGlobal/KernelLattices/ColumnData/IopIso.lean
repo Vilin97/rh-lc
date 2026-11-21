@@ -34,9 +34,9 @@ theorem Hf_herm (T : Tor D) (x y : VC D N N') :
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_mul, Complex.conj_conj]
-    refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ =>
-      Finset.sum_congr rfl fun j _ => ?_
-    ring
+      refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ =>
+        Finset.sum_congr rfl fun j _ => ?_
+      ring
   · simp
 
 def cf (T : Tor D) (x y : VC D N N') : ℂ :=

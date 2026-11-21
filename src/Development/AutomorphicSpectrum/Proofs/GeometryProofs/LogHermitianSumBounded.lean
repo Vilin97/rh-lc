@@ -33,7 +33,7 @@ theorem log_metrics_bounded (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fin
   let n : K → ((Σ k, ι k) → ℂ) → ℝ := fun k z => ∑ i, ‖z ⟨k, i⟩‖
   let S : Set ((Σ k, ι k) → ℂ) := {z | ∀ k, n k z = 1}
   have hcn : ∀ k, Continuous (n k) := fun k =>
-    continuous_finset_sum _ fun i _ => (continuous_apply _).norm
+    continuous_finsetSum _ fun i _ => (continuous_apply _).norm
   have hnpos : ∀ z : (Σ k, ι k) → ℂ, (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∀ k, 0 < n k z := by
     intro z hz k
     obtain ⟨i, hi⟩ := hz k
@@ -41,7 +41,7 @@ theorem log_metrics_bounded (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fin
   have hSU : S ⊆ {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
     intro z hz k
     by_contra hcon
-    push_neg at hcon
+    push Not at hcon
     have h0 : n k z = 0 := Finset.sum_eq_zero fun i _ => by simp [hcon i]
     have h1 : n k z = 1 := hz k
     rw [h0] at h1

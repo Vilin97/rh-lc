@@ -12,7 +12,7 @@ private lemma algebraMap_eq_zero_of_mem (O K : Type) [CommRing O] [IsLocalRing O
     [Algebra O K] [Algebra.IsIntegral O K] {a : O} (ha : a ∈ IsLocalRing.maximalIdeal O) :
     algebraMap O K a = 0 := by
   have hm : Ideal.comap (algebraMap O K) ⊥ = IsLocalRing.maximalIdeal O :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal ⊥)
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := O) (⊥ : Ideal K))
   have h : a ∈ Ideal.comap (algebraMap O K) ⊥ := hm ▸ ha
   simpa using h
 

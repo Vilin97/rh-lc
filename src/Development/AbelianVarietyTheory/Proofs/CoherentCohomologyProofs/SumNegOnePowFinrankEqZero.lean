@@ -114,7 +114,7 @@ def δ (U : X.Opens) (n : ℕ) : cohOn S.X₃ U n →ₗ[R] cohOn S.X₁ U (n + 
           τ₃ := smulHom S.X₃ r
           comm₁₂ := smulHom_comp r S.f
           comm₂₃ := smulHom_comp r S.g }
-      simpa only [SheafLES.map, Functor.mapShortComplex_map_τ₁,
+      simpa only [SheafLES.map, SiteCoh.map, Functor.mapShortComplex_map_τ₁,
         Functor.mapShortComplex_map_τ₃, φ] using
         (SheafLES.δ_naturality.{u} (shortExact_toAbSheaf hS) (shortExact_toAbSheaf hS)
           ((toAbSheaf (X := X)).mapShortComplex.map φ) n U x).symm

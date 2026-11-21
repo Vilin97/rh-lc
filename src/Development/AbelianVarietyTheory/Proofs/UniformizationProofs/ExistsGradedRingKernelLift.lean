@@ -121,7 +121,7 @@ theorem exists_graded_ring_kernel_lift : ∀ (R : Type) [CommRing R] [IsNoetheri
       rw [Ideal.Quotient.eq, mem_reesShiftIdeal] at h'
       have h'' := h' (e + 1)
       rw [Subalgebra.coe_sub, Polynomial.coeff_sub, coeff_sum_algebraMap_mul_rees, hm,
-        Polynomial.coeff_monomial, if_pos rfl] at h''
+        Polynomial.coeff_monomial, Finsupp.single_eq_same] at h''
       exact h''
     refine ⟨fun k => Ideal.Quotient.mk _ (r k - (P k : R[X]).coeff (e + 1)), ?_, ?_⟩
     · funext j

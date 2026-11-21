@@ -124,7 +124,7 @@ private theorem mul_eq_mul_of_ratio_eq_one {n : ℕ} {R : Type} [CommRing R] [Al
         apply Subtype.ext
         have := proj_of_mem ρ' e he i j _ (φ i ((ρ (e i)).rangeRestrict v)).2
         simpa [h] using this
-      rw [h1, map_zero, if_neg h]
+      rw [h1, (φ j).symm.map_zero, if_neg h]
       rfl
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum, Submodule.coe_subtype,

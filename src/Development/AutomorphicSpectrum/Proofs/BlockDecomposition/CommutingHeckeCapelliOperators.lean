@@ -155,8 +155,9 @@ theorem gens_comm (r s : ℕ) : ∀ a ∈ gens E r s, ∀ b ∈ gens E r s, a * 
 
 theorem capAlg_comm (r s : ℕ) : ∀ x ∈ capAlg E r s, ∀ y ∈ capAlg E r s, x * y = y * x := by
   intro x hx y hy
-  letI := Algebra.adjoinCommRingOfComm ℂ (gens_comm (E := E) r s)
-  exact congrArg Subtype.val (mul_comm (⟨x, hx⟩ : Algebra.adjoin ℂ (gens E r s)) ⟨y, hy⟩)
+  letI := Algebra.isMulCommutative_adjoin ℂ (s := gens E r s)
+    (fun a ha b hb _ => gens_comm (E := E) r s a ha b hb)
+  exact setLike_mul_comm (s := Algebra.adjoin ℂ (gens E r s)) hx hy
 
 theorem capAlg_le (r s : ℕ) (T : Subalgebra ℂ (Module.End ℂ (Sm E (r + s))))
     (hT : ∀ τ p q, Eop (a := r + s) τ p q ∈ T) : capAlg E r s ≤ T := by

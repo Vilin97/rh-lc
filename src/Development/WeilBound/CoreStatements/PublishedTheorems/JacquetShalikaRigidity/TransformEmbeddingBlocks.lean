@@ -222,7 +222,7 @@ theorem emb_blkU {k m j : ℕ} (hkm : k ≤ m) (hj : j < k) (ι : GA E k →* GA
     congr 1
     · simp [Matrix.one_apply, Fin.ext_iff]
     · refine Fintype.sum_equiv (sig hkm hj) _ _ fun t => ?_
-      simp [Fin.ext_iff]
+      simp [sig, Fin.ext_iff]
   · symm
     apply blkU_apply_of
     rintro t ⟨e1, e2⟩

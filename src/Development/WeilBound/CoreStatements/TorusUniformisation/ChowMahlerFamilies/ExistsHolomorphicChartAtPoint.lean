@@ -222,6 +222,8 @@ theorem ring_chart {K A : Type} [Field K] [CommRing A] [Algebra K A] (d : ℕ) [
     rw [← (hε hb).2.1]
     show _ = Φ (L (κ b))
     congr 1
+    funext i
+    simp only [L, κ, Equiv.symm_apply_apply]
     field_simp
     ring
 

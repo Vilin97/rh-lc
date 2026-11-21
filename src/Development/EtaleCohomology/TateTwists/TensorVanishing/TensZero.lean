@@ -82,7 +82,6 @@ theorem Dm_lof (U : Scheme.{0}) (w w' : ℤ) (hw : w + 1 = w') (p : Ix w) (v : C
   classical
   unfold Dm
   convert DirectSum.toModule_lof (ULift.{1} R) p v using 1
-  simp only [LinearMap.add_apply, LinearMap.smul_apply, LinearMap.comp_apply]
 
 theorem lift_lof (τ : Pair C J T) (U : Scheme.{0}) (w : ℤ) (p : Ix w) (a : Sec (C.X p.1.1) U)
     (b : Sec (J.X p.1.2) U) :

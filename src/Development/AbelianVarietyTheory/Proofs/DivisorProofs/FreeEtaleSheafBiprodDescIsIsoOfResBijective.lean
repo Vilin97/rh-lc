@@ -98,5 +98,7 @@ theorem freeYoneda_desc_isIso : ∀ (R : Type) [CommRing R] {Y₁ Y₂ X : Schem
       exact ⟨biprod.desc a b, by simp⟩
   refine (hβ.of_comp_iff' _).1 ?_
   convert key using 1
+  funext h
+  simp
 
 end GlobalTheory.EtC

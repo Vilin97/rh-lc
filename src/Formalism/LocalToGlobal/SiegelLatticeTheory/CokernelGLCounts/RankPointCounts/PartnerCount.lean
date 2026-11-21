@@ -792,7 +792,7 @@ theorem repF_cell (hN : PairVal.NormRepExists D u u' F0 what₂) (hrows : IsRowR
   have hex : ∃ x : Point D.host.E (D.R.rS + 1) × LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E) × PairVal.MatR D ×
       PairVal.MatR D, PairVal.NormRep γ x.1 x.2.1 x.2.2.1 x.2.2.2 := ⟨(w, y), hy⟩
   have hn : nrep γ = some hex.choose := dif_pos hex
-  have hz : zT γ = ZhatL (lf D F0) (repF γ) := by unfold zT repF; rw [hn]
+  have hz : zT γ = ZhatL (lf D F0) (repF γ) := by unfold zT repF; rw [hn]; rfl
   have hA := atMat_zT hN hrows ⟨⟨hgen, hG⟩, hat⟩ (eligRel_holds γ w ⟨⟨hgen, hG⟩, hat⟩)
   rw [hz] at hA
   exact ⟨hz, hA⟩

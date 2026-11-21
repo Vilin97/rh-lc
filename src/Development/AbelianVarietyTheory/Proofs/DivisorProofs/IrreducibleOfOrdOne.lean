@@ -121,10 +121,17 @@ theorem disc_residue_eq : ∀ {L K : Type} [Field L] [Field K] (cL : ℂ →+* L
     rw [zero_mul] at hhf
     exact mul_ne_zero hh0 hf0 hhf
   have hFw : F.formOrd (dForm cK (fun i => ψ (w i))) = F.ord (ψ h) := by
-    rw [hhw, (hIK.2 F).2.2.1 _ _ hvne hψh, hFO, add_zero]
+    have hs : F.formOrd (ψ h • dForm cK (Fin.cons (ψ us) (fun i => ψ (zs i)))) =
+        F.ord (ψ h) + F.formOrd (dForm cK (Fin.cons (ψ us) (fun i => ψ (zs i)))) := by
+      simpa only [Place.formOrd] using (hIK.2 F).2.2.1 _ _ hvne hψh
+    rw [hhw, hs]
+    simpa only [Place.formOrd, hFO, add_zero]
   have hPη : ∀ P : Place cL, P.IsPrimeOf Q → P.formOrd η = P.ord H := by
     intro P hPQ
-    rw [← hH, (hIL.2 P).2.2.1 Ω0 H hΩne hH0, hzO P hPQ, add_zero]
+    have hs : P.formOrd (H • Ω0) = P.ord H + P.formOrd Ω0 := by
+      simpa only [Place.formOrd] using (hIL.2 P).2.2.1 Ω0 H hΩne hH0
+    rw [← hH, hs]
+    simpa only [Place.formOrd, hzO P hPQ, add_zero]
   have hPo : ∀ P : Place cL, P.ord (h : L) + P.ord (f : L) = P.ord H + P.ord (t : L) := by
     intro P
     rw [← P.ord_mul hh0 hf0, ← P.ord_mul hH0 ht0, hhf]

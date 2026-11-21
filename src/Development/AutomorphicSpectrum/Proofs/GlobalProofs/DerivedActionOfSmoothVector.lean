@@ -66,7 +66,9 @@ theorem hasDerivAt_dRep_and_isSmoothVec : ∀ {n : ℕ} {G : Set (Matrix (Fin n)
     have h3 := h2.comp_hasDerivAt (0 : ℝ) (hasDerivAt_coord_mul_exp g X)
     refine h3.congr_of_eventuallyEq (Filter.Eventually.of_forall fun t => ?_)
     have hm : g * NormedSpace.exp (t • X) ∈ G := hG.mul_mem g hg _ (hX t)
-    have := hFG (Matrix.of.symm (g * NormedSpace.exp (t • X))) (by simpa using hm)
+    have := hFG (Matrix.of.symm (g * NormedSpace.exp (t • X))) (by
+      rw [Equiv.apply_symm_apply]
+      exact hm)
     simp only [Equiv.apply_symm_apply] at this
     simp only [Function.comp, coord_apply]
     rw [← this, hrep.2 g hg _ (hX t)]

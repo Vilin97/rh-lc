@@ -51,7 +51,7 @@ theorem UpperTheory.sections_specPi_bijective_prod_sections :
       (F.obj ⋙ CategoryTheory.forget (ModuleCat (ULift.{1, 0} R))) := by
     apply Presieve.isSheaf_of_le _ Scheme.zariskiTopology_le_etaleTopology
     rw [← isSheaf_iff_isSheaf_of_type]
-    exact (Presheaf.isSheaf_iff_isSheaf_forget _ _ (CategoryTheory.forget _)).mp F.cond
+    exact (Presheaf.isSheaf_iff_isSheaf_forget _ _ (CategoryTheory.forget _)).mp F.property
   have key := bijective_sheaf_sigma_restrict hG (fun i => Spec (CommRingCat.of (C i)))
   have hiso : Function.Bijective ((F.obj ⋙ CategoryTheory.forget _).map
       (sigmaSpec (fun i => CommRingCat.of (C i))).op) :=

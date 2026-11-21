@@ -69,7 +69,7 @@ theorem degreeOf_polOf_le (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ)
 theorem monomial_kill (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) (hP : polOf φ d = 0)
     (m : σ →₀ ℕ) (hm : ∑ x, m x = d) : φ (monomial m 1) = 0 := by
   have h := coeff_polOf φ d m hm
-  rw [hP, coeff_zero] at h
+  rw [hP, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h
   have hne : (Nat.multinomial Finset.univ m : ℝ) ≠ 0 := by
     exact_mod_cast (Nat.multinomial_pos _ _).ne'
   rcases mul_eq_zero.mp h.symm with h1 | h1

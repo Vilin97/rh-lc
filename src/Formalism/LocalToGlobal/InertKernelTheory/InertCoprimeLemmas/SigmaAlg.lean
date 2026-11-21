@@ -82,7 +82,7 @@ open PowerSeries
 def InQ (f : PowerSeries ℂ) : Prop := ∀ k, coeff k f ∈ Formalism.MainNotions.TaylorLogMetric.Qbar
 
 theorem inQ_add {f g : PowerSeries ℂ} (hf : InQ f) (hg : InQ g) : InQ (f + g) := fun k => by
-  rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hf k) (hg k)
+  rw [map_add]; exact add_mem (hf k) (hg k)
 
 theorem inQ_neg {f : PowerSeries ℂ} (hf : InQ f) : InQ (-f) := fun k => by
   rw [map_neg]; exact neg_mem (hf k)

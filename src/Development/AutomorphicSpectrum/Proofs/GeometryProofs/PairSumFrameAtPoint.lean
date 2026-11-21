@@ -79,7 +79,7 @@ theorem exists_dual_sum (𝔐 : HodgeCpt Y S y) (hind : iSupIndep 𝔐.Vgen) (q 
     (hind.disjoint_biSup_biSup (s := {a, b}) (t := {a, b}ᶜ) disjoint_compl_right).mono_left
       (sup_le (le_biSup 𝔐.Vgen (by simp)) (le_biSup 𝔐.Vgen (by simp)))
   obtain ⟨C, hC, hc⟩ := hdis.symm.exists_isCompl
-  let pr : 𝔐.Li →ₗ[Ω] ↥(𝔐.Vgen a ⊔ 𝔐.Vgen b) := Submodule.linearProjOfIsCompl _ _ hc.symm
+  let pr : 𝔐.Li →ₗ[Ω] ↥(𝔐.Vgen a ⊔ 𝔐.Vgen b) := Submodule.projectionOnto _ _ hc.symm
   have hker : LinearMap.ker (Fintype.linearCombination Ω bb) = ⊥ := by
     refine LinearMap.ker_eq_bot'.2 fun m hm => funext fun k => ?_
     exact Fintype.linearIndependent_iff.1 hli m (by rwa [Fintype.linearCombination_apply] at hm) k
@@ -88,7 +88,7 @@ theorem exists_dual_sum (𝔐 : HodgeCpt Y S y) (hind : iSupIndep 𝔐.Vgen) (q 
     have := LinearMap.congr_fun hg (Pi.single l 1)
     simpa [Fintype.linearCombination_apply_single] using this
   have hpr : ∀ w : ↥(𝔐.Vgen a ⊔ 𝔐.Vgen b), pr (w : 𝔐.Li) = w := fun w =>
-    Submodule.linearProjOfIsCompl_apply_left hc.symm w
+    Submodule.projectionOnto_apply_left hc.symm w
   refine ⟨fun j => (LinearMap.proj j).comp (g.comp pr), fun j k => ?_, fun j e he => ?_⟩
   · simp only [LinearMap.comp_apply, hpr, hgb, LinearMap.proj_apply]
     simp [Pi.single_apply]
@@ -114,14 +114,14 @@ theorem exists_dual_sum (𝔐 : HodgeCpt Y S y) (hind : iSupIndep 𝔐.Vgen) (q 
           exact Finset.sum_congr rfl fun k _ => e1 k
         set_option synthInstance.maxHeartbeats 100000 in
           simp only [LinearMap.comp_apply, e2, map_sum, map_smul, hgb, LinearMap.proj_apply]
-        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+        simp only [Pi.smul_apply, smul_eq_mul]
         refine sum_mem fun k _ => mul_mem (c' k).2 ?_
         rw [Pi.single_apply]
         split_ifs
         · exact one_mem _
         · exact zero_mem _
       · have hxC : x ∈ C := hC (Submodule.mem_iSup_of_mem s' (Submodule.mem_iSup_of_mem hs hx.2))
-        have : pr x = 0 := Submodule.linearProjOfIsCompl_apply_right' hc.symm hxC
+        have : pr x = 0 := Submodule.projectionOnto_apply_of_mem_right hc.symm hxC
         simp [this]
     | zero => simp
     | add x y _ _ hx hy => simpa using add_mem hx hy

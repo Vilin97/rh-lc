@@ -190,7 +190,7 @@ private theorem pe_maps_of {B : Type} [CommRing B] [Algebra O B] [IsCO O B] (u :
     ext g
     exact hf (congrArg Units.val (DFunLike.congr_fun h1 g))
 
-private theorem pe_form (ρ : NRep F n A) : G.IsForm O n (K.tw ρ).toHomUnits (Jgl A n) := by
+private theorem pe_form (ρ : NRep F n A) : G.IsForm O n (K.tw ρ).toHomUnits (Jgl (R := A) n) := by
   intro g
   have hk : (K.κA A) g * (K.κA A) (G.conj g) = (G.eps O A) g ^ (1 - (n : ℤ)) := by
     have h := congrArg (Units.map ((algebraMap O A : O →+* A) : O →* A)) (K.κ_conj g)
@@ -208,7 +208,7 @@ private theorem pe_form (ρ : NRep F n A) : G.IsForm O n (K.tw ρ).toHomUnits (J
   have hinv : ∀ h : F.G0, (ρ.r h)ᵀ * (ρ.r h⁻¹)ᵀ = 1 := by
     intro h
     rw [← Matrix.transpose_mul, ← map_mul, inv_mul_cancel, map_one, Matrix.transpose_one]
-  have hJ : ((Jgl A n : GL (Fin n) A) : Matrix (Fin n) (Fin n) A) = Jmat A n := rfl
+  have hJ : ((Jgl n : GL (Fin n) A) : Matrix (Fin n) (Fin n) A) = Jmat A n := rfl
   show (K.tw ρ g)ᵀ * _ * K.tw ρ (G.conj g) = _
   rw [hJ]
   simp only [Pr.TwLink.tw, MonoidHom.coe_mk, OneHom.coe_mk]
@@ -390,7 +390,7 @@ theorem UpperTheory.V.Pr.pointEx_of_le {l : ℕ} [Fact l.Prime] {O : Type} [Comm
   have hcont : ∀ i k, AdicCont (maximalIdeal (PowerSeries K))
       fun g => (L.ρ.map (j : L.R →+* PowerSeries K)).r g i k := fun i k =>
     pe_cont (j : L.R →+* PowerSeries K) ((loc_rho T.ok T.n23 T.S x L).1.1 i k)
-  refine ⟨⟨K, (T.K.tw (L.ρ.map (j : L.R →+* PowerSeries K))).toHomUnits, ?_, Jgl _ n, ?_,
+  refine ⟨⟨K, (T.K.tw (L.ρ.map (j : L.R →+* PowerSeries K))).toHomUnits, ?_, Jgl n, ?_,
     pe_form T.K _, ?_, ?_, T.K.twψ (L.ρ.map (j : L.R →+* PowerSeries K)), ?_, ?_⟩, j, hjk, hjl,
     hmat, rfl, ?_⟩
   · intro a b

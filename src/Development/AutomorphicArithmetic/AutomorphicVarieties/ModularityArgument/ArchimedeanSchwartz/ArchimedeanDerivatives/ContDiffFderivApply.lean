@@ -132,7 +132,7 @@ private theorem dir_comm (u w : Lie K n) : Commute (dirOp u) (dirOp w) := by
   refine LinearMap.ext fun F => Subtype.ext (funext fun y => ?_)
   change fderiv ℝ (fun z => fderiv ℝ F.1 z w) y u = fderiv ℝ (fun z => fderiv ℝ F.1 z u) y w
   rw [fderiv_fderiv_apply (cd_of F), fderiv_fderiv_apply (cd_of F)]
-  exact ((cd_of F).contDiffAt.isSymmSndFDerivAt (by simp; exact WithTop.coe_le_coe.2 le_top)) _ _
+  exact ((cd_of F).contDiffAt.isSymmSndFDerivAt (by simp)) _ _
 
 private theorem d_comm (τ : K →+* ℂ) (a b c e : Fin n) : Commute (dOp τ a b) (dOp τ c e) := by
   have h : ∀ u : Lie K n, Commute (dirOp u) (dOp τ c e) := fun u =>

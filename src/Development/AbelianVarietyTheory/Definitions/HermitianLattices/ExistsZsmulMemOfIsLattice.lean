@@ -53,12 +53,8 @@ theorem exists_zsmul (h : IsLatticeEmb φ) (v : Fin r → K) :
 theorem isLocalizedModule_int (h : IsLatticeEmb φ) :
     IsLocalizedModule ℤ⁰ (φ.restrictScalars ℤ) where
   map_units s := by
-    have hs : ((s : ℤ) : ℚ) ≠ 0 := by exact_mod_cast nonZeroDivisors.coe_ne_zero s
-    rw [Module.End.isUnit_iff]
-    have : ⇑(algebraMap ℤ (Module.End ℤ (Fin r → K)) s) = fun v => ((s : ℤ) : ℚ) • v := by
-      funext v; rw [Module.algebraMap_end_apply, Int.cast_smul_eq_zsmul]
-    rw [this]
-    exact MulAction.bijective (Units.mk0 _ hs)
+    rw [← (Algebra.lsmul ℤ (A := ℚ) ℤ (Fin r → K)).commutes]
+    exact (IsLocalization.map_units ℚ s).map _
   surj v := by
     obtain ⟨n, hn, x, hx⟩ := h.exists_zsmul v
     exact ⟨(x, ⟨n, mem_nonZeroDivisors_of_ne_zero hn⟩), hx.symm⟩

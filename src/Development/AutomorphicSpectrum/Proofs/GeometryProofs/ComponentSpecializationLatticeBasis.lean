@@ -35,14 +35,15 @@ variable {X : Scheme.{0}} {G : Over X} [GrpObj G] {Ω : Type} [Field Ω] {ξ : S
 
 theorem valAt_of_isDiffOf {M : LieModel G ξ V} {z : Sp K ⟶ X} (f : G ⟶ G) [IsMonHom f] (A : V →ₗ[Ω] V)
     (hf : M.IsDiffOf f A) {e : V} {w : epsAt z ⟶ G} (h : M.ValAt z e w) : M.ValAt z (A e) (w ≫ f) := by
-  obtain ⟨hs, v, hv, rfl⟩ := (M.valAt_iff z e w).1 h
-  refine (M.valAt_iff z _ _).2 ⟨hs, v ≫ f, ?_, by rw [Category.assoc]⟩
-  rw [LieModel.extends_iff] at hv ⊢
-  refine ⟨?_, ?_⟩
-  · have h1 := (isTanAt_iff v).1 hv.1
-    refine (isTanAt_iff _).2 ?_
-    rw [← Category.assoc, h1, one_comp]
-  · rw [hf e, hv.2, Category.assoc]
+  obtain ⟨hs, v, hv, hw⟩ := h
+  refine ⟨hs, v ≫ f, ⟨?_, ?_⟩, ?_⟩
+  · change _ ≫ (v ≫ f).left = _
+    rw [Over.comp_left, ← Category.assoc, hv.1]
+    exact congrArg Over.Hom.left (one_comp f)
+  · change (M.pt (A e)).left = _
+    rw [hf e, Over.comp_left, hv.2, Over.comp_left, Category.assoc]
+  · change (w ≫ f).left = _
+    rw [Over.comp_left, hw, Over.comp_left, Category.assoc]
 
 theorem exists_model_of_frame [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ) (M : LieModel G ξ V) (z : Sp K ⟶ X)
     (h : genPt ξ ⤳ centre z) (ψ : regAt ξ ⟨_, h⟩ →+* K) (hψ : ∀ a : regAt ξ ⟨_, h⟩, ValAt ξ z (a : Ω) (ψ a)) {g : ℕ}

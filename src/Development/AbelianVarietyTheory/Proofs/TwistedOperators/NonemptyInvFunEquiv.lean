@@ -120,7 +120,8 @@ theorem Contracts.congr {F F' V' W' : Type} [AddCommGroup F] [Module ℂ F] [Add
   · obtain ⟨x, rfl⟩ := (TensorProduct.congr e1 e2).surjective x
     refine hk (l ∘ₗ (TensorProduct.congr e1 e2).toLinearMap) (fun h f v => ?_) x ?_
     · simp [he1, he2, hl]
-    · simpa using hx
+    · change e3 (π ((TensorProduct.congr e1 e2).symm ((TensorProduct.congr e1 e2) x))) = 0 at hx
+      simpa only [LinearEquiv.symm_apply_apply, LinearEquiv.map_eq_zero_iff] using hx
 
 end General
 

@@ -103,7 +103,10 @@ lemma exists_fib_eq_one (hH : IsClosed (H : Set G)) (κ : Measure H) [SFinite κ
       congr 1
       rw [← lintegral_indicator_one (hS ((d n)⁻¹ * x))]
       congr 1
-      first | rfl | simp [Set.indicator_apply]
+      funext h
+      by_cases hh : (d n)⁻¹ * (x * (h : G)) ∈ V
+      · simp [Set.indicator_of_mem, hh, mul_assoc]
+      · simp [Set.indicator_of_notMem, hh, mul_assoc]
     have hC : κ {h : H | (h : G) ∈ V⁻¹ * V} < ∞ := measure_coset_lt_top hH κ hVc
     refine ⟨fun x => ∑' n, (2⁻¹ : ℝ≥0∞) ^ n * V.indicator 1 ((d n)⁻¹ * x), ?_, ?_, ?_⟩
     · exact Measurable.tsum (fun n => measurable_const.mul
@@ -123,7 +126,7 @@ lemma exists_fib_eq_one (hH : IsClosed (H : Set G)) (κ : Measure H) [SFinite κ
       have hpos' := measure_nhds_pos κ hnb
       calc (0 : ℝ≥0∞) < (2⁻¹ : ℝ≥0∞) ^ n * κ {h : H | (d n)⁻¹ * x * (h : G) ∈ V} :=
             ENNReal.mul_pos (by simp) hpos'.ne'
-        _ ≤ _ := ENNReal.le_tsum n
+        _ ≤ _ := ENNReal.le_tsum (f := fun n => (2⁻¹ : ℝ≥0∞) ^ n * κ {h : H | (d n)⁻¹ * x * (h : G) ∈ V}) n
     · intro x
       rw [hfib x]
       have hle : ∑' n, (2⁻¹ : ℝ≥0∞) ^ n * κ {h : H | (d n)⁻¹ * x * (h : G) ∈ V}

@@ -126,7 +126,7 @@ theorem infinitePart_le (A : Matrix (Fin a) (Fin a) (Ad E)) (B : ℝ) (hB : 1 �
     have hB2 : 1 ≤ |B ^ 2| := by
       rw [abs_of_nonneg (sq_nonneg B)]
       nlinarith
-    calc _ ≤ Real.posLog (B ^ 2) := Real.monotoneOn_posLog h0 (sq_nonneg B) hle
+    calc _ ≤ Real.posLog (B ^ 2) := Real.monotoneOn_posLog (by simp; linarith) (by simp; nlinarith [sq_nonneg B]) hle
       _ = Real.log (B ^ 2) := Real.posLog_eq_log hB2
       _ = 2 * Real.log B := by rw [Real.log_pow]; norm_num
   calc infP A ≤ ∑ _v : InfinitePlace E, 2 * Real.log B := Finset.sum_le_sum fun v _ => key v
@@ -160,14 +160,20 @@ theorem finP_mul_infGL (g : GA E a) (y : GL (Fin a) (Cinf E)) :
   unfold finP
   refine finsum_congr fun w => ?_
   congr 2
+  funext p
+  change ‖pLoc E w (pFin E ((g * infGL E a y).val p.1 p.2))‖ = _
   rw [pFin_mul_infGL]
+  rfl
 
 theorem finP_inv_mul_infGL (g : GA E a) (y : GL (Fin a) (Cinf E)) :
     finP ((g * infGL E a y)⁻¹).val = finP (g⁻¹).val := by
   unfold finP
   refine finsum_congr fun w => ?_
   congr 2
+  funext p
+  change ‖pLoc E w (pFin E (((g * infGL E a y)⁻¹).val p.1 p.2))‖ = _
   rw [pFin_inv_mul_infGL]
+  rfl
 
 theorem logSize_mul_infGL (g : GA E a) : ∃ D : ℝ, ∀ y : GL (Fin a) (Cinf E),
     logSize (g * infGL E a y) ≤ D + 4 * Fintype.card (InfinitePlace E) * Real.log (height y) := by

@@ -112,7 +112,7 @@ theorem gramC_eq (H : HermSp M V) {r : ℕ} (f f' : Fin (r + 1) → V) (T T' : F
     gramC (M.L.cj : E →+* E) (H.Zhat f f') (algebraMap F E T) (algebraMap F E T') =
       (H.gram (Sum.elim f f')).transpose := by
   rw [gram_eq_fromBlocks H f f' T T' hF hF', Matrix.fromBlocks_transpose]
-  ext (a | a) (b | b) <;> simp [gramC, cornerM, and_comm]
+  ext (a | a) (b | b) <;> simp [gramC, cornerM, Function.swap, and_comm]
 
 theorem unit_gramC (H : HermSp M V) {r : ℕ} (f f' : Fin (r + 1) → V) (T T' : F)
     (hF : Formalism.MainNotions.ThinScalesBound.FrameK H f T) (hF' : Formalism.MainNotions.ThinScalesBound.FrameK H f' T')

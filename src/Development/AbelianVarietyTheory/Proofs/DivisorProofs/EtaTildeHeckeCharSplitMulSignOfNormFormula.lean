@@ -80,10 +80,10 @@ theorem hom_int (s : E ≃ₐ[ℚ] E) {G : Type} [CommGroup G]
     · obtain ⟨z, a1, a2, a3⟩ := h4 P hP
       refine ⟨z, fun Q _ => ?_, fun Q _ => ?_⟩
       · by_cases hQ : Q = P
-        · rw [hQ, a1, multiplicity_self]; simp
+        · rw [hQ, a1, multiplicity_self (FiniteMultiplicity.of_prime_left P.prime P.ne_bot)]; simp
         · rw [(a3 Q hQ).1, mult_ne hQ]; simp
       · by_cases hQ : Q = P
-        · rw [hQ, a2, multiplicity_self]; simp
+        · rw [hQ, a2, multiplicity_self (FiniteMultiplicity.of_prime_left P.prime P.ne_bot)]; simp
         · rw [(a3 Q hQ).2, mult_ne hQ]; simp
     · exact ⟨1, gmov P hP, (map_one c).symm ▸ gmov P hP⟩
   have gex : ∀ B : Ideal (𝓞 E), B ≠ ⊥ → ∃ z, Gen B z ∧ Gen B (c z) := by

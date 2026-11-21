@@ -141,7 +141,7 @@ theorem exists_nsmul_add_apply_ne_zero [∀ j, IsAddTorsionFree (W j)] (l : ∀ 
     have h4 : (a : ℕ) • l j w = (b : ℕ) • l j w := add_right_cancel (h1.trans h2.symm)
     have h5 : ((a : ℤ) - (b : ℤ)) • l j w = 0 := by
       rw [sub_smul, natCast_zsmul, natCast_zsmul, h4, sub_self]
-    have h6 := (smul_eq_zero.1 h5).resolve_right hw
+    have h6 := (IsAddTorsionFree.zsmul_eq_zero_iff_left hw).1 h5
     exact Fin.ext (by omega)
   have := Fintype.card_le_of_injective _ hinj
   simp at this
@@ -179,7 +179,9 @@ variable {K : Type*} [Field K] [CharZero K] [Module K V] [∀ j, Module K (W j)]
 theorem exists_sum_natCast_smul_apply_ne_zero [Fintype κ]
     (l : ∀ j, V →ₗ[K] W j) (s : κ → V) (h : ∀ j, ∃ k, l j (s k) ≠ 0) :
     ∃ c : κ → ℕ, (∀ k, c k ≤ Fintype.card ι) ∧ ∀ j, l j (∑ k, (c k : K) • s k) ≠ 0 := by
-  have : ∀ j, IsAddTorsionFree (W j) := fun j => IsAddTorsionFree.of_isTorsionFree K (W j)
+  have : ∀ j, IsAddTorsionFree (W j) := fun j => by
+    letI : HasUniqueDiv (W j) := HasUniqueDiv.of_isTorsionFree K (W j)
+    infer_instance
   simp only [Nat.cast_smul_eq_nsmul]
   exact exists_sum_nsmul_apply_ne_zero (fun j => (l j).toAddMonoidHom) s h
 

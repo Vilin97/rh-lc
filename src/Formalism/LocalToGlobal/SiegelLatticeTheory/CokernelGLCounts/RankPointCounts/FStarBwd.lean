@@ -53,16 +53,14 @@ theorem mem_EZ_of {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hn : n ∈ unipotent
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · rw [← hF]
     refine ⟨(IsLift_mapL n hβ Λ₂ F'₂).2 hT.1, (IsAdmissible_mapL n hβ _ Λ₂ _ F'₂).2 hT.2.1, ?_⟩
-    rw [gval_mapL n hβ]
-    exact hT.2.2
+    exact (gval_mapL n hβ (lf D F0) F'₂).symm ▸ hT.2.2
   · rw [← hF]
     exact (AdmWit_mapL n hβ _ Λ₂ _ F'₂ 1).2 hA
   · rw [← hF]
     exact (generic_isomorphism_holds (S := VS D) (r := D.R.rS) (gS D) _ _ n hβ Λ₂ (lf D F0) F'₂).2 hG
   · have h := (positive_definite_isomorphism D u' n hβ Λ₂ (lf D F0) F'₂).2 ⟨hT.1, hT.2.1, hO⟩
     exact h.2.2
-  · rw [zhatL_mapL_N0F hn]
-    exact hZ
+  · exact (zhatL_mapL_N0F hn F'₂).trans hZ
 
 theorem gmap_eq_of_image {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} {Λ Λ₂ : Submodule (𝓞 D.host.E) (VS D).V}
     (h : (n : (VS D).V → (VS D).V) '' (Λ₂ : Set (VS D).V) = (Λ : Set (VS D).V)) : Formalism.HermitianLatticesTheory.gmap n Λ₂ = Λ := by

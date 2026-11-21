@@ -816,9 +816,18 @@ theorem covolume_positive : VolCPos := by
   intro E _ _ _ a b AA0 SS N N' hN hN' hsN hsN' hAA _
   have sa := stdLat_lattice (E := E) (n := a)
   have sb := stdLat_lattice (E := E) (n := b)
+  have hstd (n : ℕ) : Submodule.span E (stdLat E n : Set (Sp E n)) = ⊤ := by
+    rw [eq_top_iff]
+    intro x _
+    have hx : x = ∑ i : Fin n, x i • (Pi.single i (1 : E) : Sp E n) := by
+      funext j
+      simp [Finset.sum_apply, Pi.single_apply]
+    rw [hx]
+    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+      (Submodule.subset_span (single_mem_stdLat (E := E) (n := n) i 1))
   obtain ⟨νa₁, ha₁0, ha₁⟩ := exists_smul_le (stdLat E a) N sa.fg hsN
-  obtain ⟨νb₁, hb₁0, hb₁⟩ := exists_smul_le N' (stdLat E b) hN' sb.span_eq_top
-  obtain ⟨νa₂, ha₂0, ha₂⟩ := exists_smul_le N (stdLat E a) hN sa.span_eq_top
+  obtain ⟨νb₁, hb₁0, hb₁⟩ := exists_smul_le N' (stdLat E b) hN' (hstd b)
+  obtain ⟨νa₂, ha₂0, ha₂⟩ := exists_smul_le N (stdLat E a) hN (hstd a)
   obtain ⟨νb₂, hb₂0, hb₂⟩ := exists_smul_le (stdLat E b) N' sb.fg hsN'
   have h1 := perO_scale AA0 N (stdLat E a) N' (stdLat E b) νa₁ νb₁ ha₁ hb₁
   have h2 := perO_scale AA0 (stdLat E a) N (stdLat E b) N' νa₂ νb₂ ha₂ hb₂

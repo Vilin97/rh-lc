@@ -259,7 +259,8 @@ theorem exists_periodMatrix {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X
     have hsel : ∀ (W : Matrix (Fin q ⊕ Fin p) (Fin q) ℂ) (i : Fin p) (j : Fin q),
         (fromCols (0 : Matrix (Fin p) (Fin q) ℂ) (1 : Matrix (Fin p) (Fin p) ℂ) * W) i j = W (Sum.inr i) j := by
       intro W i j
-      simp [Matrix.mul_apply, Fintype.sum_sum_type, one_apply]
+      simpa [Matrix.mul_apply, Fintype.sum_sum_type] using
+        congrFun (congrFun (Matrix.one_mul (W.submatrix Sum.inr id)) i) j
     have hAdQ1 : A u₀ * dM Q1f u₀ v = 0 := by
       ext i j
       rw [hA0, Matrix.mul_assoc, hsel]

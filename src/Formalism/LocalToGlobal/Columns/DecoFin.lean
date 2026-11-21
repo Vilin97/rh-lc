@@ -986,10 +986,21 @@ theorem IntAt.div_of_notMem {Q : HeightOneSpectrum (𝓞 E)} {a : E} (ha : IntAt
 
 theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
     (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal) :
-    (d.til (ST := ST) pi).Ok where
-  lat := tilN_lattice hd.lat
-  uni := tilN_unimodular hd.uni
-  f_add P x hx y hy := by
+    (d.til (ST := ST) pi).Ok := by
+  refine
+    { lat := tilN_lattice hd.lat
+      uni := tilN_unimodular hd.uni
+      f_add := ?f_add
+      f_smul := ?f_smul
+      f_off := ?f_off
+      f_ne := ?f_ne
+      be_add := ?be_add
+      be_smul := ?be_smul
+      be_off := ?be_off
+      be_surj := ?be_surj
+      be_ker := ?be_ker }
+  case f_add =>
+    intro P x hx y hy
     replace hx : x ∈ localization₂ P.1.asIdeal (tilN d.N) := hx
     replace hy : y ∈ localization₂ P.1.asIdeal (tilN d.N) := hy
     simp only [Deco.til]
@@ -997,22 +1008,26 @@ theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
     rw [hermStd_lastVector_apply, hermStd_lastVector_apply]
     exact reduction_add ((IntAt.coe _ _).mul ((mem_localization_tilN _ _ _).1 hx).2)
       ((IntAt.coe _ _).mul ((mem_localization_tilN _ _ _).1 hy).2)
-  f_smul P a x hx := by
+  case f_smul =>
+    intro P a x hx
     replace hx : x ∈ localization₂ P.1.asIdeal (tilN d.N) := hx
     simp only [Deco.til]
     rw [if_pos hx, if_pos (Submodule.smul_mem _ a hx), LinearMap.map_smul_of_tower, hermStd_lastVector_apply]
     exact redP_osmul a ((IntAt.coe _ _).mul ((mem_localization_tilN _ _ _).1 hx).2)
-  f_off P x hx := by
+  case f_off =>
+    intro P x hx
     replace hx : x ∉ localization₂ P.1.asIdeal (tilN d.N) := hx
     simp only [Deco.til]
     rw [if_neg hx]
-  f_ne P := by
+  case f_ne =>
+    intro P
     have h1 : eLast E n ∈ tilN d.N := (mem_tilN _ _).2 ⟨by simp, 1, by simp⟩
     refine ⟨_, h1, ?_⟩
     simp only [Deco.til]
     rw [if_pos (le_locP _ _ h1), hermStd_lastVector_apply, eLast_last, mul_one, reduction_coe]
     exact mk_ne_zero (hT P)
-  be_add w x hx y hy := by
+  case be_add =>
+    intro w x hx y hy
     replace hx : x ∈ localization₂ w.1.asIdeal (tilN d.N) := hx
     replace hy : y ∈ localization₂ w.1.asIdeal (tilN d.N) := hy
     simp only [Deco.til]
@@ -1026,7 +1041,8 @@ theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
     · simp only [Fin.snoc_castSucc, Pi.add_apply, map_add (f := _)]
       rw [hd.be_add w _ hx1 _ hy1]
       rfl
-  be_smul w a x hx := by
+  case be_smul =>
+    intro w a x hx
     replace hx : x ∈ localization₂ w.1.asIdeal (tilN d.N) := hx
     simp only [Deco.til]
     rw [if_pos hx, if_pos (Submodule.smul_mem _ a hx)]
@@ -1039,11 +1055,13 @@ theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
     · simp only [Fin.snoc_castSucc, Pi.smul_apply, smul_eq_mul]
       rw [initL_osmul, hd.be_smul w a _ hx1]
       rfl
-  be_off w x hx := by
+  case be_off =>
+    intro w x hx
     replace hx : x ∉ localization₂ w.1.asIdeal (tilN d.N) := hx
     simp only [Deco.til]
     rw [if_neg hx]
-  be_surj w c := by
+  case be_surj =>
+    intro w c
     obtain ⟨y, hy, hc⟩ := hd.be_surj w (fun i => c i.castSucc)
     obtain ⟨r, hr⟩ := Ideal.Quotient.mk_surjective (c (Fin.last n))
     have h0 : algebraMap (𝓞 E) E pi ≠ 0 := by
@@ -1067,7 +1085,8 @@ theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
       have e : initL E n (incl E n y + (r * pi) • eLast E n) = y := by
         rw [map_add (f := _), initL_osmul]; simp
       rw [e, hc]
-  be_ker w x hx h0 := by
+  case be_ker =>
+    intro w x hx h0
     replace hx : x ∈ tilN d.N := hx
     simp only [Deco.til] at h0
     rw [if_pos (le_locP _ _ hx)] at h0

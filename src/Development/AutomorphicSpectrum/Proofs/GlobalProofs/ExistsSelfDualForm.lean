@@ -183,7 +183,7 @@ theorem exists_bump (z : ι → AdeleRing (𝓞 K) K) (U : Set (ι → AdeleRing
     GlobalTheory.TamePartR.totallyDisconnected_finiteAdele K
   obtain ⟨Kc, hKn, hKs, hKc⟩ := local_compact_nhds hB
   obtain ⟨C, hCo, hv, hCs⟩ :=
-    (loc_compact_Haus_tot_disc_of_zero_dim (H := ι → FiniteAdeleRing (𝓞 K) K)).mem_nhds_iff.1 hKn
+    (loc_compact_Haus_tot_disc_of_zero_dim (X := ι → FiniteAdeleRing (𝓞 K) K)).mem_nhds_iff.1 hKn
   have hCo' : IsClopen C := hCo
   have hCc : IsCompact C := hKc.of_isClosed_subset hCo'.1 hCs
   have hlc : ∀ {Y : Type} [Zero Y] (c : Y), IsLocallyConstant (C.indicator fun _ => c) := by

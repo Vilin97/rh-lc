@@ -80,7 +80,11 @@ theorem smul_f (a : R) (s : SecMod p M) (i : M.ι) :
 
 theorem eq_zero_of_smul_eq_zero [IsDomain R] [Flat p] {a : R} (ha : a ≠ 0) {s : SecMod p M}
     (h : a • s = 0) : s = 0 := by
-  refine SecMod.ext fun i => fn_ext fun y hy => cst_regular p y ha ?_
+  apply SecMod.ext
+  intro i
+  apply fn_ext
+  intro y hy
+  apply cst_regular p y ha
   have e := congrArg (gs (𝟙 Y) y (M.U i)) (congrArg (fun s : SecMod p M => LB.Sec.f s i) h)
   simp only [smul_f, zero_f] at e
   rw [gs_mul _ y _ hy, gs_constFn p _ _ y hy, Category.id_comp] at e

@@ -63,7 +63,7 @@ private theorem card_twDual {R Γ M : Type} [CommRing R] [Group Γ] [AddCommGrou
     rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply] at e
     exact e.symm
   · intro hy g
-    refine TDual.ext fun m => ?_
+    refine LinearMap.ext fun m => ?_
     simp only [MonoidHom.comp_apply, MonoidHom.id_apply, twDual_apply]
     have := hy g (ρ g⁻¹ m)
     rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply] at this

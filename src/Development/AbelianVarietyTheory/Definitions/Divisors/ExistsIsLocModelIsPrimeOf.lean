@@ -186,26 +186,27 @@ def TrBasis (c : k →+* K) {n : ℕ} (x : Fin n → K) : Prop :=
   letI := c.toAlgebra
   IsTranscendenceBasis k x
 
-theorem isLocModel_self : IsLocModel (RingHom.id k) ⊤ where
-  const_mem _ := trivial
-  isLocalRing := (Subring.topEquiv (R := k)).symm.isLocalRing
-  essFiniteType := (RingHom.FiniteType.of_surjective _ fun a => ⟨a.1, rfl⟩).essFiniteType
-  frac f := ⟨f, trivial, 1, trivial, one_ne_zero, mul_one f⟩
+theorem isLocModel_self : IsLocModel (RingHom.id k) ⊤ :=
+  { const_mem := fun _ => trivial
+    isLocalRing := (Subring.topEquiv (R := k)).symm.isLocalRing
+    essFiniteType := (RingHom.FiniteType.of_surjective _ fun a => ⟨a.1, rfl⟩).essFiniteType
+    frac := fun f => ⟨f, trivial, 1, trivial, one_ne_zero, mul_one f⟩ }
 
 namespace Place
 
 variable {c : k →+* K} (E : Place c) {n : ℕ}
 
-theorem isLocModel : IsLocModel c E.ring.toSubring where
-  const_mem := E.const_mem
-  isLocalRing := inferInstanceAs (IsLocalRing E.ring)
-  essFiniteType := E.essFiniteType
-  frac f := by
-    obtain ⟨a, b, hb, e⟩ := IsFractionRing.div_surjective (A := E.ring) f
-    have hb0 : (b : K) ≠ 0 := fun h => nonZeroDivisors.ne_zero hb (Subtype.ext h)
-    refine ⟨a, a.2, b, b.2, hb0, ?_⟩
-    rw [← e]
-    exact div_mul_cancel₀ _ hb0
+theorem isLocModel : IsLocModel c E.ring.toSubring :=
+  { const_mem := E.const_mem
+    isLocalRing := inferInstanceAs (IsLocalRing E.ring)
+    essFiniteType := E.essFiniteType
+    frac := by
+      intro f
+      obtain ⟨a, b, hb, e⟩ := IsFractionRing.div_surjective (A := E.ring) f
+      have hb0 : (b : K) ≠ 0 := fun h => nonZeroDivisors.ne_zero hb (Subtype.ext h)
+      refine ⟨a, a.2, b, b.2, hb0, ?_⟩
+      rw [← e]
+      exact div_mul_cancel₀ _ hb0 }
 
 theorem exists_isFreeGen [PerfectField k] {x : Fin n → K} (hx : TrBasis c x) :
     ∃ ω : Forms E.const n, IsFreeGen E.ring ω := by

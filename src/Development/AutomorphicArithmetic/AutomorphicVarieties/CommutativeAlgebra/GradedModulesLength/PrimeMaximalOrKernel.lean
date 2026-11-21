@@ -30,7 +30,10 @@ private theorem prime_maximal_or_kernel (O : Type) [CommRing O] [IsDomain O] [Is
       ext a
       rw [Ideal.mem_comap, Ideal.mem_bot, Ideal.mem_comap, hcomap]
     haveI : (⊥ : Ideal (B ⧸ P)).IsPrime := Ideal.isPrime_bot
-    have hmax := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := O) (⊥ : Ideal (B ⧸ P)) (hbot ▸ hQ)
+    have hmax := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := O) (⊥ : Ideal (B ⧸ P)) (by
+      change ((⊥ : Ideal (B ⧸ P)).comap (algebraMap O (B ⧸ P))).IsMaximal
+      rw [hbot]
+      exact hQ)
     rw [Ideal.Quotient.maximal_ideal_iff_isField_quotient]
     exact Ring.isField_iff_maximal_bot.2 hmax
   · push_neg at hc
@@ -41,9 +44,9 @@ private theorem prime_maximal_or_kernel (O : Type) [CommRing O] [IsDomain O] [Is
       intro a ha
       by_contra h0
       exact hc a h0 ((hcomap a).1 ha)
-    haveI : Module.IsTorsionFree O (B ⧸ P) := NoZeroSMulDivisors.iff_algebraMap_injective.2 hinj
+    haveI : Module.IsTorsionFree O (B ⧸ P) := Module.isTorsionFree_iff_algebraMap_injective.2 hinj
     haveI : Module.IsTorsionFree O K :=
-      NoZeroSMulDivisors.iff_algebraMap_injective.2 (FaithfulSMul.algebraMap_injective O K)
+      Module.isTorsionFree_iff_algebraMap_injective.2 (FaithfulSMul.algebraMap_injective O K)
     haveI : Algebra.IsAlgebraic O (B ⧸ P) := Algebra.IsIntegral.isAlgebraic
     let τ : (B ⧸ P) →ₐ[O] K := (by
       refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_

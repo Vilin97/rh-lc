@@ -39,7 +39,7 @@ theorem aic_of_isColim {A : Type} [CommRing A] {G : ℕ → Type} [∀ n, CommRi
   have h2 : (Q.map (f n : G n →+* G (n + 1))).map (ι (n + 1) : G (n + 1) →+* L) = P := by
     rw [Polynomial.map_map, ← hmap]; congr 1; ext z; simp [hc.comm]
   rw [← h2]
-  exact Polynomial.IsRoot.map hx
+  exact Polynomial.IsRoot.map (ι (n + 1) : G (n + 1) →+* L) hx
 
 theorem val_of_isColim {A : Type} [CommRing A] (π : A) {G : ℕ → Type} [∀ n, CommRing (G n)] [∀ n, Algebra A (G n)]
     {f : ∀ n, G n →ₐ[A] G (n + 1)} {L : Type} [CommRing L] [Algebra A L] {ι : ∀ n, G n →ₐ[A] L}

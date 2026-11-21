@@ -66,7 +66,7 @@ theorem omega_standard_holds : OmVStd X ψ := by
     have h3 := congrFun (congrFun hH i) j
     exact h3
 
-theorem omega_lattice_holds : OmVLat X := ⟨X.B.I.L, ⟨X.B.I.L_fg, X.B.I.L_span⟩, rfl⟩
+theorem omega_lattice_holds : OmVLat X := ⟨X.B.I.L, Submodule.IsLattice.of_fg X.B.I.E X.B.I.L_fg, rfl⟩
 
 theorem omega_unramified_holds : OmVUnram X := fun v => unramAt_of_cm X.B.I.cm v
 

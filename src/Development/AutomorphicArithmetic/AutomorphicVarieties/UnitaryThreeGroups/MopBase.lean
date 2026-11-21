@@ -37,9 +37,9 @@ theorem mat_eq_emb {R : Type} [CommRing R] (x : GG (m := 3) (R := R)) (a b : Fin
 
 theorem unitaryEmbedding_residualRep_eq_zero_of_weight_ne {G R : Type} [Group G] [CommRing R] (η : G →* ℤˣ) (Ψ : G →* Rˣ) (g : G)
     (a b : Fin 3 ⊕ Fin 3) (h : wt6 a ≠ wt6 b) : emb (r0 η Ψ g) a b = 0 := by
-  show (if (r0 η Ψ g).right = 1 then Matrix.fromBlocks (tor (Ψ g) : Matrix (Fin 3) (Fin 3) R) 0 0
-    (theta (tor (Ψ g)) : Matrix (Fin 3) (Fin 3) R) else Matrix.fromBlocks 0 (tor (Ψ g) : Matrix (Fin 3) (Fin 3) R)
-    (theta (tor (Ψ g)) : Matrix (Fin 3) (Fin 3) R) 0) a b = 0
+  show (if (r0 η Ψ g).right = 1 then Matrix.fromBlocks (tor R (Ψ g) : Matrix (Fin 3) (Fin 3) R) 0 0
+    (theta (tor R (Ψ g)) : Matrix (Fin 3) (Fin 3) R) else Matrix.fromBlocks 0 (tor R (Ψ g) : Matrix (Fin 3) (Fin 3) R)
+    (theta (tor R (Ψ g)) : Matrix (Fin 3) (Fin 3) R) 0) a b = 0
   rw [theta_tor, tor_val]
   split_ifs <;> rcases a with a | a <;> rcases b with b | b <;>
     first

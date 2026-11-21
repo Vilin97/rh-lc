@@ -251,8 +251,8 @@ theorem expandsG_pull (hG : GlobalFnsSt) {k : ℕ} {v : GroupSec U E k} {s : Fam
     (h : U.ExpandsG E k v s) : U.ExpandsG F k (grpPull E F U k v) (famPull D.toPre E F hG k s) := by
   obtain ⟨n, c, x, hx, e₁, e₂⟩ := (expandsG_iff U E k v s).1 h
   refine (expandsG_iff U F k _ _).2 ⟨n, fun i => algebraMap E F (c i), x, hx, ?_, fun α => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [e₁, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [e₁, map_sum]
     refine Finset.sum_congr rfl fun i _ => (map_smulₛₗ _ _ _).trans (congrArg _ ?_)
     refine sec_ext' U.LG.isLB fun y J hJ => (sval_pullOver _ _ _ _ hJ).trans ((sval_pullOver _ _ _ _ hJ).trans
       (Eq.trans ?_ (sval_pullOver _ _ _ _ hJ).symm))

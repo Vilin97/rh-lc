@@ -25,7 +25,7 @@ theorem coeff_sumAlgEquiv_mkDerivation_gen {σ : Type} {L : ℕ}
   induction b using MvPolynomial.induction_on generalizing m with
   | C a =>
     have h1 : (MvPolynomial.C a : MvPolynomial (Fin L ⊕ σ) ℂ) = algebraMap ℂ _ a := rfl
-    rw [h1, Derivation.map_algebraMap, map_zero, coeff_zero, AlgEquiv.commutes]
+    rw [h1, Derivation.map_algebraMap, map_zero, AddMonoidAlgebra.coeff_zero, AlgEquiv.commutes]
     rw [MvPolynomial.algebraMap_apply, MvPolynomial.coeff_C]
     split_ifs
     · exact (D.map_algebraMap a).symm
@@ -34,9 +34,10 @@ theorem coeff_sumAlgEquiv_mkDerivation_gen {σ : Type} {L : ℕ}
   | mul_X p i hp =>
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, map_mul, MvPolynomial.coeff_add]
     rcases i with j | v
-    · simp only [mkDerivation_X, Sum.elim_inl, map_zero, mul_zero, coeff_zero, zero_add,
+    · simp only [mkDerivation_X, Sum.elim_inl, map_zero, mul_zero, AddMonoidAlgebra.coeff_zero,
         sumAlgEquiv_X_inl]
       rw [mul_comm (X j), coeff_mul_X', coeff_mul_X']
+      simp only [Finsupp.zero_apply, zero_add]
       split_ifs
       · exact hp _
       · exact (D.map_zero).symm

@@ -51,7 +51,7 @@ theorem card_conj_eq (Γ K : Subgroup G) (x γ k : G) (hγ : γ ∈ Γ) (hk : k 
 theorem card_out_eq (Γ K : Subgroup G) (x : G) :
     Nat.card ↥(Γ ⊓ K.map (MulAut.conj (Quotient.out (DoubleCoset.mk Γ K x))).toMonoidHom) =
       Nat.card ↥(Γ ⊓ K.map (MulAut.conj x).toMonoidHom) := by
-  obtain ⟨γ, k, hγ, hk, h⟩ := DoubleCoset.mk_out_eq_mul Γ K x
+  obtain ⟨γ, hγ, k, hk, h⟩ := DoubleCoset.mk_out_eq_mul Γ K x
   rw [h]
   exact card_conj_eq Γ K x γ k hγ hk
 
@@ -84,7 +84,7 @@ theorem massCl_comap (e : G' ≃* G) (Γ K : Subgroup G) :
     apply e.injective
     simp [map_mul, h2]
   · intro c
-    obtain ⟨γ, k, hγ, hk, hout⟩ := DoubleCoset.mk_out_eq_mul Γ' K' (e.symm (Quotient.out c))
+    obtain ⟨γ, hγ, k, hk, hout⟩ := DoubleCoset.mk_out_eq_mul Γ' K' (e.symm (Quotient.out c))
     refine ⟨DoubleCoset.mk Γ' K' (e.symm (Quotient.out c)), ?_⟩
     show DoubleCoset.mk Γ K (e (Quotient.out (DoubleCoset.mk Γ' K' (e.symm (Quotient.out c))))) = c
     rw [hout]
@@ -109,7 +109,7 @@ theorem massCl_eq_sum (Γ K : Subgroup G) (S : Finset α) (ℓ : G → α) (w : 
   unfold massCl
   have hout : ∀ x, ∃ γ ∈ Γ, ∃ k ∈ K, Quotient.out (DoubleCoset.mk Γ K x) = γ * x * k := by
     intro x
-    obtain ⟨γ, k, hγ, hk, h⟩ := DoubleCoset.mk_out_eq_mul Γ K x
+    obtain ⟨γ, hγ, k, hk, h⟩ := DoubleCoset.mk_out_eq_mul Γ K x
     exact ⟨γ, hγ, k, hk, h⟩
   rw [← Finset.sum_coe_sort S w, ← finsum_eq_sum_of_fintype]
   refine finsum_eq_of_bijective (fun c => (⟨ℓ (Quotient.out c), hS _⟩ : {s // s ∈ S}))

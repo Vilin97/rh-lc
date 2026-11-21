@@ -171,7 +171,13 @@ theorem relAmple_of_effective : (∀ (k : Type) [Field k] [IsAlgClosed k] (B : O
   let π : B'.left ⟶ B.left := pullback.fst B.hom p
   have h : IsGrpPullback B' B p π := isGrpPullback_pullback B p
   have : IsCommMonObj B' := PolPull.isCommMonObj_of_isGrpPullback h
-  have hB' := PolPull.isAbelianScheme_of_isGrpPullback hB h
+  have hB' : IsAbelianScheme B' := by
+    have := hB.comm
+    exact
+      { comm := PolPull.isCommMonObj_of_isGrpPullback h
+        smooth := MorphismProperty.of_isPullback (P := @Smooth) h.1 hB.smooth
+        proper := MorphismProperty.of_isPullback (P := @IsProper) h.1 hB.proper
+        geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) h.1 hB.geomConnected }
   have : Flat π := MorphismProperty.of_isPullback (P := @Flat) h.1.flip inferInstance
   have : Surjective π := MorphismProperty.of_isPullback (P := @Surjective) h.1.flip inferInstance
   obtain ⟨hL', hr, ⟨c', -⟩, -⟩ := CubePf.cubePull _ _ B B' (cubeMapOf h) L c

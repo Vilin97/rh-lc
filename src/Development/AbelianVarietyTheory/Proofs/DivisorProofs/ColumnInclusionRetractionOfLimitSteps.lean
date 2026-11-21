@@ -97,6 +97,8 @@ theorem retrSt_of : LimActSt → LimPtSt → InvSt → RetrSt := by
     show expPt _ _ i = expPt (fgl Ch X) (fun e => ∑ a, frame Ch X f.1 a e •
       (MvPowerSeries.X ⟨⟨f, β⟩, a⟩ : MvPowerSeries (Let cx) X.C)) i
     congr 1
+    funext e
+    simp_rw [mv_sum_smul_X]
     have hc : ∀ (b : Fin (rk f.1)) (a : Fin (rk f.1)),
         ∑ β', jX X (B f.1 b (r β')) * (A β' β).mulVec (frame Ch X f.1 a) e =
           if b = β then frame Ch X f.1 a e else 0 := fun b a => by

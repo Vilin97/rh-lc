@@ -163,7 +163,7 @@ theorem exists_of_goodChart {ξ : Spec (CommRingCat.of Ω) ⟶ X} {κ : Type} {x
     | add a b _ _ iha ihb =>
       obtain ⟨s, hs, hsV⟩ := iha
       obtain ⟨t, ht, htV⟩ := ihb
-      exact ⟨s + t, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), hs, ht], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hsV htV⟩
+      exact ⟨s + t, by rw [map_add, hs, ht], by rw [map_add]; exact add_mem hsV htV⟩
     | mul a b _ _ iha ihb =>
       obtain ⟨s, hs, hsV⟩ := iha
       obtain ⟨t, ht, htV⟩ := ihb

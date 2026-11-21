@@ -115,7 +115,8 @@ theorem expand_of_dual {ι : Type*} [Fintype ι] [DecidableEq ι] (φ d : ι →
     (hcard : Fintype.card ι = n) (hd : ∀ j i, hJ ε (d j) (φ i) = if j = i then 1 else 0)
     (v : Fin n → ℂ) : v = ∑ i, hJ ε (d i) v • φ i := by
   have hli : LinearIndependent ℂ d := li_of_pair ε d φ 1 (by simp) (fun j i => by
-    rw [← hJ_conj, hd, one_apply]
+    rw [← hJ_conj, hd]
+    change star (if i = j then (1 : ℂ) else 0) = if j = i then 1 else 0
     by_cases hij : i = j
     · subst hij; simp
     · simp [hij, Ne.symm hij])

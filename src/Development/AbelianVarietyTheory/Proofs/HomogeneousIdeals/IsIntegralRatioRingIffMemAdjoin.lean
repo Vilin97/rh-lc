@@ -271,7 +271,7 @@ theorem finite_integralClosure_cone :
   haveI : Algebra.FiniteType o (cone o t) := .adjoin_of_finite (Set.finite_range _)
   haveI : Algebra.EssFiniteType o L[X] := .comp o L _
   haveI : Algebra.EssFiniteType (cone o t) L[X] := .of_comp o _ _
-  exact finite_integralClosure_of_essFiniteType_of_isReduced o _ _
+  exact finite_integralClosure_of_essFiniteType_of_isReduced (R := cone o t) o L[X]
 
 theorem exists_generators : ∃ e : ℕ, 0 < e ∧ ∃ N : ℕ → Submodule o L, (∀ q, (N q).FG) ∧
     (∀ q, N q ≤ piece o t q) ∧ (∀ q, e < q → N q = ⊥) ∧ ∀ n, piece o t n ≤

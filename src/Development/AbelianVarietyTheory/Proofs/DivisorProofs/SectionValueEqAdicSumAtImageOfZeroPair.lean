@@ -209,9 +209,21 @@ theorem exists_sumF (hB : AdmBase R I) (hG : IsSemiAbelian G) (U : Unif I D A G)
   have hL := GlobalTheory.firstFiveLaws
   have hpos : 1 ≤ k * n ^ 2 := Nat.mul_pos hk (Nat.pow_pos hn)
   obtain ⟨h, hh⟩ := (GlobalTheory.TorsionAnyChar.gtOnto_any hL R I hB D F).2.1 n hn p.g
-  let q : QkPt D.toPre F (k * n ^ 2) := TorusExt.qkMk D.tau_bimult 0 h (by
-    rw [show k * n ^ 2 = n * n * k by ring, mul_nsmul, mul_nsmul, ← (TorusExt.isNsmul_iff_eq _ _ _).1 hh,
-      TorusExt.qk_nsmul D.tau_bimult p, hp, map_zero, smul_zero])
+  have hz : GtPtF.IsIota 0 (0 : GtPtF D.toPre F) := by
+    obtain ⟨hb, hv⟩ := (isZero_iff (0 : GtPtF D.toPre F)).1 ((TorusExt.isZero_iff_eq _).2 rfl)
+    refine (isIota_iff 0 _).2 ⟨hb.trans (cPoint_zero _).symm, fun χ y J hJ => ?_⟩
+    have C : IsCub (th D.toPre (T := TF (R := R) F) y J) := isCub_cubV D.toPre.cub hJ
+    have t := tau_mul (𝟙 (TF (R := R) F)) hJ D.tau_bimult 0 0 χ
+    rw [add_zero, cPoint_zero, C.face, _root_.mul_one] at t
+    exact (hv χ y J hJ).trans (mul_eq_left.1 t.symm).symm
+  have pn : n • p.g = 0 := by
+    obtain ⟨v, hv, hi⟩ := p.eq
+    have hi' : GtPtF.IsIota 0 v := hp ▸ hi
+    exact ((TorusExt.isNsmul_iff_eq _ _ _).1 hv).symm.trans (TorusExt.isIota_unique hi' hz)
+  let q : QkPt D.toPre F (k * n ^ 2) := ⟨0, h, 0,
+    (TorusExt.isNsmul_iff_eq _ _ _).2 (by
+      rw [show k * n ^ 2 = n * n * k by ring, mul_nsmul, mul_nsmul,
+        ← (TorusExt.isNsmul_iff_eq _ _ _).1 hh, pn, smul_zero]), hz⟩
   obtain ⟨x, hx⟩ := GlobalTheory.TorsionAnyChar.existsTransl_any hL R I hB D A G hG U F _ hpos q
   have hx' := (GlobalTheory.TorsionAnyChar.indAtTransl_any hL R I hB D A G hG U F _ hpos q x).1
     (hx 1 _ le_rfl (Nat.mul_one _).symm q (one_nsmul _).symm rfl)
@@ -311,8 +323,20 @@ theorem liesOver_of_qkToAkU : ∀ (R : Type) [CommRing R] [IsDomain R] [CharZero
       obtain ⟨s, hs, -⟩ := (hbij k (by omega) w₀ hw₀).1 t
       exact ⟨_, c, ⟨t, s, hs, ht, rfl⟩, hc⟩)
     (fun m hm => by
-      let q : QkPt D.toPre F (n * m) := TorusExt.qkMk D.tau_bimult (m • p.y) p.g (by
-        rw [mul_nsmul, TorusExt.qk_nsmul D.tau_bimult p, map_nsmul])
+      have hz : GtPtF.IsIota 0 (0 : GtPtF D.toPre F) := by
+        obtain ⟨hb, hv⟩ := (isZero_iff (0 : GtPtF D.toPre F)).1 ((TorusExt.isZero_iff_eq _).2 rfl)
+        refine (isIota_iff 0 _).2 ⟨hb.trans (cPoint_zero _).symm, fun χ y J hJ => ?_⟩
+        have C : IsCub (th D.toPre (T := TF (R := R) F) y J) := isCub_cubV D.toPre.cub hJ
+        have t := tau_mul (𝟙 (TF (R := R) F)) hJ D.tau_bimult 0 0 χ
+        rw [add_zero, cPoint_zero, C.face, _root_.mul_one] at t
+        exact (hv χ y J hJ).trans (mul_eq_left.1 t.symm).symm
+      have pn : n • p.g = 0 := by
+        obtain ⟨v, hv, hi⟩ := p.eq
+        have hi' : GtPtF.IsIota 0 v := hp ▸ hi
+        exact ((TorusExt.isNsmul_iff_eq _ _ _).1 hv).symm.trans (TorusExt.isIota_unique hi' hz)
+      let q : QkPt D.toPre F (n * m) := ⟨m • p.y, p.g, 0,
+        (TorusExt.isNsmul_iff_eq _ _ _).2 (by rw [mul_nsmul, pn, smul_zero]),
+        by simpa only [hp, smul_zero] using hz⟩
       have hq : QkToAkU U.toUnifPre F (n * m) q x :=
         ((GlobalTheory.LevelCompat.qkToAkU_level hL R _ hB D A G hG U F n m _ hn hm rfl p q x).1 rfl rfl).1 hx
       obtain ⟨κ, hκ, Hκ⟩ := value_at_level hB hG U hN (Nat.mul_pos hn hm) q x hq e he (Ω _) (hΩ _)

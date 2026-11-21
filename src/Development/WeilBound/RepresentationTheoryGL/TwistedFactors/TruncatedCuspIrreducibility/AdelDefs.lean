@@ -60,7 +60,7 @@ structure IsSec {μ₁ : Measure (G1 K a)} {μ₂ : Measure (G1 K b)} (τ₁ : S
     (f : G1 K (a + b) → ℂ) : Prop where
   cont : Continuous f
   bdd : ∃ C : ℝ, ∀ g, ‖f g‖ ≤ C
-  unip : ∀ (X : UPos (a + b) a → 𝔸[K]) (g : G1 K (a + b)), f (unipOne K (a + b) a X * g) = f g
+  unip : ∀ (X : UPos (a + b) a → 𝔸[K]) (g : G1 K (a + b)), f (unipOne (K := K) (n := a + b) a X * g) = f g
   ray : ∀ (r : {r : ℝ // 0 < r}) (x g : G1 K (a + b)),
     (x : AdelicGLn.AdelicGL K (a + b)) = blk (centralSection K a r) (centralSection K b r⁻¹) * g → f x = f g
   levi : ∀ g : G1 K (a + b), ∃ (d : ℕ) (φ : Fin d → G1 K a → ℂ) (ψ : Fin d → G1 K b → ℂ),

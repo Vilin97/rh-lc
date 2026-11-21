@@ -69,7 +69,7 @@ theorem UpperTheory.V.Alg.tact :
   haveI : IsAdicComplete (maximalIdeal R') R' := IsCO.complete (O := O)
   have hf_max : ∀ x ∈ maximalIdeal R, f x ∈ maximalIdeal R' := by
     intro x hx
-    rw [← res_eq_zero_iff O R' (f x), res_map f x, res_eq_zero_iff O R x]
+    rw [← res_eq_zero_iff O R' (f x), UpperTheory.V.Alg.res_map f x, res_eq_zero_iff O R x]
     exact hx
   let xs : W.σ → R' := fun i =>
     (t (Multiplicative.ofAdd (W.wt i)) : R') * f (W.π (MvPowerSeries.X i))

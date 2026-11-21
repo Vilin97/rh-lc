@@ -61,8 +61,13 @@ theorem btG_holds : BtG Zd u u' F0 what₂ := by
   have h1 : Gval (lf D F0) (liftF F'₂) =
       Formalism.L2.SG.CntLocal.GZ (((Tu D u : ℕ) : D.host.E)) (((Tu D u' : ℕ) : D.host.E)) Z := by
     rw [← hS.1]; rfl
-  rw [h1, Formalism.L2.SG.Pf.FrameGlobalPatching.FStar.Uniq.gz_atMat hZw' (Tu D u) (Tu D u')]
-  exact hGw'
+  intro hz
+  apply hGw'
+  calc
+    _ = Formalism.L2.SG.CntLocal.GZ (((Tu D u : ℕ) : D.host.E)) (((Tu D u' : ℕ) : D.host.E)) Z :=
+      (Formalism.L2.SG.Pf.FrameGlobalPatching.FStar.Uniq.gz_atMat hZw' (Tu D u) (Tu D u')).symm
+    _ = Gval (lf D F0) (liftF F'₂) := h1.symm
+    _ = 0 := hz
 
 theorem sgnP'_last (p : PlF D) : sgnP' D p (Fin.last D.R.rS) = 1 := by
   unfold sgnP'

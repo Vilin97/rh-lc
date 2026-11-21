@@ -20,7 +20,7 @@ theorem trdeg_residueField_of_isIntegral {K B : Type} [Field K] [CharZero K] [Co
     Algebra.trdeg ℤ q.ResidueField = Algebra.trdeg ℤ K := by
   have hcm : (Ideal.comap (algebraMap K B) q).IsMaximal :=
     Ideal.IsPrime.isMaximal' (Ideal.comap_isPrime _ _)
-  have hmax : q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := K) q hcm
+  have hmax : q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := K) q hcm
   have hs : Function.Surjective (IsScalarTower.toAlgHom K B q.ResidueField) :=
     Ideal.algebraMap_residueField_surjective q
   have : Algebra.IsIntegral K q.ResidueField := Algebra.IsIntegral.of_surjective _ hs

@@ -82,7 +82,7 @@ private theorem mu_map {l : ℕ} [Fact l.Prime] {G H : Type} [Group G] [Topologi
 
 variable {l : ℕ} [Fact l.Prime] {F' F : GFrame l} (h : FHom F' F)
 
-private theorem continuous_pullback_projection : Continuous h.π₀ := (h.π_cont.comp continuous_subtype_val).subtype_mk _
+private theorem continuous_pullback_projection : Continuous h.π₀ := (h.π_cont.comp (continuous_subtype_val : Continuous (fun x : F'.G₀ => (x : F'.Γ)))).subtype_mk _
 
 private theorem pullback_projection_frobenius (v) (g) : h.π₀ (F'.φ v g) = F.φ (h.vl v) (h.gv v g) := Subtype.ext (h.hφ v g).symm
 

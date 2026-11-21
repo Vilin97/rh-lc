@@ -36,8 +36,13 @@ theorem additive_eq (G : FGLaw S d) (g : PS S 1 d)
     rw [this, ev_pt]
   have h1 : ∀ b, ∑ e, pderiv (R := S) ((0 : Fin 1), e) g * Jac G e b = C (constantCoeff (pderiv (R := S) ((0 : Fin 1), b) g)) := by
     intro b
+    have d_evF : pderiv (R := S) ((1 : Fin 2), b) (ev (n := 2) ![G.F] g) =
+        ∑ c, ev (n := 2) ![G.F] (pderiv (R := S) ((0 : Fin 1), c) g) *
+          pderiv (R := S) ((1 : Fin 2), b) (G.F c) := by
+      rw [pderiv_ev (czFF G), Fintype.sum_prod_type]
+      simp
     have := congrArg (fun f => ev (n := 1) ![pt S d 0, 0] (pderiv (R := S) ((1 : Fin 2), b) f)) hg
-    simp only [map_add (f := _), d_evF, pderiv_second_ev_first_point_eq_zero, d_evY, zero_add, ez_y, ev_sum cz1, ev_mul cz1, hx] at this
+    simp only [map_add (f := _), d_evF, pderiv_second_ev_first_point_eq_zero, d_evY, zero_add, ez_y, ev_sum cz1, ev_mul cz1, hx, Jac] at this
     exact this
   have h2 : ∀ a, pderiv (R := S) ((0 : Fin 1), a) g =
       ∑ b, C (constantCoeff (pderiv (R := S) ((0 : Fin 1), b) g)) * Om G b a := by

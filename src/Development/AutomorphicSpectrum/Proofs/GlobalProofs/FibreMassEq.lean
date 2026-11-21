@@ -37,7 +37,7 @@ theorem fibre_mass_eq {V R : Type} [TopologicalSpace V] [MeasurableSpace V] [Top
   · rw [Set.indicator_of_mem hb]
     refine measure_congr ?_
     filter_upwards [hae] with x hx
-    refine propext ⟨fun h => h.1, fun h => ⟨h, ?_⟩⟩
+    refine ⟨fun h => h.1, fun h => ⟨h, ?_⟩⟩
     show q x ∈ S
     rwa [hx]
   · rw [Set.indicator_of_notMem hb]

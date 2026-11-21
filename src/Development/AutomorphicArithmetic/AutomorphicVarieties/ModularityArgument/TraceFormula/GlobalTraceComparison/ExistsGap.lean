@@ -121,11 +121,12 @@ private theorem exists_rep {B : Type} [CommRing B] [StarRing B] [Algebra ℂ B] 
   haveI hcl : IsClosed (C : Set (H →L[ℂ] H)) := S.isClosed_topologicalClosure
   letI : CStarAlgebra C := inferInstance
   letI : CommCStarAlgebra C := { mul_comm := hmc }
-  let G : C →⋆ₐ[ℂ] C(WeakDual.characterSpace ℂ C, ℂ) := (gelfandStarTransform C : _)
+  let G : C →⋆ₐ[ℂ] C(WeakDual.characterSpace ℂ C, ℂ) := (gelfandStarTransform C).toStarAlgHom
   have hmem : ∀ y, R y ∈ C := fun y => S.le_topologicalClosure ⟨y, rfl⟩
   let ι : B →⋆ₐ[ℂ] C := R.codRestrict C hmem
   refine ⟨_, inferInstance, inferInstance, G.comp ι, fun y => ?_⟩
-  exact (gelfandTransform_isometry C).norm_map_of_map_zero (map_zero _) (ι y)
+  simpa [G, ι, gelfandStarTransform] using
+    (gelfandTransform_isometry C).norm_map_of_map_zero (map_zero _) (ι y)
 
 end Rep
 

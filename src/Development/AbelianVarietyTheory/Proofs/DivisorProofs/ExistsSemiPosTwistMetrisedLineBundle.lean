@@ -92,6 +92,7 @@ theorem exists_semiPosReg_tens : ∀ (F : Type) [Field F] (X : Scheme.{0}) (p : 
     Weight.SemiPosReg.of_mul _ H.cInf hH ((m : ℤ) : ℝ) (by positivity) (fun j => j PUnit.unit)
       (fun _ _ h => mem_pow_iff.1 h) fun j y => H.φ.zpow_φ (m : ℤ) j y
   have hva : ∃ s : Fin (N + 1) → H.B.Sec, AbLaw.VeryAmpleBy p H.B s := by
+    dsimp [H, O, MLine.pull, MLine.ofHerm, ProjSpace.hermitianTwistingSheaf, HermLB.fs]
     subst hp
     exact ⟨_, ProjSpace.veryAmpleBy_secPull_coord ι⟩
   obtain ⟨s, hs⟩ := hva

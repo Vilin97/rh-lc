@@ -130,7 +130,16 @@ theorem rd_along (w : InfinitePlace E) (g : GA E a) (φ : Sm E a) (X : Matrix (F
 theorem rd_along' (w : InfinitePlace E) (g : GA E a) (φ : Sm E a) (i j : Fin a) (z : ℂ)
     {x : Matrix (Fin a) (Fin a) ℂ} (hx : x ∈ PositivityTheory.RgBcC.GLs a) :
     PositivityTheory.RgBcC.Rd (Matrix.single i j z) (along w g φ.1) x = along w g (lieS E a i j (atEmb w.embedding z) φ).1 x := by
-  rw [rd_along w g φ _ hx, GlobalTheory.OneRep.map_single_atEmb, lieS_apply]
+  have hzero : atEmb w.embedding 0 = 0 := by
+    classical
+    unfold atEmb
+    split_ifs <;> simp
+  have hmap : (Matrix.single i j z).map (atEmb w.embedding) =
+      Matrix.single i j (atEmb w.embedding z) := by
+    ext p q
+    simp only [Matrix.map_apply, Matrix.single_apply]
+    split_ifs <;> simp [hzero]
+  rw [rd_along w g φ _ hx, hmap, lieS_apply]
   rfl
 
 theorem eu_along (w : InfinitePlace E) (g : GA E a) (s : Bool) (φ : Sm E a) (i j : Fin a)

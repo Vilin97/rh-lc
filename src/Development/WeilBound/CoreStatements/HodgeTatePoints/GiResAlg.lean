@@ -99,8 +99,6 @@ private theorem translate_mem_of_isHopfOrder' {U : Type} [CommGroup U] {A : Suba
     | mem x hx =>
       obtain ⟨a, ha, b, hb, rfl⟩ := hx
       convert A.smul_mem hb (a u) using 1
-      funext x
-      simp [L]
     | zero =>
       rw [map_zero]
       exact A.zero_mem

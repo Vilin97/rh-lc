@@ -39,7 +39,7 @@ def IsSph (w : Pl K) (p : MvPolynomial (Fin n) ℂ) (h : GL (Fin n) (w.adicCompl
     (m : Measure (GL (Fin n) (w.adicCompletion K))) (_ : m.IsHaarMeasure),
     m (GLnLocal.integralGL (w.adicCompletion K) n) = 1 ∧ ∃ H : SphericalHecke m (F := w.adicCompletion K) (n := n),
       (∀ x, (H : HeckeAlgebra m) x = h x) ∧
-        satakeTransform m H = polyEmb n (aeval (fun i : Fin n => esymm (Fin n) ℂ (i + 1)) p)
+        satakeTransform m H = polyEmb (n := n) (aeval (fun i : Fin n => esymm (Fin n) ℂ (i + 1)) p)
 
 def iwCoset (w : Pl K) (ν : Fin n → ℤ) : Set (GL (Fin n) (w.adicCompletion K)) :=
   {g | ∃ a ∈ GLnLocal.iwahori (w.adicCompletion K) n, ∃ b ∈ GLnLocal.iwahori (w.adicCompletion K) n,

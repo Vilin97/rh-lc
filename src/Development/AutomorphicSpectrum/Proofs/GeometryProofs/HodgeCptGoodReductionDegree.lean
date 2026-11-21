@@ -58,7 +58,7 @@ theorem closure_genField (Ω : Type) [Field Ω] {I : Type} :
       refine Subfield.subset_closure (Or.inl ⟨a, ?_⟩)
       rw [IsScalarTower.algebraMap_apply Ω (MvPolynomial I Ω) (FractionRing (MvPolynomial I Ω))]
       rfl
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul]
       refine mul_mem hp (Subfield.subset_closure (Or.inr ⟨some i, none, ?_⟩))

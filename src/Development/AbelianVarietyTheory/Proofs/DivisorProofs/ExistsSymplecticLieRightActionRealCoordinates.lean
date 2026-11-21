@@ -71,6 +71,8 @@ theorem exists_sp_rightActD : ∀ (ι l : Type) [Fintype ι] [DecidableEq ι] [F
     have h2 := (Pi.hasSum.2 hw).map φ (LinearMap.continuous_of_finiteDimensional φ.toLinearMap)
     refine h1.unique ?_
     convert h2 using 1
+    funext n
+    simp only [Function.comp_apply]
     rw [Matrix.smul_mulVec, hpow, ← φ.map_smul]
     congr 1; funext w
     simp [Matrix.transpose_smul, Matrix.mul_smul]

@@ -31,7 +31,7 @@ theorem exists_to_stalk (R : Type) [CommRing R] (x : Sp R) [x.asIdeal.IsPrime] :
   let e := IsLocalization.algEquiv (R := R) y.asIdeal.primeCompl
     ((Spec.structureSheaf R).presheaf.stalk y) (Localization.AtPrime y.asIdeal)
   refine ⟨Spec.map (CommRingCat.ofHom e.toRingEquiv.toRingHom), ?_⟩
-  have := Scheme.Spec_fromSpecStalk' (CommRingCat.of R) x
+  have := Spec.fromSpecStalk_eq' (CommRingCat.of R) x
   erw [this, ← Spec.map_comp]
   congr 1
   ext r

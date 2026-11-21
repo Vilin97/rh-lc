@@ -79,22 +79,32 @@ theorem kill_cell (ψ : AddChar k Circle) (hψ : Continuous ψ) (hψ1 : ψ ≠ 1
       exact ⟨p, hp, j, n, hj, rfl⟩
     · rintro ⟨p, hp, j, n, hn, rfl⟩
       exact ⟨p, hp, n, hLU j hn, rfl⟩
-  have : T2Space (GL (Fin N) k) := by
-    obtain ⟨_, _⟩ := GlobalTheory.SplitWeil.Model.secondCountable_and_t2_local_field (k := k)
-    infer_instance
-  obtain ⟨j₀, hj₀⟩ := GlobalTheory.CompanionTheory.BaireCoset.baire_double_coset (parab k (stdBlocks d hd))
-    (GlobalTheory.WhitHered.CellLoc.isClosed_parab (stdBlocks d hd)) (GlobalTheory.SplitWeil.KO k (Fin N) : Set (GL (Fin N) k)) GlobalTheory.SplitFlip.isCompact_KO
-    (fun g => by
-      obtain ⟨p, c, hc, e⟩ := GlobalTheory.SmGL.MultiIrr.exists_parab_mul (stdBlocks d hd) g
-      exact ⟨p, p.2, c, hc, e⟩)
-    L hLm hLc (pm k w) {g | f.1.1 g ≠ 0} (isClopen_supp f).isOpen
-    (fun p hp g hg => ne_zero_left f ⟨p, hp⟩ g hg) (by rw [← hcellL]; exact hcl)
   obtain ⟨i, j, hij, hb⟩ := (exists_adjacent_blk_lt_or_cell_eq_open k h N d hd w).resolve_right hbad
   obtain ⟨t, ht⟩ : ∃ t, ψ t ≠ 1 := by
     by_contra hc
     push Not at hc
     exact hψ1 (by ext x; simp [hc x])
   obtain ⟨u, hu, hwu, hrad⟩ := GlobalTheory.CompanionTheory.Rodier.RootElt.exists_root_conj_mem_unipRad k ψ h N d hd w i j hij hb t
+  have : T2Space (GL (Fin N) k) := by
+    obtain ⟨_, _⟩ := GlobalTheory.SplitWeil.Model.secondCountable_and_t2_local_field (k := k)
+    infer_instance
+  obtain ⟨j₀, hj₀⟩ := GlobalTheory.CompanionTheory.BaireCoset.baire_double_coset (parab k (stdBlocks d hd))
+    (by
+      obtain ⟨_, _⟩ := GlobalTheory.SplitWeil.Model.secondCountable_and_t2_local_field (k := k)
+      have heq : (parab k (stdBlocks d hd) : Set (GL (Fin N) k)) =
+          ⋂ i, ⋂ j, ⋂ _ : blk (stdBlocks d hd) j < blk (stdBlocks d hd) i,
+            {g : GL (Fin N) k | g.val i j = 0} := by
+        ext g
+        simp only [SetLike.mem_coe, mem_parab, Set.mem_iInter, Set.mem_setOf_eq]
+      rw [heq]
+      exact isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun _ =>
+        isClosed_eq (Units.continuous_val.matrix_elem i j) continuous_const)
+    (GlobalTheory.SplitWeil.KO k (Fin N) : Set (GL (Fin N) k)) GlobalTheory.SplitFlip.isCompact_KO
+    (fun g => by
+      obtain ⟨p, c, hc, e⟩ := GlobalTheory.SmGL.MultiIrr.exists_parab_mul (stdBlocks d hd) g
+      exact ⟨p, p.2, c, hc, e⟩)
+    L hLm hLc (pm k w) {g | f.1.1 g ≠ 0} (isClopen_supp f).isOpen
+    (fun p hp g hg => ne_zero_left f ⟨p, hp⟩ g hg) (by rw [← hcellL]; exact hcl)
   obtain ⟨j₁, hj₁⟩ := hLex u hu
   have hJ0 : L j₀ ≤ L (max j₀ j₁) := hLm (le_max_left _ _)
   have hJ1 : L j₁ ≤ L (max j₀ j₁) := hLm (le_max_right _ _)

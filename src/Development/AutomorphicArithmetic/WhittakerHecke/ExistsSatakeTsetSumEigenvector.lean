@@ -108,6 +108,8 @@ theorem UpperTheory.exists_satakeTset_sum_eigenvector :
       rw [hzdef, zGL_val]
       unfold diagJ
       congr 1
+      funext i
+      simp [i.isLt]
     have : satakeB w hϖ hu i = z * (k₁ * k₂) := by
       apply Units.ext
       rw [e, hdz, ← Units.val_mul, ← Units.val_mul, hzdef, ← zGL_comm, mul_assoc]

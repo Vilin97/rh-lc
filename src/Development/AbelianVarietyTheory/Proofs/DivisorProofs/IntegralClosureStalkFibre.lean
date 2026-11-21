@@ -270,7 +270,7 @@ theorem maximal_point (hN : ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsNorma
       · intro hinv
         haveI : Algebra.IsIntegral (M₁.Z.presheaf.stalk z₁) (integralClosure (M₁.Z.presheaf.stalk z₁) Ω₂) :=
           ⟨fun x => integralClosure.isIntegral x⟩
-        have hm1 := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := M₁.Z.presheaf.stalk z₁) 𝔷
+        have hm1 := Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := M₁.Z.presheaf.stalk z₁) 𝔷
         have hm2 := IsLocalRing.eq_maximalIdeal hm1
         set s := (M₁.stalkEquiv z₁).symm ⟨a, ringOn_le_O hz' ha⟩ with hs
         have hs1 : s ∈ IsLocalRing.maximalIdeal (M₁.Z.presheaf.stalk z₁) := by

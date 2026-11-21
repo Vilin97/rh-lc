@@ -28,12 +28,12 @@ lemma restr_ex_hom_ext_of_qis {C : Type*} [Category C] [Abelian C] {K K' L : Coc
 
 def EtaleSheafRestrictScalarsFunctorExact : Prop :=
   ∀ (R S : Type) [CommRing R] [CommRing S] (φ : R →+* S),
-    PreservesFiniteLimits (restr R φ) ∧ PreservesFiniteColimits (restr R φ)
+    PreservesFiniteLimits (restr φ) ∧ PreservesFiniteColimits (restr φ)
 
 theorem etaleSheaf_restrictScalars_resolution_hom_exists_of_exact (hE : EtaleSheafRestrictScalarsFunctorExact) : EtaleSheafRestrictScalarsInjectiveResolutionHomExists := by
   intro R S _ _ φ F
   obtain ⟨h1, h2⟩ := hE R S φ
-  let G := restr R φ
+  let G := restr φ
   have : G.Additive := G.additive_of_preserves_binary_products
   let IS := injectiveResolution F
   let IR := injectiveResolution (G.obj F)

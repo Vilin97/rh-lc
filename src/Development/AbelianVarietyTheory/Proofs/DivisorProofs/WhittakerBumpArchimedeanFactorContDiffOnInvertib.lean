@@ -36,11 +36,12 @@ theorem continuous_psiInf_sdM : Continuous fun t : Vp E n => psiInf (-sdM (nu t)
   have hs : Continuous (sInf E) :=
     ((continuous_infEq E).prodMk continuous_const : Continuous fun x : Cinf E => ((infEq E x, 0) : InfiniteAdeleRing E × Af E))
   have hd : Continuous fun t : Vp E n => sdM (nu t) :=
-    continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => (contDiff_nu_apply i j).continuous
+    continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => (contDiff_nu_apply i j).continuous
   exact continuous_subtype_val.comp (GroundTheory.Global.continuous_adelicChar.comp (hs.comp hd.neg))
 
 theorem bumpInf_contDiffOn_invSet : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (f : Lie E n → ℝ),
     ContDiff ℝ ∞ f → HasCompactSupport f → tsupport f ⊆ invSet E n → ContDiffOn ℝ ∞ (bumpInf f) (invSet E n) := by
+  open scoped Pointwise in
   intro E _ _ _ n f hf hcs hts
   intro x₀ hx₀
   refine ContDiffAt.contDiffWithinAt ?_

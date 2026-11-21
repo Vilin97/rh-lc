@@ -141,7 +141,34 @@ theorem primPull_const_pull (g : A₀ ⟶ A₀) [IsMonHom g] (q : primDR A₀) :
     primPull (divided₂ (GlobalTheory.FODef.sqZero k (Fin d → k))) (spMap (TrivSqZeroExt.fstHom k k (Fin d → k)).toRingHom) g
         ((GlobalTheory.FODef.constMorV k (Fin d → k) A₀).pull q) =
       (GlobalTheory.FODef.constMorV k (Fin d → k) A₀).pull (primPull (dp0 k) (𝟙 _) g q) := by
-  have K := (homMor (dp0 k) (𝟙 _) g).comp (GlobalTheory.FODef.constMorV k (Fin d → k) A₀)
+  have compMor {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R'']
+      {I : Ideal R} {I' : Ideal R'} {I'' : Ideal R''} {S S' S'' : Scheme.{0}}
+      {κ : DividedPowers I} {κ' : DividedPowers I'} {κ'' : DividedPowers I''}
+      {t : S ⟶ Sp R} {t' : S' ⟶ Sp R'} {t'' : S'' ⟶ Sp R''}
+      {A : Over S} {A' : Over S'} {A'' : Over S''} [GrpObj A] [GrpObj A'] [GrpObj A'']
+      {σ : R →+* R'} {τ : R' →+* R''} {b : S' ⟶ S} {b' : S'' ⟶ S'}
+      {φ : A'.left ⟶ A.left} {ψ : A''.left ⟶ A'.left}
+      (m : GrpMor κ t A κ' t' A' σ b φ) (m' : GrpMor κ' t' A' κ'' t'' A'' τ b' ψ) :
+      GrpMor κ t A κ'' t'' A'' (τ.comp σ) (b' ≫ b) (ψ ≫ φ) := by
+    refine { dp := DividedPowers.IsDPMorphism.comp _ m'.dp m.dp, base := ?_, w := ?_, mul := ?_ }
+    · rw [Category.assoc, m.base, ← Category.assoc, m'.base, Category.assoc, Cris.spMap_comp]
+    · rw [Category.assoc, m.w, ← Category.assoc, m'.w, Category.assoc]
+    · intro T x y x₀ y₀ hx hy
+      let x₁ : Over.mk (T.hom ≫ b') ⟶ A' := Over.homMk (x.left ≫ ψ) (by
+        simp only [Over.mk_hom, Category.assoc]; rw [m'.w, reassoc_of% (Over.w x)])
+      let y₁ : Over.mk (T.hom ≫ b') ⟶ A' := Over.homMk (y.left ≫ ψ) (by
+        simp only [Over.mk_hom, Category.assoc]; rw [m'.w, reassoc_of% (Over.w y)])
+      let x₂ : Over.mk ((Over.mk (T.hom ≫ b')).hom ≫ b) ⟶ A := Over.homMk x₀.left (by
+        simpa using Over.w x₀)
+      let y₂ : Over.mk ((Over.mk (T.hom ≫ b')).hom ≫ b) ⟶ A := Over.homMk y₀.left (by
+        simpa using Over.w y₀)
+      have h₁ := m'.mul T x y x₁ y₁ rfl rfl
+      have h₂ := m.mul _ x₁ y₁ x₂ y₂ (by simp [x₂, x₁, hx]) (by simp [y₂, y₁, hy])
+      have h₃ : (x₀ * y₀).left = (x₂ * y₂).left := by
+        simp only [Hom.mul_def, Over.comp_left, Over.lift_left]
+        rfl
+      rw [h₃, h₂, h₁, Category.assoc]
+  have K := compMor (homMor (dp0 k) (𝟙 _) g) (GlobalTheory.FODef.constMorV k (Fin d → k) A₀)
   have e1 := GrpMor.pull_pull (GlobalTheory.FODef.constMorV k (Fin d → k) A₀)
     (homMor (divided₂ (GlobalTheory.FODef.sqZero k (Fin d → k))) (spMap (TrivSqZeroExt.fstHom k k (Fin d → k)).toRingHom) g) K
     (fun _ ↦ rfl) (by simp) q

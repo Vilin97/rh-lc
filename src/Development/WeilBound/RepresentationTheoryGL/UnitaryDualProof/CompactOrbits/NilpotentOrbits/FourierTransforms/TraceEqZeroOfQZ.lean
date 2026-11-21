@@ -112,7 +112,7 @@ theorem continuous_piZ {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)} (hZ : CR Z)
   obtain ⟨cb, hcb⟩ := piZ_eq_sum hZ
   have : piZ Z = fun x => ∑ i, qZ Z x i • cb i := funext hcb
   rw [this]
-  exact continuous_finset_sum _ fun i _ => ((continuous_apply i).comp (continuous_qZ Z)).smul continuous_const
+  exact continuous_finsetSum _ fun i _ => ((continuous_apply i).comp (continuous_qZ Z)).smul continuous_const
 
 theorem sig_sig {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)} (hZ : CR Z) (s t : kˣ) (hst : (s : k) * t = 1)
     (p : Sp k n) : sig Z s (sig Z t p) = p := by

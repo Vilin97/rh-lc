@@ -45,7 +45,7 @@ private theorem descend_mod {F Ω : Type*} [Field F] [CharZero F] [Field Ω] [Al
       rw [map_div₀, map_sub, map_one, map_natCast, h]
       field_simp
       ring
-    rw [← isIntegral_algebraMap_iff , hmap]
+    rw [← isIntegral_algebraMap_iff (B := Ω), hmap]
     exact hz
 
 theorem UpperTheory.dvd_norm_sub_one_of_idempotent_interpolation_relNorm_one :

@@ -20,7 +20,7 @@ theorem UpperTheory.V.Z.Tf.Orb.placeData :
     ValuativeRel.isEquiv (valuation (w.1.adicCompletion E)) Valued.v x y
   have hlt : ∀ x : w.1.adicCompletion E, valuation _ x < 1 ↔ Valued.v x < 1 := fun x =>
     (ValuativeRel.isEquiv (valuation (w.1.adicCompletion E)) Valued.v).lt_one_iff_lt_one
-  have hval : ValuativeExtension (v.adicCompletion F) (w.1.adicCompletion E) := ⟨fun a b => by
+  have hval : ValuativeExtension (v.adicCompletion F) (w.1.adicCompletion E) := ⟨fun {a b} => by
     change Valued.v (completionMap v w.1 a) ≤ Valued.v (completionMap v w.1 b) ↔ Valued.v a ≤ Valued.v b
     rw [valued_completionMap, valued_completionMap]
     exact pow_le_pow_iff_left₀ zero_le zero_le he0⟩

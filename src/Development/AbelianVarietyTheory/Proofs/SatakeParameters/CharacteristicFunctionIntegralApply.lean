@@ -252,6 +252,8 @@ theorem lamV_addY {φ : TauV →ₗ[ℂ] (WO V W → ℂ)} (hφ : Good om fV yv 
   unfold lamV
   rw [← mul_add, ← integral_add (hφ.2 F y) (hφ.2 F y')]
   congr 2
+  funext g
+  simp only [map_add, Pi.add_apply, star_add, add_mul]
 
 theorem lamV_smulY (φ : TauV →ₗ[ℂ] (WO V W → ℂ)) (F : Fm) (a : ℂ) (y : C) :
     lamV om fV yv νV 𝓕V νW 𝓕W c φ F (a • y) = starRingEnd ℂ a * lamV om fV yv νV 𝓕V νW 𝓕W c φ F y := by

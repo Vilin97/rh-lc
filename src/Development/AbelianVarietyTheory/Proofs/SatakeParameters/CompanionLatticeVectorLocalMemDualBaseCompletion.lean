@@ -47,8 +47,8 @@ theorem mem_latS_dual_of_mem_latCo : ∀ {R : Ranks} {F E : Type} [Field F] [Num
     congr 1
   have hlat : latAd x Lb = Formalism.UG.CS.globLat x Lb := Submodule.span_eq (Formalism.UG.CS.globLat x Lb)
   have hL : Submodule.IsLattice E (latAd x Lb) := by
-    rw [hlat]; exact Formalism.UG.P.csGlob_lattice Lb hfin hspan x
-  have hLb : Submodule.IsLattice E Lb := ⟨Module.Finite.iff_fg.mp hfin, hspan⟩
+    rw [hlat]; exact (Formalism.UG.P.csGlob_lattice Lb hfin hspan x).toIsLattice
+  have hLb : Submodule.IsLattice E Lb := Submodule.IsLattice.of_fg E (Module.Finite.iff_fg.mp hfin)
   have hyU : y ∈ UPts sp.cm.sig J (v.adicCompletion F) := Formalism.UG.P.afsplit_bc_mem _ J v x hx
   have hyl := fun z => GlobalTheory.LocCarry.mem_latS_latAd_iff x Lb hfin hspan v z
   have hdm := GlobalTheory.DualCompletion.dual_move F E sp.cm.sig N J v (latAd x Lb) Lb y hJ hL hLb hyU hyl

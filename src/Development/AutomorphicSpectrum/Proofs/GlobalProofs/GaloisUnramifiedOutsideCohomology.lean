@@ -83,9 +83,9 @@ theorem exists_residue_correction [IsAlgClosure K Ω] {A : ValuationSubring Ω}
   set P := primeBelow (F := K) A with hPdef
   haveI : w.asIdeal.IsMaximal := w.isMaximal
   haveI : P.LiesOver w.asIdeal := ⟨(under_primeBelow hA).symm⟩
-  haveI : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := 𝓞 K) P
-    (by rw [show Ideal.comap (algebraMap (𝓞 K) (IntCl K Ω)) P = w.asIdeal from
-      under_primeBelow hA]; exact w.isMaximal)
+  haveI : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := 𝓞 K) P
+    (by rw [show Ideal.under (𝓞 K) P = w.asIdeal from under_primeBelow hA]
+        exact w.isMaximal)
   let e : IntCl K Ω ≃+* IntCl K Ω := actInt σ₁
   have hP : P = P.map (e : IntCl K Ω →+* IntCl K Ω) := by
     rw [Ideal.map_comap_of_equiv]

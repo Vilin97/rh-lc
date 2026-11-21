@@ -102,14 +102,14 @@ theorem act_comp (A B : Matrix (Fin n) (Fin n) ℂ) :
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [act, AlgHom.comp_apply, aeval_X, Sum.elim_inl, map_sum, map_mul, aeval_C,
       MvPolynomial.algebraMap_eq, Matrix.mul_apply, Finset.sum_mul, Finset.mul_sum, mul_assoc]
-    rw [Finset.sum_comm]
+      rw [Finset.sum_comm]
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [act, AlgHom.comp_apply, aeval_X, Sum.elim_inr, map_sum, map_mul, aeval_C,
       MvPolynomial.algebraMap_eq, Matrix.mul_inv_rev, Matrix.mul_apply, Finset.sum_mul, Finset.mul_sum,
       mul_assoc]
-    rw [Finset.sum_comm]
-    refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => ?_
-    ring
+      rw [Finset.sum_comm]
+      refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => ?_
+      ring
 
 theorem act_mul (A B : Matrix (Fin n) (Fin n) ℂ) (q : MvPolynomial (FinalTheorems m n) ℂ) :
     act (A * B) q = act B (act A q) := by
@@ -304,7 +304,7 @@ theorem act_diag (D : Fin n → ℂ) (hD : ∀ l, D l ≠ 0) (p : MvPolynomial (
   have hw : ∀ d ∈ p.support, ∀ l, wgt l d = 0 := by
     intro d hd l
     have h := congrArg (AddMonoidAlgebra.coeff · d) (hp l)
-    rw [coeff_Dsrc, coeff_zero] at h
+    rw [coeff_Dsrc, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h
     have hc : AddMonoidAlgebra.coeff p d ≠ 0 := mem_support_iff.mp hd
     exact_mod_cast (mul_eq_zero.mp h).resolve_right hc
   have hprod : ∀ d ∈ p.support, (d.prod fun v k => cv v ^ k) = 1 := by
@@ -362,6 +362,8 @@ theorem fftSym : FFTSym := by
     Subalgebra.mem_map.mpr ⟨p, hu, rfl⟩
   rw [AlgHom.map_adjoin, ← Set.range_comp] at h2
   convert h2 using 3
+  funext ab
+  simp only [Function.comp_apply, map_sum, map_mul, rename_vec, rename_cov, pairSym]
 
 end PositivityTheory.Rg.Sw.LC.PolynomialWeightAction
 

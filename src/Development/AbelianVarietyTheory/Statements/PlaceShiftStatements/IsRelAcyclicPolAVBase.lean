@@ -19,7 +19,7 @@ noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonObj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open GlobalTheory.CxForm (IsRelAcyclic)
-open GlobalTheory GlobalTheory.AbLaw GlobalTheory.RelAcyclicAmple
+open GlobalTheory GlobalTheory.AbLaw
 open scoped CategoryTheory.Obj
 
 attribute [local instance] Over.cartesianMonoidalCategory

@@ -38,6 +38,17 @@ theorem baseChange_normal_generic : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G]
   have : IsPreimmersion (spMap (algebraMap R K)) := IsPreimmersion.of_isLocalization (nonZeroDivisors R)
   refine ⟨inferInstance, GlobalTheory.isNormalScheme_of_smooth (CartesianMonoidalCategory.fst T G).left,
     MorphismProperty.of_isPullback hpb.flip ‹_›, fun W => ?_⟩
-  exact GlobalTheory.Exist.CubicalExtension.app_injective_generic hpb W
+  have : IsDominant (spMap (algebraMap R K)) := ⟨(PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical _).2
+    (((RingHom.injective_iff_ker_eq_bot _).1 (IsFractionRing.injective R K)).le.trans bot_le)⟩
+  have : QuasiCompact (spMap (algebraMap R K)) := by
+    set_option backward.isDefEq.respectTransparency.types false in
+      exact (HasAffineProperty.iff_of_isAffine (P := @QuasiCompact)).mpr (by infer_instance)
+  have : IsSchemeTheoreticallyDominant (spMap (algebraMap R K)) :=
+    IsSchemeTheoreticallyDominant.of_isDominant _
+  have : IsSchemeTheoreticallyDominant (h ▷ G).left :=
+    IsSchemeTheoreticallyDominant.of_isPullback hpb.flip
+  have : QuasiCompact (h ▷ G).left :=
+    MorphismProperty.of_isPullback (P := @QuasiCompact) hpb.flip inferInstance
+  exact (h ▷ G).left.app_injective W
 
 end GlobalTheory.SemiAbGenericFibre

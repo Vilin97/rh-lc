@@ -330,7 +330,8 @@ theorem finrank_rel {s : ℕ} (hs : A.fam.Ok s) (hC : Core R F) (hX : GoodStable
     partFull R.θ (R.MW i (sg0 D A)) (levS _ (R.βW i) (R.datWp i R.triv)) (levChi _ (R.βW i) (R.datWp i R.triv)) SF c)
     (inf_le_left.trans (hW.trans inf_le_left)))
   rw [fW.1, fE.1]
-  have f1 := Module.rank_lt_aleph0_iff.1 (lt_of_eq_of_lt hr'.symm (Module.rank_lt_aleph0_iff.2 fE.2))
+  set_option synthInstance.maxHeartbeats 200000 in
+    have f1 := Module.rank_lt_aleph0_iff.1 (lt_of_eq_of_lt hr'.symm (Module.rank_lt_aleph0_iff.2 fE.2))
   rw [← count hC hD hM i M₀ _ hSF c f1 fW.2]
   exact congrArg Cardinal.toNat hr'.symm
 

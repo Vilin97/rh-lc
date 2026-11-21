@@ -139,7 +139,7 @@ theorem hom_zmod_eq_zero_of_support : Laws → Laws2 → (AllPre fun {V} _ _ _ {
   have e : SecMod.mk _ t' = c.val • (SecMod.mk _ t : EA A (jFK (R := V) (Kbar V)) l) := by
     refine sub_eq_zero.1 (ex₃ _ fun α => ?_)
     rw [map_sub, map_smul, sub_eq_zero]
-    refine SecMod.ext_coord fun j => (hs' α j).trans ?_
+    refine DVR.SecOps.sec_ext fun j => (hs' α j).trans ?_
     rw [ex₂ t s hts α]
     rfl
   refine hϑ.symm.trans (GlobalTheory.T.thetaOperator_point_zero_of_power_eigen _ A (Kbar V) (jFK (R := V) (Kbar V)) l hl1 (SecMod.mk _ th) (SecMod.mk _ t) ϑ c

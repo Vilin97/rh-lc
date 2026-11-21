@@ -23,7 +23,8 @@ variable {D : Formalism.BasicNotions.D7}
 
 theorem totPos_ne_zero {x : D.host.E} (hx : TotPos x) : x ≠ 0 := by
   have : Nonempty D.what₂.Tau := Fintype.card_pos_iff.1 (by
-    rw [D.what₂.card_Tau]; unfold Formalism.BasicNotions.Ranks.f Formalism.BasicNotions.Ranks.n; positivity)
+    rw [D.what₂.card_Tau]; have := D.R.two_le_m; have := D.R.m_le_f
+    unfold Formalism.BasicNotions.Ranks.f Formalism.BasicNotions.Ranks.n; omega)
   obtain ⟨τ⟩ := this
   intro h
   have := hx τ

@@ -56,7 +56,7 @@ theorem completion_integers_precomplete {ϖ : v.adicCompletionIntegers K} (hϖ :
     intro y _
     obtain ⟨N, hN⟩ := exists_pow_lt₀ hlt
       (Units.map (MonoidWithZeroHom.ValueGroup₀.embedding
-        (f := (.ofClass (Valued.v : Valuation (v.adicCompletion K) (WithZero (Multiplicative ℤ)))))) y)
+        (f := (.ofClass (Valued.v : Valuation (v.adicCompletion K) (WithZero (Multiplicative ℤ)))))).toMonoidHom y)
     refine ⟨N, fun m hm n hn => ?_⟩
     show Valued.v.restrict (g n - g m) < y.1
     rw [Valuation.restrict_lt_iff_lt_embedding]

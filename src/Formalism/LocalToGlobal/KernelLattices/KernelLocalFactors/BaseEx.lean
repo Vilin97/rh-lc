@@ -54,7 +54,7 @@ theorem K_induction {p : H.E → Prop} (hb : p (H.sqd)) (hq : ∀ r : ℚ, p (al
     (hadd : ∀ x y, p x → p y → p (x + y)) (hinv : ∀ x, p x → p x⁻¹) (hmul : ∀ x y, p x → p y → p (x * y))
     (k : H.K) : p (k : H.E) := by
   have hk : (k : H.E) ∈ ℚ⟮H.sqd⟯ := k.2
-  refine IntermediateField.adjoin_induction ℚ (p := fun x _ => p x) ?_ hq (fun x y _ _ => hadd x y) (fun x _ => hinv x)
+  refine IntermediateField.adjoin_induction ℚ (motive := fun x _ => p x) ?_ hq (fun x y _ _ => hadd x y) (fun x _ => hinv x)
     (fun x y _ _ => hmul x y) hk
   intro x hx
   rw [Set.mem_singleton_iff.mp hx]
@@ -64,7 +64,7 @@ theorem conj_mem_K (k : H.K) : H.conj (k : H.E) ∈ H.K := by
   refine K_induction H (p := fun x => H.conj x ∈ H.K) ?_ ?_ ?_ ?_ ?_ k
   · rw [conj_b]; exact neg_mem (b_mem_K H)
   · intro r; rw [AlgEquiv.commutes]; exact H.K.algebraMap_mem r
-  · intro x y hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · intro x y hx hy; rw [map_add]; exact add_mem hx hy
   · intro x hx; rw [map_inv₀]; exact inv_mem hx
   · intro x y hx hy; rw [map_mul]; exact mul_mem hx hy
 

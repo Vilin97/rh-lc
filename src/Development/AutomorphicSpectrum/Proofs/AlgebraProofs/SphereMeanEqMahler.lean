@@ -111,7 +111,7 @@ variable {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
 lemma map_normalised {f : X → Y} (hf : MeasurableEmbedding f) {μ : Measure X} {ν : Measure Y}
     {a : ℝ≥0∞} (ha0 : a ≠ 0) (ha1 : a ≠ ⊤) (hmap : μ.map f = a • ν) (s : Set Y) :
     ((μ (f ⁻¹' s))⁻¹ • μ.restrict (f ⁻¹' s)).map f = (ν s)⁻¹ • ν.restrict s := by
-  rw [Measure.map_smul, ← hf.restrict_map, ← hf.map_apply μ s, hmap, Measure.restrict_smul,
+  rw [Measure.map_smul _ hf.measurable.aemeasurable, ← hf.restrict_map, ← hf.map_apply μ s, hmap, Measure.restrict_smul,
     Measure.smul_apply, smul_eq_mul, smul_smul]
   congr 1
   rw [ENNReal.mul_inv (Or.inl ha0) (Or.inl ha1), mul_comm a⁻¹, mul_assoc, ENNReal.inv_mul_cancel ha0 ha1,

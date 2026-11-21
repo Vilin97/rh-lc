@@ -22,7 +22,7 @@ section Ord
 variable (l : ℕ) {O : Type} [CommRing O] [IsLocalRing O] (η : G ℚ Ω →* ℤˣ) (Ψ : G ℚ Ω →* Oˣ) (σ g₁ : G ℚ Ω)
   (B : ValuationSubring Ω)
 
-structure OrdPt {A : Type} [CommRing A] [IsLocalRing A] [Algebra O A] (r : G ℚ Ω →* GG 3 A) : Prop where
+structure OrdPt {A : Type} [CommRing A] [IsLocalRing A] [Algebra O A] (r : G ℚ Ω →* GG (m := 3) (R := A)) : Prop where
   red : UnitaryThreeInertia.Red η Ψ r
   cont : UnitaryThreeInertia.AdicCont (maximalIdeal A) r
   norm : Normalised σ g₁ r
@@ -32,7 +32,7 @@ structure OrdPt {A : Type} [CommRing A] [IsLocalRing A] [Algebra O A] (r : G ℚ
 
 def FinEnd : Prop :=
   ∃ U : Subgroup (G ℚ Ω), U.FiniteIndex ∧ ∀ (A : Type) [CommRing A] [Algebra O A] [IsCD O A],
-    (∀ a ∈ maximalIdeal O, algebraMap O A a = 0) → ∀ r : G ℚ Ω →* GG 3 A, OrdPt l η Ψ σ g₁ B r →
+    (∀ a ∈ maximalIdeal O, algebraMap O A a = 0) → ∀ r : G ℚ Ω →* GG (m := 3) (R := A), OrdPt l η Ψ σ g₁ B r →
       ∀ g ∈ U, η g = 1 → (r g).mat.charpoly = (((r0 η Ψ g).mat).map (algebraMap O A)).charpoly
 
 end Ord
@@ -40,7 +40,7 @@ end Ord
 variable {l : ℕ} [Fact l.Prime] (c : Coef l) (η : G ℚ Ω →* ℤˣ) (Ψ : G ℚ Ω →* c.Oˣ) (σ g₁ : G ℚ Ω) (B : ValuationSubring Ω)
 
 def AutEnd3 (K : Type) [Field K] [NumberField K] [IsCMField K] (ι : Qbar l ≃+* ℂ) : Prop :=
-  ∀ (A : Subalgebra c.O (PadicAlgCl l)) [IsDiscreteValuationRing A] [Module.Finite c.O A] (r : G ℚ Ω →* GG 3 A),
+  ∀ (A : Subalgebra c.O (PadicAlgCl l)) [IsDiscreteValuationRing A] [Module.Finite c.O A] (r : G ℚ Ω →* GG (m := 3) (R := A)),
     OrdPt l η Ψ σ g₁ B r →
     (∀ U : Subgroup (G ℚ Ω), IsOpen (U : Set (G ℚ Ω)) → U ≤ η.ker → MatIrr U (mats (UnitaryThreeInertia.push A.val r))) →
     ∀ [Algebra K Ω] (ρ : G K Ω →* GL (Fin 3) (Qbar l)),
@@ -48,7 +48,7 @@ def AutEnd3 (K : Type) [Field K] [NumberField K] [IsCMField K] (ι : Qbar l ≃+
       Af.IsAutCsd ι (Af.tw ρ (cycBar K Ω l)⁻¹)
 
 def AutEnd2 (e : ℕ) (ι : Qbar l ≃+* ℂ) : Prop :=
-  ∀ (A : Subalgebra c.O (PadicAlgCl l)) [IsDiscreteValuationRing A] [Module.Finite c.O A] (r : G ℚ Ω →* GG 3 A),
+  ∀ (A : Subalgebra c.O (PadicAlgCl l)) [IsDiscreteValuationRing A] [Module.Finite c.O A] (r : G ℚ Ω →* GG (m := 3) (R := A)),
     OrdPt l η Ψ σ g₁ B r → TypeII η (UnitaryThreeInertia.push A.val r) → (∀ g ∈ η.ker, (r g).mat 1 1 = 1) →
     ∀ W : G ℚ Ω →* GL (Fin 2) (PadicAlgCl l),
       (∀ g ∈ η.ker, (W g).val = corner (UnitaryThreeInertia.push A.val r g).mat) →

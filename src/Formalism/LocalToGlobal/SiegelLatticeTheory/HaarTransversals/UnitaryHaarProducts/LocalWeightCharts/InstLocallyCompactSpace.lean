@@ -196,7 +196,7 @@ theorem haar_unique (U : Set (Mx k r)) (h : ClSub U) (μ : Measure (Mt k r)) (h�
       exact measure_iUnion_null hnull
     exact (NeZero.ne (Measure.haar : Measure (Grp U h))) (Measure.measure_univ_eq_zero.mp this)
   refine ⟨c, hcne0, hcnetop, ?_⟩
-  rw [← hmapν, heq, Measure.map_smul]
+  rw [← hmapν, heq, Measure.map_smul c hE.measurable.aemeasurable]
   rfl
 
 def tau (k r : ℕ) (i : Fin (2 * r + k + 1)) : Fin (2 * r + k + 1) :=

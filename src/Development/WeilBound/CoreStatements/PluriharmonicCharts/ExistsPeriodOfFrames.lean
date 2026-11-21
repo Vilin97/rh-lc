@@ -80,7 +80,8 @@ theorem exists_coord {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X] {ty :
     · simp [hit, hs u hu i a hit]
   have hSW : HolM B fun u => S * W u := (HolM.const _ _).mul hW
   refine ⟨{u ∈ B | (S * W u).det ≠ 0}, fun u => (S * W u)⁻¹ * S, hSW.isOpen_det hB, ⟨hu₀, fun h0 => ?_⟩,
-    fun _ h => h.1, ((hSW.mono fun _ h => h.1).inv fun _ h => h.2).mul (HolM.const _ _), fun u hu => ⟨?_, ?_⟩⟩
+    fun _ h => h.1, ((hSW.mono fun u (h : u ∈ {u ∈ B | (S * W u).det ≠ 0}) => h.1).inv
+      fun u (h : u ∈ {u ∈ B | (S * W u).det ≠ 0}) => h.2).mul (HolM.const _ _), fun u hu => ⟨?_, ?_⟩⟩
   · obtain ⟨c, hc, h⟩ := Matrix.exists_mulVec_eq_zero_iff.2 h0
     refine hc (hi c ?_)
     rw [← hP u₀ hu₀, ← Matrix.mulVec_mulVec, h, Matrix.mulVec_zero]

@@ -139,9 +139,9 @@ theorem eigProd : EigProd k := by
     obtain ⟨⟨b', y'⟩, rfl⟩ := (two (stdSum (rfl : r + t = r + t))).surjective j
     by_cases hb : b = b'
     · subst hb
-      rw [leviEmb_apply_same]
+      simp only [leviEmb, blockDiagonal'_apply_eq, Equiv.symm_apply_apply, Matrix.reindex_apply, Matrix.submatrix_apply, MonoidHom.coe_toHomUnits, MonoidHom.coe_mk, OneHom.coe_mk]
       simp [GeneralLinearGroup.scalar, diagonal_apply]
-    · rw [leviEmb_apply_ne _ _ _ hb]
+    · simp only [leviEmb, blockDiagonal'_apply, Equiv.symm_apply_apply, Matrix.reindex_apply, Matrix.submatrix_apply, MonoidHom.coe_toHomUnits, MonoidHom.coe_mk, OneHom.coe_mk, hb, ↓reduceDIte]
       simp [hb]
   obtain ⟨g, hg⟩ : ∃ g, f.1.1 g ≠ 0 := by
     by_contra h
@@ -151,9 +151,18 @@ theorem eigProd : EigProd k := by
   have hcomm : g * sc (r + t) x = sc (r + t) x * g := by
     ext i j
     simp [mul_comm]
-  have h5 := parInd_law (two (stdSum (rfl : r + t = r + t))) (piTensor (twoRep A.ρ B.ρ)) f
-    ⟨_, leviEmb_mem_parab k _ (fun a => GeneralLinearGroup.scalar (Two (Fin r) (Fin t) a) x)⟩ g
-  rw [leviProj_leviEmb, GlobalTheory.CentralSupport.deltaHalf_scalar] at h5
+  let e := two (stdSum (rfl : r + t = r + t))
+  let d : Levi k (Two (Fin r) (Fin t)) := fun a => GeneralLinearGroup.scalar _ x
+  have hp : leviEmb k e d ∈ parab k e := by
+    apply mem_parab_iff.2
+    intro a b i j hab
+    simp [leviEmb, blockDiagonal'_apply, hab.ne']
+  have hproj : leviProj k e ⟨leviEmb k e d, hp⟩ = d := by
+    funext a
+    ext i j
+    simp [leviProj_apply, leviEmb, blockDiagonal'_apply_eq]
+  have h5 := parInd_law e (piTensor (twoRep A.ρ B.ρ)) f ⟨leviEmb k e d, hp⟩ g
+  rw [hproj, GlobalTheory.CentralSupport.deltaHalf_scalar] at h5
   have h6 : piTensor (twoRep A.ρ B.ρ) (fun a => GeneralLinearGroup.scalar (Two (Fin r) (Fin t) a) x) (f.1.1 g) =
       c • f.1.1 g := by
     have h7 : f.1.1 (leviEmb k (two (stdSum (rfl : r + t = r + t)))

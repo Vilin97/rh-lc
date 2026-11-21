@@ -45,7 +45,7 @@ theorem twF_single_pow (q : ℕ) [NeZero q] (i : ℤ) (A : CommRingCat.{0}) (ζ 
   exact ulift_smul_eq_nsmul _ _
 
 theorem sec_res {R : Type} [CommRing R] (M : CommRingCat.{0} ⥤ ModuleCat.{1} (ULift.{1} R)) {V U : Scheme.{0}} (g : V ⟶ U)
-    (x : M.obj Γ(U, ⊤)) : Sec.res g (ofRings.sec R M U x) = ofRings.sec R M V ((M.map g.appTop).hom x) :=
+    (x : M.obj Γ(U, ⊤)) : Sec.res g (ofRings.sec M U x) = ofRings.sec M V ((M.map g.appTop).hom x) :=
   (congrArg (fun f => ModuleCat.Hom.hom f x) ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)).naturality g.op)).symm
 
 theorem res_comp {R : Type} [CommRing R] {F : Shv R} {W V U : Scheme.{0}} (h : W ⟶ V) (g : V ⟶ U)
@@ -53,7 +53,7 @@ theorem res_comp {R : Type} [CommRing R] {F : Shv R} {W V U : Scheme.{0}} (h : W
   simp [Sec.res]
 
 theorem twF_loc (q : ℕ) [NeZero q] (i : ℤ) (V : Scheme.{0}) (ζ : Prim q Γ(V, ⊤)) (x : (twF q i).obj Γ(V, ⊤)) :
-    Loc V fun _ h => ∃ c : ℕ, Sec.res h (ofRings.sec (ZMod q) (twF q i) V x) = c • twGen i (ζ.map h.appTop.hom) := by
+    Loc V fun _ h => ∃ c : ℕ, Sec.res h (ofRings.sec (twF q i) V x) = c • twGen i (ζ.map h.appTop.hom) := by
   have L := LateralTheory.Fin.EtaleLocalPropertyBasicClosure.intersectionNumber_baseChange
   have hZ := (etale_locally_roots_of_unity_structure_of_exists_and_kummer etale_locally_exists_primitive_root_of_unity_of_invertible_order etale_locally_kummer_roots_of_units_of_invertible_order q V).2.1
   have key : Loc V fun W h => ∃ c : ℕ, ((twF q i).map h.appTop).hom x =
@@ -78,7 +78,7 @@ theorem twF_loc (q : ℕ) [NeZero q] (i : ℤ) (V : Scheme.{0}) (ζ : Prim q Γ(
   exact map_nsmul _ _ _
 
 theorem loc_surj (q : ℕ) (i : ℤ) (U : Scheme.{0}) (y : Sec (tw q i) U) :
-    Loc U fun V g => ∃ x : (twF q i).obj Γ(V, ⊤), ofRings.sec (ZMod q) (twF q i) V x = Sec.res g y :=
+    Loc U fun V g => ∃ x : (twF q i).obj Γ(V, ⊤), ofRings.sec (twF q i) V x = Sec.res g y :=
   (LateralTheory.Fin.EtaleSheafificationSectionsLocallyFromPresheaf.intersectionNumber_baseChange (ZMod q) (Scheme.Γ ⋙ twF q i)).1 U y
 
 section Lift
@@ -157,7 +157,7 @@ theorem twSec : EtaleTateTwistSectionsLocallyGenerated := by
   · unfold twGen
     have := twF_single_pow q i Γ(U, ⊤) ζ ξ a h 1
     rw [ULift.one_down, one_mul] at this
-    refine (congrArg (ofRings.sec (ZMod q) (twF q i) U) this).trans ?_
+    refine (congrArg (ofRings.sec (twF q i) U) this).trans ?_
     unfold ofRings.sec
     exact map_nsmul _ _ _
   · obtain ⟨φ, hφ⟩ := lift_ex i M e hn hr

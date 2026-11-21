@@ -31,7 +31,7 @@ theorem abelianScheme_constLift : ∀ (R R₀ : Type) [CommRing R] [CommRing R�
   haveI : IsMonHom e.symm.hom := inferInstanceAs (IsMonHom e.inv)
   have h0B := isGrpPullback_of_iso e.symm
   refine ⟨(Over.pullback (spMap s)).obj A₀, inferInstance, _, (h0B.comp hBA).congr (Category.id_comp _) rfl,
-    PolPull.isAbelianScheme_of_isGrpPullback hA hAs, ?_⟩
+    isAbelianScheme_pullback_obj (spMap s) A₀ hA, ?_⟩
   exact (smoothOfRelativeDimension_isStableUnderBaseChange g).of_isPullback (IsPullback.of_hasPullback _ _) hg
 
 end GlobalTheory

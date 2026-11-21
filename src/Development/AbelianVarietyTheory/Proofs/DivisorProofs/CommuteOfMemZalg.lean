@@ -72,7 +72,8 @@ theorem prod_adj : ∀ {n : ℕ} (k : Fin n) (f₁ f₂ f₃ f₄ : Fin (n + 1) 
       have hcast : (0 : Fin (n + 2)) ≠ k.succ.castSucc := by
         rw [← Fin.succ_castSucc]
         exact (Fin.succ_ne_zero k.castSucc).symm
-      obtain ⟨e2, e3, e4⟩ := h 0 hcast (Fin.succ_ne_zero k.succ).symm
+      obtain ⟨e2, e3, e4⟩ : f₂ 0 = f₁ 0 ∧ f₃ 0 = f₁ 0 ∧ f₄ 0 = f₁ 0 :=
+        h 0 hcast (Fin.succ_ne_zero k.succ).symm
       rw [List.ofFn_succ (f := f₁), List.ofFn_succ (f := f₂), List.ofFn_succ (f := f₃), List.ofFn_succ (f := f₄)]
       simp only [List.prod_cons, e2, e3, e4]
       have := congrArg (f₁ 0 * ·) ih

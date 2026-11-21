@@ -507,6 +507,8 @@ theorem integral_conj_mul {α : Type*} [MeasurableSpace α] (μ : Measure α) (f
     ∫ x, conj (f x) * g x ∂μ = conj (∫ x, f x * conj (g x) ∂μ) := by
   rw [← integral_conj]
   congr 1
+  funext x
+  simp
 
 
 variable (F0 F0') in

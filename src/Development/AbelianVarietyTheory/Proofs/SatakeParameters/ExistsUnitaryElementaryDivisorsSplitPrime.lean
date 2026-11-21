@@ -72,7 +72,9 @@ theorem split_exist : ∀ {D : D7} (V : HSp D) (P : HeightOneSpectrum (𝓞 D.ho
     fun i => finPart D (incA D ((ϖ : D.host.E) ^ (-(d.getD i.1 0))))
   have huu : Matrix.diagonal u * Matrix.diagonal u' = 1 := by
     rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
-    congr 1
+    apply congrArg Matrix.diagonal
+    funext i
+    simp [u, u', ← map_mul, zpow_ne_zero _ hϖ]
   have key : ∀ X Y : Matrix (Fin V.rank) (Fin V.rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E),
       finPart D e • (X * (C * B) * Y) = finPart D e • (X * Y) := fun X Y => by
     rw [← Matrix.smul_mul, ← Matrix.mul_smul, c2, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one]

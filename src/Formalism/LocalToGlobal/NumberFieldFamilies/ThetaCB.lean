@@ -37,7 +37,11 @@ theorem compF_cont (τ : E →+* ℂ) : Continuous (compF (F := F) τ) :=
 
 theorem compF_alg [IsTotallyReal F] (τ : E →+* ℂ) (x : F) : compF (F := F) τ (algebraMap F (Ainf F) x) = τ (algebraMap F E x) := by
   have h1 : compF (F := F) τ (algebraMap F (Ainf F) x) = (plF (F := F) τ).embedding x :=
-    InfinitePlace.Completion.extensionEmbedding_coe (plF (F := F) τ) _
+    by
+      change (InfinitePlace.Completion.extensionEmbedding (plF (F := F) τ))
+        ((algebraMap F (Ainf F) x) (plF (F := F) τ)) = _
+      rw [InfiniteAdeleRing.algebraMap_apply]
+      exact InfinitePlace.Completion.extensionEmbedding_coe _ _
   rw [h1]
   have hr : ComplexEmbedding.IsReal (τ.comp (algebraMap F E)) := IsTotallyReal.complexEmbedding_isReal _
   unfold plF

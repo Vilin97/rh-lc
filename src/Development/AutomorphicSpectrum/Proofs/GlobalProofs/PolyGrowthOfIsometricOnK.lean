@@ -127,6 +127,8 @@ theorem trace_exp_smul {L : Matrix (Fin n) (Fin n) ℂ} (hL : L.IsHermitian) (t 
       t • diagonal (fun i => (hL.eigenvalues i : ℂ)) := by
     rw [← Matrix.diagonal_smul]
     congr 1
+    funext i
+    simp
   have hs : t • L = (U : Matrix (Fin n) (Fin n) ℂ) * diagonal (fun i => ((t * hL.eigenvalues i : ℝ) : ℂ)) *
       ((U⁻¹ : (Matrix (Fin n) (Fin n) ℂ)ˣ) : Matrix (Fin n) (Fin n) ℂ) := by
     show t • L = V * _ * Vᴴ

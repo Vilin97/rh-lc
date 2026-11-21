@@ -76,7 +76,7 @@ theorem ext_comp (h : V →ₗ⋆[K] V →ₗ[K] K) (X : V) (hX : h X X ≠ 0)
 
 def extE (h : V →ₗ⋆[K] V →ₗ[K] K) (X : V) (hX : h X X ≠ 0)
     (g : LinearMap.ker (h X) ≃ₗ[K] LinearMap.ker (h X)) : V ≃ₗ[K] V :=
-  LinearEquiv.ofLinear (ext h X hX g) (ext h X hX g.symm)
+  LinearEquiv.ofLinearMap (ext h X hX g) (ext h X hX g.symm)
     (by
       ext x
       have := ext_comp h X hX g.symm x

@@ -40,13 +40,15 @@ theorem list_prod_map_ite {α M : Type} [Monoid M] [DecidableEq α] (a : M) (σ 
     rw [List.map_cons, List.prod_cons]
     rw [List.nodup_cons] at hn
     by_cases hx : x = σ
-    · subst hx
-      rw [if_pos rfl, List.prod_eq_one, mul_one]
-      intro y hy
-      obtain ⟨z, hz, rfl⟩ := List.mem_map.1 hy
-      exact if_neg fun (e : z = x) => hn.1 (e ▸ hz)
-    · rw [if_neg hx, one_mul]
-      exact list_prod_map_ite a σ l hn.2 ((List.mem_cons.mp h).resolve_left fun e => hx e.symm)
+    · subst σ
+      have hprod : (l.map fun ρ => if ρ = x then a else 1).prod = 1 := by
+        apply List.prod_eq_one
+        intro y hy
+        obtain ⟨z, hz, rfl⟩ := List.exists_of_mem_map hy
+        exact ite_eq_right fun (e : z = x) => hn.1 (e ▸ hz)
+      rw [ite_eq_left rfl, hprod, mul_one]
+    · rw [ite_eq_right hx, one_mul]
+      exact list_prod_map_ite a σ l hn.2 ((List.mem_cons.1 h).resolve_left (Ne.symm hx))
 
 def IsRealAll (θ : InfFam D) (V : HSp D) (M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) (h : GA D V) : Prop :=
   h ∈ GinfC V ∧ ∀ ρ, infMat D.sp.cm.sig V.gram (θ ρ) h = M ρ

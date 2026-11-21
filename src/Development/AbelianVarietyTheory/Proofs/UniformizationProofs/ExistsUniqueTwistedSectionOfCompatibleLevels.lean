@@ -267,8 +267,7 @@ theorem existsUnique_sec_of_compatible : Laws → Laws2 → (∀ (V : Type) [Com
     (q := fun e => (thickObj V (IsLocalRing.maximalIdeal V) e D.P.A).hom)
     (θ := fun e => thickMap V (IsLocalRing.maximalIdeal V) e D.P.A)
     (fun e => by
-      simp [thickMap, DegPre.prBe]
-      exact (pullback.lift_fst _ _ _).trans (Category.comp_id _)) (fun e => pullback.condition) hb
+      simp [thickMap, DegPre.prBe]) (fun e => pullback.condition) hb
     (fun e => isBas_thick hT hk hb e) f hf
 
 end GlobalTheory.SecLimit

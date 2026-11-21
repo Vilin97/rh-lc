@@ -545,9 +545,9 @@ theorem modP.ext_of_mem (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E)
   exact Subtype.ext (one_smul _ _)
 
 theorem modP.ext_funAt (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (Sp E n)) (g : Module.Dual (𝓞 E ⧸ P.asIdeal) (modP P M)) :
-    FunAt P M (modP.ext P M g) where
-  add := by
-    intro x hx y hy
+    FunAt P M (modP.ext P M g) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro x hx y hy
     obtain ⟨s, hs, hsx⟩ := (mem_locP P M x).1 hx
     obtain ⟨t, ht, hty⟩ := (mem_locP P M y).1 hy
     have hst : s * t ∉ P.asIdeal := fun h => (P.isPrime.mem_or_mem h).elim hs ht
@@ -558,16 +558,14 @@ theorem modP.ext_funAt (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) 
     rw [mul_add, modP.ext_spec P M g _ hst h3, modP.ext_spec P M g _ hst h1, modP.ext_spec P M g _ hst h2, ← map_add (f := _), ← map_add (f := _)]
     congr 2
     exact Subtype.ext (smul_add _ _ _)
-  smul := by
-    intro a x hx
+  · intro a x hx
     obtain ⟨s, hs, hsx⟩ := (mem_locP P M x).1 hx
     have h1 : s • a • x ∈ M := by rw [smul_comm]; exact M.smul_mem a hsx
     apply mul_left_cancel₀ (mk_ne_zero hs)
     rw [modP.ext_spec P M g _ hs h1, mul_left_comm, modP.ext_spec P M g _ hs hsx, ← modP.mk_osmul]
     congr 2
     exact Subtype.ext (smul_comm _ _ _)
-  off := by
-    intro x hx
+  · intro x hx
     unfold modP.ext
     rw [dite_eq_right fun h => hx ((mem_locP P M x).2 h)]
 
@@ -850,7 +848,8 @@ def repPt (hc : Formalism.BasicNotions.CMData X.F X.E) (u : Pr.Word) (j : ℕ) (
 
 
 open Classical in
-def rhoK (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u i) : X.Kˣ :=
+def rhoK (W : Wts X Pr.Word R) (Λ : ∀ j, LevFam X.E X.K (R.N j) Pr.vGs)
+    (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u i) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
     (Formalism.L2.DIV.detTw hc.sig (Dc.muAt i) (repPt W Λ hc u i c))⁻¹ *
       (Formalism.L2.DIV.detTw hc.sig Dc.chi (repPt W Λ hc u i c)) ^ (-((R.N (i + 1) / 2 : ℕ) : ℤ))
@@ -858,7 +857,8 @@ def rhoK (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u i) : X.Kˣ
 
 
 open Classical in
-def rhoK' (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u (i + 1)) : X.Kˣ :=
+def rhoK' (W : Wts X Pr.Word R) (Λ : ∀ j, LevFam X.E X.K (R.N j) Pr.vGs)
+    (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u (i + 1)) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
     Formalism.L2.DIV.detTw hc.sig (Dc.muAt i) (repPt W Λ hc u (i + 1) c) *
       (Formalism.L2.DIV.detTw hc.sig Dc.chi (repPt W Λ hc u (i + 1) c)) ^ (((R.N i / 2 : ℕ) : ℤ))

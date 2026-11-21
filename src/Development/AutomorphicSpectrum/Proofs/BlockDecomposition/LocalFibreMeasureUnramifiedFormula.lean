@@ -108,7 +108,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.free_fibre_masses : ∀ (F E : Type
     · rw [Set.indicator_of_mem hy]
       refine measure_congr ?_
       filter_upwards [hae y] with x hx
-      refine propext ⟨fun h => h.1, fun h => ⟨h, ?_⟩⟩
+      refine ⟨fun h => h.1, fun h => ⟨h, ?_⟩⟩
       show q x ∈ Y
       rwa [hx]
     · rw [Set.indicator_of_notMem hy]

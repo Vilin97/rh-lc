@@ -119,11 +119,11 @@ def lift (D : A →ₗ[R] N) (hD : ∀ a b, D (a * b) = ε a • D b + ε b • 
 
 def pointDerEquiv : pointDer (N := N) ε ≃ₗ[R] (AugCot ε →ₗ[R] N) where
   toFun D := lift ε D.1 (mem_pointDer.1 D.2)
-  map_add' D E := hom_ext ε fun a => by simp
-  map_smul' c D := hom_ext ε fun a => by simp
+  map_add' D E := hom_ext (ε := ε) fun a => by simp
+  map_smul' c D := hom_ext (ε := ε) fun a => by simp
   invFun f := ⟨f ∘ₗ d ε, fun a b => by simp [d_mul]⟩
   left_inv D := by ext a; simp
-  right_inv f := hom_ext ε fun a => by simp
+  right_inv f := hom_ext (ε := ε) fun a => by simp
 
 def derivation : Derivation R A (AugCot ε) :=
   Derivation.mk' (d ε) (fun a b => by rw [d_mul, smul_eq, smul_eq])
@@ -329,8 +329,9 @@ def tensorEquiv : AugCot (tensorAug (εA := εA) (εB := εB)) ≃ₗ[R] AugCot 
         (by ext <;> simp)))
     (LinearMap.coprod (map _ tensorAug_comp_includeLeft) (map _ tensorAug_comp_includeRight))
     (by
-      refine LinearMap.prod_ext (hom_ext εA fun a => ?_) (hom_ext εB fun b => ?_) <;> simp)
-    (hom_ext tensorAug fun x => by
+      refine LinearMap.prod_ext (hom_ext (ε := εA) fun a => ?_)
+        (hom_ext (ε := εB) fun b => ?_) <;> simp)
+    (hom_ext (ε := tensorAug (εA := εA) (εB := εB)) fun x => by
       induction x with
       | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a b => simp [d_mul, d_tmul a b])
@@ -371,7 +372,7 @@ lemma isBaseChange_mapBase (φ : A →ₐ[R] A') (h : ∀ a, ε' (φ a) = algebr
           algebraMap_smul]
   refine IsBaseChange.of_equiv
     (LinearEquiv.ofLinear (LinearMap.liftBaseChange R' (mapBase φ h)) (lift ε' D hmul)
-      (hom_ext ε' fun x => ?_) (LinearMap.ext fun x => ?_)) (fun x => by simp)
+      (hom_ext (ε := ε') fun x => ?_) (LinearMap.ext fun x => ?_)) (fun x => by simp)
   · induction x using hφ.inductionOn with
     | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
     | smul s x hx => simp only [map_smul, hx]

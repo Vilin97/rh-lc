@@ -7,7 +7,7 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC GlobalTheory.Et NumberField IsDedekindDomain TensorProduct
-open GlobalTheory.GalV (HTower Htot hop galV Splits IsCorrOp IsGalois pullTot)
+open GlobalTheory.GalV (HTower hop galV Splits IsCorrOp IsGalois pullTot)
 open UpperTheory.Gal.TranscendenceTraces (Wt trHQ)
 open UpperTheory.Gal.Int.Geo
 open Formalism.ConjugateSelfDual ReciprocityTheory.Gal

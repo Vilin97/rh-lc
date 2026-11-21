@@ -94,6 +94,7 @@ theorem pd_of_tr {T : D.host.E} (u' : D.what₂.Word) (Λ Λ' : Submodule (𝓞 
     unfold mapLF; rw [dite_eq_left hiso]
   have hisoT : ∀ a b, (VS D).hT (σ a) (σ b) = (VS D).hT a b := fun a b => hiso a b
   have hfr : ∀ b, frame (mapLF σ F') b = σ (frame F' b) := Formalism.L2.SG.NormCut.frame_mapLF hiso F'
+  change IsLift Λ (mapLF σ F') ∧ IsAdmissible Λ (gS D) F (mapLF σ F') ∧ FrameOK D Λ (mapLF σ F')
   refine ⟨?_, ?_, ?_⟩
   · rw [hmap]
     refine ⟨(hTr _).mpr ?_, ?_⟩

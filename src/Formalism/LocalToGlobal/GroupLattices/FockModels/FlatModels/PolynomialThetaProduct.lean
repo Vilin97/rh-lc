@@ -18,9 +18,11 @@ theorem lin_comp {R : Type} [CommRing R] {k : ℕ} (M N : Matrix (Fin k) (Fin k)
   rw [← AlgHom.comp_apply, MvPolynomial.comp_aeval]
   apply congrArg (fun F : MvPolynomial (Fin k) R →ₐ[R] MvPolynomial (Fin k) R => F P)
   congr 1
+  funext i
+  simp only [map_sum, map_mul, aeval_C, aeval_X,
     Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
-  simp only [mul_assoc]
+  simp only [mul_assoc, MvPolynomial.algebraMap_eq]
 
 theorem lin_one {R : Type} [CommRing R] {k : ℕ} (P : MvPolynomial (Fin k) R) : lin (1 : Matrix (Fin k) (Fin k) R) P = P := by
   simp [lin, Matrix.one_apply]
@@ -151,9 +153,11 @@ theorem Lin_comp {R : Type} [CommRing R] {k : ℕ} (M N : S → Matrix (Fin k) (
   rw [← AlgHom.comp_apply, MvPolynomial.comp_aeval]
   apply congrArg (fun F : MvPolynomial (S × Fin k) R →ₐ[R] MvPolynomial (S × Fin k) R => F P)
   congr 1
+  funext i
+  simp only [map_sum, map_mul, aeval_C, aeval_X,
     Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
-  simp only [mul_assoc]
+  simp only [mul_assoc, MvPolynomial.algebraMap_eq]
 
 theorem Lin_one {R : Type} [CommRing R] {k : ℕ} (P : MvPolynomial (S × Fin k) R) :
     Lin (fun _ : S => (1 : Matrix (Fin k) (Fin k) R)) P = P := by

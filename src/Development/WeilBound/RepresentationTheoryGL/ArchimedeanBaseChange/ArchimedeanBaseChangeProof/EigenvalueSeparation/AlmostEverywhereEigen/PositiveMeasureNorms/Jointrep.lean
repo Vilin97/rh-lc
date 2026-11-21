@@ -33,7 +33,8 @@ theorem ae_tendsto {S : Type} [MeasurableSpace S] {ν : Measure S} (h : Lp ℂ 2
     have e2 : eLpNorm' (fun s => (v j : S → ℂ) s - h s) 2 ν = edist (v j) h := by
       rw [Lp.edist_def, eLpNorm_eq_eLpNorm' two_ne_zero ENNReal.ofNat_ne_top]
       simp only [ENNReal.toReal_ofNat]
-      rfl
+      · rfl
+      · exact (Lp.stronglyMeasurable (v j)).aestronglyMeasurable.sub (Lp.stronglyMeasurable h).aestronglyMeasurable
     rw [e1, e2, ENNReal.rpow_two]
     gcongr
     rw [edist_comm]; exact (hv j).le

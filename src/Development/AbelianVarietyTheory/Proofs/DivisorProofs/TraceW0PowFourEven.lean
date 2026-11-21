@@ -49,7 +49,7 @@ theorem det_interp_gen {E : Type} [Field E] [NumberField E] {r : ℕ} (n : ℕ) 
       by_cases h : i = j <;> simp [h, -algebraMap_smul]
     rw [this, h, map_add (f := _), map_mul, map_sub, map_one]
   have hy' : IsIntegral ℤ ((d - ((e : E) * (δ : E) + (1 - (e : E)))) / n) := by
-    rw [← isIntegral_algebraMap_iff , map_div₀, map_sub, map_natCast, hd',
+    rw [← isIntegral_algebraMap_iff (B := K), map_div₀, map_sub, map_natCast, hd',
       add_sub_cancel_left, mul_div_cancel_left₀ _ hn']
     exact hy
   obtain ⟨z, hz⟩ : ∃ z : 𝓞 E, (z : E) = (d - ((e : E) * (δ : E) + (1 - (e : E)))) / n := ⟨⟨_, hy'⟩, rfl⟩

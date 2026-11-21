@@ -30,7 +30,6 @@ theorem integrable_integral_fin_cons {E : Type*} [NormedAddCommGroup E] [NormedS
   congr 1; funext t'
   congr 1
   simp [MeasurableEquiv.piFinSuccAbove]
-  rfl
 
 variable {𝔸 : Type} [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [CompleteSpace 𝔸] [FiniteDimensional ℝ 𝔸]
   {G : Subgroup 𝔸ˣ} {𝔤 : Submodule ℝ 𝔸}

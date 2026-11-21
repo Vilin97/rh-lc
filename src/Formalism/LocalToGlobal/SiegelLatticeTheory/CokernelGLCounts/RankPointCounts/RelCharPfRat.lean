@@ -186,7 +186,7 @@ theorem lieN_of_coord (w : D.what₂.Word) (W : Matrix (Kap X) (Kap X) X.B.I.E) 
       rintro _ ⟨c, hc, rfl⟩
       exact ⟨c, by simp only [Set.mem_ofPred_eq] at hb hc ⊢; omega, rfl⟩
     | zero => simp
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ _ hy
   · have hx0 : ∀ a, hE X (X.eR a) (X.crd x) = 0 := by
       intro a
@@ -234,7 +234,7 @@ theorem ratVanish_holds : RatVanish := by
   have hisoF : ∀ a b, (VS D).hT (t.lin a) (t.lin b) = (VS D).hT a b := hiso
   set F' := mapFlag t.lin hiso (X.Fu u') with hF'
   have hfr : t.frame = ⟨F', t.lin (X.Fu u').z⟩ := by
-    unfold GTerm.frame mapLF; rw [dite_eq_left hiso]; rfl
+    unfold GTerm.frame mapLF; rw [dite_eq_left hiso]
   have hRF := (Formalism.L2.SG.Closed.TermFun_holds D u u' (X.Fu u) t.lam ((Yf.rowsOK u).1 t.lam t.mem)).2.2.1
   have hrel0 := (TermDef.isRel_mk D.host.F hRF ⟨t.frame, t.rep.2.2.2.2⟩).1 ht
   have hrel : Relevant D.host.F (X.Fu u) F' := by

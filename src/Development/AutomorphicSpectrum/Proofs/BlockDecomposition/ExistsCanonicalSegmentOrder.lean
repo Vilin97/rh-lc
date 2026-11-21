@@ -16,7 +16,7 @@ namespace GlobalTheory.CompanionTheory.CanonOrder
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-
+variable (k) in
 def lineSetoid : Setoid (IrrGL (k := k)) where
   r x y := ∃ m : ℤ, y = x.nu m
   iseqv :=
@@ -28,11 +28,10 @@ def lineSetoid : Setoid (IrrGL (k := k)) where
         rintro x _ _ ⟨m, rfl⟩ ⟨n, rfl⟩
         exact ⟨m + n, by simp⟩ }
 
-
 variable (k) in
 def Line : Type 1 := Quotient (lineSetoid k)
 
-instance lineLinearOrder : LinearOrder (Line k) := (exists_wellOrder (Line k)).choose
+instance lineLinearOrder : LinearOrder (Line k) := (exists_wellFoundedLT (Line k)).choose
 
 def lineOf (x : IrrGL (k := k)) : Line k := Quotient.mk (lineSetoid k) x
 

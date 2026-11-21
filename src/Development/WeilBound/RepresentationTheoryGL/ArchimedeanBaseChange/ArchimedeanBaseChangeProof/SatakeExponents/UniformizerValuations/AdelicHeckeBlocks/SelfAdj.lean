@@ -78,7 +78,7 @@ theorem self_adj (hL : LgFacts) (hU : Unimod) (hR : RCalc) (hS : WaveSpeed) (hE 
             intro y
             simp only [inner_sub_left, sum_inner, inner_smul_left]
           simp only [hpt]
-          rw [integral_sub int1 (integrable_finset_sum _ fun i _ => int2 i),
+          rw [integral_sub int1 (integrable_finsetSum _ fun i _ => int2 i),
             integral_finsetSum _ fun i _ => int2 i]
           simp only [integral_const_mul]
           rw [chain μ hL hU hR hS hE hb hk hw hK hf cf hh ch, sub_self])

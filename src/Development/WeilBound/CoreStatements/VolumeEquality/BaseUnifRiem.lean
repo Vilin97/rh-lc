@@ -61,7 +61,7 @@ omit [IsCMField E] in
 theorem exists_decomp {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : 𝓞 E →+* Module.End ℂ V) (x : V) :
     ∃ y : (E →+* ℂ) → V, (∀ s, y s ∈ eigSp ρ (s.comp (algebraMap (𝓞 E) E))) ∧ ∑ s, y s = x := by
   classical
-  choose cs hcs using exists_coeff (E := E)
+  choose cs hcs using fun s => exists_coeff (E := E) s
   have hsum : ∑ s, combo (cs s) = 1 := by
     apply evalHom_injective
     set_option synthInstance.maxHeartbeats 100000 in

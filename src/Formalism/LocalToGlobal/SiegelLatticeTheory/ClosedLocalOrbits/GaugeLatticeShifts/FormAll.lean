@@ -43,7 +43,6 @@ theorem decomp (μR : Measure G) (R : Set G) (hR : μR Rᶜ = 0) (Γ0 : Subgroup
       | simpa [ae_iff] using hR
   have hae : P =ᵐ[μR] ⋃ s : Γ0, (P ∩ (fun x => (s : G) * x) ⁻¹' Q) := by
     filter_upwards [hRae] with x hx
-    apply propext
     constructor
     · intro hxP
       obtain ⟨s, hs, hsQ⟩ := (hQu x hx).exists

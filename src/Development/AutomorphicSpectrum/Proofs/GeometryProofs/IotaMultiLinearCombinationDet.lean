@@ -34,6 +34,8 @@ theorem ιMulti_matrix_transform : ∀ (Ω Vs : Type) [Field Ω] [AddCommGroup V
         ext i j; simp [Matrix.one_apply, Pi.single_apply, eq_comm], Matrix.det_one]
     rw [AlternatingMap.smulRight_apply, e1, one_smul, AlternatingMap.compLinearMap_apply]
     congr 1
+    funext i
+    simp [Fintype.linearCombination_apply_single]
   exact AlternatingMap.congr_fun hA P
 
 end GlobalTheory.CompanionTheory.Ar.Flat.CPoint

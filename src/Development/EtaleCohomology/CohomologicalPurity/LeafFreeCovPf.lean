@@ -33,7 +33,7 @@ theorem cover_mem :
 
 theorem sec_zero (R : Type) [CommRing R] (Zs : Shv R) (z : Zs.obj.obj (op (U ⊔ V : X.Opens).toScheme))
     (h : ∀ b, Zs.obj.map (incl U V b).op z = 0) : z = 0 := by
-  have e := Presheaf.IsSheaf.hom_ext_ofArrows Zs.cond (incl U V) (cover_mem U V)
+  have e := Presheaf.IsSheaf.hom_ext_ofArrows Zs.property (incl U V) (cover_mem U V)
     (E := ModuleCat.of (ULift.{1} R) (ULift.{1} R))
     (x := ModuleCat.ofHom (LinearMap.toSpanSingleton (ULift.{1} R) _ z)) (y := 0) (fun b => by
       ext1

@@ -89,7 +89,7 @@ private theorem sec_bij (F : Shv R) (A B : Type) [CommRing A] [CommRing B] :
   let G : Scheme.{0}ᵒᵖ ⥤ Type 1 := F.obj ⋙ forget _
   have hG : Presieve.IsSheaf Scheme.zariskiTopology G :=
     Presieve.isSheaf_of_le _ Scheme.zariskiTopology_le_etaleTopology
-      ((isSheaf_iff_isSheaf_of_type _ _).1 ((sheafCompose _ (forget _)).obj F).cond)
+      ((isSheaf_iff_isSheaf_of_type _ _).1 ((sheafCompose _ (forget _)).obj F).property)
   have : PreservesLimitsOfShape (Discrete WalkingPair) G :=
     preservesLimitsOfShape_discrete_of_isSheaf_zariskiTopology hG
   let a : Spec (CommRingCat.of A) ⟶ Spec (CommRingCat.of (A × B)) := Spec.map (CommRingCat.ofHom (RingHom.fst A B))

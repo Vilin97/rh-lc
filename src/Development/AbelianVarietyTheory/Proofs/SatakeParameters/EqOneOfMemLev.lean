@@ -142,7 +142,8 @@ theorem kap_of_fst {K : Type} [Field K] [NumberField K] (a : ℤ) (x : Ideles K)
   rw [coe_kap, h]
   refine Finset.prod_congr rfl fun w _ => ?_
   congr 1
-  exact InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ k)
+  rw [InfiniteAdeleRing.algebraMap_apply]
+  simpa using InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ k)
 
 theorem dense_inf (F : Type) [Field F] [NumberField F] :
     DenseRange (Units.map (algebraMap F (InfiniteAdeleRing F)).toMonoidHom) := by

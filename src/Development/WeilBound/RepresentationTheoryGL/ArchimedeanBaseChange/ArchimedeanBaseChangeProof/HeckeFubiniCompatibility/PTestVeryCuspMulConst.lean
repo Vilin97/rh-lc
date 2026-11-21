@@ -174,7 +174,8 @@ theorem pTest_entry_le {y : G n} {R : ℝ} (h : lg y.val ≤ R) (i j : Fin n) :
 
 theorem pTest_posLog_sup_le {ι : Type} (f : ι → ℝ) (hf0 : ∀ i, 0 ≤ f i) {R : ℝ} (hR : 0 ≤ R)
     (hf : ∀ i, f i ≤ Real.exp R) : Real.posLog (⨆ i, f i) ≤ R := by
-  have h := Real.posLog_le_posLog (Real.iSup_nonneg hf0) (Real.iSup_le hf (Real.exp_pos R).le)
+  have h := Real.posLog_le_posLog (neg_one_lt_zero.le.trans (Real.iSup_nonneg hf0))
+    (Real.iSup_le hf (Real.exp_pos R).le)
   have e : Real.posLog (Real.exp R) = R := by simp [Real.posLog, hR]
   linarith
 

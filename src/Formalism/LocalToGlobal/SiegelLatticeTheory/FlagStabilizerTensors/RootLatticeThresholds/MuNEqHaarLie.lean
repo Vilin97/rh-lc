@@ -21,6 +21,8 @@ theorem torS_eq (δ : ℝ) :
   unfold Formalism.L2.SG.LocWSOf.torS tT dM
   rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_smul]
   congr 1
+  funext i
+  simp only [Pi.smul_apply, smul_eq_mul]
   have hI0 : Complex.I ≠ 0 := Complex.I_ne_zero
   by_cases h1 : i.val < r
   · simp only [dT, Formalism.MainNotions.FrameBoundFromBesselTorus.tV, Formalism.MainNotions.FrameBoundFromBesselTorus.tF, h1, if_true, one_mul]
@@ -54,6 +56,8 @@ theorem torS_inv_eq (δ : ℝ) (hδ : 0 < δ) :
   unfold Formalism.L2.SG.LocWSOf.torS tTi dMi
   rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_smul]
   congr 1
+  funext i
+  simp only [Pi.smul_apply, smul_eq_mul]
   by_cases h1 : i.val < r
   · simp only [dT, Formalism.MainNotions.FrameBoundFromBesselTorus.tV, Formalism.MainNotions.FrameBoundFromBesselTorus.tF, h1, if_true, one_mul]
     obtain ⟨n, hn⟩ : ∃ n, r = i.val + n := ⟨r - i.val, by omega⟩

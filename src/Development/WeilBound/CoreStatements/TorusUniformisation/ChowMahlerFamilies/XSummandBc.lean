@@ -40,10 +40,7 @@ theorem PositivityTheory.Xgn.t_summand_bc : ∀ {o Ω C : Type} [CommRing o] [Fi
     | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul a x _ hx => rw [map_smul, hx]
   refine ⟨⟨ρC, fun v => ?_, hid, hmap hρL⟩, ?_⟩
-  · refine hb.inductionOn v (fun v => ρC v ∈ Submodule.span C (b '' U)) ?_ ?_ ?_ ?_
-    · show ρC 0 ∈ _
-      rw [map_zero]
-      exact zero_mem _
+  · refine hb.inductionOn v ?_ ?_ ?_
     · intro m
       show ρC (b m) ∈ _
       rw [hρC]

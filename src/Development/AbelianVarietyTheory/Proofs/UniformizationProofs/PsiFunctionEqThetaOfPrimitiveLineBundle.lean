@@ -102,7 +102,7 @@ theorem traceFormTwistIso_of_primitive_lineBundle : LL → TwistBCSpanStatement 
   obtain ⟨κ₁, ⟨g₁, n₁⟩, v₁⟩ := H (1 + w₀) (ν + 2) (by
     rw [star_add, star_one]; push_cast; linear_combination htr + hν) (by omega)
   have e₁ : ιD.onB.act (1 + w₀) = padd D.toPre.P.A (𝟙 _) (ιD.onB.act w₀) := by
-    rw [ιD.onB.map_add (f := _), ιD.onB.map_one]
+    rw [ιD.onB.map_add, ιD.onB.map_one]
   obtain ⟨u, hu, vu⟩ := exists_gen D.toPre.P.isLB (K' := Fin 4)
     (φ' := ![(padd D.toPre.P.A (𝟙 _) (ιD.onB.act w₀)).left, 𝟙 D.toPre.P.A.left, (ιD.onB.act w₀).left,
       (toUnit D.toPre.P.A ≫ η[D.toPre.P.A]).left]) (ε' := ![1, -2, -1, 2]) (fun V _ h => by

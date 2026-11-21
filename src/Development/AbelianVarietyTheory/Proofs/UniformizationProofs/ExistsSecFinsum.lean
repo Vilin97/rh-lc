@@ -30,7 +30,7 @@ theorem exists_sec_finsum {X Y : Scheme.{0}} {L : LB X} {K : Type} [Fintype K] {
   refine ⟨⟨fun j => ∑ i ∈ s, (d i).f j, fun j j' => ?_⟩, fun Z r z J hJ => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, map_sum, Finset.mul_sum]
-    exact Finset.sum_congr rfl fun i _ => (d i).compat j j'
+      exact Finset.sum_congr rfl fun i _ => (d i).compat j j'
   · exact DVR.gs_fsum r z _ (hJ.mem φ r) _ _
 
 variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegPre R} {e : ℕ}

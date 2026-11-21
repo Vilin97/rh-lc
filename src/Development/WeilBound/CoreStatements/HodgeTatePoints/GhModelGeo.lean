@@ -28,7 +28,12 @@ theorem exists_base {S : Scheme.{0}} {G : Over S} [GrpObj G] [Smooth G.hom] {A R
     ∃ j : E →+ F, (∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ (M.pt e).left) ∧
       (∀ (a : A) e, j (a • e) = φ a • j e) ∧
       ∀ (n : ℕ) (b : Module.Basis (Fin n) A E), ∃ b' : Module.Basis (Fin n) R F, ∀ i, b' i = j (b i) := by
-  choose j hj using fun e => N.onto _ (isTanAt_base φ hz (M.tan e))
+  have ht (e : E) : IsTanAt G z (epsBase φ hz ≫ M.pt e) := by
+    change _ ≫ Spec.map _ ≫ (M.pt e).left = _
+    rw [← Category.assoc, spec_fst_dual, Category.assoc, M.tan e]
+    exact congrArg (·.left)
+      (comp_one (M := G) (Over.homMk (Spec.map (CommRingCat.ofHom φ)) hz : Over.mk z ⟶ Over.mk x))
+  choose j hj using fun (e : E) => N.onto _ (ht e)
   have hadd : ∀ e e', j (e + e') = j e + j e' := fun e e' => N.inj (by
     rw [hj, N.add, hj, hj, M.add, MonObj.comp_mul])
   have hsm : ∀ (a : A) e, j (a • e) = φ a • j e := fun a e => N.inj (by

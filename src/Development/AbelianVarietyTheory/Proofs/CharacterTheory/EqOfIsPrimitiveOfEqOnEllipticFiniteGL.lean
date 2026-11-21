@@ -264,16 +264,14 @@ theorem _root_.GlobalTheory.CuspGL.eq_of_isPrimitive_of_eq_on_elliptic (F : Type
       rw [hP]
       push_cast
       exact hdegA
-    push_cast [ENat.card_eq_coe_natCard]
-    exact h
+    exact_mod_cast h
   have hB : ((d * n' : ℕ) : ℤ) = (∑ k ∈ Finset.range (Nat.card F ^ d - 1), b k) * P := by
     rw [hn1'] at hdegB
     have h : (((d * n' : ℕ) : ℤ) : ℂ) = (((∑ k ∈ Finset.range (Nat.card F ^ d - 1), b k) * P : ℤ) : ℂ) := by
       rw [hP]
       push_cast
       exact hdegB
-    push_cast [ENat.card_eq_coe_natCard]
-    exact h
+    exact_mod_cast h
   have hpos : 0 < (∑ k ∈ Finset.range (Nat.card F ^ d - 1), a k) *
       ∑ k ∈ Finset.range (Nat.card F ^ d - 1), b k := by
     by_contra hle

@@ -78,7 +78,6 @@ theorem exists_isBaseChange (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonO
         rw [← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp,
           ← CommRingCat.ofHom_comp, dualMap_comp_epsMul])) }
   refine ⟨E, iA, iM, M, j, GlobalTheory.T.lie_model_isBaseChange S G R R' x E E' M M' j fun e => ?_, hleft⟩
-  change (M'.pt (f e)).left ≫ 𝟙 G.left = _
-  rw [Category.comp_id, hleft]
+  simpa only [Category.comp_id, j, LinearMap.coe_mk, AddHom.coe_mk] using hleft e
 
 end GlobalTheory.CompanionTheory.Ar.LieBaseChange

@@ -187,7 +187,7 @@ theorem rank_le (hl : ((l : ℕ) : R) ∈ maximalIdeal R)
   classical
   have hl1 : 1 < l := (Fact.out : l.Prime).one_lt
   have hq : 1 < l ^ d := Nat.one_lt_pow (NeZero.ne d) hl1
-  have hP0 : (X ^ (l ^ d) - X : (ResidueField R)[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero _ hq
+  have hP0 : (X ^ (l ^ d) - X : (ResidueField R)[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hq
   have hroot : ∀ s : ℤ_[l] ⊗[ℤ] OE, chi (em 0) s ∈ (X ^ (l ^ d) - X : (ResidueField R)[X]).roots.toFinset := by
     intro s
     rw [Multiset.mem_toFinset, mem_roots hP0, IsRoot.def, eval_sub, eval_pow, eval_X, chi_pow em hl hfrob, sub_self]

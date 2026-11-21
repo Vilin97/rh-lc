@@ -49,7 +49,17 @@ theorem tangent_of_isGrpPullback {tB : SAB H (Sp ℂ)} (A : Over (Sp ℂ)) [GrpO
   have := tB.semi.smooth
   have := tB.semi.geomConnected
   have hAb : IsAbelianScheme tB.G := ⟨tB.semi.comm, tB.semi.smooth, hP.1, tB.semi.geomConnected⟩
-  have hA : IsAbelianScheme A := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hAb hφ
+  have hA : IsAbelianScheme A := by
+    have := hAb.comm
+    have hc : IsCommMonObj A := by
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (hφ.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← hφ.2 T x y (pushPt hφ.1.w x) (pushPt hφ.1.w y) rfl rfl,
+        ← hφ.2 T y x (pushPt hφ.1.w y) (pushPt hφ.1.w x) rfl rfl, _root_.mul_comm]
+    exact ⟨hc, MorphismProperty.of_isPullback (P := @Smooth) hφ.1 hAb.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) hφ.1 hAb.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) hφ.1 hAb.geomConnected⟩
   have : ConnectedSpace tB.G.left :=
     GeometricallyConnected.geometrically_connectedSpace (f := tB.G.hom) (𝟙 _) (𝟙 _) tB.G.hom
       (IsPullback.of_horiz_isIso ⟨by simp⟩)

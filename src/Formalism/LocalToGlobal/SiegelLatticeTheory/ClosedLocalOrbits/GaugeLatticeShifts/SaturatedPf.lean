@@ -160,6 +160,8 @@ theorem Mplus_mapL (g : ℕ) (Λ : Submodule (𝓞 E) S.V) (F : LFlag S r T) (F'
   rw [Mplus, Mplus, gmap_span', Set.image_union, Set.image_union, ← coe_gmap, XLam_mapL β hβ,
     Set.image_singleton, zt_mapL, ← Set.range_comp, frame_mapL' β hβ, frame_mapL' β hβ]
   congr 3
+  funext b
+  simp only [Function.comp_apply, frameAct_map, map_sub, map_smul]
 
 theorem ModG_map (g : ℕ) (Λ : Submodule (𝓞 E) S.V) (x : S.V) :
     ModG S (Formalism.HermitianLatticesTheory.gmap β Λ) g (β x) ↔ ModG S Λ g x := by
@@ -430,7 +432,7 @@ theorem XS_mapFlag (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hβ : β ∈ Forma
 theorem positive_definite_isomorphism : PDIso D := by
   intro u' β hβ Λ T F F'
   simp only [PD, FrameOK, IsLift_mapL β hβ, IsAdmissible_mapL β hβ, IsFixedConv_mapL β hβ, XLam_mapL β hβ]
-  rw [show (mapL β hβ F').fl = mapFlag β hβ F'.fl from rfl, XS_mapFlag D β hβ, gmap_inj]
+  simp only [show (mapL β hβ F').fl = mapFlag β hβ F'.fl from rfl, XS_mapFlag D β hβ, gmap_inj]
 
 end D7
 

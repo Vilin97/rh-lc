@@ -80,7 +80,7 @@ theorem hinfConjC_holds : HinfConjC := by
       exact Measure.measure_univ_eq_zero.1 this
     have hνc : (X.muN u).map (fun s => g * s * g⁻¹) (N : Set X.B.I.Ginf)ᶜ = 0 := by
       rw [Measure.map_apply hm hNc.measurableSet.compl]
-      exact measure_mono_null (fun s hs hsN => hs (hconj g hg s hsN)) hc
+      exact measure_mono_null (t := (N : Set X.B.I.Ginf)ᶜ) (fun ⦃s⦄ hs hsN => hs (hconj g hg s hsN)) hc
     have hνi : ∀ t ∈ N, ((X.muN u).map (fun s => g * s * g⁻¹)).map (fun x => t * x) =
         (X.muN u).map (fun s => g * s * g⁻¹) := by
       intro t ht

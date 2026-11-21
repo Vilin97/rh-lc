@@ -93,7 +93,7 @@ def contMap {A A' : PAlg l} (φ : A ⟶ A') (Γ : Type) [TopologicalSpace Γ] : 
   comm := RingHom.ext fun x => Subtype.ext (funext fun _ => RingHom.congr_fun (Hom.comm φ) x)
 
 def contShift (A : PAlg l) : A.cont ℤ_[l] ⟶ A.cont ℤ_[l] where
-  f := { toFun := fun f => ⟨fun z => f.1 (z + 1), fun k => (f.2 k).comp_continuous (continuous_add_right 1)⟩
+  f := { toFun := fun f => ⟨fun z => f.1 (z + 1), fun k => (f.2 k).comp_continuous (continuous_add_const 1)⟩
          map_one' := rfl
          map_mul' := fun _ _ => rfl
          map_zero' := rfl
@@ -116,7 +116,8 @@ structure Tower {d : ℕ} (s : F.Small d) : Type 1 where
 
 variable {κ} in
 def Tower.obj {d : ℕ} {s : F.Small d} (𝒯 : Tower κ s) : (F.pt κ).Elements :=
-  ⟨𝒯.A, F.Pt.map (CommRingCat.ofHom 𝒯.g) s.y₀, 𝒯.hg ▸ F.ov_map (CommRingCat.ofHom 𝒯.g) s.ov⟩
+  (F.pt κ).elementsMk 𝒯.A
+    ⟨F.Pt.map (CommRingCat.ofHom 𝒯.g) s.y₀, 𝒯.hg ▸ F.ov_map (CommRingCat.ofHom 𝒯.g) s.ov⟩
 
 def Fn.Sub.inc (V : F.Sub) : Fn.Map V.fn F where
   u := { app := fun B => TypeCat.ofHom fun y => y.1

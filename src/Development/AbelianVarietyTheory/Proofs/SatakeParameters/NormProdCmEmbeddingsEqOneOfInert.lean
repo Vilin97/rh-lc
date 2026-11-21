@@ -397,7 +397,9 @@ theorem frobOut_of_inertK {p : ℕ} [hp : Fact p.Prime] (hp2 : p ≠ 2) (hI : Fo
     · rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, Ideal.under_def, Ideal.mem_comap]
       simpa using hpP
   have hpQ : ((p : ℕ) : 𝓞 D.host.E) ∈ Q₀ := by
-    have : (p : ℤ) ∈ Q₀.comap (algebraMap ℤ (𝓞 D.host.E)) := by rw [hQc]; exact Ideal.mem_span_singleton_self _
+    have : (p : ℤ) ∈ Q₀.comap (algebraMap ℤ (𝓞 D.host.E)) := by
+      change (p : ℤ) ∈ Q₀.under ℤ
+      rw [hQc]; exact Ideal.mem_span_singleton_self _
     rw [Ideal.mem_comap] at this
     simpa using this
   have hQ0 : Q₀ ≠ ⊥ := by
@@ -487,6 +489,7 @@ theorem frobOut_of_inertK {p : ℕ} [hp : Fact p.Prime] (hp2 : p ≠ 2) (hI : Fo
     have hdvd : (p : ℤ) ∣ -4 * (D.host.d : ℤ) := by
       have : (-4 * (D.host.d : ℤ)) ∈ Q₀.comap (algebraMap ℤ (𝓞 D.host.E)) := by
         rw [Ideal.mem_comap]; simpa using h4d
+      change (-4 * (D.host.d : ℤ)) ∈ Q₀.under ℤ at this
       rw [hQc, Ideal.mem_span_singleton] at this
       exact this
     rw [neg_mul, dvd_neg] at hdvd

@@ -25,10 +25,9 @@ section Trace
 
 theorem T_mul (c : 𝔸) (z : 𝒜) : adelstabT (F := F) (E := E) (((1 : E) ⊗ₜ[F] c) * z) =
     c * adelstabT (F := F) (E := E) z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul e a =>
-    simp [adelstabT, Algebra.TensorProduct.tmul_mul_tmul, mul_smul_comm]
+    simp [adelstabT, Algebra.TensorProduct.tmul_mul_tmul]
   | add x y hx hy => rw [mul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 theorem T_int (z : 𝒜) (hz : ∀ v, prV (E := E) v z ∈ SV E v) :
@@ -43,8 +42,7 @@ theorem T_int (z : 𝒜) (hz : ∀ v, prV (E := E) v z ∈ SV E v) :
 theorem expand {ι : Type} [Fintype ι] [DecidableEq ι] (β : Module.Basis ι F E) (z : 𝒜) :
     z = ∑ i, ((Algebra.traceForm F E).dualBasis (traceForm_nondegenerate F E) β i) ⊗ₜ[F]
       adelstabT (F := F) (E := E) ((β i ⊗ₜ[F] (1 : 𝔸)) * z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul e a =>
     have he := ((Algebra.traceForm F E).dualBasis (traceForm_nondegenerate F E) β).sum_repr e
     simp only [LinearMap.BilinForm.dualBasis_repr_apply, Algebra.traceForm_apply] at he

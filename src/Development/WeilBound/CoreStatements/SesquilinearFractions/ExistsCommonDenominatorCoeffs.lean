@@ -31,8 +31,8 @@ theorem exists_common_denominator_coeffs (D : Datum H) {p : ℕ} (x' : Fin p →
   choose n hn b hb using hpt
   refine ⟨∏ i, ∏ a, n i a, ?_, fun y a => ?_⟩
   · intro h
-    obtain ⟨i, -, hi⟩ := (Prime.dvd_finset_prod_iff (Nat.prime_iff.1 ℓ.2) _).1 h
-    obtain ⟨a, -, ha⟩ := (Prime.dvd_finset_prod_iff (Nat.prime_iff.1 ℓ.2) _).1 hi
+    obtain ⟨i, -, hi⟩ := (Prime.dvd_finsetProd_iff (Nat.prime_iff.1 ℓ.2) _).1 h
+    obtain ⟨a, -, ha⟩ := (Prime.dvd_finsetProd_iff (Nat.prime_iff.1 ℓ.2) _).1 hi
     exact hn i a ha
   · have hy : y ∈ Submodule.span (𝓞 E) (Set.range t) := ht ▸ Submodule.mem_top
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun (𝓞 E)).1 hy

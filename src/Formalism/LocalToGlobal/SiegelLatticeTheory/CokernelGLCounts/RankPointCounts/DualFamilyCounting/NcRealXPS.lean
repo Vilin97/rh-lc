@@ -99,7 +99,7 @@ theorem isHaarLoc_smul {n : ℕ} {ε : Fin n → Bool} {S : Set (Formalism.REAL.
     simpa [hc0] using congrArg (fun m : Measure (Formalism.REAL.UJ ε) => m s) h0
   · simp [h3]
   · intro s hs
-    rw [Measure.map_smul, h4 s hs]
+    rw [Measure.map_smul c (continuous_const_mul s).measurable.aemeasurable, h4 s hs]
 
 end Gen
 

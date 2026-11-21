@@ -76,10 +76,10 @@ private theorem lder_theta {m : ℕ} (F : R →ₐ[O] DualNumber κ) (b : GL (Fi
     Matrix.mul_assoc]
   rw [← Matrix.mul_assoc (Jmat κ m) (Jmat κ m), Jmat_mul_Jmat, Matrix.one_mul]
 
-private theorem tanCoc_eq (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG 3 R) (g : Γ) :
+private theorem tanCoc_eq (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG (m := 3) (R := R)) (g : Γ) :
     tanCoc F r g = lder F (r g).left := rfl
 
-private theorem tan_isCoc (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG 3 R) :
+private theorem tan_isCoc (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG (m := 3) (R := R)) :
     IsCoc (push (dualFst F) r) (tanCoc F r) := by
   intro g h
   have hne : ((-1 : ℤˣ) = 1) = False := by decide
@@ -92,18 +92,18 @@ private theorem tan_isCoc (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG 3 R) :
   · rw [hs, sgnAct_neg_one, lder_theta]
     simp only [hne, if_false]
 
-private theorem tan_mul (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG 3 R) (g : Γ) :
+private theorem tan_mul (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG (m := 3) (R := R)) (g : Γ) :
     tanCoc F r g * (push (dualFst F) r g).mat = (r g).mat.map (sndL F) := by
   show lder F (r g).left * (r g).left.val.map (dualFst F) = _
   rw [lder, Matrix.mul_assoc, fst_inv_mul, Matrix.mul_one]
   rfl
 
-private theorem tan_zero (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG 3 R) (g : Γ) (h : (r g).mat = 1) :
+private theorem tan_zero (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG (m := 3) (R := R)) (g : Γ) (h : (r g).mat = 1) :
     tanCoc F r g = 0 := by
   show (r g).mat.map (sndL F) * _ = _
   rw [h, map_sndL_one, Matrix.zero_mul]
 
-private theorem tan_norm (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG 3 R) (c g₁ : Γ) (h : Normalised c g₁ r) :
+private theorem tan_norm (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG (m := 3) (R := R)) (c g₁ : Γ) (h : Normalised c g₁ r) :
     NormCoc c g₁ (push (dualFst F) r) (tanCoc F r) := by
   have hz : ∀ a b, zvar c g₁ (push (dualFst F) r) (tanCoc F r) a b = sndL F (zmat c g₁ r a b) := fun a b => by
     rw [zvar, tan_mul, tan_mul, zmat]
@@ -208,7 +208,8 @@ private theorem pow_le {f : R →ₐ[c.O] PadicAlgCl l} (hf : IsLocPt f) :
     exact (Nat.cast_ne_zero.2 (Fact.out : l.Prime).ne_zero) h1
   have hm : ((⊥ : Ideal (R ⧸ q)).comap (algebraMap c.O (R ⧸ q))).IsMaximal :=
     Ideal.IsPrime.isMaximal inferInstance hne
-  have hb : (⊥ : Ideal (R ⧸ q)).IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap _ hm
+  have hb : (⊥ : Ideal (R ⧸ q)).IsMaximal :=
+    Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := c.O) ⊥ hm
   have hq' : q.IsMaximal := by
     have := Ideal.comap_isMaximal_of_surjective (Ideal.Quotient.mk q) Ideal.Quotient.mk_surjective (K := ⊥)
     rwa [← RingHom.ker_eq_comap_bot, Ideal.mk_ker] at this
@@ -352,7 +353,7 @@ private theorem der_sq {f : R →ₐ[c.O] PadicAlgCl l} (D : R →ₗ[c.O] Padic
   · rw [hD, (RingHom.mem_ker).1 ha, (RingHom.mem_ker).1 hb, zero_mul, zero_mul, add_zero]
   · rw [map_add (f := _), ha, hb, add_zero]
 
-private theorem tan_cont {Γ : Type} [Group Γ] [TopologicalSpace Γ] [IsCO c.O R] (r : Γ →* GG 3 R)
+private theorem tan_cont {Γ : Type} [Group Γ] [TopologicalSpace Γ] [IsCO c.O R] (r : Γ →* GG (m := 3) (R := R))
     (hr : ∀ a b, AdicCont (maximalIdeal R) fun g => (r g).mat a b) (F : R →ₐ[c.O] DualNumber (PadicAlgCl l))
     (hf : IsLocPt (dualFst F)) : Continuous (tanCoc F r) := by
   have h1 : Continuous fun g => (r g).mat.map (sndL F) :=

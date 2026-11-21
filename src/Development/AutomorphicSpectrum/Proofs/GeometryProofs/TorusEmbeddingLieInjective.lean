@@ -62,7 +62,6 @@ theorem lie_torus_saturated : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsDisc
       rw [hz, map_smulₛₗ, hcπ, zero_smul]
     have a1 := hj (A δ)
     have a2 := hjT δ
-    unfold LieModel.Lifts at a1 a2
     rw [Category.comp_id] at a1 a2
     rw [h0, pt_zero, hA, Over.comp_left] at a1
     have h1 : Mk.pt (jT δ) ≫ u = 1 := by

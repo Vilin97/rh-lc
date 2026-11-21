@@ -38,7 +38,9 @@ theorem RatModel.val_prod_zpow : ∀ {o' Ω : Type} [CommRing o'] [Field Ω] [Al
     · rw [hn, zpow_neg, zpow_natCast, zpow_neg, zpow_natCast, ← inv_pow, ← inv_pow, ← hinv]
       exact map_pow (RatModel.valHomOf y z h) ⟨(f i)⁻¹, (hf i).2.2⟩ n
   have e := map_prod (RatModel.valHomOf y z h) (fun i => (⟨f i ^ m i, hmem i⟩ : M.O z)) s
-  rw [RatModel.valHomOf_apply, SubmonoidClass.coe_finset_prod] at e
+  have hc : (↑(∏ i ∈ s, (⟨f i ^ m i, hmem i⟩ : M.O z)) : Ω) = ∏ i ∈ s, f i ^ m i := by
+    exact map_prod (M.O z).subtype _ s
+  rw [RatModel.valHomOf_apply, hc] at e
   rw [e]
   exact Finset.prod_congr rfl fun i _ => by rw [RatModel.valHomOf_apply]; exact hval i
 

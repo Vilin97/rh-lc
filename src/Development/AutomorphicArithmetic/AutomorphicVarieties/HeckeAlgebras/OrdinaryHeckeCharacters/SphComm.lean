@@ -125,10 +125,14 @@ theorem UpperTheory.V.Hi.sphComm :
   · have h1 : al k n 0 = 1 := by
       rw [al, upow, ← (diagT k (Fin n)).map_one]
       congr 1
+      funext i
+      simp
     rw [sphOp, h1, sphC_central ρ _ 1 (by simp) v hv, map_one, Module.End.one_apply]
   · refine sphC_central ρ _ _ (fun g => Units.ext ?_) v hv
     have h1 : (al k n n).val = Matrix.scalar (Fin n) (unif k : k) := by
       rw [al, upow, val_diagT, Matrix.scalar_apply]
       congr 1
+      funext i
+      simp [i.isLt]
     rw [Units.val_mul, Units.val_mul, h1]
     exact (Matrix.scalar_commute _ (fun _ => Commute.all _ _) _).eq.symm

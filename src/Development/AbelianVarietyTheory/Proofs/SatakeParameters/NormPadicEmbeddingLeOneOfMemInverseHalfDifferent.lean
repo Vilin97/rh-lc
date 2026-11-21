@@ -146,6 +146,8 @@ theorem mul_mem_mmM (x : 𝓞 D.host.E) {v : D.what₂.Tau → M} (hv : v ∈ mm
     rw [liftM_eq D M hM, liftM_eq D M hM, Algebra.smul_def, map_mul]
   | zero =>
     convert (mmM D M).zero_mem using 1
+    ext τ
+    simp
   | add v w _ _ hv hw =>
     convert (mmM D M).add_mem hv hw using 1
     funext τ

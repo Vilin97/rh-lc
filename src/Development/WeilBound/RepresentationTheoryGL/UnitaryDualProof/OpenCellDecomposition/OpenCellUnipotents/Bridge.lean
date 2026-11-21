@@ -84,6 +84,7 @@ theorem piPair_levZ (A : Representation ℂ (GL (Fin r) k) V) (x : Representatio
         rw [Function.update_self]
         exact hx z (v 1)
     rw [hv, MultilinearMap.map_update_smul, Function.update_eq_self]
+    rfl
   rw [key]
   rfl
 

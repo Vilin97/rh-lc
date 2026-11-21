@@ -361,7 +361,8 @@ theorem exists_isFrPoly_isHomogeneous : ∀ (E : Type) [Field E] [NumberField E]
     have p₂ : evalFr G (fun b' => X b' * T b') = MvPolynomial.eval (fun v => 2 * x v) G := by
       unfold evalFr
       congr 2
-      exact mul_comm _ _
+      funext v
+      simp [X, T, Matrix.mul_diagonal, mul_comm]
     rw [← p₂, ← e₂, e₃, p₁, e₁]
     rfl
 

@@ -119,7 +119,7 @@ theorem norm_step [CompleteSpace L] (σ : L →+* L) (ϖ : L) (q : ℕ) (h : IsU
         Matrix.one_mul]
     have h2 := congrArg (JiO * ·) h1
     simpa only [← Matrix.mul_assoc, hJJO', Matrix.one_mul] using h2
-  have hT : T ∈ GlobalTheory.UTr.plus P := GlobalTheory.UTr.mem_plus.2 (by rw [IsUnit.unit_spec]; exact hconj)
+  have hT : T ∈ GlobalTheory.UTr.plus P := (GlobalTheory.UTr.mem_plus (P := P)).2 (by rw [IsUnit.unit_spec]; exact hconj)
   have hsepP : (P : (intL L)[X]).Separable := hsep
   obtain ⟨u, hu⟩ := GlobalTheory.NormEq.normU_surj L σ ϖ q h P hsepP T hT
   have hu' : (u : GlobalTheory.UTr.Alg P) * GlobalTheory.UTr.conj P u = tz := by

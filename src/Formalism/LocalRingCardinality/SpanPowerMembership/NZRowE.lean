@@ -103,7 +103,7 @@ variable (Lb : Lbl H) (hT2 : ∀ u, T u ≠ 2) (per : ∀ u : W, Bool → FK ((K
   (NuL : ∀ u : W, Submodule (𝓞 H.E) ((K u).cls 0 → H.E))
   (gat : ∀ (u : W) (w : (@placesOf H.E _ _ H.cmStar).Pl), GIdx H (T u) ((@placesOf H.E _ _ H.cmStar).resChar w) →
     Formalism.MainNotions.G.GAtP ((@placesOf H.E _ _ H.cmStar).resChar w))
-  (hgat : ∀ u w h, (gat u w h).d = Fintype.card ((K u).cls 0))
+  (hgat : ∀ u w h, (gat u w h).d = @Fintype.card ((K u).cls 0) ((K u).clsFin 0))
 
 
 end Record

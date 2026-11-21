@@ -35,7 +35,7 @@ theorem blkAt_val (n N : ℕ) (h : n ≤ N) (g : GL (Fin n) k) (i j : Fin N) :
   · simp [hi, hj]
   · have hne : i ≠ j := fun e => hi (e ▸ hj)
     simp [hi, hj, hne]
-  · simp only [hi, hj, dite_false, fromBlocks_apply₂₂, one_apply, Fin.ext_iff]
+  · simp only [hi, hj, dite_false, fromBlocks_apply₂₂, Matrix.one_apply, Fin.ext_iff]
     by_cases e : (i : ℕ) = j
     · simp [e]
     · rw [if_neg (by omega), if_neg (by omega)]
@@ -100,7 +100,7 @@ theorem colEl_val (m N : ℕ) (h : m + 2 ≤ N) (x : Fin (m + 1) → k) (r c : F
         if (c : ℕ) = m + 1 then (if h : (r : ℕ) < m + 1 then x ⟨r, h⟩ else 0) else 0 := by
       simp only [colMat, Fin.ext_iff, Fin.val_last, lastCases_mk]
     have e4 : (1 : Matrix (Fin (m + 2)) (Fin (m + 2)) k) ⟨r, hr⟩ ⟨c, hc⟩ = if r = c then 1 else 0 := by
-      simp only [one_apply, Fin.ext_iff]
+      simp only [Matrix.one_apply, Fin.ext_iff]
     rw [e3, e4]
     by_cases hr' : (r : ℕ) < m + 1 <;> by_cases hc' : (c : ℕ) = m + 1 <;> simp [hr', hc']
   · have hne : r ≠ c := fun e => hc (e ▸ hr)
@@ -187,7 +187,7 @@ theorem conj_mat (N a : ℕ) (B C U : Matrix (Fin N) (Fin N) k) (hBC : B * C = 1
       (∀ i j : Fin N, a ≤ (i : ℕ) → (B * U * C) i j = U i j) := by
   have hXcol : ∀ r c : Fin N, (c : ℕ) < a + 1 → (U - 1) r c = 0 := by
     intro r c hc
-    rw [Matrix.sub_apply, h3 r c hc, one_apply, sub_self]
+    rw [Matrix.sub_apply, h3 r c hc, Matrix.one_apply, sub_self]
   have hXlow : ∀ r c : Fin N, c ≤ r → (U - 1) r c = 0 := by
     intro r c hcr
     rcases hcr.lt_or_eq with hlt | heq
@@ -232,7 +232,7 @@ theorem conj_mat (N a : ℕ) (B C U : Matrix (Fin N) (Fin N) k) (hBC : B * C = 1
     by_cases hi : (i : ℕ) < a + 1
     · rw [hBXcol i i hi, add_zero]
     · rw [hBXrow i i (by omega), hXlow i i le_rfl, add_zero]
-  · rw [Matrix.add_apply, hBXcol i j hj, add_zero, one_apply]
+  · rw [Matrix.add_apply, hBXcol i j hj, add_zero, Matrix.one_apply]
   · rw [Matrix.add_apply, hBXrow i j hi, Matrix.sub_apply, add_sub_cancel]
 
 end Conj

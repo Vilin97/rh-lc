@@ -96,13 +96,17 @@ section Entry
 variable {D : D7}
 
 theorem hT_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hun : Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ) (m n : ℕ)
-    (v v' : (VS D).V) (hv : ∀ x ∈ (((dI D ^ m : Ideal (𝓞 D.host.E)) : FI))⁻¹, x • v ∈ Λ)
-    (hv' : ∀ y ∈ (((dI D ^ n : Ideal (𝓞 D.host.E)) : FI))⁻¹, y • v' ∈ Λ) :
+    (v v' : (VS D).V)
+    (hv : ∀ x ∈ ((dI D ^ m : Ideal (𝓞 D.host.E)) : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E)⁻¹,
+      x • v ∈ Λ)
+    (hv' : ∀ y ∈ ((dI D ^ n : Ideal (𝓞 D.host.E)) : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E)⁻¹,
+      y • v' ∈ Λ) :
     ∃ o ∈ dI D ^ (m + n), (o : D.host.E) = (VS D).hT v v' := by
   set Z := (VS D).hT v v' with hZ
-  set A : FI := (((dI D ^ m : Ideal (𝓞 D.host.E)) : FI))⁻¹
-  set B : FI := (((dI D ^ n : Ideal (𝓞 D.host.E)) : FI))⁻¹
-  have hJ : (((dI D ^ (m + n) : Ideal (𝓞 D.host.E)) : FI)) = (A * B)⁻¹ := by
+  let FI := FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E
+  set A : FI := ((dI D ^ m : Ideal (𝓞 D.host.E)) : FI)⁻¹
+  set B : FI := ((dI D ^ n : Ideal (𝓞 D.host.E)) : FI)⁻¹
+  have hJ : ((dI D ^ (m + n) : Ideal (𝓞 D.host.E)) : FI) = (A * B)⁻¹ := by
     rw [mul_inv, inv_inv, inv_inv, ← FractionalIdeal.coeIdeal_mul, ← pow_add]
   have hAB0 : A * B ≠ 0 := by
     refine mul_ne_zero (inv_ne_zero ?_) (inv_ne_zero ?_) <;>

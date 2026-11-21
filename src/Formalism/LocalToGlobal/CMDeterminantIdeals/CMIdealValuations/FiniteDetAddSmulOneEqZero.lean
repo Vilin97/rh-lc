@@ -242,8 +242,10 @@ private theorem degree_of_scale {σ : Type} [Fintype σ] (P Δ : MvPolynomial σ
     rw [h0, map_zero]
   have hQ0 : Q = 0 := (mul_eq_zero.mp hΔQ).resolve_left hΔ
   have hc := congrArg (AddMonoidAlgebra.coeff · μ) hQ0
-  rw [hQ, MvPolynomial.coeff_sub, coeff_bind_scale, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_zero,
-    sub_eq_zero] at hc
+  rw [hQ, MvPolynomial.coeff_sub, coeff_bind_scale, MvPolynomial.coeff_C_mul] at hc
+  change (2 : ℂ) ^ (∑ v, μ v) * AddMonoidAlgebra.coeff P μ -
+    2 ^ n * AddMonoidAlgebra.coeff P μ = 0 at hc
+  rw [sub_eq_zero] at hc
   have h2 : (2 : ℂ) ^ (∑ v, μ v) = 2 ^ n := mul_right_cancel₀ hμ hc
   have h3 : ((2 ^ (∑ v, μ v) : ℕ) : ℂ) = ((2 ^ n : ℕ) : ℂ) := by
     push_cast

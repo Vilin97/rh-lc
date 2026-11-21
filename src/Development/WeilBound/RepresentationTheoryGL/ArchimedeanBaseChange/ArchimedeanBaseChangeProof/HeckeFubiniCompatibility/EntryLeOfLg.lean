@@ -165,6 +165,7 @@ theorem entA_convK [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : Measure (G n
 
 theorem mulF_fin [MeasurableSpace (Hf E a b)] [BorelSpace (Hf E a b)] (ν : Measure (Hf E a b)) [ν.IsHaarMeasure]
     {κ : Type} [Fintype κ] {ψ ψ' : Matrix κ κ (Hf E a b → ℂ)} (hψ : IsFinM ψ) (hψ' : IsFinM ψ') : IsFinM (mulF ν ψ ψ') := by
+  set_option synthInstance.maxHeartbeats 400000 in
   intro x y
   refine ⟨continuous_finsetSum _ fun z _ => ?_, ?_⟩
   · have e : (fun g => ∫ h, ψ x z h * ψ' z y (h⁻¹ * g) ∂ν) =

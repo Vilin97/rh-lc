@@ -117,7 +117,7 @@ theorem map_chRing {o : Type} [CommRing o] {Ω : Type} [Field Ω] [Algebra o Ω]
   | algebraMap r =>
     rw [← IsScalarTower.algebraMap_apply]
     exact Subalgebra.algebraMap_mem _ r
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 
 theorem exists_of_mem_chRing {o : Type} [CommRing o] {Ω : Type} [Field Ω] [Algebra o Ω] {κ : Type} (x : κ → Ω)
@@ -252,6 +252,8 @@ theorem normAt_of_charts (hD : Dominates M'.ξ M.ξ f (algebraMap Ω Ω'))
   obtain ⟨c, hp⟩ := M.tie.cover p
   have hc := hp.1
   have hr := GlobalTheory.T.regAt_chart_localization o Ω κ x M c p hp
+  let i₀ := algebraMap Ω Ω'
+  let A₀ := fun c => chRing o (fun k => algebraMap Ω Ω' (x k)) c
   have hB1 : ∀ c, x c ≠ 0 → ∀ a : Ω', IsIntegral (A₀ c) a → a ∈ chRing o y (e c) := fun c hc a => (hB c hc a).2
   have hAR : ∀ a ∈ A₀ c, a ∈ (regAt M.ξ p).map i₀ := fun a ha => by
     obtain ⟨b, hb, rfl⟩ := exists_of_mem_chRing x Ω' c a ha

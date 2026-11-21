@@ -107,7 +107,7 @@ theorem sig_of_diag {n : ℕ} (J : Matrix (Fin n) (Fin n) ℂ) (ε : Fin n → B
   let e1 : Fin (Finset.univ.filter fun i => ε i = true).card ≃ {a // ε a = true} :=
     (Fintype.equivFinOfCardEq (by rw [Fintype.card_subtype])).symm
   let e2 : Fin (Finset.univ.filter fun i => ε i = false).card ≃ {a // ¬ ε a = true} :=
-    (Fintype.equivFinOfCardEq (by rw [Fintype.card_subtype]; congr 1; ext a; simp)).symm
+    (Fintype.equivFinOfCardEq (by rw [Fintype.card_subtype]; congr 1)).symm
   let e : Fin _ ⊕ Fin _ ≃ Fin n := (Equiv.sumCongr e1 e2).trans (Equiv.sumCompl fun a => ε a = true)
   have hJm : (Matrix.diagonal fun i => if ε i then (1 : ℂ) else -1).submatrix e e =
       Formalism.UG.Jpq (Finset.univ.filter fun i => ε i = true).card (Finset.univ.filter fun i => ε i = false).card := by
@@ -276,7 +276,7 @@ theorem diag_sig {n p q : ℕ} (ε : Fin n → Bool) (hp : (Finset.univ.filter f
   classical
   let e1 : Fin p ≃ {a // ε a = true} := (Fintype.equivFinOfCardEq (by rw [Fintype.card_subtype, hp])).symm
   let e2 : Fin q ≃ {a // ¬ ε a = true} :=
-    (Fintype.equivFinOfCardEq (by rw [Fintype.card_subtype, ← hq]; congr 1; ext a; simp)).symm
+    (Fintype.equivFinOfCardEq (by rw [Fintype.card_subtype, ← hq]; congr 1)).symm
   let e : Fin p ⊕ Fin q ≃ Fin n := (Equiv.sumCongr e1 e2).trans (Equiv.sumCompl fun a => ε a = true)
   refine ⟨e, ?_⟩
   rw [Matrix.submatrix_diagonal_equiv]
@@ -299,7 +299,7 @@ theorem cpt_bas_ex (V : HSp D) (hV : V.SigOK) (τ : D.what₂.Tau) :
   let ε : Fin V.rank → Bool := fun i => decide (0 < lenAt V τ i)
   obtain ⟨c1, c2⟩ := sig_count V hV τ
   obtain ⟨e, he⟩ := diag_sig (p := (V.sig (tauE D τ)).1) (q := (V.sig (tauE D τ)).2) ε
-    (by rw [← c1]; congr 1; ext i; simp [ε]) (by rw [← c2]; congr 1; ext i; simp [ε])
+    (by rw [← c1]; congr 1) (by rw [← c2]; congr 1)
   let P := (basC V).map (tauE D τ)
   have hP : IsUnit P.det := by
     have : P.det = tauE D τ (basC V).det := ((tauE D τ).map_det _).symm

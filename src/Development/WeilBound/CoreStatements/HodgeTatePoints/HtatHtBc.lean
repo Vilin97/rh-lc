@@ -50,23 +50,23 @@ theorem PositivityTheory.HtPt.Htat.ht_bc : ∀ (R : Type) [CommRing R] [IsDomain
     intro t
     have hb : valAt (σ t) ⊤ le_top s = ib (χ t) := by
       apply hj
-      rw [← valAt_spec_map, hσj, hs t, ← RingHom.comp_apply, hji]
+      rw [← PositivityTheory.HtPt.Htat.HTBaseChange.valAt_spec_map, hσj, hs t, ← RingHom.comp_apply, hji]
     show valAt (Γ'.pt t).left ⊤ le_top (F.appTop.hom s) = _
-    rw [← valAt_comp_top, ← hσj', valAt_spec_map, hb, ← RingHom.comp_apply, hj'i]
+    rw [← PositivityTheory.HtPt.Htat.HTBaseChange.valAt_comp_top, ← hσj', PositivityTheory.HtPt.Htat.HTBaseChange.valAt_spec_map, hb, ← RingHom.comp_apply, hj'i]
     simp
   obtain ⟨l', hl'⟩ := PositivityTheory.HtPt.Htat.ht_linear R' T Γ' S G (Spec.map (CommRingCat.ofHom (algebraMap R R')) ≫ x) N (F ≫ i) hi'
     L' M' ((Units.map (algebraMap R R' : R →* R')).comp χ) (F.appTop.hom s) hs'
   have key : ∀ e, l' (β e) = Ideal.Quotient.mk (Ideal.span {(N : R')}) (w' (β e)) := by
     intro e
     obtain ⟨v, hv1, hv2, hv3⟩ := hv e
-    have hc : (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (qmap (R := R) (R' := R') N))) ≫ v) ≫ Γ.G.hom =
+    have hc : (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (PositivityTheory.HtPt.Htat.HTBaseChange.qmap (R := R) (R' := R') N))) ≫ v) ≫ Γ.G.hom =
         Spec.map (CommRingCat.ofHom ((algebraMap (R' ⧸ Ideal.span {(N : R')})
           (DualNumber (R' ⧸ Ideal.span {(N : R')}))).comp (Ideal.Quotient.mk _))) ≫
           Spec.map (CommRingCat.ofHom (algebraMap R R')) := by
       rw [Category.assoc, hv1, ← Spec.map_comp, ← Spec.map_comp]
       congr 1
       ext r
-      all_goals simp [GlobalTheory.CompanionTheory.Ar.dualMap, qmap, Ideal.quotientMap_mk, TrivSqZeroExt.algebraMap_eq_inl]
+      all_goals simp [GlobalTheory.CompanionTheory.Ar.dualMap, PositivityTheory.HtPt.Htat.HTBaseChange.qmap, Ideal.quotientMap_mk, TrivSqZeroExt.algebraMap_eq_inl]
     set v'' := hF.cart.lift _ _ hc with hv''
     have h1 := hF.cart.lift_fst _ _ hc
     have h2 := hF.cart.lift_snd _ _ hc
@@ -77,11 +77,11 @@ theorem PositivityTheory.HtPt.Htat.ht_bc : ∀ (R : Type) [CommRing R] [IsDomain
         ← Spec.map_comp]
       congr 2
       ext a
-      all_goals simp [GlobalTheory.CompanionTheory.Ar.dualMap, qmap, Ideal.quotientMap_mk, TrivSqZeroExt.algebraMap_eq_inl]
+      all_goals simp [GlobalTheory.CompanionTheory.Ar.dualMap, PositivityTheory.HtPt.Htat.HTBaseChange.qmap, Ideal.quotientMap_mk, TrivSqZeroExt.algebraMap_eq_inl]
     have h4 := hl' (β e) v'' ⟨h2, h3⟩
-    rw [← valAt_comp_top, h1, valAt_spec_map, hv3] at h4
+    rw [← PositivityTheory.HtPt.Htat.HTBaseChange.valAt_comp_top, h1, PositivityTheory.HtPt.Htat.HTBaseChange.valAt_spec_map, hv3] at h4
     have h5 := congrArg TrivSqZeroExt.snd h4
-    simp only [GlobalTheory.CompanionTheory.Ar.dualMap, qmap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add,
+    simp only [GlobalTheory.CompanionTheory.Ar.dualMap, PositivityTheory.HtPt.Htat.HTBaseChange.qmap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add,
       TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, TrivSqZeroExt.fst_add, TrivSqZeroExt.fst_inl,
       TrivSqZeroExt.fst_inr, zero_add, add_zero, Ideal.quotientMap_mk] at h5
     rw [← h5, hw]

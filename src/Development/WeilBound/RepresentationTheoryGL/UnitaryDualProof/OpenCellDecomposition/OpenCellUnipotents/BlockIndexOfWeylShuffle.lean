@@ -57,10 +57,9 @@ theorem wOpen_two : wOpen (dd r m) (hdd r m) = w2 r m := by
     · left; simp [hi, hj]
     · omega
     · simp [hi, hj]; omega
-  · exfalso
-    have h2 := congrArg (fun p => (ofLex p).2) he
+  · have h2 := congrArg (fun p => (ofLex p).2) he
     simp only [wKey, ofLex_toLex] at h2
-    exact hij.ne ((w2 r m).injective h2)
+    exact le_of_eq h2
 
 variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
@@ -119,7 +118,11 @@ theorem conj_aDiag (z : kˣ) :
   rw [show (w2 r m)⁻¹ = (w2 r m).symm from rfl]
   by_cases hab : a = b
   · subst hab
-    rw [leviEmb_apply_same, levZ_apply]
+    have he : ((leviEmb k (stdBlocks (dd r m) (hdd r m)) (levZ k r m z) : GL (Fin (r + m)) k) : Matrix _ _ k)
+        ((stdBlocks (dd r m) (hdd r m)) ⟨a, i'⟩) ((stdBlocks (dd r m) (hdd r m)) ⟨a, j'⟩) =
+        ((levZ k r m z a : GL _ k) : Matrix _ _ k) i' j' := by
+      simp [leviEmb, Matrix.blockDiagonal'_apply_eq]
+    rw [he, levZ_apply]
     by_cases hij : i' = j'
     · subst hij
       rw [if_pos rfl, if_pos rfl]
@@ -128,7 +131,10 @@ theorem conj_aDiag (z : kˣ) :
       · rw [if_neg (fun h => absurd (key.1 h) (by decide)), if_pos rfl]
       · rw [if_pos (key.2 rfl), if_neg (by decide)]
     · rw [if_neg (fun h => hij (by simpa using (w2 r m).symm.injective h)), if_neg hij]
-  · rw [leviEmb_apply_ne _ _ _ hab, if_neg]
+  · have he : ((leviEmb k (stdBlocks (dd r m) (hdd r m)) (levZ k r m z) : GL (Fin (r + m)) k) : Matrix _ _ k)
+        ((stdBlocks (dd r m) (hdd r m)) ⟨a, i'⟩) ((stdBlocks (dd r m) (hdd r m)) ⟨b, j'⟩) = 0 := by
+      simp [leviEmb, Matrix.blockDiagonal'_apply, hab]
+    rw [he, if_neg]
     intro h
     have := (stdBlocks (dd r m) (hdd r m)).injective ((w2 r m).symm.injective h)
     exact hab (congrArg Sigma.fst this)
@@ -138,7 +144,12 @@ theorem aDiag_conj_mem_unipU (z : kˣ) {u : GL (Fin (r + m)) k} (hu : u ∈ unip
   refine ⟨aDiag_conj_mem_unipB k _ _ z hu.1, ?_⟩
   have h2 : pm k (wOpen (dd r m) (hdd r m)) * u * (pm k (wOpen (dd r m) (hdd r m)))⁻¹ ∈
       unipRadLower k (stdBlocks (dd r m) (hdd r m)) := hu.2
-  have hN := leviEmb_mem_normalizer_lower k (stdBlocks (dd r m) (hdd r m)) (levZ k r m z)
+  have hN : leviEmb k (stdBlocks (dd r m) (hdd r m)) (levZ k r m z) ∈
+      Subgroup.normalizer (unipRadLower k (stdBlocks (dd r m) (hdd r m)) : Set _) := by
+    apply parab_le_normalizer k (opp (stdBlocks (dd r m) (hdd r m)))
+    apply (mem_parabLower_iff k).2
+    intro a b i j hab
+    simp [leviEmb, Matrix.blockDiagonal'_apply, hab.ne]
   have h3 := (Subgroup.mem_normalizer_iff.1 hN _).1 h2
   rw [← conj_aDiag] at h3
   show pm k (wOpen (dd r m) (hdd r m)) * (aDiag k (r + m) m z * u * (aDiag k (r + m) m z)⁻¹) *

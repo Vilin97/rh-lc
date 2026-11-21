@@ -115,11 +115,27 @@ theorem coboundary_cup1 (n : ℕ) {x : Cn F 1} (hx : dn F 1 x = 0) (z : Cn F n) 
     rw [dn_eq (n + 1), dn_eq n, map_sum]
   simp only [map_smul, map_mul, cup1_apply, pr_pr]
   have e1 : pr F ((dl (1 : Fin (n + 3))).comp (dl 0)) z = pr F ((dl (0 : Fin (n + 3))).comp (dl 0)) z :=
-    pr_congr (fun i ↦ by fin_order) z
+    pr_congr (fun i ↦ by
+      apply Fin.ext
+      simp only [OrderHom.comp, OrderHom.coe_mk, Function.comp_apply, val_dl, cst_apply]
+      simp only [fr, OrderEmbedding.toOrderHom, OrderHom.coe_mk, Fin.coe_castLEOrderEmb, Fin.val_castLE, val_dl, Fin.val_succ, Fin.val_zero, Fin.val_one]
+      try simp only [Nat.not_lt_zero, if_false, Nat.zero_lt_succ, if_true]
+      try fin_cases i
+      all_goals simp_all [val_dl, Fin.coe_succAboveOrderEmb, Fin.succAbove, Fin.lt_def] <;> (first | omega | (split_ifs <;> omega))) z
   have e2 : ∀ j : Fin (n + 1), pr F ((dl j.succ.succ).comp (fr n)) x = pr F (fr (n + 1)) x := fun j ↦
-    pr_congr (fun i ↦ by fin_order) x
+    pr_congr (fun i ↦ by
+      fin_cases i <;> apply Fin.ext <;>
+        simp only [OrderHom.comp, OrderHom.coe_mk, Function.comp_apply, val_dl, fr, OrderEmbedding.toOrderHom, Fin.coe_castLEOrderEmb, Fin.val_castLE, Fin.val_succ, Fin.val_zero, Fin.val_one] <;>
+        simp only [Fin.coe_succAboveOrderEmb, Fin.succAbove, Fin.lt_def, Fin.val_castSucc, Fin.val_castLE, Fin.val_succ, Fin.val_zero, Fin.val_one] <;>
+        split_ifs <;> simp_all <;> omega) x
   have e3 : ∀ j : Fin (n + 1), pr F ((dl j.succ.succ).comp (dl 0)) z = pr F ((dl 0).comp (dl j.succ)) z := fun j ↦
-    pr_congr (fun i ↦ by fin_order) z
+    pr_congr (fun i ↦ by
+      apply Fin.ext
+      simp only [OrderHom.comp, OrderHom.coe_mk, Function.comp_apply, val_dl, cst_apply]
+      simp only [fr, OrderEmbedding.toOrderHom, OrderHom.coe_mk, Fin.coe_castLEOrderEmb, Fin.val_castLE, val_dl, Fin.val_succ, Fin.val_zero, Fin.val_one]
+      try simp only [Nat.not_lt_zero, if_false, Nat.zero_lt_succ, if_true]
+      try fin_cases i
+      all_goals simp_all [val_dl, Fin.coe_succAboveOrderEmb, Fin.succAbove, Fin.lt_def] <;> (first | omega | (split_ifs <;> omega))) z
   have hs : ∑ j : Fin (n + 1), ((-1 : R) ^ (j.succ.succ : ℕ)) • (pr F ((dl j.succ.succ).comp (fr n)) x *
         pr F ((dl j.succ.succ).comp (dl 0)) z) =
       -∑ j : Fin (n + 1), ((-1 : R) ^ (j.succ : ℕ)) • (pr F (fr (n + 1)) x * pr F ((dl 0).comp (dl j.succ)) z) := by
@@ -138,11 +154,29 @@ theorem coboundary_cup0 (n : ℕ) (β : Cn F 0) (z : Cn F n) :
     simp only [map_add (f := _), map_smul, pr_pr, Fin.val_zero, pow_zero, one_smul, Fin.val_one, pow_one, neg_smul, map_neg]
     rw [sub_eq_add_neg]
     congr 1
-    · exact pr_congr (fun i ↦ by fin_order) β
+    · exact pr_congr (fun i ↦ by
+      apply Fin.ext
+      simp only [OrderHom.comp, OrderHom.coe_mk, Function.comp_apply, val_dl, cst_apply]
+      simp only [fr, OrderEmbedding.toOrderHom, OrderHom.coe_mk, Fin.coe_castLEOrderEmb, Fin.val_castLE, val_dl, Fin.val_succ, Fin.val_zero, Fin.val_one]
+      try simp only [Nat.not_lt_zero, if_false, Nat.zero_lt_succ, if_true]
+      try fin_cases i
+      all_goals simp_all [val_dl, Fin.coe_succAboveOrderEmb, Fin.succAbove, Fin.lt_def] <;> (first | omega | (split_ifs <;> omega))) β
     · congr 1
-      exact pr_congr (fun i ↦ by fin_order) β
+      exact pr_congr (fun i ↦ by
+      apply Fin.ext
+      simp only [OrderHom.comp, OrderHom.coe_mk, Function.comp_apply, val_dl, cst_apply]
+      simp only [fr, OrderEmbedding.toOrderHom, OrderHom.coe_mk, Fin.coe_castLEOrderEmb, Fin.val_castLE, val_dl, Fin.val_succ, Fin.val_zero, Fin.val_one]
+      try simp only [Nat.not_lt_zero, if_false, Nat.zero_lt_succ, if_true]
+      try fin_cases i
+      all_goals simp_all [val_dl, Fin.coe_succAboveOrderEmb, Fin.succAbove, Fin.lt_def] <;> (first | omega | (split_ifs <;> omega))) β
   have e2 : ∀ j : Fin (n + 1), pr F ((dl j.succ).comp (cst 0 0)) β = pr F (cst 0 0) β := fun j ↦
-    pr_congr (fun i ↦ by fin_order) β
+    pr_congr (fun i ↦ by
+      apply Fin.ext
+      simp only [OrderHom.comp, OrderHom.coe_mk, Function.comp_apply, val_dl, cst_apply]
+      simp only [fr, OrderEmbedding.toOrderHom, OrderHom.coe_mk, Fin.coe_castLEOrderEmb, Fin.val_castLE, val_dl, Fin.val_succ, Fin.val_zero, Fin.val_one]
+      try simp only [Nat.not_lt_zero, if_false, Nat.zero_lt_succ, if_true]
+      try fin_cases i
+      all_goals simp_all [val_dl, Fin.coe_succAboveOrderEmb, Fin.succAbove, Fin.lt_def] <;> (first | omega | (split_ifs <;> omega))) β
   rw [cup1_apply, e1, dn_eq n (cup0 F n β z), dn_eq n z, cup0_apply, cup0_apply]
   simp only [map_mul, pr_pr, map_smul, Finset.mul_sum, mul_smul_comm]
   rw [Fin.sum_univ_succ]

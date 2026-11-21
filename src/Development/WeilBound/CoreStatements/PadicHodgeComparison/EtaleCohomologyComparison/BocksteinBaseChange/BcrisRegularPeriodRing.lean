@@ -21,7 +21,7 @@ def per (l : ℕ) [Fact l.Prime] (K : IntermediateField ℚ_[l] (PadicAlgCl l)) 
   i := iC l
   t := tA l
   z := (algebraMap (AInf ℂ_[l] l) (ACris.ACris ℂ_[l] l)).comp (IsPerfectoidField.padicIntToWitt l)
-  φ := ACris.phi ℂ_[l] l
+  φ := ACris.phi (K := ℂ_[l]) (p := l)
   σA g := ACris.galCris (IntermediateField.fixingSubgroupEquiv K g)
   σ g := (σD g.1 : BdR l ≃+* BdR l).toRingHom
   q := qQ l

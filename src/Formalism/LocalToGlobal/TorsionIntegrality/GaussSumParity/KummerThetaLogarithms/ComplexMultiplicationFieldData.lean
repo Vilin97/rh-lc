@@ -68,13 +68,12 @@ theorem cW_map (g2 g3 : K) (k : ℕ) : φ (cW g2 g3 k) = cW (φ g2) (φ g3) k :=
     split_ifs with h2 h3 h4
     · rw [map_div₀, map_ofNat]
     · rw [map_div₀, map_ofNat]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_mul, map_div₀, map_mul, map_add (f := _), map_sub, map_mul, map_natCast, map_one, map_sum]
-      simp only [map_ofNat]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_div₀, map_add, map_sub, map_natCast, map_one, map_ofNat, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun m _ => ?_
       have hm := m.isLt
-      rw [map_mul, ih (m.val + 2) (by omega), ih (k - (m.val + 2)) (by omega)]
+      rw [ih (m.val + 2) (by omega), ih (k - (m.val + 2)) (by omega)]
     · exact map_zero φ
 
 theorem wpNum_map (g2 g3 : K) : PowerSeries.map φ (wpNum g2 g3) = wpNum (φ g2) (φ g3) := by

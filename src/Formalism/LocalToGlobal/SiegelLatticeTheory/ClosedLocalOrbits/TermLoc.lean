@@ -256,15 +256,16 @@ theorem termBBne_iff_loc (Z : LocDat D) (hT : BBTie D Z) {u u' : D.what₂.Word}
     (t : Term D u u' F0 what₂) (p : PlF D) : termBBne t p ↔ locBBneT Z t p := by
   have hL := hrows.1 t.lam t.mem
   have hxm : mk t.lam (lf D F0) (PD D t.lam (lf D F0) u') (Quot.out t.cls) = t.cls := Quot.out_eq _
-  rw [locBBneT, ← hT u u' F0 t.lam (Quot.out t.cls).1 hL (Quot.out t.cls).2 (hMI _ _) p]
-  constructor
-  · rintro ⟨F', ⟨h, hm⟩, P, hP, hbb⟩
-    have e := const_of_mk (fun y : Carrier (PD D t.lam (lf D F0) u') => BBneP t.lam (gS D) (lf D F0) y.1 P)
-      (fun a b hab => propext (hBF F0 t.lam hL P a b hab)) (hm.trans hxm.symm)
-    simp only at e
-    exact ⟨P, hP, e ▸ hbb⟩
-  · intro h
-    exact ⟨(Quot.out t.cls).1, ⟨(Quot.out t.cls).2, hxm⟩, h⟩
+  apply Iff.trans (b := BBneF D t.lam (lf D F0) (Quot.out t.cls).1 p)
+  · constructor
+    · rintro ⟨F', ⟨h, hm⟩, P, hP, hbb⟩
+      have e := const_of_mk (fun y : Carrier (PD D t.lam (lf D F0) u') => BBneP t.lam (gS D) (lf D F0) y.1 P)
+        (fun a b hab => propext (hBF F0 t.lam hL P a b hab)) (hm.trans hxm.symm)
+      simp only at e
+      exact ⟨P, hP, e ▸ hbb⟩
+    · intro h
+      exact ⟨(Quot.out t.cls).1, ⟨(Quot.out t.cls).2, hxm⟩, h⟩
+  · exact hT u u' F0 t.lam (Quot.out t.cls).1 hL (Quot.out t.cls).2 (hMI _ _) p
 
 
 variable (D) in

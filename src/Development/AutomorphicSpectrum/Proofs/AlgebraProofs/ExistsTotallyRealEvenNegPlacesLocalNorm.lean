@@ -54,5 +54,6 @@ theorem latIn_isLattice : ∀ (C : Type) [Field C] (v : Valuation C NNReal) (O :
     · rintro ⟨h1, h2⟩
       exact ⟨⟨x, h2⟩, h1, rfl⟩
   · intro s hs hli
+    letI : IsFractionRing O C := hv.isFractionRing
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.CompanionTheory.Ar.HT

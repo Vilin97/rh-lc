@@ -82,7 +82,7 @@ private theorem height_ker_add {B C : Type} [CommRing B] [IsDomain B] [CommRing 
     rw [← a4, ← ht]
     exact le_antisymm (a2.trans a3.le) a1
   rw [h2, ReciprocityTheory.CA.ringKrullDim_eq_of_trdeg_eq_field t h3,
-    ← IsLocalization.height_comap ((nonZeroDivisors B).map (MvPolynomial.C (σ := Fin N))) (RingHom.ker g'), Ideal.under_def, hc] at h1
+    ← IsLocalization.height_under ((nonZeroDivisors B).map (MvPolynomial.C (σ := Fin N))) (RingHom.ker g'), Ideal.under_def, hc] at h1
   exact h1
 
 theorem UpperTheory.V.CA.g_dimform :

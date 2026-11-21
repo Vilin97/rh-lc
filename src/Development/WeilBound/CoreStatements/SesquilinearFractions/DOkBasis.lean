@@ -67,7 +67,7 @@ theorem finite_primes [IsDedekindDomain R] [Module.Finite ℤ R] :
   refine ((hfinU.insert ⊥).image (fun P => P.map (algebraMap R (Localization (primeTo R ℓ hℓ))))).subset ?_
   intro Q hQ
   have hQ' := (IsLocalization.isPrime_iff_isPrime_disjoint (primeTo R ℓ hℓ) _ Q).mp hQ
-  refine ⟨Ideal.under R Q, ?_, IsLocalization.map_comap (primeTo R ℓ hℓ) _ Q⟩
+  refine ⟨Ideal.under R Q, ?_, IsLocalization.map_under (primeTo R ℓ hℓ) _ Q⟩
   by_cases h0 : Ideal.under R Q = ⊥
   · exact Or.inl h0
   · exact Or.inr (hint _ hQ'.1 hQ'.2 h0)
@@ -129,7 +129,7 @@ theorem locBasis [IsDedekindDomain R] [Module.Finite ℤ R] {M : Type} [AddCommG
   choose nn hnn hnn' using fun j => (t j).2
   refine ⟨_, fun i => (q i).1, hliR, ∏ j, nn j, ?_, ?_⟩
   · intro h
-    obtain ⟨j, -, hj⟩ := (Prime.dvd_finset_prod_iff hℓ.prime _).mp h
+    obtain ⟨j, -, hj⟩ := (hℓ.prime.dvd_finsetProd_iff _).mp h
     exact hnn j hj
   · intro y
     have hy : y ∈ Submodule.span R (Set.range g) := by

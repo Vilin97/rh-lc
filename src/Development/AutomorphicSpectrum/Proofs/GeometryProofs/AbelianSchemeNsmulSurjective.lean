@@ -35,12 +35,7 @@ theorem surjective_pow_of_isAbelianScheme :
     HasRingHomProperty.of_comp (fun _ _ h => RingHom.FiniteType.of_comp_finiteType h)
       (by rw [hw]; infer_instance)
   haveI : IsLocallyNoetherian A.left := LocallyOfFiniteType.isLocallyNoetherian A.hom
-  haveI : LocallyOfFinitePresentation ((𝟙 A) ^ n : A ⟶ A).left := by
-    rw [locallyOfFinitePresentation_iff]
-    intro U hU V hV e
-    haveI := IsLocallyNoetherian.component_noetherian (X := A.left) ⟨U, hU⟩
-    exact RingHom.FinitePresentation.of_finiteType.mp
-      (LocallyOfFiniteType.finiteType_of_affine_subset _ hU hV e)
+  haveI : LocallyOfFinitePresentation ((𝟙 A) ^ n : A ⟶ A).left := inferInstance
   haveI : UniversallyOpen ((𝟙 A) ^ n : A ⟶ A).left := UniversallyOpen.of_flat _
   haveI : IsProper (((𝟙 A) ^ n : A ⟶ A).left ≫ A.hom) := by rw [hw]; infer_instance
   haveI : IsProper ((𝟙 A) ^ n : A ⟶ A).left := IsProper.of_comp _ A.hom

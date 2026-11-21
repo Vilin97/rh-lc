@@ -100,8 +100,8 @@ theorem UpperTheory.V.Pa.laDual :
     exact ⟨_, ho⟩
   haveI := S.U.fin
   haveI hN : Module.Finite S.Bh S.U.N :=
-    Module.Finite.of_surjective (Submodule.linearProjOfIsCompl S.U.N 1 S.U.compl.symm)
-      fun x => ⟨x, Submodule.linearProjOfIsCompl_apply_left _ x⟩
+    Module.Finite.of_surjective (Submodule.projectionOnto S.U.N 1 S.U.compl.symm)
+      (Submodule.projectionOnto_surjective S.U.compl.symm)
   obtain ⟨h1, h2, h3⟩ := UpperTheory.V.Pa.dual_functionals_finite_separating_surjective S.rF hs S.La (fun μ => Iff.rfl)
   refine ⟨h1, fun y hy => ?_, h3⟩
   rw [← S.rF_ker]

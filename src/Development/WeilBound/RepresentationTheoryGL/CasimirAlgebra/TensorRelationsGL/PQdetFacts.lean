@@ -37,6 +37,8 @@ theorem capelliC_negT {n : ℕ} (E : Fin n → Fin n → A) (x : ℂ) :
       (List.ofFn fun j : Fin n => capEntry E ((n : ℂ) - 1 - x - (n : ℂ) + 1 + ((j : ℕ) : ℂ)) j (σ j)).map Neg.neg := by
     rw [List.map_ofFn]
     congr 1
+    funext j
+    simp only [Function.comp_apply, capEntry]
     by_cases hj : σ j = j
     · rw [if_pos hj, if_pos hj.symm, neg_add, ← map_neg]
       congr 2
@@ -188,7 +190,7 @@ theorem coeff_eq_zero_of_evU (r : (Module.End ℂ M)[X]) (h : ∀ u : ℂ, evU u
     refine Finset.sum_congr rfl fun e _ => ?_
     rw [eval_monomial, mul_comm]
   have hc := congrArg (fun p : ℂ[X] => p.coeff i) hq0
-  simp only [Polynomial.finsetSum_coeff, coeff_monomial, coeff_zero, Finset.sum_ite_eq', if_pos hi] at hc
+  simp only [Polynomial.finsetSum_coeff, coeff_monomial_apply, coeff_zero, Finset.sum_ite_eq', if_pos hi] at hc
   exact hc
 
 end Op

@@ -57,7 +57,7 @@ theorem hom_fix (Fx : HeightOneSpectrum (𝓞 E) → Prop) {G : Type} [CommGroup
       Gen P.asIdeal z := by
     intro P z a1 a3 Q _
     by_cases hQ : Q = P
-    · rw [hQ, a1, multiplicity_self]; simp
+    · rw [hQ, a1, multiplicity_self (FiniteMultiplicity.of_prime_left P.prime P.ne_bot)]; simp
     · rw [a3 Q hQ, GlobalTheory.EtaProduct.mult_ne hQ]; simp
   have gprime : ∀ P : HeightOneSpectrum (𝓞 E), ∃ z, Gen P.asIdeal z := by
     intro P

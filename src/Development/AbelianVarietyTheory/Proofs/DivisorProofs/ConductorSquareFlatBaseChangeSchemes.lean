@@ -91,7 +91,6 @@ theorem ideal_mul_of_isPushout {A B F G : Type} [CommRing A] [CommRing B] [CommR
   have hP' : Algebra.IsPushout A B F G := hP.symm
   intro x hx r
   induction r using hP'.out.inductionOn with
-  | zero => exact ⟨0, Ideal.zero_mem _, by simp⟩
   | tmul m =>
     refine ⟨x * m, Ideal.mul_mem_right _ _ hx, ?_⟩
     rw [map_mul]; rfl

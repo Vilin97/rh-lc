@@ -57,7 +57,7 @@ theorem map_bar {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host E) 
     have := H.d_mod
     exact_mod_cast (by omega : 1 ≤ (1 + H.d) / 4)
   have hq := congrArg j hquad
-  simp only [map_add (f := _), map_pow, map_natCast] at hq
+  simp only [j.map_add, j.map_pow, map_natCast j] at hq
   have hz : starRingEnd ℂ (j (wK H)) = 1 - j (wK H) := by
     have e := congrArg Complex.re hq
     have f := congrArg Complex.im hq
@@ -73,7 +73,9 @@ theorem map_bar {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host E) 
         linarith
     apply Complex.ext <;> simp <;> linarith
   rw [hy, hx]
-  simp only [map_add (f := _), map_mul, map_intCast, hbw, map_sub, map_one, hz]
+  simp only [br.map_add, br.map_mul, map_intCast br, hbw, j.map_add, j.map_mul,
+    map_intCast j, j.map_sub, j.map_one, map_add (starRingEnd ℂ),
+    map_mul (starRingEnd ℂ), map_intCast (starRingEnd ℂ), hz]
 
 theorem lamEq_act_bar : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (R : Type) [CommRing R] [IsDedekindDomain R] (σ : R →+* ℂ) (P : Out.PolAV (Sp R)) (a : OAct (OK H) P.A), Function.Injective σ → P.g = 1 → ∀ x y : OK H, (y : 𝓞 E) = H.bar x → LamEq P.L (a.act x) (𝟙 P.A) P.L (𝟙 P.A) (a.act y) := by
   intro hT hL E _ _ _ H R _ _ σ P a hσ hg x y hxy

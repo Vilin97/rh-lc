@@ -57,5 +57,4 @@ theorem UpperTheory.V.CA.d_tr :
   · rw [Det.tr, ← d_tr_coeff D 1 1 hn]
     have h : (1 + X ⊗ₜ 1 : A[X] ⊗[A] E) = (1 + X : A[X]) • 1 := by
       rw [Algebra.TensorProduct.one_def, smul_tmul', smul_eq_mul, mul_one, add_tmul]
-    rw [h, D.homog, map_one, mul_one, coeff_one_add_X_pow]
-    simp
+    simp only [h, D.homog, map_one, mul_one, coeff_one_add_X_pow, Nat.choose_one_right]

@@ -324,15 +324,15 @@ theorem real_of_ratLink {x : X.B.I.GA} {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V}
 theorem rv_span {S : Set (VS D).V} {w : (VS D).V} (hw : w ∈ Submodule.span D.host.E S) :
     rv X.B.I v (X.crd w) ∈ Submodule.span ℂ ((fun p => rv X.B.I v (X.crd p)) '' S) := by
   have h1 := Formalism.L2.SG.Pf.Vanish2.crd_span' X hw
-  have h2 := Formalism.L2.SG.Pf.Vanish2.tr_span (X.B.I.φ v) (Formalism.L2.SG.Pf.Vanish2.rvHom X.B.I v)
-    (Formalism.L2.SG.Pf.Vanish2.rv_smul' X.B.I v) h1
+  have h2 := Formalism.L2.SG.Pf.Vanish2.tr_span (X.B.I.φ v) (Formalism.L2.SG.Pf.Level.rvHom X v)
+    (Formalism.L2.SG.Pf.Level.rv_smul X v) h1
   rw [Set.image_image] at h2
   exact h2
 
 theorem rv_crd_sub (a b : (VS D).V) :
     rv X.B.I v (X.crd (a - b)) = rv X.B.I v (X.crd a) - rv X.B.I v (X.crd b) := by
   rw [Formalism.L2.SG.Pf.Vanish2.crd_sub' X]
-  exact map_sub (Formalism.L2.SG.Pf.Vanish2.rvHom X.B.I v) _ _
+  exact map_sub (Formalism.L2.SG.Pf.Level.rvHom X v) _ _
 
 theorem hJ_iso' {n : ℕ} (ε : Fin n → Bool) {g : Matrix (Fin n) (Fin n) ℂ}
     (hg : gᴴ * Formalism.REAL.Jm ε * g = Formalism.REAL.Jm ε) (x y : Fin n → ℂ) : hJ ε (g *ᵥ x) (g *ᵥ y) = hJ ε x y := by

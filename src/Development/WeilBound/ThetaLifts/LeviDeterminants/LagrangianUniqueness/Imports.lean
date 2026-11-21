@@ -119,6 +119,9 @@ theorem test (hP0 : (0 : G) ∈ P) (h1 : ∀ p ∈ P, ∀ φ ∈ SB G, l (fun x 
     · obtain ⟨p, hp, hpa⟩ := h
       rw [← h1 p hp _ (ind_mem h₀ hU a)]
       congr 1
+      funext x
+      simp only [ind, sub_zero]
+      rw [show x + p - a = x + (p - a) by abel]
       exact if_congr (U.toAddSubgroup.add_mem_cancel_right hpa) rfl rfl
     · refine off h₀ h2 (ind_mem h₀ hU a) fun b hb hbP => h ⟨b, hbP, ?_⟩
       by_contra hc

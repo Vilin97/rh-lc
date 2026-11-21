@@ -315,15 +315,14 @@ theorem bd_rho : ∀ (n : ℕ) (i : Fin (n + 2) → ι),
     have hx : lin (rho (ι := ι) 0) (bd 0 (Finsupp.single i 1)) ∈
         Finsupp.supported ℤ ℤ (ordFrom (minIdx i)) := by
       rw [lin_rho_zero]
-      refine map_mem_supported _ (fun j hj z => ?_) (single_mem_rangeIn i 1)
-      rw [bd_single]
-      refine Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _
-        (Finsupp.single_mem_supported ℤ z (mem_ordFrom.2 ⟨strictMono_of_fin_one _, ?_⟩))
-      have hmem : (j ∘ k.succAbove) 0 ∈ Set.range i := (mem_rangeIn.1 hj) ⟨k.succAbove 0, rfl⟩
-      obtain ⟨a, ha⟩ := hmem
+      refine Finsupp.supported_mono ?_ (bd_mem_rangeIn (n := 0) (single_mem_rangeIn i 1))
+      intro j hj
+      refine mem_ordFrom.2 ⟨strictMono_of_fin_one j, ?_⟩
+      obtain ⟨a, ha⟩ := (mem_rangeIn.1 hj) (Set.mem_range_self 0)
       rw [← ha]
       exact minIdx_le i a
-    rw [rho, bd_ocone_zero _ hx, lin_rho_zero, aug_bd, zero_smul, sub_zero]
+    change bd 0 (ocone (minIdx i) (lin (rho 0) (bd 0 (Finsupp.single i 1)))) = _
+    rw [bd_ocone_zero _ hx, lin_rho_zero, aug_bd, zero_smul, sub_zero]
   | n + 1, i => by
     have ih := bd_rho n
     have hlin : ∀ c : Chain ι (n + 1), bd n (lin (rho (n + 1)) c) = lin (rho n) (bd n c) := by

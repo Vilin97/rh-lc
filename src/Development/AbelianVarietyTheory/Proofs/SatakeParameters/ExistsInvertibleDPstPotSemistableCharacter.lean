@@ -63,7 +63,9 @@ def toAlg (L : FinExt l) : Bst P ⊗[ℚ_[l]] (Fin 1 → ↥L.1) ≃ₗ[Bst P] B
 theorem toAlg_comm (L : FinExt l) (z : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
     toAlg P L (TensorProduct.comm ℚ_[l] (Fin 1 → ↥L.1) (Bst P) z) = toA P L z := by
   induction z using TensorProduct.induction_on with
-  | zero => simp
+  | zero =>
+    set_option synthInstance.maxHeartbeats 200000 in
+      simp only [map_zero]
   | tmul v b => rfl
   | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
 

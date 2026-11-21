@@ -76,7 +76,9 @@ theorem exists_strictFund (Γ : Subgroup G) [DiscreteTopology Γ] :
     have : O n = ⋃ s ∈ Γ, ⋃ m < n, (fun y => s * y) ⁻¹' B m := by
       ext y; simp [hO]
     rw [this]
-    exact isOpen_biUnion fun s _ => isOpen_biUnion fun m _ => (hBo m).preimage (continuous_const.mul continuous_id)
+    exact isOpen_iUnion fun s => isOpen_iUnion fun _ =>
+      isOpen_iUnion fun m => isOpen_iUnion fun _ =>
+        (hBo m).preimage (continuous_const.mul continuous_id)
   refine ⟨⋃ n, B n \ O n, MeasurableSet.iUnion fun n => (hBo n).measurableSet.diff (hOo n).measurableSet, ?_, ?_⟩
   · intro x
     classical

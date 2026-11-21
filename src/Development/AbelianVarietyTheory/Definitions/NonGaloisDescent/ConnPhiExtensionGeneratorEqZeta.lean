@@ -523,12 +523,12 @@ def plus : PhiMod O K l e a (ι ⊕ Unit) :=
       simp [← Matrix.replicateCol_add]
 
 theorem plus_phi_join (v : Vec K a ι) (f : ZMod a → K⟦X⟧) :
-    (P.plus hy).phi (join v f) = join (P.phi v + frobTot l f • y) (frobTot l f) := by
+    (P.plus hy).phi (join v f) = join (P.phi v + frobTot K a l f • y) (frobTot K a l f) := by
   ext1 τ
   rw [phi_apply, plus, mx_ofMatrix]
   ext1 i
   rcases i with i | i <;>
-    simp [join, Matrix.mulVec, dotProduct, phi_apply, Fintype.sum_sum_type, mul_comm]
+    simp [join, Matrix.mulVec, dotProduct, phi_apply, frobTot, Fintype.sum_sum_type, mul_comm]
 
 def plusInl : Hom P (P.plus hy) where
   mat _ := Matrix.fromRows 1 0
@@ -563,13 +563,13 @@ theorem plus_conn_xVec_eq : (P.plus hy).conn xVec = (P.plusInl hy).app (P.zeta y
 
 variable [NormedAlgebra ℚ_[l] K] [NeZero e]
 
-def plusProj : Hom (P.plus hy) (rankOne O K l e a fun _ => 0) where
+def plusProj : Hom (P.plus hy) (rankOne O K l e fun _ => 0) where
   mat _ := Matrix.fromCols 0 1
   mem := by
     rintro τ i (j | j)
     exacts [zero_mem _, one_mem _]
   comm τ := by
-    have h : (rankOne O K l e a fun _ => 0).mx τ = 1 := by
+    have h : (rankOne O K l e fun _ => 0).mx τ = 1 := by
       ext1 i j
       simp [mx, rankOne]
     rw [h, plus, mx_ofMatrix, Matrix.fromCols_map, Matrix.map_one _ (map_zero _) (map_one _),

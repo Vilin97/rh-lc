@@ -26,6 +26,7 @@ theorem adjKlt_ringEquiv : ∀ {k K K' : Type} [Field k] [CharZero k] [Field K] 
       P.disc (dForm c x) φ := fun P => by
     simp only [Place.disc]
     rw [(hΦ P).2.2.1 φ, (hΦ P).2.2.2 n x hx]
+    rfl
   have hΦS : Φ S = S' := Place.ext (ValuationSubring.ext _ _ fun b => by
     rw [hmem, ← hS (e.symm b), e.apply_symm_apply])
   have hk : Klt c n ⊤ (dForm c x) φ := ⟨h.1, h.2.1, fun P hP =>

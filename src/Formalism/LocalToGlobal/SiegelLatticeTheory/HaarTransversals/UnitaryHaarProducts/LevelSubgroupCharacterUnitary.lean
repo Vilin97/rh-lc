@@ -296,7 +296,7 @@ theorem inv_e {x : I.Gf} (hx : x ∈ I.Kset)
       I.fmat x⁻¹ *ᵥ v ∈ Mo I g (e0 '' {b | b.1 < m}) := by
     intro m
     induction m using Nat.strong_induction_on with
-    | h m ih =>
+    | ind m ih =>
       refine mv_mem I _ g _ _ ?_ (mL_mv I (fun y hy => K_mv I hxi hy) g (mL_Mo I))
       rintro _ ⟨b, hb, rfl⟩
       have h1 : I.fmat x⁻¹ *ᵥ e0 b = e0 b + (I.fmat x⁻¹ - 1) *ᵥ e0 b := by
@@ -319,7 +319,7 @@ theorem inv_b {x : I.Gf} (hx : x ∈ I.Kset)
       I.fmat x⁻¹ *ᵥ v ∈ Mo I g (Set.range e0 ∪ bw '' {j | j.1 < m}) := by
     intro m
     induction m using Nat.strong_induction_on with
-    | h m ih =>
+    | ind m ih =>
       refine mv_mem I _ g _ _ ?_ (mL_mv I (fun y hy => K_mv I hxi hy) g (mL_Mo I))
       have hsplit : ∀ w : VA I, I.fmat x⁻¹ *ᵥ w = w + (I.fmat x⁻¹ - 1) *ᵥ w := by
         intro w

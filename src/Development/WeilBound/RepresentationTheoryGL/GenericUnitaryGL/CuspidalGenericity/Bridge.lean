@@ -22,7 +22,7 @@ theorem nontrivial_of_isIrreducible {G V : Type} [Group G] [AddCommGroup V] [Mod
 theorem cuspGeneric (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] :
     GlobalTheory.BZSeg.CuspGeneric k := by
   intro N V _ _ π hN _ hirr hc
-  obtain ⟨ψ, hψc, hψ1⟩ := exists_continuous_addChar_ne_one k
+  obtain ⟨ψ, hψc, hψ1⟩ := exists_continuous_addChar_ne_one (k := k)
   obtain ⟨M, rfl⟩ : ∃ M, N = M + 1 := ⟨N - 1, by omega⟩
   exact ⟨ψ, hψc, hψ1, GlobalTheory.BZSeg.Cusp.isGenericFor_of_isCuspidal_direct k ψ hψc hψ1 M V π hc (nontrivial_of_isIrreducible π hirr)⟩
 

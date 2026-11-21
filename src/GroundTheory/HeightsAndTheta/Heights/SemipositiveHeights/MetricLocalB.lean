@@ -42,23 +42,23 @@ theorem induct (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) �
       unfold recR
       congr 1
       · refine finsum_mem_congr rfl fun W hW => ?_
-        congr 1
-        split_ifs with hWh
+        by_cases hWh : IsHorizontal W
         · have hWa : IsArithVar W n := by
-            obtain ⟨hWmin, hWrel⟩ := hW
+            have hWmin := hW.1
             have hWmh := isMultiHomogIdeal_of_mem_minimalPrimes hP.2.1.2.1 hs hWmin
-            refine ⟨hP.1, ⟨hWmin.1.1, hWmh, hWrel⟩, hWh, ?_⟩
+            refine ⟨hP.1, ⟨hWmin.1.1, hWmh, hW.2⟩, hWh, ?_⟩
             have := hPp
             have hdim := dim_quot_minimal_add_one P W (secOf i b) hsP hWmin
             rw [hP.2.2.2, show n + 1 + Fintype.card K = n + Fintype.card K + 1 by omega] at hdim
             exact withBot_eq_of_add_one hdim
           have hPW : P ≤ W := le_trans le_sup_left hW.1.1.2
-          exact induct I hI n W (Fin.init L) (Fin.init L') hWa (fun j => hL j.castSucc)
+          have e := induct I hI n W (Fin.init L) (Fin.init L') hWa (fun j => hL j.castSucc)
             (fun j => hL' j.castSucc) (fun j => ha j.castSucc)
             (fun j z hz => hh j.castSucc z ⟨hz.1, fun f hf => hz.2 f (hPW hf)⟩)
+          simp only [ite_eq_left hWh, e]
         · have e : (fun j => (Fin.init L j).a) = fun j => (Fin.init L' j).a :=
             funext fun j => ha j.castSucc
-          rw [e]
+          simp only [ite_eq_right hWh, e]
       · unfold arInt
         exact (ptsLocal K ι P n 0 _ _ _ _
           (fun j z hz => congrArg Real.log (hh j.castSucc z hz))

@@ -36,6 +36,4 @@ theorem PositivityTheory.Xgn.t_testpt_exists : ∀ {o Ω : Type} [CommRing o] [F
     fun a ha => (hmem a).1 ((hRC _).1 ha)⟩
   · rw [NormedField.valuation_apply, ← NNReal.coe_lt_coe]
     exact hp1
-  · refine GlobalTheory.NormIntegers.isAdicComplete_span_singleton hO ?_
-    rw [map_natCast]
-    exact hp1
+  · exact GlobalTheory.NormIntegers.isAdicComplete_span_singleton hO (by simpa only [map_natCast] using hp1)

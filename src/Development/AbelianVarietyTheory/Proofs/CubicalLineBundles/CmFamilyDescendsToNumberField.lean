@@ -93,7 +93,7 @@ theorem isFam_descends_to_numberField : ThetaUnifAV → Out.Laws → ∀ (E : Ty
   have : Module.Finite (𝓞 E) L := inferInstance
   have : Module.Finite ℤ L := Module.Finite.trans (𝓞 E) L
   have hg : AddMonoid.FG L := AddGroup.fg_iff_addMonoid_fg.1 (Module.Finite.iff_addGroup_fg.1 inferInstance)
-  obtain ⟨S, hS⟩ := hg.fg_top
+  obtain ⟨S, hS⟩ := AddMonoid.isAddFG_iff.mp hg
   choose K hK hK' using fun a : L => @exists_field hT hL.polBaseChange k _ C.P T.pol _ _ _ _ _ _ hC.2.1.2.1 m.cart
     (ψ' a) (hF.1 a).isMonHom
   refine ⟨k ⊔ (K 0 ⊔ ⨆ a : S, K a), ?_, le_sup_left, ?_⟩

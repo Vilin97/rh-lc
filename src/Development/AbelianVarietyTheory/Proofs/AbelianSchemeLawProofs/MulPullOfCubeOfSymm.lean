@@ -42,7 +42,7 @@ theorem HasGen.pull (h : HasGen L φ ε) (f : Z ⟶ Y) : HasGen L (fun k => f �
 
 theorem HasGen.of_formEq (hL : L.IsLB) (h : HasGen L φ ε) (e : FormEq φ ε φ' ε') : HasGen L φ' ε' := by
   obtain ⟨t, ht⟩ := h
-  obtain ⟨t', ht', -⟩ := exists_gen hL e t ht
+  obtain ⟨t', ht', -⟩ := ReciprocityTheory.ChartRestriction.G.Geo.Tor.exists_gen hL e t ht
   exact ⟨t', ht'⟩
 
 end

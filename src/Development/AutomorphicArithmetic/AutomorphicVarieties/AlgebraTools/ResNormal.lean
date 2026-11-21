@@ -67,8 +67,8 @@ private theorem res_pow (l : ℕ) (G : Type) [Group G] [TopologicalSpace G] [IsT
 
 theorem UpperTheory.V.AlgebraTools.proLResOf_normal :
     ∀ (l : ℕ) [Fact l.Prime] (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] (H : Subgroup G) [H.Normal], IsClosed (H : Set G) →
-      (proLResOf l G H).Normal ∧ IsClosed (proLResOf l G H : Set G) ∧ proLResOf l G H ≤ H ∧
-      ∀ (O : OpenNormalSubgroup G), proLResOf l G H ≤ O.toSubgroup → ∀ h ∈ H, ∃ k : ℕ, h ^ l ^ k ∈ O.toSubgroup := by
+      (proLResOf l H).Normal ∧ IsClosed (proLResOf l H : Set G) ∧ proLResOf l H ≤ H ∧
+      ∀ (O : OpenNormalSubgroup G), proLResOf l H ≤ O.toSubgroup → ∀ h ∈ H, ∃ k : ℕ, h ^ l ^ k ∈ O.toSubgroup := by
   intro l _ G _ _ _ _ _ H _ hH
   have : CompactSpace H := isCompact_iff_compactSpace.mp hH.isCompact
   refine ⟨?_, ?_, ?_, ?_⟩

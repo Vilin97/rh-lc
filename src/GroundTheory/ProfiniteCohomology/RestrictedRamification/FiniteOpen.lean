@@ -56,15 +56,19 @@ end Places
 
 section OpenSubgroups
 
+set_option pp.rawOnError true
+
 local notation "ℚ̄" => AlgebraicClosure ℚ
 
 variable (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1)))
 
 theorem mem_gsOpenSubgroup_iff_of_image {L : FiniteSubfield} [Fact (K ≤ L)]
     (hL : ∀ x : L.1, algebraMap L.1 ℚ̄ x ∈ maxUnramifiedOutside K.1 ℚ̄ S)
-    (T : Set (maxUnramifiedOutside K.1 ℚ̄ S)) (hT : ∀ x : L.1, gsEmbedding hL x ∈ T)
-    (hT' : ∀ y ∈ T, ∃ x : L.1, gsEmbedding hL x = y) (σ : galUnramifiedOutside K.1 ℚ̄ S) :
-    σ ∈ gsOpenSubgroup S hL ↔ ∀ y ∈ T, σ y = y := by
+    (T : Set (maxUnramifiedOutside K.1 ℚ̄ S))
+    (hT : ∀ x : L.1, gsEmbedding (F := K.1) (L := L.1) (Ω := ℚ̄) hL x ∈ T)
+    (hT' : ∀ y ∈ T, ∃ x : L.1, gsEmbedding (F := K.1) (L := L.1) (Ω := ℚ̄) hL x = y)
+    (σ : galUnramifiedOutside K.1 ℚ̄ S) :
+    σ ∈ gsOpenSubgroup (F := K.1) (L := L.1) (Ω := ℚ̄) S hL ↔ ∀ y ∈ T, σ y = y := by
   rw [mem_gsOpenSubgroup_iff]
   constructor
   · intro h y hy
@@ -76,7 +80,7 @@ theorem mem_gsOpenSubgroup_iff_of_image {L : FiniteSubfield} [Fact (K ≤ L)]
 theorem exists_gsOpenSubgroup_eq (V : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S)) :
     ∃ (L : FiniteSubfield) (_ : Fact (K ≤ L))
       (hL : ∀ x : L.1, algebraMap L.1 ℚ̄ x ∈ maxUnramifiedOutside K.1 ℚ̄ S),
-      gsOpenSubgroup S hL = V := by
+      gsOpenSubgroup (F := K.1) (L := L.1) (Ω := ℚ̄) S hL = V := by
   let KS := maxUnramifiedOutside K.1 ℚ̄ S
   let H : ClosedSubgroup Gal(KS/K.1) := ⟨(V : Subgroup Gal(KS/K.1)), V.isClosed⟩
   let E : IntermediateField K.1 KS := IntermediateField.fixedField (H : Subgroup Gal(KS/K.1))

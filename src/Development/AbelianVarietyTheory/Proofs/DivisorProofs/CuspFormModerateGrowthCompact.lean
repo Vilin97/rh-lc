@@ -157,6 +157,7 @@ theorem kerInf_mem_regSpan {π : CuspSub E a} {F : GA E a → ℂ} (hF : F ∈ r
   refine ⟨kerInf_mem_rspan hF.1 ν hk, continuous_iff_continuousAt.2 fun g₀ => ?_, fun g₀ => ?_⟩
   · obtain ⟨C, N, h0, e⟩ := hF.2.2 g₀
     show ContinuousAt (fun g => ∫ x, k x * F (g * infGL E a (γ x)) ∂ν) g₀
+    set_option synthInstance.maxHeartbeats 200000 in
     refine continuousAt_of_dominated (bound := fun x => C * (‖k x‖ * height (γ x) ^ N))
       (Eventually.of_forall fun g => (RapidModel.integrable_of_modGr hM hk g).aestronglyMeasurable) ?_
       ((hk.2.2 N).const_mul C)

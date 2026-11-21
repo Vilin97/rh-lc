@@ -170,6 +170,7 @@ theorem uniq_on_closed {G : Type*} [Group G] [TopologicalSpace G] [IsTopological
       exact htμi hval
   · conv_lhs => rw [← hback μ hμc, key]
     rw [Measure.map_smul, hback ν hνc]
+    exact he.measurable.aemeasurable
 
 end Uniq
 

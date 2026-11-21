@@ -46,8 +46,8 @@ theorem gram (φ : AddChar k Circle) (col : (Fin n → k) → V →ₗ[ℂ] V)
       starRingEnd ℂ ((φ (ξ ⬝ᵥ (t + -r)) : Circle) : ℂ) * starRingEnd ℂ ((φ (ξ ⬝ᵥ r) : Circle) : ℂ) := by
     intro t r
     rw [← map_mul, ← Circle.coe_mul, ← AddChar.map_add_eq_mul, ← dotProduct_add, neg_add_cancel_right]
-  conv_lhs =>
-    set_option synthInstance.maxHeartbeats 100000 in
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs =>
       simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smul, LinearMap.smul_apply,
       LinearMap.map_smulₛₗ, smul_eq_mul, starRingEnd_self_apply, RingHom.id_apply, key, Finset.mul_sum]
   rw [Finset.sum_mul]
@@ -66,7 +66,17 @@ theorem gram_av (φ : AddChar k Circle) (col : (Fin n → k) → V →ₗ[ℂ] V
     B (av φ col ξ A v) (av φ col ζ A v) =
       ((p.2.card : ℂ)⁻¹ * ∑ r ∈ p.2, ((((φ (ξ ⬝ᵥ r))⁻¹ * φ (ζ ⬝ᵥ r) : Circle)) : ℂ)) *
         B (av φ col ξ A v) v := by
-  rw [av_eq' φ col hca A ξ v p hpξ, av_eq' φ col hca A ζ v p hpζ]
+  have av_eq_local (η : Fin n → k) (hp : AD φ col η A v p) :
+      av φ col η A v = ((p.2.card : ℂ)⁻¹) • ∑ t ∈ p.2,
+        (starRingEnd ℂ ((φ (η ⬝ᵥ t) : Circle) : ℂ)) • col t v := by
+    have hd : ∃ q, AD φ col η A v q := ⟨p, hp⟩
+    unfold av
+    rw [dite_eq_left hd]
+    obtain ⟨h1, -, h3, h4, h5, h6⟩ := hd.choose_spec
+    obtain ⟨g1, -, g3, g4, g5, g6⟩ := hp
+    exact avg_indep A _ _ h1 g1 _ _ h5 h6 g5 g6 _
+      (summand_inv φ col hca η v _ h3 h4) (summand_inv φ col hca η v _ g3 g4)
+  rw [av_eq_local ξ hpξ, av_eq_local ζ hpζ]
   obtain ⟨h1, -, h3, h4, h5, h6⟩ := hpξ
   rw [LinearMap.map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ,
     gram φ col hc0 hca B hBc A p.1 h1 p.2 h5 h6 v h3 ξ ζ h4, LinearMap.smul_apply, B_u]

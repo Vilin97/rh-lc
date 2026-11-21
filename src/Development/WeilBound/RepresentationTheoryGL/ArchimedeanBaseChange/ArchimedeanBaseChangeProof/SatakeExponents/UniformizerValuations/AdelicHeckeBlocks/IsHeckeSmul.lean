@@ -27,6 +27,8 @@ theorem isHecke_smul {G : Type} [Group G] [TopologicalSpace G] (K : Subgroup G) 
     (h : IsHecke K f) : IsHecke K (c • f) := by
   have := LocComm.isHecke_sum K ({()} : Finset Unit) (fun _ => c) (fun _ => f) (fun _ _ => h)
   convert this using 1
+  funext y
+  simp
 
 theorem isHecke_fsum {G ι : Type} [Group G] [TopologicalSpace G] (K : Subgroup G) (s : Finset ι)
     (g : ι → G → ℂ) (h : ∀ i ∈ s, IsHecke K (g i)) : IsHecke K (∑ i ∈ s, g i) := by

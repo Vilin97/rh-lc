@@ -90,20 +90,7 @@ private theorem isLattice_lam_of_ne_zero [IsFractionRing O K] {a : O} {n d : ℕ
   · unfold lam
     rw [LinearMap.range_eq_map]
     exact Module.Finite.fg_top.map _
-  · rw [eq_top_iff]
-    intro Y _
-    rw [Matrix.matrix_eq_sum_single Y]
-    refine Submodule.sum_mem _ fun i _ => Submodule.sum_mem _ fun j _ => ?_
-    have hmem : a • (Matrix.single i j (1 : O)).map (algebraMap O K) ∈ lam K a n d :=
-      mem_lam.mpr ⟨_, rfl⟩
-    have hne : algebraMap O K a ≠ 0 := fun hz =>
-      h0 ((IsFractionRing.injective O K) (by rw [hz, map_zero]))
-    have hrw : Matrix.single i j (Y i j) =
-        (Y i j * (algebraMap O K a)⁻¹) • (a • (Matrix.single i j (1 : O)).map (algebraMap O K)) := by
-      rw [Matrix.map_single, map_one, ← algebraMap_smul K a, smul_smul, inv_mul_cancel_right₀ hne,
-        Matrix.smul_single, smul_eq_mul, mul_one]
-    rw [hrw]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
+  · exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
 
 private theorem isLattice_map_of_surjective {n d : ℕ} (L : Submodule O (Matrix (Fin n) (Fin d) K)) [L.IsLattice K]
     (G : Matrix (Fin n) (Fin d) K →ₗ[K] Matrix (Fin n) (Fin d) K) (hG : Function.Surjective G) :

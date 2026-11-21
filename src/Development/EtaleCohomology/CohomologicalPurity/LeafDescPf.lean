@@ -46,7 +46,8 @@ theorem opnMap_id {X : Scheme.{0}} (U : X.Opens) (h) : opnMap (𝟙 X) U U h = �
   · exact sch.map_id X
 
 theorem dbl_id (P : Arrow Spc) : dbl.map (𝟙 P) = 𝟙 _ := by
-  apply pushout.hom_ext
+  set_option synthInstance.maxHeartbeats 200000 in
+   apply pushout.hom_ext
   · change dbl.inl _ ≫ _ = _
     rw [inl_map]; erw [Category.id_comp]
   · change dbl.inr _ ≫ _ = _

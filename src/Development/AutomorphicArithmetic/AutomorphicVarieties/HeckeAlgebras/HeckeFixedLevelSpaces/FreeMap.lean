@@ -546,9 +546,8 @@ theorem absSpec {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [IsDomain O]
       rw [Submodule.span_le]
       rintro _ ⟨g, hg, rfl⟩
       refine hbc.inductionOn (⟨g, hg⟩ : X.Ord τO θO (U K))
-        (fun n => X.mapFn (B := Ω) (n : X.Fn O m) ∈
-          Submodule.map (X.ctrl m W) (Submodule.span Ω (sp '' X.Ord τ θ (U K)))) ?_ ?_ ?_ ?_
-      · simp
+        (motive := fun n => X.mapFn (B := Ω) (n : X.Fn O m) ∈
+          Submodule.map (X.ctrl m W) (Submodule.span Ω (sp '' X.Ord τ θ (U K)))) ?_ ?_ ?_
       · intro f
         refine ⟨sp f, Submodule.subset_span ⟨f, f.2, rfl⟩, ?_⟩
         rw [(hspec K c le_rfl f f.2).2, hj, hmap2]
@@ -576,9 +575,9 @@ theorem absSpec {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [IsDomain O]
     have hw := fnIndep O Ω (Ga × Gp) κ hinj m _ hv
     refine LinearIndependent.of_comp (X.ctrl m W) ?_
     convert hw using 1
-    rw [← hmap2]
-    simp only [hj]
-    rfl
+    funext i
+    change X.ctrl m W (sp (b i)) = X.mapFn (B := Ω) (j (b i) : X.Fn O m)
+    rw [(hspec K c le_rfl (b i) (b i).2).2, hj, hmap2]
   · intro K a f hf
     obtain ⟨h1, h2⟩ := hspec K c le_rfl f hf
     refine hsp _ _ ⟨⟨K, c, le_rfl, UF_maps_clOrd_of_maps_cl X W τ' (U K) c φ' (fun a => ((hCF K c le_rfl).2 a).1) a _ h1⟩, ?_⟩

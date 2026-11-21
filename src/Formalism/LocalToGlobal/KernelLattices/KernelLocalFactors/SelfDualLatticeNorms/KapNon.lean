@@ -307,7 +307,7 @@ theorem entries_in_K (hδ0 : δ ≠ 0) (hcc : cc ≠ ⊥) (u : (Fin 4 × D.what�
     (h1 : relIdx (stdLat B.L (Fin 4 × D.what₂.Tau)) (imgLat (u : (Fin 4 × D.what₂.Tau → ℂ) →ₗ[ℂ] (Fin 4 × D.what₂.Tau → ℂ)) B.latA) ≠ 0)
     (i j : Fin 4 × D.what₂.Tau) :
     ∃ x : D.host.K, u (Pi.single j 1) i = D.host.φ₀ (x : D.host.E) := by
-  obtain ⟨c, hc, hc0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hcc
+  obtain ⟨c, hc, hc0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot (p := cc) hcc
   set ω : ℂ := δ * D.host.φ₀ (((c : D.host.K) : D.host.E)) with hω
   have hωL : ω ∈ B.L.lattice := (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SO.mem_iff B ω).2 (AddSubgroup.subset_closure ⟨c, hc, rfl⟩)
   set Lt := stdLat B.L (Fin 4 × D.what₂.Tau) with hLt
@@ -338,11 +338,11 @@ theorem entries_in_K (hδ0 : δ ≠ 0) (hcc : cc ≠ ⊥) (u : (Fin 4 × D.what�
   rw [hz] at hc'
   have hcK : ((c : D.host.K)) ≠ 0 := by
     intro h
-    exact hc0 (by exact_mod_cast h)
+    exact hc0 (RingOfIntegers.coe_injective (h.trans (map_zero (algebraMap (𝓞 D.host.K) D.host.K)).symm))
   have hφc : D.host.φ₀ (((c : D.host.K) : D.host.E)) ≠ 0 := by
     rw [Ne, map_eq_zero]
     intro h
-    exact hcK (by exact_mod_cast h)
+    exact hcK ((algebraMap D.host.K D.host.E).injective (h.trans (map_zero (algebraMap D.host.K D.host.E)).symm))
   have hk1C : (relIdx Lt M : ℂ) ≠ 0 := by exact_mod_cast h1
   have hk2C : (relIdx B.latA Lt : ℂ) ≠ 0 := by exact_mod_cast hk2
   refine ⟨(c' : D.host.K) / ((relIdx Lt M : D.host.K) * (relIdx B.latA Lt : D.host.K) * (c : D.host.K)), ?_⟩
@@ -355,7 +355,7 @@ theorem entries_in_K (hδ0 : δ ≠ 0) (hcc : cc ≠ ⊥) (u : (Fin 4 × D.what�
 theorem det_in_K (hδ0 : δ ≠ 0) (hcc : cc ≠ ⊥) (u : (Fin 4 × D.what₂.Tau → ℂ) ≃ₗ[ℂ] (Fin 4 × D.what₂.Tau → ℂ))
     (h1 : relIdx (stdLat B.L (Fin 4 × D.what₂.Tau)) (imgLat (u : (Fin 4 × D.what₂.Tau → ℂ) →ₗ[ℂ] (Fin 4 × D.what₂.Tau → ℂ)) B.latA) ≠ 0) :
     ∃ x : D.host.K, LinearMap.det (u : (Fin 4 × D.what₂.Tau → ℂ) →ₗ[ℂ] (Fin 4 × D.what₂.Tau → ℂ)) = D.host.φ₀ (x : D.host.E) := by
-  choose M hM using fun i j => entries_in_K B hδ0 hcc u h1 i j
+  choose M hM using fun (i j : Fin 4 × D.what₂.Tau) => entries_in_K B hδ0 hcc u h1 i j
   refine ⟨(Matrix.of M).det, ?_⟩
   have e : LinearMap.toMatrix' (u : (Fin 4 × D.what₂.Tau → ℂ) →ₗ[ℂ] (Fin 4 × D.what₂.Tau → ℂ)) =
       (D.host.φ₀.comp (algebraMap D.host.K D.host.E)).mapMatrix (Matrix.of M) := by

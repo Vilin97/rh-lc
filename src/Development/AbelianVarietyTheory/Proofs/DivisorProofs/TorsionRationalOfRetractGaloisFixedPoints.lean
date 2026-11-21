@@ -48,6 +48,28 @@ theorem descend_point {K : Type} [Field K] [CharZero K] (X : Scheme.{0}) [IsAffi
   rw [← Category.assoc, spMap, ← Spec.map_comp, hψ, hφ, Category.assoc, Iso.hom_inv_id, Category.comp_id]
 
 theorem torsRat_of_retract_galoisFixed : ∀ {R : Type} [CommRing R] [IsDomain R] [CharZero R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (G' : Over (Sp R)) [GrpObj G'] [IsCommMonObj G'] (A : PolAV (Sp (FractionRing R))) (gen : (Over.pullback (jK R)).obj G' ≅ A.A) (inc : G ⟶ G') (pr : G' ⟶ G) (n : ℕ), IsMonHom gen.hom → IsMonHom inc → IsMonHom pr → inc ≫ pr = 𝟙 G → 1 ≤ n → (∀ (σ : AlgebraicClosure (FractionRing R) ≃ₐ[FractionRing R] AlgebraicClosure (FractionRing R)) (x : Over.mk (spMap (algebraMap (FractionRing R) (AlgebraicClosure (FractionRing R))) ≫ jK R) ⟶ G), x ^ n = 1 → spMap σ.toAlgHom.toRingHom ≫ x.left = x.left) → TorsRat G n := by
+  have spec_map_field_cancel {K C : Type} [Field K] [Field C] (gam : K →+* C)
+      {X : Scheme} (y y' : Sp K ⟶ X)
+      (h : spMap gam ≫ y = spMap gam ≫ y') : y = y' := by
+    obtain ⟨⟨p, φ⟩, rfl⟩ := (Scheme.SpecToEquivOfField K X).symm.surjective y
+    obtain ⟨⟨p', φ'⟩, rfl⟩ := (Scheme.SpecToEquivOfField K X).symm.surjective y'
+    simp only [Scheme.SpecToEquivOfField_symm_apply] at h ⊢
+    have e : ∀ (q : X) (ψ : X.residueField q ⟶ CommRingCat.of K),
+        spMap gam ≫ (Spec.map ψ ≫ X.fromSpecResidueField q) =
+          (Scheme.SpecToEquivOfField C X).symm ⟨q, ψ ≫ CommRingCat.ofHom gam⟩ := by
+      intro q ψ
+      simp only [Scheme.SpecToEquivOfField_symm_apply, spMap, Spec.map_comp, Category.assoc]
+    rw [e, e] at h
+    have h2 := (Scheme.SpecToEquivOfField C X).symm.injective h
+    simp only [Sigma.mk.inj_iff] at h2
+    obtain ⟨rfl, h3⟩ := h2
+    have h4 : φ = φ' := by
+      have h5 : φ ≫ CommRingCat.ofHom gam = φ' ≫ CommRingCat.ofHom gam := eq_of_heq h3
+      ext x
+      apply gam.injective
+      have := congrArg (fun f => f.hom x) h5
+      simpa using this
+    rw [h4]
   intro R _ _ _ G _ _ G' _ _ A gen inc pr n hgen hinc hpr hret hn hfix
   haveI := hgen
   haveI := hinc

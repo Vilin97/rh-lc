@@ -33,14 +33,17 @@ theorem valAt_diff {X : Scheme.{0}} {Ω : Type} [Field Ω] {G : Over X} [GrpObj 
     {R : Type} [CommRing R] [IsLocalRing R] {z : Spec (CommRingCat.of R) ⟶ X} {f : G ⟶ G} [IsMonHom f]
     {A : L →ₗ[Ω] L} (hA : M.IsDiffOf f A) {e : L} {w : epsAt z ⟶ G} (h : M.ValAt z e w) :
     M.ValAt z (A e) (w ≫ f) := by
-  rw [LieModel.valAt_iff] at *
-  obtain ⟨h1, v, hv, rfl⟩ := h
-  refine ⟨h1, v ≫ f, ?_, by rw [Category.assoc]⟩
-  rw [LieModel.extends_iff] at *
-  refine ⟨?_, by rw [hA e, hv.2, Category.assoc]⟩
-  have h2 := hv.1
-  rw [isTanAt_iff] at h2 ⊢
-  rw [← Category.assoc, h2, one_comp]
+  obtain ⟨h1, v, hv, hw⟩ := h
+  refine ⟨h1, v ≫ f, ⟨?_, ?_⟩, ?_⟩
+  · change _ ≫ (v ≫ f).left = _
+    simp only [Over.comp_left]
+    rw [← Category.assoc, hv.1]
+    exact congrArg CommaMorphism.left (one_comp f)
+  · change (M.pt (A e)).left = _ ≫ (v ≫ f).left
+    rw [hA e]
+    simp only [Over.comp_left, ← Category.assoc, hv.2]
+  · change (w ≫ f).left = _ ≫ (v ≫ f).left
+    simp only [Over.comp_left, ← Category.assoc, hw]
 
 theorem conj_ne_of_sq {x : ℂ} {d : ℕ} (hd : 0 < d) (hx : x ^ 2 = -(d : ℂ)) : starRingEnd ℂ x ≠ x := by
   intro h
@@ -79,7 +82,7 @@ theorem val_eig {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} 
 
 theorem hodgeInnerProduct_blocks_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (II : IntersectionSystem) (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (Ω : Type) [Field Ω] [Algebra ℚ Ω] (W : CMType H → Type) [∀ τ, AddCommGroup (W τ)] [∀ τ, Module Ω (W τ)] (Dc : ComponentData II (CMType H) K J Ω W) (Hd : HodgeData Dc) (S₀ : Finset ℕ) (Or : CptOrigin Y S₀ Dc Hd) (z : Spec (CommRingCat.of ℂ) ⟶ Or.𝔐.X) (τ : CMType H) (e e' : Or.𝔐.Li) (v v' : epsAt z ⟶ Or.𝔐.t.G) (a : ℂ), Or.𝔐.Interior z → e ∈ Or.𝔐.Vgen (Or.bg τ) → e' ∈ Or.𝔐.Vgen (Or.sm τ) → Or.𝔐.M.ValAt z e v → Or.𝔐.M.ValAt z e' v' → HodgeIP Or.𝔐.t.G Or.𝔐.t.PP.L z v v' a → a = 0 := by
   intro E _ _ _ H D l Xo c Y II K _ J _ Ω _ _ W _ _ Dc Hd S₀ Or z τ e e' v v' a hz he he' hv hv' hI
-  have hβ : Function.Injective (algebraMap (𝓞 c.F) c.F) := FaithfulSMul.algebraMap_injective _ _
+  have hβ : Function.Injective (algebraMap (𝓞 c.F) c.F) := RingOfIntegers.coe_injective
   obtain ⟨-, -, hc0, -, -, -, -, hreg⟩ := GlobalTheory.T.hodge_cpt_interior_generic E H D l Xo c (𝓞 c.F) (algebraMap (𝓞 c.F) c.F) Y S₀ Ω K J Dc.y Or.𝔐 hβ
   haveI := hc0
   have hP := GlobalTheory.T.interior_point_polarised E H D l Xo c Y S₀ Ω K J Dc.y Or.𝔐 z hz

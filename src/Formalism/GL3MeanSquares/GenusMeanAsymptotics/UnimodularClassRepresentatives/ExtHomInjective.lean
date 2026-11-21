@@ -31,7 +31,7 @@ def extHom (S : VecSplit h h') : (V' ≃ₗ[K] V') →* (V ≃ₗ[K] V) where
     intro a b
     ext v
     obtain ⟨c, x, rfl⟩ := S.cover v
-    rw [SplitBAux.extOf_apply, LinearEquiv.mul_apply, LinearEquiv.mul_apply, SplitBAux.extOf_apply,
+    rw [SplitBAux.extOf_apply, mul_apply_eq_comp, mul_apply_eq_comp, SplitBAux.extOf_apply,
       SplitBAux.extOf_apply]
 
 theorem extHom_apply (S : VecSplit h h') (g' : V' ≃ₗ[K] V') : extHom S g' = SplitBAux.extOf S g' := rfl

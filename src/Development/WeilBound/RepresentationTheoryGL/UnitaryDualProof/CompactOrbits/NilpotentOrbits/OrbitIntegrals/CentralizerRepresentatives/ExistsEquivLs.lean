@@ -130,8 +130,8 @@ theorem conj_of_frames [∀ m, Nonempty (L m)] {N₁ N₂ : Matrix (Fin n) (Fin 
       rfl
     · have hi2 : ¬ (i : ℕ) + 1 < F₂.l m (σ m a) := by rw [(hσ m a).1]; exact hi
       rw [dite_eq_right hi, dite_eq_right hi2, map_zero]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [hGv, F₁.hv, F₂.hv, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [hGv, F₁.hv, F₂.hv, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]

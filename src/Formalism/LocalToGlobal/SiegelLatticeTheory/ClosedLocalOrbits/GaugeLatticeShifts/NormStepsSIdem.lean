@@ -24,19 +24,7 @@ theorem val_g (v : HeightOneSpectrum (𝓞 X.B.I.F)) :
   have h : ((X.B.g : ℕ) : v.adicCompletion X.B.I.F) =
       ((algebraMap (𝓞 X.B.I.F) X.B.I.F ((X.B.g : ℕ) : 𝓞 X.B.I.F) : X.B.I.F) : v.adicCompletion X.B.I.F) := by
     rw [map_natCast]
-    first
-    | (simp only [map_natCast, UniformSpace.Completion.coe_natCast]; rfl)
-    | (induction X.B.g with
-        | zero =>
-          simp only [Nat.cast_zero]
-          first
-          | rfl
-          | (rw [WithVal.equiv_symm_zero]; rfl)
-          | (simp only [map_zero, UniformSpace.Completion.coe_zero]; rfl)
-        | succ n ih =>
-          push_cast
-          rw [ih, map_add (f := _), map_one, UniformSpace.Completion.coe_add, UniformSpace.Completion.coe_one]
-          rfl)
+    exact (map_natCast (algebraMap X.B.I.F (v.adicCompletion X.B.I.F)) _).symm
   rw [h, HeightOneSpectrum.valuedAdicCompletion_eq_valuation', HeightOneSpectrum.valuation_of_algebraMap]
 
 def eS : Af X.B.I.F :=

@@ -21,7 +21,8 @@ theorem weyl_of_coeff (hswap : CoeffSwap) (hneg : CoeffNeg) (L : Type) [Field L]
     (h : GU σ n → ℂ) (hh : h ∈ Hecke ℂ (KU σ n)) :
     (∀ π : Equiv.Perm (Fin m), SatU ϖ q h (α ∘ π) = SatU ϖ q h α) ∧
       ∀ i : Fin m, SatU ϖ q h (Function.update α i (α i)⁻¹) = SatU ϖ q h α := by
-  choose T hT using fun a : Fin m → ℤ => P.fSatake_tMat_exists (n := n) hU hm a
+  have hex := fun a : Fin m → ℤ => P.fSatake_tMat_exists (n := n) hU hm a
+  choose T hT using hex
   have hq : (q : ℂ) ≠ 0 := by
     have := hU.2.2.2.2.2.1
     exact_mod_cast (by omega : q ≠ 0)

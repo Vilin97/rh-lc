@@ -81,7 +81,8 @@ variable {τ : ℝ}
 
 theorem inner_eq_integral_alt (f g : S τ) : ip0 f g = ∫ q, ev (f * cj g) q ∂mu0 0 τ := rfl
 
-theorem cj_mul (f g : S τ) : cj (f * g) = cj f * cj g := S_ext fun q => by simp
+theorem cj_mul (f g : S τ) : cj (f * g) = cj f * cj g :=
+  S_ext fun q => (starRingEnd ℂ).map_mul (ev f q) (ev g q)
 theorem cj_gg : cj (gg : S τ) = gg := S_ext fun q => by simp [ev_gg, mul_comm]
 
 end
@@ -772,15 +773,16 @@ theorem insert_matrix_mem (a : S) (x y z w : SlopeTestRemainingChoices S (A P (D
 
 theorem frame_mem (l : ℕ) {L : LevelData (A P (DQ P)) P.r} (hL : IsModelLevel P (DQ P) L) :
     ∀ w : List (Letter ℂ S), (∀ Y, (ofWord L (startM P (DQ P) l) w).ee Y ∈ US P S) ∧
-      (∀ Y, (ofWord L (startM P (DQ P) l) w).x Y ∈ US P S) ∧ (∀ Y, (ofWord L (startM P (DQ P) l) w).xi Y ∈ US P S)
-  | [] => by
-    obtain ⟨-, -, -, -, -, -, hz, hzi, hzb, hzbi, hg, hgi, hn, hns⟩ := lev_mem P hL
+      (∀ Y, (ofWord L (startM P (DQ P) l) w).x Y ∈ US P S) ∧ (∀ Y, (ofWord L (startM P (DQ P) l) w).xi Y ∈ US P S) := by
+  intro w
+  induction w with
+  | nil =>
     refine ⟨fun Y => io_mem P ?_, fun Y => io_mem P (kap_mem P _), fun Y => io_mem P (kap_mem P _)⟩
     show eeA P (DQ P) Y ∈ TS P
     refine mul_mem (mul_mem (sc_mem P (gen_mem P (by simp [DAlg.gens]))) (sc_mem P (gen_mem P (by simp [DAlg.gens]))))
       (Subalgebra.sum_mem _ fun j _ => mul_mem (kap_mem P _) (SS_mem P j))
-  | lt :: w => by
-    obtain ⟨he, hx, hxi⟩ := frame_mem l hL w
+  | cons lt w ih =>
+    obtain ⟨he, hx, hxi⟩ := ih
     obtain ⟨-, -, -, -, -, -, hz, hzi, hzb, hzbi, hg, hgi, hn, hns⟩ := lev_mem P hL
     have htz : (tz L : SlopeTestRemainingChoices S (A P (DQ P))) ∈ US P S := io_mem P (Subalgebra.smul_mem _ hzbi _)
     have hDD : ∀ Y Ya, (ofWord L (startM P (DQ P) l) w).DD Y Ya ∈ US P S := fun Y Ya =>
@@ -957,8 +959,10 @@ def cj (f : S τ) : S τ := ⟨fun q => conj (f.1 q), by
 
 @[simp] theorem ev_cj (f : S τ) (q) : ev (cj f) q = conj (ev f q) := rfl
 
-theorem cj_mul (f g : S τ) : cj (f * g) = cj f * cj g := S_ext fun q => by simp
-theorem cj_add (f g : S τ) : cj (f + g) = cj f + cj g := S_ext fun q => by simp
+theorem cj_mul (f g : S τ) : cj (f * g) = cj f * cj g :=
+  S_ext fun q => (starRingEnd ℂ).map_mul (ev f q) (ev g q)
+theorem cj_add (f g : S τ) : cj (f + g) = cj f + cj g :=
+  S_ext fun q => (starRingEnd ℂ).map_add (ev f q) (ev g q)
 theorem cj_gg : cj (gg : S τ) = gg := S_ext fun q => by simp [ev_gg, mul_comm]
 
 instance haarE : (volume : Measure (E 0)).IsAddHaarMeasure :=

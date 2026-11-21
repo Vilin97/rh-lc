@@ -92,7 +92,7 @@ theorem continuous_St (v : InfinitePlace E) {ka : Kers Ma} {kb : Kers Mb} {ψ : 
   haveI : FirstCountableTopology (G a × RA E a b v) := inferInstance
   haveI : LocallyCompactSpace (G a × RA E a b v) := inferInstance
   unfold St
-  refine continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun j _ => ?_
   obtain ⟨hc, hcs⟩ := cA_props v hka hkb hψ i j
   have e : (fun z : G a => ∫ r, cA v ka kb ψ i j r • Rv v μa μb ν ka kb ψ f j (p * ιA v z * σA v r) ∂restA μa μb ν v) =
       fun z => ∫ r in tsupport (cA v ka kb ψ i j),

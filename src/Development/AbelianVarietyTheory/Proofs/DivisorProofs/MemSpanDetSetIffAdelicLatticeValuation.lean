@@ -93,6 +93,9 @@ theorem exists_approx_matrix (Q : HeightOneSpectrum (𝓞 E)) {n : ℕ}
     simp [Valuation.restrict_lt_iff_lt_embedding]
   have hU : IsOpen {X : Matrix (Fin n) (Fin n) (Q.adicCompletion E) |
       (∀ i j, Valued.v ((h * X - 1) i j) < 1) ∧ Valued.v ((h * X).det - 1) < 1} := by
+    change IsOpen ({X : Matrix (Fin n) (Fin n) (Q.adicCompletion E) |
+      ∀ i j, Valued.v ((h * X - 1) i j) < 1} ∩
+      (fun X => (h * X).det - 1) ⁻¹' {z | Valued.v z < 1})
     refine IsOpen.inter ?_ (hb.preimage (hc.matrix_det.sub continuous_const))
     have : IsOpen (⋂ i, ⋂ j, {X : Matrix (Fin n) (Fin n) (Q.adicCompletion E) |
         Valued.v ((h * X - 1) i j) < 1}) :=

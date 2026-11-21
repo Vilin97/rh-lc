@@ -10,7 +10,7 @@ private theorem map_diagonal_rep_matrix_eq {O R D : Type} [CommRing O] [CommRing
     (η : D →* ℤˣ) (Ψ : D →* Oˣ) (g : D) :
     (GG.map (algebraMap O R) (r0 η Ψ g)).mat = Matrix.diagonal fun a => algebraMap O R (psi Ψ a g) := by
   rw [GG.map_mat]
-  show ((tor (Ψ g)).val).map (algebraMap O R) = _
+  show ((tor O (Ψ g)).val).map (algebraMap O R) = _
   rw [tor_val, Matrix.diagonal_map (map_zero _)]
   rfl
 

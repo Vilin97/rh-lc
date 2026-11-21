@@ -88,7 +88,8 @@ variable (c : Coeff l) (bF : c.F →+* ℂ) [Algebra (FractionRing ℂ) ℂ] [Is
 
 def model : letI := H.starRing; GtAn (arcIn c ℂ bF) :=
   letI := H.starRing
-  let d := dict (splitArc l) (fun _ => 1) (fun _ => by simp [splitArc]) (polar_one_smul ℂ)
+  letI : IsEmpty (Fin (splitArc l).gB) := inferInstanceAs (IsEmpty (Fin 0))
+  let d := GlobalTheory.ToricDict.dict (splitArc l) (fun _ => 1) (fun _ => by simp [splitArc]) (polar_one_smul ℂ)
   { star_eq := rfl
     A := splitArc l
     ε := LinearEquiv.refl _ _
@@ -98,8 +99,8 @@ def model : letI := H.starRing; GtAn (arcIn c ℂ bF) :=
     lam := rfl
     ah := d.isAH
     rig := d.isRig
-    tan := ⟨fun v _ => ⟨0, isDiff_zero _ _ _, fun _ _ => Subsingleton.elim _ _⟩,
-      fun w => ⟨toUnit _, ⟨isTangent_zero _, isDiff_zero _ _ _⟩, fun _ _ => toUnit_unique _ _⟩⟩
+    tan := ⟨fun v _ => ⟨0, isDiff_zero (splitArc l) 0 v, fun _ _ => Subsingleton.elim _ _⟩,
+      fun w => ⟨toUnit _, ⟨isTangent_zero _, isDiff_zero (splitArc l) w _⟩, fun _ _ => toUnit_unique _ _⟩⟩
     pow := fun n => by
       have hθ : ∀ θ, (zeroUnif (splitArc l)).IsThetaFn (splitArc l).Hm (fun m => (splitArc l).chi ⟨m.1, m.2⟩) n θ :=
         fun θ => ⟨(mem_Theta (splitArc l) n 0 θ).1, fun m z => by

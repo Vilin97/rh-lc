@@ -78,7 +78,7 @@ theorem exists_invariant_form : ∀ (k : Type) [Field k] [ValuativeRel k] [Topol
       isOpen_lt continuous_const (Complex.continuous_re.comp (cg.comp cp))
     have h0 : (0 : κ → k) ∈ {x : κ → k | 0 < (g (p x)).re} := by simp [hg]
     obtain ⟨K, hK, hK0, hKs⟩ := exists_compact_subset ho h0
-    obtain ⟨U, hU, hU0, hUs⟩ := (loc_compact_Haus_tot_disc_of_zero_dim (H := κ → k)).exists_subset_of_mem_open hK0
+    obtain ⟨U, hU, hU0, hUs⟩ := (loc_compact_Haus_tot_disc_of_zero_dim (X := κ → k)).exists_subset_of_mem_open hK0
       isOpen_interior
     have hU : IsClopen U := hU
     have hUK : U ⊆ K := hUs.trans interior_subset

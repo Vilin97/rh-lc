@@ -333,6 +333,7 @@ private theorem res_nondeg (hh : ∀ x y, h y x = star (h x y))
   intro y
   have h1 := hx ⟨y - h y v • v, by simp [hv]⟩
   have h2 : h x v = 0 := x.2
+  simp only [res, LinearMap.domRestrict₁₂_apply] at h1
   simpa [LinearMap.map_smulₛₗ, h2] using h1
 
 private theorem isOrthonormal_cons (hh : ∀ x y, h y x = star (h x y)) {v : V} (hv : h v v = 1)
@@ -345,7 +346,7 @@ private theorem isOrthonormal_cons (hh : ∀ x y, h y x = star (h x y)) {v : V} 
   · simp only [Fin.cons_zero, Fin.cons_succ]
     rw [hh, h0, star_zero, if_neg (Fin.succ_ne_zero j).symm]
   · simp [h0]
-  · simpa using hs i j
+  · simpa [res, LinearMap.domRestrict₁₂_apply] using hs i j
 
 private theorem card_frames_succ [Finite V] (hh : ∀ x y, h y x = star (h x y)) (n : ℕ) :
     Nat.card {s : Fin (n + 1) → V // IsOrthonormal h s} =
@@ -364,7 +365,7 @@ private theorem card_frames_succ [Finite V] (hh : ∀ x y, h y x = star (h x y))
     refine ⟨⟨⟨s 0, by simpa using hs 0 0⟩, fun i => ⟨s i.succ, ?_⟩, fun i j => ?_⟩,
       Subtype.ext (Fin.cons_self_tail s)⟩
     · simpa using hs i.succ 0
-    · simpa using hs i.succ j.succ
+    · simpa [res, LinearMap.domRestrict₁₂_apply] using hs i.succ j.succ
 
 end
 

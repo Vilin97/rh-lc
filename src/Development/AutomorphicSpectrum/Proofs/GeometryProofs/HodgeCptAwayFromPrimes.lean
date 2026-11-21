@@ -92,13 +92,15 @@ theorem lat_stable (M : LieModel G ξ E) {O : Type} [CommRing O] (act : Reciproc
     ρ a e ∈ M.lat q := by
   obtain ⟨v, hv⟩ := (M.mem_lat_iff q e).1 he
   refine (M.mem_lat_iff q _).2 ⟨v ≫ act.act a, ?_⟩
-  rw [LieModel.extends_iff] at hv ⊢
+  unfold LieModel.Extends at hv ⊢
   have := act.hom a
   refine ⟨?_, ?_⟩
   · have h1 := hv.1
     rw [LieTangent.isTanAt_iff] at h1 ⊢
     rw [← Category.assoc, h1, MonObj.one_comp]
-  · rw [h a e, hv.2, Category.assoc]
+  · have hpt := congrArg (fun f => f.left) (h a e)
+    simp only [Over.comp_left] at hpt ⊢
+    rw [hpt, hv.2, Category.assoc]
 
 end Stable
 

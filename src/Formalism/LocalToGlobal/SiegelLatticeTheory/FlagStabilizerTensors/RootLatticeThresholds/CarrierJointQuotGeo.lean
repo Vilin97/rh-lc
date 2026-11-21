@@ -240,7 +240,7 @@ theorem locUni_of (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (u u' : D.what
       MeasurePreserving f (muStabV X w) (muStabV X w) := by
     intro f hf
     rw [heq]
-    exact ⟨hf.measurable, by rw [Measure.map_smul, hf.map_eq]⟩
+    exact ⟨hf.measurable, by rw [Measure.map_smul _ hf.measurable.aemeasurable, hf.map_eq]⟩
   obtain ⟨hσ, hne, hc, hleft, hinvν, hκm, b, hb, hbt, hb1⟩ :=
     chart_haar (StV X u u' (gamW X u u' w) v) (stCoordV X u' w (gamW X u u' w) v) φ (muStabV X w)
       (stCoordV_continuous X u' w _ v) hφ hφS hφκ hκφ h1 hmul hinv (fun s hs => hMP _ (hL s hs))

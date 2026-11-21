@@ -53,7 +53,20 @@ theorem not_mem_pow_succ {A : Type} [CommRing A] [IsDedekindDomain A] {N : ℕ} 
   · rcases hp.dvd_or_dvd h with h | h
     · exact hQP i (hP₀.eq_of_le (hQmax i).ne_top (Ideal.le_of_dvd h)).symm
     · exact hDQ i (Ideal.le_of_dvd h)
-  · obtain ⟨j, hj, hji⟩ := (hp.dvd_finset_prod_iff _).mp h
+  · have hex : ∀ s : Finset I, Q i ∣ ∏ j ∈ s, Q j ^ N →
+        ∃ j ∈ s, Q i ∣ Q j ^ N := by
+      intro s
+      induction s using Finset.induction_on with
+      | empty =>
+        intro hd
+        exact (hp.not_dvd_one (by simpa only [Finset.prod_empty] using hd)).elim
+      | @insert a s ha ih =>
+        simp only [Finset.prod_insert ha, Finset.mem_insert, exists_eq_or_imp]
+        intro hd
+        rcases hp.dvd_or_dvd hd with hd | hd
+        · exact Or.inl hd
+        · exact Or.inr (ih hd)
+    obtain ⟨j, hj, hji⟩ := hex _ h
     have hle : Q j ≤ Q i := Ideal.le_of_dvd (hp.dvd_of_dvd_pow hji)
     exact (Finset.mem_erase.mp hj).1 (hQinj ((hQmax j).eq_of_le (hQmax i).ne_top hle))
 
@@ -533,7 +546,7 @@ theorem pic_divisible : ∀ (k B : Type) [Field k] [IsAlgClosed k] [CommRing B] 
     rw [hmap, Polynomial.algebraMap_eq, Polynomial.aeval_C])
   haveI : Module.Finite k[X] B := hfin
   have hinj : Function.Injective (algebraMap k[X] B) := injective_of_finite_not_field k B y hfin hfield
-  haveI : Module.IsTorsionFree k[X] B := (NoZeroSMulDivisors.iff_algebraMap_injective).mpr hinj
+  haveI : Module.IsTorsionFree k[X] B := Module.isTorsionFree_iff_algebraMap_injective.mpr hinj
   haveI : Module.Free k[X] B := Module.free_of_finite_type_torsion_free'
   have hred' : (∃ δ : k[X], δ ≠ 0 ∧ ∀ α : k, δ.eval α ≠ 0 → ∀ Q : Ideal B, Q.IsMaximal → algebraMap k[X] B (X - C α) ∉ Q ^ 2) := by
     obtain ⟨δ, hδ0, hδ⟩ := hred

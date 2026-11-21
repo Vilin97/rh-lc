@@ -18,7 +18,7 @@ namespace OpCompPf
 
 theorem ev_comp_ofHom {R : Type} [CommRing R] {E : Spc} {I J : Cx R} {n : ℤ} (m : I ⟶ J)
     (α : Cochain ((chains R).obj E) I n) (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
-    ev R (α.comp (Cochain.ofHom m) (add_zero n)) p s h U x = Sec.map (m.f s) (ev R α p s h U x) := by
+    ev (α.comp (Cochain.ofHom m) (add_zero n)) p s h U x = Sec.map (m.f s) (ev α p s h U x) := by
   simp only [ev, Cochain.comp_zero_cochain_v, Cochain.ofHom_v]
   rfl
 
@@ -66,7 +66,7 @@ theorem etale_cohomology_operation_comp_of_image_spec (hspec : EtaleSemilinearCo
     rw [(hspec S R ρ).2 E n α β hβ, cpost_mk]
     apply (hspec S R ρ').2
     intro p s h U y
-    show ev R (β.1.comp (Cochain.ofHom u) (add_zero n)) p s h U y = _
+    show ev (β.1.comp (Cochain.ofHom u) (add_zero n)) p s h U y = _
     rw [ev_comp_ofHom, hβ p s h U y, hu]
   · intro hb E n
     let σ := invMap ρ hb

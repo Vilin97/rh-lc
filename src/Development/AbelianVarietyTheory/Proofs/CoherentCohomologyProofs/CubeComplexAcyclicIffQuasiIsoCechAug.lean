@@ -29,7 +29,7 @@ def upperFace (e : κ ↪o ι) (i : ι) (A : Cube.{v} ι R) : Cube.{v} κ R :=
 variable (e : κ ↪o ι) (i : ι)
 
 def faceMap (A : Cube.{v} ι R) : lowerFace e A ⟶ upperFace e i A :=
-  homMk (fun s => res A (Finset.subset_insert i (s.map e.toEmbedding)))
+  homMk κ R (fun s => res A (Finset.subset_insert i (s.map e.toEmbedding)))
     fun _ _ => (res_res A _ _ _).trans (res_res A _ _ _).symm
 
 theorem cubeSign_map (s : Finset κ) (k : κ) :

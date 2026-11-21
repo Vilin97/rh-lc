@@ -249,7 +249,7 @@ theorem mem_range_of_pow_card_eq_self {F k : Type*} [Field F] [Finite F] [Field 
     rw [splits_iff_card_roots, FiniteField.roots_X_pow_card_sub_X,
       Polynomial.natDegree_X_pow_sub_X (R := F) hq]
     exact Finset.card_univ
-  refine hs.mem_range_of_isRoot (FiniteField.X_pow_card_sub_X_ne_zero F hq) ?_
+  refine hs.mem_range_of_isRoot (Polynomial.X_pow_sub_X_ne_zero hq) ?_
   simp only [Polynomial.map_sub, Polynomial.map_pow, map_X, IsRoot.def, eval_sub, eval_pow,
     eval_X, hy, sub_self]
 
@@ -402,10 +402,7 @@ instance isAlgebraic_residueField_completedUnramifiedIntegers :
   AlgEquiv.isAlgebraic (R := 𝓀[K]) (A := ResidueField 𝒪[𝔼])
     (AlgEquiv.ofRingEquiv (f := residueFieldCompletedUnramifiedIntegersEquiv K Ω) fun t ↦ by
       obtain ⟨a, rfl⟩ := residue_surjective t
-      change ResidueField.map (algebraMap 𝒪[𝔼] 𝔹)
-        (algebraMap 𝓀[K] (ResidueField 𝒪[𝔼]) (residue 𝒪[K] a)) = _
-      rw [ResidueField.algebraMap_residue, ResidueField.algebraMap_residue,
-        ResidueField.map_residue]
+      simp only [ResidueField.algebraMap_residue]
       rfl)
 
 end Completed

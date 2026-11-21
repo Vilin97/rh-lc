@@ -125,7 +125,7 @@ theorem finS_mem (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (hψ : Continuous ψ)
   have hlin : Continuous fun z : κ → FiniteAdeleRing (𝓞 F) F => z ⬝ᵥ d + d₀ :=
     (continuous_id.dotProduct continuous_const).add continuous_const
   refine ⟨((finChar_isLocallyConstant ψ hψ).comp_continuous hlin).mul
-    (hg.1.comp_continuous (continuous_add_right s)), ?_⟩
+    (hg.1.comp_continuous (continuous_id.add continuous_const)), ?_⟩
   exact (hg.2.comp_homeomorph (Homeomorph.addRight s)).mul_left
 
 theorem schr_pureA_mem [Invertible (2 : AdeleRing (𝓞 F) F)] (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ)

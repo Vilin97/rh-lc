@@ -71,7 +71,7 @@ theorem PuJPu_apply (k r : ℕ) (i j : Fin (2 * r + k + 1)) :
 
 theorem PuPu_apply (k r : ℕ) (i j : Fin (2 * r + k + 1)) :
     ((Pu k r)ᴴ * Pu k r) i j = (1 : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) i j := by
-  rw [Matrix.mul_apply, one_apply]
+  rw [Matrix.mul_apply, Matrix.one_apply]
   simp only [conjTranspose_apply, Pu_star]
   unfold Pu
   simp only [add_mul, mul_add, Finset.sum_add_distrib, ite_mul, mul_ite,

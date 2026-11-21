@@ -74,12 +74,7 @@ theorem crdLat_mem (S : HSpace E) (L : Submodule (𝓞 E) S.V) (x : S.V) : crd S
 
 theorem crdLat_lattice (S : HSpace E) (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice E L) :
     Submodule.IsLattice E (crdLat S L) := by
-  refine ⟨hL.fg.map _, ?_⟩
-  have hset : (crdLat S L : Set (Fin S.rank → E)) =
-      (crd S : S.V →ₗ[E] (Fin S.rank → E)) '' (L : Set S.V) := by
-    ext u; simp [crdLat]
-  rw [hset, Submodule.span_image, hL.span_eq_top, Submodule.map_top]
-  exact LinearMap.range_eq_top.2 (crd S).surjective
+  exact Submodule.IsLattice.of_fg E (hL.fg.map _)
 
 end Space
 

@@ -27,7 +27,7 @@ theorem local_factors_pos_typical_general {D : D7} (X : HidaSetting D) (hb : AdB
   let p : TypX X := ⟨v, hv⟩
   have hlat : ∃ L : Submodule (𝓞 X.B.I.E) (Fin X.B.I.n → X.B.I.E), Submodule.IsLattice X.B.I.E L ∧
       (L : Set (Fin X.B.I.n → X.B.I.E)) = (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E)) :=
-    ⟨X.B.I.L, ⟨X.B.I.L_fg, X.B.I.L_span⟩, rfl⟩
+    ⟨X.B.I.L, Submodule.IsLattice.of_fg X.B.I.E X.B.I.L_fg, rfl⟩
   have hL := locTieX_of X ψ u (hloc u) (Formalism.L2.SG.Pf.LocVolPrim.primX X u locFramePrim)
   have hL' := locTieX_of X ψ u' (hloc u') (Formalism.L2.SG.Pf.LocVolPrim.primX X u' locFramePrim)
   have hTF := Formalism.L2.SG.Pf.typFacts_holds X hb u u'

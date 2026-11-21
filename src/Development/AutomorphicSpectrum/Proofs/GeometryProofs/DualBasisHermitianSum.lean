@@ -70,7 +70,8 @@ theorem kappa_form {ε : ℤˣ} {h : D.La → D.La → OK H} {σ : E →+* ℂ} 
         (∑ τ : E →ₐ[ℚ] ℂ, τ (sesq D X Y)) * σ (H.w0 : E) := by
     rw [Finset.sum_mul, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun τ _ => by ring
-  rw [e1, map_add (f := _), map_mul, map_intCast, map_intCast, hκ, hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_add κ, map_mul, map_intCast, map_intCast, hκ, hs]
   push_cast
   rw [t1, t0]
   ring

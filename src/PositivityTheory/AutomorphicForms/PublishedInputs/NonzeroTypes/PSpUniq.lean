@@ -183,7 +183,11 @@ variable {V : Type} [AddCommGroup V] [Module ℂ V] (I : Representation ℂ (GL 
 def jm {W W' : Type} [AddCommGroup W] [Module ℂ W] [AddCommGroup W'] [Module ℂ W']
     {π : Representation ℂ (GL (Fin n) k) W} {τ : Representation ℂ (GL (Fin n) k) W'} (f : π.IntertwiningMap τ) :
     (jacU G.e π).IntertwiningMap (jacU G.e τ) :=
-  jacquetMap f (unipRad k G.e) (leviEmb k G.e) (leviEmb_mem_normalizer k G.e)
+  jacquetMap f (unipRad k G.e) (leviEmb k G.e) (by
+    intro g
+    have hg : leviEmb k G.e g ∈ parab k G.e := (mem_parab_iff (R := k)).2 fun a b i j h => by
+      simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne']
+    exact parab_le_normalizer k G.e hg)
 
 theorem jm_injective {W W' : Type} [AddCommGroup W] [Module ℂ W] [AddCommGroup W'] [Module ℂ W']
     {π : Representation ℂ (GL (Fin n) k) W} {τ : Representation ℂ (GL (Fin n) k) W'} (hτ : IsSmooth τ)

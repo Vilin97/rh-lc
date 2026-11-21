@@ -16,13 +16,15 @@ open scoped NumberField.LiesOver
 
 noncomputable section
 
-variable {K : FiniteSubfield}
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
+variable {K : GroundTheory.Global.FiniteSubfield}
 
 section Norms
 
 variable (v : InfinitePlace K.1)
 
-theorem range_norm_infAlgClosure_eq {F : FiniteSubfield} [Fact (K ≤ F)] (w : v.placesOver F.1)
+theorem range_norm_infAlgClosure_eq {F : GroundTheory.Global.FiniteSubfield} [Fact (K ≤ F)] (w : v.placesOver F.1)
     [(w : InfinitePlace F.1).LiesOver v]
     (e : (w : InfinitePlace F.1).Completion ≃ₐ[v.Completion] AlgebraicClosure v.Completion) :
     Set.range (Algebra.norm v.Completion : AlgebraicClosure v.Completion → v.Completion) =
@@ -34,7 +36,7 @@ theorem range_norm_infAlgClosure_eq {F : FiniteSubfield} [Fact (K ≤ F)] (w : v
   · rintro ⟨y, rfl⟩
     exact ⟨e y, Algebra.norm_eq_of_algEquiv e y⟩
 
-theorem mem_range_norm_iff_mem_normSubgroup {F : FiniteSubfield} [Fact (K ≤ F)] (w : v.placesOver F.1)
+theorem mem_range_norm_iff_mem_normSubgroup {F : GroundTheory.Global.FiniteSubfield} [Fact (K ≤ F)] (w : v.placesOver F.1)
     [(w : InfinitePlace F.1).LiesOver v] (c : v.Completionˣ) :
     (c : v.Completion) ∈ Set.range (Algebra.norm v.Completion : (w : InfinitePlace F.1).Completion → v.Completion) ↔
       c ∈ InfinitePlace.normSubgroup v (w : InfinitePlace F.1) := by
@@ -122,7 +124,7 @@ theorem apply_sqrtNegOne_eq_or (σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) : σ sqrtNegOne = 
 
 
 open Classical in
-def iCharFun (g : Additive K.1.fixingSubgroup) : QZ :=
+def iCharFun (K : GroundTheory.Global.FiniteSubfield) (g : Additive K.1.fixingSubgroup) : QZ :=
   if ((Additive.toMul g : K.1.fixingSubgroup) : ℚ̄ ≃ₐ[ℚ] ℚ̄) sqrtNegOne = sqrtNegOne then 0 else QZ.mk (1 / 2)
 
 theorem iCharFun_of_fix {g : Additive K.1.fixingSubgroup}

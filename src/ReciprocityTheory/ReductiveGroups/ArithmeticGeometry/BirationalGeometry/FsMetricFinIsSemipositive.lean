@@ -90,7 +90,7 @@ lemma inner_sq_add_inner_I_sq (x y : EuclideanSpace ℂ ι) :
     Complex.I_re, Complex.I_im]
   ring
 
-theorem fsMetric_isSmooth : IsSmoothMetric (fsMetric ι) := by
+theorem fsMetric_isSmooth : IsSmoothMetric (fsMetric (ι := ι)) := by
   intro z hz
   change ContDiffWithinAt ℝ _ (fun z => ‖fsLp ι z‖) _ z
   have h0 : fsLp ι z ≠ 0 := fsLp_ne_zero hz
@@ -101,7 +101,7 @@ theorem fsMetric_isSmooth : IsSmoothMetric (fsMetric ι) := by
   exact (hn.comp z (fsLp ι).contDiff.contDiffAt).contDiffWithinAt
 
 theorem leviForm_fsMetric {z : ι → ℂ} (hz : z ≠ 0) (w : ι → ℂ) :
-    leviForm (fun z => Real.log ((fsMetric ι).ρ z)) z w =
+    leviForm (fun z => Real.log ((fsMetric (ι := ι)).ρ z)) z w =
       (‖fsLp ι w‖ ^ 2 * ‖fsLp ι z‖ ^ 2 - ‖inner ℂ (fsLp ι z) (fsLp ι w)‖ ^ 2) /
         (2 * (‖fsLp ι z‖ ^ 2) ^ 2) := by
   change leviForm (fun z => Real.log ‖fsLp ι z‖) z w = _
@@ -112,7 +112,7 @@ theorem leviForm_fsMetric {z : ι → ℂ} (hz : z ≠ 0) (w : ι → ℂ) :
   field_simp
   ring
 
-theorem fsMetric_isSemipositive : IsSemipositive (fsMetric ι) := by
+theorem fsMetric_isSemipositive : IsSemipositive (fsMetric (ι := ι)) := by
   refine ⟨fsMetric_isSmooth, fun z hz w => ?_⟩
   rw [leviForm_fsMetric hz]
   have hcs := norm_inner_le_norm (𝕜 := ℂ) (fsLp ι z) (fsLp ι w)

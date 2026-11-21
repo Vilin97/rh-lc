@@ -58,7 +58,7 @@ theorem exists_kill (n : ℕ) (h : hankel c n = 0) :
     apply hv0
     funext k
     have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k) h0
-    simpa [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Fin.val_inj] using this
+    simpa [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply, Finsupp.single_apply, Fin.val_inj] using this
   · exact natDegree_sum_le_of_forall_le _ _ fun k _ =>
       (natDegree_monomial_le _).trans (Nat.lt_succ_iff.1 k.2)
   · intro j hj

@@ -63,11 +63,11 @@ theorem tan_iff_of_generic : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscr
     have l := hf x u e
     refine ⟨MG.pt (f x), MG.tan _, ?_⟩
     have l' : u.left ≫ φ' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (M₀.pt (f x)).left := by
-      simpa [LieModel.Lifts] using l
+      simpa using l
     rw [← eφ, ← Category.assoc, l', Category.assoc, hM₀]
   · rintro ⟨a, ha, e⟩
     obtain ⟨x, rfl⟩ := MG.onto a ha
-    have l : M₀.Lifts (algebraMap V K) φ' x u := by
+    have l : u.left ≫ φ' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (M₀.pt x).left := by
       refine hp.1.hom_ext ?_ ?_
       · rw [Category.assoc, eφ, e, Category.assoc, hM₀]
       · rw [Category.assoc, eσ, ← Category.assoc, Over.w u, Category.assoc, Over.w (M₀.pt x)]
@@ -76,6 +76,6 @@ theorem tan_iff_of_generic : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscr
         rw [Category.comp_id, Category.comp_id, spMap_dualMap_comp_alg]
     have l₂ := hg x u l
     refine ⟨MT.pt (g x), MT.tan _, ?_⟩
-    simpa [LieModel.Lifts] using l₂
+    simpa using l₂
 
 end GlobalTheory.CompanionTheory.Ar.Flat.CPoint

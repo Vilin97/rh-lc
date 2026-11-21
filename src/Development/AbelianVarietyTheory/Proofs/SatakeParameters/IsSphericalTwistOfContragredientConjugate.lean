@@ -76,7 +76,7 @@ theorem GlobalTheory.ContraPair.isSpherical_twist_of_dualIsConjBy : ∀ (E : Typ
     exact hns ⟨_, h, GlobalTheory.DefU.LocRet.under_conjSrc w⟩
   have hL : ∀ k ∈ GlobalTheory.LFun.KGL w (n := a), B.flip x ((π.twist ψ⁻¹).locRep w k y) = B.flip x y := by
     intro k hk
-    obtain ⟨k', hk', e⟩ := conjFin_locGL_mem w hw k hk
+    obtain ⟨k', hk', e⟩ := GlobalTheory.ContraPair.SphTwist.conjFin_locGL_mem w hw k hk
     have hx' : π.op (.fin (locGL E a w k')) x = x := GlobalTheory.LGrp.mem_fixed.1 hx k' hk'
     have h1 := hfin (locGL E a w k) y x
     change B ((π.twist ψ⁻¹).op (.fin (locGL E a w k)) y) x = B y x
@@ -84,7 +84,7 @@ theorem GlobalTheory.ContraPair.isSpherical_twist_of_dualIsConjBy : ∀ (E : Typ
     rw [← e]
     exact h1
   obtain ⟨v, hv, hve⟩ := GlobalTheory.SmGL.IwahoriOnto.exists_fixed_map_eq ((π.twist ψ⁻¹).isSmooth_locRep w)
-    GlobalTheory.BcSpehCompare.isCompact_KGL (B.flip x) y hL
+    (GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL w a).2 (B.flip x) y hL
   refine (Submodule.ne_bot_iff _).2 ⟨v, hv, fun h => hy ?_⟩
   have : B.flip x v = B y x := hve
   rw [← this, h, map_zero]

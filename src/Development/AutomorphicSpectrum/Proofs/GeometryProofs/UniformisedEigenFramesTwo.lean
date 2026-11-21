@@ -158,20 +158,20 @@ theorem anHol : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host
   have hVd : ∀ a, DifferentiableAt ℂ (fun b => (xx b).1 a) b₀ := fun a =>
     GlobalTheory.HolFrameMatrix.differentiableAt_coord FU i (vR a).left ψ hB' hP (fun b => (xx b).1 a) (fun b hb => by
       have := (hxx b hb).1 a
-      rw [(hfr b (hsub hb)).2.1 a, dualMap_eq] at this
+      rw [(hfr b (hsub hb)).2.1 a, AnHol.dualMap_eq] at this
       exact this) hb' hev
   have hWd : ∀ a, DifferentiableAt ℂ (fun b => (xx b).2.1 a) b₀ := fun a =>
     GlobalTheory.HolFrameMatrix.differentiableAt_coord FU i (wR a).left ψ hB' hP (fun b => (xx b).2.1 a) (fun b hb => by
       have := (hxx b hb).2.1 a
-      rw [(hfr b (hsub hb)).2.2 a, dualMap_eq] at this
+      rw [(hfr b (hsub hb)).2.2 a, AnHol.dualMap_eq] at this
       exact this) hb' hev
   have hPd : ∀ n, DifferentiableAt ℂ (fun b => P b (e i n)) b₀ := fun n =>
     (hP.2 (e i n)).differentiableAt (hB'.mem_nhds hb')
 
   have hBd : ∀ j n, DifferentiableAt ℂ (fun b => (xx b).2.2.2.1 j n) b₀ := fun j n =>
-    coef_differentiableAt (fun b => (xx b).2.1)
+    AnHol.coef_differentiableAt (fun b => (xx b).2.1)
       (fun b n => tyPart ty (ComplexEmbedding.conjugate τ') (P b (e i n))) (fun b => (xx b).2.2.2.1) b₀ hWd
-      (fun n => tyPart_differentiableAt ty _ _ b₀ (hPd n)) (hVW b₀ hb').2.2
+      (fun n => AnHol.tyPart_differentiableAt ty _ _ b₀ (hPd n)) (hVW b₀ hb').2.2
       (by filter_upwards [hnb] with b hb n using (hxx b hb).2.2.1 n) j n
   obtain ⟨Hm, hHh, -, hHi⟩ := id (hP.1 b₀ hb').2.2.2.2
   obtain ⟨-, -, hd⟩ := GlobalTheory.T.period_hermitian_type_compatibility E H (FU.Di i) g ty (P b₀) Hm (hP.1 b₀ hb') hHh hHi
@@ -203,13 +203,13 @@ theorem anHol : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host
     (Submodule.mem_span_range_iff_exists_fun ℂ).1 ((hVW b hb).2.1 (P b (e i n)))
   let Am : (Fin m → ℂ) → Matrix (Fin D.p) (Fin D.p ⊕ Fin D.q) ℂ := fun b => Matrix.of fun k n => A b n k
   have hAd : ∀ k n, DifferentiableAt ℂ (fun b => Am b k n) b₀ := fun k n =>
-    coef_differentiableAt (fun b => (xx b).1) (fun b n => tyPart ty τ' (P b (e i n))) Am b₀ hVd
-      (fun n => tyPart_differentiableAt ty _ _ b₀ (hPd n)) (hVW b₀ hb').1
+    AnHol.coef_differentiableAt (fun b => (xx b).1) (fun b n => tyPart ty τ' (P b (e i n))) Am b₀ hVd
+      (fun n => AnHol.tyPart_differentiableAt ty _ _ b₀ (hPd n)) (hVW b₀ hb').1
       (by filter_upwards [hnb] with b hb n using (hA b hb n).symm) k n
   have hexp : ∀ b ∈ B', ∀ (C : Matrix (Fin D.p) (Fin D.p ⊕ Fin D.q) ℂ) (a : Fin D.p),
       tyPart ty τ' (∑ m, C a m • P b (e i m)) = ∑ k, (Am b * C.transpose) k a • (xx b).1 k := by
     intro b hb C a
-    rw [tyPart_sum_smul]
+    rw [AnHol.tyPart_sum_smul]
     simp_rw [← hA b hb, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -231,7 +231,7 @@ theorem anHol : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host
     exact DifferentiableAt.fun_sum fun n _ => (hAd k n).mul_const _
   have hM0' : (M b₀).det ≠ 0 := by simp [M, hM0]
   have hMe := (fcHolo_det_differentiableAt M b₀ hMd).continuousAt.eventually_ne hM0'
-  have hMi := inv_differentiableAt M b₀ hMd hM0'
+  have hMi := AnHol.inv_differentiableAt M b₀ hMd hM0'
   let Cb : (Fin m → ℂ) → Matrix (Fin D.p) (Fin D.p ⊕ Fin D.q) ℂ := fun b => (C₀.transpose * (M b)⁻¹).transpose
   have hCd : ∀ a n, DifferentiableAt ℂ (fun b => Cb b a n) b₀ := fun a n => by
     simp only [Cb, Matrix.transpose_apply, Matrix.mul_apply]

@@ -117,7 +117,8 @@ namespace WD
 open Unram
 
 theorem lpUnr_spec (m : Multiset ℂ) (hm : (0 : ℂ) ∉ m) :
-    unr (lpUnr h m) ∧ frobEig (lpUnr h m) = m ∧ lpDim (lpUnr h m) = Multiset.card m := by
+    unr (lpUnr (h := h) m) ∧ frobEig (lpUnr (h := h) m) = m ∧
+      lpDim (lpUnr (h := h) m) = Multiset.card m := by
   classical
   refine ⟨(unr_mk _).mpr (WDRep.unr_diag _), ?_, ?_⟩
   · rw [lpUnr, frobEig_diag]
@@ -201,9 +202,9 @@ theorem frobEig_char (a χ : WD h) (z : ℂ) (ha : unr a) (hχ : unr χ) (hz : f
   rw [Finset.map_val, Multiset.map_map]
   rfl
 
-theorem lpZero_unr : unr (lpZero h) := (unr_mk _).mpr (WDRep.unr_diag _)
+theorem lpZero_unr : unr (lpZero (h := h)) := (unr_mk _).mpr (WDRep.unr_diag _)
 
-theorem frobEig_zero : frobEig (lpZero h) = 0 := by
+theorem frobEig_zero : frobEig (lpZero (h := h)) = 0 := by
   rw [lpZero, frobEig_diag]; simp
 
 theorem frobEig_ne_zero (a : WD h) (ha : unr a) : (0 : ℂ) ∉ frobEig a := by
@@ -211,7 +212,7 @@ theorem frobEig_ne_zero (a : WD h) (ha : unr a) : (0 : ℂ) ∉ frobEig a := by
   rw [frobEig_diag]
   simp
 
-theorem unr_eq_lpUnr (a : WD h) (ha : unr a) : a = lpUnr h (frobEig a) := by
+theorem unr_eq_lpUnr (a : WD h) (ha : unr a) : a = lpUnr (frobEig a) := by
   classical
   have h1 := (lpUnr_spec (h := h) _ (frobEig_ne_zero a ha)).2.1
   obtain ⟨n, c, hc⟩ := exists_diag ha
@@ -248,8 +249,8 @@ theorem unr_iff_ine (a : WD h) :
 
 variable (h) in
 theorem unramified_laws :
-    (∀ m : Multiset ℂ, (0 : ℂ) ∉ m → unr (lpUnr h m) ∧ frobEig (lpUnr h m) = m ∧
-      lpDim (lpUnr h m) = Multiset.card m) ∧
+    (∀ m : Multiset ℂ, (0 : ℂ) ∉ m → unr (lpUnr (h := h) m) ∧
+      frobEig (lpUnr (h := h) m) = m ∧ lpDim (lpUnr (h := h) m) = Multiset.card m) ∧
     (∀ a b : WD h, unr (lpSum a b) ↔ unr a ∧ unr b) ∧
     (∀ (a : WD h) (s : ℝ), unr (lpTw a s) ↔ unr a) ∧
     (∀ a χ : WD h, lpDim χ = 1 → unr a → unr χ → unr (lpChar a χ)) ∧
@@ -258,9 +259,9 @@ theorem unramified_laws :
       frobEig (lpTw a s) = (frobEig a).map (· * ((normV w : ℕ) : ℂ) ^ ((s : ℝ) : ℂ))) ∧
     (∀ (a χ : WD h) (c : ℂ), unr a → unr χ → lpDim χ = 1 → frobEig χ = {c} →
       frobEig (lpChar a χ) = (frobEig a).map (· * c)) ∧
-    unr (lpZero h) ∧
-    frobEig (lpZero h) = 0 ∧
-    (∀ a : WD h, unr a → a = lpUnr h (frobEig a)) ∧
+    unr (lpZero (h := h)) ∧
+    frobEig (lpZero (h := h)) = 0 ∧
+    (∀ a : WD h, unr a → a = lpUnr (frobEig a)) ∧
     (∀ a : WD h, unr a → mono0 a) ∧
     (∀ a : WD h, unr a → (0 : ℂ) ∉ frobEig a) ∧
     (∀ a : WD h, unr a → Multiset.card (frobEig a) = lpDim a) ∧

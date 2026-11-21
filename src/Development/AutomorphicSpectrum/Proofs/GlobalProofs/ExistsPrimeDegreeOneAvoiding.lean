@@ -67,7 +67,8 @@ theorem exists_exponent_ne_zero (F : Type) [Field F] [NumberField F] :
     have hub : u = (n : 𝓞 F) * b := RingOfIntegers.coe_injective (by simpa using hue)
     exact hub ▸ hu
   intro h0
-  rw [RingOfIntegers.exponent, Ideal.absNorm_eq_zero_iff] at h0
+  change Ideal.absNorm (Ideal.under ℤ (conductor ℤ θ)) = 0 at h0
+  rw [Ideal.absNorm_eq_zero_iff] at h0
   have hm : n ∈ Ideal.under ℤ (conductor ℤ θ) := by
     rw [Ideal.under_def, Ideal.mem_comap]
     simpa using hcond

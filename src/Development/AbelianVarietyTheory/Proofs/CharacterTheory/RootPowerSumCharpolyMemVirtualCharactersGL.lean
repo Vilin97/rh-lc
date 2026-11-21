@@ -61,7 +61,7 @@ private theorem exists_p_regular_split_of_normal_sylow_commute (E : Type) [Group
     have hs : ((h : E))⁻¹ * g ∈ (P : Subgroup E) := by
       have := QuotientGroup.eq.1 hq.symm
       exact this
-    obtain ⟨m, hm⟩ := P.2 ⟨_, hs⟩
+    obtain ⟨m, hm⟩ := P.isPGroup ⟨_, hs⟩
     refine ⟨((h : E))⁻¹ * g, m, ?_, ?_, ?_⟩
     · simp [h]
     · apply hcomm _ _ hs
@@ -99,7 +99,7 @@ private theorem exists_p_regular_split_of_pow_mem_center (E : Type) [Group E] [F
     exact (Subgroup.mem_center_iff.1 this x).symm
   · have hPc : ∀ x ∈ (P : Subgroup E), x ∈ Subgroup.center E := by
       intro x hx
-      obtain ⟨a, ha⟩ := P.2 ⟨x, hx⟩
+      obtain ⟨a, ha⟩ := P.isPGroup ⟨x, hx⟩
       have ha' : x ^ p ^ a = 1 := by simpa using congrArg Subtype.val ha
       apply hcen
       exact Nat.Coprime.coprime_dvd_right (orderOf_dvd_of_pow_eq_one ha')
@@ -124,6 +124,8 @@ private theorem powerSum_roots_charpoly_complex_mem_virt (G : Type) [Group G] [F
       _root_.GlobalTheory.BI.isChar_mem_virt_complex (_root_.GlobalTheory.BI.isChar_one ℂ ℂ G)
     have := zsmul_mem h1 c
     convert this using 1
+    ext x
+    simp
   induction r using Nat.strong_induction_on with
   | _ r ih =>
     rcases Nat.eq_zero_or_pos r with rfl | hr

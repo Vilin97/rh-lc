@@ -131,8 +131,10 @@ theorem cur_anti {m : ℕ} (h : n ≤ m) (η : TV n M (Fin m))
   simp only [pm, cur, reIx, LinearMap.pi_apply, LinearMap.proj_apply, Pi.smul_apply]
   rw [← hs, ← key]
   congr 1
-  generalize e x = y
-  cases y <;> rfl
+  funext x
+  simp only [Function.comp_apply, τ, Equiv.trans_apply, Equiv.apply_symm_apply, S,
+    Equiv.sumCongr_apply, Equiv.refl_apply]
+  cases e x <;> rfl
 
 end PositivityTheory.Rg.Cz.CtrX
 

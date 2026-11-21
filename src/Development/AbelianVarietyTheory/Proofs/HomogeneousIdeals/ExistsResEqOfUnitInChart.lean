@@ -158,7 +158,7 @@ theorem fstS_comp_dualScale (s : S) : (fstS R S).comp (dualScale R s) = fstS R S
 
 theorem IsAway.dualMap {ρ : S →ₐ[R] S'} {g : S} (h : IsAway ρ g) :
     IsAway (GlobalTheory.CompanionTheory.Ar.dualMap ρ) (inlS R S g) := by
-  have hi : ∀ x : S, GlobalTheory.SqZero.dualMap ρ (inlS R S x) = inlS R S' (ρ x) := fun x =>
+  have hi : ∀ x : S, GlobalTheory.CompanionTheory.Ar.dualMap ρ (inlS R S x) = inlS R S' (ρ x) := fun x =>
     TrivSqZeroExt.ext (by simp) (by simp)
   rw [isAway_iff, hi]
   refine ⟨h.unit.map (inlS R S'), fun z => ?_, fun a ha => ?_⟩

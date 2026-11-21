@@ -234,8 +234,10 @@ theorem IsRho.injective (hV : (mCoordIdeal w).IsPrime) (hW : W.IsPrime) (hVW : m
     Function.Injective ρ := by
   haveI := hV
   haveI := hW
-  set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+  change Function.Injective ρ.toAddMonoidHom
+  apply (injective_iff_map_eq_zero ρ.toAddMonoidHom).2
   intro x hx
+  change ρ x = 0 at hx
   obtain ⟨u, v, a, hu, hv, hvW, hxu⟩ := (mem_locRing_iff hVW).1 x.2
   have h1 := hρ x u v a hu hv hvW hxu
   rw [hx, zero_mul] at h1

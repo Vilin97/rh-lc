@@ -33,7 +33,7 @@ theorem differentiable_mul_of_cr {V : Type} [NormedAddCommGroup V] [NormedSpace 
       rw [← Complex.coe_smul, ← Complex.coe_smul, smul_smul, ← add_smul]
       congr 1
       exact (Complex.re_add_im a).symm
-    rw [e, L.map_add (f := _), L.map_smul, L.map_smul, hI, Complex.real_smul, Complex.real_smul]
+    rw [e, map_add L, L.map_smul, L.map_smul, hI, Complex.real_smul, Complex.real_smul]
     conv_rhs => rw [← Complex.re_add_im a]
     ring
   let g : V →L[ℂ] ℂ :=

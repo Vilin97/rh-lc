@@ -298,12 +298,17 @@ theorem CrystallineSemistableComparison.P.cup_ring : ∀ {R : Type} [CommRing R]
   intro R _ C _ A
   refine ⟨fun n x => ?_, fun {p q r a b n} h₁ h₂ h₃ h₄ x y z => ?_⟩
   · obtain ⟨f, hf, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj (cx (modF A)) n).1 x
+    have hone : d (modF A) 0 (fun s => (1 : A.obj (s.obj (Fin.last 0)))) = 0 := by
+      funext s
+      change ∑ i : Fin 2, (-1 : ℤ) ^ (i : ℕ) • (A.map (GlobalTheory.CatH.toLast i s)).hom 1 = (0 : A.obj _)
+      rw [Fin.sum_univ_two, map_one, map_one]
+      simp
     constructor
     · obtain ⟨hc, e⟩ := CrystallineSemistableComparison.P.cup_cls (mulP A) (Nat.zero_add n) (fun s => (1 : A.obj (s.obj (Fin.last 0)))) f
-        (oneH._proof_1 A) hf
+        hone hf
       exact e.trans (CrystallineSemistableComparison.Auxff.cls_congr _ (CrystallineSemistableComparison.Auxff.unit_left A f) _ _)
     · obtain ⟨hc, e⟩ := CrystallineSemistableComparison.P.cup_cls (mulP A) (Nat.add_zero n) f (fun s => (1 : A.obj (s.obj (Fin.last 0))))
-        hf (oneH._proof_1 A)
+        hf hone
       exact e.trans (CrystallineSemistableComparison.Auxff.cls_congr _ (CrystallineSemistableComparison.Auxff.unit_right A f) _ _)
   · obtain ⟨f, hf, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj (cx (modF A)) p).1 x
     obtain ⟨g, hg, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj (cx (modF A)) q).1 y

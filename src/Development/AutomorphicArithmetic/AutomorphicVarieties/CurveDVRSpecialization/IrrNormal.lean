@@ -141,7 +141,7 @@ theorem UpperTheory.V.Pr.irrNormal :
     apply hne'
     have e1 := cconj (ι d) (ι u) i (hU _ hu)
     have hu' : ι (d * u * d⁻¹) ∈ U := by
-      rw [map_mul, map_mul, map_inv]; exact Subgroup.Normal.conj_mem ‹_› _ hu _
+      rw [map_mul, map_mul, map_inv]; exact Subgroup.Normal.conj_mem _ hu _
     rw [← map_inv, ← map_mul, ← map_mul, hσ' _ _ hu', hσ' _ _ hu, map_mul, map_mul, map_inv,
       mul_inv_cancel_comm] at e1
     exact Units.ext e1

@@ -22,23 +22,20 @@ def sigSt (g : ↥(GK K)) : Bst P ⊗[ℚ_[l]] V →ₗ[ℚ_[l]] Bst P ⊗[ℚ_[
 
 theorem sigSt_smul (g : ↥(GK K)) (b : Bst P) (w : Bst P ⊗[ℚ_[l]] V) :
     sigSt P ρ g (b • w) = actSt P (g : GQ l) b • sigSt P ρ g w := by
-  induction w using TensorProduct.induction_on with
-  | zero => simp
+  induction w using TensorProduct.inductionOn with
   | tmul c v => simp [sigSt, TensorProduct.smul_tmul']
   | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem sigSt_comm (g : ↥(GK K)) (y : V ⊗[ℚ_[l]] Bst P) :
     sigSt P ρ g (TensorProduct.comm ℚ_[l] V (Bst P) y) =
       TensorProduct.comm ℚ_[l] V (Bst P) (stRep P ρ g y) := by
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul v b => simp [sigSt]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem comm_mulV (c : ↥(MaximalUnramifiedExtension l)) (y : V ⊗[ℚ_[l]] Bst P) :
     TensorProduct.comm ℚ_[l] V (Bst P) (mulV P LL V c y) = c • TensorProduct.comm ℚ_[l] V (Bst P) y := by
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul v b => simp [TensorProduct.smul_tmul', Algebra.smul_def]
   | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
 
@@ -79,7 +76,7 @@ theorem rank_DpstUr_le : ∀ {l : ℕ} [Fact l.Prime] (P : LocPrime l), IsDomain
         exact ⟨c, hc⟩)
       v hv Finset.univ (hli.linearIndepOn _)
   have hB' : LinearIndependent (Bst P) v := by
-    rw [← linearIndepOn_univ]; rw [Finset.coe_univ] at hB; exact hB
+    rw [← linearIndepOn_univ_iff]; rw [Finset.coe_univ] at hB; exact hB
   simpa using LinearIndependent.fintype_card_le_finrank hB'
 
 end GlobalTheory.PstRank

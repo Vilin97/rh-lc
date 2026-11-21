@@ -130,11 +130,11 @@ theorem exists_families (hL : Laws) (hT : DVR.TwistBaseChangeStatement) {R R' : 
       rw [Subsingleton.elim i 0]; exact hg (ha.trans (map_zero _).symm)
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [Fin.sum_univ_one, one_smul, map_sub, map_sum, sub_eq_zero]
-      refine (eq_pullOver_of_secScal hM pb.w (c₁ α) (q₃ i α)).trans
-        ((hc' i α).trans (Finset.sum_congr rfl fun l _ => ?_))
-      rw [map_smulₛₗ]
-      exact congrArg (fun q : FamTerm D.toPre F k α => g (c i l) • q)
-        (eq_pullOver_of_secScal hM pb.w (c₁ α) (b₁ l α)).symm
+        refine (eq_pullOver_of_secScal hM pb.w (c₁ α) (q₃ i α)).trans
+          ((hc' i α).trans (Finset.sum_congr rfl fun l _ => ?_))
+        rw [map_smulₛₗ]
+        exact congrArg (fun q : FamTerm D.toPre F k α => g (c i l) • q)
+          (eq_pullOver_of_secScal hM pb.w (c₁ α) (b₁ l α)).symm
   have e₃ : ∀ i, s₂' i = ∑ l, π (c i l) • s' l := fun i => fam_ext fun x j => by
     obtain ⟨mv, hmv⟩ := exists_moveMap (π := πB) (π' := famBase D'.toPre F') (fS := π) (ε := DegPre.famε k) hM
       D'.toPre.P.isLB hD.w_gen (c₂ x) (by rw [hπB]; exact hΘ₁.w)

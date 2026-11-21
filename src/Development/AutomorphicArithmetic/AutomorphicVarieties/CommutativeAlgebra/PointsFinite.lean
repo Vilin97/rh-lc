@@ -225,16 +225,16 @@ private theorem pf_step (hg : ∀ s, ι (g (MvPowerSeries.X s)) = t (Multiplicat
   refine ⟨∑ m ∈ μ, c m * g (monomial m 1), ?_, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hx', map_sum, map_sum, Finset.mul_sum]
-    refine Finset.sum_congr rfl fun m hm => ?_
-    rw [map_mul, map_mul, hc, pf_monomial, map_finsuppProd, map_finsuppProd]
-    simp only [map_pow, hg]
-    rw [pf_prod W.wt t (fun s => ξ (W.zA s)), hS m (hμ hm)]
-    ring
+      refine Finset.sum_congr rfl fun m hm => ?_
+      rw [map_mul, map_mul, hc, pf_monomial, map_finsuppProd, map_finsuppProd]
+      simp only [map_pow, hg]
+      rw [pf_prod W.wt t (fun s => ξ (W.zA s)), hS m (hμ hm)]
+      ring
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, ← Finset.sum_sub_distrib]
-    refine Ideal.sum_mem _ fun m hm => ?_
-    rw [map_mul, ← sub_mul]
-    exact Ideal.mul_mem_mul (hc' m) (hJ m (hμ hm))
+      refine Ideal.sum_mem _ fun m hm => ?_
+      rw [map_mul, ← sub_mul]
+      exact Ideal.mul_mem_mul (hc' m) (hJ m (hμ hm))
 
 private theorem pf_agree (hι : Function.Injective ι)
     (hg : ∀ s, ι (g (MvPowerSeries.X s)) = t (Multiplicative.ofAdd (W.wt s)) * ξ (W.zA s))

@@ -11,7 +11,7 @@ private theorem UpperTheory.V.AlgebraTools.Det.map_D_mapRingHom_eq {n : ℕ} {A 
     (B : Type) [CommRing B] [Algebra A' B] (φ : B₀ →+* B)
     (hφ : ∀ a, φ (algebraMap A B₀ a) = algebraMap A' B (f a)) (x : MonoidAlgebra B₀ G) :
     (D.map f).D B (MonoidAlgebra.mapRingHom G φ x) = φ (D.D B₀ x) := by
-  letI : Algebra A B := ((algebraMap A' B).comp f).toAlgebra
+  let : Algebra A B := ((algebraMap A' B).comp f).toAlgebra
   exact D.nat B₀ B { φ with commutes' := hφ } x
 
 theorem UpperTheory.V.AlgebraTools.Det.mapApi :
@@ -51,7 +51,7 @@ theorem UpperTheory.V.AlgebraTools.Det.mapApi :
     ext g
     simp [GDet.gen]
   · intro y hy B _ _ h
-    letI : Algebra A B := ((algebraMap A' B).comp f).toAlgebra
+    let : Algebra A B := ((algebraMap A' B).comp f).toAlgebra
     have := hy B h
     rw [show MonoidAlgebra.mapRingHom G (algebraMap A B) y = MonoidAlgebra.mapRingHom G (algebraMap A' B) (MonoidAlgebra.mapRingHom G f y) from by
       rw [← RingHom.comp_apply, ← MonoidAlgebra.mapRingHom_comp]; rfl] at this

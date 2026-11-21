@@ -162,7 +162,13 @@ noncomputable def h2Valuation :
   (groupCohomology.functor ℤ Gal(L/K) 2).map (unitsValuation K L)
 
 instance isIso_h2Valuation [IsUnramified K L] : IsIso (h2Valuation K L) := by
-  have hX := unitsValuationSES_shortExact K L
+  have hX : (unitsValuationSES K L).ShortExact := by
+    refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+    · exact GroundTheory.GroupCoh.shortComplex_exact_of_forall fun x hx =>
+        (exact_unitsIncl_unitsOrd (L := L) x).mp hx
+    · exact (Rep.mono_iff_injective (integerUnitsToUnits K L)).2 fun _ _ h =>
+        Additive.toMul.injective (unitsIncl_injective (K := L) (congrArg Additive.toMul h))
+    · exact (Rep.epi_iff_surjective (unitsValuation K L)).2 (unitsOrd_surjective (L := L))
   have h2 := isZero_groupCohomology_integerUnits K L (q := 2) (by norm_num)
   have h3 := isZero_groupCohomology_integerUnits K L (q := 3) (by norm_num)
   have hm : Mono ((groupCohomology.mapShortComplex₂ (unitsValuationSES K L) 2).g) :=

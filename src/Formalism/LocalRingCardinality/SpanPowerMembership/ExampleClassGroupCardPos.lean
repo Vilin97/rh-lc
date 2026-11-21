@@ -51,10 +51,10 @@ abbrev rowsH : Rows.Data R0 :=
 abbrev memT : Member R0 Tau0 (fun _ => hc0) := trivialMember Tau0 T (dstarOf T) (dstarOf_pos T)
 
 theorem nHypH (hg : ∀ k, (placesOver H.E (H.g k)).ncard = Module.finrank ℚ H.E) :
-    NHyp H (rowsH H T) where
-  hsha := fun p _ e _ _ => shaExample_eq H p e
-  hcard := rfl
-  hg := hg
+    NHyp H (rowsH H T) :=
+  { hsha := fun p _ e _ _ => shaExample_eq H p e
+    hcard := rfl
+    hg := hg }
 
 theorem normAt_empty {K V ι : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V]
     [Fintype ι] [DecidableEq ι] [IsEmpty ι] (b : Module.Basis ι K V)

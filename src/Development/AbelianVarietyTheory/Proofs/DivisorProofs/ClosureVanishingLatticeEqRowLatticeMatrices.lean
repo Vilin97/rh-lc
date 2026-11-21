@@ -313,10 +313,14 @@ theorem closure_eq {m n : ℕ} (X : Set (Fin m → k)) (Y : Set (Fin n → k))
     have := hcb _ (subset_closure (prod_mem_span (Submodule.subset_span hx₀) hy)) i₀ j
     rw [vecMulVec_apply] at this
     convert this using 1; ring
-  have hL₁ : Submodule.IsLattice k (Submodule.span 𝒪[k] X) :=
-    ⟨fg_of_bound _ _ (mul_ne_zero hc0' hyj) hb₁, by rw [Submodule.span_span_of_tower]; exact h1⟩
-  have hL₂ : Submodule.IsLattice k (Submodule.span 𝒪[k] Y) :=
-    ⟨fg_of_bound _ _ (mul_ne_zero hc0' hxi) hb₂, by rw [Submodule.span_span_of_tower]; exact h2⟩
+  have hL₁ : Submodule.IsFullLattice k (Submodule.span 𝒪[k] X) :=
+    by
+      letI := Submodule.IsLattice.of_fg k (fg_of_bound _ _ (mul_ne_zero hc0' hyj) hb₁)
+      exact ⟨by rw [Submodule.span_span_of_tower]; exact h1⟩
+  have hL₂ : Submodule.IsFullLattice k (Submodule.span 𝒪[k] Y) :=
+    by
+      letI := Submodule.IsLattice.of_fg k (fg_of_bound _ _ (mul_ne_zero hc0' hxi) hb₂)
+      exact ⟨by rw [Submodule.span_span_of_tower]; exact h2⟩
   obtain ⟨P₀, hP₀⟩ := GlobalTheory.RootEx.UnfoldShape.exists_eq_act_stdLat k (Fin m) _ hL₁
   obtain ⟨Q₀, hQ₀⟩ := GlobalTheory.RootEx.UnfoldShape.exists_eq_act_stdLat k (Fin n) _ hL₂
   have mem₁ : ∀ x, x ∈ Submodule.span 𝒪[k] X ↔ ∀ i, ((P₀⁻¹).val *ᵥ x) i ∈ 𝒪[k] := fun x => by

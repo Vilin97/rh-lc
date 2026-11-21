@@ -206,7 +206,7 @@ theorem mem_unip (h : IsSec σ t sec) {C} (hC : Fr σ t W W₁ H e C) {g : UA σ
         funext i
         obtain ⟨i, rfl⟩ := e.surjective i
         simp only [mulVec, dotProduct, sum_e' (e := e)]
-        rcases i with s' | _ | _ <;> simp [gm, p1, p2, p3, p4, a, h.snd, Pi.single_apply, apply_ite])
+        rcases i with s' | _ | _ <;> simp [gm, p1, p2, p3, p4, a, h.snd, Pi.single_apply, apply_ite, -cond_eq_ite, cond])
       rw [fr_col, fr_mulVec] at this
       refine ⟨a, this.trans ?_⟩
       funext i

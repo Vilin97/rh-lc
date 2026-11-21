@@ -46,7 +46,7 @@ theorem genFibMap_mk' {T E O : Type} [CommRing T] [CommRing E] [CommRing O] [Alg
   simp only [genFibMap, IsLocalization.map_mk']
   congr 1
   ext
-  simp
+  exact ψ.commutes t
 
 theorem exists_finitePresentation_lift (T R O : Type) [CommRing T] [CommRing R] [CommRing O]
     [Algebra T R] [Algebra R O] [Algebra T O] [IsScalarTower T R O]

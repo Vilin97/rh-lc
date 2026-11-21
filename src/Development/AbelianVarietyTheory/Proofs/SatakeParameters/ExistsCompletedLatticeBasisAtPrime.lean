@@ -30,11 +30,12 @@ theorem exists_gens {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum 
     IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain (𝓞 E) P.ne_bot _
   have : IsFractionRing (locRing P) E := Localization.subalgebra.isFractionRing_ofField E _ _
   let M := Submodule.span (locRing P) (L : Set (Fin n → E))
-  have hM : Submodule.IsLattice E M := by
-    refine ⟨?_, ?_⟩
-    · obtain ⟨s, rfl⟩ := hfg
-      exact ⟨s, (Submodule.span_span_of_tower (𝓞 E) (locRing P) _).symm⟩
-    · rw [Submodule.span_span_of_tower, hsp]
+  have hM : Submodule.IsLattice E M := Submodule.IsLattice.of_fg E (by
+    obtain ⟨s, rfl⟩ := hfg
+    exact ⟨s, (Submodule.span_span_of_tower (𝓞 E) (locRing P) _).symm⟩)
+  have : Submodule.IsFullLattice E M :=
+    { hM with span_eq_top := by rw [Submodule.span_span_of_tower, hsp] }
+  have : Module.Finite (locRing P) M := Submodule.IsLattice.finite E M
   have : Module.Free (locRing P) M := Submodule.IsLattice.free E M
   have hr : Module.finrank (locRing P) M = n := by
     simpa using ((Submodule.IsFullLattice.finrank_eq E M).trans (Module.finrank_fintype_fun_eq_card E))
@@ -116,6 +117,8 @@ theorem exists_loc_basis : ∀ {D : D7} (V : HSp D) (P : HeightOneSpectrum (𝓞
   · have := sum_mem (S := LamHat V) (t := Finset.univ) fun i _ =>
       GlobalTheory.LatDual.smul_mem_lamHat V _ (hz i) _ (idem_mul_span_mem V h (hb i))
     convert this using 1
+    funext a
+    simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Finset.mul_sum, Finset.sum_apply]
     exact Finset.sum_congr rfl fun i _ => by ring
   · rw [GlobalTheory.LatDual.lamHat_eq_hat] at hy
     induction hy using AddSubgroup.closure_induction with

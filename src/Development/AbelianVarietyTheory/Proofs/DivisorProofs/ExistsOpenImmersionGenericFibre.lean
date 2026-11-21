@@ -63,7 +63,7 @@ theorem exists_openImmersion_genericFibre (F : Type) [Field F] (o : Type) [CommR
     · rw [← e₂, ← Category.assoc, hy, Category.assoc]
     · rw [← e₁, ← Category.assoc, hy, Category.assoc]
   obtain ⟨hoi, -, hdom⟩ :=
-    GlobalTheory.isOpenImmersion_lift_toNormalization_of_isLocalization (nonZeroDivisors o) hb f' f e₁.symm
+    GlobalTheory.isOpenImmersion_lift_toNormalization_of_isLocalization (M := nonZeroDivisors o) hb f' f e₁.symm
   refine ⟨pullback.lift f.toNormalization f' (by simp [e₁]) ≫
     (pullbackRightPullbackFstIso (PSpace.str o m) (spMap (algebraMap o F)) f.fromNormalization).hom,
     inferInstance, (Scheme.Hom.denseRange _), ?_, ?_⟩

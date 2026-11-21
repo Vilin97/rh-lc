@@ -36,7 +36,7 @@ theorem blkAt_apply (n N : ℕ) (h : n ≤ N) (g : GL (Fin n) k) (i j : Fin N) :
       simp [hi, hj, this]
     · have e : ((⟨i - n, by omega⟩ : Fin (N - n)) = ⟨j - n, by omega⟩) ↔ i = j := by
         rw [Fin.ext_iff, Fin.ext_iff]; simp only; omega
-      simp only [hi, hj, dite_false, fromBlocks_apply₂₂, one_apply, e]
+      simp only [hi, hj, dite_false, fromBlocks_apply₂₂, Matrix.one_apply, e]
 
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
@@ -123,7 +123,7 @@ theorem colFix_apply {N n : ℕ} {g : GL (Fin N) k} (hg : g ∈ colFix k N n) (r
   have := congrFun (hg c hc) r
   rw [mulVec_single_one] at this
   simp only [col_apply, Pi.single_apply] at this
-  rw [one_apply, this]
+  rw [Matrix.one_apply, this]
 
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in

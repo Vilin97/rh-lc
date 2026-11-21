@@ -53,8 +53,10 @@ theorem exists_genTriv {W : Type} (s : W → H.Sec) (t : W → Ω)
   · split_ifs with hi
     · exact div_ne_zero ht0 (h1 i hi)
     · exact one_ne_zero
-  · have hi : (H.U i : Set M.Z).Nonempty := h.mono fun _ hz => hz.1
-    have hj : (H.U j : Set M.Z).Nonempty := h.mono fun _ hz => hz.2
+  · obtain ⟨z, hz⟩ := h
+    have hi : (H.U i : Set M.Z).Nonempty := ⟨z, hz.1⟩
+    have hj : (H.U j : Set M.Z).Nonempty := ⟨z, hz.2⟩
+    have h : ((H.U i ⊓ H.U j : M.Z.Opens) : Set M.Z).Nonempty := ⟨z, hz⟩
     rw [if_pos hi, if_pos hj, valF_compat (s w₀) h]
     have := h1 j hj
     have := valF_unit_ne_zero h (H.g i j)

@@ -27,4 +27,4 @@ theorem _root_.GlobalTheory.T.exists_weilRep_squarePair_characters_alpha_quotien
       (r s r' s' : ℕ), X.IsHerm D.sp.cm.sig B r s → Y.IsSkew D.sp.cm.sig B r' s' →
       ∀ Mo : Model D.sp.cm.sig X Y, Mo.IsGood B.ψ →
       ∃ om, Mo.IsWeil B.ψ (alpha G t i j) (alpha G t i j / beta G i j) om := by
-  first | exact @GlobalTheory.FunObj.squareWeil₁ | exact GlobalTheory.FunObj.squareWeil₁ | (intros; apply GlobalTheory.FunObj.squareWeil₁ <;> assumption)
+  exact @GlobalTheory.FunObj.squareWeil₁

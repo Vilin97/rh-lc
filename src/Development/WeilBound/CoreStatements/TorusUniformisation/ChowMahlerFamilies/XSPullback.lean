@@ -268,7 +268,7 @@ theorem vertEval_contract {ϖ : O} (hϖ : Irreducible ϖ) {y : (Σ k, ι k) → 
   have hm : W ∈ (pointIdeal O (joinCoords y y') ⊔ Ideal.span {joinForm f}).minimalPrimes ∧
       IsRelevant W := by
     by_contra hn
-    exact h0 (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right hn])
+    exact h0 (by unfold GroundTheory.Heights₂.Heights.NumbersDVR.divCycle; rw [dite_eq_right hn])
   have hh := MinimalPrimeMultiHomog.proof O _ _ _ W
     (SupSpanMultiHomog.proof O _ _ _ _ _ hj.multiProj.multiHomog hf') hm.1
   refine GlobalTheory.T.multi_projective_prime_intersection O Ω K ι y ϖ hϖ d r hr hy K' ι' y' W ⟨hm.1.1.1, hh, hm.2⟩ ?_ hW l hl hdim.le

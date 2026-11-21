@@ -25,7 +25,7 @@ namespace GlobalTheory.TorsionThetaLocal
 
 theorem exists_theta_of_pow_eq_one : ∀ (S₀ : Scheme.{0}) (G : Over S₀) [GrpObj G] [IsCommMonObj G] (L : RigLB G) (_ : CubicalStr G L) (S : Type) [CommRing S] [IsLocalRing S] (t : Spec (CommRingCat.of S) ⟶ S₀) (k : ℕ) (x : Over.mk t ⟶ G), x ^ k = 1 → ∃ θ : ThetaGrp G L.L (k : ℤ) (Over.mk t), θ.pt = x := by
   intro S₀ G _ _ L c S _ _ t k x hx
-  obtain ⟨u, hu, -⟩ := Geo.Tor.exists_cubN c (T := Over.mk t ⊗ G) 1 (fst (Over.mk t) G ≫ x) (snd (Over.mk t) G) k
+  obtain ⟨u, hu, -⟩ := Geo.Tor.exists_cubN c (1 : Over.mk t ⊗ G ⟶ G) (fst (Over.mk t) G ≫ x) (snd (Over.mk t) G) k
   obtain ⟨e, he⟩ := DVR.exists_gen_of_local (V := S) L.L L.isLB (K := Fin 2)
     ![x.left, (1 : Over.mk t ⟶ G).left] ![-(k : ℤ), k]
   have hm : (fst (Over.mk t) G ≫ x) ^ k = 1 := by

@@ -19,7 +19,7 @@ theorem satake_bound_of_isometric_spherical : ∀ (O K : Type) [CommRing O] [IsD
   have hone : ∀ x : V, ρ 1 x = x := fun x => by
     rw [map_one]; rfl
   choose γ hγ using (GlobalTheory.T.generalLinear_transitive_on_lattices_over_DVR O K r).1
-  have hγ' : ∀ L : Lat O K r, γ L • std O K r = L := fun L => Lat.ext (hγ L)
+  have hγ' : ∀ L : Lat O K r, γ L • std O K r = L := fun L => Subtype.ext (hγ L)
   let φ : Lat O K r → V := fun L => ρ (γ L) v
 
   have hφ : ∀ g : GL (Fin r) K, φ (g • std O K r) = ρ g v := by
@@ -59,7 +59,7 @@ theorem satake_bound_of_isometric_spherical : ∀ (O K : Type) [CommRing O] [IsD
         · intro g hg g' hg' h
           obtain ⟨M, hM, rfl⟩ := Finset.mem_image.1 (Finset.mem_coe.1 hg)
           obtain ⟨M', hM', rfl⟩ := Finset.mem_image.1 (Finset.mem_coe.1 hg')
-          have h' : M = M' := Lat.ext (by simpa only [hγ] using h)
+          have h' : M = M' := Subtype.ext (by simpa only [hγ] using h)
           rw [h']
         · rintro _ ⟨M, hM, rfl⟩
           exact ⟨γ M, Finset.mem_coe.2 (Finset.mem_image.2

@@ -136,11 +136,11 @@ theorem coeff_satake_ne_zero_of_maximal {h : SphericalHecke μ (F := F) (n := n)
     by_cases hxz : (h : HeckeAlgebra μ) x.out = 0
     · simp [hxz]
     by_cases hi : iwasawaExponent F n x.out = ν
-    · rw [if_pos hi, if_pos ⟨hi, hxz⟩]
+    · rw [ite_eq_left hi, ite_eq_left ⟨hi, hxz⟩]
       have hd := domLE_cartanType x.out
       rw [hi] at hd
       rw [apply_eq_apply_cartanType, hmax x.out hxz hd]
-    · rw [if_neg hi, if_neg fun h' => hi h'.1]
+    · rw [ite_eq_right hi, ite_eq_right fun h' => hi h'.1]
   rw [Finset.sum_congr rfl hclaim, ← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
   have hν : iwasawaExponent F n (Cartan.diagPow F n ν) = ν := by
     rw [diagPow_eq_torusPow, iwasawaExponent_torusPow]
@@ -224,11 +224,11 @@ theorem apply_sum {ι : Type*} (s : Finset ι) (f : ι → SphericalHecke μ (F 
   | insert a s ha ih => simp [Finset.sum_insert ha, ih]
 
 theorem satakeTransform_mem_symmetric (h : SphericalHecke μ (F := F) (n := n)) :
-    satakeTransform μ h ∈ symmetricLaurent n := by
+    satakeTransform μ h ∈ symmetricLaurent (n := n) := by
   classical
   suffices H : ∀ k : ℕ, ∀ h : SphericalHecke μ (F := F) (n := n),
       (∀ g, (h : HeckeAlgebra μ) g ≠ 0 → defect (cartanType F n g) < k) →
-        satakeTransform μ h ∈ symmetricLaurent n by
+        satakeTransform μ h ∈ symmetricLaurent (n := n) by
     refine H (((cosetSupport h).sup fun x => (defect (cartanType F n x.out)).toNat) + 1) h
       fun g hg => ?_
     have h1 := Finset.le_sup (f := fun x : GL (Fin n) F ⧸ integralGL F n =>
@@ -262,7 +262,7 @@ theorem satakeTransform_mem_symmetric (h : SphericalHecke μ (F := F) (n := n)) 
     set c : (Fin n → ℤ) → ℂ := fun ν =>
       (h : HeckeAlgebra μ) (Cartan.diagPow F n ν) / (H ν : HeckeAlgebra μ) (Cartan.diagPow F n ν)
     set h' := h - ∑ ν ∈ Top, c ν • H ν
-    have hsum : satakeTransform μ (∑ ν ∈ Top, c ν • H ν) ∈ symmetricLaurent n := by
+    have hsum : satakeTransform μ (∑ ν ∈ Top, c ν • H ν) ∈ symmetricLaurent (n := n) := by
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum]
       refine Subalgebra.sum_mem _ fun ν hν => ?_
@@ -275,7 +275,10 @@ theorem satakeTransform_mem_symmetric (h : SphericalHecke μ (F := F) (n := n)) 
       apply hg
       have happ : (h' : HeckeAlgebra μ) g =
           (h : HeckeAlgebra μ) g - ∑ ν ∈ Top, c ν * (H ν : HeckeAlgebra μ) g := by
-        simp only [h', HeckeAlgebraLevel.val_sub, HeckeAlgebra.coe_sub, Pi.sub_apply, apply_sum,
+        have hsub : (h' : HeckeAlgebra μ) =
+            (h : HeckeAlgebra μ) - ((∑ ν ∈ Top, c ν • H ν : SphericalHecke μ) : HeckeAlgebra μ) :=
+          rfl
+        simp only [hsub, HeckeAlgebra.coe_sub, Pi.sub_apply, apply_sum,
           HeckeAlgebraLevel.val_smul, HeckeAlgebra.coe_smul, Pi.smul_apply, smul_eq_mul]
       rw [happ]
       have hzero : ∀ ν ∈ Top, ν ≠ cartanType F n g → (H ν : HeckeAlgebra μ) g = 0 := by

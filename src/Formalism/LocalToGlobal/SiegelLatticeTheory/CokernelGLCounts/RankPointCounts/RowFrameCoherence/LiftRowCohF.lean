@@ -279,7 +279,8 @@ theorem frameCorrection_holds : FrameFixNeed X Y u u' := by
   have hA : Xsp (lf D (X.Fu u')) = Submodule.span D.host.E (Set.range e) := rfl
   have hX2 : Xsp y.1 = (Xsp (lf D (X.Fu u'))).map ((β * s.lin : (VS D).V ≃ₗ[D.host.E] (VS D).V) :
       (VS D).V →ₗ[D.host.E] (VS D).V) := by
-    rw [liftT_xsp_eq, ← hP.2.1 D.R.rS, ← liftT_xsp_eq]
+    set_option backward.isDefEq.respectTransparency false in
+      rw [liftT_xsp_eq, ← hP.2.1 D.R.rS, ← liftT_xsp_eq]
     show (Xsp (mapLF s.lin (lf D (X.Fu u')))).map _ = _
     rw [liftT_xsp_mapLF _ hγi, ← liftT_map_mul]
 

@@ -40,12 +40,22 @@ theorem card_degrees_le {e : ℕ} (Sig : Finset (ZMod e)) (c : ZMod e) (m m' : �
   Finset.card_image_le.trans (by simp [Finset.card_product])
 
 theorem degreeBounds {e : ℕ} [NeZero e] (Sig : Finset (ZMod e)) (c : ZMod e) (A' : ℕ) :
-    DegreeBounds Sig c A' where
-  lt_of_mem₁ i hi := by have := bounds_of_mem hi; nlinarith
-  mem_Ico₂ j hj := by have := bounds_of_mem hj; constructor <;> nlinarith
-  monic₁ := rootPoly_monic _
-  monic₂ := rootPoly_monic _
-  disjoint_roots := by
+    DegreeBounds Sig c A' := by
+  refine
+    { lt_of_mem₁ := ?_
+      mem_Ico₂ := ?_
+      monic₁ := rootPoly_monic _
+      monic₂ := rootPoly_monic _
+      disjoint_roots := ?_
+      card₁ := ?_
+      card₂ := ?_ }
+  · intro i hi
+    have := bounds_of_mem hi
+    nlinarith
+  · intro j hj
+    have := bounds_of_mem hj
+    constructor <;> nlinarith
+  ·
     rw [Multiset.disjoint_left]
     intro x h1 h2
     obtain ⟨i, hi, rfl⟩ := mem_roots_rootPoly h1
@@ -54,8 +64,8 @@ theorem degreeBounds {e : ℕ} [NeZero e] (Sig : Finset (ZMod e)) (c : ZMod e) (
     have := bounds_of_mem hj
     have : i = j := by exact_mod_cast hij
     omega
-  card₁ := (card_degrees_le _ _ _ _).trans (by simp)
-  card₂ := (card_degrees_le _ _ _ _).trans (by rw [show 2 * A' - A' = A' by omega])
+  · exact (card_degrees_le _ _ _ _).trans (by simp)
+  · exact (card_degrees_le _ _ _ _).trans (by rw [show 2 * A' - A' = A' by omega])
 
 theorem climb {R S V : Type} [Ring R] [Ring S] [AddCommGroup V] [Module R V] [Module S V]
     (f : Module.End S V) (W : ℕ → Submodule R V) (m : ℕ) :

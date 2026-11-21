@@ -73,7 +73,10 @@ private theorem dim_gen (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuatio
   haveI hyP : y.IsPrime := by
     rw [← hyc]
     infer_instance
-  haveI hyM : y.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := A) y (by rw [hy]; exact hx)
+  haveI hyM : y.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := A) y (by
+    change (y.comap (algebraMap A D)).IsMaximal
+    rw [hy]
+    exact hx)
   have hyB : Ideal.comap (algebraMap B D) y = maximalIdeal B := by
     rw [IsScalarTower.algebraMap_eq B A D, ← Ideal.comap_comap, hy, hxB]
   constructor

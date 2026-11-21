@@ -15,6 +15,8 @@ open Polynomial IsDedekindDomain NumberField IntermediateField GroundTheory.Glob
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K : FiniteSubfield} {v : HeightOneSpectrum (𝓞 K.1)}
   (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1))
 

@@ -23,7 +23,7 @@ theorem latHaar : LatHaar := by
   have : (μ.map φ).IsAddHaarMeasure := inferInstance
   have hc := Measure.isAddLeftInvariant_eq_smul (μ.map φ) μ
   have hqmp : Measure.QuasiMeasurePreserving φ μ μ := by
-    refine ⟨hmeas, fun t ht => ?_⟩
+    refine ⟨hmeas.aemeasurable, fun t ht => ?_⟩
     rw [hc, Measure.smul_apply, ht, smul_zero]
   let e : Γ → Γ := fun g => ⟨φ.symm g, (hΓ _).1 (by simp)⟩
   have he : Function.Bijective e := by

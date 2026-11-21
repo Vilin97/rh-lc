@@ -50,7 +50,8 @@ theorem exists_completion_map {F E : Type} [Field F] [NumberField F] [Field E] [
       ((Valued.continuous_valuation_of_surjective (P.valuedAdicCompletion_surjective E)).comp hcont)
       (Valued.continuous_valuation_of_surjective (v.valuedAdicCompletion_surjective F))) fun k => ?_
   rw [hφ, Idele.valued_algebraMap, Idele.valued_algebraMap,
-    ← HeightOneSpectrum.valuation_liesOver E v P, he, pow_one]
+    ← HeightOneSpectrum.valuation_liesOver E v P,
+    ← Ideal.ramificationIdx'_eq_ramificationIdx v.asIdeal P.asIdeal v.ne_bot, he, pow_one]
 
 theorem continuous_of_valued_eq {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E))
     (σ : P.adicCompletion E →+* P.adicCompletion E) (h : ∀ x, Valued.v (σ x) = Valued.v x) :

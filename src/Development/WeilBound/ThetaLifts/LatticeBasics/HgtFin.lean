@@ -41,12 +41,7 @@ theorem exists_locGen (v : Pl F) : ∃ δ : E, δ ≠ 0 ∧ InD δ ∧ ∀ z, In
   have hL : ∀ x, x ∈ L ↔ InD (x 0) := fun x => by
     rw [inD_iff]
     exact ⟨by rintro ⟨y, hy, rfl⟩; exact hy, fun h => ⟨x 0, h, funext fun i => by rw [Subsingleton.elim i 0]; rfl⟩⟩
-  have : L.IsLattice E := ⟨(FractionalIdeal.fg_of_isNoetherianRing le_rfl I).map _, by
-    refine eq_top_iff.2 fun x _ => ?_
-    have : x = x 0 • fun _ => (1 : E) := funext fun i => by rw [Subsingleton.elim i 0]; simp
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span ((hL _).2 ((inD_iff _).2
-      (FractionalIdeal.one_le_dual_one ℤ ℚ (FractionalIdeal.one_mem_one _)))))⟩
+  have : L.IsLattice E := Submodule.IsLattice.of_fg E ((FractionalIdeal.fg_of_isNoetherianRing le_rfl I).map _)
   obtain ⟨P, h1, h2⟩ := Frames.exists_rational_frame L v
   obtain ⟨s, hs, hs'⟩ := h1 0
   have hP : P.1 0 0 * (P⁻¹).1 0 0 = 1 := by
@@ -139,7 +134,8 @@ theorem hasSat_good {B : Base F E} (hB : B.IsGood σ) (v : Pl F) : HasSat (intLo
       a ∈ (algebraMap (u.adicCompletionIntegers K) (Fv K u)).range ↔ a ∈ u.adicCompletionIntegers K :=
     fun _ _ _ _ a => ⟨by rintro ⟨x, rfl⟩; exact x.2, fun h => ⟨⟨a, h⟩, rfl⟩⟩
   have hc := hB.cm
-  rcases GlobalTheory.KFinLoc.split_or_inert F E σ B hB v with ⟨⟨τ⟩⟩ | ⟨w, hw⟩
+  rcases (GlobalTheory.KFinLoc.split_or_inert F E σ B hB v :
+    Nonempty (E →ₐ[F] Fv F v) ∨ ∃ w : HeightOneSpectrum (𝓞 E), Formalism.UG.IsInertAt F E v w) with ⟨⟨τ⟩⟩ | ⟨w, hw⟩
   · refine hasSat_of_family (O := v.adicCompletionIntegers F) (I := Bool)
       (fun i => cond i (splitProj τ : Fv F v ⊗[F] E →+* Fv F v) (splitProj (τ.comp σ) : Fv F v ⊗[F] E →+* Fv F v))
       (fun y z h => split_ext hc τ (h true) (h false))
@@ -171,7 +167,7 @@ theorem hasIwasawa_fin' {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {r s :
         isIntegral_one (fun z hz => ⟨1, (Ideal.ne_top_iff_one _).1 v.isPrime.ne_top, ⟨z, hz⟩, by simp; rfl⟩) P h1 h2⟩
     · obtain ⟨δ, d0, d1, d2⟩ := exists_locGen (E := E) v
       exact ⟨δ, d0, gram_loc hJ hL.fg (I := InD) (fun z hz b => hz.mul b) h.dual d1 d2 P h1 h2⟩
-  obtain ⟨t, ht⟩ := GlobalTheory.exists_int_add_conj_eq_one_of_base_good B hB
+  obtain ⟨t, ht⟩ : ∃ t : 𝓞 E, (t : E) + σ t = 1 := GlobalTheory.exists_int_add_conj_eq_one_of_base_good B hB
   set G := P.1ᵀ * Y.J * P.1.map σ with hG
   let ι := inclR (F := F) (E := E) (Fv F v)
   let l : (Fv F v ⊗[F] E)ˣ := Units.map ι.toMonoidHom (Units.mk0 (δ * ξ) (mul_ne_zero h0 hξ))⁻¹

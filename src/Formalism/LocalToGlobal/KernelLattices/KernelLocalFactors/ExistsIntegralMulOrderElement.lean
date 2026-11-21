@@ -214,7 +214,8 @@ theorem nonempty_tau : Nonempty X.Tau := by
   have h : Nonempty D.what₂.Tau := Fintype.card_pos_iff.1 (by
     rw [D.what₂.card_Tau]
     unfold Ranks.f Ranks.n
-    positivity)
+    have := D.R.ord_pos
+    omega)
   exact h.map s.iT.symm
 
 theorem laHyp_ambOf (hok : s.Ok) (hcc : TaylorLogMetric.IsCurveIdeal D cc) (hδ : TaylorLogMetric.IsDiscriminantTwelfthRootOfIdealLattice D cc δ) {a b : ℕ} (ha : Even a) (hb : Even b)

@@ -33,11 +33,11 @@ private theorem scale_coeff {A G : Type} [CommRing A] (P : MvPolynomial G A) (k 
     · subst hmd
       by_cases hk : k = m.degree
       · rw [if_pos hk, if_pos hk.symm]
-      · rw [if_neg hk, if_neg fun h => hk h.symm, MvPolynomial.coeff_zero]
+      · rw [if_neg hk, if_neg fun h => hk h.symm, MvPolynomial.coeff_zero, Finsupp.zero_apply]
     · classical
       have hz : AddMonoidAlgebra.coeff (MvPolynomial.monomial m c) d = 0 := by
         rw [MvPolynomial.coeff_monomial, if_neg hmd]
-      split_ifs <;> simp only [hz, MvPolynomial.coeff_zero]
+      split_ifs <;> simp only [hz, MvPolynomial.coeff_zero, Finsupp.zero_apply]
   | add p q hp hq =>
     rw [map_add (f := _), Polynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> simp

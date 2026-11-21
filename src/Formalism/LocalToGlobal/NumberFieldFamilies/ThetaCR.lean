@@ -120,7 +120,7 @@ theorem emb_gen {E R : Type} [CommRing E] [CommRing R] {a b : ℕ} (f : E →+* 
     ext i j
     exact congrFun (e2 j) i
   have e3 : M.map f * P.map f + Q.map f = 1 := by
-    rw [← Matrix.map_mul, ← Matrix.map_add _ f.map_add (f := _), hQ, Matrix.map_one _ f.map_zero f.map_one]
+    rw [← Matrix.map_mul, ← Matrix.map_add f f.map_add, hQ, Matrix.map_one _ f.map_zero f.map_one]
   rw [← e1, ← e2', Matrix.mul_assoc, ← Matrix.mul_add, e3, Matrix.mul_one]
 
 def coM (A B : HSp D) (ι : B.V →ₗ[D.host.E] A.V) : Matrix (Fin A.rank) (Fin A.rank) D.host.E :=

@@ -59,7 +59,7 @@ private theorem amJ_step (x : Fin k → F) {N : ℕ} {d : F} (hd : d ∈ amJ x (
     subst hp
     simp only at h
     rw [h] at hw
-    simp at hw
+    simp [FreeMonoid.length_one] at hw
   | add u v hu hv ihu ihv =>
     obtain ⟨L, hL, e, he, h⟩ := ihu
     obtain ⟨L', hL', e', he', h'⟩ := ihv
@@ -75,7 +75,7 @@ private theorem amJ_fac (x : Fin k → F) (N : ℕ) :
   induction N with
   | zero =>
     refine ⟨[], by simp, ⟨0, zero_mem _, by simp [amP]⟩, ∑ a, x a, ?_, by simp [amP]⟩
-    exact sum_mem fun a _ => AddSubmonoid.subset_closure ⟨1, FreeMonoid.of a, by simp, by simp⟩
+    exact sum_mem fun a _ => AddSubmonoid.subset_closure ⟨1, FreeMonoid.of a, by simp [FreeMonoid.length_of], by simp⟩
   | succ N ih =>
     obtain ⟨L, hL, ⟨q, hq, h1⟩, d, hd, h2⟩ := ih
     obtain ⟨L', hL', e, he, h3⟩ := amJ_step x hd
@@ -181,12 +181,12 @@ private theorem amGood_prod (n : ℕ) (L : List (ℤ × FreeMonoid (Fin k))) (hL
 
 private theorem amWt_degree (w : FreeMonoid (Fin k)) : (amWt w).degree = w.length := by
   induction w using FreeMonoid.inductionOn' with
-  | one => simp [amWt]
+  | one => simp [amWt, FreeMonoid.length_one]
   | of_mul a w ih =>
     have : amWt (FreeMonoid.of a * w) = Finsupp.single a 1 + amWt w := by
       simp only [amWt, FreeMonoid.toList_of_mul, ← Multiset.cons_coe, ← Multiset.singleton_add, map_add (f := _),
         Multiset.toFinsupp_singleton]
-    rw [this, map_add (f := _), ih]; simp
+    rw [this, map_add (f := _), ih]; simp [FreeMonoid.length_mul, FreeMonoid.length_of]
 
 private theorem am_lift {A E B : Type} [CommRing A] [Ring E] [Algebra A E] [CommRing B] [Algebra A B]
     (π : MvPolynomial (Fin k) A →ₐ[A] B) (x : Fin k → E) (w : FreeMonoid (Fin k)) :

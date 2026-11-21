@@ -40,8 +40,8 @@ theorem exists_sabMap_of_iso (hG : GlobalFnsSt) {S S' : Scheme.{0}} {t t' : SAB 
     · simp only [Category.assoc, Over.w]
   have hb : LBIso u.PP.L (u'.PP.L.pull α.hom.left) := by
     obtain ⟨w, hw⟩ := hL
-    obtain ⟨w₁, g₁, -⟩ := (isPullCubical_iff _ _ _).1 n.lin
-    obtain ⟨w₂, g₂, -⟩ := (isPullCubical_iff _ _ _).1 n'.lin
+    obtain ⟨w₁, g₁, -⟩ := (isPullCubical_iff n.cm t.cub u.cub).1 n.lin
+    obtain ⟨w₂, g₂, -⟩ := (isPullCubical_iff n'.cm t'.cub u'.cub).1 n'.lin
     have hw' := (isGen_iff w).1 hw
     obtain ⟨w₃, T⟩ := exists_comp t.PP.isLB w w₁ hw' g₁ t'.PP.isLB u.PP.isLB
     obtain ⟨w₄, g₄⟩ : ∃ w₄ : LB.Iso u.PP.L (t'.PP.L.pull (α.hom.left ≫ n'.cm.F)), PGen w₄ := by

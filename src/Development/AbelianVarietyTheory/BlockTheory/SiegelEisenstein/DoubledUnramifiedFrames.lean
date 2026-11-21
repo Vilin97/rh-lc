@@ -153,6 +153,12 @@ namespace Dbl
 variable {ψ : AddChar (AF D.host.F) ℂ} {σ : ℕ} (X : Dbl ψ σ)
 
 structure GoodAt (v : Pl D) : Prop where
+  bf : GoodBF ψ X.B X.J X.b₀.M X.M₀ X.b₁.M X.L₁ v
+  fb : AdaptFB ψ X.J X.B' X.b₁.M X.L₁ X.b₂.M X.M₂ v
+  split : OrthAt X.B.o X.M₀ X.L₀ X.Lz v
+  split' : OrthAt X.B'.o X.M₂ X.L₂ X.Lz' v
+  unr₁ : UnrAt X.s₁ v
+  unr₂ : UnrAt X.s₂ v
 
 structure Frames (K : LocF) (n₀ n₁ n₂ : Type) [Fintype n₀] [DecidableEq n₀] [Fintype n₁] [DecidableEq n₁] [Fintype n₂]
     [DecidableEq n₂] where
@@ -178,7 +184,17 @@ structure TypePl (s κ t j : ℕ) (H : j + 1 + 1 + 2 * σ = s) where
   γ₂ : Frame F.p X.B'.V (XIx (Fin κ) (Fin t) (j + 1 + 1) ⊕ Fin (2 * σ + 1))
 
 structure Tower (s κ t j : ℕ) (H : j + 1 + 1 + 2 * σ = s) where
+  nT : ℕ
+  ng : ℕ
+  T : Fin nT → X.LevPl
+  G : Fin ng → X.TypePl s κ t j H
+  inj : Function.Injective (Sum.elim (fun i => (T i).F.p.v) fun i => (G i).F.p.v)
+  good : ∀ v, (∀ i, (T i).F.p.v ≠ v) → (∀ i, (G i).F.p.v ≠ v) → X.GoodAt v
+  Φ₁ : WO X.B.V X.J.W → ℂ
+  Φ₂ : WO X.J.W X.B'.V → ℂ
+  dat₁ : IsFockOver ψ X.B.V X.J.W X.b₀.L X.b₁.L (StepsAll fun i f₀ f => Over ψ (G i).γ₀ (G i).γ₁ X.b₀.L X.b₁.L f₀
     (((G i).S.T (Fin t)).Phi j (2 * σ + 1 + 1) (by omega)) f) Φ₁
+  dat₂ : IsFockOver ψ X.J.W X.B'.V X.b₁.L X.b₂.L (StepsAll fun i f₀ f => Over ψ (G i).γ₁ (G i).γ₂ X.b₁.L X.b₂.L f₀
     (((G i).S.T (Fin t)).Phi (j + 1) (2 * σ + 1) (by omega)) f) Φ₂
 
 namespace Tower
@@ -232,9 +248,15 @@ variable {ψ : AddChar (AF D.host.F) ℂ} {X' : HSp D} (X : End ψ X')
 def Unr (v : Pl D) : Prop := UnrAt X.t.s v ∧ CharUnramAt D X.t.χS v ∧ CharUnramAt D X.t.χT v
 
 structure GoodAt (v : Pl D) : Prop where
+  tame : Tame D v
+  mono : MonoAt X.B.d X.b₀.M X.M₀ v
+  split : OrthAt X.B.o X.M₀ X.L₀ X.Lz v
+  split' : OrthAt X.o X.L₂ X.L' X.Lz' v
+  line : ∀ w : WO X.t.J.W X.Z, MxAt (· = v) w →
     (w ∈ latO X.t.J.W X.Z (X.L₁ : Set _) (X.Lz' : Set _) (· = v) ↔
       GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.ofAdj X.B.L X.t.J.W ((rat X.τ : Mx D X.B.L.rank X.Z.rank) * w) ∈
         latO X.B.L X.t.J.W (X.Lz : Set _) (X.L₁ : Set _) (· = v))
+  unr : X.Unr v
 
 structure Frames (K : LocF) (n₀ n₁ n₂ u : Type) [Fintype n₀] [DecidableEq n₀] [Fintype n₁] [DecidableEq n₁] [Fintype n₂]
     [DecidableEq n₂] [Fintype u] [DecidableEq u] where
@@ -262,7 +284,17 @@ structure TypePl (s κ t : ℕ) where
   γ₁ : Frame F.p X.t.J.W (XIx (Fin κ) (Fin t) (s + 1) ⊕ Fin 0)
 
 structure Tower (s κ t : ℕ) where
+  nT : ℕ
+  ng : ℕ
+  T : Fin nT → X.LevPl
+  G : Fin ng → X.TypePl s κ t
+  inj : Function.Injective (Sum.elim (fun i => (T i).F.p.v) fun i => (G i).F.p.v)
+  good : ∀ v, (∀ i, (T i).F.p.v ≠ v) → (∀ i, (G i).F.p.v ≠ v) → X.GoodAt v
+  Φ₁ : WO X.B.V X.t.J.W → ℂ
+  Φ₂ : WO X.t.J.W X' → ℂ
+  dat₁ : IsFockOver ψ X.B.V X.t.J.W X.b₀.L X.L₁ (StepsAll fun i f₀ f => Over ψ (G i).γ₀ (G i).γ₁ X.b₀.L X.L₁ f₀
     (((G i).S.T (Fin t)).Phi s 0 rfl) f) Φ₁
+  dat₂ : IsFockOver ψ X.t.J.W X' X.L₁ X.L' (StepsAll fun i f₀ f => Over ψ (G i).γ₁ (G i).F.δ X.L₁ X.L' f₀
     ((G i).S.T (Fin t)).PhiTop f) Φ₂
 
 namespace Tower

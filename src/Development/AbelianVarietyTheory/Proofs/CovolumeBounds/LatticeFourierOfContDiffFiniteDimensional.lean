@@ -270,7 +270,7 @@ theorem exists_equiv_innerDual {ι : Type*} [Fintype ι] (b : Basis ι ℤ L) :
 omit [MeasurableSpace E] [BorelSpace E] in
 theorem summable_norm_inv_pow_innerDual {k : ℕ} (hk : finrank ℝ E < k) :
     Summable fun ν : L⁎ ↦ ‖(ν : E)‖⁻¹ ^ k := by
-  obtain ⟨b', h, -⟩ := exists_equiv_innerDual (Free.chooseBasis ℤ L)
+  obtain ⟨b', h, -⟩ := exists_equiv_innerDual L (Free.chooseBasis ℤ L)
   rw [h]
   exact ZLattice.summable_norm_pow_inv (Submodule.span ℤ (range b')) k
     (by rwa [ZLattice.rank ℝ])
@@ -296,7 +296,7 @@ private theorem hasSum_latticeFourier_complex {A : E → ℂ} (hA : ∀ x ∈ L,
     HasSum (fun ν : L⁎ ↦ e[⟪(ν : E), y⟫] • latticeFourierCoeff L A ν) (A y) := by
   set b := Free.chooseBasis ℤ L
   set b₀ := b.ofZLatticeBasis ℝ L
-  obtain ⟨-, -, φ, hφ⟩ := exists_equiv_innerDual b
+  obtain ⟨-, -, φ, hφ⟩ := exists_equiv_innerDual L b
   set p : (Free.ChooseBasisIndex ℤ L → ℝ) → UnitAddTorus (Free.ChooseBasisIndex ℤ L) :=
     fun x i ↦ (x i : UnitAddCircle) with hp
   have hq : IsOpenQuotientMap p :=

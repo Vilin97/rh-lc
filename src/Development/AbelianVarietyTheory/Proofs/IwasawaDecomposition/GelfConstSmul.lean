@@ -167,27 +167,26 @@ def swapKer {V W : HSp D} {M : Type} [AddCommGroup M] [Module ℂ M] (κ : M →
   map_smul' c f := by rw [map_smul]; rfl
 
 theorem IsKerSys.swap {θ : InfF D} {V W : HSp D} {M : Type} [AddCommGroup M] [Module ℂ M]
-    {κ : M →ₗ[ℂ] (GA D V → GA D W → ℂ)} (h : IsKerSys θ V W κ) : IsKerSys θ W V (swapKer κ) where
-  cont f := (h.cont f).comp continuous_swap
-  left f γ hγ δ hδ g g' := h.left f δ hδ γ hγ g' g
-  level f := by
+    {κ : M →ₗ[ℂ] (GA D V → GA D W → ℂ)} (h : IsKerSys θ V W κ) : IsKerSys θ W V (swapKer κ) := by
+  refine ⟨fun f => (h.cont f).comp continuous_swap, fun f γ hγ δ hδ g g' =>
+    h.left f δ hδ γ hγ g' g, ?_, ?_, ?_, ?_, ?_⟩
+  · intro f
     obtain ⟨U, U', hU, hU', hk⟩ := h.level f
     exact ⟨U', U, hU', hU, fun k hk1 hk2 k' hk1' hk2' g g' => hk k' hk1' hk2' k hk1 hk2 g' g⟩
-  growth := by
-    obtain ⟨N, hN⟩ := h.growth
+  · obtain ⟨N, hN⟩ := h.growth
     refine ⟨N, fun f => ?_⟩
     obtain ⟨C, hC⟩ := hN f
     refine ⟨C, fun g g' => ?_⟩
     have hb := hC g' g
     rw [mul_comm (height θ V g' : ℝ)] at hb
     exact hb
-  derV τ X hX f := by
+  · intro τ X hX f
     obtain ⟨f', hf'⟩ := h.derW τ X hX f
     exact ⟨f', fun g g' => hf' g' g⟩
-  derW τ X hX f := by
+  · intro τ X hX f
     obtain ⟨f', hf'⟩ := h.derV τ X hX f
     exact ⟨f', fun g g' => hf' g' g⟩
-  cap τ := by
+  · intro τ
     obtain ⟨a, b, ha, hb, hab⟩ := h.cap τ
     exact ⟨b, a, fun k f g' => hb k f g', fun k f g => ha k f g, hab.symm⟩
 

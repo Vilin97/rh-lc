@@ -37,8 +37,15 @@ theorem mem_OF_of_loc (D : Formalism.BasicNotions.D7) (s : D.host.F)
 
 theorem locGlobIntE : LocGlobIntE := by
   intro D x hx
+  have hstar : star x = D.conjF x := by
+    rw [D.conjF_eq]
+    have := D.host.isCMField_hostE
+    apply D.host.φ₀.injective
+    change D.host.φ₀ (NumberField.IsCMField.complexConj D.host.E x) = D.host.φ₀ (D.host.conj x)
+    rw [NumberField.IsCMField.complexEmbedding_complexConj]
+    exact (D.host.toHostAx.conjE_apply D.host.φ₀ x).symm
   have hcjO : ∀ p : PlF D, (D.s.atP p).ιE (star x) ∈ (D.s.atP p).O := fun p => by
-    rw [PI.UnitaryGroupMassFormula.CntFormula.star_eq_conjF, ← (D.s.atP p).cj_ιE, (D.s.atP p).O_def]
+    rw [hstar, ← (D.s.atP p).cj_ιE, (D.s.atP p).O_def]
     exact ((D.s.atP p).O_def _).1 (hx p) |>.map ((D.s.atP p).cj.toAlgHom.restrictScalars 𝒪[(D.s.atP p).Fp])
   obtain ⟨t, ht⟩ := (D.sp.cm.fixed (x + star x)).1 (by rw [star_add, star_star, add_comm])
   obtain ⟨n, hn⟩ := (D.sp.cm.fixed (x * star x)).1 (by rw [star_mul, star_star, mul_comm])

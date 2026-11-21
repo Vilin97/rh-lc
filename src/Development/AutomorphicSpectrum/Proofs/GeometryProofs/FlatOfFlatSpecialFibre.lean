@@ -100,9 +100,9 @@ theorem flat_localization_of_fibre (R P Q : Type) [CommRing R] [IsLocalRing R] [
   haveI : IsNoetherianRing P := IsNoetherianRing.of_finite R P
   haveI : IsNoetherianRing Q := IsNoetherianRing.of_finite R Q
   let p : Ideal P := n.comap (algebraMap P Q)
-  haveI hp : p.IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal n
+  haveI hp : p.IsMaximal := Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := P) n
   have hmR : p.comap (algebraMap R P) = IsLocalRing.maximalIdeal R :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal p)
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := R) p)
   letI : Algebra (Localization.AtPrime p) (Localization.AtPrime n) :=
     (Localization.localRingHom p n (algebraMap P Q) rfl).toAlgebra
   haveI tP : IsScalarTower P (Localization.AtPrime p) (Localization.AtPrime n) :=

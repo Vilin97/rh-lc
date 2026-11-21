@@ -26,11 +26,18 @@ theorem translate_apply (a : GL (Fin N) k) (l : Levi k fun a => Fin (d a))
       leviEmb k (stdBlocks d hd) l * (pm k (wOpen d hd) * (a⁻¹ * u * a)) := by
     rw [← hl]
     group
-  have hf := f.1.2 ⟨leviEmb k (stdBlocks d hd) l, leviEmb_mem_parab k _ l⟩ (pm k (wOpen d hd) * (a⁻¹ * u * a))
+  have hm : leviEmb k (stdBlocks d hd) l ∈ parab k (stdBlocks d hd) :=
+    mem_parab_iff.2 fun _ _ i j hab => by
+      simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+  have hp : leviProj k (stdBlocks d hd) ⟨leviEmb k (stdBlocks d hd) l, hm⟩ = l := by
+    funext a
+    ext i j
+    simp [leviProj_apply, leviEmb, Matrix.blockDiagonal'_apply_eq]
+  have hf := f.1.2 ⟨leviEmb k (stdBlocks d hd) l, hm⟩ (pm k (wOpen d hd) * (a⁻¹ * u * a))
   change f.1.1 (pm k (wOpen d hd) * u * a) = _
   rw [hx]
   refine hf.trans ?_
-  rw [MonoidHom.comp_apply, leviProj_leviEmb]
+  rw [MonoidHom.comp_apply, hp]
   rfl
 
 theorem translate_mem_openFns (a : GL (Fin N) k) (l : Levi k fun a => Fin (d a))
@@ -42,8 +49,11 @@ theorem translate_mem_openFns (a : GL (Fin N) k) (l : Levi k fun a => Fin (d a))
   show ∀ g : GL (Fin N) k, (parInd (stdBlocks d hd) ρ a f).1.1 g ≠ 0 → g ∈ cell k d hd (wOpen d hd)
   intro g hg
   obtain ⟨p, hp, n, hn, hpn⟩ := hf' (g * a) hg
+  have hm : leviEmb k (stdBlocks d hd) l ∈ parab k (stdBlocks d hd) :=
+    mem_parab_iff.2 fun _ _ i j hab => by
+      simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
   refine ⟨p * (leviEmb k (stdBlocks d hd) l)⁻¹,
-    (parab k _).mul_mem hp ((parab k _).inv_mem (leviEmb_mem_parab k _ l)), a * n * a⁻¹, haB n hn, ?_⟩
+    (parab k _).mul_mem hp ((parab k _).inv_mem hm), a * n * a⁻¹, haB n hn, ?_⟩
   have hg' : g = p * pm k (wOpen d hd) * n * a⁻¹ := by
     rw [← hpn]
     group
@@ -73,7 +83,7 @@ theorem deltaHalf_levZ (r m : ℕ) (z : kˣ) :
   have key : (deltaHalf k (fun a => Fin (dd r m a)) (levZ k r m z) : ℂ) =
       ((nabs k (GeneralLinearGroup.det (levZ k r m z 0)) : ℂ) ^ ((modExp (fun a => Fin (dd r m a)) 0 : ℂ) / 2)) *
       ((nabs k (GeneralLinearGroup.det (levZ k r m z 1)) : ℂ) ^ ((modExp (fun a => Fin (dd r m a)) 1 : ℂ) / 2)) := by
-    simp only [deltaHalf, Fin.prod_univ_two, MonoidHom.finset_prod_apply, Units.val_mul]
+    simp only [deltaHalf, Fin.prod_univ_two]
     rfl
   rw [key, h0, h1, hdet, map_one, modExp_two_one, nabs_pow]
   have hx : 0 ≤ nabs k z := by simp [nabs]

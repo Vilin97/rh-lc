@@ -123,11 +123,12 @@ variable [TopologicalSpace E] [IsNonarchimedeanLocalField E]
 private theorem sep {V : Type} [AddCommGroup V] [Module E V] [Module 𝒪[E] V] [IsScalarTower 𝒪[E] E V] (S : Set V) (hS : S.Finite)
     (ht : Submodule.span E S = ⊤) (D : V) (hD : D ∉ Submodule.span 𝒪[E] S) :
     ∃ φ : V →ₗ[E] E, (∀ x ∈ S, valuation E (φ x) ≤ 1) ∧ 1 < valuation E (φ D) := by
-  haveI : (Submodule.span 𝒪[E] S).IsLattice E := ⟨Submodule.fg_span hS, by rw [Submodule.span_span_of_tower, ht]⟩
-  haveI : Module.Free 𝒪[E] (Submodule.span 𝒪[E] S) := inferInstance
-  haveI : Module.Finite 𝒪[E] (Submodule.span 𝒪[E] S) := inferInstance
+  haveI : (Submodule.span 𝒪[E] S).IsLattice E := Submodule.IsLattice.of_fg E (Submodule.fg_span hS)
+  haveI : (Submodule.span 𝒪[E] S).IsFullLattice E := ⟨by rw [Submodule.span_span_of_tower, ht]⟩
+  haveI : Module.Free 𝒪[E] (Submodule.span 𝒪[E] S) := Submodule.IsLattice.free E _
+  haveI : Module.Finite 𝒪[E] (Submodule.span 𝒪[E] S) := Submodule.IsLattice.finite E _
   let b := Module.Free.chooseBasis 𝒪[E] (Submodule.span 𝒪[E] S)
-  let c := b.extendOfIsLattice E
+  let c := b.extendOfIsFullLattice E
   have hc : ∀ i, c i = b i := fun i => by simp [c]
   by_contra h
   push Not at h

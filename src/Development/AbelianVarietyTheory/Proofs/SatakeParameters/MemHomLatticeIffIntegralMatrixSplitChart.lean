@@ -118,10 +118,10 @@ theorem rk_mem (S T : HSp D) {a : D.host.E} (ha : a ∈ D.host.AA)
         simp only [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
         rw [← TensorProduct.tmul_sum, Algebra.TensorProduct.tmul_mul_tmul]
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | neg y _ hy => rw [map_neg]; exact neg_mem hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 section Chart
@@ -238,7 +238,7 @@ theorem mem_latO_iff_intM : ∀ {D : D7} (e : AE D) (v : HeightOneSpectrum (𝓞
       rw [Matrix.map_zero _ π.map_zero, Matrix.mul_zero, Matrix.zero_mul, smul_zero]
       exact fun i j => ⟨0, map_zero _⟩
     | add x y _ _ hx hy =>
-      rw [Matrix.map_add _ π.map_add (f := _), Matrix.mul_add, Matrix.add_mul, smul_add]
+      rw [Matrix.map_add π π.map_add, Matrix.mul_add, Matrix.add_mul, smul_add]
       exact hx.add hy
     | neg x _ hx =>
       rw [Matrix.map_neg _ π.map_neg, Matrix.mul_neg, Matrix.neg_mul, smul_neg]

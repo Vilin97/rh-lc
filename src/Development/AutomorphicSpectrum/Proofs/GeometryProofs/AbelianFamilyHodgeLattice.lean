@@ -90,7 +90,6 @@ theorem exists_basis_of_base {S : Scheme.{0}} {G : Over S} [GrpObj G] [Smooth G.
   obtain ⟨j, hj, -⟩ := GlobalTheory.T.lie_model_existsUnique_semilinear S G R C φ x E F M M'
   have hj' : ∀ e, (M'.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (M.pt e).left := fun e => by
     have := hj e
-    unfold LieModel.Lifts at this
     rwa [Category.comp_id] at this
   letI : Algebra R C := φ.toAlgebra
   letI : Module R F := Module.compHom F φ

@@ -46,7 +46,7 @@ theorem abs_tprod_sub_one_le {κ : Type} (f : κ → ℝ)
     refine (abs_finset_prod_sub_one_le f s).trans ?_
     gcongr ?_ - 1
     calc ∏ v ∈ s, (1 + |f v - 1|) ≤ ∏ v ∈ s, Real.exp (|f v - 1|) := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro i _
             positivity
           · intro i _

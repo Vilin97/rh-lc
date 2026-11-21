@@ -64,7 +64,7 @@ private theorem D_pow {I : Ideal R} (N : ℕ) : ∀ x ∈ I ^ (N + 1), D x ∈ I
   | succ N ih =>
     intro x hx
     rw [pow_succ] at hx
-    refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) fun a b ha hb => by rw [map_add]; exact add_mem ha hb
     rw [hD]
     refine add_mem (Ideal.mul_mem_right _ _ ?_) ?_
     · rw [← Ideal.map_pow]; exact Ideal.mem_map_of_mem _ ha
@@ -84,14 +84,14 @@ end Th
 private theorem ord_star {l : ℕ} [Fact l.Prime] {k : Type} [Field k] {F : Frame l k} {R : Type} [CommRing R]
     (ρ : NRep F 3 R) (v : F.V) (g : Fin 3 → F.Gv v) :
     ordProd (fun s => ρ.r (F.star (F.loc0 v s))) (fun i s => (ρ.ψ v i.rev s : R)) g = 0 := by
-  have hJ : Jmat R 3 * Jmat R 3 = 1 := by
+  have hJ : Jmat (R := R) 3 * Jmat (R := R) 3 = 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;> simp [Jmat, Matrix.mul_apply, Fin.sum_univ_three, Fin.rev]
-  have e (a : Matrix (Fin 3) (Fin 3) R) (c : R) : Jmat R 3 * aᵀ * Jmat R 3 - c • (1 : Matrix (Fin 3) (Fin 3) R) =
-      Jmat R 3 * (a - c • (1 : Matrix (Fin 3) (Fin 3) R))ᵀ * Jmat R 3 := by
+  have e (a : Matrix (Fin 3) (Fin 3) R) (c : R) : Jmat (R := R) 3 * aᵀ * Jmat (R := R) 3 - c • (1 : Matrix (Fin 3) (Fin 3) R) =
+      Jmat (R := R) 3 * (a - c • (1 : Matrix (Fin 3) (Fin 3) R))ᵀ * Jmat (R := R) 3 := by
     simp [mul_sub, sub_mul, hJ]
-  have hJ' (a : Matrix (Fin 3) (Fin 3) R) : Jmat R 3 * (Jmat R 3 * a) = a := by rw [← mul_assoc, hJ, one_mul]
-  have h := congrArg (fun a => Jmat R 3 * aᵀ * Jmat R 3) (ρ.ord v fun i => g i.rev)
+  have hJ' (a : Matrix (Fin 3) (Fin 3) R) : Jmat (R := R) 3 * (Jmat (R := R) 3 * a) = a := by rw [← mul_assoc, hJ, one_mul]
+  have h := congrArg (fun a => Jmat (R := R) 3 * aᵀ * Jmat (R := R) 3) (ρ.ord v fun i => g i.rev)
   simp only [ordProd, List.ofFn_succ, List.ofFn_zero, List.prod_cons, List.prod_nil, mul_one, ρ.pol, e] at h ⊢
   simp only [transpose_mul, transpose_zero, mul_zero, zero_mul, mul_assoc, hJ'] at h ⊢
   exact h

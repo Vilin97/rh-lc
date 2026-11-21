@@ -65,7 +65,7 @@ theorem hasTr_map (f : K →+* K') {γ : DX Δ} {γ' : DX (f Δ)} (e : mt γ' = 
   · rw [e, ← RingHom.mapMatrix_apply, ← RingHom.map_det, h.1, map_one]
   · have := congrArg (lmap f Δ) h.2
     rw [e, trace_fin_two, map_apply, map_apply, ← map_add (f := _), ← trace_fin_two, this]
-    ext <;> simp [lmap, QuadraticAlgebra.algebraMap_eq]
+    ext <;> simp [lmap]
 
 theorem emb_map (f : K →+* K') {γ : DX Δ} {γ' : DX (f Δ)} (e : mt γ' = (mt γ).map (lmap f Δ)) {j j'} (h : IsEmb τ γ j)
     (h' : IsEmb (f τ) γ' j') (z : (Etau K τ)ˣ) (z' : (Etau K' (f τ))ˣ) (ez : (z' : Etau K' (f τ)) = emap f τ z) :
@@ -84,21 +84,21 @@ theorem cu_coords (O : Type) [CommRing O] [Algebra O K] (hτ : IsIntegral O τ) 
   obtain ⟨u, hu⟩ := hu
   obtain ⟨w, hw⟩ := h2.exists_right_inv
   let st : Etau K τ →ₐ[O] Etau K τ := { starRingEnd (Etau K τ) with
-    commutes' := fun r => by ext <;> simp [QuadraticAlgebra.algebraMap_eq, IsScalarTower.algebraMap_apply O K (Etau K τ), starRingEnd_apply] }
+    commutes' := fun r => by ext <;> simp [IsScalarTower.algebraMap_apply O K (Etau K τ), starRingEnd_apply] }
   have hs : IsIntegral O (star x) := hx.map st
   have inj : Function.Injective (algebraMap K (Etau K τ)) := (algebraMap K _).injective
   have h1 : IsIntegral O (x.im ^ 2 * (τ ^ 2 - 4)) := by
-    rw [← isIntegral_algebraMap_iff ]
+    rw [← isIntegral_algebraMap_iff (B := Etau K τ)]
     convert (hx.sub hs).pow 2 using 1
-    ext <;> simp [QuadraticAlgebra.algebraMap_eq, sq] <;> ring
+    ext <;> simp [sq] <;> ring
   have h3 : IsIntegral O x.im := by
     refine IsIntegral.of_pow two_pos ?_
     have := h1.mul (isIntegral_algebraMap (R := O) (A := K) (x := (u⁻¹ : Oˣ)))
     rwa [← hu, mul_assoc, ← map_mul, Units.mul_inv, map_one, mul_one] at this
   have h4 : IsIntegral O (2 * x.re + τ * x.im) := by
-    rw [← isIntegral_algebraMap_iff ]
+    rw [← isIntegral_algebraMap_iff (B := Etau K τ)]
     convert hx.add hs using 1
-    ext <;> simp [QuadraticAlgebra.algebraMap_eq] <;> ring
+    ext <;> simp <;> ring
   refine ⟨?_, h3⟩
   have := (h4.sub (hτ.mul h3)).mul (isIntegral_algebraMap (R := O) (A := K) (x := w))
   have e : (2 : K) * algebraMap O K w = 1 := by rw [← map_ofNat (algebraMap O K) 2, ← map_mul, hw, map_one]

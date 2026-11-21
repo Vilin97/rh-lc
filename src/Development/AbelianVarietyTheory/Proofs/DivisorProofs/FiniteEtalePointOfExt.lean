@@ -100,8 +100,8 @@ theorem endo_descent (B : Over (Sp k₀)) [GrpObj B] (hB : IsAbelianScheme B)
     haveI := hf₀
     haveI := hΨ
     apply ActDescent.pullback_map_injective qΩ
-    have hBK := isAbelianScheme_overPullback (spMap (algebraMap k₀ K)) B hB
-    have hA := isAbelianScheme_overPullback qΩ _ hBK
+    have hBK := isAbelianScheme_pullback_obj (spMap (algebraMap k₀ K)) B hB
+    have hA := isAbelianScheme_pullback_obj qΩ _ hBK
     obtain ⟨l, hl, hlk⟩ := exists_prime_ne_zero k₀
     have hlΩ : (l : Ω) ≠ 0 := by
       intro h

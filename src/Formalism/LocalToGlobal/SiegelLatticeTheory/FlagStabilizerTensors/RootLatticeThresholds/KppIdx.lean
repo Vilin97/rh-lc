@@ -40,7 +40,7 @@ theorem jPred_of (hr : r = kk + 2 * s + 1) {N : Matrix (Fin r) (Fin r) (ZMod g)}
   unfold entN
   rw [dite_eq_left ⟨by omega, by omega⟩]
   have := hwz ⟨a - s, by omega⟩
-  convert this using 2 <;> ext <;> simp <;> omega
+  simpa only [wI, zI, Nat.add_sub_of_le ha1] using this
 
 theorem low_of {N : Matrix (Fin r) (Fin r) (ZMod g)} (hJ : JPred kk s N) (a b : Fin r) (h : b < a) : N a b = 0 :=
   (hJ.1 a b).1 h

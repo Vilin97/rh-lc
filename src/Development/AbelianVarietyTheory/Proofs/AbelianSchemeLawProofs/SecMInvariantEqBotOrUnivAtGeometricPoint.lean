@@ -410,7 +410,7 @@ theorem secM_invariant_eq_bot_or_univ_at_geometric_point :
       { carrier := {x | E x ∈ W}
         add_mem' := fun {x y} hx hy => by
           show E (x + y) ∈ W
-          rw [E.map_add (f := _)]; exact W.add_mem hx hy
+          rw [E.map_add]; exact W.add_mem hx hy
         zero_mem' := by
           show E 0 ∈ W
           rw [E.map_zero]; exact W.zero_mem

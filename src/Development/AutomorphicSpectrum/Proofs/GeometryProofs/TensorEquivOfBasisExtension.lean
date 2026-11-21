@@ -55,6 +55,8 @@ theorem exists_tensor_equiv_of_semilinear :
       B.linearIndependent.comp _ (Subtype.val_injective.comp e.symm.injective)
     have h2 := (hind _ _ h1).comp e e.injective
     convert h2 using 1
+    funext i
+    simp
   have hinj : Function.Injective L := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
     intro x hx

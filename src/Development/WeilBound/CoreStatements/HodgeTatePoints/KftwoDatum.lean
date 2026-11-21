@@ -72,7 +72,8 @@ theorem exists_countable_algClosed {Ω : Type} [Field Ω] [IsAlgClosed Ω] (s : 
   · exact (algebraicClosure F Ω).algebraMap_mem (⟨x, Subfield.subset_closure hx⟩ : F)
   · show Countable (algebraicClosure F Ω)
     rw [← Cardinal.mk_le_aleph0_iff]
-    exact (Algebra.IsAlgebraic.cardinalMk_le_max F _).trans (max_le Cardinal.mk_le_aleph0 le_rfl)
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact (Algebra.IsAlgebraic.cardinalMk_le_max F _).trans (max_le Cardinal.mk_le_aleph0 le_rfl)
   · show IsAlgClosed (algebraicClosure F Ω)
     exact IsAlgClosure.isAlgClosed F
 

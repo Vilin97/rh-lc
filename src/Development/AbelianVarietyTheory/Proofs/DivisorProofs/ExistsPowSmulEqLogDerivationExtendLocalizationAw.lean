@@ -62,7 +62,8 @@ theorem exists_pow_smul_eq_res : ∀ {k R S : Type} [Field k] [CommRing R] [Comm
     intro t ht
     have hdvd : (c ⟨t, ht⟩ : R) ∣ (m : R) := by
       show (c ⟨t, ht⟩ : R) ∣ ((∏ t, c t : Submonoid.powers f) : R)
-      rw [Submonoid.coe_finset_prod]
+      change (c ⟨t, ht⟩ : R) ∣ (Submonoid.subtype (Submonoid.powers f)) (∏ t, c t)
+      rw [map_prod]
       exact Finset.dvd_prod_of_mem _ (Finset.mem_univ _)
     obtain ⟨q, hq⟩ := hdvd
     rw [hq, mul_comm _ q, mul_assoc]
@@ -76,7 +77,7 @@ theorem exists_pow_smul_eq_res : ∀ {k R S : Type} [Field k] [CommRing R] [Comm
       induction hy using Submodule.span_induction with
       | mem x hx => rw [hDapp]; exact hmT x hx
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
       | smul a x hx' hx =>
         rw [smul_eq_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
         have hxJ : x ∈ J := by rw [← hT]; exact hx'

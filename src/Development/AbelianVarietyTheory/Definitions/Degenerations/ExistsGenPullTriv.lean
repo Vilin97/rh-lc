@@ -51,8 +51,28 @@ theorem isGrpPullback_unit' {S S' : Scheme.{0}} (f : S' ⟶ S) : IsGrpPullback (
     rw [toUnit_unique (x₀ * y₀) x₀, toUnit_unique (x * y) x, hx]⟩
 
 theorem isCPPullback_unit {S S' : Scheme.{0}} (f : S' ⟶ S) :
-    IsCPPullback (CP.triv (𝟙_ (Over S'))) (CP.triv (𝟙_ (Over S))) f f :=
-  ⟨isGrpPullback_unit' f, _, IsCPMap.triv fun _ _ _ => toUnit_unique _ _⟩
+    IsCPPullback (CP.triv (𝟙_ (Over S'))) (CP.triv (𝟙_ (Over S))) f f := by
+  refine ⟨isGrpPullback_unit' f, ⟨fun _ => 1⟩, ⟨fun _ _ _ => toUnit_unique _ _, ?_, ?_⟩⟩
+  · rw [isGen_iff]
+    intro Y r y j j' k k' _ _ _ _
+    let w : LB.Iso (CP.triv (𝟙_ (Over S'))).L.L ((CP.triv (𝟙_ (Over S))).L.L.pull f) :=
+      ⟨fun _ => 1⟩
+    have h : ∀ a b, gw w r y a b = 1 := fun _ _ => map_one _
+    have hj : gm (r ≫ f) y _ ((CP.triv (𝟙_ (Over S))).L.L.g j j') = 1 := map_one _
+    have hk : gm r y _ ((CP.triv (𝟙_ (Over S'))).L.L.g k k') = 1 := map_one _
+    rw [h j k, h j' k', hj, hk, inv_one, _root_.mul_one, _root_.mul_one]
+  · intro T z J' J _ _ W hW
+    have hW1 : ∀ x, W x = 1 := fun x => (hW x).trans (map_one _)
+    refine ⟨?_, fun x => ?_, fun x y u => ?_⟩
+    · rw [hW1, _root_.one_mul]
+      exact (val_unitGen _ _ _ _ _).trans (val_unitGen _ _ _ _ _).symm
+    · rw [hW1, hW1, _root_.mul_one, _root_.one_mul]
+      exact (val_unitGen _ _ _ _ _).trans (val_unitGen _ _ _ _ _).symm
+    · simp only [id_eq, hW1, _root_.mul_one, _root_.one_mul]
+      trans 1
+      · apply cubV_trivCub
+      · symm
+        apply cubV_trivCub
 
 def torusTQ {S S' : Scheme.{0}} (f : S' ⟶ S) (X : Type) [AddCommGroup X] :
     TQ ((Over.pullback f).obj (splitTorus S X)) X where
@@ -81,7 +101,35 @@ def torusTQ {S S' : Scheme.{0}} (f : S' ⟶ S) (X : Type) [AddCommGroup X] :
 
 def torusTower (I : Ideal R) (X : Type) [AddCommGroup X] :
     TowerR I (CP.triv (splitTorus (Spec (CommRingCat.of R)) X)) X where
-  l e := ⟨torusTQ (thick R I e) X, CP.triv _, isLevelCP_triv I e _, TQ.Desc.triv _⟩
+  l e :=
+    let Q := torusTQ (thick R I e) X
+    ⟨Q, CP.triv _, isLevelCP_triv I e _,
+      { M := CP.triv Q.B
+        w := ⟨fun _ => 1⟩
+        map := by
+          have := Q.q_hom
+          refine ⟨toBase_mul_of_isMonHom Q.q _, ?_, ?_⟩
+          · rw [isGen_iff]
+            intro Y r y j j' k k' _ _ _ _
+            let w : LB.Iso (CP.triv (thickObj R I e (splitTorus (Spec (CommRingCat.of R)) X))).L.L
+                ((CP.triv Q.B).L.L.pull Q.q.left) := ⟨fun _ => 1⟩
+            have h : ∀ a b, gw w r y a b = 1 := fun _ _ => map_one _
+            have hj : gm (r ≫ Q.q.left) y _ ((CP.triv Q.B).L.L.g j j') = 1 := map_one _
+            have hk : gm r y _ ((CP.triv (thickObj R I e (splitTorus (Spec (CommRingCat.of R)) X))).L.L.g k k') = 1 :=
+              map_one _
+            rw [h j k, h j' k', hj, hk, inv_one, _root_.mul_one, _root_.mul_one]
+          · intro T z J' J _ _ W hW
+            have hW1 : ∀ x, W x = 1 := fun x => (hW x).trans (map_one _)
+            refine ⟨?_, fun x => ?_, fun x y u => ?_⟩
+            · rw [hW1, _root_.one_mul]
+              exact (val_unitGen _ _ _ _ _).trans (val_unitGen _ _ _ _ _).symm
+            · rw [hW1, hW1, _root_.mul_one, _root_.one_mul]
+              exact (val_unitGen _ _ _ _ _).trans (val_unitGen _ _ _ _ _).symm
+            · simp only [id_eq, hW1, _root_.mul_one, _root_.one_mul]
+              trans 1
+              · apply cubV_trivCub
+              · symm
+                apply cubV_trivCub }⟩
   tor e := by
     rw [torusCompat_iff]
     refine pullback.hom_ext ?_ ?_
@@ -114,7 +162,7 @@ def torusAlg (I : Ideal R) (X : Type) [AddCommGroup X] : (torusTower I X).Alg wh
   M := CP.triv _
   ample := (Inh.zeroPolAV _).ample
   b e := thick R I e
-  b_pb e := isCPPullback_unit _
+  b_pb e := isCPPullback_unit (thick R I e)
   b_β e := thickTrans_comp R I e
 
 theorem exists_gen_pull_triv {Y Z : Scheme.{0}} (φ : Fin 2 → (Y ⟶ Y)) (ε : Fin 2 → ℤ) (r : Z ⟶ Y) (u : Γ(Z, ⊤)ˣ) :

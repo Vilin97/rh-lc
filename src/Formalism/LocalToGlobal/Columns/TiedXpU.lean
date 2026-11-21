@@ -119,7 +119,7 @@ end Step
 
 section P
 
-variable (s : DecoCl n (∅ : Finset (Pl X.E)) Pr.vGs Λ.grp → DecoSet (E := X.E) (n := n) (ST := ∅ : Finset (Pl X.E)) (SG := Pr.vGs))
+variable (s : DecoCl n (∅ : Finset (Pl X.E)) Pr.vGs Λ.grp → DecoSet (E := X.E) (n := n) (ST := (∅ : Finset (Pl X.E))) (SG := Pr.vGs))
   (hS : DecoPtSurj hc n (∅ : Finset (Pl X.E)) Pr.vGs) (hs : ∀ c, decoCls n ∅ Pr.vGs Λ.grp (s c) = c)
   (Q : StepCrd Pr σ₀ n fun c => (s c).1.N)
 

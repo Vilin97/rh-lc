@@ -65,7 +65,7 @@ theorem UpperTheory.isChart_affine_sections_of_isCurve :
   unfold IsChart
   refine ⟨?_, ded_of_equiv h.symm, fun hf => hnf (MulEquiv.isField hf h.toMulEquiv), ?_, ?_⟩
   · haveI : LocallyOfFiniteType c := @IsProper.toLocallyOfFiniteType _ _ _ hc.2.1
-    have g0 := LocallyOfFiniteType.finiteType_of_affine_subset c (isAffineOpen_top (Sp k)) hW le_top
+    have g0 := c.finiteType_appLE (isAffineOpen_top (Sp k)) hW le_top
     have gi : (Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom.FiniteType :=
       RingHom.FiniteType.of_surjective _ (fun y => ⟨(Scheme.ΓSpecIso (CommRingCat.of k)).hom y, by simp⟩)
     have g2 := (g0.comp gi).comp_surjective (g := (h : Γ(C, W) →+* B)) h.surjective

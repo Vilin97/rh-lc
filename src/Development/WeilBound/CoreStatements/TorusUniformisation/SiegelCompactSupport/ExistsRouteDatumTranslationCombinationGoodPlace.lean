@@ -422,7 +422,7 @@ theorem exists_div (n : ℕ) (f : SchwartzMap (Fin n → ℝ) ℂ)
     have hx' : x ∈ Metric.ball (0 : Fin n → ℝ) 1 := hbs (tsupport_smul_subset_left _ _ hx)
     refine b.contDiff.contDiffAt.smul (ContDiffAt.mul ?_ (hh i).contDiffAt)
     exact ContDiffAt.comp x (g := q) (f := fun x : Fin n → ℝ => x i)
-      (hq.contDiffAt (Metric.isOpen_ball.mem_nhds (hcoord i x hx'))) (contDiffAt_apply ℝ ℝ i x)
+      (hq.contDiffAt (Metric.isOpen_ball.mem_nhds (hcoord i x hx'))) (contDiffAt_apply ℝ (fun _ : Fin n => ℝ) i x)
   have hcs : ∀ i, HasCompactSupport (fun x : Fin n → ℝ => b x • (q (x i) * h i x)) :=
     fun i => b.hasCompactSupport.smul_right
   refine ⟨fun i => (hcs i).toSchwartzMap (hsm i), hcs, fun x => ?_⟩
@@ -1047,7 +1047,7 @@ theorem lift_mem {S : Module.End ℂ ((κ → Fv F v) → ℂ)} (hS : ∀ φ ∈
     {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) : lift v S Φ ∈ schA F κ := by
   refine schA_ind (P := fun Φ => lift v S Φ ∈ schA F κ) (by simp) (fun x y hx hy => ?_) (fun c x hx => ?_)
     (fun f φ hφ => ?_) hΦ
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · rw [map_add]; exact add_mem hx hy
   · rw [map_smul]; exact Submodule.smul_mem _ _ hx
   · rw [lift_pure S f hφ]; exact pure_mem f (hφ.update (hS _ (hφ.1 v)))
 
@@ -1113,6 +1113,8 @@ theorem schr_tens (ψ : AddChar (AF F) ℂ) (w : (κ → AF F) × (κ → AF F))
   have e1 : r (x + w.1) = r (x + (offP v w).1) := by
     rw [← h (x + (offP v w).1) fun i => evFin F v (w.1 i)]
     congr 1
+    ext i
+    simp only [Pi.add_apply, offP, add_assoc, off_add_at]
   have e2 : ψ (x ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2)) =
       psv v ψ ((fun i => evFin F v (x i)) ⬝ᵥ (evP v w).2 + ⅟(2 : Fv F v) * ((evP v w).1 ⬝ᵥ (evP v w).2)) *
       ψ (x ⬝ᵥ (offP v w).2 + ⅟(2 : AF F) * ((offP v w).1 ⬝ᵥ (offP v w).2)) := by

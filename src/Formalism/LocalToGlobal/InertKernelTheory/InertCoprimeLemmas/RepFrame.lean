@@ -432,14 +432,12 @@ theorem frVec_inl_same {j : ℕ} {L0 : X.Lt j} {La' : X.Lt (j + 1)} (φ : Frm X 
   simp only [frVec, stdLin]
   rw [Equiv.symm_apply_apply]
   by_cases hs : IsOddPos s
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [if_pos hs, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
+  · simp only [if_pos hs, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
     simp
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [if_neg hs, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
+  · simp only [if_neg hs, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
     obtain ⟨v, r, a, b⟩ := e
     simp only [Sum.inl.injEq, Sum.inr.injEq, reduceCtorEq, if_neg hs, if_false, Finset.sum_const_zero,
-      Sigma.mk.inj_iff, heq_eq_eq, Prod.mk.injEq, true_and]
+        Sigma.mk.inj_iff, heq_eq_eq, Prod.mk.injEq, true_and]
     rw [Finset.sum_eq_single a (fun x _ hx => by simp [hx]) (by simp),
       Finset.sum_eq_single b (fun x _ hx => by simp [hx]) (by simp),
       Finset.sum_eq_single r (fun x _ hx => by simp [hx]) (by simp)]
@@ -460,17 +458,15 @@ theorem frVec_inr_same {j : ℕ} {L0 : X.Lt j} {La' : X.Lt (j + 1)} (φ : Frm X 
   simp only [frVec, stdLin]
   rw [Equiv.symm_apply_apply]
   by_cases hs : IsOddPos s
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [if_pos hs, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
+  · simp only [if_pos hs, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
     obtain ⟨v, r, a, b⟩ := e
     simp only [Sum.inl.injEq, Sum.inr.injEq, reduceCtorEq, if_pos hs, if_false, Finset.sum_const_zero,
-      Sigma.mk.inj_iff, heq_eq_eq, Prod.mk.injEq, true_and]
+        Sigma.mk.inj_iff, heq_eq_eq, Prod.mk.injEq, true_and]
     rw [Finset.sum_eq_single a (fun x _ hx => by simp [hx]) (by simp),
       Finset.sum_eq_single b (fun x _ hx => by simp [hx]) (by simp),
       Finset.sum_eq_single r (fun x _ hx => by simp [hx]) (by simp)]
     simp
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [if_neg hs, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
+  · simp only [if_neg hs, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
     simp
 
 theorem frVec_ne {j : ℕ} {L0 : X.Lt j} {La' : X.Lt (j + 1)} (φ : Frm X j L0 La') (y : X.EA j ⊕ X.EA j)
@@ -484,8 +480,7 @@ theorem frVec_ne {j : ℕ} {L0 : X.Lt j} {La' : X.Lt (j + 1)} (φ : Frm X j L0 L
   rcases y with ⟨v', r, a, b⟩ | ⟨v', r, a, b⟩ <;>
   · simp only [Sum.elim_inl, Sum.elim_inr, id] at hv
     by_cases hs : IsOddPos s <;>
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [hs, if_true, if_false, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
+    · simp only [hs, if_true, if_false, zOfX, Finset.mul_sum, ← mul_assoc, map_sum, coeff_CC_mul_X]
       simp [hv]
 
 end Formalism.L2.KerInert.RepFrame
@@ -1001,8 +996,7 @@ theorem fK_pos (e : X.EA j) (i : Fin r) (s : Fin (X.G.P.n' e.1)) :
           Gmi X M φ e.1 (Fin.cast (rank_eq X j).symm e.2.2.1) A) * wK ((sigW p)^[s.val] ((X.om e.1).om e.2.1)) := by
   by_cases hs : IsOddPos s
   · simp [YX, hs]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [LBc, YX, if_neg hs, Fintype.sum_prod_type, map_sum, map_mul, Finset.sum_mul]
+  · simp only [LBc, YX, if_neg hs, Fintype.sum_prod_type, map_sum, map_mul, Finset.sum_mul]
     refine Finset.sum_congr rfl fun B _ => Finset.sum_congr rfl fun A _ => ?_
     ring
 
@@ -1014,8 +1008,7 @@ theorem fK'_pos (hconj : ∀ x, D.host.conj (D.host.conj x) = x) (e : X.EA j) (i
           Gpi X M φ e.1 (Fin.cast (rank_eq X (j + 1)).symm e.2.2.2) B) * wK ((sigW p)^[s.val] ((X.om e.1).omS e.2.1))
       else 0 := by
   by_cases hs : IsOddPos s
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [LBc, YX', if_pos hs, hconj, Fintype.sum_prod_type, map_sum, map_mul, Finset.sum_mul]
+  · simp only [LBc, YX', if_pos hs, hconj, Fintype.sum_prod_type, map_sum, map_mul, Finset.sum_mul]
     refine Finset.sum_congr rfl fun B _ => Finset.sum_congr rfl fun A _ => ?_
     ring
   · simp [YX', hs]

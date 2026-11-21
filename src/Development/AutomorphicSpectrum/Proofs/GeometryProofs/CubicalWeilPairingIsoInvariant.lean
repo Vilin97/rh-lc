@@ -141,21 +141,21 @@ theorem cube_ratio_faces {w : LB.Iso L₁.L L₂.L} (c₁ : CubicalStr G L₁) (
     obtain ⟨J₁, h₁⟩ := exists_good_pt L₁.isLB z
     obtain ⟨J₂, h₂⟩ := exists_good_pt L₂.isLB z
   · have e := hv T z J₁ J₂ h₁ h₂ _ (fun _ => rfl) 1 x y
-    rw [(isCub_cubV c₁ h₁).face, (isCub_cubV c₂ h₂).face] at e
+    rw [(isCub_cubV c₁ (T := T) h₁).face x y, (isCub_cubV c₂ (T := T) h₂).face x y] at e
     simp only [_root_.one_mul, _root_.mul_one] at e
     apply Additive.ofMul.injective
     have e' := congrArg Additive.ofMul e
     simp only [ofMul_mul, ofMul_one] at e' ⊢
     linear_combination (norm := abel) -e'
   · have e := hv T z J₁ J₂ h₁ h₂ _ (fun _ => rfl) x 1 y
-    rw [(isCub_cubV c₁ h₁).face₂, (isCub_cubV c₂ h₂).face₂] at e
+    rw [(isCub_cubV c₁ (T := T) h₁).face₂ x y, (isCub_cubV c₂ (T := T) h₂).face₂ x y] at e
     simp only [_root_.one_mul, _root_.mul_one] at e
     apply Additive.ofMul.injective
     have e' := congrArg Additive.ofMul e
     simp only [ofMul_mul, ofMul_one] at e' ⊢
     linear_combination (norm := abel) -e'
   · have e := hv T z J₁ J₂ h₁ h₂ _ (fun _ => rfl) x y 1
-    rw [(isCub_cubV c₁ h₁).face₃, (isCub_cubV c₂ h₂).face₃] at e
+    rw [(isCub_cubV c₁ (T := T) h₁).face₃ x y, (isCub_cubV c₂ (T := T) h₂).face₃ x y] at e
     simp only [_root_.one_mul, _root_.mul_one] at e
     apply Additive.ofMul.injective
     have e' := congrArg Additive.ofMul e

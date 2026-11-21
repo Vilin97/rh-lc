@@ -53,6 +53,8 @@ theorem locSp_eq_image : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [N
       | zero =>
         have h0 := Submodule.zero_mem (locSp (G.P.W v) (A.iw v) Λ)
         convert h0 using 1
+        funext k
+        simp
       | add y₁ y₂ _ _ h₁ h₂ =>
         have := Submodule.add_mem _ h₁ h₂
         simpa [Pi.add_def] using this

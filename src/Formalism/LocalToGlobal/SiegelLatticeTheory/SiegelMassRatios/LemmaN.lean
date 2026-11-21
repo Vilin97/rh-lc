@@ -32,7 +32,10 @@ theorem exists_prime_over (E : Type) [Field E] [NumberField E] {g : ℕ} (hg : g
     simp [hx]
   obtain ⟨Q, -, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (span {(g : ℤ)}) ⊥ hker
   refine ⟨Q, hQ, ?_⟩
-  have : ((g : ℤ)) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by rw [hQc]; exact mem_span_singleton_self _
+  have : ((g : ℤ)) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by
+    change (g : ℤ) ∈ Q.under ℤ
+    rw [hQc]
+    exact mem_span_singleton_self _
   simpa using this
 
 theorem lemmaNcGlob_of_exists (E V : Type) [Field E] [NumberField E] [AddCommGroup V] [Module E V]

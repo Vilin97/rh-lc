@@ -288,7 +288,7 @@ theorem koszulThree_of_det : jumpWindows.S1 → H0 → CuspDecayShortRowColumn �
       zero_mem' := ⟨0, π.V.zero_mem, by rw [map_zero, BoundedContinuousFunction.coe_zero, Submodule.coe_zero]⟩
       smul_mem' := by
         rintro c x ⟨θ, hθ, hx⟩
-        exact ⟨c • θ, π.V.smul_mem c hθ, by rw [map_smul, BoundedContinuousFunction.coe_smul, hx, Submodule.coe_smul]; rfl⟩ }
+        exact ⟨c • θ, π.V.smul_mem c hθ, by rw [map_smul, BoundedContinuousFunction.coe_smul, hx, Submodule.coe_smul]⟩ }
   obtain ⟨r0, hr0, Bw, hBw, hcb⟩ := WeightInverseContinuity.wtcmp (E := E) hH0 hK1 hk M
   have hder : ∀ v ∈ 𝒮, ∃ D : LieI (InfinitePlace E) k →L[ℝ] XB E k,
       HasFDerivAt (orb (ρ.comp (infGL E k)) v) D (oneI (InfinitePlace E) k) ∧ ∀ Z, D Z ∈ 𝒮 := by

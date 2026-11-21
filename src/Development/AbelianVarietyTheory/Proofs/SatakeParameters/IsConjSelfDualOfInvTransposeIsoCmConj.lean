@@ -24,7 +24,7 @@ theorem invTOp_invTOp (o : Op L a) : invTOp (invTOp o) = o := by
   | lie X =>
     refine congrArg Op.lie ?_
     funext i j
-    simp [toL]
+    simp [toL, Function.swap, Pi.neg_apply]
 
 theorem invT_map {R : Type} [CommRing R] (c : R →+* R) (g : GL (Fin a) R) :
     invT a R (GeneralLinearGroup.map c g) = GeneralLinearGroup.map c (invT a R g) :=

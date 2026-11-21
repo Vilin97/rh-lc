@@ -298,7 +298,7 @@ private theorem rel_model {A : Type} [CommRing A] {P : Polynomial (LaurentPolyno
       ← IsScalarTower.algebraMap_apply]
   have hev := congrArg (Polynomial.eval₂ (AdjoinRoot.of P) (AdjoinRoot.root P)) hP.as_sum
   rw [AdjoinRoot.eval₂_root] at hev
-  simp only [Polynomial.eval₂_add, Polynomial.eval₂_finset_sum, Polynomial.eval₂_mul,
+  simp only [Polynomial.eval₂_add, Polynomial.eval₂_finsetSum, Polynomial.eval₂_mul,
     Polynomial.eval₂_C, Polynomial.eval₂_pow, Polynomial.eval₂_X] at hev
   have hr : AdjoinRoot.root P ^ P.natDegree =
       -∑ i ∈ Finset.range P.natDegree, AdjoinRoot.of P (P.coeff i) * AdjoinRoot.root P ^ i :=

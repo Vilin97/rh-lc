@@ -43,7 +43,7 @@ theorem contDiff_det_one_add (M : Matrix ι ι ℂ) {k : WithTop ℕ∞} :
         fun S => (1 : Matrix ι ι ℂ) a b + ∑ c, M a c * S c b := by
       funext S; simp [Matrix.add_apply, Matrix.mul_apply]
     rw [e]
-    exact contDiff_const.add (ContDiff.sum fun c _ => contDiff_const.mul (contDiff_apply_apply ℂ ℂ c b))
+    exact contDiff_const.add (ContDiff.sum fun c _ => contDiff_const.mul (contDiff_apply_apply ℂ c b))
   simp only [Matrix.det_apply]
   exact ContDiff.sum fun σ _ => (contDiff_prod fun i _ => hent _ _).const_smul _
 

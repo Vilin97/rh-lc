@@ -123,7 +123,8 @@ theorem tor_rel (hT : TensFacts W φ e wv) (hdet : IsUnit (W + W.transpose).det)
   let E : N'.X ≃+ (Fin r → N.X) := AddEquiv.ofBijective (AddMonoidHom.mk' e fun a b => funext (hem a b)) heb
   let sH : Fin r → Multiplicative N.X →* Fˣ := fun k =>
     t'.comp (AddMonoidHom.toMultiplicative ((E.symm : (Fin r → N.X) →+ N'.X).comp (AddMonoidHom.single (fun _ : Fin r => N.X) k)))
-  let C := (W + W.transpose)⁻¹
+  let C : Fin r → Fin r → ℤ := ((W + W.transpose)⁻¹ : Matrix (Fin r) (Fin r) ℤ)
+  let M : Fin r → Fin r → ℤ := W
   refine ⟨fun j => ∏ k, sH k ^ C j k, fun j => ?_, fun χ' => ?_⟩
   · have h1 := hφm 1 1 j
     rw [_root_.mul_one] at h1
@@ -139,7 +140,13 @@ theorem tor_rel (hT : TensFacts W φ e wv) (hdet : IsUnit (W + W.transpose).det)
     congr 2
     congr 1
     rw [ht]
-    simp only [MonoidHom.finset_prod_apply, MonoidHom.zpow_apply]
+    change (∏ i, sH i (Multiplicative.ofAdd (e χ' i))) =
+      ∏ i, ∏ j, ((∏ k, sH k ^ C j k) (Multiplicative.ofAdd (e χ' i)) *
+        (∏ k, sH k ^ C i k) (Multiplicative.ofAdd (e χ' j))) ^ M i j
+    have hp (f : Fin r → (Multiplicative N.X →* Fˣ)) (x : Multiplicative N.X) :
+        (∏ k, f k) x = ∏ k, f k x := by
+      exact map_prod (MonoidHom.eval x) _ _
+    simp only [hp, MonoidHom.zpow_apply]
     apply Additive.ofMul.injective
     simp only [ofMul_prod, ofMul_zpow, ofMul_mul]
     exact (sum_sym_inv W C hBC fun i k => Additive.ofMul (sH k (Multiplicative.ofAdd (e χ' i)))).symm
