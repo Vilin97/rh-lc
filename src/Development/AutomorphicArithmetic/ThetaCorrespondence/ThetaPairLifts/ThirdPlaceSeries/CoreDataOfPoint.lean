@@ -67,7 +67,7 @@ theorem core_data_of_point (hD : GlobalTheory.Published.DiscreteSeriesCover) (hH
       (p : ι → GlobalTheory.FinPl.SplitPt D k), (∀ j i, GlobalTheory.FinPl.Frame (p i) (D.sp.X j) (Fin (D.sp.X j).rank)) →
         (∀ j, ι → GlobalTheory.LatPair.Pair k (Fin (D.sp.X j).rank)) → Prop)
     (hpre : ∀ (y : YRat a) (m : YMeas y) (b) (v : VCom (commOf (_root_.GlobalTheory.Fam.pk_z W) u (mkGeo m b))), v.NT = (_root_.GlobalTheory.Fam.pk_z W).ΛX →
-      (∀ p, p ∈ v.tP ↔ (((D.mem u).A.T : ℕ) : 𝓞 D.host.F) ∈ p.asIdeal) → v.τ = y.τ → y.Tau (-D.host.xi0 ^ (D.R.m / 2)) →
+      (∀ p, p ∈ v.tP ↔ (((D.mem u).A.T : ℕ) : 𝓞 D.host.F) ∈ (_root_.IsDedekindDomain.HeightOneSpectrum.asIdeal p)) → v.τ = y.τ → y.Tau (-D.host.xi0 ^ (D.R.m / 2)) →
       ∃ (k : Type) (_ : Field k) (_ : ValuativeRel k) (_ : TopologicalSpace k) (_ : IsNonarchimedeanLocalField k) (ι : Type)
         (o : GlobalTheory.SeeSaw.TDat (commOf (_root_.GlobalTheory.Fam.pk_z W) u (mkGeo m b)) k ι), PreT v o ∧ o.ζ₀ = a.ζ₀ ∧ R k ι o.p o.β o.Q) :
     ∃ A : _root_.GlobalTheory.Fam.GeometricFamily W u, A.Is ∧ A.c₀ = c₀ ∧ _root_.GlobalTheory.GeoExists.geometricDatumOfFamily A = a ∧ Framed A.d.B ∧ R A.k A.ι A.o.p A.o.β A.o.Q := by
