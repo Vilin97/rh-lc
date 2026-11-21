@@ -130,7 +130,7 @@ theorem twDual_compat_of_iso {R Γ Γ' M : Type} [CommRing R] [Group Γ] [Topolo
     (eG : Γ ≃ₜ* Γ') (hχ : ∀ g, χ' (eG g) = χ g) (hρ : ∀ g m, ρ' (eG g) m = ρ g m) :
     ∀ g ψ, twDual χ' ρ' (eG g) ψ = twDual χ ρ g ψ := by
   intro g ψ
-  ext m
+  refine DFunLike.ext _ _ fun m => ?_
   rw [twDual_apply, twDual_apply, hχ, ← map_inv, hρ]
 
 theorem shaG_transfer {R : Type} [CommRing R] [TopologicalSpace R] [DiscreteTopology R]

@@ -227,7 +227,8 @@ theorem mul_mapAcr_eq_zero (f : A ⟶ B) (hs : Function.Surjective (Hom.f f)) (E
   obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 (Ideal.Quotient.eq_zero_iff_mem.1 h0)
   obtain ⟨y₁, rfl⟩ := acrisZero_surjective_of_surjective f hs c
   have hz : (pdOk_hom f).acr0 (y - y₁ * (l : A.Acr0) ^ n) = 0 := by
-    rw [map_sub, map_mul, map_pow, map_natCast, hc, sub_self]
+    rw [(pdOk_hom f).acr0.map_sub, (pdOk_hom f).acr0.map_mul,
+      (pdOk_hom f).acr0.map_pow, map_natCast, hc, sub_self]
   have hz' : awayW (Hom.f f) (y - y₁ * (l : A.Acr0) ^ n).1 = 0 := congrArg Subtype.val hz
   obtain ⟨⟨w, s⟩, hw⟩ := IsLocalization.surj (Submonoid.powers (l : A.W)) (y - y₁ * (l : A.Acr0) ^ n).1
   have hw0 : WittVector.map (Hom.f f) w = 0 := by

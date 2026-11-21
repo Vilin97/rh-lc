@@ -231,6 +231,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.satU_of :
     rw [e, hcc, mul_one] at k2
     exact mul_right_cancel₀ hc0 (k2.trans (by ring))
   · rw [norm_mul, hc1, mul_one] at k3
-    exact k3
+    simpa [Formalism.UG.qV, Formalism.ConjugateSelfDual.normV,
+      Ideal.absNorm_apply, Submodule.cardQuot_apply] using k3
 
 end

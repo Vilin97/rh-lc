@@ -88,11 +88,11 @@ private theorem step_core (π : AutSub E n) (W : Wt E n) (f : algForms W) {w : P
     exact Submodule.sum_mem _ fun g _ => Submodule.smul_mem _ _ (π.isAut.stable _ _ (AutSub.mem_finPart.1 hf v))
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    refine Finset.sum_congr rfl fun g _ => ?_
-    have hcm : u * (⟨g.1, hle (hr _ g.2)⟩ : finU (E := E) (n := n)) = ⟨g.1, hle (hr _ g.2)⟩ * u :=
-      Subtype.ext (comm_of_cLoc hw u.1 hu g.1 (hr _ g.2)).symm
-    simp only [F]
-    rw [map_smul, ← Module.End.mul_apply, ← map_mul, hcm, map_mul, Module.End.mul_apply, hfix]
+      refine Finset.sum_congr rfl fun g _ => ?_
+      have hcm : u * (⟨g.1, hle (hr _ g.2)⟩ : finU (E := E) (n := n)) = ⟨g.1, hle (hr _ g.2)⟩ * u :=
+        Subtype.ext (comm_of_cLoc hw u.1 hu g.1 (hr _ g.2)).symm
+      simp only [F]
+      rw [map_smul, ← Module.End.mul_apply, ← map_mul, hcm, map_mul, Module.End.mul_apply, hfix]
 
 private theorem mem_lev_off (hC : LocComm) {S : Finset (Plc E)} {Kw : ∀ w : Plc E, Subgroup (GLw n w)} {w : Plc E}
     (hw : IsSplitAt w) (hwS : w ∈ S) (hcj : cj w ∉ S) {J : Subgroup (GLw n w)} (u : finU (E := E) (n := n))

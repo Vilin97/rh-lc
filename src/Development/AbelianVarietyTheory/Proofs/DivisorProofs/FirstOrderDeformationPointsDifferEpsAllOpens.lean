@@ -67,7 +67,7 @@ def sg {ε : B} (hε : ε * ε = 0) : FR ε →+* B where
   map_one' := by simp
   map_zero' := by simp
   map_add' r s := by
-    simp only [map_add (f := _), TrivSqZeroExt.snd_add]
+    rw [(p1 ε).map_add, (p2 ε).map_add, TrivSqZeroExt.snd_add, (mulE hε).map_add]
     ring
   map_mul' r s := by
     obtain ⟨c, hc⟩ : ∃ c, mkE ε c = (p2 ε r).snd := Ideal.Quotient.mk_surjective _

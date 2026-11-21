@@ -48,12 +48,12 @@ set_option synthInstance.maxHeartbeats 200000
 
 open PositivityTheory.Rg.BcB.One PositivityTheory.Rg.BcB.F.F5 PositivityTheory.Rg.BcB.F.Tail PositivityTheory.Rg.BcB.F.RS PositivityTheory.Rg.BcB.F.Eig PositivityTheory.Rg.BcB.SpectralAccumulation
 open PositivityTheory.Rg.BcN.F2 PositivityTheory.Rg.Bc.ArchbcB.B
-open PositivityTheory.Rg.BcB.Desc PositivityTheory.AutomorphicGaloisHodgeTate.D
-open PositivityTheory.Rg.BcB.F PositivityTheory.Rg.BcB.F.FrE PositivityTheory.Rg.BcB.F.FrE.FrameLocalData
+open PositivityTheory.Rg.BcB.Desc
+open PositivityTheory.Rg.BcB.F
 
 namespace GlobalTheory.CompanionTheory.LFixDPf
 
-attribute [local instance] borelG borelF borelA borelH GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
@@ -61,13 +61,13 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 section Conj
 
-open GlobalTheory.SplitPts GlobalTheory.CompanionTheory.CompConjPlace GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
+open GlobalTheory.SplitPts GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
 
 end Conj
 
 section Int
 
-open GlobalTheory.SplitPts GlobalTheory.CompanionTheory.CompConjPlace GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
+open GlobalTheory.SplitPts GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
 
 theorem mem_KGL_map_conj (u : Pl E) (g : GLw n (conjSrc (conjE E) u)) :
     GeneralLinearGroup.map (conjLoc (conjE E) u) g ∈ GlobalTheory.LFun.KGL u (n := n) ↔ g ∈ GlobalTheory.LFun.KGL (conjSrc (conjE E) u) (n := n) := by
@@ -83,13 +83,13 @@ end Int
 
 section Int2
 
-open GlobalTheory.SplitPts GlobalTheory.CompanionTheory.CompConjPlace GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
+open GlobalTheory.SplitPts GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
 
 end Int2
 
 section Main
 
-open GlobalTheory.SplitPts GlobalTheory.CompanionTheory.CompConjPlace GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
+open GlobalTheory.SplitPts GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
 open PositivityTheory.Rg.BcB.F.F5.Bo
 
 variable {d : LocData E n}
@@ -98,7 +98,7 @@ end Main
 
 section Core
 
-open GlobalTheory.SplitPts GlobalTheory.CompanionTheory.CompConjPlace GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
+open GlobalTheory.SplitPts GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorLiftConclusion GlobalTheory.ConjPairLoc GlobalTheory.CuspRep.ParLaws
 open PositivityTheory.Rg.BcB.F.F5.Bo
 
 end Core

@@ -14,8 +14,7 @@ open UpperTheory.Gal UpperTheory.Gal.Int.Geo
 theorem UpperTheory.Gal.Int.Geo.extCont_of :
     ExtCont := by
   intro Γ F L _ _ _ _ _ _ _ hF M _ _ _ a ha v μ
-  induction v using TensorProduct.induction_on with
-  | zero => simpa using continuous_const
+  induction v using TensorProduct.inductionOn with
   | add x y hx hy =>
     simp only [map_add (f := _)]
     exact hx.add hy
@@ -32,4 +31,4 @@ theorem UpperTheory.Gal.Int.Geo.extCont_of :
       rw [TensorProduct.tmul_smul, ← algebraMap_smul L, map_smul, smul_eq_mul]
       rfl
     simp_rw [key]
-    exact continuous_finset_sum _ fun i _ => (hF.comp (ha m (b.coord i))).mul continuous_const
+    exact continuous_finsetSum _ fun i _ => (hF.comp (ha m (b.coord i))).mul continuous_const

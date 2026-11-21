@@ -300,10 +300,10 @@ theorem tangent_congr (hξ : IsCptGen ξ) {G : Over X} [GrpObj G] (hG : IsSemiAb
     secVal_res _ inf_le_right h' hV f'] at e1
   have e2 := congrArg TrivSqZeroExt.snd e1
   have h0 : secVal vb (i ⁻¹ᵁ V) hP 0 = 0 := by simp [secVal]
-  rw [h0, dualMap_snd, TrivSqZeroExt.snd_zero, TrivSqZeroExt.snd_sub] at e2
+  simp only [h0, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.snd_zero] at e2
   have e3 := Ideal.Quotient.eq_zero_iff_mem.1 e2.symm
   obtain ⟨r₀, hr₀⟩ := Ideal.mem_span_singleton.1 e3
-  exact ⟨r₀, hr₀⟩
+  exact ⟨r₀, by simpa only [zero_add, TrivSqZeroExt.snd_sub] using hr₀⟩
 end
 
 theorem isHTAt_iff : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X] (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X), IsCptGen ξ → Flat.NormalCpt ξ → ∀ (G : Over X) [GrpObj G], IsSemiAbelian G → ∀ (L : LB G.left) (n : ℕ), 1 ≤ n → FullTorsion G ξ n → ∀ e, GenWeil G L ξ n e → ∀ (E : Type) [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (y : Over.mk ξ ⟶ G) (q : Cpt ξ) (w w' : Module.Dual Ω E), y ^ n = 1 → M.IsHTAt L n y q w → (M.IsHTAt L n y q w' ↔ ∃ u ∈ M.omLat q, w' = w + n • u) := by

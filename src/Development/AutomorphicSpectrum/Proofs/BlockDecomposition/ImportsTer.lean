@@ -48,7 +48,7 @@ theorem link : ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E
   have hr : Set.range (algebraMap (w.adicCompletion E) (Om l)) = (Bw.Kw.1 : Set (Om l)) :=
     GlobalTheory.T.local_embedding_range_eq_field Bw w φ hφ hφj
   haveI hsep : IsSepClosure (w.adicCompletion E) (Om l) := GlobalTheory.T.is_sep_closure_of_range_eq Bw.Kw hr
-  haveI hext : ValuativeExtension (w.adicCompletion E) (Om l) := ⟨fun a b => by
+  haveI hext : ValuativeExtension (w.adicCompletion E) (Om l) := ⟨fun {a b} => by
     rw [GroundTheory.PAdicHodge.CyclNorms.vle_iff_norm_le]
     exact (GlobalTheory.T.valuation_le_iff_norm_embedding φ hφ a b).symm⟩
   haveI hclosed : IsSepClosed (Om l) := IsSepClosure.sep_closed (w.adicCompletion E)

@@ -18,7 +18,7 @@ theorem trTot : TrTot := by
   change Htot l (sch.obj Y) at x
   change pullTot l (sch.map c) (DirectSum.lmap tr x) = ∑ j, pullTot l (sch.map (σ j)) x
   ext n
-  rw [DFinsupp.finset_sum_apply]
+  rw [DirectSum.sum_apply]
   simp only [pullTot, DirectSum.lmap_apply]
   exact htr n W r c hc J σ hσ hsp (x n)
 

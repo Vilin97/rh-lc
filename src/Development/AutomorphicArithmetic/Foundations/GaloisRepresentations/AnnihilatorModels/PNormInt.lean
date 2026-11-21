@@ -22,6 +22,8 @@ theorem UpperTheory.Gal.crystallineComparison.normInt_of :
     Module.Flat.projective_of_finitePresentation
   obtain ⟨N', hN'⟩ := hNE (Localization.Away (l : R)) (Localization.Away (l : R) ⊗[R] S) ι (fun k => 1 ⊗ₜ s k)
   obtain ⟨T, _, _, m, z, hinj, hz⟩ := hIS l d R S h
+  haveI : FaithfulSMul (Localization.Away (l : R)) T :=
+    (faithfulSMul_iff_algebraMap_injective _ _).2 hinj
   letI : Algebra R T := ((algebraMap (Localization.Away (l : R)) T).comp (algebraMap R (Localization.Away (l : R)))).toAlgebra
   haveI : IsScalarTower R (Localization.Away (l : R)) T := IsScalarTower.of_algebraMap_eq fun _ => rfl
   have hNz := hN' T (Fin m) z hz

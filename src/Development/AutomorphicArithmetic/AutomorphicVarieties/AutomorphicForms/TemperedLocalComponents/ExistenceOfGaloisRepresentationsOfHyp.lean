@@ -49,7 +49,8 @@ theorem UpperTheory.V.Af.galoisExistence_from_published :
     rw [map_mul, map_pow, compNorm_quadChar, one_pow, mul_one]
   have hpol : GlobalTheory.ContraPair.PolarizedPair π (χ * quadChar K ^ (m + n)) :=
     ⟨fun v => by
-      rw [HChar.locInf_mul, locInf_pow, hm, quadChar_locInf, ← pow_add, ← add_assoc, pow_add, ← two_mul, pow_mul]
+      change χ.locInf v (-1) * (quadChar K ^ (m + n)).locInf v (-1) = (-1) ^ n
+      rw [locInf_pow, hm, quadChar_locInf, ← pow_add, ← add_assoc, pow_add, ← two_mul, pow_mul]
       simp, hN ▸ hd⟩
   obtain ⟨R, wt, HT, H⟩ := P.litN.aut.gal K Ω l ι n hn π _ hreg hpol
   have hsat : ∀ᶠ w : HeightOneSpectrum (𝓞 K) in Filter.cofinite, ∃ B, (CG.mk π).HasSat w B :=

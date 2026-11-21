@@ -25,9 +25,9 @@ private theorem pull_primPull (h : IsGrpPullback A' A (spMap (algebraMap R R')) 
     [IsMonHom e] [IsMonHom e'] (he : e'.left ≫ φ = φ ≫ e.left) (c : primDR A) :
     (bcMor h).pull (primPull (dp0 R) (𝟙 _) e c) = primPull (dp0 R') (𝟙 _) e' ((bcMor h).pull c) := by
   have e1 := GrpMor.pull_pull (homMor (dp0 R) (𝟙 _) e) (bcMor h)
-    (GrpMor.comp (homMor (dp0 R) (𝟙 _) e) (bcMor h)) (fun _ => rfl) rfl c
+    (GlobalTheory.DeRham.GrpMor.comp (homMor (dp0 R) (𝟙 _) e) (bcMor h)) (fun _ => rfl) rfl c
   have e2 := GrpMor.pull_pull (bcMor h) (homMor (dp0 R') (𝟙 _) e')
-    (GrpMor.comp (homMor (dp0 R) (𝟙 _) e) (bcMor h)) (fun _ => rfl) he c
+    (GlobalTheory.DeRham.GrpMor.comp (homMor (dp0 R) (𝟙 _) e) (bcMor h)) (fun _ => rfl) he c
   exact e1.trans e2.symm
 
 private theorem pull_frob_iter (p : ℕ) [Fact p.Prime] (hR : (p : R) = 0) (hR' : (p : R') = 0)
@@ -67,6 +67,7 @@ private theorem no_up (p : ℕ) [Fact p.Prime] (hR : (p : R) = 0) (hR' : (p : R'
     (hd : SmoothOfRelativeDimension d A.hom) (e g : A ⟶ A) (e' g' : A' ⟶ A')
     [IsMonHom e] [IsMonHom g] [IsMonHom e'] [IsMonHom g'] (he : e'.left ≫ φ = φ ≫ e.left)
     (hg : g'.left ≫ φ = φ ≫ g.left) (f : ℕ) (hN : NO p R hR A e g f) : NO p R' hR' A' e' g' f := by
+  unfold NO at hN ⊢
   intro x hx
   rw [(GlobalTheory.abelianDeRham.2.2.1 R A d hA hd R' A' φ h).2] at hx
   induction hx using Submodule.span_induction with

@@ -21,11 +21,16 @@ private theorem chi_map_eq_map_chi_mapRingHom {n : ℕ} {B K Γ : Type} [CommRin
       MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom Γ C (MonoidAlgebra.mapRingHom Γ f z) := by
     rw [map_sub, MonoidAlgebra.mapRingHom_single]
     congr 1
-    · simp [φ]
+    · congr 1
+      change Polynomial.map f X = X
+      simp only [Polynomial.map_X]
     · induction z using MonoidAlgebra.induction_linear with
       | zero => simp
       | add a b ha hb => simp only [map_add (f := _), ha, hb]
-      | single g b => simp [φ, MonoidAlgebra.mapRingHom_single]
+      | single g b =>
+        simp only [MonoidAlgebra.mapRingHom_single]
+        change MonoidAlgebra.single g ((C b).map f) = MonoidAlgebra.single g (C (f b))
+        rw [Polynomial.map_C]
   have h := D.nat B[X] K[X] φ (MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom Γ C z)
   rw [e] at h
   exact h.symm

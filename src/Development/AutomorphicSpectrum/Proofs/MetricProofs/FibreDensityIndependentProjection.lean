@@ -394,7 +394,7 @@ theorem cxPosPart_local : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, F
   intro K _ ι _ Q e Ψ Ψ' L g z hQ _ _ hL _ hg _ hs hs'
   classical
   obtain ⟨k0⟩ := hQ.1
-  exact posPart_local_set (fun _ hz => hz.1)
+  exact posPart_local_set (S := conePts Q) (fun _ hz => hz.1)
     (fun c hc z' hz' => GlobalTheory.CompanionTheory.Ar.Pub.CxChart.FibSum.bsmul_mem_conePts hQ.2.1.2.1 hc hz') k0 hL hg hs hs'
 
 end GlobalTheory.CompanionTheory.Ar.Pub.CxPosLocal

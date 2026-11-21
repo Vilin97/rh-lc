@@ -59,7 +59,7 @@ private theorem auxiliaryVectors_pairing_eq_antiDiagonal_gram {l : ℕ} [Fact l.
     rw [hpψ]
     exact (hψ' v i).1
   · intro g
-    rw [hpD, (AlgebraTools.Det.repApi (mat ρ')).2.2.1 hn]
+    rw [hpD, (AlgebraTools.Det.repApi (mat ρ')).2.2.1 hn (MonoidAlgebra.single g 1)]
     simp [GDet.repAlg]
   · intro v i g hg
     rw [hpψ]

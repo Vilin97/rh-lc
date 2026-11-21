@@ -96,7 +96,7 @@ theorem map_eq_self (Γ : AddSubgroup A) [Countable Γ] (T : A ≃ₜ+ A) (hT : 
   have hAC : (μ.map T).IsAddHaarMeasure := ContinuousAddEquiv.isAddHaarMeasure_map μ T
   have hAC2 : (μ.map T.symm).IsAddHaarMeasure := ContinuousAddEquiv.isAddHaarMeasure_map μ T.symm
   have hsm : Measure.QuasiMeasurePreserving (T.symm.toAddEquiv.toEquiv) μ μ :=
-    ⟨T.symm.continuous.measurable, Measure.absolutelyContinuous_isAddHaarMeasure _ _⟩
+    ⟨T.symm.continuous.measurable.aemeasurable, Measure.absolutelyContinuous_isAddHaarMeasure _ _⟩
   let eΓ : Γ ≃ Γ :=
     { toFun := fun d => ⟨T.symm d.1, (hT _).1 (by simpa using d.2)⟩
       invFun := fun c => ⟨T c.1, (hT _).2 c.2⟩
@@ -169,6 +169,8 @@ theorem ikp_rat {B W : HSp D} {d : HypDec B W t} (I : IkD d n) (Ψ : Mx D B.rank
     intro Z
     unfold projS
     congr 1
+    funext k
+    simp only [mm, Matrix.mul_assoc]
   simp only [key]
   rw [← integral_right_rat I.cov₁ a (fun x => projS I.νK Ψ (d.jX ⬝ x + d.j0 ⬝ mm Y (rat a.1)))]
   congr 1

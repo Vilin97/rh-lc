@@ -70,7 +70,7 @@ theorem orderOf_one_add_prime_pow_zmod_prime_pow (l c k : ℕ) (hl : l.Prime) (h
     have h1 := Int.eq_one_of_dvd_one (Int.natCast_nonneg l) h
     have : l = 1 := by exact_mod_cast h1
     exact hl.one_lt.ne' this
-  have := ZMod.orderOf_one_add_mul_prime_pow hl c (by omega) hlc 1 hnd k
+  have := ZMod.orderOf_one_add_mul_prime_pow hl c hlc 1 hnd k
   simpa using this
 
 theorem unit_aux (l c : ℕ) [Fact l.Prime] (hc : 1 ≤ c) :

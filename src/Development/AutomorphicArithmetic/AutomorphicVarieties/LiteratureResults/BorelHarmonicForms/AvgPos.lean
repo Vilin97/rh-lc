@@ -22,7 +22,7 @@ theorem UpperTheory.V.Lit.Bor.avgPos :
   have hFc : ∀ a b, Continuous fun h => F h a b := by
     intro a b
     simp only [F, Matrix.mul_apply, Matrix.conjTranspose_apply]
-    exact continuous_finset_sum _ fun l _ => (continuous_star.comp (hc l a)).mul (hc l b)
+    exact continuous_finsetSum _ fun l _ => (continuous_star.comp (hc l a)).mul (hc l b)
   have hlin : ∀ (A C : Matrix (Fin d) (Fin d) ℂ) (i j : Fin d),
       (A * Matrix.of (fun a b => ∫ h, F h a b ∂μ) * C) i j = ∫ h, (A * F h * C) i j ∂μ := by
     intro A C i j
@@ -36,7 +36,7 @@ theorem UpperTheory.V.Lit.Bor.avgPos :
       · intro a _
         exact hint _ (continuous_const.mul (hFc a b))
     · intro b _
-      exact hint _ ((continuous_finset_sum _ fun a _ => continuous_const.mul (hFc a b)).mul
+      exact hint _ ((continuous_finsetSum _ fun a _ => continuous_const.mul (hFc a b)).mul
         continuous_const)
   refine ⟨Matrix.of fun a b => ∫ h, F h a b ∂μ, ?_, ?_⟩
   · rw [Matrix.posDef_iff_dotProduct_mulVec]
@@ -62,7 +62,7 @@ theorem UpperTheory.V.Lit.Bor.avgPos :
           · intro j _
             exact hint _ (continuous_const.mul ((hFc i j).mul continuous_const))
         · intro i _
-          exact hint _ (continuous_finset_sum _ fun j _ =>
+          exact hint _ (continuous_finsetSum _ fun j _ =>
             continuous_const.mul ((hFc i j).mul continuous_const))
       have hre : ∀ h, star (ρ h⁻¹ *ᵥ x) ⬝ᵥ (ρ h⁻¹ *ᵥ x) =
           ((star (ρ h⁻¹ *ᵥ x) ⬝ᵥ (ρ h⁻¹ *ᵥ x)).re : ℂ) := by
@@ -76,10 +76,10 @@ theorem UpperTheory.V.Lit.Bor.avgPos :
       have hyc : ∀ l, Continuous fun h => (ρ h⁻¹ *ᵥ x) l := by
         intro l
         simp only [Matrix.mulVec, dotProduct]
-        exact continuous_finset_sum _ fun j _ => (hc l j).mul continuous_const
+        exact continuous_finsetSum _ fun j _ => (hc l j).mul continuous_const
       have hdc : Continuous fun h => star (ρ h⁻¹ *ᵥ x) ⬝ᵥ (ρ h⁻¹ *ᵥ x) := by
         simp only [dotProduct, Pi.star_apply]
-        exact continuous_finset_sum _ fun l _ => (continuous_star.comp (hyc l)).mul (hyc l)
+        exact continuous_finsetSum _ fun l _ => (continuous_star.comp (hyc l)).mul (hyc l)
       rw [hdot]
       simp only [hq]
       rw [congrArg (integral μ) (funext hre), integral_complex_ofReal, Complex.zero_lt_real]

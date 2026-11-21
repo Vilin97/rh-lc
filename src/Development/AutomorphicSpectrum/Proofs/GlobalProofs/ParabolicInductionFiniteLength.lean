@@ -252,10 +252,10 @@ theorem inductionFiniteLength : ∀ (k : Type) [Field k] [ValuativeRel k] [Topol
     [IsNonarchimedeanLocalField k], GlobalTheory.SmGL.InductionFiniteLength k := by
   intro k _ _ _ _ α n m _ _ _ _ _ _ e W _ _ ρ hρ hl
   apply GlobalTheory.BlockReorder.hasFiniteLength_parInd e ρ
-  refine hasFiniteLength_parInd_std (d := GlobalTheory.BlockReorder.blockSize m)
-    (ρ.comp (GlobalTheory.BlockReorder.leviMap k e)) ?_ ?_
-  · intro v
-    exact (hρ v).preimage (GlobalTheory.BlockReorder.continuous_leviMap e)
-  · exact (GlobalTheory.SmGL.hasFiniteLength_comp_iff ρ _ (GlobalTheory.BlockReorder.leviMap_surjective e)).2 hl
+  exact hasFiniteLength_parInd_std (d := GlobalTheory.BlockReorder.blockSize m)
+    (ρ.comp (GlobalTheory.BlockReorder.leviMap k e))
+    (fun v => (hρ v).preimage (GlobalTheory.BlockReorder.continuous_leviMap e))
+    ((GlobalTheory.SmGL.hasFiniteLength_comp_iff ρ _
+      (GlobalTheory.BlockReorder.leviMap_surjective e)).2 hl)
 
 end GlobalTheory.CompanionTheory.BZInd

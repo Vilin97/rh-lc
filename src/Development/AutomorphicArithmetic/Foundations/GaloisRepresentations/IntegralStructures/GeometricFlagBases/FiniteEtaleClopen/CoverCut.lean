@@ -118,7 +118,8 @@ theorem UpperTheory.Gal.Int.Geo.Cut.coverCut :
     refine ⟨fun w => ?_⟩
     have hw : m w ∈ ⇑(pullback.fst C.p (gen O k)) ⁻¹' (V : Set C.Y) := by
       rw [Set.mem_preimage, ← Scheme.Hom.comp_apply]
-      simp only [m]
+      simp only [m, pullback.lift_fst]
+      apply (show Set.range ⇑V.ι ⊆ (V : Set C.Y) by rw [Scheme.Opens.range_ι])
       exact ⟨_, rfl⟩
     rw [hpre] at hw
     obtain ⟨z, hz⟩ := hw

@@ -152,7 +152,7 @@ theorem integrableOn_of_modif {X : Scheme.{0}} [IsIntegral X] {q : X ⟶ Sp ℤ}
   show ∫⁻ y, ‖g y‖ₑ ∂(φ.chernPart D ε).restrict S < ⊤
   rw [← lintegral_indicator hSo.measurableSet]
   refine (lintegral_mono' hle le_rfl).trans_lt ?_
-  rw [lintegral_finset_sum_measure]
+  rw [lintegral_finsetSum_measure]
   refine ENNReal.sum_lt_top.2 fun j _ => ?_
   have hT := (A.chart j).open_target.measurableSet
   have hc : ContinuousOn (F ∘ (A.chart j).symm) (A.chart j).target :=

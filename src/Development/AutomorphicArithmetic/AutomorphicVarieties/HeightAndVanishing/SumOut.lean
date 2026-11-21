@@ -18,7 +18,6 @@ private theorem exists_closure : ∃ (Q : Type) (_ : Field Q) (_ : CharZero Q), 
     (isAlgClosure_iff ℚ (AlgebraicClosure ℚ)).2 ⟨inferInstance, ?_⟩⟩
   have h := AlgebraicClosure.isAlgebraic ℚ
   convert h using 1
-  exact Subsingleton.elim (α := Algebra ℚ (AlgebraicClosure ℚ)) _ _
 
 private theorem card_small (S : Finset Nat.Primes) (n : ℕ) (h : ∀ l ∈ S, (l : ℕ) ≤ n) : S.card ≤ n := by
   have key : S.card ≤ (Finset.Icc 1 n).card := by

@@ -104,7 +104,8 @@ private theorem adL_desc {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Group 
     rw [map_sub]
     simp
   unfold W.GDet.lam
-  rw [← e, hD, (AlgebraTools.Det.repApi _).2.1, (AlgebraTools.Det.repApi _).2.1]
+  rw [← e, hD, (AlgebraTools.Det.repApi (W.mat (ρ.comp φ))).2.1,
+    (AlgebraTools.Det.repApi (W.mat ρ)).2.1]
   rfl
 
 private theorem adL_triv {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω]

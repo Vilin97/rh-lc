@@ -374,7 +374,7 @@ private theorem abs_cong {l : ℕ} [Fact l.Prime] {A M J : Type} [CommRing A] [I
     rw [hDn]
     simpa using hn
   obtain ⟨N, hN⟩ := abs_nil (maximalIdeal A) D hnil
-  obtain ⟨p, hp, -, hc, hz⟩ := LinearMap.exists_monic_and_coeff_mem_pow_and_aeval_eq_zero_of_range_le_smul A (D ^ N) _ hN
+  obtain ⟨p, hp, -, hc, hz⟩ := LinearMap.exists_monic_and_natDegree_eq_and_coeff_mem_pow_and_aeval_eq_zero A (D ^ N) _ hN
   have hz' : Polynomial.aeval (t ^ N) p = 0 := by
     apply Subtype.ext
     rw [Polynomial.aeval_subalgebra_coe]
@@ -390,8 +390,10 @@ private theorem abs_cong {l : ℕ} [Fact l.Prime] {A M J : Type} [CommRing A] [I
   have h3 : ‖y t‖ < 1 := by
     by_contra hge
     exact absurd h2 (not_lt.2 (one_le_pow₀ (not_lt.1 hge)))
+  set_option synthInstance.maxHeartbeats 200000 in
   have h4 : y t = y (heckeGen (locPart Y op a) op i) - x (a i) := by
-    simp only [t, map_sub, hy]
+    change y (heckeGen (locPart Y op a) op i - algebraMap A _ (a i)) = _
+    rw [map_sub y, hy]
   rwa [h4] at h3
 
 theorem UpperTheory.V.Z.J.D.locSp :

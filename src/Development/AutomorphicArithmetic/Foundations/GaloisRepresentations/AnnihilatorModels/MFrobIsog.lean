@@ -28,7 +28,7 @@ private theorem isIso_spMap_pow {K : Type} [Field K] [IsAlgClosed K] (φ : K →
 
 private theorem cls_hecke_pow {X : Scheme.{0}} {L : LB X} (hL : L.IsLB) (n : ℕ) (h : (Hecke.lbPow L n).IsLB) :
     GlobalTheory.CechPic.cls (Hecke.lbPow L n) h = n • GlobalTheory.CechPic.cls L hL := by
-  refine (GlobalTheory.CechPic.cls_linComb hL _ _ h).trans ?_
+  apply (GlobalTheory.CechPic.cls_linComb hL _ _ h).trans
   simp [GlobalTheory.CechPic.pull_id]
 
 private theorem square_map_fst_left {S : Scheme.{0}} {A B : Over S} [GrpObj A] [IsCommMonObj A] [GrpObj B] [IsCommMonObj B]

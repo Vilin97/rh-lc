@@ -266,7 +266,7 @@ private theorem supp (hD : D.Ok) (t : Dat.Par F) (g : DA Δ) (h : D.FK t g ≠ 0
   have hfin : (Function.mulSupport fun v => D.fKv t v (g.1 v)).Finite := by
     refine (D.Sg.finite_toSet.union (Filter.eventually_cofinite.1 ((rpg _ _).ae g))).subset fun w hw => ?_
     by_contra hn
-    rw [Set.mem_union, not_or, Set.mem_setOf_eq, not_not] at hn
+    simp only [Set.mem_union, not_or, Set.mem_setOf_eq, not_not] at hn
     apply hw
     have := (fzdLaw (Ov w) (Kv w) (cv w Δ) (hD.off w hn.1) (D.χ w) (hD.chi w).1).2 1 1 (g.1 w) (by simp [IsScal]) hn.2
     have hw' : w ∉ D.Sg := hn.1

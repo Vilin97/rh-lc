@@ -55,7 +55,7 @@ theorem UpperTheory.V.Z.Win.attBC :
     rw [hf, satNum_pow]
     exact (UpperTheory.frobenius_power_compatibility K L Ω l ι w f hf).1 n r _ hF
   have hq : normV w ≠ 0 := by
-    rw [normV]
+    rw [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
     exact (Ideal.absNorm_eq_zero_iff.not.2 w.ne_bot)
   have e := satNum_inj n _ hq (frobEig_eq hF' h1)
   exact ⟨B, hB, e ▸ hB'⟩

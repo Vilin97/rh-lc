@@ -125,6 +125,7 @@ theorem map_val_rel {X Y : Type} [MeasurableSpace X] [MeasurableSpace Y] (ν : M
   rw [Measure.map_map hT hi]
   have : T ∘ i = i ∘ Θ := funext fun z => (hc z).symm
   rw [this, ← Measure.map_map hi hΘ, h, Measure.map_smul]
+  exact hi.aemeasurable
 
 end GlobalTheory.CompanionTheory.OrbExist
 

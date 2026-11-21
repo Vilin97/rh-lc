@@ -31,21 +31,30 @@ variable {Ks : Type} [Field Ks] [NumberField Ks] [iK : Algebra Ks a.D.what₂.LL
 
 section Three
 
+set_option backward.isDefEq.lazyProjDelta false
+set_option backward.isDefEq.lazyWhnfCore false
+
 variable {A : FamIn3 a.D.what₂.LL G Pl0 I0 (List ℕ) T a.D.R.m} (R : RealDat3 a.D A Ks) {F : Face3 a.D A}
 
 def twice : RealDat3 a.D A Ks := (by with_unfolding_all exact ((real3 (a := b) a (iK := alg b iK) (real3 b R)) :))
 
-def twiceY : type_of% R.ioY := kc% (twice b R).ioY
+def twiceY : type_of% R.ioY := by
+  with_unfolding_all exact ((twice b R).ioY :)
 
-def twiceX : type_of% R.ioX := kc% (twice b R).ioX
+def twiceX : type_of% R.ioX := by
+  with_unfolding_all exact ((twice b R).ioX :)
 
-theorem twiceY_eq : R.ioY = twiceY b R :=
-  eq_of_heq ((by with_unfolding_all exact ((HEq.trans (real_ioY b R.toRealDat) (kc% (real_ioY (a := b) a (iK := alg b iK) (real b R.toRealDat))) :
-    HEq _ (twiceY b R)) :)))
+theorem twiceY_eq : R.ioY = twiceY b R := by
+  apply eq_of_heq
+  with_unfolding_all
+    exact (HEq.trans (real_ioY b R.toRealDat)
+      (real_ioY (a := b) a (iK := alg b iK) (real b R.toRealDat)) :)
 
-theorem twiceX_eq : R.ioX = twiceX b R :=
-  eq_of_heq ((by with_unfolding_all exact ((HEq.trans (real_ioX b R.toRealDat) (kc% (real_ioX (a := b) a (iK := alg b iK) (real b R.toRealDat))) :
-    HEq _ (twiceX b R)) :)))
+theorem twiceX_eq : R.ioX = twiceX b R := by
+  apply eq_of_heq
+  with_unfolding_all
+    exact (HEq.trans (real_ioX b R.toRealDat)
+      (real_ioX (a := b) a (iK := alg b iK) (real b R.toRealDat)) :)
 
 theorem twice_eq : R = twice b R := (by with_unfolding_all exact ((congrArg₂ (setIo R) (twiceY_eq b R) (twiceX_eq b R)) :))
 
@@ -56,7 +65,8 @@ theorem holds_back (h : letI := alg b iK; Holds (real3 b R) (face3 b F)) : Holds
   exact (by with_unfolding_all exact ((cast (congrArg (fun R' : RealDat3 a.D A Ks => Holds R' F) (twice_eq b R).symm) ((h2))) : _))
 
 theorem rowTest_tr (h : Rat.RowTest (R.toCx3 F)) : letI := alg b iK; Rat.RowTest ((real3 b R).toCx3 (face3 b F)) := by
-  tr_via (fun X : Cx.CxData A.fam3.amb3 => Rat.RowTest X) (toCx3_eq b R F) h
+  with_unfolding_all
+    exact ((congrArg (fun X : Cx.CxData A.fam3.amb3 => Rat.RowTest X) (toCx3_eq b R F)).mp h :)
 
 end Three
 

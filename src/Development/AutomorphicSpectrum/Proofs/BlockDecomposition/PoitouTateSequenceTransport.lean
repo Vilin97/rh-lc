@@ -111,7 +111,8 @@ variable {R : Type} [CommRing R] [TopologicalSpace R] [DiscreteTopology R] {Γ �
 include hχ hc in
 theorem twDual_transfer : ∀ g f, twDual χ' ρ' (eG g) f = twDual χ ρ g f := by
   intro g f
-  ext m
+  apply DFunLike.ext
+  intro m
   rw [twDual_apply, twDual_apply, hχ, ← map_inv eG, hc]
 
 

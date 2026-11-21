@@ -94,8 +94,6 @@ theorem UpperTheory.V.HV.sumIn :
   haveI : Fact (l : ℕ).Prime := ⟨l.2⟩
   haveI : IsAlgClosure ℚ (AlgebraicClosure ℚ) := by
     convert (AlgebraicClosure.instIsAlgClosure (k := ℚ))
-    · rfl
-    · exact Subsingleton.elim _ _
   obtain ⟨C2, hC2⟩ := hII χ
   obtain ⟨C5, hC5⟩ := hV χ
   obtain ⟨C6, hC6⟩ := hVs χ

@@ -111,7 +111,9 @@ private theorem indSys_indSat (h2 : Module.finrank F E = 2) (hex : ∀ᶠ w in F
   · obtain ⟨B, hB⟩ := hw w rfl
     obtain ⟨B', hB'⟩ := hw w' hu
     exact ⟨B, B', hB, hB', Or.inl ⟨w, w', hne.symm, rfl, hu, B, B', hB, hB', rfl⟩⟩
-  have hq1 : 1 < normV (w.under (𝓞 F)) := NumberField.HeightOneSpectrum.one_lt_absNorm _
+  have hq1 : 1 < normV (w.under (𝓞 F)) := by
+    simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+      (NumberField.HeightOneSpectrum.one_lt_absNorm (w.under (𝓞 F)))
   have hnp : ¬ HasPair (E := E) F (w.under (𝓞 F)) := by
     rintro ⟨a, b, hab, ha, hb⟩
     have e : normV w = normV (w.under (𝓞 F)) := by
@@ -184,9 +186,12 @@ private theorem indSys_of_att {K M Ω : Type} [Field K] [NumberField K] [_root_.
       have := UpperTheory.V.Af.Es.charEig_cyc (Ω := Ω) ι hlu 1
       simpa using this
     have e := eig_unique (UpperTheory.frobenius_eigenvalues_twist K Ω l ι 4 R _ u _ _ hFp hc) hF
+    have hnorm : 1 < normV u := by
+      simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+        (NumberField.HeightOneSpectrum.one_lt_absNorm u)
     have hq : (((normV u : ℝ) ^ ((((4 : ℕ) : ℝ) - 1) / 2) : ℝ) : ℂ) ≠ 0 :=
       Complex.ofReal_ne_zero.2 (Real.rpow_pos_of_pos (Nat.cast_pos.2
-        (zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm u))) _).ne'
+        (zero_lt_one.trans hnorm)) _).ne'
     have e2 : B₂ = Bp.map (· * (GlobalTheory.HeckeGal.Model.absPow K (-1)).val u) := by
       rw [algSat_val, algSat_val, Multiset.map_map] at e
       refine Multiset.map_injective (fun a b h => Units.ext (mul_left_cancel₀ hq h)) (e.symm.trans ?_)
@@ -212,7 +217,10 @@ theorem awInd : AwInd := by
   refine ⟨t + a, fun v => ImaginaryQuadraticEtaCharacter.suppSmo K 4 (by norm_num) _ _ ?_ (t + a) v (ha 4 (by norm_num) _ t v (hQ v))⟩
   refine hP.2.mono fun u ⟨B, hB, _⟩ => ⟨B, ?_, hB⟩
   have h1 := sat_tw (sat_tw hB (-1)) 1
-  have hq : (normV u : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm u)).ne'
+  have hnorm : 1 < normV u := by
+    simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+      (NumberField.HeightOneSpectrum.one_lt_absNorm u)
+  have hq : (normV u : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (zero_lt_one.trans hnorm).ne'
   have e : (B.map (· * (GlobalTheory.HeckeGal.Model.absPow K (-1)).val u)).map (· * (GlobalTheory.HeckeGal.Model.absPow K 1).val u) = B := by
     rw [Multiset.map_map]
     refine (Multiset.map_congr rfl fun b _ => ?_).trans (Multiset.map_id B)

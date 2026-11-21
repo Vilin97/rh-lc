@@ -30,6 +30,8 @@ theorem UpperTheory.Gal.productCup_of_system.coordinateSystem_degree_one_of_univ
     intro b h1 h2
     simp only [colA, Sys.colCx, kosT]
     congr 1
+    funext L
+    simp only [hA, (hu b L).2.1, (hu b L).2.2.1, mixF, h1, h2, and_self, if_true]
   have hbot : ∀ b : Finset (Two d), ¬ ((lft b).Nonempty ∧ (rgt b).Nonempty) → ∀ L, A (uni b L) = ⊥ := by
     intro b h L
     simp only [hA, (hu b L).2.1, mixF, if_neg h]

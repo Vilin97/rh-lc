@@ -31,27 +31,28 @@ private theorem cas_alg {E : Type} [Field E] [NumberField E] {a n : ℕ} (e : Fi
 
 theorem UpperTheory.V.Lit.Bor.casTens :
     UpperTheory.V.Lit.Bor.CasTens := by
-  intro E _ _ _ a n e he π Ξ r
-  obtain ⟨c₁, h₁⟩ := casPi E a n e he π r
-  obtain ⟨c₂, h₂⟩ := casXi E a n e he Ξ (-r)
-  have hB := cas_alg (B := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) e (shift Ξ.dmat (-r)) (shift (lieB π Ξ) (-r))
-    ((Module.End.lTensorAlgHom ℂ (Fin Ξ.d → ℂ) π.V).comp
-      (Matrix.toLinAlgEquiv' : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ ≃ₐ[ℂ] Module.End ℂ (Fin Ξ.d → ℂ)).toAlgHom)
-    fun X => by
-      rw [shift_apply, shift_apply, map_add (f := _), ← algebraMap_smul ℂ _ (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ), map_smul, map_one]
-      rfl
-  rw [h₂, map_smul, map_one] at hB
-  have hπ : ∀ φ : π.V, cas (A := Module.End ℂ π.V) (shift (lieOp π) r) e φ = c₁ • φ := fun φ =>
-    Subtype.ext ((cas_inter e (lieOp π) (lie E a) π.V.subtype r (fun _ _ => rfl) φ).trans (h₁ φ.1 φ.2))
-  have hA : ∀ m, cas (A := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) (shift (lieA π Ξ) r) e m = c₁ • m := fun m => by
-    induction m using TensorProduct.induction_on with
-    | zero => simp
-    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
-    | tmul φ v =>
-      have h := cas_inter e (lieOp π) (lieA π Ξ) ((TensorProduct.mk ℂ π.V (Fin Ξ.d → ℂ)).flip v) r
-        (fun _ _ => rfl) φ
-      rw [hπ, map_smul] at h
-      exact h.symm
-  refine ⟨c₂ - c₁, fun m => ?_⟩
-  rw [LinearMap.sub_apply, hA, ← hB]
-  exact (sub_smul c₂ c₁ m).symm
+  set_option synthInstance.maxHeartbeats 200000 in
+    intro E _ _ _ a n e he π Ξ r
+    obtain ⟨c₁, h₁⟩ := casPi E a n e he π r
+    obtain ⟨c₂, h₂⟩ := casXi E a n e he Ξ (-r)
+    have hB := cas_alg (B := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) e (shift Ξ.dmat (-r)) (shift (lieB π Ξ) (-r))
+      ((Module.End.lTensorAlgHom ℂ (Fin Ξ.d → ℂ) π.V).comp
+        (Matrix.toLinAlgEquiv' : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ ≃ₐ[ℂ] Module.End ℂ (Fin Ξ.d → ℂ)).toAlgHom)
+      fun X => by
+        rw [shift_apply, shift_apply, map_add (f := _), ← algebraMap_smul ℂ _ (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ), map_smul, map_one]
+        rfl
+    rw [h₂, map_smul, map_one] at hB
+    have hπ : ∀ φ : π.V, cas (A := Module.End ℂ π.V) (shift (lieOp π) r) e φ = c₁ • φ := fun φ =>
+      Subtype.ext ((cas_inter e (lieOp π) (lie E a) π.V.subtype r (fun _ _ => rfl) φ).trans (h₁ φ.1 φ.2))
+    have hA : ∀ m, cas (A := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) (shift (lieA π Ξ) r) e m = c₁ • m := fun m => by
+      induction m using TensorProduct.induction_on with
+      | zero => simp
+      | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
+      | tmul φ v =>
+        have h := cas_inter e (lieOp π) (lieA π Ξ) ((TensorProduct.mk ℂ π.V (Fin Ξ.d → ℂ)).flip v) r
+          (fun _ _ => rfl) φ
+        rw [hπ, map_smul] at h
+        exact h.symm
+    refine ⟨c₂ - c₁, fun m => ?_⟩
+    rw [LinearMap.sub_apply, hA, ← hB]
+    exact (sub_smul c₂ c₁ m).symm

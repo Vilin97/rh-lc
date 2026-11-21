@@ -39,7 +39,11 @@ theorem adj_gram (b₀ : HermE D ρ) : adj (b₀.1.map (incA D)) = b₀.1.map (i
   exact congrArg (incA D) h
 
 theorem adj_pr (b₀ : HermE D ρ) (x y : Mx D ρ t) : adj (pr b₀ x y) = pr b₀ y x := by
-  simp only [pr, adj_mul, adj_adj, adj_gram, Matrix.mul_assoc]
+  have adj_mul_local {l m n : ℕ} (a : Mx D l m) (b : Mx D m n) :
+      adj (a * b) = adj b * adj a := by
+    unfold adj
+    rw [Matrix.map_mul, Matrix.transpose_mul]
+  simp only [pr, adj_mul_local, adj_adj, adj_gram, Matrix.mul_assoc]
 
 theorem pr_neg_left (b₀ : HermE D ρ) (x y : Mx D ρ t) : pr b₀ (-x) y = -pr b₀ x y := by
   simp only [pr, adj_neg, Matrix.neg_mul]

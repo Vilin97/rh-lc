@@ -117,5 +117,6 @@ theorem UpperTheory.V.ZK.Ct.unram :
       ← Ideal.card_inertia_eq_ramificationIdxIn (G := F ≃ₐ[L] F) p.asIdeal P.asIdeal, hI]
     simp
   have hv := HeightOneSpectrum.valuation_liesOver F p P (x : L)
+  rw [Ideal.ramificationIdx'_eq_ramificationIdx p.asIdeal P.asIdeal p.ne_bot] at he
   rw [he, pow_one] at hv
   simp only [ordP, Units.coe_map, MonoidHom.coe_coe, ← hv]

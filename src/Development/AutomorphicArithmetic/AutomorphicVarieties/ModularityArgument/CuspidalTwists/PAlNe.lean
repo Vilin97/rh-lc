@@ -101,7 +101,7 @@ private theorem eta_om (hD : D.Good) (K' : IntermediateField ℚ Ω)
   haveI : CompactSpace (G T.F Ω) := inferInstanceAs (CompactSpace (Ω ≃ₐ[T.F] Ω))
   have hk'' : ∀ g, eta T g = 1 ↔ g ∈ K'.fixingSubgroup.comap (resQ T.F) := fun g => by
     rw [Subgroup.mem_comap, hk']
-  have hc : Continuous fun h : G T.F Ω => g⁻¹ * h := continuous_mul_left _
+  have hc : Continuous fun h : G T.F Ω => g⁻¹ * h := continuous_const_mul _
   have h0 : IsClosed (T.GalL : Set (G T.F Ω)) := closed_fix T.F T.K
   have hd : (l : ℤ_[l]) ∣ (cycZ T.F Ω l g : ℤ_[l]) - 1 := dvd_of_om D hD (resQ T.F g) hg
   obtain ⟨h, ⟨h1, h2⟩, h3⟩ := lim_pt l (cycZ T.F Ω l) (continuous_cycZ T.F Ω l) _

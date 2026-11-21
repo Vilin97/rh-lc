@@ -144,7 +144,7 @@ theorem UpperTheory.V.X.zOne :
     obtain ⟨y, hyS⟩ := x
     obtain ⟨z, rfl⟩ := Submodule.Quotient.mk_surjective _ y
     have hx' : (l : O) • (Submodule.Quotient.mk z : H1U ρ ⊤) = 0 := by
-      simpa using congrArg Subtype.val hx
+      simpa only [Submodule.coe_smul, Submodule.coe_zero] using congrArg Subtype.val hx
     obtain ⟨m, hm⟩ := (mk_eq_mk ρ ⊤ ((l : O) • z) 0).1
       (by rw [Submodule.Quotient.mk_smul, Submodule.Quotient.mk_zero]; exact hx')
     simp only [Submodule.coe_smul, Submodule.coe_zero, Pi.smul_apply, Pi.zero_apply, sub_zero] at hm
@@ -204,6 +204,6 @@ theorem UpperTheory.V.X.zOne :
   have hall : ∀ x : ShaU ρ l ⊤, x = 0 := by
     intro x
     obtain ⟨n, hn⟩ := tors_class (ρ.comp (⊤ : Subgroup (G ℚ Ω)).subtype) l (qoFacts l O).2.1 (x : H1U ρ ⊤)
-    exact hgen n x (Subtype.ext (by simpa using hn))
+    exact hgen n x (Subtype.ext (by simpa only [Submodule.coe_smul, Submodule.coe_zero] using hn))
   rw [Module.length_eq_zero_iff]
   exact ⟨fun a b => by rw [hall a, hall b]⟩

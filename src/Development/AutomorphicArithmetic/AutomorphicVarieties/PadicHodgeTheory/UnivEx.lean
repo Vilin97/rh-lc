@@ -15,6 +15,9 @@ private theorem UpperTheory.V.Loc.adicCont_zpow {Γ R : Type} [TopologicalSpace 
       (fun a b hab => Units.ext hab)
   have h2 := h1.comp (fun u => ((u ^ j : (R ⧸ I ^ N)ˣ) : R ⧸ I ^ N))
   convert h2 using 1
+  ext g
+  change ((Units.map (Ideal.Quotient.mk (I ^ N)).toMonoidHom (Ψ g ^ j) : (R ⧸ I ^ N)ˣ) : R ⧸ I ^ N) = _
+  rw [map_zpow]
   rfl
 
 theorem UpperTheory.V.Loc.univEx :

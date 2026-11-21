@@ -50,7 +50,7 @@ theorem melSum : MelSum := by
     rw [← Finset.mul_sum, ← integral_finsetSum _ (fun n _ => melSum_int ht (hr n) _)]
     apply mul_le_mul_of_nonneg_left _ hCpos.le
     apply setIntegral_mono_on
-    · exact integrable_finset_sum _ (fun n _ => melSum_int ht (hr n) _)
+    · exact integrable_finsetSum _ (fun n _ => melSum_int ht (hr n) _)
     · exact hI
     · exact measurableSet_Ioi
     · intro y hy

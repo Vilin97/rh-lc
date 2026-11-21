@@ -37,8 +37,7 @@ theorem UpperTheory.V.KernelIndexFullLattice.homFin_holds :
     rw [map_smul]
     rfl
   haveI : IsNoetherian (MonoidAlgebra ℂ C) τ.asModule := isNoetherian_of_tower ℂ inferInstance
-  obtain ⟨t, ht, htop⟩ := CompleteLattice.WellFoundedGT.isSupFiniteCompact
-    (Submodule (MonoidAlgebra ℂ C) τ.asModule) {m | IsSimpleModule (MonoidAlgebra ℂ C) m}
+  obtain ⟨t, ht, htop⟩ := WellFoundedGT.isSupFiniteCompact (α := Submodule (MonoidAlgebra ℂ C) τ.asModule) {m | IsSimpleModule (MonoidAlgebra ℂ C) m}
   rw [IsSemisimpleModule.sSup_simples_eq_top] at htop
   let W : Submodule (MonoidAlgebra ℂ C) τ.asModule → Submodule ℂ M := fun m =>
     F ⊓ ((isotypicComponent (MonoidAlgebra ℂ C) σ.asModule m).restrictScalars ℂ : Submodule ℂ σ.asModule)

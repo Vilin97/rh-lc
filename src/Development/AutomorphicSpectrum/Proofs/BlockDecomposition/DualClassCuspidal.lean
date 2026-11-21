@@ -27,13 +27,14 @@ theorem isSupercuspidal_contra
   have hev : ∀ m : smoothPart π.dual, Λ m = (m : Module.Dual ℂ V) u := fun m =>
     (LinearMap.congr_fun (congrArg Subtype.val hu) m).symm
   obtain ⟨C, hC, hsupp⟩ := hs.2 u l l.2
-  refine ⟨C⁻¹, hC.inv, fun g hg => ?_⟩
-  rw [hev, contra_apply] at hg
-  obtain ⟨z, hz, c, hc, e⟩ := hsupp g⁻¹ hg
-  refine ⟨z⁻¹, inv_mem hz, c⁻¹, Set.inv_mem_inv.2 hc, ?_⟩
-  have h1 : g = (z * c)⁻¹ := by rw [← e, inv_inv]
-  rw [h1, mul_inv_rev]
-  exact (Subgroup.mem_center_iff.1 (inv_mem hz) c⁻¹)
+  open scoped Pointwise in
+    refine ⟨C⁻¹, hC.inv, fun g hg => ?_⟩
+    rw [hev, contra_apply] at hg
+    obtain ⟨z, hz, c, hc, e⟩ := hsupp g⁻¹ hg
+    refine ⟨z⁻¹, inv_mem hz, c⁻¹, Set.inv_mem_inv.2 hc, ?_⟩
+    have h1 : g = (z * c)⁻¹ := by rw [← e, inv_inv]
+    rw [h1, mul_inv_rev]
+    exact (Subgroup.mem_center_iff.1 (inv_mem hz) c⁻¹)
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 

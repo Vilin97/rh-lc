@@ -185,7 +185,9 @@ theorem msum_eq_of_coeff_ne (hG : GeometricLemma) (hBZ : BernsteinZelevinskyFini
     rw [hP1def, coeff_sum]
     simp only [coeff_monomial]
     rw [Finset.sum_ite_eq' S m (fun n => AddMonoidAlgebra.coeff P n), if_pos hmS]
-  rw [hP1, coeff_zero] at hc
+  rw [hP1] at hc
+  have hc0 : AddMonoidAlgebra.coeff (0 : MvPolynomial (Segment k) ℤ) m = 0 := by rfl
+  rw [hc0] at hc
   exact hm hc.symm
 
 end Ring

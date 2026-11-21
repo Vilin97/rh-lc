@@ -32,7 +32,7 @@ theorem maMeasure_univ_eq {e : ℕ} {X : Type} [TopologicalSpace X] [CompactSpac
     (hPsh : ∀ i, IsPsh A (th i + LocPot.ofFun (u i) + Θ)) :
     maMeasure A (fun i => th i + LocPot.ofFun (u i) + Θ) Set.univ =
       ENNReal.ofReal (mInt A (fun i => th i + Θ) (fun _ => 1)) := by
-  obtain ⟨hfin, hg⟩ := maMeasure_thm A _ hP hPsh
+  obtain ⟨hfin, hg⟩ := maMeasure_thm A (fun i => th i + LocPot.ofFun (u i) + Θ) hP hPsh
   have hI : Integrable (fun _ : X => (1 : ℝ)) (maMeasure A (fun i => th i + LocPot.ofFun (u i) + Θ)) :=
     integrable_const 1
   have hM := (hg _ measurable_const).1.2 hI

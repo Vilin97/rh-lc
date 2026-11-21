@@ -613,7 +613,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formal
 theorem tools : ExtremalProjectorTools where
   extremalProjectorAlt := ExtremalProjector.extremal_projector_statement
 
-theorem inputs : Loc8All := {
+theorem inputs : Loc8All where
   p13B := flipOneThree.Pf.theorem_I_closed_form_holds
   p13A := GramWindowAlt.theorem_A_closed_form_holds
   p15 := tensor_closed
@@ -638,7 +638,6 @@ theorem inputs : Loc8All := {
   thresholdClauseOne := CountingStatementReduction.positivity_condition_eventually
   thresholdClauseThree := CountingStatementReduction.exponent_bound_eventually
   instanceClauseEight := fun D X => PolBridge.combined_weight_of_nested_sets D X (GLWeightTheory.weight_condition_from_integral_form D) (ColumnFamilies.Top.b15 D)
-}
 
 theorem rangeOne_abs :
     ∃ (T0 : ℝ) (T2 C : ℝ → ℝ), 0 < T0 ∧ ∀ C₀ : ℝ, T0 ≤ C₀ → 0 < T2 C₀ ∧ 0 < C C₀ ∧ ∀ CH : ℝ, T2 C₀ ≤ CH →

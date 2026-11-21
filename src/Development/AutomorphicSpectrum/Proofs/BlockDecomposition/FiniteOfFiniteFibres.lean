@@ -23,6 +23,7 @@ theorem isPullback_baseChange {S T : Scheme.{0}} (s : T ⟶ S) {X Y : Over S} (f
     exact pullback.lift_snd _ _ _
   have h2 : ((Over.pullback s).map f).left ≫ pullback.fst Y.hom s = pullback.fst X.hom s ≫ f.left := by
     simp only [Over.pullback_map_left]
+    exact pullback.lift_fst _ _ _
   have hX : f.left ≫ Y.hom = X.hom := Over.w f
   refine IsPullback.of_right ?_ h2 (IsPullback.of_hasPullback Y.hom s).flip
   rw [h1, hX]

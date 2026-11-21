@@ -59,8 +59,9 @@ private theorem match_qI {n : ℕ} {R S : Type} [CommRing R] [CommRing S] [Topol
 private theorem cent_mul {G : Type} [Group G] (z g : G) (hz : ∀ x, z * x = x * z) :
     Subgroup.centralizer {g} = Subgroup.centralizer {z * g} := by
   ext t
-  rw [Subgroup.mem_centralizer_singleton_iff, Subgroup.mem_centralizer_singleton_iff, ← mul_assoc, ← hz t, mul_assoc, mul_assoc,
-    mul_right_inj]
+  rw [Subgroup.mem_centralizer_singleton_iff, Subgroup.mem_centralizer_singleton_iff]
+  change (t * g = g * t) ↔ (t * (z * g) = (z * g) * t)
+  rw [← mul_assoc, ← hz t, mul_assoc, mul_assoc, mul_right_inj]
 
 private theorem lc_cent {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G] [LocallyCompactSpace G] (g : G) :
     LocallyCompactSpace (Subgroup.centralizer {g}) := by

@@ -84,7 +84,7 @@ theorem UpperTheory.V.Br.eigOf :
   have hω := hval w hM
   have hl : lev N w = 0 := (UpperTheory.V.Af.Nf.places w).2.2.2 N hN hM
   have hq : (0 : ℝ) < normV w :=
-    Nat.cast_pos.2 (zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
+    Nat.cast_pos.2 (UpperTheory.V.Af.Nf.places w).1.pos
   constructor
   · set lam : ℂ := (((normV w : ℝ) ^ (((k : ℝ) - 1) / 2) : ℝ) : ℂ) * ((α : ℂ) + β) with hlam
     have hH : hk k w (lev N w) φ = lam • φ := by

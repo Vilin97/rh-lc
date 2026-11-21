@@ -120,7 +120,7 @@ private theorem term {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     (UpperTheory.iwahori_compactOpen_and_iwCoset_indicator_test F n v).2.1 _ (GLnLocal.isOpen_integralGL _ _) le_rfl
   choose m hm using fun v : Pl F => ex_haar (hK v)
   haveI := fun v => (hm v).1
-  obtain ⟨κ, hκ, H⟩ := termF F E σ n l hn μ ν m hm
+  obtain ⟨κ, hκ, H⟩ := UpperTheory.ConvolutionTheory.C.termF F E σ n l hn μ ν m hm
   choose τ hτ using fun v : Pl F => (occursBasics F n μ V v (m v) hV).1
   obtain ⟨N, hN, H⟩ := H a q w₀ L.S V τ x hV hx fun v _ => hτ v
   have hlev : levF L.UF = levOn (insert q L.S) L.UF := by

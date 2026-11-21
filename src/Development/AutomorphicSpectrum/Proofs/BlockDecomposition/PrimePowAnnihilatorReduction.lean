@@ -48,7 +48,8 @@ theorem lseq : ∀ {l : ℕ} [Fact l.Prime] (A : PAlg l) (n m : ℕ), Function.S
       obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 h
       obtain ⟨d, rfl⟩ := Ideal.Quotient.mk_surjective c
       have e : A.mkAcr (n + m) (d * (l : A.Acr0) ^ n - y) = 0 := by
-        rw [map_sub, map_mul, map_pow, map_natCast]
+        set_option synthInstance.maxHeartbeats 400000 in
+          rw [map_sub, map_mul, map_pow, map_natCast]
         exact sub_eq_zero.2 hc
       have e2 := (mk0 _ _).1 e
       have e3 : Ideal.span {(l : A.Acr0) ^ (n + m)} ≤ Ideal.span {(l : A.Acr0) ^ n} :=

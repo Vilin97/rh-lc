@@ -23,6 +23,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.sphere_mean_normalized_groups 
   obtain ⟨a, ha⟩ := ModelDimension.GSph.map_coefRows (e := e) h
   have hmap : Measure.map (coefRows h) (gaussM (e + 1) n) = Measure.map ModelDimension.GSph.scT ((a • (ModelDimension.GSph.exP e).withDensity (ModelDimension.GSph.wt h)).prod (volume.restrict (ballProd h e))) := by
     rw [ha, ModelDimension.GSph.layer, Measure.prod_smul_left, Measure.map_smul]
+    exact ModelDimension.GSph.measurable_scT.aemeasurable
   have h1 : ∀ᵐ x ∂ModelDimension.GSph.ex1, 0 < x :=
     (withDensity_absolutelyContinuous _ _).ae_le (ae_restrict_mem measurableSet_Ioi)
   have hp : ∀ᵐ s ∂(ModelDimension.GSph.exP e), ∀ i, 0 < s i := by

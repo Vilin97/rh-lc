@@ -89,6 +89,8 @@ theorem chartIn_adjKer : ∀ {A : Type} [CommRing A] [IsNoetherianRing A] (I : I
   obtain ⟨y, rfl⟩ := hx
   set g := (Scheme.Modules.pullback φ).map (cokernel.π (S n).arrow) with hg
   have hK : pullSys I φ E S n ≤ kernelSubobject g := by
+    change imageSubobject ((Scheme.Modules.pullback φ).map (S n).arrow) ⊔
+      powSub I _ (n + 1) ≤ kernelSubobject g
     refine sup_le (image_le_kernel _ _ ?_) (le_kernelSubobject _ _ ?_)
     · rw [hg, ← Functor.map_comp, cokernel.condition, Functor.map_zero]
     · rw [powSub, ← Subobject.underlyingIso_hom_comp_eq_mk, Category.assoc,

@@ -148,9 +148,9 @@ theorem exists_phi_xi (A : PAlg l) :
 theorem factorization_factorial_le (k : ℕ) (hk : 1 ≤ k) : (k.factorial).factorization l ≤ k - 1 := by
   have hp : l.Prime := Fact.out
   rw [Nat.factorization_def _ hp]
-  have h : (l - 1) * padicValNat l k.factorial < k := sub_one_mul_padicValNat_factorial_lt_of_ne_zero l (by omega)
+  have h : (l - 1) * multiplicity l k.factorial < k := sub_one_mul_multiplicity_factorial_lt_of_ne_zero l (n := k) (by omega)
   have h1 : 1 ≤ l - 1 := Nat.le_sub_of_add_le hp.two_le
-  have h2 : padicValNat l k.factorial ≤ (l - 1) * padicValNat l k.factorial := Nat.le_mul_of_pos_left _ h1
+  have h2 : multiplicity l k.factorial ≤ (l - 1) * multiplicity l k.factorial := Nat.le_mul_of_pos_left _ h1
   omega
 
 theorem exists_factorial_mul (A : PAlg l) (k : ℕ) (hk : 1 ≤ k) :

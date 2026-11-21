@@ -173,7 +173,8 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.satPair :
     push_neg at hn
     refine hY.1 ?_
     have h0 := hker0 ((TC.toDual Q).symm Y) hn
-    simpa using h0
+    have h1 := congrArg (TC.toDual Q) h0
+    simpa only [LinearEquiv.apply_symm_apply, LinearEquiv.map_zero] using h1
   have hi : ∀ g x y, β (σ (GlobalTheory.LFun.ConjPlace.invT (RingEquiv.refl _) 2 g) x) ((TC.dual Q).locRep w g y) = β x y := by
     intro g x y
     obtain ⟨y, rfl⟩ := (TC.toDual Q).surjective y

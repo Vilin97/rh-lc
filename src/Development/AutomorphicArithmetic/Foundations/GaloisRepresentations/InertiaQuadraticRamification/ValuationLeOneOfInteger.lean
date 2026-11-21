@@ -120,7 +120,8 @@ theorem degOf : DegOf := by
       omega)
     letI := Fintype.ofFinite (𝓞 M ⧸ w.asIdeal)
     have hN : 1 < normV v ^ d := Nat.one_lt_pow (Nat.pos_iff_ne_zero.1 hd) hq
-    have hp0 := FiniteField.X_pow_card_sub_X_ne_zero (𝓞 M ⧸ w.asIdeal) hN
+    have hp0 : (Polynomial.X ^ (normV v ^ d) - Polynomial.X : Polynomial (𝓞 M ⧸ w.asIdeal)) ≠ 0 :=
+      Polynomial.X_pow_sub_X_ne_zero hN
     have hsub : (Finset.univ : Finset (𝓞 M ⧸ w.asIdeal)).val ⊆
         (Polynomial.X ^ (normV v ^ d) - Polynomial.X : Polynomial (𝓞 M ⧸ w.asIdeal)).roots := by
       intro a _

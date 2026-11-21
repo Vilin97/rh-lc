@@ -44,8 +44,11 @@ private theorem satInd_trc {I K : Subgroup G} (h : I ≤ K) (hf : FinOrb K I 1) 
     rw [mul_one, QuotientGroup.out_eq']
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hv, map_sum, MonoidAlgebra.coeff_sum]
-  simp only [Representation.ofMulAction_single, MonoidAlgebra.coeff_single, Finsupp.coe_finset_sum,
-    Finset.sum_apply, Finsupp.single_apply]
+  simp only [Representation.ofMulAction_single, MonoidAlgebra.coeff_single]
+  change (Finsupp.applyAddHom (M := A) (y : G ⧸ I))
+    (∑ q : MulAction.orbit K ((1 : G) : G ⧸ I), Finsupp.single (g • (q : G ⧸ I)) (1 : A)) = _
+  rw [map_sum]
+  simp only [Finsupp.applyAddHom_apply, Finsupp.single_apply]
   have key : ∀ q : MulAction.orbit K ((1 : G) : G ⧸ I),
       (g • (q : G ⧸ I) = (y : G ⧸ I)) ↔ (q : G ⧸ I) = ((g⁻¹ * y : G) : G ⧸ I) := by
     intro q
@@ -91,7 +94,13 @@ private theorem satInd_abs {I K : Subgroup G} (h : I ≤ K) (hI : HeckePair I) (
         MonoidAlgebra A (G ⧸ I)) = _
       rw [double_coset_operator_sum_orbit _ I I (t a) (hI (t a)), he]
       rfl
-    rw [h1, MonoidAlgebra.coeff_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+    rw [h1, MonoidAlgebra.coeff_sum]
+    change (Finsupp.applyAddHom (M := A) ((t b : G) : G ⧸ I))
+      (∑ q : MulAction.orbit I ((t a : G) : G ⧸ I),
+        (permRep A I (q : G ⧸ I).out
+          ((trc (permRep A I) K I (permRepBaseCosetVector A I) : fixd (permRep A I) K) : MonoidAlgebra A (G ⧸ I))).coeff) = _
+    rw [map_sum]
+    simp only [Finsupp.applyAddHom_apply]
     simp only [satInd_trc h hf]
     have hq : ∀ q : MulAction.orbit I ((t a : G) : G ⧸ I), ((q : G ⧸ I).out⁻¹ * t b ∈ K ↔
         (a = b ∧ q = ⟨((t a : G) : G ⧸ I), MulAction.mem_orbit_self _⟩)) := by

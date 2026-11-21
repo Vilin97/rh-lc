@@ -58,13 +58,13 @@ theorem UpperTheory.V.Ws.Eb.flagDual :
   have hres : residue (DualNumber K) = φ.comp (dF K) := RingHom.ext fun x => UpperTheory.V.Ws.Eb.residue_dual x
   have hcard : (n : Cardinal) ≤ Cardinal.mk (ResidueField (DualNumber K)) := by
     haveI : Infinite (ResidueField (DualNumber K)) := Infinite.of_injective φ φ.injective
-    exact (Cardinal.nat_lt_aleph0 n).le.trans (Cardinal.infinite_iff.mp inferInstance)
+    exact (Cardinal.natCast_lt_aleph0 (n := n)).le.trans (Cardinal.infinite_iff.mp inferInstance)
   have hinj' : Function.Injective fun i => ((residue (DualNumber K) : DualNumber K →* ResidueField (DualNumber K))).comp ((Units.coeHom (DualNumber K)).comp (κ i)) := by
     intro i j hij
     apply hinj
     ext s
     have hs := DFunLike.congr_fun hij s
-    simp only [MonoidHom.comp_apply, Units.coeHom_apply, MonoidHom.coe_coe] at hs
+    simp only [MonoidHom.comp_apply, Units.coeHom_apply, MonoidHom.coe_ofClass] at hs
     rw [hres, RingHom.comp_apply, RingHom.comp_apply] at hs
     have := φ.injective hs
     simpa [W.pushCh] using this

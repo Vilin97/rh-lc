@@ -51,7 +51,7 @@ theorem norm_le_prod {l : ℕ} [Fact l.Prime] (ι : PadicAlgCl l ≃+* ℂ) {S :
   classical
   have e : (n : PadicAlgCl l) = ∏ s, ι.symm (f s) := by rw [← map_prod, ← hn, map_intCast]
   rw [e, norm_prod, ← Finset.prod_image (s := Finset.univ) (g := j) (f := fun s => ‖ι.symm (f s)‖) hj.injOn]
-  exact Finset.prod_le_prod_of_subset_of_le_one (Finset.subset_univ _) (fun _ _ => norm_nonneg _)
+  exact Finset.prod_le_prod_of_subset_of_le_one₀ (Finset.subset_univ _) (fun _ _ => norm_nonneg _)
     fun s _ _ => norm_le_one ι (hi s)
 
 theorem exists_unit_pow (k : ℕ) [NeZero k] (σ : ℂ ≃+* ℂ) :

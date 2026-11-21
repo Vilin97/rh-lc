@@ -44,7 +44,10 @@ private theorem tensor_case {F : Type} [Field F] [NumberField F] (δ : F)
   · have hmem : finPartPi v ∈ tsupport g := subset_tsupport g hv
     have hq : (b * q4 δ v).2 = b.2 * qf (finPartPi v) := by
       have hp (x : A F) : (x ^ 2).2 = x.2 ^ 2 := rfl
-      simp [q4, qf, finPartPi, hp]
+      have hs (x y : A F) : (x - y).2 = x.2 - y.2 := rfl
+      have hm (x y : A F) : (x * y).2 = x.2 * y.2 := rfl
+      have ha : (algebraMap F (A F) δ).2 = algebraMap F (FiniteAdeleRing (𝓞 F) F) δ := rfl
+      simp [q4, qf, finPartPi, hp, hs, hm, UpperTheory.ConvolutionTheory.R2.rt, ha]
     have hone : ψ (b * q4 δ v) = 1 := by
       refine psi_eq_one _ (by simp [hb1]) ?_
       rw [hq]

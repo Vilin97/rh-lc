@@ -37,6 +37,9 @@ private theorem continuous_inner (M : Meas ℚ) {f : GL (Fin 2) (A E) → ℂ} (
     Continuous fun k : GL (Fin 2) (A E) => ∫ g in M.D, f (em E (gl g) * k) ∂M.μ := by
   haveI : IsFiniteMeasure (M.μ.restrict M.D) := ⟨by simpa using UpperTheory.ConvolutionTheory.R2.M.volD ℚ M⟩
   haveI := secondCountable_gl (E := E)
+  haveI : FirstCountableTopology (GL (Fin 2) (A E)) := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      infer_instance
   have hin : ∀ k, Continuous fun g : G1 ℚ => f (em E (gl g) * k) := fun k =>
     hf.comp ((continuous_em.comp Matrix.SpecialLinearGroup.continuous_toGL).mul continuous_const)
   rw [continuous_iff_continuousAt]

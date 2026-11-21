@@ -42,7 +42,7 @@ theorem UpperTheory.ConvolutionTheory.R2.measEx :
   haveI : SecondCountableTopology (M.Bor F) := TopologicalSpace.Subtype.secondCountableTopology _
   haveI : SecondCountableTopology (M.Ks F) := TopologicalSpace.Subtype.secondCountableTopology _
   refine ⟨⟨μ, μK.map Subtype.val, D, hμ, M.unimod F μ,
-    Measure.isProbabilityMeasure_map measurable_subtype_coe.aemeasurable, hK ▸ hsupp,
+    (Measure.isProbabilityMeasure_map_iff measurable_subtype_coe.aemeasurable).2 hp, hK ▸ hsupp,
     fun k hk => hl k (by rw [← SetLike.mem_coe, ← hK]; exact hk),
     fun k hk => hr k (by rw [← SetLike.mem_coe, ← hK]; exact hk), fun u hu => ?_, hD,
     IsFundamentalDomain.mk' hD.nullMeasurableSet hDu⟩⟩

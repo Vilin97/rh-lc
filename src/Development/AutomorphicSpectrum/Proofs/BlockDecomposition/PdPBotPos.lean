@@ -87,9 +87,7 @@ theorem theta_ex {G : Type} [CommRing G] [Algebra R G] (a b : IdF F) (T : C) (ht
     refine ⟨TensorProduct.lid R G (e.symm w), Subtype.ext ?_⟩
     change Ideal.Quotient.mk _ (e ((1 : R) ⊗ₜ[R] TensorProduct.lid R G (e.symm w))) = _
     have : (1 : R) ⊗ₜ[R] TensorProduct.lid R G (e.symm w) = e.symm w := by
-      refine TensorProduct.induction_on (e.symm w) (by simp) (fun r x => ?_) (fun u v hu hv => ?_)
-      · simp [TensorProduct.tmul_smul, TensorProduct.smul_tmul']
-      · simp only [map_add (f := _), TensorProduct.tmul_add, hu, hv]
+      rw [← TensorProduct.lid_symm_apply, LinearEquiv.symm_apply_apply]
     rw [this, e.apply_symm_apply]
 
 end Sq

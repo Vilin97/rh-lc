@@ -70,7 +70,8 @@ theorem span_grT_eq_top {A : Type} [CommRing A] [IsNoetherianRing A] (I : Ideal 
       Submodule Γ(X, U) Γ(P, U)),
       toFunctions (A := A) (U : X.Opens) (g i) • n ∈ liftSub (anti hS) (e + 1) (U : X.Opens) W := by
     intro i n hn
-    obtain ⟨v, rfl⟩ := pow_smul_le_secs_lvl I hP hS e U hn
+    obtain ⟨v, hv⟩ := pow_smul_le_secs_lvl I hP (S := S) hS e U hn
+    rw [← hv]
     refine ⟨(mulLvl (hr i) e).app (U : X.Opens) v, ?_, ?_⟩
     · rw [← ConcreteCategory.comp_apply, ← Scheme.Modules.Hom.comp_app, mulLvl_arrow,
         Scheme.Modules.Hom.comp_app, ConcreteCategory.comp_apply, GroundTheory.Arith.SchemeCoh.smulHom_app_apply]

@@ -16,6 +16,7 @@ private theorem exists_plc_over (K : Type) [Field K] [NumberField K] (l : ℕ) [
       exact bot_le)
   have hmem : ((l : ℕ) : 𝓞 K) ∈ Q := by
     have h : (l : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := by
+      change (l : ℤ) ∈ Ideal.under ℤ Q
       rw [hQc]
       exact Ideal.subset_span rfl
     simpa using h

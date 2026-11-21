@@ -15,15 +15,13 @@ theorem UpperTheory.V.AlgRepEndIrreducible.cohTransport :
   rintro E _ _ _ a π Ξ Ξ' T ⟨h1, h2⟩ H
   refine GlobalTheory.ConjCoh.hasCohomology_transport (σ := LinearMap.id) (s := id)
     (LinearEquiv.lTensor π.V T) (fun _ => rfl) (fun _ => rfl) (fun _ _ => rfl) (fun k m => ?_) (fun X m => ?_) H
-  · induction m using TensorProduct.induction_on with
-    | zero => simp only [map_zero]
+  · induction m using TensorProduct.inductionOn with
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul φ v =>
       change π.op (.cpt k) φ ⊗ₜ[ℂ] T (Ξ.mat (Unitary.toUnits k) *ᵥ v) =
         π.op (.cpt k) φ ⊗ₜ[ℂ] (Ξ'.mat (Unitary.toUnits k) *ᵥ T v)
       rw [h1]
-  · induction m using TensorProduct.induction_on with
-    | zero => simp only [map_zero]
+  · induction m using TensorProduct.inductionOn with
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul φ v =>
       rw [GlobalTheory.GKCoh.tensorLie_tmul, map_add (f := _)]

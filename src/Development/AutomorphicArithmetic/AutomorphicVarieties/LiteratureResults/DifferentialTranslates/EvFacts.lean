@@ -16,7 +16,8 @@ private theorem ev_comp {E : Type} [Field E] [NumberField E] [_root_.NumberField
     (fun g => ev m g j) = (TensorProduct.piScalarRight ℂ ℂ (Sm E a) (Fin d) m j).1 := by
   induction m using TensorProduct.induction_on with
   | zero =>
-    rw [map_zero, map_zero]
+    rw [(ev (E := E) (a := a) (d := d)).map_zero,
+      (TensorProduct.piScalarRight ℂ ℂ (Sm E a) (Fin d)).map_zero]
     rfl
   | tmul φ v =>
     funext g

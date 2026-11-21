@@ -24,10 +24,10 @@ theorem famProj_of : EvLem → SumRep → FamProj := by
       (∀ φ ∈ U, p φ = φ) ∧ ∀ V ∈ t, V ≠ U → ∀ φ ∈ V, p φ = 0 := fun U => by
     by_cases hU : U ∈ t
     · obtain ⟨C, hC, hc⟩ := (hind (Finset.mem_coe.2 hU)).symm.exists_isCompl
-      refine ⟨U.subtype ∘ₗ Submodule.linearProjOfIsCompl U C hc.symm, fun _ => ⟨fun φ => Subtype.property _, fun φ hφ =>
-        congrArg Subtype.val (Submodule.linearProjOfIsCompl_apply_left hc.symm ⟨φ, hφ⟩), fun V hV hne φ hφ => ?_⟩⟩
-      have h0 : Submodule.linearProjOfIsCompl U C hc.symm φ = 0 :=
-        Submodule.linearProjOfIsCompl_apply_right' hc.symm
+      refine ⟨U.subtype ∘ₗ Submodule.projectionOnto U C hc.symm, fun _ => ⟨fun φ => Subtype.property _, fun φ hφ =>
+        congrArg Subtype.val (Submodule.projectionOnto_apply_left hc.symm ⟨φ, hφ⟩), fun V hV hne φ hφ => ?_⟩⟩
+      have h0 : Submodule.projectionOnto U C hc.symm φ = 0 :=
+        Submodule.projectionOnto_apply_of_mem_right hc.symm
           (hC (le_sSup (show V ∈ (t : Set (Submodule ℂ (UA E a → ℂ))) \ {U} from ⟨hV, hne⟩) hφ))
       simp [h0]
     · exact ⟨0, fun h => absurd h hU⟩

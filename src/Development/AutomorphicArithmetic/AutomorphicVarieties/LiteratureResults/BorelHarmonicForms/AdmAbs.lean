@@ -19,7 +19,7 @@ private theorem compactSpace_unitary_matrix_pi_complex (T : Type) [Fintype T] (a
     continuous_id
   refine (hK.image hof).of_isClosed_subset isClosed_unitary ?_
   intro U hU
-  refine ⟨Matrix.of.symm U, ?_, by simp⟩
+  refine ⟨Matrix.of.symm U, ?_, by ext i j; rfl⟩
   simp only [Set.mem_pi, Set.mem_univ, true_implies]
   intro i j t
   have hM : U.map (fun f => f t) ∈ Matrix.unitaryGroup (Fin a) ℂ := by

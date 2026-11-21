@@ -75,7 +75,7 @@ private theorem compR_along (D : InfD σ m) {τ : E →+* ℂ} {k : Fin (m + 1)}
   rw [e]
   by_cases hik : i = k
   · subst hik
-    simp
+    rw [Pi.single_eq_same, RingEquiv.apply_symm_apply, if_pos rfl]
   · rw [Pi.single_eq_of_ne hik, map_zero, if_neg hik]
 
 private def xL {K : Type} [Field K] [NumberField K] (n : ℕ) (τ : K →+* ℂ) (p q : Fin n) (z : ℂ) : archLie K n :=

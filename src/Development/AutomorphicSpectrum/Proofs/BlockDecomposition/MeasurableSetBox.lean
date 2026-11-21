@@ -52,7 +52,7 @@ theorem abs_map (f : M → X) (hf : Measurable f) {B : Set M} (hB : MeasurableSe
     have e2 := Measure.restrict_map (μ := P) hT hB
     rw [hBT, hP] at e2
     rw [← e2, Measure.restrict_smul]
-  rw [h1, Measure.map_smul]
+  rw [h1, Measure.map_smul k hf.aemeasurable]
 
 open Pointwise in
 theorem abs_finite [AddCommGroup M] [TopologicalSpace M] [ContinuousAdd M] [TopologicalSpace X] [T2Space X]

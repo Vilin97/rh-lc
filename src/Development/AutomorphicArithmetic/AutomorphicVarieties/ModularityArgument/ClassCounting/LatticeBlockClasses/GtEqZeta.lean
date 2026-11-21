@@ -22,7 +22,7 @@ private theorem gtEq_ord {l c ν : ℕ} [hl : Fact l.Prime] {ζ : (𝓞 F)ˣ} {�
     · have := h.c_two h3.symm
       rw [← h3]; omega
     · nlinarith
-  have ho := ZMod.orderOf_one_add_mul_prime_pow hl.out c (by omega) hpm 1
+  have ho := ZMod.orderOf_one_add_mul_prime_pow hl.out c hpm 1
     (by exact_mod_cast hl.out.not_dvd_one) n
   simp only [Int.cast_one, mul_one] at ho
   have hf : IsOfFinOrder (1 + (l : ZMod (l ^ (n + c))) ^ c) := by

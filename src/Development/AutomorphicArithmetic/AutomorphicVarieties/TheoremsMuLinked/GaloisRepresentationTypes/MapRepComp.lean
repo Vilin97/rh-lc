@@ -178,11 +178,11 @@ private theorem irr_L {D : Raw Ω c} (T : Tower D) (hT : T.Ok) (𝔞 : Amb l) (f
     (fun i => (Units.map (𝔞.red c).toMonoidHom).comp (D.ps i)) (fun g => ?_) _ (comm_L T) (fun i j hij => ?_) hi
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Matrix.trace, map_sum]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    have h1 : residue 𝔞.V (r g i i) = residue 𝔞.V (𝔞.a c (D.r0 g i i)) := Ideal.Quotient.eq.2 (hr g i i)
-    have h2 : D.r0 g i i = D.ps i g := Matrix.diagonal_apply_eq _ i
-    rw [h2] at h1
-    exact h1
+      refine Finset.sum_congr rfl fun i _ => ?_
+      have h1 : residue 𝔞.V (r g i i) = residue 𝔞.V (𝔞.a c (D.r0 g i i)) := Ideal.Quotient.eq.2 (hr g i i)
+      have h2 : D.r0 g i i = D.ps i g := Matrix.diagonal_apply_eq _ i
+      rw [h2] at h1
+      exact h1
   · obtain ⟨g, hg, hne⟩ := dist_L T hT i j hij
     refine ⟨g, hg, fun h => hne ((𝔞.j c).injective ?_)⟩
     have h1 : 𝔞.red c (D.ps i g) = 𝔞.red c (D.ps j g) := congrArg Units.val h

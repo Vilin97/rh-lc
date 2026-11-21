@@ -91,20 +91,21 @@ theorem deg_iff_not_li {F : Type} [Field F] {N n : ℕ} (x : Mat F N) :
       simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at this
       rw [Finset.sum_eq_single i] at this
       · simpa using this
-      · intro b _ hb; rw [if_neg]; exact fun h => hb (Fin.ext h)
+      · intro b _ hb
+        simp [Finsupp.single_apply, show (b : ℕ) ≠ (i : ℕ) from fun h => hb (Fin.ext h)]
       · simp
     · apply Polynomial.natDegree_sum_le_of_forall_le
       intro b _
       exact (Polynomial.natDegree_monomial_le _).trans (by omega)
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum]
-      ext j k
-      have := congrFun hg (j, k)
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at this
-      simp only [Polynomial.aeval_monomial, Matrix.sum_apply, Matrix.zero_apply]
-      rw [← this]
-      refine Finset.sum_congr rfl (fun b _ => ?_)
-      rw [← Algebra.smul_def, Matrix.smul_apply, smul_eq_mul]
+        ext j k
+        have := congrFun hg (j, k)
+        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at this
+        simp only [Polynomial.aeval_monomial, Matrix.sum_apply, Matrix.zero_apply]
+        rw [← this]
+        refine Finset.sum_congr rfl (fun b _ => ?_)
+        rw [← Algebra.smul_def, Matrix.smul_apply, smul_eq_mul]
 
 noncomputable def gen (C : Type) [Field C] (N : ℕ) : Mat (MP C N) N :=
   Matrix.of fun i j => MvPolynomial.X (i, j)

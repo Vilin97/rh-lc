@@ -34,7 +34,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.KSBijection
 
-open TrivSqZeroExt KSSymm
+open TrivSqZeroExt
 
 section Crystal
 

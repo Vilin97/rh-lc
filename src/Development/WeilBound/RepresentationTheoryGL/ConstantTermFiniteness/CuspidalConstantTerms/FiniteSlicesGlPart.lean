@@ -119,7 +119,7 @@ theorem isContRep_repOf [TopologicalSpace G] [TopologicalSpace K] [ContinuousMul
     rw [e]
     rfl
   rw [this]
-  exact continuous_finset_sum _ fun p _ => continuous_const.mul
+  exact continuous_finsetSum _ fun p _ => continuous_const.mul
     ((hc w.1 w.2).comp (continuous_const.mul hα))
 
 theorem kfin_of_space {S : Submodule ℂ (K → ℂ)} [FiniteDimensional ℂ S] {H : Type} [Mul H] {i : K → H} {φ : H → ℂ}

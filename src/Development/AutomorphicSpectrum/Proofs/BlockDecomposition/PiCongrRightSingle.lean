@@ -57,6 +57,8 @@ theorem omKun_pushout (K A B R : Type) [CommRing K] [CommRing A] [CommRing B] [C
     hmain, Pi.single_smul, map_smul, hE]
   unfold form
   congr 2
+  funext k
+  simp only [Function.comp_apply, KaehlerDifferential.mapBaseChange_tmul, one_smul]
   generalize Fin.cast _ k = j
   induction j using Fin.addCases with
   | left j => simp [KaehlerDifferential.mapBaseChange_tmul]

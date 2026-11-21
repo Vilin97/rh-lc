@@ -17,6 +17,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 
 set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 100000 in
 theorem fin_small_gen {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (Z : Comp Xo c) (G : WTZ E)
     (hFG : (latOn U Z G).FG) (hsp : Submodule.span c.F (latOn U Z G : Set (cuspOn U Z G)) = ⊤)
     (hB : GlobalTheory.DegVal.BirOn U Z G) (la : HeightOneSpectrum (𝓞 c.F)) {Γ : Type} [LinearOrderedCommGroupWithZero Γ] (ν : Valuation (Om Z) Γ)

@@ -61,7 +61,7 @@ private theorem conj_ne {g : ℕ} [Fact g.Prime] {m : ℕ} (hm : 0 < m) {K : Typ
     show (aeval (z : K) p) ^ g ^ a = aeval (z : K) p
     rw [← aeval_pow_prime_pow_eq_pow, h]
   have hq : 1 < g ^ a := Nat.one_lt_pow ha.ne' hg.one_lt
-  have hP0 : (X ^ (g ^ a) - X : K[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero K hq
+  have hP0 : (X ^ (g ^ a) - X : K[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hq
   have hle := Polynomial.card_le_degree_of_subset_roots (p := (X ^ (g ^ a) - X : K[X]))
     (Z := Finset.univ.map (Function.Embedding.subtype (· ∈ F))) (by
       intro y hy

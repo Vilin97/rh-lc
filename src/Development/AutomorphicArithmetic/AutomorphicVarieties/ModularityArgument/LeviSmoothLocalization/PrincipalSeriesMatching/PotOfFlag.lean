@@ -96,7 +96,7 @@ theorem UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter.potOfFlag :
   refine ⟨κ, hflag, fun i j b hb h => ?_⟩
   have hAl : A.valuation (l : Ω) < 1 := by
     have h1 := (hA ((l : ℕ) : 𝓞 F)).2 hv
-    simpa using h1
+    simpa only [map_natCast] using h1
   obtain ⟨s, hs, hinf⟩ := cyc_inf_over F Ω l A hAl
   let t : ↥(Dec (F := F) A) := ⟨s, Ine_le_Dec A hs⟩
   have h1 : κ i t ^ b = (κ j t * cycBar F Ω l s) ^ b := DFunLike.congr_fun h t

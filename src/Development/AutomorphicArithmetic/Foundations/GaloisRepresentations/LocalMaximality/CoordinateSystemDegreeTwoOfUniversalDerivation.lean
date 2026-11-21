@@ -77,6 +77,8 @@ theorem UpperTheory.Gal.productCup_of_system.coordinateSystem_degree_two_of_univ
     intro I J hI hJ
     simp only [colA, Sys.colCx, kosT]
     congr 1
+    funext L
+    simp [A, mixF, lu1, ru1, lu2, ru2, hI, hJ]
   have hbot : ∀ b : Finset (Two d), ¬ ((lft b).Nonempty ∧ (rgt b).Nonempty) → ∀ L,
       A (uni b L) = ⊥ := by
     intro b hb L

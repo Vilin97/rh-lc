@@ -33,7 +33,9 @@ theorem UpperTheory.V.ZK.Cl.cRep :
   · intro t c
     simp only [repD, repC, dt, MonoidHom.comp_apply]
     congr 1
-      powMonoidHom_apply, chi, MonoidHom.coe_mk, OneHom.coe_mk]
+    funext j
+    simp only [MonoidHom.pi_apply, MonoidHom.coprod_apply, MonoidHom.prod_apply,
+      MonoidHom.id_apply, powMonoidHom_apply, chi, MonoidHom.coe_mk, OneHom.coe_mk]
     rw [← pow_add, hmod, hmod ((j.1 + (t : ZMod q) * j.2).val * _)]
     congr 1
     apply (ZMod.natCast_eq_natCast_iff' _ _ _).mp

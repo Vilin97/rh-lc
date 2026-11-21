@@ -30,10 +30,10 @@ theorem guard_of (H : PlainRec) [IsCMField F] [IsAlgClosure F Ω] {ι : Qbar l �
     (hσ : π.IsLocComp w σ) :
     GlobalTheory.RoadU.PlainTor (IrrGL.of σ.ρ σ.smooth σ.irred) ∧ UpperTheory.GalStar.Tor (rc (algNorm σ)) ∧ (rc (algNorm σ)).mono0 := by
   obtain ⟨t, ht⟩ := hW.2 π hreg ha
-  refine H F Ω A w h rc hrc n π t (ht w ?_) σ hσ
-  by_cases e : ((l : ℕ) : 𝓞 F) ∈ w.asIdeal
-  · exact Or.inr ((hw.resolve_left fun k => k e).elim (hW.1 w e) id)
-  · exact Or.inl e
+  apply H F Ω A w h rc hrc n π t (ht w (by
+    by_cases e : ((l : ℕ) : 𝓞 F) ∈ w.asIdeal
+    · exact Or.inr ((hw.resolve_left fun k => k e).elim (hW.1 w e) id)
+    · exact Or.inl e)) σ hσ
 
 def ThruAway : Prop := PlainRec → Thru false
 def AIsoTwOf : Prop := FlagLaws → WinTw → AIsoTw

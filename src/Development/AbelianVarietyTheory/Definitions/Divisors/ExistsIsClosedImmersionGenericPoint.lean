@@ -1098,7 +1098,7 @@ theorem SemiPos.shift {L : HermLB p} (h : L.SemiPos D) (t : (k →+* ℂ) → �
 
 
 variable (p D) in
-theorem isNef_triv : (triv p).IsNef D where
+theorem isNef_triv : (triv p).IsNef D := {
   semiPos σ i c y _ ξ := (congrArg Complex.re (ReciprocityTheory.L2DbarEstimates.Y.cmpb_leviV_const 0 _ ξ)).ge
   vertical Z i _ _ κ _ _ _ _ := (interNum_eq_zero_of_cls_eq_zero κ _
     (fun _ => LB.isLB_pull (LB.isLB_triv X) i) 0
@@ -1119,7 +1119,7 @@ theorem isNef_triv : (triv p).IsNef D where
       have e' := ((triv p).φ σ).pull_φ i rfl (pick (((triv p).restr i).φ σ).isLB y) y
       rw [logNorm, Units.val_one, e]
       exact (congrArg (_ - · / 2) e').trans (by simp [triv, Weight.ofFun])
-    simp [curveDeg, h₁, h₂]
+    simp [curveDeg, h₁, h₂] }
 
 end HermLB
 
@@ -1332,7 +1332,7 @@ def trivShift (t : ℝ) : HermLB (𝟙 (Sp ℤ)) := (HermLB.triv _).shift (fun _
 
 open Classical in
 theorem isArithHeight_trivShift (t : ℝ) : (trivShift t).IsArithHeight fun x =>
-    if x.asIdeal = ⊥ then t else Real.log (Nat.card (ℤ ⧸ x.asIdeal)) where
+    if x.asIdeal = ⊥ then t else Real.log (Nat.card (ℤ ⧸ x.asIdeal)) := {
   vertical Z i _ _ κ _ _ _ d hd := by
     have := (IsClosedImmersion.isAffine_surjective_of_isAffine i).1
     have hinj := (algebraMap κ Γ(Z, ⊤)).injective
@@ -1383,7 +1383,7 @@ theorem isArithHeight_trivShift (t : ℝ) : (trivShift t).IsArithHeight fun x =>
     have := hd.ge.trans (i.isClosedEmbedding.isInducing.topologicalKrullDim_le.trans
       isArithVar_int.dim_eq.le)
     norm_cast at this
-    omega
+    omega }
 
 theorem isSelfInter_trivShift (t : ℝ) : (trivShift t).IsSelfInter t :=
   ⟨_, isArithHeight_trivShift t, if_pos (Ideal.ext fun n =>

@@ -112,7 +112,7 @@ end GlobalTheory.MumfordE8Bimultiplicative
 
 end
 
-open GlobalTheory.Mum GlobalTheory.Mum.E8Ring
+open GlobalTheory.Mum
 
 namespace GlobalTheory.MumfordE8Bimultiplicative
 

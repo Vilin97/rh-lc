@@ -175,7 +175,9 @@ private theorem cnt_eq {n r : ℕ} {d : Fin r → ℕ} (hd : ∀ j, 0 < d j) (e 
   obtain ⟨v, hv⟩ := exists_ne (0 : V)
   let f := E.symm.toIntertwiningMap.comp ι
   have hf : f v ≠ 0 := fun h => hv (hι (E.symm.toLinearEquiv.injective (by
-    rw [map_zero, map_zero]; exact h)))
+    have hz : ι 0 = 0 := map_zero ι
+    rw [hz, E.symm.toLinearEquiv.map_zero]
+    exact h)))
   have hτs : IsSubquotient τ (jac e π) := .of_surjective (GlobalTheory.CompanionTheory.FrobJm.frobMap e f)
     (GlobalTheory.CompanionTheory.FrobJm.surjective_of_ne_zero hτ _ (GlobalTheory.CompanionTheory.FrobJm.frobMap_ne_zero e f ⟨v, hf⟩))
   have hτsm : IsSmooth τ := hτs.isSmooth (isSmooth_jac e hs.isSmooth)

@@ -155,7 +155,9 @@ theorem form_expand {a : ℕ} (c₀ : Gam n d) (c : Fin a → Gam n d) :
     have h1 : (fun k => (c k (f k)) • (dl (f k) : Ω[Lr K n d⁄K])) =
         fun k => ((c k (f k) : ℤ) : Lr K n d) • (dl (f k) : Ω[Lr K n d⁄K]) :=
       funext fun k => (Int.cast_smul_eq_zsmul _ _ _).symm
-    rw [h1, W.map_smul_univ, ← Int.cast_prod, Int.cast_smul_eq_zsmul]
+    rw [h1, W.map_smul_univ]
+    simp only [RingHom.id_apply]
+    rw [← Int.cast_prod, Int.cast_smul_eq_zsmul]
     rfl
   unfold form
   simp only [LaurentD.D_monL]

@@ -42,8 +42,7 @@ theorem vanish_ring {A : Type} [CommRing A] [TopologicalSpace A] [IsTopologicalR
     ∫ v, (∫ y, φ y * ψ (v ⬝ᵥ g y) ∂ν) * ψ (-(v ⬝ᵥ z₀)) ∂μ = 0 := by
   have hdot : Continuous (fun p : (κ → A) × (κ → A) => p.1 ⬝ᵥ p.2) := by
     unfold dotProduct
-    exact continuous_finset_sum _ fun i _ =>
-      ((continuous_apply i).comp continuous_fst).mul ((continuous_apply i).comp continuous_snd)
+    fun_prop
   have hd1 : ∀ w, Continuous fun v : κ → A => ψ (-(v ⬝ᵥ w)) := fun w =>
     hψc.comp (hdot.comp (Continuous.prodMk continuous_id continuous_const)).neg
   have hd2 : ∀ v, Continuous fun w : κ → A => ψ (-(v ⬝ᵥ w)) := fun v =>

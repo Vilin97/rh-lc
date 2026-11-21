@@ -50,7 +50,7 @@ theorem ULA_of (hS : Stalk) (hP : AlgResProps) (hE : AICExt) (hD : DomCover) (hL
     have ho : AlgRes o := p6 D (Localization.AtPrime r) r.primeCompl
     refine ⟨CommRingCat.of (Localization.AtPrime r), o, IsLocalRing.maximalIdeal _,
       hL D (Localization.AtPrime r) r.primeCompl, inferInstance,
-      IsLocalization.AtPrime.comap_maximalIdeal _ r, ?_⟩
+      IsLocalization.AtPrime.under_maximalIdeal _ r, ?_⟩
     haveI : IsDomain (CommRingCat.of (Localization.AtPrime r)) := hdom
     haveI : IsLocalRing (CommRingCat.of (Localization.AtPrime r)) :=
       inferInstanceAs (IsLocalRing (Localization.AtPrime r))

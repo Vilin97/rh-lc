@@ -24,7 +24,7 @@ private theorem invInvariant {H : Type} [Group H] [TopologicalSpace H] [IsTopolo
   have hfin : ν K ≠ ⊤ := K.isCompact.measure_lt_top.ne
   have hsq : ν = (c * c) • ν := by
     conv_lhs => rw [← Measure.inv_inv ν, hc]
-    rw [Measure.inv_def (c • ν), Measure.map_smul, ← Measure.inv_def, hc, smul_smul]
+    rw [Measure.inv_def (c • ν), Measure.map_smul _ measurable_inv.aemeasurable, ← Measure.inv_def, hc, smul_smul]
   have h1 : c * c = 1 := by
     have : (c * c) * ν K = 1 * ν K := by
       rw [one_mul]; conv_rhs => rw [hsq]

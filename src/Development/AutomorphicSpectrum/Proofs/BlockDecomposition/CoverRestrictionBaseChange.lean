@@ -158,11 +158,11 @@ theorem totalD_total (X : ∀ s, A.obj s) (t : Finset κ) :
   by_cases ht : Set.InjOn τ (t : Set κ)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [total_of_inj _ _ ht, Cube.totalD_apply, Finset.sum_image ht, map_sum, Finset.smul_sum]
-    refine Finset.sum_congr rfl fun i hi => ?_
-    have hs : Set.InjOn τ (t.erase i : Finset κ) := ht.mono (by simp [Finset.erase_subset])
-    rw [total_of_inj _ _ hs, map_zsmul, ← P.app_res (Finset.erase_subset i t), map_zsmul,
-      Cube.res_congr A X (image_erase_of_injOn τ hi ht) _ (Finset.erase_subset _ _),
-      smul_smul, smul_smul, sign_erase τ hi ht]
+      refine Finset.sum_congr rfl fun i hi => ?_
+      have hs : Set.InjOn τ (t.erase i : Finset κ) := ht.mono (by simp [Finset.erase_subset])
+      rw [total_of_inj _ _ hs, map_zsmul, ← P.app_res (Finset.erase_subset i t), map_zsmul,
+        Cube.res_congr A X (image_erase_of_injOn τ hi ht) _ (Finset.erase_subset _ _),
+        smul_smul, smul_smul, sign_erase τ hi ht]
   · rw [total_of_not _ _ ht]
     obtain ⟨a, ha, b, hb, hτab, hab⟩ : ∃ a ∈ t, ∃ b ∈ t, τ a = τ b ∧ a ≠ b := by
       simpa [Set.InjOn] using ht

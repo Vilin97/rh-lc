@@ -93,7 +93,7 @@ private theorem gk_case [IsTopologicalRing E] (hP : LocalPublishedTheorems) (K :
     rw [map_smul, b.toDual_apply_left, smul_eq_mul] at h1
     linear_combination -h1
   choose f hf hff using hf
-  refine ⟨fun s => ∑ i, f i s • b i, continuous_finset_sum _ fun i _ => (hf i).smul continuous_const,
+  refine ⟨fun s => ∑ i, f i s • b i, continuous_finsetSum _ fun i _ => (hf i).smul continuous_const,
     fun s s' => ?_⟩
   rw [cyc_val, ← Algebra.smul_def]
   conv_rhs => rw [← b.sum_repr (κ s)]

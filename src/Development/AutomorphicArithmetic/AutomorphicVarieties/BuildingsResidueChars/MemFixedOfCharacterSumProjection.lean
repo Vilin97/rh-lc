@@ -70,7 +70,7 @@ private theorem opE_sum {G R W Q : Type} [Group G] [CommRing R] [AddCommGroup W]
     [Fintype Q] (ρ : Representation R G W) (g : Q → G) (c : Q → ℤ) :
     opE ρ (∑ x, Finsupp.single (g x) (c x)) = ∑ x, c x • ρ (g x) := by
   show (∑ x, Finsupp.single (g x) (c x)).sum (fun h n => n • ρ h) = _
-  rw [← Finsupp.sum_finset_sum_index (fun a => zero_smul ℤ (ρ a)) (fun a m n => add_smul m n (ρ a))]
+  rw [← Finsupp.sum_finsetSum_index (fun a => zero_smul ℤ (ρ a)) (fun a m n => add_smul m n (ρ a))]
   exact Finset.sum_congr rfl fun x _ => Finsupp.sum_single_index (zero_smul ℤ (ρ (g x)))
 
 theorem UpperTheory.mem_fixed_of_character_sum_projection :

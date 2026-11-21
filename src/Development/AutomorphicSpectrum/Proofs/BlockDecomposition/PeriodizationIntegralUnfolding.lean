@@ -47,6 +47,7 @@ theorem tsum_setIntegral_sub_rat : ∀ (D : D7) (m r : ℕ) (μr : Measure (Mx D
     change ((-(e p) : ratMx D m r) : Mx D m r) + x = x - rat p
     rw [AddSubgroup.coe_neg, he]
     exact neg_add_eq_sub (rat p) x
+  haveI : ContinuousSub (Mx D m r) := IsTopologicalAddGroup.to_continuousSub
   have hmeas : ∀ p : Matrix (Fin m) (Fin r) D.host.E, Measurable (fun x => ‖f (x - rat p)‖ₑ) :=
     fun p => (hf.comp (continuous_id.sub continuous_const)).measurable.enorm
   have hlin : ∫⁻ x, ‖f x‖ₑ ∂μr ≤ B := by

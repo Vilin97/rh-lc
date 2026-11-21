@@ -58,7 +58,7 @@ theorem natCast_residue_eq_zero {l : ℕ} [Fact l.Prime] {F : Type} [Field F] [V
     [ValuativeExtension F (Om l)] : (l : 𝓀[F]) = 0 := by
   have hnl : ¬ ((1 : F) ≤ᵥ (l : F)) := by
     intro h
-    have h2 := (ValuativeExtension.vle_iff_vle (A := F) (B := Om l) 1 (l : F)).2 h
+    have h2 := (ValuativeExtension.vle_iff_vle (A := F) (B := Om l)).2 h
     rw [map_one, map_natCast, GroundTheory.PAdicHodge.CyclNorms.vle_iff_norm_le, norm_one,
       ← map_natCast (algebraMap ℚ_[l] (Om l)), PadicAlgCl.norm_extends] at h2
     exact absurd (Padic.norm_natCast_lt_one_iff.mpr (dvd_refl l)) (not_lt.mpr h2)

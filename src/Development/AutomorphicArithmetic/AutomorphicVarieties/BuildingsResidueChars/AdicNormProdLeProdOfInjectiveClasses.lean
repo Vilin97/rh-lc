@@ -20,5 +20,5 @@ theorem UpperTheory.adicNorm_prod_le_prod_of_injective_classes :
       = ∏ s ∈ Finset.univ.map ⟨cl o, hcl o⟩, ‖ι.symm (f o s)‖ := by
     rw [Finset.prod_map]; rfl
   rw [h2]
-  exact Finset.prod_le_prod_of_subset_of_le_one (Finset.subset_univ _)
+  exact Finset.prod_le_prod_of_subset_of_le_one₀ (Finset.subset_univ _)
     (fun _ _ => norm_nonneg _) (fun s _ _ => h1 o s)

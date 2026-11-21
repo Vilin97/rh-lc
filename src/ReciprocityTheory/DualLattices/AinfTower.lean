@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.AinfFacts
-import ReciprocityTheory.DualLattices.ThmAFull
+module
+
+public import ReciprocityTheory.DualLattices.AinfFacts
+public import ReciprocityTheory.DualLattices.ThmAFull
+
+@[expose] public section
 
 noncomputable section
 

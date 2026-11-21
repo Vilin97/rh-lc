@@ -152,12 +152,14 @@ theorem isPullbackBlowupSequence_appendLowerDimReduction
   have hjU : 0 < (MaxContactCoverData.derivedTriple S s hftS [MaxContactReduction.strictTransformAtLength s H]
       S.boundary.length).boundary.length := by
     rw [e2]
-    simp
+    change 0 < Nat.succ _
+    exact Nat.zero_lt_succ _
   have hjU' : 0 < (MaxContactCoverData.derivedTriple (NontrivialBoundary.pullbackWithNontrivialBoundary S q) s' hftT
       [MaxContactReduction.strictTransformAtLength s' (H.comap q)]
       (NontrivialBoundary.pullbackWithNontrivialBoundary S q).boundary.length).boundary.length := by
     rw [e3]
-    simp
+    change 0 < Nat.succ _
+    exact Nat.zero_lt_succ _
   have hOU := LowerDimReductionPullback.isOrderBoundedByMult_derivedTriple hstar S hV hm hO s hftS
     [MaxContactReduction.strictTransformAtLength s H] S.boundary.length hVU
   have hDU := LowerDimReductionPullback.isBalanced_derivedTriple hstar S hV hm hO s hftS

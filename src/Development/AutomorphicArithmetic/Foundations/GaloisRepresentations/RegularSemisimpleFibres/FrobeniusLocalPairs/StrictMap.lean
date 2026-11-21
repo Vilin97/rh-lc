@@ -34,7 +34,7 @@ private theorem strict_map {k E : Type} [Field k] [ValuativeRel k] [TopologicalS
   rw [← (valuation E).vlt_iff_lt]
   simp only [Units.coe_map, MonoidHom.coe_coe]
   intro hle
-  exact h ((ValuativeExtension.vle_iff_vle _ _).mp hle)
+  exact h (ValuativeExtension.vle_iff_vle.mp hle)
 
 theorem UpperTheory.Gal.InertialTypesAlt.L.align :
     UpperTheory.Gal.InertialTypesAlt.L.Align := by

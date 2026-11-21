@@ -67,7 +67,6 @@ theorem range_sup_range (K A B R : Type) [CommRing K] [CommRing A] [CommRing B] 
   have hD : ∀ r : R, KaehlerDifferential.D K R r ∈ S := by
     intro r
     induction r using h.out.inductionOn with
-    | zero => simp
     | tmul b => exact hB b
     | smul a y hy =>
       rw [Algebra.smul_def, Derivation.leibniz]

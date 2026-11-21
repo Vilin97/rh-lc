@@ -263,7 +263,7 @@ theorem length_stalk {Z : Scheme.{0}} (f : Z ⟶ MP ℤ m n) [IsClosedImmersion 
   letI : Algebra Γ(Z, f ⁻¹ᵁ mchart c) (Z.presheaf.stalk w) := TopCat.Presheaf.algebra_section_stalk Z.presheaf x
   haveI inst : IsLocalization.AtPrime (Z.presheaf.stalk w) (hU.primeIdealOf x).asIdeal := hU.isLocalization_stalk x
   have hP : (hU.primeIdealOf x).asIdeal = ptPrime f c w hw := by
-    rw [← IsLocalization.AtPrime.comap_maximalIdeal (Z.presheaf.stalk w) (hU.primeIdealOf x).asIdeal]
+    rw [← IsLocalization.AtPrime.under_maximalIdeal (Z.presheaf.stalk w) (hU.primeIdealOf x).asIdeal]
     ext a
     rw [ptPrime, RingHom.mem_ker, Ideal.under_def, Ideal.mem_comap, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
     have h1 := Scheme.mem_basicOpen Z a w hw
@@ -494,5 +494,7 @@ theorem divOfSec_cycle : ∀ (m : ℕ) (n : Fin (m + 1) → ℕ) (Z : Scheme.{0}
     exact notMem_supp_divOfSec.2 this (CartierDiv.mem_supp_of_mult_ne_zero h0)
   calc ∑ᶠ w, D.mult w * u (ptIdeal (f w)) = ∑ᶠ w ∈ S, D.mult w * u (ptIdeal (f w)) := by
         rw [finsum_mem_def, Set.indicator_eq_self.2 hsupp]
-    _ = _ := finsum_mem_congr rfl fun w hw => by rw [hD, mult_eq_multAt m n Z f k l hs w hw.1]
+    _ = _ := finsum_mem_congr rfl fun w hw => by
+      simpa only [hD] using congrArg (fun x : ℤ => x * u (ptIdeal (f w)))
+        (mult_eq_multAt m n Z f k l hs w hw.1)
 end GlobalTheory.CompanionTheory.MixZ.DivCyc

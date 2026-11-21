@@ -127,6 +127,8 @@ theorem MainStatements.WeightKernel.vanish : KerSwap → IdentOne → IdentTwo �
       a * ∫ x, ker c q φ x ∂m := by
     rw [← integral_const_mul]
     congr 1
+    funext x
+    simp only [MainStatements.WeightKernel.ker]
     rw [← tsum_mul_left]
     congr 1
     funext i

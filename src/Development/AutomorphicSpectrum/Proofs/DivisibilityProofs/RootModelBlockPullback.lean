@@ -34,18 +34,12 @@ theorem pull_trivLine (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) :
   refine ⟨?_, fun _ => rfl⟩
   funext k
   simp [trivLine, pullDeg]
-  classical
-  rw [Function.extend_def]
-  split_ifs <;> rfl
 
 theorem pull_oneLine (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) :
     IsPullHerm κ v (ReciprocityTheory.ChartRestriction.G.Geo.oneLine : HermLine ι) (ReciprocityTheory.ChartRestriction.G.Geo.oneLine : HermLine ι') := by
   refine ⟨?_, fun _ => rfl⟩
   funext k
   simp [ReciprocityTheory.ChartRestriction.G.Geo.oneLine, HermLine.ofWeight, pullDeg]
-  classical
-  rw [Function.extend_def]
-  split_ifs <;> rfl
 
 theorem smooth_monoLines {J : Type} {ℓ : J → HermLine ι} (h : ∀ j, IsSmoothHerm (ℓ j)) (m : J →₀ ℕ) (d : ℕ)
     (k : Fin d) : IsSmoothHerm (monoLines ℓ m d k) := by

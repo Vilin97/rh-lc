@@ -103,7 +103,7 @@ theorem isCompact_lattice (hC : IsCompact (Set.range (algebraMap O LL))) (M : Su
   haveI := IsModuleTopology.toContinuousSMul LL V
   haveI := IsModuleTopology.toContinuousAdd LL V
   have hc : Continuous fun c : ι → LL => ∑ i, c i • b i :=
-    continuous_finset_sum _ fun i _ => (continuous_apply i).smul continuous_const
+    continuous_finsetSum _ fun i _ => (continuous_apply i).smul continuous_const
   have he : (M : Set V) = (fun c : ι → LL => ∑ i, c i • b i) ''
       Set.pi Set.univ (fun _ => Set.range (algebraMap O LL)) := by
     ext x

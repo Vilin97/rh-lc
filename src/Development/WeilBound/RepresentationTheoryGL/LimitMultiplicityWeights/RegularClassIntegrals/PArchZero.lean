@@ -104,7 +104,7 @@ theorem continuous_rest {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLatt
   have h2 : (fun g : GAd σ J => tensorFin σ J ff (projFin σ J g)) = fun g => ∏ᶠ v, ff v (proj σ J v g) := by
     funext g; simp [tensorFin]
   rw [h2] at h1
-  exact (continuous_finset_prod _ fun u _ =>
+  exact (continuous_finsetProd _ fun u _ =>
     (continuous_of_mem_ccSmooth (continuous_archCoord σ J u) (hfa u)).comp (continuous_projArch σ J u)).mul h1
 
 open Classical in

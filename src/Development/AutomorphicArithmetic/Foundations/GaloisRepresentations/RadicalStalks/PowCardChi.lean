@@ -150,7 +150,7 @@ private theorem pow_ne_chi [CommRing C] {p : ℕ} [Fact p.Prime] (χ : C →+* k
     Nat.finite_of_card_ne_zero (by rw [hq]; exact pow_ne_zero _ (by omega))
   letI := Fintype.ofFinite (C ⧸ RingHom.ker χ)
   let Q : Polynomial k := Polynomial.X ^ p ^ j - Polynomial.X
-  have hQ : Q ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero k hpj
+  have hQ : Q ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hpj
   have hQd : Q.natDegree = p ^ j := Polynomial.natDegree_X_pow_sub_X (R := k) hpj
   have hsub : Finset.univ.image χ.kerLift ⊆ Q.roots.toFinset := by
     intro x hx

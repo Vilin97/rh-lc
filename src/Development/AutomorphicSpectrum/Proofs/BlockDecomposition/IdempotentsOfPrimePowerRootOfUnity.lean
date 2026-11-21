@@ -190,7 +190,7 @@ theorem teich_sum {ι : Type*} [Fintype ι] {e : ι → A.A} (he : OrthogonalIde
     rw [← map_mul, this.eq]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [WittVector.teichmuller_coeff_zero, ← WittVector.constantCoeff_apply, map_sum]
-    simp [WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
+      simp [WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
 
 theorem sharp_zero : A.sharp 0 = 0 := by
   show A.th (WittVector.teichmuller l 0) = 0

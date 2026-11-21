@@ -32,7 +32,7 @@ variable {N L T T' : HermLB p} {π : N.B.ι → L.B.ι} {s s' : (k →+* ℂ) �
 
 theorem Refines.pull (h : Refines N L π s) {q : Y ⟶ Sp k} (f : Y ⟶ X) (hf : f ≫ p = q) :
     Refines (N.pull f hf) (L.pull f hf) (fun c a => π (c a)) s where
-  le c y hy := mem_iInter.2 fun a => h.le _ (mem_iInter.1 hy a)
+  le _ _ hy := mem_iInter.2 fun a => h.le _ (mem_iInter.1 hy a)
   g Z r z c c' hc hc' := (gm_pull_g _ f r z c c' hc hc').trans
     ((h.g Z (r ≫ f) z _ _ (mem_iInter.1 hc PUnit.unit) (mem_iInter.1 hc' PUnit.unit)).trans
       (gm_pull_g _ f r z (fun a => π (c a)) (fun a => π (c' a))
@@ -51,7 +51,7 @@ theorem gm_pow (L : HermLB p) (m : ℕ) {Z : Scheme.{0}} (r : Z ⟶ X) (z : Z) (
 
 theorem Refines.pow (h : Refines N L π 0) (m : ℕ) :
     Refines (N.pow m) (L.pow m) (fun c a => π (c a)) 0 where
-  le c y hy := mem_iInter.2 fun a => h.le _ (mem_iInter.1 hy a)
+  le _ _ hy := mem_iInter.2 fun a => h.le _ (mem_iInter.1 hy a)
   g Z r z c c' hc hc' := (gm_pow N m r z c c' hc hc').trans
     ((congrArg (· ^ m) (h.g Z r z _ _ (mem_iInter.1 hc PUnit.unit) (mem_iInter.1 hc' PUnit.unit))).trans
       (gm_pow L m r z (fun a => π (c a)) (fun a => π (c' a))
@@ -231,14 +231,14 @@ theorem refines_comb {κ : Type} [Fintype κ] (M : κ → HermLB p) (n : κ → 
     (h : ∀ i, i ≠ i₀ → Const (M i) s) : ∃ π, Refines (comb M n) L π fun σ => (∑ i, n i - 1 : ℤ) * s σ := by
   classical
   obtain ⟨π, hπ⟩ := (refines_foldr (L := L) (fun i => zp (M i) (n i)) (fun i σ => if i = i₀ then 0 else n i * s σ) i₀
-    (by rw [h₀, hn]; exact (exists_refines_zp_one L).imp fun _ h => h.congr fun σ => (if_pos rfl).symm)
-    (fun i hi => by simpa only [if_neg hi] using (h i hi).zp (n i)) _ (Finset.nodup_toList Finset.univ)).2
+    (by rw [h₀, hn]; exact (exists_refines_zp_one L).imp fun _ h => h.congr fun σ => (ite_eq_left rfl).symm)
+    (fun i hi => by simpa only [ite_eq_right hi] using (h i hi).zp (n i)) _ (Finset.nodup_toList Finset.univ)).2
     (Finset.mem_toList.2 (Finset.mem_univ _))
   refine ⟨π, hπ.congr fun σ => Eq.symm ?_⟩
   rw [Finset.sum_map_toList, Finset.sum_apply, ← Finset.add_sum_erase _ _ (Finset.mem_univ i₀),
-    ← Finset.add_sum_erase _ _ (Finset.mem_univ i₀), if_pos rfl, hn, zero_add, add_sub_cancel_left, Int.cast_sum,
+    ← Finset.add_sum_erase _ _ (Finset.mem_univ i₀), ite_eq_left rfl, hn, zero_add, add_sub_cancel_left, Int.cast_sum,
     Finset.sum_mul]
-  exact Finset.sum_congr rfl fun i hi => (if_neg (Finset.ne_of_mem_erase hi)).symm
+  exact Finset.sum_congr rfl fun i hi => (ite_eq_right (Finset.ne_of_mem_erase hi)).symm
 
 
 open Polynomial in
@@ -260,7 +260,7 @@ theorem step_of_linear {R : Type*} [CommRing R] [Algebra ℝ R] (Φ : R →ₗ[�
       coeff_monomial_same, pow_one, Nat.add_sub_cancel, hc, Nat.choose_one_right, Nat.cast_succ]
   have h₃ (b : ℤ) : P b = taylor (b : ℝ) (P 0) := eq_of_infinite_eval_eq _ _ (hinf.mono (by
     rintro _ ⟨a, rfl⟩
-    rw [Set.mem_setOf_eq, taylor_eval, h₁, ← Int.cast_add, h₁, add_zero]))
+    rw [Set.mem_ofPred_eq, taylor_eval, h₁, ← Int.cast_add, h₁, add_zero]))
   have h₄ : derivative (P 0 - C ((D + 1) * c) * X) = 0 := eq_of_infinite_eval_eq _ _ (hinf.mono (by
     rintro _ ⟨b, rfl⟩
     have := h₂ b

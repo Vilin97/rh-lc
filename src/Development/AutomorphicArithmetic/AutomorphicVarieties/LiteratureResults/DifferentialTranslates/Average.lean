@@ -59,7 +59,9 @@ theorem average : Average := by
         simp only [DistribSMul.toAddMonoidHom_apply] at hm
         rw [hm]
         congr 1
-        rw [smul_comm] }
+        funext i
+        simp only [Submodule.coe_smul, Pi.smul_apply]
+        exact smul_comm _ _ _ }
   refine ⟨A, ?_, ?_⟩
   · intro x
     apply Subtype.ext

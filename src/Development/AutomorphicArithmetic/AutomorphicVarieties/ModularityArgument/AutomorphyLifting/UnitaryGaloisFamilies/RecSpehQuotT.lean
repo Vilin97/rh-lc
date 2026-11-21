@@ -19,7 +19,8 @@ private theorem segSum_nu {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Al
     (l : List (Segment (w.adicCompletion E))) (c : ℝ) :
     segSum rc (l.map fun Γ => Γ.nu (c : ℂ)) = (segSum rc l).lpTw c := by
   simp only [segSum]
-  rw [← GlobalTheory.NuShift.sumList_lpTw, List.map_map, List.map_map]
+  rw [← GlobalTheory.NuShift.sumList_lpTw]
+  simp only [List.map_map]
   congr 1
   refine List.map_congr_left fun Γ _ => ?_
   show ((rc (Γ.first.nu (c : ℂ))).lpTw _).lpChar _ = _

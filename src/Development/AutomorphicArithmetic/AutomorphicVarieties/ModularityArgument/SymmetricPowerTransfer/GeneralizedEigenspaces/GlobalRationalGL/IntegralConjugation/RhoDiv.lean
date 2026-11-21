@@ -19,6 +19,7 @@ theorem UpperTheory.V.Z.Sym.Dict.Br.rhoDiv :
     IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_eq_valuation' u x
   have he : (un w).asIdeal.ramificationIdx' w.asIdeal ≠ 0 :=
     Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver w.asIdeal (un w).ne_bot
+  rw [Ideal.ramificationIdx'_eq_ramificationIdx (un w).asIdeal w.asIdeal (un w).ne_bot] at he
   have key : ∀ x : Lp L, P.φ (un w) w rfl (cv (un w) x) ∈ w.adicCompletionIntegers L ↔
       cv (un w) x ∈ (un w).adicCompletionIntegers (Lp L) := by
     intro x

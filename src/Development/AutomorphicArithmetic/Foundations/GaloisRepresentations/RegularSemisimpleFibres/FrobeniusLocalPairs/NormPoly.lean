@@ -96,7 +96,7 @@ private theorem valuation_algEquiv_le_one_of_le_one {F L : Type} [Field F] [Valu
   have hext : @ValuativeExtension F L _ _ _
       (ValuativeRel.ofValuation ((valuation L).comap (s : L →+* L))) _ := by
     refine @ValuativeExtension.mk F L _ _ _
-      (ValuativeRel.ofValuation ((valuation L).comap (s : L →+* L))) _ (fun a b => ?_)
+      (ValuativeRel.ofValuation ((valuation L).comap (s : L →+* L))) _ (fun {a b} => ?_)
     show valuation L (s (algebraMap F L a)) ≤ valuation L (s (algebraMap F L b)) ↔ a ≤ᵥ b
     rw [AlgEquiv.commutes, AlgEquiv.commutes, ← Valuation.Compatible.vle_iff_le,
       ValuativeExtension.vle_iff_vle]

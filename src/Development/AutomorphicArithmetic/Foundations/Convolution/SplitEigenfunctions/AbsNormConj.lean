@@ -74,7 +74,8 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.descS :
     have h6 := c.twist (absQ_unrAt (-s) (w.under (𝓞 ℚ)))
     have h7 : (GlobalTheory.CuspRep.Model.absC M s).val w * (GlobalTheory.CuspRep.Model.absC ℚ (-s)).val (w.under (𝓞 ℚ)) = 1 := by
       apply Units.ext
-      have hn : Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 ℚ)).asIdeal := e
+      have hn : Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 ℚ)).asIdeal := by
+        simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using e
       have h0 : ((Ideal.absNorm w.asIdeal : ℕ) : ℂ) ≠ 0 := by
         simpa [Ideal.absNorm_eq_zero_iff] using w.ne_bot
       rw [Units.val_mul, PositivityTheory.Rg.Rs.StrStepB.absC_val, absQ_val, ← hn, neg_neg, Units.val_one,

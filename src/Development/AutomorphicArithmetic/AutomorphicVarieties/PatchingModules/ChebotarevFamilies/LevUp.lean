@@ -40,8 +40,8 @@ theorem UpperTheory.V.Pa.levUp :
             η_c := by simpa only [MonoidHom.comp_apply, hπ] using V0.η_c
             ε := V0.ε.comp π
             hε := by
-              ext g
-              exact congrArg (fun u : ℤ_[l]ˣ => (u : ℤ_[l])) (DFunLike.congr_fun V0.hε g)
+              ext g : 1
+              simpa only [MonoidHom.comp_apply, hπ] using DFunLike.congr_fun V0.hε g
             ε_cont := V0.ε_cont.comp hπc }, rfl, ?_⟩
   · intro v hv
     rcases hv with hv | hv

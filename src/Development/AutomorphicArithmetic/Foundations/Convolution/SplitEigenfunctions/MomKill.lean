@@ -73,7 +73,7 @@ private theorem exhaust (F : Type) [Field F] [NumberField F] :
   refine ⟨Set.accumulate e, fun n => ⟨isCompact_accumulate (fun i => (h1 i).1) n, ?_⟩,
     Set.monotone_accumulate, fun x => ?_⟩
   · rw [Set.accumulate_def]
-    exact isOpen_biUnion (fun i _ => (h1 i).2)
+    exact isOpen_iUnion (fun i => isOpen_iUnion (fun _ => (h1 i).2))
   · have hmem : x ∈ ⋃ n, e n := hU ▸ Set.mem_univ _
     obtain ⟨n, hn⟩ := Set.mem_iUnion.1 hmem
     exact ⟨n, Set.mem_accumulate.2 ⟨n, le_rfl, hn⟩⟩
@@ -178,7 +178,7 @@ private theorem norm_inf_le (v : V4 F) : ‖infPartPi v‖ ≤ ∑ p, |xc F v p|
 private theorem cont_gauss (δ : F) : Continuous (gauss δ) := by
   unfold gauss
   refine Complex.continuous_exp.comp (continuous_const.mul (Complex.continuous_ofReal.comp
-    (continuous_finset_sum _ fun w _ => (continuous_apply w).comp ((cont_pInf F).comp ?_))))
+    (continuous_finsetSum _ fun w _ => (continuous_apply w).comp ((cont_pInf F).comp ?_))))
   fun_prop
 
 private theorem gauss_ne (δ : F) (v : V4 F) : gauss δ v ≠ 0 := Complex.exp_ne_zero _

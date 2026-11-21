@@ -17,7 +17,9 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory NumberField IsDedekindDomain
 open Formalism.BasicNotions Formalism.MainNotions ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.PullbackSections ReciprocityTheory.GeometryOfNumbersTheory Formalism.L2.Pj
-open GlobalTheory.TrueGeo GlobalTheory.ProjVar GlobalTheory.CxPts GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.Mean4 GlobalTheory.Mean4O GlobalTheory.Toroidal GlobalTheory.LocM.Frm
+open GlobalTheory.TrueGeo GlobalTheory.CxPts GlobalTheory.ShFam GlobalTheory.Mean4 GlobalTheory.Mean4O GlobalTheory.Toroidal GlobalTheory.LocM.Frm
+open _root_.GlobalTheory.ProjVar (Var)
+open _root_.GlobalTheory.ShFam.Pad (grNorm latDR lat letters lnStep)
 open GlobalTheory.GradedNorm GlobalTheory.LieHt
 open Formalism.MainNotions.DIV.Cons (intO)
 
@@ -65,7 +67,7 @@ variable {X : Scheme.{0}} (t : SAB H X) {k : Type} [Field k] {x : Sp k ⟶ X} {n
 
 end Tan
 
-variable (K : Type) [Field K] [NumberField K] {n : ℕ} (e : Fin n ≃ Letter Dw)
+variable (K : Type) [Field K] [NumberField K] {n : ℕ} (e : Fin n ≃ _root_.GlobalTheory.ShFam.Pad.Letter Dw)
 
 
 end Steps

@@ -17,4 +17,5 @@ theorem UpperTheory.V.Ws.Pu.arith :
     (fun i => (D.wts4 i : ℤ)) ?_ hW
   rw [Fin.strictAnti_iff_succ_lt]
   intro i
-  fin_cases i <;> simp [Raw.wts4] <;> omega
+  fin_cases i <;> simp [Raw.wts4]
+  all_goals omega

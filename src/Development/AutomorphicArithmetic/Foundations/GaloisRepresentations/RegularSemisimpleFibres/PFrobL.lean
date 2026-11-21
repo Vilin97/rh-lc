@@ -106,4 +106,3 @@ theorem UpperTheory.Gal.InertialTypesAlt.frobL :
         congr 2
         exact Finset.prod_congr rfl fun i _ => by rw [hs i])
     convert hc
-    rfl

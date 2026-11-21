@@ -148,7 +148,9 @@ theorem lift_form : ∃ I : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ, Psd I ∧ (∀ x
     rw [Df_xz hC'] at hloc
     have hU : (fun η => xz m + η) ⁻¹' {ξ | Df gl s C ξ v w = C v w} ∈ 𝓝 (0 : Fin (m + 1) → k) := by
       have ht : Tendsto (fun η : Fin (m + 1) → k => xz m + η) (𝓝 0) (𝓝 (xz m)) := by
-        have := (continuous_add_left (xz m)).tendsto (0 : Fin (m + 1) → k)
+        have hc : Continuous (fun η : Fin (m + 1) → k => xz m + η) :=
+          continuous_const.add continuous_id
+        have := hc.tendsto (0 : Fin (m + 1) → k)
         simpa using this
       exact ht hloc
     obtain ⟨A₂, hA₂, hsub⟩ := lat_shrink ψ hψ hψ1 hU

@@ -49,17 +49,15 @@ variable {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io} {Orb : Type} {d 
 
 theorem rankHyp_ofLab {C3 : IntChart T io y} {ι : T.Fr →+* C} {Y : FBChart C V (𝓞 E) (chD C3.ch)} {lab : Lab E Orb d}
     (ha : LabArith V io ι lab) (hg : LabGeo C3 ι Y lab) (hr : lab.RankOK Dw) (o : Orb) :
-    (Y.raw (pairOfLab ha hg o)).RankHyp where
-  big_compl := (hr o).1
-  rk_big := by
-    intro g a hb
+    (Y.raw (pairOfLab ha hg o)).RankHyp := by
+  refine { big_compl := (hr o).1, rk_big := ?_, rk_small := ?_ }
+  · intro g a hb
     simp only [FBChart.raw, pairOfLab]
     convert
       (card_sigma_fst (fun b => Dw.mult (lab.tau o g b)) a).trans ((hr o).2.1 g a hb)
       using 2
     exact Finset.filter_congr (fun _ _ => Iff.rfl)
-  rk_small := by
-    intro g a hb
+  · intro g a hb
     simp only [FBChart.raw, pairOfLab]
     convert
       (card_sigma_fst (fun b => Dw.mult (lab.tau o g b)) a).trans ((hr o).2.2 g a hb)

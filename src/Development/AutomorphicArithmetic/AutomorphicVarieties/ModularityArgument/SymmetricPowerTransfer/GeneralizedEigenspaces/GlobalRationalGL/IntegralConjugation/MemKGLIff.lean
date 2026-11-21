@@ -37,7 +37,7 @@ theorem UpperTheory.V.Z.Sym.Dict.Br.okG :
         = B.ρ _ w rfl (star ((g.1 (un w) : Matrix (Fin 3) (Fin 3) _) j i)) := by
     intro g w i j
     have h := hm g⁻¹ w i j
-    rw [map_inv, InvMemClass.coe_inv, map_inv] at h
+    rw [B.bG.map_inv, InvMemClass.coe_inv, map_inv] at h
     exact h
   refine ⟨fun g v => ?_, fun g v => ?_, fun w S g => ?_⟩
   · constructor

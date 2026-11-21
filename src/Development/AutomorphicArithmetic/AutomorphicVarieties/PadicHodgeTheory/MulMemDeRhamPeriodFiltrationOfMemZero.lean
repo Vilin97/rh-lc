@@ -390,7 +390,7 @@ private theorem genMat {Q B G V : Type} [Field Q] [CommRing B] [IsDomain B] [Alg
     have := congrFun hc0 j
     simp only [Matrix.mulVec, dotProduct, A, Basis.toMatrix_apply, Pi.zero_apply] at this
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+      simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul, map_zero, Finsupp.zero_apply]
     rw [← this]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
@@ -406,7 +406,7 @@ private theorem genMat {Q B G V : Type} [Field Q] [CommRing B] [IsDomain B] [Alg
     intro g x k
     conv_lhs => rw [← e.sum_repr x]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, hs, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+      simp only [map_sum, hs, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [mul_comm]
@@ -596,7 +596,7 @@ private theorem stMat {P : LocPrime l} {AI : LocAinf l P} (T : LocTied l P AI) (
         exact ⟨c, hc⟩)
       w hv Finset.univ (hli.linearIndepOn _)
   have hB' : LinearIndependent (Bst P) w := by
-    rw [← linearIndepOn_univ]; rw [Finset.coe_univ] at hB; exact hB
+    rw [← linearIndepOn_univ_iff]; rw [Finset.coe_univ] at hB; exact hB
   obtain ⟨M, M', h1, h2⟩ := genMat (fun g : ↥(GK K') => actSt P (g : GQ l)) (fun g => ρ ⟨g, GK_le hKK' g.2⟩)
     (fun g => det_rep ρ _) (hu K') v w hv hB'
   exact ⟨K', hKK', M, M', h1, h2⟩

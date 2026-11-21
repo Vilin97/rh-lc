@@ -19,7 +19,7 @@ private theorem frob_ne_one {F F' : Type} [Field F] [Field F'] [Algebra F F'] [F
   have hcard : Nat.card F' = Nat.card F ^ Module.finrank F F' := Module.natCard_eq_pow_finrank
   have hq : 1 < Nat.card F := Finite.one_lt_card
   generalize Nat.card F = q at hs hq hcard
-  have hne : (X ^ q - X : F'[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero F' hq
+  have hne : (X ^ q - X : F'[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hq
   have hdeg : (X ^ q - X : F'[X]).natDegree = q := Polynomial.natDegree_X_pow_sub_X (R := F') hq
   have hsub : (Finset.univ : Finset F') ⊆ (X ^ q - X : F'[X]).roots.toFinset := by
     intro z _

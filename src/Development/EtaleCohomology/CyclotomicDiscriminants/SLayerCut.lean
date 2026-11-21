@@ -63,7 +63,7 @@ theorem goal_of : UpperTheory.V.ZK.SLayer := by
   let m := Nat.clog l (4 * E + 4)
   have hm1 : 4 * E + 4 ≤ l ^ m := Nat.le_pow_clog hp.one_lt _
   have hm2 : l ^ m ≤ l * (4 * E + 4) := by
-    have h1 := Nat.pow_pred_clog_lt_self hp.one_lt (x := 4 * E + 4) (by omega)
+    have h1 := Nat.pow_pred_clog_lt_self l (x := 4 * E + 4) (by omega)
     have h2 : 0 < m := Nat.clog_pos hp.one_lt (by omega)
     calc l ^ m = l * l ^ (m - 1) := by rw [← pow_succ', Nat.sub_add_cancel h2]
       _ ≤ _ := Nat.mul_le_mul_left _ h1.le

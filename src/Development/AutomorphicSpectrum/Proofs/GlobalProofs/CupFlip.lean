@@ -237,7 +237,7 @@ theorem dblAnn : Formalism.GaloisCohomology.LocalTateDualityK → ∀ (l : ℕ) 
     (ReciprocityTheory.Gal.twDual ψ rho).comp (MonoidHom.id _)
   have hEq : ∀ (g : ↥(GK K)) (x : W), E (a g x) = τ (φ g) (E x) := by
     intro g x
-    apply ReciprocityTheory.Gal.TDual.ext
+    apply LinearMap.ext
     intro y
     change E (a g x) y = ((ψ (φ g) : (ZMod (l ^ n))ˣ) : ZMod (l ^ n)) * E x (rho (φ g)⁻¹ y)
     have hy : a' g (a' g⁻¹ y) = y := by rw [← hmul', mul_inv_cancel, h1']

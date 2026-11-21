@@ -40,8 +40,7 @@ def pt (χ : HChar E) {d : ℕ} (G : Matrix (Fin d) (Fin d) ℂ) (x y : Sm E a �
   (‖((chiDet a χ g : ℂˣ) : ℂ)‖ ^ 2 : ℝ) * (star (ev x g) ⬝ᵥ G *ᵥ ev y g)
 
 theorem cmp_ev {d : ℕ} (m : Sm E a ⊗[ℂ] (Fin d → ℂ)) (j : Fin d) (g : GA E a) : (cmp j m).1 g = ev m g j := by
-  induction m using TensorProduct.induction_on with
-  | zero => simp
+  induction m using TensorProduct.inductionOn with
   | tmul φ v => simp [mul_comm]
   | add x y hx hy => simp [hx, hy]
 
@@ -51,7 +50,7 @@ theorem ptIp_eq {Ξ : AlgRep E a} {q : ℕ} (χ : HChar E) (G : Matrix (Fin Ξ.d
   simp only [ptIp, pt, Finset.mul_sum]
 
 theorem CInv.sum {ι : Type} (s : Finset ι) {F : ι → GA E a → ℂ} (h : ∀ i, CInv (F i)) : CInv fun g => ∑ i ∈ s, F i g :=
-  ⟨continuous_finset_sum _ fun i _ => (h i).cont, fun γ g => Finset.sum_congr rfl fun i _ => (h i).left γ g,
+  ⟨continuous_finsetSum _ fun i _ => (h i).cont, fun γ g => Finset.sum_congr rfl fun i _ => (h i).left γ g,
     fun t g => Finset.sum_congr rfl fun i _ => (h i).centre t g⟩
 
 theorem cs_pt_left (χ : HChar E) {d : ℕ} (G : Matrix (Fin d) (Fin d) ℂ) {x : Sm E a ⊗[ℂ] (Fin d → ℂ)} (y : Sm E a ⊗[ℂ] (Fin d → ℂ))
@@ -171,8 +170,8 @@ theorem pairFacts_of_steps (h1 : BddInt) (h2 : CsBdd) (h3 : LevInv) (h4 : PtInv)
       (β (Matrix.vecCons (e j) fun i => e (J i))) (η fun i => e (J i)) (hv _ β hβ _) (hv _ η hη _)
       (hs.imp (fun h => h.imp fun R hR g hg => hR _ g hg) fun h => h.imp fun R hR g hg => hR _ g hg)
     simp only [pair, (h6 E a Ξ χ G n e q (smLie Ξ) β η _).1, (h6 E a Ξ χ G n e q (smAdj Ξ r) β η _).2]
-    rw [integral_const_mul, integral_finsetSum _ fun J _ => integrable_finset_sum _ fun j _ => (hA J j).1,
-      integral_finsetSum _ fun J _ => integrable_finset_sum _ fun j _ => (hA J j).2.1]
+    rw [integral_const_mul, integral_finsetSum _ fun J _ => integrable_finsetSum _ fun j _ => (hA J j).1,
+      integral_finsetSum _ fun J _ => integrable_finsetSum _ fun j _ => (hA J j).2.1]
     congr 1
     refine Finset.sum_congr rfl fun J _ => ?_
     rw [integral_finsetSum _ fun j _ => (hA J j).1, integral_finsetSum _ fun j _ => (hA J j).2.1]

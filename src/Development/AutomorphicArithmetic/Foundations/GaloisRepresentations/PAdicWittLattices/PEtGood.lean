@@ -24,5 +24,5 @@ theorem UpperTheory.Gal.G3.pEtGood :
     intro W r c hc J _ σ hσ hsp
     refine fun (x : Htot l (sch.obj Y)) => DFinsupp.ext fun n => ?_
     have h1 := htr n W r c hc J σ hσ hsp (x n)
-    exact h1.trans (DFinsupp.finset_sum_apply Finset.univ
+    exact h1.trans (DirectSum.sum_apply Finset.univ
       (fun j => ((et l B).pull (σ j) (hσ j)) x) n).symm

@@ -144,7 +144,7 @@ theorem exists_gelfOp (hθ : IsInfFam θ) {τ : D.what₂.Tau} {e : Fin V.rank �
   have hYl : ∀ b, P⁻¹ * y b * P ∈ lieAt V τ := fun b => lie_conj hP hg (hy b)
   refine ⟨quad hθ hX hYl, fun φ => ?_, fun μ _ φ ψ => quad_symm μ hθ hX hYl φ ψ⟩
   rw [hq φ.1 (smooth_of_mem φ), quad_apply]
-  simp [Submodule.coe_sum]
+  simp [Submodule.coe_sum, der]
 
 theorem bd_der (μ : Measure (GA D V)) [μ.IsHaarMeasure] (hθ : IsInfFam θ) {τ : D.what₂.Tau} {e : Fin V.rank → Bool}
     {P : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hP : IsUnit P) (hg : Pᴴ * Formalism.REAL.Jm e * P = gramAt D V τ)
@@ -158,7 +158,7 @@ theorem bd_der (μ : Measure (GA D V)) [μ.IsHaarMeasure] (hθ : IsInfFam θ) {�
     (bd_ktype μ hθ hP ρ hρ (hy b) (hYl b)).mono fun φ hφ => hE φ hφ
   have hCq : C = quad hθ hX hYl := LinearMap.ext fun φ => Subtype.ext (by
     rw [← hC, hq φ.1 (smooth_of_mem φ), quad_apply]
-    simp [Submodule.coe_sum])
+    simp [Submodule.coe_sum, der])
   have bX := bd_of_quad μ hθ E hX hYl (hCq ▸ hb) bK
   obtain ⟨_, b'⟩ := bd_span μ hθ E (Set.range X ∪ Set.range fun b => P⁻¹ * y b * P) (by
     rintro _ (⟨a, rfl⟩ | ⟨b, rfl⟩)

@@ -213,11 +213,6 @@ private theorem admissible_unitary_three_point (hP : _root_.UpperTheory.V.Af.Hyp
       rw [e, SemidirectProduct.mul_left, SemidirectProduct.mul_left, SemidirectProduct.left_inl,
         SemidirectProduct.left_inl, SemidirectProduct.right_inl, sgnAct_one, SemidirectProduct.mul_right,
         SemidirectProduct.right_inl, hg, mul_one, sgnAct_one]
-    have matIrr_conj {G R : Type} [Group G] [CommRing R] {m : ℕ} {U : Subgroup G}
-        {a a' : G → Matrix (Fin m) (Fin m) R} (h : GL (Fin m) R)
-        (e : ∀ g ∈ U, a g = ((h⁻¹ : GL (Fin m) R) : Matrix (Fin m) (Fin m) R) * a' g * h) (H : MatIrr U a) :
-        MatIrr U a' :=
-      _root_.UpperTheory.Reformulated.B.Ua5.matIrr_conj h e H
     have val_of_even {Ω : Type} [Field Ω] (B : ValuationSubring Ω) {M : ℕ} (hM : Even M)
         (h : B.valuation ((4 : ℕ) : Ω) < 1) : B.valuation (M : Ω) < 1 := by
       obtain ⟨m, rfl⟩ := hM.two_dvd
@@ -229,26 +224,21 @@ private theorem admissible_unitary_three_point (hP : _root_.UpperTheory.V.Af.Hyp
       have hm : B.valuation (m : Ω) ≤ 1 := (B.valuation_le_one_iff _).2 (natCast_mem B m)
       rw [Nat.cast_mul, map_mul]
       exact lt_of_le_of_lt (mul_le_of_le_one_right' hm) h2
-    have unl_of_iso {l : ℕ} [Fact l.Prime] {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
-        [IsAlgClosure F Ω] {n : ℕ} {M : ℕ} {m : Fin n → ℤ} {r r' : Formalism.ConjugateSelfDual.G F Ω →* GL (Fin n) (Qbar l)}
-        (H : Th.Unl l M m r) (h : Af.RepIso r r') : Th.Unl l M m r' := fun w hw => by
-      obtain ⟨A, hA, κ, ⟨χ, h1, h2, h3⟩, h4⟩ := H w hw
-      exact ⟨A, hA, κ, ⟨χ, h1, h2.of_iso h, h3⟩, h4⟩
     have hl : Fact l.Prime := inferInstance
     have hN := hP.litN
-    haveI : IsGalois ℚ Ω := IsAlgClosure.isGalois ℚ Ω
-    haveI hcl := isClosed_NS Ω (S : Set Pl)
-    haveI : TotallyDisconnectedSpace (Gam Ω S) := totDisc_quot _ hcl
+    have : IsGalois ℚ Ω := IsAlgClosure.isGalois ℚ Ω
+    have hcl := isClosed_NS Ω (S : Set Pl)
+    have : TotallyDisconnectedSpace (Gam Ω S) := totDisc_quot _ hcl
     have ok := hostFrame_ok Ω c e ψ o₁ hd S A F hF
     obtain ⟨hmu, -, -, -⟩ := isCharZeroPt_basic F ok g₁ hg r hr
-    haveI : IsLocalHom (algebraMap ℤ_[l] c.O) := by
+    have : IsLocalHom (algebraMap ℤ_[l] c.O) := by
       open Formalism.GaloisCohomology UpperTheory.V.Base in
       exact (dvrFacts l c.O).2.2.1
-    haveI : CharP (ResidueField c.O) l := by
+    have : CharP (ResidueField c.O) l := by
       rw [CharP.charP_iff_prime_eq_zero hl.out, ← map_natCast (residue c.O), residue_eq_zero_iff,
         mem_maximalIdeal, mem_nonunits_iff, ← map_natCast (algebraMap ℤ_[l] c.O)]
       intro hu
-      exact PadicInt.prime_p.not_unit (isUnit_of_map_unit _ _ hu)
+      exact PadicInt.prime_p.not_isUnit (isUnit_of_map_unit _ _ hu)
     obtain ⟨σ, hσ, hσc⟩ := hF.cc
     have hv : (A F.vl).valuation (l : Ω) < 1 := by simpa using (hF.isOver F.vl (l : 𝓞 ℚ)).2 hF.vl
     have hfr := Fr.host_ex ⟨⟨hN.coh.lf, hN.coh.lt, hN.coh.le, hN.coh.gf, hN.coh.ge, hN.coh.pt⟩, hN.coh.uo, hN.coh.gw⟩
@@ -278,7 +268,7 @@ private theorem admissible_unitary_three_point (hP : _root_.UpperTheory.V.Af.Hyp
       rw [MonoidHom.mem_ker, UnitaryThreeInertia.eta4, Chr.dirG, MonoidHom.comp_apply, h5, map_one]
     have hk : Pr.LinkHyp c N e (UnitaryThreeInertia.eta4 Ω) σ (A F.vl) (l * N) :=
       ⟨hd.e_pos, dvd_rfl, mul_ne_zero hl.out.ne_zero (NeZero.ne N), hram, hv, hσ⟩
-    haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ
+    have : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ
     have hlev := UnitaryThreeInertia.levelAt_of_pt Ω c e ψ o₁ hd S A F hF K hK g₁ hg r hr ρ hρ
     have hopen := UnitaryThreeInertia.matIrr_open Ω c e ψ o₁ hd S A F hF g₁ hg r hr hI
     obtain ⟨B, _, _, t, r', hr', ht⟩ := hr
@@ -302,12 +292,14 @@ private theorem admissible_unitary_three_point (hP : _root_.UpperTheory.V.Af.Hyp
       rw [show ρ s = (r (toGS Ω _ (Base.galEmb ℚ K Ω s))).left from Units.ext (hρ s)]
       exact hle _ (hker s)⟩
     have hunl' := hU Ω l c N e ψ (UnitaryThreeInertia.eta4 Ω) σ g (A F.vl) _ hk hd.N_even hΨ hfr B _ ho
-      (fun V hV hVη => matIrr_conj (tor _ t) (fun s hs => by
+      (fun V hV hVη => _root_.UpperTheory.Reformulated.B.Ua5.matIrr_conj (tor _ t) (fun s hs => by
         rw [mats, GG.mat, GG.mat, hle s (hVη hs), ← Units.val_mul, ← Units.val_mul]
         congr 1
         group) (hopen V hV hVη)) K hK.1 (by rw [← Base.range_galEmb]; exact hrg.symm) ρ' (fun s => rfl)
       N NeZero.one_le (hlev.of_iso hiso)
-    exact unl_of_iso hunl' (Af.RepIso.symm' hiso)
+    intro w hw
+    obtain ⟨B', hB', κ, ⟨χ, h1, h2, h3⟩, h4⟩ := hunl' w hw
+    exact ⟨B', hB', κ, ⟨χ, h1, h2.of_iso (Af.RepIso.symm' hiso), h3⟩, h4⟩
   exact ⟨adm3 hK hd hF hg hr hI hρ ha, hunl⟩
 omit [IsCMField K] in
 private theorem exists_w {p : ℕ} (hp : p.Prime) {B : ValuationSubring Ω} (hB : B.valuation (p : Ω) < 1) :

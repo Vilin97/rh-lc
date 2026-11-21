@@ -70,8 +70,8 @@ theorem UpperTheory.positivity_at_all_places :
     continuous_snd.comp ((continuous_apply i).comp hf)
   have hI : Continuous fun p => qf (fun i => pInf E (f p i)) := by
     unfold qf
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun w _ => ?_
-    exact (((continuous_apply w).comp (cont_pInf.comp ((continuous_apply i).comp hf))).norm).pow 2
+    exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun w _ =>
+      (((continuous_apply w).comp (cont_pInf.comp ((continuous_apply i).comp hf))).norm).pow 2
   obtain ⟨M, hM⟩ := hc.bddAbove_image hI.continuousOn
   refine ⟨_, |C| * M ^ N, N, hc.image hF, fun g => ?_⟩
   obtain ⟨γ, b, k, ρ, hρ, hb, hk, he, hh⟩ := hS g

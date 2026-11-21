@@ -36,6 +36,8 @@ private theorem chi_map' {n : ℕ} {A A' Γ : Type} [CommRing A] [CommRing A'] [
       (MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom Γ C (MonoidAlgebra.single g 1)) =
       MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom Γ C (MonoidAlgebra.single g 1) := by
     simp [φ, MonoidAlgebra.mapRingHom_single]
+    change Polynomial.map f X = X
+    exact Polynomial.map_X f
   rw [e] at h
   exact h
 

@@ -175,7 +175,8 @@ theorem mem_minPar_real (hθ : IsInfFam θ) {r : ℕ} {X : Matrix (Fin V.rank) (
     obtain ⟨ρ, rfl⟩ := (GlobalTheory.AdelicU.placeOf_bijective D).2 w
     exact ⟨GlobalTheory.AdelicU.embOverOf D ρ, ρ, rfl⟩
   choose τ ρ hτ using hs
-  refine GlobalTheory.CompanionTheory.SiegelArch.mem_minPar_of V.gram (GlobalTheory.AdelicU.isCMExt_host D) τ hp hQ fun w => ?_
+  refine GlobalTheory.CompanionTheory.SiegelArch.mem_minPar_of V.gram (GlobalTheory.AdelicU.isCMExt_host D) τ hp hQ ?_
+  intro w
   obtain ⟨B, hB, e⟩ := h (ρ w)
   refine ⟨B, hB, ?_⟩
   rw [hτ w, GlobalTheory.Orb.archMat_eq_archEquiv _ (GlobalTheory.AdelicU.isCMExt_host D), ← GlobalTheory.AdelicU.infMat_infProj,
