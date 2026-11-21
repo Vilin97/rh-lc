@@ -15,11 +15,11 @@ theorem UpperTheory.V.KernelIndexFullLattice.quotMk_holds :
     Quotient.out_eq _
   obtain ⟨⟨l, hl⟩, e⟩ := mk_eq_iff.1 h0.symm
   obtain ⟨γ, n, rfl⟩ := mem_latticeGL_iff.1 hl
-  have hγ1 : AdelicGLn.diagonal E a γ ∈ Reduction.normOneGL E a := Reduction.rationalGL_le_normOneGL ⟨γ, rfl⟩
-  have hγΓ : (⟨AdelicGLn.diagonal E a γ, hγ1⟩ : Reduction.normOneGL E a) ∈ UpperTheory.V.KernelIndexFullLattice.Γ1 E a := ⟨γ, rfl⟩
+  have hγ1 : AdelicGLn.diagonal E a γ ∈ Reduction.normOneGL (K := E) (n := a) := Reduction.rationalGL_le_normOneGL ⟨γ, rfl⟩
+  have hγΓ : (⟨AdelicGLn.diagonal E a γ, hγ1⟩ : Reduction.normOneGL (K := E) (n := a)) ∈ UpperTheory.V.KernelIndexFullLattice.Γ1 E a := ⟨γ, rfl⟩
   have h1 : retractOne (ratGL E a γ * splitCentre E a 1 ^ n * g) =
-      (⟨AdelicGLn.diagonal E a γ, hγ1⟩ : Reduction.normOneGL E a) * retractOne g := by
-    have h2 := retractOne_coe_mul (⟨AdelicGLn.diagonal E a γ, hγ1⟩ : Reduction.normOneGL E a)
+      (⟨AdelicGLn.diagonal E a γ, hγ1⟩ : Reduction.normOneGL (K := E) (n := a)) * retractOne g := by
+    have h2 := retractOne_coe_mul (⟨AdelicGLn.diagonal E a γ, hγ1⟩ : Reduction.normOneGL (K := E) (n := a))
       (splitCentre E a 1 ^ n * g)
     have h3 : retractOne (K := E) (n := a) (splitCentre E a 1 ^ n * g) = retractOne g := by
       rw [← splitCentre_intCast, UpperTheory.V.KernelIndexFullLattice.splitEq_holds, retractOne_mul, retractOne_centralSection, one_mul]

@@ -173,7 +173,7 @@ private theorem termE (hU : U2) (q1 : Q1) (q2 : Q2) (n3 : N3) (n5 : N5)
     congrArg f (twConj_mul_left (tw θ) (d1 δ) ((hcent _).2 ⟨t, rfl⟩) x)
   obtain ⟨h1, h2⟩ := hU (G1 E n) (Subgroup.centralizer {d1 γ}) μ ν i hic _ _ hmap hv
     (fun x => f (x⁻¹ * d1 δ * tw θ x)) (contTw _ f _) hinv hi
-  have h3 := UpperTheory.quotientIntegral_lt_top_of_invariant_closedEmbedding q1 q2 (AdelicGLn.AdelicGL E n) _ (normOneGL E n) isClosed_normOneGL μ ν i hic
+  have h3 := UpperTheory.quotientIntegral_lt_top_of_invariant_closedEmbedding q1 q2 (AdelicGLn.AdelicGL E n) _ (normOneGL (K := E) (n := n)) isClosed_normOneGL μ ν i hic
     (fun x => f (x⁻¹ * d1 δ * tw θ x)) (contTw _ f _) hinv h2
   rw [h1, ← h3]
   congr 2

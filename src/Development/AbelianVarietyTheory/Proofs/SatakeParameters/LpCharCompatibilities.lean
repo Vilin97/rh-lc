@@ -112,7 +112,7 @@ theorem lpChar_laws (a b c : WD h) (s : ℝ) :
     (a.lpTw s).lpChar c = (a.lpChar c).lpTw s ∧
     a.lpChar (c.lpTw s) = (a.lpChar c).lpTw s ∧
     (a.lpChar b).lpChar c = a.lpChar (b.lpChar c) ∧
-    (WD.lpZero h).lpChar c = WD.lpZero h ∧
+    (WD.lpZero (h := h)).lpChar c = WD.lpZero (h := h) ∧
     (c.unr → c.lpDim = 1 → c.frobEig = {1} → a.lpChar c = a) := by
   induction a using ind with
   | hP n a =>
@@ -149,7 +149,7 @@ theorem lpChar_laws_closed : ∀ (E Ω : Type) [Field E] [NumberField E] [Field 
     (a.lpTw s).lpChar c = (a.lpChar c).lpTw s ∧
     a.lpChar (c.lpTw s) = (a.lpChar c).lpTw s ∧
     (a.lpChar b).lpChar c = a.lpChar (b.lpChar c) ∧
-    (WD.lpZero h).lpChar c = WD.lpZero h ∧
+    (WD.lpZero (h := h)).lpChar c = WD.lpZero (h := h) ∧
     (c.unr → c.lpDim = 1 → c.frobEig = {1} → a.lpChar c = a) :=
   fun _ _ _ _ _ _ _ _ _ _ a b c s => WD.lpChar_laws a b c s
 

@@ -33,14 +33,14 @@ def ExpForm : Prop :=
     ∃ (s : Finset ℂ) (c : ℂ → ℂ), 0 ∉ s ∧ ∀ j ≥ Module.finrank ℂ W, LinearMap.trace ℂ W (U 0 ^ j * B) = ∑ ζ ∈ s, c ζ * ζ ^ j
 
 def TrExp : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n l : ℕ), 0 < l → ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (θ : Twist μ)
+  ∀ (K : Type) [Field K] [NumberField K] (n l : ℕ), 0 < l → ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ)
     (𝔰 : Side θ l) (V : Submodule ℂ (LL μ)) (x : ℝ), 0 ≤ 𝔰.toAmp.A → IsSummand μ V → FiniteDimensional ℂ (eigIn V 𝔰.toAmp.A x) →
     ∃ (s : Finset ℂ) (c : ℂ → ℂ), 0 ∉ s ∧ ∀ᶠ j : ℕ in atTop,
       trOn (eigIn V 𝔰.toAmp.A x) ((𝔰.Uq 0 ^ j) ∘L Rop μ 𝔰.g ∘L θ.U) = ∑ ζ ∈ s, c ζ * ζ ^ j
 
 def EvVal : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 0 < n →
-    ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (𝔞 : Amp μ) (V : Submodule ℂ (LL μ)) (x : ℝ), 0 < x → IsSummand μ V →
+    ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (𝔞 : Amp μ) (V : Submodule ℂ (LL μ)) (x : ℝ), 0 < x → IsSummand μ V →
       (eigIn V 𝔞.A x ≠ ⊥ → ∃ Λ t, At μ 𝔞.S V Λ t) ∧
       (∀ Λ t Λ' t', At μ 𝔞.S V Λ t → At μ 𝔞.S V Λ' t' → Λ = Λ' ∧ ∀ w ∉ 𝔞.S, t w = t' w) ∧
       ∀ ev, 𝔞.IsEv ev → ∀ Λ t, At μ 𝔞.S V Λ t → ∀ P : PR K n, (∀ y ∈ P.vars, y.1 ∉ 𝔞.S) →
@@ -89,7 +89,7 @@ def SepPoly : Prop :=
 
 def OneSide : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n l : ℕ), 0 < n →
-    ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ l) (ev : PR K n →+* (LL μ →L[ℂ] LL μ)),
+    ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ l) (ev : PR K n →+* (LL μ →L[ℂ] LL μ)),
       𝔰.toAmp.IsEv ev → (∀ P, Inner μ (ev P)) → ∃ N : ℕ, ∀ η : ℝ, 0 < η → η ≤ 1 →
       ∀ χ : ℝ → ℝ, Continuous χ → (∀ x, 0 ≤ χ x ∧ χ x ≤ 1) → (∀ x ≥ η, χ x = 1) →
       ∃ s : Finset (ℝ × Submodule ℂ (LL μ)),

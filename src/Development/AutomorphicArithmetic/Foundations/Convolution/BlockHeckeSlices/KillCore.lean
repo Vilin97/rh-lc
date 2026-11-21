@@ -185,7 +185,7 @@ private theorem core_abs {M : Type} [AddCommGroup M] [Module ℂ M] (S : Set (Up
 
 end Abs
 
-variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} {μ : Measure (normOneGL K n)} [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] {n : ℕ} {μ : Measure (normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
 
 private theorem pc_comm (hn : 0 < n) (𝔞 : Amp μ) (ev : PR K n →+* (LL μ →L[ℂ] LL μ)) (hev : 𝔞.IsEv ev) (R : PR K n)
     (hR : ∀ y ∈ R.vars, y.1 ∉ 𝔞.S) : Commute (Pc μ) (ev R) := by

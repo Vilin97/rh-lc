@@ -28,7 +28,7 @@ private theorem decay {φ : Sm E a} (hφ : IsCuspForm φ) (N : ℕ) :
   obtain ⟨C, hC⟩ := exists_norm_le_height_pow_neg_siegel h0 hω hωB ht N
   refine ⟨C, fun g => ?_⟩
   obtain ⟨γ, b, hb, _, ⟨ρ, hρ, hs, rfl⟩, kk, hkk, hxe⟩ := hsieg g.1
-  have hγx : AdelicGLn.diagonal E a γ * g.1 ∈ Reduction.normOneGL E a :=
+  have hγx : AdelicGLn.diagonal E a γ * g.1 ∈ Reduction.normOneGL (K := E) (n := a) :=
     mul_mem (Reduction.rationalGL_le_normOneGL ⟨γ, rfl⟩) g.2
   have h := hC b hb ρ hρ hs kk hkk _ hγx hxe
   rw [h0.1.isLeftInvariant γ g.1] at h

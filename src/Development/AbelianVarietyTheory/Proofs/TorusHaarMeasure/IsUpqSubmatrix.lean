@@ -119,7 +119,7 @@ theorem frame_sum_bound :
   refine le_trans (le_of_eq ?_) key
   refine tsum_congr fun γ => ?_
   congr 1
-  rw [← Real.finset_prod_rpow _ _ (fun τ _ => by positivity), ← eΨ.prod_comp]
+  rw [← Real.finsetProd_rpow _ _ (fun τ _ => by positivity) s, ← eΨ.prod_comp]
   refine Finset.prod_congr rfl fun k _ => ?_
   rw [IC.norm_dmin_orth X (isOrth_lact X γ.2 hx), one_div, Complex.normSq_eq_norm_sq]
   have hm : ∀ M : Matrix (Fin r) (Fin r) ℂ,

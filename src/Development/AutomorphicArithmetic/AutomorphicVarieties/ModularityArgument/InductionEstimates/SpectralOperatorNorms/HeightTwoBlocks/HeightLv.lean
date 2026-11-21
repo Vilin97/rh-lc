@@ -63,7 +63,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.ctBd :
     rw [e]
     exact (UpperTheory.continuous_constantTerm K _ 2 _ (hc.comp continuous_retractOne)).comp continuous_subtype_val
   · intro D hD
-    obtain ⟨B, M, hB⟩ := UpperTheory.hasModerateGrowth_constantTerm K (2 + 2) 2 (fun x => if h : x ∈ normOneGL K (2 + 2) then Φ ⟨x, h⟩ else 0)
+    obtain ⟨B, M, hB⟩ := UpperTheory.hasModerateGrowth_constantTerm K (2 + 2) 2 (fun x => if h : x ∈ normOneGL (K := K) (n := (2 + 2)) then Φ ⟨x, h⟩ else 0)
       ⟨|C|, N, fun g => by
         have hp := pow_nonneg (height_pos g).le N
         beta_reduce
@@ -76,7 +76,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.ctBd :
         (mul_le_mul_of_nonneg_right (le_abs_self B) (pow_nonneg (height_pos _).le M)))
       rw [hW]
       refine integral_congr_ae (Eventually.of_forall fun X => ?_)
-      have h : unipGL X * (g : AdelicGLn.AdelicGL K (2 + 2)) ∈ normOneGL K (2 + 2) := (nn X * g).2
+      have h : unipGL X * (g : AdelicGLn.AdelicGL K (2 + 2)) ∈ normOneGL (K := K) (n := (2 + 2)) := (nn X * g).2
       beta_reduce
       rw [dite_eq_left h]
       rfl

@@ -81,14 +81,14 @@ theorem unipOne_injective (k : ℕ) : Injective (unipOne K n k) := fun _ _ h =>
   unipGL_injective (congrArg Subtype.val h)
 
 
-def ratOne : GL (Fin n) K →* normOneGL K n :=
-  (AdelicGLn.diagonal K n).codRestrict (normOneGL K n)
+def ratOne : GL (Fin n) K →* normOneGL (K := K) (n := n) :=
+  (AdelicGLn.diagonal K n).codRestrict (normOneGL (K := K) (n := n))
     (fun γ => rationalGL_le_normOneGL ⟨γ, rfl⟩)
 
 theorem ratOne_injective : Injective (ratOne K n) := fun _ _ h =>
   AdelicGLn.diagonal_injective K n (congrArg Subtype.val h)
 
-theorem mem_rationalGLOne_iff {x : normOneGL K n} : x ∈ rationalGLOne K n ↔ ∃ γ, ratOne K n γ = x := by
+theorem mem_rationalGLOne_iff {x : normOneGL (K := K) (n := n)} : x ∈ rationalGLOne K n ↔ ∃ γ, ratOne K n γ = x := by
   constructor
   · rintro ⟨γ, hγ⟩
     exact ⟨γ, Subtype.ext hγ⟩
@@ -96,7 +96,7 @@ theorem mem_rationalGLOne_iff {x : normOneGL K n} : x ∈ rationalGLOne K n ↔ 
     exact ⟨γ, rfl⟩
 
 theorem coe_ratOne_matrix (γ : GL (Fin n) K) :
-    (((ratOne K n γ : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) =
+    (((ratOne K n γ : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) =
       ratMat (γ : Matrix (Fin n) (Fin n) K) :=
   coe_diagonal γ
 
@@ -107,7 +107,7 @@ instance countable_GL : Countable (GL (Fin n) K) := by
     Units.val_injective
 
 
-def parabolicOne (k : ℕ) : Subgroup (normOneGL K n) :=
+def parabolicOne (k : ℕ) : Subgroup (normOneGL (K := K) (n := n)) :=
   (parabolic (K := K) (n := n) k).map (ratOne K n)
 
 theorem parabolicOne_le (k : ℕ) : parabolicOne K n k ≤ rationalGLOne K n := by
@@ -115,16 +115,16 @@ theorem parabolicOne_le (k : ℕ) : parabolicOne K n k ≤ rationalGLOne K n := 
   exact mem_rationalGLOne_iff.2 ⟨γ, rfl⟩
 
 instance countable_parabolicOne (k : ℕ) : Countable (parabolicOne K n k) := by
-  have : ((parabolicOne K n k : Set (normOneGL K n))).Countable := by
+  have : ((parabolicOne K n k : Set (normOneGL (K := K) (n := n)))).Countable := by
     rw [parabolicOne, Subgroup.coe_map]
     exact (Set.countable_univ.mono (Set.subset_univ _)).image _
   exact this.to_subtype
 
 instance discreteTopology_parabolicOne (k : ℕ) : DiscreteTopology (parabolicOne K n k) :=
-  DiscreteTopology.of_subset (s := (rationalGLOne K n : Set (normOneGL K n)))
+  DiscreteTopology.of_subset (s := (rationalGLOne K n : Set (normOneGL (K := K) (n := n))))
     discreteTopology_rationalGLOne (parabolicOne_le k)
 
-theorem mem_parabolicOne_iff {k : ℕ} {q : normOneGL K n} :
+theorem mem_parabolicOne_iff {k : ℕ} {q : normOneGL (K := K) (n := n)} :
     q ∈ parabolicOne K n k ↔ ∃ p ∈ parabolic (K := K) (n := n) k, ratOne K n p = q :=
   Subgroup.mem_map
 
@@ -159,47 +159,47 @@ theorem blockEntry_injective {R : Type*} [CommRing R] {k : ℕ} :
   have := congrFun (congrFun h p.1.1) p.1.2
   simpa [blockEntry_apply, p.2] using this
 
-theorem entry_eq_zero_of_mem_parabolicOne {k : ℕ} {q : normOneGL K n} (hq : q ∈ parabolicOne K n k)
+theorem entry_eq_zero_of_mem_parabolicOne {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k)
     {i j : Fin n} (hi : k ≤ (i : ℕ)) (hj : (j : ℕ) < k) :
-    (((q : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) i j = 0 := by
+    (((q : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) i j = 0 := by
   obtain ⟨p, hp, rfl⟩ := mem_parabolicOne_iff.1 hq
   rw [coe_ratOne_matrix]
   simp [ratMat, hp.1 i j hi hj]
 
-def conjUnip (k : ℕ) (q : normOneGL K n) : (UPos n k → 𝔸[K]) →+ (UPos n k → 𝔸[K]) where
-  toFun Z p := ((((q⁻¹ : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) *
-    blockEntry Z * (((q : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))
+def conjUnip (k : ℕ) (q : normOneGL (K := K) (n := n)) : (UPos n k → 𝔸[K]) →+ (UPos n k → 𝔸[K]) where
+  toFun Z p := ((((q⁻¹ : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) *
+    blockEntry Z * (((q : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))
       p.1.1 p.1.2
   map_zero' := by funext p; simp [blockEntry_zero]
   map_add' Z W := by funext p; simp [blockEntry_add, Matrix.mul_add, Matrix.add_mul]
 
-theorem blockEntry_conjUnip {k : ℕ} {q : normOneGL K n} (hq : q ∈ parabolicOne K n k)
+theorem blockEntry_conjUnip {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k)
     (Z : UPos n k → 𝔸[K]) :
     blockEntry (conjUnip k q Z) =
-      (((q⁻¹ : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) *
-        blockEntry Z * (((q : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) :=
+      (((q⁻¹ : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) *
+        blockEntry Z * (((q : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) :=
   (mul_blockEntry_mul (fun _ _ hi ha => entry_eq_zero_of_mem_parabolicOne (inv_mem hq) hi ha)
     (fun _ _ hb hj => entry_eq_zero_of_mem_parabolicOne hq hb hj) Z).symm
 
-theorem coe_inv_mul_coe (q : normOneGL K n) :
-    (((q⁻¹ : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) *
-      (((q : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) = 1 := by
+theorem coe_inv_mul_coe (q : normOneGL (K := K) (n := n)) :
+    (((q⁻¹ : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) *
+      (((q : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) = 1 := by
   rw [← Units.val_mul, ← Subgroup.coe_mul, inv_mul_cancel, Subgroup.coe_one, Units.val_one]
 
-theorem conj_unipOne {k : ℕ} {q : normOneGL K n} (hq : q ∈ parabolicOne K n k) (Z : UPos n k → 𝔸[K]) :
+theorem conj_unipOne {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k) (Z : UPos n k → 𝔸[K]) :
     q⁻¹ * unipOne K n k Z * q = unipOne K n k (conjUnip k q Z) := by
   refine Subtype.ext (Units.ext ?_)
   simp only [Subgroup.coe_mul, Units.val_mul, coe_unipOne, coe_unipGL, unipMatrix]
   rw [blockEntry_conjUnip hq, Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, coe_inv_mul_coe]
 
-theorem conjUnip_conjUnip_inv {k : ℕ} {q : normOneGL K n} (hq : q ∈ parabolicOne K n k)
+theorem conjUnip_conjUnip_inv {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k)
     (Z : UPos n k → 𝔸[K]) : conjUnip k q (conjUnip k q⁻¹ Z) = Z := by
   apply blockEntry_injective
   rw [blockEntry_conjUnip hq, blockEntry_conjUnip (inv_mem hq), inv_inv]
   simp only [← Matrix.mul_assoc]
   rw [coe_inv_mul_coe, Matrix.one_mul, Matrix.mul_assoc, coe_inv_mul_coe, Matrix.mul_one]
 
-theorem conjUnip_mem_unipLattice {k : ℕ} {q : normOneGL K n} (hq : q ∈ parabolicOne K n k)
+theorem conjUnip_mem_unipLattice {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k)
     {ξ : UPos n k → 𝔸[K]} (hξ : ξ ∈ unipLattice K n k) : conjUnip k q ξ ∈ unipLattice K n k := by
   obtain ⟨p, -, rfl⟩ := mem_parabolicOne_iff.1 hq
   obtain ⟨ξ₀, rfl⟩ := hξ
@@ -216,13 +216,13 @@ theorem conjUnip_mem_unipLattice {k : ℕ} {q : normOneGL K n} (hq : q ∈ parab
   have e : conjUnip k (ratOne K n p) (fun x => algebraMap K 𝔸[K] (ξ₀ x)) x =
       (ratMat ((p⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) * ratMat (blockEntry ξ₀) *
         ratMat ((p : GL (Fin n) K) : Matrix (Fin n) (Fin n) K)) x.1.1 x.1.2 := by
-    show ((((ratOne K n p)⁻¹ : normOneGL K n) : AdelicGLn.AdelicGL K n) * _ * _ :
+    show ((((ratOne K n p)⁻¹ : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) * _ * _ :
       Matrix (Fin n) (Fin n) 𝔸[K]) x.1.1 x.1.2 = _
     rw [← map_inv, coe_ratOne_matrix, coe_ratOne_matrix, hb]
   rw [e, ← ratMat_mul, ← ratMat_mul]
   rfl
 
-theorem continuous_conjUnip (k : ℕ) (q : normOneGL K n) : Continuous (conjUnip (K := K) k q) := by
+theorem continuous_conjUnip (k : ℕ) (q : normOneGL (K := K) (n := n)) : Continuous (conjUnip (K := K) k q) := by
   refine continuous_pi fun p => ?_
   have hb : Continuous (blockEntry : (UPos n k → 𝔸[K]) → Matrix (Fin n) (Fin n) 𝔸[K]) := by
     refine continuous_pi fun i => continuous_pi fun j => ?_
@@ -231,15 +231,15 @@ theorem continuous_conjUnip (k : ℕ) (q : normOneGL K n) : Continuous (conjUnip
     · exact continuous_apply _
     · exact continuous_const
   set A₀ : Matrix (Fin n) (Fin n) 𝔸[K] :=
-    (((q⁻¹ : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])
+    (((q⁻¹ : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])
   set B₀ : Matrix (Fin n) (Fin n) 𝔸[K] :=
-    (((q : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])
+    (((q : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])
   have hm : Continuous (fun Z : UPos n k → 𝔸[K] => A₀ * blockEntry Z * B₀) :=
     ((continuous_const : Continuous fun _ : UPos n k → 𝔸[K] => A₀).matrix_mul hb).matrix_mul
       continuous_const
   exact (continuous_apply p.1.2).comp ((continuous_apply p.1.1).comp hm)
 
-def conjUnipEquiv {k : ℕ} {q : normOneGL K n} (hq : q ∈ parabolicOne K n k) :
+def conjUnipEquiv {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k) :
     (UPos n k → 𝔸[K]) ≃ₜ+ (UPos n k → 𝔸[K]) where
   toFun := conjUnip k q
   invFun := conjUnip k q⁻¹
@@ -251,7 +251,7 @@ def conjUnipEquiv {k : ℕ} {q : normOneGL K n} (hq : q ∈ parabolicOne K n k) 
   continuous_toFun := continuous_conjUnip k q
   continuous_invFun := continuous_conjUnip k q⁻¹
 
-theorem measurePreserving_conjUnip {k : ℕ} {q : normOneGL K n} (hq : q ∈ parabolicOne K n k) :
+theorem measurePreserving_conjUnip {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k) :
     MeasurePreserving (conjUnip k q) (unipMeasure K n k) (unipMeasure K n k) :=
   measurePreserving_of_mapsTo_lattice (unipMeasure K n k) isAddFundamentalDomain_unipFundamentalDomain
     measurableSet_unipFundamentalDomain (unipMeasure_unipFundamentalDomain_ne_zero k)

@@ -143,6 +143,7 @@ theorem chi_conjGS (D : LData F Ω l) (h : IsLift τ σ) (g : GS Ω (D.S : Set (
   rw [e, map_mul, map_mul, map_inv, mul_comm, ← mul_assoc, mul_inv_cancel, one_mul]
 
 
+variable (l) in
 def twScal (σ : Ω ≃+* Ω) (e : ℤ) : ℤ_[l] := ((cyclotomicCharacter Ω l σ ^ (-e) : ℤ_[l]ˣ) : ℤ_[l])
 
 theorem qzTw_apply (D : LData F Ω l) (e : ℤ) (g : GS Ω (D.S : Set (HeightOneSpectrum (𝓞 F)))) (m : QZ l) :

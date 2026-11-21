@@ -51,10 +51,10 @@ private theorem integral_indicator_kbar_shift (hn : 0 < n) {κ : archGroup K n �
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.ConvolutionTheory.Tf.tensMeas :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure]
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure]
       (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure], ∃ c : ℝ, 0 < c ∧
-      ∀ (β : CompactlySupportedContinuousMap (archGroup K n) ℂ) (e : CompactlySupportedContinuousMap (AdelicGLn.FiniteAdelicGL K n) ℂ) (Θ : normOneGL K n → ℂ), Continuous Θ →
-        ∫ x : normOneGL K n, kbar β (infPart K n (x : AdelicGLn.AdelicGL K n)) * e (finPart K n (x : AdelicGLn.AdelicGL K n)) * Θ x ∂μ =
+      ∀ (β : CompactlySupportedContinuousMap (archGroup K n) ℂ) (e : CompactlySupportedContinuousMap (AdelicGLn.FiniteAdelicGL K n) ℂ) (Θ : normOneGL (K := K) (n := n) → ℂ), Continuous Θ →
+        ∫ x : normOneGL (K := K) (n := n), kbar β (infPart K n (x : AdelicGLn.AdelicGL K n)) * e (finPart K n (x : AdelicGLn.AdelicGL K n)) * Θ x ∂μ =
           c * ∫ a, ∫ h, β a * e h * Θ (archP K n a * MultiplicityOne.finProj K n h) ∂m ∂ν := by
   intro K _ _ n hn μ _ ν _ m _
   have hm : (ν.prod m).IsHaarMeasure := inferInstance
@@ -65,7 +65,7 @@ theorem UpperTheory.ConvolutionTheory.Tf.tensMeas :
   obtain ⟨hF, hFc, -⟩ := UpperTheory.ConvolutionTheory.Tf.tensCont K n hn β e
   have hS : MeasurableSet (detModule K n ⁻¹' GroundTheory.Global.posRealUnitInterval) :=
     continuous_detModule.measurable GroundTheory.Global.measurableSet_posRealUnitInterval
-  obtain ⟨Ξ, hΞdef⟩ : ∃ Ξ : normOneGL K n → ℂ, Ξ = fun x : normOneGL K n =>
+  obtain ⟨Ξ, hΞdef⟩ : ∃ Ξ : normOneGL (K := K) (n := n) → ℂ, Ξ = fun x : normOneGL (K := K) (n := n) =>
       kbar β (infPart K n (x : AdelicGLn.AdelicGL K n)) * e (finPart K n (x : AdelicGLn.AdelicGL K n)) * Θ x :=
     ⟨_, rfl⟩
   have hΞ : Continuous Ξ := hΞdef ▸ hF.mul hΘ

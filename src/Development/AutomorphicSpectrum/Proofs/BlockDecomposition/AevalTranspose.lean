@@ -294,7 +294,7 @@ theorem torusChar : DegAdelic → TorusChar := by
     obtain ⟨C, hC, hred⟩ := GroundTheory.Automorphic.Reduction.exists_isCompact_forall_of_pos_le_height (K := E) (n := n) hε
     obtain ⟨C', hC', hred'⟩ := GlobalTheory.T.centralizer_compact_reduction E n d C hC
     refine ⟨C', hC', fun t ht hM => hred' t ht ?_⟩
-    have hnorm : t ∈ GroundTheory.Automorphic.Reduction.normOneGL E n := by
+    have hnorm : t ∈ GroundTheory.Automorphic.Reduction.normOneGL (K := E) (n := n) := by
       rw [GroundTheory.Automorphic.Reduction.mem_normOneGL]
       have h1 := lam_sg d 1 ⟨1, by simp⟩ (by simp) t ht
       have h2 : sg d (1 : Matrix (Fin n) (Fin n) E) = 1 := by

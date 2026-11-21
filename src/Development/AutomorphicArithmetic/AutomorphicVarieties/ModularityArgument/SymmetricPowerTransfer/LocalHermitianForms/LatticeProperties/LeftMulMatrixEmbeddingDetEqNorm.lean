@@ -198,12 +198,13 @@ theorem isLat_lat [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O K] 
     (hS : IsLat O τ S) : ∃ g, S = LL O τ g := by
   obtain ⟨⟨s, rfl⟩, hsp⟩ := hS
   set M : Submodule O (Etau K τ) := Submodule.span O (s : Set (Etau K τ)) with hM
-  haveI : Submodule.IsLattice K M := ⟨⟨s, rfl⟩, hsp⟩
+  haveI : Submodule.IsLattice K M := Submodule.IsLattice.of_fg K ⟨s, rfl⟩
+  haveI : Submodule.IsFullLattice K M := ⟨hsp⟩
   have hr : Module.finrank O M = 2 := by
     apply Module.finrank_eq_of_rank_eq
-    rw [Submodule.IsLattice.rank' K M, ← Module.finrank_eq_rank, QuadraticAlgebra.finrank_eq_two]
+    rw [Submodule.IsFullLattice.rank_eq K M, ← Module.finrank_eq_rank, QuadraticAlgebra.finrank_eq_two]
   let b := Module.finBasisOfFinrankEq O M hr
-  let B := b.extendOfIsLattice K
+  let B := b.extendOfIsFullLattice K
   refine ⟨⟨(b0 τ).toMatrix B, B.toMatrix (b0 τ), by simp, by simp⟩, ?_⟩
   rw [lat_basis B _ fun x => (b0 τ).toMatrix_mulVec_repr B x]
   have : Set.range B = M.subtype '' Set.range b := by

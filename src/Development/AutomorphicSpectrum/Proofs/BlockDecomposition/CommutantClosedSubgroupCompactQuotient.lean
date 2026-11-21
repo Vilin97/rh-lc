@@ -50,7 +50,7 @@ theorem exists_isCompact_trHom_centralizer (hH : IsUnit H.det) {m : Type} [Finit
   classical
   let b := Module.finBasis K E
   let G : Subgroup (AdelicGLn.AdelicGL K 𝒩') := G₀.map (trHom b 𝔸[K])
-  have hG1 : G ≤ Reduction.normOneGL K 𝒩' := by
+  have hG1 : G ≤ Reduction.normOneGL (K := K) (n := 𝒩') := by
     rintro _ ⟨u, hu, rfl⟩
     rw [Reduction.mem_normOneGL]
     set a := AdelicGLn.det K 𝒩' (trHom b 𝔸[K] u)

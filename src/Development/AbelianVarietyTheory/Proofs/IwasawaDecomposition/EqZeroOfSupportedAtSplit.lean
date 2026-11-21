@@ -26,8 +26,8 @@ theorem _root_.GlobalTheory.SplitLocEq.conj_entry {L : Type} [Field L] [NumberFi
   rfl
 
 theorem proj_entry {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} (s : SplitPlace L) (x : GA L n)
-    (i j : Fin n) : s.proj ((x.1 : Matrix (Fin n) (Fin n) (AL L)) i j) =
-      ((s.loc n x : GL (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) :
+    (i j : Fin n) : s.proj (L := L) ((x.1 : Matrix (Fin n) (Fin n) (AL L)) i j) =
+      ((s.loc (L := L) n x : GL (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) :
         Matrix (Fin n) (Fin n) (s.v.adicCompletion (maximalRealSubfield L))) i j := rfl
 
 open NumberField IsDedekindDomain TensorProduct in
@@ -37,8 +37,8 @@ private theorem evalAt_apply' {L : Type} [Field L] [NumberField L] (w)
 open NumberField IsDedekindDomain TensorProduct in
 private theorem eq_zero_of_compAt_eq_zero_of_proj_conj_eq_zero {L : Type} [Field L] [NumberField L] [IsCMField L]
     (s : _root_.ReciprocityTheory.Aut.SplitPlace L) (d : _root_.ReciprocityTheory.Aut.AL L)
-    (hw : ∀ w, w ≠ s.v → _root_.ReciprocityTheory.Aut.compAt L w d = 0) (h₁ : s.proj d = 0)
-    (h₂ : s.proj (_root_.ReciprocityTheory.Aut.conjAL L d) = 0) : d = 0 := by
+    (hw : ∀ w, w ≠ s.v → _root_.ReciprocityTheory.Aut.compAt L w d = 0) (h₁ : s.proj (L := L) d = 0)
+    (h₂ : s.proj (L := L) (_root_.ReciprocityTheory.Aut.conjAL L d) = 0) : d = 0 := by
   let b : Module.Basis (Fin 2) (maximalRealSubfield L) L :=
     Module.finBasisOfFinrankEq _ _ (Algebra.IsQuadraticExtension.finrank_eq_two _ _)
   obtain ⟨a, c, rfl⟩ := _root_.GlobalTheory.tensor_exists_decomp b d
@@ -92,15 +92,16 @@ private theorem eq_zero_of_compAt_eq_zero_of_proj_conj_eq_zero {L : Type} [Field
 
 theorem _root_.GlobalTheory.SplitLocEq.eq_of_trivOutside_of_loc_eq : ∀ (L : Type) [Field L] [NumberField L]
     [IsCMField L] (n : ℕ) (s : _root_.ReciprocityTheory.Aut.SplitPlace L) (x y : _root_.Formalism.AUTREP.GAf L n),
-    _root_.ReciprocityTheory.Aut.TrivOutside {s.v} x → _root_.ReciprocityTheory.Aut.TrivOutside {s.v} y → s.loc n x = s.loc n y → x = y := by
+    _root_.ReciprocityTheory.Aut.TrivOutside L {s.v} x → _root_.ReciprocityTheory.Aut.TrivOutside L {s.v} y →
+      s.loc (L := L) n x = s.loc (L := L) n y → x = y := by
   intro L _ _ _ n s x y hx hy hxy
-  have triv : ∀ z : _root_.ReciprocityTheory.Aut.GA L n, _root_.ReciprocityTheory.Aut.TrivOutside {s.v} z → ∀ w, w ≠ s.v → ∀ i j,
+  have triv : ∀ z : _root_.ReciprocityTheory.Aut.GA L n, _root_.ReciprocityTheory.Aut.TrivOutside L {s.v} z → ∀ w, w ≠ s.v → ∀ i j,
       _root_.ReciprocityTheory.Aut.compAt L w ((z.1 : Matrix (Fin n) (Fin n) (_root_.ReciprocityTheory.Aut.AL L)) i j) =
         (1 : Matrix (Fin n) (Fin n) _) i j := by
     intro z hz w hw i j
     have := hz w (by simpa using hw)
     exact congrFun (congrFun this i) j
-  have trivInv : ∀ z : _root_.ReciprocityTheory.Aut.GA L n, _root_.ReciprocityTheory.Aut.TrivOutside {s.v} z → _root_.ReciprocityTheory.Aut.TrivOutside {s.v} z⁻¹ := by
+  have trivInv : ∀ z : _root_.ReciprocityTheory.Aut.GA L n, _root_.ReciprocityTheory.Aut.TrivOutside L {s.v} z → _root_.ReciprocityTheory.Aut.TrivOutside L {s.v} z⁻¹ := by
     intro z hz w hw
     show ((z⁻¹).1 : Matrix (Fin n) (Fin n) (_root_.ReciprocityTheory.Aut.AL L)).map (_root_.ReciprocityTheory.Aut.compAt L w) = 1
     have hm : (z.1 : Matrix (Fin n) (Fin n) (_root_.ReciprocityTheory.Aut.AL L)) *
@@ -110,7 +111,7 @@ theorem _root_.GlobalTheory.SplitLocEq.eq_of_trivOutside_of_loc_eq : ∀ (L : Ty
     rw [hz w hw, one_mul] at h2
     rw [h2]
     exact Matrix.map_one _ (map_zero _) (map_one _)
-  have hinv : s.loc n x⁻¹ = s.loc n y⁻¹ := by simp [map_inv, hxy]
+  have hinv : s.loc (L := L) n x⁻¹ = s.loc (L := L) n y⁻¹ := by simp [map_inv, hxy]
   apply Subtype.ext
   apply Units.ext
   ext i j

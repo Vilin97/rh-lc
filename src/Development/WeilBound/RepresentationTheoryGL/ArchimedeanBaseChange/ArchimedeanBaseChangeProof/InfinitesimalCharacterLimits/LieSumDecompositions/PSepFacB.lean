@@ -166,7 +166,7 @@ theorem eq_zero_of_eval_algebraMap (D : B[X]) (h : ∀ u : ℂ, D.eval (algebraM
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [eval_monomial, ← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
   have hc : q.coeff k = φ (D.coeff k) := by
-    simp only [q, finsetSum_coeff, coeff_monomial]
+    simp only [q, finsetSum_coeff, coeff_monomial_apply]
     by_cases hk : k ∈ Finset.range (D.natDegree + 1)
     · rw [Finset.sum_ite_eq']
       simp [hk]
@@ -213,7 +213,9 @@ theorem isSS_coeff_fun (m : Multiset ℂ) (hm : m.Nodup) (r s : ℕ) (_hrs : Mul
     · exact (hcomm i j).2.1.eq
     · exact ((hcomm j i).2.1.eq).symm
     · exact (hcomm i j).2.2.eq
-  letI : CommRing (Algebra.adjoin ℂ S) := Algebra.adjoinCommRingOfComm ℂ hS
+  letI : IsMulCommutative (Algebra.adjoin ℂ S) :=
+    Algebra.isMulCommutative_adjoin ℂ fun x hx y hy _ => hS x hx y hy
+  letI : CommRing (Algebra.adjoin ℂ S) := open scoped IsMulCommutative in inferInstance
   let a' : ℕ → Algebra.adjoin ℂ S := fun i => ⟨a i, Algebra.subset_adjoin (Or.inl ⟨i, rfl⟩)⟩
   let b' : ℕ → Algebra.adjoin ℂ S := fun i => ⟨b i, Algebra.subset_adjoin (Or.inr ⟨i, rfl⟩)⟩
 
@@ -255,7 +257,7 @@ theorem isSS_coeff_fun (m : Multiset ℂ) (hm : m.Nodup) (r s : ℕ) (_hrs : Mul
   have hrelP : P.comp (X + C (algebraMap ℂ _ c₁)) * Q.comp (X + C (algebraMap ℂ _ c₂)) =
       p.map (algebraMap ℂ (Algebra.adjoin ℂ S)) := by
     rw [← sub_eq_zero]
-    refine eq_zero_of_eval_algebraMap _ fun u => ?_
+    refine eq_zero_of_eval_algebraMap (B := Algebra.adjoin ℂ S) _ fun u => ?_
     rw [eval_sub, eval_mul, eval_comp, eval_comp, eval_map, eval₂_at_apply, hval]
     simp only [eval_add, eval_X, eval_C, ← map_add (f := _)]
     rw [hPe, hQe, sub_eq_zero]
@@ -281,8 +283,8 @@ theorem isSS_coeff_fun (m : Multiset ℂ) (hm : m.Nodup) (r s : ℕ) (_hrs : Mul
   let Q₁ := Q.comp (X + C (algebraMap ℂ (Algebra.adjoin ℂ S) c₂))
   have hP₁ : P₁.Monic := hPm.comp_X_add_C _
   have hQ₁ : Q₁.Monic := hQm.comp_X_add_C _
-  have hss₁ : ∀ j, IsSS (P₁.coeff j) := isSS_coeff p hps P₁ Q₁ hP₁ hQ₁ hrelP
-  have hss₂ : ∀ j, IsSS (Q₁.coeff j) := isSS_coeff p hps Q₁ P₁ hQ₁ hP₁ (by rw [mul_comm]; exact hrelP)
+  have hss₁ : ∀ j, IsSS (P₁.coeff j) := isSS_coeff (B := Algebra.adjoin ℂ S) p hps P₁ Q₁ hP₁ hQ₁ hrelP
+  have hss₂ : ∀ j, IsSS (Q₁.coeff j) := isSS_coeff (B := Algebra.adjoin ℂ S) p hps Q₁ P₁ hQ₁ hP₁ (by rw [mul_comm]; exact hrelP)
 
   have unshift : ∀ (P₁ : (Algebra.adjoin ℂ S)[X]) (c : ℂ), (∀ j, IsSS (P₁.coeff j)) →
       ∀ k, IsSS ((P₁.comp (X - C (algebraMap ℂ _ c))).coeff k) := by

@@ -267,7 +267,7 @@ theorem eval {d : ℕ} {g : Module.End ℂ (TV n M P)} (hg : Deg E d g) (J : P �
       linarith
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [Module.End.mul_apply, Om_single, map_sum, Finset.sum_apply, LinearMap.sum_apply]
-      exact Finset.sum_congr rfl fun c _ => by rw [hAv]; rfl
+        exact Finset.sum_congr rfl fun c _ => by rw [hAv]; rfl
   | perm σ _ ih =>
     intro I
     obtain ⟨A, hA, hAv⟩ := ih (I ∘ σ.symm)

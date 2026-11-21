@@ -21,7 +21,7 @@ open AutomorphicForm RightCosetSpace Reduction
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 def CuspL2 : Type _ := cuspidalL2 μ
 
@@ -39,15 +39,15 @@ theorem norm_toLp (v : CuspL2 μ) : ‖toLp μ v‖ = ‖v‖ := rfl
 
 theorem toLp_injective : Function.Injective (toLp μ) := Subtype.val_injective
 
-def cuspRepT : UnitaryRep (normOneGL K n) (CuspL2 μ) := cuspRep μ
+def cuspRepT : UnitaryRep (normOneGL (K := K) (n := n)) (CuspL2 μ) := cuspRep μ
 
-theorem toLp_cuspRepT (g : normOneGL K n) (v : CuspL2 μ) :
+theorem toLp_cuspRepT (g : normOneGL (K := K) (n := n)) (v : CuspL2 μ) :
     toLp μ (cuspRepT μ g v) = rightRegularRep Γ₁ μ g (toLp μ v) := rfl
 
 theorem toLp_mem_intertwiners : toLp μ ∈ (cuspRepT μ).intertwiners (rightRegularRep Γ₁ μ) :=
   fun _ _ => rfl
 
-theorem toLp_integrated (f : normOneGL K n →₁[μ] ℂ) (v : CuspL2 μ) :
+theorem toLp_integrated (f : normOneGL (K := K) (n := n) →₁[μ] ℂ) (v : CuspL2 μ) :
     toLp μ ((cuspRepT μ).integrated μ f v) = (rightRegularRep Γ₁ μ).integrated μ f (toLp μ v) :=
   congrArg (fun T => T v)
     (UnitaryRep.comp_integrated_of_mem_intertwiners (cuspRepT μ) μ (toLp_mem_intertwiners μ) f)
@@ -93,7 +93,7 @@ theorem toLp_integrated_archRepT {γ : archGroup K n → ℂ} (hγ : Continuous 
     (integral_congr_ae (Eventually.of_forall fun a => (toLp μ).map_smul (γ a) _))
 
 
-theorem isContRep_integrated_archRepT {w : CuspL2 μ} {W : normOneGL K n → ℂ}
+theorem isContRep_integrated_archRepT {w : CuspL2 μ} {W : normOneGL (K := K) (n := n) → ℂ}
     (hW : IsContRep μ (toLp μ w) W) {C : ℝ} (hWb : ∀ y, ‖W y‖ ≤ C)
     {γ : archGroup K n → ℂ} (hγ : Continuous γ) (hγc : HasCompactSupport γ) :
     IsContRep μ (toLp μ ((archRepT μ).integrated ν γ w))
@@ -104,7 +104,7 @@ theorem isContRep_integrated_archRepT {w : CuspL2 μ} {W : normOneGL K n → ℂ
   have hWc : Continuous W := hW.1
   have hpc : Continuous (archP K n) := continuous_archP
 
-  have hJ : Continuous (uncurry fun (y : normOneGL K n) (a : archGroup K n) =>
+  have hJ : Continuous (uncurry fun (y : normOneGL (K := K) (n := n)) (a : archGroup K n) =>
       γ a * W (y * archP K n a)) :=
     (hγ.comp continuous_snd).mul (hWc.comp (continuous_fst.mul (hpc.comp continuous_snd)))
   have hset : ∀ y, ∫ a, γ a * W (y * archP K n a) ∂ν = ∫ a in S, γ a * W (y * archP K n a) ∂ν := by
@@ -112,7 +112,7 @@ theorem isContRep_integrated_archRepT {w : CuspL2 μ} {W : normOneGL K n → ℂ
     refine (setIntegral_eq_integral_of_forall_compl_eq_zero fun a ha => ?_).symm
     have h0 : γ a = 0 := image_eq_zero_of_notMem_tsupport (by rw [← hS]; exact ha)
     rw [h0, zero_mul]
-  obtain ⟨Ψ, hΨ⟩ : ∃ Ψ : normOneGL K n → ℂ, Ψ = fun y => ∫ a, γ a * W (y * archP K n a) ∂ν :=
+  obtain ⟨Ψ, hΨ⟩ : ∃ Ψ : normOneGL (K := K) (n := n) → ℂ, Ψ = fun y => ∫ a, γ a * W (y * archP K n a) ∂ν :=
     ⟨_, rfl⟩
   have hΨc : Continuous Ψ := by
     have : Ψ = fun y => ∫ a in S, γ a * W (y * archP K n a) ∂ν := hΨ.trans (funext hset)
@@ -147,7 +147,7 @@ theorem isContRep_integrated_archRepT {w : CuspL2 μ} {W : normOneGL K n → ℂ
       γ a * WQ (rightMul Γ₁ (archP K n a) x)) := by
     have hr : Continuous fun p : archGroup K n × RightCosetSpace Γ₁ =>
         rightMul Γ₁ (archP K n p.1) p.2 := by
-      have h1 : Continuous fun p : RightCosetSpace Γ₁ × normOneGL K n => rightMul Γ₁ p.2 p.1 :=
+      have h1 : Continuous fun p : RightCosetSpace Γ₁ × normOneGL (K := K) (n := n) => rightMul Γ₁ p.2 p.1 :=
         continuous_rightMul_prod Γ₁
       have h2 : Continuous fun p : archGroup K n × RightCosetSpace Γ₁ => (p.2, archP K n p.1) :=
         continuous_snd.prodMk (hpc.comp continuous_fst)

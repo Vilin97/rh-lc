@@ -23,7 +23,7 @@ theorem UpperTheory.exists_bound_cuspForm_of_unitary_centralCharacter :
   refine ⟨B₀, fun g => ?_⟩
   let u : (A E)ˣ := posIdeleHom E (rpowHom ((((2 : ℕ) : ℝ) * Module.finrank ℚ E))⁻¹ (detModule E 2 g))
   have e : Matrix.GeneralLinearGroup.scalar (Fin 2) u = centralSection E 2 (detModule E 2 g) := Units.ext rfl
-  have h2 : (centralSection E 2 (detModule E 2 g))⁻¹ * g ∈ normOneGL E 2 := by
+  have h2 : (centralSection E 2 (detModule E 2 g))⁻¹ * g ∈ normOneGL (K := E) (n := 2) := by
     rw [mem_normOneGL_iff_detModule, map_mul, map_inv, detModule_centralSection two_pos, inv_mul_cancel]
   have h3 := hc _ hf u ((centralSection E 2 (detModule E 2 g))⁻¹ * g)
   rw [e, mul_inv_cancel_left] at h3

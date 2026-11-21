@@ -59,12 +59,12 @@ private theorem exists_proj {G H K : Type*} [Group G] [TopologicalSpace G] [Norm
 
 variable {E : Type} [Field E] [NumberField E] {n : ℕ}
 
-private def k1 : KA E n →* normOneGL E n := Subgroup.inclusion maxCompact_le_normOneGL
+private def k1 : KA E n →* normOneGL (K := E) (n := n) := Subgroup.inclusion maxCompact_le_normOneGL
 
 private def trK (k : KA E n) (φ : cuspForms E n) : cuspForms E n :=
   ⟨rightTranslate (k : AdelicGLn.AdelicGL E n) φ.1, φ.2.1.rightTranslate_of_mem_maxCompact k.2, φ.2.2.translate _⟩
 
-variable (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
 
 private theorem cls_trK (k : KA E n) (φ : cuspForms E n) :
     clsL μ (trK k φ) = rightRegularRep (rationalGLOne E n) μ (k1 k) (clsL μ φ) :=
@@ -152,9 +152,9 @@ private theorem ae_comb {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeftInvar
     exact congrArg _ e3
 
 private theorem exists_form' {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeftInvariant ψ) (hc : Continuous ψ)
-    (hb : ∃ C : ℝ, ∀ x : normOneGL E n, ‖ψ x‖ ≤ C) (hcu : Cusp ψ) (h0 : ∃ x : normOneGL E n, ψ x ≠ 0) :
+    (hb : ∃ C : ℝ, ∀ x : normOneGL (K := E) (n := n), ‖ψ x‖ ≤ C) (hcu : Cusp ψ) (h0 : ∃ x : normOneGL (K := E) (n := n), ψ x ≠ 0) :
     ∃ V, IsSummand μ V ∧ ∃ f ∈ formsIn μ V,
-      ∫ y, ψ (Quotient.out y : normOneGL E n) * starRingEnd ℂ (f.1 (Quotient.out y : normOneGL E n))
+      ∫ y, ψ (Quotient.out y : normOneGL (K := E) (n := n)) * starRingEnd ℂ (f.1 (Quotient.out y : normOneGL (K := E) (n := n)))
         ∂quotientMeasure (rationalGLOne E n) μ ≠ 0 ∧ ∀ x : KA E n →₀ ℂ,
       (∀ g, (x.sum fun k c => c * ψ (g * k)) = 0) → ∀ g, (x.sum fun k c => c * f.1 (g * k)) = 0 := by
   have := Reduction.isFiniteMeasure_quotientMeasure (K := E) (n := n) μ
@@ -174,7 +174,7 @@ private theorem exists_form' {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeft
       refine (MemLp.coeFn_toLp hm).symm.trans ?_
       rw [h]
       exact Lp.coeFn_zero _ _ _
-    have h2 : (fun y : normOneGL E n => ψ y) =ᵐ[μ] 0 := (quasiMeasurePreserving_mk _ μ).ae_eq h1
+    have h2 : (fun y : normOneGL (K := E) (n := n) => ψ y) =ᵐ[μ] 0 := (quasiMeasurePreserving_mk _ μ).ae_eq h1
     exact hx (congrFun ((Continuous.ae_eq_iff_eq μ (hc.comp continuous_subtype_val) continuous_const).1 h2) x)
   obtain ⟨V, hV, f, hf, hi, hk⟩ := exists_form μ hv hv0
   refine ⟨V, hV, f, hf, fun hz => hi ?_, fun x hx => hk x ?_⟩

@@ -28,8 +28,8 @@ theorem UpperTheory.ConvolutionTheory.Sph.down :
     UpperTheory.ConvolutionTheory.Sph.Down := by
   classical
   intro F E _ _ _ _ _ _ _ _ σ hσ hp n hn π P hW v hv ⟨w, hwv, B', hB'⟩
-  let μE : Measure (normOneGL E n) := Measure.haar
-  let μF : Measure (normOneGL F n) := Measure.haar
+  let μE : Measure (normOneGL (K := E) (n := n)) := Measure.haar
+  let μF : Measure (normOneGL (K := F) (n := n)) := Measure.haar
   obtain ⟨s, χ, χ', V, V', θ, hχ, hχ', hV, hV', hθ, hst, hW', -, hOff⟩ := Sph.norm F E σ hσ hp n hn μE μF π P hW
   obtain ⟨-, htw⟩ := powTwist F E
   obtain ⟨hi, -, h1⟩ := htw s χ χ' hχ hχ'

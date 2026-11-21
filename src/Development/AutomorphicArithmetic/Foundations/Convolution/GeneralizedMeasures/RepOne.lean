@@ -97,7 +97,7 @@ private theorem exists_mid (w : Pl K) (J : Subgroup (GL (Fin n) (w.adicCompletio
     have h3 : t⁻¹ * g ∈ J := QuotientGroup.eq.1 h2
     simpa using hSJ t ht _ h3
 
-private theorem ofin_left (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+private theorem ofin_left (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] (u : AdelicGLn.FiniteAdelicGL K n)
     (e : TF K n) (he : ∀ x, e (u * x) = e x) (v : LL μ) : rhoF μ u (Ofin μ m e v) = Ofin μ m e v := by
   have key : ∀ a b : LL μ, ⟪a, Ofin μ m e b⟫_ℂ = ∫ h, e h * ⟪a, rhoF μ h b⟫_ℂ ∂m := by
@@ -174,7 +174,7 @@ private theorem iw_zero (w : Pl K) :
   · intro hg
     exact ⟨g, hg, 1, one_mem _, by rw [GroundTheory.Automorphic.Parabolic.diagPow_zero, mul_one, mul_one]⟩
 
-variable {μ : Measure (normOneGL K n)} [μ.IsHaarMeasure]
+variable {μ : Measure (normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
 
 private theorem comm_hop (B : LL μ →L[ℂ] LL μ) (hB : ∀ h, Commute B (rhoF μ h)) (w : Pl K)
     (J : Subgroup (GL (Fin n) (w.adicCompletion K))) (x : GL (Fin n) (w.adicCompletion K))

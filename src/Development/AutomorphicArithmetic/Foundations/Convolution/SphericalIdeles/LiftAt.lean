@@ -56,19 +56,19 @@ private theorem prj_of_mem (V : Submodule ℂ H) {x : H} (h : x ∈ V) : prj V x
 
 end Hilb
 
-private theorem oinf_congr {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+private theorem oinf_congr {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (ν ν' : Measure (archGroup K n)) [ν.IsHaarMeasure] [ν'.IsHaarMeasure] (h : ν = ν') (a : TI K n) : Oinf μ ν a = Oinf μ ν' a := by
   subst h
   rfl
 
-private theorem fixL_anti {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K)
+private theorem fixL_anti {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K)
     {J J' : Subgroup (Gw n w)} (h : J ≤ J') : fixL μ w J' ≤ fixL μ w J :=
   biInf_mono fun _ hu => Subgroup.map_mono h hu
 
 theorem UpperTheory.ConvolutionTheory.Sph.liftAt (hCI : UpperTheory.ConvolutionTheory.CI) (hGM : UpperTheory.ConvolutionTheory.GM.GM) :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure] (μF : Measure (normOneGL F n)) [μF.IsHaarMeasure] (θ : Twist μE),
+    ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure] (θ : Twist μE),
       IsGalTwist σ θ → ∀ (V : Submodule ℂ (LL μF)) Λ t (S₀ : Set (Pl F)), IsSummand μF V → S₀.Finite → At μF S₀ V Λ t →
       OffAll F n (bcInf (K := E) Λ) (bcSat t) → ∀ v₀ : Pl F, v₀ ∉ S₀ → GM.Unr E v₀ →
       ∃ V' : Submodule ℂ (LL μE), IsSummand μE V' ∧ AtAE μE V' (bcInf Λ) (bcSat t) ∧

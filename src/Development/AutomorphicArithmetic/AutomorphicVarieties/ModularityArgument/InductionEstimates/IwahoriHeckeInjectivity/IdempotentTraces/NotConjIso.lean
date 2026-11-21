@@ -191,7 +191,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.indCs :
     IndNorm → IndCs := by
   intro hN K M _ _ hK _ _ hM _ h2 π hm hS
   have hq : Algebra.IsQuadraticExtension K M := ⟨h2⟩
-  let μ : Measure (normOneGL M 2) := Measure.haar
+  let μ : Measure (normOneGL (K := M) (n := 2)) := Measure.haar
   obtain ⟨χ, ⟨s, hχ⟩, V, hV⟩ := Dp.exTwist M 2 μ π (by norm_num)
   obtain ⟨hex, hpw⟩ := powTwist K M
   obtain ⟨χ₀, hχ₀⟩ := (hex s).1

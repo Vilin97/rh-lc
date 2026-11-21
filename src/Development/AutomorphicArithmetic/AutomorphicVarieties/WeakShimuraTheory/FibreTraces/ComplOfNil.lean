@@ -201,7 +201,7 @@ theorem UpperTheory.V.Ws.fibCpl :
           apply AlgHom.ext
           intro z
           simp only [AlgHom.comp_apply]
-          exact res_map _ _)
+          exact res_map Λ R (Ideal.Quotient.mkₐ Λ (maximalIdeal R ^ (k + 1))) (algebraMap A R z))
       have e1 : j.comp h = u := huniq _ (by
         show (j.comp h).comp (IsScalarTower.toAlgHom Λ A R) = _
         rw [AlgHom.comp_assoc, hh]

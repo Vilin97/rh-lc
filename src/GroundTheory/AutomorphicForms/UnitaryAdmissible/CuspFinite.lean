@@ -47,16 +47,16 @@ theorem finiteDimensional_of_map_mem {M N : Type*} [AddCommGroup M] [Module ℂ 
     exact congrArg Subtype.val hx
   exact Module.Finite.of_injective g hg
 
-theorem cuspRep_integrated_eq_smul (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
-    (F : CompactlySupportedContinuousMap (normOneGL K n) ℂ) (c : ℂ) (φ : cuspForms K n)
-    (hΘ : ∀ y : normOneGL K n,
+theorem cuspRep_integrated_eq_smul (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
+    (F : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) (c : ℂ) (φ : cuspForms K n)
+    (hΘ : ∀ y : normOneGL (K := K) (n := n),
       ∫ x, F x * (φ : AdelicGLn.AdelicGL K n → ℂ) ((y : AdelicGLn.AdelicGL K n) * x) ∂μ =
         c * (φ : AdelicGLn.AdelicGL K n → ℂ) y) :
     (cuspRep μ).integrated μ (UnitaryRep.ccToL1 μ F) (cuspToL2 μ φ) = c • cuspToL2 μ φ := by
   have hrc : rconv Γ₁ μ F ((cuspToL2 μ φ : cuspidalL2 μ) : Lp ℂ 2 (quotientMeasure Γ₁ μ)) =
-      fun y : normOneGL K n => c * (φ : AdelicGLn.AdelicGL K n → ℂ) (y : AdelicGLn.AdelicGL K n) := by
+      fun y : normOneGL (K := K) (n := n) => c * (φ : AdelicGLn.AdelicGL K n → ℂ) (y : AdelicGLn.AdelicGL K n) := by
     funext y
-    have hae : (fun z : normOneGL K n =>
+    have hae : (fun z : normOneGL (K := K) (n := n) =>
         ((cuspToL2 μ φ : cuspidalL2 μ) : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (mk Γ₁ z)) =ᵐ[μ]
           fun z => cuspQuot φ.2.1.isLeftInvariant (mk Γ₁ z) :=
       (quasiMeasurePreserving_mk Γ₁ μ).ae_eq (coeFn_cuspToL2 μ φ)
@@ -96,7 +96,7 @@ theorem finiteDimensional_of_eigen {ι : Type*} [Fintype ι]
       lieActionCusp K n (centralZ K n) φ = c • φ ∧
       ∀ u ∈ U, finRepCusp K n (u : AdelicGLn.FiniteAdelicGL K n) φ = φ) :
     FiniteDimensional ℂ S := by
-  set μ : Measure (normOneGL K n) := Measure.haar with hμ
+  set μ : Measure (normOneGL (K := K) (n := n)) := Measure.haar with hμ
   set ν : Measure (archGroup K n) := Measure.haar with hν
 
   obtain ⟨κ, hκs, hκc, -, hκ⟩ := (isExpLieAlgebra K n).exists_kernel_eq_conv_of_aeval_laplacian ν b P
@@ -133,7 +133,7 @@ theorem finiteDimensional_of_eigen {ι : Type*} [Fintype ι]
   have hκcc : HasCompactSupport κc := hκc.mul_right
   obtain ⟨F₀, c', hc', -, hint⟩ := exists_cc_integral_mul_eq μ ν U hU κc hκccont hκcc
 
-  have hΘ : ∀ φ ∈ S, ∀ y : normOneGL K n,
+  have hΘ : ∀ φ ∈ S, ∀ y : normOneGL (K := K) (n := n),
       ∫ x, F₀ x * (φ : AdelicGLn.AdelicGL K n → ℂ) ((y : AdelicGLn.AdelicGL K n) * x) ∂μ =
         c' * (φ : AdelicGLn.AdelicGL K n → ℂ) y := by
     intro φ hφ y

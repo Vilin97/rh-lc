@@ -100,7 +100,7 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceUmg :
     unfold slice
     congr 1
     funext y
-    have := Pair.ct_lev_rat hφ.left 1 γ (zt E r t * ((Quotient.out y : normOneGL E r) : GA E r)) m
+    have := Pair.ct_lev_rat hφ.left 1 γ (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) m
     rw [map_one, one_mul] at this
     rw [this]
   · refine isOpen_stab_of_mem_nhds _ _ (Filter.mem_of_superset

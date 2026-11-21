@@ -86,7 +86,7 @@ def WeakPow : Prop :=
 def FibTrace : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure] (μF : Measure (normOneGL F n)) [μF.IsHaarMeasure]
+    ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure]
       (π : CuspSub F n) (P : CuspSub E n) (V : Submodule ℂ (LL μE)) Λ t, Dp.Carries μE P V → T.AtAE μE V Λ t →
       WeakBC (Cusp.cx π).sat (Cusp.cx P).sat → ∀ (V₀ : Submodule ℂ (LL μF)) Λ₀ t₀, IsSummand μF V₀ → T.AtAE μF V₀ Λ₀ t₀ →
       Λ = bcInf Λ₀ → (∀ᶠ u in cofinite, t u = bcSat t₀ u) →
@@ -96,7 +96,7 @@ def FibTrace : Prop :=
 def BaseTw : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V →
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V →
     ∀ (q : Pl F) (w₀ : PlacesOver E q) (T : Ty σ n q w₀) (v : Pl F), (∀ u : PlacesOver E v, u = T.mk' v) →
       RankOne μ V (T.mk' v).1 (T.J _) (T.χ _) → V ⊓ eigL μ (T.mk' v).1 (T.J _) (T.χ _) ≠ ⊥ →
       ∀ [MeasurableSpace (Gw n (T.mk' v).1)] [BorelSpace (Gw n (T.mk' v).1)] (m : Measure (Gw n (T.mk' v).1)), m.IsHaarMeasure →
@@ -115,7 +115,7 @@ def PowNe : Prop := ∀ Z : Multiset ℂ, Z ≠ 0 → 0 ∉ Z → ∃ᶠ j : ℕ
 def Core : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure] (π : CuspSub F n) (P : CuspSub E n) (V : Submodule ℂ (LL μE)),
+    ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (π : CuspSub F n) (P : CuspSub E n) (V : Submodule ℂ (LL μE)),
       Dp.Carries μE P V → (∀ g : E ≃ₐ[F] E, (Cusp.cx P).ConjIso g.toRingEquiv) →
       WeakBC (Cusp.cx π).sat (Cusp.cx P).sat → ∀ (v : Pl F) (w : PlacesOver E v), ¬ GM.Split E v →
     ∀ [MeasurableSpace (Gw n v)] [BorelSpace (Gw n v)] [MeasurableSpace (Gw n w.1)] [BorelSpace (Gw n w.1)]

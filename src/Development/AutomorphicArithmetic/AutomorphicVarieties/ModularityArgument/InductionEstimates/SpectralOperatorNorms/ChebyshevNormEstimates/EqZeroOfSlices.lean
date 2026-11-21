@@ -129,7 +129,7 @@ private theorem locAt_retract (w : Pl E) {n : ℕ} {u : GL (Fin n) (w.adicComple
         exact one_mem _
   have hc : ((retractOne (finEmb E n (AdelicGLn.localEmbedding w u)) : G1 E n) : AdelicGLn.AdelicGL E n) =
       finEmb E n (AdelicGLn.localEmbedding w u) :=
-    congrArg Subtype.val (retractOne_coe (⟨_, Reduction.maxCompact_le_normOneGL hm⟩ : normOneGL E n))
+    congrArg Subtype.val (retractOne_coe (⟨_, Reduction.maxCompact_le_normOneGL hm⟩ : normOneGL (K := E) (n := n)))
   refine ⟨?_, fun w' => ?_, fun v hv => ?_⟩
   · show ((retractOne (finEmb E n (AdelicGLn.localEmbedding w u)) : G1 E n) : AdelicGLn.AdelicGL E n) ∈ (maxCompact : Subgroup (AdelicGLn.AdelicGL E n))
     rw [hc]
@@ -388,7 +388,7 @@ private theorem eq_zero_of_slices {f : G1 E (2 + 2) → ℂ} (hun : ∀ X g, f (
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.bloEx :
-    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL E (2 + 2))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (v : Eu 𝔵.d'),
+    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (v : Eu 𝔵.d'),
       (∀ (b b' : BW.Blo 𝔢.S 2), BloIn b 𝔵.τ₂ 𝔵.m₂ 𝔵.B₂ → BloIn b' 𝔵.τ₁ 𝔵.m₁ 𝔵.B₁ → ∀ k ∈ KG E (2 + 2), ell b b' k (𝔵.A'.sec v) = 0) → v = 0 := by
   intro E _ _ _ μ _ θ 𝔢 𝔵 v hv
   have hfS := (𝔵.A'.onto (𝔵.A'.sec v)).1 ⟨v, rfl⟩

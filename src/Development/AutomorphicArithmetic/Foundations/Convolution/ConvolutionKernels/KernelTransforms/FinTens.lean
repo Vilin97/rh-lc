@@ -88,7 +88,7 @@ private theorem ft_intInd {X : Type*} [MeasurableSpace X] (m : Measure X) (S : S
   simp
 
 theorem UpperTheory.ConvolutionTheory.Tf.finTens :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] (r : ℕ) (w : Fin r → Pl K), Function.Injective w →
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] (r : ℕ) (w : Fin r → Pl K), Function.Injective w →
       ∀ (f : ∀ v : Pl K, Gw n v → ℂ), (∀ i, Test (f (w i))) →
       (∀ v, v ∉ Set.range w → f v = (GLnLocal.integralGL (v.adicCompletion K) n : Set (Gw n v)).indicator 1) →
       ∃ e : TF K n, (∀ h, e h = ∏ᶠ v, f v (finAt v (finEmb K n h))) ∧

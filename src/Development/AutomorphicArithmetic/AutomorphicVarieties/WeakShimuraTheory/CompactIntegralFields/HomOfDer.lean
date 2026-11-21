@@ -23,7 +23,7 @@ private theorem lifts_map {O Γ : Type} [CommRing O] [Group Γ] [TopologicalSpac
     exact hy
   · rw [PD.map_map, ← h.red]
     congr 1
-    exact RingHom.ext fun x => res_map f x
+    exact RingHom.ext fun x => res_map Λ R f x
 
 private theorem lc_dual {Γ k : Type} [TopologicalSpace Γ] [Field k] {f : Γ → DualNumber k}
     (h : AdicCont (maximalIdeal (DualNumber k)) f) : IsLocallyConstant f := by
@@ -119,7 +119,7 @@ theorem UpperTheory.V.Ws.red :
     obtain ⟨y, hy⟩ := hom_of_der (res Λ (R ⧸ I)) (D : R ⧸ I →ₗ[Λ] ResidueField Λ) D.2
     refine ⟨y.comp (Ideal.Quotient.mkₐ Λ I), fun x => ⟨?_, ?_⟩⟩
     · rw [AlgHom.comp_apply, (hy _).1]
-      exact res_map (Ideal.Quotient.mkₐ Λ I) x
+      exact res_map Λ R (Ideal.Quotient.mkₐ Λ I) x
     · rw [AlgHom.comp_apply, (hy _).2]
       rfl
   let tv : (R ⧸ I →ₗ[Λ] ResidueField Λ) → (Γ → M4 (ResidueField Λ)) × (Φ.ι → M4 (ResidueField Λ)) :=

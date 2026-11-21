@@ -58,7 +58,7 @@ private theorem prod_mem_of {H : Type*} [NormedAddCommGroup H] [InnerProductSpac
     exact h B (by simp) _ (ih (fun B' hB' => h B' (by simp [hB'])) v hv)
 
 section Loc
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem rhoL_comm' {w w' : Pl K} (h : w ≠ w') (g : Gw n w) (g' : Gw n w') :
     Commute (rhoL μ w g) (rhoL μ w' g') := by
@@ -113,7 +113,7 @@ private theorem under_over' {F E : Type} [Field F] [NumberField F] [Field E] [Nu
   HeightOneSpectrum.ext w.2.over.symm
 
 theorem UpperTheory.archimedean_baseChange_trace_comparison :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E ≃ₐ[F] E) (k n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure]
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E ≃ₐ[F] E) (k n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
         (D : InfD σ k) (s : Fin (k + 1) → archGroup F n →* archGroup E n) (hs : ∀ i, Continuous (s i)), IsBlockElement D n s →
         ∀ (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (a : TI F n)
           [∀ u : Pl E, MeasurableSpace (Gw n u)] [∀ u : Pl E, BorelSpace (Gw n u)] (m : ∀ u : Pl E, Measure (Gw n u)),

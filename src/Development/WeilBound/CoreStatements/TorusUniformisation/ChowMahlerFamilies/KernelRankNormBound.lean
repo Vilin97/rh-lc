@@ -193,7 +193,7 @@ theorem PositivityTheory.Xgn.kernel_rank_norm_bound : ∀ (E : Type) [Field E] [
   refine ⟨?_, ?_⟩
   · have h := PositivityTheory.Xgn.AmalgamKernelBound.corank_le k p
       ((LinearMap.lsmul (𝓞 E) Λ a).restrictScalars ℤ) (by rw [hdet]; exact pow_ne_zero _ hN)
-    rw [hdet, Int.natAbs_pow, padicValNat.pow] at h
-    exact h
+    rw [hdet, Int.natAbs_pow] at h
+    simpa only [Nat.padicValNat_def, Nat.multiplicity_pow] using h
   · rw [LinearMap.charpoly_baseChange, PositivityTheory.Xgn.AmalgamKernelBound.charpoly_lsmul,
       Polynomial.map_pow, algebraMap_int_eq]

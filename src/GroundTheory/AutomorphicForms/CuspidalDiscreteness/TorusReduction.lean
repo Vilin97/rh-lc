@@ -33,10 +33,10 @@ theorem truncInf_add_truncFin {r : ℕ} (s : UPos n r → 𝔸[K]) : truncInf s 
   rw [add_zero, zero_add]
   rfl
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
-theorem rconv_mul_right (f : normOneGL K n → ℂ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ))
-    {g : normOneGL K n} (hf : ∀ w, f (g⁻¹ * w) = f w) (y : normOneGL K n) :
+theorem rconv_mul_right (f : normOneGL (K := K) (n := n) → ℂ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ))
+    {g : normOneGL (K := K) (n := n)} (hf : ∀ w, f (g⁻¹ * w) = f w) (y : normOneGL (K := K) (n := n)) :
     rconv Γ₁ μ f φ (y * g) = rconv Γ₁ μ f φ y := by
   unfold rconv
   refine integral_congr_ae (Eventually.of_forall fun z => ?_)
@@ -53,9 +53,9 @@ theorem exists_isCompact_superset_scaledUnipFD (r : ℕ) {M : ℕ} (hM : 0 < M) 
   obtain ⟨a, ha, hXa⟩ := exists_finite_eq_natCast_mul hM hX p
   exact ⟨infinite_mem_scaledInfSet hM hX p, a, ha, hXa.symm⟩
 
-theorem norm_rconv_le_of_altSum (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ)
+theorem norm_rconv_le_of_altSum (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} (hφ : φ ∈ cuspidalL2 μ) {r : ℕ} (hr : 0 < r) (hrn : r < n)
-    {M : ℕ} (hM : 0 < M) (x : normOneGL K n) (k : ℕ) {B : ℝ}
+    {M : ℕ} (hM : 0 < M) (x : normOneGL (K := K) (n := n)) (k : ℕ) {B : ℝ}
     (hB : ∀ y : Fin k → UPos n r → 𝔸[K], (∀ i, y i ∈ scaledUnipFD K n r M) →
       ‖altSum k (fun s => rconv Γ₁ μ f φ (unipOne K n r s * x)) y 0‖ ≤ B) :
     ‖rconv Γ₁ μ f φ x‖ ≤ B := by
@@ -77,9 +77,9 @@ theorem norm_rconv_le_of_altSum (f : CompactlySupportedContinuousMap (normOneGL 
   have h0 := norm_le_of_forall_altSum_le hD (unipMeasure_scaledUnipFD hM) k H hper hint hmean B hB
   simpa [H, unipOne_zero] using h0
 
-theorem norm_rconv_le_of_altSum_inf (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ)
+theorem norm_rconv_le_of_altSum_inf (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} (hφ : φ ∈ cuspidalL2 μ) {r : ℕ} (hr : 0 < r) (hrn : r < n)
-    {M : ℕ} (hM : 0 < M) (x : normOneGL K n)
+    {M : ℕ} (hM : 0 < M) (x : normOneGL (K := K) (n := n))
     (hfin : ∀ z : UPos n r → 𝔸[K], (∀ p, (z p).1 = 0) →
       (∀ p, ∃ a ∈ GroundTheory.Global.integralFiniteAdeles (𝓞 K) K,
         (z p).2 = (M : FiniteAdeleRing (𝓞 K) K) * a) →

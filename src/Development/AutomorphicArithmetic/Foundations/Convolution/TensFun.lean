@@ -31,7 +31,7 @@ abbrev Pl : Type := HeightOneSpectrum (𝓞 K)
 
 abbrev Ix : Type := (K →+* ℂ) × Fin n
 
-abbrev TG : Type := CompactlySupportedContinuousMap (normOneGL K n) ℂ
+abbrev TG : Type := CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ
 
 abbrev TI : Type := CompactlySupportedContinuousMap (archGroup K n) ℂ
 
@@ -45,7 +45,7 @@ variable {K n}
 
 section Test
 
-def tensFun (β : TI K n) (e : TF K n) (x : normOneGL K n) : ℂ :=
+def tensFun (β : TI K n) (e : TF K n) (x : normOneGL (K := K) (n := n)) : ℂ :=
   kbar β (infPart K n (x : AdelicGLn.AdelicGL K n)) * e (finPart K n (x : AdelicGLn.AdelicGL K n))
 
 
@@ -88,7 +88,7 @@ end Test
 
 section Ops
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 def Oinf (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (β : TI K n) : LL μ →L[ℂ] LL μ :=
   ((rightRegularRep (rationalGLOne K n) μ).compHom (archP K n) continuous_archP).integrated ν (UnitaryRep.ccToL1 ν β)
@@ -98,7 +98,7 @@ def Ofin (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] (e : TF 
     (UnitaryRep.ccToL1 m e)
 
 def Compat (ν : Measure (archGroup K n)) (m : Measure (AdelicGLn.FiniteAdelicGL K n)) : Prop :=
-  ∀ (β : TI K n) (e : TF K n) (Θ : normOneGL K n → ℂ), Continuous Θ →
+  ∀ (β : TI K n) (e : TF K n) (Θ : normOneGL (K := K) (n := n) → ℂ), Continuous Θ →
     ∫ x, tens β e x * Θ x ∂μ = ∫ a, ∫ h, β a * e h * Θ (archP K n a * MultiplicityOne.finProj K n h) ∂m ∂ν
 
 def rhoF (h : AdelicGLn.FiniteAdelicGL K n) : LL μ →L[ℂ] LL μ :=
@@ -176,7 +176,7 @@ structure Datum where
   d : Fin r → ℕ
   pos : ∀ i, 0 < d i
   sum : ∑ i, d i = n
-  μ : ∀ i, Measure (normOneGL K (d i))
+  μ : ∀ i, Measure (normOneGL (K := K) (n := (d i)))
   [haar : ∀ i, (μ i).IsHaarMeasure]
   V : ∀ i, Submodule ℂ (LL (μ i))
   summand : ∀ i, IsSummand (μ i) (V i)

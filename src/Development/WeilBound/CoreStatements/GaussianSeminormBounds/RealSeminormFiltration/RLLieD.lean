@@ -230,7 +230,7 @@ theorem exists_div (n : ℕ) (f : SchwartzMap (Fin n → ℝ) ℂ)
     have hx' : x ∈ Metric.ball (0 : Fin n → ℝ) 1 := hbs (tsupport_smul_subset_left _ _ hx)
     refine b.contDiff.contDiffAt.smul (ContDiffAt.mul ?_ (hh i).contDiffAt)
     exact ContDiffAt.comp x (g := q) (f := fun x : Fin n → ℝ => x i)
-      (hq.contDiffAt (Metric.isOpen_ball.mem_nhds (hcoord i x hx'))) (contDiffAt_apply ℝ ℝ i x)
+      (hq.contDiffAt (Metric.isOpen_ball.mem_nhds (hcoord i x hx'))) (contDiffAt_apply ℝ (fun _ : Fin n => ℝ) i x)
   have hcs : ∀ i, HasCompactSupport (fun x : Fin n → ℝ => b x • (q (x i) * h i x)) :=
     fun i => b.hasCompactSupport.smul_right
   refine ⟨fun i => (hcs i).toSchwartzMap (hsm i), hcs, fun x => ?_⟩

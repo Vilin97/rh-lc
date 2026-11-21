@@ -112,7 +112,7 @@ private theorem main_est {C₁ cU M₁ C₂ N c₁ η e1 e2 W D : ℝ} {N₀ j k
       mul_le_mul_of_nonneg_left (by linarith) (abs_nonneg _)
     _ = _ := by ring
 
-private theorem tr_bd {E : Type} [Field E] [NumberField E] {μ : Measure (normOneGL E (2 + 2))} [μ.IsHaarMeasure] {θ : Twist μ}
+private theorem tr_bd {E : Type} [Field E] [NumberField E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ}
     {𝔢 : Side θ 2} (𝔣 : Fam 𝔢) (N : Eu 𝔣.d' ≃ₗᵢ[ℂ] Eu 𝔣.d) (x : ℝ) :
     ∃ Ct : ℝ, 0 ≤ Ct ∧ ∀ j, ‖𝔣.tr N x j‖ ≤ Ct * (‖𝔣.u 0 0‖ + 1) ^ j := by
   let Ψ : (Eu 𝔣.d' →L[ℂ] Eu 𝔣.d') →ₗ[ℂ] ℂ :=
@@ -135,7 +135,7 @@ private theorem tr_bd {E : Type} [Field E] [NumberField E] {μ : Measure (normOn
 set_option maxHeartbeats 6000000 in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.sideEstX :
     OneSideX → EvVal → TruncSpec → ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K]
-      (μ : Measure (normOneGL K (2 + 2))) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ 2) (𝔵 : Fam 𝔰)
+      (μ : Measure (normOneGL (K := K) (n := (2 + 2)))) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ 2) (𝔵 : Fam 𝔰)
       (ev : PR K (2 + 2) →+* (LL μ →L[ℂ] LL μ)) (evz : ℂ → PR K (2 + 2) →+* (Eu 𝔵.d' →L[ℂ] Eu 𝔵.d'))
       (Nn : Eu 𝔵.d' ≃ₗᵢ[ℂ] Eu 𝔵.d) (Cf : ℝ), 𝔰.toAmp.IsEv ev → (∀ P, Inner μ (ev P)) → 𝔵.IsEvz ev evz →
       Family μ 𝔵.A 𝔵.A' 0 𝔵.P Nn Cf → ∀ sp : Finset ℝ,

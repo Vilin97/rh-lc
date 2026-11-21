@@ -12,7 +12,7 @@ private theorem w_rev (n : ℕ) (i : Fin n) : w n i.rev = - w n i := by
   split_ifs <;> omega
 
 private theorem J_apply {K : Type} [CommRing K] {n : ℕ} (X : Matrix (Fin n) (Fin n) K) (i j : Fin n) :
-    (Jmat K n * Xᵀ * Jmat K n) i j = X j.rev i.rev := by
+    (Jmat (R := K) n * Xᵀ * Jmat (R := K) n) i j = X j.rev i.rev := by
   simp only [Matrix.mul_apply, Jmat, Matrix.transpose_apply, ite_mul, one_mul, zero_mul,
     mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   have key : ∀ k : Fin n, (j = k.rev) ↔ (k = j.rev) := by

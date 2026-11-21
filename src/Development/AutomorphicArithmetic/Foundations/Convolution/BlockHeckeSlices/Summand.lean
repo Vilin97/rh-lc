@@ -78,15 +78,15 @@ def resL {d : ℕ} (ρ : KA E (r + s) → Matrix (Fin d) (Fin d) ℂ) (k : KA E 
 def resR {d : ℕ} (ρ : KA E (r + s) → Matrix (Fin d) (Fin d) ℂ) (k : KA E s) : Matrix (Fin d) (Fin d) ℂ :=
   if h : lev (Ad E) r s (1, (k : GA E s)) ∈ KA E (r + s) then ρ ⟨_, h⟩ else 0
 
-def mu1 (E : Type) [Field E] [NumberField E] (n : ℕ) : Measure (normOneGL E n) := Measure.haar
+def mu1 (E : Type) [Field E] [NumberField E] (n : ℕ) : Measure (normOneGL (K := E) (n := n)) := Measure.haar
 
 instance (E : Type) [Field E] [NumberField E] (n : ℕ) : (mu1 E n).IsHaarMeasure := by unfold mu1; infer_instance
 
 def zt (E : Type) [Field E] [NumberField E] (n : ℕ) (t : ℝ) : AdelicGLn.AdelicGL E n := centralSection E n ⟨Real.exp t, Real.exp_pos t⟩
 
 def slice (f : GA E r → ℂ) (t : ℝ) (φ : GA E (r + s) → ℂ) (m : GA E s) : ℂ :=
-  ∫ y, AutomorphicForm.constantTerm r φ (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL E r) : GA E r), m)) *
-    starRingEnd ℂ (f ((Quotient.out y : normOneGL E r) : GA E r)) ∂quotientMeasure (rationalGLOne E r) (mu1 E r)
+  ∫ y, AutomorphicForm.constantTerm r φ (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r), m)) *
+    starRingEnd ℂ (f ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) ∂quotientMeasure (rationalGLOne E r) (mu1 E r)
 
 structure Blo (S : Set (HeightOneSpectrum (𝓞 E))) (r : ℕ) where
   pos : 0 < r

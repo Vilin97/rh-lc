@@ -27,8 +27,7 @@ theorem eq_zero_of_additive [Algebra ℚ k] (G : FGLaw k d) (g : PS k 1 d)
     fin_cases j
     rfl
   refine GlobalTheory.AdditiveSeries.eq_zero_of_additive_of_pderiv k d G 0 g ?_ fun i => ?_
-  · rw [hc, hc, hc]
-    exact hadd
+  · simpa only [hc] using hadd
   · rw [hc]
     ext m
     obtain rfl : m = 0 := Subsingleton.elim _ _

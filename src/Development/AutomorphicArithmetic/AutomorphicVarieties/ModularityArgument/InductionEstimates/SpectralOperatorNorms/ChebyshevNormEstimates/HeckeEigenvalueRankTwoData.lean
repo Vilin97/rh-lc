@@ -130,7 +130,7 @@ private theorem cancel {q : ℕ} (hq : q ≠ 0) (x : ℝ) (a b : ℕ) :
   ring
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.genT :
-    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL E (2 + 2))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (w : Pl E), w ∉ 𝔢.S → ∀ i : Fin (2 + 2),
+    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (w : Pl E), w ∉ 𝔢.S → ∀ i : Fin (2 + 2),
       (∃ s, Act 𝔵.A'.J (Tsph μ w i) s ∧ s 0 ∘L 𝔵.a₀ = hval 𝔵.t (w, i) • 𝔵.a₀) ∧ Tsph μ w i ∘L 𝔵.P = 𝔵.P ∘L Tsph μ w i := by
   intro E _ _ _ μ _ θ 𝔢 𝔵 w hw i
   obtain ⟨⟨s, hs⟩, hP⟩ := genTk 𝔵 w hw i

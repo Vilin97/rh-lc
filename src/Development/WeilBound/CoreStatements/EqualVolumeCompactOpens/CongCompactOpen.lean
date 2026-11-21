@@ -23,7 +23,7 @@ theorem eich_mul {R : Type} [CommRing R] {N : ℕ} {σ : R →+* R} {J : Matrix 
   have heu : hf σ J e u = 0 := by rw [← hf_symm hσ hJ, hue, map_zero]
   rw [ext_iff_mulVec]
   intro x
-  rw [← mulVec_mulVec, eich_mulVec σ J e u, eich_mulVec σ J e u', eich_mulVec σ J e (u + u')]
+  rw [← mulVec_mulVec, eich_mulVec (σ := σ) (J := J) e u, eich_mulVec (σ := σ) (J := J) e u', eich_mulVec (σ := σ) (J := J) e (u + u')]
   simp only [hf_add_left, hf_sub_left, hf_smul_left, hf_add_right, he, hue', heu, mul_zero, add_zero, sub_zero]
   module
 

@@ -25,7 +25,7 @@ section Defs
 
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
-def AtAE (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)) (Λ : (K →+* ℂ) → Multiset ℂ)
+def AtAE (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)) (Λ : (K →+* ℂ) → Multiset ℂ)
     (t : Pl K → Multiset ℂ) : Prop := ∃ S : Set (Pl K), S.Finite ∧ At μ S V Λ t
 
 def IsPow (χ : HChar K) (s : ℂ) : Prop :=
@@ -81,12 +81,12 @@ def LocUp : Prop :=
 
 def AmpFin : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 0 < n →
-    ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (𝔞 : Amp μ),
+    ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (𝔞 : Amp μ),
     (∀ x : ℝ, 0 < x → {V | IsSummand μ V ∧ eigIn V 𝔞.A x ≠ ⊥}.Finite) ∧
       ∀ V, IsSummand μ V → (∃ v ∈ V, 𝔞.A v ≠ 0) → ∃ x : ℝ, 0 < x ∧ eigIn V 𝔞.A x ≠ ⊥
 
 def LevelEx : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
+  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
     IsSummand μ V → ∀ S : Finset (Pl K), (∀ w ∉ S, V ⊓ fixL μ w (GLnLocal.integralGL (w.adicCompletion K) n) ≠ ⊥) →
     ∃ U : ∀ w : Pl K, Subgroup (Gw n w), (∀ w, CO (U w) ∧ U w ≤ GLnLocal.integralGL (w.adicCompletion K) n) ∧
       V ⊓ sphOff μ S ⊓ ⨅ w ∈ S, fixL μ w (U w) ≠ ⊥
@@ -94,7 +94,7 @@ def LevelEx : Prop :=
 def PosSide : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μ : Measure (normOneGL F n)) [μ.IsHaarMeasure] (q : Pl F) (w₀ : PlacesOver E q) (ν : Measure (archGroup F n))
+    ∀ (μ : Measure (normOneGL (K := F) (n := n))) [μ.IsHaarMeasure] (q : Pl F) (w₀ : PlacesOver E q) (ν : Measure (archGroup F n))
       [ν.IsHaarMeasure] (a : TI F n) (L : GM.Loc σ n q w₀) (e : Fin n → ℤ) (l : ℕ) (𝔣 : Side (Twist.id μ) l), Antitone e →
       GM.IsSideF L ν a e 𝔣 → (∀ v ∈ L.S, L.f v = (L.UF v : Set (Gw n v)).indicator 1) →
       ∀ (p : Submodule ℂ (LL μ) → Prop) (V : Submodule ℂ (LL μ)) (x : ℝ), IsSummand μ V → p V → 0 < x →
@@ -105,14 +105,14 @@ def GoodEx : Prop := ∀ n : ℕ, 0 < n → ∃ ν : Fin n → ℤ, GM.Good ν
 def CoreLift : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure] (μF : Measure (normOneGL F n)) [μF.IsHaarMeasure] (θ : Twist μE),
+    ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure] (θ : Twist μE),
       IsGalTwist σ θ → ∀ (V : Submodule ℂ (LL μF)) Λ t, IsSummand μF V → AtAE μF V Λ t → OffAll F n (bcInf (K := E) Λ) (bcSat t) →
       ∃ V' : Submodule ℂ (LL μE), IsSummand μE V' ∧ V'.map (θ.U : LL μE →ₗ[ℂ] LL μE) = V' ∧ AtAE μE V' (bcInf Λ) (bcSat t)
 
 def HoweType : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V →
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V →
     ∀ (v : Pl F) (w : PlacesOver E v), (∀ w' : PlacesOver E v, w' = w) → ∀ N ∈ nhds (1 : Gw n w.1),
       ∃ (J : Subgroup (Gw n w.1)) (χ : Gw n w.1 → ℂ), CO J ∧ IsChr J χ ∧ (J : Set (Gw n w.1)) ⊆ N ∧ RankOne μ V w.1 J χ ∧
         V ⊓ eigL μ w.1 J χ ≠ ⊥ ∧ ∀ x : GL (Fin n) (CompletionsOver E v), GM.cmp w x ∈ J →
@@ -121,7 +121,7 @@ def HoweType : Prop :=
 def TyEx : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V →
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V →
     ∀ (q : Pl F) (w₀ : PlacesOver E q), GM.Split E q → ∀ S : Finset (Pl F), q ∉ S → (∀ v ∉ S, GM.Unr E v) →
       (∀ w : Pl E, w.under (𝓞 F) ∉ S → V ⊓ fixL μ w (GLnLocal.integralGL (w.adicCompletion E) n) ≠ ⊥) →
       ∀ mk : ∀ v : Pl F, PlacesOver E v,
@@ -138,7 +138,7 @@ def TyEx : Prop :=
 def TermE : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ m : ℕ, Module.finrank F E = m + 1 → ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
+    ∀ m : ℕ, Module.finrank F E = m + 1 → ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
     ∀ (D : InfD σ m) (s : Fin (m + 1) → archGroup F n →* archGroup E n) (hs : ∀ i, Continuous (s i)), IsBlockElement D n s →
     ∀ (νE : Measure (archGroup E n)) [νE.IsHaarMeasure] (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (b a : TI F n)
       (aE : TI E n) (aF : TI F n), ArchSlot D νE νF b a aE aF →
@@ -157,7 +157,7 @@ def TermE : Prop :=
 def CoreDesc : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure] (μF : Measure (normOneGL F n)) [μF.IsHaarMeasure] (θ : Twist μE),
+    ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure] (θ : Twist μE),
       IsGalTwist σ θ → ∀ (V : Submodule ℂ (LL μE)) Λ t, IsSummand μE V → V.map (θ.U : LL μE →ₗ[ℂ] LL μE) = V → AtAE μE V Λ t →
       OffAll F n Λ t → ∀ (v : Pl F) (w : PlacesOver E v), GM.Split E v → ∀ τ' : SmIrr (Gw n w.1), Occurs μE V w.1 τ' →
       ∃ (V₀ : Submodule ℂ (LL μF)) (Λ₀ : (F →+* ℂ) → Multiset ℂ) (t₀ : Pl F → Multiset ℂ), IsSummand μF V₀ ∧ AtAE μF V₀ Λ₀ t₀ ∧
@@ -186,7 +186,7 @@ def PowTwist : Prop :=
 def CarryLift : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure] (μF : Measure (normOneGL F n)) [μF.IsHaarMeasure],
+    ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure],
     (∀ V, IsSummand μF V → ∃ Λ t, AtAE μF V Λ t) ∧ (∀ V, IsSummand μE V → ∃ Λ t, AtAE μE V Λ t) ∧
     (∀ (π : CuspSub F n) (P : CuspSub E n) V V' Λ t Λ' t', Dp.Carries μF π V → Dp.Carries μE P V' → AtAE μF V Λ t →
       AtAE μE V' Λ' t' → Λ' = bcInf Λ → (∀ᶠ u in cofinite, t' u = bcSat t u) → IsLift (.cx π) (.cx P)) ∧

@@ -36,7 +36,7 @@ theorem UpperTheory.ConvolutionTheory.Dp.twCls :
   have hΨc : Continuous Ψ := continuous_cuspQuot _ ψ.2.1.continuous
   have hb := (UpperTheory.ConvolutionTheory.Dp.clsBasic K n μ).2.2.2
   have hout : ∀ (χ : cuspForms K n) (y : RightCosetSpace (rationalGLOne K n)),
-      χ.1 ((Quotient.out y : normOneGL K n) : AdelicGLn.AdelicGL K n) =
+      χ.1 ((Quotient.out y : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) =
         cuspQuot χ.2.1.isLeftInvariant y := fun χ y => by
     have h : mk (rationalGLOne K n) (Quotient.out y) = y := Quotient.out_eq y
     conv_rhs => rw [← h]

@@ -51,7 +51,7 @@ private theorem numeric_product_inequality (C₁ C₂ Y₀ Q : ℝ) (c₁ c₂ :
       _ = _ := by rw [← mul_pow]
 
 private theorem sideCondition_split_place (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E]
-    (σ : E ≃ₐ[F] E) (hσ : ∀ τ, τ ∈ Subgroup.zpowers σ) (n : ℕ) (hn : 0 < n) (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure]
+    (σ : E ≃ₐ[F] E) (hσ : ∀ τ, τ ∈ Subgroup.zpowers σ) (n : ℕ) (hn : 0 < n) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (θ : Twist μ) (hθ : IsGalTwist σ θ) (q : Pl F) (w₀ : PlacesOver E q) (hq : Split E q) (ν : Fin n → ℤ) (hν : Good ν)
     (Y₀ : ℝ) (hY : 1 ≤ Y₀) :
     ∃ (p : ℕ) (C₀ : ℝ), 0 < p ∧ ∀ Y₁ : ℝ, 1 ≤ Y₁ → ∀ᶠ j : ℕ in atTop, ∀ m : ℕ, m ≤ j / p → ∀ f : TG E n,

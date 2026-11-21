@@ -44,7 +44,7 @@ private theorem dm_induction {K : Type} [Field K] [NumberField K] {n : ℕ}
   exact (key Finset.univ).2.1
 
 private theorem lift_add {K : Type} [Field K] [NumberField K] {n : ℕ} (hn : 0 < n)
-    (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (β β' : TI K n) (e : TF K n) (φ : LL μ) :
+    (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (β β' : TI K n) (e : TF K n) (φ : LL μ) :
     liftOne (rconv (rationalGLOne K n) μ (tens (β + β') e) φ) =
       liftOne (rconv (rationalGLOne K n) μ (tens β e) φ) + liftOne (rconv (rationalGLOne K n) μ (tens β' e) φ) := by
   funext g
@@ -54,14 +54,14 @@ private theorem lift_add {K : Type} [Field K] [NumberField K] {n : ℕ} (hn : 0 
   simp only [CompactlySupportedContinuousMap.add_apply, add_mul]
 
 private theorem lift_zero {K : Type} [Field K] [NumberField K] {n : ℕ} (hn : 0 < n)
-    (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (e : TF K n) (φ : LL μ) :
+    (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (e : TF K n) (φ : LL μ) :
     liftOne (rconv (rationalGLOne K n) μ (tens (0 : TI K n) e) φ) = 0 := by
   have := lift_add hn μ 0 0 e φ
   rw [add_zero] at this
   exact left_eq_add.1 this
 
 theorem UpperTheory.liftOne_rconv_tensor_moderateGrowth_uniform :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure], Compat μ ν m →
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure], Compat μ ν m →
           ∀ (β : TI K n) (e : TF K n), SmoothT β → ∃ N : ℕ, ∀ u : UC K n, ∃ B : ℝ, ∀ (φ : LL μ) (g : AdelicGLn.AdelicGL K n),
             ‖liftOne (rconv (rationalGLOne K n) μ (tens (lact u β) e) φ) g‖ ≤ B * ‖φ‖ * AutomorphicForm.height g ^ N := by
   intro K _ _ n hn μ _ ν _ m _ hC β e hβ
@@ -97,7 +97,7 @@ theorem UpperTheory.liftOne_rconv_tensor_moderateGrowth_uniform :
     by_cases ha : lact u β₁ a = 0
     · simp [ha]
     refine mul_le_mul_of_nonneg_left ?_ (norm_nonneg _)
-    set x : normOneGL K n := retractOne g * archP K n a with hx
+    set x : normOneGL (K := K) (n := n) := retractOne g * archP K n a with hx
     have hq0 : 0 ≤ PositivityTheory.Rg.Tf.Core.qht x := le_ciInf fun γ => (height_pos _).le
     have hq1 : PositivityTheory.Rg.Tf.Core.qht x ≤ AutomorphicForm.height (x : AdelicGLn.AdelicGL K n) := by
       refine (ciInf_le ⟨0, ?_⟩ 1).trans (le_of_eq (by simp))

@@ -138,7 +138,8 @@ private theorem core {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGro
   haveI : IsClosed (C : Set G) := hC
   let K : Subgroup G := (Subgroup.zpowers (s : G ⧸ C)).comap (QuotientGroup.mk' C)
   have hKc : IsClosed (K : Set G) := by
-    have : IsClosed (Subgroup.zpowers (s : G ⧸ C) : Set (G ⧸ C)) := (finite_zpowers.2 hfo).isClosed
+    haveI : Finite (Subgroup.zpowers (s : G ⧸ C)) := finite_zpowers.2 hfo
+    have : IsClosed (Subgroup.zpowers (s : G ⧸ C) : Set (G ⧸ C)) := Set.toFinite _ |>.isClosed
     exact this.preimage QuotientGroup.continuous_mk
   have hCK : C ≤ K := fun x hx => by
     show (x : G ⧸ C) ∈ Subgroup.zpowers (s : G ⧸ C)

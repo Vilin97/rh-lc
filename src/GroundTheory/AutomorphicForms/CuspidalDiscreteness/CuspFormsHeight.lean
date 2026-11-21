@@ -117,7 +117,7 @@ theorem detModule_diagUnits_posIdele {ρ : Fin n → ℝ} (hρ : ∀ i, 0 < ρ i
 theorem exists_height_le_normOne {ω : Set (AdelicGLn.AdelicGL K n)} (hω : IsCompact ω) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ b ∈ ω, ∀ (ρ : Fin n → ℝ) (hρ : ∀ i, 0 < ρ i),
       ∀ kk ∈ (Reduction.maxCompact : Subgroup (AdelicGLn.AdelicGL K n)),
-      ∀ x : AdelicGLn.AdelicGL K n, x ∈ Reduction.normOneGL K n →
+      ∀ x : AdelicGLn.AdelicGL K n, x ∈ Reduction.normOneGL (K := K) (n := n) →
       x = b * Reduction.diagUnits n (fun i => Reduction.posIdele (K := K) (ρ i) (hρ i)) * kk →
       ∀ A : ℝ, 1 ≤ A → (∀ i j : Fin n, ρ i / ρ j ≤ A) →
       height x ≤ C * A ^ (2 * Fintype.card (InfinitePlace K)) := by

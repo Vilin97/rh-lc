@@ -146,7 +146,7 @@ end Dense
 
 section Main
 
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem mem_eigL {w : Pl K} {J : Subgroup (Gw n w)} {χ : Gw n w → ℂ} {v : LL μ} :
     v ∈ eigL μ w J χ ↔ ∀ x ∈ J, rhoL μ w x v = χ x • v := by
@@ -174,8 +174,8 @@ private theorem prj_avg {w : Pl K} {J : Subgroup (Gw n w)} {χ : Gw n w → ℂ}
   rw [← Submodule.orthogonal_closure] at h0
   exact (Submodule.mem_orthogonal' _ _).1 h0 u hu
 
-private theorem exists_split (w : Pl K) (x : normOneGL K n) :
-    ∃ (c : normOneGL K n) (a : Gw n w),
+private theorem exists_split (w : Pl K) (x : normOneGL (K := K) (n := n)) :
+    ∃ (c : normOneGL (K := K) (n := n)) (a : Gw n w),
       x = c * MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w a) ∧
       ∀ g : Gw n w, c * MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g) =
         MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g) * c := by
@@ -196,7 +196,7 @@ private theorem exists_split (w : Pl K) (x : normOneGL K n) :
     rw [mul_assoc, ← map_mul, ← h, map_mul, ← mul_assoc, ← mul_assoc,
       MultiplicityOne.finProj_mul_archProj_comm]
 
-private theorem rho_comm {w : Pl K} {c : normOneGL K n}
+private theorem rho_comm {w : Pl K} {c : normOneGL (K := K) (n := n)}
     (hc : ∀ g : Gw n w, c * MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g) =
       MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g) * c) (g : Gw n w) (v : LL μ) :
     rightRegularRep (rationalGLOne K n) μ c (rhoL μ w g v) =
@@ -228,7 +228,7 @@ end UpperTheory.TypeLine
 
 open UpperTheory.TypeLine in
 theorem UpperTheory.exists_unique_eigenline_of_rankOne_occurs :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
         IsSummand μ V → ∀ (w : Pl K) (τ : SmIrr (Gw n w)), Occurs μ V w τ → ∀ (J : Subgroup (Gw n w)) (χ : Gw n w → ℂ),
         CO J → IsChr J χ → RankOne μ V w J χ → V ⊓ eigL μ w J χ ≠ ⊥ →
         ∃ e : τ.V, e ≠ 0 ∧ (∀ g ∈ J, τ.ρ g e = χ g • e) ∧ ∀ x : τ.V, (∀ g ∈ J, τ.ρ g x = χ g • x) → ∃ c : ℂ, x = c • e := by

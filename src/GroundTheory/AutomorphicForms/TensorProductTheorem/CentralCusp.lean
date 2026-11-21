@@ -92,7 +92,7 @@ theorem exists_norm_le_of_mem_centralCuspForms {φ : cuspForms K n} (hφ : φ �
   rw [hφ s y]
   exact hC y hy
 
-def toOne (g : AdelicGLn.AdelicGL K n) : Reduction.normOneGL K n :=
+def toOne (g : AdelicGLn.AdelicGL K n) : Reduction.normOneGL (K := K) (n := n) :=
   ⟨g * (Reduction.centralSection K n (Reduction.detModule K n g))⁻¹,
     mul_centralSection_detModule_inv_mem g⟩
 
@@ -107,7 +107,7 @@ theorem apply_mul_toOne {φ : cuspForms K n} (hφ : φ ∈ centralCuspForms K n)
   rw [coe_toOne, ← map_inv, ← mul_assoc]
   exact apply_mul_centralSection_of_mem hφ _ _
 
-variable (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem cuspFormLp_rightTranslate_eq_rep {φ ψ : cuspForms K n} (hφ : φ ∈ centralCuspForms K n)
     (g : AdelicGLn.AdelicGL K n)
@@ -155,7 +155,7 @@ def quotTr (φ : cuspForms K n) (g : AdelicGLn.AdelicGL K n) : RightCosetSpace �
     rw [mul_assoc]
     exact φ.2.1.isLeftInvariant γ _
 
-theorem quotTr_mk (φ : cuspForms K n) (g : AdelicGLn.AdelicGL K n) (y : Reduction.normOneGL K n) :
+theorem quotTr_mk (φ : cuspForms K n) (g : AdelicGLn.AdelicGL K n) (y : Reduction.normOneGL (K := K) (n := n)) :
     quotTr φ g (mk Γ₁ y) = (φ : AdelicGLn.AdelicGL K n → ℂ) ((y : AdelicGLn.AdelicGL K n) * g) := rfl
 
 theorem quotTr_one (φ : cuspForms K n) : quotTr φ 1 = cuspQuot φ.2.1.isLeftInvariant := by

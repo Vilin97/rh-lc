@@ -12,7 +12,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.Ci PositivityTheory.Rg.Fx
 open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Adel PositivityTheory.Rg.Tf.IntegralApplyAeEq UpperTheory.V.Z.IntegralApplyAeEq UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial
 
-private theorem archP_inf {K : Type} [Field K] [NumberField K] {n : ℕ} (g : normOneGL K n)
+private theorem archP_inf {K : Type} [Field K] [NumberField K] {n : ℕ} (g : normOneGL (K := K) (n := n))
     (hg : CuspidalSpectrum.finPart K n (g : AdelicGLn.AdelicGL K n) = 1) :
     archP K n (infPart K n (g : AdelicGLn.AdelicGL K n)) = g := by
   have h := infEmb_infPart_mul_finEmb_finPart (g : AdelicGLn.AdelicGL K n)

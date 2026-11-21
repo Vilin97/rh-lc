@@ -60,7 +60,7 @@ private theorem coset_bij {G L : Type*} [Group G] [Group L] (loc : L →* G) (p 
     simp only [key]
     rw [e1, QuotientGroup.mk_mul_of_mem _ (U.mul_mem hk (U.inv_mem (hJU _ (hUJ k hk))))]
 
-private theorem hop_prj {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+private theorem hop_prj {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (w : Pl K) (J : Subgroup (Gw n w)) (x : Gw n w) (U : Subgroup (FA K n)) (hJ : CO J)
     (hJU : ∀ j ∈ J, AdelicGLn.localEmbedding w j ∈ U) (hUJ : ∀ u ∈ U, finAt w (finEmb K n u) ∈ J) :
     (∑ᶠ c ∈ {c : FA K n ⧸ U | ∃ k ∈ U, c = QuotientGroup.mk (k * AdelicGLn.localEmbedding w x)}, rhoF μ c.out) ∘L
@@ -85,7 +85,7 @@ private theorem hop_prj {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Mea
   change rhoF μ _ (prj (fixF μ U) v) = rhoF μ _ (prj (fixF μ U) v)
   rw [hu, hmul, ContinuousLinearMap.comp_apply, (hmemU _).1 (hPU v) u u.2]
 
-private theorem level_facts {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+private theorem level_facts {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (D : TypeDat K n) (U : Subgroup (FA K n)) (hD : D.Level U) (hle : U ≤ AdelicGLn.integralFiniteGL K n) :
     IsOpen (U : Set (FA K n)) ∧ IsCompact (U : Set (FA K n)) ∧ ∀ v, D.FixedByTypeProjector μ v → v ∈ fixF μ U := by
   have hpe : ∀ u ∈ AdelicGLn.integralFiniteGL K n, ((fin1 u : G1 K n) : AdelicGLn.AdelicGL K n) = finEmb K n u := by

@@ -136,14 +136,14 @@ theorem flat_of_formallyUnramified_grpEnd (k : Type) [Field k] [IsAlgClosed k] (
     [GrpObj G] (φ : G ⟶ G) (hG : LocallyOfFiniteType G.hom) (hφ : IsMonHom φ)
     (hu : FormallyUnramified φ.left) : Flat φ.left := by
   have := LocallyOfFiniteType.jacobsonSpace G.hom
-  refine flat_of_closedPoints _ fun x hx => ?_
+  refine UnramifiedEndFlat.flat_of_closedPoints _ fun x hx => ?_
   let x' : 𝟙_ _ ⟶ G := Over.homMk _ ((pointEquivClosedPoint G.hom).symm ⟨x, hx⟩).2
   let o : G.left := η[G].left (IsLocalRing.closedPoint k)
   have ho : IsClosed {o} := (pointEquivClosedPoint G.hom ⟨η[G].left, η[G].w⟩).2
   have hfo : φ.left o = o := by
     have : η[G] ≫ φ = η[G] := IsMonHom.one_hom φ
     exact congr(($this).left (IsLocalRing.closedPoint k))
-  have h0 := flat_stalkMap_of_fixed φ.left G.hom φ.w o ho hfo
+  have h0 := UnramifiedEndFlat.flat_stalkMap_of_fixed φ.left G.hom φ.w o ho hfo
   let α := GrpObj.mulRight (A := G) x'
   let β := GrpObj.mulRight (A := G) (x' ≫ φ)
   have hαβ : α.hom ≫ φ = φ ≫ β.hom := by

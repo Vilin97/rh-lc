@@ -35,7 +35,7 @@ private theorem isHerm_of_inner {F : Type} [Field F] [NumberField F] [IsTotallyR
 theorem hermEx_of (h1 : ToFound) (h2 : LieMatch) : HermEx := by
   intro F _ _ _ a _ π h0
   obtain ⟨e, hz, he⟩ := h2 F a
-  let μ : Measure (Reduction.normOneGL F a) := Measure.haar
+  let μ : Measure (Reduction.normOneGL (K := F) (n := a)) := Measure.haar
   let j : π.V →ₗ[ℂ] cuspForms F a :=
     ((Sm F a).subtype ∘ₗ π.V.subtype).codRestrict _ fun φ => h1 F a φ.1 (π.cusp _ φ.2)
   have hl : ∀ X φ, (gkModuleCusp F a).ρ (e X) (j φ) = j (π.op (.lie X) φ) := fun X φ => Subtype.ext (he X φ.1 _)

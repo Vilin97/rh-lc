@@ -283,12 +283,12 @@ theorem pts_eq (hE : ResExistsStatement) (a₀ : σ) (A : HermLine ι) (w : Fin 
     rw [ha, Re.line_deg, add_neg_cancel]
   have hΦ : ∀ i, IsPotential S.A (S.potT (w i) t) := fun i =>
     (anSys_open_basics D σ S).2.2.2.1 (w i) t h0 h1
+  have hdegInt := (degreeFormulaInt S.A Re.R.A Re.π Re.holo Re.deg Re.br Re.degree (fun i => S.potT (w i) t) hΦ (fun y => S.ph a₀ y - S.phT a₀ t y) (defect_integrable S a₀ h0 h1 _ hΦ)).2
   rw [pts_congr P _ fun z hz => (hlog z hz.1).symm,
     ptsIntegral_eq_mInt' hE resBridge Re.R Re.arith (fun j => Re.line_smooth (w j) t h0 h1)
       (isSmoothHerm_inv (isSmoothHerm_tensor hA (isSmoothHerm_inv (Re.line_smooth a₀ t h0 h1))))
       (isSectionOn_inv_one Re.arith.2.1.1 hdeg),
-    ← (degreeFormulaInt S.A Re.R.A Re.π Re.holo Re.deg Re.br Re.degree _ hΦ _
-      (defect_integrable S a₀ h0 h1 _ hΦ)).2]
+    ← hdegInt]
   refine (mInt_congr_samePot D Re.R.X Re.R.A (Re.π ⁻¹' S.open') _ _ _ _ (preimage_null Re)
     (fun i x _ => line_samePot Re (w i) h0 h1 x (Set.mem_univ x))
     (fun i x _ => isC2At_of_isPotential _ (isPotentialPullback S.A Re.R.A Re.π Re.holo _ (hΦ i)) x)

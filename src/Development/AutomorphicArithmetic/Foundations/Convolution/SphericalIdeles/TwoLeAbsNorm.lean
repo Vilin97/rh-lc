@@ -43,8 +43,8 @@ theorem UpperTheory.ConvolutionTheory.Sph.up :
     UpperTheory.ConvolutionTheory.Sph.Up := by
   classical
   intro F E _ _ _ _ _ _ _ _ σ hσ hp n hn π P hW v hv B hB w hw f hf
-  let μE : Measure (normOneGL E n) := Measure.haar
-  let μF : Measure (normOneGL F n) := Measure.haar
+  let μE : Measure (normOneGL (K := E) (n := n)) := Measure.haar
+  let μF : Measure (normOneGL (K := F) (n := n)) := Measure.haar
   obtain ⟨s, χ, χ', V, V', θ, hχ, hχ', hV, -, hθ, -, hW', hOff, -⟩ :=
     Sph.norm F E σ hσ hp n hn μE μF π P hW
   obtain ⟨c1, -, c3, -⟩ := carryLift F E σ hσ hp n hn μE μF

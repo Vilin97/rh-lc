@@ -152,7 +152,7 @@ theorem _root_.GlobalTheory.PeriodChange.period_change : ∀ (E : Type) [Field E
     ext i k
     have := congrFun (hnorm' k).1 i
     simp only [mulVec, dotProduct] at this
-    simp [Matrix.mul_apply, this, one_apply, Pi.single_apply]
+    simp [Matrix.mul_apply, this, Matrix.one_apply, Pi.single_apply]
   have hRτ : h' * (Matrix.of fun i k => P' (bas (Pi.single (Sum.inr k) 1)) i) = τ' := by
     ext i k
     have := congrFun (hnorm' k).2 i

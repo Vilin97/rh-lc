@@ -71,7 +71,7 @@ def HkOps : Prop := ∀ (n : ℕ) (w : Pl E) (j : ℕ),
     (∀ k : KA E n, Sph S (rt E n k φ) ∧ rt E n k (hk n w j φ) = hk n w j (rt E n k φ)) ∧
     ∀ w' ∉ S, ∀ j', hk n w j (hk n w' j' φ) = hk n w' j' (hk n w j φ)
 
-def RapidDecay : Prop := ∀ (n : ℕ) (φ : Sm E n), Umg φ → Cusp φ.1 → ∀ N : ℕ, ∃ C : ℝ, ∀ x : normOneGL E n,
+def RapidDecay : Prop := ∀ (n : ℕ) (φ : Sm E n), Umg φ → Cusp φ.1 → ∀ N : ℕ, ∃ C : ℝ, ∀ x : normOneGL (K := E) (n := n),
   ‖φ.1 (x : GA E n)‖ * PositivityTheory.Rg.Tf.Core.qht x ^ N ≤ C
 
 def CuspUmg : Prop := ∀ (n : ℕ) (f : Sm E n), f.1 ∈ AutomorphicForm.cuspForms E n → Umg f ∧ Cusp f.1
@@ -145,8 +145,8 @@ def KilledOps : Prop := ∀ (n : ℕ) (ρ : Typ E n) (φ : Sm E n), Killed ρ.ρ
   AutomorphicForm.IsKFinite φ.1
 
 def EigComp : Prop := ∀ (S : Set (Pl E)) (r : ℕ) (ρ : Typ E r) (ψ : Sm E r), 0 < r → Umg ψ → Cusp ψ.1 → Killed ρ.ρ ψ.1 → Sph S ψ →
-  (∃ x : normOneGL E r, ψ.1 (x : GA E r) ≠ 0) → ∃ b : Blo S r, Killed ρ.ρ b.f.1 ∧
-    ∫ y, ψ.1 ((Quotient.out y : normOneGL E r) : GA E r) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))
+  (∃ x : normOneGL (K := E) (n := r), ψ.1 (x : GA E r) ≠ 0) → ∃ b : Blo S r, Killed ρ.ρ b.f.1 ∧
+    ∫ y, ψ.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))
       ∂quotientMeasure (rationalGLOne E r) (mu1 E r) ≠ 0
 
 def LangStep : Prop := ∀ (S : Set (Pl E)) (r s : ℕ) (ρ : Typ E (r + s)) (φ : Sm E (r + s)), 0 < r → Umg φ → Killed ρ.ρ φ.1 → Sph S φ →

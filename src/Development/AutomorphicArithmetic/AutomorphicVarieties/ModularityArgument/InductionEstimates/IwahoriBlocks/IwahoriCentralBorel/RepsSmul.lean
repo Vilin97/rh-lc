@@ -61,8 +61,8 @@ private theorem hh_nn (X : UPos (2 + 2) 2 → AdeleRing (𝓞 K) K) (g : G1 K (2
 
 private theorem arc_mem {n : ℕ} (k : archCompact K n) : arc1 k ∈ KG K n := by
   have hk : infEmb K n k ∈ (Reduction.maxCompact : Subgroup (AdelicGLn.AdelicGL K n)) := k.2
-  have h := congrArg Subtype.val (retractOne_coe (⟨_, maxCompact_le_normOneGL hk⟩ : normOneGL K n))
-  change ((retractOne (infEmb K n k) : normOneGL K n) : AdelicGLn.AdelicGL K n) ∈ Reduction.maxCompact
+  have h := congrArg Subtype.val (retractOne_coe (⟨_, maxCompact_le_normOneGL hk⟩ : normOneGL (K := K) (n := n)))
+  change ((retractOne (infEmb K n k) : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) ∈ Reduction.maxCompact
   exact h ▸ hk
 
 private theorem fin_mem {n : ℕ} {u : FA K n} (hu : u ∈ AdelicGLn.integralFiniteGL K n) : fin1 u ∈ KG K n := by

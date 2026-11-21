@@ -83,7 +83,7 @@ theorem exists_residue_char {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {�
     have h3 : ψ ((ϖ⁻¹ : kˣ) * ((y : k) - z)) = 1 := by
       refine hψ.eq_one ?_
       have h0 : 0 < valuation k (ϖ : k) := by simp [zero_lt_iff]
-      simp only [cball, Set.mem_setOf_eq, Units.val_one, map_one, map_mul, Units.val_inv_eq_inv_val, map_inv₀]
+      simp only [cball, Set.mem_ofPred_eq, Units.val_one, map_one, map_mul, Units.val_inv_eq_inv_val, map_inv₀]
       rwa [inv_mul_le_one₀ h0]
     rw [show ((ϖ⁻¹ : kˣ) : k) * (y : k) = (ϖ⁻¹ : kˣ) * ((y : k) - z) + (ϖ⁻¹ : kˣ) * (z : k) by ring,
       AddChar.map_add_eq_mul, h3, one_mul]
@@ -109,7 +109,11 @@ theorem map_symSumInt {F : Type} [Field F] (f : 𝒪[k] →+* F) {κ l : ℕ} (g
 
 end Local
 
-theorem exists_isSymLevel : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ψ : AddChar k Circle), HasConductor ψ 1 → ∀ ϖ : kˣ, IsUnif ϖ → ∀ ρ κ l : ℕ, ∃ P : TypeDatum k (Fin κ ⊕ Fin l), IsSymLevel ψ ϖ ρ P := by
+theorem exists_isSymLevel :
+    ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+      (ψ : AddChar k Circle), HasConductor ψ 1 → ∀ ϖ : kˣ, IsUnif ϖ →
+      ∀ ρ κ l : ℕ, ∃ P : GlobalTheory.StepData.TypeDatum k (Fin κ ⊕ Fin l),
+        GlobalTheory.IndefiniteRowSideFullHecke.FramePositiveSum.IsSymLevel ψ ϖ ρ P := by
   intro k _ _ _ _ ψ hψ ϖ hϖ ρ κ l
   obtain ⟨χ, hadd, hres⟩ := exists_residue_char hψ hϖ
   let χ' : symGroup 𝓀[k] κ l (ρ + 1) →* ℂˣ :=

@@ -232,7 +232,7 @@ structure Nice (f : GA E n → ℂ) : Prop where
 
 def fop (c : GL (Fin n) (Af E) →₀ ℂ) (f : GA E n → ℂ) (g : GA E n) : ℂ := c.sum fun x z => z * f (g * finGL E n x)
 
-def Orth (μ : Measure (Reduction.normOneGL E n)) [μ.IsHaarMeasure] (φ φ' : cuspForms E n) : Prop :=
+def Orth (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (φ φ' : cuspForms E n) : Prop :=
   ∀ g g', ∫ q, starRingEnd ℂ (quotTr φ g q) * quotTr φ' g' q
     ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne E n) μ) = 0
 
@@ -373,18 +373,18 @@ def Pair : Prop :=
     SameSat π π' → ∃ φ ∈ π.V, ∃ φ' ∈ π'.V, ∃ β β' : 𝓢(Lie E n, ℂ), conv φ.1 β = conv φ'.1 β' ∧ conv φ.1 β ≠ 0
 
 def InnerZero : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (μ : Measure (Reduction.normOneGL E n)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (π π' : CuspSub E n), Cen π → Cen π' → ¬ π.Iso π' → ∀ φ ∈ Fb.carrier π, ∀ φ' ∈ Fb.carrier π',
     inner ℂ (CuspidalSpectrum.cuspToL2 μ φ) (CuspidalSpectrum.cuspToL2 μ φ') = 0
 
 def OrthTr : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) (μ : Measure (Reduction.normOneGL E n)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (U U' : Submodule ℂ (cuspForms E n)), U ≤ centralCuspForms E n → U' ≤ centralCuspForms E n → Fb.Stab U → Fb.Stab U' →
     (∀ φ ∈ U, ∀ φ' ∈ U', inner ℂ (CuspidalSpectrum.cuspToL2 μ φ) (CuspidalSpectrum.cuspToL2 μ φ') = 0) →
     ∀ φ ∈ U, ∀ φ' ∈ U', Orth μ φ φ'
 
 def OrthStep : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (μ : Measure (Reduction.normOneGL E n)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (f : GA E n → ℂ), Continuous f → (∃ C : ℝ, ∀ g, ‖f g‖ ≤ C) → IsLeftInvariant f →
     ∀ a : RightCosetSpace (Reduction.rationalGLOne E n) → ℂ, Continuous a → (∃ C : ℝ, ∀ q, ‖a q‖ ≤ C) →
     (∀ g (h : IsLeftInvariant fun x => f (x * g)), ∫ q, a q * CuspidalSpectrum.cuspQuot h q
@@ -393,7 +393,7 @@ def OrthStep : Prop :=
       ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne E n) μ) = 0
 
 def OrthConv : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (μ : Measure (Reduction.normOneGL E n)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (φ φ' : cuspForms E n), φ ∈ centralCuspForms E n → φ' ∈ centralCuspForms E n → Orth μ φ φ' →
     ∀ β β' : 𝓢(Lie E n, ℂ), conv φ.1 β = conv φ'.1 β' → conv φ.1 β = 0
 
@@ -430,7 +430,7 @@ theorem smo_of (h0 : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyReal E] 
   have hc' := h2 E n π π' hs' hc
   by_contra hi
   obtain ⟨φ, hφ, φ', hφ', β, β', e, h⟩ := h3 E n hn π π' hc hc' hs'
-  let μ : Measure (Reduction.normOneGL E n) := Measure.haar
+  let μ : Measure (Reduction.normOneGL (K := E) (n := n)) := Measure.haar
   rw [← Fb.map_carrier] at hφ hφ'
   obtain ⟨ψ, hψ, rfl⟩ := hφ
   obtain ⟨ψ', hψ', rfl⟩ := hφ'

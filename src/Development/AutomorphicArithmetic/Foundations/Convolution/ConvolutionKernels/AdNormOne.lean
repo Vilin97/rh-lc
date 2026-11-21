@@ -103,7 +103,7 @@ private theorem map_rational {K : Type} [Field K] [NumberField K] (n : ℕ) (σ 
 
 theorem UpperTheory.ConvolutionTheory.K.adNormOne :
     ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (σ : K ≃+* K) (g : AdelicGLn.AdelicGL K n),
-      ((Matrix.GeneralLinearGroup.map (CT.adMap σ) g : AdelicGLn.AdelicGL K n) ∈ normOneGL K n ↔ g ∈ normOneGL K n) ∧
+      ((Matrix.GeneralLinearGroup.map (CT.adMap σ) g : AdelicGLn.AdelicGL K n) ∈ normOneGL (K := K) (n := n) ↔ g ∈ normOneGL (K := K) (n := n)) ∧
       ((Matrix.GeneralLinearGroup.map (CT.adMap σ) g : AdelicGLn.AdelicGL K n) ∈ AdelicGLn.rationalGL K n ↔ g ∈ AdelicGLn.rationalGL K n) := by
   intro K _ _ n σ g
   refine ⟨?_, fun h => ?_, map_rational n σ g⟩

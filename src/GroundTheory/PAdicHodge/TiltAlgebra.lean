@@ -29,8 +29,8 @@ theorem norm_comp_eq {φ : K →+* L} (hφ : ∀ x, ‖φ x‖ = ‖x‖) {ψ : 
 variable (φ : K →+* L) (hφ : ∀ x, ‖φ x‖ = ‖x‖) (ψ : L →+* M) (hψ : ∀ x, ‖ψ x‖ = ‖x‖)
 
 theorem preTiltMap_comp :
-    preTiltMap p (ψ.comp φ) (norm_comp_eq hφ hψ) =
-      (preTiltMap p ψ hψ).comp (preTiltMap p φ hφ) := by
+    preTiltMap (p := p) (ψ.comp φ) (norm_comp_eq hφ hψ) =
+      (preTiltMap (p := p) ψ hψ).comp (preTiltMap (p := p) φ hφ) := by
   refine RingHom.ext fun x => Perfection.ext fun n => ?_
   rw [RingHom.comp_apply, coeff_preTiltMap, coeff_preTiltMap, coeff_preTiltMap]
   obtain ⟨a, ha⟩ := Ideal.Quotient.mk_surjective

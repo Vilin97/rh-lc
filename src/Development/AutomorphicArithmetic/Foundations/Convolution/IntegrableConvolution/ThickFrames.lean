@@ -25,8 +25,8 @@ def AmpSlot : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F] [IsTotallyComplex E]
     (σ : E ≃ₐ[F] E) (m : ℕ) (D : InfD σ m) (n : ℕ) (νE : Measure (archGroup E n)) [νE.IsHaarMeasure]
     (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (b a : TI F n) (aE : TI E n) (aF : TI F n), ArchSlot D νE νF b a aE aF →
-    (∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure], GM.AmpFn μE νE aE) ∧
-      ∀ (μF : Measure (normOneGL F n)) [μF.IsHaarMeasure], GM.AmpFn μF νF aF
+    (∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure], GM.AmpFn μE νE aE) ∧
+      ∀ (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure], GM.AmpFn μF νF aF
 
 def PairPosition : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F] [IsTotallyComplex E]

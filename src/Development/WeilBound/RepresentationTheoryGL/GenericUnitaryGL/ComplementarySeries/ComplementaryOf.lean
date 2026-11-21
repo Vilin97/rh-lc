@@ -141,7 +141,7 @@ theorem complementary_of (h : Signature) : Complementary := by
         simp only [map_smul, Submodule.coe_smul]
       set_option synthInstance.maxHeartbeats 100000 in
         simp_rw [e1, map_sum, map_smul, smul_eq_mul]
-      refine continuous_finset_sum _ fun i _ => Continuous.mul ?_ continuous_const
+      refine continuous_finsetSum _ fun i _ => Continuous.mul ?_ continuous_const
       exact Complex.continuous_ofReal.comp (Real.continuous_exp.comp (continuous_const.mul continuous_id))
     have hsimple : ∀ t, 0 ≤ t → ∀ U : Submodule ℂ W, (∀ g, ∀ w ∈ U, T t g w ∈ U) → U = ⊥ ∨ U = ⊤ := by
       intro t ht U hU

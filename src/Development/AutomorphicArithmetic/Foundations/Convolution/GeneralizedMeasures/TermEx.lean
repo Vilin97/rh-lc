@@ -114,7 +114,7 @@ private theorem mono_split {E : Type} [Field E] [NumberField E] {n : ℕ} (κ : 
         (fun _ _ => pow_zero _)]
 
 private theorem sup_mono {F K : Type} [Field F] [NumberField F] [Field K] [NumberField K] [Algebra F K] {n : ℕ} {q : Pl F}
-    {w₀ : PlacesOver K q} {ν : Fin n → ℤ} {j : ℕ} {Y Y' : ℝ} {f : normOneGL K n → ℂ} (h : Sup w₀ ν j Y f) (hY : Y ≤ Y') :
+    {w₀ : PlacesOver K q} {ν : Fin n → ℤ} {j : ℕ} {Y Y' : ℝ} {f : normOneGL (K := K) (n := n) → ℂ} (h : Sup w₀ ν j Y f) (hY : Y ≤ Y') :
     Sup w₀ ν j Y' f := fun g hg => ⟨(h g hg).1.trans hY, (h g hg).2⟩
 
 private theorem under_eq {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {v : Pl F}

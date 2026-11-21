@@ -13,7 +13,7 @@ namespace UpperTheory.ConvolutionTheory.BW
 
 variable {E : Type} [Field E] [NumberField E] {r : ℕ}
 
-abbrev onQ (h : GA E r → ℂ) (y : RightCosetSpace (rationalGLOne E r)) : ℂ := h ((Quotient.out y : normOneGL E r) : GA E r)
+abbrev onQ (h : GA E r → ℂ) (y : RightCosetSpace (rationalGLOne E r)) : ℂ := h ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)
 
 abbrev muQ (E : Type) [Field E] [NumberField E] (r : ℕ) : Measure (RightCosetSpace (rationalGLOne E r)) :=
   quotientMeasure (rationalGLOne E r) (mu1 E r)

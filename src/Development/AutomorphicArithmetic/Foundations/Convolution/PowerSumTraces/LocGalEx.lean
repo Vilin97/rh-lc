@@ -69,8 +69,8 @@ private theorem gal_module [IsGalois F E] (σ : E ≃ₐ[F] E) (hσ : σ = 1 ∨
   · exact (UpperTheory.ConvolutionTheory.G.character_column_kernels_of_block_chi_c_of_block_chi_one F E σ hσ n hn).2.2 g
 
 private theorem e_proj [IsGalois F E] {σ : E ≃ₐ[F] E} (hσ : σ = 1 ∨ ∀ τ, τ ∈ Subgroup.zpowers σ) {n : ℕ}
-    {μ : Measure (normOneGL E n)} [μ.IsHaarMeasure] {θ : Twist μ} (hθ : IsGalTwist σ θ)
-    {g g' : AdelicGLn.AdelicGL E n} (hg : mapGL n (galAd σ) g = g') {x y : normOneGL E n}
+    {μ : Measure (normOneGL (K := E) (n := n))} [μ.IsHaarMeasure] {θ : Twist μ} (hθ : IsGalTwist σ θ)
+    {g g' : AdelicGLn.AdelicGL E n} (hg : mapGL n (galAd σ) g = g') {x y : normOneGL (K := E) (n := n)}
     (hx : (x : AdelicGLn.AdelicGL E n) = g * (centralSection E n (detModule E n g))⁻¹)
     (hy : (y : AdelicGLn.AdelicGL E n) = g' * (centralSection E n (detModule E n g'))⁻¹) :
     θ.e x = y := by
@@ -78,7 +78,7 @@ private theorem e_proj [IsGalois F E] {σ : E ≃ₐ[F] E} (hσ : σ = 1 ∨ ∀
   rw [hθ, hx, hy, map_mul, map_inv, gal_central, hg, ← hg, gal_module σ hσ]
 
 private theorem e_finProj [IsGalois F E] {σ : E ≃ₐ[F] E} (hσ : σ = 1 ∨ ∀ τ, τ ∈ Subgroup.zpowers σ) {n : ℕ}
-    {μ : Measure (normOneGL E n)} [μ.IsHaarMeasure] {θ : Twist μ} (hθ : IsGalTwist σ θ)
+    {μ : Measure (normOneGL (K := E) (n := n))} [μ.IsHaarMeasure] {θ : Twist μ} (hθ : IsGalTwist σ θ)
     {u u' : AdelicGLn.FiniteAdelicGL E n} (h : mapGL n (galAd σ) (finEmb E n u) = finEmb E n u') :
     θ.e (MultiplicityOne.finProj E n u) = MultiplicityOne.finProj E n u' :=
   e_proj hσ hθ h rfl rfl

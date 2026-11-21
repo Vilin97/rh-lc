@@ -37,7 +37,7 @@ theorem UpperTheory.V.Af.Smo.orthStep :
     · rfl
   let F : RightCosetSpace (Reduction.rationalGLOne E n) × Lie E n → ℂ := fun z =>
     CuspidalSpectrum.cuspQuot (hF z.2) z.1
-  have hFmk : ∀ (y : Reduction.normOneGL E n) x,
+  have hFmk : ∀ (y : Reduction.normOneGL (K := E) (n := n)) x,
       F (RightCosetSpace.mk (Reduction.rationalGLOne E n) y, x) = chart f y.1 x := fun _ _ => rfl
   have hC0 : 0 ≤ C := (norm_nonneg _).trans (hC 1)
   have hFb : ∀ z, ‖F z‖ ≤ C := by
@@ -64,9 +64,9 @@ theorem UpperTheory.V.Af.Smo.orthStep :
     refine (hq.continuousAt_comp_iff (g := F) (x := (y, x))).1 ?_
     have h1 : ContinuousAt (fun z : GA E n × Lie E n => chart f z.1 z.2) (y.1, x) :=
       (hcc E n f hf).1.continuousAt ((isOpen_univ.prod TR.isOpen_invSet).mem_nhds ⟨trivial, hx⟩)
-    have h2 : Continuous fun z : Reduction.normOneGL E n × Lie E n => ((z.1.1, z.2) : GA E n × Lie E n) :=
+    have h2 : Continuous fun z : Reduction.normOneGL (K := E) (n := n) × Lie E n => ((z.1.1, z.2) : GA E n × Lie E n) :=
       (continuous_subtype_val.comp continuous_fst).prodMk continuous_snd
-    exact ContinuousAt.comp (f := fun z : Reduction.normOneGL E n × Lie E n => ((z.1.1, z.2) : GA E n × Lie E n))
+    exact ContinuousAt.comp (f := fun z : Reduction.normOneGL (K := E) (n := n) × Lie E n => ((z.1.1, z.2) : GA E n × Lie E n))
       (x := (y, x)) h1 h2.continuousAt
   have hFm : Measurable F := by
     have hc : ContinuousOn F (Set.univ ×ˢ invSet E n)ᶜ :=

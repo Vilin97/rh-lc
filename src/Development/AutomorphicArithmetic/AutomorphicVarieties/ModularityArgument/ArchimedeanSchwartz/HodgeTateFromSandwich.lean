@@ -42,7 +42,7 @@ def SatDict : Prop :=
       B = Finset.univ.val.map z
 
 def CoefSm : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 1 ≤ n → ∀ (μ : Measure (Reduction.normOneGL K n))
+  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n : ℕ), 1 ≤ n → ∀ (μ : Measure (Reduction.normOneGL (K := K) (n := n)))
     [μ.IsHaarMeasure] (σ : CuspSub K n), Cm.carrier σ ≤ centralCuspForms K n → ∀ φ₂ : cuspForms K n,
     ∃ T : σ.V →ₗ[ℂ] Sm K n, (∀ φ : σ.V, (T φ).1 = GJGlobal.matrixCoeff μ φ.1.1 φ₂.1) ∧
       ∀ (τ : K →+* ℂ) (u : ℂ) (φ φ' : σ.V), φ'.1 = cap τ u φ.1 → T φ' = cap τ u (T φ)

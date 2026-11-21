@@ -39,7 +39,7 @@ theorem admissible_and_equiv_of_pairing {G : Type} [Group G] [TopologicalSpace G
     GroundTheory.Automorphic.IsAdmissible σ ∧ Nonempty (σ.Equiv π) :=
   PositivityTheory.TfC.OccursIff.Pair.admissible_and_equiv σ π hσ hσi hπ hπi B hB hB0 C hC hC0
 
-theorem exists_localComponent_family (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n))
+theorem exists_localComponent_family (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n)))
     [μ.IsHaarMeasure] (V : Submodule ℂ (Lp ℂ 2 (quotientMeasure (rationalGLOne K n) μ)))
     (hle : V ≤ cuspidalL2 μ) (hcl : IsClosed (V : Set (Lp ℂ 2 (quotientMeasure (rationalGLOne K n) μ))))
     (hinv : (rightRegularRep (rationalGLOne K n) μ).IsInvariant V) (hne : V ≠ ⊥)
@@ -81,7 +81,7 @@ theorem pairL_invariant {G G' X Y H : Type} [Group G] [Group G'] [TopologicalSpa
   rw [pairL_apply, pairL_apply, hf, hf']
   exact UnitaryRep.inner_map_map _ _ _ _
 
-theorem rhoL_def (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K) (g : GL (Fin n) (w.adicCompletion K))
+theorem rhoL_def (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K) (g : GL (Fin n) (w.adicCompletion K))
     (v : LL μ) :
     rhoL μ w g v = rightRegularRep (rationalGLOne K n) μ (MultiplicityOne.finProj K n (AdelicGLn.localEmbedding w g)) v :=
   rfl

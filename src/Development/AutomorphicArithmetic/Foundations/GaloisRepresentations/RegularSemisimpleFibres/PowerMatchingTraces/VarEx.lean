@@ -25,8 +25,8 @@ namespace UpperTheory.Gal.InertialTypesAlt.G
 
 theorem varEx : VarEx := by
   intro F E _ _ _ _ _ _ _ _ σ hσ hp n hn P hP v w hv
-  let μE : Measure (normOneGL E n) := Measure.haar
-  let μF : Measure (normOneGL F n) := Measure.haar
+  let μE : Measure (normOneGL (K := E) (n := n)) := Measure.haar
+  let μF : Measure (normOneGL (K := F) (n := n)) := Measure.haar
   obtain ⟨hw, s, hs, hloc⟩ := locGalEx F E σ hp n v w hv
   refine ⟨s, hs, fun τ' hτ' => ?_⟩
   obtain ⟨χ', ⟨z, hz'⟩, V, hV⟩ := Dp.exTwist E n μE P hn

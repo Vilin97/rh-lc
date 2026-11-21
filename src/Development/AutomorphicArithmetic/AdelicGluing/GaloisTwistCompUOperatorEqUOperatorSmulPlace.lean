@@ -102,7 +102,7 @@ private theorem cosets_eq {G : Type} [Group G] (J : Subgroup G) (a b x : G) (ha 
     rw [key]
     simp
 
-private theorem fixL_iff {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+private theorem fixL_iff {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (w : Pl K) (J : Subgroup (GL (Fin n) (w.adicCompletion K))) (v : LL μ) :
     v ∈ fixL μ w J ↔ ∀ k ∈ J, rhoL μ w k v = v := by
   unfold fixL
@@ -114,7 +114,7 @@ private theorem fixL_iff {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Me
 
 theorem UpperTheory.galoisTwist_comp_uOperator_eq_uOperator_smul_place :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] (σ : E ≃ₐ[F] E) (n : ℕ), 0 < n →
-          ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ → ∀ (w : Pl E) (ν : Fin n → ℤ),
+          ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ → ∀ (w : Pl E) (ν : Fin n → ℤ),
             θ.U ∘L Uiw μ w ν = Uiw μ (σ • w) ν ∘L θ.U := by
   intro F E _ _ _ _ _ _ σ n hn μ _ θ hθ w ν
   obtain ⟨s, hs1, hs2, hs3⟩ := UpperTheory.exists_galois_transport_localGL_preserving_iwahori F E σ n hn w

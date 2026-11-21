@@ -201,7 +201,7 @@ end Loc2
 
 section Glob
 
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K)
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K)
 
 private def rr : Representation ℂ (GL (Fin n) (w.adicCompletion K)) (LL μ) where
   toFun g := (rhoL μ w g : LL μ →ₗ[ℂ] LL μ)
@@ -255,7 +255,7 @@ end Glob
 
 section Main
 
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K)
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K)
   [MeasurableSpace (GL (Fin n) (w.adicCompletion K))] [BorelSpace (GL (Fin n) (w.adicCompletion K))]
   (m : Measure (GL (Fin n) (w.adicCompletion K))) [m.IsHaarMeasure]
 

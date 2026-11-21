@@ -22,7 +22,7 @@ open Reduction AutomorphicForm RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-theorem exists_archProj_eq {g : normOneGL K n} (hg : (AdelicGLn.prodEquiv K n g).2 = 1) :
+theorem exists_archProj_eq {g : normOneGL (K := K) (n := n)} (hg : (AdelicGLn.prodEquiv K n g).2 = 1) :
     ∃ C : ArchUnits K n, archProj K n C = g ∧
       (C : ArchMatrix K n) = archMat K n ((g : AdelicGLn.AdelicGL K n) :
         Matrix (Fin n) (Fin n) 𝔸[K]) := by
@@ -70,7 +70,7 @@ theorem conjArch_mul_conjArch {r : ℕ} (x : AdelicGLn.AdelicGL K n) (P Q : UPos
       Matrix.mul_zero]
   rw [this, map_zero]
 
-theorem exists_archProj_eq_conj {r : ℕ} (x : normOneGL K n) (P : UPos n r → 𝔸[K])
+theorem exists_archProj_eq_conj {r : ℕ} (x : normOneGL (K := K) (n := n)) (P : UPos n r → 𝔸[K])
     (hP : ∀ p, (P p).2 = 0) :
     ∃ C : ArchUnits K n, archProj K n C = x⁻¹ * unipOne K n r P * x ∧
       (C : ArchMatrix K n) = 1 + conjArch K n (x : AdelicGLn.AdelicGL K n) P := by
@@ -78,7 +78,7 @@ theorem exists_archProj_eq_conj {r : ℕ} (x : normOneGL K n) (P : UPos n r → 
     (prodEquiv_conj_snd (x : AdelicGLn.AdelicGL K n) P hP)
   refine ⟨C, hC1, ?_⟩
   rw [hC2]
-  have h1 : ((x⁻¹ * unipOne K n r P * x : normOneGL K n) : AdelicGLn.AdelicGL K n) =
+  have h1 : ((x⁻¹ * unipOne K n r P * x : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) =
       (x : AdelicGLn.AdelicGL K n)⁻¹ * unipGL P * (x : AdelicGLn.AdelicGL K n) := rfl
   rw [h1, coe_conj_unipGL, map_add (f := _), map_one]
   rfl
@@ -123,10 +123,10 @@ theorem encard_le_of_subset_biUnion {α ι : Type*} [DecidableEq ι] (s : Finset
           push_cast
           ring
 
-theorem encard_le_of_subset_mul {x : normOneGL K n} {Q V : Set (normOneGL K n)}
-    (s : Finset (normOneGL K n)) (hQ : Q ⊆ ⋃ g ∈ s, (fun y => y * g) '' V) {m : ℕ}
-    (hm : ∀ z : normOneGL K n, {γ : Γ₁ | γ • z ∈ (fun y => x * y) '' V}.encard ≤ m)
-    (z : normOneGL K n) :
+theorem encard_le_of_subset_mul {x : normOneGL (K := K) (n := n)} {Q V : Set (normOneGL (K := K) (n := n))}
+    (s : Finset (normOneGL (K := K) (n := n))) (hQ : Q ⊆ ⋃ g ∈ s, (fun y => y * g) '' V) {m : ℕ}
+    (hm : ∀ z : normOneGL (K := K) (n := n), {γ : Γ₁ | γ • z ∈ (fun y => x * y) '' V}.encard ≤ m)
+    (z : normOneGL (K := K) (n := n)) :
     {γ : Γ₁ | γ • z ∈ (fun y => x * y) '' Q}.encard ≤ s.card * m := by
   classical
   refine encard_le_of_subset_biUnion s (fun g => {γ : Γ₁ | γ • (z * g⁻¹) ∈ (fun y => x * y) '' V})
@@ -139,7 +139,7 @@ theorem encard_le_of_subset_mul {x : normOneGL K n} {Q V : Set (normOneGL K n)}
   rw [Subgroup.smul_def, smul_eq_mul] at hqz ⊢
   rw [← mul_assoc, ← hqz, mul_assoc, mul_assoc, mul_inv_cancel, mul_one]
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (ν : Measure (ArchUnits K n))
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (ν : Measure (ArchUnits K n))
   [ν.IsHaarMeasure]
 
 theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
@@ -147,18 +147,18 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
     (hβu : tsupport β ⊆ range (Units.val : ArchUnits K n → ArchMatrix K n))
     (U : Subgroup (AdelicGLn.integralFiniteGL K n))
     (hU : IsOpen (U : Set (AdelicGLn.integralFiniteGL K n)))
-    (g : CompactlySupportedContinuousMap (normOneGL K n) ℂ)
+    (g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     {ω : Set (AdelicGLn.AdelicGL K n)} (hω : IsCompact ω)
     (hωB : ω ⊆ ((adelicBorel : Subgroup (AdelicGLn.AdelicGL K n)) : Set (AdelicGLn.AdelicGL K n)))
     {t : ℝ} (ht : 0 < t) {r : ℕ} (hr : 0 < r) (hrn : r < n) :
     ∃ N : ℕ, ∀ k : ℕ, ∃ C : ℝ, ∀ φ ∈ cuspidalL2 μ, ∀ b ∈ ω, ∀ (ρ : Fin n → ℝ) (hρ : ∀ i, 0 < ρ i),
       (∀ i j : Fin n, (j : ℕ) = i + 1 → t * ρ j ≤ ρ i) →
-      ∀ kk ∈ (maxCompact : Subgroup (AdelicGLn.AdelicGL K n)), ∀ x : normOneGL K n,
+      ∀ kk ∈ (maxCompact : Subgroup (AdelicGLn.AdelicGL K n)), ∀ x : normOneGL (K := K) (n := n),
       (x : AdelicGLn.AdelicGL K n) = b * diagUnits n (fun i => posIdele (K := K) (ρ i) (hρ i)) * kk →
       ∀ R : ℝ, 1 ≤ R → (∀ i j : Fin n, i < j → ρ i / ρ j ≤ R) →
       ‖rconv Γ₁ μ (archConv ν hβ.continuous hβc hβu (finAvg U hU g)) φ x‖ ≤
         C * (ρ ⟨r, hrn⟩ / ρ ⟨r - 1, by omega⟩) ^ k * √(R ^ N) * ‖φ‖ := by
-  obtain ⟨V₀, hV₀c, hV₀⟩ := exists_compact_mem_nhds (1 : normOneGL K n)
+  obtain ⟨V₀, hV₀c, hV₀⟩ := exists_compact_mem_nhds (1 : normOneGL (K := K) (n := n))
   obtain ⟨Cc, N, hCc⟩ := exists_encard_le_siegel hω ht hV₀c
   refine ⟨N, fun k => ?_⟩
   set h := finAvg U hU g
@@ -171,7 +171,7 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
   obtain ⟨c, hc⟩ := exists_norm_sum_altSign_archConvFun_le ν hβ hβc hβu h k R₁
   set c' := max c 0
   have h𝒞 := isCompact_unipBall (K := K) (n := n) (k * R₁)
-  set Q := archProj K n '' unipBall (K := K) (n := n) (k * R₁) * tsupport (f : normOneGL K n → ℂ)
+  set Q := archProj K n '' unipBall (K := K) (n := n) (k * R₁) * tsupport (f : normOneGL (K := K) (n := n) → ℂ)
   have hQ : IsCompact Q := (h𝒞.image continuous_archProj).mul f.hasCompactSupport
   obtain ⟨s, -, hs⟩ := hQ.elim_nhds_subcover (fun g => (fun y => y * g) '' V₀) fun g _ => by
     have := (Homeomorph.mulRight g).isOpenMap.image_mem_nhds hV₀
@@ -180,7 +180,7 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
   intro φ hφ b hb ρ hρ hsieg kk hkk x hx R hR1 hR
   obtain ⟨m₀, hmC₀, hm₀⟩ := hCc b hb ρ hρ hsieg kk hkk x hx R hR1 hR
   obtain ⟨m, hmdef⟩ : ∃ m : ℕ, m = s.card * m₀ := ⟨_, rfl⟩
-  have hm : ∀ z : normOneGL K n, {γ : Γ₁ | γ • z ∈ (fun y => x * y) '' Q}.encard ≤ m := by
+  have hm : ∀ z : normOneGL (K := K) (n := n), {γ : Γ₁ | γ • z ∈ (fun y => x * y) '' Q}.encard ≤ m := by
     intro z
     have := encard_le_of_subset_mul s hs hm₀ z
     rw [hmdef]

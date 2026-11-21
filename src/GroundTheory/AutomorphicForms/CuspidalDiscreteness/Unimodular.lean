@@ -70,7 +70,7 @@ namespace Reduction
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-theorem isMulRightInvariant_normOneGL (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] :
+theorem isMulRightInvariant_normOneGL (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] :
     μ.IsMulRightInvariant := by
   have := isFiniteMeasure_quotientMeasure (K := K) (n := n) μ
   exact RightCosetSpace.isMulRightInvariant_of_isFiniteMeasure_quotientMeasure (rationalGLOne K n) μ

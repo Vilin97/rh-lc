@@ -44,8 +44,8 @@ theorem UpperTheory.cuspDecay_archConv_finAvg :
   have hq0 : 0 < qht x := zero_lt_one.trans_le hq1
   have hqN : 0 < qht x ^ N' := pow_pos hq0 _
   obtain ⟨γ, hγ⟩ := hsieg (x : AdelicGLn.AdelicGL K n)
-  have hγ1 : AdelicGLn.diagonal K n γ ∈ normOneGL K n := rationalGL_le_normOneGL ⟨γ, rfl⟩
-  obtain ⟨γ₁, hγ₁⟩ : ∃ γ₁ : normOneGL K n, γ₁ = ⟨AdelicGLn.diagonal K n γ, hγ1⟩ := ⟨_, rfl⟩
+  have hγ1 : AdelicGLn.diagonal K n γ ∈ normOneGL (K := K) (n := n) := rationalGL_le_normOneGL ⟨γ, rfl⟩
+  obtain ⟨γ₁, hγ₁⟩ : ∃ γ₁ : normOneGL (K := K) (n := n), γ₁ = ⟨AdelicGLn.diagonal K n γ, hγ1⟩ := ⟨_, rfl⟩
   have hγΓ : γ₁ ∈ Gam K n := ⟨γ, by rw [hγ₁]; rfl⟩
   have hqle : qht x ≤ AutomorphicForm.height ((γ₁ * x : G1 K n) : AdelicGLn.AdelicGL K n) := by
     refine ciInf_le ⟨0, ?_⟩ (⟨γ₁, hγΓ⟩ : Gam K n)
@@ -53,7 +53,7 @@ theorem UpperTheory.cuspDecay_archConv_finAvg :
     exact (height_pos _).le
   rw [← rconv_mul_left (Gam K n) μ f φ hγΓ x]
   obtain ⟨b, hb, _, ⟨ρ, hρ, hs, rfl⟩, kk, hkk, hx⟩ := hγ
-  have hx' : ((γ₁ * x : normOneGL K n) : AdelicGLn.AdelicGL K n) =
+  have hx' : ((γ₁ * x : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) =
       b * diagUnits n (fun i => posIdele (K := K) (ρ i) (hρ i)) * kk := by
     rw [hγ₁]; exact hx
 

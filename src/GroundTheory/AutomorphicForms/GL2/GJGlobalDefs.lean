@@ -32,7 +32,7 @@ theorem coe_diagonal (γ : GL (Fin n) K) :
   rw [AdelicGLn.diagonal_apply]
   rfl
 
-variable (μ : Measure (normOneGL K n))
+variable (μ : Measure (normOneGL (K := K) (n := n)))
 
 def matrixCoeff (φ₁ φ₂ : AdelicGLn.AdelicGL K n → ℂ) (g : AdelicGLn.AdelicGL K n) : ℂ :=
   ∫ x in fundamentalDomain (rationalGLOne K n), φ₁ ((x : AdelicGLn.AdelicGL K n) * g) *

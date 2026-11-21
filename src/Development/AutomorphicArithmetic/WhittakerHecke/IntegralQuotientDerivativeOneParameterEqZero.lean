@@ -36,7 +36,7 @@ private theorem flow_cont {G : Type} [Group G] [TopologicalSpace G] [IsTopologic
 theorem UpperTheory.integral_quotient_derivative_oneParameter_eq_zero :
     ∀ (E : Type) [Field E] [NumberField E] (r : ℕ) (h D : GA E r → ℂ) (c : ℝ → GA E r),
           AutomorphicForm.IsLeftInvariant h → AutomorphicForm.IsLeftInvariant D → Continuous D → Continuous c → c 0 = 1 →
-          (∀ s t, c (s + t) = c s * c t) → (∀ s, c s ∈ normOneGL E r) → (∀ g, HasDerivAt (fun s => h (g * c s)) (D g) 0) →
+          (∀ s t, c (s + t) = c s * c t) → (∀ s, c s ∈ normOneGL (K := E) (n := r)) → (∀ g, HasDerivAt (fun s => h (g * c s)) (D g) 0) →
           Integrable (onQ h) (muQ E r) → Integrable (onQ D) (muQ E r) → ∫ y, onQ D y ∂muQ E r = 0 := by
   intro E _ _ r h D c hh hD cD cc _ cadd c1 hd ih iD
   have e : ∀ {f : GA E r → ℂ} (hf : AutomorphicForm.IsLeftInvariant f), onQ f = CuspidalSpectrum.cuspQuot hf := fun hf => by

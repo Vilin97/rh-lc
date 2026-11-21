@@ -20,7 +20,7 @@ theorem UpperTheory.ConvolutionTheory.C.nearFinite :
   have hcas : casimir b ε = casimir b' ε' :=
     UpperTheory.casimir_eq_of_orthonormal_bases _ B ι (Fin d) b ε b' ε' hsym hε (fun i j => by rw [hB, horth])
       (fun i => by rcases hε' i with h | h <;> rw [h] <;> norm_num) horth'
-  obtain ⟨μ, hμ⟩ : ∃ μ : Measure (normOneGL K n), μ.IsHaarMeasure := ⟨Measure.haar, inferInstance⟩
+  obtain ⟨μ, hμ⟩ : ∃ μ : Measure (normOneGL (K := K) (n := n)), μ.IsHaarMeasure := ⟨Measure.haar, inferInstance⟩
   have hM : ∀ i, ∃ M : ℝ, ε' i = -1 → ∀ φ ∈ centralCuspForms K n,
       (∀ k, Polynomial.aeval ((gkModuleCusp K n).σ k) (LinearMap.charpoly (τ k)) φ = 0) →
       ‖cuspVecL μ ((gkModuleCusp K n).ρ (b' i) φ)‖ ≤ M * ‖cuspVecL μ φ‖ := by

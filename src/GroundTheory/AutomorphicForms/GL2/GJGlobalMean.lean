@@ -20,14 +20,14 @@ open Reduction AutomorphicForm RightCosetSpace CuspidalSpectrum
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem exists_ae_eq_const_of_forall_eq {c : Lp ℂ 2 (quotientMeasure Γ₁ μ)}
     (hc : ∀ g, rightRegularRep Γ₁ μ g c = c) :
     ∃ κ : ℂ, (c : RightCosetSpace Γ₁ → ℂ) =ᵐ[quotientMeasure Γ₁ μ] fun _ => κ := by
-  set C : normOneGL K n → ℂ := fun x => c (mk Γ₁ x) with hCdef
+  set C : normOneGL (K := K) (n := n) → ℂ := fun x => c (mk Γ₁ x) with hCdef
   have hCm : StronglyMeasurable C := stronglyMeasurable_lift Γ₁ μ c
-  have h1 : ∀ g : normOneGL K n, ∀ᵐ x ∂μ, C (x * g) = C x := by
+  have h1 : ∀ g : normOneGL (K := K) (n := n), ∀ᵐ x ∂μ, C (x * g) = C x := by
     intro g
     have h := coeFn_rightRegularRep Γ₁ μ g c
     rw [hc g] at h
@@ -35,7 +35,7 @@ theorem exists_ae_eq_const_of_forall_eq {c : Lp ℂ 2 (quotientMeasure Γ₁ μ)
     filter_upwards [h2] with x hx
     rw [rightMul_mk] at hx
     exact hx.symm
-  have hset : MeasurableSet {p : normOneGL K n × normOneGL K n | C (p.1 * p.2) = C p.1} :=
+  have hset : MeasurableSet {p : normOneGL (K := K) (n := n) × normOneGL (K := K) (n := n) | C (p.1 * p.2) = C p.1} :=
     measurableSet_eq_fun (hCm.measurable.comp continuous_mul.measurable)
       (hCm.measurable.comp measurable_fst)
   have h2 : ∀ᵐ x ∂μ, ∀ᵐ g ∂μ, C (x * g) = C x :=
@@ -70,7 +70,7 @@ theorem eq_zero_of_ae_eq_const (hn : 2 ≤ n) {c : Lp ℂ 2 (quotientMeasure Γ�
   exact hy1
 
 theorem memLp_cuspQuot_of_bounded {ψ : AdelicGLn.AdelicGL K n → ℂ} (hψc : Continuous ψ)
-    (hψl : IsLeftInvariant ψ) (hbd : ∃ C, ∀ g ∈ normOneGL K n, ‖ψ g‖ ≤ C) :
+    (hψl : IsLeftInvariant ψ) (hbd : ∃ C, ∀ g ∈ normOneGL (K := K) (n := n), ‖ψ g‖ ≤ C) :
     MemLp (cuspQuot hψl) 2 (quotientMeasure Γ₁ μ) := by
   have := Reduction.isFiniteMeasure_quotientMeasure (K := K) (n := n) μ
   obtain ⟨C, hC⟩ := hbd
@@ -80,7 +80,7 @@ theorem memLp_cuspQuot_of_bounded {ψ : AdelicGLn.AdelicGL K n → ℂ} (hψc : 
   exact hC y y.2
 
 theorem toLp_cuspQuot_mem_cuspidalL2 {ψ : AdelicGLn.AdelicGL K n → ℂ} (hψc : Continuous ψ)
-    (hψl : IsLeftInvariant ψ) (hψ : IsCuspidal ψ) (hbd : ∃ C, ∀ g ∈ normOneGL K n, ‖ψ g‖ ≤ C) :
+    (hψl : IsLeftInvariant ψ) (hψ : IsCuspidal ψ) (hbd : ∃ C, ∀ g ∈ normOneGL (K := K) (n := n), ‖ψ g‖ ≤ C) :
     (memLp_cuspQuot_of_bounded μ hψc hψl hbd).toLp _ ∈ cuspidalL2 μ := by
   intro r hr hrn
   filter_upwards [ae_ctFun_congr μ r (MemLp.coeFn_toLp (memLp_cuspQuot_of_bounded μ hψc hψl hbd))]
@@ -90,7 +90,7 @@ theorem toLp_cuspQuot_mem_cuspidalL2 {ψ : AdelicGLn.AdelicGL K n → ℂ} (hψc
 
 theorem setIntegral_fundamentalDomain_eq_zero (hn : 2 ≤ n) {ψ : AdelicGLn.AdelicGL K n → ℂ}
     (hψc : Continuous ψ) (hψl : IsLeftInvariant ψ) (hψ : IsCuspidal ψ)
-    (hbd : ∃ C, ∀ g ∈ normOneGL K n, ‖ψ g‖ ≤ C) :
+    (hbd : ∃ C, ∀ g ∈ normOneGL (K := K) (n := n), ‖ψ g‖ ≤ C) :
     ∫ g in fundamentalDomain Γ₁, ψ (g : AdelicGLn.AdelicGL K n) ∂μ = 0 := by
   have := Reduction.isFiniteMeasure_quotientMeasure (K := K) (n := n) μ
   have : CompleteSpace (cuspidalL2 μ) := (isClosed_cuspidalL2 μ).completeSpace_coe

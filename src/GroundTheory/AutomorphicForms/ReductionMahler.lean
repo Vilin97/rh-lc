@@ -77,13 +77,13 @@ def normOneGL : Subgroup (AdelicGLn.AdelicGL K n) :=
   (normOneSubgroup K).comap (AdelicGLn.det K n)
 
 theorem mem_normOneGL {g : AdelicGLn.AdelicGL K n} :
-    g ∈ normOneGL K n ↔ (ideleModule K (AdelicGLn.det K n g) : ℝ) = 1 :=
+    g ∈ normOneGL (K := K) (n := n) ↔ (ideleModule K (AdelicGLn.det K n g) : ℝ) = 1 :=
   mem_normOneSubgroup
 
-theorem isClosed_normOneGL : IsClosed (normOneGL K n : Set (AdelicGLn.AdelicGL K n)) :=
+theorem isClosed_normOneGL : IsClosed (normOneGL (K := K) (n := n) : Set (AdelicGLn.AdelicGL K n)) :=
   (isClosed_normOneSubgroup K).preimage (AdelicGLn.continuous_det K n)
 
-theorem rationalGL_le_normOneGL : AdelicGLn.rationalGL K n ≤ normOneGL K n := by
+theorem rationalGL_le_normOneGL : AdelicGLn.rationalGL K n ≤ normOneGL (K := K) (n := n) := by
   rintro _ ⟨γ, rfl⟩
   have h : AdelicGLn.det K n (AdelicGLn.diagonal K n γ) =
       IdeleGroup.diagonal K (Matrix.GeneralLinearGroup.det γ) := by
@@ -92,7 +92,7 @@ theorem rationalGL_le_normOneGL : AdelicGLn.rationalGL K n ≤ normOneGL K n := 
     exact (RingHom.map_det (algebraMap K 𝔸[K]) (γ : Matrix (Fin n) (Fin n) K)).symm
   rw [mem_normOneGL, h, ideleModule_diagonal, Positive.val_one]
 
-theorem maxCompact_le_normOneGL : maxCompact (K := K) (n := n) ≤ normOneGL K n := by
+theorem maxCompact_le_normOneGL : maxCompact (K := K) (n := n) ≤ normOneGL (K := K) (n := n) := by
   intro k hk
   set f : AdelicGLn.AdelicGL K n →* {r : ℝ // 0 < r} := (ideleModule K).comp (AdelicGLn.det K n)
     with hf
@@ -179,7 +179,7 @@ theorem coe_finset_prod_pos {ι : Type*} (s : Finset ι) (f : ι → {r : ℝ //
   | insert a s ha ih => rw [Finset.prod_insert ha, Finset.prod_insert ha, Positive.val_mul, ih]
 
 theorem exists_isCompact_forall_of_pos_le_height {ε : ℝ} (hε : 0 < ε) :
-    ∃ C : Set (AdelicGLn.AdelicGL K n), IsCompact C ∧ ∀ g ∈ normOneGL K n,
+    ∃ C : Set (AdelicGLn.AdelicGL K n), IsCompact C ∧ ∀ g ∈ normOneGL (K := K) (n := n),
       (∀ x : Fin n → K, x ≠ 0 → ε ≤ height g x) →
         g ∈ (AdelicGLn.rationalGL K n : Set (AdelicGLn.AdelicGL K n)) * C := by
   classical
@@ -267,7 +267,7 @@ theorem exists_isCompact_forall_of_pos_le_height {ε : ℝ} (hε : 0 < ε) :
         _ = (s ^ m * r l) ^ d := (mul_pow _ _ _).symm
         _ ≤ r i ^ d := pow_le_pow_left₀ (mul_nonneg (pow_nonneg hs0.le _) (hr l).le) h1 _
 
-    have hba : b * diagUnits (m + 1) (fun i => posIdele (r i) (hr i)) ∈ normOneGL K (m + 1) := by
+    have hba : b * diagUnits (m + 1) (fun i => posIdele (r i) (hr i)) ∈ normOneGL (K := K) (n := (m + 1)) := by
       have : b * diagUnits (m + 1) (fun i => posIdele (r i) (hr i)) =
           AdelicGLn.diagonal K _ γ * g * k⁻¹ := by rw [heq]; group
       rw [this]
@@ -308,15 +308,15 @@ theorem exists_isCompact_forall_of_pos_le_height {ε : ℝ} (hε : 0 < ε) :
     rw [← heq, inv_mul_cancel_left]
 
 
-abbrev rationalGLOne : Subgroup (normOneGL K n) :=
-  (AdelicGLn.rationalGL K n).subgroupOf (normOneGL K n)
+abbrev rationalGLOne : Subgroup (normOneGL (K := K) (n := n)) :=
+  (AdelicGLn.rationalGL K n).subgroupOf (normOneGL (K := K) (n := n))
 
-instance locallyCompactSpace_normOneGL : LocallyCompactSpace (normOneGL K n) :=
+instance locallyCompactSpace_normOneGL : LocallyCompactSpace (normOneGL (K := K) (n := n)) :=
   isClosed_normOneGL.isClosedEmbedding_subtypeVal.locallyCompactSpace
 
 instance discreteTopology_rationalGLOne : DiscreteTopology (rationalGLOne K n) := by
   have := AdelicGLn.discreteTopology_rationalGL K n
-  let f : rationalGLOne K n → AdelicGLn.rationalGL K n := fun x => ⟨(x : normOneGL K n), x.2⟩
+  let f : rationalGLOne K n → AdelicGLn.rationalGL K n := fun x => ⟨(x : normOneGL (K := K) (n := n)), x.2⟩
   refine DiscreteTopology.of_continuous_injective (f := f) ?_ ?_
   · exact (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _
   · intro x y hxy

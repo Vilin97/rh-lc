@@ -152,14 +152,14 @@ theorem unfold_fd (Λ S : Type) [Group Λ] [Countable Λ] [Group S] [MeasurableS
             = fun x => ((B.subgroupOf K).index : ℝ)⁻¹ * ∑ c, |u (rep j B K c * x)| :=
           funext fun x => havg _ x
         rw [e]
-        exact (integrable_finset_sum _ fun c _ => (h c).abs).const_mul _
+        exact (integrable_finsetSum _ fun c _ => (h c).abs).const_mul _
     refine ⟨hI.trans (hIc.trans hAbs.symm), fun hint => ?_⟩
     have hcs := hIc.1 (hI.1 hint)
     have havgInt : IntegrableOn (avg j B K u) D μ := by
       have e : avg j B K u = fun x => ((B.subgroupOf K).index : ℝ)⁻¹ * ∑ c, u (rep j B K c * x) :=
         funext fun x => havg _ x
       rw [e]
-      exact (integrable_finset_sum _ fun c _ => hcs c).const_mul _
+      exact (integrable_finsetSum _ fun c _ => hcs c).const_mul _
     refine ⟨havgInt, ?_⟩
     have hint0 : IntegrableOn u (⋃ c, rep j B K c • D) μ := by
       rw [← hD0def]

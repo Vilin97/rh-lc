@@ -93,7 +93,7 @@ private theorem dep_extend {ι α : Type*} {β : α → Type*} (w : ι → α) (
   · exact dif_neg hv
 
 section Loc
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem rhoL_adj (w : Pl K) (g : Gw n w) : ContinuousLinearMap.adjoint (rhoL μ w g) = rhoL μ w g⁻¹ := by
   have := (UpperTheory.ConvolutionTheory.Tf.commPrj K n μ ⊥).2.2.2.2.2.2.2.1 (AdelicGLn.localEmbedding w g)
@@ -160,7 +160,7 @@ private theorem list_prj (hco : ∀ w, CO (J w) ∧ IsChr (J w) (χ w)) (L : Lis
 end Loc
 
 section BernoulliSumsFrobeniusOrbits
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem oloc_scale (v : Pl K) [MeasurableSpace (Gw n v)] [BorelSpace (Gw n v)] (m m₂ : Measure (Gw n v))
     [m.IsHaarMeasure] [m₂.IsHaarMeasure] {J : Subgroup (Gw n v)} (hJ : m J = 1) (φ : Gw n v → ℂ)
@@ -176,7 +176,7 @@ private theorem oloc_scale (v : Pl K) [MeasurableSpace (Gw n v)] [BorelSpace (Gw
 end BernoulliSumsFrobeniusOrbits
 
 section SlopeTestRemainingChoices
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem finAt_eq (h : AdelicGLn.FiniteAdelicGL K n) (v : Pl K) :
     finAt v (finEmb K n h) = AdelicGLn.finiteRestrictedEquiv K n h v := by
@@ -252,7 +252,7 @@ end UpperTheory.ConvolutionTheory.L1
 
 set_option maxHeartbeats 2000000 in
 theorem UpperTheory.exists_bound_dim_simultaneousLocalEigenspace_of_openCompact :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
         (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (J : ∀ w : Pl K, Subgroup (Gw n w)) (χ : ∀ w : Pl K, Gw n w → ℂ),
         (∀ w, CO (J w) ∧ IsChr (J w) (χ w)) →
         (∀ᶠ w in Filter.cofinite, J w = GLnLocal.integralGL (w.adicCompletion K) n ∧ χ w = 1) → ∃ κ : ℝ, 0 < κ ∧

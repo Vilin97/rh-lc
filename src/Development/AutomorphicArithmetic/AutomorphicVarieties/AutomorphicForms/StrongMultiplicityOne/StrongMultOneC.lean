@@ -126,7 +126,7 @@ def Vanish : Prop :=
     (∀ p, InPS S p → whittaker f p = 0) → f = 0
 
 def OrthStep : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (Reduction.normOneGL E n)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (f : GA E n → ℂ), Continuous f → (∃ C : ℝ, ∀ g, ‖f g‖ ≤ C) → IsLeftInvariant f →
     ∀ a : RightCosetSpace (Reduction.rationalGLOne E n) → ℂ, Continuous a → (∃ C : ℝ, ∀ q, ‖a q‖ ≤ C) →
     (∀ g (h : IsLeftInvariant fun x => f (x * g)), ∫ q, a q * CuspidalSpectrum.cuspQuot h q
@@ -135,7 +135,7 @@ def OrthStep : Prop :=
       ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne E n) μ) = 0
 
 def OrthConv : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (Reduction.normOneGL E n)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (φ φ' : cuspForms E n), φ ∈ centralCuspForms E n → φ' ∈ centralCuspForms E n → Orth μ φ φ' →
     ∀ β β' : 𝓢(Lie E n, ℂ), conv φ.1 β = conv φ'.1 β' → conv φ.1 β = 0
 
@@ -164,7 +164,7 @@ def CenSame : Prop :=
     U ≤ centralCuspForms E n → U' ≤ centralCuspForms E n
 
 def Compl : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) (μ : Measure (Reduction.normOneGL E n)) [μ.IsHaarMeasure]
+  ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
     (U : Submodule ℂ (cuspForms E n)), U ≤ centralCuspForms E n → Fb.Stab U →
     ∃ C : Submodule ℂ (cuspForms E n), Fb.Stab C ∧ U ⊔ C = centralCuspForms E n ∧
       ∀ φ ∈ U, ∀ φ' ∈ C, inner ℂ (CuspidalSpectrum.cuspToL2 μ φ) (CuspidalSpectrum.cuspToL2 μ φ') = 0
@@ -186,7 +186,7 @@ theorem smoCentral_of (h2 : CenSame) (h3 : Pair) (h4 : Compl) (h4' : Proj) (h5 :
       fun X φ h => ⟨sU.τ X φ h.1, sU'.τ X φ h.2⟩⟩
   rcases iU'.2 _ inf_le_right si with h0 | h0
   · exfalso
-    let μ : Measure (Reduction.normOneGL E n) := Measure.haar
+    let μ : Measure (Reduction.normOneGL (K := E) (n := n)) := Measure.haar
     obtain ⟨C, sC, hsup, ho⟩ := h4 E n μ U l sU
     obtain ⟨D, hD, hD0, sD, hs'⟩ := h4' E n U U' C sU sU' sC h0 iU'.1 (l'.trans hsup.ge) hs
     have lD : D ≤ centralCuspForms E n := hD.trans (le_sup_right.trans hsup.le)

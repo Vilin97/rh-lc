@@ -49,7 +49,7 @@ theorem vanish (D : A[X]) (a : ℂ) (h : ∀ u : ℂ, u ≠ a → D.eval (algebr
     exact (Set.finite_singleton a).infinite_compl
   by_cases hi : i < D.natDegree + 1
   · have e := congrArg (fun p => p.coeff i) q0
-    simpa [q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, hi] using e
+    simpa [q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finsupp.single_apply, hi] using e
   · rw [Polynomial.coeff_eq_zero_of_natDegree_lt (by omega), map_zero]
 
 theorem prod_neg_zero (L : List A) (h : (L.map fun x => -x).prod = 0) : L.prod = 0 := by

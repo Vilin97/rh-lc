@@ -186,7 +186,7 @@ theorem cyc_le {α : Type*} [Preorder α] {m : ℕ} (J : Fin (m + 1) → α) (h 
   simpa [h2] using h1 k (i + 1)
 
 section Loc
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem rhoL_adj (w : Pl K) (g : Gw n w) : ContinuousLinearMap.adjoint (rhoL μ w g) = rhoL μ w g⁻¹ := by
   have := (UpperTheory.ConvolutionTheory.Tf.commPrj K n μ ⊥).2.2.2.2.2.2.2.1 (AdelicGLn.localEmbedding w g)
@@ -301,7 +301,7 @@ theorem compact_typed (hn : 0 < n) (ν : Measure (archGroup K n)) [ν.IsHaarMeas
     List.prod_nil, ContinuousLinearMap.one_apply]
   rw [inv_smul_smul₀ (Complex.ofReal_ne_zero.2 hκ.ne')]
 
-theorem split_fin (M : Submonoid (normOneGL K n)) (B : Finset (Pl K))
+theorem split_fin (M : Submonoid (normOneGL (K := K) (n := n))) (B : Finset (Pl K))
     (hM : ∀ b ∈ B, ∀ y, MultiplicityOne.finProj K n (AdelicGLn.localEmbedding b y) ∈ M) (h : AdelicGLn.FiniteAdelicGL K n) :
     ∃ x ∈ M, ∃ h', MultiplicityOne.finProj K n h = x * MultiplicityOne.finProj K n h' ∧
       ∀ w ∈ B, finAt w (finEmb K n h') = 1 := by
@@ -321,7 +321,7 @@ end Loc
 
 section Two
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
-  (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure]
+  (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
 
 theorem operatorAt_int {s s' : archGroup F n →* archGroup E n} (hs : Continuous s) (hs' : Continuous s')
     (ν : Measure (archGroup F n)) [ν.IsHaarMeasure] (a : TI F n) (T : LL μ →L[ℂ] LL μ)

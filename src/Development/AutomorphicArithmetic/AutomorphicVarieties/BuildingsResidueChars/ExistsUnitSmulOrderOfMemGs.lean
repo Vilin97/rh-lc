@@ -8,12 +8,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsRe
 open QuadraticAlgebra UpperTheory.V.Z.Sym UpperTheory.V.Z.Sym.Loc UpperTheory.V.Z.Sym.Loc.PK
 
 theorem UpperTheory.exists_unit_smul_order_of_mem_gs :
-    ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K]
-      (Δ τ : K), IsLoc O Δ → τ ^ 2 - 4 ≠ 0 →
-      ∀ (π : O) (n : ℕ) (e : Oˣ) (h : O) (x : Etau K τ), PK.Cond π n e h x →
-      ∀ (t : Kˣ) (S : Set (Etau K τ)), S ∈ PS.Gs O τ t 1 →
-      ∃ (m : ℕ) (r : Kˣ) (u : (Etau K τ)ˣ),
-        u ∈ PK.Gu (O := O) (τ := τ) ∧ S = PS.ml (PS.sc (τ := τ) r * u) (PK.Ord (O := O) (yy π m x)) := by
+    ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K] (Δ τ : K), IsLoc O Δ → τ ^ 2 - 4 ≠ 0 → ∀ (π : O) (n : ℕ) (e : Oˣ) (h : O) (x : Etau K τ), Cond π n e h x → ∀ (t : Kˣ) (S : Set (Etau K τ)), S ∈ PS.Gs O τ t 1 → ∃ (m : ℕ) (r : Kˣ) (u : (Etau K τ)ˣ), u ∈ Gu O τ ∧ S = PS.ml (PS.sc τ r * u) (Ord O (yy π m x)) := by
   intro O K _ _ _ _ _ Δ τ hL hτ π n e h x hC t S hS
   obtain ⟨hfix, c, hc, hgen⟩ := hS
   rw [one_mul] at hgen

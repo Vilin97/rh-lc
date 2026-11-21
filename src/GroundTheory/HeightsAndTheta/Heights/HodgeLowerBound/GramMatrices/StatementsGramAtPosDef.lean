@@ -27,7 +27,7 @@ def GramAtPosDef.Statement (D : ComponentData II Ψ K ι Ω E) : Prop :=
 
 namespace DefinitionOfMu.LineEx
 
-open GroundTheory.Heights₂.Heights.LowerBoundFree.Line IndefiniteRowSideFullHecke.LowerBoundFree IndefiniteRowSideFullHecke.LowerBoundFree.LineFlag
+open GroundTheory.Heights₂.Heights.LowerBoundFree.Line
 
 end DefinitionOfMu.LineEx
 

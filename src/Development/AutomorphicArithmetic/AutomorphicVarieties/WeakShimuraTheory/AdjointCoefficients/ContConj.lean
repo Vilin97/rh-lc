@@ -154,7 +154,7 @@ theorem UpperTheory.V.Ws.X1.sect :
         (fun i j N => (hcont i j N).comp_continuous hQuo.cont) i j
     · have hres : (res Λ A : A →+* ResidueField Λ) = (res Λ R : R →+* ResidueField Λ).comp (p : A →+* R) := by
         ext x
-        exact (res_map p x).symm
+        exact (res_map Λ A p x).symm
       rw [hres, ← PD.map_map, hPP', hDef.1.red]
   obtain ⟨f, hf, -⟩ := hDef.2 A P' hLift
   obtain ⟨g0, -, huniq⟩ := hDef.2 R P hDef.1

@@ -90,6 +90,4 @@ theorem UpperTheory.V.Z.Sym.Glob.sideGTau :
     rw [hc] at ht
     have h2 : IsIntegral O (algebraMap K (Lsq K Δ) τ) := by
       simpa using ht.sub isIntegral_one
-    refine (isIntegral_algebraMap_iff ?_).1 h2
-    intro a b hab
-    simpa using congrArg QuadraticAlgebra.re hab
+    exact isIntegral_algebraMap_iff.1 h2

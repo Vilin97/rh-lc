@@ -113,15 +113,15 @@ theorem fhSt : ∀ (p : ℕ) [Fact p.Prime], FHSt p := by
     funext fun j => (hmap j).symm
   rw [hfun] at hMO
   obtain ⟨U, hU8⟩ := GlobalTheory.T.det_jacobian_formalMulN_eq_pow_mul_unit T d F (p ^ m)
-  have h2 : Matrix.of (fun i j : Fin d => MvPowerSeries.pderiv O (e j) (mulF (F.mapF iota) (p ^ m) i)) =
+  have h2 : Matrix.of (fun i j : Fin d => MvPowerSeries.pderiv (R := O) (e j) (mulF (F.mapF iota) (p ^ m) i)) =
       (MvPowerSeries.map iota).mapMatrix
-        (Matrix.of fun i j : Fin d => MvPowerSeries.pderiv T ((0 : Fin 1), j) (mulF F.F (p ^ m) i)) := by
+        (Matrix.of fun i j : Fin d => MvPowerSeries.pderiv (R := T) ((0 : Fin 1), j) (mulF F.F (p ^ m) i)) := by
     ext i j
     simp only [Matrix.of_apply, RingHom.mapMatrix_apply, Matrix.map_apply]
     rw [map_pderiv, hmap]
     rfl
   have hdet : Matrix.det (Matrix.of fun i j : Fin d =>
-      MvPowerSeries.pderiv O (e j) (mulF (F.mapF iota) (p ^ m) i)) =
+      MvPowerSeries.pderiv (R := O) (e j) (mulF (F.mapF iota) (p ^ m) i)) =
       (((p ^ m) ^ d : ℕ) : MvPowerSeries (Fin 1 × Fin d) O) *
         (Units.map (MvPowerSeries.map iota).toMonoidHom U : (MvPowerSeries (Fin 1 × Fin d) O)ˣ) := by
     rw [h2, ← RingHom.map_det, hU8, map_mul, map_pow, map_natCast]

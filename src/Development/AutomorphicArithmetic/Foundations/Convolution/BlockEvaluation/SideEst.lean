@@ -43,7 +43,7 @@ private theorem arith (C w zN zi q r kM e B E1 E2 kk f g1 g2 : ℝ) (hw : 0 ≤ 
 set_option maxHeartbeats 1600000 in
 theorem UpperTheory.ConvolutionTheory.Ci.sideEst :
     OneSide → EvVal → TruncSpec → ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n l : ℕ), 0 < n →
-      ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ l) (ev : PR K n →+* (LL μ →L[ℂ] LL μ)),
+      ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ l) (ev : PR K n →+* (LL μ →L[ℂ] LL μ)),
       𝔰.toAmp.IsEv ev → (∀ P, Inner μ (ev P)) → ∀ C₀ : ℝ, ∃ c₁ : ℝ, ∀ η : ℝ, 0 < η → η ≤ 1 →
       ∀ χ : ℝ → ℝ, Continuous χ → (∀ x, 0 ≤ χ x ∧ χ x ≤ 1) → (∀ x ≥ η, χ x = 1) →
       ∃ s : Finset (ℝ × Submodule ℂ (LL μ)),

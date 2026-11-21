@@ -157,7 +157,7 @@ theorem UpperTheory.V.Z.Gam.sideGCenOf :
   choose m hm using fun τ : K →+* ℂ => (GlobalTheory.ResW.IrrInfChar.main K n τ).1 σ
   have hn1 : 1 ≤ n := by omega
   obtain ⟨D⟩ := (Cm.toRep σ h).nonempty_adelicDecomposition
-  let μ : Measure (Reduction.normOneGL K n) := Measure.haar
+  let μ : Measure (Reduction.normOneGL (K := K) (n := n)) := Measure.haar
   obtain ⟨a, x, hx, ha, hx0, hxK⟩ := exists_pureTensor_spherical _ D
   obtain ⟨ℓ, fi, hℓs, hℓ1, hℓK, hf, hF1⟩ := matrixCoeff_factorization_of_pureTensor _ D μ a x hx ha hx0
   have hfix : ∀ v ∉ S, x v ∈ fixedVectors (D.finite.π v) (integralGL (v.adicCompletion K) n) := fun v hv =>

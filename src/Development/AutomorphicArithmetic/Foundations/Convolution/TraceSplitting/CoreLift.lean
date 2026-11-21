@@ -56,12 +56,12 @@ private theorem prj_of_mem (V : Submodule ℂ H) {x : H} (h : x ∈ V) : prj V x
 
 end Hilb
 
-private theorem oinf_congr {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+private theorem oinf_congr {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (ν ν' : Measure (archGroup K n)) [ν.IsHaarMeasure] [ν'.IsHaarMeasure] (h : ν = ν') (a : TI K n) : Oinf μ ν a = Oinf μ ν' a := by
   subst h
   rfl
 
-private theorem fixL_anti {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K)
+private theorem fixL_anti {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K)
     {J J' : Subgroup (Gw n w)} (h : J ≤ J') : fixL μ w J' ≤ fixL μ w J :=
   biInf_mono fun _ hu => Subgroup.map_mono h hu
 

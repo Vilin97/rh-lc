@@ -94,7 +94,7 @@ private theorem comm_abs {H : Type*} [NormedAddCommGroup H] [InnerProductSpace �
   exact hfin.symm
 
 private theorem hopComm {K : Type} [Field K] [NumberField K] {n : ℕ} (hn : 0 < n)
-    (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure]
+    (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure]
     (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure]
     (w : Pl K) (J : Subgroup (GL (Fin n) (w.adicCompletion K))) (x : GL (Fin n) (w.adicCompletion K))
     (hJo : IsOpen (J : Set (GL (Fin n) (w.adicCompletion K)))) (hJc : IsCompact (J : Set (GL (Fin n) (w.adicCompletion K))))

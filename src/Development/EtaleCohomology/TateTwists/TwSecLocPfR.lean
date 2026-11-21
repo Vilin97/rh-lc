@@ -33,7 +33,7 @@ theorem loc_bind {U : Scheme.{0}} {P : ∀ V : Scheme.{0}, (V ⟶ U) → Prop} {
 
 theorem loc_surj {R : Type} [CommRing R] (M : CommRingCat.{0} ⥤ ModuleCat.{1} (ULift.{1} R)) (U : Scheme.{0})
     (y : Sec (ofRings R M) U) :
-    Loc U fun V g => ∃ x : M.obj Γ(V, ⊤), Sec.res g y = ofRings.sec M V x := by
+    Loc U fun V g => ∃ x : M.obj Γ(V, ⊤), Sec.res g y = ofRings.sec R M V x := by
   have h := Presheaf.imageSieve_mem Scheme.etaleTopology (toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)) y
   refine ⟨_, h, fun V g hg => ?_⟩
   obtain ⟨x, hx⟩ := hg
@@ -106,7 +106,13 @@ theorem TwSecLoc_of (hZ : ZarPow) : LateralTheory.EtaleFoundations.TwLocPf.TwSec
     rfl
   rw [e]
   refine (congrArg (fun z => ((tw q i).obj.map h.op).hom z) hx).trans ?_
-  refine (LateralTheory.EtaleFoundations.TwLocPf.ofRings_sec_res (twF q i) h x).trans ?_
+  have hres : Sec.res h (ofRings.sec (ZMod q) (twF q i) V x) =
+      ofRings.sec (ZMod q) (twF q i) W (((twF q i).map h.appTop).hom x) := by
+    have hn := congrArg (fun f => f.hom x)
+      ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ twF q i)).naturality h.op)
+    simp only [ModuleCat.hom_comp] at hn
+    exact hn.symm
+  refine hres.trans ?_
   rw [hc, ← hp]
   unfold twGen ofRings.sec
   exact map_nsmul _ _ _

@@ -14,7 +14,7 @@ open scoped ComplexConjugate Classical InnerProductSpace
 set_option maxHeartbeats 1600000 in
 theorem UpperTheory.galoisTwist_commute_archOperator_and_offProjection :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ k n : ℕ,
-        ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
+        ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
         ∀ (D : InfD σ k) (s : Fin (k + 1) → archGroup F n →* archGroup E n) (hs : ∀ i, Continuous (s i)), IsBlockElement D n s →
         ∀ (νE : Measure (archGroup E n)) [νE.IsHaarMeasure] (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (b a : TI F n)
           (aE : TI E n) (aF : TI F n), ArchSlot D νE νF b a aE aF →
@@ -35,7 +35,7 @@ theorem UpperTheory.galoisTwist_commute_archOperator_and_offProjection :
   have hOc : ∀ (B : LL μ →L[ℂ] LL μ) i, (∀ g, Commute B (rightRegularRep (rationalGLOne E n) μ (archP E n (s i g)))) →
       Commute B (O i) := fun B i h => ContinuousLinearMap.ext fun v =>
     UpperTheory.ConvolutionTheory.L1.TY.operatorAt_int μ (hs i) (hs i) νF a B (fun x u => DFunLike.congr_fun (h x).eq u) v
-  have hrep : ∀ x y : normOneGL E n, Commute x y →
+  have hrep : ∀ x y : normOneGL (K := E) (n := n), Commute x y →
       Commute (rightRegularRep (rationalGLOne E n) μ x) (rightRegularRep (rationalGLOne E n) μ y) := fun x y h =>
     ContinuousLinearMap.ext fun v => by
       simp only [ContinuousLinearMap.mul_apply]

@@ -21,7 +21,7 @@ variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
 namespace CuspidalAutomorphicRepresentation
 
-variable {μ : Measure (Reduction.normOneGL K n)} [μ.IsHaarMeasure]
+variable {μ : Measure (Reduction.normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
 
 def ofL2Summand (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V] (hV : (cuspRepT μ).IsInvariant V)
     (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible) : CuspidalAutomorphicRepresentation K n :=
@@ -41,7 +41,7 @@ end CuspidalAutomorphicRepresentation
 
 open CuspidalAutomorphicRepresentation
 
-variable {μ : Measure (Reduction.normOneGL K n)} [μ.IsHaarMeasure]
+variable {μ : Measure (Reduction.normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
 
 end AutomorphicForm
 
@@ -51,7 +51,7 @@ open AutomorphicForm
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem exists_cuspForm_mem_of_ne_bot {W : Submodule ℂ (CuspL2 μ)} (hWc : IsClosed (W : Set (CuspL2 μ)))
     (hW : (cuspRepT μ).IsInvariant W) (hW0 : W ≠ ⊥) :

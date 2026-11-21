@@ -59,8 +59,8 @@ theorem UpperTheory.ConvolutionTheory.C.polyBdAll :
   refine ⟨max C₀ 0 * (D * E) ^ N₀, N₁ * N₀, fun φ x => ?_⟩
   have hq1 : 1 ≤ qht x := le_ciInf fun γ => one_le_height _
   obtain ⟨γ, hγ⟩ := hsieg (x : AdelicGLn.AdelicGL K n)
-  have hγ1 : AdelicGLn.diagonal K n γ ∈ normOneGL K n := rationalGL_le_normOneGL ⟨γ, rfl⟩
-  obtain ⟨γ₁, hγ₁⟩ : ∃ γ₁ : normOneGL K n, γ₁ = ⟨AdelicGLn.diagonal K n γ, hγ1⟩ := ⟨_, rfl⟩
+  have hγ1 : AdelicGLn.diagonal K n γ ∈ normOneGL (K := K) (n := n) := rationalGL_le_normOneGL ⟨γ, rfl⟩
+  obtain ⟨γ₁, hγ₁⟩ : ∃ γ₁ : normOneGL (K := K) (n := n), γ₁ = ⟨AdelicGLn.diagonal K n γ, hγ1⟩ := ⟨_, rfl⟩
   have hγΓ : γ₁ ∈ Gam K n := ⟨γ, by rw [hγ₁]; rfl⟩
   have hhq : AutomorphicForm.height (AdelicGLn.diagonal K n γ * (x : AdelicGLn.AdelicGL K n)) ≤
       E * qht x ^ N₁ := by
@@ -83,7 +83,7 @@ theorem UpperTheory.ConvolutionTheory.C.polyBdAll :
       _ = E * qht x ^ N₁ := by rw [hEdef, mul_pow]; ring
   rw [← rconv_mul_left (Gam K n) μ a φ hγΓ x]
   obtain ⟨b, hb, _, ⟨ρ, hρ, hs, rfl⟩, kk, hkk, hx⟩ := hγ
-  have hx' : ((γ₁ * x : normOneGL K n) : AdelicGLn.AdelicGL K n) =
+  have hx' : ((γ₁ * x : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) =
       b * diagUnits n (fun i => posIdele (K := K) (ρ i) (hρ i)) * kk := by
     rw [hγ₁]; exact hx
   obtain ⟨h, hhdef⟩ : ∃ h, h = AutomorphicForm.height (AdelicGLn.diagonal K n γ * (x : AdelicGLn.AdelicGL K n)) :=

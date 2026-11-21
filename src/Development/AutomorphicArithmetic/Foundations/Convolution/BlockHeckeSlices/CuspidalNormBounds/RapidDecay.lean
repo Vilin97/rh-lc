@@ -201,7 +201,7 @@ private theorem siegel_le {φ : AdelicGLn.AdelicGL K n → ℂ}
     ∃ C : ℝ, ∀ b ∈ ω, ∀ (ρ : Fin n → ℝ) (hρ : ∀ i, 0 < ρ i),
       (∀ i j : Fin n, (j : ℕ) = i + 1 → t * ρ j ≤ ρ i) →
       ∀ kk ∈ (Reduction.maxCompact : Subgroup (AdelicGLn.AdelicGL K n)),
-      ∀ x : AdelicGLn.AdelicGL K n, x ∈ Reduction.normOneGL K n →
+      ∀ x : AdelicGLn.AdelicGL K n, x ∈ Reduction.normOneGL (K := K) (n := n) →
       x = b * Reduction.diagUnits n (fun i => Reduction.posIdele (K := K) (ρ i) (hρ i)) * kk →
       ‖φ x‖ ≤ C * (height x ^ N')⁻¹ := by
   obtain ⟨N₀, C₀, hC₀⟩ := hφ.mod
@@ -350,12 +350,12 @@ theorem UpperTheory.ConvolutionTheory.BW.rapidDecay :
   obtain ⟨C, hC⟩ := siegel_le h0 hω hωB ht N
   refine ⟨C, fun g => ?_⟩
   obtain ⟨γ, b, hb, _, ⟨ρ, hρ, hs, rfl⟩, kk, hkk, hxe⟩ := hsieg g.1
-  have hγ1 : AdelicGLn.diagonal E n γ ∈ Reduction.normOneGL E n := Reduction.rationalGL_le_normOneGL ⟨γ, rfl⟩
+  have hγ1 : AdelicGLn.diagonal E n γ ∈ Reduction.normOneGL (K := E) (n := n) := Reduction.rationalGL_le_normOneGL ⟨γ, rfl⟩
   have h := hC b hb ρ hρ hs kk hkk _ (mul_mem hγ1 g.2) hxe
   rw [h0.left γ g.1] at h
   have hp := height_pos (AdelicGLn.diagonal E n γ * g.1)
   have hq : PositivityTheory.Rg.Tf.Core.qht g ≤ height (AdelicGLn.diagonal E n γ * g.1) :=
-    ciInf_le (f := fun γ : PositivityTheory.Rg.Tf.Core.Gam E n => height (((γ : Reduction.normOneGL E n) * g : Reduction.normOneGL E n) : AdelicGLn.AdelicGL E n))
+    ciInf_le (f := fun γ : PositivityTheory.Rg.Tf.Core.Gam E n => height (((γ : Reduction.normOneGL (K := E) (n := n)) * g : Reduction.normOneGL (K := E) (n := n)) : AdelicGLn.AdelicGL E n))
       ⟨0, by rintro _ ⟨γ, rfl⟩; exact (height_pos _).le⟩ ⟨⟨_, hγ1⟩, ⟨γ, rfl⟩⟩
   have hq0 : 0 ≤ PositivityTheory.Rg.Tf.Core.qht g := le_ciInf fun _ => (height_pos _).le
   rw [le_mul_inv_iff₀ (pow_pos hp N)] at h

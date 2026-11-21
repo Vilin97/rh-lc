@@ -23,7 +23,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.G.trEx :
     UpperTheory.Gal.InertialTypesAlt.G.TrEx := by
   intro K _ _ _ n hn π v _ _ m hm τ hτ f hf
   haveI := hm
-  let μ : Measure (normOneGL K n) := Measure.haar
+  let μ : Measure (normOneGL (K := K) (n := n)) := Measure.haar
   obtain ⟨χ, -, V, hV⟩ := Dp.exTwist K n μ π hn
   obtain ⟨⟨τ₁, h₁⟩, htw⟩ := locTw K n hn π χ v τ hτ
   obtain ⟨e, he⟩ := htw τ₁ h₁

@@ -96,7 +96,7 @@ theorem sqrt_discriminant_bounds_cm_field : ∀ (E : Type) [Field E] [NumberFiel
     exact_mod_cast hD
   have hR2 : (Real.sqrt H.d) ^ n ≤ |((discr E : ℤ) : ℝ)| :=
     (pow_le_pow_iff_left₀ (by positivity) (abs_nonneg _) two_ne_zero).mp hR
-  unfold rootDiscr
+  rw [rootDiscr_def]
   rw [Int.cast_abs]
   calc Real.sqrt H.d = ((Real.sqrt H.d) ^ n) ^ ((n : ℝ)⁻¹) :=
         (Real.pow_rpow_inv_natCast (Real.sqrt_nonneg _) hn0).symm

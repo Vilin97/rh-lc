@@ -13,8 +13,8 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm GroundThe
 theorem UpperTheory.V.KernelIndexFullLattice.kFinMem_holds :
     UpperTheory.V.KernelIndexFullLattice.KFinMem := by
   intro K _ _ n μ₁ _ π v hv hop hfin
-  have h1 : retractOne (1 : AdelicGLn.AdelicGL K n) = 1 := retractOne_coe (1 : Reduction.normOneGL K n)
-  let r : AdelicGLn.FiniteAdelicGL K n →* Reduction.normOneGL K n :=
+  have h1 : retractOne (1 : AdelicGLn.AdelicGL K n) = 1 := retractOne_coe (1 : Reduction.normOneGL (K := K) (n := n))
+  let r : AdelicGLn.FiniteAdelicGL K n →* Reduction.normOneGL (K := K) (n := n) :=
     { toFun := fun h => retractOne (finEmb K n h)
       map_one' := by rw [map_one, h1]
       map_mul' := fun a b => by rw [map_mul, retractOne_mul] }

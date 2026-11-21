@@ -87,10 +87,10 @@ theorem UpperTheory.unipotent_mem_maximalCompact_finite_integral :
     have := infEmb_mul_finEmb g
     rwa [h1, map_one, map_one, one_mul] at this
   refine ⟨⟨_, hint⟩, ?_⟩
-  have hmem : finEmb K (2 + 2) (AdelicGLn.prodEquiv K (2 + 2) g).2 ∈ normOneGL K (2 + 2) := by
+  have hmem : finEmb K (2 + 2) (AdelicGLn.prodEquiv K (2 + 2) g).2 ∈ normOneGL (K := K) (n := (2 + 2)) := by
     rw [hgf]
     exact (nn X).2
   apply Subtype.ext
-  change g = ((MultiplicityOne.finProj K (2 + 2) (AdelicGLn.prodEquiv K (2 + 2) g).2 : normOneGL K (2 + 2)) : AdelicGLn.AdelicGL K (2 + 2))
+  change g = ((MultiplicityOne.finProj K (2 + 2) (AdelicGLn.prodEquiv K (2 + 2) g).2 : normOneGL (K := K) (n := (2 + 2))) : AdelicGLn.AdelicGL K (2 + 2))
   rw [MultiplicityOne.finProj_of_mem hmem]
   exact hgf.symm

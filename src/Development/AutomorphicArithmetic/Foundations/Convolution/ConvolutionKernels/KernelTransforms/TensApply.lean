@@ -33,7 +33,7 @@ private theorem kbar_smul {K : Type} [Field K] [NumberField K] {n : ℕ}
   exact integral_const_mul c _
 
 private theorem tens_apply' {K : Type} [Field K] [NumberField K] {n : ℕ} (hn : 0 < n)
-    (β : TI K n) (e : TF K n) (x : normOneGL K n) : tens β e x = tensFun β e x := by
+    (β : TI K n) (e : TF K n) (x : normOneGL (K := K) (n := n)) : tens β e x = tensFun β e x := by
   obtain ⟨h1, h2, -⟩ := UpperTheory.ConvolutionTheory.Tf.tensCont K n hn β e
   have h : Continuous (tensFun β e) ∧ HasCompactSupport (tensFun β e) := ⟨h1, h2⟩
   rw [tens, dite_eq_left h]

@@ -72,7 +72,7 @@ theorem alg (O B S D : Type) [CommRing O] [IsLocalRing O] [CommRing B] [Algebra 
   have hht : (m'.height : WithBot ℕ∞) = 1 := by
     rw [← IsLocalization.AtPrime.ringKrullDim_eq_height m' D, hd]
   have hB' : ringKrullDim B' = 1 := by
-    rw [← GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient (ResidueField O) m', hht,
+    rw [← GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient m', hht,
       ringKrullDim_eq_zero_of_isField ((Ideal.Quotient.maximal_ideal_iff_isField_quotient m').1 hm'), add_zero]
   obtain ⟨n, hn, htr⟩ := GroundTheory.Arith.Abelian.Jacobian.exists_ringKrullDim_eq_trdeg (ResidueField O) (A := B')
   have hn1 : n = 1 := by
@@ -93,7 +93,12 @@ theorem alg (O B S D : Type) [CommRing O] [IsLocalRing O] [CommRing B] [Algebra 
       Algebra.EssFiniteType.of_isLocalization _ (nonZeroDivisors D)
     haveI := Algebra.EssFiniteType.comp (ResidueField O) B' D
     exact Algebra.EssFiniteType.comp (ResidueField O) D _
-  · rw [GroundTheory.Arith.Abelian.Jacobian.trdeg_eq_of_isFractionRing (ResidueField O) (A := D), hD]
+  · haveI : FaithfulSMul D (FractionRing D) :=
+      (faithfulSMul_iff_algebraMap_injective _ _).2 (IsFractionRing.injective D (FractionRing D))
+    haveI : Algebra.IsAlgebraic D (FractionRing D) :=
+      IsLocalization.isAlgebraic (FractionRing D) (nonZeroDivisors D)
+    rw [← trdeg_add_eq (ResidueField O) D (A := FractionRing D),
+      trdeg_eq_zero (R := D) (A := FractionRing D), add_zero, hD]
 
 theorem chart {X : Scheme.{0}} {O : Type} [CommRing O] [IsLocalRing O] (s : X ⟶ Spec (CommRingCat.of O))
     [LocallyOfFiniteType s] (x : X) (hx : IsClosed ({x} : Set X)) :

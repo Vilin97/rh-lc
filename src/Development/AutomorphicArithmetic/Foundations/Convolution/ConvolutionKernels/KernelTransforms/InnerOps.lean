@@ -12,7 +12,7 @@ open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalS
 open scoped TensorProduct InnerProductSpace ComplexConjugate Pointwise
 
 theorem UpperTheory.ConvolutionTheory.Tf.innerOps :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure],
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure],
       (∀ (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (β : TI K n), (∀ V : Submodule ℂ (LL μ), IsClosed (V : Set (LL μ)) → (rightRegularRep (rationalGLOne K n) μ).IsInvariant V → Oinf μ ν β ∘L prj V = prj V ∘L Oinf μ ν β)) ∧
       (∀ (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure] (e : TF K n), (∀ V : Submodule ℂ (LL μ), IsClosed (V : Set (LL μ)) → (rightRegularRep (rationalGLOne K n) μ).IsInvariant V → Ofin μ m e ∘L prj V = prj V ∘L Ofin μ m e)) ∧
       (∀ f : TG K n, (∀ V : Submodule ℂ (LL μ), IsClosed (V : Set (LL μ)) → (rightRegularRep (rationalGLOne K n) μ).IsInvariant V → RR μ f ∘L prj V = prj V ∘L RR μ f)) ∧

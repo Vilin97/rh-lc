@@ -82,7 +82,7 @@ private theorem out_mem_iff {G : Type} [Group G] (J : Subgroup G) (x : G) (c : G
     obtain ⟨b, hb⟩ := QuotientGroup.mk_out_eq_mul J (k * x)
     exact ⟨k, hk, b, b.2, hb⟩
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K)
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K)
 
 private theorem hop_apply (J : Subgroup (GL (Fin n) (w.adicCompletion K))) (x : GL (Fin n) (w.adicCompletion K))
     (hJ : IsCommensurated J) {v : LL μ} (hv : v ∈ fixL μ w J) :

@@ -97,11 +97,12 @@ theorem conj_mem' (d : ℕ) (t : kˣ) (ht : valuation k (t : k) ≤ 1) {m : ℕ}
       GroundTheory.Automorphic.Parabolic.oppositeUnipotentRadical k (d + d) (blk (blk2 d))) :
     (Zt d t)⁻¹ * z * Zt d t ∈ GroundTheory.Automorphic.GLnLocal.congruenceSubgroup k (d + d) m := by
   obtain ⟨hz1, hz2⟩ := Subgroup.mem_inf.1 hz
-  refine GroundTheory.Automorphic.Parabolic.mem_congruenceSubgroup_of_le (fun i j => (conj_mem d t ht hz1 hz2 i j).1) ?_
+  refine (GroundTheory.Automorphic.GLnLocal.mem_congruenceSubgroup_iff k (d + d)).2 ⟨?_, fun i j => (conj_mem d t ht hz1 hz2 i j).1⟩
+  refine (GroundTheory.Automorphic.GLnLocal.mem_integralGL_iff k (d + d)).2 ⟨fun i j => (conj_mem d t ht hz1 hz2 i j).2, ?_⟩
   intro i j
   have e : ((Zt d t)⁻¹ * z * Zt d t)⁻¹ = (Zt d t)⁻¹ * z⁻¹ * Zt d t := by group
   rw [e]
-  exact (conj_mem d t ht (inv_mem hz1) (inv_mem hz2) i j).1
+  exact (conj_mem d t ht (inv_mem hz1) (inv_mem hz2) i j).2
 
 section Rep
 

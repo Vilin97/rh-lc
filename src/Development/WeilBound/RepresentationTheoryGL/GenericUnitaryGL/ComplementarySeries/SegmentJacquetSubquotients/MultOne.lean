@@ -18,7 +18,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 theorem isSmooth_segTerm {d l : ℕ} (σ : IrrRep (GL (Fin d) k)) (a : Fin l) :
     IsSmooth (segTerm σ.ρ l a) :=
-  isSmooth_twist σ.smooth (isSmoothChar_of_isUnram (isUnram_absPow k _)).detChar
+  isSmooth_twist σ.smooth (GlobalTheory.SmGL.isSmoothChar_of_isUnram k (isUnram_absPow k _)).detChar
 
 theorem isIrreducible_segTerm {d l : ℕ} (σ : IrrRep (GL (Fin d) k)) (a : Fin l) :
     (segTerm σ.ρ l a).IsIrreducible :=

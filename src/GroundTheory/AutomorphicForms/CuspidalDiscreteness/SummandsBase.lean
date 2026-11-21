@@ -31,7 +31,7 @@ open AutomorphicForm
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
 
-def archP : archGroup K n →* Reduction.normOneGL K n :=
+def archP : archGroup K n →* Reduction.normOneGL (K := K) (n := n) :=
   (archProj K n).comp (archGroup K n).subtype
 
 @[simp] theorem archimedeanProjection_apply (a : archGroup K n) : archP K n a = archProj K n (a : ArchUnits K n) := rfl
@@ -39,7 +39,7 @@ def archP : archGroup K n →* Reduction.normOneGL K n :=
 theorem continuous_archP : Continuous (archP K n) :=
   continuous_archProj.comp continuous_subtype_val
 
-variable (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 end CuspidalSpectrum
 

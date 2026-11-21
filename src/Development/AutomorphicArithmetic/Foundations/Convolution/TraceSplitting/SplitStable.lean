@@ -40,7 +40,7 @@ def PullBack : Prop :=
             φ = fun g => ψ (mapGL n (completionMap v w.1) g)
 
 def UnitTrace : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
+  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
     IsSummand μ V → ∀ (w : Pl K) [MeasurableSpace (Gw n w)] [BorelSpace (Gw n w)] (m : Measure (Gw n w)), m.IsHaarMeasure →
     ∀ (τ : SmIrr (Gw n w)) (J : Subgroup (Gw n w)), Occurs μ V w τ → CO J → V ⊓ fixL μ w J ≠ ⊥ →
       fixedVectors τ.ρ J ≠ ⊥ ∧ Test ((J : Set (Gw n w)).indicator (1 : Gw n w → ℂ)) ∧
@@ -50,13 +50,13 @@ def UnitTrace : Prop :=
 
 def OneTerm : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (n l : ℕ), 0 < n →
-    ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ l) (V : Submodule ℂ (LL μ)) Λ t,
+    ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ) (𝔰 : Side θ l) (V : Submodule ℂ (LL μ)) Λ t,
     IsSummand μ V → V.map (θ.U : LL μ →ₗ[ℂ] LL μ) = V → At μ 𝔰.S V Λ t → ∀ (x : ℝ) (j : ℕ),
       𝔰.tr (fun V' => At μ 𝔰.S V' Λ t) x j = trOn (eigIn V 𝔰.toAmp.A x) ((𝔰.Uq 0 ^ j) ∘L Rop μ 𝔰.g ∘L θ.U)
 
 def SideSum : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F] (σ : E ≃ₐ[F] E)
-    (n l : ℕ), 0 < n → ∀ (μ : Measure (normOneGL F n)) [μ.IsHaarMeasure] (ν : Measure (archGroup F n)) [ν.IsHaarMeasure]
+    (n l : ℕ), 0 < n → ∀ (μ : Measure (normOneGL (K := F) (n := n))) [μ.IsHaarMeasure] (ν : Measure (archGroup F n)) [ν.IsHaarMeasure]
     [∀ v : Pl F, MeasurableSpace (Gw n v)] [∀ v : Pl F, BorelSpace (Gw n v)] (m : ∀ v : Pl F, Measure (Gw n v)),
     (∀ v, (m v).IsHaarMeasure ∧ m v (GLnLocal.integralGL (v.adicCompletion F) n) = 1) →
     ∀ (a : TI F n) (q : Pl F) (w₀ : PlacesOver E q) (S : Finset (Pl F)) (UF : ∀ v : Pl F, Subgroup (Gw n v)) (e : Fin n → ℤ),
@@ -70,7 +70,7 @@ def SideSum : Prop :=
 def PickS : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)) Λ t, IsSummand μ V → AtAE μ V Λ t → ∀ v : Pl F,
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)) Λ t, IsSummand μ V → AtAE μ V Λ t → ∀ v : Pl F,
       ∃ (S : Finset (Pl F)) (q : Pl F) (_ : PlacesOver E q), v ∈ S ∧ q ∉ S ∧ GM.Split E q ∧ (∀ u ∉ S, GM.Unr E u) ∧
         (∀ w : Pl E, w.under (𝓞 F) ∉ S → V ⊓ fixL μ w (GLnLocal.integralGL (w.adicCompletion E) n) ≠ ⊥) ∧
         ∀ S' : Set (Pl E), (∀ w, w ∈ S' ↔ w.under (𝓞 F) ∈ S ∨ w.under (𝓞 F) = q) →
@@ -79,7 +79,7 @@ def PickS : Prop :=
 def PickInf : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure] (μF : Measure (normOneGL F n)) [μF.IsHaarMeasure] (u : LL μE), u ≠ 0 →
+    ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure] (u : LL μE), u ≠ 0 →
       ∃ (m : ℕ) (_ : Module.finrank F E = m + 1) (D : InfD σ m) (s : Fin (m + 1) → archGroup F n →* archGroup E n)
         (hs : ∀ i, Continuous (s i)) (νE : Measure (archGroup E n)) (_ : νE.IsHaarMeasure) (νF : Measure (archGroup F n))
         (_ : νF.IsHaarMeasure) (b a : TI F n) (aE : TI E n) (aF : TI F n), IsBlockElement D n s ∧ ArchSlot D νE νF b a aE aF ∧
@@ -88,7 +88,7 @@ def PickInf : Prop :=
 def SplitLev : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V → ∀ v : Pl F, GM.Split E v →
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V → ∀ v : Pl F, GM.Split E v →
       ∃ (U : Subgroup (Gw n v)) (J : ∀ u : PlacesOver E v, Subgroup (Gw n u.1)), CO U ∧
         U ≤ GLnLocal.integralGL (v.adicCompletion F) n ∧
         ∀ u, CO (J u) ∧ (∀ g, g ∈ U ↔ mapGL n (completionMap v u.1) g ∈ J u) ∧ V ⊓ fixL μ u.1 (J u) ≠ ⊥
@@ -122,7 +122,7 @@ def SplitMatch : Prop :=
 def InertData : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V → ∀ v : Pl F, ¬ GM.Split E v →
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)), IsSummand μ V → ∀ v : Pl F, ¬ GM.Split E v →
       ∃ (J : ∀ u : PlacesOver E v, Subgroup (Gw n u.1)) (χ : ∀ u : PlacesOver E v, Gw n u.1 → ℂ) (f : Gw n v → ℂ)
         (UE : Subgroup (GL (Fin n) (CompletionsOver E v))) (UF : Subgroup (Gw n v)),
         (∀ u, CO (J u) ∧ IsChr (J u) (χ u) ∧ RankOne μ V u.1 (J u) (χ u) ∧ V ⊓ eigL μ u.1 (J u) (χ u) ≠ ⊥) ∧

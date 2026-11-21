@@ -36,7 +36,7 @@ def NormUnr : Prop :=
 def SphConj : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ → ∀ V : Submodule ℂ (LL μ),
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ → ∀ V : Submodule ℂ (LL μ),
       V.map (θ.U : LL μ →ₗ[ℂ] LL μ) = V → ∀ w w' : Pl E, w.under (𝓞 F) = w'.under (𝓞 F) →
       V ⊓ fixL μ w (GLnLocal.integralGL (w.adicCompletion E) n) ≠ ⊥ →
       V ⊓ fixL μ w' (GLnLocal.integralGL (w'.adicCompletion E) n) ≠ ⊥
@@ -44,7 +44,7 @@ def SphConj : Prop :=
 def Norm : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure] (μF : Measure (normOneGL F n)) [μF.IsHaarMeasure]
+    ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure]
       (π : CuspSub F n) (P : CuspSub E n), WeakBC (Cusp.cx π).sat (Cusp.cx P).sat →
       ∃ (s : ℂ) (χ : HChar F) (χ' : HChar E) (V : Submodule ℂ (LL μF)) (V' : Submodule ℂ (LL μE)) (θ : Twist μE),
         T.IsPow χ s ∧ T.IsPow χ' s ∧ Dp.Carries μF (π.twist χ) V ∧ Dp.Carries μE (P.twist χ') V' ∧ IsGalTwist σ θ ∧

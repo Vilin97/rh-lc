@@ -19,7 +19,7 @@ open Reduction AutomorphicForm CuspidalSpectrum
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
 theorem finEmb_mul_centralSection_inv_mem (u : AdelicGLn.FiniteAdelicGL K n) :
-    finEmb K n u * (centralSection K n (detModule K n (finEmb K n u)))⁻¹ ∈ normOneGL K n := by
+    finEmb K n u * (centralSection K n (detModule K n (finEmb K n u)))⁻¹ ∈ normOneGL (K := K) (n := n) := by
   rw [mem_normOneGL_iff_detModule, map_mul, map_inv]
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · have : Subsingleton (AdelicGLn.AdelicGL K 0) :=
@@ -42,7 +42,7 @@ theorem finProjFun_mul (u v : AdelicGLn.FiniteAdelicGL K n) :
     mul_assoc (finEmb K n v), centralSection_inv_mul_inv_comm (detModule K n (finEmb K n u))]
 
 
-def finProj : AdelicGLn.FiniteAdelicGL K n →* normOneGL K n where
+def finProj : AdelicGLn.FiniteAdelicGL K n →* normOneGL (K := K) (n := n) where
   toFun u := ⟨finProjFun K n u, finEmb_mul_centralSection_inv_mem u⟩
   map_one' := Subtype.ext (by simp [finProjFun])
   map_mul' u v := Subtype.ext (finProjFun_mul u v)
@@ -58,7 +58,7 @@ theorem continuous_finProj : Continuous (finProj K n) := by
   exact continuous_finEmb.mul ((continuous_centralSection.comp
     (continuous_detModule.comp continuous_finEmb)).inv)
 
-theorem finProj_of_mem {u : AdelicGLn.FiniteAdelicGL K n} (hu : finEmb K n u ∈ normOneGL K n) :
+theorem finProj_of_mem {u : AdelicGLn.FiniteAdelicGL K n} (hu : finEmb K n u ∈ normOneGL (K := K) (n := n)) :
     finProj K n u = ⟨finEmb K n u, hu⟩ := by
   ext1
   rw [coe_finProj, (mem_normOneGL_iff_detModule).1 hu, map_one, inv_one, mul_one]
@@ -75,7 +75,7 @@ theorem finProj_mul_archProj_comm (u : AdelicGLn.FiniteAdelicGL K n) (A : ArchUn
   rw [coe_finProj, mul_assoc, centralSection_inv_mul_comm, ← mul_assoc,
     ← archProj_mul_finEmb_comm, mul_assoc]
 
-theorem exists_archProj_mul_finProj (x : normOneGL K n) :
+theorem exists_archProj_mul_finProj (x : normOneGL (K := K) (n := n)) :
     ∃ (A : ArchUnits K n) (u : AdelicGLn.FiniteAdelicGL K n), archProj K n A * finProj K n u = x := by
   set g : AdelicGLn.AdelicGL K n := (x : AdelicGLn.AdelicGL K n)
   set A : ArchUnits K n := ((archEquiv K n (AdelicGLn.prodEquiv K n g).1 : archGroup K n) : ArchUnits K n)

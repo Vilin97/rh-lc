@@ -23,7 +23,7 @@ open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Au
 open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.BW UpperTheory.V
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
-  {μ : Measure (normOneGL E n)} [μ.IsHaarMeasure]
+  {μ : Measure (normOneGL (K := E) (n := n))} [μ.IsHaarMeasure]
 
 private theorem ampRep_open {φ : Sm E n} {U : Subgroup (AdelicGLn.FiniteAdelicGL E n)}
     (hU : IsOpen (U : Set (AdelicGLn.FiniteAdelicGL E n))) (h : ∀ u ∈ U, GlobalTheory.CuspRep.finRep E n u φ = φ) :
@@ -57,8 +57,8 @@ private theorem ampRep_rep {f : TG E n} {v : LL μ} {φ : Sm E n}
   have hc := isContRep_rconv μ f v
   refine ⟨⟨fun γ g => ?_, hl, hg⟩, fun t g => ?_, ?_⟩
   · rw [hφ]
-    have hγ1 : AdelicGLn.diagonal E n γ ∈ normOneGL E n := rationalGL_le_normOneGL ⟨γ, rfl⟩
-    have hγΓ : (⟨AdelicGLn.diagonal E n γ, hγ1⟩ : normOneGL E n) ∈ rationalGLOne E n := ⟨γ, rfl⟩
+    have hγ1 : AdelicGLn.diagonal E n γ ∈ normOneGL (K := E) (n := n) := rationalGL_le_normOneGL ⟨γ, rfl⟩
+    have hγΓ : (⟨AdelicGLn.diagonal E n γ, hγ1⟩ : normOneGL (K := E) (n := n)) ∈ rationalGLOne E n := ⟨γ, rfl⟩
     exact (congrArg (rconv (rationalGLOne E n) μ f v) (retractOne_coe_mul ⟨_, hγ1⟩ g)).trans (hc.2.1 _ hγΓ _)
   · rw [hφ]
     exact liftOne_centralSection_mul _ _ g
@@ -122,7 +122,7 @@ theorem UpperTheory.ConvolutionTheory.BW.ampRep :
         (Cm.sm_eq E n).ge (hder 𝔞.a₀ e 𝔞.smooth v).1⟩
       map_add' := fun v w => Subtype.ext (funext fun g => rconv_add _ μ _ v w _)
       map_smul' := fun c v => Subtype.ext (funext fun g => rconv_smul _ μ _ c v _) }
-  obtain ⟨d, ρ, hρ, hk⟩ := UpperTheory.finite_translates_matrix_coefficient (KA E n) (normOneGL E n) (Subgroup.inclusion maxCompact_le_normOneGL)
+  obtain ⟨d, ρ, hρ, hk⟩ := UpperTheory.finite_translates_matrix_coefficient (KA E n) (normOneGL (K := E) (n := n)) (Subgroup.inclusion maxCompact_le_normOneGL)
     (continuous_subtype_val.subtype_mk _) (tens 𝔞.a₀ e) (tens 𝔞.a₀ e).continuous
     ((UpperTheory.tensorTestFunction_invariant_and_finiteDimensional_span E n hn 𝔞.a₀ e 𝔞.U 𝔞.le 𝔞.isOpen heU).2 𝔞.fin)
   obtain ⟨N, hN⟩ := UpperTheory.liftOne_rconv_tensor_moderateGrowth_uniform E n hn μ 𝔞.ν m hm 𝔞.a₀ e 𝔞.smooth

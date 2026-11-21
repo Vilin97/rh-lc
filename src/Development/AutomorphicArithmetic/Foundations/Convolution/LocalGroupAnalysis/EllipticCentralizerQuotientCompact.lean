@@ -199,7 +199,7 @@ theorem UpperTheory.ConvolutionTheory.G.elliptic_centralizer_quotient_compact :
   refine centralizer_compact_fundamental (Gam F n) (show (γ₁ : AdelicGLn.AdelicGL F n) ∈ AdelicGLn.rationalGL F n from ⟨γ, hγ.symm⟩)
     (isClosed_normOneGL.isClosedEmbedding_subtypeVal.isCompact_preimage hD) fun t => ?_
   set τ : AdelicGLn.AdelicGL F n := ((t : G1 F n) : AdelicGLn.AdelicGL F n) with hτ
-  have hτ1 : τ ∈ normOneGL F n := (t : G1 F n).2
+  have hτ1 : τ ∈ normOneGL (K := F) (n := n) := (t : G1 F n).2
   have hht : ∀ x : Fin n → F, x ≠ 0 → P⁻¹ ≤ height τ x := fun x hx => by
     obtain ⟨κ, hκ⟩ := hK x hx
     have h1 := adelic_hadamard_inequality (AdelicGLn.diagonal F n κ * τ)
@@ -218,8 +218,8 @@ theorem UpperTheory.ConvolutionTheory.G.elliptic_centralizer_quotient_compact :
     rw [inv_le_iff_one_le_mul₀' hP]
     exact h3
   obtain ⟨g, hg, y, hy, hgy⟩ := hD' τ hτ1 hht
-  have hg1 : g ∈ normOneGL F n := rationalGL_le_normOneGL hg
-  have hy1 : y ∈ normOneGL F n := by
+  have hg1 : g ∈ normOneGL (K := F) (n := n) := rationalGL_le_normOneGL hg
+  have hy1 : y ∈ normOneGL (K := F) (n := n) := by
     have : y = g⁻¹ * τ := by rw [← hgy, inv_mul_cancel_left]
     rw [this]
     exact mul_mem (inv_mem hg1) hτ1

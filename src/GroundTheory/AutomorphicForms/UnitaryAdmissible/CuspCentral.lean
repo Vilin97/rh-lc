@@ -154,7 +154,7 @@ theorem apply_mul_centralSection {φ : cuspForms K n} {c : ℂ}
   rw [← hfs, ← hconst, ← mul_assoc, ← Complex.exp_add]
   simp
 
-theorem eq_zero_of_cuspFormLp_eq_zero (μ : MeasureTheory.Measure (normOneGL K n)) [μ.IsHaarMeasure]
+theorem eq_zero_of_cuspFormLp_eq_zero (μ : MeasureTheory.Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     {φ : cuspForms K n} {c : ℂ} (hφ : lieActionCusp K n (centralZ K n) φ = c • φ)
     (h0 : cuspToL2 μ φ = 0) : φ = 0 := by
   rw [cuspToL2_eq_zero_iff] at h0

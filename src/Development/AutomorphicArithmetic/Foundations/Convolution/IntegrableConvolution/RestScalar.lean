@@ -103,7 +103,7 @@ private theorem exists_tr_mem (g : AdelicGLn.FiniteAdelicGL K n) {U : Set (Adeli
   simp only [Set.mem_preimage, hw', mul_inv_cancel_left] at hU'
   exact ⟨S, Finset.subset_union_right, hU'⟩
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem rhoF_mul (a b : AdelicGLn.FiniteAdelicGL K n) (x : LL μ) :
     rhoF μ (a * b) x = rhoF μ a (rhoF μ b x) := by

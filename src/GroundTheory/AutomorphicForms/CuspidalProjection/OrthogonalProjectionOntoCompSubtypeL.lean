@@ -103,9 +103,9 @@ open Reduction AutomorphicForm CuspidalSpectrum RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
-theorem isHilbertSchmidt_cuspRep_of_bound (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ)
+theorem isHilbertSchmidt_cuspRep_of_bound (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     (B : ℝ) (hB : ∀ φ ∈ cuspidalL2 μ, ∀ x, ‖rconv Γ₁ μ f φ x‖ ≤ B * ‖φ‖) :
     IsHilbertSchmidt ((cuspRep μ).integrated μ (UnitaryRep.ccToL1 μ f)) := by
   have := isFiniteMeasure_quotientMeasure (K := K) (n := n) μ

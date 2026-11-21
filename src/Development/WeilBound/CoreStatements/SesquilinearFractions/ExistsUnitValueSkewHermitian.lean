@@ -489,16 +489,18 @@ theorem PositivityTheory.Xgf.exists_not_mem_sub_conj : ∀ (E : Type) [Field E] 
 namespace PositivityTheory.Xgf.LocGen
 
 theorem natCast_not_unit (F : Type) [Field F] [NumberField F] (p : Nat.Primes) : ¬ IsUnit ((p : ℕ) : 𝓞 F) := by
+  rcases p with ⟨p, hp⟩
   intro h
   rw [NumberField.isUnit_iff_norm] at h
-  have h1 : ((RingOfIntegers.norm ℚ ((p : ℕ) : 𝓞 F) : 𝓞 ℚ) : ℚ) = ((p : ℕ) : ℚ) ^ Module.finrank ℚ F := by
-    rw [RingOfIntegers.coe_norm]
-    have : (((p : ℕ) : 𝓞 F) : F) = algebraMap ℚ F ((p : ℕ) : ℚ) := by simp
+  change |((NumberField.RingOfIntegers.norm ℚ (p : 𝓞 F) : 𝓞 ℚ) : ℚ)| = 1 at h
+  have h1 : ((NumberField.RingOfIntegers.norm ℚ (p : 𝓞 F) : 𝓞 ℚ) : ℚ) = (p : ℚ) ^ Module.finrank ℚ F := by
+    rw [NumberField.RingOfIntegers.coe_norm]
+    have : ((p : 𝓞 F) : F) = algebraMap ℚ F (p : ℚ) := by simp
     rw [this, Algebra.norm_algebraMap]
   rw [h1, abs_pow, pow_eq_one_iff_of_nonneg (abs_nonneg _) Module.finrank_pos.ne'] at h
-  have h2 : (1 : ℚ) < |((p : ℕ) : ℚ)| := by
+  have h2 : (1 : ℚ) < |(p : ℚ)| := by
     rw [Nat.abs_cast]
-    exact_mod_cast p.2.one_lt
+    exact_mod_cast hp.one_lt
   linarith
 
 theorem norm_natCast_cp (p : Nat.Primes) (n : ℕ) (hn : ¬ (p : ℕ) ∣ n) : ‖(n : ℂ_[p])‖ = 1 := by
@@ -513,7 +515,7 @@ private theorem norm_le_one_lemma (p : Nat.Primes) (y : ℂ_[(p : ℕ)]) (f : Po
   by_contra hlt
   push_neg at hlt
   rw [hmon.as_sum] at hf
-  simp only [Polynomial.eval₂_add, Polynomial.eval₂_pow, Polynomial.eval₂_X, Polynomial.eval₂_finset_sum,
+  simp only [Polynomial.eval₂_add, Polynomial.eval₂_pow, Polynomial.eval₂_X, Polynomial.eval₂_finsetSum,
     Polynomial.eval₂_mul, Polynomial.eval₂_C, Int.coe_castRingHom] at hf
   have hd : f.natDegree ≠ 0 := by
     intro h0

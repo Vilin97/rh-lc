@@ -19,7 +19,7 @@ open scoped ComplexConjugate Classical
 namespace UpperTheory.ConvolutionTheory.L1
 
 section One
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 def eigL (w : Pl K) (J : Subgroup (Gw n w)) (χ : Gw n w → ℂ) : Submodule ℂ (LL μ) :=
   ⨅ x ∈ J, LinearMap.eqLocus (rhoL μ w x : LL μ →ₗ[ℂ] LL μ) (χ x • LinearMap.id)
@@ -65,7 +65,7 @@ structure Ty.Fits (T : Ty σ n q w₀) (L : GM.Loc σ n q w₀) (ψ : ∀ v : Pl
   nonsplit : ∀ v ∈ T.S, ¬ GM.Split E v →
     L.φ v = GM.prodFn fun u : PlacesOver E v => (T.J u.1 : Set (Gw n u.1)).indicator fun x => conj (T.χ u.1 x)
 
-variable (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
 
 def OComponent (s : archGroup F n →* archGroup E n) (hs : Continuous s) (ν : Measure (archGroup F n)) [ν.IsHaarMeasure] (a : TI F n) :
     LL μ →L[ℂ] LL μ :=
@@ -85,36 +85,36 @@ def Ty.Y (T : Ty σ n q w₀) (V : Submodule ℂ (LL μ)) (O : Fin (m + 1) → L
 end Two
 
 def SphRank : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
+  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
     IsSummand μ V → ∀ w : Pl K, RankOne μ V w (GLnLocal.integralGL (w.adicCompletion K) n) 1
 
 def LineRank : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
+  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
     IsSummand μ V → ∀ (w : Pl K) (π : SmIrr (Gw n w)), Occurs μ V w π → ∀ (J : Subgroup (Gw n w)) (χ : Gw n w → ℂ),
     CO J → IsChr J χ → (∃ e : π.V, ∀ x : π.V, (∀ g ∈ J, π.ρ g x = χ g • x) → ∃ c : ℂ, x = c • e) → RankOne μ V w J χ
 
 def TypedEx : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
+  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
     IsSummand μ V → ∀ (J : ∀ w : Pl K, Subgroup (Gw n w)) (χ : ∀ w : Pl K, Gw n w → ℂ), (∀ w, CO (J w) ∧ IsChr (J w) (χ w)) →
     (∀ᶠ w in Filter.cofinite, J w = GLnLocal.integralGL (w.adicCompletion K) n ∧ χ w = 1) →
     (∀ w, V ⊓ eigL μ w (J w) (χ w) ≠ ⊥) → V ⊓ ⨅ w, eigL μ w (J w) (χ w) ≠ ⊥
 
 def EigBasic : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K) (J : Subgroup (Gw n w))
+  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K) (J : Subgroup (Gw n w))
     (χ : Gw n w → ℂ), CO J → IsChr J χ → IsClosed (eigL μ w J χ : Set (LL μ)) ∧ eigL μ w J 1 = fixL μ w J ∧
     (∀ [MeasurableSpace (Gw n w)] [BorelSpace (Gw n w)] (m : Measure (Gw n w)) [m.IsHaarMeasure], m J = 1 →
       IsOloc μ w m ((J : Set (Gw n w)).indicator fun x => conj (χ x)) (prj (eigL μ w J χ))) ∧
     ∀ B : LL μ →L[ℂ] LL μ, (∀ x ∈ J, Commute B (rhoL μ w x)) → Commute B (prj (eigL μ w J χ))
 
 def RestScalar : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
+  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (V : Submodule ℂ (LL μ)),
     IsSummand μ V → ∀ (J : ∀ w : Pl K, Subgroup (Gw n w)) (χ : ∀ w : Pl K, Gw n w → ℂ), (∀ w, CO (J w) ∧ IsChr (J w) (χ w)) →
     (∀ᶠ w in Filter.cofinite, J w = GLnLocal.integralGL (w.adicCompletion K) n ∧ χ w = 1) → ∀ P : Set (Pl K),
     (∀ w ∉ P, RankOne μ V w (J w) (χ w)) → ∀ h : AdelicGLn.FiniteAdelicGL K n, (∀ w ∈ P, finAt w (finEmb K n h) = 1) →
     ∃ c : ℂ, ∀ v ∈ V ⊓ ⨅ w ∉ P, eigL μ w (J w) (χ w), prj (⨅ w ∉ P, eigL μ w (J w) (χ w)) (rhoF μ h v) = c • v
 
 def TensFactor : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+  ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (J : ∀ w : Pl K, Subgroup (Gw n w)) (χ : ∀ w : Pl K, Gw n w → ℂ),
     (∀ w, CO (J w) ∧ IsChr (J w) (χ w)) →
     (∀ᶠ w in Filter.cofinite, J w = GLnLocal.integralGL (w.adicCompletion K) n ∧ χ w = 1) → ∃ κ : ℝ, 0 < κ ∧
@@ -128,7 +128,7 @@ def TensFactor : Prop :=
 
 def TwistPerm : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] (σ : E ≃ₐ[F] E),
-    (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ (m n : ℕ) (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
+    (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ (m n : ℕ) (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
     (∀ (D : InfD σ m) (s : Fin (m + 1) → archGroup F n →* archGroup E n), IsBlockElement D n s → ∀ i g v,
       θ.U (rightRegularRep (rationalGLOne E n) μ (archP E n (s (i + 1) g)) v) =
         rightRegularRep (rationalGLOne E n) μ (archP E n (s i g)) (θ.U v)) ∧
@@ -141,7 +141,7 @@ def TwistPerm : Prop :=
 
 def ZBasic : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E ≃ₐ[F] E) (m n : ℕ), 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (D : InfD σ m) (s : Fin (m + 1) → archGroup F n →* archGroup E n)
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (D : InfD σ m) (s : Fin (m + 1) → archGroup F n →* archGroup E n)
       (hs : ∀ i, Continuous (s i)), IsBlockElement D n s → ∀ (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (a : TI F n)
       (q : Pl F) (w₀ : PlacesOver E q), GM.Split E q → ∀ (T : Ty σ n q w₀) (V : Submodule ℂ (LL μ)), IsSummand μ V →
     ∀ y : ℝ, 0 < y →
@@ -156,7 +156,7 @@ def ZBasic : Prop :=
 def TwistY : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] (σ : E ≃ₐ[F] E),
     (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ m n : ℕ, Module.finrank F E = m + 1 → 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
     ∀ (D : InfD σ m) (s : Fin (m + 1) → archGroup F n →* archGroup E n) (hs : ∀ i, Continuous (s i)), IsBlockElement D n s →
     ∀ (νE : Measure (archGroup E n)) [νE.IsHaarMeasure] (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (b a : TI F n)
       (aE : TI E n) (aF : TI F n), ArchSlot D νE νF b a aE aF →
@@ -174,7 +174,7 @@ def TwistY : Prop :=
 def SideTrace : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] (σ : E ≃ₐ[F] E),
     (∀ τ, τ ∈ Subgroup.zpowers σ) → ∀ m n : ℕ, Module.finrank F E = m + 1 → 0 < n →
-    ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
+    ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (θ : Twist μ), IsGalTwist σ θ →
     ∀ (D : InfD σ m) (s : Fin (m + 1) → archGroup F n →* archGroup E n) (hs : ∀ i, Continuous (s i)), IsBlockElement D n s →
     ∀ (νE : Measure (archGroup E n)) [νE.IsHaarMeasure] (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (b a : TI F n)
       (aE : TI E n) (aF : TI F n), ArchSlot D νE νF b a aE aF →

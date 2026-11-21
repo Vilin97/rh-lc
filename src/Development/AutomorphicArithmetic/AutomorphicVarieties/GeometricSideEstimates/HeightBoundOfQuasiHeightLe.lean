@@ -58,7 +58,7 @@ omit [IsTotallyComplex E] in
 private theorem prod_bound {ω : Set (AdelicGLn.AdelicGL E a)} (hω : IsCompact ω) :
     ∃ c : ℝ, 1 ≤ c ∧ ∀ b ∈ ω, ∀ (ρ : Fin a → ℝ) (hρ : ∀ i, 0 < ρ i),
       ∀ kk ∈ (Reduction.maxCompact : Subgroup (AdelicGLn.AdelicGL E a)),
-      b * Reduction.diagUnits a (fun i => Reduction.posIdele (K := E) (ρ i) (hρ i)) * kk ∈ Reduction.normOneGL E a →
+      b * Reduction.diagUnits a (fun i => Reduction.posIdele (K := E) (ρ i) (hρ i)) * kk ∈ Reduction.normOneGL (K := E) (n := a) →
       ∏ i, ρ i ≤ c ∧ (∏ i, ρ i)⁻¹ ≤ c := by
   have hdc : Continuous fun g : AdelicGLn.AdelicGL E a => (Reduction.detModule E a g : ℝ) :=
     continuous_subtype_val.comp Reduction.continuous_detModule
@@ -101,7 +101,7 @@ theorem UpperTheory.height_bound_of_quasiHeight_le :
   rw [← he] at hCh
   refine ⟨ω, Ch * c ^ (2 * e) * σ⁻¹ ^ (2 * ((m + 1) * e)), (m + 1) * e, hω, hωB, fun g => ?_⟩
   obtain ⟨γ, b, hb, _, ⟨ρ, hρ, hs, rfl⟩, kk, hkk, hxe⟩ := hsieg g.1
-  have hγx : AdelicGLn.diagonal E (m + 1) γ * g.1 ∈ Reduction.normOneGL E (m + 1) :=
+  have hγx : AdelicGLn.diagonal E (m + 1) γ * g.1 ∈ Reduction.normOneGL (K := E) (n := (m + 1)) :=
     mul_mem (Reduction.rationalGL_le_normOneGL ⟨γ, rfl⟩) g.2
   obtain ⟨hP1, hP2⟩ := hcb b hb ρ hρ kk hkk (hxe ▸ hγx)
   have hP : 0 < ∏ i, ρ i := Finset.prod_pos fun i _ => hρ i

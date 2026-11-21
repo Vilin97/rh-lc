@@ -18,7 +18,7 @@ namespace PositivityTheory.Rg.Tf.Core
 
 variable (K : Type*) [Field K] [NumberField K] (n : ℕ)
 
-abbrev G1 : Type _ := normOneGL K n
+abbrev G1 : Type _ := normOneGL (K := K) (n := n)
 
 abbrev Gam : Subgroup (G1 K n) := rationalGLOne K n
 

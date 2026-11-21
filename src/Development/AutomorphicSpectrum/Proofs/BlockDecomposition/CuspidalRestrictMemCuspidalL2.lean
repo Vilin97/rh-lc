@@ -26,7 +26,7 @@ theorem isAddHaarMeasure_unipMeasure (r : ℕ) : (unipMeasure E a r).IsAddHaarMe
   infer_instance
 
 theorem ctFun_resQ_eq_zero {φ : GA E a → ℂ} (hφ : φ ∈ cuspCont E a) {r : ℕ} (h0 : 0 < r) (h1 : r < a)
-    (y : normOneGL E a) : ctFun E a r (resQ φ) y = 0 := by
+    (y : normOneGL (K := E) (n := a)) : ctFun E a r (resQ φ) y = 0 := by
   obtain ⟨-, hl, -, hc⟩ := mem_cuspCont.1 hφ
   have h := hc r h0 h1 (unipMeasure E a r) (unipFundamentalDomain E a r)
     (isAddHaarMeasure_unipMeasure r) isAddFundamentalDomain_unipFundamentalDomain (y : GA E a)
@@ -35,7 +35,7 @@ theorem ctFun_resQ_eq_zero {φ : GA E a → ℂ} (hφ : φ ∈ cuspCont E a) {r 
   exact (resQ_mk hl _).trans (congrArg φ (congrArg (· * (y : GA E a)) (unipGL_eq_unip X)))
 
 theorem toLp_restrict_mem_cuspidalL2 (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
-    (ν : Measure (normOneGL E a)) [ν.IsHaarMeasure] (φ : GA E a → ℂ) (hφ : φ ∈ cuspCont E a)
+    (ν : Measure (normOneGL (K := E) (n := a))) [ν.IsHaarMeasure] (φ : GA E a → ℂ) (hφ : φ ∈ cuspCont E a)
     (h : MemLp (resQ φ) 2 (RightCosetSpace.quotientMeasure (rationalGLOne E a) ν)) :
     h.toLp (resQ φ) ∈ cuspidalL2 ν := by
   intro r h0 h1

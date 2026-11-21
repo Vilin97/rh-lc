@@ -31,7 +31,7 @@ private theorem parts_archP (a : archGroup K n) :
   · rw [← retract_infEmb, coe_retractOne, map_mul, finPart_infEmb, map_inv, finPart_centralSection]
     simp
 
-private theorem tensFun_shift (β : TI K n) (e : TF K n) (a : archGroup K n) (g : normOneGL K n) :
+private theorem tensFun_shift (β : TI K n) (e : TF K n) (a : archGroup K n) (g : normOneGL (K := K) (n := n)) :
     tensFun β e ((archP K n a)⁻¹ * g) =
       kbar β (a⁻¹ * infPart K n (g : AdelicGLn.AdelicGL K n)) *
         e (CuspidalSpectrum.finPart K n (g : AdelicGLn.AdelicGL K n)) := by
@@ -72,7 +72,7 @@ private theorem kbar_conv (hn : 0 < n) (ν : Measure (archGroup K n)) [ν.IsHaar
   exact integral_const_mul _ _
 
 private theorem tens_conv (hn : 0 < n) (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (β₁ β₂ : TI K n) (e : TF K n)
-    (g : normOneGL K n) :
+    (g : normOneGL (K := K) (n := n)) :
     tens (conv ν β₁ β₂) e g = ∫ a, β₁ a * tens β₂ e ((archP K n a)⁻¹ * g) ∂ν := by
   simp only [(UpperTheory.ConvolutionTheory.Tf.tensApply K n hn _ e).1, tensFun_shift]
   rw [tensFun, kbar_conv hn, ← integral_mul_const]

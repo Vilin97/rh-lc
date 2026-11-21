@@ -18,7 +18,7 @@ section Defs
 
 variable (E : Type) [Field E] [NumberField E] (a : ℕ)
 
-abbrev G1 : Type := Reduction.normOneGL E a
+abbrev G1 : Type := Reduction.normOneGL (K := E) (n := a)
 
 abbrev Γ1 : Subgroup (G1 E a) := Reduction.rationalGLOne E a
 

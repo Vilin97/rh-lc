@@ -75,17 +75,15 @@ theorem rename_weightedHomogeneousComponent (hj : Function.Injective j)
 theorem isMultiProjPrime_comap_rename (hj : Function.Injective j) (hg : Function.Injective g)
     (hsurj : ∀ w : Σ k, ι' k, w.1 ∈ Set.range j → ∃ v, g v = w) {R : Type*} [CommRing R]
     {P : Ideal (MRing ι' R)} (hP : IsMultiProjPrime P) :
-    IsMultiProjPrime (P.comap (rename (R := R) g)) where
-  isPrime := by
-    have := hP.isPrime
+    IsMultiProjPrime (P.comap (rename (R := R) g)) := by
+  refine ⟨?_, ?_, ?_⟩
+  · have := hP.isPrime
     exact Ideal.comap_isPrime _ _
-  multiHomog := by
-    intro f hf b
+  · intro f hf b
     rw [Ideal.mem_comap] at hf ⊢
     rw [rename_weightedHomogeneousComponent hgj hj hg]
     exact hP.multiHomog _ hf _
-  relevant := by
-    rw [isRelevant_iff]
+  · rw [isRelevant_iff]
     intro k
     obtain ⟨w, hw, hwP⟩ := (isRelevant_iff P).1 hP.relevant (j k)
     obtain ⟨v, rfl⟩ := hsurj w ⟨k, hw.symm⟩

@@ -21,7 +21,7 @@ theorem isCompactOperator_repOp_Rcusp (E : Type) [Field E] [NumberField E] [IsTo
     IsCompactOperator (repOp (Rcusp μ) μ f) := by
   rcases Nat.eq_zero_or_pos a with rfl | ha
   · exact GlobalTheory.CompanionTheory.CuspRank.isCompactOperator_repOp_Rcusp_zero E μ f
-  · let ν : Measure (GroundTheory.Automorphic.Reduction.normOneGL E a) := Measure.haar
+  · let ν : Measure (GroundTheory.Automorphic.Reduction.normOneGL (K := E) (n := a)) := Measure.haar
     obtain ⟨Φ, c, hc0, hΦ, hint⟩ := GlobalTheory.T.cuspidal_L2_norm_one_isometry E a ha μ ν
     obtain ⟨f₁, hf₁⟩ := hint f hf hc
     exact GlobalTheory.CompanionTheory.CompactOperators.isCompactOperator_of_scaled_isometric_intertwiner (repOp (Rcusp μ) μ f) _ Φ c hc0 hΦ hf₁

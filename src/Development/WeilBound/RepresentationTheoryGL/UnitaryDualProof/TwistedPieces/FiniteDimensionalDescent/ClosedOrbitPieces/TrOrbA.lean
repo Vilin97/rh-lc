@@ -48,7 +48,9 @@ theorem exists_equiv_of_torsion {k A : Type*} [Field k] [CommRing A] [Algebra k 
 
 
 def pidem (A : Type*) [CommRing A] [IsArtinianRing A] [IsReduced A] (I : MaximalSpectrum A) : A :=
-  (IsArtinianRing.equivPi A).symm (Pi.single I 1)
+  by
+    classical
+    exact (IsArtinianRing.equivPi A).symm (Pi.single I 1)
 
 section idem
 open Classical

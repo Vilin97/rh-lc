@@ -109,7 +109,9 @@ private theorem real_sign {F : Type} [Field F] [NumberField F] (d : F) [Fact (�
     have h2 := InfinitePlace.embedding_of_isReal_apply hw x
     rw [InfinitePlace.embedding_mk_eq_of_isReal hφ] at h2
     simp only [RingEquiv.apply_symm_apply] at h1
-    have h3 : ρ (algebraMap F _ x) = InfinitePlace.embedding_of_isReal hw x := h1
+    have h3 : ρ (algebraMap F _ x) = InfinitePlace.embedding_of_isReal hw x := by
+      simpa only [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+        Algebra.algebraMap_self_apply, WithAbs.equiv_symm_apply] using h1
     rw [h3, h2]
     rfl
   obtain ⟨a, b, hab⟩ := (Model.mem_normGroup_sqrt d).mp (h (InfinitePlace.mk φ))

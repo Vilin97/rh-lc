@@ -150,17 +150,17 @@ theorem norm_infAt_conj_le (w : InfinitePlace K) (b q : AdelicGLn.AdelicGL K n) 
         ring
 
 theorem exists_encard_le_siegel {ω : Set (AdelicGLn.AdelicGL K n)} (hω : IsCompact ω) {t : ℝ}
-    (ht : 0 < t) {Q : Set (normOneGL K n)} (hQ : IsCompact Q) :
+    (ht : 0 < t) {Q : Set (normOneGL (K := K) (n := n))} (hQ : IsCompact Q) :
     ∃ (C : ℝ) (N : ℕ), ∀ b ∈ ω, ∀ (ρ : Fin n → ℝ) (hρ : ∀ i, 0 < ρ i),
       (∀ i j : Fin n, (j : ℕ) = i + 1 → t * ρ j ≤ ρ i) →
-      ∀ k ∈ (maxCompact : Subgroup (AdelicGLn.AdelicGL K n)), ∀ x : normOneGL K n,
+      ∀ k ∈ (maxCompact : Subgroup (AdelicGLn.AdelicGL K n)), ∀ x : normOneGL (K := K) (n := n),
       (x : AdelicGLn.AdelicGL K n) = b * diagUnits n (fun i => posIdele (K := K) (ρ i) (hρ i)) * k →
       ∀ R : ℝ, 1 ≤ R → (∀ i j : Fin n, i < j → ρ i / ρ j ≤ R) →
-      ∃ m : ℕ, (m : ℝ) ≤ C * R ^ N ∧ ∀ z : normOneGL K n,
+      ∃ m : ℕ, (m : ℝ) ≤ C * R ^ N ∧ ∀ z : normOneGL (K := K) (n := n),
         {γ : rationalGLOne K n | γ • z ∈ (fun y => x * y) '' Q}.encard ≤ m := by
   classical
   set Q' : Set (AdelicGLn.AdelicGL K n) :=
-    (fun p : AdelicGLn.AdelicGL K n × normOneGL K n × normOneGL K n =>
+    (fun p : AdelicGLn.AdelicGL K n × normOneGL (K := K) (n := n) × normOneGL (K := K) (n := n) =>
       p.1 * (p.2.1 : AdelicGLn.AdelicGL K n) * (p.2.2 : AdelicGLn.AdelicGL K n)⁻¹ * p.1⁻¹) ''
       (((maxCompact : Subgroup (AdelicGLn.AdelicGL K n)) : Set (AdelicGLn.AdelicGL K n)) ×ˢ
         (Q ×ˢ Q)) with hQ'_def
@@ -238,22 +238,22 @@ theorem exists_encard_le_siegel {ω : Set (AdelicGLn.AdelicGL K n)} (hω : IsCom
     · rw [h, encard_empty]
       simp
     have hrat : ∀ δ : rationalGLOne K n, ∃ γ : GL (Fin n) K,
-        AdelicGLn.diagonal K n γ = ((δ : normOneGL K n) : AdelicGLn.AdelicGL K n) := fun δ =>
+        AdelicGLn.diagonal K n γ = ((δ : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) := fun δ =>
       Subgroup.mem_subgroupOf.1 δ.2
     set f : rationalGLOne K n → GL (Fin n) K := fun δ => Function.invFun (AdelicGLn.diagonal K n)
-      (((δ * γ₀⁻¹ : rationalGLOne K n) : normOneGL K n) : AdelicGLn.AdelicGL K n)
+      (((δ * γ₀⁻¹ : rationalGLOne K n) : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n)
     have hf : ∀ δ, AdelicGLn.diagonal K n (f δ) =
-        (((δ * γ₀⁻¹ : rationalGLOne K n) : normOneGL K n) : AdelicGLn.AdelicGL K n) := fun δ =>
+        (((δ * γ₀⁻¹ : rationalGLOne K n) : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) := fun δ =>
       Function.invFun_eq (hrat _)
     have hmaps : MapsTo f S Y := by
       intro δ hδ
       obtain ⟨q₁, hq₁, h₁⟩ := hδ
       obtain ⟨q₂, hq₂, h₂⟩ := hγ₀
-      have e : ((δ * γ₀⁻¹ : rationalGLOne K n) : normOneGL K n) = x * q₁ * q₂⁻¹ * x⁻¹ := by
-        have h₁'' : x * q₁ = (δ : normOneGL K n) * z := h₁
-        have h₂'' : x * q₂ = (γ₀ : normOneGL K n) * z := h₂
-        have h₁' : (δ : normOneGL K n) = x * q₁ * z⁻¹ := by rw [h₁'', mul_inv_cancel_right]
-        have h₂' : (γ₀ : normOneGL K n) = x * q₂ * z⁻¹ := by rw [h₂'', mul_inv_cancel_right]
+      have e : ((δ * γ₀⁻¹ : rationalGLOne K n) : normOneGL (K := K) (n := n)) = x * q₁ * q₂⁻¹ * x⁻¹ := by
+        have h₁'' : x * q₁ = (δ : normOneGL (K := K) (n := n)) * z := h₁
+        have h₂'' : x * q₂ = (γ₀ : normOneGL (K := K) (n := n)) * z := h₂
+        have h₁' : (δ : normOneGL (K := K) (n := n)) = x * q₁ * z⁻¹ := by rw [h₁'', mul_inv_cancel_right]
+        have h₂' : (γ₀ : normOneGL (K := K) (n := n)) = x * q₂ * z⁻¹ := by rw [h₂'', mul_inv_cancel_right]
         rw [Subgroup.coe_mul, Subgroup.coe_inv, h₁', h₂']
         group
       refine ⟨k * (q₁ : AdelicGLn.AdelicGL K n) * (q₂ : AdelicGLn.AdelicGL K n)⁻¹ * k⁻¹,

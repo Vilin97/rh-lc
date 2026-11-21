@@ -62,7 +62,7 @@ theorem exists_upper_unitary_complex {N : ℕ} (g : Matrix (Fin N) (Fin N) ℂ) 
       rw [conjTranspose_mul, ← hT]; simp only [Matrix.mul_assoc]
     exact ⟨⟨T', _, h1, mul_eq_one_comm.1 h1⟩, rfl⟩
   · intro i j hij
-    have h0 : L (OrderDual.toDual i) (OrderDual.toDual j) = 0 := LDL.lowerInv_triangular hS hij
+    have h0 : L (OrderDual.toDual i) (OrderDual.toDual j) = 0 := LDL.isLowerTriangular_lowerInv hS hij
     change (diagonal s * L) (OrderDual.toDual i) (OrderDual.toDual j) = 0
     rw [diagonal_mul]
     exact mul_eq_zero_of_right _ h0

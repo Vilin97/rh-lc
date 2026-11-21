@@ -19,8 +19,6 @@ open scoped nonZeroDivisors
 
 namespace KStar.Choice
 
-open KStar.IdealValuations
-
 open KStar.Ram DirichletCharacter
 
 private theorem exists_sq_eq_neg_of_quadratic_discr {K : Type*} [Field K] [NumberField K]

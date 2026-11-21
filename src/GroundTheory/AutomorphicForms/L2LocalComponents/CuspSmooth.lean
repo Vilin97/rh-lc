@@ -21,7 +21,7 @@ attribute [local instance 100] LieRing.ofAssociativeRing
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 def cuspVecL : cuspForms K n →ₗ[ℂ] CuspL2 μ := cuspToL2 μ
 
@@ -40,7 +40,7 @@ theorem isContRep_cuspToL2 (φ : cuspForms K n) :
     exact hy.trans (cuspQuot_mk _ y)
 
 
-theorem eq_of_isContRep {v w : CuspL2 μ} {F : normOneGL K n → ℂ} (hv : IsContRep μ (toLp μ v) F)
+theorem eq_of_isContRep {v w : CuspL2 μ} {F : normOneGL (K := K) (n := n) → ℂ} (hv : IsContRep μ (toLp μ v) F)
     (hw : IsContRep μ (toLp μ w) F) : v = w :=
   toLp_injective μ (Lp.ext (hv.ae_eq_quotFun.trans hw.ae_eq_quotFun.symm))
 
@@ -79,9 +79,9 @@ theorem integrated_cuspToL2 {φ : cuspForms K n} (hφ : φ ∈ centralCuspForms 
   obtain ⟨C, hC⟩ := exists_norm_le_of_mem_centralCuspForms hφ
   have h1 := isContRep_integrated_archRepT μ ν (isContRep_cuspToL2 μ φ) (C := C) (fun y => hC _)
     (hκ.continuous _) hκ.2
-  have hf : (fun y : normOneGL K n => ∫ a, κ a * (fun y : normOneGL K n =>
+  have hf : (fun y : normOneGL (K := K) (n := n) => ∫ a, κ a * (fun y : normOneGL (K := K) (n := n) =>
       (φ : AdelicGLn.AdelicGL K n → ℂ) (y : AdelicGLn.AdelicGL K n)) (y * archP K n a) ∂ν) =
-      fun y : normOneGL K n => (φ : AdelicGLn.AdelicGL K n → ℂ) (y : AdelicGLn.AdelicGL K n) := by
+      fun y : normOneGL (K := K) (n := n) => (φ : AdelicGLn.AdelicGL K n → ℂ) (y : AdelicGLn.AdelicGL K n) := by
     funext y
     rw [hconv (y : AdelicGLn.AdelicGL K n)]
     refine integral_congr_ae (Eventually.of_forall fun a => ?_)
@@ -115,9 +115,9 @@ theorem uAction_cuspToL2 {φ : cuspForms K n} (hφ : φ ∈ centralCuspForms K n
     (hγ.continuous _) hγ.2
   refine eq_of_isContRep h1 ?_
   have h2 := isContRep_cuspToL2 μ (uActionCusp K n u φ)
-  have hf : (fun y : normOneGL K n => ((uActionCusp K n u φ : cuspForms K n) :
+  have hf : (fun y : normOneGL (K := K) (n := n) => ((uActionCusp K n u φ : cuspForms K n) :
       AdelicGLn.AdelicGL K n → ℂ) (y : AdelicGLn.AdelicGL K n)) =
-      fun y : normOneGL K n => ∫ a, γ a * (fun y : normOneGL K n =>
+      fun y : normOneGL (K := K) (n := n) => ∫ a, γ a * (fun y : normOneGL (K := K) (n := n) =>
         (φ : AdelicGLn.AdelicGL K n → ℂ) (y : AdelicGLn.AdelicGL K n)) (y * archP K n a) ∂ν := by
     funext y
     set Ψ : archGroup K n → ℂ := fun x => (φ : AdelicGLn.AdelicGL K n → ℂ)

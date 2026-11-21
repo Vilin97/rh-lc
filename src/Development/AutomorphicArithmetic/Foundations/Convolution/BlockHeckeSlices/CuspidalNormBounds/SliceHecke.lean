@@ -43,22 +43,22 @@ variable [IsTotallyComplex E] {S : Set (Pl E)}
 private theorem move (b : Blo S r) {w : Pl E} {ϖ : w.adicCompletion E} (hu : IsUnifV E w ϖ) {a : ℕ} (ha : a ≤ r)
     {Φ : GA E r → ℂ} (hΦ : AutomorphicForm.IsLeftInvariant Φ) (t : ℝ) {x : GL (Fin r) (w.adicCompletion E)}
     (hx : x ∈ satakeTset w ϖ a) :
-    (∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r t * ((Quotient.out y : normOneGL E r) : GA E r) *
-        finGL E r (locGL E r w x)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))
+    (∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) *
+        finGL E r (locGL E r w x)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))
         ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) =
       ∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r (t - a * Real.log (qV E w)) *
-        ((Quotient.out y : normOneGL E r) : GA E r)) *
-        starRingEnd ℂ (b.f.1 (((Quotient.out y : normOneGL E r) : GA E r) * finGL E r (locGL E r w x⁻¹)))
+        ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) *
+        starRingEnd ℂ (b.f.1 (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * finGL E r (locGL E r w x⁻¹)))
         ∂(quotientMeasure (rationalGLOne E r) (mu1 E r))) ∧
-    (Integrable (fun y : RightCosetSpace (rationalGLOne E r) => Φ (zt E r t * ((Quotient.out y : normOneGL E r) : GA E r) *
-        finGL E r (locGL E r w x)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r)))
+    (Integrable (fun y : RightCosetSpace (rationalGLOne E r) => Φ (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) *
+        finGL E r (locGL E r w x)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)))
         (quotientMeasure (rationalGLOne E r) (mu1 E r)) ↔
       Integrable (fun y : RightCosetSpace (rationalGLOne E r) => Φ (zt E r (t - a * Real.log (qV E w)) *
-        ((Quotient.out y : normOneGL E r) : GA E r)) *
-        starRingEnd ℂ (b.f.1 (((Quotient.out y : normOneGL E r) : GA E r) * finGL E r (locGL E r w x⁻¹))))
+        ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) *
+        starRingEnd ℂ (b.f.1 (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * finGL E r (locGL E r w x⁻¹))))
         (quotientMeasure (rationalGLOne E r) (mu1 E r))) := by
   have hq : (0 : ℝ) < qV E w := by exact_mod_cast Nat.pos_of_ne_zero (qV_ne_zero w)
-  have hg : zt E r (a * Real.log (qV E w)) * finGL E r (locGL E r w x) ∈ normOneGL E r := by
+  have hg : zt E r (a * Real.log (qV E w)) * finGL E r (locGL E r w x) ∈ normOneGL (K := E) (n := r) := by
     rw [mem_normOneGL_iff_detModule, map_mul, zt, detModule_centralSection b.pos]
     refine Subtype.ext ?_
     rw [Positive.val_mul, UpperTheory.detModule_satakeTset_eq_inv_pow E w r a ϖ hu ha x hx]
@@ -82,13 +82,13 @@ private theorem kappa (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicComple
     (ha : a ≤ r) : ∃ κ : ℂ, ∀ Φ : GA E r → ℂ, AutomorphicForm.IsLeftInvariant Φ →
     (∀ k ∈ KGL w (n := r), ∀ g, Φ (g * finGL E r (locGL E r w k)) = Φ g) →
     (∀ g : GA E r, Integrable (fun y : RightCosetSpace (rationalGLOne E r) =>
-      Φ (((Quotient.out y : normOneGL E r) : GA E r) * g) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r)))
+      Φ (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)))
       (quotientMeasure (rationalGLOne E r) (mu1 E r))) → ∀ t : ℝ, ∀ x ∈ satakeTset (n := r) w ϖ a,
-    ∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r t * ((Quotient.out y : normOneGL E r) : GA E r) *
-        finGL E r (locGL E r w x)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))
+    ∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) *
+        finGL E r (locGL E r w x)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))
         ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) =
       κ * ∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r (t - a * Real.log (qV E w)) *
-        ((Quotient.out y : normOneGL E r) : GA E r)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))
+        ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))
         ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
   obtain ⟨n, c, μ, hn, hc, hs⟩ := UpperTheory.exists_satakeTset_sum_eigenvector E w r a ϖ hu ha _ (rw r w) b.f _ (b.isSat w hw)
   have hf : ∀ k ∈ KGL w (n := r), ∀ g, b.f.1 (g * finGL E r (locGL E r w k)) = b.f.1 g := fun k hk g =>
@@ -99,12 +99,12 @@ private theorem kappa (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicComple
     exact this
   refine ⟨(n : ℂ)⁻¹ * starRingEnd ℂ μ, fun Φ hΦ hK hI t x hx => ?_⟩
   have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
-  have h1 : ∀ i, ∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r t * ((Quotient.out y : normOneGL E r) : GA E r) *
-        finGL E r (locGL E r w x)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))
+  have h1 : ∀ i, ∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) *
+        finGL E r (locGL E r w x)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))
         ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) =
       ∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r (t - a * Real.log (qV E w)) *
-        ((Quotient.out y : normOneGL E r) : GA E r)) *
-        starRingEnd ℂ (b.f.1 (((Quotient.out y : normOneGL E r) : GA E r) * finGL E r (locGL E r w (c i))))
+        ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) *
+        starRingEnd ℂ (b.f.1 (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * finGL E r (locGL E r w (c i))))
         ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) := fun i => by
     obtain ⟨k, hk, k', hk', rfl⟩ := tset_rel (hc i) hx
     have := (move b hu ha hΦ t (satake_Tset_left w (hc i) hk)).1
@@ -112,8 +112,8 @@ private theorem kappa (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicComple
     simp only [map_mul _ _ k', map_mul _ _ (locGL E r w k'), ← mul_assoc, hK _ hk']
     exact this
   have h2 : ∀ i, Integrable (fun y : RightCosetSpace (rationalGLOne E r) => Φ (zt E r (t - a * Real.log (qV E w)) *
-        ((Quotient.out y : normOneGL E r) : GA E r)) *
-        starRingEnd ℂ (b.f.1 (((Quotient.out y : normOneGL E r) : GA E r) * finGL E r (locGL E r w (c i)))))
+        ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) *
+        starRingEnd ℂ (b.f.1 (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * finGL E r (locGL E r w (c i)))))
         (quotientMeasure (rationalGLOne E r) (mu1 E r)) := fun i => by
     have := (move b hu ha hΦ t (hc i)).2.1 (by
       simpa only [zt_comm t, mul_assoc] using hI (zt E r t * finGL E r (locGL E r w (c i)⁻¹)))
@@ -129,13 +129,13 @@ private theorem adj (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicCompleti
     [Fintype (satakeRes (Ov E w) ⟨ϖ, hϖ⟩)] {a : ℕ} (ha : a ≤ r) (Φ : GA E r → ℂ) (hΦ : AutomorphicForm.IsLeftInvariant Φ)
     (hK : ∀ k ∈ KGL w (n := r), ∀ g, Φ (g * finGL E r (locGL E r w k)) = Φ g)
     (hI : ∀ g : GA E r, Integrable (fun y : RightCosetSpace (rationalGLOne E r) =>
-      Φ (((Quotient.out y : normOneGL E r) : GA E r) * g) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r)))
+      Φ (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)))
       (quotientMeasure (rationalGLOne E r) (mu1 E r))) (t : ℝ) :
     ∑ i : SatakeIdx w hϖ (n := r) a, ∫ y : RightCosetSpace (rationalGLOne E r),
-        Φ (zt E r t * ((Quotient.out y : normOneGL E r) : GA E r) * finGL E r (locGL E r w (satakeB w hϖ hu i))) *
-        starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r)) ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) =
+        Φ (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * finGL E r (locGL E r w (satakeB w hϖ hu i))) *
+        starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) =
       satEig (qV E w) r (b.sat w) a * ∫ y : RightCosetSpace (rationalGLOne E r), Φ (zt E r (t - a * Real.log (qV E w)) *
-        ((Quotient.out y : normOneGL E r) : GA E r)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))
+        ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))
         ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
   obtain ⟨κ, hκ⟩ := kappa b hw hu ha
   obtain ⟨hi, h0⟩ := UpperTheory.integrable_translate_mul_conj_and_inner_self_ne_zero E S r b
@@ -208,15 +208,15 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceHecke :
     simp only [AutomorphicForm.constantTerm, e', ← mul_assoc, e]
   funext m
   have hI : ∀ (g : GA E r) (m : GA E s), Integrable (fun y : RightCosetSpace (rationalGLOne E r) =>
-      AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL E r) : GA E r) * g, m)) *
-        starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r)))
+      AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g, m)) *
+        starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)))
       (quotientMeasure (rationalGLOne E r) (mu1 E r)) := fun g m => by
     simpa only [zt_comm t, mul_assoc] using UpperTheory.integrable_constantTerm_leviEmbedding_mul_conj_cuspForm E S r s b φ hU (zt E r t * g) m
   have h1 : ∀ p : Fin (r + 1) × Fin (s + 1), ∫ y : RightCosetSpace (rationalGLOne E r),
       (∑ i₁ : SatakeIdx w hϖ (n := r) p.1, ∑ i₂ : SatakeIdx w hϖ (n := s) p.2,
-        AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL E r) : GA E r) *
+        AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) *
           finGL E r (locGL E r w (satakeB w hϖ hu i₁)), m * finGL E s (locGL E s w (satakeB w hϖ hu i₂)))) *
-        starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))) ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) =
+        starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) =
       satEig (qV E w) r (b.sat w) p.1 * (qc w ^ ((((p.2 : ℕ) : ℂ) * ((s : ℂ) - (p.2 : ℕ))) / 2) *
         (hk s w p.2 (ψ (t - (p.1 : ℕ) * Real.log (qV E w)))).1 m) := fun p => by
     rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun i' _ => hI _ _]

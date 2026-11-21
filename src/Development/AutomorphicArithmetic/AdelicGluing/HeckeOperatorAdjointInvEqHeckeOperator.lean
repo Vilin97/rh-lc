@@ -17,7 +17,7 @@ open UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.GM
 open scoped ComplexConjugate
 
 theorem UpperTheory.heckeOperator_adjoint_inv_eq_heckeOperator :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K) (J : Subgroup (GL (Fin n) (w.adicCompletion K))),
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K) (J : Subgroup (GL (Fin n) (w.adicCompletion K))),
           IsOpen (J : Set (GL (Fin n) (w.adicCompletion K))) → IsCompact (J : Set (GL (Fin n) (w.adicCompletion K))) →
           ∀ x : GL (Fin n) (w.adicCompletion K), ContinuousLinearMap.adjoint (Hop μ w J x⁻¹) = Hop μ w J x := by
   intro K _ _ n μ _ w J hJ hc x

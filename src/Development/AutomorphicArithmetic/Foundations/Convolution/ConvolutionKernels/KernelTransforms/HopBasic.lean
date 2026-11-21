@@ -123,7 +123,7 @@ private theorem hop_abs {G H : Type*} [Group G] [NormedAddCommGroup H] [InnerPro
         simp
 
 theorem UpperTheory.ConvolutionTheory.Tf.hopBasic :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K) (J : Subgroup (GL (Fin n) (w.adicCompletion K))) (x : GL (Fin n) (w.adicCompletion K)),
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K) (J : Subgroup (GL (Fin n) (w.adicCompletion K))) (x : GL (Fin n) (w.adicCompletion K)),
       IsOpen (J : Set (GL (Fin n) (w.adicCompletion K))) → IsCompact (J : Set (GL (Fin n) (w.adicCompletion K))) →
       {c : GL (Fin n) (w.adicCompletion K) ⧸ J | ∃ k ∈ J, c = QuotientGroup.mk (k * x)}.Finite ∧
       (∀ v, Hop μ w J x v ∈ fixL μ w J) ∧ Hop μ w J x ∘L prj (fixL μ w J) = Hop μ w J x ∧

@@ -96,7 +96,7 @@ private theorem ofFn_absorb : ∀ (r : ℕ) (T P : Fin r → M), (∀ i j, i ≠
 end Alg
 
 section Loc
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem rhoL_mul (w : Pl K) (g h : Gw n w) : rhoL μ w (g * h) = rhoL μ w g ∘L rhoL μ w h := by
   have := (UpperTheory.ConvolutionTheory.Tf.commPrj K n μ ⊥).2.2.2.2.2.1 (AdelicGLn.localEmbedding w g) (AdelicGLn.localEmbedding w h)
@@ -205,7 +205,7 @@ private theorem haar_right {G : Type} [Group G] [TopologicalSpace G] [IsTopologi
 end Haar
 
 section BernoulliSumsFrobeniusOrbits
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem oloc_commute {w v : Pl K} (h : v ≠ w) [MeasurableSpace (Gw n w)] (m : Measure (Gw n w)) (φ : Gw n w → ℂ)
     (T : LL μ →L[ℂ] LL μ) (hT : IsOloc μ w m φ T) (x : Gw n v) : Commute T (rhoL μ v x) := by
@@ -473,7 +473,7 @@ set_option maxHeartbeats 2000000 in
 open UpperTheory.EigenspaceProjectionTraces in
 theorem UpperTheory.exists_pos_const_eigenspace_bound_of_split_CMDatum :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E ≃ₐ[F] E) (n : ℕ), 0 < n →
-        ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (νE : Measure (archGroup E n)) [νE.IsHaarMeasure] (aE : TI E n)
+        ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (νE : Measure (archGroup E n)) [νE.IsHaarMeasure] (aE : TI E n)
           (q : Pl F) (w₀ : PlacesOver E q), GM.Split E q → ∀ T : Ty σ n q w₀,
           (∀ v ∈ nsS T, ∀ u : PlacesOver E v, u = T.mk' v) →
           ∃ κ : ℝ, 0 < κ ∧ ∀ (L : GM.Loc σ n q w₀) (ψ : ∀ v : Pl F, Gw n (T.mk' v).1 → ℂ), FitsV T L ψ →

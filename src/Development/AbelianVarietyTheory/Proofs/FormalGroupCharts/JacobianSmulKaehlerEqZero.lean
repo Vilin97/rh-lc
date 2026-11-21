@@ -69,7 +69,7 @@ theorem derivation_apply_eq_sum [IsNoetherianRing Q] {M : Type*} [AddCommGroup M
       rw [e, pow_succ', mul_smul]
       exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem_smul (hX i) (ih _)
   rw [← sub_eq_zero, ← Submodule.mem_bot Q,
-    ← Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M) J le_rfl, Submodule.mem_iInf]
+    ← Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M) J (by rw [hJ, Ideal.jacobson_bot]), Submodule.mem_iInf]
   exact fun n => key n g
 
 theorem det_smul_kaehler_eq_zero [DecidableEq σ] [IsNoetherianRing T] [Module.Finite T Q]

@@ -130,7 +130,7 @@ namespace CuspidalSpectrum
 open AutomorphicForm
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
-variable (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 end CuspidalSpectrum
 

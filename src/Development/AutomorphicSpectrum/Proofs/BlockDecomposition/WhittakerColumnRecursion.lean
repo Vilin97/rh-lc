@@ -68,7 +68,7 @@ theorem patChar_colGeR {d j : ℕ} (hj : j < d) (r : Fin j → K) (ψ₀ : AddCh
   ring
 
 theorem mem_patSet_succ_iff {d j : ℕ} (hj : j < d) (u : GL (Fin d) K) :
-    u ∈ patSet K (colGe d (j + 1)) ↔ u ∈ patSet K (colGe d j) ∧ colEntries hj u = 0 := by
+    u ∈ patSet (K := K) (colGe d (j + 1)) ↔ u ∈ patSet (K := K) (colGe d j) ∧ colEntries hj u = 0 := by
   simp only [patSet, Set.mem_setOf_eq, colGe]
   constructor
   · intro h
@@ -103,23 +103,23 @@ theorem mem_patSet_succ_iff {d j : ℕ} (hj : j < d) (u : GL (Fin d) K) :
 
 theorem wh_colGe_succ_eq_sum (K : Type) [Field K] [Fintype K] [DecidableEq K] (d j : ℕ)
     (ψ₀ : AddChar K ℂ) (χ : GL (Fin d) K → ℂ) (hj : j < d)
-    (hc : (patSet K (colGe d j)).ncard = Fintype.card K ^ j * (patSet K (colGe d (j + 1))).ncard)
+    (hc : (patSet (K := K) (colGe d j)).ncard = Fintype.card K ^ j * (patSet (K := K) (colGe d (j + 1))).ncard)
     (ho : ∀ x : Fin j → K, (∑ r : Fin j → K, (ψ₀ (∑ i, r i * x i))⁻¹) =
       if x = 0 then (Fintype.card K : ℂ) ^ j else 0) :
     wh (colGe d (j + 1)) (colGeE K d (j + 1)) ψ₀ χ =
       ∑ r : Fin j → K, wh (colGe d j) (colGeR K d j r) ψ₀ χ := by
   classical
   have hq : (Fintype.card K : ℂ) ^ j ≠ 0 := pow_ne_zero _ (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
-  have hN : ((patSet K (colGe d j)).ncard : ℂ)⁻¹ * (Fintype.card K : ℂ) ^ j =
-      ((patSet K (colGe d (j + 1))).ncard : ℂ)⁻¹ := by
+  have hN : ((patSet (K := K) (colGe d j)).ncard : ℂ)⁻¹ * (Fintype.card K : ℂ) ^ j =
+      ((patSet (K := K) (colGe d (j + 1))).ncard : ℂ)⁻¹ := by
     rw [hc, Nat.cast_mul, Nat.cast_pow, mul_inv, mul_comm (((Fintype.card K : ℂ) ^ j)⁻¹), mul_assoc,
       inv_mul_cancel₀ hq, mul_one]
-  have hu : ∀ u : GL (Fin d) K, (∑ r : Fin j → K, if u ∈ patSet K (colGe d j) then
+  have hu : ∀ u : GL (Fin d) K, (∑ r : Fin j → K, if u ∈ patSet (K := K) (colGe d j) then
       (patChar (colGeR K d j r) ψ₀ u)⁻¹ * χ u else 0) =
-      (Fintype.card K : ℂ) ^ j * (if u ∈ patSet K (colGe d (j + 1)) then
+      (Fintype.card K : ℂ) ^ j * (if u ∈ patSet (K := K) (colGe d (j + 1)) then
         (patChar (colGeE K d (j + 1)) ψ₀ u)⁻¹ * χ u else 0) := by
     intro u
-    by_cases hP : u ∈ patSet K (colGe d j)
+    by_cases hP : u ∈ patSet (K := K) (colGe d j)
     · rw [Finset.sum_congr rfl (fun r _ => if_pos hP)]
       simp only [patChar_colGeR hj, mul_inv]
       rw [show (∑ r : Fin j → K, (patChar (colGeE K d (j + 1)) ψ₀ u)⁻¹ *
@@ -132,13 +132,13 @@ theorem wh_colGe_succ_eq_sum (K : Type) [Field K] [Fintype K] [DecidableEq K] (d
         ring]
       rw [ho (colEntries hj u)]
       by_cases hx : colEntries hj u = 0
-      · have hmem : u ∈ patSet K (colGe d (j + 1)) := (mem_patSet_succ_iff hj u).mpr ⟨hP, hx⟩
+      · have hmem : u ∈ patSet (K := K) (colGe d (j + 1)) := (mem_patSet_succ_iff hj u).mpr ⟨hP, hx⟩
         rw [if_pos hx, if_pos hmem]
         ring
-      · have hmem : u ∉ patSet K (colGe d (j + 1)) := fun h => hx ((mem_patSet_succ_iff hj u).mp h).2
+      · have hmem : u ∉ patSet (K := K) (colGe d (j + 1)) := fun h => hx ((mem_patSet_succ_iff hj u).mp h).2
         rw [if_neg hx, if_neg hmem]
         ring
-    · have hmem : u ∉ patSet K (colGe d (j + 1)) := fun h => hP ((mem_patSet_succ_iff hj u).mp h).1
+    · have hmem : u ∉ patSet (K := K) (colGe d (j + 1)) := fun h => hP ((mem_patSet_succ_iff hj u).mp h).1
       rw [if_neg hmem, mul_zero]
       exact Finset.sum_eq_zero (fun r _ => if_neg hP)
   unfold wh

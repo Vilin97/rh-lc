@@ -19,17 +19,17 @@ variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 theorem exists_isHaarMeasure_isMulRightInvariant (hn : 0 < n) :
     ∃ μ : Measure (AdelicGLn.AdelicGL K n), μ.IsHaarMeasure ∧ μ.IsMulRightInvariant := by
   set Φ := glNormOneSplitting (K := K) hn with hΦ
-  let ν : Measure (normOneGL K n) := Measure.haar
+  let ν : Measure (normOneGL (K := K) (n := n)) := Measure.haar
   let ρ : Measure {r : ℝ // 0 < r} := Measure.haar
   haveI : ν.IsMulRightInvariant := isMulRightInvariant_normOneGL ν
-  let m : Measure (normOneGL K n × {r : ℝ // 0 < r}) := ν.prod ρ
+  let m : Measure (normOneGL (K := K) (n := n) × {r : ℝ // 0 < r}) := ν.prod ρ
   haveI : m.IsHaarMeasure := inferInstanceAs (ν.prod ρ).IsHaarMeasure
   haveI : m.IsMulRightInvariant := inferInstanceAs (ν.prod ρ).IsMulRightInvariant
-  have hc : Measurable (Φ.symm : normOneGL K n × {r : ℝ // 0 < r} → AdelicGLn.AdelicGL K n) :=
+  have hc : Measurable (Φ.symm : normOneGL (K := K) (n := n) × {r : ℝ // 0 < r} → AdelicGLn.AdelicGL K n) :=
     Φ.symm.continuous.measurable
   refine ⟨m.map Φ.symm, ContinuousMulEquiv.isHaarMeasure_map m Φ.symm, ⟨fun g => ?_⟩⟩
   rw [Measure.map_map (measurable_mul_const g) hc]
-  have h : (· * g) ∘ (Φ.symm : normOneGL K n × {r : ℝ // 0 < r} → AdelicGLn.AdelicGL K n) =
+  have h : (· * g) ∘ (Φ.symm : normOneGL (K := K) (n := n) × {r : ℝ // 0 < r} → AdelicGLn.AdelicGL K n) =
       Φ.symm ∘ (· * Φ g) := by
     funext p
     simp only [Function.comp_apply, map_mul, ContinuousMulEquiv.symm_apply_apply]

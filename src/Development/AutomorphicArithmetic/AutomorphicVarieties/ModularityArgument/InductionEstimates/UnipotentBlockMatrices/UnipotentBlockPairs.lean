@@ -37,7 +37,7 @@ def wGL (R : Type) [CommRing R] : GL (Fin (2 + 2)) R where
 def w0 (K : Type) [Field K] [NumberField K] : G1 K (2 + 2) := retractOne (wGL 𝔸[K])
 
 def KG (K : Type) [Field K] [NumberField K] (n : ℕ) : Subgroup (G1 K n) :=
-  (maxCompact : Subgroup (AdelicGLn.AdelicGL K n)).comap (normOneGL K n).subtype
+  (maxCompact : Subgroup (AdelicGLn.AdelicGL K n)).comap (normOneGL (K := K) (n := n)).subtype
 
 def PK (K : Type) [Field K] [NumberField K] : Subgroup (G1 K (2 + 2)) := (ParΓ K 2 2).map (Gam K (2 + 2)).subtype
 

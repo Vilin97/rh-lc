@@ -90,7 +90,7 @@ def chartPrimeIdeal (hj : x j ≠ 0) (pp : Ideal (Poly S N)) :
     rw [hc, ha, map_mul, map_mul, div_mul_div_comm]
 
 theorem chartPrime_le_chartPrimeIdeal (hj : x j ≠ 0) (pp : Ideal (Poly S N)) :
-    chartPrime pp hj ≤ chartPrimeIdeal x hj pp := by
+    chartPrime pp hj ≤ chartPrimeIdeal hj pp := by
   rw [chartPrime, Ideal.span_le]
   intro a ha
   exact ha

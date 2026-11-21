@@ -87,7 +87,7 @@ private theorem good_poly {σ τ : Type} (f : MvPolynomial σ (MvPolynomial τ �
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.evzEx :
-    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL E (2 + 2))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (ev : PR E (2 + 2) →+* (LL μ →L[ℂ] LL μ)), 𝔢.toAmp.IsEv ev → ∃ evz, 𝔵.IsEvz ev evz := by
+    ∀ {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (ev : PR E (2 + 2) →+* (LL μ →L[ℂ] LL μ)), 𝔢.toAmp.IsEv ev → ∃ evz, 𝔵.IsEvz ev evz := by
   intro E _ _ _ μ _ θ 𝔢 𝔵 ev hev
   classical
   let π : PR E (2 + 2) →+* PR E (2 + 2) := eval₂Hom C fun y => if y.1 ∈ 𝔢.S then 0 else X y

@@ -27,7 +27,7 @@ theorem stab_re_int {x : Lsq K Δ} (h : IsIntegral O x) : IsIntegral O (2 * x.re
   have e : x + star x = algebraMap K (Lsq K Δ) (2 * x.re) := by
     ext <;> simp <;> ring
   rw [e] at h2
-  exact (isIntegral_algebraMap_iff (fun a b hab => by simpa using congrArg QuadraticAlgebra.re hab)).1 h2
+  exact (isIntegral_algHom_iff (IsScalarTower.toAlgHom O K (Lsq K Δ)) (algebraMap K (Lsq K Δ)).injective).mp h2
 
 theorem stab_im_int {x : Lsq K Δ} (h : IsIntegral O x) {c : K} (hc : IsIntegral O (c ^ 2 * Δ)) :
     IsIntegral O (2 * (c * Δ * x.im)) := by

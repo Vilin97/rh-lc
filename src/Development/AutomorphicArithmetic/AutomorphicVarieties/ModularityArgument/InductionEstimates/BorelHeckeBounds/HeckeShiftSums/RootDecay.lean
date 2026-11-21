@@ -90,7 +90,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.rootDecay :
   intro K _ _ n μ _ f hf ω t hBor ht r hr hrn
   obtain ⟨hω, hωB⟩ := hBor
   obtain ⟨U, hU, hUf⟩ := hf.2
-  obtain ⟨V₀, hV₀c, hV₀⟩ := exists_compact_mem_nhds (1 : normOneGL K n)
+  obtain ⟨V₀, hV₀c, hV₀⟩ := exists_compact_mem_nhds (1 : normOneGL (K := K) (n := n))
   obtain ⟨Cc, N, hCc⟩ := exists_encard_le_siegel hω ht hV₀c
   refine ⟨N, fun k => ?_⟩
   obtain ⟨M, hM, hMconj⟩ := exists_natCast_conj_unipGL_mem U hU hω r
@@ -102,7 +102,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.rootDecay :
   set c' := max c 0
   have h𝒞 := isCompact_unipBall (K := K) (n := n) (((k + 1 : ℕ) : ℝ) * R₁)
   set Q := archProj K n '' unipBall (K := K) (n := n) (((k + 1 : ℕ) : ℝ) * R₁) *
-    tsupport (f : normOneGL K n → ℂ)
+    tsupport (f : normOneGL (K := K) (n := n) → ℂ)
   have hQ : IsCompact Q := (h𝒞.image continuous_archProj).mul f.hasCompactSupport
   obtain ⟨s, -, hs⟩ := hQ.elim_nhds_subcover (fun g => (fun y => y * g) '' V₀) fun g _ => by
     have := (Homeomorph.mulRight g).isOpenMap.image_mem_nhds hV₀
@@ -112,7 +112,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.rootDecay :
   rintro φ ρ x R ⟨hρ, b, hb, kk, hkk, hx⟩ hsieg hR1 hR
   obtain ⟨m₀, hmC₀, hm₀⟩ := hCc b hb ρ hρ hsieg kk hkk x hx R hR1 hR
   obtain ⟨m, hmdef⟩ : ∃ m : ℕ, m = s.card * m₀ := ⟨_, rfl⟩
-  have hm : ∀ z : normOneGL K n,
+  have hm : ∀ z : normOneGL (K := K) (n := n),
       {γ : rationalGLOne K n | γ • z ∈ (fun y => x * y) '' Q}.encard ≤ m := by
     intro z
     have := encard_le_of_subset_mul s hs hm₀ z

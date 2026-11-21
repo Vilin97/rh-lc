@@ -56,7 +56,7 @@ private theorem levOn_inter {K : Type} [Field K] [NumberField K] {n : ℕ} (P : 
     · exact ⟨h2 v hv, h3⟩
     · exact h3
 
-private theorem fixL_anti {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n))
+private theorem fixL_anti {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n)))
     [μ.IsHaarMeasure] (v : Pl K) {J J' : Subgroup (Gw n v)} (h : J' ≤ J) : fixL μ v J ≤ fixL μ v J' := by
   intro f hf
   simp only [fixL, fixF, Submodule.mem_iInf] at hf ⊢

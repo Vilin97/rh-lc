@@ -104,7 +104,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.G.core :
   haveI : ∀ x : Pl E, BorelSpace (Gw n x) := fun _ => ⟨rfl⟩
   letI : ∀ x : Pl F, MeasurableSpace (Gw n x) := fun _ => borel _
   haveI : ∀ x : Pl F, BorelSpace (Gw n x) := fun _ => ⟨rfl⟩
-  let μF : Measure (normOneGL F n) := Measure.haar
+  let μF : Measure (normOneGL (K := F) (n := n)) := Measure.haar
   have hV := hC.summand
   obtain ⟨-, hAtE, -, -, hnp, θ, hθ, hst⟩ := carryLift F E σ hσ hp n hn μE μF
   obtain ⟨Λ, t, hAt⟩ := hAtE V hV

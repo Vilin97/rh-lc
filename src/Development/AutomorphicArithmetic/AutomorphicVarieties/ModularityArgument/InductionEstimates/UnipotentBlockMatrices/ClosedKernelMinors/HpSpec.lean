@@ -180,7 +180,7 @@ private theorem hp_mul (p : G1 K (2 + 2)) (s : PS 𝔸[K]) (h : (p : AdelicGLn.A
   simp only [Subgroup.coe_mul, h, mul_assoc, Subgroup.coe_subtype]
 
 private theorem cont_hp : Continuous (HH (K := K)) := by
-  let S : Subgroup (G1 K (2 + 2)) := (PS 𝔸[K]).comap (normOneGL K (2 + 2)).subtype
+  let S : Subgroup (G1 K (2 + 2)) := (PS 𝔸[K]).comap (normOneGL (K := K) (n := (2 + 2))).subtype
   have c1 : Continuous fun g : G1 K (2 + 2) => (g : AdelicGLn.AdelicGL K (2 + 2)).val :=
     Units.continuous_val.comp continuous_subtype_val
   have c2 : Continuous fun g : G1 K (2 + 2) => ((g : AdelicGLn.AdelicGL K (2 + 2))⁻¹).val :=

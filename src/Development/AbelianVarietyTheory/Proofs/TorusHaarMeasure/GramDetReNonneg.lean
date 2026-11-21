@@ -60,7 +60,7 @@ theorem height_submodular : (∀ (r : ℕ) (X : Data E r) (d : Frame X.Ψ r → 
   · exact Finset.prod_nonneg fun τ _ => gram_det_re_nonneg _
   · exact Finset.prod_nonneg fun τ _ => gram_det_re_nonneg _
   · rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro τ _
       exact mul_nonneg (gram_det_re_nonneg _) (gram_det_re_nonneg _)
     · intro τ _

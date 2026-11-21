@@ -79,7 +79,7 @@ attribute [local instance 100] LieRing.ofAssociativeRing
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem norm_archRepT_le (a : archGroup K n) : ‖archRepT μ a‖ ≤ 1 :=
   (archURepT μ).norm_map_le a
@@ -175,8 +175,8 @@ theorem starProjection_fixU_comm (U : Subgroup (AdelicGLn.integralFiniteGL K n))
 
 theorem integrated_eq_smul_archOp {U : Subgroup (AdelicGLn.integralFiniteGL K n)}
     {κ : archGroup K n → ℂ} (hκ : (isExpLieAlgebra K n).IsTestFunction κ)
-    {F₀ : CompactlySupportedContinuousMap (normOneGL K n) ℂ} {c : ℝ}
-    (hint : ∀ Θ : normOneGL K n → ℂ, Continuous Θ → (∀ u ∈ U, ∀ x, Θ (x * finOne K n u) = Θ x) →
+    {F₀ : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ} {c : ℝ}
+    (hint : ∀ Θ : normOneGL (K := K) (n := n) → ℂ, Continuous Θ → (∀ u ∈ U, ∀ x, Θ (x * finOne K n u) = Θ x) →
       ∫ x, F₀ x * Θ x ∂μ = c * ∫ a, κ a * Θ (archP K n a) ∂ν)
     {y : CuspL2 μ} (hy : y ∈ fixU μ U) :
     (cuspRepT μ).integrated μ (UnitaryRep.ccToL1 μ F₀) y = (c : ℂ) • archOp μ ν hκ y := by

@@ -60,7 +60,7 @@ private theorem prod_mem_of {H : Type*} [NormedAddCommGroup H] [InnerProductSpac
     exact h B (by simp) _ (ih (fun B' hB' => h B' (by simp [hB'])) v hv)
 
 section Loc
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem rhoL_comm' {w w' : Pl K} (h : w ≠ w') (g : Gw n w) (g' : Gw n w') :
     Commute (rhoL μ w g) (rhoL μ w' g') := by

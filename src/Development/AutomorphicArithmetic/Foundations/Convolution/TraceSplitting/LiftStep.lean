@@ -55,8 +55,8 @@ private theorem bc_twist {K M : Type} [Field K] [NumberField K] [Field M] [Numbe
 theorem UpperTheory.ConvolutionTheory.T.liftStep :
     UpperTheory.ConvolutionTheory.T.CoreLift → UpperTheory.ConvolutionTheory.T.LiftStep := by
   intro hC F E _ _ _ _ _ _ _ _ σ hσ hp n hn hlow π
-  let μF : Measure (normOneGL F n) := Measure.haar
-  let μE : Measure (normOneGL E n) := Measure.haar
+  let μF : Measure (normOneGL (K := F) (n := n)) := Measure.haar
+  let μE : Measure (normOneGL (K := E) (n := n)) := Measure.haar
   obtain ⟨χ, ⟨s, hχ⟩, V, hV⟩ := Dp.exTwist F n μF π hn
   obtain ⟨hex, hpw⟩ := powTwist F E
   obtain ⟨χ', hχ'⟩ := (hex s).2

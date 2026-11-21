@@ -179,7 +179,7 @@ theorem measurableSet_siegelSet {ω : Set (AdelicGLn.AdelicGL K n)} (hω : IsCom
   rw [h]
   exact MeasurableSet.iUnion fun N => (isCompact_siegelSet_part hω t N).isClosed.measurableSet
 
-instance secondCountableTopology_normOneGL : SecondCountableTopology (normOneGL K n) :=
+instance secondCountableTopology_normOneGL : SecondCountableTopology (normOneGL (K := K) (n := n)) :=
   TopologicalSpace.Subtype.secondCountableTopology _
 
 theorem infAt_isUpperTriangular {w : InfinitePlace K} {b : AdelicGLn.AdelicGL K n}
@@ -188,11 +188,11 @@ theorem infAt_isUpperTriangular {w : InfinitePlace K} {b : AdelicGLn.AdelicGL K 
     rw [infAt_apply, show (b : Matrix (Fin n) (Fin n) 𝔸[K]) i j = 0 from hb hij]
     rfl
 
-theorem isFiniteMeasure_quotientMeasure (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] :
+theorem isFiniteMeasure_quotientMeasure (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] :
     IsFiniteMeasure (RightCosetSpace.quotientMeasure (rationalGLOne K n) μ) := by
   classical
   rcases Nat.eq_zero_or_pos n with rfl | hn
-  · have : Subsingleton (normOneGL K 0) :=
+  · have : Subsingleton (normOneGL (K := K) (n := 0)) :=
       ⟨fun x y => Subtype.ext (Units.ext (Subsingleton.elim _ _))⟩
     have : Subsingleton (RightCosetSpace (rationalGLOne K 0)) :=
       ⟨fun p q => by
@@ -202,13 +202,13 @@ theorem isFiniteMeasure_quotientMeasure (μ : Measure (normOneGL K n)) [μ.IsHaa
     have : CompactSpace (RightCosetSpace (rationalGLOne K 0)) := Finite.compactSpace
     infer_instance
   obtain ⟨ω, hω, hωB, t, ht, hsieg⟩ := exists_siegelSet (K := K) n
-  set D : Set (normOneGL K n) := Subtype.val ⁻¹' siegelSet n ω t with hDdef
+  set D : Set (normOneGL (K := K) (n := n)) := Subtype.val ⁻¹' siegelSet n ω t with hDdef
   have hDm : MeasurableSet D := measurable_subtype_coe (measurableSet_siegelSet hω t)
   have hcover : RightCosetSpace.mk (rationalGLOne K n) '' D = univ := by
     refine eq_univ_of_forall fun q => ?_
     obtain ⟨x, rfl⟩ := RightCosetSpace.mk_surjective _ q
     obtain ⟨γ, hγ⟩ := hsieg x
-    have hγ1 : AdelicGLn.diagonal K n γ ∈ normOneGL K n := rationalGL_le_normOneGL ⟨γ, rfl⟩
+    have hγ1 : AdelicGLn.diagonal K n γ ∈ normOneGL (K := K) (n := n) := rationalGL_le_normOneGL ⟨γ, rfl⟩
     exact ⟨⟨_, mul_mem hγ1 x.2⟩, hγ,
       (RightCosetSpace.mk_eq_mk_iff).2 ⟨⟨⟨_, hγ1⟩, ⟨γ, rfl⟩⟩, rfl⟩⟩
   obtain ⟨c, hc, hμ⟩ := exists_measure_eq_mul_measure_image hn μ
@@ -238,7 +238,7 @@ theorem isFiniteMeasure_quotientMeasure (μ : Measure (normOneGL K n)) [μ.IsHaa
     · obtain ⟨⟨b, hbω, _, ⟨r, hr, -, rfl⟩, k, hk, rfl⟩, -, -⟩ := hg
       refine ⟨p2 b, ⟨b, hbω, rfl⟩, p2 k, ⟨k, hk, rfl⟩, ?_⟩
       simp only [hp2, map_mul, Prod.snd_mul, prodEquiv_diagUnits_posIdele_snd r hr, mul_one]
-  have himage : (fun p : normOneGL K n × {r : ℝ // 0 < r} =>
+  have himage : (fun p : normOneGL (K := K) (n := n) × {r : ℝ // 0 < r} =>
       (p.1 : AdelicGLn.AdelicGL K n) * centralSection K n p.2) '' (D ×ˢ posRealUnitInterval) ⊆ E := by
     rintro _ ⟨⟨x, s⟩, ⟨hx, hs⟩, rfl⟩
     refine ⟨mul_centralSection_mem_siegelSet hx s, ?_⟩

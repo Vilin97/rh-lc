@@ -168,8 +168,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.pkLaws :
   · rintro ⟨⟨_, X, rfl⟩, γ₁, γ₂, rfl⟩
     obtain ⟨a, rfl⟩ := gam_cases γ₁
     obtain ⟨b, rfl⟩ := gam_cases γ₂
-    have h₁ : AdelicGLn.diagonal K 2 a ∈ normOneGL K 2 := rationalGL_le_normOneGL ⟨a, rfl⟩
-    have h₂ : AdelicGLn.diagonal K 2 b ∈ normOneGL K 2 := rationalGL_le_normOneGL ⟨b, rfl⟩
+    have h₁ : AdelicGLn.diagonal K 2 a ∈ normOneGL (K := K) (n := 2) := rationalGL_le_normOneGL ⟨a, rfl⟩
+    have h₂ : AdelicGLn.diagonal K 2 b ∈ normOneGL (K := K) (n := 2) := rationalGL_le_normOneGL ⟨b, rfl⟩
     refine ⟨⟨_, unipGL X * blk a b, (hdg X a b h₁ h₂).symm⟩, ?_, rfl⟩
     rw [par_eq]
     change Low (Units.val _)

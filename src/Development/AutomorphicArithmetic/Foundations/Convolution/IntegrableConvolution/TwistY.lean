@@ -109,11 +109,11 @@ private theorem place_inj {P : Finset (Pl F)} (w : ∀ p : P, Fin (m + 1) ≃ Pl
 
 private def gen {P : Finset (Pl F)} (s : Fin (m + 1) → archGroup F n →* archGroup E n)
     (w : ∀ p : P, Fin (m + 1) ≃ PlacesOver E p.1) (i : Fin (m + 1)) :
-    archGroup F n ⊕ (Σ p : P, GL (Fin n) (p.1.adicCompletion F)) → normOneGL E n
+    archGroup F n ⊕ (Σ p : P, GL (Fin n) (p.1.adicCompletion F)) → normOneGL (K := E) (n := n)
   | .inl g => archP E n (s i g)
   | .inr x => MultiplicityOne.finProj E n (AdelicGLn.localEmbedding (w x.1 i).1 (mapGL n (completionMap x.1.1 (w x.1 i).1) x.2))
 
-private theorem gen_int (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] {P : Finset (Pl F)}
+private theorem gen_int (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] {P : Finset (Pl F)}
     (s : Fin (m + 1) → archGroup F n →* archGroup E n) (w : ∀ p : P, Fin (m + 1) ≃ PlacesOver E p.1) (i : Fin (m + 1))
     (B : LL μ →L[ℂ] LL μ) (h1 : ∀ g, Commute B (rightRegularRep (rationalGLOne E n) μ (archP E n (s i g))))
     (h2 : ∀ p g, Commute B (rhoL μ (w p i).1 g)) (g : FreeGroup _) (v : LL μ) :
@@ -190,7 +190,7 @@ theorem UpperTheory.ConvolutionTheory.L1.twistY :
   have hOc : ∀ (B : LL μ →L[ℂ] LL μ) i, (∀ g, Commute B (rightRegularRep (rationalGLOne E n) μ (archP E n (s i g)))) →
       Commute B (O i) := fun B i h => ContinuousLinearMap.ext fun v =>
     operatorAt_int μ (hs i) (hs i) νF a B (fun x u => DFunLike.congr_fun (h x).eq u) v
-  have hrep : ∀ x y : normOneGL E n, Commute x y →
+  have hrep : ∀ x y : normOneGL (K := E) (n := n), Commute x y →
       Commute (rightRegularRep (rationalGLOne E n) μ x) (rightRegularRep (rationalGLOne E n) μ y) := fun x y h =>
     ContinuousLinearMap.ext fun v => by
       simp only [ContinuousLinearMap.mul_apply]

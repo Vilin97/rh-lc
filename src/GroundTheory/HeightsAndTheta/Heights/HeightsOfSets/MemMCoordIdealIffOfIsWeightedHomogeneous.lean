@@ -95,7 +95,7 @@ theorem mem_mCoordIdeal_iff {Ω : Type*} [Field Ω] (y : Coord n → Ω)
     have hk := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm m₀))
       (show Geo.mConeMap (ι := blockIdx n) y f = 0 from hf)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← sum_compDegs f, map_sum, coeff_sum, coeff_zero,
+      rw [← sum_compDegs f, map_sum, coeff_sum, AddMonoidAlgebra.coeff_zero,
       Finset.sum_eq_single m₀] at hk
     · rwa [mConeMap_of_isWeightedHomogeneous y
         (weightedHomogeneousComponent_isWeightedHomogeneous m₀ f), coeff_monomial, if_pos rfl] at hk

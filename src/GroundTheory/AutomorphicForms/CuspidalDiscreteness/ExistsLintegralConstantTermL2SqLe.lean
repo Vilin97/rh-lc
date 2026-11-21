@@ -36,14 +36,14 @@ theorem det_unipMatrix {r : ℕ} {R : Type*} [CommRing R] (X : UPos n r → R) :
     simp [unipMatrix, blockEntry_apply, h1, h2]
 
 theorem unipGL_mem_normOneGL {r : ℕ} (X : UPos n r → 𝔸[K]) :
-    unipGL X ∈ normOneGL K n := by
+    unipGL X ∈ normOneGL (K := K) (n := n) := by
   have h1 : AdelicGLn.det K n (unipGL X) = 1 :=
     Units.ext (by rw [AdelicGLn.coe_det, coe_unipGL, det_unipMatrix, Units.val_one])
   rw [mem_normOneGL, h1, map_one]
   rfl
 
 
-def unipOne (r : ℕ) (X : UPos n r → 𝔸[K]) : normOneGL K n :=
+def unipOne (r : ℕ) (X : UPos n r → 𝔸[K]) : normOneGL (K := K) (n := n) :=
   ⟨unipGL X, unipGL_mem_normOneGL X⟩
 
 @[simp] theorem coe_unipOne (r : ℕ) (X : UPos n r → 𝔸[K]) :
@@ -66,13 +66,13 @@ theorem unipOne_mem_rationalGLOne (r : ℕ) (ξ : unipLattice K n r) :
   rw [← diagonal_unipGL]
   exact ⟨unipGL ξ, rfl⟩
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 instance (r : ℕ) : SigmaFinite (unipMeasure K n r) := by
   unfold unipMeasure
   infer_instance
 
-theorem lintegral_lift_le {T : Set (normOneGL K n)}
+theorem lintegral_lift_le {T : Set (normOneGL (K := K) (n := n))}
     (hT : IsCompact T) : ∃ C : ℝ≥0∞, C ≠ ⊤ ∧ ∀ ψ : Lp ℂ 2 (quotientMeasure Γ₁ μ),
       (∫⁻ y in T, ‖ψ (mk Γ₁ y)‖ₑ ∂μ) ^ 2 ≤ C * ‖ψ‖ₑ ^ 2 := by
   obtain ⟨N, hN⟩ := exists_encard_le_of_isCompact Γ₁ hT
@@ -86,18 +86,18 @@ theorem lintegral_lift_le {T : Set (normOneGL K n)}
   gcongr
   exact lintegral_lift_sq_le Γ₁ μ ψ hT.measurableSet hN
 
-theorem ae_of_forall_isCompact {p : normOneGL K n → Prop}
-    (h : ∀ S : Set (normOneGL K n), IsCompact S → ∀ᵐ y ∂μ.restrict S, p y) : ∀ᵐ y ∂μ, p y := by
-  have : ∀ᵐ y ∂μ.restrict (⋃ k, compactCovering (normOneGL K n) k), p y :=
+theorem ae_of_forall_isCompact {p : normOneGL (K := K) (n := n) → Prop}
+    (h : ∀ S : Set (normOneGL (K := K) (n := n)), IsCompact S → ∀ᵐ y ∂μ.restrict S, p y) : ∀ᵐ y ∂μ, p y := by
+  have : ∀ᵐ y ∂μ.restrict (⋃ k, compactCovering (normOneGL (K := K) (n := n)) k), p y :=
     (ae_restrict_iUnion_iff _ _).2 fun k => h _ (isCompact_compactCovering _ k)
   rwa [iUnion_compactCovering, Measure.restrict_univ] at this
 
 theorem continuous_unipOne_mul (r : ℕ) :
-    Continuous fun p : (UPos n r → 𝔸[K]) × normOneGL K n => unipOne K n r p.1 * p.2 :=
+    Continuous fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) => unipOne K n r p.1 * p.2 :=
   ((continuous_unipOne r).comp continuous_fst).mul continuous_snd
 
-theorem setLIntegral_mul_left (F : normOneGL K n → ℝ≥0∞) (g : normOneGL K n)
-    {S : Set (normOneGL K n)} (hS : IsCompact S) :
+theorem setLIntegral_mul_left (F : normOneGL (K := K) (n := n) → ℝ≥0∞) (g : normOneGL (K := K) (n := n))
+    {S : Set (normOneGL (K := K) (n := n))} (hS : IsCompact S) :
     ∫⁻ y in S, F (g * y) ∂μ = ∫⁻ z in (g * ·) '' S, F z ∂μ := by
   have hS' : MeasurableSet ((g * ·) '' S) := (hS.image (continuous_const_mul g)).measurableSet
   rw [← lintegral_indicator hS.measurableSet, ← lintegral_indicator hS']
@@ -110,17 +110,17 @@ theorem setLIntegral_mul_left (F : normOneGL K n → ℝ≥0∞) (g : normOneGL 
     rintro ⟨y', hy', h⟩
     exact hy (mul_left_cancel h ▸ hy')
 
-theorem exists_lintegral_unip_sq_le (r : ℕ) {S : Set (normOneGL K n)} (hS : IsCompact S) :
+theorem exists_lintegral_unip_sq_le (r : ℕ) {S : Set (normOneGL (K := K) (n := n))} (hS : IsCompact S) :
     ∃ C : ℝ≥0∞, C ≠ ⊤ ∧ ∀ φ : Lp ℂ 2 (quotientMeasure Γ₁ μ),
       (∫⁻ y in S, ∫⁻ X in unipFundamentalDomain K n r,
         ‖φ (mk Γ₁ (unipOne K n r X * y))‖ₑ ∂unipMeasure K n r ∂μ) ^ 2 ≤ C * ‖φ‖ₑ ^ 2 := by
   obtain ⟨D', hD'c, hDD'⟩ := exists_isCompact_superset_unipFundamentalDomain (K := K) (n := n)
     (r := r)
-  set T := (fun p : (UPos n r → 𝔸[K]) × normOneGL K n => unipOne K n r p.1 * p.2) '' (D' ×ˢ S)
+  set T := (fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) => unipOne K n r p.1 * p.2) '' (D' ×ˢ S)
   have hT : IsCompact T := (hD'c.prod hS).image (continuous_unipOne_mul r)
   obtain ⟨C, hC, hCφ⟩ := lintegral_lift_le μ hT
   refine ⟨C, hC, fun φ => le_trans (pow_le_pow_left₀ zero_le ?_ 2) (hCφ φ)⟩
-  have hmeas : Measurable fun p : (UPos n r → 𝔸[K]) × normOneGL K n =>
+  have hmeas : Measurable fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) =>
       ‖φ (mk Γ₁ (unipOne K n r p.1 * p.2))‖ₑ :=
     ((Lp.stronglyMeasurable φ).measurable.comp ((measurable_mk Γ₁).comp
       (continuous_unipOne_mul r).measurable)).enorm
@@ -143,17 +143,17 @@ theorem exists_lintegral_unip_sq_le (r : ℕ) {S : Set (normOneGL K n)} (hS : Is
         rw [setLIntegral_const, unipMeasure_unipFundamentalDomain, mul_one]
 
 
-def ctFun (r : ℕ) (F : RightCosetSpace Γ₁ → ℂ) (y : normOneGL K n) : ℂ :=
+def ctFun (r : ℕ) (F : RightCosetSpace Γ₁ → ℂ) (y : normOneGL (K := K) (n := n)) : ℂ :=
   ∫ X in unipFundamentalDomain K n r, F (mk Γ₁ (unipOne K n r X * y)) ∂unipMeasure K n r
 
-def constantTermL2 (r : ℕ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (y : normOneGL K n) : ℂ :=
+def constantTermL2 (r : ℕ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (y : normOneGL (K := K) (n := n)) : ℂ :=
   ctFun K n r φ y
 
 theorem ae_ae_unip_notMem {Z : Set (RightCosetSpace Γ₁)} (hZ : quotientMeasure Γ₁ μ Z = 0)
     (r : ℕ) : ∀ᵐ y ∂μ, ∀ᵐ X ∂unipMeasure K n r, mk Γ₁ (unipOne K n r X * y) ∉ Z := by
   set Z' := toMeasurable (quotientMeasure Γ₁ μ) Z
   have hZ' : quotientMeasure Γ₁ μ Z' = 0 := by rw [measure_toMeasurable]; exact hZ
-  have hmeas : MeasurableSet {p : (UPos n r → 𝔸[K]) × normOneGL K n |
+  have hmeas : MeasurableSet {p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) |
       mk Γ₁ (unipOne K n r p.1 * p.2) ∉ Z'} :=
     ((measurableSet_toMeasurable _ _).preimage ((measurable_mk Γ₁).comp
       (continuous_unipOne_mul r).measurable)).compl
@@ -180,7 +180,7 @@ theorem ae_ctFun_congr (r : ℕ) {F F' : RightCosetSpace Γ₁ → ℂ}
 theorem ae_integrableOn_unip (r : ℕ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) :
     ∀ᵐ y ∂μ, IntegrableOn (fun X => φ (mk Γ₁ (unipOne K n r X * y)))
       (unipFundamentalDomain K n r) (unipMeasure K n r) := by
-  have hmeas : Measurable fun p : (UPos n r → 𝔸[K]) × normOneGL K n =>
+  have hmeas : Measurable fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) =>
       ‖φ (mk Γ₁ (unipOne K n r p.1 * p.2))‖ₑ :=
     ((Lp.stronglyMeasurable φ).measurable.comp ((measurable_mk Γ₁).comp
       (continuous_unipOne_mul r).measurable)).enorm
@@ -200,7 +200,7 @@ theorem ae_integrableOn_unip (r : ℕ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)
 
 theorem stronglyMeasurable_ctFun (r : ℕ) {F : RightCosetSpace Γ₁ → ℂ} (hF : StronglyMeasurable F) :
     StronglyMeasurable (ctFun K n r F) := by
-  have : StronglyMeasurable (uncurry fun (X : UPos n r → 𝔸[K]) (y : normOneGL K n) =>
+  have : StronglyMeasurable (uncurry fun (X : UPos n r → 𝔸[K]) (y : normOneGL (K := K) (n := n)) =>
       F (mk Γ₁ (unipOne K n r X * y))) :=
     hF.comp_measurable ((measurable_mk Γ₁).comp (continuous_unipOne_mul r).measurable)
   exact this.integral_prod_left (μ := (unipMeasure K n r).restrict (unipFundamentalDomain K n r))
@@ -227,7 +227,7 @@ theorem ae_constantTermL2_sub (r : ℕ) (φ ψ : Lp ℂ 2 (quotientMeasure Γ₁
   simp only [constantTermL2, ctFun, Pi.sub_apply]
   exact integral_sub h2 h3
 
-theorem exists_lintegral_constantTermL2_sq_le (r : ℕ) {S : Set (normOneGL K n)} (hS : IsCompact S) :
+theorem exists_lintegral_constantTermL2_sq_le (r : ℕ) {S : Set (normOneGL (K := K) (n := n))} (hS : IsCompact S) :
     ∃ C : ℝ≥0∞, C ≠ ⊤ ∧ ∀ φ : Lp ℂ 2 (quotientMeasure Γ₁ μ),
       (∫⁻ y in S, ‖constantTermL2 μ r φ y‖ₑ ∂μ) ^ 2 ≤ C * ‖φ‖ₑ ^ 2 := by
   obtain ⟨C, hC, hCφ⟩ := exists_lintegral_unip_sq_le μ r hS
@@ -298,17 +298,17 @@ theorem isInvariant_cuspidalL2 : (rightRegularRep Γ₁ μ).IsInvariant (cuspida
   filter_upwards [h2, h4] with y hy1 hy2
   rw [constantTermL2, hy1, h3, hy2, Pi.zero_apply]
 
-theorem integral_rconv_unip_eq_zero (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ)
+theorem integral_rconv_unip_eq_zero (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} (hφ : φ ∈ cuspidalL2 μ) {r : ℕ} (hr : 0 < r) (hrn : r < n)
-    (x : normOneGL K n) :
+    (x : normOneGL (K := K) (n := n)) :
     ∫ X in unipFundamentalDomain K n r, rconv Γ₁ μ f φ (unipOne K n r X * x)
       ∂unipMeasure K n r = 0 := by
-  set S := (x * ·) '' tsupport (f : normOneGL K n → ℂ)
+  set S := (x * ·) '' tsupport (f : normOneGL (K := K) (n := n) → ℂ)
   have hS : IsCompact S := f.hasCompactSupport.isCompact.image (continuous_const_mul x)
   obtain ⟨M, hM⟩ := f.continuous.bounded_above_of_compact_support f.hasCompactSupport
   have hfS : ∀ z ∉ S, f (x⁻¹ * z) = 0 := fun z hz =>
     image_eq_zero_of_notMem_tsupport fun h => hz ⟨x⁻¹ * z, h, by simp⟩
-  set F : (UPos n r → 𝔸[K]) → normOneGL K n → ℂ :=
+  set F : (UPos n r → 𝔸[K]) → normOneGL (K := K) (n := n) → ℂ :=
     fun X z => f (x⁻¹ * z) * φ (mk Γ₁ (unipOne K n r X * z))
   have hFm : StronglyMeasurable (uncurry F) :=
     (f.continuous.comp (continuous_const_mul x⁻¹ |>.comp continuous_snd)).stronglyMeasurable.mul
@@ -322,7 +322,7 @@ theorem integral_rconv_unip_eq_zero (f : CompactlySupportedContinuousMap (normOn
         ‖φ (mk Γ₁ (unipOne K n r X * z))‖ₑ ∂unipMeasure K n r ∂μ < ⊤ :=
       L2Kernel.lt_top_of_sq_lt_top ((hCφ φ).trans_lt
         (ENNReal.mul_lt_top hC.lt_top (ENNReal.pow_lt_top enorm_lt_top)))
-    have hmeas : Measurable fun p : (UPos n r → 𝔸[K]) × normOneGL K n =>
+    have hmeas : Measurable fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) =>
         ‖φ (mk Γ₁ (unipOne K n r p.1 * p.2))‖ₑ :=
       ((Lp.stronglyMeasurable φ).measurable.comp ((measurable_mk Γ₁).comp
         (continuous_unipOne_mul r).measurable)).enorm

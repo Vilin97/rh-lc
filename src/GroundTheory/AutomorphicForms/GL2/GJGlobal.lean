@@ -71,7 +71,7 @@ theorem continuous_tsum_inv {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ}
   rw [e]
 
 
-theorem globalZeta_entire_functionalEquation (hn : 2 ≤ n) (μ : Measure (normOneGL K n))
+theorem globalZeta_entire_functionalEquation (hn : 2 ≤ n) (μ : Measure (normOneGL (K := K) (n := n)))
     [μ.IsHaarMeasure] (ν : Measure (AdelicGLn.AdelicGL K n)) [ν.IsHaarMeasure]
     {φ₁ φ₂ : AdelicGLn.AdelicGL K n → ℂ} (h₁ : φ₁ ∈ cuspForms K n) (h₂ : φ₂ ∈ cuspForms K n)
     (hA : ∀ (s : {r : ℝ // 0 < r}) (x : AdelicGLn.AdelicGL K n),
@@ -104,7 +104,7 @@ theorem globalZeta_entire_functionalEquation (hn : 2 ≤ n) (μ : Measure (normO
   obtain ⟨C₁, M₁, -, hC₁⟩ := exists_bound_tsum hΦ h₁ h₂
   obtain ⟨C₂, M₂, -, hC₂⟩ := exists_bound_tsum hΦh h₂ h₁
   obtain ⟨_, _, _, hsum₂⟩ := exists_bound_GL_inv hn0 hΦ h₁ h₂ 0
-  have hB₁ : ∀ (t : {r : ℝ // 0 < r}) (x y : normOneGL K n),
+  have hB₁ : ∀ (t : {r : ℝ // 0 < r}) (x y : normOneGL (K := K) (n := n)),
       ‖φ₂ (x : AdelicGLn.AdelicGL K n)‖ * ‖φ₁ (y : AdelicGLn.AdelicGL K n)‖ *
         ‖∑' γ : GL (Fin n) K, Ξ₁ (centralSection K n t * (x : AdelicGLn.AdelicGL K n)⁻¹ *
           AdelicGLn.diagonal K n γ * (y : AdelicGLn.AdelicGL K n))‖ ≤
@@ -116,7 +116,7 @@ theorem globalZeta_entire_functionalEquation (hn : 2 ≤ n) (μ : Measure (normO
     refine mul_le_mul_of_nonneg_left ?_ (mul_nonneg (norm_nonneg _) (norm_nonneg _))
     simp only [hΞ₁, coe_mul_diagonal_mul]
     exact (norm_tsum_le_tsum_norm hGL.1).trans hGL.2
-  have hB₂ : ∀ (t : {r : ℝ // 0 < r}) (x y : normOneGL K n),
+  have hB₂ : ∀ (t : {r : ℝ // 0 < r}) (x y : normOneGL (K := K) (n := n)),
       ‖φ₂ (x : AdelicGLn.AdelicGL K n)‖ * ‖φ₁ (y : AdelicGLn.AdelicGL K n)‖ *
         ‖∑' γ : GL (Fin n) K, Ξ₂ (centralSection K n t * (x : AdelicGLn.AdelicGL K n)⁻¹ *
           AdelicGLn.diagonal K n γ * (y : AdelicGLn.AdelicGL K n))‖ ≤
@@ -215,7 +215,7 @@ theorem globalZeta_entire_functionalEquation (hn : 2 ≤ n) (μ : Measure (normO
     obtain ⟨C, M, D, hb⟩ := exists_bound_GL hn0 hΦ h₁ h₂ (σ + 1)
     set B : ℝ → ℝ := fun t => if t < 1 then C₁' * t ^ (-max M₁' 0) else D * t ^ (-(σ + 1))
       with hBdef
-    have hbB : ∀ (t : {r : ℝ // 0 < r}) (x y : normOneGL K n),
+    have hbB : ∀ (t : {r : ℝ // 0 < r}) (x y : normOneGL (K := K) (n := n)),
         Summable (fun γ : GL (Fin n) K => ‖Ξ₁ (centralSection K n t *
           (x : AdelicGLn.AdelicGL K n)⁻¹ * AdelicGLn.diagonal K n γ *
             (y : AdelicGLn.AdelicGL K n))‖) ∧
@@ -258,7 +258,7 @@ theorem globalZeta_entire_functionalEquation (hn : 2 ≤ n) (μ : Measure (normO
     obtain ⟨C, M, D, hb⟩ := exists_bound_GL_inv hn0 hΦ h₁ h₂ (σ + 1)
     set B : ℝ → ℝ := fun t => if t < 1 then D * t ^ (σ + 1) else C₂' * t ^ max M₂' 0
       with hBdef
-    have hbB : ∀ (t : {r : ℝ // 0 < r}) (x y : normOneGL K n),
+    have hbB : ∀ (t : {r : ℝ // 0 < r}) (x y : normOneGL (K := K) (n := n)),
         Summable (fun γ : GL (Fin n) K => ‖Ξ₂ (centralSection K n t *
           (x : AdelicGLn.AdelicGL K n)⁻¹ * AdelicGLn.diagonal K n γ *
             (y : AdelicGLn.AdelicGL K n))‖) ∧

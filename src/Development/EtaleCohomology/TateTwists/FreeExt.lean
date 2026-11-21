@@ -23,7 +23,7 @@ theorem free_ext (P : PSh) (F : Shv R) (φ ψ : (free R).obj P ⟶ F)
   exact h U.unop x.down
 
 theorem ev_ext {E : Spc} {I : Cx R} {n : ℤ} (α β : Cochain ((chains R).obj E) I n)
-    (h : ∀ p s h U x, ev α p s h U x = ev β p s h U x) : α = β := by
+    (h : ∀ p s h U x, ev R α p s h U x = ev R β p s h U x) : α = β := by
   refine Cochain.ext _ _ (fun i j hij => ?_)
   by_cases hi : 0 ≤ -i
   · obtain ⟨p, rfl⟩ : ∃ p : ℕ, i = -(p : ℤ) := ⟨(-i).toNat, by omega⟩

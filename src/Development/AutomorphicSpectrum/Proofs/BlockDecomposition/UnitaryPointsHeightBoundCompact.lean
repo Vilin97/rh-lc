@@ -19,7 +19,7 @@ namespace GlobalTheory.CompanionTheory.RedCov.MahlerU
 
 theorem exists_isCompact_centralizer_reduction_set {K : Type*} [Field K] [NumberField K] {n : ℕ} {m : Type*}
     [Finite m] (L : m → Matrix (Fin n) (Fin n) K)
-    (G : Set (AdelicGLn.AdelicGL K n)) (hG1 : ∀ g ∈ G, g ∈ Reduction.normOneGL K n)
+    (G : Set (AdelicGLn.AdelicGL K n)) (hG1 : ∀ g ∈ G, g ∈ Reduction.normOneGL (K := K) (n := n))
     (hGL : ∀ g ∈ G, g ∈ adelicCentralizer L) {ε : ℝ} (hε : 0 < ε)
     (hh : ∀ g ∈ G, ∀ x : Fin n → K, x ≠ 0 → ε ≤ Reduction.height g x) :
     ∃ C : Set (AdelicGLn.AdelicGL K n), IsCompact C ∧ ∀ g ∈ G, ∃ γ : GL (Fin n) K,
@@ -89,7 +89,7 @@ theorem exists_isCompact_trHom_set {d : ℕ} (b : Module.Basis (Fin d) K E) (hH 
   classical
   let G : Set (AdelicGLn.AdelicGL K (Fintype.card (ι × Fin d))) :=
     (fun u : unitaryPoints K E H 𝔸[K] => trHom b 𝔸[K] (u : GL ι (𝔸[K] ⊗[K] E))) '' Y
-  have hG1 : ∀ g ∈ G, g ∈ Reduction.normOneGL K (Fintype.card (ι × Fin d)) := by
+  have hG1 : ∀ g ∈ G, g ∈ Reduction.normOneGL (K := K) (n := (Fintype.card (ι × Fin d))) := by
     rintro _ ⟨u, -, rfl⟩
     rw [Reduction.mem_normOneGL]
     set a := AdelicGLn.det K (Fintype.card (ι × Fin d)) (trHom b 𝔸[K] (u : GL ι (𝔸[K] ⊗[K] E)))

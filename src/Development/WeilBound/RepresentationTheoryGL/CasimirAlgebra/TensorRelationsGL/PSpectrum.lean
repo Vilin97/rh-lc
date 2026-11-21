@@ -118,21 +118,26 @@ theorem Kl_sum {V : Type} [AddCommGroup V] [Module ℂ V] (A B : Module.End ℂ 
     · exact hAB.eq
     · exact hAB.eq.symm
     · rfl
-  letI : CommRing (Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V))) := Algebra.isMulCommutative_adjoin ℂ hc
+  open scoped IsMulCommutative in
+  letI : IsMulCommutative (Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V))) :=
+    Algebra.isMulCommutative_adjoin ℂ (fun a ha b hb _ => hc a ha b hb)
   let a' : Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V)) := ⟨A, Algebra.subset_adjoin (by simp)⟩
   let b' : Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V)) := ⟨B, Algebra.subset_adjoin (by simp)⟩
   have hinj : Function.Injective (Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V))).val := Subtype.val_injective
   have hA' : (La.map fun a : ℕ => a' - algebraMap ℂ _ (α + a)).prod = 0 := by
     apply hinj
     rw [map_list_prod, map_zero, List.map_map]
-    simpa [Function.comp_def, a'] using hLa
+    set_option synthInstance.maxHeartbeats 200000 in
+      simpa [Function.comp_def, a'] using hLa
   have hB' : (Lb.map fun b : ℕ => b' - algebraMap ℂ _ (β + b)).prod = 0 := by
     apply hinj
     rw [map_list_prod, map_zero, List.map_map]
-    simpa [Function.comp_def, b'] using hLb
+    set_option synthInstance.maxHeartbeats 200000 in
+      simpa [Function.comp_def, b'] using hLb
   have hs := congrArg (Algebra.adjoin ℂ ({A, B} : Set (Module.End ℂ V))).val (sum_comm a' b' α β La Lb hA' hB')
   rw [map_list_prod, map_zero, List.map_map] at hs
-  simpa [Function.comp_def, a', b'] using hs
+  set_option synthInstance.maxHeartbeats 200000 in
+    simpa [Function.comp_def, a', b'] using hs
 
 theorem xJ_apply {m : ℕ} {M : Type} [AddCommGroup M] [Module ℂ M] (E : Fin n → Fin n → Module.End ℂ M) (j : Fin m)
     (f : TV n M (Fin m)) (I : Fin m → Fin n) :

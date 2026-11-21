@@ -207,11 +207,11 @@ private theorem exists_off_open (U : Subgroup (AdelicGLn.integralFiniteGL K n))
   obtain ⟨u, huU, hu⟩ := h2
   exact ⟨u, huU, hu⟩
 
-private abbrev phi (w : Pl K) : Gw n w →* normOneGL K n :=
+private abbrev phi (w : Pl K) : Gw n w →* normOneGL (K := K) (n := n) :=
   (MultiplicityOne.finProj K n).comp (AdelicGLn.localEmbedding w)
 
-private theorem dec_phi (b : Pl K) (x : normOneGL K n) :
-    ∃ (a c : normOneGL K n) (g : Gw n b), (∀ g', phi b g' * a = a * phi b g') ∧
+private theorem dec_phi (b : Pl K) (x : normOneGL (K := K) (n := n)) :
+    ∃ (a c : normOneGL (K := K) (n := n)) (g : Gw n b), (∀ g', phi b g' * a = a * phi b g') ∧
       (∀ g', phi b g' * c = c * phi b g') ∧ x = a * phi b g * c := by
   obtain ⟨A', h, rfl⟩ := MultiplicityOne.exists_archProj_mul_finProj x
   obtain ⟨-, h1, -, -, h5⟩ := UpperTheory.ConvolutionTheory.Tf.locEmb K n b
@@ -228,7 +228,7 @@ private theorem dec_phi (b : Pl K) (x : normOneGL K n) :
   · simp only [phi, MonoidHom.comp_apply]
     rw [mul_assoc, ← map_mul, ← hd]
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem mem_eigL' {w : Pl K} {J : Subgroup (Gw n w)} {χ : Gw n w → ℂ} {x : LL μ} :
     x ∈ eigL μ w J χ ↔ ∀ g ∈ J, rhoL μ w g x = χ g • x := by
@@ -261,7 +261,7 @@ private theorem step {V : Submodule ℂ (LL μ)} (hV : IsSummand μ V) (J : ∀ 
   have hmemN : ∀ u, u ∈ N ↔ u ∈ V ∧ ∀ w ∈ A, u ∈ eigL μ w (J w) (χ w) := fun u => by
     simp [hNdef, Submodule.mem_inf, Submodule.mem_iInf]
   have hcb := (eigBasic K n μ b (J b) (χ b) (hJχ b).1 (hJχ b).2).2.2.2
-  have hc : ∀ y : normOneGL K n, (∀ g, phi b g * y = y * phi b g) → ∀ v,
+  have hc : ∀ y : normOneGL (K := K) (n := n), (∀ g, phi b g * y = y * phi b g) → ∀ v,
       rightRegularRep (rationalGLOne K n) μ y (prj (eigL μ b (J b) (χ b)) v) =
         prj (eigL μ b (J b) (χ b)) (rightRegularRep (rationalGLOne K n) μ y v) := fun y hy v =>
     comm_apply (hcb _ fun x _ => comm_rep _ (hy x).symm) v

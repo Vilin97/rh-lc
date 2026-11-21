@@ -38,7 +38,7 @@ def Family2 {K : Type} [Field K] [NumberField K] (μ : Measure (G1 K (2 + 2))) [
 
 section Fam
 
-variable {E : Type} [Field E] [NumberField E] {μ : Measure (normOneGL E (2 + 2))} [μ.IsHaarMeasure] {θ : Twist μ}
+variable {E : Type} [Field E] [NumberField E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ}
 
 structure Fam (𝔢 : Side θ 2) where
   τ₁ : Submodule ℂ (L2 (BW.mu1 E 2))
@@ -111,7 +111,7 @@ def SB {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (s : ℂ → V →L
 
 def CIx : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F] [IsTotallyComplex E]
-    (μE : Measure (normOneGL E (2 + 2))) [μE.IsHaarMeasure] (μF : Measure (normOneGL F (2 + 2))) [μF.IsHaarMeasure] (θ : Twist μE)
+    (μE : Measure (normOneGL (K := E) (n := (2 + 2)))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := (2 + 2)))) [μF.IsHaarMeasure] (θ : Twist μE)
     (𝔢 : Side θ 2) (𝔣 : Side (Twist.id μF) 2) (c : ℂ), GeoPair 𝔢 𝔣 c → ∀ 𝔵 : Fam 𝔢,
     (∀ (b : Datum F (2 + 2)) Λ' t', b.Pt 𝔣.S Λ' t' → ¬ (𝔵.Λ = bcInf Λ' ∧ ∀ w ∉ 𝔢.S, 𝔵.t w = bcSat t' w)) →
     ∃ N : Eu 𝔵.d' ≃ₗᵢ[ℂ] Eu 𝔵.d,
@@ -121,7 +121,7 @@ def CIx : Prop :=
           c * 𝔣.tr (fun V => ∃ Λ' t', At μF 𝔣.S V Λ' t' ∧ 𝔵.Λ = bcInf Λ' ∧ ∀ w ∉ 𝔢.S, 𝔵.t w = bcSat t' w) x j
 
 def KillExempt : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (μ : Measure (normOneGL E (2 + 2))) [μ.IsHaarMeasure] (θ : Twist μ)
+  ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (μ : Measure (normOneGL (K := E) (n := (2 + 2)))) [μ.IsHaarMeasure] (θ : Twist μ)
     (𝔢 : Side θ 2) (𝔵 : Fam 𝔢) (η : ℝ), 0 < η →
     ∃ (B : Type) (_ : Fintype B) (b : B → Datum E (2 + 2)), (∀ i, ∃ Λ t, (b i).Pt 𝔢.S Λ t) ∧ (∀ i, ¬ (b i).Pt 𝔢.S 𝔵.Λ 𝔵.t) ∧
       ∀ ev, 𝔢.toAmp.IsEv ev → (∀ R : PR E (2 + 2), (∀ y ∈ R.vars, y.1 ∉ 𝔢.S) → ev R ∘L 𝔵.P = 𝔵.P ∘L ev R) →
@@ -154,7 +154,7 @@ def KillEx2 : Prop :=
         evK (fun y : Ix E n => L' (y.1.comp (algebraMap F E), y.2)) (hval (bcSat t')) Φ = 0
 
 def OneSideX : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (normOneGL K (2 + 2))) [μ.IsHaarMeasure] (θ : Twist μ)
+  ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (μ : Measure (normOneGL (K := K) (n := (2 + 2)))) [μ.IsHaarMeasure] (θ : Twist μ)
     (𝔰 : Side θ 2) (𝔵 : Fam 𝔰) (ev : PR K (2 + 2) →+* (LL μ →L[ℂ] LL μ)) (evz : ℂ → PR K (2 + 2) →+* (Eu 𝔵.d' →L[ℂ] Eu 𝔵.d'))
     (Nn : Eu 𝔵.d' ≃ₗᵢ[ℂ] Eu 𝔵.d) (C₀ : ℝ), 𝔰.toAmp.IsEv ev → (∀ P, Inner μ (ev P)) → 𝔵.IsEvz ev evz →
     Family μ 𝔵.A 𝔵.A' 0 𝔵.P Nn C₀ → ∀ sp : Finset ℝ,

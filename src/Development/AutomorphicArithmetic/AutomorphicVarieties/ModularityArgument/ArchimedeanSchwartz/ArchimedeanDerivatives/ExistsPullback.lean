@@ -52,7 +52,7 @@ private theorem exists_form {E : Type} [Field E] [NumberField E] [IsTotallyCompl
     have := (hj x).1
     rw [h1, map_zero] at this
     exact Subtype.ext this.symm
-  exact exists_pullback j (CuspidalSpectrum.cuspToL2 (Measure.haar : Measure (Reduction.normOneGL E a)))
+  exact exists_pullback j (CuspidalSpectrum.cuspToL2 (Measure.haar : Measure (Reduction.normOneGL (K := E) (n := a))))
     (fun g => π.locRep w g) (fun g => finRepCusp E a (locGL E a w g)) (· ∈ centralCuspForms E a) hc
     (fun x hx h => eq_zero_of_petersson_inner_self_eq_zero _ hx h) hinj hτ
     fun g x y hx hy => petersson_inner_finiteAdelic_invariant _ _ hx hy

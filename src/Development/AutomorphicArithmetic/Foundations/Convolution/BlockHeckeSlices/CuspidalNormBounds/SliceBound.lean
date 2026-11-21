@@ -90,8 +90,8 @@ variable [IsTotallyComplex E] {S : Set (Pl E)}
 
 private theorem sl_int (b : Blo S r) (φ : Sm E (r + s)) (hφ : Umg φ) (t : ℝ) (m : AdelicGLn.AdelicGL E s) :
     Integrable (fun y : RightCosetSpace (rationalGLOne E r) =>
-      constantTerm r φ.1 (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL E r) : AdelicGLn.AdelicGL E r), m)) *
-        starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : AdelicGLn.AdelicGL E r)))
+      constantTerm r φ.1 (lev (Ad E) r s (zt E r t * ((Quotient.out y : normOneGL (K := E) (n := r)) : AdelicGLn.AdelicGL E r), m)) *
+        starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : AdelicGLn.AdelicGL E r)))
       (quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
   have hcφ : Continuous φ.1 := ((umgOps E (r + s)).2 φ hφ).1
   obtain ⟨hfU, hfC⟩ := cuspUmg E r b.f b.cusp

@@ -66,8 +66,8 @@ private theorem decay_of_form {K : Type} [Field K] [NumberField K] {n : ℕ} (Φ
   refine ⟨C, fun m => ?_⟩
   obtain ⟨γ, hγ⟩ := hsieg m
   obtain ⟨b, hb, a, ⟨ρ, hρ, hs, rfl⟩, kk, hkk, hxe⟩ := hγ
-  have hγ1 : AdelicGLn.diagonal K n γ ∈ normOneGL K n := rationalGL_le_normOneGL ⟨γ, rfl⟩
-  have hγx : AdelicGLn.diagonal K n γ * (m : AdelicGLn.AdelicGL K n) ∈ normOneGL K n := mul_mem hγ1 m.2
+  have hγ1 : AdelicGLn.diagonal K n γ ∈ normOneGL (K := K) (n := n) := rationalGL_le_normOneGL ⟨γ, rfl⟩
+  have hγx : AdelicGLn.diagonal K n γ * (m : AdelicGLn.AdelicGL K n) ∈ normOneGL (K := K) (n := n) := mul_mem hγ1 m.2
   have h := hC b hb ρ hρ hs kk hkk _ hγx hxe
   rw [Φ.2.1.isLeftInvariant γ (m : AdelicGLn.AdelicGL K n)] at h
   set x := AdelicGLn.diagonal K n γ * (m : AdelicGLn.AdelicGL K n) with hx

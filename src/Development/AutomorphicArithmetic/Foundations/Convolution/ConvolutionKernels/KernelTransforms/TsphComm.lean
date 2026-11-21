@@ -150,7 +150,7 @@ end Abstract
 
 section Concrete
 
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K)
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K)
 
 private theorem rhoL_mul (g h : GL (Fin n) (w.adicCompletion K)) :
     rhoL μ w (g * h) = rhoL μ w g ∘L rhoL μ w h := by
@@ -256,7 +256,7 @@ private theorem rhoL_comm {w w' : Pl K} (h : w ≠ w') (g : GL (Fin n) (w.adicCo
 end Concrete
 
 theorem UpperTheory.ConvolutionTheory.Tf.tsphComm :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w w' : Pl K),
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w w' : Pl K),
       (∀ x y : GL (Fin n) (w.adicCompletion K), Commute (Hop μ w (GLnLocal.integralGL (w.adicCompletion K) n) x) (Hop μ w (GLnLocal.integralGL (w.adicCompletion K) n) y)) ∧
       (w ≠ w' → ∀ (J : Subgroup (GL (Fin n) (w.adicCompletion K))) (x : GL (Fin n) (w.adicCompletion K)) (J' : Subgroup (GL (Fin n) (w'.adicCompletion K))) (x' : GL (Fin n) (w'.adicCompletion K)),
         IsOpen (J : Set (GL (Fin n) (w.adicCompletion K))) → IsCompact (J : Set (GL (Fin n) (w.adicCompletion K))) → IsOpen (J' : Set (GL (Fin n) (w'.adicCompletion K))) →

@@ -21,7 +21,9 @@ theorem fac_exists {n : Type} [Fintype n] [DecidableEq n] {Q : Matrix n n ℂ} (
   have hD : Dᴴ * D = diagonal (RCLike.ofReal ∘ hQ.1.eigenvalues) := by
     simp only [D, diagonal_conjTranspose, diagonal_mul_diagonal]
     congr 1
-    rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hQ.eigenvalues_pos i).le]
+    funext i
+    simp only [Pi.star_apply, Complex.star_def, Complex.conj_ofReal, Function.comp_apply,
+      ← Complex.ofReal_mul, Real.mul_self_sqrt (hQ.eigenvalues_pos i).le]
     rfl
   rw [conjTranspose_mul, hU, Matrix.mul_assoc, ← Matrix.mul_assoc Dᴴ, hD, ← Matrix.mul_assoc]
 

@@ -56,14 +56,10 @@ def QuotTower.trivial {p : ℕ} {O : Type} [CommRing O] (G : _root_.GlobalTheory
   j_r _ _ := rfl
   j_s _ _ := rfl
   tors_le m := by
-    rw [kerIdeal_of_surjective (f := BialgHom.id O (G.A (m + 1))) Function.surjective_id,
-      ← kerIdeal_of_surjective (f := BialgHom.id O (G.A (m + 1))) Function.surjective_id]
-    have h := kerIdeal_comp_of_surjective (mulBy O (G.A (m + 1)) p)
-      (f := BialgHom.id O (G.A (m + 1))) Function.surjective_id
     rw [kerIdeal_of_surjective (f := BialgHom.id O (G.A (m + 1))) Function.surjective_id]
     refine Ideal.map_le_iff_le_comap.2 fun a ha => ?_
     have ha' : counit (R := O) a = 0 := ha
-    change counit (R := O) (mulBy O (G.A (m + 1)) p a) = 0
+    change counit (R := O) (mulBy (R := O) (A := G.A (m + 1)) p a) = 0
     rw [CoalgHomClass.counit_comp_apply, ha']
 
 theorem exists_retraction_mulP {p : ℕ} {O : Type} [CommRing O] (G : _root_.GlobalTheory.PDivGroup p O) (m : ℕ) :

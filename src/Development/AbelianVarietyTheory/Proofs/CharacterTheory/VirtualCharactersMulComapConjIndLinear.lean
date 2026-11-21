@@ -44,7 +44,8 @@ theorem _root_.GlobalTheory.BI.isChar_monoidHom_complex {G : Type} [Group G] (la
     (Algebra.lmul ℂ ℂ).toMonoidHom.comp ((Units.coeHom ℂ).comp lam)
   have key := (_root_.GlobalTheory.BI.isChar_and_isIrrChar_of_rep ℂ ℂ G ℂ ρ).1
   convert key using 1
-  exact (trace_mulLeft_complex_lemma _).symm
+  funext g
+  simpa [ρ, Representation.character] using (trace_mulLeft_complex_lemma (lam g : ℂ)).symm
 
 open Polynomial in
 theorem _root_.GlobalTheory.BI.subgroupFunctionExtendByZero_add {G : Type} [Group G] (H : Subgroup G) (a b : H → ℂ)

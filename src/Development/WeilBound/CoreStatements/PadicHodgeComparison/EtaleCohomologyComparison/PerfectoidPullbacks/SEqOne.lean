@@ -197,7 +197,7 @@ def Good : Prop :=
     ∃! σ' : c.D ⟶ T, ∀ i, σ'.φ (c.t i) - σ.φ (c.t i) = y i
 
 def frame (h : c.Good) (Q : ObjectProperty (Thick (nlFun γ p X q κ))) (hQ : ∀ T, Q T → InU V T) (hD : Q c.D) :
-    Frame (sP Q) d where
+    CrystallineSemistableComparison.Pb.Frame (sP Q) d where
   D := ⟨c.D, hD⟩
   ne T := (h.1 T.obj (hQ _ T.property)).map fun σ => ObjectProperty.homMk σ
   τ i {T} σ σ' := (σ'.hom.φ (c.t i) - σ.hom.φ (c.t i) : T.obj.B)

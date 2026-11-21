@@ -18,7 +18,7 @@ open scoped ComplexConjugate Classical InnerProductSpace
 
 section Abs
 
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem rho_typed (J : ∀ w : Pl K, Subgroup (Gw n w)) (χ : ∀ w : Pl K, Gw n w → ℂ) (f : LL μ)
     (hf : ∀ w, f ∈ eigL μ w (J w) (χ w)) (P : Finset (Pl K))
@@ -181,7 +181,7 @@ end SlopeTestRemainingChoices
 
 theorem UpperTheory.typed_vectors_le_fixed_of_fits_level :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E ≃ₐ[F] E) (n : ℕ)
-        (q : Pl F) (w₀ : PlacesOver E q), GM.Split E q → ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure]
+        (q : Pl F) (w₀ : PlacesOver E q), GM.Split E q → ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure]
         (T : Ty σ n q w₀) (L : GM.Loc σ n q w₀) (ψ : ∀ v : Pl F, Gw n (T.mk' v).1 → ℂ), T.Fits L ψ →
         T.typed μ ≤ fixF μ (GM.levE L.UE) := by
   intro F E _ _ _ _ _ σ n q w₀ hq μ _ T L ψ hF f hf

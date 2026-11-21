@@ -41,7 +41,7 @@ theorem univChart_of_standardSmooth (G : Over (Spec (CommRingCat.of R))) [GrpObj
     IsScalarTower.of_algebraMap_eq fun r => (g.commutes r).symm
   haveI : Algebra.Etale (MvPolynomial (Fin n) R) S := hg
   have hπ : ∀ m : ℕ, ∃ π : S →ₐ[R] JetR R (Fin n) m, (jetAug R (Fin n) m).comp π = ε ∧
-      ∀ i, π (sX R i) = algebraMap R _ (ε (sX R i)) + zR m i := fun m =>
+      ∀ i, π (sX (R := R) i) = algebraMap R _ (ε (sX (R := R) i)) + zR m i := fun m =>
     etale_exists (n := n) ε (jetAug R (Fin n) m) (ker_jetAug_nil (Fin n) m) _ (fun i => by
       rw [map_add (f := _), AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply, jetAug_zR, add_zero])
   choose π hπaug hπX using hπ
@@ -69,13 +69,13 @@ theorem univChart_of_standardSmooth (G : Over (Spec (CommRingCat.of R))) [GrpObj
     have hJn := nil_of_pow _ hJ
     obtain ⟨φ, rfl⟩ := hj A aug hJn y hy
     have hφ : aug.comp φ = ε := hinj _ _ _ (by rw [← spMap_comp, Category.assoc, hy, hε])
-    have hmem : ∀ i : Fin n, φ (sX (S := S) R i) - algebraMap R A (ε (sX (S := S) R i)) ∈
+    have hmem : ∀ i : Fin n, φ (sX (R := R) (S := S) i) - algebraMap R A (ε (sX (R := R) (S := S) i)) ∈
         RingHom.ker aug := by
       intro i
       rw [RingHom.mem_ker, map_sub, AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply,
         ← AlgHom.comp_apply, hφ, sub_self]
-    let ψ := jetLift R (RingHom.ker aug) hJ
-      (fun i : Fin n => φ (sX (S := S) R i) - algebraMap R A (ε (sX (S := S) R i))) hmem
+    let ψ := jetLift (R := R) (RingHom.ker aug) hJ
+      (fun i : Fin n => φ (sX (R := R) (S := S) i) - algebraMap R A (ε (sX (R := R) (S := S) i))) hmem
     have hψaug : aug.comp ψ = jetAug R (Fin n) m := jet_ext fun i => by
       rw [AlgHom.comp_apply, jetLift_zR, jetAug_zR]; exact hmem i
     have hψπ : ψ.comp (π m) = φ := by
@@ -92,7 +92,7 @@ theorem univChart_of_standardSmooth (G : Over (Spec (CommRingCat.of R))) [GrpObj
       apply jet_ext
       intro i
       rw [jetLift_zR]
-      have := AlgHom.congr_fun h4 (sX R i)
+      have := AlgHom.congr_fun h4 (sX (R := R) i)
       rw [AlgHom.comp_apply, hπX, map_add (f := _), AlgHom.commutes] at this
       rw [← this, add_sub_cancel_left]
 

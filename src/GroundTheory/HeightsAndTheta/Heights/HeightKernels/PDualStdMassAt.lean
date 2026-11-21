@@ -25,6 +25,7 @@ theorem segre_const (z : (Σ _ : Unit, T) → ℂ) (t : T) :
   simp [segre]
 
 
+open scoped Classical in
 theorem recover_planePt {i : ℕ} {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (σ : K →+* ℂ) (v : Fin i → ℂ) :
     dualRecover b hb (fun t => dualPlanePt b σ v ⟨(), t⟩) =
@@ -40,8 +41,8 @@ theorem proj_segre_planePt {i : ℕ} {F : HermLattice K i} (b : Module.Basis T �
     dualProj b hb (segre (dualPlanePt b σ v)) = v := by
   funext j
   simp only [dualProj_apply, segre_const, recover_planePt]
-  rw [Finset.sum_eq_single σ (fun τ _ hτ => if_neg hτ) (by simp)]
-  exact if_pos rfl
+  rw [Finset.sum_eq_single σ (fun τ _ hτ => ite_eq_right hτ) (by simp)]
+  exact ite_eq_left rfl
 
 theorem h_eq (hOn : DualPtsOnPlane.Statement) {D : ℕ} {F : HermLattice K (D + 1)}
     (hF : ∀ σ, F.metric σ = 1) (b : Module.Basis T ℤ (dualLattice F))
@@ -98,10 +99,10 @@ theorem fibre_eq (hOn : DualPtsOnPlane.Statement) (hOf : DualPtsOfPlane.Statemen
       funext ⟨τ, j⟩
       by_cases hτ : τ = σ
       · subst hτ
-        rw [if_pos rfl, ← hΨ]
+        rw [ite_eq_left rfl, ← hΨ]
         simp only [dualProj_apply, segre_const]
         exact (Finset.sum_eq_single τ (fun τ' _ h' => hσ τ' h' j) (by simp)).symm
-      · rw [if_neg hτ]
+      · rw [ite_eq_right hτ]
         exact hσ τ hτ j
     have h1 := (dualRecover b hb).injective hW
     funext ⟨u, t⟩
@@ -142,6 +143,7 @@ theorem isSheet_planePt (hOf : DualPtsOfPlane.Statement) {D : ℕ} {F : HermLatt
 end StandardDualMassAtPoint
 
 
+open StandardDualMassAtPoint in
 theorem DualStdMassAt.proof (hOn : DualPtsOnPlane.Statement) (hOf : DualPtsOfPlane.Statement) :
     DualStdMassAt.Statement := by
   intro K _ _ D F T _ _ b hb hF

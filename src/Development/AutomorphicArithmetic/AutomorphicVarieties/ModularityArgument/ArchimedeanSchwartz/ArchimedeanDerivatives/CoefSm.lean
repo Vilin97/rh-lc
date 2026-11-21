@@ -127,7 +127,7 @@ private theorem cusp_facts (hn : 1 ≤ n) {σ : CuspSub K n} (h : Cm.carrier σ 
   obtain ⟨ψ, rfl⟩ := (Cm.carrierEq σ).surjective φ
   exact ⟨ψ.1.2.1.continuous, exists_norm_le_of_cusp hn ψ.1.2 (h ψ.2)⟩
 
-private theorem coef_deriv (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure] {σ : CuspSub K n}
+private theorem coef_deriv (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] {σ : CuspSub K n}
     (h : Cm.carrier σ ≤ centralCuspForms K n) (φ₂ : cuspForms K n) (g : GA K n) (φ : σ.V) {y : Lie K n}
     (hy : y ∈ invSet K n) :
     HasFDerivAt (chart (GJGlobal.matrixCoeff μ φ.1.1 φ₂.1) g) (∑ b, (cf K n b y).smulRight
@@ -136,7 +136,7 @@ private theorem coef_deriv (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL K n
     isFiniteMeasure_restrict.2 (GJGlobal.measure_fundamentalDomain_rationalGLOne_lt_top μ).ne
   obtain ⟨C₂, hC₂⟩ := CuspidalSpectrum.exists_norm_le_of_mem_cuspForms φ₂.2
   have h2c : Continuous φ₂.1 := φ₂.2.1.continuous
-  let f : σ.V → Lie K n → Reduction.normOneGL K n → ℂ := fun v z x =>
+  let f : σ.V → Lie K n → Reduction.normOneGL (K := K) (n := n) → ℂ := fun v z x =>
     chart v.1.1 ((x : AdelicGLn.AdelicGL K n) * g) z * (starRingEnd ℂ) (φ₂.1 x)
   have hf : ∀ (v : σ.V), ∀ z ∈ invSet K n, chart (GJGlobal.matrixCoeff μ v.1.1 φ₂.1) g z =
       ∫ x in RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n), f v z x ∂μ := by
@@ -173,9 +173,9 @@ private theorem coef_deriv (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL K n
     rw [mul_comm, mul_assoc]
     rfl
 
-private theorem coef_int (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure] {σ : CuspSub K n}
+private theorem coef_int (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] {σ : CuspSub K n}
     (h : Cm.carrier σ ≤ centralCuspForms K n) (φ₂ : cuspForms K n) (g : GA K n) (φ : σ.V) :
-    Integrable (fun x : Reduction.normOneGL K n => φ.1.1 ((x : AdelicGLn.AdelicGL K n) * g) * (starRingEnd ℂ) (φ₂.1 x))
+    Integrable (fun x : Reduction.normOneGL (K := K) (n := n) => φ.1.1 ((x : AdelicGLn.AdelicGL K n) * g) * (starRingEnd ℂ) (φ₂.1 x))
       (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n))) := by
   have : IsFiniteMeasure (μ.restrict (RightCosetSpace.fundamentalDomain (Reduction.rationalGLOne K n))) :=
     isFiniteMeasure_restrict.2 (GJGlobal.measure_fundamentalDomain_rationalGLOne_lt_top μ).ne
@@ -188,7 +188,7 @@ private theorem coef_int (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL K n))
   · rw [norm_mul, Complex.norm_conj]
     exact mul_le_mul (hC _) (hC₂ _ x.2) (norm_nonneg _) ((norm_nonneg _).trans (hC 1))
 
-private def coefMap (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure] {σ : CuspSub K n}
+private def coefMap (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] {σ : CuspSub K n}
     (h : Cm.carrier σ ≤ centralCuspForms K n) (φ₂ : cuspForms K n) : σ.V →ₗ[ℂ] Sm K n where
   toFun φ := ⟨GJGlobal.matrixCoeff μ φ.1.1 φ₂.1, fun g =>
     abs_smooth (G := fun v : σ.V => chart (GJGlobal.matrixCoeff μ v.1.1 φ₂.1) g) isOpen_invSet cf_smooth
@@ -200,7 +200,7 @@ private def coefMap (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL K n)) [μ.
     refine Eq.trans ?_ (integral_const_mul c _)
     exact integral_congr_ae (Filter.Eventually.of_forall fun x => mul_assoc _ _ _))
 
-private theorem coefMap_lie (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure] {σ : CuspSub K n}
+private theorem coefMap_lie (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] {σ : CuspSub K n}
     (h : Cm.carrier σ ≤ centralCuspForms K n) (φ₂ : cuspForms K n) (X : Lie K n) (φ : σ.V) :
     coefMap hn μ h φ₂ (σ.op (.lie X) φ) = lie K n X (coefMap hn μ h φ₂ φ) := by
   have e : σ.op (.lie X) φ = ∑ b, (((Module.finBasis ℝ (Lie K n)).repr X b : ℝ) : ℂ) •

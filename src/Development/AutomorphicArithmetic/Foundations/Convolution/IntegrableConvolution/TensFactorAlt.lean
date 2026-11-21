@@ -121,7 +121,7 @@ private theorem dep_extend {ι α : Type*} {β : α → Type*} (w : ι → α) (
   · exact dif_neg hv
 
 section Loc
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem rhoL_mul (w : Pl K) (g h : Gw n w) : rhoL μ w (g * h) = rhoL μ w g ∘L rhoL μ w h := by
   have := (UpperTheory.ConvolutionTheory.Tf.commPrj K n μ ⊥).2.2.2.2.2.1 (AdelicGLn.localEmbedding w g) (AdelicGLn.localEmbedding w h)
@@ -230,7 +230,7 @@ private theorem haar_right {G : Type} [Group G] [TopologicalSpace G] [IsTopologi
 end Haar
 
 section BernoulliSumsFrobeniusOrbits
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem oloc_commute {w v : Pl K} (h : v ≠ w) [MeasurableSpace (Gw n w)] (m : Measure (Gw n w)) (φ : Gw n w → ℂ)
     (T : LL μ →L[ℂ] LL μ) (hT : IsOloc μ w m φ T) (x : Gw n v) : Commute T (rhoL μ v x) := by
@@ -298,7 +298,7 @@ private theorem oloc_absorb (v : Pl K) [MeasurableSpace (Gw n v)] [BorelSpace (G
 end BernoulliSumsFrobeniusOrbits
 
 section SlopeTestRemainingChoices
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem finAt_eq (h : AdelicGLn.FiniteAdelicGL K n) (v : Pl K) :
     finAt v (finEmb K n h) = AdelicGLn.finiteRestrictedEquiv K n h v := by

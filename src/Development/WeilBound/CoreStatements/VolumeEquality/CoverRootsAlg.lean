@@ -21,7 +21,7 @@ theorem mon_map {R S : Type} [CommRing R] [CommRing S] {d : ℕ} (a : Fin d → 
 
 theorem eval₂_low {R S : Type} [CommRing R] [CommRing S] {d : ℕ} (a : Fin d → R) (f : R →+* S) (x : S) :
     eval₂ f x (low a) = ∑ j, f (a j) * x ^ (j : ℕ) := by
-  simp [low, eval₂_finset_sum]
+  simp [low, eval₂_finsetSum]
 
 theorem mon_monic {R : Type} [CommRing R] {d : ℕ} (a : Fin d → R) : (mon a).Monic :=
   monic_X_pow_add (degree_sum_fin_lt a)

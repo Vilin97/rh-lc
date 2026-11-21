@@ -41,7 +41,6 @@ theorem test_field : ∀ (A : Type) [CommRing A] [IsDomain A] [IsNoetherianRing 
   refine ⟨C, GlobalTheory.normIntegers C, inferInstance, inferInstance, inferInstance, inferInstance,
     inferInstance, inferInstance, NormedField.valuation, φ.comp (algebraMap A R), hO, hv, ?_, ?_, key⟩
   · apply GlobalTheory.NormIntegers.isAdicComplete_span_singleton hO
-    rw [map_natCast]
     exact_mod_cast hv
   · intro a b hab
     have : (φ (algebraMap A R a) : C) = (φ (algebraMap A R b) : C) := congrArg Subtype.val hab

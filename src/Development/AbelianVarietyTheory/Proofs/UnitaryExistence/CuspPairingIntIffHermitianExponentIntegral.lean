@@ -39,10 +39,18 @@ theorem mem_one_iff_range (x : E) :
 
 theorem trace_dual_iff {A : FractionalIdeal (𝓞 E)⁰ E} (hA : A ≠ 0) (y : E) :
     (∀ a ∈ A, ∃ n : ℤ, Algebra.trace ℚ E (y * a) = n) ↔ y ∈ (dif E)⁻¹ * A⁻¹ := by
+  have hdiff {x : E} : x ∈ (dif E)⁻¹ ↔
+      ∀ a : E, IsIntegral ℤ a → ∃ k : ℤ, Algebra.trace ℚ E (x * a) = k := by
+    unfold dif
+    rw [coeIdeal_differentIdeal ℤ ℚ E (𝓞 E), inv_inv,
+      FractionalIdeal.mem_dual (one_ne_zero (α := FractionalIdeal (𝓞 E)⁰ E))]
+    refine forall_congr' fun a => ?_
+    rw [mem_one_fractionalIdeal_iff, Algebra.traceForm_apply]
+    exact imp_congr_right fun _ => ⟨fun ⟨k, hk⟩ => ⟨k, hk.symm⟩, fun ⟨k, hk⟩ => ⟨k, hk.symm⟩⟩
   rw [mem_mul_inv_iff hA]
   constructor
   · intro h a ha
-    rw [mem_inv_different_iff]
+    rw [hdiff]
     intro o ho
     have hm : a * o ∈ A := by
       have := FractionalIdeal.mul_mem_mul ha (mem_one_fractionalIdeal_iff.2 ho)
@@ -50,7 +58,7 @@ theorem trace_dual_iff {A : FractionalIdeal (𝓞 E)⁰ E} (hA : A ≠ 0) (y : E
     rw [mul_assoc]
     exact h _ hm
   · intro h a ha
-    simpa using mem_inv_different_iff.1 (h a ha) 1 isIntegral_one
+    simpa using hdiff.1 (h a ha) 1 isIntegral_one
 
 theorem coord_iff {A : FractionalIdeal (𝓞 E)⁰ E} (hA : A ≠ 0) (u : E) :
     (∀ y : E, (∀ a ∈ A, ∃ n : ℤ, Algebra.trace ℚ E (y * a) = n) →

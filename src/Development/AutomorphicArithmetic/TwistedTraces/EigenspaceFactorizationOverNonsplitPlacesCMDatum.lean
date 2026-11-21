@@ -16,7 +16,7 @@ open scoped ComplexConjugate Classical InnerProductSpace
 
 section Abs
 
-variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 private theorem rho_typed (J : ∀ w : Pl K, Subgroup (Gw n w)) (χ : ∀ w : Pl K, Gw n w → ℂ) (f : LL μ)
     (hf : ∀ w, f ∈ eigL μ w (J w) (χ w)) (P : Finset (Pl K))
@@ -142,7 +142,7 @@ private theorem lvN_co (T : Ty σ n q w₀) (L : GM.Loc σ n q w₀) {v : Pl F} 
   rintro _ ⟨x, hx, rfl⟩
   exact (L.lev v hv).2.1 hx (T.mk' v)
 
-private theorem eig_of_fix (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (T : Ty σ n q w₀) (L : GM.Loc σ n q w₀)
+private theorem eig_of_fix (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (T : Ty σ n q w₀) (L : GM.Loc σ n q w₀)
     {v : Pl F} (u : PlacesOver E v) (hu : u = T.mk' v) (f : LL μ) (h : f ∈ fixL μ (T.mk' v).1 (lvN T L v)) :
     f ∈ eigL μ u.1 ((L.UE v).map (GM.cmp u)) 1 := by
   subst hu
@@ -192,7 +192,7 @@ end SlopeTestRemainingChoices
 
 theorem UpperTheory.eigenspace_factorization_over_nonsplit_places_CMDatum :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E ≃ₐ[F] E) (n : ℕ) (q : Pl F) (w₀ : PlacesOver E q), GM.Split E q →
-        ∀ (μ : Measure (normOneGL E n)) [μ.IsHaarMeasure] (T : Ty σ n q w₀) (L : GM.Loc σ n q w₀)
+        ∀ (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] (T : Ty σ n q w₀) (L : GM.Loc σ n q w₀)
           (ψ : ∀ v : Pl F, Gw n (T.mk' v).1 → ℂ), FitsV T L ψ → (∀ v ∈ nsS T, ∀ u : PlacesOver E v, u = T.mk' v) →
         ∀ (r : ℕ) (p : Fin r → Pl F), (∀ v, v ∈ nsS T ↔ v ∈ Set.range p) →
           (∀ i, CO (lvN T L (p i))) ∧ (∀ i, ∀ u ∈ lvN T L (p i), ∀ g, ψ (p i) (u * g) = ψ (p i) g) ∧

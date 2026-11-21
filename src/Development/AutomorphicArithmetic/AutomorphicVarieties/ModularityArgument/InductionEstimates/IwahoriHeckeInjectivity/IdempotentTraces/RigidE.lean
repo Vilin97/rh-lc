@@ -22,7 +22,7 @@ open scoped ComplexConjugate Classical
 open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E
 
 private theorem transfer {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a b : ℕ}
-    {μ : Measure (normOneGL E a)} [μ.IsHaarMeasure] {μ' : Measure (normOneGL E b)} [μ'.IsHaarMeasure]
+    {μ : Measure (normOneGL (K := E) (n := a))} [μ.IsHaarMeasure] {μ' : Measure (normOneGL (K := E) (n := b))} [μ'.IsHaarMeasure]
     {π : CuspSub E a} {π' : CuspSub E b} {V : Submodule ℂ (LL μ)} {V' : Submodule ℂ (LL μ')}
     (h : Dp.Carries μ π V) (h' : Dp.Carries μ' π' V')
     (e : (⟨a, CG.mk π⟩ : Σ c, CG E c) = ⟨b, CG.mk π'⟩) :
@@ -35,8 +35,8 @@ private theorem transfer {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
 
 private theorem core {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {ι κ : Type} [Fintype ι] [Fintype κ]
     (d : ι → ℕ) (d' : κ → ℕ) (hd : ∀ i, 0 < d i) (hd' : ∀ j, 0 < d' j)
-    (μ : ∀ i, Measure (normOneGL E (d i))) [∀ i, (μ i).IsHaarMeasure]
-    (μ' : ∀ j, Measure (normOneGL E (d' j))) [∀ j, (μ' j).IsHaarMeasure]
+    (μ : ∀ i, Measure (normOneGL (K := E) (n := (d i)))) [∀ i, (μ i).IsHaarMeasure]
+    (μ' : ∀ j, Measure (normOneGL (K := E) (n := (d' j)))) [∀ j, (μ' j).IsHaarMeasure]
     (V : ∀ i, Submodule ℂ (LL (μ i))) (V' : ∀ j, Submodule ℂ (LL (μ' j)))
     (hV : ∀ i, IsSummand (μ i) (V i)) (hV' : ∀ j, IsSummand (μ' j) (V' j)) (S : Set (Pl E)) (hS : S.Finite)
     (lam : ι → ℂ) (B : ι → Pl E → Multiset ℂ) (B' : κ → Pl E → Multiset ℂ)

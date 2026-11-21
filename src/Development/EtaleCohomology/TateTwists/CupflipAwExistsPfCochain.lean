@@ -12,11 +12,11 @@ def cupflip_ev_mk : Prop :=
   ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n : ℤ}
     (a : ∀ (p : ℕ) (s : ℤ), -(p : ℤ) + n = s → ∀ U : Scheme.{0}, Sx E p U → Sec (I.X s) U),
     (∀ p s h (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), Sec.res g (a p s h U x) = a p s h V (x.res g)) →
-      ∃ α : Cochain ((chains R).obj E) I n, ∀ p s h U x, ev α p s h U x = a p s h U x
+      ∃ α : Cochain ((chains R).obj E) I n, ∀ p s h U x, ev R α p s h U x = a p s h U x
 
 def cupflip_ev_res : Prop :=
   ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (α : Cochain ((chains R).obj E) I n) p s h
-    (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), Sec.res g (ev α p s h U x) = ev α p s h V (x.res g)
+    (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), Sec.res g (ev R α p s h U x) = ev R α p s h V (x.res g)
 
 def cupflip_sub_res : Prop :=
   ∀ {E : Spc} {U : Scheme.{0}} {N : ℕ} (x : Sx E N U) (j l : ℕ) (h : j + l ≤ N) {V : Scheme.{0}} (g : V ⟶ U),
@@ -28,7 +28,7 @@ theorem cupflip_aw_cochain_of (hm : cupflip_ev_mk) (he : cupflip_ev_res) (hs : c
   obtain ⟨γ, hγ⟩ := hm R (E := E) (I := K) (n := k)
     (fun N w h U x => ∑ p : Fin (N + 1), (m * (p : ℕ)).negOnePow • μ.mul U (-((p : ℕ) : ℤ) + n)
       (-((N - p : ℕ) : ℤ) + m) w (by omega)
-      (ev α p _ rfl U (x.sub 0 p (by omega))) (ev β (N - p) _ rfl U (x.sub p (N - p) (by omega))))
+      (ev R α p _ rfl U (x.sub 0 p (by omega))) (ev R β (N - p) _ rfl U (x.sub p (N - p) (by omega))))
     (by
       intro N w h V U g x
       set_option synthInstance.maxHeartbeats 100000 in
@@ -36,7 +36,7 @@ theorem cupflip_aw_cochain_of (hm : cupflip_ev_mk) (he : cupflip_ev_res) (hs : c
       refine Finset.sum_congr rfl (fun p _ => ?_)
       congr 1
       have := μ.nat g (-((p : ℕ) : ℤ) + n) (-((N - p : ℕ) : ℤ) + m) w (by omega)
-        (ev α p _ rfl U (x.sub 0 p (by omega))) (ev β (N - p) _ rfl U (x.sub p (N - p) (by omega)))
+        (ev R α p _ rfl U (x.sub 0 p (by omega))) (ev R β (N - p) _ rfl U (x.sub p (N - p) (by omega)))
       simp only [Sec.res] at this
       rw [this]
       have e1 := he R α p _ rfl V U g (x.sub 0 p (by omega))

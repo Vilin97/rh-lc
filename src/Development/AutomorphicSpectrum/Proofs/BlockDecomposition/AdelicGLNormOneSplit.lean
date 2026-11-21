@@ -85,13 +85,13 @@ theorem coeff_ne_zero (ha : 0 < a) : (a * Module.finrank ℚ E : ℝ) ≠ 0 :=
   mul_ne_zero (Nat.cast_ne_zero.2 ha.ne') (Nat.cast_ne_zero.2 Module.finrank_pos.ne')
 
 theorem splitCentre_neg_mul_mem (ha : 0 < a) (g : GA E a) :
-    splitCentre E a (-splitDeg E a g) * g ∈ Reduction.normOneGL E a := by
+    splitCentre E a (-splitDeg E a g) * g ∈ Reduction.normOneGL (K := E) (n := a) := by
   have hc := coeff_ne_zero (E := E) ha
   have hpos := (IdeleGroup.ideleModule E (AdelicGLn.det E a g)).2
   rw [Reduction.mem_normOneGL, map_mul, map_mul, Positive.val_mul, ideleModule_det_splitCentre,
     mul_neg, splitDeg, mul_div_cancel₀ _ hc, Real.exp_neg, Real.exp_log hpos, inv_mul_cancel₀ hpos.ne']
 
-theorem splitDeg_splitCentre_mul (ha : 0 < a) (x : Reduction.normOneGL E a) (t : ℝ) :
+theorem splitDeg_splitCentre_mul (ha : 0 < a) (x : Reduction.normOneGL (K := E) (n := a)) (t : ℝ) :
     splitDeg E a (splitCentre E a t * (x : GA E a)) = t := by
   have hc := coeff_ne_zero (E := E) ha
   have hx : (IdeleGroup.ideleModule E (AdelicGLn.det E a (x : GA E a)) : ℝ) = 1 :=
@@ -104,7 +104,7 @@ theorem splitCentre_neg_mul_self (t : ℝ) (g : GA E a) :
   rw [← mul_assoc, ← splitCentre_add, neg_add_cancel, splitCentre_zero, one_mul]
 
 theorem exists_homeomorph (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ha : 0 < a) :
-    ∃ e : Reduction.normOneGL E a × ℝ ≃ₜ GA E a, ∀ x t, e (x, t) = splitCentre E a t * (x : GA E a) := by
+    ∃ e : Reduction.normOneGL (K := E) (n := a) × ℝ ≃ₜ GA E a, ∀ x t, e (x, t) = splitCentre E a t * (x : GA E a) := by
   refine ⟨{
     toFun := fun p => splitCentre E a p.2 * (p.1 : GA E a)
     invFun := fun g => (⟨splitCentre E a (-splitDeg E a g) * g, splitCentre_neg_mul_mem ha g⟩, splitDeg E a g)

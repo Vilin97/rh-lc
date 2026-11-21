@@ -25,7 +25,7 @@ attribute [local instance 100] LieRing.ofAssociativeRing
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem mem_of_mem_topologicalClosure {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     {S Y : Submodule ℂ E} (hY : IsClosed (Y : Set E)) (T : E →L[ℂ] E) (hT : ∀ v ∈ S, T v ∈ Y)
@@ -33,7 +33,7 @@ theorem mem_of_mem_topologicalClosure {E : Type*} [NormedAddCommGroup E] [Normed
   have hle : S ≤ Y.comap (T : E →ₗ[ℂ] E) := fun w hw => hT w hw
   exact Submodule.topologicalClosure_minimal S hle (hY.preimage T.continuous) hv
 
-theorem exists_eq_archimedean_mul_finite (g : normOneGL K n) :
+theorem exists_eq_archimedean_mul_finite (g : normOneGL (K := K) (n := n)) :
     ∃ (a : archGroup K n) (f : AdelicGLn.FiniteAdelicGL K n),
       g = archP K n a * retractOne (finEmb K n f) := by
   refine ⟨archEquiv K n (AdelicGLn.prodEquiv K n g).1, (AdelicGLn.prodEquiv K n g).2, ?_⟩
@@ -364,7 +364,7 @@ variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
 namespace CuspidalAutomorphicRepresentation
 
-variable {μ : Measure (Reduction.normOneGL K n)} [μ.IsHaarMeasure]
+variable {μ : Measure (Reduction.normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
 
 def ofSummand (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V] (hV : (cuspRepT μ).IsInvariant V)
     (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible) (hne : summandCuspForms V ≠ ⊥) :

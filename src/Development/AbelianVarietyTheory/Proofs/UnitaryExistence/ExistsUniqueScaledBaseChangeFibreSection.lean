@@ -21,7 +21,7 @@ theorem exists_pull_linComb {X Y Z : Scheme.{0}} (L : LB X) {K : Type} [Fintype 
     ∃ s' : LB.Sec (LB.LinComb L φ' ε), ∀ (j : K → L.ι)
       (hle : (LB.LinComb L φ' ε).U j ≤ h ⁻¹ᵁ (LB.LinComb L φ ε).U j), (h.appLE _ _ hle).hom (s.f j) = s'.f j := by
   subst e
-  exact ⟨DVR.pullSec L φ ε s h, fun _ _ => rfl⟩
+  exact ⟨DVR.pullSec φ ε s h, fun _ _ => rfl⟩
 
 theorem lbSec_ext {X : Scheme.{0}} {L : LB X} {s t : LB.Sec L} (h : ∀ i, s.f i = t.f i) : s = t := by
   cases s; cases t

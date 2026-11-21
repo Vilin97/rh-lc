@@ -141,20 +141,16 @@ section Examples
 
 theorem isVerticalDivisor_one {K : Type*} [DecidableEq K] {ι : K → Type*} {O : Type*} [CommRing O]
     [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O) (H : Ideal (MRing ι O)) [H.IsPrime] :
-    IsVerticalDivisor H ϖ 0 1 1 where
-  degrees := ⟨0, 0, isWeightedHomogeneous_one _ _, isWeightedHomogeneous_one _ _, by
-    funext k; simp⟩
-  num_not_mem := Ideal.IsPrime.ne_top' ∘ (Ideal.eq_top_of_isUnit_mem _ · isUnit_one)
-  den_not_mem := Ideal.IsPrime.ne_top' ∘ (Ideal.eq_top_of_isUnit_mem _ · isUnit_one)
-  vertical := by
-    intro W hW
-    simp [ratDiv, divCycle_one] at hW
-  unit_off_special := by
-    intro W hW _ _ _
-    refine ⟨1, 1, ?_, ?_, ?_⟩
-    · exact (Ideal.ne_top_iff_one W).mp hW.ne_top
-    · exact (Ideal.ne_top_iff_one W).mp hW.ne_top
-    · simp
+    IsVerticalDivisor H ϖ 0 1 1 := by
+  have hHom : IsMultiHomog (1 : MRing ι O) 0 := isWeightedHomogeneous_one O (blockWeight ι)
+  have hOne : (1 : MRing ι O) ∉ H := (Ideal.ne_top_iff_one H).mp Ideal.IsPrime.ne_top'
+  refine ⟨⟨0, 0, hHom, hHom, ?_⟩, hOne, hOne, ?_, ?_⟩
+  · funext k
+    simp
+  · simp [ratDiv]
+  · intro W hW _ _ _
+    have hOneW : (1 : MRing ι O) ∉ W := (Ideal.ne_top_iff_one W).mp hW.ne_top
+    exact ⟨1, 1, hOneW, hOneW, by simp⟩
 
 def psumExpansion (N k : ℕ) : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ :=
   fun i => ∑ j ∈ Finset.range k, X (Sum.inl i) ^ j * X (Sum.inr i) ^ (k - 1 - j)
@@ -191,17 +187,16 @@ instance pointIdeal_isPrime (y : (Σ k, ι k) → Ω) : (pointIdeal O y).IsPrime
 
 theorem isFlagPair_self (ϖ : O) (y : (Σ k, ι k) → Ω) (r : ℕ) {s : Ω} (hs : s ≠ 0) :
     IsFlagPair ϖ y (scaledTrivBundle O (segreVec y) r hs) (scaledTrivBundle O (segreVec y) r hs)
-      (scaledBasis r hs) (scaledBasis r hs) 0 0 (fun _ => 1) (fun _ => 1) where
-  flag := isFlagFrame_scaledTriv O y r hs
-  flag' := isFlagFrame_scaledTriv O y r hs
-  sameFlag i j hij := by
-    simp [Module.Basis.repr_self, ne_of_lt hij]
-  vertical i := by
-    have h0 : ((0 : Fin r → K → ℤ) i - (0 : Fin r → K → ℤ) i) = 0 := sub_self _
-    rw [h0]
+      (scaledBasis r hs) (scaledBasis r hs) 0 0 (fun _ => 1) (fun _ => 1) := by
+  have hFlag := isFlagFrame_scaledTriv O y r hs
+  refine ⟨hFlag, hFlag, ?_, ?_, ?_⟩
+  · intro i j hij
+    rw [Module.Basis.repr_self, Finsupp.single_apply, ite_eq_right hij.ne]
+  · intro i
+    rw [sub_self]
     exact isVerticalDivisor_one ϖ _
-  generic i := by
-    simp
+  · intro i
+    simp [Module.Basis.repr_self]
 
 end ExamplesDVR
 

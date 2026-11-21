@@ -39,7 +39,7 @@ private theorem map_right_eq_of_CO {G : Type} [Group G] [TopologicalSpace G] [Is
   rw [h, hc, one_smul]
 
 theorem UpperTheory.localOperator_comp_rhoL_eq_of_right_invariant :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K)
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K)
           [MeasurableSpace (Gw n w)] [BorelSpace (Gw n w)] (mw : Measure (Gw n w)) [mw.IsHaarMeasure] (J : Subgroup (Gw n w)), CO J →
           ∀ (φ : Gw n w → ℂ), (∀ k ∈ J, ∀ x, φ (x * k) = φ x) → ∀ T : LL μ →L[ℂ] LL μ, IsOloc μ w mw φ T →
           ∀ k ∈ J, T ∘L rhoL μ w k = T := by

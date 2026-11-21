@@ -147,7 +147,7 @@ theorem finite_of_isClosed_splitTorus_of_pow_eq_one :
         (∀ x ∈ C, x ^ n = 1 → x = 1) → Finite C := by
   intro k _ _ X _ _ _ n hp hn C Z hZ hC htors
   haveI : NeZero (n : k) := ⟨hn⟩
-  let e := splitTorusPointEquiv k X
+  let e := splitTorusPointEquiv (k := k) (X := X)
   have hcl : @IsClosed _ (torusZariski k X)
       (C.comap e.toMonoidHom : Set (Multiplicative X →* kˣ)) := by
     refine isClosed_induced_iff.2 ⟨(torusIso k X).hom ⁻¹' Z,

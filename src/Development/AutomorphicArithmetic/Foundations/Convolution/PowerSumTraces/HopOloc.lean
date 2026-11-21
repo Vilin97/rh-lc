@@ -141,7 +141,7 @@ end UpperTheory.ConvolutionTheory.C.HopfExpansion
 theorem UpperTheory.ConvolutionTheory.C.hopOloc :
     UpperTheory.ConvolutionTheory.C.HopOloc := by
   intro K _ _ n μ _ w _ _ m _ J x hJ hm u v
-  let φ : Gw n w →* normOneGL K n := (MultiplicityOne.finProj K n).comp (AdelicGLn.localEmbedding w)
+  let φ : Gw n w →* normOneGL (K := K) (n := n) := (MultiplicityOne.finProj K n).comp (AdelicGLn.localEmbedding w)
   have hφ : Continuous φ := MultiplicityOne.continuous_finProj.comp (UpperTheory.ConvolutionTheory.Tf.locEmb K n w).1
   let π : UnitaryRep (Gw n w) (LL μ) := (rightRegularRep (rationalGLOne K n) μ).compHom φ hφ
   have hπ : ∀ x, π x = rhoL μ w x := fun _ => rfl

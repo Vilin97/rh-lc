@@ -63,7 +63,7 @@ theorem _root_.GlobalTheory.existsUnique_ringHom_OmS :
       rw [hm] at hcard ⊢
       norm_cast at hcard ⊢
       nlinarith
-    · exact le_trans (Cardinal.natCast_lt_aleph0 _).le ht
+    · exact le_trans Cardinal.natCast_lt_aleph0.le ht
   have hinj : Function.Injective (MvPolynomial.aeval (R := Ω) g).toRingHom :=
     algebraicIndependent_iff_injective_aeval.1 hind
   let P : _root_.ReciprocityTheory.ChartRestriction.G.T0.OmS Ω D N →+* L := IsFractionRing.lift (K := _root_.ReciprocityTheory.ChartRestriction.G.T0.OmS Ω D N) hinj

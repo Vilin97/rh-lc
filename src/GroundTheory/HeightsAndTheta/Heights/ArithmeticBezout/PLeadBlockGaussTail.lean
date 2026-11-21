@@ -22,7 +22,8 @@ theorem lintegral_pi_prod {E : Type*} [MeasurableSpace E] (μ : Measure E) [Sigm
       ∫⁻ x, ∏ i, f i (x i) ∂Measure.pi (fun _ => μ) = ∏ i, ∫⁻ y, f i y ∂μ
   | 0, f, _ => by simp
   | n + 1, f, hf => by
-      have e := measurePreserving_piFinSuccAbove (fun _ : Fin (n + 1) => μ) 0
+      have e := measurePreserving_piFinSuccAbove (α := fun _ : Fin (n + 1) => E)
+        (m := fun _ => inferInstance) (fun _ => μ) 0
       let g : E × (Fin n → E) → ℝ≥0∞ := fun a => f 0 a.1 * ∏ i : Fin n, f i.succ (a.2 i)
       have hg : Measurable fun a : Fin n → E => ∏ i : Fin n, f i.succ (a i) :=
         Finset.measurable_prod _ fun i _ => (hf i.succ).comp (measurable_pi_apply i)

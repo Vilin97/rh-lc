@@ -32,7 +32,7 @@ theorem exists_compl_centralCuspForms (U : Submodule ℂ (cuspForms K n)) (hU : 
       (∀ X, ∀ φ ∈ C, (gkModuleCusp K n).ρ X φ ∈ C) ∧ (∀ k, ∀ φ ∈ C, (gkModuleCusp K n).σ k φ ∈ C) ∧
       (∀ g, ∀ φ ∈ C, finRepCusp K n g φ ∈ C) ∧ U ⊓ C = ⊥ ∧ U ⊔ C = centralCuspForms K n := by
   obtain ⟨d, b, ε, B, hε, horth, hsymm, hinv, hK⟩ := exists_archCartanData (K := K) (n := n)
-  obtain ⟨μ, hμ⟩ : ∃ μ : Measure (Reduction.normOneGL K n), μ.IsHaarMeasure := ⟨Measure.haar, inferInstance⟩
+  obtain ⟨μ, hμ⟩ : ∃ μ : Measure (Reduction.normOneGL (K := K) (n := n)), μ.IsHaarMeasure := ⟨Measure.haar, inferInstance⟩
   exact exists_isCompl_of_finite (cuspToL2 μ)
     (fun a ha h0 => injOn_cuspToL2 μ ha (fun _ _ => rfl) (h0.trans (map_zero (cuspToL2 μ)).symm))
     (fun g a ha c hc => petersson_inner_finiteAdelic_invariant μ g ha hc)

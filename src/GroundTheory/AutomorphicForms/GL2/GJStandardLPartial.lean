@@ -35,7 +35,7 @@ theorem exists_norm_le_of_cusp (hn : 0 < n) {φ : AdelicGLn.AdelicGL K n → ℂ
   rw [hy, ← Reduction.centralSection_mul_comm, hA]
   exact hC _ p.1.2
 
-theorem continuous_globalMatrixCoeff (hn : 0 < n) (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure]
+theorem continuous_globalMatrixCoeff (hn : 0 < n) (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     {φ₁ φ₂ : AdelicGLn.AdelicGL K n → ℂ} (h₁ : φ₁ ∈ AutomorphicForm.cuspForms K n)
     (h₂ : φ₂ ∈ AutomorphicForm.cuspForms K n)
     (hA : ∀ (t : {r : ℝ // 0 < r}) (x : AdelicGLn.AdelicGL K n), φ₁ (Reduction.centralSection K n t * x) = φ₁ x) :

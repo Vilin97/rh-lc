@@ -32,16 +32,16 @@ def openSubgroupOf (U : Subgroup (AdelicGLn.integralFiniteGL K n))
     rw [Subgroup.coe_map, Subgroup.coe_subtype]
     exact (AdelicGLn.isOpen_integralFiniteGL K n).isOpenMap_subtype_val _ hU
 
-def IsSmoothTest (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ) : Prop :=
+def IsSmoothTest (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) : Prop :=
   ∃ (ν : Measure (ArchUnits K n)) (_ : ν.IsHaarMeasure) (U : Subgroup (AdelicGLn.integralFiniteGL K n))
     (hU : IsOpen (U : Set (AdelicGLn.integralFiniteGL K n)))
     (β : ArchMatrix K n → ℝ) (hβ : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) β)
     (hβc : HasCompactSupport β)
     (hβu : tsupport β ⊆ range (Units.val : ArchUnits K n → ArchMatrix K n))
-    (g : CompactlySupportedContinuousMap (normOneGL K n) ℂ),
+    (g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ),
     f = archConv ν hβ.continuous hβc hβu (finAvg U hU g)
 
-theorem IsSmoothTest.exists_finOne_mul {f : CompactlySupportedContinuousMap (normOneGL K n) ℂ}
+theorem IsSmoothTest.exists_finOne_mul {f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ}
     (hf : IsSmoothTest f) :
     ∃ (U : Subgroup (AdelicGLn.integralFiniteGL K n))
       (_ : IsOpen (U : Set (AdelicGLn.integralFiniteGL K n))),
@@ -51,10 +51,10 @@ theorem IsSmoothTest.exists_finOne_mul {f : CompactlySupportedContinuousMap (nor
   rw [archConv_apply, archConv_apply]
   exact archConvFun_finOne_mul _ _ u (fun y => finAvgFun_finOne_mul U hU g ⟨u, hu⟩ y) x
 
-variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
-theorem exists_isSmoothTest_near (g : CompactlySupportedContinuousMap (normOneGL K n) ℂ) {ε : ℝ}
-    (hε : 0 < ε) : ∃ f : CompactlySupportedContinuousMap (normOneGL K n) ℂ,
+theorem exists_isSmoothTest_near (g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) {ε : ℝ}
+    (hε : 0 < ε) : ∃ f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ,
       IsSmoothTest f ∧ ∫ x, ‖g x - f x‖ ∂μ ≤ ε := by
   obtain ⟨ν, hν⟩ : ∃ ν : Measure (ArchUnits K n), ν.IsHaarMeasure :=
     ⟨Measure.haar, inferInstance⟩

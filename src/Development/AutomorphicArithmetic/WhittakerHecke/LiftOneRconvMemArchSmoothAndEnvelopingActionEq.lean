@@ -41,7 +41,7 @@ private theorem dm_induction {K : Type} [Field K] [NumberField K] {n : ℕ}
   exact (key Finset.univ).2.1
 
 private theorem lift_add {K : Type} [Field K] [NumberField K] {n : ℕ} (hn : 0 < n)
-    (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (β β' : TI K n) (e : TF K n) (φ : LL μ) :
+    (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (β β' : TI K n) (e : TF K n) (φ : LL μ) :
     liftOne (rconv (rationalGLOne K n) μ (tens (β + β') e) φ) =
       liftOne (rconv (rationalGLOne K n) μ (tens β e) φ) + liftOne (rconv (rationalGLOne K n) μ (tens β' e) φ) := by
   funext g
@@ -51,14 +51,14 @@ private theorem lift_add {K : Type} [Field K] [NumberField K] {n : ℕ} (hn : 0 
   simp only [CompactlySupportedContinuousMap.add_apply, add_mul]
 
 private theorem lift_zero {K : Type} [Field K] [NumberField K] {n : ℕ} (hn : 0 < n)
-    (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (e : TF K n) (φ : LL μ) :
+    (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (e : TF K n) (φ : LL μ) :
     liftOne (rconv (rationalGLOne K n) μ (tens (0 : TI K n) e) φ) = 0 := by
   have := lift_add hn μ 0 0 e φ
   rw [add_zero] at this
   exact left_eq_add.1 this
 
 theorem UpperTheory.liftOne_rconv_mem_archSmooth_and_envelopingAction_eq :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure], Compat μ ν m →
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure], Compat μ ν m →
           ∀ (β : TI K n) (e : TF K n), SmoothT β → ∀ φ : LL μ,
           ∃ h : liftOne (rconv (rationalGLOne K n) μ (tens β e) φ) ∈ archSmooth K n, ∀ u : UC K n,
             (uAct u ⟨_, h⟩ : AdelicGLn.AdelicGL K n → ℂ) = liftOne (rconv (rationalGLOne K n) μ (tens (lact u β) e) φ) := by

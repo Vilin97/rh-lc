@@ -38,18 +38,18 @@ instance countable_matrix : Countable (Matrix (Fin n) (Fin n) K) := by
 
 instance countable_R (k : ℕ) : Countable (R (K := K) (n := n) k) := Subtype.countable
 
-@[simp] theorem coe_ratEquiv (γ : GL (Fin n) K) : ((ratEquiv γ : rationalGLOne K n) : normOneGL K n) = ratOne K n γ :=
+@[simp] theorem coe_ratEquiv (γ : GL (Fin n) K) : ((ratEquiv γ : rationalGLOne K n) : normOneGL (K := K) (n := n)) = ratOne K n γ :=
   rfl
 
 def thetaR (k : ℕ) (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ) (y : AdelicGLn.AdelicGL K n)
-    (h : normOneGL K n) : ℂ :=
+    (h : normOneGL (K := K) (n := n)) : ℂ :=
   ∑' Z : R (K := K) (n := n) k, Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (Z : Matrix (Fin n) (Fin n) K) *
     ((h : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))
 
-def reps (k : ℕ) (g : normOneGL K n) : Set (GL (Fin n) K) :=
+def reps (k : ℕ) (g : normOneGL (K := K) (n := n)) : Set (GL (Fin n) K) :=
   {γ | ratOne K n γ * g ∈ fundamentalDomain (parabolicOne K n k)}
 
-theorem existsUnique_reps (k : ℕ) (g : normOneGL K n) (γ₀ : GL (Fin n) K) :
+theorem existsUnique_reps (k : ℕ) (g : normOneGL (K := K) (n := n)) (γ₀ : GL (Fin n) K) :
     ∃! p : parabolic (K := K) (n := n) k, (p : GL (Fin n) K) * γ₀ ∈ reps k g := by
   obtain ⟨q, hq, hqu⟩ := existsUnique_smul_mem_fundamentalDomain (parabolicOne K n k) (ratOne K n γ₀ * g)
   obtain ⟨p, hp, hpq⟩ := mem_parabolicOne_iff.1 q.2
@@ -68,26 +68,26 @@ theorem existsUnique_reps (k : ℕ) (g : normOneGL K n) (γ₀ : GL (Fin n) K) :
     rw [hpq]
     exact congrArg Subtype.val this
 
-def rankEquiv {k : ℕ} (hk : k ≤ n) (g : normOneGL K n) :
+def rankEquiv {k : ℕ} (hk : k ≤ n) (g : normOneGL (K := K) (n := n)) :
     reps k g × R (K := K) (n := n) k ≃ {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k} :=
   Equiv.ofBijective _ (bijective_mulMap hk (existsUnique_reps k g))
 
-theorem coe_rankEquiv {k : ℕ} (hk : k ≤ n) (g : normOneGL K n) (x : reps k g × R (K := K) (n := n) k) :
+theorem coe_rankEquiv {k : ℕ} (hk : k ≤ n) (g : normOneGL (K := K) (n := n)) (x : reps k g × R (K := K) (n := n) k) :
     ((rankEquiv hk g x : {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k}) : Matrix (Fin n) (Fin n) K) =
       (x.2 : Matrix (Fin n) (Fin n) K) * ((x.1 : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) :=
   rfl
 
 theorem mul_ratMat_mul (y : AdelicGLn.AdelicGL K n) (Z : Matrix (Fin n) (Fin n) K) (γ : GL (Fin n) K)
-    (g : normOneGL K n) :
+    (g : normOneGL (K := K) (n := n)) :
     (y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (Z * (γ : Matrix (Fin n) (Fin n) K)) *
         ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) =
       (y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat Z *
-        (((ratOne K n γ * g : normOneGL K n) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) := by
+        (((ratOne K n γ * g : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) := by
   rw [ratMat_mul, Subgroup.coe_mul, Units.val_mul, coe_ratOne_matrix]
   simp only [Matrix.mul_assoc]
 
 theorem tsum_rank_eq {k : ℕ} (hk : k ≤ n) (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ)
-    (y : AdelicGLn.AdelicGL K n) (g : normOneGL K n)
+    (y : AdelicGLn.AdelicGL K n) (g : normOneGL (K := K) (n := n))
     (hs : Summable fun ξ : Matrix (Fin n) (Fin n) K => ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) *
       ratMat ξ * ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))‖) :
     ∑' ξ : {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k},
@@ -120,17 +120,17 @@ theorem tsum_rank_eq {k : ℕ} (hk : k ≤ n) (Φ : Matrix (Fin n) (Fin n) 𝔸[
       (show ratOne K n γ * g ∉ fundamentalDomain (parabolicOne K n k) from hγ)]
 
 theorem tsum_rank_enorm_eq {k : ℕ} (hk : k ≤ n) (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ)
-    (y : AdelicGLn.AdelicGL K n) (g : normOneGL K n) :
+    (y : AdelicGLn.AdelicGL K n) (g : normOneGL (K := K) (n := n)) :
     ∑' ξ : {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k},
         ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (ξ : Matrix (Fin n) (Fin n) K) *
           ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))‖ₑ =
       ∑' γ : GL (Fin n) K, (fundamentalDomain (parabolicOne K n k)).indicator
-        (fun h : normOneGL K n => ∑' Z : R (K := K) (n := n) k,
+        (fun h : normOneGL (K := K) (n := n) => ∑' Z : R (K := K) (n := n) k,
           ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (Z : Matrix (Fin n) (Fin n) K) *
             ((h : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))‖ₑ)
         (ratOne K n γ * g) := by
   rw [← (rankEquiv hk g).tsum_eq, ENNReal.tsum_prod']
-  set T : normOneGL K n → ℝ≥0∞ := fun h => ∑' Z : R (K := K) (n := n) k,
+  set T : normOneGL (K := K) (n := n) → ℝ≥0∞ := fun h => ∑' Z : R (K := K) (n := n) k,
     ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (Z : Matrix (Fin n) (Fin n) K) *
       ((h : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))‖ₑ with hT
   have hin : ∀ b : reps k g, (∑' c : R (K := K) (n := n) k, ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) *
@@ -160,7 +160,7 @@ theorem ratMat_mul_unipMatrix {k : ℕ} {Z : Matrix (Fin n) (Fin n) K}
   · rw [mul_zero]
 
 theorem thetaR_unipOne {k : ℕ} (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ) (y : AdelicGLn.AdelicGL K n)
-    (X : UPos n k → 𝔸[K]) (g : normOneGL K n) :
+    (X : UPos n k → 𝔸[K]) (g : normOneGL (K := K) (n := n)) :
     thetaR k Φ y (unipOne K n k X * g) = thetaR k Φ y g := by
   refine tsum_congr fun Z => ?_
   congr 1
@@ -186,7 +186,7 @@ def rightMulR {k : ℕ} (hk : k ≤ n) {p : GL (Fin n) K} (hp : p ∈ parabolic 
 
 theorem thetaR_ratOne {k : ℕ} (hk : k ≤ n) (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ)
     (y : AdelicGLn.AdelicGL K n) {p : GL (Fin n) K} (hp : p ∈ parabolic (K := K) (n := n) k)
-    (g : normOneGL K n) : thetaR k Φ y (ratOne K n p * g) = thetaR k Φ y g := by
+    (g : normOneGL (K := K) (n := n)) : thetaR k Φ y (ratOne K n p * g) = thetaR k Φ y g := by
   rw [thetaR, thetaR, ← (rightMulR hk hp).tsum_eq (fun Z : R (K := K) (n := n) k =>
     Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (Z : Matrix (Fin n) (Fin n) K) *
       ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])))]
@@ -196,13 +196,13 @@ theorem thetaR_ratOne {k : ℕ} (hk : k ≤ n) (Φ : Matrix (Fin n) (Fin n) 𝔸
       ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))
   rw [mul_ratMat_mul]
 
-theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     {ψ : AdelicGLn.AdelicGL K n → ℂ} (hψc : Continuous ψ) (hψl : IsLeftInvariant ψ)
     (hψ : IsCuspidal ψ) {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ} (hΦ : Continuous Φ)
     (y : AdelicGLn.AdelicGL K n)
     (hsum : ∀ g : AdelicGLn.AdelicGL K n, Summable fun ξ : Matrix (Fin n) (Fin n) K =>
       ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat ξ * (g : Matrix (Fin n) (Fin n) 𝔸[K]))‖)
-    (hbd : ∃ C, ∀ g ∈ normOneGL K n, ‖ψ g‖ * ∑' ξ : Matrix (Fin n) (Fin n) K,
+    (hbd : ∃ C, ∀ g ∈ normOneGL (K := K) (n := n), ‖ψ g‖ * ∑' ξ : Matrix (Fin n) (Fin n) K,
       ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat ξ * (g : Matrix (Fin n) (Fin n) 𝔸[K]))‖ ≤ C)
     {k : ℕ} (hk : 0 < k) (hkn : k < n) :
     ∫ g in fundamentalDomain (rationalGLOne K n), ψ (g : AdelicGLn.AdelicGL K n) *
@@ -213,13 +213,13 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL K n)) [μ.IsH
   have hkn' : k ≤ n := hkn.le
   set E := fundamentalDomain (parabolicOne K n k) with hE
   set FΓ := fundamentalDomain (rationalGLOne K n) with hFΓ
-  set F : normOneGL K n → ℂ := thetaR k Φ y with hF
-  set ψ' : normOneGL K n → ℂ := fun h => ψ (h : AdelicGLn.AdelicGL K n) with hψ'
-  set H : normOneGL K n → ℂ := E.indicator (fun h => ψ' h * F h) with hH
-  have hψΓ : ∀ (γ : GL (Fin n) K) (g : normOneGL K n), ψ' (ratOne K n γ * g) = ψ' g :=
+  set F : normOneGL (K := K) (n := n) → ℂ := thetaR k Φ y with hF
+  set ψ' : normOneGL (K := K) (n := n) → ℂ := fun h => ψ (h : AdelicGLn.AdelicGL K n) with hψ'
+  set H : normOneGL (K := K) (n := n) → ℂ := E.indicator (fun h => ψ' h * F h) with hH
+  have hψΓ : ∀ (γ : GL (Fin n) K) (g : normOneGL (K := K) (n := n)), ψ' (ratOne K n γ * g) = ψ' g :=
     fun γ g => hψl γ g
 
-  have hcoe : Continuous fun h : normOneGL K n =>
+  have hcoe : Continuous fun h : normOneGL (K := K) (n := n) =>
       ((h : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) :=
     Units.continuous_val.comp continuous_subtype_val
   have hψm : Measurable ψ' := (hψc.comp continuous_subtype_val).measurable
@@ -229,7 +229,7 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL K n)) [μ.IsH
     · exact (hsum (h : AdelicGLn.AdelicGL K n)).of_norm.comp_injective Subtype.val_injective
   have hHm : Measurable H := (hψm.mul hFm).indicator (measurableSet_fundamentalDomain _)
 
-  have hpt : ∀ g : normOneGL K n, ψ' g * ∑' ξ : {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k},
+  have hpt : ∀ g : normOneGL (K := K) (n := n), ψ' g * ∑' ξ : {ξ : Matrix (Fin n) (Fin n) K // ξ.rank = n - k},
       Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (ξ : Matrix (Fin n) (Fin n) K) *
         ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])) =
       ∑' γ : rationalGLOne K n, H (γ • g) := by
@@ -242,10 +242,10 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL K n)) [μ.IsH
     · rw [indicator_of_mem hγ, indicator_of_mem hγ, hψΓ]
     · rw [indicator_of_notMem hγ, indicator_of_notMem hγ, mul_zero]
 
-  have hbound : ∀ g : normOneGL K n, ∑' γ : rationalGLOne K n, ‖H (γ • g)‖ₑ ≤ ENNReal.ofReal C := by
+  have hbound : ∀ g : normOneGL (K := K) (n := n), ∑' γ : rationalGLOne K n, ‖H (γ • g)‖ₑ ≤ ENNReal.ofReal C := by
     intro g
     have h1 : ∀ γ : GL (Fin n) K, ‖H (ratOne K n γ * g)‖ₑ ≤ ‖ψ' g‖ₑ *
-        E.indicator (fun h : normOneGL K n => ∑' Z : R (K := K) (n := n) k,
+        E.indicator (fun h : normOneGL (K := K) (n := n) => ∑' Z : R (K := K) (n := n) k,
           ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (Z : Matrix (Fin n) (Fin n) K) *
             ((h : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))‖ₑ) (ratOne K n γ * g) := by
       intro γ
@@ -260,7 +260,7 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL K n)) [μ.IsH
           rw [← ratEquiv.tsum_eq]
           rfl
       _ ≤ ∑' γ : GL (Fin n) K, ‖ψ' g‖ₑ *
-          E.indicator (fun h : normOneGL K n => ∑' Z : R (K := K) (n := n) k,
+          E.indicator (fun h : normOneGL (K := K) (n := n) => ∑' Z : R (K := K) (n := n) k,
             ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat (Z : Matrix (Fin n) (Fin n) K) *
               ((h : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))‖ₑ) (ratOne K n γ * g) :=
           ENNReal.tsum_le_tsum h1
@@ -292,13 +292,13 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL K n)) [μ.IsH
         _ = ENNReal.ofReal C * μ FΓ := by rw [setLIntegral_const]
         _ < ∞ := ENNReal.mul_lt_top ENNReal.ofReal_lt_top hFΓfin
     · intro γ
-      exact (hHm.enorm.comp (measurable_const_mul (γ : normOneGL K n))).aemeasurable.restrict
+      exact (hHm.enorm.comp (measurable_const_mul (γ : normOneGL (K := K) (n := n)))).aemeasurable.restrict
   have hHint : Integrable H μ := ⟨hHm.aestronglyMeasurable, hlint⟩
 
   have hunf : ∫ g in FΓ, ∑' γ : rationalGLOne K n, H (γ • g) ∂μ = ∫ g, H g ∂μ := by
     rw [hFΓfd.integral_eq_tsum'' H hHint, integral_tsum]
     · intro γ
-      exact (hHm.comp (measurable_const_mul (γ : normOneGL K n))).aestronglyMeasurable.restrict
+      exact (hHm.comp (measurable_const_mul (γ : normOneGL (K := K) (n := n)))).aestronglyMeasurable.restrict
     · rw [← hFΓfd.lintegral_eq_tsum'' (fun g => ‖H g‖ₑ)]
       exact hlint.ne
 

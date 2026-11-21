@@ -277,13 +277,13 @@ private lemma nfac_flow_ge_lemma_5 {r : ℕ} (X : _root_.ReciprocityTheory.Chart
     exact ⟨by nlinarith [hs τ], by nlinarith [mul_le_mul (hY τ) (hL τ j) h2 hY0, hs τ]⟩
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.nfac
   rw [← Finset.sum_neg_distrib, Real.rpow_sum_of_pos hQ0, ← Finset.prod_mul_distrib]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro τ _
     exact mul_nonneg (Finset.prod_nonneg fun i _ => Real.rpow_nonneg (norm_nonneg _) _)
       (Real.rpow_nonneg hQ0.le _)
   intro τ _
   rw [← Finset.sum_neg_distrib, Real.rpow_sum_of_pos hQ0, ← Finset.prod_mul_distrib]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro i _
     exact mul_nonneg (Real.rpow_nonneg (norm_nonneg _) _) (Real.rpow_nonneg hQ0.le _)
   intro i _

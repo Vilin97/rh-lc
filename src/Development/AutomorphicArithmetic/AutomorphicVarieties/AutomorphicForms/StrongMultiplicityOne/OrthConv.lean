@@ -24,12 +24,12 @@ private theorem conv_left {E : Type} [Field E] [NumberField E] [IsTotallyComplex
   unfold Af.StrongMultiplicityOne.conv
   rw [e]
 
-private theorem zero_of_sq {E : Type} [Field E] [NumberField E] {n : ℕ} (μ : Measure (Reduction.normOneGL E n))
+private theorem zero_of_sq {E : Type} [Field E] [NumberField E] {n : ℕ} (μ : Measure (Reduction.normOneGL (K := E) (n := n)))
     [μ.IsHaarMeasure] (F : AdelicGLn.AdelicGL E n → ℂ) (hc : Continuous F) (C : ℝ) (hC : ∀ g, ‖F g‖ ≤ C)
     (h : IsLeftInvariant F)
     (h0 : ∫ q, starRingEnd ℂ (CuspidalSpectrum.cuspQuot h q) * CuspidalSpectrum.cuspQuot h q
       ∂(RightCosetSpace.quotientMeasure (Reduction.rationalGLOne E n) μ) = 0) :
-    ∀ y ∈ Reduction.normOneGL E n, F y = 0 := by
+    ∀ y ∈ Reduction.normOneGL (K := E) (n := n), F y = 0 := by
   have := Reduction.isFiniteMeasure_quotientMeasure (K := E) (n := n) μ
   have hq := CuspidalSpectrum.continuous_cuspQuot h hc
   have hb : ∀ q, ‖CuspidalSpectrum.cuspQuot h q‖ ≤ C := fun q => by
@@ -47,7 +47,7 @@ private theorem zero_of_sq {E : Type} [Field E] [NumberField E] {n : ℕ} (μ : 
       exact pow_le_pow_left₀ (norm_nonneg _) (hb q) 2)
   have h2 := (integral_eq_zero_iff_of_nonneg (fun q => sq_nonneg _) hi).1 h1
   have h3 := (RightCosetSpace.quasiMeasurePreserving_mk (Reduction.rationalGLOne E n) μ).ae_eq h2
-  have h4 := (Continuous.ae_eq_iff_eq μ (f := fun y : Reduction.normOneGL E n => ‖F y‖ ^ 2)
+  have h4 := (Continuous.ae_eq_iff_eq μ (f := fun y : Reduction.normOneGL (K := E) (n := n) => ‖F y‖ ^ 2)
     ((hc.comp continuous_subtype_val).norm.pow 2) continuous_const).1 h3
   intro y hy
   exact norm_eq_zero.1 (pow_eq_zero_iff two_ne_zero |>.1 (congrFun h4 ⟨y, hy⟩))

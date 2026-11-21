@@ -16,10 +16,10 @@ open GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory.C U
 namespace UpperTheory.ConvolutionTheory.BW
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
-  {μ : Measure (normOneGL E n)} [μ.IsHaarMeasure] {v : LL μ} {φ : Sm E n}
+  {μ : Measure (normOneGL (K := E) (n := n))} [μ.IsHaarMeasure] {v : LL μ} {φ : Sm E n}
 
 private theorem out_eq (h : Umg φ) :
-    (fun y : RightCosetSpace (rationalGLOne E n) => φ.1 ((Quotient.out y : normOneGL E n) : GA E n)) = cuspQuot h.left := by
+    (fun y : RightCosetSpace (rationalGLOne E n) => φ.1 ((Quotient.out y : normOneGL (K := E) (n := n)) : GA E n)) = cuspQuot h.left := by
   funext y
   conv_rhs => rw [← Quotient.out_eq y]
   rfl
@@ -61,8 +61,8 @@ private theorem rep_rt (h : Rep μ v φ) (g : GA E n) : Rep μ (RG μ g v) (rt E
   refine of_cont ((((umgOps E) n).2 φ h.umg).2.2.2.2.1 g) (fun t x => ?_) ?_
   · change φ.1 (zt E n t * x * g) = φ.1 (x * g)
     rw [mul_assoc, h.cen]
-  · have e : (fun y : normOneGL E n => (rt E n g φ).1 (y : GA E n)) =
-        fun y : normOneGL E n => φ.1 ((y * retractOne g : normOneGL E n) : GA E n) := funext fun y => retr h y g
+  · have e : (fun y : normOneGL (K := E) (n := n) => (rt E n g φ).1 (y : GA E n)) =
+        fun y : normOneGL (K := E) (n := n) => φ.1 ((y * retractOne g : normOneGL (K := E) (n := n)) : GA E n) := funext fun y => retr h y g
     rw [e]
     exact (cont_of h).translate (retractOne g)
 

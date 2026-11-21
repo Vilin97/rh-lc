@@ -57,7 +57,7 @@ private theorem int_commute {G G₁ H : Type} [Group G] [TopologicalSpace G] [Gr
   exact (UnitaryRep.comp_integrated_of_mem_intertwiners _ μ hT f).symm
 
 theorem UpperTheory.ConvolutionTheory.Tf.opAlg :
-    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure],
+    ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (m : Measure (AdelicGLn.FiniteAdelicGL K n)) [m.IsHaarMeasure],
       (∀ β β' : TI K n, Oinf μ ν (conv ν β β') = Oinf μ ν β ∘L Oinf μ ν β' ∧ Oinf μ ν (β + β') = Oinf μ ν β + Oinf μ ν β') ∧
       (∀ e e' : TF K n, Ofin μ m (conv m e e') = Ofin μ m e ∘L Ofin μ m e' ∧ Ofin μ m (e + e') = Ofin μ m e + Ofin μ m e') ∧
       (∀ (c : ℂ) (β : TI K n) (e : TF K n), Oinf μ ν (c • β) = c • Oinf μ ν β ∧ Ofin μ m (c • e) = c • Ofin μ m e) ∧

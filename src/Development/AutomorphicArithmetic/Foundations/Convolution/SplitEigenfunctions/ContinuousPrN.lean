@@ -121,9 +121,9 @@ private theorem exists_sep : ∃ W K₀ : Set (A E)ˣ, IsOpen W ∧ (1 : (A E)ˣ
   refine Units.ext (AdeleRing.algebraMap_injective (𝓞 E) E ?_)
   simpa using h4
 
-private abbrev NG (E : Type) [Field E] [NumberField E] : Type := GroundTheory.Automorphic.Reduction.normOneGL E 2
+private abbrev NG (E : Type) [Field E] [NumberField E] : Type := GroundTheory.Automorphic.Reduction.normOneGL (K := E) (n := 2)
 
-private theorem gl_mem (h : G1 E) : gl h ∈ GroundTheory.Automorphic.Reduction.normOneGL E 2 := by
+private theorem gl_mem (h : G1 E) : gl h ∈ GroundTheory.Automorphic.Reduction.normOneGL (K := E) (n := 2) := by
   rw [GroundTheory.Automorphic.Reduction.mem_normOneGL]
   show ((IdeleGroup.ideleModule E (dt (gl h)) : {r : ℝ // 0 < r}) : ℝ) = 1
   rw [dt_gl, map_one]

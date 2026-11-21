@@ -125,8 +125,10 @@ private theorem short_lattice (Λ : Type) [Ring Λ] [IsDomain Λ] [Module.Free �
       show b.repr (y * b l) k = _
       rw [hy, Finset.sum_mul]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [smul_mul_assoc, map_sum, map_zsmul, Finsupp.coe_finset_sum, Finset.sum_apply,
-        Finsupp.smul_apply, smul_eq_mul, T]
+        simp only [smul_mul_assoc, map_sum, map_zsmul, T]
+      change (Finsupp.applyAddHom k) (∑ i, g i • b.repr (b i * b l)) = _
+      rw [map_sum]
+      simp only [Finsupp.applyAddHom_apply, Finsupp.smul_apply, smul_eq_mul]
     rw [e]
     calc |∑ i, g i * T i k l| ≤ ∑ i, |g i * T i k l| := Finset.abs_sum_le_sum_abs _ _
       _ ≤ ∑ i, (m : ℤ) * ((T i k l).natAbs : ℤ) := by

@@ -282,7 +282,7 @@ theorem hermC_eq {r : ℕ} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (u 
 theorem gram_eq {r : ℕ} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E)
     (N : Matrix (Fin r) (Fin r) ℂ) : FD.gram τ G (N.map conj) = Nᴴ * G.map τ * N := by
   ext a b
-  simp only [FD.gram, FD.hermC, FD.col, of_apply, map_apply, mul_apply, conjTranspose_apply,
+  simp only [FD.gram, FD.hermC, FD.col, of_apply, map_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Finset.sum_mul, Complex.conj_conj, RCLike.star_def]
   exact Finset.sum_comm
 

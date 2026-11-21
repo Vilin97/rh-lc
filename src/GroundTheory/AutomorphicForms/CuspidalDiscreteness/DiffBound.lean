@@ -88,8 +88,8 @@ variable (ν : Measure (ArchUnits K n)) [ν.IsHaarMeasure] {β : ArchMatrix K n 
 
 theorem integrable_archConv_integrand (hβ : Continuous β) (hβc : HasCompactSupport β)
     (hβu : tsupport β ⊆ range (Units.val : ArchUnits K n → ArchMatrix K n))
-    (h : CompactlySupportedContinuousMap (normOneGL K n) ℂ) (C : ArchUnits K n)
-    (w : normOneGL K n) :
+    (h : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) (C : ArchUnits K n)
+    (w : normOneGL (K := K) (n := n)) :
     Integrable (fun A : ArchUnits K n =>
       (β ((C * A : ArchUnits K n) : ArchMatrix K n) : ℂ) * h ((archProj K n A)⁻¹ * w)) ν := by
   refine Continuous.integrable_of_hasCompactSupport ?_ ?_
@@ -104,9 +104,9 @@ theorem integrable_archConv_integrand (hβ : Continuous β) (hβc : HasCompactSu
 
 theorem sum_altSign_archConvFun_eq (hβ : Continuous β) (hβc : HasCompactSupport β)
     (hβu : tsupport β ⊆ range (Units.val : ArchUnits K n → ArchMatrix K n))
-    (h : CompactlySupportedContinuousMap (normOneGL K n) ℂ) {k : ℕ} {Y : Fin k → ArchMatrix K n}
+    (h : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) {k : ℕ} {Y : Fin k → ArchMatrix K n}
     (hY : ∀ i j, Y i * Y j = 0) {C : (Fin k → Bool) → ArchUnits K n}
-    (hC : ∀ ε, ((C ε : ArchUnits K n) : ArchMatrix K n) = 1 + altPoint Y ε) (w : normOneGL K n) :
+    (hC : ∀ ε, ((C ε : ArchUnits K n) : ArchMatrix K n) = 1 + altPoint Y ε) (w : normOneGL (K := K) (n := n)) :
     ∑ ε, (altSign ε : ℂ) * archConvFun ν β h ((archProj K n (C ε))⁻¹ * w) =
       ∫ A : ArchUnits K n, ((altSum k β (fun i => -(Y i * (A : ArchMatrix K n)))
         (A : ArchMatrix K n) : ℝ) : ℂ) * h ((archProj K n A)⁻¹ * w) ∂ν := by
@@ -154,10 +154,10 @@ theorem mem_unipBall_of_val_eq {k : ℕ} {Y : Fin k → ArchMatrix K n} (hY : �
 theorem exists_norm_sum_altSign_archConvFun_le (hβ : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) β)
     (hβc : HasCompactSupport β)
     (hβu : tsupport β ⊆ range (Units.val : ArchUnits K n → ArchMatrix K n))
-    (h : CompactlySupportedContinuousMap (normOneGL K n) ℂ) (k : ℕ) (R : ℝ) :
+    (h : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) (k : ℕ) (R : ℝ) :
     ∃ c : ℝ, ∀ (Y : Fin k → ArchMatrix K n), (∀ i j, Y i * Y j = 0) → (∀ i, ‖Y i‖ ≤ R) →
       ∀ (C : (Fin k → Bool) → ArchUnits K n),
-        (∀ ε, ((C ε : ArchUnits K n) : ArchMatrix K n) = 1 + altPoint Y ε) → ∀ w : normOneGL K n,
+        (∀ ε, ((C ε : ArchUnits K n) : ArchMatrix K n) = 1 + altPoint Y ε) → ∀ w : normOneGL (K := K) (n := n),
         ‖∑ ε, (altSign ε : ℂ) * archConvFun ν β h ((archProj K n (C ε))⁻¹ * w)‖ ≤
           c * ∏ i, ‖Y i‖ := by
   obtain ⟨Bk, hBk⟩ := exists_norm_altSum_le hβ hβc k

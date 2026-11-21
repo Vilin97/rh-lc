@@ -15,19 +15,22 @@ section
 
 variable (F : Type) {Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] (l : ℕ) [Fact l.Prime]
 
-def decImage (A : ValuationSubring Ω) : Subgroup ℤ_[l]ˣ := (Dec (F := F) A).map (cycZ F Ω l)
+def decImage (A : ValuationSubring Ω) : Subgroup ℤ_[l]ˣ :=
+  (Dec (F := F) A).map (cycZ (F := F) (Ω := Ω) l)
 
-def ineImage (A : ValuationSubring Ω) : Subgroup ℤ_[l]ˣ := (Ine (F := F) A).map (cycZ F Ω l)
+def ineImage (A : ValuationSubring Ω) : Subgroup ℤ_[l]ˣ :=
+  (Ine (F := F) A).map (cycZ (F := F) (Ω := Ω) l)
 
 theorem ineImage_le_decImage (A : ValuationSubring Ω) : ineImage F l A ≤ decImage F l A := Subgroup.map_mono (Ine_le_Dec A)
 
-
-def qzG (e : ℤ) : Representation ℤ_[l] (G F Ω) (QZ l) := scalRep (QZ l) (cycZ F Ω l ^ (-e))
+variable (Ω) in
+def qzG (e : ℤ) : Representation ℤ_[l] (G F Ω) (QZ l) :=
+  scalRep (QZ l) (cycZ (F := F) (Ω := Ω) l ^ (-e))
 
 variable {F l}
 
 theorem qzG_apply (e : ℤ) (g : G F Ω) (x : QZ l) :
-    qzG F Ω l e g x = ((cycZ F Ω l g ^ (-e) : ℤ_[l]ˣ) : ℤ_[l]) • x := rfl
+    qzG F Ω l e g x = ((cycZ (F := F) (Ω := Ω) l g ^ (-e) : ℤ_[l]ˣ) : ℤ_[l]) • x := rfl
 
 theorem qzTw_comp_toGS (D : LData F Ω l) (e : ℤ) : (qzTw D e).comp (toGS Ω _) = qzG F Ω l e := by
   ext g x
@@ -71,7 +74,7 @@ theorem mk_mem_ShaAbs (ρ : Representation R (G F Ω) M) (S : Set (HeightOneSpec
 end
 
 def shaInv (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Prime] (e : ℤ) : ℕ∞ :=
-  Module.length ℤ_[l] (ShaAbs (qzG F (AlgebraicClosure F) l e) (Above F l))
+  Module.length ℤ_[l] (ShaAbs (qzG F (AlgebraicClosure F) l e) (Above (F := F) l))
 
 def nuBound (l N e : ℕ) : ℕ :=
   if l ∣ N ∨ l - 1 ∣ e then max (N.factorization l) (if l = 2 then 2 else 1) + e.factorization l else 0

@@ -15,7 +15,7 @@ open scoped SchwartzMap FourierTransform RealInnerProductSpace ContDiff Topology
 
 open CuspidalSpectrum RightCosetSpace in
 private theorem UpperTheory.V.Af.Smo.coeFn_tr {E : Type} [Field E] [NumberField E] {n : ℕ}
-    (μ : Measure (Reduction.normOneGL E n)) [μ.IsHaarMeasure] {φ : cuspForms E n} (hφ : φ ∈ centralCuspForms E n)
+    (μ : Measure (Reduction.normOneGL (K := E) (n := n))) [μ.IsHaarMeasure] {φ : cuspForms E n} (hφ : φ ∈ centralCuspForms E n)
     (g : AdelicGLn.AdelicGL E n) :
     (toLp μ (cuspRepT μ (toOne g) (cuspVecL μ φ)) : RightCosetSpace (Reduction.rationalGLOne E n) → ℂ)
       =ᵐ[quotientMeasure (Reduction.rationalGLOne E n) μ] quotTr φ g := by

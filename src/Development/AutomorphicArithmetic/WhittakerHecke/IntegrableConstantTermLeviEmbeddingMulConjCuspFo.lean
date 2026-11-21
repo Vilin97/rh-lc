@@ -91,7 +91,7 @@ end
 
 theorem UpperTheory.integrable_constantTerm_leviEmbedding_mul_conj_cuspForm :
     ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (S : Set (Pl E)) (r s : ℕ) (b : Blo S r) (φ : Sm E (r + s)), Umg φ → ∀ (g : GA E r) (m : GA E s),
-      Integrable (fun y : RightCosetSpace (rationalGLOne E r) => AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (((Quotient.out y : normOneGL E r) : GA E r) * g, m)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))) (quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
+      Integrable (fun y : RightCosetSpace (rationalGLOne E r) => AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g, m)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) (quotientMeasure (rationalGLOne E r) (mu1 E r)) := by
   intro E _ _ _ S r s b φ hφ g m
   obtain ⟨F, hF, -, hFl, -⟩ := UpperTheory.ConvolutionTheory.BW.ctOps E r s φ hφ
   have hcφ : Continuous φ.1 := ((UpperTheory.ConvolutionTheory.BW.umgOps E (r + s)).2 φ hφ).1
@@ -124,12 +124,12 @@ theorem UpperTheory.integrable_constantTerm_leviEmbedding_mul_conj_cuspForm :
   set L := AutomorphicForm.height (lev (Ad E) r s (g, m)) with hL
   have hL0 : 0 < L := AutomorphicForm.height_pos _
   have hc0 : 0 < AutomorphicForm.heightConst E (r + s) := one_pos.trans_le AutomorphicForm.one_le_heightConst
-  have hbound : ∀ y : normOneGL E r, ‖H (y : GA E r)‖ ≤ |C| * (2 * AutomorphicForm.heightConst E (r + s) * L) ^ N * D := by
+  have hbound : ∀ y : normOneGL (K := E) (n := r), ‖H (y : GA E r)‖ ≤ |C| * (2 * AutomorphicForm.heightConst E (r + s) * L) ^ N * D := by
     intro y
     have hq1 : 1 ≤ PositivityTheory.Rg.Tf.Core.qht y := le_ciInf fun γ => AutomorphicForm.one_le_height _
     obtain ⟨γ, hγ⟩ := exists_lt_of_ciInf_lt (show PositivityTheory.Rg.Tf.Core.qht y < 2 * PositivityTheory.Rg.Tf.Core.qht y by linarith)
     obtain ⟨γ', hγ'⟩ := Subgroup.mem_subgroupOf.1 γ.2
-    have hγ'' : ((γ : normOneGL E r) : GA E r) = ratGL E r γ' := hγ'.symm
+    have hγ'' : ((γ : normOneGL (K := E) (n := r)) : GA E r) = ratGL E r γ' := hγ'.symm
     set y' : GA E r := ratGL E r γ' * (y : GA E r) with hy'
     have hy'h : AutomorphicForm.height y' < 2 * PositivityTheory.Rg.Tf.Core.qht y := by
       rw [hy', ← hγ'']; exact hγ
@@ -161,7 +161,7 @@ theorem UpperTheory.integrable_constantTerm_leviEmbedding_mul_conj_cuspForm :
       _ = |C| * (2 * AutomorphicForm.heightConst E (r + s) * L) ^ N * (‖b.f.1 (y : GA E r)‖ * PositivityTheory.Rg.Tf.Core.qht y ^ N) := by ring
       _ ≤ _ := mul_le_mul_of_nonneg_left (hD y) hK
   have := isFiniteMeasure_quotientMeasure (K := E) (n := r) (mu1 E r)
-  have he : (fun y : RightCosetSpace (rationalGLOne E r) => AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (((Quotient.out y : normOneGL E r) : GA E r) * g, m)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))) =
+  have he : (fun y : RightCosetSpace (rationalGLOne E r) => AutomorphicForm.constantTerm r φ.1 (lev (Ad E) r s (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g, m)) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) =
       CuspidalSpectrum.cuspQuot hHl := funext fun y => by
     have h := CuspidalSpectrum.cuspQuot_mk hHl (Quotient.out y)
     rw [show RightCosetSpace.mk (rationalGLOne E r) (Quotient.out y) = y from Quotient.out_eq y] at h

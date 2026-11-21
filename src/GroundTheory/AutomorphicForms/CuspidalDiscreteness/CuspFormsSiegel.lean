@@ -143,7 +143,7 @@ theorem exists_norm_le_height_pow_neg_siegel {φ : AdelicGLn.AdelicGL K n → �
     ∃ C : ℝ, ∀ b ∈ ω, ∀ (ρ : Fin n → ℝ) (hρ : ∀ i, 0 < ρ i),
       (∀ i j : Fin n, (j : ℕ) = i + 1 → t * ρ j ≤ ρ i) →
       ∀ kk ∈ (Reduction.maxCompact : Subgroup (AdelicGLn.AdelicGL K n)),
-      ∀ x : AdelicGLn.AdelicGL K n, x ∈ Reduction.normOneGL K n →
+      ∀ x : AdelicGLn.AdelicGL K n, x ∈ Reduction.normOneGL (K := K) (n := n) →
       x = b * Reduction.diagUnits n (fun i => Reduction.posIdele (K := K) (ρ i) (hρ i)) * kk →
       ‖φ x‖ ≤ C * (height x ^ N')⁻¹ := by
   obtain ⟨C₀, N₀, hC₀⟩ := hφ.1.hasModerateGrowth
@@ -259,13 +259,13 @@ theorem exists_norm_le_height_pow_neg_siegel {φ : AdelicGLn.AdelicGL K n → �
     simpa using this
 
 theorem exists_norm_le_of_mem_cuspForms {φ : AdelicGLn.AdelicGL K n → ℂ}
-    (hφ : φ ∈ cuspForms K n) : ∃ C : ℝ, ∀ x ∈ Reduction.normOneGL K n, ‖φ x‖ ≤ C := by
+    (hφ : φ ∈ cuspForms K n) : ∃ C : ℝ, ∀ x ∈ Reduction.normOneGL (K := K) (n := n), ‖φ x‖ ≤ C := by
   obtain ⟨ω, hω, hωB, t, ht, hsieg⟩ := Reduction.exists_siegelSet (K := K) n
   obtain ⟨C, hC⟩ := exists_norm_le_height_pow_neg_siegel hφ hω hωB ht 0
   refine ⟨C, fun x hx => ?_⟩
   obtain ⟨γ, hγ⟩ := hsieg x
   obtain ⟨b, hb, a, ⟨ρ, hρ, hs, rfl⟩, kk, hkk, hxe⟩ := hγ
-  have hγx : AdelicGLn.diagonal K n γ * x ∈ Reduction.normOneGL K n :=
+  have hγx : AdelicGLn.diagonal K n γ * x ∈ Reduction.normOneGL (K := K) (n := n) :=
     mul_mem (Reduction.rationalGL_le_normOneGL ⟨γ, rfl⟩) hx
   have h := hC b hb ρ hρ hs kk hkk _ hγx hxe
   rwa [pow_zero, inv_one, mul_one, hφ.1.isLeftInvariant γ x] at h

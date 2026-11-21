@@ -24,12 +24,12 @@ variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 section Integrated
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
-  (σ : UnitaryRep (normOneGL K n) H)
-  (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+  (σ : UnitaryRep (normOneGL (K := K) (n := n)) H)
+  (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
   (ν : Measure (ArchUnits K n)) [ν.IsHaarMeasure]
   {β : ArchMatrix K n → ℝ}
 
-theorem inner_integrated_ccToL1_eq (f : CompactlySupportedContinuousMap (normOneGL K n) ℂ)
+theorem inner_integrated_ccToL1_eq (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     (w u : H) :
     ⟪w, σ.integrated μ (UnitaryRep.ccToL1 μ f) u⟫_ℂ = ∫ g, f g * ⟪w, σ g u⟫_ℂ ∂μ := by
   rw [UnitaryRep.inner_integrated]
@@ -48,7 +48,7 @@ theorem integrable_smul_archProj (hβ : Continuous β) (hβc : HasCompactSupport
 
 theorem integrated_archConv (hβ : Continuous β) (hβc : HasCompactSupport β)
     (hβu : tsupport β ⊆ range (Units.val : ArchUnits K n → ArchMatrix K n))
-    (g : CompactlySupportedContinuousMap (normOneGL K n) ℂ) (w : H) :
+    (g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) (w : H) :
     σ.integrated μ (UnitaryRep.ccToL1 μ (archConv ν hβ hβc hβu g)) w =
       ∫ A, (β A : ℂ) • σ (archProj K n A) (σ.integrated μ (UnitaryRep.ccToL1 μ g) w) ∂ν := by
   refine ext_inner_left ℂ fun w' => ?_
@@ -56,7 +56,7 @@ theorem integrated_archConv (hβ : Continuous β) (hβc : HasCompactSupport β)
   rw [← integral_inner (integrable_smul_archProj σ ν hβ hβc hβu u) w']
   set S : Set (ArchUnits K n) := (Units.val : ArchUnits K n → ArchMatrix K n) ⁻¹' tsupport β
   have hS : IsCompact S := isCompact_unitsSupport hβc hβu
-  set Φ : ArchUnits K n → normOneGL K n → ℂ :=
+  set Φ : ArchUnits K n → normOneGL (K := K) (n := n) → ℂ :=
     fun A x => (β A : ℂ) * g ((archProj K n A)⁻¹ * x) * ⟪w', σ x w⟫_ℂ with hΦ
   have hcont : Continuous (uncurry Φ) :=
     (((Complex.continuous_ofReal.comp (hβ.comp (Units.continuous_val.comp continuous_fst)))).mul
@@ -68,7 +68,7 @@ theorem integrated_archConv (hβ : Continuous β) (hβc : HasCompactSupport β)
     obtain ⟨A, x⟩ := p
     show (β A : ℂ) * g ((archProj K n A)⁻¹ * x) * ⟪w', σ x w⟫_ℂ = 0
     by_cases h1 : A ∈ S
-    · by_cases h2 : (archProj K n A)⁻¹ * x ∈ tsupport (g : normOneGL K n → ℂ)
+    · by_cases h2 : (archProj K n A)⁻¹ * x ∈ tsupport (g : normOneGL (K := K) (n := n) → ℂ)
       · exact absurd ⟨h1, ⟨archProj K n A, ⟨A, h1, rfl⟩, _, h2, mul_inv_cancel_left _ _⟩⟩ hp
       · rw [image_eq_zero_of_notMem_tsupport h2, mul_zero, zero_mul]
     · have : β A = 0 := image_eq_zero_of_notMem_tsupport (f := β) h1
@@ -96,7 +96,7 @@ end Integrated
 
 theorem finAvg_eq_self (U : Subgroup (AdelicGLn.integralFiniteGL K n))
     (hU : IsOpen (U : Set (AdelicGLn.integralFiniteGL K n)))
-    {g : CompactlySupportedContinuousMap (normOneGL K n) ℂ}
+    {g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ}
     (hg : ∀ u ∈ U, ∀ x, g (finOne K n u * x) = g x) : finAvg U hU g = g := by
   ext x
   rw [finAvg_apply]

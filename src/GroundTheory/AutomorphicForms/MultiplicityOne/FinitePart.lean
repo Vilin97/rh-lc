@@ -21,7 +21,7 @@ open Reduction AutomorphicForm CuspidalSpectrum
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
-variable (σ : UnitaryRep (normOneGL K n) H)
+variable (σ : UnitaryRep (normOneGL (K := K) (n := n)) H)
 
 abbrev archRep : UnitaryRep (ArchUnits K n) H := σ.compHom (archProj K n) continuous_archProj
 
@@ -68,7 +68,7 @@ variable {σ V₀}
 variable {U₀ : Subgroup (AdelicGLn.FiniteAdelicGL K n)} (hV₀U : V₀ ≤ fixedSubspace σ U₀)
 
 
-variable {μ : Measure (normOneGL K n)} [μ.IsHaarMeasure]
+variable {μ : Measure (normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
 
 end Admissible
 

@@ -372,7 +372,7 @@ theorem centralSection_mul_comm_matrix (t : {r : ℝ // 0 < r}) (M : Matrix (Fin
 
 theorem twisted_poisson_centralSection (hn : 0 < n) {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ}
     (hΦ : Φ ∈ matrixSchwartzBruhat K n) (t : {r : ℝ // 0 < r}) {x y : AdelicGLn.AdelicGL K n}
-    (hx : x ∈ normOneGL K n) (hy : y ∈ normOneGL K n) :
+    (hx : x ∈ normOneGL (K := K) (n := n)) (hy : y ∈ normOneGL (K := K) (n := n)) :
     Summable (fun ξ : Matrix (Fin n) (Fin n) K =>
       ‖Φ (((centralSection K n t * x⁻¹ : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) *
         ratMat ξ * (y : Matrix (Fin n) (Fin n) 𝔸[K]))‖) ∧

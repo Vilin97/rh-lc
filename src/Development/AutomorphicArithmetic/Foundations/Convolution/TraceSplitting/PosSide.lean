@@ -100,14 +100,14 @@ private theorem ex_norm (m : Measure G) [m.IsHaarMeasure] {U : Subgroup G} (hU :
 
 end Abs
 
-private theorem amp_eq {K : Type} [Field K] [NumberField K] {n : ℕ} {μ : Measure (normOneGL K n)} [μ.IsHaarMeasure]
+private theorem amp_eq {K : Type} [Field K] [NumberField K] {n : ℕ} {μ : Measure (normOneGL (K := K) (n := n))} [μ.IsHaarMeasure]
     (𝔞 : Amp μ) (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (h1 : 𝔞.ν = ν) :
     𝔞.A = Oinf μ ν 𝔞.a₀ ∘L prj (fixF μ 𝔞.U) := by
   subst h1
   rfl
 
 private theorem term {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyComplex F]
-    {σ : E ≃ₐ[F] E} {n : ℕ} (hn : 0 < n) {μ : Measure (normOneGL F n)} [μ.IsHaarMeasure] {q : Pl F}
+    {σ : E ≃ₐ[F] E} {n : ℕ} (hn : 0 < n) {μ : Measure (normOneGL (K := F) (n := n))} [μ.IsHaarMeasure] {q : Pl F}
     {w₀ : GroundTheory.Global.SemiLocal.PlacesOver E q} {ν : Measure (archGroup F n)} [ν.IsHaarMeasure] {a : TI F n} {L : Loc σ n q w₀}
     {e : Fin n → ℤ} {l : ℕ} {𝔣 : Side (Twist.id μ) l} (he : Antitone e) (hF : IsSideF L ν a e 𝔣)
     (hf : ∀ v ∈ L.S, L.f v = (L.UF v : Set (Gw n v)).indicator 1) {x : ℝ} (hx : 0 < x) (V : Submodule ℂ (LL μ))

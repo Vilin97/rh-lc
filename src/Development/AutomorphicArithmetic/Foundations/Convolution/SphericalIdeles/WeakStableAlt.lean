@@ -38,8 +38,8 @@ theorem UpperTheory.ConvolutionTheory.Sph.weakStable :
     haveI : FiniteDimensional K M := Module.finite_of_finrank_pos hp.pos
     haveI : IsCyclic (M ≃ₐ[K] M) := isCyclic_of_prime_card (IsGalois.card_aut_eq_finrank K M)
     obtain ⟨σ, hσ⟩ := IsCyclic.exists_generator (α := M ≃ₐ[K] M)
-    let μE : Measure (normOneGL M n) := Measure.haar
-    let μF : Measure (normOneGL K n) := Measure.haar
+    let μE : Measure (normOneGL (K := M) (n := n)) := Measure.haar
+    let μF : Measure (normOneGL (K := K) (n := n)) := Measure.haar
     obtain ⟨s, χ, χ', V, -, -, hχ, hχ', hV, -, -, -, hW', hOff, -⟩ :=
       UpperTheory.ConvolutionTheory.Sph.norm K M σ hσ hp n hn μE μF π P hW
     obtain ⟨-, htw⟩ := powTwist K M

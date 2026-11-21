@@ -219,7 +219,7 @@ theorem exists_norm_le_of_mem_siegelSet {ψ : AdelicGLn.AdelicGL K n → ℂ}
     (hψ : ψ ∈ AutomorphicForm.cuspForms K n) {ω : Set (AdelicGLn.AdelicGL K n)} (hω : IsCompact ω)
     (hωB : ω ⊆ ((Reduction.adelicBorel : Subgroup (AdelicGLn.AdelicGL K n)) :
       Set (AdelicGLn.AdelicGL K n))) {t₀ : ℝ} (ht₀ : 0 < t₀) (N : ℕ) :
-    ∃ C : ℝ, ∀ x ∈ Reduction.siegelSet n ω t₀, x ∈ Reduction.normOneGL K n →
+    ∃ C : ℝ, ∀ x ∈ Reduction.siegelSet n ω t₀, x ∈ Reduction.normOneGL (K := K) (n := n) →
       ‖ψ x‖ ≤ C * (AutomorphicForm.height x ^ N)⁻¹ := by
   obtain ⟨C, hC⟩ := CuspidalSpectrum.exists_norm_le_height_pow_neg_siegel hψ hω hωB ht₀ N
   refine ⟨C, fun x hx hx1 => ?_⟩
@@ -244,7 +244,7 @@ theorem max_one_centralScale_inv_pow (t : {r : ℝ // 0 < r}) (M : ℕ) :
 theorem exists_bound_tsum {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ}
     (hΦ : Φ ∈ matrixSchwartzBruhat K n) {ψ₁ ψ₂ : AdelicGLn.AdelicGL K n → ℂ}
     (h₁ : ψ₁ ∈ AutomorphicForm.cuspForms K n) (h₂ : ψ₂ ∈ AutomorphicForm.cuspForms K n) :
-    ∃ C M : ℝ, 0 ≤ C ∧ ∀ x ∈ Reduction.normOneGL K n, ∀ y ∈ Reduction.normOneGL K n,
+    ∃ C M : ℝ, 0 ≤ C ∧ ∀ x ∈ Reduction.normOneGL (K := K) (n := n), ∀ y ∈ Reduction.normOneGL (K := K) (n := n),
       ∀ t : {r : ℝ // 0 < r},
       Summable (fun ξ : Matrix (Fin n) (Fin n) K => ‖Φ (((Reduction.centralSection K n t * x⁻¹ :
         AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat ξ *
@@ -261,9 +261,9 @@ theorem exists_bound_tsum {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ}
     fun x hx y hy t => ?_⟩
   obtain ⟨γ₁, hγ₁⟩ := hsieg x
   obtain ⟨γ₂, hγ₂⟩ := hsieg y
-  have hγ₁1 : AdelicGLn.diagonal K n γ₁ * x ∈ Reduction.normOneGL K n :=
+  have hγ₁1 : AdelicGLn.diagonal K n γ₁ * x ∈ Reduction.normOneGL (K := K) (n := n) :=
     mul_mem (Reduction.rationalGL_le_normOneGL ⟨γ₁, rfl⟩) hx
-  have hγ₂1 : AdelicGLn.diagonal K n γ₂ * y ∈ Reduction.normOneGL K n :=
+  have hγ₂1 : AdelicGLn.diagonal K n γ₂ * y ∈ Reduction.normOneGL (K := K) (n := n) :=
     mul_mem (Reduction.rationalGL_le_normOneGL ⟨γ₂, rfl⟩) hy
   obtain ⟨hsum, hle⟩ := hbound _ hγ₁ _ hγ₂ t
   obtain ⟨hiff, heq⟩ := summable_tsum_reindex Φ t x y γ₁ γ₂
@@ -298,7 +298,7 @@ theorem exists_bound_tsum {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ}
 theorem exists_bound_tsum_one {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ}
     (hΦ : Φ ∈ matrixSchwartzBruhat K n) {ψ : AdelicGLn.AdelicGL K n → ℂ}
     (hψ : ψ ∈ AutomorphicForm.cuspForms K n) (y : AdelicGLn.AdelicGL K n) :
-    ∃ C : ℝ, ∀ g ∈ Reduction.normOneGL K n,
+    ∃ C : ℝ, ∀ g ∈ Reduction.normOneGL (K := K) (n := n),
       Summable (fun ξ : Matrix (Fin n) (Fin n) K => ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) *
         ratMat ξ * (g : Matrix (Fin n) (Fin n) 𝔸[K]))‖) ∧
       ‖ψ g‖ * ∑' ξ : Matrix (Fin n) (Fin n) K, ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) *
@@ -314,7 +314,7 @@ theorem exists_bound_tsum_one {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ}
   have hm0 : 0 ≤ m := pow_nonneg (zero_le_one.trans (le_max_left _ _)) M
   refine ⟨max C₁ 0 * C * m * AutomorphicForm.height x' ^ M, fun g hg => ?_⟩
   obtain ⟨γ₂, hγ₂⟩ := hsieg g
-  have hγ₂1 : AdelicGLn.diagonal K n γ₂ * g ∈ Reduction.normOneGL K n :=
+  have hγ₂1 : AdelicGLn.diagonal K n γ₂ * g ∈ Reduction.normOneGL (K := K) (n := n) :=
     mul_mem (Reduction.rationalGL_le_normOneGL ⟨γ₂, rfl⟩) hg
   have hy : Reduction.centralSection K n s * y₁ = Reduction.centralSection K n s * (y₁⁻¹)⁻¹ := by
     rw [inv_inv]
@@ -354,8 +354,8 @@ theorem exists_decay_siegel (hn : 0 < n) {Φ : Matrix (Fin n) (Fin n) 𝔸[K] �
     (hΦ : Φ ∈ matrixSchwartzBruhat K n) {ω : Set (AdelicGLn.AdelicGL K n)} (hω : IsCompact ω)
     (t₀ : ℝ) {M : ℕ} (hM : Module.finrank ℝ (Fin n × Fin n → mixedEmbedding.mixedSpace K) < M)
     (N : ℝ) :
-    ∃ C : ℝ, 0 ≤ C ∧ ∀ x ∈ Reduction.siegelSet n ω t₀, x ∈ Reduction.normOneGL K n →
-      ∀ y ∈ Reduction.siegelSet n ω t₀, y ∈ Reduction.normOneGL K n →
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ x ∈ Reduction.siegelSet n ω t₀, x ∈ Reduction.normOneGL (K := K) (n := n) →
+      ∀ y ∈ Reduction.siegelSet n ω t₀, y ∈ Reduction.normOneGL (K := K) (n := n) →
       ∀ t : {r : ℝ // 0 < r}, 1 ≤ (t : ℝ) →
       Summable (fun γ : GL (Fin n) K => ‖Φ ((Reduction.centralSection K n t * x⁻¹ *
         AdelicGLn.diagonal K n γ * y : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])‖) ∧
@@ -400,7 +400,7 @@ theorem exists_decay_siegel (hn : 0 < n) {Φ : Matrix (Fin n) (Fin n) 𝔸[K] �
     by_cases hbox : IsInBox I W
     · rw [if_pos hbox, mul_one, mul_one]
       have hdet : (Reduction.detModule K n (x⁻¹ * AdelicGLn.diagonal K n γ * y) : ℝ) = 1 := by
-        have hmem : x⁻¹ * AdelicGLn.diagonal K n γ * y ∈ Reduction.normOneGL K n :=
+        have hmem : x⁻¹ * AdelicGLn.diagonal K n γ * y ∈ Reduction.normOneGL (K := K) (n := n) :=
           mul_mem (mul_mem (inv_mem hx1) (Reduction.rationalGL_le_normOneGL ⟨γ, rfl⟩)) hy1
         rw [Reduction.mem_normOneGL_iff_detModule.1 hmem]
         rfl
@@ -464,7 +464,7 @@ theorem exists_decay_siegel (hn : 0 < n) {Φ : Matrix (Fin n) (Fin n) 𝔸[K] �
 theorem exists_decay_tsum (hn : 0 < n) {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ}
     (hΦ : Φ ∈ matrixSchwartzBruhat K n) {ψ₁ ψ₂ : AdelicGLn.AdelicGL K n → ℂ}
     (h₁ : ψ₁ ∈ AutomorphicForm.cuspForms K n) (h₂ : ψ₂ ∈ AutomorphicForm.cuspForms K n) (N : ℝ) :
-    ∃ C : ℝ, 0 ≤ C ∧ ∀ x ∈ Reduction.normOneGL K n, ∀ y ∈ Reduction.normOneGL K n,
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ x ∈ Reduction.normOneGL (K := K) (n := n), ∀ y ∈ Reduction.normOneGL (K := K) (n := n),
       ∀ t : {r : ℝ // 0 < r}, 1 ≤ (t : ℝ) →
       Summable (fun γ : GL (Fin n) K => ‖Φ ((Reduction.centralSection K n t * x⁻¹ *
         AdelicGLn.diagonal K n γ * y : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K])‖) ∧
@@ -479,9 +479,9 @@ theorem exists_decay_tsum (hn : 0 < n) {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → 
   refine ⟨max C₂ 0 * max C₁ 0 * C, by positivity, fun x hx y hy t ht => ?_⟩
   obtain ⟨γ₁, hγ₁⟩ := hsieg x
   obtain ⟨γ₂, hγ₂⟩ := hsieg y
-  have hγ₁1 : AdelicGLn.diagonal K n γ₁ * x ∈ Reduction.normOneGL K n :=
+  have hγ₁1 : AdelicGLn.diagonal K n γ₁ * x ∈ Reduction.normOneGL (K := K) (n := n) :=
     mul_mem (Reduction.rationalGL_le_normOneGL ⟨γ₁, rfl⟩) hx
-  have hγ₂1 : AdelicGLn.diagonal K n γ₂ * y ∈ Reduction.normOneGL K n :=
+  have hγ₂1 : AdelicGLn.diagonal K n γ₂ * y ∈ Reduction.normOneGL (K := K) (n := n) :=
     mul_mem (Reduction.rationalGL_le_normOneGL ⟨γ₂, rfl⟩) hy
   obtain ⟨hsum, hle⟩ := hbound _ hγ₁ hγ₁1 _ hγ₂ hγ₂1 t ht
   set f : GL (Fin n) K → ℝ := fun γ => ‖Φ ((Reduction.centralSection K n t * x⁻¹ *

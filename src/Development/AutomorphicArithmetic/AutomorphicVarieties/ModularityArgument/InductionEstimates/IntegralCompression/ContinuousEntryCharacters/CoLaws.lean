@@ -32,7 +32,7 @@ private theorem haar {n : ℕ} {U : Type} [Group U] [TopologicalSpace U] [Second
 private theorem coe_arc {n : ℕ} (k : archCompact K n) :
     ((arc1 k : G1 K n) : AdelicGLn.AdelicGL K n) = infEmb K n (k : archGroup K n) := by
   rw [arc1, ← retract_infEmb]
-  exact congrArg Subtype.val (retractOne_coe (⟨_, maxCompact_le_normOneGL k.2⟩ : normOneGL K n))
+  exact congrArg Subtype.val (retractOne_coe (⟨_, maxCompact_le_normOneGL k.2⟩ : normOneGL (K := K) (n := n)))
 
 private theorem zt0 : zt K 0 = 1 := by
   rw [zt, ← map_one (centralSection K 2)]

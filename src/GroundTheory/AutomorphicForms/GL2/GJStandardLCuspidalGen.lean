@@ -166,7 +166,7 @@ variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
 theorem toOne_mul (g h : AdelicGLn.AdelicGL K n) : toOne (g * h) = toOne g * toOne h := by
   apply Subtype.ext
-  show ((toOne (g * h) : Reduction.normOneGL K n) : AdelicGLn.AdelicGL K n) =
+  show ((toOne (g * h) : Reduction.normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) =
     (toOne g : AdelicGLn.AdelicGL K n) * (toOne h : AdelicGLn.AdelicGL K n)
   rw [coe_toOne, coe_toOne, coe_toOne, map_mul, map_mul, mul_inv_rev]
   have hc : ∀ (s : {r : ℝ // 0 < r}) (x : AdelicGLn.AdelicGL K n),
@@ -183,7 +183,7 @@ theorem toOne_mul (g h : AdelicGLn.AdelicGL K n) : toOne (g * h) = toOne g * toO
 theorem toOne_one : toOne (1 : AdelicGLn.AdelicGL K n) = 1 :=
   Subtype.ext (by rw [coe_toOne, map_one, map_one, inv_one, mul_one]; rfl)
 
-variable (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure]
+variable (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem T_mul (a b : AdelicGLn.AdelicGL K n) (v : cuspidalL2 μ) :
     cuspRep μ (toOne (a * b)) v = cuspRep μ (toOne a) (cuspRep μ (toOne b) v) :=
@@ -438,7 +438,7 @@ theorem hR_gen {A H : Type*} [Group A] [NormedAddCommGroup H] [InnerProductSpace
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
   (P : CuspidalAutomorphicRepresentation K n) (D : AdelicDecomposition P.toModule)
   (a : D.toDecomposition.W₁) (x : ∀ v, D.finite.W v) (hx : IsRestricted D.finite.ξ x)
-  (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure]
+  (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 def Phi0 : cuspForms K n := ((phi D a x hx : P.carrier) : cuspForms K n)
 
@@ -687,7 +687,7 @@ theorem exists_pureTensor_spherical (P : CuspidalAutomorphicRepresentation K n) 
     · exact hwf v hv
 
 theorem matrixCoeff_factorization_of_pureTensor (P : CuspidalAutomorphicRepresentation K n) (D : AdelicDecomposition P.toModule)
-    (μ : Measure (Reduction.normOneGL K n)) [μ.IsHaarMeasure] (a : D.toDecomposition.W₁)
+    (μ : Measure (Reduction.normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (a : D.toDecomposition.W₁)
     (x : ∀ v, D.finite.W v) (hx : IsRestricted D.finite.ξ x) (ha : a ≠ 0) (hx0 : ∀ v, x v ≠ 0) :
     ∃ (ℓ : ∀ v, Module.Dual ℂ (D.finite.W v)) (fi : InfiniteAdelicGL K n → ℂ),
       (∀ v, ℓ v ∈ smoothVectors (Representation.dual (D.finite.π v))) ∧ (∀ v, ℓ v (x v) = 1) ∧

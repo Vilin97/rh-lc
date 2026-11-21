@@ -158,9 +158,9 @@ theorem compare_local {A : FinHolAtlas e X} {Ω Q : LocPot X} (hΩ : IsPotential
   have hcb : Metric.closedBall (c p) (r / 2) ⊆ O :=
     (Metric.closedBall_subset_ball (by linarith)).trans hrO
   have hΩs : ContDiffOn ℝ 2 (Ω.φ p ∘ c.symm) O :=
-    ((hΩ.1 p j).mono (fun y hy => ⟨hy.1, hy.2.1⟩)).of_le two_le_infty
+    ((hΩ.1 p j).mono (fun y (hy : y ∈ O) => ⟨hy.1, hy.2.1⟩)).of_le two_le_infty
   have hws : ContDiffOn ℝ 2 (Q.φ p ∘ c.symm) O :=
-    ((hQ.1 p j).mono (fun y hy => ⟨hy.1, hy.2.2⟩)).of_le two_le_infty
+    ((hQ.1 p j).mono (fun y (hy : y ∈ O) => ⟨hy.1, hy.2.2⟩)).of_le two_le_infty
   set K := Metric.closedBall (c p) (r / 2) ×ˢ Metric.sphere (0 : Fin e → ℂ) 1 with hK
   have hKc : IsCompact K := (isCompact_closedBall _ _).prod (isCompact_sphere _ _)
   have hKO : K ⊆ O ×ˢ Set.univ := Set.prod_mono hcb (Set.subset_univ _)

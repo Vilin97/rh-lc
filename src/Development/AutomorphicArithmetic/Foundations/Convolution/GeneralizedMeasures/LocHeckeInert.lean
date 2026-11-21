@@ -52,7 +52,7 @@ def levF (lev : ∀ v : Pl K, Subgroup (GL (Fin n) (v.adicCompletion K))) : Subg
   inv_mem' {a} ha v := by
     rw [map_inv, finAt_inv]; exact inv_mem (ha v)
 
-def sphOp (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure] (w : Pl K) (h : GL (Fin n) (w.adicCompletion K) → ℂ) : LL μ →L[ℂ] LL μ :=
+def sphOp (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure] (w : Pl K) (h : GL (Fin n) (w.adicCompletion K) → ℂ) : LL μ →L[ℂ] LL μ :=
   ∑ᶠ c : GL (Fin n) (w.adicCompletion K) ⧸ GLnLocal.integralGL (w.adicCompletion K) n, h c.out • rhoL μ w c.out
 
 def Good (ν : Fin n → ℤ) : Prop :=
@@ -120,7 +120,7 @@ structure Loc (σ : E ≃ₐ[F] E) (n : ℕ) (q : Pl F) (w₀ : PlacesOver E q) 
     f v = (GLnLocal.integralGL (v.adicCompletion F) n : Set _).indicator 1 ∧ (UE v : Set _) = unitSet E n v ∧
     UF v = GLnLocal.integralGL (v.adicCompletion F) n
 
-variable {μE : Measure (normOneGL E n)} [μE.IsHaarMeasure] {μF : Measure (normOneGL F n)} [μF.IsHaarMeasure] {θ : Twist μE} {l : ℕ}
+variable {μE : Measure (normOneGL (K := E) (n := n))} [μE.IsHaarMeasure] {μF : Measure (normOneGL (K := F) (n := n))} [μF.IsHaarMeasure] {θ : Twist μE} {l : ℕ}
   {σ : E ≃ₐ[F] E} {q : Pl F} {w₀ : PlacesOver E q}
 
 def IsSideE (L : Loc σ n q w₀) (νE : Measure (archGroup E n)) (aE : TI E n) (ν : Fin n → ℤ) (𝔢 : Side θ l) : Prop :=
@@ -133,7 +133,7 @@ def IsSideF (L : Loc σ n q w₀) (νF : Measure (archGroup F n)) (aF : TI F n) 
 
 end Two
 
-def AmpFn {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
+def AmpFn {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
     (ν : Measure (archGroup K n)) [ν.IsHaarMeasure] (a : TI K n) : Prop :=
   SmoothT a ∧ LeftFin a ∧ 0 ≤ Oinf μ ν a ∧ ‖Oinf μ ν a‖ ≤ 1
 
@@ -164,7 +164,7 @@ def LocQ : Prop :=
 def GM : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] [IsTotallyComplex F]
     [IsTotallyComplex E] (σ : E ≃ₐ[F] E), (∀ τ, τ ∈ Subgroup.zpowers σ) → (Module.finrank F E).Prime → ∀ n : ℕ, 0 < n →
-    ∀ (μE : Measure (normOneGL E n)) [μE.IsHaarMeasure] (μF : Measure (normOneGL F n)) [μF.IsHaarMeasure] (θ : Twist μE),
+    ∀ (μE : Measure (normOneGL (K := E) (n := n))) [μE.IsHaarMeasure] (μF : Measure (normOneGL (K := F) (n := n))) [μF.IsHaarMeasure] (θ : Twist μE),
       IsGalTwist σ θ → ∀ (q : Pl F) (w₀ : PlacesOver E q), Split E q →
     ∀ (νE : Measure (archGroup E n)) [νE.IsHaarMeasure] (νF : Measure (archGroup F n)) [νF.IsHaarMeasure] (aE : TI E n) (aF : TI F n)
       (ci : ℝ), 0 < ci → AmpFn μE νE aE → AmpFn μF νF aF → ArchPair σ νE νF aE aF ci →
