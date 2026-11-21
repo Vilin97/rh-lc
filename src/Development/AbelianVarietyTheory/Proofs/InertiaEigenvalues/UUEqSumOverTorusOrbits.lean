@@ -87,7 +87,9 @@ def torusOrbRel (x : B.A) (L M : B.X x) : Prop :=
   ∃ t ∈ B.T, (M : Submodule K.O B.A) = mulLat K.O (t : B.A) (L : Submodule K.O B.A)
 
 theorem torusOrb_orbRel_equivalence (x : B.A) : Equivalence (B.torusOrbRel x) where
-  refl L := ⟨1, B.T.one_mem, by rw [Units.val_one, torusOrb_mulLat_one]⟩
+  refl := by
+    intro L
+    exact ⟨1, B.T.one_mem, by rw [Units.val_one, torusOrb_mulLat_one]⟩
   symm := by
     rintro L M ⟨t, ht, h⟩
     refine ⟨t⁻¹, B.T.inv_mem ht, ?_⟩

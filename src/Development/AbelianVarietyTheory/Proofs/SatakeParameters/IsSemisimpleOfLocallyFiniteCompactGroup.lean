@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IntegralConjInnerMulInnerOfIsEmptyEquiv
 
 @[expose] public section
 
@@ -34,74 +35,12 @@ def ofInvariant (U : Submodule ℂ V) (hU : ∀ k, ∀ u ∈ U, ρ k u ∈ U) : 
 
 variable [TopologicalSpace K] [IsTopologicalGroup K] [CompactSpace K]
 
-open MeasureTheory MeasureTheory.Measure in
-open scoped InnerProductSpace in
-private theorem semisimple_of_continuous_coeff [FiniteDimensional ℂ V]
-    (hc : ∀ (ℓ : Module.Dual ℂ V) (v : V), Continuous fun k => ℓ (ρ k v)) :
-    ρ.IsSemisimpleRepresentation := by
-  borelize K
-  let μ := haarMeasure (⊤ : TopologicalSpace.PositiveCompacts K)
-  let b := Module.finBasis ℂ V
-  let e : V ≃ₗ[ℂ] EuclideanSpace ℂ (Fin (Module.finrank ℂ V)) :=
-    b.equivFun.trans (WithLp.linearEquiv 2 ℂ _).symm
-  -- Inverting the group argument makes left Haar invariance apply to the averaged inner product.
-  have hcont (v : V) : Continuous fun k : K => e (ρ k⁻¹ v) :=
-    (PiLp.continuous_toLp 2 _).comp (continuous_pi fun i => (hc (b.coord i) v).comp continuous_inv)
-  let c : InnerProductSpace.Core ℂ V :=
-    { inner := fun u v => ∫ k, ⟪e (ρ k⁻¹ u), e (ρ k⁻¹ v)⟫_ℂ ∂μ
-      conj_inner_symm := fun u v => by simp only [← integral_conj, inner_conj_symm]
-      re_inner_nonneg := fun v => by
-        simp only [inner_self_eq_norm_sq_to_K, ← RCLike.ofReal_pow, integral_ofReal,
-          RCLike.ofReal_re]
-        exact integral_nonneg fun k => by positivity
-      add_left := fun u u' v => by
-        have hi (z : V) : Integrable (fun k => ⟪e (ρ k⁻¹ z), e (ρ k⁻¹ v)⟫_ℂ) μ :=
-          ((hcont z).inner (hcont v)).integrable_of_hasCompactSupport
-            (HasCompactSupport.of_compactSpace _)
-        simp only [map_add, inner_add_left]
-        exact integral_add (hi u) (hi u')
-      smul_left := fun u v r => by
-        simp only [map_smul, inner_smul_left, integral_const_mul]
-      definite := fun v hv => by
-        by_contra h
-        simp only [inner_self_eq_norm_sq_to_K, ← RCLike.ofReal_pow, integral_ofReal,
-          RCLike.ofReal_eq_zero] at hv
-        refine (Continuous.integral_pos_of_hasCompactSupport_nonneg_ne_zero (μ := μ) (x := 1)
-          (f := fun k => ‖e (ρ k⁻¹ v)‖ ^ 2) ((hcont v).norm.pow 2)
-          (HasCompactSupport.of_compactSpace _) (fun k => by positivity) ?_).ne' hv
-        simpa [map_eq_zero_iff e e.injective] using h }
-  have hinv (g : K) (u v : V) : c.inner (ρ g u) (ρ g v) = c.inner u v := by
-    have h := integral_mul_left_eq_self (μ := μ)
-      (fun k => ⟪e (ρ k⁻¹ u), e (ρ k⁻¹ v)⟫_ℂ) g⁻¹
-    change (∫ k, ⟪e (ρ k⁻¹ (ρ g u)), e (ρ k⁻¹ (ρ g v))⟫_ℂ ∂μ) =
-      ∫ k, ⟪e (ρ k⁻¹ u), e (ρ k⁻¹ v)⟫_ℂ ∂μ
-    simpa only [mul_inv_rev, inv_inv, map_mul, mul_apply_eq_comp] using h
-  let _ : NormedAddCommGroup V := c.toNormedAddCommGroup
-  let _ : InnerProductSpace ℂ V := InnerProductSpace.ofCore c.toCore
-  refine ⟨fun S => ?_⟩
-  let T : Subrepresentation ρ := ⟨S.toSubmoduleᗮ, by
-    intro g v hv
-    rw [Submodule.mem_orthogonal] at hv ⊢
-    intro u hu
-    have h := hv _ (S.apply_mem_toSubmodule g⁻¹ hu)
-    change c.inner (ρ g⁻¹ u) v = 0 at h
-    change c.inner u (ρ g v) = 0
-    rw [← hinv g] at h
-    simpa using h⟩
-  refine ⟨T, ?_⟩
-  have h := S.toSubmodule.isCompl_orthogonal
-  constructor
-  · rw [disjoint_iff]
-    exact Subrepresentation.toSubmodule_injective h.inf_eq_bot
-  · rw [codisjoint_iff]
-    exact Subrepresentation.toSubmodule_injective h.sup_eq_top
-
 theorem isSemisimple_ofInvariant (U : Submodule ℂ V) (hU : ∀ k, ∀ u ∈ U, ρ k u ∈ U)
     (hfd : FiniteDimensional ℂ U)
     (hc : ∀ (ℓ : Module.Dual ℂ V), ∀ u ∈ U, Continuous fun k => ℓ (ρ k u)) :
     (ofInvariant U hU).toRepresentation.IsSemisimpleRepresentation := by
   haveI : FiniteDimensional ℂ (ofInvariant U hU).toSubmodule := hfd
-  refine semisimple_of_continuous_coeff fun l v => ?_
+  refine GlobalTheory.isSemisimpleRepresentation_of_continuous_coeff _ fun l v => ?_
   obtain ⟨g, hg⟩ := LinearMap.exists_extend (p := U) l
   have h : ∀ k, l ((ofInvariant U hU).toRepresentation k v) = g (ρ k v) := fun k => by
     rw [← hg]; rfl

@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.PetEqRelIndexMulPetProd
 public import Development.AbelianVarietyTheory.Definitions.Foundations.IsDCReps
 
 @[expose] public section
@@ -11,8 +12,8 @@ open GlobalTheory.HeckeFamilyMatrices
 
 namespace GlobalTheory.Hk
 
-theorem tinv_fin_fin : ∀ (N l q j : ℕ) (γ : SL(2, ℤ)), q.Prime → ¬ q ∣ N * l → j < q → γ ∈ Lev N l →
-    ¬ (q : ℤ) ∣ mat γ 0 0 + j * mat γ 1 0 → ∃ j' < q, ∃ γ' ∈ Lev N l,
+theorem tinv_fin_fin : ∀ (N l q j : ℕ) (γ : SL(2, ℤ)), q.Prime → ¬ q ∣ N * l → j < q → γ ∈ GlobalTheory.Hk.lev N l →
+    ¬ (q : ℤ) ∣ mat γ 0 0 + j * mat γ 1 0 → ∃ j' < q, ∃ γ' ∈ GlobalTheory.Hk.lev N l,
       !![(1 : ℤ), (j : ℤ); 0, (q : ℤ)] * mat γ = mat γ' * !![(1 : ℤ), (j' : ℤ); 0, (q : ℤ)] := by
   intro N l q j γ hq _ _ hγ hA
   haveI : Fact q.Prime := ⟨hq⟩

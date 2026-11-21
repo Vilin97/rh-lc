@@ -60,7 +60,8 @@ theorem colDerM_yForm (t t' : T) (X : Matrix κ κ R) (b : Fin q) (φ : κ → R
   · simp
 
 
-theorem colActHom_colDerM (g : T → GL κ R) (t : T) (X : Matrix κ κ R) (P : Poly R T p q κ) :
+theorem colActHom_colDerM [DecidableEq κ] (g : T → GL κ R) (t : T) (X : Matrix κ κ R)
+    (P : Poly R T p q κ) :
     colActHom g (colDerM t X P) =
       colDerM t ((g t : Matrix κ κ R) * X * (((g t)⁻¹ : GL κ R) : Matrix κ κ R)) (colActHom g P) := by
   induction P using MvPolynomial.induction_on with

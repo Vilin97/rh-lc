@@ -1,8 +1,10 @@
 module
 
-public import Mathlib
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
 
 @[expose] public section
+
+open IsLocalRing UpperTheory.V.Alg
 
 private theorem mul_mem_pow_sup {R : Type} [CommRing R] (P I : Ideal R) (m k : ℕ) (u v : R)
     (hu : u ∈ P ^ m) (hv : v ∈ P ^ k ⊔ I) : u * v ∈ P ^ (m + k) ⊔ I := by

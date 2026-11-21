@@ -30,21 +30,26 @@ theorem analyticAt_dslope {f : ℂ → ℂ} {z : ℂ} (h1 : AnalyticAt ℂ f 1) 
     rw [dslope_of_ne _ hw, slope_def_module]
 
 theorem analytic_D {G : ℂ → ℂ} (hG : ∀ σ : ℝ, 0 < σ → AnalyticAt ℂ G σ) :
-    ∀ j, ∀ σ : ℝ, 0 < σ → AnalyticAt ℂ (D G j) σ
-  | 0 => hG
-  | j + 1 => fun σ hσ => by
-      have h1 : AnalyticAt ℂ (D G j) (1 : ℂ) := analytic_D hG j 1 one_pos
-      exact analyticAt_dslope h1 (analytic_D hG j σ hσ)
+    ∀ j, ∀ σ : ℝ, 0 < σ → AnalyticAt ℂ (D G j) σ := by
+  intro j
+  induction j with
+  | zero => exact hG
+  | succ j ih =>
+      intro σ hσ
+      have h1 : AnalyticAt ℂ (D G j) (1 : ℂ) := ih 1 one_pos
+      rw [D]
+      exact analyticAt_dslope h1 (ih σ hσ)
 
-theorem factor (G : ℂ → ℂ) : ∀ j, (∀ i < j, D G i 1 = 0) → ∀ z, G z = (z - 1) ^ j * D G j z
-  | 0, _, z => by simp [D]
-  | j + 1, h, z => by
-      have ih := factor G j (fun i hi => h i (by omega)) z
-      have e := sub_smul_dslope (D G j) 1 z
-      rw [h j (by omega), sub_zero, smul_eq_mul] at e
-      rw [ih, ← e]
-      simp only [D]
-      ring
+theorem factor (G : ℂ → ℂ) : ∀ j, (∀ i < j, D G i 1 = 0) → ∀ z, G z = (z - 1) ^ j * D G j z := by
+  intro j
+  induction j with
+  | zero => intro _ z; simp [D]
+  | succ j ih =>
+      intro h z
+      have e : (z - 1) * D G (j + 1) z = D G j z := by
+        rw [D, ← smul_eq_mul]
+        exact sub_smul_dslope_of_zero (h j (Nat.lt_succ_self j)) z
+      rw [ih (fun i hi => h i (Nat.lt_succ_of_lt hi)) z, pow_succ, mul_assoc, e]
 
 end RemovableSingularityAlt
 

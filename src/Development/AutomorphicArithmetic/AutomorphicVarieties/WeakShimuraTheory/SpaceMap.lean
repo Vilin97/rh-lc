@@ -4,7 +4,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimura
 
 @[expose] public section
 
-open IsLocalRing Polynomial UpperTheory.V.Alg UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws
+open IsLocalRing Polynomial UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws
 
 namespace UpperTheory.V.Ws
 

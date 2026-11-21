@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import ReciprocityTheory.CommutativeAlgebra.ChainConnInDim
 public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsWeaklyRegularIffIsQuasiRegularSeqOfIsLocalRing
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsIsRegularQuotSMulTop
 
 @[expose] public section
 
@@ -100,8 +101,7 @@ theorem flat_of_basis_mod_pow [IsNoetherianRing A] (B : Type*) [CommRing B] [IsN
     have := Submodule.mem_map_of_mem (f := TensorProduct.mk A M J (m s)) (h3 s)
     rw [Submodule.map_smul''] at this
     exact Submodule.smul_mono le_rfl le_top this
-  have h0 := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⊗[A] J)
-    (I.map (algebraMap A B)) (by simpa only [Ideal.jacobson_bot] using hI)
+  have h0 := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⊗[A] J) _ hI
   rw [← Submodule.mem_bot B, ← h0, Submodule.mem_iInf]
   intro n
   rw [← Ideal.map_pow, ← Submodule.restrictScalars_mem A, Ideal.smul_restrictScalars]
@@ -342,7 +342,7 @@ section Depth
 
 universe u v
 
-open CategoryTheory Abelian Limits
+open CategoryTheory Abelian
 
 variable {R : Type u} [CommRing R] [IsNoetherianRing R] [IsLocalRing R]
 
@@ -399,35 +399,13 @@ theorem exists_isRegular_quotSMulTop [Small.{v} R] {M : Type v} [AddCommGroup M]
     [Module.Finite R M] {xs : List R} (h : RingTheory.Sequence.IsRegular M xs) {n : ℕ}
     (hn : n + 1 ≤ xs.length) {y : R} (hy : y ∈ maximalIdeal R) (hreg : IsSMulRegular M y) :
     ∃ zs : List R, zs.length = n ∧ RingTheory.Sequence.IsRegular (QuotSMulTop y M) zs := by
-  have := h.nontrivial
-  have := nontrivial_quotSMulTop_of_mem_maximalIdeal M hy
-  have hmem : ∀ x ∈ xs, x ∈ maximalIdeal R := fun x hx =>
-    le_maximalIdeal (J := Ideal.ofList xs) (fun e => h.2 (by simp [e])) (Ideal.subset_span hx)
-  have hlt (L : Type v) [AddCommGroup L] [Module R L] [Module.Finite R L] [Nontrivial L] :
-      maximalIdeal R • (⊤ : Submodule R L) < ⊤ :=
-    (Submodule.top_ne_ideal_smul_of_le_jacobson_annihilator (maximalIdeal_le_jacobson _)).symm.lt_top
-  let N := ModuleCat.of R (Shrink.{v} (R ⧸ maximalIdeal R))
-  have hM : ∀ i < xs.length, Subsingleton (Ext N (ModuleCat.of R M) i) :=
-    ((ModuleCat.exists_isRegular_tfae (maximalIdeal R) xs.length (ModuleCat.of R M)
-      (hlt M)).out 2 4).mpr
-      (⟨xs, rfl, hmem, h⟩ : ∃ rs : List R,
-        rs.length = xs.length ∧ (∀ r ∈ rs, r ∈ maximalIdeal R) ∧ IsRegular M rs)
-  have hS := IsSMulRegular.smulShortComplex_shortExact (M := ModuleCat.of R M) hreg
-  have hQ : ∀ i < n, Subsingleton (Ext N (ModuleCat.of R (QuotSMulTop y M)) i) := by
-    intro i hi
-    have he := Ext.covariant_sequence_exact₃' N hS i (i + 1) rfl
-    rw [ShortComplex.ab_exact_iff_function_exact] at he
-    have h₀ := hM i (by omega)
-    have h₁ := hM (i + 1) (by omega)
-    apply subsingleton_of_forall_eq (0 : Ext N (ModuleCat.of R (QuotSMulTop y M)) i)
-    intro z
-    obtain ⟨w, hw⟩ := (he z).mp (h₁.elim _ _)
-    rw [← hw, h₀.elim w 0]
-    exact map_zero _
-  obtain ⟨zs, hlen, -, hreg'⟩ :=
-    ((ModuleCat.exists_isRegular_tfae (maximalIdeal R) n (ModuleCat.of R (QuotSMulTop y M))
-      (hlt (QuotSMulTop y M))).out 2 4).mp hQ
-  exact ⟨zs, hlen, hreg'⟩
+  first
+  | exact @_root_.GlobalTheory.RegularElementQuotient.exists_isRegular_quotSMulTop
+  | exact _root_.GlobalTheory.RegularElementQuotient.exists_isRegular_quotSMulTop
+  | (apply _root_.GlobalTheory.RegularElementQuotient.exists_isRegular_quotSMulTop <;> assumption)
+  | (intros; apply _root_.GlobalTheory.RegularElementQuotient.exists_isRegular_quotSMulTop <;> assumption)
+  | (intros; apply @_root_.GlobalTheory.RegularElementQuotient.exists_isRegular_quotSMulTop <;> first | assumption | infer_instance)
+  | (intros; exact _root_.GlobalTheory.RegularElementQuotient.exists_isRegular_quotSMulTop ..)
 
 theorem supportDim_le_supportDim_quotient_add_length {M : Type*} [AddCommGroup M] [Module R M]
     [Module.Finite R M] {ys : List R} (hm : ∀ y ∈ ys, y ∈ maximalIdeal R) :

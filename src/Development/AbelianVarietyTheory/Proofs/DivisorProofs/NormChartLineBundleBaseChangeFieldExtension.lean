@@ -29,6 +29,7 @@ abbrev bcProj (X : Over S) : ((Over.pullback f).obj X).left ⟶ X.left := pullba
 theorem map_left_bcProj {X Y : Over S} (g : X ⟶ Y) :
     ((Over.pullback f).map g).left ≫ bcProj f Y = bcProj f X ≫ g.left := by
   simp only [Over.pullback_map_left]
+  exact pullback.lift_fst _ _ _
 
 theorem isPullback_bcProj {X Y : Over S} (g : X ⟶ Y) :
     IsPullback (bcProj f X) ((Over.pullback f).map g).left g.left (bcProj f Y) := by
@@ -89,7 +90,7 @@ theorem normChart_baseChange : ∀ (K Ω : Type) [Field K] [Field Ω] [Algebra K
     IsAbelianScheme A → ∀ N₀ : LB A.left, N₀.IsLB → NormChart A N₀ →
       NormChart ((Over.pullback (spMap (algebraMap K Ω))).obj A)
         (N₀.pull (pullback.fst A.hom (spMap (algebraMap K Ω)))) := by
-  intro K Ω _ _ _ A _ _ N₀ _ ⟨W, V, π, a, U, N, n, hπ, ha, hW, hWt, hU, hUne, hN, H, hloc⟩
+  intro K Ω _ _ _ A _ _ N₀ hN₀ ⟨W, V, π, a, U, N, n, hπ, ha, hW, hWt, hU, hUne, hN, H, hloc⟩
   have hf := surjective_spMap K Ω
   set f := spMap (algebraMap K Ω)
   have hsurj : ∀ X : Over (Sp K), Function.Surjective (bcProj f X) := fun X =>
@@ -102,9 +103,9 @@ theorem normChart_baseChange : ∀ (K Ω : Type) [Field K] [Field Ω] [Algebra K
     rw [bcProd_fst, bcProd_fst]
     exact (isPullback_whiskerRight _ _).paste_horiz (isPullback_bcProj f π)
   refine ⟨(Over.pullback f).obj W, (Over.pullback f).obj V, (Over.pullback f).map π, (Over.pullback f).map a,
-    bcProj f A ⁻¹ᵁ U, N.pull (bcProd f V A), GlobalTheory.secPull n (bcProd f V A),
+    bcProj f A ⁻¹ᵁ U, N.pull (bcProd f V A), GlobalTheory.Cartier.secPull n (bcProd f V A),
     MorphismProperty.of_isPullback (isPullback_bcProj f π) hπ,
-    MorphismProperty.of_isPullback (isPullback_bcProj f a) ha, ?_, ?_, ?_, ?_, pull_isLB hN _, ?_, ?_⟩
+    MorphismProperty.of_isPullback (isPullback_bcProj f a) ha, ?_, ?_, ?_, ?_, LB.isLB_pull hN _, ?_, ?_⟩
   · obtain ⟨w⟩ := hW
     obtain ⟨w', -⟩ := hsurj W w
     exact ⟨w'⟩
@@ -115,13 +116,18 @@ theorem normChart_baseChange : ∀ (K Ω : Type) [Field K] [Field Ω] [Algebra K
   · obtain ⟨u, hu⟩ := hUne
     obtain ⟨u', rfl⟩ := hsurj A u
     exact ⟨u', hu⟩
-  · have e : (snd ((Over.pullback f).obj V) ((Over.pullback f).obj A)).left ≫ bcProj f A =
-        bcProd f V A ≫ (snd V A).left := (bcProd_snd f V A).symm
-    exact LBIso.chartPull (GlobalTheory.chartPullPull N (bcProd f V A))
-      (chartPullLinComb N₀ (bcProj f A) (fun _ : PUnit => _) (fun _ => (snd V A).left) (fun _ => 1) _
-        fun _ => e) H
+  · let r := bcProd f V A
+    let b := (snd V A).left
+    let d := bcProj f A
+    let c := (snd ((Over.pullback f).obj V) ((Over.pullback f).obj A)).left
+    change LBIso (N.pull r) ((N₀.pull d).pull c)
+    refine LBIso.trans (LB.isLB_pull hN r) (LB.isLB_pull (LB.isLB_pull hN₀ b) r)
+      (LB.isLB_pull (LB.isLB_pull hN₀ d) c) ?_ ?_
+    · obtain ⟨w, hw⟩ := H
+      exact ⟨GlobalTheory.lbIsoPull w r, ReciprocityTheory.ChartRestriction.G.DVR.linCombIso_isGen w hw _ _⟩
+    · exact GlobalTheory.FiniteAmple.lbIso_pull_pull b hN₀ (bcProd_snd f V A)
   · intro x'
-    rw [GlobalTheory.nonzeroLocus_secPull]
+    rw [GlobalTheory.Cartier.nonzeroLocus_secPull]
     change bcProd f V A x' ∈ Out.nonzeroLocus n ↔ _
     rw [hloc]
     constructor

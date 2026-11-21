@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.Transference
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.FinrankMulDiscrRpowLeSumSqOfMemTraceDual
 
 @[expose] public section
 
@@ -48,11 +49,7 @@ private lemma inner_realCoords_one_neg_one_eq_trace {K : Type} [Field K] [Number
     (e : Fin M ≃ (K →+* ℂ)) (x y : K) :
     inner ℝ (_root_.GlobalTheory.ShortIntegers.realCoords e 1 x) (_root_.GlobalTheory.ShortIntegers.realCoords e (-1) y)
       = ((Algebra.trace ℚ K (x * y) : ℚ) : ℝ) := by
-  have htrace : ((Algebra.trace ℚ K (x * y) : ℚ) : ℂ) = ∑ σ : K →+* ℂ, σ (x * y) := by
-    rw [Fintype.sum_equiv (RingHom.equivRatAlgHom K ℂ) (fun σ => σ (x * y))
-      (fun σ => σ (x * y)) (fun _ => rfl), ← trace_eq_sum_embeddings ℂ (K := ℚ)]
-    simp
-  have ht := congrArg Complex.re htrace
+  have ht := congrArg Complex.re (_root_.GlobalTheory.trace_eq_sum_complexEmbeddings (x * y))
   simp [PiLp.inner_apply, _root_.GlobalTheory.ShortIntegers.realCoords]
   simp at ht
   rw [ht, Equiv.sum_comp e (fun σ => ((σ y).re + -(σ y).im) * ((σ x).re + (σ x).im)),
@@ -78,55 +75,6 @@ private lemma norm_sq_realCoords_eq_sum_norm_sq {K : Type} [Field K] [NumberFiel
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [Complex.sq_norm, Complex.normSq_apply]
   linear_combination (σ x).im ^ 2 * hε
-
-private lemma norm_embedding_le_norm_realCoords {K : Type} [Field K] [NumberField K] {M : ℕ}
-    (e : Fin M ≃ (K →+* ℂ)) {ε : ℝ} (hε : ε ^ 2 = 1) (x : K) (σ : K →+* ℂ) :
-    ‖σ x‖ ≤ ‖ShortIntegers.realCoords e ε x‖ := by
-  apply le_of_pow_le_pow_left₀ two_ne_zero (norm_nonneg _)
-  rw [norm_sq_realCoords_eq_sum_norm_sq e hε]
-  exact Finset.single_le_sum (f := fun τ : K →+* ℂ => ‖τ x‖ ^ 2)
-    (fun _ _ => sq_nonneg _) (Finset.mem_univ σ)
-
-private lemma inv_abs_discr_le_prod_norm {K : Type} [Field K] [NumberField K] {x : K}
-    (hx : x ∈ Submodule.traceDual ℤ ℚ (1 : Submodule (𝓞 K) K)) (hx0 : x ≠ 0) :
-    |(NumberField.discr K : ℝ)|⁻¹ ≤ ∏ σ : K →+* ℂ, ‖σ x‖ := by
-  let J : FractionalIdeal (𝓞 K)⁰ K := (differentIdeal ℤ (𝓞 K) : FractionalIdeal (𝓞 K)⁰ K)⁻¹
-  have hxJ : x ∈ J := by
-    dsimp only [J]
-    rw [← FractionalIdeal.mem_coeToSubmodule, coeIdeal_differentIdeal ℤ ℚ K (𝓞 K),
-      inv_inv, FractionalIdeal.coeToSubmodule_dual_one]
-    exact hx
-  have hJ : J ≠ 0 := by
-    rintro h
-    exact hx0 ((FractionalIdeal.mem_zero_iff _).mp (h ▸ hxJ))
-  have hle : FractionalIdeal.spanSingleton (𝓞 K)⁰ x * J⁻¹ ≤ 1 := by
-    calc
-      _ ≤ J * J⁻¹ := by
-        gcongr
-        exact FractionalIdeal.spanSingleton_le_iff_mem.mpr hxJ
-      _ = 1 := mul_inv_cancel₀ hJ
-  obtain ⟨I, hI⟩ := FractionalIdeal.le_one_iff_exists_coeIdeal.mp hle
-  have hspan : FractionalIdeal.spanSingleton (𝓞 K)⁰ x = I * J := by
-    rw [hI, inv_mul_cancel_right₀ hJ]
-  have hI0 : I ≠ ⊥ := by
-    rintro rfl
-    exact hx0 (by simpa using hspan)
-  have hNorm : FractionalIdeal.absNorm J ≤ |Algebra.norm ℚ x| := by
-    rw [← FractionalIdeal.absNorm_span_singleton (𝓞 K), hspan, map_mul,
-      FractionalIdeal.coeIdeal_absNorm]
-    exact le_mul_of_one_le_left (FractionalIdeal.absNorm_nonneg _)
-      (by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (Ideal.absNorm_eq_zero_iff.not.mpr hI0))
-  have hDiscr : FractionalIdeal.absNorm J = |(NumberField.discr K : ℚ)|⁻¹ := by
-    dsimp only [J]
-    rw [map_inv₀, FractionalIdeal.coeIdeal_absNorm, NumberField.absNorm_differentIdeal K (𝓞 K)]
-    simp
-  have hprod : ((Algebra.norm ℚ x : ℚ) : ℂ) = ∏ σ : K →+* ℂ, σ x := by
-    rw [Fintype.prod_equiv (RingHom.equivRatAlgHom K ℂ) (fun σ => σ x) (fun σ => σ x)
-      (fun _ => rfl), ← Algebra.norm_eq_prod_embeddings ℚ ℂ x]
-    simp
-  rw [← norm_prod, ← hprod, Complex.norm_ratCast]
-  rw [hDiscr] at hNorm
-  simpa only [Rat.cast_inv, Rat.cast_abs, Rat.cast_intCast] using (Rat.cast_le (K := ℝ)).mpr hNorm
 
 
 theorem _root_.GlobalTheory.exists_short_independent_integers (K : Type) [Field K] [NumberField K] :
@@ -158,7 +106,7 @@ theorem _root_.GlobalTheory.exists_short_independent_integers (K : Type) [Field 
     have h := congrArg (fun v => inner ℝ v (ψ (β i))) hc
     simp only [sum_inner, inner_smul_left, hpair, hαβ, inner_zero_left] at h
     simpa [apply_ite (Rat.cast : ℚ → ℝ), mul_ite] using h
-  have : NeZero n := ⟨(Module.finrank_pos (R := ℚ) (M := K)).ne'⟩
+  haveI : NeZero n := ⟨(Module.finrank_pos (R := ℚ) (M := K)).ne'⟩
   have hcard : Fintype.card (Fin n) = Module.finrank ℝ (EuclideanSpace ℝ (Fin n)) := by simp
   let b := basisOfLinearIndependentOfCardEqFinrank hli hcard
   let bφ := basisOfLinearIndependentOfCardEqFinrank hliφ hcard
@@ -192,6 +140,7 @@ theorem _root_.GlobalTheory.exists_short_independent_integers (K : Type) [Field 
       exact zsmul_mem hx m
   set D : ℝ := |((NumberField.discr K : ℤ) : ℝ)| with hDdef
   have hD : 0 < D := abs_pos.mpr (by exact_mod_cast NumberField.discr_ne_zero K)
+  have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne n)
   set lam : ℝ := D ^ (-(1 / (n : ℝ))) with hlam
   have hlam0 : 0 < lam := Real.rpow_pos_of_pos hD _
   have hmin : ∀ x ∈ Submodule.span ℤ (Set.range b), x ≠ 0 → lam ≤ ‖x‖ := by
@@ -207,15 +156,14 @@ theorem _root_.GlobalTheory.exists_short_independent_integers (K : Type) [Field 
       rintro h
       apply hx0
       rw [h, map_zero]
-    have hprod := inv_abs_discr_le_prod_norm (hdual c) hz0
-    have hle := Finset.prod_le_prod₀ (s := Finset.univ) (fun σ _ => norm_nonneg
-      (σ (∑ i, (c i : ℚ) • β i))) (g := fun _ => ‖ψ (∑ i, (c i : ℚ) • β i)‖)
-      (fun σ _ => norm_embedding_le_norm_realCoords e (ε := -1) (by norm_num) _ σ)
-    simp only [Finset.prod_const, Finset.card_univ, NumberField.Embeddings.card K ℂ] at hle
-    have hn0 : (0 : ℝ) < n := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne n)
-    rw [hlam, one_div, Real.rpow_neg hD.le, ← Real.inv_rpow hD.le,
-      Real.rpow_inv_le_iff_of_pos (inv_nonneg.mpr hD.le) (norm_nonneg _) hn0, Real.rpow_natCast]
-    exact hprod.trans hle
+    have hle := _root_.GlobalTheory.finrank_mul_discr_rpow_le_sum_sq_of_mem_traceDual (hdual c) hz0
+    rw [← norm_sq_realCoords_eq_sum_norm_sq e (ε := -1) (by norm_num)] at hle
+    have hlam2 : lam ^ 2 ≤ (n : ℝ) * D ^ (-2 / (n : ℝ)) := by
+      rw [hlam, ← Real.rpow_natCast, ← Real.rpow_mul hD.le]
+      have : -(1 / (n : ℝ)) * ((2 : ℕ) : ℝ) = -2 / (n : ℝ) := by push_cast; ring
+      rw [this]
+      exact le_mul_of_one_le_left (Real.rpow_nonneg hD.le _) hn1
+    exact le_of_pow_le_pow_left₀ two_ne_zero (norm_nonneg _) (hlam2.trans hle)
   obtain ⟨y, hyli, hyint, hynorm⟩ := _root_.ReciprocityTheory.ChartRestriction.G.T0.transference_dual b lam hlam0 hmin
   choose m hm using hyint
   let ω : Fin n → 𝓞 K := fun i => ∑ j, m i j • RingOfIntegers.basis K (eι.symm j)
@@ -227,18 +175,20 @@ theorem _root_.GlobalTheory.exists_short_independent_integers (K : Type) [Field 
     refine InnerProductSpace.ext_inner_right_basis b fun j => ?_
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hm, coe_basisOfLinearIndependentOfCardEqFinrank, hpair, hω, Finset.sum_mul, map_sum]
-    simp [hαβ]
+    simp [smul_mul_assoc, hαβ]
   refine ⟨ω, ?_, ?_⟩
   · have h := hyli.restrict_scalars' ℚ
     rw [show y = fun k => φ (ω k) from funext hy] at h
     exact LinearIndependent.of_comp φ h
   · intro s k
-    have h1 : ‖s (ω k : K)‖ ≤ ‖y k‖ := by
-      rw [hy]
-      exact norm_embedding_le_norm_realCoords e (ε := 1) (by norm_num) _ s
+    have hsq : ‖s (ω k : K)‖ ^ 2 ≤ ‖y k‖ ^ 2 := by
+      rw [hy, norm_sq_realCoords_eq_sum_norm_sq e (ε := 1) (by norm_num)]
+      exact Finset.single_le_sum (f := fun σ : K →+* ℂ => ‖σ (ω k : K)‖ ^ 2)
+        (fun σ _ => sq_nonneg _) (Finset.mem_univ s)
+    have h1 : ‖s (ω k : K)‖ ≤ ‖y k‖ :=
+      le_of_pow_le_pow_left₀ two_ne_zero (norm_nonneg _) hsq
     have h2 : (n : ℝ) ^ 2 / lam = (n : ℝ) ^ 2 * D ^ (1 / (n : ℝ)) := by
       rw [hlam, Real.rpow_neg hD.le, div_inv_eq_mul]
-    have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne n)
     calc ‖s (ω k : K)‖ ≤ (n : ℝ) ^ 2 / lam := h1.trans (hynorm k)
       _ = (n : ℝ) ^ 2 * D ^ (1 / (n : ℝ)) := h2
       _ ≤ (n : ℝ) ^ 3 * D ^ (1 / (n : ℝ)) :=

@@ -1,19 +1,18 @@
 module
 
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
 public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-
-import Mathlib.RingTheory.Nakayama
 
 @[expose] public section
 
-open IsLocalRing
+open IsLocalRing UpperTheory.V.Alg
 
 theorem UpperTheory.height_ker_section_le_of_cotangent_generators :
     ∀ (O S : Type) [CommRing O] [IsDomain O] [CommRing S] [Algebra O S] [IsNoetherianRing S] (x : S →ₐ[O] O) (n : ℕ) (t : Fin n → S), (∀ i, x (t i) = 0) → (∀ a, x a = 0 → ∃ (e : O) (o : Fin n → O), e ≠ 0 ∧ e • a - ∑ i, o i • t i ∈ RingHom.ker x ^ 2) → (RingHom.ker x).height ≤ (n : ℕ∞) := by
   classical
   intro O S _ _ _ _ _ x n t ht hx
   set P := RingHom.ker x with hPdef
-  have hP : P.IsPrime := RingHom.ker_isPrime x
+  haveI hP : P.IsPrime := RingHom.ker_isPrime x
   set L := Localization.AtPrime P
   set T : Ideal L := Ideal.span ((Finset.univ.image (fun i => algebraMap S L (t i)) : Finset L) : Set L) with hT
   have hTm : T ≤ maximalIdeal L := by
@@ -59,8 +58,8 @@ theorem UpperTheory.height_ker_section_le_of_cotangent_generators :
   have hmT : maximalIdeal L ≤ T ⊔ maximalIdeal L • maximalIdeal L := by
     rwa [Localization.AtPrime.map_eq_maximalIdeal] at key
   have hmle : maximalIdeal L ≤ T :=
-    Submodule.le_of_le_smul_of_le_jacobson (IsNoetherian.noetherian _)
-      (by rw [← Ideal.jacobson_bot]; exact IsLocalRing.maximalIdeal_le_jacobson ⊥) hmT
+    Submodule.le_of_le_smul_of_le_jacobson_bot (IsNoetherian.noetherian _)
+      (IsLocalRing.maximalIdeal_le_jacobson ⊥) hmT
   have heq : T = maximalIdeal L := le_antisymm hTm hmle
   have hmin : maximalIdeal L ∈ T.minimalPrimes := by
     rw [heq]

@@ -188,7 +188,7 @@ structure Ok [CharP k l] (C₀ : ℕ) : Prop where
   Ψ_open : IsOpen (F.Ψ.ker : Set F.Γ)
   Ψ_c : F.Ψ F.c = 1
   baseSubgroup_spec : F.Ψ F.g0 ^ 2 ≠ 1
-  phi : PhiCond F.Γ l
+  phi : PhiCond (Γ := F.Γ) l
   card_inf : Fintype.card F.Inf = F.d
   cw_sq : ∀ w, F.cw w * F.cw w = 1
   del_cw : ∀ w, F.del (F.cw w) = -1

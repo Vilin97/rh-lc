@@ -1,16 +1,10 @@
 module
 
-public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-public import Mathlib.RingTheory.Localization.FractionRing
-public import Mathlib.RingTheory.MvPolynomial.Homogeneous
-public import Mathlib.RingTheory.MvPowerSeries.Inverse
-
-import Mathlib.RingTheory.MvPowerSeries.Order
-import Mathlib.Tactic.Ring
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
 
 @[expose] public section
 
-open IsLocalRing
+open IsLocalRing UpperTheory.V.Alg
 
 private def Cg {A : Type} [CommRing A] (I : Ideal A) (k : ℕ) (a b : A) : Prop :=
   b ∈ I ^ k ∧ a - b ∈ I ^ (k + 1)

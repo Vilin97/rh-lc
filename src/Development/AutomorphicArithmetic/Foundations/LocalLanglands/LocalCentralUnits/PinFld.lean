@@ -140,8 +140,9 @@ theorem exists_D [Fintype Kˣ] (hn : 0 < n) (hr : Module.finrank (ZMod g) K = n)
 end Fld
 
 
-noncomputable def cj {G : Type} [CommGroup G] (g n : ℕ) (θ : G →* ℂˣ) : Finset (G →* ℂˣ) :=
-  (range n).image (fun j => θ ^ g ^ j)
+noncomputable def cj {G : Type} [CommGroup G] (g n : ℕ) (θ : G →* ℂˣ) : Finset (G →* ℂˣ) := by
+  classical
+  exact (range n).image (fun j => θ ^ g ^ j)
 
 theorem mem_cj {G : Type} [CommGroup G] {g n : ℕ} {θ χ : G →* ℂˣ} :
     χ ∈ cj g n θ ↔ ∃ j < n, θ ^ g ^ j = χ := by

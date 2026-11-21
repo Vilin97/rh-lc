@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.MulVecEqZeroOfPair
 
 @[expose] public section
 
@@ -8,36 +9,7 @@ open Filter Topology Matrix
 
 namespace GlobalTheory.CompanionTheory.PeriodLimitSeq
 
-private theorem sq_mul_sum_sq_le_local {g : ℕ} (Y : Matrix (Fin g) (Fin g) ℝ) {c : ℝ} (hc : 0 < c)
-    (h : (Y - c • (1 : Matrix (Fin g) (Fin g) ℝ)).PosSemidef) (v : Fin g → ℝ) :
-    c ^ 2 * ∑ k, v k ^ 2 ≤ ∑ k, (Y *ᵥ v) k ^ 2 := by
-  have h1 := h.dotProduct_mulVec_nonneg v
-  rw [star_trivial, sub_mulVec, smul_mulVec, one_mulVec, dotProduct_sub, dotProduct_smul] at h1
-  have h2 : 0 ≤ ∑ k, (c * v k - (Y *ᵥ v) k) ^ 2 := Finset.sum_nonneg fun k _ => sq_nonneg _
-  have h3 : ∑ k, (c * v k - (Y *ᵥ v) k) ^ 2
-      = c ^ 2 * ∑ k, v k ^ 2 - 2 * c * (v ⬝ᵥ (Y *ᵥ v)) + ∑ k, (Y *ᵥ v) k ^ 2 := by
-    simp only [dotProduct, Finset.mul_sum, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
-    exact Finset.sum_congr rfl fun k _ => by ring
-  have h4 : v ⬝ᵥ v = ∑ k, v k ^ 2 := by simp [dotProduct, sq]
-  rw [h4, smul_eq_mul] at h1
-  nlinarith [mul_nonneg hc.le h1]
-
-private theorem finite_sum_sq_le_local {g : ℕ} (M : ℝ) :
-    {v : Fin g → ℤ | ∑ k, (v k : ℝ) ^ 2 ≤ M}.Finite := by
-  refine (Set.Finite.pi' (fun _ : Fin g => Set.finite_Icc (-⌈M⌉) ⌈M⌉)).subset ?_
-  intro v hv k
-  have h1 : (v k : ℝ) ^ 2 ≤ M :=
-    (Finset.single_le_sum (f := fun k => (v k : ℝ) ^ 2) (fun k _ => sq_nonneg _)
-      (Finset.mem_univ k)).trans hv
-  have h2 : v k ^ 2 ≤ ⌈M⌉ := by
-    have := h1.trans (Int.le_ceil M)
-    exact_mod_cast this
-  constructor <;> nlinarith [sq_nonneg (v k), sq_nonneg (2 * v k - 1), sq_nonneg (2 * v k + 1), Int.le_self_sq (v k), Int.le_self_sq (-v k)]
-
-private theorem im_period_local {g : ℕ} (A : Matrix (Fin g) (Fin g) ℂ) (u v : Fin g → ℤ) (k : Fin g) :
-    ((A.map Complex.im) *ᵥ (fun k => (v k : ℝ))) k
-      = ((((fun k => (u k : ℂ)) + A *ᵥ (fun k => (v k : ℂ)) : Fin g → ℂ)) k).im := by
-  simp [Matrix.mulVec, dotProduct]
+open GlobalTheory.CompanionTheory.PeriodLimit
 
 theorem int_seq_const (a : ℕ → ℤ) (L : ℂ) (h : Tendsto (fun m => (a m : ℂ)) atTop (𝓝 L)) :
     ∃ N : ℤ, L = N ∧ ∀ᶠ m in atTop, a m = N := by
@@ -169,12 +141,12 @@ theorem limit_seq : ∀ (g : ℕ) (Bs : Matrix (Fin g) (Fin g) ℤ) (σ : Matrix
   have hbd : ∀ᶠ m in atTop,
       vs m ∈ {w : Fin g → ℤ | ∑ k, (w k : ℝ) ^ 2 ≤ (∑ k, (y k).im ^ 2 + 1) / c ^ 2} := by
     filter_upwards [hS.eventually_lt_const (lt_add_one _)] with m hm
-    have h1 := sq_mul_sum_sq_le_local ((τs m).map Complex.im) hc (hpsd m) (fun k => (vs m k : ℝ))
-    simp only [im_period_local (τs m) (us m) (vs m)] at h1
+    have h1 := sq_mul_sum_sq_le ((τs m).map Complex.im) hc (hpsd m) (fun k => (vs m k : ℝ))
+    simp only [im_period (τs m) (us m) (vs m)] at h1
     show ∑ k, (vs m k : ℝ) ^ 2 ≤ (∑ k, (y k).im ^ 2 + 1) / c ^ 2
     rw [le_div_iff₀ (pow_pos hc 2)]
     linarith
-  have hfin := finite_sum_sq_le_local (g := g) ((∑ k, (y k).im ^ 2 + 1) / c ^ 2)
+  have hfin := finite_sum_sq_le (g := g) ((∑ k, (y k).im ^ 2 + 1) / c ^ 2)
   have hall : ∀ᶠ m in atTop, ∀ w ∈ {w ∈ {w : Fin g → ℤ | ∑ k, (w k : ℝ) ^ 2 ≤
       (∑ k, (y k).im ^ 2 + 1) / c ^ 2} | ¬ ∃ᶠ n in atTop, vs n = w}, vs m ≠ w := by
     rw [Filter.eventually_all_finite (hfin.subset (Set.sep_subset _ _))]

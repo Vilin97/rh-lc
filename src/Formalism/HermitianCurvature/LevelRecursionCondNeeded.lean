@@ -2,6 +2,7 @@ module
 
 public import Formalism.LatticeRigidity.StatementC
 public import Formalism.YangianSpanCharacter.StatementT
+public import Formalism.LatticeTheta.Statement
 
 @[expose] public section
 
@@ -63,10 +64,8 @@ def ChebCoValue : Prop :=
 
 section Poisson
 
-open MeasureTheory
+open MeasureTheory Formalism.H
 open scoped FourierTransform RealInnerProductSpace
-
-local notation "dual" => LinearMap.BilinForm.dualSubmodule (innerₗ _)
 
 def PoissonAt {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℝ V] [MeasurableSpace V]
     [BorelSpace V] [FiniteDimensional ℝ V] (Λ : Submodule ℤ V) [DiscreteTopology Λ] [IsZLattice ℝ Λ]

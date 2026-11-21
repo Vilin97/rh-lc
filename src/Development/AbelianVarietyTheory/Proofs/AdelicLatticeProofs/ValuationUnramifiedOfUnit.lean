@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.AdelicHermitianForms.SqSubLeNormSub
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.HeightOneSpectrumPlacesOverFiniteSet
 
 @[expose] public section
 
@@ -45,13 +46,7 @@ theorem IsQuad.exists_base_value {F E : Type} [Field F] [Field E] [Algebra F E] 
 
 theorem valuation_unramified_of_unit : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (δ : F) (θ : E) (σ : E ≃ₐ[F] E), IsQuad δ θ σ → ∀ w : HeightOneSpectrum (𝓞 E), (w.under (𝓞 F)).valuation F 2 = 1 → (w.under (𝓞 F)).valuation F δ = 1 → ∀ x : F, w.valuation E (algebraMap F E x) = (w.under (𝓞 F)).valuation F x := by
   intro F E _ _ _ _ _ δ θ σ hq w h2 hδ
-  have : w.asIdeal.LiesOver (w.under (𝓞 F)).asIdeal := ⟨rfl⟩
-  let e := w.asIdeal.ramificationIdx (𝓞 F)
-  have he : 0 < e :=
-    Ideal.ramificationIdx_pos_of_isDedekindDomain' w.asIdeal (w.under (𝓞 F)).ne_bot
-  have hw (x : F) :
-      w.valuation E (algebraMap F E x) = (w.under (𝓞 F)).valuation F x ^ e :=
-    (HeightOneSpectrum.valuation_liesOver E (w.under (𝓞 F)) w x).symm
+  obtain ⟨e, he, hw⟩ := (places_over F E).2.2 w
   obtain ⟨π, hπ⟩ := w.valuation_exists_uniformizer E
   have h2' : w.valuation E 2 = 1 := by
     have := hw 2

@@ -102,7 +102,7 @@ theorem exists_sameOrbit {y : (Σ k, ι k) → Ω} (hP : IsArithVar (mCoordIdeal
   let φ : MRing ι →+* ℂ := (eval z).comp (map (Int.castRingHom ℂ))
   have hne : ∀ (v : MRing ι) (a : K → ℕ), IsMultiHomog v a → aeval y v ≠ 0 → φ v ≠ 0 := fun v a hv hv0 =>
     eval_ne_zero_of_dimOne arithVarZero hP
-      (A := HermLine.ofMetrics (fun k => fsMetric (ι k)) (fun k => (a k : ℤ)))
+      (A := HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (fun k => (a k : ℤ)))
       ⟨a, fun _ => rfl, hv, fun hm => hv0 (aeval_eq_zero_of_mem y hm)⟩ hz
   choose d g h hg hh hh0 hgh using hB
   let σf : Ω → ℂ := fun s => φ (g s) / φ (h s)

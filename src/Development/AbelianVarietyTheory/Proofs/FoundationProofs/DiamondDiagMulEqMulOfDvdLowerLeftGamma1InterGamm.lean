@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.PetEqRelIndexMulPetProd
 public import Development.AbelianVarietyTheory.Definitions.Foundations.IsDCReps
 
 @[expose] public section
@@ -11,9 +12,7 @@ open GlobalTheory.HeckeFamilyMatrices
 
 namespace GlobalTheory.Hk
 
-theorem dia_diag_mul_of_dvd_lowerLeft : ∀ (N l q : ℕ) (σ γ : SL(2, ℤ)),
-    q.Prime → ¬ q ∣ N * l → IsDiam N l ((q : ℤ) : ZMod N) σ → γ ∈ Lev N l →
-    (q : ℤ) ∣ mat γ 1 0 → ∃ γ' ∈ Lev N l, mat σ * dg q 1 * mat γ = mat γ' * (mat σ * dg q 1) := by
+theorem dia_diag_mul_of_dvd_lowerLeft : ∀ (N l q : ℕ) (σ γ : SL(2, ℤ)), q.Prime → ¬ q ∣ N * l → GlobalTheory.Hk.IsDia N l q σ → γ ∈ GlobalTheory.Hk.lev N l → (q : ℤ) ∣ mat γ 1 0 → ∃ γ' ∈ GlobalTheory.Hk.lev N l, mat σ * dg q 1 * mat γ = mat γ' * (mat σ * dg q 1) := by
   intro N l q σ γ hq hnd hσ hγ hc
   obtain ⟨u, hu⟩ := hc
   have hcop : Nat.Coprime q (N * l) := (Nat.Prime.coprime_iff_not_dvd hq).2 hnd
@@ -33,8 +32,7 @@ theorem dia_diag_mul_of_dvd_lowerLeft : ∀ (N l q : ℕ) (σ γ : SL(2, ℤ)),
     rw [ZMod.intCast_zmod_eq_zero_iff_dvd] at hcl' ⊢
     rw [hu'] at hcl'
     exact hcl.dvd_of_dvd_mul_left hcl'
-  have hs : ((N * l : ℕ) : ℤ) ∣ σ 1 0 :=
-    (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).1 (Gamma0_mem.1 hσ.1)
+  have hs : ((N * l : ℕ) : ℤ) ∣ σ 1 0 := (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).1 hσ.1
   have hsN : ((σ 1 0 : ℤ) : ZMod N) = 0 :=
     (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).2 (dvd_trans (by push_cast; exact dvd_mul_right _ _) hs)
   have hsl : ((σ 1 0 : ℤ) : ZMod l) = 0 :=

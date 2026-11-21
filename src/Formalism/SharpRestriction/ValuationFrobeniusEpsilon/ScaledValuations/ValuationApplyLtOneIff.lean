@@ -72,11 +72,13 @@ def Ine (A : ValuationSubring (Ω)) : Subgroup (G F Ω) where
     exact hσ' _ hy
 
 
+variable (F Ω) in
 def cycZ (l : ℕ) [Fact l.Prime] : G F Ω →* ℤ_[l]ˣ :=
   (cyclotomicCharacter (Ω) l).comp
     (MulSemiringAction.toRingAut (G F Ω) (Ω))
 
 
+variable (F Ω) in
 def cycMod (l : ℕ) [Fact l.Prime] (r : ℕ) : G F Ω →* (ZMod (l ^ r))ˣ :=
   (Units.map (PadicInt.toZModPow r : ℤ_[l] →+* ZMod (l ^ r)).toMonoidHom).comp (cycZ F Ω l)
 

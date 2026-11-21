@@ -24,6 +24,7 @@ variable {R n}
 def alt (x : MvPolynomial (Fin n) R) : MvPolynomial (Fin n) R := ∑ w : Perm (Fin n), Perm.sign w • rename w x
 
 
+open scoped Classical in
 def dd (x : MvPolynomial (Fin n) R) : MvPolynomial (Fin n) R :=
   if h : ∃ y, De R n * y = alt x then h.choose else 0
 

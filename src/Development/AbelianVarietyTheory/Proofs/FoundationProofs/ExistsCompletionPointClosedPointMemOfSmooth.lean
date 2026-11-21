@@ -1,293 +1,7 @@
 module
 
 public import Mathlib
-
-namespace GlobalTheory
-
-open Polynomial IsLocalRing
-open scoped TensorProduct
-
--- The algebraic proofs from ExistsIsDiscreteValuationRingOfMaximalIdealEqSpa are local
--- here because that file uses legacy imports.
-section Lift
-
-variable {R A B C : Type*} [CommRing R] [CommRing A] [CommRing B] [CommRing C]
-  [Algebra R A] [Algebra R B] [Algebra R C]
-
-private theorem isUnit_of_isUnit_map_of_henselian (I : Ideal B) [HenselianRing B I] (π : B →+* C)
-    (hπ : Function.Surjective π) (hI : ∀ b, b ∈ I ↔ π b = 0) {b : B} (hb : IsUnit (π b)) :
-    IsUnit b := by
-  have hker : RingHom.ker π ≤ Ring.jacobson B :=
-    fun x hx => HenselianRing.jac (I := I) ((hI x).mpr hx)
-  have := isLocalHom_of_le_jacobson hker
-  apply (isUnit_map_iff (Ideal.Quotient.mk (RingHom.ker π)) b).mp
-  simpa only [RingHom.quotientKerEquivOfSurjective_symm_apply] using
-    hb.map (π.quotientKerEquivOfSurjective hπ).symm
-
-private theorem isLocalRing_of_surjective_of_henselian [IsLocalRing B] (I : Ideal B) [HenselianRing B I]
-    (π : B →+* C) (hπ : Function.Surjective π) (hI : ∀ b, b ∈ I ↔ π b = 0) : IsLocalRing C := by
-  have : Nontrivial C := by
-    by_contra hC
-    rw [not_nontrivial_iff_subsingleton] at hC
-    exact not_isUnit_zero (isUnit_of_isUnit_map_of_henselian I π hπ hI (b := 0)
-      (isUnit_of_subsingleton _))
-  exact IsLocalRing.of_surjective' π hπ
-
-private theorem exists_algHom_lift_of_isStandardEtale [Algebra.IsStandardEtale R A] (I : Ideal B)
-    [HenselianRing B I] (π : B →ₐ[R] C) (hπ : Function.Surjective π) (hI : ∀ b, b ∈ I ↔ π b = 0)
-    (φ : A →ₐ[R] C) : ∃ ψ : A →ₐ[R] B, π.comp ψ = φ := by
-  obtain ⟨P⟩ : Nonempty (StandardEtalePresentation R A) := inferInstance
-  have h₀ : P.P.HasMap (φ P.x) := P.hasMap.map φ
-  obtain ⟨t₀, ht₀⟩ := hπ (φ P.x)
-  have hu : ∀ b, IsUnit (π b) → IsUnit b := fun b hb =>
-    isUnit_of_isUnit_map_of_henselian I (π : B →+* C) hπ hI hb
-  obtain ⟨t, ht, htt⟩ := HenselianRing.is_henselian (I := I)
-    (P.f.map (algebraMap R B)) (P.monic_f.map _) t₀
-    (by rw [hI, eval_map_algebraMap, ← aeval_algHom_apply, ht₀]; exact h₀.1)
-    (by
-      refine IsUnit.map _ (hu _ ?_)
-      rw [derivative_map, eval_map_algebraMap, ← aeval_algHom_apply, ht₀]
-      exact h₀.isUnit_derivative_f)
-  have hπt : π t = φ P.x := by
-    rw [hI, map_sub, sub_eq_zero] at htt
-    rw [htt, ht₀]
-  have h₁ : P.P.HasMap t :=
-    ⟨by rwa [IsRoot.def, eval_map_algebraMap] at ht,
-      hu _ (by rw [← aeval_algHom_apply, hπt]; exact h₀.2)⟩
-  exact ⟨(P.P.lift t h₁).comp P.equivRing.toAlgHom, P.hom_ext (by simp [hπt])⟩
-
-private theorem exists_algHom_lift_of_smooth [Algebra.Smooth R A] [IsLocalRing B] (I : Ideal B)
-    [HenselianRing B I] (π : B →ₐ[R] C) (hπ : Function.Surjective π) (hI : ∀ b, b ∈ I ↔ π b = 0)
-    (φ : A →ₐ[R] C) : ∃ ψ : A →ₐ[R] B, π.comp ψ = φ := by
-  have : IsLocalRing C := isLocalRing_of_surjective_of_henselian I (π : B →+* C) hπ hI
-  obtain ⟨f, hf, n, _, _, _⟩ := Algebra.IsSmoothAt.exists_isStandardEtale_mvPolynomial (R := R)
-    (p := (maximalIdeal C).comap φ)
-  have hφf : IsUnit (φ f) := by simpa using hf
-  let φ' : Localization.Away f →ₐ[R] C := IsLocalization.Away.liftAlgHom f hφf
-  choose b hb using fun i : Fin n => hπ (φ' (algebraMap _ _ (MvPolynomial.X (R := R) i)))
-  let χ : MvPolynomial (Fin n) R →ₐ[R] C := φ'.comp (IsScalarTower.toAlgHom R _ _)
-  have hχ : π.comp (MvPolynomial.aeval b) = χ := by ext i; simp [χ, hb]
-  letI := (MvPolynomial.aeval (R := R) b).toAlgebra
-  letI := χ.toAlgebra
-  have : IsScalarTower R (MvPolynomial (Fin n) R) B :=
-    .of_algebraMap_eq fun r => ((MvPolynomial.aeval (R := R) b).commutes r).symm
-  let π' : B →ₐ[MvPolynomial (Fin n) R] C := ⟨π, fun r => congr($hχ r)⟩
-  let φ'' : Localization.Away f →ₐ[MvPolynomial (Fin n) R] C := ⟨φ', fun r => rfl⟩
-  obtain ⟨ψ, hψ⟩ := exists_algHom_lift_of_isStandardEtale I π' hπ hI φ''
-  refine ⟨(ψ.restrictScalars R).comp (IsScalarTower.toAlgHom R A _), AlgHom.ext fun a => ?_⟩
-  exact congr($hψ (algebraMap A _ a)).trans (show φ' (algebraMap A _ a) = φ a by simp [φ'])
-
-end Lift
-
-section SeparablePoints
-
-variable {R A B K : Type*} [CommRing R] [CommRing A] [CommRing B] [Field K]
-  [Algebra R A] [Algebra R B] [Algebra R K]
-
-private theorem nonempty_algHom_of_etale_of_isSepClosed [IsSepClosed K] [Algebra.Etale R A] (q : Ideal A)
-    [q.IsPrime] (hq : q.comap (algebraMap R A) = RingHom.ker (algebraMap R K)) :
-    Nonempty (A →ₐ[R] K) := by
-  let p := RingHom.ker (algebraMap R K)
-  have : p.IsPrime := RingHom.ker_isPrime _
-  have : q.LiesOver p := ⟨hq.symm⟩
-  letI := Localization.AtPrime.algebraOfLiesOver p q
-  let ι : p.ResidueField →ₐ[R] K := Ideal.ResidueField.liftₐ p (Algebra.ofId R K) le_rfl (by
-    simp [SetLike.le_def, IsUnit.mem_submonoid_iff, p])
-  letI := ι.toAlgebra
-  have : IsScalarTower R p.ResidueField K := .of_algebraMap_eq fun r => (ι.commutes r).symm
-  let j : q.ResidueField →ₐ[p.ResidueField] K := IsSepClosed.lift
-  exact ⟨(j.restrictScalars R).comp (IsScalarTower.toAlgHom R A _)⟩
-
-private theorem nonempty_algHom_of_smooth_of_isSepClosed [IsSepClosed K] [Algebra.Smooth R A] (p : Ideal A)
-    [p.IsPrime] (hp : p.comap (algebraMap R A) = RingHom.ker (algebraMap R K)) :
-    Nonempty (A →ₐ[R] K) := by
-  have : Infinite K := by
-    by_contra hK
-    rw [not_infinite_iff_finite] at hK
-    have := IsSepClosed.isAlgClosed_of_perfectField K
-    exact not_finite K
-  obtain ⟨f, hf, n, _, _, _⟩ := Algebra.IsSmoothAt.exists_isStandardEtale_mvPolynomial (R := R)
-    (p := p)
-  let S := Localization.Away f
-  let P := MvPolynomial (Fin n) R
-  have hdisj := (Ideal.disjoint_powers_iff_notMem_of_isPrime _).mpr hf
-  let p' : PrimeSpectrum S := ⟨p.map (algebraMap A S),
-    IsLocalization.isPrime_of_isPrime_disjoint (.powers f) _ _ ‹_› hdisj⟩
-  have hp' : p'.asIdeal.comap (algebraMap R S) = RingHom.ker (algebraMap R K) := by
-    rw [IsScalarTower.algebraMap_eq R A S, ← Ideal.comap_comap, ← hp]
-    exact congrArg _ (IsLocalization.under_map_of_isPrime_disjoint (.powers f) _ ‹_› hdisj)
-  have hopen := (PrimeSpectrum.isOpenMap_comap_of_hasGoingDown_of_finitePresentation
-    (R := P) (S := S)).isOpen_range
-  obtain ⟨_, ⟨_, ⟨h, rfl⟩, rfl⟩, hh, hsub⟩ := PrimeSpectrum.isBasis_basic_opens
-    |>.exists_subset_of_mem_open (Set.mem_range_self p') hopen
-  obtain ⟨b, hb⟩ : ∃ b : Fin n → K, MvPolynomial.aeval b h ≠ 0 := by
-    by_contra hc
-    push Not at hc
-    have h₀ : h.map (algebraMap R K) = 0 :=
-      MvPolynomial.funext fun b => by rw [MvPolynomial.eval_map, ← MvPolynomial.aeval_def, hc, map_zero]
-    apply hh
-    rw [h.as_sum]
-    refine Ideal.sum_mem _ fun m _ => ?_
-    rw [MvPolynomial.monomial_eq]
-    refine Ideal.mul_mem_right _ _ ?_
-    change algebraMap P S (algebraMap R P _) ∈ p'.asIdeal
-    rw [← IsScalarTower.algebraMap_apply, ← Ideal.mem_comap, hp', RingHom.mem_ker,
-      ← MvPolynomial.coeff_map, h₀]
-    simp
-  letI := (MvPolynomial.aeval (R := R) b).toAlgebra
-  have : IsScalarTower R P K :=
-    .of_algebraMap_eq fun r => ((MvPolynomial.aeval (R := R) b).commutes r).symm
-  obtain ⟨q, hq⟩ := hsub (a := ⟨RingHom.ker (algebraMap P K), RingHom.ker_isPrime _⟩) hb
-  obtain ⟨ψ⟩ := nonempty_algHom_of_etale_of_isSepClosed (R := P) (K := K) q.asIdeal
-    congr($(hq).asIdeal)
-  exact ⟨(ψ.restrictScalars R).comp (IsScalarTower.toAlgHom R A _)⟩
-
-private theorem exists_etale_subset_range [IsLocalRing B] [Algebra B K] [Algebra (ResidueField B) K]
-    [IsScalarTower B (ResidueField B) K] [Algebra.IsSeparable (ResidueField B) K]
-    {ι : Type*} [Finite ι] (b : ι → K) :
-    ∃ (P : StandardEtalePair B) (ε : P.Ring →ₐ[B] K), ∀ i, b i ∈ Set.range ε := by
-  let k := ResidueField B
-  let L := IntermediateField.adjoin k (Set.range b)
-  have : FiniteDimensional k L :=
-    IntermediateField.finiteDimensional_adjoin fun x _ => Algebra.IsIntegral.isIntegral x
-  obtain ⟨θ, hθ⟩ := Field.exists_primitive_element k L
-  have hi : IsIntegral k θ := Algebra.IsIntegral.isIntegral θ
-  obtain ⟨μ, hμ, -, hμm⟩ := lifts_and_natDegree_eq_and_monic (f := algebraMap B k)
-    (p := minpoly k θ) (map_surjective _ residue_surjective _) (minpoly.monic hi)
-  let P : StandardEtalePair B := ⟨μ, hμm, derivative μ, 1, 0, 1, by simp⟩
-  have key : ∀ g : B[X], aeval (θ : K) g = (aeval θ (g.map (algebraMap B k)) : L) := fun g => by
-    rw [← aeval_map_algebraMap k]
-    exact aeval_algHom_apply L.val θ _
-  have hP : P.HasMap (θ : K) := by
-    refine ⟨by rw [key, hμ, minpoly.aeval]; rfl, Ne.isUnit ?_⟩
-    rw [key, ← derivative_map, hμ]
-    exact fun h => (Algebra.IsSeparable.isSeparable k θ).aeval_derivative_ne_zero
-      (minpoly.aeval k θ) (Subtype.ext h)
-  refine ⟨P, P.lift _ hP, fun i => ?_⟩
-  have h₁ : (⟨b i, IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩⟩ : L) ∈ Algebra.adjoin k {θ} := by
-    rw [← IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic hi.isAlgebraic, hθ]
-    trivial
-  rw [Algebra.adjoin_singleton_eq_range_aeval] at h₁
-  obtain ⟨g, hg⟩ := h₁
-  obtain ⟨g, rfl⟩ := map_surjective (algebraMap B k) residue_surjective g
-  refine ⟨aeval P.X g, ?_⟩
-  rw [← aeval_algHom_apply, StandardEtalePair.lift_X, key]
-  exact congrArg Subtype.val hg
-
-end SeparablePoints
-
-section EtaleLift
-
-universe u
-
-variable {R : Type*} {A B : Type u} {K : Type*} [CommRing R] [CommRing A] [CommRing B] [Field K]
-  [Algebra R A] [Algebra R B] [Algebra R K] [IsLocalRing B] [Algebra B K] [IsScalarTower R B K]
-  [Algebra (ResidueField B) K] [IsScalarTower B (ResidueField B) K]
-  [Algebra.IsSeparable (ResidueField B) K]
-
-private theorem exists_etale_algHom_lift_of_smooth [Algebra.Smooth R A] (φ : A →ₐ[R] K) :
-    ∃ (W : Type u) (_ : CommRing W) (_ : Algebra B W) (_ : Algebra.Etale B W) (ψ : A →+* W)
-      (ε : W →ₐ[B] K), ψ.comp (algebraMap R A) = (algebraMap B W).comp (algebraMap R B) ∧
-        ∀ a, ε (ψ a) = φ a := by
-  have : (RingHom.ker φ).IsPrime := RingHom.ker_isPrime _
-  obtain ⟨f, hf, n, _, _, _⟩ := Algebra.IsSmoothAt.exists_isStandardEtale_mvPolynomial (R := R)
-    (p := RingHom.ker φ)
-  let S := Localization.Away f
-  let P := MvPolynomial (Fin n) R
-  let φ' : S →ₐ[R] K := IsLocalization.Away.liftAlgHom f (Ne.isUnit hf)
-  obtain ⟨Q, ε, hε⟩ := exists_etale_subset_range (B := B)
-    fun i : Fin n => φ' (algebraMap P S (MvPolynomial.X i))
-  choose c hc using hε
-  let E := Q.Ring
-  letI : Algebra R E := ((algebraMap B E).comp (algebraMap R B)).toAlgebra
-  have : IsScalarTower R B E := .of_algebraMap_eq' rfl
-  let χ : P →ₐ[R] K := φ'.comp (IsScalarTower.toAlgHom R _ _)
-  have hχ : (ε.restrictScalars R).comp (MvPolynomial.aeval c) = χ := by
-    ext i
-    exact (congrArg ε (MvPolynomial.aeval_X c i)).trans (hc i)
-  letI := (MvPolynomial.aeval (R := R) c).toAlgebra
-  letI := χ.toAlgebra
-  letI := ε.toAlgebra
-  have : IsScalarTower B E K := .of_algebraMap_eq fun r => (ε.commutes r).symm
-  have : IsScalarTower P E K := .of_algebraMap_eq fun r => congr($hχ r).symm
-  let φ'' : S →ₐ[P] K := ⟨φ', fun r => rfl⟩
-  let W := E ⊗[P] S
-  let ε' : W →ₐ[E] K := Algebra.TensorProduct.lift (Algebra.ofId E K) φ'' fun _ _ => .all _ _
-  refine ⟨W, inferInstance, inferInstance, Algebra.Etale.comp B E W,
-    (Algebra.TensorProduct.includeRight (R := P) (A := E) (B := S)).toRingHom.comp
-      (algebraMap A S), ε'.restrictScalars B, RingHom.ext fun r => ?_, fun a => ?_⟩
-  · change (1 : E) ⊗ₜ[P] algebraMap A S (algebraMap R A r) = (algebraMap R E r) ⊗ₜ[P] (1 : S)
-    rw [← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply R P S,
-      ← (MvPolynomial.aeval (R := R) c).commutes r]
-    exact (Algebra.TensorProduct.tmul_one_eq_one_tmul _).symm
-  · change ε' ((1 : E) ⊗ₜ[P] algebraMap A S a) = φ a
-    rw [Algebra.TensorProduct.lift_tmul, map_one, one_mul]
-    exact (show φ' (algebraMap A _ a) = φ a by simp [φ'])
-
-end EtaleLift
-
-section DiscreteValuation
-
-private theorem exists_isDiscreteValuationRing_of_maximalIdeal_eq_span {B : Type*} [CommRing B]
-    [IsLocalRing B] {t : B} (ht : t ∈ nonZeroDivisors B) (hm : maximalIdeal B = Ideal.span {t})
-    (hs : ⨅ n : ℕ, maximalIdeal B ^ n = ⊥) :
-    ∃ _ : IsDomain B, IsDiscreteValuationRing B := by
-  classical
-  have key : ∀ x : B, x ≠ 0 → ∃ (n : ℕ) (u : Bˣ), t ^ n * u = x := by
-    intro x hx
-    have h : ∃ n : ℕ, ¬ t ^ n ∣ x := by
-      by_contra hc
-      push Not at hc
-      apply hx
-      rw [← Ideal.mem_bot, ← hs, Ideal.mem_iInf]
-      intro n
-      rw [hm, Ideal.span_singleton_pow, Ideal.mem_span_singleton]
-      exact hc n
-    have h₀ : Nat.find h ≠ 0 := fun h₀ => Nat.find_spec h (by simp [h₀])
-    obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero h₀
-    obtain ⟨u, rfl⟩ := not_not.mp (Nat.find_min h (hn ▸ n.lt_succ_self))
-    have hu : IsUnit u := by
-      by_contra hu
-      have h₁ : u ∈ maximalIdeal B := hu
-      rw [hm, Ideal.mem_span_singleton] at h₁
-      exact Nat.find_spec h (by rw [hn, pow_succ]; exact mul_dvd_mul_left _ h₁)
-    exact ⟨n, hu.unit, rfl⟩
-  have hreg : ∀ x : B, x ≠ 0 → x ∈ nonZeroDivisors B := fun x hx => by
-    obtain ⟨n, u, rfl⟩ := key x hx
-    exact mul_mem (pow_mem ht n) u.isUnit.mem_nonZeroDivisors
-  have : NoZeroDivisors B := ⟨fun {a b} hab => by
-    by_contra hc
-    push Not at hc
-    exact hc.1 (mem_nonZeroDivisors_iff_right.mp (hreg b hc.2) a hab)⟩
-  have : IsDomain B := NoZeroDivisors.to_isDomain B
-  have hp : Prime t := by
-    rw [← Ideal.span_singleton_prime (nonZeroDivisors.ne_zero ht), ← hm]
-    infer_instance
-  exact ⟨this, IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
-    ⟨t, hp.irreducible, fun {x} hx => by
-      obtain ⟨n, u, h⟩ := key x hx
-      exact ⟨n, u, h⟩⟩⟩
-
-variable (V : Type*) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]
-
-private theorem exists_isDiscreteValuationRing_of_unramified (B : Type*) [CommRing B] [IsLocalRing B]
-    [Algebra V B] [IsLocalHom (algebraMap V B)] [Module.Flat V B] [Algebra.EssFiniteType V B]
-    [Algebra.FormallyUnramified V B] : ∃ _ : IsDomain B, IsDiscreteValuationRing B := by
-  have : IsNoetherianRing B := Algebra.EssFiniteType.isNoetherianRing V B
-  have hs := Ideal.iInf_pow_eq_bot_of_isLocalRing (maximalIdeal B) (maximalIdeal.isMaximal B).ne_top
-  obtain ⟨t, ht⟩ := IsDiscreteValuationRing.exists_irreducible V
-  refine exists_isDiscreteValuationRing_of_maximalIdeal_eq_span (t := algebraMap V B t) ?_ ?_ hs
-  · rw [mem_nonZeroDivisors_iff_left]
-    intro x hx
-    have := Module.Flat.isSMulRegular_of_nonZeroDivisors (M := B)
-      (mem_nonZeroDivisors_of_ne_zero ht.ne_zero)
-    exact this (show t • x = t • (0 : B) by rw [smul_zero, Algebra.smul_def, hx])
-  · rw [← Algebra.FormallyUnramified.map_maximalIdeal (R := V), ht.maximalIdeal_eq,
-      Ideal.map_span, Set.image_singleton]
-
-end DiscreteValuation
-
-end GlobalTheory
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsDiscreteValuationRingOfMaximalIdealEqSpa
 
 @[expose] public section
 
@@ -409,7 +123,7 @@ theorem _root_.GlobalTheory.reducePoint_quotient_surjective [Smooth f] :
   rintro ⟨x₀, hx₀⟩
   have hker : ∀ b : B, b ∈ I ↔ Ideal.Quotient.mk I b = 0 := fun b =>
     Ideal.Quotient.eq_zero_iff_mem.symm
-  haveI : IsLocalRing (B ⧸ I) := isLocalRing_of_surjective_of_henselian I
+  haveI : IsLocalRing (B ⧸ I) := _root_.GlobalTheory.isLocalRing_of_surjective_of_henselian I
     (Ideal.Quotient.mk I) Ideal.Quotient.mk_surjective hker
   haveI : IsLocalRing (CommRingCat.of (B ⧸ I)) := ‹IsLocalRing (B ⧸ I)›
   have hclosed : (Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk I))).base
@@ -428,7 +142,7 @@ theorem _root_.GlobalTheory.reducePoint_quotient_surjective [Smooth f] :
   have hx : Set.range x₀ ⊆ V := _root_.GlobalTheory.range_subset_opens_of_isLocalRing x₀ hxV
   obtain ⟨x, hπx, hxf⟩ := _root_.GlobalTheory.exists_lift_of_smooth_of_isAffineOpen f hU hV hVU _ s x₀ hx₀ hs hx
     (fun R A _ _ _ _ _ _ π' hπ' φ =>
-      exists_algHom_lift_of_smooth I π'
+      _root_.GlobalTheory.exists_algHom_lift_of_smooth I π'
         (fun c => by
           obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective c
           exact ⟨b, hπ' b⟩)
@@ -486,14 +200,13 @@ theorem _root_.GlobalTheory.exists_etale_point_of_smooth (B : Type u) [CommRing 
   haveI : IsScalarTower Γ(S, U) B K := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
   haveI : Algebra.Smooth Γ(S, U) Γ(X, V) := hsm
   haveI := P.isPrime
-  obtain ⟨φ⟩ := nonempty_algHom_of_smooth_of_isSepClosed (K := K) P.asIdeal (by
+  obtain ⟨φ⟩ := _root_.GlobalTheory.nonempty_algHom_of_smooth_of_isSepClosed (K := K) P.asIdeal (by
     change Ideal.comap (f.appLE U V hVU).hom P.asIdeal = _
     rw [hPm]
     ext r
     change b.hom r ∈ maximalIdeal B ↔ algebraMap B K (b.hom r) = 0
-    rw [IsScalarTower.algebraMap_apply B (ResidueField B) K, map_eq_zero]
-    exact (residue_eq_zero_iff (b.hom r)).symm)
-  obtain ⟨W, iW, iBW, hE, ψ, ε, hψ, -⟩ := exists_etale_algHom_lift_of_smooth (B := B) (K := K) φ
+    exact (_root_.GlobalTheory.algebraMap_eq_zero_iff_mem_maximalIdeal (b.hom r)).symm)
+  obtain ⟨W, iW, iBW, hE, ψ, ε, hψ, -⟩ := _root_.GlobalTheory.exists_etale_algHom_lift_of_smooth (B := B) (K := K) φ
   refine ⟨W, iW, iBW, hE, ε, Spec.map (CommRingCat.ofHom ψ) ≫ hV.fromSpec, ?_, ?_⟩
   · have e : f.appLE U V hVU ≫ CommRingCat.ofHom ψ = b ≫ CommRingCat.ofHom (algebraMap B W) := by
       ext r
@@ -544,7 +257,7 @@ theorem _root_.GlobalTheory.isDiscreteValuationRing_of_etale_of_isLocalHom (V V'
         (_ : IsScalarTower V (FractionRing V) (FractionRing V')),
         Module.Finite (FractionRing V) (FractionRing V') ∧
         Algebra.IsSeparable (FractionRing V) (FractionRing V') := by
-  obtain ⟨hD, hR⟩ := exists_isDiscreteValuationRing_of_unramified V V'
+  obtain ⟨hD, hR⟩ := _root_.GlobalTheory.exists_isDiscreteValuationRing_of_unramified V V'
   have hF : Module.FaithfullyFlat V V' := Module.FaithfullyFlat.of_flat_of_isLocalHom
   have hinj : Function.Injective (algebraMap V V') := FaithfulSMul.algebraMap_injective V V'
   haveI : FaithfulSMul V (FractionRing V') := by
@@ -552,15 +265,8 @@ theorem _root_.GlobalTheory.isDiscreteValuationRing_of_etale_of_isLocalHom (V V'
     exact (IsFractionRing.injective V' (FractionRing V')).comp hinj
   letI := FractionRing.liftAlgebra V (FractionRing V')
   haveI := FractionRing.isScalarTower_liftAlgebra V (FractionRing V')
-  have : Algebra.EssFiniteType V' (FractionRing V') :=
-    .of_isLocalization _ (nonZeroDivisors V')
-  have : Algebra.FormallyUnramified V' (FractionRing V') := .of_isLocalization (nonZeroDivisors V')
-  have : Algebra.EssFiniteType V (FractionRing V') := .comp V V' _
-  have : Algebra.FormallyUnramified V (FractionRing V') := .comp V V' _
-  have : Algebra.EssFiniteType (FractionRing V) (FractionRing V') := .of_comp V _ _
-  have : Algebra.FormallyUnramified (FractionRing V) (FractionRing V') := .of_restrictScalars V _ _
-  have hfin := Algebra.FormallyUnramified.finite_of_free (FractionRing V) (FractionRing V')
-  have hsep := Algebra.FormallyUnramified.isSeparable (FractionRing V) (FractionRing V')
+  obtain ⟨hfin, hsep⟩ :=
+    _root_.GlobalTheory.finite_and_isSeparable_fractionRing_of_unramified V V' (FractionRing V) (FractionRing V')
   exact ⟨hD, hR, Algebra.FormallyUnramified.map_maximalIdeal, hF, inferInstance, inferInstance,
     _, inferInstance, hfin, hsep⟩
 

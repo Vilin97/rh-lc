@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UpperMulEqMulDiamondDiagGamma1InterGamma0
-public import Development.AbelianVarietyTheory.Definitions.Foundations.PetEqRelIndexMulPetProd
 public import Development.AbelianVarietyTheory.Definitions.Foundations.IsDCReps
 
 @[expose] public section

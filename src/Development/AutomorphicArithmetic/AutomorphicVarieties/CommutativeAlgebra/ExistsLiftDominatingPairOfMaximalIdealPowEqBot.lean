@@ -187,7 +187,7 @@ theorem UpperTheory.exists_lift_dominating_pair_of_maximalIdeal_pow_eq_bot :
     { hom := hom
       cont := fun a b n => (hloc a b).comp _
       red := fun g a b => by
-        rw [← res_map p₁]
+        rw [← res_map O S p₁]
         exact r₁.red g a b }
   refine ⟨S, inferInstance, inferInstance, hCO, r, p₁, p₂, hpow, ?_, ?_, ?_⟩
   · apply Subalgebra.map_injective (f := S.val) Subtype.val_injective

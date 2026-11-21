@@ -55,7 +55,7 @@ theorem ιz_d (a b k : ℕ) :
   · rw [ιz_ne Y _ _ _ h, zero_comp]
     refine (Finset.sum_eq_zero fun x hx => ?_).symm
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
-    rw [dT_eq_zero _ _ _ _ (by omega), Functor.map_zero, zero_comp]
+    rw [dT_eq_zero a b x.1 x.2 (by omega), Functor.map_zero, zero_comp]
 
 def shufF (G : ∀ a b n : ℕ, bo a b ⟶ bo n n) (n : ℕ) : (tot Y).X n ⟶ (diagCx Y).X n :=
   (dbl Y).totalDesc (c₁₂ := ComplexShape.down ℕ) (fun a b _ => (ev Y).map (G a b n))
@@ -110,7 +110,8 @@ theorem idc_self (n : ℕ) : idc n n = 𝟙 _ := by
   exact Nat.le_of_lt_succ j.2
 
 theorem ev_idO_self (a b : ℕ) : (ev Y).map (idO a b a b) = 𝟙 _ := by
-  rw [idO, if_pos ⟨rfl, rfl⟩, ev_map_bop, idc_self, idc_self]
+  unfold idO
+  rw [if_pos ⟨rfl, rfl⟩, ev_map_bop, idc_self, idc_self]
   simp
   rfl
 
@@ -119,7 +120,8 @@ theorem sum_idO (a b n : ℕ) (h : a + b = n) :
   rw [Finset.sum_eq_single (a, b)]
   · rw [ev_idO_self, Category.id_comp]
   · intro y _ hy
-    rw [idO, if_neg (fun h' => hy (Prod.ext h'.1.symm h'.2.symm)), Functor.map_zero, zero_comp]
+    unfold idO
+    rw [if_neg (fun h' => hy (Prod.ext h'.1.symm h'.2.symm)), Functor.map_zero, zero_comp]
   · intro hy
     exact absurd (Finset.HasAntidiagonal.mem_antidiagonal.2 h) hy
 
@@ -146,7 +148,7 @@ theorem ιz_dNext (K : ∀ a b a' b' : ℕ, bo a b ⟶ bo a' b') (a b n : ℕ) (
     rw [Homotopy.dNext_zero_chainComplex, Limits.comp_zero]
     refine (Finset.sum_eq_zero fun x _ => Finset.sum_eq_zero fun j hj => ?_).symm
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hj
-    rw [dT_eq_zero _ _ _ _ (by omega), Limits.zero_comp, Functor.map_zero, Limits.zero_comp]
+    rw [dT_eq_zero a b j.1 j.2 (by omega), Limits.zero_comp, Functor.map_zero, Limits.zero_comp]
   | succ m =>
     rw [Homotopy.dNext_succ_chainComplex, ← Category.assoc, ιz_d, Preadditive.sum_comp, Nat.add_sub_cancel]
     rw [Finset.sum_comm]
@@ -194,7 +196,7 @@ def htpyD (G : ∀ a b n : ℕ, bo a b ⟶ bo n n)
     rw [HomologicalComplex.comp_f, HomologicalComplex.id_f, Homotopy.prevD_chainComplex]
     change awF Y n ≫ shufF Y G n = _
     rw [awF_shufF, hH n]
-    simp only [Functor.map_add (f := _), Functor.map_id, Functor.map_comp]
+    simp only [Functor.map_add (ev Y), Functor.map_id, Functor.map_comp]
     rw [evd', homD, if_pos rfl, show (ev Y).map (𝟙 (bo n n)) = 𝟙 ((diagCx Y).X n) from (ev Y).map_id _]
     cases n with
     | zero =>
@@ -229,7 +231,7 @@ def htpyT (G : ∀ a b n : ℕ, bo a b ⟶ bo n n)
     rw [Finset.sum_congr rfl fun y hy => by
       rw [hK a b y.1 y.2 (Finset.HasAntidiagonal.mem_antidiagonal.1 hy)]]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp_rw [Functor.map_add (f := _), Preadditive.add_comp, Finset.sum_add_distrib, sum_idO Y a b _ rfl,
+      simp_rw [Functor.map_add (ev Y), Preadditive.add_comp, Finset.sum_add_distrib, sum_idO Y a b _ rfl,
       Functor.map_sum, Preadditive.sum_comp]
 
     simp only [Preadditive.comp_add, Category.comp_id]

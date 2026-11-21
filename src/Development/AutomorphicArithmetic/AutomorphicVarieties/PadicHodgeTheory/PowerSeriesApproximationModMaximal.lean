@@ -1,10 +1,11 @@
 module
 
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MemSpanVariable
 
 @[expose] public section
 
-open IsLocalRing
+open IsLocalRing UpperTheory.V.Alg
 
 open MvPowerSeries in
 private theorem mem_span_X {O σ : Type} [CommRing O] [Fintype σ] (f : MvPowerSeries σ O)

@@ -34,7 +34,7 @@ theorem homS_monomial (m i : ℕ) (hi : i ≤ m) (a : K) :
   rw [Finset.sum_eq_single i]
   · simp
   · intro b _ hb
-    rw [coeff_monomial, if_neg (Ne.symm hb)]
+    rw [coeff_monomial_of_ne a hb]
     simp
   · intro h
     exact absurd (Finset.mem_range.2 (Nat.lt_succ_of_le hi)) h

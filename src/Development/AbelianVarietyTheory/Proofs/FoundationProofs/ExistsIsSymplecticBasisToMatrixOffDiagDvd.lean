@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.DualRestrictSurjectiveOfIsTorsionFreeQuotient
-import all Mathlib.LinearAlgebra.SymplecticGroup
 
 @[expose] public section
 
@@ -481,7 +480,6 @@ omit [DecidableEq l] in
 theorem IsSymplecticBasis.span_inl_eq {b : Basis (l ⊕ l) R M} (hb : IsSymplecticBasis B b)
     {P : Submodule R M} (hP : ∀ x ∈ P, ∀ y ∈ P, B x y = 0) (h : ∀ i, b (.inl i) ∈ P) :
     Submodule.span R (Set.range fun i => b (.inl i)) = P := by
-  classical
   refine le_antisymm (Submodule.span_le.2 (Set.range_subset_iff.2 h)) fun x hx => ?_
   rw [← b.sum_repr x, Fintype.sum_sum_type]
   simpa [(hb.mem_iff_repr_inr hP h x).1 hx] using
@@ -573,7 +571,6 @@ theorem IsSymplecticBasis.exists_lift_adapted (hf : Surjective f) (hB : B.IsAlt)
       Submodule.span R (Set.range fun i => φ (c (.inr i))) = Q ∧
       (∀ x, φ x ∈ P ↔ ∀ i, f (c.repr x (.inr i)) = 0) ∧
       ∀ x, φ x ∈ Q ↔ ∀ i, f (c.repr x (.inl i)) = 0 := by
-  classical
   obtain ⟨c', hc', h₁, h₂⟩ := hb'.exists_adapted hB' hP hQ hPQ
   obtain ⟨c, hc, hcc⟩ := hb.exists_lift hf hB hB' φ hb' h hc'
   refine ⟨c, hc, ?_, ?_, fun x => ?_, fun x => ?_⟩

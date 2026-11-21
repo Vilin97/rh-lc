@@ -1,7 +1,6 @@
 module
 
 public import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
-public import Formalism.DoubleCosetMeasures.LowerUnipotentOrbits.ExistsContinuousLowerUpperEntry
 public import Formalism.DoubleCosetMeasures.LowerUnipotentOrbits.IsIntOfLatOfLe
 public import Formalism.DoubleCosetMeasures.LowerUnipotentOrbits.LowUniMulVecELast
 public import Formalism.DoubleCosetMeasures.LowerUnipotentOrbits.IsOpenIsIntSet
@@ -52,17 +51,13 @@ theorem revIn_app_lt (s : ℕ) : ∀ (l : List ℕ) (j : ℕ), j < l.sum → rev
     · rfl
     · rw [revIn_app_lt s l (j - a) (by simp only [List.sum_cons] at h; omega)]
 
-theorem blk_lt_length : ∀ (l : List ℕ) (j : ℕ), j < l.sum → blk l j < l.length := by
-  intro l
-  induction l with
-  | nil => intro j h; simp at h
-  | cons a l ih =>
-    intro j h
-    simp only [List.sum_cons] at h
+theorem blk_lt_length : ∀ (l : List ℕ) (j : ℕ), j < l.sum → blk l j < l.length
+  | [], j, h => by simp at h
+  | a :: l, j, h => by
     simp only [blk, List.length_cons]
     split_ifs with hj
     · omega
-    · have := ih (j - a) (by omega)
+    · have := blk_lt_length l (j - a) (by simp only [List.sum_cons] at h; omega)
       omega
 
 theorem sum_sub {k n : ℕ} (e : Fin k → Fin n) (he : Function.Injective e) (f : Fin n → K)
@@ -335,11 +330,6 @@ theorem lu_int {n : ℕ} {h u : Matrix (Fin n) (Fin n) K} (hh : IsLowUni h) (hu 
 
 theorem pt_inv (w : Point K) : (pt w.1 w.2)⁻¹ = P.Phase.ptI w.1 w.2 := Matrix.inv_eq_right_inv (P.Phase.pt_mul_ptI w.1 w.2)
 
-private theorem pt_det_isUnit (w : Point K) : IsUnit (pt w.1 w.2).det :=
-  Matrix.isUnit_det_of_right_inverse
-    (Formalism.DoubleCosetMeasures.P.Supp.pt_mul_pt w.1 w.2 (fun b => (w.2 b)⁻¹)
-      (fun b => Units.mul_inv (w.2 b)))
-
 theorem mem_intSub {n : ℕ} (H : Subgroup (GL (Fin n) K)) (g : H) :
     g ∈ intSub R H ↔ IsInt R ((g : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) ∧
       IsInt R (((g : GL (Fin n) K)⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) := Iff.rfl
@@ -348,7 +338,6 @@ theorem int_of_orb (w : Point K) (hw : InGLR R w) (p : lowW K w.1 w.2 × upUniG 
     (hZ : IsInt R (orbZ w p)) :
     p.1 ∈ intSub R (lowW K w.1 w.2) ∧ p.2 ∈ intSub R (upUniG K w.1.sum) := by
   obtain ⟨hw1, hw2⟩ := hw
-  have hd := pt_det_isUnit w
   obtain ⟨hv, hmat, hhl, he⟩ := p.1.2
   have hu : IsUpUni ((p.2 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K) := p.2.2
   have hZ' : IsInt R (((p.1 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K) *
@@ -357,14 +346,14 @@ theorem int_of_orb (w : Point K) (hw : InGLR R w) (p : lowW K w.1 w.2 × upUniG 
     have e : hmat * ((p.2 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K) =
         (pt w.1 w.2)⁻¹ * (((p.1 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K) *
           pt w.1 w.2 * ((p.2 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K)) := by
-      rw [he, ← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hd, Matrix.one_mul]
+      rw [he, pt_inv w, ← Matrix.mul_assoc, ← Matrix.mul_assoc, P.Phase.ptI_mul_pt, Matrix.one_mul]
     rw [e]
     exact isInt_mul_hermitian_curvature R hw2 hZ'
   obtain ⟨hH, hU⟩ := lu_int R hhl hu hHU
   have hV : IsInt R ((p.1 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K) := by
     have e : ((p.1 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K) =
         pt w.1 w.2 * hmat * (pt w.1 w.2)⁻¹ := by
-      rw [← he, Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hd, Matrix.mul_one]
+      rw [← he, pt_inv w, Matrix.mul_assoc, P.Phase.pt_mul_ptI, Matrix.mul_one]
     rw [e]
     exact isInt_mul_hermitian_curvature R (isInt_mul_hermitian_curvature R hw1 hH) hw2
   have hdV := ((Formalism.DoubleCosetMeasures.P.uniGroup K _ ((p.1 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K)
@@ -393,18 +382,17 @@ theorem orb_of_int (w : Point K) (hw : InGLR R w) (p : lowW K w.1 w.2 × upUniG 
       pt w.1 w.2 * ((p.2 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K) := rfl
   have hX : orbZ w p *
       ((((p.2 : GL (Fin w.1.sum) K)⁻¹ : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K) *
-        (pt w.1 w.2)⁻¹ *
+        P.Phase.ptI w.1 w.2 *
         (((p.1 : GL (Fin w.1.sum) K)⁻¹ : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K)) = 1 := by
     rw [hO]
     simp only [Matrix.mul_assoc]
     rw [← Matrix.mul_assoc ((p.2 : GL (Fin w.1.sum) K) : Matrix (Fin w.1.sum) (Fin w.1.sum) K), hUU,
-      Matrix.one_mul, ← Matrix.mul_assoc (pt w.1 w.2),
-      Matrix.mul_nonsing_inv _ (pt_det_isUnit w), Matrix.one_mul, hVV]
+      Matrix.one_mul, ← Matrix.mul_assoc (pt w.1 w.2), P.Phase.pt_mul_ptI, Matrix.one_mul, hVV]
   have hinv := Matrix.inv_eq_right_inv hX
   refine ⟨?_, ?_, ?_⟩
   · rw [hO]
     exact isInt_mul_hermitian_curvature R (isInt_mul_hermitian_curvature R hV hw1) hU
-  · rw [hinv]
+  · rw [hinv, ← pt_inv w]
     exact isInt_mul_hermitian_curvature R (isInt_mul_hermitian_curvature R hU' hw2) hV'
   · rw [hinv]
     exact hX

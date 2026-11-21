@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+public import Formalism.LatticeTheta.Statement
 
 @[expose] public section
 

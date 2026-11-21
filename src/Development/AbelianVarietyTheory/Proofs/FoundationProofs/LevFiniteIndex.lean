@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.PetEqRelIndexMulPetProd
 
 @[expose] public section
 
@@ -8,8 +8,6 @@ open UpperHalfPlane ModularForm CongruenceSubgroup MeasureTheory
 open scoped MatrixGroups ModularForm Manifold
 
 namespace GlobalTheory.Hk
-
-def lev (N l : ℕ) : Subgroup SL(2, ℤ) := Gamma1 N ⊓ Gamma0 l
 
 theorem lev_finiteIndex : ∀ (N l : ℕ), 0 < N → 0 < l → (GlobalTheory.Hk.lev N l).FiniteIndex := by
   intro N l hN hl

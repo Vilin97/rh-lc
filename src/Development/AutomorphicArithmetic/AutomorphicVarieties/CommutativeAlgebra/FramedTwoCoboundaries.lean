@@ -117,7 +117,7 @@ structure IsLocCond (r0 : Γ →* Matrix ι ι O) (N : Subgroup Γ) (L : Cond O 
   conj : ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (r r' : Lift O rbar R) (h : Matrix ι ι R),
     Φ.InH r0 R r → Φ.HH h → (∀ s, r'.hom s * h = h * r.hom s) → L R r → L R r'
   torus : ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (r r' : Lift O rbar R) (t : Multiplicative X →* Rˣ),
-    Φ.InH r0 R r → (∀ j, res O R (t j) = 1) → IsTorusConj rbar w t r r' → L R r → L R r'
+    Φ.InH r0 R r → (∀ j, res O R (t j) = 1) → IsTorusConj w t r r' → L R r → L R r'
   lift : ∀ (R R' : Type) [CommRing R] [Algebra O R] [IsCO O R] [CommRing R'] [Algebra O R'] [IsCO O R']
     (p : R →ₐ[O] R'), Function.Surjective p → maximalIdeal R * RingHom.ker p = ⊥ →
     ∀ r' : Lift O rbar R', Φ.InH r0 R' r' → L R' r' → ∃ r : Lift O rbar R, Φ.InH r0 R r ∧ L R r ∧ r.map p = r'
@@ -253,7 +253,7 @@ def LemmaP : Prop :=
     [IsAdicComplete (maximalIdeal O) O] [Finite (ResidueField O)] [CharP (ResidueField O) l], l ≠ 2 →
   ∀ (ι X : Type) [Fintype ι] [DecidableEq ι] [AddCommGroup X] [Module.Free ℤ X] [Module.Finite ℤ X] (w : ι → X)
     (Φ : FormData O w) (Γ : Type) [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ]
-    [TotallyDisconnectedSpace Γ] [T2Space Γ], PhiCond Γ l →
+    [TotallyDisconnectedSpace Γ] [T2Space Γ], PhiCond (Γ := Γ) l →
   ∀ (rbar : Γ →* Matrix ι ι (ResidueField O)) (r0 : Lift O rbar O) (hbar : Φ.Normalises rbar), Φ.Normalises r0.hom →
   ∀ (F : Frame Γ) (L : ∀ q, Cond O (rbar.comp (F.ψ q))), (∀ q, ∀ n ∈ F.N q, rbar (F.ψ q n) = 1) →
     (∀ q, Φ.IsLocCond (r0.hom.comp (F.ψ q)) (F.N q) (L q)) → (∀ q, L q O (r0.comap (F.ψ q) (F.hψ q))) →

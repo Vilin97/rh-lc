@@ -9,7 +9,6 @@ public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.GFram
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.BasisOfIsCompl
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.SpanToLePerp
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FramesCommonStabiliserEqPairingMatrixStabiliser
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.RationalExtend
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IsIntegralOfQuad
 
 @[expose] public section

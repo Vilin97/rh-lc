@@ -26,6 +26,7 @@ def Pair [TopologicalSpace G] [TopologicalSpace T] (μ : Measure G) (j : T →* 
 def IsNrm (j : T →* G) (ν : Measure T) (ρ : G → ℝ≥0∞) : Prop := Measurable ρ ∧ ∀ x, ∫⁻ t, ρ (j t * x) ∂ν = 1
 
 
+open scoped Classical in
 def qI (μ : Measure G) (j : T →* G) (ν : Measure T) (F : G → ℂ) : ℂ :=
   if h : ∃ ρ, IsNrm j ν ρ then ∫ x, F x * ((h.choose x).toReal : ℂ) ∂μ else 0
 

@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+public import Formalism.LatticeTheta.LatticeSummableDecay
 
 @[expose] public section
 
@@ -13,17 +13,6 @@ namespace Formalism.H
 
 variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V]
   [MeasurableSpace V] [BorelSpace V]
-
-abbrev dual (Λ : Submodule ℤ V) : Submodule ℤ V :=
-  LinearMap.BilinForm.dualSubmodule (innerₗ V) Λ
-
-def UnfoldCoeff (V : Type*) [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    [MeasurableSpace V] [BorelSpace V] [FiniteDimensional ℝ V] : Prop :=
-  ∀ (Λ : Submodule ℤ V) [DiscreteTopology Λ] [IsZLattice ℝ Λ] (f : V → ℂ), Integrable f →
-    ∀ D : Set V, IsAddFundamentalDomain Λ D volume → ∀ μ ∈ dual Λ,
-      ∫ y in D, (∑' l : Λ, f ((l : V) + y)) *
-          Complex.exp (-(2 * Real.pi * Complex.I * (⟪μ, y⟫ : ℝ))) = (𝓕 f : V → ℂ) μ
-
 
 lemma unfoldCoeff_char_periodic (Λ : Submodule ℤ V) {μ : V} (hμ : μ ∈ dual Λ) (l : Λ) (y : V) :
     Complex.exp (-(2 * Real.pi * Complex.I * (⟪μ, (l : V) + y⟫ : ℝ))) =

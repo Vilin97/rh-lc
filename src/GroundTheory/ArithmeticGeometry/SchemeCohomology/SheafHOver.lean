@@ -45,7 +45,9 @@ instance overPullback_isRightAdjoint : (J.overPullback AddCommGrpCat.{v} U).IsRi
         refine Eq.trans ?_ (congrArg (shriekHomOfRestrictApp g X)
           (shriekPresheafMap_app_of f X s x).symm)
         exact (shriekHomOfRestrictApp_of g X s _).symm
-      homEquiv_naturality_right := fun {P Q Q'} f g => rfl }).comp
+      homEquiv_naturality_right := fun {P Q Q'} f g => rfl } :
+        shriekFunctor U ⊣
+          (Functor.whiskeringLeft _ _ AddCommGrpCat.{v}).obj (Over.forget U).op).comp
     (sheafificationAdjunction J AddCommGrpCat.{v})).restrictFullyFaithful
     (iC := sheafToPresheaf (J.over U) AddCommGrpCat.{v}) (iD := 𝟭 _)
     (fullyFaithfulSheafToPresheaf _ _) (Functor.FullyFaithful.id _)
@@ -174,10 +176,10 @@ theorem overCohomologyMap_bijective [EnoughInjectives (Sheaf J AddCommGrpCat.{v}
     intro F
     let I : InjectivePresentation F := Classical.arbitrary _
     let S := ShortComplex.mk _ _ (cokernel.condition I.f)
-    have : Injective S.X₂ := I.injective
+    letI : Injective S.X₂ := I.injective
     have hS : S.ShortExact := { exact := ShortComplex.exact_cokernel I.f }
     have hS' := hS.map_of_exact (J.overPullback AddCommGrpCat.{v} U)
-    have : Injective (S.map (J.overPullback AddCommGrpCat.{v} U)).X₂ :=
+    letI : Injective (S.map (J.overPullback AddCommGrpCat.{v} U)).X₂ :=
       (J.overPullback AddCommGrpCat.{v} U).injective_obj_of_injective I.injective
     exact AddMonoidHom.bijective_of_surjective_of_bijective_of_right_exact _ _ _ _
       (overCohomologyMap J U S.X₂ n) (overCohomologyMap J U S.X₃ n)
@@ -189,8 +191,11 @@ theorem overCohomologyMap_bijective [EnoughInjectives (Sheaf J AddCommGrpCat.{v}
       ((ShortComplex.ab_exact_iff_function_exact _).mp
         (Ext.covariant_sequence_exact₃' _ hS' n (n + 1) rfl))
       (hn _).surjective (hn _)
-      (fun x₁ ↦ Ext.covariant_sequence_exact₁ _ hS x₁ (by subsingleton) rfl)
-      (fun y₁ ↦ Ext.covariant_sequence_exact₁ _ hS' y₁ (by subsingleton) rfl)
+      (fun x₁ ↦ Ext.covariant_sequence_exact₁ _ hS x₁
+        (Ext.eq_zero_of_injective (x₁.comp (Ext.mk₀ S.f) (add_zero (n + 1)))) rfl)
+      (fun y₁ ↦ Ext.covariant_sequence_exact₁ _ hS' y₁
+        (Ext.eq_zero_of_injective (y₁.comp (Ext.mk₀ ((J.overPullback AddCommGrpCat.{v} U).map S.f))
+          (add_zero (n + 1))) rfl)
 
 noncomputable def cohomologyPresheafOverAddEquiv [EnoughInjectives (Sheaf J AddCommGrpCat.{v})]
     (F : Sheaf J AddCommGrpCat.{v}) (n : ℕ) :

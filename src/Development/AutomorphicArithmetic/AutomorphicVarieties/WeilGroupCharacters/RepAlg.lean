@@ -1,6 +1,6 @@
 module
 
-public import Mathlib
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
 
 @[expose] public section
 
@@ -35,7 +35,8 @@ def pull {E' : Type} [Ring E'] [Algebra A E'] (φ : E' →ₐ[A] E) : Det n A E'
     change D.D B' (Algebra.TensorProduct.map (AlgHom.id B' B') φ _) = f (D.D B (Algebra.TensorProduct.map (AlgHom.id B B) φ x))
     rw [← D.nat]
     congr 1
-    induction x using TensorProduct.inductionOn with
+    induction x using TensorProduct.induction_on with
+    | zero => simp
     | tmul a b => simp
     | add a b ha hb => simp only [map_add (f := _), ha, hb]
   homog B _ _ b x := by
@@ -54,13 +55,7 @@ namespace GDet
 
 variable {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet n A G)
 
-@[ext] theorem ext {D D' : GDet n A G}
-    (h : ∀ (B : Type) [CommRing B] [Algebra A B] (x), D.D B x = D'.D B x) : D = D' := by
-  cases D
-  cases D'
-  congr
-  funext B _ _
-  exact MonoidHom.ext (h B)
+  cases D; cases D'; congr; funext B _ _; exact MonoidHom.ext (h B)
 
 def map {A' : Type} [CommRing A'] (f : A →+* A') : GDet n A' G where
   D B _ _ := letI : Algebra A B := ((algebraMap A' B).comp f).toAlgebra; D.D B
@@ -122,9 +117,7 @@ def CH : Set (MonoidAlgebra A G) :=
 
 variable [TopologicalSpace G]
 
-def IsCont (I : Ideal A) : Prop :=
-  ∀ (i N : ℕ), IsLocallyConstant fun g : G =>
-    Ideal.Quotient.mk (I ^ N) (D.lam i (MonoidAlgebra.single g 1))
+def IsCont (I : Ideal A) : Prop := ∀ i, Alg.AdicCont I fun g : G => D.lam i (MonoidAlgebra.single g 1)
 
 end GDet
 

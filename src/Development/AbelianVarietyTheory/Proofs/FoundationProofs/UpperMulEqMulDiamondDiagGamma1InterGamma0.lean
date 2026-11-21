@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.PetEqRelIndexMulPetProd
 public import Development.AbelianVarietyTheory.Definitions.Foundations.IsDCReps
 
 @[expose] public section
@@ -10,11 +11,6 @@ open scoped MatrixGroups ModularForm
 open GlobalTheory.HeckeFamilyMatrices
 
 namespace GlobalTheory.Hk
-
-def lev (N l : ℕ) : Subgroup SL(2, ℤ) := Gamma1 N ⊓ Gamma0 l
-
-def IsDia (N l : ℕ) (d : ℤ) (σ : SL(2, ℤ)) : Prop :=
-  ((σ 1 0 : ℤ) : ZMod (N * l)) = 0 ∧ ((σ 1 1 : ℤ) : ZMod N) = d
 
 theorem upper_mul_eq_mul_diamond_diag : ∀ (N l q j : ℕ) (σ γ : SL(2, ℤ)), q.Prime → ¬ q ∣ N * l → GlobalTheory.Hk.IsDia N l q σ →
     j < q → γ ∈ GlobalTheory.Hk.lev N l → (q : ℤ) ∣ mat γ 0 0 + j * mat γ 1 0 →

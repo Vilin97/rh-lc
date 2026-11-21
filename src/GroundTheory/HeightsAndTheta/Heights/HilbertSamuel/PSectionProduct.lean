@@ -34,7 +34,7 @@ theorem isMultiHomog_pow {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) 
 end SectionProduct
 
 
-theorem SectionProduct.proof : SectionProduct.Statement := by
+theorem SectionProduct.proof : SectionProduct.Statement := open SectionBoundedMul in by
   intro K _ ι _ Ω _ y A B C n j τ s t hdeg hmet hs ht
   have hdk : ∀ k, (τ : ℤ) * C.a k = (n : ℤ) * A.a k + (j : ℤ) * B.a k := fun k => by
     have := congrFun hdeg k
@@ -63,9 +63,8 @@ theorem SectionProduct.proof : SectionProduct.Statement := by
     choose c hc using hz.1
     have hy : ∀ k, y ⟨k, c k⟩ ≠ 0 := by
       intro k h0
-      have hX : IsMultiHomog (X ⟨k, c k⟩ : MRing ι) _ :=
-        (by have h := isMultiHomog_monomial (ι := ι) (Finsupp.single (⟨k, c k⟩ : Σ k, ι k) 1) 1
-            rwa [← X] at h)
+      have hX := isMultiHomog_monomial (ι := ι) (Finsupp.single (⟨k, c k⟩ : Σ k, ι k) 1) 1
+      rw [← X] at hX
       have hmem := mem_mCoordIdeal_of_aeval_eq_zero y hX (by rw [aeval_X, h0])
       have hz0 := hz.2 _ hmem
       simp only [map_X, eval_X] at hz0

@@ -30,13 +30,11 @@ def HasBase (R : Type) [CommRing R] : Prop :=
 def CohenType (R : Type) [CommRing R] : Prop :=
   ∀ p : Ideal R, p.IsPrime → HasBase (R ⧸ p)
 
-theorem isBase_field (K : Type) [Field K] : IsBase K where
-  dom := inferInstance
-  normal := inferInstance
-  cm := ⟨inferInstance, 0, by simp [ringKrullDim_eq_zero_of_field], [], rfl, by simp,
-    RingTheory.Sequence.IsRegular.nil K K⟩
-  complete := by
-    rw [IsLocalRing.maximalIdeal_eq_bot]
+theorem isBase_field (K : Type) [Field K] : IsBase K := by
+  refine ⟨inferInstance, inferInstance, ?_, ?_⟩
+  · exact ⟨inferInstance, 0, by simp [ringKrullDim_eq_zero_of_field], [], rfl, by simp,
+      RingTheory.Sequence.IsRegular.nil K K⟩
+  · rw [IsLocalRing.maximalIdeal_eq_bot]
     infer_instance
 
 theorem isWeaklyRegularPairMod_one_left {A : Type} [CommRing A] (J : Ideal A) (v : A) : Reg2 J 1 v :=

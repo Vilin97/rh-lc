@@ -96,7 +96,7 @@ def ConstOfAlg : Prop :=
 
 def ConstOfChar : Prop :=
   ∀ (G k A : Type) [Group G] [Field k] [Finite k] [CommRing A] [IsDomain A] [IsLocalRing A] [Algebra k A],
-    (2 : k) ≠ 0 → ∀ (η : G →* ℤˣ) (Ψ : G →* kˣ) (c g₁ : G), Marks η Ψ c g₁ → ∀ r : G →* GG 3 A, HasMult η r →
+    (2 : k) ≠ 0 → ∀ (η : G →* ℤˣ) (Ψ : G →* kˣ) (c g₁ : G), Marks η Ψ c g₁ → ∀ r : G →* GG (m := 3) (R := A), HasMult η r →
     (∀ g, EntIn (maximalIdeal A) ((r g).mat - ((r0 η Ψ g).mat).map (algebraMap k A))) → Normalised c g₁ r →
     ∀ U : Subgroup G, U.FiniteIndex →
     (∀ g ∈ U, η g = 1 → (r g).mat.charpoly = (((r0 η Ψ g).mat).map (algebraMap k A)).charpoly) →
@@ -111,7 +111,7 @@ attribute [instance] IsCD.complete IsCD.isLocalHom IsCD.fin
 
 def FinCrit : Prop :=
   ∀ (O R : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (maximalIdeal O) O]
-    [Finite (ResidueField O)] [CommRing R] [Algebra O R] [IsCO O R] (W : WPres O ℤ R),
+    [Finite (ResidueField O)] [CommRing R] [Algebra O R] [IsCO O R] (W : UpperTheory.V.Alg.WPres O ℤ R),
     (∀ i, W.z i ∈ maximalIdeal R) →
     (∀ (A : Type) [CommRing A] [Algebra O A] [IsCD O A] (f : R →ₐ[O] A), IsLocalHom f →
       (∀ a ∈ maximalIdeal O, algebraMap O A a = 0) →

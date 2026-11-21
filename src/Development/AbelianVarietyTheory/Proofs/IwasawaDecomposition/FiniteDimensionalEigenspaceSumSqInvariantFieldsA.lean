@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IntegralConjInnerMulInnerOfIsEmptyEquiv
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalOfUniformlyAlmostInvariantStatement
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RightTranslationCurveSqLeAndIntegralDerivEqZeroAStatement
 
@@ -14,18 +15,9 @@ namespace GlobalTheory
 theorem finiteDimensional_eigenspace_sum_sq_invariantFields : ∀ (K : Type) [Group K] [TopologicalSpace K] [IsTopologicalGroup K] [CompactSpace K] [T2Space K] (L : Type) [NormedAddCommGroup L] [NormedSpace ℝ L] [FiniteDimensional ℝ L] (S : Submodule ℂ (K → ℂ)), (∀ f ∈ S, Continuous f) → ∀ e : L → K, (∀ X : L, Continuous fun t : ℝ => e (t • X)) → e 0 = 1 → (∀ r : ℝ, 0 < r → e '' Metric.ball 0 r ∈ 𝓝 (1 : K)) → ∀ d : L → Module.End ℂ S, (∀ X Y, d (X + Y) = d X + d Y) → (∀ (a : ℝ) X, d (a • X) = (a : ℂ) • d X) → (∀ (X : L) (f : S) (x : K) (t : ℝ), HasDerivAt (fun t : ℝ => f.1 (x * e (t • X))) ((d X f).1 (x * e (t • X))) t) → ∀ (ι : Type) [Fintype ι] (X : ι → L), Submodule.span ℝ (Set.range X) = ⊤ → ∀ lam : ℂ, FiniteDimensional ℂ (Module.End.eigenspace (∑ i, d (X i) * d (X i)) lam) := by
   intro K _ _ _ _ _ L _ _ _ S hS e he he0 hU d hadd hsmul hder ι _ X hX lam
   classical
-  let : MeasurableSpace K := borel K
-  have : BorelSpace K := ⟨rfl⟩
-  let μ : Measure K := Measure.haarMeasure (⊤ : TopologicalSpace.PositiveCompacts K)
-  have : μ.IsHaarMeasure := by
-    dsimp [μ]
-    infer_instance
-  have : IsProbabilityMeasure μ :=
-    ⟨by simpa [μ] using
-      (Measure.haarMeasure_self (K₀ := (⊤ : TopologicalSpace.PositiveCompacts K)))⟩
-  have : μ.IsMulRightInvariant := ⟨fun g =>
-    Measure.isHaarMeasure_eq_of_isProbabilityMeasure
-      (Measure.map (fun x => x * g) μ) μ⟩
+  letI : MeasurableSpace K := borel K
+  haveI : BorelSpace K := ⟨rfl⟩
+  set μ : Measure K := haarProb K with hμ
   have hc : ∀ f : S, Continuous f.1 := fun f => hS f.1 f.2
   have hint : ∀ {F : Type} [NormedAddCommGroup F] {g : K → F}, Continuous g → Integrable g μ :=
     fun hg => hg.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
@@ -60,7 +52,7 @@ theorem finiteDimensional_eigenspace_sum_sq_invariantFields : ∀ (K : Type) [Gr
         ← integral_const_mul]
       refine integral_congr_ae (Eventually.of_forall fun x => ?_)
       have h2 := congrArg (fun g : S => g.1 x) hf
-      simp only [LinearMap.sum_apply, mul_apply_eq_comp, Submodule.coe_sum, Finset.sum_apply,
+      simp only [LinearMap.sum_apply, Module.End.mul_apply, Submodule.coe_sum, Finset.sum_apply,
         Submodule.coe_smul, Pi.smul_apply, smul_eq_mul] at h2
       simp only
       rw [← Finset.mul_sum, h2, mul_left_comm, Complex.conj_mul']

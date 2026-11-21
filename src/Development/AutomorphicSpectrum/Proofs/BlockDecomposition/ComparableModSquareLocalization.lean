@@ -21,7 +21,7 @@ theorem exists_eq_add_of_mem_span_quot {S : Type} [CommRing S] (ϖ x y : S)
   exact ⟨c, d, by linear_combination hd⟩
 
 theorem mem_span_or_mem_span {S : Type} [CommRing S] (ϖ : S)
-    [IsAdicComplete (Ideal.span {ϖ}) S] (h0 : Val0 (S ⧸ Ideal.span {ϖ ^ 2}))
+    [IsAdicComplete (Ideal.span {ϖ}) S] (h0 : Val0 (S := S ⧸ Ideal.span {ϖ ^ 2}))
     (P : Ideal S) (hP : P.IsPrime) (f g : S ⧸ compI P) :
     f ∈ Ideal.span {g, Ideal.Quotient.mk (compI P) ϖ ^ 2} ∨
       g ∈ Ideal.span {f, Ideal.Quotient.mk (compI P) ϖ ^ 2} := by

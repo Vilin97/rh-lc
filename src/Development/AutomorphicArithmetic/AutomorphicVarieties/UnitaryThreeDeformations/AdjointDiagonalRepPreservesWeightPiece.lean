@@ -21,32 +21,32 @@ def psi (Ψ : D →* Oˣ) (a : Fin 3) (g : D) : O := ((Ψ g ^ wt1 a : Oˣ) : O)
 
 abbrev InHat (h : GL (Fin 3) R) : Prop := CongOne (maximalIdeal R) h
 
-structure Red (η : D →* ℤˣ) (Ψ : D →* Oˣ) (r : D →* GG 3 R) : Prop where
+structure Red (η : D →* ℤˣ) (Ψ : D →* Oˣ) (r : D →* GG (m := 3) (R := R)) : Prop where
   mult : HasMult η r
   red : ∀ g, EntIn (maximalIdeal R) ((r g).mat - ((r0 η Ψ g).mat).map (algebraMap O R))
 
 def kerBar (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) : Subgroup D :=
   I ⊓ η.ker ⊓ ((Units.map (residue O).toMonoidHom).comp Ψ).ker
 
-def CondU (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG 3 R) : Prop :=
+def CondU (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG (m := 3) (R := R)) : Prop :=
   ∀ s ∈ kerBar η Ψ I, r s = 1
 
 structure TriIn (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) {A : Type} [CommRing A] [Algebra O A]
-    (r : D →* GG 3 A) (h : GL (Fin 3) A) : Prop where
+    (r : D →* GG (m := 3) (R := A)) (h : GL (Fin 3) A) : Prop where
   tri : Upper η (conjBy h⁻¹ r)
   ine : ∀ s ∈ I, η s = 1 → ∀ a, (conjBy h⁻¹ r s).mat a a = algebraMap O A (psi Ψ a s)
 
 structure DiagIn (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) {A : Type} [CommRing A] [Algebra O A]
-    (r : D →* GG 3 A) (h : GL (Fin 3) A) : Prop extends TriIn η Ψ I r h where
+    (r : D →* GG (m := 3) (R := A)) (h : GL (Fin 3) A) : Prop extends TriIn η Ψ I r h where
   low : Lower η (conjBy h⁻¹ r)
 
-def CondT (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG 3 R) : Prop :=
+def CondT (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG (m := 3) (R := R)) : Prop :=
   ∃ h : GL (Fin 3) R, InHat h ∧ TriIn η Ψ I r h
 
-def CondD (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG 3 R) : Prop :=
+def CondD (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) (r : D →* GG (m := 3) (R := R)) : Prop :=
   ∃ h : GL (Fin 3) R, InHat h ∧ DiagIn η Ψ I r h
 
-def AdicCont [TopologicalSpace D] {A : Type} [CommRing A] (J : Ideal A) (r : D →* GG 3 A) : Prop :=
+def AdicCont [TopologicalSpace D] {A : Type} [CommRing A] (J : Ideal A) (r : D →* GG (m := 3) (R := A)) : Prop :=
   ∀ n : ℕ, IsLocallyConstant fun g => (r g).mat.map (Ideal.Quotient.mk (J ^ n))
 
 def GrMat {A : Type} [CommRing A] [Algebra O A] (𝒜 : ℤ → Submodule O A) (X : Matrix (Fin 3) (Fin 3) A) : Prop :=
@@ -72,7 +72,7 @@ def Gb.val {j : ℤ} (X : Gb (k := k) j) : Matrix (Fin 3) (Fin 3) k := Subtype.v
 theorem adjoint_diagonal_rep_preserves_weight_piece (η : D →* ℤˣ) (Ψ : D →* kˣ) (j : ℤ) (g : D) :
     gw (R := k) j ≤ (gw (R := k) j).comap (adRep (r0 η Ψ) g) := by
   intro X hX a b hab
-  have hJ : ∀ i j : Fin 3, (Jmat k 3 * Xᵀ * Jmat k 3) i j = X j.rev i.rev := by
+  have hJ : ∀ i j : Fin 3, (Jmat (R := k) 3 * Xᵀ * Jmat (R := k) 3) i j = X j.rev i.rev := by
     intro i j
     fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_three, Jmat, Fin.rev]
   have hw : wt b.rev a.rev = wt a b := by
@@ -123,23 +123,23 @@ def Tb : Set ι := insert F.vl F.Sb
 
 def Ψbar : Γ →* (ResidueField O)ˣ := (Units.map (residue O).toMonoidHom).comp F.Ψ
 
-def rz (A : Type) [CommRing A] [Algebra O A] : Γ →* GG 3 A := (GG.map (algebraMap O A)).comp (r0 F.η F.Ψ)
+def rz (A : Type) [CommRing A] [Algebra O A] : Γ →* GG (m := 3) (R := A) := (GG.map (algebraMap O A)).comp (r0 F.η F.Ψ)
 
 section Cond
 
 variable {R : Type} [CommRing R] [IsLocalRing R] [Algebra O R]
 
-def LocAt (v : ι) (r : F.D v →* GG 3 R) : Prop :=
+def LocAt (v : ι) (r : F.D v →* GG (m := 3) (R := R)) : Prop :=
   (v = F.vl → CondT (F.ηv v) (F.Ψv v) (F.Iv v) r) ∧ (v ∈ F.Sb → CondD (F.ηv v) (F.Ψv v) (F.Iv v) r) ∧
     (v ∉ F.Tb → CondU (F.ηv v) (F.Ψv v) (F.Iv v) r)
 
-structure Cond (r : Γ →* GG 3 R) : Prop extends Red F.η F.Ψ r where
+structure Cond (r : Γ →* GG (m := 3) (R := R)) : Prop extends Red F.η F.Ψ r where
   loc : ∀ v, F.LocAt v (r.comp (F.loc v))
 
-structure CondN (g₁ : Γ) (r : Γ →* GG 3 R) : Prop extends F.Cond r where
+structure CondN (g₁ : Γ) (r : Γ →* GG (m := 3) (R := R)) : Prop extends F.Cond r where
   norm : Normalised F.c g₁ r
 
-structure IsPt [TopologicalSpace Γ] (g₁ : Γ) (r : Γ →* GG 3 R) : Prop extends F.CondN g₁ r where
+structure IsPt [TopologicalSpace Γ] (g₁ : Γ) (r : Γ →* GG (m := 3) (R := R)) : Prop extends F.CondN g₁ r where
   cont : AdicCont (maximalIdeal R) r
 
 end Cond

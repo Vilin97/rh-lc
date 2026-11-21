@@ -2,111 +2,13 @@ module
 
 public import Mathlib
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.FiniteAlgebraLocalCompletion
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsDiscreteValuationRingOfMaximalIdealEqSpa
 
 @[expose] public section
 
 namespace GlobalTheory
 
 open Polynomial IsLocalRing
-
-universe u
-
-variable {B W : Type u} {K : Type*} [CommRing B] [CommRing W] [Field K] [IsLocalRing B]
-  [Algebra B W] [Algebra B K] [Algebra (ResidueField B) K]
-  [IsScalarTower B (ResidueField B) K]
-
-omit [Algebra B W] [CommRing W] in
-theorem algebraMap_eq_zero_iff_mem_maximalIdeal (b : B) :
-    algebraMap B K b = 0 ↔ b ∈ maximalIdeal B := by
-  rw [IsScalarTower.algebraMap_apply B (ResidueField B) K, map_eq_zero]
-  exact residue_eq_zero_iff b
-
-theorem isUnit_adjoinRoot_mk_of_aeval_ne_zero {θ : K} (hθ : IsIntegral (ResidueField B) θ)
-    {μ : B[X]} (hμm : μ.Monic) (hμ : μ.map (residue B) = minpoly (ResidueField B) θ) {g : B[X]}
-    (hg : aeval θ g ≠ 0) : IsUnit (AdjoinRoot.mk μ g) := by
-  have : Module.Finite B (AdjoinRoot μ) := hμm.finite_adjoinRoot
-  by_contra hn
-  obtain ⟨M, hM, hgM⟩ := exists_max_ideal_of_mem_nonunits hn
-  have hM' : M.comap (algebraMap B (AdjoinRoot μ)) = maximalIdeal B :=
-    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
-      (algebraMap B (AdjoinRoot μ)) (algebraMap_isIntegral_iff.mpr inferInstance) M)
-  have hco : IsCoprime (minpoly (ResidueField B) θ) (g.map (residue B)) := by
-    rw [(minpoly.irreducible hθ).coprime_iff_not_dvd, minpoly.dvd_iff]
-    rwa [← aeval_map_algebraMap (ResidueField B)] at hg
-  obtain ⟨a, b, hab⟩ := hco
-  obtain ⟨a, rfl⟩ := map_surjective (residue B) residue_surjective a
-  obtain ⟨b, rfl⟩ := map_surjective (residue B) residue_surjective b
-  have h₀ : (a * μ + b * g - 1).map (residue B) = 0 := by
-    rw [Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul,
-      Polynomial.map_mul, hμ, hab, Polynomial.map_one, sub_self]
-  have h₁ : AdjoinRoot.mk μ (a * μ + b * g - 1) ∈ M := by
-    set_option synthInstance.maxHeartbeats 100000 in
-      rw [(a * μ + b * g - 1).as_sum_support_C_mul_X_pow, map_sum]
-    refine Ideal.sum_mem _ fun i _ => ?_
-    rw [map_mul]
-    refine Ideal.mul_mem_right _ _ ?_
-    change algebraMap B (AdjoinRoot μ) _ ∈ M
-    rw [← Ideal.mem_comap, hM', ← residue_eq_zero_iff, ← coeff_map, h₀, coeff_zero]
-  rw [map_sub, map_add (f := _), map_mul, map_mul, AdjoinRoot.mk_self, mul_zero,
-    zero_add, map_one] at h₁
-  have h₂ := sub_mem (M.mul_mem_left (AdjoinRoot.mk μ b) hgM) h₁
-  rw [sub_sub_cancel] at h₂
-  exact hM.ne_top ((Ideal.eq_top_iff_one _).mpr h₂)
-
-theorem exists_isDiscreteValuationRing_of_maximalIdeal_eq_span {B : Type*} [CommRing B]
-    [IsLocalRing B] {t : B} (ht : t ∈ nonZeroDivisors B) (hm : maximalIdeal B = Ideal.span {t})
-    (hs : ⨅ n : ℕ, maximalIdeal B ^ n = ⊥) :
-    ∃ _ : IsDomain B, IsDiscreteValuationRing B := by
-  classical
-  have key : ∀ x : B, x ≠ 0 → ∃ (n : ℕ) (u : Bˣ), t ^ n * u = x := by
-    intro x hx
-    have h : ∃ n : ℕ, ¬ t ^ n ∣ x := by
-      by_contra hc
-      push Not at hc
-      apply hx
-      rw [← Ideal.mem_bot, ← hs, Ideal.mem_iInf]
-      intro n
-      rw [hm, Ideal.span_singleton_pow, Ideal.mem_span_singleton]
-      exact hc n
-    have h₀ : Nat.find h ≠ 0 := fun h₀ => Nat.find_spec h (by simp [h₀])
-    obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero h₀
-    obtain ⟨u, rfl⟩ := not_not.mp (Nat.find_min h (hn ▸ n.lt_succ_self))
-    have hu : IsUnit u := by
-      by_contra hu
-      have h₁ : u ∈ maximalIdeal B := hu
-      rw [hm, Ideal.mem_span_singleton] at h₁
-      exact Nat.find_spec h (by rw [hn, pow_succ]; exact mul_dvd_mul_left _ h₁)
-    exact ⟨n, hu.unit, rfl⟩
-  have hreg : ∀ x : B, x ≠ 0 → x ∈ nonZeroDivisors B := fun x hx => by
-    obtain ⟨n, u, rfl⟩ := key x hx
-    exact mul_mem (pow_mem ht n) u.isUnit.mem_nonZeroDivisors
-  have : NoZeroDivisors B := ⟨fun {a b} hab => by
-    by_contra hc
-    push Not at hc
-    exact hc.1 (mem_nonZeroDivisors_iff_right.mp (hreg b hc.2) a hab)⟩
-  have : IsDomain B := NoZeroDivisors.to_isDomain B
-  have hp : Prime t := by
-    rw [← Ideal.span_singleton_prime (nonZeroDivisors.ne_zero ht), ← hm]
-    infer_instance
-  exact ⟨this, IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
-    ⟨t, hp.irreducible, fun {x} hx => by
-      obtain ⟨n, u, h⟩ := key x hx
-      exact ⟨n, u, h⟩⟩⟩
-
-variable (V : Type*) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]
-
-theorem exists_isDiscreteValuationRing_of_flat (B : Type*) [CommRing B] [IsLocalRing B]
-    [Algebra V B] [Module.Flat V B]
-    (hm : (maximalIdeal V).map (algebraMap V B) = maximalIdeal B)
-    (hs : ⨅ n : ℕ, maximalIdeal B ^ n = ⊥) : ∃ _ : IsDomain B, IsDiscreteValuationRing B := by
-  obtain ⟨t, ht⟩ := IsDiscreteValuationRing.exists_irreducible V
-  refine exists_isDiscreteValuationRing_of_maximalIdeal_eq_span (t := algebraMap V B t) ?_ ?_ hs
-  · rw [mem_nonZeroDivisors_iff_left]
-    intro x hx
-    have := Module.Flat.isSMulRegular_of_nonZeroDivisors (M := B)
-      (mem_nonZeroDivisors_of_ne_zero ht.ne_zero)
-    exact this (show t • x = t • (0 : B) by rw [smul_zero, Algebra.smul_def, hx])
-  · rw [← hm, ht.maximalIdeal_eq, Ideal.map_span, Set.image_singleton]
 
 theorem exists_finite_dvr_algHom_mem_range {B K : Type} [CommRing B] [IsDomain B]
     [IsDiscreteValuationRing B] [IsAdicComplete (maximalIdeal B) B] [Field K] [Algebra B K]
