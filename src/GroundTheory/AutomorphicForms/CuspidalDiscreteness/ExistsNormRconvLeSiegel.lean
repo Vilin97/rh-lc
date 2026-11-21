@@ -75,13 +75,13 @@ theorem conjArch_mul_conjArch {r : ℕ} (x : AdelicGLn.AdelicGL K n) (P Q : UPos
 
 theorem exists_archProj_eq_conj {r : ℕ} (x : normOneGL (K := K) (n := n)) (P : UPos n r → 𝔸[K])
     (hP : ∀ p, (P p).2 = 0) :
-    ∃ C : ArchUnits K n, archProj K n C = x⁻¹ * unipOne r P * x ∧
+    ∃ C : ArchUnits K n, archProj K n C = x⁻¹ * unipOne (K := _) (n := _) r P * x ∧
       (C : ArchMatrix K n) = 1 + conjArch K n (x : AdelicGLn.AdelicGL K n) P := by
-  obtain ⟨C, hC1, hC2⟩ := exists_archProj_eq (g := x⁻¹ * unipOne r P * x)
+  obtain ⟨C, hC1, hC2⟩ := exists_archProj_eq (g := x⁻¹ * unipOne (K := _) (n := _) r P * x)
     (prodEquiv_conj_snd (x : AdelicGLn.AdelicGL K n) P hP)
   refine ⟨C, hC1, ?_⟩
   rw [hC2]
-  have h1 : ((x⁻¹ * unipOne r P * x : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) =
+  have h1 : ((x⁻¹ * unipOne (K := _) (n := _) r P * x : normOneGL (K := K) (n := n)) : AdelicGLn.AdelicGL K n) =
       (x : AdelicGLn.AdelicGL K n)⁻¹ * unipGL P * (x : AdelicGLn.AdelicGL K n) := rfl
   rw [h1, coe_conj_unipGL, map_add (f := _), map_one]
   rfl
@@ -207,7 +207,7 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
     refine norm_rconv_le_of_altSum_inf μ f hφ hr hrn hM x ?_ k ?_
     · intro z hz1 hz2 w
       obtain ⟨u, hu⟩ := hMconj b hb ρ hρ kk hkk z hz1 hz2
-      have hxu : x⁻¹ * unipOne r z * x = finOne K n (u : AdelicGLn.integralFiniteGL K n) := by
+      have hxu : x⁻¹ * unipOne (K := _) (n := _) r z * x = finOne K n (u : AdelicGLn.integralFiniteGL K n) := by
         refine Subtype.ext ?_
         change (x : AdelicGLn.AdelicGL K n)⁻¹ * unipGL z * (x : AdelicGLn.AdelicGL K n) =
           finEmb K n _
@@ -233,7 +233,7 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
       have hYR : ∀ i, ‖Y i‖ ≤ R₁ := fun i =>
         (hYn i).trans (mul_le_mul_of_nonneg_left hgain hC₁'0)
       have hex : ∀ ε : Fin k → Bool, ∃ C : ArchUnits K n,
-          archProj K n C = x⁻¹ * unipOne r (truncInf (altPoint y ε)) * x ∧
+          archProj K n C = x⁻¹ * unipOne (K := _) (n := _) r (truncInf (altPoint y ε)) * x ∧
             (C : ArchMatrix K n) = 1 + altPoint Y ε := by
         intro ε
         obtain ⟨C, hC1, hC2⟩ := exists_archProj_eq_conj x (truncInf (altPoint y ε)) fun p => rfl
@@ -242,13 +242,13 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
           map_altPoint (conjArch K n (x : AdelicGLn.AdelicGL K n))]
         rfl
       choose Cε hCε1 hCε2 using hex
-      have hsum : altSum k (fun s => rconv Γ₁ μ f φ (unipOne r (truncInf s) * x)) y 0 =
+      have hsum : altSum k (fun s => rconv Γ₁ μ f φ (unipOne (K := _) (n := _) r (truncInf s) * x)) y 0 =
           ∑ ε, (altSign ε : ℂ) * rconv Γ₁ μ f φ (x * archProj K n (Cε ε)) := by
         rw [altSum_eq_sum]
         refine Finset.sum_congr rfl fun ε _ => ?_
         rw [zero_add, hCε1 ε, zsmul_eq_mul]
-        have : x * (x⁻¹ * unipOne r (truncInf (altPoint y ε)) * x) =
-            unipOne r (truncInf (altPoint y ε)) * x := by group
+        have : x * (x⁻¹ * unipOne (K := _) (n := _) r (truncInf (altPoint y ε)) * x) =
+            unipOne (K := _) (n := _) r (truncInf (altPoint y ε)) * x := by group
         rw [this]
       rw [hsum]
       have hb' : ∀ w, ‖∑ ε, (altSign ε : ℂ) * f ((archProj K n (Cε ε))⁻¹ * w)‖ ≤ b₀ := by

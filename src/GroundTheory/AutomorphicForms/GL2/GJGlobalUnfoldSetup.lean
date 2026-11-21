@@ -189,8 +189,8 @@ theorem coe_inv_mul_coe (q : normOneGL (K := K) (n := n)) :
   rw [← Units.val_mul, ← Subgroup.coe_mul, inv_mul_cancel, Subgroup.coe_one, Units.val_one]
 
 theorem conj_unipOne {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k) (Z : UPos n k → 𝔸[K]) :
-    q⁻¹ * unipOne k Z * q = unipOne k (conjUnip k q Z) := by
-  have hcoe (X : UPos n k → 𝔸[K]) : (unipOne k X : AdelicGLn.AdelicGL K n) = unipGL X := rfl
+    q⁻¹ * unipOne (K := _) (n := _) k Z * q = unipOne (K := _) (n := _) k (conjUnip k q Z) := by
+  have hcoe (X : UPos n k → 𝔸[K]) : (unipOne (K := _) (n := _) k X : AdelicGLn.AdelicGL K n) = unipGL X := rfl
   refine Subtype.ext (Units.ext ?_)
   simp only [Subgroup.coe_mul, Units.val_mul, hcoe, coe_unipGL, unipMatrix]
   rw [blockEntry_conjUnip hq, Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, coe_inv_mul_coe]
@@ -268,7 +268,7 @@ theorem isBlockUpper_unipMatrix {k : ℕ} (X : UPos n k → K) : IsBlockUpper k 
   rw [Matrix.one_apply, ite_eq_right (by intro h; subst h; omega), dite_eq_right (by omega), add_zero]
 
 theorem unipOne_mem_parabolicOne {k : ℕ} {ξ : UPos n k → 𝔸[K]} (hξ : ξ ∈ unipLattice K n k) :
-    unipOne k ξ ∈ parabolicOne K n k := by
+    unipOne (K := _) (n := _) k ξ ∈ parabolicOne K n k := by
   obtain ⟨ξ₀, rfl⟩ := hξ
   refine mem_parabolicOne_iff.2 ⟨unipGL ξ₀, ⟨?_, ?_⟩, Subtype.ext (diagonal_unipGL ξ₀)⟩
   · rw [coe_unipGL]
@@ -277,7 +277,7 @@ theorem unipOne_mem_parabolicOne {k : ℕ} {ξ : UPos n k → 𝔸[K]} (hξ : ξ
     exact isBlockUpper_unipMatrix (-ξ₀)
 
 theorem hyp (k : ℕ) :
-    Unfold.Hyp (unipMeasure K n k) (unipOne k) (unipLattice K n k) (unipFundamentalDomain K n k)
+    Unfold.Hyp (unipMeasure K n k) (unipOne (K := _) (n := _) k) (unipLattice K n k) (unipFundamentalDomain K n k)
       (parabolicOne K n k) (fundamentalDomain (parabolicOne K n k)) (conjUnip k) := by
   refine
     { map_add := fun X Y => Subtype.ext (unipGL_add X Y)
