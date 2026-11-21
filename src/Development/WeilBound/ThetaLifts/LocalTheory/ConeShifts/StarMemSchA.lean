@@ -169,7 +169,7 @@ theorem lDiag_ne {κ : Type} [Fintype κ] {Φ : (κ → AF F) → ℂ} (h : Φ �
     funext i
     refine Prod.ext ?_ (zero_add _)
     change (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ 0 i) + _ = _
-    simp
+    simp only [map_zero, Pi.zero_apply, zero_add]
   haveI : (mu F κ).IsOpenPosMeasure := by unfold mu; infer_instance
   refine (integral_pos_of_integrable_nonneg_nonzero (x := 0 + shiftOf x) (Complex.continuous_re.comp hc') hi.re
     (fun p => Complex.normSq_nonneg _) ?_).ne'

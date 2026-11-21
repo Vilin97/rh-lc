@@ -39,7 +39,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 private theorem tri_map {R k K : Type} [CommRing R] [CommRing k] [CommRing K] {φ₁ : c.F →+* R} {x₁ : Sp R ⟶ T.X}
     {φ : c.F →+* k} {x : Sp k ⟶ T.X} {φ' : c.F →+* K} {x' : Sp K ⟶ T.X} {f : EigFrame T φ₁ x₁} {g : EigFrame T φ x}
     {g' : EigFrame T φ' x'} {ψ : R →+* k} {χ : k →+* K} {t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ}
-    (h : f.Tri ψ g t) (hg : g.IsMap χ g') (hφ : φ' = χ.comp φ) (hx : x' = spMap χ ≫ x) :
+    (h : f.Tri ψ g t) (hg : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v g embτ basisIdx) χ g') (hφ : φ' = χ.comp φ) (hx : x' = spMap χ ≫ x) :
     f.Tri (χ.comp ψ) g' (fun τ i => Units.map χ.toMonoidHom (t τ i)) := by
   obtain ⟨h1, h2, h3⟩ := h
   refine ⟨by rw [hx, h1, sp_comp, Category.assoc], by rw [hφ, h2, RingHom.comp_assoc], fun τ i => ?_⟩
@@ -52,7 +52,7 @@ private theorem tri_map {R k K : Type} [CommRing R] [CommRing k] [CommRing K] {�
 private theorem tri_descend {R k K : Type} [CommRing R] [Field k] [Field K] {φ₁ : c.F →+* R} {x₁ : Sp R ⟶ T.X}
     {φ : c.F →+* k} {x : Sp k ⟶ T.X} {φ' : c.F →+* K} {x' : Sp K ⟶ T.X} {f : EigFrame T φ₁ x₁} {g : EigFrame T φ x}
     {g' : EigFrame T φ' x'} {ψ : R →+* k} {χ : k →+* K} {t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Kˣ}
-    (h : f.Tri (χ.comp ψ) g' t) (hg : g.IsMap χ g') (hφ : φ' = χ.comp φ) (hx : x' = spMap χ ≫ x) :
+    (h : f.Tri (χ.comp ψ) g' t) (hg : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v g embτ basisIdx) χ g') (hφ : φ' = χ.comp φ) (hx : x' = spMap χ ≫ x) :
     ∃ t₀, f.Tri ψ g t₀ := by
   have e1 : x = spMap ψ ≫ x₁ := by
     haveI := epi_sp χ
@@ -76,7 +76,7 @@ private theorem tri_descend {R k K : Type} [CommRing R] [Field k] [Field K] {φ�
 private theorem carries_map {F : Type} [Field F] {e : F ≃+* c.F} (C : FlagCpt T e) {k K : Type} [Field k] [Field K]
     {φ : c.F →+* k} {x : Sp k ⟶ T.X} {φ' : c.F →+* K} {x' : Sp K ⟶ T.X} {g : EigFrame T φ x}
     {g' : EigFrame T φ' x'} {χ : k →+* K} {p : Sp k ⟶ C.Y.X} (h : C.Carries p g)
-    (hg : g.IsMap χ g') (hφ : φ' = χ.comp φ) (hx : x' = spMap χ ≫ x) : C.Carries (spMap χ ≫ p) g' := by
+    (hg : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v g embτ basisIdx) χ g') (hφ : φ' = χ.comp φ) (hx : x' = spMap χ ≫ x) : C.Carries (spMap χ ≫ p) g' := by
   obtain ⟨y, ψ, φ₁, f, t, t', h1, h2, h3⟩ := h
   exact ⟨y, χ.comp ψ, φ₁, f, t, _, by rw [h1, sp_comp, Category.assoc], h2, tri_map h3 hg hφ hx⟩
 

@@ -229,7 +229,6 @@ theorem dx_splitN' (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) (M : ℕ) (J : Ma
     have e1 : GroundTheory.Automorphic.GJMatrix.adeleMeasurePi F (ι := Fin n × (Fin M × Fin d)) =
         Measure.pi fun _ : Fin n × (Fin M × Fin d) => l.prod lf := by
       rw [GroundTheory.Automorphic.GJMatrix.adeleMeasurePi, hEq]
-      rfl
     exact ⟨eA.measurable, hdxc.trans e1⟩
   let eP := eI.prodCongr eF
   haveI : SFinite (coordW (Af F) b lf n M) := sfinite_coordW σ hCM b lf hlf n M

@@ -139,11 +139,13 @@ theorem bound_pt {k r : ℕ} (Bs : B.RealPlaceData k r ℂ ℂ) {γ : B.Mat k r}
   have hc1 : 1 ≤ c := Nat.one_le_iff_ne_zero.mpr (by positivity)
   obtain ⟨CP, hCP⟩ := polyProper5 k r Bs.z Bs.z' γ (P.Dx2.Rad.std Bs) ⟨hγ, hpos⟩ hmono
   have hone : Matrix.of (Matrix.of.symm (1 : B.Mat k r)) ∈ B.GV k r := by
-    simpa using (P.unitary_group_closed k r).one_mem
+    rw [Equiv.apply_symm_apply]
+    exact (P.unitary_group_closed k r).one_mem
   set cR : ℝ := ∫ x, B.gN (Matrix.of x) ^ (-M) ∂μR with hcRdef
   have hcR : 0 < cR := by
     have := P.Dx3.om_pos hR hM0 hI hone
-    simpa [P.Dx3.Om] using this
+    unfold P.Dx3.Om at this
+    simpa only [Equiv.apply_symm_apply, mul_one, hcRdef] using this
   obtain ⟨KW, hKW1, hKW⟩ := P.Dx3.UW_bound Bs.z Bs.z_mem Bs.T_pos
   obtain ⟨KW', hKW1', hKW'⟩ := P.Dx3.UW_bound Bs.z' Bs.z'_mem Bs.T'_pos
   set K1 := KW * KW' with hK1

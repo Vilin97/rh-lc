@@ -21,7 +21,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData (lastPair lastKe
 open GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedLocalFrameSequences (IsFockOver StepsAll vec atW IsMoved InAt InvOnUnits IsBesFrame IsJacFrame FrameMapsPrefix jacLat ptBF ptFB)
 open scoped TensorProduct Pointwise
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
-open GlobalTheory.RouteCompare
 open GlobalTheory.Mem.Isom
 
 namespace GlobalTheory.OverTgt
@@ -60,7 +59,7 @@ theorem colRow_mem_latO {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LT :
     rw [← gen_eq_colRow]
     exact AddSubgroup.subset_closure ⟨β, hβi, hβ, a, ha, s, hs, x, hx, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add z z' _ _ hz hz' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hz hz'
+  | add z z' _ _ hz hz' => rw [map_add]; exact add_mem hz hz'
   | neg z _ hz => rw [map_neg]; exact neg_mem hz
 
 theorem mul_mem_latO {S T T' : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LT : Lat T} {LT' : Lat T'}

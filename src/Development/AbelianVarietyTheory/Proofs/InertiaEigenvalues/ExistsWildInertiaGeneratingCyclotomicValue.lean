@@ -193,6 +193,7 @@ theorem main : ∀ (D : D7) (i : D.nd.Loc) (k : Fin 2), D.nd.l i = D.host.g k �
     rw [(GlobalTheory.TypeDegOne.degree_one D i k hk).1]
     have h5 : D.R.f = 2 * D.R.ord := rfl
     rw [h5]
+    have hord := D.R.toFrame.ord_pos
     positivity
   obtain ⟨σ, hσI, hσc⟩ := GlobalTheory.PtCore.EpsAll.exists_generator (GlobalTheory.EpsInertia.epsAll D i) w hw
   obtain ⟨g0, hC, hP⟩ := exists_proL hl σ

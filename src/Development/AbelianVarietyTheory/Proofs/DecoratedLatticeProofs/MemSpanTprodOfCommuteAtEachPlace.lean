@@ -161,7 +161,7 @@ theorem prod_erase_update_self (ψ : ∀ σ, Module.Dual ℂ (M σ)) (t : ∀ σ
   intro σ hσ
   rw [Function.update_of_ne (Finset.ne_of_mem_erase hσ)]
 
-def sliceML (ψ : ∀ σ, Module.Dual ℂ (M σ)) (τ : ι) : MultilinearMap ℂ M (M τ) where
+def sliceML (ψ : ∀ σ, Module.Dual ℂ (M σ)) (τ : ι) : (∀ σ, M σ) →ₘₗ[ℂ] M τ where
   toFun t := (∏ σ ∈ Finset.univ.erase τ, ψ σ (t σ)) • t τ
   map_update_add' := by
     intro inst t i x y
@@ -175,6 +175,7 @@ def sliceML (ψ : ∀ σ, Module.Dual ℂ (M σ)) (τ : ι) : MultilinearMap ℂ
   map_update_smul' := by
     intro inst t i c x
     obtain rfl : inst = hdec := Subsingleton.elim _ _
+    simp only [RingHom.id_apply]
     by_cases h : i = τ
     · subst h
       simp only [prod_erase_update_self, Function.update_self, smul_comm _ c]

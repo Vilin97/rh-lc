@@ -20,7 +20,7 @@ variable {D : D7} {m n : ℕ}
 theorem pairing_rat (T : Matrix (Fin m) (Fin m) D.host.E) (ψ : AddChar (AF D.host.F) ℂ)
     (ξ : Matrix (Fin m) (Fin n) D.host.E) (x : Mx D m n) :
     GlobalTheory.IndefiniteRowSideFullHecke.GramMatrixBlocks.pairing T ψ (GlobalTheory.MixModel.rat ξ) x =
-      ψ (Algebra.trace (AF D.host.F) (AE D) (Matrix.trace (GlobalTheory.MixModel.rat (ξᴴ * T) ⬝ x))) := by
+      ψ (Algebra.trace (AF D.host.F) (AE D) (Matrix.trace (GlobalTheory.MixModel.rat (ξᴴ * T) * x))) := by
   rw [rat_mul, rat_conjTranspose]
   rfl
 

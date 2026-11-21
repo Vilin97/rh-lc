@@ -1224,8 +1224,9 @@ theorem bc_JF_smul (c : ℂ) (F : B.Mat k r → (Wq →L[ℂ] Wp)) (h : B.Mat k 
     B.JF Bs (fun g => c • F g) h = c • B.JF Bs F h := by
   show ∫ p, JF.xiP Bs p • B.rho Bs p (fun g => c • F g) h ∂Bs.μSS = c • ∫ p, JF.xiP Bs p • B.rho Bs p F h ∂Bs.μSS
   rw [← integral_smul]
-  congr 1
-  exact smul_comm _ _ _
+  refine integral_congr_ae (Filter.Eventually.of_forall fun p => ?_)
+  simp only [B.rho, ContinuousLinearMap.comp_smul, ContinuousLinearMap.smul_comp]
+  exact smul_comm (JF.xiP Bs p) c _
 
 theorem bc_JF_sum {ι : Type*} (s : Finset ι) (G : ι → B.Mat k r → (Wq →L[ℂ] Wp))
     (hG : ∀ i ∈ s, JC.NiceCoef Bs ε (G i)) {h : B.Mat k r} (hh : h ∈ JF.Om k r Bs.z Bs.z') :
@@ -1246,26 +1247,31 @@ def BcGood (Bs : B.RealPlaceData k r Wp Wq) (ε : ℝ) (Θ : D.Op (B.Mat k r →
   mnNP Bs ε Θ ∧ (∀ F, JC.NiceCoef Bs ε F → ∀ h ∈ JF.Om k r Bs.z Bs.z', B.JF Bs (Θ F) h = Θ (B.JF Bs F) h) ∧
     BcLoc (Q.OmPlus k r Bs.z Bs.z') Θ
 
-theorem bcGood_closed : mnClosed (BcGood Bs ε) where
-  zero := ⟨fun _ _ => mn_nice_zero, fun _ _ h _ => bc_JF_zero h, fun _ _ _ _ _ _ => rfl⟩
-  one := ⟨fun _ hF => hF, fun _ _ _ _ => rfl, fun _ _ hff x hx hxG => hff x hx hxG⟩
-  add := fun a b ha hb => ⟨fun F hF => mn_nice_add (ha.1 F hF) (hb.1 F hF),
-    fun F hF h hh => by
+theorem bcGood_closed : mnClosed (BcGood Bs ε) := by
+  constructor
+  · exact ⟨fun _ _ => mn_nice_zero, fun _ _ h _ => bc_JF_zero h, fun _ _ _ _ _ _ => rfl⟩
+  · exact ⟨fun _ hF => hF, fun _ _ _ _ => rfl, fun _ _ hff x hx hxG => hff x hx hxG⟩
+  · intro a b ha hb
+    refine ⟨fun F hF => mn_nice_add (ha.1 F hF) (hb.1 F hF), ?_, ?_⟩
+    · intro F hF h hh
       show B.JF Bs (fun g => a F g + b F g) h = a (B.JF Bs F) h + b (B.JF Bs F) h
-      rw [bc_JF_add (ha.1 F hF) (hb.1 F hF) hh, ha.2.1 F hF h hh, hb.2.1 F hF h hh],
-    fun f f' hff x hx hxG => by
+      rw [bc_JF_add (ha.1 F hF) (hb.1 F hF) hh, ha.2.1 F hF h hh, hb.2.1 F hF h hh]
+    · intro f f' hff x hx hxG
       show a f x + b f x = a f' x + b f' x
-      rw [ha.2.2 f f' hff x hx hxG, hb.2.2 f f' hff x hx hxG]⟩
-  mul := fun a b ha hb => ⟨fun F hF => ha.1 _ (hb.1 F hF),
-    fun F hF h hh => by
+      rw [ha.2.2 f f' hff x hx hxG, hb.2.2 f f' hff x hx hxG]
+  · intro a b ha hb
+    refine ⟨fun F hF => ha.1 _ (hb.1 F hF), ?_, ?_⟩
+    · intro F hF h hh
       show B.JF Bs (a (b F)) h = a (b (B.JF Bs F)) h
       rw [ha.2.1 _ (hb.1 F hF) h hh]
-      exact ha.2.2 _ _ (fun x hx hxG => hb.2.1 F hF x ⟨hxG, hx⟩) h hh.2 hh.1,
-    fun f f' hff x hx hxG => ha.2.2 _ _ (fun y hy hyG => hb.2.2 f f' hff y hy hyG) x hx hxG⟩
-  cop := fun c => ⟨fun _ hF => mn_nice_smul c hF, fun F _ h _ => bc_JF_smul c F h,
-    fun f f' hff x hx hxG => by
-      show c • f x = c • f' x
-      rw [hff x hx hxG]⟩
+      exact ha.2.2 _ _ (fun x hx hxG => hb.2.1 F hF x ⟨hxG, hx⟩) h hh.2 hh.1
+    · intro f f' hff x hx hxG
+      exact ha.2.2 _ _ (fun y hy hyG => hb.2.2 f f' hff y hy hyG) x hx hxG
+  · intro c
+    refine ⟨fun _ hF => mn_nice_smul c hF, fun F _ h _ => bc_JF_smul c F h, ?_⟩
+    intro f f' hff x hx hxG
+    show c • f x = c • f' x
+    rw [hff x hx hxG]
 
 theorem bcGood_tL (s : ℂ) (Y : ℂ) (a b : Fin 2) :
     BcGood Bs ε (fun f => s • Q.tL k r Bs.z Bs.z' 0 Y a b f) := by
@@ -1364,6 +1370,7 @@ theorem rma_resG_add {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (i :
 
 
 open Classical in
+variable (z z') in
 def rma_resFn (J : Mx k r → (Wq →L[ℂ] Wp)) : Fn k r (Wq →L[ℂ] Wp) := fun c g =>
   if (c, g) ∈ DomR k r z z' then resG k r (Fin.last r) J c g else 0
 
@@ -1611,7 +1618,7 @@ theorem rma_sandw (X : ActualOps k r z z' π π') (L : R.LevelData (Pr (RadSp k 
     exact ⟨hR, hN⟩
   | n + 1, hn, M, N, hR, hN => by
     have h : n < r := by omega
-    obtain ⟨hR', hN'⟩ := rma_step X L hL ⟨n, h⟩ Y hR hN
+    obtain ⟨hR', hN'⟩ := rma_step X L hL ⟨n, h⟩ Y (M := M) (N := N) hR hN
     have ih := rma_sandw X L hL Y n (by omega) _ _ hR' hN'
     have e1 : sandw k r Y (n + 1) N =
         sandw k r Y n (oMul (TLs k ⟨n, h⟩ Y) (oMul N (TL k ⟨n, h⟩ Y))) := by
@@ -2772,7 +2779,7 @@ def pdPsi (R : ℝ) (g : Mat k r) : ℂ := 1 - pdPhi (R⁻¹ • g)
 theorem pd_sq_cd : ContDiff ℝ ∞ (pdSq (k := k) (r := r)) := by
   unfold pdSq
   refine ContDiff.sum fun i _ => ContDiff.sum fun j _ => ?_
-  exact Formalism.FourierDecayAlt.P.AdmissibleLieWords.normSq_cd.comp (contDiff_apply_apply ℝ ℂ i j)
+  exact Formalism.FourierDecayAlt.P.AdmissibleLieWords.normSq_cd.comp (contDiff_apply_apply ℝ i j)
 
 theorem pd_chi_cd : ContDiff ℝ ∞ pdChi := by
   unfold pdChi

@@ -248,8 +248,8 @@ theorem polyNum_rename_perm {F : Type*} [Field F] {K : Type} [Fintype K] {κ : K
       ((finCongr h₁.symm).trans (σ.trans (finCongr h₂)))
     rw [← key]
     congr 1
-    rw [hσ]
-    rfl
+    funext j
+    simpa using hσ (Fin.cast h₁.symm j)
   · rw [dite_eq_right (fun h => h₂ (hlen.symm.trans h)), dite_eq_right h₂]
 
 end flagFurtherTerm_independent

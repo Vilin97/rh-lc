@@ -155,7 +155,7 @@ theorem det_cont {S : Set T} {f : T → Matrix ι ι ℂ} (hf : EntC S f) :
   simp only [Matrix.det_apply]
   refine continuousOn_finsetSum _ fun σ _ => ?_
   simp only [Units.smul_def, zsmul_eq_mul]
-  exact continuousOn_const.mul (continuousOn_finset_prod _ fun i _ => hf _ _)
+  exact continuousOn_const.mul (continuousOn_finsetProd _ fun i _ => hf _ _)
 
 theorem entC_adjugate {S : Set T} {f : T → Matrix ι ι ℂ} (hf : EntC S f) :
     EntC S (fun z => (f z).adjugate) := fun i j => by

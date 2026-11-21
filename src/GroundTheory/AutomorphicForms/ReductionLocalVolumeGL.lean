@@ -126,7 +126,9 @@ theorem unipotentOfCoords_unipotentPart_mul {b : GL (Fin n) 𝕜}
       Matrix (Fin n) (Fin n) 𝕜) * diagonal (fun i => (b : Matrix (Fin n) (Fin n) 𝕜) i i) =
       (b : Matrix (Fin n) (Fin n) 𝕜) := by
   ext i j
-  rw [mul_diagonal, coe_unipotentOfCoords, Matrix.add_apply, one_apply, strictUpperMatrix_apply]
+  rw [mul_diagonal, coe_unipotentOfCoords, Matrix.add_apply]
+  change (((1 : Matrix (Fin n) (Fin n) 𝕜) i j) + strictUpperMatrix (unipotentPart ↑b) i j) * _ = _
+  rw [Matrix.one_apply, strictUpperMatrix_apply]
   by_cases hij : i = j
   · subst hij; simp
   · by_cases h : i < j

@@ -163,7 +163,7 @@ theorem finprod_htFin_kapX_le : ∀ (D : D7) (X : HSp D) {d : ℕ} (e : Fin X.ra
   have hf : Function.HasFiniteMulSupport fun v => GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraExponentialFamilies.finHt X v h :=
     GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraExponentialFamilies.finHt_mulSupport_finite X h
   rw [← finprod_mul_distrib hc hf]
-  refine finprod_le_finprod (finite_mulSupport_htFin D.host.F (kapX X e hJ h).1) (fun _ => bot_le) ?_
+  refine finprod_le_finprod₀ (finite_mulSupport_htFin D.host.F (kapX X e hJ h).1) (fun _ => bot_le) ?_
     (fun v => htFin_kapX_le X e hJ h v)
   exact (hc.union hf).subset (Function.mulSupport_mul _ _)
 

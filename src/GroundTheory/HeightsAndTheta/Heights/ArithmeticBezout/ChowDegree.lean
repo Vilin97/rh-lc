@@ -44,7 +44,8 @@ theorem component_ne_zero_of_mem {p : MvPolynomial σ R} {a : ℕ} (ha : a ∈ w
   obtain ⟨d, hd, rfl⟩ := mem_weightSet.mp ha
   intro h
   have := congrArg (AddMonoidAlgebra.coeff · d) h
-  rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
+  rw [coeff_weightedHomogeneousComponent, if_pos rfl] at this
+  change p.coeff d = 0 at this
   exact mem_support_iff.mp hd this
 
 theorem component_mul_of_unique (p q : MvPolynomial σ R) (a b : ℕ)

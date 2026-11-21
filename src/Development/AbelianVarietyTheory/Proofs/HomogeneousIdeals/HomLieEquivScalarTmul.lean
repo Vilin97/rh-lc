@@ -190,13 +190,20 @@ variable {G' H' : Over (Sp R)} [GrpObj G'] [GrpObj H'] [IsCommMonObj G'] [IsComm
 
 def lieMap : M ⊗[O] Lie a →ₗ[O] Lie b :=
   TensorProduct.lift (LinearMap.mk₂ O (fun m v ↦ Lie.mapLinear (h.isLinearHom_tmul m) v)
-    (fun m n v ↦ by ext; simp [tmul_add, MonObj.comp_mul])
-    (fun x m v ↦ by ext; simp [tmul_smul]) (fun m v w ↦ map_add _ _ _) (fun x m v ↦ map_smul _ _ _))
+    (fun m n v ↦ Lie.ext (by
+      change v.hom ≫ h.tmul (m + n) = (v.hom ≫ h.tmul m) * (v.hom ≫ h.tmul n)
+      rw [h.tmul_add, MonObj.comp_mul]))
+    (fun x m v ↦ Lie.ext (by
+      change v.hom ≫ h.tmul (x • m) = (v.hom ≫ h.tmul m) ≫ b.act x
+      rw [h.tmul_smul, Category.assoc]))
+    (fun m v w ↦ map_add _ _ _) (fun x m v ↦ map_smul _ _ _))
 
 theorem toPts_lieMap (z : M ⊗[O] Lie a) :
     Lie.toPts b (h.lieMap z) = h.equiv (epsR R) ((Lie.toPts a).lTensor M z) := by
   induction z with
-  | tmul m v => ext; simp [lieMap]
+  | tmul m v =>
+    apply Pts.ext
+    exact (h.hom_equiv_tmul m (Lie.toPts a v)).symm
   | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 def lieEquiv : M ⊗[O] Lie a ≃ₗ[O] Lie b :=
@@ -219,7 +226,11 @@ def lieEquivBase (b₁ : OAct O' H) : Lie a ⊗[O] M ≃ₗ[R] Lie b₁ :=
       change h.lieEquiv (TensorProduct.comm O _ _ (r • z)) =
         r • h.lieEquiv (TensorProduct.comm O _ _ z)
       induction z with
-      | tmul v m => ext; simp [smul_tmul']
+      | tmul v m =>
+        rw [smul_tmul']
+        apply Lie.ext
+        change (epsScale r ≫ v.hom) ≫ h.tmul m = epsScale r ≫ (v.hom ≫ h.tmul m)
+        exact Category.assoc _ _ _
       | add z w hz hw => simp only [map_add (f := _), smul_add, hz, hw] } :
     Lie a ⊗[O] M ≃ₗ[R] Lie b) ≪≫ₗ Lie.changeAct b b₁
 
@@ -236,7 +247,10 @@ theorem lieEquivBase_smul (x : O') (z : Lie a ⊗[O] M) :
     h.lieEquivBase (h.algAct O') ((Algebra.lsmul O O M x).lTensor _ z) =
       x • h.lieEquivBase (h.algAct O') z := by
   induction z with
-  | tmul v m => ext; simp
+  | tmul v m =>
+    apply Lie.ext
+    simp only [LinearMap.lTensor_tmul, Algebra.lsmul_apply, hom_lieEquivBase_tmul,
+      Lie.hom_act_smul, Category.assoc, h.tmul_algAct]
   | add z w hz hw => simp only [map_add (f := _), smul_add, hz, hw]
 
 end Algebra

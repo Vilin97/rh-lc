@@ -490,8 +490,8 @@ theorem card_frames_le : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ 
       · rw [e0]
         refine Submodule.sub_mem _ (hw b).1.1 (Submodule.sum_mem _ fun a _ => ?_)
         exact (S0.smul_mem (Y' a b) (hv a)).2
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [frame_move, sn, (hw b).1.2 σ hσ, e0, map_sub, map_sum, sub_eq_add_neg,
+      · set_option synthInstance.maxHeartbeats 100000 in
+        rw [frame_move, sn, (hw b).1.2 σ hσ, e0, map_sub, map_sum, sub_eq_add_neg,
           ← Finset.sum_neg_distrib]
         congr 1
         refine Finset.sum_congr rfl fun a _ => ?_

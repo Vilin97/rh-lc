@@ -78,6 +78,7 @@ noncomputable def tf (i : Fin m) (ℓ : Module.Dual ℂ (⨂[ℂ] e : Emb l (fun
 theorem mem_Y {ξ : GV n (fun v : V.frame.Vl => s.w v.1) →* GL (Fin d) ℂ} {σ : Submodule ℂ (UA L n → ℂ)}
     {F : Fin m → (hset Q τ₀).X.Fn ℂ d} :
     F ∈ YOf Q ι τ₀ e ξ σ ↔ F ∈ (hset Q τ₀).Big ι ξ ∧ ∀ i ℓ, tf Q τ₀ ι e i ℓ F ∈ σ := by
+  change F ∈ (hset Q τ₀).Big ι ξ ∧ F ∈ Submodule.span ℂ {F | ∀ i ℓ, tf Q τ₀ ι e i ℓ F ∈ σ} ↔ _
   refine and_congr Iff.rfl ⟨fun h i ℓ => ?_, fun h => Submodule.subset_span h⟩
   exact (Submodule.span_le (p := σ.comap (tf Q τ₀ ι e i ℓ))).2 (fun F hF => by exact hF i ℓ) h
 

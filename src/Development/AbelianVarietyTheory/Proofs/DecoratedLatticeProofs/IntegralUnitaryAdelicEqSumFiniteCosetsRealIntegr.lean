@@ -52,7 +52,8 @@ variable {D : D7}
 
 theorem continuous_realPt {θ : InfFam D} (hθ : IsInfFam θ) {W : HSp D} (hW : W.SigOK) {Fr : Frames W}
     (hFr : IsFrames W Fr) : Continuous fun b : (∀ ρ, Upq W ρ) => realElt θ W fun ρ => realMat W Fr ρ (b ρ) := by
-  obtain ⟨h1, -, -, -, -⟩ := Formalism.IndefR.Eqv.ga_facts D W
+  obtain ⟨h1, h2, h3⟩ := Formalism.IndefR.Eqv.G5.af_facts D.host.F
+  obtain ⟨h1, -, -, -, -⟩ := Formalism.IndefR.Eqv.G5.ha_facts (AF D.host.F) D.sp.cm.deg2 D.sp.cm.sig W.gram
   unfold realElt
   refine continuous_list_prod _ fun ρ _ => ?_
   have hm : Continuous fun b : (∀ ρ, Upq W ρ) => UpqT.mat (b ρ) :=
@@ -79,10 +80,11 @@ namespace GlobalTheory.CosetDisint
 
 theorem integral_eq_cosetSum : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (W : HSp D), W.SigOK → ∀ (K : Subgroup (GL (Fin W.rank) (Lev.EAf D))) (ν : Measure (GA D W)), IsMeasLev W K ν → IsOpen {h : GA D W | finE W h ∈ K} → ∀ Fr : Frames W, IsFrames W Fr → ∀ mR : ∀ ρ, Measure (Upq W ρ), (∀ ρ, Lev.IsMinf (mR ρ)) → ∀ Z : GA D W → ℂ, Continuous Z → Integrable Z ν → (∀ g, ∀ k ∈ levA W K, Z (g * k) = Z g) → ∫⁻ b, ∑' x : FinCos W (levA W K), ‖Z (x.rep * realElt θ W fun ρ => realMat W Fr ρ (b ρ))‖ₑ ∂(Measure.pi mR) < ⊤ ∧ ∫ g, Z g ∂ν = ∫ b, ∑' x : FinCos W (levA W K), Z (x.rep * realElt θ W fun ρ => realMat W Fr ρ (b ρ)) ∂(Measure.pi mR) := by
   intro D θ hθ W hW K ν hν hO Fr hFr mR hmR Z hZc hZi hZinv
-  obtain ⟨i0, -, -, i3, i4⟩ := Formalism.IndefR.Eqv.ga_facts D W
+  obtain ⟨h1, h2, h3⟩ := Formalism.IndefR.Eqv.G5.af_facts D.host.F
+  obtain ⟨i0, -, -, i3, i4⟩ := Formalism.IndefR.Eqv.G5.ha_facts (AF D.host.F) D.sp.cm.deg2 D.sp.cm.sig W.gram
   haveI := i0; haveI := i3; haveI := i4
   haveI : ν.IsHaarMeasure := hν.1
-  haveI := Formalism.IndefR.Eqv.gfC_secondCountable D W
+  haveI : SecondCountableTopology (GfC W) := Topology.IsInducing.subtypeVal.secondCountableTopology
   set O : Set (GA D W) := {h | finE W h ∈ K} with hOdef
   have hOm : MeasurableSet O := hO.measurableSet
   set φ : (∀ ρ, Upq W ρ) → GA D W := fun b => realElt θ W fun ρ => realMat W Fr ρ (b ρ) with hφdef

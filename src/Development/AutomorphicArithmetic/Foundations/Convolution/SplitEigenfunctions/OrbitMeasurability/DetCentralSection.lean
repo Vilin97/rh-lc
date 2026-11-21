@@ -154,6 +154,8 @@ private theorem scale_int (q : ℚˣ) (g : 𝔸[ℚ] → ℂ) (hg : ∀ (c : ℚ
   rw [h1]
   exact mp.setIntegral_preimage_emb (Homeomorph.smul (IdeleGroup.diagonal ℚ q)).measurableEmbedding g _
 
+local notation "Dt" => Matrix.GeneralLinearGroup.det
+
 private def dq (q : ℚˣ) : GL (Fin 2) ℚ :=
   ⟨!![(q : ℚ), 0; 0, 1], !![((q⁻¹ : ℚˣ) : ℚ), 0; 0, 1],
     by ext i j; fin_cases i <;> fin_cases j <;> simp, by ext i j; fin_cases i <;> fin_cases j <;> simp⟩

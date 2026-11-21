@@ -27,11 +27,11 @@ theorem mulLeftRight_injective : Function.Injective (AlgHom.mulLeftRight K A) :=
 
 variable (K A) in
 theorem mulLeftRight_bijective : Function.Bijective (AlgHom.mulLeftRight K A) := by
-  refine ⟨mulLeftRight_injective, ?_⟩
+  refine ⟨mulLeftRight_injective K A, ?_⟩
   have h := LinearMap.injective_iff_surjective_of_finrank_eq_finrank
     (f := (AlgHom.mulLeftRight K A).toLinearMap)
     (by rw [Module.finrank_tensorProduct, MulOpposite.finrank, Module.finrank_linearMap])
-  exact h.mp mulLeftRight_injective
+  exact h.mp (mulLeftRight_injective K A)
 
 
 end Azumaya

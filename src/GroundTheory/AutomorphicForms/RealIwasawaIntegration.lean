@@ -27,6 +27,7 @@ theorem isInvInvariant_of_isMulRightInvariant (μ : Measure G) [μ.IsHaarMeasure
   have μeq : μ = c ^ 2 • μ := by
     conv_lhs => rw [← Measure.inv_inv μ]
     rw [hc, Measure.inv_def (c • μ), Measure.map_smul, ← Measure.inv_def, hc, smul_smul, pow_two]
+    exact measurable_inv.aemeasurable
   have K : TopologicalSpace.PositiveCompacts G := Classical.arbitrary _
   have h1 : c ^ 2 * μ K = 1 ^ 2 * μ K := by
     conv_rhs => rw [μeq]

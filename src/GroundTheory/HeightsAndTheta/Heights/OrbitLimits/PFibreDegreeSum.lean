@@ -70,7 +70,7 @@ theorem FibreDegreeSum.intNum_eq_cycEval (K : Type) [Fintype K] [DecidableEq K] 
     IsLocalization.under_map_of_isPrime_disjoint M (MRing ι O) hPprime hPdisj
   have hmp : IsMultiProjPrime P' :=
     { isPrime := hP'prime
-      multiHomog := WeightedDegree.isMultiHomogIdeal_map 𝔭.primeCompl
+      multiHomog := WeightedDegree.isMultiHomogIdeal_map (M₀ := 𝔭.primeCompl)
         ((Bridge.isMultiHomogIdeal_iff P).mpr hP.2.1.2.1)
       relevant := fun k ↦ by
         obtain ⟨i, hi⟩ := hP.2.1.2.2 k
@@ -97,7 +97,7 @@ theorem FibreDegreeSum.intNum_eq_cycEval (K : Type) [Fintype K] [DecidableEq K] 
     rw [hm0, map_zero] at hms
     exact ((IsLocalization.map_units O s).mul_left_eq_zero).mp hms
   have hdimle : ringKrullDim (MRing ι O ⧸ P') ≤ ((e + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) :=
-    (WeightedDegree.ringKrullDim_quotient_map_le 𝔭.primeCompl P).trans_eq hP.2.2.2
+    (WeightedDegree.ringKrullDim_quotient_map_le (M₀ := 𝔭.primeCompl) P).trans_eq hP.2.2.2
 
   have key := ConservationOfNumberLE.proof.{0} IntNumAssoc.full SpecialCycleEval.full
     SpecialPieceRank.full GenericPieceRank.full SpecialIdealMultiHomog.full O ϖ hϖ K ι P' e hmp hnt

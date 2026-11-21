@@ -29,10 +29,10 @@ theorem mem_GfC_iff (V : HSp D) (g : GA D V) : g ∈ GfC V ↔ (Formalism.L2.The
 
 theorem map_sand {k n : ℕ} (x : Mx D k n) (m : Mx D n n)
     (y : Mx D n k) (hm : m.map (finf D) = 1) :
-    (x ⬝ m ⬝ y).map (finf D) = (x ⬝ y).map (finf D) := by
-  have e1 : (x ⬝ m ⬝ y).map (finf D) = x.map (finf D) ⬝ m.map (finf D) ⬝ y.map (finf D) := by
+    (x * m * y).map (finf D) = (x * y).map (finf D) := by
+  have e1 : (x * m * y).map (finf D) = x.map (finf D) * m.map (finf D) * y.map (finf D) := by
     rw [Matrix.map_mul (f := finf D), Matrix.map_mul (f := finf D)]
-  have e2 : (x ⬝ y).map (finf D) = x.map (finf D) ⬝ y.map (finf D) := Matrix.map_mul (f := finf D)
+  have e2 : (x * y).map (finf D) = x.map (finf D) * y.map (finf D) := Matrix.map_mul (f := finf D)
   rw [e1, e2, hm, Matrix.mul_one]
 
 theorem orth_emb_mem_GfC {S A B : HSp D} (o : OrthDec S A B) {a : GA D A} (ha : a ∈ GfC A) :

@@ -28,14 +28,18 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 theorem infSign_ideleMap_finPartI (b : Neutral.B1.Ideles (maximalRealSubfield E)) :
     infSign E (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleMap (maximalRealSubfield E) E (GlobalTheory.Mem.Chr.finPartI _ b)) = 1 := by
-  rw [infSign, MonoidHom.finset_prod_apply]
+  rw [infSign]
+  change (MonoidHom.eval _) (∏ w, _) = 1
+  rw [map_prod]
   refine Finset.prod_eq_one fun w _ => ?_
   have : Units.map (GlobalTheory.IdeleNormChar.infEval w)
       (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleMap (maximalRealSubfield E) E (GlobalTheory.Mem.Chr.finPartI _ b)) = 1 := by
     refine Units.ext ?_
     change (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.infiniteAdeleMap (maximalRealSubfield E) E 1) w = 1
     rw [map_one]; rfl
-  simp only [MonoidHom.comp_apply, this, map_one]
+  change unitDir (Units.map (InfinitePlace.Completion.extensionEmbedding w).toMonoidHom
+    (Units.map (GlobalTheory.IdeleNormChar.infEval w) _)) = 1
+  rw [this, map_one, map_one]
 
 theorem eta_eq_infSign (hU : Unr E) (b : Neutral.B1.Ideles (maximalRealSubfield E))
     (hb : b ∈ GlobalTheory.Mem.Chr.unitIdl (maximalRealSubfield E)) :

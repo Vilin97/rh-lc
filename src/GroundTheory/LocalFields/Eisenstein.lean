@@ -193,6 +193,7 @@ theorem residueDegree_eq_one_of_ramificationIndex_eq_finrank
     (h : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = Module.finrank K L) : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1 := by
   have h1 := ramificationIndex_mul_residueDegree K L
   have h2 := ramificationIndex_pos K L
+  dsimp only [ramificationIndex] at h1 h2
   rw [h] at h1 h2
   exact (Nat.mul_eq_left h2.ne').mp h1
 
@@ -283,6 +284,7 @@ theorem isEisensteinAt_root_of_finrank_le (hf : f.IsEisensteinAt (IsLocalRing.ma
   have hef := ramificationIndex_mul_residueDegree K L
   have hf1 := residueDegree_pos K L
   have he := ramificationIndex_pos K L
+  dsimp only [ramificationIndex] at hef he
   have hle : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) ≤ Module.finrank K L := by
     rw [← hef]
     exact Nat.le_mul_of_pos_right _ hf1

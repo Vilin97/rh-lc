@@ -31,7 +31,12 @@ theorem normV_prime (v : Pl) : (normV v).Prime := by
   rw [normV, ← hb, Nat.card_zmod]
   exact hp
 
-theorem normV_mem (v : Pl) : ((normV v : ℕ) : 𝓞 ℚ) ∈ v.asIdeal := Ideal.absNorm_mem v.asIdeal
+theorem normV_mem (v : Pl) : ((normV v : ℕ) : 𝓞 ℚ) ∈ v.asIdeal := by
+  have h : Nat.card (𝓞 ℚ ⧸ v.asIdeal) = Ideal.absNorm v.asIdeal := by
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  change ((Nat.card (𝓞 ℚ ⧸ v.asIdeal) : ℕ) : 𝓞 ℚ) ∈ v.asIdeal
+  rw [h]
+  exact Ideal.absNorm_mem _
 
 theorem val_normV_lt_one {Ω : Type} [Field Ω] [Algebra ℚ Ω] {B : ValuationSubring Ω} {v : Pl}
     (h : IsPlaceOver B v) : B.valuation ((normV v : ℕ) : Ω) < 1 := by

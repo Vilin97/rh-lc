@@ -81,7 +81,8 @@ theorem natCard_isConj_mul_natCard_centralizer (σ : G) :
     Nat.card_congr (Equiv.subtypeEquiv ConjAct.toConjAct.toEquiv fun g ↦ by
       rw [Subgroup.mem_centralizer_singleton_iff]
       change _ ↔ ConjAct.toConjAct g • σ = σ
-      rw [ConjAct.toConjAct_smul, mul_inv_eq_iff_eq_mul])
+      rw [ConjAct.toConjAct_smul, mul_inv_eq_iff_eq_mul]
+      rfl)
   rw [Nat.card_coe_set_eq, ← horb, ← MulAction.index_stabilizer, hstab, mul_comm,
     Subgroup.card_mul_index]
   rfl

@@ -117,7 +117,7 @@ theorem lintegral_indicator_le {E : Set G} (hE : MeasurableSet E) {N : ℕ}
 
 theorem quasiMeasurePreserving_mk :
     Measure.QuasiMeasurePreserving (mk Γ) μ (quotientMeasure Γ μ) := by
-  refine ⟨measurable_mk Γ, Measure.AbsolutelyContinuous.mk fun s hs h0 => ?_⟩
+  refine ⟨(measurable_mk Γ).aemeasurable, Measure.AbsolutelyContinuous.mk fun s hs h0 => ?_⟩
   rw [Measure.map_apply (measurable_mk Γ) hs]
   have hs' : MeasurableSet (mk Γ ⁻¹' s) := hs.preimage (measurable_mk Γ)
   rw [← lintegral_indicator_one hs', lintegral_eq_lintegral_automorphize (Γ := Γ) μ
@@ -157,7 +157,6 @@ variable [IsFiniteMeasureOnCompacts μ]
 theorem integrableOn_lift (φ : Lp ℂ 2 (quotientMeasure Γ μ)) {C : Set G} (hC : IsCompact C) :
     IntegrableOn (fun g => φ (mk Γ g)) C μ := by
   have hm : MemLp (fun g => φ (mk Γ g)) 2 (μ.restrict C) := by
-    refine ⟨(stronglyMeasurable_lift Γ μ φ).aestronglyMeasurable, ?_⟩
     refine L2Kernel.lt_top_of_sq_lt_top ?_
     rw [L2Kernel.eLpNorm_two_sq]
     exact lintegral_lift_sq_lt_top Γ μ φ hC
@@ -195,7 +194,7 @@ theorem rconv_add (f : CompactlySupportedContinuousMap G ℂ) (φ ψ : Lp ℂ 2 
   unfold rconv
   rw [← integral_add (integrable_rconv Γ μ f φ x) (integrable_rconv Γ μ f ψ x)]
   refine integral_congr_ae ?_
-  filter_upwards [(quasiMeasurePreserving_mk Γ μ).ae_eq_comp (Lp.coeFn_add φ ψ)] with y hy
+  filter_upwards [Measure.QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ μ) (Lp.coeFn_add φ ψ)] with y hy
   simp only [comp_apply, Pi.add_apply] at hy
   rw [hy, mul_add]
 
@@ -205,7 +204,7 @@ theorem rconv_smul (f : CompactlySupportedContinuousMap G ℂ) (c : ℂ)
   unfold rconv
   rw [← integral_const_mul]
   refine integral_congr_ae ?_
-  filter_upwards [(quasiMeasurePreserving_mk Γ μ).ae_eq_comp (Lp.coeFn_smul c φ)] with y hy
+  filter_upwards [Measure.QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk Γ μ) (Lp.coeFn_smul c φ)] with y hy
   simp only [comp_apply, Pi.smul_apply, smul_eq_mul] at hy
   rw [hy]
   ring
@@ -250,7 +249,7 @@ theorem exists_norm_rconv_le (f : CompactlySupportedContinuousMap G ℂ) (x : G)
     f.hasCompactSupport.isCompact.image (continuous_const_mul x)
   obtain ⟨N, hN⟩ := exists_encard_le_of_isCompact Γ hC
   have hf2 : ∫⁻ y, ‖f y‖ₑ ^ 2 ∂μ ≠ ⊤ := by
-    have := (f.continuous.memLp_of_hasCompactSupport (μ := μ) (p := 2) f.hasCompactSupport).2
+    have := (f.continuous.memLp_of_hasCompactSupport (μ := μ) (p := 2) f.hasCompactSupport)
     rw [← L2Kernel.eLpNorm_two_sq]
     exact (ENNReal.pow_lt_top this).ne
   refine ⟨√((∫⁻ y, ‖f y‖ₑ ^ 2 ∂μ) * N).toReal, fun φ => ?_⟩

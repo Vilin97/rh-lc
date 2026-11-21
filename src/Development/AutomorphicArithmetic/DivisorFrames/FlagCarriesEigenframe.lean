@@ -34,11 +34,11 @@ private theorem UT.symm {f g : EigFrame Z φ x} (h : UT f g) : UT g f := fun τ 
   exact Matrix.blockTriangular_inv_of_blockTriangular (h τ)
 
 private theorem ut_of_tri {f : EigFrame Z φ x} {ψ : R →+* R'} {f' g : EigFrame Z φ' x'}
-    (h : ∃ t, f.Tri ψ g t) (hf : f.IsMap ψ f') : UT f' g := fun τ a i hi =>
+    (h : ∃ t, f.Tri ψ g t) (hf : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) ψ f') : UT f' g := fun τ a i hi =>
   (h.choose_spec.co τ hf).1 a i hi
 
 private theorem tri_of_ut {f : EigFrame Z φ x} {ψ : R →+* R'} {f' g : EigFrame Z φ' x'}
-    (hx : x' = spMap ψ ≫ x) (hφ : φ' = ψ.comp φ) (hf : f.IsMap ψ f') (h : UT f' g) : ∃ t, f.Tri ψ g t := by
+    (hx : x' = spMap ψ ≫ x) (hφ : φ' = ψ.comp φ) (hf : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) ψ f') (h : UT f' g) : ∃ t, f.Tri ψ g t := by
   have hu : ∀ τ i, IsUnit (f'.co g τ i i) := fun τ i => by
     have := f'.isUnit_det_co g τ
     rw [Matrix.det_of_upperTriangular (h τ)] at this
@@ -48,10 +48,10 @@ private theorem tri_of_ut {f : EigFrame Z φ x} {ψ : R →+* R'} {f' g : EigFra
   exact f'.co_spec g τ i
 
 private theorem isMap_comp {f : EigFrame Z φ x} {ψ : R →+* R'} {χ : R' →+* R''} {f' : EigFrame Z φ' x'}
-    {f'' : EigFrame Z φ'' x''} (h : f.IsMap ψ f') (h' : f'.IsMap χ f'') : f.IsMap (χ.comp ψ) f'' := fun τ i => by
+    {f'' : EigFrame Z φ'' x''} (h : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) ψ f') (h' : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f' embτ basisIdx) χ f'') : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) (χ.comp ψ) f'' := fun τ i => by
   rw [h' τ i, h τ i, ← Category.assoc, Descent.dual_comp]
 
-private theorem isMap_id (f : EigFrame Z φ x) : f.IsMap (RingHom.id R) f := fun τ i => by
+private theorem isMap_id (f : EigFrame Z φ x) : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) (RingHom.id R) f := fun τ i => by
   have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1

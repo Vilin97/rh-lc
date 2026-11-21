@@ -75,6 +75,8 @@ theorem polyNum_join (hV : JoinVariety.Statement) (hN : JoinIntNum.Statement) (F
     beta_reduce
     rw [← hN F K ι V d]
     congr 1
+    funext j
+    simp [hl]
   · have h' : ¬ (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.monoList
         (fun j => IndefiniteRowSideFullHecke.NumbersDVR.Bundles.pullDeg (K' := Unit) (deg j)) μ).length = d := by
       rwa [hl, List.length_map]

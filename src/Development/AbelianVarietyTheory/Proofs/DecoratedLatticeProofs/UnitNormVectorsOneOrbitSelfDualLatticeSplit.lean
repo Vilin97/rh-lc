@@ -44,7 +44,7 @@ theorem hermAt_jB {S A B : HSp D} (o : OrthDec S A B) (y : Fin S.rank → AE D) 
 
 theorem hermAt_jA {S A B : HSp D} (o : OrthDec S A B) (x : Fin A.rank → AE D) (y : Fin S.rank → AE D) :
     hermAt S (o.jA *ᵥ x) y = hermAt A x (o.pA *ᵥ y) := by
-  have h : gA S ⬝ o.jA = adj o.pA ⬝ gA A := by
+  have h : gA S * o.jA = adj o.pA * gA A := by
     rw [o.gA_eq]
     simp only [Matrix.add_mul, Matrix.mul_assoc, o.pA_jA, o.pB_jA, Matrix.mul_one, Matrix.mul_zero, add_zero]
   rw [hermAt_mulVec, hermAt_eq, Matrix.mulVec_mulVec, h]
@@ -54,8 +54,8 @@ theorem exists_den {P : Pl D → Prop} {m n : ℕ} (X : Matrix (Fin m) (Fin n) (
   choose k hk hX using fun p : Fin m × Fin n => GlobalTheory.LatMatch.exists_nat_smul_intAE (finPart D (X p.1 p.2))
   refine ⟨∏ p, k p, Finset.prod_pos fun p _ => hk p, fun y hy i => ⟨?_, ?_⟩⟩
   · exact Ideal.mul_mem_left _ _ (mulVec_mem_idAt X (fun j => (hy j).1) i)
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Finset.mul_sum, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Finset.mul_sum, map_sum]
     refine sum_mem fun j _ => ?_
     rw [← mul_assoc, map_mul]
     refine GlobalTheory.LatMatch.mul_mem_intAE' D ?_ (hy j).2
@@ -179,7 +179,7 @@ theorem emb_mem_grpAt {S A B : HSp D} (o : OrthDec S A B) {P : Pl D → Prop} {a
     o.emb (a, 1) ∈ grpAt S P := by
   have ha' := (mem_congGrp_iff A (idAt D P) a).1 ha
   refine (mem_congGrp_iff S (idAt D P) _).2 fun i j => ?_
-  have e : mt S (o.emb (a, 1)) - 1 = o.jA ⬝ (mt A a - 1) ⬝ o.pA := by
+  have e : mt S (o.emb (a, 1)) - 1 = o.jA * (mt A a - 1) * o.pA := by
     rw [o.mt_emb, ← o.sum_eq_one, Matrix.mul_sub, Matrix.sub_mul, mt_one, Matrix.mul_one, Matrix.mul_one]
     abel
   rw [← Matrix.sub_apply, e, Matrix.mul_apply]

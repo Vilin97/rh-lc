@@ -89,9 +89,12 @@ theorem list_prod_single {M : Type} [Monoid M] {ι : Type} [DecidableEq ι] (f :
     rw [List.map_cons, List.prod_cons]
     by_cases ha : a = i
     · subst ha
-      rw [List.prod_eq_one fun y hy => ?_, mul_one]
-      obtain ⟨b, hb, rfl⟩ := List.mem_map.1 hy
-      exact hf b fun e => hl.1 (e ▸ hb)
+      have hprod : (l.map f).prod = 1 := by
+        apply List.prod_eq_one
+        intro y hy
+        obtain ⟨b, hb, rfl⟩ := List.mem_map.1 hy
+        exact hf b fun e => hl.1 (e ▸ hb)
+      rw [hprod, mul_one]
     · rw [hf a ha, one_mul]
       exact list_prod_single f i hf l hl.2 ((List.mem_cons.1 h).resolve_left (Ne.symm ha))
 

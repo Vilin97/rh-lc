@@ -174,7 +174,7 @@ theorem exists_le_span {y : (Σ k, ι k) → Ω} (hP : IsArithVar (mCoordIdeal y
       rintro _ ⟨p, rfl⟩
       exact (CoordCurveDegree.isAlgebraic_ratio hP c hc p).isIntegral)
   have hfg : (Subalgebra.toSubmodule (chartRingQ y c)).FG := Module.Finite.iff_fg.mp hfin
-  have hcpt := (CompleteLattice.isCompactElement_iff_le_of_directed_sSup_le _ _).mp
+  have hcpt := (isCompactElement_iff_le_of_directed_sSup_le _).mp
     ((Submodule.fg_iff_compact _).mp hfg)
   obtain ⟨_, ⟨D, rfl⟩, hD⟩ := hcpt (Set.range V) (Set.range_nonempty V)
     (directedOn_range.mpr hmono.directed_le) (by

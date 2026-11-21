@@ -233,7 +233,8 @@ theorem locPart_mem {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {a : K 
       (evLHom hT).map_zero]
     simp
   | add x x' _ _ hx hx' =>
-    rw [← evLHom_apply hT, map_add (f := _), add_mul]
+    rw [← evLHom_apply hT (x + x'), (evLHom hT).map_add,
+      evLHom_apply hT x, evLHom_apply hT x', add_mul]
     exact add_mem hx hx'
   | smul r x _ hx =>
     rw [evL_smul hT, smul_mul_assoc]

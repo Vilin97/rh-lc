@@ -52,7 +52,11 @@ theorem quadComplexEquiv_star (z : QuadraticAlgebra R a 0) :
 
 theorem quadComplexEquiv_algebraMap (r : R) :
     quadComplexEquiv φ ha (algebraMap R (QuadraticAlgebra R a 0) r) = (φ r : ℂ) := by
-  apply Complex.ext <;> simp [quadComplexEquiv_apply, QuadraticAlgebra.algebraMap_eq]
+  apply Complex.ext
+  · change φ r = φ r
+    rfl
+  · change φ 0 * Real.sqrt (-φ a) = 0
+    rw [map_zero, zero_mul]
 
 end QuadComplex
 
@@ -111,16 +115,21 @@ theorem realPlaceD_neg (hE : IsNonsplitAt E w) : realPlaceD (E := E) hw < 0 := b
   set c := algebraMap w.Completion (QuadraticAlgebra w.Completion dw 0) r
   have hprod : (ω - c) * (ω + c) = 0 := by
     ext
-    · simp [ω, c, QuadraticAlgebra.algebraMap_eq, hr]
-    · simp [ω, c, QuadraticAlgebra.algebraMap_eq]
+    · change (0 - r) * (0 + r) + dw * (1 - 0) * (1 + 0) = 0
+      rw [← hr]
+      ring
+    · change (0 - r) * (1 + 0) + (1 - 0) * (0 + r) + 0 * (1 - 0) * (1 + 0) = 0
+      ring
   have hne : ω - c ≠ 0 := by
     intro h
     have := congrArg QuadraticAlgebra.im h
-    simp [ω, c, QuadraticAlgebra.algebraMap_eq] at this
+    change (1 : w.Completion) - 0 = 0 at this
+    exact one_ne_zero (by simpa only [sub_zero] using this)
   have hne' : ω + c ≠ 0 := by
     intro h
     have := congrArg QuadraticAlgebra.im h
-    simp [ω, c, QuadraticAlgebra.algebraMap_eq] at this
+    change (1 : w.Completion) + 0 = 0 at this
+    exact one_ne_zero (by simpa only [add_zero] using this)
   obtain ⟨y, hy⟩ := hF.mul_inv_cancel hne
   apply hne'
   calc ω + c = (y * (ω - c)) * (ω + c) := by rw [mul_comm y, hy, one_mul]

@@ -174,7 +174,6 @@ omit [MeasurableSpace k] [BorelSpace k] in
 theorem shellSet_eq_cell (ϖ : kˣ) (m : Fin a → ℤ) : shellSet ϖ m = cell k (Fin a) ϖ m := by
   unfold shellSet cell
   congr 1
-  exact Units.ext (by simp [val_torusElt])
 
 omit [BorelSpace k] in
 theorem shellSum_eq (μ : Measure (GL (Fin a) k)) (ϖ : kˣ) (ν : kˣ →* ℂˣ) (z : ℂ) (φ : Matrix (Fin a) (Fin a) k → ℂ) :
@@ -505,14 +504,14 @@ theorem upperProjection_right_inverse (h : GL (Fin (a + a')) k) : X0 k (finSumFi
   rw [Matrix.mul_assoc, ← Matrix.mul_assoc h.val, Units.mul_inv, Matrix.one_mul]
   ext i j
   rw [frameMatrixFirstColumnBlock_mul_apply]
-  simp only [X0, transpose_apply, of_apply, one_apply, EmbeddingLike.apply_eq_iff_eq, Sum.inl.injEq, eq_comm]
+  simp only [X0, transpose_apply, of_apply, one_apply, EmbeddingLike.apply_eq_iff_eq, Sum.inl.injEq, eq_comm, Matrix.one_apply]
 
 theorem lowerProjection_right_inverse (h : GL (Fin (a + a')) k) : Y0 k (finSumFinEquiv (m := a) (n := a')) * h.val *
     ((h⁻¹).val * (Y0 k (finSumFinEquiv (m := a) (n := a')))ᵀ) = 1 := by
   rw [Matrix.mul_assoc, ← Matrix.mul_assoc h.val, Units.mul_inv, Matrix.one_mul]
   ext i j
   rw [frameMatrixSecondColumnBlock_mul_apply]
-  simp only [Y0, transpose_apply, of_apply, one_apply, EmbeddingLike.apply_eq_iff_eq, Sum.inr.injEq, eq_comm]
+  simp only [Y0, transpose_apply, of_apply, one_apply, EmbeddingLike.apply_eq_iff_eq, Sum.inr.injEq, eq_comm, Matrix.one_apply]
 
 theorem gdet_block {b : GL (Fin (a + a')) k} (hb : IsBlockUpper b) {dA dD : kˣ} (h1 : (dA : k) = (blkA b).det)
     (h2 : (dD : k) = (blkD b).det) : gdet b = dA * dD := by
@@ -675,7 +674,10 @@ theorem pRam_inv (H : HidaSetting a a' ϖ α β ν) (hν : ¬ IsUnram ν) {Φ : 
   congr 1
   rw [← h3, ← shellSum_smul]
   congr 1
-    neg_div]
+  funext x
+  simp [omA, Matrix.mul_assoc, neg_div, apow_inv, gdet]
+  <;> ring_nf
+  <;> simp
 
 theorem pRam'_inv (Ψ : Matrix (Fin a') (Fin (a + a')) k → ℂ) (g : GL (Fin a') k) :
     pRam' a a' ν α (omB ν α g 1 Ψ) = pRam' a a' ν α Ψ := by

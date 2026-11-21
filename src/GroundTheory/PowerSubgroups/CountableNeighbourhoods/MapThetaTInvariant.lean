@@ -108,7 +108,7 @@ theorem map_thetaT_eq_self {F : Type*} [Field F] [ValuativeRel F] [TopologicalSp
     ext g : 1
     exact thetaT_thetaT g
   have hsq : (c * c) • μ = μ := by
-    conv_rhs => rw [← h2, hc, Measure.map_smul, hc, smul_smul]
+    conv_rhs => rw [← h2, hc, Measure.map_smul c hmeas.aemeasurable, hc, smul_smul]
 
   obtain ⟨K, hK, hK1⟩ := exists_compact_mem_nhds (1 : GL (Fin n) F)
   have hpos : 0 < μ K := Measure.measure_pos_of_mem_nhds μ hK1

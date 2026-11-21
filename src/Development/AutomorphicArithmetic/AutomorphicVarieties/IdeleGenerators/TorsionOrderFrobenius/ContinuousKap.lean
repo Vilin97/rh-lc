@@ -127,7 +127,9 @@ private theorem kap_of_fst {K : Type} [Field K] [NumberField K] (a : ℤ) (x : I
   rw [coe_kap, h]
   refine Finset.prod_congr rfl fun w _ => ?_
   congr 1
-  exact InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ k)
+  simpa [InfiniteAdeleRing.algebraMap_apply, AbsoluteValue.Completion.algebraMap_def,
+    WithAbs.algebraMap_right_apply] using
+    InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ k)
 
 open Classical in
 private theorem prod_type (E : Type) [Field E] [NumberField E] (a : ℤ) (k : E) :

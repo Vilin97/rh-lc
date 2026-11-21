@@ -294,65 +294,66 @@ theorem move_exists (hΛ : IsRowLat D F0 Λ) {t : TermsOf D u' F0 Λ} {Z₁ Z₂
     (r'' : TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F'') :
     ∃ F3 ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 Λ Z₂,
       TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F3 ∧ ∀ a, frame F3 a = n (rAct β (frame F'') a) := by
-  obtain ⟨p₁, e₁⟩ := r₁
-  obtain ⟨p'', e''⟩ := r''
-  obtain ⟨n'', hn'', m'', hm'', hfr'', -⟩ :=
-    (Formalism.L2.SG.Closed.TermEqIff_holds D u u' F0 Λ hΛ ⟨F₁, p₁⟩ ⟨F'', p''⟩).1 (e₁.trans e''.symm)
-  have hgA : IsAutLam (VS D) Λ (n * n'' * (m'' * m)) :=
-    Formalism.L2.SG.Pf.isAutLam_mul (Formalism.L2.SG.Pf.isAutLam_mul hn.1 hn''.1)
-      (Formalism.L2.SG.Pf.isAutLam_mul hm''.1 hm.1)
-  let F3 := Formalism.L2.SG.Saturated.mapL (n * n'' * (m'' * m)) hgA.1 F₁
-  have hf3 : ∀ a, frame F3 a = n (n'' (m'' (m (frame F₁ a)))) := fun a => by
-    rw [Formalism.L2.SG.Saturated.frame_mapL]; rfl
-  have hdc : DCRel Λ (lf D F0) F₁ F3 :=
-    ⟨n * n'', Formalism.L2.SG.Pf.nlamPf_mul hn hn'', m'' * m, Formalism.L2.SG.Pf.nlamPf_mul hm'' hm,
-      fun a => by rw [hf3 a]; rfl, rfl⟩
-  have hframe : ∀ a, frame F3 a = n (rAct β (frame F'') a) := fun a => by
-    rw [hf3 a, hβ a]
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp only [rAct, map_sum, map_smul, hfr'']
-  have pd3 : PD D Λ (lf D F0) u' F3 :=
-    Formalism.L2.SG.Closed.TermStable_holds D u u' F0 Λ hΛ ⟨F₁, p₁⟩ F3 hdc
-  have hrep : TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F3 :=
-    ⟨pd3, (Quot.sound (show TermDef.Rel Λ (lf D F0) (PD D Λ (lf D F0) u') ⟨F₁, p₁⟩ ⟨F3, pd3⟩ from hdc)).symm.trans e₁⟩
-  have hF₂ : ∀ a, frame F₂ a = n (rAct β (frame F₁) a) := fun a => by rw [hfr a, hβ a]; rfl
-  have hent : ∀ a b, (VS D).hT (frame (lf D F0) a) (frame F3 b) = (VS D).hT (frame (lf D F0) a) (frame F₂ b) := by
-    intro a b
-    have hZ : ∀ e d, (VS D).hT (frame (lf D F0) e) (frame F'' d) =
-        (VS D).hT (frame (lf D F0) e) (frame F₁ d) := by
-      intro e d
-      have := congrArg (fun M : PairVal.MatR D => M e d) (h''.2.2.2.2.trans h₁.2.2.2.2.symm)
-      simpa [ZhatL, Zhat, brS] using this
-    rw [hframe b, hF₂ b]
-    exact zhat_move (lf D F0) hn β hZ a b
-  have hent : ∀ a b, (VS D).hT (frame (lf D F0) a) (frame F3 b) =
-      (VS D).hT (frame (lf D F0) a) (frame F₂ b) := by
-    intro a b
-    have hZ : ∀ e d, (VS D).hT (frame (lf D F0) e) (frame F'' d) =
-        (VS D).hT (frame (lf D F0) e) (frame F₁ d) := by
-      intro e d
-      have := congrArg (fun M : PairVal.MatR D => M e d) (h''.2.2.2.2.trans h₁.2.2.2.2.symm)
-      simpa [ZhatL, Zhat, brS] using this
-    rw [hframe b, hF₂ b]
-    exact zhat_move (lf D F0) hn β hZ a b
-  refine ⟨F3, ⟨⟨pd3.1, pd3.2.1, ?_⟩, ?_, ?_, pd3.2.2, ?_⟩, hrep, hframe⟩
-  · rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hdc]; exact h₁.1.2.2
-  · refine ⟨fun a b hab => Matrix.one_apply_ne (ne_of_lt hab).symm, fun a => Matrix.one_apply_eq a, fun b => ?_⟩
-    rw [frameAct_one']
-    have hk : ∀ c, (n'' * m'') (frame F₁ c) = frame F'' c := fun c => by
-      rw [hfr'' c]; rfl
-    have e3 : frame F3 b = n ((n'' * m'') (m (frame F₁ b))) := by rw [hf3 b]; rfl
-    rw [e3]
-    refine modG_move h₁.1.1 h₁.2.2.2.1.1 hn.1 hm hk (fun c => ?_) (fun c => ?_) (fun c => ?_) hfr b
-    · have := h₁.2.1.2.2 c; rwa [frameAct_one'] at this
-    · have := h''.2.1.2.2 c; rwa [frameAct_one'] at this
-    · have := h₂.2.1.2.2 c; rwa [frameAct_one'] at this
-  · exact ((Formalism.L2.SG.Closed.TermFun_holds D u u' F0 Λ hΛ).2.2.2.1 ⟨F₁, p₁⟩ ⟨F3, pd3⟩ hdc).1 h₁.2.2.1
-  · have hZZ : ZhatL (lf D F0) F3 = ZhatL (lf D F0) F₂ := by
-      funext a b
-      exact hent a b
-    rw [← h₂.2.2.2.2]
-    exact hZZ
+  set_option backward.isDefEq.respectTransparency false in
+    obtain ⟨p₁, e₁⟩ := r₁
+    obtain ⟨p'', e''⟩ := r''
+    obtain ⟨n'', hn'', m'', hm'', hfr'', -⟩ :=
+      (Formalism.L2.SG.Closed.TermEqIff_holds D u u' F0 Λ hΛ ⟨F₁, p₁⟩ ⟨F'', p''⟩).1 (e₁.trans e''.symm)
+    have hgA : IsAutLam (VS D) Λ (n * n'' * (m'' * m)) :=
+      Formalism.L2.SG.Pf.isAutLam_mul (Formalism.L2.SG.Pf.isAutLam_mul hn.1 hn''.1)
+        (Formalism.L2.SG.Pf.isAutLam_mul hm''.1 hm.1)
+    let F3 := Formalism.L2.SG.Saturated.mapL (n * n'' * (m'' * m)) hgA.1 F₁
+    have hf3 : ∀ a, frame F3 a = n (n'' (m'' (m (frame F₁ a)))) := fun a => by
+      rw [Formalism.L2.SG.Saturated.frame_mapL]; rfl
+    have hdc : DCRel Λ (lf D F0) F₁ F3 :=
+      ⟨n * n'', Formalism.L2.SG.Pf.nlamPf_mul hn hn'', m'' * m, Formalism.L2.SG.Pf.nlamPf_mul hm'' hm,
+        fun a => by rw [hf3 a]; rfl, rfl⟩
+    have hframe : ∀ a, frame F3 a = n (rAct β (frame F'') a) := fun a => by
+      rw [hf3 a, hβ a]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [rAct, map_sum, map_smul, hfr'']
+    have pd3 : PD D Λ (lf D F0) u' F3 :=
+      Formalism.L2.SG.Closed.TermStable_holds D u u' F0 Λ hΛ ⟨F₁, p₁⟩ F3 hdc
+    have hrep : TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F3 :=
+      ⟨pd3, (Quot.sound (show TermDef.Rel Λ (lf D F0) (PD D Λ (lf D F0) u') ⟨F₁, p₁⟩ ⟨F3, pd3⟩ from hdc)).symm.trans e₁⟩
+    have hF₂ : ∀ a, frame F₂ a = n (rAct β (frame F₁) a) := fun a => by rw [hfr a, hβ a]; rfl
+    have hent : ∀ a b, (VS D).hT (frame (lf D F0) a) (frame F3 b) = (VS D).hT (frame (lf D F0) a) (frame F₂ b) := by
+      intro a b
+      have hZ : ∀ e d, (VS D).hT (frame (lf D F0) e) (frame F'' d) =
+          (VS D).hT (frame (lf D F0) e) (frame F₁ d) := by
+        intro e d
+        have := congrArg (fun M : PairVal.MatR D => M e d) (h''.2.2.2.2.trans h₁.2.2.2.2.symm)
+        simpa [ZhatL, Zhat, brS, frame, lf] using this
+      rw [hframe b, hF₂ b]
+      exact zhat_move (lf D F0) hn β hZ a b
+    have hent : ∀ a b, (VS D).hT (frame (lf D F0) a) (frame F3 b) =
+        (VS D).hT (frame (lf D F0) a) (frame F₂ b) := by
+      intro a b
+      have hZ : ∀ e d, (VS D).hT (frame (lf D F0) e) (frame F'' d) =
+          (VS D).hT (frame (lf D F0) e) (frame F₁ d) := by
+        intro e d
+        have := congrArg (fun M : PairVal.MatR D => M e d) (h''.2.2.2.2.trans h₁.2.2.2.2.symm)
+        simpa [ZhatL, Zhat, brS, frame, lf] using this
+      rw [hframe b, hF₂ b]
+      exact zhat_move (lf D F0) hn β hZ a b
+    refine ⟨F3, ⟨⟨pd3.1, pd3.2.1, ?_⟩, ?_, ?_, pd3.2.2, ?_⟩, hrep, hframe⟩
+    · rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hdc]; exact h₁.1.2.2
+    · refine ⟨fun a b hab => Matrix.one_apply_ne (ne_of_lt hab).symm, fun a => Matrix.one_apply_eq a, fun b => ?_⟩
+      rw [frameAct_one']
+      have hk : ∀ c, (n'' * m'') (frame F₁ c) = frame F'' c := fun c => by
+        rw [hfr'' c]; rfl
+      have e3 : frame F3 b = n ((n'' * m'') (m (frame F₁ b))) := by rw [hf3 b]; rfl
+      rw [e3]
+      refine modG_move h₁.1.1 h₁.2.2.2.1.1 hn.1 hm hk (fun c => ?_) (fun c => ?_) (fun c => ?_) hfr b
+      · have := h₁.2.1.2.2 c; rwa [frameAct_one'] at this
+      · have := h''.2.1.2.2 c; rwa [frameAct_one'] at this
+      · have := h₂.2.1.2.2 c; rwa [frameAct_one'] at this
+    · exact ((Formalism.L2.SG.Closed.TermFun_holds D u u' F0 Λ hΛ).2.2.2.1 ⟨F₁, p₁⟩ ⟨F3, pd3⟩ hdc).1 h₁.2.2.1
+    · have hZZ : ZhatL (lf D F0) F3 = ZhatL (lf D F0) F₂ := by
+        funext a b
+        exact hent a b
+      rw [← h₂.2.2.2.2]
+      exact hZZ
 
 theorem orb_le (hΛ : IsRowLat D F0 Λ) {t : TermsOf D u' F0 Λ} {Z₁ Z₂ : PairVal.MatR D}
     {F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)}
@@ -432,7 +433,9 @@ theorem orbZT_holds (M : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D,
   have hdc := (Formalism.L2.SG.Closed.TermEqIff_holds D u u' F0 γ.lam hΛ ⟨F₁, p₁⟩ ⟨_, p₂⟩).1 (e₁.trans e₂.symm)
   have h₂ : hex.choose.2.1 ∈ CntLocal.EZ (D := D) ((Tu D u' : ℕ) : D.host.E) F0 γ.lam
       (ZhatL (lf D F0) hex.choose.2.1) :=
-    ⟨⟨p₂.1, p₂.2.1, by rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hdc]; exact h₁.1.2.2⟩, hadm,
+    ⟨⟨p₂.1, p₂.2.1, by
+        set_option backward.isDefEq.respectTransparency false in
+          rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hdc]; exact h₁.1.2.2⟩, hadm,
       ((Formalism.L2.SG.Closed.TermFun_holds D u u' F0 γ.lam hΛ).2.2.2.1 ⟨F₁, p₁⟩ ⟨_, p₂⟩ hdc).1 h₁.2.2.1, p₂.2.2, rfl⟩
   rw [hz]
   exact orb_eq hΛ h₂ h₁ ⟨p₂, e₂⟩ ⟨p₁, e₁⟩

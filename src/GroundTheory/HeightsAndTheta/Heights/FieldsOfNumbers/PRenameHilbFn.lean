@@ -29,6 +29,8 @@ theorem RenameHilbFn.proof : RenameHilbFn.Statement.{u} := by
   rw [map_comap_renameEquiv σ P] at h
   rw [h]
   congr 1
+  funext s
+  simp
 
 end
 

@@ -96,7 +96,7 @@ theorem UpperTheory.V.Fr.ufacts :
     intro B' hB'
     obtain ⟨c, hc⟩ := hG.l_dvd
     have := (pb3 B' l c).2 (Or.inl hB')
-    simpa [ML.Over, hc] using this
+    simpa only [ML.Over, hc] using this
   have hσom : omO Ω l O σ = -1 := uf_om l (uf_cc l hG.cc)
   have hσb := hG.even
   have hneg : (-1 : (ResidueField O)ˣ) ≠ 1 := uf_neg l hG.odd
@@ -132,7 +132,7 @@ theorem UpperTheory.V.Fr.ufacts :
       have hno : ∀ e : ℕ, ¬ ML.Over B' (M ^ e) := by
         intro e
         induction e with
-        | zero => simp [ML.Over]
+        | zero => simp only [pow_zero, ML.Over, Nat.cast_one, map_one, lt_self_iff_false, not_false_eq_true]
         | succ e ih =>
           rw [pow_succ, pb3]
           rintro (h | h)

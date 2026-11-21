@@ -73,7 +73,7 @@ theorem dual_cob_on_line : GlobalTheory.Mem.LiteralAutomorphy.LitCoh → ∀ (l 
     TDual.mk (LinearMap.comp (show Mn c n →ₗ[ZMod (l ^ n)] ZMod (l ^ n) from φ) ι)
   have hψ : (fun s => r (f.1 s)) ∈ Z1 ((twDual χ (rhoL c n W hint B hB)).comp (MonoidHom.id _)) := by
     refine ⟨(continuous_of_discreteTopology (f := r)).comp f.2.1, fun g h => ?_⟩
-    refine TDual.ext fun u => ?_
+    refine DFunLike.ext _ _ fun u => ?_
     have e : f.1 (g * h) (Pi.single 0 u) = f.1 g (Pi.single 0 u) +
         ((μ (locHom (S : Set Pl) B g) : (ZMod (l ^ n))ˣ) : ZMod (l ^ n)) *
           f.1 h (rhoS c n W hint S hN (locHom (S : Set Pl) B g)⁻¹ (Pi.single 0 u)) := by

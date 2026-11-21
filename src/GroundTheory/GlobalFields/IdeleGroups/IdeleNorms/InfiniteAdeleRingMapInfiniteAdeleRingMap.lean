@@ -58,7 +58,11 @@ theorem algebraMap_completion_algebraMap (v : InfinitePlace K) (w : InfinitePlac
       (continuous_algebraMap v.Completion w.Completion))
     (continuous_algebraMap v.Completion u.Completion) (funext fun y ↦ ?_)
   · exact congrFun h a
-  · change algebraMap w.Completion u.Completion
+  · simp only [Function.comp_apply]
+    have hy : (y : v.Completion) = algebraMap K v.Completion y.ofAbs := by
+      simp [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]
+    rw [hy]
+    change algebraMap w.Completion u.Completion
         (algebraMap v.Completion w.Completion (algebraMap K v.Completion y.ofAbs)) =
       algebraMap v.Completion u.Completion (algebraMap K v.Completion y.ofAbs)
     rw [← IsScalarTower.algebraMap_apply K v.Completion w.Completion,

@@ -16,6 +16,8 @@ open CategoryTheory NumberField IsDedekindDomain GroundTheory.Global
 
 open scoped NumberField.LiesOver
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section GalConj
 
 variable {Kv Ew Ωv ΩE : Type*} [Field Kv] [Field Ew] [Field Ωv] [Field ΩE] [Algebra Kv Ew] [Algebra Kv Ωv]

@@ -90,7 +90,6 @@ theorem range_finite {La Q : Type} [AddCommGroup La] [Module.Finite ℤ La] [Com
     (hf : ∀ a b, f (a + b) = f a * f b) (n : ℕ) (hn : 0 < n) (hk : ∀ a, f (n • a) = 1) : (Set.range f).Finite := by
   let φ : Multiplicative La →* Q := MonoidHom.mk' (fun a => f a.toAdd) (fun a b => hf _ _)
   haveI : Group.FG (Multiplicative La) := AddGroup.fg_iff_mul_fg.1 (Module.Finite.iff_addGroup_fg.1 ‹_›)
-  haveI := Group.fg_range φ
   have hpow : ∀ a : Multiplicative La, φ a ^ n = 1 := fun a => by
     rw [← map_pow]; exact hk a.toAdd
   haveI : Finite φ.range := CommGroup.finite_of_fg_isMulTorsion _ (fun y => by

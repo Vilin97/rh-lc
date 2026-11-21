@@ -123,7 +123,8 @@ theorem apply_eq_of_valuation_sub_lt_one (hl : (l : 𝓀[K]) ≠ 0)
   have hy : y ^ l = 1 := Subtype.ext (by simpa [y] using hb)
   have hres : residue 𝒪[fixedField (V : Subgroup Gal(Ksep/K))] y =
       residue 𝒪[fixedField (V : Subgroup Gal(Ksep/K))] x := by
-    rw [← sub_eq_zero, ← map_sub, residue_eq_zero_iff, IsLocalRing.mem_maximalIdeal,
+    rw [← sub_eq_zero, ← (residue 𝒪[fixedField (V : Subgroup Gal(Ksep/K))]).map_sub,
+      residue_eq_zero_iff, IsLocalRing.mem_maximalIdeal,
       mem_nonunits_iff]
     intro hu
     have h1 := valuation_unit hu.unit

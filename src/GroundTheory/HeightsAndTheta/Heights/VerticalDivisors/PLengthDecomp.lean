@@ -120,7 +120,7 @@ theorem finite_maximalSpectrum [IsLocalRing R] [Module.Finite R B] :
   have := hfin.to_subtype
   refine Finite.of_injective (β := (maximalIdeal R).primesOver B)
     (fun n => ⟨n.asIdeal, n.isMaximal.isPrime, ⟨(IsLocalRing.eq_maximalIdeal
-      (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) n.asIdeal)).symm⟩⟩) ?_
+      (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := R) n.asIdeal)).symm⟩⟩) ?_
   intro n n' hnn'
   exact MaximalSpectrum.ext (congrArg Subtype.val hnn')
 

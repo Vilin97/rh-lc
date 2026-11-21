@@ -14,7 +14,7 @@ open Formalism.FourierDecayAlt Finset
 
 lemma prod_le_pow_of_le {s : Finset ℕ} {f : ℕ → ℝ} {B : ℝ} (h0 : ∀ i ∈ s, 0 ≤ f i)
     (h : ∀ i ∈ s, f i ≤ B) : ∏ i ∈ s, f i ≤ B ^ s.card := by
-  calc ∏ i ∈ s, f i ≤ ∏ _i ∈ s, B := Finset.prod_le_prod h0 h
+  calc ∏ i ∈ s, f i ≤ ∏ _i ∈ s, B := Finset.prod_le_prod₀ h0 h
     _ = B ^ s.card := Finset.prod_const B
 
 lemma one_le_prod_of_le {s : Finset ℕ} {f : ℕ → ℝ} (h : ∀ i ∈ s, 1 ≤ f i) : 1 ≤ ∏ i ∈ s, f i := by

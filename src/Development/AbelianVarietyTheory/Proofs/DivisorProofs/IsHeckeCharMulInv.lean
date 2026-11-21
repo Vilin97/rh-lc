@@ -20,7 +20,6 @@ namespace GlobalTheory.TwistFactorProof
 
 open NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.L2.Theta Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Pj Formalism.IndefR.Links Formalism.IndefR.Datum Formalism.IndefR.FWT
-open GlobalTheory.IndefiniteRowSideFullHecke.WeilTwistColumns
 open scoped TensorProduct
 
 def WeilUnique (D : D7) : Prop :=

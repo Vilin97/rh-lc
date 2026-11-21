@@ -72,7 +72,7 @@ theorem hasDirichletDensity_of_isBoundedUnder_abs_sub {S : Set (HeightOneSpectru
     (h : IsBoundedUnder (· ≤ ·) (𝓝[>] 1) fun s ↦
       |S.primeIdealZetaSum s - δ * (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s|) :
     S.HasDirichletDensity δ := by
-  have hZ := tendsto_primeIdealZetaSum_univ_atTop K
+  have hZ := GroundTheory.Global.tendsto_primeIdealZetaSum_univ_atTop (K := K)
   have h0 : Tendsto (fun s ↦ ((univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s)⁻¹ *
       (S.primeIdealZetaSum s - δ * (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s))
       (𝓝[>] 1) (𝓝 0) :=
@@ -80,7 +80,7 @@ theorem hasDirichletDensity_of_isBoundedUnder_abs_sub {S : Set (HeightOneSpectru
       (by simpa only [Function.comp_def, Real.norm_eq_abs] using h)
   have h1 := h0.const_add δ
   rw [add_zero] at h1
-  unfold Set.HasDirichletDensity
+  unfold NumberField.Set.HasDirichletDensity
   refine h1.congr' ?_
   filter_upwards [hZ.eventually_gt_atTop 0] with s hs
   field_simp
@@ -115,9 +115,11 @@ theorem coeff_classChar {v : HeightOneSpectrum (𝓞 K)} (hv : v ∉ ramifiedPri
     (φ : AddChar (Additive G) ℂ) :
     (classChar q hq hK φ).coeff v.asIdeal = φ (Additive.ofMul (uniformizerClass q v)) := by
   have hv' : ¬ v.asIdeal ∣ (classChar q hq hK φ).conductor := fun h ↦ hv ⟨φ, h⟩
-  rw [(classChar q hq hK φ).coeff_asIdeal_eq_toIdele hv' (exists_uniformizer v).choose_spec,
-    classChar_toIdele]
-  rfl
+  calc
+    (classChar q hq hK φ).coeff v.asIdeal =
+        ((classChar q hq hK φ).toIdele (finiteEmbedding v (exists_uniformizer v).choose) : ℂ) :=
+      (classChar q hq hK φ).coeff_asIdeal_eq_toIdele hv' (exists_uniformizer v).choose_spec
+    _ = φ (Additive.ofMul (uniformizerClass q v)) := classChar_toIdele q hq hK φ _
 
 theorem map_finiteEmbedding_eq_uniformizerClass {v : HeightOneSpectrum (𝓞 K)}
     (hv : v ∉ ramifiedPrimes q hq hK) {π : (v.adicCompletion K)ˣ}

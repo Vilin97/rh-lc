@@ -98,7 +98,9 @@ theorem ArithmeticIntersectionCycle.proof (hHor : ArithmeticIntersectionHorizont
     intro W hW
     have h := hPush K ι K' ι' κ v P' n G J s α W E hv hP' hP hJ hs hsP (hfin.mem_toFinset.1 hW)
       (fun W' hW' _ => hE W' hW'.1.isPrime)
-    rw [finsum_mem_eq_finite_toFinset_sum _ (hfin'.subset fun x hx => hx.1)] at h
+    have hfiber : {W' | W' ∈ divSupp P' (rename v s) ∧ imageZ v W' = W}.Finite :=
+      hfin'.subset (fun _ hx => hx.1)
+    rw [finsum_mem_eq_finite_toFinset_sum _ hfiber] at h
     rw [← h]
     refine Finset.sum_congr ?_ fun _ _ => rfl
     ext W'

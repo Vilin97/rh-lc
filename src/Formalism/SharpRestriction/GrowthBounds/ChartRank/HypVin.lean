@@ -83,9 +83,17 @@ theorem valIntN_of (S : StepIn M i hi G) (e : D.what₂.LL →+* G.Kf) (w : D.wh
   have hpw := (L β).resChar
   subst hpw
   have : Fact (D.what₂.places.resChar w).Prime := ⟨D.what₂.places.resChar_prime w⟩
+  have hblk : BlockRational G.P (S.loc β).rk S.pos (gramC (gramN D i hi) (embT D))
+      (crdB (embT D) (S.loc β).B) D.what₂.embLL (M.lam i) := by
+    refine hS G.P (S.loc β).rk S.pos _ _ D.what₂.embLL (M.lam i) (H β).wt fun τ => ⟨bc (tEL D τ) ((S.loc β).B)⁻¹, ?_⟩
+    ext a b
+    exact (tEL_emb D τ _).symm
   exact valIntAt_of (S := (S.K β).lev) (emb := embT D) (embLL := D.what₂.embLL) (G := S.charts.gat β)
     (e := e) (A := S.loc β) (pos := S.pos) (embV := S.embN β) (yc := (S.K β).y) weylLatticeDescent_holds hfrac (tEL D) (tEL_emb D)
-    (intW D.what₂.places w) hR0 (M.lam i) (H β).wt ((H β).toHyp hS).ex
+    (intW D.what₂.places w) hR0 (M.lam i) (H β).wt (valEx_of_rep' (tEL D) (tEL_emb D) (embT_conj D) (H β).std (S.adExt β)
+      (ptEx_of (H β).good (S.K β).lev (S.K β).y (S.K β).y_bij.2)
+      (ptOne_of (S.K β).lev (H β).int (H β).hypP (H β).bad_p)
+      (S.evRatRep β (H β).chRat hblk) (H β).chiRat)
     (fun cl B' => IsLocBasis (D.what₂.places.resChar w)
       (dualSet (sigD D : D.host.E →+* D.host.E) (gramN D i hi) (S.lat cl.1)) B')
     (fun cl => exB_of_lat hi (D.what₂.places.resChar w) (S.lat cl.1) ((L β).lat cl))

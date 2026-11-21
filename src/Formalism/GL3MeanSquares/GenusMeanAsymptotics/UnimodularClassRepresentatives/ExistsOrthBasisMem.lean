@@ -107,7 +107,7 @@ theorem prod_place_gdet (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {h 
 theorem isLattice_span [FiniteDimensional K V] (b : Basis (Fin (finrank K V)) K V) :
     Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range b)) where
   fg := ⟨(Set.finite_range b).toFinset, by rw [Set.Finite.coe_toFinset]⟩
-  span_eq_top := by
+  linearIndepOn := by
     intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end Formalism.HermitianLattices.Ext.L3.BallB

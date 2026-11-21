@@ -13,7 +13,7 @@ namespace GroundTheory.ProfCoh
 open CategoryTheory NumberField IntermediateField IsDedekindDomain GroundTheory.Global
   GroundTheory.Global.AdeleBaseChange FiniteSubfield IdeleLimit SemiLocal
 
-open scoped Pointwise NumberField.LiesOver
+open scoped Pointwise
 
 noncomputable section
 
@@ -134,21 +134,22 @@ theorem coe_infDecompRestrict (σ : MulAction.stabilizer (E.1 ≃ₐ[K.1] E.1) w
 
 theorem infCompletionMap_decomposition_smul (σ : MulAction.stabilizer (E.1 ≃ₐ[K.1] E.1) w'.1)
     (a : w.1.Completion) :
-    NumberField.LiesOver.completionMap (infDecompRestrict (w := w) σ • a) =
-      σ • NumberField.LiesOver.completionMap (v := w.1) (w := w'.1) a := by
-  have := (InfinitePlace.Completion.denseRange_coe w.1).equalizer
-    ((NumberField.LiesOver.continuous_completionMap (v := w.1) (w := w'.1)).comp
+    AbsoluteValue.Completion.map w.1.1 w'.1.1 (infDecompRestrict (w := w) σ • a) =
+      σ • AbsoluteValue.Completion.map w.1.1 w'.1.1 a := by
+  have := (AbsoluteValue.Completion.denseRange_coe w.1.1).equalizer
+    ((AbsoluteValue.Completion.continuous_map w.1.1 w'.1.1).comp
       (continuous_completionRingHomOf (infDecompRestrict (w := w) σ).2))
     ((continuous_completionRingHomOf σ.2).comp
-      (NumberField.LiesOver.continuous_completionMap (v := w.1) (w := w'.1)))
+      (AbsoluteValue.Completion.continuous_map w.1.1 w'.1.1))
     (funext fun y => by
       simp only [Function.comp_apply]
-      rw [completionRingHomOf_coe, NumberField.LiesOver.completionMap_coe,
-        NumberField.LiesOver.completionMap_coe, completionRingHomOf_coe]
-      refine congrArg (fun z : WithAbs (w'.1 : InfinitePlace E.1).1 => (z : w'.1.Completion))
+      rw [completionRingHomOf_coe, AbsoluteValue.Completion.map_coe,
+        AbsoluteValue.Completion.map_coe, completionRingHomOf_coe]
+      refine congrArg (fun z : WithAbs w'.1.1 => (z : w'.1.Completion))
         (WithAbs.ofAbs_injective _ ?_)
-      rw [ofAbs_withAbsMapOf, WithAbs.ofAbs_algebraMap, WithAbs.ofAbs_algebraMap, ofAbs_withAbsMapOf,
-        coe_infDecompRestrict, coe_levelRestrict_apply])
+      change algebraMap F.1 E.1 ((infDecompRestrict (w := w) σ : F.1 ≃ₐ[K.1] F.1) y.ofAbs) =
+        (σ : E.1 ≃ₐ[K.1] E.1) (algebraMap F.1 E.1 y.ofAbs)
+      rw [coe_infDecompRestrict, coe_levelRestrict_apply])
   exact congrFun this a
 
 
@@ -157,8 +158,8 @@ def infCompletionUnitsRep :
     Rep.res (infDecompRestrict (w := w) (w' := w'))
         (Rep.ofMulDistribMulAction (MulAction.stabilizer (F.1 ≃ₐ[K.1] F.1) w.1) (w.1.Completion)ˣ) ⟶
       Rep.ofMulDistribMulAction (MulAction.stabilizer (E.1 ≃ₐ[K.1] E.1) w'.1) (w'.1.Completion)ˣ :=
-  Rep.ofHom ⟨(MonoidHom.toAdditive (Units.map (NumberField.LiesOver.completionMap (v := w.1)
-      (w := w'.1) : w.1.Completion →* w'.1.Completion))).toIntLinearMap,
+  Rep.ofHom ⟨(MonoidHom.toAdditive (Units.map (AbsoluteValue.Completion.map w.1.1 w'.1.1 :
+      w.1.Completion →* w'.1.Completion))).toIntLinearMap,
     fun σ => LinearMap.ext fun a => congrArg Additive.ofMul (Units.ext
       (infCompletionMap_decomposition_smul w w' σ
         (Additive.toMul (α := (w.1.Completion)ˣ) a : w.1.Completion)))⟩

@@ -54,6 +54,8 @@ theorem rowV_add (x y : (VS D).V) : rowV X u (x + y) = rowV X u x + rowV X u y :
     unfold rv
     rw [← Matrix.mulVec_add]
     congr 1
+    funext i
+    simp only [Pi.add_apply, map_add]
   simp only [rowV, Pi.add_apply, hc, hr]
   split_ifs <;> exact hJ_add_l _ _ _ _
 

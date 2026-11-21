@@ -113,7 +113,8 @@ theorem ChowSecDvd.proof (h₁ : IncidenceNull.Statement) : ChowSecDvd.Statement
       rcases v with j | ⟨i, j⟩
       · simp [hφ, hψ, vφ, vψ]
       · refine Fin.cases ?_ (fun i => ?_) i
-        · simp [hφ, hψ, vφ, vψ, hπθ]
+        · set_option synthInstance.maxHeartbeats 100000 in
+            simp [hφ, hψ, vφ, vψ, hπθ]
         · simp [hφ, hψ, vφ, vψ]
   have hspec : ψ (rename Sum.inr g) =
       (specRest (algebraMap k E) g y).map (algebraMap E (SecAlg QE y)) := by

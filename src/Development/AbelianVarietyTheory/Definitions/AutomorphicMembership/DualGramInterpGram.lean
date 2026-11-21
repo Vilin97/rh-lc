@@ -97,7 +97,7 @@ namespace EigFrame
 variable {R R' : Type} [CommRing R] [CommRing R'] {φ : c.F →+* R} {x : Sp R ⟶ Z.X} {φ' : c.F →+* R'} {x' : Sp R' ⟶ Z.X}
 
 def IsMap (f : EigFrame Z φ x) (ψ : R →+* R') (f' : EigFrame Z φ' x') : Prop :=
-  ∀ τ i, f'.v τ i = spMap (dualMap ψ) ≫ f.v τ i
+  ∀ τ i, f'.v τ i = spMap (Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i
 
 theorem exists_isMap (f : EigFrame Z φ x) (ψ : R →+* R') (hφ : φ' = ψ.comp φ) (hx : x' = spMap ψ ≫ x) :
     ∃ f' : EigFrame Z φ' x', f.IsMap ψ f' := by

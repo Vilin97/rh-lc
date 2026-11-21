@@ -46,6 +46,7 @@ theorem latAtV_selfDual_locCo : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     have := GlobalTheory.LatVac.symp_smul_smul σ ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) (-1) u 1 z γ
     rw [hzat u hu, one_smul, mul_one, GlobalTheory.LatVacArith.symp_zero_left] at this
     exact this.symm
+  change B.ψ (symp (R := AF F) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) z γ) = 1
   rw [GlobalTheory.VacIndic.psi_of_at _ hat, co.form, hez]
   have h := hw (-γ) (neg_mem hγ)
   rw [GlobalTheory.LatVac.psiAt_apply] at h

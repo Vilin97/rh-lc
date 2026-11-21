@@ -84,8 +84,7 @@ theorem sand_exps [Nontrivial O] (E : EtTie W RA RW inclR φR gR πA)
     rw [← E.jD_span T, Submodule.span_le]
     rintro _ ⟨y, rfl⟩
     refine (W.N_base T hT).inductionOn y
-      (fun y => E.jD T y ∈ Submodule.span RW (Set.range fun i => E.jD T (b i : W.DD T))) ?_ ?_ ?_ ?_
-    · rw [map_zero]; exact Submodule.zero_mem _
+      (motive := fun y => E.jD T y ∈ Submodule.span RW (Set.range fun i => E.jD T (b i : W.DD T))) ?_ ?_ ?_
     · intro z
       obtain ⟨c, hc⟩ := hexp z.1 z.2
       change E.jD T z.1 ∈ _

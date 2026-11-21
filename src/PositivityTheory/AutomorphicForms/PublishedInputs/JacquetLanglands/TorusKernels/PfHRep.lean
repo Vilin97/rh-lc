@@ -177,7 +177,8 @@ theorem sat_two {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Representation 
       h.2.2.2 _ (unif_spec w) 1 (by norm_num)]
     congr 1
     rw [Complex.ofReal_cpow (by positivity)]
-    have : qV F w = normV w := rfl
+    have : qV F w = normV w := by
+      simp [normV, qV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
     simp [satEig, Multiset.esymm, Multiset.powersetCard_one, this]
     norm_num [add_comm]
   · have h2 := h.2.2.2 _ (unif_spec w) 2 le_rfl

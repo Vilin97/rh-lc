@@ -17,14 +17,17 @@ open Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.Fourier
 theorem isHaarOn_smul_of {k r : ℕ} {U : Set (Mat k r)} {μ : Measure (Mt k r)} (hμ : IsHaarOn U μ)
     {c : ℝ≥0∞} (hc0 : c ≠ 0) (hct : c ≠ ∞) : IsHaarOn U (c • μ) where
   conc := by rw [smul_apply, hμ.conc, smul_zero]
-  left a ha := by
+  left := by
+    intro a ha
     have hcont : Continuous (lmulM (k := k) (r := r) a) :=
       continuous_const.matrix_mul continuous_id
     rw [Measure.map_smul c hcont.measurable.aemeasurable, hμ.left a ha]
-  right a ha := by
+  right := by
+    intro a ha
     have hcont : Continuous (rmulF a) := continuous_id.matrix_mul continuous_const
     rw [Measure.map_smul c hcont.measurable.aemeasurable, hμ.right a ha]
-  finite_compact K hK := by
+  finite_compact := by
+    intro K hK
     rw [smul_apply, smul_eq_mul]
     exact ENNReal.mul_lt_top (lt_top_iff_ne_top.2 hct) (hμ.finite_compact K hK)
   ne_zero := by

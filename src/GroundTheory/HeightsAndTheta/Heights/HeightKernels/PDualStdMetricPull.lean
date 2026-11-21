@@ -24,6 +24,7 @@ theorem linApply_eq (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (z : (Σ _ : Unit, T) → ℂ) (j : Fin i) :
     linApply (ι₂ := PBlk i) (dualStdCoordMat b) z ⟨(), j⟩ =
       ∑ τ : K →+* ℂ, dualRecover b hb (fun t => z ⟨(), t⟩) (τ, j) := by
+  classical
   set W := dualRecover b hb (fun t => z ⟨(), t⟩)
   have hMW : dualEmbMatrix b *ᵥ W = fun t => z ⟨(), t⟩ :=
     (LinearEquiv.ofBijective _ hb).apply_symm_apply _

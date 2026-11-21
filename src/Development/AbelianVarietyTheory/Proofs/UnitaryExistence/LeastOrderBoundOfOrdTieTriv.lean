@@ -16,7 +16,7 @@ noncomputable section
 namespace GlobalTheory.TrivOrderTieCompare
 
 open AlgebraicGeometry CategoryTheory Limits NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.T0
-  Formalism.L2.Pj GlobalTheory.IndefiniteRowSideFullHecke.AgreementOfOrders
+  Formalism.L2.Pj
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}

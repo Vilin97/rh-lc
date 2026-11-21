@@ -54,7 +54,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SimilitudePa
 
 noncomputable section
 
-open NumberField IsDedekindDomain GlobalTheory.LKTrip GlobalTheory.CentTorus
+open NumberField IsDedekindDomain GlobalTheory.LKTrip
 open scoped TensorProduct
 
 namespace GlobalTheory.CentTorus.AdelicSplit

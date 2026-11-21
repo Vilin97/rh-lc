@@ -36,4 +36,5 @@ theorem UpperTheory.eisenstein_norm_eq_abs_pow :
   · refine (H.2.1 w).trans ?_
     rw [Complex.ofReal_cpow (Nat.cast_nonneg _)]
     push_cast
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
     rfl

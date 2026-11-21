@@ -184,12 +184,11 @@ theorem symLift_pull (hL : L.IsLB) {T T' : Over S} (σ : T' ⟶ T) {n : ℕ} {x 
     (hθ : SymLift A L k n x θ) (φ' : LB.Gen (thetaLB A L k (σ ≫ θ.pt))) (gφ' : φ'.IsGen)
     (hv : ∀ {Z : Scheme.{0}} (r : Z ⟶ (T' ⊗ A).left) (z : Z) {J : (Z ⟶ A.left) → L.ι}, Good L z J →
       val φ' r z J = val θ.φ (r ≫ (σ ▷ A).left) z J) :
-    SymLift A L k n (σ ≫ x) ⟨σ ≫ θ.pt, φ', gφ'⟩ where
-  pt_eq := by
-    show σ ≫ θ.pt = σ ≫ x
+    SymLift A L k n (σ ≫ x) ⟨σ ≫ θ.pt, φ', gφ'⟩ := by
+  refine ⟨?_, ?_, ?_⟩
+  · show σ ≫ θ.pt = σ ≫ x
     rw [hθ.pt_eq]
-  pow_eq := by
-    refine corr_of_val hL fun y J hJ => ?_
+  · refine corr_of_val hL fun y J hJ => ?_
     have c := val_corr hJ hθ.pow_eq (σ ▷ A).left
     rw [val_powGenT θ n _ y hJ, val_one] at c
     rw [val_powGenT _ n _ y hJ, val_one, ← c]
@@ -198,8 +197,7 @@ theorem symLift_pull (hL : L.IsLB) {T T' : Over S} (σ : T' ⟶ T) {n : ℕ} {x 
         (σ ▷ A).left ≫ (translT A (θ.pt ^ (j₀ : ℕ))).left := by
       rw [Category.id_comp, ← MonObj.comp_pow, ← Over.comp_left, ← Over.comp_left, transl_whisk]
     exact (hv _ y hJ).trans (by rw [m])
-  sym := by
-    obtain ⟨nu, gnu, cnu⟩ := hθ.sym
+  · obtain ⟨nu, gnu, cnu⟩ := hθ.sym
     have e1 : (σ ▷ A).left ≫ (snd T A).left = (snd T' A).left := by rw [← Over.comp_left, whisk_snd]
     have e2 : (σ ▷ A).left ≫ (snd T A ≫ (GrpObj.inv : A ⟶ A)).left = (snd T' A ≫ (GrpObj.inv : A ⟶ A)).left := by
       rw [← Over.comp_left, ← Category.assoc, whisk_snd]

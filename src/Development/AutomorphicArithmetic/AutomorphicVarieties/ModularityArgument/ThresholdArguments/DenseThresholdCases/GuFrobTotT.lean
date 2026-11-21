@@ -36,7 +36,7 @@ private theorem sumList_spec (g : Weil h) : ∀ (c : ℕ) (f : Fin c → WD h) (
   induction c with
   | zero =>
     intro f M _
-    have e : sumList (List.ofFn f) = WD.lpZero h := by simp [sumList]
+    have e : sumList (List.ofFn f) = WD.lpZero (h := h) := by simp [sumList]
     rw [e, WD.lpZero, WD.unr_mk, WD.charPol_mk, WDRep.diag_ρ, charpoly_diagEnd]
     exact ⟨WDRep.unr_diag _, by simp⟩
   | succ c ih =>

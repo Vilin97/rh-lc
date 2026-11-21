@@ -20,7 +20,7 @@ theorem det_submatrix_sign {R : Type*} [CommRing R] {j N : ℕ} (A : Matrix (Fin
     (hr : Set.range h = Set.range g) :
     ∃ s : ℤˣ, (A.submatrix id h).det = ((s : ℤ) : R) * (A.submatrix id g).det := by
   let σ : Equiv.Perm (Fin j) :=
-    (Equiv.ofInjective h hh).trans ((Equiv.setCongr hr).trans (Equiv.ofInjective g hg).symm)
+    (Equiv.ofInjective h hh).trans ((Equiv.subtypeEquivRight (fun x => by rw [hr])).trans (Equiv.ofInjective g hg).symm)
   have hσ : ∀ i, g (σ i) = h i := by
     intro i
     simp [σ, Equiv.apply_ofInjective_symm]
@@ -91,7 +91,7 @@ theorem GrassArithVar.proof (h : CoordConeArithVar.Statement) : GrassArithVar.St
     | C c =>
       rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
       exact IntermediateField.algebraMap_mem _ c
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul]
       exact mul_mem hp (IntermediateField.subset_adjoin _ _ ⟨e.symm i, by simp [t, φ]⟩)

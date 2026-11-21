@@ -104,7 +104,8 @@ theorem cycHerbrand_sIdeles (S : Set (HeightOneSpectrum (𝓞 K))) (hSf : S.Fini
   rw [key]
   refine mul_ne_zero (Finset.prod_ne_zero_iff.2 fun v _ ↦ ?_)
     (Finset.prod_ne_zero_iff.2 fun v _ ↦ ?_)
-  · exact Nat.cast_ne_zero.2 Module.finrank_pos.ne'
+  · exact Nat.cast_ne_zero.2 (GroundTheory.Global.InfinitePlace.finrank_completion_pos
+      (v := v) (wInf v).1).ne'
   · exact Nat.cast_ne_zero.2 Module.finrank_pos.ne'
 
 end IdeleGroup

@@ -144,8 +144,7 @@ theorem comp_eq {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I] {φ 
         Finset.univ_prod_mulSingle (fun w : InfinitePlace E => algebraMap E w.Completion (k : E))
       rw [Finset.prod_congr rfl fun w _ => (show ((infIdele E w (Formalism.L2.Host.atInf w k) : Neutral.B1.Ideles E) :
           NumberField.AdeleRing (NumberField.RingOfIntegers E) E) =
-          ι0 (Pi.mulSingle (M := fun w : InfinitePlace E => w.Completion) w (algebraMap E w.Completion (k : E))) from rfl),
-]
+          ι0 (Pi.mulSingle (M := fun w : InfinitePlace E => w.Completion) w (algebraMap E w.Completion (k : E))) from rfl)]
       exact (congrArg ι0 hprod.symm).trans (map_prod ι0 _ _)
     have hinf := hn k
     simp only [Formalism.L2.Host.HChar.inf, MonoidHom.coe_comp, Function.comp_apply] at hinf
@@ -163,13 +162,15 @@ theorem comp_eq {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I] {φ 
     rfl
   simp only [Ψ, Θ] at hz
   rw [hι] at hz
+  let a : ∀ w : InfinitePlace E, w.Completion :=
+    Pi.mulSingle (InfinitePlace.mk (φ i)) (z : (InfinitePlace.mk (φ i)).Completion)
+  change _ = ∏ j, (c j (a (InfinitePlace.mk (φ j))) /
+      ((‖c j (a (InfinitePlace.mk (φ j)))‖ : ℝ) : ℂ)) ^ n j at hz
   rw [hz, Finset.prod_eq_single i]
-  · simp [c]
+  · simp [a, c]
   · intro j _ hj
     have hw : InfinitePlace.mk (φ j) ≠ InfinitePlace.mk (φ i) := fun h => hj (hb.1 h)
-    simp only [Units.coe_map, MonoidHom.coe_mulSingle, MonoidHom.mulSingle_apply]
-    rw [Pi.mulSingle_eq_of_ne hw]
-    simp
+    simp [a, Pi.mulSingle_eq_of_ne hw]
   · intro h
     exact absurd (Finset.mem_univ i) h
 

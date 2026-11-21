@@ -225,7 +225,8 @@ theorem prod_norm_mul_finprod_norm {c : K} (hc : c ≠ 0) :
       ∏ᶠ v : HeightOneSpectrum (𝓞 K), ‖(c : v.adicCompletion K)‖ = 1 := by
   have h := GroundTheory.Global.IdeleGroup.ideleModule_diagonal (Units.mk0 c hc)
   rw [Subtype.ext_iff, GroundTheory.Global.IdeleGroup.ideleModule_eq] at h
-  exact h
+  simpa only [GroundTheory.Global.IdeleGroup.coe_diagonal, Units.val_mk0,
+    AdeleRing.algebraMap_fst_apply, AdeleRing.algebraMap_snd_apply, Positive.val_one] using h
 
 theorem one_le_adelicNorm_ratVec {x : Fin n → K} (hx : x ≠ 0) : 1 ≤ adelicNorm (ratVec x) := by
   classical
@@ -237,8 +238,9 @@ theorem one_le_adelicNorm_ratVec {x : Fin n → K} (hx : x ≠ 0) : 1 ≤ adelic
     Filter.eventually_cofinite.1 (eventually_norm_eq_one hi₀)
   refine mul_le_mul ?_ ?_ (finprod_nonneg fun _ => norm_nonneg _)
     (Finset.prod_nonneg fun _ _ => pow_nonneg (euclidNorm_nonneg _) _)
-  · exact Finset.prod_le_prod₀ (fun _ _ => pow_nonneg (norm_nonneg _) _) fun w _ =>
-      pow_le_pow_left₀ (norm_nonneg _) (norm_le_euclidNorm (infComp w (ratVec x)) i₀) _
+  · refine Finset.prod_le_prod₀ (fun _ _ => pow_nonneg (norm_nonneg _) _) fun w _ => ?_
+    simpa only [infComp, ratVec, AdeleRing.algebraMap_fst_apply] using
+      (pow_le_pow_left₀ (norm_nonneg _) (norm_le_euclidNorm (infComp w (ratVec x)) i₀) w.mult)
   · rw [finprod_eq_prod_of_mulSupport_subset _ (s := hfin'.toFinset ∪ hfin.toFinset)
       (fun v hv => Finset.mem_coe.2 (Finset.mem_union_left _ (hfin'.mem_toFinset.2 hv))),
       finprod_eq_prod_of_mulSupport_subset _ (s := hfin'.toFinset ∪ hfin.toFinset)

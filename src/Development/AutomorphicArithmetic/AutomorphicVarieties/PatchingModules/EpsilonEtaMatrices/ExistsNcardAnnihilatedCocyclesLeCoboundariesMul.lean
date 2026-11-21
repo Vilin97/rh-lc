@@ -335,7 +335,7 @@ private theorem dgPhi_nat (m : ℕ) (z : F.G₀ → Matrix (Fin n) (Fin n) (DD x
     simp only [AlgHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply]
     ext <;> simp
 
-private def dgB : Submodule x.A (F.G₀ → Matrix (Fin n) (Fin n) (DD x.A k.g)) where
+private noncomputable def dgB : Submodule x.A (F.G₀ → Matrix (Fin n) (Fin n) (DD x.A k.g)) where
   carrier := TwB k x.A
   add_mem' := by
     rintro _ _ ⟨Y, a1, a2, rfl⟩ ⟨Y', b1, b2, rfl⟩

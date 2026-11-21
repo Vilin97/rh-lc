@@ -32,7 +32,6 @@ theorem HermitianDetMono.one_le_det_one_add {n : ℕ} {M : Matrix (Fin n) (Fin n
   have key : ((1 : ℝ) : ℂ) ≤ ((∏ i, hH.eigenvalues i : ℝ) : ℂ) := Complex.real_le_real.mpr hprod
   convert key using 1
   · simp
-  · simp [Complex.ofReal_prod]
 
 theorem HermitianDetMono.proof : HermitianDetMono.Statement := by
   intro n A B hB hAB

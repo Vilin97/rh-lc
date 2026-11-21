@@ -74,8 +74,8 @@ theorem evC_cechD (n : ℕ) (w : CechC S ι (MRingOver S ι ⧸ mIdealOver S y) 
   funext I
   rw [evC_apply]
   by_cases hI : CellMeets y I.1
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [cechD_apply', map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [cechD_apply', map_sum]
     simp only [cellD, LinearMap.pi_apply, hI, if_true, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     set_option synthInstance.maxHeartbeats 100000 in

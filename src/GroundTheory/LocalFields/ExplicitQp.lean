@@ -23,6 +23,15 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 attribute [local instance] isDiscreteModule_units
 
+local instance explicitQp_isGalois_lubinTateField (n : ℕ) :
+    IsGalois K (lubinTateField Ω hπ hf n) := by
+  refine isGalois_iff.mpr ⟨inferInstance, normal_iff_forall_map_le'.mpr fun σ => ?_⟩
+  rw [lubinTateField, adjoin_map, adjoin_le_iff]
+  rintro _ ⟨_, ⟨x, hx, rfl⟩, rfl⟩
+  change σ x.val ∈ lubinTateField Ω hπ hf n
+  rw [← lubinTateGalPointMap_val hf σ x]
+  apply val_mem_lubinTateField hπ hf
+  rw [mem_lubinTateTorsion, ← map_smul, (mem_lubinTateTorsion hf n x).mp hx, map_zero]
 
 include hf in
 theorem localReciprocity_symm_lubinTateField {n : ℕ} (hn : 0 < n) (u : 𝒪[K]ˣ) (k : ℤ)
@@ -32,7 +41,7 @@ theorem localReciprocity_symm_lubinTateField {n : ℕ} (hn : 0 < n) (u : 𝒪[K]
     haveI : IsSepClosed Ω := IsSepClosure.sep_closed K
     (localReciprocity (lubinTateField Ω hπ hf n)).symm
         (unitUniformizerPow hπ u k : Kˣ ⧸ (normUnits K (lubinTateField Ω hπ hf n)).range) =
-      Abelianization.of (τ.restrictNormal (lubinTateField Ω hπ hf n)) := by
+      Group.Abelianization.of (τ.restrictNormal (lubinTateField Ω hπ hf n)) := by
   have : IsSepClosed Ω := IsSepClosure.sep_closed K
   set L := lubinTateField Ω hπ hf n
   have hr := reciprocity_lubinTate hπ hf hn (fixingOpenSubgroup L)
@@ -42,7 +51,7 @@ theorem localReciprocity_symm_lubinTateField {n : ℕ} (hn : 0 < n) (u : 𝒪[K]
   rw [← ha, localReciprocity_symm_mk_baseUnitsEquiv]
   have e : ((localClassFieldData K Ω).reciprocityAbEquiv (le_top : fixingOpenSubgroup L ≤ ⊤)
       (classFieldAxiom_units K Ω)).symm (a : tateZero Ωˣ _ _) =
-      Abelianization.of (QuotientGroup.mk ⟨τ, Subgroup.mem_top τ⟩) := by
+      Group.Abelianization.of (QuotientGroup.mk ⟨τ, Subgroup.mem_top τ⟩) := by
     rw [MulEquiv.symm_apply_eq, ClassFieldData.reciprocityAbEquiv_of]
     exact hr.symm
   rw [e]

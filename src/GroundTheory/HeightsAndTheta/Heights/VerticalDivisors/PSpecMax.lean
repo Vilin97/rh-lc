@@ -56,7 +56,9 @@ theorem SpecMax.proof (h1 : SecBFinite.Statement) (h2 : SecIdealOfPrime.Statemen
   have hmax : ∀ W ∈ specComps I v, (secIdealOf e I v W).IsMaximal := by
     intro W hW
     obtain ⟨hprime, -⟩ := h2 K n e I f v hI hf W hW
-    refine Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ParDVR e n v) _ ?_
+    refine Ideal.isMaximal_of_isIntegral_of_isMaximal_comap
+      (algebraMap (ParDVR e n v) (SecB e I v)) (algebraMap_isIntegral_iff.mpr inferInstance)
+      (secIdealOf e I v W) ?_
     have hle : IsLocalRing.maximalIdeal (ParDVR e n v) ≤
         (secIdealOf e I v W).comap (algebraMap (ParDVR e n v) (SecB e I v)) := by
       rw [← Localization.AtPrime.map_eq_maximalIdeal, Ideal.map_le_iff_le_comap]
@@ -72,7 +74,8 @@ theorem SpecMax.proof (h1 : SecBFinite.Statement) (h2 : SecIdealOfPrime.Statemen
 
   set W' := 𝔫.comap (toSecB e I v) with hW'
   have hR : 𝔫.comap (algebraMap (ParDVR e n v) (SecB e I v)) = IsLocalRing.maximalIdeal _ :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _)
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+      (algebraMap (ParDVR e n v) (SecB e I v)) (algebraMap_isIntegral_iff.mpr inferInstance) 𝔫)
   have hle : integralModel I ⊔ Ideal.map C v.asIdeal ≤ W' := by
     refine sup_le (fun p hp => ?_) ?_
     · have h0 : toSecB e I v p = 0 := Ideal.Quotient.eq_zero_iff_mem.mpr

@@ -155,7 +155,8 @@ theorem diag_inv_val {g : GL (Fin n) L} (hg : IsDiag g) :
   have h1 : g.val * diagonal (fun i => (g.val i i)⁻¹) = 1 := by
     rw [diag_val hg, diagonal_mul_diagonal, ← diagonal_one]
     congr 1
-    exact mul_inv_cancel₀ (diag_entry_ne hg i)
+    funext i
+    simpa only [diagonal_apply_eq] using mul_inv_cancel₀ (diag_entry_ne hg i)
   calc (g⁻¹).val = (g⁻¹).val * (g.val * diagonal fun i => (g.val i i)⁻¹) := by rw [h1, mul_one]
     _ = _ := by rw [← mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mul]
 

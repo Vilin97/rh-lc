@@ -57,6 +57,7 @@ theorem map_sigma_eq (μ : Measure (GL (Fin n) F)) [μ.IsHaarMeasure] : μ.map s
       rw [this, Measure.map_id]
     have h2 : (μ.map theta).map theta = (c * c) • μ := by
       rw [e, Measure.map_smul, e, smul_smul]
+      exact hθm.aemeasurable
     exact h1.symm.trans h2
   set K := GLnLocal.integralGL F n
   have hK0 : μ K ≠ 0 := (GLnLocal.isOpen_integralGL F n).measure_ne_zero μ ⟨1, K.one_mem⟩

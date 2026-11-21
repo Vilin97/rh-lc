@@ -242,15 +242,15 @@ theorem arithAt_scale3 (A3 : FamIn3 K G Pl0 I0 Ty T m) (s : ℕ) (P0 : Subgroup 
     (B : ℝ)
     (hB : boundBR Pk.core (lgDef (RecNums.ofNum Nd eJ δ Tl Nc lam0 C0 ce Ch Sw C1 H) s) 1 (etaSumBound bd dg s) ≤ B)
     (hg : 24 * (Nd.R.f : ℝ) * (Nd.R.r : ℝ) * QOfR B ((Zsc Pk.Zs).num C CH) ≤ ((min (Nd.g 0) (Nd.g 1) : ℕ) : ℝ)) :
-    ArithAt A3 s P0 ψ0 P1 ψ1 Dc Sp Zsc cf C CH Pk (RecNums.ofNum Nd eJ δ Tl Nc lam0 C0 ce Ch Sw C1 H) bd dg where
-  eig6 := eigenvalue_sum_le_closed_of eJ δ Tl lam0 C0 ce Ch Sw C1 H Pk.Zs C CH hl6
-  hG0 := logCard_le_lambda (A3 := A3) eJ δ Tl lam0 C0 ce Ch Sw C1 H hG
-  l3 := ⟨(Nd.R.m : ℝ) * (C * (Zsc Pk.Zs).l3u), levelThree_bound_closed hZ eJ δ Tl lam0 C0 ce Ch Sw C1 H Pk.Zs C CH,
-    error_bound_closed_numbers Nd Nc hZ eJ δ Tl lam0 C0 ce Ch Sw C1 H Pk.Zs C CH hC0 bd dg s c13 cG cD hbd hLam hdg hce⟩
-  q := ⟨QOfR B ((Zsc Pk.Zs).num C CH), delta_nonneg hZ Pk.Zs C CH, delta_mul_Q_le_one hZ Pk.Zs C CH _ hg, one_le_Q _ _,
-    Q_ge_bound_add Pk.core _ _ _ B hB⟩
-  la_le := logCardGroup_le_lambda hZ eJ δ Tl lam0 C0 ce Ch Sw C1 H Pk.Zs C CH hG
-  constant_ge_twenty_eight := twentyEight_le_constant (A3 := A3) eJ δ Tl lam0 C0 ce Ch Sw C1 H h28
+    ArithAt A3 s P0 ψ0 P1 ψ1 Dc Sp Zsc cf C CH Pk (RecNums.ofNum Nd eJ δ Tl Nc lam0 C0 ce Ch Sw C1 H) bd dg :=
+  { eig6 := eigenvalue_sum_le_closed_of eJ δ Tl lam0 C0 ce Ch Sw C1 H Pk.Zs C CH hl6
+    hG0 := logCard_le_lambda (A3 := A3) eJ δ Tl lam0 C0 ce Ch Sw C1 H hG
+    l3 := ⟨(Nd.R.m : ℝ) * (C * (Zsc Pk.Zs).l3u), levelThree_bound_closed hZ eJ δ Tl lam0 C0 ce Ch Sw C1 H Pk.Zs C CH,
+      error_bound_closed_numbers Nd Nc hZ eJ δ Tl lam0 C0 ce Ch Sw C1 H Pk.Zs C CH hC0 bd dg s c13 cG cD hbd hLam hdg hce⟩
+    q := ⟨QOfR B ((Zsc Pk.Zs).num C CH), delta_nonneg hZ Pk.Zs C CH, delta_mul_Q_le_one hZ Pk.Zs C CH _ hg, one_le_Q _ _,
+      Q_ge_bound_add Pk.core _ _ _ B hB⟩
+    la_le := logCardGroup_le_lambda hZ eJ δ Tl lam0 C0 ce Ch Sw C1 H Pk.Zs C CH hG
+    constant_ge_twenty_eight := twentyEight_le_constant (A3 := A3) eJ δ Tl lam0 C0 ce Ch Sw C1 H h28 }
 
 theorem arithmetic_fixed_scale (A3 : FamIn3 K G Pl0 I0 Ty T m) (s : ℕ) (P0 : Subgroup G) (ψ0 : P0 →* Kˣ) (P1 : Subgroup G)
     (ψ1 : P1 →* Kˣ) (Dc : ∀ Zs : DefSub A3.fam3.amb3, DefCols (A3.side3 P1 ψ1 Zs))
@@ -1490,39 +1490,39 @@ theorem numFacts_rows (hDel : D.s.Del = (Del : ℚ)) (hh0 : L.etaSz = (D.R.m : �
     (c1 : 1 ≤ C0) (c2 : C0 ≤ ce) (c3 : 0 ≤ Ch) (c4 : Ch ≤ C0)
     (c5 : Ch * (ofRecord D L Del h0).Lp ≤ C0 * (ofRecord D L Del h0).La)
     (constant_succ_le : constantOneChoice L + 1 ≤ C0) :
-    (ofRecord D L Del h0).NumFacts (letterOf D L Del h0 u) Nc lam0 C0 ce Ch (swRec L) (constantOneChoice L) where
-  logrd := logrd
-  logx := logx
-  Nc0 := Nc0
-  w2b := w2b
-  Om := Om
-  lam := lam
-  lam0 := hlam0
-  n2 := n2
-  n3 := n3
-  eta := eta
-  kN := kN
-  kS := kS
-  blkW := blkW
-  Nw := Nw
-  bN := bN
-  mkb := mkb
-  c1 := c1
-  c2 := c2
-  c3 := c3
-  c4 := c4
-  c5 := c5
-  C1two := nf_C1two_rec L
-  constant_weight_sum_bound := nf_C1S_rec L Del h0 hDel
-  constant_succ_le := constant_succ_le
-  sw := nf_sw_rec' L Del h0 hDel P5
-  rowsA := nf_rowsA_rec L Del h0 P5 hx w2b
-  topsA := nf_topsA_rec L Del h0 (by have := abs_nonneg L.Cc; linarith) w2b
-  nu0 := nu_nonneg_from_conditions L Del h0 hDel P5 u
-  blk := nf_blk_rec L Del h0 hh0 u
-  inter := nf_inter_rec L Del h0 hDel u
-  off := nf_off_rec L Del h0 P5
-  top := nf_top_rec L Del h0
+    (ofRecord D L Del h0).NumFacts (letterOf D L Del h0 u) Nc lam0 C0 ce Ch (swRec L) (constantOneChoice L) :=
+  { logrd := logrd
+    logx := logx
+    Nc0 := Nc0
+    w2b := w2b
+    Om := Om
+    lam := lam
+    lam0 := hlam0
+    n2 := n2
+    n3 := n3
+    eta := eta
+    kN := kN
+    kS := kS
+    blkW := blkW
+    Nw := Nw
+    bN := bN
+    mkb := mkb
+    c1 := c1
+    c2 := c2
+    c3 := c3
+    c4 := c4
+    c5 := c5
+    C1two := nf_C1two_rec L
+    constant_weight_sum_bound := nf_C1S_rec L Del h0 hDel
+    constant_succ_le := constant_succ_le
+    sw := nf_sw_rec' L Del h0 hDel P5
+    rowsA := nf_rowsA_rec L Del h0 P5 hx w2b
+    topsA := nf_topsA_rec L Del h0 (by have := abs_nonneg L.Cc; linarith) w2b
+    nu0 := nu_nonneg_from_conditions L Del h0 hDel P5 u
+    blk := nf_blk_rec L Del h0 hh0 u
+    inter := nf_inter_rec L Del h0 hDel u
+    off := nf_off_rec L Del h0 P5
+    top := nf_top_rec L Del h0 }
 
 end Assemble
 

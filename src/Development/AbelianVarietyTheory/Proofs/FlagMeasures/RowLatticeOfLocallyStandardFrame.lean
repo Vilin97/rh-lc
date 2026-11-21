@@ -29,7 +29,7 @@ theorem witt_flag (D : D7) (T : D.host.E) (hT : T ≠ 0) (F F' : FlagG (VS D) D.
   have hind : ∀ G : FlagG (VS D) D.R.rS T, LinearIndependent D.host.E G.fvec := by
     intro G
     unfold FlagG.fvec
-    rw [linearIndependent_fin_snoc]
+    rw [linearIndependent_finSnoc]
     refine ⟨G.e_indep, fun hz => hT ?_⟩
     have h0 : ∀ x ∈ Submodule.span D.host.E (Set.range G.e), (VS D).hT x G.z = 0 := by
       intro x hx
@@ -129,7 +129,7 @@ theorem row_lattice_of_local_standard : ∀ (D : D7) (Tn : ℕ), Tn ≠ 0 → �
     simp only [FlagG.fvec, Fin.snoc_last, Fin.val_last, hGz, xa_last]
     simpa using hx
   | cast b =>
-    simp only [FlagG.fvec, Fin.snoc_castSucc, Fin.coe_castSucc, hGe]
+    simp only [FlagG.fvec, Fin.snoc_castSucc, Fin.val_castSucc, hGe]
     exact he' b
 
 end GlobalTheory.RowLatAdapt

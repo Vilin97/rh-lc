@@ -22,7 +22,35 @@ theorem UpperTheory.V.Fr.ep_hasobs :
   have hco : ∀ u : ↥(formp σ' (RingHom.ker p) j),
       (∀ x : F.Γ × F.Γ, (D.co u).1 x ∈ adp (ResidueField O) j) ∧
         ∀ (v : F.V) (s : F.Gv v), (D.co u).2 v s ∈ adp (ResidueField O) j :=
-    fun u => ep_gco O C' R p σ' B π D hD j u u.2
+    by
+      intro u
+      have hu' : ∀ i, i ≠ j → ∀ y : RingHom.ker p, (y : C') ∈ evp σ' i → (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O) y = 0 := u.2
+      have key : ∀ M : Matrix (Fin 3) (Fin 3) C', GrM σ' pq pq M →
+          M.map (evK (RingHom.ker p) (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O)) ∈ adp (ResidueField O) j := by
+        intro M hM
+        change ∀ a b, pw a b ≠ j → M.map (evK (RingHom.ker p) (u : ↥(RingHom.ker p) →ₗ[O] ResidueField O)) a b = 0
+        intro a b hab
+        rw [Matrix.map_apply]
+        have hmem := hM a b
+        rw [← pw_eq] at hmem
+        unfold evK
+        split_ifs with hk
+        · exact hu' (pw a b) hab ⟨M a b, hk⟩ hmem
+        · rfl
+      obtain ⟨h1, hsub, hmul, hinv, hsgn⟩ := ep_grm σ'
+      refine ⟨fun x => ?_, fun v s => ?_⟩
+      · refine key (D.om x) ?_
+        unfold SetLift.om
+        rw [Units.val_mul, Units.val_mul]
+        exact hsub _ _ _ _ (hmul _ _ _ _ _ (hmul _ _ _ _ _ (hD.r x.1) (hsgn _ _ (hD.r x.2)))
+          (hinv _ _ _ (hD.r (x.1 * x.2)))) (h1 pq)
+      · have hX : GrM σ' pq pq ↑((D.g v)⁻¹ * D.t v s * D.g v) := by
+          rw [Units.val_mul, Units.val_mul]
+          exact hmul _ _ _ _ _ (hmul _ _ _ _ _ (hinv _ _ _ (hD.g v)) (hD.t v s)) (hD.g v)
+        refine key (D.a v s) ?_
+        unfold SetLift.a
+        rw [Units.val_mul]
+        exact hsub _ _ _ _ (hmul _ _ _ _ _ (hD.r _) (hinv _ _ _ hX)) (h1 pq)
   have hom := pr_omk hF O C' R p B D hker
   let Ψ : ↥(formp σ' (RingHom.ker p) j) →ₗ[ResidueField O]
       ((F.Γ × F.Γ → ↥(adp (ResidueField O) j)) × ((v : F.V) → F.Gv v → ↥(adp (ResidueField O) j))) :=

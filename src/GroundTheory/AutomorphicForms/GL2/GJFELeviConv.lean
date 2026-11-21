@@ -435,6 +435,7 @@ theorem exists_integrable_multi [∀ i, NeZero (d i)] [TopologicalSpace H] [IsTo
         (∀ s : ℂ, s₁ < s.re → Integrable (multiA ρ Ψ w ℓ s) (Measure.pi μ)) ∧
         (∀ s : ℂ, s.re < -s₁ → Integrable (multiB ρ Ψ w ℓ s) (Measure.pi μ)) := by
   classical
+  open scoped Pointwise in
   set q : ℝ := (LocalField.residueCard F : ℝ) with hqdef
   have hq1 : 1 < q := by rw [hqdef]; exact_mod_cast (LocalField.one_lt_residueCard (K := F))
   set L : ι → ℝ := fun i => Real.logb q (‖α i‖ ^ ((d i : ℝ)⁻¹)) with hL

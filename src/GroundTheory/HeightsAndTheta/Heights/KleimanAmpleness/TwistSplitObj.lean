@@ -59,7 +59,7 @@ theorem yHom_mem_tDeg (c : MvPolynomial (Fin (r + 1)) S) : yHom S η c ∈ tDeg 
   | C a =>
     rw [yHom_C]
     exact single_mem_tDeg (0 : ℤ × ℤ) _
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | mul_X p j hp =>
     rw [map_mul, yHom_X]
     have h2 : single ((1, 0) : ℤ × ℤ) (η j) ∈ tDeg Ω 0 := single_mem_tDeg ((1, 0) : ℤ × ℤ) _
@@ -73,7 +73,7 @@ theorem xyHom_mem_tDeg {p : Poly (MvPolynomial (Fin (r + 1)) S) N} {d : ℕ} (hp
   refine Submodule.sum_mem _ fun α hα => ?_
   have hdeg := hp (mem_support_iff.mp hα)
   rw [xyHom, coe_eval₂Hom, eval₂_monomial]
-  have h1 : (yHom S η).toRingHom (coeff α p) ∈ tDeg Ω 0 := yHom_mem_tDeg η _
+  have h1 : (yHom S η).toRingHom (p.coeff α) ∈ tDeg Ω 0 := yHom_mem_tDeg η _
   have h2 : (α.prod fun i k => single ((0, 1) : ℤ × ℤ) (x i) ^ k) ∈
       tDeg Ω (∑ i ∈ α.support, α i • (1 : ℤ)) := by
     rw [Finsupp.prod]
@@ -93,8 +93,8 @@ theorem xyHom_map_C {f : Poly S N} {e : ℕ} (hf : f.IsHomogeneous e) :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, map_sum, map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [show single ((0 : ℤ), (e : ℤ)) (∑ α ∈ f.support, aeval x (monomial α (coeff α f))) =
-      ∑ α ∈ f.support, single ((0 : ℤ), (e : ℤ)) (aeval x (monomial α (coeff α f))) from
+    rw [show single ((0 : ℤ), (e : ℤ)) (∑ α ∈ f.support, aeval x (monomial α (f.coeff α))) =
+      ∑ α ∈ f.support, single ((0 : ℤ), (e : ℤ)) (aeval x (monomial α (f.coeff α))) from
     map_sum (singleAddHom ((0 : ℤ), (e : ℤ))) _ _]
   refine Finset.sum_congr rfl fun α hα => ?_
   have hdeg := hf (mem_support_iff.mp hα)

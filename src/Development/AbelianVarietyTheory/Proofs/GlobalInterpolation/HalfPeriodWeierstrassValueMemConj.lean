@@ -88,7 +88,6 @@ theorem wpF_conj (Λ : AddSubgroup ℂ) (z : ℂ) :
   unfold wpF
   rw [map_add (f := _), Complex.conj_tsum, ← e.tsum_eq]
   simp [e, map_sub]
-  rfl
 
 theorem key_top {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (h : Formalism.MainNotions.StandardLatticesGL3.Crv D cc δ)
     (ρ : (⊤ : IntermediateField ℚ ℂ) →ₐ[ℚ] ℂ) {t t' : ℂ}

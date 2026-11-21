@@ -22,14 +22,14 @@ section Cont
 theorem continuous_rowv {A X : Type} [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
     [TopologicalSpace X] {M : ℕ} {s : A →+* A} (hs : Continuous s) (J : Matrix (Fin M) (Fin M) A)
     {w : X → Fin M → A} (hw : Continuous w) (b : Fin M) : Continuous fun x => rowv s J (w x) b :=
-  continuous_finset_sum _ fun a _ =>
+  continuous_finsetSum _ fun a _ =>
     (hs.comp ((continuous_apply a).comp hw)).mul continuous_const
 
 theorem continuous_hv {A X : Type} [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
     [TopologicalSpace X] {M : ℕ} {s : A →+* A} (hs : Continuous s) (J : Matrix (Fin M) (Fin M) A)
     {w v : X → Fin M → A} (hw : Continuous w) (hv' : Continuous v) :
     Continuous fun x => hv s J (w x) (v x) :=
-  continuous_finset_sum _ fun b _ =>
+  continuous_finsetSum _ fun b _ =>
     (continuous_rowv hs J hw b).mul ((continuous_apply b).comp hv')
 
 theorem continuous_nM {A X : Type} [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
@@ -257,7 +257,7 @@ theorem stab_structure : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
   · have hm : Continuous fun m : (piR (AF F) σ J).ker => matP (AF F) σ J m.1 :=
       (continuous_matStab (AF F) σ J).1.comp continuous_subtype_val
     refine continuous_pi fun _ => continuous_pi fun j => ?_
-    exact continuous_finset_sum _ fun i _ => (hm.matrix_elem _ _).mul continuous_const
+    exact continuous_finsetSum _ fun i _ => (hm.matrix_elem _ _).mul continuous_const
   · intro x y
     funext _ j
     exact topRow_ker_mul (AF F) σ J x y _

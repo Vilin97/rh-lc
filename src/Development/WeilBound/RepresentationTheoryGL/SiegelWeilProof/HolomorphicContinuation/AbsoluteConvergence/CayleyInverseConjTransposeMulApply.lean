@@ -75,6 +75,8 @@ theorem blk_U (u v : Matrix (Fin n) (Fin n) ℂ) (hu : uᴴ * u = 1) (hv : vᴴ 
 theorem diag_real_conj (s : Fin n → ℝ) : (diagonal fun j => (s j : ℂ))ᴴ = diagonal fun j => (s j : ℂ) := by
   rw [diagonal_conjTranspose]
   congr 1
+  funext j
+  simp
 
 private theorem coshSinh_conjTranspose_mul_S0_mul_eq_S0 (X : Fin n → ℝ) :
     (fromBlocks (diagonal fun j => (Real.cosh (X j) : ℂ)) (diagonal fun j => (Real.sinh (X j) : ℂ))
@@ -153,6 +155,8 @@ private theorem exists_unitary_coshSinh_decomposition (N : M2 n) (hN : Nᴴ * S0
   obtain ⟨U2, hU2, hRW⟩ := gram_diag_unitary (R * W) (fun j => Real.sinh (X j)) (by
     rw [hl]
     congr 1
+    funext j
+    rw [hs2])
   have hPW : (P * W)ᴴ * (P * W) = diagonal fun j => ((Real.cosh (X j) ^ 2 : ℝ) : ℂ) := by
     have h1 : (P * W)ᴴ * (P * W) = Wᴴ * W + (R * W)ᴴ * (R * W) := by
       simp only [conjTranspose_mul, Matrix.mul_assoc]

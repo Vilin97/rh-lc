@@ -136,7 +136,7 @@ theorem Abelianization.lift_injective_of_ker_le {Γ T : Type*} [Group Γ] [CommG
   induction z using QuotientGroup.induction_on with
   | H q =>
     have hq : Abelianization.lift f (Abelianization.of q) = 1 := hz
-    rw [Abelianization.lift_apply_of] at hq
+    change f q = 1 at hq
     have := h hq
     rw [← Abelianization.ker_of, MonoidHom.mem_ker] at this
     exact this

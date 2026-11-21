@@ -107,7 +107,8 @@ theorem eval₂_genPt (p : MvPolynomial (Fin n) k) :
 theorem sT_ne_zero (j : Fin n) (hj : genPt Q j ≠ 0) : sT Q e ≠ 0 := by
   intro h
   have h' := congrArg (eval (Pi.single j 1)) h
-  simp [sT, Pi.single_apply] at h'
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [sT, Pi.single_apply] at h'
   exact hj h'
 
 theorem secIdeal_le_ker (hQh : IsHomogIdeal Q) (c : Fin n → Fn Q) (hc : ∑ j, c j * genPt Q j = 1)
@@ -287,7 +288,8 @@ theorem map_secIdeal (Q : Ideal (MvPolynomial (Fin n) k)) (e : ℕ) :
       Ideal.span (Set.range (secForm (genPar k e n))) := by
     rw [Ideal.map_span, ← Set.range_comp]
     congr 2
-    rfl
+    funext i
+    simp [secForm, map_linForm, genPar]
   have h3 : (Ideal.span {chartForm (X : Par e n → MvPolynomial (Par e n) k) - 1}).map
       (MvPolynomial.map (algebraMap (MvPolynomial (Par e n) k) (GenParField k e n))) =
       Ideal.span {chartForm (genPar k e n) - 1} := by

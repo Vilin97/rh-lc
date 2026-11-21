@@ -116,6 +116,7 @@ theorem ArchUnimodular.proof (h : HermitianForm F E W) (v : Basis ι E W) :
     rwa [ArchUnimodular.mulEquivHaarChar_conjCME_archUnitary, one_smul] at e
   have hfun : (fun x => x * g) = (fun x => g * x) ∘ (conjCME g⁻¹) := by
     funext x
+    change x * g = g * (g⁻¹ * x * (g⁻¹)⁻¹)
     simp [mul_assoc]
   have hm : Measurable (conjCME g⁻¹) := (map_continuous (conjCME g⁻¹)).measurable
   rw [hfun, ← Measure.map_map (measurable_const_mul g) hm, hc, map_mul_left_eq_self]

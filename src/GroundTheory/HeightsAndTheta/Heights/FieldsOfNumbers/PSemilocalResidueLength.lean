@@ -22,7 +22,7 @@ universe u
 
 
 set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
+set_option maxHeartbeats 4000000 in
 theorem SemilocalResidueLength.proof (hRes : DegZeroLocResidue.Statement.{u})
     (hFR : SemilocalFiniteRank.Statement.{u}) (hLoc : DegZeroLocLocalize.Statement.{u}) :
     SemilocalResidueLength.Statement.{u} := by
@@ -110,7 +110,8 @@ theorem SemilocalResidueLength.proof (hRes : DegZeroLocResidue.Statement.{u})
     haveI : Module.Finite L M :=
       Module.Finite.of_restrictScalars_finite (degZeroLoc (contractPrime j P') {contractPrime j W'}) L M
     refine e.toLinearEquiv.length_eq.trans ?_
-    rw [Module.length_eq_of_surjective (R := L) hσs, Module.length_eq_finrank, relDeg,
+    refine (Module.length_eq_of_surjective (S := degZeroLoc (contractPrime j P') {contractPrime j W'}) (R := L) (M := M) hσs).trans ?_
+    rw [Module.length_eq_finrank L M, relDeg,
       IntermediateField.relfinrank_eq_finrank_of_le hLE]
 
 end

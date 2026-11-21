@@ -359,7 +359,7 @@ theorem NU_subgroupOf : (NU F0 Λ).subgroupOf (A0 F0 Λ) = (indU F0 Λ).ker := b
 theorem NU_conj : ∀ a ∈ A0 F0 Λ, ∀ n ∈ NU F0 Λ, a * n * a⁻¹ ∈ NU F0 Λ := by
   rintro a ha _ ⟨k, hk, rfl⟩
   have hk' : (⟨a, ha⟩ : A0 F0 Λ) * k * (⟨a, ha⟩ : A0 F0 Λ)⁻¹ ∈ (indU F0 Λ).ker :=
-    Subgroup.Normal.conj_mem (MonoidHom.normal_ker _) k hk _
+    Subgroup.Normal.conj_mem k hk _
   exact ⟨_, hk', rfl⟩
 
 def toFun' (u : (Module.End D.host.E (WbQ D F0))ˣ) : WbQ D F0 → WbQ D F0 := ⇑(u : Module.End D.host.E (WbQ D F0))

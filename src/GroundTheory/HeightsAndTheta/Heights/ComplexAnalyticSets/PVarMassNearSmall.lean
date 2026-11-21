@@ -43,7 +43,7 @@ theorem volume_eq_zero_of_hausdorff {S : Set (Fin d → ℂ)} (hS : μH[((2 * d 
     simp [Fintype.card_sigma, mul_comm]
   have hT : volume (E ⁻¹' S) = 0 := by
     rw [← hausdorffMeasure_pi_real, hcard]
-    have h := E.symm.lipschitz.hausdorffMeasure_image_le (d := ((2 * d : ℕ) : ℝ)) (by positivity) S
+    have h := E.symm.lipschitzWith.hausdorffMeasure_image_le (d := ((2 * d : ℕ) : ℝ)) (by positivity) S
     rw [hS, mul_zero, nonpos_iff_eq_zero, ContinuousLinearEquiv.image_symm_eq_preimage] at h
     exact h
   have : (Measure.map E volume).IsAddHaarMeasure := E.isAddHaarMeasure_map volume

@@ -49,12 +49,12 @@ theorem natCard_tateCohomology_zero (A : Rep.{u} R G) {σ : G}
     (hσ : ∀ x, x ∈ Subgroup.zpowers σ) :
     Nat.card (tateCohomology A 0) = Nat.card (KerModRange (repSubOne A σ) (repNorm A)) := by
   rw [natCard_kerModRange_eq_relIndex, ker_repSubOne A hσ, range_repNorm]
-  exact Nat.card_congr ((tateCohomologyZeroIso R G).app A).toLinearEquiv.toEquiv
+  exact Nat.card_congr ((tateCohomologyZeroIso (R := R) (G := G)).app A).toLinearEquiv.toEquiv
 
 theorem natCard_tateCohomology_neg_one (A : Rep.{u} R G) {σ : G}
     (hσ : ∀ x, x ∈ Subgroup.zpowers σ) :
     Nat.card (tateCohomology A (-1)) = Nat.card (KerModRange (repNorm A) (repSubOne A σ)) := by
   rw [natCard_kerModRange_eq_relIndex, ker_repNorm, range_repSubOne A hσ]
-  exact Nat.card_congr ((tateCohomologyNegOneIso R G).app A).toLinearEquiv.toEquiv
+  exact Nat.card_congr ((tateCohomologyNegOneIso (R := R) (G := G)).app A).toLinearEquiv.toEquiv
 
 end GroundTheory.GroupCoh

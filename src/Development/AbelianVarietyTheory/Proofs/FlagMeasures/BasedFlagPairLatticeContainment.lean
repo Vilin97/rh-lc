@@ -152,10 +152,7 @@ theorem mem_int_of_loc (Z : LocDat D) (z : D.host.E) (hz : ∀ p, (D.s.atP p).ι
   let Λ1 : Submodule (𝓞 D.host.E) (Fin 1 → D.host.E) := Submodule.span (𝓞 D.host.E) {fun _ => (1 : D.host.E)}
   have h1 : (fun _ : Fin 1 => (1 : D.host.E)) ∈ Λ1 := Submodule.mem_span_singleton_self _
   have hL : Submodule.IsLattice D.host.E Λ1 := by
-    refine ⟨Submodule.fg_span_singleton _, ?_⟩
-    rw [eq_top_iff]; intro v _
-    have : v = v 0 • (fun _ : Fin 1 => (1 : D.host.E)) := by funext i; fin_cases i; simp
-    rw [this]; exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
+    exact Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span_singleton _)
   have key := ((GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) 1 Λ1 hL).1 (fun _ => z)).2 (fun p => by
     have hg : (GlobalTheory.HL.placesOf Z).bc p (fun _ : Fin 1 => (1 : D.host.E)) ∈ (GlobalTheory.HL.placesOf Z).lat p Λ1 :=
       Submodule.subset_span ⟨_, h1, rfl⟩

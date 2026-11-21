@@ -83,9 +83,18 @@ theorem LatticePointsBelowFinite.proof (h : HermitianForm F E W) (v : Basis ι E
       neg_mem' := fun {a} ha i => by
         simpa only [map_neg, Finsupp.neg_apply, smul_neg] using (ha i).neg }
   have hLaT : La ≤ T := by
-    rw [← hS, AddSubgroup.closure_le]
-    intro s hs i
-    exact hd _ (Finset.mem_biUnion.2 ⟨s, hs, Finset.mem_image.2 ⟨i, Finset.mem_univ _, rfl⟩⟩)
+    have hall : ∀ s : La, (s : W) ∈ T := by
+      intro s
+      have hmem : s ∈ AddSubsemigroup.closure (S : Set La) := by
+        rw [hS]
+        trivial
+      induction hmem using AddSubsemigroup.closure_induction with
+      | mem s hs =>
+        intro i
+        exact hd _ (Finset.mem_biUnion.2 ⟨s, hs, Finset.mem_image.2 ⟨i, Finset.mem_univ _, rfl⟩⟩)
+      | add a b _ _ ha hb => exact T.add_mem ha hb
+    intro x hx
+    exact hall ⟨x, hx⟩
   have hdE : (d : E) ≠ 0 := Int.cast_ne_zero.2 hd0
 
   obtain ⟨K, hK0, hK⟩ := exists_coord_le_len M g

@@ -334,7 +334,7 @@ theorem adelicNorm_ratVec_single {n : ℕ} (j : Fin n) :
     funext i
     change ((finEval v).comp (algebraMap K 𝔸[K])) ((Pi.single j (1 : K) : Fin n → K) i) = _
     by_cases h : i = j
-    · subst h; simp
+    · subst h; simp [finEval]
     · rw [Pi.single_eq_of_ne h, map_zero, Pi.single_eq_of_ne h]
   simp only [adelicNorm, hinf, hfin, euclidNorm_pi_single_one, norm_pi_single_one, one_pow,
     Finset.prod_const_one, finprod_one, mul_one]

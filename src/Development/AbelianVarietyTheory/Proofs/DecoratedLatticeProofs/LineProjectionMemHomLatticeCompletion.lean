@@ -76,17 +76,17 @@ theorem proj_frame {p : SplitPt D k} {n : Type} [Fintype n] [DecidableEq n] {S A
     (ζ : Fin L.rank → D.host.E) {α : Frame p A n} {α₀ : Frame p S (n ⊕ Fin 1)} (h : IsSumFrame o ζ α α₀)
     (x : n ⊕ Fin 1 → k) :
     (o.jB ⬝ o.pB).map p.pr *ᵥ (α₀.b *ᵥ x) = α₀.b *ᵥ Sum.elim 0 (x ∘ Sum.inr) := by
-  have h1 : (o.jB ⬝ o.pB).map p.pr * o.jA.map p.pr = 0 := by
+  have h1 : (o.jB * o.pB).map p.pr * o.jA.map p.pr = 0 := by
     rw [← Matrix.map_mul, Matrix.mul_assoc, o.pB_jA, Matrix.mul_zero]
     exact Matrix.map_zero _ (map_zero _)
-  have h2 : (o.jB ⬝ o.pB) *ᵥ ratV (vecB o ζ) = ratV (vecB o ζ) := by
+  have h2 : (o.jB * o.pB) *ᵥ ratV (vecB o ζ) = ratV (vecB o ζ) := by
     have e : ratV (vecB o ζ) = o.jB *ᵥ ratV ζ := by
       funext i
       exact RingHom.map_mulVec (incA D) o.iB ζ i
     rw [e, Matrix.mulVec_mulVec, Matrix.mul_assoc, o.pB_jB, Matrix.mul_one]
-  have h3 : (o.jB ⬝ o.pB).map p.pr *ᵥ (fun i => p.pr (ratV (vecB o ζ) i)) = fun i => p.pr (ratV (vecB o ζ) i) := by
+  have h3 : (o.jB * o.pB).map p.pr *ᵥ (fun i => p.pr (ratV (vecB o ζ) i)) = fun i => p.pr (ratV (vecB o ζ) i) := by
     funext i
-    have := RingHom.map_mulVec p.pr (o.jB ⬝ o.pB) (ratV (vecB o ζ)) i
+    have := RingHom.map_mulVec p.pr (o.jB * o.pB) (ratV (vecB o ζ)) i
     rw [h2] at this
     exact this.symm
   rw [IsSumFrame] at h
@@ -116,7 +116,7 @@ theorem proj_half {p : SplitPt D k} {n : Type} [Fintype n] [DecidableEq n] {S A 
 
 theorem lineProj_mem_latO : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ι : Type) (p : ι → SplitPt D k) (I : List ι) (P : Pl D → Prop), Places p I P → ∀ (n' : Type) [Fintype n'] [DecidableEq n'] (ρ : ℕ) (B : BesLev D ρ) (S : HSp D) (α : ∀ i, Frame (p i) B.A n') (α₀ : ∀ i, Frame (p i) B.V₀ (n' ⊕ Fin 1)) (M : Lat B.V₀) (LS : Lat S) (Λ : ι → Submodule 𝒪[k] (n' → k)), IsSelfDualC B.V₀ M → IsSelfDualC S LS → (∀ i, IsSumFrame B.o B.ζ (α i) (α₀ i) ∧ (α₀ i).IsLat M (lastKer (Λ i))) → ∀ x ∈ latO B.V₀ S (M : Set _) (LS : Set _) P, (B.o.resS S).symm (0, (B.o.resS S x).2) ∈ latO B.V₀ S (M : Set _) (LS : Set _) P := by
   intro D k _ _ _ _ ι p I P hP n' _ _ ρ B S α α₀ M LS Λ hM hLS h x hx
-  have hπ : ∀ y ∈ latV B.V₀ M P, (B.o.jB ⬝ B.o.pB) *ᵥ y ∈ latV B.V₀ M P := by
+  have hπ : ∀ y ∈ latV B.V₀ M P, (B.o.jB * B.o.pB) *ᵥ y ∈ latV B.V₀ M P := by
     intro y hy
     refine (GlobalTheory.FinPlLoc.part_lat P B.V₀ M _ hM.1).2 ⟨mulVec_mem_idAt _ (GlobalTheory.FinPlLoc.latV_idAt hy), fun v hv e he => ?_⟩
     obtain ⟨i, rfl⟩ := (hP.mem v).1 hv
@@ -124,7 +124,7 @@ theorem lineProj_mem_latO : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [
     exact mulVec_mem_of_half (p i) hM (proj_selfAdj B.o) (fun z hz => proj_half B.o B.ζ (h i).1 (h i).2 hz)
       (GlobalTheory.FinPlLoc.smul_latV _ he hy)
   obtain ⟨hx1, hx2⟩ := (GlobalTheory.FinPl.LatMem.mem_latO_iff D B.V₀ S M LS hM hLS P x).1 hx
-  have e : (B.o.resS S).symm (0, (B.o.resS S x).2) = x ⬝ (B.o.jB ⬝ B.o.pB) := by
+  have e : (B.o.resS S).symm (0, (B.o.resS S x).2) = x * (B.o.jB * B.o.pB) := by
     rw [OrthDec.resS_symm_apply, OrthDec.resS_apply, Matrix.zero_mul, zero_add, Matrix.mul_assoc]
   rw [e]
   refine (GlobalTheory.FinPl.LatMem.mem_latO_iff D B.V₀ S M LS hM hLS P _).2 ⟨fun i j => ?_, fun y hy => ?_⟩

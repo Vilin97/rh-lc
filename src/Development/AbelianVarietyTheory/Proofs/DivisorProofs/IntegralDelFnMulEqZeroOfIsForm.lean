@@ -50,7 +50,7 @@ theorem dens_delAt (F : V n → Alt n) (v : V n) : dens (delAt F v) =
     ∑ a, ∑ S, GlobalTheory.del (fun x => (bas n).repr (F x) S) v (coordVec a) *
       ((bas n).repr (dz a * bas n S) Finset.univ / (bas n).repr (vol n : Alt n) Finset.univ) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [dens, delAt, coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.coe_finset_sum,
+    simp only [dens, delAt, coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.coe_finsetSum,
     Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, Finset.sum_div, mul_div_assoc]
 
 theorem integral_dens_delAt {F : V n → Alt n} (hF : ∀ S, ContDiff ℝ 1 fun v => (bas n).repr (F v) S)
@@ -60,8 +60,8 @@ theorem integral_dens_delAt {F : V n → Alt n} (hF : ∀ S, ContDiff ℝ 1 fun 
       ((bas n).repr (dz a * bas n S) Finset.univ / (bas n).repr (vol n : Alt n) Finset.univ) :=
     fun a S => (del_integral (hF S) (hc S) _).1.mul_const _
   simp only [dens_delAt]
-  refine ⟨integrable_finset_sum _ fun a _ => integrable_finset_sum _ fun S _ => hi a S, ?_⟩
-  rw [integral_finsetSum _ fun a _ => integrable_finset_sum _ fun S _ => hi a S]
+  refine ⟨integrable_finsetSum _ fun a _ => integrable_finsetSum _ fun S _ => hi a S, ?_⟩
+  rw [integral_finsetSum _ fun a _ => integrable_finsetSum _ fun S _ => hi a S]
   refine Finset.sum_eq_zero fun a _ => ?_
   rw [integral_finsetSum _ fun S _ => hi a S]
   refine Finset.sum_eq_zero fun S _ => ?_

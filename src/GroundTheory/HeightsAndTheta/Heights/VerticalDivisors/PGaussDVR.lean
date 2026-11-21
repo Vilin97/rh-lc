@@ -71,8 +71,7 @@ theorem adicAbv_of_intValuation_eq (v : HeightOneSpectrum (𝓞 K)) {a : 𝓞 K}
       (Ideal.absNorm v.asIdeal : ℝ)⁻¹ := by
   rw [NumberField.HeightOneSpectrum.adicAbv_def, HeightOneSpectrum.valuation_of_algebraMap, ha,
     WithZeroMulInt.toNNReal_neg_apply _ exp_ne_zero]
-  have h1 : Multiplicative.toAdd (unzero (exp_ne_zero (a := (-1 : ℤ)))) = -1 := rfl
-  rw [h1, zpow_neg_one, NNReal.coe_inv, NNReal.coe_natCast]
+  rw [WithZero.log_exp, zpow_neg_one, NNReal.coe_inv, NNReal.coe_natCast]
 
 theorem irreducible_algebraMap_C (e n : ℕ) (v : HeightOneSpectrum (𝓞 K))
     [IsDiscreteValuationRing (ParDVR e n v)] {a : 𝓞 K} (ha : v.intValuation a = exp (-1 : ℤ)) :

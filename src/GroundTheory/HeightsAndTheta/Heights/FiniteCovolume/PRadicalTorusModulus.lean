@@ -46,6 +46,7 @@ theorem map_eq_smul_of_coordinates {N V : Type*} [Group N] [TopologicalSpace N]
     funext x
     simp
   rw [e, ← Measure.map_map hφ hT, hC, Measure.map_smul, smul_comm]
+  all_goals fun_prop
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]
   [Algebra.IsQuadraticExtension F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]

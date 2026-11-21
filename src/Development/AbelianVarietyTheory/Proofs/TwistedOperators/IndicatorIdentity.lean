@@ -78,13 +78,26 @@ end Indicator
 theorem card_withKer (q : Unif k) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] :
     (withKer L).card = (withLat L).card := by
   classical
-  letI := Fintype.ofFinite (Red L)
-  letI := Fintype.ofFinite (Module.Dual 𝓀[k] (Red L))
-  have hc : Fintype.card (Red L) = Fintype.card (Module.Dual 𝓀[k] (Red L)) := by
-    rw [← Nat.card_eq_fintype_card, ← Nat.card_eq_fintype_card, Module.natCard_eq_pow_finrank (K := 𝓀[k]),
-      Module.natCard_eq_pow_finrank (K := 𝓀[k]) (V := Module.Dual 𝓀[k] (Red L)), Subspace.dual_finrank_eq]
-  rw [Finset.card_eq_sum_ones, Finset.card_eq_sum_ones, sum_withKer L q, sum_withLat L]
-  simp [hc]
+  by_cases hfull : L.IsFullLattice k
+  · letI : L.IsFullLattice k := hfull
+    letI := Fintype.ofFinite (Red L)
+    letI := Fintype.ofFinite (Module.Dual 𝓀[k] (Red L))
+    have hc : Fintype.card (Red L) = Fintype.card (Module.Dual 𝓀[k] (Red L)) := by
+      rw [← Nat.card_eq_fintype_card, ← Nat.card_eq_fintype_card, Module.natCard_eq_pow_finrank (K := 𝓀[k]),
+        Module.natCard_eq_pow_finrank (K := 𝓀[k]) (V := Module.Dual 𝓀[k] (Red L)), Subspace.dual_finrank_eq]
+    rw [Finset.card_eq_sum_ones, Finset.card_eq_sum_ones, sum_withKer L q, sum_withLat L]
+    simp [hc]
+  · have hk : withKer L = ∅ := Finset.eq_empty_iff_forall_notMem.mpr (by
+      intro P hP
+      apply hfull
+      rw [← mem_withKer.mp hP]
+      exact P.ker_isLat)
+    have hl : withLat L = ∅ := Finset.eq_empty_iff_forall_notMem.mpr (by
+      intro P hP
+      apply hfull
+      rw [← mem_withLat.mp hP]
+      exact P.isLat)
+    simp [hk, hl]
 
 variable [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n']
 

@@ -38,6 +38,10 @@ def transposeHomeo : U2 ≃ₜ U2 where
 
 theorem map_transpose_μK : Measure.map transposeU μK = μK := by
   have hmeas : Measurable transposeU := continuous_transposeU.measurable
+  haveI : μK.IsMulRightInvariant := by
+    refine ⟨fun g => ?_⟩
+    haveI : (Measure.map (· * g) μK).IsHaarMeasure := Measure.isHaarMeasure_map_mul_right μK g
+    exact Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
   haveI : (Measure.map transposeU μK).IsMulLeftInvariant := by
     refine ⟨fun g => ?_⟩
     rw [Measure.map_map (measurable_const_mul g) hmeas]
@@ -51,7 +55,7 @@ theorem map_transpose_μK : Measure.map transposeU μK = μK := by
         exact (hU.preimage continuous_transposeU).measure_ne_zero μK
           (by obtain ⟨u, hu⟩ := hne; exact ⟨transposeU u, by simpa [transposeU_transposeU] using hu⟩)⟩ }
   haveI : IsProbabilityMeasure (Measure.map transposeU μK) :=
-    Measure.isProbabilityMeasure_map hmeas.aemeasurable
+    by infer_instance
   exact Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
 
 theorem integral_transpose_K {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] (f : U2 → E) :

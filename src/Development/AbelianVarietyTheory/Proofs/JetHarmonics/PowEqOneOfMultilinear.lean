@@ -30,7 +30,7 @@ open scoped CategoryTheory.Obj
 namespace GlobalTheory
 
 theorem pow_eq_one_of_multilinear {F M N : Type} [Field F] [AddCommGroup M] [Module F M]
-    [AddCommGroup N] [Module F N] {j : ℕ} (bx : MultilinearMap F (fun _ : Fin j => M) N)
+    [AddCommGroup N] [Module F N] {j : ℕ} (bx : MultilinearMap (RingHom.id F) (fun _ : Fin j => M) N)
     (hspan : ∀ S : N, S ∈ Submodule.span F {S' | ∃ s, S' = bx s})
     (U : Fin j → Module.End F M) (W : Module.End F N)
     (hW : ∀ s, W (bx s) = bx (fun i => U i (s i)))
@@ -70,5 +70,6 @@ theorem finOrd_box : Laws → Laws2 → Laws4 → TwistBaseChangeStatement → �
     ((hbx _ _).2 rfl) ((hbx _ _).2 rfl))
   simp only [LinearMap.smul_apply]
   rw [← e, MultilinearMap.map_smul_univ]
+  simp only [RingHom.id_apply]
 
 end GlobalTheory

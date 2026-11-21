@@ -87,6 +87,12 @@ theorem pow_finrank_mem_range_infiniteLocalNorm (v : InfinitePlace K) (y : (v.Co
   classical
   refine ⟨fun w ↦ Units.map (algebraMap v.Completion (w : InfinitePlace L).Completion :
     v.Completion →* (w : InfinitePlace L).Completion) y, ?_⟩
+  apply Units.ext
+  rw [coe_infiniteLocalNorm, Units.val_pow_eq_pow_val, ← GroundTheory.Global.InfinitePlace.sum_finrank_completion (L := L) v,
+    ← Finset.prod_pow_eq_pow_sum]
+  refine Finset.prod_congr rfl fun w _ ↦ ?_
+  rw [Units.coe_map]
+  exact Algebra.norm_algebraMap (S := (w : InfinitePlace L).Completion) (y : v.Completion)
 
 end LocalNorms
 

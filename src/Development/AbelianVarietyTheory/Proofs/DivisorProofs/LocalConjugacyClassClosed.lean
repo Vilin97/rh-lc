@@ -228,7 +228,7 @@ theorem isClosed_conjClass [TopologicalSpace S] [IsTopologicalRing S] [T2Space S
   refine IsClosed.inter (isClosed_iInter fun i => ?_) (isClosed_iInter fun z => isClosed_iInter fun k => ?_)
   · have hc : Continuous fun y : (S ⊗[ℚ] B)ˣ => b.coord i (Pv (y : S ⊗[ℚ] B)) := by
       refine (IsModuleTopology.continuous_of_linearMap (b.coord i)).comp ?_
-      exact continuous_finset_sum _ fun j _ => continuous_const.mul (Units.continuous_val.pow j)
+      exact continuous_finsetSum _ fun j _ => continuous_const.mul (Units.continuous_val.pow j)
     exact isClosed_eq hc continuous_const
   · have hc : Continuous fun y : (S ⊗[ℚ] B)ˣ => trL S B (cen S F B z * (y : S ⊗[ℚ] B) ^ k) :=
       (IsModuleTopology.continuous_of_linearMap (trL S B)).comp

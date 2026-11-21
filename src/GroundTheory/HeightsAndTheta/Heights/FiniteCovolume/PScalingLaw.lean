@@ -211,7 +211,9 @@ theorem ScalingLaw.proof (h : HermitianForm F E W) (v : Basis ι E W) [FiniteDim
     intro t ht
     rw [massBelow, lintegral_congr fun g => hcount g t, MeasureTheory.lintegral_finsetSum]
     · exact Finset.sum_congr rfl fun o ho => hCeq (Y o) (hSV (hYS o ho)) t ht
-    · exact fun o _ => @Measurable.tsum _ _ _ (hQc _) _ fun q =>
+    · intro o ho
+      letI := hQc ((vecStabGroup h v La (Y o)).subgroupOf Γ)
+      exact Measurable.tsum fun q =>
         (measurable_belowIndicator M _ t).comp (measurable_const_mul _)
   refine ⟨FD, hFD, fun t ht => ⟨?_, fun θ hθ => ?_⟩⟩
   · rw [hm t ht]

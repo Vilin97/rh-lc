@@ -105,7 +105,7 @@ theorem nonempty_equiv_of_coeff (hρirr : ρ.IsIrreducible) (hπ : ∀ v, IsAdmi
   have hr : IsRestricted ξ fun v => π v (g v) (ξ v) := by
     filter_upwards [g.2, hξ] with v h1 h2
     exact h2 _ h1
-  show _ = evalForm ξ l hl (tensorRep K π g (tprod ℂ ξ))
+  show _ = evalForm ξ l hl (tensorRep (K := K) π g (tprod ℂ ξ))
   rw [tensorRep_tprod, evalForm_tprod hr]
 
 end Coefficient

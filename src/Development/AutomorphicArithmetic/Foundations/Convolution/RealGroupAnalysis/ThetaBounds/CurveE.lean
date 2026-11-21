@@ -54,11 +54,11 @@ private theorem unipotent_placeEmbed_gl (w : InfinitePlace F) (t : ℝ) : gl (nU
   · rw [TR.pInf_infGL]
     refine Units.ext ?_
     ext i j v
-    fin_cases i <;> fin_cases j <;> simp [cU_val, Fo.at1, pInf_sInf]
+    fin_cases i <;> fin_cases j <;> simp [cU_val, Fo.at1, nU, gl, Matrix.SpecialLinearGroup.toGL, pInf_sInf]
   · rw [TR.pFin_infGL]
     refine Units.ext ?_
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [Fo.at1, pFin_sInf]
+    fin_cases i <;> fin_cases j <;> simp [Fo.at1, nU, gl, Matrix.SpecialLinearGroup.toGL, pFin_sInf]
 
 private theorem character_placeEmbed_exp (w : InfinitePlace F) (t : ℝ) (q : A F) :
     ψ (Fo.at1 w t * q) = Complex.exp (Fo.cc * ((t : ℂ) * Fo.cw w q)) := by

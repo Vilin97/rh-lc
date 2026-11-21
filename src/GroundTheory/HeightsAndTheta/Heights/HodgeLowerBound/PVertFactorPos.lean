@@ -46,7 +46,7 @@ theorem mCoordIdeal_le {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {z : (Σ
   show F ∈ RingHom.ker (mConeMap z)
   rw [RingHom.mem_ker]
   ext m
-  rw [coeff_zero, ← Finsupp.equivFunOnFinite_symm_coe m,
+  rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, ← Finsupp.equivFunOnFinite_symm_coe m,
     HilbertSamuel.GenFibreHomog.coeff_mConeMap, aeval_eq_eval_map]
   exact hz.2 _ (HilbertSamuel.GenFibreHomog.isMultiHomogIdeal_mCoordIdeal y F hF _)
 

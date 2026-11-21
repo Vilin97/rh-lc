@@ -196,7 +196,8 @@ theorem isDedekindDomain_closure_adjoin :
     IsDedekindDomain (integralClosure (Algebra.adjoin k {t}) K) := by
   have := isPrincipalIdealRing_adjoin (k := k) t
   have := finiteDimensional_adjoin (transcendental_of_isSeparable (k := k) t)
-  exact IsIntegralClosure.isDedekindDomain (Algebra.adjoin k {t}) (IntermediateField.adjoin k {t}) K _
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact IsIntegralClosure.isDedekindDomain (Algebra.adjoin k {t}) (IntermediateField.adjoin k {t}) K _
 
 theorem isFractionRing_closure_adjoin :
     IsFractionRing (integralClosure (Algebra.adjoin k {t}) K) K := by

@@ -26,7 +26,10 @@ theorem IdeleGroup.finiteProj_diagonal (v : HeightOneSpectrum (𝓞 K)) (a : Kˣ
 theorem IdeleGroup.infiniteProj_diagonal (w : InfinitePlace K) (a : Kˣ) :
     IdeleGroup.infiniteProj w (IdeleGroup.diagonal K a) =
       Units.map (algebraMap K w.Completion).toMonoidHom a :=
-  Units.ext (IdeleGroup.coe_infiniteProj_diagonal w a)
+  by
+    apply Units.ext
+    simpa [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply] using
+      IdeleGroup.coe_infiniteProj_diagonal w a
 
 
 variable (L) in

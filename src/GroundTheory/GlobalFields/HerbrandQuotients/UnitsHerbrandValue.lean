@@ -146,7 +146,9 @@ theorem cycHerbrand_unitsRep {σ : L ≃ₐ[K] L} (hσ : ∀ g, g ∈ Subgroup.z
     rw [← Nat.card_eq_fintype_card, IsGalois.card_aut_eq_finrank]
   have h3 : (finrank K L : ℚ) ≠ 0 := by
     exact_mod_cast Module.finrank_pos.ne'
-  rw [cycHerbrand_unitsRep_eq_logLattice hσ, eq_div_iff h3, ← h2, h1]
+  apply (eq_div_iff h3).2
+  rw [cycHerbrand_unitsRep_eq_logLattice hσ, ← h2]
+  exact h1
 
 end
 

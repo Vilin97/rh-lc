@@ -12,7 +12,7 @@ public import Formalism.LocalToGlobal.GlobalTheory.GL3.PLinkThU
 
 noncomputable section
 
-open Formalism.BasicNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings GlobalTheory.RowCuspPar
+open Formalism.BasicNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings
 
 namespace GlobalTheory.RowRegAlg
 

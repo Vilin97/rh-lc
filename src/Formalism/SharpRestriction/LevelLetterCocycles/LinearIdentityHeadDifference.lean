@@ -220,8 +220,8 @@ theorem repVV_map (C : LevC.Ctx W) {T₂ Y : LocLat G Qp LL O} (ι : LatHom T₂
     fun j => ⟨W.AΔ.sum_mem fun k _ => W.AΔ.mul_mem (haa k).1 (W.AΔ.algebraMap_mem _), ?_⟩, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Finset.mul_sum, map_sum]
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [← mul_assoc, (haa k).2, map_mul, ← IsScalarTower.algebraMap_apply O (LetA O n) W.EE]
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [← mul_assoc, (haa k).2, map_mul, ← IsScalarTower.algebraMap_apply O (LetA O n) W.EE]
   · simp only [Formalism.MainNotions.UnusedSlot80.Relay2.φpow_lsmul]
     rw [lin_map (lA W) Λ κ κY κ' Kt (W.map ι x) (fun k => ((W.φD Y) ^ e) (W.map ι (Hh k)))
       (fun j => ((W.φD Y) ^ e) (HhY j)) aa (fun k j => algebraMap O (LetA O n) (o k j))]

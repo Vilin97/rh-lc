@@ -21,7 +21,7 @@ variable {C : Type} [Field C] [CharZero C] {dd : ℕ} {V : VF C} {O : Type} [Com
 
 theorem aOf_eq (Y : FBChart C V O dd) (u : Fin dd → C) :
     Y.aOf u = ∑ i, MvPowerSeries.C (u i ^ V.l * ((V.l.factorial : C))⁻¹) *
-      ev (rz 1) ((pderiv C ((0 : Fin 2), i))^[V.l] Y.u1) := by
+      ev (rz 1) ((pderiv (R := C) ((0 : Fin 2), i))^[V.l] Y.u1) := by
   ext ν
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
@@ -37,7 +37,8 @@ theorem aOf_eq (Y : FBChart C V O dd) (u : Fin dd → C) :
   field_simp
 
 theorem link (Y : FBChart C V O dd) (u : Fin dd → C) (W : Pt C 2 dd) (hW : ∀ j, constantCoeff (W j) = 0)
-    (Wup : Pt C 3 dd) (hW0 : ∀ j, constantCoeff (Wup j) = 0) (hd : ∀ i j, pderiv C ((0 : Fin 3), i) (Wup j) = 0)
+    (Wup : Pt C 3 dd) (hW0 : ∀ j, constantCoeff (Wup j) = 0)
+    (hd : ∀ i j, pderiv (R := C) ((0 : Fin 3), i) (Wup j) = 0)
     (hr : ∀ j, ev (rz 2) (Wup j) = W j) (γ : Fin 2 × Fin dd →₀ ℕ) :
     coeff γ (ev (n := 2) ![W] (Y.aOf u)) = Phi V u (UU Y Wup) γ := by
   have hz1 := z0_1 W hW
@@ -47,16 +48,16 @@ theorem link (Y : FBChart C V O dd) (u : Fin dd → C) (W : Pt C 2 dd) (hW : ∀
     simp only [ev_mul hz1, ev_C, map_sum, coeff_C_mul]
   unfold Phi
   refine Finset.sum_congr rfl fun i _ => ?_
-  have e1 : ev ![W] (ev (rz 1) ((pderiv C ((0 : Fin 2), i))^[V.l] Y.u1)) =
-      ev (n := 2) ![0, W] ((pderiv C ((0 : Fin 2), i))^[V.l] Y.u1) := by
+  have e1 : ev ![W] (ev (rz 1) ((pderiv (R := C) ((0 : Fin 2), i))^[V.l] Y.u1)) =
+      ev (n := 2) ![0, W] ((pderiv (R := C) ((0 : Fin 2), i))^[V.l] Y.u1) := by
     rw [ev_ev (constant_zero_restrict_points 1) hz1]
     congr 1
     funext k j
     fin_cases k
     · exact ev_zero hz1
     · exact ev_X hz1 0 j
-  have e2 : ev (rz 2) ((pderiv C ((0 : Fin 3), i))^[V.l] (UU Y Wup)) =
-      ev (n := 2) ![0, W] ((pderiv C ((0 : Fin 2), i))^[V.l] Y.u1) := by
+  have e2 : ev (rz 2) ((pderiv (R := C) ((0 : Fin 3), i))^[V.l] (UU Y Wup)) =
+      ev (n := 2) ![0, W] ((pderiv (R := C) ((0 : Fin 2), i))^[V.l] Y.u1) := by
     unfold UU
     rw [d_ev_keep_iter hW0 i (hd i), ev_ev hz2 (constant_zero_restrict_points 2)]
     congr 1
@@ -75,7 +76,8 @@ theorem coeff_U_eq (Y : FBChart C V O dd) (u : Fin dd → C) (hu : ∀ i, V.Ge 0
     V.MM (Phi V u (UU Y (SS Y.B.G)) γ - Phi V u (UU Y (p3 1)) γ - Phi V u (UU Y (p3 2)) γ -
       Phi V u (Y.B.ph2 ^ V.l) γ + Phi V u (QQ Y) γ) := by
   have hU : ∀ {w : Pt C 3 dd}, (∀ j, constantCoeff (w j) = 0) → (∀ j, IntS V (w j)) →
-      (∀ i j, pderiv C ((0 : Fin 3), i) (w j) = 0) → IntS V (UU Y w) ∧ FrobD V (UU Y w) ∧ ev (rz 2) (UU Y w) = 1 :=
+      (∀ i j, pderiv (R := C) ((0 : Fin 3), i) (w j) = 0) →
+      IntS V (UU Y w) ∧ FrobD V (UU Y w) ∧ ev (rz 2) (UU Y w) = 1 :=
     fun hw0 hw hd => ⟨UU_int Y hw0 hw, UU_frob Y hw0 hw hd, UU_one Y hw0⟩
   obtain ⟨iS, fS, oS⟩ := hU (triple_sum_constantCoeff Y.B.G) (SS_int Y.B.G Y.intF) (SS_d Y.B.G)
   obtain ⟨i1, f1, o1⟩ := hU (z0p3 1) (fun j => triple_coordinate_integral 1 j) (fun i j => triple_point_pderiv_first_zero 1 (by decide) i j)

@@ -14,7 +14,8 @@ noncomputable section
 
 namespace GlobalTheory.DownMemRoad
 
-open Formalism.BasicNotions Formalism.MainNotions.N GlobalTheory.ThetaExh GlobalTheory.IndefiniteRowSideFullHecke.ThetaLiftOfEachComponent GlobalTheory.IndefiniteRowSideFullHecke.InternalDirectSumCriteria
+open Formalism.BasicNotions Formalism.MainNotions.N GlobalTheory.ThetaExh
+  GlobalTheory.IndefiniteRowSideFullHecke.ThetaLiftOfEachComponent
 
 theorem mem_biSup_of_orthogonal {V ι : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (U : ι → Submodule ℂ V) (S : Set ι) (htop : ⨆ k, U k = ⊤) (horth : ∀ k k', k ≠ k' → U k ⟂ U k')

@@ -55,7 +55,7 @@ theorem mem_GfC_of_suppAt' {D : D7} {e : Formalism.L2.Theta.AE D} (he : IsSplitI
 
 theorem suppAt_conj' {D : D7} {e : Formalism.L2.Theta.AE D} {V : HSp D} {g : GA D V} (hg : Formalism.L2.Theta.SuppAt e V g) (t : GA D V) :
     Formalism.L2.Theta.SuppAt e V (t⁻¹ * g * t) := by
-  refine GlobalTheory.LocGrp.suppAt_of_sandwich hg (mt V t⁻¹) (mt V t) ?_
+  apply GlobalTheory.LocGrp.suppAt_of_sandwich hg (mt V t⁻¹) (mt V t)
   rw [GlobalTheory.MixModel.mt_mul, GlobalTheory.MixModel.mt_mul, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, GlobalTheory.MixModel.mt_inv_mul]
 
 end GlobalTheory.PlaceMatch

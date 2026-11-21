@@ -256,7 +256,7 @@ theorem GlobalTheory.LocFlat.doubleStep_of_pureCol_pureRow : ∀ (k : Type) [Fie
   intro k _ _ _ _ _ _ ν hν s κ S t _ _ hP hOne hCol hRow j c H r hc
   haveI := hν.1
   obtain ⟨C₁, hC₁, hC1⟩ := hCol j (c + 1) (by omega) (r + 1) (by omega)
-  obtain ⟨V, hV, hVe⟩ := hat_box (n := XIx (Fin κ) t (j + 1)) S.cond ν (S.ϖ ^ (r + 1))
+  obtain ⟨V, hV, hVe⟩ := GlobalTheory.LocFlat.DoubleStepProof.hat_box (n := XIx (Fin κ) t (j + 1)) S.cond ν (S.ϖ ^ (r + 1))
   have hhat : ∀ (p : Matrix (XIx (Fin κ) t (j + 1)) (XIx (Fin κ) t j) k × Matrix (XIx (Fin κ) t (j + 1 + 1)) (XIx (Fin κ) t (j + 1)) k)
       (u : XIx (Fin κ) t (j + 1) → k),
       hat S.ψ ν (-1) (fun y => flCol S.ψ ν (r + 1 + 1) ((S.T t).Phi j (c + 1 + 1) (by omega))
@@ -286,7 +286,7 @@ theorem GlobalTheory.LocFlat.doubleStep_of_pureCol_pureRow : ∀ (k : Type) [Fie
     · have e1 : (fromRows p.2 (Matrix.of fun _ => u)) (Sum.inr ()) = u := by funext a; simp
       rw [GlobalTheory.T.flatRowMap_eq_rootExchangeOperator_translate k S.ψ ν S.cond.continuous hν.1 _ _ (c + 1) (r + 1) (by omega) (by omega) _
         (om_mem_SB _ 1 h hΦ₂) _, e1, toRows₁_fromRows]
-      obtain ⟨a, ha⟩ := Phi_mul_rowE S t hP j c (by omega) r hc u hu
+      obtain ⟨a, ha⟩ := GlobalTheory.LocFlat.DoubleStepProof.Phi_mul_rowE S t hP j c (by omega) r hc u hu
       have e2 : (fun z => om (S.μ (j + 1 + 1)) 1 h ((S.T t).Phi (j + 1) (c + 1) (by omega)) (z * (rowE (c + 1 + 1) (r + 1) u).val)) =
           fun z => a * om (S.μ (j + 1 + 1)) 1 h ((S.T t).Phi (j + 1) (c + 1) (by omega)) z := by
         funext z
@@ -307,7 +307,7 @@ theorem GlobalTheory.LocFlat.doubleStep_of_pureCol_pureRow : ∀ (k : Type) [Fie
       congr 1
     · rw [if_neg hu]; simp
   · obtain ⟨C₂, hC₂, hC2⟩ := hRow (j + 1) c H r hc
-    have hW := vol_box_pos (n := XIx (Fin κ) t (j + 1)) ν (S.ϖ ^ (r + 1))
+    have hW := GlobalTheory.LocFlat.DoubleStepProof.vol_box_pos (n := XIx (Fin κ) t (j + 1)) ν (S.ϖ ^ (r + 1))
     set W := ((Measure.pi fun _ : XIx (Fin κ) t (j + 1) => ν) (box (XIx (Fin κ) t (j + 1)) (S.ϖ ^ (r + 1)) : Set (XIx (Fin κ) t (j + 1) → k))).toReal with hWdef
     refine ⟨C₁ * C₂ * V * W, by positivity, fun p => ?_⟩
     simp only [contr]
@@ -320,6 +320,6 @@ theorem GlobalTheory.LocFlat.doubleStep_of_pureCol_pureRow : ∀ (k : Type) [Fie
       have e1 : (fromRows p.2 (Matrix.of fun _ => u)) (Sum.inr ()) = u := by funext a; simp
       rw [e1, toRows₁_fromRows]
       split_ifs <;> ring
-    · rw [integral_const_mul, integral_box]
+    · rw [integral_const_mul, GlobalTheory.LocFlat.DoubleStepProof.integral_box]
       push_cast
       ring

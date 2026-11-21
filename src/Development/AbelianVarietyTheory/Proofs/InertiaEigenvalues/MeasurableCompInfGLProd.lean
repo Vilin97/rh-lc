@@ -63,6 +63,7 @@ theorem integrable_of_isRapidInf {X : Type} [MeasurableSpace X] {ν : Measure X}
 theorem kerInf_mem_bddForms {X : Type} [MeasurableSpace X] {ν : Measure X} {k : X → ℂ}
     {γ : X → GL (Fin a) (Cinf E)} (hk : IsRapidInf ν k γ) {F : GA E a → ℂ} (h : F ∈ bddForms E a ω) :
     (fun g => ∫ x, k x * F (g * infGL E a (γ x)) ∂ν) ∈ bddForms E a ω := by
+  set_option synthInstance.maxHeartbeats 200000 in
   obtain ⟨C, hC⟩ := h.2.2.2
   have hki := integrable_of_isRapidInf hk
   refine ⟨?_, fun γ' g => ?_, fun z g => ?_, ∫ x, ‖k x‖ * C ∂ν, fun g => ?_⟩

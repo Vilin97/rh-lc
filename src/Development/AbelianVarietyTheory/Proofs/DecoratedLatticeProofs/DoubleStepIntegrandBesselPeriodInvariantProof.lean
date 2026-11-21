@@ -156,7 +156,9 @@ theorem flatFB_source {σ : ℕ} {J : JacLev D (σ + 1)} {B : BesLev D σ} (s : 
         ψ (J.d.qS B.V c (x0 B ⬝ (v * u').1.1)) • J.d.mixS B.V ψ s.vS.μ s.vS.𝓕 Ψ (x0 B ⬝ (v * u').1.1) :=
       (FS _ hΨ).centre c _
     rw [fourierBessel_centralTerm_const_on_orbit] at t3
-    unfold evalAt
+    change J.d.mixS B.V ψ s.vS.μ s.vS.𝓕 _ _ = J.d.mixS B.V ψ s.vS.μ s.vS.𝓕 _ _ at t1
+    change J.d.mixS B.V ψ s.vS.μ s.vS.𝓕 _ _ = heisO ψ J.W₀ B.V _ (J.d.mixS B.V ψ s.vS.μ s.vS.𝓕 _ _) at t2
+    change B.d.mixT J.W₀ ψ s.vT.μ s.vT.𝓕 (J.d.mixS B.V ψ s.vS.μ s.vS.𝓕 _ _) 0 = _
     rw [e, t1, t2, t3]
     exact mixT_zero_heis B.d s.vT (MV _) _ _ _
   have : BorelSpace (UX D (σ + 1)) := ⟨rfl⟩
@@ -303,6 +305,8 @@ theorem per_flag {ρ : ℕ} (B : BesLev D ρ) (hψ : IsStdChar D ψ (-1)) (φ : 
   have hm := GlobalTheory.CharLaws.embA_conj_mem B.d B.o h hn
   rw [← (GlobalTheory.fundamentalDomain_integral_mul_right B.vN.ν _ _ _ (⟨_, hm⟩ : flagN B.d) u2 hK).2]
   congr 1
+  funext m
+  simp only [besFun, Subgroup.coe_mul, Pi.smul_apply, smul_eq_mul, rTrans]
   rw [psiBes_mul B.d ψ 1 _ m.2 hm, GlobalTheory.CharLaws.psiBes_conj, star_mul', mul_assoc (m : GA D B.V) (_ * _ * _),
     inv_mul_cancel_right, mul_assoc (m : GA D B.V)]
   ring

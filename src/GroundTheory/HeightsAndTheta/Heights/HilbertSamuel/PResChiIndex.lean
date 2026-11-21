@@ -254,7 +254,8 @@ theorem resChi_sub_of_bases (d d' : HSMDatum D Ω κ) (B : Matrix (Ix κ) (Ix κ
 
   have hGpos : 0 < (resGram d n b).det := by
     rw [ResSym.det_resGram d hb.1]
-    exact (Complex.pos_iff.1 (ResSym.posDef_gram d hb).det_pos).1
+    open scoped ComplexOrder in
+      exact (Complex.pos_iff.1 (ResSym.posDef_gram d hb).det_pos).1
   have hTd : ((Matrix.of T).map (Rat.cast : ℚ → ℝ)).det = ((Matrix.of T).det : ℝ) :=
     (RingHom.map_det (Rat.castHom ℝ) (Matrix.of T)).symm
   have hTr : ((Matrix.of T).det : ℝ) ≠ 0 := by exact_mod_cast hdet

@@ -63,7 +63,8 @@ theorem aeval_i2comp (y : (Σ k, ι k) → Ω) (m : K → ℕ) (q : MRing ι) :
 
 theorem aeval_i2comp_of_mem (y : (Σ k, ι k) → Ω) {p : MRing ι} (hp : p ∈ mCoordIdeal y) (m : K → ℕ) :
     aeval y (i2comp m p) = 0 := by
-  rw [aeval_i2comp, show mConeMap y p = 0 from RingHom.mem_ker.mp hp, coeff_zero]
+  rw [aeval_i2comp, show mConeMap y p = 0 from RingHom.mem_ker.mp hp]
+  rfl
 
 theorem mem_mCoordIdeal_of_homog (y : (Σ k, ι k) → Ω) {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d)
     (h0 : aeval y f = 0) : f ∈ mCoordIdeal y := by
@@ -131,11 +132,11 @@ theorem map_piece [DecidableEq K] (y : (Σ k, ι k) → Ω) {g : MRing ι} {e : 
     · refine Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ ?_
       exact (mem_mHom_iff _ _).mpr (isMultiHomog_mul' ((mem_mHom_iff _ _).mp hh) (hgX j))
     set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [LinearMap.mulLeft_apply, AlgHom.toLinearMap_apply, map_sum, map_zsmul,
-        map_mul, aeval_X, Finset.sum_mul]
-      refine Finset.sum_congr rfl fun j _ => ?_
-      simp only [zsmul_eq_mul]
-      ring
+      simp only [LinearMap.mulLeft_apply, AlgHom.toLinearMap_apply, map_sum, map_zsmul,
+        map_mul, aeval_X, Finset.sum_mul, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    simp only [zsmul_eq_mul]
+    ring
 
 theorem relIndex_eq_map {M : Type*} [AddCommGroup M] (f : M →ₗ[ℤ] Ω) {A B H : Submodule ℤ M} (hA : A ≤ H)
     (hB : B ≤ H) (hker : ∀ u ∈ H, f u = 0 → u ∈ A) :

@@ -55,7 +55,9 @@ theorem UpperTheory.V.Fr.st_set :
       by_contra h
       exact hne (hκ A h)
     rw [← hA (N : 𝓞 ℚ)]
-    simpa using h1
+    have e : algebraMap ℚ Ω (((N : 𝓞 ℚ) : ℚ)) = (N : Ω) := by simp
+    rw [e]
+    exact h1
   refine ⟨hT.toFinset.filter (fun v => ((l : ℕ) : 𝓞 ℚ) ∈ v.asIdeal ∨ v = v₀ ∨
     ∃ A : ValuationSubring Ω, IsPlaceOver A v ∧ ¬ Ine (F := ℚ) A ≤ κ.ker), v₀, hv₀, ?_⟩
   intro v A hA

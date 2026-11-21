@@ -384,8 +384,16 @@ theorem BlockResolutionMetricPair.proof (h : BergmanDensChartSum.Statement) : Bl
     intro x
     obtain ⟨x', hx', hx⟩ := mem_iUnion₂.1 (ht (mem_univ x))
     exact ⟨t.equivFin ⟨x', hx'⟩, by simpa [pt] using hx⟩
-  refine ⟨atlas d pt hcov, bundle d pt hcov, weight d pt hcov d.A d.deg d.semipos.1,
-    weight d pt hcov A' hA' hsp'.1, smoothVol d pt hcov, fun _ b => sec d pt hcov b, refine_compatible _ _ _ _ _,
+  have hsm : IsSmoothHerm d.A := by
+    have h := d.semipos
+    unfold IsSemipositiveRel at h
+    exact h.1
+  have hsm' : IsSmoothHerm A' := by
+    have h := hsp'
+    unfold IsSemipositiveRel at h
+    exact h.1
+  refine ⟨atlas d pt hcov, bundle d pt hcov, weight d pt hcov d.A d.deg hsm,
+    weight d pt hcov A' hA' hsm', smoothVol d pt hcov, fun _ b => sec d pt hcov b, refine_compatible _ _ _ _ _,
     weight_isSemipositive d pt hcov d.A d.deg d.P0 d.normalForm_baseLattice_le_dualSpan_sup_line d.semipos,
     weight_isSemipositive d pt hcov A' hA' P0' hP0' hsp', rfl, fun n b hb => sec_mem d pt hcov hb,
     fun y => ?_, fun s _ g hg => ?_⟩
@@ -400,11 +408,24 @@ theorem BlockResolutionMetricPair.proof (h : BergmanDensChartSum.Statement) : Bl
     · show 2 * Real.log (A'.h (d.R.lift (pt _) y)) = _
       rw [hz]
   · have hΦ : ∀ _ : Fin D, IsPotential d.R.A (blockInterpPot d d.A A' s) :=
-      fun _ => isPotential_blockInterpPot d hsp'.1 s
+      fun _ => isPotential_blockInterpPot d hsm' s
     have hMI := mIntegrableCont d.R.A _ hΦ g hg
     have hcomp := refine_compatible d.R.A (fun i => chartIdx d.R.A (pt i)) (fun i => d.R.U (pt i))
       (fun i => d.R.isOpen_U (pt i)) fun x => (hcov x).imp fun _ hx => ⟨hx.2, hx.1⟩
-    rw [(mIntAtlasIndep d.R.A (atlas d pt hcov) ⟨hcomp.2, hcomp.1⟩ _ hΦ g hMI).2]
+    have hcompat : d.R.A.Compatible (atlas d pt hcov) := ⟨hcomp.2, hcomp.1⟩
+    have hIndep : mInt d.R.A (fun _ => blockInterpPot d d.A A' s) g =
+        mInt (atlas d pt hcov) (fun _ => blockInterpPot d d.A A' s) g := by
+      have hU := compatible_unionAtlas_left d.R.A (atlas d pt hcov) hcompat
+      have hPU := fun i => isPotential_of_compatible hU (hΦ i)
+      have hgU := mIntegrable_of_compatible hU _ hΦ hMI
+      have hP' := fun i => isPotential_of_compatible hcompat (hΦ i)
+      have hg' := mIntegrable_of_compatible hcompat _ hΦ hMI
+      obtain ⟨R⟩ := existsPartition d.R.A
+      obtain ⟨R'⟩ := existsPartition (atlas d pt hcov)
+      rw [mIntEq d.R.A R _ hΦ g hMI, mIntEq (atlas d pt hcov) R' _ hP' g hg',
+        ← integralWith_extendLeft hcompat R _ g, ← integralWith_extendRight hcompat R' _ g]
+      exact integralWithIndep _ _ _ _ hPU g hgU
+    rw [hIndep]
     have hP : Nonempty (ChartPartition (atlas d pt hcov)) := existsPartition _
     rw [h (atlas d pt hcov) (bundle d pt hcov) _ (smoothVol d pt hcov) hP.some g hg]
     unfold mInt
@@ -414,7 +435,7 @@ theorem BlockResolutionMetricPair.proof (h : BergmanDensChartSum.Statement) : Bl
     refine Finset.sum_congr rfl fun j _ => setIntegral_congr_fun
       (((atlas d pt hcov).chart j).open_target.measurableSet) fun y hy => ?_
     simp only
-    rw [locDens_eq_chernTopDens d pt hcov A' hA' hsp'.1 s j hy]
+    rw [locDens_eq_chernTopDens d pt hcov A' hA' hsm' s j hy]
 
 end
 

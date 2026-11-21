@@ -8,7 +8,7 @@ open UpperTheory.V.Lit.Geo
 
 private theorem absBd {V W F : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V]
     [AddCommGroup W] [Module ℝ W] [NormedAddCommGroup F] [NormedSpace ℝ F] (e : W ≃ₗ[ℝ] V) (q : ℕ) :
-    ∃ (T : Finset (Fin q → W)) (B : ℝ), 0 ≤ B ∧ ∀ (m : MultilinearMap ℝ (fun _ : Fin q => W) F) (M : ℝ), 0 ≤ M →
+    ∃ (T : Finset (Fin q → W)) (B : ℝ), 0 ≤ B ∧ ∀ (m : (Fin q → W) →ₘₗ[ℝ] F) (M : ℝ), 0 ≤ M →
       (∀ X ∈ T, ‖m X‖ ≤ M) → ∀ X, ‖m X‖ ≤ B * M * ∏ i, ‖e (X i)‖ := by
   classical
   let b := Module.finBasis ℝ V

@@ -13,7 +13,8 @@ open Formalism.BasicNotions Formalism.BasicNotions.Loc ReciprocityTheory.Gal Mod
 
 namespace GlobalTheory.OrdLoc
 
-def glPart {G R : Type} [Group G] [CommRing R] {m : ℕ} (H : Subgroup G) (r : G →* GG m R)
+def glPart {G R : Type} [Group G] [CommRing R] {m : ℕ} (H : Subgroup G)
+    (r : G →* GG (m := m) (R := R))
     (h : ∀ g ∈ H, (r g).right = 1) : H →* GL (Fin m) R where
   toFun g := (r g).left
   map_one' := by simp

@@ -66,16 +66,17 @@ theorem coreMove {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
 theorem actSameOff {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] {n : ℕ}
     {ST SG : Finset (HeightOneSpectrum (𝓞 E))} (v : HeightOneSpectrum (𝓞 F)) {d d' : Deco E n ST SG}
     (h : Deco.SameOff ST SG v d d') (ga : Sp E n ≃ₗ[E] Sp E n) (hh : GLG (E := E) (n := n) (SG := SG)) :
-    Deco.SameOff ST SG v (d.act ga hh) (d'.act ga hh) where
-  N Q hQ := by
+    Deco.SameOff ST SG v (d.act ga hh) (d'.act ga hh) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro Q hQ
     ext x
     show x ∈ localization₂ Q.asIdeal (gmap ga d.N) ↔ x ∈ localization₂ Q.asIdeal (gmap ga d'.N)
     rw [mem_localization_gmap, mem_localization_gmap, h.N Q hQ]
-  f Q hQ := by
+  · intro Q hQ
     funext x
     show d.f Q (ga.symm x) = d'.f Q (ga.symm x)
     rw [h.f Q hQ]
-  be w hw := by
+  · intro w hw
     funext x
     show (hh w).1.mulVec (d.be w (ga.symm x)) = (hh w).1.mulVec (d'.be w (ga.symm x))
     rw [h.be w hw]

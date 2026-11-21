@@ -75,7 +75,6 @@ theorem rot_eq {k : InfinitePlace F → ℕ} {φ : TR.Sm F 2}
     have h2 : HasDerivAt (fun u : ℝ => f (t + u)) (s * f t) 0 := by
       convert h1 using 2
       · simp only [hf, add_smul, rotA_add, map_mul, mul_assoc]
-      · rfl
     have h3 := HasDerivAt.comp_add_const t (-t) (f := fun u : ℝ => f (t + u)) (by simpa using h2)
     simpa using h3
   have he : ∀ t : ℝ, HasDerivAt (fun t : ℝ => Complex.exp (-s * t)) (Complex.exp (-s * t) * -s) t := fun t => by

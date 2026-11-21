@@ -219,6 +219,8 @@ theorem thetaOrbits : ThetaOrbits := by
     (fun U => leftInv_rankSum V Φ.1 (c U) (Module.finrank D.host.E U))
     hfin
   convert key using 1
+  funext U
+  simp only [Ifr, pull_mt]
   rfl
 
 end GlobalTheory.CompanionTheory.ThetaOrbit

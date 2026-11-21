@@ -40,9 +40,9 @@ theorem hasDirichletDensity_zero_of_isBoundedUnder {S : Set (HeightOneSpectrum (
     S.HasDirichletDensity 0 := by
   obtain ⟨C, hC⟩ := hS
   have hC' : ∀ᶠ s in 𝓝[>] (1 : ℝ), S.primeIdealZetaSum s ≤ C := eventually_map.mp hC
-  have hden := tendsto_primeIdealZetaSum_univ_atTop K
+  have hden := tendsto_primeIdealZetaSum_univ_atTop (K := K)
   have hpos := hden.eventually_gt_atTop 0
-  unfold Set.HasDirichletDensity
+  unfold NumberField.Set.HasDirichletDensity
   refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
     (Tendsto.div_atTop (tendsto_const_nhds (x := C)) hden) (Eventually.of_forall fun s => ?_) ?_
   · exact div_nonneg (S.primeIdealZetaSum_nonneg s) (univ.primeIdealZetaSum_nonneg s)
@@ -50,16 +50,16 @@ theorem hasDirichletDensity_zero_of_isBoundedUnder {S : Set (HeightOneSpectrum (
     exact div_le_div_of_nonneg_right h1 h2.le
 
 theorem hasDirichletDensity_univ : (univ : Set (HeightOneSpectrum (𝓞 K))).HasDirichletDensity 1 := by
-  unfold Set.HasDirichletDensity
+  unfold NumberField.Set.HasDirichletDensity
   refine tendsto_const_nhds.congr' ?_
-  filter_upwards [(tendsto_primeIdealZetaSum_univ_atTop K).eventually_gt_atTop 0] with s hs
+  filter_upwards [(tendsto_primeIdealZetaSum_univ_atTop (K := K)).eventually_gt_atTop 0] with s hs
   exact (div_self hs.ne').symm
 
 theorem hasDirichletDensity_iff_of_subset_of_isBoundedUnder {S T : Set (HeightOneSpectrum (𝓞 K))}
     (hTS : T ⊆ S) (hb : IsBoundedUnder (· ≤ ·) (𝓝[>] 1) fun s => (S \ T).primeIdealZetaSum s)
     (δ : ℝ) : T.HasDirichletDensity δ ↔ S.HasDirichletDensity δ := by
   have h0 := hasDirichletDensity_zero_of_isBoundedUnder hb
-  unfold Set.HasDirichletDensity at h0 ⊢
+  unfold NumberField.Set.HasDirichletDensity at h0 ⊢
   have heq : ∀ᶠ s in 𝓝[>] (1 : ℝ),
       S.primeIdealZetaSum s / (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s =
         T.primeIdealZetaSum s / (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s +
@@ -91,7 +91,7 @@ variable (K) in
 theorem hasDirichletDensity_inter_degreeOnePrimes_iff (S : Set (HeightOneSpectrum (𝓞 L)))
     (δ : ℝ) : (S ∩ degreeOnePrimes K L).HasDirichletDensity δ ↔ S.HasDirichletDensity δ := by
   refine hasDirichletDensity_iff_of_subset_of_isBoundedUnder inter_subset_left ?_ δ
-  obtain ⟨C, hC⟩ := primeIdealZetaSum_higherDegreePrimes_le K L
+  obtain ⟨C, hC⟩ := primeIdealZetaSum_higherDegreePrimes_le (K := K) (L := L)
   refine isBoundedUnder_of_eventually_le (a := C)
     (eventually_nhdsWithin_of_forall fun s (hs : 1 < s) => ?_)
   refine (primeIdealZetaSum_mono ?_ hs).trans (hC s hs.le)
@@ -125,7 +125,7 @@ theorem tendsto_neg_log_sub_one_atTop :
 theorem tendsto_primeIdealZetaSum_univ_div_neg_log :
     Tendsto (fun s : ℝ => (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s /
       -Real.log (s - 1)) (𝓝[>] 1) (𝓝 1) := by
-  obtain ⟨C, hC⟩ := exists_abs_primeIdealZetaSum_add_log_le K
+  obtain ⟨C, hC⟩ := exists_abs_primeIdealZetaSum_add_log_le (K := K)
   have hu := tendsto_neg_log_sub_one_atTop
   have hupos := hu.eventually_gt_atTop 0
   set P := fun s : ℝ => (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s
@@ -275,9 +275,9 @@ theorem hasDirichletDensity_primesAbove_iff {T : Set (HeightOneSpectrum (𝓞 K)
     exact_mod_cast (Module.finrank_pos (R := K) (M := L)).ne'
   have hKL := tendsto_primeIdealZetaSum_univ_div_univ K L
   have hLK := tendsto_primeIdealZetaSum_univ_div_univ L K
-  have hKpos := (tendsto_primeIdealZetaSum_univ_atTop K).eventually_gt_atTop 0
-  have hLpos := (tendsto_primeIdealZetaSum_univ_atTop L).eventually_gt_atTop 0
-  unfold Set.HasDirichletDensity
+  have hKpos := (tendsto_primeIdealZetaSum_univ_atTop (K := K)).eventually_gt_atTop 0
+  have hLpos := (tendsto_primeIdealZetaSum_univ_atTop (K := L)).eventually_gt_atTop 0
+  unfold NumberField.Set.HasDirichletDensity
   constructor
   · intro h
     have := (h.const_mul n⁻¹).mul hLK
@@ -336,7 +336,7 @@ theorem dvd_differentIdeal_of_ramificationIdx_ne_one {w : HeightOneSpectrum (�
       v.map (algebraMap (𝓞 K) (𝓞 L)) := by
     rw [he]
     exact pow_multiplicity_dvd _ _
-  have := pow_sub_one_dvd_differentIdeal_aux (𝓞 K) K L w.asIdeal (by omega) hv0 hdvd
+  have := pow_sub_one_dvd_differentIdeal_aux (𝓞 K) K L w.asIdeal hv0 hdvd
   exact (dvd_pow_self _ (by omega)).trans this
 
 

@@ -73,7 +73,6 @@ theorem acts_of_comm {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype �
   have hya' : ya = fun i => ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (evI F (y i)), 0) := by
     funext i
     simp only [hya, evI, RingEquiv.symm_apply_apply]
-    rfl
   have hf₁' := hf₁ (fun i => evI F (y i))
   rw [step1, hfib, hya', hf₁']
   simp only [tens]

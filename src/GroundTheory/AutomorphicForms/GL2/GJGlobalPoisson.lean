@@ -104,6 +104,7 @@ theorem map_mul_left (a : GL (Fin n) 𝔸[K]) :
     simp only [Function.comp_apply, coe_transposeGL, ← transpose_mul, transpose_transpose]
   rw [h, ← map_map hT.measurable (hR.comp hT.measurable), ← map_map hR hT.measurable, hT.map_eq,
     map_mul_right, Measure.map_smul, hT.map_eq, invMod_transposeGL]
+  exact hT.measurable.aemeasurable
 
 theorem map_mul_mul (a b : GL (Fin n) 𝔸[K]) :
     (adelicMatrixMeasure K n).map
@@ -121,6 +122,7 @@ theorem map_mul_mul (a b : GL (Fin n) 𝔸[K]) :
         (fun x => (a : Matrix (Fin n) (Fin n) 𝔸[K]) * x) := rfl
   rw [h, ← map_map hR hL, map_mul_left, Measure.map_smul, map_mul_right, smul_smul, mul_pow,
     mul_comm]
+  exact hR.aemeasurable
 
 def mulMulHomeomorph (a b : GL (Fin n) 𝔸[K]) :
     Matrix (Fin n) (Fin n) 𝔸[K] ≃ₜ Matrix (Fin n) (Fin n) 𝔸[K] where

@@ -96,6 +96,7 @@ theorem UpperTheory.V.Ws.Chain.exists_residual_datum_over_restriction_to_rationa
       have hmax : ((l : ℕ) : c.O) ∈ IsLocalRing.maximalIdeal c.O := by
         obtain ⟨Q, hQ, hQc⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (R := ℤ_[l]) (S := c.O)
           (IsLocalRing.maximalIdeal ℤ_[l]) (IsLocalRing.le_maximalIdeal (RingHom.ker_ne_top _))
+        change Q.comap (algebraMap ℤ_[l] c.O) = _ at hQc
         have hlQ : ((l : ℕ) : c.O) ∈ Q := by
           have h0 : ((l : ℕ) : ℤ_[l]) ∈ Q.comap (algebraMap ℤ_[l] c.O) := by
             rw [hQc, PadicInt.maximalIdeal_eq_span_p]

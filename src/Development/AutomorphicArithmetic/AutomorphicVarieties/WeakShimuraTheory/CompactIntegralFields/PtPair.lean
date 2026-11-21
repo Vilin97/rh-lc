@@ -16,7 +16,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.HC Recip
 private theorem ptp_root {B V : Type} [CommRing B] [CommRing V] [IsLocalRing V] (f : B →+* V) {I : Ideal B}
     (hf : ∀ b ∈ I, f b ∈ maximalIdeal V) {q : B[X]} (hq : Pp.Dist I q) {v : V} (hv : q.eval₂ f v = 0) :
     v ∈ maximalIdeal V := by
-  rw [hq.1.as_sum, eval₂_add, eval₂_pow, eval₂_X, eval₂_finset_sum, add_eq_zero_iff_eq_neg] at hv
+  rw [hq.1.as_sum, eval₂_add, eval₂_pow, eval₂_X, eval₂_finsetSum, add_eq_zero_iff_eq_neg] at hv
   refine Ideal.IsPrime.mem_of_pow_mem inferInstance q.natDegree ?_
   rw [hv]
   refine neg_mem (Ideal.sum_mem _ fun n hn => ?_)

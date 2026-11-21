@@ -204,7 +204,9 @@ theorem key (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h.Nondegene
   change _ ∈ L
   rw [← hdd, mem_dual]
   intro y hy
-  have hy' : y ∈ dualInH h L := ⟨hy, by change y ∈ Submodule.span K _; rw [hL.span_eq_top]; trivial⟩
+  have hspan : Submodule.span K (L : Set V) = ⊤ := by
+    simpa using span_inf L hL (⊤ : Submodule K V)
+  have hy' : y ∈ dualInH h L := ⟨hy, by change y ∈ Submodule.span K _; rw [hspan]; trivial⟩
   have hay : a • y ∈ I₂ • L := by
     have := Submodule.smul_mem_smul haI hy'
     rw [Submodule.mul_smul] at this

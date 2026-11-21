@@ -47,14 +47,14 @@ private theorem spl_prj (c : Fin 4 → R) (X : M4 R) (i : Fin 4) :
   simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
 
 private theorem spl_ord {I : Subgroup H} {ps : Fin 4 → H → R} {s₀ : H} {r : H →* M4 R} (h : Ord I ps s₀ r) :
-    Ord I (fun i g => f (ps i g)) s₀ (mapRep f r) where
-  charpoly := by
-    rw [spl_rep, RingHom.mapMatrix_apply, Matrix.charpoly_map, h.charpoly, Polynomial.map_prod]
+    Ord I (fun i g => f (ps i g)) s₀ (mapRep f r) := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [spl_rep, RingHom.mapMatrix_apply, Matrix.charpoly_map, h.charpoly, Polynomial.map_prod]
     simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
-  stable g i j hij := by
+  · intro g i j hij
     rw [spl_rep, spl_rep, spl_prj f (fun a => ps a s₀), spl_prj f (fun a => ps a s₀), ← map_mul, ← map_mul,
       h.stable g i j hij, map_zero]
-  inert s hs i := by
+  · intro s hs i
     rw [spl_rep, spl_rep, spl_prj f (fun a => ps a s₀), ← map_one f.mapMatrix, ← spl_smul, ← map_sub, ← map_mul,
       ← map_mul, h.inert s hs i, map_zero]
 

@@ -29,7 +29,7 @@ theorem nonempty_emb {σ : E →ₐ[F] E} (h : IsCMExt F E σ) [Algebra.Unramifi
   · exact (nonempty_split_iff h).2 hp
 
 omit [NumberField E] in
-theorem piW_apply {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : piW τ z = splitProj τ (evT E v z) := rfl
+theorem piW_apply {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) : piW τ z = splitProj τ (evT (E := E) v z) := rfl
 
 omit [NumberField E] in
 theorem piW_cA {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
@@ -51,7 +51,7 @@ theorem piW_inclR {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (e : E) : piW τ (
   rw [map_one, one_mul]
 
 theorem mem_latAt_iff {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (z : Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
-    z ∈ GlobalTheory.InertSph.latAt W v ↔ At (evFin F v) z ∧ (fun i => evT E v (z i)) ∈ latLoc F W.L v := by
+    z ∈ GlobalTheory.InertSph.latAt W v ↔ At (evFin F v) z ∧ (fun i => evT (E := E) v (z i)) ∈ latLoc F W.L v := by
   constructor
   · intro hz
     induction hz using AddSubgroup.closure_induction with
@@ -75,8 +75,8 @@ theorem mem_latAt_iff {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (z : Fin d →
       convert neg_mem hx.2 using 1
       funext i; simp
   · rintro ⟨hz, hm⟩
-    have key : ∀ y ∈ latLoc F W.L v, (fun i => liftT E v (y i)) ∈ GlobalTheory.InertSph.latAt W v := fun y hy => by
-      refine latLoc_induction (p := fun y => (fun i => liftT E v (y i)) ∈ GlobalTheory.InertSph.latAt W v)
+    have key : ∀ y ∈ latLoc F W.L v, (fun i => liftT (E := E) v (y i)) ∈ GlobalTheory.InertSph.latAt W v := fun y hy => by
+      refine latLoc_induction (p := fun y => (fun i => liftT (E := E) v (y i)) ∈ GlobalTheory.InertSph.latAt W v)
         (fun a ha x hx => GlobalTheory.InertSphLat.gen_mem W ha hx) ?_ (fun p q hp hq => ?_) (fun p hp => ?_) hy
       · convert zero_mem (GlobalTheory.InertSph.latAt W v) using 1
         funext i; simp
@@ -244,7 +244,7 @@ theorem exists_split_dictionary : ∀ {F E : Type} [Field F] [NumberField F] [Fi
   · obtain ⟨y, rfl⟩ := (at_iff v z).1 hz
     rw [piW_apply, evT_liftT] at e₁ e₂
     rw [split_ext h τ (y := y) (z := 0) (by rw [e₁, map_zero]) (by rw [e₂, map_zero]), map_zero]
-  · refine ⟨liftT E v ((splitAlgEquiv h τ).symm (x₁, x₂)), at_liftT v _, ?_, ?_⟩
+  · refine ⟨liftT (E := E) v ((splitAlgEquiv h τ).symm (x₁, x₂)), at_liftT v _, ?_, ?_⟩
     · rw [piW_apply, evT_liftT, splitProj_symm]
     · rw [piW_apply, evT_liftT, splitProj_comp_symm]
   · rw [mem_latAt_iff, mem_latLoc_iff_split τ h, h₁.mem_iff, h₂.mem_iff]

@@ -131,7 +131,8 @@ theorem norm_diagonal_mul (k : Kˣ) (y : IdeleGroup K) (w : InfinitePlace K) :
     ‖((diagonal K k * y : IdeleGroup K) : 𝔸[K]).1 w‖ = w (k : K) * ‖(y : 𝔸[K]).1 w‖ := by
   rw [Units.val_mul, adele_fst_mul_apply, norm_mul]
   congr 1
-  exact InfinitePlace.Completion.norm_coe (K := K) (v := w) _
+  rw [coe_diagonal, AdeleRing.algebraMap_fst_apply]
+  exact AbsoluteValue.Completion.norm_coe (WithAbs.toAbs w.1 (k : K))
 
 theorem log_infiniteModule (x : IdeleGroup K) :
     Real.log (infiniteModule x) =

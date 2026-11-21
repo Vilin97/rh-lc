@@ -46,14 +46,40 @@ theorem exists_proj (ψ : AddChar k Circle) (n : ℕ) : ∀ (j : ℕ) (τ : MRep
     intro τ
     obtain ⟨p, hp, hq, hk⟩ := ih (MRep.phiM k ψ τ)
     have hnm : n ≤ n + j := Nat.le_add_right n j
-    obtain ⟨e, -⟩ := GlobalTheory.CompanionTheory.BZMirStep.twKer_twAct_eq_map τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j)) _
-      (levi_stab ψ (n + j)) (derUnipM k (n + j) n) (derCharM k ψ (n + j) n) (derUnipM k (n + j + 1) n)
-      (derCharM k ψ (n + j + 1) n) (GlobalTheory.CompanionTheory.BZMirStep.MirUin_step ψ hnm) (GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ hnm)
-      (GlobalTheory.CompanionTheory.BZMirStep.derUnipM_decomp hnm)
-    refine ⟨p ∘ₗ (twKer τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j))).mkQ,
+    let s := (levi k (n + j + 1)).comp (Mir k (n + j)).subtype
+    let q := (twKer τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j))).mkQ
+    let K := twKer (twAct τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j)) s (levi_stab ψ (n + j)))
+      (derUnipM k (n + j) n) (derCharM k ψ (n + j) n)
+    have hmap : (twKer τ.ρ (derUnipM k (n + j + 1) n) (derCharM k ψ (n + j + 1) n)).map q ≤ K := by
+      rw [Submodule.map_le_iff_le_comap]
+      refine Submodule.span_le.2 ?_
+      rintro _ ⟨u, v, rfl⟩
+      obtain ⟨u₁, a, hu⟩ := GlobalTheory.CompanionTheory.BZMirStep.derUnipM_decomp hnm u
+      obtain ⟨hu₁, h₁⟩ := GlobalTheory.CompanionTheory.BZMirStep.MirUin_step ψ hnm u₁
+      obtain ⟨ha, h₂⟩ := GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ hnm a
+      have hθ : derCharM k ψ (n + j + 1) n u = mirChar k ψ (n + j) u₁ * derCharM k ψ (n + j) n a := by
+        have : u = ⟨u₁, hu₁⟩ * ⟨s a, ha⟩ := Subtype.ext hu
+        rw [this, map_mul, h₁, h₂]
+      let c : ℂ := mirChar k ψ (n + j) u₁
+      let d : ℂ := derCharM k ψ (n + j) n a
+      have hdec : τ.ρ u v - (derCharM k ψ (n + j + 1) n u : ℂ) • v =
+          (τ.ρ u₁ (τ.ρ (s a) v) - c • τ.ρ (s a) v) + c • (τ.ρ (s a) v - d • v) := by
+        change (u : Mir k (n + j + 1)) = u₁ * s a at hu
+        rw [hθ, hu, map_mul, Module.End.mul_apply, Units.val_mul, smul_sub, mul_smul]
+        dsimp [c, d]
+        abel
+      have hz : τ.ρ u₁ (τ.ρ (s a) v) - c • τ.ρ (s a) v ∈
+          twKer τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j)) :=
+        Submodule.subset_span ⟨u₁, _, rfl⟩
+      change q (τ.ρ u v - (derCharM k ψ (n + j + 1) n u : ℂ) • v) ∈ K
+      rw [hdec, map_add, show q _ = 0 from (Submodule.Quotient.mk_eq_zero _).2 hz, zero_add, map_smul]
+      refine Submodule.smul_mem K c (Submodule.subset_span ⟨a, q v, ?_⟩)
+      rw [map_sub, map_smul]
+      rfl
+    refine ⟨p ∘ₗ q,
       hp.comp (Submodule.mkQ_surjective _), fun m v => hq m (Submodule.Quotient.mk v), ?_⟩
     rintro _ ⟨y, hy, rfl⟩
-    exact hk (Submodule.mem_map_of_mem (e.ge (Submodule.mem_map_of_mem hy)))
+    exact hk (Submodule.mem_map_of_mem (hmap (Submodule.mem_map_of_mem hy)))
 
 theorem glEmbMat_apply (N : ℕ) (A : Matrix (Fin N) (Fin N) k) (a b : Fin (N + 1)) :
     glEmbMat k N A a b = if h : (a : ℕ) < N ∧ (b : ℕ) < N then A ⟨a, h.1⟩ ⟨b, h.2⟩
@@ -107,6 +133,13 @@ theorem embM_eq_leviEmb (n j : ℕ) (g : GL (Fin n) k) :
       leviEmb k (stdBlocks (dd n (j + 1)) (dd_sum n j))
         (Pi.mulSingle (M := fun a => GL (Fin (dd n (j + 1) a)) k) (0 : Fin 2) g) := by
   set e := stdBlocks (dd n (j + 1)) (dd_sum n j) with he
+  let g' := Pi.mulSingle (M := fun a => GL (Fin (dd n (j + 1) a)) k) (0 : Fin 2) g
+  have hsame (a : Fin 2) (i l : Fin (dd n (j + 1) a)) :
+      (leviEmb k e g' : Matrix _ _ k) (e ⟨a, i⟩) (e ⟨a, l⟩) = (g' a : Matrix _ _ k) i l := by
+    simp [leviEmb, blockDiagonal'_apply_eq]
+  have hne {a b : Fin 2} (hab : a ≠ b) (i : Fin (dd n (j + 1) a)) (l : Fin (dd n (j + 1) b)) :
+      (leviEmb k e g' : Matrix _ _ k) (e ⟨a, i⟩) (e ⟨b, l⟩) = 0 := by
+    simp [leviEmb, blockDiagonal'_apply, hab]
   apply Units.ext
   ext a b
   rw [embM_levi_apply]
@@ -120,20 +153,20 @@ theorem embM_eq_leviEmb (n j : ℕ) (g : GL (Fin n) k) :
       have hln : (l : ℕ) < n := l.2
       have hs : Pi.mulSingle (M := fun a => GL (Fin (dd n (j + 1) a)) k) (0 : Fin 2) g 0 = g :=
         Pi.mulSingle_eq_same _ _
-      rw [leviEmb_apply_same, dite_eq_left (by omega)]
+      rw [hsame, dite_eq_left (by omega)]
       refine Eq.trans ?_ (congrArg (fun X : GL (Fin n) k => (X : Matrix (Fin n) (Fin n) k) i l) hs).symm
       exact congrArg₂ (fun a b => (g : Matrix (Fin n) (Fin n) k) a b) (Fin.ext hi) (Fin.ext hl)
     · have hl : (e ⟨1, l⟩ : ℕ) = n + l := std_val1 n (j + 1) _ (dd_sum n j) l
-      rw [leviEmb_apply_ne k e _ (by decide), dite_eq_right (by omega), if_neg (by omega)]
+      rw [hne (show (0 : Fin 2) ≠ 1 by decide), dite_eq_right (by omega), ite_eq_right (by omega)]
   · have hi : (e ⟨1, i⟩ : ℕ) = n + i := std_val1 n (j + 1) _ (dd_sum n j) i
     obtain rfl | rfl : y = 0 ∨ y = 1 := by omega
     · have hl : (e ⟨0, l⟩ : ℕ) = l := std_val0 n (j + 1) _ (dd_sum n j) l
       have hln : (l : ℕ) < n := l.2
-      rw [leviEmb_apply_ne k e _ (by decide), dite_eq_right (by omega), if_neg (by omega)]
+      rw [hne (show (1 : Fin 2) ≠ 0 by decide), dite_eq_right (by omega), ite_eq_right (by omega)]
     · have hl : (e ⟨1, l⟩ : ℕ) = n + l := std_val1 n (j + 1) _ (dd_sum n j) l
       have hs : Pi.mulSingle (M := fun a => GL (Fin (dd n (j + 1) a)) k) (0 : Fin 2) g 1 = 1 :=
         Pi.mulSingle_eq_of_ne (by decide) _
-      rw [leviEmb_apply_same, dite_eq_right (by omega)]
+      rw [hsame, dite_eq_right (by omega)]
       refine Eq.trans ?_ (congrArg (fun X : GL (Fin (dd n (j + 1) 1)) k =>
         (X : Matrix (Fin (dd n (j + 1) 1)) (Fin (dd n (j + 1) 1)) k) i l) hs).symm
       show _ = (1 : Matrix (Fin (dd n (j + 1) 1)) (Fin (dd n (j + 1) 1)) k) i l

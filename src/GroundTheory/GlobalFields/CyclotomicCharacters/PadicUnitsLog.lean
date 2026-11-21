@@ -93,7 +93,7 @@ def genUnit (n : ℕ) : (ZMod (ℓ ^ (n + unitsLevel ℓ)))ˣ :=
 
 theorem orderOf_genUnit (n : ℕ) : orderOf (genUnit ℓ n) = ℓ ^ n := by
   rw [← orderOf_units, coe_genUnit]
-  have := ZMod.orderOf_one_add_mul_prime_pow hℓ.out (unitsLevel ℓ) (unitsLevel_ne_zero ℓ)
+  have := ZMod.orderOf_one_add_mul_prime_pow hℓ.out (unitsLevel ℓ)
     (unitsLevel_add_two_le ℓ) 1 (by norm_cast; exact hℓ.out.not_dvd_one) n
   simpa using this
 

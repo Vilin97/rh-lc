@@ -26,7 +26,7 @@ theorem one_induction (P N : Submodule (𝓞 E) E) (β : E) (hβ : star β = β)
   have hI : I ≠ 0 := fun h => hne (FractionalIdeal.coeToSubmodule_eq_bot.2 h)
   have h1 : (1 : E) ∈ ((I⁻¹ : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) : Submodule (𝓞 E) E) *
       (I : Submodule (𝓞 E) E) := by
-    rw [← FractionalIdeal.coe_mul, inv_mul_cancel₀ hI]
+    rw [← FractionalIdeal.coeToSubmodule_mul, inv_mul_cancel₀ hI]
     exact FractionalIdeal.one_mem_one _
   refine Submodule.mul_induction_on h1 (fun z hz a ha => ?_) hadd
   have hz' := (FractionalIdeal.mem_inv_iff hI).1 hz

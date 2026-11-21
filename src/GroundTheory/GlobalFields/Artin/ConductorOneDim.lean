@@ -38,7 +38,7 @@ theorem unitFiltrationUnits_eq_unitsLevel (v : HeightOneSpectrum (𝓞 K)) (n : 
   · exact unitFiltrationUnits_zero_eq_unitsLevel_zero v
   ext x
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[v.adicCompletion K]
-  rw [mem_unitFiltrationUnits_iff hn hϖ, mem_unitsLevel_of_one_le hn, ← map_pow,
+  rw [mem_unitFiltrationUnits_iff hn hϖ, GroundTheory.Global.mem_unitsLevel_of_one_le hn, ← map_pow,
     (isEquiv_valuation_valued v).le_iff_le, map_pow, valued_irreducible_valuationInteger v hϖ,
     ← WithZero.exp_nsmul]
   simp

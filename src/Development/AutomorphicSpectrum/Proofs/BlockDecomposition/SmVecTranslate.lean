@@ -260,12 +260,16 @@ theorem tw_tens {V₁ : Submodule ℂ (Sm E r)} {V₂ : Submodule ℂ (Sm E s)} 
     field_simp
   | zero =>
     convert Submodule.zero_mem (tens2 V₁ V₂) using 1
+    funext m
+    simp
   | add a b _ _ ha hb =>
     convert add_mem ha hb using 1
     funext m
     simp [mul_add]
   | smul c a _ ha =>
     convert Submodule.smul_mem _ c ha using 1
+    funext m
+    simp only [Pi.smul_apply, smul_eq_mul]
     ring
 
 theorem node_tens {φ : Sm E (r + s)} (hφ : φ ∈ (Tr.node t₁ t₂).space) (k : Kinf E (r + s)) (y : GL (Fin (r + s)) (Af E)) :
@@ -274,7 +278,7 @@ theorem node_tens {φ : Sm E (r + s)} (hφ : φ ∈ (Tr.node t₁ t₂).space) (
   induction hφ using Submodule.span_induction with
   | mem φ h => exact tw_tens (h.1.2 k y)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 theorem node_fin {φ : Sm E (r + s)} (hφ : φ ∈ (Tr.node t₁ t₂).space) (g : GL (Fin (r + s)) (Af E)) :
@@ -295,7 +299,7 @@ theorem node_fin {φ : Sm E (r + s)} (hφ : φ ∈ (Tr.node t₁ t₂).space) (g
       rw [e] at this
       exact this
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 end Node

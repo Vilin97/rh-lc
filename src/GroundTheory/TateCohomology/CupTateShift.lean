@@ -306,7 +306,6 @@ theorem tateCup_connecting_left (m : ℕ) : ∀ (p q : ℤ), (1 - p).toNat + (1 
     erw [ih _ (by omega) p (q + 1) rfl hE (augIdeal k G ⊗ B)
       (shortExact_tensorRight_tensor hE B (augIdeal k G) hEB) (r + 1) (by omega) a _]
     rw [tsgn_add_one, neg_smul]
-    rfl
   · obtain ⟨n, rfl⟩ : ∃ n : ℕ, p = n := ⟨p.toNat, by omega⟩
     obtain ⟨m', rfl⟩ : ∃ m' : ℕ, q = m' := ⟨q.toNat, by omega⟩
     obtain ⟨l, rfl⟩ : ∃ l : ℕ, r = l := ⟨r.toNat, by omega⟩

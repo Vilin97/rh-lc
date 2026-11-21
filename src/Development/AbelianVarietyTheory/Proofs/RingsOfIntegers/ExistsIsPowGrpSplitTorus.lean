@@ -50,14 +50,13 @@ theorem mul_comp_torusMap (φ : X →+ X') {Z : Over S} (a b : Z ⟶ splitTorus 
   rw [map_mul, points_comp_torusMap, points_comp_torusMap, points_comp_torusMap, map_mul,
     MonoidHom.mul_comp]
 
-theorem isMonHom_torusMap (φ : X →+ X') : IsMonHom (torusMap S φ) where
-  one_hom := by
-    have h : (1 : 𝟙_ (Over S) ⟶ splitTorus S X') ≫ torusMap S φ = 1 := by
+theorem isMonHom_torusMap (φ : X →+ X') : IsMonHom (torusMap S φ) := by
+  constructor
+  · have h : (1 : 𝟙_ (Over S) ⟶ splitTorus S X') ≫ torusMap S φ = 1 := by
       apply (splitTorusPointsEquiv S X _).injective
       rw [points_comp_torusMap, map_one, map_one, MonoidHom.one_comp]
     simpa [Hom.one_def] using h
-  mul_hom := by
-    simpa only [Hom.mul_def, lift_fst_snd, Category.id_comp, lift_fst_comp_snd_comp] using
+  · simpa only [Hom.mul_def, lift_fst_snd, Category.id_comp, lift_fst_comp_snd_comp] using
       mul_comp_torusMap (S := S) φ (fst (splitTorus S X') (splitTorus S X')) (snd _ _)
 
 def incl {j : ℕ} (xe : X' ≃+ (Fin j → X)) (i : Fin j) : X →+ X' :=

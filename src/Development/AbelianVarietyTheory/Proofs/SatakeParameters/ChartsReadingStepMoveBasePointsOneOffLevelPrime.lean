@@ -178,29 +178,23 @@ theorem reads_move {B : Base} {X : PreX B.toPre} (I : TC B X) {u : B.Word} {a : 
     (hT : ∀ β (P : (B.primes X).vT u) (r j : Fin (B.R.N i)), r.1 + 1 = B.R.N i →
       HasRes P.1 (adAt B.host.F P.1 ((((k' β)⁻¹ * k β)⁻¹ : GA B (B.R.N i)).1 r j))
         (if j = r then Ideal.Quotient.mk P.1.asIdeal (B.fields.conjO (X.piT u)) else 0)) :
-    I.Reads u a i chOf Lb U' chi' (fun c => y c * k' (chOf c)) st (fun β => (k' β)⁻¹ * k β) where
-  key := R.key
-  onto := R.onto
-  lb := R.lb
-  k_std := hstd
-  k_off := fun β v hv _ _ => hoff β v hv
-  k_T := hT
-  pt := fun c => by
+    I.Reads u a i chOf Lb U' chi' (fun c => y c * k' (chOf c)) st (fun β => (k' β)⁻¹ * k β) := by
+  refine ⟨R.key, R.onto, R.lb, hstd, fun β v hv _ _ => hoff β v hv, hT, ?_, ?_, ?_, R.stab⟩
+  · intro c
     have e : y c * k' (chOf c) * ((k' (chOf c))⁻¹ * k (chOf c)) = y c * k (chOf c) := by group
     rw [e]
     exact R.pt c
-  lev := fun c x q hq => by
+  · intro c x q hq
     have e : y c * k' (chOf c) * x * ((k' (chOf c))⁻¹ * k (chOf c)) = y c * (k' (chOf c) * x * (k' (chOf c))⁻¹) * k (chOf c) := by
       group
     rw [e] at hq
     exact (hU (chOf c) x).trans (R.lev c _ q hq)
-  chr := fun c x κ hκ hq => by
+  · intro c x κ hκ hq
     have e : y c * k' (chOf c) * x.1 * ((k' (chOf c))⁻¹ * k (chOf c)) =
         y c * (k' (chOf c) * x.1 * (k' (chOf c))⁻¹) * k (chOf c) := by group
     rw [e] at hq
     rw [hchi]
     exact R.chr c _ κ hκ hq
-  stab := R.stab
 
 end GlobalTheory.TwU.AtTrue
 
@@ -224,7 +218,13 @@ theorem readsMove_holds : ReadsMove := by
   have hX := GlobalTheory.Mem.FieldsLaws.fields_ok B
   haveI : NeZero (B.R.N i) := ⟨(B.R.N_pos i).ne'⟩
   have hgr : gramN (I.rec7 l Z) i hi = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hP l Z).2.2.2 i hi).1
-  have hB := basePi_of_ok hX hPr u
+  have hB : BasePi ((B.primes X).vT u) (X.piT u) := by
+    refine ⟨fun r => ?_, hPr.piT_cop u⟩
+    constructor
+    · intro hr
+      exact piT_dvd_of_mem hX hPr u r fun P => hr P.1 P.2
+    · rintro ⟨q, rfl⟩ P hP
+      exact Ideal.mul_mem_right _ _ ((rls_vT_iff hX hPr u P).1 hP)
   have hLb : ∀ β, (K β).lev.Lb = baseLb B.fields.E (B.R.N i) ((B.primes X).vT u) := fun β => by
     ext x
     exact (R.lb β x).trans (GlobalTheory.Mem.Col2.Reside.mem_baseLb hPr u _ x).symm

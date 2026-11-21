@@ -316,13 +316,17 @@ theorem sum_ord_mul_deg_le {x : K} (hx : Transcendental k x) (S : Finset (Place 
 theorem finite_ord_pos (x : K) : {v : Place k K | 0 < v.ord x}.Finite := by
   classical
   by_cases hx0 : x = 0
-  · convert Set.finite_empty
-    ext v
-    simp [hx0]
+  · have h : {v : Place k K | 0 < v.ord x} = ∅ := by
+      ext v
+      simp [hx0]
+    rw [h]
+    exact Set.finite_empty
   by_cases halg : IsAlgebraic k x
-  · convert Set.finite_empty
-    ext v
-    simp [v.ord_eq_zero_of_isAlgebraic halg hx0]
+  · have h : {v : Place k K | 0 < v.ord x} = ∅ := by
+      ext v
+      simp [v.ord_eq_zero_of_isAlgebraic halg hx0]
+    rw [h]
+    exact Set.finite_empty
   by_contra hinf
   obtain ⟨S, hSsub, hcard⟩ := Set.Infinite.exists_subset_card_eq hinf
     (Module.finrank (IntermediateField.adjoin k {x}) K + 1)

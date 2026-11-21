@@ -69,7 +69,7 @@ theorem central_tens2 {G G' : Type} [Group G] [Fintype G] [Group G'] [Fintype G'
   rw [key ha _ x.1, key hb _ x.2, mul_inv_cancel_left, mul_inv_cancel_left, mul_comm]
 
 theorem finrank_multilinear {ι : Type} [Fintype ι] (N : ι → Type) [∀ i, AddCommGroup (N i)] [∀ i, Module ℂ (N i)]
-    [∀ i, FiniteDimensional ℂ (N i)] : Module.finrank ℂ (MultilinearMap ℂ N ℂ) = ∏ i, Module.finrank ℂ (N i) := by
+    [∀ i, FiniteDimensional ℂ (N i)] : Module.finrank ℂ ((Π i, N i) →ₘₗ[ℂ] ℂ) = ∏ i, Module.finrank ℂ (N i) := by
   classical
   rw [Module.finrank_eq_card_basis
     (Basis.multilinearMap (fun i => Module.finBasis ℂ (N i)) (Module.Basis.singleton Unit ℂ))]

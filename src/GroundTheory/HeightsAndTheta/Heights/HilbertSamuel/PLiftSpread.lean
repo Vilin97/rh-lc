@@ -54,7 +54,7 @@ theorem LiftSpread.proof : LiftSpread.Statement := by
   intro K _ _ ι _ _ Ω _ _ y D N _ hA
   classical
   obtain ⟨q, hq, hgen, -⟩ := hA
-  obtain ⟨σ, _, s, hs, hrel⟩ := GenRead.exists_sections_of_generatedV y hgen
+  obtain ⟨σ, _, s, hs, hrel⟩ := GenRead.exists_sections_of_generatedV (y := y) hgen
 
   obtain ⟨M, hM1, hM⟩ := LiftSpread.exists_common (fun j n => (n : Ω) * s j ∈ chartLat y (q • N) 1)
     (fun j n k h => by

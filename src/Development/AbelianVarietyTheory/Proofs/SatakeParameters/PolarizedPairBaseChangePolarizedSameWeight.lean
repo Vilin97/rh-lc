@@ -83,7 +83,7 @@ theorem normV_under {K L : Type} [Field K] [NumberField K] [Field L] [NumberFiel
   have : w.asIdeal.LiesOver (w.under (𝓞 K)).asIdeal := ⟨rfl⟩
   have := w.isMaximal
   have := (w.under (𝓞 K)).isMaximal
-  show Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 K)).asIdeal ^ w.asIdeal.inertiaDeg (𝓞 K)
+  simp only [normV, ← Ideal.absNorm_eq_natCard]
   rw [← Ideal.absNorm_relNorm (𝓞 K) (𝓞 L) w.asIdeal,
     Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 K)).asIdeal, map_pow]
 
@@ -91,7 +91,8 @@ theorem val_of_norm {K L : Type} [Field K] [NumberField K] [Field L] [NumberFiel
     (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpectrum (𝓞 L)) (y : (v.adicCompletion K)ˣ) (x : (w.adicCompletion L)ˣ)
     (h : ‖(y : v.adicCompletion K)‖ = ‖(x : w.adicCompletion L)‖) (f : ℕ) (hf : normV w = normV v ^ f) :
     Valued.v (y : v.adicCompletion K) = Valued.v (x : w.adicCompletion L) ^ f := by
-  have hf' : Ideal.absNorm w.asIdeal = Ideal.absNorm v.asIdeal ^ f := hf
+  have hf' : Ideal.absNorm w.asIdeal = Ideal.absNorm v.asIdeal ^ f := by
+    simpa only [normV, ← Ideal.absNorm_eq_natCard] using hf
   have hy : Valued.v (y : v.adicCompletion K) ≠ 0 := (Valuation.ne_zero_iff _).2 y.ne_zero
   have hx : Valued.v (x : w.adicCompletion L) ≠ 0 := (Valuation.ne_zero_iff _).2 x.ne_zero
   rw [FinitePlace.norm_def, FinitePlace.norm_def] at h
@@ -101,7 +102,7 @@ theorem val_of_norm {K L : Type} [Field K] [NumberField K] [Field L] [NumberFiel
   have h2 := zpow_right_injective₀ (zero_lt_one.trans h1) h1.ne' h
   rw [← WithZero.coe_unzero hy, ← WithZero.coe_unzero hx, ← WithZero.coe_pow]
   refine congrArg _ (Multiplicative.toAdd.injective ?_)
-  rw [h2, toAdd_pow, nsmul_eq_mul]
+  rw [toAdd_pow, WithZero.toAdd_unzero_eq_log, WithZero.toAdd_unzero_eq_log, nsmul_eq_mul, h2]
 
 def normChar {K : Type} (L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] (χ : HChar K) :
     HChar L :=
@@ -169,7 +170,7 @@ theorem normCharGen : ∀ (K L : Type) [Field K] [NumberField K] [Field L] [Numb
 
 theorem one_lt_normV {K : Type} [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K)) : 1 < normV v := by
   have h := HeightOneSpectrum.one_lt_absNorm_nnreal v
-  show 1 < Ideal.absNorm v.asIdeal
+  simp only [normV, ← Ideal.absNorm_eq_natCard]
   exact_mod_cast h
 
 theorem algebraMap_mem_real {E M : Type} [Field E] [NumberField E] [IsCMField E] [Field M] [NumberField M] [IsCMField M]

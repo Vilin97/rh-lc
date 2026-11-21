@@ -88,10 +88,10 @@ omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem killBlocks_comp {S S' : Set K} (h : S ⊆ S') :
     (killBlocks S').comp (killBlocks S) = (killBlocks S' : MRing ι →ₐ[ℤ] MRing ι) := by
   refine MvPolynomial.algHom_ext fun p => ?_
-  rw [AlgHom.comp_apply, killBlocks_X, killBlocks_X]
+  simp only [AlgHom.comp_apply, killBlocks, aeval_X]
   by_cases hp : p.1 ∈ S
-  · rw [if_pos hp, map_zero, if_pos (h hp)]
-  · rw [if_neg hp, killBlocks_X]
+  · simp [hp, h hp]
+  · simp [hp, killBlocks, aeval_X]
 
 theorem comap_killBlocks_mono {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) {S S' : Set K}
     (h : S ⊆ S') : P.comap (killBlocks S) ≤ P.comap (killBlocks S') := by

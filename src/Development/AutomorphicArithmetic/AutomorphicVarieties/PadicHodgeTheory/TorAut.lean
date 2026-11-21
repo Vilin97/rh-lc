@@ -10,7 +10,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 
 open Formalism.BasicNotions Formalism.BasicNotions.Loc ReciprocityTheory.Gal Module UpperTheory.V.Loc UpperTheory.V.U3 UpperTheory.V.Alg IsLocalRing Polynomial
 
-private theorem gg_ext {A : Type} [CommRing A] {x y : GG 3 A} (h : ∀ a b, x.mat a b = y.mat a b)
+private theorem gg_ext {A : Type} [CommRing A] {x y : GG (m := 3) (R := A)}
+    (h : ∀ a b, x.mat a b = y.mat a b)
     (h' : x.right = y.right) : x = y :=
   SemidirectProduct.ext (Units.ext (Matrix.ext h)) h'
 
@@ -52,7 +53,7 @@ theorem UpperTheory.V.Loc.torAut :
     rw [e, one_zpow] at e2
     rw [AlgHom.commutes]
     exact e2
-  have hmat : ∀ (C : Type) [CommRing C] [Algebra O C] (r : GQ l →* GG 3 C) g a b,
+  have hmat : ∀ (C : Type) [CommRing C] [Algebra O C] (r : GQ l →* GG (m := 3) (R := C)) g a b,
       (conjBy (tor C (Units.map (algebraMap O C : O →* C) t)) r g).mat a b =
         algebraMap O C ((t ^ wt a b : Oˣ) : O) * (r g).mat a b := fun C _ _ r g a b => by
     rw [(conjBy_tor r _).1, ← map_zpow]
@@ -77,7 +78,7 @@ theorem UpperTheory.V.Loc.torAut :
     refine (hF f ?_).trans (hF f' rfl).symm
     exact GLift.ext (MonoidHom.ext fun g => gg_ext (h g) rfl)
   have hxe : ∀ g a b, x ((U.r.hom g).mat a b) = (r0 D.η D.Ψ g).mat a b := fun g a b =>
-    congrArg (fun r : GQ l →* GG 3 O => (r g).mat a b) hx
+    congrArg (fun r : GQ l →* GG (m := 3) (R := O) => (r g).mat a b) hx
   refine ⟨t, θ, ht, uniq O _ _ fun g a b => ?_, fun y hy => ?_, hθm⟩
   · rw [AlgHom.comp_apply, hθm, map_mul, AlgHom.commutes]
     by_cases hab : a = b
@@ -98,7 +99,7 @@ theorem UpperTheory.V.Loc.torAut :
       ⟨_, rfl, fun a ha => Ideal.Quotient.eq_zero_iff_mem.2 ha⟩
     have e : f = (Ideal.Quotient.mkₐ O _).comp θ := uniq _ _ _ fun g a b => by
       rw [AlgHom.comp_apply, hθm, map_mul, AlgHom.commutes]
-      exact (congrArg (fun r : GQ l →* GG 3 (U.R ⧸ D.It U) => (r g).mat a b) hf).trans (hmat _ _ g a b)
+      exact (congrArg (fun r : GQ l →* GG (m := 3) (R := U.R ⧸ D.It U) => (r g).mat a b) hf).trans (hmat _ _ g a b)
     have := hfI hy
     rw [e] at this
     exact Ideal.Quotient.eq_zero_iff_mem.1 this

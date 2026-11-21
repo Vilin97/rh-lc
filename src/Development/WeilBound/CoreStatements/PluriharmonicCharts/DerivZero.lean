@@ -192,7 +192,8 @@ theorem deriv_zero {D : Datum H} {l : Level H} {Xo : Moduli D l} {σ : KA l →+
   obtain ⟨ho, -⟩ := isOpen_convex G hp L
   let Q : (Fin (Module.finrank ℂ 𝒵) → ℂ) → ((FU.Di i).La →+ (Fin g → ℂ)) := fun b =>
     P 0 + (anti (L b)).toAddMonoidHom.comp (P 0)
-  have hQ : IsHolPeriods (FU.Di i) ty _ Q := ⟨fun b hb => isPeriod_add (P 0) hl hi hd hs G hG hE _
+  have hQ : IsHolPeriods (FU.Di i) ty
+      {b | ∀ z, z ≠ 0 → (sesq G (anti (L b) z) (anti (L b) z)).re < (sesq G z z).re} Q := ⟨fun b hb => isPeriod_add (P 0) hl hi hd hs G hG hE _
     (fun a => (anti_comm_iff ty a _).2 ((e.symm b).2.1 a)) ((anti_symm_iff _ _).2 (e.symm b).2.2) hb, fun x => by
       let f : (Fin (Module.finrank ℂ 𝒵) → ℂ) →ₗ[ℂ] (Fin g → ℂ) :=
         { toFun := fun b => L b *ᵥ star (P 0 x)

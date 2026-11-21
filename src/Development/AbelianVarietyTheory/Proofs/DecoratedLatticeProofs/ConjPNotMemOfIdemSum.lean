@@ -65,7 +65,30 @@ theorem exists_rep_add_mem : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ :
   have hAA : (D.host.AA0 : Submodule (𝓞 D.host.E) D.host.E) ≠ ⊥ := fun h =>
     Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.B5.leading_constant_ne_zero D (FractionalIdeal.coeToSubmodule_eq_bot.1 h)
   have hspan : ∀ x : Formalism.L2.Col.HomE D.host.E S.rank T.rank, ∃ n : ℕ, 0 < n ∧ (n : D.host.E) • x ∈ perO (D.host.AA0 : Submodule (𝓞 D.host.E) D.host.E) N N' :=
-    Formalism.L2.Ker.lf_span _ hAA N N' hN.1.fg hN'.1.span_eq_top
+    by
+      have hfull : Submodule.span D.host.E (N' : Set (Fin T.rank → D.host.E)) = ⊤ := by
+        obtain ⟨n, s, s', hs, hd⟩ := GlobalTheory.T.exists_dual_family_selfDual_hermitianSpace D T N' hN'
+        apply top_unique
+        intro v _
+        have hv : v = ∑ i, (∑ j, (∑ k, star (s' i k) * T.gram k j) * v j) • s i := by
+          ext a
+          simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+          calc
+            v a = ∑ j : Fin T.rank, (if a = j then 1 else 0) * v j := by simp
+            _ = ∑ j, (∑ i, s i a * (∑ k, star (s' i k) * T.gram k j)) * v j := by simp_rw [hd]
+            _ = ∑ i, (∑ j, (∑ k, star (s' i k) * T.gram k j) * v j) * s i a := by
+              simp only [Finset.sum_mul, Finset.mul_sum]
+              rw [Finset.sum_comm]
+              apply Finset.sum_congr rfl
+              intro i _
+              apply Finset.sum_congr rfl
+              intro j _
+              apply Finset.sum_congr rfl
+              intro k _
+              ring
+        rw [hv]
+        exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span (hs i).1)
+      exact Formalism.L2.Ker.lf_span _ hAA N N' hN.1.fg hfull
   have hneg : ∀ P ∈ SS, (c : D.host.E) • (-g) ∈ Formalism.HermitianLatticesTheory.localization₂ P.asIdeal (perO (D.host.AA0 : Submodule (𝓞 D.host.E) D.host.E) N N') := fun P hP' => by
     rw [smul_neg]; exact neg_mem (hg P hP')
   have hL := Formalism.L2.Ker.lift_exists_alt D.host.E S.rank T.rank SS (perO (D.host.AA0 : Submodule (𝓞 D.host.E) D.host.E) N N') c hc hSS hspan (-g) hneg

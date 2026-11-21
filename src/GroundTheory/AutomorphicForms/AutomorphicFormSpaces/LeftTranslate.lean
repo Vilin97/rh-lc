@@ -43,10 +43,14 @@ def leftTranslateEnd (a : G) : Module.End ℂ (h.smoothFuns (F := F)) where
 
 theorem leftTranslateEnd_mul (a b : G) :
     h.leftTranslateEnd (F := F) a * h.leftTranslateEnd b = h.leftTranslateEnd (b * a) :=
-  LinearMap.ext fun f => Subtype.ext (funext fun g => by simp [leftTranslate, mul_assoc])
+  LinearMap.ext fun f => Subtype.ext (funext fun g => by
+    change (f : G → F) (b * (a * g)) = (f : G → F) ((b * a) * g)
+    rw [mul_assoc])
 
 theorem leftTranslateEnd_one : h.leftTranslateEnd (F := F) 1 = 1 :=
-  LinearMap.ext fun f => Subtype.ext (funext fun g => by simp [leftTranslate])
+  LinearMap.ext fun f => Subtype.ext (funext fun g => by
+    change (f : G → F) (1 * g) = (f : G → F) g
+    rw [one_mul])
 
 theorem leftTranslateEnd_inv_mul (a : G) :
     h.leftTranslateEnd (F := F) a⁻¹ * h.leftTranslateEnd a = 1 := by

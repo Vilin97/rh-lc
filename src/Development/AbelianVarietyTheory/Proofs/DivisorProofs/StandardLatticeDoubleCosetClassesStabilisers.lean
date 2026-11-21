@@ -42,7 +42,7 @@ theorem transport {G H : Type} [Group G] [Group H] (π : G →* H) (Γ J : Subgr
       ∀ x, {γ : G | γ ∈ Γ ∧ (gx x)⁻¹ * γ * gx x ∈ J}.ncard =
         Nat.card {γ : H // γ ∈ Δ ∧ (x.out)⁻¹ * γ * x.out ∈ K} := by
   refine ⟨fun g => ⟨DoubleCoset.mk Δ K (π g), ?_, ?_⟩, fun x => ?_⟩
-  · obtain ⟨δ, k, hδ, hk, e⟩ := DoubleCoset.mk_out_eq_mul Δ K (π g)
+  · obtain ⟨δ, hδ, k, hk, e⟩ := DoubleCoset.mk_out_eq_mul Δ K (π g)
     obtain ⟨γ, hγ, rfl⟩ := hsurj δ hδ
     refine ⟨γ⁻¹, inv_mem hγ, (gx (DoubleCoset.mk Δ K (π g)))⁻¹ * γ * g, (hJ _).2 ?_, by group⟩
     rw [map_mul, map_mul, map_inv, hgx, e]
@@ -50,7 +50,7 @@ theorem transport {G H : Type} [Group G] [Group H] (π : G →* H) (Γ J : Subgr
     rw [this]
     exact inv_mem hk
   · rintro x ⟨γ, hγ, k, hk, e⟩
-    rw [← DoubleCoset.out_eq' _ _ x, DoubleCoset.eq]
+    rw [← DoubleCoset.out_eq' x, DoubleCoset.eq]
     refine ⟨π γ, hmap γ hγ, π k, (hJ k).1 hk, ?_⟩
     rw [e, map_mul, map_mul, hgx]
   · rw [← Nat.card_coe_set_eq]

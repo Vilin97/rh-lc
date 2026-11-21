@@ -177,6 +177,12 @@ private theorem hs_lemma_0 {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra ℂ �
   have hB := NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) B
   refine (hA.mul_left H).unique ?_
   convert hB.mul_right H using 1
+  funext n
+  have hp : H * A ^ n = B ^ n * H := by
+    induction n with
+    | zero => simp
+    | succ n ih => rw [pow_succ, pow_succ, ← mul_assoc, ih, mul_assoc, h, ← mul_assoc]
+  rw [mul_smul_comm, smul_mul_assoc, hp]
 
 private theorem H_exp_lemma {n : Type*} [Fintype n] [DecidableEq n] {H A B : Matrix n n ℂ}
     (h : H * A = B * H) :

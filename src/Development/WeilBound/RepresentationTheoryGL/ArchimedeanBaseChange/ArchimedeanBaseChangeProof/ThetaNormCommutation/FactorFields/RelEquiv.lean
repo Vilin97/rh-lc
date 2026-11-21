@@ -13,13 +13,12 @@ open scoped Classical TensorProduct
 namespace PositivityTheory.Rg.BcB.G3.Count2P
 
 theorem rel_equiv {G : Type} [Group G] (θ : G →* G) :
-    Equivalence (fun x y : G => ∃ g, y = g⁻¹ * x * θ g) where
-  refl x := ⟨1, by simp⟩
-  symm := by
-    rintro x y ⟨g, rfl⟩
+    Equivalence (fun x y : G => ∃ g, y = g⁻¹ * x * θ g) := by
+  constructor
+  · exact fun x => ⟨1, by simp⟩
+  · rintro x y ⟨g, rfl⟩
     exact ⟨g⁻¹, by rw [map_inv]; group⟩
-  trans := by
-    rintro x y z ⟨g, rfl⟩ ⟨h, rfl⟩
+  · rintro x y z ⟨g, rfl⟩ ⟨h, rfl⟩
     exact ⟨g * h, by rw [map_mul]; group⟩
 
 theorem mk_eq_iff {G : Type} [Group G] (θ : G →* G) (x z : G) :

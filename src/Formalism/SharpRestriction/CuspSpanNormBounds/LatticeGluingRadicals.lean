@@ -4414,18 +4414,19 @@ section FinalB
 
 theorem d_termHyp {D : D7} (hGl : Formalism.MainNotions.S.UnitaryVolumeMass.stGlue D) {Λ : Formalism.MainNotions.S.UnitaryVolumeMass.Lt D} {T T' : ℕ}
     {F : Formalism.MainNotions.S.UnitaryVolumeMass.Fl D T} {F' : Formalism.MainNotions.S.UnitaryVolumeMass.Fl D T'} (hF : FixedHyp D Λ F)
-    (hT' : IsTerm Λ (gS D) F F') (hG' : IsGeneric Λ (gS D) F F') : d_TermHyp Λ (gS D) F F' where
-  lat := hF.1
-  unim := hF.2.1
-  glue := fun U hU => (hGl Λ hF.1 hF.2.1 U hU).1
-  g0 := Nat.one_le_iff_ne_zero.1 (d_gS_pos D)
-  zt := hF.2.2.1.2
-  zΛ := hF.2.2.1.1
-  fix := hF.2.2.2
-  zt' := hT'.1.2
-  zΛ' := hT'.1.1
-  G := hT'.2.2
-  gen := hG'
+    (hT' : IsTerm Λ (gS D) F F') (hG' : IsGeneric Λ (gS D) F F') : d_TermHyp Λ (gS D) F F' := by
+  exact {
+    lat := hF.1
+    unim := hF.2.1
+    glue := fun U hU => (hGl Λ hF.1 hF.2.1 U hU).1
+    g0 := Nat.one_le_iff_ne_zero.1 (d_gS_pos D)
+    zt := hF.2.2.1.2
+    zΛ := hF.2.2.1.1
+    fix := hF.2.2.2
+    zt' := hT'.1.2
+    zΛ' := hT'.1.1
+    G := hT'.2.2
+    gen := hG' }
 
 theorem theorem_B_first_two_steps (D : D7) (hGl : Formalism.MainNotions.S.UnitaryVolumeMass.stGlue D) (hA3 : Formalism.MainNotions.S.UnitaryVolumeMass.DefiniteRankOneAllWords D) :
     TheoremBFirstTwoSteps D := by

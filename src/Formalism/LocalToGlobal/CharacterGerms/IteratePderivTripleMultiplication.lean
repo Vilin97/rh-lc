@@ -121,7 +121,7 @@ theorem QQ_expand (Y : FBChart C V O dd) :
   rfl
 
 theorem triple_multiplication_pderiv_other (Y : FBChart C V O dd) (k : Fin dd) (s : Fin 3 × Fin dd) (hs : s.1 ≠ 0) :
-    pderiv C s (m3 Y.B.G V.l k) = 0 := by
+    pderiv (R := C) s (m3 Y.B.G V.l k) = 0 := by
   simp only [m3]
   rw [pderiv_eval_single (fun j => by simp [p3, pt])]
   apply Finset.sum_eq_zero
@@ -140,22 +140,22 @@ theorem triple_multiplication_first_only (Y : FBChart C V O dd) (k : Fin dd) (p 
   exact (mul_eq_zero.mp h).resolve_right (Nat.cast_add_one_ne_zero _)
 
 private theorem pderiv_ev_p3_zero_eq_ev_pderiv (i : Fin dd) (g : PS C 1 dd) :
-    pderiv C ((0 : Fin 3), i) (ev ![(p3 0 : Pt C 3 dd)] g) =
-      ev ![(p3 0 : Pt C 3 dd)] (pderiv C ((0 : Fin 1), i) g) := by
+    pderiv (R := C) ((0 : Fin 3), i) (ev ![(p3 0 : Pt C 3 dd)] g) =
+      ev ![(p3 0 : Pt C 3 dd)] (pderiv (R := C) ((0 : Fin 1), i) g) := by
   rw [pderiv_eval_single (fun j => by simp [p3, pt])]
   simp [p3, pderiv_pt, Finset.sum_ite_eq']
 
 theorem iterate_pderiv_triple_multiplication (Y : FBChart C V O dd) (k i : Fin dd) (L : ℕ) :
-    (pderiv C ((0 : Fin 3), i))^[L] (m3 Y.B.G V.l k) =
-      ev ![(p3 0 : Pt C 3 dd)] ((pderiv C ((0 : Fin 1), i))^[L] (mulL Y.B.G.F V.l k)) := by
+    (pderiv (R := C) ((0 : Fin 3), i))^[L] (m3 Y.B.G V.l k) =
+      ev ![(p3 0 : Pt C 3 dd)] ((pderiv (R := C) ((0 : Fin 1), i))^[L] (mulL Y.B.G.F V.l k)) := by
   induction L with
   | zero => rfl
   | succ L ih =>
     rw [Function.iterate_succ_apply', ih, pderiv_ev_p3_zero_eq_ev_pderiv,
-      ← Function.iterate_succ_apply' (pderiv C ((0 : Fin 1), i))]
+      ← Function.iterate_succ_apply' (pderiv (R := C) ((0 : Fin 1), i))]
 
 private theorem coeff_iterate_pderiv_eq_coeff_add_single_mul_prod {σ : Type} (i : σ) (L : ℕ) : ∀ (f : MvPowerSeries σ C) (μ : σ →₀ ℕ),
-    coeff μ ((pderiv C i)^[L] f) =
+    coeff μ ((pderiv (R := C) i)^[L] f) =
       coeff (μ + Finsupp.single i L) f * ∏ t ∈ Finset.range L, ((μ i : C) + t + 1) := by
   induction L with
   | zero =>

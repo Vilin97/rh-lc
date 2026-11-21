@@ -31,7 +31,7 @@ theorem TwistFinite.proof (hE : Extension.Statement.{u, w, w}) (hSF : SerreFinit
   have hΓ : Γ ⊆ LinearMap.range (readChartH0 x η S n0 d0 g0 i0 hi0) := by
     rintro _ ⟨b, s, hs, rfl⟩
     refine mem_range_readChartH0 x η S n0 d0 g0 i0 hi0 _ fun I hI => ?_
-    refine chart_pre x η S M0 G B hgen hG hspan I hI b ?_
+    refine chart_pre x η S (n0 := n0) (d0 := d0) (g0 := g0) M0 G B hgen hG hspan I hI b ?_
     rw [SubSystem.secs, Submodule.mem_iInf] at hs
     exact hs (toChart x I hI)
   have hfg : (Submodule.span (Sy S r) Γ).FG := by

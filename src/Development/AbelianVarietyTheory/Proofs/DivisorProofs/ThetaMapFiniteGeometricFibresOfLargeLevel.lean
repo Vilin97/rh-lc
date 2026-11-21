@@ -78,10 +78,9 @@ theorem finite_thetaData (Xo : Moduli Dw l) (c : Coeff l) (g j : ℕ) (hbig : 81
         exact ⟨φ.hom.left ≫ α, polFib_transport Xo.univ.t.PP.isLB φ hφ hpb hPL⟩
     · intro y₁ h₁ y₂ h₂ h
       exact pullback.hom_ext h (h₁.1.trans h₂.1.symm)
-  · convert Set.finite_empty
-    ext y
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
-    exact fun h => hne ⟨y, h⟩
+  · apply Set.Finite.subset Set.finite_empty
+    intro y hy
+    exact False.elim (hne ⟨y, hy⟩)
 
 end GlobalTheory.UMin.QF
 

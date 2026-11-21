@@ -29,8 +29,8 @@ noncomputable section
 
 namespace PI.IwaMeasEx.Nrm
 
-open Matrix NumberField Topology Filter MeasureTheory Formalism.MainNotions.S Formalism.MainNotions.LeviCoordinates Formalism.L2.S.S7.DensDefs
-  Formalism.L2.S.S7.WittLeviSubgroups Formalism.L2.S.S7.PositiveOrthantChangeOfVariables Formalism.L2.S.S7.GLOne
+open Matrix NumberField Topology Filter MeasureTheory Formalism.MainNotions.S
+  Formalism.MainNotions.LeviCoordinates Formalism.L2.S.S7.GLOne
 open scoped TensorProduct nonZeroDivisors
 
 section Top
@@ -86,7 +86,7 @@ theorem continuous_inclR :
 
 theorem continuous_embC {ι : Type} [Fintype ι] (b : Module.Basis ι I.F I.E) :
     Continuous (fun c : ι → Af I.F => (∑ j, b j ⊗ₜ[I.F] c j : AEf I)) := by
-  refine continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun j _ => ?_
   have e : (fun c : ι → Af I.F => (b j ⊗ₜ[I.F] c j : AEf I)) =
       fun c => iE I (b j) * Algebra.TensorProduct.includeRight (c j) := by
     funext c

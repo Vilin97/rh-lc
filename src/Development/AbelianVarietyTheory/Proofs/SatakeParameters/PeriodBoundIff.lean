@@ -13,7 +13,7 @@ noncomputable section
 
 namespace GlobalTheory.ExpAtTypePrimes
 
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G NumberField IsDedekindDomain GlobalTheory.IndefiniteRowSideFullHecke.PeriodLowerBounds
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G NumberField IsDedekindDomain
 
 theorem col_smul {R : Ranks} {ι : Type} [Fintype ι] {hc : ι → HCParam R} (C : ColumnChain R ι hc) (a : ℂ)
     (φ : C.cls 0 → C.Y 0 → ℂ) : C.col (a • φ) = a • C.col φ := by

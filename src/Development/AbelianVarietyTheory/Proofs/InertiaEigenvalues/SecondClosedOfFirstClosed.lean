@@ -55,7 +55,7 @@ theorem continuous_of_comb (had : IsAdic (IsLocalRing.maximalIdeal O)) {ι : Typ
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_mul, map_sum, hf, ha, Finset.mul_sum, Algebra.smul_def, mul_assoc]
   rw [this]
-  exact continuous_finset_sum _ fun j _ => continuous_const.mul (hh j)
+  exact continuous_finsetSum _ fun j _ => continuous_const.mul (hh j)
 
 theorem continuous_of_splitsAs (had : IsAdic (IsLocalRing.maximalIdeal O)) {Γ : Type} [Group Γ]
     [TopologicalSpace Γ] {n r t : ℕ} {M : Γ →* Matrix (Fin n) (Fin n) O}

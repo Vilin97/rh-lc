@@ -56,7 +56,7 @@ def firstHit (Γ : Subgroup G) (A : ℕ → Set G) : Set G :=
 theorem measurableSet_firstHit [MeasurableSpace G] [BorelSpace G] (Γ : Subgroup G)
     {A : ℕ → Set G} (hA : ∀ i, IsOpen (A i)) : MeasurableSet (firstHit Γ A) := by
   refine MeasurableSet.iUnion fun i => (hA i).measurableSet.diff ?_
-  exact (isOpen_saturate Γ (isOpen_biUnion fun j _ => hA j)).measurableSet
+  exact (isOpen_saturate Γ (isOpen_iUnion fun j => isOpen_iUnion fun _ : j < i => hA j)).measurableSet
 
 theorem existsUnique_mem_firstHit (Γ : Subgroup G) (A : ℕ → Set G)
     (hinj : ∀ i, ∀ γ ∈ Γ, ∀ x ∈ A i, γ * x ∈ A i → γ = 1)

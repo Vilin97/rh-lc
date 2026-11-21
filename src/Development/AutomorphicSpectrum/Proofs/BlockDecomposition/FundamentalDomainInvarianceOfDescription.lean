@@ -96,14 +96,22 @@ theorem measure_inter_band_lt_top (μ : Measure Ad3.R.G2) [μ.IsHaarMeasure] {�
         rw [Set.mem_inv_smul_set_iff]
         exact hγ
     _ ≤ ∑' γ : (AdelicGLn.diagonal ℚ 2).range, μ (γ • E ∩ 𝓕) := measure_iUnion_le _
-    _ = μ E := (hF.measure_eq_tsum E).symm
+    _ = μ E := by
+      set_option synthInstance.maxHeartbeats 200000 in
+        exact (hF.measure_eq_tsum E).symm
 
 theorem exists_probability_haar :
     ∃ m : Measure Ad3.R.KA, m.IsHaarMeasure ∧ IsProbabilityMeasure m := by
   haveI : CompactSpace Ad3.R.KA := isCompact_iff_compactSpace.1 isCompact_maxCompact
+  haveI : WeaklyLocallyCompactSpace Ad3.R.KA := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact inferInstance
   let K₀ : TopologicalSpace.PositiveCompacts Ad3.R.KA := ⊤
-  refine ⟨Measure.haarMeasure K₀, inferInstance, ⟨?_⟩⟩
-  have h := Measure.haarMeasure_self (K₀ := K₀)
+  set_option synthInstance.maxHeartbeats 200000 in
+    refine ⟨Measure.haarMeasure K₀, inferInstance, ⟨?_⟩⟩
+  have h := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact Measure.haarMeasure_self (K₀ := K₀)
   simpa [K₀] using h
 
 theorem setup_of_ideleDomain : Ad3.R.D0 → Ad3.R.G0 := by

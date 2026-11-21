@@ -65,9 +65,12 @@ def coordClass (p : Σ k, ι k) : FractionRing (MRing ι ⧸ P) :=
 
 theorem aeval_coordClass (g : MRing ι) :
     aeval (coordClass P) g = algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P)) (Ideal.Quotient.mk P g) := by
+  set_option synthInstance.maxHeartbeats 200000 in
   induction g using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add (f := _), hp, hq]
+  | add p q hp hq =>
+    rw [map_add (aeval (coordClass P)), map_add (Ideal.Quotient.mk P),
+      map_add (algebraMap _ _), hp, hq]
   | mul_X p n hp => simp only [map_mul, hp, aeval_X, coordClass]
 
 theorem aeval_coordClass_eq_zero (g : MRing ι) : aeval (coordClass P) g = 0 ↔ g ∈ P := by

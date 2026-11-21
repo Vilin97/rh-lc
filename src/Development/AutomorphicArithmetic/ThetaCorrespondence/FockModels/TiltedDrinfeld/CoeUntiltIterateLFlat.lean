@@ -14,6 +14,10 @@ namespace UpperTheory.Lit.Drps.Kum
 
 variable {l : ℕ} [Fact l.Prime]
 
+local notation "𝒪" => normInteger ℂ_[l]
+local notation "𝒪♭" => PreTilt 𝒪 l
+local notation "φi" => RingEquiv.symm (_root_.frobeniusEquiv 𝒪♭ l)
+
 variable {P : Formalism.BasicNotions.LocPrime l} (AI : Formalism.BasicNotions.LocAinf l P)
 
 def zeta (n : ℕ) : 𝒪 := Formalism.Per6.intEquiv l (AI.ζ n)
@@ -117,7 +121,7 @@ theorem epsPow_epsPow {a : ℤ_[l]} (ha : epsPow untilt_epsilon a = epsT AI) (c 
     epsPow (untilt_epsT AI) c = epsPow untilt_epsilon (a * c) := by
   refine tilt_ext_untilt fun n => ?_
   have e1 : PreTilt.untilt (φi^[n] (epsT AI)) =
-      PreTilt.untilt (φi^[n] (ε₀)) ^ (PadicInt.toZModPow n a).val := by
+      PreTilt.untilt (φi^[n] (epsilon l)) ^ (PadicInt.toZModPow n a).val := by
     rw [← ha]; exact untilt_iterate_epsPow _ a n
   haveI : NeZero (l ^ n) := ⟨pow_ne_zero _ (Fact.out : l.Prime).ne_zero⟩
   have e2 : (PadicInt.toZModPow n (a * c)).val = (PadicInt.toZModPow n a).val * (PadicInt.toZModPow n c).val % (l ^ n) := by

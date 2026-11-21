@@ -163,7 +163,13 @@ theorem main (ha : B1a) (hb : B1b) (h3 : B3) (hK : KapInt) (I : Type) [Fintype I
     refine ⟨hf.1.comp (continuous_pi fun i => continuous_apply _), fun w' j => ?_⟩
     have h := hf.2 (fun i => w' (σ i)) (σ.symm j)
     convert h using 3 with t
-    split_ifs <;> rfl
+    funext i
+    have heq : σ i = j ↔ i = σ.symm j := by
+      constructor
+      · intro h; exact σ.injective (by simpa using h)
+      · intro h; simpa [h]
+    simp only [Function.update_apply]
+    rw [heq]
   have hnrm : ∀ w' : X (Fin (Fintype.card I)), nrm (fun j => k (σ.symm j)) w' = nrm k fun i => w' (σ i) := by
     intro w'
     exact Fintype.prod_equiv σ.symm _ _ fun j => by simp

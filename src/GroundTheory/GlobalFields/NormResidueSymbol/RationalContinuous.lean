@@ -17,11 +17,10 @@ namespace RationalSymbol
 open _root_.GroundTheory.Global.Cyclotomic GroundTheory.LocalField.Abstract
 
 theorem continuous_cycRestrict : Continuous cycRestrict := by
-  have : IsGalois ℚ ℚ̄ := IsAlgClosure.isGalois ℚ ℚ̄
+  have : IsGalois ℚ (AlgebraicClosure ℚ) := IsAlgClosure.isGalois ℚ (AlgebraicClosure ℚ)
   have h : @Normal ℚ maxCyclotomic _ _ (IntermediateField.algebra' maxCyclotomic) := by
     convert isGalois_maxCyclotomic.to_normal
-    exact Subsingleton.elim _ _
-  have hc := @InfiniteGalois.restrictNormalHom_continuous ℚ ℚ̄ _ _ _ maxCyclotomic h
+  have hc := @InfiniteGalois.restrictNormalHom_continuous ℚ (AlgebraicClosure ℚ) _ _ _ maxCyclotomic h
   exact hc
 
 theorem continuous_cycCharacter : Continuous cycCharacter := by

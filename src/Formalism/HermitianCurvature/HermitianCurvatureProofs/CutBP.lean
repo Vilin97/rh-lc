@@ -25,15 +25,8 @@ noncomputable section
 
 theorem isBoundedBilinearMap_compR {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
     [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] :
-    IsBoundedBilinearMap ℝ (fun q : (Wq →L[ℂ] Wp) × (Wq →L[ℂ] Wq) => q.1.comp q.2) where
-  add_left x₁ x₂ y := ContinuousLinearMap.add_comp x₁ x₂ y
-  smul_left c x y := by ext v; simp
-  add_right x y₁ y₂ := ContinuousLinearMap.comp_add x y₁ y₂
-  smul_right c x y := by
-    ext v
-    simp only [ContinuousLinearMap.comp_apply, smul_apply]
-    exact ContinuousLinearMap.map_smul_of_tower x c (y v)
-  bound := ⟨1, one_pos, fun x y => by simpa using ContinuousLinearMap.opNorm_comp_le x y⟩
+    IsBoundedBilinearMap ℝ (fun q : (Wq →L[ℂ] Wp) × (Wq →L[ℂ] Wq) => q.1.comp q.2) :=
+  ((ContinuousLinearMap.compL ℂ Wq Wq Wp).bilinearRestrictScalars ℝ).isBoundedBilinearMap
 
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in

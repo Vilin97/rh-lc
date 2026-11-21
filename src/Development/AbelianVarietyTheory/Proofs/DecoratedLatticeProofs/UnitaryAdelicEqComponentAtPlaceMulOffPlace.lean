@@ -43,8 +43,8 @@ theorem mix_mem_decompAt (s : A →+* A) (J : Matrix n n A) (e : A) (hee : e * e
   refine ⟨⟨e • (g : Matrix n n A) + (1 - e) • 1, e • ((g⁻¹ : GL n A) : Matrix n n A) + (1 - e) • 1, ?_, ?_⟩, ?_, rfl⟩
   · rw [mix_mul_decompAt e hee, Units.mul_inv, ← add_smul, add_sub_cancel, one_smul]
   · rw [mix_mul_decompAt e hee, Units.inv_mul, ← add_smul, add_sub_cancel, one_smul]
-  · have hg' : Formalism.UG.cT s (g : Matrix n n A) ⬝ J ⬝ (g : Matrix n n A) = J := hg
-    show Formalism.UG.cT s (e • (g : Matrix n n A) + (1 - e) • 1) ⬝ J ⬝ (e • (g : Matrix n n A) + (1 - e) • 1) = J
+  · have hg' : Formalism.UG.cT s (g : Matrix n n A) * J * (g : Matrix n n A) = J := hg
+    show Formalism.UG.cT s (e • (g : Matrix n n A) + (1 - e) • 1) * J * (e • (g : Matrix n n A) + (1 - e) • 1) = J
     have h1 : e * (1 - e) = 0 := by rw [mul_sub, mul_one, hee, sub_self]
     have h2 : (1 - e) * e = 0 := by rw [mul_comm, h1]
     have h3 : (1 - e) * (1 - e) = 1 - e := by rw [sub_mul, one_mul, h1, sub_zero]

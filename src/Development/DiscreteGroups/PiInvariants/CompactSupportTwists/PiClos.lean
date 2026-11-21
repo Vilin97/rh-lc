@@ -76,7 +76,7 @@ theorem piClosureInv : PiClosureInv := by
   have hstep : ∀ i, f i ∈ W1 := fun i => by
     obtain ⟨hψi, hui, hsi⟩ := hψ i
     let u' : ℝ → ℂ := fun s => u i (s + ldet z)
-    have hu' : Continuous u' := hui.comp (continuous_add_right _)
+    have hu' : Continuous u' := hui.comp (continuous_id.add continuous_const)
     have hs' : HasCompactSupport u' := hsi.comp_homeomorph (Homeomorph.addRight (ldet z))
     let T := Top D hn u' hu' hs'
     have hle : (classes π.V (muG D)).topologicalClosure ≤ W1.comap (T : L2 (latticeGL E n) (muG D) →ₗ[ℂ] Lp ℂ 2 D.ν) := by

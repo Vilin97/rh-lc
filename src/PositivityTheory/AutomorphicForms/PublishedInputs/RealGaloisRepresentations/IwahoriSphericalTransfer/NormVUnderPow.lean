@@ -22,12 +22,12 @@ theorem normV_under_pow {K K' : Type} [Field K] [NumberField K] [Field K'] [Numb
   have : w.asIdeal.LiesOver (w.under (𝓞 K)).asIdeal := ⟨rfl⟩
   have := w.isMaximal
   have := (w.under (𝓞 K)).isMaximal
-  show Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 K)).asIdeal ^ w.asIdeal.inertiaDeg (𝓞 K)
+  simp only [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
   rw [← Ideal.absNorm_relNorm (𝓞 K) (𝓞 K') w.asIdeal,
     Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 K)).asIdeal, map_pow]
 
 theorem two_le_normV {K : Type} [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K)) : 2 ≤ normV v := by
-  show 2 ≤ Ideal.absNorm v.asIdeal
+  simp only [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
   have h0 : Ideal.absNorm v.asIdeal ≠ 0 := by
     rw [Ne, Ideal.absNorm_eq_zero_iff]; exact v.ne_bot
   have h1 : Ideal.absNorm v.asIdeal ≠ 1 := by

@@ -105,7 +105,7 @@ theorem cpt_eq_finAd (Q : Pl D.host.E) (z : AE D) :
     have h2 := congrArg (fun s : FiniteAdeleRing (𝓞 D.host.E) D.host.E => s Q)
       ((GlobalTheory.LFun.toFinAd_tmul (F := D.host.F) a.2 x).trans (mul_comm _ _))
     exact h1.trans h2.symm
-  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingEquiv.map_add (f := _), ha, hb]; rfl
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingEquiv.map_add (e := _), ha, hb]; rfl
 
 theorem exp_lt_one {n : ℕ} (hn : 0 < n) : WithZero.exp (-(n : ℤ)) < (1 : WithZero (Multiplicative ℤ)) := by
   rw [← WithZero.exp_zero, WithZero.exp_lt_exp]; omega
@@ -262,7 +262,7 @@ theorem smAt_cong {n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)
     (hx : ∀ y ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ, x.1 *ᵥ y - y ∈ Formalism.L2.Herm.hatL (F := D.host.F) (𝔪 • Λ))
     {w : Pl D.host.E} {k : ℕ} (h : 𝔪 ≤ w.asIdeal ^ k) :
     SmAt w (WithZero.exp (-(k : ℤ))) (Comparison₂.fr β β (x.val - 1)) := fun i j => by
-  obtain ⟨s, hs, e⟩ := (GlobalTheory.FrameIdeal.mem_hatL_smul_iff β Λ hβ 𝔪 _).1 (hx _ (HatFrame.col_mem_hat hβ j)) i
+  obtain ⟨s, hs, e⟩ := (GlobalTheory.FrameIdeal.mem_hatL_smul_iff β Λ hβ 𝔪 _).1 (hx _ (GlobalTheory.FrameIdeal.col_mem_hatL hβ j)) i
   have e2 : Comparison₂.fr β β (x.val - 1) i j = s := by
     have e3 : x.val *ᵥ (β.val *ᵥ Pi.single j 1) - β.val *ᵥ Pi.single j 1 = (x.val - 1) *ᵥ (β.val *ᵥ Pi.single j 1) := by
       rw [Matrix.sub_mulVec, Matrix.one_mulVec]

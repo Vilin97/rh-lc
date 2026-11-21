@@ -86,7 +86,8 @@ theorem finiteTest_add {v : HeightOneSpectrum (𝓞 K)} (x : v.adicCompletion K)
     (hh : Valued.v h ≤ exp (-(multiplicity v.asIdeal χ.conductor : ℤ))) :
     χ.finiteTest v (x + h) = χ.finiteTest v x := by
   by_cases hv : v.asIdeal ∣ χ.conductor
-  · have hn : 1 ≤ multiplicity v.asIdeal χ.conductor := multiplicity_pos_of_dvd hv
+  · have hn : 1 ≤ multiplicity v.asIdeal χ.conductor :=
+      multiplicity_pos_of_dvd hv (Ideal.finiteMultiplicity v.isPrime.ne_top χ.conductor_ne_bot)
     have hh1 : Valued.v h < 1 := by
       refine hh.trans_lt ?_
       rw [← exp_zero, exp_lt_exp]
@@ -223,7 +224,8 @@ theorem isCoprime_of_count_eq_zero {I 𝔪 : Ideal (𝓞 K)} (h𝔪 : 𝔪 ≠ �
   have hvI : v.asIdeal ∣ I := Ideal.dvd_iff_le.2 (le_sup_left.trans hle)
   have := h v hv𝔪
   rw [count_coeIdeal_eq_multiplicity v hI] at this
-  exact (multiplicity_pos_of_dvd hvI).ne' (by exact_mod_cast this)
+  exact (multiplicity_pos_of_dvd hvI (Ideal.finiteMultiplicity v.isPrime.ne_top hI)).ne'
+    (by exact_mod_cast this)
 
 theorem idealOfExponents_ne_bot {n : HeightOneSpectrum (𝓞 K) →₀ ℤ} (hn : ∀ v, 0 ≤ n v) :
     idealOfExponents n ≠ ⊥ := by

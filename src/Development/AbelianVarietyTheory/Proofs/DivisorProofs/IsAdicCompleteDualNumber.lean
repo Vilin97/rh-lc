@@ -38,13 +38,13 @@ theorem dual_dvd_iff {O : Type} [CommRing O] (p n : ℕ) (x : DualNumber O) :
 theorem isAdicComplete_dualNumber {O : Type} [CommRing O] (p : ℕ)
     [h : IsAdicComplete (Ideal.span {(p : O)}) O] :
     IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) where
-  toIsHausdorff.haus' x hx := by
+  haus' x hx := by
     simp only [SModEq.zero, mem_pow_iff, dual_dvd_iff] at hx
     refine TrivSqZeroExt.ext (h.toIsHausdorff.haus' x.fst fun n => ?_)
       (h.toIsHausdorff.haus' x.snd fun n => ?_)
     · rw [SModEq.zero, mem_pow_iff]; exact (hx n).1
     · rw [SModEq.zero, mem_pow_iff]; exact (hx n).2
-  toIsPrecomplete.prec' f hf := by
+  prec' f hf := by
     simp only [SModEq.sub_mem, mem_pow_iff, dual_dvd_iff] at hf ⊢
     obtain ⟨a, ha⟩ := h.toIsPrecomplete.prec' (fun n => (f n).fst) fun {m n} hmn => by
       rw [SModEq.sub_mem, mem_pow_iff]; exact (hf hmn).1

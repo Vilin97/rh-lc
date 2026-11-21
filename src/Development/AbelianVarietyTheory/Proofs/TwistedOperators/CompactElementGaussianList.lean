@@ -164,7 +164,7 @@ theorem prod_map_ite {M ι : Type} [Monoid M] [DecidableEq ι] (g : ι → M) (�
   | [], _, h => absurd h List.not_mem_nil
   | a :: L, hL, h => by
     rw [List.map_cons, List.prod_cons]
-    obtain ⟨ha, hL'⟩ := List.nodup_cons.1 hL
+    obtain ⟨ha, hL'⟩ : a ∉ L ∧ L.Nodup := List.nodup_cons.mp hL
     by_cases e : τ = a
     · subst e
       rw [if_pos rfl, List.prod_eq_one, mul_one]

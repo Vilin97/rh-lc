@@ -75,6 +75,17 @@ variable (μ₀ : Measure (ι → F)) [μ₀.IsAddHaarMeasure]
 
 theorem map_mul_left_comap (g : G) :
     map (g * ·) (μ₀.comap C.toFun) = (C.leftModulus g)⁻¹ • μ₀.comap C.toFun := by
+  haveI : SecondCountableTopology F := by
+    letI := IsTopologicalAddGroup.rightUniformSpace F
+    haveI := isUniformAddGroup_of_addCommGroup (G := F)
+    letI : (Valued.v (R := F)).RankOne :=
+      { hom' := ValuativeRel.IsRankLeOne.nonempty.some.emb (R := F).comp
+          MonoidWithZeroHom.ValueGroup₀.embedding
+        strictMono' := ValuativeRel.IsRankLeOne.nonempty.some.strictMono.comp
+          MonoidWithZeroHom.ValueGroup₀.embedding_strictMono }
+    open scoped Valued in
+    haveI : ProperSpace F := .of_nontriviallyNormedField_of_weaklyLocallyCompactSpace F
+    exact secondCountable_of_proper
   ext s hs
   rw [map_apply (continuous_const_mul g).measurable hs, C.measurableEmbedding.comap_apply,
     Measure.smul_apply, C.measurableEmbedding.comap_apply, image_preimage_mul_left,
@@ -83,6 +94,17 @@ theorem map_mul_left_comap (g : G) :
 
 theorem map_mul_right_comap (h : G) :
     map (· * h) (μ₀.comap C.toFun) = (C.rightModulus h)⁻¹ • μ₀.comap C.toFun := by
+  haveI : SecondCountableTopology F := by
+    letI := IsTopologicalAddGroup.rightUniformSpace F
+    haveI := isUniformAddGroup_of_addCommGroup (G := F)
+    letI : (Valued.v (R := F)).RankOne :=
+      { hom' := ValuativeRel.IsRankLeOne.nonempty.some.emb (R := F).comp
+          MonoidWithZeroHom.ValueGroup₀.embedding
+        strictMono' := ValuativeRel.IsRankLeOne.nonempty.some.strictMono.comp
+          MonoidWithZeroHom.ValueGroup₀.embedding_strictMono }
+    open scoped Valued in
+    haveI : ProperSpace F := .of_nontriviallyNormedField_of_weaklyLocallyCompactSpace F
+    exact secondCountable_of_proper
   ext s hs
   rw [map_apply (continuous_mul_const h).measurable hs, C.measurableEmbedding.comap_apply,
     Measure.smul_apply, C.measurableEmbedding.comap_apply, image_preimage_mul_right,
@@ -122,6 +144,7 @@ theorem leftModulus_mul (g h : G) : C.leftModulus (g * h) = C.leftModulus g * C.
     simp [mul_assoc]
   rw [e2, C.map_mul_left_comap μ₀ h, Measure.map_smul, C.map_mul_left_comap μ₀ g, smul_smul]
     at e1
+  all_goals try exact (continuous_const_mul g).measurable.aemeasurable
   have := C.eq_of_smul_comap_eq μ₀ e1
   rw [← mul_inv] at this
   rw [mul_comm]
@@ -139,6 +162,7 @@ theorem rightModulus_mul (g h : G) :
     simp [mul_assoc]
   rw [e2, C.map_mul_right_comap μ₀ g, Measure.map_smul, C.map_mul_right_comap μ₀ h, smul_smul]
     at e1
+  all_goals try exact (continuous_mul_const h).measurable.aemeasurable
   have := C.eq_of_smul_comap_eq μ₀ e1
   rw [← mul_inv] at this
   exact inv_injective this.symm

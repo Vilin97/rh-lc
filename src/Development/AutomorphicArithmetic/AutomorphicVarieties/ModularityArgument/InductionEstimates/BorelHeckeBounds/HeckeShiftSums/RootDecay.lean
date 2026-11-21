@@ -18,9 +18,9 @@ open scoped Pointwise
 private theorem sub_ct_le_of_altSum {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (G1 K n))
     [μ.IsHaarMeasure] (f : CC K n) (φ : L2 μ) {r M : ℕ} (hM : 0 < M) (x : G1 K n) (k : ℕ) {B : ℝ}
     (hB : ∀ y : Fin (k + 1) → UPos n r → 𝔸[K], (∀ i, y i ∈ scaledUnipFD K n r M) →
-      ‖altSum (k + 1) (fun s => rc μ f φ (unipOne K n r s * x)) y 0‖ ≤ B) :
+      ‖altSum (k + 1) (fun s => rc μ f φ (unipOne r s * x)) y 0‖ ≤ B) :
     ‖rc μ f φ x - ct r (rc μ f φ) x‖ ≤ B := by
-  set H : (UPos n r → 𝔸[K]) → ℂ := fun s => rc μ f φ (unipOne K n r s * x) with hH
+  set H : (UPos n r → 𝔸[K]) → ℂ := fun s => rc μ f φ (unipOne r s * x) with hH
   set c : ℂ := ct r (rc μ f φ) x with hc
   have hHc : Continuous H :=
     (continuous_rconv (Gam K n) μ f φ).comp ((continuous_unipOne r).mul continuous_const)
@@ -56,28 +56,28 @@ private theorem sub_ct_le_of_altSum_inf {K : Type} [Field K] [NumberField K] {n 
     (hfin : ∀ z : UPos n r → 𝔸[K], (∀ p, (z p).1 = 0) →
       (∀ p, ∃ a ∈ GroundTheory.Global.integralFiniteAdeles (𝓞 K) K,
         (z p).2 = (M : IsDedekindDomain.FiniteAdeleRing (𝓞 K) K) * a) →
-      ∀ w, f ((x⁻¹ * unipOne K n r z * x)⁻¹ * w) = f w)
+      ∀ w, f ((x⁻¹ * unipOne r z * x)⁻¹ * w) = f w)
     (k : ℕ) {B : ℝ}
     (hB : ∀ y : Fin (k + 1) → UPos n r → 𝔸[K], (∀ i, y i ∈ scaledUnipFD K n r M) →
-      ‖altSum (k + 1) (fun s => rc μ f φ (unipOne K n r (truncInf s) * x)) y 0‖ ≤ B) :
+      ‖altSum (k + 1) (fun s => rc μ f φ (unipOne r (truncInf s) * x)) y 0‖ ≤ B) :
     ‖rc μ f φ x - ct r (rc μ f φ) x‖ ≤ B := by
   refine sub_ct_le_of_altSum (r := r) μ f φ hM x k fun y hy => ?_
   have key : ∀ ε : Fin (k + 1) → Bool,
-      rc μ f φ (unipOne K n r (0 + altPoint y ε) * x) =
-        rc μ f φ (unipOne K n r (truncInf (0 + altPoint y ε)) * x) := by
+      rc μ f φ (unipOne r (0 + altPoint y ε) * x) =
+        rc μ f φ (unipOne r (truncInf (0 + altPoint y ε)) * x) := by
     intro ε
     rw [zero_add]
     have hfinP := hfin (truncFin (altPoint y ε)) (fun p => rfl) fun p => by
       obtain ⟨a, ha, hPa⟩ := exists_finite_altPoint_eq_natCast_mul hM y hy ε p
       exact ⟨a, ha, hPa⟩
-    have hP : unipOne K n r (altPoint y ε) * x = unipOne K n r (truncInf (altPoint y ε)) * x *
-        (x⁻¹ * unipOne K n r (truncFin (altPoint y ε)) * x) := by
+    have hP : unipOne r (altPoint y ε) * x = unipOne r (truncInf (altPoint y ε)) * x *
+        (x⁻¹ * unipOne r (truncFin (altPoint y ε)) * x) := by
       simp only [mul_assoc, mul_inv_cancel_left]
       rw [← mul_assoc, ← unipOne_add, truncInf_add_truncFin]
     rw [hP]
     exact rconv_mul_right μ f φ hfinP _
-  have heq : altSum (k + 1) (fun s => rc μ f φ (unipOne K n r s * x)) y 0 =
-      altSum (k + 1) (fun s => rc μ f φ (unipOne K n r (truncInf s) * x)) y 0 := by
+  have heq : altSum (k + 1) (fun s => rc μ f φ (unipOne r s * x)) y 0 =
+      altSum (k + 1) (fun s => rc μ f φ (unipOne r (truncInf s) * x)) y 0 := by
     rw [altSum_eq_sum, altSum_eq_sum]
     exact Finset.sum_congr rfl fun ε _ => congrArg (altSign ε • ·) (key ε)
   rw [heq]
@@ -137,7 +137,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.rootDecay :
     refine sub_ct_le_of_altSum_inf (r := r) μ f φ hM x ?_ k ?_
     · intro z hz1 hz2 w
       obtain ⟨u, hu⟩ := hMconj b hb ρ hρ kk hkk z hz1 hz2
-      have hxu : x⁻¹ * unipOne K n r z * x = finOne K n (u : AdelicGLn.integralFiniteGL K n) := by
+      have hxu : x⁻¹ * unipOne r z * x = finOne K n (u : AdelicGLn.integralFiniteGL K n) := by
         refine Subtype.ext ?_
         change (x : AdelicGLn.AdelicGL K n)⁻¹ * unipGL z * (x : AdelicGLn.AdelicGL K n) =
           finEmb K n _
@@ -162,7 +162,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.rootDecay :
         exact h1.trans (mul_le_mul_of_nonneg_right (le_max_left _ _) hgain0)
       have hYR : ∀ i, ‖Y i‖ ≤ R₁ := fun i => (hYn i).trans hgR
       have hex : ∀ ε : Fin (k + 1) → Bool, ∃ C : ArchUnits K n,
-          archProj K n C = x⁻¹ * unipOne K n r (truncInf (altPoint y ε)) * x ∧
+          archProj K n C = x⁻¹ * unipOne r (truncInf (altPoint y ε)) * x ∧
             (C : ArchMatrix K n) = 1 + altPoint Y ε := by
         intro ε
         obtain ⟨C, hC1, hC2⟩ := exists_archProj_eq_conj x (truncInf (altPoint y ε)) fun p => rfl
@@ -171,13 +171,13 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.rootDecay :
           map_altPoint (conjArch K n (x : AdelicGLn.AdelicGL K n))]
         rfl
       choose Cε hCε1 hCε2 using hex
-      have hsum : altSum (k + 1) (fun s => rc μ f φ (unipOne K n r (truncInf s) * x)) y 0 =
+      have hsum : altSum (k + 1) (fun s => rc μ f φ (unipOne r (truncInf s) * x)) y 0 =
           ∑ ε, (altSign ε : ℂ) * rconv (rationalGLOne (K := K) (n := n)) μ f φ (x * archProj K n (Cε ε)) := by
         rw [altSum_eq_sum]
         refine Finset.sum_congr rfl fun ε _ => ?_
         rw [zero_add, hCε1 ε, zsmul_eq_mul]
-        have : x * (x⁻¹ * unipOne K n r (truncInf (altPoint y ε)) * x) =
-            unipOne K n r (truncInf (altPoint y ε)) * x := by group
+        have : x * (x⁻¹ * unipOne r (truncInf (altPoint y ε)) * x) =
+            unipOne r (truncInf (altPoint y ε)) * x := by group
         rw [this]
       rw [hsum]
       have hb' : ∀ w, ‖∑ ε, (altSign ε : ℂ) * f ((archProj K n (Cε ε))⁻¹ * w)‖ ≤ b₀ := by

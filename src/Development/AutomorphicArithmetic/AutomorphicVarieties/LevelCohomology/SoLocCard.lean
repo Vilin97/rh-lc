@@ -51,7 +51,9 @@ theorem UpperTheory.V.X.So.locCard :
   obtain ⟨⟨e⟩, -, -, -, hb⟩ := hdual k Ω l r M A ρ v hr hA hcont
   refine ⟨h1, h2, ?_⟩
   have hτ' : τ = twDual ((cycMod k Ω l r).comp (Dec (F := k) A).subtype) ρ := by
-    ext g φ m
+    ext g φ
+    apply DFunLike.ext
+    intro m
     rw [hτ]
     rfl
   subst hτ'

@@ -54,10 +54,9 @@ theorem mem_of_divCycle_ne_zero {K : Type*} {ι : K → Type*} {R : Type*} [Comm
     {P : Ideal (MRing ι R)} {f : MRing ι R} {W : Ideal (MRing ι R)} (h : divCycle P f W ≠ 0) :
     f ∈ W ∧ W.IsPrime ∧ IsRelevant W := by
   unfold divCycle at h
-  have hW : W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P f := by
-    by_contra hW
-    simp [hW] at h
-  exact ⟨hW.1.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl)), hW.1.1.1, hW.2⟩
+  by_cases hW : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W
+  · exact ⟨hW.1.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl)), hW.1.1.1, hW.2⟩
+  · exact False.elim (h (dif_neg hW))
 
 end Examples
 

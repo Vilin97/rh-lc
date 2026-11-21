@@ -27,7 +27,8 @@ theorem acts_eq_of_rest {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {
     (h1 : Acts (evFin F v) T φ φ₁) (h2 : Acts (evFin F v) T φ φ₂) : φ₁ = φ₂ := by
   funext y
   set z : κ → AF F := fun i => GlobalTheory.LatVac.liftV v (y i - evFin F v (x₀ i)) with hz
-  have hza : At (evFin F v) z := GlobalTheory.VacAny.at_pi fun i => GlobalTheory.LatVac.at_liftV v _
+  have hza : At (evFin F v) z := fun u hu => funext fun i =>
+    GlobalTheory.LatVac.at_liftV v _ u hu
   have hrx : r (x₀ + z) = r x₀ := hr.1 x₀ z hza
   have hy : (fun i => evFin F v ((x₀ + z) i)) = y := by
     funext i
@@ -51,6 +52,7 @@ theorem isVac_iff_loc {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     exact acts_eq_of_rest v hr hx₀ _ _ _ (GlobalTheory.VacBridge.rho_acts_locCo M.co ψ v γ (hat γ hγ) φ) (h γ hγ)
   · rintro ⟨hSB, hne, θ, hθ, h⟩
     refine ⟨hSB, hne, θ, hθ, fun γ hγ => ?_⟩
+    simp only [cA, incM]
     rw [← h γ hγ]
     exact GlobalTheory.VacBridge.rho_acts_locCo M.co ψ v γ (hat γ hγ) φ
 end GlobalTheory.VacLocEig

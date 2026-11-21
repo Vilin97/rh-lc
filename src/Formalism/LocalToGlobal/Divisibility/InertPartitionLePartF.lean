@@ -384,9 +384,9 @@ theorem sameTypes_base3 {s : ℕ} (h : F3.Ok3 s) (P : Subgroup G) (ψ : P →* K
     ((F3.RI F3.F.μ0).sameTypes_self3 (F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ F3.F.μ0) (h.what₂ F3.F.μ0) h.ok2.irr)
 
 theorem side_well_formed {s : ℕ} (h : F3.Ok3 s) (P : Subgroup G) (ψ : P →* Kˣ) (Zs : DefSub F3.amb3) (hst : Zs.Stable)
-    (hin : Zs.InBlock) (hsep : F3.TypesSep3) : (F3.side3 P ψ Zs).WF where
+    (hin : Zs.InBlock) (hsep : F3.TypesSep3) : (F3.side3 P ψ Zs).WF := {
   cm := isCMSub_cmMax' K
-  «conj» := h.ok2.conj
+  conj := h.ok2.conj
   HV_rat t := BlockDat.HV_rat (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
   HV_pos t := BlockDat.HV_pos (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
   Mt_lat t := BlockDat.Mt_lat (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
@@ -405,6 +405,7 @@ theorem side_well_formed {s : ℕ} (h : F3.Ok3 s) (P : Subgroup G) (ψ : P →* 
   Tl_lat j t := BlockDat.Tl_lat (ℓ := F3.F.lvlA P ψ) (Z := Zs.Zl j t) h.ok2.conj (h.ok2.lifts j t) h.ok2.irr
   Zp_indep j := (F3.LI j F3.F.μ0).inert_parts_independent (F3.F.lvlA P ψ) (Zs.Zl j F3.F.μ0) (h.lifts j F3.F.μ0).comm
     (fun p : F3.base3.Ix => F3.tr3 j p.1) fun p p' hpp => hsep p.1 p.2 p'.1 p'.2 (fun e => hpp (Subtype.ext e)) j
+}
 
 def toIx2 (hc : Col.PairComm (F3.F.R F3.F.μ0).op) (p : F3.base3.Ix) : F3.F.base.Ix :=
   ⟨p.1.1, (F3.RI F3.F.μ0).mem_ixFin_fst hc p.2⟩

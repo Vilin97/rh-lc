@@ -16,12 +16,12 @@ namespace PositivityTheory.Rg.BcB.G3.LocDictP
 
 theorem frame_transport {k : Type} [Field k] {n : ℕ} {c : k →+* k} {δ : GL (Fin n) k} {s : k} {B B' : Type}
     [CommRing B] [CommRing B'] {d : B} {ρ : B →+* Matrix (Fin n) (Fin n) k} (e : B ≃+* B')
-    (h : IsFrame c δ s d ρ) : IsFrame c δ s (e d) (ρ.comp e.symm.toRingHom) where
-  inj := h.inj.comp e.symm.injective
-  sq := by simpa using h.sq
-  adj a := h.adj (e.symm a)
-  comm a := h.comm (e.symm a)
-  span x hx := by
+    (h : IsFrame c δ s d ρ) : IsFrame c δ s (e d) (ρ.comp e.symm.toRingHom) := by
+  refine ⟨h.inj.comp e.symm.injective, ?_, ?_, ?_, ?_⟩
+  · simpa using h.sq
+  · exact fun a => h.adj (e.symm a)
+  · exact fun a => h.comm (e.symm a)
+  · intro x hx
     obtain ⟨a, b, hab⟩ := h.span x hx
     exact ⟨e a, e b, by simpa using hab⟩
 

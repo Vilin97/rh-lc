@@ -76,8 +76,9 @@ theorem LineFibreBlocks.proof (hLin : LinearQuotient.Statement) : LineFibreBlock
   rw [hWdef, ringKrullDim_eq_of_ringEquiv (Ideal.quotientKerAlgEquivOfSurjective hφs).toRingEquiv,
     MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, zero_add] at hdimW
   have hr : r = 1 := by
-    have : ((Nat.card (Fin r) : ℕ) : WithBot ℕ∞) = ((1 : ℕ) : WithBot ℕ∞) := hdimW
-    have h2 : Nat.card (Fin r) = 1 := by exact_mod_cast this
+    have h : ENat.card (Fin r) = (1 : ℕ∞) := WithBot.coe_injective hdimW
+    rw [ENat.card_eq_coe_natCard] at h
+    have h2 : Nat.card (Fin r) = 1 := by exact_mod_cast h
     simpa using h2
   subst hr
 

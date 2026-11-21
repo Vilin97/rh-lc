@@ -32,7 +32,7 @@ private theorem fst_norm {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     · change (am E e).2 * (z : A E).2 = (am E e).2
       rw [hi2, zero_mul]
   have h2 := congrArg D.co h1
-  rw [D.co_am_mul, D.co_am] at h2
+  rw [D.co_am_mul, ← D.mkE_base, D.co_mkE] at h2
   have hu : e * D.co z 0 = e := congrFun h2 0
   have ht : e * D.co z 1 = 0 := congrFun h2 1
   have hu1 : (D.co z 0).1 = 1 := by

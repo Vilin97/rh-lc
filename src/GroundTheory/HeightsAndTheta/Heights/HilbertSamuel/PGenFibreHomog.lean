@@ -56,7 +56,8 @@ theorem isMultiHomogIdeal_mCoordIdeal {Ω : Type} [Field Ω] (y : (Σ k, ι k) �
   change mConeMap y _ = 0
   rw [ProjLine.mConeMap_eq_of_isMultiHomog y
       (isMultiHomog_of_weighted (weightedHomogeneousComponent_isWeightedHomogeneous b f)),
-    ← coeff_mConeMap, hf', coeff_zero, map_zero, zero_mul]
+    ← coeff_mConeMap, hf']
+  simp
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 

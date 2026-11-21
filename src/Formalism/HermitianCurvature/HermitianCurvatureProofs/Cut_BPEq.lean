@@ -28,15 +28,13 @@ theorem ttp_eq (p : KB.Pl P Wp Wq) (q : KB.Pl (shP P u u') Wp Wq') (hz : q.T.bas
   rfl
 
 theorem isBoundedBilinearMap_compSh :
-    IsBoundedBilinearMap ℝ (fun q : (Wq →L[ℂ] Wp) × (Wq' →L[ℂ] Wq) => q.1.comp q.2) where
-  add_left x₁ x₂ y := ContinuousLinearMap.add_comp x₁ x₂ y
-  smul_left c x y := by ext v; simp
-  add_right x y₁ y₂ := ContinuousLinearMap.comp_add x y₁ y₂
-  smul_right c x y := by
-    ext v
-    simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply]
-    exact ContinuousLinearMap.map_smul_of_tower x c (y v)
-  bound := ⟨1, one_pos, fun x y => by simpa using ContinuousLinearMap.opNorm_comp_le x y⟩
+    IsBoundedBilinearMap ℝ (fun q : (Wq →L[ℂ] Wp) × (Wq' →L[ℂ] Wq) => q.1.comp q.2) :=
+  { add_left := fun x₁ x₂ y => ContinuousLinearMap.add_comp x₁ x₂ y
+    smul_left := fun c x y => ContinuousLinearMap.smul_comp c x y
+    add_right := fun x y₁ y₂ => ContinuousLinearMap.comp_add x y₁ y₂
+    smul_right := fun c x y => ContinuousLinearMap.comp_smul x c y
+    bound := ⟨1, one_pos, fun x y => by simpa only [one_mul] using
+      ContinuousLinearMap.opNorm_comp_le x y⟩ }
 
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in

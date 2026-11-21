@@ -428,7 +428,7 @@ theorem proof : PrincipalReductionOfBoundedGens.Statement.{u} := by
       Ideal.mul_mem_mul (Ideal.mem_span_singleton_self c) ((mem_reesAlgebra_iff I _).1 f'.2 L), _, ?_,
       show c * (f' : A[X]).coeff L + (x - (f' : A[X]).coeff L * c) = x by ring⟩
     rw [Ideal.smul_eq_mul, show x - (f' : A[X]).coeff L * c = -((f' : A[X]).coeff L * c - x) by ring]
-    exact neg_mem h2
+    simpa using (neg_mem h2)
   · calc Ideal.span {c} * I ^ L ≤ I ^ m * I ^ L :=
           Ideal.mul_mono_left ((Ideal.span_singleton_le_iff_mem _).2 hc)
       _ = I ^ (L + m) := by rw [pow_add, mul_comm]

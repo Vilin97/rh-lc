@@ -80,7 +80,7 @@ private theorem ch_cup {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algeb
     (fun j hj m => LinearMap.congr_fun (hK j hj.2).1 m) x).1 hx
   obtain ⟨γ, -, h1, h2⟩ := decZhat F Ω v A hA
   haveI : ((Ine (F := F) A ⊓ K).subgroupOf (Dec (F := F) A)).Normal :=
-    ⟨fun n hn g => ⟨conj_mem_Ine g.2 hn.1, Subgroup.Normal.conj_mem inferInstance _ hn.2 _⟩⟩
+    ⟨fun n hn g => ⟨conj_mem_Ine g.2 hn.1, Subgroup.Normal.conj_mem _ hn.2 _⟩⟩
   obtain ⟨b, hb1, -, hb2⟩ := H2_unramified_inflation l (Dec (F := F) A) k k ((charRep μ).comp φ) hμ
     ((Ine (F := F) A).subgroupOf (Dec (F := F) A)) ((Ine (F := F) A ⊓ K).subgroupOf (Dec (F := F) A)) γ
     (fun g hg => hg.1) (((isClosed_Ine A).inter (K.isClosed_of_isOpen ho)).preimage continuous_subtype_val)

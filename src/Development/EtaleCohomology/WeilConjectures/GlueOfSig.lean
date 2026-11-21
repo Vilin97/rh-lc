@@ -29,7 +29,7 @@ theorem shvSigma : ShvSigma := by
   · intro y
     let sec : (Discrete.functor (fun a => op (Y a)) ⋙ G).sections :=
       ⟨fun j => y j.as, by
-        rintro ⟨j⟩ ⟨j'⟩ ⟨⟨h⟩⟩
+        rintro ⟨j⟩ ⟨j'⟩ ⟨h⟩
         cases h
         show G.map (𝟙 _) _ = _
         rw [G.map_id]; rfl⟩

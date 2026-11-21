@@ -49,15 +49,17 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
 theorem map_maximalIdeal_eq_iff :
     (maximalIdeal 𝒪[K]).map (algebraMap 𝒪[K] 𝒪[L]) = maximalIdeal 𝒪[L] ↔ IsUnramified K L := by
   rw [map_maximalIdeal K L, isUnramified_iff]
+  change maximalIdeal 𝒪[L] ^ ramificationIndex K L = maximalIdeal 𝒪[L] ↔
+    ramificationIndex K L = 1
   constructor
   · intro h
     have hpos := ramificationIndex_pos K L
     by_contra hne
-    have h2 : 2 ≤ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by omega
+    have h2 : 2 ≤ ramificationIndex K L := by omega
     have hL : maximalIdeal 𝒪[L] ≠ ⊥ := maximalIdeal_ne_bot L
     have hlt := Ideal.pow_succ_lt_pow hL 1
     have hle : maximalIdeal 𝒪[L] ^ 1 ≤ maximalIdeal 𝒪[L] ^ (1 + 1) :=
-      calc maximalIdeal 𝒪[L] ^ 1 = maximalIdeal 𝒪[L] ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
+      calc maximalIdeal 𝒪[L] ^ 1 = maximalIdeal 𝒪[L] ^ ramificationIndex K L := by
             rw [pow_one, h]
         _ ≤ maximalIdeal 𝒪[L] ^ (1 + 1) := Ideal.pow_le_pow_right h2
     exact absurd hle (not_le_of_gt hlt)

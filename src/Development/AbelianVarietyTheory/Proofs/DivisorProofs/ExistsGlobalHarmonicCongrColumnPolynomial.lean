@@ -27,7 +27,7 @@ theorem sum_smul_mem_HaO {Ty : Type} {r : Ty → ℕ} {n : ℕ} {k : Type} [Fiel
     fun q hq => ?_⟩, fun q => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    exact Finset.sum_congr rfl fun j _ => by rw [map_smul, (hP j).1.2.1 σ i i' hi t]
+      exact Finset.sum_congr rfl fun j _ => by rw [map_smul, (hP j).1.2.1 σ i i' hi t]
   · obtain ⟨j, -, hj⟩ := Finset.mem_biUnion.1 (MvPolynomial.support_sum hq)
     exact (hP j).1.2.2 q (MvPolynomial.support_smul hj)
   · rw [MvPolynomial.coeff_sum]

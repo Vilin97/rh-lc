@@ -152,5 +152,6 @@ theorem map_tuple : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
       Measure.map_map (hPI.prodMap hPF) S.continuous.measurable,
       Measure.map_map ((hPI.prodMap hPF).comp S.continuous.measurable) he]
     rfl
+    exact (hPI.prodMap hPF).aemeasurable
 
 end GlobalTheory.CompanionTheory.SiegelND.Integ.MapTup

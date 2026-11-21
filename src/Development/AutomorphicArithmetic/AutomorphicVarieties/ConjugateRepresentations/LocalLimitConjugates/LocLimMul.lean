@@ -45,13 +45,13 @@ private theorem isOp_cj {r : ℝ} {χ : HChar E} (hχ : IsTw (a := a) r χ) {N :
 private theorem shift_mul {r : ℝ} {χ : HChar E} (hχ : IsTw (a := a) r χ) (X : Lie E a) (φ : Sm E a) :
     shift (lie E a) 0 X (mulChi a χ φ) = mulChi a χ (shift (lie E a) r X φ) := by
   rw [shift_apply, shift_apply, zero_mul, zero_smul, add_zero, hχ.2, LinearMap.add_apply, LinearMap.smul_apply,
-    Module.End.one_apply, Complex.coe_smul]
+    one_apply_eq_self, Complex.coe_smul]
 
 private theorem casA_mul {r : ℝ} {χ : HChar E} (hχ : IsTw (a := a) r χ) (c : ℝ) {n : ℕ} (e : Fin n → Herm E a)
     (φ : Sm E a) : casA 0 c e (mulChi a χ φ) = mulChi a χ (casA r c e φ) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [casA, cas, LinearMap.sub_apply, LinearMap.sum_apply, Module.End.mul_apply, LinearMap.smul_apply,
-    Module.End.one_apply, map_sub, map_sum, map_smul, shift_mul hχ]
+    simp only [casA, cas, LinearMap.sub_apply, LinearMap.sum_apply, mul_apply_eq_comp, LinearMap.smul_apply,
+    one_apply_eq_self, map_sub, map_sum, map_smul, shift_mul hχ]
 
 private theorem locLim_mul (χ : HChar E) {f : ℕ → Sm E a} {φ : Sm E a}
     (h : LocLim (fun k => mulChi a χ (f k)) (mulChi a χ φ)) : LocLim f φ := by

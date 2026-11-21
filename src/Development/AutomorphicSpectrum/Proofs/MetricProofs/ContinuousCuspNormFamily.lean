@@ -111,7 +111,7 @@ theorem continuous_eigComp (R : X → RiemLat E g Λ) (hP : ∀ v, Continuous fu
     have h1 := eigComp_eq (R x) (extEmb s) c hc u
     rwa [extEmb_comp] at h1
   simp_rw [h]
-  exact continuous_finset_sum _ fun a _ => (hP (a • u)).const_smul (c a)
+  exact continuous_finsetSum _ fun a _ => (hP (a • u)).const_smul (c a)
 
 theorem continuous_ip (R : X → RiemLat E g Λ) (hH : Continuous fun x => (R x).Hm) {p q : X → Fin g → ℂ}
     (hp : Continuous p) (hq : Continuous q) : Continuous fun x => (R x).ip (p x) (q x) := by
@@ -123,7 +123,7 @@ theorem continuous_nzOf {Ψ : Type} [Fintype Ψ] (R : X → RiemLat E g Λ)
     (σ : Ψ → (𝓞 E →+* ℂ)) (I : Submodule (𝓞 E) Λ) {r : ℕ} (v : Fin r → Λ) :
     Continuous fun x => (R x).nzOf σ I v := by
   unfold RiemLat.nzOf
-  refine Continuous.div_const (continuous_finset_prod _ fun τ _ => ?_) _
+  refine Continuous.div_const (continuous_finsetProd _ fun τ _ => ?_) _
   refine Complex.continuous_re.comp (Continuous.matrix_det ?_)
   refine continuous_matrix fun a b => ?_
   exact continuous_ip R hH (continuous_eigComp R hP _ _) (continuous_eigComp R hP _ _)

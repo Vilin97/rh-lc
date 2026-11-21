@@ -192,7 +192,7 @@ theorem integrable_of_nodes {Y : Type*} [MeasurableSpace Y] {μ : Measure Y} {N 
     have := congrFun (hinv y) ⟨i, hi⟩
     simpa only [Matrix.mulVec, dotProduct] using this
   rw [hM]
-  exact integrable_finset_sum _ fun j _ => (h j).const_mul _
+  exact integrable_finsetSum _ fun j _ => (h j).const_mul _
 
 end PtsPencil
 

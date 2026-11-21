@@ -260,7 +260,10 @@ theorem haar_conj {g : MatKR k r} (hg : g ∈ UH (Hpk k r)) {μ : Measure (Mt k 
   · have hcl : IsClosed {x : Mt k r | Matrix.of x ∈ C6.Rset g} := (P.Dx2.OrbJ.closedR hu).closed
     refine (Measure.map_apply hm hcl.measurableSet.compl).trans ?_
     have h0 : μ {x : Mt k r | Matrix.of x ∈ C6.Rset g⁻¹}ᶜ = 0 := h.conc
-    refine measure_mono_null (fun x hx (hx' : Matrix.of x ∈ C6.Rset g⁻¹) => hx ⟨?_, ?_⟩) h0
+    refine measure_mono_null (t := {x : Mt k r | Matrix.of x ∈ C6.Rset g⁻¹}ᶜ) ?_ h0
+    intro x hx hx'
+    apply hx
+    refine ⟨?_, ?_⟩
     · have := hx'.2
       rw [hii] at this
       exact this
@@ -327,7 +330,8 @@ theorem root_haar (hk : 1 ≤ k) {z z' : Fin (2 * r + k + 1) → ℂ} (hz : inWb
       rw [← Matrix.conjTranspose_conjTranspose (C2.uMap k r Bs.z (Matrix.of x)), this]; rfl
   have e2 : μ = c • D.muR Bs g (permOf γ) := by
     rw [← e1, ← Measure.map_map hm ((cjE _).measurable.comp hrm), ← Measure.map_map (cjE _).measurable hrm, h2,
-      Measure.map_smul, Measure.map_smul, (cjE_mp _).map_eq, hmu]
+      Measure.map_smul _ (cjE _).measurable.aemeasurable,
+      Measure.map_smul _ hm.aemeasurable, (cjE_mp _).map_eq, hmu]
   rw [e2]
   exact ⟨haar_smul (Rad.haar_good Bs hg hd hG) hc0 hc, (Dx3.intR Bs hg hd hG (by linarith)).smul_measure hc⟩
 
@@ -393,7 +397,15 @@ theorem amp_at_monomial : ∀ (D : D7) τ w w' θ (W : LocW D.R.k D.R.rS) (hW : 
         rw [hii]
         exact h0
       rw [hμ, Measure.smul_apply, this, smul_zero])
-    (by rw [hμ, Measure.map_smul, h1, smul_smul])
+    (by
+      have hrm : Measurable (rootCoords D.R.k D.R.rS W.z' q) := by
+        refine Measurable.of_eval fun a => Continuous.measurable ?_
+        by_cases hi : ((a : Fin (D.R.rS + 1) × Fin (D.R.rS + 1)).1 : ℕ) < D.R.rS
+        · simp only [rootCoords, flagMat, hi, dite_true, Matrix.mulVec, dotProduct, Matrix.of_apply]
+          fun_prop
+        · simp only [rootCoords, flagMat, hi, dite_false]
+          exact continuous_const
+      rw [hμ, Measure.map_smul _ hrm.aemeasurable, h1, smul_smul])
   obtain ⟨ν, hν⟩ := exists_orbQuot L ENNReal.ofReal_ne_top hg hH (by positivity) hI
   have hR := haar_conj hg hH
   have hq₀ : IsQuotMeas W.μG μ (νR.map (lmulEquiv hn'.1)) := by
@@ -406,7 +418,7 @@ theorem amp_at_monomial : ∀ (D : D7) τ w w' θ (W : LocW D.R.k D.R.rS) (hW : 
       have := conj_inv_conj (inv_mem hn'.1) x
       rwa [Matrix.nonsing_inv_nonsing_inv _ (unit_det hn'.1)] at this
     have := quot_map hn'.1 hG hq
-    rwa [e1, Measure.map_smul, Measure.map_map (continuous_conj _).measurable (continuous_conj _).measurable, e2,
+    rwa [e1, Measure.map_smul _ (continuous_conj _).measurable.aemeasurable, Measure.map_map (continuous_conj _).measurable (continuous_conj _).measurable, e2,
       Measure.map_id] at this
   have hconc : νR.map (lmulEquiv hn'.1) {x | Matrix.of x ∉ UH (Hpk D.R.k D.R.rS)} = 0 :=
     CutQuot.null_of_stable (R := {x | Matrix.of x ∈ C6.Rset g⁻¹})

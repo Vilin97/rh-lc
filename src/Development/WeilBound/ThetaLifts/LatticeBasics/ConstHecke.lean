@@ -51,7 +51,7 @@ theorem hchar_eq_one (H : GlobalTheory.Published.HeckeLEntireAndNonzeroAtOne) (�
     have sx : Summable x := summable_absNorm_rpow K hs
     have s1 : HasSum (fun w => x w - 2 * (A.indicator x w + (hS.toFinset : Set _).indicator x w))
         (∑' w, x w - 2 * (∑' w : A, x w + ∑ w ∈ hS.toFinset, x w)) :=
-      sx.hasSum.sub (((hasSum_subtype_iff_indicator.1 (sx.subtype A).hasSum).add
+      sx.hasSum.sub (((hasSum_subtype_iff_indicator.1 (sx.subtype (· ∈ A)).hasSum).add
         (hasSum_subtype_iff_indicator.1 (hS.toFinset.hasSum x))).mul_left 2)
     have le : ∀ w, Real.exp (x w - 2 * (A.indicator x w + (hS.toFinset : Set _).indicator x w)) ≤ ‖eulerFactor χ s w‖ := fun w => by
       by_cases hw : w ∈ A ∨ w ∈ (hS.toFinset : Set _)
@@ -72,7 +72,8 @@ theorem hchar_eq_one (H : GlobalTheory.Published.HeckeLEntireAndNonzeroAtOne) (�
         simpa using exp_le_inv (x1 w)
     refine le_trans (Real.exp_le_exp.2 ?_) (le_of_tendsto_of_tendsto' s1.rexp (hP s hs).norm fun T =>
       Finset.prod_le_prod₀ (fun _ _ => (Real.exp_pos _).le) fun w _ => le w)
-    have e1 : ∑' w : A, x w ≤ C := hC s hs
+    have e1 : ∑' w : A, x w ≤ C := by
+      simpa only [NumberField.Set.primeIdealZetaSum_def, hx] using hC s hs
     have e2 : ∑ w ∈ hS.toFinset, x w ≤ hS.toFinset.card := by
       simpa using Finset.sum_le_card_nsmul _ _ 1 fun w _ => (x1 w).le
     rw [NumberField.Set.primeIdealZetaSum_def, tsum_univ x]

@@ -36,7 +36,8 @@ theorem isInvForm_formI {I : (GL (Fin m) k → ℂ) →ₗ[ℂ] ℂ} (hI : PosIn
   refine ⟨fun x y => ?_, fun x => ?_, fun g x y => ?_⟩
   · rw [formI_apply, formI_apply, ← hI.2.1 _ (isTestFun_pair x y)]
     congr 1
-    ring
+    funext g
+    simp [map_mul, mul_comm]
   · exact (hI.2.2 _ (isTestFun_pair x x) fun g => by rw [conj_mul_self_re]; exact Complex.normSq_nonneg _).1
   · rw [formI_apply, formI_apply]
     simp only [rhoW_apply]

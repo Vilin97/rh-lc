@@ -80,7 +80,8 @@ theorem exists_unitFiltrationUnits_le_ker : ∃ n, unitFiltrationUnits K n ≤ �
 
 theorem unitFiltrationUnits_quasiCharConductor_le_ker :
     unitFiltrationUnits K (quasiCharConductor χ) ≤ χ.ker :=
-  Nat.sInf_mem (exists_unitFiltrationUnits_le_ker hχ)
+  Nat.sInf_mem (show {n : ℕ | unitFiltrationUnits K n ≤ χ.ker}.Nonempty from
+    exists_unitFiltrationUnits_le_ker hχ)
 
 theorem quasiCharConductor_eq_zero_iff : quasiCharConductor χ = 0 ↔ IsUnramifiedChar χ := by
   constructor

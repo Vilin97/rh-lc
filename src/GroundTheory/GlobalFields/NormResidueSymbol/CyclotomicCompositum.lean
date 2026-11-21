@@ -16,6 +16,8 @@ namespace CyclotomicSymbol
 
 open FiniteSubfield
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 def compositum (K F : FiniteSubfield) : FiniteSubfield :=
   ⟨K.1 ⊔ F.1, inferInstance⟩
 
@@ -37,7 +39,6 @@ theorem fixingSubgroup_normal : F.1.fixingSubgroup.Normal := by
   have : IsGalois ℚ ℚ̄ := IsAlgClosure.isGalois ℚ ℚ̄
   have h : @IsGalois ℚ _ F.1 _ (IntermediateField.algebra' F.1) := by
     convert (inferInstance : IsGalois ℚ F.1)
-    exact Subsingleton.elim _ _
   rw [InfiniteGalois.normal_iff_isGalois]
   exact h
 

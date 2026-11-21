@@ -179,8 +179,8 @@ theorem tree_module_separation (hL : LeafMod) (hN : NodeMod) (hJ : JoinMod) (w :
       have : twPart (E := E) 1 = id := funext twPart_one
       rw [this, List.map_id, List.map_id]
     obtain ⟨e⟩ := equiv_untwist (e := (hJ E _ _ _ rfl 1 1 P₁ P₂ P w hj).some)
-      (h₁ := fun _ => by simp only [MonoidHom.comp_apply, HChar.loc_one])
-      (h₂ := fun _ => by simp only [MonoidHom.comp_apply, HChar.loc_one])
+      (h₁ := fun _ => by simp [HChar.loc])
+      (h₂ := fun _ => by simp [HChar.loc])
     exact Sep.equiv_symm (hN E _ _ t₁ t₂ w _ _ _ _ (ih₁ P₁ g₁ u₁ h₁) (ih₂ P₂ g₂ u₂ h₂)) e
 
 theorem treeModOf_holds : TreeModOf :=

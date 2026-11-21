@@ -50,12 +50,14 @@ theorem eq_liftV_of_at (v : Pl (F := F)) {a : AF F} (ha : At (evFin F v) a) :
   exact h
 
 
+variable (E) in
 def liftT (v : Pl (F := F)) : Fv F v ⊗[F] E →ₗ[F] AE F E := TensorProduct.map (GlobalTheory.LatVac.liftV v) LinearMap.id
 
 theorem liftT_tmul (v : Pl (F := F)) (a : Fv F v) (e : E) :
     liftT E v (a ⊗ₜ[F] e) = GlobalTheory.LatVac.liftV v a ⊗ₜ[F] e := rfl
 
 
+variable (E) in
 def evT (v : Pl (F := F)) : AE F E →ₐ[F] Fv F v ⊗[F] E := Algebra.TensorProduct.map (evFin F v) (AlgHom.id F E)
 
 theorem evT_liftT (v : Pl (F := F)) (y : Fv F v ⊗[F] E) : evT E v (liftT E v y) = y := by
@@ -146,7 +148,10 @@ theorem trace_mem_of_mem_intLoc (v : Pl (F := F)) {y : Fv F v ⊗[F] E} (hy : y 
       refine mul_mem ha ?_
       have hi : IsIntegral ℤ (Algebra.trace F E (o : E)) := Algebra.isIntegral_trace o.2
       exact GlobalTheory.AdeleBaseChange.algebraMap_int_mem (⟨_, hi⟩ : 𝓞 F) v)
-    (by rw [map_zero]; exact zero_mem _) (fun _ _ h h' => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h')
+    (by rw [map_zero]; exact zero_mem _)
+    (fun _ _ h h' => by
+      rw [map_add]
+      exact add_mem h h')
     (fun _ h => by rw [map_neg]; exact neg_mem h) hy
 
 theorem odd_absNorm_of_two_notMem (P : HeightOneSpectrum (𝓞 F)) (h : (2 : 𝓞 F) ∉ P.asIdeal) :

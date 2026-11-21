@@ -35,7 +35,8 @@ private theorem cont_ofChars {n : ℕ} {A G : Type} [CommRing A] [Group G] [Topo
     (((X : A[X]) • (1 : Matrix (Fin n) (Fin n) A[X]) -
       (Matrix.diagonal fun j => (v j : A)).map (algebraMap A A[X])).det).coeff (n - i))
   convert h2 using 1
-  rfl
+  funext g
+  simp [GDet.lam, GDet.ofChars, chi_ofRep, GDet.diagRep]
 
 private theorem fin_field (l : ℕ) [Fact l.Prime] {n : ℕ} {k G : Type} [Field k] [Finite k] [CharP k l] [Group G]
     [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] (χ : Fin n → G →* kˣ)

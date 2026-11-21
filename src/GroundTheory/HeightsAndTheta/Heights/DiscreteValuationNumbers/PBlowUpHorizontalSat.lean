@@ -77,10 +77,10 @@ theorem BlowUpHorizontalSat.full : BlowUpHorizontalSat.Statement.{u} := by
   classical
   have hPp : P.IsPrime := hP.multiProj.isPrime
 
-  have hWsupp : W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp (blowUpOf P u) (liftForm x) := by
+  have hWsupp : W ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
-    exact hW (by simp [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe, h])
-  obtain ⟨hmin, hWrel⟩ : W ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes ∧ IsRelevant W := hWsupp
+    exact hW (by rw [divCycle, dif_neg h])
+  obtain ⟨hmin, hWrel⟩ := hWsupp
   have hWp : W.IsPrime := hmin.1.1
   have hBW : blowUpOf P u ≤ W := le_sup_left.trans hmin.1.2
   set W₀ := W.comap (liftForm (ι := ι) (J := J) (R := O)) with hW₀

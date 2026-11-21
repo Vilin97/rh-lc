@@ -54,7 +54,9 @@ theorem memInd2_of_indSpan {r s : ℕ} {U₁ : Submodule ℂ (Sm E r)} {U₂ : S
 
 theorem finVec_of_indFin {r s : ℕ} {U₁ : Submodule ℂ (Sm E r)} {U₂ : Submodule ℂ (Sm E s)} {φ : Sm E (r + s)}
     (h : φ ∈ indFin U₁ U₂) : φ ∈ finVec (cptRep E (r + s)) :=
-  (Submodule.span_le (p := finVec (cptRep E (r + s)))).2 (fun _ hx => hx.2) h
+  (Submodule.span_le (s := {x | MemInd2 U₁ U₂ x ∧ x ∈ finVec (cptRep E (r + s))})
+    (p := finVec (cptRep E (r + s)))).2
+    (fun x (hx : MemInd2 U₁ U₂ x ∧ x ∈ finVec (cptRep E (r + s))) => hx.2) h
 
 theorem mem_indFin {r s : ℕ} {U₁ : Submodule ℂ (Sm E r)} {U₂ : Submodule ℂ (Sm E s)} {φ : Sm E (r + s)}
     (h₁ : MemInd2 U₁ U₂ φ) (h₂ : φ ∈ finVec (cptRep E (r + s))) : φ ∈ indFin U₁ U₂ :=

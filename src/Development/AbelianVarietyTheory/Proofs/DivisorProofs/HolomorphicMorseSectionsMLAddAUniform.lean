@@ -58,7 +58,7 @@ theorem continuous_cmb {D : ℕ} (hX : IsArithVar p D) (P : Pair p) (m : ℕ) {�
     simp only [vals, map_mul]
     ring
   rw [e]
-  exact Complex.continuous_re.comp (continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ =>
+  exact Complex.continuous_re.comp (continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ =>
     continuous_const.mul (hp _ (hf a) _ (hf b)))
 
 theorem integral_over_chart_le_l2 {D : ℕ} (hX : IsArithVar p D) (hs : GenSmooth p D) (P : Pair p) (m : ℕ) {ι : Type}

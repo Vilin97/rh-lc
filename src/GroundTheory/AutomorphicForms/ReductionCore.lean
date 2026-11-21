@@ -166,7 +166,7 @@ theorem adelicNorm_single_one {n : ℕ} (i : Fin n) :
       Pi.single i 1 := fun v => by
     ext k
     by_cases hk : k = i
-    · subst hk; simp [finComp]
+    · subst hk; simp [finComp]; rfl
     · simp only [finComp, Pi.single_eq_of_ne hk]; rfl
   have he : ∀ (E : Type _) [NormedField E], euclidNorm (Pi.single i (1 : E) : Fin n → E) = 1 := by
     intro E _
@@ -193,7 +193,7 @@ theorem hasFiniteContent_single_one {n : ℕ} (i : Fin n) :
   have hfin : finComp v (Pi.single i (1 : 𝔸[K]) : Fin n → 𝔸[K]) = Pi.single i 1 := by
     ext k
     by_cases hk : k = i
-    · subst hk; simp [finComp]
+    · subst hk; simp [finComp]; rfl
     · simp only [finComp, Pi.single_eq_of_ne hk]; rfl
   rw [hfin]
   refine le_antisymm ((pi_norm_le_iff_of_nonneg zero_le_one).2 fun j => ?_) ?_

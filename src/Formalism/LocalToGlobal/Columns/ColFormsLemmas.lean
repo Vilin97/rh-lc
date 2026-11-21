@@ -81,9 +81,9 @@ theorem LevFam.chr_root (h : ↥Λ.grp) : ∃ m : ℕ, 0 < m ∧ ((Λ.chr h : X.
   refine ⟨orderOf h, hf.orderOf_pos, ?_⟩
   rw [← Units.val_pow_eq_pow_val, ← map_pow, pow_orderOf_eq_one, map_one, Units.val_one]
 
-theorem formGSD_ok (hX : X.Ok) (hC : C.Eqv) : (formGSD C Λ).Ok where
-  fin_orb := by
-    obtain ⟨s, hs, hrep⟩ := DecoSet.finite_reps (ST := ST) (SG := SG) (n := n) (posStar_of_conj hX.conjE)
+theorem formGSD_ok (hX : X.Ok) (hC : C.Eqv) : (formGSD C Λ).Ok := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · obtain ⟨s, hs, hrep⟩ := DecoSet.finite_reps (ST := ST) (SG := SG) (n := n) (posStar_of_conj hX.conjE)
     have : Finite s := hs
     refine Finite.of_surjective (fun d : s => (formGSD C Λ).cls d.1) ?_
     intro c
@@ -94,24 +94,20 @@ theorem formGSD_ok (hX : X.Ok) (hC : C.Eqv) : (formGSD C Λ).Ok where
       refine ((formGSD C Λ).cls_eq_iff d0 d).mpr ⟨((g, 1) : FormG Λ)⁻¹, ?_⟩
       have h1 : d = (((g, 1) : FormG Λ) : (formGSD C Λ).G) • (d0 : (formGSD C Λ).D) := hg
       rw [h1, inv_smul_smul]
-  fin_stab := by
-    intro d
+  · intro d
     have := DecoSet.finite_stabilizer (posStar_of_conj hX.conjE) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))
     refine Finite.of_injective
       (fun a : MulAction.stabilizer (formGSD C Λ).G d =>
         (⟨FormG.incl Λ a.1, a.2⟩ : MulAction.stabilizer (UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)))) ?_
     intro a b hab
     exact Subtype.ext (FormG.incl_injective Λ (congrArg Subtype.val hab))
-  nab_smul := by
-    intro g d
+  · intro g d
     obtain ⟨m, hm, hc⟩ := Λ.chr_root g.2
     exact (hC.nab_smul (FormG.incl Λ g) d).trans (map_root_smul _ _ hm hc).symm
-  del_smul := by
-    intro g d
+  · intro g d
     obtain ⟨m, hm, hc⟩ := Λ.chr_root g.2
     exact (hC.del_smul (FormG.incl Λ g) d).trans (map_root_smul _ _ hm hc).symm
-  inv := by
-    intro g x y
+  · intro g x y
     obtain ⟨m, hm, hc⟩ := Λ.chr_root g.2
     show C.pair (((Λ.chr g.2 : X.Kˣ) : X.K) • C.rho g.1 x) (((Λ.chr g.2 : X.Kˣ) : X.K) • C.rho g.1 y) = C.pair x y
     rw [LinearMap.map_smulₛₗ₂, map_smul, hC.inv, smul_smul]
@@ -129,10 +125,8 @@ section Cols
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
 
 theorem colVal_eqv (hX : X.Ok) (u : Pr.Word) (j : ℕ) (ST SG : Finset (HeightOneSpectrum (𝓞 X.E))) :
-    (colVal W u j ST SG).Eqv where
-  nab_smul := colVal_nab_smul W u j
-  del_smul := colVal_del_smul W u j
-  inv := roundPk_inv X _ _ hX.emb_star
+    (colVal W u j ST SG).Eqv :=
+  ⟨colVal_nab_smul W u j, colVal_del_smul W u j, roundPk_inv X _ _ hX.emb_star⟩
 
 theorem colOk (hX : X.Ok) (u : Pr.Word) (j : ℕ) : (colGSD W Ch u j).Ok :=
   formGSD_ok _ _ hX (colVal_eqv W hX u j _ _)

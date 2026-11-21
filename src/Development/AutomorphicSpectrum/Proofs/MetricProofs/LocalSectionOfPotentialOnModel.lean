@@ -110,7 +110,7 @@ theorem potential_pos_of_section :
   have hc2 : ContDiffAt ℝ 2 (fun u => ((G ∘ e.symm) u).re) y := by
     have h := (Complex.reCLM.contDiff (n := 2)).contDiffAt.comp y
       (hg.restrictScalars.contDiffAt (n := 2))
-    convert h using 1
+    simpa only [Function.comp_def, Complex.reCLM_apply] using h
   have hev : (Φ.φ x ∘ e.symm) =ᶠ[𝓝 y]
       fun u => ((fun z => Real.log (D.A'.h z)) ∘ τ) u + (1 : ℝ) * ((G ∘ e.symm) u).re := by
     filter_upwards [hVn] with u hu

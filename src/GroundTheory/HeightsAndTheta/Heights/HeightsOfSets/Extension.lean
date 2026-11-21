@@ -38,8 +38,8 @@ theorem det_gram_sumElim_sub {ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fint
       fun b ↦ ∑ a, B a b • Sum.elim v u a := by
     funext b
     rcases b with i | j
-    · simp [B, Fintype.sum_sum_type, one_apply, ite_smul]
-    · simp [B, Fintype.sum_sum_type, one_apply, ite_smul, sub_eq_add_neg, add_comm]
+    · simp [B, Fintype.sum_sum_type, Matrix.one_apply, ite_smul]
+    · simp [B, Fintype.sum_sum_type, Matrix.one_apply, ite_smul, sub_eq_add_neg, add_comm]
   have hB : det B = 1 := by simp [B]
   rw [hc, gram_comb, det_mul, det_mul, det_conjTranspose, hB]
   simp

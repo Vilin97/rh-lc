@@ -153,7 +153,19 @@ theorem lamEq_one {ρ : 𝓞 K} (hρ : ρ ^ 2 = -(H.d : 𝓞 K)) (A A' B : PAT H
   haveI := hf.isMonHom
   haveI := hf'.isMonHom
   haveI := A.ab.comm
-  haveI : IsMonHom (1 : A'.t.G ⟶ A.t.G) := LamF.IsogSum.isMonHom_of_points _ fun T a b => by
+  have mon_of_points : ∀ {S : Scheme.{0}} {G H : Over S} [GrpObj G] [GrpObj H] (f : G ⟶ H),
+      (∀ (T : Over S) (a b : T ⟶ G), (a * b) ≫ f = a ≫ f * b ≫ f) → IsMonHom f := by
+    intro S G H _ _ f h
+    refine ⟨?_, ?_⟩
+    · have h1 := h (𝟙_ _) 1 1
+      rw [_root_.mul_one] at h1
+      have h2 : (1 : 𝟙_ _ ⟶ G) ≫ f = 1 := by simpa using h1
+      simpa [Hom.one_def] using h2
+    · have h1 := h (G ⊗ G) (fst G G) (snd G G)
+      have e : lift (fst G G ≫ f) (snd G G ≫ f) = f ⊗ₘ f := by ext1 <;> simp
+      rw [Hom.mul_def, Hom.mul_def, lift_fst_snd, Category.id_comp, e] at h1
+      exact h1
+  haveI : IsMonHom (1 : A'.t.G ⟶ A.t.G) := mon_of_points _ fun T a b => by
     simp only [MonObj.comp_one, _root_.mul_one]
   obtain ⟨f₁, hm₁, e₁⟩ := GlobalTheory.PairingFibre.exists_hom m₁.cart mB.cart f
   obtain ⟨f₂, hm₂, e₂⟩ := GlobalTheory.PairingFibre.exists_hom m₂.cart mB.cart f'
@@ -245,7 +257,28 @@ theorem exists_inverse : ∃ (N : ℕ) (ψ : Fin p → (X.B.pol.A ⟶ (X.A true)
       · congr 1
         funext i
         exact congrArg (fun j => x j ≫ X.φ j) (finSumFinEquiv_symm_apply_natAdd i)
-  have S := LamF.points_sums_eq_products.1 (Sp (𝓞 K))
+  have S : ∀ (G T : Over (Sp (𝓞 K))) [GrpObj G],
+      (toUnit T ≫ η[G] = (1 : T ⟶ G)) ∧ (∀ a b : T ⟶ G, padd G a b = a * b) ∧
+      (∀ (n : ℕ) (a : T ⟶ G), LamF.pnsmulPt n a = a ^ n) ∧
+      ∀ (n : ℕ) (f : Fin n → (T ⟶ G)), LamF.psumPt f = (List.ofFn f).prod := by
+    intro G T _
+    refine ⟨rfl, fun _ _ => rfl, fun n a => ?_, fun n f => ?_⟩
+    · induction n with
+      | zero => rw [pow_zero]; rfl
+      | succ n ih => rw [pow_succ, ← ih]; rfl
+    · rw [List.prod_eq_foldr]; rfl
+  have mon_of_points : ∀ {S : Scheme.{0}} {G H : Over S} [GrpObj G] [GrpObj H] (f : G ⟶ H),
+      (∀ (T : Over S) (a b : T ⟶ G), (a * b) ≫ f = a ≫ f * b ≫ f) → IsMonHom f := by
+    intro S G H _ _ f h
+    refine ⟨?_, ?_⟩
+    · have h1 := h (𝟙_ _) 1 1
+      rw [_root_.mul_one] at h1
+      have h2 : (1 : 𝟙_ _ ⟶ G) ≫ f = 1 := by simpa using h1
+      simpa [Hom.one_def] using h2
+    · have h1 := h (G ⊗ G) (fst G G) (snd G G)
+      have e : lift (fst G G ≫ f) (snd G G ≫ f) = f ⊗ₘ f := by ext1 <;> simp
+      rw [Hom.mul_def, Hom.mul_def, lift_fst_snd, Category.id_comp, e] at h1
+      exact h1
   simp only [fun G T [GrpObj G] => (S G T).2.1, fun G T [GrpObj G] => (S G T).2.2.1,
     fun G T [GrpObj G] => (S G T).2.2.2, List.prod_ofFn] at h1 h2
   have hm : ∀ (T : Over (Sp (𝓞 K))) (x y : T ⟶ X.B.pol.A),
@@ -257,8 +290,8 @@ theorem exists_inverse : ∃ (N : ℕ) (ψ : Fin p → (X.B.pol.A ⟶ (X.A true)
     exact congrArg₂ (· * ·) (Finset.prod_congr rfl fun k _ => MonObj.mul_comp _ _ _)
       (Finset.prod_congr rfl fun k _ => MonObj.mul_comp _ _ _)
   refine ⟨N * N, fun i => ψ i ^ N, fun i => ψ' i ^ N, Nat.mul_pos hN hN,
-    fun i => LamF.IsogSum.isMonHom_of_points _ fun T x y => ?_,
-    fun i => LamF.IsogSum.isMonHom_of_points _ fun T x y => ?_, fun T x => ?_, fun T a a' => ⟨fun i => ?_, fun i => ?_⟩⟩
+    fun i => mon_of_points _ fun T x y => ?_,
+    fun i => mon_of_points _ fun T x y => ?_, fun T x => ?_, fun T a a' => ⟨fun i => ?_, fun i => ?_⟩⟩
   · simp only [MonObj.comp_pow]
     rw [← mul_pow, ← (h2 T (fun k => x ≫ ψ k * y ≫ ψ k) fun k => x ≫ ψ' k * y ≫ ψ' k).1 i, hm,
       (h2 T (fun k => (x * y) ≫ ψ k) fun k => (x * y) ≫ ψ' k).1 i]

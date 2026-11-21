@@ -163,7 +163,12 @@ theorem not_mem_of_dvd (l : ℕ) [Fact l.Prime] {n : ℕ} {w : Pl} (hn : 1 ≤ n
   have hpos : 1 < normV w := (prime_normV w).one_lt
   obtain ⟨k, hk⟩ := (dvd_pow_self l (by omega : n ≠ 0)).trans hdiv
   have e : normV w = l * k + 1 := by omega
-  have hmem : ((normV w : ℕ) : 𝓞 ℚ) ∈ w.asIdeal := Ideal.absNorm_mem w.asIdeal
+  have hmem : ((normV w : ℕ) : 𝓞 ℚ) ∈ w.asIdeal := by
+    have hn : normV w = Ideal.absNorm w.asIdeal := by
+      rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+      rfl
+    rw [hn]
+    exact Ideal.absNorm_mem w.asIdeal
   rw [e] at hmem
   push_cast at hmem
   have h1 : (1 : 𝓞 ℚ) ∈ w.asIdeal := by
@@ -218,7 +223,13 @@ theorem cycZ_toZModPow_of_mem_Dec {l : ℕ} [Fact l.Prime] {n : ℕ} {w : Pl} {B
   haveI : Fact (normV w).Prime := ⟨hp⟩
   have hlt : B.valuation (g ζ - ζ) < 1 := by
     have hpB : B.valuation ((normV w : ℕ) : Ω) < 1 := by
-      have := (hB ((normV w : ℕ) : 𝓞 ℚ)).2 (Ideal.absNorm_mem w.asIdeal)
+      have hn : normV w = Ideal.absNorm w.asIdeal := by
+        rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+        rfl
+      have hmem : ((normV w : ℕ) : 𝓞 ℚ) ∈ w.asIdeal := by
+        rw [hn]
+        exact Ideal.absNorm_mem w.asIdeal
+      have := (hB ((normV w : ℕ) : 𝓞 ℚ)).2 hmem
       simpa using this
     haveI : CharP (IsLocalRing.ResidueField B) (normV w) := by
       refine (CharP.charP_iff_prime_eq_zero hp).2 ?_
@@ -235,7 +246,7 @@ theorem cycZ_toZModPow_of_mem_Dec {l : ℕ} [Fact l.Prime] {n : ℕ} {w : Pl} {B
       congr 1
       exact Subtype.ext (by simpa using hζp)
     have ha : IsAlgebraic (ZMod (normV w)) (IsLocalRing.residue B ⟨ζ, hζB⟩) :=
-      ⟨Polynomial.X ^ normV w - Polynomial.X, FiniteField.X_pow_card_sub_X_ne_zero _ hp.one_lt,
+      ⟨Polynomial.X ^ normV w - Polynomial.X, Polynomial.X_pow_sub_X_ne_zero hp.one_lt,
         by simp [hyp]⟩
     obtain ⟨i, hi⟩ := exists_frob_pow _ (normV w) σ _ ha
     have hfix : σ (IsLocalRing.residue B ⟨ζ, hζB⟩) = IsLocalRing.residue B ⟨ζ, hζB⟩ := by

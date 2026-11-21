@@ -27,10 +27,8 @@ theorem dbl_decomp {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
         (Matrix.vecMulVec (incV F H.x) a₂ + incM F H.ι * z₂)ᵀ := by
   ext i j
   rcases j with j | j
-  · simp [dblEmb, Matrix.fromBlocks_transpose, Matrix.fromCols_mul_fromBlocks, Matrix.vecMulVec_apply, Matrix.mul_apply]
-    ring
-  · simp [dblEmb, Matrix.fromBlocks_transpose, Matrix.fromCols_mul_fromBlocks, Matrix.vecMulVec_apply, Matrix.mul_apply]
-    ring
+  · simp [dblEmb, Matrix.fromBlocks_transpose, Matrix.fromCols_mul_fromBlocks, Matrix.vecMulVec_apply, Matrix.mul_apply, incM, add_comm]
+  · simp [dblEmb, Matrix.fromBlocks_transpose, Matrix.fromCols_mul_fromBlocks, Matrix.vecMulVec_apply, Matrix.mul_apply, incM, add_comm]
 
 def dblV {F : Type} [Field F] {κ : Type} (L : Submodule F ((κ → F) × (κ → F))) :
     (L × L) →ₗ[F] ((κ ⊕ κ → F) × (κ ⊕ κ → F)) where
@@ -130,13 +128,14 @@ theorem twist {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Mo
           = w * ((dblEmb H.ι)ᵀ * (md.1.1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ) := Matrix.mul_assoc _ _ _
         _ = w * ((gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ * (dblEmb H.ι)ᵀ) := congrArg _ h4
         _ = _ := (Matrix.mul_assoc _ _ _).symm
+    change (omd₁ gd₁⁻¹) (et (dd.rho B.ψ (actB (cA σ) md (w * (dblEmb H.ι)ᵀ + u)) ((omd md) Φ))) = _
     rw [ea, hl _ u hu _ (hs.pres _ _ hΦ), hs₁.impl gd₁⁻¹ _ _ (hm _ (hs.pres _ _ hΦ))]
     congr 1
     show w * (gd₁.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ *
       (((gd₁⁻¹ : UG (cA σ) (dbl (incM F X₁.J))) : GL (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ = w
     have hi : (((gd₁⁻¹ : UG (cA σ) (dbl (incM F X₁.J))) : GL (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) :
         Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * gd₁.1.1 = 1 := by
-      rw [Subgroup.coe_inv]; exact Units.inv_mul _
+      exact Units.inv_mul gd₁.1
     rw [Matrix.mul_assoc, ← Matrix.transpose_mul, hi, Matrix.transpose_one, Matrix.mul_one]
   · exact hs.adm md _ (ha _ (hs₁.adm gd₁⁻¹ l hl'))
 

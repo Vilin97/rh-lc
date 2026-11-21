@@ -116,7 +116,6 @@ theorem dScale : AMem → ACls → AUnit → DScale := by
     have e : ((jF F γ₀ * x : GF F) : GF F ⧸ Hc c) = (x : GF F ⧸ Hc c) := hγ
     have := inv_mem (QuotientGroup.eq.1 e)
     convert this using 1
-    group
   obtain ⟨k, hk, z, hkz⟩ := (hHc c _).1 h1
   obtain ⟨y, u, r, hr, hu, hz⟩ := hT z
   set d : F := γ₀.val.det * ((y⁻¹ : Fˣ) : F) ^ 2 with hd

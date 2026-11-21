@@ -38,14 +38,4 @@ theorem pairing_dual_bidual (t : G.Tate) (u : G.dual.Tate) :
 
 end Group
 
-section Coordinates
-
-variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] {v : Valuation C NNReal} {O : Type}
-  [CommRing O] [Algebra O C] {Λ : Type} [CommRing Λ] [StarRing Λ] [Algebra ℤ_[p] C]
-  (P : Point p v O Λ) {h : ℕ} (ψ : P.T ≃ₗ[ℤ_[p]] (Fin h → ℤ_[p]))
-
-variable [Algebra ℤ_[p] O] [IsScalarTower ℤ_[p] O C]
-
-end Coordinates
-
 end GlobalTheory.DetInv

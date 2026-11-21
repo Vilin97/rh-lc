@@ -36,11 +36,11 @@ theorem RelAlgClosureFinite.linearIndependent_adjoin {K L : Type*} [Field K] [Fi
   have hcoeff : ∀ d, ∀ j ∈ s, AddMonoidAlgebra.coeff (p j) d = 0 := fun d => by
     apply hm s (fun j => AddMonoidAlgebra.coeff (p j) d)
     have := congrArg (AddMonoidAlgebra.coeff · d) hP
-    simp only [coeff_sum, coeff_C_mul, coeff_map, coeff_zero] at this
+    simp only [coeff_sum, coeff_C_mul, coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
     rw [← this]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Algebra.smul_def, mul_comm]
-  have hpi : p i = 0 := MvPolynomial.ext _ _ fun d => by rw [hcoeff d i hi, coeff_zero]
+  have hpi : p i = 0 := MvPolynomial.ext _ _ fun d => by simp [hcoeff d i hi, AddMonoidAlgebra.coeff_zero]
   apply Subtype.ext
   rw [← hp i, hpi, map_zero]
   rfl

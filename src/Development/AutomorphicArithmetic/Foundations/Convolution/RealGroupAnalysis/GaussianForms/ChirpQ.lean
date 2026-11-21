@@ -83,6 +83,8 @@ private theorem chirp_poly (p : MvPolynomial (Fin 4) (A F)) (φ : V4 F → ℂ)
     simp [mul_add]
   · intro a f _ hf
     convert (schwartzBruhatPi (K := F) (ι := Fin 4)).smul_mem a hf using 1
+    funext v
+    simp only [Pi.smul_apply, smul_eq_mul]
     ring
 
 end ChirpQ

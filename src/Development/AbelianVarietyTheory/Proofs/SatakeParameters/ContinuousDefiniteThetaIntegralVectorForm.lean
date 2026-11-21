@@ -34,7 +34,7 @@ theorem continuous_theta_integral_vector : ∀ {D : D7} (ψ : AddChar (Formalism
       simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
   have hK : Continuous fun p : GA D W × GA D V => thetaKO om p.2 p.1 (L (u p.2)) := by
     simp only [e]
-    refine continuous_finset_sum _ fun k _ => Continuous.mul ?_ ?_
+    refine continuous_finsetSum _ fun k _ => Continuous.mul ?_ ?_
     · exact (b.coord k).continuous_of_finiteDimensional.comp (hu.comp continuous_snd)
     · exact (hom.om_cont _ (hL (b k)) 0).comp (continuous_snd.prodMk continuous_fst)
   have hKinv : ∀ γ ∈ GQ V, ∀ g h, thetaKO om (γ * h) g (L (u (γ * h))) = thetaKO om h g (L (u h)) := by

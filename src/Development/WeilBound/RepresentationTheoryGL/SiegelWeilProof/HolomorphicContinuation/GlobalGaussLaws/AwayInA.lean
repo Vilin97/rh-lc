@@ -27,7 +27,7 @@ theorem evalPoly_congr {m : ℕ} (p : MvPolynomial (D.what₂.Tau × Fin m × Fi
   change MvPolynomial.eval₂ (RingHom.id ℂ) _ p = MvPolynomial.eval₂ (RingHom.id ℂ) _ p
   apply MvPolynomial.eval₂_congr
   intro i c hi hc
-  have hv : i ∈ p.vars := (MvPolynomial.mem_vars i).2 ⟨c, (MvPolynomial.mem_support_iff).2 hc, hi⟩
+  have hv : i ∈ p.vars := (MvPolynomial.mem_vars_iff_mem_support i).2 ⟨c, (MvPolynomial.mem_support_iff).2 hc, hi⟩
   have e := h i.1 (hp i hv)
   simp only [e]
 

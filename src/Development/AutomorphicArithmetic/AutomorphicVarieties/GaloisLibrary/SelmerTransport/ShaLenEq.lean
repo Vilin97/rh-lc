@@ -50,11 +50,11 @@ theorem UpperTheory.V.Base.shaLenEq :
     refine ⟨fun hx => ?_, fun hx => ⟨(Φ.symm y).2, ?_⟩⟩
     · have hs : (⟨_, h⟩ : ↥(Sha D e)) = s • Φ.symm y := Subtype.ext hx.2
       refine hk.symm.trans ?_
-      rw [hs, map_smul, LinearEquiv.apply_symm_apply]
+      rw [hs, Φ.map_smul, LinearEquiv.apply_symm_apply]
     · have hs : (⟨_, h⟩ : ↥(Sha D e)) = s • Φ.symm y := by
         apply Φ.injective
         refine hk.trans (hx.trans ?_)
-        rw [map_smul, LinearEquiv.apply_symm_apply]
+        rw [Φ.map_smul, LinearEquiv.apply_symm_apply]
       exact congrArg Subtype.val hs
   rw [← hmap]
   exact ((Submodule.comapSubtypeEquivOfLe hle).symm.trans (Φ.submoduleMap _)).length_eq

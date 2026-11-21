@@ -75,7 +75,7 @@ theorem dbl_decomp (H : Plane E n n₁) (w : Matrix (Fin d) (Fin n₁ ⊕ Fin n�
   ext i j
   rcases j with j | j <;>
     simp [dblEmb, Matrix.mul_apply, Matrix.fromBlocks_transpose, Fintype.sum_sum_type, Matrix.vecMulVec_apply,
-      Matrix.fromBlocks]
+      Matrix.fromBlocks, Function.swap, incM]
 
 end GlobalTheory.MixXDblEv
 
@@ -108,16 +108,18 @@ theorem exists_dblEv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   have lawL : ∀ (w₁ : Matrix (Fin d) (Fin n₁) (AE F E)) (z₁ : Fin d → AE F E), ∀ φ ∈ schA F (Fin n × Fin d),
       e (d'.rho B.ψ (w₁ * (incM F H.ι)ᵀ + Matrix.vecMulVec z₁ (incV F H.x)) φ) = d₁'.rho B.ψ w₁ (e φ) := by
     intro w₁ z₁ φ hφ
-    rw [rho_tr M hd', rho_tr M₁ hd₁', Matrix.transpose_add, Matrix.transpose_mul, Matrix.transpose_transpose,
-      Matrix.transpose_vecMulVec]
-    exact law_one hP hH he _ _ φ hφ
+    have hh := law_one hP hH he w₁ᵀ z₁ φ hφ
+    rw [← Matrix.transpose_vecMulVec, ← Matrix.transpose_transpose (incM F H.ι),
+      ← Matrix.transpose_mul, ← Matrix.transpose_add, ← rho_tr M hd', ← rho_tr M₁ hd₁'] at hh
+    exact hh
   have lawR : ∀ (w₂ : Matrix (Fin d) (Fin n₁) (AE F E)) (z₂ : Fin d → AE F E), ∀ φ ∈ schA F (Fin n × Fin d),
       conjLin e (d'.rho B.ψ⁻¹ (w₂ * (incM F H.ι)ᵀ + Matrix.vecMulVec z₂ (incV F H.x)) φ) =
         d₁'.rho B.ψ⁻¹ w₂ (conjLin e φ) := by
     intro w₂ z₂ φ hφ
-    rw [rho_tr M hd', rho_tr M₁ hd₁', Matrix.transpose_add, Matrix.transpose_mul, Matrix.transpose_transpose,
-      Matrix.transpose_vecMulVec]
-    exact law_two hP hH he _ _ φ hφ
+    have hh := law_two hP hH he w₂ᵀ z₂ φ hφ
+    rw [← Matrix.transpose_vecMulVec, ← Matrix.transpose_transpose (incM F H.ι),
+      ← Matrix.transpose_mul, ← Matrix.transpose_add, ← rho_tr M hd', ← rho_tr M₁ hd₁'] at hh
+    exact hh
   obtain ⟨Φ₀, h₀, hne⟩ := GlobalTheory.EvSchANe.exists_mem_schA_ne_zero F E σ B n d n₁ d X W X₁ W M M₁ H.ι 1 _ e hP.good
     hP₁.good he
   refine ⟨partRₗ (conjLin e) ∘ₗ partLₗ e, conjLin e, fun Φ hΦ => ?_, fun φ hφ => ?_, ?_, fun φ₁ _ φ₂ _ => ?_,

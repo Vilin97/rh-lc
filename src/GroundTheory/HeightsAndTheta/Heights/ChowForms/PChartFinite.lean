@@ -148,7 +148,8 @@ theorem exists_pow_mem (I : Ideal (MvPolynomial (Fin n) F)) (f : MvPolynomial (F
   have hk1 : ((aeval pt).toRingHom.comp ψ).comp
       (algebraMap F (Polynomial (MvPolynomial (Fin e × Fin n) F))) = algebraMap F (AlgebraicClosure F) := by
     ext a
-    simp [ψ, Polynomial.algebraMap_apply]
+    change (aeval pt) (ψ (Polynomial.C (C a))) = algebraMap F _ a
+    simp [ψ]
   have hk2 : ((aeval pt).toRingHom.comp ψ) ∘ lineVar t m = V := by
     funext ⟨i, j⟩
     cases i using Fin.cases with

@@ -257,6 +257,7 @@ theorem map_fst_restrict_eq_smul_haar (lam : Measure (G × H)) [lam.IsHaarMeasur
   conv_lhs => rw [Measure.isMulLeftInvariant_eq_smul lam ((Measure.haar : Measure G).prod ν)]
   rw [Measure.restrict_smul, Measure.map_smul, ← Measure.prod_restrict, Measure.restrict_univ,
     Measure.map_fst_prod, Measure.restrict_apply_univ, hν, one_smul]
+  exact measurable_fst.aemeasurable
 
 theorem isHaarMeasure_map_fst_restrict (lam : Measure (G × H)) [lam.IsHaarMeasure]
     (ν : Measure H) [ν.IsHaarMeasure] {S : Set H} (hν : ν S = 1) :

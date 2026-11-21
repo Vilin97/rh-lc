@@ -15,7 +15,6 @@ public import Development.AbelianVarietyTheory.Definitions.Foundations.NonemptyA
 noncomputable section
 
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
-open GlobalTheory.KFinLoc
 
 namespace GlobalTheory.KFinLoc
 

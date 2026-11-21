@@ -70,7 +70,7 @@ theorem isClosed_range_iota : IsClosed (Set.range (iotaOQ N A i)) := by
   let f : (s → ℤ_[N.l i]) → Qbar (N.l i) := fun c =>
     ∑ y : s, algebraMap ℚ_[N.l i] (Qbar (N.l i)) (c y : ℚ_[N.l i]) * iotaOQ N A i y
   have hf : Continuous f := by
-    refine continuous_finset_sum _ fun y _ => ?_
+    refine continuous_finsetSum _ fun y _ => ?_
     exact ((continuous_algebraMap ℚ_[N.l i] (Qbar (N.l i))).comp
       ((continuous_subtype_val : Continuous fun x : ℤ_[N.l i] => (x : ℚ_[N.l i])).comp
         (continuous_apply y))).mul continuous_const
@@ -226,7 +226,8 @@ theorem frob_value (D : D7) (C : CharFrame D) (nch : NChoice D) (Tp : TupTied D 
   have hq : ((normV w : ℕ) : ℂ) ≠ 0 := by
     have := w.asIdeal.finiteQuotientOfFreeOfNeBot w.ne_bot
     exact Nat.cast_ne_zero.2 Nat.card_pos.ne'
-  have hn : (Ideal.absNorm w.asIdeal : ℕ) = normV w := rfl
+  have hn : (Ideal.absNorm w.asIdeal : ℕ) = normV w := by
+    simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
   have hy' : D.what₂.embLL (y : D.what₂.LL) =
       ((C.eta.val w : ℂˣ) : ℂ) * ((normV w : ℕ) : ℂ) ^ (-(((1 / 2 : ℝ)) : ℂ)) := by
     have e : D.what₂.embLL (y : D.what₂.LL) = C.eta.valTw (1 / 2) w := hy

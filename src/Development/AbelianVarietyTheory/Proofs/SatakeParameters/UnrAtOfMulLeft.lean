@@ -41,15 +41,18 @@ theorem not_isUnram_loc {E : Type} [Field E] [NumberField E] {χ : HChar E} {w :
 
 theorem tameAt_mul {E : Type} [Field E] [NumberField E] {χ χ' : HChar E} {w : HeightOneSpectrum (𝓞 E)}
     (h : χ.TameAt w) (h' : χ'.TameAt w) : (χ * χ').TameAt w := fun x hx hx' => by
-  rw [HChar.loc_mul, h x hx hx', h' x hx hx', one_mul]
+  change χ.loc w x * χ'.loc w x = 1
+  rw [h x hx hx', h' x hx hx', one_mul]
 
 theorem unrAt_mul {E : Type} [Field E] [NumberField E] {χ χ' : HChar E} {w : HeightOneSpectrum (𝓞 E)}
     (h : χ.UnrAt w) (h' : χ'.UnrAt w) : (χ * χ').UnrAt w := fun x hx => by
-  rw [HChar.loc_mul, h x hx, h' x hx, one_mul]
+  change χ.loc w x * χ'.loc w x = 1
+  rw [h x hx, h' x hx, one_mul]
 
 theorem unrAt_of_mul_left {E : Type} [Field E] [NumberField E] {χ χ' : HChar E} {w : HeightOneSpectrum (𝓞 E)}
     (h : χ.UnrAt w) (h' : (χ * χ').UnrAt w) : χ'.UnrAt w := fun x hx => by
   have := h' x hx
-  rwa [HChar.loc_mul, h x hx, one_mul] at this
+  change χ.loc w x * χ'.loc w x = 1 at this
+  rwa [h x hx, one_mul] at this
 
 end GlobalTheory.MuTameQS

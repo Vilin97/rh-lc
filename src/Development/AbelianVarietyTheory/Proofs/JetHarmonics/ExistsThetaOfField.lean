@@ -19,7 +19,6 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
 attribute [local instance] Over.cartesianMonoidalCategory
 open Formalism.MainNotions.ModuliIntegralCharts.H1.BoxTuple Formalism.MainNotions.ModuliIntegralCharts.H1.BidegreeTwoJet GlobalTheory GlobalTheory.PowGerm
 open ReciprocityTheory.ChartRestriction.G.TB (colM dAct)
-open GlobalTheory.BoxApp
 
 namespace GlobalTheory.ThetaLift
 

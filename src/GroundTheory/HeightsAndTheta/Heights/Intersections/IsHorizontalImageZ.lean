@@ -127,9 +127,9 @@ theorem ArithmeticIntersectionHorizontal.proof (hDiv : DivSuppArithStatement) (h
   intro I hI n hn K _ ι _ K' _ ι' _ κ v P' L L' s α W' hv hP' hP hL hLL' hs hsP hW' hh
   classical
 
-  let A : HermLine ι := HermLine.ofMetrics (fun k => maxMetric ℂ (ι k)) (fun k => (α k : ℤ))
+  let A : HermLine ι := HermLine.ofMetrics (fun k => maxMetric (C := ℂ) (ι := ι k)) (fun k => (α k : ℤ))
   let A' : HermLine ι' :=
-    HermLine.ofMetrics (fun k => maxMetric ℂ (ι' k)) (fun k => ((Function.extend κ α 0 : K' → ℕ) k : ℤ))
+    HermLine.ofMetrics (fun k => maxMetric (C := ℂ) (ι := ι' k)) (fun k => ((Function.extend κ α 0 : K' → ℕ) k : ℤ))
   have hsec : IsSectionOn (imageZ v P') A s := ⟨α, fun _ => rfl, hs, hsP⟩
   have hsec' : IsSectionOn P' A' (rename v s) :=
     ⟨Function.extend κ α 0, fun _ => rfl, isMultiHomog_rename hv hs, fun h => hsP (Ideal.mem_comap.mpr h)⟩

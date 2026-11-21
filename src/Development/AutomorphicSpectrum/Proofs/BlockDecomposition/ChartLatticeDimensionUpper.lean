@@ -95,7 +95,7 @@ namespace GlobalTheory.CompanionTheory.NefSections
 open GroundTheory.Heights₂.Heights ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2
 
 theorem exists_rat_multilinear_le {M : Type} [AddCommGroup M] {n : ℕ}
-    (f : MultilinearMap ℤ (fun _ : Fin n => M) ℤ) (μ e : M) (ε : ℚ) (hε : 0 < ε) :
+    (f : (Π _ : Fin n, M) →ₘₗ[ℤ] ℤ) (μ e : M) (ε : ℚ) (hε : 0 < ε) :
     ∃ t : ℚ, 0 < t ∧ ∀ (a : ℕ) (m : ℤ), 1 ≤ a → (m : ℚ) = a * t →
       ((f (fun _ => a • μ + m • e) : ℤ) : ℚ) ≤ (a : ℚ) ^ n * (((f fun _ => μ : ℤ) : ℚ) + ε) := by
   let g : ℚ → ℚ := fun t => PositivityTheory.HtPt.Siua.form f μ e (fun _ => 1) (fun _ => 1 * t)

@@ -23,6 +23,7 @@ open Matrix
 
 variable {D : D7}
 
+local notation "𝒪" => Formalism.L2.Herm.intAf D.host.F D.host.E
 
 set_option maxHeartbeats 1000000 in
 theorem exists_unit_res (Pg : Finset (Formalism.L2.DIV.Pl D.host.E)) (d : ∀ PP : Formalism.L2.DIV.Pl D.host.E, (Formalism.L2.DIV.kP PP)ˣ) :
@@ -35,7 +36,7 @@ theorem exists_unit_res (Pg : Finset (Formalism.L2.DIV.Pl D.host.E)) (d : ∀ PP
     intro PP
     rw [Formalism.UG.P.levelaf_valued_algebraMap]
     refine le_antisymm (HeightOneSpectrum.valuation_le_one _ _) (not_lt.1 fun h => ?_)
-    have hm := (HeightOneSpectrum.valuation_lt_one_iff_mem PP (a PP)).1 h
+    have hm := (HeightOneSpectrum.valuation_lt_one_iff_mem (K := D.host.E) PP (a PP)).1 h
     have h0 : (Ideal.Quotient.mk PP.asIdeal (a PP)) = 0 := Ideal.Quotient.eq_zero_iff_mem.2 hm
     rw [ha PP] at h0
     exact (d PP).ne_zero h0
@@ -58,7 +59,7 @@ theorem exists_unit_res (Pg : Finset (Formalism.L2.DIV.Pl D.host.E)) (d : ∀ PP
   have h2 : Valued.v (GlobalTheory.StdFrames.cpt PP
       (((⟨z, hz⟩ : 𝒪) - Formalism.L2.DIV.oToS D.host.F D.host.E (a PP) : 𝒪) : EAf D)) < 1 := by
     rw [AddSubgroupClass.coe_sub, hc, map_sub, GlobalTheory.AdIsom.cpt_inc, hzc]
-    simp only [t, if_pos hPP, sub_self, map_zero]
+    simp only [t, ite_eq_left hPP, sub_self, map_zero]
     exact zero_lt_one
   have h1 : Formalism.L2.DIV.resS D.host.F PP ((⟨z, hz⟩ : 𝒪) - Formalism.L2.DIV.oToS D.host.F D.host.E (a PP)) = 0 :=
     (GlobalTheory.AdIsom.resS_eq_zero_iff_cpt (D := D) PP ((⟨z, hz⟩ : 𝒪) - Formalism.L2.DIV.oToS D.host.F D.host.E (a PP))).2 h2

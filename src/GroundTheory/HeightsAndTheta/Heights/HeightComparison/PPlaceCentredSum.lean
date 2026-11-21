@@ -46,7 +46,7 @@ theorem apply_algebraMap (v : FinitePlace K) (x : L) :
   rw [← FinitePlace.norm_embedding_eq v, FinitePlace.mk_apply, FinitePlace.norm_embedding',
     FinitePlace.norm_embedding', ← HeightOneSpectrum.valuation_liesOver K (below (L := L) v) v.maximalIdeal, map_pow,
     toNNReal_pow _ (NumberField.HeightOneSpectrum.absNorm_ne_zero (below (L := L) v)) hf (by rw [hN]; push_cast; rfl), deg,
-    ramificationIdx'_eq_ramificationIdx _ _ hQ, inertiaDeg'_eq_inertiaDeg, ← pow_mul]
+    inertiaDeg'_eq_inertiaDeg, ← pow_mul]
   push_cast
   rw [mul_comm]
 

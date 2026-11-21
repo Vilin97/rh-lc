@@ -217,11 +217,12 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
       obtain ⟨l₁, hl₁, b₁, e₁⟩ := hx
       obtain ⟨l₂, hl₂, b₂, e₂⟩ := hy
       refine ⟨l₁ * l₂, mul_ne_zero hl₁ hl₂, l₂ * b₁ + l₁ * b₂, ?_⟩
-      rw [map_mul, map_add (f := _), map_mul, map_mul, ← e₁, ← e₂]
+      rw [map_mul, ιA.map_add, map_mul, map_mul, ← e₁, ← e₂]
       ring
     | neg x _ hx =>
       obtain ⟨l, hl, b, e₁⟩ := hx
-      exact ⟨l, hl, -b, by rw [map_neg, ← e₁]; ring⟩
+      set_option synthInstance.maxHeartbeats 200000 in
+        exact ⟨l, hl, -b, by rw [map_neg ιA, ← e₁]; ring⟩
     | mul x y _ _ hx hy =>
       obtain ⟨l₁, hl₁, b₁, e₁⟩ := hx
       obtain ⟨l₂, hl₂, b₂, e₂⟩ := hy
@@ -284,7 +285,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
     | add p q hp hq =>
       obtain ⟨a, ha⟩ := hp
       obtain ⟨b, hb⟩ := hq
-      exact ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]⟩
+      exact ⟨a + b, by rw [φ.map_add, ha, hb, (Ideal.Quotient.mk _).map_add, (algebraMap _ _).map_add]⟩
     | mul_X p v hp =>
       obtain ⟨a, ha⟩ := hp
       rcases v with ⟨_ | k, i⟩

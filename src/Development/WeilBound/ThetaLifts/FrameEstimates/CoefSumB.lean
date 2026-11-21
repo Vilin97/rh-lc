@@ -53,24 +53,27 @@ theorem dot_single (i : κ) [DecidableEq κ] (u : κ → AF F) (a : F) :
   rw [this, dotProduct_single, mul_comm]
 
 theorem dual {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F ψ) (hann : RatOfKer ψ) :
-    Dual (ratH F κ) fun ξ u => ψ (u ⬝ᵥ ratH F κ ξ) where
-  inj := by
-    have : Nontrivial (AF F) := by
+    Dual (ratH F κ) fun ξ u => ψ (u ⬝ᵥ ratH F κ ξ) := by
+  constructor
+  · have : Nontrivial (AF F) := by
       show Nontrivial (AdeleRing (𝓞 F) F)
       unfold AdeleRing
       infer_instance
     intro ξ η h
     funext l
     exact (algebraMap F (AF F)).injective (congrFun h l)
-  cont ξ := by
+  · intro ξ
     have h : Continuous fun u : κ → AF F => u ⬝ᵥ ratH F κ ξ :=
-      continuous_finset_sum _ fun i _ => (continuous_apply i).mul continuous_const
+      continuous_finsetSum _ fun i _ => (continuous_apply i).mul continuous_const
     exact hψ.1.comp h
-  norm ξ u := hψ.2.1 _
-  addl ξ η u := by rw [map_add (f := _), dotProduct_add, AddChar.map_add_eq_mul]
-  addr ξ u v := by rw [add_dotProduct, AddChar.map_add_eq_mul]
-  triv ξ η := by rw [ratH_dot, hψ.2.2.1]
-  sep u hu := by
+  · exact fun _ _ => hψ.2.1 _
+  · intro ξ η u
+    rw [map_add (f := _), dotProduct_add, AddChar.map_add_eq_mul]
+  · intro ξ u v
+    rw [add_dotProduct, AddChar.map_add_eq_mul]
+  · intro ξ η
+    rw [ratH_dot, hψ.2.2.1]
+  · intro u hu
     classical
     have key : ∀ i, ∃ c : F, algebraMap F (AF F) c = u i := fun i => hann (a := u i) (by
       rintro _ ⟨a, rfl⟩
@@ -78,14 +81,13 @@ theorem dual {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F ψ) (hann : RatOfKer ψ
       exact hu _)
     choose c hc using key
     exact ⟨c, funext hc⟩
-  nondeg ξ hξ := by
+  · intro ξ hξ
     classical
     obtain ⟨x, hx⟩ := hψ.2.2.2
     obtain ⟨l, hl⟩ := Function.ne_iff.1 hξ
     refine ⟨Pi.single l (x * algebraMap F (AF F) (ξ l)⁻¹), ?_⟩
     rwa [single_dotProduct, ratH_apply, mul_assoc, ← map_mul, inv_mul_cancel₀ hl, map_one, mul_one]
-  cpt := by
-    obtain ⟨K, hK, hKc⟩ := GlobalTheory.AdeleCocompact.exists_compact_adele F
+  · obtain ⟨K, hK, hKc⟩ := GlobalTheory.AdeleCocompact.exists_compact_adele F
     refine ⟨Set.univ.pi fun _ => K, isCompact_univ_pi fun _ => hK, fun u => ?_⟩
     choose ξ hξ using fun l => hKc (u l)
     exact ⟨ξ, fun l _ => hξ l⟩
@@ -183,12 +185,12 @@ theorem coefSum_of_annih (hA : Annih) : CoefSum := by
     simp only [← map_add (f := _)]
     rfl
   calc ‖thetaSum F Φ₁‖ₑ * ‖thetaSum F Φ₂‖ₑ = ‖thetaSum F Φ₁ * (starRingEnd ℂ) (thetaSum F Φ₂)‖ₑ := by
-        rw [enorm_mul, ← ofReal_norm ((starRingEnd ℂ) _), Complex.norm_conj, ofReal_norm]
+        rw [eNorm_mul, ← ofReal_norm ((starRingEnd ℂ) _), Complex.norm_conj, ofReal_norm]
     _ ≤ ∑' x : κ → F, ENNReal.ofReal c * ∑' y : κ → F, ‖coef F ψ μ Φ₁ Φ₂ (ratH F κ x, ratH F κ y)‖ₑ := by
         rw [hmain]
-        exact enorm_tsum_le_tsum_enorm.trans (ENNReal.tsum_le_tsum hx)
+        exact eNorm_tsum_le_tsum_eNorm.trans (tsum_le_tsum hx)
     _ = _ := by
-        rw [ENNReal.tsum_mul_left, ENNReal.tsum_prod']
+        rw [ENNReal.tsum_mul_left, tsum_prod']
         rfl
 
 end PositivityTheory.ThKEst

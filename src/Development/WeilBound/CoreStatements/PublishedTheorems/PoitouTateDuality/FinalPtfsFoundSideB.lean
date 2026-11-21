@@ -16,7 +16,7 @@ attribute [local instance 2000] Rep.hV2
 
 section Local
 
-variable {Kf : FiniteSubfield} [NumberField Kf.1] [IsAlgClosure Kf.1 (AlgebraicClosure ℚ)]
+variable {Kf : GroundTheory.Global.FiniteSubfield} [NumberField Kf.1] [IsAlgClosure Kf.1 (AlgebraicClosure ℚ)]
   {S : Set (HeightOneSpectrum (𝓞 Kf.1))} [Fintype S] {l r : ℕ} [Fact l.Prime]
   {ιs : ∀ v : S, AlgebraicClosure ℚ →ₐ[Kf.1]
       AlgebraicClosure ((v : HeightOneSpectrum (𝓞 Kf.1)).adicCompletion Kf.1)}

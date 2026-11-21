@@ -41,7 +41,9 @@ theorem normalizedValuation_eq_one_of_sub_one_mem {y : K} (hy : y - 1 ∈ valBal
   simpa using this
 
 theorem mem_valBall_zero_of_sub_one_mem {y : K} (hy : y - 1 ∈ valBall (K := K) 1) : y ∈ valBall (K := K) 0 := by
-  rw [mem_valBall, normalizedValuation_eq_one_of_sub_one_mem hy]; simp
+  change normalizedValuation K y ≤ WithZero.exp (-(0 : ℤ))
+  rw [normalizedValuation_eq_one_of_sub_one_mem hy]
+  simp
 
 theorem eq_zero_of_forall_mem_principalFiltration {w : Additive (unitFiltrationUnits K 1)}
     (h : ∀ k, w ∈ principalFiltration (K := K) k) : w = 0 := by
@@ -67,7 +69,7 @@ theorem natCast_prime_mem_valBall_one : (p : K) ∈ valBall (K := K) 1 := by
 
 theorem pow_prime_sub_one_mem {k : ℤ} (hk : 1 ≤ k) {y : K} (hy : y - 1 ∈ valBall (K := K) k) :
     y ^ p - 1 ∈ valBall (K := K) (k + 1) := by
-  have hball_le {m n : ℤ} (h : m ≤ n) : valBall (K := K) n ≤ valBall m := by
+  have hball_le {m n : ℤ} (h : m ≤ n) : valBall (K := K) n ≤ valBall (K := K) m := by
     intro x hx
     rw [mem_valBall] at hx ⊢
     exact hx.trans (WithZero.exp_le_exp.mpr (neg_le_neg h))
@@ -123,7 +125,7 @@ section Complete
 theorem exists_forall_sub_mem_principalFiltration {s : ℕ → Additive (unitFiltrationUnits K 1)}
     (hs : ∀ k, s (k + 1) - s k ∈ principalFiltration (K := K) k) :
     ∃ l, ∀ k, l - s k ∈ principalFiltration (K := K) k := by
-  have hball_le {m n : ℤ} (h : m ≤ n) : valBall (K := K) n ≤ valBall m := by
+  have hball_le {m n : ℤ} (h : m ≤ n) : valBall (K := K) n ≤ valBall (K := K) m := by
     intro x hx
     rw [mem_valBall] at hx ⊢
     exact hx.trans (WithZero.exp_le_exp.mpr (neg_le_neg h))

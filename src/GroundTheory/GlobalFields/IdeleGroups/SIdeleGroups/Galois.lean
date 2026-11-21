@@ -128,6 +128,9 @@ omit [NumberField K] in
 theorem sIdelesToIdeleClassGroup_smul (σ : L ≃ₐ[K] L) (x : sIdeles (placesAbove L S)) :
     sIdelesToIdeleClassGroup (placesAbove L S) (σ • x) =
       σ • sIdelesToIdeleClassGroup (placesAbove L S) x := by
+  let : CharZero K := ⟨fun m n h ↦ Nat.cast_injective (R := L) (by
+    simpa only [map_natCast] using congrArg (algebraMap K L) h)⟩
+  let : NumberField K := { to_finiteDimensional := FiniteDimensional.left ℚ K L }
   rw [sIdelesToIdeleClassGroup_apply, sIdelesToIdeleClassGroup_apply, smul_mk, coe_smul_sIdeles]
 
 

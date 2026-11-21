@@ -221,11 +221,12 @@ theorem le_and_half_le_prod_one_sub_exp_neg_of_bounds (hU : Unr E) (w : Pl E) (h
   · change _ * _ = _ * _
     rw [thL_diagT w hw, ← map_mul, ← map_mul]
     congr 1
+    funext i
     have hki : -k i.rev = k i := by
       have := hη i
       simp only [hk]
       linarith
-    rw [hki, mul_comm]
+    simp only [Pi.mul_apply, map_zpow, hϖc, ← _root_.zpow_neg, hki, mul_comm]
   · refine ⟨fun i j hij => by rw [diagT_val_apply, if_neg hij], fun i => ?_⟩
     rw [diagT_val_apply, if_pos rfl]
     have hl : WithZero.log (Valued.v (((η i * ϖ ^ (-k i)) : (w.adicCompletion E)ˣ) : w.adicCompletion E)) = 0 := by
@@ -235,6 +236,8 @@ theorem le_and_half_le_prod_one_sub_exp_neg_of_bounds (hU : Unr E) (w : Pl E) (h
     rw [← WithZero.exp_log (v_ne_zero' (Units.ne_zero _)), hl, WithZero.exp_zero]
   · rw [← map_mul]
     congr 1
+    funext i
+    simp only [Pi.mul_apply]
     rw [mul_left_comm, ← _root_.zpow_add, add_neg_cancel, zpow_zero, mul_one]
 
 end PositivityTheory.Rg.Bc.ArchbcB.B.M4

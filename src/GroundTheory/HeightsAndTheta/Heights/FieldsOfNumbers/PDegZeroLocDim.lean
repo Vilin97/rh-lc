@@ -69,7 +69,7 @@ theorem DegZeroLocDim.proof (h₁ : MChartHomog.Statement.{u}) (h₂ : MChartTrd
   have : ((chartIdeal W u).map (Ideal.Quotient.mk (chartIdeal P u))).IsPrime :=
     Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective (by rw [Ideal.mk_ker]; exact hle)
   have := finiteType_quotient_mRing (F := F) (chartIdeal P u)
-  have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient F
+  have hform := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient (k := F)
     ((chartIdeal W u).map (Ideal.Quotient.mk (chartIdeal P u)))
   rw [ringKrullDim_eq_of_ringEquiv (DoubleQuot.quotQuotEquivQuotOfLE hle)] at hform
   show ringKrullDim (degZeroLoc P {W}) + ringKrullDim (MRing ι F ⧸ W) = ringKrullDim (MRing ι F ⧸ P)

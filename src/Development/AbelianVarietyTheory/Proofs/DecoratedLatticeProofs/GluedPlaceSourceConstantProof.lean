@@ -60,6 +60,9 @@ theorem valuation_det_mul_unif (q : Unif k) (P : Pair k n') (g : GL n' k) (hg : 
       refine ⟨⟨_, h2⟩, Subtype.ext ?_⟩
       change F (g • (x : n' → k)) = x
       rw [hF, inv_smul_smul]
+  letI : P.lat.IsLattice k := P.isLat.toIsLattice
+  letI : Module.Free 𝒪[k] P.lat := Submodule.IsLattice.free k P.lat
+  letI : Module.Finite 𝒪[k] P.lat := Submodule.IsLattice.finite k P.lat
   have hlen : IsDiscreteValuationRing.addVal 𝒪[k] (LinearMap.det f) = 1 := by
     rw [← GlobalTheory.length_quotient_range_eq_addVal_det, hr, (P.fn.quotKerEquivOfSurjective (fn_surjective P)).length_eq,
       length_residue]

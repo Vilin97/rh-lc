@@ -31,7 +31,7 @@ theorem prodT_sum (A : Submodule ℂ P1) (B : Submodule ℂ P2) {κ : Type} (s :
     prodT A B (∑ k ∈ s, x k ⊗ₜ y k) = fun z => ∑ k ∈ s, (x k).1.1 z.1 * (y k).1.1 z.2 := by
   funext z
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [map_sum, Finset.sum_apply]
+    simp [map_sum, Finset.sum_apply, prodT] 
 
 theorem linInd {Y : Type} {P : Submodule ℂ (Y → ℂ)} {A : Submodule ℂ P} {κ : Type} (b : Module.Basis κ ℂ A) :
     LinearIndependent ℂ (fun k => (b k).1.1) :=
@@ -159,7 +159,7 @@ theorem sep_pair [TopologicalSpace G1] [TopologicalSpace G2] {X1 X2 : Type} [Add
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul u v => exact Submodule.subset_span ⟨u.1, u.2, v.1, v.2, rfl⟩
-      | add t t' ht ht' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ht ht'
+      | add t t' ht ht' => rw [map_add]; exact add_mem ht ht'
   rw [hR]
   set Ψ := prodT S1 S2
   have hinj : Function.Injective Ψ := by
@@ -178,7 +178,7 @@ theorem sep_pair [TopologicalSpace G1] [TopologicalSpace G2] {X1 X2 : Type} [Add
       · exact Subtype.ext (Subtype.ext (hz k hk))
       · exact Finsupp.notMem_support_iff.1 hk
     have : t = (TensorProduct.equivFinsuppOfBasisRight b2).symm m := by simp [m]
-    rw [this, hm, map_zero]
+    rw [this, hm, LinearEquiv.map_zero]
   set e := LinearEquiv.ofInjective Ψ hinj
   have hL : ∀ j : J1 × J2, ∃ g : (Y1 × Y2 → ℂ) →ₗ[ℂ] X1 ⊗[ℂ] X2, g ∘ₗ (LinearMap.range Ψ).subtype =
       (TensorProduct.map (L1 j.1 ∘ₗ S1.subtype) (L2 j.2 ∘ₗ S2.subtype)) ∘ₗ e.symm.toLinearMap :=
@@ -215,7 +215,7 @@ theorem sep_pair [TopologicalSpace G1] [TopologicalSpace G2] {X1 X2 : Type} [Add
     | tmul u v =>
       refine ⟨(⟨ρ1 g.1 u.1, hs1 g.1 u.1 u.2⟩ : S1) ⊗ₜ (⟨ρ2 g.2 v.1, hs2 g.2 v.1 v.2⟩ : S2), ?_⟩
       funext z
-      simp [Ψ, hρ, hρ1, hρ2]
+      simp [Ψ, prodT, hρ, hρ1, hρ2]
     | add t t' ht ht' => rw [map_add (f := _), map_add (f := _)]; exact add_mem ht ht'
   · intro j g G hG hsm
     obtain ⟨U1, U2, κ, s, x, y, hU1o, hU2o, hx, hy, -, rfl⟩ := hdec G hG hsm

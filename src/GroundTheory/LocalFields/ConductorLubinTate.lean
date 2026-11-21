@@ -155,6 +155,8 @@ theorem lowerIndex_lubinTateField (hf : IsLubinTateSeries π f) {n k : ℕ} (hk 
     exact ordRat_primitive hπ hf hμ.1 hμ.2
   have he : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (lubinTateField Ω hπ hf n)))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) =
       (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (lubinTateField Ω hπ hf (n - k))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) * Nat.card 𝓀[K] ^ k := by
+    change ramificationIndex K (lubinTateField Ω hπ hf n) =
+      ramificationIndex K (lubinTateField Ω hπ hf (n - k)) * Nat.card 𝓀[K] ^ k
     rw [ramificationIndex_lubinTateField hπ hf hn,
       ramificationIndex_lubinTateField hπ hf (by omega : 0 < n - k), finrank_lubinTateField hπ hf hn,
       finrank_lubinTateField hπ hf (by omega : 0 < n - k), mul_assoc, ← pow_add]
@@ -303,8 +305,16 @@ theorem herbrandPhi_lubinTateField (hf : IsLubinTateSeries π f) {n k : ℕ} (hk
   have hqk : (1 : ℝ) ≤ ((Nat.card 𝓀[K] ^ k : ℕ) : ℝ) := by exact_mod_cast Nat.one_le_pow _ _ hq
   rw [herbrandPhi_eq_sum_lowerIndex (by linarith), sub_add_cancel]
   push_cast
-  rw [sum_enatMin_lowerIndex_lubinTateField hπ hf hk, card_lowerRamificationGroup_zero,
-    ramificationIndex_lubinTateField hπ hf hn, ← IsGalois.card_aut_eq_finrank]
+  have hc : Nat.card (lubinTateField Ω hπ hf n ≃ₐ[K] lubinTateField Ω hπ hf n) =
+      Module.finrank K (lubinTateField Ω hπ hf n) :=
+    (Nat.card_congr (lubinTateGalEquiv (Ω := Ω) hπ hf n).toEquiv).trans
+      (card_units_quotient_eq_finrank (Ω := Ω) (hπ := hπ) hf n)
+  haveI : IsGalois K (lubinTateField Ω hπ hf n) := IsGalois.of_card_aut_eq_finrank K _ hc
+  have he : (IsLocalRing.maximalIdeal 𝒪[lubinTateField Ω hπ hf n]).ramificationIdx 𝒪[K] =
+      Nat.card (lubinTateField Ω hπ hf n ≃ₐ[K] lubinTateField Ω hπ hf n) := by
+    change ramificationIndex K (lubinTateField Ω hπ hf n) = _
+    rw [ramificationIndex_lubinTateField hπ hf hn, hc]
+  rw [sum_enatMin_lowerIndex_lubinTateField hπ hf hk, card_lowerRamificationGroup_zero, he]
   have hG : (0 : ℝ) < Nat.card (lubinTateField Ω hπ hf n ≃ₐ[K] lubinTateField Ω hπ hf n) := by
     exact_mod_cast Nat.card_pos
   field_simp

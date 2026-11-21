@@ -33,7 +33,7 @@ def rIdele [IsTotallyReal F] (c : ℝ) : GroundTheory.Global.IdeleGroup F where
 theorem ideleModule_rIdele [IsTotallyReal F] (c : ℝ) :
     (GroundTheory.Global.IdeleGroup.ideleModule F (rIdele c) : ℝ) = Real.exp ((Module.finrank ℚ F : ℝ) * c) := by
   have hm : ∀ w : InfinitePlace F, w.mult = 1 := fun w => by
-    rw [InfinitePlace.mult, if_pos (IsTotallyReal.isReal w)]
+    rw [InfinitePlace.mult, ite_eq_left (IsTotallyReal.isReal w)]
   have hinf : ∀ w : InfinitePlace F, ‖(rId F c).1 w‖ ^ w.mult = Real.exp c := fun w => by
     rw [hm, pow_one]
     exact norm_evInf_rId w c

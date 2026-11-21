@@ -155,7 +155,7 @@ theorem mem_rayUnits {a : Kˣ} :
   · have hc : ∀ k : K, (k : v.adicCompletion K) = algebraMap K (v.adicCompletion K) k := fun k ↦ by
       rw [HeightOneSpectrum.algebraMap_adicCompletion]
       rfl
-    rw [mem_unitsLevel_of_one_le ((𝔪.one_le_exponent_iff v).2 hv), coe_finiteProj_diagonal,
+    rw [GroundTheory.Global.mem_unitsLevel_of_one_le ((𝔪.one_le_exponent_iff v).2 hv), coe_finiteProj_diagonal,
       ← HeightOneSpectrum.valuedAdicCompletion_eq_valuation', hc, hc,
       (algebraMap K (v.adicCompletion K)).map_sub, (algebraMap K (v.adicCompletion K)).map_one]
   · rw [coe_infiniteProj_diagonal]

@@ -22,11 +22,11 @@ def EigFrame.Coord {R R' : Type} [CommRing R] [CommRing R'] {φ : c.F →+* R} {
     {x : Sp R ⟶ Z.X} {x' : Sp R' ⟶ Z.X} (f : EigFrame Z φ x) (ψ : R →+* R') (g : EigFrame Z φ' x')
     (A : Mat Dw.mult R') : Prop :=
   x' = spMap ψ ≫ x ∧ φ' = ψ.comp φ ∧
-    ∀ τ i, IsCombAtG Z.t x' (fun k => spMap (dualMap ψ) ≫ f.v τ k) (A τ i) (g.v τ i)
+    ∀ τ i, IsCombAtG Z.t x' (fun k => spMap (Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ k) (A τ i) (g.v τ i)
 
 def EigFrame.Stable {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x) : Prop :=
   ∀ (R' : Type) [CommRing R'] [IsLocalRing R'] (ψ : R →+* R'),
-    ∃ g : EigFrame Z (ψ.comp φ) (spMap ψ ≫ x), ∀ τ i, g.v τ i = spMap (dualMap ψ) ≫ f.v τ i
+    ∃ g : EigFrame Z (ψ.comp φ) (spMap ψ ≫ x), ∀ τ i, g.v τ i = spMap (Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i
 
 theorem EigFrame.tri_iff {R R' : Type} [CommRing R] [CommRing R'] {φ : c.F →+* R} {φ' : c.F →+* R'}
     {x : Sp R ⟶ Z.X} {x' : Sp R' ⟶ Z.X} (f : EigFrame Z φ x) (ψ : R →+* R') (g : EigFrame Z φ' x')

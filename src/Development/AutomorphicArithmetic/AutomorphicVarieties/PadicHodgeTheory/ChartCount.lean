@@ -44,7 +44,8 @@ private theorem snd_mul_right {E : Type} [CommRing E] (A : Matrix (Fin 3) (Fin 3
   ext a b
   simp [Matrix.mul_apply, TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.snd_sum, mul_comm]
 
-private theorem exists_coc {G E : Type} [Group G] [CommRing E] (r : G →* GG 3 E) (r' : G →* GG 3 (DualNumber E))
+private theorem exists_coc {G E : Type} [Group G] [CommRing E]
+    (r : G →* GG (m := 3) (R := E)) (r' : G →* GG (m := 3) (R := DualNumber E))
     (h1 : ∀ g, (r' g).right = (r g).right) (h2 : ∀ g a b, ((r' g).mat a b).fst = (r g).mat a b) :
     ∃ γ, IsCoc r γ ∧ DualDef r γ r' := by
   obtain ⟨γ, -, hc, hd⟩ := exists_isCoc (RingHom.ker (TrivSqZeroExt.fstHom E E E))
@@ -89,7 +90,7 @@ theorem UpperTheory.V.Loc.chartCount :
   haveI : IsModuleTopology ℚ_[l] E := ⟨rfl⟩
   haveI : IsTopologicalRing E := IsModuleTopology.isTopologicalRing ℚ_[l] E
   have hxe : ∀ g a b, algebraMap O E (x ((U.r.hom g).mat a b)) = (D.rz E g).mat a b := fun g a b =>
-    congrArg (fun r : GQ l →* GG 3 O => algebraMap O E ((r g).mat a b)) hx
+    congrArg (fun r : GQ l →* GG (m := 3) (R := O) => algebraMap O E ((r g).mat a b)) hx
   let d : GQ l → Fin 3 → E := fun g b => algebraMap O E ((D.Ψ g ^ wt1 b : Oˣ) : O)
   have hd : ∀ g, (D.rz E g).mat = Matrix.diagonal (d g) := fun g =>
     Matrix.diagonal_map (map_zero (algebraMap O E))

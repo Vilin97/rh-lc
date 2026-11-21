@@ -72,7 +72,7 @@ theorem SemilocalLength.proof (h1 : SemilocalLengthSum.Statement.{u})
         (isMultiHomog_rename j ι' ha) haP W' hdc
       have hmin : W' ∈ (P' ⊔ Ideal.span {(rename (blockIncl j ι') a)}).minimalPrimes := by
         by_contra hn
-        exact hdc (by unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle; rw [dite_eq_right (fun hc => hn hc.1)])
+        exact hdc (by unfold divCycle; rw [dite_eq_right (fun hc => hn hc.1)])
       have hc : contractPrime j W' = W := by
         by_contra hne
         exact hMW (hM0 W' hne)

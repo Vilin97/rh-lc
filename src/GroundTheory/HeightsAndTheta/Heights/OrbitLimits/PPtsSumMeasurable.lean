@@ -62,6 +62,14 @@ theorem PtsSumMeasurable.proof : PtsSumMeasurable.Statement := by
     have : S m = B m ∩ ⋂ m' ∈ Finset.range m, (B m' ∩ {y | σ m' y = σ m y})ᶜ := by
       ext y
       simp [hSdef]
+      intro _
+      constructor
+      · intro h i hi
+        by_cases hb : y ∈ B i
+        · exact Or.inr (h i hi hb)
+        · exact Or.inl hb
+      · intro h i hi hb
+        exact (h i hi).resolve_left (not_not.mpr hb)
     rw [this]
     exact (hBo m).measurableSet.inter (Finset.measurableSet_biInter _ fun m' _ =>
       ((hBo m').measurableSet.inter (measurableSet_eq_fun (hσm m') (hσm m))).compl)

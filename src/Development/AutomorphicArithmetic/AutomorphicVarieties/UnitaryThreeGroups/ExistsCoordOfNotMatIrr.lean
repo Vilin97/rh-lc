@@ -53,7 +53,7 @@ theorem UpperTheory.V.U3.shape_cases :
   intro G κ _ _ η r c g₁ h2 hm hc hg hn hz
   have hc' : (r c).right = -1 := (hm c).trans hc
   have hstar (g : G) (hg : g ∈ η.ker) :
-      (r (gstar c g)).mat = Jmat 3 * (r g).matᵀ * Jmat 3 ∧ (r (gstar c g)).right = 1 := by
+      (r (gstar c g)).mat = Jmat κ 3 * (r g).matᵀ * Jmat κ 3 ∧ (r (gstar c g)).right = 1 := by
     have hc₀ : r c = SemidirectProduct.mk 1 (-1) :=
       SemidirectProduct.ext (Units.ext (by simpa [GG.mat] using hn.atc)) hc'
     have hg₀ : r g = SemidirectProduct.mk (r g).left 1 :=

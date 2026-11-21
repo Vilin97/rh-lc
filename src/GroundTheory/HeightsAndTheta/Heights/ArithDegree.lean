@@ -125,8 +125,9 @@ section GramDet
 variable (h : HermitianMetric K E) (σ : K →+* ℂ) {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 theorem gramDet_pos {s : ι → E} (hs : LinearIndependent (𝓞 K) s) : 0 < gramDet h σ s := by
-  have := (posDef_gram_of_linearIndependent (linearIndependent_fibreVec h σ hs)).det_pos
-  exact (RCLike.pos_iff.mp this).1
+  open scoped ComplexOrder in
+    have := (posDef_gram_of_linearIndependent (linearIndependent_fibreVec h σ hs)).det_pos
+    exact (RCLike.pos_iff.mp this).1
 
 theorem gramDet_comb (A : Matrix ι ι (𝓞 K)) (s : ι → E) :
     gramDet h σ (fun j ↦ ∑ i, A i j • s i) = ‖σ (A.det : K)‖ ^ 2 * gramDet h σ s := by

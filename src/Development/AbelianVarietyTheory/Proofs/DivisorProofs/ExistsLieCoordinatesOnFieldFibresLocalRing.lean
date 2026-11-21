@@ -140,7 +140,37 @@ end GlobalTheory.LieCoordFibre
 open GlobalTheory.LieCoordFibre ReciprocityTheory.ChartRestriction.G.Chart in
 theorem GlobalTheory.exists_lie_coordinates_fibres : ∀ (R : Type) [CommRing R] [IsLocalRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G], Smooth G.hom → ∃ (n : ℕ) (M : (G ⟶ G) → Matrix (Fin n) (Fin n) R), (∀ g : ℕ, SmoothOfRelativeDimension g G.hom → n = g) ∧ ∀ (k : Type) [Field k] (f : R →+* k), ∃ T : (Fin n → k) → (epsPt (spMap f) ⟶ G), Function.Injective T ∧ (∀ v : epsPt (spMap f) ⟶ G, spMap (TrivSqZeroExt.fstHom k k k).toRingHom ≫ (v).left = (1 : Over.mk (spMap f) ⟶ G).left ↔ v ∈ Set.range T) ∧ (∀ c c', T (c + c') = T c * T c') ∧ (∀ (t : k) c, (T (t • c)).left = spMap (epsScale t) ≫ (T c).left) ∧ ∀ u : G ⟶ G, IsMonHom u → ∀ c, T c ≫ u = T (((M u).map f).mulVec c) := by
   intro R _ _ G _ _ hs
-  obtain ⟨n, v, hv⟩ := LieLocalBasis.exists_isLieBasis_of_isLocalRing R G hs
+  have hlocal : ∃ (n : ℕ) (y : Fin n → (epsR R ⟶ G)), IsLieBasis y := by
+    haveI := hs
+    obtain ⟨C⟩ := ReciprocityTheory.ChartRestriction.G.Chart.exists_chart G
+    obtain ⟨g, hg, n, v, hv⟩ := ReciprocityTheory.ChartRestriction.G.Chart.exists_lieBasis_away C (IsLocalRing.maximalIdeal R)
+    have hu : IsUnit g := by
+      by_contra h
+      exact hg ((IsLocalRing.mem_maximalIdeal g).2 h)
+    let L := Localization.Away g
+    let f' : L →+* R := IsLocalization.Away.lift (g := RingHom.id R) g hu
+    have hf' : f'.comp (algebraMap R L) = RingHom.id R := RingHom.ext fun r => IsLocalization.Away.lift_eq (g := RingHom.id R) g hu r
+    let G' := ReciprocityTheory.ChartRestriction.G.Chart.Gs G g
+    have hpb : IsGrpPullback G' G (ReciprocityTheory.ChartRestriction.G.Chart.fB R L) (pullback.fst G.hom _) :=
+      isGrpPullback_pullback G _
+    have hcomp : spMap f' ≫ ReciprocityTheory.ChartRestriction.G.Chart.fB R L = 𝟙 (Sp R) := by
+      simp only [ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap, ReciprocityTheory.ChartRestriction.G.Chart.fB]
+      rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, hf']
+      exact Spec.map_id _
+    let φ' : G.left ⟶ G'.left := pullback.lift (𝟙 _) (G.hom ≫ spMap f') (by rw [Category.assoc, hcomp]; simp)
+    have hφ : φ' ≫ pullback.fst _ _ = 𝟙 _ := pullback.lift_fst _ _ _
+    have hw : φ' ≫ G'.hom = G.hom ≫ spMap f' := pullback.lift_snd _ _ _
+    haveI : IsMonHom (Iso.refl G).hom := inferInstanceAs (IsMonHom (𝟙 G))
+    have hid : IsGrpPullback G G (𝟙 (Sp R)) (𝟙 G.left) := (isGrpPullback_of_iso (Iso.refl G)).congr rfl rfl
+    have hn : IsGrpPullback G G (spMap f' ≫ ReciprocityTheory.ChartRestriction.G.Chart.fB R L) (φ' ≫ pullback.fst _ _) :=
+      hid.congr hcomp.symm hφ.symm
+    have hG : IsGrpPullback G G' (spMap f') φ' := hpb.cancel hn hw
+    have hs' : Smooth G'.hom := by
+      show Smooth (pullback.snd G.hom _)
+      infer_instance
+    obtain ⟨v', hv', -⟩ := GlobalTheory.exists_isLieBasis_baseChange L R f' G' G φ' hG hs' n v hv
+    exact ⟨n, v', hv'⟩
+  obtain ⟨n, v, hv⟩ := hlocal
   refine ⟨n, lieMat hv, fun g hg => ?_, fun k _ f => ?_⟩
   · obtain ⟨w, hw⟩ := KeyPow.exists_isLieBasis G hg
     exact card_eq_of_isLieBasis hv hw

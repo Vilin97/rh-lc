@@ -29,10 +29,19 @@ theorem psiN_conj_eq_one {ψ₀ : AddChar F ℂ} (hψ₀ : ∀ x ∈ 𝒪[F], ψ
     (hl : Antitone l) {k : GL (Fin n) F} (hk : k ∈ integralGL F n) :
     Whittaker.psiN ψ₀ (torusPow F n l * k * torusPow F n (-l)) = 1 := by
   refine hψ₀ _ (superdiagSum_mem fun i j hij => ?_)
-  rw [torusPow_mul_mul_neg_apply]
-  refine Subring.mul_mem _ (zpow_mem_of_nonneg ?_) (((mem_integralGL_iff F n).1 hk).1 i j)
-  have := hl (show i ≤ j from Fin.le_def.2 (by omega))
-  linarith
+  have heq : ((torusPow F n l * k * torusPow F n (-l) : GL (Fin n) F) :
+      Matrix (Fin n) (Fin n) F) i j = (GLnLocal.uniformizer F : F) ^ (l i - l j) * k i j := by
+    rw [Units.val_mul, Units.val_mul, coe_torusPow, coe_torusPow, mul_diagonal, diagonal_mul,
+      Pi.neg_apply, zpow_sub₀ (uniformizer_ne_zero F), _root_.zpow_neg, div_eq_mul_inv]
+    ring
+  rw [heq]
+  have ht : 0 ≤ l i - l j := by
+    have := hl (show i ≤ j from Fin.le_def.2 (by omega))
+    linarith
+  refine Subring.mul_mem _ ?_ (((mem_integralGL_iff F n).1 hk).1 i j)
+  obtain ⟨m, hm⟩ := Int.eq_ofNat_of_zero_le ht
+  rw [hm, zpow_natCast]
+  exact Subring.pow_mem _ (GLnLocal.uniformizer F).2 m
 
 theorem exists_iwasawa_decomp (g : GL (Fin n) F) :
     ∃ p : GL (Fin n) F × GL (Fin n) F, p.1 ∈ unipotent F n ∧ p.2 ∈ integralGL F n ∧

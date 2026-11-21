@@ -26,7 +26,7 @@ theorem LinearFormCut.proof : LinearFormCut.Statement := by
   classical
   let S := {Q : Ideal (MvPolynomial (Fin n) ℂ) | Q ∈ I.minimalPrimes ∧ Q ≠ originIdeal n}
   have : Finite S :=
-    ((Ideal.finite_minimalPrimes_of_isNoetherianRing _ I).subset fun Q hQ => hQ.1).to_subtype
+    ((Ideal.finite_minimalPrimes_of_isNoetherianRing _ I).subset fun Q (hQ : Q ∈ S) => hQ.1).to_subtype
   let p : S → Submodule ℂ (Fin n → ℂ) := fun Q => (Q.1.restrictScalars ℂ).comap (formMap n)
   have hp : ∀ Q, p Q ≠ ⊤ := by
     intro Q htop

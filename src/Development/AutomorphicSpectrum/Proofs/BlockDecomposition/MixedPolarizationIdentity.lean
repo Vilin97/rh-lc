@@ -14,7 +14,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo GlobalTheory.ArInt
 namespace GlobalTheory.CompanionTheory.MixZ.PolarProof
 
 theorem multilinear_eq_zero {V : Type} [AddCommGroup V] {N : ℕ}
-    (M : MultilinearMap ℤ (fun _ : Fin N => V) ℝ)
+    (M : (Fin N → V) →ₘₗ[ℤ] ℝ)
     (hs : ∀ (a : Fin N → V) (σ : Equiv.Perm (Fin N)), M (a ∘ σ) = M a)
     (hd : ∀ x : V, M (fun _ => x) = 0) (a : Fin N → V) : M a = 0 := by
   classical
@@ -89,7 +89,7 @@ theorem eq_of_diag {V : Type} [AddCommGroup V] {N : ℕ} (S T : (Fin N → V) �
     intro a j b c
     simp only [Pi.sub_apply, aS, aT]
     ring
-  let M : MultilinearMap ℤ (fun _ : Fin N => V) ℝ :=
+  let M : (Fin N → V) →ₘₗ[ℤ] ℝ :=
     { toFun := S - T
       map_update_add' := by
         intro inst m j b c

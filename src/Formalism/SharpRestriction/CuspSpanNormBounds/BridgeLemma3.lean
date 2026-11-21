@@ -40,19 +40,21 @@ theorem hu_pull_sigmaFinite {U : Set (Mat k r)} (hU : IsClosedSubgroup U) (μ : 
   · rw [← Set.preimage_iUnion, iUnion_spanningSets, Set.preimage_univ]
 
 theorem hu_smul {U : Set (Mat k r)} {ν : Measure (Mt k r)} (h : Formalism.FourierDecayAlt.B.IsHaarOn U ν) {c : ℝ≥0∞} (hc0 : c ≠ 0)
-    (hc1 : c ≠ ∞) : Formalism.FourierDecayAlt.B.IsHaarOn U (c • ν) where
-  conc := by simp [h.conc]
-  left := fun a ha => by rw [Measure.map_smul, h.left a ha]
-  right := fun a ha => by rw [Measure.map_smul, h.right a ha]
-  finite_compact := fun K hK => by
-    rw [Measure.smul_apply, smul_eq_mul]
+    (hc1 : c ≠ ∞) : Formalism.FourierDecayAlt.B.IsHaarOn U (c • ν) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · rw [smul_apply, h.conc, smul_zero]
+  · intro a ha
+    rw [Measure.map_smul c (lmulM_cont (k := k) (r := r) a).measurable.aemeasurable, h.left a ha]
+  · intro a ha
+    rw [Measure.map_smul c (rmulF_cont a).measurable.aemeasurable, h.right a ha]
+  · intro K hK
+    rw [smul_apply, smul_eq_mul]
     exact ENNReal.mul_lt_top (lt_top_iff_ne_top.2 hc1) (h.finite_compact K hK)
-  ne_zero := by
-    intro h0
+  · intro h0
     apply h.ne_zero
     ext s _
     have := congrArg (fun m : Measure (Mt k r) => m s) h0
-    simp only [Measure.smul_apply, Measure.coe_zero, Pi.zero_apply, smul_eq_mul, mul_eq_zero] at this
+    simp only [smul_apply, FunLike.coe_zero, Pi.zero_apply, smul_eq_mul, mul_eq_zero] at this
     rcases this with h1 | h1
     · exact absurd h1 hc0
     · simpa using h1
@@ -90,7 +92,7 @@ theorem hu_eq_smul {U : Set (Mat k r)} (hU : IsClosedSubgroup U) {ν μ : Measur
     have e0 : ∀ s : Set (Gp U hU), pull hU μ s = ∞ * pull hU ν s := by
       intro s
       have := congrArg (fun m : Measure (Gp U hU) => m s) key
-      simpa only [Measure.smul_apply, smul_eq_mul, h] using this
+      simpa only [smul_apply, smul_eq_mul, h] using this
     have e := e0 (spanningSets (pull hU μ) n)
     by_cases hz : pull hU ν (spanningSets (pull hU μ) n) = 0
     · rw [e, hz, mul_zero] at hn
@@ -100,7 +102,7 @@ theorem hu_eq_smul {U : Set (Mat k r)} (hU : IsClosedSubgroup U) {ν μ : Measur
   refine ⟨c, hc0, hc1, ?_⟩
   calc μ = (pull hU μ).map inc := (map_pull μ hc').symm
     _ = (c • pull hU ν).map inc := by rw [← key]
-    _ = c • ν := by rw [Measure.map_smul, map_pull ν hν.conc]
+    _ = c • ν := by rw [Measure.map_smul c inc_memb.measurable.aemeasurable, map_pull ν hν.conc]
 
 theorem hu_general {U : Set (Mat k r)} (hU : IsClosedSubgroup U) {ν μ : Measure (Mt k r)}
     (hν : Formalism.FourierDecayAlt.B.IsHaarOn U ν) (hμ : Formalism.MainNotions.S.IsHaarOn U μ) : Formalism.FourierDecayAlt.B.IsHaarOn U μ := by

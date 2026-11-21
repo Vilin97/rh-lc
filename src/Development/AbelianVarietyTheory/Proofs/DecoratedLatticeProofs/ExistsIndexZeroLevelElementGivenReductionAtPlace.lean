@@ -102,10 +102,10 @@ theorem lev_back {cm : GlobalTheory.ChainOnto.Com D} {st : StAt (c.V 0)} {b : GA
       rw [RingHom.map_mul, k1, pr_other (G PP).q (G PP').q ha PP.2 PP'.2 (fun h => hne (Subtype.ext h)) (hB.loc PP).idem
         (hB.loc PP').idem, zero_mul, RingHom.map_sub] at e1
       have e2 : π' ((1 : Matrix _ _ (Lev.EAf D)) (e' a₁) (e' b₁)) = (1 : Matrix _ _ (G PP').k) a₁ b₁ := by
-        simp only [one_apply, e'.injective.eq_iff]
-        split_ifs
-        · exact π'.map_one
-        · exact π'.map_zero
+        change π' (if e' a₁ = e' b₁ then 1 else 0) = (if a₁ = b₁ then 1 else 0)
+        by_cases h : a₁ = b₁
+        · simp only [h, if_true, map_one]
+        · simp only [h, e'.injective.ne h, if_false, map_zero]
       rw [← e2, ← e1, Valuation.map_zero]
       exact zero_lt_one
   change _ ∈ Lev.levG _ _ st.L

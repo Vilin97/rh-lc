@@ -67,7 +67,13 @@ theorem mem_leviOne_last {X Y : Matrix (Fin n) (Fin (r + 1)) E} {g : GAd σ J} :
       (∃ B : GL (Fin (r + 1)) (AF F ⊗[F] E), (matHom _ σ J g).1 * adMat F Y = adMat F Y * B.1) ∧
       (∃ B ∈ ((absE F E).comp (Matrix.GeneralLinearGroup.det : GL (Fin (r + 1)) (AF F ⊗[F] E) →* (AF F ⊗[F] E)ˣ)).ker,
         (matHom _ σ J g).1 * adMat F X = adMat F X * B.1) := by
-  rw [GlobalTheory.LeviSplit.mem_leviOne]
+  have hmem : g ∈ GlobalTheory.StdPar.leviOne σ J X Y {Fin.last r} ↔ ∀ k ∈ ({Fin.last r} : Finset (Fin (r + 1))),
+      g ∈ GlobalTheory.StdPar.frameStab σ J (GlobalTheory.StdPar.initCols X k) ((⊤ : Subgroup (AF F ⊗[F] E)ˣ).comap Matrix.GeneralLinearGroup.det) ∧
+      g ∈ GlobalTheory.StdPar.frameStab σ J (GlobalTheory.StdPar.initCols Y k) ((⊤ : Subgroup (AF F ⊗[F] E)ˣ).comap Matrix.GeneralLinearGroup.det) ∧
+      g ∈ GlobalTheory.StdPar.frameStab σ J (GlobalTheory.StdPar.initCols X k) ((absE F E).ker.comap Matrix.GeneralLinearGroup.det) := by
+    simp only [GlobalTheory.StdPar.leviOne, GlobalTheory.StdPar.levi, Subgroup.mem_inf, Subgroup.mem_iInf, Subgroup.comap_top, MonoidHom.comap_ker]
+    exact ⟨fun h k hk => ⟨(h.1 k hk).1, (h.1 k hk).2, h.2 k hk⟩, fun h => ⟨fun k hk => ⟨(h k hk).1, (h k hk).2.1⟩, fun k hk => (h k hk).2.2⟩⟩
+  rw [hmem]
   simp only [Finset.mem_singleton, forall_eq]
   constructor
   · rintro ⟨⟨B, -, h⟩, ⟨B', -, h'⟩, ⟨B'', h2, h''⟩⟩

@@ -253,7 +253,16 @@ theorem exists_mem_of_ordGe {g n : ℕ} {F : SFam g n (zetaAway n)} {Z : Scheme.
       Φ.m y = 1 ∧ IsPrincipalIdealRing (Φ.V y) ∧ Function.Injective f ∧ IsLocalHom f ∧ f.comp (f₁.comp ev) = Φ.ev y ∧
       ∀ k, Φ.t y k = f T.ϖ ∧ ∀ a b, Φ.δ y k a b = T.β (e a) (e b) := hT T (f₁.comp ev) inferInstance hreg (by
     rw [← hgen, spMap_comp₁, Category.assoc, ← Category.assoc (spMap ev), hξ, Category.assoc])
-  obtain ⟨a, ha, hJ⟩ := valOn_pow F i φ J d D hval T _ hgen
+  obtain ⟨a₀, ha₀, hJ₀⟩ := hval T _ hgen
+  have hpowJ : idlAlong (J ^ D) (spMap f₁ ≫ ξ ≫ p₁ ≫ X₁.π) = idlAlong J (spMap f₁ ≫ ξ ≫ p₁ ≫ X₁.π) ^ D := by
+    rw [idlAlong, stalkId_pow', Ideal.map_pow, ← idlAlong]
+  have ha : ((D * a₀ : ℕ) : ℝ) = (D * d : ℕ) * φ.evalZ T.β := by
+    push_cast
+    rw [ha₀]
+    ring
+  have hJ : idlAlong (J ^ D) (spMap f₁ ≫ ξ ≫ p₁ ≫ X₁.π) = Ideal.span {T.ϖ ^ (D * a₀)} := by
+    rw [hpowJ, hJ₀, Ideal.span_singleton_pow, pow_mul']
+  let a := D * a₀
   let k₀ : Fin (Φ.m y) := ⟨0, by omega⟩
   have hm := hf.mem y hP hm k₀ a (by
     rw [ha]
@@ -263,8 +272,28 @@ theorem exists_mem_of_ordGe {g n : ℕ} {F : SFam g n (zetaAway n)} {Z : Scheme.
   have hpow : ∀ {Y : Scheme.{0}} (I : Y.IdealSheafData) (χ : Sp V ⟶ Y), idlAlong (I ^ D) χ = idlAlong I χ ^ D := by
     intro Y I χ
     rw [idlAlong, stalkId_pow', Ideal.map_pow, ← idlAlong]
+  have idlAlong_comp_local {X : Scheme.{0}} (J : X.IdealSheafData) {R S : Type} [CommRing R] [IsLocalRing R] [CommRing S]
+      [IsLocalRing S] (χ : Sp R ⟶ X) (f : R →+* S) : idlAlong J (spMap f ≫ χ) = (idlAlong J χ).map f := by
+    have eq_map {A : Type} [CommRing A] [IsLocalRing A] (ψ : Sp A ⟶ X)
+        (U : X.affineOpens) (hle : ⊤ ≤ ψ ⁻¹ᵁ U.1) :
+        idlAlong J ψ = (J.ideal U).map (ψ.appLE U.1 ⊤ hle ≫ (Scheme.ΓSpecIso (.of A)).hom).hom := by
+      have hx : ψ (closedPoint A) ∈ U.1 := hle trivial
+      unfold idlAlong
+      rw [ds_stalkId_eq_map J U _ hx, Ideal.map_map, ← CommRingCat.hom_comp, Scheme.germ_stalkClosedPointTo]
+      congr 2
+    obtain ⟨U, hU, hx, -⟩ := TopologicalSpace.Opens.isBasis_iff_nbhd.1 X.isBasis_affineOpens
+      (show χ (closedPoint R) ∈ (⊤ : X.Opens) from trivial)
+    have hle : ⊤ ≤ χ ⁻¹ᵁ U := (Scheme.preimage_eq_top_of_closedPoint_mem χ hx).ge
+    have hle' : ⊤ ≤ (spMap f ≫ χ) ⁻¹ᵁ U := fun x _ => hle (show spMap f x ∈ (⊤ : (Sp R).Opens) from trivial)
+    rw [eq_map χ ⟨U, hU⟩ hle, eq_map _ ⟨U, hU⟩ hle', Ideal.map_map]
+    congr 1
+    have e : (spMap f ≫ χ).appLE U ⊤ hle' = χ.appLE U ⊤ hle ≫ (spMap f).appTop := by
+      rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
+      exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm
+    rw [e, Category.assoc, Scheme.ΓSpecIso_naturality, ← Category.assoc, CommRingCat.hom_comp]
+    rfl
   have h1 : (idlAlong E.idealSheaf ξ).map (f₂.comp f₁) = Ideal.span {Φ.t y k₀ ^ a} := by
-    rw [hE', hpow, GlobalTheory.PullAlong.idlAlong_comap_eq, ← hpow, ← Ideal.map_map, ← GlobalTheory.TraitOrder.idlAlong_comp, hJ,
+    rw [hE', hpow, GlobalTheory.PullAlong.idlAlong_comap_eq, ← hpow, ← Ideal.map_map, ← idlAlong_comp_local, hJ,
       Ideal.map_span, Set.image_singleton, map_pow, (hδ k₀).1]
   rw [Ideal.map_sup, h1, Ideal.map_pow, Ideal.map_map, RingHom.comp_assoc, hev₂, ← RingHom.comp_apply,
     RingHom.comp_assoc, hev₂]
@@ -318,11 +347,31 @@ theorem exists_elements : ∀ g : ℕ, 1 ≤ g → ∀ n : ℕ, 3 ≤ n → Odd 
   · rw [hb]
     congr 1
     exact (evalZ_eq_of_addEquiv φ _ _ e (htδ k).2).symm
-  · rw [← Ideal.span_singleton_eq_span_singleton]
+  · have idlAlong_comp_local {X : Scheme.{0}} (J : X.IdealSheafData) {R S : Type} [CommRing R] [IsLocalRing R] [CommRing S]
+        [IsLocalRing S] (χ : Sp R ⟶ X) (f : R →+* S) : idlAlong J (spMap f ≫ χ) = (idlAlong J χ).map f := by
+      have eq_map {A : Type} [CommRing A] [IsLocalRing A] (ψ : Sp A ⟶ X)
+          (U : X.affineOpens) (hle : ⊤ ≤ ψ ⁻¹ᵁ U.1) :
+          idlAlong J ψ = (J.ideal U).map (ψ.appLE U.1 ⊤ hle ≫ (Scheme.ΓSpecIso (.of A)).hom).hom := by
+        have hx : ψ (closedPoint A) ∈ U.1 := hle trivial
+        unfold idlAlong
+        rw [ds_stalkId_eq_map J U _ hx, Ideal.map_map, ← CommRingCat.hom_comp, Scheme.germ_stalkClosedPointTo]
+        congr 2
+      obtain ⟨U, hU, hx, -⟩ := TopologicalSpace.Opens.isBasis_iff_nbhd.1 X.isBasis_affineOpens
+        (show χ (closedPoint R) ∈ (⊤ : X.Opens) from trivial)
+      have hle : ⊤ ≤ χ ⁻¹ᵁ U := (Scheme.preimage_eq_top_of_closedPoint_mem χ hx).ge
+      have hle' : ⊤ ≤ (spMap f ≫ χ) ⁻¹ᵁ U := fun x _ => hle (show spMap f x ∈ (⊤ : (Sp R).Opens) from trivial)
+      rw [eq_map χ ⟨U, hU⟩ hle, eq_map _ ⟨U, hU⟩ hle', Ideal.map_map]
+      congr 1
+      have e : (spMap f ≫ χ).appLE U ⊤ hle' = χ.appLE U ⊤ hle ≫ (spMap f).appTop := by
+        rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
+        exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm
+      rw [e, Category.assoc, Scheme.ΓSpecIso_naturality, ← Category.assoc, CommRingCat.hom_comp]
+      rfl
+    rw [← Ideal.span_singleton_eq_span_singleton]
     have h1 : idlAlong (J.comap (p₁ ≫ X₁.π)) ξ₁ = Ideal.span {s f₀} := by
       rw [idlAlong, hst, Ideal.map_span, Set.image_singleton]
     rw [← h1, GlobalTheory.PullAlong.idlAlong_comap_eq, ← hν, ← Category.assoc, hξν, Category.assoc,
-      GlobalTheory.TraitOrder.idlAlong_comp, ← GlobalTheory.PullAlong.idlAlong_comap_eq, hJb, Ideal.map_span, Set.image_singleton, map_prod,
+      idlAlong_comp_local, ← GlobalTheory.PullAlong.idlAlong_comap_eq, hJb, Ideal.map_span, Set.image_singleton, map_prod,
       ← Equiv.prod_comp h]
     simp only [map_pow, (htδ _).1]
   · have hle : ∀ {R : Type} [CommRing R] (I J : Ideal R) {a b : ℕ}, a ≤ b → J ⊔ I ^ b ≤ J ⊔ I ^ a :=

@@ -106,7 +106,11 @@ open scoped Classical in
 theorem norm_adeleRing_fst (v : InfinitePlace K) (y : 𝔸[L]) :
     (Algebra.norm 𝔸[K] y).1 v =
       ∏ w : v.placesOver L, Algebra.norm v.Completion (y.1 w) :=
-  (infiniteEval_norm v y).trans (GroundTheory.Global.Algebra.norm_pi _)
+  by
+    letI : ∀ w : v.placesOver L, Module.Finite v.Completion (w : InfinitePlace L).Completion :=
+      fun w => GroundTheory.Global.InfinitePlace.finiteDimensional_completion v
+        (w : InfinitePlace L)
+    exact (infiniteEval_norm v y).trans (GroundTheory.Global.Algebra.norm_pi _)
 
 end AdeleBaseChange
 

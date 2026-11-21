@@ -20,7 +20,7 @@ theorem regularityLocalFlat_holds.proof : regularityLocalFlat_holds.Statement :=
   have := hP.1
   have := hW.1
   choose v hv using hW.2.2
-  have hA := regularityLocalFlat_holds.isLocalRing hPW
+  have hA := regularityLocalFlat_holds.isLocalRing (P := P) (W := W) hPW
   have hloc := regularityLocalFlat_holds.isLocalization_coneVarMap hPW hP.2.1 hW.2.1 v hv
   let _ := (regularityLocalFlat_holds.coneVarMap P W hPW v).toRingHom.toAlgebra
   have := regularityLocalFlat_holds.isPrime_map_C K (maximalIdeal (locRing P W))

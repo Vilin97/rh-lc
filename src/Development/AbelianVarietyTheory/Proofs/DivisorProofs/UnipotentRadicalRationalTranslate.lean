@@ -11,7 +11,7 @@ public import Development.AbelianVarietyTheory.Proofs.HeightProofs.TwoStepUnipot
 noncomputable section
 
 open scoped TensorProduct NNReal Matrix
-open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.EisRes
+open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet
 open Formalism.UG (cT cT_mul cT_one)
 
 namespace GlobalTheory.EisCT

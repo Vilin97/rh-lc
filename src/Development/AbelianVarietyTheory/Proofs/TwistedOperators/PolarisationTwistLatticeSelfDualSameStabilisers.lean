@@ -297,8 +297,7 @@ theorem isSelfDualC_scaleLat (V : HSp D) (Λ : Submodule (𝓞 D.host.E) (Fin V.
       rw [← algebraMap_smul D.host.E o x, smul_smul, ho, Algebra.smul_def d a, ← mul_assoc, inv_mul_cancel₀ hdne, one_mul]
     exact fg_of_le_fg' hP hle
   ·
-    rw [eq_top_iff, ← hlat.span_eq_top]
-    exact Submodule.span_le.2 (mem_span_of h𝔟 fun a ha x hx => smul_mem_scaleLat ha hx)
+    exact fun _ _ => (LinearIndependent.iff_fractionRing (𝓞 D.host.E) D.host.E).mp
   · change y ∈ scaleLat 𝔟 Λ ↔ ∀ x ∈ scaleLat 𝔟 Λ, ∃ b : 𝓞 D.host.E, (b : D.host.E) = hf V x y
     constructor
     · intro hy x hx

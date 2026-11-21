@@ -40,7 +40,7 @@ theorem ClassFormation.cohomologyConj_two_eq_id (F : ClassFormation C) {U V : Op
     (h : V ≤ U) [((V : Subgroup G).subgroupOf (U : Subgroup G)).Normal] (g : (U : Subgroup G)) :
     cohomologyConj (Rep.res (U : Subgroup G).subtype C) ((V : Subgroup G).subgroupOf U) 2 g = 𝟙 _ := by
   refine ModuleCat.hom_ext (LinearMap.ext fun y => ?_)
-  obtain ⟨x, rfl⟩ := cohomologyRes_subgroupOf_surjective h 2 (F.cohomologyResLE_surjective h) y
+  obtain ⟨x, rfl⟩ := cohomologyRes_subgroupOf_surjective h 2 (ClassFormation.cohomologyResLE_surjective F h) y
   exact congrArg (fun φ => φ.hom x) (cohomologyRes_comp_cohomologyConj (Rep.res (U : Subgroup G).subtype C)
     ((V : Subgroup G).subgroupOf U) 2 g)
 

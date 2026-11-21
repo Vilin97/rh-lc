@@ -171,8 +171,10 @@ theorem herbrandPhi_comp (u : ℝ) :
       obtain ⟨σ, rfl⟩ := AlgEquiv.restrictNormalHom_surjective (F := K) (K₁ := M) L s
       rw [sum_filter_restrictNormalHom_eq M (fun ρ ↦ enatMin (lowerIndex K L ρ) (u + 1)) σ,
         sum_enatMin_lowerIndex_coset M σ hu]
+    have ht := ramificationIndex_tower K M L
+    dsimp only [ramificationIndex] at ht
     rw [hfib, ← Finset.mul_sum, card_lowerRamificationGroup_zero K L,
-      card_lowerRamificationGroup_zero K M, ramificationIndex_tower K M L]
+      card_lowerRamificationGroup_zero K M, ht]
     have h1 : (0 : ℝ) < (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by exact_mod_cast ramificationIndex_pos K M
     have h2 : (0 : ℝ) < (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation L))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation M))) := by exact_mod_cast ramificationIndex_pos M L
     push_cast

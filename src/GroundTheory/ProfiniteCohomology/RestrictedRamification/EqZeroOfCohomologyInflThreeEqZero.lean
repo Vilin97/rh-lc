@@ -121,7 +121,7 @@ theorem exists_isOpen_cohomologyResLE_eq (N : Subgroup G) (hN : IsClosed (N : Se
   classical
   have : CompactSpace N := isCompact_iff_compactSpace.mp hN.isCompact
   obtain ⟨z, rfl⟩ := cohomologyπ_surjective _ n y
-  set c : (Fin n → N) → A := cochainOf _ (cocycleι _ n z) with hc_def
+  set c : (Fin n → N) → A := cochainOf _ (cocycleι (A := Rep.res N.subtype A) (p := n) z) with hc_def
   have hc : IsLocallyConstant c := isLocallyConstant_cochainOf _
   obtain ⟨U, hU⟩ := exists_openNormalSubgroup_fin_of_isLocallyConstant hc
   obtain ⟨O, hO, hOU⟩ := isOpen_induced_iff.1 U.isOpen'
@@ -202,7 +202,7 @@ theorem exists_isOpen_cohomologyResLE_eq (N : Subgroup G) (hN : IsClosed (N : Se
     (cochainsComplex (Rep.res H.subtype A)).cyclesMk (mkCochain _ c' hc') (n + 1) (by simp) (by
       apply cochainOf_injective (A := Rep.res H.subtype A)
       exact (cochainOf_d _).trans hdc)
-  have hz' : cochainOf _ (cocycleι _ n z') = c' :=
+  have hz' : cochainOf _ (cocycleι (A := Rep.res H.subtype A) (p := n) z') = c' :=
     congrArg (cochainOf (Rep.res H.subtype A)) ((cochainsComplex (Rep.res H.subtype A)).i_cyclesMk _ _ _ _)
   refine ⟨H, hHo, le_sup_left, cohomologyπ _ n z', ?_⟩
   rw [cohomologyResLE_eq, cohomologyMapAlong_cohomologyπ]

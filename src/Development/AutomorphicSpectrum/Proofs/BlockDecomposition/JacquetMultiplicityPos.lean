@@ -138,9 +138,15 @@ def frobMap (e : (Σ a, m a) ≃ n) {τ : Representation ℂ (GL n k) V} {ρ : R
   isIntertwining' g := by
     refine LinearMap.ext fun y => ?_
     obtain ⟨v, rfl⟩ := Submodule.Quotient.mk_surjective _ y
-    have h := parInd_law e ρ (f v) ⟨_, leviEmb_mem_parab k e g⟩ 1
-    rw [mul_one] at h
-    simp only [leviProj_leviEmb] at h
+    have hmem : leviEmb k e g ∈ parab k e := by
+      refine mem_parab_iff.2 fun a b i j hab => ?_
+      simp [leviEmb, Matrix.blockDiagonal'_apply, hab.ne']
+    have hproj : leviProj k e ⟨leviEmb k e g, hmem⟩ = g := by
+      funext a
+      ext i j
+      simp [leviEmb]
+    have h := parInd_law e ρ (f v) ⟨leviEmb k e g, hmem⟩ 1
+    rw [mul_one, hproj] at h
     have h2 : evalOne e f (τ (leviEmb k e g) v) =
         (deltaHalf k m g : ℂ) • ρ g (evalOne e f v) := (eval_map e f _ v).trans h
     show (twKer τ (unipRad k e) 1).liftQ (evalOne e f) (twKer_le_ker_evalOne e f)

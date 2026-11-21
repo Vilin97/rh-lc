@@ -14,7 +14,7 @@ noncomputable section
 namespace UpperTheory.V.Cj.H
 
 private theorem multi_cont {H : Type} [AddCommGroup H] [Module ℝ H] [TopologicalSpace H] [IsTopologicalAddGroup H]
-    [ContinuousSMul ℝ H] [T2Space H] [FiniteDimensional ℝ H] {q : ℕ} (f : MultilinearMap ℝ (fun _ : Fin q => H) ℂ) :
+    [ContinuousSMul ℝ H] [T2Space H] [FiniteDimensional ℝ H] {q : ℕ} (f : (Fin q → H) →ₘₗ[ℝ] ℂ) :
     Continuous f := by
   classical
   let b := Module.finBasis ℝ H
@@ -27,7 +27,7 @@ private theorem multi_cont {H : Type} [AddCommGroup H] [Module ℝ H] [Topologic
       rw [f.map_sum]
     exact Finset.sum_congr rfl fun r _ => f.map_smul_univ _ _
   rw [h]
-  refine continuous_finset_sum _ fun r _ => Continuous.fun_smul (continuous_finset_prod _ fun i _ => ?_) continuous_const
+  refine continuous_finsetSum _ fun r _ => Continuous.fun_smul (continuous_finsetProd _ fun i _ => ?_) continuous_const
   exact (b.coord (r i)).continuous_of_finiteDimensional.comp (continuous_apply i)
 
 private def contr {S : Type} [AddCommGroup S] [Module ℂ S] {d : ℕ} :
@@ -52,7 +52,7 @@ private theorem abs_type {K H S : Type} [Group K] [TopologicalSpace K] [IsTopolo
     (M : K →* Matrix (Fin d) (Fin d) ℂ) (hM : Continuous M) (π : Representation ℂ K S) :
     ∃ (W : Type) (_ : AddCommGroup W) (_ : Module ℂ W) (_ : FiniteDimensional ℂ W)
       (ρ : Representation ℂ K W), GlobalTheory.Published.AutFin.IsContRep ρ ∧
-      ∀ ω : MultilinearMap ℝ (fun _ : Fin q => H) (S ⊗[ℂ] (Fin d → ℂ)),
+      ∀ ω : (Fin q → H) →ₘₗ[ℝ] S ⊗[ℂ] (Fin d → ℂ),
         (∀ k X, ω (fun i => ad k (X i)) = TensorProduct.map (π k) (Matrix.toLin' (M k)) (ω X)) → ∀ X i,
       ∃ (T : W →ₗ[ℂ] S) (w : W), (∀ k v, T (ρ k v) = π k (T v)) ∧ T w = Bor.cmp i (ω X) := by
   classical
@@ -105,7 +105,7 @@ private theorem abs_type {K H S : Type} [Group K] [TopologicalSpace K] [IsTopolo
         rw [← TensorProduct.smul_tmul', map_smul]
         rfl
       rw [e]
-      refine continuous_finset_sum _ fun j _ => Continuous.mul ?_ ?_
+      refine continuous_finsetSum _ fun j _ => Continuous.mul ?_ ?_
       · exact (continuous_apply j).comp ((hM.comp continuous_inv).matrix_transpose.matrix_mulVec continuous_const)
       · exact (multi_cont _).comp (continuous_pi fun i => had _)
   · let T : (Fin d → ℂ) ⊗[ℝ] P →ₗ[ℂ] S := TensorProduct.AlgebraTensorModule.lift

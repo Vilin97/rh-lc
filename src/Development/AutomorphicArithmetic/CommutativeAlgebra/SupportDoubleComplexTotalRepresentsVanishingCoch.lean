@@ -11,7 +11,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComp
 
 private theorem map_res' {E E' : Spc} (j : E ⟶ E') {p : ℕ} {V U : Scheme.{0}} (g : V ⟶ U) (z : Sx E p U) :
     (z.map j).res g = (z.res g).map j := by
-  exact (FunctorToTypes.naturality (j.app _) g.op z).symm
+  exact (ConcreteCategory.congr_hom ((j.app _).naturality g.op) z).symm
 
 private theorem map_face' {E E' : Spc} (j : E ⟶ E') {p : ℕ} {U : Scheme.{0}} (z : Sx E (p + 1) U) (i : Fin (p + 2)) :
     (z.map j).face i = (z.face i).map j :=

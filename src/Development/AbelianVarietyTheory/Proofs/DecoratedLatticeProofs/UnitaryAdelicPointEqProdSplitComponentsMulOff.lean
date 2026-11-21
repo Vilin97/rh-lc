@@ -73,7 +73,8 @@ theorem map_list_prod_single {ι G H : Type*} [Monoid G] [Monoid H] (φ : G →*
     (h1 : ∀ i, i ≠ j → φ (f i) = 1) : ∀ J : List ι, J.Nodup → j ∈ J → φ (J.map f).prod = φ (f j)
   | [], _, hj => absurd hj List.not_mem_nil
   | a :: J, hn, hj => by
-    obtain ⟨ha, hn'⟩ := List.nodup_cons.1 hn
+    have ha : a ∉ J := List.Nodup.notMem hn
+    have hn' : J.Nodup := List.Nodup.of_cons hn
     rw [List.map_cons, List.prod_cons, map_mul]
     by_cases haj : a = j
     · subst haj

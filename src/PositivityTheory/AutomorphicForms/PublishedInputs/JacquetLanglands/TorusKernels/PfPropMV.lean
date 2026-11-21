@@ -135,9 +135,9 @@ theorem dec_cong {art : Ideles F →* Gab F Ω} (ha : IsGlobalArtin art) {ι : Q
 theorem tr_det (ι : Qbar l ≃+* ℂ) (M : Matrix (Fin 2) (Fin 2) (Qbar l)) (a b : ℂ)
     (h : M.charpoly.map ι.toRingHom = Polynomial.X ^ 2 - C a * Polynomial.X + C b) : M.trace = ι.symm a ∧ M.det = ι.symm b := by
   rw [Matrix.charpoly_fin_two] at h
-  have h2 := congrArg (coeff · 1) h
-  have h3 := congrArg (coeff · 0) h
-  simp [coeff_X_pow, coeff_C] at h2 h3
+  have h2 := congrArg (AddMonoidAlgebra.coeff · 1) h
+  have h3 := congrArg (AddMonoidAlgebra.coeff · 0) h
+  simp [Polynomial.coeff_X_pow, Polynomial.coeff_C] at h2 h3
   rw [← h2, ← h3]
   simp
 

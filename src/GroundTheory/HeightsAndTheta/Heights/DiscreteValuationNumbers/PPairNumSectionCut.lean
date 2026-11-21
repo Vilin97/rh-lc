@@ -135,8 +135,22 @@ theorem cut_list_ratDiv (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irred
     cycEval (fun G => vNumL G ((fun k => (cs k : ℤ) - ch k) :: l)) (ratDiv P f g) =
       cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNumL W (b :: l)
         else cycEval (fun G => vNumL G l) (ratDiv W f g)) (ratDiv P s h) := by
-  have e1 := cut_list hC3 hϖ hD hs hsP (fun H hH => hgen H (Or.inl hH)) l hP
-  have e2 := cut_list hC3 hϖ hD hh hhP (fun H hH => hgen H (Or.inr hH)) l hP
+  have hcycle (a : MRing ι O) (W : Ideal (MRing ι O)) :
+      divCycle P a W = (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P a W : ℤ) := by
+    have hL : (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P a W : ℕ) =
+        if W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P a then
+          ReciprocityTheory.ChartRestriction.G.Geo.multAt (P ⊔ Ideal.span {a}) W else 0 := rfl
+    rw [divCycle, hL]
+    by_cases hw : W ∈ (P ⊔ Ideal.span {a}).minimalPrimes ∧ IsRelevant W
+    · have hw' : W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P a := hw
+      rw [dite_eq_left hw, if_pos hw', ReciprocityTheory.ChartRestriction.G.Geo.multAt,
+        dite_eq_left hw.1.1.1]
+      rfl
+    · have hw' : W ∉ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P a := hw
+      rw [dite_eq_right hw, if_neg hw']
+      simp
+  have e1 := cut_list hC3 hϖ hD hs hsP (fun H hH => hgen H (Or.inl (by rwa [← hcycle]))) l hP
+  have e2 := cut_list hC3 hϖ hD hh hhP (fun H hH => hgen H (Or.inr (by rwa [← hcycle]))) l hP
   have hr : ratDiv P s h = divCycle P s - divCycle P h := rfl
   have hfg := ratDiv_finite_support P f g
   rw [hr, ← cycEval_sub_cycle _ _ _ (divCycle_finite_support P s) (divCycle_finite_support P h), ← e1, ← e2,

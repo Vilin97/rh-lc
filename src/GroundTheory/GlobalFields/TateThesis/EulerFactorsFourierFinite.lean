@@ -250,7 +250,7 @@ theorem exists_mem_unitsLevel_ne_one {v : HeightOneSpectrum (𝓞 K)} (hv : v.as
     rfl
   have hcont : Continuous ((χ.toIdele.comp ofFinite).comp (finiteUnitsSingle v)) :=
     (χ.continuous_toIdele.comp continuous_ofFinite).comp (continuous_finiteUnitsSingle v)
-  have hn := multiplicity_pos_of_dvd hv
+  have hn := multiplicity_pos_of_dvd hv (Ideal.finiteMultiplicity v.isPrime.ne_top χ.conductor_ne_bot)
   have hnot : ¬ unitsLevel v (multiplicity v.asIdeal χ.conductor - 1) ≤
       ((χ.toIdele.comp ofFinite).comp (finiteUnitsSingle v)).ker := by
     rw [unitsLevel_le_ker_iff v Circle.noSmallSubgroups _ hcont]
@@ -267,7 +267,7 @@ theorem finiteFourier_eq_zero_of_le {y : FiniteAdeleRing (𝓞 K) K} {v : Height
     finiteFourier K χ.finiteTestFun y = 0 := by
   obtain ⟨a, ha, ha1⟩ := χ.exists_mem_unitsLevel_ne_one hv
   set u := finiteUnitsSingle v a
-  have hn := multiplicity_pos_of_dvd hv
+  have hn := multiplicity_pos_of_dvd hv (Ideal.finiteMultiplicity v.isPrime.ne_top χ.conductor_ne_bot)
   have hu : ∀ w, Valued.v ((u : FiniteAdeleRing (𝓞 K) K) w) = 1 := by
     intro w
     rw [← coe_finiteComponent]

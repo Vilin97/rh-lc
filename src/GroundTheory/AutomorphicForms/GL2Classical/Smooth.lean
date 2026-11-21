@@ -39,7 +39,7 @@ theorem contDiffAt_entryLift (k : ℤ) {F : ℂ → ℂ} (hF : DifferentiableOn 
     {m : Fin 2 → Fin 2 → ℝ} (hm : 0 < m 0 0 * m 1 1 - m 0 1 * m 1 0) :
     ContDiffAt ℝ ∞ (entryLift k F) m := by
   have hc : ∀ i j : Fin 2, ContDiff ℝ ∞ (fun m : Fin 2 → Fin 2 → ℝ => m i j) := fun i j =>
-    contDiff_apply_apply ℝ ℝ i j
+    contDiff_apply_apply ℝ i j
   have hcC : ∀ i j : Fin 2, ContDiff ℝ ∞ (fun m : Fin 2 → Fin 2 → ℝ => ((m i j : ℝ) : ℂ)) := fun i j =>
     Complex.ofRealCLM.contDiff.comp (hc i j)
   set D : (Fin 2 → Fin 2 → ℝ) → ℝ := fun m => m 0 0 * m 1 1 - m 0 1 * m 1 0

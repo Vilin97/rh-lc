@@ -286,13 +286,19 @@ theorem ma_op_tL (z z' : Fin (2 * r + k + 1) → ℂ) (Y : ℂ) (a b : Fin 2) :
 def maS (N : ℕ) (Θ : D.Op (Mat k r → (Wq →L[ℂ] Wp))) : Prop :=
   maOp Wp Wq (2 * N) ((2 * r + k + 1) * N) Θ
 
-theorem ma_S_gr : sqGr (maS (k := k) (r := r) (Wp := Wp) (Wq := Wq)) where
-  zero N := ma_op_congr (ma_op_zero _ _) (fun F => rfl)
-  one := ma_op_congr (ma_op_mono (Nat.zero_le _) (Nat.zero_le _) ma_op_id) (fun F => rfl)
-  add N a b ha hb := ma_op_congr (ma_op_add ha hb) (fun F => rfl)
-  mul N M a b ha hb := ma_op_congr (ma_op_comp (by ring_nf; omega) (by ring_nf; omega) ha hb) (fun F => rfl)
-  cop c := ma_op_congr (ma_op_mono (Nat.zero_le _) (Nat.zero_le _) (ma_op_smul c ma_op_id)) (fun F => rfl)
-  mono N a ha := ma_op_mono (by omega) (by ring_nf; omega) ha
+theorem ma_S_gr : sqGr (maS (k := k) (r := r) (Wp := Wp) (Wq := Wq)) := by
+  constructor
+  · intro N
+    exact ma_op_congr (ma_op_zero _ _) (fun F => rfl)
+  · exact ma_op_congr ma_op_id (fun F => rfl)
+  · intro N a b ha hb
+    exact ma_op_congr (ma_op_add ha hb) (fun F => rfl)
+  · intro N M a b ha hb
+    exact ma_op_congr (ma_op_comp (by ring_nf; omega) (by ring_nf; omega) ha hb) (fun F => rfl)
+  · intro c
+    exact ma_op_congr (ma_op_smul c ma_op_id) (fun F => rfl)
+  · intro N a ha
+    exact ma_op_mono (by omega) (by ring_nf; omega) ha
 
 theorem ma_S_tL (z z' : Fin (2 * r + k + 1) → ℂ) (s Y : ℂ) (a b : Fin 2) :
     maS (Wp := Wp) (Wq := Wq) 1 ((fun f => s • Q.tL k r z z' 0 Y a b f : D.Op (Mat k r → (Wq →L[ℂ] Wp)))) := by

@@ -34,7 +34,7 @@ theorem det_colwise_fromBlocks {k : Type} [CommRing k] {n m σ : Type} [Fintype 
     ext a b
     rcases a with (⟨r, s, hs⟩ | ⟨⟨l, s⟩, hs⟩) <;> rcases b with (⟨r', s', hs'⟩ | ⟨⟨l', s'⟩, hs'⟩) <;>
       simp [hM, splitVar, blockDiagonal_apply, one_apply]
-    by_cases h1 : s = s' <;> by_cases h2 : l = l' <;> simp [h1, h2]
+    by_cases h1 : s = s' <;> by_cases h2 : l = l' <;> simp [h1, h2, Matrix.one_apply, Subtype.ext_iff]
   rw [this, det_fromBlocks_zero₂₁, det_blockDiagonal]
   simp
 

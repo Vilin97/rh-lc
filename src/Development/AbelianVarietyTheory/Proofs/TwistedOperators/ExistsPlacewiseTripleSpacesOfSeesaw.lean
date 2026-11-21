@@ -239,13 +239,7 @@ theorem AA_ne : D.host.AA ≠ 0 := fun h => by
 
 theorem skLat_isLattice (S : HSp D) {d : ℕ} (e : Fin S.rank ≃ Fin d) : Submodule.IsLattice D.host.E (skLat S e) := by
   have hL := GlobalTheory.SkewLat.PairLatLattice.scLat_isLattice (AA_ne (D := D)) (GlobalTheory.PlaceModel.isSelfDualC_latFrame S).1
-  refine ⟨Submodule.FG.map _ hL.fg, ?_⟩
-  unfold skLat
-  rw [Submodule.map_coe]
-  have : ⇑((LinearEquiv.funCongrLeft D.host.E D.host.E e.symm).restrictScalars (𝓞 D.host.E)).toLinearMap =
-      ⇑(LinearEquiv.funCongrLeft D.host.E D.host.E e.symm).toLinearMap := rfl
-  rw [this, Submodule.span_image, hL.span_eq_top, Submodule.map_top]
-  exact LinearMap.range_eq_top.mpr (LinearEquiv.funCongrLeft D.host.E D.host.E e.symm).surjective
+  exact Submodule.IsLattice.of_fg D.host.E (Submodule.FG.map _ hL.fg)
 
 theorem skew_dual (S : HSp D) {d : ℕ} (e : Fin S.rank ≃ Fin d) (y : Fin d → D.host.E) :
     y ∈ skLat S e ↔ ∀ x ∈ skLat S e, ∀ o : 𝓞 D.host.E,

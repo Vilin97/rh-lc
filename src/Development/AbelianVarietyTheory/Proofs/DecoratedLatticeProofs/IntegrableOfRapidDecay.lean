@@ -13,7 +13,6 @@ namespace GlobalTheory.Core.Rk.RapidInt
 
 open scoped TensorProduct ENNReal NNReal ComplexConjugate Matrix Topology
 open NumberField IsDedekindDomain MeasureTheory Filter Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.Cont GlobalTheory.GaugeEx
-open GlobalTheory.Core.Rk.NSing
 open NumberField.mixedEmbedding
 open scoped Classical
 

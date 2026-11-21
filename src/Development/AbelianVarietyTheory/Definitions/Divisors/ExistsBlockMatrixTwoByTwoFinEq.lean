@@ -406,11 +406,15 @@ def embUp (v : HeightOneSpectrum (𝓞 F)) : upperParabolic (Fv F v) σ Q →* u
 theorem aUp_embUp (v : HeightOneSpectrum (𝓞 F)) (p : upperParabolic (Fv F v) σ Q) :
     aUp _ σ Q (embUp v p) = ideleAt F E v (aUp _ σ Q p) :=
   idele_ext (fun w => by
-    rw [← aUp_projArchUp, unitInf_ideleAt, show projArchUp w (embUp v p) = 1 from Subtype.ext (by simp), map_one])
+    rw [← aUp_projArchUp, unitInf_ideleAt, show projArchUp w (embUp v p) = 1 from Subtype.ext (by
+      change projArch σ Q w (emb σ Q v p) = 1
+      exact projArch_emb σ Q w v p), map_one])
     fun u => by
     rw [← aUp_projUp]
     by_cases e : u = v
-    · subst e; rw [unitFin_ideleAt_self, show projUp u (embUp u p) = p from Subtype.ext (by simp)]
+    · subst e; rw [unitFin_ideleAt_self, show projUp u (embUp u p) = p from Subtype.ext (by
+        change proj σ Q u (emb σ Q u p) = p
+        exact proj_emb_self σ Q u p)]
     · rw [unitFin_ideleAt_ne e, show projUp u (embUp v p) = 1 from Subtype.ext (proj_emb_ne σ Q e _), map_one]
 
 theorem isCompact_KUpFin (v : HeightOneSpectrum (𝓞 F)) : IsCompact (KUpFin σ Q v : Set (GLoc σ Q v)) :=

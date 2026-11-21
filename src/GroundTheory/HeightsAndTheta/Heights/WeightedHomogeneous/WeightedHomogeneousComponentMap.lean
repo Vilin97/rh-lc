@@ -123,13 +123,13 @@ theorem cycEval_divCycle_map (P : Ideal (MRing ι R)) (f : MRing ι R)
   have hsupp : ∀ (Q : Ideal (MRing ι R')) (x) (W : Ideal (MRing ι R')),
       divCycle Q x W ≠ 0 → W ∈ (Q ⊔ Ideal.span {x}).minimalPrimes := by
     intro Q x W h
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
+    unfold divCycle at h
     split_ifs at h with hh
     · exact hh.1
     · exact absurd rfl h
   have hsupp0 : ∀ W : Ideal (MRing ι R), divCycle P f W ≠ 0 → W ∈ J.minimalPrimes := by
     intro W h
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
+    unfold divCycle at h
     split_ifs at h with hh
     · exact hh.1
     · exact absurd rfl h

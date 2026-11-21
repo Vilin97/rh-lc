@@ -24,7 +24,7 @@ open GlobalTheory.AdIsom GlobalTheory.IndefiniteRowSideFullHecke.FlatSpaceCompon
 variable {D : D7}
 
 theorem mem_O_iff {w : Pl D.host.E} (a : Kw w) : a ∈ 𝒪[Kw w] ↔ Valued.v a ≤ 1 := by
-  haveI : (Valued.v : Valuation (Kw w) (WithZero (Multiplicative ℤ))).Compatible := Valuation.Compatible.ofValuation _
+  have : (Valued.v : Valuation (Kw w) (WithZero (Multiplicative ℤ))).Compatible := Valuation.Compatible.ofValuation _
   exact (ValuativeRel.isEquiv (valuation (Kw w)) Valued.v).le_one_iff_le_one
 
 theorem inBasis_val {n n' : ℕ} (h : n' = n) (β x : GL (Fin n) (Lev.EAf D)) (w : Pl D.host.E) (i j : Fin n') :
@@ -124,7 +124,7 @@ theorem prodLev_inf_UA {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank �
       rcases GlobalTheory.IdemSupport.eq_or_eq_cP hQw with rfl | rfl
       · exact idem_smul_mem hβ (hA ⟨Q, hw⟩).1 hy
       · exact transfer hsd hU (fun y hy => idem_smul_mem hβ (hA ⟨w, hw⟩).2 hy) hy
-    · push_neg at hQ
+    · push Not at hQ
       have := Subgroup.mem_comap.1 (Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 hB' Q) hQ)
       exact idem_smul_mem hβ (ent_of_KO _ β g Q this).1 hy
   ext x

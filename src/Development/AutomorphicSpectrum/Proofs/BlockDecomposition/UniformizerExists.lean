@@ -30,10 +30,8 @@ theorem valuation_up (hU : GlobalTheory.BCT.Unr E) (w : Pl E) (x : maximalRealSu
       (w.under (𝓞 (maximalRealSubfield E))).valuation (maximalRealSubfield E) x := by
   have := hU w
   have h1 := HeightOneSpectrum.valuation_liesOver E (w.under (𝓞 (maximalRealSubfield E))) w x
-  have he : (w.under (𝓞 (maximalRealSubfield E))).asIdeal.ramificationIdx' w.asIdeal = 1 := by
-    rw [Ideal.ramificationIdx'_eq_ramificationIdx]
-    · exact Ideal.ramificationIdx_eq_one_of_isUnramifiedAt
-    · exact (w.under _).ne_bot
+  have he : w.asIdeal.ramificationIdx (𝓞 (maximalRealSubfield E)) = 1 := by
+    exact Ideal.ramificationIdx_eq_one_of_isUnramifiedAt
   rw [← h1, he, pow_one]
 
 theorem neg_toAdd_unzero (a : WithZero (Multiplicative ℤ)) (h : a ≠ 0) (ha : a = WithZero.exp (-1 : ℤ)) :

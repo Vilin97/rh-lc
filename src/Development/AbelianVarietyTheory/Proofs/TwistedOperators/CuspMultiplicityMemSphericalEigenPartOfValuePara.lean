@@ -37,7 +37,7 @@ namespace GlobalTheory.EvenOnto.ValPart
 
 theorem lift_compMultilinearMap' {ι : Type*} [Fintype ι] {Mi : ι → Type*} [∀ i, AddCommGroup (Mi i)] [∀ i, Module ℂ (Mi i)]
     {E F : Type*} [AddCommGroup E] [Module ℂ E] [AddCommGroup F] [Module ℂ F]
-    (L : E →ₗ[ℂ] F) (T : MultilinearMap ℂ Mi E) :
+    (L : E →ₗ[ℂ] F) (T : MultilinearMap (RingHom.id ℂ) Mi E) :
     PiTensorProduct.lift (L.compMultilinearMap T) = L ∘ₗ PiTensorProduct.lift T := by
   apply PiTensorProduct.ext
   ext v

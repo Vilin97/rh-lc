@@ -54,7 +54,7 @@ private theorem exists_nhds (hρ : ρ ≫ genStr Z ≫ spMap e.toRingHom = Y.str
         (hv : yc ∈ ptsIn (genStr Z) _ V.1), yc.1 = p.1 ≫ ρ →
         ∃ (φ : c.F →+* Y.X.presheaf.stalk (Var.base p)) (f : StalkFrame ρ (Var.base p) φ)
           (g f₀ : EigFrame Z (embOf e σ) (yc.1 ≫ genι Z)), Fits g₀ τ (Var.base p) φ f P ∧
-          f.IsMap (Var.evStalk p) g ∧ Fr.IsMap (evHom hv) f₀ ∧ f₀.co g τ = Q.map (evHom hp) := by
+          f.IsMap (Var.evStalk p) g ∧ (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v Fr embτ basisIdx) (evHom hv) f₀ ∧ f₀.co g τ = Q.map (evHom hp) := by
   obtain ⟨V₀, hV₀, φ₀, Fr₀, hy₀, hs₀, -⟩ := EigSpread.exists_stable_eigFrame E H Dw l Xo c O β Z (ρ y)
   let ι₀ : Sp Γ(gen Z, V₀) ⟶ gen Z := hV₀.fromSpec
   have inj : ∀ {R : Type} [CommRing R] {a b : Γ(gen Z, V₀) →+* R}, spMap a ≫ ι₀ = spMap b ≫ ι₀ → a = b :=

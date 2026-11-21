@@ -165,7 +165,7 @@ theorem specialIdeal_map (W : Ideal (MRing ι₁ O)) :
 theorem vNumL_map (hσ : ∀ v, (σ v).1 = e v.1) (W : Ideal (MRing ι₁ O)) (l : List (K₂ → ℤ)) :
     vNumL (W.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) l = vNumL W (l.map (· ∘ e)) := by
   unfold vNumL vNum
-  rw [specialIdeal_map, GroundTheory.Heights₂.Heights.FieldNumbers.Relabel.intNum_map_rename e σ hσ,
+  rw [specialIdeal_map, GroundTheory.Heights₂.Heights.FieldNumbers.Relabel.intNum_map_rename e σ hσ (specialIdeal W) l.get,
     intNum_get_eq]
   unfold intNum mixedDiff
   have hl : List.ofFn (fun i => l.get i ∘ e) = l.map (· ∘ e) := by

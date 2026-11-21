@@ -43,7 +43,7 @@ theorem artinLevel_spec {n : ℕ} (h : artinImage K η n ≠ ⊥) :
       rw [h0]
       exact this
   · have hmem' : ¬ artinImage K η n ≤ unitsOneAdd p (artinLevel K η n + 1) := hmem
-    exact SetLike.not_le_iff_exists.1 hmem'
+    exact IsConcreteLE.not_le_iff_exists.1 hmem'
 
 theorem artinLevel_mono (hA : ∀ n, artinImage K η n ≠ ⊥) : Monotone (artinLevel K η) := by
   intro n n' hnn'
@@ -214,18 +214,20 @@ theorem sum_zpow_block_le (μ : ℕ → ℕ) (hμ : Monotone μ) {e n₀ : ℕ}
 
     have hcard : (Finset.Ioc (N - (e * q + e)) (N - e * q)).card = e := by
       rw [Nat.card_Ioc]; omega
-    calc (e : ℝ) * b ^ ((k : ℤ) - q)
-        = ∑ _j ∈ Finset.Ioc (N - (e * q + e)) (N - e * q), b ^ ((k : ℤ) - q) := by
-          rw [Finset.sum_const, hcard, nsmul_eq_mul]
-      _ ≤ ∑ j ∈ Finset.Ioc (N - (e * q + e)) (N - e * q), b ^ (μ j : ℤ) := by
-          refine Finset.sum_le_sum fun j hj => ?_
-          rw [Finset.mem_Ioc] at hj
-          refine zpow_le_zpow_right₀ hb ?_
-
-          have h1 : μ (j + e * q) = μ j + q := hiter q j (by omega)
-          have h2 : k + 1 ≤ μ (j + e * q + e) := hN.trans (hμ (by omega))
-          rw [hper _ (by omega), h1] at h2
-          omega
+    have hconst : (∑ _j ∈ Finset.Ioc (N - (e * q + e)) (N - e * q), b ^ ((k : ℤ) - q)) =
+        (e : ℝ) * b ^ ((k : ℤ) - q) := by
+      rw [Finset.sum_const, hcard, nsmul_eq_mul]
+    have hpoint : ∀ j ∈ Finset.Ioc (N - (e * q + e)) (N - e * q),
+        b ^ ((k : ℤ) - q) ≤ b ^ (μ j : ℤ) := by
+      intro j hj
+      rw [Finset.mem_Ioc] at hj
+      refine zpow_le_zpow_right₀ hb ?_
+      have h1 : μ (j + e * q) = μ j + q := hiter q j (by omega)
+      have h2 : k + 1 ≤ μ (j + e * q + e) := hN.trans (hμ (by omega))
+      rw [hper _ (by omega), h1] at h2
+      omega
+    rw [← hconst]
+    exact Finset.sum_le_sum hpoint
 
 theorem artinLevel_add_mul {n₀ e : ℕ}
     (hper : ∀ n, n₀ ≤ n → artinLevel K η (n + e) = artinLevel K η n + 1) (i : ℕ) :
@@ -267,7 +269,7 @@ theorem le_herbrandPsi_div_ramificationIndex (hη : Continuous η) (hA : ∀ n, 
     (hNq : n₀ + e * (k - artinLevel K η n₀) ≤ N)
     [FiniteDimensional K (charTower η (k + 1))] [IsAbelianGalois K (charTower η (k + 1))] :
     (e : ℝ) / p * ∑ i ∈ Finset.range (k - artinLevel K η n₀), (p : ℝ) ^ (-(i : ℤ)) ≤
-      herbrandPsi K (charTower η (k + 1)) N / (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
+      herbrandPsi K (charTower η (k + 1)) N / ramificationIndex K (charTower η (k + 1)) := by
   have hmono := artinLevel_mono hA
   have hn'N : n' ≤ N := le_trans hn' (le_trans (Nat.le_add_right _ _) hNq)
   have hsk : artinLevel K η n' ≤ k := (hmono hn'N).trans hNk
@@ -278,8 +280,11 @@ theorem le_herbrandPsi_div_ramificationIndex (hη : Continuous η) (hA : ∀ n, 
     exact upperRamificationGroup_antitone K _ (Nat.cast_nonneg n')
   obtain ⟨c, hc⟩ : ∃ c, (upperRamificationGroup K (charTower η (k + 1)) n').relIndex
       (lowerRamificationGroup K (charTower η (k + 1)) 0) = c := ⟨_, rfl⟩
-  have hE : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = c * p ^ (k + 1 - artinLevel K η n') := by
-    rw [← card_lowerRamificationGroup_zero, ← Subgroup.relIndex_bot_left,
+  have hE : ramificationIndex K (charTower η (k + 1)) = c * p ^ (k + 1 - artinLevel K η n') := by
+    have hcard : Nat.card (lowerRamificationGroup K (charTower η (k + 1)) 0) =
+        ramificationIndex K (charTower η (k + 1)) :=
+      card_lowerRamificationGroup_zero K (charTower η (k + 1))
+    rw [← hcard, ← Subgroup.relIndex_bot_left,
       ← Subgroup.relIndex_mul_relIndex _ _ _ bot_le hn'0, Subgroup.relIndex_bot_left,
       card_upperRamificationGroup_charTower hη hA h2 (by omega), hc, mul_comm]
 
@@ -322,7 +327,7 @@ theorem le_herbrandPsi_div_ramificationIndex (hη : Continuous η) (hA : ∀ n, 
       _ ≤ ∑ j ∈ Finset.Ioc 0 N, (upperIndex K (charTower η (k + 1)) j : ℝ) :=
           Finset.sum_le_sum_of_subset_of_nonneg (Finset.Ioc_subset_Ioc_left (Nat.zero_le _))
             (fun _ _ _ => Nat.cast_nonneg _)
-  have hE0 : (0 : ℝ) < (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
+  have hE0 : (0 : ℝ) < ramificationIndex K (charTower η (k + 1)) := by
     exact_mod_cast ramificationIndex_pos K (charTower η (k + 1))
   rw [le_div_iff₀ hE0]
   refine le_trans (le_of_eq ?_) hψlow
@@ -372,9 +377,9 @@ theorem nrm_sub_le_of_mem_unitsOneAdd (hη : Continuous η) (hA : ∀ n, artinIm
   have hX := le_herbrandPsi_div_ramificationIndex hη hA hn' h2 hper hNk hN1 hNq
   have hu0 : 0 < unifNrm (charTower η (k + 1)) := unifNrm_pos _
   have hu1 : unifNrm (charTower η (k + 1)) < 1 := unifNrm_lt_one _
-  have huE : unifNrm (charTower η (k + 1)) ^ (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) =
+  have huE : unifNrm (charTower η (k + 1)) ^ ramificationIndex K (charTower η (k + 1)) =
       baseUnifNrm K (PadicAlgCl p) := unifNrm_pow_ramificationIndex _
-  have hE0 : (0 : ℝ) < (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) := by
+  have hE0 : (0 : ℝ) < ramificationIndex K (charTower η (k + 1)) := by
     exact_mod_cast ramificationIndex_pos K (charTower η (k + 1))
   calc unifNrm (charTower η (k + 1)) ^ i = unifNrm (charTower η (k + 1)) ^ (i : ℝ) :=
         (Real.rpow_natCast _ i).symm
@@ -385,7 +390,7 @@ theorem nrm_sub_le_of_mem_unitsOneAdd (hη : Continuous η) (hA : ∀ n, artinIm
         rw [← this]
         exact Int.le_ceil _
     _ = baseUnifNrm K (PadicAlgCl p) ^
-          (herbrandPsi K (charTower η (k + 1)) N / (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation (charTower η (k + 1))))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K)))) := by
+          (herbrandPsi K (charTower η (k + 1)) N / ramificationIndex K (charTower η (k + 1))) := by
         rw [← huE, ← Real.rpow_natCast, ← Real.rpow_mul hu0.le]
         congr 1
         field_simp

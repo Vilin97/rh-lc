@@ -40,6 +40,8 @@ lemma lexDeg_surjective : Function.Surjective (lexDeg (K := K)) := by
   show toLex _ = i
   rw [← toLex_ofLex i]
   congr 1
+  funext j
+  simp
 
 variable {ι : K → Type} {R : Type u} [CommRing R]
 

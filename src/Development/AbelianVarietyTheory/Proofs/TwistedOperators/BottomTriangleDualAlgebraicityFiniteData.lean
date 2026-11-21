@@ -47,21 +47,23 @@ variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D}
 theorem isThetaFunO_of_fixSig {f : WO S T → ℂ} (h : IsThetaFunO ψ (fixSig S) (fixSig T) f) : IsThetaFunO ψ S T f :=
   ⟨h.quasi, h.level, h.cont, h.smooth⟩
 
-theorem isWeilDatumO_fixSig (h : IsWeilDatumO ψ S T χS χT om) : IsWeilDatumO ψ (fixSig S) (fixSig T) χS χT om where
-  std := h.std
-  hecS := h.hecS
-  hecT := h.hecT
-  resS := h.resS
-  resT := h.resT
-  om_pres p f hf := GlobalTheory.VacFixTarget.isThetaFunO_fixSig (h.om_pres p f (isThetaFunO_of_fixSig hf))
-  om_heis g k w f hf := h.om_heis g k w f (isThetaFunO_of_fixSig hf)
-  om_aut g hg k hk f hf := h.om_aut g hg k hk f (isThetaFunO_of_fixSig hf)
-  om_cont f hf := h.om_cont f (isThetaFunO_of_fixSig hf)
-  om_unit μ F h1 h2 p f hf := h.om_unit μ F h1 h2 p f (isThetaFunO_of_fixSig hf)
-  om_split e he g k hg hk x y hx hy := by
-    obtain ⟨r, hr, H⟩ := h.om_split e he g k hg hk x y hx hy
-    exact ⟨r, hr, fun ℓ hℓ f hf => H ℓ (fun u hu f' hf' => hℓ u hu f' (GlobalTheory.VacFixTarget.isThetaFunO_fixSig hf')) f
-      (isThetaFunO_of_fixSig hf)⟩
+theorem isWeilDatumO_fixSig (h : IsWeilDatumO ψ S T χS χT om) : IsWeilDatumO ψ (fixSig S) (fixSig T) χS χT om := by
+  refine {
+    std := h.std
+    hecS := h.hecS
+    hecT := h.hecT
+    resS := h.resS
+    resT := h.resT
+    om_pres p f hf := GlobalTheory.VacFixTarget.isThetaFunO_fixSig (h.om_pres p f (isThetaFunO_of_fixSig hf))
+    om_heis g k w f hf := h.om_heis g k w f (isThetaFunO_of_fixSig hf)
+    om_aut g hg k hk f hf := h.om_aut g hg k hk f (isThetaFunO_of_fixSig hf)
+    om_cont f hf := h.om_cont f (isThetaFunO_of_fixSig hf)
+    om_unit μ F h1 h2 p f hf := h.om_unit μ F h1 h2 p f (isThetaFunO_of_fixSig hf)
+    om_split := ?_ }
+  intro e he g k hg hk x y hx hy
+  obtain ⟨r, hr, H⟩ := h.om_split e he g k hg hk x y hx hy
+  exact ⟨r, hr, fun ℓ hℓ f hf => H ℓ (fun u hu f' hf' => hℓ u hu f' (GlobalTheory.VacFixTarget.isThetaFunO_fixSig hf')) f
+    (isThetaFunO_of_fixSig hf)⟩
 
 
 set_option maxHeartbeats 1000000 in

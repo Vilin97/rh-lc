@@ -19,7 +19,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsClo
 @[expose] public section
 
 open Formalism.L2.SG Formalism.L2.SG.PoincareInHH Formalism.BasicNotions Formalism.L2.Theta GlobalTheory.MixPer GlobalTheory.MixModel MeasureTheory
-  GlobalTheory.Core.Mi GlobalTheory.IndefiniteRowSideFullHecke.ConjugacyTypeUnfolding Formalism.L2.SG.InstExistsPf Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.BasicNotions.TH Matrix
+  GlobalTheory.Core.Mi Formalism.L2.SG.InstExistsPf Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.BasicNotions.TH Matrix
 
 noncomputable section
 

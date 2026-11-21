@@ -23,7 +23,7 @@ theorem map_mem_intLoc_fld {v : HeightOneSpectrum (𝓞 F)} {c : Fv F v ⊗[F] E
       intLoc F (Fld P) v := by
   refine intLoc_induction (p := fun c => Algebra.TensorProduct.map (AlgHom.id F (Fv F v))
       (IsScalarTower.toAlgHom F E (Fld P)) c ∈ intLoc F (Fld P) v) (fun a ha x => ?_) (by simp)
-    (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz) (fun y hy => by rw [map_neg]; exact neg_mem hy) hc
+    (fun y z hy hz => by rw [map_add]; exact add_mem hy hz) (fun y hy => by rw [map_neg]; exact neg_mem hy) hc
   rw [Algebra.TensorProduct.map_tmul]
   exact tmul_mem_intLoc ha ⟨algebraMap E (Fld P) x, x.2.algebraMap⟩
 
@@ -39,12 +39,12 @@ theorem eventually_mem_intLoc_iff_coordEquiv_mem :
   · intro hy i
     rw [coordEquiv_apply]
     refine intLoc_induction (p := fun y => coordF P (Fv F v) i y ∈ intLoc F E v) (fun a ha x => ?_) (by simp)
-      (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz) (fun y hy => by rw [map_neg]; exact neg_mem hy) hy
+      (fun y z hy hz => by rw [map_add]; exact add_mem hy hz) (fun y hy => by rw [map_neg]; exact neg_mem hy) hy
     rw [coordF_tmul]
     have e : (powB P).repr (x : Fld P) i = ∑ j, b.repr x j • (powB P).repr (b j : Fld P) i := by
       conv_lhs => rw [← b.sum_repr x]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, map_zsmul, Finsupp.coe_finset_sum, Finset.sum_apply]
+        simp only [map_sum, map_zsmul, Finsupp.coe_finsetSum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       simp [← zsmul_eq_mul, map_zsmul]
     rw [e, TensorProduct.tmul_sum]

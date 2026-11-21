@@ -38,6 +38,10 @@ theorem mem_unitFiltration_of_mem_range_normUnits {n : ℕ} (hn : 0 < n) (u : �
     u ∈ unitFiltration K n := by
   have : IsSepClosed Ω := IsSepClosure.sep_closed K
   set T := lubinTateField Ω hπ hf n
+  haveI : IsGalois K T :=
+    IsGalois.of_card_aut_eq_finrank K _
+      ((Nat.card_congr (lubinTateGalEquiv (Ω := Ω) hπ hf n).toEquiv).trans
+        (card_units_quotient_eq_finrank (Ω := Ω) (hπ := hπ) hf n))
   have hab : IsAbelianExtension ⊤ (fixingOpenSubgroup T) :=
     (isAbelianExtension_fixingOpenSubgroup_iff T).2 ⟨inferInstance, lubinTateField_mul_comm hπ hf n⟩
   have := hab.normal
@@ -133,7 +137,19 @@ theorem exists_range_normUnits_le (H : Subgroup Kˣ) [H.FiniteIndex] (hH : IsOpe
   have hmE : m ∣ Module.finrank K (unramifiedTower K Ω m) := by
     rw [finrank_unramifiedTower]
     exact Nat.dvd_factorial (Nat.pos_of_ne_zero hm) m.le_succ
-  exact ⟨_, inferInstance, range_normUnits_sup_le hπ (isLubinTateSeries_ltPoly π) n.succ_pos hE hmE
+  have hf : IsLubinTateSeries π (ltPoly π : PowerSeries 𝒪[K]) := by
+    have hq := one_lt_card_residueField' K
+    refine ⟨?_, ?_, ?_⟩
+    · rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, Polynomial.coeff_coe, ltPoly]
+      simp [Polynomial.coeff_X_pow, show 0 ≠ Nat.card 𝓀[K] by omega]
+    · rw [Polynomial.coeff_coe, ltPoly]
+      simp [Polynomial.coeff_X_pow, hq.ne]
+    · intro k
+      rw [coeff_ltPoly_sub, Polynomial.coeff_C_mul_X]
+      split_ifs
+      · exact dvd_rfl
+      · exact dvd_zero π
+  exact ⟨_, inferInstance, range_normUnits_sup_le hπ hf n.succ_pos hE hmE
     ((unitFiltrationUnits_antitone n.le_succ).trans hnH) hmH⟩
 
 theorem isOpen_range_normUnits_and_finiteIndex (L : IntermediateField K Ω) [FiniteDimensional K L] :

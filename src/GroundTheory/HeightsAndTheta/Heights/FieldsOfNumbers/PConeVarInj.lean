@@ -43,7 +43,7 @@ theorem ConeVarInj.proof (hNum : ConeVarNumerator.Statement.{u}) : ConeVarInj.St
       IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem] at hφ
     exact hφ
   refine MvPolynomial.ext _ _ fun d => ?_
-  rw [coeff_zero]
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   by_contra hd
   have hcomp := hP.multiHomog _ hN (B + ⇑d)
   set_option synthInstance.maxHeartbeats 100000 in

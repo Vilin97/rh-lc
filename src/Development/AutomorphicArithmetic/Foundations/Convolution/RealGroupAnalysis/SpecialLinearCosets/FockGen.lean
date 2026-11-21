@@ -97,3 +97,6 @@ theorem UpperTheory.ConvolutionTheory.R2.I.fockGen :
   obtain ⟨s, hs⟩ := gauss_schwartz δ hδ
   have h := schwartzBruhatTensorPi_mem (SchwartzMap.smulLeftCLM ℂ f s) hg
   convert h using 1
+  funext X
+  simp only [schwartzBruhatTensorPi, SchwartzMap.smulLeftCLM_apply_apply hf, smul_eq_mul,
+    hfp, hs]

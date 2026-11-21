@@ -157,7 +157,8 @@ theorem MajorantTransport.proof (h : HermitianForm F E W) (v : Basis ι E W) :
   have hmap : Measure.map T.symm volume = c • (volume : Measure (InfinitePlace E → ι → ℂ)) := by
     have hcomp : ⇑T.symm = (MajorantTransport.invApplyEquiv g).symm ∘ S.symm := rfl
     rw [hcomp, ← Measure.map_map (MajorantTransport.invApplyEquiv g).symm.continuous.measurable
-      S.symm.continuous.measurable, hc, Measure.map_smul, hsymm,
+      S.symm.continuous.measurable, hc,
+      Measure.map_smul c (MajorantTransport.invApplyEquiv g).symm.continuous.measurable.aemeasurable, hsymm,
       (MajorantTransport.measurePreserving_invApply g⁻¹).map_eq]
   let b := Module.Free.chooseBasis ℤ L
   rw [ZLattice.covolume_eq_measure_fundamentalDomain L _ (ZLattice.isAddFundamentalDomain b _),

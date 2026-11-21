@@ -179,7 +179,7 @@ theorem wa_main (hWA : WAPlaces) (hCM : PI.UG.IsCMUnram E) (p : ℕ) (hp : p.Pri
       (∃ s : ℕ, Nat.Coprime s p ∧ (∀ x ∈ PI.UG.stdLat E n, (s : E) • x ∈ M) ∧
         ∀ x ∈ M, (s : E) • x ∈ PI.UG.stdLat E n) ∧
       L = Formalism.BasicNotions.SDLat.smulLat (γ : Matrix (Fin n) (Fin n) E) M := by
-  have hLat : Submodule.IsLattice E L := ⟨hL.1, hL.2.1⟩
+  have hLat : Submodule.IsLattice E L := Submodule.IsLattice.of_fg E hL.1
   have hUni : PI.UG.IsUnimodular (PI.UG.hStd E n) L := wa_unimod hL
   have hGen := unimodular_genus_unique E n hCM L hLat hUni
   obtain ⟨γ, hγ, hγP⟩ := hWA E hCM p hp n L (fun P hP _ => hGen P hP)

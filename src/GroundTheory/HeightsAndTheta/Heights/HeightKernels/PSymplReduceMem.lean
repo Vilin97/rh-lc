@@ -32,7 +32,7 @@ theorem omega_tail (h2 : SymplCons.Statement) {n : ℕ} (x y : Fin (n + 1) ⊕ F
 theorem J_succ {n : ℕ} (a b : Fin n ⊕ Fin n) :
     J (Fin (n + 1)) ℝ (Sum.map Fin.succ Fin.succ a) (Sum.map Fin.succ Fin.succ b) =
       J (Fin n) ℝ a b := by
-  rcases a with i | i <;> rcases b with j | j <;> simp [J, one_apply, Fin.succ_inj]
+  rcases a with i | i <;> rcases b with j | j <;> simp [J, Matrix.one_apply, Fin.succ_inj]
 
 theorem J_succ_e {n : ℕ} (a : Fin n ⊕ Fin n) :
     J (Fin (n + 1)) ℝ (Sum.map Fin.succ Fin.succ a) (Sum.inl 0) = 0 := by

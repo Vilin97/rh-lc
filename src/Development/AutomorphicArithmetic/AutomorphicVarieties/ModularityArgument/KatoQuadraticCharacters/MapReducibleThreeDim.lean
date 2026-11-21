@@ -53,7 +53,7 @@ private theorem map_reducible_three_dim {G R S : Type} [Group G] [CommRing R] [C
   funext i
   exact congrArg Units.val (map_zpow (Units.map f.toMonoidHom) (Ψ g) (wt1 i))
 
-private theorem coboundary_of_mem_B1 {Γ κ : Type} [Group Γ] [CommRing κ] (r : Γ →* GG 3 κ)
+private theorem coboundary_of_mem_B1 {Γ κ : Type} [Group Γ] [CommRing κ] (r : Γ →* GG (m := 3) (R := κ))
     (γ : Γ → Matrix (Fin 3) (Fin 3) κ) (h : γ ∈ ReciprocityTheory.Gal.B1 (adRep r)) : ∃ X, γ = cob r X := by
   obtain ⟨m, rfl⟩ := h
   refine ⟨-m, funext fun g => ?_⟩
@@ -62,5 +62,6 @@ private theorem coboundary_of_mem_B1 {Γ κ : Type} [Group Γ] [CommRing κ] (r 
   abel
 
 private theorem isPush_push {O Γ R κ : Type} [CommRing O] [Group Γ] [CommRing R] [Algebra O R] [CommRing κ]
-    [Algebra O κ] (f : R →ₐ[O] κ) (r : Γ →* GG 3 R) : IsPush (f.comp (entAlg O r).val) r (push f r) :=
+    [Algebra O κ] (f : R →ₐ[O] κ) (r : Γ →* GG (m := 3) (R := R)) :
+    IsPush (f.comp (entAlg O r).val) r (push f r) :=
   fun g => ⟨rfl, fun a b => ⟨Algebra.subset_adjoin ⟨g, a, b, rfl⟩, rfl⟩⟩

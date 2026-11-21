@@ -84,10 +84,11 @@ theorem add_one_pow_eq_ringHom_image_add_prime_mul_zero : ∀ (m : ℕ) (n : Fin
       rw [hW]
       refine TopologicalSpace.Opens.ext (Set.ext fun x => ⟨fun hx => Set.mem_iInter.1 hx 0, fun hx => ?_⟩)
       refine Set.mem_iInter.2 fun k => ?_
-      obtain rfl : k = 0 := Subsingleton.elim (α := Fin 1) _ _
-      rw [show blockChart n 0 (c 0) = chart ℤ (n 0) (c 0) from rfl]
+      have hk : k = 0 := Fin.eq_zero k
+      subst k
       exact hx
-    subst e
+    clear hW
+    subst W
     refine ⟨isAffineOpen_chart ℤ (n 0) (c 0), ?_⟩
     refine eq_top_iff.2 fun x _ => ?_
     have hx : (x : Γ(PSpace ℤ (n 0), chart ℤ (n 0) (c 0))) ∈

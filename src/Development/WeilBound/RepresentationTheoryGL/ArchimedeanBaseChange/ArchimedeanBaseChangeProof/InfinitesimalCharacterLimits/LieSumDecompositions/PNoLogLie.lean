@@ -147,8 +147,19 @@ theorem hasDerivAt_aT (r s : ℕ) (Φ : Sm E (r + s)) (h : GA E (r + s)) (t : �
   simpa [lie_apply] using h2
 
 theorem lev_aT (r s : ℕ) (t : ℝ) : lev (Ad E) r s (aT E r r t, 1) = aT E (r + s) r t := by
+  have val_emb₂ {T : Type} [CommRing T] (g : GL (Fin r) T × GL (Fin s) T) :
+      (GlobalTheory.SmGL.emb₂ T (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) g : Matrix (Fin (r+s)) (Fin (r+s)) T) =
+        Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) (Matrix.fromBlocks g.1.val 0 0 g.2.val) := by
+    ext i j
+    obtain ⟨u, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
+    obtain ⟨v, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j
+    simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+    rcases u with u | u <;> rcases v with v | v
+    all_goals simp [GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb,
+      GlobalTheory.SmGL.leviTwo, GlobalTheory.SmGL.two, Matrix.blockDiagonal'_apply_eq,
+      Matrix.blockDiagonal'_apply_ne]
   apply Units.ext
-  rw [GlobalTheory.SmGL.val_emb₂, JFinTr.aT_val, JFinTr.aT_val]
+  rw [lev, val_emb₂, JFinTr.aT_val, JFinTr.aT_val]
   ext i j
   obtain ⟨i, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
   obtain ⟨j, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j

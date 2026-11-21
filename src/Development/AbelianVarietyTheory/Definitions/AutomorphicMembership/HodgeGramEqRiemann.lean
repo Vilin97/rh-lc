@@ -161,7 +161,7 @@ theorem IsHodgeFrame.not_liesIn (h : IsHodgeFrame U y g) : ¬ LiesIn y (genBd Z)
 
 theorem IsHodgeFrame.conj (h : IsHodgeFrame U y g) {σ₁ : c.F →+* ℂ} {y₁ : CxPts (genStr Z) σ₁}
     {g₁ : EigFrame Z σ₁ (y₁.1 ≫ genι Z)} (hσ : σ = (starRingEnd ℂ).comp σ₁) (e : y.1 = spMap (starRingEnd ℂ) ≫ y₁.1)
-    (hg : g₁.IsMap (starRingEnd ℂ) g) : IsHodgeFrame U y₁ g₁ := by
+    (hg : (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v g₁ embτ basisIdx) (starRingEnd ℂ) g) : IsHodgeFrame U y₁ g₁ := by
   obtain ⟨ψ, σ', k, x, h1, h2, h3, h4, h5, h6⟩ := h
   refine ⟨ψ.comp (starRingEnd ℂ), σ', k, x, ?_, by rw [h2, hσ]; rfl, h3, h4, ?_, fun τ i => ?_⟩
   · rcases h1 with rfl | rfl

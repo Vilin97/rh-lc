@@ -85,7 +85,7 @@ theorem DominatingDVR.proof (hKA : KrullAkizuki.Statement) (hBU : BlowUpChart.St
   have hPbot : P ≠ ⊥ := by
     rintro rfl
     have hF : IsField R := by
-      rw [IsLocalRing.isField_iff_maximalIdeal_eq, ← hPc, Ideal.comap_bot_of_injective _ hinj]
+      rw [IsLocalRing.isField_iff_maximalIdeal_eq, ← hPc, Ideal.under_def, Ideal.comap_bot_of_injective _ hinj]
     have h0 := ringKrullDim_eq_zero_of_isField hF
     rw [hdimR] at h0
     exact one_ne_zero h0

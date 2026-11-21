@@ -64,6 +64,8 @@ theorem exists_weilEq_smul_of_pure : ∀ (E : Type) [Field E] [NumberField E] [I
   have hGP : ∀ s a, G s (F (Pe a)) = F (Pe (s • a)) := fun s a => by
     simp only [G, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]
     congr 1
+    funext i
+    exact (hP.1 s a i).symm
   have hcomm : ∀ (f : A.t.G ⟶ B.t.G), Serre.IsLinearHom A.t.act B.t.act f →
       ∀ Fl : (Fin A.pol.g → ℂ) →ₗ[ℂ] (Fin B.pol.g → ℂ), (∀ z, uB.ex (Fl z) = uA.ex z ≫ f) →
       ∀ s z, Fl (G s z) = ρB s (Fl z) := by

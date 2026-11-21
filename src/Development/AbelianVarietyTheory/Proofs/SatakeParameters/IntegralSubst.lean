@@ -10,7 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExpMvNegL
 
 @[expose] public section
 
-open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.GL3Theta GlobalTheory.IndefiniteRowSideFullHecke.VandermondeConjugatePrimes
+open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.GL3Theta
 
 namespace GlobalTheory.CurveToStdLog
 

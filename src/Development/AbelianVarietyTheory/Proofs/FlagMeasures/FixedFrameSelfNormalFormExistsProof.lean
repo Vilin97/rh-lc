@@ -222,7 +222,57 @@ theorem idNF_spec (F : Formalism.MainNotions.S.FlagG S r (n : E)) (hT : ((n : �
         rw [algebraMap_smul, hΛ]
         exact Submodule.mem_sup_left (Submodule.mem_sup_right (L.smul_mem o hz))
   refine ⟨⟨⟨?_, hframe, hframe⟩, fun a t x' hx' h => ⟨x', hx', h, by rw [sub_self]; exact Submodule.zero_mem _⟩⟩, ?_⟩
-  · refine (GlobalTheory.HermLat.isUnimod_iff _ _).2 ⟨hlat, ?_⟩
+  · have hsurj : Function.Surjective S.hT := by
+      have hinj : Function.Injective S.hT := by
+        set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+        intro x hx
+        exact S.nondeg.1 x (fun y => by rw [hx]; rfl)
+      have hbij : Function.Bijective S.hT.rangeRestrict :=
+        ⟨fun a b hab => hinj (congrArg Subtype.val hab), S.hT.surjective_rangeRestrict⟩
+      let j : S.V ≃+ LinearMap.range S.hT := AddEquiv.ofBijective S.hT.rangeRestrict.toAddMonoidHom hbij
+      have hr : Module.rank E S.V = Module.rank E (LinearMap.range S.hT) :=
+        rank_eq_of_equiv_equiv (starRingEnd E) j star_involutive.bijective (fun r m => by
+          apply Subtype.ext
+          show S.hT (r • m) = (starRingEnd E) r • S.hT m
+          rw [map_smulₛₗ])
+      have hf : Module.finrank E (LinearMap.range S.hT) = Module.finrank E (Module.Dual E S.V) := by
+        rw [Subspace.dual_finrank_eq]
+        unfold Module.finrank
+        rw [hr]
+      exact LinearMap.range_eq_top.1 (Submodule.eq_top_of_finrank_eq hf)
+    have hspan : Submodule.span E (Λ : Set S.V) = ⊤ := by
+      apply Submodule.dualAnnihilator_eq_bot_iff.mp
+      apply le_antisymm ?_ bot_le
+      intro φ hφ
+      obtain ⟨v, hv⟩ := hsurj φ
+      have hline (c : E) : c • v ∈ Λ := by
+        rw [← huni]
+        change c • v ∈ Formalism.E.hdual S.hT Λ
+        simp only [Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap, LinearMap.restrictScalars_apply]
+        intro y hy
+        have hy0 : S.hT v y = 0 := by
+          rw [hv]
+          exact (Submodule.mem_dualAnnihilator φ).mp hφ y (Submodule.subset_span hy)
+        have hz : S.hT y v = 0 := by
+          simpa [hy0] using (S.herm.eq v y).symm
+        simp [hz]
+      have hv0 : v = 0 := by
+        apply S.frame.repr.injective
+        ext i
+        simp only [map_zero, Finsupp.zero_apply]
+        by_contra hi
+        let coord := (S.frame.coord i).restrictScalars (𝓞 E)
+        have htop : Λ.map coord = ⊤ := by
+          rw [eq_top_iff]
+          intro x _
+          refine ⟨(x / S.frame.repr v i) • v, hline _, ?_⟩
+          simp [coord, div_mul_cancel₀ _ hi]
+        have : Module.Finite (𝓞 E) E := Module.finite_def.mpr (htop ▸ hlat.fg.map coord)
+        exact RingOfIntegers.not_isField E
+          (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+      rw [Submodule.mem_bot]
+      simpa [hv0] using hv.symm
+    refine (GlobalTheory.HermLat.isUnimod_iff _ _).2 ⟨⟨hlat.fg, hspan⟩, ?_⟩
     rw [show (GlobalTheory.TypeAsm.spH S).B.flip = S.hT from LinearMap.flip_flip S.hT]
     exact huni
 

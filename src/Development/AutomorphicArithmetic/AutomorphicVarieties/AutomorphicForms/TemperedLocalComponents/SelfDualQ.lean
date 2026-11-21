@@ -157,7 +157,10 @@ private theorem sat_stable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [A
     simp
   have hq : (0 : ℝ) < normV w := by
     have : 1 < Ideal.absNorm w.asIdeal := NumberField.HeightOneSpectrum.one_lt_absNorm w
-    have h : 0 < normV w := zero_lt_one.trans this
+    have h : 0 < normV w := by
+      have : 1 < normV w := by
+        simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using this
+      exact zero_lt_one.trans this
     exact_mod_cast h
   set c : ℂ := (((normV w : ℝ) ^ (((n : ℝ) - 1) / 2) : ℝ) : ℂ) with hc
   have hc0 : c ≠ 0 := Complex.ofReal_ne_zero.2 (Real.rpow_pos_of_pos hq _).ne'

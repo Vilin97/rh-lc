@@ -72,13 +72,15 @@ structure TransformedComponentHypotheses : Prop where
                               C = closure ({π ξ'} : Set ↥T.scheme)
 
 theorem strictTransformHypotheses_of_transformedComponents (h : TransformedComponentHypotheses.{u}) :
-    StrictTransformCase.StrictTransformHypotheses.{u} where
-  center_smooth := MonomialCenterGeometry.smooth_componentUnionIdeal
-  center_snc := MonomialCenterGeometry.hasStrictNormalCrossingsWith_componentUnionIdeal
-  blowup_total_transform := _root_.FunctorialResolution.EmbeddedResolution.comap_eq_strictTransform_mul_exceptionalIdeal_pow
-  components_subset_divisor_iff := _root_.FunctorialResolution.EmbeddedResolution.intersectionComponents_subset_support_iff
-  transformed_components := h.transformed_components
-  strictTransform_components := h.strictTransform_components
+    StrictTransformCase.StrictTransformHypotheses.{u} := by
+  exact {
+    toMonomialCenterHypotheses := {
+      center_smooth := MonomialCenterGeometry.smooth_componentUnionIdeal
+      center_snc := MonomialCenterGeometry.hasStrictNormalCrossingsWith_componentUnionIdeal
+      blowup_total_transform := comap_eq_strictTransform_mul_exceptionalIdeal_pow
+      components_subset_divisor_iff := intersectionComponents_subset_support_iff
+      transformed_components := h.transformed_components }
+    strictTransform_components := h.strictTransform_components }
 
 end MonomialStrictTransformComponents
 

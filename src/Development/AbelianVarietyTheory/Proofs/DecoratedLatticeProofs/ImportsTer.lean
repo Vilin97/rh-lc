@@ -19,7 +19,6 @@ open GlobalTheory.FinPl (SplitPt grpAt grpOff)
 open GlobalTheory.SymCompare (sE)
 open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
-open GlobalTheory.QCmp
 
 noncomputable section
 
@@ -43,7 +42,7 @@ theorem main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1
     refine ⟨U ⊓ V, hU.inter hV, fun a ha ha' => ?_⟩
     exact GlobalTheory.FrComb.heisO_comb (hVf a ha.2 ha') (hUf a ha.1 ha')
   · rw [e]
-    exact continuous_finset_sum _ fun x _ => continuous_const.mul
+    exact continuous_finsetSum _ fun x _ => continuous_const.mul
       ((hψ.1.1.comp (GlobalTheory.FinTranslate.continuous_symplOH S T x)).mul
         (hf.cont.comp (continuous_id.add continuous_const)))
   · intro n L hL hLf w

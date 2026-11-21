@@ -78,8 +78,8 @@ theorem idem_minors {R L : Type} [CommRing R] [Field L] (φ : R →+* L) (hφ : 
   have hdet : ∀ s : Fin m → Fin n, φ (e.submatrix s s).det = ((e.map φ).submatrix s s).det := fun s => by
     rw [RingHom.map_det, RingHom.mapMatrix_apply, Matrix.submatrix_map]
   refine ⟨hφ ?_, fun s => Matrix.map_injective hφ ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum, map_one]
+  · set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one]
     simp only [hdet, ← hUV]
     exact sum_minors_of_factor U V hVU
   · dsimp only

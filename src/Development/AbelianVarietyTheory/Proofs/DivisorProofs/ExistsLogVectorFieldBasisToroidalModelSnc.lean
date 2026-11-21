@@ -128,6 +128,7 @@ theorem exists_basis_of_dual {K R : Type} [CommRing R] [IsNoetherianRing R] (hQ 
     have := map_sum (Derivation.coeFnAddMonoidHom (R := ℤ) (A := R) (M := R)) (fun k => g k • d k) Finset.univ
     have h3 := congrFun this (z l)
     rw [Finset.sum_apply] at h3
+    change (∑ k, g k • d k) (z l) = ∑ k, (g k • d k) (z l) at h3
     refine h3.trans ?_
     simp [hd]
   let v : Fin n → M := fun k => ⟨u k • d k, hv k⟩
@@ -208,6 +209,7 @@ theorem exists_basis_of_kaehler {K R : Type} [Field K] [CharZero K] [CommRing R]
       have := map_sum (Derivation.coeFnAddMonoidHom (R := ℤ) (A := R) (M := R)) (fun k => D (z k) • d k) Finset.univ
       have h3 := congrFun this r
       rw [Finset.sum_apply] at h3
+      change (∑ k, D (z k) • d k) r = ∑ k, (D (z k) • d k) r at h3
       refine Eq.trans ?_ h3.symm
       set_option synthInstance.maxHeartbeats 100000 in
         rw [← hD', ← D'.liftKaehlerDifferential_comp_D r, ← bΩ.sum_repr (KaehlerDifferential.D K R r), map_sum]

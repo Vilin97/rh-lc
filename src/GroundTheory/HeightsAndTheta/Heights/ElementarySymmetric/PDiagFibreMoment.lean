@@ -47,11 +47,15 @@ theorem continuous_coeff_aeval (Q : MvPolynomial (Fin 2) ℝ) (m : Fin 3 →₀ 
     fin_cases r
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [Fin.zero_eta, Matrix.cons_val_zero, v, dotPoly, mapAlgHom_apply, map_sum, map_mul, map_X, map_C]
-      rfl
+        apply Finset.sum_congr rfl
+        intro i hi
+        congr 2
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_fin_one, v, dotPoly, mapAlgHom_apply, map_sum,
         map_mul, map_X, map_C]
-      rfl
+        apply Finset.sum_congr rfl
+        intro i hi
+        congr 2
   rw [hv, ← comp_aeval, AlgHom.comp_apply, mapAlgHom_apply, coeff_map]
   exact (AddMonoidAlgebra.coeff (aeval v Q) m).continuous
 

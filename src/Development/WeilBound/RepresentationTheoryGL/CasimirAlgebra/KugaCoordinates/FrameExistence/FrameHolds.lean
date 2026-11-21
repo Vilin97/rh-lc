@@ -26,7 +26,7 @@ theorem fr_eq (x : InfinitePlace E × Fin a × Fin a) :
   show frU x + star (frU x) = _
   rw [frU, Matrix.star_eq_conjTranspose, conjTranspose_single]
   congr 2
-  split_ifs <;> simp
+  exact (Pi.single_star (f := fun _ : InfinitePlace E => ℂ) x.1 c0).symm
 
 theorem fr_apply (x : InfinitePlace E × Fin a × Fin a) (p q : Fin a) (w : InfinitePlace E) :
     (fr x).1 p q w = (if x = (w, p, q) then c0 else 0) + (if x = (w, q, p) then star c0 else 0) := by

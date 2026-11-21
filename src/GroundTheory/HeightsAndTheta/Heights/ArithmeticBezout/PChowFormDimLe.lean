@@ -82,7 +82,7 @@ theorem exists_ne_zero_common_zero {K : Type} [Field K] [IsAlgClosed K] {n k : �
     refine (Ideal.height_le_card_of_mem_minimalPrimes_span_finset hqmin).trans ?_
     exact_mod_cast Finset.card_image_le.trans (by simp)
   have hMht : (Mb.height : WithBot ℕ∞) = ringKrullDim (MvPolynomial (Fin n) K ⧸ P) := by
-    have h := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient K Mb
+    have h := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient (k := K) Mb
     have hF : IsField ((MvPolynomial (Fin n) K ⧸ P) ⧸ Mb) :=
       (Ideal.Quotient.maximal_ideal_iff_isField_quotient Mb).mp inferInstance
     have h0 : ringKrullDim ((MvPolynomial (Fin n) K ⧸ P) ⧸ Mb) = 0 := by

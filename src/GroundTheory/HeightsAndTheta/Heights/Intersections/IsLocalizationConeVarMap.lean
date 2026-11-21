@@ -142,7 +142,7 @@ theorem coneVarMap_injective (hPW : P ≤ W) (hPh : IsMultiHomogIdeal P) {v : �
   have hvP : ∀ k, (X ⟨k, v k⟩ : MRing ι) ∉ P := fun k h => hv k (hPW h)
   have hNP : ∀ e ∈ G.support, N e ∈ P := mem_of_clear_mem hPh hvP G.support (fun e => (hN e).1) hNum
   refine MvPolynomial.ext _ _ fun e => ?_
-  rw [coeff_zero]
+  change G.coeff e = 0
   by_contra hne
   have he : e ∈ G.support := mem_support_iff.mpr hne
   have h1 := (hN e).2
@@ -188,7 +188,10 @@ theorem exists_lift (hPW : P ≤ W) {v : ∀ k, ι k} (hv : ∀ k, (X ⟨k, v k�
   | add p q hp hq =>
     obtain ⟨F, hF⟩ := hp
     obtain ⟨G, hG⟩ := hq
-    exact ⟨F + G, by rw [map_add (f := _), hF, hG, map_add (f := _), map_add (f := _)]⟩
+    refine ⟨F + G, ?_⟩
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, hF, hG, map_add (Ideal.Quotient.mk P),
+        map_add (algebraMap (MRing ι ⧸ P) (coneLocRing P W hPW))]
   | mul_X p n hp =>
     obtain ⟨F, hF⟩ := hp
     obtain ⟨k, i⟩ := n

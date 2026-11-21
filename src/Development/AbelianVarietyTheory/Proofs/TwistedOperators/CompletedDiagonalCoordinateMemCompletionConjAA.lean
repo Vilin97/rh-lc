@@ -250,7 +250,7 @@ theorem gen_eq {m n : ℕ} (α : AF D.host.F) (x : Matrix (Fin m) (Fin n) D.host
   rw [show inclR (AF D.host.F) (x i j) = (1 : AF D.host.F) ⊗ₜ[D.host.F] x i j from rfl,
     Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one]
 
-theorem hatMx_coord_mem : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {F : Frames G}, Std F → ∀ (ρ : ℕ) (h : 2 * ρ + 2 ≤ D.R.m) (x : WO (negSp (G.V (.grid (2 * ρ + 2) 0))) (G.V (.grid (2 * ρ + 1) 0))), x ∈ hatMx (G.modul • homLat (G.Λ (.grid (2 * ρ + 2) 0)) (G.Λ (.grid (2 * ρ + 1) 0))) → ∀ p : Fin ρ, ((F.dJ ρ h).pY ⬝ x ⬝ (F.dB ρ h).jY) p p ∈ complId D.host.AAbar := by
+theorem hatMx_coord_mem : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {F : Frames G}, Std F → ∀ (ρ : ℕ) (h : 2 * ρ + 2 ≤ D.R.m) (x : WO (negSp (G.V (.grid (2 * ρ + 2) 0))) (G.V (.grid (2 * ρ + 1) 0))), x ∈ hatMx (G.modul • homLat (G.Λ (.grid (2 * ρ + 2) 0)) (G.Λ (.grid (2 * ρ + 1) 0))) → ∀ p : Fin ρ, ((F.dJ ρ h).pY * x * (F.dB ρ h).jY) p p ∈ complId D.host.AAbar := by
   intro D T L sc G F hF ρ h x hx p
   unfold hatMx at hx
   induction hx using AddSubgroup.closure_induction with

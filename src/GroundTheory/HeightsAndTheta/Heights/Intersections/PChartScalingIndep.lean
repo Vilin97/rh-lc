@@ -153,7 +153,7 @@ theorem ChartScalingIndep.proof : ChartScalingIndep.Statement := by
       _ = 0 := by rw [hp, mul_zero]
   have h0 := ChartScalingIndep.coeff_eq_zero x i hx hV p.support g hsum
   refine MvPolynomial.ext _ _ fun α => ?_
-  rw [coeff_zero]
+  change p.coeff α = 0
   by_cases hα : α ∈ p.support
   · have h2 := h0 α hα
     rw [hgD α hα] at h2

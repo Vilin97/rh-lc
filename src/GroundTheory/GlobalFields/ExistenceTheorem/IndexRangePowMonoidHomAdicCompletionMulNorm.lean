@@ -47,10 +47,12 @@ theorem index_range_powMonoidHom_infinitePlaceCompletion_mul_norm (w : InfiniteP
     ((powMonoidHom n : (w.Completion)ˣ →* (w.Completion)ˣ).range.index : ℝ) *
       ‖(n : w.Completion)‖ ^ w.mult = (n : ℝ) ^ 2 := by
   have hnorm : ‖(n : w.Completion)‖ = n := by
-    have h : ‖(n : w.Completion)‖ = w (n : K) := by
-      rw [← map_natCast (algebraMap K w.Completion) n]
-      exact InfinitePlace.Completion.norm_coe (K := K) (v := w) _
-    rw [h, InfinitePlace.map_natCast]
+    have hc (m : ℕ) : ((m : WithAbs w.1) : w.Completion) = m := by
+      induction m with
+      | zero => simp
+      | succ m ih => simp [Nat.cast_succ, ih]
+    simpa [hc, InfinitePlace.map_natCast] using
+      (InfinitePlace.Completion.norm_coe (v := w) (n : WithAbs w.1))
   rw [index_range_powMonoidHom_infinitePlaceCompletion w (NeZero.ne n), hnorm]
   rcases w.isReal_or_isComplex with hw | hw
   · rw [hw.mult_eq_one, pow_one]

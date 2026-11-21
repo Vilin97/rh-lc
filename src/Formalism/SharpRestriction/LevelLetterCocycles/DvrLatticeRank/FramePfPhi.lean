@@ -96,8 +96,7 @@ theorem framepf_phiBasis (hT : IsCrys PD T.ρ) :
   have hsp : ⊤ ≤ Submodule.span W.EE (Set.range fun k => W.φD T (Bs.b k)) := by
     intro y _
     exact (W.N_base T hT).inductionOn y
-      (fun y => y ∈ Submodule.span W.EE (Set.range fun k => W.φD T (Bs.b k)))
-      (Submodule.zero_mem _) (fun m => hN m m.2) (fun e y hy => Submodule.smul_mem _ e hy)
+      (fun m => hN m m.2) (fun e y hy => Submodule.smul_mem _ e hy)
       (fun y₁ y₂ h₁ h₂ => Submodule.add_mem _ h₁ h₂)
   exact ⟨Module.Basis.mk hli hsp, fun k => by rw [Module.Basis.mk_apply]⟩
 

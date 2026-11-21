@@ -41,7 +41,10 @@ private theorem cmp_rT {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (S :
 
 private def invSub (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) : Submodule ℂ (Sm E a) where
   carrier := {φ | Pf.SInv φ}
-  zero_mem' := ⟨fun _ _ => rfl, fun _ _ => rfl, by simp⟩
+  zero_mem' := ⟨fun _ _ => rfl, fun _ _ => rfl, by
+    change IsOpen {k | finRep E a k (0 : Sm E a) = 0}
+    simpa only [map_zero, Set.ofPred_true] using
+      (isOpen_univ : IsOpen (Set.univ : Set (GL (Fin a) (Af E))))⟩
   add_mem' := by
     intro φ ψ h h'
     refine ⟨fun γ g => congrArg₂ (· + ·) (h.left γ g) (h'.left γ g),

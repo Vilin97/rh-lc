@@ -40,9 +40,9 @@ theorem levi_abs_le_local (A : FinHolAtlas D X) (θ om : LocPot X) (hθ : IsPote
   have hcb : Metric.closedBall (c p) (r / 2) ⊆ O :=
     (Metric.closedBall_subset_ball (by linarith)).trans hrO
   have homs : ContDiffOn ℝ 2 (om.φ p ∘ c.symm) O :=
-    ((hom.1 p j).mono fun y hy => ⟨hy.1, hy.2.2⟩).of_le two_le_smooth_kb
+    ((hom.1 p j).mono fun y (hy : y ∈ O) => ⟨hy.1, hy.2.2⟩).of_le two_le_smooth_kb
   have hθs : ContDiffOn ℝ 2 (θ.φ p ∘ c.symm) O :=
-    ((hθ.1 p j).mono fun y hy => ⟨hy.1, hy.2.1⟩).of_le two_le_smooth_kb
+    ((hθ.1 p j).mono fun y (hy : y ∈ O) => ⟨hy.1, hy.2.1⟩).of_le two_le_smooth_kb
   set K := Metric.closedBall (c p) (r / 2) ×ˢ Metric.sphere (0 : Fin D → ℂ) 1 with hK
   have hKc : IsCompact K := (isCompact_closedBall _ _).prod (isCompact_sphere _ _)
   have hKO : K ⊆ O ×ˢ Set.univ := Set.prod_mono hcb (Set.subset_univ _)

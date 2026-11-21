@@ -9,7 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.QdetTopThreeO
 
 @[expose] public section
 
-open NumberField Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.UAut GlobalTheory.ULie
+open NumberField Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.UAut
 open scoped TensorProduct
 
 private theorem UpperTheory.coeff_mem_span_range_of_polynomial_eq {A : Type} [Ring A] [Algebra ℂ A] (f : ℂ → A) (q : ℕ → A)

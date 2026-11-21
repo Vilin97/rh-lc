@@ -55,11 +55,15 @@ theorem LocRingFrac.proof : LocRingFrac.Statement := by
       isMultiHomog_add (AvoidRing.isMultiHomog_mul hu hv')
         (by rw [add_comm]; exact AvoidRing.isMultiHomog_mul hu' hv),
       AvoidRing.isMultiHomog_mul hv hv', fun h => (hW.mem_or_mem h).elim hvW hvW', ?_⟩
-    rw [map_mul, map_add (f := _), map_mul, map_mul, map_add (f := _), map_mul, map_mul, map_mul, ← e, ← e']
+    simp only [RingHom.map_mul, RingHom.map_add]
+    rw [← e, ← e']
     ring
   | neg x _ hx =>
     obtain ⟨u, v, a, hu, hv, hvW, e⟩ := hx
-    exact ⟨-u, v, a, isMultiHomog_neg hu, hv, hvW, by rw [map_neg, map_neg, ← e]; ring⟩
+    exact ⟨-u, v, a, isMultiHomog_neg hu, hv, hvW, by
+      simp only [RingHom.map_neg]
+      rw [← e]
+      ring⟩
   | mul x y _ _ hx hy =>
     obtain ⟨u, v, a, hu, hv, hvW, e⟩ := hx
     obtain ⟨u', v', a', hu', hv', hvW', e'⟩ := hy

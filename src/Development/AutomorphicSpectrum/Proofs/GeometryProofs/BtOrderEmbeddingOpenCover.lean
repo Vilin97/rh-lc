@@ -14,7 +14,7 @@ public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.HopfOrderTran
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
-open GlobalTheory.CompanionTheory.Ar.BT GroundTheory.PAdicHodge
+open GlobalTheory.CompanionTheory.Ar.BT
 
 namespace GlobalTheory.CompanionTheory.Ar.BT.EmbSub
 
@@ -187,7 +187,9 @@ theorem openImmersion_translatesCover : ∀ (R : Type) [CommRing R] [IsDomain R]
   have hTr : ∀ f ∈ A, ∀ t, (fun h => f (t * h)) ∈ A := GlobalTheory.T.hopf_order_translation_invariant R H A hA
   have hB : ∀ f : T → R, f ∈ Γ.btOrder ⊤ ↔ ∀ t, (fun h : H => f (t * h)) ∈ A := by
     intro f
-    rw [← GlobalTheory.T.btOrder_eq_btOrder_top R T Γ U hF, GlobalTheory.T.mem_btOrder_iff_btSet R T Γ U f]
+    have hOrder : Γ.btOrder U = Γ.btOrder ⊤ :=
+      GlobalTheory.CompanionTheory.Relay.btOrder_eq_btOrder_top R T Γ U hF
+    rw [← hOrder, GlobalTheory.T.mem_btOrder_iff_btSet R T Γ U f]
     constructor
     · intro hf t
       obtain ⟨s, hs⟩ := (GlobalTheory.T.regular_function_iff_section R T Γ U _).1 (hf t)

@@ -99,7 +99,7 @@ noncomputable section
 
 namespace GlobalTheory.PtString
 
-open GlobalTheory.SphPar GlobalTheory.SphGal GlobalTheory.Hk3 GlobalTheory.CuspRep GlobalTheory.IndefiniteRowSideFullHecke.EigenSplitStrings Formalism.UG Polynomial
+open GlobalTheory.SphPar GlobalTheory.SphGal GlobalTheory.Hk3 GlobalTheory.CuspRep Formalism.UG Polynomial
 open Formalism.MainNotions.SchurIrreducible (IsSplit)
 
 variable {D : D7}

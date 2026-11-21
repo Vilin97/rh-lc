@@ -232,8 +232,7 @@ theorem integerUnitsAddEquiv_decomposition (σ : MulAction.stabilizer Gal(L/K) w
 omit [IsGalois K L] in
 theorem isUnramified_adicCompletion (he : w.asIdeal.ramificationIdx (𝓞 K) = 1) :
     GroundTheory.LocalField.IsUnramified (v.adicCompletion K) (w.adicCompletion L) :=
-  (GroundTheory.LocalField.isUnramified_iff _ _).2 (by
-    rw [GroundTheory.LocalField.ramificationIndex, ramificationIdx_integer v w, he])
+  (GroundTheory.LocalField.isUnramified_iff _ _).2 ((ramificationIdx_integer v w).trans he)
 
 end UnitsCard
 

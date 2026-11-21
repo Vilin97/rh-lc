@@ -11,7 +11,7 @@ public import GroundTheory.LocalFields.LocalZetaGauss
 
 @[expose] public section
 
-open NumberField IsDedekindDomain ValuativeRel Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.DelEps GlobalTheory.DelGlob
+open NumberField IsDedekindDomain ValuativeRel Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
 open GroundTheory.Global (HeckeCharacter localAdelicChar)
 open GroundTheory.Automorphic.GodementSection (localChar)
 open scoped Pointwise

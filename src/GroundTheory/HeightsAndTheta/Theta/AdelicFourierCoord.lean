@@ -207,6 +207,8 @@ theorem measurePreserving_mulVec (hNM : N * M = 1) (hMN : M * N = 1) :
     funext k
     simp only [Function.comp_apply, Equiv.symm_apply_apply]
     congr 2
+    funext i
+    simp
   rw [hfun]
   exact h3.comp (h2.comp h1)
 

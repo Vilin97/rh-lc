@@ -209,12 +209,14 @@ theorem rootMeas_iff (hz : Bs.z = L.z) (hc : L.c = cStd) (γ : Point ℂ (r + 1)
         rw [← Matrix.conjTranspose_conjTranspose (C2.uMap k r Bs.z (Matrix.of x)), this]; rfl
     rw [← e1, ← Measure.map_map hm ((cjE _).measurable.comp hrm), ← Measure.map_map (cjE _).measurable hrm, h2,
       Measure.map_smul, Measure.map_smul, (cjE_mp _).map_eq, hmu]
+    all_goals first | exact hm.aemeasurable | exact (cjE _).measurable.aemeasurable
   · rintro rfl
     refine ⟨?_, ?_⟩
     · rw [Measure.smul_apply]
       have : D.muR Bs g (permOf γ) {x | Matrix.of x ∉ RStab k r g} = 0 := (Rad.haar_good Bs hg hd hG).conc
       rw [this, smul_zero]
     · rw [Measure.map_smul, hmu, Measure.map_map hrm hm]
+      swap; exact hrm.aemeasurable
       congr 1
       have : rootCoords k r L.z γ ∘ (fun x => (Matrix.of.symm (Rad.rhoF Bs g (permOf γ) x) : Mt k r)) =
           (cjE (rootEquiv γ)).symm := by
@@ -332,7 +334,11 @@ theorem haar_smul {U : Set (B.Mat k r)} {μ : Measure (Mt k r)} (h : B.IsHaarOn 
   refine ⟨?_, fun a ha => ?_, fun a ha => ?_, fun K hK => ?_, ?_⟩
   · rw [Measure.smul_apply, h.conc, smul_zero]
   · rw [Measure.map_smul, h.left a ha]
+    exact (show Continuous (lmulM a : Mt k r → Mt k r) from
+      continuous_const.matrix_mul continuous_id).measurable.aemeasurable
   · rw [Measure.map_smul, h.right a ha]
+    exact (show Continuous (B.rmulF a : Mt k r → Mt k r) from
+      continuous_id.matrix_mul continuous_const).measurable.aemeasurable
   · rw [Measure.smul_apply, smul_eq_mul]; exact ENNReal.mul_lt_top h1.lt_top (h.finite_compact K hK)
   · intro e
     have e2 : c * μ Set.univ = 0 := congrArg (fun m : Measure (Mt k r) => m Set.univ) e

@@ -299,7 +299,7 @@ theorem linearIndependent_of_residue {x : K} (hx0 : x ≠ 0) (hx : v.ring.valuat
   exact lt_irrefl _ this
 
 theorem isNoetherianRing [IsFunctionField k K] : IsNoetherianRing v.ring := by
-  rw [isNoetherianRing_iff, isNoetherian_iff', WellFoundedGT, isWellFounded_iff,
+  rw [isNoetherianRing_iff, isNoetherian_iff', WellFoundedGT,
     RelEmbedding.wellFounded_iff_isEmpty]
   refine ⟨fun f => ?_⟩
   have hf : ∀ n, f n < f (n + 1) := fun n => f.map_rel_iff.2 (Nat.lt_succ_self n)

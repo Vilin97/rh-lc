@@ -181,7 +181,9 @@ theorem sum_eq_finsum {V Z : Ideal (MRing ι)} [V.IsPrime] [Z.IsPrime] {A : Type
   push_cast
   rw [← finsum_mem_coe_finset]
   symm
-  refine finsum_mem_eq_of_bijOn (fun p => p.asIdeal.comap (algebraMap (MRing ι) A))
+  refine finsum_mem_eq_of_bijOn
+    (s := {p : PrimeSpectrum A | p.asIdeal.height = 1 ∧ algebraMap (MRing ι) A f ∈ p.asIdeal})
+    (fun p => p.asIdeal.comap (algebraMap (MRing ι) A))
     ⟨?_, ?_, ?_⟩ ?_
   · intro p hp
     have hm := (h.height_eq_one_iff hVZ hex hfV p.asIdeal).mp hp

@@ -47,7 +47,7 @@ theorem one_le_re_det_one_add {Q : Matrix n n 𝕜} (hQ : Q.PosSemidef) :
     refine Finset.prod_congr rfl fun i _ => ?_
     simp
   rw [this, RCLike.ofReal_re]
-  exact Finset.one_le_prod fun i _ => by linarith [hQ.eigenvalues_nonneg i]
+  exact Finset.one_le_prod₀ fun i _ => by linarith [hQ.eigenvalues_nonneg i]
 
 theorem re_det_le_re_det_add {A P : Matrix n n 𝕜} (hA : A.PosSemidef) (hP : P.PosSemidef) :
     RCLike.re A.det ≤ RCLike.re (A + P).det := by

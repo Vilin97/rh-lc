@@ -21,22 +21,68 @@ section OkThms
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
-theorem rowVal_eqv (hX : X.Ok) (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : (rowVal W SG).Eqv where
-  nab_smul := rowVal_nab_smul W
-  del_smul := rowVal_del_smul W
-  inv := squarePk_inv X _ _ hX.emb_star
+theorem rowVal_eqv (hX : X.Ok) (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : (rowVal W SG).Eqv := by
+  exact {
+    nab_smul := rowVal_nab_smul W
+    del_smul := rowVal_del_smul W
+    inv := squarePk_inv X _ _ hX.emb_star }
 
-theorem mtVal_eqv (hX : X.Ok) (j : ℕ) (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : (mtVal W j SG).Eqv where
-  nab_smul := mtVal_nab_smul W j
-  del_smul := mtVal_del_smul W j
-  inv := roundPk_inv X _ _ hX.emb_star
+theorem mtVal_eqv (hX : X.Ok) (j : ℕ) (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : (mtVal W j SG).Eqv := by
+  exact {
+    nab_smul := mtVal_nab_smul W j
+    del_smul := mtVal_del_smul W j
+    inv := roundPk_inv X _ _ hX.emb_star }
 
-theorem mtildeOk (hX : X.Ok) (P : LevFam X.E X.K R.r Pr.vGs) : (mtildeGSD W Ch sel mu P).Ok :=
-  formGSD_ok _ _ hX (rowVal_eqv W hX _)
+local macro "prove_row_form_ok " hX:term:max hC:term : tactic =>
+  `(tactic| (
+    have hOk {Y : Fields} {n : ℕ} {SG : Finset (HeightOneSpectrum (𝓞 Y.E))}
+        {C : CoefPk Y n (DecoSet (E := Y.E) (n := n) (ST := ∅) (SG := SG))}
+        {Λ : LevFam Y.E Y.K n SG} (hY : Y.Ok) (hEqv : C.Eqv) :
+        (formGSD C Λ).Ok := by
+      refine ⟨?_, ?_, ?_, ?_, ?_⟩
+      · obtain ⟨s, hs, hrep⟩ := DecoSet.finite_reps (ST := ∅) (SG := SG)
+          (n := n) (posStar_of_conj hY.conjE)
+        have : Finite s := hs
+        refine Finite.of_surjective (fun d : s => (formGSD C Λ).cls d.1) ?_
+        intro c
+        induction c using Quotient.inductionOn' with
+        | h d =>
+          obtain ⟨d0, hd0, g, hg⟩ := hrep d
+          refine ⟨⟨d0, hd0⟩, ((formGSD C Λ).cls_eq_iff d0 d).mpr
+            ⟨((g, 1) : FormG Λ)⁻¹, ?_⟩⟩
+          change d = (((g, 1) : FormG Λ) : (formGSD C Λ).G) • d0 at hg
+          rw [hg, inv_smul_smul]
+      · intro d
+        have := DecoSet.finite_stabilizer (posStar_of_conj hY.conjE)
+          (d : DecoSet (E := Y.E) (n := n) (ST := ∅) (SG := SG))
+        refine Finite.of_injective (fun a : MulAction.stabilizer (formGSD C Λ).G d =>
+          (⟨FormG.incl Λ a.1, a.2⟩ :
+            MulAction.stabilizer (UF Y.E n × GLG (E := Y.E) (n := n) (SG := SG)) d)) ?_
+        intro a b hab
+        exact Subtype.ext (FormG.incl_injective Λ (congrArg Subtype.val hab))
+      · intro g d
+        obtain ⟨m, hm, hc⟩ := Λ.chr_root g.2
+        exact (hEqv.nab_smul (FormG.incl Λ g) d).trans (map_root_smul _ _ hm hc).symm
+      · intro g d
+        obtain ⟨m, hm, hc⟩ := Λ.chr_root g.2
+        exact (hEqv.del_smul (FormG.incl Λ g) d).trans (map_root_smul _ _ hm hc).symm
+      · intro g x y
+        obtain ⟨m, hm, hc⟩ := Λ.chr_root g.2
+        let c : Y.K := (Λ.chr g.2 : Y.Kˣ)
+        change C.pair (c • C.rho g.1 x) (c • C.rho g.1 y) = C.pair x y
+        rw [LinearMap.map_smulₛₗ₂, map_smul, hEqv.inv, smul_smul]
+        change (star c * c) • C.pair x y = C.pair x y
+        rw [star_mul_root hY.conjK hm (show c ^ m = 1 from hc), one_smul]
+    exact hOk $hX $hC))
 
-theorem mtildeKOk (hX : X.Ok) : (mtildeKGSD W Ch sel mu).Ok := formGSD_ok _ _ hX (rowVal_eqv W hX _)
+theorem mtildeOk (hX : X.Ok) (P : LevFam X.E X.K R.r Pr.vGs) : (mtildeGSD W Ch sel mu P).Ok := by
+  prove_row_form_ok hX (rowVal_eqv W hX _)
 
-theorem mtKOk (hX : X.Ok) (j : ℕ) : (mtKGSD W Ch sel mu j).Ok := formGSD_ok _ _ hX (mtVal_eqv W hX j _)
+theorem mtildeKOk (hX : X.Ok) : (mtildeKGSD W Ch sel mu).Ok := by
+  prove_row_form_ok hX (rowVal_eqv W hX _)
+
+theorem mtKOk (hX : X.Ok) (j : ℕ) : (mtKGSD W Ch sel mu j).Ok := by
+  prove_row_form_ok hX (mtVal_eqv W hX j _)
 
 end OkThms
 
@@ -214,14 +260,15 @@ theorem GSD.repCSD_actGood {K : Type} [Field K] [NumberField K] [StarRing K] (S 
     [Fintype A] (r : Representation K A S.EqFun)
     (h1 : ∀ a φ ψ, S.ip h (r a φ) (r a ψ) = S.ip h φ ψ)
     (h2 : ∀ a φ, φ ∈ S.intNab → r a φ ∈ S.intNab) (h3 : ∀ a φ, φ ∈ S.intDel → r a φ ∈ S.intDel) :
-    (S.toCSD h).ActGood (S.repCSD h r) where
-  unitary t f g := by
+    (S.toCSD h).ActGood (S.repCSD h r) := by
+  refine { unitary := ?_, nab_stable := ?_, del_stable := ?_ }
+  · intro t f g
     have e := h1 t ((S.res h).symm f) ((S.res h).symm g)
     have e1 : S.ip h ((S.res h).symm f) ((S.res h).symm g) =
         (S.toCSD h).csum ((S.res h ((S.res h).symm f)).1 : S.Cl → S.V) ((S.res h ((S.res h).symm g)).1 : S.Cl → S.V) := rfl
     rw [e1, LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply] at e
     exact e
-  nab_stable t f hf c := by
+  · intro t f hf c
     have e : (S.res h).symm f ∈ S.intNab := by
       rw [S.mem_intNab_iff h S.outSec]
       intro c
@@ -230,7 +277,7 @@ theorem GSD.repCSD_actGood {K : Type} [Field K] [NumberField K] [StarRing K] (S 
         exact hf c
       exact this
     exact (S.mem_intNab_iff h S.outSec _).mp (h2 t _ e) c
-  del_stable t f hf c := by
+  · intro t f hf c
     have e : (S.res h).symm f ∈ S.intDel := by
       rw [S.mem_intDel_iff h S.outSec]
       intro c
@@ -322,8 +369,9 @@ theorem lamPar_apply (h : r ≤ n) (bl : List ℕ) {H₀ : Subgroup (GL (Fin r) 
 
 theorem HPar_split (h : r ≤ n) (bl : List ℕ) (H₀ : Subgroup (GL (Fin r) κ)) (lam₀ : ↥H₀ →* Kˣ) (χ : ℕ → κˣ →* Kˣ) :
     Lev.Split (diagEmb κ h) (⟨HPar n κ h bl H₀, lamPar h bl lam₀ χ⟩ : Lev κ K n) ⟨HK n κ r bl, lamK χ n r bl⟩
-      ⟨H₀, lam₀⟩ where
-  fac M hM := by
+      ⟨H₀, lam₀⟩ := by
+  refine { fac := ?_, emb := ?_, sub := ?_ }
+  · intro M hM
     have hM' : M ∈ HPar n κ h bl H₀ := hM
     obtain ⟨hB, h0⟩ := mem_HPar.mp hM'
     set a := blk0 n κ h bl ⟨M, hB⟩ with ha
@@ -346,7 +394,7 @@ theorem HPar_split (h : r ≤ n) (bl : List ℕ) (H₀ : Subgroup (GL (Fin r) κ
     have e : (⟨(diagEmb κ h a)⁻¹ * M, hkB⟩ : ↥(blockUT n κ r bl)) =
         (⟨diagEmb κ h a, diagEmb_mem_blockUT h bl a⟩ : ↥(blockUT n κ r bl))⁻¹ * ⟨M, hB⟩ := rfl
     rw [e, map_mul, map_inv, detChar_diagEmb, inv_one, one_mul]
-  emb a ha := by
+  · intro a ha
     have hm : diagEmb κ h a ∈ HPar n κ h bl H₀ :=
       mem_HPar.mpr ⟨diagEmb_mem_blockUT h bl a, by rw [firstBlock_diagEmb_eq]; exact ha⟩
     refine ⟨hm, ?_⟩
@@ -356,7 +404,7 @@ theorem HPar_split (h : r ≤ n) (bl : List ℕ) (H₀ : Subgroup (GL (Fin r) κ
     rw [lamPar_apply, detChar_diagEmb, mul_one]
     congr 1
     exact Subtype.ext (firstBlock_diagEmb_eq h bl a)
-  sub k hk := by
+  · intro k hk
     have hk' : k ∈ HK n κ r bl := hk
     have hb : k ∈ HPar n κ h bl ⊥ := by rw [← HK_eq_HPar h bl]; exact hk'
     obtain ⟨hB, h0⟩ := mem_HPar.mp hb
@@ -379,12 +427,15 @@ theorem Lev.inv_ev (l : Lev κ K n) (M : GL (Fin n) κ) : l.inv.ev M = (l.ev M)�
     rw [dif_neg h, dif_neg (show M ∉ l.inv.H from h), inv_one]
 
 theorem Lev.Split.inv {e : GL (Fin r) κ →* GL (Fin n) κ} {lP lK : Lev κ K n} {l0 : Lev κ K r}
-    (H : Lev.Split e lP lK l0) : Lev.Split e lP.inv lK.inv l0.inv where
-  fac M hM := by
+    (H : Lev.Split e lP lK l0) : Lev.Split e lP.inv lK.inv l0.inv := by
+  refine { fac := ?_, emb := ?_, sub := ?_ }
+  · intro M hM
     obtain ⟨a, ha, k, hk, e1, e2⟩ := H.fac M hM
     exact ⟨a, ha, k, hk, e1, by rw [Lev.inv_ev, Lev.inv_ev, Lev.inv_ev, e2, mul_inv]⟩
-  emb a ha := ⟨(H.emb a ha).1, by rw [Lev.inv_ev, Lev.inv_ev, (H.emb a ha).2]⟩
-  sub k hk := ⟨(H.sub k hk).1, by rw [Lev.inv_ev, Lev.inv_ev, (H.sub k hk).2]⟩
+  · intro a ha
+    exact ⟨(H.emb a ha).1, by rw [Lev.inv_ev, Lev.inv_ev, (H.emb a ha).2]⟩
+  · intro k hk
+    exact ⟨(H.sub k hk).1, by rw [Lev.inv_ev, Lev.inv_ev, (H.sub k hk).2]⟩
 
 end Split
 
@@ -431,8 +482,9 @@ theorem prod_uSG {M : Type} [CommMonoid M] (f : SG0 → M) :
 open Classical in
 theorem LevFam.glue_split (h : r ≤ n) (TP TK : LevFam X.E X.K n SG0) (P : LevFam X.E X.K r SG0)
     (B : LevFam X.E X.K n Q) (H : ∀ w : SG0, Lev.Split (diagEmb _ h) (TP w) (TK w) (P w)) :
-    LevFam.Split ((extGLG Q).comp (diagonalEmbeddingProduct SG0 h)) (TP.glue B) (TK.glue B) P where
-  fac x := by
+    LevFam.Split ((extGLG Q).comp (diagonalEmbeddingProduct SG0 h)) (TP.glue B) (TK.glue B) P := by
+  refine { fac := ?_, emb := ?_, sub := ?_ }
+  · intro x
     have hx : ∀ w : SG0, x.1 (inlSG w) ∈ (TP w).H := fun w => by
       have := (TP.glue B).mem_at x (inlSG w)
       rw [LevFam.glue_of_mem TP B (inlSG w) w.2] at this
@@ -470,7 +522,7 @@ theorem LevFam.glue_split (h : r ≤ n) (TP TK : LevFam X.E X.K n SG0) (P : LevF
         exact e2 ⟨w.1, hw⟩
       · have hkw : kk w = x.1 w := dif_neg hw
         rw [hkw, dif_neg hw, LevFam.glue_of_not TP B w hw, LevFam.glue_of_not TK B w hw, one_mul]
-  emb a := by
+  · intro a
     have hm : ((extGLG Q).comp (diagonalEmbeddingProduct SG0 h)) a.1 ∈ (TP.glue B).grp := by
       intro w _
       show extGLG Q (diagonalEmbeddingProduct SG0 h a.1) w ∈ (TP.glue B w).H
@@ -488,7 +540,7 @@ theorem LevFam.glue_split (h : r ≤ n) (TP TK : LevFam X.E X.K n SG0) (P : LevF
       exact ((H ⟨w.1, hw⟩).emb _ (P.mem_at a ⟨w.1, hw⟩)).2
     · rw [dif_neg hw, extGLG_of_not _ w hw, Lev.ev_of_mem _ (Subgroup.one_mem _)]
       exact map_one _
-  sub k := by
+  · intro k
     have hm : k.1 ∈ (TP.glue B).grp := by
       intro w _
       have := (TK.glue B).mem_at k w
@@ -518,15 +570,16 @@ theorem LevFam.inv_chr {SG : Finset (HeightOneSpectrum (𝓞 X.E))} (Λ : LevFam
 
 theorem LevFam.Split.inv {SG : Finset (HeightOneSpectrum (𝓞 X.E))} {ι : GLG (E := X.E) (n := r) (SG := SG0) →* GLG (E := X.E) (n := n) (SG := SG)}
     {ΛP ΛK : LevFam X.E X.K n SG} {Λ0 : LevFam X.E X.K r SG0} (H : LevFam.Split ι ΛP ΛK Λ0) :
-    LevFam.Split ι ΛP.inv ΛK.inv Λ0.inv where
-  fac h := by
+    LevFam.Split ι ΛP.inv ΛK.inv Λ0.inv := by
+  refine { fac := ?_, emb := ?_, sub := ?_ }
+  · intro h
     obtain ⟨a, k, e1, e2⟩ := H.fac ⟨h.1, h.2⟩
     refine ⟨⟨a.1, a.2⟩, ⟨k.1, k.2⟩, e1, ?_⟩
     rw [ΛP.inv_chr ⟨h.1, h.2⟩, Λ0.inv_chr a, ΛK.inv_chr k, e2, mul_inv]
-  emb a := by
+  · intro a
     obtain ⟨hm, e⟩ := H.emb ⟨a.1, a.2⟩
     exact ⟨hm, by rw [ΛP.inv_chr ⟨_, hm⟩, Λ0.inv_chr ⟨a.1, a.2⟩, e]⟩
-  sub k := by
+  · intro k
     obtain ⟨hm, e⟩ := H.sub ⟨k.1, k.2⟩
     exact ⟨hm, by rw [ΛP.inv_chr ⟨_, hm⟩, ΛK.inv_chr ⟨k.1, k.2⟩, e]⟩
 

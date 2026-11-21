@@ -143,7 +143,7 @@ theorem finite_cohomology_of_trivial (V : OpenSubgroup Gal(Ksep/K))
       rw [← Units.val_pow_eq_pow_val, (mem_rootsOfUnity p _).1 (Additive.toMul x).2, Units.val_one]
     rw [hc, pow_mul, hxp, one_pow]
   let ι : Rep.res (V : Subgroup Gal(Ksep/K)).subtype (galRootsOfUnity.{0} K Ksep p) ⟶ A :=
-    Rep.ofHom ⟨(uliftIntLinearEquivAddHom (Rep.res (V : Subgroup Gal(Ksep/K)).subtype
+    Rep.ofHom ⟨(GroundTheory.ProfCoh.uliftIntLinearEquivAddHom (Rep.res (V : Subgroup Gal(Ksep/K)).subtype
       (galRootsOfUnity.{0} K Ksep p)) A).symm (i.comp e.symm.toAddMonoidHom), fun σ => LinearMap.ext fun x => by
       change i (e.symm ((Rep.res (V : Subgroup Gal(Ksep/K)).subtype
         (galRootsOfUnity.{0} K Ksep p)).ρ σ x)) = A.ρ σ (i (e.symm x))

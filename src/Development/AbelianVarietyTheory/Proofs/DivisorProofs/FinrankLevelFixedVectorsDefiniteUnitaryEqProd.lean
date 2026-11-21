@@ -158,7 +158,7 @@ theorem exists_finset_subset (hU : Unr E) (hn : 1 ≤ n) (hS : IsSection S)
     (fun w : S => {k : finU (E := E) (n := n) | proj n S (.inr w) k = 1})
     (fun w => isClosed_eq ((continuous_subtype_val.comp (continuous_ret (w := w.1))).comp continuous_subtype_val)
       continuous_const) (by
-      refine Set.eq_empty_of_forall_notMem fun k ⟨hk, hk'⟩ => hk.2 ?_
+      refine Set.disjoint_left.2 fun k hk hk' => hk.2 ?_
       have : k = 1 := by
         refine Subtype.ext (ua_ext (k.2.trans (map_one _).symm) fun u => ?_)
         obtain ⟨w, ⟨hw, hwu⟩, -⟩ := hS u
@@ -167,7 +167,7 @@ theorem exists_finset_subset (hU : Unr E) (hn : 1 ≤ n) (hS : IsSection S)
         rfl
       rwa [this])
   refine ⟨T, fun k hk h => by_contra fun hk' => ?_⟩
-  exact Set.eq_empty_iff_forall_notMem.1 hT k ⟨⟨hle hk, hk'⟩, Set.mem_iInter₂.2 h⟩
+  exact Set.disjoint_left.1 hT ⟨hle hk, hk'⟩ (Set.mem_iInter₂.2 h)
 
 theorem hasComp_inl (π : AutSub E n) (v : InfinitePlace E) (lam : DomWeight n) (h : HasWeightAt π.V v.embedding lam) :
     HasComp π.rep (proj n S (.inl v)) (lev S K') (Module.finrank ℂ (nablaSq ℂ n lam)) := by

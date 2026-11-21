@@ -73,8 +73,8 @@ theorem coord_of_mem {n : ℕ} {x : Fin n → E} (hx : x ∈ Formalism.MainNotio
     obtain ⟨a, ha⟩ := hx
     exact ⟨r * a, by simp [← ha, Algebra.smul_def]⟩
 
-theorem isLattice_std (n : ℕ) : Submodule.IsLattice E (Formalism.MainNotions.StandardLattice.stdLat E n) where
-  fg := Submodule.fg_span (Set.finite_range _)
+theorem isLattice_std (n : ℕ) : Submodule.IsFullLattice E (Formalism.MainNotions.StandardLattice.stdLat E n) where
+  toIsLattice := Submodule.IsLattice.of_fg E (Submodule.fg_span (Set.finite_range _))
   span_eq_top := by
     rw [eq_top_iff, ← (Pi.basisFun E (Fin n)).span_eq]
     refine Submodule.span_mono ?_
@@ -185,9 +185,9 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] [StarRing 
   have hφ : ∀ (φ : E →+* ℂ) (a : E), φ (star a) = starRingEnd ℂ (φ a) := fun φ a => by
     rw [hst, IsCMField.complexEmbedding_complexConj]
   obtain ⟨⟨s, hs⟩, hm, -⟩ := Formalism.HermitianLatticesTheory.final_massBasic E (Fin n → E) _ (isSymm_std n) (trace_pos hφ) _
-    (isLattice_std n)
+    (isLattice_std n).toIsLattice
   obtain ⟨N, ⟨hN, g, hg, e⟩, -⟩ := hs.2 (Formalism.MainNotions.StandardLattice.stdLat E n)
-    ⟨isLattice_std n, fun p _ => ⟨1, one_mem _, Submodule.map_id _⟩⟩
+    ⟨(isLattice_std n).toIsLattice, fun p _ => ⟨1, one_mem _, Submodule.map_id _⟩⟩
   obtain ⟨hf, hc⟩ := card_aut_std hφ n
   haveI : Nonempty (Formalism.ThetaLiftIndependence.autL (Formalism.MainNotions.StandardLattice.stdForm E n) (Formalism.MainNotions.StandardLattice.stdLat E n)) :=
     ⟨⟨1, one_mem _, Submodule.map_id _⟩⟩

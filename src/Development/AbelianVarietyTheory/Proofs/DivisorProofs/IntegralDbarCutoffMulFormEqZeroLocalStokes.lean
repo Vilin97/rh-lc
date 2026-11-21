@@ -56,9 +56,10 @@ theorem integral_dbar_fn_mul_eq_zero : ∀ {M : Type} [TopologicalSpace M] [Comp
   intro M _ _ _ _ _ _ n A γ χ i hγ hχ hK
   set K := tsupport χ with hKdef
   have hKc : IsCompact K := (isClosed_tsupport χ).isCompact
-  have calc0 := (GlobalTheory.T.smoothForms_calculus_holomorphicAtlas M n A).2.1 0
-  have hP : A.IsForm (A.fn χ * γ) := (calc0 _ _ (A.isForm_fn hχ) hγ).2.1
-  have hω : A.IsForm (A.dbar (A.fn χ * γ)) := (calc0 _ _ hP hγ).2.2.2.2.1
+  have hP : A.IsForm (A.fn χ * γ) :=
+    ((GlobalTheory.T.isForm_one_add_mul_smul M n A).2 0 _ _ (A.isForm_fn hχ) hγ).2.1
+  have hω : A.IsForm (A.dbar (A.fn χ * γ)) :=
+    (GlobalTheory.T.holAtlas_isForm_del_dbar_smooth M n A _ hP).2
 
   have hnear : ∀ (j : A.ι) (w : V n), w ∈ (A.e j).target → (A.e j).symm w ∉ K →
       A.loc (A.fn χ * γ) j =ᶠ[𝓝 w] fun _ => 0 := by

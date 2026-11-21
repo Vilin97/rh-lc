@@ -83,7 +83,10 @@ theorem AttRes.normV_eq_pow (w : HeightOneSpectrum (𝓞 L)) :
   have : w.asIdeal.LiesOver (w.under (𝓞 F)).asIdeal := ⟨rfl⟩
   have := w.isMaximal
   have := (w.under (𝓞 F)).isMaximal
-  show Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 F)).asIdeal ^ w.asIdeal.inertiaDeg (𝓞 F)
+  have nv {K : Type} [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K)) :
+      normV v = Ideal.absNorm v.asIdeal := by
+    rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  rw [nv, nv]
   rw [← Ideal.absNorm_relNorm (𝓞 F) (𝓞 L) w.asIdeal,
     Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 F)).asIdeal, map_pow]
 

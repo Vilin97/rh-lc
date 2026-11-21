@@ -27,8 +27,9 @@ theorem genMap_mk (G : GenFibre v P') (f : MRing ι) :
     genMap G (Ideal.Quotient.mk _ f) = aeval G.x f := rfl
 
 theorem genMap_injective (G : GenFibre v P') : Function.Injective (genMap G) := by
-  refine (injective_iff_map_eq_zero _).2 fun a ha => ?_
+  refine (injective_iff_map_eq_zero (genMap G).toAddMonoidHom).2 fun a ha => ?_
   obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective a
+  change genMap G (Ideal.Quotient.mk _ f) = 0 at ha
   rw [genMap_mk] at ha
   rw [Ideal.Quotient.eq_zero_iff_mem, ← G.ker_x]
   exact RingHom.mem_ker.mpr ha
@@ -82,7 +83,12 @@ theorem aeval_xW (W : Ideal (MRing ι')) [W.IsPrime] (f : MRing ι') :
     rw [aeval_C, eq_intCast (algebraMap ℤ (FractionRing (MRing ι' ⧸ W))) a]
     exact (eq_intCast (((algebraMap (MRing ι' ⧸ W) (FractionRing (MRing ι' ⧸ W))).comp
       (Ideal.Quotient.mk W)).comp C) a).symm
-  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
+  | add p q hp hq =>
+    change (aeval (R := ℤ) (xW W)).toRingHom (p + q) = _
+    change (aeval (R := ℤ) (xW W)).toRingHom p = _ at hp
+    change (aeval (R := ℤ) (xW W)).toRingHom q = _ at hq
+    rw [(aeval (R := ℤ) (xW W)).map_add, (Ideal.Quotient.mk W).map_add,
+      (algebraMap (MRing ι' ⧸ W) (FractionRing (MRing ι' ⧸ W))).map_add, hp, hq]
   | mul_X p n hp => rw [map_mul, map_mul, map_mul, hp, aeval_X, xW]
 
 theorem ker_aeval_xW (W : Ideal (MRing ι')) [W.IsPrime] :

@@ -43,8 +43,11 @@ def twistComplex {l m : ℤ} (h : l + 1 = m) : ShortComplex Y.Modules :=
 theorem shortExact_twistComplex [Mono (GlobalTheory.cutHom F hL s)] {l m : ℤ} (h : l + 1 = m) :
     (twistComplex hL F s h).ShortExact := by
   have h' : -1 + m = l := by omega
+  have hS : (cutComplex F hL s).ShortExact :=
+    ShortComplex.ShortExact.mk' (ShortComplex.exact_cokernel (cutHom F hL s))
+      (inferInstanceAs (Mono (cutHom F hL s))) (epi_cutπ F hL s)
   refine ShortComplex.shortExact_of_iso ?_
-    (Twist.shortExact_map (isLB_lbZPow hL m) (shortExact_cutComplex F hL s))
+    (Twist.shortExact_map (isLB_lbZPow hL m) hS)
   refine ShortComplex.isoMk (twistZAddIso F hL h') (Iso.refl _) (Iso.refl _) ?_ ?_
   · exact (map_cutHom hL F s h h').symm.trans (Category.comp_id _).symm
   · exact (Category.id_comp _).trans (Category.comp_id _).symm
@@ -77,7 +80,9 @@ theorem exists_global (n : ℕ) : ∀ (t : Fin n → L.Sec) (F : Y.Modules) (j�
         (Twist.map (lbZPow L (l + 1)) (cutπ F hL (t 0))).app W ((mulSecOfEq F (zofSec a) rfl).app W u) =
           (mulSecOfEq (cut F hL (t 0)) (zofSec a) rfl).app W
             ((Twist.map (lbZPow L l) (cutπ F hL (t 0))).app W u) := fun a W u => by
-      rw [app_app, app_app, mulSecOfEq_naturality]
+      apply zsec_ext fun i => ?_
+      rw [zcoord_map_app, zcoord_mulSecOfEq_app, zcoord_mulSecOfEq_app, zcoord_map_app,
+        Scheme.Modules.Hom.app_smul]
     have hS := shortExact_twistComplex hL F (t 0) (l := l) rfl
     have := hS.mono_f
     have hex : ∀ W : Y.Opens, Function.Exact ((mulSecOfEq F (zofSec (t 0)) (rfl : l + 1 = l + 1)).app W)

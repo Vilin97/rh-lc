@@ -42,7 +42,7 @@ theorem exists_frameFam {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
     ∃ (V : (gen Z).affineOpens) (φ : c.F →+* Γ(gen Z, V.1)) (F : EigFrame Z φ (LogKS.chart V ≫ genι Z))
       (B : Set (Fin n → ℂ)) (a : (Fin n → ℂ) → CxFr Z σ), LogKS.chart V ≫ genStr Z = spMap φ ∧ IsOpen B ∧ e y₀ ∈ B ∧
       B ⊆ e.target ∧ HolFam B a ∧
-      ∀ b ∈ B, (a b).1 = e.symm b ∧ ∃ hy : (a b).1 ∈ ptsIn (genStr Z) σ V.1, F.IsMap (evHom hy) (a b).2 := by
+      ∀ b ∈ B, (a b).1 = e.symm b ∧ ∃ hy : (a b).1 ∈ ptsIn (genStr Z) σ V.1, (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v F embτ basisIdx) (evHom hy) (a b).2 := by
   obtain ⟨U, hU, φ, F, hzU, hφ, -⟩ :=
     EigSpread.exists_stable_eigFrame E H Dw l Xo c O β Z (y₀.1 (IsLocalRing.closedPoint ℂ))
   let V : (gen Z).affineOpens := ⟨U, hU⟩
@@ -55,7 +55,7 @@ theorem exists_frameFam {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
       y.1 ≫ genι Z = spMap (evHom hy) ≫ LogKS.chart V ≫ genι Z := fun y hy => by
     rw [← Category.assoc, spMap_evHom hy]
   have hfr : ∀ (y : CxPts (genStr Z) σ) (hy : y ∈ ptsIn (genStr Z) σ V.1),
-      ∃ f : EigFrame Z σ (y.1 ≫ genι Z), EigFrame.IsMap (F : EigFrame Z φ (LogKS.chart V ≫ genι Z)) (evHom hy) f :=
+      ∃ f : EigFrame Z σ (y.1 ≫ genι Z), (fun srcFrame mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v srcFrame embτ basisIdx) (F : EigFrame Z φ (LogKS.chart V ≫ genι Z)) (evHom hy) f :=
     fun y hy => EigFrame.exists_isMap F (evHom hy) (hov y hy) (hx y hy)
   choose fr hfr using hfr
   have h0 : e.symm (e y₀) ∈ ptsIn (genStr Z) σ V.1 := by rw [e.left_inv hy₀]; exact hy₀V

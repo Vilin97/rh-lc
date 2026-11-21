@@ -18,7 +18,7 @@ theorem det_eq_zero_of_diag_eq_zero {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ} (
     {i : Fin n} (hi : A i i = 0) : A.det = 0 := by
   have h0 : star (Pi.single i (1 : ℂ)) ⬝ᵥ A *ᵥ Pi.single i 1 = 0 := by
     simpa using hi
-  have hcol := (hA.dotProduct_mulVec_zero_iff _).mp h0
+  have hcol := (hA.dotProduct_mulVec_zero_iff).mp h0
   refine det_eq_zero_of_column_eq_zero i fun k => ?_
   simpa using congrFun hcol k
 

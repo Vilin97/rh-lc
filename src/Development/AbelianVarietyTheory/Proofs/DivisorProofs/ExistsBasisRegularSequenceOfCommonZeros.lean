@@ -53,7 +53,8 @@ theorem exists_regSeq [Infinite k] [Module.Finite k V] [AlgebraicGeometry.IsNoet
       rw [e, finrank_top] at hW
       omega
     have : Finite {x : X // x ∈ assPoints F ∧ vanishAt φ x ≠ ⊤} :=
-      ((finite_assPoints F).subset fun _ hx => hx.1).to_subtype
+      ((finite_assPoints F).subset (t := {x : X | x ∈ assPoints F ∧ vanishAt φ x ≠ ⊤})
+        (fun _ hx => hx.1)).to_subtype
     obtain ⟨w, hw⟩ := Submodule.exists_forall_notMem_of_forall_ne_top
       (fun o : Option {x : X // x ∈ assPoints F ∧ vanishAt φ x ≠ ⊤} => o.elim W fun x => vanishAt φ x.1)
       (by

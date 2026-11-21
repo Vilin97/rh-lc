@@ -39,6 +39,6 @@ theorem ideal_map_smul_isLattice (F E : Type) [Field F] [NumberField F] [Field E
       rw [Units.smul_def, Units.val_mk0, ← algebraMap_smul E (algebraMap (𝓞 F) (𝓞 E) d) y]
     rw [this]
     exact Submodule.smul_mem_smul (Ideal.mem_map_of_mem _ hdI) hy
-  exact Submodule.IsLattice.of_le_of_isLattice_of_fg E hsub (Submodule.FG.of_le hL.fg hle)
+  exact Submodule.IsLattice.of_fg E (Submodule.FG.of_le hL.fg hle)
 
 end GlobalTheory

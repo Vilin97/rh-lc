@@ -71,13 +71,14 @@ theorem exists_algHom_rootsOfUnity_ne_zero {B : Type*} [CommRing B] [IsDomain B]
   have := hQ
   set p := Q.comap (algebraMap (MvPolynomial (Fin s) ℚ) B) with hp
   have : p.IsPrime := Ideal.comap_isPrime _ Q
+  have hpc : p = RingHom.ker ev := hQc
 
   have hvan : ∀ a ∈ p, ev a = 0 := fun a ha ↦ by
-    rw [hQc] at ha
+    rw [hpc] at ha
     exact RingHom.mem_ker.mp ha
   let evq : MvPolynomial (Fin s) ℚ ⧸ p →+* AlgebraicClosure ℚ := Ideal.Quotient.lift p ev hvan
   have hevq : Function.Injective evq :=
-    RingHom.lift_injective_of_ker_le_ideal p hvan (by rw [hQc])
+    RingHom.lift_injective_of_ker_le_ideal p hvan (by rw [hpc])
   let : Algebra (MvPolynomial (Fin s) ℚ ⧸ p) (AlgebraicClosure ℚ) := evq.toAlgebra
   have : Module.IsTorsionFree (MvPolynomial (Fin s) ℚ ⧸ p) (AlgebraicClosure ℚ) :=
     (Module.isTorsionFree_iff_algebraMap_injective).mpr hevq

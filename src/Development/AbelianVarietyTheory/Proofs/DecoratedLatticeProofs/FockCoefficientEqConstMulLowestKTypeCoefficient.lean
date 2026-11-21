@@ -31,7 +31,7 @@ open Classical in
 set_option maxHeartbeats 4000000 in
 theorem pair_of_ext (θ : InfFam D) (hθ : IsInfFam θ) (M : DSModel W S') (hLS : LowSm M) (hLI : GlobalTheory.IndefiniteRowSideFullHecke.HolomorphicLowestType.LowIrr M)
     (hω : IsWeilDatumO ψ V W χV χW ω) (hcv : IsCovolOne (ratL W V) μ 𝓕)
-    (J : MultilinearMap ℂ (fun ρ => lowT M ρ) (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
+    (J : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
     (hK : ∀ τ, ∀ k ∈ Formalism.REAL.Kset (M.ε τ), ∀ (v : ∀ ρ, lowT M ρ) (u : lowT M τ),
       ((u : M.sm τ) : M.H τ) = M.σ τ k ((v τ : M.sm τ) : M.H τ) →
       J (Function.update v τ u) = ω (1, atTau θ W τ ((M.fr τ)⁻¹ * k * M.fr τ)) (J v))
@@ -185,7 +185,7 @@ theorem coef_one_vector : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : In
   intro D ψ θ S T χS χT om hθ hom Sp M hM hwt μ 𝓧 hcv c hc pt hpt Δ io hio hΔ w
   obtain ⟨wt, hw⟩ := hwt
   obtain ⟨hLS, hLI⟩ := GlobalTheory.HolLowOnce.lowSm_and_lowIrr D T Sp M hM
-  let J : MultilinearMap ℂ (fun ρ => lowT M ρ) (WO S T → ℂ) :=
+  let J : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (WO S T → ℂ) :=
     (pt.comp (io.flip w)).compMultilinearMap (PiTensorProduct.tprod ℂ)
   have hJv : ∀ v, J v = pt (io (PiTensorProduct.tprod ℂ v) w) := fun _ => rfl
   have hJ : ∀ v, IsThetaFunO ψ S T (J v) := fun v => hpt _

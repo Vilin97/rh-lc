@@ -170,7 +170,7 @@ theorem UpperTheory.V.GC.character_H1_galois_quotient :
     exact (continuous_of_discreteTopology (f := fun q : k × k => q.1 * q.2)).comp
       (((h2.comp Units.val).continuous.comp continuous_fst).prodMk continuous_snd)
   obtain ⟨τ, hτ⟩ := ch_trace (ZMod (l ^ 1)) k
-  have hτe : ∀ g a, twDual μ ρ g (τ a) = τ (κ (p g) * a) := fun g a => TDual.ext fun m => by
+  have hτe : ∀ g a, twDual μ ρ g (τ a) = τ (κ (p g) * a) := fun g a => DFunLike.ext _ _ fun m => by
     rw [twDual_apply, hτ, hτ, hρa, ← smul_eq_mul, ← map_smul, Algebra.smul_def]
     congr 1
     have e : κ' g⁻¹ * ω g = κ (p g) := by

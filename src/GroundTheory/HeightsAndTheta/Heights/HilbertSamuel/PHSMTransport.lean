@@ -347,8 +347,6 @@ theorem mem_mcPts_map_iff [DecidableEq (Ix κ)] {I : Ideal (MRing (GlobalTheory 
     · intro h
       have := mcPts_smul hI (fun _ => (c : ℂ)) (fun _ => hc') h
       convert this using 1
-      funext p
-      rfl
   rw [← hsm, mem_mcPts_iff_pts, mem_mcPts_iff_pts]
   simp only [pts, conePts, Set.mem_ofPred_eq]
   rw [vanish_map_iff, intAct_eqC hM]

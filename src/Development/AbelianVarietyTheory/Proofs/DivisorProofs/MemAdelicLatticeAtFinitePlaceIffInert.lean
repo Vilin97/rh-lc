@@ -27,9 +27,9 @@ theorem smul_inclR (a : AF F) (e : E) : a • inclR (F := F) (AF F) e = a ⊗ₜ
 
 theorem iotaW_toCompl {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)} (hw : Formalism.UG.IsInertAt F E v w)
     (y : Fv F v ⊗[F] E) :
-    GlobalTheory.InertBigCell.iotaW hw (toCompl (under_eq_of_isInertAt hw) y) = liftT E v y := by
-  show liftT E v ((complEquiv hw (under_eq_of_isInertAt hw)).symm
-    (complEquiv hw (under_eq_of_isInertAt hw) y)) = liftT E v y
+    GlobalTheory.InertBigCell.iotaW hw (toCompl (under_eq_of_isInertAt hw) y) = liftT (E := E) v y := by
+  show liftT (E := E) v ((complEquiv hw (under_eq_of_isInertAt hw)).symm
+    (complEquiv hw (under_eq_of_isInertAt hw) y)) = liftT (E := E) v y
   rw [RingEquiv.symm_apply_apply]
 
 theorem gen_mem {v : Pl (F := F)} {d : ℕ} (W : Spc F E d) {t : Fv F v} (ht : t ∈ v.adicCompletionIntegers F)
@@ -41,6 +41,8 @@ theorem gen_mem {v : Pl (F := F)} {d : ℕ} (W : Spc F E d) {t : Fv F v} (ht : t
 theorem mem_latAt_iff {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)} (hw : Formalism.UG.IsInertAt F E v w) {d : ℕ}
     (W : Spc F E d) (z : Fin d → AE F E) :
     z ∈ GlobalTheory.InertSph.latAt W v ↔ ∃ u ∈ GlobalTheory.LFun.latAt w W.L, z = fun i => GlobalTheory.InertBigCell.iotaW hw (u i) := by
+  have liftT_tmul (a : Fv F v) (e : E) :
+      liftT (E := E) v (a ⊗ₜ[F] e) = GlobalTheory.LatVac.liftV v a ⊗ₜ[F] e := rfl
   have h := under_eq_of_isInertAt hw
   let f : (Fin d → w.adicCompletion E) →+ (Fin d → AE F E) :=
     AddMonoidHom.compLeft (GlobalTheory.InertBigCell.iotaW hw) (Fin d)
@@ -72,7 +74,7 @@ theorem mem_latAt_iff {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)} (hw : F
         obtain ⟨t, ht⟩ := toCompl_surjective h (o : w.adicCompletion E)
         have htI : t ∈ intLoc F E v := (mem_intLoc_iff hw h t).2 (ht ▸ o.2)
         have e1 : f (o • fun i => algebraMap E (w.adicCompletion E) (y i)) =
-            fun i => liftT E v (t * ((1 : Fv F v) ⊗ₜ[F] y i)) := by
+            fun i => liftT (E := E) v (t * ((1 : Fv F v) ⊗ₜ[F] y i)) := by
           funext i
           rw [hf]
           dsimp only
@@ -80,7 +82,7 @@ theorem mem_latAt_iff {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)} (hw : F
             show algebraMap E (w.adicCompletion E) (y i) = toCompl h ((1 : Fv F v) ⊗ₜ[F] y i) by
               rw [toCompl_tmul, map_one, one_mul], ← map_mul, iotaW_toCompl]
         rw [e1]
-        refine intLoc_induction (p := fun t => (fun i => liftT E v (t * ((1 : Fv F v) ⊗ₜ[F] y i))) ∈
+        refine intLoc_induction (p := fun t => (fun i => liftT (E := E) v (t * ((1 : Fv F v) ⊗ₜ[F] y i))) ∈
           GlobalTheory.InertSph.latAt W v) (fun a ha x => ?_) ?_ (fun p q hp hq => ?_) (fun p hp => ?_) htI
         · convert gen_mem W ha (W.L.smul_mem x hy) using 1
           funext i

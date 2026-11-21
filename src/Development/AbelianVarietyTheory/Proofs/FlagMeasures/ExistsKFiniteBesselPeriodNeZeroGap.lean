@@ -128,9 +128,10 @@ theorem nzOn_of_mass (hy : GlobalTheory.GapIn.Hyp) {k r : ℕ} {ε : Fin (2 * r 
     refine aesm_of_contOn (s := {q : Mt k r × Mt k r | Matrix.of q.1 ∈ GG k r ∧ Matrix.of q.2 ∈ GG k r}) ?_
       ((isClosed_UH.preimage c1).inter (isClosed_UH.preimage c2)).measurableSet
       ((Measure.quasiMeasurePreserving_fst.ae hGae).and (Measure.quasiMeasurePreserving_snd.ae hνae))
-    exact (continuous_star.comp_continuousOn (hmc.comp continuous_fst.continuousOn fun q hq => hq.1)).mul
-      (((hΦ w hw).comp c2.continuousOn fun q hq => hq.2).inner
-        ((hΦ w hw).comp (c2.matrix_mul c1).continuousOn fun q hq => Formalism.FourierDecayAlt.P.DDSmoothness.uh_mul hq.2 hq.1))
+    let hs : Set (Mt k r × Mt k r) := {q | Matrix.of q.1 ∈ GG k r ∧ Matrix.of q.2 ∈ GG k r}
+    exact (continuous_star.comp_continuousOn (hmc.comp (s := hs) continuous_fst.continuousOn fun q hq => hq.1)).mul
+      (((hΦ w hw).comp (s := hs) c2.continuousOn fun q hq => hq.2).inner
+        ((hΦ w hw).comp (s := hs) (c2.matrix_mul c1).continuousOn fun q hq => Formalism.FourierDecayAlt.P.DDSmoothness.uh_mul hq.2 hq.1))
   have hF1 : ∀ g : Mt k r, Matrix.of g ∈ GG k r → (fun y => F (g, y)) =ᵐ[νq] fun y =>
       star (m g) * ⟪B (R.σ (Matrix.of y) w), B (R.σ (Matrix.of y) (R.σ (Matrix.of g) w))⟫_ℂ := by
     intro g hg
