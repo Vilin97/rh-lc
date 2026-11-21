@@ -35,8 +35,6 @@ def constTermOn (φ : G → ℂ) (x : G) : ℂ := ∫ q, φ ((q.out : N) * x) �
 
 variable {Γ N} {φ ψ : G → ℂ} {μ : Measure N} {𝓕 : Set N}
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G]
-  [DiscreteTopology Γ] [LocallyCompactSpace N] in
 
 theorem leftInv_integrand (hφ : LeftInv Γ φ) (x : G) : LeftInv (Γ.subgroupOf N) fun n : N => φ (n * x) :=
   fun γ hγ n => by simp only [Subgroup.coe_mul, mul_assoc]; exact hφ _ hγ _

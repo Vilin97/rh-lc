@@ -98,8 +98,6 @@ variable {k G : Type u} [Field k] [Group G] [TopologicalSpace G] [IsTopologicalG
   (hT : ∀ (g : (P : Subgroup G)) (t : T), T.ρ g t = t)
   (hM : ∀ (g : (P : Subgroup G)) (m : M), M.ρ g m = m)
 
-omit [IsTopologicalGroup G] [CompactSpace G] [(P : Subgroup G).Normal] [IsDiscreteRep T]
-  [IsDiscreteRep M] in
 
 theorem homRep_ρ_of_mem (g : (P : Subgroup G)) (f : homRep T M) : (homRep T M).ρ g f = f := by
   apply LinearMap.ext

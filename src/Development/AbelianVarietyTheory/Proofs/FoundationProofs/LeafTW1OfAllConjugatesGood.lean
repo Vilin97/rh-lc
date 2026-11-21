@@ -131,8 +131,6 @@ theorem relLength_read (h : Induces emb v) (rd : V →ₛₗ[emb] W) {ι : Type}
   · rw [hsp, hsp, relLength_map_of_injective g hinj]
     exact length_baseChange_subquotient_dvr (Ow v) O' _ _
 
-omit [NumberField K] [IsDomain O'] [IsDiscreteValuationRing O'] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Module O' W]
-  [IsScalarTower O' (FractionRing O') W] in
 
 variable [StarRing K]
 

@@ -237,8 +237,6 @@ variable [IsTopologicalGroup H] [SecondCountableTopology H] [LocallyCompactSpace
   (h : ∀ x, e x ∈ T' ↔ x ∈ T) (hT : IsClosed (T : Set H)) (dt : Measure T) [dt.IsHaarMeasure]
   [dt.IsMulRightInvariant] (dh : Measure H) [SFinite dh] [dh.IsMulLeftInvariant]
 
-omit [SecondCountableTopology H] [LocallyCompactSpace H] [T2Space H] [SecondCountableTopology H']
-  [LocallyCompactSpace H'] [T2Space H'] in
 
 instance isMulRightInvariant_map (μ : Measure H) [μ.IsMulRightInvariant] : (μ.map e).IsMulRightInvariant :=
   ⟨fun g => by
@@ -271,8 +269,6 @@ theorem quotMeas_map :
   simp only [map_mul]
   rfl
 
-omit [IsTopologicalGroup H] [SecondCountableTopology H] [LocallyCompactSpace H] [T2Space H] [IsTopologicalGroup H']
-  [SecondCountableTopology H'] [LocallyCompactSpace H'] [T2Space H'] in
 
 theorem measurableEmbedding_quotMap : MeasurableEmbedding (quotMap e h) :=
   MeasurableEquiv.measurableEmbedding
@@ -391,8 +387,6 @@ theorem hasOrbInt_of_finite [IsFiniteMeasure dt] (hf : Integrable (conjFn γ f) 
     HasOrbInt dh γ dt f ((∫ x, f (x⁻¹ * γ * x) ∂dh) / dt.real univ) :=
   hasQuotInt_of_finite (isClosed_cent γ) (leftInv_conjFn le_rfl f) hf
 
-omit [MeasurableSpace H] [IsTopologicalGroup H] [T2Space H] [LocallyCompactSpace H] [SecondCountableTopology H]
-  [BorelSpace H] in
 
 def centEquiv {H' : Type} [Group H'] [TopologicalSpace H'] (e : H ≃ₜ* H') (γ : H) {γ' : H'} (h : e γ = γ') :
     cent γ ≃ₜ* cent γ' :=

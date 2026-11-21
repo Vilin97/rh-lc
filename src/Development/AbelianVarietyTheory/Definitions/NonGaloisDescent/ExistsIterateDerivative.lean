@@ -85,16 +85,10 @@ def galCoef (g : GQ l) : (ι → OW l O) →ₗ[O] (ι → OW l O) := (galOW O g
 
 abbrev ME : Submodule (invE l e (A O K)) (Vec K a ι) := P.Mext (invE l e (A O K))
 
-variable {P} in
-omit hl [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem mem_ME_of_mem_M {v : Vec K a ι} (hv : v ∈ P.M) : v ∈ ME P :=
   mem_tot.2 fun τ i => le_away _ _ (mem_tot.1 hv τ i)
 
-variable {P} in
-omit hl [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem mem_ME_of_mem_L {v : Vec K a ι} (hv : v ∈ P.L) : v ∈ ME P :=
   mem_tot.2 fun τ i => by
@@ -102,8 +96,6 @@ theorem mem_ME_of_mem_L {v : Vec K a ι} (hv : v ∈ P.L) : v ∈ ME P :=
     rw [h]
     exact Subalgebra.sum_mem _ fun j _ => mul_mem (P.mx_mem τ i j) (le_away _ _ (hm j))
 
-omit hl [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 def coordM (B : Subalgebra O K⟦X⟧) : P.Mext B →ₗ[O] (ι → ZMod a → B) where
   toFun v i τ := ⟨v.1 τ i, mem_tot.1 v.2 τ i⟩
@@ -174,16 +166,12 @@ theorem toW_mem_LA {v : Vec K a ι} (hv : v ∈ P.L) : toW t ϖ P ⟨v, mem_ME_o
   choose m hm h using fun τ => P.mem_extc.1 (mem_tot.1 hv τ)
   exact ⟨_, (toW_of_mx t ϖ P _ (fun j τ => ⟨m τ j, hm τ j⟩) h).symm⟩
 
-omit hl [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 def coordL (B : Subalgebra O K⟦X⟧) : P.ext B →ₗ[O] (ι → ZMod a → B) where
   toFun v i τ := ⟨(P.mxInv τ *ᵥ v.1 τ) i, P.mem_extc_iff.1 (mem_tot.1 v.2 τ) i⟩
   map_add' v w := funext fun i => funext fun τ => Subtype.ext (congrFun (Matrix.mulVec_add (P.mxInv τ) (v.1 τ) (w.1 τ)) i)
   map_smul' c v := funext fun i => funext fun τ => Subtype.ext (congrFun (Matrix.mulVec_smul (P.mxInv τ) c (v.1 τ)) i)
 
-omit hl [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem mx_mulVec_coordL (B : Subalgebra O K⟦X⟧) (v : P.ext B) (τ : ZMod a) :
     (P.mx τ *ᵥ fun i => (coordL P B v i τ : K⟦X⟧)) = v.1 τ := by
@@ -616,20 +604,14 @@ section Triv
 
 def unitMod : PhiMod O K l e a ι := ⟨fun _ => 1⟩
 
-omit hl [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem mx_unitMod (τ : ZMod a) : (unitMod l a e O K ι).mx τ = 1 :=
   Matrix.map_one _ (map_zero _) (map_one _)
 
-omit hl [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem mxInv_unitMod (τ : ZMod a) : (unitMod l a e O K ι).mxInv τ = 1 := by
   rw [← (unitMod l a e O K ι).mx_mul_mxInv τ, mx_unitMod, one_mul]
 
-omit hl [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem mem_ext_unitMod {B : Subalgebra O K⟦X⟧} {v : Vec K a ι} :
     v ∈ (unitMod l a e O K ι).ext B ↔ ∀ τ i, v τ i ∈ B :=
@@ -654,8 +636,6 @@ def unitConn : Conn (unitMod l a e O K ι) where
     ring
   mem_MM m hm := mem_ext_unitMod.2 fun τ i => derivative_mem_S (mem_ext_unitMod.1 hm τ i)
 
-omit [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem unitConn_frobCompat : (unitConn (O := O) (K := K) l a e ι).FrobCompat := fun m _ =>
   funext fun τ => funext fun i => by
@@ -704,8 +684,6 @@ theorem unitConn_topNilp : (unitConn (O := O) (K := K) l a e ι).TopNilp := fun 
   | zero => rfl
   | succ i ih => rw [pow_succ', Function.iterate_succ_apply', ← ih]; rfl
 
-omit hl [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem unitConn_desc (i : ℕ) (m : Vec K a ι) (τ : ZMod a) (j : ι) :
     (unitConn (O := O) (K := K) l a e ι).desc i m τ j = descN K i (m τ j) := by
@@ -868,8 +846,6 @@ theorem taylor_unitIdent {T : Lat a O K ϖ} (hT : IsTriv T) (b : Module.Basis ι
   rw [mul_left_comm, ← hz (τ, j), mul_sub, Finset.mul_sum]
   simp only [mul_left_comm (idem (constC t) τ)]
 
-omit [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem natural_constHom (Y : Matrix κ ι O) :
     (unitConn (K := K) l a e ι).Natural (unitConn l a e κ) (constHom l a e Y) := fun m _ =>

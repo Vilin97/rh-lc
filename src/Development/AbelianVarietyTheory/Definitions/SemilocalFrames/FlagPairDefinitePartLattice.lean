@@ -29,15 +29,11 @@ def dual (H : HermSpace K V) (M : Submodule R V) : Submodule R V :=
 def IsIntegralLat (H : HermSpace K V) (M : Submodule R V) : Prop :=
   Formalism.HermitianLatticesTheory.IsIntegralLat H.B.flip M
 
-variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
-  [Module R V] [IsScalarTower R K V] in
 
 theorem _root_.GlobalTheory.HermLat.mem_perp_iff (H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V) (S : Submodule K V) (y : V) :
     y ∈ _root_.GlobalTheory.HermLat.perp H S ↔ ∀ x ∈ S, H.B y x = 0 := by
   simp [_root_.GlobalTheory.HermLat.perp, Submodule.mem_iInf]
 
-variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
-  [Module R V] [IsScalarTower R K V] in
 
 theorem _root_.GlobalTheory.HermLat.mem_dual_iff (H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V) (M : Submodule R V) (y : V) :
     y ∈ _root_.GlobalTheory.HermLat.dual H M ↔
@@ -45,8 +41,6 @@ theorem _root_.GlobalTheory.HermLat.mem_dual_iff (H : _root_.Formalism.Hermitian
   simp only [_root_.GlobalTheory.HermLat.dual, _root_.GlobalTheory.HermLat.rs, Submodule.mem_inf,
     Submodule.restrictScalars_mem, _root_.Formalism.HermitianLatticesTheory.dualBasic_mem_dual, LinearMap.flip_apply]
 
-variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
-  [Module R V] [IsScalarTower R K V] in
 
 theorem _root_.GlobalTheory.HermLat.isIntegralLat_iff (H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V) (M : Submodule R V) :
     _root_.GlobalTheory.HermLat.IsIntegralLat H M ↔ ∀ x ∈ M, ∀ y ∈ M, H.B x y ∈ (1 : Submodule R K) := by
@@ -54,8 +48,6 @@ theorem _root_.GlobalTheory.HermLat.isIntegralLat_iff (H : _root_.Formalism.Herm
   simp only [LinearMap.flip_apply]
   exact ⟨fun h x hx y hy => h y hy x hx, fun h x hx y hy => h y hy x hx⟩
 
-variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
-  [Module R V] [IsScalarTower R K V] in
 
 theorem _root_.GlobalTheory.HermLat.flip_isSymm (H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V) : H.B.flip.IsSymm := by
   rw [LinearMap.isSymm_def]
@@ -71,8 +63,6 @@ def IsUnimodMod (H : HermSpace K V) (M : Submodule R V) (S I : Submodule K V) : 
 
 def IsUnimod (H : HermSpace K V) (M : Submodule R V) : Prop := IsUnimodMod H M ⊤ ⊥
 
-variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
-  [Module R V] [IsScalarTower R K V] in
 
 theorem _root_.GlobalTheory.HermLat.isLatMod_top_bot_iff (M : Submodule R V) :
     _root_.GlobalTheory.HermLat.IsLatMod M (⊤ : Submodule K V) ⊥ ↔ Submodule.IsLattice K M := by
@@ -84,8 +74,6 @@ theorem _root_.GlobalTheory.HermLat.isLatMod_top_bot_iff (M : Submodule R V) :
   · intro hM
     exact ⟨⟨M, hM.fg, by simp⟩, hM.span_eq_top⟩
 
-variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
-  [Module R V] [IsScalarTower R K V] in
 
 theorem _root_.GlobalTheory.HermLat.isUnimod_iff (H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V) (M : Submodule R V) :
     _root_.GlobalTheory.HermLat.IsUnimod H M ↔ Submodule.IsLattice K M ∧ _root_.Formalism.HermitianLatticesTheory.IsUnimodular H.B.flip M := by
@@ -179,8 +167,6 @@ section Genus
 
 def isomGrp (H : HermSpace K V) : Subgroup (V ≃ₗ[K] V) := Formalism.HermitianLatticesTheory.isom H.B.flip
 
-variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
-  [Module R V] [IsScalarTower R K V] in
 
 theorem _root_.GlobalTheory.HermLat.mem_isomGrp (H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V) (s : V ≃ₗ[K] V) :
     s ∈ _root_.GlobalTheory.HermLat.isomGrp H ↔ ∀ x y, H.B (s x) (s y) = H.B x y := by
@@ -269,11 +255,6 @@ theorem genusSum_eq_sum (H : HermSpace K V) {L : Submodule (𝓞 K) V} {s : Fins
 
 variable [FiniteDimensional K V]
 
-variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
-  [Module R V] [IsScalarTower R K V] in
-open NumberField in
-variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
-  [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
 theorem _root_.GlobalTheory.HermLat.autCard_eq_natCard {H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V} (hH : _root_.GlobalTheory.HermLat.IsTraceDef H)
     {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) :

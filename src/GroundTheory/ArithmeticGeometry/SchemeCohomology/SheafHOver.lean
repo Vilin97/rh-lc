@@ -23,7 +23,7 @@ instance overPullback_additive : (J.overPullback AddCommGrpCat.{v} U).Additive w
   map_add := rfl
 
 instance overPullback_isRightAdjoint : (J.overPullback AddCommGrpCat.{v} U).IsRightAdjoint :=
-  ⟨_, ⟨sheafShriekAdjunction J U⟩⟩
+  ⟨_, ⟨GroundTheory.Arith.SchemeCoh.sheafShriekAdjunction J U⟩⟩
 
 instance overPullback_preservesFiniteLimits :
     PreservesFiniteLimits (J.overPullback AddCommGrpCat.{v} U) := inferInstance
@@ -42,8 +42,8 @@ instance overPullback_preservesEpimorphisms :
 
 instance overPullback_preservesFiniteColimits :
     PreservesFiniteColimits (J.overPullback AddCommGrpCat.{v} U) := by
-  have h := (Functor.preservesFiniteLimits_tfae (J.overPullback AddCommGrpCat.{v} U)).out 3 0
-  refine ((Functor.preservesFiniteColimits_tfae (J.overPullback AddCommGrpCat.{v} U)).out 0 3).1 ?_
+  have h := (Functor.preservesFiniteLimits_tfae (J.overPullback AddCommGrpCat.{v} U)).out 4 1
+  refine ((Functor.preservesFiniteColimits_tfae (J.overPullback AddCommGrpCat.{v} U)).out 1 4).1 ?_
   intro S hS
   have := hS.epi_g
   exact ⟨(h.1 inferInstance S hS).1, (J.overPullback AddCommGrpCat.{v} U).map_epi S.g⟩

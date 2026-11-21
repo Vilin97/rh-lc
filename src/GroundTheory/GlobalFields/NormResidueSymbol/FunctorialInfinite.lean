@@ -71,8 +71,6 @@ theorem restrictNormal_restrictScalars_conjAt [IsGalois K L] [IsGalois K' L']
 variable [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)] [IsGalois K' L']
   [IsMulCommutative (L' ≃ₐ[K'] L')]
 
-omit [NumberField K] [NumberField K'] [NumberField L] [NumberField L'] [IsGalois K L]
-  [IsMulCommutative (L ≃ₐ[K] L)] [IsGalois K' L'] [IsMulCommutative (L' ≃ₐ[K'] L')] in
 
 theorem restrictNormal_restrictScalars_one [Normal K L] :
     ((1 : L' ≃ₐ[K'] L').restrictScalars K).restrictNormal L = 1 := by

@@ -62,10 +62,6 @@ theorem _root_.GlobalTheory.DegCnt.NFGeom.e_mem_II (a : Fin r)
   rw [_root_.GlobalTheory.DegCnt.NFGeom.e_eq N a.castSucc h]
   exact Submodule.smul_mem _ _ (_root_.Formalism.HermitianLatticeCounting.P.e_mem_X _ a)
 
-open NumberField in
-open scoped Pointwise ENNReal Classical in
-variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
-  {H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V} {r : ℕ} (N : _root_.GlobalTheory.DegCnt.NF H r) in
 
 def proj : V →ₗ[K] V :=
   ∑ b ∈ Finset.univ.filter (fun b : Fin r => N.j ≤ b.val),
@@ -898,10 +894,6 @@ end GlobalTheory.DegCnt.NFGeom
 
 namespace GlobalTheory.DegCnt
 
-open NumberField in
-open scoped Pointwise ENNReal Classical in
-variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
-  {H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V} {r : ℕ} (N : _root_.GlobalTheory.DegCnt.NF H r) in
 
 theorem _root_.GlobalTheory.DegCnt.NF.geometry : ∀ (K V : Type) [Field K]
     [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]

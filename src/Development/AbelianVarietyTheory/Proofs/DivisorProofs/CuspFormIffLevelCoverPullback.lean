@@ -114,8 +114,6 @@ theorem lact_flow_isom (hψ : X.Ψ = X'.Ψ) (hξ0 : X.ξ0 = X'.ξ0)
       ((a : Matrix (Fin r) (Fin r) E).map τ.1 * mat x ⟨τ.1, memψ hψ τ⟩)
   rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hm]
 
-open GlobalTheory.LevelCusp.Transport ReciprocityTheory.ChartRestriction.G.FD.EmbeddingHermitianPairs ReciprocityTheory.ChartRestriction.G.FD.TransvectionPeriodicity ReciprocityTheory.ChartRestriction.G.FD.RealEmbeddingCharacters
-  ReciprocityTheory.ChartRestriction.G.FD.FlowMeanContinuity in
 
 theorem mem_SS_of_isom (X X' : Data E r) (a : GL (Fin r) E) (hψ : X.Ψ = X'.Ψ) (hp : X.p0 = X'.p0)
     (hξ0 : X.ξ0 = X'.ξ0)

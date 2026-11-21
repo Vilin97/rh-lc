@@ -38,11 +38,6 @@ variable [MeasurableSpace G] [BorelSpace G] {μ : Measure G} [μ.IsHaarMeasure]
   {V : Type} [AddCommGroup V] [Module ℂ V] {π : Representation ℂ G V}
   {Y : Type} [AddCommGroup Y] [Module ℂ Y]
 
-open MeasureTheory in
-variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G] in
-variable [MeasurableSpace G] [BorelSpace G] {μ : Measure G} [μ.IsHaarMeasure]
-  {V : Type} [AddCommGroup V] [Module ℂ V] {π : Representation ℂ G V}
-  {Y : Type} [AddCommGroup Y] [Module ℂ Y] in
 
 theorem _root_.GlobalTheory.InvBilinTest.integral_ite (K : Subgroup G) (ho : IsOpen (K : Set G)) (c : ℂ) :
     ∫ g, (if g ∈ K then c else 0) ∂μ = (μ.real K : ℂ) * c := by

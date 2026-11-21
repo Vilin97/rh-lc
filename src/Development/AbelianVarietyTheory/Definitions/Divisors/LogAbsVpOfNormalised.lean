@@ -79,10 +79,6 @@ theorem _root_.GlobalTheory.HTLat.algebraMap_embO (φ : E →+* C) (a : 𝓞 E) 
     ((RingEquiv.ofBijective (algebraMap O C).rangeRestrict hb).apply_symm_apply
       ((φ.comp (algebraMap (𝓞 E) E)).codRestrict _ hm a))
 
-set_option autoImplicit false in
-open scoped TensorProduct NNReal NumberField Pointwise in
-variable {C : Type} [Field C] {v : Valuation C ℝ≥0} {O : Type} [CommRing O] [Algebra O C]
-  (hv : v.Integers O) {E : Type} [Field E] [NumberField E] in
 
 theorem _root_.GlobalTheory.HTLat.isSplitting_embO [IsAlgClosed C] [CharZero C] :
     _root_.GlobalTheory.EigenSplit.IsSplitting
@@ -226,10 +222,6 @@ def grAt (La : Submodule O U) (f : Fin N → U) (i : Fin N) : Submodule O (U ⧸
 def grNorm (v : Valuation C ℝ≥0) (La : Submodule O U) (f : Fin N → U) (i : Fin N) : ℝ≥0 :=
   latNorm v (grAt C La f i) ((step C f i).mkQ (f i))
 
-set_option autoImplicit false in
-open scoped TensorProduct NNReal NumberField Pointwise in
-variable {O C : Type} [CommRing O] [Field C] [Algebra O C]
-  {U : Type} [AddCommGroup U] [Module C U] [Module O U] [IsScalarTower O C U] {N : ℕ} in
 
 theorem _root_.GlobalTheory.HTLat.exists_grAt_eq {v : Valuation C ℝ≥0} (hv : v.Integers O)
     {La : Submodule O U} (hfg : La.FG)

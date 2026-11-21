@@ -327,8 +327,6 @@ theorem valueGroupRat_eq :
     obtain ⟨y, hy, hyn⟩ := exists_ord_eq L n
     exact ⟨y, hy, by rw [ordRat_algebraMap_of_finite, hyn, zsmul_eq_mul, div_eq_mul_inv]⟩
 
-omit [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L] [ValuativeExtension K L]
-  [FiniteDimensional K L] [ValuativeExtension L Ω] in
 
 
 theorem relIndex_valueGroupRat :

@@ -126,8 +126,6 @@ theorem isInvariant_of_isBaseChange [Finite G] [Module.Flat R S] [Algebra.IsInva
       exact ⟨t + u, by rw [map_add (f := _), ht, hu]; rfl⟩
   exact key ⟨y, hy⟩
 
-omit [MulSemiringAction G A] [SMulCommClass G R A] [MulSemiringAction G A']
-  [SMulCommClass G S A'] in
 
 theorem faithfulSMul_of_isBaseChange [Module.Flat R S] [FaithfulSMul R A]
     (f : A →ₐ[R] A') (hb : IsBaseChange S f.toLinearMap) : FaithfulSMul S A' := by

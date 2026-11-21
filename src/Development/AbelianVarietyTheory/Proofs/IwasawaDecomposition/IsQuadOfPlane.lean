@@ -73,10 +73,6 @@ theorem _root_.GlobalTheory.Mem.Lift.dH_smul {ρ : V → B →L[ℂ] B} (v : V) 
   rw [(hf'.hasFDerivAt.fun_const_smul a).fderiv]
   rfl
 
-open MeasureTheory Complex Matrix in
-open scoped ContDiff Real in
-variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {B : Type} [NormedAddCommGroup B]
-  [NormedSpace ℂ B] in
 
 theorem _root_.GlobalTheory.Mem.Lift.hasDerivAt_dH {ρ : V → B →L[ℂ] B} (v : V) {f : B}
     (hf : _root_.GlobalTheory.RealWeil.Sm ρ f) :
@@ -87,10 +83,6 @@ theorem _root_.GlobalTheory.Mem.Lift.hasDerivAt_dH {ρ : V → B →L[ℂ] B} (v
     simpa using (hasDerivAt_id (0 : ℝ)).smul_const v
   exact hf'.hasFDerivAt.comp_hasDerivAt_of_eq (0 : ℝ) hl (by simp)
 
-open MeasureTheory Complex Matrix in
-open scoped ContDiff Real in
-variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {B : Type} [NormedAddCommGroup B]
-  [NormedSpace ℂ B] in
 
 theorem _root_.GlobalTheory.Mem.Lift.dH_comm {ρ : V → B →L[ℂ] B} (A : B →L[ℂ] B)
     (hA : ∀ v f, A (ρ v f) = ρ v (A f)) {f : B} (hf : _root_.GlobalTheory.RealWeil.Sm ρ f) :

@@ -41,8 +41,6 @@ theorem charOf_prime {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRing 
     (W.comap (C : ℤ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRing ι))] at hI
   exact Int.prime_iff_natAbs_prime.mp ((Ideal.span_singleton_prime hg).mp hI)
 
-open GroundTheory.Heights₂.Heights.Bridge GroundTheory.Heights₂.Heights.Bridge.GeoNum GroundTheory.Heights₂.Heights.NumbersDVR
-  GroundTheory.Heights₂.Heights.FieldNumbers in
 
 end SemiampleNefAlt
 

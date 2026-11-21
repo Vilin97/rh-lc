@@ -96,8 +96,6 @@ theorem map_coordW (hCM : IsCMExt F E σ) (hc : IsHomeomorph (cf (F := F) (E := 
   refine Finset.prod_congr rfl fun a _ => ?_
   rw [Fintype.prod_prod_type]
 
-omit [NumberField F] [NumberField E] [IsTopologicalRing R] [LocallyCompactSpace R]
-  [SecondCountableTopology R] [T2Space R] [MeasurableSpace R] [BorelSpace R] in
 
 theorem BR_eq (hc : IsHomeomorph (cf (F := F) (E := E) R b)) {M n : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (B : Matrix (Fin M × Fin d) (Fin M × Fin d) F)

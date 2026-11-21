@@ -155,8 +155,6 @@ variable {F F' Ω Ω' : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [I
   (f : Rep.res ρ (galUnitsZ F' Ω') ⟶ galUnitsZ F Ω)
   (hf : ∀ u : Ω'ˣ, ((Additive.toMul (f.hom (Additive.ofMul u)) : Ωˣ) : Ω) = ε.symm u)
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [ValuativeRel F']
-  [TopologicalSpace F'] [IsNonarchimedeanLocalField F'] in
 
 theorem cohomologyMapAlong_galCupClass_transport (χ : Additive Gal(Ω'/F') →ₜ+ QZ) (a : Fˣ) :
     (cohomologyMapAlong ρ hρc f 2).hom (galCupClass F' Ω' χ (Units.map e.toRingHom.toMonoidHom a)) =

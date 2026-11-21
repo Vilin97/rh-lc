@@ -68,8 +68,6 @@ variable {V : Type} [AddCommGroup V] [Module R V] [TopologicalSpace V] [IsTopolo
   [ContinuousSMul R V] [LocallyCompactSpace V] [SecondCountableTopology V] [T2Space V]
   [MeasurableSpace V] [BorelSpace V]
 
-omit [IsTopologicalRing R] [T2Space R] [LocallyCompactSpace R] [SecondCountableTopology R]
-  [MeasurableSpace R] [BorelSpace R] [T2Space V] in
 
 theorem exists_map_smul (μ : Measure V) [μ.IsAddHaarMeasure] {c : R} (hc : IsUnit c) :
     ∃ d : ℝ≥0, d ≠ 0 ∧ μ.map (fun x : V => c • x) = d • μ := by
@@ -85,9 +83,6 @@ theorem exists_map_smul (μ : Measure V) [μ.IsAddHaarMeasure] {c : R} (hc : IsU
   exact ⟨_, (Measure.addHaarScalarFactor_pos_of_isAddHaarMeasure _ μ).ne',
     Measure.isAddLeftInvariant_eq_smul _ μ⟩
 
-omit [IsTopologicalRing R] [T2Space R] [LocallyCompactSpace R] [SecondCountableTopology R]
-  [MeasurableSpace R] [BorelSpace R] [IsTopologicalAddGroup V] [LocallyCompactSpace V]
-  [SecondCountableTopology V] [T2Space V] [MeasurableSpace V] [BorelSpace V] in
 
 theorem exists_compact_pull (ho : IsOpenUnits R) {S : Set R} (hS : IsCompact S) {s : R → R}
     (hs : ContinuousOn s S) (hu : ∀ u ∈ S, IsUnit (s u)) {K : Set V} (hK : IsCompact K) :
@@ -301,8 +296,6 @@ theorem exists_fibreFamily (hR : Nice R) (μ : Measure V) [μ.IsAddHaarMeasure]
             exact (Function.mem_support.1 hu) (by simp [h])
         exact (hcu.comp (continuous_id.mul continuous_const)).continuousAt
 
-omit [TopologicalSpace R] [IsTopologicalRing R] [T2Space R] [LocallyCompactSpace R]
-  [SecondCountableTopology R] [MeasurableSpace R] [BorelSpace R] [ContinuousSMul R V] [T2Space V] in
 
 theorem null_of_finite_curve (μ : Measure V) [μ.IsAddHaarMeasure] {Z : Set V} (hZ : MeasurableSet Z)
     {L : ℝ → V} (hL : Continuous L) (h : ∀ x : V, {t : ℝ | x + L t ∈ Z}.Finite) : μ Z = 0 := by

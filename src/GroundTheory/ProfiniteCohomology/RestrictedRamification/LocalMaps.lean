@@ -109,8 +109,6 @@ noncomputable def conjResMor (A : Rep.{u} k G) {φ φ' : H →* G} (g : G)
     congr 2
     group⟩
 
-omit [TopologicalSpace G] [TopologicalSpace H] [IsTopologicalGroup G] [IsTopologicalGroup H]
-  [CompactSpace G] in
 
 theorem cohomologyMapAlong_conj (A : Rep.{u} k G) [IsDiscreteRep A] {φ φ' : H →* G}
     (hφ : Continuous φ) (hφ' : Continuous φ') (g : G) (h : ∀ x, φ' x = g⁻¹ * φ x * g)

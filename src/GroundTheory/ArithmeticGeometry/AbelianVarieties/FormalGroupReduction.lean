@@ -714,8 +714,6 @@ theorem add_mem_and_reduce {P Q : (curveK K W).Point} (hP : P ∈ E0Set K W)
         rw [e, e', reducePoint_some_integral K W h₃ n₃]
         exact ⟨mem_E0Set_some_integral K W h₃ n₃, rfl⟩
 
-omit [DecidableEq K] [DecidableEq (ResidueField 𝒪)] [IsAdicComplete (maximalIdeal 𝒪) 𝒪]
-  [(W.map (algebraMap 𝒪 K)).IsElliptic] in
 
 theorem neg_mem_and_reduce {P : (curveK K W).Point} (hP : P ∈ E0Set K W) :
     -P ∈ E0Set K W ∧ reducePoint K W (-P) = -reducePoint K W P := by

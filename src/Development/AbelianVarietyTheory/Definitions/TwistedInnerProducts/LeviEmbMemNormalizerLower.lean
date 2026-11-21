@@ -17,11 +17,6 @@ variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [L
 
 def blk (e : (Σ a, m a) ≃ n) (i : n) : α := (e.symm i).1
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
-omit [Fintype α] [LinearOrder α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n]
-  [DecidableEq n] in
 
 @[simp] theorem _root_.GlobalTheory.SmGL.blk_apply (e : (Σ a, m a) ≃ n) (a : α) (i : m a) :
     _root_.GlobalTheory.SmGL.blk e (e ⟨a, i⟩) = a := by
@@ -48,18 +43,12 @@ def parab (e : (Σ a, m a) ≃ n) : Subgroup (GL n R) where
 
 variable {R}
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.mem_parab {e : (Σ a, m a) ≃ n} {g : GL n R} :
     g ∈ _root_.GlobalTheory.SmGL.parab R e ↔ ∀ i j, _root_.GlobalTheory.SmGL.blk e j <
       _root_.GlobalTheory.SmGL.blk e i → (g : Matrix n n R) i j = 0 :=
   ⟨fun h _ _ hij => h hij, fun h _ _ hij => h _ _ hij⟩
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.mem_parab_iff {e : (Σ a, m a) ≃ n} {g : GL n R} :
     g ∈ _root_.GlobalTheory.SmGL.parab R e ↔ ∀ a b (i : m a) (j : m b), b < a →
@@ -114,9 +103,6 @@ def leviEmb {α : Type} [DecidableEq α] {m : α → Type} [Fintype α] [∀ a, 
         rw [this, blockDiagonal'_mul]
         simp [Matrix.submatrix_mul_equiv] }
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [DecidableEq α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 @[simp] theorem _root_.GlobalTheory.SmGL.leviEmb_apply_same (e : (Σ a, m a) ≃ n)
     (g : _root_.GlobalTheory.SmGL.Levi R m) (a : α) (i j : m a) :
@@ -124,9 +110,6 @@ variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [D
       (g a : Matrix (m a) (m a) R) i j := by
   simp [_root_.GlobalTheory.SmGL.leviEmb, blockDiagonal'_apply_eq]
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [DecidableEq α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.leviEmb_apply_ne (e : (Σ a, m a) ≃ n)
     (g : _root_.GlobalTheory.SmGL.Levi R m) {a b : α} (h : a ≠ b) (i : m a) (j : m b) :
@@ -134,9 +117,6 @@ theorem _root_.GlobalTheory.SmGL.leviEmb_apply_ne (e : (Σ a, m a) ≃ n)
   classical
   simp [_root_.GlobalTheory.SmGL.leviEmb, blockDiagonal'_apply_ne _ _ _ h]
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.leviEmb_mem_parab (e : (Σ a, m a) ≃ n)
     (g : _root_.GlobalTheory.SmGL.Levi R m) :
@@ -144,9 +124,6 @@ theorem _root_.GlobalTheory.SmGL.leviEmb_mem_parab (e : (Σ a, m a) ≃ n)
   (_root_.GlobalTheory.SmGL.mem_parab_iff R).2 fun _ _ i j hab =>
     _root_.GlobalTheory.SmGL.leviEmb_apply_ne R e g hab.ne' i j
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 @[simp] theorem _root_.GlobalTheory.SmGL.leviProj_leviEmb (e : (Σ a, m a) ≃ n)
     (g : _root_.GlobalTheory.SmGL.Levi R m) :
@@ -176,9 +153,6 @@ private lemma bijective_blockPosition_of_equiv_sigma (e : (Σ a, m a) ≃ n) (a 
     subst hk
     exact ⟨i, rfl⟩
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.det_parab (e : (Σ a, m a) ≃ n)
     (p : _root_.GlobalTheory.SmGL.parab R e) :
@@ -192,9 +166,6 @@ theorem _root_.GlobalTheory.SmGL.det_parab (e : (Σ a, m a) ≃ n)
     ← Matrix.det_submatrix_equiv_self (Equiv.ofBijective _ (bijective_blockPosition_of_equiv_sigma e a))]
   rfl
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.det_leviEmb (e : (Σ a, m a) ≃ n)
     (g : _root_.GlobalTheory.SmGL.Levi R m) :
@@ -209,9 +180,6 @@ def unipRad (e : (Σ a, m a) ≃ n) : Subgroup (GL n R) := (leviProj R e).ker.ma
 
 variable {R}
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.mem_unipRad {e : (Σ a, m a) ≃ n} {g : GL n R} :
     g ∈ _root_.GlobalTheory.SmGL.unipRad R e ↔ g ∈ _root_.GlobalTheory.SmGL.parab R e ∧ ∀ a (i j : m a),
@@ -231,17 +199,11 @@ theorem _root_.GlobalTheory.SmGL.mem_unipRad {e : (Σ a, m a) ≃ n} {g : GL n R
 
 variable (R)
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.unipRad_le_parab (e : (Σ a, m a) ≃ n) :
     _root_.GlobalTheory.SmGL.unipRad R e ≤ _root_.GlobalTheory.SmGL.parab R e := fun _ hg =>
   ((_root_.GlobalTheory.SmGL.mem_unipRad R).1 hg).1
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.coe_mem_unipRad {e : (Σ a, m a) ≃ n}
     (p : _root_.GlobalTheory.SmGL.parab R e) :
@@ -267,9 +229,6 @@ private lemma conj_mem_unipRad_of_mem_parab {e : (Σ a, m a) ≃ n} {p u : GL n 
   rw [_root_.GlobalTheory.SmGL.coe_mem_unipRad, map_mul, map_mul, map_inv, hU,
     mul_one, mul_inv_cancel]
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.parab_le_normalizer (e : (Σ a, m a) ≃ n) :
     _root_.GlobalTheory.SmGL.parab R e ≤
@@ -283,9 +242,6 @@ theorem _root_.GlobalTheory.SmGL.parab_le_normalizer (e : (Σ a, m a) ≃ n) :
     have := conj_mem_unipRad_of_mem_parab R (inv_mem hp) h
     simpa [mul_assoc] using this
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.leviEmb_mem_normalizer (e : (Σ a, m a) ≃ n)
     (g : _root_.GlobalTheory.SmGL.Levi R m) :
@@ -294,9 +250,6 @@ theorem _root_.GlobalTheory.SmGL.leviEmb_mem_normalizer (e : (Σ a, m a) ≃ n)
   _root_.GlobalTheory.SmGL.parab_le_normalizer R e
     (_root_.GlobalTheory.SmGL.leviEmb_mem_parab R e g)
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.exists_levi_mul_unip (e : (Σ a, m a) ≃ n)
     (p : _root_.GlobalTheory.SmGL.parab R e) :
@@ -311,9 +264,6 @@ theorem _root_.GlobalTheory.SmGL.exists_levi_mul_unip (e : (Σ a, m a) ≃ n)
   · rw [Subgroup.coe_mul, Subgroup.coe_inv]
     exact (mul_inv_cancel_left _ _).symm
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.det_eq_one_of_mem_unipRad {e : (Σ a, m a) ≃ n} {u : GL n R}
     (hu : u ∈ _root_.GlobalTheory.SmGL.unipRad R e) : GeneralLinearGroup.det u = 1 := by
@@ -322,9 +272,6 @@ theorem _root_.GlobalTheory.SmGL.det_eq_one_of_mem_unipRad {e : (Σ a, m a) ≃ 
   rw [_root_.GlobalTheory.SmGL.det_parab, MonoidHom.mem_ker.1 hp]
   simp
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.continuous_leviEmb [TopologicalSpace R] {α : Type} {m : α → Type}
     [Fintype α] [DecidableEq α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)]
@@ -351,9 +298,6 @@ def parabLower (e : (Σ a, m a) ≃ n) : Subgroup (GL n R) := parab R (opp e)
 
 def unipRadLower (e : (Σ a, m a) ≃ n) : Subgroup (GL n R) := unipRad R (opp e)
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.mem_parabLower_iff {e : (Σ a, m a) ≃ n} {g : GL n R} :
     g ∈ _root_.GlobalTheory.SmGL.parabLower R e ↔ ∀ a b (i : m a) (j : m b), a < b →
@@ -372,9 +316,6 @@ def leviProjLower (e : (Σ a, m a) ≃ n) : parabLower R e →* Levi R m := levi
     (leviProjLower R e p a : Matrix (m a) (m a) R) i j =
       ((p : GL n R) : Matrix n n R) (e ⟨a, i⟩) (e ⟨a, j⟩) := rfl
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.mem_unipRadLower {e : (Σ a, m a) ≃ n} {g : GL n R} :
     g ∈ _root_.GlobalTheory.SmGL.unipRadLower R e ↔ g ∈ _root_.GlobalTheory.SmGL.parabLower R e ∧
@@ -382,9 +323,6 @@ theorem _root_.GlobalTheory.SmGL.mem_unipRadLower {e : (Σ a, m a) ≃ n} {g : G
       (g : Matrix n n R) (e ⟨a, i⟩) (e ⟨a, j⟩) = (1 : Matrix (m a) (m a) R) i j :=
   _root_.GlobalTheory.SmGL.mem_unipRad R (e := _root_.GlobalTheory.SmGL.opp e)
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.leviEmb_mem_parabLower (e : (Σ a, m a) ≃ n)
     (g : _root_.GlobalTheory.SmGL.Levi R m) :
@@ -392,9 +330,6 @@ theorem _root_.GlobalTheory.SmGL.leviEmb_mem_parabLower (e : (Σ a, m a) ≃ n)
   (_root_.GlobalTheory.SmGL.mem_parabLower_iff R).2 fun _ _ i j hab =>
     _root_.GlobalTheory.SmGL.leviEmb_apply_ne R e g hab.ne i j
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.leviEmb_mem_normalizer_lower (e : (Σ a, m a) ≃ n)
     (g : _root_.GlobalTheory.SmGL.Levi R m) :
@@ -406,9 +341,6 @@ theorem _root_.GlobalTheory.SmGL.leviEmb_mem_normalizer_lower (e : (Σ a, m a) �
 def stdBlocks {s N : ℕ} (d : Fin s → ℕ) (h : ∑ a, d a = N) : (Σ a, Fin (d a)) ≃ Fin N :=
   finSigmaFinEquiv.trans (finCongr h)
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.stdBlocks_val {s N : ℕ} (d : Fin s → ℕ) (h : ∑ a, d a = N)
     (a : Fin s) (i : Fin (d a)) :
@@ -449,17 +381,11 @@ def two (e : a ⊕ b ≃ n) : (Σ x, Two a b x) ≃ n :=
 
 def stdSum {r t N : ℕ} (h : r + t = N) : Fin r ⊕ Fin t ≃ Fin N := finSumFinEquiv.trans (finCongr h)
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 @[simp] theorem _root_.GlobalTheory.SmGL.stdSum_inl {r t N : ℕ} (h : r + t = N) (i : Fin r) :
     (_root_.GlobalTheory.SmGL.stdSum h (Sum.inl i) : ℕ) = i := by
   simp [_root_.GlobalTheory.SmGL.stdSum]
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 @[simp] theorem _root_.GlobalTheory.SmGL.stdSum_inr {r t N : ℕ} (h : r + t = N) (j : Fin t) :
     (_root_.GlobalTheory.SmGL.stdSum h (Sum.inr j) : ℕ) = r + j := by
@@ -477,9 +403,6 @@ def leviTwo (a b : Type) [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
   right_inv g := by funext x; cases x <;> rfl
   map_mul' g h := by funext x; cases x <;> rfl
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.continuous_leviTwo [TopologicalSpace R] :
     Continuous (_root_.GlobalTheory.SmGL.leviTwo R a b) :=
@@ -491,9 +414,6 @@ theorem _root_.GlobalTheory.SmGL.continuous_leviTwo [TopologicalSpace R] :
 def emb₂ (e : a ⊕ b ≃ n) : GL a R × GL b R →* GL n R :=
   (leviEmb R (two e)).comp (leviTwo R a b).toMonoidHom
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.val_emb₂ (e : a ⊕ b ≃ n) (g : GL a R × GL b R) :
     (_root_.GlobalTheory.SmGL.emb₂ R e g : Matrix n n R) =
@@ -512,9 +432,6 @@ theorem _root_.GlobalTheory.SmGL.val_emb₂ (e : a ⊕ b ≃ n) (g : GL a R × G
   · exact _root_.GlobalTheory.SmGL.leviEmb_apply_same R (_root_.GlobalTheory.SmGL.two e)
       (_root_.GlobalTheory.SmGL.leviTwo R a b g) true s t
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.det_emb₂ (e : a ⊕ b ≃ n) (g : GL a R × GL b R) :
     GeneralLinearGroup.det (_root_.GlobalTheory.SmGL.emb₂ R e g) =
@@ -523,9 +440,6 @@ theorem _root_.GlobalTheory.SmGL.det_emb₂ (e : a ⊕ b ≃ n) (g : GL a R × G
     Fintype.prod_bool, mul_comm]
   rfl
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.mem_parab_two {e : a ⊕ b ≃ n} {g : GL n R} :
     g ∈ _root_.GlobalTheory.SmGL.parab R (_root_.GlobalTheory.SmGL.two e) ↔
@@ -541,9 +455,6 @@ theorem _root_.GlobalTheory.SmGL.mem_parab_two {e : a ⊕ b ≃ n} {g : GL n R} 
     · exact h i j
     · exact absurd hxy (by decide)
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.mem_parabLower_two {e : a ⊕ b ≃ n} {g : GL n R} :
     g ∈ _root_.GlobalTheory.SmGL.parabLower R (_root_.GlobalTheory.SmGL.two e) ↔
@@ -579,9 +490,6 @@ def leviTorus (n : Type) : (n → Rˣ) ≃* Levi R (fun _ : n => Unit) where
     funext i
     simp
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.continuous_leviTorus [TopologicalSpace R] (n : Type) :
     Continuous (_root_.GlobalTheory.SmGL.leviTorus R n) :=
@@ -596,9 +504,6 @@ theorem _root_.GlobalTheory.SmGL.continuous_leviTorus [TopologicalSpace R] (n : 
 def diagT (n : Type) [Fintype n] [DecidableEq n] : (n → Rˣ) →* GL n R :=
   (leviEmb R (points n)).comp (leviTorus R n).toMonoidHom
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.val_diagT (t : n → Rˣ) :
     (_root_.GlobalTheory.SmGL.diagT R n t : Matrix n n R) = diagonal fun i => (t i : R) := by
@@ -620,9 +525,6 @@ def unipB (n : Type) [Fintype n] [DecidableEq n] [LinearOrder n] : Subgroup (GL 
 
 def unipBLower (n : Type) [Fintype n] [DecidableEq n] [LinearOrder n] : Subgroup (GL n R) := unipRadLower R (points n)
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.mem_borel {n : Type} [Fintype n] [DecidableEq n]
     [LinearOrder n] {g : GL n R} :
@@ -631,9 +533,6 @@ theorem _root_.GlobalTheory.SmGL.mem_borel {n : Type} [Fintype n] [DecidableEq n
   rw [_root_.GlobalTheory.SmGL.mem_parab R]
   simp [_root_.GlobalTheory.SmGL.points, _root_.GlobalTheory.SmGL.blk]
 
-open Matrix in
-variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.mem_unipB {n : Type} [Fintype n] [DecidableEq n]
     [LinearOrder n] {g : GL n R} :

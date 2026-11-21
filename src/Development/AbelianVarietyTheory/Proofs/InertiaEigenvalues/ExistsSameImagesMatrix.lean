@@ -94,8 +94,6 @@ private lemma exists_matrix_vecMul_span_eq_of_smul_mem {R : Type} [CommRing R] [
   rw [Matrix.det_mul, h0, mul_zero, Matrix.det_smul, Matrix.det_one, mul_one] at this
   exact pow_ne_zero _ hc this.symm
 
-variable (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-  [Finite (IsLocalRing.ResidueField O)] [Field K] [Algebra O K] [IsFractionRing O K] (n r : ℕ) in
 
 theorem _root_.GlobalTheory.DownLift.SplitGen.exists_same_images_matrix (hr : r ≤ n) {d : O} (hd : d ≠ 0) {V I : Type}
     [AddCommGroup V] [Module ℂ V]

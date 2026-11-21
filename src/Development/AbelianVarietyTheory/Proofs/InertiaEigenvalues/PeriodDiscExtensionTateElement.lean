@@ -49,9 +49,6 @@ theorem _root_.GlobalTheory.HWL.Cmp.actS_one_tmul (b : B) (m : V ⊗[Qp] B) :
       AlgebraTensorModule.map (LinearMap.id : V →ₗ[LL] V) (LinearMap.mulLeft Qp b) m := by
   simp [_root_.GlobalTheory.HWL.Cmp.actS, _root_.GlobalTheory.HWL.Cmp.mulR]
 
-open TensorProduct in
-variable {Qp LL : Type} [Field Qp] [Field LL] [Algebra Qp LL] (V : Type) [AddCommGroup V] [Module LL V]
-  [Module Qp V] [IsScalarTower Qp LL V] (B : Type) [CommRing B] [Algebra Qp B] in
 
 theorem _root_.GlobalTheory.HWL.Cmp.map_actS {V' : Type} [AddCommGroup V'] [Module LL V'] [Module Qp V'] [IsScalarTower Qp LL V']
     {B' : Type} [CommRing B'] [Algebra Qp B'] (f : V →ₗ[LL] V') (h : B →ₐ[Qp] B') (a : LL ⊗[Qp] B)
@@ -150,15 +147,6 @@ theorem _root_.GlobalTheory.HWL.Cmp.φL_apply (L : Type) [CommRing L] (n p : ℕ
   funext k
   simp [_root_.GlobalTheory.HWL.Cmp.φL, _root_.Formalism.BasicNotions.letφ, PowerSeries.coe_substAlgHom]
 
-open TensorProduct in
-variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
-    [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]
-    {B BdR : Type} [CommRing B] [CommRing BdR] [Algebra Qp B] [Algebra K₀ B] [IsScalarTower Qp K₀ B]
-    [Algebra Qp BdR] [Algebra K₀ BdR] [Algebra K BdR] [IsScalarTower Qp K BdR]
-    [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
-    {PD : _root_.Formalism.WeaklyAdmissibleFiltrations.PeriodData G Qp K₀ K B BdR} {LL O : Type} [Field LL] [Algebra Qp LL]
-    [CommRing O] [Algebra O LL] [TopologicalSpace LL] {v : AddValuation LL (WithTop ℚ)} {n s : ℕ}
-    {Γ : _root_.GlobalTheory.HWL.WGam PD LL O v n s} in
 
 theorem _root_.GlobalTheory.HWL.Cmp.ringHom_ext_of_X {O L : Type} [CommRing O] [CommRing L] (f g : PowerSeries O →+* PowerSeries L)
     (hC : ∀ c, f (PowerSeries.C c) = g (PowerSeries.C c)) (hX : f PowerSeries.X = g PowerSeries.X)

@@ -226,11 +226,7 @@ variable (ψ : AddChar k Circle) (m : Measure k) [m.IsAddHaarMeasure] (μ : kˣ 
 variable {ρ v τ w W : Type} [Fintype ρ] [DecidableEq ρ] [Fintype v] [DecidableEq v]
   [Fintype τ] [DecidableEq τ] [Fintype w] [DecidableEq w] [Fintype W] [DecidableEq W]
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k]
-  [Fintype ρ] [DecidableEq ρ] [Fintype v] [DecidableEq v] [DecidableEq τ] [DecidableEq w] in
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k]
-  [DecidableEq ρ] [Fintype v] [DecidableEq v] [Fintype τ] [DecidableEq τ] [Fintype w] [DecidableEq w] in
 
 end Main
 

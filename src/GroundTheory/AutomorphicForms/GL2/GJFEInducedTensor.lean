@@ -64,8 +64,6 @@ def tensorConst (g : Fin n × Fin n → F → ℂ) : ℂ :=
     LocalField.localFourier (LocalField.selfDualMeasure ψ) ψ (g s.1) 0) *
       ∏ ij : Fin n × Fin n, if β ij.2 < β ij.1 then g ij 0 else 1
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [MeasurableSpace F]
-  [BorelSpace F] in
 
 theorem prod_not_unip_eq {X : Matrix (Fin n) (Fin n) F} (hX : ∀ i j, β i ≠ β j → X i j = 0)
     (g : Fin n × Fin n → F → ℂ) :
@@ -125,8 +123,6 @@ theorem localMatrixFourier_matrixTensor_eq (g : Fin n × Fin n → F → ℂ) :
   rw [localMatrixFourier_matrixTensor, matrixTensor]
   exact Fintype.prod_equiv (Equiv.prodComm _ _) _ _ fun ij => rfl
 
-omit [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
-  [MeasurableSpace F] [BorelSpace F] in
 
 theorem leviTensor_swap_eq (h : Fin n × Fin n → F → ℂ) (Y : Matrix (Fin n) (Fin n) F) :
     leviTensor β (fun s => h s.1.swap) Y = ∏ s : LeviIndex n β, h s.1 (Y s.1.2 s.1.1) := by

@@ -17,8 +17,6 @@ open scoped NNReal
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   [MeasurableSpace F] [BorelSpace F] {n : ℕ} {α : Type*} [LinearOrder α] {β : Fin n → α}
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [MeasurableSpace F]
-  [BorelSpace F] in
 
 theorem det_eq_prod_of_apply {ι : Type*} [Fintype ι] [DecidableEq ι]
     (L : (ι → F) ≃ₗ[F] (ι → F)) (c : ι → F) (h : ∀ x s, L x s = c s * x s) :
@@ -138,8 +136,6 @@ theorem prod_subtype_eq_ite {M : Type*} [CommMonoid M] (P : Fin n × Fin n → P
   rw [← Finset.prod_filter]
   exact (Finset.prod_subtype (Finset.univ.filter P) (by simp) g).symm
 
-omit [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
-  [MeasurableSpace F] [BorelSpace F] in
 
 theorem prod_identity (t : Fin n → ℝ≥0) (ht : ∀ i, t i ≠ 0) :
     ((∏ s : LeviIndex n β, t s.1.1) / ∏ s : ParabolicIndex n β, t s.1.1) ^ 2 *

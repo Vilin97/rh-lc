@@ -28,11 +28,6 @@ section Grp
 variable {S S' : Scheme.{0}} {f : S' ⟶ S} {B G : Over S} {B' G' : Over S'}
   {β : B'.left ⟶ B.left} {π : G'.left ⟶ G.left}
 
-set_option autoImplicit false in
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj in
-variable {S S' : Scheme.{0}} {f : S' ⟶ S} {B G : Over S} {B' G' : Over S'}
-  {β : B'.left ⟶ B.left} {π : G'.left ⟶ G.left} in
 
 theorem _root_.GlobalTheory.PureType.exists_hom_over (hβ : β ≫ B.hom = B'.hom ≫ f)
     (hπ : IsPullback π G'.hom G.hom f) (φ : B ⟶ G) :
@@ -41,11 +36,6 @@ theorem _root_.GlobalTheory.PureType.exists_hom_over (hβ : β ≫ B.hom = B'.ho
   · rw [Category.assoc, Over.w φ, hβ]
   · exact hπ.lift_fst _ _ _
 
-set_option autoImplicit false in
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj in
-variable {S S' : Scheme.{0}} {f : S' ⟶ S} {B G : Over S} {B' G' : Over S'}
-  {β : B'.left ⟶ B.left} {π : G'.left ⟶ G.left} in
 
 theorem _root_.GlobalTheory.PureType.eq_of_comp_eq (hπ : IsPullback π G'.hom G.hom f) {T : Over S'}
     {x y : T ⟶ G'} (h : x.left ≫ π = y.left ≫ π) : x = y :=
@@ -53,11 +43,6 @@ theorem _root_.GlobalTheory.PureType.eq_of_comp_eq (hπ : IsPullback π G'.hom G
 
 variable [GrpObj B] [GrpObj G] [GrpObj B'] [GrpObj G']
 
-set_option autoImplicit false in
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open scoped CategoryTheory.Obj in
-variable {S S' : Scheme.{0}} {f : S' ⟶ S} {B G : Over S} {B' G' : Over S'}
-  {β : B'.left ⟶ B.left} {π : G'.left ⟶ G.left} in
 
 theorem _root_.GlobalTheory.PureType.isMonHom_over (hβ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsGrpPullback B' B f β) (hπ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsGrpPullback G' G f π) {φ : B ⟶ G}
     [IsMonHom φ] {φ' : B' ⟶ G'} (h : φ'.left ≫ π = β ≫ φ.left) : IsMonHom φ' := by

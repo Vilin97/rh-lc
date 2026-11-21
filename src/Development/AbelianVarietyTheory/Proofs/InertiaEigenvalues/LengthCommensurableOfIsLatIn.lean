@@ -14,8 +14,6 @@ open Formalism.MainNotions.IntegralHeckeForms
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   {W : Type} [AddCommGroup W] [Module O W]
 
-variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-  {W : Type} [AddCommGroup W] [Module O W] in
 
 theorem _root_.GlobalTheory.relLength_ne_top_of_isLatIn {V A B : Submodule O W} (hA : _root_.Formalism.MainNotions.IntegralHeckeForms.IsLatIn A V)
     (hB : _root_.Formalism.MainNotions.IntegralHeckeForms.IsLatIn B V) : _root_.GlobalTheory.relLength A B ≠ ⊤ := by
@@ -32,16 +30,12 @@ theorem _root_.GlobalTheory.relLength_ne_top_of_isLatIn {V A B : Submodule O W} 
     rw [Submonoid.smul_def, ← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero]
     exact hcB
 
-variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-  {W : Type} [AddCommGroup W] [Module O W] in
 
 theorem _root_.GlobalTheory.lengthCommensurable_of_isLatIn {V A B : Submodule O W} (hA : _root_.Formalism.MainNotions.IntegralHeckeForms.IsLatIn A V)
     (hB : _root_.Formalism.MainNotions.IntegralHeckeForms.IsLatIn B V) : _root_.GlobalTheory.LengthCommensurable A B :=
   ⟨_root_.GlobalTheory.relLength_ne_top_of_isLatIn hA hB,
     _root_.GlobalTheory.relLength_ne_top_of_isLatIn hB hA⟩
 
-variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-  {W : Type} [AddCommGroup W] [Module O W] in
 
 theorem _root_.GlobalTheory.sIdx_eq_signedLength_div (l : ℕ) (A B : Submodule O W) :
     _root_.Formalism.MainNotions.IntegralHeckeForms.sIdx l A B = (_root_.GlobalTheory.signedLength A B : ℝ) /
@@ -52,8 +46,6 @@ theorem _root_.GlobalTheory.sIdx_eq_signedLength_div (l : ℕ) (A B : Submodule 
   push_cast
   rw [sub_div]
 
-variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-  {W : Type} [AddCommGroup W] [Module O W] in
 
 theorem _root_.GlobalTheory.sIdx_add_and_mono :
     ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (W : Type)

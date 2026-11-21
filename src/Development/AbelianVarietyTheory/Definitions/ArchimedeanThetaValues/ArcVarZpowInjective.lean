@@ -27,10 +27,6 @@ private lemma exists_pos_nat_mul_eq_int {Idx : Type} [Fintype Idx] (q : Idx → 
   rw [← Rat.mul_den_eq_num (q i)]
   ring
 
-open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
-open Matrix in
-variable {K : Type} [CommRing K] [IsDomain K] {X : Type} [AddCommGroup X] [Module.Free ℤ X]
-  [Module.Finite ℤ X] in
 
 theorem _root_.GlobalTheory.ToricData.finite_form_le (be : LinearMap.BilinForm ℤ X) (hs : ∀ y z, be y z = be z y)
     (hp : ∀ y, y ≠ 0 → 0 < be y y) (C : ℤ) : {y | be y y ≤ C}.Finite := by

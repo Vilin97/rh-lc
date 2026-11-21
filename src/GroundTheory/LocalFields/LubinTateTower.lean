@@ -31,8 +31,6 @@ def lubinTateField (hπ : Irreducible π) (hf : IsLubinTateSeries π f) (n : ℕ
   adjoin K (IdealPoint.val ''
     (lubinTateTorsion Ω hf n : Set (IdealPoint Ω (lubinTateFormalGroup hπ hf))))
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
-  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 
 theorem finiteDimensional_adjoin_simple (x : Ω) : FiniteDimensional K K⟮x⟯ :=
   adjoin.finiteDimensional (Algebra.IsAlgebraic.isAlgebraic x).isIntegral
@@ -126,9 +124,6 @@ theorem exists_lubinTateField_eq_adjoin_eisenstein (hf : IsLubinTateSeries π f)
   rw [hann, Ideal.mem_span_singleton, pow_dvd_pow_iff hπ.ne_zero hπ.not_isUnit] at h1
   omega
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
-  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω]
-  [IsSepClosed Ω] in
 
 theorem adjoin_simple_eq_top_of_eq {E : IntermediateField K Ω} {a : Ω} (hE : E = K⟮a⟯) :
     K⟮(⟨a, hE ▸ mem_adjoin_simple_self K a⟩ : E)⟯ = ⊤ := by

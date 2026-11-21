@@ -50,8 +50,6 @@ theorem finrank_eq_one_of_bijective (hK : Function.Bijective (algebraMap K K')) 
   (AlgEquiv.ofBijective (Algebra.ofId K K') hK).toLinearEquiv.finrank_eq.symm.trans
     (Module.finrank_self K)
 
-omit [Algebra K L] [Algebra K L'] [Algebra K' L'] [Algebra L L'] [IsScalarTower K K' L']
-  [IsScalarTower K L L'] in
 
 theorem ideleNorm_ideleEmbedding_of_bijective (hK : Function.Bijective (algebraMap K K'))
     (x : IdeleGroup K) : ideleNorm K K' (ideleEmbedding K K' x) = x := by

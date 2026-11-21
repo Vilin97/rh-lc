@@ -16,8 +16,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
   [MeasurableSpace G] [BorelSpace G]
 
-omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] [MeasurableSpace G]
-  [BorelSpace G] in
 
 theorem smooth_of_mem_fixedVectors {V : Type*} [AddCommGroup V] [Module ℂ V]
     {ρ : Representation ℂ G V} {K : Subgroup G} (hKo : IsOpen (K : Set G)) {v : V}

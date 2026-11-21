@@ -28,8 +28,6 @@ theorem isNonarchimedeanLocalField_fixedField (V : OpenSubgroup Gal(Ksep/K)) :
   rw [← hrel] at h1
   exact h1
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ksep]
-  [ValuativeExtension K Ksep] in
 
 theorem valuation_le_valuation_iff_coe (E : IntermediateField K Ksep) (x y : E) :
     valuation E x ≤ valuation E y ↔ valuation Ksep (x : Ksep) ≤ valuation Ksep (y : Ksep) := by

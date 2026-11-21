@@ -55,8 +55,6 @@ variable (X : TopRep.{u} k G) [DiscreteTopology X] [IsDiscreteRep (underlyingRep
 
 
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G] [DiscreteTopology X]
-  [IsDiscreteRep (underlyingRep X)] in
 
 
 

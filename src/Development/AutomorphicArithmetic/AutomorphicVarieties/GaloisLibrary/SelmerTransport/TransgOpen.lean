@@ -343,8 +343,6 @@ theorem length_restriction_coker_le_H2 (ρ : Representation R G M) (hρ : ContAc
     exact (Submodule.Quotient.mk_eq_zero _ (x := (⟨_, h1⟩ : invariantsUnderSubgroupH1 ρ U U'))).mpr hm
   exact len_le_of_ker_le f g hfs hker
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [TopologicalSpace M] [IsTopologicalAddGroup M]
-  [ContinuousConstSMul R M] [DiscreteTopology M] in
 
 theorem length_H0_quotient_rep_le (ρ : Representation R G M) (U' U : Subgroup G) [(U'.subgroupOf U).Normal] :
     Module.length R (H0 (quotRep ρ U U')) ≤ Module.length R (H0U ρ U) := by

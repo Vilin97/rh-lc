@@ -403,10 +403,6 @@ section Quotient
 variable (B : Type u) [CommRing B] [IsLocalRing B] (I : Ideal B) [HenselianRing B I]
   (s : Spec (.of B) ⟶ S)
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IsLocalRing in
-variable {X S : Scheme.{u}} (f : X ⟶ S) in
-variable (B : Type u) [CommRing B] [IsLocalRing B] (I : Ideal B) [HenselianRing B I]
-  (s : Spec (.of B) ⟶ S) in
 
 theorem _root_.GlobalTheory.reducePoint_quotient_surjective [Smooth f] :
     Function.Surjective (_root_.GlobalTheory.reducePoint f (CommRingCat.ofHom (Ideal.Quotient.mk I)) s) := by

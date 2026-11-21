@@ -145,8 +145,6 @@ theorem continuous_flip {j : k' →+* k} (hj : Continuous j) : Continuous (flip 
   Units.continuous_iff.2 ⟨continuous_matrix fun a b => hj.comp (Units.continuous_coe_inv.matrix_elem b.rev a.rev),
     continuous_matrix fun a b => hj.comp (Units.continuous_val.matrix_elem b.rev a.rev)⟩
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] [ValuativeRel k'] [IsNonarchimedeanLocalField k']
-  [TopologicalSpace k] [TopologicalSpace k'] in
 
 theorem flip_surjective {j : k' →+* k} (hj : Function.Surjective j) : Function.Surjective (flip j n) := fun g => by
   let e := RingEquiv.ofBijective j ⟨j.injective, hj⟩

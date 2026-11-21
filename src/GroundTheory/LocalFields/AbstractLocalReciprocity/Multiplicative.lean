@@ -71,8 +71,6 @@ theorem valuation_norm_prime (s : D.FrobeniusLift K)
 
 section DegOne
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]
-  [((L : Subgroup G).subgroupOf K).Normal] in
 
 theorem smul_prod_pow_div (φ : G) (y : A) (n : ℕ) :
     φ • (∏ ν : Fin n, φ ^ (ν : ℕ) • y) / ∏ ν : Fin n, φ ^ (ν : ℕ) • y = φ ^ n • y / y := by

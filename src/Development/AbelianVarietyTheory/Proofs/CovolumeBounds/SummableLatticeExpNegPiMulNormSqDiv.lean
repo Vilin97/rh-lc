@@ -64,8 +64,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDim
   {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
   (L : Submodule ℤ E) [DiscreteTopology L] [IsZLattice ℝ L]
 
-omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]
-  [NormedSpace ℂ V] [DiscreteTopology L] [IsZLattice ℝ L] in
 
 theorem continuous_tsum_lattice_translate [CompleteSpace V] {f : E → V} (hc : Continuous f)
     (hdom : ∀ R : ℝ, ∃ g : L → ℝ, Summable g ∧ ∀ (x : L) (u : E), ‖u‖ ≤ R → ‖f (x + u)‖ ≤ g x) :
@@ -77,8 +75,6 @@ theorem continuous_tsum_lattice_translate [CompleteSpace V] {f : E → V} (hc : 
       fun x v hv ↦ h x v (mem_ball_zero_iff.1 hv).le
   exact this.continuousAt (Metric.isOpen_ball.mem_nhds (by simp))
 
-omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]
-  [NormedSpace ℂ V] [DiscreteTopology L] [IsZLattice ℝ L] in
 
 theorem periodic_tsum_lattice_translate (f : E → V) {z : E} (hz : z ∈ L) :
     Function.Periodic (fun u : E ↦ ∑' x : L, f (x + u)) z := fun u ↦ by

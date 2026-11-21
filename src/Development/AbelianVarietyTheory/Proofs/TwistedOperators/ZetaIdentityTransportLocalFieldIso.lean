@@ -78,13 +78,9 @@ theorem shellSet_subset {ϖ ϖ' : kˣ} (h : IsUnif ϖ) (h' : IsUnif ϖ') (m : n 
 def glEquiv (j : k ≃+* k') (n : Type) [Fintype n] [DecidableEq n] : GL n k ≃* GL n k' :=
   Units.mapEquiv (j.mapMatrix (m := n)).toMulEquiv
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [ValuativeRel k'] [TopologicalSpace k']
-  [IsNonarchimedeanLocalField k'] in
 
 theorem glEquiv_val (g : GL n k) : (glEquiv j n g).val = g.val.map j := rfl
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [ValuativeRel k'] [TopologicalSpace k']
-  [IsNonarchimedeanLocalField k'] in
 
 theorem gdet_glEquiv (g : GL n k) : gdet (glEquiv j n g) = Units.map (j : k →* k') (gdet g) :=
   Units.ext ((j : k →+* k').map_det g.val).symm

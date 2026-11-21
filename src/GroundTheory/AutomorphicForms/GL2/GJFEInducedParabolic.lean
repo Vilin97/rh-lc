@@ -67,8 +67,6 @@ theorem leviIntegrand_shift (Ψ : Matrix (Fin n) (Fin n) F → ℂ) (w : W) (ℓ
   push_cast
   ring
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [MeasurableSpace F]
-  [BorelSpace F] in
 
 theorem monoidHom_ne_zero {G : Type*} [Group G] (χ : G →* ℝ≥0) (g : G) : χ g ≠ 0 :=
   left_ne_zero_of_mul_eq_one (map_mul_eq_one χ (mul_inv_cancel g))

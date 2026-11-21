@@ -224,14 +224,8 @@ def mulEquivHomeo (α : G ≃* G) (hα : Continuous α) (hα' : Continuous α.sy
   continuous_toFun := hα
   continuous_invFun := hα'
 
-omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
-  [MeasurableSpace G] [BorelSpace G] in
 
-omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
-  [MeasurableSpace G] [BorelSpace G] in
 
-omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
-  [MeasurableSpace G] [BorelSpace G] in
 
 theorem isAdmissible_comp (α : G ≃* G) (hα : Continuous α) (hα' : Continuous α.symm)
     (hρ : IsAdmissible ρ) : IsAdmissible (ρ.comp α.toMonoidHom) := by

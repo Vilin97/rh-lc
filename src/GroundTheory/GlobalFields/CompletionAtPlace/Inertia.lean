@@ -72,9 +72,6 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 def arithFrobAtDecomposition : MulAction.stabilizer Gal(L/K) w.asIdeal :=
   ⟨arithFrobAt (𝓞 K) Gal(L/K) w.asIdeal, IsArithFrobAt.arithFrobAt_mem_stabilizer (𝓞 K) Gal(L/K) w.asIdeal⟩
 
-omit [NumberField L] [IsGalois K L] [Algebra (v.adicCompletion K) (w.adicCompletion L)]
-  [ContinuousSMul (v.adicCompletion K) (w.adicCompletion L)]
-  [IsScalarTower K (v.adicCompletion K) (w.adicCompletion L)] in
 
 theorem natCard_residueField_eq_under :
     Nat.card 𝓀[v.adicCompletion K] = Nat.card (𝓞 K ⧸ w.asIdeal.under (𝓞 K)) := by
@@ -118,9 +115,6 @@ theorem isArithFrobAt_iff_decompositionToLocal (σ : MulAction.stabilizer Gal(L/
     rwa [integerAlgEquiv_ringOfIntegersToInteger, ← map_pow, ← map_sub,
       ringOfIntegersToInteger_mem_maximalIdeal_iff] at this
 
-omit [Algebra (v.adicCompletion K) (w.adicCompletion L)]
-  [ContinuousSMul (v.adicCompletion K) (w.adicCompletion L)]
-  [IsScalarTower K (v.adicCompletion K) (w.adicCompletion L)] in
 
 theorem natCard_inertia :
     Nat.card (w.asIdeal.inertia Gal(L/K)) = w.asIdeal.ramificationIdx (𝓞 K) := by

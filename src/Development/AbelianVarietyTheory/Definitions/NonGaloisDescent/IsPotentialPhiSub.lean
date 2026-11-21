@@ -21,8 +21,6 @@ variable {l : ℕ} [hl : Fact l.Prime] {a : ℕ} [NeZero a] {e : ℕ} [NeZero e]
   {ι : Type} [Fintype ι] [DecidableEq ι]
   {G : Type} [Group G] [TopologicalSpace G]
 
-omit [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem xi_unit (d : (unitMod l a e O K ι).D) : (unitMod l a e O K ι).xi d = cst d :=
   (PhiMod.xi_unique _ (s := fun d => cst d) red_cst (fun d => by
@@ -32,14 +30,10 @@ theorem xi_unit (d : (unitMod l a e O K ι).D) : (unitMod l a e O K ι).xi d = c
     rw [cst_apply, PhiMod.phiD_apply, PhiMod.mx0, mx_unitMod, Matrix.map_one _ (map_zero _) (map_one _), Matrix.one_mulVec]
     simp [PhiMod.phiD_apply, PhiMod.mx0, mx_unitMod, frob_C]) d).symm
 
-omit [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem nabla_bas (i : ι) : (unitMod l a e O K ι).nabla (bas i) = 0 := by
   rw [← cst_single, ← xi_unit (O := O) (l := l) (e := e), PhiMod.nabla_xi]
 
-omit [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem phi_bas_unit (i : ι) : (unitMod l a e O K ι).phi (bas i) = bas i := by
   ext1 τ
@@ -138,8 +132,6 @@ theorem galOB_iB_const {h : GQ l} (hh : h ∈ GK (ϖ.field a)) (f : ZMod a → i
 def coordEq (R : Type) [CommRing R] [Algebra O R] (T : LocLat G ℚ_[l] K O) (b : Module.Basis ι O ↥T.L.T) :
     (ι → R) ≃ₗ[R] TW R T := (b.baseChange R).equivFun.symm
 
-omit [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K]
-  [DecidableEq ι] in
 
 theorem coordEq_apply (R : Type) [CommRing R] [Algebra O R] (T : LocLat G ℚ_[l] K O)
     (b : Module.Basis ι O ↥T.L.T) (v : ι → R) : coordEq R T b v = ∑ i, v i ⊗ₜ[O] b i := by

@@ -39,8 +39,6 @@ def transportLocalMor (i : ι) :
     rw [← hcomm]
     exact Rep.hom_comm_apply f (φ i h) a⟩
 
-omit [IsTopologicalGroup G] [IsTopologicalGroup G'] [∀ i, IsTopologicalGroup (H i)]
-  [∀ j, IsTopologicalGroup (H' j)] [IsDiscreteRep A'] [IsDiscreteRep A] in
 
 abbrev transportGlobal : cochainsComplex A' ⟶ cochainsComplex A :=
   cochainsMapAlong θ.toMulEquiv.toMonoidHom (continuous_mulEquiv_toMonoidHom θ) f
@@ -201,9 +199,6 @@ variable {A' B' C' : Rep.{u} k G'} [IsDiscreteRep A'] [IsDiscreteRep B'] [IsDisc
   (hμ : (Rep.resFunctor θ.toMulEquiv.toMonoidHom).map μ' ≫ fC =
     resTensorHom θ.toMulEquiv.toMonoidHom fA fB ≫ μ)
 
-omit [IsTopologicalGroup G] [IsTopologicalGroup G'] [∀ i, IsTopologicalGroup (H i)]
-  [∀ j, IsTopologicalGroup (H' j)] [IsDiscreteRep A'] [IsDiscreteRep B'] [IsDiscreteRep C']
-  [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRep C] in
 
 theorem transportLocalMor_pairing (i : ι) :
     (Rep.resFunctor (ψ i).toMulEquiv.toMonoidHom).map ((Rep.resFunctor (φ' (e i)).toMonoidHom).map μ') ≫

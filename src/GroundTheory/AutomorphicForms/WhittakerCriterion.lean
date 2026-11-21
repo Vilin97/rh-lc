@@ -684,8 +684,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   {V : Type*} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V}
   {σ : G ≃ₜ G} {H : Subgroup G} {χ : H → ℂ}
 
-omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
-  [TopologicalSpace.SeparableSpace G] [MeasurableSpace G] [BorelSpace G] in
 
 theorem rank_le_one_of_ne_bot (hσ : ∀ x y, σ (x * y) = σ y * σ x) (hσμ : μ.map σ = μ)
     (hGK : BiEquivariantSigmaInvariant H χ σ) (h : IsAdmissible ρ) [ρ.IsIrreducible]

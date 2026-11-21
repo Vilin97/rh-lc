@@ -135,9 +135,6 @@ theorem rho_eq_of_inv_mul_mem (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.
   have e : h₂ = h₁ * (h₁⁻¹ * h₂) := by group
   rw [e, map_mul, Module.End.mul_apply, hfix (h₁⁻¹ * h₂) (by simpa using h)]
 
-variable (H V) in
-omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]
-  hVn in
 
 noncomputable def summandFun (a : A) (x : G) : A :=
   if hx : x ∈ H ⊔ V then A.ρ (supSection H V ⟨x, hx⟩) a else 0

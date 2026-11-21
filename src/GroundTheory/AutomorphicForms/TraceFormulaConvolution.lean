@@ -74,8 +74,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   [T2Space G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G]
   (Γ : Subgroup G) [DiscreteTopology Γ]
 
-omit [IsTopologicalGroup G] [LocallyCompactSpace G] [SecondCountableTopology G] [MeasurableSpace G]
-  [BorelSpace G] in
 
 theorem finite_setOf_mem_of_isCompact [IsTopologicalGroup G] {C : Set G} (hC : IsCompact C) :
     {δ : Γ | (δ : G) ∈ C}.Finite := by

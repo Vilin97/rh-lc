@@ -80,8 +80,6 @@ theorem integral_inv_of_support (K : Subgroup G) (hc : IsCompact (K : Set G)) (h
 
 variable {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G] [SecondCountableTopology G] [MeasurableSpace G]
-  [BorelSpace G] in
 
 theorem inner_rep (π : G → (H →L[ℂ] H)) (h1 : π 1 = 1) (hm : ∀ a b, π (a * b) = π a * π b)
     (hn : ∀ g v, ‖π g v‖ = ‖v‖) (g : G) (x y : H) : ⟪x, π g y⟫_ℂ = ⟪π g⁻¹ x, y⟫_ℂ := by

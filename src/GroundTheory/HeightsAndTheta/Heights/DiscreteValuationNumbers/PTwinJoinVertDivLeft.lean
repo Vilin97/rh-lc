@@ -31,8 +31,6 @@ theorem assocBlock_injective :
 variable [Fintype K] [Fintype K'] [Fintype K₂] [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
   [∀ k, Fintype (ι₂ k)]
 
-omit [Fintype K] [Fintype K'] [Fintype K₂] [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
-  [∀ k, Fintype (ι₂ k)] in
 
 theorem mcMap_rename_assocVar (R : Type) [CommRing R] {Ω : Type} [Field Ω] [Algebra R Ω]
     (x : (Σ k, ι k) → Ω) (z : (Σ k, ι' k) → Ω) (w : (Σ k, ι₂ k) → Ω)
@@ -47,8 +45,6 @@ theorem mcMap_rename_assocVar (R : Type) [CommRing R] {Ω : Type} [Field Ω] [Al
     congr 1
     simp [mcMap, joinCoord_assocVar, assocVar_fst]
 
-omit [Fintype K] [Fintype K'] [Fintype K₂] [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
-  [∀ k, Fintype (ι₂ k)] in
 
 theorem rename_assocVar_mem_mcIdeal_iff (R : Type) [CommRing R] {Ω : Type} [Field Ω] [Algebra R Ω]
     (x : (Σ k, ι k) → Ω) (z : (Σ k, ι' k) → Ω) (w : (Σ k, ι₂ k) → Ω)
@@ -58,8 +54,6 @@ theorem rename_assocVar_mem_mcIdeal_iff (R : Type) [CommRing R] {Ω : Type} [Fie
   rw [mcMap_rename_assocVar]
   exact map_eq_zero_iff _ (rename_injective _ assocBlock_injective)
 
-omit [Fintype K] [Fintype K'] [Fintype K₂] [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
-  [∀ k, Fintype (ι₂ k)] in
 
 theorem blockWeight_assocVar [DecidableEq K] [DecidableEq K'] [DecidableEq K₂]
     (p : Σ k : K ⊕ K', Sum.elim ι ι' k) (s : K ⊕ (K' ⊕ K₂)) :
@@ -68,8 +62,6 @@ theorem blockWeight_assocVar [DecidableEq K] [DecidableEq K'] [DecidableEq K₂]
         (Sum.elim (fun k => blockWeight (Sum.elim ι ι') p (.inr k)) 0) s := by
   obtain ⟨k | k, i⟩ := p <;> rcases s with l | l | l <;> simp [blockWeight, assocVar, Pi.single_apply]
 
-omit [Fintype K] [Fintype K'] [Fintype K₂] [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
-  [∀ k, Fintype (ι₂ k)] in
 
 theorem weight_mapDomain_assocVar [DecidableEq K] [DecidableEq K'] [DecidableEq K₂]
     (d : (Σ k : K ⊕ K', Sum.elim ι ι' k) →₀ ℕ) :
@@ -82,8 +74,6 @@ theorem weight_mapDomain_assocVar [DecidableEq K] [DecidableEq K'] [DecidableEq 
   simp only [Finsupp.sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, blockWeight_assocVar]
   rcases s with l | l | l <;> simp
 
-omit [Fintype K] [Fintype K'] [Fintype K₂] [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
-  [∀ k, Fintype (ι₂ k)] in
 
 theorem isMultiHomog_rename_assocVar' [DecidableEq K] [DecidableEq K'] [DecidableEq K₂] {R : Type}
     [CommRing R] {f : MvPolynomial (Σ k : K ⊕ K', Sum.elim ι ι' k) R} {a : K ⊕ K' → ℕ}
@@ -109,8 +99,6 @@ theorem isMultiHomog_rename_assocVar {R : Type} [CommRing R]
   rw [← Objects.isMultiHomog_iff] at hf ⊢
   exact isMultiHomog_rename_assocVar' hf
 
-omit [Fintype K] [Fintype K'] [Fintype K₂] [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
-  [∀ k, Fintype (ι₂ k)] in
 
 theorem rename_weightedHomogeneousComponent [DecidableEq K] [DecidableEq K'] [DecidableEq K₂] {R : Type}
     [CommRing R] (c : K ⊕ K' → ℕ) (h : MvPolynomial (Σ k : K ⊕ K', Sum.elim ι ι' k) R) :

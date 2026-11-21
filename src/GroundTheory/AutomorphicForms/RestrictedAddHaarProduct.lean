@@ -53,7 +53,9 @@ def proj (T : Finset ι) : (Πʳ i, [G i, (C i : Set (G i))]) →+ ((i : T) → 
 theorem proj_apply (T : Finset ι) (x : Πʳ i, [G i, (C i : Set (G i))]) (i : T) : proj C T x i = x i := rfl
 
 
-def secFun (T : Finset ι) (a : (i : T) → G i) (i : ι) : G i := if h : i ∈ T then a ⟨i, h⟩ else 0
+def secFun (T : Finset ι) (a : (i : T) → G i) (i : ι) : G i := by
+  classical
+  exact if h : i ∈ T then a ⟨i, h⟩ else 0
 
 theorem secFun_of_mem {T : Finset ι} (a : (i : T) → G i) {i : ι} (h : i ∈ T) :
     secFun T a i = a ⟨i, h⟩ := by
@@ -141,7 +143,12 @@ theorem isCompact_box_inter_preimage [∀ i, IsTopologicalAddGroup (G i)] [∀ i
   have hZc : IsCompact Z := by
     rw [(RestrictedProduct.isEmbedding_coe_of_principal (R := G) (A := fun i ↦ (C i : Set (G i)))
       (S := S)).isCompact_iff, hZ, image_preimage_eq_inter_range, RestrictedProduct.range_coe_principal]
-    rw [inter_eq_left.2 fun x hx ↦ hx.2]
+    have hsubset : W ⊆ S.pi (fun i ↦ (C i : Set (G i))) := by
+      intro x hx
+      rw [hW] at hx
+      change ∀ i ∈ S, x i ∈ C i
+      exact hx.2
+    rw [inter_eq_left.2 hsubset]
     exact hWc
   have heq : (box C T : Set (Πʳ i, [G i, (C i : Set (G i))])) ∩ proj C T ⁻¹' E =
       RestrictedProduct.inclusion G (fun i ↦ (C i : Set (G i))) hS '' Z := by
@@ -265,7 +272,7 @@ theorem projMeasure_eq (hCo : ∀ i, IsOpen (C i : Set (G i))) (hCc : ∀ i, IsC
   have hc : ((projMeasure C μ T).addHaarScalarFactor (Measure.pi fun i : T ↦ ν i) : ℝ≥0∞) =
       μ {x : Πʳ i, [G i, (C i : Set (G i))] | ∀ i, x i ∈ C i} := by
     have := congrArg (fun m : Measure ((i : T) → G i) ↦ m B) h
-    simp only [Measure.smul_apply, hpi, ENNReal.smul_def, smul_eq_mul, mul_one] at this
+    simp only [smul_apply, hpi, ENNReal.smul_def, smul_eq_mul, mul_one] at this
     rw [← hproj, this]
   conv_lhs => rw [h]
   rw [← hc]

@@ -139,8 +139,6 @@ theorem psEval_add {σ : Type*} [Finite σ] (f g : MvPowerSeries σ 𝒪[K]) {x 
   have h := (hasSum_psEval' f x hx).add (hasSum_psEval' g x hx)
   exact (hasSum_psEval' (f + g) x hx).unique (by rw [psTerm_add]; exact h)
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω] [TopologicalSpace Ω]
-  [IsValuativeTopology Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] in
 
 theorem psEval_X_mul_X [TopologicalSpace Ω] (x : Fin 2 → Ω) :
     psEval (MvPowerSeries.X 0 * MvPowerSeries.X 1 : MvPowerSeries (Fin 2) 𝒪[K]) x = x 0 * x 1 := by

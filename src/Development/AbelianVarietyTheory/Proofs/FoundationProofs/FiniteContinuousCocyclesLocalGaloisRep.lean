@@ -285,9 +285,6 @@ theorem rep_apply {m : ℕ} (r : ↥Gw →* GL (Fin m) O) (g : ↥(GK Bw.Kw)) (v
     (a : Fin m) :
     Bw.rep r g v a = ∑ b, Bw.toLL ((r (Bw.e.symm g) : Matrix (Fin m) (Fin m) O) a b) * v b := rfl
 
-variable {l : ℕ} [Fact l.Prime] {E Ω : Type} [Field E] [Field Ω] [Algebra E Ω]
-  {Gw : Subgroup (Ω ≃ₐ[E] Ω)} {O : Type} [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O]
-  (Bw : _root_.Formalism.BasicNotions.LocBridge l E Ω Gw O) in
 
 theorem _root_.GlobalTheory.LocalH1Finiteness.finite_continuous_cocycles_localGaloisRep (hK : _root_.Formalism.GaloisCohomology.LocalFinitenessK) {m : ℕ}
     (r : ↥Gw →* GL (Fin m) O)

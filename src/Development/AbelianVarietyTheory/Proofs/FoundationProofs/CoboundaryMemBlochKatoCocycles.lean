@@ -234,8 +234,6 @@ theorem ker_redMap_le (L : Lattice (O := O) ρ) (hρ : ∀ x, Continuous fun g =
   rw [Submodule.map_smul''] at h
   exact Submodule.smul_mono le_rfl le_top h
 
-omit [TopologicalSpace G] [TopologicalSpace V] [IsTopologicalAddGroup V] [ContinuousConstSMul LL V]
-  [IsFractionRing O LL] in
 
 theorem h0_mod_uniformizer_le_rank (L : Lattice (O := O) ρ) {ϖ : O} (hϖ : Irreducible ϖ) :
     h0ModResidueDim L ϖ ≤ finrank O ↥L.T := by

@@ -149,10 +149,6 @@ private lemma involution_apply_eq_tensorProductMap_restrictScalars (a : _root_.G
   | tmul r e => unfold _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR; simp
   | add x y hx hy => simp [map_add (f := _), hx, hy]
 
-open scoped TensorProduct in
-open NumberField IsDedekindDomain in
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryLatticeOrthogonal.sigR_mem {a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryLatticeOrthogonal.Ev F E v}
     (ha : a ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryLatticeOrthogonal.OEv F E v) :

@@ -13,8 +13,6 @@ namespace GlobalTheory.LenUnitPow
 variable (l : ℕ) [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O]
 
-variable (l : ℕ) [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-  [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] in
 
 theorem _root_.GlobalTheory.LenUnitPow.natCast_ne_zero : (l : O) ≠ 0 := by
   intro h
@@ -30,8 +28,6 @@ theorem _root_.GlobalTheory.LenUnitPow.natCast_ne_zero : (l : O) ≠ 0 := by
     rwa [← RingHom.ker_eq_comap_bot]
   exact IsDiscreteValuationRing.not_a_field O (IsLocalRing.eq_maximalIdeal hbot).symm
 
-variable (l : ℕ) [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-  [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] in
 
 theorem _root_.GlobalTheory.LenUnitPow.natCast_not_isUnit : ¬ IsUnit (l : O) := by
   intro h

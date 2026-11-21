@@ -42,6 +42,7 @@ theorem IsShortForm.a₄_ne_zero_or_a₆_ne_zero {W : WeierstrassCurve F} [W.IsE
   simp at this
 
 
+open Classical in
 noncomputable def weberValue (W : WeierstrassCurve F) (x : F) : F :=
   if W.a₆ = 0 then g₂ W ^ 2 / W.Δ * x ^ 2
   else if W.a₄ = 0 then g₃ W / W.Δ * x ^ 3

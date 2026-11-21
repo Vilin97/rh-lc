@@ -33,8 +33,6 @@ def absUpper (u : ℝ) : Subgroup Gal(Ω/K) where
 variable {K Ω}
 
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
-  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] in
 
 variable [IsGalois K Ω]
 

@@ -60,10 +60,6 @@ def mainDatum (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (ε : 𝓀[k]ˣ) (P : Pair
 def lastKer (L : Submodule 𝒪[k] (n'' → k)) : Submodule 𝒪[k] (n'' ⊕ Fin 1 → k) :=
   L.map (inX k n'' 1) ⊔ Submodule.span 𝒪[k] {avec k n'' 1 1}
 
-open MeasureTheory ValuativeRel Matrix IsLocalRing in
-open scoped Pointwise in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-  {n n' n'' : Type} [Fintype n] [Fintype n'] [Fintype n''] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.mem_lastKer {L : Submodule 𝒪[k] (n'' → k)} {y : n'' ⊕ Fin 1 → k} :
     y ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer L ↔ y ∘ Sum.inl ∈ L ∧ y (Sum.inr 0) ∈ 𝒪[k] := by
@@ -89,10 +85,6 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.mem_la
     · fin_cases i
       simp [_root_.GlobalTheory.LatPair.inX, _root_.GlobalTheory.LatPair.avec, Subring.smul_def]
 
-open MeasureTheory ValuativeRel Matrix IsLocalRing in
-open scoped Pointwise in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-  {n n' n'' : Type} [Fintype n] [Fintype n'] [Fintype n''] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer_eq (q : _root_.GlobalTheory.LatPair.Unif k)
     (L : Submodule 𝒪[k] (n'' → k)) :
@@ -107,10 +99,6 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKe
   · rintro ⟨s, h1, h2⟩
     exact ⟨by simpa using h1, (h2 0).1 (by norm_num)⟩
 
-open MeasureTheory ValuativeRel Matrix IsLocalRing in
-open scoped Pointwise in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-  {n n' n'' : Type} [Fintype n] [Fintype n'] [Fintype n''] in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.isGlue_last (q : _root_.GlobalTheory.LatPair.Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsLattice k] :
     _root_.GlobalTheory.LatPair.IsGlue (_root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer L) (q.inv • _root_.GlobalTheory.LatPair.avec k n'' 1 1) := by

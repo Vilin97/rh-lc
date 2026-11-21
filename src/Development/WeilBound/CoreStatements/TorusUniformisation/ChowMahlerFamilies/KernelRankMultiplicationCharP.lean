@@ -675,5 +675,3 @@ end
 
 end PositivityTheory.Xgn.JetKernelRank
 
-open PositivityTheory.Xgn.JetKernelRank Formalism.L2.Pj Formalism.MainNotions.ModuliIntegralCharts.H1.GermD ReciprocityTheory.ChartRestriction.G.DVR TensorProduct
-  Algebra.TensorProduct TrivSqZeroExt in

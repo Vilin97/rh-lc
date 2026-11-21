@@ -69,7 +69,5 @@ theorem map_le_jacobson {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R
 
 end ThickeningDivisible
 
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R Cartier EffCartierData ThickeningDetermines
-  ThickeningDivisible in
 
 end GlobalTheory

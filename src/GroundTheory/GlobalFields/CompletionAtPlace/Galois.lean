@@ -242,9 +242,6 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
   [ContinuousSMul (v.adicCompletion K) (w.adicCompletion L)]
   [IsScalarTower K (v.adicCompletion K) (w.adicCompletion L)]
 
-omit [Algebra (v.adicCompletion K) (w.adicCompletion L)]
-  [ContinuousSMul (v.adicCompletion K) (w.adicCompletion L)]
-  [IsScalarTower K (v.adicCompletion K) (w.adicCompletion L)] in
 
 theorem card_decompositionGroup :
     Nat.card (MulAction.stabilizer Gal(L/K) w.asIdeal) =

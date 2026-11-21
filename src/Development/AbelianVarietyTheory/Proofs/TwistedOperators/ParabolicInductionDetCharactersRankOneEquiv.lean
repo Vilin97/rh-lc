@@ -25,8 +25,6 @@ theorem det_eq_one_of_ne (g : (Σ i, c i) ≃ Unit) {a : α} (ha : a ≠ (g.symm
   ext
   simp
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α]
-  [∀ i, Fintype (c i)] [∀ i, DecidableEq (c i)] in
 
 theorem mem_parab_unit (g : (Σ i, c i) ≃ Unit) (x : GL Unit k) : x ∈ parab k g :=
   mem_parab.2 fun _ _ h => absurd h (lt_irrefl _)

@@ -101,19 +101,19 @@ namespace GlobalTheory.Col
 variable {R : Type} [CommRing R]
 
 theorem FrobLift.witt (p : ℕ) [hp : Fact p.Prime] (k : Type) [Field k] [CharP k p] [PerfectRing k p] :
-    FrobLift (WittVector p k) p (WittVector.frobeniusEquiv p k) where
-  dom := inferInstance
-  prime := (WittVector.irreducible p).prime
-  complete := WittVector.isAdicCompleteIdealSpanP
-  frob := by
-    intro x
+    FrobLift (WittVector p k) p (WittVector.frobeniusEquiv p k) := by
+  refine { dom := inferInstance
+           prime := (WittVector.irreducible p).prime
+           complete := WittVector.isAdicCompleteIdealSpanP
+           frob := ?_
+           perfect := ?_ }
+  · intro x
     rw [WittVector.mem_span_p_iff_coeff_zero_eq_zero]
     have : WittVector.constantCoeff (WittVector.frobeniusEquiv p k x - x ^ p) = 0 := by
       rw [map_sub, map_pow]
       simp [WittVector.constantCoeff_apply, WittVector.coeff_frobenius_charP]
     exact this
-  perfect := by
-    intro x
+  · intro x
     refine ⟨(WittVector.frobeniusEquiv p k).symm x, ?_⟩
     rw [WittVector.mem_span_p_iff_coeff_zero_eq_zero]
     have : WittVector.constantCoeff (((WittVector.frobeniusEquiv p k).symm x) ^ p - x) = 0 := by

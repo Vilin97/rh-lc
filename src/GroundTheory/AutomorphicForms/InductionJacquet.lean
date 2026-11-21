@@ -17,8 +17,6 @@ variable {N : Type*} [Group N] [TopologicalSpace N] [IsTopologicalGroup N]
   [LocallyCompactSpace N] [T2Space N] [TotallyDisconnectedSpace N]
   {V : Type*} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ N V)
 
-omit [TopologicalSpace N] [IsTopologicalGroup N] [LocallyCompactSpace N] [T2Space N]
-  [TotallyDisconnectedSpace N] in
 
 theorem coinvariantsKer_le_ker (K : Subgroup N) :
     coinvariantsKer ρ K ≤ Representation.Coinvariants.ker ρ := by

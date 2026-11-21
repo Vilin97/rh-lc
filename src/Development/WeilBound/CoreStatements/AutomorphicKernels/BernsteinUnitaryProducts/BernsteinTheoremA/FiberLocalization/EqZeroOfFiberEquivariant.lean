@@ -68,8 +68,6 @@ variable [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X]
 variable {Y : Type*} [TopologicalSpace Y] [T2Space Y] [LocallyCompactSpace Y]
   [TotallyDisconnectedSpace Y]
 
-omit [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X] [T2Space Y]
-  [LocallyCompactSpace Y] in
 
 end FiberSubspace
 

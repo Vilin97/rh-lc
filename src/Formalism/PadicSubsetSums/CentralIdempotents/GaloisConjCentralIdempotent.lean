@@ -147,6 +147,7 @@ def rootsBar (f : K[X]) : Multiset (AlgebraicClosure K) :=
   (f.map (algebraMap K (AlgebraicClosure K))).roots
 
 
+variable {K} in
 def HasCuspLabel (C : LabelConv K) {ι : Type} [Fintype ι] [DecidableEq ι] (τ : FDRep ℂ (GL ι K))
     (P : K[X]) : Prop :=
   P.Monic ∧ Irreducible P ∧ P ≠ X ∧ P.natDegree = Fintype.card ι ∧

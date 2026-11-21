@@ -389,11 +389,6 @@ private theorem frameNorm_toMatrix_map_mul_eq_of_isFrame {Nm : (K →+* ℂ) →
   have n2 : 0 ≤ _root_.GlobalTheory.ChowHt.frameNorm (A σ) z := by unfold _root_.GlobalTheory.ChowHt.frameNorm; positivity
   exact (sq_eq_sq₀ n1 n2).1 hsq'
 
-set_option autoImplicit false in
-open MvPolynomial NumberField Module in
-open scoped Matrix in
-variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
-  [IsScalarTower (𝓞 K) K V] {N : ℕ} in
 
 theorem _root_.GlobalTheory.ImageHeightUnique.formHeight_linSubst {Nm : (K →+* ℂ) → V → ℝ} {L : Submodule (𝓞 K) V} {n n' B : ℕ} {b b' : Basis (Fin N) K V}
     {w : Matrix (Fin N) (Fin n) K} {w' : Matrix (Fin N) (Fin n') K} {A A' : (K →+* ℂ) → Matrix (Fin N) (Fin N) ℂ}
@@ -435,11 +430,6 @@ theorem _root_.GlobalTheory.ImageHeightUnique.formHeight_linSubst {Nm : (K →+*
   unfold _root_.GlobalTheory.ChowHt.formHeight
   simp only [hfin, harch]
 
-set_option autoImplicit false in
-open MvPolynomial NumberField Module in
-open scoped Matrix in
-variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
-  [IsScalarTower (𝓞 K) K V] {N : ℕ} in
 
 theorem _root_.GlobalTheory.ImageHeightUnique.isImageHeight_unique {Ω : Type} [Field Ω] [Algebra K Ω] {Nm : (K →+* ℂ) → V → ℝ} {L : Submodule (𝓞 K) V}
     {ev : V →ₗ[K] Ω} {D : ℕ} {x y : ℝ} (hx : _root_.GlobalTheory.CompHt.IsImageHeight Nm L ev D x) (hy : _root_.GlobalTheory.CompHt.IsImageHeight Nm L ev D y) : x = y := by

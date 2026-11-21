@@ -25,8 +25,6 @@ variable {l : ℕ} [hl : Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e] {O K : 
   [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [NormedField K] [IsUltrametricDist K] [Algebra O K]
   [IsUnitBall O K] [NormedAlgebra ℚ_[l] K] (t : Wq l a →ₐ[ℤ_[l]] O)
 
-omit [NeZero e] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem iotaP_mem (b : Bp l a) : iotaP K t b ∈ PPSet t K e := by
   refine ⟨fun x => ((x.1.factorial * (x.2 / e).factorial : ℕ) : Wq l a) * (b.coeff x.1).coeff x.2,
@@ -168,8 +166,6 @@ variable (sh : K⟦X⟧ →+* K⟦X⟧⟦X⟧)
   (hsh : ∀ (f : K⟦X⟧) (i : ℕ), (i.factorial : K⟦X⟧) * coeff i (sh f) = (PowerSeries.derivative K)^[i] f)
 include hsh
 
-omit [NeZero a] [NeZero e] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K]
-  [NormedAlgebra ℚ_[l] K] in
 
 theorem sh_C [CharZero K] (c : K) : sh (C c) = C (C c) := by
   ext i : 1

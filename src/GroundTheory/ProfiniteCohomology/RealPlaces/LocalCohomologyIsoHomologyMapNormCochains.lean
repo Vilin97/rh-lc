@@ -142,11 +142,7 @@ noncomputable def tateGlobalCohomologyIso (n : ℕ) :
     (isIso_homologyMap_prodFst (cochainsComplex A) (degZeroComplex (ModuleCat.of k (∀ w, Aᵣ w)))
       (isZero_degZeroComplex_homology_succ _ n))
 
-omit [∀ w, TopologicalSpace (F w)] [∀ w, IsTopologicalGroup (F w)] [∀ w, Fintype (F w)]
-  [∀ w, IsDiscreteRep (Aᵣ w)] in
 
-omit [∀ w, TopologicalSpace (F w)] [∀ w, IsTopologicalGroup (F w)] [∀ w, Fintype (F w)]
-  [∀ w, IsDiscreteRep (Aᵣ w)] in
 
 theorem tateCompactRes_prodFst :
     tateCompactRes φ ψ A Aᵥ a Aᵣ ar ≫ prodFst _ _ = prodFst _ _ ≫ localRes φ A Aᵥ a :=

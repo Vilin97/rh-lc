@@ -280,8 +280,6 @@ theorem unitsIncl_toAdditive_smul (σ : F ≃ₐ[E] F) (a : Additive 𝒪[F]ˣ) 
     (unitsIncl F).toAdditive (σ • a) = σ • (unitsIncl F).toAdditive a :=
   congrArg Additive.ofMul (unitsIncl_smul σ a.toMul)
 
-omit [Algebra E F] [ValuativeExtension E F] [FiniteDimensional E F] [TopologicalSpace F]
-  [IsNonarchimedeanLocalField F] in
 
 theorem finite_torsN_integerUnits (l : ℕ) [NeZero l] : Finite (TorsN (Additive 𝒪[F]ˣ) l) := by
   classical
@@ -339,8 +337,6 @@ theorem exists_maxPow_le_normalSub [IsGalois E F] {θ : F}
     _ ≤ valuation F (ϖ : F) ^ j := pow_le_pow_right_of_le_one' h1 hk
     _ < γ := hj
 
-omit [TopologicalSpace E] [IsNonarchimedeanLocalField E] [ValuativeExtension E F]
-  [FiniteDimensional E F] in
 
 theorem finite_quotient_maxPow {θ : F} {k : ℕ} (hle : maxPow F k ≤ normalSub E θ) :
     Finite (normalSub E θ ⧸ (AddSubgroup.inclusion hle).range) := by

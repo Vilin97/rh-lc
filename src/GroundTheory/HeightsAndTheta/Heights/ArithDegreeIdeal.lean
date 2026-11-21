@@ -37,18 +37,12 @@ def fibreMap (σ : K →+* ℂ) (f : E' →ₗ[𝓞 K] E) : Fibre σ E' →ₗ[�
   map_add' := map_add _
   map_smul' := lTensor_complex_smul σ f
 
-omit [NumberField K] [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 K) E]
-  [Module.Finite (𝓞 K) E'] [Module.Projective (𝓞 K) E'] in
 
-omit [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 K) E] [Module.Finite (𝓞 K) E']
-  [Module.Projective (𝓞 K) E'] in
 
 theorem fibreMap_injective (σ : K →+* ℂ) {f : E' →ₗ[𝓞 K] E} (hf : Function.Injective f) :
     Function.Injective (fibreMap σ f) :=
   Module.Flat.lTensor_preserves_injective_linearMap f hf
 
-omit [NumberField K] [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 K) E]
-  [Module.Finite (𝓞 K) E'] [Module.Projective (𝓞 K) E'] in
 
 theorem conjMap_fibreMap (σ : K →+* ℂ) (f : E' →ₗ[𝓞 K] E) (x : Fibre σ E') :
     conjMap σ E (fibreMap σ f x) = fibreMap (conjugate σ) f (conjMap σ E' x) := by

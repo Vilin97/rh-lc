@@ -46,8 +46,6 @@ variable [CompactSpace (RightCosetSpace Γ)]
 
 
 
-omit [LocallyCompactSpace G] [T2Space G] [SecondCountableTopology G] [μ.IsHaarMeasure]
-  [μ.IsMulRightInvariant] [CompactSpace (RightCosetSpace Γ)] in
 
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G]
@@ -61,8 +59,6 @@ theorem eq_of_mul_mem_fundamentalDomain {η₁ η₂ : Γ} {y : G}
     η₁ = η₂ :=
   (existsUnique_smul_mem_fundamentalDomain Γ y).unique h₁ h₂
 
-omit [LocallyCompactSpace G] [T2Space G] [μ.IsHaarMeasure] [CompactSpace (RightCosetSpace Γ)]
-  [μ.IsMulRightInvariant] in
 
 
 end Geometric

@@ -196,8 +196,6 @@ theorem t2Space_of_isValuativeTopology : T2Space Ω := by
 
 variable [Algebra K Ω] [ValuativeExtension K Ω]
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace Ω]
-  [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 
 theorem valuation_coe_lt_one_iff (E : IntermediateField K Ω) (x : E) :
     valuation Ω (x : Ω) < 1 ↔ valuation E x < 1 := by
@@ -207,8 +205,6 @@ theorem valuation_coe_lt_one_iff (E : IntermediateField K Ω) (x : E) :
 
 variable [Algebra.IsAlgebraic K Ω]
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
-  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 
 theorem finiteDimensional_adjoin_range {σ : Type*} [Finite σ] (x : σ → Ω) :
     FiniteDimensional K (IntermediateField.adjoin K (Set.range x)) :=

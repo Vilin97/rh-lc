@@ -298,8 +298,6 @@ variable {I : Type} {H : I → Type} [∀ i, Group (H i)] [∀ i, TopologicalSpa
   [∀ i, IsTopologicalGroup (H i)] [∀ i, CompactSpace (H i)] [∀ i, TotallyDisconnectedSpace (H i)]
   (φ : ∀ i, H i →* G) (hφ : ∀ i, Continuous (φ i))
 
-omit [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] [∀ i, TopologicalSpace (H i)]
-  [∀ i, IsTopologicalGroup (H i)] [∀ i, CompactSpace (H i)] [∀ i, TotallyDisconnectedSpace (H i)] in
 
 theorem bijective_nsmul_divFun_rat {n : ℕ} (hn : n ≠ 0) :
     Function.Bijective (fun f : divFun φ ℚ => n • f) := by
@@ -327,8 +325,6 @@ theorem bijective_nsmul_divFun_rat {n : ℕ} (hn : n ≠ 0) :
       simp only [AddSubgroup.coe_nsmul, Pi.smul_apply, nsmul_eq_mul]
       field_simp
 
-omit [∀ i, TopologicalSpace (H i)] [∀ i, IsTopologicalGroup (H i)] [∀ i, CompactSpace (H i)]
-  [∀ i, TotallyDisconnectedSpace (H i)] in
 
 theorem isZero_cohomology_one_divFunRep_int : IsZero (cohomology (divFunRep φ ℤ) 1) := by
   have hS := divFunSequence_shortExact φ

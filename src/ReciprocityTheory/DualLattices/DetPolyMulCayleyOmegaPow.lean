@@ -411,7 +411,8 @@ theorem sum_prod_factorial_fibres (s : ℕ) : ∀ m : ℕ,
       have := Finset.card_eq_sum_card_fiberwise (f := φ) (s := univ) (t := univ)
         (fun x _ => mem_univ _)
       simpa using this.symm
-    rw [sum_prod_factorial_add_ite, hsum, add_comm m s]
+    simpa only [hsum, Nat.add_comm m s] using
+      (sum_prod_factorial_add_ite fun k : Fin s => #{a | φ a = k})
 
 theorem eval_one_cayOp_pow (s : ℕ) :
     eval onePt (cayOp n ℤ (cayDet n ℤ ^ s)) = ((∏ k ∈ range n, (s + k) : ℕ) : ℤ) := by

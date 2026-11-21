@@ -60,10 +60,6 @@ noncomputable def rightMeasure [MeasurableSpace (G ⧸ H)] [MeasurableSpace (Rig
     (μ : Measure (G ⧸ H)) : Measure (RightCosets H) :=
   μ.map (invCoset H)
 
-open MeasureTheory MeasureTheory.Measure Topology in
-open scoped ENNReal NNReal in
-variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
-  [MeasurableSpace G] [BorelSpace G] (H : Subgroup G) in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.InvariantRadonFibre.IsInvariantRadon.regular [LocallyCompactSpace G]
     [SecondCountableTopology G] [IsClosed (H : Set G)] [MeasurableSpace (G ⧸ H)]

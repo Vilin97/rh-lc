@@ -137,10 +137,6 @@ private lemma laurentVariable_pow_mul_mem_of_frobenius_lemma_3 {l : ℕ} (hl : 0
   simp [PowerSeries.constantCoeff_X, zero_pow hpos.ne'] at e4
   exact hb0 e4
 
-open scoped LaurentSeries PowerSeries in
-variable {k : Type} [Field k] in
-variable {V : Type} [AddCommGroup V] [Module k⸨X⸩ V] [Module k⟦X⟧ V] [Module k V]
-  [IsScalarTower k⟦X⟧ k⸨X⸩ V] in
 
 theorem _root_.GlobalTheory.PhiGam.Close.key {l : ℕ} (hl : 0 < l)
     (R : _root_.GlobalTheory.PhiGam.RingPG k l) [FiniteDimensional k⸨X⸩ V] (f : V →ₗ[k] V)
@@ -262,10 +258,6 @@ theorem _root_.GlobalTheory.PhiGam.Close.key {l : ℕ} (hl : 0 < l)
   rw [smul_smul, ← hr i, ← smul_eq]
   exact Submodule.smul_mem _ _ (b i).2
 
-open scoped LaurentSeries PowerSeries in
-variable {k : Type} [Field k] in
-variable {V : Type} [AddCommGroup V] [Module k⸨X⸩ V] [Module k⟦X⟧ V] [Module k V]
-  [IsScalarTower k⟦X⟧ k⸨X⸩ V] in
 
 theorem _root_.GlobalTheory.PhiGam.Close.exists_pow {N N' : Submodule k⟦X⟧ V} (hN : N.FG)
     (hN' : Submodule.span k⸨X⸩ (N' : Set V) = ⊤) :
@@ -304,10 +296,6 @@ theorem _root_.GlobalTheory.PhiGam.Close.exists_pow {N N' : Submodule k⟦X⟧ V
     rw [← algebraMap_smul k⸨X⸩ p y, smul_smul, mul_comm, ← smul_smul, algebraMap_smul]
     exact N'.smul_mem p hy
 
-open scoped LaurentSeries PowerSeries in
-variable {k : Type} [Field k] in
-variable {V : Type} [AddCommGroup V] [Module k⸨X⸩ V] [Module k⟦X⟧ V] [Module k V]
-  [IsScalarTower k⟦X⟧ k⸨X⸩ V] in
 
 theorem _root_.GlobalTheory.PhiGam.Close.le_sg {l : ℕ} (hl : 1 < l) {n : ℕ} [NeZero n]
     (h a : ZMod n → ℕ) (ha : ∀ i, l * a i ≤ a (i + 1) + h (i + 1)) (i : ZMod n) :

@@ -481,8 +481,6 @@ theorem sameGenericFibre_symm {τ : Type*} {x : τ → Ω} {ϖ : O} {B B' : Char
     (h : SameGenericFibre ϖ B B') : SameGenericFibre ϖ B' B :=
   fun c hc => (h c hc).symm
 
-omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] [IsDomain O] [IsDiscreteValuationRing O]
-  [Algebra O Ω] in
 
 theorem repr_chain (w w' : Module.Basis (Fin N) Ω E) (v : E) (j : Fin N) :
     w.repr v j = ∑ m, w'.repr v m * w.repr (w' m) j := by

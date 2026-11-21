@@ -240,13 +240,7 @@ variable {E F : IntermediateField K Ω} (h : E ≤ F) [FiniteDimensional K F]
   [IsGalois E₂ (IntermediateField.extendScalars h₂)]
   (hE : E.map (σ : Ω →ₐ[K] Ω) = E₂) (hF : F.map (σ : Ω →ₐ[K] Ω) = F₂)
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω]
-  [FiniteDimensional K F] [IsGalois E (IntermediateField.extendScalars h)] [FiniteDimensional K F₂]
-  [IsGalois E₂ (IntermediateField.extendScalars h₂)] in
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω]
-  [FiniteDimensional K F] [IsGalois E (IntermediateField.extendScalars h)] [FiniteDimensional K F₂]
-  [IsGalois E₂ (IntermediateField.extendScalars h₂)] in
 
 
 end ConjSquare

@@ -18,19 +18,19 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 abbrev PlacesOver (v : HeightOneSpectrum (𝓞 K)) : Type _ :=
   {w : HeightOneSpectrum (𝓞 L) // w.asIdeal.LiesOver v.asIdeal}
 
-instance (v : HeightOneSpectrum (𝓞 K)) (w : PlacesOver L v) : w.1.asIdeal.LiesOver v.asIdeal :=
+instance (v : HeightOneSpectrum (𝓞 K)) (w : PlacesOver (L := L) v) : w.1.asIdeal.LiesOver v.asIdeal :=
   w.2
 
 
 def placesOverEquiv (v : HeightOneSpectrum (𝓞 K)) :
-    PlacesOver L v ≃ v.asIdeal.primesOver (𝓞 L) where
+    PlacesOver (L := L) v ≃ v.asIdeal.primesOver (𝓞 L) where
   toFun w := ⟨w.1.asIdeal, w.1.isPrime, w.2⟩
   invFun P := ⟨⟨P.1, P.2.1, (have := P.2.2; Ideal.ne_bot_of_liesOver_of_ne_bot v.ne_bot P.1)⟩, P.2.2⟩
   left_inv _ := rfl
   right_inv _ := rfl
 
-instance (v : HeightOneSpectrum (𝓞 K)) : Fintype (PlacesOver L v) :=
-  Fintype.ofEquiv _ (placesOverEquiv L v).symm
+instance (v : HeightOneSpectrum (𝓞 K)) : Fintype (PlacesOver (L := L) v) :=
+  Fintype.ofEquiv _ (placesOverEquiv (L := L) v).symm
 
 section Map
 

@@ -28,8 +28,6 @@ variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
   {V : Type*} [AddCommGroup V] [Module K V] [Module R V] [IsScalarTower R K V]
   {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-omit [IsDomain R] [IsDiscreteValuationRing R] [IsDomain A] [IsDiscreteValuationRing A]
-  [IsFractionRing A L] [IsLocalHom (algebraMap R A)] in
 
 theorem faithfulSMul_of_tower : FaithfulSMul R A := by
   rw [faithfulSMul_iff_algebraMap_injective]

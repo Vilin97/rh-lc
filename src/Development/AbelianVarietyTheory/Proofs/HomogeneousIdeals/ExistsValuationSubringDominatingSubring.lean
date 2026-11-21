@@ -69,8 +69,6 @@ theorem valExt_over : valExt p r y h ≫ p = r :=
 variable {V' K' : Type u} [CommRing V'] [IsDomain V'] [ValuationRing V'] [Field K']
   [Algebra V' K'] [IsFractionRing V' K']
 
-omit [IsDomain V] [ValuationRing V] [IsFractionRing V K] [IsDomain V'] [ValuationRing V']
-  [IsFractionRing V' K'] in
 
 def valCentre : X := valExt p r y h (closedPoint V)
 

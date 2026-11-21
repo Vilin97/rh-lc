@@ -41,9 +41,6 @@ def galoisLatticeModIdealInvariants (L : Lattice (O := O) ρ) (I : Ideal O) : Su
     change latModAct L I g (a • y) = a • y
     rw [map_smul, hy g]
 
-variable {G : Type} [Group G] {LL : Type} [Field LL] {O : Type} [CommRing O] [Algebra O LL]
-  {V : Type} [AddCommGroup V] [Module LL V] [Module O V] [IsScalarTower O LL V]
-  {ρ : Representation LL G V} in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GaloisLatticeModuleActions.mk_mem_H0Mod (L : _root_.Formalism.WeaklyAdmissibleFiltrations.Lattice (O := O) ρ) (I : Ideal O)
     (x : ↥L.T) :
@@ -56,9 +53,6 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GaloisLatticeModuleAction
 def h0ModResidueDim (L : Lattice (O := O) ρ) (ϖ : O) : ℕ :=
   Module.finrank (O ⧸ Ideal.span {ϖ}) ↥(galoisLatticeModIdealInvariants L (Ideal.span {ϖ}))
 
-variable {G : Type} [Group G] {LL : Type} [Field LL] {O : Type} [CommRing O] [Algebra O LL]
-  {V : Type} [AddCommGroup V] [Module LL V] [Module O V] [IsScalarTower O LL V]
-  {ρ : Representation LL G V} in
 
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GaloisLatticeModuleActions.finite_latMod (L : _root_.Formalism.WeaklyAdmissibleFiltrations.Lattice (O := O) ρ) (I : Ideal O) :
     Module.Finite (O ⧸ I) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.GaloisLatticeModuleActions.LatMod L I) := by

@@ -49,8 +49,6 @@ variable {K L K' L' : FiniteSubfield} [hKL : Fact (K ≤ L)]
   [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal] [hKL' : Fact (K' ≤ L')]
   [(L'.1.fixingSubgroup.subgroupOf K'.1.fixingSubgroup).Normal]
 
-omit [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal]
-  [(L'.1.fixingSubgroup.subgroupOf K'.1.fixingSubgroup).Normal] in
 
 theorem normTateZero_normClass (hK : K ≤ K') (hL : L ≤ L') (c : IdeleClassGroup K'.1) :
     normTateZero (openSubgroup_le hK) (openSubgroup_le hL) (openSubgroup_le hKL'.out)

@@ -134,13 +134,6 @@ private lemma addChar_symp_add_add (hc : ∀ z, c (c z) = z) {JA : Matrix α α 
   simp only [AddChar.map_add_eq_mul]
   rw [h1, h2, mul_one, mul_one]
 
-set_option autoImplicit false in
-open IsDedekindDomain NumberField MeasureTheory Matrix in
-open Classical in
-open scoped TensorProduct ComplexConjugate in
-attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar _root_.GlobalTheory.LocalData.complRel
-  _root_.GlobalTheory.LocalData.isLocalField _root_.GlobalTheory.FunObj.borelKw
-  _root_.GlobalTheory.FunObj.borelSpaceKw in
 
 theorem _root_.GlobalTheory.VacCocycle.psi_half_symp_add : ∀ {F E : Type} [Field F]
     [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}

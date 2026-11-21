@@ -245,9 +245,6 @@ private theorem eq_zero_of_twistedInvariant_offJumps_lemma_5 (hact : _root_.Glob
   rw [← hw']
   simp [hcoef]
 
-open scoped Matrix in
-variable {l : ℕ} [Fact l.Prime] {act : _root_.Formalism.BasicNotions.Loc.GQ l →* (PadicComplex l ≃+* PadicComplex l)}
-  {χ : _root_.Formalism.BasicNotions.Loc.GQ l →* ℚ_[l]ˣ} in
 
 theorem _root_.GlobalTheory.FrameInv.pow_smul_mem_of_invariant_mod : ∀ (l : ℕ) [Fact l.Prime]
     (act : _root_.Formalism.BasicNotions.Loc.GQ l →* (PadicComplex l ≃+* PadicComplex l)) (χ : _root_.Formalism.BasicNotions.Loc.GQ l →* ℚ_[l]ˣ),

@@ -95,10 +95,6 @@ private theorem isKTypeOf_map_of_intertwining {σ₁ σ₂ : Matrix (Fin n) (Fin
     obtain ⟨x, hx, rfl⟩ := hy
     exact hmax ν x hx (by rintro rfl; simp at hy0) (wt' ν x hyw)
 
-open Matrix MeasureTheory Finset in
-open scoped InnerProductSpace ENNReal in
-variable {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {ε : Fin n → Bool}
-  {σ σ' : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} in
 
 theorem _root_.GlobalTheory.CayleyChoice.isDS_conj {lam : Fin n → ℝ} (hσ : _root_.PI.UpqRep.IsDS ε lam σ)
     {u u' : Matrix (Fin n) (Fin n) ℂ}

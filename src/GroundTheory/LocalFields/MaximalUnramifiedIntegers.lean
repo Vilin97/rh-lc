@@ -94,23 +94,17 @@ theorem exists_valuation_eq_algebraMap {x : Ω} (hx : x ∈ 𝔼) (hx0 : x ≠ 0
     hay]
   exact h1
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace Ω]
-  [IsValuativeTopology Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω] in
 
 @[simp]
 theorem coe_algebraMap_integer_intermediateField (E : IntermediateField K Ω) (a : 𝒪[K]) :
     (((algebraMap 𝒪[K] 𝒪[E] a : 𝒪[E]) : E) : Ω) = algebraMap K Ω (a : K) :=
   rfl
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace Ω]
-  [IsValuativeTopology Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω] in
 
 theorem valuation_algebraMap_eq_one_iff (x : K) :
     valuation Ω (algebraMap K Ω x) = 1 ↔ valuation K x = 1 := by
   simpa using valuation_algebraMap_eq_iff (G := Ω) x 1
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace Ω]
-  [IsValuativeTopology Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω] in
 
 theorem not_isUnit_algebraMap_uniformizer (E : IntermediateField K Ω) {ϖ : 𝒪[K]}
     (hϖ : Irreducible ϖ) : ¬ IsUnit (algebraMap 𝒪[K] 𝒪[E] ϖ) := by

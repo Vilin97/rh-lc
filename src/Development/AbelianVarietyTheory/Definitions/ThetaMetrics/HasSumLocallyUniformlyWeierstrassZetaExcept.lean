@@ -346,6 +346,7 @@ theorem quasiPeriod_congr {L L' : PeriodPair} (h : L'.lattice = L.lattice) :
   LinearMap.ext fun z => by simpa using (isHomothetic_one_iff.2 h).quasiPeriod_mul z
 
 
+open EisensteinSeries SummationFilter in
 theorem quasiPeriod_ω₁_eq_eisenstein (τ : UpperHalfPlane) (hτ : (τ : ℂ) * L.ω₁ = L.ω₂) :
     quasiPeriod L L.ω₁ = L.ω₁⁻¹ * G2 τ := by
   have h0 : L.ω₁ ≠ 0 := by simpa using L.indep.ne_zero 0
@@ -723,6 +724,7 @@ theorem IsHomothetic.weierstrassSigma_mul {L L' : PeriodPair} {c : ℂ} (h : IsH
   rw [weierstrassSigma, h.sigmaProd_mul, weierstrassSigma, mul_assoc]
 
 
+open scoped Classical in
 def sigmaSign (w : ℂ) : ℂ := if w / 2 ∈ L.lattice then 1 else -1
 
 theorem sigmaSign_of_mem {w : ℂ} (h : w / 2 ∈ L.lattice) : sigmaSign L w = 1 := if_pos h
@@ -735,7 +737,8 @@ theorem sigmaSign_of_notMem {w : ℂ} (h : w / 2 ∉ L.lattice) : sigmaSign L w 
 theorem sigmaSign_ne_zero (w : ℂ) : sigmaSign L w ≠ 0 := by
   unfold sigmaSign; split_ifs <;> simp
 
-theorem sigmaSign_int (m n : ℤ) : sigmaSign L (m * L.ω₁ + n * L.ω₂) = (-1) ^ (m + n + m * n) := by
+theorem sigmaSign_int (m n : ℤ) :
+    sigmaSign L (m * L.ω₁ + n * L.ω₂) = (-1 : ℂ) ^ (m + n + m * n) := by
   have h : (m * L.ω₁ + n * L.ω₂) / 2 ∈ L.lattice ↔ Even m ∧ Even n := by
     constructor
     · intro h

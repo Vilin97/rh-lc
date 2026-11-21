@@ -23,10 +23,6 @@ section Mat
 
 variable {α β : Type} [Fintype α]
 
-open MeasureTheory ValuativeRel in
-open scoped TensorProduct Topology in
-variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-  {r t : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] in
 
 theorem _root_.GlobalTheory.GodementJacquet.parab_mul_eMat
     (p : _root_.GlobalTheory.SmGL.parab k
@@ -103,8 +99,6 @@ variable [m.IsMulLeftInvariant] (hσ : IsSmooth σ) (hs : ∀ v w, Bf w v = star
       Integrable (fun g : GL (Fin r) k => om μ g h Φ (eMat k r t)) m)
 
 
-omit [MeasurableSpace (GL (Fin r) k)] [BorelSpace (GL (Fin r) k)] [SecondCountableTopology (GL (Fin r) k)]
-  [m.IsMulLeftInvariant] in
 
 end Family
 

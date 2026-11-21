@@ -40,12 +40,6 @@ private theorem mem_dotDual_iff' (N : Submodule S (J → Ω)) (v : J → Ω) :
     v ∈ _root_.GlobalTheory.ZH.DualLattice.dotDual S N ↔ ∀ w ∈ N, w ⬝ᵥ v ∈ S :=
   Iff.rfl
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-open Classical in
-open Matrix in
-variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : Subalgebra o Ω) {J : Type}
-  [Fintype J] in
 
 theorem _root_.GlobalTheory.ZH.DualLattice.mem_dotDual_span {I : Type} (a : I → J → Ω) (v : J → Ω) :
     v ∈ _root_.GlobalTheory.ZH.DualLattice.dotDual S (Submodule.span S (Set.range a)) ↔ ∀ i, a i ⬝ᵥ v ∈ S := by
@@ -68,12 +62,6 @@ theorem _root_.GlobalTheory.ZH.DualLattice.mem_dotDual_span {I : Type} (a : I �
       rw [smul_dotProduct, Subalgebra.smul_def, smul_eq_mul]
       exact mul_mem c.2 hx
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-open Classical in
-open Matrix in
-variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : Subalgebra o Ω) {J : Type}
-  [Fintype J] in
 
 theorem _root_.GlobalTheory.ZH.DualLattice.mem_span_rows (B : Matrix J J Ω) (v : J → Ω) :
     v ∈ Submodule.span S (Set.range B) ↔ ∃ c : J → Ω, (∀ i, c i ∈ S) ∧ c ᵥ* B = v := by
@@ -91,12 +79,6 @@ theorem _root_.GlobalTheory.ZH.DualLattice.mem_span_rows (B : Matrix J J Ω) (v 
 
 variable [DecidableEq J]
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-open Classical in
-open Matrix in
-variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : Subalgebra o Ω) {J : Type}
-  [Fintype J] in
 
 theorem _root_.GlobalTheory.ZH.DualLattice.dotDual_span_rows {A B : Matrix J J Ω} (h : A * Bᵀ = 1) :
     _root_.GlobalTheory.ZH.DualLattice.dotDual S (Submodule.span S (Set.range A)) =
@@ -116,12 +98,6 @@ theorem _root_.GlobalTheory.ZH.DualLattice.dotDual_span_rows {A B : Matrix J J �
     rw [hAc]
     exact hc i
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-open Classical in
-open Matrix in
-variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : Subalgebra o Ω) {J : Type}
-  [Fintype J] in
 
 theorem _root_.GlobalTheory.ZH.DualLattice.span_eq_span_minor {n : ℕ} (g : Fin n → J → Ω) (k : J → Fin n)
     (h0 : (Matrix.of fun i j => g (k i) j).det ≠ 0)
@@ -166,12 +142,6 @@ theorem _root_.GlobalTheory.ZH.DualLattice.span_eq_span_minor {n : ℕ} (g : Fin
       (⟨s / t, hst⟩ : S) (Submodule.subset_span ⟨k i, rfl⟩)
     rwa [Subalgebra.smul_def] at hmem
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-open Classical in
-open Matrix in
-variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : Subalgebra o Ω) {J : Type}
-  [Fintype J] in
 
 theorem _root_.GlobalTheory.ZH.DualLattice.smul_mul_smul_inv {G : Matrix J J Ω} (h0 : G.det ≠ 0) {t : Ω}
     (ht : t ≠ 0) : (t⁻¹ • G) * (t • G⁻¹ᵀ)ᵀ = 1 := by

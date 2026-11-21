@@ -16,8 +16,6 @@ variable (F Ω : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarc
   [Field Ω] [Algebra F Ω] [IsSepClosure F Ω]
   [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω]
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [ValuativeRel Ω]
-  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω] in
 
 theorem brauerInflation_unitsInflationOfLE {E E' : IntermediateField F Ω} (h : E ≤ E')
     [FiniteDimensional F E] [Normal F E] [FiniteDimensional F E'] [Normal F E']

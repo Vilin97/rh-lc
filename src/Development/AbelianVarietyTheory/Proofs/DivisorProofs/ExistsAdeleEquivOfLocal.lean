@@ -155,8 +155,6 @@ variable {W : Type} [AddCommGroup W] [Module ℚ W] [Module E W] [IsScalarTower 
   [Module (𝓞 E) W] [IsScalarTower (𝓞 E) E W]
 
 
-omit [Algebra K E] [IsCMField E] [IsScalarTower ℚ E W] [Module (𝓞 E) W]
-  [IsScalarTower (𝓞 E) E W] in
 
 
 

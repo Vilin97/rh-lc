@@ -160,14 +160,8 @@ open scoped Polynomial
 variable [IsFunctionField k K] [Algebra k[X] K] [Algebra (RatFunc k) K]
   [IsScalarTower k[X] (RatFunc k) K] [IsScalarTower k k[X] K] [FunctionField k K]
 
-omit [IsFunctionField k K] [Algebra (RatFunc k) K] [IsScalarTower k[X] (RatFunc k) K]
-  [FunctionField k K] in
 
-omit [IsFunctionField k K] [Algebra (RatFunc k) K] [IsScalarTower k[X] (RatFunc k) K]
-  [FunctionField k K] in
 
-omit [IsFunctionField k K] [Algebra (RatFunc k) K] [IsScalarTower k[X] (RatFunc k) K]
-  [FunctionField k K] in
 
 end RingOfIntegers
 

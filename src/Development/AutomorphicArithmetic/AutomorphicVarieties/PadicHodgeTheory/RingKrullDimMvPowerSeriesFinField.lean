@@ -1,11 +1,11 @@
 module
 
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+public import Mathlib
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PiSpanVariable
 
 @[expose] public section
 
-open IsLocalRing UpperTheory.V.Alg
+open IsLocalRing
 
 private theorem dim_ge (E : Type) [Field E] (n : ℕ) :
     ((n : ℕ∞) : WithBot ℕ∞) ≤ ringKrullDim (MvPowerSeries (Fin n) E) := by

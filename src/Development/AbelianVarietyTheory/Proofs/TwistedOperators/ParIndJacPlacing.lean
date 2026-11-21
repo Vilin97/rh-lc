@@ -106,9 +106,6 @@ def Moves {ι : Type} (e e' : ι ≃ n) (w : GL n R) : Prop :=
   ∀ (g : GL n R) x y, ((w * g * w⁻¹ : GL n R) : Matrix n n R) (e' x) (e' y) =
     (g : Matrix n n R) (e x) (e y)
 
-open ValuativeRel MeasureTheory in
-variable {R : Type} [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
-  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 
 theorem _root_.GlobalTheory.SmGL.Placing.exists_moves {ι : Type} (e e' : ι ≃ n) :
     ∃ w : GL n R, _root_.GlobalTheory.SmGL.Placing.Moves e e' w := by

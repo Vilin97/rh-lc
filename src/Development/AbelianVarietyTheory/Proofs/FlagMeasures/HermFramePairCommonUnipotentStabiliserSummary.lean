@@ -236,10 +236,6 @@ private theorem hermFlag_graded_zero_lemma_7 {x : V} (hx : x ∈ F.Xa 0) : x = 0
   unfold _root_.Formalism.HermitianLatticeCounting.S6.FlagD.Xa at hx
   simpa using hx
 
-open NumberField in
-open scoped Pointwise ENNReal Classical in
-variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V]
-  {H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V} {r : ℕ} (F : _root_.Formalism.HermitianLatticeCounting.S6.FlagD H r) in
 
 theorem _root_.GlobalTheory.UnipStab.pow_eq_zero [FiniteDimensional K V]
     {s : V ≃ₗ[K] V} (hs : F.InN (s : V →ₗ[K] V)) :

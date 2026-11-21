@@ -21,16 +21,12 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
   [IsNonarchimedeanLocalField M] [Algebra k M] [ValuativeExtension k M] [FiniteDimensional k M]
   [IsGalois k M] [IsMulCommutative (M ≃ₐ[k] M)]
 
-omit [CharZero k] [IsGalois k M] [IsMulCommutative (M ≃ₐ[k] M)] [ValuativeRel M] [TopologicalSpace M]
-  [IsNonarchimedeanLocalField M] [ValuativeExtension k M] [FiniteDimensional k M] in
 
 theorem exists_ord_eq_one_units : ∃ π : kˣ, ord (π : k) = 1 := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[k]
   have h0 : (ϖ : k) ≠ 0 := by exact_mod_cast hϖ.ne_zero
   exact ⟨Units.mk0 _ h0, ord_uniformizer hϖ⟩
 
-omit [CharZero k] [IsGalois k M] [IsMulCommutative (M ≃ₐ[k] M)] [ValuativeRel M] [TopologicalSpace M]
-  [IsNonarchimedeanLocalField M] [ValuativeExtension k M] [FiniteDimensional k M] in
 
 theorem ord_zpow_units {π : kˣ} (hπ : ord (π : k) = 1) (n : ℤ) : ord ((π ^ n : kˣ) : k) = n := by
   rw [Units.val_zpow_eq_zpow_val, ord_zpow π.ne_zero, hπ, mul_one]

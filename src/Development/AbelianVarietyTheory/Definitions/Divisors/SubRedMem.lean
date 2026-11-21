@@ -67,11 +67,6 @@ theorem Charts.Obj.red_tmul (T : K.Obj) (d : D) (c : T.C) : T.red π (d ⊗ₜ c
 
 def Charts.Obj.tenJ (T : K.Obj) : Ideal (T.ten D) := T.J.comap (T.red π)
 
-set_option autoImplicit false in
-open TopologicalSpace Filter Topology TensorProduct in
-open CategoryTheory AlgebraicGeometry DividedPowers in
-variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : _root_.GlobalTheory.AnPer.Fam I g Λ}
-  {K : _root_.GlobalTheory.AnPer.Charts F} in
 
 theorem _root_.GlobalTheory.AnPer.Charts.Hom.red_ten
     {T T' : K.Obj} (f : T ⟶ T') (x : T.ten D) :
@@ -89,11 +84,6 @@ theorem _root_.GlobalTheory.AnPer.Charts.Hom.red_ten
       (π d)).symm
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-set_option autoImplicit false in
-open TopologicalSpace Filter Topology TensorProduct in
-open CategoryTheory AlgebraicGeometry DividedPowers in
-variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : _root_.GlobalTheory.AnPer.Fam I g Λ}
-  {K : _root_.GlobalTheory.AnPer.Charts F} in
 
 theorem _root_.GlobalTheory.AnPer.Charts.Hom.ten_mem {T T' : K.Obj}
     (f : T ⟶ T') {x : T.ten D} (h : x ∈ T.tenJ π) :
@@ -132,11 +122,6 @@ private theorem sub_one_tmul_red_mem_map_ker (T : K.Obj) (x : T.ten D) :
     rw [map_add (f := _), tmul_add, add_sub_add_comm]
     exact add_mem hx hy
 
-set_option autoImplicit false in
-open TopologicalSpace Filter Topology TensorProduct in
-open CategoryTheory AlgebraicGeometry DividedPowers in
-variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : _root_.GlobalTheory.AnPer.Fam I g Λ}
-  {K : _root_.GlobalTheory.AnPer.Charts F} in
 
 theorem _root_.GlobalTheory.AnPer.Charts.Obj.tenJ_nil
     (hπ : IsNilpotent (RingHom.ker π)) (T : K.Obj) : IsNilpotent (T.tenJ π) := by

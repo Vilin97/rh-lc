@@ -47,8 +47,6 @@ theorem heckeAct_idem_apply (g : G) {v : V} (hv : v ∈ fixedVectors ρ K) :
   rw [heckeAct_ltrans g (idem μ hKc hKo).mem hs]
   rfl
 
-omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] [MeasurableSpace G]
-  [BorelSpace G] [IsTopologicalGroup G] in
 
 theorem mem_span_orbit [ρ.IsIrreducible] {v : V} (hv : v ≠ 0) (w : V) :
     w ∈ Submodule.span ℂ (range fun g => ρ g v) := by

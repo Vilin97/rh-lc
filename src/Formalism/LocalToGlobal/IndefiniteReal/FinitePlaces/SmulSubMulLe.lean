@@ -89,7 +89,8 @@ theorem avg_mul (k j : ℕ) (H : AddSubgroup W) [Finite (Qt k H)] [Finite (Qt (k
 
 
 def integ (H : AddSubgroup W) (g : W → ℂ) : ℂ :=
-  if h : ∃ k, 0 < k ∧ IsInv k H g then avg h.choose H g else 0
+  by classical
+     exact if h : ∃ k, 0 < k ∧ IsInv k H g then avg h.choose H g else 0
 
 section Integ
 

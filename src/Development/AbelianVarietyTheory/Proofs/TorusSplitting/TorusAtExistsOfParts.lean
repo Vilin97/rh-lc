@@ -104,10 +104,6 @@ section Build
 variable [IsCMField E] {dim : (E →+* ℂ) → ℕ}
   {b : Module.Basis (Fin (2 * Fintype.card (Idx dim))) ℝ (Vsp dim)} {w w' : 𝓞 E}
 
-open NumberField in
-variable {E : Type} [Field E] [NumberField E] in
-variable [IsCMField E] {dim : (E →+* ℂ) → ℕ}
-  {b : Module.Basis (Fin (2 * Fintype.card (_root_.ReciprocityTheory.ChartRestriction.G.I2.Idx dim))) ℝ (_root_.ReciprocityTheory.ChartRestriction.G.I2.Vsp dim)} {w w' : 𝓞 E} in
 
 theorem _root_.GlobalTheory.TorusAtAssembly.integral_of_parity (hw : (w' : E) = _root_.ReciprocityTheory.ChartRestriction.G.FD.cc (w : E))
     (par : ∀ x ∈ _root_.ReciprocityTheory.ChartRestriction.G.I2.lat b, ∀ y ∈ _root_.ReciprocityTheory.ChartRestriction.G.I2.lat b, ∃ k : ℤ,

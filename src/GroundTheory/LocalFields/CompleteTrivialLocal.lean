@@ -308,8 +308,6 @@ theorem val_coe_smul_F {j : ℕ} (σ : Gal(L/K)) (y : D.filt.F j) :
     D.val ((σ • y : D.filt.F j) : D.units 0) = σ (D.val y) := by
   rw [StableFiltration.coe_smul_F, val_smul]
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeExtension K L]
-  [FiniteDimensional K L] in
 
 theorem smul_theta_mem (j : ℕ) (c : 𝒪[K]) : c • D.π ^ (D.k + j) • D.θ ∈ D.lat (D.k + j) := by
   have : D.π ^ (D.k + j) • (1 : Gal(L/K)) D.θ ∈ D.lat (D.k + j) := Submodule.subset_span ⟨1, rfl⟩
@@ -438,15 +436,11 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
   [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L] [IsGalois K L]
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel L] [TopologicalSpace L]
-  [IsNonarchimedeanLocalField L] [ValuativeExtension K L] [FiniteDimensional K L] [IsGalois K L] in
 
 theorem normalLattice_eq_smul_span (π : 𝒪[K]) (θ : L) (s : ℕ) :
     normalLattice π θ s = π ^ s • Submodule.span 𝒪[K] (Set.range fun σ : Gal(L/K) => σ θ) := by
   rw [normalLattice, ← Set.smul_set_range, Submodule.span_smul]
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel L]
-  [TopologicalSpace L] [IsNonarchimedeanLocalField L] [ValuativeExtension K L] in
 
 theorem span_conjugates_eq_top {θ : L} (hθ : LinearIndependent K fun σ : Gal(L/K) => σ θ) :
     Submodule.span K (Set.range fun σ : Gal(L/K) => σ θ) = ⊤ := by

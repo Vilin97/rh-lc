@@ -36,10 +36,6 @@ def conjHom : Formalism.ConjugateSelfDual.G E Ω →* Formalism.ConjugateSelfDua
 
 theorem conjHom_apply (g : Formalism.ConjugateSelfDual.G E Ω) (x : Ω) : conjHom cc hc g x = cc (g (cc.symm x)) := rfl
 
-open NumberField IsDedekindDomain in
-open scoped Pointwise in
-variable {E Ω : Type} [Field E] [Field Ω] [Algebra E Ω] (cc : Ω ≃+* Ω)
-  (hc : ∀ x : E, ∃ y : E, cc.symm (algebraMap E Ω x) = algebraMap E Ω y) in
 
 theorem _root_.GlobalTheory.AntiLAdic.isFrob_conjHom [NumberField E] {B : ValuationSubring Ω} {q : ℕ} {σ : _root_.Formalism.ConjugateSelfDual.G E Ω} (hσ : _root_.Formalism.ConjugateSelfDual.IsFrob (F := E) B q σ) :
     _root_.Formalism.ConjugateSelfDual.IsFrob (F := E) (_root_.GlobalTheory.AntiRamConj.moveVal cc B) q (_root_.GlobalTheory.AntiLAdic.conjHom cc hc σ) := by
@@ -58,10 +54,6 @@ theorem _root_.GlobalTheory.AntiLAdic.isFrob_conjHom [NumberField E] {B : Valuat
       _root_.GlobalTheory.AntiLAdic.conjHom_apply, RingEquiv.symm_apply_apply]
     exact hval _ ((ValuationSubring.valuation_le_one_iff _ _).mpr hx)
 
-open NumberField IsDedekindDomain in
-open scoped Pointwise in
-variable {E Ω : Type} [Field E] [Field Ω] [Algebra E Ω] (cc : Ω ≃+* Ω)
-  (hc : ∀ x : E, ∃ y : E, cc.symm (algebraMap E Ω x) = algebraMap E Ω y) in
 
 theorem _root_.GlobalTheory.AntiLAdic.continuous_conjHom [Algebra.IsAlgebraic E Ω] : Continuous (_root_.GlobalTheory.AntiLAdic.conjHom cc hc) := by
   apply continuous_of_continuousAt_one

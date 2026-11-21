@@ -51,11 +51,6 @@ structure PDPoly.IsStd (Q : PDPoly B) (δ : DividedPowers J) (η : DividedPowers
   dp : IsDPMorphism δ η (algebraMap B Q.P)
   var : ∀ n, η.dpow n (Q.e 1) = Q.e n
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.isLev_iff_prod (δ : DividedPowers J) (N : ℕ) :
     _root_.GlobalTheory.PDA.IsLev δ N ↔ ∀ l : List (ℕ × B), (∀ p ∈ l, p.2 ∈ J) →
@@ -68,22 +63,12 @@ theorem _root_.GlobalTheory.PDA.isLev_iff_prod (δ : DividedPowers J) (N : ℕ) 
   · rintro h _ ⟨l, hl, hN, rfl⟩
     exact h l hl hN
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.isDPNilpotent_iff_exists_isLevel (δ : DividedPowers J) :
     _root_.GlobalTheory.Cris.IsNilDP δ ↔ ∃ N, _root_.GlobalTheory.PDA.IsLev δ N := by
   unfold _root_.GlobalTheory.Cris.IsNilDP
   exact exists_congr fun N => (_root_.GlobalTheory.PDA.isLev_iff_prod δ N).symm
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.fil_zero_eq_top (δ : DividedPowers J) :
     _root_.GlobalTheory.PDA.fil δ 0 = ⊤ :=
@@ -106,11 +91,6 @@ private lemma prod_dpow_mem_of_one_le_sum (δ : DividedPowers J) :
       simpa [hp] using h
     · exact J.mul_mem_right _ (δ.dpow_mem hp (hl p (by simp)))
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.fil_one_eq (δ : DividedPowers J) :
     _root_.GlobalTheory.PDA.fil δ 1 = J := by
@@ -121,31 +101,16 @@ theorem _root_.GlobalTheory.PDA.fil_one_eq (δ : DividedPowers J) :
   · intro x hx
     exact Ideal.subset_span ⟨[(1, x)], by simpa using hx, by simp, by simp [δ.dpow_one hx]⟩
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.PDPoly.e_succ_mem_aug (Q : _root_.GlobalTheory.PDA.PDPoly B)
     (n : ℕ) : Q.e (n + 1) ∈ Q.aug :=
   Ideal.subset_span ⟨n, rfl⟩
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.PDPoly.e_one_mem_ext (Q : _root_.GlobalTheory.PDA.PDPoly B)
     (J : Ideal B) : Q.e 1 ∈ Q.ext J :=
   Ideal.mem_sup_right (Q.e_succ_mem_aug 0)
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.PDPoly.algebraMap_mem_ext (Q : _root_.GlobalTheory.PDA.PDPoly B)
     {a : B} (ha : a ∈ J) :
@@ -170,20 +135,10 @@ private lemma ratBasis_eq_C_inv_factorial_mul_X_pow (n : ℕ) :
   rw [_root_.GlobalTheory.PDA.ratBasis, Module.Basis.unitsSMul_apply, coe_basisMonomials, Units.smul_def,
     Units.val_mk0, smul_eq_C_mul, X_pow_eq_monomial]
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.ratBasis_zero : _root_.GlobalTheory.PDA.ratBasis 0 = 1 := by
   rw [ratBasis_eq_C_inv_factorial_mul_X_pow]; simp
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.ratBasis_mul (m n : ℕ) : _root_.GlobalTheory.PDA.ratBasis m * _root_.GlobalTheory.PDA.ratBasis n = ((m + n).choose m : ℚ[X]) * _root_.GlobalTheory.PDA.ratBasis (m + n) := by
   have key : ((m.factorial : ℚ)⁻¹ * (n.factorial : ℚ)⁻¹)
@@ -217,11 +172,6 @@ def intForm : Subalgebra ℤ ℚ[X] :=
       · intro r x y _ _ h; rw [smul_mul_assoc]; exact Submodule.smul_mem _ _ h
       · intro r x y _ _ h; rw [mul_smul_comm]; exact Submodule.smul_mem _ _ h)
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.ratBasis_linearIndependent_int : LinearIndependent ℤ _root_.GlobalTheory.PDA.ratBasis :=
   _root_.GlobalTheory.PDA.ratBasis.linearIndependent.restrict_scalars' ℤ
@@ -239,20 +189,10 @@ private lemma intBasis_cast_eq_ratBasis (n : ℕ) :
   exact congrArg Subtype.val
     (Module.Basis.span_apply _root_.GlobalTheory.PDA.ratBasis_linearIndependent_int n)
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.intBasis_zero : _root_.GlobalTheory.PDA.intBasis 0 = 1 :=
   Subtype.ext (by simp [intBasis_cast_eq_ratBasis, _root_.GlobalTheory.PDA.ratBasis_zero])
 
-set_option autoImplicit false in
-open DividedPowers in
-variable {B : Type} [CommRing B] {J : Ideal B} in
-attribute [instance] _root_.GlobalTheory.PDA.PDPoly.ring
-  _root_.GlobalTheory.PDA.PDPoly.alg in
 
 theorem _root_.GlobalTheory.PDA.intBasis_mul (m n : ℕ) : _root_.GlobalTheory.PDA.intBasis m * _root_.GlobalTheory.PDA.intBasis n = ((m + n).choose m : _root_.GlobalTheory.PDA.intForm) * _root_.GlobalTheory.PDA.intBasis (m + n) :=
   Subtype.ext (by simp [intBasis_cast_eq_ratBasis, _root_.GlobalTheory.PDA.ratBasis_mul])

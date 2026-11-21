@@ -191,11 +191,6 @@ private theorem list_prod_ofFn_eq_of_eq_one_of_ne :
       rw [h 0 (Fin.succ_ne_zero i).symm, one_mul]
       exact list_prod_ofFn_eq_of_eq_one_of_ne k _ i fun m hm => h _ fun e => hm (Fin.succ_injective _ e)
 
-open NumberField Matrix in
-open scoped ContDiff Topology in
-open NormedSpace in
-variable {𝔸 L G : Type} [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [FiniteDimensional ℝ 𝔸] [NormedAddCommGroup L]
-  [NormedSpace ℝ L] [Group G] {σ : 𝔸 →ₗ[ℝ] 𝔸} {j : L →ₗ[ℝ] 𝔸} {s : 𝔸 → G} in
 
 theorem _root_.GlobalTheory.SmoothForms.SecondKind.sm_iff (H : _root_.GlobalTheory.SmoothForms.IsLieData σ j s)
     (hl : _root_.GlobalTheory.SmoothForms.HasLog σ j) (T : Set L) (hT : Submodule.span ℝ T = ⊤) (φ : G → ℂ) :

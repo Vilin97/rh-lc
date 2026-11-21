@@ -299,8 +299,6 @@ section Group
 variable {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]
   [TotallyDisconnectedSpace G] {n : ℕ} {D : Rep.{u} (ULift.{u} ℤ) G} [IsDiscreteRep D]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]
-  [IsDiscreteRep D] in
 
 theorem resTensorIso_inv_comp_resFunctor_map_evalPairing (S : Subgroup G)
     (M : Rep.{u} (ULift.{u} ℤ) G) :

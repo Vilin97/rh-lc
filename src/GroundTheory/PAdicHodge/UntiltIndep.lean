@@ -17,11 +17,7 @@ variable {K C : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
   [NontriviallyNormedField C] [IsUltrametricDist C] [NormedAlgebra K C]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [IsPerfectoidField C p]
 
-omit [IsUltrametricDist K] [IsUltrametricDist C] [Fact p.Prime] [IsPerfectoidField K p]
-  [IsPerfectoidField C p] in
 
-omit [NontriviallyNormedField K] [IsUltrametricDist K] [NontriviallyNormedField C] [NormedAlgebra K C]
-  [Fact p.Prime] [IsPerfectoidField K p] [IsPerfectoidField C p] in
 
 theorem norm_eq_of_norm_sub_lt {E : Type*} [SeminormedAddCommGroup E] [IsUltrametricDist E]
     {x y : E} (h : ‖x - y‖ < ‖y‖) : ‖x‖ = ‖y‖ := by

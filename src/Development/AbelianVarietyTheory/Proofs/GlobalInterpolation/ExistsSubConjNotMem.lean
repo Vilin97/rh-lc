@@ -27,10 +27,6 @@ theorem _root_.GlobalTheory.UnramConjUnit.conj_ne_id (h : _root_.Formalism.MainN
   ext x
   simpa [hσ x] using (hconj w.embedding x).symm
 
-open scoped TensorProduct Matrix in
-open NumberField IsDedekindDomain in
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  {σ : E →ₐ[F] E} in
 
 theorem _root_.GlobalTheory.UnramConjUnit.exists_sub_conj_notMem (h : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ)
     (v : HeightOneSpectrum (𝓞 F)) (hv : _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryLatticeOrthogonal.UnramAt F E v) :
@@ -109,10 +105,6 @@ theorem _root_.GlobalTheory.UnramConjUnit.exists_sub_conj_notMem (h : _root_.For
   rw [heq] at hmem
   exact hd ((hP.mem_or_mem hmem).elim id id)
 
-open scoped TensorProduct Matrix in
-open NumberField IsDedekindDomain in
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  {σ : E →ₐ[F] E} in
 
 theorem _root_.GlobalTheory.UnramConjUnit.exists_sub_conj_unit : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ →

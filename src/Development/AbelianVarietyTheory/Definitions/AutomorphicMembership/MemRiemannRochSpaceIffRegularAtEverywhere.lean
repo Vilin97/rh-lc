@@ -91,8 +91,6 @@ section OfImmersion
 variable {Z : Scheme.{0}} {N : ℕ} (i : Z ⟶ PSpace F N) [IsClosedImmersion i] (d : ℕ)
   [SmoothOfRelativeDimension d (i ≫ PSpace.str F N)] [GeometricallyIntegral (i ≫ PSpace.str F N)]
 
-omit [SmoothOfRelativeDimension d (i ≫ PSpace.str F N)]
-  [GeometricallyIntegral (i ≫ PSpace.str F N)] in
 
 theorem subschemeι_ker : i.ker.subschemeι = inv i.toImage ≫ i := by
   rw [IsIso.eq_inv_comp]; exact i.toImage_imageι

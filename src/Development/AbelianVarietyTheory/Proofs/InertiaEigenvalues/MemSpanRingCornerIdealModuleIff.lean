@@ -129,8 +129,6 @@ theorem _root_.GlobalTheory.SpanRing.inRing_mat (h : Γ) :
   (_root_.GlobalTheory.SpanRing.mem_ringR T rep _).1
     (Submodule.subset_span ⟨1, T.one_mem, h, by funext x; simp⟩)
 
-variable {Γ X A : Type} [Group Γ] [CommRing A] {n : ℕ}
-  (T : Subalgebra A (X → A)) (rep : X → (Γ →* GL (Fin n) A)) in
 
 theorem _root_.GlobalTheory.SpanRing.eval_mem_span {a : X → Matrix (Fin n) (Fin n) A}
     (ha : _root_.GlobalTheory.IndefiniteRowSideFullHecke.CongruenceModuleMatrices.InRing T rep a) (x : X) :
@@ -140,8 +138,6 @@ theorem _root_.GlobalTheory.SpanRing.eval_mem_span {a : X → Matrix (Fin n) (Fi
   exact Submodule.sum_mem _ fun k _ =>
     Submodule.smul_mem _ _ (Submodule.subset_span ⟨h k, rfl⟩)
 
-variable {Γ X A : Type} [Group Γ] [CommRing A] {n : ℕ}
-  (T : Subalgebra A (X → A)) (rep : X → (Γ →* GL (Fin n) A)) in
 
 theorem _root_.GlobalTheory.SpanRing.exists_inRing_eval (x : X) {M : Matrix (Fin n) (Fin n) A}
     (hM : M ∈ Submodule.span A (Set.range (_root_.GlobalTheory.IndefiniteRowSideFullHecke.CongruenceModuleMatrices.mat (rep x)))) :

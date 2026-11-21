@@ -122,9 +122,6 @@ private lemma smul_multilinear_mem_span {ι : Type*} [DecidableEq ι] (f : V [�
         rw [Function.update_of_ne hjk]
         exact hs j (Finset.mem_insert_of_mem hj)
 
-open NumberField MvPolynomial in
-variable {F V : Type} [Field F] [NumberField F] [AddCommGroup V] [Module F V] [Module (𝓞 F) V]
-  [IsScalarTower (𝓞 F) F V] {d : ℕ} in
 
 theorem _root_.GlobalTheory.DetColon.smul_detSpan_sup_le :
     ∀ (F V : Type) [Field F] [NumberField F] [AddCommGroup V] [Module F V] [Module (𝓞 F) V]

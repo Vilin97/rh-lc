@@ -52,8 +52,6 @@ def powB (L : Lattice (O := O) ρ) (n : ℕ) : Submodule O (G → V) :=
 def lenModPow (L : Lattice (O := O) ρ) (n : ℕ) : ℕ∞ :=
   Module.length O (↥(latticeFiniteCocycles PD L) ⧸ (powB PD L n).comap (latticeFiniteCocycles PD L).subtype)
 
-omit [TopologicalSpace G] [TopologicalSpace V] [ContinuousAdd V] [ContinuousConstSMul LL V]
-  [Module Qp V] [IsScalarTower Qp LL V] in
 
 def lenInvD (L : Lattice (O := O) ρ) : ℕ∞ :=
   Module.length O ↥(Representation.invariants (repD L))

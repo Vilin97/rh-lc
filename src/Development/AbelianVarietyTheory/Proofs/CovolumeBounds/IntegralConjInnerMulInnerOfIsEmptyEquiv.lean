@@ -131,8 +131,6 @@ theorem inner_rankOneAverage (hρc : ∀ v, Continuous fun k => ρ k v)
   refine Eq.trans h.symm ?_
   simp [inner_smul_right]
 
-omit [TopologicalSpace K] [IsTopologicalGroup K] [CompactSpace K] [MeasurableSpace K]
-  [BorelSpace K] in
 
 theorem finrank_pos_of_isIrreducible [h : ρ.IsIrreducible] : 0 < Module.finrank ℂ V := by
   rw [Module.finrank_pos_iff]

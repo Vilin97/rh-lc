@@ -34,8 +34,9 @@ def famIdeal {Y Z : Scheme.{0}} [IsIntegral Y] (π : Y ⟶ Z) [IsAffineHom π]
     (hK : IsField (Z.presheaf.stalk (genPt π)))
     (hfd : letI := fieldK π hK; letI := algKL π
       FiniteDimensional (Z.presheaf.stalk (genPt π)) Y.functionField)
-    (I : Y.IdealSheafData) (U : Z.affineOpens) : Ideal Γ(Z, U) :=
-  if h : genPt π ∈ U.1 then
+    (I : Y.IdealSheafData) (U : Z.affineOpens) : Ideal Γ(Z, U) := by
+  classical
+  exact if h : genPt π ∈ U.1 then
     letI := fieldK π hK; letI := algKL π; letI := algAK π U.1 h; letI := algBL π U.1 h
     GlobalTheory.NormSheaf.normIdeal Γ(Z, U) (Z.presheaf.stalk (genPt π)) Y.functionField Γ(Y, π ⁻¹ᵁ U.1)
       (I.ideal ⟨π ⁻¹ᵁ U.1, U.2.preimage π⟩)

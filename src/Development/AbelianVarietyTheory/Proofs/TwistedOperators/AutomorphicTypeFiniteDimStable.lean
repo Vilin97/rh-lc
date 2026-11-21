@@ -132,7 +132,5 @@ end Avg
 end GlobalTheory.FiniteGKSum
 
 namespace GlobalTheory.FiniteGKSum
-open Formalism.REAL Formalism.MainNotions.S GlobalTheory.SmoothGlob GlobalTheory.LowTypeDetermined GlobalTheory.TypeSum GlobalTheory.PointAtPlaceHom GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes GlobalTheory.SeriesToClosure
-  GlobalTheory.FiniteGKSum in
 
 end GlobalTheory.FiniteGKSum

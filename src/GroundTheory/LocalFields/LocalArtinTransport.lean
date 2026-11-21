@@ -181,8 +181,6 @@ def integerEquivOfVle : 𝒪[K] ≃+* 𝒪[K'] where
   map_mul' _ _ := Subtype.ext (map_mul e _ _)
   map_add' _ _ := Subtype.ext (map_add e _ _)
 
-omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace K']
-  [IsNonarchimedeanLocalField K'] in
 
 def residueFieldEquivOfVle : 𝓀[K] ≃+* 𝓀[K'] :=
   IsLocalRing.ResidueField.mapEquiv (integerEquivOfVle e he)

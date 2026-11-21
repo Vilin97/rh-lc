@@ -68,10 +68,6 @@ private lemma form_smul_add_left_lemma_3 (c : _root_.GlobalTheory.IndefiniteRowS
   unfold _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.hR _root_.Formalism.UG.hform _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR
   simp [add_mul, mul_assoc, Finset.sum_add_distrib, Finset.mul_sum]
 
-open scoped TensorProduct Matrix in
-open NumberField IsDedekindDomain in
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (v : HeightOneSpectrum (𝓞 F)) in
 
 theorem _root_.GlobalTheory.SelfDualLatticeSplit.unit_vector_splits :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

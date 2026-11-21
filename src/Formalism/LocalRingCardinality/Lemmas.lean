@@ -278,9 +278,6 @@ theorem liftBaseChange_injective [Module.Flat A O]
   rw [hc, hc] at hst
   exact h1 (liftBaseChange_injective_top hO φ b hb hst)
 
-omit [CommRing A] [IsDomain A] [Algebra A K] [IsFractionRing A K] [CommRing O] [Algebra A O] [Algebra O Kf] [Algebra A Kf]
-  [IsScalarTower A O Kf] [IsScalarTower A K Kf] [Module A V] [IsScalarTower A K V] [Module O W] [IsScalarTower O Kf W]
-  [Module A W] [IsScalarTower A O W] [IsScalarTower A K W] [IsScalarTower A Kf W] in
 
 theorem li_tower {ι' : Type*} (φ : V →ₗ[K] W) (b : Basis ι K V) (hb : LinearIndependent Kf (φ ∘ b))
     (e : ι' → V) (he : LinearIndependent K e) : LinearIndependent Kf (φ ∘ e) := by

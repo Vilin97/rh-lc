@@ -155,8 +155,6 @@ theorem TWact_TWincl {R R' : Type} [CommRing R] [CommRing R'] [Algebra O R] [Alg
 
 end Tensor
 
-omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K]
-  [TameDescentExponentData K l e a] [NeZero a] [NeZero e] [NormedAlgebra ℚ_[l] K] in
 
 theorem galOB_toB (s : GQ l) (x : OA l O) : galOB O s (toB l O x) = toB l O (galOA O s x) := by
   rw [toB, AlgHom.comp_apply, AlgHom.comp_apply, galOB_toOB, galOCr_toOCr]

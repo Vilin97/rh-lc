@@ -887,8 +887,6 @@ theorem mem_integers_iff_alt {x : LL} : x ∈ OL O LL ↔ ∃ a : O, x = algebra
   · rintro ⟨a, rfl⟩
     exact ⟨a, rfl⟩
 
-omit [TopologicalSpace G] [TopologicalSpace Qp] [TopologicalSpace LL] [IsTopologicalRing LL]
-  [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O LL] in
 
 theorem cyclotomic_mul_mem_integers (L1 : Lattice (O := O) (charRep (cycLL PD LL))) (hL1 : L1.T = OL O LL) (g : G)
     {x : LL} (hx : x ∈ OL O LL) : ((cycLL PD LL g : LLˣ) : LL) * x ∈ OL O LL := by

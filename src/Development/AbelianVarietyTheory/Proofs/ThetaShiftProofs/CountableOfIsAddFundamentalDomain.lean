@@ -320,8 +320,6 @@ theorem continuous_partialCoeff {D₁ : Set W₁} (h1 : μ₁ D₁ ≠ ⊤) (j :
   · exact Filter.Eventually.of_forall fun s => by rw [norm_mul, norm_eNeg, mul_one]; exact hC _
   · exact Filter.Eventually.of_forall fun s => by fun_prop
 
-omit [FiniteDimensional ℝ W] [MeasurableSpace W] [BorelSpace W] [μ₁.IsAddHaarMeasure]
-  [FiniteDimensional ℝ W₁] [BorelSpace W₁] in
 
 theorem partialCoeff_add_period (D₁ : Set W₁) (j : W₁ →ₗ[ℝ] W) {f : W → ℂ} (ν : W₁ →ₗ[ℝ] ℝ)
     {l : W} (hl : ∀ x, f (x + l) = f x) (b : W) :

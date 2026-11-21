@@ -27,8 +27,6 @@ theorem finite_lattice_closedBall (r : ℝ) : {x : V | x ∈ L ∧ ‖x‖ ≤ r
 
 variable [IsZLattice ℝ L]
 
-omit [InnerProductSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V]
-  [DiscreteTopology L] [IsZLattice ℝ L] in
 
 end Euclidean
 

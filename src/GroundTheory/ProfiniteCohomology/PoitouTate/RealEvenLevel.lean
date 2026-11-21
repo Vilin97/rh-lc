@@ -51,8 +51,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   {n : ℕ} [NeZero n] {D : Rep (ULift.{0} ℤ) G} [IsDiscreteRep D] (hD : ∀ d : D, n • d = 0)
   [IsDiscreteRep (dualRep D (zmodRep.{0} G n))]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [NeZero n] [IsDiscreteRep D]
-  [IsDiscreteRep (dualRep D (zmodRep.{0} G n))] in
 
 theorem tensorHom_zmodDualIso_inv_dualEvalPairing :
     ((zmodDualIso n D hD).inv ⊗ₘ 𝟙 (zmodRep.{0} G n)) ≫ dualEvalPairing D (zmodRep.{0} G n) =

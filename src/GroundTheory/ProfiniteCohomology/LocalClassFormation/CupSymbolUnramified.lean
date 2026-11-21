@@ -176,8 +176,6 @@ variable {F Ω : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarc
   [Field Ω] [Algebra F Ω] [IsSepClosure F Ω]
   [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω]
 
-omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [ValuativeRel Ω]
-  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω] in
 
 theorem exists_cocycle_brauerInflation (E : IntermediateField F Ω) [FiniteDimensional F E] [Normal F E]
     (c : cocycles₂ (galUnits.{0} F E)) :

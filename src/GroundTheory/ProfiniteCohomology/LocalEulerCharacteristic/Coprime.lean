@@ -355,9 +355,6 @@ theorem finrank_cohomology_alternating_sum_coprime (hl : (l : K) ≠ 0) (h : V �
   change _ - _ + d.one = _
   linarith
 
-set_option maxHeartbeats 400000 in
-omit [ValuativeRel Ksep] [TopologicalSpace Ksep] [IsValuativeTopology Ksep]
-  [ValuativeExtension K Ksep] in
 
 theorem finite_cohomology_coprime (hl : (l : K) ≠ 0) (h : V ≤ U)
     [((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))).Normal]
@@ -433,8 +430,6 @@ theorem eulerChar_coprime (hl : (l : K) ≠ 0) (h : V ≤ U)
   congr 1
   linarith
 
-omit [ValuativeRel Ksep] [TopologicalSpace Ksep] [IsValuativeTopology Ksep]
-  [ValuativeExtension K Ksep] in
 
 end Main
 

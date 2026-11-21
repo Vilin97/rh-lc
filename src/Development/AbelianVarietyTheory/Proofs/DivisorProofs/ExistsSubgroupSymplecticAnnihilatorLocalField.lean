@@ -28,12 +28,6 @@ noncomputable section
 
 namespace GlobalTheory.SympDualNbhd
 
-open IsDedekindDomain NumberField MeasureTheory Matrix in
-open Classical in
-open scoped TensorProduct ComplexConjugate in
-attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar _root_.GlobalTheory.LocalData.complRel
-  _root_.GlobalTheory.LocalData.isLocalField _root_.GlobalTheory.FunObj.borelKw
-  _root_.GlobalTheory.FunObj.borelSpaceKw in
 
 theorem _root_.GlobalTheory.SympDualNbhd.exists_dual_nbhd : ∀ {F : Type} [Field F] [NumberField F]
     (v : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (ψ : AddChar (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v) ℂ),

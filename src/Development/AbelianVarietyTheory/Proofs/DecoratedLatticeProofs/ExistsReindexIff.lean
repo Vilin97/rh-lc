@@ -26,8 +26,6 @@ variable {n m n' m' : Type*} [Fintype n] [DecidableEq n] [Fintype m] [DecidableE
   [Fintype n'] [DecidableEq n'] [Fintype m'] [DecidableEq m'] {c : ℕ}
 
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
-  [Fintype n'] [DecidableEq n'] [Fintype m'] [DecidableEq m'] in
 
 
 end Local

@@ -197,8 +197,6 @@ def FrameT : Prop :=
   HeckeStable X.O X.Γ X.jK X.T (NablaT X.O N lam) ∧
     ∀ μ, HeckeNat X.O X.Γ X.jK X.T (NablaT X.O N lam) (L μ)
 
-omit [∀ μ, Module X.T (Forms X.O X.Γ X.jK (L μ))] [∀ μ, IsScalarTower X.O X.A (L μ)]
-  [∀ μ, Module X.O (L μ)] in
 
 def SimpleFacts (ϖ : X.O) (e : ι → (Fin N → ℕ) → X.A) (hwt : Λ → ι → Fin N → ℕ) : Prop :=
   (∀ (Gm : Type) [AddCommGroup Gm] [Module X.A Gm], IsSimpleModule X.A Gm →

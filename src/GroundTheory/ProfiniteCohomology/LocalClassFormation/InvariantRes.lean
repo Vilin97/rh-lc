@@ -109,8 +109,6 @@ variable (F F' Ω : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNon
   [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω]
   [ValuativeExtension F' Ω]
 
-omit [ValuativeRel F'] [TopologicalSpace F'] [IsNonarchimedeanLocalField F'] [ValuativeExtension F F']
-  [FiniteDimensional F F'] [ValuativeExtension F' Ω] in
 
 theorem unitsInflationCochains_comp_cochainsMapAlong (E : IntermediateField F Ω)
     (E' : IntermediateField F' Ω) [FiniteDimensional F E] [Normal F E] [IsUnramified F E]
@@ -150,8 +148,6 @@ theorem unitsInflationCochains_comp_cochainsMapAlong (E : IntermediateField F Ω
   apply Units.ext
   exact (hι _).symm
 
-omit [ValuativeRel F'] [TopologicalSpace F'] [IsNonarchimedeanLocalField F'] [ValuativeExtension F F']
-  [FiniteDimensional F F'] [ValuativeExtension F' Ω] in
 
 theorem brauerRes_brauerInflation (E : IntermediateField F Ω)
     (E' : IntermediateField F' Ω) [FiniteDimensional F E] [Normal F E] [IsUnramified F E]
@@ -164,8 +160,6 @@ theorem brauerRes_brauerInflation (E : IntermediateField F Ω)
   simp only [HomologicalComplex.homologyMap_comp] at h
   exact congrArg (fun φ => φ.hom y) h
 
-omit [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω]
-  [ValuativeExtension F' Ω] in
 
 theorem unramifiedLevel_le_unramifiedLevel (n : ℕ+) :
     unramifiedLevel F Ω n ≤ (unramifiedLevel F' Ω n).restrictScalars F := by

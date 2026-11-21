@@ -148,8 +148,6 @@ theorem localInv_bijective (U : OpenSubgroup Gal(Ksep/K)) : Function.Bijective (
   (brauerInv_bijective _ Ksep).comp
     ⟨(ModuleCat.mono_iff_injective _).1 inferInstance, (ModuleCat.epi_iff_surjective _).1 inferInstance⟩
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ksep]
-  [TopologicalSpace Ksep] [IsValuativeTopology Ksep] [ValuativeExtension K Ksep] in
 
 theorem isZero_H1_open (U : OpenSubgroup Gal(Ksep/K)) :
     Limits.IsZero (cohomology (Rep.res (U : Subgroup Gal(Ksep/K)).subtype (galUnits.{0} K Ksep)) 1) :=

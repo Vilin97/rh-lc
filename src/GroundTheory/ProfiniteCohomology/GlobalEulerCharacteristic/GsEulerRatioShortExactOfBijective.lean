@@ -76,8 +76,6 @@ theorem eulerChar_mul_eq_mul_card_ker (hS : S.ShortExact)
   rw [eulerChar_mul_eq_mul_card_range_δ hS,
     card_range_eq_card_ker_of_exact (cohomology_exact₁ hS 2 3 rfl)]
 
-omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep S.X₁] [IsDiscreteRep S.X₂]
-  [IsDiscreteRep S.X₃] in
 
 theorem card_X₂_eq_of_shortExact (hS : S.ShortExact) [Finite S.X₂] :
     Nat.card S.X₂ = Nat.card S.X₁ * Nat.card S.X₃ := by

@@ -104,9 +104,6 @@ theorem HasQuotInt.mul_of_measurePreserving (hT : IsClosed (T : Set H)) (hT₁ :
   · rw [← integral_prod_mul, ← mp.map_eq, integral_map mp.aemeasurable (mp.map_eq ▸ hi.aestronglyMeasurable)]
     rfl
 
-omit [MeasurableSpace H₁] [IsTopologicalGroup H₁] [SecondCountableTopology H₁] [BorelSpace H₁] [LocallyCompactSpace H₁]
-  [T2Space H₁] [MeasurableSpace H₂] [IsTopologicalGroup H₂] [SecondCountableTopology H₂] [BorelSpace H₂]
-  [LocallyCompactSpace H₂] [T2Space H₂] in
 
 def prodSub {U : Subgroup (H₁ × H₂)} (h : ∀ x, x ∈ U ↔ x.1 ∈ T₁ ∧ x.2 ∈ T₂) : T₁ × T₂ ≃ₜ* U where
   toFun t := ⟨(t.1, t.2), (h _).2 ⟨t.1.2, t.2.2⟩⟩
@@ -130,9 +127,6 @@ theorem HasQuotInt.prod (hT₁ : IsClosed (T₁ : Set H₁)) (hT₂ : IsClosed (
     (MeasurePreserving.id _)
     ⟨(map_continuous _).measurable, (prodSub h).toHomeomorph.toMeasurableEquiv.map_symm_map⟩ i₁ i₂ h₁ h₂
 
-omit [MeasurableSpace H₁] [IsTopologicalGroup H₁] [SecondCountableTopology H₁] [BorelSpace H₁] [LocallyCompactSpace H₁]
-  [T2Space H₁] [MeasurableSpace H₂] [IsTopologicalGroup H₂] [SecondCountableTopology H₂] [BorelSpace H₂]
-  [LocallyCompactSpace H₂] [T2Space H₂] [TopologicalSpace H₁] [TopologicalSpace H₂] in
 
 theorem mem_cent_prod (γ₁ : H₁) (γ₂ : H₂) (x : H₁ × H₂) : x ∈ cent (γ₁, γ₂) ↔ x.1 ∈ cent γ₁ ∧ x.2 ∈ cent γ₂ := by
   simp only [mem_cent, Prod.ext_iff, Prod.fst_mul, Prod.snd_mul]

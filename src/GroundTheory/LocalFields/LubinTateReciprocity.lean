@@ -137,8 +137,6 @@ theorem ramificationIndex_fixingSubgroup_lubinTateField {n : ℕ} (hn : 0 < n) :
     mul_one, ← finrank_eq_fixingSubgroup_index] at h
   exact h.symm
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
-  [TopologicalSpace Ω] [IsValuativeTopology Ω] [IsSepClosure K Ω] in
 
 theorem norm_neg_gen_eq_coeff_zero {x : Ω} (hint : IsIntegral K x) :
     Algebra.norm K (-AdjoinSimple.gen K x) = (minpoly K x).coeff 0 := by
@@ -362,8 +360,6 @@ theorem exists_lubinTate_action {n : ℕ} (hn : 0 < n) (u : 𝒪[K]ˣ) (k : ℤ)
     rw [lubinTateGalPointMap_val] at e ⊢
     rw [AlgEquiv.mul_apply, h1, e]
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
-  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 
 theorem normal_subgroupOf_fixingOpenSubgroup (M : IntermediateField K Ω) [FiniteDimensional K M]
     [IsGalois K M] :

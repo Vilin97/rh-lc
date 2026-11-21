@@ -79,9 +79,6 @@ variable {X : Type*} [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X]
 
 def orbitPiece (L : Subgroup H) (y : X) : Set X := (fun l : H => l • y) '' (L : Set H)
 
-omit [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X]
-  [TopologicalSpace H] [IsTopologicalGroup H] [LocallyCompactSpace H] [T2Space H]
-  [TotallyDisconnectedSpace H] [SigmaCompactSpace H] [ContinuousSMul H X] in
 
 omit [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X]
   [TopologicalSpace H] [IsTopologicalGroup H] [LocallyCompactSpace H] [T2Space H]
@@ -97,9 +94,6 @@ theorem orbitPiece_subset_orbit {L : Subgroup H} {x₀ y : X} (hy : y ∈ orbit 
   rintro _ ⟨l, -, rfl⟩
   exact mem_orbit_of_mem_orbit l hy
 
-omit [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X]
-  [TopologicalSpace H] [IsTopologicalGroup H] [LocallyCompactSpace H] [T2Space H]
-  [TotallyDisconnectedSpace H] [SigmaCompactSpace H] [ContinuousSMul H X] in
 
 theorem orbitPiece_eq_of_mem {L : Subgroup H} {y z : X} (hz : z ∈ orbitPiece L y) :
     orbitPiece L z = orbitPiece L y := by
@@ -112,9 +106,6 @@ theorem orbitPiece_eq_of_mem {L : Subgroup H} {y z : X} (hz : z ∈ orbitPiece L
     refine ⟨m * l⁻¹, L.mul_mem hm (L.inv_mem hl), ?_⟩
     simp [mul_smul]
 
-omit [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X]
-  [TopologicalSpace H] [IsTopologicalGroup H] [LocallyCompactSpace H] [T2Space H]
-  [TotallyDisconnectedSpace H] [SigmaCompactSpace H] [ContinuousSMul H X] in
 
 theorem orbitPiece_eq_or_disjoint (L : Subgroup H) (y z : X) :
     orbitPiece L y = orbitPiece L z ∨ Disjoint (orbitPiece L y) (orbitPiece L z) := by
@@ -123,9 +114,6 @@ theorem orbitPiece_eq_or_disjoint (L : Subgroup H) (y z : X) :
   · obtain ⟨x, hxy, hxz⟩ := Set.not_disjoint_iff.1 h
     exact Or.inl ((orbitPiece_eq_of_mem hxy).symm.trans (orbitPiece_eq_of_mem hxz))
 
-omit [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X]
-  [TopologicalSpace H] [IsTopologicalGroup H] [LocallyCompactSpace H] [T2Space H]
-  [TotallyDisconnectedSpace H] [SigmaCompactSpace H] [ContinuousSMul H X] in
 
 theorem smul_orbitPiece {A : Subgroup H} {j : H} (hj : ∀ a ∈ A, j * a * j⁻¹ ∈ A)
     (hj' : ∀ a ∈ A, j⁻¹ * a * j ∈ A) (y : X) : j • orbitPiece A y = orbitPiece A (j • y) := by
@@ -138,9 +126,6 @@ theorem smul_orbitPiece {A : Subgroup H} {j : H} (hj : ∀ a ∈ A, j * a * j⁻
     refine ⟨(j⁻¹ * a * j) • y, ⟨j⁻¹ * a * j, hj' a ha, rfl⟩, ?_⟩
     simp [mul_smul]
 
-omit [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X]
-  [TopologicalSpace H] [IsTopologicalGroup H] [LocallyCompactSpace H] [T2Space H]
-  [TotallyDisconnectedSpace H] [SigmaCompactSpace H] [ContinuousSMul H X] in
 
 theorem orbitPiece_smul (L : Subgroup H) (h : H) (y : X) :
     orbitPiece L (h • y) = h • orbitPiece (L.map (MulAut.conj h⁻¹).toMonoidHom) y := by
@@ -159,8 +144,6 @@ theorem isCompact_orbitPiece {L : Subgroup H} (hL : IsCompact (L : Set H)) (y : 
     IsCompact (orbitPiece L y) :=
   hL.image (continuous_id.smul continuous_const)
 
-omit [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] [SigmaCompactSpace H] [T2Space X]
-  [LocallyCompactSpace X] [TotallyDisconnectedSpace X] [ContinuousSMul H X] in
 
 theorem isCompact_isOpen_map_conj {L : Subgroup H} (hLc : IsCompact (L : Set H))
     (hLo : IsOpen (L : Set H)) (h : H) :
@@ -213,9 +196,6 @@ section Base
 
 variable {U C : Set X} {x₀ : X}
 
-omit [LocallyCompactSpace X] [TotallyDisconnectedSpace X] [IsTopologicalGroup H]
-  [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] [SigmaCompactSpace H]
-  [ContinuousSMul H X] [T2Space X] [TopologicalSpace H] in
 
 theorem sub_mem_of_eqOn_orbit (hO : U ∩ C = orbit H x₀) {f g : X → ℂ} (hf : f ∈ supportedIn U)
     (hg : g ∈ supportedIn U) (heq : ∀ x ∈ orbit H x₀, f x = g x) :
@@ -228,9 +208,6 @@ theorem sub_mem_of_eqOn_orbit (hO : U ∩ C = orbit H x₀) {f g : X → ℂ} (h
     have h2 : g x = 0 := Function.notMem_support.1 fun h => hxU (hg.2 h)
     simp [h1, h2]
 
-omit [LocallyCompactSpace X] [TotallyDisconnectedSpace X] [IsTopologicalGroup H]
-  [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] [SigmaCompactSpace H]
-  [ContinuousSMul H X] [T2Space X] [TopologicalSpace H] in
 
 theorem mem_of_eqOn_orbit (hO : U ∩ C = orbit H x₀) {W : Submodule ℂ (X → ℂ)}
     (hWU : W ≤ supportedIn U) {f g : X → ℂ} (hg : g ∈ supportedIn U)
@@ -241,9 +218,6 @@ theorem mem_of_eqOn_orbit (hO : U ∩ C = orbit H x₀) {W : Submodule ℂ (X �
     (le_sup_right (a := W) (sub_mem_of_eqOn_orbit hO hg hfU heq))
   simpa using this
 
-omit [LocallyCompactSpace X] [TotallyDisconnectedSpace X] [IsTopologicalGroup H]
-  [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] [SigmaCompactSpace H] [T2Space X]
-  [TopologicalSpace H] [ContinuousSMul H X] in
 
 theorem transl_mem_of_mem (χ : H →* ℂ)
     {W : Submodule ℂ (X → ℂ)} (hWU : W ≤ supportedIn U) (hW : relSpan χ U ≤ W) (h : H)

@@ -26,9 +26,6 @@ variable {R S B : Type} [CommRing R] [CommRing S] [CommRing B] [Algebra R S] [Al
     _root_.GlobalTheory.DiscrJacobian.mu R S B (s ⊗ₜ w) = algebraMap S B s * w := by
   simp [_root_.GlobalTheory.DiscrJacobian.mu]
 
-open scoped TensorProduct in
-variable {R S B : Type} [CommRing R] [CommRing S] [CommRing B] [Algebra R S] [Algebra S B]
-  [Algebra R B] [IsScalarTower R S B] in
 
 theorem _root_.GlobalTheory.DiscrJacobian.mem_span_of_mu_eq_zero {ι : Type} [Fintype ι] [Module.Finite R B]
     [Module.FinitePresentation S B] (x : ι → S)

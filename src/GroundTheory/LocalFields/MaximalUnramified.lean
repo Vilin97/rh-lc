@@ -512,8 +512,6 @@ theorem restrictNormal_eq_maximalUnramifiedExtensionFrobenius_iff (σ : Ω ≃�
   rw [← unramifiedDegree_restrictNormal, ← unramifiedDegree_maximalUnramifiedExtensionFrobenius (K := K) (Ω := Ω)]
   exact unramifiedDegree_maximalUnramifiedExtension_injective.eq_iff.symm
 
-omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [HasUnramifiedRoots K Ω]
-  [IsGalois K Ω] in
 
 theorem dense_zpowers_ofAdd_one :
     Dense (Subgroup.zpowers (Multiplicative.ofAdd (1 : ℤ̂)) : Set (Multiplicative ℤ̂)) := by

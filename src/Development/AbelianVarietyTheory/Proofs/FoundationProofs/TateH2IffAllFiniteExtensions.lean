@@ -24,8 +24,6 @@ variable {O O' G M M' : Type} [CommRing O] [CommRing O'] [Group G] [TopologicalS
 variable (he : ∀ g x, e (π g x) = ρ g (e x))
 include he
 
-omit [TopologicalSpace G] [TopologicalSpace M'] [DiscreteTopology M'] [IsTopologicalAddGroup M']
-  [ContinuousConstSMul O' M'] in
 
 end Transport
 

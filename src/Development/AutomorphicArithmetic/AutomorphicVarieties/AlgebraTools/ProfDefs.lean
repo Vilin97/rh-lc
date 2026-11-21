@@ -42,6 +42,7 @@ theorem isClosed_proLRes [ContinuousMul G] : IsClosed (proLRes l G : Set G) := b
 def proLResOf (H : Subgroup G) : Subgroup G := (proLRes l H).map H.subtype
 
 
+variable {G} in
 def TopGen (s : Set G) : Prop := Dense (Subgroup.closure s : Set G)
 
 def TopFG : Prop := ∃ s : Set G, s.Finite ∧ TopGen s
@@ -53,6 +54,7 @@ theorem topGen_iff [IsTopologicalGroup G] (s : Set G) :
     SetLike.coe_set_eq]
 
 
+variable {G} in
 def limKer {ι : Type} (F : Filter ι) (K : ι → Subgroup G) : Subgroup G where
   carrier := {g | ∀ O : OpenNormalSubgroup G, ∀ᶠ i in F, g ∈ K i ⊔ O.toSubgroup}
   mul_mem' ha hb O := ((ha O).and (hb O)).mono fun _ h => mul_mem h.1 h.2

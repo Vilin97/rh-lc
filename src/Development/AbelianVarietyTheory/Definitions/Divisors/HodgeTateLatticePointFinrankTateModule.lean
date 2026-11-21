@@ -277,8 +277,6 @@ theorem wRec_le_latTSub (τ : Λ →+* O) : P.wRec τ ≤ P.latTSub τ :=
 
 variable {P} {N j : ℕ}
 
-omit [IsAlgClosed C] [CharZero C] [Fact ¬IsUnit (p : O)]
-  [IsAdicComplete (Ideal.span {(p : O)}) O] in
 
 end Point
 

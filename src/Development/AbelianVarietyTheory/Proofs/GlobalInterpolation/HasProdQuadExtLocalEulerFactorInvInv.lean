@@ -84,10 +84,6 @@ private theorem conjIdeal_eq_smul_of_star_eq (τ : Gal(E/F)) (hs : ∀ x : E, st
     show ((τ • s : 𝓞 E) : E) = _
     rw [hs]; rfl
 
-open scoped TensorProduct Pointwise in
-open NumberField IsDedekindDomain in
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  [StarRing E] in
 
 theorem _root_.GlobalTheory.EtaEulerProduct.inert_or_split {σ : E →ₐ[F] E} (h : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ)
     (hs : ∀ x : E, star x = σ x) (hE : _root_.Formalism.HermitianLatticesTheory.IsCMUnram E) (v : HeightOneSpectrum (𝓞 F)) :
@@ -425,10 +421,6 @@ private theorem summable_absNorm_maximal_rpow_neg (K : Type) [Field K] [NumberFi
   rw [Nat.card_eq_fintype_card]
   exact_mod_cast hc
 
-open scoped TensorProduct Pointwise in
-open NumberField IsDedekindDomain in
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  [StarRing E] in
 
 theorem _root_.GlobalTheory.EtaEulerProduct.hasProd_eulerInv_inv : ∀ (F E : Type) [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E] [StarRing E] (σ : E →ₐ[F] E), _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ →

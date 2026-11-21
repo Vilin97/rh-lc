@@ -15,8 +15,6 @@ namespace GlobalTheory.ExpWeight
 variable {C : Type} [Field C] (v : AddValuation C (WithTop ℝ))
   {σ : Type} [DecidableEq σ] (ρ : σ → ℝ)
 
-variable {C : Type} [Field C] (v : AddValuation C (WithTop ℝ))
-  {σ : Type} [DecidableEq σ] (ρ : σ → ℝ) in
 
 theorem _root_.GlobalTheory.ExpWeight.weight_exp :
   (∀ (C : Type) [Field C] [CharZero C] (v : AddValuation C (WithTop ℝ)) (l : ℕ), l.Prime → v (l : C) = 1 → ∀ (σ : Type) [Fintype σ] [DecidableEq σ] (ρ : σ → ℝ) (h : MvPowerSeries σ C), MvPowerSeries.constantCoeff h = 0 →

@@ -242,8 +242,6 @@ theorem spMap_inj {A B : Type} [CommRing A] [CommRing B] {f g : A →+* B} (h : 
 
 end GlobalTheory.ShFam.EigLoc
 
-open AlgebraicGeometry CategoryTheory Limits NumberField ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.L2.Pj
-  GlobalTheory.Toroidal GlobalTheory.Cartier GlobalTheory.ShFam GlobalTheory.ShFam.EigLoc in
 
 theorem GlobalTheory.ShFam.EigLoc.exists_eigFrame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : Model Xo c β) (R : Type) [CommRing R] [IsLocalRing R] (φ : c.F →+* R) (x : Sp R ⟶ gen Z), x ≫ genStr Z = spMap φ → Nonempty (EigFrame Z φ (x ≫ genι Z)) := by
   intro E _ _ _ H Dw l Xo c O _ β Z R _ _ φ x hφ

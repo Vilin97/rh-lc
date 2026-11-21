@@ -396,13 +396,6 @@ private theorem relIndex_comap_mulEquiv {G G' : Type} [Group G] [Group G'] (f : 
     (A.comap f.toMonoidHom).relIndex (B.comap f.toMonoidHom) = A.relIndex B := by
   rw [Subgroup.relIndex_comap, Subgroup.map_comap_eq_self_of_surjective f.surjective]
 
-open ValuativeRel in
-open scoped Pointwise ENNReal Classical in
-variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] in
-variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableSpace E] in
-variable {M : _root_.Formalism.MainNotions.S.Loc.Model F E} {V : Type} [AddCommGroup V] [Module E V] {H : _root_.Formalism.MainNotions.S.Loc.HermSp M V} {r k : ℕ} in
-variable {P : _root_.Formalism.MainNotions.S.LocNG.FPair H r} {S : _root_.GlobalTheory.HL.Frames M.L r k}
-  (c : _root_.GlobalTheory.HL.Coord P S) in
 
 theorem _root_.GlobalTheory.HL.CoordDatum.transport : ∀ {F : Type} [Field F] [ValuativeRel F]
     [TopologicalSpace F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
