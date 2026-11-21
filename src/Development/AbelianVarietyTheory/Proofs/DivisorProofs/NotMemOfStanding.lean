@@ -108,7 +108,7 @@ theorem notMem_of_standing {t : T} (hst : SquareStanding G t) {w : Pl D.host.E} 
 set_option maxHeartbeats 1000000 in
 theorem local_charts (hL : L.Is μ₀) (W : G.Weil) (B : Frames G) (t : T) (i j : Fin D.R.m) (M : Vol G) (hst : SquareStanding G t)
     {e : Num G i j} {Bs : Base D.host.F D.host.E} {Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j} {X : Chars D.host.F D.host.E}
-    {om : Rep D.sp.cm.sig Γ.V Γ.W} {om' : Rep D.sp.cm.sig Γ.V' Γ.W} (h : IsTripleOf W M t i j e Bs Γ X) {R Rf}
+    {om : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Γ.V Γ.W} {om' : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Γ.V' Γ.W} (h : IsTripleOf W M t i j e Bs Γ X) {R Rf}
     (hm : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsMatched Bs Γ X om om' R Rf) (hti : IsDoublyCompatible t i j e Bs Γ X) {w : Pl D.host.E} (hw : w ∈ locPl G t) :
     ∃ (ιA ι : ToA G t i j w) (ιB ι' : ToB G t i j w) (l : ℂ), l ≠ 0 ∧ IsLinModelA W B t e Γ w ιA ∧ IsLinModelB W B t e Γ w ιB ∧
       IsMixModelA W B t e Γ w ι ∧ IsMixModelB W B t e Γ w ι' ∧
