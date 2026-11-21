@@ -71,9 +71,11 @@ theorem V'_le_V (N e : ℕ) (ψ : G k Ω →* Oˣ) : V' l N e ψ ≤ V l e ψ :=
   exact VS_anti l (Dvd.intro N rfl) e ψ
 
 
+variable (O) in
 def nrm (a : ℕ∞) : ℝ := (a.toNat : ℝ) / ((eO l O).toNat : ℝ)
 
 
+variable (O) in
 def SumLe (f : ℕ → ℕ∞) (t : ℕ) (B : ℝ) : Prop :=
   (∀ e : ℕ, 0 < e → e < t → f e ≠ ⊤) ∧ ∑ e ∈ Finset.Ico 1 t, nrm l O (f e) ≤ B
 
