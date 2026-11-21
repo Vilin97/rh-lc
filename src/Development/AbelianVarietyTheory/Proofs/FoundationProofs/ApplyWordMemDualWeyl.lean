@@ -266,7 +266,8 @@ private theorem mem_dualWeyl_rat_of_mem_map_weyl {r n : ℕ} (hn : n ≤ r) (ν 
 
 theorem weyl_isLattice {r n : ℕ} (hn : n ≤ r) (ν : Fin n → ℕ) (hν : Antitone ν) :
     (inV ν ((weyl ℤ r n hn ν).map (intQ r n))).IsFullLattice ℚ where
-  toIsLattice := Submodule.IsLattice.of_fg ℚ <| by
+  toIsLattice := by
+    apply Submodule.IsLattice.of_fg ℚ
     have hW : (weyl ℤ r n hn ν).FG := by
       have := isNoetherian_of_fg_of_noetherian _ (dualWeyl_int_fg r n ν)
       exact Submodule.FG.of_le_of_isNoetherian (weylLeDual ℤ r n hn ν hν)

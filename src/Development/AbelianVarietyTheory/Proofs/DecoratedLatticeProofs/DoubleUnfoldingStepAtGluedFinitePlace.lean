@@ -448,6 +448,7 @@ theorem vertexGlued (D : D7) : VertexGlued D := by
               rw [one_smul] at this
               exact this) z]
         congr 1
+        simp
       have e3 := Comm.doubleThetaUnfolding_equivariant_unitaryGroups s₁ s₂ l vL (hFF A) (t₁ (xv A' Q)) (t₂ (yd Q)) (α.gl g) 1 1
       rw [one_emb, Comm.emb_gl hα g, hid] at e3
       have e4 : FFStar q (resChar χ hχ q) φ (g • A) = fun x => FFStar q (resChar χ hχ q) φ A (x * α.gl g) :=

@@ -79,7 +79,12 @@ theorem main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1
     have hth1 := GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ hΦ (dV.ext0 W w)
     have hth2 : IsThetaFunO ψ V W (c • Φ) := isThetaFunO_smul_loc hΦ c
     refine (GlobalTheory.T.thetaFunction_determined_by_mixedCoordinates D ψ hψ V W _ _ hth1 hth2).1 V₀ ρ dV vS (fun x => ?_)
-    rw [hH.2.2.1 x w, hmix x, heisO_smul_loc, hw, mixS_smul_loc, hmix x, smul_comm]
+    change (_root_.I195MixedCoordinates_8ff71cc19fc82be2cd949563.source dV) W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.ext0 W w) Φ) x =
+      (_root_.I195MixedCoordinates_8ff71cc19fc82be2cd949563.source dV) W ψ vS.μ vS.𝓕 (c • Φ) x
+    have hh := hH.2.2.1 x w
+    change (_root_.I195MixedCoordinates_8ff71cc19fc82be2cd949563.source dV) W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.ext0 W w) Φ) x =
+      heisO ψ V₀ W w ((_root_.I195MixedCoordinates_8ff71cc19fc82be2cd949563.source dV) W ψ vS.μ vS.𝓕 Φ x) at hh
+    rw [hh, hmix x, heisO_smul_loc, hw, mixS_smul_loc, hmix x, smul_comm]
   refine ⟨fun ξ hξ => key _ _ (hB1 ξ hξ), fun η hη => by rw [key _ 1 (by rw [one_smul]; exact hB2 η hη), one_smul], ?_, ?_⟩
   · intro u hu
     obtain ⟨w, hw, rfl⟩ := AddSubgroup.mem_map.1 hu

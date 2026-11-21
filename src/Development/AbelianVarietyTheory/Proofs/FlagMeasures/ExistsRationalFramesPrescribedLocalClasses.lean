@@ -129,8 +129,8 @@ private theorem algebraMap_δ_mul_uP_mem_O (Z : LocDat D) (p : PlF D) :
     rw [inv_one] at hle
     exact FractionalIdeal.one_le.mp hle
   obtain ⟨-, -, -, hO, -⟩ := Z.agree p
-  have h2 := LocFacts.lf_mem_pow p dualLoc_holds Z 1 1 h1
-  simp only [map_one, one_mul, pow_one] at h2
+  have h2 := LocFacts.lf_mem_inv p dualLoc_holds Z 1 (by simpa using h1)
+  simp only [map_one, one_mul] at h2
   rw [hO]
   exact h2
 

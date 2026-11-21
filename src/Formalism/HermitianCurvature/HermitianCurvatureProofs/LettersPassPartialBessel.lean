@@ -31,7 +31,7 @@ theorem pbF_congr_D (Bj : B.RealPlaceData k ρ Wp Wq) (B0 : B.RealPlaceData k n 
   unfold TI
   refine integral_congr_ae (Eventually.of_forall fun x => ?_)
   by_cases hx : PBQ.GoodP Bj x
-  · simp only [gI, if_pos hx]
+  · simp only [gI, ite_eq_left hx]
     congr 2
     have hs : sE Bj e x ∈ Sset k n B0.z := hzS ▸ sE_mem_S Bj e x
     have hs1 : (1 : B.Mat k n) ∈ Sset k n B0.z' := Formalism.FourierDecayAlt.P.PBG.one_mem_Sset k n B0.z'

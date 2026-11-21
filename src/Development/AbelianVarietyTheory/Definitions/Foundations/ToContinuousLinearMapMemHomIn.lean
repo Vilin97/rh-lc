@@ -79,7 +79,7 @@ theorem restr_map {M : ι → Type} {ξ y : ∀ i, M i} {f : ∀ i, M i → M i}
     (hy : Restr ξ y) : Restr ξ fun i => f i (y i) :=
   (Set.Finite.union hy hf).subset fun i hi => by
     by_contra hn
-    simp only [Set.mem_union, Set.mem_setOf_eq, Set.mem_compl_iff, not_or, not_not] at hn
+    simp only [Set.mem_union, Set.mem_ofPred_eq, Set.mem_compl_iff, not_or, not_not] at hn
     exact hi ((congrArg (f i) hn.1).trans hn.2)
 
 theorem restr_self {M : ι → Type} (ξ : ∀ i, M i) : Restr ξ ξ := by simp [Restr]
@@ -91,7 +91,7 @@ theorem IsRestrTensor.finite_mulSupport (h : IsRestrTensor p δ ξ π B) (hy : R
     (Function.mulSupport fun i => ⟪y' i, y i⟫_ℂ).Finite :=
   ((Set.Finite.union hy hy').union h.unit).subset fun i hi => by
     by_contra hn
-    simp only [Set.mem_union, Set.mem_setOf_eq, Set.mem_compl_iff, not_or, not_not] at hn
+    simp only [Set.mem_union, Set.mem_ofPred_eq, Set.mem_compl_iff, not_or, not_not] at hn
     exact hi (by beta_reduce; rw [hn.1.1, hn.1.2, inner_self_eq_norm_sq_to_K, hn.2]; simp)
 
 theorem IsRestrTensor.ext (h : IsRestrTensor p δ ξ π B) {v w : H} (e : ∀ y, Restr ξ y → ⟪B y, v⟫_ℂ = ⟪B y, w⟫_ℂ) :
@@ -123,7 +123,7 @@ def restrRep (p : ∀ i, G →* Γ i) (σ : ∀ i, Representation ℂ (Γ i) (N 
   let a : G → AdmFun s → AdmFun s := fun g l => ⟨fun i => l.1 i ∘ₗ σ i (p i g),
     (Set.Finite.union l.2 (h g)).subset fun i hi => by
       by_contra hn
-      simp only [Set.mem_union, Set.mem_setOf_eq, Set.mem_compl_iff, not_or, not_not] at hn
+      simp only [Set.mem_union, Set.mem_ofPred_eq, Set.mem_compl_iff, not_or, not_not] at hn
       exact hi ((congrArg (l.1 i) hn.2).trans hn.1)⟩
   { toFun := fun g => (LinearMap.funLeft ℂ ℂ (a g)).restrict (p := RTens s) (q := RTens s) fun _ hz =>
       (Submodule.span_le (p := (RTens s).comap (LinearMap.funLeft ℂ ℂ (a g)))).2 (by

@@ -82,10 +82,14 @@ theorem polZero_om_fin : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     intro i
     filter_upwards [hM.triple.geo.hM.std, T.finite_toSet.compl_mem_cofinite] with w hw hwT
     rw [(hf i).2.2 w hwT, hw]
-  have hpure : ∀ i, om (1, h) (pure (f i) (φ i)) = pure (f i) (φ₂ i) := fun i =>
-    GlobalTheory.ThK.LocalOps.acts_pure v (om (1, h)) (f i) (φ i) (ψ i)
-      (GlobalTheory.TensUniq.pure_mem_schA _ _ (hf i).2.1 (hstd i)) (fun x => GlobalTheory.PureFactor.mulSupport_finite _ (hstd i) x)
-      (hDA _ _)
+  have hpure : ∀ i, om (1, h) (pure (f i) (φ i)) = pure (f i) (φ₂ i) := by
+    intro i
+    obtain ⟨r, hr, hrt⟩ := GlobalTheory.PureFactor.exists_rest_factor v (f i) (φ i) (hstd i)
+    have e1 : pure (f i) (φ i) = tens (evFin F v) (φ i v) r := by
+      rw [hrt, Function.update_eq_self]
+    have hRest : Rest (evFin F v) (φ i v) r :=
+      ⟨hr, by rw [← e1]; exact GlobalTheory.TensUniq.pure_mem_schA _ _ (hf i).2.1 (hstd i)⟩
+    rw [e1, hDA _ _ r hRest, hrt]
   have hv : v ∈ insert v T := Finset.mem_insert_self _ _
   have hTS : T ⊆ insert v T := Finset.subset_insert _ _
   refine ⟨insert v T, hXT.trans hTS, m, f, φ₂, fun i => ⟨(hf i).1, fun w => ?_, fun w hw => ?_⟩, ?_, ?_⟩
@@ -100,7 +104,7 @@ theorem polZero_om_fin : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     exact (hf i).2.2 w hw.2
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    exact Finset.sum_congr rfl fun i _ => hpure i
+      exact Finset.sum_congr rfl fun i _ => hpure i
   · have hz' := GlobalTheory.PolMatchLin.transport Bs G Xc om om' R Rf hM.fin hXT hTS f φ
       (fun j : Fin 0 => j.elim0 : Fin 0 → SInf F (Fin a' × Fin (a + a')))
       (fun j : Fin 0 => j.elim0 : Fin 0 → ∀ w : Pl F, (Fin a' × Fin (a + a') → Fv F w) → ℂ)

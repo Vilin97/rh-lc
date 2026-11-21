@@ -216,7 +216,7 @@ theorem isHaarOn_smul {S : Set (Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1
     simp only [Measure.smul_apply, smul_eq_mul, Measure.coe_zero, Pi.zero_apply, mul_eq_zero, hc0, false_or] at this
     exact h2 (Measure.measure_univ_eq_zero.1 this)
   · rw [Measure.smul_apply, h3, smul_zero]
-  · rw [Measure.map_smul, h4 s hs]
+  · rw [Measure.map_smul c (measurable_lmulM (k := k) (r := r) s).aemeasurable, h4 s hs]
 
 theorem preimage_expBall (hPJ : Pᴴ * Formalism.REAL.Jm ε * P = Hpk k r) (h1 : Pᴴ * P = 1) (h2 : P * Pᴴ = 1) (ρ : ℝ) :
     cM (ε := ε) Pᴴ P ⁻¹' expBall (UH (Hpk k r)) ρ = Formalism.MainNotions.S.Gauge.expSet ε (Metric.ball 0 ρ) := by
@@ -265,7 +265,7 @@ theorem gaugeTr_of {r k : ℕ} {ε : Fin (2 * r + k + 1) → Bool} {e f : Fin r 
     (hG : Formalism.MainNotions.S.Gauge.GaugeDens ε) :
     IsGaugeOn (UH (Hpk k r))
       (((ENNReal.ofReal (Formalism.MainNotions.S.Gauge.gaugeU ε))⁻¹ • Formalism.REAL.muG ε).map
-        (cM (ε := ε) (Qi ε e f wf z0) (Qm e f wf z0))) := by
+        (cM (ε := ε) (Qi (k := k) (r := r) ε e f wf z0) (Qm e f wf z0))) := by
   obtain ⟨P, hPJ, h1⟩ := exists_unitary ε (sig_of_frame hF)
   have h2 : P * Pᴴ = 1 := mul_eq_one_comm.mp h1
   set c : ℝ≥0∞ := (ENNReal.ofReal (Formalism.MainNotions.S.Gauge.gaugeU ε))⁻¹ with hc
@@ -300,10 +300,10 @@ theorem gaugeTr_of {r k : ℕ} {ε : Fin (2 * r + k + 1) → Bool} {e f : Fin r 
   have hmapeq : (c • Formalism.REAL.muG ε).map (cM (ε := ε) (Qi ε e f wf z0) (Qm e f wf z0)) =
       (c • Formalism.REAL.muG ε).map (cM (ε := ε) Pᴴ P) := by
     have hm : Measurable (fun g : Formalism.REAL.UJ ε => t⁻¹ * g * t) := (measurable_const_mul t⁻¹).mul_const t
-    rw [hfun, ← Measure.map_map emb.measurable hm, Measure.map_smul, muG_conj]
+    rw [hfun, ← Measure.map_map emb.measurable hm, Measure.map_smul c hm.aemeasurable, muG_conj]
   rw [hmapeq]
   refine ⟨?_, ?_⟩
-  · rw [Measure.map_smul]
+  · rw [Measure.map_smul c emb.measurable.aemeasurable]
     exact isHaarOn_smul (isHaarOn_G (P0 := P) (B0 := Pᴴ) ⟨hPJ, by
       rw [← hPJ]; simp only [Matrix.mul_assoc]; rw [← Matrix.mul_assoc P Pᴴ, h2, Matrix.one_mul,
         Formalism.REAL.Jm_mul_self, Matrix.mul_one]⟩) hc0 hct

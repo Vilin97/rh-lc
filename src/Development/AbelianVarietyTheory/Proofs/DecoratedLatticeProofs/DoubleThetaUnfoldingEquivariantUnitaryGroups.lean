@@ -146,6 +146,8 @@ theorem handFB_equiv {Y : GA D J.W₀ → WO J.W₀ B.L → ℂ} {Ξ : WO J.W₀
   simp only [handFB]
   refine Eq.trans ?_ (integral_right J.v0 (contAut_pairKer s vL hY hΞ (h₁ * h)).1 g)
   congr 1
+  funext h₀
+  simp only [pairKer]
   rw [← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, ← map_mul, Prod.mk_mul_mk, one_mul]
 
 end FB

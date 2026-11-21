@@ -24,7 +24,7 @@ theorem value_zero_parabolic : ∀ (D : D7) (n : ℕ) (V : HSp D) (ψ : AddChar 
   obtain ⟨m, v, b, e, hm, hv⟩ := GlobalTheory.StdUnn.LeftInvSect.exists_levi_unip hp a ha
   have e' : ω (p * g) Φ = ω m (ω v (ω g Φ)) := by
     rw [e, map_mul, map_mul]; rfl
-  have z1 : ((0 : Mx D V.rank n) ⬝ a.1 : Mx D V.rank n) = 0 := Matrix.zero_mul _
+  have z1 : ((0 : Mx D V.rank n) * a.1 : Mx D V.rank n) = 0 := Matrix.zero_mul _
   have z2 : GlobalTheory.StdUnn.inner V (0 : Mx D V.rank n) 0 = 0 := by
     rw [GlobalTheory.StdUnn.inner, adj_zero, Matrix.zero_mul]
   have hs : s0 V n + (n : ℂ) / 2 = (V.rank : ℂ) / 2 := by rw [s0]; ring

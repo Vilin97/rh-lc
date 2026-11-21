@@ -103,8 +103,7 @@ theorem hasComplement_of_basis (W : HSpace E) {n : ℕ} (b : Module.Basis (Fin (
   have hx : b k ∈ L := Submodule.subset_span ⟨k, rfl⟩
   refine ⟨L, ⟨⟨Submodule.fg_span (Set.finite_range _), ?_⟩, ?_⟩, hx, ?_,
     stdSpace star_isIntegral n (fun i => neg (k.succAbove i)) p q, ι, hk, ?_, ?_, ?_⟩
-  · rw [Submodule.span_span_of_tower]
-    exact b.span_eq
+  · exact fun _ _ => (LinearIndependent.iff_fractionRing (𝓞 E) E).mp
   · have h := (Formalism.E.hermDual (𝓞 E) E W.V (Fin (n + 1)) W.hT b
       (IsFractionRing.injective (𝓞 E) E) (star_integral star_isIntegral)).2
       (Matrix.diagonal fun i => (sgn (neg i) : 𝓞 E)) (by

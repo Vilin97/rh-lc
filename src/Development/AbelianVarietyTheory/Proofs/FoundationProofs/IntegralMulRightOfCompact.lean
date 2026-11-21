@@ -343,7 +343,7 @@ theorem repOp_typeIdem [T2Space G] [Finite Q] (hτ : τ.IsIrreducible) {H : Type
       l ((repOp π μ f).toLinearMap v) = ∫ g, f g * l (linRep π g v) ∂μ := fun {f} hf l hl v => by
     have := (⟨l, hl⟩ : H →L[ℂ] ℂ).integral_comp_comm (hπ.isRepOp (μ := μ) hf.1.continuous hf.2 v).1
     rw [← hπ.repOp_apply hf.1.continuous hf.2] at this
-    simpa using this.symm
+    simpa [linRep] using this.symm
   obtain ⟨h1, h2, h3, h4⟩ := proj_of_weak μ ho hc hr hk τ hτ (ρ := linRep π) (L := {l | Continuous l})
     (fun v w h => ext_inner_left ℂ fun u => h (innerSL ℂ u).toLinearMap (innerSL ℂ u).continuous)
     (fun l hl g => Continuous.comp (g := l) hl (π g).continuous) (fun l hl v => Continuous.comp hl (hπ.continuous_apply v))

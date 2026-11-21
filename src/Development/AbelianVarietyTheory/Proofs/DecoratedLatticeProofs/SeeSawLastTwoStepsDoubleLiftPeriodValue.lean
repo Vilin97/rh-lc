@@ -106,6 +106,8 @@ theorem trc_mapDomain {V : HSp D} (e : GA D V →₀ ℂ) (b : GA D V) (f : GA D
     (fun _ _ _ => add_smul _ _ _)]
   refine Finsupp.sum_congr fun g _ => ?_
   congr 1
+  funext x
+  simp only [rTrans, mul_assoc]
 
 theorem contAut_trc {V : HSp D} (e : GA D V →₀ ℂ) {f : GA D V → ℂ} (hf : IsContAut V f) : IsContAut V (trc e f) :=
   TrcProof.contAut_sum e.support e (fun g => rTrans g f) fun g _ => TrcProof.contAut_rTrans g hf
@@ -172,7 +174,7 @@ theorem integral_sum_sum {X T L : HSp D} (o : OrthDec X T L) (cT : CoCpt T) (vT 
     {I J : Type} [Fintype I] [Fintype J] {Φ : I → J → GA D X → ℂ} (hΦ : ∀ i j, IsContAut X (Φ i j)) :
     ∫ h in vT.𝓕, f h * (∑ i, ∑ j, Φ i j) (o.emb (h, 1)) ∂vT.μ = ∑ i, ∑ j, ∫ h in vT.𝓕, f h * Φ i j (o.emb (h, 1)) ∂vT.μ := by
   simp only [Finset.sum_apply, Finset.mul_sum]
-  rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => integrableOn_emb o cT vT hf (hΦ i j)]
+  rw [integral_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => integrableOn_emb o cT vT hf (hΦ i j)]
   exact Finset.sum_congr rfl fun i _ => integral_finsetSum _ fun j _ => integrableOn_emb o cT vT hf (hΦ i j)
 
 theorem lst_smul (c : Comm D) (j : ℕ) (h : j + 2 * 0 + 2 = D.R.m) (τ) (s₁ : StepBF c.ψ (c.B j 0 h) (c.J j 0 h)) (a b : ℂ)

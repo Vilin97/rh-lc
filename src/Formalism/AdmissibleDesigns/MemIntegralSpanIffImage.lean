@@ -773,8 +773,9 @@ variable {O : Type} [CommRing O] [IsDomain O] {LL : Type} [Field LL] [Topologica
 include hσ hb hc in
 theorem thet_loc (hι : Function.Bijective ι) (hO : IsOpen (Set.range (algebraMap OL LL)))
     (hinj : Function.Injective iL) :
-    IsLocalizedModule (nonZeroDivisors O) (thet e PD iL ρ ι ρL hiL) where
-  map_units s := by
+    IsLocalizedModule (nonZeroDivisors O) (thet e PD iL ρ ι ρL hiL) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro s
     rw [Module.End.isUnit_iff]
     have hs : algebraMap O (FractionRing O) (s : O) ≠ 0 :=
       IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors s.2
@@ -787,7 +788,7 @@ theorem thet_loc (hι : Function.Bijective ι) (hO : IsOpen (Set.range (algebraM
       refine ⟨(algebraMap O (FractionRing O) (s : O))⁻¹ • q, ?_⟩
       rw [Module.algebraMap_end_apply, ← algebraMap_smul (FractionRing O) (s : O), smul_smul,
         mul_inv_cancel₀ hs, one_smul]
-  surj q := by
+  · intro q
     obtain ⟨c, rfl⟩ := Submodule.Quotient.mk_surjective _ q
     obtain ⟨s, hs, p, hp⟩ := bound_fin e PD σ hσ bV bL iL hb ρ ι hc ρL hiL (Qp := Qp) hι.2 hO c
     have hcoc : ∀ γ δ, (c : Γ → V) (γ * δ) = (c : Γ → V) γ + ρ γ ((c : Γ → V) δ) := by
@@ -810,7 +811,7 @@ theorem thet_loc (hι : Function.Bijective ι) (hO : IsOpen (Set.range (algebraM
     rw [thet_mk, ← Submodule.Quotient.mk_smul]
     congr 1
     exact Subtype.ext (funext fun γ => (hp γ).symm)
-  exists_of_eq {z1 z2} h := by
+  · intro z1 z2 h
     have hz : ((z1 - z2 : ↥(KFin.FfG ρL iL (finZ e PD ρ ι))) : H1z ρL) ∈ LinearMap.range (hF e PD iL ρ ι ρL) := by
       rw [← F_eq e PD iL ρ ι ρL]
       exact (z1 - z2).2
@@ -928,6 +929,7 @@ theorem compact_G {w : HeightOneSpectrum (𝓞 D.host.E)} (hw : w ∈ placesOver
     CompactSpace (Br.G D.nbr i w hw) :=
   isCompact_iff_compactSpace.1 (InfiniteGalois.fixingSubgroup_isClosed _).isCompact
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem jr_eq (l : K.Col i dc) :
     KFin.jr i dc ρ π (K.colIdx i dc l) =
       Module.finrank (Br.LL D.nbr i _ (KDim.col_over i dc l))
@@ -938,6 +940,7 @@ theorem jr_eq (l : K.Col i dc) :
   rw [dite_eq_left (KDim.col_over i dc l)]
   rfl
 
+set_option synthInstance.maxHeartbeats 100000 in
 def DimV (l : K.Col i dc) : Prop :=
   Module.finrank (Br.LL D.nbr i _ (KDim.col_over i dc l))
       (FiniteCohomology (Br.PD D.loc D.nbr i _ (KDim.col_over i dc l))

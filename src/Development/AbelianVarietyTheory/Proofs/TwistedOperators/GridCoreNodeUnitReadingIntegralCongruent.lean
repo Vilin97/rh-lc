@@ -142,15 +142,21 @@ theorem one_sub_unit {𝔪 : Ideal (𝓞 D.host.E)} {Z : Finset (Pl D.host.E)} (
     rw [Matrix.map_apply, Matrix.sub_apply, Matrix.sub_apply, map_sub, Matrix.of_apply, Matrix.one_apply,
       Matrix.one_apply, ← hsB]
     split_ifs <;> simp
-  have hI : IsIntM (1 - B) := by rw [e0]; exact GlobalTheory.HalfUnit.isIntM_map _
-  refine GlobalTheory.T.exists_integral_inverse_at_splitPlaces_of_units Z e he _ (GlobalTheory.HalfUnit.det_mem hI) fun PP hPP => GlobalTheory.HalfUnit.isUnit_res_det PP hI ?_
-  have hr : redM PP (1 - B) = 1 := by
-    rw [e0, GlobalTheory.HalfUnit.redM_map]
+  have hdet : (1 - B).det ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
+    rw [e0, ← RingHom.mapMatrix_apply, ← RingHom.map_det]
+    exact ((1 - Matrix.of s).det).2
+  refine GlobalTheory.T.exists_integral_inverse_at_splitPlaces_of_units Z e he _ hdet fun PP hPP => ?_
+  have hm : (1 - Matrix.of s).map (resS D.host.F PP) = 1 := by
     ext i j
     rw [Matrix.map_apply, Matrix.sub_apply, map_sub, Matrix.of_apply, resS_idS (hZ PP hPP) (hs i j), sub_zero,
       Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
-  rw [hr, Matrix.det_one]
+  have hd : (⟨(1 - B).det, hdet⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = (1 - Matrix.of s).det := by
+    apply Subtype.ext
+    change (1 - B).det = ((1 - Matrix.of s).det : EAf D)
+    rw [e0, ← RingHom.mapMatrix_apply, ← RingHom.map_det]
+    rfl
+  rw [hd, RingHom.map_det, RingHom.mapMatrix_apply, hm, Matrix.det_one]
   exact isUnit_one
 
 end GlobalTheory.UnitRead

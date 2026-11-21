@@ -251,6 +251,8 @@ theorem hatL_of_hat (Λ Λ' : Submodule (𝓞 E) (Fin n → E))
   simp only [AlgEquiv.apply_symm_apply] at h3
   refine h3.trans (iff_of_eq ?_)
   congr 1
+  funext i
+  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, AlgEquiv.apply_symm_apply, Matrix.map_apply]
   rfl
 
 end Lattice
@@ -468,9 +470,7 @@ abbrev gramOf (V : HSp D) (β : GL (Fin V.rank) (Ef D)) : Matrix (Fin V.rank) (F
 
 theorem isLattice_crdLat (V : HSp D) {L : Submodule (𝓞 D.host.E) V.V} (h : Submodule.IsLattice D.host.E L) :
     Submodule.IsLattice D.host.E (crdLat V L) := by
-  refine ⟨h.fg.map _, ?_⟩
-  have h1 : (crdLat V L : Set (Fin V.rank → D.host.E)) = V.frame.equivFun.toLinearMap '' (L : Set V.V) := rfl
-  rw [h1, ← Submodule.map_span, h.span_eq_top, Submodule.map_top, LinearEquiv.range]
+  exact Submodule.IsLattice.of_fg D.host.E (h.fg.map _)
 
 theorem isSD_one {V : HSp D} {β : GL (Fin V.rank) (Ef D)} (h : crdLat V V.L0 = lat β) :
     IsSDFrame V β (crdLat V V.L0) 1 := by
@@ -586,12 +586,10 @@ theorem exists_unitary (V : HSp D) (γ : GL (Fin V.rank) (Ef D)) (hγ : Unimod (
     (f := (crd V : V.V →ₗ[D.host.E] (Fin V.rank → D.host.E)).restrictScalars (𝓞 D.host.E)) (crd V).surjective _
   have hm : ∀ x, x ∈ L ↔ crd V x ∈ lat γ := fun _ => Iff.rfl
   have h1 : Submodule.IsLattice D.host.E L := by
-    refine ⟨Submodule.fg_of_fg_map_injective
+    apply Submodule.IsLattice.of_fg D.host.E
+    exact Submodule.fg_of_fg_map_injective
       ((crd V : V.V →ₗ[D.host.E] (Fin V.rank → D.host.E)).restrictScalars (𝓞 D.host.E)) (crd V).injective
-      (hL ▸ (lat_isLattice γ).fg : (crdLat V L).FG), ?_⟩
-    apply Submodule.map_injective_of_injective (f := (crd V).toLinearMap) (crd V).injective
-    rw [Submodule.map_span, Submodule.map_top, LinearEquiv.range, ← (lat_isLattice γ).span_eq_top, ← hL]
-    rfl
+      (hL ▸ (lat_isLattice γ).fg : (crdLat V L).FG)
   have h2 : Formalism.HermitianLatticesTheory.IsUnimodular V.hT L := by
     ext x
     simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap, LinearMap.restrictScalars_apply,

@@ -233,7 +233,7 @@ theorem exists_homDS_comb (hB : IsFactorisation D.sp.cm.sig V.gram (fun v => (R 
     refine (pow_left_inj₀ (by positivity) (by positivity) two_ne_zero).1 ?_
     rw [mul_pow, mul_pow, key y hy v a, key y hy v b]
     ring
-  let f : MultilinearMap ℂ M.H H :=
+  let f : MultilinearMap (RingHom.id ℂ) M.H H :=
     { toFun := fun z => B (c z)
       map_update_add' := fun z τ x x' => by
         simp only [hcdef, comb_update hinj, map_add (f := _)]
@@ -247,10 +247,12 @@ theorem exists_homDS_comb (hB : IsFactorisation D.sp.cm.sig V.gram (fun v => (R 
         rw [hcdef] at h h0'
         simpa [h0'] using h }
   have hf : ∀ z, f z = B (c z) := fun z => rfl
-  let u : ∀ τ, M.H τ := fun τ => unitVec (M.H τ)
-  have hu : ∀ τ, ‖u τ‖ = 1 := fun τ => by
+  have hex : ∀ τ, ∃ x : M.H τ, ‖x‖ = 1 := fun τ => by
     haveI := (isIrrUnitary_dsRep M τ).irred.1
-    exact norm_unitVec _
+    obtain ⟨x, hx⟩ := exists_ne (0 : M.H τ)
+    refine ⟨‖x‖⁻¹ • x, ?_⟩
+    simp [norm_smul, hx]
+  choose u hu using hex
   have hsc : ∀ z τ (x : M.H τ), ‖f (Function.update z τ x)‖ = ‖f (Function.update z τ (u τ))‖ * ‖x‖ := by
     intro z τ x
     have := scale (c z) (hc z) (.inl (placeOf D τ)) (A τ x) (A τ (u τ))

@@ -323,10 +323,8 @@ instance isFiniteQC_cut [IsFiniteQC F] : IsFiniteQC (cut F hL s) :=
 def cutComplex : ShortComplex X.Modules :=
   .mk (cutHom F hL s) (cutπ F hL s) (cokernel.condition _)
 
-theorem shortExact_cutComplex [h : Mono (cutHom F hL s)] : (cutComplex F hL s).ShortExact where
-  exact := ShortComplex.exact_cokernel _
-  mono_f := h
-  epi_g := epi_cutπ F hL s
+theorem shortExact_cutComplex [h : Mono (cutHom F hL s)] : (cutComplex F hL s).ShortExact :=
+  ShortComplex.ShortExact.mk' (ShortComplex.exact_cokernel _) h (epi_cutπ F hL s)
 
 theorem mono_cutHom_iff [IsLocallyNoetherian X] [F.IsQuasicoherent] :
     Mono (cutHom F hL s) ↔ assPoints F ⊆ nonzeroLocus s := (isMulBy_cutHom F hL s).mono_iff hL

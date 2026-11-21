@@ -34,7 +34,6 @@ noncomputable section
 namespace GlobalTheory.EtaPinnedCompare
 
 open NumberField ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.PullbackSections Formalism.L2.Pj
-  GlobalTheory.TorusFrameRigid GlobalTheory.EtaProdCompare
 open ReciprocityTheory.ChartRestriction.G.I2 (TorusAt Vsp Hf PT)
 open scoped ComplexConjugate
 

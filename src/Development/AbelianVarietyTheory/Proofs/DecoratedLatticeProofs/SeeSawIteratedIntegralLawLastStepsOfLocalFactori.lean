@@ -157,7 +157,7 @@ theorem qLast_of_pin : ∀ (D : D7) (c : Comm D) (v : VCom c) (t : Tup c) (w : V
   have hint : ∀ α, IntegrableOn (fun h' => f h' * G α (E (h', 1))) c.volT.𝓕 c.volT.μ := by
     intro α
     rw [key α]
-    exact integrable_finset_sum _ fun g _ => ((han α).1 _ (hom g) f hfc).const_mul _
+    exact integrable_finsetSum _ fun g _ => ((han α).1 _ (hom g) f hfc).const_mul _
   have hL : ∀ α, ∑ g ∈ (w.ε j α).support, w.ε j α g * ∫ h' in c.volT.𝓕, f h' * c.bl j (t.kom j) (t.kom (j + 1)) (φ α)
       (c.lst j h (v.τ j h) (t.sBF j 0 h) (t.om j (g, 1) X) Y) (E (h', 1)) ∂c.volT.μ =
       ∫ h' in c.volT.𝓕, f h' * G α (E (h', 1)) ∂c.volT.μ := by
@@ -182,7 +182,7 @@ theorem qLast_of_pin : ∀ (D : D7) (c : Comm D) (v : VCom c) (t : Tup c) (w : V
       rw [hF.εT (j + 1 + 1) h β]
       by_cases ha : (∏ i, (F.Q i).wt (j + 1 + 1) (F.eqv (j + 1 + 1) β i)) = 0
       · simp [trc, ha]
-      · rw [trc, Finsupp.support_single_ne_zero _ ha, Finset.sum_singleton]
+      · rw [trc, Finsupp.support_single _ ha, Finset.sum_singleton]
         funext x
         simp [rTrans]
     rw [← integral_const_mul]

@@ -68,7 +68,7 @@ theorem Intg.sub {Φ Ψ : WO M X → ℂ} (hΦ : Intg ω ν 𝓕 Φ) (hΨ : Intg
 theorem Intg.sum {ι : Type} (s : Finset ι) {Φ : ι → WO M X → ℂ} (hΦ : ∀ i ∈ s, Intg ω ν 𝓕 (Φ i)) :
     Intg ω ν 𝓕 (∑ i ∈ s, Φ i) := fun h => by
   simp only [thetaKO_sum]
-  exact integrable_finset_sum s fun i hi => hΦ i hi h
+  exact integrable_finsetSum s fun i hi => hΦ i hi h
 
 theorem intg_of_modInt {θ : InfFam D} {Φ : WO M X → ℂ} (hΦ : ModInt θ ω ν 𝓕 Φ) : Intg ω ν 𝓕 Φ := by
   obtain ⟨N, C, hC⟩ := hΦ

@@ -44,15 +44,15 @@ theorem exists_mean (π : G →* (H →L[ℂ] H)) (hπ : ∀ g x, ‖π g x‖ =
     exact ⟨k, rfl⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_smul, map_sum]
-    congr 1
-    refine Finset.sum_nbij' (fun z => π k z) (fun z => π k⁻¹ z) (fun z hz => ?_) (fun z hz => ?_)
-      (fun z _ => ?_) (fun z _ => ?_) (fun z _ => rfl)
-    · obtain ⟨k', rfl⟩ := (hmem z).1 hz
-      exact (hmem _).2 ⟨⟨k, hk⟩ * k', by simp⟩
-    · obtain ⟨k', rfl⟩ := (hmem z).1 hz
-      exact (hmem _).2 ⟨⟨k, hk⟩⁻¹ * k', by simp⟩
-    · simp [← ContinuousLinearMap.mul_apply, ← map_mul]
-    · simp [← ContinuousLinearMap.mul_apply, ← map_mul]
+      congr 1
+      refine Finset.sum_nbij' (fun z => π k z) (fun z => π k⁻¹ z) (fun z hz => ?_) (fun z hz => ?_)
+        (fun z _ => ?_) (fun z _ => ?_) (fun z _ => rfl)
+      · obtain ⟨k', rfl⟩ := (hmem z).1 hz
+        exact (hmem _).2 ⟨⟨k, hk⟩ * k', by simp⟩
+      · obtain ⟨k', rfl⟩ := (hmem z).1 hz
+        exact (hmem _).2 ⟨⟨k, hk⟩⁻¹ * k', by simp⟩
+      · simp [← ContinuousLinearMap.mul_apply, ← map_mul]
+      · simp [← ContinuousLinearMap.mul_apply, ← map_mul]
   · have h1 : ∀ z ∈ O, ⟪u, z⟫_ℂ = ⟪u, w⟫_ℂ := fun z hz => by
       obtain ⟨k, rfl⟩ := (hmem z).1 hz
       rw [← inner_map_map_of_norm hπ k u w, hu k k.2]

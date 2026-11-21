@@ -124,8 +124,8 @@ theorem subD_subst (g : ι → Matrix (Fin a) (Fin a) K) (h : ι → Matrix (Fin
     (φ₂ := (aeval _).comp ((subD K ι a b).comp (Formalism.GradedWeylDivisibility.blockAct K g))) (MvPolynomial.algHom_ext fun v => ?_) P
   obtain ⟨τ, α, s⟩ := v
   by_cases hs : s.1 < b
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.blockAct, subD, aeval_X, map_sum, map_mul, algHom_C, dif_pos hs, Sum.elim_inl,
+  · set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.blockAct, subD, aeval_X, map_sum, map_mul, algHom_C, dif_pos hs, Sum.elim_inl,
       Sum.elim_inr, rename_X, algebraMap_eq, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm, Finset.sum_congr rfl fun _ _ => Finset.sum_comm, Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun β _ => ?_
@@ -420,7 +420,8 @@ theorem muProdLaw (hD : X.AbelianUnramifiedExtensionConditions) (hPr : Pr.Ok) (h
   have hsel' : ∀ v, (sel v).under (𝓞 X.F) = v := fun v => HeightOneSpectrum.ext (hsel v)
   let B : HeightOneSpectrum (𝓞 X.F) → Prop := fun v => ∃ P ∈ rowSG Pr sel mu, P.asIdeal.under (𝓞 X.F) = v.asIdeal
   have unr : ∀ P : HeightOneSpectrum (𝓞 X.E), ¬ B (P.under (𝓞 X.F)) → (m0 j * ξ).UnrAt P := fun P h y hy => by
-    rw [HChar.loc_mul, hμ.unr P (unr_off hX hPr hsel hξ h).1 y hy, (unr_off hX hPr hsel hξ h).2 y hy, one_mul]
+    change (m0 j).loc P y * ξ.loc P y = 1
+    rw [hμ.unr P (unr_off hX hPr hsel hξ h).1 y hy, (unr_off hX hPr hsel hξ h).2 y hy, one_mul]
   let rep : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E) := fun v => if h : B v then h.choose else sel v
   have rep_mem : ∀ P ∈ rowSG Pr sel mu, rep (P.under (𝓞 X.F)) = P := fun P hP => by
     have h : B (P.under (𝓞 X.F)) := ⟨P, hP, rfl⟩
@@ -444,7 +445,9 @@ theorem muProdLaw (hD : X.AbelianUnramifiedExtensionConditions) (hPr : Pr.Ok) (h
   have key := GlobalTheory.T.heckeChar_productFormula_normOne X.F X.E (m0 j * ξ) rep V x z hX.star_F hX.rankE hs hD.unram
     ⟨fun v k => by rw [HChar.resFin_mul, hμ.triv.1, ξtriv.1, one_mul], fun v k => by
       rw [HChar.resInf_mul, hμ.triv.2, ξtriv.2, one_mul]⟩
-    (fun P y h1 h2 => by rw [HChar.loc_mul, hμ.tame P y h1 h2, xi_tame hξ P y h1 h2, one_mul])
+    (fun P y h1 h2 => by
+      change (m0 j).loc P y * ξ.loc P y = 1
+      rw [hμ.tame P y h1 h2, xi_tame hξ P y h1 h2, one_mul])
     (fun P hP => unr P fun ⟨Q, hQ, e⟩ => by
       have e' : Q = P := ((hu P Q).1 (HeightOneSpectrum.ext e)).elim id fun e => e.trans hP
       subst e'

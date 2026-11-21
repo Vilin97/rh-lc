@@ -53,7 +53,7 @@ theorem vsize_seen_mul_le (V : HSp D) (a b : GA D V) {ξ : Fin V.rank → D.host
   have hsuppy : (Function.mulSupport fun v => vFin v (M *ᵥ x)).Finite := Filter.eventually_cofinite.mp hfy
   have hprodF : (∏ᶠ v, vFin v (M *ᵥ x)) ≤ (∏ᶠ v, hF v) * ∏ᶠ v, vFin v x := by
     rw [← finprod_mul_distrib hsuppF hsuppx]
-    exact finprod_le_finprod hsuppy (fun _ => zero_le) ((hsuppF.union hsuppx).subset (Function.mulSupport_mul _ _))
+    exact finprod_le_finprod₀ hsuppy (fun _ => zero_le) ((hsuppF.union hsuppx).subset (Function.mulSupport_mul _ _))
       (fun v => hFle v)
   have key : (∏ w, vInf w (M *ᵥ x)) * (∏ᶠ v, vFin v (M *ᵥ x)) ≤
       ((V.rank : ℝ≥0) + 1) ^ Fintype.card (InfinitePlace D.host.F) * ((∏ w, hI w) * ∏ᶠ v, hF v) *

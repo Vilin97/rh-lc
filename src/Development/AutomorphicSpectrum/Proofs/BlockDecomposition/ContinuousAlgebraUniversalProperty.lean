@@ -241,9 +241,27 @@ theorem continuous_algebra_universal_existsUnique (ε : Eps l) {ρ : ℕ → ((b
     have := rel_of_formula (coi_map ψ' m) (formula ε hF ψ' m) c
     rwa [show Hom.f ψ' (Hom.f (contMap A.fromBase ℤ_[l]) (ρ m)) = r m from congrFun key m] at this
 
-theorem main : ∀ {l : ℕ} [Fact l.Prime] (ε : Eps l), ∃ η : (((base l).cont ℤ_[l]).A)ˣ, ((base l).cont ℤ_[l]).sharp η = 1 ∧ PAlg.Hom.f (contShift (base l)) η = ((base l).cont ℤ_[l]).s (ε.e 0) * η ∧ ∀ (A t : PAlg l), t.IsTest → ∀ (φ : A ⟶ t) (u : (t.A)ˣ), t.sharp u = 1 → ∃! ψ : A.cont ℤ_[l] ⟶ t, A.toCont ℤ_[l] ≫ ψ = φ ∧ PAlg.Hom.f ψ (PAlg.Hom.f (contMap A.fromBase ℤ_[l]) η) = u := by
+theorem main : ∀ {l : ℕ} [Fact l.Prime] (ε : Eps l),
+    ∃ η : (((base l).cont ℤ_[l]).A)ˣ, ((base l).cont ℤ_[l]).sharp η = 1 ∧
+      PAlg.Hom.f (CrystallineSemistableComparison.B.contShift (base l)) η =
+        ((base l).cont ℤ_[l]).s (ε.e 0) * (η : ((base l).cont ℤ_[l]).A) ∧
+      ∀ (A t : PAlg l), t.IsTest → ∀ (φ : A ⟶ t) (u : (t.A)ˣ), t.sharp u = 1 →
+        ∃! ψ : A.cont ℤ_[l] ⟶ t, A.toCont ℤ_[l] ≫ ψ = φ ∧
+          PAlg.Hom.f ψ (PAlg.Hom.f (contMap A.fromBase ℤ_[l]) η) = u := by
   intro l _ ε
-  obtain ⟨η, hη, hs⟩ := GlobalTheory.T.exists_continuous_epsilon_power ε
+  have hx : (base l).s (ε.e 0) - 1 ∈ Ideal.span {(base l).pi} :=
+    ((RL.sharp_cong (base l)).2.1 _ 1).1 (by
+      rw [ε.sharp_e (base l), map_one, sub_self]
+      exact zero_mem _)
+  obtain ⟨η, hη, hshift⟩ := EtaFn.exists_fn (base l) _ hx
+  have hs : PAlg.Hom.f (CrystallineSemistableComparison.B.contShift (base l)) η =
+      ((base l).cont ℤ_[l]).s (ε.e 0) * η := by
+    refine cont_ext fun z => ?_
+    have hev : Hom.f ((base l).evCont z) (((base l).cont ℤ_[l]).s (ε.e 0)) =
+        (base l).s (ε.e 0) :=
+      RingHom.congr_fun (Hom.comm ((base l).evCont z)) _
+    rw [map_mul, hev]
+    exact hshift z
   obtain ⟨ρ, h0, hρ⟩ := exists_roots ((base l).cont ℤ_[l]) η
   have hF := GlobalTheory.T.sharp_epsilon_root_idempotent_sum ε ρ (fun m z => h0 ▸ hη m z) hρ
   have h1 : ((base l).cont ℤ_[l]).sharp η = 1 := by

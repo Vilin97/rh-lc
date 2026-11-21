@@ -17,6 +17,8 @@ open IsDedekindDomain NumberField CategoryTheory GroundTheory.Global
 
 attribute [local instance 2000] Rep.hV2
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section Nonempty
 
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) {N : ℕ}

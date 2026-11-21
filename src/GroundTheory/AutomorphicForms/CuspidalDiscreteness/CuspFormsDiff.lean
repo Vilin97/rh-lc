@@ -163,7 +163,7 @@ theorem uAction_uJ_succ {k : ℕ} (J : Fin (k + 1) → Fin (archDim K n)) (ψ : 
     uAction (uJ (k + 1) J) ψ =
       uAction (uJ k (Fin.tail J)) (uAction (UniversalEnvelopingAlgebra.ι ℝ
         (lieOf (archBasis K n (J 0)))) ψ) := by
-  rw [uJ, map_mul, Module.End.mul_apply]
+  rw [uJ, map_mul, mul_apply_eq_comp]
 
 theorem exists_abs_le_of_linear (f : ArchMatrix K n →ₗ[ℝ] ℝ) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ x, |f x| ≤ C * ‖x‖ := by
@@ -214,7 +214,7 @@ theorem norm_diffSum_le {c : ℝ} (hc0 : 0 ≤ c)
       ‖diffSum (ψ : AdelicGLn.AdelicGL K n → ℂ) x Y‖ ≤ (archDim K n * c) ^ k * (∏ i, ‖Y i‖) * B
   | 0, ψ, x, Y, _, B, _, hB => by
     have h := hB Fin.elim0 Fin.elim0 fun i => i.elim0
-    simp only [uJ, map_one, Module.End.one_apply, Finset.univ_eq_empty, Finset.sum_empty,
+    simp only [uJ, map_one, one_apply_eq_self, Finset.univ_eq_empty, Finset.sum_empty,
       archExp_zero, mul_one] at h
     simpa [diffSum, altSign, altPoint, archExp_zero] using h
   | k + 1, ψ, x, Y, hY, B, hB0, hB => by
@@ -256,18 +256,13 @@ theorem norm_diffSum_le {c : ℝ} (hc0 : 0 ≤ c)
           Commute.sum_right _ _ _ fun i _ => ((hc' i).smul_left s).smul_right (t i)
         rw [hsum, archExp_add hcomm, ← mul_assoc] at h
         exact h
-      calc ‖∑ j, ((archBasis K n).repr (Y 0) j : ℂ) *
-            diffSum (uAction (UniversalEnvelopingAlgebra.ι ℝ (lieOf (archBasis K n j))) ψ :
-              AdelicGLn.AdelicGL K n → ℂ) (x * archExp (s • Y 0)) (Fin.tail Y)‖
-          ≤ ∑ j, |(archBasis K n).repr (Y 0) j| * A := by
-            refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
-            rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
-            exact mul_le_mul_of_nonneg_left (hIH j) (abs_nonneg _)
-        _ ≤ ∑ _j : Fin d, c * ‖Y 0‖ * A :=
-            Finset.sum_le_sum fun j _ => mul_le_mul_of_nonneg_right (hc (Y 0) j) hA0
-        _ = d * c * ‖Y 0‖ * A := by
-            simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
-              mul_assoc]
+      have hsum : (∑ _j : Fin d, c * ‖Y 0‖ * A) = d * c * ‖Y 0‖ * A := by
+        rw [Finset.sum_const, Finset.card_fin, nsmul_eq_mul]
+        simp only [mul_assoc]
+      rw [← hsum]
+      refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
+      rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
+      exact mul_le_mul (hc (Y 0) j) (hIH j) (norm_nonneg _) (mul_nonneg hc0 (norm_nonneg _))
     have hmv := norm_image_sub_le_of_norm_deriv_le_segment_01' hderiv hbound
     have hG1 : G 1 = diffSum (ψ : AdelicGLn.AdelicGL K n → ℂ) (x * archExp (Y 0)) (Fin.tail Y) := by
       simp only [hG, one_smul]
@@ -277,7 +272,7 @@ theorem norm_diffSum_le {c : ℝ} (hc0 : 0 ≤ c)
     refine hmv.trans (le_of_eq ?_)
     rw [hA, Fin.prod_univ_succ, pow_succ]
     simp only [Fin.tail]
-    ring
+    ac_rfl
 
 def HasGrowth (φ : AdelicGLn.AdelicGL K n → ℂ) (N : ℕ) : Prop :=
   ∃ C : ℝ, ∀ g, ‖φ g‖ ≤ C * height g ^ N

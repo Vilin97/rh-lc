@@ -43,9 +43,13 @@ theorem tot_heisO_extY (a : Gen ψ V V₀ W ρ Y) (ha : a.Is) (G : GA D W → �
       ψ (symplO V W (a.d.extX W (Formalism.L2.Theta.mt W p.1.1⁻¹ ⬝ ((rat a.x₀ : Mx D W.rank ρ) ⬝ p.2.1.1.1))) (a.d.extY W c)) *
         a.tot G Φ p := by
   simp only [Gen.tot, flFun]
-  rw [ha.weil.om_heis _ _ _ _ hΦ, dualPair_action_embedded_hyperbolic_extY,
-    (@GlobalTheory.HeisMixSource.heis_mixS D ψ ha.weil.std V V₀ W ρ a.d a.vS _ (ha.weil.om_pres _ _ hΦ)).2.1, Pi.smul_apply, smul_eq_mul,
-    symplO_extX_extY_mt]
+  rw [ha.weil.om_heis _ _ _ _ hΦ, dualPair_action_embedded_hyperbolic_extY]
+  have h := congrFun ((@GlobalTheory.HeisMixSource.heis_mixS D ψ ha.weil.std V V₀ W ρ a.d a.vS (a.om (a.d.emb0 (a.g p.1.2), p.1.1) Φ) (ha.weil.om_pres (a.d.emb0 (a.g p.1.2), p.1.1) Φ hΦ)).2.1
+    ((rat a.x₀ : Mx D W.rank ρ) ⬝ p.2.1.1.1) (Formalism.L2.Theta.mt W p.1.1 ⬝ c)) (rat a.x₀ ⬝ p.2.2)
+  simp only [Pi.smul_apply, smul_eq_mul] at h
+  dsimp only [I195MixedCoordinates_5a743adb4eaabe3d936622f8.source] at h
+  dsimp only [I195MixedCoordinates_f1b992d3c44b213cc9f27f15.source]
+  rw [h, symplO_extX_extY_mt]
   ring
 
 def pointHU (x₀ : Matrix (Fin W.rank) (Fin ρ) D.host.E) (q : GA D W × UX D ρ) : Mx D W.rank ρ :=

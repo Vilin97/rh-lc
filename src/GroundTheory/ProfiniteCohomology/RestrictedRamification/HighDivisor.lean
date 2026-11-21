@@ -166,9 +166,7 @@ theorem exists_mem_divFunOneLevel [TotallyDisconnectedSpace G] (f : divFunRepOne
     intro g x
     obtain ⟨m, ⟨h, rfl⟩, v, hv, hmv⟩ := Subgroup.mem_sup_of_normal_right.1 g.2
     change (f : PUnit → G → QZ) PUnit.unit ((g : G) * x) = (f : PUnit → G → QZ) PUnit.unit x
-    have hv' : x⁻¹ * v * x ∈ (N : Subgroup G) := by
-      have := Subgroup.Normal.conj_mem inferInstance v hv x⁻¹
-      rwa [inv_inv] at this
+    have hv' : x⁻¹ * v * x ∈ (N : Subgroup G) := N.isNormal'.conj_mem' v hv x
     rw [← hmv, show ψ h * v * x = ψ h * (x * (x⁻¹ * v * x)) by group, hinv,
       hVf x _ (hWV (hN hv'))]
   refine ⟨⟨U, hU⟩, ⟨⟨(f : PUnit → G → QZ) PUnit.unit, hF⟩, ?_⟩⟩
@@ -397,9 +395,9 @@ theorem single_mem_divFun (j : I) (F : G → QZ) (hF : IsLocallyConstant F ∧ �
       exact ⟨IsLocallyConstant.const 0, fun _ _ => rfl⟩
 
 theorem divFunSuppSequence_shortExact (T : Finset I) (j : I) (hj : j ∉ T) :
-    (divFunSuppSequence φ T j hj).ShortExact where
-  exact := by
-    apply shortComplex_exact_of_forall_exists
+    (divFunSuppSequence φ T j hj).ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+  · apply shortComplex_exact_of_forall_exists
     intro f hf
     have hj0 : ((f.1 : divFun φ QZ) : I → G → QZ) j = 0 := congrFun (congrArg Subtype.val hf) PUnit.unit
     refine ⟨⟨f.1, (mem_divFunSupp_iff φ T f.1).2 fun i hi => ?_⟩, rfl⟩
@@ -407,10 +405,10 @@ theorem divFunSuppSequence_shortExact (T : Finset I) (j : I) (hj : j ∉ T) :
     · subst hij
       exact hj0
     · exact (mem_divFunSupp_iff φ _ f.1).1 f.2 i (by simp [hij, hi])
-  mono_f := (Rep.mono_iff_injective _).2 fun a b h => Subtype.ext (by
-    have h' := congrArg Subtype.val h
-    exact h')
-  epi_g := (Rep.epi_iff_surjective _).2 fun e => by
+  · apply (Rep.mono_iff_injective _).2
+    exact Submodule.inclusion_injective (divFunSupp_mono φ (Finset.subset_insert j T))
+  · apply (Rep.epi_iff_surjective _).2
+    intro e
     refine ⟨⟨⟨Pi.single j ((e.1 : PUnit → G → QZ) PUnit.unit),
       single_mem_divFun φ j _ (e.2.2 PUnit.unit)⟩, (mem_divFunSupp_iff φ _ _).2 fun i hi => ?_⟩, ?_⟩
     · have hij : i ≠ j := fun h => hi (h ▸ Finset.mem_insert_self j T)

@@ -45,7 +45,10 @@ theorem exists_place_resChar (K : Type) [Field K] [NumberField K] {ℓ : ℕ} (h
     exact bot_le
   obtain ⟨Q, hQ, hQc⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (S := 𝓞 K) _ hker
   have hmem : ((ℓ : ℤ) : 𝓞 K) ∈ Q := by
-    have h1 : (ℓ : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := hQc ▸ Ideal.mem_span_singleton_self _
+    have h1 : (ℓ : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := by
+      change (ℓ : ℤ) ∈ Ideal.under ℤ Q
+      rw [hQc]
+      exact Ideal.mem_span_singleton_self _
     simpa using h1
   have hne : Q ≠ ⊥ := by
     rintro rfl

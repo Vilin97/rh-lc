@@ -32,13 +32,11 @@ theorem twConj_map' (ι : D →* G) (θD : Monoid.End D) (θ : Monoid.End G)
     twConj θ (ι g) (ι δ) = ι (twConj θD g δ) := by
   simp [twConj, hθ]
 
-theorem twConjugate_equivalence (θ : Monoid.End D) : Equivalence (TwConjugate θ) where
-  refl δ := ⟨1, by simp [twConj]⟩
-  symm := by
-    rintro a b ⟨g, rfl⟩
+theorem twConjugate_equivalence (θ : Monoid.End D) : Equivalence (TwConjugate θ) := by
+  refine ⟨fun δ => ⟨1, by simp [twConj]⟩, ?_, ?_⟩
+  · rintro a b ⟨g, rfl⟩
     exact ⟨g⁻¹, by simp only [twConj, map_inv]; group⟩
-  trans := by
-    rintro a b c ⟨g, rfl⟩ ⟨h, rfl⟩
+  · rintro a b c ⟨g, rfl⟩ ⟨h, rfl⟩
     exact ⟨g * h, (twConj_mul' θ g h a).symm⟩
 
 theorem cl_eq_iff (θ : Monoid.End D) (a b : D) :
@@ -257,7 +255,7 @@ theorem abstract_unfold
       by_cases hx : x ∈ S
       · simp [hdef, hh, Set.indicator_of_mem hx]
       · simp [hdef, hh, Set.indicator_of_notMem hx]
-    have hs : Summable (h x) := summable_of_finite_support (hsupp x)
+    have hs : Summable (h x) := summable_of_hasFiniteSupport (hsupp x)
     have hs' : Summable fun p => h x (Equiv.sigmaFiberEquiv cl p) :=
       (Equiv.sigmaFiberEquiv cl).summable_iff.2 hs
     have e1 : ∑' d, h x d = ∑' p, h x (Equiv.sigmaFiberEquiv cl p) :=

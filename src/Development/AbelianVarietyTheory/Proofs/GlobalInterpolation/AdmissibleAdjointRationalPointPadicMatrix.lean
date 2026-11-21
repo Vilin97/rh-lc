@@ -413,17 +413,10 @@ theorem barStd : GlobalTheory.IndefiniteRowSideFullHecke.JetSumTable.JetMoments 
     d d' hstd.1 hstd.2 Ξ₀ (fun x _ => ⟨hint x, hbox.2 x⟩)).1 hw
 
   obtain ⟨m0, eta, ht, hq⟩ := hyp.tied
-  have hinv : ∀ (n : ℕ) (N : Submodule (𝓞 Z.X.E) (Sp Z.X.E n)), StdOver (Z.Pr.T u) N →
-      ∀ fr : Frs Z.X.E n (rowSG Z.Pr sel mu), w.valuation Z.X.K (GlobalTheory.IndefiniteRowSideFullHecke.CharacterValuation.muInv Z sel mu cst i N fr) = 1 := by
-    intro n N hS fr
-    rw [GlobalTheory.IndefiniteRowSideFullHecke.CharacterValuation.muInv, GlobalTheory.IndefiniteRowSideFullHecke.CharacterValuation.muInvDet,
-      GlobalTheory.CharVal.muOff_unit hyp.ok ht hyp.isSel ⟨i, hi⟩ hTw hS,
-      GlobalTheory.CharVal.locProd_unit hyp.ok ht hyp.isSel (unramOver mu (hPr.T_prime u) (hyp.host (Or.inr ⟨u, rfl⟩)))
-        (fun k => unramOver mu (hPr.g_prime k) (hyp.host (Or.inl (by fin_cases k <;> simp)))) hq ⟨i, hi⟩ hTw fr, one_mul]
-  have hscal : GlobalTheory.IndefiniteRowSideFullHecke.CharacterValuation.UnitAt w
-      (GlobalTheory.IndefiniteRowSideFullHecke.CharacterValuation.scal Z sel mu cst i d.1.N fr d'.1.N fr') := by
-    rw [GlobalTheory.IndefiniteRowSideFullHecke.CharacterValuation.UnitAt, GlobalTheory.IndefiniteRowSideFullHecke.CharacterValuation.scal, map_mul, map_inv₀,
-      hinv _ _ (stdOver hPr d hstd.1) fr, hinv _ _ (stdOver hPr d' hstd.2) fr', inv_one, one_mul]
+  have hscal := (((GlobalTheory.CharVal.charValAtT Z H s χ u hyp.ok hyp.ana.1 hyp.ana.2.1 hyp.ana.2.2.2.2.1 hyp.chiK).2.2 m0 eta ht sel
+    hyp.isSel S mu (unramOver mu (hPr.T_prime u) (hyp.host (Or.inr ⟨u, rfl⟩)))
+    (fun k => unramOver mu (hPr.g_prime k) (hyp.host (Or.inl (by fin_cases k <;> simp)))) cst hq ⟨i, hi⟩).1 w hTw).1.2
+    _ _ d.1.N fr d'.1.N fr' hsd hsd' (stdOver hPr d hstd.1) (stdOver hPr d' hstd.2) hfr hfr'
 
   obtain ⟨σ, σ', hwt, -⟩ := GlobalTheory.ColPeriod.chainWeights Z.X Z.Pr Z.R Z.W u i hi
   have hval := fun τ => (GlobalTheory.CharVal.splitOver_vT hX hPr u (hv τ)).val

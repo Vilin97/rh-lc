@@ -76,11 +76,11 @@ theorem lift_sum {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} 
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum, Finset.sum_apply, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [pt_om hom hθ sS BS sT BT hf (hκ i), map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc, ← Module.End.mul_apply, ← map_mul,
+    rw [pt_om hom hθ sS BS sT BT hf (hκ i), map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc, ← mul_apply_eq_comp, ← map_mul,
       Prod.mk_mul_mk, mul_one]
   refine ⟨fun g => ?_, funext fun g => ?_⟩
   · simp only [e]
-    exact integrable_finset_sum _ fun i _ => (hi _).const_mul _
+    exact integrable_finsetSum _ fun i _ => (hi _).const_mul _
   · show ∫ h in 𝓕, thetaKO om g h (pureTensorO ψ θ S T sS sT BS BT f' φ) * F h ∂ν = _
     simp only [e]
     rw [integral_finsetSum _ fun i _ => (hi _).const_mul _]

@@ -151,7 +151,6 @@ theorem cx_cx (ε : InfinitePlace F → ℤˣ) (hX : ∀ v, X.θ v * X.θ v = 1)
 theorem liftA_add (a b : mixedEmbedding.mixedSpace F) : liftA (F := F) (a + b) = liftA a + liftA b := by
   simp only [liftA]
   rw [map_add (f := _), map_add (f := _)]
-  rfl
 
 theorem evI_add (a b : AF F) : evI F (a + b) = evI F a + evI F b :=
   map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1

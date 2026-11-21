@@ -98,7 +98,7 @@ theorem mixS_dblDec_zero (A B : HSp D) (ψ : AddChar (AF D.host.F) ℂ) (ν : Me
     have h := GlobalTheory.OrientedHeis.symplOH_add_right (S := dblSp A) (T := B) y 0 0
     rw [add_zero] at h
     exact left_eq_add.1 h
-  unfold _root_.I195MixedCoordinates_38e171c1cdbf76962db34e8f.source GlobalTheory.IndefiniteRowSideFullHecke.SphericalZero.evZero
+  unfold HypDec.mixS GlobalTheory.IndefiniteRowSideFullHecke.SphericalZero.evZero
   congr 1
   funext a
   rw [HypDec.integrandS_eq, map_zero, map_zero, hz, AddChar.map_zero_eq_one, one_mul, add_zero, add_zero,

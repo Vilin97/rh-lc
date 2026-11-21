@@ -63,9 +63,11 @@ variable {V V₀ W W₀ : HSp D} {ρ σ : ℕ} (dV : HypDec V V₀ ρ) (dW : Hyp
 theorem enorm_evalAt_le (hψ : IsStdChar D ψ (-1)) (hT : μT 𝓕T = 1) (f : WO V W → ℂ) (x : Mx D W.rank ρ) (M : ℝ≥0∞)
     (hM : ∀ w', ‖dV.mixS W ψ μS 𝓕S f x w'‖ₑ ≤ M) (y : Mx D V₀.rank σ) (w : WO V₀ W₀) :
     ‖evalAt ψ dV dW μS 𝓕S μT 𝓕T f x y w‖ₑ ≤ M := by
-  unfold evalAt _root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target
+  unfold evalAt _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target
   refine (enorm_integral_le_lintegral_enorm _).trans ((lintegral_mono (g := fun _ => M) fun ξ => ?_).trans (le_of_eq ?_))
-  · rw [HypDec.integrandT_eq, enorm_mul, enorm_psi hψ, one_mul]; exact hM _
+  · have ht := dW.integrandT_eq (ψ := ψ) (_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV W ψ μS 𝓕S f x) y ξ w
+    simp only [HypDec.incX, HypDec.incAdj, HypDec.incY, HypDec.inc0, AddMonoidHom.coe_mk, ZeroHom.coe_mk] at ht
+    rw [ht, enorm_mul, enorm_psi hψ, one_mul]; exact hM _
   · rw [setLIntegral_const, hT, mul_one]
 
 theorem enorm_flatFun_le (hψ : IsStdChar D ψ (-1)) (hT : μT 𝓕T = 1) (f : WO V W → ℂ) (x : Mx D W.rank ρ)
@@ -120,8 +122,10 @@ theorem continuous_evalAt (hψ : IsStdChar D ψ (-1)) (hT : μT 𝓕T = 1) (f : 
       (Continuous.comp (g := fun q : Mx D W.rank ρ × WO V₀ W => (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S f q.1 q.2)
         (f := fun p : Mx D W.rank ρ × Mx D σ V₀.rank => (p.1, dW.incX V₀ p.2 + dW.incAdj V₀ y + dW.inc0 V₀ w)) hc
         (continuous_fst.prodMk (((hcX.comp continuous_snd).add continuous_const).add continuous_const)))
-  unfold evalAt _root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target
-  simp only [HypDec.integrandT_eq]
+  unfold evalAt _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target
+  have ht (x : Mx D W.rank ρ) (ξ : Mx D σ V₀.rank) := dW.integrandT_eq (ψ := ψ) (_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV W ψ μS 𝓕S f x) y ξ w
+  simp only [HypDec.incX, HypDec.incAdj, HypDec.incY, HypDec.inc0, AddMonoidHom.coe_mk, ZeroHom.coe_mk] at ht
+  simp_rw [ht]
   refine continuous_of_dominated (bound := fun _ => B)
     (fun x => (hj.uncurry_left x).aestronglyMeasurable)
     (fun x => ae_of_all _ fun ξ => ?_) (integrable_const B)
@@ -132,7 +136,7 @@ theorem continuous_upSum : Continuous fun u : UX D ρ => upSum (u.1.1 : Mx D ρ 
   have hval : Continuous fun u : UX D ρ => (u.1.1 : Matrix (Fin ρ) (Fin ρ) (AE D)) :=
     Units.continuous_val.comp continuous_subtype_val
   unfold upSum
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   by_cases h : j.1 = i.1 + 1
   · simp only [h, if_true]; exact (continuous_apply j).comp ((continuous_apply i).comp hval)
   · simp only [h, if_false]; exact continuous_const
@@ -165,14 +169,13 @@ theorem mixS_add (hψ : IsStdChar D ψ (-1)) (hS : IsCovolOne (ratMx D W.rank ρ
   funext w'
   have h1 := dV.integrableOn_mixS hψ.1.1 hS hf x w'
   have h2 := dV.integrableOn_mixS hψ.1.1 hS hg x w'
-  simp only [HypDec.integrandS_eq] at h1 h2
-  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source, HypDec.integrandS_eq, Pi.add_apply, mul_add]
+  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source, heisO, Pi.add_apply, mul_add] at h1 h2 ⊢
   exact integral_add h1 h2
 
 theorem mixS_smul (c : ℂ) (f : WO V W → ℂ) (x : Mx D W.rank ρ) :
     (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S (c • f) x = c • (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S f x := by
   funext w'
-  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source, HypDec.integrandS_eq, Pi.smul_apply, smul_eq_mul]
+  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source, heisO, Pi.smul_apply, smul_eq_mul]
   rw [← integral_const_mul]
   congr 1; funext a; ring
 
@@ -182,12 +185,14 @@ theorem mixT_add (g₁ g₂ : WO V₀ W → ℂ) (y : Mx D V₀.rank σ) (w : WO
     (h₂ : Integrable (fun ξ => ψ (symplOH V₀ W (dW.incX V₀ ξ) (dW.incAdj V₀ y)) *
       g₂ (dW.incX V₀ ξ + dW.incAdj V₀ y + dW.inc0 V₀ w)) (μT.restrict 𝓕T)) :
     (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T (g₁ + g₂) y w = (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T g₁ y w + (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T g₂ y w := by
-  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target, HypDec.integrandT_eq, Pi.add_apply, mul_add]
+  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target]
+  simp only [← HypDec.integrandT_eq] at h₁ h₂
+  simp only [heisO, Pi.add_apply, mul_add] at h₁ h₂ ⊢
   exact integral_add h₁ h₂
 
 theorem mixT_smul (c : ℂ) (g : WO V₀ W → ℂ) (y : Mx D V₀.rank σ) (w : WO V₀ W₀) :
     (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T (c • g) y w = c * (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T g y w := by
-  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target, HypDec.integrandT_eq, Pi.smul_apply, smul_eq_mul]
+  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target, heisO, Pi.smul_apply, smul_eq_mul]
   rw [← integral_const_mul]
   congr 1; funext a; ring
 
@@ -276,12 +281,14 @@ theorem flatAt_isSobForm : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
         flatFun ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 (rat x) y f w u + flatFun ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 (rat x) y g w u := by
     intro f g hf hg w u
     simp only [flatFun, evalAt]
+    change star (psiUni ψ u.1) * (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW V₀ ψ vT.μ vT.𝓕 (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV W ψ vS.μ vS.𝓕 (f + g) (rat x ⬝ u.1.1)) y w) = star (psiUni ψ u.1) * (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW V₀ ψ vT.μ vT.𝓕 (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV W ψ vS.μ vS.𝓕 f (rat x ⬝ u.1.1)) y w) + star (psiUni ψ u.1) * (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW V₀ ψ vT.μ vT.𝓕 (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV W ψ vS.μ vS.𝓕 g (rat x ⬝ u.1.1)) y w)
     rw [mixS_add dV hψ hS hf hg, mixT_add dW _ _ y w (hTint f hf _ w) (hTint g hg _ w), mul_add]
   have hsmul : ∀ (c : ℂ) f w u,
       flatFun ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 (rat x) y (c • f) w u =
         c * flatFun ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 (rat x) y f w u := by
     intro c f w u
     simp only [flatFun, evalAt]
+    change star (psiUni ψ u.1) * (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW V₀ ψ vT.μ vT.𝓕 (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV W ψ vS.μ vS.𝓕 (c • f) (rat x ⬝ u.1.1)) y w) = c * (star (psiUni ψ u.1) * (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW V₀ ψ vT.μ vT.𝓕 (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV W ψ vS.μ vS.𝓕 f (rat x ⬝ u.1.1)) y w))
     rw [mixS_smul dV c f, mixT_smul dW c _ y w]; ring
   refine ⟨hint, fun w => ⟨fun f g hf hg => ?_, fun c f hf => ?_, fun U hU => ?_⟩⟩
   · simp only [flatAt]

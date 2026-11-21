@@ -78,7 +78,7 @@ theorem mem_closure_finRat {z : AE D} (hz : infPart D z = 0) : z ∈ closure (Se
     DenseRange.piMap fun _ => AdeleCharTwist.denseRange_fin
   have hc : Continuous fun y : Fin (Module.finrank D.host.F D.host.E) → Af D.host.F =>
       ∑ i, pairA D.host.F 0 (y i) ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E i := by
-    refine continuous_finset_sum _ fun i _ => ?_
+    refine continuous_finsetSum _ fun i _ => ?_
     have h1 : Continuous fun a : AF D.host.F => a ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E i := by
       have he : (fun a : AF D.host.F => a ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E i) =
           fun a => a • ((1 : AF D.host.F) ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E i) := by

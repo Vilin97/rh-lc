@@ -99,7 +99,9 @@ theorem rank_factorIdem {γ : GL (Fin n) E} (hA : ClauseAlg σ J γ) (hP : Claus
   have hψ : ∀ t, ψ t = plusTensor σ J (γ : Matrix (Fin n) (Fin n) E) (TensorProduct.comm F E P t) := by
     intro t
     induction t using TensorProduct.induction_on with
-    | zero => simp
+    | zero =>
+      change ψ 0 = plusTensor σ J (γ : Matrix (Fin n) (Fin n) E) ((TensorProduct.comm F E P).toLinearMap 0)
+      rw [map_zero, map_zero, map_zero]
     | tmul a p =>
       simp [ψ, incl, plusTensor, Algebra.TensorProduct.productMap_apply_tmul, Algebra.smul_def, mul_comm]; rfl
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
@@ -125,7 +127,7 @@ theorem rank_factorIdem {γ : GL (Fin n) E} (hA : ClauseAlg σ J γ) (hP : Claus
         refine ⟨a • ((((e.symm (Pi.single i x) : P) : L) : Matrix (Fin n) (Fin n) E) *ᵥ v), ?_⟩
         rw [hΦt, Matrix.mulVecLin_apply, Matrix.mulVec_smul, Matrix.mulVec_mulVec, factorIdem_mul]
         simp
-      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y hx hy => rw [map_add Φ]; exact add_mem hx hy
     · rintro _ ⟨w, rfl⟩
       obtain ⟨l, rfl⟩ := hv.2 w
       obtain ⟨s, rfl⟩ := hψb.2 l

@@ -60,17 +60,19 @@ theorem lift_finSum {θ : InfFam D} {A B : Node D} {P : Type} {m : A.MeasDat} {n
     (∀ h, IntegrableOn (fun g => (∑ l, K l (ps l) h g) * ∑ k, Fs k (vs k) g) m.fd m.ν) ∧
     IsAutFun B.V (fun h => ∫ g in m.fd, (∑ l, K l (ps l) h g) * ∑ k, Fs k (vs k) g ∂m.ν) ∧
     IsCuspFun B.V (fun h => ∫ g in m.fd, (∑ l, K l (ps l) h g) * ∑ k, Fs k (vs k) g ∂m.ν) := by
-  choose F' hF' hI using fun l k => hK l (Fs k) (hF k)
+  choose F' h using fun l k => hK l (Fs k) (hF k)
+  have hF' := fun l k => (h l k).1
+  have hI := fun l k => (h l k).2
   have hsplit : ∀ h g, (∑ l, K l (ps l) h g) * ∑ k, Fs k (vs k) g = ∑ l, ∑ k, K l (ps l) h g * Fs k (vs k) g :=
     fun h g => by rw [Finset.sum_mul_sum]
   have hint : ∀ h, IntegrableOn (fun g => (∑ l, K l (ps l) h g) * ∑ k, Fs k (vs k) g) m.fd m.ν := fun h => by
     simp_rw [hsplit]
-    exact integrable_finset_sum _ fun l _ => integrable_finset_sum _ fun k _ => (hI l k (ps l) (vs k) h).1
+    exact integrable_finsetSum _ fun l _ => integrable_finsetSum _ fun k _ => (hI l k (ps l) (vs k) h).1
   have heq : (fun h => ∫ g in m.fd, (∑ l, K l (ps l) h g) * ∑ k, Fs k (vs k) g ∂m.ν) =
       ∑ l, ∑ k, F' l k (It (ps l) (vs k)) := by
     funext h
     simp_rw [hsplit]
-    rw [integral_finsetSum _ fun l _ => integrable_finset_sum _ fun k _ => (hI l k (ps l) (vs k) h).1]
+    rw [integral_finsetSum _ fun l _ => integrable_finsetSum _ fun k _ => (hI l k (ps l) (vs k) h).1]
     simp only [Finset.sum_apply]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [integral_finsetSum _ fun k _ => (hI l k (ps l) (vs k) h).1]

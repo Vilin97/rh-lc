@@ -73,7 +73,7 @@ theorem parIndep_even : ∀ D : D7, ParIndep D := by
     rw [Finset.sum_filter_of_ne]
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [← map_zero (starRingEnd ℂ), ← hsum' g, map_sum]
-      simp [map_mul]
+        exact Finset.sum_congr rfl (fun i _ => (map_mul (starRingEnd ℂ) _ _).symm)
     · intro i _ hne h0
       apply hne
       simp [h0]

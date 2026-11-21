@@ -12,6 +12,8 @@ open IsDedekindDomain NumberField IntermediateField IdeleGroup AdeleBaseChange
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 namespace FiniteSubfield
 
 variable {F E : FiniteSubfield} [Fact (F ≤ E)]

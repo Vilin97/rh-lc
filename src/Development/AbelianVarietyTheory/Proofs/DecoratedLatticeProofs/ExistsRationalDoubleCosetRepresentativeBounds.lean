@@ -158,6 +158,9 @@ theorem bounds_of_isGL : ∀ (X : Fields) (Pr : Primes X) (R : Ranks) (P : Heigh
     change (ϖ : k) ^ n • (toLoc ι e e γ.toLinearMap *ᵥ fun i => ι (x (e i))) ∈ _ at h4
     rw [toLoc_mulVec, hC.unif] at h4
     convert h4 using 1
+    ext i
+    simp only [Pi.smul_apply, smul_eq_mul, map_mul, map_pow]
+    rfl
 
 theorem ordX_exists (R : Ranks) (j : ℕ) : ∃ e : XIx (Fin R.k) (Fin R.t) j ≃ Fin (R.N j), IsOrd xPos e := by
   have hN : R.k + j + j * R.t + 0 = R.N j := by simp only [Ranks.N]; ring

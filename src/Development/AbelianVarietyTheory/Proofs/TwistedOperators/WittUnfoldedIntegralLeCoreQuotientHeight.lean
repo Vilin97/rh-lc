@@ -119,6 +119,8 @@ theorem inner_inv {ψ : AddChar (AF D.host.F) ℂ} {V V₀ W : HSp D} {ρ : ℕ}
   set F := (_root_.I195MixedCoordinates_a5bfad30f3dc46236d3fbec8.source d) W ψ vS.μ vS.𝓕 Ψ x with hFdef
   have hF : IsThetaFunO ψ V₀ W F := GlobalTheory.MixValues.mixS_theta D ψ hW.std V V₀ W ρ d vS.μ vS.𝓕 vS.covol Ψ hΨ x
   have hcore := (GlobalTheory.MixSourceFormulas.mixed_source D ψ V V₀ W ρ d χV χW om om' hW hW' vS.μ vS.𝓕 vS.covol Ψ hΨ).core γ x
+  change (_root_.I195MixedCoordinates_a5bfad30f3dc46236d3fbec8.source d) W ψ vS.μ vS.𝓕 (om (d.emb0 γ, 1) Ψ) x =
+    om' (γ, 1) F at hcore
   have hsub : ∀ w, (_root_.I195MixedCoordinates_a5bfad30f3dc46236d3fbec8.source d) W ψ vS.μ vS.𝓕 (om (d.emb0 γ, 1) Ψ) x w = F (w ⬝ Formalism.L2.Theta.mt V₀ γ) := by
     intro w
     rw [hcore]
@@ -134,6 +136,8 @@ theorem inner_inv {ψ : AddChar (AF D.host.F) ℂ} {V V₀ W : HSp D} {ρ : ℕ}
     simp only [Formalism.L2.Theta.mt, map_inv]; exact Units.mul_inv _
   have hmul : ∀ b : Mx D ρ V₀.rank, rat x₀ ⬝ b ⬝ Formalism.L2.Theta.mt V₀ γ = rat x₀ ⬝ (b ⬝ Formalism.L2.Theta.mt V₀ γ) :=
     fun b => Matrix.mul_assoc _ _ _
+  change ∫⁻ b in vb.𝓕, ‖(_root_.I195MixedCoordinates_a5bfad30f3dc46236d3fbec8.source d) W ψ vS.μ vS.𝓕 (om (d.emb0 γ, 1) Ψ) x (rat x₀ ⬝ b)‖ₑ ∂vb.μ =
+    ∫⁻ b in vb.𝓕, ‖F (rat x₀ ⬝ b)‖ₑ ∂vb.μ
   simp_rw [hsub, hmul]
   exact covolOne_lintegral_mul_right vb.covol (Formalism.L2.Theta.mt V₀ γ) (Formalism.L2.Theta.mt V₀ γ⁻¹) h1 h2 hM hM'
     (fun b => ‖F (rat x₀ ⬝ b)‖ₑ) (enorm_periodic hW.std hF x₀)

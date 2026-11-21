@@ -36,7 +36,9 @@ section Invariants
 variable {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
 theorem algClToBdRField_apply (k : PadicAlgCl p) :
-    algClToBdRField p k = algebraMap 𝔹 𝔹dR (algClToBdR p k) :=
+    algClToBdRField p k =
+      algebraMap (BDeRhamPlus (normInteger ℂ_[p]) p) (BDeRham (normInteger ℂ_[p]) p)
+        (algClToBdR p k) :=
   rfl
 
 theorem algClToBdRField_injective : Function.Injective (algClToBdRField p) :=

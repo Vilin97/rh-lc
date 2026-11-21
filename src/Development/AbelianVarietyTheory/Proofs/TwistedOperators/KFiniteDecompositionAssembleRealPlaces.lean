@@ -173,7 +173,7 @@ theorem assemble_places : ∀ (D : D7) (θ : InfFam D) (N : GlobalTheory.Grid.No
     (⟨T (e.symm j),
       fun v τ x y => by convert hTadd (e.symm j) v τ (Finset.mem_univ τ) x y,
       fun v τ c x => by convert hTsmul (e.symm j) v τ (Finset.mem_univ τ) c x⟩ :
-      MultilinearMap ℂ (fun τ => GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension.kFin N.M τ) (GA D N.V → ℂ))
+      MultilinearMap (RingHom.id ℂ) (fun τ => GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension.kFin N.M τ) (GA D N.V → ℂ))
   refine ⟨Fintype.card κ, T₀, fun j => u (e.symm j), fun j v => hT𝒞 (e.symm j) v, ?_, ?_, ?_⟩
   · intro j τ k hk v w hw
     exact hTR (e.symm j) v τ (Finset.mem_univ τ) w _ (Or.inl ⟨k, hk, hw, rfl⟩)

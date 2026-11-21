@@ -118,7 +118,7 @@ theorem classLattice_selfDual : ∀ (D : D7) (u : D.what₂.Word) (K : ClsPTied 
     have := K.lev.Lb_dual x hx
     rwa [Nat.cast_one, one_smul] at this
   rw [e]
-  exact ⟨Formalism.UG.P.csGlob_lattice (F := D.host.F) _ K.lev.Lb_fin K.lev.Lb_span _,
+  exact ⟨(Formalism.UG.P.csGlob_lattice (F := D.host.F) _ K.lev.Lb_fin K.lev.Lb_span _).toIsLattice,
     fun y => GlobalTheory.PointLattice.globLat_selfDual (sigD D) (gramP D) _ hdual K.lev.Lb_fin K.lev.Lb_span _ (K.y c).2 y⟩
 
 end GlobalTheory.ClassLatticeSelfDual

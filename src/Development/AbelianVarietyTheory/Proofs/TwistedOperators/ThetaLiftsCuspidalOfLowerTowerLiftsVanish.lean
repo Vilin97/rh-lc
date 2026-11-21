@@ -55,6 +55,9 @@ theorem liftInt_smul' {G H S : Type*} [MeasurableSpace H] {ν : Measure H} {𝓕
   unfold Lift.liftInt
   rw [← integral_const_mul]
   congr 1
+  funext h
+  simp only [Pi.smul_apply, smul_eq_mul]
+  exact mul_left_comm (th g h s) c (φ h)
 
 theorem liftInt_zero' {G H S : Type*} [MeasurableSpace H] {ν : Measure H} {𝓕 : Set H} {th : G → H → S → ℂ} {s : S}
     (g : G) : Lift.liftInt ν 𝓕 th s (0 : H → ℂ) g = 0 := by
@@ -77,11 +80,12 @@ variable {V V' W : HSp D} {r : ℕ} {C : Matrix (Fin V.rank) (Fin r) D.host.E}
   {ν : Measure (GA D W)} {𝓕 : Set (GA D W)} {κ : Measure (NI V C)} {𝓝 : Set (NI V C)}
   {f : WO V W → ℂ} {f' : WO V' W → ℂ} {g : GA D V} {c : ℂ}
 
-theorem CtGood.zero : CtGood C ω ω' ν 𝓕 κ 𝓝 f f' g c 0 where
-  integ g₁ := by simp
-  integ' := by simp
-  mean := by simp [liftInt_zero']
-  eq := by simp [liftInt_zero']
+theorem CtGood.zero : CtGood C ω ω' ν 𝓕 κ 𝓝 f f' g c 0 := by
+  refine ⟨fun g₁ => ?_, ?_, ?_, ?_⟩
+  · simp
+  · simp
+  · simp [liftInt_zero']
+  · simp [liftInt_zero']
 
 theorem CtGood.add {φ φ' : GA D W → ℂ} (h : CtGood C ω ω' ν 𝓕 κ 𝓝 f f' g c φ)
     (h' : CtGood C ω ω' ν 𝓕 κ 𝓝 f f' g c φ') : CtGood C ω ω' ν 𝓕 κ 𝓝 f f' g c (φ + φ') := by

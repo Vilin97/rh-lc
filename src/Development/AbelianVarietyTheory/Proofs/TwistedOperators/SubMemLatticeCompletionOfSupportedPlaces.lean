@@ -93,8 +93,11 @@ theorem sub_mem_hatL : ∀ (D : D7) (S : HSp D) (P : GlobalTheory.FinPl.Pl D →
       Matrix.one_mulVec]
   rw [hlhs]
   convert hmem using 1
+  funext i
+  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum,
     AddMonoidHom.compLeft_apply, Function.comp_apply, hcut]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [finPart_mul_cut P _ (hI i j), map_mul, hswap]
+  rfl
 
 end GlobalTheory.LatBridge

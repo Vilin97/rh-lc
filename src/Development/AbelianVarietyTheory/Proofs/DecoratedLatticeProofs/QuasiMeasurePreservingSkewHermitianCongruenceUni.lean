@@ -71,7 +71,7 @@ theorem quasiMeasurePreserving_skewConj : ∀ (D : D7) (ρ : ℕ) (lC : Measure 
   have hH : (lC.map (skewConj u.1.1)).IsAddHaarMeasure :=
     AddEquiv.isAddHaarMeasure_map lC (skewConjEquiv u.1) hc
       (continuous_skewConj_arg (u.1⁻¹).val)
-  refine ⟨hc.measurable, ?_⟩
+  refine ⟨hc.measurable.aemeasurable, ?_⟩
   exact Measure.absolutelyContinuous_isAddHaarMeasure _ _
 
 end GlobalTheory.Unf.SkewConjQmp

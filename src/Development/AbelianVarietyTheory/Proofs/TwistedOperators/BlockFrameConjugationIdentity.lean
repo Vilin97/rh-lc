@@ -239,9 +239,9 @@ theorem exists_conj_map : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T :
     have : f x = T' := by
       refine MultilinearMap.ext fun v' => funext fun g => ?_
       rw [e1 v' (fun τ => ⟨c τ (v' τ), (h τ _).1 (v' τ).2⟩) (fun _ => rfl) g]
-      rfl
+      simp only [f, LinearMap.coe_mk, AddHom.coe_mk, GlobalTheory.ConjDim.conjMap_apply, Pi.star_apply]
     rw [this]
-    exact GlobalTheory.PartDims.mult_le R.θ _ (fun k hk => hk.elim) hT'
+    exact GlobalTheory.PartDims.mult_le R.θ _ (J' := ∅) (fun k hk => hk.elim) hT'
 
 
 open Formalism.IndefR.principalLevelFrame in

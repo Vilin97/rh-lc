@@ -30,16 +30,13 @@ theorem siegel_le_pow_mul {t : ℝ} (ht : 0 < t) {ρ : Fin n → ℝ} (hρ : ∀
     set p : Fin n := ⟨m + k, hp⟩
     have h1 : ρ l ≤ max 1 t⁻¹ * ρ p := by
       have hstep := hs p l (by simp only [p]; omega)
-      calc
-        ρ l = t⁻¹ * (t * ρ l) := by rw [← mul_assoc, inv_mul_cancel₀ ht.ne', one_mul]
-        _ ≤ t⁻¹ * ρ p := mul_le_mul_of_nonneg_left hstep (inv_nonneg.2 ht.le)
-        _ ≤ max 1 t⁻¹ * ρ p := mul_le_mul_of_nonneg_right (le_max_right _ _) (hρ p).le
+      have hscaled : ρ l ≤ t⁻¹ * ρ p := by
+        simpa only [← mul_assoc, inv_mul_cancel₀ ht.ne', one_mul] using
+          mul_le_mul_of_nonneg_left hstep (inv_nonneg.2 ht.le)
+      exact hscaled.trans (mul_le_mul_of_nonneg_right (le_max_right _ _) (hρ p).le)
     have h2 := siegel_le_pow_mul ht hρ hs k m p rfl
-    calc
-      ρ l ≤ max 1 t⁻¹ * ρ p := h1
-      _ ≤ max 1 t⁻¹ * ((max 1 t⁻¹) ^ k * ρ m) :=
-          mul_le_mul_of_nonneg_left h2 (le_trans zero_le_one (le_max_left _ _))
-      _ = (max 1 t⁻¹) ^ (k + 1) * ρ m := by rw [pow_succ', mul_assoc]
+    rw [pow_succ', mul_assoc]
+    exact h1.trans (mul_le_mul_of_nonneg_left h2 (le_trans zero_le_one (le_max_left _ _)))
 
 theorem siegel_div_le_mul {t : ℝ} (ht : 0 < t) {ρ : Fin n → ℝ} (hρ : ∀ i, 0 < ρ i)
     (hs : ∀ i j : Fin n, (j : ℕ) = i + 1 → t * ρ j ≤ ρ i) {R : ℝ} (hR1 : 1 ≤ R)

@@ -164,6 +164,7 @@ theorem map_frameEquiv (hB : Bᴴ * Formalism.UG.Jpq p q * B = Formalism.REAL.Jm
   rw [e, ← Measure.map_map (measurable_mul_const _) ((measurable_const_mul _).comp hm),
     ← Measure.map_map (measurable_const_mul _) hm, hc, Measure.map_smul, Measure.map_smul,
     map_mul_left_eq_self, Formalism.REAL.indefinite_unitary_unimodular n ε u⁻¹]
+  all_goals first | exact (measurable_mul_const _).aemeasurable | exact (measurable_const_mul _).aemeasurable
 
 theorem sq_of_isFdeg {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {μ : Measure (Formalism.REAL.UJ ε)}
     {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {d : ℝ} (h : IsFdeg μ σ d) (v : H) (hv : ‖v‖ = 1) :

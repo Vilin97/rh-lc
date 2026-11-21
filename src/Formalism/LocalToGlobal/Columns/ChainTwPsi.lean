@@ -16,9 +16,12 @@ section TwPsi
 
 variable {X : Fields} {P : HeightOneSpectrum (𝓞 X.E)}
 
-theorem twDvd_of_intAt (hq : (qOf P).Prime) : ∀ (D : ℕ) (b : ℤ), IntAt P ((b : X.E) / (qOf P : X.E) ^ D) → ((qOf P : ℤ) ^ D) ∣ b
-  | 0, b, _ => by simp
-  | D + 1, b, h => by
+theorem twDvd_of_intAt (hq : (qOf P).Prime) : ∀ (D : ℕ) (b : ℤ), IntAt P ((b : X.E) / (qOf P : X.E) ^ D) → ((qOf P : ℤ) ^ D) ∣ b := by
+  intro D
+  induction D with
+  | zero => simp
+  | succ D ih =>
+      intro b h
       have hq0 : (qOf P : X.E) ≠ 0 := by exact_mod_cast hq.ne_zero
       have h1 : IntAt P ((b : X.E) / (qOf P : X.E) ^ D) := by
         have e : (b : X.E) / (qOf P : X.E) ^ D = (qOf P : X.E) * ((b : X.E) / (qOf P : X.E) ^ (D + 1)) := by
@@ -26,7 +29,7 @@ theorem twDvd_of_intAt (hq : (qOf P).Prime) : ∀ (D : ℕ) (b : ℤ), IntAt P (
           ring
         rw [e]
         exact (ciIntAt_q (P := P) (q := qOf P)).mul h
-      have hb : ((qOf P : ℤ) ^ D) ∣ b := twDvd_of_intAt hq D b h1
+      have hb : ((qOf P : ℤ) ^ D) ∣ b := ih b h1
       obtain ⟨b', rfl⟩ := hb
       have h2 : IntAt P ((b' : X.E) / (qOf P : X.E)) := by
         have e : (b' : X.E) / (qOf P : X.E) = (((qOf P : ℤ) ^ D * b' : ℤ) : X.E) / (qOf P : X.E) ^ (D + 1) := by
@@ -46,9 +49,14 @@ theorem twDvd_of_intAt (hq : (qOf P).Prime) : ∀ (D : ℕ) (b : ℤ), IntAt P (
       exact ⟨c, by ring⟩
 
 theorem twRes_exists (hq : (qOf P).Prime) (hu : ((qOf P : ℕ) : 𝓞 X.E) ∉ P.asIdeal ^ 2) :
-    ∀ (D : ℕ) (y : X.E), IntAt P y → ∃ b : ℤ, IntAt P ((y - b) / (qOf P : X.E) ^ D)
-  | 0, y, hy => ⟨0, by simpa using hy⟩
-  | D + 1, y, hy => by
+    ∀ (D : ℕ) (y : X.E), IntAt P y → ∃ b : ℤ, IntAt P ((y - b) / (qOf P : X.E) ^ D) := by
+  intro D
+  induction D with
+  | zero =>
+      intro y hy
+      exact ⟨0, by simpa using hy⟩
+  | succ D ih =>
+      intro y hy
       have hq0 : (qOf P : X.E) ≠ 0 := by exact_mod_cast hq.ne_zero
       have hfin : Finite (𝓞 X.E ⧸ P.asIdeal) := ciFinite (w := P) hq.ne_zero
       have hex : ∃ b0 : ℤ, redP P y = (b0 : 𝓞 X.E ⧸ P.asIdeal) :=
@@ -57,7 +65,7 @@ theorem twRes_exists (hq : (qOf P).Prime) (hu : ((qOf P : ℕ) : 𝓞 X.E) ∉ P
       have hz : IntAt P ((y - b0) / (qOf P : X.E)) :=
         ciIntAt_div (ciQ_mem P) hu (ciIntAt_sub hy (ciIntAt_intCast b0))
           (by rw [redP_sub hy (ciIntAt_intCast b0), redP_intCast, hb0, sub_self])
-      obtain ⟨b1, hb1⟩ := twRes_exists hq hu D _ hz
+      obtain ⟨b1, hb1⟩ := ih _ hz
       refine ⟨b0 + (qOf P : ℤ) * b1, ?_⟩
       have e : (y - ((b0 + (qOf P : ℤ) * b1 : ℤ) : X.E)) / (qOf P : X.E) ^ (D + 1) =
           ((y - b0) / (qOf P : X.E) - b1) / (qOf P : X.E) ^ D := by

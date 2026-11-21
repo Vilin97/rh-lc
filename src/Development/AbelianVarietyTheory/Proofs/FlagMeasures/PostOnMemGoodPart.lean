@@ -32,21 +32,23 @@ theorem isCuspFun_rTr {φ : GA D V → ℂ} (h : IsCuspFun V φ) (x : GA D V) : 
 
 theorem isMultMap_rTr {J J' : Set (GA D V)} {χ χ' : GA D V → ℂ} {x : GA D V} (hx : x ∈ GfC V)
     (hJ : ∀ k ∈ J', x⁻¹ * k * x ∈ J ∧ χ' k = χ (x⁻¹ * k * x)) {T : MMap M} (h : IsMultMap θ M J χ T) :
-    IsMultMap θ M J' χ' (postOn M (GlobalTheory.FinTranslate.rTrL V x) T) where
-  aut v := GlobalTheory.FinTranslate.isAutFunSm_rTr θ V x hx _ (h.aut v)
-  cusp v := isCuspFun_rTr (h.cusp v) x
-  lev v k hk g := by
+    IsMultMap θ M J' χ' (postOn M (GlobalTheory.FinTranslate.rTrL V x) T) := by
+  refine
+    { aut := fun v => GlobalTheory.FinTranslate.isAutFunSm_rTr θ V x hx _ (h.aut v)
+      cusp := fun v => isCuspFun_rTr (h.cusp v) x
+      lev := ?_
+      equiv := ?_
+      cont := fun τ v y => h.cont τ v (y * x) }
+  · intro v k hk g
     change T v (g * k * x) = χ' k * T v (g * x)
     rw [(hJ k hk).2, ← h.lev v _ (hJ k hk).1]
-    congr 1
     group
-  equiv τ g hg v w hw := by
+  · intro τ g hg v w hw
     funext y
     change T (Function.update v τ w) (y * x) = T v (y * atTau θ V τ g * x)
     rw [h.equiv τ g hg v w hw, mul_assoc,
       ← GlobalTheory.FinTranslate.comm_fin_real V hx (GlobalTheory.FinTranslate.atTau_mem θ V τ g), ← mul_assoc]
     rfl
-  cont τ v y := h.cont τ v (y * x)
 
 theorem postOn_mem_goodPart {J J' : Set (GA D V)} {χ χ' : GA D V → ℂ} {x : GA D V} (hx : x ∈ GfC V)
     (hJ : ∀ k ∈ J', x⁻¹ * k * x ∈ J ∧ χ' k = χ (x⁻¹ * k * x)) {L L' : (GA D V → ℂ) →ₗ[ℂ] (GA D V → ℂ)}

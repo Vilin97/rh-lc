@@ -168,7 +168,7 @@ theorem ptO_smul {m k : ℕ} (G : Matrix (Fin m) (Fin m) D.host.E) (a : AF D.hos
 
 theorem gram_sgn (ε : Bool) (M : HSp D) : (sgn ε M).gram = -(sgE (D := D) ε • M.gram) := by
   cases ε
-  · simp [sgn, sgE]
+  · ext i j; simp [sgn, HSpace.gram, sgE]
   · ext i j; simp [HSpace.gram, sgE]
 
 variable {ψ : AddChar (AF D.host.F) ℂ} {ε : Bool} {M X : HSp D} {Xs : Spc D.host.F D.host.E M.rank}

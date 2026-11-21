@@ -52,7 +52,6 @@ theorem mem_stabFun_of_sub (Λ₀ Λ : Submodule R (n → A)) (f : Λ →ₗ[R] 
   have hd := hf ⟨(g : Matrix n n A) *ᵥ (x : n → A) - x, Λ.sub_mem (hmap g h1 x x.2) x.2⟩ (h1 x x.2)
   rw [← sub_eq_zero, ← map_sub]
   convert hd using 2
-  exact Subtype.ext rfl
 
 end Abstract
 

@@ -92,7 +92,19 @@ theorem isAlgComb_of_isThetaAt {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar
   have tf : ∀ k : ℕ, 0 < k → Function.Injective fun t : WO S WW => k • t := fun k hk a b hab => by
     rw [← inv_smul_nsmul S WW hk a, ← inv_smul_nsmul S WW hk b]
     exact congrArg _ hab
-  have hb := isBichar_symplO S WW ψ
+  have hb : IsBichar (fun x y : WO S WW => ψ (symplO S WW x y)) := by
+    have hl (a b y : WO S WW) : symplO S WW (a + b) y = symplO S WW a y + symplO S WW b y := by
+      unfold symplO hO
+      simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
+    have hr (x a b : WO S WW) : symplO S WW x (a + b) = symplO S WW x a + symplO S WW x b := by
+      unfold symplO hO
+      simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add (f := _)]
+    have hz₁ (y : WO S WW) : symplO S WW 0 y = 0 := by simpa using hl 0 0 y
+    have hz₂ (y : WO S WW) : symplO S WW y 0 = 0 := by simpa using hr y 0 0
+    exact ⟨fun a b y => by rw [hl, AddChar.map_add_eq_mul],
+      fun a b y => by rw [hr, AddChar.map_add_eq_mul],
+      fun y => by rw [hz₁, AddChar.map_zero_eq_one],
+      fun y => by rw [hz₂, AddChar.map_zero_eq_one]⟩
 
   obtain ⟨h1, k, hk, h2, h3⟩ := hSB
   have hmem := mem_algSpan (χ := fun x y : WO S WW => ψ (symplO S WW x y)) (X := half S WW e)
@@ -153,7 +165,7 @@ theorem isAlgComb_of_isThetaAt {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar
       change infPart D (x a b + y a b) = 0
       rw [RingHom.map_add (f := _), q1, q2, add_zero]
     | zero => rw [map_zero]; exact zero_mem _
-    | add f g _ _ hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
+    | add f g _ _ hf hg => rw [map_add]; exact add_mem hf hg
     | smul c f _ hf =>
       change Tm ((c : ℂ) • f) ∈ V
       rw [map_smul]

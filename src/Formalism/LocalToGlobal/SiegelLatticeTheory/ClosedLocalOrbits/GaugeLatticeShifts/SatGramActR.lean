@@ -108,7 +108,7 @@ def rmul (hx : RatLink X x β) {Λ Λ' : Submodule (𝓞 D.host.E) (VS D).V}
     Formalism.L2.SG.Pf.ratLink_mul X p.2.1 (Formalism.L2.SG.Pf.ratLink_inv X hx),
     Subgroup.mul_mem _ p.2.2.1 (Subgroup.inv_mem _ (isom_of_autF hβ)),
     by rw [Formalism.L2.SG.Pf.gmap_mul, Formalism.L2.SG.Pf.gmap_inv (gmap_of_autF hβ), p.2.2.2.1],
-    by rw [mapLF_mul_aut hβ p.1.2 p.2.2.1]; exact p.2.2.2.2⟩
+    (congrArg (TermDef.PD D Λ (lf D F0) u') (mapLF_mul_aut hβ p.1.2 p.2.2.1)).mpr p.2.2.2.2⟩
 
 theorem rmul_rel (hN : AutFConjN) (hx : RatLink X x β) {Λ Λ' : Submodule (𝓞 D.host.E) (VS D).V}
     (hβ : β ∈ Formalism.L2.SG.Saturated.AutF Λ' (lf D F0')) (p q : GCar X u u' F0 F0' Λ Λ')

@@ -134,7 +134,10 @@ theorem covolume_N : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
       have := congrFun (hg β hβ) w
       rwa [hρo] at this
   have tw := GlobalTheory.T.existsUnique_layered_strictFundamentalDomain (V := fun β : Bk r => InfinitePlace E → VM k r β) ρ NN o (degB r)
-    (fun β x w => cM k r β (x w)) LB DB (fun w => by simpa [o] using PI.AmpOrbQuot.nset_one) hρ1 hρm hρN
+    (fun β x w => cM k r β (x w)) LB DB (fun w => by
+      change Matrix.of (Matrix.of.symm 1) ∈ Nset k r
+      rw [Equiv.apply_symm_apply]
+      exact PI.AmpOrbQuot.nset_one) hρ1 hρm hρN
     (by
       rintro (p | a | p | a)
       · exact (ideLat _ _).zero_mem

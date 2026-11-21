@@ -46,7 +46,7 @@ theorem gramQ_adj {m : ℕ} {T : Matrix (Fin m) (Fin m) D.host.E} (hT : IsHermND
   have h : adj (rat T : Mx D m m) = rat T := by
     ext i j
     exact (GlobalTheory.DualPairCheck.cA_incA _).trans (congrArg (incA D) (hT.1 i j))
-  change adj ((adj x ⬝ (rat T : Mx D m m)) ⬝ y) = (adj y ⬝ (rat T : Mx D m m)) ⬝ x
+  change adj ((adj x * (rat T : Mx D m m)) * y) = (adj y * (rat T : Mx D m m)) * x
   rw [adj_mul, adj_mul, adj_adj, h, Matrix.mul_assoc]
 
 theorem selfDual_of_covolOne {m : ℕ} {T : Matrix (Fin m) (Fin m) D.host.E} (hT : IsHermND D.sp.cm.sig T)

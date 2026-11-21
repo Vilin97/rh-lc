@@ -19,7 +19,7 @@ namespace PositivityTheory.RSHS.LocalComponentTwist
 open PositivityTheory.RSHS.LeviInductionForms
 
 theorem multilinear_mem_of_span {ι : Type} [Fintype ι] {M : ι → Type} [∀ i, AddCommGroup (M i)] [∀ i, Module ℂ (M i)]
-    {Y : Type} [AddCommGroup Y] [Module ℂ Y] (P : MultilinearMap ℂ M Y) (s : ∀ i, Set (M i)) (W : Submodule ℂ Y)
+    {Y : Type} [AddCommGroup Y] [Module ℂ Y] (P : (∀ i, M i) →ₘₗ[ℂ] Y) (s : ∀ i, Set (M i)) (W : Submodule ℂ Y)
     (h : ∀ x : ∀ i, M i, (∀ i, x i ∈ s i) → P x ∈ W) (x : ∀ i, M i) (hx : ∀ i, x i ∈ Submodule.span ℂ (s i)) :
     P x ∈ W := by
   classical
@@ -46,7 +46,7 @@ theorem multilinear_mem_of_span {ι : Type} [Fintype ι] {M : ι → Type} [∀ 
   exact key Finset.univ x (fun i _ => hx i) fun i hi => absurd (Finset.mem_univ i) hi
 
 def prodMap {ι : Type} [Fintype ι] {G : ι → Type} (S : ∀ i, Submodule ℂ (G i → ℂ)) :
-    MultilinearMap ℂ (fun i => S i) ((∀ i, G i) → ℂ) :=
+    (∀ i, S i) →ₘₗ[ℂ] ((∀ i, G i) → ℂ) :=
   MultilinearMap.pi fun m => (MultilinearMap.mkPiAlgebra ℂ ι ℂ).compLinearMap
     fun i => (LinearMap.proj (m i) : (G i → ℂ) →ₗ[ℂ] ℂ) ∘ₗ (S i).subtype
 
@@ -76,7 +76,9 @@ theorem span_le_iSup {ι : Type} [Fintype ι] {G Γ X A : ι → Type} [∀ i, G
       | smul_tprod r u =>
         rw [map_smul, hΦ, hT]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨fun i => ⟨f i (a i) (u i), hf i _ _⟩, rfl⟩)
-      | add x y h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+      | add x y h1 h2 =>
+        rw [map_add]
+        exact add_mem h1 h2
     · induction t using PiTensorProduct.induction_on with
       | smul_tprod r u =>
         rw [map_smul, map_smul, map_smul, piTensor_tprod, hΦ, hΦ]

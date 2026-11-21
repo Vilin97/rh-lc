@@ -13,6 +13,8 @@ open CategoryTheory Limits NumberField IsDedekindDomain GroundTheory.Global
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem exists_coprime_nsmul_of_primary_eq_zero {M : Type*} [AddCommGroup M] {ℓ : ℕ} (hℓ : ℓ.Prime)
     (hM : ∀ y : M, ∀ k : ℕ, ℓ ^ k • y = 0 → y = 0) {x : M} (hx : IsOfFinAddOrder x) :
     ∃ m : ℕ, m.Coprime ℓ ∧ m • x = 0 := by

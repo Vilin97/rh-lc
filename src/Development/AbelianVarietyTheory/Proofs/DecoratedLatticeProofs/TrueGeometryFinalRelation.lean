@@ -71,9 +71,9 @@ theorem glued_stab_iff {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k
 theorem moves_emb_iff {D : D7} {S A B : HSp D} (o : OrthDec S A B) (M : GlobalTheory.FinPl.Lat S) (LA : GlobalTheory.FinPl.Lat A)
     (LB : GlobalTheory.FinPl.Lat B) (v : GlobalTheory.FinPl.Pl D) (h : GlobalTheory.FinPl.OrthAt o M LA LB v) (κ : GA D A) :
     GlobalTheory.FinPl.Moves S (o.emb (κ, 1)) M M (· = v) ↔ GlobalTheory.FinPl.Moves A κ LA LA (· = v) := by
-  have e1 : ∀ y, o.pA *ᵥ (mt S (o.emb (κ, 1)) *ᵥ y) = mt A κ *ᵥ (o.pA *ᵥ y) := fun y => by
+  have e1 : ∀ y, o.pA *ᵥ (Formalism.L2.Theta.mt S (o.emb (κ, 1)) *ᵥ y) = Formalism.L2.Theta.mt A κ *ᵥ (o.pA *ᵥ y) := fun y => by
     rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec]; congr 1; exact o.pA_emb κ 1
-  have e2 : ∀ y, o.pB *ᵥ (mt S (o.emb (κ, 1)) *ᵥ y) = o.pB *ᵥ y := fun y => by
+  have e2 : ∀ y, o.pB *ᵥ (Formalism.L2.Theta.mt S (o.emb (κ, 1)) *ᵥ y) = o.pB *ᵥ y := fun y => by
     rw [Matrix.mulVec_mulVec, o.pB_emb]; simp [Formalism.L2.Theta.mt]
   constructor
   · intro hM yA hyA
@@ -89,11 +89,11 @@ theorem moves_emb_iff {D : D7} {S A B : HSp D} (o : OrthDec S A B) (M : GlobalTh
 theorem carriesLattice_wittEmbedding_iff_core {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (N : GlobalTheory.FinPl.Lat S) (M : GlobalTheory.FinPl.Lat S₀)
     (v : GlobalTheory.FinPl.Pl D) (h : GlobalTheory.FinPl.MonoAt d N M v) (g : GA D S₀) :
     GlobalTheory.FinPl.Moves S (d.emb0 g) N N (· = v) ↔ GlobalTheory.FinPl.Moves S₀ g M M (· = v) := by
-  have eX : ∀ y, d.pX *ᵥ (mt S (d.emb0 g) *ᵥ y) = d.pX *ᵥ y := fun y => by
+  have eX : ∀ y, d.pX *ᵥ (Formalism.L2.Theta.mt S (d.emb0 g) *ᵥ y) = d.pX *ᵥ y := fun y => by
     rw [Matrix.mulVec_mulVec, d.wittDecomp_projX_anisotropicEmbedding]
-  have eY : ∀ y, d.pY *ᵥ (mt S (d.emb0 g) *ᵥ y) = d.pY *ᵥ y := fun y => by
+  have eY : ∀ y, d.pY *ᵥ (Formalism.L2.Theta.mt S (d.emb0 g) *ᵥ y) = d.pY *ᵥ y := fun y => by
     rw [Matrix.mulVec_mulVec, d.wittDecomp_projY_anisotropicEmbedding]
-  have e0 : ∀ y, d.p0 *ᵥ (mt S (d.emb0 g) *ᵥ y) = mt S₀ g *ᵥ (d.p0 *ᵥ y) := fun y => by
+  have e0 : ∀ y, d.p0 *ᵥ (Formalism.L2.Theta.mt S (d.emb0 g) *ᵥ y) = Formalism.L2.Theta.mt S₀ g *ᵥ (d.p0 *ᵥ y) := fun y => by
     rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec]; congr 1; exact d.wittDecomp_projAnisotropic_anisotropicEmbedding g
   constructor
   · intro hM y₀ hy₀

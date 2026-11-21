@@ -57,7 +57,7 @@ theorem real_translate (hθ : IsInfFam θ) {M : DSModel V S} {J : Set (GA D V)} 
     | add a b ha hb =>
       obtain ⟨a', f1⟩ := ha
       obtain ⟨b', f2⟩ := hb
-      exact ⟨a' + b', fun T hT h => by rw [T.map_add (f := _), T.map_add (f := _), Pi.add_apply, Pi.add_apply, f1 T hT, f2 T hT]⟩
+      exact ⟨a' + b', fun T hT h => by rw [map_add, map_add, Pi.add_apply, Pi.add_apply, f1 T hT, f2 T hT]⟩
 
 end General
 

@@ -54,7 +54,9 @@ theorem mixS_rankZero {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T : HSp 
     intro a
     rw [d.integrandS_eq, Subsingleton.elim a 0, Subsingleton.elim x 0, map_zero, map_zero, symplOH_zero_left,
       AddChar.map_zero_eq_one, one_mul, zero_add, zero_add]
-  simp only [_root_.I195MixedCoordinates_7149a82cc25e6f9e668c8c61.source, h1]
+  change (∫ a in 𝓕, heisO ψ S T (d.extY T a)
+    (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) f)) 0 ∂μ) = _
+  simp_rw [h1]
   rw [MeasureTheory.setIntegral_const]
   simp [Measure.real, hμ.2.2]
 
@@ -67,7 +69,9 @@ theorem mixT_rankZero {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T T₀ : HSp 
     intro ξ
     rw [d.integrandT_eq, Subsingleton.elim ξ 0, Subsingleton.elim y 0, map_zero, map_zero, symplOH_zero_left,
       AddChar.map_zero_eq_one, one_mul, zero_add, zero_add]
-  simp only [_root_.I195MixedCoordinates_7149a82cc25e6f9e668c8c61.target, h1]
+  change (∫ ξ in 𝓕, heisO ψ S T (d.incX S ξ)
+    (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w) f)) 0 ∂μ) = _
+  simp_rw [h1]
   rw [MeasureTheory.setIntegral_const]
   simp [Measure.real, hμ.2.2]
 

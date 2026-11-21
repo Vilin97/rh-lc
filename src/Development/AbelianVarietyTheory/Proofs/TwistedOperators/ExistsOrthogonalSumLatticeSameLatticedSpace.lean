@@ -78,11 +78,7 @@ private theorem exists_unimodular_lattice_eq_lat_of_isSelfDualC (X : LSp D) (h :
       exact this ▸ hc', fun hc => Submodule.mem_map_of_mem hc⟩
   have hsurj : ∀ v : X.sp.V, e (X.sp.frame.equivFun v) = v := fun v => X.sp.frame.equivFun.symm_apply_apply v
   have h1 : Submodule.IsLattice D.host.E (X.lat.map e) := by
-    refine ⟨hlat.fg.map e, ?_⟩
-    have himg : ((X.lat.map e : Submodule (𝓞 D.host.E) X.sp.V) : Set X.sp.V) =
-        (X.sp.frame.equivFun.symm : (Fin X.sp.rank → D.host.E) →ₗ[D.host.E] X.sp.V) '' (X.lat : Set _) :=
-      Submodule.map_coe e X.lat
-    rw [himg, Submodule.span_image, hlat.span_eq_top, Submodule.map_top, LinearEquiv.range]
+    exact Submodule.IsLattice.of_fg D.host.E (hlat.fg.map e)
   have h2 : Formalism.HermitianLatticesTheory.IsUnimodular X.sp.hT (X.lat.map e) := by
     unfold Formalism.HermitianLatticesTheory.IsUnimodular Formalism.HermitianLatticesTheory.dual Formalism.E.hdual
     ext v

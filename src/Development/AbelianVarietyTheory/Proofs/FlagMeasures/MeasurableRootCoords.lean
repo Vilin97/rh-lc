@@ -117,7 +117,7 @@ theorem root_conj {z z' : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hz' : 
   have hI' : μ.map GlobalTheory.SgInf.invM = μ := hI
   have mc := (continuous_conj g).measurable
   rw [← hI', Measure.map_map mc mi, Measure.map_map (measurable_rootCoords z p) (mc.comp mi), ← h2.map_eq,
-    ← Measure.map_smul, ← h, Measure.map_map h2.measurable (measurable_rootCoords z' p)]
+    ← Measure.map_smul _ h2.measurable.aemeasurable, ← h, Measure.map_map h2.measurable (measurable_rootCoords z' p)]
   refine Measure.map_congr ?_
   filter_upwards [P.Dx2.OrbJ.ae_mem hμ] with x hx
   have hxi := (hR.inv_mem _ hx).2
@@ -185,7 +185,7 @@ theorem amp_at_root (D : D7) τ w w' θ (W : LocW D.R.k D.R.rS) (hW : GoodW D τ
     rw [e, gInv _ _ _ _ hz hz' _ (P.Dx2.Rad.N_sub_S W.z hn) _ (P.Dx2.Rad.N_sub_S W.z' hn')] at hG0
     obtain ⟨μ, h1, -, h3⟩ := GlobalTheory.Amp.RootQuot.exists_root_haar hk hz hz' hTz hTz' p hg hZ hG0
     refine (GlobalTheory.T.besselRootMeasure_independent_of_choices D W.z W.z' γ p q _ μ' hz hz' hTz hTz' hγ hGf hka
-      ⟨n, hn, n', hn', g, e, hZ, ENNReal.ofReal _ • μ, ?_, by rw [Measure.map_smul, h3], rfl⟩ hroot).1
+      ⟨n, hn, n', hn', g, e, hZ, ENNReal.ofReal _ • μ, ?_, by rw [Measure.map_smul _ (measurable_rootCoords _ _).aemeasurable, h3], rfl⟩ hroot).1
     rw [Measure.smul_apply, h1.2.2.1, smul_zero]
   obtain ⟨n, hn, n', hn', g, rfl, hZ, μ₀, h0, h1, rfl⟩ := hroot
   have hg : g ∈ UH (Hpk D.R.k D.R.rS) := by
@@ -204,7 +204,25 @@ theorem amp_at_root (D : D7) τ w w' θ (W : LocW D.R.k D.R.rS) (hW : GoodW D τ
   obtain ⟨hH₀, hI₀⟩ := root_haar (μ := μ₀) hk hz' hz hTz' hTz (CellRed.inv_mem hg) (by rw [gf_inv _ _ hg]; exact hpos)
     hd' hm' (by simpa using hc) ENNReal.ofReal_ne_top (by unfold C6.Rset; rw [hii]; exact h0) h1
   set μ : Measure (Mt D.R.k D.R.rS) := ENNReal.ofReal θ' • μ₀ with hμ
-  have hH : B.IsHaarOn (C6.Rset g⁻¹) μ := GlobalTheory.AmpNorm.haar_smul hH₀ hθ'
+  have hH : B.IsHaarOn (C6.Rset g⁻¹) μ := by
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · rw [Measure.smul_apply, hH₀.conc, smul_zero]
+    · intro a ha
+      have hcont : Continuous (lmulM a : Mt D.R.k D.R.rS → Mt D.R.k D.R.rS) :=
+        continuous_const.matrix_mul continuous_id
+      rw [Measure.map_smul _ hcont.measurable.aemeasurable, hH₀.left a ha]
+    · intro a ha
+      have hcont : Continuous (B.rmulF a : Mt D.R.k D.R.rS → Mt D.R.k D.R.rS) :=
+        continuous_id.matrix_mul continuous_const
+      rw [Measure.map_smul _ hcont.measurable.aemeasurable, hH₀.right a ha]
+    · intro K hK
+      rw [Measure.smul_apply, smul_eq_mul]
+      exact ENNReal.mul_lt_top ENNReal.ofReal_lt_top (hH₀.finite_compact K hK)
+    · intro h0
+      apply hH₀.ne_zero
+      have h1 := Measure.measure_univ_eq_zero.2 h0
+      rw [Measure.smul_apply, smul_eq_mul] at h1
+      exact Measure.measure_univ_eq_zero.1 ((mul_eq_zero.1 h1).resolve_left (ENNReal.ofReal_pos.2 hθ').ne')
   obtain ⟨ν, hν⟩ := exists_orbQuot L ENNReal.ofReal_ne_top hg hH (by positivity)
     (hI₀.smul_measure ENNReal.ofReal_ne_top)
   have hR := haar_conj hg hH
@@ -218,14 +236,14 @@ theorem amp_at_root (D : D7) τ w w' θ (W : LocW D.R.k D.R.rS) (hW : GoodW D τ
       have := conj_inv_conj (CellRed.inv_mem hn'.1) x
       rwa [Matrix.nonsing_inv_nonsing_inv _ (unit_det hn'.1)] at this
     have := quot_map hn'.1 hG hq
-    rwa [e1, Measure.map_smul, Measure.map_map (continuous_conj _).measurable (continuous_conj _).measurable, e2,
+    rwa [e1, Measure.map_smul _ (continuous_conj _).measurable.aemeasurable, Measure.map_map (continuous_conj _).measurable (continuous_conj _).measurable, e2,
       Measure.map_id] at this
   have hconc : νR.map (lmulEquiv hn'.1) {x | Matrix.of x ∉ UH (Hpk D.R.k D.R.rS)} = 0 :=
     CutQuot.null_of_stable (R := {x | Matrix.of x ∈ C6.Rset g⁻¹})
       (T := fun s x => fun i j => (Matrix.of s * Matrix.of x) i j) hH.conc hH.ne_zero hq₀
       (CutQuot.measurable_G _ _).compl
       (fun s hs x hx h => hx ((CutQuot.mul_mem_iff hs.1.1 (Matrix.of x)).1 h)) hG.2.2.1
-  have hmap : ENNReal.ofReal θ' • μ₀.map (conjM g) = μ.map (conjM g) := (Measure.map_smul _ _ _).symm
+  have hmap : ENNReal.ofReal θ' • μ₀.map (conjM g) = μ.map (conjM g) := (Measure.map_smul _ (continuous_conj _).measurable.aemeasurable).symm
   refine ⟨g, μ₀.map (conjM g), νR.map (lmulEquiv hn'.1), ν,
     (psiS D W.z n / psiS D W.z 1) * star (psiS D W.z' n'⁻¹ / psiS D W.z' 1), ?_, hconc, ⟨hg, hZ⟩,
     ⟨(haar_conj hg hH₀).conc, ?_⟩, ?_, ?_⟩

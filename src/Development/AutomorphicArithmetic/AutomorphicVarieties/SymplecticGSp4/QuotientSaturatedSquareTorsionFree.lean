@@ -214,8 +214,10 @@ private theorem spans_cotangent_of_derivation_test (hD : D.Good) (hSo : SoV Ω l
   · obtain ⟨δ', ⟨h1, rfl⟩, -⟩ := (der_extend c.O M.R (ℤ × ℤ) M.W M.org c.O).1 δ hδ
     have hwt' : HasWt M.W.part w δ' := fun i hi f hf => hwt i hi ⟨f, M.W.part_le_A hf⟩ hf
     obtain ⟨a, b, e⟩ := h δ' hwt' h0
-    rw [derivation_zero_of_killing_generators hD hSo M w hw δ' h1 hwt' a b e, LinearMap.zero_comp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [derivation_zero_of_killing_generators hD hSo M w hw δ' h1 hwt' a b e, LinearMap.zero_comp]
 
+set_option synthInstance.maxHeartbeats 100000 in
 private theorem cotangent_rank_at_weight_eq_dims (M : Model D) (w : ℤ × ℤ) :
     Module.rank c.O (cotLat (M.W.originA M.org) M.W.gr w) = (tDims M.r M.r' M.m w : ℕ) := by
   obtain ⟨τ, _, wt, φ, hc, hn⟩ := M.smooth

@@ -62,7 +62,7 @@ def lineMap {k : Type} [Field k] {R R' : Type} [CommRing R] [Algebra k R] [CommR
       spMap (algebraMap k (Polynomial R'))
     rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
     congr 2
-    ext a; simp [Polynomial.algebraMap_apply])
+    exact RingHom.ext fun a => (Polynomial.mapAlgHom φ).commutes a)
 
 theorem lineMap_scaled {k : Type} [Field k] (B : Over (Sp k)) (f : Sp (Polynomial k) ⟶ B.left)
     (hf : f ≫ B.hom = spMap (algebraMap k (Polynomial k))) {R R' : Type} [CommRing R] [Algebra k R]

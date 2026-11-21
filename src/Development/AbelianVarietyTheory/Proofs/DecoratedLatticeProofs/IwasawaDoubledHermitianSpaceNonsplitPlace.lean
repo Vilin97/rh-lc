@@ -102,33 +102,34 @@ variable (e : n ⊕ n ≃ ι)
 omit [Fintype ι] [DecidableEq ι] in
 theorem dCol_mulVec (x : n → A) : dCol A e *ᵥ x = pairVec e x x := by
   funext j
-  obtain ⟨i | i, rfl⟩ := e.surjective j <;> simp [dCol, mulVec, dotProduct, one_apply]
+  obtain ⟨i | i, rfl⟩ := e.surjective j <;> simp [dCol, mulVec, dotProduct, Matrix.one_apply]
 
 omit [Fintype ι] [DecidableEq ι] in
 theorem fCol_mulVec (x : n → A) : fCol A e *ᵥ x = pairVec e x 0 := by
   funext j
-  obtain ⟨i | i, rfl⟩ := e.surjective j <;> simp [fCol, mulVec, dotProduct, one_apply]
+  obtain ⟨i | i, rfl⟩ := e.surjective j <;> simp [fCol, mulVec, dotProduct, Matrix.one_apply]
 
 omit [DecidableEq ι] in
 theorem transpose_fCol_mul (M : Matrix (n ⊕ n) n A) : (fCol A e)ᵀ * M.submatrix e.symm id = M.toRows₁ := by
   ext i j
-  simp [fCol, Matrix.mul_apply, ← e.sum_comp, one_apply, toRows₁]
+  simp [fCol, Matrix.mul_apply, ← e.sum_comp, Matrix.one_apply, toRows₁]
 
 omit [Fintype n] [Fintype ι] [DecidableEq ι] in
 theorem dCol_map {B : Type} [CommRing B] (f : A →+* B) : (dCol A e).map f = dCol B e := by
   ext j k
-  obtain ⟨i | i, rfl⟩ := e.surjective j <;> simp [dCol, one_apply, apply_ite f]
+  obtain ⟨i | i, rfl⟩ := e.surjective j <;> simp [dCol, Matrix.one_apply, apply_ite f]
 
 omit [Fintype n] [Fintype ι] [DecidableEq ι] in
 theorem fCol_map {B : Type} [CommRing B] (f : A →+* B) : (fCol A e).map f = fCol B e := by
   ext j k
-  obtain ⟨i | i, rfl⟩ := e.surjective j <;> simp [fCol, one_apply, apply_ite f]
+  obtain ⟨i | i, rfl⟩ := e.surjective j <;> simp [fCol, Matrix.one_apply, apply_ite f]
 
 omit [DecidableEq ι] in
 theorem dCol_isotropic (σ : A →+* A) (J : Matrix n n A) : cT σ (dCol A e) * dblGram e J * dCol A e = 0 := by
   rw [cT, dCol_map]
   ext i j
-  simp [dCol, dblGram, blkMat, mul_apply, ← e.sum_comp, one_apply]
+  simp [dCol, dblGram, blkMat, transpose_fromRows, fromCols_mul_fromBlocks,
+    fromCols_mul_fromRows]
 
 theorem keepsDiag_of_dCol {M : Matrix ι ι A} {c : Matrix n n A} (h : M * dCol A e = dCol A e * c) : KeepsDiag e M :=
   keepsDiag_of_mulVec fun w hw => by

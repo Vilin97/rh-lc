@@ -247,7 +247,7 @@ theorem exists_compact_mat {Λ : Set (n → S)} (hΛ : IsCompact Λ) {e : S}
   · exact continuous_const.add (Continuous.matrix_transpose continuous_id)
   · conv_rhs => rw [← hM]
     ext i j
-    simp [cut, mulVec_smul, mul_sub, sub_mul]
+    simp [cut, mulVec_smul, mul_sub, sub_mul, Function.swap, Matrix.col]
     ring
 
 theorem stab_compact_open [T2Space S] {φ : G →* GL n S} (hφ : IsClosedEmbedding φ) {e : S}

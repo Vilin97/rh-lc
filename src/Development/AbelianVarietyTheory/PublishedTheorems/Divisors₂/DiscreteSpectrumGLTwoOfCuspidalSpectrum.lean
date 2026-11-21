@@ -68,7 +68,9 @@ theorem isSqInt_of_bounded {f : GA E a → ℂ} (h : ∀ t g, f (splitCentre E a
 
 theorem IsDiscreteWith.twist (h : IsDiscreteWith ω V) {ν : HChar E} (hν : ν.IsUnitary) :
     IsDiscreteWith (ω * ν ^ a) (V.map (mulChi a ν).toLinearMap) where
-  aut := by rintro _ ⟨φ, hφ, rfl⟩; exact (h.aut φ hφ).mulChi ν
+  aut := by
+    rintro _ ⟨φ, hφ, rfl⟩
+    exact (h.aut φ hφ).mulChi ν
   central := by
     rintro z _ ⟨φ, hφ, rfl⟩
     refine Subtype.ext (funext fun g => ?_)

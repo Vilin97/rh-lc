@@ -75,48 +75,70 @@ theorem flatAt_dual (hψ : IsStdChar D ψ (-1)) (f : WO V W → ℂ) (hf : IsThe
     (ha : GlobalTheory.FinPl.UInv W x a) :
     flatAt ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 νU x y (heisO ψ V W (dV.extY W a) f) =
       ψ (symplO V W (dV.extX W x) (dV.extY W a)) • flatAt ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 νU x y f := by
-  have key : ∀ u : UX D ρ, (_root_.I195MixedCoordinates_e025acfe930a3926902b259b.source dV) W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.extY W a) f) (x ⬝ u.1.1) =
-      ψ (symplO V W (dV.extX W x) (dV.extY W a)) • (_root_.I195MixedCoordinates_e025acfe930a3926902b259b.source dV) W ψ vS.μ vS.𝓕 f (x ⬝ u.1.1) := by
+  have key : ∀ u : UX D ρ, (_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV) W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.extY W a) f) (x ⬝ u.1.1) =
+      ψ (symplO V W (dV.extX W x) (dV.extY W a)) • (_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV) W ψ vS.μ vS.𝓕 f (x ⬝ u.1.1) := by
     intro u
-    rw [(GlobalTheory.T.heisenbergOperator_thetaFunctional_mixedSourceModel D ψ hψ V V₀ W ρ dV vS f hf).2.1 (x ⬝ u.1.1) a]
+    have hs := (GlobalTheory.T.heisenbergOperator_thetaFunctional_mixedSourceModel D ψ hψ V V₀ W ρ dV vS f hf).2.1 (x ⬝ u.1.1) a
+    unfold _root_.I195MixedCoordinates_0bc2bf51bedd9bcbcf543475.source at hs
+    unfold _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source
+    rw [hs]
     rw [symplO_eq_of_symplOH (a := dV.extX W (x ⬝ u.1.1)) (b := dV.extY W a) (a' := dV.extX W x) (b' := dV.extY W a)
       (by rw [dV.symplOH_extX_extY W, dV.symplOH_extX_extY W, ha u])]
+  have hm := mixT_smul dW ψ vT.μ vT.𝓕 (ψ (symplO V W (dV.extX W x) (dV.extY W a)))
+  unfold _root_.I195MixedCoordinates_e025acfe930a3926902b259b.target at hm
   funext w
-  simp only [flatAt, flatFun, evalAt, key, mixT_smul, Pi.smul_apply, smul_eq_mul]
+  simp only [flatAt, flatFun, evalAt, key, hm, Pi.smul_apply, smul_eq_mul]
   rw [← integral_const_mul]
-  congr 1; funext u; ring
+  congr 1; funext u
+  unfold _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target
+  rw [congrFun (hm _ _) w]
+  simp only [Pi.smul_apply, smul_eq_mul]
+  ring
 
 theorem flatAt_iso (hψ : IsStdChar D ψ (-1)) (f : WO V W → ℂ) (hf : IsThetaFunO ψ V W f) (ξ : Mx D σ V₀.rank) :
     flatAt ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 νU x y (heisO ψ V W (dV.ext0 W (dW.incX V₀ ξ)) f) =
       ψ (symplO V₀ W (dW.incAdj V₀ y) (dW.incX V₀ ξ)) • flatAt ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 νU x y f := by
-  have key : ∀ u : UX D ρ, (_root_.I195MixedCoordinates_e025acfe930a3926902b259b.target dW) V₀ ψ vT.μ vT.𝓕
-      ((_root_.I195MixedCoordinates_e025acfe930a3926902b259b.source dV) W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.ext0 W (dW.incX V₀ ξ)) f) (x ⬝ u.1.1)) y =
+  have key : ∀ u : UX D ρ, (_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target dW) V₀ ψ vT.μ vT.𝓕
+      ((_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV) W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.ext0 W (dW.incX V₀ ξ)) f) (x ⬝ u.1.1)) y =
       ψ (symplO V₀ W (dW.incAdj V₀ y) (dW.incX V₀ ξ)) •
-        (_root_.I195MixedCoordinates_e025acfe930a3926902b259b.target dW) V₀ ψ vT.μ vT.𝓕 ((_root_.I195MixedCoordinates_e025acfe930a3926902b259b.source dV) W ψ vS.μ vS.𝓕 f (x ⬝ u.1.1)) y := by
+        (_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target dW) V₀ ψ vT.μ vT.𝓕 ((_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV) W ψ vS.μ vS.𝓕 f (x ⬝ u.1.1)) y := by
     intro u
-    rw [(GlobalTheory.T.heisenbergOperator_thetaFunctional_mixedSourceModel D ψ hψ V V₀ W ρ dV vS f hf).2.2.1 (x ⬝ u.1.1) (dW.incX V₀ ξ)]
+    have hs := (GlobalTheory.T.heisenbergOperator_thetaFunctional_mixedSourceModel D ψ hψ V V₀ W ρ dV vS f hf).2.2.1 (x ⬝ u.1.1) (dW.incX V₀ ξ)
+    unfold _root_.I195MixedCoordinates_0bc2bf51bedd9bcbcf543475.source at hs
+    unfold _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source
+    rw [hs]
     have hg := (GlobalTheory.T.mixedCoordinates_of_thetaFunction_are_thetaFunctions D ψ hψ).1 V V₀ W ρ dV vS.μ vS.𝓕 vS.covol f hf (x ⬝ u.1.1)
-    exact (GlobalTheory.T.heisenbergThetaMixedModelTarget_of_mixedModel D ψ hψ V₀ W W₀ σ dW vT.μ vT.𝓕 vT.covol _ hg).1 ξ y
+    unfold _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source at hg
+    simpa only [_root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.target, _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target] using (GlobalTheory.T.heisenbergThetaMixedModelTarget_of_mixedModel D ψ hψ V₀ W W₀ σ dW vT.μ vT.𝓕 vT.covol _ hg).1 ξ y
   funext w
   simp only [flatAt, flatFun, evalAt, key, Pi.smul_apply, smul_eq_mul]
   rw [← integral_const_mul]
-  congr 1; funext u; ring
+  congr 1; funext u
+  rw [congrFun (key u) w]
+  simp only [Pi.smul_apply, smul_eq_mul]
+  ring
 
 theorem flatAt_core (hψ : IsStdChar D ψ (-1)) (f : WO V W → ℂ) (hf : IsThetaFunO ψ V W f) (w₀ : WO V₀ W₀) :
     flatAt ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 νU x y (heisO ψ V W (dV.ext0 W (dW.inc0 V₀ w₀)) f) =
       heisO ψ V₀ W₀ w₀ (flatAt ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 νU x y f) := by
-  have key : ∀ u : UX D ρ, (_root_.I195MixedCoordinates_e025acfe930a3926902b259b.target dW) V₀ ψ vT.μ vT.𝓕
-      ((_root_.I195MixedCoordinates_e025acfe930a3926902b259b.source dV) W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.ext0 W (dW.inc0 V₀ w₀)) f) (x ⬝ u.1.1)) y =
-      heisO ψ V₀ W₀ w₀ ((_root_.I195MixedCoordinates_e025acfe930a3926902b259b.target dW) V₀ ψ vT.μ vT.𝓕 ((_root_.I195MixedCoordinates_e025acfe930a3926902b259b.source dV) W ψ vS.μ vS.𝓕 f (x ⬝ u.1.1)) y) := by
+  have key : ∀ u : UX D ρ, (_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target dW) V₀ ψ vT.μ vT.𝓕
+      ((_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV) W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.ext0 W (dW.inc0 V₀ w₀)) f) (x ⬝ u.1.1)) y =
+      heisO ψ V₀ W₀ w₀ ((_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target dW) V₀ ψ vT.μ vT.𝓕 ((_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV) W ψ vS.μ vS.𝓕 f (x ⬝ u.1.1)) y) := by
     intro u
-    rw [(GlobalTheory.T.heisenbergOperator_thetaFunctional_mixedSourceModel D ψ hψ V V₀ W ρ dV vS f hf).2.2.1 (x ⬝ u.1.1) (dW.inc0 V₀ w₀)]
+    have hs := (GlobalTheory.T.heisenbergOperator_thetaFunctional_mixedSourceModel D ψ hψ V V₀ W ρ dV vS f hf).2.2.1 (x ⬝ u.1.1) (dW.inc0 V₀ w₀)
+    unfold _root_.I195MixedCoordinates_0bc2bf51bedd9bcbcf543475.source at hs
+    unfold _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source
+    rw [hs]
     have hg := (GlobalTheory.T.mixedCoordinates_of_thetaFunction_are_thetaFunctions D ψ hψ).1 V V₀ W ρ dV vS.μ vS.𝓕 vS.covol f hf (x ⬝ u.1.1)
-    exact (GlobalTheory.T.heisenbergThetaMixedModelTarget_of_mixedModel D ψ hψ V₀ W W₀ σ dW vT.μ vT.𝓕 vT.covol _ hg).2.1 w₀ y
+    unfold _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source at hg
+    simpa only [_root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.target, _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target] using (GlobalTheory.T.heisenbergThetaMixedModelTarget_of_mixedModel D ψ hψ V₀ W W₀ σ dW vT.μ vT.𝓕 vT.covol _ hg).2.1 w₀ y
   funext w
   simp only [flatAt, flatFun, evalAt, key, heisO]
   rw [← integral_const_mul]
-  congr 1; funext u; ring
-
+  congr 1; funext u
+  rw [congrFun (key u) w]
+  simp only [heisO]
+  ring
 end Gen
 
 end GlobalTheory.FlatLawsDuality

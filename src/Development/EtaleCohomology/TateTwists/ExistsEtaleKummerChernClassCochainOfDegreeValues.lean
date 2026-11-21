@@ -53,15 +53,23 @@ theorem vals_nat {q : ℕ} {E : Spc} (a1 : ∀ U : Scheme.{0}, Sx E 1 U → Sec 
     (h1 : ∀ (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E 1 U), Sec.res g (a1 U x) = a1 V (x.res g))
     (h2 : ∀ (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E 2 U), Sec.res g (a2 U x) = a2 V (x.res g)) :
     ∀ p s h (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U),
-      Sec.res g (vals a1 a2 p s h U x) = vals a1 a2 p s h V (x.res g)
-  | 0, _, _, V, U, g, x => by simp [vals]
-  | Nat.succ 0, s, h, V, U, g, x => by
-      obtain rfl : s = 1 := by omega
-      simpa only [vals] using h1 V U g x
-  | Nat.succ (Nat.succ 0), s, h, V, U, g, x => by
-      obtain rfl : s = 0 := by omega
-      simpa only [vals] using h2 V U g x
-  | Nat.succ (Nat.succ (Nat.succ _)), _, _, V, U, g, x => by simp [vals]
+      Sec.res g (vals a1 a2 p s h U x) = vals a1 a2 p s h V (x.res g) := by
+  intro p
+  match p with
+  | 0 =>
+    intro s h V U g x
+    simp [vals]
+  | Nat.succ 0 =>
+    intro s h V U g x
+    subst s
+    exact h1 V U g x
+  | Nat.succ (Nat.succ 0) =>
+    intro s h V U g x
+    subst s
+    exact h2 V U g x
+  | Nat.succ (Nat.succ (Nat.succ _)) =>
+    intro s h V U g x
+    simp [vals]
 
 theorem exists_etale_kummer_chern_class_cochain_of_degree_values (hmk : EvMk) (h1 : ExistsNaturalEtaleKummerChernClassDegreeOneValue) (h2 : ExistsNaturalEtaleKummerChernClassDegreeTwoValue) : ExistsEtaleKummerChernClassCochain := by
   intro q _ E L hi

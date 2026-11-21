@@ -82,6 +82,8 @@ theorem GlobalTheory.Corev.kappa_mem_latO_iff : ∀ (D : D7) (k : Type) [Field k
     have h1 : ((rat l.τ : Matrix _ _ (AE D)) * (x : Matrix _ _ (AE D))) *ᵥ y = d • ratV (-B.ζ) := by
       rw [← Matrix.mulVec_mulVec, hxy, Matrix.mulVec_smul, ← l.map]
       congr 1
+      ext i
+      simp [rat, ratV, Matrix.mulVec, dotProduct, map_sum, map_mul]
     rw [h1]
     have hh : incA D (star B.ζ ⬝ᵥ HSpace.gram B.L *ᵥ B.ζ) =
         ∑ i, ∑ j, incA D (star (B.ζ i)) * incA D (HSpace.gram B.L i j) * incA D (B.ζ j) := by

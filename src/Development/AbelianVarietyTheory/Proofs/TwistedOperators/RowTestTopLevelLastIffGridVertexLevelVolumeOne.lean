@@ -46,7 +46,7 @@ theorem embX_frame_int {a c b : ℕ} (h : a + c = b) (z : GL (Fin a) k) :
     · exact H r s
     · exact zero_mem _
     · exact zero_mem _
-    · rw [one_apply]; split_ifs
+    · rw [Matrix.one_apply]; split_ifs
       · exact one_mem _
       · exact zero_mem _
 

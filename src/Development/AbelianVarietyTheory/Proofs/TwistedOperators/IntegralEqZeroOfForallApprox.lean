@@ -69,7 +69,7 @@ theorem isCuspFun_of_locApprox {f : GA D V → ℂ} (h : LocApprox V f) : IsCusp
     simpa using (hint (fun _ => (1 : ℂ)) continuous_const fun _ _ _ => rfl).norm
   refine integral_eq_zero_of_forall_approx (μ := μ.restrict 𝓕) (v := fun n => f (n.1 * g)) hw fun ε hε => ?_
   obtain ⟨m, ψ, hψ, happ⟩ := h _ (hK.image hcont) ε hε
-  refine ⟨fun n => ∑ l, ψ l (n.1 * g), integrable_finset_sum _ fun l _ => hint _ (hψ l).1 (hψ l).2.1, ?_,
+  refine ⟨fun n => ∑ l, ψ l (n.1 * g), integrable_finsetSum _ fun l _ => hint _ (hψ l).1 (hψ l).2.1, ?_,
     fun n => ?_⟩
   · rw [integral_finsetSum _ fun l _ => hint _ (hψ l).1 (hψ l).2.1]
     exact Finset.sum_eq_zero fun l _ =>

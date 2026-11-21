@@ -114,6 +114,8 @@ theorem dRho_add (hθ : IsInfFam θ) (hψ : IsStdChar D ψ (-1)) (τ : D.what₂
   refine Eq.trans ?_ this.deriv
   unfold Formalism.IndefR.Datum.dRho
   congr 1
+  funext t
+  simp only [heisO, Pi.add_apply, mul_add]
 
 theorem dRho_neg (hθ : IsInfFam θ) (τ : D.what₂.Tau) (z : Matrix (Fin T.rank) (Fin S.rank) ℂ) (f : WO S T → ℂ) :
     dRho (heisO ψ S T) θ τ (-z) f = -dRho (heisO ψ S T) θ τ z f := by

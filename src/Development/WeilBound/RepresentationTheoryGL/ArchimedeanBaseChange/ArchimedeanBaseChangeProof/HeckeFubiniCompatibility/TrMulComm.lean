@@ -140,13 +140,13 @@ theorem map_aff [MeasurableSpace (nilrad W₁ W₂)] [BorelSpace (nilrad W₁ W�
 theorem haar_map [MeasurableSpace (G n)] [BorelSpace (G n)] [MeasurableSpace (nilrad W₁ W₂)]
     [BorelSpace (nilrad W₁ W₂)] (ν : Measure (nilrad W₁ W₂)) [ν.IsAddHaarMeasure] :
     (Measure.map (eH W₁ W₂) ν).IsHaarMeasure where
-  lt_top_of_isCompact K hK := by
+  toIsFiniteMeasureOnCompacts := ⟨fun K hK => by
     have h := (eH W₁ W₂).toMeasurableEquiv.map_apply (μ := ν) K
     rw [Homeomorph.toMeasurableEquiv_coe] at h
     rw [h]
-    exact ((eH W₁ W₂).isCompact_preimage.2 hK).measure_lt_top
-  open_pos := ((eH W₁ W₂).continuous.isOpenPosMeasure_map (eH W₁ W₂).surjective).open_pos
-  map_mul_left_eq_self g := by
+    exact ((eH W₁ W₂).isCompact_preimage.2 hK).measure_lt_top⟩
+  toIsOpenPosMeasure := (eH W₁ W₂).continuous.isOpenPosMeasure_map (eH W₁ W₂).surjective
+  toIsMulLeftInvariant := ⟨fun g => by
     set Y := (eH W₁ W₂).symm g
     have hg : g = eH W₁ W₂ Y := by simp [Y]
     have hcomp : (fun x => g * x) ∘ (eH W₁ W₂) = (eH W₁ W₂) ∘ (fun X : nilrad W₁ W₂ =>
@@ -157,7 +157,7 @@ theorem haar_map [MeasurableSpace (G n)] [BorelSpace (G n)] [MeasurableSpace (ni
       rw [hg, eH_val]
       noncomm_ring
     rw [Measure.map_map (continuous_const_mul g).measurable (eH W₁ W₂).continuous.measurable, hcomp,
-      ← Measure.map_map (eH W₁ W₂).continuous.measurable (by fun_prop), map_aff]
+      ← Measure.map_map (eH W₁ W₂).continuous.measurable (by fun_prop), map_aff]⟩
 
 end Haar
 

@@ -45,8 +45,8 @@ theorem vecB_norm_ne : ∀ (D : D7) (V₀ A L : HSp D) (o : OrthDec V₀ A L) (�
 
 theorem psi_qS_eq_one : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (V V₀ : HSp D) (ρ : ℕ) (d : HypDec V V₀ ρ) (W : HSp D) (x₀ : Matrix (Fin W.rank) (Fin ρ) D.host.E), gramQ W x₀ = 0 → ∀ c : skewA D ρ, ψ (d.qS W c (rat x₀)) = 1 := by
   intro D ψ hψ V V₀ ρ d W x₀ hx₀ c
-  have hg : adj (rat x₀) ⬝ (gA W ⬝ rat x₀) = 0 := by
-    have h : x₀ᴴ ⬝ HSpace.gram W ⬝ x₀ = 0 := by rw [Matrix.mul_assoc]; exact hx₀
+  have hg : adj (rat x₀) * (gA W * rat x₀) = 0 := by
+    have h : x₀ᴴ * HSpace.gram W * x₀ = 0 := by rw [Matrix.mul_assoc]; exact hx₀
     rw [gram_rat W h, rat_zero]
   have hq := ((GlobalTheory.T.mixedModelCentralTerms_via_gramMatrices D).1 V V₀ W ρ d).2.1 c (rat x₀)
   have h0 : GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.gramSkew W (rat x₀) = 0 := by

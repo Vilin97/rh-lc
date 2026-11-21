@@ -159,14 +159,13 @@ theorem isFlagPair_join (ϖ : O) (y : (Σ k, ι k) → Ω) (B B' : ChartBundle O
     (hpV : IsFlagPair ϖ y BV BV' wV wV' xV xV' fV gV) :
     IsFlagPair ϖ y B B' (((wU.prod wV).map φ).reindex e) (((wU'.prod wV').map φ).reindex e)
       (fun i => Sum.elim xU xV (e.symm i)) (fun i => Sum.elim xU' xV' (e.symm i))
-      (fun i => Sum.elim fU fV (e.symm i)) (fun i => Sum.elim gU gV (e.symm i)) where
-  flag := by
-    exact isFlagFrame_join y B BU BV φ e he (fun c hc u => (hU c hc u).1)
+      (fun i => Sum.elim fU fV (e.symm i)) (fun i => Sum.elim gU gV (e.symm i)) := by
+  refine { flag := ?_, flag' := ?_, sameFlag := ?_, vertical := ?_, generic := ?_ }
+  · exact isFlagFrame_join y B BU BV φ e he (fun c hc u => (hU c hc u).1)
       (fun c hc q => (hV c hc q).1) hpU.flag hpV.flag
-  flag' := by
-    exact isFlagFrame_join y B' BU' BV' φ e he (fun c hc u => (hU c hc u).2)
+  · exact isFlagFrame_join y B' BU' BV' φ e he (fun c hc u => (hU c hc u).2)
       (fun c hc q => (hV c hc q).2) hpU.flag' hpV.flag'
-  sameFlag i i' hii' := by
+  · intro i i' hii'
     obtain ⟨t, rfl⟩ := e.surjective i
     obtain ⟨t', rfl⟩ := e.surjective i'
     rw [Fin.lt_def, he, he] at hii'
@@ -177,12 +176,12 @@ theorem isFlagPair_join (ϖ : O) (y : (Σ k, ι k) → Ω) (B B' : ChartBundle O
     · have := a'.isLt
       omega
     · simpa using hpV.sameFlag b b' (Fin.lt_def.2 (by omega))
-  vertical i := by
+  · intro i
     obtain ⟨t, rfl⟩ := e.surjective i
     rcases t with a | b
     · simpa using hpU.vertical a
     · simpa using hpV.vertical b
-  generic i := by
+  · intro i
     obtain ⟨t, rfl⟩ := e.surjective i
     rcases t with a | b
     · simpa using hpU.generic a

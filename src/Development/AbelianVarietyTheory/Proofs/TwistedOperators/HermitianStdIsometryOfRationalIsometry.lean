@@ -113,27 +113,34 @@ theorem exists_isom {Y Y' X : HSp D} {ι : X.V →ₗ[D.host.E] Y.V} {ι' : X.V 
 theorem isDec_rescale {Y X X' : HSp D} {ι : X'.V →ₗ[D.host.E] Y.V} {a ρ : ℕ} {z : Fin a → Y.V} {c : D.host.E}
     {e f : Fin ρ → Y.V} (h : IsDec Y X' ι z c e f) (φ : X.V →ₗ[D.host.E] X'.V) (hφ : HSpace.IsIsomEmb X X' φ)
     (hr : X.rank = X'.rank) (π : D.host.E) :
-    IsDec Y X (ι ∘ₗ φ) (fun i => π • z i) (c * (π * star π)) e f where
-  isom x y := (h.isom _ _).trans (hφ x y)
-  a_le := h.a_le
-  rank := by rw [hr, h.rank]
-  z_norm i := by
+    IsDec Y X (ι ∘ₗ φ) (fun i => π • z i) (c * (π * star π)) e f := by
+  refine
+    { isom := fun x y => (h.isom _ _).trans (hφ x y)
+      a_le := h.a_le
+      rank := ?_
+      z_norm := ?_
+      z_X := ?_
+      ee := h.ee
+      ff := h.ff
+      ef := h.ef
+      hyp_X := fun i x => h.hyp_X i (φ x)
+      hyperbolicDecomp_hyp_orthogonal_line := ?_ }
+  · rw [hr, h.rank]
+  · intro i
     have := h.z_norm i
     simp only [HSpace.hD, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply,
       starRingEnd_apply] at this ⊢
-    rw [this]; ring
-  z_X i x := by
+    rw [this]
+    ring
+  · intro i x
     have := h.z_X i (φ x)
     simp only [HSpace.hD, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, LinearMap.comp_apply] at this ⊢
     rw [this, mul_zero]
-  ee := h.ee
-  ff := h.ff
-  ef := h.ef
-  hyp_X i x := h.hyp_X i (φ x)
-  hyperbolicDecomp_hyp_orthogonal_line i j := by
+  · intro i j
     have := h.hyperbolicDecomp_hyp_orthogonal_line i j
     simp only [HSpace.hD, LinearMap.map_smulₛₗ, smul_eq_mul] at this ⊢
-    rw [this.1, this.2, mul_zero]; exact ⟨rfl, rfl⟩
+    rw [this.1, this.2, mul_zero]
+    exact ⟨rfl, rfl⟩
 
 theorem stdIsomSt_of_rationalSt : ∀ D : D7, GlobalTheory.IndefiniteRowSideFullHecke.FlatSpaceComponents.RationalSt D → GlobalTheory.IndefiniteRowSideFullHecke.FlatSpaceComponents.StdIsomSt D := by
   intro D hR u

@@ -69,6 +69,10 @@ theorem sees (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) : 
   Inh.sees_ofOk B (I.cols l) Z.W Z.V Z.S Z.N Z.G u X (I.chIn u a) (I.atIn u a) (I.perIn u a) (I.fmIn l.pr u a) (l.ch u a)
     (l.lev u a) (l.per u a) (l.ovr u a) rfl (fun _ h => h) (fun _ _ => rfl) (fun _ => decide_eq_true_iff)
 
+local instance moveStepDatNumberField (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l))
+    (u : B.Word) (a : I.ι) : @NumberField (dat I l Z u a).E (dat I l Z u a).fE :=
+  (dat I l Z u a).nE
+
 theorem kerEq (h : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι)
     (hth : _root_.Formalism.L2.Col.ChTh.Ok (Ch := I.Ch) (I.cst a) (chTh (Pr := B.primes X) B.wts I.Ch I.sel (I.tup a) (I.cst a) I.A u (B.R.m - 2)))
     {i : ℕ} (hi : i < B.R.m)

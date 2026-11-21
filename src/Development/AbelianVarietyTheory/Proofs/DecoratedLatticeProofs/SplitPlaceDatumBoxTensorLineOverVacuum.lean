@@ -67,11 +67,7 @@ theorem exists_nsmul_rat_mul (S : HSp D) {T T' : HSp D} (M : Matrix (Fin T'.rank
 
 theorem isLattice_span {L : HSp D} {ζ : Fin L.rank → D.host.E} (h : IsLineVec L ζ) :
     Submodule.IsLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
-  refine ⟨Submodule.fg_span_singleton ζ, ?_⟩
-  have h0 : ζ ≠ 0 := fun h0 => h.2 (by simp [h0])
-  rw [Submodule.span_span_of_tower]
-  have hr : Module.finrank D.host.E (Fin L.rank → D.host.E) = 1 := by simp [h.1]
-  exact (finrank_eq_one_iff_of_nonzero ζ h0).1 hr
+  exact Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span_singleton ζ)
 
 theorem isHalf_mul {l m n : ℕ} {e : AE D} (M : Mx D l m) {u : Mx D m n} (hu : IsHalf e u) : IsHalf e (M * u : Mx D l n) :=
   fun i j => by

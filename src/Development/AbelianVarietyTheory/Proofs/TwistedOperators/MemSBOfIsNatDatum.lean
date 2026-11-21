@@ -204,7 +204,11 @@ theorem mem_SB_of_isNatDatum {k A C : Type} [Field k] [ValuativeRel k] [Topologi
     exact IsOpen.preimage (f := fun x' : Matrix A C k => (x' - x) r s / ((ϖ ^ n : kˣ) : k)) (by fun_prop) Valuation.isOpen_integer
   · rw [← h.2 x (x' - x), add_sub_cancel]
     classical
-    refine GlobalTheory.SplitFlip.FourierDepth.mem_matLat_smul_stdLat.2 fun r s => ?_
+    rw [GlobalTheory.SplitFlip.stdLat, smul_diagLat]
+    simp only [Pi.one_apply, mul_one]
+    change ∀ r s, ValuativeRel.valuation k ((x' - x) r s) ≤
+      ValuativeRel.valuation k ((ϖ ^ n : kˣ) : k)
+    intro r s
     have := hx' r s
     rwa [Valuation.mem_integer_iff, map_div₀, div_le_one₀ h0] at this
 

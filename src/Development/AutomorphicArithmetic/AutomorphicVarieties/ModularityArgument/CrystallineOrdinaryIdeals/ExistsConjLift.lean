@@ -16,7 +16,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.Loc ReciprocityTheory.Gal Mod
 namespace GlobalTheory.OrdLoc.RootConjugation
 
 private theorem map_conj {A B G : Type} [CommRing A] [CommRing B] [Group G] (f : A →+* B) (h : GL (Fin 3) A)
-    (r : G →* GG 3 A) (g : G) :
+    (r : G →* GG (m := 3) (R := A)) (g : G) :
     GG.map f (conjBy h r g) = GG.ofGL (Matrix.GeneralLinearGroup.map f h) * GG.map f (r g) *
       (GG.ofGL (Matrix.GeneralLinearGroup.map f h))⁻¹ := by
   have e : GG.map f (GG.ofGL h) = GG.ofGL (Matrix.GeneralLinearGroup.map f h) := by
@@ -26,11 +26,12 @@ private theorem map_conj {A B G : Type} [CommRing A] [CommRing B] [Group G] (f :
   rw [e2, map_mul, map_mul, map_inv, e]
 
 private theorem push_conj {O A B G : Type} [CommRing O] [CommRing A] [CommRing B] [Algebra O A] [Algebra O B]
-    [Group G] (f : A →ₐ[O] B) (h : GL (Fin 3) A) (r : G →* GG 3 A) :
+    [Group G] (f : A →ₐ[O] B) (h : GL (Fin 3) A) (r : G →* GG (m := 3) (R := A)) :
     push f (conjBy h r) = conjBy (Matrix.GeneralLinearGroup.map (f : A →+* B) h) (push f r) :=
   MonoidHom.ext fun g => map_conj _ h r g
 
-private theorem conjBy_one {A G : Type} [CommRing A] [Group G] (r : G →* GG 3 A) : conjBy 1 r = r := by
+private theorem conjBy_one {A G : Type} [CommRing A] [Group G] (r : G →* GG (m := 3) (R := A)) :
+    conjBy 1 r = r := by
   refine MonoidHom.ext fun g => ?_
   have e2 : conjBy 1 r g = GG.ofGL 1 * r g * (GG.ofGL 1)⁻¹ := rfl
   rw [e2, map_one, one_mul, inv_one, mul_one]
@@ -103,7 +104,13 @@ end GlobalTheory.OrdLoc.RootConjugation
 
 open GlobalTheory.OrdLoc.RootConjugation in
 theorem GlobalTheory.OrdLoc.rtConj :
-    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)) (C : Type) [CommRing C] [Algebra O C] [IsCO O C] (r : GQ l →* GG 3 C) (h : GL (Fin 3) C), UpperTheory.V.UnitaryThreeInertia.InHat h → GlobalTheory.OrdLoc.On D U r → GlobalTheory.OrdLoc.On D U (conjBy h r) := by
+    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O]
+    [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O]
+    [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O)
+    (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ))
+    (C : Type) [CommRing C] [Algebra O C] [IsCO O C] (r : GQ l →* GG (m := 3) (R := C))
+    (h : GL (Fin 3) C), UpperTheory.V.UnitaryThreeInertia.InHat h → Dat3.On D U r →
+      Dat3.On D U (conjBy h r) := by
   intro hP l _ O _ _ _ _ _ _ _ D U C _ _ _ r h hh hr
   obtain ⟨f, rfl, hf⟩ := hr
   obtain ⟨hpr, hprime, hl, hIt, -, -, -⟩ := GlobalTheory.T.ordinaryComponent_unique_prime_dim_thirteen_near_base hP D U

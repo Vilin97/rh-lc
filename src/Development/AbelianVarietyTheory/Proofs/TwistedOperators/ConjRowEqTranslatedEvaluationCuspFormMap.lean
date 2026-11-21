@@ -46,7 +46,7 @@ theorem conj_row_eq_eval_mult : GlobalTheory.Published.DiscreteSeriesClassificat
     have key : ∀ x, ev (MP R) v₀ (GlobalTheory.ConjRowMult.conjMap X (MP R) c Φ h t) (@HMul.hMul (GA D (Yc D 0)) (GA D (Yc D 0)) (GA D (Yc D 0)) _ ((iotaX X h).symm x) t) = star (ψ x) := by
       intro x
       rw [ev_apply]
-      refine (GlobalTheory.ConjRowMult.conjMap_apply X (MP R) c Φ h t v₀ _).trans ?_
+      apply (GlobalTheory.ConjRowMult.conjMap_apply X (MP R) c Φ h t v₀ _).trans
       rw [hw, hΦw, GlobalTheory.ConjRowMult.contRepL_spec X hψ]
       have e : ∀ a b : GA D (D.sp.Y 0), a * b * b⁻¹ = a := fun a b => mul_inv_cancel_right a b
       erw [e, ContinuousMulEquiv.apply_symm_apply]

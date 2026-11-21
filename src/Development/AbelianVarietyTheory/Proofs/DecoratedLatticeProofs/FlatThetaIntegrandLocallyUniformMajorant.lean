@@ -63,9 +63,9 @@ theorem flatFun_majorant : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀
   rw [norm_mul, norm_star]
   have h1 : ‖psiUni ψ u.1‖ = 1 := hn _
   rw [h1, one_mul]
-  unfold _root_.I195MixedCoordinates_e532927a36ed71d9eb873635.target
+  unfold _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target
   have hb : ∀ ξ ∈ vT.𝓕, ‖heisO ψ V₀ W (dW.incX V₀ ξ) (heisO ψ V₀ W (dW.incAdj V₀ y) (heisO ψ V₀ W (dW.inc0 V₀ w)
-      ((_root_.I195MixedCoordinates_e532927a36ed71d9eb873635.source dV) W ψ vS.μ vS.𝓕 (om p Φ) ((rat x : Mx D W.rank ρ) ⬝ u.1.1)))) 0‖ ≤ C * maj θ K' N ((rat x : Mx D W.rank ρ) ⬝ u.1.1) := by
+      ((_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV) W ψ vS.μ vS.𝓕 (om p Φ) ((rat x : Mx D W.rank ρ) ⬝ u.1.1)))) 0‖ ≤ C * maj θ K' N ((rat x : Mx D W.rank ρ) ⬝ u.1.1) := by
     intro ξ _
     rw [dW.integrandT_eq, norm_mul, hn, one_mul]
     exact hC p hp _ _

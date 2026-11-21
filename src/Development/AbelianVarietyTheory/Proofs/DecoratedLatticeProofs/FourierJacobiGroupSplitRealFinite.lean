@@ -81,8 +81,8 @@ theorem mem_jacGrp_of_mat {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (c 
     (hh : mt S h = (1 - c) • (1 : Mx D S.rank S.rank) + c • mt S g) : h ∈ jacGrp d := by
   obtain ⟨h0, hY, hX⟩ := (GlobalTheory.BesClosed.mem_jacGrp_iff_mat d g).1 hg
   have e : ∀ {k : ℕ} (P : Mx D k S.rank),
-      P ⬝ (mt S h ⬝ d.jX) = (1 - c) • (P ⬝ d.jX) + c • (P ⬝ (mt S g ⬝ d.jX)) := fun P =>
-    (congrArg (fun N : Mx D S.rank S.rank => P ⬝ (N ⬝ d.jX)) hh).trans (conj_mix c P (mt S g) d.jX)
+      P * (mt S h * d.jX) = (1 - c) • (P * d.jX) + c • (P * (mt S g * d.jX)) := fun P =>
+    (congrArg (fun N : Mx D S.rank S.rank => P * (N * d.jX)) hh).trans (conj_mix c P (mt S g) d.jX)
   refine (GlobalTheory.BesClosed.mem_jacGrp_iff_mat d h).2
     ⟨(e _).trans (mix_zero c d.p0_jX h0), (e _).trans (mix_zero c d.pY_jX hY), ?_⟩
   rw [e]

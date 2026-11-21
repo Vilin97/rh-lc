@@ -91,7 +91,7 @@ theorem selfDual_complex {ι : Type} [Fintype ι] {n : ℕ} (d : ι → Fin n �
     _ = (ENNReal.ofReal (∏ k, √|d' k|) • (volume : Measure (ι × Fin n × Bool → ℝ))).map e.symm := by
         rw [h2']
     _ = ENNReal.ofReal (∏ k, √|d' k|) • (volume : Measure (ι × Fin n × Bool → ℝ)).map e.symm :=
-        Measure.map_smul _ _ _
+        Measure.map_smul _ e.symm.measurable.aemeasurable
     _ = ENNReal.ofReal (∏ v, ∏ i, |d v i|) • (volume : Measure (ι → Fin n → ℂ)) := by
         rw [(hmp.symm e).map_eq, hconst]
 

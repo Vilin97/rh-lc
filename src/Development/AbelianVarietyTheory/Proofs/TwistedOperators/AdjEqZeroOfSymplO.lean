@@ -169,7 +169,7 @@ section Mean
 variable {D : D7} {m n : ℕ}
 
 theorem continuous_smul_Mx (u : AE D) : Continuous fun a : Mx D m n => u • a := by
-  obtain ⟨r1, -⟩ := Formalism.IndefR.Eqv.ae_facts (D := D)
+  obtain ⟨r1, -⟩ := Formalism.IndefR.Eqv.ae_facts D
   exact continuous_pi fun i => continuous_pi fun j =>
     continuous_const.mul ((continuous_apply j).comp (continuous_apply i))
 

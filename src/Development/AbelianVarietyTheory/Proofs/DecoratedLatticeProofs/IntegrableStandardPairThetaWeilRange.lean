@@ -47,7 +47,7 @@ theorem integrable_theta : GlobalTheory.Published.WeilThetaConvergence → ∀ (
     have hlim := aestronglyMeasurable_of_tendsto_ae (μ := ν)
       (Filter.atTop : Filter (Finset (Matrix (Fin V.rank) (Fin n) D.host.E)))
       (f := fun F h => ∑ ξ ∈ F, φ.1 (GlobalTheory.SiegelFormula.invPt V h ξ))
-      (fun F => (continuous_finset_sum F fun ξ _ =>
+      (fun F => (continuous_finsetSum F fun ξ _ =>
         hcont.comp (GlobalTheory.AbsThetaSemi.continuous_invPt V ξ)).aestronglyMeasurable)
       (hsum.mono fun h hh => hh.hasSum)
     exact hlim.congr (Filter.Eventually.of_forall fun h => (hterm h).symm)

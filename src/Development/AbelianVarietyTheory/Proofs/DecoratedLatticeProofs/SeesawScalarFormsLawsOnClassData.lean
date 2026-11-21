@@ -36,7 +36,7 @@ theorem continuous_valC {ι : Type} [Fintype ι] {n : ℕ} {G : ι → Matrix (F
     funext fun x => GlobalTheory.KJInf.ValPol.fnOf_one_apply _ P _
   rw [e]
   simp only [GlobalTheory.KJInf.ValPol.evalAt_eq]
-  refine Continuous.mul (continuous_finset_prod _ fun τ _ => ?_) ?_
+  refine Continuous.mul (continuous_finsetProd _ fun τ _ => ?_) ?_
   · exact (((continuous_apply τ).comp hf).matrix_det).zpow₀ _ fun x => Or.inl (hi x τ).ne_zero
   · exact (MvPolynomial.continuous_eval P).comp
       (continuous_pi fun v => ((continuous_apply v.1).comp hf).matrix_elem v.2.1 v.2.2)

@@ -69,7 +69,7 @@ theorem GlobalTheory.AscFin.Cond.of_mul_grpOff : ∀ {D : D7} {V₀ W W₀ : HSp
   · obtain ⟨u, a, ha, hoff⟩ := H.pt
     refine ⟨u, a, ha, fun i j => ?_⟩
     have h1 := idOff_sub hQP (hoff i j)
-    have h2 : ((mt W g₂⁻¹ - 1) * (mt W g₁⁻¹ * (x * u.1.1))) i j ∈ idOff D Q := by
+    have h2 : (((mt W g₂⁻¹ - 1) * (mt W g₁⁻¹ * (x * u.1.1)) : Matrix (Fin W.rank) (Fin ρ) (AE D))) i j ∈ idOff D Q := by
       rw [Matrix.mul_apply]
       exact Ideal.sum_mem _ fun l _ => Ideal.mul_mem_right _ _ (by
         rw [Matrix.sub_apply]; exact (GlobalTheory.FinPlLoc.mem_congGrp _ _).1 hg₂i i l)

@@ -17,7 +17,7 @@ public import Formalism.QuotientMetricDivisors.FinalW
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix MatrixOrder ComplexOrder
-open Formalism.L2.Indef Formalism.L2.Indef.Tree Formalism.DivisionValues Formalism.PairingDivisionLocalBalance Formalism.HN GlobalTheory.IndefiniteRowSideFullHecke.InfinitePlaceDepthSums
+open Formalism.L2.Indef Formalism.L2.Indef.Tree Formalism.DivisionValues Formalism.PairingDivisionLocalBalance Formalism.HN
 
 noncomputable section
 

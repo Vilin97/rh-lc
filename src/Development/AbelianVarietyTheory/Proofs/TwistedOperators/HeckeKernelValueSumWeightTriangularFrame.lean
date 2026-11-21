@@ -53,6 +53,8 @@ theorem isLieImg_comb {Ω : Type} [Field Ω] {x x' : Sp Ω ⟶ Xo.X} {ψ : Gx x 
   have key : scaleAt x' p ≫ W' = tanMap h W := by
     rw [← eW, ← eW', comp_listProd, map_list_prod, List.map_ofFn, List.map_ofFn]
     congr 2
+    funext k
+    simp only [Function.comp_apply]
     rw [tanMap_scale, hb, ← Category.assoc, ← Category.assoc, scaleAt_comm]
   have := congrArg (·.left) key
   simp only [Over.comp_left, tanMap_left] at this

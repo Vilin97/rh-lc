@@ -75,7 +75,7 @@ theorem absEv_inert : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
 
   rw [GlobalTheory.Doubling.absEv_apply, coe_nnnorm]
   show ‖N‖ = _
-  rw [NumberField.FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hN', WithZero.toAdd_unzero_eq_log,
+  rw [NumberField.FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hN',
     hvN, WithZero.log_pow, ordL_eq_neg_log (y := toCompl h x.1) hz']
   have hq : ((Ideal.absNorm v.asIdeal : ℝ≥0) : ℝ) = (qV F v : ℝ) := by simp [qV]
   rw [NNReal.coe_zpow, hq]

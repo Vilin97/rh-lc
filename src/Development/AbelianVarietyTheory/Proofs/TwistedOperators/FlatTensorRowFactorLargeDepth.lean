@@ -35,7 +35,7 @@ theorem moved_pureTensor_eq_mul (G : Grid k) (keep : Bool) (g : G.VertexGroup)
     simp only [Grid.moveArgs, Edge.src, Edge.tgt, ha, hb, map_one, inv_one, Units.val_one, Matrix.one_mul,
       Matrix.mul_one]
   have h2 : ((List.range G.m).map fun i => exOne φ (.ex i G.m) (G.moveArgs .one g z (.ex i G.m))).prod = 1 := by
-    simp
+    simp [exOne]
   simp only [moved, Grid.pathAct, Grid.lines₂, oppositePath, List.map_append, List.prod_append, List.map_map,
     Function.comp_def]
   rw [h1, h2]

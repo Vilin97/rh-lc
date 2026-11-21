@@ -48,6 +48,8 @@ theorem val_smul_inv {ψ : AddChar (AF D.host.F) ℂ} {σ : ℕ} (S : Dbl2 ψ σ
     funext u v
     unfold GlobalTheory.Unf.contr
     congr 1
+    funext w
+    simp only [Pi.smul_apply, smul_eq_mul]
     rw [mul_mul_mul_comm, Units.inv_mul, one_mul]
   unfold Dbl2.val
   rw [e]

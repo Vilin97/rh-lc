@@ -48,13 +48,26 @@ theorem restr_periodic (ρ : Representation ℂ (LH k n) E) (f : cIndSpace (LH k
   exact congrFun (congrArg Subtype.val h1) (uv n v)
 
 theorem continuous_mvec (n : ℕ) : Continuous (mvec (k := k) (n := n)) := by
-  have h1 : Continuous fun g : Mir k n => (((mirabolicProjection k n g)⁻¹ : GL (Fin n) k) : Matrix (Fin n) (Fin n) k) :=
-    Units.continuous_val.comp (GlobalTheory.CompanionTheory.BZMirFun.continuous_mirProj k n).inv
+  have hval : Continuous fun g : Mir k n =>
+      ((g : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) :=
+    Units.continuous_val.comp continuous_subtype_val
+  have hblock : Continuous fun g : Mir k n =>
+      ((mirabolicProjection k n g : GL (Fin n) k) : Matrix (Fin n) (Fin n) k) := by
+    refine continuous_pi fun i => continuous_pi fun j => ?_
+    exact (continuous_apply (Fin.castSucc j)).comp ((continuous_apply (Fin.castSucc i)).comp hval)
+  have h1 : Continuous fun g : Mir k n =>
+      (((mirabolicProjection k n g)⁻¹ : GL (Fin n) k) : Matrix (Fin n) (Fin n) k) := by
+    have hinv : Continuous fun g : Mir k n => g⁻¹ := continuous_inv
+    have heq : (fun g : Mir k n =>
+        (((mirabolicProjection k n g)⁻¹ : GL (Fin n) k) : Matrix (Fin n) (Fin n) k)) =
+        fun g => ((mirabolicProjection k n g⁻¹ : GL (Fin n) k) : Matrix (Fin n) (Fin n) k) := by
+      funext g
+      rw [map_inv]
+    rw [heq]
+    exact hblock.comp hinv
   have h2 : Continuous (colv (k := k) (n := n)) := by
     refine continuous_pi fun i => ?_
-    have : Continuous fun g : Mir k n => ((g : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) :=
-      Units.continuous_val.comp continuous_subtype_val
-    exact this.matrix_elem _ _
+    exact hval.matrix_elem _ _
   exact h1.matrix_mulVec h2
 
 theorem exists_compact_polyBall (n : ℕ) {C : Set (Fin n → k)} (hC : IsCompact C) :
@@ -622,6 +635,7 @@ theorem phi_of_induced_rank_zero_equiv (ψ : AddChar k Circle) (hψ : Continuous
   core ψ hψ (0 + t) (HPG k 0 (t + 1)) (HPG_zero (t + 1)) (rho0 τ σ) (smooth_rho0 τ σ hσ) (hlv t) _
     (fun m x => congrArg (fun c : ℂ => c • (rho0 τ σ ⟨_, hlv t m⟩ x)) (dpowM_one (0 + t) m))
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem comb_lem (ψ : AddChar k Circle) (hψ : Continuous ψ) (hσ : IsSmooth σ.ρ) :
     Nonempty ((twist (phiMinus k ψ (cInd (HPG k 0 (t + 1)) (rho0 τ σ) : Representation ℂ (Mir k (0 + t + 1)) _)) (dpowM (0 + t) (-1 / 2))).Equiv
       (cInd (MirabolicParabolic k 0 t) (rhoR τ σ))) :=

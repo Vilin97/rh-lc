@@ -176,7 +176,7 @@ end Conj
 theorem haarLie_map_cj {k r : ℕ} {d : Fin (2 * r + k + 1) → ℂ} (h : Uni d) {S : Set (Mx k r)}
     (hS : ∀ g ∈ S, cj d g ∈ S) (κ : ENNReal) : (haarLie S κ).map (cjE h) = haarLie S κ := by
   unfold haarLie
-  rw [Measure.map_smul]
+  rw [Measure.map_smul _ (cjE h).measurable.aemeasurable]
   congr 1
   set E : lieE S → Mt k r := fun x => fun i j => NormedSpace.exp (unrealify (x : EuclideanSpace ℝ _)) i j with hE
   by_cases hm : AEMeasurable E volume
@@ -189,7 +189,21 @@ theorem haarLie_map_cj {k r : ℕ} {d : Fin (2 * r + k + 1) → ℂ} (h : Uni d)
       rw [unrealify_cjR, cj_exp h]
     rw [AEMeasurable.map_map_of_aemeasurable (cjE h).measurable.aemeasurable hm, e,
       ← AEMeasurable.map_map_of_aemeasurable (by rwa [hΦ.map_eq]) hΦ.measurable.aemeasurable, hΦ.map_eq]
-  · rw [Measure.map_of_not_aemeasurable hm, Measure.map_zero]
+  · exfalso
+    apply hm
+    have hu : Continuous (unrealify : EuclideanSpace ℝ (Fin (2 * r + k + 1) × Fin (2 * r + k + 1) × Bool) → Mx k r) := by
+      refine continuous_pi fun i => continuous_pi fun j => ?_
+      have he : (fun x : EuclideanSpace ℝ (Fin (2 * r + k + 1) × Fin (2 * r + k + 1) × Bool) => unrealify x i j) =
+          fun x => ((x (i, j, false) : ℝ) : ℂ) + ((x (i, j, true) : ℝ) : ℂ) * Complex.I := by
+        funext x
+        apply Complex.ext <;> simp [unrealify]
+      rw [he]
+      fun_prop
+    have hexp : Continuous (fun X : Mx k r => NormedSpace.exp X) := by
+      open scoped Matrix.Norms.Operator in
+        exact NormedSpace.exp_continuous
+    have : Continuous E := hexp.comp (hu.comp continuous_subtype_val)
+    exact this.measurable.aemeasurable
 
 section Tor
 
@@ -337,7 +351,7 @@ theorem isHaarOn_cj (h : Uni d) {S : Set (Mx k r)} (hS : ∀ g ∈ S, cj d g ∈
   have hu : (μ.map (cjE h)) Set.univ = 1 := by rw [MeasurableEquiv.map_apply, Set.preimage_univ, h5]
   refine ⟨⟨(cjE h).sigmaFinite_map, fun e => by simp [e] at hu, ?_, fun s hs => ?_⟩, hu⟩
   · rw [MeasurableEquiv.map_apply]
-    exact measure_mono_null (fun x hx hx' => hx (hS _ hx')) h3
+    exact measure_mono_null (t := {x | Matrix.of x ∉ S}) (fun x hx hx' => hx (hS _ hx')) h3
   · have e : lmulM s ∘ cjE h = cjE h ∘ lmulM (cj (star d) s) := by
       funext x
       show s * cj d (Matrix.of x) = cj d (cj (star d) s * Matrix.of x)
@@ -639,14 +653,14 @@ theorem root_map_turn {z : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (S : F
     funext x q
     exact flagMat_cj hz (Matrix.of x) _ _
   rw [Measure.map_map (measurable_flag z S) (cjE _).measurable, e,
-    ← Measure.map_map hp.measurable (measurable_flag z S), hμ, Measure.map_smul, hp.map_eq]
+    ← Measure.map_map hp.measurable (measurable_flag z S), hμ, Measure.map_smul _ hp.measurable.aemeasurable, hp.map_eq]
 
 theorem isRootMeas_turn (L : LocBessel k r) {p : Point ℂ (r + 1)} {g : Mx k r} {μ : Measure (Mt k r)}
     (hμ : IsRootMeas L p g μ) :
     IsRootMeas (turnL L) (turnP p) (cj (dT k r) g) (μ.map (cjE (tor_dT k r).uni)) := by
   refine ⟨?_, ?_⟩
   · rw [MeasurableEquiv.map_apply]
-    exact measure_mono_null (fun x hx hx' => hx (cj_mem_RStab (tor_dT k r) hx')) hμ.1
+    exact measure_mono_null (t := {x | Matrix.of x ∉ RStab k r g}) (fun x hx hx' => hx (cj_mem_RStab (tor_dT k r) hx')) hμ.1
   · have hc : ‖(turnL L).c‖ = ‖L.c‖ := by
       show ‖-Complex.I * L.c‖ = _
       simp

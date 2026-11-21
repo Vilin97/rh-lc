@@ -81,7 +81,7 @@ theorem isCh_pull (G : FGLaw k d) {Λ : Type} [CommRing Λ] (A : OAct Λ G) (a :
       fin_cases j
       exact ev_X hb 1 i
 
-theorem dl_eq (u : PS k 1 d) (j : Fin d) : dl u j = constantCoeff (pderiv k ((0 : Fin 1), j) u) := by
+theorem dl_eq (u : PS k 1 d) (j : Fin d) : dl u j = constantCoeff (pderiv ((0 : Fin 1), j) u) := by
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv, zero_add]
   simp [dl]
 

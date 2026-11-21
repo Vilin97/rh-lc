@@ -125,9 +125,9 @@ theorem dual_coords {v : VA X.B.I} (hv : v ∈ X.B.I.Lf) : v - repr0 X v ∈ mL 
     · intro a
       by_cases hab : a = b
       · subst hab
-        rw [if_pos rfl]
+        rw [ite_eq_left rfl]
         exact Z_of_sym X (by rw [map_one]; simpa using (X.gramIntegral a a).2.2)
-      · rw [if_neg hab, sub_zero]
+      · rw [ite_eq_right hab, sub_zero]
         exact sym (by simpa [Ne.symm hab] using (X.gramIntegral b a).2.2)
     · intro a; simpa using (X.gramIntegral a b).1
     · simpa using sym (X.formsAtZero.2 b).1
@@ -168,9 +168,9 @@ theorem dual_coords {v : VA X.B.I} (hv : v ∈ X.B.I.Lf) : v - repr0 X v ∈ mL 
       refine Z_of_sym X ?_
       by_cases hlm : l = m
       · subst hlm
-        rw [if_pos rfl, sigA_sigA]
+        rw [ite_eq_left rfl, sigA_sigA]
         simpa using X.bw_dual l l
-      · rw [if_neg hlm, map_zero]
+      · rw [ite_eq_right hlm, map_zero]
         simpa [Ne.symm hlm] using X.bw_dual m l
   have hmL : mL X.B.I X.B.g ≤ ReprSub X := by
     unfold mL

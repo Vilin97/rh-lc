@@ -180,22 +180,22 @@ def dcEquiv (θ : G →* G) (K : Subgroup G) (δ g : G) :
   toFun q := DoubleCoset.mk (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q)
   invFun q := DoubleCoset.mk (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K (g⁻¹ * Quotient.out q)
   left_inv q := by
-    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
-      (DoubleCoset.out_eq' (GlobalTheory.BCT.twCent θ δ) K (DoubleCoset.mk _ K (g * Quotient.out q))).symm
+    obtain ⟨t, ht, k, hk, he⟩ :=
+      DoubleCoset.mk_out_eq_mul (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q)
     show DoubleCoset.mk _ K (g⁻¹ * Quotient.out (DoubleCoset.mk (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q))) = q
     rw [he]
-    conv_rhs => rw [← DoubleCoset.out_eq' (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K q]
+    conv_rhs => rw [← DoubleCoset.out_eq' (H := GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) (K := K) q]
     rw [DoubleCoset.eq]
     refine ⟨g⁻¹ * t⁻¹ * g, ?_, k⁻¹, K.inv_mem hk, by group⟩
     rw [twCent_conj]
     exact ⟨t⁻¹, (GlobalTheory.BCT.twCent θ δ).inv_mem ht, by simp [MulAut.conj_apply]⟩
   right_inv q := by
-    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
-      (DoubleCoset.out_eq' (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K (DoubleCoset.mk _ K (g⁻¹ * Quotient.out q))).symm
+    obtain ⟨t, ht, k, hk, he⟩ :=
+      DoubleCoset.mk_out_eq_mul (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K (g⁻¹ * Quotient.out q)
     show DoubleCoset.mk _ K (g * Quotient.out (DoubleCoset.mk (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K
       (g⁻¹ * Quotient.out q))) = q
     rw [he]
-    conv_rhs => rw [← DoubleCoset.out_eq' (GlobalTheory.BCT.twCent θ δ) K q]
+    conv_rhs => rw [← DoubleCoset.out_eq' (H := GlobalTheory.BCT.twCent θ δ) (K := K) q]
     rw [DoubleCoset.eq]
     rw [twCent_conj] at ht
     obtain ⟨s, hs, rfl⟩ := ht
@@ -216,8 +216,8 @@ theorem twOrb_twConj : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopologi
       = ∑ᶠ q, summand θ K δ f (Quotient.out (dcEquiv θ K δ g q)) := by
         refine finsum_congr fun q => ?_
         rw [summand_twist]
-        obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
-          (DoubleCoset.out_eq' (GlobalTheory.BCT.twCent θ δ) K (DoubleCoset.mk _ K (g * Quotient.out q))).symm
+        obtain ⟨t, ht, k, hk, he⟩ :=
+          DoubleCoset.mk_out_eq_mul (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q)
         show _ = summand θ K δ f (Quotient.out (DoubleCoset.mk (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q)))
         rw [he, summand_rep θ K δ f _ ht hk]
     _ = ∑ᶠ q, summand θ K δ f (Quotient.out q) :=

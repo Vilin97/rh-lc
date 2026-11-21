@@ -38,7 +38,7 @@ theorem flatAt_om_continuous : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V 
     Units.continuous_val.comp continuous_subtype_val
   have hup : Continuous fun T : Mx D ρ ρ => upSum T := by
     unfold upSum
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     exact continuous_if_const _ (fun _ => (continuous_apply j).comp (continuous_apply i)) fun _ => continuous_const
   have hpsi : Continuous fun u : UX D ρ => psiUni ψ u.1 :=
     hψ.comp (htr.comp (hup.comp hval))

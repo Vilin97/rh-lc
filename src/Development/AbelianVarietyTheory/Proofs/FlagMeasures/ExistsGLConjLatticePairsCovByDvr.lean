@@ -88,9 +88,11 @@ theorem exists_extend_latticeEquiv {O K V : Type} [CommRing O] [IsDomain O]
     ∃ g : V ≃ₗ[K] V, ∀ x : B, g x = e x := by
   have := Submodule.IsLattice.finite K B
   have := Submodule.IsLattice.free K B
+  have : B'.IsFullLattice K := Submodule.IsFullLattice.of_rank_le K B' (by
+    rw [← Submodule.IsFullLattice.rank_eq K B, e.rank_eq])
   let b := Module.Free.chooseBasis O B
   let c := b.map e
-  let g := (b.extendOfIsFullLattice K).equiv (c.extendOfIsLattice K) (Equiv.refl _)
+  let g := (b.extendOfIsFullLattice K).equiv (c.extendOfIsFullLattice K) (Equiv.refl _)
   refine ⟨g, fun x => ?_⟩
   have key : (g.toLinearMap.restrictScalars O) ∘ₗ B.subtype = B'.subtype ∘ₗ e.toLinearMap := by
     refine b.ext fun i => ?_
@@ -102,10 +104,16 @@ theorem exists_extend_latticeEquiv {O K V : Type} [CommRing O] [IsDomain O]
 
 theorem exists_conj_of_covBy : ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K] [IsFractionRing O K] (n : ℕ) (A B A' B' : Submodule O (Fin n → K)), B.FG → B'.FG → Submodule.span K (A : Set (Fin n → K)) = ⊤ → Submodule.span K (A' : Set (Fin n → K)) = ⊤ → A ⋖ B → A' ⋖ B' → ∃ g : GL (Fin n) K, (∀ x, x ∈ A ↔ g.1 *ᵥ x ∈ A') ∧ ∀ x, x ∈ B ↔ g.1 *ᵥ x ∈ B' := by
   intro O K _ _ _ _ _ _ n A B A' B' hB hB' hA hA' h h'
-  have : B.IsLattice K :=
-    ⟨hB, eq_top_iff.2 (hA ▸ Submodule.span_mono (show (A : Set (Fin n → K)) ⊆ B from h.le))⟩
-  have : B'.IsLattice K :=
-    ⟨hB', eq_top_iff.2 (hA' ▸ Submodule.span_mono (show (A' : Set (Fin n → K)) ⊆ B' from h'.le))⟩
+  have : B.IsLattice K := Submodule.IsLattice.of_fg K hB
+  have : B'.IsLattice K := Submodule.IsLattice.of_fg K hB'
+  have : B.IsFullLattice K :=
+    ⟨eq_top_iff.2 (hA ▸ Submodule.span_mono (show (A : Set (Fin n → K)) ⊆ B from h.le))⟩
+  have : B'.IsFullLattice K :=
+    ⟨eq_top_iff.2 (hA' ▸ Submodule.span_mono (show (A' : Set (Fin n → K)) ⊆ B' from h'.le))⟩
+  have : Module.Free O B := Submodule.IsLattice.free K B
+  have : Module.Free O B' := Submodule.IsLattice.free K B'
+  have : Module.Finite O B := Submodule.IsLattice.finite K B
+  have : Module.Finite O B' := Submodule.IsLattice.finite K B'
   have hr : Module.finrank O B = Module.finrank O B' := by
     rw [((Submodule.IsFullLattice.finrank_eq K B).trans (Module.finrank_fintype_fun_eq_card K)), ((Submodule.IsFullLattice.finrank_eq K B').trans (Module.finrank_fintype_fun_eq_card K))]
   obtain ⟨ψ, hψs, hψ⟩ := exists_form_of_covBy A B h

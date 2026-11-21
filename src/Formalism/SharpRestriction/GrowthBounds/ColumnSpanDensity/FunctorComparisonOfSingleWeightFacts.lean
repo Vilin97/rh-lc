@@ -35,10 +35,10 @@ private theorem exists_linearMap_prod_rename_eq {K : Type} [Field K] (I β γ : 
     · intro h
       exact absurd (Finset.mem_univ i) h
   refine ⟨Φ, fun P => ?_⟩
-  let L : MultilinearMap K (fun _ : I => MvPolynomial β K) (MvPolynomial (I × γ) K) :=
+  let L : (I → MvPolynomial β K) →ₘₗ[K] MvPolynomial (I × γ) K :=
     Φ.compMultilinearMap ((MultilinearMap.mkPiAlgebra K I (MvPolynomial (I × β) K)).compLinearMap
       (fun i => (MvPolynomial.rename (fun v : β => (i, v))).toLinearMap))
-  let M : MultilinearMap K (fun _ : I => MvPolynomial β K) (MvPolynomial (I × γ) K) :=
+  let M : (I → MvPolynomial β K) →ₘₗ[K] MvPolynomial (I × γ) K :=
     (MultilinearMap.mkPiAlgebra K I (MvPolynomial (I × γ) K)).compLinearMap
       (fun i => (MvPolynomial.rename (fun v : γ => (i, v))).toLinearMap ∘ₗ f i)
   have hLM : L = M := by

@@ -25,6 +25,10 @@ variable {D : D7}
 theorem finite_rat_mem (m n : ℕ) (K : Set (Mx D m n)) (hK : IsCompact K) :
     {γ : Matrix (Fin m) (Fin n) D.host.E | rat γ ∈ K}.Finite := by
   obtain ⟨hg, hlc, -, ht2, hdisc, -⟩ := lattice_Mx D m n
+  letI : IsTopologicalAddGroup (Mx D m n) := hg
+  letI : T2Space (Mx D m n) := ht2
+  letI : T1Space (Mx D m n) := T2Space.t1Space
+  letI : DiscreteTopology (ratMx D m n) := hdisc
   have hcl : IsClosed (ratMx D m n : Set (Mx D m n)) := AddSubgroup.isClosed_of_discrete
   have hS : IsCompact ((Subtype.val : ratMx D m n → Mx D m n) ⁻¹' K) :=
     hcl.isClosedEmbedding_subtypeVal.isCompact_preimage hK

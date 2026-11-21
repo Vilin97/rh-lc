@@ -100,6 +100,10 @@ theorem enorm_val_le {Ψ : WO B.V J.W → ℂ} (hΨ : IsThetaFunO ψ B.V J.W Ψ)
     ‖val s Ψ x 0‖ₑ ≤ ∫⁻ b in s.vT.𝓕, ‖B.d.mixS J.W ψ s.vS.μ s.vS.𝓕 Ψ x (xZero J.d ⬝ b)‖ₑ ∂s.vT.μ := by
   refine (enorm_integral_le_lintegral_enorm _).trans (le_of_eq (lintegral_congr fun b => ?_))
   have hf := (GlobalTheory.MixValues.mixed_values D ψ s.weil.std).1 _ _ _ _ B.d _ _ s.vS.covol Ψ hΨ x
+  change IsThetaFunO ψ B.V₀ J.W (B.d.mixS J.W ψ s.vS.μ s.vS.𝓕 Ψ x) at hf
+  change ‖heisO ψ B.V₀ J.W (J.d.incX B.V₀ b)
+    (heisO ψ B.V₀ J.W (J.d.incAdj B.V₀ (yZero B.V₀ ρ (vecB B.o B.ζ)))
+      (heisO ψ B.V₀ J.W (J.d.inc0 B.V₀ 0) (B.d.mixS J.W ψ s.vS.μ s.vS.𝓕 Ψ x))) 0‖ₑ = _
   rw [J.d.integrandT_eq, map_zero, add_zero, add_comm, ← ofReal_norm, ← ofReal_norm, norm_mul, s.weil.std.1.2.1, one_mul,
     norm_theta_add s.weil.std hf (incAdj_mem J.d _ (yZero_mem _ _ _))]
   rfl

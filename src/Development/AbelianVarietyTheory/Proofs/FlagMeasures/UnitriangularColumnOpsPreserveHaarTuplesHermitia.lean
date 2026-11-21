@@ -73,7 +73,7 @@ theorem map_add_nilpotent_of_compactOpen {G : Type*} [AddCommGroup G] [Topologic
         fun x => ∑ j ∈ Finset.range m, ((-N) ^ j : Module.End ℤ G) x :=
       funext fun x => LinearMap.sum_apply _ _ _
     rw [this]
-    exact continuous_finset_sum _ fun j _ => hpow _ hnegc j
+    exact continuous_finsetSum _ fun j _ => hpow _ hnegc j
   let L : G ≃ₜ+ G :=
     { toFun := fun x => x + N x
       invFun := (∑ j ∈ Finset.range m, (-N) ^ j : Module.End ℤ G)

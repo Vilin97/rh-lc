@@ -8,7 +8,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.Transpose
 
 noncomputable section
 
-open Matrix Topology Filter ValuativeRel GlobalTheory.SplitWeil GlobalTheory.BZMir GlobalTheory.GelfandKazhdan PositivityTheory.PfBern.ThmA
+open Matrix Topology Filter ValuativeRel GlobalTheory.SplitWeil GlobalTheory.BZMir GlobalTheory.GelfandKazhdan
 
 namespace PositivityTheory.PfBern.cocyclesToWachVectorsExponent
 

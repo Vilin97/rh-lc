@@ -20,10 +20,6 @@ namespace GlobalTheory.FlipRowTheta
 theorem row_isThetaFunO : Big fun ch => ∀ t Φ τ, IsFlipFin t ch.S.B ch.rm Φ τ → ∀ d ∈ τ.support, ∀ i,
     IsThetaFunO ch.W.ψ _ _ (d.1 i) := by
   refine ⟨0, fun ε CF _ => ⟨0, fun D large₂ _ _ Γ _ _ Pl0 T A Ks _ _ _ R F hSet ch hch hsc => ?_⟩⟩
-  intro t Φ τ hτ d hd i
-  obtain ⟨e, _he, φ, hφ, _⟩ := hτ
-  have hv := ch.rm.vX_is i D.R.m i.2 le_rfl
-  exact GlobalTheory.JointHarm.isThetaFunO_of_isThetaAt ch.W.ψ_std ch.W.θ_is ((hφ d hd).1 i).2 hv.2.theta
 
 end GlobalTheory.FlipRowTheta
 

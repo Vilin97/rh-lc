@@ -140,7 +140,10 @@ theorem GlobalTheory.BlockSubst.fourierSum_blockDiag_one : ∀ {k : Type} [Field
         rw [Valuation.mem_integer_iff, map_mul]
         exact (show valuation k (Z i j) * valuation k (YH i j) ≤ valuation k ((ϖ ^ e : kˣ) : k) * valuation k (YH i j) by
           gcongr; exact hZ i j).trans h3
-      · refine FourierDepth.mem_matLat_smul_stdLat.2 fun i j => ?_
+      · rw [GlobalTheory.SplitFlip.stdLat, smul_diagLat]
+        simp only [Pi.one_apply, mul_one]
+        change ∀ i j, valuation k (setCols P 0 Z i j) ≤ valuation k ((ϖ ^ e : kˣ) : k)
+        intro i j
         by_cases hj : j ∈ P
         · simpa [setCols, hj] using hZ i ⟨j, hj⟩
         · simp [setCols, hj]

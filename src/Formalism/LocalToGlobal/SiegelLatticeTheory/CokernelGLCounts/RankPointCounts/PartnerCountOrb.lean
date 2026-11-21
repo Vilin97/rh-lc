@@ -282,9 +282,13 @@ theorem exists_shift_gen (p : PlF D) (c : (D.s.atP p).Ep) (hns : (D.s.atP p).spl
 
 theorem modBlocks_full {δ : ∀ p : PlF D, (D.s.atP p).Fp} (T T' : ℕ) (p : PlF D) (hδ : δ p ≠ 0) :
     ∀ (a : ℕ) (l : List (D.host.E × ℕ)), (∀ b ∈ l, b.1 ≠ 0 ∧ 1 ≤ b.2) →
-      ∃ l', modBlocks (blkTop δ T T' p) a l = some l'
-  | a, [], _ => ⟨[], rfl⟩
-  | a, (t, s) :: rest, hb => by
+      ∃ l', modBlocks (blkTop δ T T' p) a l = some l' := by
+  intro a l
+  induction l generalizing a with
+  | nil => intro _; exact ⟨[], rfl⟩
+  | cons b rest ih =>
+    obtain ⟨t, s⟩ := b
+    intro hb
     have h1 := hb (t, s) List.mem_cons_self
     have hu : IsUnit (blkTop δ T T' p a s t) := by
       by_cases hnt : a + s - 1 = D.R.rS + 1 ∧ s = 1
@@ -298,7 +302,7 @@ theorem modBlocks_full {δ : ∀ p : PlF D, (D.s.atP p).Fp} (T T' : ℕ) (p : Pl
         exact LMK.nSh_unit hx
       · rw [LMK.blkTop_nonTop δ T T' p hnt]
         exact (LMK.isUnit_ιE p h1.1).mul (LMK.isUnit_hF p hδ _ _)
-    obtain ⟨l', hl'⟩ := modBlocks_full T T' p hδ (a + s) rest fun b hb' => hb b (List.mem_cons_of_mem _ hb')
+    obtain ⟨l', hl'⟩ := ih (a + s) fun b hb' => hb b (List.mem_cons_of_mem _ hb')
     have hs0 : 0 < s := by omega
     have e : modBlocks (blkTop δ T T' p) a ((t, s) :: rest) = some ((hu.unit, ⟨s, hs0⟩) :: l') := by
       simp only [modBlocks]

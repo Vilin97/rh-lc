@@ -170,6 +170,7 @@ theorem theta_series (hψ : IsStdChar D ψ (-1)) (d : HypDec S S₀ ρ) (T : HSp
       (F := fun (ξ : Matrix (Fin T.rank) (Fin ρ) D.host.E) a =>
         ψ (symplO S T (d.extX T (rat ξ)) (d.extY T a)) * φ (x + rat ξ)) (fun ξ => ?_) ?_
     · rw [_root_.I195MixedCoordinates_b252ee61f962e28100fad012.source]
+      simp only [HypDec.extX_apply, HypDec.extY_apply, map_zero, Matrix.zero_mul] at key ⊢
       simp only [key]
       refine hF.unique ?_
       have h0 : ∫ a in 𝓕, ψ (symplO S T (d.extX T (rat 0)) (d.extY T a)) * φ (x + rat 0) ∂μ = φ x := by

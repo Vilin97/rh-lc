@@ -15,7 +15,7 @@ open NumberField MeasureTheory
 open scoped Classical
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum
 open GlobalTheory.NormSum (Pair Tup minorPol ratG intG Cls gam)
-open GlobalTheory.NormDict GlobalTheory.NormDictEx
+open GlobalTheory.NormDict
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 

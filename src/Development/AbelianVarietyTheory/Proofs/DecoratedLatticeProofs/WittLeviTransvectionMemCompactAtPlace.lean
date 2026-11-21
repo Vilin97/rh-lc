@@ -50,7 +50,7 @@ theorem hermAt_colMul_jY (d : HypDec S S₀ ρ) (l : Fin ρ) (b : AE D) (x : Fin
   ring
 
 theorem pX_colMul_jX (d : HypDec S S₀ ρ) (l : Fin ρ) (a : AE D) : (d.pX *ᵥ colMul d.jX l a) l = a := by
-  have h : (d.pX ⬝ d.jX) l l = 1 := by rw [d.pX_jX, Matrix.one_apply_eq]
+  have h : (d.pX * d.jX) l l = 1 := by rw [d.pX_jX, Matrix.one_apply_eq]
   rw [Matrix.mul_apply] at h
   refine Eq.trans ?_ (mul_one a)
   rw [Matrix.mulVec, dotProduct, ← h, Finset.mul_sum]
@@ -112,14 +112,14 @@ theorem levi_mem_grpAt (d : HypDec S S₀ ρ) {v : Pl D} {i j : Fin ρ} (hij : i
     (hr : r ∈ idAt D (· = v)) : d.levi (GlobalTheory.GLGen.transvGL hij r) ∈ grpAt S (· = v) := by
   refine (mem_congGrp_iff S _ _).2 fun a b => ?_
   have e : mt S (d.levi (GlobalTheory.GLGen.transvGL hij r)) - 1 =
-      d.jX ⬝ (Matrix.single i j r : Mx D ρ ρ) ⬝ d.pX + d.jY ⬝ (Matrix.single j i (cA D (-r)) : Mx D ρ ρ) ⬝ d.pY := by
+      d.jX * (Matrix.single i j r : Mx D ρ ρ) * d.pX + d.jY * (Matrix.single j i (cA D (-r)) : Mx D ρ ρ) * d.pY := by
     rw [d.mt_levi, ← d.sum_eq_one]
-    change d.jX ⬝ (transvection i j r : Mx D ρ ρ) ⬝ d.pX + _ + d.jY ⬝ adj (transvection i j (-r) : Mx D ρ ρ) ⬝ d.pY - _ = _
+    change d.jX * (transvection i j r : Mx D ρ ρ) * d.pX + _ + d.jY * adj (transvection i j (-r) : Mx D ρ ρ) * d.pY - _ = _
     rw [adj_transv, transvection, transvection]
     simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_one]
     abel
   have k : ∀ (A : Mx D S.rank ρ) (B : Mx D ρ S.rank) (p q : Fin ρ) (s : AE D), s ∈ idAt D (· = v) →
-      (A ⬝ (Matrix.single p q s : Mx D ρ ρ) ⬝ B) a b ∈ idAt D (· = v) := fun A B p q s hs => by
+      (A * (Matrix.single p q s : Mx D ρ ρ) * B) a b ∈ idAt D (· = v) := fun A B p q s hs => by
     rw [Matrix.mul_apply]
     refine Ideal.sum_mem _ fun k _ => Ideal.mul_mem_right _ _ ?_
     rw [Matrix.mul_apply]

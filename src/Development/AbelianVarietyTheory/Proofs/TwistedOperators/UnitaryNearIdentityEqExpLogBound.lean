@@ -251,7 +251,7 @@ theorem logNear_holds : LogNear := by
   have hYn : ‖Y‖ ≤ δ := by rw [← hsn_eq_norm]; exact hgd
   have hY4 : ‖Y‖ ≤ 1 / 4 := hYn.trans hδ
   let S : Subalgebra ℂ (Mat m) := Algebra.elemental ℂ Y
-  letI : NormedCommRing S := { SubringClass.toNormedRing S with mul_comm := mul_comm }
+  letI : NormedCommRing S := { SubringClass.toNormedRing S with mul_comm := mul_comm' }
   letI : NormedAlgebra ℂ S := inferInstance
   haveI : CompleteSpace S := inferInstance
   let y : S := ⟨Y, Algebra.elemental.self_mem ℂ Y⟩

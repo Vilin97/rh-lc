@@ -229,7 +229,7 @@ theorem GlobalTheory.PoinAut.poin_aut : ∀ (D : D7) (θ : InfFam D), IsInfFam �
     refine tsum_congr fun γ => ?_
     simp only [Equiv.coe_mulRight, Subgroup.coe_mul, mul_assoc]
 
-  let L : GA D V → MultilinearMap ℂ (fun τ : D.what₂.Tau => M.H τ) ℂ := fun z =>
+  let L : GA D V → MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => M.H τ) ℂ := fun z =>
     (MultilinearMap.mkPiAlgebra ℂ D.what₂.Tau ℂ).compLinearMap fun τ =>
       (innerₛₗ ℂ (v τ)).comp (M.rep τ (cmp θ τ z)).toLinearMap
   have hL : ∀ z b, coefR θ M v b z = L z b := fun z b => by

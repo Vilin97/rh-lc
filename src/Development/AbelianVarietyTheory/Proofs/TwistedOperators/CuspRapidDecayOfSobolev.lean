@@ -30,9 +30,11 @@ theorem thetaKO_om (g g₀ : GA D V) (h h₀ : GA D W) (f : WO V W → ℂ) :
 
 theorem sobO_smul_measure (c : ℝ≥0) (μ : Measure (WO V W)) (𝓓 : Set (WO V W)) (d : ℕ) (f : WO V W → ℂ) :
     sobO ψ θ (c • μ) 𝓓 d f = (c ^ (2 : ℝ≥0∞).toReal⁻¹ : ℝ≥0) * sobO ψ θ μ 𝓓 d f := by
-  simp only [sobO, wordSum, l2O, Measure.restrict_smul, eLpNorm_smul_measure_of_ne_top' ENNReal.ofNat_ne_top,
-    Finset.mul_sum]
-  rfl
+  by_cases hc : c = 0
+  · simp [hc, sobO, wordSum, l2O]
+  · simp only [sobO, wordSum, l2O, Measure.restrict_smul, eLpNorm_smul_measure_of_ne_zero' hc,
+      Finset.mul_sum]
+    rfl
 
 theorem kernel_le (H : KernelBound V W A d) (hθ : IsInfFam θ) (hω : IsWeilDatumO ψ V W χS χT ω)
     {μ : Measure (WO V W)} {𝓓 : Set (WO V W)} (hμ : μ.IsAddHaarMeasure) (h𝓓 : IsAddFundamentalDomain (ratL W V) 𝓓 μ)
@@ -219,7 +221,9 @@ theorem growthSob_lift_le (hG : ThetaGrowth D) (H : KernelBound V W A d) (hθ : 
   choose c hc using fun l => (tame_word ht l).2
   obtain ⟨C, hC⟩ := growthSize_lift_le H hθ hω hμ h𝓓 hU
   refine ⟨C * ∑ n ∈ Finset.range (k + 1), ∑ a : Fin n → _, c (List.ofFn a), fun f hf F hF => ?_⟩
-  simp only [growthSob, wordSum, ENNReal.coe_mul, ENNReal.coe_finset_sum, Finset.mul_sum, Finset.sum_mul]
+  simp only [growthSob, wordSum, ENNReal.coe_mul, Finset.mul_sum, Finset.sum_mul]
+  push_cast
+  simp only [Finset.sum_mul]
   refine Finset.sum_le_sum fun n hn => Finset.sum_le_sum fun a _ => ?_
   have e := (wordAct_rel (A := glDer θ V) (R := fun φ x => φ = lift ω ν 𝓕 x F ∧ IsThetaFunO ψ V W x) (List.ofFn a)
     (fun i _ φ x h => ⟨by

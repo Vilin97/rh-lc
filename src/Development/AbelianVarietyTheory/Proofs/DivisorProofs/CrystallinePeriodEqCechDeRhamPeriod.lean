@@ -134,25 +134,26 @@ theorem snd_phi {B O : Type} [CommRing B] [Algebra ℂ B] [CommRing O] [Algebra 
 set_option maxHeartbeats 1600000 in
 def Phi (U : A.left.affineOpens) (ℓ : Ω[Sec (str A) U.1⁄ℂ] →+ (Fin g → Hol (W u U.1)))
     (h : ∀ b ω, ℓ (b • ω) = valHom u U.1 b • ℓ ω) :
-    (diagExt ℂ (Sec (str A) U.1)).thick (affPt (str A) U) (affPt_w _ U) ⟶ (rl u).obj ((ch u).jet U) where
-  φ := { phi (valHom u U.1) ℓ h with
-    commutes' := fun c => TrivSqZeroExt.ext ((fst_phi _ ℓ h _).trans ((valHom u U.1).commutes c))
-      ((snd_phi _ ℓ h _).trans (map_zero ℓ)) }
-  φ₀ := (Ideal.Quotient.mk (RingHom.ker (TrivSqZeroExt.fstHom ℂ (Hol (W u U.1)) (Fin g → Hol (W u U.1))).toRingHom)).comp
-    ((TrivSqZeroExt.inlHom (Hol (W u U.1)) (Fin g → Hol (W u U.1))).comp (valHom u U.1 : Sec (str A) U.1 →+* Hol (W u U.1)))
-  comm c := Ideal.Quotient.eq.2 (by
-    change (TrivSqZeroExt.inl (valHom u U.1 c.fst) - phi (valHom u U.1) ℓ h c).fst = 0
-    rw [TrivSqZeroExt.fst_sub, fst_phi, TrivSqZeroExt.fst_inl, sub_self])
-  dp := by
-    letI := ((ch u).jet U).ratAlg
-    refine isDPMorphism_of_rat _ ((ch u).jet U).δ (phi (valHom u U.1) ℓ h) fun c hc => ?_
-    have h0 : c.fst = 0 := hc
-    change (phi (valHom u U.1) ℓ h c).fst = 0
-    rw [fst_phi, h0, map_zero]
-  pt := by
-    exact ((Category.assoc _ _ _).symm.trans (congrArg (· ≫ affPt (str A) U) (Cris.spMap_comp (valHom u U.1 : Sec (str A) U.1 →+* Hol (W u U.1))
-      ((Ideal.Quotient.mk (RingHom.ker (TrivSqZeroExt.fstHom ℂ (Hol (W u U.1)) (Fin g → Hol (W u U.1))).toRingHom)).comp
-        (TrivSqZeroExt.inlHom (Hol (W u U.1)) (Fin g → Hol (W u U.1))))).symm)).symm
+    (diagExt ℂ (Sec (str A) U.1)).thick (affPt (str A) U) (affPt_w _ U) ⟶ (rl u).obj ((ch u).jet U) :=
+  let T := (ch u).jet U
+  letI : Ring T.C := T.ring.toRing
+  let q := (Ideal.Quotient.mk T.J).comp T.ρ
+  { φ := { phi (valHom u U.1) ℓ h with
+      commutes' := fun c => TrivSqZeroExt.ext ((fst_phi _ ℓ h _).trans ((valHom u U.1).commutes c))
+        ((snd_phi _ ℓ h _).trans (map_zero ℓ)) }
+    φ₀ := q.comp (valHom u U.1).toRingHom
+    comm c := Ideal.Quotient.eq.2 (by
+      change (TrivSqZeroExt.inl (valHom u U.1 c.fst) - phi (valHom u U.1) ℓ h c).fst = 0
+      rw [TrivSqZeroExt.fst_sub, fst_phi, TrivSqZeroExt.fst_inl, sub_self])
+    dp := by
+      letI := T.ratAlg
+      refine isDPMorphism_of_rat _ T.δ (phi (valHom u U.1) ℓ h) fun c hc => ?_
+      have h0 : c.fst = 0 := hc
+      change (phi (valHom u U.1) ℓ h c).fst = 0
+      rw [fst_phi, h0, map_zero]
+    pt := by
+      change spMap (q.comp (valHom u U.1).toRingHom) ≫ affPt (str A) U = spMap q ≫ (rl u).x U
+      rw [Cris.spMap_comp, Category.assoc] <;> rfl }
 
 abbrev sec0 (U : A.left.affineOpens) : TU U ⟶ (diagExt ℂ (Sec (str A) U.1)).thick (affPt (str A) U) (affPt_w _ U) :=
   (diagExt ℂ (Sec (str A) U.1)).secHom (affPt_w _ U) (diagExt ℂ _).i fun _ => rfl

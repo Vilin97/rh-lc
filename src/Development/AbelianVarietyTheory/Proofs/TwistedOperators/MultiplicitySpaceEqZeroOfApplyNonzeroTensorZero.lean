@@ -52,6 +52,7 @@ theorem eq_zero_of_tprodInnerFun {ι : Type} [Fintype ι] {E : ι → Type} [∀
       rw [MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [MultilinearMap.map_smul_univ]
+    simp only [RingHom.id_apply]
   have hx' : x = ∑ j, f j • PiTensorProduct.tprod ℂ (v j) := by
     rw [← hg]; simp [hv]
   have key : x = ∑ k : ∀ i, Fin (Module.finrank ℂ (W i)),

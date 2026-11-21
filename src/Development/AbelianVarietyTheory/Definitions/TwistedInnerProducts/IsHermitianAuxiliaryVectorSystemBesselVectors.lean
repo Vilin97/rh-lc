@@ -204,7 +204,7 @@ theorem hQ_vecB : hQ V (d.i₀ *ᵥ vecB o ζ) (d.i₀ *ᵥ vecB o ζ) = hQ L ζ
 
 variable {ζ} in
 theorem isHermitianAuxiliaryVectorSystem_besselVectors (hζ : IsLineVec L ζ) : IsHermitianAuxiliaryVectorSystem (2 * ρ + 1) V A (d.i₀ * o.iA) (besselAuxiliaryVectors d (vecB o ζ))
-    (fun i => if i = ρ then hQ L ζ ζ else 1) := {
+    (fun i => if i = ρ then hQ L ζ ζ else 1) where
   iso := by
     rw [conjTranspose_mul, Matrix.mul_assoc o.iAᴴ, Matrix.mul_assoc o.iAᴴ, ← Matrix.mul_assoc _ d.i₀, d.iso,
       ← Matrix.mul_assoc, o.isoA]
@@ -240,7 +240,6 @@ theorem isHermitianAuxiliaryVectorSystem_besselVectors (hζ : IsLineVec L ζ) : 
     split_ifs
     exacts [hζ.2, one_ne_zero]
   card := by have := d.rank_add; have := o.rank_add; have := hζ.1; omega
-}
 
 variable {β}
 

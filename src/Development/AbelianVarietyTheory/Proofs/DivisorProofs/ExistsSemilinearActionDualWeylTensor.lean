@@ -64,7 +64,7 @@ instance {R : Type} [CommRing R] (σ : R →+* R) (M : Type) [AddCommGroup M] [M
 variable {R : Type} [CommRing R] {ι : Type} (N : ℕ) (mu : ι → ℕ → ℕ)
 
 def mlin (σ : R →+* R) :
-    MultilinearMap R (fun τ : ι => Formalism.GradedWeylDivisibility.dualWeyl R N N (Formalism.CohomologicalDescent.LD.res N (mu τ)))
+    MultilinearMap (RingHom.id R) (fun τ : ι => Formalism.GradedWeylDivisibility.dualWeyl R N N (Formalism.CohomologicalDescent.LD.res N (mu τ)))
       (Tw σ (NablaT R N mu)) where
   toFun x := (PiTensorProduct.tprod R (fun τ => onFactor σ N N _ (x τ)) : NablaT R N mu)
   map_update_add' := by
@@ -136,10 +136,7 @@ theorem onFactor_rep (g : R ≃+* R) (u : GL (Fin N) R)
   unfold Formalism.UG.dwAct Formalism.GradedWeylDivisibility.rowAct
   rw [aeval_eq_bind₁, map_bind₁]
   congr 2
-  refine Finset.sum_congr rfl fun b _ => ?_
-  have := fix_inv N g u hu v.1 b
-  simp only [RingHom.coe_coe] at this ⊢
-  rw [this]
+  simp only [map_sum, map_mul, map_C, map_X, RingHom.coe_coe, fix_inv N g u hu]
 
 theorem grp_tprod [DecidableEq ι] (h : ι → GL (Fin N) R)
     (x : ∀ τ, Formalism.GradedWeylDivisibility.dualWeyl R N N (Formalism.CohomologicalDescent.LD.res N (mu τ))) :

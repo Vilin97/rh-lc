@@ -70,7 +70,7 @@ theorem norm_prod_map_le {α : Type*} (f : α → ℂ) (g : α → ℝ) :
   | a :: L, h => by
     simp only [List.map_cons, List.prod_cons]
     rw [norm_mul]
-    have ha := h a (List.mem_cons_self ..)
+    have ha := h a List.mem_cons_self
     have hL := norm_prod_map_le f g L fun b hb => h b (List.mem_cons_of_mem a hb)
     exact mul_le_mul ha hL (norm_nonneg _) ((norm_nonneg _).trans ha)
 
@@ -166,14 +166,14 @@ theorem fold_eig {k r : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ 
       L.foldr (fun a H => s • Q.CV k r (a.2 : ℂ) H) F g = ∑ i, (L.map fun a => s * ev i a.2).prod • h i g
   | [], _, g, hg => by simpa using hF g hg
   | a :: L, hL, g, hg => by
-    have ih := fold_eig s Y h ev hs he hF L (fun l hl => hL l (List.mem_cons_of_mem a hl))
+    have ih := fold_eig s Y h ev hs he (F := F) hF L (fun l hl => hL l (List.mem_cons_of_mem a hl))
     have hsm : ∀ i, Q.SmoothLev k r 0 Set.univ (h i) := fun i => Dx1.LZ.smooth_of_ck (hs i)
     have hlin := (good_finsum (Dx1.LZ.good_CV (k := k) (r := r) (E := E) (a.2 : ℂ))
       (fun i => (L.map fun a => s * ev i a.2).prod) h hsm Finset.univ).2 g (Dx1.LZ.glev0 hg)
     have hloc := (Dx1.LZ.good_CV (k := k) (r := r) (E := E) (a.2 : ℂ)).loc
       (L.foldr (fun a H => s • Q.CV k r (a.2 : ℂ) H) F)
       (fun y => ∑ i, (L.map fun a => s * ev i a.2).prod • h i y) (fun y hy => ih y hy.1.1) g (Dx1.LZ.glev0 hg)
-    have ha := hL a (List.mem_cons_self ..)
+    have ha := hL a List.mem_cons_self
     simp only [List.foldr_cons, List.map_cons, List.prod_cons, Pi.smul_apply]
     rw [hloc, hlin, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

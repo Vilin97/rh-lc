@@ -314,12 +314,12 @@ theorem exists_generators : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [I
     refine Fin.addCases (fun l => ?_) (fun l => ?_) l
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [Fin.append_left, hχ, map_sum]
-      exact Submodule.sum_mem _ fun i _ => by
-        rw [map_smul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
+        exact Submodule.sum_mem _ fun i _ => by
+          rw [map_smul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [Fin.append_right, map_sum]
-      exact Submodule.sum_mem _ fun i _ => by
-        rw [map_smul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
+        exact Submodule.sum_mem _ fun i _ => by
+          rw [map_smul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
   · have hTb : ∀ j k, tauExt ((t j : Emb (O := O) w.e) : OE →+* O) (b k : ℤ_[p] ⊗[ℤ] OE) =
         tauExt ((t j : Emb (O := O) w.e) : OE →+* O) α ^ (k : ℕ) := by
       intro j k

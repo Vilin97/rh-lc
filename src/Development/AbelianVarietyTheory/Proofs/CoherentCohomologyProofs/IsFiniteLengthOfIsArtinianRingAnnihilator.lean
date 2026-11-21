@@ -435,7 +435,7 @@ variable {X : Scheme.{0}} {F : X.Modules} [AlgebraicGeometry.IsNoetherian X] [Is
 theorem subsingleton_coh_of_suppDim_le_zero (h : suppDim F ≤ 0) {n : ℕ} (hn : 0 < n) :
     Subsingleton (coh F n) := by
   have := isArtinianScheme_annihilatorSheaf h
-  have := cohOn.subsingleton_of_isAffineOpen (onAnnihilator F) (isAffineOpen_top _) hn
+  haveI := cohOn.subsingleton_of_isAffineOpen (onAnnihilator F) (isAffineOpen_top _) hn
   exact ((cohOn.mapIso ℤ ⊤ n (isoPushforwardOnAnnihilator F)).trans
     (coh.pushforwardEquiv ℤ (fun r => (map_intCast _ r).trans (eq_intCast _ r).symm)
       (onAnnihilator F) n)).toEquiv.subsingleton

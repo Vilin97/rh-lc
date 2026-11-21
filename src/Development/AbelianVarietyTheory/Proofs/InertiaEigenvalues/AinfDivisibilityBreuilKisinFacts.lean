@@ -81,9 +81,9 @@ theorem complete : IsAdicComplete (Ideal.span {bk.flat}) (OCb l) where
     have := hx n
     simp only [Ideal.span_singleton_pow, smul_eq_mul, Ideal.mul_top, SModEq.zero] at this
     exact Ideal.mem_span_singleton.1 this
-  toIsPrecomplete := GlobalTheory.Per.AinfComplete.precomplete_of_summ
+  prec' := (GlobalTheory.Per.AinfComplete.precomplete_of_summ
     (GlobalTheory.Per.AinfComplete.summ_of_tails
-      (GlobalTheory.Per.AinfComplete.perfection_tails (flat_nil bk)))
+      (GlobalTheory.Per.AinfComplete.perfection_tails (flat_nil bk)))).prec'
 
 theorem dvd_of_dvd_X_mul (y : Ainf l) (h : ((l : ℕ) : Ainf l) ∣ bk.ev X * y) : ((l : ℕ) : Ainf l) ∣ y := by
   rw [dvd_iff] at h ⊢

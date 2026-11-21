@@ -90,9 +90,16 @@ theorem exists_form (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T : HSp D) (ρ : �
     hf (hω.om_pres _ f hf) (fun x _ => ?_)
   · rw [key]; push_cast; ring
   · have hmove := (GlobalTheory.T.weil_operators_witt_parabolic_origin_to_point D ψ S S₀ T ρ d χS χT om hω μ 𝓕 hμ f hf x).2.1 a g
-    rw [hmove, H a g _ (GlobalTheory.TwistFactorCompare.isTheta_heisO hω.std hf _), ← hbr μ 𝓕 f (x ⬝ a.1), map_smul,
-      smul_eq_mul, hsp₀ ℓ₀ hinv₀ _ (hmv f hf _)]
     simp only [Units.val_one, Matrix.one_mul]
+    change ℓ₀ (_root_.I195MixedCoordinates_a6b848dc850707252261af49.source d T ψ μ 𝓕 (om (d.levi a * d.emb0 g, 1) f) x) =
+      _ * ℓ₀ (_root_.I195MixedCoordinates_a6b848dc850707252261af49.source d T ψ μ 𝓕 f (x * a.1))
+    change _root_.I195MixedCoordinates_a6b848dc850707252261af49.source d T ψ μ 𝓕 (om (d.levi a * d.emb0 g, 1) f) x =
+      _root_.I195MixedCoordinates_a6b848dc850707252261af49.source d T ψ μ 𝓕 (om (d.levi a * d.emb0 g, 1) (heisO ψ S T (d.extX T (x * a.1)) f)) 0 at hmove
+    have hb : _root_.I195MixedCoordinates_a6b848dc850707252261af49.source d T ψ μ 𝓕 f (x * a.1) =
+        _root_.I195MixedCoordinates_a6b848dc850707252261af49.source d T ψ μ 𝓕 (heisO ψ S T (d.extX T (x * a.1)) f) 0 := hbr μ 𝓕 f (x * a.1)
+    conv_lhs =>
+      rw [hmove, H a g _ (GlobalTheory.TwistFactorCompare.isTheta_heisO hω.std hf _), ← hb, map_smul,
+        smul_eq_mul, hsp₀ ℓ₀ hinv₀ _ (hmv f hf _)]
     ring
 
 end GlobalTheory.LeviSplitChar

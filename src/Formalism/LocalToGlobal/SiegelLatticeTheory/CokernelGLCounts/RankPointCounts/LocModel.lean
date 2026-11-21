@@ -859,24 +859,30 @@ theorem det_mem_of {B : Type} [CommRing B] (O : Subring B) {n : ℕ} (A : Matrix
 theorem modBlocks_some {A B : Type} [CommRing B] (O : Subring B) (f : ℕ → ℕ → A → B) :
     ∀ (L : List (A × ℕ)) (a : ℕ), (∀ b ∈ L, 0 < b.2) → (∀ a', ∀ b ∈ L, UnitIn O (f a' b.2 b.1)) →
       ∃ l, modBlocks f a L = some l ∧ l.map (fun b => (b.2 : ℕ)) = L.map Prod.snd ∧
-        ∀ b ∈ l, UnitIn O (b.1 : B) ∧ UnitIn O (((b.1)⁻¹ : Bˣ) : B)
-  | [], _, _, _ => ⟨[], rfl, rfl, by simp⟩
-  | (t, s) :: rest, a, hs, hu => by
+        ∀ b ∈ l, UnitIn O (b.1 : B) ∧ UnitIn O (((b.1)⁻¹ : Bˣ) : B) := by
+  intro L
+  induction L with
+  | nil =>
+    intro a hs hu
+    exact ⟨[], rfl, rfl, by simp⟩
+  | cons b rest ih =>
+    obtain ⟨t, s⟩ := b
+    intro a hs hu
     have h0 : 0 < s := hs (t, s) List.mem_cons_self
-    obtain ⟨hx, y, hy, hxy⟩ : UnitIn O (f a s t) := hu a (t, s) List.mem_cons_self
-    have hU : IsUnit (f a s t) := IsUnit.of_mul_eq_one _ hxy
-    obtain ⟨l, hl, hls, hlu⟩ := modBlocks_some O f rest (a + s) (fun b hb => hs b (List.mem_cons_of_mem _ hb))
+    have hu₀ : UnitIn O (f a s t) := hu a (t, s) List.mem_cons_self
+    rcases hu₀ with ⟨hx, y, hy, hxy⟩
+    have hyx : y * f a s t = 1 := by rw [mul_comm, hxy]
+    let u : Bˣ := ⟨f a s t, y, hxy, hyx⟩
+    have hU : IsUnit (f a s t) := u.isUnit
+    obtain ⟨l, hl, hls, hlu⟩ := ih (a + s) (fun b hb => hs b (List.mem_cons_of_mem _ hb))
       (fun a' b hb => hu a' b (List.mem_cons_of_mem _ hb))
-    refine ⟨(hU.unit, ⟨s, h0⟩) :: l, ?_, ?_, ?_⟩
-    · simp only [modBlocks, dif_pos (show IsUnit (f a s t) ∧ 0 < s from ⟨hU, h0⟩), hl, Option.map_some]
+    refine ⟨(u, ⟨s, h0⟩) :: l, ?_, ?_, ?_⟩
+    · have he : hU.unit = u := Units.ext hU.unit_spec
+      simp only [modBlocks, dite_eq_left (And.intro hU h0), hl, Option.map_some, he]
     · simp [hls]
     · intro b hb
       rcases List.mem_cons.1 hb with rfl | hb
-      · have hinv : ((hU.unit⁻¹ : Bˣ) : B) = y := Units.inv_eq_of_mul_eq_one_right hxy
-        refine ⟨⟨hx, y, hy, hxy⟩, ?_⟩
-        simp only
-        rw [hinv]
-        exact ⟨hy, f a s t, hx, by rw [mul_comm]; exact hxy⟩
+      · exact ⟨⟨hx, y, hy, hxy⟩, ⟨hy, f a s t, hx, hyx⟩⟩
       · exact hlu b hb
 
 theorem getD_unitIn {B : Type} [CommRing B] (O : Subring B) (l : List (Bˣ × ℕ+))

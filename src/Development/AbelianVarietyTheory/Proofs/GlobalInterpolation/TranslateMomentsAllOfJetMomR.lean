@@ -15,7 +15,7 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CoefInTra
 
 noncomputable section
 
-open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric Formalism.L2.Ker GlobalTheory.IndefiniteRowSideFullHecke.ParabolicPointMembership GlobalTheory.PlaceComponents GlobalTheory.QuadSubfield
+open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric Formalism.L2.Ker GlobalTheory.PlaceComponents GlobalTheory.QuadSubfield
 open Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity
 
 namespace GlobalTheory.MomT.FromComb

@@ -147,7 +147,7 @@ theorem eq_scalar_smul_of_stab : ∀ (k : Type) [Field k] [ValuativeRel k] [Topo
   have hlat : ∀ x ∈ Q.lat, ∀ (b d : n) (t : 𝒪[k]), b ≠ d → (b ≠ i ∨ t ∈ IsLocalRing.maximalIdeal 𝒪[k]) →
       x + Pi.single b ((t : k) * x d) ∈ Q.lat := fun x hx b d t hbd hbi =>
     (hcl x _ (Q.hasVal_fn ⟨x, hx⟩) b d t hbd hbi).mem
-  obtain ⟨c, hc0, hcb, hca⟩ := GlobalTheory.T.localLattice_exists_scalar_bound_attained k n Q.lat Q.isLat ⟨i⟩
+  obtain ⟨c, hc0, hcb, hca⟩ := GlobalTheory.T.localLattice_exists_scalar_bound_attained k n Q.lat Q.isLat.toIsLattice ⟨i⟩
   rcases GlobalTheory.T.transvectionStable_localLattice_shape k n i Q.lat c hn hc0 hlat hcb hca with hA | hB
   swap
   · exact (GlobalTheory.T.no_transvectionInvariant_pair_on_scaledKernel k n i Q c hn hc0 hB hcl).elim

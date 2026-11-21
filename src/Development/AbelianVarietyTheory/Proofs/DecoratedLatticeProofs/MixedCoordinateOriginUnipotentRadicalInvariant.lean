@@ -59,6 +59,7 @@ theorem mixS_zero_unip : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T
     have hμ' : IsCovolOne (GlobalTheory.IndefiniteRowSideFullHecke.AdjointIsotropicDecomposition.ratMx D T.rank ρ) μ 𝓕 := by rw [hrat]; exact hμ
     have key : ∀ n : NI S d.e, (_root_.I195MixedCoordinates_069c5864e5661f762e792771.source d) T ψ μ 𝓕 (om ((n : GA D S), 1) f) 0 = (_root_.I195MixedCoordinates_069c5864e5661f762e792771.source d) T ψ μ 𝓕 f 0 := by
       intro n
+      change I195MixedCoordinates_61fbc522a99e851221ffe16d.source d T ψ μ 𝓕 (om ((n : GA D S), 1) f) 0 = I195MixedCoordinates_61fbc522a99e851221ffe16d.source d T ψ μ 𝓕 f 0
       rw [hres, hres, map_zero, heisO_zero, heisO_zero]
       exact GlobalTheory.T.wittTower_restriction_unipotentRadical_invariant D S S₀ T ρ d.e d.i₀ (hiso hρ) ψ χS χT om hW μ 𝓕 hμ' n f hf
     exact ⟨fun b => key ⟨_, hnB b⟩, fun c => key ⟨_, hnC c⟩⟩

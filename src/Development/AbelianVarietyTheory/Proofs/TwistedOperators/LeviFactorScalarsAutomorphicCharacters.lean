@@ -60,12 +60,12 @@ theorem levi_scalars_autChar : ∀ (D : D7) (V V' W : HSp D) (r : ℕ) (C : Matr
   have hsC : ∀ a g', HMul.hMul (mt V (s a g')) (C.map (incA D)) = HMul.hMul (C.map (incA D)) a.val := by
     intro a g'
     subst hdC
-    show mt V (d.levi a * d.emb0 g') ⬝ d.jX = d.jX ⬝ a.1
+    show mt V (d.levi a * d.emb0 g') * d.jX = d.jX * a.1
     rw [mt_mul, Matrix.mul_assoc, d.wittDecomp_anisotropicEmbedding_inclX, d.levi_jX]
   have hsB : ∀ a g', HMul.hMul (mt V (s a g')) (B.map (incA D)) = HMul.hMul (B.map (incA D)) (mt V' g') := by
     intro a g'
     subst hdB
-    show mt V (d.levi a * d.emb0 g') ⬝ d.j0 = d.j0 ⬝ mt V' g'
+    show mt V (d.levi a * d.emb0 g') * d.j0 = d.j0 * mt V' g'
     rw [mt_mul, Matrix.mul_assoc, d.wittDecomp_anisotropicEmbedding_inclAnisotropic, ← Matrix.mul_assoc, d.wittDecomp_levi_inclAnisotropic]
   have hsmul : ∀ a₁ g₁ a₂ g₂, s (a₁ * a₂) (g₁ * g₂) = s a₁ g₁ * s a₂ g₂ := by
     intro a₁ g₁ a₂ g₂

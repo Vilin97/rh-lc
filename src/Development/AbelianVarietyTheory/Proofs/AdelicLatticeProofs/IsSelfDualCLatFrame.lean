@@ -74,11 +74,16 @@ theorem symplO_zero_right (x : WO S T) : symplO S T x 0 = 0 := by
 theorem symplO_zero_left (x : WO S T) : symplO S T 0 x = 0 := by
   simpa using symplO_add_left S T 0 0 x
 
-theorem isBichar_symplO (ψ : AddChar (AF D.host.F) ℂ) : IsBichar fun x y : WO S T => ψ (symplO S T x y) where
-  left a b y := by rw [symplO_add_left, AddChar.map_add_eq_mul]
-  right a b y := by rw [symplO_add_right, AddChar.map_add_eq_mul]
-  zero_left y := by rw [symplO_zero_left, AddChar.map_zero_eq_one]
-  zero_right y := by rw [symplO_zero_right, AddChar.map_zero_eq_one]
+theorem isBichar_symplO (ψ : AddChar (AF D.host.F) ℂ) : IsBichar fun x y : WO S T => ψ (symplO S T x y) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro a b y
+    rw [symplO_add_left, AddChar.map_add_eq_mul]
+  · intro a y z
+    rw [symplO_add_right, AddChar.map_add_eq_mul]
+  · intro y
+    rw [symplO_zero_left, AddChar.map_zero_eq_one]
+  · intro a
+    rw [symplO_zero_right, AddChar.map_zero_eq_one]
 
 def heisL (ψ : AddChar (AF D.host.F) ℂ) (w : WO S T) : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ) where
   toFun := heisO ψ S T w
@@ -150,17 +155,15 @@ theorem coe_latFrame : (latFrame S : Set (Fin S.rank → D.host.E)) = L0c D S :=
   Set.ext fun y => mem_latFrame S y
 
 theorem isSelfDualC_latFrame : IsSelfDualC S (latFrame S) := by
-  refine ⟨⟨S.standardTuple_isLattice.fg.map _, ?_⟩, fun y => ?_⟩
-  · change Submodule.span _ (S.frame.equivFun.toLinearMap '' (S.L0 : Set S.V)) = ⊤
-    rw [← Submodule.map_span, S.standardTuple_isLattice.span_eq_top, Submodule.map_top, LinearEquiv.range]
-  · rw [mem_latFrame, mem_hermitianStandardLattice_iff_pairing_integral]
-    constructor
-    · intro h x hx
-      rw [← hT_coord]
-      exact h _ ((mem_latFrame S x).1 hx)
-    · intro h x hx
-      have := h (S.frame.equivFun x) ⟨x, hx, rfl⟩
-      rwa [← hT_coord, S.frame.sum_equivFun] at this
+  refine ⟨Submodule.IsLattice.of_fg D.host.E (S.standardTuple_isLattice.fg.map _), fun y => ?_⟩
+  rw [mem_latFrame, mem_hermitianStandardLattice_iff_pairing_integral]
+  constructor
+  · intro h x hx
+    rw [← hT_coord]
+    exact h _ ((mem_latFrame S x).1 hx)
+  · intro h x hx
+    have := h (S.frame.equivFun x) ⟨x, hx, rfl⟩
+    rwa [← hT_coord, S.frame.sum_equivFun] at this
 
 variable {S T} {LS : Set (Fin S.rank → D.host.E)} {LT : Set (Fin T.rank → D.host.E)}
   {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host.F}

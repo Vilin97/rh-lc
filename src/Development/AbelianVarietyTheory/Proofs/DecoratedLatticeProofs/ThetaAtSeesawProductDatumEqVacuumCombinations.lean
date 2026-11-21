@@ -372,7 +372,8 @@ theorem thetaAt_prodDat : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCh
   intro D ψ hψ S T M M' hM hM' n L hinj f₀ f hf₀ hθ _
   obtain ⟨⟨T', hT'⟩, hall⟩ := hθ
   have hcore := core hψ hM hM' f₀ hf₀
-  refine ⟨(hall T' hT').trans (hcore n L hinj T' hT'), fun N N' hN hN' hI hV => ?_⟩
+  refine ⟨(hall T' hT').trans (hcore n L hinj T' hT'), ?_⟩
+  intro N N' hN hN' hI hV
 
   have hg1 : T' (prodDat fun i => oneLoc (L i)) =
       (List.finRange n).foldr (fun i g => comb ψ S T (L i).o g) f₀ := by

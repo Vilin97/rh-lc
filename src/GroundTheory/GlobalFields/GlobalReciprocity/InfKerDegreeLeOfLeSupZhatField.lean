@@ -14,6 +14,8 @@ open scoped GroundTheory.LocalField.Abstract
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 namespace FiniteSubfield
 
 abbrev openSubgroup (F : FiniteSubfield) : OpenSubgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄) :=
@@ -51,7 +53,7 @@ variable (K L : FiniteSubfield) [hKL : Fact (K ≤ L)]
   [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal]
 
 abbrev reciprocityEquiv :
-    Abelianization ((K.openSubgroup : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)) ⧸
+    Group.Abelianization ((K.openSubgroup : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)) ⧸
         (L.openSubgroup : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)).subgroupOf K.openSubgroup) ≃*
       tateZero IdeleClassLimit (K.openSubgroup : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)) L.openSubgroup :=
   classFieldTheory.toClassFieldData.reciprocityAbEquiv (openSubgroup_le hKL.out)
@@ -62,12 +64,12 @@ abbrev normClass : IdeleClassGroup K.1 →*
   (QuotientGroup.mk' (norm IdeleClassLimit (K.openSubgroup : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄))
     (L.openSubgroup : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄))).range).comp (fixedEquiv K).toMonoidHom
 
-def abstractSymbol : IdeleClassGroup K.1 →* Abelianization (L.1 ≃ₐ[K.1] L.1) :=
-  (Abelianization.map (quotientGaloisEquiv K L).toMonoidHom).comp
+def abstractSymbol : IdeleClassGroup K.1 →* Group.Abelianization (L.1 ≃ₐ[K.1] L.1) :=
+  (Group.Abelianization.map (quotientGaloisEquiv K L).toMonoidHom).comp
     ((reciprocityEquiv K L).symm.toMonoidHom.comp (normClass K L))
 
 theorem abstractSymbol_apply (c : IdeleClassGroup K.1) :
-    abstractSymbol K L c = Abelianization.map (quotientGaloisEquiv K L).toMonoidHom
+    abstractSymbol K L c = Group.Abelianization.map (quotientGaloisEquiv K L).toMonoidHom
       ((reciprocityEquiv K L).symm (normClass K L c)) :=
   rfl
 

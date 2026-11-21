@@ -116,13 +116,13 @@ theorem exists_idem_half : ∀ (D : D7), ∃ e : AE D, e * e = e ∧ e * cA D e 
   · have key : 2 * pairA D.host.F (algebraMap D.host.F _ (1 / 2)) β =
         1 - ∑ v ∈ P, pairA D.host.F 0 (singleV D.host.F v 1) := by
       refine AF_ext ?_ ?_
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_mul, map_sub, map_sum, map_one, map_ofNat, fstA_pairA]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_mul, map_sub, map_sum, map_one, map_ofNat, fstA_pairA]
         simp only [fstA_pairA, Finset.sum_const_zero, sub_zero]
         rw [← map_ofNat (algebraMap D.host.F (Ainf D.host.F)) 2, ← map_mul]
         norm_num
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_mul, map_sub, map_sum, map_one, map_ofNat, sndA_pairA]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_mul, map_sub, map_sum, map_one, map_ofNat, sndA_pairA]
         simp only [sndA_pairA]
         linear_combination -h1
     calc (2 : AE D) * algebraMap (AF D.host.F) (AE D) (pairA D.host.F (algebraMap D.host.F _ (1 / 2)) β)

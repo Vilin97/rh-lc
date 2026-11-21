@@ -57,8 +57,10 @@ theorem AlgWt.Iso.trans {a b c : AlgWt L n} (h : a.Iso b) (h' : b.Iso c) : a.Iso
 
 theorem AutRep.iso_equivalence : Equivalence (AutRep.Iso (L := L) (n := n)) where
   refl π := ⟨AlgWt.Iso.refl π.toAlgWt, IsoRep.refl π.S⟩
-  symm {π _} h := ⟨h.1.symm, h.2.symm π.irrS.1.stable⟩
-  trans {_ _ _} h h' := ⟨h.1.trans h'.1, h.2.trans h'.2⟩
+  symm := by
+    intro π π' h
+    exact ⟨h.1.symm, h.2.symm π.irrS.1.stable⟩
+  trans h h' := ⟨h.1.trans h'.1, h.2.trans h'.2⟩
 
 end NG
 

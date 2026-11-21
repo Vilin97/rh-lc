@@ -64,16 +64,18 @@ theorem locJ_actB (hB : FrRatJ t B) : (locJ hi t B).ActB := by
 
 
 set_option maxHeartbeats 4000000 in
-theorem locGood_locJ : LocGood (sigD D) (gramN D (i + 1) hi) (locJ hi t B) where
-  herm := isHerm_re (rankN D (i + 1) hi) _ (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) (gram_herm D.sp.cm (D.sp.X (i + 1)))
-  det := det_re (rankN D (i + 1) hi) (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) (gram_det_unit D.sp.cm (D.sp.X (i + 1)))
-  sig := fun v x => (X.g u w hg).spl_sig _ ((X.g u w hg).pl v).2 x
-  yG_mem := fun c => reGL_mem_UPts (rankN D (i + 1) hi) D.sp.cm.sig (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) _ _ (t.yG c).2
-  yG_p := fun c v => by
-    have h1 := t.yG_p c _ ((X.g u w hg).pl v).2
-    have h2 := bc_reGL (rankN D (i + 1) hi) (prV (E := D.host.E) ((X.g u w hg).pl v).1) (t.yG c).1
-    rw [h1, map_one] at h2
-    exact h2
+theorem locGood_locJ : LocGood (sigD D) (gramN D (i + 1) hi) (locJ hi t B) := by
+  refine {
+    herm := isHerm_re (rankN D (i + 1) hi) _ (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) (gram_herm D.sp.cm (D.sp.X (i + 1)))
+    det := det_re (rankN D (i + 1) hi) (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) (gram_det_unit D.sp.cm (D.sp.X (i + 1)))
+    sig := fun v x => (X.g u w hg).spl_sig _ ((X.g u w hg).pl v).2 x
+    yG_mem := fun c => reGL_mem_UPts (rankN D (i + 1) hi) D.sp.cm.sig (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) _ _ (t.yG c).2
+    yG_p := ?_ }
+  intro c v
+  have h1 := t.yG_p c _ ((X.g u w hg).pl v).2
+  have h2 := bc_reGL (rankN D (i + 1) hi) (prV (E := D.host.E) ((X.g u w hg).pl v).1) (t.yG c).1
+  rw [h1, map_one] at h2
+  exact h2
 
 theorem locInt_locJ : LocInt (locJ hi t B) :=
   fun v x => (X.g u w hg).completion_integers_iff v _ rfl x

@@ -76,9 +76,12 @@ theorem halfAvg_linear : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCha
         (hH _).1 (H.sub_mem s.2 t.2)
       have h1 := hU _ hs hsH t
       rw [show (t : Mx D T.rank ρ) + ((s : Mx D T.rank ρ) - t) = s by abel] at h1
+      change ℓ₀ (_root_.I195MixedCoordinates_41a545e47d405c9816345b57.source d T ψ μ 𝓕 f s) = ℓ₀ (_root_.I195MixedCoordinates_41a545e47d405c9816345b57.source d T ψ μ 𝓕 f t)
       rw [h1]
     · by_contra hne
-      exact ht (hKs _ ((hH _).1 t.2) fun h0 => hne (by rw [h0, map_zero]))
+      exact ht (hKs _ ((hH _).1 t.2) fun h0 => hne (by
+        change ℓ₀ (_root_.I195MixedCoordinates_41a545e47d405c9816345b57.source d T ψ μ 𝓕 f t) = 0
+        rw [h0, map_zero]))
 
   have madd : ∀ f g : WO S T → ℂ,
       (∀ x w, IntegrableOn (fun a => heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) f)) 0) 𝓕 μ) →
@@ -88,12 +91,14 @@ theorem halfAvg_linear : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCha
     funext w
     have h1 := hf x w
     have h2 := hg x w
-    simp only [_root_.I195MixedCoordinates_5faa2c9cd849d5d53bf59d46.source, HypDec.integrandS_eq, Pi.add_apply, mul_add] at h1 h2 ⊢
+    change (∫ a in 𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) (f + g))) 0 ∂μ) = (∫ a in 𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) f)) 0 ∂μ) + (∫ a in 𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) g)) 0 ∂μ)
+    simp only [HypDec.integrandS_eq, Pi.add_apply, mul_add] at h1 h2 ⊢
     exact integral_add h1 h2
   have msmul : ∀ (c : ℂ) (f : WO S T → ℂ) x, (_root_.I195MixedCoordinates_5faa2c9cd849d5d53bf59d46.source d) T ψ μ 𝓕 (c • f) x = c • (_root_.I195MixedCoordinates_5faa2c9cd849d5d53bf59d46.source d) T ψ μ 𝓕 f x := by
     intro c f x
     funext w
-    simp only [_root_.I195MixedCoordinates_5faa2c9cd849d5d53bf59d46.source, HypDec.integrandS_eq, Pi.smul_apply, smul_eq_mul, mul_left_comm _ c, integral_const_mul]
+    change (∫ a in 𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) (c • f))) 0 ∂μ) = c • (∫ a in 𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) f)) 0 ∂μ)
+    simp only [HypDec.integrandS_eq, Pi.smul_apply, smul_eq_mul, mul_left_comm _ c, integral_const_mul]
   let P : Submodule ℂ (WO S T → ℂ) :=
     { carrier := {f | (∀ x w, IntegrableOn
           (fun a => heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) f)) 0) 𝓕 μ) ∧

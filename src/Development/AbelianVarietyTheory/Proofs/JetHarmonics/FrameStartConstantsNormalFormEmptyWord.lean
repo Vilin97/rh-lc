@@ -28,13 +28,8 @@ private lemma prod_ofFn_mul_prod_ofFn_eq_one {A : Type} [Ring A] :
       prod_ofFn_mul_prod_ofFn_eq_one _ _ (fun i => h i.succ) (fun i j => hc i.succ j.succ)
     have hcomm : Commute (List.ofFn fun i : Fin n => f i.succ).prod (g 0) :=
       Commute.list_prod_left _ _ (List.forall_mem_ofFn_iff.mpr fun i => hc i.succ 0)
-    calc f 0 * (List.ofFn fun i : Fin n => f i.succ).prod *
-          (g 0 * (List.ofFn fun i : Fin n => g i.succ).prod)
-        = f 0 * ((List.ofFn fun i : Fin n => f i.succ).prod * g 0) *
-            (List.ofFn fun i : Fin n => g i.succ).prod := by simp only [mul_assoc]
-      _ = f 0 * g 0 * ((List.ofFn fun i : Fin n => f i.succ).prod *
-            (List.ofFn fun i : Fin n => g i.succ).prod) := by rw [hcomm.eq]; simp only [mul_assoc]
-      _ = 1 := by rw [h 0, hrest, one_mul]
+    simp only [mul_assoc]
+    rw [hcomm.left_comm, ← mul_assoc (f 0), h 0, hrest, one_mul]
 
 private lemma levelConstants_commute {A : Type} [Ring A] [Algebra ℂ A] {r : ℕ} (L : _root_.Formalism.FourierDecayAlt.R.LevelData A r)
     {x y : A}

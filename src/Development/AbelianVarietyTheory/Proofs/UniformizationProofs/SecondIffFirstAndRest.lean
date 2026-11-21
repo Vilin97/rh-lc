@@ -24,7 +24,7 @@ noncomputable section
 
 namespace GlobalTheory.PairingCompare
 
-open GlobalTheory.IndefiniteRowSideFullHecke.ConstantUnitPairing GlobalTheory.TorsionExt GlobalTheory.FieldBaseChange
+open GlobalTheory.TorsionExt GlobalTheory.FieldBaseChange
 
 section Clause
 

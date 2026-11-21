@@ -138,6 +138,7 @@ theorem norm_mixS_dRho_ge : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStd
     refine h3.congr_deriv ?_
     simp
   have heq := hder.unique hexp
+  change d.mixS T ψ v.μ v.𝓕 (dRho (heisO ψ S T) θ τ (z * compAt θ τ d.pY) f) x w = _ at heq
   rw [heq]
   have ha : 2 * (tauE D τ D.host.xi0 * ((compAt θ τ x)ᴴ * gramAt D T τ * z).trace).re = a := by
     rw [ha_def]
@@ -148,6 +149,8 @@ theorem norm_mixS_dRho_ge : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStd
       Complex.norm_real, Real.norm_eq_abs, abs_of_pos Real.pi_pos]
     ring
   rw [hn]
+  change M = d.mixS T ψ v.μ v.𝓕 f x w at hM
+  rw [← hM]
   have h1 : (1 : ℝ) ≤ 2 * Real.pi := by linarith [Real.pi_gt_three]
   have h0 : 0 ≤ |a| * ‖M‖ := by positivity
   nlinarith

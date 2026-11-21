@@ -187,6 +187,11 @@ theorem exists_repOp_tensor_eq_mul {L : Submodule (𝓞 E) (Fin n → E)} [Submo
     simp only [ContinuousLinearMap.mul_apply]
     rw [(hQ _).2, (hQ v).2, ← ContinuousLinearMap.integral_comp_comm _ (hQ v).1]
     congr 1
+    funext g
+    rw [map_smul]
+    congr 1
+    change (π (killAt σ J w g)) (π (embArch σ J w x) v) =
+      (π (embArch σ J w x)) (π (killAt σ J w g) v)
     rw [← ContinuousLinearMap.mul_apply, ← ContinuousLinearMap.mul_apply, ← map_mul, ← map_mul,
       commute_embArch_killAt]
   · have hfc := continuous_of_mem_ccAd (tensor_mem_ccAd hfa hff)

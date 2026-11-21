@@ -57,11 +57,15 @@ theorem hasSum_finsupp_prod_pow_div_factorial_exp : ∀ (κ : Type) [Fintype κ]
       (Complex.exp (∑ k, x k)) := by
     rw [← ((Equiv.arrowCongr e (Equiv.refl ℕ)).symm).hasSum_iff]
     convert hA using 1
+    funext g
+    simp only [Equiv.arrowCongr_symm, Equiv.arrowCongr_apply,
       Equiv.symm_symm, Equiv.refl_symm, Equiv.coe_refl, Function.comp_def, id]
     exact (Equiv.prod_comp e.symm (fun k => x k ^ g (e k) / ((g (e k)).factorial : ℂ))).symm.trans
       (by simp)
   rw [← (Finsupp.equivFunOnFinite (α := κ) (M := ℕ)).symm.hasSum_iff]
   convert hB using 1
+  funext f
+  simp only [Function.comp_apply]
   rw [Finsupp.prod_fintype]
   · simp
   · intro i; simp

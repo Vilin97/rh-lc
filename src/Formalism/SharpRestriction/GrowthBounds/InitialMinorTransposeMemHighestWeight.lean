@@ -135,28 +135,38 @@ theorem decSys_congr {W : I → Submodule K V} {e e' : I → Module.End K V} (h 
 theorem joint_top : ∀ {N : ℕ} (W : Fin N → I → Submodule K V) (e : Fin N → I → Module.End K V)
     (_ : ∀ i, DecSys (W i) (e i))
     (_ : ∀ i j, i ≠ j → ∀ mu nu, ∀ x ∈ W j nu, e i mu x ∈ W j nu),
-    (⨆ t : Fin N → I, ⨅ i, W i (t i)) = ⊤
-  | 0, W, e, h, hc => by
+    (⨆ t : Fin N → I, ⨅ i, W i (t i)) = ⊤ := by
+  intro N
+  induction N with
+  | zero =>
+    intro W e h hc
     refine eq_top_iff.2 ?_
     refine le_trans ?_ (le_iSup _ (fun i => i.elim0))
     simp
-  | N + 1, W, e, h, hc => by
-    have ih := joint_top (fun i => W i.succ) (fun i => e i.succ) (fun i => h i.succ)
-      (fun i j hij => hc i.succ j.succ (by simpa using hij))
-    refine eq_top_iff.2 ?_
-    rw [← ih]
-    apply iSup_le
-    intro t y hy
-    obtain ⟨T, hT⟩ := (h 0).cover y
-    rw [hT]
-    refine Submodule.sum_mem _ fun mu _ => ?_
-    refine Submodule.mem_iSup_of_mem (Fin.cons mu t) ?_
-    rw [Submodule.mem_iInf]
-    intro i
-    refine Fin.cases ?_ (fun j => ?_) i
-    · simpa using (h 0).mem mu y
-    · simp only [Fin.cons_succ]
-      exact hc 0 j.succ (Fin.succ_ne_zero j).symm mu (t j) y ((Submodule.mem_iInf _).1 hy j)
+  | succ N ih =>
+    intro W e h hc
+    let tail (t : Fin N → I) : Submodule K V := ⨅ i, W i.succ (t i)
+    let joint (t : Fin (N + 1) → I) : Submodule K V := ⨅ i, W i (t i)
+    have htail : (⨆ t, tail t) = ⊤ :=
+      ih (fun i => W i.succ) (fun i => e i.succ) (fun i => h i.succ)
+        (fun i j hij => hc i.succ j.succ (by simpa using hij))
+    have hle (t : Fin N → I) : tail t ≤ ⨆ s, joint s := by
+      intro y hy
+      have hy' : ∀ j : Fin N, y ∈ W j.succ (t j) := (Submodule.mem_iInf _).1 hy
+      obtain ⟨T, hT⟩ := DecSys.cover (h 0) y
+      rw [hT]
+      refine Submodule.sum_mem _ fun mu _ => ?_
+      refine Submodule.mem_iSup_of_mem (p := joint) (Fin.cons mu t) ?_
+      change e 0 mu y ∈ ⨅ i, W i ((Fin.cons mu t : Fin (N + 1) → I) i)
+      rw [Submodule.mem_iInf]
+      intro i
+      cases i using Fin.cases with
+      | zero => simpa only [Fin.cons_zero] using (h 0).mem mu y
+      | succ j =>
+        rw [Fin.cons_succ]
+        exact hc 0 j.succ (Fin.succ_ne_zero j).symm mu (t j) y (hy' j)
+    change (⨆ t, joint t) = ⊤
+    exact eq_top_iff.2 (htail.ge.trans (iSup_le hle))
 
 theorem list_fix (l : List (Module.End K V)) (x : V) (h : ∀ A ∈ l, A x = x) : l.prod x = x := by
   induction l with

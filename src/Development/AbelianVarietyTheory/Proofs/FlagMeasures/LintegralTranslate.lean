@@ -45,7 +45,7 @@ theorem lenA_mul {k r : ℕ} (z : Fin (2 * r + k + 1) → ℂ) (t x : MatKR k r)
         (Submodule.subset_span ⟨b, hb, rfl⟩)
       simp only [smul_smul, inv_mul_cancel₀ (hs b), one_smul] at this
       exact this
-  rw [hsp, ← infDist_smul₀ (hs a)]
+  rw [hsp, ← infDist_smul₀ (s a)]
   congr 1
   ext y
   rw [Set.mem_smul_set_iff_inv_smul_mem₀ (hs a)]

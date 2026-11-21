@@ -108,7 +108,8 @@ theorem sum_mixS_le : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D
             ‖(compAt θ τ (ξ.map (incA D) : Mx D X.rank r) * diagonal (fun k => (t k : ℂ))) i j‖) ^ N)⁻¹) ξ * K := by
     intro ξ
     by_cases h0 : (_root_.I195MixedCoordinates_36336a34ca84d0e19c17303f.source d) X ψ μ' 𝓕' Ψ (HMul.hMul (ξ.map (incA D) : Mx D X.rank r) α) 0 = 0
-    · rw [h0, enorm_zero]; exact bot_le
+    · have hz : d.mixS X ψ μ' 𝓕' Ψ (HMul.hMul (ξ.map (incA D) : Mx D X.rank r) α) 0 = 0 := h0
+      rw [hz, enorm_zero]; exact bot_le
     have hfin : (HMul.hMul (ξ.map (incA D) : Mx D X.rank r) α).map (finPart D) =
         (ξ.map (incA D) : Mx D X.rank r).map (finPart D) := by
       rw [Matrix.map_mul, hα, Matrix.mul_one]

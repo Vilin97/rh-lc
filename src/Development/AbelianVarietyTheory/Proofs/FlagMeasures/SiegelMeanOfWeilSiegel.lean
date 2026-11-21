@@ -90,7 +90,7 @@ theorem const_eq {ι κ : Type} [Fintype κ] (q : ι → ℝ) (hq : ∀ u, 0 < q
     hasProd_prod_of_ne_finset_one fun u hu => by simp [hout u hu]
   have h2 : ∏ u ∈ hm.toFinset, (q u ^ m u) ^ ((1 / 2 : ℝ) - (n : ℝ)) =
       ((2 * w) ^ f * ∏ v, |lam v|) ^ ((1 / 2 : ℝ) - (n : ℝ)) := by
-    rw [Real.finset_prod_rpow _ _ fun u _ => (zpow_pos (hq u) _).le, ← hp,
+    rw [Real.finsetProd_rpow _ _ (fun u _ => (zpow_pos (hq u) _).le) _, ← hp,
       finprod_eq_prod_of_mulSupport_subset _ (s := hm.toFinset)]
     intro u hu
     by_contra h
@@ -107,7 +107,7 @@ theorem const_eq {ι κ : Type} [Fintype κ] (q : ι → ℝ) (hq : ∀ u, 0 < q
       ← Real.rpow_neg (by positivity), ← Real.rpow_add (by positivity)]
     congr 1; push_cast; ring
   rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, hf,
-    Real.finset_prod_rpow _ _ fun v _ => abs_nonneg _, Real.mul_rpow (by positivity) hl.le, h6, mul_pow, pow_mul 2]
+    Real.finsetProd_rpow _ _ (fun v _ => abs_nonneg _) _, Real.mul_rpow (by positivity) hl.le, h6, mul_pow, pow_mul 2]
   have : (2 ^ n : ℝ) ^ f ≠ 0 := by positivity
   have h7 : (∏ v, |lam v|) ^ ((1 / 2 : ℝ) - (n : ℝ)) = ((∏ v, |lam v|) ^ ((n : ℝ) - 1 / 2))⁻¹ :=
     eq_inv_of_mul_eq_one_right h5

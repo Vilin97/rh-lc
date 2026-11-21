@@ -42,7 +42,38 @@ theorem hY_pair_flag_int {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D
     hY D (pairAt X h PP a) (flagAt X h PP c) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
   obtain ⟨β₀, h₀⟩ := GlobalTheory.StdFrames.exists_base (Yc D 0)
   have hU := GlobalTheory.StdFrames.unimod_of_isSD (GlobalTheory.StdFrames.isSD_one h₀)
-  have hF := flag_pair_int X h β₀ h₀ PP
+  have hF : ∀ i j, ((β₀⁻¹).val * colMat (flagAt X h PP)) i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E ∧ ((β₀⁻¹).val * colMat (pairAt X h PP)) i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
+    intro i j
+    have hF : Formalism.L2.DIV.IsFrame β₀ (Formalism.L2.Herm.crdLat (Yc D 0) (Yc D 0).L0) := h₀ ▸ GlobalTheory.StdFrames.isFrame_lat β₀
+    have hLf := GlobalTheory.KgFrame.Lf_eq D
+    have key : ∀ v : Fin (Yc D 0).rank → EAf D, v ∈ (Formalism.L2.SG.InstExistsPf.instOf D).Lf →
+        Matrix.mulVec (β₀⁻¹).val v i ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
+      intro v hv
+      rw [hLf] at hv
+      exact (hF v).1 hv i
+    set S : Set (Fin (Yc D 0).rank → EAf D) := {v | v ∈ (Formalism.L2.SG.InstExistsPf.instOf D).Lf}
+    have h0 : (0 : Fin (Yc D 0).rank → EAf D) ∈ S := by
+      show (0 : Fin (Yc D 0).rank → EAf D) ∈ (Formalism.L2.SG.InstExistsPf.instOf D).Lf
+      exact zero_mem _
+    obtain ⟨hef, hz, hbw⟩ := X.vectorsInLattice
+    have he : ∀ a, e0T X h a ∈ S := cast_fun_mem_Lf h X.e0 (fun a => (hef a).1)
+    have hf : ∀ a, f0T X h a ∈ S := cast_fun_mem_Lf h X.f0 (fun a => (hef a).2)
+    have hb : ∀ a, bwT X h a ∈ S := cast_fun_mem_Lf h X.bw (fun a => (hbw a).1)
+    have hbd : ∀ a, bwdT X h a ∈ S := cast_fun_mem_Lf h X.bwd (fun a => (hbw a).2)
+    have hzz : z0T X h ∈ S := cast_mem_Lf h X.z0 hz
+    refine ⟨?_, ?_⟩
+    · rw [colMat_entry]
+      apply key
+      unfold flagAt
+      split_ifs
+      · exact flagV_mem S h0 _ _ _ _ _ _ _ he hf hb hzz j
+      · exact flagV_mem S h0 _ _ _ _ _ _ _ he hf (fun a => hbd _) hzz j
+    · rw [colMat_entry]
+      apply key
+      unfold pairAt
+      split_ifs
+      · exact flagV_mem S h0 _ _ _ _ _ _ _ hf he hbd hzz j
+      · exact flagV_mem S h0 _ _ _ _ _ _ _ hf he (fun a => hb _) hzz j
   set U := colMat (pairAt X h PP) with hUdef
   set W := colMat (flagAt X h PP) with hWdef
   set J := GlobalTheory.IndefiniteRowSideFullHecke.ChainMatrices.ratM (Yc D 0).gram with hJ

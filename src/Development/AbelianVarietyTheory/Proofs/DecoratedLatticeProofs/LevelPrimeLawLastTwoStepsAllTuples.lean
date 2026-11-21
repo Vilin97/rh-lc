@@ -45,7 +45,7 @@ theorem main : ∀ (D : D7) (c : Comm D) (v : VCom c) (k : Type) [Field k] [Valu
   have hx1 : IsSelfDualC _ (c.x (j + 1)).L := (hc.x (j + 1) (by omega)).sd
   have hx2 : IsSelfDualC _ (c.x (j + 1 + 1)).L := (hc.x (j + 1 + 1) (by omega)).sd
   have hpl : Nonempty (Pl D) := by
-    obtain ⟨M, hM⟩ := Ideal.exists_maximal (NumberField.RingOfIntegers D.host.F)
+    obtain ⟨M, hM⟩ := Ideal.exists_maximal (α := NumberField.RingOfIntegers D.host.F)
     exact ⟨⟨M, hM.isPrime, (Ideal.bot_lt_of_maximal M (NumberField.RingOfIntegers.not_isField D.host.F)).ne'⟩⟩
   have hM : IsSelfDualC _ (o.M j 0 h) := ((hS.good (Classical.arbitrary _)).bf j 0 h).sdV₀
   obtain ⟨lam, hlam, hlamv⟩ := hS.pre.lam j h
@@ -53,8 +53,8 @@ theorem main : ∀ (D : D7) (c : Comm D) (v : VCom c) (k : Type) [Field k] [Valu
     (Fin (c.X (j + 1)).rank) (Fin (c.X j).rank) (Fin c.T.rank) (c.bes j 0 h).V₀ (c.X j) (c.bes j 0 h).L (c.X (j + 1))
     (c.X (j + 1 + 1)) c.T c.Lz (c.bes j 0 h).o (c.oT (j + 1 + 1) h) (c.bes j 0 h).ζ o.ζ₀ (c.bes j 0 h).line hS.pre.line
     (v.τ j h) lam hlam (fun i => (hlamv i).1) (hS.pre.tau j h)
-  obtain ⟨Λ, hΛ, u, hγ, hrep⟩ := GlobalTheory.T.lastKernelDatum_in_lastLineFrame_at_levelPrime D c v k ι o hc hv hS j h
-  haveI : ∀ i, (Λ i).IsLattice k := hΛ
+  obtain ⟨Λ, hΛ, u, hγ, hrep⟩ := GlobalTheory.SeeSaw.lastKernel_reps D c v k ι o hc hv hS j h
+  haveI : ∀ i, (Λ i).IsFullLattice k := hΛ
   let ε : ι → 𝓀[k]ˣ := fun i => (ε' i)⁻¹ * u i
   let Q : ι → Pair k (Fin (c.X (j + 1)).rank) := fun i => ε i • o.Q (j + 1) i
   obtain ⟨r, e, hr, hSm⟩ := GlobalTheory.T.smallPairPairingAllGluedPlaces_proof D k ι o.p o.I (· ∈ v.tP) hPl (Fin (c.X (j + 1)).rank) (Fin (c.X j).rank) o.q o.χ o.hχ

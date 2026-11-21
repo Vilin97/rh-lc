@@ -116,7 +116,8 @@ open GlobalTheory.FinPl.PlacesAdeles in
 theorem placesToAdeles (D : D7) : PlacesToAdeles D := by
   classical
   intro S L P hL R h hyp
-  obtain ⟨M, hM, hmove⟩ := (GlobalTheory.T.selfDual_image_adelicPoint_wittCore D S L hL).1 h
+  obtain ⟨M, hM, hmove⟩ : ∃ M : Lat S, IsSelfDualC S M ∧ ∀ P : Pl D → Prop, Moves S h L M P :=
+    (GlobalTheory.T.selfDual_image_adelicPoint_wittCore D S L hL).1 h
   obtain ⟨T, hT⟩ := latV_eq_ae D S L M hL.1 hM.1
   have hfar : ∀ v, v ∉ T → Moves S h L L (· = v) := by
     intro v hv y hy

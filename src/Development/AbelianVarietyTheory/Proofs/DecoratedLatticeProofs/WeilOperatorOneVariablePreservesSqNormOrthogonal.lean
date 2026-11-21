@@ -32,17 +32,15 @@ theorem borel_Mx (m n : ℕ) : BorelSpace (Mx D m n) := ⟨rfl⟩
 theorem isAddFundamentalDomain_prod {A B : Type*} [AddGroup A] [AddGroup B] [MeasurableSpace A]
     [MeasurableSpace B] {Γ : AddSubgroup A} {Δ : AddSubgroup B} {μ : Measure A} {ν : Measure B} [SFinite μ]
     [SFinite ν] {s : Set A} {t : Set B} (hs : IsAddFundamentalDomain Γ s μ) (ht : IsAddFundamentalDomain Δ t ν) :
-    IsAddFundamentalDomain (Γ.prod Δ) (s ×ˢ t) (μ.prod ν) where
-  nullMeasurableSet := hs.nullMeasurableSet.prod ht.nullMeasurableSet
-  ae_covers := by
-    have h1 := (Measure.quasiMeasurePreserving_fst (μ := μ) (ν := ν)).ae hs.ae_covers
+    IsAddFundamentalDomain (Γ.prod Δ) (s ×ˢ t) (μ.prod ν) := by
+  refine ⟨hs.nullMeasurableSet.prod ht.nullMeasurableSet, ?_, ?_⟩
+  · have h1 := (Measure.quasiMeasurePreserving_fst (μ := μ) (ν := ν)).ae hs.ae_covers
     have h2 := (Measure.quasiMeasurePreserving_snd (μ := μ) (ν := ν)).ae ht.ae_covers
     filter_upwards [h1, h2] with p hp hq
     obtain ⟨g, hg⟩ := hp
     obtain ⟨h, hh⟩ := hq
     exact ⟨⟨((g : A), (h : B)), AddSubgroup.mem_prod.2 ⟨g.2, h.2⟩⟩, hg, hh⟩
-  aedisjoint := by
-    intro g h hgh
+  · intro g h hgh
     change μ.prod ν ((g +ᵥ s ×ˢ t) ∩ (h +ᵥ s ×ˢ t)) = 0
     let g1 : Γ := ⟨(g : A × B).1, (AddSubgroup.mem_prod.1 g.2).1⟩
     let h1 : Γ := ⟨(h : A × B).1, (AddSubgroup.mem_prod.1 h.2).1⟩
@@ -91,8 +89,8 @@ theorem lintegral_resS {S A B T : HSp D} (o : OrthDec S A B) (μ : Measure (WO S
   obtain ⟨c, hmeq⟩ : ∃ c : ℝ≥0, μ.map em = c • μA.prod μB :=
     ⟨_, Measure.isAddLeftInvariant_eq_smul (μ.map em) (μA.prod μB)⟩
   refine ⟨c, fun Φ hper => ?_⟩
-  have hqmp : Measure.QuasiMeasurePreserving em μ (μA.prod μB) :=
-    ⟨em.measurable, by rw [hmeq]; exact Measure.smul_absolutelyContinuous⟩
+  have hqmp : QuasiMeasurePreserving em μ (μA.prod μB) :=
+    ⟨em.measurable.aemeasurable, by rw [hmeq]; exact Measure.smul_absolutelyContinuous⟩
   have hprod := isAddFundamentalDomain_prod hA hB
   have hmem : ∀ g : (ratL T A).prod (ratL T B), (o.resS T).symm (g : WO A T × WO B T) ∈ ratL T S := fun g => by
     rw [o.mem_ratL_resS, AddEquiv.apply_symm_apply]; exact AddSubgroup.mem_prod.1 g.2

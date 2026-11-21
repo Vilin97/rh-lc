@@ -86,6 +86,8 @@ theorem vol_fd {D : D7} {δ : ℂ} (hC : Crv D D.host.ccK δ) {N N' : ℕ} {A : 
   have h1 := ZSpan.isAddFundamentalDomain' b (volume : Measure (VC D N N'))
   have h2 := Classical.epsilon_spec
     (p := fun Fd => IsAddFundamentalDomain (Submodule.span ℤ (Set.range b)).toAddSubgroup Fd (volume : Measure (VC D N N'))) ⟨_, h1⟩
+  have : VAddInvariantMeasure (Submodule.span ℤ (Set.range b)).toAddSubgroup (VC D N N') volume :=
+    ⟨fun c s _ => measure_preimage_add _ _ _⟩
   rw [h2.measure_eq h1]
   exact ⟨ZSpan.measure_fundamentalDomain_ne_zero b, (ZSpan.fundamentalDomain_isBounded b).measure_lt_top.ne⟩
 

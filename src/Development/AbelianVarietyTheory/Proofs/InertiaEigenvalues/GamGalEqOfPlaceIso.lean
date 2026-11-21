@@ -47,7 +47,8 @@ theorem wdRel_mk (c : Weil h ≃* Weil h') (hcr : ∀ σ σ', WeilRel φ σ σ' 
     rw [← (hcr σ σ').1 hσ, hρ]
 
 theorem wdRel_lpUnr (c : Weil h ≃* Weil h') (hcr : ∀ σ σ', WeilRel φ σ σ' ↔ c σ = σ')
-    (hdeg : ∀ σ, deg (c σ) = deg σ) (m : Multiset ℂ) : WDRel φ (WD.lpUnr h m) (WD.lpUnr h' m) := by
+    (hdeg : ∀ σ, deg (c σ) = deg σ) (m : Multiset ℂ) :
+    WDRel φ (WD.lpUnr (h := h) m) (WD.lpUnr (h := h') m) := by
   classical
   unfold WD.lpUnr
   refine wdRel_mk c hcr _ _ rfl fun σ => ?_

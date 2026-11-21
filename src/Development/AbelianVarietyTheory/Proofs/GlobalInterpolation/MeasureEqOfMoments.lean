@@ -27,9 +27,9 @@ theorem measure_eq_of_moments : ∀ (q : ℕ) [Fact q.Prime] (κ : Type) [Fintyp
       map_smul' := fun _ _ => rfl
       cont := ContinuousMap.continuous_precomp π }
   have hz : (μ - μ').comp Φ = 0 := by
-    refine GlobalTheory.MonomialDense.eq_zero_of_monomials q _ _ fun m k g hg => ?_
-    have := h m (fun l => e.symm (k l)) (Φ g) fun b => hg (π b)
-    simp [this]
+    exact GlobalTheory.MonomialDense.eq_zero_of_monomials q _ _ fun m k g hg => by
+      have := h m (fun l => e.symm (k l)) (Φ g) fun b => hg (π b)
+      simp [this]
   ext F
   have hF : Φ (F.comp π') = F := by
     ext b

@@ -44,13 +44,18 @@ open GlobalTheory.AscFin
 theorem GlobalTheory.ClassFromMixed.main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (V V₀ W W₀ : HSp D) (ρ σ : ℕ) (dV : HypDec V V₀ ρ) (dW : HypDec W W₀ σ) (vS : VolM D W.rank ρ) (p : Pieces V₀ W W₀ ρ σ) (x : Mx D W.rank ρ), p.Is dV dW x ψ → ∀ (β₁ : Mx D W.rank ρ → ℂ) (g' : WO V₀ W → ℂ) (Φ : WO V W → ℂ), IsThetaFunO ψ V W Φ → (∀ x', (_root_.I195MixedCoordinates_acb50ed7a993b068b784d65f.source dV) W ψ vS.μ vS.𝓕 Φ x' = β₁ x' • g') → (∀ a ∈ p.A₁, ∀ z, β₁ (z + a) = β₁ z) → (∀ z, β₁ z ≠ 0 → ∃ r : Mx D W.rank ρ, r.map (finPart D) = 0 ∧ z - (x + r) ∈ p.A₁) → (∀ a ∈ p.A₁, heisO ψ V W (dV.extX W a) Φ = Φ) ∧ ∀ a ∈ p.A₂, heisO ψ V W (dV.extY W a) Φ = ψ (symplO V W (dV.extX W x) (dV.extY W a)) • Φ := by
   intro D ψ hψ V V₀ W W₀ ρ σ dV dW vS p x hp β₁ g' Φ hΦ hmix hper hsupp
   obtain ⟨hX, hY, -⟩ := GlobalTheory.HeisMixSource.heis_mixS D ψ hψ V V₀ W ρ dV vS Φ hΦ
+  change ∀ x', I195MixedCoordinates_5a743adb4eaabe3d936622f8.source dV W ψ vS.μ vS.𝓕 Φ x' = β₁ x' • g' at hmix
   refine ⟨fun a ha => ?_, fun a ha => ?_⟩
   · refine (GlobalTheory.T.thetaFunction_determined_by_mixedCoordinates D ψ hψ V W _ _ (GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ hΦ _) hΦ).1 V₀ ρ dV vS
       fun x' => ?_
+    change I195MixedCoordinates_5a743adb4eaabe3d936622f8.source dV W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.extX W a) Φ) x' = I195MixedCoordinates_5a743adb4eaabe3d936622f8.source dV W ψ vS.μ vS.𝓕 Φ x'
     rw [hX, hmix, hmix, hper a ha]
   · refine (GlobalTheory.T.thetaFunction_determined_by_mixedCoordinates D ψ hψ V W _ _ (GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ hΦ _)
       (GlobalTheory.WeilVacMove.isTheta_smul _ hΦ)).1 V₀ ρ dV vS fun x' => ?_
-    rw [hY, GlobalTheory.HandHom.mixS_smul, hmix]
+    change I195MixedCoordinates_5a743adb4eaabe3d936622f8.source dV W ψ vS.μ vS.𝓕 (heisO ψ V W (dV.extY W a) Φ) x' = I195MixedCoordinates_5a743adb4eaabe3d936622f8.source dV W ψ vS.μ vS.𝓕 (ψ (symplO V W (dV.extX W x) (dV.extY W a)) • Φ) x'
+    have hsmul := GlobalTheory.HandHom.mixS_smul dV W ψ vS.μ vS.𝓕 (ψ (symplO V W (dV.extX W x) (dV.extY W a))) Φ x'
+    change I195MixedCoordinates_5a743adb4eaabe3d936622f8.source dV W ψ vS.μ vS.𝓕 (ψ (symplO V W (dV.extX W x) (dV.extY W a)) • Φ) x' = ψ (symplO V W (dV.extX W x) (dV.extY W a)) • I195MixedCoordinates_5a743adb4eaabe3d936622f8.source dV W ψ vS.μ vS.𝓕 Φ x' at hsmul
+    rw [hY, hsmul, hmix]
     by_cases hb : β₁ x' = 0
     · rw [hb, zero_smul, smul_zero, smul_zero]
     · obtain ⟨r, hr, hx'⟩ := hsupp x' hb

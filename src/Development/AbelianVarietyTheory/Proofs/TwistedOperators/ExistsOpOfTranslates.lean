@@ -29,8 +29,6 @@ section Linear
 
 variable {L : Type} [Field L] {σ : L →+* ℂ} {H : Type} [AddCommGroup H] [Module ℂ H]
 
-open Formalism.L2.Pj.KsHecke
-
 end Linear
 
 section Group

@@ -147,7 +147,7 @@ theorem adjoint_eq_upLift : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T
   have hintF : ∀ u (y' : (R.HW i σ).H), IntegrableOn (fun g => star (thP ((c.ext ∘ₗ H.e).rangeRestrict u)
       (PiTensorProduct.tprod ℂ v) g) * (R.HW i σ).e y' (fun ρ => v ρ) g) (R.fdW i) (R.νW i) := by
     intro u y'
-    have hsum := integrable_finset_sum (μ := (R.νW i).restrict (R.fdW i)) Finset.univ fun j _ =>
+    have hsum := integrable_finsetSum (μ := (R.νW i).restrict (R.fdW i)) Finset.univ fun j _ =>
       (hth' y' (H.e u ((R.B.L i A.μ0).pres.y j)) (GlobalTheory.AdelicScalar.finLift (Vc D i) ((R.B.L i A.μ0).pres.y j))).const_mul
         ((Nat.card (Bridge.stab (Bridge.ratF (Vc D i)) (grpOf (Vc D i) (R.βV i) (datV i R.Pg (R.Q A.μ0) R.triv m)) ((R.B.L i A.μ0).pres.y j)) : ℂ))⁻¹
     exact hsum.congr (Filter.Eventually.of_forall fun g => (congrFun (eF u y') g).symm)

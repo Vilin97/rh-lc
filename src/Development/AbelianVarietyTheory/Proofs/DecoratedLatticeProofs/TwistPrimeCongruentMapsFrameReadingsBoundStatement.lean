@@ -26,4 +26,4 @@ theorem _root_.GlobalTheory.T.twist_prime_congruent_maps_frame_readings_bound : 
         ((LinearMap.toMatrix' (Formalism.L2.Col.inFr (Formalism.L2.Col.frsF I.sel (I.tup a) q.1.1 P) (Formalism.L2.Col.frsF I.sel (I.tup a) q'.1.1 P) x) -
           LinearMap.toMatrix' (Formalism.L2.Col.inFr (Formalism.L2.Col.frsF I.sel (I.tup a) p.1.1 P) (Formalism.L2.Col.frsF I.sel (I.tup a) p'.1.1 P) x₀)) r s) ≤
         P.1.valuation B.fields.E ((M₀ : ℕ) : B.fields.E) := by
-  first | exact @GlobalTheory.Transport.TwistRead.qread | exact GlobalTheory.Transport.TwistRead.qread | (intros; apply GlobalTheory.Transport.TwistRead.qread <;> assumption)
+  exact @GlobalTheory.Transport.TwistRead.qread

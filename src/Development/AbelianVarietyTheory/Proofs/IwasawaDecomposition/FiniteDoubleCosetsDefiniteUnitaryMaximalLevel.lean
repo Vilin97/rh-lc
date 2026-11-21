@@ -121,7 +121,7 @@ end GlobalTheory.DefiniteClassFinite
 namespace GlobalTheory.DefiniteClassFinite
 variable (L : Type) [Field L] [NumberField L] [IsCMField L]
 
-def intSet : Set (TensorProduct (maximalRealSubfield L) (Af (maximalRealSubfield L)) L) :=
+noncomputable def intSet : Set (TensorProduct (maximalRealSubfield L) (Af (maximalRealSubfield L)) L) :=
   (swapAd L).symm ⁻¹' (ReciprocityTheory.Aut.ALint L : Set (ReciprocityTheory.Aut.AL L))
 
 theorem isOpen_intSet : IsOpen (intSet L) := by
@@ -163,7 +163,7 @@ theorem isOpen_intSet : IsOpen (intSet L) := by
     apply Filter.mem_of_superset _ hV
     apply (isOpen_set_pi Set.finite_univ fun _ _ => hW).mem_nhds
     intro i _ v
-    simp
+    exact (v.adicCompletionIntegers (maximalRealSubfield L)).zero_mem
   have : intSet L = B.equivFun ⁻¹' H := by
     ext x
     simp [intSet, H]

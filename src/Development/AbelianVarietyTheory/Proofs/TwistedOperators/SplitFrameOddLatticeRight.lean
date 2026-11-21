@@ -196,7 +196,7 @@ theorem bd_of_mul {I : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E} (h0 : I ≠ 
       obtain ⟨z, hz, e⟩ := h b hb
       exact ⟨_, mul_mem (hV a ha) hz, by rw [star_mul', (incA D).map_mul, p.pr.map_mul, e]; ring⟩
     · rintro a b ⟨z, hz, e⟩ ⟨z', hz', e'⟩
-      exact ⟨z + z', add_mem hz hz', by rw [star_add, (incA D).map_add (f := _), p.pr.map_add (f := _), add_mul, e, e']; ring⟩
+      exact ⟨z + z', add_mem hz hz', by rw [star_add, map_add, map_add, add_mul, e, e']; ring⟩
   rwa [star_one, RingHom.map_one, RingHom.map_one, one_mul] at key
 
 variable {T : Type} {L : LevCh D T} {sc : Consts}

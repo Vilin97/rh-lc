@@ -44,10 +44,9 @@ theorem algebraicIndependent_of_minimal [Infinite k] (hinj : Function.Injective 
       AlgebraicIndependent k (forms v L)
   | 0, _, _, _ => algebraicIndependent_empty_type_iff.mpr hinj
   | r + 1, L, hL, hmin => by
-    by_contra hnot
-    rw [algebraicIndependent_iff] at hnot
-    obtain ⟨F, hF⟩ := Classical.not_forall.mp hnot
-    obtain ⟨hF, hF0⟩ := Classical.not_imp.mp hF
+    apply algebraicIndependent_iff.mpr
+    intro F hF
+    by_contra hF0
     obtain ⟨lam, h0⟩ := exists_isIntegralElem_linear (forms v L) F hF0 hF
     refine hmin r (Nat.lt_succ_self r) (fun i s => L i.succ s - lam i * L 0 s) fun t => ?_
     have hf : forms v (fun i s => L i.succ s - lam i * L 0 s) =

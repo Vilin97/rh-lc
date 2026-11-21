@@ -45,7 +45,7 @@ theorem cartan_existsUnique (E : Type) [Field E] [NumberField E] (w : HeightOneS
 
 theorem differentiable_eulerPoly (B : Multiset ℂˣ) (a : ℂ) : Differentiable ℂ fun X : ℂ => eulerPoly B (a * X) := by
   induction B using Multiset.induction_on with
-  | empty => simp
+  | empty => simp [eulerPoly]
   | cons b B ih =>
     simp only [eulerPoly_cons]
     exact (by fun_prop : Differentiable ℂ fun X : ℂ => 1 - (b : ℂ) * (a * X)).mul ih

@@ -169,7 +169,7 @@ theorem multT_span_partFull : GlobalTheory.Published.CuspRapidDecay → ∀ D : 
     have : ((φ T : s.CC c) : SmT s.M →ₗ[ℂ] (GA D s.V → ℂ)) = PiTensorProduct.lift (T : MMap s.M) := rfl
     rw [this, LinearEquiv.symm_apply_apply]
     exact he
-  · rw [map_zero]; exact zero_mem _
-  · intro a b ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  · rw [φ.map_zero]; exact zero_mem _
+  · intro a b ha hb; rw [φ.map_add]; exact add_mem ha hb
 
 end GlobalTheory.OntoDecomp

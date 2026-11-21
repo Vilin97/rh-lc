@@ -67,7 +67,7 @@ theorem glob_of_shapiro_system_noLayer (l : ℕ) [Fact l.Prime] (Ω : Type) [Fie
   have hac : ∀ r i, Continuous fun s => a r s i := by
     intro r i
     simp only [haE]
-    exact continuous_finset_sum _ fun x _ => continuous_const.mul (hYc r x i)
+    exact continuous_finsetSum _ fun x _ => continuous_const.mul (hYc r x i)
   have hyc : Continuous y := by
     refine continuous_pi fun i => ?_
     refine TendstoUniformly.continuous (F := fun r s => a r s i) (p := Filter.atTop) ?_

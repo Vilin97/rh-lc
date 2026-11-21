@@ -52,7 +52,7 @@ theorem mem_lev_of_inK {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L 
     (hΛ : Submodule.IsLattice D.host.E (G.Λ X)) {κ : GA D (G.V X)}
     (hκ : InK (G.V X) (G.Λ X) (fun v => v ∉ G.pl.S0) κ) : κ ∈ lev G X := by
   classical
-  have hfg : (G.Λ X).FG := Submodule.IsLattice.fg (A := D.host.E)
+  have hfg : (G.Λ X).FG := Submodule.IsLattice.fg D.host.E (G.Λ X)
   obtain ⟨hGf, hpr⟩ := (GlobalTheory.FinPl.KOpen.mem_grpAt_iff (G.V X) _ κ).1 hκ.1
   obtain ⟨β, hβ⟩ := Formalism.L2.DIV.frame_exists_alt D.host.F D.host.E (G.V X).rank (G.Λ X) hΛ
   have hS : Lev.finE (G.V X) κ ∈ Formalism.L2.DIV.St β :=

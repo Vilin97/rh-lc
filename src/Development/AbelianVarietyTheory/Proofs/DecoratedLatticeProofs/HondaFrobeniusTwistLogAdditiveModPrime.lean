@@ -52,7 +52,7 @@ theorem twistLog_additive_mod : ∀ (K : Type) [NormedField K] [IsUltrametricDis
     · have := congrArg (MvPowerSeries.map (σ ^ i)) hef
       rw [PowerSeries.map_subst (PowerSeries.HasSubst.of_constantCoeff_zero' h0'), hXm] at this
       exact this
-  have hd' : CoefLe 1 (d⁄dX K g) := by
+  have hd' : CoefLe 1 (d⁄dX g) := by
     intro k
     rw [PowerSeries.coeff_derivative, hg, PowerSeries.coeff_map]
     have hk : (σ ^ i) ((PowerSeries.coeff (k + 1)) f) * ((k : K) + 1)

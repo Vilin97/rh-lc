@@ -154,6 +154,8 @@ theorem mem_closure_elt {V : HSp D} (B : Fr V) {a : GA D V} (ha : a ∈ GinfC V)
         apply Eqv.matA_inj D V
         rw [Eqv.matA_famH, Eqv.matA_one]
         convert Eqv.famM_one D V using 2
+        funext τ
+        simp
       rw [e]
       exact Submonoid.one_mem _
     | insert τ0 s hτ0 ih =>

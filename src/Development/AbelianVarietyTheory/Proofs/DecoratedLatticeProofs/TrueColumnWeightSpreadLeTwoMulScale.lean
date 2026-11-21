@@ -91,7 +91,11 @@ theorem spread_lamTrue_le : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (
     have : 0 < L.sc.a := by linarith
     exact div_pos this hX0
   have hn1 : (1 : ℝ) ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.n := by
-    have : 1 ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.n := by unfold Ranks.n; exact Nat.succ_le_of_lt (by positivity)
+    have : 1 ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.n := by
+      have h₁ := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.two_le_m
+      have h₂ := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m_le_f
+      unfold Ranks.n
+      omega
     exact_mod_cast this
   have hw : L.sc.w'' (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.n ≤ L.sc.b' :=
     div_le_self hb'0.le (one_le_mul_of_one_le_of_one_le hx1.le hn1)

@@ -14,7 +14,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.T2SpaceTenso
 
 @[expose] public section
 
-open NumberField GlobalTheory.LKTrip GlobalTheory.HTBetti GlobalTheory.Kg IsDedekindDomain
+open NumberField GlobalTheory.LKTrip IsDedekindDomain
 open scoped TensorProduct Matrix.Norms.L2Operator RestrictedProduct
 
 noncomputable section
@@ -172,7 +172,5 @@ theorem finiteAdeleRingAway_secondCountableTopology : SecondCountableTopology (A
   exact @TopologicalSpace.secondCountableTopology_of_countable_cover _ _ _ _ U hsc hUo hcov
 
 end AfP
-
-open GlobalTheory.HTBetti
 
 end GlobalTheory.GfTop

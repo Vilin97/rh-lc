@@ -36,7 +36,7 @@ theorem cyc_stable (ρ : Representation ℂ G V) (x : V) (g : G) (v : V) (hv : v
     obtain ⟨h, rfl⟩ := hy
     exact Submodule.subset_span ⟨g * h, by simp⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 def quoRep (σ : Representation ℂ G V) (M : Submodule ℂ V) (hM : ∀ g, ∀ v ∈ M, σ g v ∈ M) :
@@ -321,7 +321,9 @@ theorem hasSum_hecke_eigenvalues : GlobalTheory.Published.UnramifiedDoublingGL �
     exact hval (t d) (c d) (hcy d)
   obtain ⟨s₀, hs⟩ := GlobalTheory.Published.UnramifiedDoublingGL.hasSum H (w.adicCompletion E) r μ hμ' hu hα hω'
   have hq1 : 1 < qV E w := one_lt_absNorm w
-  have hqr : resCard (w.adicCompletion E) = qV E w := GlobalTheory.LocLanglands.resCard_eq_normV w
+  have hqr : resCard (w.adicCompletion E) = qV E w := by
+    simpa only [Formalism.ConjugateSelfDual.normV, Formalism.UG.qV, Ideal.absNorm_apply,
+      Submodule.cardQuot_apply] using GlobalTheory.LocLanglands.resCard_eq_normV w
   have hq0 : (0 : ℝ) < qV E w := by exact_mod_cast (by omega : 0 < qV E w)
   have hlq : 0 < Real.log (qV E w) := Real.log_pos (by exact_mod_cast hq1)
   refine ⟨Real.exp (-(s₀ + r / 2) * Real.log (qV E w)), Real.exp_pos _, fun X hX0 hXδ => ?_⟩

@@ -210,7 +210,7 @@ theorem exists_mult (hG : GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension
     | add _ _ _ _ a b => intro c; rw [smul_add]; exact h3 _ _ (a c) (b c)
     | smul a _ _ h => intro c; rw [smul_smul]; exact h _
   have hg : ∀ x, IsCuspGrow θ V (T x) := fun x => GlobalTheory.Chain.CuspGrowSpace.isCuspGrow_of_mem_span D θ V _ (hind (fun x => T x ∈ _)
-    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _)) (fun x y a b => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b) x)
+    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _)) (fun x y a b => by rw [map_add (f := _)]; exact add_mem a b) x)
   obtain ⟨μ, 𝓕, hμ, h𝓕⟩ := GlobalTheory.Ker.HypModel.exists_haar_fundDom D V
   obtain ⟨E, hE0, -⟩ := GlobalTheory.PairLift.RuleLift.exists_embedding_skew hdec θ V μ 𝓕 hθ hμ h𝓕
   obtain ⟨U, ⟨hU, hUe⟩, -⟩ := hG θ hθ V S M J χ μ 𝓕 hμ h𝓕 (T.compMultilinearMap (PiTensorProduct.tprod ℂ))
@@ -344,7 +344,7 @@ theorem pairLifts (D : D7) (X : ProvA) (hI : Inputs D X) (hC : CuspAll D X) : Pa
       rw [hBF]
       exact ⟨L.aut _ _ (hpt φ) (hcl v), L.smooth _ _ (hpt φ) (hcl v), hcusp _ hF _ _ (hpt φ),
         L.growth _ _ (hpt φ) (hcl v)⟩
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact add_mem hx hy
   let G : PolF D W.rank V.rank →ₗ[ℂ] SmT M' →ₗ[ℂ] (SmT M × (GA D V → ℂ)) :=
     (LinearMap.prodEquiv ℂ).toLinearMap ∘ₗ It.prod BF
   have hGe : ∀ φ v, G φ v = (It φ v, BF φ v) := fun _ _ => rfl

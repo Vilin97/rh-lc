@@ -282,15 +282,16 @@ theorem pts_inj : ∀ (bs bs' : List (K × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧ 1
     simp only [List.map_nil, List.sum_nil, List.map_cons, List.sum_cons] at hs; omega
   | (t, s) :: b1, (t', s') :: b1', hv, hv', hs, h => by
     simp only [List.map_cons, List.sum_cons] at hs
-    have hs1 := (hv (t, s) (by simp)).2
-    have hs1' := (hv' (t', s') (by simp)).2
+    have hs1 : 0 < s := (hv (t, s) (by simp)).2
+    have hs1' : 0 < s' := (hv' (t', s') (by simp)).2
     have hzero : 0 < (((t, s) :: b1).map Prod.snd).sum := by
       simp only [List.map_cons, List.sum_cons]
       omega
     obtain ⟨e1, e2⟩ :
         pσ ((t, s) :: b1) 0 = pσ ((t', s') :: b1') 0 ∧
           pv ((t, s) :: b1) 0 = pv ((t', s') :: b1') 0 := h 0 hzero
-    simp only [pσ, pv, if_pos (show 0 < s by omega), if_pos (show 0 < s' by omega)] at e1 e2
+    simp only [pσ, ite_eq_left hs1, ite_eq_left hs1', Nat.sub_zero] at e1
+    simp only [pv, ite_eq_left hs1, ite_eq_left hs1'] at e2
     have ess : s = s' := by omega
     subst ess e2
     have := pts_inj b1 b1' (fun b hb => hv b (by simp [hb])) (fun b hb => hv' b (by simp [hb])) (by omega)

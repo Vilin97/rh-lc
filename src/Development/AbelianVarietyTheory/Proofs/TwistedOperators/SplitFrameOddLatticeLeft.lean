@@ -292,7 +292,7 @@ theorem GlobalTheory.AscFin.DepthColumn.scaled_column_mem : OnStd fun {D} _ _ {s
   have hy := int_mul_mem (sec_mem_intAt p _ hc) hx
   have hZ := GlobalTheory.DepthRowLem.latRow_mulVec D hO T L μ0 hL sc G W M hM (2 * (σ + 1) + 1) (by omega) e₀ he₀ _ ha _ _ hy
   have hval := val_coord_le β hβ (γ := valuation k (ϖ : k) ^ G.pl.depth sc v) (fun b hb => by
-    obtain ⟨m, hm, rfl⟩ := (FractionalIdeal.mem_coeIdeal _).1 hb
+    obtain ⟨m, hm, rfl⟩ := (FractionalIdeal.mem_coeIdeal (𝓞 D.host.E)⁰ (x := b) (I := G.modul)).1 hb
     exact val_le_of_mem_modul G.pl sc hv p hw hϖ hm) hZ i
   refine exists_mem_pow hϖ _ (le_of_eq_of_le ?_ hval)
   congr 1

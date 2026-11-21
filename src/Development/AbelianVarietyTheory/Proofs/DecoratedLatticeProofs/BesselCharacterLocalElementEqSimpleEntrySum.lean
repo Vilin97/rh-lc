@@ -151,7 +151,46 @@ theorem col_eq {ρ : ℕ} {B : BesLev D ρ} {s : k} {FA : Frame k B.A.rank n} {F
 theorem psiBes_isLoc : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : Place D k) (ψ : AddChar (AF D.host.F) ℂ) (ψk : AddChar k Circle), p.IsChar ψ ψk → ∀ (σ : ℕ) (B : BesLev D σ) (s : k) (n : Type) [Fintype n] [DecidableEq n] (c : ℕ) (FA : Frame k B.A.rank n) (FV : Frame k B.V.rank (n ⊕ Fin c)), p.IsBesFrame B s FA FV → ∀ (g : GA D B.V) (q : GL (n ⊕ Fin c) k), q ∈ N k n c (σ + 1) → p.IsLoc FV g q → psiBes ψ B.d 1 (vecB B.o B.ζ) g = (ψk (GlobalTheory.RootEx.simpleSum q) : ℂ) := by
   intro D k _ _ _ _ p ψ ψk hψ σ B s n _ _ c FA FV hF g q hq hg
   obtain rfl := hF.1
-  have H := GlobalTheory.LocFrame.isHermitianAuxiliaryVectorSystem_besselVectors B.d B.o B.line
+  have H : IsHermitianAuxiliaryVectorSystem (2 * σ + 1) B.V B.A (B.d.i₀ * B.o.iA)
+      (besselAuxiliaryVectors B.d (vecB B.o B.ζ)) (fun i => if i = σ then hQ B.L B.ζ B.ζ else 1) := by
+    open GlobalTheory.LocFrame in
+    exact {
+  iso := by
+    rw [conjTranspose_mul, Matrix.mul_assoc B.o.iAᴴ, Matrix.mul_assoc B.o.iAᴴ, ← Matrix.mul_assoc _ B.d.i₀, B.d.iso,
+      ← Matrix.mul_assoc, B.o.isoA]
+  perp := by
+    intro i hi
+    unfold besselAuxiliaryVectors
+    split_ifs with h1 h2
+    · rw [colN_eq_mulVec _ h1, ← vecMul_vecMul, perp_of_gram B.d.i₀e, zero_vecMul]
+    · rw [vecB, mulVec_mulVec]
+      refine perp_of_gram ?_ _
+      rw [conjTranspose_mul, Matrix.mul_assoc B.o.iAᴴ, Matrix.mul_assoc B.o.iAᴴ, ← Matrix.mul_assoc _ B.d.i₀, B.d.iso,
+        ← Matrix.mul_assoc, B.o.orth']
+    · rw [colN_eq_mulVec _ (show 2 * σ - i < σ by omega), ← vecMul_vecMul, perp_of_gram B.d.i₀e', zero_vecMul]
+  pair := by
+    intro i hi l hl
+    unfold besselAuxiliaryVectors
+    rcases lt_trichotomy l σ with h | h | h <;> rcases lt_trichotomy i σ with h' | h' | h'
+    · rw [if_pos h, if_neg (by omega), if_neg (by omega), hQ_XY B.d h (by omega), if_neg h'.ne]
+      exact if_congr (by omega) rfl rfl
+    · rw [if_pos h, if_neg (by omega), if_pos (by omega), wittDecomposition_hermitian_e_anisotropicPart B.d h, if_neg (by omega)]
+    · rw [if_pos h, if_pos (by omega), hQ_XX B.d h (by omega), if_neg (by omega)]
+    · rw [if_neg (by omega), if_pos h, if_neg (by omega), if_neg (by omega), hQ_0Y B.d (by omega), if_neg (by omega)]
+    · rw [if_neg (by omega), if_pos h, if_neg (by omega), if_pos (by omega), hQ_vecB B.d B.o, if_pos (by omega), if_pos h']
+    · rw [if_neg (by omega), if_pos h, if_pos (by omega), hQ_0X B.d (by omega), if_neg (by omega)]
+    · rw [if_neg (by omega), if_neg (by omega), if_neg (by omega), if_neg (by omega), hQ_YY B.d (by omega) (by omega),
+        if_neg (by omega)]
+    · rw [if_neg (by omega), if_neg (by omega), if_neg (by omega), if_pos (by omega), wittDecomposition_hermitian_dual_anisotropicPart B.d (by omega),
+        if_neg (by omega)]
+    · rw [if_neg (by omega), if_neg (by omega), if_pos (by omega), hQ_YX B.d (by omega) (by omega), if_neg h'.ne']
+      exact if_congr (by omega) rfl rfl
+  ne := by
+    intro i _
+    split_ifs
+    exacts [B.line.2, one_ne_zero]
+  card := by have := B.d.rank_add; have := B.o.rank_add; have := B.line.1; omega
+    }
   have hx := Witness.xi_ne p
   rw [psiBes, map_one, one_mul, GlobalTheory.LocFrame.simpleSum_eq_sum_hA, psiE_supp p hψ, GlobalTheory.LocFrame.simpleSum_eq_sum_ent]
   · congr 2

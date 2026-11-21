@@ -82,7 +82,7 @@ theorem cont_val {ι : Type} [Fintype ι] {X : Type} [TopologicalSpace X] {a : �
   obtain ⟨P, -, rfl⟩ := hΦ
   simp only [fnOf, LinearMap.coe_mk, AddHom.coe_mk, Pi.one_apply, one_mul]
   refine Continuous.mul ?_ ?_
-  · refine continuous_finset_prod _ fun τ _ => ?_
+  · refine continuous_finsetProd _ fun τ _ => ?_
     exact Continuous.zpow₀ ((continuous_apply τ).comp hM).matrix_det _ fun x => Or.inl (hinv x τ).ne_zero
   · exact (MvPolynomial.continuous_eval P).comp
       (continuous_pi fun x => ((continuous_apply x.1).comp hM).matrix_elem x.2.1 x.2.2)
@@ -190,7 +190,10 @@ theorem avg_eq_mul_branch : ∀ (ι : Type) [Fintype ι] (N n : ℕ) (hN : N = n
     show L (∫ k, Ψ (yk k) • e (jU (r' k)) ∂ν) = _
     rw [← L.integral_comp_comm (hint Ψ hΨ)]
     congr 1
-      LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply, Submodule.subtype_apply, smul_eq_mul, hJk']
+    funext k
+    simp only [L, map_smul, LinearMap.coe_toContinuousLinearMap', LinearMap.coe_comp,
+      Function.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply,
+      Submodule.subtype_apply, smul_eq_mul, hJk']
   have hT : BrEqv rfl G G' lam sg T := by
     refine ⟨fun Ψ _ => Submodule.coe_mem _, ?_⟩
     intro k0 kt0 hk0 hkt0 Ψ hΨ Ψ' hΨ' z z' hzz'

@@ -63,6 +63,7 @@ theorem exists_mixS_ne {V V₀ W W₀ : HSp D} {ρ σ : ℕ} (dV : HypDec V V₀
     have hg : (_root_.I195MixedCoordinates_42c4dae75290f981192a257e.source dV) W ψ s.vS.μ s.vS.𝓕 F (x ⬝ u.1.1) = (0 : ℂ) • (_root_.I195MixedCoordinates_42c4dae75290f981192a257e.source dV) W ψ s.vS.μ s.vS.𝓕 F (x ⬝ u.1.1) := by
       funext w₀; simp [hne u w₀]
     simp only [GlobalTheory.MixPer.flatFun, GlobalTheory.MixPer.evalAt]
+    change star (psiUni ψ u.1) * (_root_.I195MixedCoordinates_234e4f75c563de28cf3cb155.target dW) V₀ ψ s.vT.μ s.vT.𝓕 ((_root_.I195MixedCoordinates_42c4dae75290f981192a257e.source dV) W ψ s.vS.μ s.vS.𝓕 F (x ⬝ u.1.1)) y w = 0
     rw [hg, GlobalTheory.HandHom.mixT_smul, zero_smul]
     simp
   simp only [flatS, GlobalTheory.MixPer.flatAt, h0, integral_zero, Pi.zero_apply]
@@ -117,11 +118,14 @@ theorem cond_of_flatS_ne : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀
           ψ (symplO V W (dV.extX W (rat x₀)) (dV.extY W a')) • s.om (1, h) Φ := by
         rw [← actO_one_extY, ← s.weil.om_heis 1 h _ Φ hΦt, hA2 a' ha', map_smul]
       have e2 := GlobalTheory.MixModel.Check.mixS_heis_extY dV s.vS.covol hf (mt W h ⬝ a') ((rat x₀ : Mx D W.rank ρ) ⬝ u.1.1) w₀
-      rw [e1, GlobalTheory.HandHom.mixS_smul, Pi.smul_apply, smul_eq_mul] at e2
+      rw [e1] at e2
+      change (_root_.I195MixedCoordinates_234e4f75c563de28cf3cb155.source dV) W ψ s.vS.μ s.vS.𝓕 (ψ (symplO V W (dV.extX W (rat x₀)) (dV.extY W a')) • (s.om (1, h) Φ)) ((rat x₀ : Mx D W.rank ρ) ⬝ u.1.1) w₀ = _ at e2
+      rw [GlobalTheory.HandHom.mixS_smul, Pi.smul_apply, smul_eq_mul] at e2
       have e3 : (ψ (symplO V W (dV.extX W (rat x₀)) (dV.extY W a')) -
           ψ (symplO V W (dV.extX W ((rat x₀ : Mx D W.rank ρ) ⬝ u.1.1)) (dV.extY W (mt W h ⬝ a')))) *
           (_root_.I195MixedCoordinates_42c4dae75290f981192a257e.source dV) W ψ s.vS.μ s.vS.𝓕 (s.om (1, h) Φ) ((rat x₀ : Mx D W.rank ρ) ⬝ u.1.1) w₀ = 0 := by
-        rw [sub_mul, e2, sub_self]
+        rw [sub_mul, e2]
+        exact sub_self _
       rcases mul_eq_zero.1 e3 with h1 | h1
       · rw [hAdef, ← GlobalTheory.StripVanish.symplO_extX_extY_mt]; exact (sub_eq_zero.1 h1).symm
       · exact absurd h1 hM

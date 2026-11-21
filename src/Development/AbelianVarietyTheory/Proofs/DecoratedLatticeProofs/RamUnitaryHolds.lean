@@ -108,8 +108,18 @@ theorem ramUnitary_holds : ∀ D : D7, GlobalTheory.FinPl.RamUnitary D := by
   have k2 : ∀ Q ∈ withKer P.lat, pet vS φ (FF q (resChar χ hχ q) X') Q = pet vS φ (FF q (resChar χ hχ q) X') P :=
     fun Q _ => pet_const vS β hφ.1 (FF_mem_EqForm q _ (FFStar_mem_EqForm q _ hφ'.1)) (fun Q => (hφ.2.2 Q).1)
       (fun Q => (c2 Q).1) Q P
+  have hcard : (withLat P.lat).card = (withKer P.lat).card := by
+    classical
+    have e : Red P.lat ≃ₗ[𝓀[k]] Module.Dual 𝓀[k] (Red P.lat) :=
+      (Module.Free.chooseBasis 𝓀[k] (Red P.lat)).toDualEquiv
+    have e' : {x : Red P.lat // x ≠ 0} ≃ {f : Module.Dual 𝓀[k] (Red P.lat) // f ≠ 0} :=
+      e.toEquiv.subtypeEquiv (fun x => by simp)
+    refine Finset.card_eq_of_equiv ?_
+    exact (Equiv.subtypeEquivRight (fun P => mem_withLat)).trans
+      ((latEquiv P.lat).symm.trans (e'.symm.trans ((kerEquiv P.lat q).trans
+        (Equiv.subtypeEquivRight (fun P => mem_withKer.symm)))))
   rw [Finset.sum_congr rfl k1, Finset.sum_congr rfl k2, Finset.sum_const, Finset.sum_const,
-    ← card_withLat_eq_card_withKer] at hsum
+    ← hcard] at hsum
   have hN : (withLat P.lat).card ≠ 0 := (Finset.card_pos.2 ⟨P, mem_withLat.2 rfl⟩).ne'
   have hpe : pet vS X X' (ε • P) = pet vS φ (FF q (resChar χ hχ q) X') P := by
     rw [← Nat.cast_smul_eq_nsmul ℂ, ← Nat.cast_smul_eq_nsmul ℂ] at hsum

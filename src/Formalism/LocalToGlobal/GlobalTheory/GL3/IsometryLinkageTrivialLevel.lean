@@ -41,12 +41,16 @@ def cK : D.host.K →+* D.host.K where
 def hK (x y : D.host.E) : D.host.K := Algebra.trace D.host.K D.host.E (x * D.host.conj y)
 
 theorem tau_nonempty : Nonempty D.what₂.Tau := by
-  rw [← Fintype.card_pos_iff, FL.card_tau]; positivity
+  rw [← Fintype.card_pos_iff, FL.card_tau]
+  exact Nat.mul_pos (by decide) D.R.ord_pos
 
-theorem herm : FS.Herm4 (cK D) (hK D) where
-  add_left x x' y := by simp only [hK, add_mul, map_add (f := _)]
-  smul_left k x y := by simp only [hK, smul_mul_assoc, map_smul, smul_eq_mul]
-  symm x y := by
+theorem herm : FS.Herm4 (cK D) (hK D) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro x x' y
+    simp only [hK, add_mul, map_add (f := _)]
+  · intro k x y
+    simp only [hK, smul_mul_assoc, map_smul, smul_eq_mul]
+  · intro x y
     apply Subtype.ext
     apply D.host.φ₀.injective
     show D.host.φ₀ ((Algebra.trace D.host.K D.host.E (y * D.host.conj x) : D.host.K) : D.host.E)
@@ -55,7 +59,7 @@ theorem herm : FS.Herm4 (cK D) (hK D) where
       rw [CU.emb_conj, ← FL.sum_tau_trace, ← FL.sum_tau_trace, map_sum]
     refine Finset.sum_congr rfl fun τ _ => ?_
     rw [map_mul, map_mul, map_mul, CU.emb_conj, CU.emb_conj, Complex.conj_conj, mul_comm]
-  pos x hx := by
+  · intro x hx
     have hφ : D.host.φ₀ ((hK D x x : D.host.K) : D.host.E)
         = ((∑ τ : D.what₂.Tau, Complex.normSq (embT D τ x) : ℝ) : ℂ) := by
       show D.host.φ₀ ((Algebra.trace D.host.K D.host.E (x * D.host.conj x) : D.host.K) : D.host.E) = _

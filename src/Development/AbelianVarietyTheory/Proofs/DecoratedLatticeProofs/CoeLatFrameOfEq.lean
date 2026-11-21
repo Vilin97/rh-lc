@@ -33,13 +33,14 @@ theorem gram_of_eq {D : D7} (S : HSp D) (hs : ∀ x : D.host.E, IsIntegral ℤ x
     (h : S = Formalism.BasicNotions.Examples₂.posSpace hs N) : S.gram = 1 := by
   subst h
   refine Matrix.ext fun a b => ?_
-  refine (Formalism.BasicNotions.Examples₂.stdSpace_gram_apply hs N (fun _ => false) N 0 a b).trans ?_
-  by_cases hab : a = b
-  · subst hab
-    rw [Matrix.one_apply_eq]
-    exact (if_pos rfl).trans (by simp [Formalism.BasicNotions.Examples₂.sgn])
-  · rw [Matrix.one_apply_ne hab]
-    exact if_neg hab
+  exact (Formalism.BasicNotions.Examples₂.stdSpace_gram_apply hs N (fun _ => false) N 0 a b).trans
+    (by
+      by_cases hab : a = b
+      · subst hab
+        rw [Matrix.one_apply_eq]
+        exact (if_pos rfl).trans (by simp [Formalism.BasicNotions.Examples₂.sgn])
+      · rw [Matrix.one_apply_ne hab]
+        exact if_neg hab)
 
 theorem cartan_of_gram {D : D7} {S : HSp D} (h : S.gram = 1) (τ : D.what₂.Tau) : IsCartanInv (gramAt D S τ) 1 := by
   have e : gramAt D S τ = 1 := by rw [gramAt, h, Matrix.map_one _ (map_zero _) (map_one _)]

@@ -34,10 +34,10 @@ theorem posNhds : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ 
   have hcont : Continuous fun z : Mx D n ρ => star (psiE ψ (upSum (L ⬝ (z - x)))) := by
     refine continuous_star.comp (hψc.comp (htr.comp ?_))
     unfold upSum
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     split_ifs
     · simp only [Matrix.mul_apply, Matrix.sub_apply]
-      refine continuous_finset_sum _ fun k _ => ?_
+      refine continuous_finsetSum _ fun k _ => ?_
       have hk : Continuous fun z : Mx D n ρ => z k j - x k j := by
         simp only [sub_eq_add_neg]
         exact (continuous_id.matrix_elem k j).add continuous_const

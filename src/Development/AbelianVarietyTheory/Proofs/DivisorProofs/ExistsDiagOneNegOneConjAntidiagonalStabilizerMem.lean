@@ -54,13 +54,15 @@ theorem flipM_transpose (d : ℕ) : (flipM (F := F) (E := E) d)ᵀ = flipM d := 
 theorem flipM_dbl {d : ℕ} (J : Matrix (Fin d) (Fin d) (AE F E)) : flipM d * dbl J * flipM d = dbl J := by
   simp [flipM, dbl, fromBlocks_multiply]
 
-theorem flipM_diagCols (d : ℕ) : flipM (F := F) (E := E) d ⬝ₘ diagCols (Fin d) = antiCols d := by
-  ext (i | i) j <;> simp only [flipM, diagCols, antiCols, Matrix.mul_apply, Fintype.sum_sum_type] <;>
-    simp [Matrix.one_apply]
+theorem flipM_diagCols (d : ℕ) : flipM (F := F) (E := E) d * diagCols (Fin d) = antiCols d := by
+  change @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid
+    (flipM (F := F) (E := E) d) (diagCols (Fin d)) = antiCols d
+  simp [flipM, diagCols, antiCols, Matrix.fromBlocks_mul_fromRows]
 
-theorem flipM_antiCols (d : ℕ) : flipM (F := F) (E := E) d ⬝ₘ antiCols d = diagCols (Fin d) := by
-  ext (i | i) j <;> simp only [flipM, diagCols, antiCols, Matrix.mul_apply, Fintype.sum_sum_type] <;>
-    simp [Matrix.one_apply]
+theorem flipM_antiCols (d : ℕ) : flipM (F := F) (E := E) d * antiCols d = diagCols (Fin d) := by
+  change @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid
+    (flipM (F := F) (E := E) d) (antiCols d) = diagCols (Fin d)
+  simp [flipM, antiCols, diagCols, Matrix.fromBlocks_mul_fromRows]
 
 theorem flipM_map (σ : E →ₐ[F] E) (d : ℕ) : (flipM (F := F) (E := E) d).map (cA σ) = flipM d := by
   ext (i | i) (j | j) <;> simp [flipM, Matrix.one_apply] <;> split_ifs <;> simp
@@ -71,11 +73,11 @@ variable {R A : Type} [CommRing R] [CommRing A] [Algebra R A] {ι κ : Type} [Fi
   [Fintype κ] [DecidableEq κ]
 
 theorem idem_conj_cols {e : R} (he : e * e = e) (N Q : Matrix ι ι A) (D Ac : Matrix ι κ A) (T : Matrix κ κ A)
-    (hND : N ⬝ₘ D = Ac) (hNA : N ⬝ₘ Ac = D) (hQ : (1 - e) • Q = (1 - e) • (1 : Matrix ι ι A))
-    (hQA : Q ⬝ₘ Ac = Ac ⬝ₘ T) :
-    (((1 - e) • (1 : Matrix ι ι A) + e • N) * Q * ((1 - e) • (1 : Matrix ι ι A) + e • N)) ⬝ₘ D =
-      D ⬝ₘ ((1 - e) • (1 : Matrix κ κ A) + e • T) := by
-  have hQD : (1 - e) • (Q ⬝ₘ D) = (1 - e) • D := by
+    (hND : N * D = Ac) (hNA : N * Ac = D) (hQ : (1 - e) • Q = (1 - e) • (1 : Matrix ι ι A))
+    (hQA : Q * Ac = Ac * T) :
+    (((1 - e) • (1 : Matrix ι ι A) + e • N) * Q * ((1 - e) • (1 : Matrix ι ι A) + e • N)) * D =
+      D * ((1 - e) • (1 : Matrix κ κ A) + e • T) := by
+  have hQD : (1 - e) • (Q * D) = (1 - e) • D := by
     rw [← Matrix.smul_mul, hQ, Matrix.smul_mul, Matrix.one_mul]
   rw [idem_sandwich he, Matrix.add_mul, Matrix.smul_mul, Matrix.smul_mul, hQD,
     Matrix.mul_assoc, Matrix.mul_assoc, hND, hQA, ← Matrix.mul_assoc, hNA, Matrix.mul_add, Matrix.mul_smul,
@@ -207,7 +209,7 @@ theorem flipPt_conj_anti_diag : ∀ {F E : Type} [Field F] [NumberField F] [Fiel
     (1 - GlobalTheory.LatVac.liftV v 1 : AF F) • (1 : Matrix (Fin d) (Fin d) (AE F E)) +
       (GlobalTheory.LatVac.liftV v 1 : AF F) • ((T⁻¹ : GL (Fin d) (AE F E)) : Matrix (Fin d) (Fin d) (AE F E)),
     idem_unit he _ _ (Units.mul_inv T), idem_unit he _ _ (Units.inv_mul T)⟩, ?_⟩
-  show (flipAt v d * matD q * flipAt v d) ⬝ₘ diagCols (Fin d) = diagCols (Fin d) ⬝ₘ
+  show (flipAt v d * matD q * flipAt v d) * diagCols (Fin d) = diagCols (Fin d) *
     ((1 - GlobalTheory.LatVac.liftV v 1 : AF F) • (1 : Matrix (Fin d) (Fin d) (AE F E)) +
       (GlobalTheory.LatVac.liftV v 1 : AF F) • (T : Matrix (Fin d) (Fin d) (AE F E)))
   exact idem_conj_cols he (flipM d) (matD q) _ _ _ (flipM_diagCols d) (flipM_antiCols d) hQ hT

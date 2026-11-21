@@ -82,7 +82,10 @@ theorem isSBHalf_topFn : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (
     have hk2 := ((mem_hatMx_iff hFS hFT 𝔪 _).1 hk).2
     have hXYZ : fr (B.β 0 (j + 1)) (B.β 0 j) ((x + K • u).map (toEAf D)) =
         fr (B.β 0 (j + 1)) (B.β 0 j) (x.map (toEAf D)) + fr (B.β 0 (j + 1)) (B.β 0 j) ((K • u).map (toEAf D)) := by
-      rw [Matrix.map_add _ (toEAf D).map_add (f := _), fr_add]
+      have hm : (x + K • u).map (toEAf D) = x.map (toEAf D) + (K • u).map (toEAf D) := by
+        ext i l
+        exact (toEAf D).map_add _ _
+      rw [hm, fr_add]
     have hZ : ∀ i l, fr (B.β 0 (j + 1)) (B.β 0 j) ((K • u).map (toEAf D)) i l ∈ OA D := fun i l => by
       obtain ⟨s, -, hs⟩ := hk2 i l
       rw [← hs]

@@ -33,7 +33,9 @@ theorem transvTrivial_of_descent (D : D7) (hD : Descent D) : GlobalTheory.Indefi
     rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, Prod.mk_mul_mk, Prod.mk_mul_mk,
       mul_one, mul_one]
   have hq : symplOH S T (d.extX T x) (d.extY T (x ⬝ c.1)) = 0 := h3
-  rw [e, (F _ hb).levi, h1, (F _ hc).unip, h2, GlobalTheory.MixPer.heisO_zero, (F _ hf).centre, hq, GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.halfMod, hdet]
+  rw [e]
+  change I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d T ψ μ 𝓕 _ x = I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d T ψ μ 𝓕 f x
+  rw [(F _ hb).levi, h1, (F _ hc).unip, h2, GlobalTheory.MixPer.heisO_zero, (F _ hf).centre, hq, GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.halfMod, hdet]
   simp
 
 theorem transvLemma_of_descent : ∀ D : D7, Descent D → GlobalTheory.IndefiniteRowSideFullHecke.TransvectionAction.TransvLemma D := fun D hD =>

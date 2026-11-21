@@ -323,9 +323,12 @@ theorem Zalg_mulChi (χ : HChar E) {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zal
     obtain ⟨y', h3, h4⟩ := hy
     exact ⟨x' * y', mul_mem h1 h3, fun φ => by simp [h2, h4]⟩
 
-theorem IsAutForm.mulChi {φ : Sm E a} (h : IsAutForm φ) (χ : HChar E) : IsAutForm (mulChi a χ φ) where
-  left γ g := by simp [h.left, chiDet_ratGL]
-  level := by
+theorem IsAutForm.mulChi {φ : Sm E a} (h : IsAutForm φ) (χ : HChar E) : IsAutForm (mulChi a χ φ) := by
+  refine { left := ?left, level := ?level, kfin := ?kfin, zfin := ?zfin, growth := ?growth }
+  case left =>
+    intro γ g
+    simp [h.left, chiDet_ratGL]
+  case level =>
     refine isOpen_stab_of_mem_nhds _ _ (Filter.mem_of_superset
       ((h.level.inter (isOpen_ker_chiDet χ)).mem_nhds ⟨by simp, by simp⟩) ?_)
     intro k hk
@@ -333,20 +336,21 @@ theorem IsAutForm.mulChi {φ : Sm E a} (h : IsAutForm φ) (χ : HChar E) : IsAut
     have h2 : chiDet a χ (finGL E a k) = 1 := hk.2
     change rt E a (finGL E a k) _ = _
     rw [rt_mulChi, h1, h2, Units.val_one, one_smul]
-  kfin := by
+  case kfin =>
     have := h.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (Set.range fun k => cptRep E a k φ)).map
       (TR.mulChi a χ).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     exact ⟨_, Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩), (rt_mulChi χ _ φ).symm⟩
-  zfin := by
+  case zfin =>
     have := h.zfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) ''
       Zalg E a)).map (TR.mulChi a χ).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     obtain ⟨z', h1, h2⟩ := Zalg_mulChi χ hz
     exact ⟨_, Submodule.subset_span ⟨z', h1, rfl⟩, (h2 φ).symm⟩
-  growth g := by
+  case growth =>
+    intro g
     obtain ⟨C, N, h1⟩ := h.growth g
     obtain ⟨C', N', h2⟩ := chiDet_growth (a := a) χ
     refine ⟨C * (‖((chiDet a χ g : ℂˣ) : ℂ)‖ * C'), N + N', fun y => ?_⟩

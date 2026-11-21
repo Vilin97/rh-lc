@@ -54,7 +54,7 @@ theorem integrable_term {K : Type} [Group K] [TopologicalSpace K] [IsTopological
     rw [MvPolynomial.coeff_map]
     simp only [GlobalTheory.KJAvg.ontoUni_inv hr]
   simp_rw [key, Finset.sum_mul]
-  refine integrable_finset_sum _ fun m _ => ?_
+  refine integrable_finsetSum _ fun m _ => ?_
   have hm := (GlobalTheory.KJAvg.integrable_avg_term ν hr (AddMonoidAlgebra.coeff (GlobalTheory.KJAvg.univSubst P) m) y F).mul_const (ℓ (monomial m 1))
   refine hm.congr (Filter.Eventually.of_forall fun k => ?_)
   simp only

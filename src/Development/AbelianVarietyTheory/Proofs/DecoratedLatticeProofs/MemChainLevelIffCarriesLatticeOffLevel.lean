@@ -23,7 +23,7 @@ namespace GlobalTheory.Core.Mi.LevChain
 theorem mem_levS_iff_moves : ∀ (D : D7) (c : GlobalTheory.ChainOnto.Com D) (j : ℕ) (s : GlobalTheory.ChainOnto.PiLocalization₂ D), s.Is c j → ∀ v : GlobalTheory.FinPl.Pl D, v ∉ c.S → ∀ κ ∈ grpAt s.V (· = v), κ ∈ levS s.V s.β s.L ↔ Moves s.V κ s.Λ s.Λ (· = v) := by
   intro D c j s hs v hv κ hκ
   haveI : Submodule.IsLattice D.host.E s.Λ := hs.selfDual.1
-  have hfg : s.Λ.FG := Submodule.IsLattice.fg (A := D.host.E)
+  have hfg : s.Λ.FG := Submodule.IsLattice.fg (A := D.host.E) s.Λ
   have hGf := (GlobalTheory.FinPl.KOpen.mem_grpAt_iff s.V (· = v) κ).1 hκ
   have hSt : Lev.finE s.V κ ∈ Formalism.L2.DIV.St s.β ↔ κ ∈ GlobalTheory.AdelicU.levelOpen D.sp.cm.sig s.V.gram s.Λ := by
     rw [GlobalTheory.ChainOnto.LStab.finE_mem_St_iff_of_fg s.V s.β s.Λ hs.frame hfg κ]

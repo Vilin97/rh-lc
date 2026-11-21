@@ -70,7 +70,7 @@ theorem exists_isHaarKH : ∀ k r : ℕ, ∃ μ : Measure (Matrix (Fin (2 * r + 
     simpa using this⟩
   have hKm : MeasurableSet (GlobalTheory.ThA.KH k r) := (isCompact_KH k r).isClosed.measurableSet
   refine ⟨ν.map (incKH k r), ?_, ?_, ?_, ?_⟩
-  · exact Measure.isProbabilityMeasure_map hmeas.aemeasurable
+  · infer_instance
   · rw [Measure.map_apply hmeas hKm.compl]
     have : incKH k r ⁻¹' (GlobalTheory.ThA.KH k r)ᶜ = ∅ := by
       ext u

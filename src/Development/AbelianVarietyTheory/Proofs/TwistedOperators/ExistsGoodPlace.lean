@@ -63,20 +63,20 @@ theorem base_isGood {D : D7} (B : Base D.host.F D.host.E) (hψ : IsStdChar D B.�
            galois := D.host.hostE_isGalois
            unram := GlobalTheory.InertOfConj.unram D
            std := GlobalTheory.BaseGoodPlace.isStd_of_isStdChar hψ
-           inert := ?_
+           inert := by
+             intro v w hw
+             have hns : ¬ Formalism.MainNotions.KudlaSiegelWeil.Split D v := by
+               rintro ⟨w1, w2, hne, h1, h2⟩
+               apply hne
+               have key : ∀ u : HeightOneSpectrum (𝓞 D.host.E), Formalism.MainNotions.KudlaSiegelWeil.Over D u v → u = w := fun u hu => by
+                 have hle : w.asIdeal ≤ u.asIdeal := by
+                   rw [← hw]
+                   exact Ideal.map_le_iff_le_comap.2 (le_of_eq hu.symm)
+                 exact HeightOneSpectrum.ext (w.isMaximal.eq_of_le u.isPrime.ne_top hle).symm
+               rw [key w1 h1, key w2 h2]
+             obtain ⟨h2, h3, hd, -⟩ := Formalism.MainNotions.KudlaSiegelWeil.inert_conditions_hold D v hns
+             exact ⟨h2, h3, GlobalTheory.BaseGoodPlace.psiUnr_of_not_le hψ v hd⟩
            psiP := fun v hv => GlobalTheory.BaseGoodPlace.psiUnr_of_not_le hψ v fun hle => hP v hv (Ideal.dvd_iff_le.2 hle) }
-  intro v w hw
-  have hns : ¬ Formalism.MainNotions.KudlaSiegelWeil.Split D v := by
-    rintro ⟨w1, w2, hne, h1, h2⟩
-    apply hne
-    have key : ∀ u : HeightOneSpectrum (𝓞 D.host.E), Formalism.MainNotions.KudlaSiegelWeil.Over D u v → u = w := fun u hu => by
-      have hle : w.asIdeal ≤ u.asIdeal := by
-        rw [← hw]
-        exact Ideal.map_le_iff_le_comap.2 (le_of_eq hu.symm)
-      exact HeightOneSpectrum.ext (w.isMaximal.eq_of_le u.isPrime.ne_top hle).symm
-    rw [key w1 h1, key w2 h2]
-  obtain ⟨h2, h3, hd, -⟩ := Formalism.MainNotions.KudlaSiegelWeil.inert_conditions_hold D v hns
-  exact ⟨h2, h3, GlobalTheory.BaseGoodPlace.psiUnr_of_not_le hψ v hd⟩
 
 theorem exists_good_place (D : D7) (S : Finset (HeightOneSpectrum (𝓞 D.host.F))) :
     ∃ v₁ : HeightOneSpectrum (𝓞 D.host.F), v₁ ∉ S ∧ SplitsFully D.host.E v₁ ∧

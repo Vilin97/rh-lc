@@ -190,16 +190,9 @@ theorem keepsTors_up (H₁ : KeepsIota E h F) (H : KeepsTors E h F) : KeepsTors 
 end Field
 
 theorem isMonHom_mul {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G]
-    (f g : G ⟶ G) [IsMonHom f] [IsMonHom g] : IsMonHom (f * g) where
-  one_hom := by
-    rw [MonObj.comp_mul, IsMonHom.one_hom, IsMonHom.one_hom, MonObj.one_eq_one, _root_.mul_one]
-  mul_hom := by
-    have h : ∀ k : G ⟶ G, [IsMonHom k] → (k ⊗ₘ k) ≫ μ[G] = (fst G G ≫ k) * (snd G G ≫ k) := fun k _ => by
-      rw [MonObj.mul_eq_mul, MonObj.comp_mul]
-      simp
-    rw [MonObj.comp_mul, IsMonHom.mul_hom, IsMonHom.mul_hom, h, h, MonObj.mul_eq_mul, MonObj.comp_mul]
-    simp only [← Category.assoc, tensorHom_fst, tensorHom_snd, MonObj.comp_mul]
-    exact mul_mul_mul_comm _ _ _ _
+    (f g : G ⟶ G) [IsMonHom f] [IsMonHom g] : IsMonHom (f * g) := by
+  rw [CategoryTheory.Hom.mul_def]
+  infer_instance
 
 section Main
 variable (hL : LL) {R : Type} [CommRing R] [IsDomain R] [CharZero R] {I : Ideal R} (hR : AdmBase R I) {D : DegData R I}

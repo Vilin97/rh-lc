@@ -155,8 +155,7 @@ theorem cong_mem_prCat_twist : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} {Ch 
     exact hL.boundQ j b P hP x hx
   have hκ : ∀ y ∈ stdAt X.E (R.N j) P.1, (((qOf P.1 : ℕ) : X.E) ^ cst.D P)⁻¹ • (C.1 y - y) ∈ stdAt X.E (R.N j) P.1 :=
     mem_prinCong.1 hC
-  have hκ' : ∀ y ∈ stdAt X.E (R.N j) P.1, (((qOf P.1 : ℕ) : X.E) ^ cst.D P)⁻¹ • (C.1⁻¹ y - y) ∈ stdAt X.E (R.N j) P.1 :=
-by
+  have hκ' : ∀ y ∈ stdAt X.E (R.N j) P.1, (((qOf P.1 : ℕ) : X.E) ^ cst.D P)⁻¹ • (C.1⁻¹ y - y) ∈ stdAt X.E (R.N j) P.1 := by
     intro y hy
     have h0 := mem_prinCong.1 (inv_mem hC) y hy
     rwa [Subgroup.coe_inv] at h0
@@ -181,8 +180,7 @@ by
     have ep : LocE.parL P.1 (qOf P.1) (R.k + j) (R.N j) (cOf R j) =
         LocE.sclLat P.1 (qOf P.1) (R.N j + cOf R j)
           (fun l => (fun _ => (0 : ℤ)) l + if R.k + j ≤ l ∧ l < R.N j then 1 else 0) := by
-      unfold LocE.parL
-      congr 1
+      simp only [LocE.parL, zero_add]
     have hM : ∀ _s : ℕ, LocE.parL P.1 (qOf P.1) (R.k + j) (R.N j) (cOf R j) ≤ stdAt X.E (R.N j + cOf R j) P.1 := by
       intro _
       rw [ep, ← sclLat_zero (P := P.1) (qOf P.1)]

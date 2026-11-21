@@ -195,11 +195,11 @@ theorem transLat_isLattice (hB : BasisAtEx) (lam : ι → DomWeight n) (T : Subm
     (hloc : ∀ (w : HeightOneSpectrum (𝓞 K)) (B : ι → GL (Fin n) K), (∀ τ, IsBasisAt w (M τ) (B τ)) →
       Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (transLat lam T M) =
         (Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T).map ((actP lam B).restrictScalars (𝓞 K))) :
-    Submodule.IsLattice K ((transLat lam T M).comap ((VV K lam).subtype.restrictScalars (𝓞 K))) where
-  fg := by
-    refine Submodule.fg_of_fg_map_injective ((VV K lam).subtype.restrictScalars (𝓞 K)) Subtype.val_injective ?_
-    exact (transLat_fg hB lam T hT hsp M hM).of_le (Submodule.map_comap_le _ _)
-  linearIndepOn _ _ := (LinearIndependent.iff_fractionRing (𝓞 K) K).mp
+    Submodule.IsLattice K ((transLat lam T M).comap ((VV K lam).subtype.restrictScalars (𝓞 K))) := by
+  apply Submodule.IsLattice.of_fg K
+  refine Submodule.fg_of_fg_map_injective ((VV K lam).subtype.restrictScalars (𝓞 K)) Subtype.val_injective ?_
+  exact (transLat_fg hB lam T hT hsp M hM).of_le (Submodule.map_comap_le _ _)
+
 theorem nabDelLattice : NabDelLattice := by
   intro K _ _ ι _ n lam M hM
   obtain ⟨h1, h2, h3, h4⟩ := GlobalTheory.T.stdWeylLattices_fg_and_span_coeffSpace K ι n lam

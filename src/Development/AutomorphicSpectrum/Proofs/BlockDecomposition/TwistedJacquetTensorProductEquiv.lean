@@ -81,7 +81,7 @@ theorem mkQ_update [DecidableEq α] (K : ∀ a, Submodule ℂ (X a)) {q : ∀ a,
   · simp [Function.update_of_ne hb, hy]
 
 def descend [Fintype α] (K : ∀ a, Submodule ℂ (X a)) :
-    MultilinearMap ℂ (fun a => X a ⧸ K a) ((⨂[ℂ] a, X a) ⧸ pureSpan K) where
+    (Π a, X a ⧸ K a) →ₘₗ[ℂ] ((⨂[ℂ] a, X a) ⧸ pureSpan K) where
   toFun := descendFun K
   map_update_add' := by
     intro _ q a u v
@@ -149,6 +149,7 @@ theorem twKer_piTensor_le (π : ∀ a, Representation ℂ (Γ a) (X a)) (H : ∀
       rfl
     have e3 := (MultilinearMap.map_smul_univ (PiTensorProduct.tprod ℂ)
       (fun a => ((χ a ⟨(n : ∀ a, Γ a) a, n.2 a (Set.mem_univ a)⟩ : ℂˣ) : ℂ)) x).symm
+    simp only [RingHom.id_apply] at e3
     rw [map_smul, smul_comm, ← smul_sub]
     apply Submodule.smul_mem
     rw [e1, e2, e3]
@@ -206,7 +207,7 @@ theorem pureSpan_le_twKer (π : ∀ a, Representation ℂ (Γ a) (X a)) (H : ∀
       have hw : PiTensorProduct.tprod ℂ (Function.update x a ((π a) (g : Γ a) v - ((χ a g : ℂˣ) : ℂ) • v)) =
           (piTensor π) (n : ∀ a, Γ a) (PiTensorProduct.tprod ℂ (Function.update x a v)) -
             ((piChar χ n : ℂˣ) : ℂ) • PiTensorProduct.tprod ℂ (Function.update x a v) := by
-        rw [MultilinearMap.map_update_sub, MultilinearMap.map_update_smul, e1, e2]
+        rw [MultilinearMap.map_update_sub, MultilinearMap.map_update_smul, RingHom.id_apply, e1, e2]
       rw [hw]
       exact Submodule.subset_span ⟨n, _, rfl⟩
     | zero =>

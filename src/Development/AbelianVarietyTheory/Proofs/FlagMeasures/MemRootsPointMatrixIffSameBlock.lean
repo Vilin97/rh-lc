@@ -59,8 +59,12 @@ theorem bwd {K : Type*} [Zero K] : ∀ (bs : List (K × ℕ)), (∀ p ∈ bs, p.
     · have hb : ¬ b < s := by omega
       have hbl' : blkOf bs (a - s) = blkOf bs (b - s) := by
         simpa [blkOf, ha, hb] using hbl
-      obtain ⟨i, j, hji, his, hi, hj⟩ := bwd bs (fun p hp => hnz p (by simp [hp])) (a - s) (b - s) (by omega)
-        (by omega) hbl'
+      obtain ⟨i, j, hji, his, hi, hj⟩ :
+          ∃ i j, j < i ∧ i < (bs.map Prod.snd).sum ∧
+            Formalism.MainNotions.S.ptEntry bs i (a - s) ≠ 0 ∧
+            Formalism.MainNotions.S.ptEntry bs j (b - s) ≠ 0 :=
+        bwd bs (fun p hp => hnz p (List.mem_cons_of_mem _ hp)) (a - s) (b - s)
+          (by omega) (by omega) hbl'
       refine ⟨i + s, j + s, by omega, by omega, ?_, ?_⟩
       · rw [Formalism.MainNotions.S.ptEntry, if_neg (by omega), if_pos ⟨by omega, by omega⟩]; simpa using hi
       · rw [Formalism.MainNotions.S.ptEntry, if_neg (by omega), if_pos ⟨by omega, by omega⟩]; simpa using hj

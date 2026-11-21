@@ -52,7 +52,15 @@ theorem isBiTheta_act_right : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (A S
     Unit 0 (fun _ => 0) (fun _ => 0) measurable_const (integrable_zero _ _ _) (negGA A' h, g)).1
   refine isBiTheta_of_join d ?_
   convert hG using 1
-  exact (conjSource_conjAdjoint_apply omb g h (C (d.resS S x).1) (d.resS S x).2).symm
+  funext x
+  have hs : d.symm.resS S x = ((d.resS S x).2, (d.resS S x).1) := by
+    apply (d.symm.resS S).symm.injective
+    calc
+      _ = x := (d.symm.resS S).symm_apply_apply x
+      _ = (d.resS S).symm (d.resS S x) := ((d.resS S).symm_apply_apply x).symm
+      _ = _ := (resS_symm_swap d S _ _).symm
+  simpa [join, hs, resS_symm_swap] using
+    (conjSource_conjAdjoint_apply omb g h (C (d.resS S x).1) (d.resS S x).2).symm
 
 end GlobalTheory.BiActRight
 

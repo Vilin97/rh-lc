@@ -35,7 +35,8 @@ def liftInf (z : mixedEmbedding.mixedSpace F) : AF F :=
   LinearMap.inl F (Ainf F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm z)
 
 theorem evI_liftInf (z : mixedEmbedding.mixedSpace F) : evI F (liftInf F z) = z := by
-  simp [evI, liftInf]
+  change (InfiniteAdeleRing.ringEquiv_mixedSpace F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm z) = z
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply z
 
 theorem mul_liftInf_eq_zero {a : AF F} (ha : evI F a = 0) (z : mixedEmbedding.mixedSpace F) :
     a * liftInf F z = 0 := by

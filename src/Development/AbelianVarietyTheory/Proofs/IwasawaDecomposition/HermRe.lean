@@ -19,7 +19,11 @@ variable {D : D7} (Z : New D)
 
 
 set_option maxHeartbeats 4000000 in
-def hermRe (H : Formalism.L2.Herm.ColsHermS D) : Formalism.L2.Herm.ColsHermS (reD D Z) := by kcopy H
+def hermRe (H : Formalism.L2.Herm.ColsHermS D) : Formalism.L2.Herm.ColsHermS (reD D Z) :=
+  { H with
+    base := { H.base with }
+    atT := fun u => { H.atT u with }
+    ad := { H.ad with } }
 
 end GlobalTheory.Mem.SRe.ColRe
 

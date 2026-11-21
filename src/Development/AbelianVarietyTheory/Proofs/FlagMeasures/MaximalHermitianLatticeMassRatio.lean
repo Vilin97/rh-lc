@@ -41,10 +41,10 @@ theorem localMassFactor_eq_of_mem_badPrimes (hK : IsCMUnram K) (hF : IsFixF K F)
   obtain ⟨hc, hq2, hq, -⟩ := (GlobalTheory.MaxLatStruct.main K V h hK hs hnd M hM).2.2.2 P hP
   have hPm : P.IsMaximal := hP.1
   set 𝔭 := P.comap (algebraMap (𝓞 F) (𝓞 K)) with h𝔭def
-  have h𝔭 : 𝔭.IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+  have h𝔭 : 𝔭.IsMaximal := Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := 𝓞 F) P
   obtain ⟨hJ1, hJ2⟩ := jordan_splitting_exists K F V hK hF h hs
   obtain ⟨b, a, hJ⟩ := hJ1 ⊤ M (fun x _ hx => hnd.1 x fun y => hx y trivial)
-    ⟨hM.1.1.fg, hM.1.1.span_eq_top⟩ hM.1.2 𝔭 h𝔭
+    ⟨hM.1.1.fg, Submodule.IsLattice.span_eq_top (self := hM.1.1)⟩ hM.1.2 𝔭 h𝔭
   obtain ⟨i, hi, hj⟩ := GlobalTheory.T.jordan_exponents_maximal_hermitian_lattice_bad_prime K F V hK hF h hs hd M hM P hP b a hJ
   have hv : vd h M 𝔭 = 1 := by
     rw [hJ2 M hM.1.1 𝔭 h𝔭 b a hJ, vJof, Finset.sum_eq_single i (fun j _ => hj j) (by simp)]
@@ -92,7 +92,7 @@ theorem lamG_eq_lamMax (hK : IsCMUnram K) (hF : IsFixF K F) {h : V →ₗ⋆[K] 
   let g : {P // P ∈ hfin.toFinset} → {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} := fun P =>
     ⟨P.1.comap (algebraMap (𝓞 F) (𝓞 K)), by
       have : P.1.IsMaximal := (hfin.mem_toFinset.1 P.2).1
-      exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P.1⟩
+      exact Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := 𝓞 F) P.1⟩
   have hg : Function.Injective g := by
     intro P Q hPQ
     have hP := hfin.mem_toFinset.1 P.2

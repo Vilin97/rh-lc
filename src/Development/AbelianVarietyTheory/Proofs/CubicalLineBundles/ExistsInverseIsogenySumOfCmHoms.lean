@@ -21,14 +21,13 @@ namespace GlobalTheory.LamF.IsogSum
 variable {S : Scheme.{0}}
 
 theorem isMonHom_of_points {G H : Over S} [GrpObj G] [GrpObj H] (f : G ⟶ H)
-    (h : ∀ (T : Over S) (a b : T ⟶ G), (a * b) ≫ f = a ≫ f * b ≫ f) : IsMonHom f where
-  one_hom := by
-    have h1 := h (𝟙_ _) 1 1
+    (h : ∀ (T : Over S) (a b : T ⟶ G), (a * b) ≫ f = a ≫ f * b ≫ f) : IsMonHom f := by
+  refine ⟨?_, ?_⟩
+  · have h1 := h (𝟙_ _) 1 1
     rw [_root_.mul_one] at h1
     have h2 : (1 : 𝟙_ _ ⟶ G) ≫ f = 1 := by simpa using h1
     simpa [Hom.one_def] using h2
-  mul_hom := by
-    simpa only [Hom.mul_def, lift_fst_snd, Category.id_comp, lift_fst_comp_snd_comp]
+  · simpa only [Hom.mul_def, lift_fst_snd, Category.id_comp, lift_fst_comp_snd_comp]
       using h (G ⊗ G) (fst G G) (snd G G)
 
 theorem comp_prod {T G H : Over S} [GrpObj H] [IsCommMonObj H] {n : ℕ} (x : T ⟶ G)

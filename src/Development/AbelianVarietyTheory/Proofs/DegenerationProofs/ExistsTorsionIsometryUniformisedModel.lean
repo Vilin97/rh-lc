@@ -65,6 +65,7 @@ theorem exists_tateIsoQ_of_model : GlobalTheory.UT.LL → BrGtSt → ∀ (E : Ty
             onto := fun n hn p => ?_, tower := fun n m hn hm a => ?_, isom := fun n hn a b => ?_ },
     rfl, fun k hk x p' z h hz => ?_⟩
   · refine (TorusExt.qkAdd_iff hB _ _ _).2 ((f₃ n hn _ _).1 ?_)
+    rw [f₄ n hn _ _ _ (TorusExt.qkAdd_qkAdd hB _ _), evp, evp, evp, o.I.add, map_mul]
   · obtain ⟨p, hp⟩ := qkAct_exists hL.1.globalFns hB M.P.oD c (ev n a)
     have h₁ := f₅ n hn _ _ _ hp
     obtain ⟨q, q₁, q₂, q₃⟩ := hp

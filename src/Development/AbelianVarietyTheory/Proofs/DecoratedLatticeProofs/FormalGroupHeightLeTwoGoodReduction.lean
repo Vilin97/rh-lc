@@ -235,7 +235,7 @@ theorem height_le_two (L : PeriodPair) (l : ℕ) [Fact l.Prime] (hl : 5 ≤ l) (
   obtain ⟨hb2, -, -, hD⟩ := Formalism.L2.Th1.A.shortInv ℂ_[l] (ι L.g₂) (ι L.g₃)
   have hInt : Formalism.L2.Th1.E.IntCurve (Formalism.L2.Th1.E.curveL l L ι) :=
     ⟨hz, hz, hz, ha4, ha6, by rw [← hΔ, ← hD]; rfl⟩
-  obtain ⟨-, hx, -, -, -, -, -, hzs, -⟩ := Formalism.L2.Th1.A.coeffMem ℂ_[l] W (Formalism.G.unitBall ℂ_[l]) hz hz hz ha4 ha6
+  obtain ⟨-, hx, -, -, -, -, -, hzs, -⟩ := Formalism.L2.Th1.A.coeffMem.{0} ℂ_[l] W (Formalism.G.unitBall ℂ_[l]) hz hz hz ha4 ha6
 
   have key : ∀ s P : ℂ, s ∉ L.lattice → 2 * s ∈ L.lattice → (l : ℂ) * P ∈ L.lattice →
       s + P ∉ L.lattice ∧ ‖ι (L.weierstrassP (s + P))‖ ≤ 1 := by

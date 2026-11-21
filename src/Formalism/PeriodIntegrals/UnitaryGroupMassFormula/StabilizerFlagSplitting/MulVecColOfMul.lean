@@ -127,8 +127,7 @@ lemma conj_pow {N : ℕ} (A G Gi : Matrix (Fin N) (Fin N) ℂ) (h1 : Gi * G = 1)
       Gi * A ^ p * G * (Gi * A * G) = Gi * A ^ p * (G * Gi) * A * G := by
         simp only [Matrix.mul_assoc]
       _ = Gi * (A ^ p * A) * G := by
-        rw [h2, Matrix.mul_one]
-        simp only [Matrix.mul_assoc]
+        simp only [h2, Matrix.mul_one, ← Matrix.mul_assoc]
 
 lemma fvec_lt (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (a : Fin r) :
     fvec k r z ⟨a.val, by omega⟩ = bvec (eI k r a) := by

@@ -12,7 +12,7 @@ public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.GeneratorCommutatorQua
 
 @[expose] public section
 
-open NumberField Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.UAut GlobalTheory.ULie
+open NumberField Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.UAut
 open scoped TensorProduct
 
 namespace UpperTheory.QuantumDeterminantBlockAnnihilators
@@ -38,6 +38,8 @@ private theorem map_qdet {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 3
+  funext k
+  simp only [Function.comp_apply, Tm, map_add]
   split_ifs <;> simp
 
 private theorem qdet_self_comm {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ}
@@ -142,8 +144,8 @@ private theorem two_factor {V : Type} [AddCommGroup V] [Module ℂ V] {r m : ℕ
     (∀ u : ℂ, ∃ P : ℂ[X], P ≠ 0 ∧ aeval (qdet A u) P v ∈ M) ∧
       (∀ u : ℂ, ∃ P : ℂ[X], P ≠ 0 ∧ aeval (qdet B u) P v ∈ M) := by
   let s : Set (Module.End ℂ V) := Set.range (qdet A) ∪ Set.range (qdet B)
-  have hs : ∀ x ∈ s, ∀ y ∈ s, x * y = y * x := by
-    rintro _ (⟨u, rfl⟩ | ⟨u, rfl⟩) _ (⟨w, rfl⟩ | ⟨w, rfl⟩)
+  have hs : s.Pairwise Commute := by
+    rintro _ (⟨u, rfl⟩ | ⟨u, rfl⟩) _ (⟨w, rfl⟩ | ⟨w, rfl⟩) _
     · exact qdet_self_comm A hA u w
     · exact (hAB w u).symm
     · exact hAB u w

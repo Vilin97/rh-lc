@@ -121,7 +121,8 @@ theorem mixS_tsum_le : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar 
       ((C₁ : ℝ≥0∞) * supSob ψ θ k f * (n : ℝ≥0∞) ^ k) * ENNReal.ofReal (maj θ K k (n • x)) := by
     intro x
     by_cases h0 : (_root_.I195MixedCoordinates_73914be5564edd02d7192cbf.source d) T ψ v.μ v.𝓕 f x w = 0
-    · simp [h0]
+    · change d.mixS T ψ v.μ v.𝓕 f x w = 0 at h0
+      simp [h0]
     have hbox : InBox K (n • x) := by
       apply hK
       intro a ha haU

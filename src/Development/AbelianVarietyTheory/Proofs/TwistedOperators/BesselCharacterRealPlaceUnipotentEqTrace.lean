@@ -187,10 +187,10 @@ theorem besChar_atTau_coords : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀
     rw [h0]
     funext i
     exact map_zero _
-  have h1 : Formalism.L2.Theta.mt B (atTau θ B τ u) *ₘ d.e.map (incA D) = d.e.map (incA D) +
-      d.e.map (incA D) *ₘ (L.map (incA D) *ₘ (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1) *ₘ d.e.map (incA D)) := by
-    have hK : (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1) *ₘ d.e.map (incA D) - d.e.map (incA D) *ₘ
-        (L.map (incA D) *ₘ (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1) *ₘ d.e.map (incA D)) = 0 := by
+  have h1 : Formalism.L2.Theta.mt B (atTau θ B τ u) * d.e.map (incA D) = d.e.map (incA D) +
+      d.e.map (incA D) * (L.map (incA D) * (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1) * d.e.map (incA D)) := by
+    have hK : (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1) * d.e.map (incA D) - d.e.map (incA D) *
+        (L.map (incA D) * (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1) * d.e.map (incA D)) = 0 := by
       refine mat_eq_zero θ hθ _ ?_ ?_
       · rw [cols_resid_map, hfin]; simp
       · intro ρ
@@ -204,9 +204,9 @@ theorem besChar_atTau_coords : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀
         · rw [hgρ ρ hρ]; simp
     exact cols_of_resid hK
   have h2 : Formalism.L2.Theta.mt B (atTau θ B τ u) *ᵥ ratV d.z = ratV d.z +
-      d.e.map (incA D) *ᵥ ((L.map (incA D) *ₘ (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1)) *ᵥ ratV d.z) := by
+      d.e.map (incA D) *ᵥ ((L.map (incA D) * (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1)) *ᵥ ratV d.z) := by
     have hK : (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1) *ᵥ ratV d.z - d.e.map (incA D) *ᵥ
-        ((L.map (incA D) *ₘ (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1)) *ᵥ ratV d.z) = 0 := by
+        ((L.map (incA D) * (Formalism.L2.Theta.mt B (atTau θ B τ u) - 1)) *ᵥ ratV d.z) = 0 := by
       refine vec_eq_zero θ hθ _ ?_ ?_
       · refine (vec_resid_map (finPart D) _ _ _ _).trans ?_
         rw [hfin]

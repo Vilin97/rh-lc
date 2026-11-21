@@ -42,7 +42,7 @@ theorem qmp_left_uni : ∀ (D : D7) (ρ n : ℕ) (μ : Measure (Mx D ρ n)), μ.
         rw [← Matrix.mul_assoc, Units.mul_inv, Matrix.one_mul]
       map_add' := fun a b => Matrix.mul_add _ _ _ }
   haveI : (μ.map T).IsAddHaarMeasure := AddEquiv.isAddHaarMeasure_map μ T hc hc'
-  refine ⟨hc.measurable, ?_⟩
+  refine ⟨hc.measurable.aemeasurable, ?_⟩
   have e := Measure.isAddLeftInvariant_eq_smul (μ.map T) μ
   show μ.map T ≪ μ
   rw [e]

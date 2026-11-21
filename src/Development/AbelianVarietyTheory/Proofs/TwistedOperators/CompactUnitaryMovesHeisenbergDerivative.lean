@@ -88,7 +88,8 @@ theorem GlobalTheory.KHeisComm.actsD_heisLine_mat_mul : ∀ (F E : Type) [Field 
       (pureA F (⇑(D u f)) (GlobalTheory.ArchIsom.g0 F (Fin n × Fin d))) = h z := by
     rw [LinearMap.comp_apply, LinearMap.proj_apply, hf₁, ← GlobalTheory.ArchIsom.tensor_at_standard_point, hA₁ _ (GlobalTheory.ArchIsom.restriction_at_standard_point _ f₁),
       tens_split]
-  rw [hfun, hval] at b1
+  dsimp only at b1
+  rw (config := { transparency := .all }) [hfun, hval] at b1
   have b2 := hD₁ fk _ (GlobalTheory.ArchIsom.restriction_at_standard_point _ fk) x
   rw [tens_split] at b2
   exact b1.unique b2

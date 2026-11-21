@@ -32,7 +32,7 @@ def incI (x : mixedEmbedding.mixedSpace F) : AF F := ⟨(InfiniteAdeleRing.ringE
 
 theorem evI_incI (x : mixedEmbedding.mixedSpace F) : evI F (incI x) = x := by
   show InfiniteAdeleRing.ringEquiv_mixedSpace F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm x) = x
-  simp
+  exact RingEquiv.apply_symm_apply _ _
 
 theorem evI_add (a b : AF F) : evI F (a + b) = evI F a + evI F b :=
   map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1

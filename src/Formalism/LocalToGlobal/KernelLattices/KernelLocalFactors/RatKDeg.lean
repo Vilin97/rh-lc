@@ -127,12 +127,12 @@ theorem thDistC_ok_deg (hD : 0 < D) (rho : UF X.E a →* Module.End X.K (DIV.VV 
     (sS sT : SB → X.E → X.K) (hfin : LatFin (X := X) a b Sall) (hadd : A.JetAddDeg a b Sall D (opDeg lam n))
     (heq : ThEquivP (thDistC A Sall SB D sel mU mI lam lam' n) Sall D rho rho')
     (ha : MuDetLaw a mI sS) (hb : MuDetLaw b mI sS) (hi : UnitInv sS sT) :
-    ThDist.Ok (thDistC A Sall SB D sel mU mI lam lam' n) Sall D rho rho' sS sT where
-  cong := fun N fr N' fr' c x x' _ _ h => thDistC_cong A Sall SB sel mU mI lam lam' n D N fr N' fr' c x x' h
-  add := fun N fr N' fr' c c' x hN hN' hc hc' hd hx =>
-    thDistC_add_deg A Sall SB D sel mU mI lam lam' n hfin hadd N fr N' fr' c c' x hc hc' ⟨hN, hN', Nat.mul_pos hc hc', hd, hx⟩
-  equiv := thDistC_equiv A Sall SB sel mU mI lam lam' n D hD rho rho' heq
-  det := fun N fr N' fr' c x κ κ' _ _ => thDistC_det A Sall SB sel mU mI lam lam' n D sS sT ha hb hi N fr N' fr' c x κ κ'
+    ThDist.Ok (thDistC A Sall SB D sel mU mI lam lam' n) Sall D rho rho' sS sT :=
+  { cong := fun N fr N' fr' c x x' _ _ h => thDistC_cong A Sall SB sel mU mI lam lam' n D N fr N' fr' c x x' h
+    add := fun N fr N' fr' c c' x hN hN' hc hc' hd hx =>
+      thDistC_add_deg A Sall SB D sel mU mI lam lam' n hfin hadd N fr N' fr' c c' x hc hc' ⟨hN, hN', Nat.mul_pos hc hc', hd, hx⟩
+    equiv := thDistC_equiv A Sall SB sel mU mI lam lam' n D hD rho rho' heq
+    det := fun N fr N' fr' c x κ κ' _ _ => thDistC_det A Sall SB sel mU mI lam lam' n D sS sT ha hb hi N fr N' fr' c x κ κ' }
 
 end Props
 
@@ -163,9 +163,9 @@ theorem stepC_ok_deg (i : ℕ) (hi : i < R.m) {b : ℕ} (lam' : X.Tau → DomWei
     (muDetLaw_chain Ch sel mu cst i _) (muDetLaw_chain Ch sel mu cst i _) (unitInv_rho Ch sel mu i)
 
 theorem chTh_ok_ambD (hm : m2 + 1 < R.m) (hT : 0 < Pr.T u) (hq : MuqTie Ch sel mu cst) (h : ThHypD W Ch sel mu cst A u m2) :
-    ChTh.Ok (Ch := Ch) cst (chTh W Ch sel mu cst A u m2) where
-  th i hi := stepC_ok_deg W Ch sel mu cst A u i (by omega) _ hT _ _ hq (h.1 i hi) (h.2.2.1 i hi)
-  top := stepC_ok_deg W Ch sel mu cst A u (m2 + 1) hm _ hT _ _ hq h.2.1 h.2.2.2
+    ChTh.Ok (Ch := Ch) cst (chTh W Ch sel mu cst A u m2) :=
+  { th i hi := stepC_ok_deg W Ch sel mu cst A u i (by omega) _ hT _ _ hq (h.1 i hi) (h.2.2.1 i hi)
+    top := stepC_ok_deg W Ch sel mu cst A u (m2 + 1) hm _ hT _ _ hq h.2.1 h.2.2.2 }
 
 end Chain
 

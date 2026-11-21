@@ -159,9 +159,9 @@ theorem comb_aconv_cons (c : WO S T →₀ ℂ) (l : List (WO S T →₀ ℂ))
   classical
   have e : aconv (c :: l) = ∑ x ∈ c.support, ∑ y ∈ (aconv l).support, Finsupp.single (x + y) (c x * aconv l y) := rfl
   rw [e, GlobalTheory.HeisComb.comb_comb, GlobalTheory.HeisComb.comb_eq_sum]
-  rw [← Finsupp.sum_finset_sum_index (fun u => zero_smul ℂ (heisO ψ S T u f)) (fun u a b => add_smul a b (heisO ψ S T u f))]
+  rw [← Finsupp.sum_finsetSum_index (fun u => zero_smul ℂ (heisO ψ S T u f)) (fun u a b => add_smul a b (heisO ψ S T u f))]
   refine Finset.sum_congr rfl fun x hx => ?_
-  rw [← Finsupp.sum_finset_sum_index (fun u => zero_smul ℂ (heisO ψ S T u f)) (fun u a b => add_smul a b (heisO ψ S T u f))]
+  rw [← Finsupp.sum_finsetSum_index (fun u => zero_smul ℂ (heisO ψ S T u f)) (fun u a b => add_smul a b (heisO ψ S T u f))]
   refine Finset.sum_congr rfl fun y hy => ?_
   have h0 : symplOH S T x y = 0 := by
     unfold symplOH

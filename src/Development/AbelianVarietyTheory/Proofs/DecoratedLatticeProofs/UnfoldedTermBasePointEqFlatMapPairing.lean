@@ -36,7 +36,7 @@ theorem continuous_psiUni {ψ : AddChar (AF D.host.F) ℂ} (hψ : Continuous ψ)
   have hc : Continuous fun u : UX D ρ => (u.1.1 : Mx D ρ ρ) := Units.continuous_val.comp continuous_subtype_val
   have hu : Continuous fun u : UX D ρ => upSum (u.1.1 : Mx D ρ ρ) := by
     unfold upSum
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     split_ifs
     · exact (continuous_apply j).comp ((continuous_apply i).comp hc)
     · exact continuous_const
@@ -90,6 +90,8 @@ theorem fl_base_eq_tFlat : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (σ : �
           refine integral_congr_ae (Filter.Eventually.of_forall fun b => ?_)
           simp only [flFun]
           rw [hlaw b u.1 u.2]
+          simp only [I195MixedCoordinates_f1b992d3c44b213cc9f27f15.source, HypDec.mixS,
+            HypDec.extX, HypDec.extY, HypDec.ext0, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
           ring
       _ = _ := by
           rw [integral_const_mul]
@@ -167,8 +169,10 @@ theorem fl_base_eq_tFlat : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (σ : �
         simp only [flFun]
         rw [enorm_mul]
         gcongr
-        rw [hlaw b u.1 u.2, ← ofReal_norm_eq_enorm, norm_mul, norm_star, norm_star, hnorm u, one_mul]
-        exact ENNReal.ofReal_le_ofReal (hMb' _)
+        · rw [hlaw b u.1 u.2, ← ofReal_norm_eq_enorm, norm_mul, norm_star, norm_star, hnorm u, one_mul]
+          exact ENNReal.ofReal_le_ofReal (hMb' _)
+        · simp only [I195MixedCoordinates_f1b992d3c44b213cc9f27f15.source, HypDec.mixS,
+            HypDec.extX, HypDec.extY, HypDec.ext0, AddMonoidHom.coe_mk, ZeroHom.coe_mk, le_refl]
     _ = _ := (lintegral_congr fun u => lintegral_const_mul' _ _ ENNReal.ofReal_ne_top).trans
         (lintegral_const_mul' _ _ ENNReal.ofReal_ne_top)
 

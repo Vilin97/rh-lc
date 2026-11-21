@@ -181,7 +181,7 @@ theorem nontrivial_dual_tensor {ι : Type} [Fintype ι] {H : ι → Type} [∀ i
     simp only [not_exists, not_not] at h
     exact hv i ((Module.forall_dual_apply_eq_zero_iff ℂ (v i)).mp h)
   choose f hf using hf
-  let m : MultilinearMap ℂ H ℂ := (MultilinearMap.mkPiAlgebra ℂ ι ℂ).compLinearMap f
+  let m : (∀ i, H i) →ₘₗ[ℂ] ℂ := (MultilinearMap.mkPiAlgebra ℂ ι ℂ).compLinearMap f
   let φ : Module.Dual ℂ (⨂[ℂ] i, H i) := PiTensorProduct.lift m
   refine ⟨⟨φ, 0, fun h => ?_⟩⟩
   have hz := LinearMap.congr_fun h (PiTensorProduct.tprod ℂ v)

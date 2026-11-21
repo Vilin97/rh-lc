@@ -128,13 +128,43 @@ theorem amb_eq (B : GlobalTheory.Mem.Base) (J : AmbIn B.host) (χ : Submodule (�
 theorem thCEq_of_ind {X : Fields} (A : Amb X) (a b : ℕ) (Sa : Finset (HeightOneSpectrum (𝓞 X.E))) (hL : A.LaHyp a b Sa) (h0 : A.AA ≠ ⊥)
     (hT : ∀ D, 0 < D → A.ThIndEq a b Sa D) : A.ThCEq a b Sa := by
   intro γ γ' N N' cA cB Ξ hN hN' hA hB hΞ hS z
+  open Formalism.HermitianLatticesTheory in
+  have full_of_sd : ∀ {n : ℕ} {L : Submodule (𝓞 X.E) (Sp X.E n)}, IsSdLat L → Submodule.IsFullLattice X.E L := by
+    intro n L hL
+    let := hL.1
+    refine { span_eq_top := ?_ }
+    let W := Submodule.span X.E (L : Set (Sp X.E n))
+    change W = ⊤
+    by_contra hW
+    let e : Sp X.E n ≃ₗ⋆[X.E] Sp X.E n := starLinearEquiv X.E
+    let g : Sp X.E n →ₗ[X.E] Module.Dual X.E W :=
+      (LinearMap.domRestrict' W).comp ((hStd X.E n).comp e.toLinearMap)
+    have hdim : Module.finrank X.E (Module.Dual X.E W) < Module.finrank X.E (Sp X.E n) := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt hW
+    obtain ⟨x, hx, hx₀⟩ :=
+      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    have hsmul (a : X.E) : a • e x ∈ L := by
+      rw [← hL.2, dualBasic_mem_dual]
+      intro y hy
+      apply hStd_mem_one_symm
+      have hxy : hStd X.E n (e x) y = 0 :=
+        congrArg (fun f : Module.Dual X.E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+      simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+    let i : X.E →ₗ[𝓞 X.E] L :=
+      ((LinearMap.toSpanSingleton X.E _ (e x)).restrictScalars (𝓞 X.E)).codRestrict L hsmul
+    let : Module.Finite (𝓞 X.E) L := Module.Finite.iff_fg.mpr hL.1.fg
+    let : Module.Finite (𝓞 X.E) X.E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective X.E (fun hz => hx₀ (e.map_eq_zero_iff.mp hz)) (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField X.E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 X.E) X.E) (Field.toIsField X.E))
   have key : ∀ (M : Submodule (𝓞 X.E) (Sp X.E a)) (M' : Submodule (𝓞 X.E) (Sp X.E b)) (Φ : HomE X.E a b → ℂ), IsSdLat M → IsSdLat M' →
       (∀ x, Φ x ≠ 0 → x ∈ divLat cA (homAt Sa M M')) → (∀ x y, y ∈ mulLat cB (homAt Sa M M') → Φ (x + y) = Φ x) → ∀ w,
       thC (X.embC A.σ₀) A.δ A.d A.sc A.AA Sa M M' (cA * cB) Φ (A.e a b M M') w =
         latSum (divLat cA (homAt Sa M M')) (mulLat cB (homAt Sa M M')) fun x => Φ x * A.thInd Sa M M' cB x w :=
     fun M M' Φ hM hM' h1 h2 w => (GlobalTheory.latSum_thInd_eq_thC X A a b Sa M M' cA cB Φ (indTieD_of_la A a b Sa _ (Nat.mul_pos hA hB) hL)
-      hM hM' hA hB (GlobalTheory.ThetaMove.VolumePos.volC_pos X.E a b A.AA Sa M M' hM.1.fg hM'.1.fg hM.1.span_eq_top hM'.1.span_eq_top
-        hL.2.2.2.2.1 h0) (GlobalTheory.finite_divLat_quot_mulLat_homAt X.E a b Sa M M' cA cB hM.1 hM'.1 hA hB) h1 h2 w).symm
+      hM hM' hA hB (GlobalTheory.ThetaMove.VolumePos.volC_pos X.E a b A.AA Sa M M' hM.1.fg hM'.1.fg (full_of_sd hM).span_eq_top (full_of_sd hM').span_eq_top
+        hL.2.2.2.2.1 h0) (GlobalTheory.finite_divLat_quot_mulLat_homAt X.E a b Sa M M' cA cB (full_of_sd hM) hM'.1 hA hB) h1 h2 w).symm
   have hmul : mulLat cB (homAt Sa (Formalism.HermitianLatticesTheory.gmap γ.1 N) (Formalism.HermitianLatticesTheory.gmap γ'.1 N')) =
       (mulLat cB (homAt Sa N N')).map (conjE γ.1 γ'.1 : HomE X.E a b →ₗ[𝓞 X.E] HomE X.E a b) := by rw [homAt_gmap, mulLat_map]
   have hdiv : divLat cA (homAt Sa (Formalism.HermitianLatticesTheory.gmap γ.1 N) (Formalism.HermitianLatticesTheory.gmap γ'.1 N')) =

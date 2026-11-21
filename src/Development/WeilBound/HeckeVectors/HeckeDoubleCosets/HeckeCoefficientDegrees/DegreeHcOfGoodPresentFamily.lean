@@ -49,7 +49,25 @@ theorem fdeg_gap (n : ℕ) (ε : Fin n → Bool) : ∃ c : ℝ, 0 < c ∧
   refine ⟨c, hc, fun lam h H _ _ _ σ v hl hσ hgap hh hp hq hv => ?_⟩
   have hn : 1 ≤ n := hp.trans ((Finset.card_le_univ _).trans_eq (Fintype.card_fin n))
   have hn3 : (1 : ℝ) ≤ (n : ℝ) ^ 3 := one_le_pow₀ (by exact_mod_cast hn)
-  have ht := thrStar_le hn ε
+  have ht : thrStar ε ≤ 32 * (n : ℝ) ^ 3 := by
+    have hp_le : pOf ε ≤ n := (Finset.card_le_univ _).trans_eq (Fintype.card_fin n)
+    have hq_le : qOf ε ≤ n := (Finset.card_le_univ _).trans_eq (Fintype.card_fin n)
+    have hq0_le : S7.q0 ε ≤ n := (min_le_right _ _).trans hq_le
+    have hp_real : (pOf ε : ℝ) ≤ n := by exact_mod_cast hp_le
+    have hq_real : (qOf ε : ℝ) ≤ n := by exact_mod_cast hq_le
+    have hq0_real : (S7.q0 ε : ℝ) ≤ n := by exact_mod_cast hq0_le
+    have hn_real : (1 : ℝ) ≤ n := by exact_mod_cast hn
+    have hn_le_cube : (n : ℝ) ≤ (n : ℝ) ^ 3 := le_self_pow₀ hn_real (by norm_num)
+    have hsq_le_cube : (n : ℝ) ^ 2 ≤ (n : ℝ) ^ 3 :=
+      pow_le_pow_right₀ hn_real (by norm_num)
+    unfold thrStar
+    apply max_le
+    · have hprod : (n : ℝ) * pOf ε * qOf ε ≤ n * n * n := by gcongr
+      nlinarith
+    · have hsqrt : Real.sqrt (2 * (S7.q0 ε : ℝ)) ≤ 2 * n :=
+        Real.sqrt_le_iff.2 ⟨by positivity, by nlinarith⟩
+      have hprod : 16 * (n : ℝ) * S7.q0 ε ≤ 16 * n * n := by gcongr
+      nlinarith
   refine hH lam H σ v hl hσ h hgap (by linarith) hp hq (fun μ hμ hg => ?_) hv
   have hq0 : 1 ≤ S7.q0 ε := by unfold S7.q0; omega
   have h8 : 8 * (n : ℝ) * S7.q0 ε < h := by
@@ -65,7 +83,7 @@ theorem fdeg_gap (n : ℕ) (ε : Fin n → Bool) : ∃ c : ℝ, 0 < c ∧
 end UJ
 
 
-open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Formalism.FourierDecayAlt.P.CutBP Formalism.FourierDecayAlt.P.CutBP.Jmu
+open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Formalism.FourierDecayAlt.P.CutBP
 
 variable {P : M.Par} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
   [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp]

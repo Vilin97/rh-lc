@@ -52,7 +52,9 @@ theorem squareNuHeckeCharacter_not_unramified_at_chosenPlace {μ₀ : T} (hL : L
   apply hchi
   intro x hx
   have h := hnu x hx
-  simp only [SqNum.nuH, div_eq_mul_inv, HChar.loc_mul, HChar.loc_inv, hmu j x hx, hxi x hx, one_mul] at h
+  change (L.C.mu0 j * L.xiH t / G.ch.chiH (D.R.m - i)).loc (G.pl.w G.pl.v0) x = 1 at h
+  change (L.C.mu0 j).loc (G.pl.w G.pl.v0) x * (L.xiH t).loc (G.pl.w G.pl.v0) x * ((G.ch.chiH (D.R.m - i)).loc (G.pl.w G.pl.v0) x)⁻¹ = 1 at h
+  rw [hmu j x hx, hxi x hx, one_mul, one_mul] at h
   exact inv_eq_one.mp h
 
 end GlobalTheory.RowTest

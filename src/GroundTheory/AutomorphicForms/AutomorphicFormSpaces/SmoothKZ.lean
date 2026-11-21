@@ -198,18 +198,14 @@ theorem IsSmoothKZ.isKFinite_uAction {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ 
   exact Submodule.finiteDimensional_of_le hle
 
 theorem IsSmoothKZ.uAction {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : IsSmoothKZ φ) (u : UEnv K n) :
-    IsSmoothKZ (AutomorphicForm.uAction u ⟨φ, hφ.isSmooth.1⟩ : AdelicGLn.AdelicGL K n → ℂ) where
-  isLeftInvariant := IsLeftInvariant.uAction hφ.isLeftInvariant u
-  isSmooth := hφ.isSmooth_uAction u
-  isKFinite := hφ.isKFinite_uAction u
-  isZFinite := hφ.isZFinite.uAction u
+    IsSmoothKZ (AutomorphicForm.uAction u ⟨φ, hφ.isSmooth.1⟩ : AdelicGLn.AdelicGL K n → ℂ) :=
+  ⟨IsLeftInvariant.uAction hφ.isLeftInvariant u, hφ.isSmooth_uAction u,
+    hφ.isKFinite_uAction u, hφ.isZFinite.uAction u⟩
 
 theorem IsSmoothKZ.rightTranslate_infEmb {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : IsSmoothKZ φ)
-    {a : archGroup K n} (ha : a ∈ archCompact K n) : IsSmoothKZ (rightTranslate (infEmb K n a) φ) where
-  isLeftInvariant := hφ.isLeftInvariant.translate _
-  isSmooth := hφ.isSmooth.rightTranslate_infEmb a
-  isKFinite := hφ.isKFinite.rightTranslate_of_mem_maxCompact ha
-  isZFinite := hφ.isZFinite.map_rtInf a
+    {a : archGroup K n} (ha : a ∈ archCompact K n) : IsSmoothKZ (rightTranslate (infEmb K n a) φ) :=
+  ⟨hφ.isLeftInvariant.translate _, hφ.isSmooth.rightTranslate_infEmb a,
+    hφ.isKFinite.rightTranslate_of_mem_maxCompact ha, hφ.isZFinite.map_rtInf a⟩
 
 end AutomorphicForm
 

@@ -138,10 +138,17 @@ theorem weil_comm_sliceSum_target : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ
   have P4 := Psmul (-Complex.I) _ (Ppos _ (mim.neg.max measurable_const) (fun w => le_max_right _ _) him.neg_part)
   have Pa' := Padd _ _ (Padd _ _ (Padd _ _ P1 P2) P3) P4
   have Pa'' : P a' := by
-    convert Pa' using 1
-    first
-      | exact (decomp_re_im (a' w)).symm
-      | exact decomp_re_im (a' w)
+    have heq : (fun w => (((max (a' w).re 0 : ℝ) : ℂ) +
+        -1 * ((max (-(a' w).re) 0 : ℝ) : ℂ) +
+        Complex.I * ((max (a' w).im 0 : ℝ) : ℂ)) +
+        -Complex.I * ((max (-(a' w).im) 0 : ℝ) : ℂ)) = a' := by
+      funext w
+      exact decomp_re_im (a' w)
+    change P (fun w => (((max (a' w).re 0 : ℝ) : ℂ) +
+        -1 * ((max (-(a' w).re) 0 : ℝ) : ℂ) +
+        Complex.I * ((max (a' w).im 0 : ℝ) : ℂ)) +
+        -Complex.I * ((max (-(a' w).im) 0 : ℝ) : ℂ)) at Pa'
+    rwa [heq] at Pa'
   have e1 : (fun u => ∫ w, a w * Fs (k w) u ∂μ) = fun u => ∫ w, a' w * Fs (k w) u ∂μ := by
     funext u; exact integral_congr_ae (hae.mono fun w hw => by simp only [hw])
   have e2 : ∫ w, a w * om p (Fs (k w)) u₀ ∂μ = ∫ w, a' w * om p (Fs (k w)) u₀ ∂μ :=

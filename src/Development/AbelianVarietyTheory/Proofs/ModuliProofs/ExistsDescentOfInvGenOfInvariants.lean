@@ -263,7 +263,7 @@ theorem exists_descent_of_tame :
   intro Γ _ _ Y Y' τ φ L hφ htame hL u hu hc hfix
   obtain ⟨_, _, horb, -, -⟩ := quotient_isIntegral_surjective_orbits Γ Y Y' τ φ hφ
   have : Finite Γᵐᵒᵖ := Finite.of_equiv Γ MulOpposite.opEquiv
-  refine exists_descent_of_tame_family (C := Γᵐᵒᵖ) (t := fun c => (τ c.unop).hom) hL
+  refine exists_descent_of_tame_family (C := Γᵐᵒᵖ) (t := fun c => (τ c.unop).asIso.hom) hL
     (fun c c' => ?_) (fun c => hφ.2.1 _)
     (fun V => ⟨(hφ.2.2 V).1, fun f hf => (hφ.2.2 V).2 f fun g => hf (MulOpposite.op g)⟩)
     (fun x x' e => ?_) (fun k _ _ r => ?_) (u := fun c => u c.unop) (fun c => hu _)

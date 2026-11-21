@@ -26,6 +26,3 @@ theorem GlobalTheory.FinPl.vertexGlued_vanish_lastLat : ∀ (D : D7) (k : Type) 
   have h₁ := (hO k p n (n' ⊕ Fin 1) ψ hψ B.V₀ J.W₀ α₀ β M₀ M₁ hM₀ hM₁ Ξ₁ hΞ₁).2.2 hG.unit _ _ hG.lat hβ
   have hO₂ := hO k p (n'' ⊕ Fin 1) n ψ hψ J.W₀ B'.V₀ β γ₀ M₁ M hM₁ hM Ξ₂ hΞ₂
   refine (hV n n' n'' σ B J B' s₁ s₂ l vL hs₁ hs₂ α α₀ β γ γ₀ hG.sum hγ P P Q).2 Λ M₀ M₁ M₁ M Ξ₁ Ξ₁ Ξ₂ Ξ₂ h₁ ?_ φ hφ
-  rcases hγ₀ with h | h
-  · exact Or.inl (hO₂.2.2 hG.unit _ _ hβ h)
-  · exact Or.inr (hO₂.2.2 hG.unit _ _ hβ h)

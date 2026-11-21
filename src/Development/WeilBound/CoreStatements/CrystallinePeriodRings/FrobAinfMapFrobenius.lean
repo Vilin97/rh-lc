@@ -41,7 +41,7 @@ theorem frob_qB_coe (z : ℤ_[l]) : qB l (z : ℚ_[l]) = Per6.cB l (algebraMap (
   rw [cD_apply, ACris.iota_padicInt, frob_oD_apply, AlgHom.commutes]
 
 theorem frob_phi_padicInt (z : ℤ_[l]) :
-    ACris.phi ℂ_[l] l (algebraMap (AInf ℂ_[l] l) (ACris.ACris ℂ_[l] l)
+    ACris.phi (K := ℂ_[l]) (p := l) (algebraMap (AInf ℂ_[l] l) (ACris.ACris ℂ_[l] l)
       (IsPerfectoidField.padicIntToWitt l z)) =
     algebraMap (AInf ℂ_[l] l) (ACris.ACris ℂ_[l] l) (IsPerfectoidField.padicIntToWitt l z) := by
   rw [ACris.phi_algebraMap, ACris.frobenius_padicIntToWitt]
@@ -51,7 +51,8 @@ theorem φB_qB (q : ℚ_[l]) : Per6.φB l (qB l q) = qB l q :=
     (congrArg (Per6.φB l) (frob_qB_coe z)).trans (((φB_cB _).trans
       (congrArg (Per6.cB l) (frob_phi_padicInt z))).trans (frob_qB_coe z).symm)) q
 
-theorem frob_phi_tA : ACris.phi ℂ_[l] l (Per6.tA l) = (l : ACris.ACris ℂ_[l] l) * Per6.tA l :=
+theorem frob_phi_tA :
+    ACris.phi (K := ℂ_[l]) (p := l) (Per6.tA l) = (l : ACris.ACris ℂ_[l] l) * Per6.tA l :=
   ACris.phi_periodT_eq_mul (untilt_epsilon (p := l))
 
 theorem φB_tB : Per6.φB l (tB l) = (l : Per6.Bcris l) * tB l :=
@@ -82,7 +83,8 @@ theorem frob_ainfMap_frobenius (a : Ainf l) :
 
 theorem frob_phi_ainfMap (a : Ainf l) :
     algebraMap (AInf ℂ_[l] l) (ACris.ACris ℂ_[l] l) (Per6.ainfMap l (WittVector.frobenius a)) =
-      ACris.phi ℂ_[l] l (algebraMap (AInf ℂ_[l] l) (ACris.ACris ℂ_[l] l) (Per6.ainfMap l a)) := by
+      ACris.phi (K := ℂ_[l]) (p := l)
+        (algebraMap (AInf ℂ_[l] l) (ACris.ACris ℂ_[l] l) (Per6.ainfMap l a)) := by
   rw [ACris.phi_algebraMap, frob_ainfMap_frobenius]
   rfl
 

@@ -12,6 +12,7 @@ theorem lintegral_enorm_sq_Lp {Q E : Type} [MeasurableSpace Q] [NormedAddCommGro
     (ν : Measure Q) (f : Lp E 2 ν) :
     ∫⁻ x, ‖f x‖ₑ ^ 2 ∂ν = ENNReal.ofReal (‖f‖ ^ 2) := by
   have h := eLpNorm_nnreal_pow_eq_lintegral (f := f) (μ := ν) (p := 2) (by norm_num)
+    (Lp.aestronglyMeasurable f)
   rw [ENNReal.ofReal_pow (norm_nonneg _), Lp.norm_def, ENNReal.ofReal_toReal (Lp.eLpNorm_ne_top f)]
   simp only [NNReal.coe_ofNat, ENNReal.coe_ofNat, ENNReal.rpow_ofNat] at h
   exact h.symm
@@ -94,8 +95,8 @@ theorem extend_ae_linear_of_local_sq : ∀ {X : Type} [MeasurableSpace X] (μ : 
   have hae : ∀ u ∈ D, AEStronglyMeasurable (F u) ν := fun u hu =>
     aestronglyMeasurable_sum_measure_iff.2 fun n => (hC n u hu).1.smul_measure _
   have hmem : ∀ u ∈ D, MemLp (F u) 2 ν := fun u hu =>
-    ⟨hae u hu, (eLpNorm_two_le_of_lintegral ν _ _ (by positivity) (hsq u hu)).trans_lt
-      ENNReal.ofReal_lt_top⟩
+    (eLpNorm_two_le_of_lintegral ν _ _ (by positivity) (hsq u hu)).trans_lt
+      ENNReal.ofReal_lt_top
   let L : D →ₗ[ℂ] Lp E 2 ν :=
     { toFun := fun u => (hmem u u.2).toLp (F u)
       map_add' := fun u v => by

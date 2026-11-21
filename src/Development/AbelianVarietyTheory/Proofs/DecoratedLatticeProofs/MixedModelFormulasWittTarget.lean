@@ -133,14 +133,20 @@ include hsw FS
 theorem read_source (g : GA D S) (y : Mx D S.rank ρ) :
     (_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.target d) S ψ μ 𝓕 (om (g, 1) f) y = om₀ (g, 1) ((_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.target d) S ψ μ 𝓕 f (mt S g⁻¹ ⬝ y)) := by
   apply cj_dagger_inj S T₀
-  have h1 := FS.target g (incA D D.host.xi0⁻¹ • y)
+  have h1 : (_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.source d) S ψ μ' 𝓕'
+      (conjAdjoint om (1, g) (cj (dagger T S) f)) (incA D D.host.xi0⁻¹ • y) =
+      conjAdjoint om₀ (1, g) ((_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.source d) S ψ μ' 𝓕'
+        (cj (dagger T S) f) (mt S g⁻¹ ⬝ (incA D D.host.xi0⁻¹ • y))) := FS.target g _
   rw [conjAdjoint_cj, hsw, Matrix.mul_smul, hsw, conjAdjoint_cj] at h1
   exact h1
 
 theorem read_core (h₀ : GA D T₀) (y : Mx D S.rank ρ) :
     (_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.target d) S ψ μ 𝓕 (om (1, d.emb0 h₀) f) y = om₀ (1, h₀) ((_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.target d) S ψ μ 𝓕 f y) := by
   apply cj_dagger_inj S T₀
-  have h1 := FS.core h₀ (incA D D.host.xi0⁻¹ • y)
+  have h1 : (_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.source d) S ψ μ' 𝓕'
+      (conjAdjoint om (d.emb0 h₀, 1) (cj (dagger T S) f)) (incA D D.host.xi0⁻¹ • y) =
+      conjAdjoint om₀ (h₀, 1) ((_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.source d) S ψ μ' 𝓕'
+        (cj (dagger T S) f) (incA D D.host.xi0⁻¹ • y)) := FS.core h₀ _
   rw [conjAdjoint_cj, hsw, hsw, conjAdjoint_cj] at h1
   exact h1
 
@@ -149,7 +155,11 @@ theorem read_levi (a : GL (Fin ρ) (AE D)) (y : Mx D S.rank ρ) :
       (((χS (Matrix.GeneralLinearGroup.det a) : Circle) : ℂ) * (halfMod S.rank a : ℂ)) •
         (_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.target d) S ψ μ 𝓕 f (y ⬝ a.1) := by
   apply cj_dagger_inj S T₀
-  have h1 := FS.levi a (incA D D.host.xi0⁻¹ • y)
+  have h1 : (_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.source d) S ψ μ' 𝓕'
+      (conjAdjoint om (d.levi a, 1) (cj (dagger T S) f)) (incA D D.host.xi0⁻¹ • y) =
+      ((((χS (Matrix.GeneralLinearGroup.det a))⁻¹ : Circle) : ℂ) * (halfMod S.rank a : ℂ)) •
+        (_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.source d) S ψ μ' 𝓕'
+          (cj (dagger T S) f) ((incA D D.host.xi0⁻¹ • y) ⬝ a.1) := FS.levi a _
   rw [conjAdjoint_cj, hsw, Matrix.smul_mul, hsw] at h1
   rw [cj_smul, conj_levi_coeff']
   exact h1
@@ -157,7 +167,11 @@ theorem read_levi (a : GL (Fin ρ) (AE D)) (y : Mx D S.rank ρ) :
 theorem read_unip (hψ : IsStdChar D ψ (-1)) (b : Mx D ρ T₀.rank) (y : Mx D S.rank ρ) :
     (_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.target d) S ψ μ 𝓕 (om (1, d.nB b) f) y = heisO ψ S T₀ (ofAdj S T₀ (y ⬝ b)) ((_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.target d) S ψ μ 𝓕 f y) := by
   apply cj_dagger_inj S T₀
-  have h1 := FS.unip b (incA D D.host.xi0⁻¹ • y)
+  have h1 : (_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.source d) S ψ μ' 𝓕'
+      (conjAdjoint om (d.nB b, 1) (cj (dagger T S) f)) (incA D D.host.xi0⁻¹ • y) =
+      heisO ψ T₀ S ((incA D D.host.xi0⁻¹ • y) ⬝ b)
+        ((_root_.I195MixedCoordinates_4160728ecfd2b76db64d5897.source d) S ψ μ' 𝓕'
+          (cj (dagger T S) f) (incA D D.host.xi0⁻¹ • y)) := FS.unip b _
   rw [conjAdjoint_cj, hsw, Matrix.smul_mul, hsw, ← dagger_ofAdj, (GlobalTheory.T.hermitianAdjoint_symplectic_action_theta_heisenberg D ψ hψ S T₀).2.2.2] at h1
   exact h1
 

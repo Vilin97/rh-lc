@@ -130,7 +130,7 @@ variable {F E : FiniteSubfield} [hFE : Fact (F ≤ E)]
   [(E.1.fixingSubgroup.subgroupOf F.1.fixingSubgroup).Normal]
 
 theorem smul_of_of_normal (g : F.1.fixingSubgroup) (c : IdeleClassGroup E.1) :
-    (g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • of E c = of E (restrictHom (E := E) g • c) :=
+    (g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • of E c = of E (@HSMul.hSMul _ _ _ instHSMul (restrictHom (E := E) g) c) :=
   smul_of_eq_of_ideleClassEquiv _ ((restrictHom (E := E) g : E.1 ≃ₐ[F.1] E.1) : E.1 ≃+* E.1)
     (fun _ ↦ rfl) c
 

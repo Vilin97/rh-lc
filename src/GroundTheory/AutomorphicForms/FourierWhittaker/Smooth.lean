@@ -74,16 +74,17 @@ theorem archSlice_mul_finEmb {ϕ : AdelicGLn.AdelicGL K n → ℂ} {V : OpenSubg
   rw [mul_assoc, ← infEmb_mul_finEmb_comm, ← mul_assoc, hV _ v hv]
 
 theorem IsUSmooth.rDeriv_smooth {ϕ : AdelicGLn.AdelicGL K n → ℂ} (hϕ : IsUSmooth ϕ) (Y : archLie K n) :
-    IsUSmooth (rDeriv Y ϕ) where
-  arch := by
-    rw [rDeriv_eq_uActFun Y hϕ.arch]
+    IsUSmooth (rDeriv Y ϕ) := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [rDeriv_eq_uActFun Y hϕ.arch]
     exact uActFun_mem _ _
-  fin := by
-    obtain ⟨V, hV⟩ := hϕ.fin
+  · obtain ⟨V, hV⟩ := hϕ.fin
     exact ⟨V, fun g v hv => by simp only [rDeriv, archSlice_mul_finEmb hV g hv]⟩
-  left γ g := by
+  · intro γ g
     simp only [rDeriv]
     congr 1
+    funext x
+    simp only [archSlice_apply, mul_assoc, hϕ.left γ]
 
 def oneParam (Y : archLie K n) (s : ℝ) : AdelicGLn.AdelicGL K n :=
   infEmb K n ((isExpLieAlgebra K n).expG (s • Y))

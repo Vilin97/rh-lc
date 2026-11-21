@@ -152,6 +152,9 @@ theorem mixed_coords_continuous : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) 
       rw [HypDec.integrandT_eq, HypDec.integrandT_eq] at this
       exact this
   refine h2.congr fun q => ?_
-  simp only [evalAt, _root_.I195MixedCoordinates_ea4eb4ab36e967232c52358e.target, HypDec.integrandT_eq, G]
+  simp only [evalAt, _root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target, G]
+  congr 1
+  funext ξ
+  exact (dW.integrandT_eq _ _ _ _).symm
 
 end GlobalTheory.MixCont

@@ -34,7 +34,7 @@ theorem intAt_neg {D : D7} {v : GlobalTheory.FinPl.Pl D} {z : AE D} (h : z ∈ i
 
 theorem intAt_add {D : D7} {v : GlobalTheory.FinPl.Pl D} {z w : AE D} (h : z ∈ intAt D (· = v)) (h' : w ∈ intAt D (· = v)) :
     z + w ∈ intAt D (· = v) :=
-  ⟨add_mem h.1 h'.1, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h.2 h'.2⟩
+  ⟨add_mem h.1 h'.1, by rw [map_add]; exact add_mem h.2 h'.2⟩
 
 theorem idem_incA_mem {D : D7} (v : GlobalTheory.FinPl.Pl D) (o : 𝓞 D.host.E) :
     idem D (· = v) * incA D (o : D.host.E) ∈ intAt D (· = v) := by
@@ -153,6 +153,8 @@ theorem uni_off : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D
     have hyy : idem D (· = v) • (M *ᵥ y) = M *ᵥ y := by
       rw [← Matrix.mulVec_smul]
       congr 1
+      funext k
+      simp [hy, smul_eq_mul, ← mul_assoc, idem_mul_self]
     rw [hyy] at hMy'
     have z1 := (hA _ _ _).1 hMy'
     have z2 := (hA _ _ _).1 hwv

@@ -51,7 +51,7 @@ theorem denseRange_rat_add_real : DenseRange (fun p : D.host.E × D.host.E =>
   set b := Module.finBasis D.host.F D.host.E
   set Bt := Algebra.TensorProduct.basis (AF D.host.F) b
   let Φ : (Fin (Module.finrank D.host.F D.host.E) → AF D.host.F) → AE D := fun α => ∑ k, α k • Bt k
-  have hΦc : Continuous Φ := continuous_finset_sum _ fun k _ => (continuous_apply k).smul continuous_const
+  have hΦc : Continuous Φ := by fun_prop
   have hΦs : Function.Surjective Φ := fun x => ⟨Bt.repr x, Bt.sum_repr x⟩
   have hd := hΦs.denseRange.comp (DenseRange.piMap fun _ => denseRange_hostField_infinite_finite_adelePair (D := D)) hΦc
   refine hd.mono ?_
@@ -62,7 +62,7 @@ theorem denseRange_rat_add_real : DenseRange (fun p : D.host.E × D.host.E =>
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [incA, inclR, map_sum]
-    exact Finset.sum_congr rfl fun k _ => rfl
+      exact Finset.sum_congr rfl fun k _ => rfl
   · rw [TensorProduct.tmul_sum]
 
 end GlobalTheory.ThetaUniqReal

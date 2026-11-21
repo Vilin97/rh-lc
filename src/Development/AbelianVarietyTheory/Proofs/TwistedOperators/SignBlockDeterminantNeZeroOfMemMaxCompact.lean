@@ -36,7 +36,7 @@ theorem CoefCont.add {F F' : G → MvPolynomial σ ℂ} (h : CoefCont F) (h' : C
 theorem CoefCont.mul {F F' : G → MvPolynomial σ ℂ} (h : CoefCont F) (h' : CoefCont F') :
     CoefCont fun k => F k * F' k := fun m => by
   simp only [MvPolynomial.coeff_mul]
-  exact continuous_finset_sum _ fun p _ => (h _).mul (h' _)
+  exact continuous_finsetSum _ fun p _ => (h _).mul (h' _)
 
 theorem CoefCont.smul {s : G → ℂ} {F : G → MvPolynomial σ ℂ} (hs : Continuous s) (h : CoefCont F) :
     CoefCont fun k => s k • F k := fun m => by
@@ -46,7 +46,7 @@ theorem CoefCont.smul {s : G → ℂ} {F : G → MvPolynomial σ ℂ} (hs : Cont
 theorem CoefCont.sum {ι : Type} [Fintype ι] {F : ι → G → MvPolynomial σ ℂ} (h : ∀ i, CoefCont (F i)) :
     CoefCont fun k => ∑ i, F i k := fun m => by
   simp only [MvPolynomial.coeff_sum]
-  exact continuous_finset_sum _ fun i _ => h i m
+  exact continuous_finsetSum _ fun i _ => h i m
 
 theorem CoefCont.aeval {τ : Type} {g : G → τ → MvPolynomial σ ℂ} (h : ∀ v, CoefCont fun k => g k v)
     (P : MvPolynomial τ ℂ) : CoefCont fun k => MvPolynomial.aeval (g k) P := by

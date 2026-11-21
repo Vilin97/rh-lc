@@ -46,7 +46,7 @@ theorem continuous_psiE {ψ : AddChar (AF D.host.F) ℂ} (hψ : Continuous ψ) :
 theorem continuous_upSum {X : Type} [TopologicalSpace X] {ρ : ℕ} {T : X → Mx D ρ ρ} (hT : Continuous T) :
     Continuous fun t => upSum (T t) := by
   unfold upSum
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   by_cases h : j.1 = i.1 + 1
   · simp only [h, if_true]; exact (continuous_apply j).comp ((continuous_apply i).comp hT)
   · simp only [h, if_false]; exact continuous_const

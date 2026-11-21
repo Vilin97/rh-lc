@@ -67,7 +67,13 @@ theorem hasDerivAt_mixS_extY : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), Is
   have hI : ∀ g : WO S T → ℂ, IsThetaFunO ψ S T g → IntegrableOn (fun a => ψ (symplOH S T (d.extY T a) (d.extX T x)) *
       g (d.extY T a + d.extX T x + d.ext0 T w)) v.𝓕 v.μ := fun g hg => by
     simpa only [HypDec.integrandS_eq] using HypDec.integrableOn_mixS d hψ.1.1 v.covol hg x w
-  simp only [_root_.I195MixedCoordinates_9421736abf21ec81fbe38545.source, HypDec.integrandS_eq]
+  change HasDerivAt (fun t : ℝ => ∫ a in v.𝓕,
+    heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x)
+      (heisO ψ S T (d.ext0 T w) (heisO ψ S T (M t) f))) 0 ∂v.μ)
+    (∫ a in v.𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x)
+      (heisO ψ S T (d.ext0 T w)
+        (heisO ψ S T (M 0) (GlobalTheory.OrientedHeis.dLine ψ S T M f)))) 0 ∂v.μ) 0
+  simp only [HypDec.integrandS_eq]
   refine (hasDerivAt_integral_of_dominated_loc_of_deriv_le (μ := v.μ.restrict v.𝓕) (x₀ := (0 : ℝ))
     (F' := fun t a => ψ (symplOH S T (d.extY T a) (d.extX T x)) *
       heisO ψ S T (M t) (GlobalTheory.OrientedHeis.dLine ψ S T M f) (d.extY T a + d.extX T x + d.ext0 T w))

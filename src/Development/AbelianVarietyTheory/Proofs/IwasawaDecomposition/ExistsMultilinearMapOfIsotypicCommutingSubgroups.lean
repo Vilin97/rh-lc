@@ -20,7 +20,7 @@ theorem exists_multilinearMap_of_isotypic_commuting :
       Nontrivial V → (∀ v, (σ v).IsIrreducible) →
       (∀ u v, u ≠ v → ∀ a b, Commute (s u a) (s v b)) →
       (∀ v, (⨆ f : (σ v).IntertwiningMap (ρ.comp (s v)), LinearMap.range f.toLinearMap) = ⊤) →
-      ∃ F : MultilinearMap ℂ Wv V, F ≠ 0 ∧ ∀ v (h : H v) (x : ∀ u, Wv u),
+      ∃ F : (∀ v, Wv v) →ₘₗ[ℂ] V, F ≠ 0 ∧ ∀ v (h : H v) (x : ∀ u, Wv u),
         ρ (s v h) (F x) = F (Function.update x v (σ v h (x v))) := by
   intro ι _ _ G V _ _ _ H _ Wv _ _ _ ρ s σ hV hirr hcomm hspan
   have hfac : ∀ v, ∃ Φ : Module.End ℂ (Wv v) →ₐ[ℂ] Module.End ℂ V,

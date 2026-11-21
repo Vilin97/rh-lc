@@ -62,7 +62,7 @@ theorem weighted_uniform_approx_cusp_forms {θ : InfFam D} {N : GlobalTheory.Gri
   have hI : 0 ≤ I := integral_nonneg fun _ => zero_le_one
   obtain ⟨n, F, v, hF, h⟩ := hu (ε / (I + 1)) (div_pos hε (by linarith))
   have hcs : Continuous fun g => ∑ l, F l (v l) g := by
-    have := continuous_finset_sum Finset.univ fun l _ =>
+    have := continuous_finsetSum Finset.univ fun l _ =>
       GlobalTheory.BaseChain.multT_apply_continuous θ N.M ∅ 1 (F l) (hF l) (v l)
     simpa using this
   have hcf : Continuous fun g => GlobalTheory.Grow.quotHeight N.V g ^ b * ‖(∑ l, F l (v l) g) - φ g‖ :=

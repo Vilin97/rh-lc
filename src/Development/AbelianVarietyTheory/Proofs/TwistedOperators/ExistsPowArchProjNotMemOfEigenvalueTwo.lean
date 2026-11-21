@@ -84,9 +84,10 @@ theorem exists_pow_projArch_not_mem_of_eigen_two : ∀ (D : D7) (V : HSp D) (g :
     rw [show (2 : D.host.E) ^ n * c j = ((2 : D.host.F) ^ n) • c j by rw [Algebra.smul_def, map_pow, map_ofNat],
       map_smul, smul_eq_mul]
   have hnorm : ∀ a : D.host.F, ‖algebraMap D.host.F w.Completion a‖ = w a := fun a => by
-    rw [show algebraMap D.host.F w.Completion a = ((a : D.host.F) : w.Completion) from rfl]
-    simp only [InfinitePlace.Completion.norm_ofCompletion, UniformSpace.Completion.norm_coe]
-    rfl
+    rw [show algebraMap D.host.F w.Completion a = ((a : D.host.F) : w.Completion) from by
+      rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+        Algebra.algebraMap_self_apply]]
+    exact AbsoluteValue.Completion.norm_coe _
   have hpos : 0 < w (φ (c j)) := (InfinitePlace.pos_iff).2 hφ
   obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt (C / w (φ (c j))) (by norm_num : (1 : ℝ) < 2)
   refine ⟨n, fun hmem => ?_⟩

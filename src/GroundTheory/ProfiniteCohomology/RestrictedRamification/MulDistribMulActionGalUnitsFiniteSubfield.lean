@@ -151,6 +151,7 @@ theorem decompHom_smul_placeOfEmbedding'
   calc τ • w₀ = τ • (τ⁻¹ • w₀) := by rw [h]
     _ = w₀ := smul_inv_smul τ w₀
 
+set_option synthInstance.maxHeartbeats 400000 in
 def placeDecompHom :
     Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1) →*
       MulAction.stabilizer Gal(F.1/K.1) (placeOfEmbedding ι F).1.asIdeal :=
@@ -322,8 +323,7 @@ theorem isMulCoboundary₂_of_valuation (he : w.asIdeal.ramificationIdx (𝓞 K)
   have hπv : Valued.v π0 = WithZero.exp (-1) := by
     rw [hπ0def, show algebraMap L (w.adicCompletion L) (algebraMap K L ϖ) =
       ((algebraMap K L ϖ : L) : w.adicCompletion L) from rfl, w.valuedAdicCompletion_eq_valuation',
-      ← HeightOneSpectrum.valuation_liesOver L v w ϖ, Ideal.ramificationIdx'_eq_ramificationIdx' v.asIdeal w.asIdeal
-        (Ideal.map_ne_bot_of_ne_bot v.ne_bot), he, pow_one, hϖ]
+      ← HeightOneSpectrum.valuation_liesOver L v w ϖ, he, pow_one, hϖ]
   have hπ0 : π0 ≠ 0 := by
     intro h
     rw [h, map_zero] at hπv

@@ -106,7 +106,7 @@ theorem exists_factor_kFin_of_rapid (hdec : GlobalTheory.Published.CuspRapidDeca
   have s3 : ∀ τ (A : Module.End ℂ (kFin M' τ)) (y : KVec M') z, PiTensorProduct.tprod ℂ (Function.update y τ (A z)) =
       intersection_update_fsHerm_neg_one τ A (PiTensorProduct.tprod ℂ (Function.update y τ z)) := fun τ A y z => by
     rw [position_tprod, Function.update_idem, Function.update_self]
-  have pI : ∀ τ L, IsContr τ L → ∀ p y,
+  have pI : ∀ τ L, IsContr (K := fun τ => kFin M τ) τ L → ∀ p y,
       IsLocPair M M' τ (aS τ) (aT τ) (a' τ) ((slice (multi I) τ p y).compr₂ L) := fun τ L hL p y => by
     refine ⟨fun X hX P P' z z' => ?_, fun Y hY P z => ?_⟩
     · have hL' := fun x => LinearMap.congr_fun (hL (a τ X)) x
@@ -192,7 +192,7 @@ theorem exists_mult_of_rapid (hG : GlobalTheory.IndefiniteRowSideFullHecke.KType
     | add _ _ _ _ a b => intro c; rw [smul_add]; exact h3 _ _ (a c) (b c)
     | smul a _ _ h => intro c; rw [smul_smul]; exact h _
   have hg : ∀ x, IsCuspGrow θ V (T x) := fun x => GlobalTheory.Chain.CuspGrowSpace.isCuspGrow_of_mem_span D θ V _ (hind (fun x => T x ∈ _)
-    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _)) (fun x y a b => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b) x)
+    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _)) (fun x y a b => by rw [map_add]; exact add_mem a b) x)
   obtain ⟨μ, 𝓕, hμ, h𝓕⟩ := GlobalTheory.Ker.HypModel.exists_haar_fundDom D V
   obtain ⟨E, hE0, -⟩ := exists_embedding_skew_of_rapid hdec D θ V μ 𝓕 hθ hμ h𝓕
   obtain ⟨U, ⟨hU, hUe⟩, -⟩ := hG θ hθ V S M J χ μ 𝓕 hμ h𝓕 (T.compMultilinearMap (PiTensorProduct.tprod ℂ))
@@ -291,7 +291,7 @@ theorem ioPair_of_rapid (D : D7) (X : ProvA) (hX : ChosenSeries X) (h3 : Formali
       rw [hBF]
       exact ⟨L.aut _ _ (hpt φ) (hcl v), L.smooth _ _ (hpt φ) (hcl v), hcusp _ (hCle F.2) _ _ (hpt φ),
         L.growth _ _ (hpt φ) (hcl v)⟩
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y hx hy => rw [map_add]; exact add_mem hx hy
   let G : PolF D W.rank V.rank →ₗ[ℂ] SmT M' →ₗ[ℂ] (SmT M × (GA D V → ℂ)) :=
     (LinearMap.prodEquiv ℂ).toLinearMap ∘ₗ It.prod BF
   have hGe : ∀ φ v, G φ v = (It φ v, BF φ v) := fun _ _ => rfl

@@ -136,12 +136,9 @@ theorem two_sum_sub (r : ℕ) : ∀ q : ℕ, q ≤ r + 1 → 2 * ∑ i : Fin q, 
     rw [Fin.sum_univ_castSucc]
     simp only [Fin.val_castSucc, Fin.val_last]
     rw [mul_add, two_sum_sub r q (by omega)]
-    have h1 : q ≤ r := by omega
-    obtain ⟨d, rfl⟩ : ∃ d : ℕ, r = q + d := Nat.exists_eq_add_of_le h1
-    have e1 : 2 * (q + d) + 1 - q = q + 2 * d + 1 := by omega
-    have e2 : 2 * (q + d) + 1 - (q + 1) = q + 2 * d := by omega
-    have e3 : q + d - q = d := by omega
-    rw [e1, e2, e3]
+    have e1 : 2 * r + 1 - q = q + 2 * (r - q) + 1 := by omega
+    have e2 : 2 * r + 1 - (q + 1) = q + 2 * (r - q) := by omega
+    rw [e1, e2]
     ring
 
 end Entry

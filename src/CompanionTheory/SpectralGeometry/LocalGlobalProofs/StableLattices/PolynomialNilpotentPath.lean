@@ -43,6 +43,7 @@ theorem apply_mem_upperImg (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N 
   | add a b _ _ ha hb => simpa using Submodule.add_mem _ ha hb
   | smul r a _ ha => simpa using Submodule.smul_mem _ r ha
 
+open scoped IsMulCommutative in
 theorem exists_monic_trace (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N → Fin N → Module.End ℂ V)
     (hX : GlRel Xf) (Pc : ℂ → ℂ)
     (hP : ∀ Y : ℂ, ∃ k : ℕ, (qdet Xf (Y + ((N : ℂ) - 1) / 2) - Pc Y • (1 : Module.End ℂ V)) ^ k = 0)
@@ -66,10 +67,10 @@ theorem exists_monic_trace (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N 
     exact sub_eq_zero.1 this
   obtain ⟨a, ha1, hform, htr, hcomm⟩ := GlobalTheory.CompanionTheory.RgCOBlock.capelli_coef_commute V c n Xi hglr hcm
   let s : Set (Module.End ℂ V) := Set.range fun p : Fin c × ℕ => a p.1 p.2
-  have hcs : ∀ x ∈ s, ∀ y ∈ s, x * y = y * x := by
-    rintro _ ⟨p, rfl⟩ _ ⟨q, rfl⟩
-    exact (hcomm _ _ _ _).eq
-  letI : CommRing (Algebra.adjoin ℂ s) := Algebra.adjoinCommRingOfComm ℂ hcs
+  have hcs : s.Pairwise Commute := by
+    rintro _ ⟨p, rfl⟩ _ ⟨q, rfl⟩ _
+    exact hcomm _ _ _ _
+  let : IsMulCommutative (Algebra.adjoin ℂ s) := Algebra.isMulCommutative_adjoin ℂ hcs
   let I := upperImg n h Xf
   let Yd : Ideal (Algebra.adjoin ℂ s) :=
     { carrier := {x | ∀ F, (x : Module.End ℂ V) F ∈ I}
@@ -198,6 +199,7 @@ end Abstract
 section Grading
 
 open CompanionTheory.RgExh CompanionTheory.RgExh.Dec.J
+open ReciprocityTheory.ChartRestriction.DS renaming actM → aM
 
 section Act
 

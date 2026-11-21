@@ -176,8 +176,8 @@ def divUnif {L N : LB A.left} (u₀ : HolUnif A L g) (u : HolUnif A N g) (hu : u
     have h2 : ∀ z, ⊤ ≤ (u₀.ex z).left ⁻¹ᵁ (LB.div (lbPow L n) N).U p →
         ⊤ ≤ (u.ex z).left ⁻¹ᵁ N.U p.2 := fun z hz =>
       hu ▸ ((top_le_preimage_inf _ _ _).1 hz).2
-    exact (((u₀.fr_hol _).mono h1).pow n).mul
-      (((u.fr_hol _).mono h2).inv fun z hz => u.fr_ne _ z (h2 z hz))
+    exact (((u₀.fr_hol (p.1 PUnit.unit)).mono (fun z hz => h1 z hz)).pow n).mul
+      (((u.fr_hol p.2).mono (fun z hz => h2 z hz)).inv fun z hz => u.fr_ne _ z (h2 z hz))
   fr_ne p z hz := by
     obtain ⟨h1, h2⟩ := (top_le_preimage_inf _ _ _).1 hz
     exact mul_ne_zero (pow_ne_zero _ (u₀.fr_ne _ z (Cartier.lbPow_U L n p.1 ▸ h1)))

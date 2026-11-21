@@ -108,7 +108,7 @@ def read : @Read c.to.D G _ _ Pl0 I0 T (famInThreeCoefficientChange c.to A) Ks _
     (tied := (by with_unfolding_all exact ((recTied_tr c Y.tied) :)))
     (prtE := (by with_unfolding_all exact ((prtE_tr c Y) :)))
     (prtE0 := (by with_unfolding_all exact ((replacementValues_baseLevelTypeParts_eq c Y) :)))
-    (prtWE := kc% (prtWE_tr c Y))
+    (prtWE := by with_unfolding_all exact (prtWE_tr c Y :))
     (xi := (by with_unfolding_all exact (Y.xi :)))
     (isomFin := (by with_unfolding_all exact ((isomFin_tr c Y) :)))
     (frameMatch := (by with_unfolding_all exact (Y.frameMatch :)))
@@ -183,6 +183,7 @@ theorem met0u : ∀ v, v ≠ A.A.v0 → ∀ x y, Formalism.HermitianLatticesTheo
 
 
 open Classical in
+include Z in
 theorem etaJu : ∀ (i : Fin a.D.R.m) w, a.D.what₂.etaJ ((i : ℕ) + 1) w =
     if a.D.plEq w ∈ R.twPl then A.A.fam.etaJ F.P0 F.ψ0 (A.fam3.toSub2 (cxW R F u).zs) i (R.mu (a.D.plEq w)) (a.D.plEq w) else 0 :=
   (by with_unfolding_all exact (Z.etaJ :))
@@ -198,8 +199,12 @@ def readL : @ReadL c.to.D G _ _ Pl0 I0 T (famInThreeCoefficientChange c.to A) Ks
       (jEE0u Z (partsB c R) y)) :)))
     (met := (by with_unfolding_all exact ((metu Z (partsB c R)) :)))
     (met0 := (by with_unfolding_all exact ((met0u Z (partsB c R)) :)))
-    (rr := kc% Z.rr)
-    (rr0 := kc% Z.rr0)
+    (rr := by
+      set_option smartUnfolding false in
+        with_unfolding_all exact (Z.rr :))
+    (rr0 := by
+      set_option smartUnfolding false in
+        with_unfolding_all exact (Z.rr0 :))
     (jW := (by with_unfolding_all exact ((jWu Z (partsB c R)) :)))
     (jW_read := (by with_unfolding_all exact (Z.jW_read :)))
     (etaJ := (by with_unfolding_all exact ((etaJu Z (partsB c R)) :)))

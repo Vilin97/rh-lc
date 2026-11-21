@@ -57,9 +57,7 @@ theorem isLattice_comap (n n₁ : ℕ) (L : Submodule (𝓞 E) (Fin n → E)) (�
   fg := fg_comap _ (fun u u' e => by
     have := congrArg (P *ᵥ ·) (show ι *ᵥ u = ι *ᵥ u' from e)
     simpa [Matrix.mulVec_mulVec, hP] using this) L hL.fg
-  span_eq_top := by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  linearIndepOn _ _ hli := (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem exists_ideal (n : ℕ) (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsLattice E) (x : Fin n → E) (hx : x ≠ 0) :
     ∃ 𝔟 : FractionalIdeal (𝓞 E)⁰ E, ∀ s : E, s ∈ 𝔟 ↔ s • x ∈ L :=
   ⟨⟨L.comap ((LinearMap.toSpanSingleton E _ x).restrictScalars (𝓞 E)), FractionalIdeal.isFractional_of_fg

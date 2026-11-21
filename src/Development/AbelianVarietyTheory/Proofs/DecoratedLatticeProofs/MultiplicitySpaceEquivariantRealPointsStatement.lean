@@ -60,6 +60,8 @@ theorem _root_.GlobalTheory.T.multiplicitySpace_equivariant_real_points : ∀ (D
     have h := equivOnList (Finset.univ : Finset D.what₂.Tau).toList (Finset.nodup_toList _)
     rw [GlobalTheory.AdelicScalar.realElt, ← h]
     congr 1
+    funext τ
+    simp
   | zero =>
     funext x
     simp [rTr]

@@ -201,7 +201,7 @@ end CM
 
 section Host
 
-open Formalism.BasicNotions.TH Formalism.MainNotions.S Formalism.L2.Theta Formalism.L2.NTheta Formalism.IndefR Formalism.IndefR.Mult GlobalTheory.IndefiniteRowSideFullHecke.GoodReductionModelReading
+open Formalism.BasicNotions.TH Formalism.MainNotions.S Formalism.L2.Theta Formalism.L2.NTheta Formalism.IndefR Formalism.IndefR.Mult
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}

@@ -16,7 +16,7 @@ set_option genInjectivity false
 noncomputable section
 
 open MeasureTheory ValuativeRel Matrix IsLocalRing
-open GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.LatPair GlobalTheory.SeeSaw GlobalTheory.IndefiniteRowSideFullHecke.StandardLatticeStabilizers
+open GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.LatPair GlobalTheory.SeeSaw
 
 namespace GlobalTheory.PlaceCompare.Spherical
 
@@ -47,8 +47,6 @@ theorem exists_unram_char (D : D7) (n : ℕ) :
   · rw [MonoidHom.pow_apply, h1.2 x, one_pow]
   · rw [MonoidHom.pow_apply, h3.2 e he a, pow_one]
   · rw [MonoidHom.pow_apply, h2 x a b c, one_pow]
-
-variable {c : Comm D}
 
 end Global
 

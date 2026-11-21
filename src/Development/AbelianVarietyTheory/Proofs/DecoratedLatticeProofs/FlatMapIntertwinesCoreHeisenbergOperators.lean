@@ -55,6 +55,15 @@ theorem flatAt_heisO : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar 
     intro x' w
     have a := (GlobalTheory.T.heisenbergOperator_thetaFunctional_mixedSourceModel D ψ hψ V V₀ W ρ dV vS Ψ hΨ).2.2.1 x' (dW.inc0 V₀ w)
     have b := (hHT V₀ W W₀ σ dW vT.μ vT.𝓕 vT.covol _ (hS x')).2.1 w y
+    change I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV W ψ vS.μ vS.𝓕
+      (heisO ψ V W (dV.ext0 W (dW.inc0 V₀ w)) Ψ) x' =
+      heisO ψ V₀ W (dW.inc0 V₀ w)
+        (I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV W ψ vS.μ vS.𝓕 Ψ x') at a
+    change I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target dW V₀ ψ vT.μ vT.𝓕
+      (heisO ψ V₀ W (dW.inc0 V₀ w)
+        (I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV W ψ vS.μ vS.𝓕 Ψ x')) y =
+      heisO ψ V₀ W₀ w (I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.target dW V₀ ψ vT.μ vT.𝓕
+        (I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV W ψ vS.μ vS.𝓕 Ψ x') y) at b
     unfold evalAt
     rw [a, b]
   refine ⟨fun w => h1 x w, fun w => ?_, fun γ => ?_⟩

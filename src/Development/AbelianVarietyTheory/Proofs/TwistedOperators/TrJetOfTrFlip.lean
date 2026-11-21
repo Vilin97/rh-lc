@@ -334,7 +334,10 @@ theorem jets_congr (hp : X'.B.toPre = X.B.toPre) {E : Env X.toD7} {E' : Env X'.t
   dsimp only at h1 h2 h3 h4 h5 h6 h7 h8 h9 h10 h11 h12 h13
   cases h1; cases h2; cases h3; cases h4; cases h5; cases h6; cases h7; cases h8; cases h9; cases h10; cases h11; cases h12
   cases h13
-  refine Env.Jets.mono (a := (by with_unfolding_all exact (a :))) (b := (by with_unfolding_all exact (b :))) (by kexactB H) (fun j hj r x y => ?_) fun j hj r x y => ?_
+  refine Env.Jets.mono (a := (by with_unfolding_all exact (a :))) (b := (by with_unfolding_all exact (b :))) (by run_tac do
+    let e ← Lean.Elab.Term.elabTerm (Lean.mkIdent `H) none
+    (← Lean.Elab.Tactic.getMainGoal).assign e
+    Lean.Elab.Tactic.replaceMainGoal []) (fun j hj r x y => ?_) fun j hj r x y => ?_
   · exact (by with_unfolding_all exact (ha j hj r r x x y y HEq.rfl HEq.rfl HEq.rfl :))
   · exact (by with_unfolding_all exact (hb j hj r r x x y y HEq.rfl HEq.rfl HEq.rfl :))
 

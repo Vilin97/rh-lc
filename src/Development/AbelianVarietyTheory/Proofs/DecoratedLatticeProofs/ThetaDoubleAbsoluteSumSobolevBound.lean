@@ -60,13 +60,15 @@ theorem mixS_add (hψ : IsStdChar D ψ (-1)) {f g : WO S T → ℂ} (hf : IsThet
   funext w
   have h1 := d.integrableOn_mixS hψ.1.1 v.covol hf x w
   have h2 := d.integrableOn_mixS hψ.1.1 v.covol hg x w
-  simp only [_root_.I195MixedCoordinates_6edf13e9c2ea736a34004c3c.source, HypDec.integrandS_eq, Pi.add_apply, mul_add] at h1 h2 ⊢
+  change d.mixS T ψ v.μ v.𝓕 (f + g) x w = d.mixS T ψ v.μ v.𝓕 f x w + d.mixS T ψ v.μ v.𝓕 g x w
+  simp only [HypDec.mixS, HypDec.integrandS_eq, Pi.add_apply, mul_add] at h1 h2 ⊢
   exact integral_add h1 h2
 
 theorem mixS_smul (c : ℂ) (f : WO S T → ℂ) (x : Mx D T.rank ρ) :
     (_root_.I195MixedCoordinates_6edf13e9c2ea736a34004c3c.source d) T ψ v.μ v.𝓕 (c • f) x = c • (_root_.I195MixedCoordinates_6edf13e9c2ea736a34004c3c.source d) T ψ v.μ v.𝓕 f x := by
   funext w
-  simp only [_root_.I195MixedCoordinates_6edf13e9c2ea736a34004c3c.source, HypDec.integrandS_eq, Pi.smul_apply, smul_eq_mul, mul_left_comm _ c, integral_const_mul]
+  change d.mixS T ψ v.μ v.𝓕 (c • f) x w = c • d.mixS T ψ v.μ v.𝓕 f x w
+  simp only [HypDec.mixS, HypDec.integrandS_eq, Pi.smul_apply, smul_eq_mul, mul_left_comm _ c, integral_const_mul]
 
 
 variable (T) in

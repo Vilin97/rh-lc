@@ -51,7 +51,7 @@ theorem contAut_trc {V : HSp D} (e : GA D V →₀ ℂ) {f : GA D V → ℂ} (hf
       funext x
       simp only [trc, rTrans, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [e]
-    exact continuous_finset_sum _ fun g _ => continuous_const.mul (hf.2.comp (continuous_mul_const g))
+    exact continuous_finsetSum _ fun g _ => continuous_const.mul (hf.2.comp (continuous_mul_const g))
 
 theorem contAut_emb {S A B : HSp D} (o : OrthDec S A B) {f : GA D S → ℂ} (hf : IsContAut S f) :
     Continuous (fun h : GA D A => f (o.emb (h, 1))) ∧ ∀ γ ∈ GQ A, ∀ g, f (o.emb (γ * g, 1)) = f (o.emb (g, 1)) := by

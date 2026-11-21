@@ -57,7 +57,10 @@ theorem frame_mem_idS {m n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.h
     rwa [Submodule.map_smul'', Submodule.map_subtype_top] at this
   have h2 : (y : Matrix (Fin m) (Fin n) D.host.E).map (eToEAf D) ∈
       GlobalTheory.FunObj.HatFrame.genGrp D.host.F (I • GlobalTheory.ChiGrid.homLat Λ Λ') :=
-    AddSubgroup.subset_closure ⟨1, one_mem _, _, h1, by ext a b; rfl⟩
+    by
+      unfold GlobalTheory.FunObj.HatFrame.genGrp
+      apply AddSubgroup.subset_closure
+      exact ⟨1, one_mem _, _, h1, by ext a b; rfl⟩
   exact GlobalTheory.FunObj.HatFrame.genGrp_le_frGrp hβ hβ' (H := GlobalTheory.ChiGrid.homLat Λ Λ') (fun _ hx => hx) I h2 i j
 
 theorem frame_smul_incA {m n : ℕ} (β : GL (Fin n) (EAf D)) (β' : GL (Fin m) (EAf D)) (a : AE D)

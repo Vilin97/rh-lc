@@ -73,7 +73,8 @@ theorem nontrivial_af : Nontrivial (Formalism.L2.Herm.Af F) := by
   let v : HeightOneSpectrum (𝓞 F) := ⟨p, hp, hp0⟩
   refine ⟨⟨0, 1, fun h => ?_⟩⟩
   have h' := congrArg (fun b : Formalism.L2.Herm.Af F => b v) h
-  simp at h'
+  change (0 : _) = 1 at h'
+  exact zero_ne_one h'
 
 theorem mem_smul_span (Λ : Submodule (𝓞 E) (Fin n → E)) (𝔪 : Ideal (𝓞 E)) (g : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))
     (y : Fin n → E)

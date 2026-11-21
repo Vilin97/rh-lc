@@ -622,25 +622,27 @@ theorem sameTypes_base {s : ℕ} (h : F.Ok s) (P : Subgroup G) (ψ : P →* Kˣ)
     ((F.R F.μ0).sameTypes_self (F.lvl P ψ) h.conj (h.what₂ F.μ0) h.irr)
 
 theorem side_WF {s : ℕ} (h : F.Ok s) (P : Subgroup G) (ψ : P →* Kˣ) (Zs : DefSub F.amb) (hst : Zs.Stable)
-    (hin : Zs.InBlock) (hsep : F.TypesSep) : (F.side P ψ Zs).WF where
-  cm := isCMSub_cmMax' K
-  conj := h.conj
-  HV_rat t := BlockDat.HV_rat (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr
-  HV_pos t := BlockDat.HV_pos (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr
-  Mt_lat t := BlockDat.Mt_lat (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr
-  Pq_surj t := BlockDat.Pq_surj (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
-  XQ_quot t := BlockDat.XQ_quot (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
-  Lam_lat t := BlockDat.Lam_lat (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
-  Qp_indep := (F.R F.μ0).part_indep (F.lvl P ψ) (Zs.Z F.μ0) (h.what₂ F.μ0).comm (fun p : F.base.Ix => p.1)
-    fun p p' hpp => (F.R F.μ0).sep_of_mem_ixFin p.2 p'.2 fun e => hpp (Subtype.ext e)
-  Qp_top := (F.R F.μ0).part_top (F.lvl P ψ) (Zs.Z F.μ0) h.conj (h.what₂ F.μ0) h.irr (stable_rows hst F.μ0)
-    (fun p : F.base.Ix => p.1) (fun p p' hpp => (F.R F.μ0).sep_of_mem_ixFin p.2 p'.2 fun e => hpp (Subtype.ext e))
-    ((F.sameTypes_base h P ψ hin).trans ((F.R F.μ0).good_part_coordinates_mono _
-      (Col.eigSum_mono fun x hx => (F.isType_iff _ id x).1 hx)))
-  XT_herm j t := BlockDat.XQ_herm (ℓ := F.lvlA P ψ) (Z := Zs.Zl j t) h.conj (h.lifts j t) h.irr
-  Tl_lat j t := BlockDat.Tl_lat (ℓ := F.lvlA P ψ) (Z := Zs.Zl j t) h.conj (h.lifts j t) h.irr
-  Zp_indep j := (F.L j F.μ0).part_indep (F.lvlA P ψ) (Zs.Zl j F.μ0) (h.lifts j F.μ0).comm
-    (fun p : F.base.Ix => F.tr j p.1) fun p p' hpp => hsep p.1 p.2 p'.1 p'.2 (fun e => hpp (Subtype.ext e)) j
+    (hin : Zs.InBlock) (hsep : F.TypesSep) : (F.side P ψ Zs).WF := by
+  exact {
+    cm := isCMSub_cmMax' K
+    conj := h.conj
+    HV_rat t := BlockDat.HV_rat (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr
+    HV_pos t := BlockDat.HV_pos (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr
+    Mt_lat t := BlockDat.Mt_lat (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr
+    Pq_surj t := BlockDat.Pq_surj (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
+    XQ_quot t := BlockDat.XQ_quot (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
+    Lam_lat t := BlockDat.Lam_lat (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
+    Qp_indep := (F.R F.μ0).part_indep (F.lvl P ψ) (Zs.Z F.μ0) (h.what₂ F.μ0).comm (fun p : F.base.Ix => p.1)
+      fun p p' hpp => (F.R F.μ0).sep_of_mem_ixFin p.2 p'.2 fun e => hpp (Subtype.ext e)
+    Qp_top := (F.R F.μ0).part_top (F.lvl P ψ) (Zs.Z F.μ0) h.conj (h.what₂ F.μ0) h.irr (stable_rows hst F.μ0)
+      (fun p : F.base.Ix => p.1) (fun p p' hpp => (F.R F.μ0).sep_of_mem_ixFin p.2 p'.2 fun e => hpp (Subtype.ext e))
+      ((F.sameTypes_base h P ψ hin).trans ((F.R F.μ0).good_part_coordinates_mono _
+        (Col.eigSum_mono fun x hx => (F.isType_iff _ id x).1 hx)))
+    XT_herm j t := BlockDat.XQ_herm (ℓ := F.lvlA P ψ) (Z := Zs.Zl j t) h.conj (h.lifts j t) h.irr
+    Tl_lat j t := BlockDat.Tl_lat (ℓ := F.lvlA P ψ) (Z := Zs.Zl j t) h.conj (h.lifts j t) h.irr
+    Zp_indep j := (F.L j F.μ0).part_indep (F.lvlA P ψ) (Zs.Zl j F.μ0) (h.lifts j F.μ0).comm
+      (fun p : F.base.Ix => F.tr j p.1) fun p p' hpp => hsep p.1 p.2 p'.1 p'.2 (fun e => hpp (Subtype.ext e)) j
+  }
 
 end DefFam
 

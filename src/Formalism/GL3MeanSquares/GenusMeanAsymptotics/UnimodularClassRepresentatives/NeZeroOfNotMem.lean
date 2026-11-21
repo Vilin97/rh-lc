@@ -14,6 +14,9 @@ open LocalSpans idealPowerSpanBounds localizedQuotients
 
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+local notation "jK" => algebraMap (𝓞 K) K
+
 structure IsUnif0 (𝔭 : Ideal (𝓞 F)) (π₀ s₀ : 𝓞 F) : Prop where
   mem : π₀ ∈ 𝔭
   notMem : π₀ ∉ 𝔭 ^ 2
@@ -140,15 +143,21 @@ theorem isLocUnif (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     obtain ⟨n₀, hn₀⟩ := exists_norm hF (ι t + ι π₀ * z)
     have hn : n₀ ∉ 𝔭 := by
       intro hmem
-      have h1 : ι (n₀ - t * t) ∈ extP K 𝔭 ^ 1 := by
+      have hconj (a : 𝓞 F) : conjO K (ι a) = ι a :=
+        jK_inj (star_ι hF a)
+      have h1 : ι (n₀ - t * t) ∈ extP K 𝔭 := by
         have : ι (n₀ - t * t) = ι π₀ * (z * ι t + ι t * conjO K z + ι π₀ * z * conjO K z) := by
-          rw [map_sub, hn₀, map_add (f := _), map_mul (conjO K), conjO_map hF, conjO_map hF, map_mul]
+          rw [map_sub, hn₀, map_add (f := _), map_mul (conjO K), hconj t, hconj π₀, map_mul]
           ring
         rw [this]
-        exact Ideal.mul_mem_right _ _ (ι_mem_pow (by rw [pow_one]; exact hu.mem))
-      rw [mem_pow_iff, pow_one] at h1
+        exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem ι hu.mem)
+      have hdiff : n₀ - t * t ∈ 𝔭 := by
+        have hcomap : (extP K 𝔭).comap ι = 𝔭 :=
+          Ideal.comap_map_eq_self_of_faithfullyFlat 𝔭
+        rw [← hcomap]
+        exact Ideal.mem_comap.mpr h1
       have h2 : t * t ∈ 𝔭 := by
-        have := sub_mem hmem h1
+        have := sub_mem hmem hdiff
         rwa [sub_sub_cancel] at this
       exact (hp.mem_or_mem h2).elim ht ht
     have hn0 : jK (ι n₀) ≠ 0 := jι_ne_zero (ne_zero_of_notMem hn)

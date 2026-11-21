@@ -91,6 +91,7 @@ theorem cj_mem_sm : ∀ (D : D7) (Y : HSp D) (S : D.what₂.Tau → SPar) (M : D
       cont := (cj (M.H τ)).continuous }
   have hL := L.contDiff.comp hc
   convert hL using 1
+  funext t
   rw [hrep, hprod]
   rfl
 

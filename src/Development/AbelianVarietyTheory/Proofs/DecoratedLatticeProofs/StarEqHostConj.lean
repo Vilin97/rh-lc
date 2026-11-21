@@ -44,7 +44,8 @@ theorem exists_line (D : D7) (X : HidaSetting D) (u : D.what₂.Word) :
     intro h; apply hT0; rw [← hπ, h, zero_mul]
   have hc0 : D.host.conj (π : D.host.E) ≠ 0 := by
     intro h; apply hT0; rw [← hπ, h, mul_zero]
-  refine ⟨negLine D, ((π : 𝓞 D.host.E) : D.host.E)⁻¹, inv_ne_zero hπ0, rfl, ?_, fun i j => ?_⟩
+  refine ⟨negLine D, ((π : 𝓞 D.host.E) : D.host.E)⁻¹, inv_ne_zero hπ0, ?_, ?_, fun i j => ?_⟩
+  · simp [negLine, Formalism.BasicNotions.Examples₂.stdSpace]
   · rw [X.zu_norm]; exact neg_ne_zero.2 hT0
   · rw [negLine_gram, X.zu_norm, star_inv₀, star_eq_hostConj, ← hπ]
     field_simp <;> ring

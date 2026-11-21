@@ -78,7 +78,7 @@ theorem mem_besGrp_of_parts {S S₀ A L : HSp D} {ρ : ℕ} (d : HypDec S S₀ �
     (hi : infHom S x = infHom S y) (hf : finHom S x = finHom S z) (hy : y ∈ besGrp d o) (hz : z ∈ besGrp d o) :
     x ∈ besGrp d o := by
   have key : ∀ g : GA D S, g ∈ besGrp d o ↔ g ∈ jacGrp d ∧
-      d.p0 ⬝ (Formalism.L2.Theta.mt S g ⬝ (d.j0 ⬝ o.jB)) = o.jB := fun g => by
+      HMul.hMul d.p0 (HMul.hMul (Formalism.L2.Theta.mt S g) (HMul.hMul d.j0 o.jB)) = o.jB := fun g => by
     have e := Set.ext_iff.1 (GlobalTheory.BesClosed.besGrp_eq_inter d o) g
     rw [← Matrix.mul_assoc (Formalism.L2.Theta.mt S g), ← Matrix.mul_assoc]
     exact e

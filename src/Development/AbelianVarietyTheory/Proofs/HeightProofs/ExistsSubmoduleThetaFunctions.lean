@@ -17,7 +17,7 @@ variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {V W : HSp D}
 
 theorem isThetaFun_zero : IsThetaFun ψ V W 0 := {
   quasi γ w := by simp
-  level := ⟨⊤, by simp, fun u _ _ => by funext w; simp [Heisenberg₂]⟩
+  level := ⟨⊤, by change IsOpen (Set.univ : Set (WA V W)); exact isOpen_univ, fun u _ _ => by funext w; simp [Heisenberg₂]⟩
   cont := continuous_const
   smooth _ _ _ _ _ := contDiff_const }
 
@@ -27,7 +27,7 @@ theorem isThetaFun_add {f g : WA V W → ℂ} (hf : IsThetaFun ψ V W f) (hg : I
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
     obtain ⟨U', hU'o, hU'⟩ := hg.level
-    refine ⟨U ⊓ U', by simpa using hUo.inter hU'o, fun u hu hinf => ?_⟩
+    refine ⟨U ⊓ U', by change IsOpen ((U : Set (WA V W)) ∩ (U' : Set (WA V W))); exact hUo.inter hU'o, fun u hu hinf => ?_⟩
     have e1 := hU u (AddSubgroup.mem_inf.1 hu).1 hinf
     have e2 := hU' u (AddSubgroup.mem_inf.1 hu).2 hinf
     funext w

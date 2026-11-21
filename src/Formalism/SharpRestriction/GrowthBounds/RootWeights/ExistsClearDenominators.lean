@@ -26,15 +26,14 @@ def latticeInter (M : Submodule O W) (L : Submodule (KK O) W) : Submodule O L :=
   M.comap (L.subtype.restrictScalars O)
 
 theorem latticeInter_isLattice (M : Submodule O W) (hfg : M.FG) (hMQ : MQ (K := KK O) M = ⊤) (L : Submodule (KK O) W) :
-    Submodule.IsFullLattice (KK O) (latticeInter M L) where
-  toIsLattice := Submodule.IsLattice.of_fg (KK O) (by
-    have hN : IsNoetherian O M := isNoetherian_of_fg_of_noetherian M hfg
+    Submodule.IsFullLattice (KK O) (latticeInter M L) := by
+  refine { toIsLattice := Submodule.IsLattice.of_fg (KK O) ?_, span_eq_top := ?_ }
+  · have hN : IsNoetherian O M := isNoetherian_of_fg_of_noetherian M hfg
     refine Submodule.fg_of_fg_map_injective (L.subtype.restrictScalars O) (fun x y h => Subtype.ext h) ?_
     refine (isNoetherian_submodule.1 hN) _ ?_
     rintro _ ⟨x, hx, rfl⟩
-    exact hx)
-  span_eq_top := by
-    apply top_unique
+    exact hx
+  · apply top_unique
     intro x _
     obtain ⟨a, ha, hax⟩ := exists_clear_denominators_alt M (x : W) (by rw [hMQ]; trivial)
     have ha' : algebraMap O (KK O) a ≠ 0 :=

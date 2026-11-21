@@ -26,9 +26,13 @@ theorem mem_Kset_iff_moves : ∀ {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaS
   intro D X h v κ hκ
   have hlat : Submodule.IsLattice D.host.E (latS D) :=
     GlobalTheory.StdFrames.isLattice_crdLat (D.sp.Y 0) (D.sp.Y 0).standardTuple_isLattice
-  obtain ⟨β, hβ⟩ := GlobalTheory.latticeFrame.exists_frame D.host.F D.host.E _ (latS D) hlat
-  have h1 := ((GlobalTheory.SeeConjReadIota.read_iota X h β hβ κ).2.1)
-  have h2 := GlobalTheory.ChainOnto.LStab.finE_mem_St_iff_of_fg (D.sp.Y 0) β (latS D) hβ hlat.fg κ
+  obtain ⟨β, hβ⟩ := GlobalTheory.StdFrames.exists_base (D.sp.Y 0)
+  have hβ' : Formalism.L2.DIV.IsFrame β (latS D) := by
+    change Formalism.L2.DIV.IsFrame β (Formalism.L2.Herm.crdLat (D.sp.Y 0) (D.sp.Y 0).L0)
+    rw [hβ]
+    exact GlobalTheory.StdFrames.isFrame_lat β
+  have h1 := ((GlobalTheory.SeeConjReadIota.read_iota X h β hβ' κ).2.1)
+  have h2 := GlobalTheory.ChainOnto.LStab.finE_mem_St_iff_of_fg (D.sp.Y 0) β (latS D) hβ' hlat.fg κ
   have h3 : κ ∈ GlobalTheory.AdelicU.levelOpen D.sp.cm.sig (D.sp.Y 0).gram (latS D) ↔
       Moves (D.sp.Y 0) κ (latS D) (latS D) (· = v) :=
     ⟨fun hk => GlobalTheory.FinPl.KOpen.moves_of_levelOpen (D.sp.Y 0) (latS D) hlat.fg (· = v) hk,

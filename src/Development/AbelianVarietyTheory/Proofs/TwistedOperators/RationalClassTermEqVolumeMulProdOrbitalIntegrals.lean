@@ -42,7 +42,7 @@ theorem continuous_tensor {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLa
     Continuous (tensor σ J fa ff) ∧ HasCompactSupport (tensor σ J fa ff) := by
   have hb := hf.tensorFin_mem
   have h1 : Continuous (tensorInf σ J fa) :=
-    continuous_finset_prod _ fun w _ => (ha w).1.comp (continuous_projInfArch σ J w)
+    continuous_finsetProd _ fun w _ => (ha w).1.comp (continuous_projInfArch σ J w)
   have h2 : HasCompactSupport (tensorInf σ J fa) := by
     refine .intro ((infContEquivPi σ J).toHomeomorph.isClosedEmbedding.isCompact_preimage
       (isCompact_univ_pi fun w => (ha w).2)) fun g hg => ?_

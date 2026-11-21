@@ -46,6 +46,7 @@ theorem kerP : GlobalTheory.IndefiniteRowSideFullHecke.JetSumTable.JetMoments �
     unfold OverT at e
     rw [e] at h1
     exact h1
+  letI : StarRing B.fields.E := B.fields.starE
   have key := hPT d.1.1.deco _ d'.1.1.deco _ Ξ₀ hfr hfr' hbox (hint _ hT) F hF
   rw [ColIn.A, eA]
   have eS : ∀ τ, (dat I l Z u a).ch.C.sDiv i τ = -((B.wts.lamTrue u (i + 1) τ).detShift) := fun τ => by

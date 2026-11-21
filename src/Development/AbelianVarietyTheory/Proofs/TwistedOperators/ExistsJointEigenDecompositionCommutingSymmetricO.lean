@@ -73,7 +73,7 @@ theorem exists_finset_joint_eigen : ∀ {E ι : Type} [AddCommGroup E] [Module �
   have key := LinearMap.IsSymmetric.iSup_iInf_eq_top_of_commute hT hC
   have htop : IsCompactElement (⊤ : Submodule ℂ Z) :=
     (Submodule.fg_iff_compact _).1 (Module.finite_def.1 hfd)
-  obtain ⟨s, hs⟩ := CompleteLattice.IsCompactElement.exists_finset_of_le_iSup _ htop
+  obtain ⟨s, hs⟩ := htop.exists_finset_of_le_iSup
     (fun χ : ι → ℂ => ⨅ i, Module.End.eigenspace (T i) (χ i)) key.ge
   have hle : (⊤ : Submodule ℂ Z) ≤
       (⨆ c ∈ s, Submodule.span ℂ {h | h ∈ Z ∧ ∀ i, F i h = c i • h}).comap Z.subtype := by

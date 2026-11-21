@@ -167,7 +167,9 @@ theorem lower_eigen : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpac
   have hα : Finset.univ.val.map α = (B.map (· * (ξ ϖ)⁻¹)).map (· * (μ₀ ϖ)⁻¹) := by
     rw [hαB, Multiset.map_map]
     congr 1
-    rw [mul_assoc, mul_comm (ξ ϖ)⁻¹]
+    funext x
+    simp only [Function.comp_apply, MonoidHom.mul_apply, _root_.mul_inv_rev]
+    ac_rfl
   have hz := hψ f₂ hf₂K (fun s R hR m => by rw [hf₂H s R hR m, hα, genVal_map_mul _ _ _ _ _ (μ₀ ϖ)⁻¹])
   have hval := hz (torusElt k (Fin (l * t)) ϖ e)
 

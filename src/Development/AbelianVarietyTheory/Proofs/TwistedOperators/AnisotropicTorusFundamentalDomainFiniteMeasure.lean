@@ -79,7 +79,7 @@ theorem tensFlip_sig (x : D.host.E ⊗[D.host.F] AF D.host.F) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [Formalism.UG.sigR, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-  | add x y hx hy => simp only [RingEquiv.map_add (f := _), RingHom.map_add (f := _), hx, hy]
+  | add x y hx hy => simp only [RingEquiv.map_add (e := _), RingHom.map_add (f := _), hx, hy]
 
 theorem tensFlip_symm_sig (x : AF D.host.F ⊗[D.host.F] D.host.E) :
     Formalism.UG.sigR D.sp.cm.sig (AF D.host.F) ((tensFlip D).symm x) =
@@ -87,7 +87,7 @@ theorem tensFlip_symm_sig (x : AF D.host.F ⊗[D.host.F] D.host.E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [Formalism.UG.sigR, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-  | add x y hx hy => simp only [RingEquiv.map_add (f := _), RingHom.map_add (f := _), hx, hy]
+  | add x y hx hy => simp only [RingEquiv.map_add (e := _), RingHom.map_add (f := _), hx, hy]
 
 variable {D : D7} (V : HSp D)
 

@@ -55,7 +55,23 @@ theorem levS_datYt (t : T) : levS (Yc D 0) (R.βY 0) (R.datYt t 0 R.triv) = levS
 
 theorem levChi_datYt (t : T) : Lev.levChi (Yc D 0) (R.βY 0) (R.datYt t 0 R.triv) = Lev.levChi (Yc D 0) (R.βY 0) (R.dat0 R.triv) := by
   funext k
-  rw [Formalism.IndefR.Eqv.Act.flag_character_eq_principal, principalRowLevelCharacter_trivial]
+  have h : Lev.levChi (Yc D 0) (R.βY 0) (R.datYt t 0 R.triv) k =
+      Lev.levChi (Yc D 0) (R.βY 0) (Lev.flag1L (R.dat0 R.triv)) k := by
+    unfold Lev.levChi
+    congr 1
+    have e1 : Formalism.L2.DIV.levFn (R.βY 0) (R.datYt t 0 R.triv) (Lev.finE (Yc D 0) k) =
+        Formalism.L2.DIV.levFn (R.βY 0) (Lev.withP (R.datYt t 0 R.triv)
+          (LevelP.triv (R.datYt t 0 R.triv).Pg (R.datYt t 0 R.triv).r ℂ))
+          (Lev.finE (Yc D 0) k) := rfl
+    rw [e1, Lev.levFn_withP]
+    rw [show ext1 (LevelP.triv (R.datYt t 0 R.triv).Pg (R.datYt t 0 R.triv).r ℂ).H
+        (⇑(LevelP.triv (R.datYt t 0 R.triv).Pg (R.datYt t 0 R.triv).r ℂ).chi)
+        (rTup (R.βY 0) (R.datYt t 0 R.triv) (Lev.finE (Yc D 0) k)) = 1 from
+          Lev.subgroupCharExtension_one_apply _ _, one_mul, Lev.levFn_flag1]
+    unfold LevCh.datYt LevCh.dat0
+    exact Formalism.IndefR.Eqv.Act.levFn_datY_noQ Formalism.IndefR.Eqv.Act.rank_lowerChainSpace_zero_le
+      (r_le_Y 0) D.R.t 0 R.Pg (R.Q t) R.triv R.chi (R.xiR t) (fun _ => 1) Lev.Frm.B _
+  rw [h, principalRowLevelCharacter_trivial]
   unfold Lev.levChi Formalism.L2.DIV.levFn
   simp [LevCh.dat0, Lev.datY, Lev.flag1L, Lev.withP]
   exact Lev.subgroupCharExtension_one_apply _ _

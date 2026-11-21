@@ -20,6 +20,8 @@ open IsDedekindDomain NumberField CategoryTheory GroundTheory.Global
 
 attribute [local instance 2000] Rep.hV2
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem isTotallyComplex_of_sq_eq_neg_one {F : Type*} [Field F] (x : F) (hx : x ^ 2 = -1) :
     IsTotallyComplex F := by
   refine ⟨fun w => InfinitePlace.not_isReal_iff_isComplex.1 fun hw => ?_⟩

@@ -102,7 +102,7 @@ theorem nonempty_cech_sliceFst_iso {R : Type} [CommRing R] {Y : Scheme.{0}}
         (inf_le_right.trans (biInf_le W (Cube.inr_mem_sumVertex.1 hu)))
   let φ : secCube f M (fun i => U i ⊓ ⨅ j ∈ T, W j) ⟶ Cube.sliceFst
       (secCube f M fun u : κ₁ ⊕ₗ κ₂ => Sum.elim U W (ofLex u)) T :=
-    Cube.homMk (fun s => SecOnR.restrict f M (h₁ s)) fun {s t} _ x =>
+    Cube.homMk κ₁ R (fun s => SecOnR.restrict f M (h₁ s)) fun {s t} _ x =>
       (SecOnR.restrict_restrict f _ (h₁ t) x).trans (SecOnR.restrict_restrict f (h₁ s) _ x).symm
   exact ⟨@asIso _ _ _ _ (cechComplexMap φ) (isIso_cechComplexMap φ fun s hs =>
     SecOnR.restrict_bijective f (h₁ s) (h₂ s hs))⟩

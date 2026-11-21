@@ -151,14 +151,13 @@ theorem isAlgPt_genericPoint (i : Z ⟶ X) [IsClosedImmersion i] [IsIntegral Z] 
 
 theorem isNef_shift (hX : IsArithVar p D) {L : HermLB p} {e : ℝ} (hs : L.SemiPos D) (hf : NefFib L)
     (hh : ∀ x, IsAlgPt x → ∃ b, IsPtHt L x b ∧ e ≤ b) :
-    (L.shift (fun _ => -e) fun _ => rfl).IsNef D where
-  semiPos := hs.shift _ _
-  vertical := hf
-  horizontal Z i _ _ _ hc hd := by
-    obtain ⟨r, hr⟩ := exists_isRatSec (L.restr i).isLB
-    obtain ⟨b, ⟨h, H, hb⟩, hle⟩ := hh _ (isAlgPt_genericPoint i hc hd)
-    refine ⟨r, hr, ?_⟩
-    rw [curveDeg_shift hX L (-e) i hc hd hr, ← H.point Z i hc hd r hr, hb, ← add_mul]
-    exact mul_nonneg (by linarith) (Nat.cast_nonneg _)
+    (L.shift (fun _ => -e) fun _ => rfl).IsNef D := by
+  refine ⟨hs.shift _ _, fun Z i _ _ κ _ _ _ hd => hf Z i κ hd, ?_⟩
+  intro Z i _ _ _ hc hd
+  obtain ⟨r, hr⟩ := exists_isRatSec (L.restr i).isLB
+  obtain ⟨b, ⟨h, H, hb⟩, hle⟩ := hh _ (isAlgPt_genericPoint i hc hd)
+  refine ⟨r, hr, ?_⟩
+  rw [curveDeg_shift hX L (-e) i hc hd hr, ← H.point Z i hc hd r hr, hb, ← add_mul]
+  exact mul_nonneg (by linarith) (Nat.cast_nonneg _)
 
 end GlobalTheory.HtSelfInter

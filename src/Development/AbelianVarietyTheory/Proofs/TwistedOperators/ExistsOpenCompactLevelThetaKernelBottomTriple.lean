@@ -59,8 +59,8 @@ theorem exists_open_fix (hX : IsBottomTri W i j X) (t : T) :
     exact isOpen_iInter_of_finite hU
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [e, map_sum]
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_smul, hfix k κ (Subgroup.mem_iInf.1 hκ k) hf]
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [map_smul, hfix k κ (Subgroup.mem_iInf.1 hκ k) hf]
 
 theorem continuous_finPart (V : HSp D) : Continuous (GlobalTheory.DefiniteClassAvg.finPart V) := by
   have e : GlobalTheory.DefiniteClassAvg.finPart V = fun y => (GlobalTheory.DefiniteClassAvg.realPart V y)⁻¹ * y := by

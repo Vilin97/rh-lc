@@ -55,6 +55,8 @@ theorem levi_sum : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T : HSp
   congr 1
   funext ξ
   have e := congrFun (hF.levi α (GlobalTheory.MixModel.rat ξ)) 0
+  change ‖(I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d) T ψ v.μ v.𝓕
+    (om (d.levi α, 1) f) (GlobalTheory.MixModel.rat ξ) 0‖ₑ = _
   rw [e, Pi.smul_apply, smul_eq_mul, enorm_mul, enorm_mul]
   congr 1
   rw [← ofReal_norm_eq_enorm, ← ofReal_norm_eq_enorm, Circle.norm_coe, ENNReal.ofReal_one, one_mul, Complex.norm_real,

@@ -575,7 +575,7 @@ theorem linearι_preimage_chart (i : Fin (N + 1)) : linearι R he ⁻¹ᵁ chart
 
 theorem linearι_preimage_chart_of_notMem {k : Fin (M + 1)} (hk : k ∉ Set.range e) :
     linearι R he ⁻¹ᵁ chart R M k = ⊥ := by
-  have : killHom R he (X k) = 0 := (aeval_X _ k).trans (dif_neg hk)
+  have : killHom R he (X k) = 0 := (aeval_X _ k).trans (dite_eq_right hk)
   exact (congrArg (Proj.basicOpen (grading R N)) this).trans (Proj.basicOpen_zero _)
 
 end Linear
@@ -616,7 +616,7 @@ theorem isProjOver_sigmaDesc {ι : Type} [Finite ι] {T : ι → Scheme.{0}} (f 
         rw [HomogeneousLocalization.Away.val_mk]
         exact congrArg (Localization.mk · _) (killCompl_C he r)
       exact key _ s.1.2 _ s.2.2
-    rw [Sigma.ι_desc_assoc, Sigma.ι_desc, Category.assoc, hstr, e]
+    rw [Sigma.ι_comp_desc_assoc, Sigma.ι_comp_desc, Category.assoc, hstr, e]
 
 theorem isProjOver_coprodDesc {f : Y ⟶ Sp R} {g : Z ⟶ Sp R} (hf : IsProjOver f) (hg : IsProjOver g) :
     IsProjOver (coprod.desc f g) := by
@@ -624,7 +624,7 @@ theorem isProjOver_coprodDesc {f : Y ⟶ Sp R} {g : Z ⟶ Sp R} (hf : IsProjOver
   convert isProjOver_sigmaDesc (T := fun i : ULift.{0} WalkingPair => i.1.casesOn Y Z)
     (fun i => Sigma.ι (fun i : ULift.{0} WalkingPair => (i.1.casesOn Y Z : Scheme.{0})) i ≫
       (coprodIsoSigma Y Z).inv ≫ coprod.desc f g) ?_ using 1
-  · exact Sigma.hom_ext _ _ fun i => by rw [Sigma.ι_desc]
+  · exact Sigma.hom_ext _ _ fun i => by rw [Sigma.ι_comp_desc]
   · rintro ⟨_ | _⟩
     · rwa [← Category.assoc, ι_left_coprodIsoSigma_inv, coprod.inl_desc]
     · rwa [← Category.assoc, ι_right_coprodIsoSigma_inv, coprod.inr_desc]
@@ -638,10 +638,10 @@ theorem isProjOver_of_disjoint_cover {ι : Type} [Finite ι] (f : Y ⟶ Sp R) (U
     isIso_of_isOpenImmersion_of_opensRange_eq_top _ (top_le_iff.1 fun y _ => by
       obtain ⟨i, hi⟩ := Opens.mem_iSup.1 (hU.ge (Set.mem_univ y))
       exact ⟨Sigma.ι (fun i => (U i).toScheme) i ⟨y, hi⟩, (Scheme.Hom.comp_apply _ _ _).symm.trans
-        (by rw [Sigma.ι_desc]; rfl)⟩)
+        (by rw [Sigma.ι_comp_desc]; rfl)⟩)
   refine isProjOver_of_isIso_comp (Sigma.desc fun i => (U i).ι) ?_
   convert isProjOver_sigmaDesc _ h using 1
-  exact Sigma.hom_ext _ _ fun i => by rw [Sigma.ι_desc_assoc, Sigma.ι_desc]
+  exact Sigma.hom_ext _ _ fun i => by rw [Sigma.ι_comp_desc_assoc, Sigma.ι_comp_desc]
 
 
 variable (R N) in

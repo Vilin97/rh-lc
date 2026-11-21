@@ -582,7 +582,7 @@ end Final
 section Cov
 
 open scoped ComplexConjugate
-open Formalism.L2.SG.CovariantRepresentation Formalism.L2.SG.HaarPushforward Formalism.L2.SG.HaarRelevantTerms
+open Formalism.L2.SG.CovariantRepresentation Formalism.L2.SG.HaarPushforward
 
 def RHaarRel0 : Prop :=
   ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word)

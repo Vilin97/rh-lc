@@ -111,7 +111,7 @@ theorem bInf_repr_infPart (a : AE D) (k : Fin (dimE D)) :
   induction a using TensorProduct.induction_on with
   | zero => simp
   | add a b ha hb =>
-    rw [(infPart D).map_add (f := _), LinearEquiv.map_add (f := _), LinearEquiv.map_add (f := _), Finsupp.add_apply, Finsupp.add_apply, ha, hb]
+    rw [map_add (infPart D), LinearEquiv.map_add (e := _), LinearEquiv.map_add (e := _), Finsupp.add_apply, Finsupp.add_apply, ha, hb]
     exact (map_add (fstA D.host.F) _ _).symm
   | tmul r e =>
     rw [infPart_tmul, bInf, bAE, Algebra.TensorProduct.basis_repr_tmul,
@@ -123,7 +123,7 @@ theorem bFin_repr_finPart (a : AE D) (k : Fin (dimE D)) :
   induction a using TensorProduct.induction_on with
   | zero => simp
   | add a b ha hb =>
-    rw [(finPart D).map_add (f := _), LinearEquiv.map_add (f := _), LinearEquiv.map_add (f := _), Finsupp.add_apply, Finsupp.add_apply, ha, hb]
+    rw [map_add (finPart D), LinearEquiv.map_add (e := _), LinearEquiv.map_add (e := _), Finsupp.add_apply, Finsupp.add_apply, ha, hb]
     exact (map_add (sndA D.host.F) _ _).symm
   | tmul r e =>
     rw [finPart_tmul, bFin, bAE, Algebra.TensorProduct.basis_repr_tmul,

@@ -79,10 +79,12 @@ theorem exists_mixS_zero {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ 
       funext w
       exact congrArg f₀ ((Equiv.ofBijective _ hb).symm_apply_apply w)
     refine ⟨f₀ ∘ (Equiv.ofBijective _ hb).symm, (hth _).1 (by rw [hc]; exact hf₀), ?_⟩
+    change I195MixedCoordinates_7149a82cc25e6f9e668c8c61.source d T ψ μ 𝓕 _ 0 = f₀
     rw [(GlobalTheory.Unf.mixRankZero D ψ).1 S S₀ T d μ 𝓕 hμ, hc]
   · obtain ⟨h1, h2, -, -, -, h6, -⟩ := GlobalTheory.Bridge.heis_bridge D ψ S S₀ T ρ d
     obtain ⟨f, hf, hff⟩ := GlobalTheory.TowerSurj.res_surjective D S S₀ T ρ d.e d.i₀ (h1 hρ) ψ hψ μ 𝓕 (h2 ▸ hμ) f₀ hf₀
     refine ⟨f, hf, ?_⟩
+    change I195MixedCoordinates_16b53debd46a2c18720dfcab.source d T ψ μ 𝓕 f 0 = f₀
     rw [h6, map_zero, heisO_zero', hff]
 
 
@@ -112,12 +114,16 @@ theorem avg_mixS_ne_zero : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
       simp only [this, map_zero])
     (fun t l hl => by
       simp only [AddSubgroup.coe_add]
+      change ℓ₀ (I195MixedCoordinates_41a545e47d405c9816345b57.source d T ψ μ 𝓕 f (t.1 + l.1)) =
+        ℓ₀ (I195MixedCoordinates_41a545e47d405c9816345b57.source d T ψ μ 𝓕 f t.1)
       rw [hUinv l.1 (hLU hl) l.2])
     (fun a _ => by
       rw [← hall _ (GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ hf (d.extY T a.1))]
       refine congrArg (fun g => @integral _ ℂ _ _ mH ν g) (funext fun t => ?_)
       have := hY t.1 a.1
       simp only at this
+      change ψ (halfSympl T a.1 t.1) * ℓ₀ (I195MixedCoordinates_5a743adb4eaabe3d936622f8.source d T ψ μ 𝓕 f t.1) =
+        ℓ₀ (I195MixedCoordinates_5a743adb4eaabe3d936622f8.source d T ψ μ 𝓕 (heisO ψ S T (d.extY T a.1) f) t.1)
       rw [this, map_smul, smul_eq_mul, symplO_extX_extY])
   apply hℓ
   have := congrFun hφ 0

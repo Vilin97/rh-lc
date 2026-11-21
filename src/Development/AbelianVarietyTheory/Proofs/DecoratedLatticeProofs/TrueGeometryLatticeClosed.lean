@@ -52,8 +52,7 @@ theorem half_mem (hL : IntIn q V F L) {g : GA D V} (hg : GlobalTheory.LevIdx.loc
   rw [e]
   refine (hL _).1 (GlobalTheory.LocGl.mulVec_int ((GlobalTheory.LocGl.mem_KO_iff _).1 hg).1 ((hL _).2 ?_))
   rw [Matrix.mulVec_mulVec, F.βγ, Matrix.one_mulVec]
-  simp only [q.sec_pr]
-  exact GlobalTheory.FinPl.LatIndHalf.mul_mem_latV he hy
+  simpa only [q.sec_pr] using GlobalTheory.FinPl.LatIndHalf.mul_mem_latV he hy
 
 theorem act_mem (hsd : IsSelfDualC V L) (hL : IntIn q V F L) {g : GA D V} (hg : GlobalTheory.LevIdx.locHom q V F g ∈ KO k Y)
     {y : Fin V.rank → Formalism.L2.Theta.AE D} (hy : y ∈ latV V L (· = q.v)) :

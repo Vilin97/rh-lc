@@ -112,22 +112,22 @@ theorem isAddHaarMeasure_muLoc (v : Pl (F := F)) : (muLoc v ι).IsAddHaarMeasure
     obtain ⟨C, hC, h⟩ := exists_compact v hK
     rw [muLoc_apply v hK.isClosed.measurableSet]
     exact (measure_mono h).trans_lt hC.measure_lt_top
-  toIsAddLeftInvariant := ⟨fun t => by
+  map_add_left_eq_self t := by
     refine Measure.ext fun s hs => ?_
     have hm : Measurable fun x : ι → Fv F v => t + x := (continuous_const.add continuous_id).measurable
     rw [Measure.map_apply hm hs, muLoc_apply v hs, muLoc_apply v (hm hs),
       ← measure_preimage_add _ (sgl v t) (prj v ⁻¹' s ∩ away v ι)]
     congr 1
     ext y
-    simp only [Set.mem_inter_iff, Set.mem_preimage, prj_sgl_add, sgl_add_mem_away]⟩
-  toIsOpenPosMeasure := ⟨fun U hU hne => by
+    simp only [Set.mem_inter_iff, Set.mem_preimage, prj_sgl_add, sgl_add_mem_away]
+  open_pos U hU hne := by
     obtain ⟨t, ht⟩ := hne
     rw [muLoc_apply v hU.measurableSet]
     refine ((hU.preimage (continuous_prj v)).inter (isClopen_away v).isOpen).measure_ne_zero _
       ⟨sgl v t + 0, ?_, (sgl_add_mem_away v t 0).2 (zero_mem_away v)⟩
     have e : prj v (0 : ι → Af F) = 0 := funext fun i => map_zero _
     rw [Set.mem_preimage, prj_sgl_add, e, add_zero]
-    exact ht⟩
+    exact ht
 
 theorem integral_muLoc (v : Pl (F := F)) {φ : (ι → Fv F v) → ℂ} (hφ : Continuous φ) :
     ∫ x, φ x ∂(muLoc v ι) = ∫ y : Vf F ι, φ (prj v y) * ind v ι y ∂Measure.addHaar := by

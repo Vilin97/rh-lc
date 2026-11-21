@@ -61,7 +61,8 @@ theorem mp_colrow {ι : Type} [Fintype ι] (s : ι → ℂ) (hs : ∀ i, ‖s i�
   have hsc : MeasurePreserving (fun z : ι → ℂ => (-2 : ℝ) • z)
       (((2 : ℝ≥0∞) ^ n * 2 ^ n) • volume) volume := by
     refine ⟨measurable_const_smul _, ?_⟩
-    rw [Measure.map_smul, Measure.map_addHaar_smul _ (by norm_num), smul_smul]
+    rw [Measure.map_smul _ (measurable_const_smul _).aemeasurable,
+      Measure.map_addHaar_smul _ (by norm_num), smul_smul]
     have hf : Module.finrank ℝ (ι → ℂ) = n * 2 := by
       simp [Module.finrank_pi_fintype, hn]
     have h1 : ENNReal.ofReal |((-2 : ℝ) ^ Module.finrank ℝ (ι → ℂ))⁻¹| = ((2 : ℝ≥0∞) ^ n * 2 ^ n)⁻¹ := by

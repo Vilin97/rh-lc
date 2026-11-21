@@ -258,21 +258,17 @@ theorem IsKFinite.rightTranslate_finEmb {φ : AdelicGLn.AdelicGL K n → ℂ} (h
 
 theorem IsAutomorphicForm.rightTranslate_finEmb {φ : AdelicGLn.AdelicGL K n → ℂ}
     (hφ : IsAutomorphicForm φ) (h : AdelicGLn.FiniteAdelicGL K n) :
-    IsAutomorphicForm (rightTranslate (finEmb K n h) φ) where
-  isLeftInvariant := hφ.isLeftInvariant.translate _
-  isSmooth := hφ.isSmooth.rightTranslate_finEmb h
-  isKFinite := IsKFinite.rightTranslate_finEmb hφ.isSmooth hφ.isKFinite h
-  isZFinite := hφ.isZFinite.map_rtFin h
-  hasModerateGrowth := hφ.hasModerateGrowth.translate _
+    IsAutomorphicForm (rightTranslate (finEmb K n h) φ) :=
+  ⟨hφ.isLeftInvariant.translate _, hφ.isSmooth.rightTranslate_finEmb h,
+    IsKFinite.rightTranslate_finEmb hφ.isSmooth hφ.isKFinite h, hφ.isZFinite.map_rtFin h,
+    hφ.hasModerateGrowth.translate _⟩
 
 theorem IsAutomorphicForm.rightTranslate_infEmb {φ : AdelicGLn.AdelicGL K n → ℂ}
     (hφ : IsAutomorphicForm φ) {a : archGroup K n} (ha : a ∈ archCompact K n) :
-    IsAutomorphicForm (rightTranslate (infEmb K n a) φ) where
-  isLeftInvariant := hφ.isLeftInvariant.translate _
-  isSmooth := hφ.isSmooth.rightTranslate_infEmb a
-  isKFinite := hφ.isKFinite.rightTranslate_of_mem_maxCompact ha
-  isZFinite := hφ.isZFinite.map_rtInf a
-  hasModerateGrowth := hφ.hasModerateGrowth.translate _
+    IsAutomorphicForm (rightTranslate (infEmb K n a) φ) :=
+  ⟨hφ.isLeftInvariant.translate _, hφ.isSmooth.rightTranslate_infEmb a,
+    hφ.isKFinite.rightTranslate_of_mem_maxCompact ha, hφ.isZFinite.map_rtInf a,
+    hφ.hasModerateGrowth.translate _⟩
 
 theorem IsAutomorphicForm.rightTranslate_of_mem_maxCompact {φ : AdelicGLn.AdelicGL K n → ℂ}
     (hφ : IsAutomorphicForm φ) {k : AdelicGLn.AdelicGL K n} (hk : k ∈ maxCompact) :
@@ -289,7 +285,8 @@ variable (K n)
 def finRep : Representation ℂ (AdelicGLn.FiniteAdelicGL K n) (automorphicForms K n) where
   toFun h := (rightTranslateL (finEmb K n h)).restrict fun _ hφ => hφ.rightTranslate_finEmb h
   map_one' := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
-    simp [GroundTheory.Automorphic.rightTranslate])
+    change φ.val (g * finEmb K n 1) = φ.val g
+    rw [map_one, mul_one])
   map_mul' h₁ h₂ := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
     show (φ : AdelicGLn.AdelicGL K n → ℂ) (g * finEmb K n (h₁ * h₂)) =
       (φ : AdelicGLn.AdelicGL K n → ℂ) (g * finEmb K n h₁ * finEmb K n h₂)
@@ -298,7 +295,8 @@ def finRep : Representation ℂ (AdelicGLn.FiniteAdelicGL K n) (automorphicForms
 def archCompactRep : Representation ℂ (archCompact K n) (automorphicForms K n) where
   toFun k := (rightTranslateL (infEmb K n k)).restrict fun _ hφ => hφ.rightTranslate_infEmb k.2
   map_one' := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
-    simp [GroundTheory.Automorphic.rightTranslate])
+    change φ.val (g * infEmb K n ((1 : archCompact K n) : archGroup K n)) = φ.val g
+    rw [OneMemClass.coe_one, map_one, mul_one])
   map_mul' k₁ k₂ := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
     show (φ : AdelicGLn.AdelicGL K n → ℂ) (g * infEmb K n ((k₁ * k₂ : archCompact K n) : archGroup K n)) =
       (φ : AdelicGLn.AdelicGL K n → ℂ) (g * infEmb K n k₁ * infEmb K n k₂)
@@ -312,7 +310,8 @@ def finRepCusp : Representation ℂ (AdelicGLn.FiniteAdelicGL K n) (cuspForms K 
   toFun h := (rightTranslateL (finEmb K n h)).restrict fun _ hφ =>
     ⟨hφ.1.rightTranslate_finEmb h, hφ.2.translate _⟩
   map_one' := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
-    simp [GroundTheory.Automorphic.rightTranslate])
+    change φ.val (g * finEmb K n 1) = φ.val g
+    rw [map_one, mul_one])
   map_mul' h₁ h₂ := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
     show (φ : AdelicGLn.AdelicGL K n → ℂ) (g * finEmb K n (h₁ * h₂)) =
       (φ : AdelicGLn.AdelicGL K n → ℂ) (g * finEmb K n h₁ * finEmb K n h₂)
@@ -322,7 +321,8 @@ def archCompactRepCusp : Representation ℂ (archCompact K n) (cuspForms K n) wh
   toFun k := (rightTranslateL (infEmb K n k)).restrict fun _ hφ =>
     ⟨hφ.1.rightTranslate_infEmb k.2, hφ.2.translate _⟩
   map_one' := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
-    simp [GroundTheory.Automorphic.rightTranslate])
+    change φ.val (g * infEmb K n ((1 : archCompact K n) : archGroup K n)) = φ.val g
+    rw [OneMemClass.coe_one, map_one, mul_one])
   map_mul' k₁ k₂ := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
     show (φ : AdelicGLn.AdelicGL K n → ℂ) (g * infEmb K n ((k₁ * k₂ : archCompact K n) : archGroup K n)) =
       (φ : AdelicGLn.AdelicGL K n → ℂ) (g * infEmb K n k₁ * infEmb K n k₂)

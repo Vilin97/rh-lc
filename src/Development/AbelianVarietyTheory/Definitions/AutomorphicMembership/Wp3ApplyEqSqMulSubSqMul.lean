@@ -93,7 +93,10 @@ variable {R F}
 theorem isInert_tr (h : R.IsInert) : letI := alg b iK; (real3 b R).IsInert := by
   letI := alg b iK
   constructor
-  case tie => tr_clause a b h.tie
+  case tie =>
+    constructor
+    · exact (by with_unfolding_all exact (h.tie.plI_inj :))
+    · exact (by with_unfolding_all exact (h.tie.okI :))
   case onto => exact (by with_unfolding_all exact (h.onto :))
   case hR => exact (by with_unfolding_all exact (h.hR :))
   case hL => exact (by with_unfolding_all exact (h.hL :))
@@ -111,21 +114,21 @@ theorem isTup_tr (h : R.IsTup) : letI := alg b iK; (real3 b R).IsTup := by
 theorem isScal_tr (h : R.IsScal F) : letI := alg b iK; (real3 b R).IsScal (face3 b F) := by
   letI := alg b iK
   constructor
-  case lam0 => tr_via (fun W : type_of% R.Wp3 => ∀ i t p (l : ℝ), W i p ≠ ⊥ →
-      (∀ x ∈ W i p, R.thG i t (LinearMap.adjoint (R.thG i t) x) = (l : ℂ) • x) → R.lam3 i t p A.A.v0 = l) (wp3_apply_eq_sq_mul_sub_sq_mul b R) h.lam0
-  case kap => tr_via (fun E : type_of% R.EEp3 => ∀ κ : ℝ,
+  case lam0 => exact (by exact ((Eq.mp (congrArg (fun W : type_of% R.Wp3 => ∀ i t p (l : ℝ), W i p ≠ ⊥ →
+      (∀ x ∈ W i p, R.thG i t (LinearMap.adjoint (R.thG i t) x) = (l : ℂ) • x) → R.lam3 i t p A.A.v0 = l) (wp3_apply_eq_sq_mul_sub_sq_mul b R)) h.lam0) :))
+  case kap => exact (by exact ((Eq.mp (congrArg (fun E : type_of% R.EEp3 => ∀ κ : ℝ,
       Lift.IsKap a.D.R.m (fun t => R.Th t ∘ₗ LinearMap.adjoint (R.Th t)) E R.lamN κ →
-      (∃ t p, E p ≠ ⊥ ∧ ∏ j ∈ Finset.Icc 1 a.D.R.m, R.lamN t j p ≠ 0) → R.kap = κ) (realAdelicInertTransport_typeRows_eq b R) h.kap
-  case off => tr_via (fun X : Cx.CxData A.fam3.amb3 => ∀ i p v (l : ℝ), v ≠ A.A.v0 → partAtW F X i p v →
+      (∃ t p, E p ≠ ⊥ ∧ ∏ j ∈ Finset.Icc 1 a.D.R.m, R.lamN t j p ≠ 0) → R.kap = κ) (realAdelicInertTransport_typeRows_eq b R)) h.kap) :))
+  case off => exact (by exact ((Eq.mp (congrArg (fun X : Cx.CxData A.fam3.amb3 => ∀ i p v (l : ℝ), v ≠ A.A.v0 → partAtW F X i p v →
       (∀ x, X.tC F.cr false i A.A.μ0 (Cx.cpt A.A.v0.embedding x) ∈ X.Wp i p → ∀ y,
         inner ℂ (X.wC false i v (Cx.cpt v.embedding ((X.liftMat F.cr false i A.A.μ0).mulVec x)))
             (X.wC false i v (Cx.cpt v.embedding ((X.liftMat F.cr false i A.A.μ0).mulVec y))) =
           ((l : ℝ) : ℂ) * Formalism.HermitianLatticesTheory.majAt (Pi.basisFun a.D.what₂.LL _) ((Cx.lv (F.fc X.zs) false).XT i A.A.μ0) v x y) →
-      R.lam3 i A.A.μ0 p v = l) (toCx3_eq b R F) h.off
-  case abs0 => tr_via (fun u : Parts R => ∀ i t p, u.2.2 i p = ⊥ →
-      R.lam3 i t p A.A.v0 = Real.exp ((F.Zsc (cxW R F u).zs).l6m i)) (parts_eq b R F) h.abs0
-  case abs => tr_via (fun X : Cx.CxData A.fam3.amb3 => ∀ i p v, v ≠ A.A.v0 → ¬ partAtW F X i p v →
-      R.lam3 i A.A.μ0 p v = Real.exp ((F.Zsc X.zs).l6m i)) (toCx3_eq b R F) h.abs
+      R.lam3 i A.A.μ0 p v = l) (toCx3_eq b R F)) h.off) :))
+  case abs0 => exact (by exact ((Eq.mp (congrArg (fun u : Parts R => ∀ i t p, u.2.2 i p = ⊥ →
+      R.lam3 i t p A.A.v0 = Real.exp ((F.Zsc (cxW R F u).zs).l6m i)) (parts_eq b R F)) h.abs0) :))
+  case abs => exact (by exact ((Eq.mp (congrArg (fun X : Cx.CxData A.fam3.amb3 => ∀ i p v, v ≠ A.A.v0 → ¬ partAtW F X i p v →
+      R.lam3 i A.A.μ0 p v = Real.exp ((F.Zsc X.zs).l6m i)) (toCx3_eq b R F)) h.abs) :))
   case tup => exact (by with_unfolding_all exact (h.tup :))
 
 theorem primRows3_tr (h : PrimRows3 R F) : letI := alg b iK; PrimRows3 (real3 b R) (face3 b F) := by

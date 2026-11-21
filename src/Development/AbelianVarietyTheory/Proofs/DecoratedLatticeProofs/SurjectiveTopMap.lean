@@ -143,8 +143,8 @@ theorem real_translate (hθ : IsInfFam θ) (hj : IsJ u M j) : ∀ a ∈ GinfC D.
     | add a b ha hb =>
       obtain ⟨a', e1, f1⟩ := ha
       obtain ⟨b', e2, f2⟩ := hb
-      refine ⟨a' + b', by rw [j.map_add (f := _), j.map_add (f := _), LinearMap.map_add (f := _), e1, e2], fun T hT h => ?_⟩
-      rw [T.map_add (f := _), T.map_add (f := _), Pi.add_apply, Pi.add_apply, f1 T hT, f2 T hT]
+      refine ⟨a' + b', by rw [map_add j, map_add j, map_add, e1, e2], fun T hT h => ?_⟩
+      rw [map_add T, map_add T, Pi.add_apply, Pi.add_apply, f1 T hT, f2 T hT]
 
 theorem hasMat_finPt {h : GA D D.sp.X'} (hh : h ∈ GfC D.sp.X') : HasMat h (finPt h).1 :=
   ⟨hh, fun i j => (finN_apply D.sp.X' (rankP D) h (finCongr (rankP D) i) (finCongr (rankP D) j)).symm⟩

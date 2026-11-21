@@ -168,8 +168,9 @@ theorem eigen_eq_one_of_diag_any : ∀ (F E : Type) [Field F] [NumberField F] [F
       exact congrFun (congrFun e2 (Sum.inl i)) j
     · have hz' := hp.2 (Sum.elim z z) ⟨hz, hz⟩
       exact ⟨hvec p _ ht z ▸ hz'.1.1, hvec p⁻¹ _ ht' z ▸ hz'.2.1⟩
-  rw [hμ, map_smul, smul_eq_mul, hβ, Circle.coe_one, one_mul] at hrule
-  have hμ' := mul_right_cancel₀ hl hrule
+  have hrule' := (congrArg (DiagForm.lDiag F (Fin a × Fin (a + a'))) hμ).symm.trans hrule
+  simp only [map_smul, smul_eq_mul, hβ, Circle.coe_one, one_mul] at hrule'
+  have hμ' := mul_right_cancel₀ hl hrule'
   rw [hμ', Complex.norm_real, Real.norm_of_nonneg (Real.rpow_nonneg (NNReal.coe_nonneg _) _)] at hn
   rw [hμ', hn, Complex.ofReal_one]
 

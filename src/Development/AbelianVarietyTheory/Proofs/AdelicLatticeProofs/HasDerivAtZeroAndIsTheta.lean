@@ -137,8 +137,8 @@ theorem continuous_symplOH (S T : HSp D) {X : Type} [TopologicalSpace X] {x y : 
   have hx' : ∀ i j, Continuous fun t => x t i j := fun i j =>
     (continuous_apply j).comp ((continuous_apply i).comp hx)
   have hh : Continuous fun t => hO S T (x t) (y t) :=
-    continuous_finset_sum _ fun _ _ => continuous_finset_sum _ fun _ _ => continuous_finset_sum _ fun _ _ =>
-      continuous_finset_sum _ fun _ _ => ((continuous_const.mul (hy' _ _)).mul continuous_const).mul (hx' _ _)
+    continuous_finsetSum _ fun _ _ => continuous_finsetSum _ fun _ _ => continuous_finsetSum _ fun _ _ =>
+      continuous_finsetSum _ fun _ _ => ((continuous_const.mul (hy' _ _)).mul continuous_const).mul (hx' _ _)
   have ht : Continuous (Algebra.trace (AF D.host.F) (AE D)) := IsModuleTopology.continuous_of_linearMap _
   exact continuous_const.mul (ht.comp (continuous_const.mul hh))
 
@@ -188,7 +188,7 @@ theorem exists_log {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) 
       map_add' := fun a b => by
         simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib, mul_add] }
   refine ⟨lam, ?_, fun a ha => ?_⟩
-  · exact continuous_const.mul (continuous_finset_sum _ fun ρ _ => (hθ ρ).2.comp continuous_fst)
+  · exact continuous_const.mul (continuous_finsetSum _ fun ρ _ => (hθ ρ).2.comp continuous_fst)
   · have hc := hψ.2.2 θ hθ (fstA D.host.F a)
     have e : pairA D.host.F (fstA D.host.F a) 0 = a := Prod.ext rfl ha.symm
     rw [psiInf, e] at hc

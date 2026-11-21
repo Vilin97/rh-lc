@@ -44,12 +44,14 @@ theorem mixS_zero_target : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S S₀
   rcases Nat.eq_zero_or_pos ρ with rfl | hρ
   · have hz := (GlobalTheory.T.wittDecomposition_mixedCoords_rank_zero D ψ).1 S S₀ T d μ 𝓕 hμ
     have hi := (GlobalTheory.T.weil_datum_transport_source_rational_isometry D ψ S S₀ T d hS.std).2.2.2 χS χT om om₀ hS hS₀ 1 h f hf
+    change I195MixedCoordinates_00549d7c7323d43c39912169.source d T ψ μ 𝓕 (om (1, h) f) 0 = om₀ (1, h) (I195MixedCoordinates_00549d7c7323d43c39912169.source d T ψ μ 𝓕 f 0)
     rw [hz, hz, hi, map_one]
   · obtain ⟨hsp, hrat, -, -, -, hmix, -⟩ := GlobalTheory.T.wittSourceMixedCoord_heisenbergRestriction D ψ S S₀ T ρ d
     have hc := GlobalTheory.T.weilCompatible_of_sameSplittingCharacter D S S₀ T ρ d.e d.i₀ (hsp hρ) ψ χS χT χT om om₀ hS hS₀ μ 𝓕 (hrat ▸ hμ) h f hf
     have h0 : ∀ g : WO S T → ℂ, heisO ψ S T (d.extX T 0) g = g := by
       intro g; funext w
       simp [heisO, symplOH_zero_right]
+    change I195MixedCoordinates_61fbc522a99e851221ffe16d.source d T ψ μ 𝓕 (om (1, h) f) 0 = om₀ (1, h) (I195MixedCoordinates_61fbc522a99e851221ffe16d.source d T ψ μ 𝓕 f 0)
     rw [hmix, hmix, h0, h0, hc]
 
 end GlobalTheory.ValueAtOrigin

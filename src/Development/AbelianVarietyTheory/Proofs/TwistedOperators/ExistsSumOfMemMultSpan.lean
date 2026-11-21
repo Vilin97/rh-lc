@@ -52,7 +52,7 @@ theorem gkGen_le {ψ : GA D V → ℂ} {A : Submodule ℂ (GA D V → ℂ)} (hψ
   sInf_le ⟨hψ, hA⟩
 
 structure IsGKMult
-    (F : MultilinearMap ℂ (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ)) (GA D V → ℂ)) : Prop where
+    (F : MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ)) (GA D V → ℂ)) : Prop where
   aut : ∀ u, IsAutFunSm θ V (F u)
   cusp : ∀ u, IsCuspFun V (F u)
   equivK : ∀ τ, ∀ g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ), M.fr τ * g * (M.fr τ)⁻¹ ∈ Formalism.REAL.Kset (M.ε τ) →
@@ -64,7 +64,7 @@ structure IsGKMult
       F (Function.update u τ w) = Rder θ V τ X (F u)
 
 def multSpan : Submodule ℂ (GA D V → ℂ) :=
-  Submodule.span ℂ {f | ∃ (F : MultilinearMap ℂ (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ))
+  Submodule.span ℂ {f | ∃ (F : MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ))
     (GA D V → ℂ)) (u : ∀ τ, GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ)), IsGKMult θ M F ∧ f = F u}
 
 def IsKFinCuspOfType (f : GA D V → ℂ) : Prop :=
@@ -72,19 +72,19 @@ def IsKFinCuspOfType (f : GA D V → ℂ) : Prop :=
     ∃ W : Submodule ℂ (GA D V → ℂ), FiniteDimensional ℂ W ∧ f ∈ W ∧ ∀ τ, ∀ g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ),
       M.fr τ * g * (M.fr τ)⁻¹ ∈ Formalism.REAL.Kset (M.ε τ) → ∀ h ∈ W, rTr V (atTau θ V τ g) h ∈ W
 
-theorem IsGKMult.smul {F : MultilinearMap ℂ (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ))
+theorem IsGKMult.smul {F : MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ))
     (GA D V → ℂ)} (h : IsGKMult θ M F) (c : ℂ) : IsGKMult θ M (c • F) where
   aut u := Formalism.IndefR.Mult.isAutFunSm_smul θ V (h.aut u) c
   cusp u := Formalism.IndefR.Mult.isCuspFun_smul V (h.cusp u) c
   equivK τ g hg hk u w hw := by
-    rw [MultilinearMap.smul_apply, MultilinearMap.smul_apply, h.equivK τ g hg hk u w hw]
+    rw [smul_apply, smul_apply, h.equivK τ g hg hk u w hw]
     rfl
   equivLie τ X hX u w hw := by
-    rw [MultilinearMap.smul_apply, MultilinearMap.smul_apply, h.equivLie τ X hX u w hw,
+    rw [smul_apply, smul_apply, h.equivLie τ X hX u w hw,
       Formalism.IndefR.Mult.rder_smul]
 
 theorem exists_sum_of_mem_multSpan {ψ : GA D V → ℂ} (hψ : ψ ∈ multSpan θ M) :
-    ∃ (n : ℕ) (F : Fin n → MultilinearMap ℂ (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ))
+    ∃ (n : ℕ) (F : Fin n → MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ))
       (GA D V → ℂ)) (u : Fin n → ∀ τ, GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ)),
       (∀ l, IsGKMult θ M (F l)) ∧ ∀ g, ψ g = ∑ l, F l (u l) g := by
   obtain ⟨n, c, f, hf⟩ := Submodule.mem_span_set'.1 hψ

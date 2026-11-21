@@ -102,12 +102,13 @@ theorem valR_eq_of_val (hL : L.IsLB) {φ : K → (Y ⟶ X)} {φ' : K → (Y' ⟶
     exact this
   refine ⟨hj', toStkA_injective ?_⟩
   obtain ⟨J, hJ⟩ := TorusCoord.exists_good' hL (cpt C)
-  refine (toStkA_valR r _ _ hj _).trans (Eq.trans (congrArg Units.val ?_) (toStkA_valR r' _ _ hj' _).symm)
-  refine (gen_trans ht r _ (hj trivial) (hJ.mem φ r)).trans
-    (Eq.trans ?_ (gen_trans ht' r' _ (hj' trivial) (hJ.mem φ' r')).symm)
-  refine congrArg₂ (· * ·) ?_ (hv _ J hJ)
-  exact Finset.prod_congr rfl fun k _ =>
-    congrArg (fun q => gm q (cpt C) (L.U (j k) ⊓ L.U (J q)) (L.g (j k) (J q)) ^ ε k) (h k)
+  have he : gm r (cpt C) (LB.wchart L φ j) (t.s j) = gm r' (cpt C) (LB.wchart L φ' j) (t'.s j) := by
+    refine (gen_trans ht r _ (hj trivial) (hJ.mem φ r)).trans
+      (Eq.trans ?_ (gen_trans ht' r' _ (hj' trivial) (hJ.mem φ' r')).symm)
+    refine congrArg₂ (· * ·) ?_ (hv _ J hJ)
+    exact Finset.prod_congr rfl fun k _ =>
+      congrArg (fun q => gm q (cpt C) (L.U (j k) ⊓ L.U (J q)) (L.g (j k) (J q)) ^ ε k) (h k)
+  exact (toStkA_valR r _ _ hj _).trans (Eq.trans (congrArg Units.val he) (toStkA_valR r' _ _ hj' _).symm)
 
 end Values
 
@@ -159,7 +160,7 @@ theorem exists_finset_factor {V C : Type} [CommRing V] [CommRing C] [IsLocalRing
       refine ⟨φ a, ?_⟩
       rw [← RingHom.comp_apply, hj, ← GlobalTheory.Points.valR_constFn_of_over q j c hc U ht a, GlobalTheory.Points.valR_eq c U ht]
       rfl
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let e : W ≃+* io.range := RingEquiv.ofBijective io.rangeRestrict
     ⟨fun a b h => hio (congrArg Subtype.val h), io.rangeRestrict_surjective⟩

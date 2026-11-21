@@ -29,7 +29,8 @@ theorem normalFormStabilizerMeasure_eq_any_normalForm : ∀ (k r j : ℕ) (hj : 
   have hNt : IsNormalFormStabilizerMeasure k r hj z z' (n₁ * g₀ * n₂) t.toReal μR := by
     unfold IsNormalFormStabilizerMeasure
     exact ⟨hz, hz', hT, n₁, hn₁, n₂, hn₂, g₀, β, c, hg₀, rfl, by
-      rw [ht, ENNReal.ofReal_toReal htop.ne, Measure.map_smul]⟩
+      rw [ht, ENNReal.ofReal_toReal htop.ne, Measure.map_smul]
+      exact (conj_cont n₂⁻¹).measurable.aemeasurable⟩
   have h1 := normalFormStabilizerMeasure_scalar_le hj z z' _ 1 t.toReal μR hR hNt
   have h2 := normalFormStabilizerMeasure_scalar_le hj z z' _ t.toReal 1 μR hNt hR
   rw [ENNReal.ofReal_one, ENNReal.ofReal_toReal htop.ne] at h1 h2

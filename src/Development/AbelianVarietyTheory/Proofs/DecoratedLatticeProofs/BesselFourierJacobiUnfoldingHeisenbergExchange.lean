@@ -11,7 +11,7 @@ noncomputable section
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
 open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Unf GlobalTheory.LatPair GlobalTheory.SplitWeil ValuativeRel IsLocalRing
 open GlobalTheory.FinPl
-open scoped TensorProduct Pointwise
+open scoped TensorProduct Pointwise Matrix
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.FinPl.HeisExchange
@@ -48,8 +48,7 @@ theorem quasi_resT {ψ : AddChar (AF D.host.F) ℂ} {T A L : HSp D} (o : OrthDec
     f ((o.resT S).symm (0, γ + v)) = ψ (-symplOH S L γ v) * f ((o.resT S).symm (0, v)) := by
   have r : (o.resT S).symm (0, γ) ∈ ratMx D T.rank S.rank := by
     refine (o.mem_ratL_resT S _).2 ?_
-    rw [AddEquiv.apply_symm_apply]
-    exact ⟨zero_mem _, hγ⟩
+    simpa only [AddEquiv.apply_symm_apply, Prod.fst, Prod.snd] using (show (0 : WO S A) ∈ ratL A S ∧ γ ∈ ratL L S from ⟨zero_mem _, hγ⟩)
   obtain ⟨γ₂, hγ₂⟩ := r
   have q := hf.quasi γ₂ ((o.resT S).symm (0, v))
   have e : ratW T S γ₂ = (o.resT S).symm (0, γ) := hγ₂
@@ -60,8 +59,7 @@ theorem quasi_resS {ψ : AddChar (AF D.host.F) ℂ} {T A L : HSp D} (o : OrthDec
     f ((o.resS S).symm (0, γ + v)) = ψ (-symplOH L S γ v) * f ((o.resS S).symm (0, v)) := by
   have r : (o.resS S).symm (0, γ) ∈ ratMx D S.rank T.rank := by
     refine (o.mem_ratL_resS S _).2 ?_
-    rw [AddEquiv.apply_symm_apply]
-    exact ⟨zero_mem _, hγ⟩
+    simpa only [AddEquiv.apply_symm_apply, Prod.fst, Prod.snd] using (show (0 : WO A S) ∈ ratL S A ∧ γ ∈ ratL S L from ⟨zero_mem _, hγ⟩)
   obtain ⟨γ₂, hγ₂⟩ := r
   have q := hf.quasi γ₂ ((o.resS S).symm (0, v))
   have e : ratW S T γ₂ = (o.resS S).symm (0, γ) := hγ₂

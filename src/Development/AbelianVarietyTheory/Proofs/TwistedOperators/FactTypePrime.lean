@@ -58,7 +58,7 @@ def clsA (V : HSp D) (K : Subgroup (GL (Fin V.rank) (EAf D))) (h : GA D V) : Cl 
   Quotient.mk'' (finU V h)
 
 def evAt {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (h : GA D V) :
-    MMap M →ₗ[ℂ] MultilinearMap ℂ (fun τ : D.what₂.Tau => M.sm τ) ℂ where
+    MMap M →ₗ[ℂ] MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => M.sm τ) ℂ where
   toFun T := (LinearMap.proj h : (GA D V → ℂ) →ₗ[ℂ] ℂ).compMultilinearMap T
   map_add' T T' := by ext v; simp
   map_smul' c T := by ext v; simp

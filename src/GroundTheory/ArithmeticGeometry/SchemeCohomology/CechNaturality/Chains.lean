@@ -315,13 +315,14 @@ theorem bd_rho : ∀ (n : ℕ) (i : Fin (n + 2) → ι),
     have hx : lin (rho (ι := ι) 0) (bd 0 (Finsupp.single i 1)) ∈
         Finsupp.supported ℤ ℤ (ordFrom (minIdx i)) := by
       rw [lin_rho_zero]
-      refine Finsupp.supported_mono ?_ (bd_mem_rangeIn (n := 0) (single_mem_rangeIn i 1))
-      intro j hj
-      refine mem_ordFrom.2 ⟨strictMono_of_fin_one j, ?_⟩
-      have hj0 : j 0 ∈ Set.range j := ⟨0, rfl⟩
-      obtain ⟨a, ha⟩ := (mem_rangeIn.1 hj) hj0
-      rw [← ha]
-      exact minIdx_le i a
+      have hsubset : rangeIn (n := 0) (Set.range i) ⊆ ordFrom (minIdx i) := by
+        intro j hj
+        refine mem_ordFrom.2 ⟨strictMono_of_fin_one j, ?_⟩
+        have hrange : Set.range j ⊆ Set.range i := mem_rangeIn.1 hj
+        obtain ⟨a, ha⟩ := hrange (Set.mem_range_self 0)
+        rw [← ha]
+        exact minIdx_le i a
+      exact Finsupp.supported_mono hsubset (bd_mem_rangeIn (single_mem_rangeIn i 1))
     change bd 0 (ocone (minIdx i) (lin (rho 0) (bd 0 (Finsupp.single i 1)))) = _
     rw [bd_ocone_zero _ hx, lin_rho_zero, aug_bd, zero_smul, sub_zero]
   | n + 1, i => by

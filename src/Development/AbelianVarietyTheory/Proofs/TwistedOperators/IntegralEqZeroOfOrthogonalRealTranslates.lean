@@ -47,7 +47,7 @@ theorem integral_eq_zero_of_translates : GlobalTheory.Published.CuspRapidDecay �
         funext g
         ring }
   have hℓ : ∀ x, ℓ x = ∫ g in v.𝓕, F g * t x g ∂v.μ := fun x => rfl
-  let L : MultilinearMap ℂ (fun τ => M.sm τ) ℂ := ℓ.compMultilinearMap (PiTensorProduct.tprod ℂ)
+  let L : MultilinearMap (RingHom.id ℂ) (fun τ => M.sm τ) ℂ := ℓ.compMultilinearMap (PiTensorProduct.tprod ℂ)
   have hL : ∀ u, L u = ℓ (PiTensorProduct.tprod ℂ u) := fun u => rfl
   have hx : w ∈ Submodule.span ℂ (Set.range (PiTensorProduct.tprod ℂ (s := fun τ => M.sm τ))) := by
     rw [PiTensorProduct.span_tprod_eq_top]; trivial

@@ -80,20 +80,34 @@ theorem whittaker_eq_partialCoeff {ϕ : AdelicGLn.AdelicGL K n → ℂ} (hϕ : C
   rw [whittaker_eq_partialCoeff_zero hϕ, partialCoeff_zero_eq_one ϕ hn]
 
 theorem isUSmooth_of_isAutomorphicForm {ϕ : AdelicGLn.AdelicGL K n → ℂ} (hϕ : IsAutomorphicForm ϕ) :
-    IsUSmooth ϕ where
-  arch := hϕ.isSmooth.1
-  fin := by
-    obtain ⟨U, -, hU⟩ := exists_openSubgroup_rightInvariant hϕ.isSmooth hϕ.isKFinite
-    exact ⟨U, hU⟩
-  left := hϕ.isLeftInvariant
+    IsUSmooth ϕ := by
+  obtain ⟨U, -, hU⟩ := exists_openSubgroup_rightInvariant hϕ.isSmooth hϕ.isKFinite
+  exact ⟨hϕ.isSmooth.1, ⟨U, hU⟩, hϕ.isLeftInvariant⟩
 
 theorem hasSum_partialCoeff_cusp {ϕ : AdelicGLn.AdelicGL K n → ℂ} (hϕ : ϕ ∈ cuspForms K n) {k : ℕ}
     (hk0 : 0 < k) (hk : k < n) (g : AdelicGLn.AdelicGL K n) :
     HasSum (fun ξ : {ξ : Fin k → K // ξ ≠ 0} =>
         partialCoeff ϕ k (AdelicGLn.diagonal K n (blockGL hk.le (rowCompletion ξ.1)) * g))
-      (partialCoeff ϕ (k + 1) g) :=
-  hasSum_partialCoeff_of_vecCoeff_zero (isUSmooth_of_isAutomorphicForm hϕ.1) hk
-    (fun g => vecCoeff_zero_of_isCuspidal hϕ.1.continuous hϕ.1.isLeftInvariant hϕ.2 hk0 hk g) g
+      (partialCoeff ϕ (k + 1) g) := by
+  have hzero (g' : AdelicGLn.AdelicGL K n) :
+      vecCoeff (fun x => partialCoeff ϕ (k + 1) (colGL k x * g')) 0 = 0 := by
+    have hconstant (B : LowPos n k → 𝔸[K]) :
+        ∫ A in vecDomain K (UPos n k), ϕ (uGL (extLow B + extU A) * g')
+            ∂vecMeasure K (UPos n k) = constantTerm k ϕ (uGL (extLow B) * g') := by
+      have hrepr (A : UPos n k → 𝔸[K]) :
+          uGL (extLow B + extU A) = unipGL ((shear B).symm A) * uGL (extLow B) := by
+        apply Units.ext
+        rw [Units.val_mul, coe_unipGL, coe_uGL, coe_uGL, unipMatrix_mul_uMat_extLow,
+          AddEquiv.apply_symm_apply]
+      simp_rw [hrepr, mul_assoc]
+      rw [setIntegral_comp_addEquiv (shear B).symm (continuous_shear_symm B) (continuous_shear B)
+        (isAddFundamentalDomain_shear_symm B) (f := fun A => ϕ (unipGL A * (uGL (extLow B) * g')))
+        fun ξ hξ x => hϕ.1.isLeftInvariant.unipGL_vadd _ ⟨ξ, hξ⟩ x]
+      rfl
+    rw [vecCoeff_zero_eq_setIntegral_low hϕ.1.continuous hk g']
+    refine (setIntegral_congr_fun measurableSet_vecDomain fun B _ => ?_).trans (integral_zero _ _)
+    rw [hconstant B, hϕ.2 k hk0 hk, mul_zero]
+  exact hasSum_partialCoeff_of_vecCoeff_zero (isUSmooth_of_isAutomorphicForm hϕ.1) hk hzero g
 
 
 variable (K) in

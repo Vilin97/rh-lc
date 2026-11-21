@@ -48,7 +48,7 @@ theorem kerX_of_clsPinD : ∀ (D : D7) (c : Comm D) (𝒯 : Type) (t : 𝒯 → 
   rw [h1]
   congr 1
   change _ = Finsupp.sum _ (fun y' b => b • (t s').rd (j + 1) γ ((t s').K j ψ) y')
-  rw [← Finsupp.sum_finset_sum_index (h := fun y' b => b • (t s').rd (j + 1) γ ((t s').K j ψ) y')
+  rw [Finsupp.sum_finsetSum _ _ (fun y' b => b • (t s').rd (j + 1) γ ((t s').K j ψ) y')
     (fun _ => zero_smul ℂ _) (fun _ _ _ => add_smul _ _ _)]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finsupp.sum_single_index (h := fun y' b => b • (t s').rd (j + 1) γ ((t s').K j ψ) y') (zero_smul ℂ _)]

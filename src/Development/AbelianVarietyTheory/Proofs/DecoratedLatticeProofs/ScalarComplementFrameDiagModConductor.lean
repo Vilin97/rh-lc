@@ -57,7 +57,9 @@ theorem scalar_diag_mod_g : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word
   set P' : VA X.B.I → VA X.B.I := fun y => X.B.I.fmat (X.xu u)⁻¹ *ᵥ GlobalTheory.ScalW.prj X u (X.B.I.fmat (X.xu u) *ᵥ y)
     with hP'
   set M := Mb * Mc * M6 * (D.mem u).A.T with hMdef
-  have hMg : Nat.Coprime M X.B.g := ((hMb.mul hMc).mul hM6).mul hTg
+  have hMg : Nat.Coprime M X.B.g := by
+    simp only [hMdef, Nat.coprime_mul_iff_left]
+    exact ⟨⟨⟨hMb, hMc⟩, hM6⟩, hTg⟩
   have smulL : ∀ {s : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F}, s ∈ IntAf X.B.I.F X.B.I.E → ∀ {y : VA X.B.I},
       y ∈ X.B.I.Lf → s • y ∈ X.B.I.Lf := fun hs _ hy => X.B.I.Lf.smul_mem (⟨_, hs⟩ : IntAf X.B.I.F X.B.I.E) hy
   have smulM : ∀ {s : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F}, s ∈ IntAf X.B.I.F X.B.I.E → ∀ {y : VA X.B.I},

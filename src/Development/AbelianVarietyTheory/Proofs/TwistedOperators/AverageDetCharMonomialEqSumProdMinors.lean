@@ -45,7 +45,7 @@ theorem continuous_colSub_mul (Λ : Pol ι d a →ₗ[ℂ] ℂ) (P : Pol ι d a)
           C (G y.1 j y.2.2) * (colSub (fun τ => Matrix.of (G τ)) p * (X (y.1, y.2.1, j) * Q)) by ring,
         ← smul_eq_C_mul, map_smul, smul_eq_mul]
     simp only [h]
-    refine continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun j _ => ?_
     exact Continuous.mul (by fun_prop) (hp _)
 
 theorem norm_det_unitary (u : Matrix.unitaryGroup (Fin a) ℂ) : ‖(u : Matrix (Fin a) (Fin a) ℂ).det‖ = 1 := by

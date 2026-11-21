@@ -68,7 +68,7 @@ theorem le_exp_posLog (y : ℝ) : y ≤ Real.exp (Real.posLog y) := by
 
 theorem posLog_le_of_le_exp {y E : ℝ} (hy : 0 ≤ y) (hE : 0 ≤ E) (h : y ≤ Real.exp E) :
     Real.posLog y ≤ E := by
-  refine (Real.posLog_le_posLog hy h).trans ?_
+  refine (Real.posLog_le_posLog (by linarith) h).trans ?_
   rw [Real.posLog_apply, Real.log_exp]
   exact max_le hE le_rfl
 

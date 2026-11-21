@@ -163,7 +163,7 @@ theorem irreducible [CompleteSpace H] (hπ : IsIrrUnitary π) (hD : HasDSComp M 
   classical
   have hunit : IsUnitaryRep π := hπ.unitary
   haveI : Nontrivial H := hπ.irred.1
-  let u : ∀ τ, M.H τ := fun τ => unitVec (M.H τ)
+  let u : ∀ τ, M.H τ := fun τ => unitVec (H := M.H τ)
   obtain ⟨ev, hevd⟩ : ∃ ev : smoothPart (finPartDS M hU) →ₗ[ℂ] H,
       ev = (ContinuousMultilinearMap.apply ℂ M.H H u).toLinearMap ∘ₗ valMap hU := ⟨_, rfl⟩
   have hev : ∀ (g : GfC V) Φ, ev (finPartDSSm M hU g Φ) = π g (ev Φ) := fun g Φ => by subst hevd; rfl

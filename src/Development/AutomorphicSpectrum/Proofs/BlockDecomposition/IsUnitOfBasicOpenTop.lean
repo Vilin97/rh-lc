@@ -32,7 +32,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option linter.unusedVariables false
 noncomputable section
-open CategoryTheory AlgebraicGeometry GlobalTheory.LogCris CrystallineSemistableComparison CrystallineSemistableComparison.B CrystallineSemistableComparison.Pb DividedPowers CompanionTheory.KM.G4 GlobalTheory.CompanionTheory.KMGys ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.CompanionTheory.KMGys.Trace
+open CategoryTheory AlgebraicGeometry GlobalTheory.LogCris CrystallineSemistableComparison CrystallineSemistableComparison.B CrystallineSemistableComparison.Pb DividedPowers ReciprocityTheory.ChartRestriction.G.Geo.Tor
 
 namespace GlobalTheory.CompanionTheory.KMVan
 

@@ -240,7 +240,8 @@ theorem GlobalTheory.Core.Mi.sobolev_unif_bound : ∀ (D : D7) (θ : InfFam D) (
   have hσ : IsURepOn (UJset (M.ε τ)) (M.σ τ) := (M.ds τ).2.2.1
   have hP := M.fr_unit τ
   have hG := M.fr_gram τ
-  choose ℓ hℓ hℓT using fun g : Ω => hT.cont τ v g.1
+  have hex := fun g : Ω => hT.cont τ v g.1
+  choose ℓ hℓ hℓT using hex
   have hsm : ∀ u : M.H τ, SmoothVec (GlobalTheory.SmoothGlob.lieSet (M.ε τ)) (M.σ τ) u → u ∈ M.sm τ := fun u hu =>
     Submodule.subset_span ((GlobalTheory.SmoothCyclic.smoothVec_transport hP hG u).2 hu)
   obtain ⟨L, C, hL, hC⟩ := unif_model hσ ℓ (fun g => GlobalTheory.SmoothCyclic.sobCont_transport hP hG (hℓ g))

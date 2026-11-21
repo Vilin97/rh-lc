@@ -58,7 +58,7 @@ theorem map_eq_pi : ∀ (T V W : Type) [Fintype T] [NormedAddCommGroup V] [Norme
   obtain ⟨φ, hφs, hφ0⟩ := exists_test V
   obtain ⟨-, hI, hinv⟩ := hsd φ
   have hc1 : Continuous fun x : T → V => ∏ ρ, φ (x ρ) :=
-    continuous_finset_prod _ fun ρ _ => φ.continuous.comp (continuous_apply ρ)
+    by fun_prop
   have hs1 : HasCompactSupport fun x : T → V => ∏ ρ, φ (x ρ) := by
     refine HasCompactSupport.intro (isCompact_univ_pi fun _ : T => hφs.isCompact) fun x hx => ?_
     rw [Set.mem_univ_pi, not_forall] at hx

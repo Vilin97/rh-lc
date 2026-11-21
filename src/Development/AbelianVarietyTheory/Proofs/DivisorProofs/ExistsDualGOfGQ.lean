@@ -73,8 +73,8 @@ def formLat (G : Matrix (Fin n) (Fin n) E) (Λ : Submodule (𝓞 E) (Fin n → E
     rw [star_smul, star_star, Matrix.smul_vecMul]
 
 theorem formLat_isLattice {G : Matrix (Fin n) (Fin n) E} (hG : IsUnit G.det) {Λ : Submodule (𝓞 E) (Fin n → E)}
-    (h : Submodule.IsLattice E Λ) : Submodule.IsLattice E (formLat G Λ) where
-  fg := by
+    (h : Submodule.IsLattice E Λ) : Submodule.IsLattice E (formLat G Λ) :=
+  Submodule.IsLattice.of_fg E (by
     obtain ⟨s, hs⟩ := h.fg
     classical
     refine ⟨s.image fun x => star x ᵥ* G, le_antisymm (Submodule.span_le.2 ?_) ?_⟩
@@ -91,8 +91,7 @@ theorem formLat_isLattice {G : Matrix (Fin n) (Fin n) E} (hG : IsUnit G.det) {Λ
         have := Submodule.smul_mem _ (⟨star (c : E), Formalism.BasicNotions.Examples₂.star_isIntegral _ c.2⟩ : 𝓞 E) hx
         change star ((c : E) • x) ᵥ* G ∈ _
         rw [star_smul, Matrix.smul_vecMul]
-        exact this
-  linearIndepOn _ _ := (LinearIndependent.iff_fractionRing (𝓞 E) E).mp
+        exact this)
 
 theorem form_dual {G : Matrix (Fin n) (Fin n) E} (hG : IsUnit G.det) (hh : Gᴴ = G) (x y : Fin n → E) :
     ∑ i, ∑ j, star ((star x ᵥ* G) i) * G⁻¹ᵀ i j * (star y ᵥ* G) j = star (∑ i, ∑ j, star (x i) * G i j * y j) := by

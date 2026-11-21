@@ -130,7 +130,7 @@ theorem isReal_add_iota (h : GlobalTheory.FockCompare.Chart θ σ) {w : WO S T} 
   have a1 := congrFun (congrFun hw i) j
   have a2 := congrFun (congrFun h2 i) j
   simp only [Matrix.map_apply, Matrix.zero_apply] at a1 a2 ⊢
-  rw [Matrix.add_apply, (finPart D).map_add (f := _), a1, a2, add_zero]
+  rw [Matrix.add_apply, map_add (finPart D), a1, a2, add_zero]
 
 theorem eq_gs_xiN (h : GlobalTheory.FockCompare.Chart θ σ) {δ : ℂ} (hδ : δ ≠ 0) (sc : ℝ) (f : WO S T → ℂ) {w : WO S T}
     (hw : w.map (finPart D) = 0) :

@@ -110,6 +110,7 @@ theorem unimodular_of_unipotent : ∀ {n : ℕ} (ε : Fin n → Bool) (m : ℕ) 
     have : (fun x : Formalism.REAL.UJ ε => x * (s : Formalism.REAL.UJ ε)) ∘ S.subtype = S.subtype ∘ (· * s) := by
       funext x; rfl
     rw [this, ← Measure.map_map hφ.measurable (measurable_mul_const _), e1, Measure.map_smul, h2]
+    exact hφ.measurable.aemeasurable
 
   have key : ∀ s : S, Measure.modularCharacter s ≤ 1 := by
     intro s

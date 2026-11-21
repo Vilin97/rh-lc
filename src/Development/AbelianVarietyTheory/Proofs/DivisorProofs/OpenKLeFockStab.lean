@@ -20,7 +20,6 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 open GlobalTheory.NormSum (Pair Tup)
 open GlobalTheory.FunObj.SqNum GlobalTheory.SqTop
 open GlobalTheory.CMVal (IsHeckeL)
-open GlobalTheory.NormAdelic
 
 noncomputable section
 namespace GlobalTheory.NormAdelic

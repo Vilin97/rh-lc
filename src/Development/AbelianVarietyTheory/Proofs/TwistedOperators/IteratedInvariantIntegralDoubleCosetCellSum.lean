@@ -76,9 +76,7 @@ theorem niter_cellSum_at (ι : Type) [DecidableEq ι] (H : ι → Type) [∀ i, 
         (fun β => Wt' β * q (b β) * (((μ i (K i : Set (H i))).toReal / (ρ i (cellSet (R i) (K i) (b β i) (b β i))).toReal : ℝ) : ℂ))
         (fun β _ => by
           have := (isQuotientIntegral_indicator_doubleCoset (R i) (K i) hcl hkc hko (ρ i) (μ i) (b β i)).smul (Wt' β * q (b β))
-          convert this using 1
-          funext g
-          simp [smul_eq_mul])
+          convert this using 1)
       convert hS using 1
       apply Finset.sum_congr rfl
       intro β _

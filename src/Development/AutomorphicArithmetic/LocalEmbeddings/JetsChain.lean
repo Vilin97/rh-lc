@@ -199,19 +199,22 @@ include hc hF hFa
 theorem ptF_left (x : ∀ n, GfC (V n)) : ∀ n ≤ N, ∀ γ ∈ GQ (V n), ∀ g, ptF comp v ρ Λ x n (γ * g) = ptF comp v ρ Λ x n g
   | 0, _, γ, hγ, g => (hF _).symm.trans ((hFa γ hγ g).trans (hF _))
   | n + 1, hn, γ, hγ, g => by
-    obtain ⟨κ, h1, h2⟩ := exists_haar _ (hc n hn).1
-    simp only [ptF_succ (hc n hn) κ h1 h2, (hc n hn).2.2.2.2.2.1 γ hγ]
+    have hArrow := hc n (Nat.lt_of_succ_le hn)
+    obtain ⟨κ, h1, h2⟩ := exists_haar (V n) hArrow.1
+    simp only [ptF_succ hArrow κ h1 h2, hArrow.2.2.2.2.2.1 γ hγ]
 
 theorem ptF_rat {x x' : ∀ n, GfC (V n)} (hx : ∀ j < N, ∃ γ ∈ ratFin (V j), x' j = γ * x j) :
     ∀ n ≤ N, ptF comp v ρ Λ x' n = ptF comp v ρ Λ x n
   | 0, _ => rfl
   | n + 1, hn => by
-    obtain ⟨κ, h1, h2⟩ := exists_haar _ (hc n hn).1
-    obtain ⟨γ, hγ, e⟩ := hx n hn
+    have hn' : n < N := Nat.lt_of_succ_le hn
+    have hArrow := hc n hn'
+    obtain ⟨κ, h1, h2⟩ := exists_haar (V n) hArrow.1
+    obtain ⟨γ, hγ, e⟩ := hx n hn'
     funext g
-    rw [ptF_succ (hc n hn) κ h1 h2, ptF_succ (hc n hn) κ h1 h2, ptF_rat hx n (by omega), e]
+    rw [ptF_succ hArrow κ h1 h2, ptF_succ hArrow κ h1 h2, ptF_rat hx n (by omega), e]
     exact avg_rat _ κ (fun z => ker n z g * ptF comp v ρ Λ x n z) (fun q hq z => by
-      rw [(hc n hn).2.2.2.2.1 q hq, ptF_left hc hF hFa x n (by omega) q hq]) hγ _
+      rw [hArrow.2.2.2.2.1 q hq, ptF_left hc hF hFa x n (by omega) q hq]) hγ _
 
 
 omit hF in
@@ -238,8 +241,10 @@ theorem liftC_real (μ : ∀ n, Measure (GA D (V n))) (fd : ∀ n, Set (GA D (V 
   | n + 1, hn => by
     intro h
     have ih := liftC_real μ fd K hK n (by omega)
-    obtain ⟨h1, ⟨K₀, h2, h3, h4⟩, h5⟩ := hK n hn
-    obtain ⟨-, a2, a3, a4, a5, -, a7, a8⟩ := hc n hn
+    have hn' : n < N := Nat.lt_of_succ_le hn
+    have hLevel := hK n hn'
+    obtain ⟨h1, ⟨K₀, h2, h3, h4⟩, h5⟩ := hLevel
+    obtain ⟨-, a2, a3, a4, a5, -, a7, a8⟩ := hc n hn'
     obtain ⟨hfin, κ, hκH, hκP, hU⟩ := GlobalTheory.DefiniteClassReal.integral_eq_finClSum_avg (V n) a2 K₀ (K n) h2 h1 h3 (μ n) (fd n) h4
       (fun g => ker n g h * liftC μ fd ker F n g)
       (fun γ hγ g => by

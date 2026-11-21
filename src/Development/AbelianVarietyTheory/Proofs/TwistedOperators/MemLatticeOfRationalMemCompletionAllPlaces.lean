@@ -154,7 +154,7 @@ theorem coord_int {D : D7} {S : HSp D} (L : Lat S) (Φ : (Fin S.rank → D.host.
     | add y y' _ _ hy hy' =>
       obtain ⟨β, hβ, e⟩ := hy
       obtain ⟨β', hβ', e'⟩ := hy'
-      exact ⟨β + β', fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hβ v) (hβ' v),
+      exact ⟨β + β', fun v => by rw [map_add]; exact add_mem (hβ v) (hβ' v),
         by rw [extV_add, e, e', GlobalTheory.FinPlLoc.pairA_add]⟩
     | neg y _ hy =>
       obtain ⟨β, hβ, e⟩ := hy

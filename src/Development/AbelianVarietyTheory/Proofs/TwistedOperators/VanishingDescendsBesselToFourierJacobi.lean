@@ -188,7 +188,33 @@ theorem vanBF : ∀ D : D7, VanBF D := by
 
   obtain ⟨-, -, -, -, hconj, hinj, -⟩ := GlobalTheory.MixPer.flag_jacobi_structure D J.W J.W₀ ρ J.d
   have hclN := (GlobalTheory.T.flag_subgroups_closed_normal_cocompact' D J.W J.W₀ ρ J.d).1
-  obtain ⟨⟨hRcl, hRhaar⟩, -⟩ := GlobalTheory.T.fourierJacobi_bessel_groups_closed_haar_product D J.W J.W₀ J.W₀ (GlobalTheory.UnfBessel.zeroSp D) ρ J.d (GlobalTheory.UnfBessel.orthZero J.W₀)
+  let Z : HSp D := {
+    V := Fin 0 → D.host.E
+    hT := 0
+    herm := ⟨fun _ _ => by simp⟩
+    nondeg := ⟨fun x _ => Subsingleton.elim x 0, fun x _ => Subsingleton.elim x 0⟩
+    rank := 0
+    rank_eq := by simp
+    frame := Pi.basisFun D.host.E (Fin 0)
+    sig := fun _ => (0, 0)
+    L0 := ⊥
+    standardTuple_isLattice := by
+      refine ⟨?_, ?_⟩
+      · exact Submodule.fg_bot
+      · intro t _ ht
+        have : t = ∅ := Set.eq_empty_iff_forall_notMem.mpr fun x hx =>
+          ht.ne_zero hx (Subsingleton.elim x 0)
+        subst t
+        exact linearIndepOn_empty _ _
+    baseLattice_isUnimodular := Subsingleton.elim _ _ }
+  let o : OrthDec J.W₀ J.W₀ Z := {
+    iA := 1
+    iB := 0
+    isoA := by simp
+    isoB := by ext i; exact Fin.elim0 (show Fin 0 from i)
+    orth := by ext i; exact Fin.elim0 (show Fin 0 from i)
+    rank_add := rfl }
+  obtain ⟨⟨hRcl, hRhaar⟩, -⟩ := GlobalTheory.T.fourierJacobi_bessel_groups_closed_haar_product D J.W J.W₀ J.W₀ Z ρ J.d o
     J.vN.ν J.vN.𝓝 J.vN.unit
   obtain ⟨hνh, h𝓝, -⟩ := J.vN.unit
   have hμR : (semiMeas (flagN J.d) J.d.emb0 J.v0.μ J.vN.ν).IsHaarMeasure := hRhaar J.v0.μ J.v0.haar

@@ -27,8 +27,7 @@ def IsKRel (ε : Fin n → Bool) (A : Fin n → Fin n → Module.End ℂ X) : Pr
 theorem word_isWeightVector (hA : IsKRel ε A) {ν : Fin n → ℝ} {u : X} (hu : ∀ a, A a a u = (ν a : ℂ) • u) :
     ∀ l : List (Fin n × Fin n), KirrLow ε l → ∀ a, A a a (kirrWord A u l) = (kirrWt ν l a : ℂ) • kirrWord A u l
   | [], _, a => by simpa [kirrWord, kirrWt] using hu a
-  | p :: l, hl, a => by
-    obtain ⟨b, c⟩ := p
+  | (b, c) :: l, hl, a => by
     have hbc := (hl (b, c) List.mem_cons_self).2
     have ih := word_isWeightVector hA hu l (fun q hq => hl q (List.mem_cons_of_mem _ hq)) a
     have key := LinearMap.congr_fun (hA a a b c rfl hbc) (kirrWord A u l)

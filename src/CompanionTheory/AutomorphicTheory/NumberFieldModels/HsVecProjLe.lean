@@ -31,8 +31,9 @@ def trL (hpl : Q.IsPlace P Bs.z Bs.z' Bs.π Bs.π') (hk : 2 ≤ P.k) (he : IsFra
 
 theorem baseTie (hpl : Q.IsPlace P Bs.z Bs.z' Bs.π Bs.π') (hk : 2 ≤ P.k) (he : IsFrameB P Bs e)
     (hG : GaugeQQ P Bs e) (X : Q.ActualOps P.k P.r Bs.z Bs.z' Bs.π Bs.π') :
-    Formalism.FourierDecayAlt.P.NormalFormRelations.BaseTie X (trL hpl hk he) where
-  op l j := by
+    Formalism.FourierDecayAlt.P.NormalFormRelations.BaseTie X (trL hpl hk he) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro l j
     fin_cases j
     · exact transfer_operator_p hpl hk he X l
     · exact transfer_operator_c hpl hk he X l
@@ -40,7 +41,7 @@ theorem baseTie (hpl : Q.IsPlace P Bs.z Bs.z' Bs.π Bs.π') (hk : 2 ≤ P.k) (he
     · exact transfer_operator_pbar hpl hk he X l
     · exact transfer_operator_cbar hpl hk he X l
     · exact transfer_operator_cbar_inv hpl hk he X l
-  fn j := by
+  · intro j
     fin_cases j
     · exact transfer_gauge_generator_z hpl hk he X
     · exact transfer_gauge_generator_z_inv hpl hk he X
@@ -48,7 +49,7 @@ theorem baseTie (hpl : Q.IsPlace P Bs.z Bs.z' Bs.π Bs.π') (hk : 2 ≤ P.k) (he
     · exact transfer_gauge_generator_zbar_inv hpl hk he X
     · exact transfer_gauge_generator_ggi hpl hk he X
     · exact transfer_gauge_generator_gg_inv hpl hk he X
-  t Y a b := transfer_torus_action hpl hk he X hG Y a b
+  · exact transfer_torus_action hpl hk he X hG
 
 theorem tie_cpt (p : KB.Pl P Wp Wq) {e : M.Ty P → ℂ → (Wq →L[ℂ] Wp)} (he : IsFrameB P p.T.base e)
     (hG : GaugeQQ P p.T.base e) {Lm : R.LevelData (MA.A P (MA.DQ P)) P.r} (hM : MA.IsModelLevel P (MA.DQ P) Lm)

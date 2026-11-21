@@ -25,13 +25,43 @@ theorem _root_.GlobalTheory.MomT.LatFin.per_lattice_facts : ∀ (X : _root_.Form
       y ∈ _root_.Formalism.HermitianLatticesTheory.localization₂ P.asIdeal (_root_.GlobalTheory.MomT.per A N N') ↔
         ∀ v ∈ _root_.Formalism.HermitianLatticesTheory.localization₂ P.asIdeal N, y v ∈ _root_.Formalism.HermitianLatticesTheory.localization₂ P.asIdeal N' := by
   intro X A a b N N' hAfg hA hN hN'
+  have hNfull : Submodule.IsFullLattice X.E N := by
+    let := hN.1
+    refine { span_eq_top := ?_ }
+    let W := Submodule.span X.E (N : Set (Sp X.E a))
+    change W = ⊤
+    by_contra hW
+    let e : Sp X.E a ≃ₗ⋆[X.E] Sp X.E a := starLinearEquiv X.E
+    let g : Sp X.E a →ₗ[X.E] Module.Dual X.E W :=
+      (LinearMap.domRestrict' W).comp ((hStd X.E a).comp e.toLinearMap)
+    have hdim : Module.finrank X.E (Module.Dual X.E W) < Module.finrank X.E (Sp X.E a) := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt hW
+    obtain ⟨x, hx, hx₀⟩ :=
+      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    have hsmul (c : X.E) : c • e x ∈ N := by
+      rw [← hN.2, dualBasic_mem_dual]
+      intro y hy
+      apply hStd_mem_one_symm
+      have hxy : hStd X.E a (e x) y = 0 :=
+        congrArg (fun f : Module.Dual X.E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+      simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+    let i : X.E →ₗ[𝓞 X.E] N :=
+      ((LinearMap.toSpanSingleton X.E _ (e x)).restrictScalars (𝓞 X.E)).codRestrict N hsmul
+    let : Module.Finite (𝓞 X.E) N := Module.Finite.iff_fg.mpr hN.1.fg
+    let : Module.Finite (𝓞 X.E) X.E := Module.Finite.of_injective i fun c d hcd =>
+      smul_left_injective X.E (fun hz => hx₀ (e.map_eq_zero_iff.mp hz)) (congrArg Subtype.val hcd)
+    exact RingOfIntegers.not_isField X.E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 X.E) X.E) (Field.toIsField X.E))
   obtain ⟨hNl, -⟩ := hN
   obtain ⟨hN'l, -⟩ := hN'
   have hfull : _root_.GlobalTheory.ThetaMove.Full (_root_.Formalism.L2.Ker.perO A.AA N N') :=
     _root_.GlobalTheory.ThetaMove.PeriodComp.full A.AA N N' hNl.fg hN'l hA
   have hfg : (_root_.GlobalTheory.MomT.per A N N').FG :=
     _root_.GlobalTheory.ThetaMove.VolumePos.perO_fg hAfg
-      (_root_.GlobalTheory.ThetaMove.VolumePos.homO_fg hNl.fg hN'l.fg hNl.span_eq_top)
+      (_root_.GlobalTheory.ThetaMove.VolumePos.homO_fg hNl.fg hN'l.fg (by
+        let := hNfull
+        exact Submodule.IsFullLattice.span_eq_top))
   have hmult : ∀ x : _root_.Formalism.L2.Col.HomE X.E a b, ∃ n : ℕ, 0 < n ∧
       (n : X.E) • x ∈ _root_.GlobalTheory.MomT.per A N N' := by
     intro x

@@ -288,6 +288,7 @@ theorem orbRepY : OrbRepY := by
       inc_memb.lintegral_map, map_pull νg hc]
     simp_rw [act_pt]
   have hbt : b ≠ ⊤ := by
+    open scoped Pointwise in
     obtain ⟨K, hK, hKm⟩ := orbit_proper (k := k) (r := r) hT R
     haveI : T2Space (Gp k r) := inc_closedEmbedding.isEmbedding.t2Space
     refine ne_top_of_le_ne_top (hfin K⁻¹ hK.inv) ?_

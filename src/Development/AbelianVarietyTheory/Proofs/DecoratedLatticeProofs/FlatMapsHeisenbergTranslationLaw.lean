@@ -74,7 +74,15 @@ theorem flatAt_shift {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)
     intro u
     simp only [hK, hH, Matrix.mul_add, upSum_add, psiE_add, star_mul', psiUni]
     linear_combination (-(star (psiE ψ (upSum u.1.1)) * (_root_.I195MixedCoordinates_da3d54e6b295c596ea3330b3.target dW) V₀ ψ μT 𝓕T ((_root_.I195MixedCoordinates_da3d54e6b295c596ea3330b3.source dV) W ψ μS 𝓕S f (x ⬝ u.1.1 + x ⬝ N)) y w)) * hc
-  simp_rw [hpt]
+  have hs (u : UX D ρ) :
+      (_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV) W ψ μS 𝓕S
+          (heisO ψ V W (dV.extX W (x ⬝ N)) f) (x ⬝ u.1.1) =
+        (_root_.I195MixedCoordinates_14b5fd3aa93c7f4842f1a892.source dV) W ψ μS 𝓕S
+          f (x ⬝ u.1.1 + x ⬝ N) := by
+    change dV.mixS W ψ μS 𝓕S (heisO ψ V W (dV.extX W (x ⬝ N)) f) (x ⬝ u.1.1) =
+      dV.mixS W ψ μS 𝓕S f (x ⬝ u.1.1 + x ⬝ N)
+    exact Check.mixS_heis_extX dV μS 𝓕S f (x ⬝ N) (x ⬝ u.1.1)
+  simp_rw [hs, hpt]
   have hinv := (GlobalTheory.T.haar_adelicUpperUnitriangular_entry_translate_invariant D ρ νU hν).2.2 N (fun i j h => hN i j (not_lt.1 h))
   calc ∫ u, K (u.1.1 + N) ∂νU = ∫ m, K (m + N) ∂(νU.map (fun u : UX D ρ => u.1.1)) :=
         ((measEmb_val ρ).integral_map (fun m => K (m + N))).symm

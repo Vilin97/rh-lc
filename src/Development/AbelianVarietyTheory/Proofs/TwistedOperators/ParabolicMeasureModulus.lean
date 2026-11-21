@@ -186,6 +186,7 @@ theorem eq_smul_of_left_inv (P : Subgroup G) (hPm : MeasurableSet (P : Set G)) (
   refine ⟨c, ?_⟩
   conv_lhs => rw [← hmap ρ h0, key]
   rw [Measure.map_smul, hmap ρ₀ h0']
+  exact hemb.measurable.aemeasurable
 
 end General
 

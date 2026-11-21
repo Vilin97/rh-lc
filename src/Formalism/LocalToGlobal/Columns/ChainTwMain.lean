@@ -48,9 +48,11 @@ theorem twSt_chrOk (hN : ∀ i, i < m2 → TwNormAt (Ch := Ch) (cst := cst) (twS
   | 0, _, _, _, _, h0 => absurd rfl h0
   | i + 1, b, P, hP, hd, _ => by
       by_cases h1 : i + 1 ≤ m2
-      · obtain ⟨hb, hnf, ⟨al, hal⟩, hint⟩ := twSt_cand h1 (hN i (by omega)) b P hP
-        have hs := twSt_of_twNormAt hN i (by omega) al P hP
-        exact hC.1 i (by omega) P hP hd _ _ hs.1 hs.2 hb hnf hint hal
+      · have hi : i < m2 := by omega
+        have hcand := twSt_cand h1 (hN i hi) b P hP
+        obtain ⟨hb, hnf, ⟨al, hal⟩, hint⟩ := hcand
+        have hs := twSt_of_twNormAt hN i hi al P hP
+        exact hC.1 i hi P hP hd _ _ hs.1 hs.2 hb hnf hint hal
       · revert b
         by_cases h2 : i + 1 = m2 + 1
         · rw [show twSt Ch sel mu cst m2 (i + 1) = twUnitSt _ (i + 1) by rw [twSt, ite_eq_right h1, ite_eq_left h2]]

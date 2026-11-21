@@ -116,7 +116,7 @@ variable {D : D7}
 theorem enorm_mixS_le' {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {V V₀ W : HSp D} {ρ : ℕ}
     (d : HypDec V V₀ ρ) (v : GlobalTheory.Unf.VolM D W.rank ρ) (φ : WO V W → ℂ) (x : Mx D W.rank ρ) (w : WO V₀ W) :
     ‖d.mixS W ψ v.μ v.𝓕 φ x w‖ₑ ≤ GlobalTheory.HeisTaylor.supN φ := by
-  simp only [_root_.I195MixedCoordinates_3aa6f9d92ad8d1052bda2e20.source, HypDec.integrandS_eq]
+  simp only [HypDec.mixS, HypDec.integrandS_eq]
   refine (enorm_integral_le_lintegral_enorm _).trans ?_
   calc ∫⁻ a in v.𝓕, ‖ψ (symplOH V W (d.extY W a) (d.extX W x)) * φ (d.extY W a + d.extX W x + d.ext0 W w)‖ₑ ∂v.μ
       ≤ ∫⁻ _ in v.𝓕, GlobalTheory.HeisTaylor.supN φ ∂v.μ := by

@@ -218,7 +218,7 @@ theorem levGAt_eq (hTw : I.IsTw) (a : I.ι) (j : ℕ) (hj : j < B.R.m) (b : Idx 
     rw [← Idx.some_get b hj]
     rfl
   have h2 : ∀ b', (I.idx a).levG j b' = colLevSym I.Ch j := by
-    rw [(hTw a).2]
+    rw [hTw.idx_eq a]
     exact fun _ => rfl
   rw [h1, h2]
 

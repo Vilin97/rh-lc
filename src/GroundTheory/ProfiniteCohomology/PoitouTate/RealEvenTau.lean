@@ -15,12 +15,16 @@ open IsDedekindDomain NumberField CategoryTheory GroundTheory.Global
 
 attribute [local instance 2000] Rep.hV2
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
   [Fintype S] {N : ℕ} [NeZero N]
   (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((N : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S) (hev : Even N)
 
 def GsTauBijective (U : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S)) : Prop :=
+  letI : IsDiscreteRep (gsRoots S N) := isDiscreteRep_gsRoots S N
+  letI := isDiscreteRep_res_subtype (gsRoots S N) (U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S))
   ∀ τ : compactCohomologyRes (mackeyFamily U (gsFinFamily S ιs))
       (Rep.res (U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).subtype (gsRoots S N)) 3 →+ ZMod N,
     Function.Surjective τ → ∀ {r s : ℕ} (h : r + s = 3),

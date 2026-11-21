@@ -119,9 +119,9 @@ theorem hasTrace_repOp_of_isCopyFinDS : ∀ (D : D7) (V : HSp D) (lam : D.what�
         have hz' : σ g z = z := mem_fixed.1 hz g hg
         show bePi (Tm (σ g w)) (Tm z) = bePi (Tm w) (Tm z)
         simp only [bePi]
-        calc inner ℂ (Tm z fun i => unitVec (M.H i)) (Tm (σ g w) fun i => unitVec (M.H i))
-            = inner ℂ (Tm (σ g z) fun i => unitVec (M.H i)) (Tm (σ g w) fun i => unitVec (M.H i)) := by rw [hz']
-          _ = inner ℂ (π g (Tm z fun i => unitVec (M.H i))) (π g (Tm w fun i => unitVec (M.H i))) := by
+        calc inner ℂ (Tm z fun i => unitVec (H := M.H i)) (Tm (σ g w) fun i => unitVec (H := M.H i))
+            = inner ℂ (Tm (σ g z) fun i => unitVec (H := M.H i)) (Tm (σ g w) fun i => unitVec (H := M.H i)) := by rw [hz']
+          _ = inner ℂ (π g (Tm z fun i => unitVec (H := M.H i))) (π g (Tm w fun i => unitVec (H := M.H i))) := by
             rw [(mem_homTensorPi.1 hTm').2.1, (mem_homTensorPi.1 hTm').2.1]; rfl
           _ = _ := inner_map_map hπ.unitary _ _ _
       have h1 := (hP w l).2

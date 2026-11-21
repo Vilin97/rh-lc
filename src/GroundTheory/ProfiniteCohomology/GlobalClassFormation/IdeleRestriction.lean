@@ -76,7 +76,8 @@ theorem coe_idelesProj_of (F : FiniteSubfield) [Fact (K ≤ F)] (x : IdeleGroup 
 
 set_option maxHeartbeats 2000000 in
 theorem idelesProj_smul (σ : Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1)) (z : IdeleLimit) :
-    idelesProj ι ((globalDecomp (v.adicCompletion K.1) ι σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) • z) = σ • idelesProj ι z := by
+    idelesProj ι ((globalDecomp (v.adicCompletion K.1) ι σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) • z) =
+      galUnitsHom (v.adicCompletion K.1) (AlgebraicClosure (v.adicCompletion K.1)) σ (idelesProj ι z) := by
   obtain ⟨F, x, rfl⟩ := exists_of z
   obtain ⟨p, hp⟩ := GLevel.exists_le (K := K) F
   rw [← of_ideleMap hp x]
@@ -155,7 +156,8 @@ theorem coe_infLocalDecompHom_eq_restrictHom (F : FiniteSubfield) [Fact (K ≤ F
   decompHom_eq_restrictHom_globalDecomp _ ι F (infEmbedLevel ι F) (infEmbedLevel_apply ι F) σ
 
 theorem infIdelesProj_smul (σ : Gal(AlgebraicClosure v.Completion/v.Completion)) (z : IdeleLimit) :
-    infIdelesProj ι ((globalDecomp v.Completion ι σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) • z) = σ • infIdelesProj ι z := by
+    infIdelesProj ι ((globalDecomp v.Completion ι σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) • z) =
+      galUnitsHom v.Completion (AlgebraicClosure v.Completion) σ (infIdelesProj ι z) := by
   obtain ⟨F, x, rfl⟩ := exists_of z
   obtain ⟨p, hp⟩ := GLevel.exists_le (K := K) F
   rw [← of_ideleMap hp x]

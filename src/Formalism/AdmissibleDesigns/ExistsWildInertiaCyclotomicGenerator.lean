@@ -130,7 +130,7 @@ theorem rTop_constSMul (R' : Subalgebra O (X' → Matrix d d (FractionRing O))) 
     letI := rTopology O R'; ContinuousConstSMul O R' := by
   letI := rTopology O R'
   haveI := rTop_smul O R'
-  infer_instance
+  exact ContinuousSMul.continuousConstSMul
 
 theorem rTop_fgTop (R' : Subalgebra O (X' → Matrix d d (FractionRing O))) [IsTopologicalRing O] [T2Space O]
     (hfin : Module.Finite O R') : letI := rTopology O R'; IsFGTop O R' := by
@@ -257,6 +257,7 @@ theorem continuous_of_entries (ℓ : ℕ) (R' : Subalgebra O (X' → Matrix d d 
   have := hR.csmul
   have := hR.fg
   have := t2Space_fractionRing_of_padicCoeff ℓ hO hF
+  haveI : ContinuousAdd R' := ‹IsTopologicalAddGroup R'›.toContinuousAdd
   obtain ⟨n, f, hf⟩ := Module.Finite.exists_fin' O R'
   have hfc : Continuous f := LinearMap.continuous_on_pi f
   have hq : Topology.IsQuotientMap f := Topology.IsQuotientMap.of_surjective_continuous hf hfc
@@ -330,7 +331,7 @@ theorem compact_O : CompactSpace (D.nd.O i) := by
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Algebra.smul_def]
     rw [this]
-    exact continuous_finset_sum _ fun k _ =>
+    exact continuous_finsetSum _ fun k _ =>
       ((continuous_alg i).comp (continuous_apply k)).mul continuous_const
   exact hf.compactSpace hc
 
@@ -356,13 +357,8 @@ theorem t2Space_nd_O : T2Space (D.nd.O i) := by
   haveI : T1Space (D.nd.O i) := IsTopologicalAddGroup.t1Space _ this
   infer_instance
 
-theorem padicCoeff_O : PadicCoeff (D.nd.l i) (D.nd.O i) where
-  ring := D.nd.trO i
-  compact := compact_O i
-  t2 := t2Space_nd_O i
-  adic := D.nd.O_adic i
-  p_mem := l_mem_max i
-  p_ne := l_ne_zero i
+theorem padicCoeff_O : PadicCoeff (D.nd.l i) (D.nd.O i) :=
+  ⟨D.nd.trO i, compact_O i, t2Space_nd_O i, D.nd.O_adic i, l_mem_max i, l_ne_zero i⟩
 
 theorem fracTop_O : letI := fracTopology (D.nd.O i); FracTop (D.nd.O i) :=
   fracTop_open (D.nd.O i) (D.nd.O_adic i)

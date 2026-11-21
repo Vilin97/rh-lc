@@ -67,16 +67,19 @@ variable {ψ : AddChar (AF D.host.F) ℂ} {V V₀ W : HSp D} {ρ : ℕ} (d : Hyp
 theorem mixS_levi_uni (hF : GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.FormulasS d ψ χW om om' μ 𝓕 f) {u : GL (Fin ρ) (AE D)}
     (hu : u ∈ UX D ρ) (x : Mx D W.rank ρ) :
     (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 (om (d.levi u, 1) f) x = (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 f (x ⬝ u.1) := by
+  change _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d W ψ μ 𝓕 (om (d.levi u, 1) f) x = _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d W ψ μ 𝓕 f (x ⬝ u.1)
   rw [hF.levi, det_uni hu, halfMod_uni _ hu, map_one, inv_one]
   simp
 
 theorem mixS_nB_zero (hF : GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.FormulasS d ψ χW om om' μ 𝓕 f) (b : Mx D ρ V₀.rank)
     (x : Mx D W.rank ρ) : (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 (om (d.nB b, 1) f) x 0 = (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 f x (x ⬝ b) := by
+  change _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d W ψ μ 𝓕 (om (d.nB b, 1) f) x 0 = _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d W ψ μ 𝓕 f x (x ⬝ b)
   rw [hF.unip]
   simp only [heisO, zero_add, GlobalTheory.MixModel.symplOH_zero_left, AddChar.map_zero_eq_one, one_mul]
 
 theorem mixS_nC (hF : GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.FormulasS d ψ χW om om' μ 𝓕 f) (c : skewA D ρ) (x : Mx D W.rank ρ)
     (w : WO V₀ W) : (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 (om (d.nC c, 1) f) x w = ψ (d.qS W c x) * (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 f x w := by
+  change _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d W ψ μ 𝓕 (om (d.nC c, 1) f) x w = ψ (d.qS W c x) * _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d W ψ μ 𝓕 f x w
   rw [hF.centre]
   rfl
 
@@ -201,6 +204,7 @@ theorem term_laws : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀ W : HS
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · intro x b u c
     simp only [term]
+    change _root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d W ψ vS.μ vS.𝓕 (om (d.nC c * (d.nB b * d.levi u.1), 1) Ψ) (rat x) 0 = _
     rw [om_mul_left, om_mul_left, mixS_nC d (hMS _ (thP _ _ (thP _ _ hΨ))), mixS_nB_zero d (hMS _ (thP _ _ hΨ)),
       mixS_levi_uni d (hMS _ hΨ) u.2]
   · intro γ hγQ hγN x x' hx'
@@ -210,6 +214,7 @@ theorem term_laws : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀ W : HS
       rw [blockX, (blocks_flag d u b c).1, ← Matrix.mul_assoc, d.pX_jX, Matrix.one_mul]
     rw [hblk] at hx'
     simp only [term]
+    change _root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d W ψ vS.μ vS.𝓕 (om (d.levi u * (d.nB b * d.nC c), 1) Ψ) (rat x) 0 = _root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d W ψ vS.μ vS.𝓕 Ψ (rat x') 0
     rw [om_mul_left, om_mul_left, mixS_levi_uni d (hMS _ (thP _ _ (thP _ _ hΨ))) hu, mixS_nB_zero d (hMS _ (thP _ _ hΨ)),
       mixS_nC d (hMS _ hΨ), hx']
     have hxu : rat x ⬝ u.1 ∈ ratMx D W.rank ρ := ratMx_mul (rat_mem x) hru
@@ -220,9 +225,11 @@ theorem term_laws : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀ W : HS
     rw [add_zero, GlobalTheory.MixModel.symplOH_zero_right, neg_zero, AddChar.map_zero_eq_one, one_mul] at hθ
     have hβ' : ratW W V₀ β = rat x ⬝ u.1 ⬝ b := by rw [ratW_eq, Matrix.mul_assoc]; exact hβ
     rw [hβ'] at hθ
-    rw [hq, one_mul, hθ]
+    rw [hq, one_mul]
+    exact hθ
   · intro δ hδ x x' hx
     simp only [term]
+    change _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d W ψ vS.μ vS.𝓕 (om (1, δ) Ψ) (rat x) 0 = _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source d W ψ vS.μ vS.𝓕 Ψ (rat x') 0
     rw [(hMS _ hΨ).target δ (rat x)]
     have e : mt W δ⁻¹ ⬝ rat x = rat x' := by rw [← hx, ← Matrix.mul_assoc, mt_inv_mul, Matrix.one_mul]
     rw [e]

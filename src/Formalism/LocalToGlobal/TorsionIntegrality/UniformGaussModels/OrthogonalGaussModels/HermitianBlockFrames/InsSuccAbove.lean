@@ -149,9 +149,12 @@ end Drop
 theorem jac_fin : ∀ (m : ℕ) (Γ : Matrix (Fin m) (Fin m) K), S.IntM Γ → S.Herm Γ → S.UM Γ →
     ∃ (k : ℕ) (v : Fin k → Fin m → K), (∀ c, S.IntV (v c)) ∧
       (∀ c c', S.hf Γ (v c) (v c') = if c = c' then 1 else 0) ∧
-      ∑ c, vecMulVec (Γ *ᵥ v c) (S.cv (v c) ᵥ* Γ) = Γ
-  | 0, Γ, _, _, _ => ⟨0, Fin.elim0, fun c => c.elim0, fun c => c.elim0, by ext i; exact i.elim0⟩
-  | m + 1, Γ, hΓ, hH, hU => by
+      ∑ c, vecMulVec (Γ *ᵥ v c) (S.cv (v c) ᵥ* Γ) = Γ := by
+  intro m
+  induction m with
+  | zero => exact fun Γ _ _ _ => ⟨0, Fin.elim0, fun c => c.elim0, fun c => c.elim0, by ext i; exact i.elim0⟩
+  | succ m ih =>
+    intro Γ hΓ hH hU
     by_cases h0 : Γ = 0
     · exact ⟨0, Fin.elim0, fun c => c.elim0, fun c => c.elim0, by simp [h0]⟩
     have hunit : ∃ (a : Fin (m + 1) → K) (i : Fin (m + 1)),
@@ -164,7 +167,7 @@ theorem jac_fin : ∀ (m : ℕ) (Γ : Matrix (Fin m) (Fin m) K), S.IntM Γ → S
     have hGa := S.Γp_mulVec_self (Γ := Γ) haa
     have haG := S.vecMul_Γp_self (Γ := Γ) haa
     set G := S.Γp Γ a with hG_def
-    obtain ⟨k, v'', hvI, hvo, hvs⟩ := jac_fin m (G.submatrix i.succAbove i.succAbove)
+    obtain ⟨k, v'', hvI, hvo, hvs⟩ := ih (G.submatrix i.succAbove i.succAbove)
       (fun s t => hG _ _) (fun s t => hHG _ _) (S.UM_drop i hUG ha hai hGa haG)
     have hai0 : a i ≠ 0 := S.ne_zero_of_not_NU hai
     have hσa : S.σ (a i) ≠ 0 := S.ne_zero_of_not_NU (S.not_NU_σ (ha i) hai)

@@ -76,6 +76,17 @@ theorem mixS_unip : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T : HS
   have hzB := fun g (hg : IsThetaFunO ψ S T g) => (GlobalTheory.T.mixedCoordinate_origin_unipotentRadical_invariant D ψ S S₀ T ρ d χS χT om hom μ 𝓕 hμ g hg).1
   have hzC := fun g (hg : IsThetaFunO ψ S T g) => (GlobalTheory.T.mixedCoordinate_origin_unipotentRadical_invariant D ψ S S₀ T ρ d χS χT om hom μ 𝓕 hμ g hg).2
 
+  change ∀ n : GA D S,
+    (_root_.I195MixedCoordinates_c87fda97bbaf39bed14145da.source d) T ψ μ 𝓕 (om (n, 1) f) x =
+      (_root_.I195MixedCoordinates_c87fda97bbaf39bed14145da.source d) T ψ μ 𝓕
+        (om (n, 1) (heisO ψ S T (d.extX T x ⬝ mt S n) f)) 0 at hmove
+  change ∀ g, IsThetaFunO ψ S T g → ∀ b,
+    (_root_.I195MixedCoordinates_c87fda97bbaf39bed14145da.source d) T ψ μ 𝓕 (om (d.nB b, 1) g) 0 =
+      (_root_.I195MixedCoordinates_c87fda97bbaf39bed14145da.source d) T ψ μ 𝓕 g 0 at hzB
+  change ∀ g, IsThetaFunO ψ S T g → ∀ c,
+    (_root_.I195MixedCoordinates_c87fda97bbaf39bed14145da.source d) T ψ μ 𝓕 (om (d.nC c, 1) g) 0 =
+      (_root_.I195MixedCoordinates_c87fda97bbaf39bed14145da.source d) T ψ μ 𝓕 g 0 at hzC
+
   have eX : ∀ (a : Mx D T.rank ρ) (g : WO S T → ℂ), IsThetaFunO ψ S T g →
       (_root_.I195MixedCoordinates_c87fda97bbaf39bed14145da.source d) T ψ μ 𝓕 (heisO ψ S T (d.extX T a) g) 0 = (_root_.I195MixedCoordinates_c87fda97bbaf39bed14145da.source d) T ψ μ 𝓕 g a := fun a g hg => by
     have := (GlobalTheory.T.heisenbergOperator_thetaFunctional_mixedSourceModel D ψ hstd S S₀ T ρ d ⟨μ, 𝓕, hμ⟩ g hg).1 0 a

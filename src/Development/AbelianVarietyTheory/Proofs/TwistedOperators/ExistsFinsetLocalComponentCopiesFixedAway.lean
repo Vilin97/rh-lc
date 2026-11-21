@@ -216,7 +216,7 @@ theorem exists_finset_fixed_away : ∀ (D : D7) (V : HSp D) (u : HeightOneSpectr
     rw [← away_mul u k, map_mul, Module.End.mul_apply, h1, h2]
   haveI : FiniteDimensional ℂ F := Submodule.finiteDimensional_of_le hFle
   have hFfg : F.FG := Module.Finite.iff_fg.1 inferInstance
-  obtain ⟨s, hs⟩ := CompleteLattice.IsCompactElement.exists_finset_of_le_iSup _ ((Submodule.fg_iff_compact F).1 hFfg)
+  obtain ⟨s, hs⟩ := IsCompactElement.exists_finset_of_le_iSup ((Submodule.fg_iff_compact F).1 hFfg)
     (fun φ : π.IntertwiningMap (σ.comp (locFin V u)) => LinearMap.range φ.toLinearMap)
     (le_of_le_of_eq le_top hiso.symm)
   refine ⟨s, fun x hx => le_biSup_of_fixed hπ hiso hv Y hY s (fun y hy hfix => hs ⟨hy, ?_⟩) ((hmemY x).2 hx)⟩

@@ -351,6 +351,7 @@ theorem measure_iwahoriCoset [MeasurableSpace (GL n k)] [BorelSpace (GL n k)] (�
   have h2 := UnipHaar.haar_conj_eq_modulus_mul k n n (fun _ => Unit) (points n) ν (leviTorus k n t) _
     ho.measurableSet
   rw [← deltaB_eq_modulus] at h2
+  simp only [diagT, MonoidHom.comp_apply] at h1
   have h3 := (congrArg (· * μ (iwahoriCoset t)) h2).symm.trans h1
   rw [mul_right_comm, ENNReal.mul_left_inj (ho.measure_pos ν ⟨1, one_mem (iwahori k n)⟩).ne' hc.measure_lt_top.ne] at h3
   rw [measureReal_def, measureReal_def, ← h3, ENNReal.toReal_mul, ENNReal.toReal_ofReal (deltaB_pos t).le,
@@ -372,7 +373,9 @@ theorem traceFormula (h : GlobalTheory.Published.BorelCasselman) : TraceFormula 
       (twKer π (unipB k n) 1).mkQ _ hb (jacBUFixed π t) fun g hg v => by
         obtain ⟨u, hu, -, i, hi, rfl⟩ := (mem_iwahoriCoset ht g).1 hg
         rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, IwahoriInj.mem_fixed.1 v.2 i hi]
-        exact (Submodule.Quotient.eq _).2 (IwahoriInj.sub_mem_twKer hu _)
+        apply (Submodule.Quotient.eq _).2
+        simpa only [diagT, MonoidHom.comp_apply, MonoidHom.id_apply, Submodule.subtype_apply] using
+          (IwahoriInj.sub_mem_twKer hu (π (diagT k n t) v))
     rwa [measure_iwahoriCoset μ ht, Complex.ofReal_mul, Complex.ofReal_inv] at h1
   obtain ⟨E, h1, h2⟩ := exists_exponents _ _ (jacBUFixed π) rfl
   refine ⟨hfd, key, E, ⟨fun χ hχ s hs => ?_, h1⟩, fun t ht => h2 t ▸ key t ht⟩

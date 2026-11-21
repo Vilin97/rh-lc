@@ -33,7 +33,8 @@ theorem jetP_cast (D : D7) (S T : HSp D) {a b : ℕ} (hS : S.rank = a) (hT : T.r
 
 theorem jetC_zero {ι : Type} [Fintype ι] {a b : ℕ} (cD : ι → ℂ) (m : Formalism.L2.Ker.DVar ι a b →₀ ℕ) :
     jetC cD (fun _ : VCx ι a b => (0 : ℂ)) m = 0 := by
-  simp only [jetC, derivAt0, iteratedFDeriv_zero_fun, Pi.zero_apply, ContinuousMultilinearMap.zero_apply, mul_zero]
+  change jetC cD (0 : VCx ι a b → ℂ) m = 0
+  simp only [jetC, derivAt0, iteratedFDeriv_zero, Pi.zero_apply, zero_apply, mul_zero]
 
 theorem jetP_zero (D : D7) (S T : HSp D) {a b : ℕ} (hS : S.rank = a) (hT : T.rank = b) (s : ℂ)
     (P : MvPolynomial (FVar D T.rank S.rank) ℂ) : jetP S T hS hT s (fun _ => 0) P = 0 := by

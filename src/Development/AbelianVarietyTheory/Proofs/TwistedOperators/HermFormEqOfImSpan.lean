@@ -164,10 +164,14 @@ theorem shift_core (hMod : R.IsModels) (hTie : TieIn T R κ v₀) (i : Fin D.R.m
     exact res_embLL T hTie.alg hTie.laws.pins.2.2.1
   have hg : GoodEmb T.Q.c (res T (sg0 D A)) := e ▸ T.toCore.good_σ₀
   obtain rfl : σ = res T (sg0 D A) := hσ.trans e.symm
-  have hB0 := (GlobalTheory.HolDict.BaseFrame.baseFrT_of_tieIn D G Pl0 T0 A T R κ v₀ hMod hTie i _ hg hV).1
-  have hB : ∀ c t, t ∈ ((T.U ((i : ℕ) + 1) (res T (sg0 D A))).X c).Ψ → ∃ ρ, t = tauE D ρ := fun c t ht => (hB0 c t).1 ht
   have hj : InR D ((i : ℕ) + 1) := ⟨Nat.le_add_left _ _, i.2⟩
   have hU := hTie.laws.unf _ hj _ hg
+  have hB : ∀ c t, t ∈ ((T.U ((i : ℕ) + 1) (res T (sg0 D A))).X c).Ψ → ∃ ρ, t = tauE D ρ := by
+    intro c t ht
+    have h1 := (((T.U ((i : ℕ) + 1) (res T (sg0 D A))).X c).cmType t).1 ht
+    obtain ⟨ρ, hρ⟩ := (GlobalTheory.SmoothForms.RealPts.tauE_cm D t).2 (fun ⟨ρ, hρ⟩ =>
+      h1 (hρ ▸ ((hU.2.1 c).2 _).2 (hTie.laws.pins.1.2.2.2 ρ)))
+    exact ⟨ρ, hρ.symm⟩
   obtain ⟨hr, hmod⟩ := hTie.laws.modelW _ hj _ hg
   have hr0 := rank_Wc i
   set N : Matrix (Fin D.R.r) (Fin D.R.r) D.host.E := Matrix.reindex (finCongr hr0) (finCongr hr0) M with hN
@@ -220,6 +224,7 @@ theorem perFr_shift (hMod : R.IsModels) (hTie : TieIn T R κ v₀) (i : Fin D.R.
       perFr ((T.U ((i : ℕ) + 1) σ).X (dictW T i σ hV h).1) (dictW T i σ hV h).2 (fun m => (M *ᵥ v) (Fin.cast (rank_Wc i).symm m)) τ j := by
   rw [(shift_core hMod hTie i σ hσ hV hS h ha hfr hfr' hM).1]
   congr 1
+  funext m
   exact Equiv.sum_comp (finCongr (rank_Wc i)).symm (fun n => M (Fin.cast (rank_Wc i).symm m) n * v n)
 
 end Shift

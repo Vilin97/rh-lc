@@ -54,11 +54,12 @@ theorem mxAt_true_iff {m n : ℕ} (x : Mx D m n) : MxAt (fun _ => True) x ↔ pa
   simp only [Matrix.smul_apply, Matrix.zero_apply, mem_idAt_true, GlobalTheory.AdelicCoord.infPart_eq_zero_iff]
 
 theorem continuous_smul_mx {m n : ℕ} (c : AF D.host.F) : Continuous fun x : Mx D m n => c • x := by
-  haveI := (Formalism.IndefR.Eqv.ae_facts D).1
+  haveI : IsModuleTopology (AF D.host.F) (AE D) := ⟨rfl⟩
+  haveI : ContinuousSMul (AF D.host.F) (AE D) :=
+    IsModuleTopology.toContinuousSMul (AF D.host.F) (AE D)
   refine continuous_pi fun i => continuous_pi fun j => ?_
   show Continuous fun x : Mx D m n => c • x i j
-  simp only [Algebra.smul_def]
-  exact continuous_const.mul (continuous_id.matrix_elem i j)
+  exact (continuous_const (y := c)).smul (continuous_id.matrix_elem i j)
 
 def annSet (ψ : AddChar (AF D.host.F) ℂ) {S T : HSp D} (Γ : AddSubgroup (WO S T)) : Set (WO S T) :=
   {u' | MxAt (fun _ => True) u' ∧ ∀ u ∈ Γ, ψ (symplO S T u u') = 1}

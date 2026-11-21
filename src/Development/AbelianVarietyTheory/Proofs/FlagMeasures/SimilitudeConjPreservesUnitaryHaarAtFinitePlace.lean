@@ -191,7 +191,7 @@ theorem mv_one (X : Fin a → Fin n → A) : mv 1 X = X := by
 
 theorem continuous_mv [TopologicalSpace A] [IsTopologicalRing A] (u : Matrix (Fin a) (Fin a) A) :
     Continuous (mv (n := n) u) :=
-  continuous_pi fun b => continuous_finset_sum _ fun c _ => (continuous_apply c).const_smul (u c b)
+  continuous_pi fun b => continuous_finsetSum _ fun c _ => (continuous_apply c).const_smul (u c b)
 
 theorem det_unitriangular (u : Matrix (Fin a) (Fin a) A) (h1 : ∀ i, u i i = 1)
     (h2 : ∀ i j, j < i → u i j = 0) : u.det = 1 := by

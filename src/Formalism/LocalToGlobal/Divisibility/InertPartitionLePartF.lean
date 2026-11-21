@@ -384,27 +384,29 @@ theorem sameTypes_base3 {s : ℕ} (h : F3.Ok3 s) (P : Subgroup G) (ψ : P →* K
     ((F3.RI F3.F.μ0).sameTypes_self3 (F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ F3.F.μ0) (h.what₂ F3.F.μ0) h.ok2.irr)
 
 theorem side_well_formed {s : ℕ} (h : F3.Ok3 s) (P : Subgroup G) (ψ : P →* Kˣ) (Zs : DefSub F3.amb3) (hst : Zs.Stable)
-    (hin : Zs.InBlock) (hsep : F3.TypesSep3) : (F3.side3 P ψ Zs).WF where
-  cm := isCMSub_cmMax' K
-  conj := h.ok2.conj
-  HV_rat t := BlockDat.HV_rat (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
-  HV_pos t := BlockDat.HV_pos (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
-  Mt_lat t := BlockDat.Mt_lat (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
-  Pq_surj t := BlockDat.Pq_surj (ℓ := F3.F.lvl P ψ) (Z := Zs.Z t) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
-  XQ_quot t := BlockDat.XQ_quot (ℓ := F3.F.lvl P ψ) (Z := Zs.Z t) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
-  Lam_lat t := BlockDat.Lam_lat (ℓ := F3.F.lvl P ψ) (Z := Zs.Z t) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
-  Qp_indep := (F3.RI F3.F.μ0).inert_parts_independent (F3.F.lvl P ψ) (Zs.Z F3.F.μ0) (h.what₂ F3.F.μ0).comm
-    (fun p : F3.base3.Ix => p.1)
-    fun p p' hpp => (F3.RI F3.F.μ0).diffAt_of_mem_ixFin3 p.2 p'.2 fun e => hpp (Subtype.ext e)
-  Qp_top := (F3.RI F3.F.μ0).inert_parts_span_top (F3.F.lvl P ψ) (Zs.Z F3.F.μ0) h.ok2.conj (h.ok2.what₂ F3.F.μ0)
-    (h.what₂ F3.F.μ0) h.ok2.irr (stable3_rows hst F3.F.μ0) (fun p : F3.base3.Ix => p.1)
-    (fun p p' hpp => (F3.RI F3.F.μ0).diffAt_of_mem_ixFin3 p.2 p'.2 fun e => hpp (Subtype.ext e))
-    ((F3.sameTypes_base3 h P ψ hin).trans ((F3.F.R F3.F.μ0).good_part_coordinates_mono _
-      (Col.eigSum_mono fun _ ⟨p, hp, hx⟩ => ⟨⟨p, hp⟩, hx⟩)))
-  XT_herm j t := BlockDat.XQ_herm (ℓ := F3.F.lvlA P ψ) (Z := Zs.Zl j t) h.ok2.conj (h.ok2.lifts j t) h.ok2.irr
-  Tl_lat j t := BlockDat.Tl_lat (ℓ := F3.F.lvlA P ψ) (Z := Zs.Zl j t) h.ok2.conj (h.ok2.lifts j t) h.ok2.irr
-  Zp_indep j := (F3.LI j F3.F.μ0).inert_parts_independent (F3.F.lvlA P ψ) (Zs.Zl j F3.F.μ0) (h.lifts j F3.F.μ0).comm
-    (fun p : F3.base3.Ix => F3.tr3 j p.1) fun p p' hpp => hsep p.1 p.2 p'.1 p'.2 (fun e => hpp (Subtype.ext e)) j
+    (hin : Zs.InBlock) (hsep : F3.TypesSep3) : (F3.side3 P ψ Zs).WF := by
+  exact {
+    cm := isCMSub_cmMax' K
+    conj := h.ok2.conj
+    HV_rat t := BlockDat.HV_rat (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
+    HV_pos t := BlockDat.HV_pos (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
+    Mt_lat t := BlockDat.Mt_lat (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
+    Pq_surj t := BlockDat.Pq_surj (ℓ := F3.F.lvl P ψ) (Z := Zs.Z t) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
+    XQ_quot t := BlockDat.XQ_quot (ℓ := F3.F.lvl P ψ) (Z := Zs.Z t) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
+    Lam_lat t := BlockDat.Lam_lat (ℓ := F3.F.lvl P ψ) (Z := Zs.Z t) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
+    Qp_indep := (F3.RI F3.F.μ0).inert_parts_independent (F3.F.lvl P ψ) (Zs.Z F3.F.μ0) (h.what₂ F3.F.μ0).comm
+      (fun p : F3.base3.Ix => p.1)
+      fun p p' hpp => (F3.RI F3.F.μ0).diffAt_of_mem_ixFin3 p.2 p'.2 fun e => hpp (Subtype.ext e)
+    Qp_top := (F3.RI F3.F.μ0).inert_parts_span_top (F3.F.lvl P ψ) (Zs.Z F3.F.μ0) h.ok2.conj (h.ok2.what₂ F3.F.μ0)
+      (h.what₂ F3.F.μ0) h.ok2.irr (stable3_rows hst F3.F.μ0) (fun p : F3.base3.Ix => p.1)
+      (fun p p' hpp => (F3.RI F3.F.μ0).diffAt_of_mem_ixFin3 p.2 p'.2 fun e => hpp (Subtype.ext e))
+      ((F3.sameTypes_base3 h P ψ hin).trans ((F3.F.R F3.F.μ0).good_part_coordinates_mono _
+        (Col.eigSum_mono fun _ ⟨p, hp, hx⟩ => ⟨⟨p, hp⟩, hx⟩)))
+    XT_herm j t := BlockDat.XQ_herm (ℓ := F3.F.lvlA P ψ) (Z := Zs.Zl j t) h.ok2.conj (h.ok2.lifts j t) h.ok2.irr
+    Tl_lat j t := BlockDat.Tl_lat (ℓ := F3.F.lvlA P ψ) (Z := Zs.Zl j t) h.ok2.conj (h.ok2.lifts j t) h.ok2.irr
+    Zp_indep j := (F3.LI j F3.F.μ0).inert_parts_independent (F3.F.lvlA P ψ) (Zs.Zl j F3.F.μ0) (h.lifts j F3.F.μ0).comm
+      (fun p : F3.base3.Ix => F3.tr3 j p.1) fun p p' hpp => hsep p.1 p.2 p'.1 p'.2 (fun e => hpp (Subtype.ext e)) j
+  }
 
 def toIx2 (hc : Col.PairComm (F3.F.R F3.F.μ0).op) (p : F3.base3.Ix) : F3.F.base.Ix :=
   ⟨p.1.1, (F3.RI F3.F.μ0).mem_ixFin_fst hc p.2⟩

@@ -91,11 +91,11 @@ variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (
 theorem muBase_mem (hmu : ∀ j x, ((L.C.mu0 j).loc w x : ℂ) ∈ F) (c : ℕ) (x : (Kw w)ˣ) :
     (((muBase L c).loc w x : ℂˣ) : ℂ) ∈ F := by
   rcases c with _ | c
-  · simp [muBase]
+  · simp [muBase, HChar.loc]
   · simp only [muBase]
     split_ifs with h
     · exact hmu _ _
-    · simp
+    · simp [HChar.loc]
 
 variable {t : T} (hmu : ∀ j x, ((L.C.mu0 j).loc w x : ℂ) ∈ F) (hxi : ∀ x, ((L.xiH t).loc w x : ℂ) ∈ F)
 include hmu hxi

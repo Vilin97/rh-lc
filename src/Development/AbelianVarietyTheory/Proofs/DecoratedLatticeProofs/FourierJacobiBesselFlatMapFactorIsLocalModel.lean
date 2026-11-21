@@ -280,8 +280,8 @@ theorem continuous_hO_up {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] 
     ((continuous_const.matrix_mul continuous_id).matrix_mul continuous_const).matrix_map p.cont_ι
   refine p.cont_π.comp ?_
   unfold hO
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => continuous_finset_sum _ fun c _ =>
-    continuous_finset_sum _ fun d _ => continuous_const.mul (h.matrix_elem d a)
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => continuous_finsetSum _ fun c _ =>
+    continuous_finsetSum _ fun d _ => continuous_const.mul (h.matrix_elem d a)
 
 variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c ρ σ : ℕ}
   {J : JacLev D ρ} {B : BesLev D σ} {s hh s' : k} {G₀ : Frame k J.W₀.rank n'} {FW : Frame k J.W.rank (n' ⊕ Fin (c + 1))}
@@ -323,7 +323,7 @@ theorem factor_isModel : ∀ (D : D7), GlobalTheory.FinPl.FlatLaws D → OmLoc D
     exact hF.theta _ (hTm.theta Φ)
   · obtain ⟨Φ, h⟩ := hon Ψ
     let Φ' : SB (Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k) := ⟨fun t => Φ.1 (t + embR l x₀),
-      Φ.2.1.comp_continuous (continuous_add_right _), Φ.2.2.comp_homeomorph (Homeomorph.addRight (embR l x₀))⟩
+      Φ.2.1.comp_continuous (continuous_id.add continuous_const), Φ.2.2.comp_homeomorph (Homeomorph.addRight (embR l x₀))⟩
     have h' : Ψ'.1 = flRow ψk ν (σ + 1) Φ'.1 := funext fun x => by
       rw [hΨ', h]; exact (flRow_translate ψk ν l (σ + 1) rfl Φ.1 x₀ x).symm
     rw [← hT Φ' Ψ' h', ← hT Φ Ψ h, hTm.trans (embR l x₀) Φ Φ' fun _ => rfl, up_embR hJF hCF hBF l rfl]

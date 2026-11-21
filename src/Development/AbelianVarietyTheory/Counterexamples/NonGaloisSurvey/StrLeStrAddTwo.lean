@@ -14,7 +14,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef
 open Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx Formalism.IndefR.Links
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
-open GlobalTheory.IndefiniteRowSideFullHecke.EigenSplitStrings GlobalTheory.DownLift
+open GlobalTheory.DownLift
 
 namespace GlobalTheory.PtStringTest
 

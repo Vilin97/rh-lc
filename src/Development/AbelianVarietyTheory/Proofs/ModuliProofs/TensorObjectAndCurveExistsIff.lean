@@ -35,8 +35,6 @@ open scoped CategoryTheory.Obj
 noncomputable section
 namespace GlobalTheory.CM.ExCompare
 
-open GlobalTheory.IndefiniteRowSideFullHecke.PositiveSignKForm
-
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 theorem spMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (f : R →+* R') (f' : R' →+* R'') :

@@ -104,10 +104,11 @@ abbrev Isom (E : Type) [Field E] [NumberField E] [StarRing E] (r : ℕ) (X Y : D
       ∀ y, (γ : Matrix (Fin r) (Fin r) E) *ᵥ y ∈ Y.1.2 ↔ y ∈ X.1.2
 
 theorem isom_equivalence (E : Type) [Field E] [NumberField E] [StarRing E] (r : ℕ) :
-    Equivalence (Isom E r) where
-  refl X := ⟨1, by simp, fun y => by simp⟩
-  symm := by
-    rintro X Y ⟨γ, h1, h2⟩
+    Equivalence (Isom E r) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro X
+    exact ⟨1, by simp, fun y => by simp⟩
+  · rintro X Y ⟨γ, h1, h2⟩
     refine ⟨γ⁻¹, ?_, fun y => ?_⟩
     · have hu : (γ : Matrix (Fin r) (Fin r) E) * ((γ⁻¹ : GL (Fin r) E) : Matrix (Fin r) (Fin r) E) = 1 := by
         simp
@@ -121,8 +122,7 @@ theorem isom_equivalence (E : Type) [Field E] [NumberField E] [StarRing E] (r : 
     · have h3 := h2 (((γ⁻¹ : GL (Fin r) E) : Matrix (Fin r) (Fin r) E) *ᵥ y)
       rw [mulVec_mulVec, Units.mul_inv, one_mulVec] at h3
       exact h3.symm
-  trans := by
-    rintro X Y Z ⟨γ, h1, h2⟩ ⟨δ, h3, h4⟩
+  · rintro X Y Z ⟨γ, h1, h2⟩ ⟨δ, h3, h4⟩
     refine ⟨δ * γ, ?_, fun y => ?_⟩
     · rw [Units.val_mul, conjTranspose_mul, ← h1, ← h3]
       simp only [Matrix.mul_assoc]
@@ -130,7 +130,7 @@ theorem isom_equivalence (E : Type) [Field E] [NumberField E] [StarRing E] (r : 
 
 def latOf {r : ℕ} (h : HasSig I r 0) (x : I.GA) : DefLat I.E I.n :=
   ⟨(I.J, lamX I x), by rw [← GlobalTheory.StabCosets.cT_star]; exact I.J_herm, pos_all I h,
-    ⟨(GlobalTheory.PointLattice.lamX_selfDual I x).2.1, (GlobalTheory.PointLattice.lamX_selfDual I x).2.2.1⟩,
+    Submodule.IsLattice.of_fg I.E (GlobalTheory.PointLattice.lamX_selfDual I x).2.1,
     fun y => by
       simpa only [hform_eq] using (GlobalTheory.PointLattice.lamX_selfDual I x).2.2.2.1 y⟩
 

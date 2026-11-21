@@ -166,7 +166,7 @@ theorem integral_polKernel : ∀ (E : Type) [Field E] [NumberField E] (F : Subfi
     simp only [descend, hker0]
   have hi := fun i : I => hcl (g i) (g1 i) i.1.1 i.1.2 (g2 i) (g3 i)
   rw [hker]
-  refine ⟨integrable_finset_sum _ fun i _ => (hi i).1, ?_⟩
+  refine ⟨integrable_finsetSum _ fun i _ => (hi i).1, ?_⟩
   rw [integral_finsetSum _ fun i _ => (hi i).1, Finset.sum_congr rfl fun i _ => (hi i).2, mul_assoc]
   simp only [Phi]
   rw [← hsum, mul_finsum' _ _ hsupp]

@@ -38,7 +38,7 @@ section Span
 variable (K A : Type) [CommRing K] [CommRing A] [Algebra K A]
 
 theorem multi_mem {M N : Type} [AddCommGroup M] [Module A M] [AddCommGroup N] [Module A N] {a : ℕ}
-    (f : MultilinearMap A (fun _ : Fin a => M) N) (s : Set M) (hs : Submodule.span A s = ⊤) (S : Submodule A N)
+    (f : (Fin a → M) →ₘₗ[A] N) (s : Set M) (hs : Submodule.span A s = ⊤) (S : Submodule A N)
     (h : ∀ v : Fin a → M, (∀ k, v k ∈ s) → f v ∈ S) (v : Fin a → M) : f v ∈ S := by
   classical
   have key : ∀ (t : Finset (Fin a)) (v : Fin a → M), (∀ k, k ∉ t → v k ∈ s) → f v ∈ S := by
@@ -59,7 +59,7 @@ theorem multi_mem {M N : Type} [AddCommGroup M] [Module A M] [AddCommGroup N] [M
             exact hv k (by simp [e, hk])
         | zero => rw [f.map_update_zero]; exact S.zero_mem
         | add x y _ _ hx hy => rw [f.map_update_add]; exact S.add_mem hx hy
-        | smul c x _ hx => rw [f.map_update_smul]; exact S.smul_mem _ hx
+        | smul c x _ hx => rw [f.map_update_smul, RingHom.id_apply]; exact S.smul_mem _ hx
       simpa using this _ hvi
   exact key Finset.univ v fun k hk => (hk (Finset.mem_univ k)).elim
 
@@ -114,6 +114,8 @@ theorem mOm_form (h : SemiHom σ α) {a : ℕ} (g₀ : B) (g : Fin a → B) :
   rw [SemiHom.coe_mOm, exteriorPower.ιMulti_apply_coe, exteriorPower.ιMulti_apply_coe, ExteriorAlgebra.ιMulti_apply,
     ExteriorAlgebra.ιMulti_apply, map_list_prod, List.map_ofFn]
   congr 2
+  funext i
+  exact (h.mDR_ι _).trans (congrArg (ExteriorAlgebra.ι B') (h.m1_D (g i)))
 
 end Mom
 

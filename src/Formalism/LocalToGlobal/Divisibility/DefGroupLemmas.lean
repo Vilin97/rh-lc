@@ -1756,9 +1756,10 @@ theorem mk_span_rat (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Submodule.spa
   exact eq_top_iff.2 fun x _ => key x (by rw [hΛ]; trivial)
 
 theorem mk_isLattice (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Submodule.IsFullLattice E Λ) :
-    Submodule.IsFullLattice ℚ (Λ.restrictScalars ℤ : Submodule ℤ (Fin n → E)) where
-  toIsLattice := Submodule.IsLattice.of_fg ℚ hΛ.fg.restrictScalars
-  span_eq_top := mk_span_rat Λ hΛ.span_eq_top
+    Submodule.IsFullLattice ℚ (Λ.restrictScalars ℤ : Submodule ℤ (Fin n → E)) := by
+  have : Submodule.IsLattice ℚ (Λ.restrictScalars ℤ) :=
+    Submodule.IsLattice.of_fg ℚ (Submodule.IsLattice.fg E Λ).restrictScalars
+  exact { span_eq_top := mk_span_rat Λ hΛ.span_eq_top }
 
 theorem mk_finrank (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Submodule.IsFullLattice E Λ) :
     Module.finrank ℤ (Λ.restrictScalars ℤ : Submodule ℤ (Fin n → E)) = Module.finrank ℚ E * n := by

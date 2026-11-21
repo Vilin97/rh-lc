@@ -15,26 +15,26 @@ namespace GlobalTheory.CompanionTheory.AffglAssembly
 
 variable {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}
 
-theorem isAutForm_add {φ ψ : Sm E a} (h : IsAutForm φ) (h' : IsAutForm ψ) : IsAutForm (φ + ψ) where
-  left γ g := by
+theorem isAutForm_add {φ ψ : Sm E a} (h : IsAutForm φ) (h' : IsAutForm ψ) : IsAutForm (φ + ψ) := by
+  refine { left := ?_, level := ?_, kfin := ?_, zfin := ?_, growth := ?_ }
+  · intro γ g
     change φ.1 _ + ψ.1 _ = φ.1 _ + ψ.1 _
     rw [h.left, h'.left]
-  level := isOpen_stab_of_mem_nhds _ _ <| Filter.mem_of_superset
-    ((h.level.inter h'.level).mem_nhds ⟨by simp, by simp⟩) fun k hk => by
-      have h1 : finRep E a k φ = φ := hk.1
-      have h2 : finRep E a k ψ = ψ := hk.2
-      change finRep E a k (φ + ψ) = φ + ψ
-      rw [map_add (f := _), h1, h2]
-  kfin := by
-    have := h.kfin
+  · refine isOpen_stab_of_mem_nhds _ _ (Filter.mem_of_superset
+      ((h.level.inter h'.level).mem_nhds ⟨by simp, by simp⟩) ?_)
+    intro k hk
+    have h1 : finRep E a k φ = φ := hk.1
+    have h2 : finRep E a k ψ = ψ := hk.2
+    change finRep E a k (φ + ψ) = φ + ψ
+    rw [map_add (f := _), h1, h2]
+  · have := h.kfin
     have := h'.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ (Set.range fun k => cptRep E a k φ) ⊔
       Submodule.span ℂ (Set.range fun k => cptRep E a k ψ)) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     simp only [map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨k, rfl⟩) (Submodule.subset_span ⟨k, rfl⟩)
-  zfin := by
-    have := h.zfin
+  · have := h.zfin
     have := h'.zfin
     refine Submodule.finiteDimensional_of_le
       (S₂ := Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) '' Zalg E a) ⊔
@@ -42,7 +42,7 @@ theorem isAutForm_add {φ ψ : Sm E a} (h : IsAutForm φ) (h' : IsAutForm ψ) : 
     rintro _ ⟨z, hz, rfl⟩
     simp only [map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨z, hz, rfl⟩) (Submodule.subset_span ⟨z, hz, rfl⟩)
-  growth g := by
+  · intro g
     obtain ⟨C, N, h1⟩ := h.growth g
     obtain ⟨C', N', h2⟩ := h'.growth g
     refine ⟨|C| + |C'|, N + N', fun y => ?_⟩
@@ -61,30 +61,29 @@ theorem isAutForm_add {φ ψ : Sm E a} (h : IsAutForm φ) (h' : IsAutForm ψ) : 
             (mul_le_mul_of_nonneg_left e2 (abs_nonneg C'))
       _ = (|C| + |C'|) * height y ^ (N + N') := by ring
 
-theorem isAutForm_smul (c : ℂ) {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (c • φ) where
-  left γ g := by
+theorem isAutForm_smul (c : ℂ) {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (c • φ) := by
+  refine { left := ?_, level := ?_, kfin := ?_, zfin := ?_, growth := ?_ }
+  · intro γ g
     change c • φ.1 _ = c • φ.1 _
     rw [h.left]
-  level := isOpen_stab_of_mem_nhds _ _ <| Filter.mem_of_superset
-    (h.level.mem_nhds (by simp)) fun k hk => by
-      have h1 : finRep E a k φ = φ := hk
-      change finRep E a k (c • φ) = c • φ
-      rw [map_smul, h1]
-  kfin := by
-    have := h.kfin
+  · refine isOpen_stab_of_mem_nhds _ _ (Filter.mem_of_superset (h.level.mem_nhds (by simp)) ?_)
+    intro k hk
+    have h1 : finRep E a k φ = φ := hk
+    change finRep E a k (c • φ) = c • φ
+    rw [map_smul, h1]
+  · have := h.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ (Set.range fun k => cptRep E a k φ))
       (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     simp only [map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
-  zfin := by
-    have := h.zfin
+  · have := h.zfin
     refine Submodule.finiteDimensional_of_le
       (S₂ := Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) '' Zalg E a)) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     simp only [map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨z, hz, rfl⟩)
-  growth g := by
+  · intro g
     obtain ⟨C, N, h1⟩ := h.growth g
     refine ⟨‖c‖ * C, N, fun y => ?_⟩
     change ‖c * φ.1 (g * infGL E a y)‖ ≤ _

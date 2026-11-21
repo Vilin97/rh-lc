@@ -33,7 +33,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 noncomputable section
 namespace GlobalTheory.UnifDvrCompare
-open GlobalTheory.UU GlobalTheory.LN GlobalTheory.IndefiniteRowSideFullHecke.UniformizationLinear
+open GlobalTheory.UU GlobalTheory.LN
 
 theorem exists_point_of_fixed {F F' : Type} [Field F] [Field F'] [Algebra F F'] [IsGalois F F'] {X : Scheme.{0}}
     (x' : Sp F' ⟶ X) (h : ∀ σ : Gal(F'/F), spMap (σ : F' →+* F') ≫ x' = x') :

@@ -20,6 +20,8 @@ private theorem exists_intertwiner_decomp_of_kernel_intertwines {R : Type} [Comm
   rw [Matrix.add_mulVec, ← Matrix.mulVec_mulVec] at h
   conv_lhs => rw [← h]
   congr 1
+  ext i
+  simp only [Matrix.mulVec, dotProduct, Matrix.vecMulVec_apply, Pi.smul_apply, smul_eq_mul,
     Finset.sum_mul]
   exact Finset.sum_congr rfl fun j _ => by ring
 

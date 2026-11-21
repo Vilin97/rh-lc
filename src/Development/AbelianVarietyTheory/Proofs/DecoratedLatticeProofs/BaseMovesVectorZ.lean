@@ -147,7 +147,7 @@ theorem exists_theta (q : SplitPt D k) {PP : Formalism.L2.DIV.Pl D.host.E} (he :
   refine ⟨(1 + s).1, (1 + s).2, ?_, ?_⟩
   · have h2 : Formalism.L2.DIV.resS D.host.F PP s = 0 :=
       (q.resS_eq_zero_iff he s).2 (by rw [hs, q.prF_toEAf, q.pr_sec]; exact ht)
-    rw [Subtype.coe_eta, map_add (f := _), h2, map_one, add_zero]
+    rw [Subtype.coe_eta, (Formalism.L2.DIV.resS D.host.F PP).map_add, h2, (Formalism.L2.DIV.resS D.host.F PP).map_one, add_zero]
   · have h1 := q.sec_pr 1
     rw [map_one, mul_one] at h1
     have h2 : q.e * (1 + q.sec (t - 1)) = q.sec t := by

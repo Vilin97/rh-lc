@@ -87,7 +87,12 @@ theorem step3 : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalS
         rw [h0]; exact hneg _ ha }
   rw [GlobalTheory.T.homLatticeCompletion_self_annihilator_atPlaces D ψ hψ V T LV LT hLV hLT P y hy]
   intro u' hu'
-  have hK : u' ∈ K := (AddSubgroup.closure_le K).2 (fun u hu => hno u hu.1 hu.2)
+  have hle : AddSubgroup.closure {x : WO V T | x ∈ latO V T (LV : Set _) (LT : Set _) P ∧
+      ∃ e, IsSplitIdem D e ∧ IsHalf e x} ≤ K := by
+    apply (AddSubgroup.closure_le K).2
+    intro u hu
+    exact hno u hu.1 hu.2
+  have hK : u' ∈ K := hle
     (GlobalTheory.T.homLatticeCompletion_le_closure_isotropicHalves D k ι p I P hP V T _ _ u' hu')
   rw [GlobalTheory.SplitScalar.symplO_skew]
   exact hneg _ hK

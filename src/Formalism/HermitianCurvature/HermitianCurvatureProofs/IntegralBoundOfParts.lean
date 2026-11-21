@@ -22,16 +22,17 @@ theorem uInv_zero_eq_self {X : Type} [AddCommGroup X] [Module ℂ X] :
   | l :: w, x => by
     funext e
     have he : (Fin.cons (e 0) (fun a => e a.succ) : Wd.Ix (Fin (w.length + 1))) = e := Fin.cons_self_tail e
-    simp only [KB.uInv, map_zero, ite_self, zero_smul, add_zero, uInv_zero_eq_self w]
+    unfold KB.uInv
+    simp only [map_zero, ite_self, zero_smul, add_zero, uInv_zero_eq_self w]
     by_cases h0 : e 0 = 0
-    · rw [if_pos h0]
+    · rw [ite_eq_left h0]
       conv_rhs => rw [← he]
       rw [h0]
     · have h1 : e 0 = 1 := by
         rcases Fin.exists_fin_two.1 ⟨e 0, rfl⟩ with h | h
         · exact absurd h h0
         · exact h
-      rw [if_neg h0]
+      rw [ite_eq_right h0]
       conv_rhs => rw [← he]
       rw [h1]
 

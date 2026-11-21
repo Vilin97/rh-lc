@@ -133,7 +133,10 @@ theorem sum_coef_mul_translate : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), 
     intro γ
     rw [thPair, hb γ, hIdef, ← integral_const_mul]
     congr 1
+    funext a
+    simp only [hFdef, chiR]
     rw [star_mul, star_mul, star_psi hn, neg_neg, star_chi hn]
+    simp only [AddSubgroup.coe_neg]
     ring
   have hJ : ∀ γ : ratL T S, J (-γ) = chi ψ S T γ x * I γ := by
     intro γ
@@ -165,7 +168,7 @@ theorem sum_coef_mul_translate : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), 
     exact (Equiv.neg (ratL T S)).summable_iff.1 h2
   have hinv := GlobalTheory.SeparatingCharacters.tsum_coefficients_eq_value_zero (WO S T) (ratL T S) K hK hcov
     (ratL T S) (chiR ψ S T) lc lx la l0 ln lker (fun a ha => chiR_eq_zero hψ.1 a ha) μ 𝓕 hμ h𝓕 h1 Φ
-    (hFc.comp (continuous_add_right x)) (fun γ hγ z => by simp only [hΦdef, add_assoc, hFp γ hγ]) hsJ
+    (hFc.comp (continuous_id.add continuous_const)) (fun γ hγ z => by simp only [hΦdef, add_assoc, hFp γ hγ]) hsJ
   simp only [hkey]
   have hre : ∑' γ : ratL T S, J (-γ) = ∑' a, J a := by
     have e := (Equiv.neg (ratL T S)).tsum_eq J

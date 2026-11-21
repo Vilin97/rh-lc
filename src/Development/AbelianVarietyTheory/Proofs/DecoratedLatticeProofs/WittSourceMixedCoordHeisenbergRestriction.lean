@@ -129,6 +129,8 @@ theorem mixS_heis {S S₀ T : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (ψ : Add
   simp only [_root_.I195MixedCoordinates_16b53debd46a2c18720dfcab.source]
   congr 1
   funext a
+  change heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) f)) 0 =
+    heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T 0) (heisO ψ S T (d.ext0 T w) (heisO ψ S T (d.extX T x) f))) 0
   rw [integrand_eq d ψ f x a w, integrand_eq d ψ _ 0 a w, map_zero]
   simp only [heisO, add_zero, GlobalTheory.OrientedHeis.symplOH_add_left]
   rw [symplOH_skew S T 0 (d.extY T a), symplOH_skew S T 0 (d.ext0 T w)]

@@ -115,7 +115,9 @@ theorem Phi_fixed (hQQ : Qm * Qi = 1)
       (A.map (phiSt P)).map (actSt P (g : GQ l)) = (A.map (actSt P (g : GQ l))).map (phiSt P) := by
     intro A; ext i j; simp [phiSt_actSt]
   have hRφ : ((R g).map (algebraMap ℚ_[l] (Bst P))).map (phiSt P) = (R g).map (algebraMap ℚ_[l] (Bst P)) := by
-    ext i j; simp
+    apply Matrix.ext
+    intro i j
+    exact (phiSt P).commutes (R g i j)
   constructor
   · rw [mmap_mul, hc, inv_act P R Qm Qi hQQ hQ g, Matrix.mul_assoc, ← hRφ, ← mmap_mul, hQ g]
   · rw [mmap_mul, hc, inv_act P R Qm Qi hQQ hQ g, mmap_mul, hRφ, Matrix.mul_assoc, hQ g]
@@ -133,7 +135,9 @@ theorem const_of_fixed {K : FinExt l}
       simpa using congrFun (congrFun (hY ⟨g, hg⟩) i) j
   choose y hy using h
   refine ⟨Matrix.of y, ?_, ?_⟩
-  · ext i j; simp [hy]
+  · apply Matrix.ext
+    intro i j
+    exact (hy i j).symm
   · intro g; ext i j
     have h1 := congrFun (congrFun (hY g) i) j
     simp only [Matrix.map_apply] at h1
@@ -179,7 +183,7 @@ theorem ev_phiSt (b : P.R.B)
 
 theorem taylor_sum (r s : P.R.B) (p : Bst P) (N : ℕ) (hN : p.natDegree < N) :
     Polynomial.eval (s + r) p = ∑ k ∈ Finset.range N,
-      (s ^ k * algebraMap ℚ_[l] P.R.B ((k.factorial : ℚ_[l])⁻¹)) * Polynomial.eval r (derivative^[k] p) := by
+      (s ^ k * algebraMap ℚ_[l] P.R.B ((k.factorial : ℚ_[l])⁻¹)) * Polynomial.eval r (Polynomial.derivative^[k] p) := by
   rw [← Polynomial.taylor_eval, Polynomial.eval_eq_sum_range' (by rwa [Polynomial.natDegree_taylor])]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Polynomial.taylor_coeff, mul_comm, mul_assoc]
@@ -235,7 +239,8 @@ theorem period_matrix_at_zero : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk 
     have h1 := congrArg (fun A => Matrix.map A eg) (hQ' g)
     simp only [mmap_mul] at h1
     have e1 : ((R g).map (algebraMap ℚ_[l] (Bst P))).map eg = (R g).map (algebraMap ℚ_[l] P.R.B) := by
-      ext i j; simp [heg]
+      ext i j
+      simp only [Matrix.map_apply, heg, Polynomial.coe_evalRingHom, Polynomial.algebraMap_apply, Polynomial.eval_C]
     have e2 : (Qm.map (actSt P (g : GQ l))).map eg = U₀.map (P.actQ (g : GQ l)) := by
       ext i j
       simp only [Matrix.map_apply, heg, Polynomial.coe_evalRingHom, hU₀, hev0]

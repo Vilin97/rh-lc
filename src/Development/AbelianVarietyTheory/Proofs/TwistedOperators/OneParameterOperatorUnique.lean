@@ -133,7 +133,7 @@ theorem integral_norm_sq_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field 
   have hgSB : g ∈ GlobalTheory.WeilM.SB _ := GlobalTheory.SchANonzero.indicator_intPts_mem_SB F _
   have h0mem : (0 : Fin a × Fin (a + a') → FiniteAdeleRing (𝓞 F) F) ∈ GlobalTheory.SchANonzero.intPts F _ := by
     intro i _ v
-    simp
+    exact zero_mem (v.adicCompletionIntegers F)
   have hg0 : g 0 ≠ 0 := by
     rw [hgdef, Set.indicator_of_mem h0mem]
     simp

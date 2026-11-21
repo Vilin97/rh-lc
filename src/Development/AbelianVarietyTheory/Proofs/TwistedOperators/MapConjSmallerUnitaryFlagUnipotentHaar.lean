@@ -58,6 +58,8 @@ theorem map_conj_smallerUnitary_flagUnipotent_haar : ∀ (D : D7) (S S₀ : HSp 
     rw [← Measure.map_prod_map _ _ measurable_id (hf.prodMap measurable_id), ← Measure.map_prod_map _ _ hf measurable_id,
       Measure.map_id, Measure.map_id, GlobalTheory.AdelicModulus.RowMat.map_mul_mt_eq D S₀ ρ lB hB h⁻¹]
   rw [hk, Measure.map_smul, Measure.map_smul, key]
+  · exact hval.aemeasurable
+  · exact (hconj.comp hval).aemeasurable
 
 end GlobalTheory.FlagModulus
 

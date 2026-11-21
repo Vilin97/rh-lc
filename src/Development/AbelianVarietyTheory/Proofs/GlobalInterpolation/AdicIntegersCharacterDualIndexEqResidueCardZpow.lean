@@ -39,7 +39,7 @@ theorem nIdx_eq_zpow : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (A
     NumberField.FinitePlace.norm_def, ha,
     WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero]
   simp only [GlobalTheory.IndefiniteRowSideFullHecke.PlaceSplittingTypes.resCard]
-  rw [← Submodule.cardQuot_apply, ← Ideal.absNorm_apply, hu]
+  rw [← Submodule.cardQuot_apply, ← Ideal.absNorm_apply, WithZero.log_exp]
   simp [_root_.zpow_neg]
 
 end GlobalTheory.DualIndexPow

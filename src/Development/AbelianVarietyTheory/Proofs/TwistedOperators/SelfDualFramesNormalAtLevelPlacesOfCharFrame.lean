@@ -29,7 +29,8 @@ theorem selfDual_frames_normal_at_level_places_of_charFrame : ∀ (D : D7) (C : 
       βY := fun _ => 1, βX := 1, βV := fun _ => 1, βW := fun _ => 1 }
   have hP : ∀ PP, PP ∈ L.Pg ↔ ∃ l, L.C.P.Div l PP := hPg
   have hQ : ∀ t, Formalism.IndefR.Lev.IsTwistPlaces D.host.g (L.Q t) := fun t => t.elim
-  choose γ hγ using fun j => GlobalTheory.StdFrames.exists_base (D.sp.X j)
+  have hbase (j : ℕ) := GlobalTheory.StdFrames.exists_base (D.sp.X j)
+  choose γ hγ using hbase
   have hγ' : ∀ j, j < D.R.m → IsFrame (γ j) (Formalism.L2.Herm.crdLat (D.sp.X j) (D.sp.X j).L0) := fun j _ => by
     rw [hγ j]; exact GlobalTheory.StdFrames.isFrame_lat _
   have hex : ∀ j, ∃ (E Ev : ℕ → (D.sp.Y j).V) (z : (D.sp.Y j).V), j < D.R.m → IsAuxiliaryHeckeCharacter D j E Ev z := fun j => by

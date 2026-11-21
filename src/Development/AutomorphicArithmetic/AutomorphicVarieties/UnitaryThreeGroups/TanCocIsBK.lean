@@ -98,7 +98,7 @@ private theorem sndM_inv (F : R →ₐ[O] DualNumber κ) (a : GL (Fin 3) R) :
   rw [Matrix.mul_assoc (sndM F _), ← map_mul, Units.mul_inv, map_one, Matrix.mul_one] at h2
   exact eq_neg_of_add_eq_zero_right h2.symm
 
-private theorem tan_coc (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG 3 R) (g h : Γ) :
+private theorem tan_coc (F : R →ₐ[O] DualNumber κ) (r : Γ →* GG (m := 3) (R := R)) (g h : Γ) :
     tanCoc F r (g * h) = tanCoc F r g + adRep (push (dualFst F) r) g (tanCoc F r h) := by
   have e1 : ∀ g, tanCoc F r g = sndM F ((r g).left : Matrix (Fin 3) (Fin 3) R) *
       fstM F (((r g).left⁻¹ : GL (Fin 3) R) : Matrix (Fin 3) (Fin 3) R) := fun g => rfl
@@ -194,7 +194,7 @@ theorem UpperTheory.V.U3.tanCoc_isBK :
     have hA : ¬ (placeOf Ω w).valuation (l : Ω) < 1 := fun h =>
       hw (((places ℚ Ω l _).2.2.1 w (isPlaceOver_placeOf Ω w)).1 h)
     haveI : Finite (ResidueField c.O) := (abelian₂.dvr_finite l c.O).2.1
-    haveI : Finite (GG 3 (ResidueField c.O)) := Finite.of_equiv _ SemidirectProduct.equivProd.symm
+    haveI : Finite (GG (m := 3) (R := ResidueField c.O)) := Finite.of_equiv _ SemidirectProduct.equivProd.symm
     obtain ⟨y, hy⟩ := tanBK_avg (k := PadicAlgCl l) (G := Ine (F := ℚ) (placeOf Ω w))
       (fun g => adRep (push (dualFst F) S.r.hom) g) (fun g h x => by simp)
       (fun g => tanCoc F S.r.hom g) (fun g h => hZ.2 g h)
@@ -203,7 +203,7 @@ theorem UpperTheory.V.U3.tanCoc_isBK :
         have h2 : tanCoc F S.r.hom g = sndM F (S.r.hom g).mat *
           fstM F (((S.r.hom g).left⁻¹ : GL (Fin 3) S.R) : Matrix (Fin 3) (Fin 3) S.R) := rfl
         rw [h2, h1]
-        have h3 : sndM F (1 : GG 3 S.R).mat = 0 := sndM_one F
+        have h3 : sndM F (1 : GG (m := 3) (R := S.R)).mat = 0 := sndM_one F
         simp [h3])
     exact ⟨y, fun s hs => hy ⟨s, hs⟩⟩
   · have hfg : ∀ h, GG.map (f : U.R →+* S.R) (U.r.hom h) = S.r.hom (D.ι h) := fun h =>
@@ -220,7 +220,7 @@ theorem UpperTheory.V.U3.tanCoc_isBK :
       rfl
     have e2 : adRep (push (dualFst (F.comp f)) U.r.hom) = (adRep (push (dualFst F) S.r.hom)).comp D.ι := by
       refine MonoidHom.ext fun h => ?_
-      show _ = GG.ad 3 _ (GG.map _ (S.r.hom (D.ι h)))
+      show _ = GG.ad (m := 3) (GG.map _ (S.r.hom (D.ι h)))
       rw [← hfg]
       rfl
     rw [e1, e2] at h1

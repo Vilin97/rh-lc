@@ -180,7 +180,34 @@ theorem glue_mem (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y) (hinj
       refine Submodule.add_mem _ ?_ (Submodule.smul_mem _ _ (Submodule.subset_span hzG))
       have : Submodule.span K (L : Set W) ≤ (Submodule.span K (glue ι z T L y : Set V)).comap ι :=
         Submodule.span_le.2 fun l hl => Submodule.subset_span (hLG l hl)
-      exact this (hL.span_eq_top.ge trivial)
+      have hw : w ∈ Submodule.span K (L : Set W) := by
+        obtain ⟨s, hs⟩ := hL.fg
+        obtain ⟨a, ha⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 K)) s (fun l => h0 w l)
+        have hdual : star ((a : 𝓞 K) : K) • w ∈ dual h0 L := by
+          apply (dualBasic_mem_dual _ _ _).2
+          intro l hl
+          apply swap_mem hs0
+          have hle : L ≤ (1 : Submodule (𝓞 K) K).comap
+              ((a : 𝓞 K) • (h0 w).restrictScalars (𝓞 K)) := by
+            rw [← hs, Submodule.span_le]
+            intro x hx
+            exact Submodule.mem_one.2 (ha x hx)
+          have hh := hle hl
+          change (a : 𝓞 K) • h0 w l ∈ (1 : Submodule (𝓞 K) K) at hh
+          rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, starRingEnd_apply, star_star, ← algebraMap_smul K]
+          exact hh
+        obtain ⟨b, hb⟩ := hgen _ hdual
+        have hyspan : y ∈ Submodule.span K (L : Set W) := by
+          have hh := Submodule.smul_mem (Submodule.span K (L : Set W)) (T : K)⁻¹
+            (Submodule.subset_span hTy)
+          simpa [smul_smul, hT'] using hh
+        have hh := Submodule.add_mem (Submodule.span K (L : Set W))
+          (Submodule.subset_span hb) (Submodule.smul_mem _ (b : K) hyspan)
+        have ha0 : star ((a : 𝓞 K) : K) ≠ 0 := star_ne_zero.mpr
+          ((IsFractionRing.injective (𝓞 K) K).ne (nonZeroDivisors.ne_zero a.property))
+        have hh' := Submodule.smul_mem (Submodule.span K (L : Set W)) (star ((a : 𝓞 K) : K))⁻¹ hh
+        simpa [sub_add_cancel, smul_smul, ha0] using hh'
+      exact this hw
   have hint : ∀ x ∈ glue ι z T L y, ∀ x' ∈ glue ι z T L y, h x x' ∈ (1 : Submodule (𝓞 K) K) := by
     intro x hx x' hx'
     obtain ⟨l, hl, s, rfl⟩ := mem_glue.1 hx

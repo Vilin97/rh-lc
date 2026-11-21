@@ -114,6 +114,7 @@ theorem gval_ne_of_locGv (D : D7) (Z : LocDat D) (p : PlF D) (u u' : D.what₂.W
   simp only [map_mul, hcj, map_natCast]
   set c := ∏ i : Fin D.R.rS, (Z.M p).L.cj (frFac Z.δ p (Fin.castLE (Nat.le_succ _) i)) *
         frFac Z.δ p (Fin.castLE (Nat.le_succ _) i)
+  dsimp only [Tu]
   linear_combination (c * (Z.M p).L.cj c) * hι
 
 theorem wt_self {D : D7} {Z : LocDat D} {p : PlF D} {P : LocNG.FPair (locH Z p) D.R.rS} (d : LocNG.Datum P) :

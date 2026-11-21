@@ -29,20 +29,17 @@ open GlobalTheory.SS
 namespace GlobalTheory
 
 theorem isAbelianScheme_overPullback {S S' : Scheme.{0}} (f : S' ⟶ S) (A : Over S) [GrpObj A]
-    (h : IsAbelianScheme A) : IsAbelianScheme ((Over.pullback f).obj A) where
-  comm := by
-    have := h.comm
+    (h : IsAbelianScheme A) : IsAbelianScheme ((Over.pullback f).obj A) := by
+  constructor
+  · have := h.comm
     infer_instance
-  smooth := by
-    have := h.smooth
+  · have := h.smooth
     change Smooth (pullback.snd A.hom f)
     infer_instance
-  proper := by
-    have := h.proper
+  · have := h.proper
     change IsProper (pullback.snd A.hom f)
     infer_instance
-  geomConnected := by
-    have := h.geomConnected
+  · have := h.geomConnected
     change GeometricallyConnected (pullback.snd A.hom f)
     infer_instance
 

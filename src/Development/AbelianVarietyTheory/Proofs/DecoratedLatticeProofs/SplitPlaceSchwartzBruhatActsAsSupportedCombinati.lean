@@ -171,7 +171,12 @@ theorem extFun_comb : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolo
   have tf : ∀ k : ℕ, 0 < k → Function.Injective fun t : WO S T => k • t := fun k hk a b hab => by
     rw [← inv_smul_nsmul S T hk a, ← inv_smul_nsmul S T hk b]
     exact congrArg _ hab
-  have hb := isBichar_symplO S T ψ
+  have hb : IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro a b y; rw [symplO_add_left, AddChar.map_add_eq_mul]
+    · intro a b y; rw [symplO_add_right, AddChar.map_add_eq_mul]
+    · intro y; rw [symplO_zero_left, AddChar.map_zero_eq_one]
+    · intro y; rw [symplO_zero_right, AddChar.map_zero_eq_one]
   have hm : extFun α β Ψ ∈
       waveSpan (fun x y : WO S T => ψ (symplO S T x y)) (half S T p.e) (half S T (cA D p.e)) (Λ ⊓ half S T p.e) := by
     obtain ⟨h1, k, hk, h2, h3⟩ := hΦ

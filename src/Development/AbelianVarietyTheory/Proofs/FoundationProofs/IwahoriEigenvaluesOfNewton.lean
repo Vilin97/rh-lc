@@ -102,8 +102,7 @@ theorem exists_root_of_side {O : Type*} [CommRing O] [IsLocalRing O] (ϖ : O)
     by_cases hj' : j = i + 1
     · subst hj'
       simp [h1]
-    rw [if_neg (Ne.symm hj), if_neg (Ne.symm hj')]
-    simpa using h2 j hj hj'
+    simpa [Finsupp.single_apply, hj, hj'] using h2 j hj hj'
   obtain ⟨R, hR⟩ := hd
   set y₀ : Oˣ := -(u * w⁻¹) with hy₀
   have hy : (u : O) + w * y₀ = 0 := by
@@ -239,7 +238,7 @@ theorem isAdicComplete_span [CompleteSpace F] (π : Int F)
     rw [Valued.cauchy_iff]
     refine ⟨map_neBot, fun γ => ?_⟩
     obtain ⟨n, hn⟩ := exists_pow_lt₀ hπ1 (Units.map (MonoidWithZeroHom.ValueGroup₀.embedding
-      (f := (.ofClass (Valued.v : Valuation F ℤᵐ⁰)))) γ)
+      (f := (.ofClass (Valued.v : Valuation F ℤᵐ⁰)))).toMonoidHom γ)
     refine ⟨g '' Set.Ici n, image_mem_map (Ici_mem_atTop n), ?_⟩
     rintro _ ⟨a, ha, rfl⟩ _ ⟨b, hb, rfl⟩
     rw [Valuation.restrict_lt_iff_lt_embedding]
@@ -363,7 +362,7 @@ theorem iwahoriEigenvalues_of_newton (hN : Formalism.PacketSums.IwahoriNewton) :
   have hx : ∀ i, g.charpoly.IsRoot (x i) := fun i => by
     have h1 : ((G.map (Int F).subtype).charpoly).IsRoot ((π ^ b i * y i : Int F) : F) := by
       rw [Matrix.charpoly_map]
-      exact (hyr i).map
+      exact (hyr i).map (Int F).subtype
     rw [IsRoot.def, Matrix.eval_charpoly] at h1 ⊢
     have : Matrix.scalar (Fin r) (x i) - g =
         ϖ ^ N • (Matrix.scalar (Fin r) ((π ^ b i * y i : Int F) : F) - G.map (Int F).subtype) := by

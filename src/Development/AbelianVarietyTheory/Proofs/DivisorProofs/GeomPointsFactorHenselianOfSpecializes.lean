@@ -14,7 +14,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RingHomExten
 @[expose] public section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel GlobalTheory.UPelLevel
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.UPel
 open scoped CategoryTheory.Obj TensorProduct
 
 namespace GlobalTheory
@@ -24,7 +24,8 @@ open Polynomial
 theorem geomPoints_factor_henselian_of_specializes :
   ∀ {X : Scheme.{0}} {k k' : Type} [Field k] [IsAlgClosed k] [Field k'] [IsAlgClosed k'] (x : Sp k ⟶ X) (x' : Sp k' ⟶ X) (u : Sp k) (u' : Sp k'), x'.base u' ⤳ x.base u → ∃ (R : Type) (_ : CommRing R) (_ : HenselianLocalRing R) (_ : IsAlgClosed (IsLocalRing.ResidueField R)) (r : Sp R ⟶ X) (i : Sp k ⟶ Sp R) (i' : Sp k' ⟶ Sp R), i ≫ r = x ∧ i' ≫ r = x' := by
   intro X k k' _ _ _ _ x x' u u' hsp
-  obtain ⟨B, _, g, g', ρ, hker, hx, hx'⟩ := GlobalTheory.T.exists_affine_ring_hom_pair_of_specializes x x' u u' hsp
+  have hAffine := exists_ringHom_pair_of_specializes x x' u u' hsp
+  obtain ⟨B, _, g, g', ρ, hker, hx, hx'⟩ := hAffine
   set q := RingHom.ker g' with hq
   haveI : q.IsPrime := RingHom.ker_isPrime g'
   let D := B ⧸ q

@@ -124,9 +124,9 @@ theorem detPow_map (i c : ℕ) : MvPolynomial.map φ (detPow K i c) = detPow C i
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ GlobalTheory.FormalLog
 
 theorem map_pderiv {σ : Type} (i : σ) (f : MvPowerSeries σ K) :
-    MvPowerSeries.map φ (pderiv K i f) = pderiv C i (MvPowerSeries.map φ f) := by
+    MvPowerSeries.map φ (MvPowerSeries.pderiv i f) = MvPowerSeries.pderiv i (MvPowerSeries.map φ f) := by
   ext α
-  simp [coeff_pderiv]
+  simp [MvPowerSeries.coeff_pderiv]
 
 theorem om_map {d : ℕ} (G : FGLaw K d) :
     Om (GlobalTheory.FBMap.mapLaw φ G) = (Om G).map (MvPowerSeries.map φ) := by

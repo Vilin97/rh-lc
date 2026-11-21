@@ -163,7 +163,9 @@ theorem sum_oM (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF
       rw [OrbF.relIndex_stab hs]
       obtain ⟨⟨⟨g, hg, rfl⟩, hxM⟩, -⟩ := hR.1 M hM
       rw [LocalizedFibreSets.gmap_locF] at hxM ⊢
-      exact oM_ne_zero hs S (LocalizedFibreSets.isLattice_gmap g hL) h𝔭 hxM) w
+      have hLat : Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap g L) :=
+        Submodule.IsLattice.of_fg K (hL.fg.map _)
+      exact oM_ne_zero hs S hLat h𝔭 hxM) w
   calc ∑ M ∈ R, (oM S M : ℝ) * w (S.cut M) = _ :=
         Finset.sum_congr rfl fun M _ => by rw [← OrbF.relIndex_stab hs]
     _ = _ := key

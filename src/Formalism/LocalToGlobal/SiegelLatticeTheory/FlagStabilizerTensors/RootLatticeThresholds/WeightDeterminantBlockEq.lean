@@ -72,11 +72,9 @@ theorem nHead_eq (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (v : InfinitePl
     rw [hφ, norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (by unfold Formalism.MainNotions.S.rhoReal; positivity)]
     congr 1
     unfold Formalism.MainNotions.S.rhoReal
-    obtain ⟨d, hd⟩ : ∃ d, 2 * (D.R.rS + 1) - b - (b + s - 1) = d := ⟨_, rfl⟩
-    have hd' : (d : ℤ) = 2 * (D.R.rS : ℤ) + 3 - 2 * (b : ℤ) - (s : ℤ) := by omega
-    rw [hd, ← zpow_natCast, ← zpow_neg, hd']
-    push_cast
-    ring_nf
+    have hexp : ((2 * (D.R.rS + 1) - b - (b + s - 1) : ℕ) : ℤ) =
+        ((2 * D.R.rS + 3 : ℕ) : ℤ) - 2 * (b : ℤ) - (s : ℤ) := by omega
+    rw [← hexp, zpow_neg, zpow_natCast]
 
 theorem signFlip_append {K : Type} [Ring K] (r : ℕ) : ∀ (L1 L2 : Formalism.FourierDecayAlt.TB.Pt K) (b : ℕ),
     Formalism.L2.SG.DataInst.signAux r b (L1 ++ L2) =

@@ -89,18 +89,16 @@ private theorem isSD_lemma_8 {K V : Type} [Field K] [StarRing K] [AddCommGroup V
     {S : Subring K} (hS : IsHermSemilocal S) {h : V →ₗ⋆[K] V →ₗ[K] K} {ι : Type} [Fintype ι]
     [DecidableEq ι] {b : ι → V} (ho : ∀ i j, i ≠ j → h (b i) (b j) = 0)
     (hu : ∀ i, IsUnitIn S (h (b i) (b i))) :
-    IsSD S h (Submodule.span K (Set.range b)) (spanS S b) where
-  le := fun m hm => mem_span_lemma_4 hm
-  smul_mem := fun a ha m hm => smul_mem_lemma_2 ha hm
-  int := by
-    intro x hx y hy
+    IsSD S h (Submodule.span K (Set.range b)) (spanS S b) := by
+  refine ⟨⟨fun _ hm => mem_span_lemma_4 hm, fun _ ha _ hm => smul_mem_lemma_2 ha hm,
+    ?_, ?_⟩, ?_⟩
+  · intro x hx y hy
     rw [mem_iff_lemma] at hx hy
     obtain ⟨a, ha, rfl⟩ := hx
     obtain ⟨c, hc, rfl⟩ := hy
     rw [form_sum_lemma_7 ho]
     exact sum_mem fun i _ => S.mul_mem (S.mul_mem (hS.star_mem _ (ha i)) (hc i)) (hu i).2.1
-  span := by
-    intro x hx
+  · intro x hx
     obtain ⟨g, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hx
     choose T hTS hT0 hTg using fun i => hS.frac (g i)
     refine ⟨∏ i, T i, Finset.prod_ne_zero_iff.2 fun i _ => hT0 i, ?_⟩
@@ -111,8 +109,7 @@ private theorem isSD_lemma_8 {K V : Type} [Field K] [StarRing K] [AddCommGroup V
       exact S.mul_mem (S.prod_mem fun j _ => hTS j) (hTg i)
     · rw [Finset.smul_sum]
       simp only [smul_smul]
-  dual := by
-    intro x hx hdual
+  · intro x hx hdual
     obtain ⟨g, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hx
     rw [mem_iff_lemma]
     refine ⟨g, fun i => ?_, rfl⟩

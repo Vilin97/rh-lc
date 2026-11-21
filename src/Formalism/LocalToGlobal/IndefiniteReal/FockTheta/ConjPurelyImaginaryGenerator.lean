@@ -277,7 +277,7 @@ def sigH (D : D7) (m n : ℕ) : Mx D m n →+ V D m n where
   map_add' c c' := by
     funext ρ i j
     show Eqv.thetaC D ρ (infPart D (c i j + c' i j)) = _
-    rw [(infPart D).map_add (f := _), (Eqv.thetaC D ρ).map_add (f := _)]
+    rw [map_add (f := infPart D), map_add (f := Eqv.thetaC D ρ)]
     rfl
 
 theorem sigH_apply (c : Mx D m n) (ρ : D.what₂.Tau) (i : Fin m) (j : Fin n) :
@@ -616,7 +616,7 @@ theorem continuous_compAt {m n : ℕ} (ρ : D.what₂.Tau) : Continuous fun x : 
 
 theorem continuous_phR (v : V D T.rank S.rank) : Continuous fun x : WO S T => phR S T x v := by
   unfold phR
-  exact continuous_finset_sum _ fun ρ _ => (continuous_eM_left _ _ _ _).comp (continuous_compAt ρ)
+  exact continuous_finsetSum _ fun ρ _ => (continuous_eM_left _ _ _ _).comp (continuous_compAt ρ)
 
 
 variable (S T) in

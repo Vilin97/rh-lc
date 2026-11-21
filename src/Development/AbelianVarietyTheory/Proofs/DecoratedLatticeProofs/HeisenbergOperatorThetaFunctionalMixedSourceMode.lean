@@ -48,8 +48,7 @@ theorem heis_mixS : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D �
   refine ⟨fun x a => GlobalTheory.MixModel.Check.mixS_heis_extX d v.μ v.𝓕 f a x, fun x a => ?_,
     fun x w => GlobalTheory.MixModel.Check.mixedModelSource_heisenberg_anisotropic_part d v.μ v.𝓕 f w x, ?_, fun w => ?_⟩
   · funext w₀
-    rw [GlobalTheory.MixModel.Check.mixS_heis_extY d v.covol hf a x w₀]
-    rfl
+    exact GlobalTheory.MixModel.Check.mixS_heis_extY d v.covol hf a x w₀
   · have hX : Continuous (d.extX T) := continuous_id.matrix_mul continuous_const
     have hY : Continuous (d.extY T) := continuous_id.matrix_mul continuous_const
     have h0 : Continuous (d.ext0 T) := continuous_id.matrix_mul continuous_const
@@ -73,7 +72,7 @@ theorem heis_mixS : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D �
     · have hz := (GlobalTheory.T.wittDecomposition_mixedCoords_rank_zero D ψ).1 S S₀ T d v.μ v.𝓕 v.covol f
       haveI : Subsingleton (Matrix (Fin T.rank) (Fin 0) D.host.E) := ⟨fun a b => Matrix.ext fun _ j => j.elim0⟩
       have h1 : ∀ x : Matrix (Fin T.rank) (Fin 0) D.host.E, (_root_.I195MixedCoordinates_5a743adb4eaabe3d936622f8.source d) T ψ v.μ v.𝓕 f (rat x) w = f (d.ext0 T w) :=
-        fun x => by rw [hz]
+        fun x => congrFun (hz (rat x)) w
       rw [show (fun x : Matrix (Fin T.rank) (Fin 0) D.host.E => (_root_.I195MixedCoordinates_5a743adb4eaabe3d936622f8.source d) T ψ v.μ v.𝓕 f (rat x) w) =
         fun _ => f (d.ext0 T w) from funext h1]
       exact hasSum_single (f := fun _ : Matrix (Fin T.rank) (Fin 0) D.host.E => f (d.ext0 T w))
@@ -97,8 +96,10 @@ theorem heis_mixS : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D �
       rw [hg0] at H
       convert H using 1
       funext y
-      rw [hXe, ← hres, GlobalTheory.MixModel.Check.mixedModelSource_heisenberg_anisotropic_part]
+      rw [hXe, ← hres]
+      change d.mixS T ψ v.μ v.𝓕 f (rat y) w =
+        d.mixS T ψ v.μ v.𝓕 (heisO ψ S T (d.ext0 T w) f) (rat y) 0
+      rw [GlobalTheory.MixModel.Check.mixedModelSource_heisenberg_anisotropic_part]
       simp only [heisO, symplOH_zero_left, AddChar.map_zero_eq_one, one_mul, zero_add]
-      rfl
 
 end GlobalTheory.HeisMixSource

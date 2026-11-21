@@ -34,5 +34,6 @@ theorem haar_eq_map_prod : ∀ (D : D7) (Y : HSp D) (ν : Measure (GA D Y)), ν.
   refine ⟨(c : ℝ≥0∞) • m₀, μ, hm, inferInstance, inferInstance, inferInstance, ?_, ?_⟩
   · rw [← he]; exact e.toHomeomorph.measurableEmbedding
   · rw [← he, Measure.prod_smul_left, Measure.map_smul, hc, ENNReal.smul_def]
+    exact e.continuous.measurable.aemeasurable
 
 end GlobalTheory.HaarSplit

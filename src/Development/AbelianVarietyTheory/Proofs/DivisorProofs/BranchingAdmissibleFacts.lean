@@ -83,12 +83,17 @@ theorem rCap_kill {lam sg : Fin n → ℕ} (hI : Interlace (lamZ lam) (fun i => 
 theorem dual_tri {M : Type} [AddCommGroup M] [Module K M] (ψ : M →ₗ[K] K) : ∀ {m : ℕ} (g : Fin m → Module.End K M)
     (c : Fin m → K) (F : Fin m → Prop), (∀ k, F k → ∀ x, ψ (g k x) = c k * ψ x) →
     (∀ k, ¬ F k → (∀ j, j < k → F j) → ∀ x, ψ (g k x) = 0) → ∀ x,
-    ((∀ k, F k) → ψ ((List.ofFn g).prod x) = (∏ k, c k) * ψ x) ∧ ((¬ ∀ k, F k) → ψ ((List.ofFn g).prod x) = 0)
-  | 0, g, c, F, _, _, x => ⟨fun _ => by simp, fun h => absurd (fun k : Fin 0 => k.elim0) h⟩
-  | m + 1, g, c, F, h1, h2, x => by
+    ((∀ k, F k) → ψ ((List.ofFn g).prod x) = (∏ k, c k) * ψ x) ∧ ((¬ ∀ k, F k) → ψ ((List.ofFn g).prod x) = 0) := by
+  intro m
+  induction m with
+  | zero =>
+    intro g c F _ _ x
+    exact ⟨fun _ => by simp, fun h => absurd (fun k : Fin 0 => k.elim0) h⟩
+  | succ m ih =>
+    intro g c F h1 h2 x
     rw [List.ofFn_succ, List.prod_cons, Module.End.mul_apply, Fin.prod_univ_succ]
     by_cases h0 : F 0
-    · obtain ⟨ih1, ih2⟩ := dual_tri ψ (fun i : Fin m => g i.succ) (fun i => c i.succ) (fun i => F i.succ)
+    · obtain ⟨ih1, ih2⟩ := ih (fun i : Fin m => g i.succ) (fun i => c i.succ) (fun i => F i.succ)
         (fun k hk => h1 _ hk) (fun k hk hj => h2 _ hk (fun j hkj => by
           induction j using Fin.cases with
           | zero => exact h0

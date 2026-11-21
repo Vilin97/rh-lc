@@ -69,7 +69,7 @@ theorem cov_le : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCom
   haveI : SigmaFinite (lebR0 k r N.j β) := (hH v0).1
   have hu : ∀ v, IsUnit (g v).det := fun v => RealMat.isUnit_det (hF v).2.2.2.2.1.choose_spec.1
   have hone : m 1 = fun _ => Matrix.of.symm (1 : Mat k r) :=
-    (hmu 1 _ fun v x => by simp).symm
+    (hmu 1 _ fun v x => by simp only [Equiv.apply_symm_apply, Matrix.one_mulVec]; rfl).symm
   have hmul : ∀ s t, m (s * t) = fun v => Matrix.of.symm (Matrix.of (m s v) * Matrix.of (m t v)) := fun s t =>
     (hmu (s * t) _ fun v x => by
       simp only [Equiv.apply_symm_apply]
@@ -113,7 +113,7 @@ theorem cov_le : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCom
   have hzL : N.F.z ∈ latL N.F N.F' Λ := by
     have := (hz1 1).2 (Submodule.mem_one.2 ⟨1, map_one _⟩)
     simpa using this
-  have hΛ : Submodule.IsLattice K Λ := ((GlobalTheory.HermLat.isUnimod_iff H Λ).1 hT.1.1).1
+  have hΛ : Submodule.IsLattice K Λ := Submodule.IsLattice.of_fg K ((GlobalTheory.HermLat.isUnimod_iff H Λ).1 hT.1.1).1.1
   obtain ⟨Ω, hΩ, -, hΩle⟩ := GlobalTheory.T.covolume_referenceLattice_stabiliser_bounds K V H hK r N k ι σ β Φ z z' g hP hd hF hN hv (latL N.F N.F' Λ) hLU hzL
   have hnil := (GlobalTheory.UnipStab.common_unipotent_stabiliser K V H hK r N).2.2.2.2
   have hc1 := (GlobalTheory.DegCnt.Unimod.invVol_smul K V N.R (2 * r + 1) hnil _ _ hRefLat hΛ).1

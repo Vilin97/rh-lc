@@ -19,7 +19,8 @@ theorem continuous_coefR : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V 
   intro D θ hθ V S M v a
   haveI : IsTotallyReal D.host.F := D.sp.cm.totReal
   unfold coefR
-  refine continuous_finset_prod _ fun τ _ => ?_
+  refine continuous_finsetProd _ fun τ _ => ?_
+
   have hc : Continuous fun g : GA D V => cmp θ τ g := GlobalTheory.Mem.VolExists.continuous_infMat V.gram (hθ τ)
   have hu : ∀ g : GA D V, (cmp θ τ g)ᴴ * gramAt D V τ * cmp θ τ g = gramAt D V τ := by
     intro g

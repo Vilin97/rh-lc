@@ -84,7 +84,7 @@ theorem mixT_heis_incX {μ : Measure (Mx D ρ S.rank)} {𝓕 : Set (Mx D ρ S.ra
       ring
     · congr 1
       abel
-  show ∫ ξ' in 𝓕, _ ∂μ = ψ _ * ∫ ξ' in 𝓕, _ ∂μ
+  change ∫ ξ' in 𝓕, heisO ψ S T (d.incX S ξ') (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w₀) (heisO ψ S T (d.incX S ξ) f))) 0 ∂μ = ψ _ * ∫ ξ' in 𝓕, heisO ψ S T (d.incX S ξ') (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w₀) f)) 0 ∂μ
   simp_rw [key]
   rw [integral_const_mul]
   congr 1
@@ -114,7 +114,7 @@ theorem mixedModelTarget_heisenberg_anisotropic_part {μ : Measure (Mx D ρ S.ra
       ring
     · congr 1
       abel
-  show ∫ ξ' in 𝓕, _ ∂μ = ψ _ * ∫ ξ' in 𝓕, _ ∂μ
+  change ∫ ξ' in 𝓕, heisO ψ S T (d.incX S ξ') (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w₀) (heisO ψ S T (d.inc0 S v) f))) 0 ∂μ = ψ _ * ∫ ξ' in 𝓕, heisO ψ S T (d.incX S ξ') (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S (w₀ + v)) f)) 0 ∂μ
   simp_rw [key]
   rw [integral_const_mul]
 
@@ -144,8 +144,15 @@ theorem hasSum_mixT {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1))
         starRingEnd ℂ ((_root_.I195MixedCoordinates_1f38ee5ffec15f714787e016.target d) S ψ μ 𝓕 f (rat y) 0) := by
     intro y
     show (_root_.I195MixedCoordinates_1f38ee5ffec15f714787e016.source d) S ψ μ' 𝓕' _ (rat (D.host.xi0⁻¹ • y)) 0 = _
-    rw [rat_smul, hsw f (rat y)]
-    simp [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj, GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger]
+    rw [rat_smul]
+    have hh := congrFun (hsw f (rat y)) 0
+    simpa only [I195MixedCoordinates_79cab7195843a34bfe21655d.source,
+      I195MixedCoordinates_79cab7195843a34bfe21655d.target,
+      I195MixedCoordinates_1f38ee5ffec15f714787e016.source,
+      I195MixedCoordinates_1f38ee5ffec15f714787e016.target,
+      GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj,
+      GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger,
+      adj_zero, Matrix.zero_mul, Matrix.mul_zero] using hh
   have h0 : GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger T S) f (d.ext0 S 0) = starRingEnd ℂ (f 0) := by
     simp [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj, GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger]
   simp only [Function.comp_def, e, h0] at h5

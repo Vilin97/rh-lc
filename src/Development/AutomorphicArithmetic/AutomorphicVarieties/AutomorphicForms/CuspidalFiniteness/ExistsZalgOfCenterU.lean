@@ -115,14 +115,19 @@ theorem isZFinite_toArch {φ : TR.Sm F a}
   obtain ⟨z', h1, h2⟩ := exists_Zalg_of_centerU hz
   exact ⟨_, Submodule.subset_span ⟨z', h1, rfl⟩, (h2 φ).symm⟩
 
-theorem isAutomorphicForm_of {φ : TR.Sm F a} (h : TR.IsAutForm φ) : IsAutomorphicForm φ.1 where
-  isLeftInvariant := h.left
-  isSmooth := ⟨(toArch F a φ).2, fun g => Filter.eventually_of_mem
-    (h.level.mem_nhds (show TR.finRep F a 1 φ = φ by rw [map_one]; rfl)) fun k hk => by
-      rw [Fb.finEmb_eq]; exact congrFun (congrArg Subtype.val hk) g⟩
-  isKFinite := UpperTheory.isKFinite_totallyRealModel_of_isKFinite F a φ h.level h.kfin
-  isZFinite := isZFinite_toArch h.zfin
-  hasModerateGrowth := UpperTheory.moderateGrowth_totallyRealModel_of_moderateGrowth F a φ h.left h.level h.growth
+theorem isAutomorphicForm_of {φ : TR.Sm F a} (h : TR.IsAutForm φ) : IsAutomorphicForm φ.1 := by
+  have hs : IsSmooth φ.1 := by
+    refine ⟨(toArch F a φ).2, fun g => ?_⟩
+    have hone : TR.finRep F a 1 φ = φ := by rw [map_one]; rfl
+    refine Filter.eventually_of_mem (h.level.mem_nhds hone) fun k hk => ?_
+    rw [Fb.finEmb_eq]
+    exact congrFun (congrArg Subtype.val hk) g
+  exact {
+    isLeftInvariant := h.left
+    isSmooth := hs
+    isKFinite := UpperTheory.isKFinite_totallyRealModel_of_isKFinite F a φ h.level h.kfin
+    isZFinite := isZFinite_toArch h.zfin
+    hasModerateGrowth := UpperTheory.moderateGrowth_totallyRealModel_of_moderateGrowth F a φ h.left h.level h.growth }
 
 theorem mem_cuspForms_of (φ : TR.Sm F a) (h : TR.IsCuspForm φ) : φ.1 ∈ cuspForms F a :=
   ⟨isAutomorphicForm_of h.1, UpperTheory.constantTerm_eq_zero_of_isCuspidal F a φ.1 h.1.left (isAutomorphicForm_of h.1).continuous h.2⟩

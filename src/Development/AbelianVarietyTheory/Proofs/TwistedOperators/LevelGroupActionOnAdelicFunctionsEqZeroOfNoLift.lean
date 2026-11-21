@@ -94,7 +94,7 @@ theorem ip_sum (M : DSModel V S) {μ : Measure (GA D V)} {𝓕 : Set (GA D V)} {
     IsMultIP M μ 𝓕 U U' (∑ i, z i * a i) := by
   intro v v'
   simp only [hU]
-  refine ⟨integrable_finset_sum _ fun i _ => (h i v v').1.const_mul _, ?_⟩
+  refine ⟨integrable_finsetSum _ fun i _ => (h i v v').1.const_mul _, ?_⟩
   rw [integral_finsetSum _ fun i _ => (h i v v').1.const_mul _, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [integral_const_mul, (h i v v').2, mul_assoc]

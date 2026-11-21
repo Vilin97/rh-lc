@@ -81,7 +81,7 @@ theorem ptAt_isFockVec : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : 
         omega
   obtain ⟨Q', hQ', hQc⟩ := key l
   have hQ0 : Q' = 0 := MvPolynomial.ext _ _ fun n => by
-    rw [hQc n (by rw [hl]; omega), MvPolynomial.coeff_zero]
+    simpa using hQc n (by rw [hl]; omega)
   show l.foldr _ (ptAt R i σ BW f Q) = 0
   rw [hpt', hQ', hQ0, map_zero]
 

@@ -235,7 +235,19 @@ theorem psi_mem {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {S 
   obtain ⟨k, hk, hkx⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' hS.1 hT.1 x hx
   obtain ⟨k', hk', hky⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' hS.1 hT.1 y hy
   have hd := ((GlobalTheory.LatVac.latO_selfDual_approx_sign D ψ S T ΛS ΛT hψ hS hT).1 _ (nsmul_finite hx k)).1 hkx _ hky
-  have hb := isBichar_symplO S T ψ
+  have hb : IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
+    have hl (a b y : WO S T) : symplO S T (a + b) y = symplO S T a y + symplO S T b y := by
+      unfold symplO hO
+      simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
+    have hr (x a b : WO S T) : symplO S T x (a + b) = symplO S T x a + symplO S T x b := by
+      unfold symplO hO
+      simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add (f := _)]
+    have hz₁ (y : WO S T) : symplO S T 0 y = 0 := by simpa using hl 0 0 y
+    have hz₂ (y : WO S T) : symplO S T y 0 = 0 := by simpa using hr y 0 0
+    exact ⟨fun a b y => by rw [hl, AddChar.map_add_eq_mul],
+      fun a b y => by rw [hr, AddChar.map_add_eq_mul],
+      fun y => by rw [hz₁, AddChar.map_zero_eq_one],
+      fun y => by rw [hz₂, AddChar.map_zero_eq_one]⟩
   rw [bichar_pow_left hb, ← hb.nsmul, bichar_pow_left hb, ← pow_mul] at hd
   refine mem_algebraicClosure_iff.2 (IsAlgebraic.of_pow (n := k' * k) (Nat.mul_pos hk' hk) ?_)
   rw [hd]
@@ -269,7 +281,9 @@ theorem stdFst_mem {ν : (AE D)ˣ →* Circle} (hν : Continuous ν) {e : AE D} 
         have hB : topL A.rank (frMapO A WW βA βW x) = (Formalism.L2.Herm.intAf D.host.F D.host.E).subtype.mapMatrix B := rfl
         rw [hB, ← RingHom.map_det]
         exact (B.det).2
-      have hE := StandardFirstTheta.GlobalTheory.CompanionTheory.StdFstTheta.toEAf_mem he
+      have hE : toEAf D e ∈ Formalism.L2.Herm.intAf D.host.F D.host.E :=
+        GlobalTheory.IdemRes.toEAf_mem_of_finPart (GlobalTheory.AdIdem.idempotent_mem_intAE D _
+          (by rw [← RingHom.map_mul, GlobalTheory.PlaceDatum.idemSum_mul_self he]))
       have hfu : Formalism.L2.Pj.FinUnit hu.choose := ⟨h1, GlobalTheory.PlaceDatum.finPart_mem_of_toEAf (by
         rw [h2]; exact add_mem (sub_mem (one_mem _) hE) (mul_mem hE hdet)), GlobalTheory.PlaceDatum.finPart_mem_of_toEAf h3⟩
       have hpow := hord _ hfu

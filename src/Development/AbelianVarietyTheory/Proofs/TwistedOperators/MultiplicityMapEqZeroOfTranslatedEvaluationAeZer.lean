@@ -56,12 +56,10 @@ theorem eq_zero_of_ae_fund (I : AutInst) (μf : Measure I.Gf) [μf.IsHaarMeasure
     intro γ A hA
     obtain ⟨t, hAt, ht, ht0⟩ := exists_measurable_superset_of_null hA
     refine measure_mono_null (Set.preimage_mono hAt) ?_
-    by_cases hf : AEMeasurable (fun z => γ * z) (I.muA μf)
-    · rw [← Measure.map_apply_of_aemeasurable hf ht, hl γ]
-      exact ht0
-    · have hz : I.muA μf = 0 := by rw [← hl γ, Measure.map_of_not_aemeasurable hf]
-      rw [hz]
-      simp
+    have hf : AEMeasurable (fun z => γ * z) (I.muA μf) :=
+      (continuous_const_mul γ).measurable.aemeasurable
+    rw [← Measure.map_apply_of_aemeasurable hf ht, hl γ]
+    exact ht0
   have hopen : IsOpen {z | φ z ≠ 0} := isOpen_ne_fun hc continuous_const
 
   have hnull : I.muA μf ({z | φ z ≠ 0} ∩ fund) = 0 := by

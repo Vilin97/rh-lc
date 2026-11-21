@@ -42,7 +42,7 @@ theorem charpoly_map_diagEnd {n m : ℕ} (f : Module.End ℂ (Fin n → ℂ)) (c
   have e : LinearMap.toMatrix (Pi.basisFun ℂ (Fin m)) (Pi.basisFun ℂ (Fin m)) (diagEnd c) =
       Matrix.diagonal c := by
     ext i j
-    simp [LinearMap.toMatrix_apply, Matrix.diagonal_apply, Pi.single_apply]
+    simp [Matrix.diagonal_apply, Pi.single_apply]
   rw [← LinearMap.charpoly_toMatrix _ (b.tensorProduct (Pi.basisFun ℂ (Fin m))),
     TensorProduct.toMatrix_map, e]
   have e2 : Matrix.kroneckerMap (· * ·) (LinearMap.toMatrix b b f) (Matrix.diagonal c) =
@@ -58,7 +58,7 @@ end GlobalTheory.WeilDeligne.SpCharpoly
 
 namespace GlobalTheory.WeilDeligne
 
-theorem charPol_lpTw_lpChar_lpSp : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (x : WD h), (x.lpTw 0).lpChar (WD.lpSp h 1) = x ∧ ∀ (l : ℕ) (σ : Weil h), ((x.lpTw (((l : ℝ) - 1) / 2)).lpChar (WD.lpSp h l)).charPol σ = ((Multiset.range l).map fun j : ℕ => (x.lpTw j).charPol σ).prod := by
+theorem charPol_lpTw_lpChar_lpSp : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (x : WD h), (x.lpTw 0).lpChar (WD.lpSp (h := h) 1) = x ∧ ∀ (l : ℕ) (σ : Weil h), ((x.lpTw (((l : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) l)).charPol σ = ((Multiset.range l).map fun j : ℕ => (x.lpTw j).charPol σ).prod := by
   intro E Ω _ _ _ _ _ A w h x
   refine ⟨?_, fun l σ => ?_⟩
   · rw [WD.lpTw_zero]
@@ -68,12 +68,12 @@ theorem charPol_lpTw_lpChar_lpSp : ∀ (E Ω : Type) [Field E] [NumberField E] [
       refine WD.sound (WDRep.Iso.symm ⟨(TensorProduct.rid ℂ (Fin n → ℂ)).symm ≪≫ₗ
         TensorProduct.congr (LinearEquiv.refl ℂ _) (LinearEquiv.funUnique (Fin 1) ℂ ℂ).symm,
         fun σ v => ?_, fun v => ?_⟩)
-      · have : (WDRep.sp h 1).ρ σ = 1 := by
+      · have : (WDRep.sp (h := h) 1).ρ σ = 1 := by
           refine LinearMap.ext fun v => funext fun i => ?_
           simp [WDRep.spEig]
         rw [WDRep.tensor_ρ, this]
         simp
-      · have : (WDRep.sp h 1).N = 0 := by
+      · have : (WDRep.sp (h := h) 1).N = 0 := by
           refine LinearMap.ext fun v => funext fun i => ?_
           simp [shiftEnd_apply]
         rw [WDRep.tensor_N, this]

@@ -190,7 +190,7 @@ theorem char_split_value (D : D7) (c : (Formalism.L2.Theta.AE D)ˣ →* Circle) 
     rw [Finset.prod_pow, ← hm k y hy1 hy2, ← Circle.coe_pow, ← Circle.coe_pow, ← Circle.coe_mul, e2, Circle.coe_one]
   obtain ⟨h1, h2⟩ := values_of_rel D _ (h * M) k (fun τ => m τ * M) (Nat.mul_pos hh hM) e3
   refine ⟨h1, fun q _ hq => h2 q fun P hP => hk P ?_⟩
-  rw [hx, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_mul, RingHom.map_one, RingEquiv.map_add (f := _), RingEquiv.map_sub,
+  rw [hx, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_mul, RingHom.map_one, RingEquiv.map_add (e := _), RingEquiv.map_sub,
     RingEquiv.map_mul, RingEquiv.map_one]
   show finIso D (Formalism.L2.Theta.finPart D e) P * finIso D (Formalism.L2.Theta.finPart D a) P + (1 - finIso D (Formalism.L2.Theta.finPart D e) P) = 1
   rw [finIso_idem D he hq P hP, zero_mul, sub_zero, zero_add]

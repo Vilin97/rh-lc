@@ -38,7 +38,7 @@ theorem shCoc_wsum_props : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [
     exact Finset.sum_comm
   · intro r y j
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-    exact continuous_finset_sum _ fun i _ => continuous_const.mul (hCont i r y j)
+    exact continuous_finsetSum _ fun i _ => continuous_const.mul (hCont i r y j)
   · intro r s u j
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     exact Subalgebra.sum_mem _ fun i _ => Subalgebra.mul_mem _ (hw i) (hO i r s u j)

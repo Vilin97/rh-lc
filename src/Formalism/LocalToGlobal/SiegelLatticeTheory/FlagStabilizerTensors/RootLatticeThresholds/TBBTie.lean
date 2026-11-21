@@ -72,7 +72,7 @@ theorem ew_top {P : Formalism.FourierDecayAlt.M.Par} {Wp Wq : Type} [NormedAddCo
       Formalism.FourierDecayAlt.TBB.nPt P.k P.r (Formalism.FourierDecayAlt.TBB.TTp p) γ *
         (Formalism.FourierDecayAlt.B.hsInner (Formalism.FourierDecayAlt.D.vecV p.T.base p.ν' p.m₀ F γ) (Formalism.FourierDecayAlt.D.vecV p.T.base p.ν' p.m₀ F γ)).re := by
   unfold Formalism.FourierDecayAlt.TBB.Ew Formalism.FourierDecayAlt.TBB.NP Formalism.FourierDecayAlt.KB.Pl.RR Formalism.FourierDecayAlt.D.RRplace
-  rw [dite_eq_left ⟨hγ, hγ⟩, dite_eq_right (by omega), if_pos rfl, if_pos rfl]
+  rw [dite_eq_left ⟨hγ, hγ⟩, dite_eq_right (by omega), ite_eq_left rfl, ite_eq_left rfl]
   simp only [Formalism.FourierDecayAlt.TBB.normC, List.map_nil, List.prod_nil, div_one, Real.mul_self_sqrt hn,
     Complex.re_ofReal_mul]
 
@@ -89,8 +89,11 @@ theorem pointWeight_eq_blockWeight (k r : ℕ) (T T' GG : ℝ) (hk : 1 ≤ k) : 
     simp only [ptWeightFrom, List.map_cons, Prod.swap_prod_mk, Formalism.FourierDecayAlt.C.nAux]
     rw [show a + 1 + s = a + s + 1 by omega, ← ih]
     congr 1
+    have hindex : a + s + 1 - 1 = a + s := by omega
+    have hcond : (a + s = r + 1 ∧ s = 1) ↔ (s = 1 ∧ a + 1 = r + 1) := by omega
+    simp only [hindex, hcond]
     by_cases hc : s = 1 ∧ a + 1 = r + 1
-    · rw [if_pos hc, if_pos ⟨by omega, hc.1⟩]
+    · simp only [ite_eq_left hc]
       have hbs : bs = [] := by
         cases bs with
         | nil => rfl
@@ -99,9 +102,8 @@ theorem pointWeight_eq_blockWeight (k r : ℕ) (T T' GG : ℝ) (hk : 1 ≤ k) : 
           simp only [List.map_cons, List.sum_cons] at hsum'
           omega
       subst hbs
-      obtain ⟨rfl, -⟩ := hc
-      rw [hlast (t, 1) (by simp)]
-    · rw [if_neg hc, if_neg (by omega), one_mul, show a + s + 1 - 1 = a + s by omega]
+      rw [hlast (t, s) (by simp)]
+    · simp only [ite_eq_right hc, one_mul]
       have hle : a + s ≤ r + 1 := by omega
       have hexp : (2 * (s : ℤ) * (Formalism.FourierDecayAlt.C.Mlev k r (a + s) + s - 3)) =
           ((2 * s * (Ml k r (a + s) + s - 3) : ℕ) : ℤ) := by

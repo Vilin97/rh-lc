@@ -194,7 +194,13 @@ theorem mixS_cj_dagger : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCha
   rw [hint, ← integral_conj]
   congr 1
   funext ξ
-  rw [HypDec.integrandS_eq, HypDec.integrandT_eq]
+  change heisO ψ T S (d.extY S (adjM S ρ ξ))
+    (heisO ψ T S (d.extX S (incA D D.host.xi0⁻¹ • y))
+      (heisO ψ T S (d.ext0 S w) (cj (dagger T S) f))) 0 =
+    starRingEnd ℂ (heisO ψ S T (d.incX S ξ)
+      (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S (dagger T₀ S w)) f)) 0)
+  rw [d.integrandS_eq (cj (dagger T S) f) (incA D D.host.xi0⁻¹ • y) (adjM S ρ ξ) w,
+    d.integrandT_eq f y ξ (dagger T₀ S w)]
   have e1 : d.extY S (adjM S ρ ξ) = dagger S T (d.incX S ξ) := (dagger_incX d S ξ).symm
   have e2 : d.extX S (incA D D.host.xi0⁻¹ • y) = dagger S T (d.incAdj S y) := (dagger_incAdj d S y).symm
   have e3 : d.ext0 S w = dagger S T (d.inc0 S (dagger T₀ S w)) := by rw [hermitianAdjointHomSpace_wittCoreInclusion, dagger_dagger]

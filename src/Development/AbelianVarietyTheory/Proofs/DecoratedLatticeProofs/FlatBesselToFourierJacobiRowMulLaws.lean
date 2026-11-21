@@ -181,8 +181,8 @@ theorem core_col {ρ : ℕ} {B : BesLev D ρ} {s : k} {n : Type} [Fintype n] [De
   · rw [h.2.1, pr_eq, Matrix.map_mul, Matrix.mul_assoc,
       mul_col (a := 1) (X := B.o.iA.map (prH p) * FA.β) (i := a) (fun r => by rw [one_mul]; exact h₀.1 r a), one_mul]
     rfl
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [h.2.2.2.1 i (hq i rfl), pr_eq, Matrix.mulVec, dotProduct, map_sum, Finset.mul_sum, Matrix.mul_apply]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [h.2.2.2.1 i (hq i rfl), pr_eq, Matrix.mulVec, dotProduct, map_sum, Finset.mul_sum, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun y _ => ?_
     rw [map_mul, mul_left_comm]
     exact congrArg _ (h₀.2 y)

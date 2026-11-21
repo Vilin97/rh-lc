@@ -84,7 +84,7 @@ theorem thPair_sub_sum_left {ι : Type} (s : Finset ι) (a : ι → ℂ) (f g : 
     congr 1
     exact Finset.sum_congr rfl fun i _ => by ring
   simp_rw [e]
-  rw [integral_sub hf (integrable_finset_sum _ fun i _ => (hi i).const_mul _),
+  rw [integral_sub hf (integrable_finsetSum _ fun i _ => (hi i).const_mul _),
     integral_finsetSum _ fun i _ => (hi i).const_mul _]
   congr 1
   exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _

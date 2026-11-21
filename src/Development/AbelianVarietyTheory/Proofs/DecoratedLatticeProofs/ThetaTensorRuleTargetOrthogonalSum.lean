@@ -99,9 +99,13 @@ theorem tensorTarget : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar 
   · have h1 := (src.slice_theta (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj (dagger T S) f) ((thd S T f).2 hf)).1 (dagger S B v)
     rw [← thd S A]
     convert h1 using 1
+    funext u
+    simp only [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj, dagger_resS_symm, dagger_dagger]
   · have h1 := (src.slice_theta (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj (dagger T S) f) ((thd S T f).2 hf)).2 (dagger S A u)
     rw [← thd S B]
     convert h1 using 1
+    funext v
+    simp only [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj, dagger_resS_symm, dagger_dagger]
   · intro ε hε
     obtain ⟨g, hg, hgε⟩ := src.dense _ ((thd S T f).2 hf) ε hε
     refine ⟨GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj (dagger S T) g, cj_mem_span _ ?_ hg, fun x => ?_⟩

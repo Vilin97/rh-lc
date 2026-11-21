@@ -163,6 +163,7 @@ theorem stdEx' : StdEx' := by
     intro z hz r hr
     have hz' : ∀ r', IsIntegral ℤ (z r') := (hL j hj z).1 hz
     have hx : ∀ r', (p i).pr (incA (I.rec7 l Z) (z r')) ∈ 𝒪[ℚ_[B.T u]] := fun r' => pr_int (p i) ⟨z r', hz' r'⟩
+    change r.1 + 1 = ((I.rec7 l Z).sp.X j).rank at hr
     have hrl : r = last j := Fin.ext (by show r.1 = _ - 1; omega)
     subst hrl
     refine ⟨c i * ⟨_, hx (last j)⟩, ?_, ?_⟩

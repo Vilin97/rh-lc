@@ -56,7 +56,7 @@ theorem eq_liftA_of_mul {a : AF F} (ha : ∀ c : AF F, evI F c = 0 → c * a = 0
   · simp [liftA, h2]
 
 theorem liftA_add (a b : mixedEmbedding.mixedSpace F) : liftA (a + b) = liftA a + liftA b := by
-  unfold liftA; rw [map_add (f := _), map_add (f := _)]; rfl
+  unfold liftA; rw [map_add (f := _), map_add (f := _)]
 
 theorem liftA_mul (a b : mixedEmbedding.mixedSpace F) : liftA (a * b) = liftA a * liftA b := by
   refine Prod.ext ?_ ?_
@@ -135,7 +135,9 @@ section Places
 theorem exists_mat_at (hcm : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w)
     {m k : Type} (z : InfinitePlace F → Matrix m k ℂ) :
     ∃ u : Matrix m k (AE F E), At (evI F) u ∧ ∀ w, u.map (piInf (τ w)) = z w := by
-  choose a ha using fun i j => GlobalTheory.PolRangeInf.exists_at_inf_values hcm τ (fun w => z w i j)
+  have hex : ∀ i j, ∃ a, At (evI F) a ∧ ∀ w, piInf (τ w) a = z w i j :=
+    fun i j => GlobalTheory.PolRangeInf.exists_at_inf_values hcm τ (fun w => z w i j)
+  choose a ha using hex
   refine ⟨Matrix.of a, fun x hx => ?_, fun w => ?_⟩
   · ext i j
     simp only [Matrix.smul_apply, Matrix.of_apply, Matrix.zero_apply]
@@ -158,7 +160,8 @@ theorem eq_of_map_piInf (hcm : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, Gl
 
 theorem map_smul_piInf {w : InfinitePlace F} (τ : GlobalTheory.AdelicU.EmbOver E w) {m k : Type} (c : AF F) (u : Matrix m k (AE F E)) :
     (c • u).map (piInf τ) = piInf τ (algebraMap (AF F) (AE F E) c) • u.map (piInf τ) := by
-  ext i j
+  apply Matrix.ext
+  intro i j
   simp [Algebra.smul_def, map_mul]
 
 end Places
@@ -253,7 +256,9 @@ theorem exists_complex_structure : ∀ {F E : Type} [Field F] [NumberField F] [F
   obtain ⟨ε, hε⟩ := hG
   let rel : Matrix (Fin a) (Fin (a + a')) (AE F E) → InfinitePlace F → Matrix (Fin a) (Fin (a + a')) ℂ :=
     fun u w => (((ε w : ℤ) : ℂ) * Complex.I) • (G.V.θ w * u.map (piInf (B.emb w)) * (G.W.θ w)ᵀ)
-  choose R hRat hRmap using fun u => exists_mat_at hcm B.emb (rel u)
+  have hex : ∀ u : Matrix (Fin a) (Fin (a + a')) (AE F E), ∃ v : Matrix (Fin a) (Fin (a + a')) (AE F E), At (evI F) v ∧ ∀ w, v.map (piInf (B.emb w)) = rel u w :=
+    fun u => exists_mat_at hcm B.emb (rel u)
+  choose R hRat hRmap using hex
   have hRadd : ∀ u v, R (u + v) = R u + R v := by
     intro u v
     refine eq_of_map_piInf hcm B.emb (hRat _) (fun c hc => by rw [smul_add, hRat u c hc, hRat v c hc, add_zero])

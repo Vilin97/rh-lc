@@ -53,6 +53,8 @@ theorem fl_base_eq_contract : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (σ 
           refine integral_congr_ae (Filter.Eventually.of_forall fun b => ?_)
           simp only [flFun]
           rw [hlaw b u.1 u.2]
+          simp only [I195MixedCoordinates_f1b992d3c44b213cc9f27f15.source, HypDec.mixS,
+            HypDec.extX, HypDec.extY, HypDec.ext0, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
           ring
       _ = _ := by
           rw [integral_const_mul]
@@ -129,8 +131,10 @@ theorem fl_base_eq_contract : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (σ 
         simp only [flFun]
         rw [enorm_mul]
         gcongr
-        rw [hlaw b u.1 u.2, ← ofReal_norm, norm_mul, norm_star, norm_star, hnorm u, one_mul]
-        exact ENNReal.ofReal_le_ofReal (hMb' _)
+        · rw [hlaw b u.1 u.2, ← ofReal_norm, norm_mul, norm_star, norm_star, hnorm u, one_mul]
+          exact ENNReal.ofReal_le_ofReal (hMb' _)
+        · simp only [I195MixedCoordinates_f1b992d3c44b213cc9f27f15.source, HypDec.mixS,
+            HypDec.extX, HypDec.extY, HypDec.ext0, AddMonoidHom.coe_mk, ZeroHom.coe_mk, le_refl]
     _ = _ := (lintegral_congr fun u => lintegral_const_mul' _ _ ENNReal.ofReal_ne_top).trans
         (lintegral_const_mul' _ _ ENNReal.ofReal_ne_top)
 

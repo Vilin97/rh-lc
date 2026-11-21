@@ -35,8 +35,7 @@ theorem continuous_hsn_umat {m : ℕ} (ε : Fin m → Bool) : Continuous fun g :
   unfold hsn
   have hu : Continuous fun g : UJ ε => umat g := Units.continuous_val.comp continuous_subtype_val
   refine Real.continuous_sqrt.comp ?_
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => ?_
-  exact ((continuous_apply b).comp ((continuous_apply a).comp hu)).norm.pow 2
+  fun_prop
 
 end GlobalTheory.SepReal.powerIntegrability
 

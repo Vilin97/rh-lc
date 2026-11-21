@@ -186,23 +186,28 @@ theorem unit_coprime (n : ℕ) (h : Nat.Coprime n p) : IsUnit (n : BR ε) := by
     rwa [ZMod.coe_unitOfCoprime] at this
   simpa using hu.map (ZMod.castHom (dvd_refl p) (PreTilt O p))
 
-theorem isFrame (hv : v.Integers O) (hε : IsPrimitiveSystem ε) : QLog.IsFrame p (BQ ε) (θ hε) where
-  surj y := by
+theorem isFrame (hv : v.Integers O) (hε : IsPrimitiveSystem ε) : QLog.IsFrame p (BQ ε) (θ hε) := by
+  refine {
+    surj := ?_
+    inj := ?_
+    denom := ?_
+    unit_p := ?_
+    unit_coprime := unit_coprime
+    pd := pd hv hε
+    sat := sat hv
+    complete := complete hv hε }
+  · intro y
     obtain ⟨x, rfl⟩ := (GlobalTheory.AinfXi.ainf_local_xi_order p C v O hv ε (prim hε)).2.2.2.1 y
     exact ⟨a ε x, θ_a hε x⟩
-  inj := IsLocalization.injective (M := Submonoid.powers (p : BR ε)) _ (Submonoid.powers_le.2
-    (mem_nonZeroDivisors_iff.2 ⟨fun x hx => torsion_free hv hε x hx,
-      fun x hx => torsion_free hv hε x (by rw [mul_comm]; exact hx)⟩))
-  denom q := by
+  · exact IsLocalization.injective (M := Submonoid.powers (p : BR ε)) _ (Submonoid.powers_le.2
+      (mem_nonZeroDivisors_iff.2 ⟨fun x hx => torsion_free hv hε x hx,
+        fun x hx => torsion_free hv hε x (by rw [mul_comm]; exact hx)⟩))
+  · intro q
     obtain ⟨⟨b, ⟨_, k, rfl⟩⟩, hq⟩ := IsLocalization.surj (Submonoid.powers (p : BR ε)) q
     exact ⟨k, b, by rw [← hq, map_pow, map_natCast, mul_comm]⟩
-  unit_p := by
+  ·
     have := IsLocalization.Away.algebraMap_isUnit (S := BQ ε) (p : BR ε)
     rwa [map_natCast] at this
-  unit_coprime := unit_coprime
-  pd := pd hv hε
-  sat := sat hv
-  complete := complete hv hε
 
 theorem exists_bFrame : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C]
     (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C] [Fact ¬IsUnit (p : O)]

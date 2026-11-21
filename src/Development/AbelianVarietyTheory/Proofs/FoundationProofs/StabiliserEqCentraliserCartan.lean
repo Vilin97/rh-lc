@@ -33,6 +33,8 @@ theorem diagonal_sign_conjTranspose (ε : Fin n → Bool) :
     (Matrix.diagonal fun i => if ε i then (1 : ℂ) else -1)ᴴ = Matrix.diagonal fun i => if ε i then 1 else -1 := by
   rw [Matrix.diagonal_conjTranspose]
   congr 1
+  funext i
+  change star (if ε i then (1 : ℂ) else -1) = _
   split_ifs <;> simp
 
 theorem mul_conjTranspose_mul_eq (hbc : b * c = 1) (h : bᴴ * G * b = d) : b * bᴴ * G = b * d * c := by

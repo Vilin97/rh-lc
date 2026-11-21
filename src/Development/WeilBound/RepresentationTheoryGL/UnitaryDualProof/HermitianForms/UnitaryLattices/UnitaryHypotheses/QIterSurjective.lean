@@ -60,32 +60,35 @@ theorem ker_qIter (ψ : AddChar k Circle) {n : ℕ} :
     let θ := derCharM k ψ (n + j + 1) n
     let K := twKer τ.ρ N₁ θ₁
     let L := twKer τ.ρ N θ
-    let T := twKer (MRep.phiM k ψ τ).ρ N₂ θ₂
+    let σ : Representation ℂ (Mir k (n + j)) (τ.V ⧸ K) := (MRep.phiM k ψ τ).ρ
+    let T := twKer σ N₂ θ₂
     have h₁ (u : N₁) : ∃ h : (u : Mir k (n + j + 1)) ∈ N, θ ⟨u, h⟩ = θ₁ u :=
       GlobalTheory.CompanionTheory.BZMirStep.MirUin_step ψ (Nat.le_add_right n j) u
     have h₂ (a : N₂) : ∃ h : s a ∈ N, θ ⟨s a, h⟩ = θ₂ a :=
       GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ (Nat.le_add_right n j) a
     have hle : K ≤ L := by
-      dsimp only [K, twKer]
       refine Submodule.span_le.2 ?_
-      rintro _ ⟨u, v, rfl⟩
+      intro w hw
+      change ∃ (u : N₁) (v : τ.V), w = τ.ρ u v - (θ₁ u : ℂ) • v at hw
+      obtain ⟨u, v, rfl⟩ := hw
       obtain ⟨h, hθ⟩ := h₁ u
       exact Submodule.subset_span ⟨⟨u, h⟩, v, by rw [hθ]⟩
     have e : T = L.map K.mkQ := by
       refine le_antisymm ?_ ?_
-      · dsimp only [T, twKer]
-        refine Submodule.span_le.2 ?_
-        rintro _ ⟨a, x, rfl⟩
-        induction x using Submodule.Quotient.induction_on with
-        | H v =>
-          obtain ⟨h, hθ⟩ := h₂ a
-          refine ⟨τ.ρ (s a) v - ((θ ⟨s a, h⟩ : ℂˣ) : ℂ) • v,
-            Submodule.subset_span ⟨⟨s a, h⟩, v, rfl⟩, ?_⟩
-          rw [hθ, Submodule.mkQ_apply, Submodule.Quotient.mk_sub, Submodule.Quotient.mk_smul]
-          rfl
-      · dsimp only [L, twKer]
-        refine Submodule.map_le_iff_le_comap.2 (Submodule.span_le.2 ?_)
-        rintro _ ⟨u, v, rfl⟩
+      · refine Submodule.span_le.2 ?_
+        intro w hw
+        change ∃ (a : N₂) (x : τ.V ⧸ K), w = σ a x - (θ₂ a : ℂ) • x at hw
+        obtain ⟨a, x, rfl⟩ := hw
+        obtain ⟨v, rfl⟩ := K.mkQ_surjective x
+        obtain ⟨h, hθ⟩ := h₂ a
+        refine ⟨τ.ρ (s a) v - (θ ⟨s a, h⟩ : ℂ) • v,
+          Submodule.subset_span ⟨⟨s a, h⟩, v, rfl⟩, ?_⟩
+        rw [hθ, map_sub, map_smul]
+        rfl
+      · refine Submodule.map_le_iff_le_comap.2 (Submodule.span_le.2 ?_)
+        intro w hw
+        change ∃ (u : N) (v : τ.V), w = τ.ρ u v - (θ u : ℂ) • v at hw
+        obtain ⟨u, v, rfl⟩ := hw
         obtain ⟨u₁, a, hu⟩ := GlobalTheory.CompanionTheory.BZMirStep.derUnipM_decomp
           (Nat.le_add_right n j) u
         change (u : Mir k (n + j + 1)) = u₁ * s a at hu
@@ -94,28 +97,23 @@ theorem ker_qIter (ψ : AddChar k Circle) {n : ℕ} :
         have hθ : θ u = θ₁ u₁ * θ₂ a := by
           have : u = ⟨u₁, hu₁⟩ * ⟨s a, ha⟩ := Subtype.ext hu
           rw [this, map_mul, hθ₁, hθ₂]
-        have hdec : τ.ρ (u : Mir k (n + j + 1)) v - ((θ u : ℂˣ) : ℂ) • v =
-            (τ.ρ u₁ (τ.ρ (s a) v) - ((θ₁ u₁ : ℂˣ) : ℂ) • τ.ρ (s a) v) +
-              ((θ₁ u₁ : ℂˣ) : ℂ) • (τ.ρ (s a) v - ((θ₂ a : ℂˣ) : ℂ) • v) := by
+        have hdec : τ.ρ u v - (θ u : ℂ) • v =
+            (τ.ρ u₁ (τ.ρ (s a) v) - (θ₁ u₁ : ℂ) • τ.ρ (s a) v) +
+              (θ₁ u₁ : ℂ) • (τ.ρ (s a) v - (θ₂ a : ℂ) • v) := by
           rw [hθ, hu, map_mul, Module.End.mul_apply, Units.val_mul, smul_sub, mul_smul]
           abel
-        have hz : τ.ρ u₁ (τ.ρ (s a) v) - ((θ₁ u₁ : ℂˣ) : ℂ) • τ.ρ (s a) v ∈ K :=
+        have hz : τ.ρ u₁ (τ.ρ (s a) v) - (θ₁ u₁ : ℂ) • τ.ρ (s a) v ∈ K :=
           Submodule.subset_span ⟨u₁, _, rfl⟩
         show K.mkQ _ ∈ T
-        rw [hdec, map_add (f := K.mkQ), Submodule.mkQ_apply,
-          (Submodule.Quotient.mk_eq_zero _).2 hz, zero_add, map_smul]
-        refine Submodule.smul_mem T _ ?_
-        refine Submodule.subset_span ⟨a, K.mkQ v, ?_⟩
-        rw [Submodule.mkQ_apply, Submodule.Quotient.mk_sub, Submodule.Quotient.mk_smul]
+        rw [hdec, map_add, show K.mkQ _ = 0 from (Submodule.Quotient.mk_eq_zero _).2 hz,
+          zero_add, map_smul]
+        refine Submodule.smul_mem T _ (Submodule.subset_span ⟨a, K.mkQ v, ?_⟩)
+        rw [map_sub, map_smul]
         rfl
+    have hcomap : T.comap K.mkQ = L := by
+      rw [e, Submodule.comap_map_mkQ, sup_eq_right.2 hle]
     have ih := ker_qIter ψ j (MRep.phiM k ψ τ)
-    show LinearMap.ker (((twKer (iterPhi k ψ j (MRep.phiM k ψ τ)).ρ (MirUin k n) 1).mkQ ∘ₗ
-      qIter k ψ j (MRep.phiM k ψ τ)) ∘ₗ K.mkQ) = L
-    refine (LinearMap.ker_comp _ _).trans ?_
-    rw [ih]
-    change T.comap K.mkQ = L
-    rw [e]
-    exact (Submodule.comap_map_mkQ _ _).trans (sup_eq_right.2 hle)
+    exact (congrArg (Submodule.comap K.mkQ) ih).trans hcomap
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem glEmbMat_apply' (n : ℕ) (A : Matrix (Fin n) (Fin n) k) (a b : Fin (n + 1)) :

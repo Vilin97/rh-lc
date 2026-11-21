@@ -218,8 +218,12 @@ theorem heis_trans_char : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
     rw [GlobalTheory.StdVacuum.psi_eq_psiLoc ψ v _ hat', M.co.form u₂ u₁] at hz
     rw [← hz, hψv, GlobalTheory.LatVac.psiAt_apply]
     congr 1
+    have hev : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+      refine (invOf_eq_right_inv ?_).symm
+      have h : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+      rwa [map_mul, map_ofNat] at h
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_mul, map_sub, dotProduct, map_sum, GlobalTheory.VacAny.evFin_invOf_two]
+      simp only [map_mul, map_sub, dotProduct, map_sum, hev]
     rfl
   have hphase' : ψv (⅟(2 : Fv F v) * ((GlobalTheory.LatVac.locCo M.co v u₁).1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u₂).2 -
       (GlobalTheory.LatVac.locCo M.co v u₂).1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u₁).2)) = 1 := by

@@ -57,8 +57,9 @@ theorem exists_norm_repr_le {ι : Type} [Fintype ι] [DecidableEq ι] (b : Modul
     | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz, add_mul, Finset.sum_add_distrib]
     | tmul a e =>
       have h : ∀ x : F, InfinitePlace.Completion.extensionEmbedding w (algebraMap F w.Completion x) =
-          algebraMap F ℂ x := fun x =>
-        InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm x)
+          algebraMap F ℂ x := fun x => by
+        rw [AbsoluteValue.Completion.algebraMap_def, InfinitePlace.Completion.extensionEmbedding_coe]
+        rfl
       rw [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, map_mul,
         h, Module.Basis.traceDual_repr_apply, Algebra.traceForm_apply,
         trace_eq_sum_embeddings, Finset.mul_sum]

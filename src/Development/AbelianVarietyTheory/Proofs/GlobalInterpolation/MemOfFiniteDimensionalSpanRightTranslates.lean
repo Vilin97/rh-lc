@@ -12,13 +12,7 @@ namespace GlobalTheory.UnitaryBC
 theorem exists_finset_detecting_of_finiteDimensional {X : Type} (W : Submodule ℂ (X → ℂ))
     [FiniteDimensional ℂ W] :
     ∃ s : Finset X, ∀ v : W, (∀ x ∈ s, (v : X → ℂ) x = 0) → v = 0 := by
-  first
-  | exact @_root_.GlobalTheory.FinitePointsDetect.finite_points_detect
-  | exact _root_.GlobalTheory.FinitePointsDetect.finite_points_detect
-  | (apply _root_.GlobalTheory.FinitePointsDetect.finite_points_detect <;> assumption)
-  | (intros; apply _root_.GlobalTheory.FinitePointsDetect.finite_points_detect <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.FinitePointsDetect.finite_points_detect <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.FinitePointsDetect.finite_points_detect ..)
+  apply _root_.GlobalTheory.FinitePointsDetect.finite_points_detect
 
 theorem exists_interpolation_of_finiteDimensional {X : Type} (W : Submodule ℂ (X → ℂ))
     [FiniteDimensional ℂ W] :
@@ -135,7 +129,7 @@ theorem mem_of_finiteDimensional_span_rightTranslates :
     have hl : ∀ v : s → ℂ, l v = ∑ x, v x * c x := fun v => LinearMap.pi_apply_eq_sum_univ l v
     have hg : (fun k => ∑ x : s, f (x * k) * c x) = 0 := by
       refine eq_zero_of_integral_mul_eq_zero_of_separating μ R hc hs hsep _
-        (continuous_finset_sum _ fun x _ => (hfx x).mul continuous_const) fun p hp => ?_
+        (continuous_finsetSum _ fun x _ => (hfx x).mul continuous_const) fun p hp => ?_
       have h1 : l (T ⟨p, hp⟩) = 0 := by
         have : l (T ⟨p, hp⟩) ∈ Submodule.map l (LinearMap.range T) :=
           Submodule.mem_map_of_mem ⟨_, rfl⟩

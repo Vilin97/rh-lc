@@ -25,4 +25,4 @@ theorem _root_.GlobalTheory.T.entryDatum_transport_badPrime_anyTuple : ∀ {B : 
                 (Formalism.L2.Col.inFr (Formalism.L2.Col.frsF I.sel (I.tup a) p.1.1 P) (Formalism.L2.Col.frsF I.sel (I.tup a) p'.1.1 P) x₀) =
         Formalism.L2.Col.XiAt I.Ch I.sel (I.tup a) (I.cst a) i P ((I.idx a).h i al P) ((I.idx a).h (i + 1) be P)
           (Formalism.L2.Col.inFr (Formalism.L2.Col.frsF I.sel (I.tup a) q.1.1 P) (Formalism.L2.Col.frsF I.sel (I.tup a) q'.1.1 P) x) := by
-  first | exact @GlobalTheory.Transport.EntryAny.entry_transport_any | exact GlobalTheory.Transport.EntryAny.entry_transport_any | (intros; apply GlobalTheory.Transport.EntryAny.entry_transport_any <;> assumption)
+  exact @GlobalTheory.Transport.EntryAny.entry_transport_any

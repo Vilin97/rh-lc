@@ -38,8 +38,9 @@ theorem isFinComb_sum_single {ι : Type} [Fintype ι] (x : ι → WO S T) (a : �
     (hx : ∀ i, (x i).map (infPart D) = 0) : IsFinComb (∑ i, Finsupp.single (x i) (a i)) := by
   classical
   intro u hu
-  obtain ⟨i, -, hi⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hu)
-  rw [Finset.mem_singleton.1 (Finsupp.support_single_subset hi)]
+  obtain ⟨i, -, hi⟩ := Finset.mem_biUnion.1 (Finsupp.support_finsetSum hu)
+  have hui : u = x i := Finset.mem_singleton.1 (Finsupp.support_single_subset hi)
+  rw [hui]
   exact hx i
 
 theorem map_infPart_add_neg {x y : WO S T} (hx : x.map (infPart D) = 0) (hy : y.map (infPart D) = 0) :

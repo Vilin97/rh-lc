@@ -41,6 +41,8 @@ variable {D : D7}
 theorem finite_rat_mem {m n : ℕ} (K : Set (Mx D m n)) (hK : IsCompact K) :
     {γ : Matrix (Fin m) (Fin n) D.host.E | rat γ ∈ K}.Finite := by
   obtain ⟨hg, hlc, hsc, ht2, hdisc, -⟩ := lattice_Mx D m n
+  haveI : T2Space (Mx D m n) := ht2
+  haveI : T1Space (Mx D m n) := @T2Space.t1Space _ _ ht2
   have hcl : IsClosed (ratMx D m n : Set (Mx D m n)) := AddSubgroup.isClosed_of_discrete
   have hS : IsCompact ((Subtype.val : ratMx D m n → Mx D m n) ⁻¹' K) :=
     hcl.isClosedEmbedding_subtypeVal.isCompact_preimage hK
@@ -79,7 +81,9 @@ theorem mixS_poinX : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D 
     (F := fun (ξ : Matrix (Fin T.rank) (Fin ρ) D.host.E) a =>
       ψ (symplO S T (d.extX T (rat ξ)) (d.extY T a)) * β (x + rat ξ)) (fun ξ => ?_) ?_
   · rw [_root_.I195MixedCoordinates_fba5a936e8e43b62cb67e97a.source]
-    simp only [key]
+    change (∫ a in v.𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x)
+      (heisO ψ S T (d.ext0 T 0) (poinX ψ d T β))) 0 ∂v.μ) = β x
+    simp_rw [key]
     refine hF.unique ?_
     have h0 : ∫ a in v.𝓕, ψ (symplO S T (d.extX T (rat 0)) (d.extY T a)) * β (x + rat 0) ∂v.μ = β x := by
       simp only [rat_zero, map_zero, GlobalTheory.Core.Rk.ThetaOf.symplO_eq_add, symplOH_zero_left, add_zero,
@@ -91,7 +95,7 @@ theorem mixS_poinX : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D 
   · refine Integrable.mul_const (Integrable.of_bound ?_ 1 (Filter.Eventually.of_forall fun a => (hn _).le)) _
     exact (hψc.comp (GlobalTheory.Core.Rk.ThetaOf.continuous_symplO continuous_const hY)).measurable.aestronglyMeasurable
   · simp only [norm_mul, hn, one_mul, setIntegral_const, hone, one_smul]
-    refine summable_of_finite_support (hfin.subset fun ξ hξ => ?_)
+    refine summable_of_hasFiniteSupport (hfin.subset fun ξ hξ => ?_)
     exact fun h0 => (Function.mem_support.1 hξ) (by simp only [h0, norm_zero])
 
 end GlobalTheory.BumpMixSum

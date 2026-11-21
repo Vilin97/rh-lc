@@ -102,12 +102,13 @@ theorem finite_plancherel_schrodinger_intertwiner :
     intro y hHd hy c
     rw [hg, ← hmod (ind c) (hSBind c) y hHd, ← map_smul]
     congr 1
-    rw [hind]
+    funext t
+    simp only [Pi.smul_apply, smul_eq_mul, hind]
     by_cases ht : t ∈ Λc
     · rw [dite_eq_left ht]
       by_cases hr : red ⟨t, ht⟩ = c
-      · rw [if_pos hr, mul_one, mul_one, ← hr]; exact hχ y hy ⟨t, ht⟩
-      · rw [if_neg hr]; simp
+      · rw [ite_eq_left hr, mul_one, mul_one, ← hr]; exact hχ y hy ⟨t, ht⟩
+      · rw [ite_eq_right hr]; simp
     · rw [dite_eq_right ht]; simp
   have htrg : ∀ c, hs (rep c) (g c) = g 0 := by
     intro c

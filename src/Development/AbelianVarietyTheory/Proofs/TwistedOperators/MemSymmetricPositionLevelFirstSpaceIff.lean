@@ -37,7 +37,9 @@ theorem mem_levS_dat0_PsharpSym_iff : ∀ {D : D7} {T : Type} (Lc : LevCh D T) (
       exact ⟨⟨h0, h1, h2⟩, fun PP => h3 PP.1 PP.2⟩
   · have hm := ((GlobalTheory.SeeConjReord.mem_levelSubgroup_principalDatum_iff Lc _ β κ).1 hκ).2
     rw [GlobalTheory.SeeConjReord.principalRowLevelCharacter_trivial, extendOne_of_mem _ hm]
-    erw [MonoidHom.finset_prod_apply, Units.coe_prod]
+    letI : IsOneApply ((PsharpSym Lc.Pg D.R.r D.R.rS D.R.k ψ0).H →* ℂˣ) := ⟨fun _ => rfl⟩
+    letI : IsMulApply ((PsharpSym Lc.Pg D.R.r D.R.rS D.R.k ψ0).H →* ℂˣ) := ⟨fun _ _ _ => rfl⟩
+    erw [prod_apply, Units.coe_prod]
     rw [← Finset.prod_coe_sort Lc.Pg]
     rfl
 

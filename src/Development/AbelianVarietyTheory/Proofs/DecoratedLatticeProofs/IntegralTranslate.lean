@@ -90,7 +90,8 @@ theorem half_avg_heis_inv : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStd
       rw [hsplit]; exact c1 x.1 a
     have e2 : (_root_.I195MixedCoordinates_35474aefd184915ecb24a8bf.source d) T ψ μ 𝓕 g₁ (x.1 + a) = heisO ψ S₀ T w ((_root_.I195MixedCoordinates_35474aefd184915ecb24a8bf.source d) T ψ μ 𝓕 g₂ (x.1 + a)) := c3 (x.1 + a) w
     have e3 : (_root_.I195MixedCoordinates_35474aefd184915ecb24a8bf.source d) T ψ μ 𝓕 g₂ (x.1 + a) = (_root_.I195MixedCoordinates_35474aefd184915ecb24a8bf.source d) T ψ μ 𝓕 f (x.1 + a) := by
-      rw [hg₂, c2 (x.1 + a) b, horth (show IsHalf (cA D e) (d.extX T (x.1 + a)) from hhalfR _ hxa) hYb,
+      have hc2 : (_root_.I195MixedCoordinates_35474aefd184915ecb24a8bf.source d) T ψ μ 𝓕 (heisO ψ S T (d.extY T b) f) (x.1 + a) = ψ (symplO S T (d.extX T (x.1 + a)) (d.extY T b)) • (_root_.I195MixedCoordinates_35474aefd184915ecb24a8bf.source d) T ψ μ 𝓕 f (x.1 + a) := c2 (x.1 + a) b
+      rw [hg₂, hc2, horth (show IsHalf (cA D e) (d.extX T (x.1 + a)) from hhalfR _ hxa) hYb,
         AddChar.map_zero_eq_one, one_smul]
     have hmt : IsThetaFunO ψ S₀ T ((_root_.I195MixedCoordinates_35474aefd184915ecb24a8bf.source d) T ψ μ 𝓕 g₂ (x.1 + a)) :=
       GlobalTheory.MixValues.mixS_theta D ψ hψ S S₀ T ρ d μ 𝓕 hμ g₂ hg₂t (x.1 + a)

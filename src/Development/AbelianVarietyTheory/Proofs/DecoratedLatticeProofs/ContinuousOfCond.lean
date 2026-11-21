@@ -120,7 +120,7 @@ theorem exists_system {σ₀ : X.K →+* ℂ} {P : rowSG Pr sel mu} {k : Type} [
     by_cases H' : ∃ g₁, DoubleCoset.mk _ _ g₁ = β ∧ GlobalTheory.IndefiniteRowSideFullHecke.NormalRepresentationLattice.IsNormalRep (W.T s R) W.ϖ j c h g₁
     · obtain ⟨g, h1, h2⟩ := H'
       exact ⟨g, h1, fun _ => h2⟩
-    · exact ⟨_, DoubleCoset.out_eq' _ _ β, fun h' => absurd h' H'⟩
+    · exact ⟨_, DoubleCoset.out_eq' β, fun h' => absurd h' H'⟩
   choose σ σ1 σ2 using ex
   let A : RepFam k s (XIx (Fin R.k) (Fin R.t)) := fun j =>
     Nat.rec (motive := fun j => ∀ c, j + c = s → Set (GL (XIx (Fin R.k) (Fin R.t) j ⊕ Fin (c + 1)) k)) (fun _ _ => {1})

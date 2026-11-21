@@ -68,7 +68,7 @@ theorem mean_theta_orbit : ∀ (D : D7), Descent D → ∀ (ψ : AddChar (AF D.h
       (f := fun s n => ∑ x ∈ s, Th n.1 * term ψ d W vS (om (n.1, 1) Ψ) x.1) (fun s => ?_)
       (Filter.Eventually.of_forall fun n => ?_)
     · exact (continuous_finsetSum _ fun x _ => hTh.cont.mul (hcont x.1)).aestronglyMeasurable
-    · exact (((hsum n).summable.mul_left (Th n.1)).subtype S).hasSum
+    · exact (((hsum n).summable.mul_left (Th n.1)).subtype (fun x => x ∈ S)).hasSum
   have : IsFiniteMeasure (vN.ν.restrict vN.𝓝) :=
     isFiniteMeasure_restrict.2 (by rw [vN.unit.2.2]; exact ENNReal.one_ne_top)
   have hint : ∀ S : Set (Matrix (Fin W.rank) (Fin ρ) D.host.E),
@@ -106,7 +106,7 @@ theorem mean_theta_orbit : ∀ (D : D7), Descent D → ∀ (ψ : AddChar (AF D.h
       · have h2 : x ∉ Orb W x₀ := fun h => hl h.1
         obtain ⟨j, hj⟩ := (h61 x).1.1 hl
         rw [Set.indicator_of_notMem h2, zero_add, Finset.sum_eq_single j
-          (fun j' _ hj' => Set.indicator_of_notMem (fun h => hj' ((h61 x).2.1 j' j h.2 hj)) _)
+          (fun j' _ hj' => Set.indicator_of_notMem (fun (h : x ∈ Sj j') => hj' ((h61 x).2.1 j' j h.2 hj)) _)
           (fun h => (h (Finset.mem_univ j)).elim), Set.indicator_of_mem (show x ∈ Sj j from ⟨hg, hj⟩)]
     · have h1 : x ∈ Sb := hg
       have h2 : x ∉ Orb W x₀ := fun h => hg h.2

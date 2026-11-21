@@ -26,7 +26,7 @@ namespace GlobalTheory.CollCompare
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-open GlobalTheory.Core.Deg GlobalTheory.IndefiniteRowSideFullHecke.WordCollisionBound
+open GlobalTheory.Core.Deg
 
 theorem splits_level (D : D7) (w : D.what₂.Word) : SplitsE D (D.mem w).A.T :=
   S.splitsCompl_of_ncard _ _ (D.mem w).A.T_prime

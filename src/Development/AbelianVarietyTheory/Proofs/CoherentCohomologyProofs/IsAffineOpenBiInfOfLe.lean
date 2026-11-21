@@ -95,7 +95,7 @@ theorem cechLB_homology_equiv_trunc₂ :
       (iInf₂_le (toLex (Sum.inr k)) (Finset.mem_map_of_mem _ (Cube.inr_mem_sumVertex.2 hk)))
       (fun s => Cube.sumVertex (Cube.sumVertex s t) w)
       (fun _ _ h => Cube.sumVertex_mono (Cube.sumVertex_mono h (subset_refl _)) (subset_refl _))
-      fun s => (Cube.map_lastTwoEmb_union s t w).symm) (n + 2)
+      fun s => (Cube.map_lastTwoEmb_union _ _ _ s t w).symm) (n + 2)
   let e₃ := trunc₂HomologyIsoSnd (Cube.lowerFace (Cube.lastTwoEmb κ₁ κ₂ κ) A) (fun w ⟨k, hk⟩ =>
     acyclic_comap_secCube f hM E hE ((Cube.inlEmb κ₂ κ).trans (Cube.lastTwoEmb κ₁ κ₂ κ)) cW
       (w.map (Cube.inrEmb _ _).toEmbedding) (hD k)

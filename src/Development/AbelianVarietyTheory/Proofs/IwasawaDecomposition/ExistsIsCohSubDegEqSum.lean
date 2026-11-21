@@ -45,7 +45,8 @@ def sub (hv : ∀ j, IsFrame (v j)) (e : ∀ j, α ↪ κ j) (S : Finset α) : S
   sec V :=
     { carrier := {x | ∀ j (W : C.Opens) (h₁ : W ≤ V) (h₂ : W ≤ T j), resM F h₁ x ∈ spn v e S j h₂}
       add_mem' := fun hs ht j W h₁ h₂ => by
-        rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hs j W h₁ h₂) (ht j W h₁ h₂)
+        rw [map_add (f := resM F h₁)]
+        exact add_mem (hs j W h₁ h₂) (ht j W h₁ h₂)
       zero_mem' := fun j W h₁ h₂ => by rw [map_zero]; exact zero_mem _
       smul_mem' := fun a s hs j W h₁ h₂ => by
         rw [resM_smul]; exact Submodule.smul_mem _ _ (hs j W h₁ h₂) }
@@ -138,7 +139,7 @@ theorem IsTriangular.repr_eq (H : IsTriangular v rk e g) (hv : ∀ j, IsFrame (v
     change ((hv j).basis h).repr (resM F h' (v j' (e j' b))) (e j a) =
       resG C (le_inf h h') (g a j j') * ((hv j').basis h').repr (resM F h' (v j' (e j' b))) (e j' a)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hr, h3, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+      rw [hr, h3, map_sum, Finset.sum_apply']
     simp only [hB, map_smul, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.single_apply,
       (e j).injective.eq_iff, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
       Finset.mem_univ, if_true]

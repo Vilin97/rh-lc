@@ -126,8 +126,8 @@ theorem continuous_symplOH {X : Type} [TopologicalSpace X] {x y : X → WO S T} 
   have hx' : ∀ i j, Continuous fun t => x t i j := fun i j =>
     (continuous_apply j).comp ((continuous_apply i).comp hx)
   have hh : Continuous fun t => hO S T (x t) (y t) :=
-    continuous_finset_sum _ fun _ _ => continuous_finset_sum _ fun _ _ => continuous_finset_sum _ fun _ _ =>
-      continuous_finset_sum _ fun _ _ => ((continuous_const.mul (hy' _ _)).mul continuous_const).mul (hx' _ _)
+    continuous_finsetSum _ fun _ _ => continuous_finsetSum _ fun _ _ => continuous_finsetSum _ fun _ _ =>
+      continuous_finsetSum _ fun _ _ => ((continuous_const.mul (hy' _ _)).mul continuous_const).mul (hx' _ _)
   have ht : Continuous (Algebra.trace (AF D.host.F) (Formalism.L2.Theta.AE D)) := IsModuleTopology.continuous_of_linearMap _
   exact continuous_const.mul (ht.comp (continuous_const.mul hh))
 
@@ -390,7 +390,7 @@ theorem heisO_line_add (hθ : IsInfFam θ) (hψ : IsStdChar D ψ (-1)) {L : ℝ 
   have h1 : ψ (symplOH S T (L s) (L t)) = 1 := by
     rw [e s, e t, psi_symplOH h hψ, h.pi_iota, LinearMap.map_smul₂, map_smul, omO_self h]
     simp
-  rw [heisO_heisO, h1, one_smul, L.map_add (f := _)]
+  rw [heisO_heisO, h1, one_smul, map_add L]
 
 theorem hasDerivAt_heisO (hθ : IsInfFam θ) (hψ : IsStdChar D ψ (-1)) {L : ℝ →+ WO S T} (hL : IsRealDir T S L)
     {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (w : WO S T) (s : ℝ) :

@@ -30,7 +30,7 @@ theorem tr_span {E R M₁ M₂ : Type*} [Field E] [CommRing R] [AddCommGroup M�
   induction hx using Submodule.span_induction with
   | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add ι]; exact add_mem ha hb
   | smul c a _ ha => rw [hs]; exact Submodule.smul_mem _ _ ha
 
 variable {E R : Type*} [Field E] [CommRing R] {n r : ℕ}
@@ -123,6 +123,8 @@ def rvHom (v : InfinitePlace I.F) : (Fin I.n → I.E) →+ (Fin I.n → ℂ) whe
     unfold rv
     rw [← Matrix.mulVec_add]
     congr 1
+    funext i
+    simpa only [Pi.add_apply] using (I.φ v).map_add (x i) (y i)
 
 theorem rvHom_apply (v : InfinitePlace I.F) (x : Fin I.n → I.E) : rvHom I v x = rv I v x := rfl
 
@@ -132,6 +134,8 @@ theorem rv_smul' (v : InfinitePlace I.F) (c : I.E) (x : Fin I.n → I.E) :
   unfold rv
   rw [← Matrix.mulVec_smul]
   congr 1
+  funext i
+  simpa only [Pi.smul_apply, smul_eq_mul] using (I.φ v).map_mul c (x i)
 
 theorem rv_span' (v : InfinitePlace I.F) (y : Fin I.n → ℂ) :
     ∃ c : Fin I.n → ℂ, ∃ w : Fin I.n → Fin I.n → I.E, y = ∑ i, c i • rvHom I v (w i) := by

@@ -100,9 +100,12 @@ theorem squareFlip_one_rows : ∀ {k : Type} [Field k] [ValuativeRel k] [Topolog
         Subring.sum_mem _ fun i _ => Subring.sum_mem _ fun j _ => mul_mem (hZ' i j) (hcond.2 hX i j j.2)
       simp only
       rw [e1, e2, hdep.2, AddChar.map_add_eq_mul, triv _ e3, mul_one]
-      refine FourierDepth.mem_matLat_smul_blockLat.2 ⟨fun i j hj => ?_, fun i j hj => ?_⟩
-      · simpa [setCols, hj] using hZ' i ⟨j, hj⟩
-      · simp [setCols, hj]
+      apply FourierDepth.mem_matLat_smul_blockLat.2
+      constructor
+      · intro i j hj
+        simpa [setCols, hj] using hZ' i ⟨j, hj⟩
+      · intro i j hj
+        simp [setCols, hj]
     have key := GlobalTheory.T.sum_quotientIntegerMatrices_invariant_integralGL_mul_left ϖ e hϖ (fun Z => φ (setCols (Assignment.two.block D₁ D₂) X' Z) * (ψ (pairCols (Assignment.two.block D₁ D₂) X' Z) : ℂ)) hg (invT u⁻¹) hMK
     beta_reduce at key
     rw [← key, Finset.mul_sum]

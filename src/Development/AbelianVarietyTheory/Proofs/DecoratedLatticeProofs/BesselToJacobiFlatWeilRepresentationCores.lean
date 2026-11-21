@@ -42,7 +42,7 @@ theorem continuous_psiUni (ψ : AddChar (AF D.host.F) ℂ) (hψ : Continuous ψ)
   have hv : Continuous fun u : UX D ρ => u.1.1 := Units.continuous_val.comp continuous_subtype_val
   unfold psiUni psiE upSum
   refine hψ.comp (ht.comp ?_)
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   split_ifs
   · exact (continuous_apply j).comp ((continuous_apply i).comp hv)
   · exact continuous_const

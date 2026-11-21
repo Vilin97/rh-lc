@@ -85,16 +85,18 @@ theorem lvHyp_holds (Lb : LevB W) (hR : Ring9 W) (uZ : ℤ_[PD.p]ˣ) (ιZ : ℤ_
     (huZ : ∀ k : ℕ, (k : WithTop ℚ) ≤
       v (algebraMap O LL (W.χΓ W.gam : O) - ((PadicInt.toZModPow k (uZ : ℤ_[PD.p])).val : LL)))
     (m : ℕ) (hm : ∀ i, Mj i ≤ m) (hκ : κ = Λ * ∏ s ∈ Finset.range ell, (baseIdOf hR).Bs.p s ^ m) :
-    LvHyp Lb hR uZ ιZ C c ell Λ κ (lamOf C c ell e) where
-  delta := delta_holds hR uZ ιZ c lev_Γ hω valRing
-  gamInv := gamInv_holds uZ ιZ T c
-  gamRho := gamRho_holds hR uZ ιZ c lev_Γ hgamK huZ
-  kap := kap_holds C ell Λ κ hP5 hT hJl hs1 hR m hm hκ
-  expSemi := expSemi_holds Lb hR T c levN_eq
-  locInv := locInv_holds Lb C κ (delta_holds hR uZ ιZ c lev_Γ hω valRing) hT levB_Γ hω hv
-  loclInv := loclInv_holds hR uZ ιZ T c Λ _ (delta_holds hR uZ ιZ c lev_Γ hω valRing)
-  filAnti := filAnti_holds
-  rhoC := rhoC_holds hR c
+    LvHyp Lb hR uZ ιZ C c ell Λ κ (lamOf C c ell e) := by
+  have hΔ := delta_holds hR uZ ιZ c lev_Γ hω valRing
+  exact
+    { delta := hΔ
+      gamInv := gamInv_holds uZ ιZ T c
+      gamRho := gamRho_holds hR uZ ιZ c lev_Γ hgamK huZ
+      kap := kap_holds C ell Λ κ hP5 hT hJl hs1 hR m hm hκ
+      expSemi := expSemi_holds Lb hR T c levN_eq
+      locInv := locInv_holds Lb C κ hΔ hT levB_Γ hω hv
+      loclInv := loclInv_holds hR uZ ιZ T c Λ _ hΔ
+      filAnti := filAnti_holds
+      rhoC := rhoC_holds hR c }
 
 theorem levSteps_of_jumps [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O) O]
     [CharZero LL] [IsFractionRing O LL]
@@ -187,15 +189,17 @@ theorem mapSteps_holds {T₁ T₂ : LocLat G Qp LL O} {C₁ : Coord W (baseIdOf 
     (he₂ : ∀ l, e₂ l ∈ (latOf C₂).N (c - (ell : ZMod n)))
     (hP : ∀ k, ∃ a : Fin r₂ → PowerSeries O, (latHomOf hC).f (e₁ k) = ∑ l, a l • e₂ l ∧
       ∀ l, LinearMap.toMatrix' P l k = PowerSeries.constantCoeff (a l)) :
-    MapSteps hC Hy₁ Hy₂ Mh j M g η kind b e₁ e₂ P where
-  locComm := locComm_holds hC Hy₁ Hy₂ Mh j M g η kind b levN_eq
-    (kapUnit_holds Hy₁ j M g η kind b m₁ hκ₁ hk1b₁ hUnits₁)
-    (kapUnit_holds Hy₂ j M g η kind b m₂ hκ₂ hk1b₂ hUnits₂)
-  loclComm := loclComm_holds hC Hy₁ Hy₂ Mh j M g η kind b e₁ e₂ P rfl rfl he₁ he₂ hP
-  mapFl := mapFl_holds Hy₁ Hy₂ Mh j M g η kind b
-  cMap := cMap_holds Mh.memD kind b η P
-    (lambda_of_matrixCongruences hC Mh.memD e₁ e₂ P he₁ he₂ (prLIs_holds hC e₁ e₂ P he₂ hP))
-  prLIs := prLIs_holds hC e₁ e₂ P he₂ hP
+    MapSteps hC Hy₁ Hy₂ Mh j M g η kind b e₁ e₂ P := by
+  have hprL := prLIs_holds hC e₁ e₂ P he₂ hP
+  exact
+    { locComm := locComm_holds hC Hy₁ Hy₂ Mh j M g η kind b levN_eq
+        (kapUnit_holds Hy₁ j M g η kind b m₁ hκ₁ hk1b₁ hUnits₁)
+        (kapUnit_holds Hy₂ j M g η kind b m₂ hκ₂ hk1b₂ hUnits₂)
+      loclComm := loclComm_holds hC Hy₁ Hy₂ Mh j M g η kind b e₁ e₂ P rfl rfl he₁ he₂ hP
+      mapFl := mapFl_holds Hy₁ Hy₂ Mh j M g η kind b
+      cMap := cMap_holds Mh.memD kind b η P
+        (lambda_of_matrixCongruences hC Mh.memD e₁ e₂ P he₁ he₂ hprL)
+      prLIs := hprL }
 
 theorem mapHyp_of (hR : Ring9 W) (uZ : ℤ_[PD.p]ˣ) (ιZ : ℤ_[PD.p] →+* O) {T₁ T₂ : LocLat G Qp LL O}
     (F : LatHom T₁.L T₂.L) (c : ZMod n) : MapHyp hR uZ ιZ F c :=

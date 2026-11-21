@@ -33,7 +33,7 @@ theorem continuous_lin_mvZ {T : Type} [TopologicalSpace T] (g : T → ι → Mat
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [C_mul', mul_smul_comm, map_smul, smul_eq_mul]
     simp_rw [key]
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     refine Continuous.mul (continuous_const.mul ?_) (hp _)
     exact ((continuous_apply j).comp ((continuous_apply v.2.2).comp ((continuous_apply v.1).comp hg)))
 

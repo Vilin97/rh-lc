@@ -76,6 +76,10 @@ omit [NumberField E] [IsCMField E] in
 theorem even_nsmul {G : WTZ E} (hG : Even G.2) (n : ℕ) : Even (n • G).2 := by
   rw [Prod.smul_snd, nsmul_eq_mul]; exact hG.mul_left n
 
+section
+
+set_option synthInstance.maxHeartbeats 100000
+
 theorem range_pow_le {Z : Comp Xo c} {G : WTZ E} (hG : Even G.2) (n : ℕ) :
     (LinearMap.range (genPoint Z (cuspOn U Z G))) ^ (n + 1) ≤
       (cuspOn U Z ((n + 1) • G)).map (genVal Z).toLinearMap := by
@@ -167,6 +171,8 @@ theorem compDeg_le (hP : Proport U) (Z : Comp Xo c) {u : Weight Dw} (hu : ∀ τ
     have h2 := growth_hilb_le hP Z hu le_rfl
     rw [h1, Nat.cast_one, Nat.cast_one, one_pow, one_pow, one_mul, one_mul, ← ENNReal.ofReal_natCast] at h2
     exact (ENNReal.ofReal_le_ofReal_iff (topDeg_nonneg Z hu)).1 h2
+
+end
 
 def normFac {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (x : ℝ) (G : WTZ E) (z : Σ k, Frame (U.X k).Ψ r) : ℝ :=
   lieFacZ Dw x G * (U.X z.1).nfac (modelWt U G z.1) z.2

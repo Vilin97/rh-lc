@@ -75,7 +75,7 @@ theorem exists_contRep_of_zkFinite (v : CuspL2 μ)
       IsContRep μ (toLp μ v) Φ ∧ (∀ y, ‖Φ y‖ ≤ C) ∧
       (∀ u ∈ U, ∀ x, Φ (x * finOne K n u) = Φ x) ∧
       ∀ r : ℕ, 0 < r → r < n → ∀ x : normOneGL (K := K) (n := n),
-        ∫ X in unipFundamentalDomain K n r, Φ (unipOne K n r X * x) ∂unipMeasure K n r = 0 := by
+        ∫ X in unipFundamentalDomain K n r, Φ (unipOne r X * x) ∂unipMeasure K n r = 0 := by
   have := isFiniteMeasure_quotientMeasure (K := K) (n := n) μ
 
   have hKarch : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : archCompact K n =>

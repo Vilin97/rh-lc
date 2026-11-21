@@ -35,7 +35,7 @@ theorem isConjPl_of_under_eq_of_ne : ∀ (D : D7) (PP PP' : Pl D.host.E), (_root
       rw [star_mul, star_star]
     obtain ⟨a, ha⟩ := (D.sp.cm.fixed _).1 hfix
     have hint : IsIntegral ℤ a := by
-      rw [← isIntegral_algebraMap_iff , ha]
+      rw [← isIntegral_algebraMap_iff (B := D.host.E), ha]
       exact (x * Formalism.L2.Col.cO D.host.E x).isIntegral_coe
     have e : algebraMap (𝓞 D.host.F) (𝓞 D.host.E) ⟨a, hint⟩ = x * Formalism.L2.Col.cO D.host.E x := RingOfIntegers.ext ha
     have h1 : (⟨a, hint⟩ : 𝓞 D.host.F) ∈ ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP')).asIdeal := by

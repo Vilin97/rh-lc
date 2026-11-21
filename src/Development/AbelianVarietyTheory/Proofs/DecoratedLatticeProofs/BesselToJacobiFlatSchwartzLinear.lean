@@ -47,7 +47,11 @@ theorem mixS_add (hψ : IsStdChar D ψ (-1)) {S S₀ T : HSp D} {ρ : ℕ} (d : 
     (_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.source d) T ψ v.μ v.𝓕 (f + g) x = (_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.source d) T ψ v.μ v.𝓕 f x + (_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.source d) T ψ v.μ v.𝓕 g x := by
   funext w
   have h := integral_add (d.integrableOn_mixS hψ.1.1 v.covol hf x w) (d.integrableOn_mixS hψ.1.1 v.covol hg x w)
-  simp only [_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.source, Pi.add_apply, HypDec.integrandS_eq, mul_add] at h ⊢
+  change (∫ a in v.𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) (f + g))) 0 ∂v.μ) =
+    (∫ a in v.𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) f)) 0 ∂v.μ) +
+    (∫ a in v.𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) g)) 0 ∂v.μ)
+  simp_rw [d.integrandS_eq, Pi.add_apply, mul_add]
+  simp_rw [d.integrandS_eq] at h
   exact h
 
 theorem cont_bdd_of_tame {Z : Type} [TopologicalSpace Z] {F : Z → ℂ}
@@ -85,7 +89,10 @@ theorem mixT_add (hψ : IsStdChar D ψ (-1)) {S T T₀ : HSp D} {ρ : ℕ} (d : 
     (_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.target d) S ψ v.μ v.𝓕 (f + g) y = (_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.target d) S ψ v.μ v.𝓕 f y + (_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.target d) S ψ v.μ v.𝓕 g y := by
   funext w
   have h := integral_add (integrableOn_mixT hψ d v hf y w) (integrableOn_mixT hψ d v hg y w)
-  simp only [_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.target, Pi.add_apply, HypDec.integrandT_eq, mul_add]
+  change (∫ ξ in v.𝓕, heisO ψ S T (d.incX S ξ) (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w) (f + g))) 0 ∂v.μ) =
+    (∫ ξ in v.𝓕, heisO ψ S T (d.incX S ξ) (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w) f)) 0 ∂v.μ) +
+    (∫ ξ in v.𝓕, heisO ψ S T (d.incX S ξ) (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w) g)) 0 ∂v.μ)
+  simp_rw [d.integrandT_eq, Pi.add_apply, mul_add]
   exact h
 
 theorem evalAt_add (hψ : IsStdChar D ψ (-1)) {V V₀ W W₀ : HSp D} {ρ σ : ℕ} (dV : HypDec V V₀ ρ) (dW : HypDec W W₀ σ)
@@ -94,6 +101,7 @@ theorem evalAt_add (hψ : IsStdChar D ψ (-1)) {V V₀ W W₀ : HSp D} {ρ σ : 
     GlobalTheory.MixPer.evalAt ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 (f + g) x y =
       GlobalTheory.MixPer.evalAt ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 f x y + GlobalTheory.MixPer.evalAt ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 g x y := by
   unfold GlobalTheory.MixPer.evalAt
+  change (_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.target dW) V₀ ψ vT.μ vT.𝓕 ((_root_.I195MixedCoordinates_f836602dbb4c79f519e0538a.source dV) W ψ vS.μ vS.𝓕 (f + g) x) y = _
   rw [mixS_add hψ dV vS hf hg, mixT_add hψ dW vT (mixS_cont_bdd hψ dV vS hf x) (mixS_cont_bdd hψ dV vS hg x)]
 
 theorem flatAt_add (hF : FlatLaw D) (hψ : IsStdChar D ψ (-1)) {V V₀ W W₀ : HSp D} {ρ σ : ℕ} (dV : HypDec V V₀ ρ)
@@ -108,6 +116,8 @@ theorem flatAt_add (hF : FlatLaw D) (hψ : IsStdChar D ψ (-1)) {V V₀ W W₀ :
     ((hF ψ hψ V V₀ W W₀ ρ σ dV dW vS vT vU x hx y g hg).1 w)
   rw [Pi.add_apply, GlobalTheory.MixPer.flatAt, GlobalTheory.MixPer.flatAt, GlobalTheory.MixPer.flatAt, ← h]
   congr 1
+  funext u
+  simp only [GlobalTheory.MixPer.flatFun, evalAt_add hψ dV dW vS vT hf hg, Pi.add_apply, mul_add]
 
 theorem flatBF_linear : ∀ (D : D7), FlatLaw D → ∀ (ψ : AddChar (AF D.host.F) ℂ) (ρ : ℕ) (B : BesLev D ρ) (J : JacLev D ρ) (st : StepBF ψ B J) (f g : WO B.V J.W → ℂ) (a : ℂ), IsThetaFunO ψ B.V J.W f → IsThetaFunO ψ B.V J.W g → flatBF st (f + g) = flatBF st f + flatBF st g ∧ flatBF st (a • f) = a • flatBF st f := by
   intro D hF ψ ρ B J st f g a hf hg

@@ -40,7 +40,7 @@ theorem isHaarSub_map_closedEmb {H G : Type} [Group H] [TopologicalSpace H] [IsT
   · rw [Measure.map_apply hm hK'.isClosed.measurableSet]
     exact (hι.isCompact_preimage hK').measure_lt_top
   · rw [Measure.map_apply hm hc.measurableSet.compl]
-    refine measure_mono_null (fun z hz hzN => hz ⟨z, hzN, rfl⟩) hc0
+    refine measure_mono_null (t := (N : Set H)ᶜ) (fun z hz hzN => hz ⟨z, hzN, rfl⟩) hc0
   · rintro _ ⟨m, hmN, rfl⟩
     rw [Measure.map_map (measurable_const_mul _) hm]
     have : ((fun x => ι m * x) ∘ ι) = ι ∘ (fun x => m * x) := by

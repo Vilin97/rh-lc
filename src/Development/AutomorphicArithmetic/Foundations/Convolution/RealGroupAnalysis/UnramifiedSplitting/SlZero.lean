@@ -14,9 +14,9 @@ open scoped Classical
 
 namespace UpperTheory.ConvolutionTheory.R2.H
 
-private def eV : Γv := ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) : Γv)
+private def eV : WithZero (Multiplicative ℤ) := ↑(Multiplicative.ofAdd (-1 : ℤ))
 
-private lemma val_le_one_of (m : Γv) (h : eV * m ^ 2 ≤ 1) : m ≤ 1 := by
+private lemma val_le_one_of (m : WithZero (Multiplicative ℤ)) (h : eV * m ^ 2 ≤ 1) : m ≤ 1 := by
   rcases eq_or_ne m 0 with rfl | hm
   · exact zero_le'
   obtain ⟨k, rfl⟩ := WithZero.ne_zero_iff_exists.mp hm
@@ -32,7 +32,7 @@ private lemma val_le_one_of (m : Γv) (h : eV * m ^ 2 ≤ 1) : m ≤ 1 := by
     omega
   exact_mod_cast this
 
-private lemma val_le_e_of (m : Γv) (h : eV⁻¹ * m ^ 2 ≤ 1) : m ≤ eV := by
+private lemma val_le_e_of (m : WithZero (Multiplicative ℤ)) (h : eV⁻¹ * m ^ 2 ≤ 1) : m ≤ eV := by
   rcases eq_or_ne m 0 with rfl | hm
   · exact zero_le'
   obtain ⟨k, rfl⟩ := WithZero.ne_zero_iff_exists.mp hm
@@ -49,7 +49,7 @@ private lemma val_le_e_of (m : Γv) (h : eV⁻¹ * m ^ 2 ≤ 1) : m ≤ eV := by
   unfold eV
   exact_mod_cast this
 
-private lemma one_lt_eV : (1 : Γv) < eV⁻¹ := by
+private lemma one_lt_eV : (1 : WithZero (Multiplicative ℤ)) < eV⁻¹ := by
   have h : (1 : Multiplicative ℤ) < (Multiplicative.ofAdd (-1 : ℤ))⁻¹ := by
     apply Multiplicative.toAdd_lt.mp
     simp

@@ -59,7 +59,11 @@ theorem sg_submatrix {p q : ℕ} (π : Fin r ≃ Fin r) (h : ∀ i, ((π i : ℕ
     (sg r p).submatrix π π = -sg r q := by
   rw [submatrix_diagonal_equiv, diagonal_neg]
   congr 1
-  split_ifs <;> simp
+  funext i
+  by_cases hi : (i : ℕ) < q
+  · have hπ : ¬ (π i : ℕ) < p := fun h' => (h i).1 h' hi
+    simp [Function.comp_apply, sgn, hi, hπ]
+  · simp [Function.comp_apply, sgn, hi, (h i).2 hi]
 
 theorem sg_sq (p : ℕ) : sg r p * sg r p = 1 := by
   rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
@@ -97,7 +101,7 @@ theorem free_neg (X : Data E r) (γ : GL (Fin r) E) (hγ : γ ∈ X.Γ) (x : Fra
     (hx : x ∈ GG X.Ψ (-X.Gm) (r - X.p0)) (b : Frame X.Ψ r) (hb : b ∈ Bor X.Ψ r) (h : lact γ x = rmul x b) :
     γ = 1 := by
   have hG : ∀ a b, cc ((-X.Gm) a b) = (-X.Gm) b a := fun a b => by
-    rw [neg_apply, neg_apply, ← X.Gm_herm a b, cc, cc, map_neg]
+    rw [Matrix.neg_apply, Matrix.neg_apply, ← X.Gm_herm a b, cc, cc, map_neg]
   choose b0 h0 h1 h2 using fun τ : X.Ψ => GlobalTheory.UnitFrames.exists_upper_conj_eq_signature (r - X.p0) _
     (gram_isHermitian τ.1 hG (mat x τ)) (hx τ).2
   simp only [← FrameDegreeData.gram_mul] at h2
@@ -137,7 +141,7 @@ def negData (X : Data E r) : Data E r where
   Ψ := X.Ψ
   cmType := X.cmType
   Gm := -X.Gm
-  Gm_herm a b := by rw [neg_apply, neg_apply, ← X.Gm_herm a b, cc, cc, map_neg]
+  Gm_herm a b := by rw [Matrix.neg_apply, Matrix.neg_apply, ← X.Gm_herm a b, cc, cc, map_neg]
   Gm_det := by
     rw [det_neg]
     exact mul_ne_zero (pow_ne_zero _ (neg_ne_zero.2 one_ne_zero)) X.Gm_det
