@@ -48,8 +48,8 @@ theorem unrAt_and_val_inv : ∀ (D : D7) (χ : (AE D)ˣ →* Circle), ResEta D �
         ideleMap D.host.F D.host.E (Units.map (Algebra.norm (AF D.host.F) : AF D.host.F ⊗[D.host.F] D.host.E →* AF D.host.F)
           (locIdele D.host.F w (Units.map (complMap hww).toMonoidHom a))) :=
       Units.ext (by
-        rw [Units.val_mul, ← GlobalTheory.LFun.SplitVal.sigR_locIdele hE hww hv hne]
-        exact (GlobalTheory.Doubling.algebraMap_norm_eq hE _).symm)
+        rw [Units.val_mul, ← GlobalTheory.LFun.SplitVal.sigR_locIdele hE hww hv hne a, ← GlobalTheory.Doubling.algebraMap_norm_eq hE]
+        rfl)
     have k := congrArg χ e
     rw [hμ η hη, pow_zero, map_mul] at k
     have k2 := (map_mul Circle.toUnits _ _).symm.trans ((congrArg Circle.toUnits k).trans (map_one _))
@@ -67,7 +67,7 @@ theorem unrAt_and_val_inv : ∀ (D : D7) (χ : (AE D)ˣ →* Circle), ResEta D �
     rw [ConjPlace.valued_complMap hE hv hτ'] at h1
     change Valued.v (complMap hww (a : Fv D.host.F v)) = 1
     rw [ConjPlace.valued_complMap hE hww hτ, h1]
-  exact ⟨hunr, eq_inv_of_mul_eq_one_right (ResEta.val_mul_val hE.2.2.1 ((GlobalTheory.LFun.resEta_iff χ 0).1 hr) hne hww hv hu hunr)⟩
+  exact ⟨hunr, eq_inv_of_mul_eq_one_right (GlobalTheory.LFun.SplitVal.val_mul_val_eq_one D.host.F D.host.E _ hE χ 0 ((GlobalTheory.LFun.resEta_iff χ 0).1 hr) w w' (hww.trans hv.symm) hne hu hunr)⟩
 
 end GlobalTheory.SplitUnr
 

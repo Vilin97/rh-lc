@@ -162,7 +162,7 @@ private theorem ker_subschemeι_le_ker_comp {X Y : Scheme.{u}} (h : Y ⟶ X) (D 
     AlgebraicGeometry.Scheme.IdealSheafData.ker_subschemeι]
   exact AlgebraicGeometry.Scheme.IdealSheafData.le_map_comap D h
 
-private theorem exists_subscheme_hom_comp_subschemeι_eq {X Y : Scheme.{u}} (h : Y ⟶ X) (D : X.IdealSheafData)
+theorem exists_subscheme_hom_comp_subschemeι_eq {X Y : Scheme.{u}} (h : Y ⟶ X) (D : X.IdealSheafData)
     (D' : Y.IdealSheafData) (hD : D' = D.comap h) :
     ∃ g : D'.subscheme ⟶ D.subscheme,
       g ≫ D.subschemeι = D'.subschemeι ≫ h ∧

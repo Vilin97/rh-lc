@@ -41,8 +41,8 @@ theorem exists_keyPB_on : ∀ (R R' : Type) [CommRing R] [CommRing R'] (f : R �
   have hr₀ : (rigPullOf φ (spMap f) he x.P.L x.rig).IsGen :=
     Out.LBxP.isGen_pullAlong x.P.L φ (spMap f) (fun _ : PUnit => eSec x.P.A) (fun _ => 1) (fun _ => eSec P'.A)
       (fun _ => he) x.rig x.rig_gen
-  obtain ⟨rig, hr, hm⟩ := Transport.exists_transport (pull_isLB hL' (eSec P'.A))
-    (pull_isLB (pull_isLB x.P.isLB φ) (eSec P'.A))
+  obtain ⟨rig, hr, hm⟩ := Transport.exists_transport (LB.isLB_pull hL' (eSec P'.A))
+    (LB.isLB_pull (LB.isLB_pull x.P.isLB φ) (eSec P'.A))
     (LB.linCombIso w (K := PUnit) (fun _ => eSec P'.A) (fun _ => 1)) (DVR.linCombIso_isGen w hw₀ _ _) _ hr₀
   obtain ⟨th', hth'⟩ := sec_pull_down hw x.P.isLB hL' x.th
   have c₁ : IsCommMonObj x.P.A := x.P.isAb.comm

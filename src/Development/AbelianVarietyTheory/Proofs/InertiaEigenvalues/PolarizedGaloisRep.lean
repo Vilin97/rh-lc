@@ -16,7 +16,7 @@ noncomputable section
 
 namespace GlobalTheory.Proof.SemisimpleRepresentationIntegralConjugate
 
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.IndefiniteRowSideFullHecke.DeterminantInTorus
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal
 open scoped Pointwise Matrix
 
 theorem exists_conj_integral {O K Γ : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K]
@@ -141,7 +141,7 @@ theorem norm_le_one (x : O) : ‖φ x‖ ≤ 1 := by
   have h0 : (φ x) ^ p.natDegree + ∑ i ∈ Finset.range p.natDegree,
       algebraMap ℚ_[l] (Qbar l) (p.coeff i : ℚ_[l]) * φ x ^ i = 0 := by
     have := congrArg φ hx
-    rw [hp.as_sum, Polynomial.eval₂_add, Polynomial.eval₂_finset_sum] at this
+    rw [hp.as_sum, Polynomial.eval₂_add, Polynomial.eval₂_finsetSum] at this
     simpa [hφ] using this
   have hpos : 0 < p.natDegree := by
     by_contra h

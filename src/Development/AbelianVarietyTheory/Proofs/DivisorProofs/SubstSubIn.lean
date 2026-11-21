@@ -90,7 +90,9 @@ end GlobalTheory.KatzCongr
 
 namespace GlobalTheory.KatzCongr
 
-theorem subst_sub_in : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [CommRing B] [CommRing Q] [CommRing O] [Algebra B Q] (θ : B →+* O), IsFrame p Q θ → ∀ J : Ideal B, (∀ x ∈ J, ∃ y ∈ J, x ^ p = p * y) → ∀ (σ τ : Type) [Fintype σ] (N : Ideal B) (f : MvPowerSeries σ Q) (u v : σ → MvPowerSeries τ B), DIn N f → (∀ i, constantCoeff (u i) = 0) → (∀ i, constantCoeff (v i) = 0) → (∀ i α, coeff α (u i - v i) ∈ J) → In (J * N) (subst (up Q u) f - subst (up Q v) f) := by
+theorem subst_sub_in : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [CommRing B] [CommRing Q] [CommRing O] [Algebra B Q] (θ : B →+* O), IsFrame p Q θ → ∀ J : Ideal B, (∀ x ∈ J, ∃ y ∈ J, x ^ p = p * y) → ∀ (σ τ : Type) [Fintype σ] (N : Ideal B) (f : MvPowerSeries σ Q) (u v : σ → MvPowerSeries τ B), DIn N f → (∀ i, constantCoeff (u i) = 0) → (∀ i, constantCoeff (v i) = 0) → (∀ i α, coeff α (u i - v i) ∈ J) →
+    In (J * N) (MvPowerSeries.subst (σ := σ) (τ := τ) (R := Q) (S := Q) (up Q u) f -
+      MvPowerSeries.subst (σ := σ) (τ := τ) (R := Q) (S := Q) (up Q v) f) := by
   intro p _ B O Q _ _ _ _ θ hF J hJ σ τ _ N f u v hf hu hv huv
   classical
   have hdp : ∀ w ∈ coeffIdeal τ J, ∀ n : ℕ, 0 < n →

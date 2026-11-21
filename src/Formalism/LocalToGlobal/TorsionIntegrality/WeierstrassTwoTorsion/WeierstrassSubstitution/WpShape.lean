@@ -75,7 +75,7 @@ theorem coeff_ofNat_mul (a : ℕ) [a.AtLeastTwo] (f : K⟦X⟧) (n : ℕ) :
   rw [e, coeff_C_mul]
 
 theorem coeff_X_mul_derivative (f : K⟦X⟧) (n : ℕ) :
-    coeff n (X * derivative K f) = (n : K) * coeff n f := by
+    coeff n (X * derivative f) = (n : K) * coeff n f := by
   rcases n with _ | m
   · simp
   · rw [coeff_succ_X_mul, coeff_derivative]
@@ -94,13 +94,13 @@ theorem coeff_shift_zero {f : K⟦X⟧} (A : K⟦X⟧) {n m : ℕ} (hf : ∀ k <
   · rfl
 
 theorem derivative_X_sq_mul (t : K⟦X⟧) :
-    derivative K (X ^ 2 * t) = 2 * X * t + X ^ 2 * derivative K t := by
+    derivative (X ^ 2 * t) = 2 * X * t + X ^ 2 * derivative t := by
   rw [pow_two, mul_assoc, Derivation.leibniz, Derivation.leibniz, derivative_X]
   simp only [smul_eq_mul]
   ring
 
 theorem derivative_X_mul (t : K⟦X⟧) :
-    derivative K (X * t) = t + X * derivative K t := by
+    derivative (X * t) = t + X * derivative t := by
   rw [Derivation.leibniz, derivative_X]
   simp only [smul_eq_mul]
   ring
@@ -111,27 +111,27 @@ theorem rescale_C' (a c : K) : rescale a (C c) = C c := by
   split_ifs with h <;> simp [h]
 
 theorem derivative_rescale_neg_one (r : K⟦X⟧) :
-    derivative K (rescale (-1 : K) r) = -rescale (-1 : K) (derivative K r) := by
+    derivative (rescale (-1 : K) r) = -rescale (-1 : K) (derivative r) := by
   ext n
   simp only [coeff_derivative, coeff_rescale, map_neg]
   ring
 
 def ClearedM (g2 g3 : K) (M : K⟦X⟧) : Prop :=
-  (X * derivative K M - 2 * M) ^ 2 = 4 * M ^ 3 - C g2 * X ^ 4 * M - C g3 * X ^ 6
+  (X * derivative M - 2 * M) ^ 2 = 4 * M ^ 3 - C g2 * X ^ 4 * M - C g3 * X ^ 6
 
 def Cleared (g2 g3 : K) (r : K⟦X⟧) : Prop :=
-  (-2 + X ^ 3 * derivative K r) ^ 2 =
+  (-2 + X ^ 3 * derivative r) ^ 2 =
     4 * (1 + X ^ 2 * r) ^ 3 - C g2 * X ^ 4 * (1 + X ^ 2 * r) - C g3 * X ^ 6
 
 theorem clearedM_of_ode {g2 g3 : K} {M : K⟦X⟧}
     (h : dL (uPow (-2) * toL M) ^ 2 = 4 * (uPow (-2) * toL M) ^ 3
       - HahnSeries.C g2 * (uPow (-2) * toL M) - HahnSeries.C g3) : ClearedM g2 g3 M := by
   have hd : dL (uPow (-2) * toL M : LaurentSeries K)
-      = uPow (-1) ^ 2 * toL (derivative K M) + (-2) * uPow (-1) ^ 3 * toL M := by
+      = uPow (-1) ^ 2 * toL (derivative M) + (-2) * uPow (-1) ^ 3 * toL M := by
     rw [dL_mul, dL_toL, dL_uPow, C_neg_two, uPow_neg_two, uPow_neg_three]
     ring
   rw [hd, uPow_neg_two] at h
-  have e := alg_first (toL X) (uPow (-1)) (toL M) (toL (derivative K M)) (HahnSeries.C g2)
+  have e := alg_first (toL X) (uPow (-1)) (toL M) (toL (derivative M)) (HahnSeries.C g2)
     (HahnSeries.C g3) z_mul_zi h
   unfold ClearedM
   apply toL_injective
@@ -143,8 +143,8 @@ theorem cleared_of_clearedM {g2 g3 : K} {r : K⟦X⟧} (h : ClearedM g2 g3 (1 + 
   unfold ClearedM at h
   unfold Cleared
   rw [map_add (f := _), Derivation.map_one_eq_zero, derivative_X_sq_mul] at h
-  have e : X * (0 + (2 * X * r + X ^ 2 * derivative K r)) - 2 * (1 + X ^ 2 * r)
-      = -2 + X ^ 3 * derivative K r := by ring
+  have e : X * (0 + (2 * X * r + X ^ 2 * derivative r)) - 2 * (1 + X ^ 2 * r)
+      = -2 + X ^ 3 * derivative r := by ring
   rw [e] at h
   exact h
 
@@ -155,9 +155,9 @@ theorem cleared_of_ode {g2 g3 : K} {r : K⟦X⟧}
   exact cleared_of_clearedM (clearedM_of_ode h)
 
 theorem cleared_main {g2 g3 : K} {r : K⟦X⟧} (h : Cleared g2 g3 r) :
-    4 * (X * derivative K r) + 12 * r =
+    4 * (X * derivative r) + 12 * r =
       X ^ 2 * (C g2 + C g3 * X ^ 2 + C g2 * X ^ 2 * r - 12 * r ^ 2 - 4 * X ^ 2 * r ^ 3
-        + X ^ 2 * derivative K r ^ 2) := by
+        + X ^ 2 * derivative r ^ 2) := by
   unfold Cleared at h
   have hX : (X : K⟦X⟧) ^ 2 ≠ 0 := pow_ne_zero _ X_ne_zero
   apply mul_left_cancel₀ hX
@@ -167,23 +167,23 @@ theorem cleared_unique [CharZero K] {g2 g3 : K} {r s : K⟦X⟧} (hr : Cleared g
     (hs : Cleared g2 g3 s) : r = s := by
   have hr' := cleared_main hr
   have hs' := cleared_main hs
-  have key : ∀ n, coeff n (4 * (X * derivative K (r - s)) + 12 * (r - s)) =
+  have key : ∀ n, coeff n (4 * (X * derivative (r - s)) + 12 * (r - s)) =
       coeff n (X ^ 4 * ((r - s) * C g2) + X ^ 2 * ((r - s) * (-12 * (r + s)))
         + X ^ 4 * ((r - s) * (-4 * (r ^ 2 + r * s + s ^ 2)))
-        + X ^ 3 * ((X * derivative K (r - s)) * (derivative K r + derivative K s))) := by
+        + X ^ 3 * ((X * derivative (r - s)) * (derivative r + derivative s))) := by
     intro n
     congr 1
     rw [map_sub]
     linear_combination hr' - hs'
   have main : ∀ n, (∀ k < n, coeff k (r - s) = 0) → coeff n (r - s) = 0 := by
     intro n hn
-    have hn' : ∀ k < n, coeff k (X * derivative K (r - s)) = 0 := by
+    have hn' : ∀ k < n, coeff k (X * derivative (r - s)) = 0 := by
       intro k hk
       rw [coeff_X_mul_derivative, hn k hk, mul_zero]
     have t1 := coeff_shift_zero (m := 4) (C g2) hn (by norm_num)
     have t2 := coeff_shift_zero (m := 2) (-12 * (r + s)) hn (by norm_num)
     have t3 := coeff_shift_zero (m := 4) (-4 * (r ^ 2 + r * s + s ^ 2)) hn (by norm_num)
-    have t4 := coeff_shift_zero (m := 3) (derivative K r + derivative K s) hn' (by norm_num)
+    have t4 := coeff_shift_zero (m := 3) (derivative r + derivative s) hn' (by norm_num)
     have e := key n
     simp only [map_add (f := _)] at e
     rw [t1, t2, t3, t4, coeff_ofNat_mul, coeff_ofNat_mul, coeff_X_mul_derivative] at e
@@ -202,7 +202,7 @@ theorem cleared_unique [CharZero K] {g2 g3 : K} {r s : K⟦X⟧} (hr : Cleared g
 theorem cleared_low [CharZero K] {g2 g3 : K} {r : K⟦X⟧} (h : Cleared g2 g3 r) :
     coeff 0 r = 0 ∧ coeff 1 r = 0 ∧ coeff 2 r = g2 / 20 ∧ coeff 4 r = g3 / 28 := by
   have E := cleared_main h
-  have lhs : ∀ n : ℕ, coeff n (4 * (X * derivative K r) + 12 * r) = (4 * (n : K) + 12) * coeff n r := by
+  have lhs : ∀ n : ℕ, coeff n (4 * (X * derivative r) + 12 * r) = (4 * (n : K) + 12) * coeff n r := by
     intro n
     rw [map_add (f := _), coeff_ofNat_mul, coeff_ofNat_mul, coeff_X_mul_derivative]
     ring
@@ -220,13 +220,13 @@ theorem cleared_low [CharZero K] {g2 g3 : K} {r : K⟦X⟧} (h : Cleared g2 g3 r
     rw [X_pow_dvd_iff]
     intro m hm
     interval_cases m <;> assumption
-  have E2 : 4 * (X * derivative K t) + 20 * t = C g2 + X ^ 2 * (C g3 + X ^ 2 * (C g2 * t - 12 * t ^ 2
-      - 4 * X ^ 4 * t ^ 3 + (2 * t + X * derivative K t) ^ 2)) := by
+  have E2 : 4 * (X * derivative t) + 20 * t = C g2 + X ^ 2 * (C g3 + X ^ 2 * (C g2 * t - 12 * t ^ 2
+      - 4 * X ^ 4 * t ^ 3 + (2 * t + X * derivative t) ^ 2)) := by
     have hX : (X : K⟦X⟧) ^ 2 ≠ 0 := pow_ne_zero _ X_ne_zero
     apply mul_left_cancel₀ hX
     rw [derivative_X_sq_mul] at E
     linear_combination E
-  have lt : ∀ n : ℕ, coeff n (4 * (X * derivative K t) + 20 * t) = (4 * (n : K) + 20) * coeff n t := by
+  have lt : ∀ n : ℕ, coeff n (4 * (X * derivative t) + 20 * t) = (4 * (n : K) + 20) * coeff n t := by
     intro n
     rw [map_add (f := _), coeff_ofNat_mul, coeff_ofNat_mul, coeff_X_mul_derivative]
     ring
@@ -261,11 +261,11 @@ theorem cleared_odd [CharZero K] {g2 g3 : K} {r : K⟦X⟧} (h : Cleared g2 g3 r
 
 theorem second_cleared {c : K} {r : K⟦X⟧}
     (h : dL (dL (uPow (-2) + toL r)) = 6 * (uPow (-2) + toL r) ^ 2 - HahnSeries.C c) :
-    X ^ 2 * derivative K (derivative K r) = 12 * r + X ^ 2 * (6 * (r * r)) - X ^ 2 * C c := by
+    X ^ 2 * derivative (derivative r) = 12 * r + X ^ 2 * (6 * (r * r)) - X ^ 2 * C c := by
   rw [map_add (f := _), dL_uPow, dL_toL] at h
   rw [map_add (f := _), dL_mul, dL_C, dL_uPow, dL_toL] at h
   rw [C_neg_two, C_neg_three, uPow_neg_four, mul_zero, add_zero, uPow_neg_two] at h
-  have e := alg_second (toL X) (uPow (-1)) (toL r) (toL (derivative K (derivative K r)))
+  have e := alg_second (toL X) (uPow (-1)) (toL r) (toL (derivative (derivative r)))
     (HahnSeries.C c) z_mul_zi h
   apply toL_injective
   simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat, HahnSeries.ofPowerSeries_C]
@@ -304,7 +304,7 @@ theorem sum_even (a : ℕ → K) (h0 : a 0 = 0) (hodd : ∀ n, Odd n → a n = 0
     · rw [hodd k hko, zero_mul]
 
 theorem recursion_of [CharZero K] {c : K} {r : K⟦X⟧}
-    (h : X ^ 2 * derivative K (derivative K r) = 12 * r + X ^ 2 * (6 * (r * r)) - X ^ 2 * C c)
+    (h : X ^ 2 * derivative (derivative r) = 12 * r + X ^ 2 * (6 * (r * r)) - X ^ 2 * C c)
     (h0 : coeff 0 r = 0) (hodd : ∀ n, Odd n → coeff n r = 0) (q : ℕ) (hq : 1 ≤ q) :
     ((q : K) - 1) * (2 * (q : K) + 5) * coeff (2 * q + 2) r =
       3 * ∑ i ∈ Finset.Icc 1 (q - 1), coeff (2 * i) r * coeff (2 * (q - i)) r := by
@@ -367,8 +367,8 @@ theorem wpL_shape (hE : ExpSpec.{u}) (hO : WpODE.{u}) [CharZero K] (W : Weierstr
   rw [hMe] at hC
   unfold ClearedM at hC
   rw [map_add (f := _), Derivation.map_one_eq_zero, derivative_X_mul] at hC
-  have key : X * (8 * M1 - X * (-4 * derivative K M1 - 11 * M1 ^ 2 - 2 * X * M1 * derivative K M1
-      + X ^ 2 * derivative K M1 ^ 2 - 4 * X * M1 ^ 3 + C (g₂ W) * X ^ 2 * (1 + X * M1)
+  have key : X * (8 * M1 - X * (-4 * derivative M1 - 11 * M1 ^ 2 - 2 * X * M1 * derivative M1
+      + X ^ 2 * derivative M1 ^ 2 - 4 * X * M1 ^ 3 + C (g₂ W) * X ^ 2 * (1 + X * M1)
       + C (g₃ W) * X ^ 4)) = 0 := by
     linear_combination (-1 : K⟦X⟧) * hC
   have h8 := (mul_eq_zero.mp key).resolve_left X_ne_zero

@@ -96,7 +96,7 @@ def pr (q : ℕ) : EG q ⟶ ofCat (glCat 1) where
     ext U h
     exact fext _ _ fun i j f => rfl
 
-theorem unitSec_res {V U : Scheme.{0}} (g : V ⟶ U) (u : (Γ(U, ⊤))ˣ) : Sec.res g (GlobalTheory.EtC.unitSec u) = GlobalTheory.EtC.unitSec (um g u) :=
+theorem unitSec_res {V U : Scheme.{0}} (g : V ⟶ U) (u : (Γ(U, ⊤))ˣ) : Sec.res g (unitSec u) = unitSec (um g u) :=
   (ConcreteCategory.congr_hom ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ unitsF)).naturality g.op)
     (ULift.up (Additive.ofMul u) : (Scheme.Γ ⋙ unitsF).obj (op U))).symm
 
@@ -106,7 +106,7 @@ theorem sec_zsmul {R : Type} [CommRing R] {F : Shv R} {U : Scheme.{0}} (n : ℤ)
   simp only [Sec.map, h1, NatTrans.app_zsmul]
   simp
 
-theorem unitSec_pow {U : Scheme.{0}} (v : (Γ(U, ⊤))ˣ) (n : ℕ) : ((n : ℤ) • GlobalTheory.EtC.unitSec v) = GlobalTheory.EtC.unitSec (v ^ n) := by
+theorem unitSec_pow {U : Scheme.{0}} (v : (Γ(U, ⊤))ˣ) (n : ℕ) : ((n : ℤ) • unitSec v) = unitSec (v ^ n) := by
   have := map_zsmul ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ unitsF)).app (op U)).hom (n : ℤ)
     (ULift.up (Additive.ofMul v) : (Scheme.Γ ⋙ unitsF).obj (op U))
   refine this.symm.trans ?_
@@ -118,16 +118,16 @@ theorem unitSec_pow {U : Scheme.{0}} (v : (Γ(U, ⊤))ˣ) (n : ℕ) : ((n : ℤ)
 theorem locRoot (q : ℕ) [NeZero q] {U : Scheme.{0}} (hq : IsUnit (q : Γ(U, ⊤))) (u : (Γ(U, ⊤))ˣ) :
     Loc U fun V g => ∃ v : (Γ(V, ⊤))ˣ, v ^ q = um g u := by
   obtain ⟨κ, -, -, -, -, h⟩ := GlobalTheory.T.kummer_sequence_etale_tateTwist q
-  refine loc_trans U _ (loc_mono U _ _ (h U hq (GlobalTheory.EtC.unitSec u)) ?_)
+  refine loc_trans U _ (loc_mono U _ _ (h U hq (unitSec u)) ?_)
   rintro V g ⟨c, hc⟩
   rw [sec_zsmul] at hc
   refine loc_trans V _ (loc_mono V _ _ ((GlobalTheory.T.etaleToSheafify_locally_bijective_and_lift ℤ (Scheme.Γ ⋙ unitsF)).1 V c) ?_)
   rintro W k ⟨x, hx⟩
   obtain ⟨x⟩ := x
   obtain ⟨v, hv⟩ : ∃ v : (Γ(W, ⊤))ˣ, x = Additive.ofMul v := ⟨Additive.toMul x, rfl⟩
-  have e1 : GlobalTheory.EtC.unitSec (v ^ q) = GlobalTheory.EtC.unitSec (um k (um g u)) := by
+  have e1 : unitSec (v ^ q) = unitSec (um k (um g u)) := by
     rw [← unitSec_pow, ← unitSec_res, ← unitSec_res, ← hc]
-    have hx' : GlobalTheory.EtC.unitSec v = Sec.res k c :=
+    have hx' : unitSec v = Sec.res k c :=
       (congrArg (fun z => ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ unitsF)).app (op W)).hom (ULift.up z)) hv).symm.trans hx
     rw [hx']
     exact (map_zsmul (Gm.obj.map k.op).hom (q : ℤ) c).symm
@@ -206,11 +206,11 @@ def Wmap {q : ℕ} {A : Spc} (w : ∀ T : Scheme.{0}, Sx A 0 T → (Γ(T, ⊤))�
 
 def IsC (q : ℕ) [NeZero q] {E : Spc} (ℓ : ∀ U : Scheme.{0}, Sx E 1 U → (Γ(U, ⊤))ˣ)
     (γ : Cochain ((chains (ZMod q)).obj E) (res _ (tw q 1)) 2) : Prop :=
-  (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev (R := _) γ 0 2 (by simp) U x = 0) ∧
+  (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev γ 0 2 (by simp) U x = 0) ∧
   (∀ (U : Scheme.{0}) (x : Sx E 1 U) (v : (Γ(U, ⊤))ˣ), v ^ q = ℓ U x →
-    ev (R := _) γ 1 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v)) ∧
+    ev γ 1 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v)) ∧
   ∀ (U : Scheme.{0}) (x : Sx E 2 U) (v w : (Γ(U, ⊤))ˣ), v ^ q = ℓ U (x.sub 0 1 (by omega)) →
-    w ^ q = ℓ U (x.sub 1 1 (by omega)) → ev (R := _) γ 2 0 (by simp) U x = kumT q U v + kumT q U w - kumT q U (v * w)
+    w ^ q = ℓ U (x.sub 1 1 (by omega)) → ev γ 2 0 (by simp) U x = kumT q U v + kumT q U w - kumT q U (v * w)
 
 theorem sep_root (q : ℕ) [NeZero q] {F : Shv (ZMod q)} {U : Scheme.{0}} (hq : IsUnit (q : Γ(U, ⊤))) (u : (Γ(U, ⊤))ˣ)
     (a b : Sec F U) (h : ∀ (V : Scheme.{0}) (g : V ⟶ U) (v : (Γ(V, ⊤))ˣ), v ^ q = um g u → Sec.res g a = Sec.res g b) : a = b :=
@@ -224,16 +224,16 @@ theorem sep_root2 (q : ℕ) [NeZero q] {F : Shv (ZMod q)} {U : Scheme.{0}} (hq :
 
 theorem ev_res {R : Type} [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (α : Cochain ((chains R).obj E) I n) (p : ℕ) (s : ℤ)
     (h : -(p : ℤ) + n = s) {V U : Scheme.{0}} (g : V ⟶ U) (x : Sx E p U) :
-    Sec.res g (ev (R := _) α p s h U x) = ev (R := _) α p s h V (x.res g) :=
+    Sec.res g (ev α p s h U x) = ev α p s h V (x.res g) :=
   (GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R).2.1 α p s h V U g x
 
 theorem ev_ext {R : Type} [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (α β : Cochain ((chains R).obj E) I n)
-    (h : ∀ p s h U x, ev (R := _) α p s h U x = ev (R := _) β p s h U x) : α = β :=
+    (h : ∀ p s h U x, ev α p s h U x = ev β p s h U x) : α = β :=
   (GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R).2.2.1 α β h
 
 theorem ev_pull {R : Type} [CommRing R] {E E' : Spc} {I : Cx R} {n : ℤ} (f : E' ⟶ E) (α : Cochain ((chains R).obj E) I n)
     (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E' p U) :
-    ev (R := _) ((Cochain.ofHom ((chains R).map f)).comp α (zero_add n)) p s h U x = ev (R := _) α p s h U (x.map f) :=
+    ev ((Cochain.ofHom ((chains R).map f)).comp α (zero_add n)) p s h U x = ev α p s h U (x.map f) :=
   (GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R).2.2.2.1 f α p s h U x
 
 theorem isC_pull {q : ℕ} [NeZero q] {E E' : Spc} (f : E' ⟶ E) {ℓ : ∀ U : Scheme.{0}, Sx E 1 U → (Γ(U, ⊤))ˣ}
@@ -304,13 +304,13 @@ variable {q : ℕ} [NeZero q] {U : Scheme.{0}} (hq : IsUnit (q : Γ(U, ⊤)))
   (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 2) (hZ : IsC q (fun _ x => lineUnit (pr q) x) Z.1)
   (a b c d : (Γ(U, ⊤))ˣ)
 
-abbrev G1 : Sec ((res _ (tw q 1)).X 1) U := ev (R := _) Z.1 1 1 (by simp) U (s2 hq a b)
-abbrev G2 : Sec ((res _ (tw q 1)).X 0) U := ev (R := _) Z.1 2 0 (by simp) U (s3 hq a b c)
+abbrev G1 : Sec ((res _ (tw q 1)).X 1) U := ev Z.1 1 1 (by simp) U (s2 hq a b)
+abbrev G2 : Sec ((res _ (tw q 1)).X 0) U := ev Z.1 2 0 (by simp) U (s3 hq a b c)
 
 theorem delta_zero : δ 2 3 Z.1 = 0 := (Cocycle.mem_iff 2 3 (by norm_num) _).1 Z.2
 
 theorem ev_zero {R : Type} [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (V : Scheme.{0}) (x : Sx E p V) :
-    ev (R := _) (0 : Cochain ((chains R).obj E) I n) p s h V x = 0 :=
+    ev (0 : Cochain ((chains R).obj E) I n) p s h V x = 0 :=
   (((GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R).1 0 0 p s h V x).2).2.1
 
 theorem neg3 : Int.negOnePow 3 = -1 := by decide
@@ -333,7 +333,7 @@ theorem F2 : Sec.map ((res _ (tw q 1)).d 0 1) (G2 hq Z a b c) = G1 hq Z b c - G1
 theorem F3 : G2 hq Z b c d - G2 hq Z a c d + G2 hq Z a b d - G2 hq Z a b c = 0 := by
   have h := (GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values (ZMod q) (n := 2) (m := 3) (by norm_num) Z.1 U).2 2 (-1) 0 (by simp) (by simp) (s4 hq a b c d)
   have hs : Subsingleton (Sec ((res _ (tw q 1)).X (-1)) U) := (GlobalTheory.T.chosenInjectiveResolutionEtaleSheaf_sections_exactness _ (tw q 1) U).2.2.2 (-1) (by omega)
-  rw [delta_zero, ev_zero, neg3, Fin.sum_univ_four, unitsSimplexThree_face_zero, unitsSimplexThree_face_one, unitsSimplexThree_face_two, unitsSimplexThree_face_three, Subsingleton.elim (ev (R := _) Z.1 (2 + 1) (-1) _ U _) 0] at h
+  rw [delta_zero, ev_zero, neg3, Fin.sum_univ_four, unitsSimplexThree_face_zero, unitsSimplexThree_face_one, unitsSimplexThree_face_two, unitsSimplexThree_face_three, Subsingleton.elim (ev Z.1 (2 + 1) (-1) _ U _) 0] at h
   simp at h
   rw [← neg_eq_zero]
   refine Eq.trans ?_ h.symm
@@ -356,7 +356,7 @@ theorem F5 {a' b' c' : (Γ(U, ⊤))ˣ} (h1 : a / b = b' / c') (h2 : b / c = a' /
 end Facts
 
 theorem ev_neg {R : Type} [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (α : Cochain ((chains R).obj E) I n) (p : ℕ) (s : ℤ)
-    (h : -(p : ℤ) + n = s) (V : Scheme.{0}) (x : Sx E p V) : ev (R := _) (-α) p s h V x = -ev (R := _) α p s h V x := by
+    (h : -(p : ℤ) + n = s) (V : Scheme.{0}) (x : Sx E p V) : ev (-α) p s h V x = -ev α p s h V x := by
   rw [← zero_sub, ((GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R).1 0 α p s h V x).2.1, ev_zero, zero_sub]
 
 theorem sec_map_neg {R : Type} [CommRing R] {F G : Shv R} (φ : F ⟶ G) {U : Scheme.{0}} (a : Sec F U) :
@@ -378,33 +378,33 @@ variable {q : ℕ} [NeZero q]
 
 def thetaFam (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 2) :
     ∀ (p : ℕ) (s : ℤ), -(p : ℤ) + 1 = s → ∀ U : Scheme.{0}, Sx (EG q) p U → Sec ((res _ (tw q 1)).X s) U
-  | 0, s, h, U, x => ev (R := _) Z.1 1 s (by omega) U (s2 x.2 (x.1 0) 1)
-  | 1, s, h, U, x => -ev (R := _) Z.1 2 s (by omega) U (s3 x.2 (x.1 0) (x.1 1) 1)
+  | 0, s, h, U, x => ev Z.1 1 s (by omega) U (s2 x.2 (x.1 0) 1)
+  | 1, s, h, U, x => -ev Z.1 2 s (by omega) U (s3 x.2 (x.1 0) (x.1 1) 1)
   | _ + 2, _, _, _, _ => 0
 
 theorem exists_theta (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 2)
     (hZ : IsC q (fun _ x => lineUnit (pr q) x) Z.1) :
     ∃ Θ : Cochain ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 1,
-      (∀ (U : Scheme.{0}) (x : Sx (EG q) 0 U), ev (R := _) Θ 0 1 (by simp) U x = G1 x.2 Z (x.1 0) 1) ∧
-      (∀ (U : Scheme.{0}) (x : Sx (EG q) 1 U), ev (R := _) Θ 1 0 (by simp) U x = -G2 x.2 Z (x.1 0) (x.1 1) 1) ∧
+      (∀ (U : Scheme.{0}) (x : Sx (EG q) 0 U), ev Θ 0 1 (by simp) U x = G1 x.2 Z (x.1 0) 1) ∧
+      (∀ (U : Scheme.{0}) (x : Sx (EG q) 1 U), ev Θ 1 0 (by simp) U x = -G2 x.2 Z (x.1 0) (x.1 1) 1) ∧
       δ 1 2 Θ = -Z.1 := by
   obtain ⟨Θ, hΘ⟩ := GlobalTheory.T.exists_cochain_ev_eq_of_natural' (ZMod q) (E := EG q) (I := res _ (tw q 1)) (n := 1) (thetaFam Z) (by
     intro p s h V U g x
     rcases p with _ | _ | p
     · obtain rfl : s = 1 := by omega
-      change Sec.res g (ev (R := _) Z.1 1 1 _ U _) = ev (R := _) Z.1 1 1 _ V _
+      change Sec.res g (ev Z.1 1 1 _ U _) = ev Z.1 1 1 _ V _
       rw [ev_res, unitsSimplexOne_restrict, map_one]
       rfl
     · obtain rfl : s = 0 := by omega
-      change Sec.res g (-ev (R := _) Z.1 2 0 _ U _) = -ev (R := _) Z.1 2 0 _ V _
+      change Sec.res g (-ev Z.1 2 0 _ U _) = -ev Z.1 2 0 _ V _
       refine (map_neg _ _).trans (congrArg Neg.neg ?_)
       refine (ev_res _ _ _ _ g _).trans ?_
       rw [unitsSimplexTwo_restrict, map_one]
       rfl
     · exact map_zero _)
-  have h0 : ∀ (U : Scheme.{0}) (x : Sx (EG q) 0 U), ev (R := _) Θ 0 1 (by simp) U x = G1 x.2 Z (x.1 0) 1 :=
+  have h0 : ∀ (U : Scheme.{0}) (x : Sx (EG q) 0 U), ev Θ 0 1 (by simp) U x = G1 x.2 Z (x.1 0) 1 :=
     fun U x => hΘ 0 1 _ U x
-  have h1 : ∀ (U : Scheme.{0}) (x : Sx (EG q) 1 U), ev (R := _) Θ 1 0 (by simp) U x = -G2 x.2 Z (x.1 0) (x.1 1) 1 :=
+  have h1 : ∀ (U : Scheme.{0}) (x : Sx (EG q) 1 U), ev Θ 1 0 (by simp) U x = -G2 x.2 Z (x.1 0) (x.1 1) 1 :=
     fun U x => hΘ 1 0 _ U x
   refine ⟨Θ, h0, h1, ev_ext _ _ fun p s hs U x => ?_⟩
   rw [ev_neg]
@@ -415,23 +415,23 @@ theorem exists_theta (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)
   · obtain rfl : s = 1 := by omega
     have h := (GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values (ZMod q) (n := 1) (m := 2) (by norm_num) Θ U).2 0 0 1 (by simp) (by simp) x
     rw [h, h1, Fin.sum_univ_two]
-    have e0 : ev (R := _) Θ 0 1 _ U (x.face 0) = G1 x.2 Z (x.1 1) 1 := h0 U _
-    have e1 : ev (R := _) Θ 0 1 _ U (x.face 1) = G1 x.2 Z (x.1 0) 1 := h0 U _
+    have e0 : ev Θ 0 1 _ U (x.face 0) = G1 x.2 Z (x.1 1) 1 := h0 U _
+    have e1 : ev Θ 0 1 _ U (x.face 1) = G1 x.2 Z (x.1 0) 1 := h0 U _
     rw [e0, e1]
     have h2 := F2 x.2 Z hZ (x.1 0) (x.1 1) 1
-    have e3 : ev (R := _) Z.1 (0 + 1) 1 hs U x = G1 x.2 Z (x.1 0) (x.1 1) := congrArg _ (oneSimplex_eq_mkOfVertices x)
+    have e3 : ev Z.1 (0 + 1) 1 hs U x = G1 x.2 Z (x.1 0) (x.1 1) := congrArg _ (oneSimplex_eq_mkOfVertices x)
     rw [e3, sec_map_neg, h2, neg2]
     simp
     abel
   · obtain rfl : s = 0 := by omega
     have h := (GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values (ZMod q) (n := 1) (m := 2) (by norm_num) Θ U).2 1 (-1) 0 (by simp) (by simp) x
     have hs' : Subsingleton (Sec ((res _ (tw q 1)).X (-1)) U) := (GlobalTheory.T.chosenInjectiveResolutionEtaleSheaf_sections_exactness _ (tw q 1) U).2.2.2 (-1) (by omega)
-    have f0 : ev (R := _) Θ 1 0 _ U (x.face 0) = -G2 x.2 Z (x.1 1) (x.1 2) 1 := h1 U _
-    have f1 : ev (R := _) Θ 1 0 _ U (x.face 1) = -G2 x.2 Z (x.1 0) (x.1 2) 1 := h1 U _
-    have f2 : ev (R := _) Θ 1 0 _ U (x.face 2) = -G2 x.2 Z (x.1 0) (x.1 1) 1 := h1 U _
-    rw [h, Fin.sum_univ_three, Subsingleton.elim (ev (R := _) Θ (1 + 1) (-1) _ U x) 0, f0, f1, f2, sec_map_zero, neg2]
+    have f0 : ev Θ 1 0 _ U (x.face 0) = -G2 x.2 Z (x.1 1) (x.1 2) 1 := h1 U _
+    have f1 : ev Θ 1 0 _ U (x.face 1) = -G2 x.2 Z (x.1 0) (x.1 2) 1 := h1 U _
+    have f2 : ev Θ 1 0 _ U (x.face 2) = -G2 x.2 Z (x.1 0) (x.1 1) 1 := h1 U _
+    rw [h, Fin.sum_univ_three, Subsingleton.elim (ev Θ (1 + 1) (-1) _ U x) 0, f0, f1, f2, sec_map_zero, neg2]
     have h3 := F3 x.2 Z hZ (x.1 0) (x.1 1) (x.1 2) 1
-    have e3 : ev (R := _) Z.1 (1 + 1) 0 hs U x = G2 x.2 Z (x.1 0) (x.1 1) (x.1 2) := congrArg _ (twoSimplex_eq_mkOfVertices x)
+    have e3 : ev Z.1 (1 + 1) 0 hs U x = G2 x.2 Z (x.1 0) (x.1 1) (x.1 2) := congrArg _ (twoSimplex_eq_mkOfVertices x)
     rw [e3, ← sub_eq_zero.1 h3]
     simp
     abel
@@ -447,9 +447,9 @@ theorem cmp_kappa (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 2
     (hZ : IsC q (fun _ x => lineUnit (pr q) x) Z.1)
     (κ : Cochain ((chains (ZMod q)).obj (sch.obj (Gq q))) (res _ (tw q 1)) 1)
     (hκ : ∀ (U : Scheme.{0}) (x : U ⟶ Gq q) (v : (Γ(U, ⊤))ˣ), v ^ q = um x (tq q) →
-      ev (R := _) κ 0 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v))
+      ev κ 0 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v))
     {U : Scheme.{0}} (hq : IsUnit (q : Γ(U, ⊤))) (x : U ⟶ Gq q) (a b : (Γ(U, ⊤))ˣ) (h : um x (tq q) = a / b) :
-    ev (R := _) κ 0 1 (by simp) U x = G1 hq Z a b := by
+    ev κ 0 1 (by simp) U x = G1 hq Z a b := by
   refine sep_root q hq (a / b) _ _ fun V g v hv => ?_
   have e1 : v ^ q = um (g ≫ x) (tq q) := by rw [um_comp, h]; exact hv
   have e2 : v ^ q = lineUnit (pr q) (s2 (by simpa using hq.map g.appTop.hom) (um g a) (um g b)) := by
@@ -462,18 +462,18 @@ theorem cmp_kappa (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 2
 
 def tauFam {D : Spc} (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 2) (V₁ V₂ : D ⟶ EG q) :
     ∀ (p : ℕ) (s : ℤ), -(p : ℤ) + 0 = s → ∀ U : Scheme.{0}, Sx D p U → Sec ((res _ (tw q 1)).X s) U
-  | 0, s, h, U, y => -ev (R := _) Z.1 2 s (by omega) U (s3 (y.map V₁).2 ((y.map V₁).1 0) ((y.map V₂).1 0) 1)
+  | 0, s, h, U, y => -ev Z.1 2 s (by omega) U (s3 (y.map V₁).2 ((y.map V₁).1 0) ((y.map V₂).1 0) 1)
   | _ + 1, _, _, _, _ => 0
 
 theorem exists_tau {D : Spc} (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 2) (V₁ V₂ : D ⟶ EG q) :
     ∃ τ : Cochain ((chains (ZMod q)).obj D) (res _ (tw q 1)) 0,
-      (∀ (U : Scheme.{0}) (y : Sx D 0 U), ev (R := _) τ 0 0 (by simp) U y =
+      (∀ (U : Scheme.{0}) (y : Sx D 0 U), ev τ 0 0 (by simp) U y =
         -G2 (y.map V₁).2 Z ((y.map V₁).1 0) ((y.map V₂).1 0) 1) := by
   obtain ⟨τ, hτ⟩ := GlobalTheory.T.exists_cochain_ev_eq_of_natural' (ZMod q) (E := D) (I := res _ (tw q 1)) (n := 0) (tauFam Z V₁ V₂) (by
     intro p s h V U g x
     rcases p with _ | p
     · obtain rfl : s = 0 := by omega
-      change Sec.res g (-ev (R := _) Z.1 2 0 _ U _) = -ev (R := _) Z.1 2 0 _ V _
+      change Sec.res g (-ev Z.1 2 0 _ U _) = -ev Z.1 2 0 _ V _
       refine (map_neg _ _).trans (congrArg Neg.neg ?_)
       refine (ev_res _ _ _ _ g _).trans ?_
       rw [unitsSimplexTwo_restrict, map_one, ← res_map, ← res_map]
@@ -497,12 +497,12 @@ theorem neg1 : Int.negOnePow 1 = -1 := by decide
 theorem mv_core {D : Spc} (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 2)
     (hZ : IsC q (fun _ x => lineUnit (pr q) x) Z.1)
     (Θ : Cochain ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 1)
-    (hΘ0 : ∀ (U : Scheme.{0}) (x : Sx (EG q) 0 U), ev (R := _) Θ 0 1 (by simp) U x = G1 x.2 Z (x.1 0) 1)
-    (hΘ1 : ∀ (U : Scheme.{0}) (x : Sx (EG q) 1 U), ev (R := _) Θ 1 0 (by simp) U x = -G2 x.2 Z (x.1 0) (x.1 1) 1)
+    (hΘ0 : ∀ (U : Scheme.{0}) (x : Sx (EG q) 0 U), ev Θ 0 1 (by simp) U x = G1 x.2 Z (x.1 0) 1)
+    (hΘ1 : ∀ (U : Scheme.{0}) (x : Sx (EG q) 1 U), ev Θ 1 0 (by simp) U x = -G2 x.2 Z (x.1 0) (x.1 1) 1)
     (κ : Cochain ((chains (ZMod q)).obj (sch.obj (Gq q))) (res _ (tw q 1)) 1)
     (hκ : ∀ (U : Scheme.{0}) (x : U ⟶ Gq q) (v : (Γ(U, ⊤))ˣ), v ^ q = um x (tq q) →
-      ev (R := _) κ 0 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v))
-    (hκ1 : ∀ (U : Scheme.{0}) (x : U ⟶ Gq q), ev (R := _) κ 1 0 (by simp) U x = 0)
+      ev κ 0 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v))
+    (hκ1 : ∀ (U : Scheme.{0}) (x : U ⟶ Gq q), ev κ 1 0 (by simp) U x = 0)
     (V₁ V₂ : D ⟶ EG q) (u : D ⟶ sch.obj (Gq q))
     (hr : ∀ (T : Scheme.{0}) (y : Sx D 0 T), um (show T ⟶ Gq q from y.map u) (tq q) = (y.map V₁).1 0 / (y.map V₂).1 0) :
     ∃ τ : Cochain ((chains (ZMod q)).obj D) (res _ (tw q 1)) 0,
@@ -519,9 +519,9 @@ theorem mv_core {D : Spc} (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw
   rcases p with _ | _ | p
   · obtain rfl : s = 1 := by omega
     have hq := (y.map V₁).2
-    have e1 : ev (R := _) Θ 0 1 _ U (y.map V₁) = G1 hq Z ((y.map V₁).1 0) 1 := hΘ0 U _
-    have e2 : ev (R := _) Θ 0 1 _ U (y.map V₂) = G1 hq Z ((y.map V₂).1 0) 1 := hΘ0 U _
-    have e3 : ev (R := _) κ 0 1 _ U (y.map u) = G1 hq Z ((y.map V₁).1 0) ((y.map V₂).1 0) :=
+    have e1 : ev Θ 0 1 _ U (y.map V₁) = G1 hq Z ((y.map V₁).1 0) 1 := hΘ0 U _
+    have e2 : ev Θ 0 1 _ U (y.map V₂) = G1 hq Z ((y.map V₂).1 0) 1 := hΘ0 U _
+    have e3 : ev κ 0 1 _ U (y.map u) = G1 hq Z ((y.map V₁).1 0) ((y.map V₂).1 0) :=
       cmp_kappa Z hZ κ hκ hq _ _ _ (hr U y)
     have e4 := (GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values (ZMod q) (n := 0) (m := 1) (by norm_num) τ U).1 y
     rw [e1, e2, e3, e4, hτ, sec_map_neg, F2 hq Z hZ]
@@ -529,17 +529,17 @@ theorem mv_core {D : Spc} (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw
   · obtain rfl : s = 0 := by omega
     have hq := (y.map V₁).2
     have hs' : Subsingleton (Sec ((res _ (tw q 1)).X (-1)) U) := (GlobalTheory.T.chosenInjectiveResolutionEtaleSheaf_sections_exactness _ (tw q 1) U).2.2.2 (-1) (by omega)
-    have e1 : ev (R := _) Θ (0 + 1) 0 hs U (y.map V₁) = -G2 hq Z ((y.map V₁).1 0) ((y.map V₁).1 1) 1 := hΘ1 U _
-    have e2 : ev (R := _) Θ (0 + 1) 0 hs U (y.map V₂) = -G2 hq Z ((y.map V₂).1 0) ((y.map V₂).1 1) 1 := hΘ1 U _
-    have e3 : ev (R := _) κ (0 + 1) 0 hs U (y.map u) = 0 := hκ1 U _
+    have e1 : ev Θ (0 + 1) 0 hs U (y.map V₁) = -G2 hq Z ((y.map V₁).1 0) ((y.map V₁).1 1) 1 := hΘ1 U _
+    have e2 : ev Θ (0 + 1) 0 hs U (y.map V₂) = -G2 hq Z ((y.map V₂).1 0) ((y.map V₂).1 1) 1 := hΘ1 U _
+    have e3 : ev κ (0 + 1) 0 hs U (y.map u) = 0 := hκ1 U _
     have e4 := (GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values (ZMod q) (n := 0) (m := 1) (by norm_num) τ U).2 0 (-1) 0 (by simp) (by simp) y
     have x0 : ((y.face 1).map V₁).1 0 = (y.map V₁).1 0 := congrArg (fun z : Sx (EG q) 0 U => z.1 0) (face_map V₁ y 1).symm
     have x1 : ((y.face 0).map V₁).1 0 = (y.map V₁).1 1 := congrArg (fun z : Sx (EG q) 0 U => z.1 0) (face_map V₁ y 0).symm
     have z0 : ((y.face 1).map V₂).1 0 = (y.map V₂).1 0 := congrArg (fun z : Sx (EG q) 0 U => z.1 0) (face_map V₂ y 1).symm
     have z1 : ((y.face 0).map V₂).1 0 = (y.map V₂).1 1 := congrArg (fun z : Sx (EG q) 0 U => z.1 0) (face_map V₂ y 0).symm
-    have t0 : ev (R := _) τ 0 0 (by simp) U (y.face 0) = -G2 hq Z ((y.map V₁).1 1) ((y.map V₂).1 1) 1 := by
+    have t0 : ev τ 0 0 (by simp) U (y.face 0) = -G2 hq Z ((y.map V₁).1 1) ((y.map V₂).1 1) 1 := by
       rw [hτ, x1, z1]
-    have t1 : ev (R := _) τ 0 0 (by simp) U (y.face 1) = -G2 hq Z ((y.map V₁).1 0) ((y.map V₂).1 0) 1 := by
+    have t1 : ev τ 0 0 (by simp) U (y.face 1) = -G2 hq Z ((y.map V₁).1 0) ((y.map V₂).1 0) 1 := by
       rw [hτ, x0, z0]
     have hu01 : (show U ⟶ Gq q from (y.face 0).map u) = (show U ⟶ Gq q from (y.face 1).map u) :=
       (face_map u y 0).symm.trans (face_map u y 1)
@@ -555,7 +555,7 @@ theorem mv_core {D : Spc} (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw
     have g1 := F3 hq Z hZ ((y.map V₁).1 0) ((y.map V₁).1 1) ((y.map V₂).1 1) 1
     have g2 := F3 hq Z hZ ((y.map V₁).1 0) ((y.map V₂).1 0) ((y.map V₂).1 1) 1
     rw [← F5 hq Z hZ _ _ _ rs rr] at g2
-    rw [e1, e2, e3, e4, Subsingleton.elim (ev (R := _) τ (0 + 1) (-1) _ U y) 0, sec_map_zero, neg1, Fin.sum_univ_two, t0, t1,
+    rw [e1, e2, e3, e4, Subsingleton.elim (ev τ (0 + 1) (-1) _ U y) 0, sec_map_zero, neg1, Fin.sum_univ_two, t0, t1,
       comb _ _ _ _ _ _ g1 g2]
     simp
     abel

@@ -101,7 +101,7 @@ theorem exists_symplectic {τ τ' : Matrix (Fin g) (Fin g) ℂ} (hτ : τ ∈ Si
     rw [SymplecticGroup.mem_iff]
     ext s t
     have h1 : (δ * J (Fin g) ℤ * δᵀ) s t = -(n s ⬝ᵥ m t - n t ⬝ᵥ m s) := by
-      simp [δ, Matrix.mul_apply, J, Fintype.sum_sum_type, Matrix.one_apply, dotProduct, mul_comm]
+      simp [δ, Matrix.mul_apply, J, Fintype.sum_sum_type, Matrix.one_apply, dotProduct, Function.swap, mul_comm]
       ring
     rw [h1, ← alt]
     rcases s with s | s <;> rcases t with t | t <;>

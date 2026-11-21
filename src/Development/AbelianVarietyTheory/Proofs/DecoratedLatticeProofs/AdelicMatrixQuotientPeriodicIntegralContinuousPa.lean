@@ -51,7 +51,7 @@ theorem isCovolOne_map {μ : Measure (Mx D m n)} {𝓕 : Set (Mx D m n)} (h : Is
         left_inv := fun γ => Subtype.ext (e.apply_symm_apply _)
         right_inv := fun γ => Subtype.ext (e.symm_apply_apply _) }
     refine h.2.1.image_of_equiv e.toEquiv ?_ g fun γ x => ?_
-    · refine ⟨he'.measurable, ?_⟩
+    · refine ⟨he'.measurable.aemeasurable, ?_⟩
       have : (μ.map e).map e.symm = μ := by
         rw [Measure.map_map he'.measurable he.measurable]
         have : (e.symm ∘ e : Mx D m n → Mx D m n) = id := funext e.symm_apply_apply

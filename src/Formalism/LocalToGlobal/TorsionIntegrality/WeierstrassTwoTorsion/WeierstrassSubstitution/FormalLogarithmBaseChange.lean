@@ -28,7 +28,7 @@ variable {R : Type u} [CommRing R] (W : WeierstrassCurve R)
 abbrev curveM : WeierstrassCurve (MvPowerSeries (Fin 2) R) :=
   W.map (MvPowerSeries.C : R →+* MvPowerSeries (Fin 2) R)
 
-theorem fw_subst {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
+theorem fw_subst {s : MvPowerSeries (Fin 2) R} (hs : MvPowerSeries.constantCoeff s = 0) :
     (fw W).subst s = fwAt (curveM W) s ((wSer W).subst s) := by
   have hs' := PowerSeries.HasSubst.of_constantCoeff_zero hs
   have hC : ∀ a : R, (PowerSeries.C a).subst s = MvPowerSeries.C a := fun a => by
@@ -41,7 +41,7 @@ theorem fw_subst {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
     WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆]
   try ring
 
-theorem fu_subst {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
+theorem fu_subst {s : MvPowerSeries (Fin 2) R} (hs : MvPowerSeries.constantCoeff s = 0) :
     (fu W).subst s = fuAt (curveM W) s ((wSer W).subst s) := by
   have hs' := PowerSeries.HasSubst.of_constantCoeff_zero hs
   have hC : ∀ a : R, (PowerSeries.C a).subst s = MvPowerSeries.C a := fun a => by
@@ -54,7 +54,7 @@ theorem fu_subst {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
     WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆]
   try ring
 
-theorem weq_subst {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
+theorem weq_subst {s : MvPowerSeries (Fin 2) R} (hs : MvPowerSeries.constantCoeff s = 0) :
     WEq (curveM W) s ((wSer W).subst s) := by
   have hs' := PowerSeries.HasSubst.of_constantCoeff_zero hs
   have hC : ∀ a : R, (PowerSeries.C a).subst s = MvPowerSeries.C a := fun a => by
@@ -85,8 +85,8 @@ theorem const_Dm (i : Fin 2) : ConstCurve (Dm W i) (curveM W) := by
   · unfold Dm
     simp [MvPowerSeries.pderiv_C]
 
-theorem Dm_subst (i : Fin 2) {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) (f : R⟦X⟧) :
-    Dm W i (f.subst s) = (derivative R f).subst s * Dm W i s := by
+theorem Dm_subst (i : Fin 2) {s : MvPowerSeries (Fin 2) R} (hs : MvPowerSeries.constantCoeff s = 0) (f : R⟦X⟧) :
+    Dm W i (f.subst s) = (PowerSeries.derivative f).subst s * Dm W i s := by
   unfold Dm
   rw [Formalism.G.LogCR.pderiv_psubst hs]
   ring
@@ -101,7 +101,7 @@ theorem flow_Dm (i : Fin 2) : IsFlowUW (curveM W) (Dm W i) (MvPowerSeries.X i) (
   refine ⟨weq_subst W hX, ?_, ?_⟩
   · rw [hDX, fw_subst W hX]
   · rw [Dm_subst W i hX, ← fu_subst W hX, hDX]
-    have h3 : fw W * derivative R (wSer W) = fu W := by
+    have h3 : fw W * PowerSeries.derivative (wSer W) = fu W := by
       have h4 := hF.2.2.1.2.2
       rw [hF.2.2.2.2.1] at h4
       simpa only [D, Derivation.smul_apply, smul_eq_mul] using h4
@@ -188,7 +188,7 @@ theorem Dm_fgl [IsDomain R] (i : Fin 2) : Dm W i (fgl W) = (fw W).subst (fgl W) 
   have hu' := PowerSeries.HasSubst.of_constantCoeff_zero hu
   have hS := formal_inverse_spec R W
   have hI : PowerSeries.HasSubst (iSer W) := PowerSeries.HasSubst.of_constantCoeff_zero hS.1
-  have hD : derivative R (iSer W) * fw W = -(fw W).subst (iSer W) := by
+  have hD : PowerSeries.derivative (iSer W) * fw W = -(fw W).subst (iSer W) := by
     have h := hS.2.2.2.2.2.2.1
     simp only [D, Derivation.smul_apply, smul_eq_mul] at h
     rw [mul_comm]
@@ -227,7 +227,7 @@ theorem Dm_fgl' (W : WeierstrassCurve R) (i : Fin 2) : Dm W i (fgl W) = (fw W).s
     (series_map _ _ (Univ.φ_of W) Univ.W₀).2.2.2.2.1, Univ.map_eq, ← Fgl1.fgl_univ] at h1
   exact h1
 
-theorem fw_mul_om_subst (W : WeierstrassCurve R) {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
+theorem fw_mul_om_subst (W : WeierstrassCurve R) {s : MvPowerSeries (Fin 2) R} (hs : MvPowerSeries.constantCoeff s = 0) :
     (fw W).subst s * (om W).subst s = 1 := by
   have h1 : fw W * om W = 1 := by
     have h := (unit_flow R W).2.2.2.2.2 X

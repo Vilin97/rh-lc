@@ -39,6 +39,17 @@ theorem nilpotent_ker {R : Type} [CommRing R] (I : Ideal R) {n : ℕ} (h : I ^ n
 theorem exists_h1Zero_pw (R : Type) [CommRing R] [IsNoetherianRing R] (X : Scheme.{0})
     (f : X ⟶ Spec (CommRingCat.of R)) (H : LB X) (m : ℕ) (s : Fin (m + 1) → LB.Sec H) (hH : H.IsLB)
     (hs : VeryAmpleBy f H s) : ∃ t₀ : ℕ, ∀ t : ℕ, t₀ ≤ t → FirstCohomologyVanishes (GlobalTheory.AbLaw.pw H t) := by
+  have isLB_pw {Y : Scheme.{0}} {L : LB Y} (hL : L.IsLB) (t : ℤ) :
+      (AbLaw.pw L t).IsLB := by
+    refine ⟨hL.cover, ?_, ?_⟩
+    · intro i
+      have h := congrArg (· ^ t) (hL.g_self i)
+      simp only [one_zpow, ← map_zpow] at h
+      exact h
+    · intro i j k
+      have h := congrArg (· ^ t) (hL.cocycle i j k)
+      simp only [mul_zpow, ← map_zpow] at h
+      exact h
   obtain ⟨t₀, ht₀⟩ := GlobalTheory.T.serre_vanishing_very_ample.1 R X f H m s hH hs H hH
   refine ⟨t₀.toNat + 1, fun t ht => ?_⟩
   obtain ⟨w, hw⟩ := GlobalTheory.Algebraise.lbIso_tw hH ((t : ℤ) - 1)
@@ -107,13 +118,13 @@ theorem GlobalTheory.Degen.exists_form_correction_local : ∀ (R : Type) [CommRi
       · rw [pullback.lift_snd, Category.id_comp]
     rw [this]
     infer_instance
-  obtain ⟨t₁, ht₁⟩ := exists_h1Zero_pw _ _ f₀ _ n s₀ hL hva₀
+  obtain ⟨t₁, ht₁⟩ := GlobalTheory.Degen.PolyStepLocal.exists_h1Zero_pw _ _ f₀ _ n s₀ hL hva₀
   obtain ⟨t₂, ht₂⟩ := GlobalTheory.T.serre_vanishing_very_ample.2 _ _ f₀ _ n s₀ hL hva₀
   refine ⟨max t₁ t₂, fun t ht e F hF hF0 => ?_⟩
-  obtain ⟨j₀, hj, w, hw', hr⟩ := exists_pull_tower _ Y β hβ H (fun e => (hH e).1) s
+  obtain ⟨j₀, hj, w, hw', hr⟩ := GlobalTheory.Degen.PolyStepLocal.exists_pull_tower _ Y β hβ H (fun e => (hH e).1) s
     (fun e => ⟨v e, (hH e).2, hs e⟩) e
   have hvae : VeryAmpleBy (Y (e + 1)).hom (H (e + 1)) (s (e + 1)) :=
-    GlobalTheory.AbLaw.veryAmpleBy_of_isNilpotent _ _ _ (Ideal.Quotient.factor_surjective _) (nilpotent_ker I _) _ _ _ _ j₀ hj
+    GlobalTheory.AbLaw.veryAmpleBy_of_isNilpotent _ _ _ (Ideal.Quotient.factor_surjective _) (GlobalTheory.Degen.PolyStepLocal.nilpotent_ker I _) _ _ _ _ j₀ hj
       _ _ w n _ _ (hH _).1 (hH _).1 hw' hr hva
   obtain ⟨w₀, hw₀, c₀⟩ := GlobalTheory.MorAlg.IsPull.comp (hH (e + 1)).1 (hH 0).1 hL ⟨w, hw', hr⟩ hs₀
   have hP₀ := hP.paste_horiz hj
@@ -127,14 +138,14 @@ theorem GlobalTheory.Degen.exists_form_correction_local : ∀ (R : Type) [CommRi
     (hφ.comp (Ideal.Quotient.factor_surjective _)) _ _ _ hP₀ _ w₀ s₀ hL hw₀ c₀ t (ht₁ t (le_of_max_le_left ht))
     (ht₂ t (le_of_max_le_right ht)) _ _ _ (β e) (Y e).hom (hβ e) _ (v e) (s e) (hH e).1 (hH e).2 (hs e)
     (MvPolynomial.map (Ideal.Quotient.mk _) F) (hF.map _) (fun k => by
-      rw [MvPolynomial.eval₂Hom_map_hom, ← cst_comp_spec, Category.assoc]
+      rw [MvPolynomial.eval₂Hom_map_hom, ← GlobalTheory.Degen.PolyStepLocal.cst_comp_spec, Category.assoc]
       exact (congrArg (fun p => MvPolynomial.eval₂Hom (GlobalTheory.AbLaw.cst p ((H e).U k)) (fun j => (s e j).f k) F) c₁).trans
         (hF0 k))
-  obtain ⟨G, hG, rfl⟩ := exists_form_lift _ Ideal.Quotient.mk_surjective hG₀
+  obtain ⟨G, hG, rfl⟩ := GlobalTheory.Degen.PolyStepLocal.exists_form_lift _ Ideal.Quotient.mk_surjective hG₀
   refine ⟨G, hG, fun d => ?_, fun k => ?_⟩
   · have h := hc d
     rw [MvPolynomial.coeff_map, Ideal.Quotient.factor_mk] at h
     exact Ideal.Quotient.eq_zero_iff_mem.1 h
   · have h := hz k
-    rw [← map_sub, MvPolynomial.eval₂Hom_map_hom, ← cst_comp_spec] at h
+    rw [← map_sub, MvPolynomial.eval₂Hom_map_hom, ← GlobalTheory.Degen.PolyStepLocal.cst_comp_spec] at h
     exact h

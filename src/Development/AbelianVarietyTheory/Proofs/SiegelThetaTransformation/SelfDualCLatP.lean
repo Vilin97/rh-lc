@@ -131,6 +131,8 @@ theorem sgnM_sq {r : ℕ} (X : Data D.host.E r) : sgnM X * sgnM X = 1 := by
 theorem sgnM_herm {r : ℕ} (X : Data D.host.E r) : (sgnM X)ᴴ = sgnM X := by
   rw [sgnM, Matrix.diagonal_conjTranspose]
   congr 1
+  funext a
+  simp
 
 theorem mem_Dinv {z : D.host.E} : z ∈ Dinv D ↔ ∀ c : 𝓞 D.host.E, ∃ m : ℤ, Algebra.trace ℚ D.host.E (z * c) = m := by
   rw [FractionalIdeal.mem_dual (one_ne_zero : (1 : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) ≠ 0)]
@@ -176,11 +178,7 @@ theorem selfDualC_latP {T : HSp D} {X : Data D.host.E T.rank} (hG : X.Gm = T.gra
   have hP := Formalism.IndefR.Fin.factPrincipalDatum
   have hF := dual_of_selfD hk hL
   rw [hG] at hF
-  refine ⟨⟨localLattice_fg D L hL.1, ?_⟩, fun y => ⟨fun hy x hx => ?_, fun h => ?_⟩⟩
-  · obtain ⟨b, hb0, hb⟩ := FractionalIdeal.exists_ne_zero_mem_isInteger (inv_ne_zero (AA_ne_zero hP D))
-    have hb0' : algebraMap _ D.host.E b ≠ 0 := by simpa using hb0
-    rw [eq_top_iff, ← hsp, Submodule.span_le]
-    exact fun v hv => (Submodule.smul_mem_iff _ hb0').1 (Submodule.subset_span (smul_mem_latP hP hb hv))
+  refine ⟨Submodule.IsLattice.of_fg D.host.E (localLattice_fg D L hL.1), fun y => ⟨fun hy x hx => ?_, fun h => ?_⟩⟩
   · exact ⟨⟨_, localLattice_form_integral hP _ L hF hy hx⟩, (sum_eq_herm T x y).symm⟩
   · refine mem_dual_localLattice_of_forall hP _ L hF fun x hx => ?_
     obtain ⟨b, hb⟩ := h x hx
@@ -193,10 +191,7 @@ theorem star_mem_stdL {n : ℕ} {v : Fin n → D.host.E} (hv : v ∈ stdL D.host
 theorem selfDualC_stdL {S : HSp D} (hS : S.gram = 1) : IsSelfDualC S (stdL D.host.E S.rank) := by
   have e : ∀ x y : Fin S.rank → D.host.E, ∑ i, ∑ j, star (x i) * S.gram i j * y j = ∑ i, star (x i) * y i :=
     fun x y => by simp [hS, Matrix.one_apply]
-  refine ⟨⟨Submodule.fg_span (Set.finite_range _), ?_⟩, fun y => ⟨fun hy x hx => ?_, fun h => ?_⟩⟩
-  · rw [stdL, Submodule.span_span_of_tower]
-    have := (Pi.basisFun D.host.E (Fin S.rank)).span_eq
-    simpa only [Pi.basisFun_apply, funext (Pi.basisFun_apply D.host.E (Fin S.rank))] using this
+  refine ⟨Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span (Set.finite_range _)), fun y => ⟨fun hy x hx => ?_, fun h => ?_⟩⟩
   · rw [e]
     exact ⟨⟨∑ i, star (x i) * y i, IsIntegral.sum _ fun i _ => ((GlobalTheory.SW.Base.mem_stdL _).1 (star_mem_stdL hx) i).mul ((GlobalTheory.SW.Base.mem_stdL _).1 hy i)⟩, rfl⟩
   · refine (GlobalTheory.SW.Base.mem_stdL _).2 fun a => ?_

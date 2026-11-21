@@ -62,28 +62,28 @@ variable [HasExt.{w'} (Sheaf (Opens.grothendieckTopology X.toTopCat) AddCommGrpC
   (A : Type*) [CommRing A] [Algebra A Γ(X, ⊤)]
 
 lemma H.linearMap_add {F G : X.Modules} (φ ψ : F ⟶ G) (p : ℕ) :
-    H.linearMapV436.{w'} A (φ + ψ) p = H.linearMapV436 A φ p + H.linearMapV436 A ψ p := by
+    H.linearMap.{w'} A (φ + ψ) p = H.linearMap A φ p + H.linearMap A ψ p := by
   ext x
-  simp only [H.linearMapV436_apply, LinearMap.add_apply, modulesAbMap_add, Sheaf.H.map_add_apply]
+  simp only [H.linearMap_apply, LinearMap.add_apply, modulesAbMap_add, Sheaf.H.map_add_apply]
 
 lemma H.linearMap_comp {F G K : X.Modules} (φ : F ⟶ G) (ψ : G ⟶ K) (p : ℕ) :
-    H.linearMapV436.{w'} A (φ ≫ ψ) p = (H.linearMapV436 A ψ p).comp (H.linearMapV436 A φ p) := by
+    H.linearMap.{w'} A (φ ≫ ψ) p = (H.linearMap A ψ p).comp (H.linearMap A φ p) := by
   ext x
-  simp only [H.linearMapV436_apply, LinearMap.comp_apply, modulesAbMap_comp, Sheaf.H.map_comp_apply]
+  simp only [H.linearMap_apply, LinearMap.comp_apply, modulesAbMap_comp, Sheaf.H.map_comp_apply]
 
 lemma H.linearMap_id (F : X.Modules) (p : ℕ) :
-    H.linearMapV436.{w'} A (𝟙 F) p = LinearMap.id := by
+    H.linearMap.{w'} A (𝟙 F) p = LinearMap.id := by
   ext x
-  simp only [H.linearMapV436_apply, LinearMap.id_apply, modulesAbMap_id, Sheaf.H.map_id_apply]
+  simp only [H.linearMap_apply, LinearMap.id_apply, modulesAbMap_id, Sheaf.H.map_id_apply]
 
 lemma H.linearMap_zero (F G : X.Modules) (p : ℕ) :
-    H.linearMapV436.{w'} A (0 : F ⟶ G) p = 0 := by
+    H.linearMap.{w'} A (0 : F ⟶ G) p = 0 := by
   have h := H.linearMap_add.{w'} A (0 : F ⟶ G) 0 p
   rw [add_zero] at h
   exact left_eq_add.mp h
 
 lemma H.linearMap_sum {F G : X.Modules} {ι : Type*} (s : Finset ι) (φ : ι → (F ⟶ G)) (p : ℕ) :
-    H.linearMapV436.{w'} A (∑ i ∈ s, φ i) p = ∑ i ∈ s, H.linearMapV436 A (φ i) p := by
+    H.linearMap.{w'} A (∑ i ∈ s, φ i) p = ∑ i ∈ s, H.linearMap A (φ i) p := by
   classical
   induction s using Finset.induction_on with
   | empty => simp [H.linearMap_zero]
@@ -166,7 +166,7 @@ theorem finite_H_X₃ [IsNoetherianRing A] (p : ℕ)
     [Module.Finite A (Sheaf.H.{w'} (modulesAb S.X₂) p)]
     [Module.Finite A (Sheaf.H.{w'} (modulesAb S.X₁) (p + 1))] :
     Module.Finite A (Sheaf.H.{w'} (modulesAb S.X₃) p) :=
-  finite_of_exact_noetherian (H.linearMapV436 A S.g p) (H.δLinear A (shortExact_abSC hS) p)
+  finite_of_exact_noetherian (H.linearMap A S.g p) (H.δLinear A (shortExact_abSC hS) p)
     fun y hy => H.exact₃ (shortExact_abSC hS) rfl y hy
 
 
@@ -209,7 +209,8 @@ def ιP {I : Type u} (i : I) : 𝟙_ (projectiveSpace A n).Modules ⟶ freeP A n
   SheafOfModules.ιFree i
 
 def πP {I : Type u} [DecidableEq I] (i : I) : freeP A n I ⟶ 𝟙_ (projectiveSpace A n).Modules :=
-  Cofan.IsColimit.desc (SheafOfModules.isColimitFreeCofan I) fun j => if j = i then 𝟙 _ else 0
+  Cofan.IsColimit.desc (A := SheafOfModules.unit (projectiveSpace A n).ringCatSheaf)
+    (SheafOfModules.isColimitFreeCofan I) fun j => if j = i then 𝟙 _ else 0
 
 lemma freeSheaf_hom_ext {I : Type u} {M : (projectiveSpace A n).Modules} (f g : freeP A n I ⟶ M)
     (h : ∀ j, ιP j ≫ f = ιP j ≫ g) : f = g :=
@@ -228,9 +229,9 @@ lemma free_total {I : Type u} [Fintype I] [DecidableEq I] :
     ∑ i, πP (A := A) (n := n) i ≫ ιP i = 𝟙 (freeP A n I) := by
   refine freeSheaf_hom_ext _ _ fun j => ?_
   rw [Preadditive.comp_sum, Category.comp_id, Finset.sum_eq_single j]
-  · rw [← Category.assoc, ιP_πP, if_pos rfl, Category.id_comp]
+  · rw [← Category.assoc, ιP_πP, ite_eq_left rfl, Category.id_comp]
   · intro b _ hb
-    rw [← Category.assoc, ιP_πP, if_neg (Ne.symm hb), zero_comp]
+    rw [← Category.assoc, ιP_πP, ite_eq_right (Ne.symm hb), zero_comp]
   · intro h
     exact absurd (Finset.mem_univ j) h
 
@@ -290,8 +291,8 @@ attribute [local instance] algebraOfOver
 
 lemma H_twist_free_eq {I : Type u} [Fintype I] [DecidableEq I] (k : ℤ) (p : ℕ)
     (x : Sheaf.H.{w'} (modulesAb ((twistEquiv (A := A) (n := n) k).functor.obj (freeP A n I))) p) :
-    x = ∑ i, H.linearMapV436 A ((twistEquiv k).functor.map (ιP i)) p
-      (H.linearMapV436 A ((twistEquiv k).functor.map (πP i)) p x) := by
+    x = ∑ i, H.linearMap A ((twistEquiv k).functor.map (ιP i)) p
+      (H.linearMap A ((twistEquiv k).functor.map (πP i)) p x) := by
   conv_lhs => rw [← LinearMap.id_apply (R := A) x, ← H.linearMap_id, ← twist_total k]
   rw [H.linearMap_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -315,9 +316,9 @@ lemma finite_H_twist_free (I : Type u) [Finite I] (k : ℤ) (p : ℕ) :
   let Φ : (I → Sheaf.H.{w'} (modulesAb ((twistEquiv (A := A) (n := n) k).functor.obj
       (𝟙_ (projectiveSpace A n).Modules))) p) →ₗ[A]
       Sheaf.H.{w'} (modulesAb ((twistEquiv (A := A) (n := n) k).functor.obj (freeP A n I))) p :=
-    ∑ i, (H.linearMapV436 A ((twistEquiv k).functor.map (ιP i)) p).comp (LinearMap.proj i)
+    ∑ i, (H.linearMap A ((twistEquiv k).functor.map (ιP i)) p).comp (LinearMap.proj i)
   refine Module.Finite.of_surjective Φ fun x => ⟨fun i =>
-    H.linearMapV436 A ((twistEquiv k).functor.map (πP i)) p x, ?_⟩
+    H.linearMap A ((twistEquiv k).functor.map (πP i)) p x, ?_⟩
   conv_rhs => rw [H_twist_free_eq k p x]
   simp [Φ, LinearMap.sum_apply]
 
@@ -334,8 +335,8 @@ lemma subsingleton_H_twist_free (I : Type u) [Finite I] {k : ℤ} (hk : 0 ≤ k)
   rw [H_twist_free_eq k p x, H_twist_free_eq k p y]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Subsingleton.elim
-    (H.linearMapV436 A ((twistEquiv k).functor.map (πP i)) p x)
-    (H.linearMapV436 A ((twistEquiv k).functor.map (πP i)) p y)]
+    (H.linearMap A ((twistEquiv k).functor.map (πP i)) p x)
+    (H.linearMap A ((twistEquiv k).functor.map (πP i)) p y)]
 
 end ProjSpace
 

@@ -78,6 +78,8 @@ theorem prod_eq_one (h : IsGrpPullback G' G f φ) {n : ℕ} (ξ : Fin n → (�
   have e : pushHom h _ (List.ofFn fun r => ξ' r ^ a r).prod = preHom U (List.ofFn fun r => ξ r ^ a r).prod := by
     rw [map_list_prod, map_list_prod, List.map_ofFn, List.map_ofFn]
     congr 2
+    funext r
+    simp only [Function.comp_apply, map_zpow, e₁]
   rw [H, map_one, ← map_one (pushHom h (𝟙_ (Over S')))] at e
   refine Over.OverMorphism.ext (h.1.hom_ext (congrArg (fun z => z.left) e) ?_)
   rw [Over.w, Over.w]

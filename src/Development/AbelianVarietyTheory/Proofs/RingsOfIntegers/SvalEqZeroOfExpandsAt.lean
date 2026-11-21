@@ -62,7 +62,7 @@ theorem sum_eq_zero (w : Fin n → Ix → V) (x : Fin n → MF)
       apply IsFractionRing.injective V (FractionRing V)
       have h2 := congrArg (fun y => B.repr y β) (hd i)
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, map_zero, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
+        simp only [map_sum, map_zero, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, map_zero, ← mul_zero (algebraMap V (FractionRing V) r), ← h2, Finset.mul_sum]
       refine Finset.sum_congr rfl fun p _ => ?_

@@ -64,6 +64,8 @@ end gen
 
 variable {k r : ℕ}
 
+local notation "⟪" u ", " v "⟫" => herm (Hpk k r) u v
+
 lemma Hh : (Hpk k r)ᴴ = Hpk k r := B2x8.Hpk_herm k r
 
 lemma herm_bvec_right (u : Fin (2 * r + k + 1) → ℂ) (j : Fin (2 * r + k + 1)) :
@@ -154,6 +156,9 @@ lemma uw_glev {z : Fin (2 * r + k + 1) → ℂ} {h : Mx k r} (hh : h ∈ UWset k
   ⟨hh.1, fun a _ => hh.2.1 a⟩
 
 variable {l : Fin r}
+
+local notation "𝐞" => bvec (eI k r l)
+local notation "𝐬" => bvec (esI k r l)
 
 def UP (k r : ℕ) (l : Fin r) : Set (Mx k r) :=
   {u | u ∈ Glev k r l.castSucc ∧ u *ᵥ bvec (eI k r l) = bvec (eI k r l) ∧
@@ -648,7 +653,7 @@ lemma smM_contDiffOn {f : X → Matrix (Fin m) (Fin m) ℂ} {s : Set X} (hf : Sm
 end smooth
 
 lemma smM_id (s : Set (Mx k r)) : SmM (fun g : Mx k r => g) s := fun i j =>
-  (contDiff_apply_apply ℝ ℂ i j).contDiffOn
+  (contDiff_apply_apply ℝ i j).contDiffOn
 
 section smooth2
 variable {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X]
@@ -925,7 +930,7 @@ lemma psi_lev (z : Fin (2 * r' + k + 1) → ℂ) (c : ℂ) (g : Mx k r') :
   unfold psi; rw [ell_lev]
 
 lemma smM_blk (s : Set (Mx k (1 + r'))) : SmM (fun x : Mx k (1 + r') => (blk x : Mx k r')) s := fun i j =>
-  (contDiff_apply_apply ℝ ℂ (lv k r' i) (lv k r' j)).contDiffOn
+  (contDiff_apply_apply ℝ (lv k r' i) (lv k r' j)).contDiffOn
 
 lemma cont_blk : Continuous (fun x : Mx k (1 + r') => (blk x : Mx k r')) :=
   continuousOn_univ.1 (smM_contDiffOn (smM_blk Set.univ)).continuousOn

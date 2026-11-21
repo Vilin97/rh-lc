@@ -256,7 +256,7 @@ theorem isCompact_hatG (hfg : A.toIntSubmodule.FG) :
   obtain ⟨m, x, hx⟩ := exists_gen (F := F) hfg
   have hI : IsCompact (intAf F) := GlobalTheory.AdeleCocompact.isCompact_integral F
   have hg : Continuous fun c : Fin m → Af F => ∑ k, fT F (c k) (x k) :=
-    continuous_finset_sum _ fun k _ => (continuous_fT (x k)).comp (continuous_apply k)
+    continuous_finsetSum _ fun k _ => (continuous_fT (x k)).comp (continuous_apply k)
   convert (isCompact_univ_pi fun _ => hI).image hg using 1
   ext u
   exact (hx u).trans ⟨fun ⟨c, hc, e⟩ => ⟨c, fun k _ => hc k, e⟩, fun ⟨c, hc, e⟩ => ⟨c, fun k => hc k trivial, e⟩⟩

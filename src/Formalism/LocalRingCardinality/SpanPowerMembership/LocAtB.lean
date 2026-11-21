@@ -72,7 +72,9 @@ def locAtC : LocAt F E sig v :=
     dense := v.denseRange_algebraMap F
     val := fun x y => by
       show Valued.v (algebraMap F (v.adicCompletion F) x) ≤ Valued.v (algebraMap F (v.adicCompletion F) y) ↔ _
-      rw [adicCompl_val_algebraMap, adicCompl_val_algebraMap]
+      have hval (a : F) : Valued.v (algebraMap F (v.adicCompletion F) a) = v.valuation F a :=
+        valuedAdicCompletion_eq_valuation' v a
+      rw [hval x, hval y]
     free := inferInstance
     rank := by rw [Module.finrank_baseChange, h2]
     span := by
@@ -131,7 +133,8 @@ theorem splitAt_nonempty (φ : E →ₐ[F] v.adicCompletion F) (b : E) (hb0 : b 
   have hinj : Function.Injective e :=
     (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim (f := e.toLinearMap)).mpr hsurj
   have hval : Valued.v ((resChar v : ℕ) : K) = exp (-1 : ℤ) := by
-    rw [← map_natCast (algebraMap F K), adicCompl_val_algebraMap, hv]
+    rw [← map_natCast (algebraMap F K)]
+    exact (valuedAdicCompletion_eq_valuation' v ((resChar v : ℕ) : F)).trans hv
   have hmem : ∀ x : K, x ∈ 𝒪[K] ↔ x ∈ v.adicCompletionIntegers F := fun x => by
     rw [Valuation.mem_integer_iff, mem_adicCompletionIntegers]
     exact (ValuativeRel.isEquiv (valuation K) (Valued.v : Valuation K ℤᵐ⁰)).le_one_iff_le_one
@@ -142,9 +145,20 @@ theorem splitAt_nonempty (φ : E →ₐ[F] v.adicCompletion F) (b : E) (hb0 : b 
       right_inv := fun _ => rfl
       map_mul' := fun _ _ => rfl
       map_add' := fun _ _ => rfl }
-  have hirr : Irreducible ((resChar v : ℕ) : v.adicCompletionIntegers F) :=
-    (IsDiscreteValuationRing.irreducible_iff_uniformizer _).mpr
-      (adicInt_max_eq_span v _ (by simpa using hval))
+  have hirr : Irreducible ((resChar v : ℕ) : v.adicCompletionIntegers F) := by
+    apply (IsDiscreteValuationRing.irreducible_iff_uniformizer _).mpr
+    have hI := adicCompletionIntegers.integers (K := F) (v := v)
+    ext x
+    rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, Ideal.mem_span_singleton,
+      hI.isUnit_iff_valuation_eq_one, hI.dvd_iff_le]
+    change Valued.v (x : K) ≠ 1 ↔ Valued.v (x : K) ≤ Valued.v ((resChar v : ℕ) : K)
+    have hle : Valued.v (x : K) ≤ 1 := hI.map_le_one x
+    rw [hval, ← hle.lt_iff_ne]
+    generalize Valued.v (x : K) = γ
+    rcases eq_or_ne γ 0 with rfl | hγ
+    · exact iff_of_true zero_lt_one zero_le'
+    · rw [← WithZero.exp_log hγ, WithZero.exp_lt_one_iff, WithZero.exp_le_exp]
+      omega
   refine ⟨⟨AlgEquiv.ofBijective e ⟨hinj, hsurj⟩, fun x => ?_, ((resChar v : ℕ) : 𝒪[K]), ?_, ?_⟩⟩
   · show e (cjT sig hsig v x) = (e x).swap
     induction x using TensorProduct.induction_on with

@@ -118,7 +118,7 @@ variable {G α : Type} [AddCommGroup G]
 theorem finite_image_of_fg {A : AddSubgroup G} (hA : A.FG) (f : G → α) {N : ℕ} (hN : 0 < N)
     (hf : ∀ a ∈ A, ∀ b ∈ A, f (a + N • b) = f a) : (f '' A).Finite := by
   classical
-  obtain ⟨S, hS⟩ := hA
+  obtain ⟨S, hS⟩ := AddSubgroup.isAddFG_iff.mp hA
   have hspan : ∀ x, x ∈ A ↔ x ∈ Submodule.span ℤ (S : Set G) := fun x => by
     rw [← hS, ← Submodule.span_int_eq_addSubgroupClosure, Submodule.mem_toAddSubgroup]
   have hmemS : ∀ d : S → ℤ, (∑ s : S, d s • (s : G)) ∈ A := fun d =>

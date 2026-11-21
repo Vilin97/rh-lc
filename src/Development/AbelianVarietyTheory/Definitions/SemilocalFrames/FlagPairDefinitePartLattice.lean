@@ -75,31 +75,31 @@ def IsUnimod (H : HermSpace K V) (M : Submodule R V) : Prop := IsUnimodMod H M �
 variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
   [Module R V] [IsScalarTower R K V] in
 theorem _root_.GlobalTheory.HermLat.isLatMod_top_bot_iff (M : Submodule R V) :
-    _root_.GlobalTheory.HermLat.IsLatMod M (⊤ : Submodule K V) ⊥ ↔ Submodule.IsLattice K M := by
+    _root_.GlobalTheory.HermLat.IsLatMod M (⊤ : Submodule K V) ⊥ ↔
+      M.FG ∧ Submodule.span K (M : Set V) = ⊤ := by
   unfold _root_.GlobalTheory.HermLat.IsLatMod
-  constructor
-  · rintro ⟨⟨N, hN, rfl⟩, hs⟩
-    simp only [_root_.GlobalTheory.HermLat.rs, Submodule.restrictScalars_bot, sup_bot_eq] at hs ⊢
-    exact { fg := hN, span_eq_top := hs }
-  · intro hM
-    exact ⟨⟨M, hM.fg, by simp⟩, hM.span_eq_top⟩
+  simp only [_root_.GlobalTheory.HermLat.rs, Submodule.restrictScalars_bot, sup_bot_eq]
+  exact ⟨fun ⟨⟨N, hN, h⟩, hs⟩ => ⟨h.symm ▸ hN, hs⟩,
+    fun ⟨hM, hs⟩ => ⟨⟨M, hM, rfl⟩, hs⟩⟩
 
 
 variable {R K V : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K] [AddCommGroup V] [Module K V]
   [Module R V] [IsScalarTower R K V] in
 theorem _root_.GlobalTheory.HermLat.isUnimod_iff (H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V) (M : Submodule R V) :
-    _root_.GlobalTheory.HermLat.IsUnimod H M ↔ Submodule.IsLattice K M ∧ _root_.Formalism.HermitianLatticesTheory.IsUnimodular H.B.flip M := by
+    _root_.GlobalTheory.HermLat.IsUnimod H M ↔
+      (M.FG ∧ Submodule.span K (M : Set V) = ⊤) ∧
+        _root_.Formalism.HermitianLatticesTheory.IsUnimodular H.B.flip M := by
   unfold _root_.GlobalTheory.HermLat.IsUnimod _root_.GlobalTheory.HermLat.IsUnimodMod
   rw [_root_.GlobalTheory.HermLat.isLatMod_top_bot_iff]
   unfold _root_.Formalism.HermitianLatticesTheory.IsUnimodular _root_.GlobalTheory.HermLat.dual
   constructor
   · rintro ⟨hM, hd⟩
     refine ⟨hM, ?_⟩
-    rw [hM.span_eq_top] at hd
+    rw [hM.2] at hd
     simpa using hd
   · rintro ⟨hM, hd⟩
     refine ⟨hM, ?_⟩
-    rw [hM.span_eq_top]
+    rw [hM.2]
     simpa using hd
 
 def idx (M M' : Submodule R V) : ℕ := M'.toAddSubgroup.relIndex M.toAddSubgroup
@@ -207,13 +207,13 @@ def genusMass (H : HermSpace K V) (L : Submodule R V) : ENNReal := genusSum H L 
 def genusMean (H : HermSpace K V) (L : Submodule R V) (φ : Submodule R V → ENNReal) : ENNReal :=
   genusSum H L φ / genusMass H L
 
-theorem isometric_equivalence (H : HermSpace K V) : Equivalence (Isometric (R := R) H) where
-  refl M := ⟨1, (isomGrp H).one_mem, Formalism.HermitianLatticesTheory.genusBasic_gmap_one M⟩
-  symm := by
-    rintro M _ ⟨s, hs, rfl⟩
+theorem isometric_equivalence (H : HermSpace K V) : Equivalence (Isometric (R := R) H) := by
+  constructor
+  · intro M
+    exact ⟨1, (isomGrp H).one_mem, Formalism.HermitianLatticesTheory.genusBasic_gmap_one M⟩
+  · rintro M _ ⟨s, hs, rfl⟩
     exact ⟨s⁻¹, (isomGrp H).inv_mem hs, Formalism.HermitianLatticesTheory.genusBasic_gmap_inv s M⟩
-  trans := by
-    rintro M _ _ ⟨s, hs, rfl⟩ ⟨t, ht, rfl⟩
+  · rintro M _ _ ⟨s, hs, rfl⟩ ⟨t, ht, rfl⟩
     exact ⟨t * s, (isomGrp H).mul_mem ht hs, Formalism.HermitianLatticesTheory.genusBasic_gmap_mul s t M⟩
 
 theorem autCard_eq_of_isometric (H : HermSpace K V) {M M' : Submodule R V} (h : Isometric H M M') :
@@ -277,14 +277,15 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 variable [FiniteDimensional K V] in
 theorem _root_.GlobalTheory.HermLat.autCard_eq_natCard {H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V} (hH : _root_.GlobalTheory.HermLat.IsTraceDef H)
-    {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) :
+    {M : Submodule (𝓞 K) V} (hM : Submodule.IsFullLattice K M) :
     (_root_.Formalism.ThetaLiftIndependence.autL H.B.flip M).Finite ∧ 0 < Nat.card (_root_.Formalism.ThetaLiftIndependence.autL H.B.flip M) ∧
       _root_.GlobalTheory.HermLat.autCard H M = (Nat.card (_root_.Formalism.ThetaLiftIndependence.autL H.B.flip M) : ENNReal) := by
   have hA := _root_.Formalism.HermitianLatticesTheory.final_autFinite
   unfold _root_.Formalism.HermitianLatticesTheory.AutFinite at hA
   have hfin : (_root_.Formalism.ThetaLiftIndependence.autL H.B.flip M).Finite := by
     unfold _root_.Formalism.ThetaLiftIndependence.autL
-    exact hA K V H.B.flip (_root_.GlobalTheory.HermLat.flip_isSymm H) (fun x hx => by simpa using hH x hx) M hM
+    exact hA K V H.B.flip (_root_.GlobalTheory.HermLat.flip_isSymm H)
+      (fun x hx => by simpa using hH x hx) M hM.toIsLattice
   have hone : (1 : V ≃ₗ[K] V) ∈ _root_.Formalism.ThetaLiftIndependence.autL H.B.flip M := by
     unfold _root_.Formalism.ThetaLiftIndependence.autL
     exact ⟨one_mem _, _root_.Formalism.ThetaLiftIndependence.LatticeLiftIndependence.gmap_one (K := K) M⟩
@@ -299,28 +300,57 @@ theorem _root_.GlobalTheory.HermLat.autCard_eq_natCard {H : _root_.Formalism.Her
     rw [hset, ← hfin.cast_ncard_eq, Nat.card_coe_set_eq]
     simp
 
+open Formalism.HermitianLatticesTheory in
 theorem genusMass_eq {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) :
+    (hL : Submodule.IsFullLattice K L) :
     genusMass H L = ENNReal.ofReal (Formalism.HermitianLatticesTheory.mass H.B.flip L) := by
-  obtain ⟨⟨s, hs⟩, hm, -⟩ := Formalism.HermitianLatticesTheory.massBasic K V H.B.flip (flip_isSymm H) hH L hL
+  obtain ⟨⟨s, hs⟩, hm, -⟩ := massBasic K V H.B.flip (flip_isSymm H) hH L hL.toIsLattice
   rw [genusMass, genusSum_eq_sum H hs (fun _ _ _ _ => rfl), hm s hs,
     ENNReal.ofReal_sum_of_nonneg (fun _ _ => by positivity)]
   refine Finset.sum_congr rfl fun M hM => ?_
-  obtain ⟨-, hpos, he⟩ := autCard_eq_natCard hH (hs.1 M hM).1
+  have hgen := hs.1 M hM
+  have hfull : Submodule.IsFullLattice K M := by
+    refine { toIsLattice := hgen.1, span_eq_top := ?_ }
+    obtain ⟨p, hp⟩ := Ideal.exists_maximal (α := 𝓞 K)
+    let _ : p.IsPrime := hp.isPrime
+    obtain ⟨g, -, hg⟩ := hgen.2 p hp
+    have hspan (N : Submodule (𝓞 K) V) :
+        Submodule.span K (loc (K := K) p N : Set V) = Submodule.span K (N : Set V) := by
+      apply le_antisymm
+      · apply Submodule.span_le.mpr
+        rintro x ⟨a, ha, hx⟩
+        have hne : algebraMap (𝓞 K) K a ≠ 0 := by
+          intro hz
+          rw [← map_zero (algebraMap (𝓞 K) K)] at hz
+          exact locBasic_hcompl_not_mem p a ha
+            ((FaithfulSMul.algebraMap_injective (𝓞 K) K hz).symm ▸ p.zero_mem)
+        have hx' : a • x ∈ Submodule.span K (N : Set V) := Submodule.subset_span hx
+        rw [← algebraMap_smul K a x] at hx'
+        have hy := (Submodule.span K (N : Set V)).smul_mem (algebraMap (𝓞 K) K a)⁻¹ hx'
+        rwa [smul_smul, inv_mul_cancel₀ hne, one_smul] at hy
+      · exact Submodule.span_mono (locBasic_le_locS _ N)
+    have hg' := congrArg (fun N : Submodule (𝓞 K) V => Submodule.span K (N : Set V)) hg
+    change Submodule.span K ((g : V →ₗ[K] V) '' (loc (K := K) p L : Set V)) =
+      Submodule.span K (loc (K := K) p M : Set V) at hg'
+    rw [← Submodule.map_span, hspan L, hspan M, hL.span_eq_top, Submodule.map_top,
+      LinearMap.range_eq_top.mpr g.surjective] at hg'
+    exact hg'.symm
+  obtain ⟨-, hpos, he⟩ := autCard_eq_natCard hH hfull
   rw [he, ENNReal.ofReal_inv_of_pos (by exact_mod_cast hpos), ENNReal.ofReal_natCast, one_div]
 
 theorem genusMass_ne_zero {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) : genusMass H L ≠ 0 := by
+    (hL : Submodule.IsFullLattice K L) : genusMass H L ≠ 0 := by
   rw [genusMass_eq hH hL]
-  exact (ENNReal.ofReal_pos.2 (Formalism.HermitianLatticesTheory.massBasic K V H.B.flip (flip_isSymm H) hH L hL).2.2).ne'
+  exact (ENNReal.ofReal_pos.2 (Formalism.HermitianLatticesTheory.massBasic K V H.B.flip
+    (flip_isSymm H) hH L hL.toIsLattice).2.2).ne'
 
 theorem genusMass_ne_top {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) : genusMass H L ≠ ⊤ := by
+    (hL : Submodule.IsFullLattice K L) : genusMass H L ≠ ⊤ := by
   rw [genusMass_eq hH hL]
   exact ENNReal.ofReal_ne_top
 
 theorem genusMean_one {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) : genusMean H L (fun _ => 1) = 1 :=
+    (hL : Submodule.IsFullLattice K L) : genusMean H L (fun _ => 1) = 1 :=
   ENNReal.div_self (genusMass_ne_zero hH hL) (genusMass_ne_top hH hL)
 
 end Mass
@@ -346,13 +376,15 @@ theorem ratLine_isTraceDef : IsTraceDef ratLine := by
   exact h2
 
 theorem ratLine_isLattice :
-    Submodule.IsLattice ℚ (1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) := by
-  refine ⟨by rw [Submodule.one_eq_span]; exact Submodule.fg_span_singleton _, ?_⟩
-  rw [eq_top_iff]
-  intro x _
-  have h1 : (1 : ℚ) ∈ Submodule.span ℚ ((1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) : Set ℚ) :=
-    Submodule.subset_span (Submodule.mem_one.2 ⟨1, map_one _⟩)
-  simpa using Submodule.smul_mem _ x h1
+    Submodule.IsFullLattice ℚ (1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) := by
+  refine { toIsLattice := Submodule.IsLattice.of_fg ℚ ?_, span_eq_top := ?_ }
+  · rw [Submodule.one_eq_span]
+    exact Submodule.fg_span_singleton _
+  · rw [eq_top_iff]
+    intro x _
+    have h1 : (1 : ℚ) ∈ Submodule.span ℚ ((1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) : Set ℚ) :=
+      Submodule.subset_span (Submodule.mem_one.2 ⟨1, map_one _⟩)
+    simpa using Submodule.smul_mem _ x h1
 
 end Examples
 

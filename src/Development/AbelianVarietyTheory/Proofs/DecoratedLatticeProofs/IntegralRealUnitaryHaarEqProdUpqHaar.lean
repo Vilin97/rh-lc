@@ -177,9 +177,8 @@ def eqv : GinfC V ≃ₜ* (∀ τ, Formalism.REAL.UJ (M.ε τ)) where
   invFun := bwd M
   left_inv g := by
     apply Subtype.ext
-    refine (famH_unique D V _ (unitFam_ofFr M (fwd M g)) (g : GA D V) g.2 fun τ => ?_).symm
-    show _ = GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.ofFr M τ (toJ M τ _)
-    rw [ofFr_toJ]
+    exact (famH_unique D V _ (unitFam_ofFr M (fwd M g)) (g : GA D V) g.2
+      (fun τ => (ofFr_toJ M τ _).symm)).symm
   right_inv us := by
     funext τ
     refine Subtype.ext (Units.ext ?_)

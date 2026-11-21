@@ -54,14 +54,14 @@ theorem approx_entry (hΨ : IsType Ψ) : ∃ K : ℝ, ∀ w : Ψ → ℂ, ∃ a 
     · rw [integralBasis_apply]; exact RingOfIntegers.isIntegral_coe _
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hre, map_sum, ← Finset.sum_sub_distrib]
-    refine le_trans ((norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_))
-      (Finset.single_le_sum (f := fun σ : E →+* ℂ => ∑ i, ‖σ (integralBasis E i)‖)
-        (fun _ _ => Finset.sum_nonneg fun _ _ => norm_nonneg _) (Finset.mem_univ τ.1))
-    rw [map_mul, map_intCast, ← sub_mul, norm_mul]
-    refine mul_le_of_le_one_left (norm_nonneg _) ?_
-    rw [← Complex.ofReal_intCast, ← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs,
-      Int.self_sub_floor, abs_of_nonneg (Int.fract_nonneg _)]
-    exact (Int.fract_lt_one _).le
+      refine le_trans ((norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_))
+        (Finset.single_le_sum (f := fun σ : E →+* ℂ => ∑ i, ‖σ (integralBasis E i)‖)
+          (fun _ _ => Finset.sum_nonneg fun _ _ => norm_nonneg _) (Finset.mem_univ τ.1))
+      rw [map_mul, map_intCast, ← sub_mul, norm_mul]
+      refine mul_le_of_le_one_left (norm_nonneg _) ?_
+      rw [← Complex.ofReal_intCast, ← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs,
+        Int.self_sub_floor, abs_of_nonneg (Int.fract_nonneg _)]
+      exact (Int.fract_lt_one _).le
 
 theorem approx_herm (hΨ : IsType Ψ) : ∃ K : ℝ, ∀ Z : CM Ψ N N,
     ∃ β : Matrix (Fin N) (Fin N) E, ccT β = β ∧ IntM β ∧

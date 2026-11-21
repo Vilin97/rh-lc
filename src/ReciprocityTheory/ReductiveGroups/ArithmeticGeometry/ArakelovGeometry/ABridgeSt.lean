@@ -50,7 +50,7 @@ theorem IsSecBasis.card_eq {x : Ix κ → Ω} {n r : ℕ} {b : Fin r → MvPolyn
     (hb : IsSecBasis x n b) : r = finrank ℤ (sec ℤ x n) := by
   rw [← hb.2.2, finrank_span_eq_card hb.2.1, Fintype.card_fin]
 
-theorem continuousOn_rho {J : Type} [Fintype J] {m : ConeMetric ℂ J} (hm : IsSmoothMetric m) :
+theorem continuousOn_rho {J : Type} [Fintype J] {m : ConeMetric (C := ℂ) (ι := J)} (hm : IsSmoothMetric m) :
     ContinuousOn m.ρ {0}ᶜ := hm.continuousOn.mono fun _ hz => hz
 
 theorem sum_secFun_smul {n r : ℕ} {b : Fin r → MvPolynomial (Ix κ) ℚ}
@@ -62,7 +62,7 @@ theorem sum_secFun_smul {n r : ℕ} {b : Fin r → MvPolynomial (Ix κ) ℚ}
   rw [secFun_smul (hb i)]
   ring
 
-theorem isDegZero_normSq {m : ConeMetric ℂ (Ix κ)} {n r : ℕ} {b : Fin r → MvPolynomial (Ix κ) ℚ}
+theorem isDegZero_normSq {m : ConeMetric (C := ℂ) (ι := Ix κ)} {n r : ℕ} {b : Fin r → MvPolynomial (Ix κ) ℚ}
     (hb : ∀ k, ∃ f : MvPolynomial (Ix κ) ℤ, f.IsHomogeneous n ∧ b k = map (Int.castRingHom ℚ) f)
     (c : Fin r → ℂ) : IsDegZero fun z => ‖∑ i, c i * secFun (b i) z‖ ^ 2 * wgt m n z := by
   intro a z ha
@@ -73,7 +73,7 @@ theorem isDegZero_normSq {m : ConeMetric ℂ (Ix κ)} {n r : ℕ} {b : Fin r →
   field_simp
   ring
 
-theorem continuousOn_normSq {m : ConeMetric ℂ (Ix κ)} (hm : IsSmoothMetric m) {n r : ℕ}
+theorem continuousOn_normSq {m : ConeMetric (C := ℂ) (ι := Ix κ)} (hm : IsSmoothMetric m) {n r : ℕ}
     (b : Fin r → MvPolynomial (Ix κ) ℚ) (c : Fin r → ℂ) :
     ContinuousOn (fun z => ‖∑ i, c i * secFun (b i) z‖ ^ 2 * wgt m n z) {0}ᶜ := by
   have hρ : ContinuousOn m.ρ {0}ᶜ := hm.continuousOn.mono fun _ hz => hz

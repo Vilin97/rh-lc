@@ -15,7 +15,7 @@ open MvPowerSeries ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
 variable {R : Type} [CommRing R] {d n : ℕ}
 
 def Lin (b : Fin n) (v : Fin d → R) (f : PS R n d) : PS R n d :=
-  ∑ j : Fin d, C (v j) * pderiv R (b, j) f
+  ∑ j : Fin d, C (v j) * pderiv (b, j) f
 
 def LinMon {ι : Type} [Fintype ι] (cp : ι → Fin n) (u : ι → Fin d → R) (m : ι →₀ ℕ) (f : PS R n d) :
     PS R n d :=

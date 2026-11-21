@@ -55,14 +55,14 @@ noncomputable def sUnitsQuotSequence :
         (show Additive.toMul (α := (maxUnramifiedOutside F Ω S)ˣ) _ ∈ sUnitsMax F Ω S from
           (Additive.toMul x).2))
 
-theorem sUnitsQuotSequence_shortExact : (sUnitsQuotSequence F Ω S).ShortExact where
-  exact := by
-    apply shortComplex_exact_of_forall_exists
+theorem sUnitsQuotSequence_shortExact : (sUnitsQuotSequence F Ω S).ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+  · apply shortComplex_exact_of_forall_exists
     intro x hx
     exact ⟨Additive.ofMul ⟨Additive.toMul (α := (maxUnramifiedOutside F Ω S)ˣ) x,
       (Submodule.Quotient.mk_eq_zero _).1 hx⟩, rfl⟩
-  mono_f := (Rep.mono_iff_injective _).2 (sUnitsToUnits_injective S _)
-  epi_g := (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
+  · exact (Rep.mono_iff_injective _).2 (sUnitsToUnits_injective S _)
+  · exact (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
 
 variable [IsGalois F Ω]
 

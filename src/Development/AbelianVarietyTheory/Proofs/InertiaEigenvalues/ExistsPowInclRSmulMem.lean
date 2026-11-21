@@ -65,7 +65,7 @@ theorem exists_pow_wittCoords_inclR_smul_mem_nhds {l : ℕ} [Fact l.Prime] {P : 
   let F : (Fin m → WCb l) → (Fin d → WCb l) := fun w i =>
     ∑ α, w α * GlobalTheory.WeakTop.coords (WCb l) ↥(OL LL) b (Y α) i
   have hF : Continuous F := continuous_pi fun i =>
-    continuous_finset_sum _ fun α _ => (continuous_apply α).mul continuous_const
+    continuous_finsetSum _ fun α _ => (continuous_apply α).mul continuous_const
   have hF0 : F 0 = 0 := by funext i; simp [F]
   have hFV : F ⁻¹' V ∈ 𝓝 (0 : Fin m → WCb l) := hF.tendsto 0 (hF0 ▸ hV)
   rw [nhds_pi] at hFV

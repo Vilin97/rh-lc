@@ -151,7 +151,21 @@ theorem om_dLine (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ) (g :
   refine (sub_eq_zero.1 (eq_zero_of_lintegral_eq_zero (G := WA T S) (ratL T S) μ 𝓕 h𝓕 _ hδ.cont
     (theta_norm_periodic hψ hδ) ?_)).symm
   refine lintegral_eq_zero_of_approx (μ.restrict 𝓕) (by rw [Measure.restrict_apply_univ, h1]) _ C C' fun t ht => ?_
-  have hr := theta_sub (theta_smul (t : ℂ)⁻¹ (theta_sub (theta_heisO_real hθ hψ (hL.2 t) hf) hf))
+  have theta_smul_local (c : ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
+      IsThetaFunO ψ S T (c • f) := by
+    refine ⟨?_, ?_, hf.cont.const_smul c, ?_⟩
+    · intro γ w
+      rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
+    ·
+      obtain ⟨U, hU, h1⟩ := hf.level
+      refine ⟨U, hU, fun u hu h0 => ?_⟩
+      funext w
+      have e1 := congrFun (h1 u hu h0) w
+      unfold heisO at e1 ⊢
+      rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
+    · intro k L h1 h2 w
+      exact contDiff_const.mul (hf.smooth k L h1 h2 w)
+  have hr := theta_sub (theta_smul_local (t : ℂ)⁻¹ (theta_sub (theta_heisO_real hθ hψ (hL.2 t) hf) hf))
     (theta_dLine hθ hψ hL hf)
   refine ⟨_, _, _, ?_, hom.om_unit μ 𝓕 hμ h𝓕 (g, h) _ hr, hC t ht, hC' t ht⟩
   rw [map_sub, map_smul, map_sub, hom.om_heis g h _ f hf, hLL]

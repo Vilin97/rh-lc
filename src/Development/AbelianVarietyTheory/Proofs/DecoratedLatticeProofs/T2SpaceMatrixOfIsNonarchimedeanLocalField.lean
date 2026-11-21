@@ -117,6 +117,7 @@ theorem isCompact_lat (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] : IsComp
   rw [hset]
   refine isCompact_range (continuous_finset_sum _ fun i _ => continuous_pi fun j => ?_)
   change Continuous fun c : Fin m → 𝒪[k] => (c i : k) * v i j
+  exact (continuous_subtype_val.comp (continuous_apply i)).mul continuous_const
 
 theorem dual_compact_open (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] :
     IsCompact {η | InDual L η} ∧ IsOpen {η | InDual L η} := by
@@ -152,7 +153,7 @@ theorem dual_compact_open (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] :
   refine ⟨?_, hopen⟩
   have htop : Submodule.span k (Set.range v) = ⊤ := by
     rw [← Submodule.span_span_of_tower 𝒪[k] k (Set.range v), hv]
-    exact Submodule.IsFullLattice.span_eq_top
+    exact (inferInstance : L.IsLattice k).span_eq_top
   have hcoef : ∀ j : n, ∃ a : Fin m → k, ∑ i, a i • v i = Pi.single j 1 := fun j =>
     (Submodule.mem_span_range_iff_exists_fun k).mp (by rw [htop]; exact Submodule.mem_top)
   choose a ha using hcoef

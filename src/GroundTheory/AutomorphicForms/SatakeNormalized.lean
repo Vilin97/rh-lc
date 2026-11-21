@@ -209,7 +209,7 @@ theorem normalize_yElt (i : Fin n) :
 
 theorem normalize_esymm_yElt (k : ℕ) :
     normalize F n ((Finset.univ.val.map (yElt F (n := n))).esymm k) =
-      (sqrtQ F ^ ((n : ℤ) - 1)) ^ k • polyEmb n (MvPolynomial.esymm (Fin n) ℂ k) := by
+      (sqrtQ F ^ ((n : ℤ) - 1)) ^ k • polyEmb (n := n) (MvPolynomial.esymm (Fin n) ℂ k) := by
   classical
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Finset.esymm_map_val, map_sum, MvPolynomial.esymm, map_sum, Finset.smul_sum]
@@ -244,14 +244,14 @@ theorem sphericalCharacter_paramChar (z : Fin n → ℂˣ) (h : SphericalHecke �
   rfl
 
 theorem symmetricLaurent_le_range :
-    symmetricLaurent n ≤ (satakeTransform μ (F := F) (n := n)).range := by
+    symmetricLaurent (n := n) ≤ (satakeTransform μ (F := F) (n := n)).range := by
   have hK : (μ.real (integralGL F n : Set (GL (Fin n) F)) : ℂ) ≠ 0 :=
     Complex.ofReal_ne_zero.2
       (measureReal_compactOpen_pos μ (isCompact_integralGL F n) (isOpen_integralGL F n)).ne'
   refine symmetricLaurent_le (fun k => ?_) ?_
   · obtain ⟨h, hh⟩ := (AlgHom.mem_range _).1 (esymm_yElt_mem (μ := μ) (F := F) (n := n) k)
     have hc : (sqrtQ F ^ ((n : ℤ) - 1)) ^ k ≠ 0 := pow_ne_zero _ (zpow_ne_zero _ sqrtQ_ne_zero)
-    have : polyEmb n (MvPolynomial.esymm (Fin n) ℂ k) =
+    have : polyEmb (n := n) (MvPolynomial.esymm (Fin n) ℂ k) =
         ((sqrtQ F ^ ((n : ℤ) - 1)) ^ k)⁻¹ • satakeTransform μ h := by
       rw [satakeTransform_apply, ← satakeHom_apply, hh, normalize_esymm_yElt, smul_smul,
         inv_mul_cancel₀ hc, one_smul]

@@ -84,7 +84,7 @@ theorem sum_mul_sum_cons {T : Type} [CommRing T] {E₁ E₂ E : R →+* T} (h₁
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun I _ => Finset.sum_congr rfl fun i _ => ?_
-  rw [show Fin.tail ((Fin.consEquiv fun _ => Fin N) (j, I)) = I from Fin.tail_cons _ _]
+  rw [Fin.tail_cons]
   ring
 
 theorem span_ev (K : Type) [Field K] (x : KeyIn K) (m N : ℕ) (b : Fin N → RR x m) (hb : IsBasis x b) (n : ℕ) :

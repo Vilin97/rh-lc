@@ -183,14 +183,14 @@ theorem exists_invariant_form {Λ : AddSubgroup (WO S T)} {e : AE D} (he : IsSpl
           refine ⟨fun y hy => ?_, ?_⟩
           set_option synthInstance.maxHeartbeats 100000 in
             · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
-            refine Finset.sum_nonneg fun k _ => ?_
-            rw [heisL_apply, ← heisO_add_of_orth ψ S T (half_orth he (isHalf_nsmul hy' k) hy)]
-            exact ih.1 _ (isHalf_add (isHalf_nsmul hy' k) hy)
+              refine Finset.sum_nonneg fun k _ => ?_
+              rw [heisL_apply, ← heisO_add_of_orth ψ S T (half_orth he (isHalf_nsmul hy' k) hy)]
+              exact ih.1 _ (isHalf_add (isHalf_nsmul hy' k) hy)
           set_option synthInstance.maxHeartbeats 100000 in
             · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
-            refine Finset.sum_pos' (fun k _ => ih.1 _ (isHalf_nsmul hy' k)) ⟨0, Finset.mem_range.2 N.succ_pos, ?_⟩
-            rw [heisL_apply, zero_smul, heisO_zero]
-            exact ih.2
+              refine Finset.sum_pos' (fun k _ => ih.1 _ (isHalf_nsmul hy' k)) ⟨0, Finset.mem_range.2 N.succ_pos, ?_⟩
+              rw [heisL_apply, zero_smul, heisO_zero]
+              exact ih.2
       intro B hB h0
       have := (this B hB).2
       rw [h0, map_zero] at this

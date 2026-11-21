@@ -149,8 +149,8 @@ theorem continuous_symplOH (u : WO S T) : Continuous fun w : WO S T => symplOH S
   have ht : Continuous (Algebra.trace (AF D.host.F) (AE D)) := IsModuleTopology.continuous_of_linearMap _
   unfold symplOH symplO hO
   refine continuous_const.mul (ht.comp (continuous_const.mul ?_))
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => continuous_finset_sum _ fun c _ =>
-    continuous_finset_sum _ fun d _ => continuous_const.mul ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => continuous_finsetSum _ fun c _ =>
+    continuous_finsetSum _ fun d _ => continuous_const.mul ?_
   exact (continuous_apply a).comp (continuous_apply d)
 
 theorem ker_mem_nhds {F : Type} [Field F] [NumberField F] {ψ : AddChar (AF F) ℂ} (hc : Continuous ψ)

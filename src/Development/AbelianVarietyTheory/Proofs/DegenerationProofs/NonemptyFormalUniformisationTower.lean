@@ -118,7 +118,10 @@ theorem exists_tq_succ [IsLocalRing R] [IsCommMonObj G] (hI : I ≠ ⊤) (hG : I
     [Module.Free ℤ X] [Module.Finite ℤ X] (e : ℕ) (Q₀ : TQ (thickObj R I e G) X) :
     ∃ Q : TQ (thickObj R I (e + 1) G) X, TorusCompat (thickTrans R I e) (thickMap R I e G) Q₀.i Q.i := by
   have := isLocalRing_quot hI (e + 1)
-  have := (IsSemiAbelian.pullback (thick R I (e + 1)) G hG).smooth
+  have := hG.smooth
+  have : Smooth (thickObj R I (e + 1) G).hom := by
+    change Smooth (pullback.snd G.hom _)
+    infer_instance
   refine exists_tq_lift _ (Ideal.Quotient.factor_surjective _) (isNilpotent_of_le_map I _ _ fun x hx => ?_) _ _ _
     (isGrpPullback_thickMap I G e) Q₀
   obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
@@ -133,10 +136,20 @@ theorem nonempty_biTriv (h₁ : Laws) (h₂ : Laws2) [IsLocalRing R] [IsNoetheri
     DoubleQuot.quotQuotEquivQuotOfLE (Ideal.pow_le_self (Nat.succ_ne_zero e))
   have : IsDomain ((R ⧸ I ^ (e + 1)) ⧸ J) := ε.toMulEquiv.isDomain _
   have : IsIntegrallyClosed ((R ⧸ I ^ (e + 1)) ⧸ J) := IsIntegrallyClosed.of_equiv ε.symm
-  have h₀ := IsSemiAbelian.pullback (red J) _ (IsSemiAbelian.pullback (thick R I e) G hG)
-  have := h₀.smooth
-  have := h₀.geomConnected
-  have := h₀.comm
+  have := hG.smooth
+  have := hG.geomConnected
+  have : Smooth (thickObj R I e G).hom := by
+    change Smooth (pullback.snd G.hom _)
+    infer_instance
+  have : GeometricallyConnected (thickObj R I e G).hom := by
+    change GeometricallyConnected (pullback.snd G.hom _)
+    infer_instance
+  have : Smooth ((Over.pullback (red J)).obj (thickObj R I e G)).hom := by
+    change Smooth (pullback.snd (thickObj R I e G).hom _)
+    infer_instance
+  have : GeometricallyConnected ((Over.pullback (red J)).obj (thickObj R I e G)).hom := by
+    change GeometricallyConnected (pullback.snd (thickObj R I e G).hom _)
+    infer_instance
   have : ConnectedSpace (Sp ((R ⧸ I ^ (e + 1)) ⧸ J)) := inferInstance
   have := (GroupConn.connectedSpace_group _ ((Over.pullback (red J)).obj (thickObj R I e G))).1
   have hp := isGrpPullback_pullback (thickObj R I e G) (red J)
@@ -158,9 +171,14 @@ theorem connectedSpace_thickObj [IsLocalRing R] (hI : I ≠ ⊤) (hG : IsSemiAbe
     ConnectedSpace (thickObj R I e G).left := by
   have := isLocalRing_quot hI e
   have := connectedSpace_sp (R ⧸ I ^ (e + 1))
-  have h₀ := IsSemiAbelian.pullback (thick R I e) G hG
-  have := h₀.smooth
-  have := h₀.geomConnected
+  have := hG.smooth
+  have := hG.geomConnected
+  have : Smooth (thickObj R I e G).hom := by
+    change Smooth (pullback.snd G.hom _)
+    infer_instance
+  have : GeometricallyConnected (thickObj R I e G).hom := by
+    change GeometricallyConnected (pullback.snd G.hom _)
+    infer_instance
   exact (GroupConn.connectedSpace_group _ (thickObj R I e G)).1
 
 

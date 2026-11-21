@@ -37,7 +37,9 @@ theorem distribHaarChar_pi {ι : Type} [Fintype ι] (A : ι → Type) [∀ i, Co
     refine forall_congr' fun i => ?_
     rw [← map_inv]
     rfl
-  rw [e, hp, hp, ENNReal.coe_finset_prod, ← Finset.prod_mul_distrib]
+  rw [e, hp, hp]
+  push_cast
+  rw [← Finset.prod_mul_distrib]
   refine Finset.prod_congr rfl fun i _ => ?_
   rw [distribHaarChar_mul]
 

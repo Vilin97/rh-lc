@@ -304,7 +304,7 @@ variable (D : D7) (r j p : ℕ) (M : MP D p)
   chConst := fun _ => True
   PL := Unit
   phiAt := fun _ _ _ => 0
-  phiAt_zero := fun _ _ _ => rfl
+  phiAt_zero := fun _ {_} _ _ => rfl
   divGe := fun _ _ _ _ => True
   FJd := Unit
   Chr := fun _ => Unit

@@ -186,8 +186,7 @@ theorem basePoly_mem_of_colLie_stable {K : Type*} [Field K] [CharZero K]
     (hs : ∀ t k l, ∀ w ∈ W, colLie K p q t k l w ∈ W) (hW0 : W ≠ ⊥) : basePoly K h c c' ∈ W := by
   classical
   have := Submodule.finiteDimensional_of_le hW
-  have exists_eq_smul_basePoly {K T : Type*} [Field K] [CharZero K] [Fintype T] {p q n : ℕ}
-      (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) {P : Poly K T p q (Fin n)}
+  have exists_eq_smul_basePoly {P : Poly K T p q (Fin n)}
       (hP : P ∈ rowHighest K c c') (κ : T → Fin n → ℤ) (hκ : ∀ t, Antitone (κ t))
       (hup : ∀ t (k l : Fin n), k < l →
         ∑ a, X (xVar t a k) * pderiv (xVar t a l) P - ∑ b, X (yVar t b l) * pderiv (yVar t b k) P = 0)
@@ -207,8 +206,8 @@ theorem basePoly_mem_of_colLie_stable {K : Type*} [Field K] [CharZero K]
     have hv := fun t => HighestUnique.notMem_vars h (z t) (hz t) (y t) (hy t) (hzy t) (partOf (c t)) (partOf (c' t))
       (partOf_antitone _) (partOf_antitone _) (hrx t) (hry t) (hix t) (hiy t)
       (fun i j => (laplacian_apply t i j P).symm.trans (hh t i j)) (κ t) (hκ t)
-      (fun k l hkl => (mixedOp_apply _ _ _ _ _).trans (hup t k l hkl))
-      (fun k => (mixedOp_apply _ _ _ _ _).trans (hwt t k))
+      (fun k l hkl => (GlobalTheory.Capelli.mixedOp_apply _ _ _ _ _).trans (hup t k l hkl))
+      (fun k => (GlobalTheory.Capelli.mixedOp_apply _ _ _ _ _).trans (hwt t k))
     let e : Fin p → Fin n := Fin.castLE (by omega)
     let e' : Fin q → Fin n := fun b => Fin.rev (Fin.castLE (by omega) b)
     have he : ∀ k : Fin n, k ∉ Set.range e → p ≤ k := fun k hk =>
@@ -221,7 +220,7 @@ theorem basePoly_mem_of_colLie_stable {K : Type*} [Field K] [CharZero K]
         have h₁ := hup t (e k) (e l) hkl
         rw [Finset.sum_eq_zero (f := fun b => X (yVar t b (e l)) * pderiv (yVar t b (e k)) P),
           sub_zero] at h₁
-        · exact (colOp_apply _ _ _ _).trans h₁
+        · exact (GlobalTheory.Capelli.colOp_apply _ _ _ _).trans h₁
         · intro b _
           rw [pderiv_eq_zero_of_notMem_vars ((hv t).2 b (e k) ?_), mul_zero]
           have := k.2
@@ -232,7 +231,7 @@ theorem basePoly_mem_of_colLie_stable {K : Type*} [Field K] [CharZero K]
         have h₁ := hup t (e' l) (e' k) (Fin.rev_lt_rev.2 hkl)
         rw [Finset.sum_eq_zero (f := fun a => X (xVar t a (e' l)) * pderiv (xVar t a (e' k)) P),
           zero_sub, neg_eq_zero] at h₁
-        · exact (colOp_apply _ _ _ _).trans h₁
+        · exact (GlobalTheory.Capelli.colOp_apply _ _ _ _).trans h₁
         · intro b _
           rw [pderiv_eq_zero_of_notMem_vars ((hv t).1 b (e' k) ?_), mul_zero]
           have := k.2
@@ -283,7 +282,7 @@ theorem basePoly_mem_of_colLie_stable {K : Type*} [Field K] [CharZero K]
         · exact absurd hs ((hv t).2 b k (he' k hk))
   obtain ⟨v, hv, hv0, hup, μ, hμ⟩ := exists_highest_vector (colLie K p q) colLie_diag_comm
     (iSup_iInf_eigenspace_colLie K T p q (Fin n)) W hs hW0
-  obtain ⟨r, rfl⟩ := exists_eq_smul_basePoly h c c' (hW hv) μ
+  obtain ⟨r, rfl⟩ := exists_eq_smul_basePoly (hW hv) μ
     (fun t => highest_weight_antitone _ (colLie_lie t) W (hs t) v hv hv0 _ (hup t) (hμ t))
     (fun t k l hkl => (colLie_apply t k l v).symm.trans (hup t k l hkl))
     fun t k => (colLie_apply t k k v).symm.trans (hμ t k)

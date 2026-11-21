@@ -47,7 +47,7 @@ theorem exists_perm_mem_iff {D : ℕ} (s : Finset (Fin D)) :
       Equiv.sumCongr_apply, Sum.map_inr, Equiv.sumCompl_apply_inr]
     exact iff_of_false (Fintype.equivOfCardEq h2 ⟨j, hj⟩).2 hj
 
-theorem expand {D : ℕ} (M : MultilinearMap ℤ (fun _ : Fin D => Fin 2 → ℤ) ℤ)
+theorem expand {D : ℕ} (M : (Fin D → Fin 2 → ℤ) →ₘₗ[ℤ] ℤ)
     (hsym : ∀ (v : Fin D → Fin 2 → ℤ) (σ : Equiv.Perm (Fin D)), M (v ∘ σ) = M v) (a b : ℤ) :
     M (fun _ => ![a, b]) =
       ∑ i ∈ Finset.range (D + 1), (D.choose i : ℤ) * a ^ i * b ^ (D - i) * M (twoBlockDegList D i) := by
@@ -68,7 +68,8 @@ theorem expand {D : ℕ} (M : MultilinearMap ℤ (fun _ : Fin D => Fin 2 → ℤ
       · simp [Finset.piecewise, hj, twoBlockDegList, (hσ j).mpr hj]
       · have : ¬ (σ j : ℕ) < t.card := fun h => hj ((hσ j).mp h)
         simp [Finset.piecewise, hj, twoBlockDegList, this]
-    rw [hpw, M.map_smul_univ, hsym, Finset.prod_ite, Finset.prod_const, Finset.prod_const, smul_eq_mul]
+    rw [hpw, M.map_smul_univ, hsym]
+    simp only [RingHom.id_apply, Finset.prod_ite, Finset.prod_const, smul_eq_mul]
     congr 2
     · congr 1
       simp
@@ -113,7 +114,7 @@ theorem geoNum_update_eq_last {K : Type} [Fintype K] {ι : K → Type} [∀ k, F
 
 def geoNumMulti {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] (W : Ideal (MRing ι)) (D : ℕ)
     (hsym : ∀ (v : Fin D → K → ℤ) (σ : Equiv.Perm (Fin D)), geoNum D W (v ∘ σ) = geoNum D W v) :
-    MultilinearMap ℤ (fun _ : Fin D => K → ℤ) ℤ where
+    (Fin D → K → ℤ) →ₘₗ[ℤ] ℤ where
   toFun := geoNum D W
   map_update_add' := by
     intro inst v j x y

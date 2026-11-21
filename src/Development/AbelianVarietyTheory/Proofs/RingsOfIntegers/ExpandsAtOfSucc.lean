@@ -25,7 +25,7 @@ omit [IsDomain R] [GrpObj G] [IsCommMonObj G] in
 theorem thickMap_comp_fGl (I : Ideal R) (e : ℕ) (G : Over (Spec (CommRingCat.of R))) :
     thickMap R I e G ≫ fGl I G (e + 1) = fGl I G e := by
   unfold thickMap fGl fstG
-  simp only [Over.homMk_left, pullback.map]
+  simp only [Over.homMk_left, pullback.map, pullback.lift_fst, Category.comp_id]
 
 private lemma mem_pull_U_of_mem_U {X Y : Scheme.{0}} {M : LB X} (f : Y ⟶ X) (j : PUnit → M.ι) (y : Y)
     (h : f y ∈ M.U (j ⟨⟩)) : y ∈ (M.pull f).U j := by

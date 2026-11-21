@@ -30,12 +30,12 @@ theorem exists_qkPt_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   choose pt hpt using fun a => hon (ev a) (hpow a)
   refine ⟨pt, fun a => (hto _ _).2 (hpt a).symm, fun n z hz y => ?_⟩
   have yadd : ∀ a b, ∃ t : P.D.toPre.X, (pt (a + b)).y = (pt a).y + (pt b).y + N • t := fun a b => by
-    have e := hfa _ _ _ (_root_.GlobalTheory.TorusExt.qkAdd_qkAdd hB (pt a) (pt b))
+    have e := hfa _ _ _ (GlobalTheory.TorusExt.qkAdd_qkAdd hB (pt a) (pt b))
     rw [hpt, hpt, ← hadd, ← hpt] at e
     obtain ⟨t, ht, -⟩ := (heq _ _).1 e
     exact ⟨t, ht⟩
   have ysm : ∀ (o : 𝓞 E) a, ∃ t : P.D.toPre.X, (pt (o • a)).y = o • (pt a).y + N • t := fun o a => by
-    have e := hfs _ _ _ (_root_.GlobalTheory.TorusExt.qkAct_qkSmul hB hG P.oD o (pt a))
+    have e := hfs _ _ _ (GlobalTheory.TorusExt.qkAct_qkSmul hB hG P.oD o (pt a))
     rw [hpt, ← hsm, ← hpt] at e
     obtain ⟨t, ht, -⟩ := (heq _ _).1 e
     exact ⟨t, ht⟩
@@ -62,11 +62,11 @@ theorem exists_qkPt_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       exact ⟨o • u, Submodule.smul_mem _ o hu, o • t + s, by
         rw [hs, ht, smul_add, smul_add, smul_comm o N t, add_assoc]⟩
   have hA : AdmBase V (maximalIdeal V) := ⟨inferInstance, inferInstance, inferInstance, hc⟩
-  letI := _root_.GlobalTheory.TorusExt.gtGroup P.D.toPre F
+  letI := GlobalTheory.TorusExt.gtGroup P.D.toPre F
   obtain ⟨g, hg⟩ := (GlobalTheory.UT.gt_onto_divisible_kernel GlobalTheory.firstFiveLaws V _ hA P.D F).2.1 N hN
-    (_root_.GlobalTheory.TorusExt.iota hB F y)
+    (GlobalTheory.TorusExt.iota hB F y)
   let p : QkPt P.D.toPre F N :=
-    _root_.GlobalTheory.TorusExt.qkMk hB y g ((_root_.GlobalTheory.TorusExt.isNsmul_iff_eq _ _ _).1 hg).symm
+    GlobalTheory.TorusExt.qkMk hB y g ((GlobalTheory.TorusExt.isNsmul_iff_eq _ _ _).1 hg).symm
   have hp : f p ^ N = 1 := by
     obtain ⟨w, hw⟩ := P.U.ext
     exact ((hto p _).2 rfl w hw).1

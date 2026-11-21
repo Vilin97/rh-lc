@@ -181,7 +181,10 @@ theorem simple_zeros_move_holomorphically :
   have hS : IsClosed {x : (Fin g → ℝ) × (Fin g → ℝ) | ∀ i,
       x.1 i ∈ Set.range ((↑) : ℤ → ℝ) ∧ x.2 i ∈ Set.range ((↑) : ℤ → ℝ)} := by
     simp only [Set.setOf_forall]
-    refine isClosed_iInter fun i => IsClosed.inter ?_ ?_
+    refine isClosed_iInter fun i => ?_
+    change IsClosed ({x : (Fin g → ℝ) × (Fin g → ℝ) | x.1 i ∈ Set.range ((↑) : ℤ → ℝ)} ∩
+      {x : (Fin g → ℝ) × (Fin g → ℝ) | x.2 i ∈ Set.range ((↑) : ℤ → ℝ)})
+    refine IsClosed.inter ?_ ?_
     · exact Int.isClosedEmbedding_coe_real.isClosed_range.preimage
         (f := fun x : (Fin g → ℝ) × (Fin g → ℝ) => x.1 i) (by fun_prop)
     · exact Int.isClosedEmbedding_coe_real.isClosed_range.preimage

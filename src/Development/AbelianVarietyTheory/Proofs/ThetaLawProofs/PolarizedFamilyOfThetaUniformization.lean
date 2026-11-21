@@ -50,7 +50,7 @@ theorem polPB_cancel {S S' S'' : Scheme.{0}} {P : Out.PolAV S} {P' : Out.PolAV S
   refine ⟨h.1.1.lift χ _ w, h.1.cancel (n.1.congr rfl e.symm) (h.1.1.lift_snd _ _ _), n.2.1.trans h.2.1.symm, ?_⟩
   have k := GlobalTheory.ZM.SiegPull.lbIso_pull_comp h.2.2 (h.1.1.lift χ _ w)
   rw [e] at k
-  exact LBIso.trans P''.isLB (pull_isLB P.isLB _) (pull_isLB P'.isLB _) n.2.2 k.symm
+  exact LBIso.trans P''.isLB (LB.isLB_pull P.isLB _) (LB.isLB_pull P'.isLB _) n.2.2 k.symm
 
 theorem lbIso_drop {k : Type} [Field k] {X Y : Scheme.{0}} {L : LB X} (hL : L.IsLB) (p : Y ⟶ Sp k) (a : Sp k ⟶ X)
     (u : Y ⟶ X) (φ : Fin 2 → (Y ⟶ X)) (h₀ : φ 0 = u) (h₁ : φ 1 = p ≫ a) :
@@ -89,15 +89,15 @@ theorem exists_translate (hL : Out.Laws) {h k : ℕ} {o : Type} [CommRing o] {ζ
   refine ⟨Q', _, (e.hom.left ≫ π) ≫ e'.inv.left,
     (sqOf_calculus h k o ζ S (Sp R) (Sp R) s c f).2.2 Q Q' φ e' he' hg' hl' hQ, gp,
     hP.2.1.trans (hg'.trans hQ.2.1).symm, ?_⟩
-  have k₁ := LBIso.trans P.isLB (pull_isLB P₁.isLB _) (pull_isLB Q.isLB _) hi
+  have k₁ := LBIso.trans P.isLB (LB.isLB_pull P₁.isLB _) (LB.isLB_pull Q.isLB _) hi
     (GlobalTheory.ZM.SiegPull.lbIso_pull_comp hπ.2.2 (e.hom ≫ ((toUnit P₁.A ≫ t₁) * 𝟙 P₁.A)).left)
   have k₂ := LBIso.chartPull (Geo.Tor.chartPullPull Q'.L _ ((e.hom.left ≫ π) ≫ e'.inv.left) rfl)
     (chartPullSame Q.L _ _ _ ((e.hom.left ≫ π) ≫ e'.inv.left) fun _ => rfl) hi'
   have k₃ := lbIso_drop Q.isLB P.A.hom (x ≫ t.left) ((e.hom ≫ ((toUnit P₁.A ≫ t₁) * 𝟙 P₁.A)).left ≫ π)
     (fun i => ((e.hom.left ≫ π) ≫ e'.inv.left) ≫
       (![(e'.hom ≫ ((toUnit Q.A ≫ t) * 𝟙 Q.A)).left, (toUnit Q'.A ≫ t).left] : Fin 2 → _) i) ?_ ?_
-  · exact LBIso.trans P.isLB (pull_isLB Q.isLB _) (pull_isLB Q'.isLB _) k₁
-      (LBIso.trans (pull_isLB Q'.isLB _) (DVR.linComb_isLB _ Q.isLB _ _) (pull_isLB Q.isLB _) k₂ k₃).symm
+  · exact LBIso.trans P.isLB (LB.isLB_pull Q.isLB _) (LB.isLB_pull Q'.isLB _) k₁
+      (LBIso.trans (LB.isLB_pull Q'.isLB _) (DVR.linComb_isLB _ Q.isLB _ _) (LB.isLB_pull Q.isLB _) k₂ k₃).symm
   · show _ ≫ (e'.hom.left ≫ ((toUnit Q.A ≫ t) * 𝟙 Q.A).left) = (e.hom.left ≫ _) ≫ π
     rw [← Category.assoc, ee, Category.assoc, Category.assoc]
     refine congrArg (e.hom.left ≫ ·) ?_

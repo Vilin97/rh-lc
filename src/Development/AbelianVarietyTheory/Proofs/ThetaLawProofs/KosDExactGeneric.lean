@@ -84,8 +84,8 @@ theorem exact_kosD_map {O K : Type} [CommRing O] [CommRing K] (f : O →+* K) {g
   refine exact_of_rescale ((kosD m ev).map f) (kosD m' ev') h (Sum.elim (fun _ => 1) u) hh ?_ ?_ v hv
   · intro p q
     rcases p with ⟨P, kp⟩ | a <;> rcases q with ⟨Q, kq⟩ | b
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [Matrix.map_apply, kosD, Sum.elim_inl, Units.val_one, _root_.one_mul, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.map_apply, kosD, Sum.elim_inl, Units.val_one, _root_.one_mul, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       split_ifs with hc
       · obtain ⟨hi, hQ⟩ := hc

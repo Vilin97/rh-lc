@@ -57,7 +57,7 @@ theorem pow_card_eq_one {ι : Type*} [Fintype ι] (b : Module.Basis ι C F) (τ 
         rw [(ℛ R c).convMul_apply]
         simp only [LinearMap.comp_apply]
         rw [(ℛ R c).convMul_apply]
-        simp [← Algebra.smul_def]
+        simp [postcomp, ← Algebra.smul_def]
       left_inv := fun f => by
         ext c
         simp
@@ -67,7 +67,7 @@ theorem pow_card_eq_one {ι : Type*} [Fintype ι] (b : Module.Basis ι C F) (τ 
   let b' := Module.Basis.ofEquivFun e
   let τ' : WithConv (B →ₗ[R] F) ≃ₐ[WithConv (B →ₗ[R] C)] WithConv (B →ₗ[R] F) :=
     AlgEquiv.ofRingEquiv (f := RingEquiv.ofRingHom (postcomp B (τ.toAlgHom.restrictScalars R))
-      (postcomp B (τ.symm.toAlgHom.restrictScalars R)) (by ext f c; simp) (by ext f c; simp))
+      (postcomp B (τ.symm.toAlgHom.restrictScalars R)) (by ext f c; simp [postcomp]) (by ext f c; simp [postcomp]))
       (fun g => by
         ext c
         exact τ.commutes (g c))

@@ -50,6 +50,8 @@ theorem rho_apply (e : (Fin r → R ⧸ I) ≃ₗ[R] Q) (k : GL (Fin r) (R ⧸ I
   change e ((k : Matrix (Fin r) (Fin r) (R ⧸ I)) *ᵥ (e.symm (e (Pi.single i 1)))) = _
   rw [e.symm_apply_apply, ← ha]
   congr 1
+  simp only [Matrix.mulVec_single_one]
+  rfl
 
 theorem cop_iff_isUnit {s : R} : IsCoprime (Ideal.span {s}) I ↔ IsUnit (Ideal.Quotient.mk I s) := by
   rw [cop_iff]

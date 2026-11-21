@@ -197,6 +197,8 @@ theorem relAmple_of_values
     rw [MvPolynomial.eval₂Hom_map_hom, ← hc, MvPolynomial.eval₂Hom_rename]
     refine Eq.trans ?_ (MvPolynomial.map_eval₂Hom _ (r (e i)) (ψ.appLE _ _ (loc (e i)).le).hom F).symm
     congr 2
+    funext j
+    simp
 
 theorem two_mul_dot_int {g : ℕ} {a : Fin g → ℝ} (ha : ∀ i, a i = 0 ∨ a i = 1 / 2) (n : Fin g → ℤ) :
     ∃ k : ℤ, 2 * (ofRealVec a ⬝ᵥ ofIntVec n) = k := by

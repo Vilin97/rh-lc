@@ -65,7 +65,7 @@ theorem exists_closed_level (D : D7) (m n : ℕ) (N : Set (Mx D m n)) (hN : N �
   let Φ : (Fin m × Fin n × Fin (Module.finrank D.host.F D.host.E) → Af D.host.F) → Mx D m n :=
     fun x i j => ∑ k, pairA D.host.F 0 (x (i, j, k)) • B k
   have hΦ : Continuous Φ := by
-    refine continuous_pi fun i => continuous_pi fun j => continuous_finset_sum _ fun k _ => ?_
+    refine continuous_pi fun i => continuous_pi fun j => continuous_finsetSum _ fun k _ => ?_
     have h1 : Continuous fun x : Fin m × Fin n × Fin (Module.finrank D.host.F D.host.E) → Af D.host.F =>
         pairA D.host.F 0 (x (i, j, k)) := continuous_const.prodMk (continuous_apply _)
     exact h1.smul continuous_const

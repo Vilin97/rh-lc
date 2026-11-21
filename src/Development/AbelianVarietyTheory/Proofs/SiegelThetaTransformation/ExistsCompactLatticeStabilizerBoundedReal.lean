@@ -62,7 +62,7 @@ theorem exists_compact_latHat (F E : Type) [Field F] [NumberField F] [Field E] [
   obtain ⟨m, x, hx⟩ := Submodule.fg_iff_exists_fin_generating_family.1 hZ
   let g : (Fin m → Af F) → Fin M → Af F ⊗[F] E := fun c i => ∑ k, c k ⊗ₜ[F] x k i
   have hg : Continuous g := by
-    refine continuous_pi fun i => continuous_finset_sum _ fun k _ => ?_
+    refine continuous_pi fun i => continuous_finsetSum _ fun k _ => ?_
     have : (fun c : Fin m → Af F => c k ⊗ₜ[F] x k i) = fun c => c k • ((1 : Af F) ⊗ₜ[F] x k i) := by
       funext c
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

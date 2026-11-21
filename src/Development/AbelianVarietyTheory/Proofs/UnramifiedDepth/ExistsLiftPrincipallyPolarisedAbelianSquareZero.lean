@@ -84,7 +84,7 @@ theorem exists_lift : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
     have hB : Geo.Tor.LBIso (c.P.pull k.left) (c'.P.pull (k.left ≫ φ₂)) :=
       Geo.Tor.LBIso.chartPull (Geo.Tor.chartPullPull c.P k.left k.left rfl)
         (Geo.Tor.chartPullSame c'.P _ (fun _ => φ₂) _ k.left fun _ => rfl) hiso
-    exact Geo.Tor.LBIso.trans (DVR.linComb_isLB _ P.isLB _ _) (Geo.Tor.pull_isLB c.isLB _)
-      (Geo.Tor.pull_isLB c'.isLB _) hA hB
+    exact Geo.Tor.LBIso.trans (DVR.linComb_isLB _ P.isLB _ _) (DVR.linComb_isLB _ c.isLB _ _)
+      (DVR.linComb_isLB _ c'.isLB _ _) hA hB
 
 end GlobalTheory.AbelianLift

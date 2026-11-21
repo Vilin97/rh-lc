@@ -11,7 +11,6 @@ namespace GlobalTheory.K5.Span
 
 variable (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω]
 
-variable (p Ω) in
 def baseField : Subfield Ω :=
   Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x | IsAlgZp (p := p) x})
 

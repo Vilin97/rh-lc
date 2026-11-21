@@ -85,11 +85,11 @@ theorem exists_coef : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (t
   intro R _ _ D th hth χ u hu g
   obtain ⟨g₀, hg₀⟩ := exists_untwist D χ u hu g
   obtain ⟨b, hb⟩ := hth g₀
-  refine ⟨b, fun T y z J hJ => ?_⟩
-  have e₁ : (lift (toUnit T) (y * cT D T χ)).left ≫ (𝟙_ _ ⊗ D.P.A).hom = T.hom := Over.w _
-  have h := hb _ (lift (toUnit T) (y * cT D T χ)).left z J hJ
-  rw [e₁, hg₀ T y z J hJ, Units.mul_inv_eq_iff_eq_mul] at h
-  rw [h]
-  ring
+  exact ⟨b, fun T y z J hJ => by
+    have e₁ : (lift (toUnit T) (y * cT D T χ)).left ≫ (𝟙_ _ ⊗ D.P.A).hom = T.hom := Over.w _
+    have h := hb _ (lift (toUnit T) (y * cT D T χ)).left z J hJ
+    rw [e₁, hg₀ T y z J hJ, Units.mul_inv_eq_iff_eq_mul] at h
+    rw [h]
+    ring⟩
 
 end GlobalTheory.PsiCoef

@@ -12,7 +12,7 @@ public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.TotallyP
 
 @[expose] public section
 
-open NumberField Matrix Formalism.BasicNotions GlobalTheory.IndefiniteRowSideFullHecke.TotallyPositiveExponents GlobalTheory.IndefiniteRowSideFullHecke.CuspFormFieldDegree
+open NumberField Matrix Formalism.BasicNotions GlobalTheory.IndefiniteRowSideFullHecke.TotallyPositiveExponents
 
 namespace GlobalTheory.CuspCharLattice
 

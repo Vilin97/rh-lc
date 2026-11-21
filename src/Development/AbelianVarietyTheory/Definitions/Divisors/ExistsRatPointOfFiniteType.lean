@@ -263,10 +263,10 @@ theorem UOver.exists_spread {Xo : Moduli D l} {c : Coeff l} {R : Subalgebra o Ω
     letI := hG.comm
     rw [isCommMonObj_iff_isMulCommutative]
     intro T
-    open scoped CategoryTheory.MonObj
-    refine ⟨⟨fun x y => Over.OverMorphism.ext (h.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
-    rw [← h.2 T x y (pushPt h.1.w x) (pushPt h.1.w y) rfl rfl,
-      ← h.2 T y x (pushPt h.1.w y) (pushPt h.1.w x) rfl rfl, _root_.mul_comm]
+    open scoped CategoryTheory.MonObj in
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (h.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← h.2 T x y (pushPt h.1.w x) (pushPt h.1.w y) rfl rfl,
+        ← h.2 T y x (pushPt h.1.w y) (pushPt h.1.w x) rfl rfl, _root_.mul_comm]
   have a₁ := pullAb P.isAb p₁
   obtain ⟨a, ha, H₁⟩ := exists_spread_grp (B := ratHull R) (Ω := Ω) a₁
     (pullAb (Obj.toPolAV Xo.univ).isAb p₂) q₁ q₂

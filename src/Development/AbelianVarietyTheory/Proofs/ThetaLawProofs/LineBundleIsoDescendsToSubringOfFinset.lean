@@ -37,7 +37,7 @@ theorem exists_finset_lbIso_adjoin {k A : Type} [CommRing k] [CommRing A] [Algeb
     (X := pullback pB (spMap (algebraMap k A)))
     (fun s => Spread.bcMap pB (Algebra.adjoin k (s.unop : Set A)).val)
     (fun f => (Spread.bcCone pB A).w f) (Spread.isLimitBcCone pB A) (i := .op ∅)
-    (M.pull (pullback.fst _ _)) (N.pull (pullback.fst _ _)) (pull_isLB hM _) (pull_isLB hN _)
+    (M.pull (pullback.fst _ _)) (N.pull (pullback.fst _ _)) (LB.isLB_pull hM _) (LB.isLB_pull hN _)
     (LBIso.chartPull
       (chartPullOut M _ _ _ _ fun _ => (Spread.bcMap_fst pB _).symm)
       (chartPullOut N _ _ _ _ fun _ => (Spread.bcMap_fst pB _).symm) H)

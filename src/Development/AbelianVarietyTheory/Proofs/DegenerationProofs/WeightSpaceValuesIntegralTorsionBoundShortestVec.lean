@@ -126,7 +126,7 @@ theorem exists_wt_ne (l : u.Lab) [ArithBase o Ω] (β : u.D.toPre.X) (hβ : ∀ 
   rw [(GlobalTheory.thetaSys_FF_mem_finite_perp_proj o Ω S).2.2.1, AddMonoidHom.mem_ker, map_nsmul, hx, ← QuotientAddGroup.mk_nsmul,
     QuotientAddGroup.eq_zero_iff] at hm
   obtain ⟨z, hz⟩ := hm
-  have : IsAddTorsionFree u.D.toPre.X := IsAddTorsionFree.of_isTorsionFree ℤ _
+  have : HasUniqueDiv u.D.toPre.X := HasUniqueDiv.of_isTorsionFree ℤ _
   refine hβ z (nsmul_right_injective (Nat.one_le_iff_ne_zero.1 S.r_pos) ?_)
   show S.r • β = S.r • S.N • z
   rw [← hz, smul_smul]; rfl
@@ -134,8 +134,8 @@ theorem exists_wt_ne (l : u.Lab) [ArithBase o Ω] (β : u.D.toPre.X) (hβ : ∀ 
 theorem prim_root [ArithBase o Ω] (y₀ : S.R →+* PadicAlgCl p) : IsPrimitiveRoot (y₀ (algebraMap o S.R S.ζN)) S.N := by
   have : IsDomain o := (ArithBase.inj (Ω := Ω)).isDomain _
   have : NeZero ((S.N : ℕ) : PadicAlgCl p) := ⟨Nat.cast_ne_zero.2 (N_pos S).ne'⟩
-  rw [← Polynomial.isRoot_cyclotomic_iff, ← Polynomial.map_cyclotomic _ (y₀.comp (algebraMap o S.R))]
-  exact ((isPrimitiveRoot_ζN S).isRoot_cyclotomic (N_pos S)).map
+  rw [← Polynomial.isRoot_cyclotomic_iff (R := PadicAlgCl p), ← Polynomial.map_cyclotomic _ (y₀.comp (algebraMap o S.R))]
+  exact Polynomial.IsRoot.map (y₀.comp (algebraMap o S.R)) ((isPrimitiveRoot_ζN S).isRoot_cyclotomic (N_pos S))
 
 theorem wt_sep (hLL : LL) (hU : UTorsSt) [ArithBase o Ω] (l : u.Lab) (Φ : u.Geom) (β : u.D.toPre.X) (hβ : ∀ z, β ≠ S.N • z) :
     ∃ (a : S.perp l.yy.ker) (q : QkPt u.D.toPre (PadicAlgCl p) S.N) (τ : Multiplicative u.D.toPre.X →* (PadicAlgCl p)ˣ),

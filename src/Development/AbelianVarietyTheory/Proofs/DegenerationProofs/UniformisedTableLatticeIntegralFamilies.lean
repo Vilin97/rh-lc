@@ -122,8 +122,11 @@ theorem valuation_eq_of {F : Type} [Field F] {v : AddValuation F (WithTop ℚ)} 
     (h : ∀ x, x ∈ O ↔ 0 ≤ v x) {x y : F} (e : v x = v y) : O.valuation x = O.valuation y := by
   have e' : O = (AddValuation.toValuation v).valuationSubring := ValuationSubring.ext _ _ h
   subst e'
-  refine (Valuation.isEquiv_valuation_valuationSubring (AddValuation.toValuation v)).val_eq.1 ?_
-  exact congrArg (fun a => Multiplicative.ofAdd (OrderDual.toDual a)) e
+  apply le_antisymm
+  · apply (Valuation.isEquiv_valuation_valuationSubring (AddValuation.toValuation v) x y).1
+    exact le_of_eq (congrArg (fun a => Multiplicative.ofAdd (OrderDual.toDual a)) e)
+  · apply (Valuation.isEquiv_valuation_valuationSubring (AddValuation.toValuation v) y x).1
+    exact le_of_eq (congrArg (fun a => Multiplicative.ofAdd (OrderDual.toDual a)) e.symm)
 
 theorem v_prod {F : Type} [Field F] (v : AddValuation F (WithTop ℚ)) {K : Type} (S : Finset K) (π : K → F) (q : K → ℚ)
     (h : ∀ i, v (π i) = (q i : WithTop ℚ)) : v (∏ i ∈ S, π i) = ((∑ i ∈ S, q i : ℚ) : WithTop ℚ) := by

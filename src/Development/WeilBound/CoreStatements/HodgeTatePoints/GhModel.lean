@@ -104,8 +104,10 @@ theorem hodge_tate_free_sandwich : ∀ (E : Type) [Field E] [NumberField E] [IsC
       obtain ⟨i, rfl⟩ := hx
       refine (hf1 i j).symm ▸ (?_ : (if i = j then (1 : Ω) else 0) ∈ regAt 𝔐.ξ ⟨centre z, h⟩)
       by_cases hij : i = j
-      · rw [if_pos hij]; exact one_mem _
-      · rw [if_neg hij]; exact zero_mem _
+      · rw [ite_eq_left hij]
+        exact one_mem _
+      · rw [ite_eq_right hij]
+        exact zero_mem _
     | zero => exact zero_mem _
     | add x y _ _ hx hy => exact add_mem hx hy
     | smul a x _ hx => exact mul_mem a.2 hx

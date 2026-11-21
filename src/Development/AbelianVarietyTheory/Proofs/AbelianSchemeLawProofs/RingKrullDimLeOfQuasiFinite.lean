@@ -179,7 +179,7 @@ theorem coheight_le_of_smooth {K : Type} [Field K] {X : Scheme.{0}} (f : X ⟶ S
     ← coheight_eq_of_isOpenImmersion (x := hV.primeIdealOf ⟨x, hx⟩) hV.fromSpec] at h₂
   have h₃ : hV.fromSpec.base (hV.primeIdealOf ⟨x, hx⟩) = x := hV.fromSpec_primeIdealOf ⟨x, hx⟩
   rw [h₃] at h₂
-  simp only [zero_add, Nat.card_eq_fintype_card, Fintype.card_fin] at h₂
+  simp only [zero_add, ENat.card_eq_coe_natCard, Nat.card_eq_fintype_card, Fintype.card_fin] at h₂
   exact_mod_cast h₂
 
 theorem exists_cover_of_infinite (K : Type) [Field K] [Infinite K] (P : PolAV (Spec (CommRingCat.of K))) :

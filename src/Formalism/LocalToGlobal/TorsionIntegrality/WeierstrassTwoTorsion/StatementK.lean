@@ -22,7 +22,7 @@ def ShortInv : Prop :=
 def WpNumEq : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (W : WeierstrassCurve K),
     Formalism.L2.Th1.CM.wpNum (g₂ W) (g₃ W) = 1 + X ^ 2 * wpReg W ∧
-    Formalism.L2.Th1.CM.wpDen (g₂ W) (g₃ W) = 1 - C (1 / 2 : K) * X ^ 3 * derivative K (wpReg W)
+    Formalism.L2.Th1.CM.wpDen (g₂ W) (g₃ W) = 1 - C (1 / 2 : K) * X ^ 3 * derivative (wpReg W)
 
 def USerEq : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (g2 g3 : K),
