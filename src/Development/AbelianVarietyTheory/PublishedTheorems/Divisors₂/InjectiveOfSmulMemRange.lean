@@ -186,7 +186,7 @@ theorem free_of_exact [IsDomain O] [ValuationRing O] [Module.Free O D] [Module.F
   haveI : Module.Free O (Module.Dual O Y) := Module.free_of_flat_of_isLocalRing
   obtain ⟨s, hs⟩ := Module.projective_lifting_property π LinearMap.id hπ
   have hs' : ∃ l, π ∘ₗ l = LinearMap.id := ⟨s, hs⟩
-  obtain ⟨t, ht⟩ : ∃ l, l ∘ₗ ι = LinearMap.id := ((he.split_tfae hι hπ).out 0 1).1 hs'
+  obtain ⟨t, ht⟩ : ∃ l, l ∘ₗ ι = LinearMap.id := ((he.split_tfae hι hπ).out 1 2).1 hs'
   haveI : Module.Finite O X := Module.Finite.of_surjective t fun x => ⟨ι x, LinearMap.congr_fun ht x⟩
   haveI : Module.Projective O X := Module.Projective.of_split ι t ht
   exact ⟨⟨Module.free_of_flat_of_isLocalRing, inferInstance⟩, inferInstance, inferInstance⟩

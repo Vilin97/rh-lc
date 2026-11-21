@@ -209,9 +209,9 @@ theorem respectsAdd_isogPt {α : ℂ} (hα : α ∈ latticeHom L₁ L₂) (h0 : 
     (isGenPt_affinePoint L₁ _ 0 one_add_sqrt_two_ne_zero)
   refine (map_genEval_congr _ eS _ (isGenPt_affinePoint L₁ _ 0 one_add_sqrt_two_ne_zero)).trans ?_
   refine vs.trans (key.trans ?_)
-  rw [← v1, ← vr]
-  congr 1
-  exact map_genEval_congr _ eA.symm _ _
+  have vA := map_genEval_congr (isogPt hα h0) eA.symm
+    (isGenPt_affinePoint L₁ 1 0 one_ne_zero) hA
+  exact congrArg₂ (· + ·) (v1.symm.trans vA) vr.symm
 
 def latticeIsog {α : ℂ} (hα : α ∈ latticeHom L₁ L₂) (h0 : α ≠ 0) :
     Isogeny (weierstrassCurve L₁) (weierstrassCurve L₂) :=

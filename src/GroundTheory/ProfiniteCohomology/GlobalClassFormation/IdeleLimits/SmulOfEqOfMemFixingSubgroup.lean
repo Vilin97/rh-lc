@@ -63,8 +63,10 @@ set_option maxHeartbeats 1000000 in
 def of (F : FiniteSubfield) : IdeleGroup F.1 →* IdeleLimit where
   toFun x := (⟦⟨F, x⟩⟧ : DirectLimit (fun F : FiniteSubfield ↦ IdeleGroup F.1)
     (fun _ _ h ↦ ideleMap h))
-  map_one' := (DirectLimit.one_def (f := fun _ _ h ↦ ideleMap h) F).symm
-  map_mul' x y := (DirectLimit.mul_def (f := fun _ _ h ↦ ideleMap h) F x y).symm
+  map_one' := (DirectLimit.one_def (G := fun F : FiniteSubfield ↦ IdeleGroup F.1)
+    (f := fun _ _ h ↦ ideleMap h) F).symm
+  map_mul' x y := (DirectLimit.mul_def (G := fun F : FiniteSubfield ↦ IdeleGroup F.1)
+    (f := fun _ _ h ↦ ideleMap h) F x y).symm
 
 @[simp]
 theorem of_ideleMap {F E : FiniteSubfield} (h : F ≤ E) (x : IdeleGroup F.1) :
